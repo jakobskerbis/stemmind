@@ -77,6 +77,23 @@ node scripts/generate-explanations.js --yes --path MAT-OS-8 --model claude-haiku
 
 Dokler razlag ni, gumb »Uči se s STEMMind« temo razloži v klepetu.
 
+## Učbenik
+
+Zavihek **Učbenik** ima za vsako temo učne poti lekcijo: zakaj se tega učimo, razlaga, rešeni primeri od lažjega do težjega, interaktivni poskus, pogoste napake, povzetek, gumb **Razloži drugače** (na sliki, iz vsakdanjega življenja, s številkami, bolj natančno) in kratko preverjanje. Na koncu sta gumba **Vadi naloge** (generator nalog) in **Vprašaj tutorja**. Iskanje pregleda naslove, cilje in besedilo lekcij.
+
+- Lekcije so datoteke Markdown v `content/lessons/<pot>/<tema>.md` (oblika v `content/lessons/README.md`), da jih učitelj lahko pregleda in popravi. Branje ne stane nič; tutor dobi v kontekst samo povzetek lekcije.
+- Lastni poskusi (`public/demos.js`): graf y = kx + n, Pitagorov izrek, ulomki, Ohmov zakon, prosti pad, nihalo, plinska enačba, urejanje kemijskih enačb, pH lestvica. Kateri poskus sodi h kateri temi, določa `DEMOS` v `server/textbook.js`.
+- Za druge teme so dodane simulacije PhET (University of Colorado Boulder, CC BY 4.0; `PHET` v `server/textbook.js`), ki se naložijo šele na klik.
+- **PDF**: celoten učbenik razreda je na `/ucbenik/<pot>` (npr. `/ucbenik/MAT-OS-8`), ena lekcija na `/ucbenik/<pot>/<tema>`. Strani so brezplačne in brez prijave; gumb »Shrani kot PDF« odpre tiskanje brskalnika.
+- **Paketi**: ko so računi vklopljeni (`STEMMIND_ACCOUNTS=1`), so poskusi, simulacije in sprotno preverjanje na voljo samo s plačljivim paketom ali med preizkusom. Brezplačni paket vidi besedilo lekcije in vprašanja z rešitvami.
+- Lekcije za preostale teme ustvari skripta (Batch API, osnutki za pregled):
+
+```bash
+node scripts/generate-lessons.js                     # ocena stroška za teme z vajami
+node scripts/generate-lessons.js --yes --limit 5     # preizkus na petih temah
+node scripts/generate-lessons.js --yes --path FIZ-OS-9 --model claude-sonnet-5-5
+```
+
 ## Objava
 
 Aplikacija je en proces Node z bazo v eni datoteki, zato potrebuje gostovanje s **trajnim diskom**:
