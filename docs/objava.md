@@ -22,7 +22,7 @@ Strošek: paket Starter ≈ 7 $/mesec + disk 1 GB ≈ 0,25 $/mesec. Brezplačni 
 - **Stripe webhook:** v Stripe → Developers → Webhooks dodaj `https://<tvoj-naslov>/api/stripe/webhook`, nato skopiraj `whsec_…` v Render → Environment → `STRIPE_WEBHOOK_SECRET`.
 - **Lastna domena (npr. stemmind.si):** Render → Settings → Custom Domains; pri registrarju dodaj CNAME, ki ga pokaže Render. Nato posodobi `STEMMIND_BASE_URL`.
 - **Razlage in učbenik:** enkrat poženi generiranje (v Render → Shell):
-  `node scripts/generate-explanations.js --yes` in `node scripts/generate-lessons.js --model claude-sonnet-5-5`.
+  `node scripts/generate-explanations.js --yes` in `node scripts/generate-lessons.js --yes --model claude-sonnet-5-5`.
 
 ## Omejitve stroškov AI (že nastavljene)
 
