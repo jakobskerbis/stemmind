@@ -1,6 +1,7 @@
 // STEMMind – odjemalec (brez ogrodja).
 import { attachPad, closePad } from "./pad.js";
 import { initAccount, accountsOn, openAddChild } from "./account.js";
+import { initTextbook, showTextbook, openLesson } from "./textbook.js";
 
 const $ = (sel) => document.querySelector(sel);
 const api = async (url, opts = {}) => {
@@ -66,6 +67,7 @@ function showView(name) {
   }
   if (name === "progress") loadProgress();
   if (name === "path") loadPath();
+  if (name === "textbook") showTextbook();
   if (name !== "topic") closePad();
   if (name !== "topic") setActiveMode(null);
   window.scrollTo(0, 0);
@@ -148,11 +150,22 @@ function renderState(convState) {
     .filter(Boolean)
     .map((t) => `<span class="chip">${escapeHtml(t)}</span>`)
     .join("");
+  // Pogovor o temi učne poti: povezava na lekcijo v učbeniku.
+  const topicId = state.conversationId && state.convTopic;
+  if (topicId) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip chip-btn";
+    b.textContent = "Preberi lekcijo";
+    b.addEventListener("click", () => openLesson(topicId));
+    $("#chat-state").append(b);
+  }
 }
 
 async function openConversation(id) {
   const conv = await api(`/api/conversations/${id}`);
   state.conversationId = conv.id;
+  state.convTopic = conv.topic?.id || null;
   $("#chat-title").textContent = conv.title;
   const box = $("#messages");
   box.innerHTML = "";
@@ -690,6 +703,7 @@ async function openTopic(topicId) {
     <div class="actions">
       ${hasPractice?.practice ? `<button class="primary" id="t-practice">✏️ Vadi naloge</button>` : ""}
       <button id="t-learn">💬 Uči se s STEMMind</button>
+      <button id="t-lesson" class="secondary">📖 Lekcija</button>
       ${hasPractice?.status === "mastered" ? "" : `<button id="t-done" class="small">Označi kot osvojeno</button>`}
     </div>
     <div class="card explanation">${
@@ -700,6 +714,7 @@ async function openTopic(topicId) {
     <div id="practice"></div>`;
   $("#t-practice")?.addEventListener("click", () => nextPractice());
   $("#t-learn").addEventListener("click", () => learnWithTutor(t));
+  $("#t-lesson").addEventListener("click", () => openLesson(t.id));
   $("#t-done")?.addEventListener("click", async () => {
     if (!confirm("Res znaš to temo? Označena bo kot osvojena in se bo pojavljala pri ponavljanju.")) return;
     await api(`/api/students/${state.student.id}/topic-status`, { method: "POST", body: { topic_id: t.id, status: "mastered" } });
@@ -708,12 +723,12 @@ async function openTopic(topicId) {
   });
 }
 
-async function learnWithTutor(t) {
+async function learnWithTutor(t, firstMessage = `Začniva s temo: ${t.name}.`) {
   const conv = await api(`/api/students/${state.student.id}/conversations`, { method: "POST", body: { topic_id: t.id } });
   await loadConversations();
   showView("chat");
   await openConversation(conv.id);
-  send(`Začniva s temo: ${t.name}.`);
+  send(firstMessage);
 }
 
 // ---------- vadnica ----------
@@ -900,7 +915,18 @@ async function loadUsage() {
 }
 
 // Za samodejne preizkuse v brskalniku.
-window.stemmind = { openTopic, showView };
+window.stemmind = { openTopic, showView, openLesson };
+
+initTextbook({
+  api,
+  renderRich,
+  escapeHtml,
+  getStudent: () => state.student,
+  openTopic,
+  nextPractice,
+  learnWithTutor,
+  showView,
+});
 
 // ---------- zagon ----------
 

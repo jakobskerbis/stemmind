@@ -10,6 +10,8 @@ import { Usage, LIMITS, windowHistory } from "./usage.js";
 import { Progress } from "./progress.js";
 import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
+import { lessonView, tocView, searchTextbook, lessonSummaryForPrompt } from "./textbook.js";
+import { printPage } from "./textbook-print.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
@@ -43,7 +45,7 @@ export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
   const app = express();
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
-  mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
+  const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
   if (process.env.STEMMIND_PASSWORD) app.use(basicAuth(process.env.STEMMIND_PASSWORD));
   app.use(express.json({ limit: "10mb" }));
   app.use(express.static(path.join(here, "..", "public")));
@@ -52,6 +54,13 @@ export function createApp(store, opts = {}) {
   app.use("/vendor/katex", express.static(path.join(modules, "katex", "dist")));
   app.use("/vendor/marked", express.static(path.join(modules, "marked")));
   app.use("/vendor/dompurify", express.static(path.join(modules, "dompurify", "dist")));
+
+  // Učbenik za tiskanje / PDF: brezplačno in brez prijave.
+  app.get("/ucbenik/:path{/:topic}", (req, res) => {
+    const html = printPage(req.params.path, req.params.topic || null);
+    if (!html) return res.status(404).send("Ta del učbenika ne obstaja.");
+    res.type("html").send(html);
+  });
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
   const usage = new Usage(store.db);
@@ -215,7 +224,7 @@ export function createApp(store, opts = {}) {
         settings: student.settings,
         weaknesses: weaknessesForPrompt(store, student),
         studentName: student.name,
-        learningPath: conv.path_topic ? learningPathPrompt(conv.path_topic) : "",
+        learningPath: conv.path_topic ? [learningPathPrompt(conv.path_topic), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n") : "",
       });
       const cached = key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
       const run = cached
@@ -306,6 +315,33 @@ export function createApp(store, opts = {}) {
     const t = getTopic(req.query.id);
     if (!t) return res.status(404).json({ error: "Tema ne obstaja." });
     res.json({ ...t, pathLabel: getPath(t.path).label, explanation: getExplanation(t.id)?.text || null });
+  });
+  // --- učbenik ---
+  app.get("/api/textbook/toc", (req, res) => {
+    const toc = tocView(String(req.query.path || ""));
+    if (!toc) return res.status(404).json({ error: "Učna pot ne obstaja." });
+    res.json(toc);
+  });
+  // Lekcija za učenca. Interaktivni del (poskusi, simulacije, sprotno preverjanje)
+  // je v plačljivem paketu in preizkusu; besedilo je za vse (tudi kot PDF).
+  app.get("/api/students/:id/lesson", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const view = lessonView(String(req.query.id || ""));
+    if (!view) return res.status(404).json({ error: "Tema ne obstaja." });
+    const interactive = !accounts || accounts.premiumFor(s.id);
+    if (interactive) return res.json({ ...view, interactive: true });
+    res.json({
+      ...view,
+      interactive: false,
+      locked: { demo: view.demo?.title || null, phet: !!view.phet },
+      demo: null,
+      phet: null,
+    });
+  });
+  app.get("/api/textbook/search", (req, res) => {
+    const subject = ["MAT", "FIZ", "KEM"].includes(req.query.subject) ? req.query.subject : undefined;
+    res.json(searchTextbook(String(req.query.q || "").slice(0, 100), { subject }));
   });
   app.post("/api/students/:id/topic-status", (req, res) => {
     const s = loadStudent(req, res);

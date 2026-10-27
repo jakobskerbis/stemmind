@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="account.css">
+  <link rel="stylesheet" href="textbook.css">
 </head>
 <body>
   <header class="topbar">
     <div class="brand">STEM<span>Mind</span></div>
     <nav class="tabs" role="tablist">
       <button class="tab active" data-view="path">Učna pot</button>
+      <button class="tab" data-view="textbook">Učbenik</button>
       <button class="tab" data-view="chat">Klepet</button>
       <button class="tab" data-view="settings">Nastavitve</button>
       <button class="tab" data-view="progress">Napredek</button>
@@ -48,6 +50,9 @@
     <button id="back-to-path" type="button">← Učna pot</button>
     <div id="topic-content"></div>
   </main>
+
+  <!-- UČBENIK (textbook.js) -->
+  <main id="view-textbook" class="view narrow textbook" hidden></main>
 
   <!-- KLEPET -->
   <main id="view-chat" class="view chat-view" hidden>
