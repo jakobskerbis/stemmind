@@ -10,6 +10,7 @@ import { Usage, LIMITS, windowHistory } from "./usage.js";
 import { Progress } from "./progress.js";
 import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
+import { lessonView, tocView, searchTextbook, lessonSummaryForPrompt } from "./textbook.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
@@ -215,7 +216,7 @@ export function createApp(store, opts = {}) {
         settings: student.settings,
         weaknesses: weaknessesForPrompt(store, student),
         studentName: student.name,
-        learningPath: conv.path_topic ? learningPathPrompt(conv.path_topic) : "",
+        learningPath: conv.path_topic ? [learningPathPrompt(conv.path_topic), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n") : "",
       });
       const cached = key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
       const run = cached
@@ -306,6 +307,21 @@ export function createApp(store, opts = {}) {
     const t = getTopic(req.query.id);
     if (!t) return res.status(404).json({ error: "Tema ne obstaja." });
     res.json({ ...t, pathLabel: getPath(t.path).label, explanation: getExplanation(t.id)?.text || null });
+  });
+  // --- učbenik ---
+  app.get("/api/textbook/toc", (req, res) => {
+    const toc = tocView(String(req.query.path || ""));
+    if (!toc) return res.status(404).json({ error: "Učna pot ne obstaja." });
+    res.json(toc);
+  });
+  app.get("/api/textbook/lesson", (req, res) => {
+    const view = lessonView(String(req.query.id || ""));
+    if (!view) return res.status(404).json({ error: "Tema ne obstaja." });
+    res.json(view);
+  });
+  app.get("/api/textbook/search", (req, res) => {
+    const subject = ["MAT", "FIZ", "KEM"].includes(req.query.subject) ? req.query.subject : undefined;
+    res.json(searchTextbook(String(req.query.q || "").slice(0, 100), { subject }));
   });
   app.post("/api/students/:id/topic-status", (req, res) => {
     const s = loadStudent(req, res);
