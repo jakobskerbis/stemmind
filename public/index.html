@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>STEMMind</title>
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">STEM<span>Mind</span></div>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-view="chat">Klepet</button>
+      <button class="tab" data-view="settings">Nastavitve</button>
+      <button class="tab" data-view="progress">Napredek</button>
+    </nav>
+    <label class="student-picker">
+      <span class="sr-only">Učenec</span>
+      <select id="student-select"></select>
+    </label>
+  </header>
+
+  <div id="mock-banner" class="banner" hidden>
+    Preizkusni način: API ključ ni nastavljen, zato STEMMind vrača vnaprej pripravljene odgovore.
+  </div>
+
+  <!-- KLEPET -->
+  <main id="view-chat" class="view chat-view">
+    <aside class="sidebar">
+      <button id="new-chat" class="primary">+ Nov pogovor</button>
+      <ul id="conversation-list"></ul>
+    </aside>
+    <section class="chat">
+      <div class="chat-head">
+        <button id="toggle-sidebar" class="mobile-only" type="button" aria-label="Pogovori">☰</button>
+        <h1 id="chat-title">Nov pogovor</h1>
+        <div id="chat-state" class="chips"></div>
+      </div>
+      <div id="messages" class="messages" aria-live="polite">
+        <div class="empty">
+          <p class="big">Živjo! 👋</p>
+          <p>Napiši nalogo ali jo fotografiraj. Skupaj jo bova rešila.</p>
+        </div>
+      </div>
+      <form id="composer" class="composer">
+        <div id="image-preview" class="image-preview" hidden>
+          <img alt="Predogled fotografije">
+          <button type="button" id="remove-image" aria-label="Odstrani sliko">×</button>
+        </div>
+        <div class="composer-row">
+          <label class="icon-btn" title="Dodaj fotografijo naloge">
+            📷<input id="image-input" type="file" accept="image/*" capture="environment" hidden>
+          </label>
+          <textarea id="input" rows="1" placeholder="Napiši nalogo ali vprašanje …"></textarea>
+          <button id="send" class="primary" type="submit">Pošlji</button>
+        </div>
+        <div class="hint">Namig: lahko napišeš »zdaj kemija«, »daj mi celo rešitev« ali »razloži skozi nogomet«.</div>
+      </form>
+    </section>
+  </main>
+
+  <!-- NASTAVITVE -->
+  <main id="view-settings" class="view narrow" hidden>
+    <h1>Nastavitve</h1>
+    <form id="settings-form" class="card form">
+      <label>Ime <input name="name" maxlength="40" required></label>
+      <label>Šola
+        <select name="educational_track">
+          <option value="OSNOVNA_SOLA">Osnovna šola</option>
+          <option value="SREDNJA_SOLA">Srednja šola</option>
+        </select>
+      </label>
+      <label>Raven
+        <input name="curriculum_level" maxlength="60" list="level-options" placeholder="npr. 8. razred, 2. letnik VR">
+        <datalist id="level-options"></datalist>
+      </label>
+      <label>Predmet
+        <select name="subject">
+          <option value="MAT">Matematika</option>
+          <option value="FIZ">Fizika</option>
+          <option value="KEM">Kemija</option>
+        </select>
+      </label>
+      <label>Program
+        <select name="track">
+          <option value="REGULAR">Redni pouk (NPZ / matura)</option>
+          <option value="COMPETITION">Tekmovanja</option>
+        </select>
+      </label>
+      <fieldset>
+        <legend>Način</legend>
+        <label class="radio"><input type="radio" name="solving_mode" value="A"> A – vodenje korak za korakom</label>
+        <label class="radio"><input type="radio" name="solving_mode" value="B"> B – celotna rešitev z razlago</label>
+      </fieldset>
+      <label>Osebnost / tema razlage
+        <input name="personality_setting" maxlength="200" placeholder="npr. strog, šaljiv, primeri iz nogometa">
+      </label>
+      <label>Znane šibke točke (ločene z vejico)
+        <input name="manual_weaknesses" placeholder="npr. ulomki, pretvarjanje enot">
+      </label>
+      <div class="form-actions">
+        <button class="primary" type="submit">Shrani</button>
+        <span id="settings-saved" class="muted" hidden>Shranjeno ✓</span>
+      </div>
+    </form>
+
+    <div class="card form">
+      <h2>Nov učenec</h2>
+      <form id="new-student-form" class="inline">
+        <input name="name" maxlength="40" placeholder="Ime" required>
+        <button type="submit">Dodaj</button>
+      </form>
+      <button id="delete-student" class="danger" type="button">Izbriši tega učenca in vse njegove pogovore</button>
+    </div>
+  </main>
+
+  <!-- NAPREDEK -->
+  <main id="view-progress" class="view narrow" hidden>
+    <h1>Napredek</h1>
+    <div class="card">
+      <h2>Šibke točke</h2>
+      <p class="muted">Samodejno zaznane iz pogovorov (vsaj 3 poteze, vsaj 40 % napak v zadnjih 60 dneh) in ročno vnesene. STEMMind jih upošteva pri razlagi.</p>
+      <ul id="weak-list" class="pill-list"></ul>
+    </div>
+    <div class="card">
+      <h2>Aktivnost (30 dni)</h2>
+      <div id="activity" class="activity"></div>
+    </div>
+    <div class="card">
+      <h2>Teme</h2>
+      <table class="table">
+        <thead><tr><th>Predmet</th><th>Tema</th><th>Poteze</th><th>Napake</th></tr></thead>
+        <tbody id="topic-rows"></tbody>
+      </table>
+    </div>
+    <div class="card" id="flags-card">
+      <h2>Opozorila</h2>
+      <p class="muted">Pogovori, kjer je STEMMind zaznal stisko, nevarno prošnjo ali poskus obiti pravila.</p>
+      <ul id="flag-list"></ul>
+    </div>
+  </main>
+
+  <script src="vendor/katex/katex.min.js"></script>
+  <script src="vendor/marked/lib/marked.umd.js"></script>
+  <script src="vendor/dompurify/purify.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
