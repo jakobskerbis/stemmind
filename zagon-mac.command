@@ -1,6 +1,12 @@
 #!/bin/bash
 cd "$(dirname "$0")"
 
+# Če STEMMind že teče, samo odpri brskalnik.
+if lsof -iTCP:3000 -sTCP:LISTEN >/dev/null 2>&1; then
+  open http://localhost:3000
+  exit 0
+fi
+
 if ! command -v node >/dev/null 2>&1; then
   echo "Node.js ni nameščen. Namesti ga s https://nodejs.org (gumb LTS) in nato znova odpri to datoteko."
   read -r -p "Pritisni Enter za izhod."
@@ -14,9 +20,10 @@ if [ ! -f .env ]; then
   echo "Ključ je shranjen v datoteko .env"
 fi
 
-if [ ! -d node_modules ]; then
+# Knjižnice namesti ob prvem zagonu in po vsaki posodobitvi (ko se package.json spremeni).
+if ! cmp -s package.json node_modules/.stemmind-package.json; then
   echo "Nameščam potrebne knjižnice, to traja minuto ..."
-  npm install --omit=dev
+  npm install --omit=dev --no-audit --no-fund && cp package.json node_modules/.stemmind-package.json
 fi
 
 echo
