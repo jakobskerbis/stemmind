@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>STEMMind</title>
+  <meta name="theme-color" content="#2563eb">
+  <link rel="stylesheet" href="vendor/nunito/index.css">
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="account.css">
@@ -11,16 +13,22 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">STEM<span>Mind</span></div>
+    <button type="button" class="brand" data-view="path" aria-label="STEMMind – na učno pot">
+      <span class="logo" aria-hidden="true"><i data-icon="graduation-cap"></i></span>
+      <span class="brand-name">STEM<span>Mind</span></span>
+    </button>
     <nav class="tabs" role="tablist">
-      <button class="tab active" data-view="path">Učna pot</button>
-      <button class="tab" data-view="textbook">Učbenik</button>
-      <button class="tab" data-view="chat">Klepet</button>
-      <button class="tab" data-view="settings">Nastavitve</button>
-      <button class="tab" data-view="progress">Napredek</button>
-      <button class="tab" data-view="account" id="account-tab" hidden>Račun</button>
+      <button class="tab active" data-view="path"><i data-icon="map"></i><span>Učna pot</span></button>
+      <button class="tab" data-view="textbook"><i data-icon="book-open"></i><span>Učbenik</span></button>
+      <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span>Inštruktor</span></button>
+      <button class="tab" data-view="progress"><i data-icon="chart-column"></i><span>Napredek</span></button>
+      <button class="tab" data-view="settings"><i data-icon="settings"></i><span>Nastavitve</span></button>
+      <button class="tab" data-view="account" id="account-tab" hidden><i data-icon="user"></i><span>Račun</span></button>
     </nav>
-    <div id="xp-badge" class="xp-badge" title="Izkušnje">⭐ <b id="xp-total">0</b> XP · 🔥 <b id="xp-streak">0</b></div>
+    <div id="xp-badge" class="xp-badge">
+      <span class="stat xp" title="Točke izkušenj (XP)"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span></span>
+      <span class="stat streak" title="Dnevi zapored"><i data-icon="flame"></i><b id="xp-streak">0</b></span>
+    </div>
     <label class="student-picker">
       <span class="sr-only">Učenec</span>
       <select id="student-select"></select>
@@ -29,7 +37,7 @@
 
   <div id="toast" class="toast" hidden></div>
   <div id="mock-banner" class="banner" hidden>
-    Preizkusni način: API ključ ni nastavljen, zato STEMMind vrača vnaprej pripravljene odgovore.
+    <i data-icon="info"></i><span><b>Preizkusni način.</b> <span class="long">Brez API ključa inštruktor vrača pripravljene odgovore.</span></span>
   </div>
 
   <!-- PRIJAVA STARŠEV IN RAČUN (account.js) -->
@@ -39,7 +47,8 @@
   <!-- UČNA POT -->
   <main id="view-path" class="view narrow">
     <div class="path-head">
-      <select id="path-select" aria-label="Učna pot"></select>
+      <label class="field-label" for="path-select">Učna pot</label>
+      <select id="path-select"></select>
     </div>
     <div id="xp-card" class="card xp-card"></div>
     <div id="path-content"></div>
@@ -47,7 +56,7 @@
 
   <!-- TEMA / VADNICA -->
   <main id="view-topic" class="view narrow" hidden>
-    <button id="back-to-path" type="button">← Učna pot</button>
+    <button id="back-to-path" type="button" class="ghost back"><i data-icon="arrow-left"></i>Učna pot</button>
     <div id="topic-content"></div>
   </main>
 
@@ -57,20 +66,17 @@
   <!-- KLEPET -->
   <main id="view-chat" class="view chat-view" hidden>
     <aside class="sidebar">
-      <button id="new-chat" class="primary">+ Nov pogovor</button>
+      <button id="new-chat" class="primary"><i data-icon="plus"></i>Nov pogovor</button>
       <ul id="conversation-list"></ul>
     </aside>
     <section class="chat">
       <div class="chat-head">
-        <button id="toggle-sidebar" class="mobile-only" type="button" aria-label="Pogovori">☰</button>
+        <button id="toggle-sidebar" class="mobile-only icon-only" type="button" aria-label="Pogovori"><i data-icon="menu"></i></button>
         <h1 id="chat-title">Nov pogovor</h1>
         <div id="chat-state" class="chips"></div>
       </div>
       <div id="messages" class="messages" aria-live="polite">
-        <div class="empty">
-          <p class="big">Živjo! 👋</p>
-          <p>Napiši nalogo ali jo fotografiraj. Skupaj jo bova rešila.</p>
-        </div>
+        <div class="empty"></div>
       </div>
       <form id="composer" class="composer">
         <div id="image-preview" class="image-preview" hidden>
@@ -78,13 +84,13 @@
           <button type="button" id="remove-image" aria-label="Odstrani sliko">×</button>
         </div>
         <div class="composer-row">
-          <label class="icon-btn" title="Dodaj fotografijo naloge">
-            📷<input id="image-input" type="file" accept="image/*" capture="environment" hidden>
+          <label class="icon-btn" title="Fotografiraj nalogo" aria-label="Fotografiraj nalogo">
+            <i data-icon="camera"></i><input id="image-input" type="file" accept="image/*" capture="environment" hidden>
           </label>
           <textarea id="input" rows="1" placeholder="Napiši nalogo ali vprašanje …"></textarea>
-          <button id="send" class="primary" type="submit">Pošlji</button>
+          <button id="send" class="primary send" type="submit" aria-label="Pošlji"><i data-icon="send"></i><span>Pošlji</span></button>
         </div>
-        <div class="hint">Namig: lahko napišeš »zdaj kemija«, »daj mi celo rešitev« ali »razloži skozi nogomet«.</div>
+        <div class="hint">Lahko napišeš tudi »zdaj kemija« ali »razloži skozi nogomet«.</div>
       </form>
     </section>
   </main>
@@ -139,6 +145,12 @@
       <div id="usage"></div>
     </div>
 
+    <div class="card">
+      <h2>Pomoč</h2>
+      <p class="muted">Kratek ogled pokaže, kje je kaj v aplikaciji.</p>
+      <button id="tour-again" type="button" class="secondary"><i data-icon="circle-help"></i>Ponovi uvodni ogled</button>
+    </div>
+
     <div class="card form">
       <h2>Nov učenec</h2>
       <form id="new-student-form" class="inline">
@@ -182,11 +194,22 @@
 
   <!-- NAČINI UČENJA (vedno dosegljivi) -->
   <nav id="modebar" class="modebar" aria-label="Način učenja">
-    <button type="button" data-mode="new"><span class="ic">🧭</span><span>Nova snov</span></button>
-    <button type="button" data-mode="review"><span class="ic">🔁</span><span>Ponavljanje</span><b class="badge" hidden></b></button>
-    <button type="button" data-mode="test"><span class="ic">📝</span><span class="long">Priprava na test</span><span class="short">Test</span></button>
-    <button type="button" data-mode="daily"><span class="ic">⚡</span><span class="long">Današnji trening</span><span class="short">Trening</span></button>
+    <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span>Nova snov</span></button>
+    <button type="button" data-mode="review"><span class="ic"><i data-icon="repeat"></i><b class="badge" hidden></b></span><span>Ponavljanje</span></button>
+    <button type="button" data-mode="daily" class="hero"><span class="ic"><i data-icon="zap"></i></span><span class="long">Današnji trening</span><span class="short">Trening</span></button>
+    <button type="button" data-mode="test"><span class="ic"><i data-icon="clipboard-check"></i></span><span class="long">Priprava na test</span><span class="short">Test</span></button>
   </nav>
+
+  <!-- UVODNI OGLED -->
+  <div id="tour" class="tour" hidden role="dialog" aria-modal="true" aria-labelledby="tour-title">
+    <div class="tour-spot"></div>
+    <div class="tour-card">
+      <div class="tour-step"></div>
+      <h2 id="tour-title"></h2>
+      <p class="tour-text"></p>
+      <div class="tour-actions"><button type="button" class="ghost" data-tour="skip">Preskoči</button><button type="button" class="primary" data-tour="next">Naprej</button></div>
+    </div>
+  </div>
 
   <script src="vendor/katex/katex.min.js"></script>
   <script src="vendor/marked/lib/marked.umd.js"></script>

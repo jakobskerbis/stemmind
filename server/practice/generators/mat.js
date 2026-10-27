@@ -677,6 +677,24 @@ export const MAT_GENERATORS = [
     id: "neenacbe",
     topics: ["MAT-OS-9/linearne-neenacbe", "MAT-SS-1/linearne-neenacbe", "MAT-OS-6/preproste-neenacbe"],
     gen(level, r) {
+      if (level === 2 && r.int(0, 1) === 1) {
+        // Branje rešitve s številske premice
+        const x0 = r.int(-4, 6);
+        const op = r.pick(["<", ">", "\\le", "\\ge"]);
+        const strict = { "<": "\\le", ">": "\\ge", "\\le": "<", "\\ge": ">" }[op];
+        const flip = { "<": ">", ">": "<", "\\le": "\\ge", "\\ge": "\\le" }[op];
+        const right = `x ${op} ${x0}`;
+        const c = choices(r, right, [`x ${strict} ${x0}`, `x ${flip} ${x0}`, `x ${op} ${x0 + 1}`]);
+        const closed = op.includes("le") || op.includes("ge");
+        return {
+          text: "Na številski premici je prikazana rešitev neenačbe. Katera je?",
+          figure: { type: "numberline", x0, dir: op === "<" || op === "\\le" ? -1 : 1, closed },
+          answer: { type: "choice", ...c },
+          options_tex: true,
+          hint: "Poln krožec pomeni, da število spada zraven ($\\le$ ali $\\ge$), prazen pa, da ne ($<$ ali $>$). Pobarvani del kaže, katera števila so rešitev.",
+          solution: `Krožec pri $${x0}$ je ${closed ? "poln" : "prazen"}, pobarvano je ${op === "<" || op === "\\le" ? "levo" : "desno"}: $${right}$.`,
+        };
+      }
       const a = level === 3 ? r.nonZero(-6, -2) : r.int(2, 6);
       const x0 = r.int(-6, 8);
       const b = r.int(-10, 10);

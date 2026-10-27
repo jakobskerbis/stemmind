@@ -1,15 +1,23 @@
 # Render Blueprint: v Renderju izberi New > Blueprint in poveži ta repozitorij.
+# Navodila: docs/objava.md
 services:
   - type: web
     name: stemmind
     runtime: node
-    plan: free
-    buildCommand: npm ci
+    region: frankfurt          # najbližje Sloveniji
+    plan: starter              # trajni disk ni na voljo v brezplačnem paketu
+    buildCommand: npm ci --omit=dev
     startCommand: npm start
     healthCheckPath: /healthz
+    disk:
+      name: stemmind-data
+      mountPath: /var/data     # baza učencev ostane ob vsaki posodobitvi
+      sizeGB: 1
     envVars:
       - key: NODE_VERSION
-        value: "22"
+        value: "22.12.0"
+      - key: STEMMIND_DB
+        value: /var/data/stemmind.db
       - key: ANTHROPIC_API_KEY
         sync: false
       - key: STEMMIND_PASSWORD
@@ -20,6 +28,14 @@ services:
         sync: false
       - key: STEMMIND_ADMIN_EMAILS
         sync: false
+      - key: STEMMIND_DAILY_QUESTIONS
+        value: "0"
+      - key: STEMMIND_FREE_DAILY_QUESTIONS
+        value: "10"
+      - key: STEMMIND_STUDENT_MONTHLY_USD
+        value: "1.5"
+      - key: STEMMIND_MONTHLY_BUDGET_USD
+        value: "50"
       - key: STRIPE_SECRET_KEY
         sync: false
       - key: STRIPE_WEBHOOK_SECRET
