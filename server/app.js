@@ -52,6 +52,7 @@ export function createApp(store, opts = {}) {
   app.use("/vendor/katex", express.static(path.join(modules, "katex", "dist")));
   app.use("/vendor/marked", express.static(path.join(modules, "marked")));
   app.use("/vendor/dompurify", express.static(path.join(modules, "dompurify", "dist")));
+  app.use("/vendor/nunito", express.static(path.join(modules, "@fontsource-variable", "nunito")));
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
   const usage = new Usage(store.db);
@@ -142,7 +143,7 @@ export function createApp(store, opts = {}) {
     if (!s) return;
     const topic = req.body?.topic_id ? getTopic(req.body.topic_id) : null;
     if (req.body?.topic_id && !topic) return res.status(400).json({ error: "Tema ne obstaja." });
-    res.status(201).json(store.createConversation(s.id, topic ? { pathTopic: topic.id, title: `📘 ${topic.name}` } : {}));
+    res.status(201).json(store.createConversation(s.id, topic ? { pathTopic: topic.id, title: `Tema: ${topic.name}` } : {}));
   });
   app.get("/api/conversations/:id", (req, res) => {
     const c = loadConversation(req, res);
@@ -416,7 +417,7 @@ export function createApp(store, opts = {}) {
     if (!s) return;
     const t = progress.getTask(intParam(req.params.taskId));
     if (!t || t.student_id !== s.id) return res.status(404).json({ error: "Naloga ne obstaja." });
-    const conv = store.createConversation(s.id, { pathTopic: t.topic_id, title: `🧩 ${getTopic(t.topic_id)?.name ?? "Naloga"}` });
+    const conv = store.createConversation(s.id, { pathTopic: t.topic_id, title: `Naloga: ${getTopic(t.topic_id)?.name ?? "vadnica"}` });
     const text = `Rešujem nalogo iz Vadnice:\n\n${t.payload.text}\n\n${t.last_answer ? `Moj odgovor je bil: ${t.last_answer}. Ni pravilen.` : "Ne vem, kako začeti."} Mi pomagaš najti, kje se zatakne? Rešitve mi ne povej.`;
     res.json({ conversation: conv, text });
   });

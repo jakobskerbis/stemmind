@@ -1,5 +1,8 @@
 // STEMMind – odjemalec (brez ogrodja).
 import { attachPad, closePad } from "./pad.js";
+import { icon, hydrateIcons } from "./icons.js";
+
+hydrateIcons();
 import { initAccount, accountsOn, openAddChild } from "./account.js";
 
 const $ = (sel) => document.querySelector(sel);
@@ -70,7 +73,7 @@ function showView(name) {
   if (name !== "topic") setActiveMode(null);
   window.scrollTo(0, 0);
 }
-document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
+document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
 
 // ---------- učenci ----------
 
@@ -117,7 +120,7 @@ function renderConversationList() {
   for (const c of state.conversations) {
     const li = document.createElement("li");
     li.className = c.id === state.conversationId ? "active" : "";
-    li.innerHTML = `<span>${escapeHtml(c.title)}</span><button title="Izbriši">🗑</button>`;
+    li.innerHTML = `<span>${escapeHtml(c.title)}</span><button title="Izbriši pogovor" aria-label="Izbriši pogovor">${icon("trash-2")}</button>`;
     li.querySelector("span").addEventListener("click", () => openConversation(c.id));
     li.querySelector("button").addEventListener("click", async (e) => {
       e.stopPropagation();
@@ -135,8 +138,18 @@ function renderConversationList() {
 
 function renderEmptyChat() {
   $("#chat-title").textContent = "Nov pogovor";
-  $("#messages").innerHTML = `<div class="empty"><p class="big">Živjo, ${escapeHtml(state.student.name)}! 👋</p>
-    <p>Napiši nalogo ali jo fotografiraj. Skupaj jo bova rešila.</p></div>`;
+  const ideas = ["Kako rešim enačbo 2x + 3 = 11?", "Razloži mi Pitagorov izrek.", "Kaj je gostota?"];
+  $("#messages").innerHTML = `<div class="empty">
+    <div class="tutor-avatar big" aria-hidden="true">${icon("sparkles")}</div>
+    <p class="big">Živjo, ${escapeHtml(state.student.name)}!</p>
+    <p>Napiši nalogo ali jo fotografiraj. Skupaj jo bova rešila po korakih.</p>
+    <div class="ideas">${ideas.map((t) => `<button type="button" class="idea" data-idea="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("")}</div></div>`;
+  $("#messages").querySelectorAll("[data-idea]").forEach((b) =>
+    b.addEventListener("click", () => {
+      $("#input").value = b.dataset.idea;
+      $("#input").focus();
+    }),
+  );
   renderState(null);
 }
 
@@ -186,7 +199,7 @@ function addMessage(role, text, hasImage = false) {
     if (hasImage) {
       const note = document.createElement("div");
       note.className = "photo-note";
-      note.textContent = "📷 fotografija naloge";
+      note.innerHTML = `${icon("camera")} fotografija naloge`;
       el.prepend(note);
     }
   } else {
@@ -242,7 +255,7 @@ async function send(text, { deep = false } = {}) {
         raw += d.text;
         if (!frame) frame = requestAnimationFrame(paint);
       },
-      mastered: (d) => toast(`🏆 Tema »${d.topic}« je osvojena!`),
+      mastered: (d) => toast(`Tema »${d.topic}« je osvojena!`, "trophy"),
       done: (d) => {
         raw = d.text;
         paint();
@@ -451,7 +464,7 @@ function addDeepButton(el, wasDeep) {
   const b = document.createElement("button");
   b.className = "deep-btn";
   b.type = "button";
-  b.textContent = "🔍 Razloži podrobneje";
+  b.innerHTML = `${icon("search")} Razloži podrobneje`;
   b.addEventListener("click", () => {
     b.remove();
     send("Tega ne razumem dobro. Razloži podrobneje, korak za korakom.", { deep: true });
@@ -459,9 +472,10 @@ function addDeepButton(el, wasDeep) {
   el.appendChild(b);
 }
 
-function toast(msg) {
+function toast(msg, ic = null) {
   const t = $("#toast");
-  t.textContent = msg;
+  t.innerHTML = `${ic ? icon(ic) : ""}<span></span>`;
+  t.querySelector("span").textContent = msg;
   t.hidden = false;
   clearTimeout(toast.timer);
   toast.timer = setTimeout(() => (t.hidden = true), 3500);
@@ -487,12 +501,27 @@ function localStorageSet(k, v) {
 
 // ---------- učna pot ----------
 
-const STATUS_ICON = { new: "○", learning: "◐", mastered: "●" };
+const LEVEL_NAMES = { 1: "lahka", 2: "srednja", 3: "težka" };
+const NODE = {
+  locked: ["lock", "zaklenjeno"],
+  due: ["rotate-ccw", "za ponovitev"],
+  mastered: ["check", "osvojeno"],
+  learning: ["pencil", "v učenju"],
+  new: ["play", "še ne"],
+};
+const diffBadge = (level) =>
+  `<span class="diff d${level}" title="Težavnost"><span class="dots"><i></i><i></i><i></i></span>${LEVEL_NAMES[level] || ""}</span>`;
 
 async function refreshXp() {
   if (!state.student) return;
   const x = await api(`/api/students/${state.student.id}/xp`);
+  const prev = Number($("#xp-total").textContent) || 0;
   $("#xp-total").textContent = x.total;
+  if (x.total > prev && prev) {
+    $("#xp-badge").classList.remove("bump");
+    void $("#xp-badge").offsetWidth;
+    $("#xp-badge").classList.add("bump");
+  }
   $("#xp-streak").textContent = x.streak;
   state.leaderboard = x.leaderboard;
   refreshModes();
@@ -513,7 +542,7 @@ async function refreshModes() {
   badge.title = `${m.reviewBacklog} nalog za ponavljanje`;
   const daily = $('#modebar [data-mode="daily"]');
   daily.classList.toggle("done", m.daily.done);
-  daily.title = m.daily.done ? "Današnji trening je opravljen ✓" : m.daily.open ? "Nadaljuj današnji trening" : "Približno 15 minut: nova snov in ponavljanje";
+  daily.title = m.daily.done ? "Današnji trening je opravljen" : m.daily.open ? "Nadaljuj današnji trening" : "Približno 15 minut: nova snov in ponavljanje";
   return m;
 }
 
@@ -536,7 +565,7 @@ async function goNew({ skipHint = false } = {}) {
     } catch {}
     showView("topic");
     $("#topic-content").innerHTML = `<div class="card suggest">
-      <h2>🔁 Najprej 5 minut ponavljanja?</h2>
+      <h2>${icon("repeat")} Najprej 5 minut ponavljanja?</h2>
       <p>Nabralo se je <b>${m.reviewBacklog}</b> nalog za ponavljanje. Kratka ponovitev pomaga, da osvojeno znanje ne zbledi. Lahko pa takoj nadaljuješ z novo snovjo.</p>
       <div class="actions"><button class="primary" id="sg-review">Da, 5 minut ponavljanja</button><button id="sg-new">Ne, nova snov</button></div>
     </div>`;
@@ -546,7 +575,7 @@ async function goNew({ skipHint = false } = {}) {
   }
   if (!m?.newTopic) {
     showView("path");
-    toast("Vse teme te poti so osvojene. 🎉 Izberi drugo pot ali ponavljaj.");
+    toast("Vse teme te poti so osvojene. Izberi drugo pot ali ponavljaj.", "trophy");
     return;
   }
   await openTopic(m.newTopic.id);
@@ -560,7 +589,7 @@ async function showTestPrep(edit = false) {
   const box = $("#topic-content");
   if (plan && !edit && plan.daysLeft >= 0) {
     const when = plan.daysLeft === 0 ? "danes" : plan.daysLeft === 1 ? "jutri" : `čez ${plan.daysLeft} dni`;
-    box.innerHTML = `<h1>📝 Priprava na test</h1>
+    box.innerHTML = `<h1 class="with-icon">${icon("clipboard-check")} Priprava na test</h1>
       <div class="card"><p>Test je <b>${when}</b> (${escapeHtml(new Date(plan.date).toLocaleDateString("sl-SI"))}).</p>
       <p class="muted">Snov: ${plan.unitTitles.map(escapeHtml).join(", ")}</p>
       <p class="muted">Vsak dan reši niz mešanih nalog iz teh sklopov. Bližje kot je test, težje so naloge.</p>
@@ -572,7 +601,7 @@ async function showTestPrep(edit = false) {
   const p = await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(state.pathKey || "")}`);
   const today = new Date().toISOString().slice(0, 10);
   const chosen = new Set(plan?.path === p.key ? plan.units : []);
-  box.innerHTML = `<h1>📝 Priprava na test</h1>
+  box.innerHTML = `<h1 class="with-icon">${icon("clipboard-check")} Priprava na test</h1>
     <form id="tp-form" class="card">
       <p><b>Katera snov bo na testu?</b> <span class="muted">(${escapeHtml(p.label || "")})</span></p>
       <div class="tp-units">${p.units
@@ -630,38 +659,60 @@ async function loadPath(key = state.pathKey) {
   }
   state.pathKey = p.key;
   const x = p.xp;
-  $("#xp-card").innerHTML = `<div><b>Raven ${x.level}</b> · ${x.total} XP</div>
-    <div class="muted">Ta teden ${x.week} XP · 🔥 ${x.streak} ${x.streak === 1 ? "dan" : "dni"} zapored</div>
-    <button class="primary daily-btn" data-daily>⚡ Današnji trening <span class="muted">~15 min</span></button>
-    ${p.next ? `<div class="next">Naslednji korak: <b>${escapeHtml(p.next.name)}</b> <button class="primary" data-open="${p.next.id}">Začni</button></div>` : `<div class="next">🎉 Vse teme te poti so osvojene!</div>`}`;
+  const done = state.modes?.daily?.done;
+  $("#xp-card").innerHTML = `
+    <div class="hero">
+      <div class="hero-icon">${icon("zap")}</div>
+      <div class="hero-text"><h2>Današnji trening</h2><p>${done ? "Opravljeno za danes. Lahko narediš še en krog." : "Približno 15 minut: nova snov in malo ponavljanja."}</p></div>
+      <button class="primary big" data-daily>${done ? "Še en krog" : "Začni trening"}</button>
+    </div>
+    ${
+      p.next
+        ? `<button class="next-row" data-open="${p.next.id}"><span class="eyebrow">Naslednja tema</span><span class="next-name">${escapeHtml(p.next.name)}</span>${icon("chevron-right")}</button>`
+        : `<div class="next-row done">${icon("trophy")}<span class="next-name">Vse teme te poti so osvojene!</span></div>`
+    }
+    <div class="stats-row">
+      <div><b>${x.level}</b><span>raven</span></div>
+      <div><b>${x.week}</b><span>XP ta teden</span></div>
+      <div><b>${x.streak}</b><span>${x.streak === 1 ? "dan" : "dni"} zapored</span></div>
+    </div>`;
 
-  content.innerHTML = p.units
-    .map(
-      (u, ui) => `<section class="unit card ${u.locked ? "locked" : ""}">
+  content.innerHTML =
+    `<div class="legend">${["mastered", "learning", "due", "locked"].map((k) => `<span class="lg ${k}">${icon(NODE[k][0])}${NODE[k][1]}</span>`).join("")}</div>` +
+    p.units
+      .map((u, ui) => {
+        const rel = u.topics.filter((t) => t.practice).length ? u.topics.filter((t) => t.practice) : u.topics;
+        const nDone = rel.filter((t) => t.status === "mastered").length;
+        const pct = Math.round(u.progress * 100);
+        return `<section class="unit card ${u.locked ? "locked" : ""} ${u.mastered ? "mastered" : ""}">
         <div class="unit-head">
-          <h2>${u.locked ? "🔒 " : u.mastered ? "✅ " : ""}${escapeHtml(u.title)}</h2>
-          <div class="bar"><div style="width:${Math.round(u.progress * 100)}%"></div></div>
+          <div class="ring" style="--p:${pct}">${u.locked ? icon("lock") : u.mastered ? icon("award") : `<span>${pct}%</span>`}</div>
+          <div class="unit-title"><span class="eyebrow">Sklop ${ui + 1}</span><h2>${escapeHtml(u.title)}</h2>
+            <span class="muted">${u.locked ? "Odklene se, ko osvojiš prejšnji sklop." : `${nDone} od ${rel.length} osvojenih`}</span></div>
         </div>
-        ${u.locked ? `<p class="muted">Odklene se, ko osvojiš prejšnji sklop. Če snov že znaš, opravi preizkus znanja.</p>` : ""}
-        <div class="unit-actions">
-          ${u.hasPractice && !u.locked && u.started ? `<button class="small" data-unit="${ui}">🧩 Vadi sklop</button>` : ""}
-          ${u.hasPractice && !u.mastered ? `<button class="small" data-placement="${ui}">🎯 Preizkus znanja</button>` : ""}
-        </div>
-        <ul class="topics">
+        <ol class="path">
           ${u.topics
-            .map(
-              (t) => `<li class="topic ${t.status} ${t.due ? "due" : ""}">
-                <span class="st" title="${{ new: "še ne", learning: "v učenju", mastered: "osvojeno" }[t.status]}">${t.due ? "⟳" : STATUS_ICON[t.status]}</span>
-                <button class="link" data-open="${t.id}" ${u.locked ? "disabled" : ""}>${escapeHtml(t.name)}</button>
-                ${t.due ? `<span class="tag">za ponovitev</span>` : ""}
-                ${t.practice && t.status !== "new" && t.status !== "mastered" ? `<span class="lvl">${"★".repeat(t.level)}${"☆".repeat(3 - t.level)}</span>` : ""}
-              </li>`,
-            )
+            .map((t) => {
+              const st = u.locked ? "locked" : t.due ? "due" : t.status;
+              const isNext = p.next && p.next.id === t.id;
+              const sub = NODE[st][1] + (t.practice && t.status === "learning" && !u.locked ? ` · ${LEVEL_NAMES[t.level]}` : "");
+              return `<li><button class="node ${st} ${isNext ? "current" : ""}" data-open="${t.id}" ${u.locked ? "disabled" : ""}>
+                <span class="node-dot">${icon(NODE[st][0])}</span>
+                <span class="node-text"><span class="node-name">${escapeHtml(t.name)}</span><span class="node-sub">${isNext ? "Naslednja · " : ""}${sub}</span></span>
+              </button></li>`;
+            })
             .join("")}
-        </ul>
-      </section>`,
-    )
-    .join("");
+        </ol>
+        <div class="unit-actions">
+          ${u.hasPractice && !u.locked && u.started ? `<button class="secondary small" data-unit="${ui}">${icon("puzzle")}Vadi sklop</button>` : ""}
+          ${u.hasPractice && !u.mastered ? `<button class="secondary small" data-placement="${ui}">${icon("target")}${u.locked ? "Odkleni s preizkusom znanja" : "Preizkus znanja"}</button>` : ""}
+        </div>
+      </section>`;
+      })
+      .join("");  if (!maybeTour.done) {
+    maybeTour.done = true;
+    maybeTour();
+  }
 }
 
 $("#path-select").addEventListener("change", (e) => loadPath(e.target.value));
@@ -683,20 +734,26 @@ async function openTopic(topicId) {
   const hasPractice = (await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(t.path)}`)).units
     .flatMap((u) => u.topics)
     .find((x) => x.id === t.id);
+  const canPractice = !!hasPractice?.practice;
   $("#topic-content").innerHTML = `
-    <p class="muted">${escapeHtml(t.pathLabel)} · ${escapeHtml(t.unit)}</p>
-    <h1>${escapeHtml(t.name)}</h1>
-    <p><b>Cilji:</b> ${escapeHtml(t.goals)}</p>
-    <div class="actions">
-      ${hasPractice?.practice ? `<button class="primary" id="t-practice">✏️ Vadi naloge</button>` : ""}
-      <button id="t-learn">💬 Uči se s STEMMind</button>
-      ${hasPractice?.status === "mastered" ? "" : `<button id="t-done" class="small">Označi kot osvojeno</button>`}
+    <div class="card topic-head">
+      <span class="eyebrow">${escapeHtml(t.pathLabel)} · ${escapeHtml(t.unit)}</span>
+      <h1>${escapeHtml(t.name)}</h1>
+      <p class="goals">${icon("target")}<span>${escapeHtml(t.goals)}</span></p>
+      <div class="actions">
+        ${canPractice ? `<button class="primary big" id="t-practice">${icon("pencil")}Vadi naloge</button>` : ""}
+        <button class="${canPractice ? "secondary" : "primary big"}" id="t-learn">${icon("message-circle")}Razloži mi z inštruktorjem</button>
+      </div>
+      ${hasPractice?.status === "mastered" ? "" : `<button id="t-done" class="text-btn">To temo že znam</button>`}
     </div>
-    <div class="card explanation">${
-      t.explanation
-        ? renderRich(t.explanation)
-        : `<p class="muted">Za to temo še ni pripravljene razlage. Klikni »Uči se s STEMMind«: najprej te vpraša, kaj že znaš, nato razloži po korakih.</p>`
-    }</div>
+    <div class="card explanation">
+      <h2 class="with-icon">${icon("book-open")} Razlaga</h2>
+      ${
+        t.explanation
+          ? renderRich(t.explanation)
+          : `<p class="muted">Razlaga za to temo še ni pripravljena. Inštruktor te najprej vpraša, kaj že znaš, nato razloži po korakih.</p>`
+      }
+    </div>
     <div id="practice"></div>`;
   $("#t-practice")?.addEventListener("click", () => nextPractice());
   $("#t-learn").addEventListener("click", () => learnWithTutor(t));
@@ -723,12 +780,12 @@ async function nextPractice() {
   const box = $("#practice");
   if (out.example) {
     box.innerHTML = `<div class="card task example">
-      <div class="task-tag">📖 Rešen zgled</div>
+      <div class="task-top"><span class="eyebrow with-icon">${icon("book-open")} Rešen zgled</span></div>
       <div class="task-text">${renderRich(out.example.text)}</div>
       ${out.example.figure ? figureSvg(out.example.figure) : ""}
-      <div class="solution">${renderRich(out.example.solution)}</div>
-      <p class="muted">${renderRich("Namig za podobne naloge: " + out.example.hint)}</p>
-      <button class="primary" id="ex-next">Zdaj ti →</button>
+      <div class="solution"><span class="sol-label">Rešitev</span>${renderRich(out.example.solution)}</div>
+      <div class="fb hint">${icon("lightbulb")}<div>${renderRich(out.example.hint)}</div></div>
+      <div class="actions"><button class="primary big" id="ex-next">Zdaj ti${icon("arrow-right")}</button></div>
     </div>`;
     $("#ex-next").addEventListener("click", nextPractice);
   } else {
@@ -738,11 +795,11 @@ async function nextPractice() {
 }
 
 const SESSIONS = {
-  review: { mode: "review", title: "🔁 Ponavljanje", intro: "Mešane naloge iz tem, ki jih je čas ponoviti. Ponavljanje v razmikih (1, 3, 7, 21 dni) pomaga, da znanje ostane.", empty: "Trenutno ni ničesar za ponoviti. 👍" },
-  placement: { mode: "placement", title: "🎯 Preizkus znanja", intro: "Reši naloge brez namigov. Če jih rešiš vsaj 80 %, se sklop odklene in šteje kot osvojen." },
-  daily: { mode: "daily", title: "⚡ Današnji trening", intro: "Približno 15 minut: večinoma nova snov, vmes ponavljanje. Ko se ponavljanje nabere, je ponavljanja več.", empty: "Na tej poti še ni nalog za trening. Začni z novo snovjo." },
-  "unit-practice": { mode: "unit", title: "🧩 Vaja sklopa", intro: "Prepletene naloge iz vseh tem tega sklopa." },
-  "test-prep": { mode: "test", title: "📝 Priprava na test", intro: "Mešane naloge iz snovi za test. Bližje kot je test, težje so." },
+  review: { mode: "review", icon: "repeat", title: "Ponavljanje", intro: "Mešane naloge iz tem, ki jih je čas ponoviti, da znanje ostane.", empty: "Trenutno ni ničesar za ponoviti. 👍" },
+  placement: { mode: "placement", icon: "target", title: "Preizkus znanja", intro: "Brez namigov. Z vsaj 80 % se sklop odklene in šteje kot osvojen." },
+  daily: { mode: "daily", icon: "zap", title: "Današnji trening", intro: "Približno 15 minut: nova snov, vmes ponavljanje.", empty: "Na tej poti še ni nalog za trening. Začni z novo snovjo." },
+  "unit-practice": { mode: "unit", icon: "puzzle", title: "Vaja sklopa", intro: "Prepletene naloge iz vseh tem tega sklopa." },
+  "test-prep": { mode: "test", icon: "clipboard-check", title: "Priprava na test", intro: "Mešane naloge iz snovi za test. Bližje kot je test, težje so." },
 };
 const SESSION_DONE = { review: "Ponavljanje končano", daily: "Današnji trening opravljen", unit: "Vaja sklopa končana", test: "Današnji niz za test opravljen" };
 
@@ -757,7 +814,7 @@ async function startSession(kind, body = {}) {
     return;
   }
   showView("topic");
-  $("#topic-content").innerHTML = `<h1>${cfg.title}</h1><p class="muted">${cfg.intro}</p><div id="practice"></div>`;
+  $("#topic-content").innerHTML = `<div class="session-head"><span class="session-icon">${icon(cfg.icon)}</span><div><h1>${cfg.title}</h1><p class="muted">${cfg.intro}</p></div></div><div id="practice"></div>`;
   if (out.finished) {
     $("#practice").innerHTML = out.empty ? `<p>${cfg.empty || "Ni nalog."}</p>` : sessionDoneCard(cfg.mode, out);
     return;
@@ -766,32 +823,95 @@ async function startSession(kind, body = {}) {
 }
 
 function sessionDoneCard(mode, n) {
-  return `<div class="card result"><h2>${SESSION_DONE[mode] || "Končano"} 👏</h2>
-    <p>Pravilno v prvem poskusu: ${n.correct}/${n.total}${n.xp ? ` · +${n.xp.gained} XP` : ""}</p>
-    <button class="primary" id="fb-back">Na učno pot</button></div>`;
+  return `<div class="card result celebrate"><div class="result-icon">${icon("trophy")}</div><h2>${SESSION_DONE[mode] || "Končano"}!</h2>
+    <p>Pravilno v prvem poskusu: <b>${n.correct} od ${n.total}</b>${n.xp ? ` · +${n.xp.gained} XP` : ""}</p>
+    <button class="primary big" id="fb-back">Na učno pot</button></div>`;
 }
 
+// Slike pri nalogah: graf premice in številska premica. Barve so enake v svetlem
+// in temnem načinu (risba je na belem »listu«).
+let figSeq = 0;
 function figureSvg(f) {
-  if (f.type !== "line") return "";
-  const S = 24, R = 6, W = (2 * R + 1) * S;
-  const X = (x) => (x + R) * S + S / 2, Y = (y) => (R - y) * S + S / 2;
-  let g = "";
-  for (let i = -R; i <= R; i++) {
-    g += `<line x1="${X(i)}" y1="${Y(-R)}" x2="${X(i)}" y2="${Y(R)}" class="grid"/><line x1="${X(-R)}" y1="${Y(i)}" x2="${X(R)}" y2="${Y(i)}" class="grid"/>`;
-  }
-  const y1 = f.k * -R + f.n, y2 = f.k * R + f.n;
-  return `<svg class="figure" viewBox="0 0 ${W} ${W}" role="img" aria-label="Graf premice">
-    ${g}<line x1="${X(-R)}" y1="${Y(0)}" x2="${X(R)}" y2="${Y(0)}" class="axis"/><line x1="${X(0)}" y1="${Y(-R)}" x2="${X(0)}" y2="${Y(R)}" class="axis"/>
-    <text x="${X(R) - 4}" y="${Y(0) - 6}" class="lbl">x</text><text x="${X(0) + 6}" y="${Y(R) + 10}" class="lbl">y</text>
-    <text x="${X(1) - 3}" y="${Y(0) + 16}" class="lbl">1</text><text x="${X(0) - 14}" y="${Y(1) + 4}" class="lbl">1</text>
-    <clipPath id="clip"><rect x="${X(-R)}" y="${Y(R)}" width="${2 * R * S}" height="${2 * R * S}"/></clipPath>
-    <line clip-path="url(#clip)" x1="${X(-R)}" y1="${Y(y1)}" x2="${X(R)}" y2="${Y(y2)}" class="plot"/></svg>`;
+  if (f.type === "line") return lineFigure(f);
+  if (f.type === "numberline") return numberLineFigure(f);
+  return "";
 }
+
+function lineFigure(f) {
+  const id = `fig${++figSeq}`;
+  const R = 6, S = 28, P = 22; // polmer mreže, velikost enote, rob
+  const W = 2 * R * S + 2 * P;
+  const X = (x) => P + (x + R) * S, Y = (y) => P + (R - y) * S;
+  let g = "", nums = "";
+  for (let i = -R; i <= R; i++) {
+    g += `<line x1="${X(i)}" y1="${Y(-R)}" x2="${X(i)}" y2="${Y(R)}"/><line x1="${X(-R)}" y1="${Y(i)}" x2="${X(R)}" y2="${Y(i)}"/>`;
+    if (i && Math.abs(i) < R) {
+      nums += `<text x="${X(i)}" y="${Y(0) + 17}" text-anchor="middle">${i < 0 ? "−" + -i : i}</text>`;
+      nums += `<text x="${X(0) - 7}" y="${Y(i) + 4}" text-anchor="end">${i < 0 ? "−" + -i : i}</text>`;
+    }
+  }
+  const f0 = (x) => f.k * x + f.n;
+  // Do tri točke s celimi koordinatami blizu izhodišča; dotik pokaže koordinate.
+  const pts = [];
+  for (let x = -R + 1; x < R; x++) if (Math.abs(f0(x)) < R) pts.push(x);
+  pts.sort((a, b) => Math.abs(a) + Math.abs(f0(a)) - (Math.abs(b) + Math.abs(f0(b))));
+  const shown = pts.slice(0, 3).sort((a, b) => a - b);
+  const ptsSvg = shown
+    .map((x) => {
+      const y = f0(x);
+      const right = X(x) < W - 90;
+      return `<g class="fig-pt" tabindex="0" role="button" aria-label="Točka (${x}, ${y})">
+        <circle cx="${X(x)}" cy="${Y(y)}" r="14" class="hit"/><circle cx="${X(x)}" cy="${Y(y)}" r="6.5" class="dot"/>
+        <text x="${X(x) + (right ? 12 : -12)}" y="${Y(y) - 10}" text-anchor="${right ? "start" : "end"}" class="coord">(${x}, ${y})</text></g>`;
+    })
+    .join("");
+  return `<figure class="fig"><svg viewBox="0 0 ${W} ${W}" role="img" aria-label="Graf premice v koordinatnem sistemu">
+    <defs><marker id="${id}a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="arrow"/></marker>
+      <clipPath id="${id}c"><rect x="${X(-R)}" y="${Y(R)}" width="${2 * R * S}" height="${2 * R * S}"/></clipPath></defs>
+    <rect x="0" y="0" width="${W}" height="${W}" rx="14" class="paper"/>
+    <g class="grid">${g}</g>
+    <line x1="${X(-R)}" y1="${Y(0)}" x2="${X(R) + 12}" y2="${Y(0)}" class="axis" marker-end="url(#${id}a)"/>
+    <line x1="${X(0)}" y1="${Y(-R)}" x2="${X(0)}" y2="${Y(R) - 12}" class="axis" marker-end="url(#${id}a)"/>
+    <g class="nums">${nums}<text x="${X(0) - 7}" y="${Y(0) + 17}" text-anchor="end">0</text></g>
+    <text x="${X(R) + 6}" y="${Y(0) - 10}" class="axis-name">x</text><text x="${X(0) + 10}" y="${Y(R) - 4}" class="axis-name">y</text>
+    <line clip-path="url(#${id}c)" x1="${X(-R - 1)}" y1="${Y(f0(-R - 1))}" x2="${X(R + 1)}" y2="${Y(f0(R + 1))}" class="plot"/>
+    ${ptsSvg}</svg>
+    <figcaption>${icon("info")} Tapni oranžno točko, da vidiš njene koordinate.</figcaption></figure>`;
+}
+
+function numberLineFigure(f) {
+  const id = `fig${++figSeq}`;
+  const S = 40, P = 26, from = f.x0 - 5, to = f.x0 + 5;
+  const W = (to - from) * S + 2 * P, H = 84, Y = 40;
+  const X = (x) => P + (x - from) * S;
+  let ticks = "";
+  for (let x = from; x <= to; x++) {
+    ticks += `<line x1="${X(x)}" y1="${Y - 7}" x2="${X(x)}" y2="${Y + 7}" class="tick"/><text x="${X(x)}" y="${Y + 28}" text-anchor="middle" class="${x === f.x0 ? "strong" : ""}">${x < 0 ? "−" + -x : x}</text>`;
+  }
+  const end = f.dir < 0 ? P - 8 : W - P + 8;
+  return `<figure class="fig wide"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Številska premica z označeno rešitvijo">
+    <defs><marker id="${id}a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="arrow"/></marker>
+      <marker id="${id}b" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ray-arrow"/></marker></defs>
+    <rect x="0" y="0" width="${W}" height="${H}" rx="14" class="paper"/>
+    <line x1="${P - 14}" y1="${Y}" x2="${W - P + 14}" y2="${Y}" class="axis" marker-end="url(#${id}a)"/>
+    ${ticks}
+    <line x1="${X(f.x0)}" y1="${Y}" x2="${end}" y2="${Y}" class="ray" marker-end="url(#${id}b)"/>
+    <circle cx="${X(f.x0)}" cy="${Y}" r="8" class="${f.closed ? "closed" : "open"}"/></svg></figure>`;
+}
+
+// Dotik točke na grafu pokaže ali skrije njene koordinate.
+document.addEventListener("click", (e) => e.target.closest(".fig-pt")?.classList.toggle("show"));
+document.addEventListener("keydown", (e) => {
+  if ((e.key === "Enter" || e.key === " ") && e.target.closest?.(".fig-pt")) {
+    e.preventDefault();
+    e.target.closest(".fig-pt").classList.toggle("show");
+  }
+});
 
 function renderTask(task, ctx) {
   const box = $("#practice");
-  const stars = ctx.mode !== "placement" && task.level ? `<span class="lvl" title="Težavnost">${"★".repeat(task.level)}${"☆".repeat(3 - task.level)}</span>` : "";
-  const counter = ctx.total ? `<span class="muted">${ctx.index}/${ctx.total}</span>` : "";
+  const stars = ctx.mode !== "placement" && task.level ? diffBadge(task.level) : "";
+  const counter = ctx.total ? `<span class="count">${ctx.index} / ${ctx.total}</span>` : "";
   let input;
   if (task.answerType === "choice") {
     input = `<div class="choices">${task.options
@@ -801,10 +921,11 @@ function renderTask(task, ctx) {
     const ph =
       task.inputHint ||
       (task.answerType === "coefficients" ? "npr. 2, 1, 2" : task.unit ? `število in enota, npr. 12,5 ${task.unit}` : "vpiši rezultat");
-    input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn" title="Vnos z dotikom (tipke ali pisanje s prstom)" aria-label="Vnos z dotikom">✍️</button><button class="primary">Preveri</button></form>`;
+    input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn secondary" title="Vnos s prstom ali miško: tipke ali pisanje">${icon("pencil")}<span>Piši</span></button><button class="primary">Preveri</button></form>`;
   }
   box.innerHTML = `<div class="card task">
-    <div class="task-tag">${task.topicName ? escapeHtml(task.topicName) + " · " : ""}${stars} ${counter}</div>
+    <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${counter}</div>
+    ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
     ${task.figure ? figureSvg(task.figure) : ""}
     ${input}
@@ -832,35 +953,36 @@ function renderTask(task, ctx) {
 async function checkTask(task, ctx, value) {
   const r = await api(`/api/students/${state.student.id}/tasks/${task.id}/answer`, { method: "POST", body: { answer: value } });
   const fb = $("#feedback");
-  const next = (label = "Naslednja naloga →") => `<button class="primary" id="fb-next">${label}</button>`;
+  const next = (label = "Naslednja naloga") => `<div class="actions"><button class="primary big" id="fb-next">${label}${icon("arrow-right")}</button></div>`;
   let html = "";
   if (r.retry) {
     html = `<div class="fb info">${escapeHtml(r.message)}</div>`;
   } else if (ctx.mode === "placement") {
-    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${r.correct ? "✓ Pravilno" : "✗ Ni pravilno"}</div>${r.message ? `<div class="fb info">${escapeHtml(r.message)}</div>` : ""}`;
+    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? "Pravilno" : "Ni pravilno"}</span></div>${r.message ? `<div class="fb info">${icon("info")}<span>${escapeHtml(r.message)}</span></div>` : ""}`;
     if (r.placement) {
       const p = r.placement;
-      html += `<div class="card result"><h2>${p.passed ? "🎉 Sklop je odklenjen in osvojen!" : "Še ne čisto."}</h2>
+      html += `<div class="card result ${p.passed ? "celebrate" : ""}">${p.passed ? `<div class="result-icon">${icon("award")}</div>` : ""}<h2>${p.passed ? "Sklop je odklenjen in osvojen!" : "Še ne čisto."}</h2>
         <p>Pravilno: ${p.correct}/${p.total}.${p.passed ? ` +${p.xp.gained} XP` : " Sklop je odklenjen za učenje; začni pri prvi temi."}</p>
-        <button class="primary" id="fb-back">Na učno pot</button></div>`;
+        <button class="primary big" id="fb-back">Na učno pot</button></div>`;
     } else html += next();
   } else if (r.correct) {
-    html = `<div class="fb ok">✓ Pravilno! +${r.xp.gained} XP${r.levelUp ? ` · ⬆️ težavnost ${"★".repeat(r.levelUp)}` : ""}</div>
-      ${r.mastered ? `<div class="fb mastered">🏆 Tema je osvojena! Čez 1 dan te povabim k ponovitvi.</div>` : ""}
-      <div class="solution">${renderRich(r.solution)}</div>
-      ${r.selfExplain ? `<div class="fb info">🤔 ${escapeHtml(r.selfExplain)}</div>` : ""}`;
+    html = `<div class="fb ok pop">${icon("circle-check")}<span><b>Pravilno!</b>${r.levelUp ? " Naslednje naloge bodo malo težje." : ""}</span><span class="xp-gain">+${r.xp.gained} XP</span></div>
+      ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>Tema je osvojena! Jutri te povabim k ponovitvi.</span></div>` : ""}
+      <div class="solution"><span class="sol-label">Rešitev</span>${renderRich(r.solution)}</div>
+      ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}`;
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next();
     refreshXp();
   } else {
-    html = `<div class="fb bad">${escapeHtml(r.message)}</div>
-      ${r.levelDown ? `<div class="muted">Težavnost sem znižal, da utrdiš osnove.</div>` : ""}
-      ${r.hint ? `<div class="fb hint">💡 ${renderRich(r.hint)}</div>` : ""}`;
+    html = `<div class="fb bad shake">${icon("circle-x")}<span>${escapeHtml(r.message)}</span></div>
+      ${r.levelDown ? `<div class="muted">Naslednje naloge bodo malo lažje, da utrdiš osnove.</div>` : ""}
+      ${r.hint ? `<div class="fb hint">${icon("lightbulb")}<div><b>Namig:</b> ${renderRich(r.hint)}</div></div>` : ""}`;
     if (r.solution) {
-      html += `<div class="solution"><b>Rešen zgled:</b> ${renderRich(r.solution)}</div>`;
-      html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" ? "Poskusi podobno nalogo →" : "Naslednja naloga →");
+      html += `<div class="solution"><span class="sol-label">Rešen zgled</span>${renderRich(r.solution)}</div>`;
+      html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" ? "Poskusi podobno nalogo" : "Naslednja naloga");
     } else {
-      html += `<div class="actions"><button id="fb-retry" class="primary">Poskusi znova (še ${r.attemptsLeft})</button>
-        <button id="fb-help">💬 Vprašaj STEMMind</button></div>`;
+      html += `<div class="actions"><button id="fb-retry" class="primary big">Poskusi znova</button>
+        <button id="fb-help" class="secondary">${icon("message-circle")}Vprašaj inštruktorja</button></div>
+        <p class="muted small-note">Še ${r.attemptsLeft} ${r.attemptsLeft === 1 ? "poskus" : "poskusa"}, nato pokažem rešen zgled.</p>`;
     }
   }
   fb.innerHTML = html;
@@ -898,6 +1020,65 @@ async function loadUsage() {
     .map((s) => `<tr><td>${escapeHtml(s.name)}</td><td>${s.calls}</td><td>${s.input_tokens} / ${s.output_tokens} / ${s.cache_read_tokens}</td><td>${s.cost_usd.toFixed(3)} $</td></tr>`)
     .join("")}</tbody></table>`;
 }
+
+// ---------- uvodni ogled ----------
+
+const TOUR = [
+  { sel: "#xp-card", title: "Današnji trening", text: "Vsak dan približno 15 minut. Aplikacija sama zmeša novo snov in ponavljanje." },
+  { sel: "#path-content .unit", title: "Učna pot", text: "Teme si sledijo po učnem načrtu. Naslednji sklop se odklene, ko osvojiš prejšnjega. Tapni temo, da začneš." },
+  { sel: "#modebar", title: "Načini učenja", text: "Tu kadar koli preklopiš med novo snovjo, ponavljanjem in pripravo na test. Napredek se ohrani." },
+  { sel: '.tab[data-view="chat"]', title: "Inštruktor", text: "Ko se zatakneš, vprašaj inštruktorja. Vodi te po korakih, rezultata pa ti ne pove kar tako." },
+];
+const TOUR_KEY = "stemmind.tour";
+
+function startTour() {
+  const box = $("#tour");
+  let i = 0;
+  const show = () => {
+    const step = TOUR[i];
+    const target = document.querySelector(step.sel);
+    if (!target) return next();
+    target.scrollIntoView({ block: "nearest" });
+    const r = target.getBoundingClientRect();
+    const pad = 6;
+    Object.assign(box.querySelector(".tour-spot").style, {
+      left: `${r.left - pad}px`,
+      top: `${r.top - pad}px`,
+      width: `${r.width + 2 * pad}px`,
+      height: `${Math.min(r.height, innerHeight * 0.5) + 2 * pad}px`,
+    });
+    const card = box.querySelector(".tour-card");
+    const below = r.top + Math.min(r.height, innerHeight * 0.5) / 2 < innerHeight / 2;
+    card.style.top = below ? `${Math.min(r.top + Math.min(r.height, innerHeight * 0.5) + 16, innerHeight - 220)}px` : "auto";
+    card.style.bottom = below ? "auto" : `${Math.max(innerHeight - r.top + 16, 16)}px`;
+    box.querySelector(".tour-step").textContent = `${i + 1} / ${TOUR.length}`;
+    box.querySelector("#tour-title").textContent = step.title;
+    box.querySelector(".tour-text").textContent = step.text;
+    box.querySelector('[data-tour="next"]').textContent = i === TOUR.length - 1 ? "Začniva" : "Naprej";
+  };
+  const end = () => {
+    box.hidden = true;
+    try {
+      localStorage.setItem(TOUR_KEY, "done");
+    } catch {}
+  };
+  const next = () => (++i >= TOUR.length ? end() : show());
+  box.querySelector('[data-tour="next"]').onclick = next;
+  box.querySelector('[data-tour="skip"]').onclick = end;
+  box.hidden = false;
+  show();
+}
+function maybeTour() {
+  let seen = null;
+  try {
+    seen = localStorage.getItem(TOUR_KEY);
+  } catch {}
+  if (!seen) setTimeout(startTour, 400);
+}
+$("#tour-again").addEventListener("click", () => {
+  showView("path");
+  setTimeout(startTour, 500);
+});
 
 // Za samodejne preizkuse v brskalniku.
 window.stemmind = { openTopic, showView };
