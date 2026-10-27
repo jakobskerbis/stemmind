@@ -1,0 +1,66 @@
+/* Lige, razredi in skupine prijateljev */
+.tier-0 { --tier: #c27c45; } /* bronasta */
+.tier-1 { --tier: #8d99ae; } /* srebrna */
+.tier-2 { --tier: #f5a524; } /* zlata */
+.tier-3 { --tier: #3b82f6; } /* safirna */
+.tier-4 { --tier: #e5484d; } /* rubinasta */
+.tier-5 { --tier: #16a05a; } /* smaragdna */
+.tier-6 { --tier: #7c6cff; } /* diamantna */
+
+.tier-badge { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: color-mix(in srgb, var(--tier) 18%, transparent); color: var(--tier); flex: none; }
+.tier-badge svg.i { width: 16px; height: 16px; }
+.tier-badge.big { width: 64px; height: 64px; background: rgba(255, 255, 255, 0.22); color: #fff; }
+.tier-badge.big svg.i { width: 34px; height: 34px; }
+
+.league-hero { display: flex; gap: 16px; align-items: center; color: #fff; border: 0;
+  background: linear-gradient(135deg, var(--tier), color-mix(in srgb, var(--tier) 55%, var(--accent-grad))); }
+.league-hero h2 { margin: 0 0 4px; font-size: 1.3rem; }
+.league-hero .nick { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.league-hero .nick svg.i { width: 16px; height: 16px; }
+.league-hero .last { opacity: 0.9; font-size: 0.92rem; margin-top: 4px; }
+.league-hero button.ghost { color: #fff; background: rgba(255, 255, 255, 0.16); }
+.league-hero button.ghost:hover { background: rgba(255, 255, 255, 0.28); color: #fff; }
+
+.h-icon { display: flex; align-items: center; gap: 8px; }
+.h-icon svg.i { color: var(--accent); width: 20px; height: 20px; }
+.league-rule { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.league-rule svg.i { width: 15px; height: 15px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot.up { background: var(--ok); }
+.dot.down { background: var(--danger); }
+
+.league-board { list-style: none; padding: 0; margin: 8px 0 0; }
+.league-board li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: var(--radius-sm); border-bottom: 0; margin-bottom: 4px; background: var(--surface-2); }
+.league-board li .who { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.league-board li b { white-space: nowrap; }
+.league-board li .xp-unit { color: var(--muted); font-size: 0.8rem; }
+.league-board .rank { display: inline-grid; place-items: center; min-width: 26px; height: 26px; margin-right: 8px; border-radius: 50%; background: var(--surface); font-size: 0.85rem; color: var(--muted); font-weight: 800; }
+.league-board li:nth-child(1) .rank { background: var(--gold); color: #fff; }
+.league-board li.zone-up { background: var(--ok-bg); }
+.league-board li.zone-down { background: var(--danger-bg); }
+.league-board li.me { outline: 2px solid var(--accent); color: var(--text); }
+.league-board .you { font-size: 0.75rem; font-weight: 800; color: var(--accent-text); background: var(--accent); border-radius: 999px; padding: 1px 8px; margin-left: 4px; }
+.zone-mark { display: inline-flex; }
+.zone-mark svg.i { width: 16px; height: 16px; }
+.zone-up .zone-mark { color: var(--ok); transform: rotate(-90deg); }
+.zone-down .zone-mark { color: var(--danger); transform: rotate(-90deg); }
+
+.tier-row { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 14px; font-size: 0.85rem; color: var(--muted); }
+.tier-row > span { display: inline-flex; align-items: center; gap: 6px; opacity: 0.55; }
+.tier-row > span.done { opacity: 0.8; }
+.tier-row > span.cur { opacity: 1; color: var(--text); font-weight: 800; }
+
+.league-empty { display: flex; gap: 12px; align-items: center; background: var(--accent-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
+.league-empty svg.i { color: var(--accent); width: 28px; height: 28px; flex: none; }
+.league-empty p { margin: 0; }
+
+.group-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.group-head h2 { margin: 0; }
+.code-chip { font-family: ui-monospace, monospace; font-weight: 800; letter-spacing: 0.08em; background: var(--accent-soft); color: var(--accent); padding: 4px 10px; border-radius: 999px; }
+.code { font-family: ui-monospace, monospace; letter-spacing: 0.08em; }
+
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+.row input { flex: 1; min-width: 160px; padding: 10px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--bg); }
+.row input:focus { border-color: var(--accent); outline: none; }
+.row button, button.ghost.small, button.secondary { display: inline-flex; align-items: center; gap: 6px; }
+.nick-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
