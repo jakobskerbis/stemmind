@@ -14,3 +14,17 @@ services:
         sync: false
       - key: STEMMIND_PASSWORD
         sync: false
+      - key: STEMMIND_ACCOUNTS
+        value: "1"
+      - key: STEMMIND_BASE_URL
+        sync: false
+      - key: STEMMIND_ADMIN_EMAILS
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM
+        sync: false

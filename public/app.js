@@ -1,5 +1,6 @@
 // STEMMind – odjemalec (brez ogrodja).
 import { attachPad, closePad } from "./pad.js";
+import { initAccount, accountsOn, openAddChild } from "./account.js";
 
 const $ = (sel) => document.querySelector(sel);
 const api = async (url, opts = {}) => {
@@ -76,6 +77,7 @@ document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () 
 async function loadStudents(selectId) {
   state.students = await api("/api/students");
   if (!state.students.length) {
+    if (accountsOn()) return openAddChild(); // otroka doda starš s soglasjem
     const name = prompt("Kako ti je ime?", "") || "Učenec";
     state.students = [await api("/api/students", { method: "POST", body: { name } })];
   }
@@ -905,6 +907,10 @@ window.stemmind = { openTopic, showView };
 (async () => {
   const cfg = await api("/api/config");
   $("#mock-banner").hidden = !cfg.mock;
-  await loadStudents();
-  showView("path");
+  // Starševski računi (account.js): prijava, potrditev, prvi otrok.
+  const start = async (o) => {
+    await loadStudents();
+    if (!o?.keepView) showView("path");
+  };
+  if (await initAccount({ onReady: start })) await start();
 })();

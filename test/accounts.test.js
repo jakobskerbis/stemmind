@@ -1,0 +1,313 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { openDb } from "../server/db.js";
+import { createApp } from "../server/app.js";
+import { signWebhook, verifyWebhook, formEncode } from "../server/accounts/stripe.js";
+import { accessFor, isPremiumChild } from "../server/accounts/plans.js";
+import { weekKey, isSendTime } from "../server/accounts/weekly.js";
+
+const SECRET = "whsec_test";
+const YEAR = new Date().getFullYear();
+
+// Lažni Stripe + Resend: zapomni si klice in vrne smiselne odgovore.
+function fakeFetch(calls) {
+  let n = 0;
+  return async (url, init = {}) => {
+    const body = init.body ? (init.headers["Content-Type"]?.includes("json") ? JSON.parse(init.body) : Object.fromEntries(new URLSearchParams(init.body))) : null;
+    const u = new URL(url);
+    calls.push({ method: init.method, path: u.pathname, query: Object.fromEntries(u.searchParams), body, host: u.host });
+    const ok = (data) => ({ ok: true, status: 200, json: async () => data });
+    if (u.host === "api.resend.com") return ok({ id: "email_" + ++n });
+    const p = u.pathname.replace("/v1", "");
+    if (p === "/customers") return ok({ id: "cus_" + ++n });
+    if (p === "/prices" && init.method === "GET") return ok({ data: [] });
+    if (p === "/products") return ok({ id: "prod_1" });
+    if (p === "/prices") return ok({ id: "price_" + body.lookup_key });
+    if (p === "/checkout/sessions") return ok({ id: "cs_1", url: "https://checkout.stripe.test/cs_1" });
+    if (p === "/billing_portal/configurations") return ok({ id: "bpc_1" });
+    if (p === "/billing_portal/sessions") return ok({ url: "https://billing.stripe.test/p" });
+    if (/\/balance_transactions$/.test(p)) return ok({ id: "cbtxn_1" });
+    if (p.startsWith("/subscriptions")) return ok({ data: [] });
+    return { ok: false, status: 404, json: async () => ({ error: { message: "ni" } }) };
+  };
+}
+
+async function withServer(fn, extra = {}) {
+  const store = openDb(":memory:");
+  const calls = [];
+  const mails = [];
+  const app = createApp(store, {
+    accounts: true,
+    scheduler: false,
+    stripeKey: "sk_test_x",
+    resendKey: "re_x",
+    webhookSecret: SECRET,
+    fetchFn: fakeFetch(calls),
+    log: { error() {} },
+    streamFn: async ({ onText }) => {
+      onText("ok");
+      return { text: 'ok\n<<META subject=MAT topic="-" error=0 mode=A flag=none>>', stopReason: "end_turn" };
+    },
+    ...extra,
+  });
+  const server = app.listen(0);
+  const base = `http://127.0.0.1:${server.address().port}`;
+  // Odjemalec s piškotki (en na starša).
+  const client = () => {
+    let cookie = "";
+    return async (path, opts = {}) => {
+      const res = await fetch(base + path, {
+        method: opts.method || "GET",
+        redirect: "manual",
+        headers: { "Content-Type": "application/json", cookie, ...(opts.headers || {}) },
+        body: opts.raw ?? (opts.body ? JSON.stringify(opts.body) : undefined),
+      });
+      const set = res.headers.get("set-cookie");
+      if (set) cookie = set.split(";")[0];
+      const type = res.headers.get("content-type") || "";
+      return { status: res.status, headers: res.headers, body: type.includes("json") ? await res.json() : await res.text() };
+    };
+  };
+  try {
+    await fn({ client, store, calls, mails, base });
+  } finally {
+    server.close();
+  }
+}
+
+const verifyLink = (calls) => {
+  const mail = calls.filter((c) => c.host === "api.resend.com").at(-1);
+  return /\/api\/auth\/verify\?token=[\w-]+/.exec(mail.body.text)[0];
+};
+
+async function registerVerified(call, calls, email, extra = {}) {
+  const r = await call("/api/auth/register", { method: "POST", body: { email, password: "geslo1234", accept_privacy: true, ...extra } });
+  assert.equal(r.status, 201, JSON.stringify(r.body));
+  const v = await call(verifyLink(calls));
+  assert.equal(v.status, 302);
+  return r.body.parent;
+}
+
+test("register, verify, consent and ownership", async () => {
+  await withServer(async ({ client, calls }) => {
+    const a = client();
+    assert.equal((await a("/api/students")).status, 401);
+    assert.equal((await a("/api/auth/register", { method: "POST", body: { email: "x@y.si", password: "geslo1234" } })).status, 400);
+
+    const reg = await a("/api/auth/register", { method: "POST", body: { email: "Ana@Primer.si", password: "geslo1234", accept_privacy: true } });
+    assert.equal(reg.status, 201);
+    assert.equal(reg.body.parent.email, "ana@primer.si");
+    assert.equal(reg.body.dev_verify_url, undefined); // Resend je nastavljen
+
+    // Pred potrditvijo e-naslova otroka ni mogoče dodati.
+    const early = await a("/api/students", { method: "POST", body: { name: "Miha", birth_year: YEAR - 12, consent: true } });
+    assert.equal(early.status, 403);
+    await a(verifyLink(calls));
+
+    const noConsent = await a("/api/students", { method: "POST", body: { name: "Miha", birth_year: YEAR - 12 } });
+    assert.equal(noConsent.status, 400);
+    const kid = await a("/api/students", { method: "POST", body: { name: "Miha", birth_year: YEAR - 12, consent: true } });
+    assert.equal(kid.status, 201);
+
+    const acc = (await a("/api/account")).body;
+    assert.equal(acc.access.tier, "trial");
+    assert.equal(acc.children[0].premium, true);
+
+    // Drug starš ne vidi in ne more spreminjati tujega otroka.
+    const b = client();
+    await registerVerified(b, calls, "bor@primer.si");
+    assert.deepEqual((await b("/api/students")).body, []);
+    assert.equal((await b(`/api/students/${kid.body.id}`)).status, 404);
+    assert.equal((await b(`/api/students/${kid.body.id}`, { method: "DELETE" })).status, 404);
+    const conv = (await a(`/api/students/${kid.body.id}/conversations`, { method: "POST" })).body;
+    assert.equal((await b(`/api/conversations/${conv.id}`)).status, 404);
+    assert.equal((await a(`/api/conversations/${conv.id}`)).status, 200);
+    assert.equal((await b("/api/usage")).status, 403);
+
+    // Odjava in ponovna prijava.
+    await a("/api/auth/logout", { method: "POST" });
+    assert.equal((await a("/api/students")).status, 401);
+    assert.equal((await a("/api/auth/login", { method: "POST", body: { email: "ana@primer.si", password: "napacno12" } })).status, 401);
+    assert.equal((await a("/api/auth/login", { method: "POST", body: { email: "ANA@primer.si", password: "geslo1234" } })).status, 200);
+    assert.equal((await a("/api/students")).body.length, 1);
+  });
+});
+
+test("free tier limits tutor questions; subscription via webhook lifts it", async () => {
+  process.env.STEMMIND_FREE_DAILY_QUESTIONS = "2";
+  try {
+    await withServer(async ({ client, calls, store }) => {
+      const a = client();
+      const parent = await registerVerified(a, calls, "cene@primer.si");
+      const kid = (await a("/api/students", { method: "POST", body: { name: "Lan", birth_year: YEAR - 10, consent: true } })).body;
+      // Preizkus je potekel.
+      store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z'").run();
+      const conv = (await a(`/api/students/${kid.id}/conversations`, { method: "POST" })).body;
+      const ask = (t) => a(`/api/conversations/${conv.id}/messages`, { method: "POST", body: { text: t } });
+      assert.equal((await ask("prvo")).status, 200);
+      assert.equal((await ask("drugo")).status, 200);
+      const blocked = await ask("tretje");
+      assert.equal(blocked.status, 429);
+      assert.equal(blocked.body.upgrade, true);
+
+      // Plačilo: checkout s pravilno ceno.
+      const co = await a("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "year" } });
+      assert.equal(co.body.url, "https://checkout.stripe.test/cs_1");
+      const session = calls.find((c) => c.path === "/v1/checkout/sessions");
+      assert.equal(session.body["line_items[0][price]"], "price_stemmind_1_year");
+      assert.equal(session.body.mode, "subscription");
+      assert.equal(session.body["subscription_data[trial_end]"], undefined); // preizkus je že potekel
+      assert.equal(calls.filter((c) => c.path === "/v1/prices" && c.method === "POST").length, 4);
+      const customer = store.db.prepare("SELECT stripe_customer_id FROM parents WHERE id = ?").get(parent.id).stripe_customer_id;
+
+      // Webhook z napačnim podpisom je zavrnjen.
+      const event = {
+        type: "customer.subscription.updated",
+        data: {
+          object: {
+            id: "sub_1",
+            customer,
+            status: "active",
+            cancel_at_period_end: false,
+            items: { data: [{ price: { id: "price_x", lookup_key: "stemmind_1_year" }, current_period_end: 1893456000 }] },
+          },
+        },
+      };
+      const raw = JSON.stringify(event);
+      const anon = client();
+      assert.equal((await anon("/api/stripe/webhook", { method: "POST", raw, headers: { "stripe-signature": signWebhook(raw, "wrong") } })).status, 400);
+      const okHook = await anon("/api/stripe/webhook", { method: "POST", raw, headers: { "stripe-signature": signWebhook(raw, SECRET) } });
+      assert.equal(okHook.status, 200);
+
+      const acc = (await a("/api/account")).body;
+      assert.equal(acc.access.tier, "paid");
+      assert.equal(acc.parent.subscription.plan, "stemmind_1_year");
+      assert.equal(acc.parent.subscription.period_end, "2030-01-01T00:00:00.000Z");
+      assert.equal((await ask("tretje")).status, 200);
+      assert.equal((await a("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month" } })).status, 409);
+
+      const portal = await a("/api/billing/portal", { method: "POST" });
+      assert.equal(portal.body.url, "https://billing.stripe.test/p");
+    });
+  } finally {
+    delete process.env.STEMMIND_FREE_DAILY_QUESTIONS;
+  }
+});
+
+test("checkout carries remaining app trial into Stripe", async () => {
+  await withServer(async ({ client, calls }) => {
+    const a = client();
+    await registerVerified(a, calls, "dani@primer.si");
+    await a("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month" } });
+    const session = calls.find((c) => c.path === "/v1/checkout/sessions");
+    assert.equal(session.body["line_items[0][price]"], "price_stemmind_2_month");
+    const days = (Number(session.body["subscription_data[trial_end]"]) * 1000 - Date.now()) / 86400000;
+    assert.ok(days > 6.9 && days <= 7, String(days));
+  });
+});
+
+test("referral: both parents get a free month after the first payment", async () => {
+  await withServer(async ({ client, calls, store }) => {
+    const a = client();
+    const ref = await registerVerified(a, calls, "eva@primer.si");
+    const b = client();
+    const reg = await b("/api/auth/register", { method: "POST", body: { email: "fran@primer.si", password: "geslo1234", accept_privacy: true, referral_code: ref.referral_code.toLowerCase() } });
+    assert.equal(reg.body.referred, true);
+    await b("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month" } });
+    const customer = store.db.prepare("SELECT stripe_customer_id FROM parents WHERE email = 'fran@primer.si'").get().stripe_customer_id;
+
+    const send = (status) => {
+      const raw = JSON.stringify({
+        type: "customer.subscription.updated",
+        data: { object: { id: "sub_9", customer, status, items: { data: [{ price: { lookup_key: "stemmind_2_month" }, current_period_end: 1893456000 }] } } },
+      });
+      return client()("/api/stripe/webhook", { method: "POST", raw, headers: { "stripe-signature": signWebhook(raw, SECRET) } });
+    };
+    await send("trialing");
+    assert.equal(calls.filter((c) => c.path.endsWith("/balance_transactions")).length, 0); // še ni plačal
+    await send("active");
+    await send("active"); // ponovljen dogodek ne nagradi dvakrat
+
+    const credits = calls.filter((c) => c.path.endsWith("/balance_transactions"));
+    assert.equal(credits.length, 1);
+    assert.equal(credits[0].body.amount, "-1449"); // povabljeni: dobropis v višini mesečne naročnine
+    const referrer = (await a("/api/account")).body;
+    assert.equal(referrer.referral.rewards, 1);
+    assert.equal(referrer.access.tier, "trial"); // še v preizkusu, mesec se doda kot bonus
+    const bonus = store.db.prepare("SELECT bonus_until FROM parents WHERE email = 'eva@primer.si'").get().bonus_until;
+    assert.ok(Date.parse(bonus) > Date.now() + 29 * 86400000);
+  });
+});
+
+test("weekly report, export and account deletion", async () => {
+  await withServer(async ({ client, calls, store }) => {
+    const a = client();
+    await registerVerified(a, calls, "gal@primer.si");
+    const kid = (await a("/api/students", { method: "POST", body: { name: "Zala", birth_year: YEAR - 13, consent: true } })).body;
+    store.db.prepare("INSERT INTO xp_events (student_id, amount, reason) VALUES (?, 40, 'test')").run(kid.id);
+
+    const preview = await a("/api/account/weekly-report/preview");
+    assert.match(preview.body, /Zala/);
+    assert.match(preview.body, /<b>40<\/b>/);
+    const sent = await a("/api/account/weekly-report/send", { method: "POST" });
+    assert.equal(sent.status, 200);
+    const mail = calls.filter((c) => c.host === "api.resend.com").at(-1);
+    assert.equal(mail.body.to[0], "gal@primer.si");
+    assert.match(mail.body.subject, /Zala/);
+
+    // Odjava od poročil prek povezave.
+    const unsub = /\/api\/account\/unsubscribe\?token=[\w-]+/.exec(mail.body.text)[0];
+    await client()(unsub);
+    assert.equal((await a("/api/account")).body.parent.weekly_email, false);
+
+    const consent = store.db.prepare("SELECT * FROM consents WHERE student_id = ?").get(kid.id);
+    assert.equal(consent.under_15, 1);
+    assert.equal(consent.parent_email, "gal@primer.si");
+
+    const exp = await a("/api/account/export");
+    assert.equal(exp.body.children[0].name, "Zala");
+    assert.equal(exp.body.parent.password_hash, undefined);
+
+    assert.equal((await a("/api/account", { method: "DELETE", body: { password: "narobe123" } })).status, 401);
+    assert.equal((await a("/api/account", { method: "DELETE", body: { password: "geslo1234" } })).status, 200);
+    assert.equal(store.db.prepare("SELECT COUNT(*) AS n FROM students").get().n, 0);
+    assert.equal(store.db.prepare("SELECT COUNT(*) AS n FROM consents").get().n, 0);
+    assert.equal((await a("/api/account")).status, 401);
+  });
+});
+
+test("weekly scheduler sends once per week", async () => {
+  const { mountAccounts } = await import("../server/accounts/index.js");
+  const express = (await import("express")).default;
+  const store = openDb(":memory:");
+  const calls = [];
+  const api = mountAccounts(express(), store, { accounts: true, scheduler: false, resendKey: "re_x", fetchFn: fakeFetch(calls), log: { error() {} } });
+  store.db.prepare(
+    "INSERT INTO parents (email, password_hash, privacy_version, unsubscribe_token, referral_code, email_verified_at) VALUES ('i@p.si', 'x', 'v', 't', 'C1', '2026-01-01')",
+  ).run();
+  const s = store.createStudent("Ivo");
+  store.db.prepare("UPDATE students SET parent_id = 1 WHERE id = ?").run(s.id);
+  assert.equal(await api.sendWeeklyAll(), 1);
+  assert.equal(await api.sendWeeklyAll(), 0);
+});
+
+test("helpers: webhook signature, form encoding, access, week key", () => {
+  const sig = signWebhook("{}", SECRET);
+  assert.ok(verifyWebhook("{}", sig, SECRET));
+  assert.ok(!verifyWebhook("{ }", sig, SECRET));
+  assert.ok(!verifyWebhook("{}", signWebhook("{}", SECRET, 1000), SECRET));
+  assert.equal(formEncode({ a: { b: 1 }, c: [{ d: 2 }], e: ["x"] }).toString(), "a%5Bb%5D=1&c%5B0%5D%5Bd%5D=2&e%5B0%5D=x");
+
+  const now = Date.parse("2026-10-27T12:00:00Z");
+  assert.equal(accessFor({ sub_status: "active", sub_seats: 2 }, now).tier, "paid");
+  assert.equal(accessFor({ sub_status: "canceled", trial_ends_at: "2026-10-30T00:00:00Z" }, now).tier, "trial");
+  assert.equal(accessFor({ bonus_until: "2026-11-30T00:00:00Z" }, now).tier, "bonus");
+  assert.equal(accessFor({}, now).tier, "free");
+  assert.ok(isPremiumChild({ seats: 1 }, [5, 3], 3));
+  assert.ok(!isPremiumChild({ seats: 1 }, [5, 3], 5));
+
+  assert.equal(weekKey(new Date("2026-10-27T12:00:00Z")), "2026-W44");
+  assert.equal(weekKey(new Date("2027-01-01T12:00:00Z")), "2026-W53");
+  assert.ok(isSendTime(new Date("2026-10-25T17:30:00Z"))); // nedelja 18:30 v Ljubljani
+  assert.ok(!isSendTime(new Date("2026-10-26T17:30:00Z")));
+});
