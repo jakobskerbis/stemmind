@@ -19,6 +19,7 @@ const isWin = process.platform === "win32";
 const say = (s = "") => console.log(s);
 const children = [];
 function stopAll(code = 0) {
+  stopping = true;
   for (const c of children) try { c.kill(); } catch {}
   process.exit(code);
 }
@@ -54,6 +55,30 @@ async function status() {
   } catch { return 0; }
 }
 
+let stopping = false;
+let log = null;
+
+function spawnServer() {
+  const server = spawn(process.execPath,
+    ["--env-file-if-exists=.env", "--disable-warning=ExperimentalWarning", "server/index.js"],
+    { cwd: root, stdio: ["ignore", "pipe", "pipe"] });
+  for (const stream of [server.stdout, server.stderr]) {
+    stream.on("data", (d) => { process.stdout.write(d); log?.write(`${new Date().toISOString().slice(11, 19)} ${d}`); });
+  }
+  children.push(server);
+  // Če se strežnik ustavi (npr. posodobitev ga je zaprla), ga zaženemo znova,
+  // da povezava za telefon ostane ista.
+  server.on("exit", async (code) => {
+    if (stopping) return;
+    say(`Strežnik se je ustavil (koda ${code}). Znova ga zaganjam čez 3 sekunde ...`);
+    await new Promise((r) => setTimeout(r, 3000));
+    if (stopping) return;
+    while (await status()) await new Promise((r) => setTimeout(r, 2000)); // počakaj, da se vrata sprostijo
+    spawnServer();
+  });
+  return server;
+}
+
 async function ensureServer() {
   const s = await status();
   if (s === 401) return; // že teče, z geslom
@@ -62,16 +87,9 @@ async function ensureServer() {
     return stopAll(1);
   }
   fs.mkdirSync(path.dirname(logFile), { recursive: true });
-  const log = fs.createWriteStream(logFile, { flags: "a" });
+  log = fs.createWriteStream(logFile, { flags: "a" });
   log.write(`\n=== zagon ${new Date().toISOString()} ===\n`);
-  const server = spawn(process.execPath,
-    ["--env-file-if-exists=.env", "--disable-warning=ExperimentalWarning", "server/index.js"],
-    { cwd: root, stdio: ["ignore", "pipe", "pipe"] });
-  for (const stream of [server.stdout, server.stderr]) {
-    stream.on("data", (d) => { process.stdout.write(d); log.write(`${new Date().toISOString().slice(11, 19)} ${d}`); });
-  }
-  children.push(server);
-  server.on("exit", (code) => { say(`Strežnik se je ustavil (koda ${code}).`); stopAll(1); });
+  spawnServer();
   for (let i = 0; i < 60; i++) {
     if (await status()) return;
     await new Promise((r) => setTimeout(r, 500));
