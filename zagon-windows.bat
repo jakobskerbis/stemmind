@@ -3,6 +3,13 @@ setlocal enabledelayedexpansion
 cd /d "%~dp0"
 title STEMMind
 
+rem Ce STEMMind ze tece, samo odpri brskalnik.
+curl -s -o nul -m 2 http://localhost:3000 >nul 2>nul
+if not errorlevel 1 (
+  start http://localhost:3000
+  exit /b 0
+)
+
 where node >nul 2>nul
 if errorlevel 1 (
   echo Node.js ni namescen. Namesti ga s https://nodejs.org ^(gumb LTS^) in nato znova dvakrat klikni to datoteko.
@@ -17,9 +24,14 @@ if not exist .env (
   echo Kljuc je shranjen v datoteko .env
 )
 
-if not exist node_modules (
+rem Knjiznice namesti ob prvem zagonu in po vsaki posodobitvi (ko se package.json spremeni).
+set NEED_INSTALL=0
+if not exist node_modules\.stemmind-package.json set NEED_INSTALL=1
+if exist node_modules\.stemmind-package.json fc /b package.json node_modules\.stemmind-package.json >nul 2>nul || set NEED_INSTALL=1
+if "!NEED_INSTALL!"=="1" (
   echo Namescam potrebne knjiznice, to traja minuto ...
-  call npm install --omit=dev
+  call npm install --omit=dev --no-audit --no-fund
+  copy /y package.json node_modules\.stemmind-package.json >nul
 )
 
 echo.
