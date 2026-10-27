@@ -57,8 +57,7 @@ function build() {
       </div>
       <div class="canvas-wrap"><canvas class="ink" aria-label="Površina za pisanje"></canvas></div>
       <div class="draw-foot">
-        <button type="button" class="primary" data-act="read">${icon("eye")}Preberi odgovor</button>
-        <span class="muted">Piši sproti, kot v zvezek. Končni odgovor napiši v zadnjo vrstico.</span>
+        <span class="muted">Piši sproti, kot v zvezek. Končni odgovor napiši v zadnjo vrstico, nato pritisni Preveri.</span>
       </div>
     </div>
   </aside>`);
@@ -89,7 +88,6 @@ function build() {
   pad.querySelector("[data-act=undo]").addEventListener("click", () => ink.undo());
   pad.querySelector("[data-act=clear]").addEventListener("click", () => ink.clear());
   pad.querySelector("[data-act=grow]").addEventListener("click", () => ink.grow());
-  pad.querySelector("[data-act=read]").addEventListener("click", readInk);
 
   // Prostor pod vsebino, da plošča na telefonu ne prekrije odgovora in povratne informacije.
   new ResizeObserver(() => {
@@ -132,7 +130,16 @@ function press(k, isUnit = false) {
 }
 
 function submit() {
-  if (!cur || !cur.input.value.trim()) return;
+  if (!cur) return;
+  const box = pad.querySelector(".read-result");
+  const drawing = pad.dataset.tab === "draw";
+  // V načinu Piši gumb Preveri najprej prebere zapis (učenec ga potrdi), nato odgovor preveri.
+  if (drawing && ink.hasInk() && (ink.changed || !cur.input.value.trim())) return readInk();
+  if (!cur.input.value.trim()) {
+    box.innerHTML = `<div class="fb info">${drawing ? "Najprej napiši odgovor na črte spodaj." : "Najprej vpiši odgovor."}</div>`;
+    return;
+  }
+  box.innerHTML = "";
   // Starejši iOS (pred 16) nima requestSubmit; takrat sprožimo dogodek submit sami.
   if (typeof cur.form.requestSubmit === "function") cur.form.requestSubmit();
   else cur.form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
@@ -146,13 +153,14 @@ async function readInk() {
     box.innerHTML = `<div class="fb info">Najprej nekaj napiši. 🙂</div>`;
     return;
   }
-  box.innerHTML = `<div class="fb info">Berem …</div>`;
+  box.innerHTML = `<div class="fb info">Berem zapis …</div>`;
   try {
     const r = await cur.readFn(image);
     if (!r.text) {
-      box.innerHTML = `<div class="fb info">${escapeHtml(r.message || "Zapisa nisem uspel prebrati.")}</div>`;
+      box.innerHTML = `<div class="fb info">${escapeHtml(r.message || "Zapisa nisem uspel prebrati. Poskusi pisati večje ali uporabi tipke.")}</div>`;
       return;
     }
+    ink.changed = false; // prebrano; Preveri zdaj odgovor pošlje
     box.innerHTML = `<div class="fb info"><span>Prebral sem: <b class="read-text"></b>. Je prav?</span></div>
       <div class="actions"><button type="button" class="primary" data-ok>Da, preveri</button><button type="button" data-fix>Popravi s tipkami</button></div>`;
     box.querySelector(".read-text").textContent = r.text;
@@ -236,7 +244,7 @@ function createInk(canvas) {
   let active = null;
   let penSeen = false;
   let extra = 0; // dodatna višina (»+ prostor«)
-  const api = { tool: "pen" };
+  const api = { tool: "pen", changed: false }; // changed: zapis se je spremenil po zadnjem branju
 
   const color = () => getComputedStyle(canvas).color || "#111";
 
@@ -293,6 +301,7 @@ function createInk(canvas) {
     } catch {}
     active = { id: e.pointerId, tool: e.button === 5 ? "eraser" : api.tool, pts: [pos(e)] };
     strokes.push(active);
+    api.changed = true;
     redraw();
     e.preventDefault();
   });
@@ -319,10 +328,12 @@ function createInk(canvas) {
 
   api.undo = () => {
     strokes.pop();
+    api.changed = true;
     redraw();
   };
   api.clear = (resetSize = false) => {
     strokes.length = 0;
+    api.changed = false;
     if (resetSize) extra = 0;
     if (resetSize && canvas.width) api.fit();
     else redraw();
