@@ -89,6 +89,9 @@ test("textbook API and PDF page", async () => {
     const lessonUrl = (id) => `${base}/api/students/${kid.id}/lesson?id=${id}`;
     const lesson = await (await fetch(lessonUrl("FIZ-OS-9/upor-in-ohmov-zakon"))).json();
     assert.equal(lesson.interactive, true, "brez računov je vse odklenjeno");
+    // Kartica teme brez vnaprej pripravljene razlage pokaže povzetek lekcije.
+    const topic = await (await fetch(`${base}/api/topic?id=FIZ-OS-9/upor-in-ohmov-zakon`)).json();
+    assert.match(topic.explanation || "", /### Bistvo/);
     assert.equal(lesson.demo.id, "ohm");
     assert.match(lesson.phet.url, /^https:\/\/phet\.colorado\.edu\/sims\/html\/ohms-law\//);
     assert.equal(lesson.next.id.startsWith("FIZ-OS-9/"), true);

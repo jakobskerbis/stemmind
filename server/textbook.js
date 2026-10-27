@@ -309,6 +309,20 @@ function snippet(lesson, words) {
   return (start ? "…" : "") + plain.slice(start, start + 140).trim() + "…";
 }
 
+// Razlaga teme iz lekcije, kadar vnaprej pripravljene razlage (explanations.json) ni:
+// »Zakaj se tega učimo« in »Povzetek« ter napotek na celotno lekcijo.
+export function lessonExplanation(topicId) {
+  const lesson = loadLesson(topicId);
+  if (!lesson) return null;
+  const pick = (re) => lesson.sections.find((s) => re.test(s.title))?.md?.trim();
+  const why = pick(/^zakaj/i);
+  const sum = pick(/^povzetek/i);
+  if (!why && !sum) return null;
+  return [why, sum ? `### Bistvo\n${sum}` : "", "*Celotna lekcija z rešenimi primeri in vprašanji je pod gumbom »Lekcija«.*"]
+    .filter(Boolean)
+    .join("\n\n");
+}
+
 // Kratek povzetek lekcije za sistemski prompt tutorja (če lekcija obstaja),
 // da tutor razlaga skladno z učbenikom.
 export function lessonSummaryForPrompt(topicId) {
