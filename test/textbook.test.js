@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
-import { getTopic } from "../server/curriculum.js";
+import { getTopic, listPaths, topicOrder } from "../server/curriculum.js";
 import { parseLesson, lessonView, searchTextbook, tocView, DEMOS, PHET, LESSONS_DIR, lessonSummaryForPrompt } from "../server/textbook.js";
 
 test("parseLesson: front matter, sections, alternatives, checks", () => {
@@ -45,6 +45,16 @@ test("every lesson file belongs to a topic and is complete", () => {
       assert.ok(v.lesson.checks.length >= 2, `${id}: premalo vprašanj`);
       if (v.lesson.status) assert.match(v.lesson.status, /^(osnutek|pregledano)$/);
       assert.ok(lessonSummaryForPrompt(id).length > 50);
+      // Vsako vprašanje: natanko en pravilen odgovor, vsi odgovori različni.
+      const raw = fs.readFileSync(path.join(LESSONS_DIR, dir.name, f), "utf8");
+      const quiz = raw.split(/^## Preveri se\s*$/m)[1] || "";
+      for (const block of quiz.split(/^\? /m).slice(1)) {
+        const opts = block.split("\n").filter((l) => /^[+-] /.test(l));
+        const q = block.split("\n")[0];
+        assert.equal(opts.filter((l) => l.startsWith("+")).length, 1, `${id}: »${q}« nima natanko enega pravilnega odgovora`);
+        assert.ok(opts.length >= 3, `${id}: »${q}« ima premalo odgovorov`);
+        assert.equal(new Set(opts.map((l) => l.slice(2).trim())).size, opts.length, `${id}: »${q}« ima ponovljen odgovor`);
+      }
     }
   }
 });
@@ -82,9 +92,10 @@ test("textbook API and PDF page", async () => {
     assert.equal(lesson.demo.id, "ohm");
     assert.match(lesson.phet.url, /^https:\/\/phet\.colorado\.edu\/sims\/html\/ohms-law\//);
     assert.equal(lesson.next.id.startsWith("FIZ-OS-9/"), true);
-    const noLesson = await (await fetch(lessonUrl("FIZ-OS-9/prosti-pad"))).json();
-    assert.equal(noLesson.lesson, null);
-    assert.equal(noLesson.demo.id, "prosti-pad");
+    const fall = await (await fetch(lessonUrl("FIZ-OS-9/prosti-pad"))).json();
+    assert.equal(fall.demo.id, "prosti-pad");
+    const missing = listPaths().flatMap((p) => topicOrder(p.key)).find((t) => !fs.existsSync(path.join(LESSONS_DIR, `${t.id}.md`)));
+    if (missing) assert.equal((await (await fetch(lessonUrl(missing.id))).json()).lesson, null);
     assert.equal((await fetch(lessonUrl("../../etc/passwd"))).status, 404);
     assert.equal((await fetch(`${base}/api/textbook/toc?path=KEM-OS-8`)).status, 200);
     const hits = await (await fetch(`${base}/api/textbook/search?q=ohm`)).json();
