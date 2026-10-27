@@ -1,3 +1,4 @@
+import { icon } from "./icons.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku STEMMIND_ACCOUNTS=1.
 
@@ -26,6 +27,44 @@ let status = null;
 let onReadyCb = null;
 
 export const accountsOn = () => enabled;
+
+// Profil je lahko hkrati odprt samo na eni napravi. Če ga ima druga naprava,
+// strežnik vrne 409 { taken }; ponudimo prevzem.
+function watchTakenProfiles() {
+  const orig = window.fetch.bind(window);
+  window.fetch = async (...args) => {
+    const res = await orig(...args);
+    if (res.status === 409) {
+      res.clone().json().then((d) => d?.taken && showTaken(d, orig)).catch(() => {});
+    }
+    return res;
+  };
+}
+
+function showTaken(d, rawFetch) {
+  if ($("#taken-overlay")) return;
+  const box = document.createElement("div");
+  box.id = "taken-overlay";
+  box.className = "overlay";
+  box.innerHTML = `<div class="card overlay-card">
+    <h2>Profil je odprt drugje</h2>
+    <p>${esc(d.error)}</p>
+    <p class="muted">Če nadaljuješ tukaj, se na drugi napravi profil zapre.</p>
+    <div class="form-actions">
+      <button class="primary" id="taken-here" type="button">Nadaljuj tukaj</button>
+      <button id="taken-other" type="button">Izberi drug profil</button>
+    </div></div>`;
+  document.body.appendChild(box);
+  $("#taken-here").addEventListener("click", async () => {
+    await rawFetch(`/api/students/${d.student_id}/claim`, { method: "POST" });
+    store.set("studentId", String(d.student_id));
+    location.reload();
+  });
+  $("#taken-other").addEventListener("click", () => {
+    box.remove();
+    $("#student-select")?.focus();
+  });
+}
 
 function toast(msg) {
   const t = $("#toast");
@@ -58,6 +97,7 @@ export async function initAccount({ onReady }) {
   enabled = !!status.enabled;
   if (!enabled) return true;
   $("#account-tab").hidden = false;
+  watchTakenProfiles();
   $("#account-tab").addEventListener("click", renderAccount);
 
   const q = new URLSearchParams(location.search);
@@ -360,12 +400,20 @@ async function renderAccount() {
           c.premium ? `<span class="pill ok">poln dostop</span>` : `<span class="pill">brezplačni paket · danes ${c.questions_today}/${acc.free_daily_questions}</span>`
         }</li>`)
         .join("")}</ul>
-      ${acc.children.length < acc.max_children ? `<details><summary>Dodaj otroka</summary>${childForm(acc.consent_text)}</details>` : ""}
-      <p class="muted">Otrokov profil in vse njegove podatke izbrišete v zavihku Nastavitve.</p>
+      ${acc.children
+        .filter((c) => c.devices.length > acc.device_warn_limit)
+        .map((c) => `<p class="warn">${icon("info")} Profil <b>${esc(c.name)}</b> je bil v zadnjih 30 dneh odprt na ${c.devices.length} različnih napravah (${c.devices.map((d) => esc(d.label)).join(", ")}). Če to niste bili vi, kliknite »Odjavi vse druge naprave« in spremenite geslo.</p>`)
+        .join("")}
+      ${acc.swap_blocked_until
+        ? `<p class="muted">Profil lahko zamenjate enkrat na 30 dni. Nov profil boste lahko dodali ${date(acc.swap_blocked_until)}.</p>`
+        : acc.children.length < acc.max_children
+          ? `<details><summary>Dodaj otroka</summary>${childForm(acc.consent_text)}</details>`
+          : `<p class="muted">Vaš paket ima ${acc.max_children === 1 ? "1 profil" : `${acc.max_children} profila`}.${acc.max_children === 1 ? " Za drugega otroka izberite paket za 2 otroka." : ""}</p>`}
+      <p class="muted">Vsak profil je lahko hkrati odprt samo na eni napravi. Profil zamenjate (izbrišete v zavihku Nastavitve in dodate novega) največ enkrat na 30 dni.</p>
     </div>
 
     <div class="card">
-      <h2>Povabi prijatelje 🎁</h2>
+      <h2>${icon("award")} Povabi prijatelje</h2>
       <p>Ko se družina, ki jo povabite, naroči in prvič plača, <b>oboji dobite en mesec brezplačno</b>.</p>
       <div class="inline"><input id="ref-url" readonly value="${esc(acc.referral.url)}"><button id="ref-copy" type="button">Kopiraj</button></div>
       <p class="muted">Vaša koda: <b>${esc(acc.referral.code)}</b>${acc.referral.rewards ? ` · prisluženi meseci: ${acc.referral.rewards}` : ""}</p>
@@ -387,6 +435,7 @@ async function renderAccount() {
       <div class="form-actions">
         <a href="/api/account/export" download>Prenesi vse moje podatke</a>
         <button id="logout-btn" type="button">Odjava</button>
+        <button id="logout-others" type="button">Odjavi vse druge naprave</button>
       </div>
       <button id="delete-account" class="danger" type="button">Izbriši račun in vse podatke</button>
     </div>`;
@@ -436,6 +485,10 @@ async function renderAccount() {
     }
   });
   $("#logout-btn").addEventListener("click", logout);
+  $("#logout-others").addEventListener("click", async () => {
+    await api("/api/account/logout-others", { method: "POST" });
+    toast("Vse druge naprave so odjavljene.");
+  });
   $("#delete-account").addEventListener("click", async () => {
     const password = prompt("Za izbris računa, vseh otrokovih profilov in pogovorov vpišite geslo. Tega ni mogoče razveljaviti.");
     if (!password) return;

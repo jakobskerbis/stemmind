@@ -7,6 +7,7 @@ import { PLANS, planByKey, planFor, monthlyAmount, accessFor, isPremiumChild, is
 import { Stripe, verifyWebhook } from "./stripe.js";
 import { Mailer, verifyEmail, resetEmail, referralRewardEmail } from "./email.js";
 import { buildWeeklyReport, weekKey, isSendTime } from "./weekly.js";
+import { Devices, deviceLabel, deviceWarnLimit } from "./devices.js";
 import { cleanText } from "../settings.js";
 
 export const CONSENT_TEXT =
@@ -45,6 +46,7 @@ export function mountAccounts(app, store, opts = {}) {
   const webhookSecret = opts.webhookSecret ?? env.STRIPE_WEBHOOK_SECRET;
   const adminEmails = (env.STEMMIND_ADMIN_EMAILS || "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
   const sessions = new Sessions(db);
+  const devices = new Devices(db);
   const throttle = new Throttle();
   const json = express.json({ limit: "100kb" });
   const log = opts.log || console;
@@ -110,6 +112,7 @@ export function mountAccounts(app, store, opts = {}) {
   app.use("/api", (req, _res, next) => {
     const pid = sessions.parentId(readCookie(req));
     req.parent = pid ? getParent(pid) : null;
+    req.deviceId = devices.identify(req, _res);
     next();
   });
 
@@ -130,6 +133,24 @@ export function mountAccounts(app, store, opts = {}) {
     }
     if (studentId !== null && ownerOf(studentId) !== p.id) {
       return res.status(404).json({ error: s ? "Učenec ne obstaja." : "Pogovor ne obstaja." });
+    }
+
+    // Profil je hkrati odprt samo na eni napravi. Izbris profila je dovoljen z vsake naprave staršu.
+    if (studentId !== null) {
+      const own = s && /^\/students\/\d+\/?$/.test(req.path);
+      if (own && req.method === "DELETE") {
+        devices.logChange(p.id, "deleted", studentId);
+      } else {
+        const takeover = req.method === "POST" && req.path === `/students/${studentId}/claim`;
+        const r = devices.use(studentId, req.deviceId, deviceLabel(req.get("user-agent")), { takeover });
+        if (!r.ok) {
+          return res.status(409).json({
+            error: `Ta profil je trenutno odprt na drugi napravi (${r.other}). Profil je lahko hkrati odprt samo na eni napravi.`,
+            taken: true,
+            student_id: studentId,
+          });
+        }
+      }
     }
 
     // Brezplačni paket: omejeno število vprašanj inštruktorju na dan.
@@ -273,8 +294,11 @@ export function mountAccounts(app, store, opts = {}) {
         birth_year: c.birth_year,
         premium: isPremiumChild(access, ids, c.id),
         questions_today: questionsToday(c.id),
+        devices: devices.recent(c.id),
       })),
-      max_children: MAX_CHILDREN,
+      max_children: Math.min(MAX_CHILDREN, access.seats || 1),
+      device_warn_limit: deviceWarnLimit(),
+      swap_blocked_until: devices.swapBlockedUntil(p.id),
       plans: PLANS,
       billing: stripe.enabled,
       email: mailer.enabled,
@@ -353,10 +377,34 @@ export function mountAccounts(app, store, opts = {}) {
   // --- otroci (nadomesti osnovni GET/POST /api/students) ---
   app.get("/api/students", (req, res) => res.json(children(req.parent.id)));
 
+  // Ta naprava prevzame profil (druga naprava se ustavi ob naslednji zahtevi).
+  app.post("/api/students/:id/claim", (_req, res) => res.json({ ok: true }));
+
+  // Odjava z vseh drugih naprav: seje staršev in odprti profili.
+  app.post("/api/account/logout-others", (req, res) => {
+    sessions.destroyOthers(req.parent.id, readCookie(req));
+    devices.releaseOthers(childIds(req.parent.id), req.deviceId);
+    res.json({ ok: true });
+  });
+
   app.post("/api/students", json, (req, res) => {
     const p = req.parent;
     if (!p.email_verified_at) return res.status(403).json({ error: "Najprej potrdite e-naslov (povezava je v e-pošti).", verify: true });
-    if (childIds(p.id).length >= MAX_CHILDREN) return res.status(400).json({ error: `Dodate lahko največ ${MAX_CHILDREN} otroke.` });
+    // Število profilov = paket (preizkus: 2, brezplačno: 1). Menjava profila največ enkrat na 30 dni.
+    const seats = Math.min(MAX_CHILDREN, accessFor(p).seats || 1);
+    if (childIds(p.id).length >= seats) {
+      return res.status(400).json({
+        error: seats === 1 ? "Vaš paket ima 1 profil. Za drugega otroka izberite paket za 2 otroka v zavihku Račun." : `Vaš paket ima ${seats} profila.`,
+        seats: true,
+      });
+    }
+    const blocked = devices.swapBlockedUntil(p.id);
+    if (blocked) {
+      return res.status(400).json({
+        error: `Profil lahko zamenjate največ enkrat na 30 dni. Nov profil boste lahko dodali ${new Date(blocked).toLocaleDateString("sl-SI")}.`,
+        swap: true,
+      });
+    }
     const name = cleanText(req.body?.name, 40);
     if (!name) return res.status(400).json({ error: "Vpišite ime ali vzdevek otroka." });
     const year = Number(req.body?.birth_year);
@@ -375,6 +423,8 @@ export function mountAccounts(app, store, opts = {}) {
       CONSENT_TEXT,
       p.email,
     );
+    devices.logChange(p.id, "created", s.id);
+    devices.use(s.id, req.deviceId, deviceLabel(req.get("user-agent")));
     res.status(201).json({ ...store.getStudent(s.id), birth_year: year });
   });
 

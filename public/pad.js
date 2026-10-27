@@ -1,6 +1,7 @@
 // Vnos z dotikom: plošča s tipkami in risalno površino.
 // Na telefonu se odpre spodaj (besedilo naloge ostane pripeto zgoraj),
 // na širšem zaslonu ob strani, tako da je naloga ves čas vidna.
+import { icon } from "./icons.js";
 
 const LS_KEY = "stemmind.pad";
 const prefs = (() => {
@@ -32,10 +33,10 @@ function build() {
   pad = el(`<aside id="pad" class="pad" hidden aria-label="Vnos odgovora">
     <div class="pad-head">
       <div class="pad-tabs" role="tablist">
-        <button type="button" data-tab="keys" role="tab">🔢 Tipke</button>
-        <button type="button" data-tab="draw" role="tab">✍️ Piši</button>
+        <button type="button" data-tab="keys" role="tab">${icon("keyboard")}Tipke</button>
+        <button type="button" data-tab="draw" role="tab">${icon("pencil")}Piši</button>
       </div>
-      <button type="button" class="pad-close" aria-label="Zapri">✕</button>
+      <button type="button" class="pad-close" aria-label="Zapri">${icon("x")}</button>
     </div>
     <div class="pad-answer"><span class="pad-value" aria-live="polite"></span><span class="pad-units"></span><button type="button" class="primary pad-check">Preveri</button></div>
     <div class="read-result" aria-live="polite"></div>
@@ -48,15 +49,15 @@ function build() {
     </div>
     <div class="pad-body pad-draw">
       <div class="draw-tools">
-        <button type="button" data-tool="pen" class="on" title="Pisalo">✏️</button>
-        <button type="button" data-tool="eraser" title="Radirka">🧽</button>
-        <button type="button" data-act="undo" title="Razveljavi">↶</button>
-        <button type="button" data-act="clear" title="Počisti">🗑️</button>
-        <button type="button" data-act="grow" title="Več prostora">＋ prostor</button>
+        <button type="button" data-tool="pen" class="on" title="Pisalo" aria-label="Pisalo">${icon("pencil")}<span>Pisalo</span></button>
+        <button type="button" data-tool="eraser" title="Radirka" aria-label="Radirka">${icon("eraser")}<span>Radirka</span></button>
+        <button type="button" data-act="undo" title="Razveljavi" aria-label="Razveljavi">${icon("undo-2")}</button>
+        <button type="button" data-act="clear" title="Počisti" aria-label="Počisti">${icon("trash-2")}</button>
+        <button type="button" data-act="grow" title="Več prostora" aria-label="Več prostora">${icon("plus")}<span>Prostor</span></button>
       </div>
       <div class="canvas-wrap"><canvas class="ink" aria-label="Površina za pisanje"></canvas></div>
       <div class="draw-foot">
-        <button type="button" class="primary" data-act="read">👁️ Preberi odgovor</button>
+        <button type="button" class="primary" data-act="read">${icon("eye")}Preberi odgovor</button>
         <span class="muted">Piši sproti, kot v zvezek. Končni odgovor napiši v zadnjo vrstico.</span>
       </div>
     </div>
@@ -150,7 +151,7 @@ async function readInk() {
       box.innerHTML = `<div class="fb info">${escapeHtml(r.message || "Zapisa nisem uspel prebrati.")}</div>`;
       return;
     }
-    box.innerHTML = `<div class="fb info">Prebral sem: <b class="read-text"></b>. Je prav?</div>
+    box.innerHTML = `<div class="fb info"><span>Prebral sem: <b class="read-text"></b>. Je prav?</span></div>
       <div class="actions"><button type="button" class="primary" data-ok>Da, preveri</button><button type="button" data-fix>Popravi s tipkami</button></div>`;
     box.querySelector(".read-text").textContent = r.text;
     box.querySelector("[data-ok]").addEventListener("click", () => {
