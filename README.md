@@ -30,6 +30,10 @@ npm start                 # http://localhost:3000
 
 Brez ključa se aplikacija zažene v preizkusnem načinu. Teste zaženeš z `npm test`.
 
+Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac.command` (Mac). Skript ob prvem zagonu vpraša za ključ, namesti knjižnice in odpre brskalnik. `ustvari-bliznjico.bat` / `ustvari-bliznjico-mac.command` naredi bližnjico STEMMind na namizju.
+
+**Posodobitev na najnovejšo različico**: dvakrat klikni `posodobi-windows.bat` ali `posodobi-mac.command`. Skript prenese zadnjo različico z GitHuba, jo prekopira čez to mapo (ključ `.env`, podatki `data/` in knjižnice ostanejo) in aplikacijo znova zažene.
+
 ## Nastavitve okolja
 
 | Spremenljivka | Privzeto | Pomen |
