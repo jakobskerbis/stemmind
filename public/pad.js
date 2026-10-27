@@ -133,7 +133,9 @@ function press(k, isUnit = false) {
 
 function submit() {
   if (!cur || !cur.input.value.trim()) return;
-  cur.form.requestSubmit();
+  // Starejši iOS (pred 16) nima requestSubmit; takrat sprožimo dogodek submit sami.
+  if (typeof cur.form.requestSubmit === "function") cur.form.requestSubmit();
+  else cur.form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
 }
 
 async function readInk() {
