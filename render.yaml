@@ -1,0 +1,16 @@
+# Render Blueprint: v Renderju izberi New > Blueprint in poveži ta repozitorij.
+services:
+  - type: web
+    name: stemmind
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/config
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: STEMMIND_PASSWORD
+        sync: false
