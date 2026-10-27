@@ -111,3 +111,83 @@ test("history window trims in chunks so the cached prefix stays stable", () => {
   assert.equal(windowHistory(msgs(39), 10)[0].content, "20"); // 20 izmenjav: odrežemo 10
   assert.equal(windowHistory(msgs(55), 10)[0].content, "20"); // enak začetek do 29 izmenjav
 });
+
+test("practice resumes the same unanswered task", () => {
+  const { p, s } = setup();
+  p.nextPractice(s.id, TOPIC); // zgled
+  const a = p.nextPractice(s.id, TOPIC);
+  const b = p.nextPractice(s.id, TOPIC);
+  assert.equal(b.task.id, a.task.id);
+  assert.ok(b.resumed);
+});
+
+test("daily training mixes ~70% new and ~30% review, resumes, and gives a bonus", () => {
+  const { p, s } = setup();
+  const path = "MAT-OS-8";
+  // dve osvojeni temi, ki sta na vrsti za ponavljanje
+  const view = p.pathView(s.id, path);
+  const practiceTopics = view.units.flatMap((u) => u.topics).filter((t) => t.practice);
+  for (const t of practiceTopics.slice(0, 2)) {
+    p.markMastered(s.id, t.id, "manual");
+    p.db.prepare("UPDATE topic_state SET review_due = '2000-01-01 00:00:00' WHERE student_id = ? AND topic_id = ?").run(s.id, t.id);
+  }
+  const first = p.startDaily(s.id, path);
+  assert.equal(first.total, 10);
+  const again = p.startDaily(s.id, path);
+  assert.equal(again.task.id, first.task.id); // nadaljevanje
+  const sess = p.getSession(first.sessionId);
+  const modes = sess.plan.map((x) => x.mode);
+  assert.equal(modes.filter((m) => m === "review").length, 3);
+  assert.equal(modes.filter((m) => m === "practice").length, 7);
+  assert.ok(modes.indexOf("review") < 5); // ponavljanje je vmes, ne šele na koncu
+  let next = first, bonus = null;
+  for (let i = 0; i < 20 && !next.finished; i++) {
+    const row = p.getTask(next.task.id);
+    const r = p.answer(s.id, next.task.id, correctInput(row.payload.answer));
+    next = r.next;
+    if (next.finished) bonus = next.xp;
+  }
+  assert.ok(next.finished);
+  assert.ok(bonus.items.some((x) => x.reason === "dnevni trening"));
+  assert.equal(p.modes(s.id, path).daily.done, true);
+});
+
+test("daily flips to mostly review when review piles up", () => {
+  const { p, s } = setup();
+  const path = "MAT-OS-8";
+  const all = p.pathView(s.id, path).units.flatMap((u) => u.topics).filter((t) => t.practice);
+  for (const t of all.slice(0, 9)) {
+    p.markMastered(s.id, t.id, "manual");
+    p.db.prepare("UPDATE topic_state SET review_due = '2000-01-01 00:00:00' WHERE student_id = ? AND topic_id = ?").run(s.id, t.id);
+  }
+  p.setStatus(s.id, all[9].id, "learning");
+  const m = p.modes(s.id, path);
+  assert.ok(m.suggestReview);
+  const d = p.startDaily(s.id, path);
+  const plan = p.getSession(d.sessionId).plan;
+  assert.equal(plan.filter((x) => x.mode === "review").length, 7);
+  const q = p.startReview(s.id, { quick: true });
+  assert.equal(q.total, RULES.quickReviewTasks);
+});
+
+test("test prep: harder tasks closer to the date; unit practice only when unlocked", () => {
+  const { p, s } = setup();
+  const path = "MAT-OS-8";
+  const view = p.pathView(s.id, path);
+  const ui = view.units.findIndex((u) => u.hasPractice);
+  const later = new Date(Date.now() + 10 * 86400000).toISOString().slice(0, 10);
+  const soon = new Date(Date.now() + 1 * 86400000).toISOString().slice(0, 10);
+  assert.equal(p.setTestPlan(s.id, path, [], later), null);
+  p.setTestPlan(s.id, path, [ui], later);
+  const far = p.getSession(p.startTest(s.id).sessionId).plan;
+  p.setTestPlan(s.id, path, [ui], soon);
+  const near = p.getSession(p.startTest(s.id).sessionId).plan;
+  const avg = (pl) => pl.reduce((a, x) => a + x.level, 0) / pl.length;
+  assert.ok(avg(near) > avg(far));
+  assert.equal(p.testPlan(s.id).daysLeft, 1);
+  const locked = view.units.findIndex((u) => u.locked);
+  if (locked >= 0) assert.equal(p.startUnit(s.id, path, locked), null);
+  const u = p.startUnit(s.id, path, ui);
+  assert.ok(u.task.id);
+  assert.equal(p.startUnit(s.id, path, ui).task.id, u.task.id);
+});

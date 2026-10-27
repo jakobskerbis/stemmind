@@ -14,7 +14,14 @@ export const RULES = {
   reviewDays: [1, 3, 7, 21], // razmaki ponavljanja
   placementPass: 0.8,
   placementTasks: 6,
-  reviewTasks: 6,
+  reviewPerTopic: 2, // vsaka tema, ki je na vrsti, prinese 2 nalogi
+  reviewSessionMax: 10,
+  quickReviewTasks: 4, // »najprej 5 minut ponavljanja«
+  backlogSuggest: 15, // nad tem predlagamo najprej ponavljanje
+  dailyTasks: 10, // ~15 minut
+  dailyNewShare: 0.7, // 70 % nove snovi, 30 % ponavljanja (obrne se, ko se ponavljanje nabere)
+  unitTasks: 8,
+  testTasks: 10,
 };
 
 const XP = {
@@ -23,12 +30,21 @@ const XP = {
   fixBonus: 3,
   mastery: 25,
   placement: 40,
+  daily: 15,
   dailyStreak: (days) => 5 * Math.min(days, 7),
 };
 
 const nowSql = () => new Date().toISOString().replace("T", " ").slice(0, 19);
 const addDays = (d) => new Date(Date.now() + d * 86400000).toISOString().replace("T", " ").slice(0, 19);
 const today = () => new Date().toISOString().slice(0, 10);
+function shuffle(a) {
+  const b = [...a];
+  for (let i = b.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [b[i], b[j]] = [b[j], b[i]];
+  }
+  return b;
+}
 
 export class Progress {
   constructor(store) {
@@ -164,22 +180,98 @@ export class Progress {
       s.status = "learning";
       this.saveState(s);
     }
+    // Nedokončana naloga te teme počaka na učenca.
+    const pending = this.db
+      .prepare("SELECT * FROM tasks WHERE student_id = ? AND topic_id = ? AND mode = 'practice' AND session_id IS NULL AND solved = 0 AND attempts < ? ORDER BY id DESC LIMIT 1")
+      .get(studentId, topicId, RULES.maxAttempts);
+    if (pending) {
+      return { task: { id: pending.id, mode: "practice", ...publicTask(JSON.parse(pending.payload)) }, state: { level: s.level, streak: s.streak }, resumed: true };
+    }
     const task = generateTask(topicId, s.level);
     const id = this.saveTask(studentId, task, "practice");
     return { task: { id, mode: "practice", ...publicTask(task) }, state: { level: s.level, streak: s.streak } };
   }
 
+  // ---------- seje ----------
+  // Seja ima načrt [{topic, mode, level?}]; naloge nastajajo sproti, zato se
+  // težavnost pri novi snovi prilagaja tudi med sejo. Nedokončana seja se
+  // ob vrnitvi nadaljuje pri isti nalogi.
+  createSession(studentId, kind, plan, params = {}) {
+    const id = crypto.randomUUID();
+    this.db
+      .prepare("INSERT INTO sessions (id, student_id, kind, params, plan) VALUES (?, ?, ?, ?, ?)")
+      .run(id, studentId, kind, JSON.stringify(params), JSON.stringify(plan));
+    return id;
+  }
+  openSession(studentId, kind, match = () => true) {
+    const rows = this.db
+      .prepare("SELECT * FROM sessions WHERE student_id = ? AND kind = ? AND finished = 0 ORDER BY created_at DESC, rowid DESC")
+      .all(studentId, kind);
+    for (const r of rows) {
+      const sess = { ...r, params: JSON.parse(r.params), plan: JSON.parse(r.plan) };
+      if (match(sess)) return sess;
+    }
+    return null;
+  }
+  getSession(id) {
+    const r = this.db.prepare("SELECT * FROM sessions WHERE id = ?").get(id);
+    return r && { ...r, params: JSON.parse(r.params), plan: JSON.parse(r.plan) };
+  }
+
+  sessionNext(sessionId) {
+    const sess = this.getSession(sessionId);
+    const maxA = (t) => (t.mode === "placement" ? 1 : RULES.maxAttempts);
+    const isDone = (t) => t.solved || t.attempts >= maxA(t);
+    let all = this.db.prepare("SELECT * FROM tasks WHERE session_id = ? ORDER BY id").all(sessionId);
+    let open = all.find((t) => !isDone(t));
+    if (!open && sess && all.length < sess.plan.length) {
+      const item = sess.plan[all.length];
+      const st = this.state(sess.student_id, item.topic);
+      if (item.mode === "practice" && st.status === "new") {
+        st.status = "learning";
+        this.saveState(st);
+      }
+      const level = item.level ?? st.level;
+      const id = this.saveTask(sess.student_id, generateTask(item.topic, level), item.mode, sessionId);
+      all = this.db.prepare("SELECT * FROM tasks WHERE session_id = ? ORDER BY id").all(sessionId);
+      open = all.find((t) => t.id === id);
+    }
+    const total = sess ? sess.plan.length : all.length;
+    const done = all.filter(isDone).length;
+    const kind = sess?.kind ?? all[0]?.mode;
+    if (!open) {
+      const out = { finished: true, sessionId, kind, total: all.length, correct: all.filter((t) => t.first_try_correct).length };
+      if (sess && !sess.finished) {
+        this.db.prepare("UPDATE sessions SET finished = 1 WHERE id = ?").run(sessionId);
+        if (sess.kind === "daily") out.xp = this.award(sess.student_id, [[XP.daily, "dnevni trening"]]);
+      }
+      return out;
+    }
+    const payload = JSON.parse(open.payload);
+    return {
+      sessionId,
+      kind,
+      index: done + 1,
+      total,
+      task: { id: open.id, mode: open.mode, topicName: getTopic(open.topic_id)?.name, ...publicTask(payload) },
+    };
+  }
+
+  reviewBacklog(studentId) {
+    return this.dueTopics(studentId).length * RULES.reviewPerTopic;
+  }
+
   // Ponavljanje: naloge iz več tem, ki so na vrsti, prepletene med sabo.
-  startReview(studentId) {
+  startReview(studentId, { quick = false } = {}) {
+    const open = this.openSession(studentId, "review");
+    if (open) return this.sessionNext(open.id);
     const due = this.dueTopics(studentId);
     if (!due.length) return null;
-    const sessionId = crypto.randomUUID();
-    const ids = [];
-    for (let i = 0; i < Math.min(RULES.reviewTasks, Math.max(due.length, 3)); i++) {
-      const topicId = due[i % due.length];
-      ids.push(this.saveTask(studentId, generateTask(topicId, 2), "review", sessionId));
-    }
-    return this.sessionNext(sessionId);
+    const max = quick ? RULES.quickReviewTasks : RULES.reviewSessionMax;
+    const topics = due.slice(0, Math.ceil(max / RULES.reviewPerTopic));
+    const plan = [];
+    for (let r = 0; r < RULES.reviewPerTopic; r++) for (const t of topics) plan.push({ topic: t, mode: "review", level: 2 });
+    return this.sessionNext(this.createSession(studentId, "review", plan.slice(0, max), { quick }));
   }
 
   // Preizkus znanja za sklop: ob uspehu so vse teme sklopa obvladane.
@@ -188,26 +280,143 @@ export class Progress {
     if (!unit) return null;
     const topics = unit.topics.filter((t) => hasGenerator(t.id));
     if (!topics.length) return null;
-    const sessionId = crypto.randomUUID();
+    const open = this.openSession(studentId, "placement", (x) => x.params.path === pathKey && x.params.unit === unitIndex);
+    if (open) return this.sessionNext(open.id);
     const n = Math.max(RULES.placementTasks, topics.length);
-    for (let i = 0; i < n; i++) {
-      const t = topics[i % topics.length];
-      this.saveTask(studentId, generateTask(t.id, i % 2 ? 3 : 2), "placement", sessionId);
-    }
-    return this.sessionNext(sessionId);
+    const plan = [];
+    for (let i = 0; i < n; i++) plan.push({ topic: topics[i % topics.length].id, mode: "placement", level: i % 2 ? 3 : 2 });
+    return this.sessionNext(this.createSession(studentId, "placement", plan, { path: pathKey, unit: unitIndex }));
   }
 
-  sessionNext(sessionId) {
-    const all = this.db.prepare("SELECT * FROM tasks WHERE session_id = ? ORDER BY id").all(sessionId);
-    const open = all.find((t) => !t.solved && t.attempts < (t.mode === "placement" ? 1 : RULES.maxAttempts));
-    const done = all.filter((t) => t.solved || t.attempts >= (t.mode === "placement" ? 1 : RULES.maxAttempts)).length;
-    if (!open) return { finished: true, sessionId, total: all.length, correct: all.filter((t) => t.first_try_correct).length };
-    const payload = JSON.parse(open.payload);
+  // Tema za »Nova snov«: zadnja tema, ki se je učenec uči, sicer naslednja na poti.
+  currentTopic(studentId, pathKey) {
+    const view = this.pathView(studentId, pathKey);
+    if (!view) return null;
+    const open = new Map(view.units.filter((u) => !u.locked).flatMap((u) => u.topics.map((t) => [t.id, t])));
+    const recent = this.db
+      .prepare("SELECT topic_id FROM topic_state WHERE student_id = ? AND topic_id LIKE ? AND status = 'learning' ORDER BY updated_at DESC")
+      .all(studentId, `${pathKey}/%`)
+      .map((r) => open.get(r.topic_id))
+      .find((t) => t && t.practice);
+    const t = recent || view.units.filter((u) => !u.locked).flatMap((u) => u.topics).find((x) => x.status !== "mastered" && x.practice) || view.next;
+    return t ? { id: t.id, name: t.name, practice: t.practice } : null;
+  }
+
+  // Današnji trening (~15 min): 70 % nove snovi in 30 % ponavljanja, prepleteno.
+  // Ko se ponavljanje nabere, se razmerje obrne.
+  startDaily(studentId, pathKey) {
+    const open = this.openSession(studentId, "daily", (x) => x.created_at.slice(0, 10) === today());
+    if (open) return this.sessionNext(open.id);
+    const view = this.pathView(studentId, pathKey);
+    if (!view) return null;
+    const unlocked = view.units.filter((u) => !u.locked).flatMap((u) => u.topics).filter((t) => t.practice);
+    const cur = this.currentTopic(studentId, pathKey);
+    const fresh = [cur?.practice ? cur.id : null, ...unlocked.filter((t) => t.status === "learning").map((t) => t.id)]
+      .filter((v, i, a) => v && a.indexOf(v) === i)
+      .slice(0, 2);
+    const due = this.dueTopics(studentId);
+    // Če ni ničesar na vrsti, priklic že osvojenih tem (brez vpliva na urnik ponavljanja).
+    const old = due.length ? due : unlocked.filter((t) => t.status === "mastered").map((t) => t.id);
+    const oldMode = due.length ? "review" : "test";
+    const backlog = due.length * RULES.reviewPerTopic;
+    const share = backlog > RULES.backlogSuggest ? 1 - RULES.dailyNewShare : RULES.dailyNewShare;
+    const N = RULES.dailyTasks;
+    let nNew = fresh.length ? (old.length ? Math.round(N * share) : N) : 0;
+    const nOld = old.length ? N - nNew : 0;
+    if (!fresh.length && !old.length) return null;
+    if (!nNew && !nOld) nNew = N;
+    // Prepletanje: ponavljanje enakomerno razporejeno med novo snovjo.
+    const plan = [];
+    let a = 0, b = 0;
+    for (let i = 0; i < nNew + nOld; i++) {
+      const wantOld = nOld && (b + 1) / nOld <= (i + 1) / (nNew + nOld) + 1e-9;
+      if ((wantOld && b < nOld) || a >= nNew) plan.push({ topic: old[b++ % old.length], mode: oldMode, level: 2 });
+      else plan.push({ topic: fresh[a++ % fresh.length], mode: "practice" });
+    }
+    return this.sessionNext(this.createSession(studentId, "daily", plan, { path: pathKey, nNew, nOld }));
+  }
+
+  // Vaja posameznega (odklenjenega) sklopa: prepletene naloge iz vseh tem sklopa.
+  startUnit(studentId, pathKey, unitIndex) {
+    const view = this.pathView(studentId, pathKey);
+    const unit = view?.units[unitIndex];
+    if (!unit || unit.locked) return null;
+    const topics = unit.topics.filter((t) => t.practice).map((t) => t.id);
+    if (!topics.length) return null;
+    const open = this.openSession(studentId, "unit", (x) => x.params.path === pathKey && x.params.unit === unitIndex);
+    if (open) return this.sessionNext(open.id);
+    const order = shuffle(topics);
+    const plan = Array.from({ length: Math.max(RULES.unitTasks, topics.length) }, (_, i) => ({ topic: order[i % order.length], mode: "practice" }));
+    return this.sessionNext(this.createSession(studentId, "unit", plan, { path: pathKey, unit: unitIndex }));
+  }
+
+  // ---------- priprava na test ----------
+  testPlan(studentId) {
+    const r = this.db.prepare("SELECT * FROM test_plans WHERE student_id = ?").get(studentId);
+    if (!r) return null;
+    const units = JSON.parse(r.units);
+    const path = getPath(r.path_key);
+    const daysLeft = Math.round((Date.parse(r.test_date) - Date.parse(today())) / 86400000);
     return {
-      sessionId,
-      index: done + 1,
-      total: all.length,
-      task: { id: open.id, mode: open.mode, topicName: getTopic(open.topic_id)?.name, ...publicTask(payload) },
+      path: r.path_key,
+      units,
+      unitTitles: units.map((i) => path?.units[i]?.title).filter(Boolean),
+      date: r.test_date,
+      daysLeft,
+    };
+  }
+  setTestPlan(studentId, pathKey, units, date) {
+    const path = getPath(pathKey);
+    const clean = [...new Set((units || []).map(Number))].filter((i) => Number.isInteger(i) && path?.units[i]);
+    if (!path || !clean.length || !/^\d{4}-\d{2}-\d{2}$/.test(String(date))) return null;
+    this.db
+      .prepare(
+        `INSERT INTO test_plans (student_id, path_key, units, test_date) VALUES (?, ?, ?, ?)
+         ON CONFLICT(student_id) DO UPDATE SET path_key = excluded.path_key, units = excluded.units, test_date = excluded.test_date, created_at = datetime('now')`,
+      )
+      .run(studentId, pathKey, JSON.stringify(clean), date);
+    // Stare nedokončane seje priprave zapremo, nova upošteva nov načrt.
+    this.db.prepare("UPDATE sessions SET finished = 1 WHERE student_id = ? AND kind = 'test' AND finished = 0").run(studentId);
+    return this.testPlan(studentId);
+  }
+  clearTestPlan(studentId) {
+    this.db.prepare("DELETE FROM test_plans WHERE student_id = ?").run(studentId);
+  }
+  // Mešane naloge iz izbranih sklopov; bližje kot je test, težje so.
+  startTest(studentId) {
+    const plan = this.testPlan(studentId);
+    if (!plan) return null;
+    const open = this.openSession(studentId, "test", (x) => x.created_at.slice(0, 10) === today());
+    if (open) return this.sessionNext(open.id);
+    const path = getPath(plan.path);
+    const topics = plan.units.flatMap((i) => path.units[i].topics).filter((t) => hasGenerator(t.id)).map((t) => t.id);
+    if (!topics.length) return null;
+    const d = plan.daysLeft;
+    const levels = d >= 7 ? [1, 1, 2, 2, 2, 2, 2, 2, 3, 3] : d >= 3 ? [1, 2, 2, 2, 2, 3, 3, 3, 3, 3] : [2, 2, 3, 3, 3, 3, 3, 3, 3, 3];
+    const order = shuffle(topics);
+    const items = Array.from({ length: RULES.testTasks }, (_, i) => ({ topic: order[i % order.length], mode: "test", level: levels[i] }));
+    return this.sessionNext(this.createSession(studentId, "test", items, { date: plan.date }));
+  }
+
+  // Pregled za spodnjo vrstico.
+  modes(studentId, pathKey) {
+    const dueCount = this.dueTopics(studentId).length;
+    const backlog = dueCount * RULES.reviewPerTopic;
+    const daily = this.db
+      .prepare("SELECT finished FROM sessions WHERE student_id = ? AND kind = 'daily' AND date(created_at) = date('now') ORDER BY created_at DESC LIMIT 1")
+      .get(studentId);
+    const openKinds = this.db
+      .prepare("SELECT DISTINCT kind FROM sessions WHERE student_id = ? AND finished = 0")
+      .all(studentId)
+      .map((r) => r.kind);
+    return {
+      newTopic: pathKey ? this.currentTopic(studentId, pathKey) : null,
+      dueCount,
+      reviewBacklog: backlog,
+      suggestReview: backlog > RULES.backlogSuggest,
+      daily: { done: !!daily?.finished, open: !!daily && !daily.finished },
+      testPlan: this.testPlan(studentId),
+      openKinds,
     };
   }
 
@@ -284,7 +493,7 @@ export class Progress {
         }
       }
       if (row.mode === "review" && firstTry) this.advanceReview(studentId, row.topic_id, true);
-      if (row.mode === "review") out.next = this.sessionNext(row.session_id);
+      if (row.session_id) out.next = this.sessionNext(row.session_id);
       // Samorazlaga: občasno vprašanje »zakaj?«
       if (Math.random() < 0.3) out.selfExplain = "Razloži sam sebi v enem stavku: zakaj je bil ključni korak pravilen?";
       return out;
@@ -311,7 +520,7 @@ export class Progress {
       out.solution = task.solution;
       out.message = "Poglejva rešen zgled, nato poskusiš podobno nalogo.";
     }
-    if (row.mode === "review" && out.attemptsLeft <= 0) out.next = this.sessionNext(row.session_id);
+    if (row.session_id && out.attemptsLeft <= 0) out.next = this.sessionNext(row.session_id);
     return out;
   }
 

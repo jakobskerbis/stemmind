@@ -32,7 +32,6 @@
   <main id="view-path" class="view narrow">
     <div class="path-head">
       <select id="path-select" aria-label="Učna pot"></select>
-      <button id="review-btn" class="primary" hidden>🔁 Ponovi</button>
     </div>
     <div id="xp-card" class="card xp-card"></div>
     <div id="path-content"></div>
@@ -169,6 +168,14 @@
       <ul id="flag-list"></ul>
     </div>
   </main>
+
+  <!-- NAČINI UČENJA (vedno dosegljivi) -->
+  <nav id="modebar" class="modebar" aria-label="Način učenja">
+    <button type="button" data-mode="new"><span class="ic">🧭</span><span>Nova snov</span></button>
+    <button type="button" data-mode="review"><span class="ic">🔁</span><span>Ponavljanje</span><b class="badge" hidden></b></button>
+    <button type="button" data-mode="test"><span class="ic">📝</span><span class="long">Priprava na test</span><span class="short">Test</span></button>
+    <button type="button" data-mode="daily"><span class="ic">⚡</span><span class="long">Današnji trening</span><span class="short">Trening</span></button>
+  </nav>
 
   <script src="vendor/katex/katex.min.js"></script>
   <script src="vendor/marked/lib/marked.umd.js"></script>

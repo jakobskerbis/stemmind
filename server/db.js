@@ -106,6 +106,26 @@ export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
       hits INTEGER NOT NULL DEFAULT 0,
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
+    -- Seje vaj (ponavljanje, preizkus, dnevni trening, priprava na test, vaja sklopa).
+    -- Naloge se ustvarijo sproti po načrtu, da se težavnost lahko prilagaja.
+    CREATE TABLE IF NOT EXISTS sessions (
+      id TEXT PRIMARY KEY,
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      kind TEXT NOT NULL,                        -- review | placement | daily | test | unit
+      params TEXT NOT NULL DEFAULT '{}',
+      plan TEXT NOT NULL,                        -- [{topic, mode, level?}]
+      finished INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_sessions ON sessions(student_id, kind, finished);
+    -- Načrt priprave na test (en na učenca)
+    CREATE TABLE IF NOT EXISTS test_plans (
+      student_id INTEGER PRIMARY KEY REFERENCES students(id) ON DELETE CASCADE,
+      path_key TEXT NOT NULL,
+      units TEXT NOT NULL,                       -- indeksi sklopov
+      test_date TEXT NOT NULL,                   -- YYYY-MM-DD
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
     CREATE INDEX IF NOT EXISTS idx_msg_conv ON messages(conversation_id, id);
     CREATE INDEX IF NOT EXISTS idx_events_student ON events(student_id, created_at);
   `);

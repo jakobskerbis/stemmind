@@ -14,6 +14,7 @@ Osebni AI inštruktor za matematiko, fiziko in kemijo za slovenske učence (OŠ 
 - **Vadnica**: koda sestavi naloge in izračuna rezultate (37 vrst nalog). Preverjanje dopušča zaokroževanje, preveri enote in razloži napačno zaokroževanje. Težavnost se prilagaja, ob napaki je namig, po treh poskusih rešen zgled.
 - **Vnos z dotikom**: gumb ✍️ odpre ploščo s tipkami ali površino za pisanje s prstom, miško ali pisalom. Na telefonu je spodaj in besedilo naloge ostane pripeto zgoraj, na računalniku in ležeči tablici je ob strani. Napisano prebere model (»Prebral sem: … Je prav?«), preveri pa koda. Na napravah na dotik se plošča odpre sama.
 - **Ponavljanje** v razmikih 1, 3, 7 in 21 dni, mešane naloge iz več tem, XP, dnevni niz in tedenska lestvica.
+- **Načini učenja** (spodnja vrstica, vedno dosegljiva): *Nova snov* nadaljuje tam, kjer je učenec ostal; *Ponavljanje* pokaže število nalog na vrsti; *Priprava na test* (izbrani sklopi in datum, bližje kot je test, težje so naloge); *Današnji trening* (~15 min, 70 % nove snovi in 30 % ponavljanja, obrne se, ko se nabere več kot 15 nalog za ponavljanje). Preklop kadar koli: nedokončana seja ali naloga počaka na isto mesto. Vsak odklenjen sklop lahko vadiš posebej (»Vadi sklop«).
 - **Poraba**: vsak klic se zabeleži (žetoni in strošek), z dnevnimi in mesečnimi omejitvami. Pregled je v Nastavitvah.
 - **Preizkusni način**: brez API ključa vrača pripravljene odgovore, da lahko preizkusiš vse ostalo.
 

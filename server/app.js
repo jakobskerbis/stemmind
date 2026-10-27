@@ -324,8 +324,52 @@ export function createApp(store, { streamFn = streamReply, readFn = readHandwrit
   app.post("/api/students/:id/review", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
-    const out = progress.startReview(s.id);
+    const out = progress.startReview(s.id, { quick: !!req.body?.quick });
     if (!out) return res.json({ finished: true, empty: true });
+    res.json(out);
+  });
+  // Načini učenja: nova snov, ponavljanje, priprava na test, dnevni trening.
+  app.get("/api/students/:id/modes", (req, res) => {
+    const s = loadStudent(req, res);
+    if (s) res.json(progress.modes(s.id, getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings)));
+  });
+  app.post("/api/students/:id/daily", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const key = getPath(String(req.body?.path || "")) ? String(req.body.path) : pathKeyFor(s.settings);
+    const out = progress.startDaily(s.id, key);
+    if (!out) return res.json({ finished: true, empty: true });
+    res.json(out);
+  });
+  app.post("/api/students/:id/unit-practice", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.startUnit(s.id, String(req.body?.path || ""), Number(req.body?.unit));
+    if (!out) return res.status(400).json({ error: "Ta sklop je še zaklenjen ali nima vaj." });
+    res.json(out);
+  });
+  app.get("/api/students/:id/test-plan", (req, res) => {
+    const s = loadStudent(req, res);
+    if (s) res.json({ plan: progress.testPlan(s.id) });
+  });
+  app.post("/api/students/:id/test-plan", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const plan = progress.setTestPlan(s.id, String(req.body?.path || ""), req.body?.units, req.body?.date);
+    if (!plan) return res.status(400).json({ error: "Izberi vsaj en sklop in datum testa." });
+    res.json({ plan });
+  });
+  app.delete("/api/students/:id/test-plan", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    progress.clearTestPlan(s.id);
+    res.json({ ok: true });
+  });
+  app.post("/api/students/:id/test-prep", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.startTest(s.id);
+    if (!out) return res.status(400).json({ error: "Najprej nastavi pripravo na test (sklopi z vajami in datum)." });
     res.json(out);
   });
   app.post("/api/students/:id/placement", (req, res) => {

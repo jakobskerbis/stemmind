@@ -66,6 +66,7 @@ function showView(name) {
   if (name === "progress") loadProgress();
   if (name === "path") loadPath();
   if (name !== "topic") closePad();
+  if (name !== "topic") setActiveMode(null);
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
@@ -492,8 +493,125 @@ async function refreshXp() {
   $("#xp-total").textContent = x.total;
   $("#xp-streak").textContent = x.streak;
   state.leaderboard = x.leaderboard;
+  refreshModes();
   return x;
 }
+
+// ---------- načini učenja (spodnja vrstica) ----------
+
+async function refreshModes() {
+  if (!state.student) return null;
+  const q = state.pathKey ? `?path=${encodeURIComponent(state.pathKey)}` : "";
+  const m = await api(`/api/students/${state.student.id}/modes${q}`).catch(() => null);
+  if (!m) return null;
+  state.modes = m;
+  const badge = $("#modebar .badge");
+  badge.hidden = !m.reviewBacklog;
+  badge.textContent = m.reviewBacklog;
+  badge.title = `${m.reviewBacklog} nalog za ponavljanje`;
+  const daily = $('#modebar [data-mode="daily"]');
+  daily.classList.toggle("done", m.daily.done);
+  daily.title = m.daily.done ? "Današnji trening je opravljen ✓" : m.daily.open ? "Nadaljuj današnji trening" : "Približno 15 minut: nova snov in ponavljanje";
+  return m;
+}
+
+function setActiveMode(mode) {
+  document.querySelectorAll("#modebar [data-mode]").forEach((b) => b.classList.toggle("active", b.dataset.mode === mode));
+}
+
+const REVIEW_HINT_KEY = "stemmind.reviewHint";
+async function goNew({ skipHint = false } = {}) {
+  const m = (await refreshModes()) || state.modes;
+  setActiveMode("new");
+  let shown = null;
+  try {
+    shown = localStorage.getItem(REVIEW_HINT_KEY);
+  } catch {}
+  const today = new Date().toISOString().slice(0, 10);
+  if (!skipHint && m?.suggestReview && shown !== today) {
+    try {
+      localStorage.setItem(REVIEW_HINT_KEY, today);
+    } catch {}
+    showView("topic");
+    $("#topic-content").innerHTML = `<div class="card suggest">
+      <h2>🔁 Najprej 5 minut ponavljanja?</h2>
+      <p>Nabralo se je <b>${m.reviewBacklog}</b> nalog za ponavljanje. Kratka ponovitev pomaga, da osvojeno znanje ne zbledi. Lahko pa takoj nadaljuješ z novo snovjo.</p>
+      <div class="actions"><button class="primary" id="sg-review">Da, 5 minut ponavljanja</button><button id="sg-new">Ne, nova snov</button></div>
+    </div>`;
+    $("#sg-review").addEventListener("click", () => startSession("review", { quick: true }));
+    $("#sg-new").addEventListener("click", () => goNew({ skipHint: true }));
+    return;
+  }
+  if (!m?.newTopic) {
+    showView("path");
+    toast("Vse teme te poti so osvojene. 🎉 Izberi drugo pot ali ponavljaj.");
+    return;
+  }
+  await openTopic(m.newTopic.id);
+  if (m.newTopic.practice) await nextPractice();
+}
+
+async function showTestPrep(edit = false) {
+  setActiveMode("test");
+  const { plan } = await api(`/api/students/${state.student.id}/test-plan`);
+  showView("topic");
+  const box = $("#topic-content");
+  if (plan && !edit && plan.daysLeft >= 0) {
+    const when = plan.daysLeft === 0 ? "danes" : plan.daysLeft === 1 ? "jutri" : `čez ${plan.daysLeft} dni`;
+    box.innerHTML = `<h1>📝 Priprava na test</h1>
+      <div class="card"><p>Test je <b>${when}</b> (${escapeHtml(new Date(plan.date).toLocaleDateString("sl-SI"))}).</p>
+      <p class="muted">Snov: ${plan.unitTitles.map(escapeHtml).join(", ")}</p>
+      <p class="muted">Vsak dan reši niz mešanih nalog iz teh sklopov. Bližje kot je test, težje so naloge.</p>
+      <div class="actions"><button class="primary" id="tp-start">Začni današnji niz</button><button id="tp-edit">Spremeni</button></div></div>`;
+    $("#tp-start").addEventListener("click", () => startSession("test-prep"));
+    $("#tp-edit").addEventListener("click", () => showTestPrep(true));
+    return;
+  }
+  const p = await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(state.pathKey || "")}`);
+  const today = new Date().toISOString().slice(0, 10);
+  const chosen = new Set(plan?.path === p.key ? plan.units : []);
+  box.innerHTML = `<h1>📝 Priprava na test</h1>
+    <form id="tp-form" class="card">
+      <p><b>Katera snov bo na testu?</b> <span class="muted">(${escapeHtml(p.label || "")})</span></p>
+      <div class="tp-units">${p.units
+        .map((u, i) =>
+          u.hasPractice
+            ? `<label class="check"><input type="checkbox" name="unit" value="${i}" ${chosen.has(i) ? "checked" : ""}> ${escapeHtml(u.title)}</label>`
+            : "",
+        )
+        .join("")}</div>
+      <p><label><b>Datum testa</b><br><input type="date" name="date" min="${today}" value="${plan?.date && plan.date >= today ? plan.date : ""}" required></label></p>
+      <div class="actions"><button class="primary">Shrani in začni</button>${plan ? `<button type="button" id="tp-del">Odstrani pripravo</button>` : ""}</div>
+      <div id="tp-err" class="muted"></div>
+    </form>`;
+  $("#tp-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const units = f.getAll("unit").map(Number);
+    if (!units.length) return ($("#tp-err").textContent = "Izberi vsaj en sklop.");
+    try {
+      await api(`/api/students/${state.student.id}/test-plan`, { method: "POST", body: { path: p.key, units, date: f.get("date") } });
+      startSession("test-prep");
+    } catch (err) {
+      $("#tp-err").textContent = err.message;
+    }
+  });
+  $("#tp-del")?.addEventListener("click", async () => {
+    await api(`/api/students/${state.student.id}/test-plan`, { method: "DELETE" });
+    showTestPrep(true);
+  });
+}
+
+document.querySelectorAll("#modebar [data-mode]").forEach((b) =>
+  b.addEventListener("click", () => {
+    if (!state.student) return;
+    const mode = b.dataset.mode;
+    if (mode === "new") goNew();
+    else if (mode === "review") startSession("review");
+    else if (mode === "test") showTestPrep();
+    else if (mode === "daily") startSession("daily", { path: state.pathKey });
+  }),
+);
 
 async function loadPath(key = state.pathKey) {
   const q = key ? `?key=${encodeURIComponent(key)}` : "";
@@ -512,9 +630,8 @@ async function loadPath(key = state.pathKey) {
   const x = p.xp;
   $("#xp-card").innerHTML = `<div><b>Raven ${x.level}</b> · ${x.total} XP</div>
     <div class="muted">Ta teden ${x.week} XP · 🔥 ${x.streak} ${x.streak === 1 ? "dan" : "dni"} zapored</div>
+    <button class="primary daily-btn" data-daily>⚡ Današnji trening <span class="muted">~15 min</span></button>
     ${p.next ? `<div class="next">Naslednji korak: <b>${escapeHtml(p.next.name)}</b> <button class="primary" data-open="${p.next.id}">Začni</button></div>` : `<div class="next">🎉 Vse teme te poti so osvojene!</div>`}`;
-  $("#review-btn").hidden = !p.dueCount;
-  $("#review-btn").textContent = `🔁 Ponovi (${p.dueCount})`;
 
   content.innerHTML = p.units
     .map(
@@ -524,7 +641,10 @@ async function loadPath(key = state.pathKey) {
           <div class="bar"><div style="width:${Math.round(u.progress * 100)}%"></div></div>
         </div>
         ${u.locked ? `<p class="muted">Odklene se, ko osvojiš prejšnji sklop. Če snov že znaš, opravi preizkus znanja.</p>` : ""}
-        ${u.hasPractice && !u.mastered ? `<button class="small" data-placement="${ui}">🎯 Preizkus znanja</button>` : ""}
+        <div class="unit-actions">
+          ${u.hasPractice && !u.locked && u.started ? `<button class="small" data-unit="${ui}">🧩 Vadi sklop</button>` : ""}
+          ${u.hasPractice && !u.mastered ? `<button class="small" data-placement="${ui}">🎯 Preizkus znanja</button>` : ""}
+        </div>
         <ul class="topics">
           ${u.topics
             .map(
@@ -548,8 +668,10 @@ document.addEventListener("click", (e) => {
   if (open && !open.disabled) openTopic(open.dataset.open);
   const pl = e.target.closest("[data-placement]");
   if (pl) startSession("placement", { path: state.pathKey, unit: Number(pl.dataset.placement) });
+  const un = e.target.closest("[data-unit]");
+  if (un) startSession("unit-practice", { path: state.pathKey, unit: Number(un.dataset.unit) });
+  if (e.target.closest("[data-daily]")) startSession("daily", { path: state.pathKey });
 });
-$("#review-btn").addEventListener("click", () => startSession("review"));
 $("#back-to-path").addEventListener("click", () => showView("path"));
 
 async function openTopic(topicId) {
@@ -613,20 +735,38 @@ async function nextPractice() {
   box.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+const SESSIONS = {
+  review: { mode: "review", title: "🔁 Ponavljanje", intro: "Mešane naloge iz tem, ki jih je čas ponoviti. Ponavljanje v razmikih (1, 3, 7, 21 dni) pomaga, da znanje ostane.", empty: "Trenutno ni ničesar za ponoviti. 👍" },
+  placement: { mode: "placement", title: "🎯 Preizkus znanja", intro: "Reši naloge brez namigov. Če jih rešiš vsaj 80 %, se sklop odklene in šteje kot osvojen." },
+  daily: { mode: "daily", title: "⚡ Današnji trening", intro: "Približno 15 minut: večinoma nova snov, vmes ponavljanje. Ko se ponavljanje nabere, je ponavljanja več.", empty: "Na tej poti še ni nalog za trening. Začni z novo snovjo." },
+  "unit-practice": { mode: "unit", title: "🧩 Vaja sklopa", intro: "Prepletene naloge iz vseh tem tega sklopa." },
+  "test-prep": { mode: "test", title: "📝 Priprava na test", intro: "Mešane naloge iz snovi za test. Bližje kot je test, težje so." },
+};
+const SESSION_DONE = { review: "Ponavljanje končano", daily: "Današnji trening opravljen", unit: "Vaja sklopa končana", test: "Današnji niz za test opravljen" };
+
 async function startSession(kind, body = {}) {
-  const out = await api(`/api/students/${state.student.id}/${kind}`, { method: "POST", body });
-  showView("topic");
-  $("#topic-content").innerHTML = `<h1>${kind === "review" ? "🔁 Ponavljanje" : "🎯 Preizkus znanja"}</h1>
-    <p class="muted">${
-      kind === "review"
-        ? "Mešane naloge iz tem, ki jih je čas ponoviti. Ponavljanje v razmikih (1, 3, 7, 21 dni) pomaga, da znanje ostane."
-        : "Reši naloge brez namigov. Če jih rešiš vsaj 80 %, se sklop odklene in šteje kot osvojen."
-    }</p><div id="practice"></div>`;
-  if (out.finished) {
-    $("#practice").innerHTML = `<p>Trenutno ni ničesar za ponoviti. 👍</p>`;
+  const cfg = SESSIONS[kind];
+  setActiveMode({ review: "review", daily: "daily", "test-prep": "test" }[kind] || null);
+  let out;
+  try {
+    out = await api(`/api/students/${state.student.id}/${kind}`, { method: "POST", body });
+  } catch (err) {
+    toast(err.message);
     return;
   }
-  renderTask(out.task, { mode: kind, index: out.index, total: out.total });
+  showView("topic");
+  $("#topic-content").innerHTML = `<h1>${cfg.title}</h1><p class="muted">${cfg.intro}</p><div id="practice"></div>`;
+  if (out.finished) {
+    $("#practice").innerHTML = out.empty ? `<p>${cfg.empty || "Ni nalog."}</p>` : sessionDoneCard(cfg.mode, out);
+    return;
+  }
+  renderTask(out.task, { mode: cfg.mode, index: out.index, total: out.total });
+}
+
+function sessionDoneCard(mode, n) {
+  return `<div class="card result"><h2>${SESSION_DONE[mode] || "Končano"} 👏</h2>
+    <p>Pravilno v prvem poskusu: ${n.correct}/${n.total}${n.xp ? ` · +${n.xp.gained} XP` : ""}</p>
+    <button class="primary" id="fb-back">Na učno pot</button></div>`;
 }
 
 function figureSvg(f) {
@@ -648,7 +788,7 @@ function figureSvg(f) {
 
 function renderTask(task, ctx) {
   const box = $("#practice");
-  const stars = ctx.mode === "practice" ? `<span class="lvl" title="Težavnost">${"★".repeat(task.level)}${"☆".repeat(3 - task.level)}</span>` : "";
+  const stars = ctx.mode !== "placement" && task.level ? `<span class="lvl" title="Težavnost">${"★".repeat(task.level)}${"☆".repeat(3 - task.level)}</span>` : "";
   const counter = ctx.total ? `<span class="muted">${ctx.index}/${ctx.total}</span>` : "";
   let input;
   if (task.answerType === "choice") {
@@ -707,8 +847,7 @@ async function checkTask(task, ctx, value) {
       ${r.mastered ? `<div class="fb mastered">🏆 Tema je osvojena! Čez 1 dan te povabim k ponovitvi.</div>` : ""}
       <div class="solution">${renderRich(r.solution)}</div>
       ${r.selfExplain ? `<div class="fb info">🤔 ${escapeHtml(r.selfExplain)}</div>` : ""}`;
-    if (ctx.mode === "review") html += r.next?.finished ? `<div class="card result"><h2>Ponavljanje končano 👏</h2><button class="primary" id="fb-back">Na učno pot</button></div>` : next();
-    else html += next();
+    html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next();
     refreshXp();
   } else {
     html = `<div class="fb bad">${escapeHtml(r.message)}</div>
@@ -716,7 +855,7 @@ async function checkTask(task, ctx, value) {
       ${r.hint ? `<div class="fb hint">💡 ${renderRich(r.hint)}</div>` : ""}`;
     if (r.solution) {
       html += `<div class="solution"><b>Rešen zgled:</b> ${renderRich(r.solution)}</div>`;
-      html += ctx.mode === "review" && r.next?.finished ? `<button class="primary" id="fb-back">Na učno pot</button>` : next("Poskusi podobno nalogo →");
+      html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" ? "Poskusi podobno nalogo →" : "Naslednja naloga →");
     } else {
       html += `<div class="actions"><button id="fb-retry" class="primary">Poskusi znova (še ${r.attemptsLeft})</button>
         <button id="fb-help">💬 Vprašaj STEMMind</button></div>`;

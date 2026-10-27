@@ -274,3 +274,32 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
   body.pad-open #view-topic { padding-bottom: 40px; margin-right: 400px; width: calc(100% - 400px); max-width: none; }
   body.pad-open #view-topic > * { max-width: 760px; margin-left: auto; margin-right: auto; }
 }
+
+/* spodnja vrstica z načini učenja */
+.modebar {
+  display: flex; justify-content: center; gap: 4px; padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  background: var(--surface); border-top: 1px solid var(--border); flex-shrink: 0;
+}
+.modebar button {
+  position: relative; flex: 1; max-width: 170px; display: flex; flex-direction: column; align-items: center; gap: 1px;
+  border: 0 !important; background: none !important; padding: 4px 6px !important; border-radius: 12px; color: var(--muted); font-size: 0.78rem; line-height: 1.2;
+}
+.modebar button .ic { font-size: 1.25rem; }
+.modebar button.active { color: var(--accent); background: var(--surface-2) !important; font-weight: 600; }
+.modebar button.done .ic::after { content: "✓"; font-size: 0.75rem; color: var(--ok); position: absolute; margin-left: 2px; }
+.modebar .badge {
+  position: absolute; top: 0; right: calc(50% - 26px); min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px;
+  background: #d48a00; color: #fff; font-size: 0.7rem; line-height: 18px; text-align: center;
+}
+body.pad-open .modebar { display: none; }
+.daily-btn { margin-top: 10px; }
+.daily-btn .muted { color: inherit; opacity: 0.8; font-weight: 400; }
+.unit-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.unit-actions:empty { display: none; }
+.suggest { border-color: #d48a00; }
+.tp-units { display: flex; flex-direction: column; gap: 6px; margin: 6px 0 12px; }
+label.check { display: flex; gap: 8px; align-items: center; }
+input[type="date"] { padding: 7px 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); margin-top: 4px; }
+@media (min-width: 761px) { .modebar button { flex-direction: row; gap: 6px; font-size: 0.9rem; } .modebar .badge { position: static; } }
+.modebar .short { display: none; }
+@media (max-width: 480px) { .modebar .long { display: none; } .modebar .short { display: inline; } }
