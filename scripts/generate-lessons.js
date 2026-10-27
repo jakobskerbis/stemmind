@@ -53,6 +53,8 @@ Pravila:
 - Upoštevaj raven razreda/letnika in ne uporabljaj snovi, ki je učenec še ni obravnaval. Drži se slovenske terminologije učnih načrtov.
 - Formule v LaTeX ($...$ in $$...$$), decimalna vejica ($3{,}5$), enote pokončno ($\\,\\text{m}$ ali $\\mathrm{m}$), kemijske formule z \\mathrm.
 - Ne izmišljuj si podatkov. Če nečesa nisi prepričana, tega ne piši.
+- Pred oddajo preveri vsak račun, vsako števko in vsako trditev v rešenih primerih (npr. koliko mest ima število).
+- V »Preveri se« ima vsako vprašanje natanko en odgovor s »+« in 2–3 z »-«; vsi odgovori so med seboj različni in kratki (brez pojasnil v samem odgovoru). Preveri, da je odgovor s »+« res pravilen.
 - Brez emojijev. Brez uvodnega ali zaključnega nagovora zunaj lekcije.
 - Odgovori SAMO z vsebino datoteke .md, začni z vrstico "---".
 
@@ -115,6 +117,7 @@ for (;;) {
 
 const byCustom = Object.fromEntries(ids.map((x) => [x.custom, x.topic]));
 let ok = 0;
+const spent = { in: 0, out: 0, cacheRead: 0, cacheWrite: 0 };
 for await (const result of await client.messages.batches.results(batch.id)) {
   const topic = byCustom[result.custom_id];
   if (result.result.type !== "succeeded") {
@@ -122,6 +125,11 @@ for await (const result of await client.messages.batches.results(batch.id)) {
     continue;
   }
   const msg = result.result.message;
+  const u = msg.usage || {};
+  spent.in += u.input_tokens || 0;
+  spent.out += u.output_tokens || 0;
+  spent.cacheRead += u.cache_read_input_tokens || 0;
+  spent.cacheWrite += u.cache_creation_input_tokens || 0;
   if (msg.stop_reason === "refusal" || msg.stop_reason === "max_tokens") {
     console.warn(`  ${topic.id}: ${msg.stop_reason}`);
     continue;
@@ -137,4 +145,7 @@ for await (const result of await client.messages.batches.results(batch.id)) {
   fs.writeFileSync(path.join(LESSONS_DIR, pathKey, `${slug}.md`), text + "\n");
   ok++;
 }
+const pr = PRICES[model] || PRICES["claude-opus-5-5"];
+const cost = (spent.in * pr.in + spent.out * pr.out + spent.cacheRead * pr.cacheRead + spent.cacheWrite * pr.cacheWrite) / 1e6 / 2;
+console.log(`Poraba: ${spent.in} vh., ${spent.out} izh., predpomnilnik ${spent.cacheRead}/${spent.cacheWrite} žetonov ≈ ${cost.toFixed(3)} $ (Batch, -50 %).`);
 console.log(`Shranjenih ${ok} lekcij v ${LESSONS_DIR}. Preglej jih (npm test preveri obliko), nato v glavi nastavi "stanje: pregledano".`);
