@@ -6,6 +6,7 @@ hydrateIcons();
 import { initAccount, accountsOn, openAddChild } from "./account.js";
 import { initTextbook, showTextbook, openLesson } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
+import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
 
 const $ = (sel) => document.querySelector(sel);
 const api = async (url, opts = {}) => {
@@ -239,6 +240,7 @@ async function send(text, { deep = false } = {}) {
   if (!text && !image) return;
   state.sending = true;
   $("#send").disabled = true;
+  state.pacer?.skip();
 
   try {
     if (!state.conversationId) {
@@ -252,14 +254,18 @@ async function send(text, { deep = false } = {}) {
 
     const bubble = addMessage("assistant", "");
     bubble.classList.add("typing");
-    let raw = "";
-    let frame = 0;
-    const paint = () => {
-      frame = 0;
-      bubble.innerHTML = renderRich(raw);
-      const box = $("#messages");
-      box.scrollTop = box.scrollHeight;
+    const box = $("#messages");
+    const paint = (shown) => {
+      const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
+      bubble.innerHTML = renderRich(closeMarkdown(shown));
+      if (atBottom) box.scrollTop = box.scrollHeight;
     };
+    // Odgovor se izpisuje z berljivim tempom; dotik sporočila pokaže vse naenkrat.
+    const pacer = createPacer(currentPace(), paint);
+    state.pacer = pacer;
+    const skip = () => pacer.skip();
+    bubble.addEventListener("click", skip);
+    bubble.title = "Dotakni se za prikaz celega odgovora";
 
     const res = await fetch(`/api/conversations/${state.conversationId}/messages`, {
       method: "POST",
@@ -272,27 +278,31 @@ async function send(text, { deep = false } = {}) {
       throw new Error(err.error || `Napaka ${res.status}`);
     }
 
+    let doneData = null;
     await readSse(res, {
-      delta: (d) => {
-        raw += d.text;
-        if (!frame) frame = requestAnimationFrame(paint);
-      },
+      delta: (d) => pacer.push(d.text),
       mastered: (d) => toast(`Tema »${d.topic}« je osvojena!`, "trophy"),
       done: (d) => {
-        raw = d.text;
-        paint();
-        addDeepButton(bubble, d.deep);
+        doneData = d;
+        pacer.finish(d.text);
         if (d.state) renderState(d.state);
         if (d.title) $("#chat-title").textContent = d.title;
       },
       error: (d) => {
         bubble.classList.add("error");
-        raw = d.error;
-        paint();
+        pacer.finish(d.error);
+        pacer.skip();
         $("#input").value = text; // vrni besedilo za ponovni poskus
       },
     });
-    bubble.classList.remove("typing");
+    pacer.finish();
+    pacer.done.then(() => {
+      bubble.classList.remove("typing");
+      bubble.removeEventListener("click", skip);
+      bubble.removeAttribute("title");
+      if (doneData) addDeepButton(bubble, doneData.deep);
+      if (state.pacer === pacer) state.pacer = null;
+    });
     await loadConversations();
   } catch (err) {
     addMessage("assistant", err.message).classList.add("error");
@@ -384,6 +394,15 @@ function fillSettingsForm() {
   f.querySelector(`input[name=solving_mode][value=${s.solving_mode}]`).checked = true;
   f.manual_weaknesses.value = state.student.manual_weaknesses.join(", ");
   fillLevelOptions(s.educational_track);
+}
+// Hitrost izpisa je nastavitev naprave (ne profila), shrani se takoj.
+{
+  const sel = $("#pace-select");
+  sel.innerHTML = Object.entries(PACES)
+    .map(([k, p]) => `<option value="${k}">${p.label}</option>`)
+    .join("");
+  sel.value = PACES[localStorageGet("pace")] ? localStorageGet("pace") : DEFAULT_PACE;
+  sel.addEventListener("change", () => localStorageSet("pace", sel.value));
 }
 $("#settings-form").educational_track.addEventListener("change", (e) => fillLevelOptions(e.target.value));
 
@@ -504,6 +523,17 @@ function toast(msg, ic = null) {
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+}
+// Med postopnim izpisom zapre odprte ** in *, da se ne vidijo surove zvezdice.
+function closeMarkdown(t) {
+  const bold = (t.match(/\*\*/g) || []).length;
+  if (bold % 2) t += "**";
+  const single = (t.replace(/\*\*/g, "").match(/\*/g) || []).length;
+  if (single % 2) t += "*";
+  return t;
+}
+function currentPace() {
+  return PACES[localStorageGet("pace")] || PACES[DEFAULT_PACE];
 }
 function localStorageGet(k) {
   try {
