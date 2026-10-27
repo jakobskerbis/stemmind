@@ -15,10 +15,10 @@ function fakeStream(replies, seen) {
   };
 }
 
-async function withServer(replies, fn) {
+async function withServer(replies, fn, opts = {}) {
   const store = openDb(":memory:");
   const seen = [];
-  const app = createApp(store, { streamFn: fakeStream(replies, seen) });
+  const app = createApp(store, { streamFn: fakeStream(replies, seen), ...opts });
   const server = app.listen(0);
   const base = `http://127.0.0.1:${server.address().port}`;
   const call = async (path, opts = {}) => {
@@ -121,4 +121,22 @@ test("input validation", async () => {
     assert.equal((await call(`/api/conversations/999/messages`, { method: "POST", body: { text: "a" } })).status, 404);
     assert.equal((await call(`/api/students/${s.id}/prompt`)).status, 404);
   });
+});
+
+test("handwriting read: validates image, returns transcript and logs usage", async () => {
+  const PNG = "data:image/png;base64,iVBORw0KGgo=";
+  const readFn = async ({ unit }) => ({ text: `5 ${unit ?? ""}`.trim(), usage: { input_tokens: 500, output_tokens: 10 }, model: "claude-haiku-5-5" });
+  await withServer(["x"], async ({ call, store }) => {
+    const s = (await call("/api/students", { method: "POST", body: { name: "Ana" } })).body;
+    const topic = "MAT-OS-8/pitagorov-izrek";
+    await call(`/api/students/${s.id}/practice/next`, { method: "POST", body: { topic_id: topic } }); // zgled
+    const { task } = (await call(`/api/students/${s.id}/practice/next`, { method: "POST", body: { topic_id: topic } })).body;
+    const bad = await call(`/api/students/${s.id}/tasks/${task.id}/read`, { method: "POST", body: { image: "nekaj" } });
+    assert.equal(bad.status, 400);
+    const ok = await call(`/api/students/${s.id}/tasks/${task.id}/read`, { method: "POST", body: { image: PNG } });
+    assert.equal(ok.status, 200);
+    assert.match(ok.body.text, /^5/);
+    const row = store.db.prepare("SELECT kind FROM usage").get();
+    assert.equal(row.kind, "ocr");
+  }, { readFn });
 });

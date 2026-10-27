@@ -1,11 +1,34 @@
-// Klic Claude API (pretakanje) in preizkusni način brez ključa.
+// Klic Claude API (pretakanje), izbira modela, strošek, preizkusni način.
 import Anthropic from "@anthropic-ai/sdk";
 
-export const MODEL = process.env.STEMMIND_MODEL || "claude-opus-5-5";
-// Inštruiranje je pogovor, zato je "medium" razumna osnova; za
-// tekmovalne naloge strežnik zviša na "high".
-const EFFORT = process.env.STEMMIND_EFFORT || "medium";
-const EFFORT_COMPETITION = process.env.STEMMIND_EFFORT_COMPETITION || "high";
+const env = (k, d) => (process.env[k] === undefined || process.env[k] === "" ? d : process.env[k]);
+
+// Privzeto poceni hiter model; zmogljivejši za »Razloži podrobneje« in tekmovanja.
+export const MODEL = env("STEMMIND_MODEL", "claude-haiku-5-5");
+export const MODEL_DEEP = env("STEMMIND_MODEL_DEEP", "claude-opus-5-5");
+const EFFORT = env("STEMMIND_EFFORT", "low");
+const EFFORT_DEEP = env("STEMMIND_EFFORT_DEEP", "medium");
+const MAX_TOKENS = Number(env("STEMMIND_MAX_TOKENS", 8000));
+
+// Cene v USD na milijon žetonov (vhod, izhod, branje predpomnilnika, zapis v predpomnilnik).
+// Preveri na https://claude.com/pricing in po potrebi popravi.
+export const PRICES = {
+  "claude-haiku-5-5": { in: 0.1, out: 0.5, cacheRead: 0.01, cacheWrite: 0.125 },
+  "claude-sonnet-5-5": { in: 2, out: 10, cacheRead: 0.2, cacheWrite: 2.5 },
+  "claude-opus-5-5": { in: 4, out: 20, cacheRead: 0.2, cacheWrite: 5 },
+  "claude-fable-5-1": { in: 10, out: 50, cacheRead: 0.25, cacheWrite: 12.5 },
+};
+
+export function costUsd(model, u) {
+  const p = PRICES[model] || PRICES["claude-opus-5-5"];
+  return (
+    ((u.input_tokens || 0) * p.in +
+      (u.output_tokens || 0) * p.out +
+      (u.cache_read_input_tokens || 0) * p.cacheRead +
+      (u.cache_creation_input_tokens || 0) * p.cacheWrite) /
+    1e6
+  );
+}
 
 export const REFUSAL_TEXT =
   "Pri tem ti žal ne morem pomagati. Lahko pa skupaj rešiva kakšno nalogo iz matematike, fizike ali kemije – kaj imaš pred sabo?";
@@ -17,51 +40,52 @@ export function isMockMode() {
 }
 
 let client = null;
-function getClient() {
+export function getClient() {
   if (!client) client = new Anthropic();
   return client;
 }
 
+// Strežniški nadomestni model ob zavrnitvi podpirajo modeli Opus/Sonnet/Fable, Haiku ne.
+const supportsFallback = (model) => !/haiku/.test(model);
+
 /**
  * Pretoči odgovor modela.
- * @returns {Promise<{content: Array, text: string, stopReason: string}>}
- *   content = bloki za zgodovino (nespremenjeni), text = surovo besedilo z META.
+ * @returns {Promise<{content, text, stopReason, usage, model}>}
  */
-export async function streamReply({ system, messages, competition = false, onText, signal }) {
-  if (isMockMode()) return mockReply({ messages, onText, signal });
+export async function streamReply({ system, messages, deep = false, onText, signal }) {
+  const model = deep ? MODEL_DEEP : MODEL;
+  if (isMockMode()) return mockReply({ messages, onText, signal, model });
 
-  const stream = getClient().beta.messages.stream(
-    {
-      model: MODEL,
-      max_tokens: 64000,
-      system,
-      messages,
-      thinking: { type: "adaptive" },
-      output_config: { effort: competition ? EFFORT_COMPETITION : EFFORT },
-      // Če model zahtevo zavrne iz varnostnih razlogov, jo strežnik
-      // samodejno preusmeri na privzeti nadomestni model.
-      betas: ["server-side-fallback-2026-07-01"],
-      fallbacks: "default",
-    },
-    { signal },
-  );
+  const params = {
+    model,
+    max_tokens: MAX_TOKENS,
+    system,
+    messages,
+    thinking: { type: "adaptive" },
+    output_config: { effort: deep ? EFFORT_DEEP : EFFORT },
+    // Samodejni predpomnilnik: ves stalni del (prompt + zgodovina) se ob
+    // naslednjem sporočilu prebere iz predpomnilnika za ~10 % cene.
+    cache_control: { type: "ephemeral" },
+  };
+  if (supportsFallback(model)) {
+    params.betas = ["server-side-fallback-2026-07-01"];
+    params.fallbacks = "default";
+  }
 
+  const stream = getClient().beta.messages.stream(params, { signal });
   for await (const event of stream) {
-    if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-      onText(event.delta.text);
-    }
+    if (event.type === "content_block_delta" && event.delta.type === "text_delta") onText(event.delta.text);
   }
   const final = await stream.finalMessage();
   const text = final.content
     .filter((b) => b.type === "text")
     .map((b) => b.text)
     .join("");
-  return { content: final.content, text, stopReason: final.stop_reason };
+  return { content: final.content, text, stopReason: final.stop_reason, usage: final.usage, model: final.model || model };
 }
 
 // ---------------------------------------------------------------------------
-// Preizkusni način: brez API ključa vrne vnaprej pripravljen odgovor, da lahko
-// preizkusiš vmesnik, shranjevanje in analitiko.
+// Preizkusni način: brez API ključa vrne vnaprej pripravljen odgovor.
 
 function lastUserText(messages) {
   const last = messages[messages.length - 1];
@@ -76,23 +100,26 @@ function lastUserText(messages) {
 function mockAnswer(userText) {
   const t = userText.toLowerCase();
   if (/sistemsk|prompt|navodil|ignoriraj/.test(t)) {
-    return '»Žal ti teh informacij o svojem delovanju ne morem razkriti. 🛡️ Sem tvoj osebni AI inštruktor za naravoslovne predmete. Povej mi raje, katero nalogo rešuješ, da jo pogledava skupaj!«\n<<META subject=MAT topic="-" error=0 mode=A flag=injection>>';
+    return '»Žal ti teh informacij o svojem delovanju ne morem razkriti. 🛡️ Sem tvoj osebni AI inštruktor za naravoslovne predmete. Povej mi raje, katero nalogo rešuješ, da jo pogledava skupaj!«\n<<META subject=MAT topic="-" error=0 mode=A flag=injection done=0>>';
   }
   if (/kemij/.test(t)) {
-    return 'Prav, preklopil sem na kemijo. 🧪\n\nKatero nalogo imaš? Napiši jo ali jo fotografiraj.\n<<META subject=KEM topic="-" error=0 mode=A flag=none>>';
+    return 'Prav, preklopil sem na kemijo. 🧪\n\nKatero nalogo imaš? Napiši jo ali jo fotografiraj.\n<<META subject=KEM topic="-" error=0 mode=A flag=none done=0>>';
   }
   if (/x\s*=\s*4|rezultat je 4/.test(t)) {
-    return 'Ni čisto prav, a si blizu. Poglej drugi korak: ko si odštel $3$ na obeh straneh, koliko ostane na desni?\n<<META subject=MAT topic="linearne enačbe" error=1 mode=A flag=none>>';
+    return 'Ni čisto prav, a si blizu. Poglej drugi korak: ko si odštel $3$ na obeh straneh, koliko ostane na desni?\n<<META subject=MAT topic="linearne enačbe" error=1 mode=A flag=none done=0>>';
+  }
+  if (/začniva s temo/.test(t)) {
+    return "*(Preizkusni način.)*\n\nPreden razložim: kaj že veš o tej temi? Poskusi odgovoriti na kratko vprašanje:\n\nKoliko je $3 \\cdot 4$?\n" + '<<META subject=MAT topic="-" error=0 mode=A flag=none done=0>>';
   }
   return (
     "*(Preizkusni način – brez povezave s Claude.)*\n\n" +
     "Poglejva skupaj. Pri enačbi $2x + 3 = 11$ želimo, da $x$ ostane sam.\n\n" +
     "Kaj bi naredil najprej, da se znebiš števila $3$ na levi strani?\n" +
-    '<<META subject=MAT topic="linearne enačbe" error=0 mode=A flag=none>>'
+    '<<META subject=MAT topic="linearne enačbe" error=0 mode=A flag=none done=0>>'
   );
 }
 
-async function mockReply({ messages, onText, signal }) {
+async function mockReply({ messages, onText, signal, model }) {
   const text = mockAnswer(lastUserText(messages));
   const delay = Number(process.env.STEMMIND_MOCK_DELAY_MS ?? 15);
   for (let i = 0; i < text.length; i += 6) {
@@ -100,5 +127,48 @@ async function mockReply({ messages, onText, signal }) {
     onText(text.slice(i, i + 6));
     if (delay) await new Promise((r) => setTimeout(r, delay));
   }
-  return { content: [{ type: "text", text }], text, stopReason: "end_turn" };
+  return { content: [{ type: "text", text }], text, stopReason: "end_turn", usage: { input_tokens: 0, output_tokens: 0 }, model };
+}
+
+// ---------------------------------------------------------------------------
+// Branje rokopisa: učenec odgovor napiše s prstom ali miško, model ga prepiše.
+// Model NE preverja pravilnosti (to naredi koda), samo prebere zapisano.
+
+const OCR_MODEL = env("STEMMIND_OCR_MODEL", MODEL);
+
+export async function readHandwriting({ imageBase64, mediaType = "image/png", answerType = "number", unit = null }) {
+  if (isMockMode()) return { text: null, mock: true, usage: null, model: OCR_MODEL };
+  const kind =
+    answerType === "fraction"
+      ? "ulomek (zapiši kot a/b)"
+      : answerType === "coefficients"
+        ? "zaporedje koeficientov, ločenih z vejico (npr. 2, 1, 2)"
+        : unit
+          ? `število z enoto (npr. 12,5 ${unit})`
+          : "število ali kratek izraz";
+  const final = await getClient().messages.create({
+    model: OCR_MODEL,
+    max_tokens: 200,
+    messages: [
+      {
+        role: "user",
+        content: [
+          { type: "image", source: { type: "base64", media_type: mediaType, data: imageBase64 } },
+          {
+            type: "text",
+            text:
+              `Na sliki je učenčev ročno napisan zapis pri nalogi iz matematike, fizike ali kemije. Pričakovan odgovor je ${kind}.\n` +
+              "Prepiši KONČNI odgovor točno tako, kot je napisan (tudi če je napačen). Ne računaj in ne popravljaj. " +
+              "Decimalno vejico zapiši z vejico. Če je zapisanih več vrstic, je končni odgovor običajno zadnja vrstica ali zapis za »=«.\n" +
+              "Odgovori samo z eno vrstico: <odgovor>prepis</odgovor>. Če zapisa ni mogoče prebrati, odgovori <odgovor>?</odgovor>.",
+          },
+        ],
+      },
+    ],
+  });
+  const raw = final.content.filter((b) => b.type === "text").map((b) => b.text).join("");
+  const m = raw.match(/<odgovor>([\s\S]*?)<\/odgovor>/);
+  let text = (m ? m[1] : raw).trim().slice(0, 80);
+  if (!text || text === "?") text = null;
+  return { text, usage: final.usage, model: final.model || OCR_MODEL };
 }

@@ -22,11 +22,13 @@ const PLACEHOLDERS = [
   "solving_mode",
   "personality_setting",
   "weaknesses",
+  "learning_path",
 ];
 
 // settings: normalizirane nastavitve; weaknesses: seznam nizov.
-export function buildSystemPrompt({ settings, weaknesses = [], studentName = "" }, template = loadTemplate()) {
+export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "" }, template = loadTemplate()) {
   const values = {
+    learning_path: learningPath || "(Prost pogovor: ni izbrane teme učne poti.)",
     ...settings,
     student_name: cleanText(studentName, 40) || "(ni podano)",
     personality_setting: settings.personality_setting || "nevtralna",

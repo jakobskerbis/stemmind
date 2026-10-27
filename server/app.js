@@ -5,7 +5,11 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
 import { createStreamFilter, parseMeta, stripMeta } from "./meta.js";
-import { streamReply, isMockMode, MODEL, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
+import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
+import { Usage, LIMITS, windowHistory } from "./usage.js";
+import { Progress } from "./progress.js";
+import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt } from "./curriculum.js";
+import { getExplanation } from "./explanations.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 
@@ -13,6 +17,15 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_IMAGE_B64 = 7 * 1024 * 1024; // ~5 MB slike
 const MAX_TEXT = 6000;
+const ANSWER_CACHE = process.env.STEMMIND_ANSWER_CACHE !== "0";
+
+// Ključ za ponovno uporabo odgovora: isto prvo vprašanje pri istih nastavitvah.
+function cacheKey(text, settings, deep) {
+  const norm = text.toLowerCase().replace(/\s+/g, " ").replace(/[\s.!?]+$/, "").trim();
+  if (norm.length < 8) return null;
+  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.curriculum_level, settings.solving_mode, settings.personality_setting, deep ? 1 : 0];
+  return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
+}
 
 function basicAuth(password) {
   const expected = Buffer.from(password);
@@ -25,7 +38,7 @@ function basicAuth(password) {
   };
 }
 
-export function createApp(store, { streamFn = streamReply } = {}) {
+export function createApp(store, { streamFn = streamReply, readFn = readHandwriting } = {}) {
   const app = express();
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
   if (process.env.STEMMIND_PASSWORD) app.use(basicAuth(process.env.STEMMIND_PASSWORD));
@@ -38,6 +51,8 @@ export function createApp(store, { streamFn = streamReply } = {}) {
   app.use("/vendor/dompurify", express.static(path.join(modules, "dompurify", "dist")));
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
+  const usage = new Usage(store.db);
+  const progress = new Progress(store);
 
   const intParam = (v) => (/^\d+$/.test(v) ? Number(v) : NaN);
   const loadStudent = (req, res) => {
@@ -52,7 +67,14 @@ export function createApp(store, { streamFn = streamReply } = {}) {
   };
 
   app.get("/api/config", (_req, res) => {
-    res.json({ mock: isMockMode(), model: MODEL, enums: ENUMS, defaults: DEFAULT_SETTINGS });
+    res.json({
+      mock: isMockMode(),
+      model: MODEL,
+      model_deep: MODEL_DEEP,
+      enums: ENUMS,
+      defaults: DEFAULT_SETTINGS,
+      daily_questions: LIMITS.dailyQuestions() || null,
+    });
   });
 
   // --- učenci in nastavitve ---
@@ -114,7 +136,10 @@ export function createApp(store, { streamFn = streamReply } = {}) {
   });
   app.post("/api/students/:id/conversations", (req, res) => {
     const s = loadStudent(req, res);
-    if (s) res.status(201).json(store.createConversation(s.id));
+    if (!s) return;
+    const topic = req.body?.topic_id ? getTopic(req.body.topic_id) : null;
+    if (req.body?.topic_id && !topic) return res.status(400).json({ error: "Tema ne obstaja." });
+    res.status(201).json(store.createConversation(s.id, topic ? { pathTopic: topic.id, title: `📘 ${topic.name}` } : {}));
   });
   app.get("/api/conversations/:id", (req, res) => {
     const c = loadConversation(req, res);
@@ -123,6 +148,7 @@ export function createApp(store, { streamFn = streamReply } = {}) {
     res.json({
       ...c,
       state: last ? { subject: last.subject, mode: last.mode } : null,
+      topic: c.path_topic ? { id: c.path_topic, name: getTopic(c.path_topic)?.name } : null,
       messages: store.listMessages(c.id).map((m) => ({
         id: m.id,
         role: m.role,
@@ -150,12 +176,18 @@ export function createApp(store, { streamFn = streamReply } = {}) {
     }
     if (!text && !image) return res.status(400).json({ error: "Sporočilo je prazno." });
     if (busy.has(conv.id)) return res.status(409).json({ error: "Počakaj, da STEMMind odgovori." });
+    const blocked = usage.blockReason(student.id);
+    if (blocked) return res.status(429).json({ error: blocked, limit: true });
     busy.add(conv.id);
+    // Zmogljivejši model: gumb »Razloži podrobneje« ali program Tekmovanja.
+    const deep = req.body?.deep === true || student.settings.track === "COMPETITION";
 
     const userContent = [];
     if (image) userContent.push({ type: "image", source: { type: "base64", media_type: image.media_type, data: image.data } });
     userContent.push({ type: "text", text: text || "(Pošiljam fotografijo naloge.)" });
+    const isFirst = store.listMessages(conv.id).length === 0;
     const userMsgId = store.addMessage(conv.id, "user", userContent, text, !!image);
+    const key = ANSWER_CACHE && isFirst && !image && !conv.path_topic ? cacheKey(text, student.settings, req.body?.deep === true) : null;
     if (conv.title === "Nov pogovor") {
       store.renameConversation(conv.id, cleanText(text, 50) || "Naloga s fotografije");
     }
@@ -180,11 +212,22 @@ export function createApp(store, { streamFn = streamReply } = {}) {
         settings: student.settings,
         weaknesses: weaknessesForPrompt(store, student),
         studentName: student.name,
+        learningPath: conv.path_topic ? learningPathPrompt(conv.path_topic) : "",
       });
-      const result = await streamFn({
+      const cached = key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
+      const run = cached
+        ? async ({ onText }) => {
+            // Ime učenca je v predpomnilniku shranjeno kot {{IME}}.
+            const t = cached.text.replaceAll("{{IME}}", student.name);
+            for (let i = 0; i < t.length; i += 40) onText(t.slice(i, i + 40));
+            store.db.prepare("UPDATE answer_cache SET hits = hits + 1 WHERE key = ?").run(key);
+            return { content: [{ type: "text", text: t }], text: t, stopReason: "end_turn", usage: null, model: "cache" };
+          }
+        : streamFn;
+      const result = await run({
         system,
-        messages: store.apiHistory(conv.id),
-        competition: student.settings.track === "COMPETITION",
+        messages: windowHistory(store.apiHistory(conv.id)),
+        deep,
         signal: controller.signal,
         onText: (chunk) => {
           const out = filter.push(chunk);
@@ -198,7 +241,14 @@ export function createApp(store, { streamFn = streamReply } = {}) {
 
       let meta = parseMeta(result.text);
       let display = stripMeta(result.text);
-      let content = result.content;
+      // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
+      // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
+      let content = [{ type: "text", text: result.text || "…" }];
+      const cost = cached ? 0 : usage.log(student.id, result.model || (deep ? MODEL_DEEP : MODEL), result.usage);
+      if (key && !cached && result.stopReason === "end_turn" && result.text) {
+        const generic = student.name.length > 1 ? result.text.replaceAll(student.name, "{{IME}}") : result.text;
+        store.db.prepare("INSERT OR REPLACE INTO answer_cache (key, text) VALUES (?, ?)").run(key, generic);
+      }
       if (result.stopReason === "refusal") {
         display = REFUSAL_TEXT;
         content = [{ type: "text", text: REFUSAL_TEXT }];
@@ -209,6 +259,9 @@ export function createApp(store, { streamFn = streamReply } = {}) {
       const assistantId = store.addMessage(conv.id, "assistant", content, display);
       if (meta) {
         store.addEvent({ student_id: student.id, conversation_id: conv.id, message_id: assistantId, ...meta });
+        if (meta.done && conv.path_topic && progress.markMastered(student.id, conv.path_topic, "chat")) {
+          send("mastered", { topic: getTopic(conv.path_topic)?.name });
+        }
       } else {
         console.warn(`[stemmind] odgovor brez META (pogovor ${conv.id})`);
       }
@@ -218,6 +271,8 @@ export function createApp(store, { streamFn = streamReply } = {}) {
         text: display,
         state: meta ? { subject: meta.subject, mode: meta.mode } : null,
         title: store.getConversation(conv.id).title,
+        deep,
+        cost_usd: Math.round(cost * 10000) / 10000,
       });
       res.end();
     } catch (err) {
@@ -233,6 +288,100 @@ export function createApp(store, { streamFn = streamReply } = {}) {
       busy.delete(conv.id);
     }
   });
+
+  // --- učne poti ---
+  app.get("/api/paths", (req, res) => res.json(listPaths(req.query.subject)));
+  app.get("/api/students/:id/path", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const key = req.query.key || pathKeyFor(s.settings);
+    const view = key && progress.pathView(s.id, key);
+    if (!view) return res.json({ key: null, message: "Za to raven še ni učne poti." });
+    res.json({ ...view, defaultKey: pathKeyFor(s.settings), xp: progress.xpSummary(s.id) });
+  });
+  app.get("/api/topic", (req, res) => {
+    const t = getTopic(req.query.id);
+    if (!t) return res.status(404).json({ error: "Tema ne obstaja." });
+    res.json({ ...t, pathLabel: getPath(t.path).label, explanation: getExplanation(t.id)?.text || null });
+  });
+  app.post("/api/students/:id/topic-status", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const { topic_id, status } = req.body || {};
+    if (!getTopic(topic_id) || !["new", "learning", "mastered"].includes(status)) return res.status(400).json({ error: "Napačni podatki." });
+    progress.setStatus(s.id, topic_id, status);
+    res.json({ ok: true });
+  });
+
+  // --- vadnica ---
+  app.post("/api/students/:id/practice/next", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.nextPractice(s.id, req.body?.topic_id);
+    if (!out) return res.status(400).json({ error: "Za to temo še ni vaj." });
+    res.json(out);
+  });
+  app.post("/api/students/:id/review", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.startReview(s.id);
+    if (!out) return res.json({ finished: true, empty: true });
+    res.json(out);
+  });
+  app.post("/api/students/:id/placement", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.startPlacement(s.id, req.body?.path, Number(req.body?.unit));
+    if (!out) return res.status(400).json({ error: "Za ta sklop ni preizkusa znanja." });
+    res.json(out);
+  });
+  app.post("/api/students/:id/tasks/:taskId/answer", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.answer(s.id, intParam(req.params.taskId), req.body?.answer);
+    if (out.error) return res.status(400).json(out);
+    res.json(out);
+  });
+  // Branje odgovora, napisanega s prstom/miško. Vrne prepis, ki ga učenec potrdi.
+  app.post("/api/students/:id/tasks/:taskId/read", async (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const t = progress.getTask(intParam(req.params.taskId));
+    if (!t || t.student_id !== s.id) return res.status(404).json({ error: "Naloga ne obstaja." });
+    const m = /^data:(image\/(?:png|jpeg|webp));base64,(.+)$/.exec(String(req.body?.image || ""));
+    if (!m || m[2].length > 2 * 1024 * 1024) return res.status(400).json({ error: "Slika zapisa manjka ali je prevelika." });
+    const blocked = usage.blockReason(s.id);
+    if (blocked) return res.status(429).json({ error: blocked });
+    try {
+      const a = t.payload.answer || {};
+      const out = await readFn({ imageBase64: m[2], mediaType: m[1], answerType: a.type, unit: a.unit || null });
+      if (out.mock) return res.json({ text: null, message: "Branje rokopisa deluje, ko je nastavljen API ključ. Do takrat odgovor vpiši s tipkami." });
+      if (out.usage) usage.log(s.id, out.model, out.usage, "ocr");
+      res.json({ text: out.text, message: out.text ? null : "Zapisa nisem uspel prebrati. Poskusi pisati večje ali uporabi tipke." });
+    } catch (err) {
+      console.error("[stemmind] branje rokopisa:", err?.message || err);
+      res.status(502).json({ error: "Branje zapisa trenutno ne deluje. Odgovor vpiši s tipkami." });
+    }
+  });
+  // »Vprašaj STEMMind«: odpre pogovor z nalogo in učenčevim odgovorom.
+  app.post("/api/students/:id/tasks/:taskId/help", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const t = progress.getTask(intParam(req.params.taskId));
+    if (!t || t.student_id !== s.id) return res.status(404).json({ error: "Naloga ne obstaja." });
+    const conv = store.createConversation(s.id, { pathTopic: t.topic_id, title: `🧩 ${getTopic(t.topic_id)?.name ?? "Naloga"}` });
+    const text = `Rešujem nalogo iz Vadnice:\n\n${t.payload.text}\n\n${t.last_answer ? `Moj odgovor je bil: ${t.last_answer}. Ni pravilen.` : "Ne vem, kako začeti."} Mi pomagaš najti, kje se zatakne? Rešitve mi ne povej.`;
+    res.json({ conversation: conv, text });
+  });
+
+  // --- XP in lestvica ---
+  app.get("/api/students/:id/xp", (req, res) => {
+    const s = loadStudent(req, res);
+    if (s) res.json({ ...progress.xpSummary(s.id), leaderboard: progress.leaderboard() });
+  });
+
+  // --- poraba AI ---
+  app.get("/api/usage", (_req, res) => res.json(usage.summary()));
 
   return app;
 }

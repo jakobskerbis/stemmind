@@ -6,9 +6,9 @@ import { normalizeSettings } from "../server/settings.js";
 
 test("parseMeta reads quoted topics and validates enums", () => {
   const m = parseMeta('Besedilo\n<<META subject=FIZ topic="Newtonovi zakoni" error=1 mode=B flag=none>>');
-  assert.deepEqual(m, { subject: "FIZ", topic: "Newtonovi zakoni", error: 1, mode: "B", flag: "none" });
+  assert.deepEqual(m, { subject: "FIZ", topic: "Newtonovi zakoni", error: 1, mode: "B", flag: "none", done: 0 });
   const bad = parseMeta('<<META subject=BIO topic="-" error=7 mode=C flag=xyz>>');
-  assert.deepEqual(bad, { subject: null, topic: null, error: 0, mode: null, flag: "none" });
+  assert.deepEqual(bad, { subject: null, topic: null, error: 0, mode: null, flag: "none", done: 0 });
   assert.equal(parseMeta("brez meta"), null);
 });
 

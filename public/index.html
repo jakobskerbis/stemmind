@@ -11,22 +11,41 @@
   <header class="topbar">
     <div class="brand">STEM<span>Mind</span></div>
     <nav class="tabs" role="tablist">
-      <button class="tab active" data-view="chat">Klepet</button>
+      <button class="tab active" data-view="path">Učna pot</button>
+      <button class="tab" data-view="chat">Klepet</button>
       <button class="tab" data-view="settings">Nastavitve</button>
       <button class="tab" data-view="progress">Napredek</button>
     </nav>
+    <div id="xp-badge" class="xp-badge" title="Izkušnje">⭐ <b id="xp-total">0</b> XP · 🔥 <b id="xp-streak">0</b></div>
     <label class="student-picker">
       <span class="sr-only">Učenec</span>
       <select id="student-select"></select>
     </label>
   </header>
 
+  <div id="toast" class="toast" hidden></div>
   <div id="mock-banner" class="banner" hidden>
     Preizkusni način: API ključ ni nastavljen, zato STEMMind vrača vnaprej pripravljene odgovore.
   </div>
 
+  <!-- UČNA POT -->
+  <main id="view-path" class="view narrow">
+    <div class="path-head">
+      <select id="path-select" aria-label="Učna pot"></select>
+      <button id="review-btn" class="primary" hidden>🔁 Ponovi</button>
+    </div>
+    <div id="xp-card" class="card xp-card"></div>
+    <div id="path-content"></div>
+  </main>
+
+  <!-- TEMA / VADNICA -->
+  <main id="view-topic" class="view narrow" hidden>
+    <button id="back-to-path" type="button">← Učna pot</button>
+    <div id="topic-content"></div>
+  </main>
+
   <!-- KLEPET -->
-  <main id="view-chat" class="view chat-view">
+  <main id="view-chat" class="view chat-view" hidden>
     <aside class="sidebar">
       <button id="new-chat" class="primary">+ Nov pogovor</button>
       <ul id="conversation-list"></ul>
@@ -105,6 +124,11 @@
       </div>
     </form>
 
+    <div class="card">
+      <h2>Poraba AI ta mesec</h2>
+      <div id="usage"></div>
+    </div>
+
     <div class="card form">
       <h2>Nov učenec</h2>
       <form id="new-student-form" class="inline">
@@ -133,6 +157,11 @@
         <thead><tr><th>Predmet</th><th>Tema</th><th>Poteze</th><th>Napake</th></tr></thead>
         <tbody id="topic-rows"></tbody>
       </table>
+    </div>
+    <div class="card">
+      <h2>Lestvica tedna</h2>
+      <p class="muted">Točke XP, zbrane od ponedeljka. Prikazani so samo vzdevki.</p>
+      <ol id="leaderboard" class="leaderboard"></ol>
     </div>
     <div class="card" id="flags-card">
       <h2>Opozorila</h2>

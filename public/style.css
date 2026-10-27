@@ -157,3 +157,120 @@ h2 { font-size: 1.05rem; margin: 0 0 8px; }
   .msg { max-width: 100%; }
   .chat-head { padding: 10px 12px; }
 }
+
+/* učna pot in vadnica */
+.xp-badge { font-size: 0.9rem; color: var(--muted); white-space: nowrap; }
+.xp-badge b { color: var(--text); }
+.path-head { display: flex; gap: 8px; margin-bottom: 12px; }
+.path-head select { flex: 1; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); }
+.xp-card .next { margin-top: 8px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.unit.locked { opacity: 0.6; }
+.unit-head { display: flex; align-items: center; gap: 12px; justify-content: space-between; }
+.unit-head h2 { margin: 0; }
+.bar { width: 120px; height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; flex-shrink: 0; }
+.bar > div { height: 100%; background: var(--ok); }
+.topics { list-style: none; padding: 0; margin: 10px 0 0; }
+.topic { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+.topic .st { width: 1.2em; text-align: center; color: var(--muted); }
+.topic.mastered .st { color: var(--ok); }
+.topic.learning .st { color: var(--accent); }
+.topic.due .st { color: #d48a00; }
+.topic.mastered.due button.link { opacity: 0.65; } /* znanje bledi, čas za ponovitev */
+button.link { border: 0 !important; background: none !important; padding: 0 !important; color: var(--text); cursor: pointer; text-align: left; }
+button.link:hover:not(:disabled) { text-decoration: underline; color: var(--accent); }
+button.link:disabled { cursor: default; color: var(--muted); }
+button.small { font-size: 0.85rem; padding: 5px 10px !important; margin-top: 8px; }
+.tag { font-size: 0.75rem; background: #fff1cc; color: #7a5200; border-radius: 99px; padding: 1px 8px; }
+.lvl { color: #e0a100; font-size: 0.85rem; letter-spacing: 1px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.explanation h3 { font-size: 1rem; margin: 14px 0 4px; }
+.explanation details { background: var(--surface-2); border-radius: 8px; padding: 4px 10px; margin: 6px 0; }
+.task { margin-top: 16px; }
+.task-tag { font-size: 0.85rem; color: var(--muted); display: flex; gap: 10px; align-items: center; margin-bottom: 6px; }
+.task-text { font-size: 1.05rem; }
+.answer-row { display: flex; gap: 8px; margin-top: 12px; }
+.answer-row input { flex: 1; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-size: 1.05rem; }
+.choices { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.choice { min-width: 80px; font-size: 1.05rem; }
+.feedback { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.fb { border-radius: 10px; padding: 8px 12px; }
+.fb.ok { background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); font-weight: 600; }
+.fb.bad { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger); }
+.fb.info, .fb.hint { background: var(--surface-2); }
+.fb.mastered { background: #fff4d6; color: #6b4e00; font-weight: 600; }
+.solution { background: var(--surface-2); border-radius: 10px; padding: 8px 12px; overflow-x: auto; }
+.example { border-color: var(--accent); }
+.figure { width: 100%; max-width: 320px; display: block; margin: 10px auto; }
+.figure .grid { stroke: var(--border); stroke-width: 1; }
+.figure .axis { stroke: var(--muted); stroke-width: 1.5; }
+.figure .plot { stroke: var(--accent); stroke-width: 3; }
+.figure .lbl { fill: var(--muted); font-size: 12px; }
+.result { margin-top: 8px; }
+.leaderboard { padding-left: 1.4em; }
+.leaderboard li { display: flex; justify-content: space-between; padding: 3px 0; }
+.leaderboard li.me { font-weight: 700; color: var(--accent); }
+.deep-btn { display: block; margin-top: 8px; font-size: 0.82rem; padding: 4px 10px !important; color: var(--muted); }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 10px 18px; border-radius: 12px; z-index: 50; box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+@media (max-width: 760px) { .xp-badge { order: 2; } .bar { width: 70px; } }
+
+/* vnos z dotikom */
+.pad-open-btn { padding: 6px 12px !important; font-size: 1.1rem; }
+.pad {
+  --ink-h: 30vh;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  max-height: 66vh; overflow-y: auto; display: flex; flex-direction: column;
+  background: var(--surface); border-top: 1px solid var(--border);
+  border-radius: 16px 16px 0 0; box-shadow: 0 -8px 24px rgba(0,0,0,.12);
+  padding: 6px 12px calc(10px + env(safe-area-inset-bottom));
+}
+.pad-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pad-tabs { display: flex; gap: 4px; }
+.pad-tabs button, .pad-close { border: 0 !important; background: none !important; padding: 8px 12px !important; border-radius: 10px; color: var(--muted); }
+.pad-tabs button[aria-selected="true"] { background: var(--surface-2) !important; color: var(--text); font-weight: 600; }
+.pad-answer { display: flex; align-items: center; gap: 8px; margin: 4px 0 8px; }
+.pad-value { flex: 1; min-height: 44px; display: flex; align-items: center; padding: 6px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); font-size: 1.25rem; overflow-x: auto; white-space: pre; }
+.pad-value.ph { color: var(--muted); font-size: 1rem; }
+.pad-body { display: none; }
+.pad[data-tab="keys"] .pad-keys, .pad[data-tab="draw"] .pad-draw { display: block; }
+.pad-units { display: flex; gap: 6px; }
+.pad-units:empty { display: none; }
+.pad-units button { min-height: 44px; padding: 6px 14px; border-radius: 12px; }
+.keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.key { min-height: 46px; font-size: 1.3rem; border-radius: 12px; touch-action: manipulation; user-select: none; }
+.key.fn { background: var(--surface-2); }
+.key:active { transform: scale(0.96); }
+.draw-tools { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+.draw-tools button { padding: 6px 12px; border-radius: 10px; }
+.draw-tools button.on { outline: 2px solid var(--accent); }
+.canvas-wrap { height: var(--ink-h); overflow-y: auto; border: 1px solid var(--border); border-radius: 10px; }
+canvas.ink {
+  display: block; width: 100%; height: 100%; touch-action: none; cursor: crosshair; color: var(--text);
+  background: repeating-linear-gradient(to bottom, transparent 0 39px, color-mix(in srgb, var(--border) 80%, transparent) 39px 40px), var(--bg);
+}
+.draw-foot { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.draw-foot .muted { font-size: 0.8rem; flex: 1; min-width: 160px; }
+.read-result:not(:empty) { margin-bottom: 8px; }
+.read-result .actions { margin: 6px 0 0; }
+body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
+/* Telefon: besedilo naloge ostane pripeto na vrhu, plošča je spodaj. */
+@media (max-width: 899px) {
+  /* Med vnosom skrijemo zavihke in obvestila, da je za nalogo več prostora. */
+  body.pad-open .tabs, body.pad-open .banner, body.pad-open #back-to-path, body.pad-open .task-tag { display: none !important; }
+  body.pad-open .pad-tabs button, body.pad-open .pad-close { padding: 6px 10px !important; }
+  body.pad-open .task .task-text {
+    position: sticky; top: -20px; z-index: 2; max-height: 30vh; overflow-y: auto;
+    background: var(--surface); margin: 0 -16px; padding: 8px 16px; border-bottom: 1px solid var(--border);
+  }
+}
+/* Tablica v ležečem položaju in računalnik: naloga levo, plošča desno. */
+@media (min-width: 900px) {
+  .pad {
+    top: var(--pad-top, 60px); left: auto; width: 400px; max-height: none; overflow: hidden;
+    border-top: 0; border-left: 1px solid var(--border); border-radius: 0; box-shadow: -8px 0 24px rgba(0,0,0,.08);
+    padding-top: 12px;
+  }
+  .pad[data-tab="draw"] .pad-draw { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .pad .canvas-wrap { flex: 1; height: auto; min-height: 120px; }
+  body.pad-open #view-topic { padding-bottom: 40px; margin-right: 400px; width: calc(100% - 400px); max-width: none; }
+  body.pad-open #view-topic > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+}

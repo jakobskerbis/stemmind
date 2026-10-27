@@ -10,6 +10,11 @@ Osebni AI inštruktor za matematiko, fiziko in kemijo za slovenske učence (OŠ 
 - **Analitika**: model na konec vsakega odgovora doda vrstico `<<META …>>`. Strežnik jo odstrani še preden jo učenec vidi (tudi med pretakanjem), jo shrani in iz nje izračuna šibke točke.
 - **Samodejne šibke točke**: tema z vsaj 3 potezami in vsaj 40 % napak v zadnjih 60 dneh se doda v prompt kot šibka točka.
 - **Napredek**: šibke točke, aktivnost po dnevih, teme z deležem napak in opozorila (stiska, nevarna prošnja, poskus obiti pravila).
+- **Učna pot**: 20 poti po učnem načrtu (MAT, FIZ, KEM; OŠ in SŠ, 255 tem). Naslednji sklop se odklene, ko je prejšnji osvojen (8 od zadnjih 10 pravilnih in vsaj 2 težji nalogi) ali s preizkusom znanja.
+- **Vadnica**: koda sestavi naloge in izračuna rezultate (37 vrst nalog). Preverjanje dopušča zaokroževanje, preveri enote in razloži napačno zaokroževanje. Težavnost se prilagaja, ob napaki je namig, po treh poskusih rešen zgled.
+- **Vnos z dotikom**: gumb ✍️ odpre ploščo s tipkami ali površino za pisanje s prstom, miško ali pisalom. Na telefonu je spodaj in besedilo naloge ostane pripeto zgoraj, na računalniku in ležeči tablici je ob strani. Napisano prebere model (»Prebral sem: … Je prav?«), preveri pa koda. Na napravah na dotik se plošča odpre sama.
+- **Ponavljanje** v razmikih 1, 3, 7 in 21 dni, mešane naloge iz več tem, XP, dnevni niz in tedenska lestvica.
+- **Poraba**: vsak klic se zabeleži (žetoni in strošek), z dnevnimi in mesečnimi omejitvami. Pregled je v Nastavitvah.
 - **Preizkusni način**: brez API ključa vrača pripravljene odgovore, da lahko preizkusiš vse ostalo.
 
 ## Zagon
@@ -30,12 +35,33 @@ Brez ključa se aplikacija zažene v preizkusnem načinu. Teste zaženeš z `npm
 |---|---|---|
 | `ANTHROPIC_API_KEY` | – | Ključ iz console.anthropic.com. Brez njega preizkusni način. |
 | `STEMMIND_PASSWORD` | – | Če je nastavljeno, stran zahteva geslo (HTTP Basic, uporabniško ime poljubno). Priporočeno, dokler ni pravih prijav. |
-| `STEMMIND_MODEL` | `claude-opus-5-5` | Model. `claude-haiku-5-5` je precej cenejši, a šibkejši. |
-| `STEMMIND_EFFORT` | `medium` | Koliko model razmišlja (`low`/`medium`/`high`). |
-| `STEMMIND_EFFORT_COMPETITION` | `high` | Enako, za program Tekmovanja. |
+| `STEMMIND_MODEL` | `claude-haiku-5-5` | Privzeti model za klepet (poceni). |
+| `STEMMIND_MODEL_DEEP` | `claude-opus-5-5` | Za »Razloži podrobneje« in program Tekmovanja. |
+| `STEMMIND_EFFORT` / `STEMMIND_EFFORT_DEEP` | `low` / `medium` | Koliko model razmišlja. |
+| `STEMMIND_MAX_TOKENS` | `8000` | Najdaljši odgovor. |
+| `STEMMIND_OCR_MODEL` | = `STEMMIND_MODEL` | Model za branje rokopisa. |
+| `STEMMIND_HISTORY_TURNS` | `10` | Koliko izmenjav zgodovine gre v API (starejše se odrežejo po kosih, da predpomnilnik deluje). |
+| `STEMMIND_ANSWER_CACHE` | `1` | Enaka prva vprašanja dobijo shranjen odgovor brez klica API. |
+| `STEMMIND_DAILY_QUESTIONS` | `0` | Vprašanj za inštruktorja na učenca na dan (0 = brez omejitve). Vadnica je vedno neomejena. |
+| `STEMMIND_MONTHLY_BUDGET_USD` | `0` | Skupni mesečni proračun v $; pri 80 % opozorilo, pri 100 % se klepet ustavi. |
+| `STEMMIND_STUDENT_MONTHLY_USD` | `0` | Mesečna omejitev na učenca v $. |
+| `STEMMIND_EXPLANATIONS` | `content/explanations.json` | Datoteka z vnaprej pripravljenimi razlagami tem. |
+| `STEMMIND_EXPLAIN_MODEL` | `claude-opus-5-5` | Model za skript z razlagami. |
 | `STEMMIND_DB` | `data/stemmind.db` | Pot do baze SQLite. Mora biti na trajnem disku. |
 | `STEMMIND_DEBUG` | `0` | `1` omogoči `/api/students/:id/prompt` (ogled sestavljenega prompta). |
 | `PORT` | `3000` | Vrata strežnika. |
+
+## Razlage tem
+
+Razlage tem se ustvarijo enkrat z Message Batches API (pol cene) in se nato strežejo brez stroška:
+
+```bash
+node scripts/generate-explanations.js            # samo ocena stroška (Opus ≈ 4 $, Haiku ≈ 0,15 $ za vse teme)
+node scripts/generate-explanations.js --yes      # ustvari razlage za vse teme
+node scripts/generate-explanations.js --yes --path MAT-OS-8 --model claude-haiku-5-5
+```
+
+Dokler razlag ni, gumb »Uči se s STEMMind« temo razloži v klepetu.
 
 ## Objava
 
@@ -53,7 +79,13 @@ server/claude.js           klic Claude API + preizkusni način
 server/meta.js             branje/odstranjevanje META, filter za pretakanje
 server/prompt.js           sestavljanje prompta iz nastavitev
 server/weaknesses.js       zaznavanje šibkih točk
-server/db.js               SQLite (učenci, pogovori, sporočila, dogodki)
+server/db.js               SQLite (učenci, pogovori, sporočila, dogodki, naloge, XP, poraba)
+server/curriculum*.js      učne poti po učnem načrtu (osnutek, naj ga pregleda učitelj)
+server/practice/           generatorji nalog in preverjanje odgovorov
+server/progress.js         napredovanje, ponavljanje, preizkus znanja, XP
+server/usage.js            beleženje porabe in omejitve
+public/pad.js              vnos z dotikom (tipke, pisanje, branje rokopisa)
+scripts/                   ustvarjanje razlag (Batch API)
 public/                    vmesnik (brez ogrodja)
 docs/                      opombe k promptu in seznam za preizkušanje
 ```

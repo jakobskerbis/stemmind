@@ -36,7 +36,7 @@ export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
     CREATE TABLE IF NOT EXISTS events (
       id INTEGER PRIMARY KEY,
       student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
-      conversation_id INTEGER NOT NULL REFERENCES conversations(id) ON DELETE CASCADE,
+      conversation_id INTEGER REFERENCES conversations(id) ON DELETE CASCADE, -- NULL pri vajah
       message_id INTEGER REFERENCES messages(id) ON DELETE SET NULL,
       subject TEXT,
       topic TEXT,
@@ -45,9 +45,74 @@ export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
       flag TEXT NOT NULL DEFAULT 'none',
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
+    -- Stanje učenca pri posamezni temi učne poti
+    CREATE TABLE IF NOT EXISTS topic_state (
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      topic_id TEXT NOT NULL,
+      level INTEGER NOT NULL DEFAULT 1,          -- težavnost 1–3
+      streak INTEGER NOT NULL DEFAULT 0,         -- zaporedni pravilni odgovori
+      status TEXT NOT NULL DEFAULT 'new',        -- new | learning | mastered
+      source TEXT,                               -- practice | chat | placement
+      mastered_at TEXT,
+      review_stage INTEGER NOT NULL DEFAULT 0,   -- 0..4 (1, 3, 7, 21 dni)
+      review_due TEXT,
+      seen_example INTEGER NOT NULL DEFAULT 0,
+      updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+      PRIMARY KEY (student_id, topic_id)
+    );
+    -- Naloge iz generatorja (odgovor ostane na strežniku)
+    CREATE TABLE IF NOT EXISTS tasks (
+      id INTEGER PRIMARY KEY,
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      topic_id TEXT NOT NULL,
+      mode TEXT NOT NULL DEFAULT 'practice',     -- practice | review | placement
+      session_id TEXT,                           -- skupina nalog (preizkus, ponavljanje)
+      level INTEGER NOT NULL,
+      payload TEXT NOT NULL,
+      attempts INTEGER NOT NULL DEFAULT 0,
+      hint_used INTEGER NOT NULL DEFAULT 0,
+      solved INTEGER NOT NULL DEFAULT 0,
+      first_try_correct INTEGER,
+      last_answer TEXT,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_tasks_topic ON tasks(student_id, topic_id, id);
+    CREATE TABLE IF NOT EXISTS xp_events (
+      id INTEGER PRIMARY KEY,
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      amount INTEGER NOT NULL,
+      reason TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_xp ON xp_events(student_id, created_at);
+    -- Poraba AI (žetoni in strošek)
+    CREATE TABLE IF NOT EXISTS usage (
+      id INTEGER PRIMARY KEY,
+      student_id INTEGER REFERENCES students(id) ON DELETE SET NULL,
+      model TEXT NOT NULL,
+      kind TEXT NOT NULL DEFAULT 'chat',
+      input_tokens INTEGER NOT NULL DEFAULT 0,
+      output_tokens INTEGER NOT NULL DEFAULT 0,
+      cache_read_tokens INTEGER NOT NULL DEFAULT 0,
+      cache_write_tokens INTEGER NOT NULL DEFAULT 0,
+      cost_usd REAL NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_usage ON usage(created_at);
+    -- Ponovna uporaba odgovorov na enaka prva vprašanja (brez slike)
+    CREATE TABLE IF NOT EXISTS answer_cache (
+      key TEXT PRIMARY KEY,
+      text TEXT NOT NULL,
+      hits INTEGER NOT NULL DEFAULT 0,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
     CREATE INDEX IF NOT EXISTS idx_msg_conv ON messages(conversation_id, id);
     CREATE INDEX IF NOT EXISTS idx_events_student ON events(student_id, created_at);
   `);
+  // Migracije za starejše baze
+  const convCols = db.prepare("PRAGMA table_info(conversations)").all().map((c) => c.name);
+  if (!convCols.includes("path_topic")) db.exec("ALTER TABLE conversations ADD COLUMN path_topic TEXT");
+  if (!convCols.includes("deep")) db.exec("ALTER TABLE conversations ADD COLUMN deep INTEGER NOT NULL DEFAULT 0");
   return new Store(db);
 }
 
@@ -104,8 +169,10 @@ export class Store {
   getConversation(id) {
     return this.db.prepare("SELECT * FROM conversations WHERE id = ?").get(id);
   }
-  createConversation(studentId) {
-    const r = this.db.prepare("INSERT INTO conversations (student_id) VALUES (?)").run(studentId);
+  createConversation(studentId, { pathTopic = null, title = "Nov pogovor" } = {}) {
+    const r = this.db
+      .prepare("INSERT INTO conversations (student_id, path_topic, title) VALUES (?, ?, ?)")
+      .run(studentId, pathTopic, title);
     return this.getConversation(Number(r.lastInsertRowid));
   }
   renameConversation(id, title) {

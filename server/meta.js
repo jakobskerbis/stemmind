@@ -34,6 +34,7 @@ export function parseMeta(text) {
     error: a.error === "1" ? 1 : 0,
     mode: pick("mode", null),
     flag: pick("flag", "none"),
+    done: a.done === "1" ? 1 : 0,
   };
 }
 
