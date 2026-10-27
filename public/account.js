@@ -1,3 +1,4 @@
+import { icon } from "./icons.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku STEMMIND_ACCOUNTS=1.
 
@@ -401,7 +402,7 @@ async function renderAccount() {
         .join("")}</ul>
       ${acc.children
         .filter((c) => c.devices.length > acc.device_warn_limit)
-        .map((c) => `<p class="warn">⚠️ Profil <b>${esc(c.name)}</b> je bil v zadnjih 30 dneh odprt na ${c.devices.length} različnih napravah (${c.devices.map((d) => esc(d.label)).join(", ")}). Če to niste bili vi, kliknite »Odjavi vse druge naprave« in spremenite geslo.</p>`)
+        .map((c) => `<p class="warn">${icon("info")} Profil <b>${esc(c.name)}</b> je bil v zadnjih 30 dneh odprt na ${c.devices.length} različnih napravah (${c.devices.map((d) => esc(d.label)).join(", ")}). Če to niste bili vi, kliknite »Odjavi vse druge naprave« in spremenite geslo.</p>`)
         .join("")}
       ${acc.swap_blocked_until
         ? `<p class="muted">Profil lahko zamenjate enkrat na 30 dni. Nov profil boste lahko dodali ${date(acc.swap_blocked_until)}.</p>`
@@ -412,7 +413,7 @@ async function renderAccount() {
     </div>
 
     <div class="card">
-      <h2>Povabi prijatelje 🎁</h2>
+      <h2>${icon("award")} Povabi prijatelje</h2>
       <p>Ko se družina, ki jo povabite, naroči in prvič plača, <b>oboji dobite en mesec brezplačno</b>.</p>
       <div class="inline"><input id="ref-url" readonly value="${esc(acc.referral.url)}"><button id="ref-copy" type="button">Kopiraj</button></div>
       <p class="muted">Vaša koda: <b>${esc(acc.referral.code)}</b>${acc.referral.rewards ? ` · prisluženi meseci: ${acc.referral.rewards}` : ""}</p>
