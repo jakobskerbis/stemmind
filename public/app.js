@@ -510,6 +510,12 @@ function addDeepButton(el, wasDeep) {
   el.appendChild(b);
 }
 
+// Tiha napaka (npr. prekinjena povezava) se pokaže kot obvestilo, ne pa kot »nič se ne zgodi«.
+window.addEventListener("unhandledrejection", (e) => {
+  const msg = e.reason?.message || String(e.reason || "");
+  if (msg) toast(`Napaka: ${msg}`, "circle-x");
+});
+
 function toast(msg, ic = null) {
   const t = $("#toast");
   t.innerHTML = `${ic ? icon(ic) : ""}<span></span>`;
@@ -827,8 +833,14 @@ async function learnWithTutor(t, firstMessage = `Začniva s temo: ${t.name}.`) {
 // ---------- vadnica ----------
 
 async function nextPractice() {
-  const out = await api(`/api/students/${state.student.id}/practice/next`, { method: "POST", body: { topic_id: state.topic.id } });
   const box = $("#practice");
+  let out;
+  try {
+    out = await api(`/api/students/${state.student.id}/practice/next`, { method: "POST", body: { topic_id: state.topic.id } });
+  } catch (err) {
+    box.innerHTML = `<div class="card task"><div class="fb bad">${icon("circle-x")}<span>Naloge nisem mogel naložiti (${escapeHtml(err.message)}). Preveri povezavo in poskusi znova.</span></div></div>`;
+    return;
+  }
   if (out.example) {
     box.innerHTML = `<div class="card task example">
       <div class="task-top"><span class="eyebrow with-icon">${icon("book-open")} Rešen zgled</span></div>
@@ -1002,8 +1014,16 @@ function renderTask(task, ctx) {
 }
 
 async function checkTask(task, ctx, value) {
-  const r = await api(`/api/students/${state.student.id}/tasks/${task.id}/answer`, { method: "POST", body: { answer: value } });
   const fb = $("#feedback");
+  let r;
+  try {
+    fb.innerHTML = `<div class="fb info">Preverjam …</div>`;
+    r = await api(`/api/students/${state.student.id}/tasks/${task.id}/answer`, { method: "POST", body: { answer: value } });
+  } catch (err) {
+    // Napaka pri povezavi: učenec jo vidi, namesto da se ne zgodi nič.
+    fb.innerHTML = `<div class="fb bad">${icon("circle-x")}<span>Odgovora nisem mogel preveriti (${escapeHtml(err.message)}). Preveri povezavo in poskusi znova.</span></div>`;
+    return;
+  }
   const next = (label = "Naslednja naloga") => `<div class="actions"><button class="primary big" id="fb-next">${label}${icon("arrow-right")}</button></div>`;
   let html = "";
   if (r.retry) {

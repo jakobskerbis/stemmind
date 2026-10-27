@@ -49,6 +49,13 @@ export function createApp(store, opts = {}) {
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
   if (process.env.STEMMIND_PASSWORD) app.use(basicAuth(process.env.STEMMIND_PASSWORD));
   app.use(express.json({ limit: "10mb" }));
+  // Neuspele klice API zapišemo v dnevnik, da je napako na telefonu mogoče poiskati.
+  app.use("/api", (req, res, next) => {
+    res.on("finish", () => {
+      if (res.statusCode >= 400) console.warn(`[stemmind] ${res.statusCode} ${req.method} ${req.originalUrl}`);
+    });
+    next();
+  });
   app.use(express.static(path.join(here, "..", "public")));
   // Knjižnice za izris strežemo lokalno (brez odvisnosti od CDN).
   const modules = path.join(here, "..", "node_modules");

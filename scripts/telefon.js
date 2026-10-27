@@ -13,6 +13,7 @@ const port = Number(process.env.PORT || 3000);
 const local = `http://localhost:${port}`;
 const toolsDir = path.join(root, "data", "orodja");
 const urlFile = path.join(root, "data", "telefon-povezava.txt");
+const logFile = path.join(root, "data", "dnevnik.txt"); // izpis strežnika, za iskanje napak
 const isWin = process.platform === "win32";
 
 const say = (s = "") => console.log(s);
@@ -60,9 +61,15 @@ async function ensureServer() {
     say("STEMMind že teče brez gesla. Zapri drugo okno STEMMind in znova zaženi to datoteko.");
     return stopAll(1);
   }
+  fs.mkdirSync(path.dirname(logFile), { recursive: true });
+  const log = fs.createWriteStream(logFile, { flags: "a" });
+  log.write(`\n=== zagon ${new Date().toISOString()} ===\n`);
   const server = spawn(process.execPath,
     ["--env-file-if-exists=.env", "--disable-warning=ExperimentalWarning", "server/index.js"],
-    { cwd: root, stdio: ["ignore", "inherit", "inherit"] });
+    { cwd: root, stdio: ["ignore", "pipe", "pipe"] });
+  for (const stream of [server.stdout, server.stderr]) {
+    stream.on("data", (d) => { process.stdout.write(d); log.write(`${new Date().toISOString().slice(11, 19)} ${d}`); });
+  }
   children.push(server);
   server.on("exit", (code) => { say(`Strežnik se je ustavil (koda ${code}).`); stopAll(1); });
   for (let i = 0; i < 60; i++) {
