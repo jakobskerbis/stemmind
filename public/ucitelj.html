@@ -4,18 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>STEMMind za učitelje</title>
+  <meta name="theme-color" content="#5b4cf0">
+  <link rel="stylesheet" href="vendor/nunito/index.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="leagues.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand">STEM<span>Mind</span></div>
-    <div class="muted">za učitelje</div>
+    <a class="brand" href="/" style="text-decoration:none">
+      <span class="logo" aria-hidden="true"><i data-icon="graduation-cap"></i></span>
+      <span class="brand-name">STEM<span>Mind</span></span>
+    </a>
+    <span class="muted">za učitelje</span>
   </header>
   <div id="toast" class="toast" hidden></div>
   <main class="view narrow">
     <h1>Moji razredi</h1>
     <form id="create" class="card form">
-      <h2>Nov razred</h2>
+      <h2 class="h-icon"><i data-icon="plus"></i> Nov razred</h2>
       <p class="muted">Dobite kodo, ki jo poveste učencem. V aplikaciji jo vpišejo pod »Lige«. Vidite samo vzdevke učencev in njihove točke XP, ne imen.</p>
       <div class="row">
         <input id="name" placeholder="Ime razreda, npr. 8.b" maxlength="40" required>
@@ -26,6 +32,8 @@
     <p class="muted">Razredi so shranjeni v tem brskalniku. Za dostop z druge naprave shranite povezavo »Povezava za upravljanje« (zaznamek), ker vsebuje ključ razreda.</p>
   </main>
   <script type="module">
+    import { icon, hydrateIcons } from "./icons.js";
+    hydrateIcons();
     const $ = (s) => document.querySelector(s);
     const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
     const load = () => { try { return JSON.parse(localStorage.getItem("teacherClasses") || "[]"); } catch { return []; } };
@@ -65,11 +73,11 @@
           if (v.name !== c.name) { c.name = v.name; save(list); }
           const link = !c.key ? null : `${location.origin}${location.pathname}#code=${encodeURIComponent(c.code)}&key=${encodeURIComponent(c.key)}`;
           out.push(`<div class="card">
-            <h2>🏫 ${esc(v.name)} · koda <span class="code">${esc(v.code)}</span></h2>
+            <div class="group-head"><h2 class="h-icon">${icon("graduation-cap")} ${esc(v.name)}</h2><span class="code-chip">${esc(v.code)}</span></div>
             <p class="muted">${v.members.length} ${v.members.length === 1 ? "učenec" : "učencev"} · XP od ponedeljka ${esc(v.week)}</p>
             ${v.members.length ? `<table class="table"><thead><tr><th>#</th><th>Vzdevek</th><th>Ta teden</th><th>Skupaj</th><th></th></tr></thead><tbody>
               ${v.members.map((m) => `<tr><td>${m.rank}</td><td>${esc(m.nickname)}</td><td>${m.xp}</td><td>${m.total}</td>
-                <td><button class="small" data-rm="${m.ref}" data-code="${esc(c.code)}">Odstrani</button></td></tr>`).join("")}
+                <td><button class="ghost small" data-rm="${m.ref}" data-code="${esc(c.code)}">${icon("x")}<span>Odstrani</span></button></td></tr>`).join("")}
               </tbody></table>` : `<p class="muted">Še nihče se ni pridružil.</p>`}
             ${link ? `<p class="muted"><a href="${esc(link)}">Povezava za upravljanje</a></p>` : ""}
             <button class="danger" data-del="${esc(c.code)}">Izbriši razred</button>
