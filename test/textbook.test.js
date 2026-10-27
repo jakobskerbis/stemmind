@@ -69,22 +69,41 @@ test("toc marks lessons, demos and practice", () => {
   assert.equal(tocView("NI-POT"), null);
 });
 
-test("textbook API", async () => {
-  const app = createApp(openDb(":memory:"));
+test("textbook API and PDF page", async () => {
+  const store = openDb(":memory:");
+  const app = createApp(store);
   const server = app.listen(0);
   const base = `http://127.0.0.1:${server.address().port}`;
   try {
-    const lesson = await (await fetch(`${base}/api/textbook/lesson?id=FIZ-OS-9/upor-in-ohmov-zakon`)).json();
+    const kid = await (await fetch(`${base}/api/students`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: "Ana" }) })).json();
+    const lessonUrl = (id) => `${base}/api/students/${kid.id}/lesson?id=${id}`;
+    const lesson = await (await fetch(lessonUrl("FIZ-OS-9/upor-in-ohmov-zakon"))).json();
+    assert.equal(lesson.interactive, true, "brez računov je vse odklenjeno");
     assert.equal(lesson.demo.id, "ohm");
     assert.match(lesson.phet.url, /^https:\/\/phet\.colorado\.edu\/sims\/html\/ohms-law\//);
     assert.equal(lesson.next.id.startsWith("FIZ-OS-9/"), true);
-    const noLesson = await (await fetch(`${base}/api/textbook/lesson?id=FIZ-OS-9/prosti-pad`)).json();
+    const noLesson = await (await fetch(lessonUrl("FIZ-OS-9/prosti-pad"))).json();
     assert.equal(noLesson.lesson, null);
     assert.equal(noLesson.demo.id, "prosti-pad");
-    assert.equal((await fetch(`${base}/api/textbook/lesson?id=../../etc/passwd`)).status, 404);
+    assert.equal((await fetch(lessonUrl("../../etc/passwd"))).status, 404);
     assert.equal((await fetch(`${base}/api/textbook/toc?path=KEM-OS-8`)).status, 200);
     const hits = await (await fetch(`${base}/api/textbook/search?q=ohm`)).json();
     assert.equal(hits[0].id, "FIZ-OS-9/upor-in-ohmov-zakon");
+
+    // PDF: cela pot in ena lekcija, formule že izrisane.
+    const book = await fetch(`${base}/ucbenik/MAT-OS-8`);
+    assert.equal(book.status, 200);
+    const html = await book.text();
+    assert.match(html, /Pitagorov izrek/);
+    assert.match(html, /class="katex"/);
+    assert.match(html, /Kazalo/);
+    assert.match(html, /Rešitve/);
+    assert.doesNotMatch(html, /@@MATH/);
+    const one = await (await fetch(`${base}/ucbenik/KEM-OS-8/urejanje-kemijskih-enacb`)).text();
+    assert.match(one, /Razloži drugače/);
+    assert.doesNotMatch(one, /Kazalo/);
+    assert.equal((await fetch(`${base}/ucbenik/MAT-OS-8/ni-teme`)).status, 404);
+    assert.equal((await fetch(`${base}/ucbenik/NI-POTI`)).status, 404);
   } finally {
     server.close();
   }

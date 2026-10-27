@@ -57,6 +57,7 @@ async function renderHome() {
           .map(([k, v]) => `<button type="button" role="tab" data-subj="${k}" class="${k === tb.subject ? "on" : ""}" aria-selected="${k === tb.subject}">${v}</button>`)
           .join("")}</div>
         <select id="tb-path" aria-label="Razred ali letnik">${paths.map((p) => `<option value="${p.key}" ${p.key === tb.pathKey ? "selected" : ""}>${esc(p.label)}</option>`).join("")}</select>
+        ${tb.pathKey ? `<a class="tb-pdf" id="tb-pdf-path" href="/ucbenik/${tb.pathKey}#natisni" target="_blank" rel="noopener">${ic("download")}Prenesi učbenik (PDF)</a>` : ""}
       </div>
     </div>
     <div id="tb-body"></div>`;
@@ -78,6 +79,7 @@ async function renderHome() {
   );
   $("#tb-path").addEventListener("change", (e) => {
     tb.pathKey = e.target.value;
+    $("#tb-pdf-path")?.setAttribute("href", `/ucbenik/${tb.pathKey}#natisni`);
     renderBody();
   });
   await renderBody();
@@ -141,7 +143,7 @@ async function renderLesson(topicId) {
   const box = $("#view-textbook");
   let L;
   try {
-    L = await ctx.api(`/api/textbook/lesson?id=${encodeURIComponent(topicId)}`);
+    L = await ctx.api(`/api/students/${ctx.getStudent().id}/lesson?id=${encodeURIComponent(topicId)}`);
   } catch (err) {
     tb.topicId = null;
     return renderHome();
@@ -156,9 +158,14 @@ async function renderLesson(topicId) {
   const explainAt = sections.findIndex((s) => /razlag/i.test(s.title));
   const altAt = explainAt >= 0 ? explainAt : 0;
 
+  const locked = !L.interactive && (L.locked?.demo || L.locked?.phet);
   const demoHtml = L.demo
     ? `<section class="card tb-demo"><h2>${ic("flask-conical")}Preizkusi sam: ${esc(L.demo.title)}</h2><div id="tb-demo-mount"></div></section>`
-    : "";
+    : locked
+      ? `<section class="card tb-locked"><h2>${ic("lock")}${L.locked.demo ? `Poskus: ${esc(L.locked.demo)}` : "Simulacija"}</h2>
+          <p>Interaktivni poskusi, simulacije in sprotno preverjanje so na voljo v plačljivem paketu in med 7-dnevnim preizkusom. Besedilo lekcije in PDF sta brezplačna.</p>
+          <button type="button" class="primary" id="tb-upgrade">${ic("sparkles")}Poglej pakete</button></section>`
+      : "";
   const altHtml = lesson?.alternatives?.length
     ? `<div class="tb-alt">
         <button type="button" class="secondary" id="tb-alt-btn">${ic("refresh-cw")}Razloži drugače</button>
@@ -193,7 +200,13 @@ async function renderLesson(topicId) {
       </section>`
     : "";
 
-  const checksHtml = lesson?.checks?.length
+  const staticChecks = () => `<section class="card tb-checks"><h2>${ic("circle-help")}Preveri se</h2><ol>${lesson.checks
+    .map((c) => `<li><div class="tb-q">${R(c.q)}</div><ol type="a">${c.options.map((o) => `<li>${R(o)}</li>`).join("")}</ol>
+      <details><summary>Rešitev</summary>${"abcdefgh"[c.correct]}) ${c.why ? R(c.why) : ""}</details></li>`)
+    .join("")}</ol></section>`;
+  const checksHtml = lesson?.checks?.length && !L.interactive
+    ? staticChecks()
+    : lesson?.checks?.length
     ? `<section class="card tb-checks"><h2>${ic("circle-help")}Preveri se</h2>${lesson.checks
         .map(
           (c, qi) => `<div class="tb-check" data-q="${qi}">
@@ -209,6 +222,7 @@ async function renderLesson(topicId) {
     <button type="button" class="text-btn tb-back" id="tb-back">← Učbenik</button>
     <p class="muted tb-crumb">${esc(L.pathLabel)} · ${esc(L.unit)}</p>
     <h1 class="tb-title">${esc(L.name)}</h1>
+    ${lesson ? `<a class="tb-pdf" href="/ucbenik/${L.path}/${L.id.split("/")[1]}#natisni" target="_blank" rel="noopener">${ic("download")}PDF lekcije</a>` : ""}
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
     ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej tutorju.</p>` : ""}
     ${sectionHtml}${fallback}${phetHtml}${checksHtml}
@@ -231,6 +245,7 @@ async function renderLesson(topicId) {
     renderHome();
   });
   if (L.demo) mountDemo(L.demo.id, $("#tb-demo-mount"));
+  $("#tb-upgrade")?.addEventListener("click", () => ctx.showView("account"));
   $("#tb-phet-load")?.addEventListener("click", () => {
     $("#tb-phet-mount").innerHTML = `<div class="tb-frame"><iframe src="${esc(L.phet.url)}" title="Simulacija PhET" allowfullscreen loading="lazy"></iframe></div>`;
   });
@@ -247,7 +262,7 @@ async function renderLesson(topicId) {
   });
   box.querySelectorAll("[data-alt]").forEach((b) => b.addEventListener("click", () => showAlt(Number(b.dataset.alt))));
   // Preveri se
-  box.querySelectorAll(".tb-check").forEach((el) => {
+  if (L.interactive) box.querySelectorAll(".tb-check").forEach((el) => {
     const c = lesson.checks[Number(el.dataset.q)];
     el.querySelectorAll(".tb-opt").forEach((b) =>
       b.addEventListener("click", () => {

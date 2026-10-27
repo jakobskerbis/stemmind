@@ -1,0 +1,138 @@
+// Učbenik za tiskanje oziroma shranjevanje kot PDF (brezplačno, brez prijave).
+// Strežnik izriše HTML z že izrisanimi formulami; brskalnik ga shrani kot PDF.
+import katex from "katex";
+import { marked } from "marked";
+import { getPath, getTopic, topicOrder } from "./curriculum.js";
+import { loadLesson, DEMOS } from "./textbook.js";
+
+const esc = (s) =>
+  String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+// Enako kot renderRich v brskalniku: formule umaknemo, izrišemo Markdown, vrnemo formule.
+// Vsebina prihaja iz datotek v repozitoriju, zato je ne čistimo dodatno.
+export function renderMd(text) {
+  const math = [];
+  const stash = (tex, display) => `@@MATH${math.push({ tex, display }) - 1}@@`;
+  const src = String(text)
+    .replace(/\$\$([\s\S]+?)\$\$/g, (_, t) => stash(t, true))
+    .replace(/(^|[^\\$])\$([^$\n]+?)\$/g, (_, pre, t) => pre + stash(t, false));
+  return marked
+    .parse(src, { breaks: true })
+    .replace(/@@MATH(\d+)@@/g, (_, i) => katex.renderToString(math[i].tex, { displayMode: math[i].display, throwOnError: false, strict: "ignore" }));
+}
+
+const demoFor = (topicId, lesson) => {
+  const id = lesson.meta.demo && DEMOS[lesson.meta.demo] ? lesson.meta.demo : Object.keys(DEMOS).find((k) => DEMOS[k].topics.includes(topicId));
+  return id ? DEMOS[id] : null;
+};
+
+function lessonHtml(t, lesson, n) {
+  const demo = demoFor(t.id, lesson);
+  const sections = lesson.sections
+    .map((s) => {
+      const body = `<section>${s.title ? `<h3>${esc(s.title)}</h3>` : ""}${renderMd(s.md)}</section>`;
+      const note =
+        demo && /rešen/i.test(s.title)
+          ? `<aside class="demo-note">Interaktivni poskus »${esc(demo.title)}« je na voljo v aplikaciji STEMMind.</aside>`
+          : "";
+      return body + note;
+    })
+    .join("");
+  const alts = lesson.alternatives.length
+    ? `<section class="alts"><h3>Razloži drugače</h3>${lesson.alternatives
+        .map((a) => `<div class="alt"><h4>${esc(a.title)}</h4>${renderMd(a.md)}</div>`)
+        .join("")}</section>`
+    : "";
+  const letters = "abcdefgh";
+  const checks = lesson.checks.length
+    ? `<section class="checks"><h3>Preveri se</h3><ol>${lesson.checks
+        .map((c) => `<li>${renderMd(c.q)}<ol class="opts">${c.options.map((o) => `<li>${renderMd(o)}</li>`).join("")}</ol></li>`)
+        .join("")}</ol>
+        <details open class="key"><summary>Rešitve</summary><ol>${lesson.checks
+          .map((c) => `<li><b>${letters[c.correct]})</b> ${c.why ? renderMd(c.why) : ""}</li>`)
+          .join("")}</ol></details></section>`
+    : "";
+  return `<article class="lesson" id="${esc(t.id)}">
+    <p class="crumb">${esc(t.unit)}</p>
+    <h2>${n ? `${n}. ` : ""}${esc(t.name)}</h2>
+    ${t.goals ? `<p class="goals"><b>Cilji:</b> ${esc(t.goals)}</p>` : ""}
+    ${sections}${alts}${checks}
+  </article>`;
+}
+
+// pathKey: cela pot; topicSlug (neobvezno): samo ena lekcija.
+export function printPage(pathKey, topicSlug = null) {
+  const p = getPath(pathKey);
+  if (!p) return null;
+  let topics = topicOrder(pathKey);
+  if (topicSlug) {
+    const t = getTopic(`${pathKey}/${topicSlug}`);
+    if (!t) return null;
+    topics = [t];
+  }
+  const ready = topics.map((t) => ({ t, lesson: loadLesson(t.id) })).filter((x) => x.lesson);
+  if (topicSlug && !ready.length) return null;
+  const title = topicSlug ? `${ready[0].t.name} · ${p.label}` : `${p.label} · učbenik`;
+  const date = new Date().toLocaleDateString("sl-SI", { day: "numeric", month: "long", year: "numeric" });
+
+  const toc = topicSlug
+    ? ""
+    : `<section class="cover">
+        <p class="brand">STEM<span>Mind</span></p>
+        <h1>${esc(p.label)}</h1>
+        <p class="sub">Učbenik z razlagami, rešenimi primeri in vprašanji za preverjanje</p>
+        <p class="muted">Izdaja ${esc(date)} · ${ready.length} od ${topics.length} tem${ready.length < topics.length ? " (ostale lekcije so v pripravi)" : ""}</p>
+        <h2>Kazalo</h2>
+        <ol class="toc">${ready.map(({ t }) => `<li><a href="#${esc(t.id)}">${esc(t.name)}</a> <span class="muted">${esc(t.unit)}</span></li>`).join("")}</ol>
+        <p class="muted small">Interaktivni poskusi, simulacije, sprotno preverjanje in vaje so na voljo v aplikaciji STEMMind.
+        Lekcije z oznako osnutek še pregleduje učitelj.</p>
+      </section>`;
+
+  const body = ready.length
+    ? ready.map(({ t, lesson }, i) => lessonHtml(t, lesson, topicSlug ? 0 : i + 1)).join("")
+    : `<p>Za to pot lekcije še nastajajo.</p>`;
+
+  return `<!doctype html>
+<html lang="sl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<style>
+  :root { color-scheme: light; }
+  body { font: 11.5pt/1.55 Georgia, "Times New Roman", serif; color: #1c2233; background: #fff; margin: 0; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+  h1, h2, h3, h4, .brand, .bar, .crumb, .toc { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .bar { position: sticky; top: 0; background: #2f6fed; color: #fff; padding: 10px 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .bar button { font: inherit; font-weight: 700; border: 0; border-radius: 10px; padding: 8px 14px; background: #fff; color: #2f6fed; cursor: pointer; }
+  .cover { page-break-after: always; break-after: page; }
+  .brand { font-weight: 800; font-size: 1.4rem; margin: 0; } .brand span { color: #2f6fed; }
+  .cover h1 { font-size: 2.2rem; margin: 40px 0 6px; }
+  .sub { font-size: 1.15rem; }
+  .muted { color: #667089; } .small { font-size: 0.9em; }
+  .toc li { margin: 4px 0; } .toc a { color: inherit; text-decoration: none; font-weight: 600; }
+  .lesson { break-before: page; page-break-before: always; }
+  .lesson h2 { font-size: 1.6rem; margin: 0 0 6px; }
+  .crumb { color: #667089; margin: 0; font-size: 0.9rem; }
+  .lesson h3 { font-size: 1.15rem; margin: 22px 0 6px; border-bottom: 2px solid #dde2ec; padding-bottom: 3px; }
+  .lesson h4 { margin: 14px 0 4px; }
+  table { border-collapse: collapse; margin: 8px 0; } th, td { border: 1px solid #ccd3e0; padding: 3px 9px; }
+  pre { background: #f3f5f9; padding: 8px; border-radius: 6px; }
+  .demo-note { border: 1px dashed #2f6fed; border-radius: 8px; padding: 6px 10px; color: #2f6fed; font-family: system-ui, sans-serif; font-size: 0.9rem; margin: 10px 0; }
+  .alt { border-left: 3px solid #7b61d1; padding-left: 12px; margin: 10px 0; }
+  .checks .opts { list-style: lower-alpha; }
+  .checks p { margin: 2px 0; }
+  .key { margin-top: 10px; font-size: 0.92em; } .key summary { font-weight: 700; font-family: system-ui, sans-serif; }
+  .katex-display { overflow-x: auto; overflow-y: hidden; }
+  section, .alt, li { break-inside: avoid-page; }
+  @media print {
+    .bar { display: none; }
+    main { max-width: none; padding: 0; }
+    a { color: inherit; }
+    @page { margin: 18mm 16mm; }
+  }
+</style></head>
+<body>
+<div class="bar"><span>${esc(title)}</span><button type="button" onclick="window.print()">Shrani kot PDF</button></div>
+<main>${toc}${body}</main>
+<script>if (location.hash === "#natisni") addEventListener("load", () => setTimeout(() => print(), 300));</script>
+</body></html>`;
+}

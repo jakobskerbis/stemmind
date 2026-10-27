@@ -311,3 +311,27 @@ test("helpers: webhook signature, form encoding, access, week key", () => {
   assert.ok(isSendTime(new Date("2026-10-25T17:30:00Z"))); // nedelja 18:30 v Ljubljani
   assert.ok(!isSendTime(new Date("2026-10-26T17:30:00Z")));
 });
+
+test("textbook: interactive part only with a paid plan or trial; PDF is public", async () => {
+  await withServer(async ({ client, calls, store, base }) => {
+    const a = client();
+    await registerVerified(a, calls, "uci@primer.si");
+    const kid = (await a("/api/students", { method: "POST", body: { name: "Eva", birth_year: YEAR - 13, consent: true } })).body;
+    const url = `/api/students/${kid.id}/lesson?id=MAT-OS-8/pitagorov-izrek`;
+    const trial = (await a(url)).body;
+    assert.equal(trial.interactive, true);
+    assert.equal(trial.demo.id, "pitagora");
+
+    store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z'").run();
+    const free = (await a(url)).body;
+    assert.equal(free.interactive, false);
+    assert.equal(free.demo, null);
+    assert.equal(free.locked.demo, "Pitagorov izrek s kvadrati");
+    assert.ok(free.lesson.sections.length > 3, "besedilo ostane brezplačno");
+
+    // Neprijavljen obiskovalec ne dobi lekcije prek API, PDF pa je javen.
+    assert.equal((await client()(url)).status, 401);
+    const pdf = await fetch(`${base}/ucbenik/MAT-OS-8`);
+    assert.equal(pdf.status, 200);
+  });
+});

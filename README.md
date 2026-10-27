@@ -84,6 +84,8 @@ Zavihek **Učbenik** ima za vsako temo učne poti lekcijo: zakaj se tega učimo,
 - Lekcije so datoteke Markdown v `content/lessons/<pot>/<tema>.md` (oblika v `content/lessons/README.md`), da jih učitelj lahko pregleda in popravi. Branje ne stane nič; tutor dobi v kontekst samo povzetek lekcije.
 - Lastni poskusi (`public/demos.js`): graf y = kx + n, Pitagorov izrek, ulomki, Ohmov zakon, prosti pad, nihalo, plinska enačba, urejanje kemijskih enačb, pH lestvica. Kateri poskus sodi h kateri temi, določa `DEMOS` v `server/textbook.js`.
 - Za druge teme so dodane simulacije PhET (University of Colorado Boulder, CC BY 4.0; `PHET` v `server/textbook.js`), ki se naložijo šele na klik.
+- **PDF**: celoten učbenik razreda je na `/ucbenik/<pot>` (npr. `/ucbenik/MAT-OS-8`), ena lekcija na `/ucbenik/<pot>/<tema>`. Strani so brezplačne in brez prijave; gumb »Shrani kot PDF« odpre tiskanje brskalnika.
+- **Paketi**: ko so računi vklopljeni (`STEMMIND_ACCOUNTS=1`), so poskusi, simulacije in sprotno preverjanje na voljo samo s plačljivim paketom ali med preizkusom. Brezplačni paket vidi besedilo lekcije in vprašanja z rešitvami.
 - Lekcije za preostale teme ustvari skripta (Batch API, osnutki za pregled):
 
 ```bash
