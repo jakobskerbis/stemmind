@@ -83,7 +83,7 @@ export function printPage(pathKey, topicSlug = null) {
         <p class="sub">Učbenik z razlagami, rešenimi primeri in vprašanji za preverjanje</p>
         <p class="muted">Izdaja ${esc(date)} · ${ready.length} od ${topics.length} tem${ready.length < topics.length ? " (ostale lekcije so v pripravi)" : ""}</p>
         <h2>Kazalo</h2>
-        <ol class="toc">${ready.map(({ t }) => `<li><a href="#${esc(t.id)}">${esc(t.name)}</a> <span class="muted">${esc(t.unit)}</span></li>`).join("")}</ol>
+        <ol class="toc">${ready.map(({ t }) => `<li><a href="#${esc(t.id)}">${esc(t.name)}</a> ${t.unit && t.unit !== t.name ? `<span class="muted">${esc(t.unit)}</span>` : ""}</li>`).join("")}</ol>
         <p class="muted small">Interaktivni poskusi, simulacije, sprotno preverjanje in vaje so na voljo v aplikaciji STEMMind.
         Lekcije z oznako osnutek še pregleduje učitelj.</p>
       </section>`;

@@ -19,7 +19,7 @@ export function roundHalfUp(x, d) {
 
 // Slovenski zapis števila: decimalna vejica.
 export function fmt(x, d = null) {
-  let s = d === null ? String(Number(x.toFixed(10))) : x.toFixed(d);
+  let s = d === null ? String(Number(x.toFixed(10))) : roundHalfUp(x, d).toFixed(d);
   return s.replace("-", "−").replace(".", ",");
 }
 

@@ -420,6 +420,18 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
+/* ---------- ožji računalniki in tablice: zavihki samo z ikonami ---------- */
+@media (min-width: 761px) and (max-width: 1240px) {
+  .topbar { gap: 10px; padding: 10px 14px; }
+  .tab { padding: 9px 11px; }
+  .tab:not(.active) span { display: none; }
+  .tab svg.i { width: 21px; height: 21px; }
+}
+@media (min-width: 761px) and (max-width: 980px) {
+  .brand-name { display: none; }
+  .stat .xp-unit { display: none; }
+}
+
 /* ---------- telefon ---------- */
 @media (max-width: 760px) {
   .topbar { flex-wrap: wrap; gap: 8px 10px; padding: 10px 12px 0; }

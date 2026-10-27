@@ -33,6 +33,26 @@ export function makeRng(seed) {
 }
 
 export const NAMES = ["Ana", "Luka", "Eva", "Jan", "Nika", "Tim", "Zala", "Mark", "Lara", "Nejc", "Maja", "Žan"];
+const FEMALE = new Set(["Ana", "Eva", "Nika", "Zala", "Lara", "Maja"]);
+
+// Oblika glede na spol imena: g("Ana", "plačal", "plačala") → "plačala".
+export const g = (name, m, f) => (FEMALE.has(name) ? f : m);
+
+// Slovenska sklanjatev ob številu: n + ustrezna oblika (1 delavec, 2 delavca, 3 delavci, 5 delavcev).
+export function nOf(n, ena, dve, tri, pet) {
+  const h = n % 100;
+  const d = n % 10;
+  const form = h >= 11 && h <= 14 ? pet : d === 1 ? ena : d === 2 ? dve : d === 3 || d === 4 ? tri : pet;
+  return `${n} ${form}`;
+}
+// Glagol ob številu: verbOf(3, "prepleska", "prepleskata", "prepleskajo") → "prepleskajo".
+// Pri 5 in več je glagol v ednini (srednji spol v pretekliku: "5 delavcev je prepleskalo").
+export function verbOf(n, ena, dve, vec, pet = ena) {
+  const h = n % 100;
+  const d = n % 10;
+  if (h >= 11 && h <= 14) return pet;
+  return d === 1 ? ena : d === 2 ? dve : d === 3 || d === 4 ? vec : pet;
+}
 
 // Izbira odgovorov: pravilni + motilci, premešano. Vrne { options, index }.
 export function choices(r, correct, distractors) {
