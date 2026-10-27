@@ -1,15 +1,15 @@
 /* STEMMind – videz. Barve so v spremenljivkah; temni način spodaj. */
 :root {
-  --bg: #f4f5fb;
+  --bg: #f3f6fb;
   --surface: #ffffff;
-  --surface-2: #eef0f8;
-  --text: #1d2033;
-  --muted: #6a7090;
-  --border: #e3e6f1;
-  --accent: #5b4cf0;
-  --accent-2: #7c6cff;
-  --accent-grad: #b06cff;
-  --accent-soft: #eeebff;
+  --surface-2: #eaf0f9;
+  --text: #14213d;
+  --muted: #5d6b86;
+  --border: #dfe6f1;
+  --accent: #2563eb;
+  --accent-2: #4f86f7;
+  --accent-grad: #22b8f0;
+  --accent-soft: #e7efff;
   --accent-text: #ffffff;
   --gold: #f5a524;
   --user-bubble: var(--accent);
@@ -20,22 +20,22 @@
   --danger-bg: #fdecec;
   --radius: 16px;
   --radius-sm: 12px;
-  --shadow: 0 1px 2px rgba(24, 28, 70, 0.05), 0 6px 20px rgba(24, 28, 70, 0.06);
-  --shadow-lg: 0 10px 30px rgba(24, 28, 70, 0.14);
+  --shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 6px 20px rgba(20, 33, 61, 0.06);
+  --shadow-lg: 0 10px 30px rgba(20, 33, 61, 0.14);
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f1120;
-    --surface: #181b2e;
-    --surface-2: #22263d;
+    --bg: #0d1322;
+    --surface: #151d30;
+    --surface-2: #1f2a40;
     --text: #eceef8;
-    --muted: #9ba1bf;
-    --border: #2b304b;
-    --accent: #8b7fff;
-    --accent-2: #a69cff;
-    --accent-grad: #b48cff;
-    --accent-soft: #2a2752;
+    --muted: #97a3bd;
+    --border: #2a3650;
+    --accent: #5b95ff;
+    --accent-2: #7eadff;
+    --accent-grad: #3cc6f5;
+    --accent-soft: #1c2d52;
     --accent-text: #ffffff;
     --user-bubble: var(--accent);
     --ok: #3dd68c;
@@ -266,7 +266,7 @@ button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shad
 .lg.mastered svg.i { background: var(--ok); }
 .lg.learning svg.i { background: var(--accent); }
 .lg.due svg.i { background: var(--gold); }
-.lg.locked svg.i { background: #a3a8c3; }
+.lg.locked svg.i { background: #a3adc3; }
 
 .unit { padding: 20px 20px 16px; }
 .unit-head { display: flex; align-items: center; gap: 14px; }
@@ -300,7 +300,7 @@ button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shad
 .node.learning .node-dot { background: var(--accent); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 60%, #000); }
 .node.due .node-dot { background: var(--gold); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--gold) 60%, #000); }
 .node.new .node-dot { background: var(--surface); color: var(--accent); border-color: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent-soft); }
-.node.locked .node-dot { background: var(--surface-2); color: #a3a8c3; }
+.node.locked .node-dot { background: var(--surface-2); color: #a3adc3; }
 .node.current .node-dot { animation: pulse 1.8s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); } 50% { box-shadow: 0 0 0 10px transparent; } }
 .node-text { display: flex; flex-direction: column; min-width: 0; }
@@ -382,20 +382,20 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
 /* ---------- slike pri nalogah ---------- */
 .fig { margin: 16px auto 4px; max-width: 420px; }
 .fig.wide { max-width: 520px; }
-.fig > svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 2px 8px rgba(24, 28, 70, 0.08)); }
-.fig .paper { fill: #ffffff; stroke: #e3e6f1; }
-.fig .grid line { stroke: #e9ebf4; stroke-width: 1; }
+.fig > svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 2px 8px rgba(20, 33, 61, 0.08)); }
+.fig .paper { fill: #ffffff; stroke: #dfe6f1; }
+.fig .grid line { stroke: #e8eef7; stroke-width: 1; }
 .fig .axis { stroke: #2b2f45; stroke-width: 2; }
 .fig .arrow { fill: #2b2f45; }
-.fig .nums text, .fig text { fill: #6a7090; font: 600 11px "Nunito Variable", system-ui, sans-serif; }
-.fig text.strong { fill: #1d2033; font-weight: 900; }
-.fig .axis-name { fill: #1d2033; font-style: italic; font-weight: 800; font-size: 14px; }
+.fig .nums text, .fig text { fill: #5d6b86; font: 600 11px "Nunito Variable", system-ui, sans-serif; }
+.fig text.strong { fill: #14213d; font-weight: 900; }
+.fig .axis-name { fill: #14213d; font-style: italic; font-weight: 800; font-size: 14px; }
 .fig .plot { stroke: var(--accent); stroke-width: 3.5; stroke-linecap: round; }
 .fig-pt { cursor: pointer; outline: none; }
 .fig-pt .hit { fill: transparent; }
 .fig-pt .dot { fill: #f5a524; stroke: #fff; stroke-width: 2.5; transition: r 0.15s; }
 .fig-pt:hover .dot, .fig-pt:focus-visible .dot { r: 8.5; }
-.fig-pt .coord { opacity: 0; fill: #1d2033; font-weight: 900; font-size: 13px; paint-order: stroke; stroke: #fff; stroke-width: 4px; transition: opacity 0.15s; }
+.fig-pt .coord { opacity: 0; fill: #14213d; font-weight: 900; font-size: 13px; paint-order: stroke; stroke: #fff; stroke-width: 4px; transition: opacity 0.15s; }
 .fig-pt.show .coord { opacity: 1; }
 .fig .tick { stroke: #2b2f45; stroke-width: 2; }
 .fig .ray { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; opacity: 0.9; }
@@ -553,3 +553,8 @@ body.pad-open .modebar { display: none; }
 .draw-tools button.on { outline: none; border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 @media (max-width: 480px) { .draw-tools button span { display: none; } .draw-tools { flex-wrap: nowrap; } .draw-tools button { flex: 1; padding: 6px !important; } }
 @media (max-width: 760px) { .tabs { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); } }
+
+/* Temni način: preliv ostane dovolj temen za bel tekst. */
+@media (prefers-color-scheme: dark) {
+  .hero, .modebar button.hero .ic, .logo { background: linear-gradient(135deg, #1d4ed8, #0e8fc4); }
+}
