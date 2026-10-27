@@ -67,6 +67,32 @@ export function migrateAccounts(db) {
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
       UNIQUE (parent_id, kind, period)
     );
+    -- Naprave in zaščita pred deljenjem: profil je hkrati odprt samo na eni napravi.
+    CREATE TABLE IF NOT EXISTS devices (
+      id TEXT PRIMARY KEY,                    -- zgoščen piškotek sm_device
+      label TEXT NOT NULL DEFAULT '',
+      first_seen TEXT NOT NULL DEFAULT (datetime('now')),
+      last_seen TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE TABLE IF NOT EXISTS profile_devices (
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      device_id TEXT NOT NULL,
+      first_seen TEXT NOT NULL DEFAULT (datetime('now')),
+      last_seen TEXT NOT NULL DEFAULT (datetime('now')),
+      PRIMARY KEY (student_id, device_id)
+    );
+    CREATE TABLE IF NOT EXISTS profile_claims (
+      student_id INTEGER PRIMARY KEY REFERENCES students(id) ON DELETE CASCADE,
+      device_id TEXT NOT NULL,
+      last_seen INTEGER NOT NULL              -- ms
+    );
+    CREATE TABLE IF NOT EXISTS profile_changes (
+      id INTEGER PRIMARY KEY,
+      parent_id INTEGER NOT NULL REFERENCES parents(id) ON DELETE CASCADE,
+      kind TEXT NOT NULL,                     -- created | deleted
+      student_id INTEGER,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
     CREATE TABLE IF NOT EXISTS kv (
       key TEXT PRIMARY KEY,
       value TEXT NOT NULL

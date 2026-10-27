@@ -52,6 +52,9 @@ export class Sessions {
   destroy(token) {
     if (token) this.db.prepare("DELETE FROM parent_sessions WHERE token_hash = ?").run(sha256(token));
   }
+  destroyOthers(parentId, keepToken) {
+    this.db.prepare("DELETE FROM parent_sessions WHERE parent_id = ? AND token_hash != ?").run(parentId, sha256(keepToken || ""));
+  }
   destroyAll(parentId) {
     this.db.prepare("DELETE FROM parent_sessions WHERE parent_id = ?").run(parentId);
   }

@@ -63,6 +63,7 @@ Vklopiš jih z `STEMMIND_ACCOUNTS=1`. Brez tega aplikacija deluje kot prej (brez
 - **Webhook**: v Stripe → Developers → Webhooks dodaj `https://<naslov>/api/stripe/webhook` z dogodki `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid` in vpiši `STRIPE_WEBHOOK_SECRET`. Lokalno webhook ni nujen: stanje se prebere ob vrnitvi s plačilne strani in iz portala.
 - **Priporočila**: vsak starš ima kodo in povezavo `/?ref=KODA`. Ko povabljeni prvič plača, oba dobita mesec brezplačno (dobropis v Stripu ali 30 dni dostopa, če naročnine nima).
 - **Tedensko poročilo** (Resend): vsako nedeljo po 17. uri staršem s potrjenim e-naslovom; aktivni dnevi, rešene naloge, natančnost, XP, osvojene in šibke teme ter nasvet. Odjava s povezavo v sporočilu.
+- **Zaščita pred deljenjem**: število profilov je enako paketu (1 ali 2; preizkus 2, brezplačno 1). Profil zamenjaš (izbris + nov) največ enkrat na 30 dni. Profil je hkrati odprt samo na eni napravi: druga naprava vidi »Profil je odprt drugje« in ga lahko prevzame (»Nadaljuj tukaj«), stara se ob naslednjem kliku ustavi; po 30 minutah nedejavnosti prevzem ni potreben. Če je profil v 30 dneh odprt na več kot `STEMMIND_DEVICE_WARN` (3) napravah, starš v zavihku Račun vidi opozorilo in gumb »Odjavi vse druge naprave«.
 - **Pravice staršev**: izvoz vseh podatkov (JSON) in izbris računa z vsemi otroki (naročnina se prekliče).
 
 ## Razlage tem

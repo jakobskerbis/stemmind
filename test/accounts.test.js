@@ -54,16 +54,19 @@ async function withServer(fn, extra = {}) {
   const base = `http://127.0.0.1:${server.address().port}`;
   // Odjemalec s piškotki (en na starša).
   const client = () => {
-    let cookie = "";
+    const jar = {};
     return async (path, opts = {}) => {
       const res = await fetch(base + path, {
         method: opts.method || "GET",
         redirect: "manual",
-        headers: { "Content-Type": "application/json", cookie, ...(opts.headers || {}) },
+        headers: { "Content-Type": "application/json", cookie: Object.entries(jar).map(([k, v]) => `${k}=${v}`).join("; "), ...(opts.headers || {}) },
         body: opts.raw ?? (opts.body ? JSON.stringify(opts.body) : undefined),
       });
-      const set = res.headers.get("set-cookie");
-      if (set) cookie = set.split(";")[0];
+      for (const c of res.headers.getSetCookie()) {
+        const [kv] = c.split(";");
+        const i = kv.indexOf("=");
+        jar[kv.slice(0, i)] = kv.slice(i + 1);
+      }
       const type = res.headers.get("content-type") || "";
       return { status: res.status, headers: res.headers, body: type.includes("json") ? await res.json() : await res.text() };
     };
@@ -310,4 +313,79 @@ test("helpers: webhook signature, form encoding, access, week key", () => {
   assert.equal(weekKey(new Date("2027-01-01T12:00:00Z")), "2026-W53");
   assert.ok(isSendTime(new Date("2026-10-25T17:30:00Z"))); // nedelja 18:30 v Ljubljani
   assert.ok(!isSendTime(new Date("2026-10-26T17:30:00Z")));
+});
+
+test("anti-sharing: seats per plan, one profile swap per 30 days", async () => {
+  await withServer(async ({ client, calls, store }) => {
+    const a = client();
+    await registerVerified(a, calls, "jan@primer.si");
+    const add = (name) => a("/api/students", { method: "POST", body: { name, birth_year: YEAR - 11, consent: true } });
+    // Preizkus: 2 profila.
+    const k1 = (await add("Ana")).body;
+    assert.equal((await add("Bor")).status, 201);
+    const third = await add("Cene");
+    assert.equal(third.status, 400);
+    assert.equal(third.body.seats, true);
+
+    // Menjava: izbris + nov profil je dovoljen enkrat.
+    assert.equal((await a(`/api/students/${k1.id}`, { method: "DELETE" })).status, 200);
+    const k3 = await add("Cene");
+    assert.equal(k3.status, 201);
+    await a(`/api/students/${k3.body.id}`, { method: "DELETE" });
+    const again = await add("Dan");
+    assert.equal(again.status, 400);
+    assert.equal(again.body.swap, true);
+    assert.ok((await a("/api/account")).body.swap_blocked_until);
+
+    // Po 30 dneh spet gre.
+    store.db.prepare("UPDATE profile_changes SET created_at = datetime('now','-31 days')").run();
+    assert.equal((await add("Dan")).status, 201);
+
+    // Brezplačni paket: samo 1 profil.
+    store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z'").run();
+    store.db.prepare("UPDATE profile_changes SET created_at = datetime('now','-31 days')").run();
+    const kids = (await a("/api/students")).body;
+    await a(`/api/students/${kids[0].id}`, { method: "DELETE" });
+    await a(`/api/students/${kids[1].id}`, { method: "DELETE" });
+    store.db.prepare("UPDATE profile_changes SET created_at = datetime('now','-31 days')").run();
+    assert.equal((await add("Eva")).status, 201);
+    assert.equal((await add("Fran")).body.seats, true);
+  });
+});
+
+test("anti-sharing: a profile is open on one device at a time", async () => {
+  await withServer(async ({ client, calls, store }) => {
+    const phone = client();
+    await registerVerified(phone, calls, "kaja@primer.si");
+    const kid = (await phone("/api/students", { method: "POST", body: { name: "Lan", birth_year: YEAR - 12, consent: true } })).body;
+    assert.equal((await phone(`/api/students/${kid.id}/xp`)).status, 200);
+
+    // Isti račun na drugi napravi (drug piškotek naprave).
+    const tablet = client();
+    assert.equal((await tablet("/api/auth/login", { method: "POST", body: { email: "kaja@primer.si", password: "geslo1234" } })).status, 200);
+    assert.equal((await tablet("/api/students")).body.length, 1); // seznam profilov je viden
+    const blocked = await tablet(`/api/students/${kid.id}/xp`);
+    assert.equal(blocked.status, 409);
+    assert.equal(blocked.body.taken, true);
+
+    // Prevzem: tablica nadaljuje, telefon se ustavi.
+    assert.equal((await tablet(`/api/students/${kid.id}/claim`, { method: "POST" })).status, 200);
+    assert.equal((await tablet(`/api/students/${kid.id}/xp`)).status, 200);
+    assert.equal((await phone(`/api/students/${kid.id}/xp`)).status, 409);
+    const conv = (await tablet(`/api/students/${kid.id}/conversations`, { method: "POST" })).body;
+    assert.equal((await phone(`/api/conversations/${conv.id}`)).status, 409);
+
+    // Po 30 minutah nedejavnosti lahko druga naprava nadaljuje brez prevzema.
+    store.db.prepare("UPDATE profile_claims SET last_seen = last_seen - 31 * 60000").run();
+    assert.equal((await phone(`/api/students/${kid.id}/xp`)).status, 200);
+
+    const acc = (await phone("/api/account")).body;
+    assert.equal(acc.children[0].devices.length, 2);
+    assert.equal(acc.device_warn_limit, 3);
+
+    // Odjava z drugih naprav: tablica izgubi prijavo.
+    await phone("/api/account/logout-others", { method: "POST" });
+    assert.equal((await tablet("/api/students")).status, 401);
+    assert.equal((await phone("/api/students")).status, 200);
+  });
 });
