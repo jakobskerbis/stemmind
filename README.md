@@ -32,6 +32,8 @@ Brez ključa se aplikacija zažene v preizkusnem načinu. Teste zaženeš z `npm
 
 Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac.command` (Mac). Skript ob prvem zagonu vpraša za ključ, namesti knjižnice in odpre brskalnik. `ustvari-bliznjico.bat` / `ustvari-bliznjico-mac.command` naredi bližnjico STEMMind na namizju.
 
+**Na telefonu (testno):** dvakrat klikni `telefon-windows.bat` (ali `node scripts/telefon.js`). Skript posodobi aplikacijo, ob prvem zagonu vpraša za geslo (`STEMMIND_PASSWORD` v `.env`), zažene strežnik in odpre brezplačno povezavo Cloudflare (`https://…trycloudflare.com`). Povezava se izpiše v oknu, kopira v odložišče in shrani v `data/telefon-povezava.txt`. Deluje, dokler je okno odprto in računalnik prižgan; ob vsakem zagonu je nova.
+
 **Posodobitev na najnovejšo različico**: dvakrat klikni `posodobi-windows.bat` ali `posodobi-mac.command`. Skript prenese zadnjo različico z GitHuba, jo prekopira čez to mapo (ključ `.env`, podatki `data/` in knjižnice ostanejo) in aplikacijo znova zažene.
 
 ## Nastavitve okolja
