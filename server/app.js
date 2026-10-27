@@ -8,6 +8,7 @@ import { createStreamFilter, parseMeta, stripMeta } from "./meta.js";
 import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
 import { Usage, LIMITS, windowHistory } from "./usage.js";
 import { Progress } from "./progress.js";
+import { mountLeagues } from "./leagues.js";
 import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
 import { lessonView, tocView, searchTextbook, lessonSummaryForPrompt } from "./textbook.js";
@@ -463,6 +464,9 @@ export function createApp(store, opts = {}) {
     const s = loadStudent(req, res);
     if (s) res.json({ ...progress.xpSummary(s.id), leaderboard: progress.leaderboard() });
   });
+
+  // --- tedenske lige, razredi in skupine prijateljev ---
+  mountLeagues(app, store, { loadStudent });
 
   // --- poraba AI ---
   app.get("/api/usage", (_req, res) => res.json(usage.summary()));

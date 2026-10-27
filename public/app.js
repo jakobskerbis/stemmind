@@ -5,6 +5,7 @@ import { icon, hydrateIcons } from "./icons.js";
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild } from "./account.js";
 import { initTextbook, showTextbook, openLesson } from "./textbook.js";
+import { loadLeague } from "./leagues.js";
 
 const $ = (sel) => document.querySelector(sel);
 const api = async (url, opts = {}) => {
@@ -69,6 +70,7 @@ function showView(name) {
     loadUsage();
   }
   if (name === "progress") loadProgress();
+  if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
   if (name === "textbook") showTextbook();
   if (name !== "topic") closePad();
@@ -103,6 +105,7 @@ async function selectStudent(id) {
   else renderEmptyChat();
   if (!$("#view-settings").hidden) fillSettingsForm();
   if (!$("#view-progress").hidden) loadProgress();
+  if (!$("#view-league").hidden) loadLeague(state.student.id);
   state.pathKey = null;
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
   refreshXp();
@@ -461,10 +464,7 @@ async function loadProgress() {
   const FLAG_NAMES = { distress: "stiska", unsafe: "nevarna prošnja", injection: "poskus obiti pravila", offtopic: "izven teme" };
   const flags = p.flags.filter((f) => f.flag !== "offtopic");
   $("#flags-card").hidden = !flags.length;
-  const x = await refreshXp();
-  $("#leaderboard").innerHTML = (x?.leaderboard || [])
-    .map((l) => `<li class="${l.id === state.student.id ? "me" : ""}"><span>${escapeHtml(l.name)}</span><b>${l.xp} XP</b></li>`)
-    .join("");
+  refreshXp();
   $("#flag-list").innerHTML = flags
     .map((f) => `<li>${f.created_at.slice(0, 16)} – <b>${FLAG_NAMES[f.flag] ?? f.flag}</b> v pogovoru »${escapeHtml(f.title)}«</li>`)
     .join("");

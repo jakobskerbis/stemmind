@@ -413,3 +413,22 @@ test("textbook: interactive part only with a paid plan or trial; PDF is public",
     assert.equal(pdf.status, 200);
   });
 });
+
+test("leagues with accounts: teacher's classes belong to the account; children join only their own", async () => {
+  await withServer(async ({ client, calls }) => {
+    const teacher = client();
+    await registerVerified(teacher, calls, "ucitelj@sola.si");
+    assert.equal((await client()("/api/classes", { method: "POST", body: { name: "8.b" } })).status, 401);
+    const cls = (await teacher("/api/classes", { method: "POST", body: { name: "8.b" } })).body;
+    assert.deepEqual((await teacher("/api/teacher/classes")).body.map((c) => c.code), [cls.code]);
+    assert.equal((await teacher(`/api/classes/${cls.code}`)).status, 200); // brez ključa
+
+    const parent = client();
+    await registerVerified(parent, calls, "stars@primer.si");
+    assert.equal((await parent(`/api/classes/${cls.code}`)).status, 403);
+    const kidId = (await parent("/api/students", { method: "POST", body: { name: "Lan", birth_year: YEAR - 12, consent: true } })).body.id;
+    assert.equal((await parent(`/api/students/${kidId}/classes`, { method: "POST", body: { code: cls.code } })).status, 201);
+    assert.equal((await teacher(`/api/students/${kidId}/league`)).status, 404); // tuj otrok
+    assert.equal((await teacher(`/api/classes/${cls.code}`)).body.members.length, 1);
+  });
+});

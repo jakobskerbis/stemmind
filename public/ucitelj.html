@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>STEMMind za učitelje</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">STEM<span>Mind</span></div>
+    <div class="muted">za učitelje</div>
+  </header>
+  <div id="toast" class="toast" hidden></div>
+  <main class="view narrow">
+    <h1>Moji razredi</h1>
+    <form id="create" class="card form">
+      <h2>Nov razred</h2>
+      <p class="muted">Dobite kodo, ki jo poveste učencem. V aplikaciji jo vpišejo pod »Lige«. Vidite samo vzdevke učencev in njihove točke XP, ne imen.</p>
+      <div class="row">
+        <input id="name" placeholder="Ime razreda, npr. 8.b" maxlength="40" required>
+        <button class="primary" type="submit">Ustvari</button>
+      </div>
+    </form>
+    <div id="classes"></div>
+    <p class="muted">Razredi so shranjeni v tem brskalniku. Za dostop z druge naprave shranite povezavo »Povezava za upravljanje« (zaznamek), ker vsebuje ključ razreda.</p>
+  </main>
+  <script type="module">
+    const $ = (s) => document.querySelector(s);
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+    const load = () => { try { return JSON.parse(localStorage.getItem("teacherClasses") || "[]"); } catch { return []; } };
+    const save = (list) => { try { localStorage.setItem("teacherClasses", JSON.stringify(list)); } catch {} };
+    const toast = (m) => { const t = $("#toast"); t.textContent = m; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => (t.hidden = true), 4000); };
+    const api = async (url, key, method = "GET", body) => {
+      const r = await fetch(url, { method, headers: { "Content-Type": "application/json", ...(key ? { "X-Teacher-Key": key } : {}) }, body: body && JSON.stringify(body) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw Object.assign(new Error(d.error || `Napaka ${r.status}`), { status: r.status });
+      return d;
+    };
+
+    // Povezava za upravljanje: ucitelj.html#code=XXX-XXX&key=...
+    const h = new URLSearchParams(location.hash.slice(1));
+    if (h.get("code") && h.get("key")) {
+      const list = load();
+      if (!list.some((c) => c.code === h.get("code"))) save([...list, { code: h.get("code"), key: h.get("key"), name: h.get("code") }]);
+      history.replaceState(null, "", location.pathname);
+    }
+
+    const loginMsg = `Za upravljanje razredov se prijavite v aplikacijo (<a href="/">prijava</a>), nato odprite to stran znova.`;
+    async function render() {
+      // Pri prijavljenem učitelju dodamo razrede iz računa (delujejo brez ključa).
+      try {
+        const mine = await api("/api/teacher/classes");
+        const list = load();
+        for (const c of mine) if (!list.some((x) => x.code === c.code)) list.push({ code: c.code, key: null, name: c.name });
+        save(list);
+      } catch (e) {
+        if (e.status === 401) { $("#classes").innerHTML = `<div class="card">${loginMsg}</div>`; return; }
+      }
+      const list = load();
+      const out = [];
+      for (const c of list) {
+        try {
+          const v = await api(`/api/classes/${encodeURIComponent(c.code)}`, c.key);
+          if (v.name !== c.name) { c.name = v.name; save(list); }
+          const link = !c.key ? null : `${location.origin}${location.pathname}#code=${encodeURIComponent(c.code)}&key=${encodeURIComponent(c.key)}`;
+          out.push(`<div class="card">
+            <h2>🏫 ${esc(v.name)} · koda <span class="code">${esc(v.code)}</span></h2>
+            <p class="muted">${v.members.length} ${v.members.length === 1 ? "učenec" : "učencev"} · XP od ponedeljka ${esc(v.week)}</p>
+            ${v.members.length ? `<table class="table"><thead><tr><th>#</th><th>Vzdevek</th><th>Ta teden</th><th>Skupaj</th><th></th></tr></thead><tbody>
+              ${v.members.map((m) => `<tr><td>${m.rank}</td><td>${esc(m.nickname)}</td><td>${m.xp}</td><td>${m.total}</td>
+                <td><button class="small" data-rm="${m.ref}" data-code="${esc(c.code)}">Odstrani</button></td></tr>`).join("")}
+              </tbody></table>` : `<p class="muted">Še nihče se ni pridružil.</p>`}
+            ${link ? `<p class="muted"><a href="${esc(link)}">Povezava za upravljanje</a></p>` : ""}
+            <button class="danger" data-del="${esc(c.code)}">Izbriši razred</button>
+          </div>`);
+        } catch (e) {
+          if (e.status === 403) { save(load().filter((x) => x.code !== c.code)); continue; }
+          out.push(`<div class="card"><b>${esc(c.name)}</b> <span class="muted">${esc(e.message)}</span></div>`);
+        }
+      }
+      $("#classes").innerHTML = out.join("");
+      document.querySelectorAll("[data-rm]").forEach((b) => b.addEventListener("click", async () => {
+        if (!confirm("Odstranim učenca iz razreda?")) return;
+        const c = load().find((x) => x.code === b.dataset.code);
+        await api(`/api/classes/${encodeURIComponent(c.code)}/members/${b.dataset.rm}`, c.key, "DELETE");
+        render();
+      }));
+      document.querySelectorAll("[data-del]").forEach((b) => b.addEventListener("click", async () => {
+        if (!confirm("Razred bo izbrisan za vse učence. Nadaljujem?")) return;
+        const c = load().find((x) => x.code === b.dataset.del);
+        await api(`/api/classes/${encodeURIComponent(c.code)}`, c.key, "DELETE");
+        save(load().filter((x) => x.code !== c.code));
+        render();
+      }));
+    }
+
+    $("#create").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        const c = await api("/api/classes", null, "POST", { name: $("#name").value });
+        save([...load(), { code: c.code, key: c.teacherKey, name: c.name }]);
+        $("#name").value = "";
+        toast(`Razred ustvarjen. Koda za učence: ${c.code}`);
+        render();
+      } catch (err) { if (err.status === 401) $("#classes").innerHTML = `<div class="card">${loginMsg}</div>`; else toast(err.message); }
+    });
+    render();
+  </script>
+</body>
+</html>

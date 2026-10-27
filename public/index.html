@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="account.css">
   <link rel="stylesheet" href="textbook.css">
+  <link rel="stylesheet" href="leagues.css">
 </head>
 <body>
   <header class="topbar">
@@ -24,6 +25,7 @@
       <button class="tab" data-view="progress"><i data-icon="chart-column"></i><span>Napredek</span></button>
       <button class="tab" data-view="settings"><i data-icon="settings"></i><span>Nastavitve</span></button>
       <button class="tab" data-view="account" id="account-tab" hidden><i data-icon="user"></i><span>Račun</span></button>
+      <button class="tab" data-view="league"><i data-icon="trophy"></i><span>Lige</span></button>
     </nav>
     <div id="xp-badge" class="xp-badge">
       <span class="stat xp" title="Točke izkušenj (XP)"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span></span>
@@ -180,11 +182,6 @@
         <tbody id="topic-rows"></tbody>
       </table>
     </div>
-    <div class="card">
-      <h2>Lestvica tedna</h2>
-      <p class="muted">Točke XP, zbrane od ponedeljka. Prikazani so samo vzdevki.</p>
-      <ol id="leaderboard" class="leaderboard"></ol>
-    </div>
     <div class="card" id="flags-card">
       <h2>Opozorila</h2>
       <p class="muted">Pogovori, kjer je STEMMind zaznal stisko, nevarno prošnjo ali poskus obiti pravila.</p>
@@ -193,6 +190,12 @@
   </main>
 
   <!-- NAČINI UČENJA (vedno dosegljivi) -->
+  <!-- LIGE -->
+  <main id="view-league" class="view narrow" hidden>
+    <h1>Lige</h1>
+    <div id="league-content"><p class="muted">Nalagam …</p></div>
+  </main>
+
   <nav id="modebar" class="modebar" aria-label="Način učenja">
     <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span>Nova snov</span></button>
     <button type="button" data-mode="review"><span class="ic"><i data-icon="repeat"></i><b class="badge" hidden></b></span><span>Ponavljanje</span></button>
