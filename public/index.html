@@ -6,6 +6,7 @@
   <title>STEMMind</title>
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="account.css">
 </head>
 <body>
   <header class="topbar">
@@ -15,6 +16,7 @@
       <button class="tab" data-view="chat">Klepet</button>
       <button class="tab" data-view="settings">Nastavitve</button>
       <button class="tab" data-view="progress">Napredek</button>
+      <button class="tab" data-view="account" id="account-tab" hidden>Račun</button>
     </nav>
     <div id="xp-badge" class="xp-badge" title="Izkušnje">⭐ <b id="xp-total">0</b> XP · 🔥 <b id="xp-streak">0</b></div>
     <label class="student-picker">
@@ -27,6 +29,10 @@
   <div id="mock-banner" class="banner" hidden>
     Preizkusni način: API ključ ni nastavljen, zato STEMMind vrača vnaprej pripravljene odgovore.
   </div>
+
+  <!-- PRIJAVA STARŠEV IN RAČUN (account.js) -->
+  <main id="view-auth" class="view narrow" hidden></main>
+  <main id="view-account" class="view narrow" hidden></main>
 
   <!-- UČNA POT -->
   <main id="view-path" class="view narrow">

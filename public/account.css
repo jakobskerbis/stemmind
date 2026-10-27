@@ -1,0 +1,35 @@
+/* Prijava staršev in zavihek Račun (account.js) */
+body.auth-mode .tabs, body.auth-mode .xp-badge, body.auth-mode .student-picker, body.auth-mode .modebar { display: none !important; }
+.auth-box { max-width: 440px; margin: 24px auto 0; }
+.auth-box h1 { margin-bottom: 4px; }
+.auth-links { text-align: center; font-size: 0.92rem; }
+a { color: var(--accent); }
+.form-error { color: var(--danger); margin: 0; font-size: 0.92rem; }
+.form label.check, label.check { flex-direction: row; align-items: flex-start; gap: 10px; font-weight: 400; display: flex; }
+label.check input { margin-top: 4px; flex: none; width: 18px; height: 18px; }
+
+.plans { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.plan-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 8px; align-items: stretch; }
+.plan-head { font-weight: 600; align-self: center; }
+.plan { display: flex; gap: 8px; align-items: flex-start; border: 1px solid var(--border); border-radius: 10px; padding: 10px; cursor: pointer; background: var(--bg); }
+.plan:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.plan input { margin-top: 4px; }
+.plan .muted { font-size: 0.8rem; }
+@media (max-width: 520px) {
+  .plan-row { grid-template-columns: 1fr 1fr; }
+  .plan-head { grid-column: 1 / -1; }
+}
+
+.child-list { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 8px; }
+.pill { display: inline-block; font-size: 0.8rem; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); }
+.pill.ok { color: var(--ok); }
+details summary { cursor: pointer; color: var(--accent); margin: 4px 0 8px; }
+details .card { margin-top: 8px; }
+#view-account .form-actions { flex-wrap: wrap; margin-top: 8px; }
+#view-account .inline input { padding: 8px 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); min-width: 0; }
+/* Pet zavihkov: na ozkem zaslonu se vrstica zavihkov pomika, stran ostane široka kot zaslon. */
+@media (max-width: 760px) {
+  .tabs { overflow-x: auto; scrollbar-width: none; min-width: 0; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { white-space: nowrap; flex: none; padding: 8px 10px; }
+}

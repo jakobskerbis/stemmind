@@ -12,6 +12,7 @@ import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt } from "./
 import { getExplanation } from "./explanations.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
+import { mountAccounts } from "./accounts/index.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -38,9 +39,11 @@ function basicAuth(password) {
   };
 }
 
-export function createApp(store, { streamFn = streamReply, readFn = readHandwriting } = {}) {
+export function createApp(store, opts = {}) {
+  const { streamFn = streamReply, readFn = readHandwriting } = opts;
   const app = express();
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
+  mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
   if (process.env.STEMMIND_PASSWORD) app.use(basicAuth(process.env.STEMMIND_PASSWORD));
   app.use(express.json({ limit: "10mb" }));
   app.use(express.static(path.join(here, "..", "public")));
