@@ -98,7 +98,7 @@ node scripts/generate-lessons.js --yes --path FIZ-OS-9 --model claude-sonnet-5-5
 
 Aplikacija je en proces Node z bazo v eni datoteki, zato potrebuje gostovanje s **trajnim diskom**:
 
-- **Render / Railway / Fly.io**: poveži repozitorij, dodaj trajni disk (volume), nastavi `STEMMIND_DB` na pot na tem disku ter `ANTHROPIC_API_KEY` in `STEMMIND_PASSWORD`.
+- **Render (priporočeno)**: en klik prek `render.yaml`, navodila v [docs/objava.md](docs/objava.md).
 - **Docker**: `docker build -t stemmind . && docker run -p 3000:3000 -v stemmind-data:/data -e ANTHROPIC_API_KEY=... stemmind`
 
 ## Zgradba
