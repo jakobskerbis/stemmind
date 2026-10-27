@@ -133,6 +133,31 @@ export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
   const convCols = db.prepare("PRAGMA table_info(conversations)").all().map((c) => c.name);
   if (!convCols.includes("path_topic")) db.exec("ALTER TABLE conversations ADD COLUMN path_topic TEXT");
   if (!convCols.includes("deep")) db.exec("ALTER TABLE conversations ADD COLUMN deep INTEGER NOT NULL DEFAULT 0");
+  // Starejše baze: events.conversation_id je bil NOT NULL, vaje (brez pogovora) pa zapisujejo NULL.
+  const convIdCol = db.prepare("PRAGMA table_info(events)").all().find((c) => c.name === "conversation_id");
+  if (convIdCol?.notnull) {
+    db.exec(`
+      BEGIN;
+      CREATE TABLE events_new (
+        id INTEGER PRIMARY KEY,
+        student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+        conversation_id INTEGER REFERENCES conversations(id) ON DELETE CASCADE,
+        message_id INTEGER REFERENCES messages(id) ON DELETE SET NULL,
+        subject TEXT,
+        topic TEXT,
+        error INTEGER NOT NULL DEFAULT 0,
+        mode TEXT,
+        flag TEXT NOT NULL DEFAULT 'none',
+        created_at TEXT NOT NULL DEFAULT (datetime('now'))
+      );
+      INSERT INTO events_new (id, student_id, conversation_id, message_id, subject, topic, error, mode, flag, created_at)
+        SELECT id, student_id, conversation_id, message_id, subject, topic, error, mode, flag, created_at FROM events;
+      DROP TABLE events;
+      ALTER TABLE events_new RENAME TO events;
+      CREATE INDEX IF NOT EXISTS idx_events_student ON events(student_id, created_at);
+      COMMIT;
+    `);
+  }
   return new Store(db);
 }
 
