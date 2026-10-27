@@ -1,6 +1,6 @@
 // Generatorji nalog za matematiko v OŠ (6.–9. razred).
 // Vsak generator izračuna števila in pravilen odgovor v kodi.
-import { NAMES, choices } from "../rng.js";
+import { NAMES, choices, g, nOf, verbOf } from "../rng.js";
 import { fmt, gcd, roundHalfUp } from "../check.js";
 
 // Število za LaTeX z decimalno vejico.
@@ -94,7 +94,12 @@ export const MAT_GENERATORS = [
       const s = r.pick(pool);
       const factor = (u) => (s.custom ? s.custom[u] : s.f ** s.units.indexOf(u));
       let [from, to] = r.shuffle(s.units).slice(0, 2);
-      const value = level === 1 ? r.int(1, 90) : r.dec(0.5, 90, r.int(0, 2));
+      let value = level === 1 ? r.int(1, 90) : r.dec(0.5, 90, r.int(0, 2));
+      if (s.units[0] === "s") {
+        // Čas: pretvorbe s faktorjem 60 naj dajo lep rezultat.
+        const ratio = factor(from) / factor(to);
+        value = ratio >= 1 ? r.pick([0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 7.5, 10, 12]) : r.pick([0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 4, 6, 8]) / ratio;
+      }
       const result = Math.round(((value * factor(from)) / factor(to)) * 1e9) / 1e9;
       return {
         text: `Pretvori: $${tx(value)}\\ \\mathrm{${from.replace("²", "^2").replace("³", "^3")}} = \\ ?\\ \\mathrm{${to.replace("²", "^2").replace("³", "^3")}}$`,
@@ -172,8 +177,10 @@ export const MAT_GENERATORS = [
     gen(level, r) {
       const d1 = r.int(2, level === 1 ? 6 : 10);
       const d2 = level === 1 ? d1 : r.int(2, 10);
-      const n1 = r.int(1, d1 * (level === 3 ? 2 : 1));
-      const n2 = r.int(1, d2);
+      let n1 = r.int(1, d1 * (level === 3 ? 2 : 1));
+      let n2 = r.int(1, d2);
+      if (n1 === d1) n1 = n1 > 1 ? n1 - 1 : n1 + 1;
+      if (n2 === d2) n2 = n2 > 1 ? n2 - 1 : n2 + 1;
       const op = level === 1 ? r.pick(["+", "-"]) : r.pick(["+", "-", "·", ":"]);
       let n, d;
       if (op === "+") [n, d] = [n1 * d2 + n2 * d1, d1 * d2];
@@ -232,7 +239,7 @@ export const MAT_GENERATORS = [
       const total = r.pick([20, 25, 40, 50, 80]);
       const got = r.int(1, total - 1);
       return {
-        text: `Na testu je bilo $${total}$ točk. ${name} je dosegel $${got}$ točk. Koliko odstotkov je to? Zaokroži na eno decimalko.`,
+        text: `Na testu je bilo $${total}$ točk. ${name} je ${g(name, "dosegel", "dosegla")} $${got}$ točk. Koliko odstotkov je to? Zaokroži na eno decimalko.`,
         answer: { type: "number", value: (got / total) * 100, decimals: 1, unit: "%", unitAlternatives: ["odstotkov"] },
         hint: "Delež = del : celota. Delež pomnoži s 100 %.",
         solution: `$${got} : ${total} \\cdot 100\\ \\% = ${tx((got / total) * 100, 1)}\\ \\%$`,
@@ -250,7 +257,7 @@ export const MAT_GENERATORS = [
         const workers2 = r.pick([2, 3, 4, 5, 6, 8].filter((w) => w !== workers));
         const v = (workers * days) / workers2;
         return {
-          text: `${workers} delavci prepleskajo šolo v ${days} dneh. V koliko dneh bi jo prepleskalo ${workers2} delavcev, če delajo enako hitro? Zaokroži na eno decimalko.`,
+          text: `${nOf(workers, "delavec", "delavca", "delavci", "delavcev")} šolo ${verbOf(workers, "prepleska", "prepleskata", "prepleskajo")} v ${days} dneh. V koliko dneh bi jo ${verbOf(workers2, "prepleskal", "prepleskala", "prepleskali", "prepleskalo")} ${nOf(workers2, "delavec", "delavca", "delavci", "delavcev")}, če delajo enako hitro? Zaokroži na eno decimalko.`,
           answer: { type: "number", value: v, decimals: 1, unit: "dni", unitAlternatives: ["dan", "dneh", "dnevi", "d"] },
           hint: "Več delavcev, manj dni: to je obratno sorazmerje. Produkt delavci · dnevi ostane enak.",
           solution: `$${workers} \\cdot ${days} = ${workers2} \\cdot x \\Rightarrow x = ${tx(v, 1)}$ dni`,
@@ -261,7 +268,7 @@ export const MAT_GENERATORS = [
       const qty2 = r.int(7, 15);
       const total = Math.round(qty * price * 100) / 100;
       return {
-        text: `${name} je za ${qty} kg jabolk plačal $${tx(total, 2)}$ €. Koliko bi plačal za ${qty2} kg?`,
+        text: `${name} je za ${qty} kg jabolk ${g(name, "plačal", "plačala")} $${tx(total, 2)}$ €. Koliko bi ${g(name, "plačal", "plačala")} za ${qty2} kg?`,
         answer: { type: "number", value: (total / qty) * qty2, decimals: 2, unit: "€", unitAlternatives: ["eur", "evrov"] },
         hint: "Najprej izračunaj ceno za 1 kg.",
         solution: `$${tx(total, 2)} : ${qty} \\cdot ${qty2} = ${tx((total / qty) * qty2, 2)}$ €`,
@@ -314,7 +321,7 @@ export const MAT_GENERATORS = [
           text: `Trikotnik ima stranico $a = ${tx(a)}\\ \\mathrm{${u}}$ in pripadajočo višino $v_a = ${tx(v)}\\ \\mathrm{${u}}$. Izračunaj ploščino.`,
           answer: { type: "number", value: (a * v) / 2, decimals: level === 1 ? null : 2, unit: `${u}²` },
           hint: "Ploščina trikotnika je $p = \\dfrac{a \\cdot v_a}{2}$.",
-          solution: `$p = \\dfrac{${tx(a)} \\cdot ${tx(v)}}{2} = ${tx((a * v) / 2)}\\ \\mathrm{${u}^2}$`,
+          solution: `$p = \\dfrac{${tx(a)} \\cdot ${tx(v)}}{2} = ${tx((a * v) / 2)}\\ \\mathrm{${u}^2}${level === 1 ? "" : ` \\approx ${tx(roundHalfUp((a * v) / 2, 2), 2)}\\ \\mathrm{${u}^2}`}$`,
         };
       }
       const a = r.int(6, 20);
@@ -507,7 +514,8 @@ export const MAT_GENERATORS = [
       const x = r.int(-9, 12);
       const a = r.nonZero(level === 1 ? 2 : -9, 9);
       const b = r.int(-20, 20);
-      const sign = (v) => (v < 0 ? `- ${-v}` : `+ ${v}`);
+      const sign = (v) => (v < 0 ? `- ${-v}` : v === 0 ? "" : `+ ${v}`);
+      const cx = (v) => (v === 1 ? "x" : v === -1 ? "-x" : `${v}x`);
       if (level === 1) {
         const ax = Math.abs(a);
         const c = ax * x + b;
@@ -523,10 +531,10 @@ export const MAT_GENERATORS = [
         const d = a * x + b - c * x;
         if (a === c) return this.gen(2, r);
         return {
-          text: `Reši enačbo: $${a}x ${sign(b)} = ${c}x ${sign(d)}$`,
+          text: `Reši enačbo: $${cx(a)} ${sign(b)} = ${cx(c)} ${sign(d)}$`,
           answer: { type: "number", value: x },
           hint: "Člene z $x$ zberi na levi, števila na desni strani enačbe.",
-          solution: `$${a - c}x = ${d - b} \\Rightarrow x = ${x}$`,
+          solution: `$${cx(a - c)} = ${d - b} \\Rightarrow x = ${x}$`,
         };
       }
       // z oklepaji ali ulomkom
@@ -566,21 +574,26 @@ export const MAT_GENERATORS = [
         };
       }
       const p = r.int(1, 7);
-      const q = r.nonZero(-7, 7);
+      let q = r.nonZero(-7, 7);
+      if (q === -p) q = -q; // da člen z x ne izgine
       const qs = q < 0 ? `- ${-q}` : `+ ${q}`;
+      // Zapis polinoma a x^2 + b x + c brez "1x", "+ -3" in ničelnih členov.
+      const poly = (a2, b, c) => {
+        const parts = [];
+        if (a2) parts.push(a2 === 1 ? "x^2" : `${a2}x^2`);
+        if (b) parts.push(`${b < 0 ? "- " : parts.length ? "+ " : ""}${Math.abs(b) === 1 ? "" : Math.abs(b)}x`);
+        if (c) parts.push(`${c < 0 ? "- " : parts.length ? "+ " : ""}${Math.abs(c)}`);
+        return parts.join(" ") || "0";
+      };
       if (level === 2) {
-        const right = `x^2 ${p + q < 0 ? "-" : "+"} ${Math.abs(p + q)}x ${p * q < 0 ? "-" : "+"} ${Math.abs(p * q)}`;
-        const c = choices(r, right, [
-          `x^2 + ${p * q}`,
-          `x^2 ${p - q < 0 ? "-" : "+"} ${Math.abs(p - q)}x ${p * q < 0 ? "-" : "+"} ${Math.abs(p * q)}`,
-          `2x ${p + q < 0 ? "-" : "+"} ${Math.abs(p + q)}`,
-        ]);
+        const right = poly(1, p + q, p * q);
+        const c = choices(r, right, [poly(1, 0, p * q), poly(1, p - q, p * q), poly(0, 2, p + q)]);
         return {
           text: `Zmnoži: $(x + ${p})(x ${qs})$`,
           answer: { type: "choice", ...c },
           options_tex: true,
           hint: "Vsak člen prvega oklepaja pomnoži z vsakim členom drugega, nato seštej podobne člene.",
-          solution: `$(x + ${p})(x ${qs}) = ${right.replace(/\+ 1x|\+ -/, (m) => m)}$`,
+          solution: `$(x + ${p})(x ${qs}) = ${right}$`,
         };
       }
       const k = r.int(2, 9);
@@ -615,7 +628,7 @@ export const MAT_GENERATORS = [
       const v = area ? Math.PI * rad * rad : 2 * Math.PI * rad;
       const v314 = area ? 3.14 * rad * rad : 2 * 3.14 * rad;
       return {
-        text: `Krog ima polmer $r = ${tx(rad)}\\ \\mathrm{${u}}$. Izračunaj njegov ${area ? "ploščino" : "obseg"}. Zaokroži na dve decimalki. ${piNote}`,
+        text: `Krog ima polmer $r = ${tx(rad)}\\ \\mathrm{${u}}$. Izračunaj ${area ? "njegovo ploščino" : "njegov obseg"}. Zaokroži na dve decimalki. ${piNote}`,
         answer: { type: "number", value: v, alsoAccept: [v314], unit: area ? `${u}²` : u, decimals: 2 },
         hint: area ? "Ploščina kroga: $p = \\pi r^2$." : "Obseg kroga: $o = 2\\pi r$.",
         solution: area
@@ -787,7 +800,7 @@ export const MAT_GENERATORS = [
     id: "podobnost",
     topics: ["MAT-OS-9/podobni-trikotniki", "MAT-OS-9/talesov-izrek", "MAT-SS-2/podobnost"],
     gen(level, r) {
-      const k = level === 1 ? r.int(2, 4) : r.pick([1.5, 2.5, 0.5, 3, 1.2]);
+      const k = level === 1 ? r.int(2, 4) : r.pick([1.5, 2.5, 3, 1.2]);
       const a = r.int(2, 12);
       const b = r.int(2, 12);
       if (level === 3) {
@@ -833,26 +846,28 @@ export const MAT_GENERATORS = [
       }
       const red = r.int(1, 8);
       const blue = r.int(1, 8);
-      const green = r.int(0, 6);
+      const green = r.int(1, 6);
       const total = red + blue + green;
+      const kroglice = (n) => `${verbOf(n, "je", "sta", "so")} ${nOf(n, "kroglica", "kroglici", "kroglice", "kroglic")}`;
       if (level === 2) {
         const [n, d] = reduce(red, total);
         return {
-          text: `V vrečki je ${red} rdečih, ${blue} modrih in ${green} zelenih kroglic. Na slepo izvlečemo eno. Kolikšna je verjetnost, da je rdeča? Zapiši kot okrajšan ulomek.`,
+          text: `V vrečki ${kroglice(total)}: ${nOf(red, "rdeča", "rdeči", "rdeče", "rdečih")}, ${nOf(blue, "modra", "modri", "modre", "modrih")} in ${nOf(green, "zelena", "zeleni", "zelene", "zelenih")}. Na slepo izvlečemo eno. Kolikšna je verjetnost, da je rdeča? Zapiši kot okrajšan ulomek.`,
           answer: { type: "fraction", num: n, den: d },
           hint: "Koliko je vseh kroglic? Koliko je rdečih?",
           solution: `$P = ${frac(red, total)} = ${fracTex(n, d)}$`,
           inputHint: "npr. 3/8",
         };
       }
-      const [n, d] = reduce(red * (red - 1), total * (total - 1));
+      const R = red + 1;
+      const T = R + blue + green;
+      const [n, d] = reduce(R * (R - 1), T * (T - 1));
       return {
-        text: `V vrečki je ${red + 1} rdečih in ${blue + green} drugih kroglic. Zaporedoma izvlečemo dve kroglici, prve ne vrnemo. Kolikšna je verjetnost, da sta obe rdeči? Zapiši kot okrajšan ulomek.`,
-        answer: { type: "fraction", ...(() => { const [nn, dd] = reduce((red + 1) * red, total * (total - 1)); return { num: nn, den: dd }; })() },
+        text: `V vrečki ${kroglice(T)}: ${nOf(R, "rdeča", "rdeči", "rdeče", "rdečih")} in ${nOf(blue + green, "druge barve", "drugih barv", "drugih barv", "drugih barv")}. Zaporedoma izvlečemo dve kroglici, prve ne vrnemo. Kolikšna je verjetnost, da sta obe rdeči? Zapiši kot okrajšan ulomek.`,
+        answer: { type: "fraction", num: n, den: d },
         hint: "Verjetnost za prvo rdečo pomnoži z verjetnostjo za drugo rdečo, ko je ena že izvlečena.",
-        solution: `$P = ${frac(red + 1, total)} \\cdot ${frac(red, total - 1)}$`,
+        solution: `$P = ${frac(R, T)} \\cdot ${frac(R - 1, T - 1)} = ${fracTex(n, d)}$`,
         inputHint: "npr. 1/6",
-        _unused: [n, d],
       };
     },
   },

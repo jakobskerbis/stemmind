@@ -47,6 +47,12 @@ function renderMath(tex, display) {
   }
 }
 
+// Sporočilo učenca: besedilo ostane besedilo, le $...$ se izriše kot formula.
+function renderUserText(text) {
+  const parts = String(text).split(/(\$[^$\n]+?\$)/g);
+  return parts.map((p, i) => (i % 2 ? renderMath(p.slice(1, -1), false) : escapeHtml(p))).join("");
+}
+
 function renderRich(text) {
   const math = [];
   const stash = (tex, display) => `@@MATH${math.push({ tex, display }) - 1}@@`;
@@ -211,7 +217,7 @@ function addMessage(role, text, hasImage = false) {
   const el = document.createElement("div");
   el.className = `msg ${role}`;
   if (role === "user") {
-    el.textContent = text;
+    el.innerHTML = renderUserText(text);
     if (hasImage) {
       const note = document.createElement("div");
       note.className = "photo-note";
@@ -810,7 +816,7 @@ async function nextPractice() {
 }
 
 const SESSIONS = {
-  review: { mode: "review", icon: "repeat", title: "Ponavljanje", intro: "Mešane naloge iz tem, ki jih je čas ponoviti, da znanje ostane.", empty: "Trenutno ni ničesar za ponoviti. 👍" },
+  review: { mode: "review", icon: "repeat", title: "Ponavljanje", intro: "Mešane naloge iz tem, ki jih je čas ponoviti, da znanje ostane.", empty: "Trenutno ni ničesar za ponoviti. Naloge za ponavljanje se pojavijo nekaj dni po novi snovi." },
   placement: { mode: "placement", icon: "target", title: "Preizkus znanja", intro: "Brez namigov. Z vsaj 80 % se sklop odklene in šteje kot osvojen." },
   daily: { mode: "daily", icon: "zap", title: "Današnji trening", intro: "Približno 15 minut: nova snov, vmes ponavljanje.", empty: "Na tej poti še ni nalog za trening. Začni z novo snovjo." },
   "unit-practice": { mode: "unit", icon: "puzzle", title: "Vaja sklopa", intro: "Prepletene naloge iz vseh tem tega sklopa." },

@@ -1,5 +1,5 @@
 // Generatorji nalog za fiziko (OŠ in gimnazija).
-import { NAMES } from "../rng.js";
+import { NAMES, g } from "../rng.js";
 import { roundHalfUp } from "../check.js";
 import { tx } from "./mat.js";
 
@@ -11,7 +11,7 @@ export const FIZ_GENERATORS = [
     id: "gostota",
     topics: ["FIZ-OS-8/gostota"],
     gen(level, r) {
-      const mats = [["aluminij", 2700], ["železo", 7870], ["les (smreka)", 450], ["led", 920], ["baker", 8960], ["steklo", 2500]];
+      const mats = [["aluminija", 2700], ["železa", 7870], ["smrekovega lesa", 450], ["ledu", 920], ["bakra", 8960], ["stekla", 2500]];
       const [name, rho] = r.pick(mats);
       if (level === 1) {
         const m = r.dec(0.2, 5, 1);
@@ -26,7 +26,7 @@ export const FIZ_GENERATORS = [
       const V = r.dec(0.5, 20, 1); // dm³
       const m = (rho * V) / 1000;
       return {
-        text: `Kolikšna je masa ${level === 3 ? "kocke" : "telesa"} iz snovi ${name} ($\\rho = ${rho}\\ \\mathrm{kg/m^3}$) s prostornino $${tx(V)}\\ \\mathrm{dm^3}$? Rezultat v kg zaokroži na dve decimalki.`,
+        text: `Kolikšna je masa ${level === 3 ? "kocke" : "telesa"} iz ${name} ($\\rho = ${rho}\\ \\mathrm{kg/m^3}$) s prostornino $${tx(V)}\\ \\mathrm{dm^3}$? Rezultat v kg zaokroži na dve decimalki.`,
         answer: num(m, "kg"),
         hint: "$m = \\rho \\cdot V$. Prostornino pretvori v $\\mathrm{m^3}$: $1\\ \\mathrm{dm^3} = 0{,}001\\ \\mathrm{m^3}$.",
         solution: `$m = ${rho} \\cdot ${tx(V / 1000)} \\approx ${tx(roundHalfUp(m, 2), 2)}\\ \\mathrm{kg}$`,
@@ -85,7 +85,7 @@ export const FIZ_GENERATORS = [
     gen(level, r) {
       const name = r.pick(NAMES);
       if (level === 1) {
-        const v = r.int(2, 30);
+        const v = r.int(2, 12);
         const t = r.int(2, 60);
         return {
           text: `Kolesar vozi enakomerno s hitrostjo $${v}\\ \\mathrm{m/s}$. Koliko poti prevozi v $${t}\\ \\mathrm{s}$?`,
@@ -99,7 +99,7 @@ export const FIZ_GENERATORS = [
         const tmin = r.int(5, 90);
         const v = s / (tmin / 60);
         return {
-          text: `${name} prevozi $${tx(s)}\\ \\mathrm{km}$ v $${tmin}$ minutah. Kolikšna je njegova povprečna hitrost v km/h? Zaokroži na eno decimalko.`,
+          text: `${name} prevozi $${tx(s)}\\ \\mathrm{km}$ v $${tmin}$ minutah. Kolikšna je ${g(name, "njegova", "njena")} povprečna hitrost v km/h? Zaokroži na eno decimalko.`,
           answer: num(v, "km/h", 1),
           hint: "Čas pretvori v ure ($t = \\dfrac{${tmin}}{60}\\ \\mathrm{h}$), nato $v = \\dfrac{s}{t}$.",
           solution: `$v = \\dfrac{${tx(s)}}{${tmin}/60} \\approx ${tx(roundHalfUp(v, 1), 1)}\\ \\mathrm{km/h}$`,
@@ -219,14 +219,14 @@ export const FIZ_GENERATORS = [
     id: "toplota",
     topics: ["FIZ-OS-9/toplota", "FIZ-SS-2/notranja-energija-in-toplota"],
     gen(level, r) {
-      const subs = [["vode", 4200], ["aluminija", 900], ["železa", 450], ["olja", 2000]];
-      const [name, c] = level === 1 ? subs[0] : r.pick(subs);
+      const subs = [["vode", 4200, "ji"], ["aluminija", 900, "mu"], ["železa", 450, "mu"], ["olja", 2000, "mu"]];
+      const [name, c, pron] = level === 1 ? subs[0] : r.pick(subs);
       const m = r.dec(0.2, 5, 1);
       const dT = r.int(5, 80);
       const Q = m * c * dT;
       if (level === 3) {
         return {
-          text: `Koliko se segreje $${tx(m)}\\ \\mathrm{kg}$ ${name} ($c = ${c}\\ \\mathrm{J/(kg\\,K)}$), če ji dovedemo $${tx(Q / 1000, 1)}\\ \\mathrm{kJ}$ toplote? Zaokroži na eno decimalko.`,
+          text: `Koliko se segreje $${tx(m)}\\ \\mathrm{kg}$ ${name} ($c = ${c}\\ \\mathrm{J/(kg\\,K)}$), če ${pron} dovedemo $${tx(Q / 1000, 1)}\\ \\mathrm{kJ}$ toplote? Zaokroži na eno decimalko.`,
           answer: num((roundHalfUp(Q / 1000, 1) * 1000) / (m * c), "K", 1, { unitAlternatives: ["°c", "stopinj"] }),
           hint: "Iz $Q = m c \\Delta T$ izrazi $\\Delta T$. Pazi: kJ pretvori v J.",
           solution: `$\\Delta T = \\dfrac{Q}{m c} \\approx ${tx(roundHalfUp((roundHalfUp(Q / 1000, 1) * 1000) / (m * c), 1), 1)}\\ \\mathrm{K}$`,
