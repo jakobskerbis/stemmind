@@ -27,6 +27,7 @@ function basicAuth(password) {
 
 export function createApp(store, { streamFn = streamReply } = {}) {
   const app = express();
+  app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
   if (process.env.STEMMIND_PASSWORD) app.use(basicAuth(process.env.STEMMIND_PASSWORD));
   app.use(express.json({ limit: "10mb" }));
   app.use(express.static(path.join(here, "..", "public")));
