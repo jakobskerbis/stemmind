@@ -19,11 +19,19 @@ export function hess(el) {
     const [, A, B, C] = HESS[k];
     const vals = [A[1], B[1], C[1]], lo = Math.min(...vals), hi = Math.max(...vals), pad = (hi - lo) * 0.12 || 20;
     const Y = (e) => 30 + ((hi + pad - e) / (hi - lo + 2 * pad)) * 220;
+    // os entalpije s številkami, da je merilo vidno
+    const span = hi - lo + 2 * pad, st = [10, 20, 50, 100, 200, 500].find((q) => span / q <= 6) || 1000;
+    s("line", { x1: 40, y1: 26, x2: 40, y2: 254, class: "axis" }, svg);
+    for (let e = Math.ceil((lo - pad) / st) * st; e <= hi + pad; e += st) {
+      s("line", { x1: 37, y1: Y(e), x2: 43, y2: Y(e), class: "axis" }, svg);
+      label(svg, 34, Y(e), String(e), "tick small", "end");
+    }
+    label(svg, 4, 16, "H [kJ]", "tick small", "start");
     const lvl = ([n, e], x0, x1) => {
       s("line", { x1: x0, y1: Y(e), x2: x1, y2: Y(e), class: "graph-line" }, svg);
       label(svg, (x0 + x1) / 2, Y(e) - 10, n, "tick small b");
     };
-    lvl(A, 20, 120);
+    lvl(A, 46, 120);
     lvl(B, 130, 230);
     lvl(C, 230, 330);
     if (show >= 1) {
@@ -35,7 +43,7 @@ export function hess(el) {
     if (show >= 2) {
       arrow(svg, 70, Y(A[1]) + (C[1] < A[1] ? 2 : -2), 70, Y(C[1]), "c", 2.5);
       s("line", { x1: 60, y1: Y(C[1]), x2: 230, y2: Y(C[1]), class: "guide" }, svg);
-      label(svg, 64, (Y(A[1]) + Y(C[1])) / 2, `ΔH = ${fmt(C[1] - A[1], 1)} kJ`, "tick small b fill-c", "end");
+      label(svg, 76, Y(C[1]) + (C[1] < A[1] ? 14 : -10), `ΔH = ${fmt(C[1] - A[1], 1)} kJ`, "tick small b fill-c", "start");
     }
   };
   const info = () => {

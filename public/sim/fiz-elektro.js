@@ -258,7 +258,8 @@ export function krogEl(el, { mode = "zarnice" } = {}) {
         if (!(out1 && i === 0)) s("path", { d: `M${x - 8},${y - 8} L${x + 8},${y + 8} M${x - 8},${y + 8} L${x + 8},${y - 8}`, class: "string" }, svg);
         else label(svg, x, y, "odvita", "tick small");
       } else {
-        s("rect", vertical ? { x: x - 9, y: y - 22, width: 18, height: 44, class: "resistor", "stroke-width": 2 } : { x: x - 22, y: y - 9, width: 44, height: 18, class: "resistor", "stroke-width": 2 }, svg);
+        const rl = 10 + 0.8 * it.R; // dolžina upornika je sorazmerna z uporom
+        s("rect", vertical ? { x: x - 9, y: y - rl / 2, width: 18, height: rl, class: "resistor", "stroke-width": 2 } : { x: x - rl / 2, y: y - 9, width: rl, height: 18, class: "resistor", "stroke-width": 2 }, svg);
         label(svg, vertical ? x + 14 : x, vertical ? y : y - 18, `R${"₁₂₃"[i]} = ${it.R} Ω`, "tick small", vertical ? "start" : "middle");
       }
       label(svg, vertical ? x + 14 : x, vertical ? y + (bulbs ? 0 : 16) : y + 26, `${fmt(it.U, 2)} V`, "lbl small", vertical ? "start" : "middle");
@@ -273,6 +274,16 @@ export function krogEl(el, { mode = "zarnice" } = {}) {
       wire(`M${x},${Tp} V${B}`);
       elem(x, (Tp + B) / 2 - 10, it, i, true);
     });
+    // puščice toka v istem merilu: dolžina je sorazmerna s tokom
+    const kI = 40, curArrow = (x, y, I, max = 120) => {
+      if (!on || I <= 0) return;
+      const len = kI * I, cut = len > max;
+      arrow(svg, x, y, x, y + Math.min(len, max), "accent", 2.5, cut ? { "stroke-dasharray": "5 3" } : {});
+    };
+    curArrow(Rr + 12, Tp + 6, c.I);
+    label(svg, 336, Tp - 8, `I = ${fmt(c.I, 2)} A`, "tick small", "end");
+    if (vez === "vzporedno") c.items.forEach((it, i) => curArrow(130 + ((i + 0.5) * 170) / n - 9, (Tp + B) / 2 + 30, it.I, 46));
+    label(svg, 4, 12, `puščice toka: 1 A = ${kI} px (črtkana = skrajšana)`, "tick small", "start");
     const rows = c.items.map((it, i) => `${bulbs ? "žarnica" : "R"}${i + 1}: U = ${fmt(it.U, 2)} V, I = ${fmt(it.I, 2)} A, P = ${fmt(it.U * it.I, 2)} W`).join("<br>");
     out.innerHTML = (bulbs ? "" : texBlock(vez === "zaporedno" ? `R = R_1 + R_2${n > 2 ? " + R_3" : ""} = ${T(c.Rt, 1)}\\ \\Omega` : `\\frac{1}{R} = \\frac{1}{R_1} + \\frac{1}{R_2}${n > 2 ? " + \\frac{1}{R_3}" : ""} \\Rightarrow R = ${T(c.Rt, 2)}\\ \\Omega`)) +
       `<p>${rows}</p><p>${!on ? "Stikalo je odprto: krog ni sklenjen, tok ne teče." : vez === "zaporedno" ? `<b>Zaporedna vezava:</b> skozi vse ${bulbs ? "žarnice" : "upornike"} teče enak tok, napetost vira se razdeli (vsota = ${fmt(U, 1)} V).${bulbs && out1 ? " Ker je ena žarnica odvita, je krog prekinjen: ne sveti nobena." : ""}` : `<b>Vzporedna vezava:</b> na vseh je enaka napetost ${fmt(U, 1)} V, skupni tok je vsota tokov v vejah.${bulbs && out1 ? " Odvita žarnica ne vpliva na druge." : ""}`}</p>
@@ -346,12 +357,14 @@ export function magnet(el, { mode = "magnet" } = {}) {
     const src = Math.abs(str) < 1e-6 ? [] : [{ x: cx + half * Math.sign(str), y: cy, q: Math.abs(str) }, { x: cx - half * Math.sign(str), y: cy, q: -Math.abs(str) }];
     if (src.length) traceLines(svg, src, { W: 340, H: 280, perUnit: coil ? 10 : 12, arrows: true });
     if (coil) {
-      for (let i = 0; i < 9; i++) {
-        const x = cx - half + 6 + i * 13.5;
+      const loops = Math.round(N / 25); // ena narisana zanka = 25 ovojev
+      for (let i = 0; i < loops; i++) {
+        const x = cx - half + 6 + (i * 108) / Math.max(1, loops - 1);
         s("ellipse", { cx: x, cy, rx: 5, ry: 30, class: "graph-line stroke-a", "stroke-width": 2.5, fill: "none" }, svg);
       }
       s("line", { x1: cx - half + 6, y1: cy + 30, x2: cx - half - 10, y2: cy + 70, class: "wire" }, svg);
       s("line", { x1: cx + half - 2, y1: cy + 30, x2: cx + half + 10, y2: cy + 70, class: "wire" }, svg);
+      label(svg, cx, cy + 108, `${N} ovojev (ena narisana zanka = 25 ovojev)`, "tick small");
       label(svg, cx, cy + 90, I ? `tok ${fmt(Math.abs(I), 1)} A ${I > 0 ? "→" : "←"}` : "ni toka", "lbl small");
       if (src.length) {
         label(svg, cx + half * Math.sign(str) + 18 * Math.sign(str), cy - 40, "N", "lbl big");
@@ -447,6 +460,11 @@ export function lorentz(el) {
       else s("circle", { cx: x, cy: y, r: 2.5, class: "fill-muted" }, svg);
     }
     label(svg, 210, 290, into ? "B kaže v zaslon (×)" : "B kaže iz zaslona (·)", "lbl small");
+    {
+      const pr0 = params(), R0 = pr0.r * 1000, up = (pr0.q > 0) === into; // 1 px = 1 mm
+      s("path", { d: `M80,150 A${R0},${R0} 0 0 ${up ? 0 : 1} 80,${150 + (up ? -2 : 2) * R0}`, class: "graph-line stroke-c thin-line", "stroke-dasharray": "6 5", fill: "none", opacity: 0.7 }, svg);
+      label(svg, 210, 274, `črtkano: pot v polju, r = ${fmt(R0 / 10, 1)} cm (1 cm = 10 px)`, "tick small");
+    }
     if (trail.length > 1) s("path", { d: trail.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(""), class: "graph-line stroke-c thin-line", fill: "none" }, svg);
     const pr = params();
     s("circle", { cx: st.x, cy: st.y, r: 8, class: pr.q > 0 ? "fill-danger" : "fill-accent" }, svg);
@@ -512,7 +530,8 @@ export function indukcija(el) {
     svg.replaceChildren();
     svg2.replaceChildren();
     const mx = 170 + xm * 100;
-    for (let i = 0; i < 7; i++) s("ellipse", { cx: coilX - 30 + i * 10, cy: 90, rx: 5, ry: 34, class: "graph-line stroke-a", "stroke-width": 2.5, fill: "none" }, svg);
+    const loops = N / 20; // ena narisana zanka = 20 ovojev
+    for (let i = 0; i < loops; i++) s("ellipse", { cx: coilX - 30 + (i * 60) / Math.max(1, loops - 1), cy: 90, rx: 5, ry: 34, class: "graph-line stroke-a", "stroke-width": 2.5, fill: "none" }, svg);
     s("path", { d: `M${coilX - 30},124 V170 H${coilX - 10} M${coilX + 30},124 V170 H${coilX + 10}`, class: "wire" }, svg);
     const e = emfAt(xm, vx);
     s("circle", { cx: coilX, cy: 172, r: 16, class: "meter" }, svg);
@@ -522,6 +541,7 @@ export function indukcija(el) {
     s("rect", { x: mx, y: 78, width: 50, height: 24, class: flip ? "fill-accent" : "fill-danger" }, svg);
     label(svg, mx - 25, 90, flip ? "N" : "S", "lbl inv");
     label(svg, mx + 25, 90, flip ? "S" : "N", "lbl inv");
+    label(svg, coilX, 46, `${N} ovojev (zanka = 20)`, "tick small");
     label(svg, 10, 20, `inducirana napetost: ${fmt(e, 2)} V`, "lbl small", "start");
     const tw = 6, t0 = Math.max(0, t - tw);
     const X = (tt) => 40 + ((tt - t0) / tw) * 290, Y = (u) => 80 - u * 15;

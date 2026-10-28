@@ -97,7 +97,9 @@ function mase(el) {
     const all = [...re.map((r) => [...r, "r"]), ...pr.map((p) => [...p, "p"])];
     const W = 320 / all.length;
     const masses = all.map(([c, f]) => c * x * molarMass(f));
-    const mMax = Math.max(...masses);
+    // stalno merilo za izbrano reakcijo: vrh stolpca je največja masa pri 100 g prvega reaktanta
+    const mMax = (Math.max(...masses) * 100) / m;
+    label(svg, 330, 14, `merilo: polna višina = ${fmt(mMax, 0)} g`, "tick small", "end");
     all.forEach(([c, f, side], i) => {
       const cx = 10 + W * i + W / 2, mm = masses[i], h = (mm / mMax) * 110;
       s("rect", { x: cx - 18, y: 140 - h, width: 36, height: h, rx: 3, class: `bar ${side === "r" ? "fill-a" : "fill-b"}` }, svg);

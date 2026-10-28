@@ -136,10 +136,10 @@ export function kot(el, { mode = "meri" } = {}) {
         <p>${ang < 90 ? "Manjši od pravega kota (90°)." : ang === 90 ? "Kraka sta pravokotna." : ang < 180 ? "Med 90° in 180°." : ang === 180 ? "Kraka ležita na isti premici, na nasprotnih straneh vrha." : "Večji od 180°: kotomer meri le do 180°, zato izmerimo 360° − α in odštejemo."}</p>
         <p class="muted">Kotomer položimo tako, da je središče na vrhu kota in ničla na enem kraku. ${ang > 180 ? `Tu: 360° − ${ang}° = ${360 - ang}°.` : ""}</p>`;
     } else {
-      const b = a2;
-      s("path", { d: `M${V[0]},${V[1]} L${tip(0, 50).join(",")} A50,50 0 0 0 ${tip(ang, 50).join(",")} Z`, class: "angle-fill fill-a" }, svg);
-      s("path", { d: `M${V[0]},${V[1]} L${tip(ang, 50).join(",")} A50,50 0 0 0 ${tip(ang + b, 50).join(",")} Z`, class: "angle-fill fill-b" }, svg);
-      [0, ang, ang + b].forEach((d) => { const T = tip(d); s("line", { x1: V[0], y1: V[1], x2: T[0], y2: T[1], class: "ray-line" }, svg); });
+      const b = a2, aa = ang + m1 / 60, bb = b + m2 / 60;
+      s("path", { d: `M${V[0]},${V[1]} L${tip(0, 50).join(",")} A50,50 0 0 0 ${tip(aa, 50).join(",")} Z`, class: "angle-fill fill-a" }, svg);
+      s("path", { d: `M${V[0]},${V[1]} L${tip(aa, 50).join(",")} A50,50 0 0 0 ${tip(aa + bb, 50).join(",")} Z`, class: "angle-fill fill-b" }, svg);
+      [0, aa, aa + bb].forEach((d) => { const T = tip(d); s("line", { x1: V[0], y1: V[1], x2: T[0], y2: T[1], class: "ray-line" }, svg); });
       const A = ang * 60 + m1, B = b * 60 + m2, S = A + B;
       const dm = (x) => `${Math.floor(x / 60)}° ${x % 60}'`;
       out.innerHTML = `<div class="demo-eq"><span class="dot dot-a"></span> ${dm(A)} + <span class="dot dot-b"></span> ${dm(B)} = <b>${dm(S)}</b></div>
@@ -723,13 +723,14 @@ export function izsek(el) {
   let al = 120, r = 4;
   const draw = () => {
     svg.replaceChildren();
-    const C = [170, 130], R = 100;
+    const C = [170, 130], R = r * 12; // polmer v merilu: 12 px na cm
     s("circle", { cx: C[0], cy: C[1], r: R, class: "circle-fill" }, svg);
     const p = (a) => [C[0] + R * Math.cos(-rad(a)), C[1] + R * Math.sin(-rad(a))];
     s("path", { d: `M${C[0]},${C[1]} L${p(0).join(",")} A${R},${R} 0 ${al > 180 ? 1 : 0} 0 ${p(al).join(",")} Z`, class: "shape fill-a" }, svg);
     s("path", { d: `M${p(0).join(",")} A${R},${R} 0 ${al > 180 ? 1 : 0} 0 ${p(al).join(",")}`, class: "arc-thick" }, svg);
-    s("path", { d: `M${C[0]},${C[1]} L${C[0] + 26},${C[1]} A26,26 0 ${al > 180 ? 1 : 0} 0 ${C[0] + 26 * Math.cos(-rad(al))},${C[1] + 26 * Math.sin(-rad(al))}`, class: "right-angle" }, svg);
-    label(svg, C[0] + 40 * Math.cos(-rad(al / 2)), C[1] + 40 * Math.sin(-rad(al / 2)), `${al}°`, "lbl small");
+    const ra = Math.min(26, R * 0.45);
+    s("path", { d: `M${C[0]},${C[1]} L${C[0] + ra},${C[1]} A${ra},${ra} 0 ${al > 180 ? 1 : 0} 0 ${C[0] + ra * Math.cos(-rad(al))},${C[1] + ra * Math.sin(-rad(al))}`, class: "right-angle" }, svg);
+    label(svg, C[0] + (R + 16) * Math.cos(-rad(al / 2)), C[1] + (R + 16) * Math.sin(-rad(al / 2)), `${al}°`, "lbl small");
     const l = (2 * Math.PI * r * al) / 360, A = (Math.PI * r * r * al) / 360;
     out.innerHTML = `<p>Izsek je <b>${al}/360</b> celega kroga${360 % al === 0 ? ` (1/${360 / al})` : ""}. Zato je tudi lok tolikšen del obsega in izsek tolikšen del ploščine.</p>
       ${texBlock(`l = 2\\pi r\\cdot\\frac{\\alpha}{360^\\circ} = 2\\pi\\cdot ${r}\\cdot\\frac{${al}}{360} \\approx ${tfmt(l)}\\,\\mathrm{cm}`)}

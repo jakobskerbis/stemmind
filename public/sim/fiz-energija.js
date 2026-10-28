@@ -79,6 +79,12 @@ function moc(el) {
     arrow(svg, 300, base, 300, Y(hh), "c", 2);
     label(svg, 308, (base + Y(hh)) / 2, `h = ${hh} m`, "lbl small", "start");
     label(svg, 10, 16, `t = ${fmt(prog * tt, 1)} s`, "lbl small", "start");
+    // stolpec moči v stalnem merilu (0–6 kW)
+    const Pw = (m * G * hh) / tt, ph = Math.min(1, Pw / 6000) * 150;
+    s("rect", { x: 14, y: 40, width: 16, height: 150, class: "fill-soft" }, svg);
+    s("rect", { x: 14, y: 190 - ph, width: 16, height: ph, class: "bar fill-a" }, svg);
+    label(svg, 22, 32, "P", "tick b");
+    label(svg, 22, 202, `${fmt(Pw / 1000, 2)} kW`, "tick small");
     const W = m * G * hh, P = W / tt;
     out.innerHTML = texBlock(`A = m g h = ${m}\\cdot 9{,}81\\cdot ${hh} = ${T(W, 0)}\\ \\text{J}`) + texBlock(`P = \\frac{A}{t} = \\frac{${T(W, 0)}\\ \\text{J}}{${tt}\\ \\text{s}} = ${T(P, 0)}\\ \\text{W}`) +
       `<p>Moč pove, <b>kako hitro</b> opravljamo delo. Če isto stopnišče pretečeš v pol krajšem času, je delo enako, moč pa dvakrat večja.</p>
@@ -115,7 +121,7 @@ export function skejt(el) {
   const m = 50, k = 0.3, Lx = 5;
   let h0 = 6, mu = 0, x = -Math.sqrt(6 / k), dir = 1, E = m * G * 6, Q = 0;
   const yOf = (xx) => k * xx * xx;
-  const X = (xx) => 30 + ((xx + Lx) / (2 * Lx)) * 200, Y = (yy) => 230 - yy * 25;
+  const X = (xx) => 30 + ((xx + Lx) / (2 * Lx)) * 200, Y = (yy) => 230 - yy * 20; // 20 px na meter v obeh smereh
   const reset = () => {
     x = -Math.min(Lx, Math.sqrt(h0 / k));
     dir = 1;
