@@ -907,7 +907,7 @@ async function openTopic(topicId) {
     .flatMap((u) => u.topics)
     .find((x) => x.id === t.id);
   const canPractice = !!hasPractice?.practice;
-  $("#topic-content").innerHTML = `
+  $("#topic-content").innerHTML = `<div class="topic-grid">
     <div class="card topic-head">
       <span class="eyebrow">${escapeHtml(t.pathLabel)} · ${escapeHtml(t.unit)}</span>
       <h1>${escapeHtml(t.name)}</h1>
@@ -927,7 +927,7 @@ async function openTopic(topicId) {
           : `<p class="muted">Razlaga za to temo še ni pripravljena. Inštruktor te najprej vpraša, kaj že znaš, nato razloži po korakih.</p>`
       }
     </div>
-    <div id="practice"></div>`;
+    <div id="practice"></div></div>`;
   $("#t-practice")?.addEventListener("click", () => nextPractice());
   $("#t-learn").addEventListener("click", () => learnWithTutor(t));
   $("#t-lesson").addEventListener("click", () => openLesson(t.id));
@@ -997,7 +997,7 @@ async function startSession(kind, body = {}) {
   }
   if (kind !== "tek" && kind !== "contest") setBack("path");
   showView("topic");
-  $("#topic-content").innerHTML = `<div class="session-head"><span class="session-icon">${icon(cfg.icon)}</span><div><h1>${cfg.title}</h1><p class="muted">${cfg.intro}</p></div></div><div id="practice"></div>`;
+  $("#topic-content").innerHTML = `<div class="session-grid"><div class="session-main"><div class="session-head"><span class="session-icon">${icon(cfg.icon)}</span><div><h1>${cfg.title}</h1><p class="muted">${cfg.intro}</p></div></div><div id="practice"></div></div><aside id="session-side" class="card explanation" hidden></aside></div>`;
   if (kind === "contest") {
     if (out.contest) return showContestResult(out.contest);
     state.contestDeadline = out.deadline;
@@ -1097,7 +1097,31 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// Na širokem zaslonu je med serijo nalog desno razlaga teme trenutne naloge (ne pri preizkusu znanja in tekmovanju).
+const SIDE_MODES = ["review", "daily", "unit", "test", "tek"];
+const topicCache = new Map();
+async function showSideExplanation(task, ctx) {
+  const side = $("#session-side");
+  if (!side) return;
+  if (!SIDE_MODES.includes(ctx.mode) || !task.topicId) return (side.hidden = true);
+  if (side.dataset.topic === task.topicId) return;
+  side.dataset.topic = task.topicId;
+  try {
+    if (!topicCache.has(task.topicId)) topicCache.set(task.topicId, await api(`/api/topic?id=${encodeURIComponent(task.topicId)}`));
+    const t = topicCache.get(task.topicId);
+    if (side.dataset.topic !== task.topicId) return;
+    side.innerHTML = `<h2 class="with-icon">${icon("book-open")} ${escapeHtml(t.name)}</h2>${
+      t.explanation ? renderRich(t.explanation) : `<p class="muted">Razlaga za to temo še ni pripravljena.</p>`
+    }<button type="button" class="secondary small" id="side-lesson">${icon("book-open")}Celotna lekcija</button>`;
+    side.hidden = false;
+    $("#side-lesson").addEventListener("click", () => openLesson(t.id));
+  } catch {
+    side.hidden = true;
+  }
+}
+
 function renderTask(task, ctx) {
+  showSideExplanation(task, ctx);
   const box = $("#practice");
   const comp = ctx.mode === "tek" || ctx.mode === "contest" || (ctx.mode === "practice" && isCompTopic(state.topic?.id));
   const stars = ctx.mode !== "placement" && task.level ? diffBadge(task.level, comp) : "";

@@ -65,5 +65,6 @@ export function publicTask(task) {
     // Podatki iz besedila (Podatki / Iščemo) in potrebna formula za rešen zgled.
     data: task.data || null,
     formula: task.formula || null,
+    topicId: task.topicId || null, // za razlago teme ob seriji nalog
   };
 }

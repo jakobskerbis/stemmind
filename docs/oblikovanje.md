@@ -43,6 +43,16 @@ Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `
 - Telefon (do 760 px): spodnja vrstica `#tabbar` s petimi zavihki (Učna pot, Učbenik, Inštruktor, Tekmovanja, Jaz). Napredek, Lige, Nastavitve in Račun so pod »Jaz« (`#view-me`). Nov glavni del aplikacije dodaj v zgornje zavihke in na stran Jaz, ne kot šesti zavihek spodaj.
 - Načini učenja (Nova snov, Ponavljanje, Priprava na test) so kartice `#modebar.modes` na Učni poti; Današnji trening je modra kartica nad njimi.
 
+## Široki zasloni (od 1200 px)
+
+Prostor ob strani izkoristimo za informacije, ki jih učenec potrebuje hkrati:
+
+- Učna pot: levo izbira poti, Današnji trening in načini (pritrjeni), desno sklopi.
+- Tema: levo naloga, desno razlaga (pritrjena, z lastnim drsnikom). Pri seriji nalog (trening, ponavljanje, priprava na test, vaja sklopa, tekmovalni trening) je desno razlaga teme trenutne naloge; pri Preizkusu znanja in tekmovanju je ni.
+- Lekcija: besedilo levo, poskusi in simulacije desno (`placeDemos` v `textbook.js`; na ožjem zaslonu so med besedilom).
+- Kazalo učbenika in Napredek: kartice v dveh stolpcih.
+- Ko je odprta plošča za vnos (400 px desno), sta stolpca šele od 1700 px.
+
 ## Telefon
 
 - Najmanjša višina tipke za dotik je 44px.

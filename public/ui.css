@@ -156,3 +156,69 @@ a.btn-secondary svg { color: var(--accent); }
 .me-stats .stat-ic.streak svg.i { color: #ff7a1a; fill: #ffb21a; }
 .me-stats b { font-size: 1.35rem; font-weight: 900; line-height: 1.1; }
 .me-stats span:last-child { font-size: 0.82rem; color: var(--muted); font-weight: 700; }
+
+/* ---------- široki zasloni: več stolpcev, da je več informacij hkrati na pregledu ---------- */
+@media (min-width: 1200px) {
+  /* Učna pot: levo izbira, trening in načini (ostanejo vidni), desno sklopi in teme. */
+  #view-path { max-width: 1320px; display: grid; grid-template-columns: minmax(360px, 440px) minmax(0, 1fr); gap: 0 28px; align-items: start; align-content: start; }
+  #view-path > .path-side { position: sticky; top: 0; }
+  #view-path .hero { grid-template-columns: auto 1fr; }
+  #view-path .hero button.primary { grid-column: 1 / -1; width: 100%; }
+  #view-path .modes { grid-template-columns: 1fr; gap: 8px; }
+  #view-path .modes button { flex-direction: row; align-items: center; gap: 12px; padding: 10px 14px; }
+  #view-path .modes .ic { margin: 0; }
+  #view-path .modes .m-name { flex: none; }
+  #view-path .modes .m-sub { margin-left: auto; text-align: right; }
+  #path-content .unit { margin-bottom: 16px; }
+
+  /* Tema: levo naloga, desno razlaga, ki ostane vidna med reševanjem. */
+  #view-topic:has(.topic-grid) { max-width: 1400px; }
+  body:not(.pad-open) .topic-grid {
+    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); grid-template-areas: "head expl" "practice expl"; grid-template-rows: auto 1fr;
+    gap: 0 24px; align-items: start;
+  }
+  body:not(.pad-open) .topic-grid > .topic-head { grid-area: head; }
+  body:not(.pad-open) .topic-grid > .explanation { grid-area: expl; position: sticky; top: 0; max-height: calc(100dvh - 150px); overflow-y: auto; }
+  body:not(.pad-open) .topic-grid > #practice { grid-area: practice; }
+  body:not(.pad-open) .topic-grid > #practice > .task:first-child { margin-top: 0; }
+
+  /* Serija nalog (trening, ponavljanje …): desno razlaga teme trenutne naloge. */
+  #view-topic:has(.session-grid > aside:not([hidden])) { max-width: 1400px; }
+  body:not(.pad-open) .session-grid:has(> aside:not([hidden])) { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 0 24px; align-items: start; }
+  .session-grid > aside { position: sticky; top: 0; max-height: calc(100dvh - 150px); overflow-y: auto; }
+
+  /* Lekcija: besedilo levo, poskusi desno (pritrjeni, da so vidni med branjem). */
+  #view-textbook:has(.tb-lesson-grid.has-side) { max-width: 1440px; }
+  .tb-lesson-grid.has-side { display: grid; grid-template-columns: minmax(0, 1fr) minmax(420px, 560px); gap: 0 28px; align-items: start; }
+  .tb-lesson-grid.has-side .tb-side { position: sticky; top: 0; max-height: calc(100dvh - 120px); overflow-y: auto; overscroll-behavior: contain; padding-bottom: 8px; }
+  .tb-side .demo-values { grid-template-columns: 1fr 1fr; }
+  .tb-lesson-grid.has-side .tb-side .demo-svg { max-width: 100%; max-height: 46dvh; width: auto; display: block; margin: 0 auto; }
+
+  /* Kazalo učbenika: sklopi v dveh stolpcih. */
+  #view-textbook:not(:has(.tb-lesson-grid)) { max-width: 1240px; }
+  .tb-part { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; align-items: start; }
+  .tb-part > .tb-part-head { grid-column: 1 / -1; }
+
+  /* Ostale strani s karticami: dva stolpca. */
+  #view-progress, #view-league, #view-competition { max-width: 1240px; }
+  #view-progress { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; align-items: start; align-content: start; }
+  #view-progress > h1 { grid-column: 1 / -1; }
+}
+@media (min-width: 1700px) {
+  /* Zelo širok zaslon: razlaga ostane ob nalogi tudi, ko je odprta plošča za vnos. */
+  body.pad-open .topic-grid {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "head expl" "practice expl"; grid-template-rows: auto 1fr; gap: 0 24px; align-items: start;
+  }
+  body.pad-open .topic-grid > .topic-head { grid-area: head; }
+  body.pad-open .topic-grid > .explanation { grid-area: expl; position: sticky; top: 0; max-height: calc(100dvh - 150px); overflow-y: auto; }
+  body.pad-open .topic-grid > #practice { grid-area: practice; }
+}
+@media (min-width: 1700px) { body.pad-open #view-topic > #topic-content:has(.topic-grid) { max-width: 1300px; } }
+/* Razlaga ob seriji nalog je samo za široke zaslone (na telefonu bi bila predolga). */
+@media (max-width: 1199px) { #session-side { display: none !important; } }
+body.pad-open #session-side { display: none !important; }
+@media (min-width: 1700px) {
+  body.pad-open #session-side:not([hidden]) { display: block !important; }
+  body.pad-open .session-grid:has(> aside:not([hidden])) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 24px; align-items: start; }
+  body.pad-open #view-topic > #topic-content:has(.session-grid > aside:not([hidden])) { max-width: 1300px; }
+}

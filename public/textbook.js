@@ -123,6 +123,20 @@ export async function showTextbook() {
   await renderHome();
 }
 
+// Na širokem zaslonu so poskusi v desnem stolpcu (ostanejo vidni med branjem), sicer med besedilom.
+const WIDE = matchMedia("(min-width: 1200px)");
+function placeDemos(root = document) {
+  root.querySelectorAll(".tb-lesson-grid").forEach((grid) => {
+    const side = grid.querySelector(".tb-side");
+    const slot = grid.querySelector(".tb-demo-slot");
+    const demos = grid.querySelectorAll(".tb-demo, .tb-locked");
+    if (!demos.length) return;
+    if (WIDE.matches || !slot) side.append(...demos);
+    else slot.append(...demos);
+  });
+}
+WIDE.addEventListener?.("change", () => placeDemos());
+
 export async function openLesson(topicId) {
   tb.topicId = topicId;
   ctx.showView("textbook");
@@ -321,19 +335,20 @@ async function renderLesson(topicId) {
         </div>
       </div>`
     : "";
+  const SLOT = '<div class="tb-demo-slot"></div>';
   const sectionHtml = sections
     .map((s, i) => {
       const cls = /povzetek/i.test(s.title) ? "tb-summary" : /napak/i.test(s.title) ? "tb-mistakes" : /zakaj/i.test(s.title) ? "tb-why" : "";
       return `<section class="card tb-section ${cls}">${s.title ? `<h2>${esc(s.title)}</h2>` : ""}<div class="explanation">${R(s.md)}</div>${
         i === altAt ? altHtml : ""
-      }</section>${i === demoAfter ? demoHtml : ""}`;
+      }</section>${i === demoAfter ? SLOT : ""}`;
     })
     .join("");
 
   const fallback = !lesson
     ? `<section class="card tb-section"><div class="explanation">${
         L.explanation ? R(L.explanation) : `<p>Lekcija za to temo še nastaja.${L.demo ? " Medtem si oglej poskus spodaj" : ""}${L.practice ? ", reši nekaj nalog" : ""} ali vprašaj tutorja, ki ti temo razloži po korakih.</p>`
-      }</div></section>${demoHtml}`
+      }</div></section>${SLOT}`
     : "";
 
   const staticChecks = () => `<section class="card tb-checks"><h2>${ic("circle-help")}Preveri se</h2><ol>${lesson.checks
@@ -354,7 +369,7 @@ async function renderLesson(topicId) {
         .join("")}</section>`
     : "";
 
-  box.innerHTML = `
+  box.innerHTML = `<div class="tb-lesson-grid${demoHtml ? " has-side" : ""}"><div class="tb-main">
     <button type="button" class="text-btn tb-back" id="tb-back">← Učbenik</button>
     <p class="muted tb-crumb">${esc(L.pathLabel)} · ${esc(L.unit)}</p>
     <h1 class="tb-title">${esc(L.name)}</h1>
@@ -373,7 +388,8 @@ async function renderLesson(topicId) {
         ${L.prev ? `<button type="button" class="ghost" data-lesson="${esc(L.prev.id)}">← ${esc(L.prev.name)}</button>` : "<span></span>"}
         ${L.next ? `<button type="button" class="ghost" data-lesson="${esc(L.next.id)}">${esc(L.next.name)} →</button>` : ""}
       </div>
-    </section>`;
+    </section></div><aside class="tb-side">${demoHtml}</aside></div>`;
+  placeDemos(box);
   window.scrollTo(0, 0);
   box.scrollTop = 0;
 
