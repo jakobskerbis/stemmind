@@ -110,7 +110,7 @@ $s = \dfrac{g \cdot t^2}{2}$, od tod $t^2 = \dfrac{2s}{g}$; nato $v = g \cdot t$
 
 ## Drugače: Na sliki
 
-V demonstraciji zgoraj spustiš telo na Zemlji, Luni in Marsu ter opazuješ, kako pada. Na vseh treh nebesnih telesih začne telo iz mirovanja, a se hitrost povečuje različno hitro. Na Zemlji (največji $g$) telo pade najhitreje, na Marsu počasneje, na Luni najpočasneje.
+V simulaciji »Prosti pad na Zemlji, Luni in Marsu« spodaj spustiš telo na Zemlji, Luni in Marsu ter opazuješ, kako pada. Na vseh treh nebesnih telesih začne telo iz mirovanja, a se hitrost povečuje različno hitro. Na Zemlji (največji $g$) telo pade najhitreje, na Marsu počasneje, na Luni najpočasneje.
 
 Opazuj dvoje:
 
@@ -173,7 +173,7 @@ Ta izpeljava velja le za enakomerno pospešeno gibanje, kjer povprečna hitrost 
 
 ? Kaj pomeni, da ima telo pospešek $3\,\mathrm{m/s^2}$?
 - Telo se giblje s hitrostjo $3\,\mathrm{m/s}$.
-- Telo vsako sekundo prepotuje $3\,\text{m}$ več kot v prejšnji.
+- Hitrost telesa se vsako sekundo poveča $3$-krat.
 + Hitrost telesa se vsako sekundo poveča za $3\,\mathrm{m/s}$.
 - Telo vsako sekundo prepotuje $3\,\text{m}$.
 > Pospešek pove spremembo hitrosti v eni sekundi. Pospešek $3\,\mathrm{m/s^2}$ torej pomeni, da hitrost vsako sekundo naraste za $3\,\mathrm{m/s}$. Hitrost in prepotovana pot v sekundi sta drugi količini.
