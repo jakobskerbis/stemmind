@@ -205,8 +205,25 @@ function schoolBooks() {
     .sort((a, b) => subjects.indexOf(a.subject) - subjects.indexOf(b.subject) || rank(a.school) - rank(b.school))
     .map((b) => {
       const topics = b.paths.flatMap((p) => topicOrder(p.key));
-      return { ...b, label: `${b.subjectName} · ${b.schoolName}`, topics: topics.length, lessons: topics.filter((t) => loadLesson(t.id)).length };
+      return {
+        ...b,
+        label: `${b.subjectName} · ${b.schoolName}`,
+        topics: topics.length,
+        lessons: topics.filter((t) => loadLesson(t.id)).length,
+        formulas: !!formulaSheet(b.key),
+      };
     });
+}
+
+// Formule in konstante predmeta: content/formulas/<učbenik>.md (npr. MAT-OS.md).
+export const FORMULAS_DIR = process.env.STEMMIND_FORMULAS || path.join(here, "..", "content", "formulas");
+export function formulaSheet(bookKey) {
+  if (!/^[A-Z]+-[A-Z]+$/.test(bookKey || "")) return null;
+  try {
+    return fs.readFileSync(path.join(FORMULAS_DIR, `${bookKey}.md`), "utf8");
+  } catch {
+    return null;
+  }
 }
 
 export function getBook(bookKey) {

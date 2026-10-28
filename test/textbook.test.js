@@ -163,6 +163,16 @@ test("textbook API and PDF page", async () => {
     assert.match(fizBook, /Fizika, 8\. razred/);
     assert.match(fizBook, /Fizika, 9\. razred/);
     assert.match(fizBook, /Upor in Ohmov zakon/);
+    // Formule in konstante na ločenem listu za vsak predmet in raven.
+    assert.equal(books.find((b) => b.key === "FIZ-SS").formulas, true);
+    const sheet = await fetch(`${base}/ucbenik/FIZ-SS/formule`);
+    assert.equal(sheet.status, 200);
+    const sheetHtml = await sheet.text();
+    assert.match(sheetHtml, /Fizika: formule in konstante/);
+    assert.match(sheetHtml, /class="katex"/);
+    assert.doesNotMatch(sheetHtml, /katex-error/);
+    assert.match(await (await fetch(`${base}/ucbenik/MAT-OS-8/formule`)).text(), /Matematika: formule in konstante/);
+    assert.equal((await fetch(`${base}/ucbenik/MAT-TEK/formule`)).status, 404);
     const hits = await (await fetch(`${base}/api/textbook/search?q=ohm`)).json();
     assert.equal(hits[0].id, "FIZ-OS-9/upor-in-ohmov-zakon");
 

@@ -3,7 +3,7 @@
 import katex from "katex";
 import { marked } from "marked";
 import { getPath, getTopic, topicOrder } from "./curriculum.js";
-import { loadLesson, simsFor, expandFormulaBlocks, getBook } from "./textbook.js";
+import { loadLesson, simsFor, expandFormulaBlocks, getBook, formulaSheet } from "./textbook.js";
 
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -101,8 +101,25 @@ export function printBook(bookKey) {
   return shell(`${book.subjectName} · ${book.schoolName} · učbenik`, cover + body);
 }
 
+// List s formulami in konstantami predmeta (/ucbenik/MAT-OS/formule ali /ucbenik/MAT-OS-8/formule).
+export function printFormulas(key) {
+  const p = getPath(key);
+  const bookKey = p ? `${p.subject}-${p.school}` : key;
+  const book = getBook(bookKey);
+  const md = formulaSheet(bookKey);
+  if (!book || !md) return null;
+  const content = `<section class="sheet">
+      <p class="brand small">STEM<span>Mind</span></p>
+      <h1>${esc(book.subjectName)}: formule in konstante</h1>
+      <p class="muted">${esc(book.schoolName.charAt(0).toUpperCase() + book.schoolName.slice(1))} · izdaja ${esc(today())}</p>
+      ${renderMd(md)}
+    </section>`;
+  return shell(`${book.subjectName} · ${book.schoolName} · formule in konstante`, content);
+}
+
 // pathKey: cela pot; topicSlug (neobvezno): samo ena lekcija.
 export function printPage(pathKey, topicSlug = null) {
+  if (topicSlug === "formule") return printFormulas(pathKey);
   const p = getPath(pathKey);
   if (!p) return topicSlug ? null : printBook(pathKey);
   let topics = topicOrder(pathKey);
@@ -152,6 +169,15 @@ function shell(title, content) {
   .muted { color: #667089; } .small { font-size: 0.9em; }
   .toc li { margin: 4px 0; } .toc a { color: inherit; text-decoration: none; font-weight: 600; }
   .lesson, .part { break-before: page; page-break-before: always; }
+  .sheet { font: 9.5pt/1.35 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .sheet h1 { font-size: 1.5rem; margin: 2px 0; }
+  .sheet h2 { font-size: 1.02rem; margin: 12px 0 4px; color: #2f6fed; border-bottom: 2px solid #dde2ec; padding-bottom: 2px; break-after: avoid; }
+  .sheet table { width: 100%; margin: 0 0 4px; break-inside: auto; }
+  .sheet th:empty, .sheet thead:has(th:empty) { display: none; }
+  .sheet td, .sheet th { padding: 2px 6px; vertical-align: middle; }
+  .sheet td:first-child { font-weight: 600; white-space: nowrap; }
+  .sheet tr { break-inside: avoid; }
+  .sheet p { margin: 4px 0; }
   .part h1 { font-size: 2rem; margin: 30vh 0 6px; } .toc-part { margin: 16px 0 4px; font-size: 1.05rem; }
   .lesson h2 { font-size: 1.6rem; margin: 0 0 6px; }
   .crumb { color: #667089; margin: 0; font-size: 0.9rem; }

@@ -135,7 +135,7 @@ async function onboard(name = "") {
       }
       const track = f.educational_track.value;
       const settings = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value };
-      if (track === "UNIVERZA") settings.subject = programs.find((p) => p.id === settings.study_program)?.subjects?.[0] || "MAT";
+      if (track === "UNIVERZA") settings.subject = programs.find((p) => p.id === settings.study_program)?.mainSubject || "MAT";
       const s = await api("/api/students", { method: "POST", body: { name: f.name.value, settings } });
       document.body.classList.remove("onboarding");
       resolve(s);
