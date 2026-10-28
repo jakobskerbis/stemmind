@@ -9,6 +9,9 @@ import { TEK_MAT_OS } from "./generators/tek-mat-os.js";
 import { TEK_MAT_SS } from "./generators/tek-mat-ss.js";
 import { TEK_FIZ } from "./generators/tek-fiz.js";
 import { TEK_KEM } from "./generators/tek-kem.js";
+import { EXAM_MAT } from "./generators/exam-mat.js";
+import { EXAM_FIZ } from "./generators/exam-fiz.js";
+import { EXAM_KEM } from "./generators/exam-kem.js";
 import { baseTopicIds } from "../curriculum.js";
 
 export const GENERATORS = [
@@ -21,6 +24,10 @@ export const GENERATORS = [
   ...TEK_MAT_SS,
   ...TEK_FIZ,
   ...TEK_KEM,
+  // Priprave na izpite (SAT, gaokao, JEE, NEET, CBSE): angleške naloge v banki *-EXB.
+  ...EXAM_MAT,
+  ...EXAM_FIZ,
+  ...EXAM_KEM,
 ];
 
 const BY_TOPIC = {};

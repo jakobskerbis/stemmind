@@ -4,6 +4,7 @@ import { UNI_PATHS, PROGRAMS, FACULTIES, FAC_SHORT, UNIVERSITIES } from "./unive
 import { ALL_SUBJECTS } from "./subjects.js";
 import { EN, EN_UNITS, INT_LEVELS, IN_PATHS, SUBJECT_EN } from "./region-curricula.js";
 import { SCHOOL_SYSTEMS, isRegional, gradeInfo, gradesOf } from "../public/regions.js";
+import { BANK, EXAMS, SUBJECT_NAMES_EN } from "./exam-data.js";
 
 export function slugify(s) {
   return s
@@ -34,7 +35,7 @@ for (const [key, p] of Object.entries({ ...PATHS, ...UNI_PATHS })) {
 
 // ---------- regijske poti (public/regions.js, server/region-curricula.js) ----------
 // Teme imajo »base«: osnovne teme, iz katerih vzamejo naloge, lekcije in simulacije.
-function addRegionPath(key, label, subject, school, grade, units) {
+function addRegionPath(key, label, subject, school, grade, units, extra = {}) {
   BUILT[key] = {
     key,
     label,
@@ -42,6 +43,7 @@ function addRegionPath(key, label, subject, school, grade, units) {
     school,
     grade,
     region: true,
+    ...extra,
     units: units.map(([title, topics], ui) => ({
       title,
       topics: topics.map(({ name, goals, base }) => {
@@ -83,6 +85,45 @@ for (const [key, p] of Object.entries(IN_PATHS)) {
     }),
   ]);
   addRegionPath(key, p.label, subject, "IN", Number(grade), units);
+}
+
+// Banka izpitnih nalog (angleške naloge, server/exam-data.js): teme brez »base«, ki jih
+// izpitne poti uporabijo kot osnovo. Niso na nobenem seznamu poti.
+for (const [key, topics] of Object.entries(BANK)) {
+  const subject = key.split("-")[0];
+  BUILT[key] = {
+    key,
+    label: `${SUBJECT_NAMES_EN[subject]} – exam question bank`,
+    subject,
+    school: "EXB",
+    grade: 0,
+    region: true,
+    hidden: true,
+    units: [
+      {
+        title: "Exam topics",
+        topics: topics.map((line) => {
+          const [name, goals = ""] = line.split("|").map((x) => x.trim());
+          const topic = { id: `${key}/${slugify(name)}`, name, goals, unit: "Exam topics", unitIndex: 0, path: key, subject };
+          TOPICS[topic.id] = topic;
+          return topic;
+        }),
+      },
+    ],
+  };
+}
+
+// Priprave na izpite: pot "<predmet>-EX-<izpit>", npr. MAT-EX-SAT (server/exams.js).
+const parseRefs = (line) => {
+  const [text, refs = ""] = line.split("=>");
+  const [name, goals = ""] = text.split("|").map((x) => x.trim());
+  return { name, goals, base: refs.split(",").map((x) => x.trim()).filter(Boolean) };
+};
+for (const [examId, exam] of Object.entries(EXAMS)) {
+  for (const [subject, def] of Object.entries(exam.subjects)) {
+    const units = def.units.map(([title, topics]) => [title, topics.map(parseRefs)]);
+    addRegionPath(`${subject}-EX-${examId}`, `${exam.name} – ${SUBJECT_NAMES_EN[subject]}`, subject, "EX", 0, units, { exam: examId });
+  }
 }
 
 // Letnik predmeta v programu (za oznako "moj letnik").
