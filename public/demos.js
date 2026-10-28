@@ -292,7 +292,7 @@ function ohm(el) {
   let phase = 0;
   // Elektroni tečejo od - proti +, torej v nasprotni smeri kot dogovorjeni tok.
   animate(el, (dt) => {
-    phase -= dt * 140 * Math.min(1, (U / R) / 0.6);
+    phase -= dt * 100 * (U / R); // hitrost elektronov je sorazmerna s tokom
     dots.forEach((c, i) => {
       const [x, y] = at(phase + (i * total) / dots.length);
       c.setAttribute("cx", x);
@@ -307,17 +307,19 @@ function ohm(el) {
     rLbl.textContent = `${fmt(R, 0)} Ω`;
     iLbl.textContent = `${fmt(I, 3)} A`;
     res.style.strokeWidth = 1 + R / 25;
-    glow.style.opacity = Math.min(1, (U * I) / 4);
+    const pad = 2 + 3 * Math.sqrt(U * I); // sij raste z močjo
+    glow.setAttribute("x", 140 - pad); glow.setAttribute("y", 30 - pad); glow.setAttribute("width", 60 + 2 * pad); glow.setAttribute("height", 20 + 2 * pad);
+    glow.style.opacity = U * I > 0.01 ? 0.8 : 0;
     gsvg.replaceChildren();
-    const X = (u) => 30 + (u / 12) * 160, Y = (i) => 130 - (i / 1.2) * 115;
+    const X = (u) => 30 + (u / 12) * 160, Y = (i) => 130 - (i / 2.4) * 115;
     s("line", { x1: 30, y1: 130, x2: 195, y2: 130, class: "axis" }, gsvg);
     s("line", { x1: 30, y1: 130, x2: 30, y2: 8, class: "axis" }, gsvg);
     s("text", { x: 195, y: 122, class: "tick", "text-anchor": "end" }, gsvg).textContent = "U [V]";
     s("text", { x: 34, y: 14, class: "tick" }, gsvg).textContent = "I [A]";
     for (const u of [4, 8, 12]) s("text", { x: X(u), y: 143, class: "tick", "text-anchor": "middle" }, gsvg).textContent = u;
-    const uEnd = Math.min(12, 1.2 * R);
+    const uEnd = Math.min(12, 2.4 * R);
     s("line", { x1: X(0), y1: Y(0), x2: X(uEnd), y2: Y(uEnd / R), class: "graph-line" }, gsvg);
-    s("circle", { cx: X(U), cy: Y(Math.min(1.2, I)), r: 5, class: "pt pt-n" }, gsvg);
+    s("circle", { cx: X(U), cy: Y(I), r: 5, class: "pt pt-n" }, gsvg);
     out.innerHTML = `<div class="demo-eq">${tex(`I = \\frac{U}{R} = \\frac{${fmt(U, 1).replace(",", "{,}")}\\,\\mathrm{V}}{${fmt(R, 0)}\\,\\Omega} = ${fmt(I, 3).replace(",", "{,}")}\\,\\mathrm{A}`)}</div>
       <p>Moč na uporniku: P = U · I = ${fmt(U * I, 2)} W. ${U * I > 2 ? "Upornik se močno segreva." : U * I > 0.3 ? "Upornik se segreva." : "Upornik se komaj segreje."}</p>
       <p class="muted">Pri stalnem uporu je tok premo sorazmeren z napetostjo: graf I(U) je premica skozi izhodišče. Večji upor pomeni bolj položno premico. Pikice so elektroni; tečejo od − proti +, dogovorjena smer toka pa je obratna.</p>`;
@@ -408,7 +410,7 @@ function nihalo(el) {
   const svg = svgBox(340, 280);
   const out = readout();
   let L = 1, amp = 15, m = 1, planet = "Zemlja", th = (15 * Math.PI) / 180, w = 0, t = 0, lastCross = null, measured = null, prevSign = 1;
-  const px = (L) => 40 + L * 110;
+  const px = (L) => L * 120; // dolžina nihala v merilu: 120 px na meter
   const draw = () => {
     svg.replaceChildren();
     const ox = 170, oy = 24, len = px(L);
@@ -418,7 +420,7 @@ function nihalo(el) {
     for (const sgn of [-1, 1]) s("line", { x1: ox, y1: oy, x2: ox + sgn * len * Math.sin(A), y2: oy + len * Math.cos(A), class: "guide" }, svg);
     const bx = ox + len * Math.sin(th), by = oy + len * Math.cos(th);
     s("line", { x1: ox, y1: oy, x2: bx, y2: by, class: "string" }, svg);
-    s("circle", { cx: bx, cy: by, r: 7 + 5 * Math.cbrt(m), class: "ball" }, svg);
+    s("circle", { cx: bx, cy: by, r: 8 * Math.cbrt(m), class: "ball" }, svg);
     const g = PLANETS[planet];
     const T = 2 * Math.PI * Math.sqrt(L / g);
     out.innerHTML = `<div class="demo-eq">${tex(`T = 2\\pi\\sqrt{\\frac{l}{g}} = ${fmt(T, 2).replace(",", "{,}")}\\,\\mathrm{s}`)}</div>
@@ -451,7 +453,7 @@ function nihalo(el) {
     controls(
       slider({ label: "dolžina l", min: 0.2, max: 2, step: 0.1, value: L, unit: "m", digits: 1, onInput: (v) => ((L = v), restart()) }),
       slider({ label: "odmik", min: 5, max: 60, step: 5, value: amp, unit: "°", digits: 0, onInput: (v) => ((amp = v), restart()) }),
-      slider({ label: "masa", min: 0.1, max: 5, step: 0.1, value: m, unit: "kg", digits: 1, onInput: (v) => (m = v) }),
+      slider({ label: "masa", min: 0.1, max: 5, step: 0.1, value: m, unit: "kg", digits: 1, onInput: (v) => ((m = v), draw()) }),
       planetSelect(planet, (p) => ((planet = p), restart())),
     ),
     out,
@@ -477,7 +479,7 @@ function plini(el) {
   };
   let hits = 0, hitRate = 0, acc = 0;
   const draw = () => {
-    const boxW = 60 + (V / 50) * 220, boxH = 150, x0 = 20, y0 = 40;
+    const boxW = (V / 50) * 280, boxH = 150, x0 = 20, y0 = 40; // širina posode ∝ prostornina
     svg.replaceChildren();
     s("rect", { x: x0, y: y0, width: boxW, height: boxH, class: "box" }, svg);
     s("rect", { x: x0 + boxW, y: y0 - 6, width: 10, height: boxH + 12, class: "piston" }, svg);
@@ -493,10 +495,10 @@ function plini(el) {
       </ul>`;
   };
   animate(el, (dt) => {
-    const speed = 0.35 * Math.sqrt(T / 300) * (25 / (60 + (V / 50) * 220)) * 9;
+    const speed = 0.35 * Math.sqrt(T / 300) * (25 / ((V / 50) * 280)) * 9;
     for (const p of parts) {
       p.x += p.vx * speed * dt;
-      p.y += p.vy * speed * dt * ((60 + (V / 50) * 220) / 150);
+      p.y += p.vy * speed * dt * (((V / 50) * 280) / 150);
       if (p.x < 0 || p.x > 1) { p.vx *= -1; p.x = Math.min(1, Math.max(0, p.x)); hits++; }
       if (p.y < 0 || p.y > 1) { p.vy *= -1; p.y = Math.min(1, Math.max(0, p.y)); hits++; }
     }

@@ -584,6 +584,12 @@ export function zaporedje(el, { mode = "ag" } = {}) {
   build();
 }
 
+// najmanjše število oblike 1, 2, 5 · 10ⁿ, ki je ≥ v
+const niceCeil = (v) => {
+  const e = 10 ** Math.floor(Math.log10(v));
+  return [1, 2, 5, 10].map((k) => k * e).find((x) => x >= v - 1e-9);
+};
+
 // ------------------------------------------------------------ geometrijska vrsta
 export function vrsta(el) {
   const svg = svgBox(340, 240);
@@ -596,8 +602,14 @@ export function vrsta(el) {
     const sums = [];
     let s0 = 0;
     for (let i = 0; i < n; i++) (s0 += a1 * q ** i), sums.push(s0);
-    const maxV = Math.max(Math.abs(lim ?? 0), ...sums.map(Math.abs), 1);
+    // merilo na okroglih korakih (1, 2, 5 · 10ⁿ): večji a₁ da res daljši trak
+    const maxV = niceCeil(Math.max(Math.abs(lim ?? 0), ...sums.map(Math.abs), 1));
     const X = (v) => 20 + (v / maxV) * 290;
+    for (let i = 0; i <= 5; i++) {
+      const v = (maxV * i) / 5;
+      s("line", { x1: X(v), y1: 66, x2: X(v), y2: 72, class: "axis" }, svg);
+      label(svg, X(v), 82, fmt(v, 2), "tick small");
+    }
     let x = 0;
     for (let i = 0; i < n; i++) {
       const t = a1 * q ** i;
@@ -639,7 +651,7 @@ export function obresti(el) {
   const draw = () => {
     svg.replaceChildren();
     const simple = (t) => G * (1 + (p / 100) * t), comp = (t) => G * (1 + p / 100 / m) ** (m * t);
-    const maxV = comp(n) * 1.08;
+    const maxV = niceCeil(comp(n) * 1.08); // okrogla meja osi: večja glavnica da višji graf
     const A = axes(svg, { W: 340, H: 260, x: [0, n], y: [0, maxV], xLabel: "leta", yLabel: "€", pad: 40 });
     s("path", { d: fnPath(simple, A, { from: 0, to: n }), class: "graph-line stroke-b" }, svg);
     s("path", { d: fnPath(comp, A, { from: 0, to: n }), class: "graph-line stroke-a" }, svg);

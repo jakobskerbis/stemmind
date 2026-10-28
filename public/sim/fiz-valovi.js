@@ -232,14 +232,14 @@ export function val(el, { mode = "precno" } = {}) {
     }
     out.innerHTML = texBlock(`c = \\lambda\\nu = ${T(lam / 100, 2)}\\ \\text{m}\\cdot ${T(f, 1)}\\ \\text{Hz} = ${T(c, 2)}\\ \\tfrac{\\text{m}}{\\text{s}}`) +
       `<p>${kind === "precno" ? "<b>Prečno valovanje:</b> delci nihajo pravokotno na smer širjenja (vrv, valovi na vodi, svetloba)." : "<b>Vzdolžno valovanje:</b> delci nihajo v smeri širjenja; nastajajo zgoščine in razredčine (zvok, vzmet)."} Rdeči delec ostaja na svojem mestu in le niha: valovanje prenaša energijo, ne snovi.</p>
-       <p class="muted">Nihajni čas t₀ = 1/ν = ${fmt(1 / f, 2)} s. V tem času se valovanje premakne za eno valovno dolžino.</p>`;
+       <p class="muted">Nihajni čas t₀ = 1/ν = ${fmt(1 / f, 2)} s. V tem času se valovanje premakne za eno valovno dolžino. Slika je v merilu (1 m = 100 px) in teče v resničnem času${kind === "precno" ? "" : "; odmik delcev pri vzdolžnem valovanju je zaradi preglednosti zmanjšan na tretjino"}.</p>`;
   };
   const anim = animate(el, (dt) => ((t += dt), draw()), { autoplay: true });
   layout(el, {
     stage: [svg],
     controls: [
       segmented({ options: [["precno", "prečno"], ["vzdolzno", "vzdolžno"]], value: kind, onChange: (v) => ((kind = v), draw()) }),
-      slider({ label: "amplituda", min: 5, max: 40, step: 5, value: A, unit: "cm", onInput: (v) => ((A = v), draw()), format: (v) => `${v / 10} cm` }),
+      slider({ label: "amplituda", min: 5, max: 40, step: 5, value: A, unit: "cm", onInput: (v) => ((A = v), draw()) }),
       slider({ label: "valovna dolžina", min: 40, max: 240, step: 10, value: lam, onInput: (v) => ((lam = v), draw()), format: (v) => `${fmt(v / 100, 1)} m` }),
       slider({ label: "frekvenca", min: 0.2, max: 2, step: 0.1, value: f, unit: "Hz", onInput: (v) => ((f = v), draw()) }),
       buttons(playButton(anim, { play: "Predvajaj", pause: "Ustavi" })),
@@ -279,9 +279,10 @@ function zvok(el) {
     label(svg, 60 + lamPx / 2 + 6, 202, "λ", "lbl small");
     out.innerHTML = texBlock(`\\lambda = \\frac{c}{\\nu} = \\frac{340\\ \\text{m/s}}{${f}\\ \\text{Hz}} = ${T(c / f, 2)}\\ \\text{m}`) +
       `<p>Zvok je <b>vzdolžno valovanje</b> zraka: zgoščine in razredčine. Višja frekvenca pomeni višji ton, večja amplituda glasnejši zvok. ${f < 20 ? "Pod 20 Hz je infrazvok, ki ga ne slišimo." : f > 20000 ? "Nad 20 kHz je ultrazvok." : "Človek sliši od približno 20 Hz do 20 000 Hz."}</p>
-       <p class="muted">Ton 440 Hz je komorni a. Valovna dolžina na sliki je pomanjšana.</p>`;
+       <p class="muted">Ton 440 Hz je komorni a. Slika je v merilu 1 m = 60 px, gibanje pa je upočasnjeno 340-krat: zgoščine se pri vseh frekvencah premikajo enako hitro, ker je hitrost zvoka v zraku stalna.</p>`;
   };
-  const anim = animate(el, (dt) => ((t += dt * Math.min(1, 200 / f) * 0.5), draw()), { autoplay: true });
+  // hitrost zvoka je pri vseh frekvencah enaka: na sliki 60 px/s (upočasnjeno 340-krat)
+  const anim = animate(el, (dt) => ((t += dt * 0.5), draw()), { autoplay: true });
   const sound = button("🔊 Predvajaj ton", () => {
     try {
       if (osc) {
@@ -391,7 +392,7 @@ export function interferenca(el) {
   let lam = 550, d = 0.2, Lm = 1.5, t = 0;
   const draw = () => {
     svg.replaceChildren();
-    const col = wlColor(lam), sx = 70, cy = 130, dpx = 20 + d * 100;
+    const col = wlColor(lam), sx = 70, cy = 130, dpx = d * 200; // razmik rež je sorazmeren z d
     s("rect", { x: 0, y: 0, width: 340, height: 260, fill: "#0e1220", rx: 10 }, svg);
     for (let x = 6; x < sx; x += lam / 40) s("line", { x1: x, y1: 20, x2: x, y2: 240, stroke: col, "stroke-width": 1.5, opacity: 0.5 }, svg);
     s("rect", { x: sx - 3, y: 10, width: 6, height: 240, fill: "#888" }, svg);
@@ -439,7 +440,7 @@ export function fotoefekt(el) {
     s("rect", { x: 40, y: 50, width: 18, height: 120, class: "fill-muted" }, svg);
     label(svg, 49, 182, METAL.find((m) => m[0] === met)[1], "tick");
     const col = wlColor(lam);
-    for (let k = 0; k < Math.round(I / 10) + 1; k++) s("path", { d: `M${180 + k * 12},10 q-10,${20} -20,${30} t-20,30 t-20,30 t-18,32`, stroke: col, fill: "none", "stroke-width": 2, opacity: 0.8 }, svg);
+    for (let k = 0; k < Math.round(I / 10); k++) s("path", { d: `M${180 + k * 12},10 q-10,${20} -20,${30} t-20,30 t-20,30 t-18,32`, stroke: col, fill: "none", "stroke-width": 2, opacity: 0.8 }, svg);
     s("circle", { cx: 200, cy: 18, r: 14, fill: col, stroke: "var(--text)" }, svg);
     el_.forEach((p) => s("circle", { cx: p.x, cy: p.y, r: 3.5, class: "electron" }, svg));
     const Ek = E() - W();
@@ -461,7 +462,7 @@ export function fotoefekt(el) {
   };
   const anim = animate(el, (dt) => {
     const Ek = E() - W();
-    if (Ek > 0 && Math.random() < I / 60) el_.push({ x: 60, y: 60 + Math.random() * 100, v: 60 + Math.sqrt(Ek) * 80 });
+    if (Ek > 0 && Math.random() < I / 60) el_.push({ x: 60, y: 60 + Math.random() * 100, v: 120 * Math.sqrt(Ek) }); // hitrost ∝ √W_k
     el_.forEach((p) => (p.x += p.v * dt));
     el_ = el_.filter((p) => p.x < 340);
     draw();

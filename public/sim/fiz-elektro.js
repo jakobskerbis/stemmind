@@ -61,10 +61,12 @@ export function naboji(el, { mode = "coulomb" } = {}) {
     const xA = 170 - r * 140, xB = 170 + r * 140, y = 100;
     s("line", { x1: xA, y1: 160, x2: xB, y2: 160, class: "axis thin" }, svg);
     label(svg, 170, 176, `r = ${fmt(r, 2)} m`, "lbl small");
-    const L = (clamp(Math.abs(F) * 60, 0, 110) + 24) * Math.sign(F);
+    // dolžina puščice je sorazmerna s silo: 40 px na N; zelo majhno ali preveliko silo narišemo črtkano
+    const Lf = Math.abs(F) * 40, odd = Lf < 8 || Lf > 120, L = clamp(Lf, 8, F > 0 ? 120 : Math.max(8, (xB - xA) / 2 - 16)) * Math.sign(F);
     if (q1 && q2) {
-      arrow(svg, xA, y, xA - L, y, "c", 3.5);
-      arrow(svg, xB, y, xB + L, y, "c", 3.5);
+      arrow(svg, xA, y, xA - L, y, "c", 3.5, odd || Math.abs(L) < Lf - 0.5 ? { "stroke-dasharray": "4 3" } : {});
+      arrow(svg, xB, y, xB + L, y, "c", 3.5, odd || Math.abs(L) < Lf - 0.5 ? { "stroke-dasharray": "4 3" } : {});
+      label(svg, 170, 24, `F = ${fmt(Math.abs(F), 2)} N`, "lbl small");
     }
     [[xA, q1], [xB, q2]].forEach(([x, q]) => {
       if (q) chargeDot(svg, x, y, q, 10 + Math.abs(q) * 2.5);
@@ -72,20 +74,20 @@ export function naboji(el, { mode = "coulomb" } = {}) {
       label(svg, x, y - 30, `${q > 0 ? "+" : q < 0 ? "−" : ""}${Math.abs(q)} μC`, "lbl small");
     });
     // F(r)
-    const X = (rr) => 40 + (rr / 1) * 280, Y = (f) => 140 - (f / 30) * 120;
+    const X = (rr) => 40 + (rr / 1) * 280, Y = (f) => 140 - (f / 6) * 120;
     s("line", { x1: 40, y1: 140, x2: 330, y2: 140, class: "axis" }, svg2);
     s("line", { x1: 40, y1: 140, x2: 40, y2: 12, class: "axis" }, svg2);
     label(svg2, 330, 156, "r [m]", "axis-label", "end");
     label(svg2, 46, 18, "|F| [N]", "axis-label", "start");
     [0.2, 0.4, 0.6, 0.8, 1].forEach((rr) => label(svg2, X(rr), 152, fmt(rr, 1), "tick small"));
-    [10, 20, 30].forEach((f) => label(svg2, 36, Y(f), String(f), "tick small", "end"));
+    [2, 4, 6].forEach((f) => label(svg2, 36, Y(f), String(f), "tick small", "end"));
     let d = "";
     for (let i = 0; i <= 100; i++) {
       const rr = 0.1 + (0.9 * i) / 100, f = Math.abs((k * q1 * q2 * 1e-12) / (rr * rr));
-      if (f <= 30) d += `${d ? "L" : "M"}${X(rr).toFixed(1)},${Y(f).toFixed(1)}`;
+      if (f <= 6) d += `${d ? "L" : "M"}${X(rr).toFixed(1)},${Y(f).toFixed(1)}`;
     }
     s("path", { d, class: "graph-line stroke-c", fill: "none" }, svg2);
-    if (Math.abs(F) <= 30) s("circle", { cx: X(r), cy: Y(Math.abs(F)), r: 5, class: "pt fill-accent" }, svg2);
+    if (Math.abs(F) <= 6) s("circle", { cx: X(r), cy: Y(Math.abs(F)), r: 5, class: "pt fill-accent" }, svg2);
     out.innerHTML = texBlock(`F = k\\frac{|e_1 e_2|}{r^2} = 9\\cdot 10^9\\cdot\\frac{${Math.abs(q1)}\\cdot 10^{-6}\\cdot ${Math.abs(q2)}\\cdot 10^{-6}}{${T(r, 2)}^2} = ${T(Math.abs(F), 2)}\\ \\text{N}`) +
       `<p>${!q1 || !q2 ? "Eden od teles ni nabit: električne sile ni." : F > 0 ? "Istoimenska naboja se <b>odbijata</b>." : "Raznoimenska naboja se <b>privlačita</b>."} Sili na oba naboja sta enako veliki in nasprotno usmerjeni (3. Newtonov zakon).</p>
        <p class="muted">Sila pada s kvadratom razdalje: pri dvakrat večji razdalji je štirikrat manjša.</p>`;
@@ -184,9 +186,10 @@ function polje(el) {
       const [ex, ey] = fieldAt(src, test.x, test.y);
       E = [ex * 4000, ey * 4000];
     }
-    const L = Math.hypot(...E), sc = Math.min(70, L * 40) / (L || 1);
+    const L = Math.hypot(...E), cut = L * 40 > 70, sc = Math.min(70, L * 40) / (L || 1);
     s("circle", { cx: test.x, cy: test.y, r: 6, class: "fill-a" }, svg);
-    if (L > 1e-6) arrow(svg, test.x, test.y, test.x + E[0] * sc, test.y + E[1] * sc, "a", 3);
+    if (L > 1e-6) arrow(svg, test.x, test.y, test.x + E[0] * sc, test.y + E[1] * sc, "a", 3, cut ? { "stroke-dasharray": "6 4" } : {});
+    if (cut) label(svg, test.x, test.y + 20, "(puščica skrajšana)", "tick small");
     const ht = handle(svg, "a", 1);
     ht.move(test.x, test.y);
     draggable(svg, ht, (x, y) => ((test = { x: clamp(x, 10, 330), y: clamp(y, 10, 290) }), draw()));
@@ -249,13 +252,14 @@ export function krogEl(el, { mode = "zarnice" } = {}) {
     const elem = (x, y, it, i, vertical) => {
       const P = it.U * it.I;
       if (bulbs) {
-        const glow = clamp(P / 1.2, 0, 1);
-        if (glow > 0.02) s("circle", { cx: x, cy: y, r: 22, class: "fill-a", opacity: glow * 0.7 }, svg);
+        // ploščina sija je sorazmerna z močjo žarnice
+        if (P > 0.005) s("circle", { cx: x, cy: y, r: 13 + 8 * Math.sqrt(P), class: "fill-a", opacity: 0.55 }, svg);
         s("circle", { cx: x, cy: y, r: 13, class: "meter" }, svg);
         if (!(out1 && i === 0)) s("path", { d: `M${x - 8},${y - 8} L${x + 8},${y + 8} M${x - 8},${y + 8} L${x + 8},${y - 8}`, class: "string" }, svg);
         else label(svg, x, y, "odvita", "tick small");
       } else {
-        s("rect", vertical ? { x: x - 9, y: y - 22, width: 18, height: 44, class: "resistor", "stroke-width": 2 } : { x: x - 22, y: y - 9, width: 44, height: 18, class: "resistor", "stroke-width": 2 }, svg);
+        const rl = 10 + 0.8 * it.R; // dolžina upornika je sorazmerna z uporom
+        s("rect", vertical ? { x: x - 9, y: y - rl / 2, width: 18, height: rl, class: "resistor", "stroke-width": 2 } : { x: x - rl / 2, y: y - 9, width: rl, height: 18, class: "resistor", "stroke-width": 2 }, svg);
         label(svg, vertical ? x + 14 : x, vertical ? y : y - 18, `R${"₁₂₃"[i]} = ${it.R} Ω`, "tick small", vertical ? "start" : "middle");
       }
       label(svg, vertical ? x + 14 : x, vertical ? y + (bulbs ? 0 : 16) : y + 26, `${fmt(it.U, 2)} V`, "lbl small", vertical ? "start" : "middle");
@@ -270,13 +274,23 @@ export function krogEl(el, { mode = "zarnice" } = {}) {
       wire(`M${x},${Tp} V${B}`);
       elem(x, (Tp + B) / 2 - 10, it, i, true);
     });
+    // puščice toka v istem merilu: dolžina je sorazmerna s tokom
+    const kI = 40, curArrow = (x, y, I, max = 120) => {
+      if (!on || I <= 0) return;
+      const len = kI * I, cut = len > max;
+      arrow(svg, x, y, x, y + Math.min(len, max), "accent", 2.5, cut ? { "stroke-dasharray": "5 3" } : {});
+    };
+    curArrow(Rr + 12, Tp + 6, c.I);
+    label(svg, 336, Tp - 8, `I = ${fmt(c.I, 2)} A`, "tick small", "end");
+    if (vez === "vzporedno") c.items.forEach((it, i) => curArrow(130 + ((i + 0.5) * 170) / n - 9, (Tp + B) / 2 + 30, it.I, 46));
+    label(svg, 4, 12, `puščice toka: 1 A = ${kI} px (črtkana = skrajšana)`, "tick small", "start");
     const rows = c.items.map((it, i) => `${bulbs ? "žarnica" : "R"}${i + 1}: U = ${fmt(it.U, 2)} V, I = ${fmt(it.I, 2)} A, P = ${fmt(it.U * it.I, 2)} W`).join("<br>");
     out.innerHTML = (bulbs ? "" : texBlock(vez === "zaporedno" ? `R = R_1 + R_2${n > 2 ? " + R_3" : ""} = ${T(c.Rt, 1)}\\ \\Omega` : `\\frac{1}{R} = \\frac{1}{R_1} + \\frac{1}{R_2}${n > 2 ? " + \\frac{1}{R_3}" : ""} \\Rightarrow R = ${T(c.Rt, 2)}\\ \\Omega`)) +
       `<p>${rows}</p><p>${!on ? "Stikalo je odprto: krog ni sklenjen, tok ne teče." : vez === "zaporedno" ? `<b>Zaporedna vezava:</b> skozi vse ${bulbs ? "žarnice" : "upornike"} teče enak tok, napetost vira se razdeli (vsota = ${fmt(U, 1)} V).${bulbs && out1 ? " Ker je ena žarnica odvita, je krog prekinjen: ne sveti nobena." : ""}` : `<b>Vzporedna vezava:</b> na vseh je enaka napetost ${fmt(U, 1)} V, skupni tok je vsota tokov v vejah.${bulbs && out1 ? " Odvita žarnica ne vpliva na druge." : ""}`}</p>
        <p class="muted">${bulbs ? "Svetlost je odvisna od moči P = U · I. Doma so naprave vezane vzporedno." : "Ohmov zakon za vsak upornik: U = R · I."}</p>`;
   };
   const anim = animate(el, (dt) => {
-    flow += dt * 40 * Math.min(3, calc().I * (bulbs ? 3 : 2));
+    flow += dt * Math.min(300, calc().I * (bulbs ? 120 : 25)); // hitrost pik je sorazmerna s tokom
     draw();
   }, { autoplay: false });
   const build = () => {
@@ -343,18 +357,20 @@ export function magnet(el, { mode = "magnet" } = {}) {
     const src = Math.abs(str) < 1e-6 ? [] : [{ x: cx + half * Math.sign(str), y: cy, q: Math.abs(str) }, { x: cx - half * Math.sign(str), y: cy, q: -Math.abs(str) }];
     if (src.length) traceLines(svg, src, { W: 340, H: 280, perUnit: coil ? 10 : 12, arrows: true });
     if (coil) {
-      for (let i = 0; i < 9; i++) {
-        const x = cx - half + 6 + i * 13.5;
+      const loops = Math.round(N / 25); // ena narisana zanka = 25 ovojev
+      for (let i = 0; i < loops; i++) {
+        const x = cx - half + 6 + (i * 108) / Math.max(1, loops - 1);
         s("ellipse", { cx: x, cy, rx: 5, ry: 30, class: "graph-line stroke-a", "stroke-width": 2.5, fill: "none" }, svg);
       }
       s("line", { x1: cx - half + 6, y1: cy + 30, x2: cx - half - 10, y2: cy + 70, class: "wire" }, svg);
       s("line", { x1: cx + half - 2, y1: cy + 30, x2: cx + half + 10, y2: cy + 70, class: "wire" }, svg);
+      label(svg, cx, cy + 108, `${N} ovojev (ena narisana zanka = 25 ovojev)`, "tick small");
       label(svg, cx, cy + 90, I ? `tok ${fmt(Math.abs(I), 1)} A ${I > 0 ? "→" : "←"}` : "ni toka", "lbl small");
       if (src.length) {
         label(svg, cx + half * Math.sign(str) + 18 * Math.sign(str), cy - 40, "N", "lbl big");
         label(svg, cx - half * Math.sign(str) - 18 * Math.sign(str), cy - 40, "S", "lbl big");
       }
-      const clips = Math.floor(Math.abs(I * N) / 150);
+      const clips = Math.floor(Math.abs(I * N) / 300);
       for (let i = 0; i < Math.min(clips, 8); i++) s("rect", { x: cx + half + 14 + (i % 4) * 12, y: cy + 4 + Math.floor(i / 4) * 12, width: 9, height: 4, rx: 2, class: "fill-muted" }, svg);
     } else {
       s("rect", { x: cx - half - 10, y: cy - 16, width: half + 10, height: 32, class: "fill-accent" }, svg);
@@ -409,7 +425,8 @@ function zica(el) {
     const B = (2e-7 * Math.abs(I)) / rm;
     if (I) {
       const dir = I > 0 ? 1 : -1, ux = (-dy / r) * dir, uy = (dx / r) * dir;
-      arrow(svg, probe.x, probe.y, probe.x - ux * Math.min(70, B * 1e6), probe.y - uy * Math.min(70, B * 1e6), "c", 3);
+      const L = Math.min(90, B * 1e6), cut = B * 1e6 > 90; // 1 px na μT
+      arrow(svg, probe.x, probe.y, probe.x - ux * L, probe.y - uy * L, "c", 3, cut ? { "stroke-dasharray": "6 4" } : {});
     }
     s("line", { x1: cx, y1: cy, x2: probe.x, y2: probe.y, class: "guide" }, svg);
     const hp = handle(svg, "c");
@@ -443,21 +460,26 @@ export function lorentz(el) {
       else s("circle", { cx: x, cy: y, r: 2.5, class: "fill-muted" }, svg);
     }
     label(svg, 210, 290, into ? "B kaže v zaslon (×)" : "B kaže iz zaslona (·)", "lbl small");
+    {
+      const pr0 = params(), R0 = pr0.r * 1000, up = (pr0.q > 0) === into; // 1 px = 1 mm
+      s("path", { d: `M80,150 A${R0},${R0} 0 0 ${up ? 0 : 1} 80,${150 + (up ? -2 : 2) * R0}`, class: "graph-line stroke-c thin-line", "stroke-dasharray": "6 5", fill: "none", opacity: 0.7 }, svg);
+      label(svg, 210, 274, `črtkano: pot v polju, r = ${fmt(R0 / 10, 1)} cm (1 cm = 10 px)`, "tick small");
+    }
     if (trail.length > 1) s("path", { d: trail.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(""), class: "graph-line stroke-c thin-line", fill: "none" }, svg);
     const pr = params();
     s("circle", { cx: st.x, cy: st.y, r: 8, class: pr.q > 0 ? "fill-danger" : "fill-accent" }, svg);
     label(svg, st.x, st.y + 1, pr.q > 0 ? "+" : "−", "lbl inv");
-    arrow(svg, st.x, st.y, st.x + st.vx * 40, st.y + st.vy * 40, "b", 2.5);
+    arrow(svg, st.x, st.y, st.x + st.vx * 15 * v, st.y + st.vy * 15 * v, "b", 2.5); // 15 px na 10⁶ m/s
     if (st.x > 80) {
-      const sg = (pr.q > 0 ? 1 : -1) * (into ? 1 : -1);
-      arrow(svg, st.x, st.y, st.x + st.vy * sg * -30 * -1, st.y + st.vx * sg * -30, "c", 2.5);
+      const sg = (pr.q > 0 ? 1 : -1) * (into ? 1 : -1), fl = pr.F * 1e14 * 1.5; // 1,5 px na 10⁻¹⁴ N
+      arrow(svg, st.x, st.y, st.x + st.vy * sg * fl, st.y - st.vx * sg * fl, "c", 2.5);
     }
     out.innerHTML = texBlock(`F = e v B = ${T(pr.F * 1e14, 2)}\\cdot 10^{-14}\\ \\text{N},\\quad r = \\frac{m v}{e B} = ${T(pr.r * 100, 1)}\\ \\text{cm}`) +
       `<p>Magnetna sila je vedno <b>pravokotna na hitrost</b> (vijolična puščica), zato spreminja le smer gibanja, ne velikosti hitrosti: delec kroži. ${pr.q < 0 ? "Negativni delec kroži v nasprotno smer." : ""}</p>
        <p class="muted">Večja masa ali hitrost → večji polmer; močnejše polje ali večji naboj → manjši polmer. Tako deluje masni spektrometer.</p>`;
   };
   const anim = animate(el, (dt) => {
-    const pr = params(), w = 1 / Math.max(pr.r * 1000, 1e-6), sp = 140;
+    const pr = params(), w = 1 / Math.max(pr.r * 1000, 1e-6), sp = 50 * v; // hitrejši delec se tudi na sliki giblje hitreje
     for (let i = 0; i < 10; i++) {
       const h2 = (dt / 10) * sp;
       if (st.x > 80) {
@@ -508,7 +530,8 @@ export function indukcija(el) {
     svg.replaceChildren();
     svg2.replaceChildren();
     const mx = 170 + xm * 100;
-    for (let i = 0; i < 7; i++) s("ellipse", { cx: coilX - 30 + i * 10, cy: 90, rx: 5, ry: 34, class: "graph-line stroke-a", "stroke-width": 2.5, fill: "none" }, svg);
+    const loops = N / 20; // ena narisana zanka = 20 ovojev
+    for (let i = 0; i < loops; i++) s("ellipse", { cx: coilX - 30 + (i * 60) / Math.max(1, loops - 1), cy: 90, rx: 5, ry: 34, class: "graph-line stroke-a", "stroke-width": 2.5, fill: "none" }, svg);
     s("path", { d: `M${coilX - 30},124 V170 H${coilX - 10} M${coilX + 30},124 V170 H${coilX + 10}`, class: "wire" }, svg);
     const e = emfAt(xm, vx);
     s("circle", { cx: coilX, cy: 172, r: 16, class: "meter" }, svg);
@@ -518,6 +541,7 @@ export function indukcija(el) {
     s("rect", { x: mx, y: 78, width: 50, height: 24, class: flip ? "fill-accent" : "fill-danger" }, svg);
     label(svg, mx - 25, 90, flip ? "N" : "S", "lbl inv");
     label(svg, mx + 25, 90, flip ? "S" : "N", "lbl inv");
+    label(svg, coilX, 46, `${N} ovojev (zanka = 20)`, "tick small");
     label(svg, 10, 20, `inducirana napetost: ${fmt(e, 2)} V`, "lbl small", "start");
     const tw = 6, t0 = Math.max(0, t - tw);
     const X = (tt) => 40 + ((tt - t0) / tw) * 290, Y = (u) => 80 - u * 15;

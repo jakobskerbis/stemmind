@@ -71,13 +71,20 @@ function moc(el) {
     for (let i = 0; i < n; i++) d += ` V${Y(((i + 1) * hh) / n)} H${60 + ((i + 1) * 180) / n}`;
     d += ` V${base} Z`;
     s("path", { d, class: "wall" }, svg);
-    const y = prog * hh, xx = 60 + prog * 180;
-    s("circle", { cx: xx - 6, cy: Y(y) - 36, r: 9, class: "fill-a" }, svg);
-    s("rect", { x: xx - 14, y: Y(y) - 27, width: 16, height: 27, rx: 5, class: "fill-a" }, svg);
+    // človek v merilu (1,7 m), širši pri večji masi
+    const y = prog * hh, xx = 60 + prog * 180, kpx = (base - top) / 20, hu = 1.7 * kpx, wu = 0.45 * kpx * Math.sqrt(m / 60);
+    s("circle", { cx: xx - wu / 2, cy: Y(y) - hu + 0.13 * kpx, r: 0.13 * kpx, class: "fill-a" }, svg);
+    s("rect", { x: xx - wu, y: Y(y) - hu + 0.27 * kpx, width: wu, height: hu - 0.27 * kpx, rx: wu / 3, class: "fill-a" }, svg);
     s("line", { x1: 40, y1: Y(hh), x2: 300, y2: Y(hh), class: "guide" }, svg);
     arrow(svg, 300, base, 300, Y(hh), "c", 2);
     label(svg, 308, (base + Y(hh)) / 2, `h = ${hh} m`, "lbl small", "start");
     label(svg, 10, 16, `t = ${fmt(prog * tt, 1)} s`, "lbl small", "start");
+    // stolpec moči v stalnem merilu (0–6 kW)
+    const Pw = (m * G * hh) / tt, ph = Math.min(1, Pw / 6000) * 150;
+    s("rect", { x: 14, y: 40, width: 16, height: 150, class: "fill-soft" }, svg);
+    s("rect", { x: 14, y: 190 - ph, width: 16, height: ph, class: "bar fill-a" }, svg);
+    label(svg, 22, 32, "P", "tick b");
+    label(svg, 22, 202, `${fmt(Pw / 1000, 2)} kW`, "tick small");
     const W = m * G * hh, P = W / tt;
     out.innerHTML = texBlock(`A = m g h = ${m}\\cdot 9{,}81\\cdot ${hh} = ${T(W, 0)}\\ \\text{J}`) + texBlock(`P = \\frac{A}{t} = \\frac{${T(W, 0)}\\ \\text{J}}{${tt}\\ \\text{s}} = ${T(P, 0)}\\ \\text{W}`) +
       `<p>Moč pove, <b>kako hitro</b> opravljamo delo. Če isto stopnišče pretečeš v pol krajšem času, je delo enako, moč pa dvakrat večja.</p>
@@ -114,7 +121,7 @@ export function skejt(el) {
   const m = 50, k = 0.3, Lx = 5;
   let h0 = 6, mu = 0, x = -Math.sqrt(6 / k), dir = 1, E = m * G * 6, Q = 0;
   const yOf = (xx) => k * xx * xx;
-  const X = (xx) => 30 + ((xx + Lx) / (2 * Lx)) * 200, Y = (yy) => 230 - yy * 25;
+  const X = (xx) => 30 + ((xx + Lx) / (2 * Lx)) * 200, Y = (yy) => 230 - yy * 20; // 20 px na meter v obeh smereh
   const reset = () => {
     x = -Math.min(Lx, Math.sqrt(h0 / k));
     dir = 1;
@@ -202,9 +209,10 @@ export function izkoristek(el) {
     s("circle", { cx: 75, cy: top - 22, r: 12, class: "meter" }, svg);
     label(svg, 75, top - 22, "M", "meter-label");
     const y = prog * hh;
-    s("line", { x1: 75, y1: top, x2: 75, y2: Y(y) - 34, class: "string" }, svg);
-    s("rect", { x: 55, y: Y(y) - 34, width: 40, height: 34, rx: 3, class: "fill-a" }, svg);
-    label(svg, 75, Y(y) - 17, `${m} kg`, "lbl inv");
+    s("line", { x1: 75, y1: top, x2: 75, y2: Y(y) - 30 * Math.cbrt(m / 400), class: "string" }, svg);
+    const bs = 30 * Math.cbrt(m / 400); // večja masa → večje breme
+    s("rect", { x: 75 - bs / 2, y: Y(y) - bs, width: bs, height: bs, rx: 3, class: "fill-a" }, svg);
+    label(svg, 75 - bs / 2 - 4, Y(y) - bs / 2, `${m} kg`, "lbl small", "end");
     s("line", { x1: 20, y1: base, x2: 130, y2: base, class: "ground" }, svg);
     s("line", { x1: 20, y1: Y(hh), x2: 130, y2: Y(hh), class: "guide" }, svg);
     label(svg, 128, Y(hh) - 8, `${hh} m`, "tick", "end");
@@ -262,10 +270,9 @@ export function met(el, { mode = "posevni" } = {}) {
   const draw = () => {
     svg.replaceChildren();
     const tf = tFlight();
-    const xmax = vert ? 10 : Math.max(20, ...ghosts.map((g) => g.D), v0 * v0 / G + 5);
-    const hmax = Math.max(10, (v0 * v0) / (2 * G) + h0 + 2);
-    const span = Math.max(xmax, hmax * (vert ? 1 : 1.4));
-    const A = axes(svg, { W: 340, H: 250, x: vert ? [-5, 5] : [0, span], y: [0, vert ? hmax : span * (210 / 290)], xLabel: vert ? "" : "x [m]", yLabel: "y [m]", pad: 30 });
+    // stalne osi (za največjo hitrost in višino), da se sprememba vnosa vidi na sliki
+    const span = 120, hmax = 70;
+    const A = axes(svg, { W: 340, H: 250, x: vert ? [-5, 5] : [0, span], y: [0, vert ? hmax : span * (210 / 290)], xLabel: vert ? "" : "x [m]", yLabel: "y [m]", pad: 30, xStep: vert ? 5 : 20, yStep: vert ? 10 : 20 });
     if (h0 > 0) s("rect", { x: A.X(vert ? -1 : 0) - (vert ? 0 : 10), y: A.Y(h0), width: vert ? A.X(1) - A.X(-1) : 10, height: A.Y(0) - A.Y(h0), class: "wall" }, svg);
     ghosts.forEach((g) => s("path", { d: g.d, class: "graph-line stroke-muted thin-line", opacity: 0.4, fill: "none" }, svg));
     let d = "";
@@ -290,7 +297,7 @@ export function met(el, { mode = "posevni" } = {}) {
     const tTop = Math.max(0, (v0 * Math.sin(rad(ang))) / G), H = h0 + (v0 * Math.sin(rad(ang))) ** 2 / (2 * G);
     if (vert) {
       svg2.replaceChildren();
-      timeGraph(svg2, show === "h" ? { tMax: Math.max(1, tf), y0: 0, y1: H * 1.1 + 0.5, yLabel: "h [m]", f: (u) => Math.max(0, pos(u)[1]), t, cls: "stroke-c" } : { tMax: Math.max(1, tf), y0: -v0 - 5, y1: v0 + 2, yLabel: "v [m/s]", f: (u) => v0 - G * u, t, cls: "stroke-a" });
+      timeGraph(svg2, show === "h" ? { tMax: 7, y0: 0, y1: 70, yStep: 10, yLabel: "h [m]", f: (u) => (u <= tf ? Math.max(0, pos(u)[1]) : NaN), t, cls: "stroke-c" } : { tMax: 7, y0: -40, y1: 35, yStep: 10, yLabel: "v [m/s]", f: (u) => (u <= tf ? v0 - G * u : NaN), t, cls: "stroke-a" });
       out.innerHTML = texBlock(`h_{\\max} = ${h0 ? `h_0 + ` : ""}\\frac{v_0^2}{2g} = ${h0 ? `${h0} + ` : ""}\\frac{${v0}^2}{2\\cdot 9{,}81} = ${T(H, 2)}\\ \\text{m}`) +
         `<p>Hitrost se vsako sekundo zmanjša za 9,81 m/s. Na vrhu (po ${fmt(tTop, 2)} s) je hitrost 0, pospešek pa še vedno g navzdol. Žoga pade na tla po ${fmt(tf, 2)} s s hitrostjo ${fmt(Math.sqrt(v0 * v0 + 2 * G * h0), 1)} m/s.</p>
          <p class="muted">Trenutna hitrost: v = v₀ − g t = ${fmt(vy, 1)} m/s. Vijolične pike so lege vsake 0,25 s: na vrhu so bolj skupaj.</p>`;
@@ -334,7 +341,7 @@ export function met(el, { mode = "posevni" } = {}) {
 
 // ------------------------------------------------------------ klanec
 export function klanec(el, { mode = "newton" } = {}) {
-  const svg = svgBox(340, 250);
+  const svg = svgBox(340, 300);
   const out = readout();
   let ang = mode === "trenje" ? 15 : 30, m = 5, ms = mode === "trenje" ? 0.5 : 0, mk = mode === "trenje" ? 0.4 : 0, sPos = 0, v = 0, comp = true;
   const Lm = 6;
@@ -347,7 +354,7 @@ export function klanec(el, { mode = "newton" } = {}) {
   const draw = () => {
     svg.replaceChildren();
     const a = rad(ang), q = st();
-    const B = [310, 225], len = 280, A = [B[0] - len * Math.cos(a), B[1] - len * Math.sin(a)];
+    const B = [310, 285], len = 280, A = [B[0] - len * Math.cos(a), B[1] - len * Math.sin(a)];
     s("polygon", { points: `${A[0]},${A[1]} ${B[0]},${B[1]} ${A[0]},${B[1]}`, class: "wall" }, svg);
     s("path", { d: `M${A[0] + 40},${B[1]} A40,40 0 0 0 ${A[0] + 40 * Math.cos(a)},${B[1] - 40 * Math.sin(a)}`, class: "graph-line stroke-c thin-line", fill: "none" }, svg);
     label(svg, A[0] + 52, B[1] - 12, `${ang}°`, "lbl small", "start");
@@ -355,17 +362,17 @@ export function klanec(el, { mode = "newton" } = {}) {
     const u = [Math.cos(a), Math.sin(a)], nrm = [Math.sin(a), -Math.cos(a)];
     const pos = 30 + (sPos / Lm) * (len - 100);
     const C = [A[0] + u[0] * pos, A[1] + u[1] * pos];
-    const bw = 50, bh = 32;
+    const bh = 22 * Math.cbrt(m), bw = bh * 1.5; // večja masa → večja klada
     const corner = (p, q2) => [C[0] + u[0] * p + nrm[0] * q2, C[1] + u[1] * p + nrm[1] * q2];
     s("polygon", { points: [corner(0, 0), corner(bw, 0), corner(bw, bh), corner(0, bh)].map((p) => p.join(",")).join(" "), class: "fill-a" }, svg);
-    const M = corner(bw / 2, bh / 2), fs = 1.6;
+    const M = corner(bw / 2, bh / 2), fs = 1; // vse sile v istem merilu: 1 px na N
     force(svg, M[0], M[1], 0, q.Fg * fs, "text", "F_g");
     if (comp) {
       force(svg, M[0], M[1], u[0] * q.Fpar * fs, u[1] * q.Fpar * fs, "b", "F∥", { width: 2.5 });
       force(svg, M[0], M[1], -nrm[0] * q.Fn * fs, -nrm[1] * q.Fn * fs, "c", "F⊥", { width: 2.5 });
     }
     const Bm = corner(bw / 2, 0);
-    force(svg, Bm[0], Bm[1], nrm[0] * q.Fn * fs * 0.6, nrm[1] * q.Fn * fs * 0.6, "muted", "F_N", { width: 2 });
+    force(svg, Bm[0], Bm[1], nrm[0] * q.Fn * fs, nrm[1] * q.Fn * fs, "muted", "F_N", { width: 2 });
     if (q.Ft > 0.05) force(svg, corner(0, 3)[0], corner(0, 3)[1], -u[0] * q.Ft * fs, -u[1] * q.Ft * fs, "danger", "F_tr", { width: 2.5 });
     const crit = ms ? (Math.atan(ms) * 180) / Math.PI : 0;
     out.innerHTML = texBlock(`F_\\parallel = m g \\sin\\alpha = ${T(q.Fpar, 1)}\\ \\text{N},\\quad F_\\perp = m g\\cos\\alpha = ${T(q.Fn, 1)}\\ \\text{N}`) +
@@ -401,7 +408,7 @@ export function klanec(el, { mode = "newton" } = {}) {
 
 // ------------------------------------------------------------ trki
 export function trki(el) {
-  const svg = svgBox(340, 230);
+  const svg = svgBox(340, 110), svg2 = svgBox(340, 200);
   const out = readout();
   let m1 = 2, m2 = 1, v1 = 3, v2 = -1, kind = "prozni", x1, x2, u1, u2, hit, t;
   const W1 = () => 26 + m1 * 6, W2 = () => 26 + m2 * 6;
@@ -432,23 +439,24 @@ export function trki(el) {
     };
     cart(x1, W1(), "a", `${m1} kg`, u1);
     cart(x2, W2(), "b", `${m2} kg`, u2);
-    // gibalne količine pred in po
+    // gibalne količine pred in po (stalno merilo: 3,2 px na kg·m/s)
+    svg2.replaceChildren();
     const [a1, a2] = after();
     const before = [m1 * v1, m2 * v2], aft = [m1 * a1, m2 * a2];
-    const sc = 8, y0 = 175;
+    const sc = 3.2, y0 = 104;
     const group = (x, vals, title) => {
-      label(svg, x + 60, 124, title, "tick b");
-      s("line", { x1: x, y1: y0, x2: x + 120, y2: y0, class: "axis thin" }, svg);
+      label(svg2, x + 60, 12, title, "tick b");
+      s("line", { x1: x, y1: y0, x2: x + 120, y2: y0, class: "axis thin" }, svg2);
       [["p₁", vals[0], "a"], ["p₂", vals[1], "b"], ["skupaj", vals[0] + vals[1], "c"]].forEach(([nm, v, col], i) => {
         const bx = x + 8 + i * 38, hh = v * sc;
-        s("rect", { x: bx, y: hh >= 0 ? y0 - hh : y0, width: 28, height: Math.abs(hh), class: `bar fill-${col}` }, svg);
-        label(svg, bx + 14, 222, nm, "tick small");
-        label(svg, bx + 14, hh >= 0 ? y0 - hh - 7 : y0 - hh + 9, fmt(v, 1), "tick small");
+        s("rect", { x: bx, y: hh >= 0 ? y0 - hh : y0, width: 28, height: Math.abs(hh), class: `bar fill-${col}` }, svg2);
+        label(svg2, bx + 14, 196, nm, "tick small");
+        label(svg2, bx + 14, hh >= 0 ? y0 - hh - 7 : y0 - hh + 9, fmt(v, 1), "tick small");
       });
     };
     group(20, before, "gibalna količina pred trkom");
     group(190, hit ? aft : [0, 0], "po trku");
-    if (!hit) label(svg, 250, 160, "(še ni trka)", "tick");
+    if (!hit) label(svg2, 250, 70, "(še ni trka)", "tick");
     const Ek0 = (m1 * v1 * v1 + m2 * v2 * v2) / 2, Ek1 = (m1 * a1 * a1 + m2 * a2 * a2) / 2;
     out.innerHTML = texBlock(`m_1 v_1 + m_2 v_2 = m_1 v_1' + m_2 v_2' \\Rightarrow ${T(before[0] + before[1], 1)} = ${T(aft[0] + aft[1], 1)}\\ \\tfrac{\\text{kg m}}{\\text{s}}`) +
       `<p>Po trku: v₁' = ${fmt(a1, 2)} m/s, v₂' = ${fmt(a2, 2)} m/s. <b>Skupna gibalna količina se ohrani</b> pri vsakem trku.</p>
@@ -473,7 +481,7 @@ export function trki(el) {
     prevPlay();
   };
   layout(el, {
-    stage: [svg],
+    stage: [svg, svg2],
     controls: [
       segmented({ options: [["prozni", "prožni trk"], ["neprozni", "neprožni trk"]], value: kind, onChange: (v) => ((kind = v), restart()) }),
       slider({ label: "m₁", min: 1, max: 5, value: m1, unit: "kg", onInput: (v) => ((m1 = v), restart()) }),
@@ -504,15 +512,16 @@ export function krozenje(el) {
     if (fly) P = [fly.x, fly.y];
     else P = [cx + R * Math.cos(phi), cy - R * Math.sin(phi)];
     if (!fly) s("line", { x1: cx, y1: cy, x2: P[0], y2: P[1], class: "string" }, svg);
-    s("circle", { cx: P[0], cy: P[1], r: 10, class: "ball" }, svg);
-    const vs = 14;
+    s("circle", { cx: P[0], cy: P[1], r: 10 * Math.cbrt(m / 0.5), class: "ball" }, svg);
+    const vs = 5; // 5 px na m/s
     const tx = fly ? fly.vx : -Math.sin(phi), ty = fly ? fly.vy : -Math.cos(phi);
     arrow(svg, P[0], P[1], P[0] + tx * v * vs, P[1] + ty * v * vs, "b", 3);
     label(svg, P[0] + tx * (v * vs + 12), P[1] + ty * (v * vs + 12), "v", "lbl small");
     if (!fly) {
-      const al = Math.min(R - 12, ar * 6);
-      arrow(svg, P[0], P[1], P[0] - Math.cos(phi) * al, P[1] + Math.sin(phi) * al, "c", 3);
-      label(svg, P[0] - Math.cos(phi) * (al + 12), P[1] + Math.sin(phi) * (al + 12), "a_r", "lbl small");
+      // 1 px na m/s²; predolgo puščico skrajšamo do središča in jo narišemo črtkano
+      const full = ar, al = Math.min(R - 6, full), cut = full > al;
+      arrow(svg, P[0], P[1], P[0] - Math.cos(phi) * al, P[1] + Math.sin(phi) * al, "c", 3, cut ? { "stroke-dasharray": "6 4" } : {});
+      label(svg, P[0] - Math.cos(phi) * (al + 12), P[1] + Math.sin(phi) * (al + 12), cut ? "a_r (skrajšana)" : "a_r", "lbl small");
     }
     out.innerHTML = texBlock(`v = \\frac{2\\pi r}{t_0} = \\frac{2\\pi\\cdot ${T(r, 1)}}{${T(Tp, 1)}} = ${T(v, 2)}\\ \\tfrac{\\text{m}}{\\text{s}},\\quad a_r = \\frac{v^2}{r} = ${T(ar, 2)}\\ \\tfrac{\\text{m}}{\\text{s}^2}`) +
       texBlock(`F_r = m a_r = ${T(m, 1)}\\cdot ${T(ar, 2)} = ${T(m * ar, 2)}\\ \\text{N},\\quad \\omega = \\frac{2\\pi}{t_0} = ${T(w, 2)}\\ \\text{s}^{-1}`) +

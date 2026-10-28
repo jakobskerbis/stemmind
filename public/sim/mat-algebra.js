@@ -229,20 +229,25 @@ export function ploscice(el, { mode = "izrazi" } = {}) {
   const draw = () => {
     svg.replaceChildren();
     if (mode === "izrazi") {
-      const X = 46, U = 14;
-      let x0 = 10;
-      const put = (n, w, hgt, t, y) => {
+      // 1 = 18 px; dolžina palice x je res x enic (pri x < 0 je palica "obrnjena", rdeča).
+      const U = 18, X = Math.max(2, Math.abs(xs) * U), sx = xs < 0 ? -1 : 1;
+      // vrsta ploščic; vrne y za naslednjo vrsto
+      const put = (n, w, hgt, t, y, sg = 1) => {
+        let x0 = 10;
         for (let i = 0; i < Math.abs(n); i++) {
-          s("rect", { x: x0, y, width: w, height: hgt, rx: 3, class: `algtile ${n < 0 ? "neg" : "pos"}` }, svg);
-          label(svg, x0 + w / 2, y + hgt / 2, (n < 0 ? "−" : "") + t, "lbl small");
+          if (x0 + w > 330) (x0 = 10), (y += hgt + 6);
+          s("rect", { x: x0, y, width: w, height: hgt, rx: Math.min(3, w / 2), class: `algtile ${n * sg < 0 ? "neg" : "pos"}` }, svg);
+          if (w >= 10 && hgt >= 10) label(svg, x0 + w / 2, y + hgt / 2, (n < 0 ? "−" : "") + t, "lbl small");
           x0 += w + 5;
-          if (x0 > 300) (x0 = 10), (y += hgt + 6);
         }
-        x0 = 10;
+        return n ? y + hgt + 10 : y;
       };
-      put(cnt.x2, X, X, "x²", 10);
-      put(cnt.x, U, X, "x", 66);
-      put(cnt.one, U, U, "1", 126);
+      let y = put(cnt.x2, X, X, "x²", 10);
+      y = put(cnt.x, U, X, "x", y, sx);
+      y = put(cnt.one, U, U, "1", y);
+      const Hh = Math.max(240, y + 20);
+      svg.setAttribute("viewBox", `0 0 340 ${Hh}`);
+      label(svg, 330, Hh - 8, `merilo: 1 = ${U} px, x = ${fmt(xs, 1)}`, "tick small", "end");
       const terms = [];
       if (cnt.x2) terms.push(`${cnt.x2 === 1 ? "" : cnt.x2 === -1 ? "-" : cnt.x2}x^2`);
       if (cnt.x) terms.push(`${cnt.x === 1 ? "" : cnt.x === -1 ? "-" : cnt.x}x`);
@@ -253,6 +258,7 @@ export function ploscice(el, { mode = "izrazi" } = {}) {
         `<p>Združujemo samo <b>podobne člene</b>: kvadrate s kvadrati, palice s palicami, enice z enicami. Ploščica in nasprotna ploščica (rdeča) se izničita.</p>
          <p>Vrednost izraza pri x = ${fmt(xs, 1)}: ${tex(expr.replace(/x/g, `(${tfmt(xs, 1)})`).replace(/\)\^2/g, ")^2") + ` = ${tfmt(v, 2)}`)}</p>`;
     } else {
+      svg.setAttribute("viewBox", "0 0 340 240");
       const U = 20, X = 70;
       const W = X + p * U, H = X + q * U;
       const ox = (340 - W) / 2, oy = 20;
@@ -291,9 +297,9 @@ export function povrsinski(el, { mode = "stevila" } = {}) {
     draw();
   };
   const rect2 = (cols, rows, names) => {
-    // cols, rows: [[dolžina, napis], …]
-    const W = cols.reduce((x, c) => x + Math.abs(c[0]), 0), H = rows.reduce((x, r) => x + Math.abs(r[0]), 0);
-    const sc = Math.min(260 / W, 190 / H);
+    // cols, rows: [[dolžina, napis], …]; merilo je stalno (za največji vnos), da je večji zmnožek res večji pravokotnik
+    const [Wm, Hm] = { stevila: [49, 29], kvadrat: [39, 39], izrazi: [13, 13] }[mode];
+    const sc = Math.min(260 / Wm, 190 / Hm);
     const ox = 50, oy = 30;
     let x = ox;
     cols.forEach(([cw, ct], i) => {
