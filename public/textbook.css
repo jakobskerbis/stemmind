@@ -17,6 +17,8 @@
 .tb-book .eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; }
 .tb-book-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .tb-jump { padding: 8px 0; background: var(--bg, var(--surface)); }
+.tb-mine { margin-left: 4px; padding: 1px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 0.72rem; font-weight: 800; }
+.tb-jump .active .tb-mine { background: var(--surface); }
 .tb-part { scroll-margin-top: 130px; }
 .tb-part-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin: 22px 0 8px; }
 .tb-part-head h2 { margin: 0; }

@@ -171,6 +171,7 @@ function programBook(programId) {
   const paths = listProgramPaths(programId).map((p) => ({
     key: p.key,
     label: `${p.elective ? "Izbirni predmet" : `${p.year}. letnik`}: ${p.label}`,
+    group: p.elective ? "Izbirni predmeti" : `${p.year}. letnik`,
   }));
   const topics = paths.flatMap((p) => topicOrder(p.key));
   return {
@@ -235,7 +236,8 @@ export function getBook(bookKey) {
 export function bookView(bookKey) {
   const b = getBook(bookKey);
   if (!b) return null;
-  return { ...b, parts: b.paths.map((p) => tocView(p.key)) };
+  // group: letnik pri študijskem programu (več predmetov skupaj), sicer vsak del zase.
+  return { ...b, parts: b.paths.map((p) => ({ ...tocView(p.key), group: p.group || null })) };
 }
 
 // Kazalo poti: sklopi in teme z oznakami, kaj je na voljo.
