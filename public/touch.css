@@ -49,5 +49,5 @@
   .tb-lesson-grid.has-side { grid-template-columns: minmax(0, 1fr) minmax(360px, 42%); gap: 0 20px; }
   #view-path { grid-template-columns: minmax(320px, 380px) minmax(0, 1fr); gap: 0 20px; }
   /* Levi stolpec je na tablici višji od zaslona: pripet bi skril spodnje načine. */
-  #view-path > .path-side { position: static; }
+  #view-path > .path-side { position: static; max-height: none; overflow: visible; }
 }

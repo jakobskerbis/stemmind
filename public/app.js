@@ -1544,3 +1544,23 @@ initTextbook({
   };
   if (await initAccount({ onReady: start })) await start();
 })();
+
+// Računalnik: če zavihki z napisi ne gredo v zgornjo vrstico (ožje okno ali več zavihkov),
+// jih najprej stisnemo, nato pokažemo samo ikone; izbrani zavihek obdrži napis, ostali ga pokažejo ob lebdenju (title).
+{
+  const bar = document.querySelector(".topbar");
+  const tabs = bar?.querySelector(".tabs");
+  if (bar && tabs) {
+    tabs.querySelectorAll(".tab").forEach((t) => (t.title ||= t.textContent.trim()));
+    // Najprej poskusimo z ožjimi zavihki, šele nato samo ikone.
+    const over = () => tabs.scrollWidth > tabs.clientWidth + 1;
+    const fit = () => {
+      bar.classList.remove("tabs-tight", "tabs-compact");
+      if (over()) bar.classList.add("tabs-tight");
+      if (over()) bar.classList.add("tabs-compact");
+    };
+    new ResizeObserver(fit).observe(tabs);
+    new MutationObserver(fit).observe(tabs, { subtree: true, attributes: true, attributeFilter: ["hidden", "class"] });
+    document.fonts?.ready.then(fit);
+  }
+}
