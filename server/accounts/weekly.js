@@ -3,7 +3,7 @@ import { getTopic } from "../curriculum.js";
 import { detectWeakTopics } from "../weaknesses.js";
 import { esc, layout, button } from "./email.js";
 
-const SUBJ = { MAT: "matematika", FIZ: "fizika", KEM: "kemija" };
+const SUBJ = { MAT: "matematika", FIZ: "fizika", KEM: "kemija", BIO: "biologija", GEO: "geologija", RAC: "računalništvo", EKO: "ekonomija" };
 
 export function childWeek(db, studentId) {
   const one = (sql) => db.prepare(sql).get(studentId);

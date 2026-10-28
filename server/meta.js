@@ -3,8 +3,10 @@
 const META_RE = /<<META\b([\s\S]*?)>>/g;
 const MARKER = "<<META";
 
+import { ALL_SUBJECTS } from "./subjects.js";
+
 const VALID = {
-  subject: ["MAT", "FIZ", "KEM"],
+  subject: ALL_SUBJECTS,
   mode: ["A", "B"],
   flag: ["none", "offtopic", "distress", "unsafe", "injection"],
 };

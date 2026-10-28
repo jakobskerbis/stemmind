@@ -1,6 +1,7 @@
 // Učne poti: dostop do podatkov iz curriculum-data.js.
 import { PATHS } from "./curriculum-data.js";
-import { UNI_PATHS, PROGRAMS, FACULTIES } from "./university-data.js";
+import { UNI_PATHS, PROGRAMS, FACULTIES, FAC_SHORT, UNIVERSITIES } from "./university-data.js";
+import { ALL_SUBJECTS } from "./subjects.js";
 
 export function slugify(s) {
   return s
@@ -64,8 +65,14 @@ export function listPrograms() {
     name: p.name,
     faculty: p.faculty,
     facultyName: FACULTIES[p.faculty],
+    facultyShort: FAC_SHORT[p.faculty],
+    university: p.faculty.split("-")[0],
+    universityName: UNIVERSITIES[p.faculty.split("-")[0]] || p.faculty.split("-")[0],
     source: p.source,
     sourceYear: p.sourceYear,
+    years: p.years.length,
+    // Predmeti aplikacije, ki jih program ima (za izbirnik predmeta).
+    subjects: ALL_SUBJECTS.filter((s) => [...p.courseKeys.flat(), ...p.electiveKeys].some((k) => UNI_PATHS[k].subject === s)),
   }));
 }
 
@@ -127,7 +134,7 @@ export function learningPathPrompt(topicId) {
 function uniPathKeyFor(settings) {
   const p = PROGRAMS[settings.study_program];
   if (!p) return null;
-  const year = Number((String(settings.curriculum_level || "").match(/([1-3])/) || [])[1]) || 1;
+  const year = Number((String(settings.curriculum_level || "").match(/([1-4])/) || [])[1]) || 1;
   // Letnik brez zajetih predmetov (npr. moduli v 3. letniku): vzamemo zadnjega s predmeti.
   const years = p.courseKeys.slice(0, year).filter((k) => k.length);
   const keys = years[years.length - 1] || [];
@@ -139,7 +146,7 @@ export function studyProgramPrompt(settings) {
   if (settings.educational_track !== "UNIVERZA") return "(ni fakultete)";
   const p = PROGRAMS[settings.study_program];
   if (!p) return "(program ni izbran)";
-  const year = Number((String(settings.curriculum_level || "").match(/([1-3])/) || [])[1]) || 1;
+  const year = Number((String(settings.curriculum_level || "").match(/([1-4])/) || [])[1]) || 1;
   const names = (p.courseKeys[year - 1] || []).map((k) => BUILT[k].label.replace(/ \(.*\)$/, ""));
   return `${FACULTIES[p.faculty]}, univerzitetni študijski program 1. stopnje ${p.name}` + (names.length ? `; predmeti ${year}. letnika: ${names.join(", ")}` : "");
 }
