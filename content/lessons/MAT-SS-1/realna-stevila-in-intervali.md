@@ -40,7 +40,7 @@ Absolutna vrednost je torej vedno nenegativna. Primeri: $|5| = 5$, $|-5| = 5$, $
 
 Podobno je $|x - c| = r$ ($r > 0$) enačba točk, ki so od $c$ oddaljene za $r$: $x = c - r$ ali $x = c + r$.
 
-**3. Intervali.** **Interval** je množica vseh realnih števil med dvema **krajiščema** $a$ in $b$ ($a \le b$). Krajišče je lahko vključeno ali izključeno. Interval je lahko tudi neomejen, če se razteza v neskončnost.
+**3. Intervali.** **Interval** je množica vseh realnih števil med dvema **krajiščema** $a$ in $b$ ($a < b$). Krajišče je lahko vključeno ali izključeno. Interval je lahko tudi neomejen, če se razteza v neskončnost.
 
 | Interval | Neenačba | Ime | Na številski premici |
 |---|---|---|---|
@@ -141,11 +141,11 @@ $|x - c| \le r \iff c - r \le x \le c + r \iff x \in [c - r,\, c + r]$
 
 ## Pogoste napake
 
-- **»Absolutna vrednost vsote je vsota absolutnih vrednosti«: $|a + b| = |a| + |b|$.** To velja le, če imata $a$ in $b$ isti predznak. Za $a = 3$, $b = -5$ je $|3 + (-5)| = |{-2}| = 2$, medtem ko je $|3| + |{-5}| = 8$. Pravilno: najprej izračunaj vsoto, nato ji vzemi absolutno vrednost. Splošno velja le $|a + b| \le |a| + |b|$.
+- **»Absolutna vrednost vsote je vsota absolutnih vrednosti«: $|a + b| = |a| + |b|$.** To velja le, če imata $a$ in $b$ isti predznak (ali je eno od njiju $0$). Za $a = 3$, $b = -5$ je $|3 + (-5)| = |{-2}| = 2$, medtem ko je $|3| + |{-5}| = 8$. Pravilno: najprej izračunaj vsoto, nato ji vzemi absolutno vrednost. Splošno velja le $|a + b| \le |a| + |b|$.
 - **Odstranjevanje minusa po občutku: $|2 - 5| = 2 + 5 = 7$.** Absolutna vrednost ne spreminja znakov znotraj izraza. Pravilno: $2 - 5 = -3$, ta vrednost je negativna, zato jo zamenjaš z nasprotno: $|{-3}| = 3$. Ker absolutna vrednost nikoli ni negativna, enačba $|x| = -3$ nima rešitve.
 - **Pomešani smeri pri neenačbah: rešitev $|x| > 3$ zapišeš kot $(-3, 3)$.** Razdalja od $0$ večja od $3$ pomeni **zunaj** tega odseka. Pravilno: $|x| < 3$ je $(-3, 3)$, $|x| > 3$ pa je $(-\infty, -3) \cup (3, \infty)$. Test: število $0$ ima $|0| = 0 < 3$, torej spada k prvi, ne k drugi množici.
-- **Napačni oklepaji: $[2, \infty]$ ali $(2, 5)$ za $2 \le x \le 5$.** Znak $\infty$ ni število, zato mu sledi okrogel oklepaj: $[2, \infty)$. Pri $\le$ in $\ge$ piši oglat oklepaj, pri $<$ in $>$ okrogel. Pravilno: $2 \le x \le 5$ je $[2, 5]$.
-- **»Število $3{,}14$ je enako $\pi$« in »vsak koren je iracionalen«.** Število $3{,}14$ je le racionalen približek števila $\pi$, ki ima neskončen neperiodičen zapis. Koren je iracionalen samo, če število pod korenom ni popoln kvadrat: $\sqrt{9} = 3$ je racionalno, $\sqrt{2}$ pa ne.
+- **Napačni oklepaji: $[2, \infty]$ za $x \ge 2$ ali $(2, 5)$ za $2 \le x \le 5$.** Znak $\infty$ ni število, zato mu sledi okrogel oklepaj: $[2, \infty)$. Pri $\le$ in $\ge$ piši oglat oklepaj, pri $<$ in $>$ okrogel. Pravilno: $2 \le x \le 5$ je $[2, 5]$.
+- **»Število $3{,}14$ je enako $\pi$« in »vsak koren je iracionalen«.** Število $3{,}14$ je le racionalen približek števila $\pi$, ki ima neskončen neperiodičen zapis. Koren naravnega števila je iracionalen samo, če število pod korenom ni popoln kvadrat: $\sqrt{9} = 3$ je racionalno, $\sqrt{2}$ pa ne.
 
 ## Povzetek
 
@@ -165,7 +165,7 @@ Na številski premici označi točko $c = 2$. Pogoj $|x - 2| < 3$ pomeni: točka
 | $\lvert x - 2 \rvert$ | $4$ | $3$ | $2$ | $0$ | $2$ | $3$ | $4$ |
 | $\lvert x - 2 \rvert < 3$? | ne | ne | da | da | da | ne | ne |
 
-Če bi pogoj bil $\le$, bi bila krožca polna in bi veljalo $[-1, 5]$. Pri pogoju $|x - 2| > 3$ pobarvaš ravno nasprotno: dva žarka, ki se začneta pri $-1$ in $5$ in tečeta proč od središča, $(-\infty, -1) \cup (5, \infty)$. Središče intervala $(-1, 5)$ je $\dfrac{-1 + 5}{2} = 2$, polmer pa $\dfrac{5 - (-1)}{2} = 3$. To sta natanko števili $c$ in $r$ iz pogoja.
+Če bi bil pogoj $\le$, bi bila krožca polna in bi veljalo $[-1, 5]$. Pri pogoju $|x - 2| > 3$ pobarvaš ravno nasprotno: dva žarka, ki se začneta pri $-1$ in $5$ in tečeta proč od središča, $(-\infty, -1) \cup (5, \infty)$. Središče intervala $(-1, 5)$ je $\dfrac{-1 + 5}{2} = 2$, polmer pa $\dfrac{5 - (-1)}{2} = 3$. To sta natanko števili $c$ in $r$ iz pogoja.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -196,7 +196,7 @@ Reši neenačbo $|2x - 1| < 5$ in rešitev zapiši z intervalom.
 | 6 | Preverba na krajiščih: $x = 3$ da $\lvert 5 \rvert = 5$, $x = -2$ da $\lvert{-5}\rvert = 5$. | ne velja, krajišči izključeni |
 | 7 | Preverba zunaj: $x = 4$ da $\lvert 7 \rvert = 7$. | ne velja |
 
-Še en primer s pogojem »več ali enako«: $|x + 1| \ge 2$. Izraz $x + 1$ mora biti $\le -2$ ali $\ge 2$. Prvi primer da $x \le -3$, drugi $x \ge 1$. Rešitev: $(-\infty, -3] \cup [1, \infty)$. Preverba: $x = -3$ da $|{-2}| = 2 \ge 2$, $x = 1$ da $|2| = 2 \ge 2$, $x = 0$ da $|1| = 1 \ge 2$, kar ne velja, in $0$ res ni v rešitvi.
+Še en primer s pogojem »več ali enako«: $|x + 1| \ge 2$. Izraz $x + 1$ mora biti $\le -2$ ali $\ge 2$. Prvi primer da $x \le -3$, drugi $x \ge 1$. Rešitev: $(-\infty, -3] \cup [1, \infty)$. Preverba: $x = -3$ da $|{-2}| = 2 \ge 2$, $x = 1$ da $|2| = 2 \ge 2$, $x = 0$ da $|1| = 1 < 2$, torej pogoj ne velja, in $0$ res ni v rešitvi.
 
 ## Drugače: Bolj natančno
 

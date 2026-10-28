@@ -13,7 +13,7 @@ Zakaj je to koristno? Izraz v obliki produkta je veliko lažje obvladati. Produk
 
 ## Razlaga
 
-**1. Kaj pomeni razstaviti.** Razstaviti izraz pomeni zapisati ga kot produkt faktorjev. Razcep je **popoln**, ko noben faktor ni več mogoče razstaviti naprej. Pravilnost vedno preveriš s preizkusom: faktorje zmnožiš in moraš dobiti prvotni izraz.
+**1. Kaj pomeni razstaviti.** Razstaviti izraz pomeni zapisati ga kot produkt faktorjev. Razcep je **popoln**, ko nobenega faktorja ni več mogoče razstaviti naprej. Pravilnost vedno preveriš s preizkusom: faktorje zmnožiš in moraš dobiti prvotni izraz.
 
 **2. Izpostavljanje skupnega faktorja.** Distributivnostni zakon $ab + ac = a(b + c)$ preberemo v obratni smeri. Postopek:
 
@@ -31,7 +31,7 @@ $$ax + ay + bx + by = a(x+y) + b(x+y) = (a+b)(x+y).$$
 
 **3. Obrazci za razstavljanje.** Znane obrazce iz algebrskih izrazov preberi od desne proti levi:
 
-| Kako izraz izgleda | Obrazec | Primer |
+| Kakšen je izraz | Obrazec | Primer |
 |---|---|---|
 | dva člena, med njima minus, oba kvadrata | $a^2 - b^2 = (a-b)(a+b)$ | $9x^2 - 16 = (3x-4)(3x+4)$ |
 | trije členi, kvadrat vsote | $a^2 + 2ab + b^2 = (a+b)^2$ | $x^2 + 10x + 25 = (x+5)^2$ |
@@ -133,7 +133,7 @@ $ab + ac = a(b + c)$, $\quad ax + ay + bx + by = (a+b)(x+y)$, $\quad a^2 - b^2 =
 
 - **Pozabljena enica pri izpostavljanju.** Zapišeš $4x^2 + 4x = 4x \cdot x$. Razlog: ko je cel člen enak skupnemu faktorju, ne ostane nič, ampak $1$. Pravilno: $4x^2 + 4x = 4x(x + 1)$. Preizkus: $4x(x+1) = 4x^2 + 4x$.
 - **Razcep ni popoln.** Zapišeš $6x^2 - 9x = 3(2x^2 - 3x)$ ali se ustaviš pri $x^4 - 16 = (x^2-4)(x^2+4)$. Razlog: nisi izpostavil največjega skupnega faktorja (tudi spremenljivke) oziroma nisi pogledal, ali se kak faktor da razstaviti naprej. Pravilno: $6x^2 - 9x = 3x(2x - 3)$ in $x^4 - 16 = (x-2)(x+2)(x^2+4)$.
-- **Napačen predznak pri izpostavljanju minusa.** Zapišeš $-x^2 + 4x = -x(x + 4)$. Razlog: ko izpostaviš $-x$, se predznaka vseh členov v oklepaju obrneta. Pravilno: $-x^2 + 4x = -x(x - 4)$. Preizkus: $-x \cdot x = -x^2$ in $-x \cdot (-4) = 4x$.
+- **Napačen predznak pri izpostavljanju minusa.** Zapišeš $-x^2 + 4x = -x(x + 4)$. Razlog: ko izpostaviš $-x$, se predznaka obeh členov v oklepaju obrneta. Pravilno: $-x^2 + 4x = -x(x - 4)$. Preizkus: $-x \cdot x = -x^2$ in $-x \cdot (-4) = 4x$.
 - **Mešanje obrazcev.** Zapišeš $x^2 + 9 = (x+3)^2$ ali $x^2 - 9 = (x-3)^2$. Razlog: $(x+3)^2 = x^2 + 6x + 9$ ima srednji člen, razlika kvadratov ga nima, vsote kvadratov pa ni mogoče razstaviti. Pravilno: $x^2 - 9 = (x-3)(x+3)$, izraz $x^2 + 9$ ostane nerazstavljen.
 - **Vietovo pravilo z napačnimi predznaki.** Za $x^2 - 5x + 6$ zapišeš $(x+2)(x+3)$, ker je $2 \cdot 3 = 6$. Razlog: preveril si le produkt, ne pa vsote; $2 + 3 = 5$, ne $-5$. Pravilno: iščeš števili z vsoto $-5$ in produktom $6$, to sta $-2$ in $-3$, zato je $x^2 - 5x + 6 = (x-2)(x-3)$.
 

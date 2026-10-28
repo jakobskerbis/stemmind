@@ -43,7 +43,7 @@ Množica z $n$ elementi ima natanko $2^n$ podmnožic. Množica $\{a, b\}$ ima po
 | **Razlika** | $A \setminus B$ | tisti, ki so v $A$, niso pa v $B$ |
 | **Komplement** | $A^c$ | tisti iz $\mathcal{U}$, ki niso v $A$ |
 
-Komplement pišemo tudi $\overline{A}$ ali $A'$. Besedica »ali« je v matematiki nevezniška in pomeni »vsaj eno od obeh«. Če je $A \cap B = \emptyset$, pravimo, da sta množici **disjunktni** (tuji): nimata skupnih elementov.
+Komplement pišemo tudi $\overline{A}$ ali $A'$. Besedica »ali« je v matematiki vključujoča in pomeni »vsaj eno od obeh«. Če je $A \cap B = \emptyset$, pravimo, da sta množici **disjunktni** (tuji): nimata skupnih elementov.
 
 **6. Pravila.**
 
@@ -72,6 +72,7 @@ Dani sta množici $A = \{1, 2, 3, 4, 5, 6\}$ in $B = \{2, 4, 6, 8, 10\}$. Določ
 - $A \cup B$: elementi, ki so v $A$ ali v $B$
 - $A \cap B$: elementi, ki so v $A$ in v $B$
 - $A \setminus B$: elementi, ki so v $A$, ne pa v $B$
+- preverjanje: $|A \cup B| = |A| + |B| - |A \cap B|$
 :::
 
 **Rešitev:**
@@ -157,7 +158,7 @@ Predstavljaj si pravokotnik, ki pomeni $\mathcal{U}$, in v njem dva kroga, ki se
 
 Vsaka operacija je pobarvanje nekaj teh območij. Unija pobarva oba kroga v celoti, to je tri območja. Presek pobarva samo lečo. Razlika $A \setminus B$ pobarva levi krog brez leče. Komplement $A^c$ pobarva vse, kar je zunaj levega kroga: desni krog brez leče in zunanje območje.
 
-Zdaj lahko De Morganovo pravilo preprosto *vidiš*. Množica $(A \cup B)^c$ je zunanje območje. Množica $A^c \cap B^c$ je tisto, kar je hkrati zunaj levega in zunaj desnega kroga, torej spet zunanje območje. Če je $A \subseteq B$, leži krog $A$ cel znotraj kroga $B$. Disjunktni množici sta kroga, ki se ne dotikata. Pri treh krogih nastane sedem območij znotraj krogov in osmo zunaj njih.
+Zdaj lahko De Morganovo pravilo preprosto *vidiš*. Množica $(A \cup B)^c$ je zunanje območje. Množica $A^c \cap B^c$ je tisto, kar je hkrati zunaj levega in zunaj desnega kroga, torej spet zunanje območje. Če je $A \subseteq B$, leži krog $A$ cel znotraj kroga $B$. Disjunktni množici sta kroga, ki se ne prekrivata. Pri treh krogih nastane sedem območij znotraj krogov in osmo zunaj njih.
 
 ## Drugače: Iz vsakdanjega življenja
 

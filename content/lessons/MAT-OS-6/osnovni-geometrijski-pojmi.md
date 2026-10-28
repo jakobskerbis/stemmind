@@ -43,7 +43,7 @@ Za daljice veljata dve pravili:
 **7. Vzporednici.** Premici $p$ in $q$ sta vzporedni, če ležita v isti ravnini in nimata skupne točke, kakor koli ju podaljšamo. Zapišemo $p \parallel q$. Vzporednici sta povsod enako narazen. Velja:
 
 - skozi točko $T$, ki ne leži na premici $p$, gre **natanko ena** vzporednica s $p$,
-- če je $a \parallel b$ in $b \parallel c$, je tudi $a \parallel c$.
+- če je $a \parallel b$ in $b \parallel c$ (premici $a$ in $c$ sta različni), je tudi $a \parallel c$.
 
 Vzporednico skozi $T$ narišemo z geotrikotnikom in ravnilom (glej »Korak za korakom«).
 
@@ -85,7 +85,7 @@ Daljica $AB$ je dolga $15\,\text{cm}$. Točka $C$ leži na daljici $AB$ tako, da
 **Iščemo:** $|AC|$, $|CB|$, $|CM|$ in $|AM|$
 
 :::formula
-Če $C$ leži na daljici $AB$: $|AB| = |AC| + |CB|$. Razpolovišče $M$ daljice $CB$: $|CM| = \dfrac{|CB|}{2}$.
+Del celote: $\dfrac{2}{5}$ od $|AB|$ je $(|AB| : 5) \cdot 2$. Če $C$ leži na daljici $AB$: $|AB| = |AC| + |CB|$. Razpolovišče $M$ daljice $CB$: $|CM| = \dfrac{|CB|}{2}$.
 :::
 
 **Rešitev:**
@@ -150,7 +150,7 @@ Premica ima puščici na obeh koncih, poltrak samo eno, daljica nobene. Odnose m
 |---|---|---|
 | = | dve črti, ki tečeta vštric | vzporedni |
 | + | ena vodoravna, ena navpična črta | pravokotni (sekata se pod pravim kotom) |
-| X | dve poševni črti, ki se križata | sekata se, a nista pravokotni |
+| X | dve črti, ki se križata, a ne pod pravim kotom | sekata se, a nista pravokotni |
 
 V zvezku s kvadratno mrežo vse to vidiš na papirju. Vse vodoravne črte mreže so med seboj vzporedne, prav tako vse navpične. Vsaka vodoravna črta je pravokotna na vsako navpično. Razmik med sosednjima vodoravnima črtama je povsod enak, to je razdalja med vzporednicama.
 
@@ -158,7 +158,7 @@ V zvezku s kvadratno mrežo vse to vidiš na papirju. Vse vodoravne črte mreže
 
 **Točka.** Na zemljevidu je kraj, na primer Ljubljana, majhna pika: pokaže lego, ne velikosti. Prav to je točka.
 
-**Poltrak.** Curek svetlobe iz laserskega kazalnika se začne pri kazalniku in gre naravnost naprej, dokler ga kaj ne ustavi. Podoben je poltraku: ima začetek, konca pa si v mislih ne predstavljaš.
+**Poltrak.** Žarek svetlobe iz laserskega kazalnika se začne pri kazalniku in gre naravnost naprej, dokler ga kaj ne ustavi. Podoben je poltraku: ima začetek, konca pa si v mislih ne predstavljaš.
 
 **Daljica.** Napeta vrvica, rob mize, svinčnik: vse to so daljice, saj imajo jasna krajišča in jih lahko izmeriš.
 
@@ -172,8 +172,8 @@ V zvezku s kvadratno mrežo vse to vidiš na papirju. Vse vodoravne črte mreže
 
 1. Neznano dolžino označimo: $|AT| = x$.
 2. Potem je $|TB| = x + 6$ (v centimetrih).
-3. Ker $T$ leži na daljici $AB$, je $|AT| + |TB| = |AB|$, torej $x + (x + 6) = 24$.
-4. Poenostavimo: $2x + 6 = 24$, nato $2x = 18$ in $x = 9$.
+3. Ker $T$ leži na daljici $AB$, je $|AT| + |TB| = |AB|$, torej $x + x + 6 = 24$.
+4. Dvakrat $x$ je $2 \cdot x$, zato $2 \cdot x + 6 = 24$. S sklepanjem: $2 \cdot x = 24 - 6 = 18$ in $x = 18 : 2 = 9$.
 5. $|AT| = 9\,\text{cm}$ in $|TB| = 9 + 6 = 15\,\text{cm}$.
 6. Preverimo: $9 + 15 = 24$ in $15 - 9 = 6$. Res.
 

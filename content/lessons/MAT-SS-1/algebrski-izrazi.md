@@ -73,7 +73,7 @@ Koeficienti so $1, 3, 3, 1$. Potence prvega člena od leve proti desni padajo, p
 Poenostavi izraz $(2x^2 - 3x + 5) - (x^2 + 4x - 7)$ in izračunaj njegovo vrednost za $x = 2$.
 
 **Podatki:** izraz $(2x^2 - 3x + 5) - (x^2 + 4x - 7)$, vrednost spremenljivke $x = 2$
-**Iščemo:** poenostavljen izraz in njegova vrednost pri $x = 2$
+**Iščemo:** poenostavljen izraz in njegovo vrednost pri $x = 2$
 
 :::formula
 Minus pred oklepajem spremeni predznak vsakemu členu v njem: $-(p + q - r) = -p - q + r$. Podobne člene združimo: $m x^k + n x^k = (m + n) x^k$.
@@ -136,7 +136,7 @@ $(p - q)^3 = p^3 - 3p^2q + 3pq^2 - q^3$, kjer sta $p$ prvi in $q$ drugi člen dv
 - **Napačen predznak pri kvadratu razlike: »$(x - 3)^2 = x^2 - 9$« ali »$x^2 - 6x - 9$«.** Razlog: minus je le pri srednjem členu, saj je $(-3)^2 = +9$. Izraz $x^2 - 9$ je rezultat zmnožka $(x - 3)(x + 3)$, kar je drug primer. Pravilno: $(x - 3)^2 = x^2 - 6x + 9$.
 - **Minus pred oklepajem: »$5x - (2x - 3) = 3x - 3$«.** Razlog: minus spremeni predznak vsakemu členu v oklepaju, torej tudi zadnjemu. Pravilno: $5x - (2x - 3) = 5x - 2x + 3 = 3x + 3$.
 - **Člena nista pomnožena vsak z vsakim: »$(x + 2)(x + 3) = x^2 + 6$«.** Razlog: pomnožila sta se le prva in zadnja člena. Pravilno: pomnožimo vse štiri pare, $(x + 2)(x + 3) = x^2 + 3x + 2x + 6 = x^2 + 5x + 6$. Namig: pred združevanjem preštej člene, pri dveh dvočlenikih jih mora biti štiri.
-- **Mešanje vsote in zmnožka enočlenikov: »$3x + 2x^2 = 5x^3$« ali »$3x \cdot 2x = 6x$«.** Razlog: seštevamo samo podobne člene, pri množenju pa se potence iste spremenljivke zmnožijo. Pravilno: $3x + 2x^2$ ni mogoče poenostaviti, $3x + 2x = 5x$ in $3x \cdot 2x = 6x^2$.
+- **Mešanje vsote in zmnožka enočlenikov: »$3x + 2x^2 = 5x^3$« ali »$3x \cdot 2x = 6x$«.** Razlog: seštevamo samo podobne člene, pri množenju pa se eksponenti iste spremenljivke seštejejo ($x \cdot x = x^2$). Pravilno: $3x + 2x^2$ ni mogoče poenostaviti, $3x + 2x = 5x$ in $3x \cdot 2x = 6x^2$.
 
 ## Povzetek
 
@@ -161,7 +161,7 @@ Celotna ploščina je $(a + b)^2$ in je enaka vsoti štirih delov: $a^2 + ab + a
 
 Kvadrat razlike je slika odrezovanja. Vzemimo kvadrat s stranico $a$ in ploščino $a^2$. Ob desnem robu odrežemo trak širine $b$ (ploščina $ab$) in ob zgornjem robu še enega (ploščina $ab$). V zgornjem desnem kotu smo kvadratek $b^2$ odrezali dvakrat, zato ga enkrat vrnemo: $(a - b)^2 = a^2 - 2ab + b^2$. S števili: pri $a = 5$, $b = 2$ je $25 - 20 + 4 = 9 = 3^2$.
 
-Kocko z robom $a + b$ z ravnimi rezi razdelimo na osem delov: ena kocka $a^3$, tri kvadri $a^2b$, trije kvadri $ab^2$ in ena kocka $b^3$. Skupaj $1 + 3 + 3 + 1 = 8$ delov, prostornina je $a^3 + 3a^2b + 3ab^2 + b^3$.
+Kocko z robom $a + b$ z ravnimi rezi razdelimo na osem delov: ena kocka $a^3$, trije kvadri $a^2b$, trije kvadri $ab^2$ in ena kocka $b^3$. Skupaj $1 + 3 + 3 + 1 = 8$ delov, prostornina je $a^3 + 3a^2b + 3ab^2 + b^3$.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -171,7 +171,7 @@ Kocko z robom $a + b$ z ravnimi rezi razdelimo na osem delov: ena kocka $a^3$, t
 - $98^2 = (100 - 2)^2 = 10\,000 - 400 + 4 = 9604$,
 - $51 \cdot 49 = (50 + 1)(50 - 1) = 2500 - 1 = 2499$.
 
-**Vrt.** Kvadratni vrt ima stranico $x$ metrov. Eno stranico podaljšamo za $2\,\text{m}$, drugo za $3\,\text{m}$. Nova ploščina je $(x + 2)(x + 3) = x^2 + 5x + 6$. Pri $x = 10$ dobimo vrt $12\,\text{m} \times 13\,\text{m}$, torej $156\,\text{m}^2$, in res je $100 + 50 + 6 = 156$. Izraz $5x + 6$ pove, za koliko se ploščina poveča, pri čemer je lepo vidno, da dodatek ni odvisen samo od kvadrata, ampak tudi od $x$.
+**Vrt.** Kvadratni vrt ima stranico $x$ metrov. Eno stranico podaljšamo za $2\,\text{m}$, drugo za $3\,\text{m}$. Nova ploščina je $(x + 2)(x + 3) = x^2 + 5x + 6$. Pri $x = 10$ dobimo vrt $12\,\text{m} \times 13\,\text{m}$, torej $156\,\text{m}^2$, in res je $100 + 50 + 6 = 156$. Izraz $5x + 6$ pove, za koliko se ploščina poveča. Lepo je vidno, da dodatek ni stalen, ampak je odvisen od stranice $x$ prvotnega vrta.
 
 **Računski trik z izrazom.** Pomisli si poljubno število, mu prištej $3$, vsoto pomnoži z $2$, odštej $6$ in rezultat deli z $2$. Dobiš začetno število. Zakaj? Če je število $n$, je $(n + 3) \cdot 2 - 6 = 2n + 6 - 6 = 2n$, polovica tega pa je $n$. Izraz s črko dokaže trik za vsa števila hkrati, česar s poskušanjem ne bi mogel.
 
@@ -228,4 +228,4 @@ Pri kubu je postopek podoben. Za $(x - 1)^3$ je $a = x$ in $b = 1$. Zapišemo ko
 - $2501$
 + $2499$
 - $2599$
-> Zmnožek vsote in razlike: $(50 + 1)(50 - 1) = 50^2 - 1^2 = 2500 - 1 = 2499$. Rezultat $2500$ dobiš, če pozabiš odšteti $1^2$, rezultat $2501$ pa, če kvadrat drugega člena prišteješ namesto odšteješ.
+> Zmnožek vsote in razlike: $(50 + 1)(50 - 1) = 50^2 - 1^2 = 2500 - 1 = 2499$. Rezultat $2500$ dobiš, če pozabiš odšteti $1^2$, rezultat $2501$ pa, če kvadrat drugega člena prišteješ, namesto da bi ga odštel.

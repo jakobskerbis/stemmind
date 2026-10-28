@@ -55,7 +55,7 @@ $$\underbrace{a \cdot a \cdot \ldots \cdot a}_{n \text{ faktorjev}} = a^n$$
 | $10^1$ | $10$ | $10$ |
 | $10^2$ | $10 \cdot 10$ | $100$ |
 | $10^3$ | $10 \cdot 10 \cdot 10$ | $1\,000$ |
-| $10^6$ | šest desetic | $1\,000\,000$ |
+| $10^6$ | $10 \cdot 10 \cdot 10 \cdot 10 \cdot 10 \cdot 10$ | $1\,000\,000$ |
 
 Potenca $10^n$ je torej enica z $n$ ničlami. Zato lahko število zapišemo razširjeno s potencami: $4\,305 = 4 \cdot 10^3 + 3 \cdot 10^2 + 5$.
 
@@ -156,7 +156,7 @@ Iz 13 kvadratkov lahko sestaviš samo eno vrsto. Številom, ki imajo samo dva de
 
 **Večkratniki: plačevanje.** Če imaš samo bankovce po 20 €, lahko plačaš zneske 20 €, 40 €, 60 €, … To so večkratniki števila 20. Znesek 70 € ni večkratnik števila 20, zato ga z bankovci po 20 € ne moreš plačati brez vračila.
 
-**Delitelji: pravična delitev.** Imaš 24 bonbonov. Delitelji števila 24 so $1, 2, 3, 4, 6, 8, 12, 24$. Razdeliš jih lahko med 2, 3, 4, 6, 8 ali 12 otrok, med 5 otrok pa ne: $24 : 5 = 4$ in ostanek $4$.
+**Delitelji: pravična delitev.** Imaš 24 bonbonov. Delitelji števila 24 so $1, 2, 3, 4, 6, 8, 12, 24$. Razdeliš jih lahko med 2, 3, 4, 6, 8, 12 ali 24 otrok, med 5 otrok pa ne: $24 : 5 = 4$ in ostanek $4$.
 
 **Potence: hitra rast.** List papirja prepogneš: po enem pregibu sta 2 plasti, po dveh 4, po treh 8, po štirih 16, torej $2^4 = 16$. Pri verižnem sporočilu, ki ga vsak pošlje trem novim osebam, jih prvi dan prejme 3, nato 9, nato 27 in 81, torej $3^4 = 81$. Šahovnica ima $8 \cdot 8 = 8^2 = 64$ polj.
 
@@ -189,11 +189,11 @@ Izračunajmo še $2 \cdot 3^2 + 4^2 - 10$. Najprej potenci: $3^2 = 9$ in $4^2 = 
 
 ## Drugače: Bolj natančno
 
-**Definicija z enačbo.** Število $b$ je delitelj števila $a$, če obstaja naravno število $n$, da je $a = b \cdot n$. Tedaj pišemo tudi $b \mid a$, kar preberemo »$b$ deli $a$«. Isti enačbi pravimo tudi, da je $a$ večkratnik števila $b$.
+**Definicija z enačbo.** Število $b$ je delitelj števila $a$, če obstaja naravno število $n$, da je $a = b \cdot n$. Tedaj pišemo tudi $b \mid a$, kar preberemo »$b$ deli $a$«. Ista enačba pove tudi, da je $a$ večkratnik števila $b$.
 
 **Koliko večkratnikov je do neke meje?** Večkratnikov števila $b$, ki niso večji od $N$, je toliko, kolikor je celi del količnika $N : b$. Za $b = 7$ in $N = 100$: $100 : 7 = 14$ z ostankom $2$, zato je do $100$ štirinajst večkratnikov števila $7$, zadnji je $7 \cdot 14 = 98$.
 
-**Delitelji v parih in kvadrati.** Delitelji se razporedijo v pare s produktom $a$. Če sta oba delitelja v paru enaka (kot pri $6 \cdot 6$), delitelj ostane brez para in število deliteljev je liho. Zato imajo kvadrati lihe število deliteljev: $16$ jih ima 5, $25$ jih ima 3, $36$ jih ima 9. Število $12$, ki ni kvadrat, jih ima 6.
+**Delitelji v parih in kvadrati.** Delitelji se razporedijo v pare s produktom $a$. Če sta oba delitelja v paru enaka (kot pri $6 \cdot 6$), delitelj ostane brez para in število deliteljev je liho. Zato imajo kvadrati liho število deliteljev: $16$ jih ima 5, $25$ jih ima 3, $36$ jih ima 9. Število $12$, ki ni kvadrat, jih ima 6.
 
 **Potence kot ponavljano množenje.** Potence definiramo po korakih: $a^1 = a$ in $a^{n+1} = a^n \cdot a$. Vsak naslednji eksponent torej pomeni še en faktor $a$. Zato potence hitro rastejo: $2^{10} = 1\,024$, že $2^{20} = 1\,048\,576$ pa je več kot milijon. Potenciranje ni zamenljivo: $2^3 = 8$, $3^2 = 9$.
 

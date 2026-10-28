@@ -34,7 +34,7 @@ V srednji šoli to znanje ne ostane pri računanju po receptih, ampak ga zgradim
 | $9$ | vsota števk je deljiva z $9$ | $6\,354$ ($6+3+5+4=18$) |
 | $10$ | zadnja števka je $0$ | $830$ |
 
-Če sta števili $m$ in $n$ tuji (nimata skupnega delitelja razen $1$) in obe delita $b$, potem $b$ deli tudi njun produkt $m \cdot n$. Zato je število deljivo s $6$, če je deljivo z $2$ in s $3$, ter s $36$, če je deljivo s $4$ in z $9$. Za števili, ki nista tuji, to ne velja: $2$ in $4$ delita $12$, število $8$ pa ne.
+Če sta števili $m$ in $n$ tuji (nimata skupnega delitelja razen $1$) in obe delita $b$, potem tudi njun produkt $m \cdot n$ deli $b$. Zato je število deljivo s $6$, če je deljivo z $2$ in s $3$, ter s $36$, če je deljivo s $4$ in z $9$. Za števili, ki nista tuji, to ne velja: $2$ in $4$ delita $12$, število $8$ pa ne.
 
 **5. Deljenje z ostankom.** Za celo število $a$ in naravno število $b$ obstajata natanko določeni celi števili $q$ (količnik) in $r$ (ostanek), da velja
 
@@ -48,7 +48,7 @@ Ali je $n$ praštevilo, preveriš tako, da poskusiš deliti s praštevili $p$, z
 
 **Osnovni izrek aritmetike:** vsako naravno število $n > 1$ je produkt praštevil, in to na en sam način (do vrstnega reda faktorjev). Na primer $360 = 2 \cdot 2 \cdot 2 \cdot 3 \cdot 3 \cdot 5 = 2^3 \cdot 3^2 \cdot 5$. Praštevil je neskončno mnogo.
 
-**7. Največji skupni delitelj in najmanjši skupni večkratnik.** Največji skupni delitelj $D(a, b)$ je največje naravno število, ki deli $a$ in $b$. Najmanjši skupni večkratnik $v(a, b)$ je najmanjše naravno število, ki ga delita $a$ in $b$. V jeziku množic: $D(a, b)$ je največji element preseka množic deliteljev, $v(a, b)$ pa najmanjši element preseka množic večkratnikov. Če je $D(a, b) = 1$, sta števili **tuji**.
+**7. Največji skupni delitelj in najmanjši skupni večkratnik.** Največji skupni delitelj $D(a, b)$ je največje naravno število, ki deli $a$ in $b$. Najmanjši skupni večkratnik $v(a, b)$ je najmanjše naravno število, ki ga delita $a$ in $b$. V jeziku množic: $D(a, b)$ je največji element preseka množic deliteljev, $v(a, b)$ pa najmanjši element preseka množic naravnih večkratnikov. Če je $D(a, b) = 1$, sta števili **tuji**.
 
 Iz razcepa na prafaktorje dobiš:
 

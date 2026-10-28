@@ -7,7 +7,7 @@ avtor: AI
 
 Z naravnimi in celimi števili že suvereno računaš: vsota, razlika in zmnožek dveh celih števil so spet cela števila. Pri deljenju pa se zatakne. Račun $12 : 4 = 3$ je v redu, račun $1 : 3$ pa ni celo število. Enačba $3x = 1$ v množici $\mathbb{Z}$ nima rešitve.
 
-Takih primerov je v vsakdanjem življenju veliko. Pico razdeliš med tri prijatelje, recept zahteva tri četrtine litra mleka, termometer pokaže −2,5 °C, jogurt stane 0,59 €. Vsa ta števila ležijo med celimi števili. Potrebujemo torej širšo množico, v kateri deljenje (razen z $0$) vedno uspe. To so **racionalna števila**, označimo jih z $\mathbb{Q}$ (črka Q je iz besede *količnik*).
+Takih primerov je v vsakdanjem življenju veliko. Pico razdeliš med tri prijatelje, recept zahteva tri četrtine litra mleka, termometer pokaže −2,5 °C, jogurt stane 0,59 €. Vsa ta števila ležijo med celimi števili. Potrebujemo torej širšo množico, v kateri deljenje (razen z $0$) vedno uspe. To so **racionalna števila**, označimo jih z $\mathbb{Q}$ (črka Q izhaja iz besede *quotient*, količnik).
 
 V tej lekciji se naučiš zapisati racionalno število kot ulomek, ga razširiti in skrajšati, računati z ulomki, ulomek pretvoriti v decimalno število in nazaj ter števila primerjati po velikosti. Brez tega ne gre naprej: potence, algebrski izrazi in ulomljeni izrazi bodo vsi gradili na računanju z ulomki.
 
@@ -21,7 +21,7 @@ $$\mathbb{Q} = \left\{ \frac{a}{b} \;;\; a \in \mathbb{Z},\ b \in \mathbb{N} \ri
 
 $$\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q}.$$
 
-**2. Razširjanje, krajšanje in enakost ulomkov.** Isto število lahko zapišemo z mnogimi ulomki: $\dfrac{1}{2} = \dfrac{2}{4} = \dfrac{3}{6}$. Ulomek **razširimo**, če števec in imenovalec pomnožimo z istim številom (različnim od $0$). Ulomek **skrajšamo**, če ju delimo z istim številom. Vrednost se pri tem ne spremeni. Dva ulomka sta enaka, kadar velja
+**2. Razširjanje, krajšanje in enakost ulomkov.** Isto število lahko zapišemo z mnogimi ulomki: $\dfrac{1}{2} = \dfrac{2}{4} = \dfrac{3}{6}$. Ulomek **razširimo**, če števec in imenovalec pomnožimo z istim številom (različnim od $0$). Ulomek **skrajšamo**, če ju delimo z istim številom. Vrednost se pri tem ne spremeni. Za enakost dveh ulomkov velja
 
 $$\frac{a}{b} = \frac{c}{d} \iff a \cdot d = b \cdot c.$$
 
@@ -50,9 +50,9 @@ Vsako racionalno število ima končen ali periodičen decimalni zapis. Kdaj je z
 - Čisto periodično število, npr. $x = 2{,}\overline{18}$: perioda ima dve števki, zato pomnožimo s $100$, da se »repa« ujemata: $100x = 218{,}\overline{18}$. Odštejemo $x$: $99x = 216$, torej $x = \dfrac{216}{99} = \dfrac{24}{11}$.
 - Mešano periodično število, npr. $x = 0{,}1\overline{6}$: pomnožimo z $10$ in s $100$: $10x = 1{,}\overline{6}$ in $100x = 16{,}\overline{6}$. Odštejemo: $90x = 15$, torej $x = \dfrac{15}{90} = \dfrac{1}{6}$.
 
-Splošno pravilo: pomnožimo z $10$, $100$, $1000$, … (toliko ničel, kolikor je mest periode), tako da se neskončna »repa« ujemata, in ju odštejemo.
+Splošno pravilo: število pomnožimo z dvema od števil $1$, $10$, $100$, $1000$, … tako, da se neskončna »repa« ujemata (števili, s katerima množimo, se razlikujeta za toliko ničel, kolikor je mest periode), in zmnožka odštejemo.
 
-**6. Urejenost.** Za poljubni racionalni števili velja natanko ena od možnosti: $a < b$, $a = b$ ali $a > b$. Na številski premici je manjše število levo od večjega. Kako primerjamo?
+**6. Urejenost.** Za poljubni racionalni števili $a$ in $b$ velja natanko ena od možnosti: $a < b$, $a = b$ ali $a > b$. Na številski premici je manjše število levo od večjega. Kako primerjamo?
 
 - Pozitivno število je večje od $0$, negativno manjše od $0$.
 - Pri istem pozitivnem imenovalcu je večji ulomek tisti z večjim števcem: $\dfrac{3}{7} < \dfrac{5}{7}$.
@@ -146,9 +146,9 @@ Periodično število pretvorimo v ulomek, vsa števila zapišemo na skupnem imen
 ## Povzetek
 
 - Racionalno število je število oblike $\dfrac{a}{b}$, $a \in \mathbb{Z}$, $b \in \mathbb{N}$; velja $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q}$.
-- Ulomka sta enaka, če je $\dfrac{a}{b} = \dfrac{c}{d} \iff ad = bc$; krajšamo z največjim skupnim deliteljem, rezultat naj bo nekrajšljiv.
+- Enakost ulomkov: $\dfrac{a}{b} = \dfrac{c}{d} \iff ad = bc$; krajšamo z največjim skupnim deliteljem, rezultat naj bo nekrajšljiv.
 - Vsota in razlika: skupni imenovalec. Zmnožek: $\dfrac{ac}{bd}$. Količnik: množi z obratno vrednostjo.
-- Decimalni zapis racionalnega števila je končen ali periodičen. Nekrajšljiv ulomek je končen natanko tedaj, ko ima v imenovalcu samo praštevili $2$ in $5$.
+- Decimalni zapis racionalnega števila je končen ali periodičen. Nekrajšljiv ulomek ima končen zapis natanko tedaj, ko ima v imenovalcu samo praštevili $2$ in $5$.
 - Periodično število v ulomek: pomnoži z $10$, $100$, … in odštej, da neskončni »rep« izgine.
 - Primerjanje: skupni imenovalec ali $\dfrac{a}{b} < \dfrac{c}{d} \iff ad < bc$ ($b, d > 0$); levo na številski premici je manjše.
 - Med dvema racionalnima številoma je neskončno mnogo drugih (gostost), npr. povprečje $\dfrac{p+q}{2}$.

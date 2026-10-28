@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Z ulomki že znaš računati: $\dfrac{12}{18}$ okrajšaš v $\dfrac{2}{3}$, ulomka $\dfrac{1}{3}$ in $\dfrac{1}{4}$ pa s skupnim imenovalcem seštejеš v $\dfrac{7}{12}$. Pri racionalnih številih si spoznal tudi, da imenovalec ne sme biti $0$. V tej lekciji ista pravila uporabiš za ulomke, v katerih nastopajo črke, na primer $\dfrac{x^2-9}{x^2+3x}$. Takim izrazom pravimo **ulomljeni izrazi**.
+Z ulomki že znaš računati: $\dfrac{12}{18}$ okrajšaš v $\dfrac{2}{3}$, ulomka $\dfrac{1}{3}$ in $\dfrac{1}{4}$ pa s skupnim imenovalcem sešteješ v $\dfrac{7}{12}$. Pri racionalnih številih si spoznal tudi, da imenovalec ne sme biti $0$. V tej lekciji ista pravila uporabiš za ulomke, v katerih nastopajo črke, na primer $\dfrac{x^2-9}{x^2+3x}$. Takim izrazom pravimo **ulomljeni izrazi**.
 
 Ključno orodje je znanje iz prejšnje teme. Ulomka ne moreš okrajšati, dokler števca in imenovalca ne razstaviš na faktorje, zato zdaj uporabiš izpostavljanje, razliko kvadratov in Vietovo pravilo.
 
@@ -96,7 +96,7 @@ $\dfrac{A}{C} - \dfrac{B}{C} = \dfrac{A - B}{C}$; skupni imenovalec je najmanjš
 2. Skupni imenovalec je $(x-3)(x+3)$. Prvi ulomek ostane, drugega razširimo z $x-3$: $\dfrac{2}{x+3} = \dfrac{2(x-3)}{(x-3)(x+3)}$.
 3. Odštejemo, drugi števec je v oklepaju: $\dfrac{x - 2(x-3)}{(x-3)(x+3)}$.
 4. Števec: $x - 2(x-3) = x - 2x + 6 = 6 - x$.
-5. Rezultat $\dfrac{6-x}{(x-3)(x+3)}$ ni mogoče krajšati, ker števec $6 - x$ ni enak nobenemu od faktorjev imenovalca (niti njegovemu nasprotnemu).
+5. Rezultata $\dfrac{6-x}{(x-3)(x+3)}$ ni mogoče krajšati, ker števec $6 - x$ ni enak nobenemu od faktorjev imenovalca (niti njegovemu nasprotnemu).
 6. Preizkus pri $x = 1$: $\dfrac{1}{1-9} - \dfrac{2}{4} = -\dfrac{1}{8} - \dfrac{4}{8} = -\dfrac{5}{8}$ in $\dfrac{6-1}{(1-3)(1+3)} = \dfrac{5}{-8} = -\dfrac{5}{8}$.
 7. Odgovor: izraz je enak $\dfrac{6-x}{(x-3)(x+3)}$ za $x \neq 3$ in $x \neq -3$.
 
@@ -123,9 +123,9 @@ $\dfrac{A}{B} \cdot \dfrac{C}{D} = \dfrac{A \cdot C}{B \cdot D}$; $\quad a^2 - b
 
 ## Pogoste napake
 
-- **Krajšanje členov namesto faktorjev.** Zapišeš $\dfrac{x+3}{3} = x$ ali $\dfrac{x^2+5}{x^2+3} = \dfrac{5}{3}$. Razlog: krajšamo lahko le tisto, s čimer je množen ves števec in ves imenovalec. Pravilno: razstavi in krajšaj faktorje, na primer $\dfrac{x^2+2x}{x} = \dfrac{x(x+2)}{x} = x+2$. Izraz $\dfrac{x+3}{3}$ pri $x = 3$ da $2$, ne $3$.
+- **Krajšanje členov namesto faktorjev.** Zapišeš $\dfrac{x+3}{3} = x$ ali $\dfrac{x^2+5}{x^2+3} = \dfrac{5}{3}$. Razlog: krajšamo lahko le tisto, s čimer je množen ves števec in ves imenovalec. Pravilno: razstavi in krajšaj faktorje, na primer $\dfrac{x^2+2x}{x} = \dfrac{x(x+2)}{x} = x+2$ za $x \neq 0$. Izraz $\dfrac{x+3}{3}$ pri $x = 3$ da $2$, ne $3$.
 - **Seštevanje števcev in imenovalcev.** Zapišeš $\dfrac{1}{x} + \dfrac{1}{y} = \dfrac{2}{x+y}$. Razlog: ulomka lahko seštejemo le, če imata enaka imenovalca. Pravilno: $\dfrac{1}{x} + \dfrac{1}{y} = \dfrac{y}{xy} + \dfrac{x}{xy} = \dfrac{x+y}{xy}$. Pri $x = y = 2$ je vsota $1$, napačni izraz pa da $\dfrac{1}{2}$.
-- **Pozabljen oklepaj pri odštevanju.** Zapišeš $\dfrac{5x}{x+1} - \dfrac{2x-3}{x+1} = \dfrac{5x - 2x - 3}{x+1}$. Razlog: minus velja za ves drugi števec. Pravilno: $\dfrac{5x - (2x-3)}{x+1} = \dfrac{3x+3}{x+1} = \dfrac{3(x+1)}{x+1} = 3$.
+- **Pozabljen oklepaj pri odštevanju.** Zapišeš $\dfrac{5x}{x+1} - \dfrac{2x-3}{x+1} = \dfrac{5x - 2x - 3}{x+1}$. Razlog: minus velja za ves drugi števec. Pravilno: $\dfrac{5x - (2x-3)}{x+1} = \dfrac{3x+3}{x+1} = \dfrac{3(x+1)}{x+1} = 3$ za $x \neq -1$.
 - **Pozabljeni pogoji.** Zapišeš $\dfrac{x^2-x}{x} = x - 1$ in ne omeniš pogojev. Razlog: pri $x = 0$ prvotni izraz ni definiran, desna stran pa je. Pravilno: $\dfrac{x(x-1)}{x} = x - 1$ za $x \neq 0$.
 - **Napačen predznak pri nasprotnih faktorjih.** Zapišeš $\dfrac{x-3}{3-x} = 1$. Razlog: $3 - x = -(x-3)$. Pravilno: $\dfrac{x-3}{3-x} = \dfrac{x-3}{-(x-3)} = -1$ za $x \neq 3$.
 
@@ -150,7 +150,7 @@ $\dfrac{A}{B} \cdot \dfrac{C}{D} = \dfrac{A \cdot C}{B \cdot D}$; $\quad a^2 - b
 
 Zidaka $x+3$ stojita eden nad drugim, zato ju prečrtaš. Ostaneta $x-3$ zgoraj in $x$ spodaj. Zidaka $x-3$ in $x$ nista enaka, zato ju ne smeš krajšati.
 
-**Seštevanje.** Vzemi dve enaki palici. Eno razreži na $3$, drugo na $4$ enakih delov. Kosa nista enaka, zato ju ne moreš kar prešteti. Ko pa vsako palico razrežeš na $12$ enakih koščkov, prva vsebuje $4$ koščke, druga $3$, skupaj $7$ koščkov od $12$. To je skupni imenovalec. Splošno: za $\dfrac{1}{x} + \dfrac{1}{y}$ palici razrežeš na $xy$ koščkov, in dobiš $y + x$ koščkov od $xy$.
+**Seštevanje.** Vzemi dve enaki palici. Eno razreži na $3$, drugo na $4$ enakih delov. Kosa nista enaka, zato ju ne moreš kar prešteti. Ko pa vsako palico razrežeš na $12$ enakih koščkov, tretjina vsebuje $4$ koščke, četrtina $3$, skupaj $7$ koščkov od $12$. To je skupni imenovalec. Splošno: za $\dfrac{1}{x} + \dfrac{1}{y}$ palici razrežeš na $xy$ koščkov in dobiš $y + x$ koščkov od $xy$.
 
 **Množenje.** Enotski kvadrat razdeli na $b$ stolpcev in $d$ vrstic, to je $b \cdot d$ celic. Širina $\dfrac{a}{b}$ pokrije $a$ stolpcev, višina $\dfrac{c}{d}$ pa $c$ vrstic. Pravokotnik ima $a \cdot c$ celic od $b \cdot d$, torej ploščino $\dfrac{a \cdot c}{b \cdot d}$.
 

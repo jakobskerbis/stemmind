@@ -150,7 +150,7 @@ Poglej tabelo: v zgornji vrstici je eksponent $n$ od $-3$ do $4$, pod njim pa vr
 
 Ko se pomakneš za en korak desno, vrednost podvojiš. Ko se pomakneš za en korak levo, jo razpoloviš. Zato mora biti pod eksponentom $0$ število $1$ (polovica od $2$) in pod $-1$ število $\dfrac{1}{2}$. Če bi točke narisal v koordinatni sistem, bi desno strmo rasle, levo pa bi se vedno bolj približevale vodoravni osi, ne da bi jo kdaj dosegle: vse vrednosti ostanejo pozitivne.
 
-Za kvadrat in kocko pomagata geometrijski sliki. Kvadrat s stranico $3$ razdelimo na mrežo $3 \times 3$, torej na $3^2 = 9$ enotskih kvadratov. Kocko z robom $3$ razdelimo na plasti $3 \times 3 \times 3$, torej na $3^3 = 27$ enotskih kock. Če stranico podvojimo, dobi kvadrat štirikrat večjo ploščino, kocka pa osemkrat večjo prostornino: $(2a)^2 = 4a^2$ in $(2a)^3 = 8a^3$. To je pravilo $(a \cdot b)^n = a^n \cdot b^n$ z $a = 2$.
+Za kvadrat in kocko pomagata geometrijski sliki. Kvadrat s stranico $3$ razdelimo na mrežo $3 \times 3$, torej na $3^2 = 9$ enotskih kvadratov. Kocko z robom $3$ razdelimo na plasti $3 \times 3 \times 3$, torej na $3^3 = 27$ enotskih kock. Če stranico podvojimo, dobi kvadrat štirikrat večjo ploščino, kocka pa osemkrat večjo prostornino: $(2a)^2 = 4a^2$ in $(2a)^3 = 8a^3$. To je pravilo $(a \cdot b)^n = a^n \cdot b^n$, v katerem je prvi faktor $2$.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -162,7 +162,7 @@ $$t = \frac{1{,}5 \cdot 10^{11}\,\text{m}}{3 \cdot 10^{8}\,\text{m/s}} = 0{,}5 \
 
 Sončna svetloba do nas potuje torej nekaj več kot osem minut. Račun je preprost, ker števila delimo posebej in potence števila $10$ posebej.
 
-**Predpone enot.** Kilometer je $10^3\,\text{m}$, milimeter $10^{-3}\,\text{m}$, mikrometer $10^{-6}\,\text{m}$. Zato je $2{,}5\,\text{mm} = 2{,}5 \cdot 10^{-3}\,\text{m}$. Pri pretvarjanju enot se v resnici izražaš s potencami števila $10$.
+**Predpone enot.** Kilometer je $10^3\,\text{m}$, milimeter $10^{-3}\,\text{m}$, mikrometer $10^{-6}\,\text{m}$. Zato je $2{,}5\,\text{mm} = 2{,}5 \cdot 10^{-3}\,\text{m}$. Pri pretvarjanju enot v resnici računaš s potencami števila $10$.
 
 ## Drugače: Korak za korakom s številkami
 

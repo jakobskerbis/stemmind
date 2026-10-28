@@ -160,15 +160,15 @@ $a \cdot b = b \cdot a$, $\quad (a \cdot b) \cdot c = a \cdot (b \cdot c)$, $\qu
 
 ## Drugače: Na sliki
 
-**Ploščice v pravokotniku.** Račun $3 \cdot (4 + 5)$ si predstavljaj kot ploščice, razporejene v 3 vrstice. V vsaki vrstici je 4 modre (■) in 5 rdečih (□) ploščic:
+**Ploščice v pravokotniku.** Račun $3 \cdot (4 + 5)$ si predstavljaj kot ploščice, razporejene v 3 vrstice. V vsaki vrstici so 4 polne ploščice (■) in 5 praznih (□):
 
-| | 4 modre | 5 rdečih |
+| | 4 polne | 5 praznih |
 |---|---|---|
 | 1. vrstica | ■ ■ ■ ■ | □ □ □ □ □ |
 | 2. vrstica | ■ ■ ■ ■ | □ □ □ □ □ |
 | 3. vrstica | ■ ■ ■ ■ | □ □ □ □ □ |
 
-Vseh ploščic je $3 \cdot 9 = 27$. Preštejemo jih lahko tudi posebej: modrih je $3 \cdot 4 = 12$, rdečih $3 \cdot 5 = 15$, skupaj $12 + 15 = 27$. To je razčlenjevalni zakon. Če si pravokotnik predstavljaš obrnjen na bok, dobiš 9 vrstic po 3 ploščice: $9 \cdot 3 = 3 \cdot 9$. To je zamenjalni zakon.
+Vseh ploščic je $3 \cdot 9 = 27$. Preštejemo jih lahko tudi posebej: polnih je $3 \cdot 4 = 12$, praznih $3 \cdot 5 = 15$, skupaj $12 + 15 = 27$. To je razčlenjevalni zakon. Če si pravokotnik predstavljaš obrnjen na bok, dobiš 9 vrstic po 3 ploščice: $9 \cdot 3 = 3 \cdot 9$. To je zamenjalni zakon.
 
 **Številska premica.** Odštevanje je premik v levo. Račun $(20 - 8) - 4$ pomeni: začni pri $20$, skoči $8$ nazaj na $12$, nato še $4$ nazaj na $8$. Račun $20 - (8 - 4)$ pomeni: najprej ugotovi, da je $8 - 4 = 4$, nato od $20$ skoči le $4$ nazaj, na $16$. Oklepaj spremeni pot skokov in cilj. Zato pri odštevanju združevalni zakon ne velja.
 
@@ -191,9 +191,10 @@ Izračunajmo $60 - (4 + 2 \cdot 5) \cdot 3 + 24 : 6$ in v vsakem koraku spremeni
 | 0 | $60 - (4 + 2 \cdot 5) \cdot 3 + 24 : 6$ | začetni izraz, poiščemo oklepaj |
 | 1 | $60 - (4 + 10) \cdot 3 + 24 : 6$ | v oklepaju množenje: $2 \cdot 5 = 10$ |
 | 2 | $60 - 14 \cdot 3 + 24 : 6$ | v oklepaju seštevanje: $4 + 10 = 14$ |
-| 3 | $60 - 42 + 4$ | zunaj oklepaja: $14 \cdot 3 = 42$ in $24 : 6 = 4$ |
-| 4 | $18 + 4$ | odštevanje: $60 - 42 = 18$ |
-| 5 | $22$ | seštevanje: $18 + 4 = 22$ |
+| 3 | $60 - 42 + 24 : 6$ | zunaj oklepaja množenje: $14 \cdot 3 = 42$ |
+| 4 | $60 - 42 + 4$ | deljenje: $24 : 6 = 4$ |
+| 5 | $18 + 4$ | odštevanje: $60 - 42 = 18$ |
+| 6 | $22$ | seštevanje: $18 + 4 = 22$ |
 
 Postopek za vsak izraz:
 
