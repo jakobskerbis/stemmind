@@ -1,4 +1,5 @@
-/* STEMMind – videz. Barve so v spremenljivkah; temni način spodaj. */
+/* STEMMind – videz. Barve so v spremenljivkah; temni način je razred .dark na <html> (nastavi ga theme.js).
+   Lastne barve iz Nastavitve → Videz theme.js zapiše kot slog na <html> in prepišejo te privzete. */
 :root {
   --bg: #f3f6fb;
   --surface: #ffffff;
@@ -11,6 +12,8 @@
   --accent-grad: #22b8f0;
   --accent-soft: #e7efff;
   --accent-text: #ffffff;
+  --hero-a: #2563eb;  /* preliv pod belim besedilom (kartica Današnji trening, logotip) */
+  --hero-b: #22b8f0;
   --gold: #f5a524;
   --user-bubble: var(--accent);
   --user-text: #ffffff;
@@ -24,28 +27,44 @@
   --shadow-lg: 0 10px 30px rgba(20, 33, 61, 0.14);
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0d1322;
-    --surface: #151d30;
-    --surface-2: #1f2a40;
-    --text: #eceef8;
-    --muted: #97a3bd;
-    --border: #2a3650;
-    --accent: #5b95ff;
-    --accent-2: #7eadff;
-    --accent-grad: #3cc6f5;
-    --accent-soft: #1c2d52;
-    --accent-text: #ffffff;
-    --user-bubble: var(--accent);
-    --ok: #3dd68c;
-    --ok-bg: #12301f;
-    --danger: #ff6b6e;
-    --danger-bg: #3a1a1f;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.45);
-    color-scheme: dark;
-  }
+:root.dark {
+  --bg: #0d1322;
+  --surface: #151d30;
+  --surface-2: #1f2a40;
+  --text: #eceef8;
+  --muted: #97a3bd;
+  --border: #2a3650;
+  --accent: #5b95ff;
+  --accent-2: #7eadff;
+  --accent-grad: #3cc6f5;
+  --accent-soft: #1c2d52;
+  --accent-text: #ffffff;
+  --hero-a: #1d4ed8;
+  --hero-b: #0e8fc4;
+  --user-bubble: var(--accent);
+  --ok: #3dd68c;
+  --ok-bg: #12301f;
+  --danger: #ff6b6e;
+  --danger-bg: #3a1a1f;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+/* Meniji (zgornja in spodnja vrstica, seznam pogovorov, spustni seznami) imajo lahko svoje barve.
+   Privzeto so enaki oknom; theme.js nastavi --menu-* ob lastnih barvah. */
+.topbar, .modebar, .sidebar, .dd-list {
+  --surface: var(--menu, var(--surface-base));
+  --text: var(--menu-text, var(--text-base));
+  --muted: var(--menu-muted, var(--muted-base));
+  --surface-2: var(--menu-2, var(--surface-2-base));
+  --border: var(--menu-border, var(--border-base));
+  --accent: var(--menu-accent, var(--accent-base));
+  --accent-soft: var(--menu-accent-soft, var(--accent-soft-base));
+  color: var(--text);
+}
+:root, :root.dark {
+  --surface-base: var(--surface); --text-base: var(--text); --muted-base: var(--muted); --surface-2-base: var(--surface-2);
+  --border-base: var(--border); --accent-base: var(--accent); --accent-soft-base: var(--accent-soft);
 }
 
 * { box-sizing: border-box; }
@@ -113,7 +132,7 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 }
 .brand { display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0; font-weight: 900; font-size: 1.2rem; letter-spacing: -0.02em; color: var(--text); }
 .brand-name span { color: var(--accent); }
-.logo { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent-grad)); box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent); }
+.logo { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: #fff; background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent); }
 .logo svg.i { width: 20px; height: 20px; }
 .tabs { display: flex; gap: 4px; flex: 1; min-width: 0; }
 .tab {
@@ -131,7 +150,7 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 @keyframes bump { 0% { transform: scale(1); } 35% { transform: scale(1.18); background: color-mix(in srgb, var(--gold) 30%, var(--surface-2)); } 100% { transform: scale(1); } }
 .student-picker .dd-btn { min-height: 40px; max-width: 180px; }
 .banner { display: flex; align-items: center; gap: 8px; background: #fff6e0; color: #6b4e00; padding: 7px 20px; font-size: 0.88rem; }
-@media (prefers-color-scheme: dark) { .banner { background: #352b12; color: #f3d98a; } }
+.dark .banner { background: #352b12; color: #f3d98a; }
 
 /* ---------- pogledi, kartice, obrazci ---------- */
 .view { flex: 1; min-height: 0; }
@@ -193,11 +212,11 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .chip { background: var(--surface-2); border-radius: 999px; padding: 3px 11px; font-size: 0.82rem; color: var(--muted); white-space: nowrap; font-weight: 700; }
 .messages { flex: 1; overflow-y: auto; padding: 24px 20px; display: flex; flex-direction: column; gap: 16px; }
 .empty { margin: auto; text-align: center; color: var(--muted); max-width: 440px; display: flex; flex-direction: column; align-items: center; }
-.empty .big { font-size: 1.5rem; margin: 12px 0 4px; color: var(--text); font-weight: 800; }
+.empty p.big { font-size: 1.5rem; margin: 12px 0 4px; color: var(--text); font-weight: 800; }
 .ideas { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; width: 100%; }
 .idea { border: 1.5px solid var(--border); background: var(--surface); color: var(--text); border-radius: 14px; padding: 12px 14px; text-align: left; font-weight: 700; }
 .idea:hover { border-color: var(--accent); }
-.tutor-avatar { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent-grad)); }
+.tutor-avatar { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: #fff; background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); }
 .tutor-avatar.big { width: 64px; height: 64px; border-radius: 20px; box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 35%, transparent); }
 .tutor-avatar.big svg.i { width: 30px; height: 30px; }
 .msg { max-width: 720px; width: fit-content; padding: 12px 16px; border-radius: 20px; overflow-wrap: anywhere; line-height: 1.6; animation: msg-in 0.2s ease; }
@@ -206,7 +225,7 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .msg.assistant { align-self: flex-start; background: var(--surface); border: 1px solid var(--border); border-bottom-left-radius: 6px; box-shadow: var(--shadow); position: relative; margin-left: 44px; }
 .msg.assistant::before {
   content: ""; position: absolute; left: -44px; bottom: 0; width: 34px; height: 34px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-grad));
+  background: linear-gradient(135deg, var(--hero-a), var(--hero-b));
 }
 .msg.assistant::after {
   content: "S"; position: absolute; left: -44px; bottom: 0; width: 34px; height: 34px; display: grid; place-items: center;
@@ -243,13 +262,12 @@ button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shad
 .field-label { font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
 .path-note { font-size: .9rem; margin: -8px 0 16px; }
 .card.xp-card { padding: 0; overflow: hidden; }
-.hero { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; padding: 20px; background: linear-gradient(135deg, var(--accent), var(--accent-grad)); color: #fff; }
+.hero { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; padding: 20px; background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #fff; }
 .hero h2 { margin: 0; font-size: 1.25rem; }
 .hero p { margin: 2px 0 0; opacity: 0.9; font-weight: 600; }
 .hero-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: rgba(255, 255, 255, 0.18); }
 .hero-icon svg.i { width: 28px; height: 28px; color: #ffe27a; fill: #ffe27a; }
-.hero button.primary { background: #fff; color: var(--accent); box-shadow: 0 3px 0 rgba(0, 0, 0, 0.18); }
-@media (prefers-color-scheme: dark) { .hero button.primary { color: color-mix(in srgb, var(--accent) 80%, #000); } }
+.hero button.primary { background: #fff; color: var(--hero-a); box-shadow: 0 3px 0 rgba(0, 0, 0, 0.18); }
 .next-row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 14px 20px; border: 0; border-bottom: 1px solid var(--border); background: var(--surface); text-align: left; color: var(--text); }
 .next-row:hover { background: var(--surface-2); }
 .next-row .eyebrow { flex: none; }
@@ -297,7 +315,7 @@ button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shad
 .node:hover:not(:disabled) .node-dot { transform: scale(1.06); }
 .node-dot svg.i { width: 22px; height: 22px; }
 .node.mastered .node-dot { background: var(--ok); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--ok) 60%, #000); }
-.node.learning .node-dot { background: var(--accent); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 60%, #000); }
+.node.learning .node-dot { background: var(--accent); color: var(--accent-text); box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 60%, #000); }
 .node.due .node-dot { background: var(--gold); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--gold) 60%, #000); }
 .node.new .node-dot { background: var(--surface); color: var(--accent); border-color: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent-soft); }
 .node.locked .node-dot { background: var(--surface-2); color: #a3adc3; }
@@ -354,7 +372,7 @@ button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shad
 .fb.hint > svg.i { color: var(--gold); }
 .fb.info > svg.i { color: var(--accent); }
 .fb.mastered { background: #fff3d4; color: #6b4e00; }
-@media (prefers-color-scheme: dark) { .fb.mastered { background: #3a2f12; color: #f6d77f; } }
+.dark .fb.mastered { background: #3a2f12; color: #f6d77f; }
 .xp-gain { flex: none !important; font-weight: 900; color: var(--gold); background: var(--surface); border-radius: 999px; padding: 2px 10px; animation: float-up 1s ease both; }
 @keyframes float-up { 0% { opacity: 0; transform: translateY(8px) scale(0.8); } 40% { opacity: 1; transform: translateY(-4px) scale(1.12); } 100% { transform: none; } }
 .pop { animation: pop 0.35s ease; }
@@ -588,7 +606,7 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
 .modebar .ic svg.i { width: 22px; height: 22px; }
 .modebar button.active { color: var(--accent); }
 .modebar button.active .ic { background: var(--accent-soft); }
-.modebar button.hero .ic { background: linear-gradient(135deg, var(--accent), var(--accent-grad)); color: #fff; width: 44px; height: 36px; border-radius: 12px; box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent); }
+.modebar button.hero .ic { background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #fff; width: 44px; height: 36px; border-radius: 12px; box-shadow: 0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent); }
 .modebar button.hero .ic svg.i { fill: #ffe27a; color: #ffe27a; }
 .modebar button.hero.done .ic { background: var(--ok); }
 .modebar button.done .ic::after { content: ""; position: absolute; right: -3px; top: -3px; width: 12px; height: 12px; border-radius: 50%; background: var(--ok); border: 2px solid var(--surface); }
@@ -610,9 +628,7 @@ body.pad-open .modebar { display: none; }
 @media (max-width: 760px) { .tabs { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); } }
 
 /* Temni način: preliv ostane dovolj temen za bel tekst. */
-@media (prefers-color-scheme: dark) {
-  .hero, .modebar button.hero .ic, .logo { background: linear-gradient(135deg, #1d4ed8, #0e8fc4); }
-}
+
 
 /* Izbira šole po korakih (level-picker.js) */
 .level-picker { display: grid; gap: 10px; }

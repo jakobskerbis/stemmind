@@ -14,6 +14,14 @@ Vse barve so spremenljivke v `public/style.css` (`:root`, temni način pod njim)
 | `--ok`, `--danger`, `--gold` | pravilno; napaka; XP in ponavljanje |
 | `--radius` (16px), `--radius-sm` (12px) | kartice in seznami; gumbi, polja, možnosti |
 
+Temni način je razred `.dark` na `<html>`, ne `@media (prefers-color-scheme)`: pravila za temni način piši kot `.dark .moj-razred { … }`. Razred nastavi `public/theme.js` (Nastavitve → Videz: Svetlo / Temno / Samodejno).
+
+Lastne barve: uporabnik v Nastavitve → Videz izbere poudarek in barve ozadja, oken, menijev in pisave (ali »Naključne barve«). `theme.js` iz njih izračuna vse spremenljivke zgoraj in poskrbi za kontrast (besedilo vsaj 7:1, sivo besedilo in poudarki 4.5:1). Zato:
+
+- nikoli ne piši barve besedila ali ozadja neposredno, vedno spremenljivko;
+- belo besedilo samo na prelivu `--hero-a` → `--hero-b`, besedilo na `--accent` je `--accent-text`;
+- meniji (`.topbar`, `.modebar`, `.sidebar`, `.dd-list`) imajo lahko svojo barvo; znotraj njih `--surface`, `--text` … že pomenijo barve menija.
+
 Pisava je Nunito. Naslovi so debeli (800), gumbi 700–800.
 
 ## Gradniki (`public/ui.css`)
