@@ -150,8 +150,9 @@ function vzmetNihanje(el) {
     const w = Math.sqrt(k / m), Tp = (2 * Math.PI) / w, y = A0 * Math.cos(w * t);
     const top = 14, eq = 120, yb = eq + y * sc;
     s("line", { x1: 30, y1: top, x2: 110, y2: top, class: "ground" }, svg);
-    s("path", { d: springPath(70, top, 70, yb - 16, 12, 10), class: "string", fill: "none" }, svg);
-    s("rect", { x: 52, y: yb - 16, width: 36, height: 32, rx: 4, class: "fill-a" }, svg);
+    const bs = 28 * Math.cbrt(m), hb = bs / 2; // večja masa → večja utež
+    s("path", { d: springPath(70, top, 70, yb - hb, 12, 10), class: "string", fill: "none" }, svg);
+    s("rect", { x: 70 - hb, y: yb - hb, width: bs, height: bs, rx: 4, class: "fill-a" }, svg);
     label(svg, 70, yb, `${fmt(m, 1)} kg`, "lbl inv");
     s("line", { x1: 20, y1: eq, x2: 336, y2: eq, class: "guide" }, svg);
     label(svg, 334, eq - 8, "ravnovesna lega", "tick", "end");
@@ -294,7 +295,7 @@ export function sile(el) {
 // ------------------------------------------------------------ klada: trenje in Newtonov zakon
 const SURF = [["les", "les na lesu", 0.5, 0.3], ["guma", "guma na betonu", 0.9, 0.7], ["led", "kovina na ledu", 0.1, 0.05], ["nic", "brez trenja", 0, 0]];
 export function klada(el, { mode = "trenje" } = {}) {
-  const svg = svgBox(340, 170);
+  const svg = svgBox(340, 230);
   const svg2 = svgBox(340, 190);
   const out = readout();
   let m = 5, F = 10, surf = mode === "newton" ? "nic" : "les", x = 0, v = 0, t = 0, hist = [];
@@ -312,22 +313,28 @@ export function klada(el, { mode = "trenje" } = {}) {
   const draw = () => {
     svg.replaceChildren();
     const st = state();
-    const yG = 130;
-    s("rect", { x: 0, y: yG, width: 340, height: 40, class: surf === "led" ? "fill-soft" : "wall" }, svg);
-    const bx = 105 + (((x * 40) % 120) + 120) % 120, bw = 70, bh = 46;
+    const yG = 150, PXM = 60; // 60 px na meter poti
+    // podlaga s črticami, ki se premikajo pod klado (pogled sledi kladi)
+    s("rect", { x: 0, y: yG, width: 340, height: 80, class: surf === "led" ? "fill-soft" : "wall" }, svg);
+    const off = (((x * PXM) % 30) + 30) % 30;
+    for (let gx = -off; gx < 340; gx += 30) s("line", { x1: gx, y1: yG, x2: gx - 10, y2: yG + 10, class: "axis thin" }, svg);
+    // velikost klade raste z maso (enaka gostota: rob ∝ ∛m)
+    const side = 30 * Math.cbrt(m), bw = side * 1.3, bh = side;
+    const bx = 140 - bw / 2;
     s("rect", { x: bx, y: yG - bh, width: bw, height: bh, rx: 3, class: "fill-a" }, svg);
-    label(svg, bx + 18, yG - bh + 12, `${m} kg`, "lbl inv");
-    const fs = 1.6; // px na N
-    const fL = Math.min(F * fs, 110), tL = Math.min(st.Ft * fs, 100);
-    force(svg, bx + bw, yG - bh / 2, fL, 0, "b", "");
-    if (F > 0) label(svg, bx + bw + Math.max(fL, 30) / 2 + 6, yG - bh / 2 - 13, `F = ${fmt(F, 0)} N`, "lbl small");
+    label(svg, bx + bw * 0.28, yG - bh * 0.72, `${m} kg`, "tick small b inv");
+    // vse sile v istem merilu: 0,85 px na N
+    const fs = 0.85;
+    force(svg, bx + bw, yG - bh / 2, F * fs, 0, "b", "");
+    if (F > 0) label(svg, bx + bw + Math.max(F * fs, 30) / 2 + 6, yG - bh / 2 - 13, `F = ${fmt(F, 0)} N`, "lbl small");
     if (st.Ft > 0.01) {
-      force(svg, bx, yG - 4, -tL, 0, "danger", "");
-      label(svg, bx - Math.max(tL, 40) / 2, yG - 17, `F_tr = ${fmt(st.Ft, 1)} N`, "lbl small");
+      force(svg, bx, yG - 4, -st.Ft * fs, 0, "danger", "");
+      label(svg, bx - Math.max(st.Ft * fs, 40) / 2, yG - 17, `F_tr = ${fmt(st.Ft, 1)} N`, "lbl small");
     }
-    force(svg, bx + bw / 2 + 8, yG - bh / 2, 0, Math.min(st.Fn * fs * 0.4, 50), "text", "F_g", { width: 2 });
-    force(svg, bx + bw / 2 - 8, yG - bh, 0, -Math.min(st.Fn * fs * 0.4, 50), "c", "F_N", { width: 2 });
-    if (Math.abs(v) > 0.01) label(svg, 336, 16, `v = ${fmt(v, 1)} m/s`, "lbl small", "end");
+    force(svg, bx + bw / 2 + 8, yG - bh / 2, 0, st.Fn * fs, "text", "F_g", { width: 2 });
+    force(svg, bx + bw / 2 - 8, yG - bh, 0, -st.Fn * fs, "c", "F_N", { width: 2 });
+    label(svg, 4, 14, "vse puščice sil v istem merilu", "tick small", "start");
+    if (Math.abs(v) > 0.01) label(svg, 336, 14, `v = ${fmt(v, 1)} m/s`, "lbl small", "end");
     // graf
     svg2.replaceChildren();
     if (mode === "trenje") {
@@ -412,8 +419,10 @@ export function gostota(el, { mode = "gostota" } = {}) {
       s("line", { x1: tank.x, y1: surfY, x2: tank.x + tank.w, y2: surfY, class: "graph-line stroke-b thin-line" }, svg);
       const sub = Math.min(1, f);
       const Fb = rl * G * (V * sub) / 1e6;
-      force(svg, cx + 10, top + side / 2, 0, Math.min(70, Fg * 6 + 6), "text", "F_g", { width: 2.5 });
-      force(svg, cx - 10, top + side / 2, 0, -Math.min(70, Fb * 6 + 6), "c", "F_vzg", { width: 2.5 });
+      // obe sili v istem merilu: daljša puščica je dolga 70 px
+      const ks = 70 / Math.max(Fg, Fb);
+      force(svg, cx + 10, top + side / 2, 0, Fg * ks, "text", "F_g", { width: 2.5 });
+      force(svg, cx - 10, top + side / 2, 0, -Fb * ks, "c", "F_vzg", { width: 2.5 });
       label(svg, 300, 90, `ρ telesa`, "tick", "middle");
       label(svg, 300, 106, `${ro} kg/m³`, "lbl small");
       label(svg, 300, 140, `ρ tekočine`, "tick", "middle");
@@ -438,8 +447,9 @@ export function gostota(el, { mode = "gostota" } = {}) {
       s("rect", { x: 283, y: 249 - lvl, width: 38, height: lvl, class: "fill-b", opacity: 0.35 }, svg);
       label(svg, 302, 108, `${fmt(Vs, 0)} cm³`, "lbl small");
       label(svg, 302, 262, "izpodrinjena", "tick small");
-      force(svg, cx + side / 2 + 12, top + side / 2, 0, Math.min(70, Fg * 2 + 6), "text", "F_g", { width: 2.5 });
-      if (Fb > 0.01) force(svg, cx - side / 2 - 12, top + side / 2, 0, -Math.min(70, Fb * 2 + 6), "c", "F_vzg", { width: 2.5 });
+      const ks = 70 / Math.max(Fg, Fb);
+      force(svg, cx + side / 2 + 12, top + side / 2, 0, Fg * ks, "text", "F_g", { width: 2.5 });
+      if (Fb > 0.01) force(svg, cx - side / 2 - 12, top + side / 2, 0, -Fb * ks, "c", "F_vzg", { width: 2.5 });
       html = texBlock(`F_{vzg} = \\rho_{tek}\\, g\\, V_{pot} = ${rl}\\cdot 9{,}81\\cdot ${T(Vs / 1e6, 6)} = ${T(Fb, 2)}\\ \\text{N}`) +
         `<p>Silomer kaže ${fmt(Fg, 2)} N − ${fmt(Fb, 2)} N = <b>${fmt(reading, 2)} N</b>. <b>Arhimedov zakon:</b> vzgon je enak teži izpodrinjene tekočine (${fmt(Vs, 0)} cm³ ${LIQ.find((q) => q[0] === liq)[1]}).</p>
          <p class="muted">${Fg - Fb <= 0 ? "Vzgon je že večji od teže: telo bi samo splavalo, vrvica se ohlapi." : "Ko je telo povsem potopljeno, se vzgon z globino ne spreminja več."}</p>`;
@@ -575,31 +585,37 @@ export function gibanje(el, { mode = "enakomerno" } = {}) {
   let v0 = acc ? 2 : 8, a = acc ? 2 : 0, x0 = 0, t = 0, show = "s";
   const tMax = 10;
   const xAt = (tt) => x0 + v0 * tt + (a * tt * tt) / 2, vAt = (tt) => v0 + a * tt;
+  // Cesta v stalnem merilu (2,5 px na meter): hitrejši avto se res hitreje premika po sliki.
+  // Ko avto pride blizu roba, se pogled premakne za njim.
+  const PX = 2.5, WM = 296 / PX;
+  let cam = 0;
+  const camReset = () => (cam = x0 - (v0 < 0 || a < 0 ? 0.7 : 0.15) * WM);
   const draw = () => {
     road.replaceChildren();
     svg.replaceChildren();
-    let lo = 0, hi = 0;
-    for (let i = 0; i <= 50; i++) {
-      const xx = xAt((tMax * i) / 50);
-      lo = Math.min(lo, xx);
-      hi = Math.max(hi, xx);
-    }
-    const span = Math.max(50, hi - lo), stepM = span > 300 ? 100 : span > 120 ? 50 : 20;
-    lo = Math.floor(lo / stepM) * stepM;
-    hi = lo + Math.ceil(span / stepM) * stepM + (hi > lo + Math.ceil(span / stepM) * stepM ? stepM : 0);
-    const X = (xx) => 22 + ((xx - lo) / (hi - lo)) * 296;
+    const xc = xAt(t);
+    if (xc < cam + 0.12 * WM) cam = xc - 0.12 * WM;
+    if (xc > cam + 0.88 * WM) cam = xc - 0.88 * WM;
+    const X = (xx) => 22 + (xx - cam) * PX;
     s("rect", { x: 0, y: 58, width: 340, height: 14, class: "fill-soft" }, road);
-    for (let m = lo; m <= hi + 1e-9; m += stepM) {
-      s("line", { x1: X(m), y1: 58, x2: X(m), y2: 72, class: "axis thin" }, road);
-      label(road, X(m), 84, `${m} m`, "tick small");
+    for (let m = Math.ceil((cam - 10) / 10) * 10; m <= cam + WM + 10; m += 10) {
+      if (X(m) < 0 || X(m) > 340) continue;
+      s("line", { x1: X(m), y1: 58, x2: X(m), y2: m % 20 ? 64 : 72, class: "axis thin" }, road);
+      if (m % 20 === 0) label(road, X(m), 84, `${m} m`, "tick small");
     }
-    for (let k = 0; k <= Math.floor(t + 1e-9); k++) s("circle", { cx: X(xAt(k)), cy: 52, r: 3, class: "pt fill-c" }, road);
-    car(road, X(xAt(t)), 56, "a", vAt(t) < 0);
-    label(road, 336, 12, `t = ${fmt(t, 1)} s`, "lbl small", "end");
+    for (let k = 0; k <= Math.floor(t + 1e-9); k++) {
+      const xk = X(xAt(k));
+      if (xk > -4 && xk < 344) s("circle", { cx: xk, cy: 52, r: 3, class: "pt fill-c" }, road);
+    }
+    car(road, X(xc), 56, "a", vAt(t) < 0);
+    label(road, 336, 12, `t = ${fmt(t, 1)} s · v = ${fmt(vAt(t), 1)} m/s`, "lbl small", "end");
+    label(road, 4, 12, "merilo: 20 m", "tick small", "start");
+    s("line", { x1: 4, y1: 20, x2: 4 + 20 * PX, y2: 20, class: "axis" }, road);
+    // grafi imajo stalne osi, da se sprememba vnosa vidi kot sprememba naklona
     const cfg = {
-      s: { f: xAt, yLabel: "x [m]", lo, hi },
-      v: { f: vAt, yLabel: "v [m/s]", lo: Math.min(0, vAt(0), vAt(tMax)) - 1, hi: Math.max(vAt(0), vAt(tMax), 1) + 1 },
-      a: { f: () => a, yLabel: "a [m/s²]", lo: Math.min(0, a) - 1, hi: Math.max(0, a) + 1 },
+      s: { f: xAt, yLabel: "x [m]", lo: acc ? -150 : -100, hi: acc ? 450 : 300 },
+      v: { f: vAt, yLabel: "v [m/s]", lo: acc ? -45 : -10, hi: acc ? 70 : 20 },
+      a: { f: () => a, yLabel: "a [m/s²]", lo: -5, hi: 5 },
     }[show];
     timeGraph(svg, { tMax, y0: cfg.lo, y1: cfg.hi, yLabel: cfg.yLabel, f: cfg.f, t, cls: show === "s" ? "stroke-a" : show === "v" ? "stroke-b" : "stroke-c", area: show === "v" });
     const xs = xAt(t) - x0;
@@ -614,7 +630,7 @@ export function gibanje(el, { mode = "enakomerno" } = {}) {
     draw();
     if (t >= tMax) return false;
   }, { autoplay: false });
-  const restart = () => (anim.pause(), (t = 0), draw());
+  const restart = () => (anim.pause(), (t = 0), camReset(), draw());
   const ctl = [
     segmented({ options: acc ? [["s", "x(t)"], ["v", "v(t)"], ["a", "a(t)"]] : [["s", "x(t)"], ["v", "v(t)"]], value: show, onChange: (v) => ((show = v), draw()) }),
     slider({ label: acc ? "začetna hitrost v₀" : "hitrost v", min: acc ? -5 : -10, max: 20, step: 1, value: v0, unit: "m/s", onInput: (v) => ((v0 = v), restart()) }),
@@ -624,9 +640,118 @@ export function gibanje(el, { mode = "enakomerno" } = {}) {
   ctl.push(buttons(playButton(anim, { play: "Vozi", pause: "Ustavi" }), button("Na začetek", restart)));
   const prevPlay = anim.play;
   anim.play = () => {
-    if (t >= tMax) t = 0;
+    if (t >= tMax) (t = 0), camReset();
     prevPlay();
   };
   layout(el, { stage: [road, svg], controls: ctl, out, tryText: acc ? "Nastavi v₀ = 10 m/s in a = −2 m/s². Kdaj se avto ustavi in kaj se zgodi potem?" : "Nastavi negativno hitrost. Kako izgleda graf x(t)?" });
+  camReset();
+  draw();
+}
+
+// ------------------------------------------------------------ prosti pad v pravem merilu in pravem času
+// Merilo slike se prilagodi višini (večja višina → pogled se oddalji, krogla in človek sta manjša),
+// krogla pa pada v resničnem času s pospeškom g izbranega kraja.
+const PAD_KRAJI = [["Zemlja", 9.81], ["Luna", 1.62], ["Mars", 3.71], ["Jupiter", 24.8]];
+export function prostiPad(el) {
+  const W = 340, HH = 330, ground = 300, topY = 22;
+  const svg = svgBox(W, HH);
+  const out = readout();
+  let H = 20, gi = 0, slow = 1, t = 0, running = false, t0 = 0, view = null;
+  const R = 0.11; // polmer krogle (nogometna žoga) v metrih
+  const g = () => PAD_KRAJI[gi][1];
+  const tEnd = () => Math.sqrt((2 * H) / g());
+  const strobe = () => [0.05, 0.1, 0.2, 0.25, 0.5, 1].find((d) => tEnd() / d <= 14) || 1;
+  const niceStep = (span) => [0.5, 1, 2, 5, 10, 20, 25, 50].find((st) => span / st <= 6) || 50;
+  const draw = () => {
+    svg.replaceChildren();
+    const target = Math.max(H * 1.12, 2.3); // koliko metrov je vidnih v višino
+    view = view == null ? target : view;
+    const k = (ground - topY) / view; // px na meter
+    const Y = (m) => ground - m * k;
+    const tt = Math.min(t, tEnd()), y = H - (g() * tt * tt) / 2, v = g() * tt;
+    // tla in višinska skala
+    s("rect", { x: 0, y: ground, width: W, height: HH - ground, class: "fill-soft" }, svg);
+    s("line", { x1: 0, y1: ground, x2: W, y2: ground, class: "ground" }, svg);
+    const st = niceStep(view);
+    s("line", { x1: 46, y1: Y(0), x2: 46, y2: Math.max(topY - 6, Y(view)), class: "axis" }, svg);
+    for (let m = 0; m <= view + 1e-9; m += st) {
+      s("line", { x1: 42, y1: Y(m), x2: 50, y2: Y(m), class: "axis" }, svg);
+      label(svg, 38, Y(m) + 4, `${fmt(m, st < 1 ? 1 : 0)} m`, "tick small", "end");
+    }
+    // stolp z ograjo, s katerega spustimo kroglo
+    const bx = 88, bw = Math.max(14, Math.min(60, 3 * k));
+    s("rect", { x: bx, y: Y(H), width: bw, height: H * k, class: "fill-muted", opacity: 0.35 }, svg);
+    s("line", { x1: bx, y1: Y(H), x2: bx + bw + 30, y2: Y(H), class: "axis" }, svg);
+    s("line", { x1: bx + 10, y1: Y(H) + 0.3, x2: W - 8, y2: Y(H) + 0.3, class: "guide" }, svg);
+    label(svg, bx + bw + 34, Y(H) - 6, `h = ${fmt(H, 0)} m`, "lbl small", "start");
+    // človek, visok 1,7 m, za primerjavo velikosti
+    const px = 250, hu = 1.7 * k;
+    const head = 0.12 * k, lw = Math.max(1, 0.06 * k);
+    s("circle", { cx: px, cy: ground - hu + head, r: head, class: "fill-a" }, svg);
+    s("line", { x1: px, y1: ground - hu + 2 * head, x2: px, y2: ground - 0.85 * k, class: "graph-line stroke-a", "stroke-width": lw }, svg);
+    s("line", { x1: px, y1: ground - 0.85 * k, x2: px - 0.18 * k, y2: ground, class: "graph-line stroke-a", "stroke-width": lw }, svg);
+    s("line", { x1: px, y1: ground - 0.85 * k, x2: px + 0.18 * k, y2: ground, class: "graph-line stroke-a", "stroke-width": lw }, svg);
+    s("line", { x1: px - 0.3 * k, y1: ground - 1.3 * k, x2: px + 0.3 * k, y2: ground - 1.3 * k, class: "graph-line stroke-a", "stroke-width": lw }, svg);
+    if (hu < 26) label(svg, px, ground - hu - 6, "1,7 m", "tick small");
+    // stroboskopske sence (vsakih dt sekund) in krogla
+    const bxBall = bx + bw + 16, r = Math.max(2, R * k), dts = strobe();
+    for (let i = 1; i * dts < tt - 1e-9; i++) {
+      const yi = H - (g() * (i * dts) ** 2) / 2;
+      s("circle", { cx: bxBall, cy: Y(yi) - r, r, class: "ghost" }, svg);
+    }
+    s("circle", { cx: bxBall, cy: Y(y) - r, r, class: "ball" }, svg);
+    // majhno kroglo označimo s krožcem, da jo oko najde (krogla sama ostane v merilu)
+    if (r < 5) s("circle", { cx: bxBall, cy: Y(y) - r, r: 9, class: "graph-line stroke-danger thin-line", fill: "none", "stroke-dasharray": "3 2" }, svg);
+    // merilnik hitrosti v stalnem merilu 0–75 m/s
+    const mx = 312, vmax = 75, vy = (vv) => ground - (vv / vmax) * (ground - topY);
+    s("rect", { x: mx - 7, y: vy(vmax), width: 14, height: ground - vy(vmax), rx: 3, class: "box" }, svg);
+    if (v > 0) s("rect", { x: mx - 7, y: vy(v), width: 14, height: ground - vy(v), rx: 3, class: "fill-c" }, svg);
+    for (let vv = 0; vv <= vmax; vv += 25) label(svg, mx - 10, vy(vv) + 4, String(vv), "tick small", "end");
+    label(svg, mx, topY - 8, "v [m/s]", "tick small");
+    label(svg, 8, 14, `t = ${fmt(tt, 2)} s${slow > 1 ? ` (prikaz ${slow}× počasneje)` : ""}`, "lbl small", "start");
+    out.innerHTML = texBlock(`t = \\sqrt{\\frac{2h}{g}} = \\sqrt{\\frac{2\\cdot ${fmt(H, 0)}\\ \\text{m}}{${tfmt(g(), 2)}\\ \\text{m/s}^2}} = ${tfmt(tEnd(), 2)}\\ \\text{s},\\quad v = g\\,t = ${tfmt(g() * tEnd(), 1)}\\ \\tfrac{\\text{m}}{\\text{s}}`) +
+      `<p>Zdaj: t = ${fmt(tt, 2)} s, prepotovano s = ½·g·t² = ${fmt(H - y, 2)} m, hitrost v = g·t = <b>${fmt(v, 1)} m/s</b> (${fmt(v * 3.6, 0)} km/h).</p>
+       <p class="muted">Slika je v merilu: krogla ima premer 22 cm, človek je visok 1,7 m. Krogla pada v resničnem času${slow > 1 ? " (zdaj upočasnjeno)" : ""}. Sence kažejo lego vsakih ${fmt(dts, 2)} s: razmiki se večajo, ker hitrost vsako sekundo naraste za ${fmt(g(), 2)} m/s. Zračni upor zanemarimo.</p>`;
+  };
+  const tick = (now) => {
+    if (!el.isConnected || !running) return;
+    t = ((now - t0) / 1000) / slow;
+    if (t >= tEnd()) (t = tEnd()), (running = false);
+    draw();
+    if (running) requestAnimationFrame(tick);
+  };
+  const drop = () => {
+    t = 0;
+    t0 = performance.now();
+    running = true;
+    requestAnimationFrame(tick);
+  };
+  // ob spremembi višine se pogled gladko približa/oddalji
+  let zooming = false;
+  const zoom = () => {
+    if (zooming) return;
+    zooming = true;
+    const step = () => {
+      const target = Math.max(H * 1.12, 2.3);
+      view += (target - view) * 0.25;
+      if (Math.abs(target - view) < target * 0.002) view = target;
+      if (!running) draw();
+      if (view !== target && el.isConnected) requestAnimationFrame(step);
+      else zooming = false;
+    };
+    requestAnimationFrame(step);
+  };
+  const reset = () => ((running = false), (t = 0), draw(), zoom());
+  layout(el, {
+    stage: [svg],
+    controls: [
+      slider({ label: "višina h", min: 1, max: 100, step: 1, value: H, unit: "m", onInput: (v) => ((H = v), reset()) }),
+      select({ label: "kraj", options: PAD_KRAJI.map(([n, gg], i) => [String(i), `${n} (g = ${fmt(gg, 2)} m/s²)`]), value: "0", onChange: (v) => ((gi = Number(v)), reset()) }),
+      select({ label: "hitrost prikaza", options: [["1", "resnični čas"], ["2", "2× počasneje"], ["5", "5× počasneje"]], value: "1", onChange: (v) => ((slow = Number(v)), reset()) }),
+      buttons(button("Spusti kroglo", drop, "primary small")),
+    ],
+    out,
+    tryText: "Kolikokrat dlje pada krogla, če višino povečaš 4-krat? Primerjaj padec z 20 m na Zemlji in na Luni.",
+  });
   draw();
 }

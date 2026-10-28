@@ -8,7 +8,7 @@ export const ENGINES = {
   pitagora: ["../demos.js", "pitagora"],
   ulomki: ["../demos.js", "ulomki"],
   ohm: ["../demos.js", "ohm"],
-  "prosti-pad": ["../demos.js", "prosti-pad"],
+  "prosti-pad": ["fiz-meh.js", "prostiPad"],
   nihalo: ["../demos.js", "nihalo"],
   plini: ["../demos.js", "plini"],
   enacbe: ["../demos.js", "enacbe"],
