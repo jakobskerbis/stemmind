@@ -1,7 +1,7 @@
 ---
 stanje: osnutek
 phet: energy-skate-park-basics
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -42,13 +42,22 @@ $$m g h = \frac{m v^2}{2}$$
 
 Masa se pokrajša, zato je hitrost na dnu $v = \sqrt{2 g h}$ in ni odvisna od mase.
 
-V simulaciji spodaj izberi skejterja in opazuj stolpčni prikaz energij. Ko skejter drsi, se stolpca kinetične in potencialne energije spreminjata, skupna energija pa ostaja enaka (če je trenje izklopljeno).
+V interaktivni simulaciji spodaj izberi skejterja in opazuj stolpčni prikaz energij. Ko skejter drsi, se stolpca kinetične in potencialne energije spreminjata, skupna energija pa ostaja enaka (če je trenje izklopljeno).
 
 ## Rešeni primeri
 
 ### Primer 1: kinetična energija
 
 Kolesar z maso (skupaj s kolesom) $80\,\text{kg}$ vozi s hitrostjo $5\,\frac{\text{m}}{\text{s}}$. Kolikšna je njegova kinetična energija?
+
+**Podatki:** $m = 80\,\text{kg}$ (kolesar skupaj s kolesom), $v = 5\,\frac{\text{m}}{\text{s}}$
+**Iščemo:** kinetično energijo $W_k$
+
+:::formula
+$W_k = \dfrac{m v^2}{2}$
+:::
+
+**Rešitev:**
 
 1. Iščemo kinetično energijo, zato uporabimo $W_k = \dfrac{m v^2}{2}$.
 2. Najprej kvadriramo hitrost (kvadrirana je samo hitrost, ne masa): $v^2 = 5^2 = 25$.
@@ -59,6 +68,15 @@ Kolesar z maso (skupaj s kolesom) $80\,\text{kg}$ vozi s hitrostjo $5\,\frac{\te
 
 Opeka z maso $2\,\text{kg}$ leži na odru, ki je $3\,\text{m}$ nad tlemi. Kolikšna je njena potencialna energija glede na tla? Vzemi $g = 10\,\frac{\text{N}}{\text{kg}}$.
 
+**Podatki:** $m = 2\,\text{kg}$, $h = 3\,\text{m}$ (tla so ničelna raven), $g = 10\,\frac{\text{N}}{\text{kg}}$
+**Iščemo:** potencialno energijo $W_p$
+
+:::formula
+$W_p = m g h$
+:::
+
+**Rešitev:**
+
 1. Uporabimo $W_p = m g h$.
 2. Vstavimo: $W_p = 2 \cdot 10 \cdot 3 = 60\,\text{J}$.
 3. Preverimo enote: $\text{kg} \cdot \frac{\text{N}}{\text{kg}} \cdot \text{m} = \text{N} \cdot \text{m} = \text{J}$. ✓
@@ -67,6 +85,15 @@ Opeka z maso $2\,\text{kg}$ leži na odru, ki je $3\,\text{m}$ nad tlemi. Kolik�
 ### Primer 3: pretvarjanje energije
 
 Otrok z maso $30\,\text{kg}$ se spusti po toboganu z višine $2\,\text{m}$ iz mirovanja. Trenje zanemarimo. Kolikšna je njegova hitrost na dnu? ($g = 10\,\frac{\text{N}}{\text{kg}}$)
+
+**Podatki:** $m = 30\,\text{kg}$, $h = 2\,\text{m}$, začetna hitrost $v_0 = 0$ (iz mirovanja), trenje zanemarimo, $g = 10\,\frac{\text{N}}{\text{kg}}$
+**Iščemo:** hitrost $v$ na dnu tobogana
+
+:::formula
+Ohranitev mehanske energije: $m g h = \dfrac{m v^2}{2}$, torej $v = \sqrt{2 g h}$
+:::
+
+**Rešitev:**
 
 1. **Energija na vrhu.** Miruje, zato je $W_k = 0$. $W_p = 30 \cdot 10 \cdot 2 = 600\,\text{J}$.
 2. **Energija na dnu.** Višina je $0$, zato je $W_p = 0$. Zaradi ohranitve mehanske energije je $W_k = 600\,\text{J}$.
@@ -78,7 +105,7 @@ Otrok z maso $30\,\text{kg}$ se spusti po toboganu z višine $2\,\text{m}$ iz mi
 
 - **Pozabljeno kvadriranje hitrosti.** $W_k = \frac{m v^2}{2}$, ne $\frac{m v}{2}$. Pri $m = 80\,\text{kg}$ in $v = 5\,\frac{\text{m}}{\text{s}}$ bi napačno dobil $200\,\text{J}$ namesto $1000\,\text{J}$.
 - **Kvadriranje produkta $m v$.** Kvadrira se samo $v$, ne $m \cdot v$.
-- **Pozabljen delitev z 2.** Brez delitve z $2$ je kinetična energija dvakrat prevelika.
+- **Pozabljeno deljenje z 2.** Brez delitve z $2$ je kinetična energija dvakrat prevelika.
 - **Napačne enote.** Masa mora biti v $\mathrm{kg}$ (ne v $\mathrm{g}$), višina v $\mathrm{m}$ (ne v $\mathrm{cm}$), hitrost v $\frac{\mathrm{m}}{\mathrm{s}}$ (ne v $\frac{\mathrm{km}}{\mathrm{h}}$). Najprej pretvori.
 - **Potencialna energija brez ničelne ravni.** Višina se vedno meri od izbrane ničelne ravni. Če jo spremeniš, se spremeni $W_p$, a razlika energij ostane.
 - **Ohranitev energije brez premisleka.** Vsota $W_k + W_p$ je konstantna le, če trenje in upor zanemarimo. Pri trenju se mehanska energija zmanjša.

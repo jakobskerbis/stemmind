@@ -1,7 +1,7 @@
 ---
 stanje: osnutek
 phet: circuit-construction-kit-dc
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -21,9 +21,9 @@ V vsakdanjem življenju pa skoraj nikoli nimamo samo ene žarnice ali enega pora
 
 Tok teče samo, če je krog **sklenjen**. Če ga kjer koli prekinemo (odpremo stikalo, pregori žarnica), tok v tem delu kroga preneha.
 
-**2. Električni načrt.** Krog narišemo s simboli: baterija, žarnica, stikalo, upornik in črte za vodnike. Pri risanju vodnike rišemo kot ravne črte z ostrimi koti.
+**2. Električni načrt.** Krog narišemo s simboli: baterija, žarnica, stikalo, upornik in črte za vodnike. Pri risanju vodnike rišemo kot ravne črte s pravimi koti.
 
-**3. Zaporedna vezava.** Porabniki so vezani **eden za drugim** v isti veji, tako da imata tok samo eno pot.
+**3. Zaporedna vezava.** Porabniki so vezani **eden za drugim** v isti veji, tako da ima tok samo eno pot.
 
 - Skozi vse porabnike teče **enak tok**: $I = I_1 = I_2$.
 - Napetost vira se **porazdeli** med porabnike: $U = U_1 + U_2$.
@@ -45,9 +45,9 @@ Tok teče samo, če je krog **sklenjen**. Če ga kjer koli prekinemo (odpremo st
 | Napetost | se porazdeli | enaka na vsaki veji |
 | Če en porabnik izpade | vsi ugasnejo | drugi delujejo |
 
-**6. Merilnika.** Ampermeter merimo tok in ga vežemo **zaporedno** s porabnikom (tok mora teči skozi njega). Voltmeter merimo napetost in ga vežemo **vzporedno** s porabnikom (meri napetost med dvema točkama).
+**6. Merilnika.** Z ampermetrom merimo tok; vežemo ga **zaporedno** s porabnikom (tok mora teči skozi njega). Z voltmetrom merimo napetost; vežemo ga **vzporedno** s porabnikom (meri napetost med dvema točkama).
 
-**7. Uporaba simulacije.** V simulaciji spodaj sestavi krog z baterijo in dvema žarnicama. Najprej ju veži zaporedno, nato vzporedno. Opazuj svetlost žarnic in kazalce merilnikov, nato obe vezavi primerjaj.
+**7. Uporaba simulacije.** V interaktivni simulaciji spodaj sestavi krog z baterijo in dvema žarnicama. Najprej ju veži zaporedno, nato vzporedno. Opazuj svetlost žarnic in kazalce merilnikov, nato obe vezavi primerjaj.
 
 ## Rešeni primeri
 
@@ -55,7 +55,16 @@ Tok teče samo, če je krog **sklenjen**. Če ga kjer koli prekinemo (odpremo st
 
 Dve žarnici sta zaporedno vezani na baterijo z napetostjo $6\,\text{V}$. Ampermeter pokaže $0{,}2\,\text{A}$. Na prvi žarnici izmerimo $2\,\text{V}$. Kolikšen je tok skozi drugo žarnico in kolikšna je napetost na njej?
 
-1. Vezava je zaporedna, zato je tok povsod enak: $I_2 = I_1 = 0{,}2\,\text{A}$.
+**Podatki:** zaporedna vezava dveh žarnic, $U = 6\,\text{V}$, $I = 0{,}2\,\text{A}$ (kaže ampermeter), $U_1 = 2\,\text{V}$
+**Iščemo:** tok $I_2$ skozi drugo žarnico in napetost $U_2$ na njej
+
+:::formula
+Zaporedna vezava: $I = I_1 = I_2$, $U = U_1 + U_2$
+:::
+
+**Rešitev:**
+
+1. Vezava je zaporedna, zato je tok povsod enak: $I_2 = I = 0{,}2\,\text{A}$.
 2. Napetosti se seštevajo: $U = U_1 + U_2$.
 3. Izrazimo: $U_2 = U - U_1 = 6\,\text{V} - 2\,\text{V} = 4\,\text{V}$.
 4. Preverimo: $2\,\text{V} + 4\,\text{V} = 6\,\text{V}$, kar je enako napetosti baterije.
@@ -65,6 +74,15 @@ Dve žarnici sta zaporedno vezani na baterijo z napetostjo $6\,\text{V}$. Amperm
 ### Primer 2: vzporedna vezava
 
 Dve žarnici sta vzporedno vezani na baterijo z napetostjo $4{,}5\,\text{V}$. Skozi prvo teče $0{,}3\,\text{A}$, skozi drugo $0{,}2\,\text{A}$. Kolikšna je napetost na vsaki žarnici in kolikšen tok teče skozi baterijo?
+
+**Podatki:** vzporedna vezava dveh žarnic, $U = 4{,}5\,\text{V}$, $I_1 = 0{,}3\,\text{A}$, $I_2 = 0{,}2\,\text{A}$
+**Iščemo:** napetosti $U_1$ in $U_2$ na žarnicah ter tok $I$ skozi baterijo
+
+:::formula
+Vzporedna vezava: $U = U_1 = U_2$, $I = I_1 + I_2$
+:::
+
+**Rešitev:**
 
 1. Vezava je vzporedna, zato je na vsaki veji enaka napetost kot na viru: $U_1 = U_2 = 4{,}5\,\text{V}$.
 2. Tok se v vozlišču razdeli, skozi baterijo pa teče vsota tokov po vejah: $I = I_1 + I_2$.
@@ -77,10 +95,19 @@ Dve žarnici sta vzporedno vezani na baterijo z napetostjo $4{,}5\,\text{V}$. Sk
 
 Tri enake žarnice so vezane na baterijo. Najprej so vezane zaporedno, nato vzporedno. V obeh primerih odvijemo eno žarnico. Kaj se zgodi z ostalima dvema?
 
+**Podatki:** tri enake žarnice na bateriji; najprej so vezane zaporedno, nato vzporedno; v obeh primerih odvijemo eno žarnico (številskih podatkov ni)
+**Iščemo:** ali ostali dve žarnici še svetita in kako močno
+
+:::formula
+Zaporedna vezava: tok ima eno samo pot, zato prekinitev kjer koli ustavi tok v celotnem krogu. Vzporedna vezava: vsaka veja je samostojna in na vsaki je polna napetost vira ($U = U_1 = U_2 = U_3$).
+:::
+
+**Rešitev:**
+
 1. **Zaporedna vezava.** Vse tri žarnice so v isti veji. Če eno odvijemo, je krog na tistem mestu prekinjen. Tok nima več sklenjene poti, zato **ugasneta tudi ostali dve**.
 2. **Vzporedna vezava.** Vsaka žarnica je v svoji veji. Odvitje ene prekine samo to vejo. Ostali dve veji sta še vedno sklenjeni, zato obe **svetita naprej**.
 3. **Svetlost ostalih dveh.** Pri vzporedni vezavi je na vsaki preostali žarnici še vedno polna napetost vira, zato svetita enako kot prej.
-4. **Zakaj.** Pri vzporedni vezavi je to tudi razlog, da v stanovanju ugasnitev ene luči ne vpliva na druge: vsi porabniki so vezani vzporedno na omrežno napetost.
+4. **Zakaj.** To je tudi razlog, da v stanovanju ugasnitev ene luči ne vpliva na druge: vsi porabniki so vezani vzporedno na omrežno napetost.
 
 **Odgovor:** pri zaporedni vezavi ugasnejo vse, pri vzporedni ostali dve svetita naprej z enako svetlostjo.
 
@@ -106,11 +133,11 @@ Predstavljaj si krog kot zaprto krožno cesto.
 
 **Zaporedna vezava** je ena sama cesta, na kateri je zapored več cestninskih postaj (porabnikov). Vsi avtomobili (naboji) morajo skozi vse postaje, zato v vsakem trenutku skozi vsako postajo pelje enako število avtomobilov na sekundo. To je enak tok. Če je ena postaja zaprta, se promet ustavi povsod.
 
-**Vzporedna vezava** je cesta, ki se razcepi na dva pasova in se kasneje spet združi. Avtomobili se razdelijo po pasovih, skupno število avtomobilov pa je vsota po obeh pasovih. Če je en pasi zaprt, promet po drugem teče naprej.
+**Vzporedna vezava** je cesta, ki se razcepi na dva pasova in se kasneje spet združi. Avtomobili se razdelijo po pasovih, skupno število avtomobilov pa je vsota po obeh pasovih. Če je en pas zaprt, promet po drugem teče naprej.
 
 Na skici kroga pri vzporedni vezavi poišči dve vozlišči: v prvem se tok razcepi, v drugem se združi. Med njima je na obeh vejah enaka napetost.
 
-V simulaciji lahko kazalce merilnikov postaviš na različna mesta in to sam preveriš.
+V interaktivni simulaciji spodaj lahko merilnike postaviš na različna mesta in to sam preveriš.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -144,7 +171,7 @@ Primerjajmo dve enaki žarnici na bateriji $6\,\text{V}$. Vsaka žarnica ima, ka
 2. Pri manjši napetosti je tok manjši kot $0{,}4\,\text{A}$, zato žarnici svetita šibkeje.
 3. Skupna napetost je $3\,\text{V} + 3\,\text{V} = 6\,\text{V}$, kar se ujema z napetostjo vira.
 
-Točne vrednosti toka v primeru C iz podatkov ne moremo izračunati, ker nimamo upora žarnice. Pomembno je razumeti, da je tok manjši in da je tok skozi obe žarnici enak.
+Točne vrednosti toka v primeru C tu še ne računamo: potrebovali bi Ohmov zakon, upor žarnice pa se poleg tega spreminja s temperaturo nitke. Pomembno je razumeti, da je tok manjši kot $0{,}4\,\text{A}$ in da je tok skozi obe žarnici enak.
 
 | Vezava | Napetost na žarnici | Tok skozi baterijo | Svetlost žarnic |
 |---|---|---|---|
@@ -185,10 +212,10 @@ $$U = U_1 = U_2$$
 - $4{,}5\,\text{V}$
 - $18\,\text{V}$
 + $9\,\text{V}$
-> Pri vzporedni vezavi sta obe veji priključeni na iste dve točki kroga, zato je na vsakem porabniku enaka napetost kot na viru: $9\,\text{V}$. Napetost se deli pri zaporedni vezavi, ne pri vzporedni.
+> Pri vzporedni vezavi sta obe veji priključeni na isti dve točki kroga, zato je na vsakem porabniku enaka napetost kot na viru: $9\,\text{V}$. Napetost se deli pri zaporedni vezavi, ne pri vzporedni.
 
 ? V stanovanju ugasnemo eno luč, druge pa svetijo naprej. Zakaj?
 - Ker so luči vezane zaporedno.
 + Ker so luči vezane vzporedno, vsaka v svoji veji.
 - Ker se pri ugasnitvi ene luči napetost poveča na ostalih.
-> Pri vzporedni vezavi ima vsak porabnik svojo vejo, zato prekinitev ene veje ne vpliva na druge. Pri zaporedni vezavi bi se z odklopom ene luči prekinil celoten krog, napetost na ostalih lučeh pa ostane enaka napetosti vira.
+> Pri vzporedni vezavi ima vsak porabnik svojo vejo, zato prekinitev ene veje ne vpliva na druge. Pri zaporedni vezavi bi se z odklopom ene luči prekinil celoten krog. Pri vzporedni vezavi pa napetost na ostalih lučeh ostane enaka napetosti vira, zato se ne poveča.

@@ -557,4 +557,168 @@ export const PATHS = {
       ]],
     ],
   },
+  // ------------------------------------------------------------ TEKMOVANJA
+  // Dodatne teme za tekmovanja in olimpijade (Kenguru, Vegovo, Stefanovo,
+  // Preglovo priznanje, izbirna tekmovanja za olimpijade). Niso del učnega
+  // načrta, zato niso privzeta pot nobenega razreda; učenec jih izbere sam.
+  "MAT-TEK-OS": {
+    label: "Matematika, tekmovanja OŠ (Kenguru, Vegovo)",
+    units: [
+      ["Logika in strategije", [
+        "Logične naloge in sklepanje | resnične in lažne izjave, tabele možnosti, izključevanje",
+        "Parnost in invariante | kaj se pri koraku ne spremeni, parnost, barvanje polj",
+        "Dirichletovo načelo | predalčno načelo, n + 1 predmetov v n predalih",
+        "Igre in zmagovalne strategije | simetrija, položaji zmage in poraza, igre s kupčki",
+      ]],
+      ["Števila", [
+        "Deljivost in ostanki | pravila deljivosti, ostanki pri deljenju, zadnja števka",
+        "Praštevila in delitelji v nalogah | število deliteljev, razcep, D in v v tekmovalnih nalogah",
+        "Številske uganke in zapisi | mesta števk, kriptogrami, zaporedja in vzorci",
+        "Enačbe s celoštevilskimi rešitvami | preproste diofantske enačbe iz besedila, preizkušanje in omejevanje",
+      ]],
+      ["Kombinatorika", [
+        "Preštevanje možnosti | pravilo produkta in vsote, drevesni prikaz, sistematično naštevanje",
+        "Razporeditve in izbire | permutacije, izbiranje brez vrstnega reda, štetje po dopolnilu",
+        "Štetje poti in likov | poti po mreži, štetje trikotnikov in pravokotnikov na sliki",
+      ]],
+      ["Geometrija", [
+        "Lovljenje kotov | koti ob vzporednicah, enakokraki trikotniki, vsote kotov v likih",
+        "Ploščine z razrezom in dopolnjevanjem | razrez, premik delov, polovice, mreže",
+        "Pitagorov izrek v tekmovalnih nalogah | razdalje v mreži, kvadrati na stranicah, pravokotni trikotniki v likih",
+        "Simetrija, vrtenje in tlakovanje | zrcaljenje, vrtenje, sestavljanje likov",
+      ]],
+      ["Besedilne naloge", [
+        "Delo, hitrost in mešanice | skupno delo, povprečna hitrost, srečevanje, mešanice",
+        "Starosti, ure in koledar | odnosi med starostmi, kazalca ure, dnevi v tednu",
+        "Ocenjevanje in Fermijeve naloge | ocena velikosti, zaokroževanje, razumne enote",
+      ]],
+    ],
+  },
+  "MAT-TEK-SS": {
+    label: "Matematika, tekmovanja SŠ (Vegovo, olimpijada)",
+    units: [
+      ["Teorija števil", [
+        "Deljivost, D in v, Evklidov algoritem | Bézoutova enakost, lastnosti največjega skupnega delitelja",
+        "Kongruence | modularna aritmetika, ostanki potenc, kvadratni ostanki",
+        "Mali Fermatov in Eulerjev izrek | red elementa, uporaba pri potencah in deljivosti",
+        "Diofantske enačbe | linearne in nelinearne, razcep, omejevanje, neskončni spust",
+        "Praštevila in eksponent praštevila | p-adična valuacija, Legendrova formula, LTE v osnovni obliki",
+      ]],
+      ["Algebra", [
+        "Neenakosti med sredinami | AM-GM, kvadratna in harmonična sredina, kdaj velja enakost",
+        "Cauchy-Schwarzeva neenakost in urejanje | Cauchy-Schwarz, neenakost urejanja, Čebišev",
+        "Polinomi in Vietove formule | ničle, deljenje polinomov, Vietove formule, simetrične funkcije",
+        "Funkcijske enačbe | substitucije, injektivnost, Cauchyjeva enačba",
+        "Zaporedja, rekurzije in indukcija | linearne rekurzije, popolna indukcija, krepka indukcija",
+      ]],
+      ["Kombinatorika", [
+        "Štetje z bijekcijami | dvojno štetje, bijekcije, vključitve in izključitve",
+        "Dirichletovo načelo | predalčno načelo in njegove posplošitve",
+        "Invariante in monovariante | parnost, barvanje, količine, ki se ne spremenijo ali monotono spreminjajo",
+        "Ekstremalni princip | največji ali najmanjši element, neskončni spust",
+        "Grafi in barvanja | točke in povezave, stopnja točke, Ramseyjeve naloge v osnovni obliki",
+      ]],
+      ["Geometrija", [
+        "Koti v krožnici in tetivni štirikotniki | obodni in središčni kot, pogoji tetivnosti",
+        "Potenca točke in radikalna os | potenca točke, sekante in tangente, radikalna os",
+        "Podobnost, Menelaj in Ceva | razmerja na stranicah, Menelajev in Cevov izrek",
+        "Značilne točke trikotnika | ortocenter, težišče, središči krožnic, Eulerjeva premica",
+        "Geometrijske neenakosti in ekstremi | trikotniška neenakost, zrcaljenje, najkrajše poti",
+      ]],
+    ],
+  },
+  "FIZ-TEK-OS": {
+    label: "Fizika, tekmovanja OŠ (Stefanovo)",
+    units: [
+      ["Merjenje in grafi", [
+        "Branje in risanje grafov gibanja | graf poti in hitrosti, naklon, ploščina pod grafom",
+        "Ocenjevanje in merske napake | ocena vrednosti, odčitek, povprečje in odstopanje",
+      ]],
+      ["Gibanje in sile", [
+        "Sestavljeno gibanje in povprečna hitrost | več odsekov, srečevanje, dohitevanje",
+        "Sile, ravnovesje in vzvod | sestavljanje sil, vzvod, škripec, ravnovesje",
+        "Tlak in vzgon v nalogah | hidrostatični tlak, vezne posode, plavanje, gostota",
+      ]],
+      ["Energija in toplota", [
+        "Delo, energija in izkoristek | pretvorbe energije, moč, izkoristek naprav",
+        "Toplotne bilance | mešanje vode, segrevanje in taljenje, kalorimetrija",
+      ]],
+      ["Svetloba", [
+        "Zrcala in leče v nalogah | konstrukcija slik, ravno zrcalo, zbiralna leča",
+      ]],
+      ["Elektrika", [
+        "Vezja z več porabniki | zaporedna in vzporedna vezava, Ohmov zakon, merjenje",
+        "Električna energija in moč v gospodinjstvu | kWh, strošek, moč naprav",
+      ]],
+      ["Eksperimentalne naloge", [
+        "Načrtovanje poskusa in obdelava meritev | spremenljivke, tabela, graf, sklep",
+      ]],
+    ],
+  },
+  "FIZ-TEK-SS": {
+    label: "Fizika, tekmovanja SŠ (Stefanovo, olimpijada)",
+    units: [
+      ["Mehanika", [
+        "Poševni met in gibanje v ravnini | sestavljanje gibanj, domet, najvišja točka",
+        "Newtonovi zakoni s trenjem in klanci | sile na klancu, trenje, vrvi in škripci",
+        "Gibalna količina in trki | ohranitev gibalne količine, prožni in neprožni trki",
+        "Vrtenje in navor | navor, ravnovesje togega telesa, vztrajnostni moment v osnovni obliki",
+        "Gravitacija in kroženje | centripetalni pospešek, Keplerjevi zakoni, sateliti",
+        "Nihanje in valovanje | nihalo, vzmet, valovna dolžina, stoječe valovanje",
+      ]],
+      ["Toplota", [
+        "Idealni plin in termodinamika | plinska enačba, delo plina, prvi zakon termodinamike",
+      ]],
+      ["Elektrika in magnetizem", [
+        "Elektrostatika | Coulombov zakon, električno polje, potencial, kondenzator",
+        "Tokokrogi s Kirchhoffovimi pravili | zanke in vozlišča, notranji upor, moč",
+        "Magnetno polje in Lorentzova sila | sila na vodnik in naboj, gibanje naboja v polju",
+      ]],
+      ["Optika in metode", [
+        "Geometrijska optika | lom, popolni odboj, leče in zrcala, optične naprave",
+        "Ocenjevanje in dimenzijska analiza | enote, red velikosti, preverjanje rezultatov",
+      ]],
+    ],
+  },
+  "KEM-TEK-OS": {
+    label: "Kemija, tekmovanja OŠ (Preglovo)",
+    units: [
+      ["Snovi in zgradba", [
+        "Lastnosti snovi in ločevanje zmesi | gostota, topnost, postopki ločevanja v nalogah",
+        "Zgradba atoma in periodni sistem v nalogah | izotopi, elektronska razporeditev, trendi",
+        "Kemijske vezi in formule spojin | ionske in kovalentne spojine, poimenovanje, formule",
+      ]],
+      ["Kemijsko računanje", [
+        "Urejanje enačb in množina snovi | koeficienti, mol, molska masa",
+        "Računanje mas iz enačb | masa reaktanta in produkta, prebitek, izkoristek v osnovni obliki",
+        "Raztopine in masni delež | masni delež, redčenje, mešanje raztopin",
+      ]],
+      ["Reakcije in snovi", [
+        "Kisline, baze in soli v nalogah | indikatorji, nevtralizacija, nastanek soli",
+        "Organske spojine v nalogah | prepoznavanje skupin, izomeri, lastnosti",
+        "Eksperimentalne in opazovalne naloge | opazovanje poskusa, sklepanje, varnost",
+      ]],
+    ],
+  },
+  "KEM-TEK-SS": {
+    label: "Kemija, tekmovanja SŠ (Preglovo, olimpijada)",
+    units: [
+      ["Kemijsko računanje", [
+        "Stehiometrija z omejitvenim reaktantom in izkoristkom | omejitveni reaktant, izkoristek, čistost vzorca",
+        "Plini in plinska enačba | molski volumen, splošna plinska enačba, zmesi plinov",
+        "Termokemija | reakcijska entalpija, Hessov zakon, kalorimetrija",
+      ]],
+      ["Ravnotežja", [
+        "Kemijsko ravnotežje | konstanta ravnotežja, Le Chatelierovo načelo, računanje sestave",
+        "Kisline, baze, pH in pufri | močne in šibke kisline, Ka, pH pufra, titracijska krivulja",
+        "Redoks reakcije in elektrokemija | urejanje redoks enačb, galvanski člen, standardni potenciali",
+      ]],
+      ["Zgradba in organska kemija", [
+        "Zgradba atoma in periodne lastnosti | kvantna števila, ionizacijska energija, elektronegativnost",
+        "Kemijska vez in geometrija molekul | Lewisove strukture, VSEPR, polarnost, hibridizacija",
+        "Organska kemija: reakcijski mehanizmi | substitucija, adicija, eliminacija, stereokemija",
+        "Analizna kemija: titracije | kislinsko-bazne in redoks titracije, računanje iz volumnov",
+      ]],
+    ],
+  },
 };

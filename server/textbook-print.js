@@ -3,7 +3,7 @@
 import katex from "katex";
 import { marked } from "marked";
 import { getPath, getTopic, topicOrder } from "./curriculum.js";
-import { loadLesson, DEMOS } from "./textbook.js";
+import { loadLesson, DEMOS, expandFormulaBlocks, getBook } from "./textbook.js";
 
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -13,7 +13,7 @@ const esc = (s) =>
 export function renderMd(text) {
   const math = [];
   const stash = (tex, display) => `@@MATH${math.push({ tex, display }) - 1}@@`;
-  const src = String(text)
+  const src = expandFormulaBlocks(text, "print")
     .replace(/\$\$([\s\S]+?)\$\$/g, (_, t) => stash(t, true))
     .replace(/(^|[^\\$])\$([^$\n]+?)\$/g, (_, pre, t) => pre + stash(t, false));
   return marked
@@ -60,10 +60,54 @@ function lessonHtml(t, lesson, n) {
   </article>`;
 }
 
+const today = () => new Date().toLocaleDateString("sl-SI", { day: "numeric", month: "long", year: "numeric" });
+const NOTE = `<p class="muted small">Interaktivni poskusi, simulacije, sprotno preverjanje in vaje so na voljo v aplikaciji STEMMind.
+        Lekcije z oznako osnutek še pregleduje učitelj.</p>`;
+
+// Celoten učbenik predmeta (npr. MAT-OS): deli so razredi oziroma letniki.
+export function printBook(bookKey) {
+  const book = getBook(bookKey);
+  if (!book) return null;
+  let n = 0;
+  const parts = book.paths.map((p) => {
+    const topics = topicOrder(p.key);
+    const ready = topics.map((t) => ({ t, lesson: loadLesson(t.id) })).filter((x) => x.lesson);
+    return { p, topics, ready };
+  });
+  const total = parts.reduce((s, x) => s + x.topics.length, 0);
+  const have = parts.reduce((s, x) => s + x.ready.length, 0);
+  const cover = `<section class="cover">
+        <p class="brand">STEM<span>Mind</span></p>
+        <h1>${esc(book.subjectName)}</h1>
+        <p class="sub">Učbenik za ${esc(book.schoolName)}: razlage, rešeni primeri in vprašanja za preverjanje</p>
+        <p class="muted">Izdaja ${esc(today())} · ${have} od ${total} tem${have < total ? " (ostale lekcije so v pripravi)" : ""}</p>
+        <h2>Kazalo</h2>
+        ${parts
+          .filter((x) => x.ready.length)
+          .map(
+            ({ p, ready }) => `<h3 class="toc-part">${esc(p.label)}</h3>
+        <ol class="toc">${ready.map(({ t }) => `<li><a href="#${esc(t.id)}">${esc(t.name)}</a> ${t.unit && t.unit !== t.name ? `<span class="muted">${esc(t.unit)}</span>` : ""}</li>`).join("")}</ol>`,
+          )
+          .join("")}
+        ${NOTE}
+      </section>`;
+  const body = have
+    ? parts
+        .filter((x) => x.ready.length)
+        .map(({ p, ready }) => {
+          n = 0;
+          return `<section class="part"><p class="brand small">${esc(book.subjectName)}</p><h1>${esc(p.label)}</h1>
+            <p class="muted">${ready.length} lekcij</p></section>${ready.map(({ t, lesson }) => lessonHtml(t, lesson, ++n)).join("")}`;
+        })
+        .join("")
+    : `<p>Za ta učbenik lekcije še nastajajo.</p>`;
+  return shell(`${book.subjectName} · ${book.schoolName} · učbenik`, cover + body);
+}
+
 // pathKey: cela pot; topicSlug (neobvezno): samo ena lekcija.
 export function printPage(pathKey, topicSlug = null) {
   const p = getPath(pathKey);
-  if (!p) return null;
+  if (!p) return topicSlug ? null : printBook(pathKey);
   let topics = topicOrder(pathKey);
   if (topicSlug) {
     const t = getTopic(`${pathKey}/${topicSlug}`);
@@ -73,7 +117,6 @@ export function printPage(pathKey, topicSlug = null) {
   const ready = topics.map((t) => ({ t, lesson: loadLesson(t.id) })).filter((x) => x.lesson);
   if (topicSlug && !ready.length) return null;
   const title = topicSlug ? `${ready[0].t.name} · ${p.label}` : `${p.label} · učbenik`;
-  const date = new Date().toLocaleDateString("sl-SI", { day: "numeric", month: "long", year: "numeric" });
 
   const toc = topicSlug
     ? ""
@@ -81,17 +124,19 @@ export function printPage(pathKey, topicSlug = null) {
         <p class="brand">STEM<span>Mind</span></p>
         <h1>${esc(p.label)}</h1>
         <p class="sub">Učbenik z razlagami, rešenimi primeri in vprašanji za preverjanje</p>
-        <p class="muted">Izdaja ${esc(date)} · ${ready.length} od ${topics.length} tem${ready.length < topics.length ? " (ostale lekcije so v pripravi)" : ""}</p>
+        <p class="muted">Izdaja ${esc(today())} · ${ready.length} od ${topics.length} tem${ready.length < topics.length ? " (ostale lekcije so v pripravi)" : ""}</p>
         <h2>Kazalo</h2>
         <ol class="toc">${ready.map(({ t }) => `<li><a href="#${esc(t.id)}">${esc(t.name)}</a> ${t.unit && t.unit !== t.name ? `<span class="muted">${esc(t.unit)}</span>` : ""}</li>`).join("")}</ol>
-        <p class="muted small">Interaktivni poskusi, simulacije, sprotno preverjanje in vaje so na voljo v aplikaciji STEMMind.
-        Lekcije z oznako osnutek še pregleduje učitelj.</p>
+        ${NOTE}
       </section>`;
 
   const body = ready.length
     ? ready.map(({ t, lesson }, i) => lessonHtml(t, lesson, topicSlug ? 0 : i + 1)).join("")
     : `<p>Za to pot lekcije še nastajajo.</p>`;
+  return shell(title, toc + body);
+}
 
+function shell(title, content) {
   return `<!doctype html>
 <html lang="sl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
@@ -109,7 +154,8 @@ export function printPage(pathKey, topicSlug = null) {
   .sub { font-size: 1.15rem; }
   .muted { color: #667089; } .small { font-size: 0.9em; }
   .toc li { margin: 4px 0; } .toc a { color: inherit; text-decoration: none; font-weight: 600; }
-  .lesson { break-before: page; page-break-before: always; }
+  .lesson, .part { break-before: page; page-break-before: always; }
+  .part h1 { font-size: 2rem; margin: 30vh 0 6px; } .toc-part { margin: 16px 0 4px; font-size: 1.05rem; }
   .lesson h2 { font-size: 1.6rem; margin: 0 0 6px; }
   .crumb { color: #667089; margin: 0; font-size: 0.9rem; }
   .lesson h3 { font-size: 1.15rem; margin: 22px 0 6px; border-bottom: 2px solid #dde2ec; padding-bottom: 3px; }
@@ -118,6 +164,8 @@ export function printPage(pathKey, topicSlug = null) {
   pre { background: #f3f5f9; padding: 8px; border-radius: 6px; }
   .demo-note { border: 1px dashed #2f6fed; border-radius: 8px; padding: 6px 10px; color: #2f6fed; font-family: system-ui, sans-serif; font-size: 0.9rem; margin: 10px 0; }
   .alt { border-left: 3px solid #7b61d1; padding-left: 12px; margin: 10px 0; }
+  .formula { border: 1px solid #c9d3ea; background: #f3f6fc; border-radius: 8px; padding: 4px 12px; margin: 8px 0; }
+  .formula-label { margin: 2px 0 0; font: 700 0.78rem system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; color: #2f6fed; }
   .checks .opts { list-style: lower-alpha; }
   .checks p { margin: 2px 0; }
   .key { margin-top: 10px; font-size: 0.92em; } .key summary { font-weight: 700; font-family: system-ui, sans-serif; }
@@ -132,7 +180,7 @@ export function printPage(pathKey, topicSlug = null) {
 </style></head>
 <body>
 <div class="bar"><span>${esc(title)}</span><button type="button" onclick="window.print()">Shrani kot PDF</button></div>
-<main>${toc}${body}</main>
+<main>${content}</main>
 <script>if (location.hash === "#natisni") addEventListener("load", () => setTimeout(() => print(), 300));</script>
 </body></html>`;
 }

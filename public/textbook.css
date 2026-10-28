@@ -15,6 +15,17 @@
 .tb-seg button { border: 0 !important; background: none !important; padding: 7px 14px !important; border-radius: 9px !important; color: var(--muted); cursor: pointer; }
 .tb-seg button.on { background: var(--surface) !important; color: var(--text); font-weight: 700; box-shadow: 0 1px 3px rgb(0 0 0 / 0.12); }
 
+.tb-book { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.tb-book h2 { margin: 2px 0; }
+.tb-book p { margin: 0; }
+.tb-book .eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; }
+.tb-book-pdf { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; border-radius: 12px; padding: 10px 16px; background: var(--accent); color: var(--accent-text, #fff); font-weight: 700; }
+.tb-jump { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; background: var(--bg, var(--surface)); }
+.tb-jump a { flex: none; text-decoration: none; border: 1px solid var(--border); border-radius: 99px; padding: 5px 12px; color: var(--text); font-size: 0.88rem; font-weight: 600; }
+.tb-jump a.on { border-color: var(--accent); color: var(--accent); }
+.tb-part { scroll-margin-top: 130px; }
+.tb-part-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin: 22px 0 8px; }
+.tb-part-head h2 { margin: 0; }
 .tb-unit h2 { display: flex; align-items: center; gap: 10px; }
 .tb-num {
   display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
@@ -56,6 +67,13 @@
 .tb-why { border-left: 4px solid var(--accent); }
 .tb-summary { border-left: 4px solid var(--ok); }
 .tb-mistakes { border-left: 4px solid var(--danger); }
+.tb-formula { margin: 8px 0; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2); padding: 0 12px; }
+.tb-formula > summary { cursor: pointer; font-weight: 600; color: var(--accent); padding: 8px 0; list-style: none; }
+.tb-formula > summary::-webkit-details-marker { display: none; }
+.tb-formula > summary::before { content: "+ "; }
+.tb-formula[open] > summary::before { content: "− "; }
+.tb-formula[open] > summary { border-bottom: 1px solid var(--border); margin-bottom: 6px; }
+.tb-formula p { margin: 6px 0; }
 .tb-alt { margin-top: 12px; }
 .tb-alt-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 8px; }
 .tb-alt-tabs button { border-radius: 99px !important; padding: 5px 12px !important; font-size: 0.88rem; }

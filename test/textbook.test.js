@@ -5,7 +5,8 @@ import path from "node:path";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { getTopic, listPaths, topicOrder } from "../server/curriculum.js";
-import { parseLesson, lessonView, searchTextbook, tocView, DEMOS, PHET, LESSONS_DIR, lessonSummaryForPrompt } from "../server/textbook.js";
+import { parseLesson, lessonView, searchTextbook, tocView, DEMOS, PHET, LESSONS_DIR, lessonSummaryForPrompt, expandFormulaBlocks } from "../server/textbook.js";
+import { checkLessonSource } from "../server/lesson-check.js";
 
 test("parseLesson: front matter, sections, alternatives, checks", () => {
   const l = parseLesson(`---
@@ -31,6 +32,41 @@ Slika.
   assert.deepEqual(l.alternatives, [{ title: "Na sliki", md: "Slika." }]);
   assert.equal(l.checks.length, 1, "vprašanje brez pravilnega odgovora se izpusti");
   assert.deepEqual(l.checks[0], { q: "Koliko je $2 + 2$?", options: ["3", "4"], correct: 1, why: "Ker je tako." });
+});
+
+test("lesson files load for competition paths too", () => {
+  const dir = path.join(LESSONS_DIR, "MAT-TEK-OS");
+  fs.mkdirSync(dir, { recursive: true });
+  const topic = tocView("MAT-TEK-OS").units[0].topics[0];
+  const real = path.join(LESSONS_DIR, `${topic.id}.md`);
+  const existed = fs.existsSync(real);
+  if (!existed) fs.writeFileSync(real, fs.readFileSync(path.join(LESSONS_DIR, "FIZ-OS-9", "upor-in-ohmov-zakon.md"), "utf8"));
+  try {
+    assert.ok(lessonView(topic.id).lesson, "lekcija tekmovalne poti se naloži");
+  } finally {
+    if (!existed) fs.rmSync(real);
+    if (!fs.readdirSync(dir).length) fs.rmdirSync(dir);
+  }
+});
+
+test("formula blocks: hidden in app, printed in PDF, plain for the tutor", () => {
+  const md = "Besedilo.\n\n:::formula\n$s = v \\cdot t$\n:::\n\nNaprej.";
+  assert.match(expandFormulaBlocks(md), /<details class="tb-formula"><summary>Pokaži formulo<\/summary>\n\n\$s = v \\cdot t\$\n\n<\/details>/);
+  assert.match(expandFormulaBlocks(md, "print"), /<div class="formula">/);
+  assert.equal(expandFormulaBlocks(md, "plain"), "Besedilo.\n\n$s = v \\cdot t$\n\nNaprej.");
+  const v = lessonView("FIZ-OS-9/upor-in-ohmov-zakon");
+  const ex = v.lesson.sections.find((s) => /rešen/i.test(s.title)).md;
+  assert.match(ex, /\*\*Podatki:\*\*/);
+  assert.match(ex, /<details class="tb-formula">/);
+  assert.doesNotMatch(ex, /:::/);
+  assert.doesNotMatch(lessonSummaryForPrompt("FIZ-OS-9/upor-in-ohmov-zakon"), /:::/);
+  // Preverjevalnik oblike: vzorčna lekcija je v redu, pokvarjena ne.
+  const src = fs.readFileSync(path.join(LESSONS_DIR, "FIZ-OS-9", "upor-in-ohmov-zakon.md"), "utf8");
+  assert.deepEqual(checkLessonSource(src, "FIZ-OS-9/upor-in-ohmov-zakon").errors, []);
+  const broken = src.replace("**Podatki:** $R = 30", "Podatki $R = 30").replace("$U = R \\cdot I$", "$U = \\frac{R$");
+  const r = checkLessonSource(broken, "FIZ-OS-9/upor-in-ohmov-zakon");
+  assert.ok(r.errors.some((e) => /Podatki/.test(e)), r.errors.join("; "));
+  assert.ok(r.errors.some((e) => /ne izriše/.test(e)), r.errors.join("; "));
 });
 
 test("every lesson file belongs to a topic and is complete", () => {
@@ -89,6 +125,9 @@ test("textbook API and PDF page", async () => {
     const lessonUrl = (id) => `${base}/api/students/${kid.id}/lesson?id=${id}`;
     const lesson = await (await fetch(lessonUrl("FIZ-OS-9/upor-in-ohmov-zakon"))).json();
     assert.equal(lesson.interactive, true, "brez računov je vse odklenjeno");
+    // Kartica teme brez vnaprej pripravljene razlage pokaže povzetek lekcije.
+    const topic = await (await fetch(`${base}/api/topic?id=FIZ-OS-9/upor-in-ohmov-zakon`)).json();
+    assert.match(topic.explanation || "", /### Bistvo/);
     assert.equal(lesson.demo.id, "ohm");
     assert.match(lesson.phet.url, /^https:\/\/phet\.colorado\.edu\/sims\/html\/ohms-law\//);
     assert.equal(lesson.next.id.startsWith("FIZ-OS-9/"), true);
@@ -98,6 +137,18 @@ test("textbook API and PDF page", async () => {
     if (missing) assert.equal((await (await fetch(lessonUrl(missing.id))).json()).lesson, null);
     assert.equal((await fetch(lessonUrl("../../etc/passwd"))).status, 404);
     assert.equal((await fetch(`${base}/api/textbook/toc?path=KEM-OS-8`)).status, 200);
+    // Učbenik za vsak predmet posebej (in raven), s PDF-jem celega predmeta.
+    const books = await (await fetch(`${base}/api/textbook/books`)).json();
+    for (const k of ["MAT-OS", "MAT-SS", "FIZ-OS", "FIZ-SS", "KEM-OS", "KEM-SS"]) assert.ok(books.some((b) => b.key === k), k);
+    const mat = await (await fetch(`${base}/api/textbook/toc?book=MAT-OS`)).json();
+    assert.deepEqual(mat.parts.map((p) => p.key), ["MAT-OS-6", "MAT-OS-7", "MAT-OS-8", "MAT-OS-9"]);
+    assert.equal(mat.subjectName, "Matematika");
+    assert.equal((await fetch(`${base}/api/textbook/toc?book=NI-TO`)).status, 404);
+    const fizBook = await (await fetch(`${base}/ucbenik/FIZ-OS`)).text();
+    assert.match(fizBook, /Fizika/);
+    assert.match(fizBook, /Fizika, 8\. razred/);
+    assert.match(fizBook, /Fizika, 9\. razred/);
+    assert.match(fizBook, /Upor in Ohmov zakon/);
     const hits = await (await fetch(`${base}/api/textbook/search?q=ohm`)).json();
     assert.equal(hits[0].id, "FIZ-OS-9/upor-in-ohmov-zakon");
 
@@ -110,6 +161,9 @@ test("textbook API and PDF page", async () => {
     assert.match(html, /Kazalo/);
     assert.match(html, /Rešitve/);
     assert.doesNotMatch(html, /@@MATH/);
+    const ohm = await (await fetch(`${base}/ucbenik/FIZ-OS-9/upor-in-ohmov-zakon`)).text();
+    assert.match(ohm, /<div class="formula">/);
+    assert.doesNotMatch(ohm, /:::/);
     const one = await (await fetch(`${base}/ucbenik/KEM-OS-8/urejanje-kemijskih-enacb`)).text();
     assert.match(one, /Razloži drugače/);
     assert.doesNotMatch(one, /Kazalo/);

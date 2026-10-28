@@ -1,7 +1,7 @@
 ---
 stanje: osnutek
 phet: forces-and-motion-basics
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -52,14 +52,33 @@ Pomembno: sili delujeta na **različni telesi**, zato se med seboj ne izničita.
 
 Voziček z maso $20\,\mathrm{kg}$ potiskamo po vodoravnih tleh s silo $60\,\mathrm{N}$. Trenje zanemarimo. Kolikšen je pospešek?
 
+**Podatki:** $m = 20\,\mathrm{kg}$, $F = 60\,\mathrm{N}$ (vodoravna potisna sila), trenje zanemarimo ($F_\mathrm{tr} = 0$)
+**Iščemo:** pospešek $a$
+
+:::formula
+Drugi Newtonov zakon: $F_\mathrm{r} = m\,a$, torej $a = \dfrac{F_\mathrm{r}}{m}$
+:::
+
+**Rešitev:**
+
 1. V vodoravni smeri deluje samo potisna sila. Navpični sili (teža in sila podlage) se izničita, zato ne vplivata na gibanje v vodoravni smeri.
 2. Zapišemo drugi zakon: $F_\mathrm{r} = m\,a$, torej $a = \dfrac{F_\mathrm{r}}{m}$.
 3. Vstavimo: $a = \dfrac{60\,\mathrm{N}}{20\,\mathrm{kg}} = 3\,\mathrm{m/s^2}$.
 4. Smiselnost: enota $\mathrm{N/kg} = \mathrm{m/s^2}$ je enota pospeška, vrednost pa ni nenavadno velika.
+5. Odgovor: voziček pospešuje s pospeškom $3\,\mathrm{m/s^2}$.
 
 ### Primer 2: trenje in pot
 
 Škatla z maso $10\,\mathrm{kg}$ se giblje po vodoravni podlagi. Vlečemo jo z vodoravno silo $50\,\mathrm{N}$, sila trenja je $20\,\mathrm{N}$. Škatla na začetku miruje. Kolikšen je pospešek in kolikšno pot prepotuje v $4\,\mathrm{s}$?
+
+**Podatki:** $m = 10\,\mathrm{kg}$, $F = 50\,\mathrm{N}$ (vodoravna vlečna sila), $F_\mathrm{tr} = 20\,\mathrm{N}$, $v_0 = 0$, $t = 4\,\mathrm{s}$
+**Iščemo:** pospešek $a$ in pot $s$
+
+:::formula
+$F_\mathrm{r} = F - F_\mathrm{tr} = m\,a$, nato pot pri $v_0 = 0$: $s = \dfrac{1}{2}a t^2$
+:::
+
+**Rešitev:**
 
 1. Izberemo pozitivno smer v smeri vlečne sile. Trenje kaže nasprotno, zato je negativno.
 2. Rezultanta: $F_\mathrm{r} = 50\,\mathrm{N} - 20\,\mathrm{N} = 30\,\mathrm{N}$.
@@ -72,18 +91,28 @@ Voziček z maso $20\,\mathrm{kg}$ potiskamo po vodoravnih tleh s silo $60\,\math
 
 Oseba z maso $70\,\mathrm{kg}$ stoji v dvigalu na tehtnici. Dvigalo se začne gibati navzgor s pospeškom $1{,}2\,\mathrm{m/s^2}$. Kolikšno silo kaže tehtnica? Vzemi $g = 9{,}8\,\mathrm{m/s^2}$.
 
+**Podatki:** $m = 70\,\mathrm{kg}$, $a = 1{,}2\,\mathrm{m/s^2}$ (navzgor), $g = 9{,}8\,\mathrm{m/s^2}$
+**Iščemo:** silo podlage $F_\mathrm{p}$, ki jo kaže tehtnica
+
+:::formula
+Drugi Newtonov zakon s pozitivno smerjo navzgor: $F_\mathrm{p} - F_\mathrm{g} = m\,a$, kjer je $F_\mathrm{g} = m\,g$
+:::
+
+**Rešitev:**
+
 1. Na osebo delujeta dve sili: teža $F_\mathrm{g}$ navzdol in sila podlage $F_\mathrm{p}$ navzgor. Tehtnica kaže prav silo podlage (po tretjem zakonu je enaka sili, s katero oseba pritiska na tehtnico).
 2. Pozitivna smer naj bo navzgor, saj v to smer pospešujemo.
 3. Zapišemo drugi zakon: $F_\mathrm{p} - F_\mathrm{g} = m\,a$.
 4. Izrazimo: $F_\mathrm{p} = m\,g + m\,a = m\,(g + a)$.
 5. Vstavimo: $F_\mathrm{p} = 70\,\mathrm{kg}\cdot(9{,}8 + 1{,}2)\,\mathrm{m/s^2} = 70\cdot 11\,\mathrm{N} = 770\,\mathrm{N}$.
 6. Primerjava: teža je $70\cdot 9{,}8 = 686\,\mathrm{N}$. Tehtnica kaže več, ker moramo osebo ne le držati, ampak tudi pospeševati navzgor. To se ujema z občutkom, da te ob speljevanju dvigala pritisne k tlom.
+7. Odgovor: tehtnica kaže silo $770\,\mathrm{N}$.
 
 ## Pogoste napake
 
 - **»Sila je potrebna za gibanje.«** Po prvem zakonu telo brez rezultante sil nadaljuje enakomerno gibanje. Sila je potrebna za *spremembo* gibanja (pospešek), ne za enakomerno gibanje.
 - **Seštevanje vseh sil brez predznakov.** V $F_\mathrm{r} = m\,a$ nastopa rezultanta, ne ena sama sila. Sile v nasprotnih smereh odštevamo.
-- **Sili akcije in reakcije se »izničita«.** Delujeta na različni telesi, zato ju ne seštevamo pri istem telesu. Zato se npr. voziček, ki ga potiskaš, lahko giblje, čeprav ti on potiska nazaj z enako silo.
+- **Sili akcije in reakcije se »izničita«.** Delujeta na različni telesi, zato ju ne seštevamo pri istem telesu. Zato se npr. voziček, ki ga potiskaš, lahko giblje, čeprav on tebe potiska nazaj z enako veliko silo.
 - **Mešanje mase in teže.** Masa se meri v $\mathrm{kg}$, teža je sila in se meri v $\mathrm{N}$. Teža je $F_\mathrm{g} = m\,g$.
 - **Napačna enota.** Sila mora biti v $\mathrm{N}$, masa v $\mathrm{kg}$, pospešek v $\mathrm{m/s^2}$. Pred računom pretvori, npr. $500\,\mathrm{g} = 0{,}5\,\mathrm{kg}$.
 - **Trenje v napačno smer.** Trenje vedno nasprotuje gibanju (ali poskusu gibanja).
@@ -108,11 +137,11 @@ Nariši škatlo kot kvadrat in iz njenega središča puščice za sile:
 
 Dolžina puščice kaže velikost sile. Če sta navpični puščici enako dolgi, se izničita in škatla se ne giblje navpično. Če je desna puščica daljša od leve, je rezultanta usmerjena desno in škatla pospešuje v desno. Če sta enako dolgi, je rezultanta nič in škatla miruje ali drsi enakomerno.
 
-V simulaciji PhET postavi različne osebe na vrv in opazuj puščice sil. Ko je vsota sil na eni strani večja, se vozel pomakne v to smer. Ko sta strani izenačeni, miruje. Preizkusi tudi premikanje škatle s trenjem in opazuj, kako se spreminja pospešek.
+V interaktivni simulaciji spodaj postavi različne osebe na vrv in opazuj puščice sil. Ko je vsota sil na eni strani večja, se vozel pomakne v to smer. Ko sta strani izenačeni, miruje. Preizkusi tudi premikanje škatle s trenjem in opazuj, kako se spreminja pospešek.
 
 ## Drugače: Iz vsakdanjega življenja
 
-**Avtobus.** Ko avtobus nenadoma speljuje, te zdi, da te potegne nazaj. V resnici se sedež pospeši naprej, tvoje telo pa zaradi vztrajnosti (1. zakon) skuša ostati pri miru. Ko avtobus zavira, te "vrže" naprej, ker telo nadaljuje prvotno gibanje.
+**Avtobus.** Ko avtobus nenadoma spelje, se ti zdi, da te potegne nazaj. V resnici se sedež pospeši naprej, tvoje telo pa zaradi vztrajnosti (1. zakon) skuša ostati pri miru. Ko avtobus zavira, te "vrže" naprej, ker telo nadaljuje prvotno gibanje.
 
 **Prazen in poln nakupovalni voziček.** Z isto silo prazen voziček pospešiš bolj kot poln. Po $a = F/m$ je pri enaki sili pospešek obratno sorazmeren z maso.
 

@@ -1,14 +1,14 @@
 ---
 stanje: osnutek
 phet: energy-skate-park
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Pri delu si spoznal, da sila, ki deluje vzdolž poti, opravi delo: $A = F s \cos\varphi$. Znaš tudi izračunati hitrost iz poti in časa ter veš, da na telesa blizu Zemlje deluje teža $F_g = mg$.
+Pri delu si spoznal, da sila, ki deluje vzdolž poti, opravi delo: $A = F s \cos\alpha$. Znaš tudi izračunati hitrost iz poti in časa ter veš, da na telesa blizu Zemlje deluje teža $F_g = mg$.
 
-Energija je eden najpomembnejših pojmov v fiziki. Z njo lahko veliko problemov rešiš **brez podrobnega spremljanja gibanja**. Če poznaš višino, s katere se spusti sanka, lahko izračunaš njeno hitrost na dnu, ne da bi poznal obliko pobočja. Enako velja za konstruktorja toboganov, za voznika, ki mora vedeti, koliko dlje potrebuje avto pri dvakrat večji hitrosti, in za kolesarja, ki prosto drvi po klancu navzdol.
+Energija je eden najpomembnejših pojmov v fiziki. Z njo lahko veliko problemov rešiš **brez podrobnega spremljanja gibanja**. Če poznaš višino, s katere se spustijo sani, lahko izračunaš njihovo hitrost na dnu, ne da bi poznal obliko pobočja. Enako velja za konstruktorja toboganov, za voznika, ki mora vedeti, koliko daljšo zavorno pot potrebuje avto pri dvakrat večji hitrosti, in za kolesarja, ki prosto drvi po klancu navzdol.
 
 ## Razlaga
 
@@ -28,7 +28,7 @@ Hitrost nastopa v *kvadratu*. Pri dvakrat večji hitrosti je kinetična energija
 
 $$W_p = mgh$$
 
-Pri tem je $g = 9{,}8\,\mathrm{m/s^2}$. Ničelno raven si izbereš sam (tla, miza, dno doline). Pomembne so le **spremembe** potencialne energije, zato ni treba, da je izbira ničle vedno enaka, le dosledno jo uporabljaj.
+Pri tem je $g = 9{,}8\,\mathrm{m/s^2}$. Ničelno raven si izbereš sam (tla, miza, dno doline). Pomembne so le **spremembe** potencialne energije, zato ni treba, da je izbira ničle vedno enaka, v isti nalogi pa jo uporabljaj dosledno.
 
 **4. Prožnostna energija** je energija raztegnjene ali stisnjene vzmeti. Če ima vzmet prožnostni koeficient $k$ in je raztegnjena ali stisnjena za $x$ glede na ravnovesno lego, velja:
 
@@ -40,7 +40,7 @@ Enota za $k$ je $\mathrm{N/m}$, za $x$ pa $\mathrm{m}$. Spet nastopa kvadrat: pr
 
 $$W_k + W_p + W_{pr} = \text{konst.}$$
 
-Če sta v začetnem stanju (1) in končnem stanju (2) prisotni vsi trije členi:
+Če so v začetnem stanju (1) in končnem stanju (2) prisotni vsi trije členi:
 
 $$W_{k1} + W_{p1} + W_{pr1} = W_{k2} + W_{p2} + W_{pr2}$$
 
@@ -53,13 +53,22 @@ $$W_{k1} + W_{p1} + W_{pr1} = W_{k2} + W_{p2} + W_{pr2}$$
 3. Za vsako stanje zapiši, katere oblike energije so prisotne.
 4. Izenači skupni energiji in izrazi neznanko.
 
-V simulaciji spodaj lahko opazuješ, kako se pri drsalcu na klancu energija neprestano pretvarja med kinetično in potencialno, in kaj se zgodi, ko vklopiš trenje.
+V interaktivni simulaciji spodaj lahko opazuješ, kako se pri drsalcu na klancu energija neprestano pretvarja med kinetično in potencialno, in kaj se zgodi, ko vklopiš trenje.
 
 ## Rešeni primeri
 
 ### Primer 1: kinetična energija avtomobila
 
 Avto z maso $1000\,\mathrm{kg}$ vozi s hitrostjo $72\,\mathrm{km/h}$. Kolikšna je njegova kinetična energija? Kolikšna bi bila pri dvakrat večji hitrosti?
+
+**Podatki:** $m = 1000\,\mathrm{kg}$, $v = 72\,\mathrm{km/h}$; v drugem delu dvakrat večja hitrost $2v$
+**Iščemo:** kinetično energijo $W_k$ pri hitrosti $v$ in pri hitrosti $2v$
+
+:::formula
+$W_k = \dfrac{mv^2}{2}$ (hitrost mora biti v $\mathrm{m/s}$: $\mathrm{km/h}$ delimo s $3{,}6$)
+:::
+
+**Rešitev:**
 
 1. **Pretvorba enot.** Formula zahteva $\mathrm{m/s}$: $72\,\mathrm{km/h} = 72 : 3{,}6 = 20\,\mathrm{m/s}$.
 2. **Vstavimo:** $W_k = \dfrac{mv^2}{2} = \dfrac{1000 \cdot 20^2}{2} = \dfrac{1000 \cdot 400}{2} = 200\,000\,\mathrm{J} = 200\,\mathrm{kJ}$.
@@ -69,6 +78,15 @@ Avto z maso $1000\,\mathrm{kg}$ vozi s hitrostjo $72\,\mathrm{km/h}$. Kolikšna 
 ### Primer 2: padec kamna
 
 Kamen spustimo z višine $5{,}0\,\mathrm{m}$ (začetna hitrost je $0$). S kolikšno hitrostjo zadene tla? Zanemari upor zraka.
+
+**Podatki:** $h = 5{,}0\,\mathrm{m}$, $v_0 = 0$, $g = 9{,}8\,\mathrm{m/s^2}$, upor zraka zanemarimo
+**Iščemo:** hitrost $v$ tik nad tlemi
+
+:::formula
+Ohranitev mehanske energije: $W_{p1} = W_{k2}$, torej $mgh = \dfrac{mv^2}{2}$
+:::
+
+**Rešitev:**
 
 1. **Stanji.** (1) Kamen miruje na višini $h$. (2) Kamen je tik nad tlemi. Ničelno raven izberemo pri tleh.
 2. **Energija v stanju 1:** $W_{k1} = 0$ (miruje), $W_{p1} = mgh$.
@@ -83,6 +101,15 @@ Vzmet s prožnostnim koeficientom $k = 200\,\mathrm{N/m}$ stisnemo za $x = 0{,}1
 a) S kolikšno hitrostjo telo zapusti vzmet?
 b) Telo nato zdrsi po gladkem klancu navzgor. Do katere višine se dvigne?
 
+**Podatki:** $k = 200\,\mathrm{N/m}$, $x = 0{,}10\,\mathrm{m}$, $m = 0{,}050\,\mathrm{kg}$, $g = 9{,}8\,\mathrm{m/s^2}$, podlaga in klanec sta brez trenja
+**Iščemo:** a) hitrost $v$, s katero telo zapusti vzmet; b) višino $h$, do katere se dvigne
+
+:::formula
+Ohranitev mehanske energije: $W_{pr} = \dfrac{kx^2}{2}$, $\dfrac{kx^2}{2} = \dfrac{mv^2}{2}$ (a) in $\dfrac{mv^2}{2} = mgh$ (b)
+:::
+
+**Rešitev:**
+
 1. **Začetna energija (stisnjena vzmet):** $W_{pr} = \dfrac{kx^2}{2} = \dfrac{200 \cdot 0{,}10^2}{2} = \dfrac{200 \cdot 0{,}01}{2} = 1{,}0\,\mathrm{J}$.
 2. **a) Vsa prožnostna energija se pretvori v kinetično:** $\dfrac{mv^2}{2} = 1{,}0\,\mathrm{J}$.
 3. $v^2 = \dfrac{2 \cdot 1{,}0}{0{,}050} = 40\,\mathrm{m^2/s^2}$, zato $v = \sqrt{40} \approx 6{,}3\,\mathrm{m/s}$.
@@ -93,11 +120,11 @@ b) Telo nato zdrsi po gladkem klancu navzgor. Do katere višine se dvigne?
 ## Pogoste napake
 
 - **Pozabljena pretvorba enot.** Hitrost v $\mathrm{km/h}$ moraš pred uporabo formule pretvoriti v $\mathrm{m/s}$ (deli s $3{,}6$).
-- **Pozabljen kvadrat ali faktor $\tfrac12$.** Pri $W_k$ in $W_{pr}$ je kvadrat na $v$ oziroma $x$, ne na celotnem izrazu. Pri $W_k = mv^2/2$ ne pozabi na delitev z $2$.
+- **Pozabljen kvadrat ali faktor $\tfrac12$.** Pri $W_k$ in $W_{pr}$ je kvadrat na $v$ oziroma $x$, ne na celotnem izrazu. Pri $W_k = mv^2/2$ ne pozabi na deljenje z $2$.
 - **Raztezek $x$ zamenjaš z dolžino vzmeti.** V formuli je $x$ sprememba dolžine glede na ravnovesno lego, ne celotna dolžina vzmeti.
 - **Nejasna ničelna raven.** Če pri začetnem stanju računaš višino od tal, jo moraš tako računati tudi pri končnem.
 - **»Energija se izgubi.«** Pri trenju se mehanska energija zmanjša, vendar se spremeni v notranjo energijo. Skupna energija se ohranja.
-- **Mislimo, da je hitrost pri prostem padu odvisna od mase.** V primeru 2 se masa pokrajša: težji kamen pade z enako hitrostjo kot lažji (če zanemarimo upor zraka).
+- **Misliš, da je hitrost pri prostem padu odvisna od mase.** V primeru 2 se masa pokrajša: težji kamen pade z enako hitrostjo kot lažji (če zanemarimo upor zraka).
 
 ## Povzetek
 
@@ -114,7 +141,7 @@ Predstavljaj si energijo kot stolpčni diagram z več barvami: en stolpec za kin
 
 Drsalec na vrhu klanca ima visok stolpec potencialne energije in nič kinetične. Ko drsi navzdol, se potencialni stolpec zmanjšuje, kinetični pa raste. Na dnu je skoraj vsa energija kinetična. Ko se vzpenja po nasprotnem pobočju, se vse zgodi v obratnem vrstnem redu.
 
-Če v simulaciji vklopiš trenje, se pojavi še četrti stolpec: toplotna energija. Rdeči stolpec raste, skupna višina stolpcev pa še vedno ostaja nespremenjena.
+Če v interaktivni simulaciji spodaj vklopiš trenje, se pojavi še četrti stolpec: notranja (toplotna) energija. Ta stolpec raste, skupna višina vseh stolpcev pa še vedno ostaja nespremenjena.
 
 Podobno velja za vzmet: stisnjena vzmet ima visok stolpec prožnostne energije. Ko jo spustimo, se ta stolpec zmanjšuje, kinetični pa raste.
 
@@ -166,7 +193,7 @@ $$\frac{mv^2}{2} = mgh$$
 
 To je natanko ohranitev energije: kar telo izgubi pri potencialni energiji, pridobi pri kinetični.
 
-**Prožnostna energija.** Sila vzmeti je sorazmerna z raztezkom: $F = kx$. Ker sila narašča od $0$ do $kx$, je njena povprečna vrednost $\dfrac{kx}{2}$. Delo pri raztegu za $x$ je zato $\dfrac{kx}{2} \cdot x = \dfrac{kx^2}{2}$. (Natančna izpeljava s ploščino pod grafom $F(x)$ je ploščina trikotnika z osnovnico $x$ in višino $kx$, torej $\dfrac{x \cdot kx}{2}$.)
+**Prožnostna energija.** Sila vzmeti je sorazmerna z raztezkom: $F = kx$. Ker sila narašča od $0$ do $kx$, je njena povprečna vrednost $\dfrac{kx}{2}$. Delo pri raztegu za $x$ je zato $\dfrac{kx}{2} \cdot x = \dfrac{kx^2}{2}$. (Natančneje: delo je ploščina pod grafom $F(x)$, to je ploščina trikotnika z osnovnico $x$ in višino $kx$, torej $\dfrac{x \cdot kx}{2}$.)
 
 ## Preveri se
 
@@ -174,13 +201,13 @@ To je natanko ohranitev energije: kar telo izgubi pri potencialni energiji, prid
 - $18\,\mathrm{J}$
 - $6\,\mathrm{J}$
 + $9\,\mathrm{J}$
-> $W_k = \dfrac{mv^2}{2} = \dfrac{2 \cdot 3^2}{2} = \dfrac{18}{2} = 9\,\mathrm{J}$. Odgovor $18\,\mathrm{J}$ pozabi delitev z $2$, odgovor $6\,\mathrm{J}$ pa je produkt $mv$ brez kvadrata.
+> $W_k = \dfrac{mv^2}{2} = \dfrac{2 \cdot 3^2}{2} = \dfrac{18}{2} = 9\,\mathrm{J}$. Pri odgovoru $18\,\mathrm{J}$ je pozabljeno deljenje z $2$, odgovor $6\,\mathrm{J}$ pa je produkt $mv$ brez kvadrata.
 
 ? Vzmet s prožnostnim koeficientom $k = 100\,\mathrm{N/m}$ stisnemo za $0{,}20\,\mathrm{m}$. Kolikšna je njena prožnostna energija?
 - $20\,\mathrm{J}$
 - $4\,\mathrm{J}$
 + $2\,\mathrm{J}$
-> $W_{pr} = \dfrac{kx^2}{2} = \dfrac{100 \cdot 0{,}20^2}{2} = \dfrac{100 \cdot 0{,}04}{2} = 2\,\mathrm{J}$. Odgovor $20\,\mathrm{J}$ je $kx$ brez kvadrata in brez delitve z $2$, odgovor $4\,\mathrm{J}$ pa pozabi delitev z $2$.
+> $W_{pr} = \dfrac{kx^2}{2} = \dfrac{100 \cdot 0{,}20^2}{2} = \dfrac{100 \cdot 0{,}04}{2} = 2\,\mathrm{J}$. Odgovor $20\,\mathrm{J}$ je $kx$ brez kvadrata in brez delitve z $2$, pri odgovoru $4\,\mathrm{J}$ pa je pozabljeno deljenje z $2$.
 
 ? Telo spustimo iz mirovanja z višine $h$ nad tlemi in zanemarimo upor zraka. Na kateri višini sta kinetična in potencialna energija telesa enaki?
 - Tik pred trkom ob tla

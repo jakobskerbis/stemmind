@@ -1,6 +1,6 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -11,7 +11,7 @@ V vsakdanjem govoru rečemo, da »delamo«, ko se učimo, razmišljamo ali drži
 
 ## Razlaga
 
-**1. Kdaj telo opravi delo.** Sila opravi delo, kadar telo premika. Pri tem mora imeti sila smer (vsaj približno) v smeri gibanja telesa. Potrebujemo torej dvoje: **silo** in **pot**, na kateri telo deluje.
+**1. Kdaj telo opravi delo.** Sila opravi delo, kadar telo premika. Pri tem mora imeti sila smer (vsaj približno) v smeri gibanja telesa. Potrebujemo torej dvoje: **silo** in **pot**, na kateri sila deluje.
 
 **2. Formula.** Če na telo deluje stalna sila $F$ v smeri gibanja in telo prepotuje pot $s$, je opravljeno delo:
 
@@ -30,7 +30,7 @@ Delo je $1\,\mathrm{J}$, kadar sila $1\,\mathrm{N}$ premakne telo za $1\,\mathrm
 **4. Kdaj je delo enako nič.**
 
 - Če se telo ne premakne ($s = 0$), je $A = 0$. Tudi če se zelo trudiš in potiskaš zid, ne opraviš dela.
-- Če je sila pravokotna na smer gibanja, delo ni opravljeno. Ko nosiš torbo po vodoravni poti, te sila, s katero držiš torbo, usmerjena navzgor, gibanje pa je vodoravno. Ta sila ne opravlja dela.
+- Če je sila pravokotna na smer gibanja, delo ni opravljeno. Ko nosiš torbo po vodoravni poti, je sila, s katero držiš torbo, usmerjena navzgor, gibanje pa je vodoravno. Ta sila ne opravlja dela.
 
 **5. Dviganje telesa.** Pri dviganju telesa s stalno hitrostjo mora sila dvigovanja uravnotežiti težo telesa. Teža je $F_g = m \cdot g$, pri čemer je $g \approx 10\,\dfrac{\mathrm{N}}{\mathrm{kg}}$. Teža telesa z maso $1\,\mathrm{kg}$ je torej približno $10\,\mathrm{N}$. Delo pri dvigovanju za višino $h$ je:
 
@@ -44,6 +44,15 @@ $$A = F_g \cdot h$$
 
 Otrok vleče voziček s stalno silo $20\,\mathrm{N}$ v smeri gibanja po poti $5\,\mathrm{m}$. Koliko dela opravi?
 
+**Podatki:** $F = 20\,\mathrm{N}$ (stalna sila v smeri gibanja), $s = 5\,\mathrm{m}$
+**Iščemo:** delo $A$
+
+:::formula
+$A = F \cdot s$
+:::
+
+**Rešitev:**
+
 1. Sila in pot sta v isti smeri, zato lahko uporabimo $A = F \cdot s$.
 2. Vstavimo: $A = 20\,\mathrm{N} \cdot 5\,\mathrm{m} = 100\,\mathrm{N\,m}$.
 3. Ker je $1\,\mathrm{N\,m} = 1\,\mathrm{J}$, je $A = 100\,\mathrm{J}$.
@@ -51,7 +60,16 @@ Otrok vleče voziček s stalno silo $20\,\mathrm{N}$ v smeri gibanja po poti $5\
 
 ### Primer 2: dviganje škatle
 
-Škatlo z maso $4\,\mathrm{kg}$ dvignemo enakomerno z tal na polico, ki je $1{,}5\,\mathrm{m}$ visoko. Koliko dela opravimo? Vzemi $g = 10\,\dfrac{\mathrm{N}}{\mathrm{kg}}$.
+Škatlo z maso $4\,\mathrm{kg}$ dvignemo enakomerno s tal na polico, ki je $1{,}5\,\mathrm{m}$ visoko. Koliko dela opravimo? Vzemi $g = 10\,\dfrac{\mathrm{N}}{\mathrm{kg}}$.
+
+**Podatki:** $m = 4\,\mathrm{kg}$, $h = 1{,}5\,\mathrm{m}$, $g = 10\,\dfrac{\mathrm{N}}{\mathrm{kg}}$, dviganje je enakomerno
+**Iščemo:** delo $A$
+
+:::formula
+Sila dvigovanja je enaka teži: $F_g = m \cdot g$, nato $A = F_g \cdot h$
+:::
+
+**Rešitev:**
 
 1. Pri enakomernem dviganju je sila dvigovanja enaka teži škatle. Izračunamo težo: $F_g = m \cdot g = 4\,\mathrm{kg} \cdot 10\,\dfrac{\mathrm{N}}{\mathrm{kg}} = 40\,\mathrm{N}$.
 2. Pot v smeri sile je višina: $s = h = 1{,}5\,\mathrm{m}$.
@@ -61,6 +79,15 @@ Otrok vleče voziček s stalno silo $20\,\mathrm{N}$ v smeri gibanja po poti $5\
 ### Primer 3 (težji): iskanje sile iz dela
 
 Delavec porine zaboj po vodoravnih tleh po poti $300\,\mathrm{cm}$ in pri tem opravi $540\,\mathrm{J}$ dela. S kolikšno stalno silo je potiskal v smeri gibanja?
+
+**Podatki:** $s = 300\,\mathrm{cm}$, $A = 540\,\mathrm{J}$, sila je stalna in kaže v smeri gibanja
+**Iščemo:** silo $F$
+
+:::formula
+Iz $A = F \cdot s$ sledi $F = \dfrac{A}{s}$
+:::
+
+**Rešitev:**
 
 1. Pot pretvorimo v metre: $300\,\mathrm{cm} = 3\,\mathrm{m}$.
 2. Iščemo silo, zato formulo preoblikujemo: iz $A = F \cdot s$ sledi $F = \dfrac{A}{s}$.
@@ -148,8 +175,8 @@ Formula $A = F \cdot s$ velja samo, če je sila stalna in kaže v smeri gibanja.
 + $60\,\mathrm{J}$
 > Teža škatle je $2\,\mathrm{kg} \cdot 10\,\dfrac{\mathrm{N}}{\mathrm{kg}} = 20\,\mathrm{N}$. Delo je $20\,\mathrm{N} \cdot 3\,\mathrm{m} = 60\,\mathrm{J}$. Odgovor $6$ uporabi samo maso, $20$ pa samo težo brez poti.
 
-? Dijak $10$ sekund z vso močjo potiska težko omaro, ki se ne premakne. Koliko dela opravi na omari?
+? Učenec $10$ sekund z vso močjo potiska težko omaro, ki se ne premakne. Koliko dela opravi na omari?
 + $0\,\mathrm{J}$, ker je pot enaka nič
 - $0\,\mathrm{J}$, ker se ne utrudi
 - Veliko, ker se trudi
-> Delo je $A = F \cdot s$. Ker se omara ne premakne, je $s = 0$ in zato $A = 0$, ne glede na to, kako se dijak trudi.
+> Delo je $A = F \cdot s$. Ker se omara ne premakne, je $s = 0$ in zato $A = 0$, ne glede na to, kako se učenec trudi.

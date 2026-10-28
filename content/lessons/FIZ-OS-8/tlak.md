@@ -1,7 +1,7 @@
 ---
 stanje: osnutek
 phet: under-pressure
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -56,6 +56,15 @@ Hidrostatični tlak je odvisen od gostote tekočine in globine, **ne pa od oblik
 
 Opeka teži $40\,\mathrm{N}$. Njena ploskev, s katero leži na tleh, ima ploščino $200\,\mathrm{cm^2}$. Kolikšen tlak povzroča na tla?
 
+**Podatki:** $F = F_g = 40\,\mathrm{N}$, $S = 200\,\mathrm{cm^2}$
+**Iščemo:** tlak $p$ na tla
+
+:::formula
+$p = \dfrac{F}{S}$, pri čemer ploščino najprej pretvorimo: $1\,\mathrm{m^2} = 10\,000\,\mathrm{cm^2}$
+:::
+
+**Rešitev:**
+
 1. Ploščino pretvorimo v $\mathrm{m^2}$, ker je enota paskal definirana z $\mathrm{m^2}$. $1\,\mathrm{m^2} = 10\,000\,\mathrm{cm^2}$, zato $S = 200 : 10\,000 = 0{,}02\,\mathrm{m^2}$.
 2. Sila na podlago je teža opeke: $F = 40\,\mathrm{N}$.
 3. Vstavimo: $p = \dfrac{F}{S} = \dfrac{40\,\mathrm{N}}{0{,}02\,\mathrm{m^2}} = 2000\,\mathrm{Pa}$.
@@ -65,21 +74,38 @@ Opeka teži $40\,\mathrm{N}$. Njena ploskev, s katero leži na tleh, ima plošč
 
 Kolikšen je hidrostatični tlak v globini $12\,\mathrm{m}$ pod gladino jezera? Gostota vode je $1000\,\dfrac{\mathrm{kg}}{\mathrm{m^3}}$.
 
-1. Podatki: $\rho = 1000\,\dfrac{\mathrm{kg}}{\mathrm{m^3}}$, $g = 10\,\dfrac{\mathrm{N}}{\mathrm{kg}}$, $h = 12\,\mathrm{m}$.
-2. Uporabimo $p = \rho g h$.
-3. Vstavimo: $p = 1000 \cdot 10 \cdot 12 = 120\,000\,\mathrm{Pa}$.
-4. Odgovor: $p = 120\,000\,\mathrm{Pa} = 120\,\mathrm{kPa} = 1{,}2\,\mathrm{bar}$.
-5. Smiselnost: vsakih $10\,\mathrm{m}$ vode doda približno $100\,000\,\mathrm{Pa}$, kar je približno en zračni tlak. Za $12\,\mathrm{m}$ je $120\,000\,\mathrm{Pa}$, torej prav.
+**Podatki:** $h = 12\,\mathrm{m}$, $\rho = 1000\,\dfrac{\mathrm{kg}}{\mathrm{m^3}}$, $g = 10\,\dfrac{\mathrm{N}}{\mathrm{kg}}$
+**Iščemo:** hidrostatični tlak $p$
 
-### Primer 3: težji, sila na steklo
+:::formula
+$p = \rho \, g \, h$
+:::
+
+**Rešitev:**
+
+1. Uporabimo $p = \rho g h$.
+2. Vstavimo: $p = 1000 \cdot 10 \cdot 12 = 120\,000\,\mathrm{Pa}$.
+3. Odgovor: $p = 120\,000\,\mathrm{Pa} = 120\,\mathrm{kPa} = 1{,}2\,\mathrm{bar}$.
+4. Smiselnost: vsakih $10\,\mathrm{m}$ vode doda približno $100\,000\,\mathrm{Pa}$, kar je približno en zračni tlak. Za $12\,\mathrm{m}$ je $120\,000\,\mathrm{Pa}$, torej prav.
+
+### Primer 3: sila na steklo maske (težji)
 
 Potapljač ima na globini $20\,\mathrm{m}$ v morju na potapljaški maski steklo s ploščino $150\,\mathrm{cm^2}$. Gostota morske vode je $1030\,\dfrac{\mathrm{kg}}{\mathrm{m^3}}$. S kolikšno silo pritiska voda na steklo (brez zračnega tlaka)?
+
+**Podatki:** $h = 20\,\mathrm{m}$, $S = 150\,\mathrm{cm^2}$, $\rho = 1030\,\dfrac{\mathrm{kg}}{\mathrm{m^3}}$, $g = 10\,\dfrac{\mathrm{N}}{\mathrm{kg}}$; zračnega tlaka ne upoštevamo
+**Iščemo:** silo $F$, s katero voda pritiska na steklo
+
+:::formula
+Najprej $p = \rho \, g \, h$, nato iz $p = \dfrac{F}{S}$ sledi $F = p \cdot S$ (ploščina v $\mathrm{m^2}$)
+:::
+
+**Rešitev:**
 
 1. Najprej hidrostatični tlak: $p = \rho g h = 1030 \cdot 10 \cdot 20 = 206\,000\,\mathrm{Pa}$.
 2. Ploščina v $\mathrm{m^2}$: $S = 150 : 10\,000 = 0{,}015\,\mathrm{m^2}$.
 3. Formulo $p = \dfrac{F}{S}$ preoblikujemo v $F = p \cdot S$, ker iščemo silo.
 4. Vstavimo: $F = 206\,000 \cdot 0{,}015 = 3090\,\mathrm{N}$.
-5. Odgovor: voda pritiska na steklo s silo približno $3090\,\mathrm{N}$. To je sila, ki bi jo imela teža telesa z maso približno $309\,\mathrm{kg}$. Zato morajo biti potapljaške maske iz trdnega stekla.
+5. Odgovor: voda pritiska na steklo s silo približno $3090\,\mathrm{N}$. To je sila, ki bi jo imela teža telesa z maso približno $309\,\mathrm{kg}$. Steklo zdrži, ker na njegovo notranjo stran pritiska zrak v maski: potapljač med spuščanjem skozi nos izdihuje zrak v masko in tako izenači tlak na obeh straneh stekla.
 
 ## Pogoste napake
 
@@ -104,12 +130,12 @@ Predstavljaj si stolp iz zloženih vrečk vode. Spodnja vrečka nosi vse nad seb
 
 Zdaj si zamisli dve posodi: ozko visoko cev in široko nizko skledo, obe napolnjeni do višine $h$. V cevi je vode malo, v skledi veliko. Vendar je vsaka točka na dnu obremenjena z istim "stolpcem" vode višine $h$ nad njo, zato je tlak enak.
 
-V simulaciji zgoraj premikaj merilnik tlaka globlje v vodo in opazuj, kako se vrednost veča. Spreminjaj obliko posode in ugotovi, da se tlak na enaki globini ne spremeni. Poskusi tudi z drugo tekočino (večja gostota pomeni večji tlak).
+V interaktivni simulaciji spodaj premikaj merilnik tlaka globlje v vodo in opazuj, kako se vrednost veča. Spreminjaj obliko posode in ugotovi, da se tlak na enaki globini ne spremeni. Poskusi tudi z drugo tekočino (večja gostota pomeni večji tlak).
 
 ## Drugače: Iz vsakdanjega življenja
 
 - **Žebelj in kladivo.** Z roko pritiskaš na glavico žeblja z enako silo, kot jo ima konica na les. Ploščina konice je mnogo manjša, zato je tlak na les mnogo večji in žebelj prodre.
-- **Smuči.** Težka oseba stoji na dveh ozkih čevljih in se pogrezne v sneg. S smučmi je ista teža razporejena na veliko ploščino, tlak je manjši in ne tonemo.
+- **Smuči.** Težka oseba stoji na dveh ozkih čevljih in se pogrezne v sneg. S smučmi je ista teža razporejena na veliko ploščino, tlak je manjši in se ne pogrezne.
 - **Bazen.** Na dnu globokega dela čutiš pritisk na ušesa. Tam je tlak večji zaradi večje globine, ne zaradi tega, da je voda "težja".
 - **Jez.** Zid jezu je ob dnu debelejši kot zgoraj, ker je tlak ob dnu večji.
 

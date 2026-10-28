@@ -1,13 +1,13 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
 Iz prejšnjih lekcij že veš, da opravimo **delo**, kadar sila premika telo, in da delo izračunamo kot $A = F \cdot s$ (kadar sila kaže v smeri gibanja). Delo merimo v joulih ($\mathrm{J}$). Veš tudi, da se delo porabi za spremembo energije telesa.
 
-Vendar delo samo še ne pove vsega. Če dvigneš vrečo moke na polico v $2\,\text{s}$ ali v $20\,\text{s}$, opraviš enako delo, a v prvem primeru si bil veliko »hitrejši«. Hitrost opravljanja dela opiše fizikalna količina **moč**. Moč uporabljamo pri žarnicah, motorjih avtomobilov, gospodinjskih aparatih in električnih računih. Poleg tega se nikoli ne izkoristi vsa dovedena energija. Koliko jo je koristno porabljene, pove **izkoristek**.
+Vendar delo samo še ne pove vsega. Če dvigneš vrečo moke na polico v $2\,\text{s}$ ali v $20\,\text{s}$, opraviš enako delo, a v prvem primeru si bil veliko »hitrejši«. Hitrost opravljanja dela opiše fizikalna količina **moč**. Moč uporabljamo pri žarnicah, motorjih avtomobilov, gospodinjskih aparatih in električnih računih. Poleg tega se nikoli ne izkoristi vsa dovedena energija. Kolikšen del je koristno uporabljen, pove **izkoristek**.
 
 ## Razlaga
 
@@ -42,14 +42,32 @@ Izražamo ga kot decimalno število ali v odstotkih. Izkoristek je vedno manjši
 
 Dvigalo v $5\,\text{s}$ opravi $2000\,\mathrm{J}$ dela. Kolikšna je njegova moč?
 
+**Podatki:** $A = 2000\,\mathrm{J}$, $t = 5\,\mathrm{s}$
+**Iščemo:** moč $P$
+
+:::formula
+$P = \dfrac{A}{t}$
+:::
+
+**Rešitev:**
+
 1. Iščemo moč, zato uporabimo $P = \dfrac{A}{t}$.
 2. Vstavimo: $P = \dfrac{2000\,\mathrm{J}}{5\,\mathrm{s}}$.
 3. Izračunamo: $P = 400\,\mathrm{W}$.
 4. Smiselnost: v vsaki sekundi dvigalo opravi $400\,\mathrm{J}$ dela, in $400 \cdot 5 = 2000$. ✓
 
-### Primer 2: delo in čas iz moči
+### Primer 2: delo iz moči in časa
 
 Električni grelnik ima moč $1500\,\mathrm{W}$. Koliko energije porabi v $2\,\text{min}$?
+
+**Podatki:** $P = 1500\,\mathrm{W}$, $t = 2\,\text{min}$
+**Iščemo:** porabljeno energijo (električno delo) $A$
+
+:::formula
+Iz $P = \dfrac{A}{t}$ sledi $A = P \cdot t$ (čas v sekundah)
+:::
+
+**Rešitev:**
 
 1. Iščemo delo (energijo): $A = P \cdot t$.
 2. **Čas pretvorimo v sekunde**, ker je vat definiran z jouli na sekundo: $t = 2\,\text{min} = 120\,\mathrm{s}$.
@@ -60,6 +78,15 @@ Električni grelnik ima moč $1500\,\mathrm{W}$. Koliko energije porabi v $2\,\t
 ### Primer 3: moč pri dvigovanju in izkoristek
 
 Motor dvigne breme z maso $50\,\text{kg}$ na višino $12\,\text{m}$ v $10\,\text{s}$. Motor ima dovedeno moč $1000\,\mathrm{W}$. Vzemi $g = 10\,\dfrac{\mathrm{N}}{\mathrm{kg}}$. Izračunaj koristno moč in izkoristek motorja.
+
+**Podatki:** $m = 50\,\text{kg}$, $h = 12\,\text{m}$, $t = 10\,\text{s}$, $P_\text{dovedena} = 1000\,\mathrm{W}$, $g = 10\,\dfrac{\mathrm{N}}{\mathrm{kg}}$
+**Iščemo:** koristno moč $P_\text{koristna}$ in izkoristek $\eta$
+
+:::formula
+$F = m \cdot g$, $A = F \cdot h$, $P_\text{koristna} = \dfrac{A}{t}$, $\eta = \dfrac{P_\text{koristna}}{P_\text{dovedena}}$
+:::
+
+**Rešitev:**
 
 1. **Sila.** Breme dvigamo enakomerno, zato je potrebna sila enaka teži: $F = m \cdot g = 50\,\text{kg} \cdot 10\,\dfrac{\mathrm{N}}{\mathrm{kg}} = 500\,\mathrm{N}$.
 2. **Koristno delo.** $A = F \cdot s = 500\,\mathrm{N} \cdot 12\,\mathrm{m} = 6000\,\mathrm{J}$.
@@ -85,9 +112,9 @@ Motor dvigne breme z maso $50\,\text{kg}$ na višino $12\,\text{m}$ v $10\,\text
 
 ## Drugače: Na sliki
 
-Predstavljaj si dve osebi, ki prenašata opeke iz kupa na vozilo. Obe prenesete $100$ opek, ki zahtevajo enako delo $A$. Prva oseba to opravi v $10$ minutah, druga v $5$ minutah. Delo je enako, druga oseba pa ima **dvakrat večjo moč**, ker delo opravi v pol krajšem času.
+Predstavljaj si dve osebi, ki prenašata opeke iz kupa na vozilo. Obe preneseta $100$ opek, ki zahtevajo enako delo $A$. Prva oseba to opravi v $10$ minutah, druga v $5$ minutah. Delo je enako, druga oseba pa ima **dvakrat večjo moč**, ker delo opravi v pol krajšem času.
 
-Če narišeš graf dela v odvisnosti od časa, je delo v enem primeru strmejša premica, v drugem položnejša. **Strmina premice je moč**: bolj strma kot je premica, več dela se opravi v sekundi.
+Če narišeš graf dela v odvisnosti od časa, je graf v enem primeru strmejša premica, v drugem položnejša. **Strmina premice je moč**: bolj strma kot je premica, več dela se opravi v sekundi.
 
 Izkoristek si predstavljaj kot škatlo: v njo vstopi $100$ enot energije, ven pride npr. $60$ koristnih, preostalih $40$ uide kot toplota. Izkoristek je $\dfrac{60}{100} = 60\,\%$.
 
@@ -149,7 +176,7 @@ Izkoristek je razmerje dveh količin z isto enoto, zato nima enote. Ker je koris
 - $60\,\mathrm{J}$
 - $2030\,\mathrm{J}$
 + $60\,000\,\mathrm{J}$
-> $2\,\mathrm{kW} = 2000\,\mathrm{W}$, zato $A = P \cdot t = 2000\,\mathrm{W} \cdot 30\,\mathrm{s} = 60\,000\,\mathrm{J}$. Rezultat $60\,\mathrm{J}$ nastane, če kilovate ne pretvoriš v vate.
+> $2\,\mathrm{kW} = 2000\,\mathrm{W}$, zato $A = P \cdot t = 2000\,\mathrm{W} \cdot 30\,\mathrm{s} = 60\,000\,\mathrm{J}$. Rezultat $60\,\mathrm{J}$ nastane, če kilovatov ne pretvoriš v vate.
 
 ? Motor dobi $800\,\mathrm{J}$ energije, koristno delo pa je $600\,\mathrm{J}$. Kolikšen je izkoristek?
 - $133\,\%$

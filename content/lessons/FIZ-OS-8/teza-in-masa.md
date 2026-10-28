@@ -1,17 +1,17 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Iz vsakdanjega življenja že veš, da je nekaj težko ali lahko. Na trgovini kupiš kilogram moke, na tehtnici pa vidiš številko v kilogramih. Pogosto rečemo, da je »teža moke en kilogram«. V fiziki pa to ni povsem pravilno: kilogram je enota za **maso**, **teža** pa je nekaj drugega.
+Iz vsakdanjega življenja že veš, da je nekaj težko ali lahko. V trgovini kupiš kilogram moke, na tehtnici pa vidiš številko v kilogramih. Pogosto rečemo, da je »teža moke en kilogram«. V fiziki pa to ni povsem pravilno: kilogram je enota za **maso**, **teža** pa je nekaj drugega.
 
 Že iz prejšnjih tem veš, da sila spremeni gibanje ali obliko telesa in da jo merimo v newtonih ($\text{N}$). Zdaj bomo spoznali eno najpogostejših sil, to je težo, ter razumeli, zakaj ni isto kot masa. To je pomembno, ker:
 
 - astronavt na Luni ni »lažji« v smislu mase, vendar je njegova teža manjša,
 - inženir mora vedeti, kolikšno silo prenese most ali vrv,
-- pri vsakem tehtanju moraš vedeti, kaj dejansko merimo.
+- pri vsakem tehtanju moraš vedeti, kaj dejansko meriš.
 
 ## Razlaga
 
@@ -37,7 +37,7 @@ $$m = \dfrac{F_g}{g}$$
 
 **6. Teža ni povsod enaka.** Na Luni je $g$ približno šestkrat manjši kot na Zemlji, zato je tam teža istega telesa manjša, masa pa ostane enaka.
 
-**7. Tehtnica in merjenje.** Domača tehtnica meri silo, s katero stojiš nanjo, in jo preračuna v kilograme. Zato kaže maso, če jo uporabljaš na Zemlji. Silomer (vzmetna tehtnica) neposredno meri težo v newtonih.
+**7. Tehtnica in merjenje.** Domača tehtnica meri silo, s katero pritiskaš nanjo, in jo preračuna v kilograme. Zato kaže maso, če jo uporabljaš na Zemlji. Silomer (vzmetna tehtnica) neposredno meri težo v newtonih.
 
 **8. Pogosto zaokrožanje.** Pri računih v šoli včasih uporabljamo $g \approx 10\,\dfrac{\text{N}}{\text{kg}}$. V tej lekciji računamo z $9{,}81\,\dfrac{\text{N}}{\text{kg}}$, razen kjer je napisano drugače.
 
@@ -47,28 +47,57 @@ $$m = \dfrac{F_g}{g}$$
 
 Kolikšna je teža telesa z maso $5\,\text{kg}$?
 
+**Podatki:** $m = 5\,\text{kg}$, $g = 9{,}81\,\dfrac{\text{N}}{\text{kg}}$
+**Iščemo:** težo $F_g$
+
+:::formula
+$F_g = m \cdot g$
+:::
+
+**Rešitev:**
+
 1. Iščemo težo, poznamo maso: uporabimo $F_g = m \cdot g$.
 2. Vstavimo: $F_g = 5\,\text{kg} \cdot 9{,}81\,\dfrac{\text{N}}{\text{kg}}$.
 3. Enota kg se pokrajša, ostane newton: $F_g = 49{,}05\,\text{N}$.
 4. Preverimo smiselnost: teža v newtonih je približno desetkrat večja od mase v kilogramih ($5 \cdot 10 = 50$). ✓
+5. Odgovor: teža telesa je $49{,}05\,\text{N}$.
 
 ### Primer 2: masa iz teže
 
 Silomer pokaže, da je teža nekega telesa $24{,}525\,\text{N}$. Kolikšna je masa telesa?
 
+**Podatki:** $F_g = 24{,}525\,\text{N}$, $g = 9{,}81\,\dfrac{\text{N}}{\text{kg}}$
+**Iščemo:** maso $m$
+
+:::formula
+$m = \dfrac{F_g}{g}$
+:::
+
+**Rešitev:**
+
 1. Iščemo maso, poznamo težo: $m = \dfrac{F_g}{g}$.
 2. Vstavimo: $m = \dfrac{24{,}525\,\text{N}}{9{,}81\,\text{N/kg}}$.
 3. Izračunamo: $m = 2{,}5\,\text{kg}$.
 4. Preverimo: $2{,}5 \cdot 9{,}81 = 24{,}525$. ✓
+5. Odgovor: masa telesa je $2{,}5\,\text{kg}$.
 
 ### Primer 3: Zemlja in Luna
 
 Astronavt ima skupaj z opremo maso $120\,\text{kg}$. Na Luni je gravitacijski pospešek približno $1{,}6\,\dfrac{\text{N}}{\text{kg}}$. Izračunaj njegovo težo na Zemlji in na Luni ter primerjaj masi.
 
-1. **Teža na Zemlji.** $F_g = 120\,\text{kg} \cdot 9{,}81\,\dfrac{\text{N}}{\text{kg}} = 1177{,}2\,\text{N}$.
-2. **Teža na Luni.** $F_g = 120\,\text{kg} \cdot 1{,}6\,\dfrac{\text{N}}{\text{kg}} = 192\,\text{N}$.
-3. **Masa.** Masa je na obeh telesih enaka: $120\,\text{kg}$. Masa je lastnost telesa in ni odvisna od kraja.
-4. **Primerjava.** Teža na Luni je približno $\dfrac{1177{,}2}{192} \approx 6{,}1$-krat manjša kot na Zemlji, kar se ujema s podatkom, da je Luna šestkrat šibkejša.
+**Podatki:** $m = 120\,\text{kg}$, na Zemlji $g_\text{Z} = 9{,}81\,\dfrac{\text{N}}{\text{kg}}$, na Luni $g_\text{L} = 1{,}6\,\dfrac{\text{N}}{\text{kg}}$
+**Iščemo:** težo na Zemlji $F_{g,\text{Z}}$, težo na Luni $F_{g,\text{L}}$ in primerjavo mas na obeh nebesnih telesih
+
+:::formula
+$F_g = m \cdot g$, pri čemer za vsako nebesno telo vstavimo njegov $g$; masa $m$ je povsod enaka
+:::
+
+**Rešitev:**
+
+1. **Teža na Zemlji.** $F_{g,\text{Z}} = 120\,\text{kg} \cdot 9{,}81\,\dfrac{\text{N}}{\text{kg}} = 1177{,}2\,\text{N}$.
+2. **Teža na Luni.** $F_{g,\text{L}} = 120\,\text{kg} \cdot 1{,}6\,\dfrac{\text{N}}{\text{kg}} = 192\,\text{N}$.
+3. **Masa.** Masa je na obeh nebesnih telesih enaka: $120\,\text{kg}$. Masa je lastnost telesa in ni odvisna od kraja.
+4. **Primerjava.** Teža na Luni je približno $\dfrac{1177{,}2}{192} \approx 6{,}1$-krat manjša kot na Zemlji, kar se ujema s podatkom, da je $g$ na Luni približno šestkrat manjši kot na Zemlji.
 5. **Odgovor.** Teža na Zemlji je $1177{,}2\,\text{N}$, na Luni $192\,\text{N}$, masa pa je v obeh primerih $120\,\text{kg}$.
 
 ## Pogoste napake
@@ -127,7 +156,7 @@ Primer s pretvorbo: telo ima maso $250\,\text{g}$. Najprej $250\,\text{g} = 0{,}
 
 ## Drugače: Bolj natančno
 
-Gravitacijsko silo med dvema telesoma opisuje Newtonov gravitacijski zakon. Velja, da je sila večja, če sta telesi masivnejši, in manjša, če sta bolj narazen. Zemlja ima veliko maso, zato na telesa blizu površja deluje opazno sila.
+Gravitacijsko silo med dvema telesoma opisuje Newtonov gravitacijski zakon. Velja, da je sila večja, če sta telesi masivnejši, in manjša, če sta bolj narazen. Zemlja ima veliko maso, zato na telesa blizu površja deluje z opazno silo.
 
 Za telo z maso $m$ blizu površja Zemlje je ta sila približno $m \cdot g$, kjer je $g$ odvisen od mase in polmera Zemlje. Zato ima $g$ na različnih nebesnih telesih različne vrednosti. Na Luni je $g$ manjši, ker ima Luna manjšo maso.
 
@@ -138,7 +167,7 @@ Pomembno je razlikovati dve količini:
 - masa je **skalar** in ni odvisna od kraja,
 - teža je **vektor** (sila), ki je odvisna od kraja, kjer se telo nahaja.
 
-Vrednost $g = 9{,}81\,\dfrac{\text{N}}{\text{kg}}$ je povprečna vrednost za Zemljo. Na različnih krajih se nekoliko razlikuje, zato je to za šolske naloge dovolj dober podatek.
+Vrednost $g = 9{,}81\,\dfrac{\text{N}}{\text{kg}}$ je povprečna vrednost za Zemljo. Na različnih krajih se nekoliko razlikuje, a je za šolske naloge to dovolj dober podatek.
 
 ## Preveri se
 

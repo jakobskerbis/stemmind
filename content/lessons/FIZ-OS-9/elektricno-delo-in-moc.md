@@ -1,11 +1,11 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Iz prejšnjih lekcij o električnem toku že znaš, da električni tok $I$ merimo v amperih ($\mathrm{A}$) in električno napetost $U$ v voltih ($\mathrm{V}$). Znaš tudi, da imajo porabniki (žarnica, grelnik, motor) različne lastnosti: nekateri svetijo močneje, drugi šibkeje, nekateri hitro segrejejo vodo, drugi počasi.
+Iz prejšnjih lekcij o električnem toku že veš, da električni tok $I$ merimo v amperih ($\mathrm{A}$) in električno napetost $U$ v voltih ($\mathrm{V}$). Veš tudi, da imajo porabniki (žarnica, grelnik, motor) različne lastnosti: nekateri svetijo močneje, drugi šibkeje, nekateri hitro segrejejo vodo, drugi počasi.
 
 Na vsakem gospodinjskem aparatu je napisana številka v vatih ($\mathrm{W}$), na računu za elektriko pa so kilovatne ure ($\mathrm{kWh}$). Ti dve količini sta povezani z **električno močjo** in **električnim delom**. Ko ju razumeš, lahko izračunaš, koliko energije porabi aparat, koliko stane njegovo delovanje in kateri aparati največ obremenjujejo tvojo domačo denarnico.
 
@@ -31,7 +31,7 @@ Ker je $A = P \cdot t$ in $P = U \cdot I$, velja tudi:
 
 $$A = U \cdot I \cdot t$$
 
-**4. Kilovatna ura.** Joul je zelo majhna enota, zato elektrodistributerji merijo porabo v **kilovatnih urah** ($\mathrm{kWh}$). To je delo, ki ga opravi porabnik z močjo $1\,\mathrm{kW}$ v eni uri:
+**4. Kilovatna ura.** Joule je zelo majhna enota, zato elektrodistributerji merijo porabo v **kilovatnih urah** ($\mathrm{kWh}$). To je delo, ki ga opravi porabnik z močjo $1\,\mathrm{kW}$ v eni uri:
 
 $$1\,\mathrm{kWh} = 1000\,\mathrm{W} \cdot 3600\,\mathrm{s} = 3\,600\,000\,\mathrm{J}$$
 
@@ -52,6 +52,15 @@ $$\text{strošek} = \text{delo v kWh} \cdot \text{cena na kWh}$$
 
 Žarnica je priključena na napetost $230\,\mathrm{V}$ in skozi njo teče tok $0{,}1\,\mathrm{A}$. Kolikšna je njena moč?
 
+**Podatki:** $U = 230\,\mathrm{V}$, $I = 0{,}1\,\mathrm{A}$
+**Iščemo:** moč $P$
+
+:::formula
+$P = U \cdot I$
+:::
+
+**Rešitev:**
+
 1. Poznamo napetost in tok, iščemo moč, zato uporabimo $P = U \cdot I$.
 2. Vstavimo: $P = 230\,\mathrm{V} \cdot 0{,}1\,\mathrm{A} = 23\,\mathrm{W}$.
 3. Preverimo smiselnost: $23\,\mathrm{W}$ je moč varčne svetilke, kar je realno.
@@ -60,6 +69,15 @@ $$\text{strošek} = \text{delo v kWh} \cdot \text{cena na kWh}$$
 
 Električni grelnik z močjo $2\,\mathrm{kW}$ deluje $3\,\mathrm{h}$. Koliko električnega dela opravi in koliko stane, če je cena $0{,}20\,\text{€}$ za $1\,\mathrm{kWh}$?
 
+**Podatki:** $P = 2\,\mathrm{kW}$, $t = 3\,\mathrm{h}$, cena $0{,}20\,\text{€}$ za $1\,\mathrm{kWh}$
+**Iščemo:** električno delo $A$ (v $\mathrm{kWh}$) in strošek
+
+:::formula
+$A = P \cdot t$ (moč v $\mathrm{kW}$ in čas v $\mathrm{h}$ dasta delo v $\mathrm{kWh}$), strošek = delo v $\mathrm{kWh}$ $\cdot$ cena na $\mathrm{kWh}$
+:::
+
+**Rešitev:**
+
 1. Moč je že v $\mathrm{kW}$, čas v $\mathrm{h}$, zato delo dobimo neposredno v $\mathrm{kWh}$.
 2. $A = P \cdot t = 2\,\mathrm{kW} \cdot 3\,\mathrm{h} = 6\,\mathrm{kWh}$.
 3. Strošek: $6\,\mathrm{kWh} \cdot 0{,}20\,\dfrac{\text{€}}{\mathrm{kWh}} = 1{,}20\,\text{€}$.
@@ -67,7 +85,16 @@ Električni grelnik z močjo $2\,\mathrm{kW}$ deluje $3\,\mathrm{h}$. Koliko ele
 
 ### Primer 3: tok iz moči in poraba v več dneh
 
-Kuhalnik ima moč $1500\,\mathrm{W}$ in je priključen na $230\,\mathrm{V}$. a) Kolikšen tok teče skozi njega? b) Koliko energije porabi v 30 dneh, če dnevno deluje $40\,\text{min}$?
+Kuhalnik ima moč $1500\,\mathrm{W}$ in je priključen na $230\,\mathrm{V}$. a) Kolikšen tok teče skozi njega? b) Koliko energije porabi v $30$ dneh, če dnevno deluje $40\,\text{min}$, in koliko to stane pri ceni $0{,}20\,\text{€}$ za $1\,\mathrm{kWh}$?
+
+**Podatki:** $P = 1500\,\mathrm{W}$, $U = 230\,\mathrm{V}$, $30$ dni po $40\,\text{min}$ na dan, cena $0{,}20\,\text{€}$ za $1\,\mathrm{kWh}$
+**Iščemo:** a) tok $I$; b) električno delo $A$ v $\mathrm{kWh}$ in strošek
+
+:::formula
+a) Iz $P = U \cdot I$ sledi $I = \dfrac{P}{U}$. b) $A = P \cdot t$ (moč v $\mathrm{kW}$, čas v $\mathrm{h}$), strošek = $A$ $\cdot$ cena na $\mathrm{kWh}$
+:::
+
+**Rešitev:**
 
 **a)**
 

@@ -1,26 +1,26 @@
 ---
 stanje: osnutek
 demo: prosti-pad
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
 Iz prejšnjih tem že veš, kaj je hitrost ($v = s/t$), da se hitrost telesa spreminja, če nanj deluje sila, in da ima težnost vedno enako smer: navzdol proti tlom. Vsak dan opaziš, da stvari padajo: telefon ti zdrsne iz roke, jabolko pade z veje, kapljica z vrha strehe.
 
-Zanima nas, **kako hitro** telo pada in **kako daleč** pade v določenem času. Odgovor je presenetljivo preprost: pri padanju brez upora zraka se hitrost vsako sekundo poveča za enako vrednost. S tem znaš oceniti, kako globoka je vodnjak (spustiš kamen in izmeriš čas do pljuska), kako hitro priletiš na tla s skoka ali kako dolgo pada predmet z balkona.
+Zanima nas, **kako hitro** telo pada in **kako daleč** pade v določenem času. Odgovor je presenetljivo preprost: pri padanju brez upora zraka se hitrost vsako sekundo poveča za enako vrednost. S tem znaš oceniti, kako globok je vodnjak (spustiš kamen in izmeriš čas do pljuska), kako hitro priletiš na tla s skoka ali kako dolgo pada predmet z balkona.
 
 ## Razlaga
 
 **1. Kaj je prosti pad.** Prosti pad je gibanje telesa samo pod vplivom težnosti, brez drugih sil. V resnici vedno deluje tudi upor zraka, vendar je pri gostih in majhnih telesih (kamen, kovinska kroglica) na kratkih razdaljah tako majhen, da ga lahko zanemarimo. Pri peresu ali listu papirja upor ni zanemarljiv, zato padata počasi.
 
-**2. Pospešek.** Pospešek pove, za koliko se hitrost spremeni v eni sekundi. Pri prostem padu je pospešek vedno enak. Imenujemo ga **težnostni pospešek** in ga označimo z $g$. Na Zemlji je
+**2. Pospešek.** Pospešek pove, za koliko se hitrost spremeni v eni sekundi. Pri prostem padu je pospešek vedno enak. Imenujemo ga **težnostni pospešek** (tudi težni pospešek) in ga označimo z $g$. Na Zemlji je
 
 $$g \approx 9{,}8\,\mathrm{\frac{m}{s^2}}$$
 
 To pomeni: vsako sekundo se hitrost padajočega telesa poveča za približno $9{,}8\,\mathrm{\frac{m}{s}}$. Za enostavnejše računanje pogosto vzamemo $g \approx 10\,\mathrm{\frac{m}{s^2}}$. V tej lekciji bomo uporabljali $g = 9{,}8\,\mathrm{\frac{m}{s^2}}$, razen kjer je zapisano drugače.
 
-**3. Vsa telesa padajo enako.** Brez upora zraka težko in lahko telo padata z enakim pospeškom. Masa na pospešek ne vpliva. Težje telo sicer privlači večja sila, vendar ga je zaradi večje mase tudi težje pospešiti, in se to natanko izravna.
+**3. Vsa telesa padajo enako.** Brez upora zraka težko in lahko telo padata z enakim pospeškom. Masa na pospešek ne vpliva. Težje telo sicer privlači večja sila, vendar ga je zaradi večje mase tudi težje pospešiti, in to se natanko izravna.
 
 **4. Hitrost pri prostem padu.** Telo spustimo (začetna hitrost je $0$). Po času $t$ je hitrost
 
@@ -40,33 +40,60 @@ Pot narašča s **kvadratom** časa: če je čas dvakrat daljši, je pot štirik
 
 Kamen spustimo z roke. Kolikšna je njegova hitrost po $3\,\mathrm{s}$? Upor zraka zanemarimo.
 
+**Podatki:** $t = 3\,\mathrm{s}$, začetna hitrost $v_0 = 0$ (kamen spustimo), $g = 9{,}8\,\mathrm{\frac{m}{s^2}}$, upor zraka zanemarimo
+**Iščemo:** hitrost $v$ po $3\,\mathrm{s}$
+
+:::formula
+Hitrost pri prostem padu iz mirovanja: $v = g\,t$
+:::
+
+**Rešitev:**
+
 1. Telo je spuščeno, zato velja $v = g\,t$.
 2. Vstavimo: $v = 9{,}8\,\mathrm{\frac{m}{s^2}} \cdot 3\,\mathrm{s}$.
 3. Izračunamo: $v = 29{,}4\,\mathrm{\frac{m}{s}}$.
 4. Smiselnost: vsako sekundo se hitrost poveča za $9{,}8\,\mathrm{\frac{m}{s}}$, torej po treh sekundah za $3 \cdot 9{,}8 = 29{,}4\,\mathrm{\frac{m}{s}}$. ✓
+5. Odgovor: po $3\,\mathrm{s}$ ima kamen hitrost $29{,}4\,\mathrm{\frac{m}{s}}$.
 
 ### Primer 2: globina vodnjaka
 
 Kamen spustimo v vodnjak in pljusk slišimo (oziroma vidimo) po $2\,\mathrm{s}$. Kako globok je vodnjak? Čas, ki ga potrebuje zvok, zanemarimo.
 
-1. Iščemo pot pri prostem padu: $h = \dfrac{1}{2}\,g\,t^2$.
+**Podatki:** $t = 2\,\mathrm{s}$, začetna hitrost $v_0 = 0$ (kamen spustimo), $g = 9{,}8\,\mathrm{\frac{m}{s^2}}$, čas potovanja zvoka zanemarimo
+**Iščemo:** globina vodnjaka $h$ (pot pri prostem padu)
+
+:::formula
+Pot pri prostem padu iz mirovanja: $h = \dfrac{1}{2}\,g\,t^2$
+:::
+
+**Rešitev:**
+
+1. Uporabimo enačbo za pot pri prostem padu: $h = \dfrac{1}{2}\,g\,t^2$.
 2. Najprej izračunamo kvadrat časa: $t^2 = 2^2 = 4\,\mathrm{s^2}$. (Kvadriramo čas, ne produkta $g\,t$.)
 3. Vstavimo: $h = \dfrac{1}{2} \cdot 9{,}8 \cdot 4 = 19{,}6\,\mathrm{m}$.
 4. Preverimo s hitrostjo: po $2\,\mathrm{s}$ je $v = 19{,}6\,\mathrm{\frac{m}{s}}$, povprečna hitrost je $9{,}8\,\mathrm{\frac{m}{s}}$, pot je $9{,}8 \cdot 2 = 19{,}6\,\mathrm{m}$. ✓
-
-Vodnjak je globok približno $19{,}6\,\mathrm{m}$.
+5. Odgovor: vodnjak je globok približno $19{,}6\,\mathrm{m}$.
 
 ### Primer 3: čas padanja in končna hitrost (težji)
 
 Predmet pade z balkona na višini $20\,\mathrm{m}$. Izračunaj, kako dolgo pada in s kolikšno hitrostjo zadene tla. Vzemi $g = 10\,\mathrm{\frac{m}{s^2}}$.
 
-1. **Kaj iščemo.** Najprej čas $t$, potem hitrost $v$.
+**Podatki:** $h = 20\,\mathrm{m}$, začetna hitrost $v_0 = 0$ (predmet pade z balkona), $g = 10\,\mathrm{\frac{m}{s^2}}$
+**Iščemo:** čas padanja $t$ in hitrost ob tleh $v$
+
+:::formula
+Iz $h = \dfrac{1}{2}\,g\,t^2$ izrazimo čas: $t = \sqrt{\dfrac{2h}{g}}$, nato $v = g\,t$
+:::
+
+**Rešitev:**
+
+1. **Vrstni red.** Najprej izračunamo čas $t$, potem hitrost $v$.
 2. **Čas iz poti.** Iz $h = \dfrac{1}{2}\,g\,t^2$ izrazimo $t^2$: množimo z $2$ in delimo z $g$:
  $$t^2 = \frac{2h}{g} = \frac{2 \cdot 20}{10} = 4\,\mathrm{s^2}$$
 3. **Koren.** Iščemo $t$, ne $t^2$: $t = \sqrt{4} = 2\,\mathrm{s}$.
 4. **Hitrost.** $v = g\,t = 10 \cdot 2 = 20\,\mathrm{\frac{m}{s}}$.
 5. **Preverimo.** $\dfrac{1}{2} \cdot 10 \cdot 2^2 = 20\,\mathrm{m}$, kar je res višina balkona. ✓
-6. **Občutek.** $20\,\mathrm{\frac{m}{s}} = 72\,\mathrm{\frac{km}{h}}$, saj $20 \cdot 3{,}6 = 72$. Predmet torej tla zadene s hitrostjo avtomobila v naselju.
+6. **Občutek.** $20\,\mathrm{\frac{m}{s}} = 72\,\mathrm{\frac{km}{h}}$, saj $20 \cdot 3{,}6 = 72$. Predmet torej tla zadene s hitrostjo avtomobila zunaj naselja (več kot dovoljenih $50\,\mathrm{\frac{km}{h}}$ v naselju).
 
 **Odgovor:** pada $2\,\mathrm{s}$ in zadene tla s hitrostjo $20\,\mathrm{\frac{m}{s}}$.
 
