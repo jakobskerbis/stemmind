@@ -1,17 +1,17 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Iz 8. razreda že poznaš temperaturo (merimo jo v stopinjah Celzija) in veš, da se snovi pri segrevanju raztezajo. Poznaš tudi pojma masa ($m$, v kilogramih) in energija (v joulih).
+Iz naravoslovja in prejšnje teme že poznaš temperaturo (merimo jo v stopinjah Celzija) in veš, da se snovi pri segrevanju raztezajo. Poznaš tudi pojma masa ($m$, v kilogramih) in energija (v joulih).
 
-Zdaj se vprašamo: **koliko energije moramo dovesti, da se nekaj segreje?** Zakaj se voda v loncu segreva dlje kot kovinska žlica? Zakaj je pesek na plaži opoldne vroč, morje pa precej hladnejše? Zakaj za čaj porabimo več energije kot za pol skodelice čaja? Odgovore da enačba $Q = m \cdot c \cdot \Delta T$, ki jo spoznaš v tej lekciji.
+Zdaj se vprašamo: **koliko energije moramo dovesti, da se nekaj segreje?** Zakaj se voda v loncu segreva dlje kot kovinska žlica? Zakaj je pesek na plaži opoldne vroč, morje pa precej hladnejše? Zakaj za polno skodelico čaja porabimo več energije kot za pol skodelice? Odgovore da enačba $Q = m \cdot c \cdot \Delta T$, ki jo spoznaš v tej lekciji.
 
 ## Razlaga
 
-**1. Toplota.** Toplota $Q$ je energija, ki se zaradi temperaturne razlike prenese z toplejšega telesa na hladnejše. Merimo jo v joulih ($\mathrm{J}$), pogosto tudi v kilojoulih ($1\,\text{kJ} = 1000\,\text{J}$).
+**1. Toplota.** Toplota $Q$ je energija, ki se zaradi temperaturne razlike prenese s toplejšega telesa na hladnejše. Merimo jo v joulih ($\mathrm{J}$), pogosto tudi v kilojoulih ($1\,\text{kJ} = 1000\,\text{J}$).
 
 **2. Od česa je odvisna toplota za segrevanje?** Od treh stvari:
 
@@ -37,7 +37,7 @@ Zdaj se vprašamo: **koliko energije moramo dovesti, da se nekaj segreje?** Zaka
 
 $$Q = m \cdot c \cdot \Delta T$$
 
-Pri ohlajanju je $\Delta T < 0$, zato je $Q < 0$: telo toploto oddaja. Pogosto računamo samo z absolutno vrednostjo odddane toplote.
+Pri ohlajanju je $\Delta T < 0$, zato je $Q < 0$: telo toploto oddaja. Pogosto računamo samo z absolutno vrednostjo oddane toplote.
 
 **6. Izražanje drugih količin.**
 
@@ -51,23 +51,49 @@ $$c = \frac{Q}{m \cdot \Delta T}, \qquad m = \frac{Q}{c \cdot \Delta T}, \qquad 
 
 Koliko toplote potrebuje $2\,\text{kg}$ vode, da se segreje z $20\,^\circ\text{C}$ na $50\,^\circ\text{C}$?
 
-1. Podatki: $m = 2\,\text{kg}$, $c = 4200\,\dfrac{\mathrm{J}}{\mathrm{kg}\cdot{}^\circ\mathrm{C}}$.
-2. Sprememba temperature: $\Delta T = 50 - 20 = 30\,^\circ\text{C}$. Zakaj? Ker enačba potrebuje razliko, ne končne temperature.
-3. Račun: $Q = 2 \cdot 4200 \cdot 30 = 252\,000\,\text{J}$.
-4. Odgovor: $Q = 252\,000\,\text{J} = 252\,\text{kJ}$.
+**Podatki:** $m = 2\,\text{kg}$, $T_{\text{zač}} = 20\,^\circ\text{C}$, $T_{\text{konč}} = 50\,^\circ\text{C}$, $c = 4200\,\dfrac{\mathrm{J}}{\mathrm{kg}\cdot{}^\circ\mathrm{C}}$ (voda, iz tabele)
+**Iščemo:** toplota $Q$
+
+:::formula
+$Q = m \cdot c \cdot \Delta T$, kjer je $\Delta T = T_{\text{konč}} - T_{\text{zač}}$
+:::
+
+**Rešitev:**
+
+1. Sprememba temperature: $\Delta T = 50 - 20 = 30\,^\circ\text{C}$. Zakaj? Ker enačba potrebuje razliko, ne končne temperature.
+2. Račun: $Q = 2 \cdot 4200 \cdot 30 = 252\,000\,\text{J}$.
+3. Odgovor: voda potrebuje $Q = 252\,000\,\text{J} = 252\,\text{kJ}$ toplote.
 
 ### Primer 2: ohlajanje kovine
 
 Aluminijast kos mase $500\,\text{g}$ se ohladi s $100\,^\circ\text{C}$ na $20\,^\circ\text{C}$. Koliko toplote odda okolici?
 
+**Podatki:** $m = 500\,\text{g}$, $T_{\text{zač}} = 100\,^\circ\text{C}$, $T_{\text{konč}} = 20\,^\circ\text{C}$, $c = 900\,\dfrac{\mathrm{J}}{\mathrm{kg}\cdot{}^\circ\mathrm{C}}$ (aluminij, iz tabele)
+**Iščemo:** oddana toplota $Q$
+
+:::formula
+$Q = m \cdot c \cdot \Delta T$, kjer je $\Delta T = T_{\text{konč}} - T_{\text{zač}}$; masa mora biti v $\text{kg}$
+:::
+
+**Rešitev:**
+
 1. Pretvorimo maso: $m = 500\,\text{g} = 0{,}5\,\text{kg}$. Zakaj? Ker je enota $c$ vezana na kilograme.
 2. Sprememba temperature: $\Delta T = 20 - 100 = -80\,^\circ\text{C}$.
 3. Račun: $Q = 0{,}5 \cdot 900 \cdot (-80) = -36\,000\,\text{J}$.
-4. Odgovor: Telo odda $36\,000\,\text{J} = 36\,\text{kJ}$ toplote (minus pomeni oddajanje).
+4. Odgovor: telo odda $36\,000\,\text{J} = 36\,\text{kJ}$ toplote (minus pomeni oddajanje).
 
 ### Primer 3: iskanje specifične toplote
 
 Kos neznane kovine z maso $2\,\text{kg}$ segrejemo z $15\,^\circ\text{C}$ na $35\,^\circ\text{C}$. Dovedemo mu $18\,000\,\text{J}$ toplote. Katera kovina je to?
+
+**Podatki:** $m = 2\,\text{kg}$, $T_{\text{zač}} = 15\,^\circ\text{C}$, $T_{\text{konč}} = 35\,^\circ\text{C}$, $Q = 18\,000\,\text{J}$
+**Iščemo:** specifična toplota $c$ in po tabeli vrsta kovine
+
+:::formula
+Iz $Q = m \cdot c \cdot \Delta T$ izrazimo $c = \dfrac{Q}{m \cdot \Delta T}$
+:::
+
+**Rešitev:**
 
 1. Iščemo $c$, zato enačbo preoblikujemo: $c = \dfrac{Q}{m \cdot \Delta T}$.
 2. $\Delta T = 35 - 15 = 20\,^\circ\text{C}$.
@@ -93,7 +119,7 @@ Kos neznane kovine z maso $2\,\text{kg}$ segrejemo z $15\,^\circ\text{C}$ na $35
 
 ## Drugače: Na sliki
 
-Predstavljaj si dve enaki posodi nad enakima gorilnikoma. V eni je $1\,\text{kg}$ vode, v drugi $1\,\text{kg}$ železa. Po enem minutu je železo že zelo vroče, voda pa komaj topla.
+Predstavljaj si dve enaki posodi nad enakima gorilnikoma. V eni je $1\,\text{kg}$ vode, v drugi $1\,\text{kg}$ železa. Po eni minuti je železo že zelo vroče, voda pa komaj topla.
 
 Sliko si lahko narišeš kot graf: na vodoravni osi je dovedena toplota $Q$, na navpični temperatura $T$. Za vsako snov dobiš premico. Premica za železo je strma (že majhna toplota močno dvigne temperaturo), premica za vodo pa položna. **Naklon premice je odvisen od $m \cdot c$**: večji kot je ta zmnožek, bolj položna je premica.
 
@@ -101,9 +127,9 @@ Sliko si lahko narišeš kot graf: na vodoravni osi je dovedena toplota $Q$, na 
 
 Ob morju je čez dan pesek zelo vroč, morje pa prijetno hladno. Sonce da obema približno enako toploto na enoto površine, a ima voda veliko večjo specifično toploto kot pesek. Zato se pesek hitro segreje, voda pa le počasi.
 
-Isti razlog ima večer: pesek se hitro ohladi, voda pa dolgo zadrži toploto. Zato je podnebje ob morju bolj izenačeno kot v notranjosti celin.
+Isto velja zvečer: pesek se hitro ohladi, voda pa dolgo zadrži toploto. Zato je podnebje ob morju bolj izenačeno kot v notranjosti celin.
 
-Še en primer: ročaji kuhalnic so pogosto iz plastike ali lesa, lonci pa iz kovine. Kovina hitro sprejme toploto, a tudi zato je pri kuhanju vode za segrevanje vode potrebno veliko energije: voda v loncu jo shrani.
+Še en primer: lonec je iz kovine, ki ima majhno specifično toploto, zato se hitro segreje. Voda v njem pa se segreva počasi, saj zaradi velike specifične toplote potrebuje veliko energije. To energijo shrani in jo nato dolgo oddaja, zato čaj v skodelici dolgo ostane vroč.
 
 ## Drugače: Korak za korakom s številkami
 
@@ -141,7 +167,7 @@ Pri tem velja predpostavka, da se snov ne tali in ne izhlapeva (ne spremeni agre
 ## Preveri se
 
 ? Koliko toplote potrebuje $3\,\text{kg}$ vode, da se segreje z $10\,^\circ\text{C}$ na $30\,^\circ\text{C}$? ($c = 4200\,\dfrac{\mathrm{J}}{\mathrm{kg}\cdot{}^\circ\mathrm{C}}$)
-- $126\,000\,\text{J}$ 
+- $126\,000\,\text{J}$
 + $252\,000\,\text{J}$
 - $378\,000\,\text{J}$
 - $12\,600\,\text{J}$

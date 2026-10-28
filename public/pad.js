@@ -145,8 +145,9 @@ function submit() {
   else cur.form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
 }
 
+let reading = false;
 async function readInk() {
-  if (!cur) return;
+  if (!cur || reading) return;
   const box = pad.querySelector(".read-result");
   const image = ink.exportImage();
   if (!image) {
@@ -154,13 +155,16 @@ async function readInk() {
     return;
   }
   box.innerHTML = `<div class="fb info">Berem zapis …</div>`;
+  const version = ink.version;
+  reading = true;
   try {
     const r = await cur.readFn(image);
     if (!r.text) {
       box.innerHTML = `<div class="fb info">${escapeHtml(r.message || "Zapisa nisem uspel prebrati. Poskusi pisati večje ali uporabi tipke.")}</div>`;
       return;
     }
-    ink.changed = false; // prebrano; Preveri zdaj odgovor pošlje
+    // Prebrano; če je učenec medtem še kaj dopisal, Preveri zapis prebere znova.
+    ink.changed = ink.version !== version;
     box.innerHTML = `<div class="fb info"><span>Prebral sem: <b class="read-text"></b>. Je prav?</span></div>
       <div class="actions"><button type="button" class="primary" data-ok>Da, preveri</button><button type="button" data-fix>Popravi s tipkami</button></div>`;
     box.querySelector(".read-text").textContent = r.text;
@@ -178,6 +182,8 @@ async function readInk() {
     });
   } catch (err) {
     box.innerHTML = `<div class="fb bad">${escapeHtml(err.message)}</div>`;
+  } finally {
+    reading = false;
   }
 }
 
@@ -209,10 +215,11 @@ export function attachPad(opts) {
 
 export function openPad(tab) {
   if (!pad || !cur) return;
-  const top = document.querySelector(".topbar")?.getBoundingClientRect().bottom;
-  if (top) document.documentElement.style.setProperty("--pad-top", Math.round(top) + "px");
   pad.hidden = false;
   document.body.classList.add("pad-open");
+  // Vrh plošče ob strani = spodnji rob vrstice z naslovom (izmerjeno, ko so zavihki že skriti).
+  const top = document.querySelector(".topbar")?.getBoundingClientRect().bottom;
+  if (top) document.documentElement.style.setProperty("--pad-top", Math.round(top) + "px");
   setTab(tab || prefs.tab || "keys");
   // Na telefonu brez sistemske tipkovnice, ki bi prekrila nalogo.
   if (isTouch()) cur.input.setAttribute("inputmode", "none");
@@ -220,6 +227,13 @@ export function openPad(tab) {
   // Naloga naj bo na vrhu vidnega dela.
   const card = cur.form.closest(".task");
   requestAnimationFrame(() => card?.scrollIntoView({ block: "start" }));
+}
+
+// Ali je plošča odprta kot list čez spodnji del zaslona (telefon pokončno) in ne ob strani.
+export function padIsSheet() {
+  if (!pad || pad.hidden) return false;
+  const r = pad.getBoundingClientRect();
+  return r.left < 1 && r.width > innerWidth - 2;
 }
 
 export function closePad() {
@@ -242,9 +256,12 @@ function createInk(canvas) {
   const ctx = canvas.getContext("2d");
   const strokes = [];
   let active = null;
-  let penSeen = false;
+  let lastPen = -Infinity; // čas zadnjega dotika s pisalom (zavračanje dlani)
   let extra = 0; // dodatna višina (»+ prostor«)
-  const api = { tool: "pen", changed: false }; // changed: zapis se je spremenil po zadnjem branju
+  let baseH = 0; // višina okvirja brez dodatnega prostora
+  // changed: zapis se je spremenil po zadnjem branju; version: številka spremembe (za branje med pisanjem)
+  const api = { tool: "pen", changed: false, version: 0 };
+  const wrap = canvas.parentElement;
 
   const color = () => getComputedStyle(canvas).color || "#111";
 
@@ -254,9 +271,10 @@ function createInk(canvas) {
   }
 
   api.fit = () => {
-    const base = canvas.parentElement.clientHeight - 2;
+    const base = wrap.clientHeight - 2;
     if (base <= 0) return;
-    canvas.style.height = base + extra + "px";
+    if (!extra) baseH = wrap.clientHeight;
+    canvas.style.height = base + "px";
     const { w, h } = size();
     if (!w) return;
     const dpr = window.devicePixelRatio || 1;
@@ -293,8 +311,10 @@ function createInk(canvas) {
   };
 
   canvas.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "pen") penSeen = true;
-    if (penSeen && e.pointerType === "touch") return; // dlan na zaslonu
+    if (e.pointerType === "pen") lastPen = performance.now();
+    // Dlan na zaslonu: dotik s prstom tik ob pisalu prezremo (1,5 s), kasneje prst spet piše.
+    if (e.pointerType === "touch" && performance.now() - lastPen < 1500) return;
+    if (active || (e.pointerType === "touch" && !e.isPrimary)) return; // drugi prst med pisanjem ne prekine poteze
     if (e.button > 0) return;
     try {
       canvas.setPointerCapture(e.pointerId);
@@ -302,6 +322,7 @@ function createInk(canvas) {
     active = { id: e.pointerId, tool: e.button === 5 ? "eraser" : api.tool, pts: [pos(e)] };
     strokes.push(active);
     api.changed = true;
+    api.version++;
     redraw();
     e.preventDefault();
   });
@@ -313,35 +334,46 @@ function createInk(canvas) {
     e.preventDefault();
   });
   const end = (e) => {
-    if (active && e.pointerId === active.id) active = null;
+    if (active && e.pointerId === active.id) {
+      if (e.pointerType === "pen") lastPen = performance.now();
+      active = null;
+    }
   };
   canvas.addEventListener("pointerup", end);
   canvas.addEventListener("pointercancel", end);
   let lastWrapH = 0;
   new ResizeObserver(() => {
-    const h = canvas.parentElement.clientHeight;
+    const h = wrap.clientHeight;
     if (h && h !== lastWrapH) {
       lastWrapH = h;
       api.fit();
     }
-  }).observe(canvas.parentElement);
+  }).observe(wrap);
 
   api.undo = () => {
     strokes.pop();
     api.changed = true;
+    api.version++;
     redraw();
   };
   api.clear = (resetSize = false) => {
     strokes.length = 0;
     api.changed = false;
-    if (resetSize) extra = 0;
+    api.version++;
+    if (resetSize) {
+      extra = 0;
+      lastPen = -Infinity;
+      wrap.style.height = "";
+    }
     if (resetSize && canvas.width) api.fit();
     else redraw();
   };
+  // Več prostora: okvir se poveča (plošča se premika kot celota), prejšnje vrstice ostanejo vidne.
   api.grow = () => {
     extra += 160;
+    wrap.style.height = (baseH || wrap.clientHeight) + extra + "px";
     api.fit();
-    canvas.parentElement.scrollTop = canvas.parentElement.scrollHeight;
+    requestAnimationFrame(() => canvas.scrollIntoView({ block: "end", behavior: "smooth" }));
   };
 
   // Izvoz za branje: le del s pisavo, črno na belem, največ 800 px → manj žetonov.

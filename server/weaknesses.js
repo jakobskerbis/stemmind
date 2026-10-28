@@ -1,6 +1,6 @@
 // Šibke točke: ročno vnesene + samodejno zaznane iz META analitike.
 
-const SUBJECT_LABEL = { MAT: "MAT", FIZ: "FIZ", KEM: "KEM" };
+const SUBJECT_LABEL = { MAT: "MAT", FIZ: "FIZ", KEM: "KEM", BIO: "BIO", GEO: "GEO", RAC: "RAČ", EKO: "EKO" };
 
 // Tema je šibka, če je imel učenec v zadnjih 60 dneh vsaj MIN_TURNS potez
 // pri njej in je bil delež napak vsaj MIN_RATE.

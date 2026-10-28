@@ -45,6 +45,7 @@
   <!-- PRIJAVA STARŠEV IN RAČUN (account.js) -->
   <main id="view-auth" class="view narrow" hidden></main>
   <main id="view-account" class="view narrow" hidden></main>
+  <main id="view-onboard" class="view narrow" hidden></main>
 
   <!-- UČNA POT -->
   <main id="view-path" class="view narrow">
@@ -52,6 +53,7 @@
       <label class="field-label" for="path-select">Učna pot</label>
       <select id="path-select"></select>
     </div>
+    <p id="path-note" class="muted path-note" hidden></p>
     <div id="xp-card" class="card xp-card"></div>
     <div id="path-content"></div>
   </main>
@@ -102,16 +104,14 @@
     <h1>Nastavitve</h1>
     <form id="settings-form" class="card form">
       <label>Ime <input name="name" maxlength="40" required></label>
-      <label>Šola
-        <select name="educational_track">
-          <option value="OSNOVNA_SOLA">Osnovna šola</option>
-          <option value="SREDNJA_SOLA">Srednja šola</option>
-        </select>
-      </label>
-      <label>Raven
-        <input name="curriculum_level" maxlength="60" list="level-options" placeholder="npr. 8. razred, 2. letnik VR">
-        <datalist id="level-options"></datalist>
-      </label>
+      <fieldset class="level-field">
+        <legend>Šola in letnik</legend>
+        <div id="settings-level" class="level-picker"></div>
+        <small class="muted">Učna pot, naloge in učbenik se prilagodijo izbiri. Pri fakulteti sledijo javnemu predmetniku programa.</small>
+        <input type="hidden" name="educational_track">
+        <input type="hidden" name="study_program">
+        <input type="hidden" name="curriculum_level">
+      </fieldset>
       <label>Predmet
         <select name="subject">
           <option value="MAT">Matematika</option>
@@ -119,7 +119,7 @@
           <option value="KEM">Kemija</option>
         </select>
       </label>
-      <label>Program
+      <label id="track-row">Program
         <select name="track">
           <option value="REGULAR">Redni pouk (NPZ / matura)</option>
           <option value="COMPETITION">Tekmovanja</option>

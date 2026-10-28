@@ -1,13 +1,13 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Fizika je veda, ki opisuje naravo s **številkami**. Ne rečemo le »palica je dolga«, ampak »palica je dolga $1{,}2\,\text{m}$«. Že v prejšnjih razredih si merila dolžino z ravnilom, maso s tehtnico in čas z uro. Zdaj te izkušnje uredimo: povemo, kaj je fizikalna količina, kako zapišemo meritev in kako enote pretvarjamo.
+Fizika je veda, ki opisuje naravo s **števili**. Ne rečemo le »palica je dolga«, ampak »palica je dolga $1{,}2\,\text{m}$«. Že v prejšnjih razredih si meril dolžino z ravnilom, maso s tehtnico in čas z uro. Zdaj te izkušnje uredimo: povemo, kaj je fizikalna količina, kako zapišemo meritev in kako enote pretvarjamo.
 
-Če bi vsak uporabljal svoje enote (svoj »korak«, svojo »pest«), se ne bi mogli sporazumeti. Zato so znanstveniki dogovorjeni za enoten sistem. Brez njega ne bi mogli zgraditi mostu po načrtu iz tujine, pripraviti zdravila po receptu ali primerjati rezultatov tekmovalcev.
+Če bi vsak uporabljal svoje enote (svoj »korak«, svojo »pest«), se ne bi mogli sporazumeti. Zato so se znanstveniki dogovorili za enoten sistem. Brez njega ne bi mogli zgraditi mostu po načrtu iz tujine, pripraviti zdravila po receptu ali primerjati rezultatov tekmovalcev.
 
 ## Razlaga
 
@@ -19,9 +19,9 @@ Fizika je veda, ki opisuje naravo s **številkami**. Ne rečemo le »palica je d
 
 $$\text{količina} = \text{številska vrednost} \cdot \text{enota}$$
 
-Primer: $m = 3\,\text{kg}$. Številka brez enote nima pomena. »Dolžina je 5« ne pove nič.
+Primer: $m = 3\,\text{kg}$. Število brez enote nima pomena. »Dolžina je 5« ne pove nič.
 
-**4. Mednarodni sistem enot (SI).** Po vsem svetu se dogovorno uporabljajo osnovne enote:
+**4. Mednarodni sistem enot (SI).** Po vsem svetu se dogovorno uporabljajo osnovne enote SI. Vseh je sedem; v tem razredu potrebuješ te štiri:
 
 | Količina | Oznaka količine | Enota | Znak enote |
 |---|---|---|---|
@@ -30,7 +30,7 @@ Primer: $m = 3\,\text{kg}$. Številka brez enote nima pomena. »Dolžina je 5« 
 | čas | $t$ | sekunda | $\text{s}$ |
 | temperatura | $T$ | kelvin | $\text{K}$ |
 
-Drugim enotam (npr. liter, minuta, ura, stopinja Celzija) rečemo tudi dovoljene enote, ki jih pogosto uporabljamo v vsakdanu.
+Druge enote (npr. liter, minuta, ura, stopinja Celzija) niso osnovne enote SI, so pa dovoljene in jih v vsakdanjem življenju pogosto uporabljamo.
 
 **5. Predpone.** Za zelo velike ali majhne vrednosti uporabljamo predpone, ki pomenijo množenje z določeno potenco števila 10:
 
@@ -51,7 +51,7 @@ Torej $1\,\text{km} = 1000\,\text{m}$, $1\,\text{cm} = 0{,}01\,\text{m}$, $1\,\t
 
 Za čas velja: $1\,\text{min} = 60\,\text{s}$, $1\,\text{h} = 60\,\text{min} = 3600\,\text{s}$. Tu ne pretvarjamo z 10, 100 ali 1000.
 
-**7. Prostornina.** Enota SI je $\text{m}^3$. Pogosta je tudi litrska enota: $1\,\text{l} = 1\,\text{dm}^3$ in $1\,\text{ml} = 1\,\text{cm}^3$.
+**7. Prostornina.** Enota SI je $\text{m}^3$. Pogosto uporabljamo tudi liter: $1\,\text{l} = 1\,\text{dm}^3$ in $1\,\text{ml} = 1\,\text{cm}^3$.
 
 **8. Merilni instrument.** Vsak instrument ima **merilno območje** (od najmanjše do največje vrednosti, ki jo lahko izmeri) in **vrednost najmanjšega razdelka** (npr. $1\,\text{mm}$ na ravnilu). Meritve ne moremo odčitati natančneje od najmanjšega razdelka. Pri odčitku gledamo pravokotno na skalo, da se izognemo napaki.
 
@@ -60,6 +60,15 @@ Za čas velja: $1\,\text{min} = 60\,\text{s}$, $1\,\text{h} = 60\,\text{min} = 3
 ### Primer 1: preprosta pretvorba (lažji)
 
 Pretvori $3{,}5\,\text{m}$ v centimetre.
+
+**Podatki:** dolžina $3{,}5\,\text{m}$
+**Iščemo:** isto dolžino v centimetrih
+
+:::formula
+$1\,\text{m} = 100\,\text{cm}$; v manjšo enoto množimo.
+:::
+
+**Rešitev:**
 
 1. Ker je $1\,\text{m} = 100\,\text{cm}$, gremo v manjšo enoto, zato bo število večje.
 2. Množimo s $100$: $3{,}5 \cdot 100 = 350$.
@@ -70,6 +79,15 @@ Pretvori $3{,}5\,\text{m}$ v centimetre.
 
 a) Pretvori $2400\,\text{g}$ v kilograme.
 b) Pretvori $45\,\text{min}$ v sekunde.
+
+**Podatki:** a) masa $2400\,\text{g}$; b) čas $45\,\text{min}$
+**Iščemo:** a) maso v kilogramih, b) čas v sekundah
+
+:::formula
+a) $1\,\text{kg} = 1000\,\text{g}$ (v večjo enoto delimo); b) $1\,\text{min} = 60\,\text{s}$ (v manjšo enoto množimo)
+:::
+
+**Rešitev:**
 
 a)
 1. $1\,\text{kg} = 1000\,\text{g}$. Gremo v večjo enoto, zato delimo.
@@ -84,6 +102,15 @@ b)
 
 Kolesar se vozi $1{,}5\,\text{h}$. Koliko je to v sekundah? Nato pretvori še prevoženo pot $12\,\text{km}$ v metre.
 
+**Podatki:** čas vožnje $t = 1{,}5\,\text{h}$, prevožena pot $s = 12\,\text{km}$
+**Iščemo:** čas v sekundah in pot v metrih
+
+:::formula
+$1\,\text{h} = 60\,\text{min}$, $1\,\text{min} = 60\,\text{s}$ (torej $1\,\text{h} = 3600\,\text{s}$); $1\,\text{km} = 1000\,\text{m}$
+:::
+
+**Rešitev:**
+
 1. **Čas v minute:** $1\,\text{h} = 60\,\text{min}$, zato $1{,}5 \cdot 60 = 90\,\text{min}$.
 2. **Minute v sekunde:** $90 \cdot 60 = 5400\,\text{s}$.
 3. Lahko tudi naravnost: $1\,\text{h} = 3600\,\text{s}$, torej $1{,}5 \cdot 3600 = 5400\,\text{s}$. Enak rezultat. ✓
@@ -96,11 +123,11 @@ Kolesar se vozi $1{,}5\,\text{h}$. Koliko je to v sekundah? Nato pretvori še pr
 - **Napačna smer pretvorbe.** Pri pretvorbi v manjšo enoto množimo, v večjo delimo. Preveri s smiselnostjo: v manjši enoti mora biti število večje.
 - **Čas pretvarjaš s 100.** Ura ima $60$ minut, minuta $60$ sekund. Pretvarjanje s $100$ je napaka.
 - **Mešanje enot v računu.** Pred računanjem vse količine izrazi v isti enoti (npr. ne seštevaj $\text{m}$ in $\text{cm}$ brez pretvorbe).
-- **Zamenjava predpon.** $\text{m}$ (mili) ni isto kot $\text{m}$ (meter): $1\,\text{mm} = 0{,}001\,\text{m}$, ne $1000\,\text{m}$. Pozorno beri znake.
+- **Zamenjava predpon.** Znak $\text{m}$ pred enoto pomeni predpono *mili* (tisočinka), sam pa enoto *meter*: $1\,\text{mm} = 0{,}001\,\text{m}$, ne $1000\,\text{m}$. Pozorno beri znake.
 
 ## Povzetek
 
-- Fizikalna količina je merljiva lastnost; zapišemo jo kot število in enota.
+- Fizikalna količina je merljiva lastnost; zapišemo jo kot število in enoto.
 - Merjenje je primerjanje z dogovorjeno enoto.
 - Osnovne enote SI: meter (dolžina), kilogram (masa), sekunda (čas), kelvin (temperatura).
 - Predpone: kilo $10^3$, hekto $10^2$, deci $10^{-1}$, centi $10^{-2}$, mili $10^{-3}$.
@@ -118,15 +145,15 @@ Podobno si lahko predstavljaš lestvico: najmanjši razdelki so $\text{mm}$, ve�
 
 ## Drugače: Iz vsakdanjega življenja
 
-Pogledaj embalažo v kuhinji:
+Poglej embalažo v kuhinji:
 
-- Mleko: $1\,\text{l}$. To je prostornina, enak je $1\,\text{dm}^3$.
+- Mleko: $1\,\text{l}$. To je prostornina; en liter je enak $1\,\text{dm}^3$.
 - Moka: $500\,\text{g}$. To je masa. Dva taka paketa dasta $1000\,\text{g} = 1\,\text{kg}$.
 - Čas kuhanja jajca: $10\,\text{min} = 600\,\text{s}$.
 
-Še en primer: če si $1{,}60\,\text{m}$ visok/-a, je to $160\,\text{cm}$. Obe številki opisujeta isto višino, le enota je drugačna, tako kot ista cena v evrih ali centih ($2\,\text{€}$ je $200$ centov).
+Še en primer: če si $1{,}60\,\text{m}$ visok/-a, je to $160\,\text{cm}$. Obe števili opisujeta isto višino, le enota je drugačna, tako kot ista cena v evrih ali centih ($2\,\text{€}$ je $200$ centov).
 
-Zato je pomembno, da vedno zapišeš tudi enoto: »$1{,}60$« in »$160$« sta različni številki, a ob pravilni enoti pomenita isto.
+Zato je pomembno, da vedno zapišeš tudi enoto: »$1{,}60$« in »$160$« sta različni števili, a ob pravilni enoti pomenita isto.
 
 ## Drugače: Korak za korakom s številkami
 
@@ -152,9 +179,9 @@ Tabela hitrih pretvorb:
 
 ## Drugače: Bolj natančno
 
-Zakaj sploh potrebujemo mednarodni sistem? Če merimo isto količino z različnimi enotami, številki ne moreta biti primerljivi. Zato se znanstveniki dogovorijo za **standard**. Danes so enote SI določene tako, da jih lahko vsak laboratorij na svetu ponovi.
+Zakaj sploh potrebujemo mednarodni sistem? Če merimo isto količino z različnimi enotami, števil ne moremo neposredno primerjati. Zato se znanstveniki dogovorijo za **standard**. Danes so enote SI določene tako, da jih lahko vsak laboratorij na svetu ponovi.
 
-Pomembno je razlikovati med **osnovnimi** in **izpeljanimi** količinami. Osnovne (dolžina, masa, čas, temperatura) imajo samostojno enoto. Izpeljane dobimo z računanjem iz osnovnih. Na primer prostornina kvadra je $V = a \cdot b \cdot c$, zato je njena enota $\text{m} \cdot \text{m} \cdot \text{m} = \text{m}^3$.
+Pomembno je razlikovati med **osnovnimi** in **izpeljanimi** količinami. Osnovne (dolžina, masa, čas, temperatura in še tri, ki jih spoznaš pozneje) imajo vsaka svojo osnovno enoto. Izpeljane dobimo z računanjem iz osnovnih. Na primer prostornina kvadra je $V = a \cdot b \cdot c$, zato je njena enota $\text{m} \cdot \text{m} \cdot \text{m} = \text{m}^3$.
 
 Pri pretvarjanju prostornine moramo paziti: ker je $1\,\text{m} = 10\,\text{dm}$, velja
 

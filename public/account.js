@@ -1,4 +1,6 @@
 import { icon } from "./icons.js";
+import { loadPrograms, programsCache } from "./programs.js";
+import { mountLevelPicker } from "./level-picker.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku STEMMIND_ACCOUNTS=1.
 
@@ -164,8 +166,8 @@ function shell(inner) {
 function renderLogin(mode = "login") {
   const ref = store.get("stemmind_ref") || "";
   shell(`
-    <h1>${mode === "login" ? "Prijava za starše" : "Nov račun za starše"}</h1>
-    <p class="muted">${mode === "login" ? "Prijavite se in izberite otrokov profil." : `STEMMind je 7 dni brezplačen, brez kartice. Nato ${eur(899)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
+    <h1>${mode === "login" ? "Prijava" : "Nov račun"}</h1>
+    <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za študente fakultet (lasten profil)." : `STEMMind je 7 dni brezplačen, brez kartice. Nato ${eur(899)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
     <form id="auth-form" class="card form">
       ${mode === "register" ? `<label>Vaše ime (neobvezno) <input name="name" maxlength="60" autocomplete="name"></label>` : ""}
       <label>E-naslov <input name="email" type="email" required autocomplete="email"></label>
@@ -173,7 +175,7 @@ function renderLogin(mode = "login") {
       ${mode === "register" ? `
         <label>Koda priporočila (neobvezno) <input name="referral_code" maxlength="12" value="${esc(ref)}"></label>
         <label class="check"><input type="checkbox" name="accept_privacy" required>
-          <span>Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu osebnih podatkov</a> in sem polnoleten starš ali zakoniti zastopnik.</span></label>` : ""}
+          <span>Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu osebnih podatkov</a> in sem polnoleten(a): starš oziroma zakoniti zastopnik ali študent, ki ustvarja lasten profil.</span></label>` : ""}
       <p class="form-error" hidden></p>
       <button class="primary" type="submit">${mode === "login" ? "Prijava" : "Ustvari račun"}</button>
     </form>
@@ -284,30 +286,54 @@ function renderVerify() {
 
 // ---------- otroci ----------
 
-function childForm(consentText) {
+function childForm(consentText, programs = []) {
   const y = new Date().getFullYear();
-  const years = Array.from({ length: 16 }, (_, i) => y - 6 - i);
+  const years = Array.from({ length: 60 }, (_, i) => y - 6 - i);
   return `
     <form id="child-form" class="card form">
-      <label>Ime ali vzdevek otroka <input name="name" maxlength="40" required placeholder="npr. Miha"></label>
+      <label>Ime ali vzdevek <input name="name" maxlength="40" required placeholder="npr. Miha"></label>
+      <fieldset class="level-field">
+        <legend>Šola in letnik</legend>
+        <div class="level-picker child-level"></div>
+        <small class="muted">Vsebina se prilagodi izbiri; pri fakulteti sledi javnemu predmetniku programa. Izbiro lahko kadar koli spremeniš v profilu.</small>
+        <input type="hidden" name="educational_track">
+        <input type="hidden" name="study_program">
+        <input type="hidden" name="curriculum_level">
+      </fieldset>
       <label>Letnica rojstva
         <select name="birth_year" required><option value="">Izberite …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
       </label>
       <label class="check"><input type="checkbox" name="consent" required>
-        <span>${esc(consentText)} <a href="/zasebnost.html" target="_blank">Obvestilo o varstvu podatkov</a>.</span></label>
+        <span class="consent-child">${esc(consentText)} <a href="/zasebnost.html" target="_blank">Obvestilo o varstvu podatkov</a>.</span>
+        <span class="consent-adult" hidden>Profil je moj (sem polnoleten študent) ali profil mojega otroka. Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu podatkov</a> in soglašam z obdelavo podatkov (ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.</span></label>
       <p class="form-error" hidden></p>
-      <button class="primary" type="submit">Dodaj otroka</button>
+      <button class="primary" type="submit">Ustvari profil</button>
     </form>`;
 }
 
+// Nastavitve profila iz obrazca: šola, program in letnik.
+function childSettings(f) {
+  const track = f.educational_track.value;
+  const base = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value };
+  if (track === "UNIVERZA") return { ...base, subject: programsCache().find((p) => p.id === f.study_program.value)?.subjects?.[0] || "MAT" };
+  return base;
+}
+
 function bindChildForm(after) {
-  $("#child-form").addEventListener("submit", async (e) => {
+  const f = $("#child-form");
+  const toggle = (_, track) => {
+    const uni = track === "UNIVERZA";
+    f.querySelector(".consent-child").hidden = uni;
+    f.querySelector(".consent-adult").hidden = !uni;
+  };
+  const picker = mountLevelPicker(f.querySelector(".child-level"), f, { programs: programsCache(), onChange: toggle });
+  f.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const f = e.target;
+    if (!picker.complete()) return showError(f, new Error("Izberite šolo in letnik do konca."));
     try {
       const s = await api("/api/students", {
         method: "POST",
-        body: { name: f.name.value, birth_year: Number(f.birth_year.value), consent: f.consent.checked },
+        body: { name: f.name.value, birth_year: Number(f.birth_year.value), consent: f.consent.checked, settings: childSettings(f) },
       });
       store.set("studentId", String(s.id));
       await after(s);
@@ -318,11 +344,11 @@ function bindChildForm(after) {
 }
 
 async function renderAddChild() {
-  const acc = await api("/api/account");
+  const [acc, programs] = await Promise.all([api("/api/account"), loadPrograms(api)]);
   shell(`
-    <h1>Dodajte otroka</h1>
-    <p class="muted">Vsak otrok ima svoj profil z učno potjo in napredkom. Za otroke, mlajše od 15 let, je potrebno soglasje starša.</p>
-    ${childForm(acc.consent_text)}
+    <h1>Ustvarite profil</h1>
+    <p class="muted">Vsak učenec, dijak ali študent ima svoj profil z učno potjo in napredkom. Za otroke, mlajše od 15 let, je potrebno soglasje starša.</p>
+    ${childForm(acc.consent_text, programs)}
     <p class="auth-links"><a href="#" id="add-child-logout">Odjava</a></p>`);
   $("#add-child-logout").addEventListener("click", (e) => (e.preventDefault(), logout()));
   bindChildForm(continueFlow);
@@ -407,7 +433,7 @@ async function renderAccount() {
       ${acc.swap_blocked_until
         ? `<p class="muted">Profil lahko zamenjate enkrat na 30 dni. Nov profil boste lahko dodali ${date(acc.swap_blocked_until)}.</p>`
         : acc.children.length < acc.max_children
-          ? `<details><summary>Dodaj otroka</summary>${childForm(acc.consent_text)}</details>`
+          ? `<details><summary>Dodaj profil</summary>${childForm(acc.consent_text, await loadPrograms(api))}</details>`
           : `<p class="muted">Vaš paket ima ${acc.max_children === 1 ? "1 profil" : `${acc.max_children} profila`}.${acc.max_children === 1 ? " Za drugega otroka izberite paket za 2 otroka." : ""}</p>`}
       <p class="muted">Vsak profil je lahko hkrati odprt samo na eni napravi. Profil zamenjate (izbrišete v zavihku Nastavitve in dodate novega) največ enkrat na 30 dni.</p>
     </div>

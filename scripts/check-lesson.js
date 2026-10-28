@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+// Preveri obliko lekcij učbenika (content/lessons/README.md).
+//   node scripts/check-lesson.js content/lessons/MAT-OS-8/pitagorov-izrek.md [...]
+//   node scripts/check-lesson.js            # vse lekcije
+// Izhodna koda 1, če ima katera lekcija napako. Opozorila ne štejejo.
+import fs from "node:fs";
+import path from "node:path";
+import { LESSONS_DIR } from "../server/textbook.js";
+import { checkLessonSource } from "../server/lesson-check.js";
+
+const strict = process.argv.includes("--strict"); // tudi opozorila so napake
+let files = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+if (!files.length) {
+  for (const dir of fs.readdirSync(LESSONS_DIR)) {
+    const d = path.join(LESSONS_DIR, dir);
+    if (!fs.statSync(d).isDirectory()) continue;
+    for (const f of fs.readdirSync(d)) if (f.endsWith(".md")) files.push(path.join(d, f));
+  }
+}
+let bad = 0;
+for (const file of files) {
+  const abs = path.resolve(file);
+  const id = `${path.basename(path.dirname(abs))}/${path.basename(abs, ".md")}`;
+  let src;
+  try {
+    src = fs.readFileSync(abs, "utf8");
+  } catch {
+    console.log(`${file}: datoteke ni`);
+    bad++;
+    continue;
+  }
+  const r = checkLessonSource(src, id);
+  const fail = r.errors.length || (strict && r.warnings.length);
+  if (fail) bad++;
+  console.log(`${fail ? "NAPAKA" : "OK"} ${id} (${r.words} besed, ${r.examples} primerov, ${r.questions} vprašanj)`);
+  for (const e of r.errors) console.log(`  napaka: ${e}`);
+  for (const w of r.warnings) console.log(`  opozorilo: ${w}`);
+}
+console.log(`${files.length - bad}/${files.length} lekcij v redu.`);
+process.exit(bad ? 1 : 0);

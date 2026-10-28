@@ -1,13 +1,13 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Gibanje opazuješ vsak dan: avtomobil na cesti, kolesar, hodec, vlak. Že veš, da se telesa gibljejo hitreje ali počasneje in da se pot meri v metrih ali kilometrih, čas pa v sekundah, minutah ali urah. Iz matematike znaš tudi računati z razmerji in brati preproste grafe.
+Gibanje opazuješ vsak dan: avtomobil na cesti, kolesar, pešec, vlak. Že veš, da se telesa gibljejo hitreje ali počasneje in da se pot meri v metrih ali kilometrih, čas pa v sekundah, minutah ali urah. Iz matematike znaš tudi računati z razmerji in brati preproste grafe.
 
-V tej lekciji zapišemo gibanje s fizikalnimi količinami. Naučili se boste izračunati, **kako hitro** se telo giblje, **kako daleč** pride v določenem času in **koliko časa** potrebuje za neko pot. To potrebuješ, ko načrtuješ pot (kdaj pridem na cilj?), ko razumeš prometne predpise ali ko preberaš podatke z grafa.
+V tej lekciji zapišemo gibanje s fizikalnimi količinami. Naučil se boš izračunati, **kako hitro** se telo giblje, **kako daleč** pride v določenem času in **koliko časa** potrebuje za neko pot. To potrebuješ, ko načrtuješ pot (kdaj pridem na cilj?), ko razumeš prometne predpise ali ko prebereš podatke z grafa.
 
 ## Razlaga
 
@@ -31,7 +31,7 @@ $$1\,\frac{\mathrm{m}}{\mathrm{s}} = 3{,}6\,\frac{\mathrm{km}}{\mathrm{h}}$$
 
 Zakaj? $1\,\mathrm{m} = 0{,}001\,\mathrm{km}$ in $1\,\mathrm{s} = \dfrac{1}{3600}\,\mathrm{h}$, zato je $1\,\dfrac{\mathrm{m}}{\mathrm{s}} = 0{,}001 \cdot 3600\,\dfrac{\mathrm{km}}{\mathrm{h}} = 3{,}6\,\dfrac{\mathrm{km}}{\mathrm{h}}$. Pri pretvorbi iz $\dfrac{\mathrm{m}}{\mathrm{s}}$ v $\dfrac{\mathrm{km}}{\mathrm{h}}$ **množimo** s $3{,}6$, v obratni smeri **delimo** s $3{,}6$.
 
-**6. Graf poti $s(t)$.** Na vodoravno os nanesemo čas, na navpično pot. Pri enakomernem gibanju je graf **premica skozi izhodišče** (če gibanje začnemo v času $0$ s poti $0$). Večja ko je hitrost, bolj strma je premica. Strmina premice je enaka hitrosti.
+**6. Graf poti $s(t)$.** Na vodoravno os nanesemo čas, na navpično pot. Pri enakomernem gibanju je graf **premica skozi izhodišče** (če ob času $0$ začnemo pri poti $0$). Večja ko je hitrost, bolj strma je premica. Strmina premice je enaka hitrosti.
 
 **7. Graf hitrosti $v(t)$.** Na vodoravno os nanesemo čas, na navpično hitrost. Ker se hitrost ne spreminja, je graf **vodoravna črta**. Ploščina pod to črto (pravokotnik z višino $v$ in širino $t$) je enaka prepotovani poti: $v \cdot t = s$.
 
@@ -40,6 +40,15 @@ Zakaj? $1\,\mathrm{m} = 0{,}001\,\mathrm{km}$ in $1\,\mathrm{s} = \dfrac{1}{3600
 ### Primer 1: hitrost
 
 Kolesar v $20\,\mathrm{s}$ prevozi $100\,\mathrm{m}$. Kolikšna je njegova hitrost?
+
+**Podatki:** $t = 20\,\mathrm{s}$, $s = 100\,\mathrm{m}$
+**Iščemo:** hitrost $v$
+
+:::formula
+$v = \dfrac{s}{t}$; za pretvorbo velja $1\,\dfrac{\mathrm{m}}{\mathrm{s}} = 3{,}6\,\dfrac{\mathrm{km}}{\mathrm{h}}$
+:::
+
+**Rešitev:**
 
 1. Iščemo hitrost, zato uporabimo $v = \dfrac{s}{t}$.
 2. Vstavimo: $v = \dfrac{100\,\mathrm{m}}{20\,\mathrm{s}} = 5\,\dfrac{\mathrm{m}}{\mathrm{s}}$.
@@ -52,6 +61,15 @@ Avtomobil se enakomerno giblje s hitrostjo $90\,\dfrac{\mathrm{km}}{\mathrm{h}}$
 
 a) Kolikšno pot prevozi v $2{,}5\,\mathrm{h}$?
 b) Koliko časa potrebuje za $45\,\mathrm{km}$?
+
+**Podatki:** $v = 90\,\dfrac{\mathrm{km}}{\mathrm{h}}$; a) $t = 2{,}5\,\mathrm{h}$; b) $s = 45\,\mathrm{km}$
+**Iščemo:** a) pot $s$, b) čas $t$
+
+:::formula
+a) $s = v \cdot t$, b) $t = \dfrac{s}{v}$
+:::
+
+**Rešitev:**
 
 **a)**
 1. Iščemo pot: $s = v \cdot t$.
@@ -66,6 +84,15 @@ b) Koliko časa potrebuje za $45\,\mathrm{km}$?
 ### Primer 3: branje grafa in dve telesi
 
 Pešec hodi enakomerno in je po $10\,\mathrm{s}$ prehodil $15\,\mathrm{m}$. Kolesar začne ob istem času na istem mestu in vozi s hitrostjo $5\,\dfrac{\mathrm{m}}{\mathrm{s}}$. Primerjaj njuni gibanji.
+
+**Podatki:** pešec: $t = 10\,\mathrm{s}$, $s_1 = 15\,\mathrm{m}$; kolesar: $v_2 = 5\,\dfrac{\mathrm{m}}{\mathrm{s}}$; oba začneta ob istem času na istem mestu
+**Iščemo:** hitrost pešca $v_1$, primerjavo hitrosti in poti po $10\,\mathrm{s}$, grafa $s(t)$ in $v(t)$ ter razdaljo med njima
+
+:::formula
+$v = \dfrac{s}{t}$ in $s = v \cdot t$
+:::
+
+**Rešitev:**
 
 1. **Hitrost pešca:** $v_1 = \dfrac{15\,\mathrm{m}}{10\,\mathrm{s}} = 1{,}5\,\dfrac{\mathrm{m}}{\mathrm{s}}$.
 2. **Primerjava:** $5\,\dfrac{\mathrm{m}}{\mathrm{s}} > 1{,}5\,\dfrac{\mathrm{m}}{\mathrm{s}}$, zato je kolesar hitrejši.
@@ -98,7 +125,7 @@ V grafu $v(t)$ narišemo vodoravno črto na višini $2\,\dfrac{\mathrm{m}}{\math
 
 ## Drugače: Iz vsakdanjega življenja
 
-Na avtocesti vidiš kažipot: »Ljubljana 60 km«. Če vozi avtomobil s stalnih $90\,\dfrac{\mathrm{km}}{\mathrm{h}}$, hitro oceniš čas: v eni uri prevozi $90\,\mathrm{km}$, torej bo $60\,\mathrm{km}$ prevozil v manj kot uri. Natančno: $t = \dfrac{60}{90}\,\mathrm{h} = \dfrac{2}{3}\,\mathrm{h} = 40\,\mathrm{min}$.
+Na avtocesti vidiš kažipot: »Ljubljana 60 km«. Če avtomobil vozi s stalno hitrostjo $90\,\dfrac{\mathrm{km}}{\mathrm{h}}$, hitro oceniš čas: v eni uri prevozi $90\,\mathrm{km}$, torej bo $60\,\mathrm{km}$ prevozil v manj kot uri. Natančno: $t = \dfrac{60}{90}\,\mathrm{h} = \dfrac{2}{3}\,\mathrm{h} = 40\,\mathrm{min}$.
 
 Podobno razmišljamo pri hoji. Odrasel človek hodi približno $5\,\dfrac{\mathrm{km}}{\mathrm{h}}$ (običajna ocena). Za $2\,\mathrm{km}$ do šole potrebuje $\dfrac{2}{5}\,\mathrm{h} = 0{,}4\,\mathrm{h} = 24\,\mathrm{min}$.
 
@@ -146,7 +173,7 @@ Ploščina pod grafom $v(t)$ od časa $0$ do $t$ je pravokotnik s ploščino $v 
 - $9000\,\mathrm{h}$
 > $t = \dfrac{s}{v} = \dfrac{150\,\mathrm{km}}{60\,\frac{\mathrm{km}}{\mathrm{h}}} = 2{,}5\,\mathrm{h}$, kar je $2$ uri in $30$ minut. Če bi množili, bi dobili napačno enoto in nesmiselno veliko število.
 
-? Kako izgleda graf $s(t)$ za telo, ki se giblje enakomerno s hitrostjo $3\,\dfrac{\mathrm{m}}{\mathrm{s}}$ in začne v izhodišču?
+? Kakšen je graf $s(t)$ za telo, ki se giblje enakomerno s hitrostjo $3\,\dfrac{\mathrm{m}}{\mathrm{s}}$ in začne v izhodišču?
 - Vodoravna črta na višini $3$.
 - Navpična črta pri času $3\,\mathrm{s}$.
 + Poševna premica skozi izhodišče.

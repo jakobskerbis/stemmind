@@ -409,7 +409,8 @@ export function mountAccounts(app, store, opts = {}) {
     if (!name) return res.status(400).json({ error: "Vpišite ime ali vzdevek otroka." });
     const year = Number(req.body?.birth_year);
     const now = new Date().getFullYear();
-    if (!Number.isInteger(year) || year < now - 25 || year > now - 5) return res.status(400).json({ error: "Vpišite letnico rojstva otroka." });
+    // Tudi odrasli študenti fakultet ustvarijo svoj profil, zato ni zgornje starostne meje za otroke.
+    if (!Number.isInteger(year) || year < now - 90 || year > now - 5) return res.status(400).json({ error: "Vpišite letnico rojstva." });
     if (req.body?.consent !== true) return res.status(400).json({ error: "Za otrokov profil je potrebno soglasje starša.", consent: true });
     const under15 = now - year <= 15; // previdno: v letu 15. rojstnega dne še štejemo kot mlajšega od 15
     const s = store.createStudent(name, req.body?.settings);

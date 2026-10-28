@@ -1,13 +1,13 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
 Iz osnovne šole že poznaš pojma **pot** in **hitrost** ter formulo $v = \dfrac{s}{t}$. Veš tudi, da se hitrost meri v $\mathrm{m/s}$ ali $\mathrm{km/h}$ in da se pretvarja s faktorjem $3{,}6$.
 
-V 1. letniku to znanje nadgradimo: gibanje začnemo **opisovati z grafi**. Graf pove veliko več kot ena številka. Iz njega razbereš, kje je telo ob kateri uri, ali miruje, ali se giblje hitro ali počasi in v katero smer. Tako berejo podatke prometniki, športni trenerji in vsak, ki si ogleda zapis gibanja s senzorja ali telefona.
+V 1. letniku to znanje nadgradimo: gibanje začnemo **opisovati z grafi**. Graf pove veliko več kot ena številka. Iz njega razbereš, kje je telo ob katerem času, ali miruje, ali se giblje hitro ali počasi in v katero smer. Tako berejo podatke prometniki, športni trenerji in vsak, ki si ogleda zapis gibanja s senzorja ali telefona.
 
 Najpreprostejše gibanje je **premo enakomerno gibanje**. Na njem se naučimo risati in brati grafa $s(t)$ in $v(t)$, ki ju bomo potrebovali pri vseh težjih gibanjih.
 
@@ -47,7 +47,16 @@ V tej lekciji večinoma vzamemo $s_0 = 0$ in $t$ merimo od začetka gibanja.
 
 ### Primer 1 (lažji): izračun poti in risanje grafov
 
-Kolesar se enakomerno vozi s hitrostjo $v = 5\,\mathrm{m/s}$. Koliko poti opravi v $4\,\mathrm{s}$? Nariši tabelo za graf $s(t)$.
+Kolesar se enakomerno vozi s hitrostjo $v = 5\,\mathrm{m/s}$. Koliko poti opravi v $4\,\mathrm{s}$? Sestavi tabelo vrednosti za graf $s(t)$.
+
+**Podatki:** $v = 5\,\mathrm{m/s}$, $t = 4\,\mathrm{s}$, začetek v izhodišču ($s_0 = 0$)
+**Iščemo:** pot $s$ in tabelo vrednosti za graf $s(t)$
+
+:::formula
+$s = v \cdot t$
+:::
+
+**Rešitev:**
 
 1. Gibanje je enakomerno, zato uporabimo $s = v \cdot t$.
 2. Vstavimo: $s = 5\,\mathrm{m/s} \cdot 4\,\mathrm{s} = 20\,\mathrm{m}$.
@@ -58,35 +67,56 @@ Kolesar se enakomerno vozi s hitrostjo $v = 5\,\mathrm{m/s}$. Koliko poti opravi
 | $s\,(\mathrm{m})$ | 0 | 5 | 10 | 15 | 20 |
 
 4. Točke ležijo na premici skozi izhodišče. Graf $v(t)$ je vodoravna premica pri $5\,\mathrm{m/s}$.
+5. Odgovor: kolesar v $4\,\mathrm{s}$ opravi $20\,\mathrm{m}$ poti.
 
 ### Primer 2: branje hitrosti iz grafa $s(t)$
 
 Na grafu $s(t)$ je premica, ki gre skozi točki $(0\,\mathrm{s},\ 0\,\mathrm{m})$ in $(6\,\mathrm{s},\ 30\,\mathrm{m})$. Določi hitrost in zapiši enačbo gibanja.
+
+**Podatki:** točki na premici grafa $s(t)$: $(0\,\mathrm{s},\ 0\,\mathrm{m})$ in $(6\,\mathrm{s},\ 30\,\mathrm{m})$; premica gre skozi izhodišče ($s_0 = 0$)
+**Iščemo:** hitrost $v$ in enačbo gibanja $s(t)$
+
+:::formula
+Hitrost je naklon premice: $v = \dfrac{\Delta s}{\Delta t}$, enačba gibanja: $s = v \cdot t$
+:::
+
+**Rešitev:**
 
 1. Hitrost je naklon premice: $v = \dfrac{\Delta s}{\Delta t}$. Zato izberemo dve točki na premici.
 2. $\Delta s = 30\,\mathrm{m} - 0\,\mathrm{m} = 30\,\mathrm{m}$, $\Delta t = 6\,\mathrm{s} - 0\,\mathrm{s} = 6\,\mathrm{s}$.
 3. $v = \dfrac{30\,\mathrm{m}}{6\,\mathrm{s}} = 5\,\mathrm{m/s}$.
 4. Enačba gibanja: $s = 5\,\mathrm{m/s} \cdot t$.
 5. Preverimo: pri $t = 6\,\mathrm{s}$ je $s = 30\,\mathrm{m}$. ✓
+6. Odgovor: hitrost je $5\,\mathrm{m/s}$, enačba gibanja je $s = 5\,\mathrm{m/s} \cdot t$.
 
 ### Primer 3 (težji): gibanje z začetnim položajem in dve telesi
 
 Pešec je ob $t = 0$ na mestu $s_0 = 20\,\mathrm{m}$ in hodi s hitrostjo $1{,}5\,\mathrm{m/s}$ v pozitivno smer. Kolesar začne ob $t = 0$ v izhodišču ($s_0 = 0$) in se vozi s hitrostjo $5\,\mathrm{m/s}$ v isto smer. Kdaj kolesar dohiti pešca in kje?
+
+**Podatki:** pešec: $s_{0P} = 20\,\mathrm{m}$, $v_P = 1{,}5\,\mathrm{m/s}$; kolesar: $s_{0K} = 0$, $v_K = 5\,\mathrm{m/s}$; oba začneta ob $t = 0$ in se gibljeta v isto (pozitivno) smer
+**Iščemo:** čas $t$ in mesto $s$, kjer kolesar dohiti pešca
+
+:::formula
+Enačba gibanja za vsako telo: $s = s_0 + v\,t$; dohitevanje pomeni $s_K = s_P$
+:::
+
+**Rešitev:**
 
 1. **Enačbi gibanja** (zakaj: vsako telo ima svojo lego kot funkcijo časa):
    - pešec: $s_P = 20 + 1{,}5\,t$,
    - kolesar: $s_K = 5\,t$.
 2. **Dohitevanje** pomeni, da sta na istem mestu: $s_K = s_P$.
 3. $5\,t = 20 + 1{,}5\,t$, torej $3{,}5\,t = 20$.
-4. $t = \dfrac{20}{3{,}5} \approx 5{,}7\,\mathrm{s}$.
-5. Mesto: $s_K = 5 \cdot 5{,}7 \approx 28{,}6\,\mathrm{m}$.
-6. **Preverimo** s pešcem: $20 + 1{,}5 \cdot 5{,}7 = 20 + 8{,}55 \approx 28{,}6\,\mathrm{m}$. ✓
-7. **Na grafu $s(t)$** se premici sekata v tej točki. Kolesarjeva premica je strmejša, pešcev pa se začne više, na $20\,\mathrm{m}$.
+4. $t = \dfrac{20}{3{,}5} \approx 5{,}71\,\mathrm{s}$.
+5. Mesto: $s_K = 5 \cdot 5{,}71 \approx 28{,}6\,\mathrm{m}$.
+6. **Preverimo** s pešcem: $20 + 1{,}5 \cdot 5{,}71 = 20 + 8{,}57 \approx 28{,}6\,\mathrm{m}$. ✓
+7. **Na grafu $s(t)$** se premici sekata v tej točki. Kolesarjeva premica je strmejša, premica pešca pa se začne višje, pri $20\,\mathrm{m}$.
+8. Odgovor: kolesar dohiti pešca po približno $5{,}7\,\mathrm{s}$, približno $28{,}6\,\mathrm{m}$ od izhodišča.
 
 ## Pogoste napake
 
 - **Graf $s(t)$ zamenjamo s potjo telesa.** Premica, ki gre navzgor, ne pomeni, da se telo vzpenja. Pomeni, da se lega s časom povečuje.
-- **Vodoravna črta na $s(t)$ ni enakomerno gibanje s hitrostjo.** Pomeni mirovanje ($v = 0$). Vodoravna črta na $v(t)$ pa pomeni stalno hitrost, ki ni nič.
+- **Vodoravna črta na $s(t)$ ne pomeni gibanja s stalno hitrostjo.** Pomeni mirovanje ($v = 0$). Vodoravna črta na $v(t)$ pa pomeni stalno hitrost, ki ni nič.
 - **Zamenjava osi.** Čas je vedno na vodoravni osi. Če osi zamenjaš, naklon ne da več hitrosti.
 - **Enote.** Čas v minutah in hitrost v $\mathrm{m/s}$ ne gresta skupaj. Najprej pretvori: $1\,\mathrm{min} = 60\,\mathrm{s}$.
 - **Naklon računamo iz ene točke.** Za $\Delta s / \Delta t$ potrebuješ razliko dveh točk. Če premica ne gre skozi izhodišče, $s/t$ ni hitrost.
@@ -119,7 +149,7 @@ Pomisli na **tempomat** na avtocesti. Voznik nastavi $90\,\mathrm{km/h}$, to je 
 
 Vsako sekundo avto prevozi $25\,\mathrm{m}$. Za $10\,\mathrm{s}$ je to $250\,\mathrm{m}$, za $20\,\mathrm{s}$ pa $500\,\mathrm{m}$. Pot raste enakomerno, zato je graf $s(t)$ premica.
 
-Podoben primer je **tekoče stopnice** v veleblagovnici, ki se vrtijo z enako hitrostjo. Če stojiš na njih, se vsako sekundo premakneš za enako razdaljo.
+Podoben primer so **tekoče stopnice** v veleblagovnici, ki se premikajo s stalno hitrostjo. Če stojiš na njih, se vsako sekundo premakneš za enako razdaljo.
 
 Pri **vožnji skozi mesto** pa hitrost ni stalna, ker se ustavljaš pri semaforjih. Gibanje takrat ni enakomerno in graf $s(t)$ ni ena sama premica.
 

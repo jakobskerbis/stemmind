@@ -3,10 +3,11 @@
 // Lekcije so Markdown datoteke v content/lessons/<pot>/<slug-teme>.md, da jih
 // učitelj lahko pregleda in popravi kar v repozitoriju. Branje ne stane nič.
 // Oblika je opisana v content/lessons/README.md.
+import { SUBJECT_NAMES } from "./subjects.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getTopic, getPath, listPaths, topicOrder } from "./curriculum.js";
+import { getTopic, getPath, listPaths, topicOrder, getProgram, listProgramPaths } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
 import { hasGenerator } from "./practice/index.js";
 import { simsForTopic } from "../public/sim/katalog.js";
@@ -151,9 +152,23 @@ function parseChecks(md) {
   return out.filter((c) => c.options.length >= 2 && c.correct >= 0);
 }
 
+// Blok s formulo v rešenem primeru: vrstice med »:::formula« in »:::«.
+// V aplikaciji je skrit za gumbom »Pokaži formulo« (učenec najprej poskusi sam),
+// v PDF-ju je izpisan kot okvir »Formula«, tutor ga dobi kot navadno besedilo.
+const FORMULA_RE = /^[ \t]*:::[ \t]*formula[ \t]*\n([\s\S]*?)\n[ \t]*:::[ \t]*$/gm;
+export function expandFormulaBlocks(md, mode = "html") {
+  return String(md ?? "").replace(FORMULA_RE, (_, body) => {
+    const inner = body.trim();
+    if (mode === "plain") return inner;
+    if (mode === "print") return `<div class="formula"><p class="formula-label">Formula</p>\n\n${inner}\n\n</div>`;
+    return `<details class="tb-formula"><summary>Pokaži formulo</summary>\n\n${inner}\n\n</details>`;
+  });
+}
+const withFormulas = (parts, mode) => parts.map((x) => ({ ...x, md: expandFormulaBlocks(x.md, mode) }));
+
 function lessonFile(topicId) {
   const [pathKey, slug] = topicId.split("/");
-  if (!/^[A-Z]+-[A-Z]+-\d$/.test(pathKey) || !/^[a-z0-9-]+$/.test(slug || "")) return null;
+  if (!/^[A-Z]+-[A-Z]+-[A-Z0-9]+$/.test(pathKey) || !/^[a-z0-9-]+$/.test(slug || "")) return null;
   return path.join(LESSONS_DIR, pathKey, `${slug}.md`);
 }
 
@@ -195,7 +210,12 @@ export function lessonView(topicId) {
     pathLabel: getPath(t.path).label,
     subject: t.subject,
     lesson: lesson
-      ? { status: lesson.meta.stanje || "osnutek", sections: lesson.sections, alternatives: lesson.alternatives, checks: lesson.checks }
+      ? {
+          status: lesson.meta.stanje || "osnutek",
+          sections: withFormulas(lesson.sections, "html"),
+          alternatives: withFormulas(lesson.alternatives, "html"),
+          checks: lesson.checks,
+        }
       : null,
     // Če lekcije še ni, pokažemo vsaj kratko razlago teme (če obstaja).
     explanation: lesson ? null : getExplanation(topicId)?.text || null,
@@ -206,6 +226,72 @@ export function lessonView(topicId) {
     prev: nav(order[i - 1]),
     next: nav(order[i + 1]),
   };
+}
+
+// Učbeniki: za vsak predmet in vsako raven svoj učbenik (npr. MAT-OS = matematika
+// za osnovno šolo, vsi razredi). Nove poti (npr. univerzitetne) se samodejno
+// pridružijo; ime predmeta in ravni dopolni v SUBJECT_NAMES / SCHOOL_NAMES.
+export { SUBJECT_NAMES };
+export const SCHOOL_NAMES = { OS: "osnovna šola", SS: "srednja šola", TEK: "tekmovanja in olimpijade" };
+const SCHOOL_ORDER = ["OS", "SS", "TEK"];
+const subjectName = (p) => SUBJECT_NAMES[p.subject] || p.label.split(",")[0].trim();
+const schoolName = (school) => SCHOOL_NAMES[school] || school;
+
+// Študijski program (fakulteta): en učbenik, deli so predmeti programa po letnikih.
+function programBook(programId) {
+  const prog = getProgram(programId);
+  if (!prog) return null;
+  const paths = listProgramPaths(programId).map((p) => ({
+    key: p.key,
+    label: `${p.elective ? "Izbirni predmet" : `${p.year}. letnik`}: ${p.label}`,
+  }));
+  const topics = paths.flatMap((p) => topicOrder(p.key));
+  return {
+    key: `P-${programId}`,
+    subject: "PROG",
+    school: "UNI",
+    subjectName: prog.label || prog.name,
+    schoolName: "študijski program",
+    paths,
+    label: prog.label || prog.name,
+    topics: topics.length,
+    lessons: topics.filter((t) => loadLesson(t.id)).length,
+  };
+}
+
+export function listBooks({ program } = {}) {
+  const prog = program ? programBook(program) : null;
+  return prog ? [prog, ...schoolBooks()] : schoolBooks();
+}
+
+function schoolBooks() {
+  const books = new Map();
+  for (const p of listPaths()) {
+    const key = `${p.subject}-${p.school}`;
+    if (!books.has(key))
+      books.set(key, { key, subject: p.subject, school: p.school, subjectName: subjectName(p), schoolName: schoolName(p.school), paths: [] });
+    books.get(key).paths.push({ key: p.key, label: p.label });
+  }
+  const rank = (s) => (SCHOOL_ORDER.includes(s) ? SCHOOL_ORDER.indexOf(s) : SCHOOL_ORDER.length);
+  const subjects = [...new Set(listPaths().map((p) => p.subject))];
+  return [...books.values()]
+    .sort((a, b) => subjects.indexOf(a.subject) - subjects.indexOf(b.subject) || rank(a.school) - rank(b.school))
+    .map((b) => {
+      const topics = b.paths.flatMap((p) => topicOrder(p.key));
+      return { ...b, label: `${b.subjectName} · ${b.schoolName}`, topics: topics.length, lessons: topics.filter((t) => loadLesson(t.id)).length };
+    });
+}
+
+export function getBook(bookKey) {
+  if (String(bookKey).startsWith("P-")) return programBook(String(bookKey).slice(2));
+  return schoolBooks().find((b) => b.key === bookKey) || null;
+}
+
+// Kazalo celega učbenika: deli = razredi oziroma letniki.
+export function bookView(bookKey) {
+  const b = getBook(bookKey);
+  if (!b) return null;
+  return { ...b, parts: b.paths.map((p) => tocView(p.key)) };
 }
 
 // Kazalo poti: sklopi in teme z oznakami, kaj je na voljo.
@@ -280,6 +366,20 @@ function snippet(lesson, words) {
   return (start ? "…" : "") + plain.slice(start, start + 140).trim() + "…";
 }
 
+// Razlaga teme iz lekcije, kadar vnaprej pripravljene razlage (explanations.json) ni:
+// »Zakaj se tega učimo« in »Povzetek« ter napotek na celotno lekcijo.
+export function lessonExplanation(topicId) {
+  const lesson = loadLesson(topicId);
+  if (!lesson) return null;
+  const pick = (re) => expandFormulaBlocks(lesson.sections.find((s) => re.test(s.title))?.md ?? "", "html").trim();
+  const why = pick(/^zakaj/i);
+  const sum = pick(/^povzetek/i);
+  if (!why && !sum) return null;
+  return [why, sum ? `### Bistvo\n${sum}` : "", "*Celotna lekcija z rešenimi primeri in vprašanji je pod gumbom »Lekcija«.*"]
+    .filter(Boolean)
+    .join("\n\n");
+}
+
 // Kratek povzetek lekcije za sistemski prompt tutorja (če lekcija obstaja),
 // da tutor razlaga skladno z učbenikom.
 export function lessonSummaryForPrompt(topicId) {
@@ -287,5 +387,5 @@ export function lessonSummaryForPrompt(topicId) {
   if (!lesson) return "";
   const sum = lesson.sections.find((s) => /^povzetek/i.test(s.title));
   if (!sum) return "";
-  return `Učenec ima v učbeniku lekcijo o tej temi. Njen povzetek (razlagaj skladno z njim, a z drugimi besedami in primeri):\n${sum.md.slice(0, 1200)}`;
+  return `Učenec ima v učbeniku lekcijo o tej temi. Njen povzetek (razlagaj skladno z njim, a z drugimi besedami in primeri):\n${expandFormulaBlocks(sum.md, "plain").slice(0, 1200)}`;
 }
