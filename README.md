@@ -122,7 +122,7 @@ Aplikacija je en proces Node z bazo v eni datoteki, zato potrebuje gostovanje s 
 ## Zgradba
 
 ```
-prompts/system_prompt.md   sistemski prompt (predloga z {nastavitvami})
+prompts/system_prompt.md   sistemski prompt: stalni del (predpomnjen), pod oznako STEMMIND:NASTAVITVE {nastavitve} učenca
 server/app.js              API in klepet (SSE)
 server/claude.js           klic Claude API + preizkusni način
 server/meta.js             branje/odstranjevanje META, filter za pretakanje

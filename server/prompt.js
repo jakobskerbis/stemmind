@@ -8,6 +8,10 @@ import { studyProgramPrompt } from "./curriculum.js";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const TEMPLATE_PATH = process.env.STEMMIND_PROMPT_PATH || path.join(here, "..", "prompts", "system_prompt.md");
 
+// Vrstica, ki loči stalni del prompta (enak za vse učence, predpomnjen pri
+// Claude API) od nastavitev učenca, ki jih vstavi strežnik.
+export const SPLIT_MARKER = "<!-- STEMMIND:NASTAVITVE";
+
 let cached = null;
 export function loadTemplate() {
   if (!cached) cached = fs.readFileSync(TEMPLATE_PATH, "utf8");
@@ -41,4 +45,18 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
   return template.replace(/\{(\w+)\}/g, (match, key) =>
     PLACEHOLDERS.includes(key) ? String(values[key] ?? "") : match,
   );
+}
+
+// Razdeli sestavljeni prompt na stalni del (predpomnjen) in del z nastavitvami.
+// Vrne bloke za polje `system` Claude API; če oznake ni, en sam blok.
+export function systemBlocks(prompt, { cacheStatic = true } = {}) {
+  const at = prompt.indexOf(SPLIT_MARKER);
+  if (at === -1) return [{ type: "text", text: prompt }];
+  const end = prompt.indexOf("\n", at);
+  const staticPart = prompt.slice(0, at).trimEnd();
+  const dynamicPart = (end === -1 ? "" : prompt.slice(end + 1)).trim();
+  const blocks = [{ type: "text", text: staticPart }];
+  if (cacheStatic) blocks[0].cache_control = { type: "ephemeral" };
+  if (dynamicPart) blocks.push({ type: "text", text: dynamicPart });
+  return blocks;
 }

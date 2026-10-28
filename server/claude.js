@@ -1,5 +1,6 @@
 // Klic Claude API (pretakanje), izbira modela, strošek, preizkusni način.
 import Anthropic from "@anthropic-ai/sdk";
+import { systemBlocks } from "./prompt.js";
 
 const env = (k, d) => (process.env[k] === undefined || process.env[k] === "" ? d : process.env[k]);
 
@@ -59,12 +60,14 @@ export async function streamReply({ system, messages, deep = false, onText, sign
   const params = {
     model,
     max_tokens: MAX_TOKENS,
-    system,
+    // Stalni del prompta (enak za vse učence) ima svojo oznako predpomnilnika,
+    // zato se deli med vsemi pogovori; nastavitve učenca so v drugem bloku.
+    system: typeof system === "string" ? systemBlocks(system) : system,
     messages,
     thinking: { type: "adaptive" },
     output_config: { effort: deep ? EFFORT_DEEP : EFFORT },
-    // Samodejni predpomnilnik: ves stalni del (prompt + zgodovina) se ob
-    // naslednjem sporočilu prebere iz predpomnilnika za ~10 % cene.
+    // Samodejni predpomnilnik še za zgodovino pogovora: ob naslednjem
+    // sporočilu se prebere iz predpomnilnika za ~10 % cene.
     cache_control: { type: "ephemeral" },
   };
   if (supportsFallback(model)) {
