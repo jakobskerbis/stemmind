@@ -40,3 +40,14 @@
 @media (max-width: 480px) {
   .contest-history li { grid-template-columns: 6.5em 4em 1fr; font-size: 0.86rem; }
 }
+
+/* Izpiti: negativne točke, opis izpita, izbira drugih izpitov */
+.pts.neg { color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, transparent); }
+.dark .pts.neg { color: var(--danger); }
+.exam-about summary { cursor: pointer; display: flex; align-items: flex-start; gap: 10px; list-style: none; }
+.exam-about summary::-webkit-details-marker { display: none; }
+.exam-about summary svg.i { flex: none; margin-top: 2px; color: var(--accent); }
+.exam-about p { margin: 10px 0 0; color: var(--muted); line-height: 1.5; }
+.exam-other { max-width: 360px; }
+.exam-other select { width: 100%; }
+.task-top:has(.pts.neg) .task-topic { flex-basis: 100%; }

@@ -80,7 +80,9 @@ test("default system from the device country; next grade and school-year start p
   assert.equal(systemForCountry("IN"), "IN-CBSE");
   assert.equal(systemForCountry("ci"), "FR-AF");
   assert.equal(systemForCountry("SI"), "SI");
-  assert.equal(systemForCountry("US"), "SI");
+  assert.equal(systemForCountry("US"), "US");
+  assert.equal(systemForCountry("CN"), "CN");
+  assert.equal(systemForCountry("DE"), "SI");
   assert.equal(nextLevel({ school_system: "NG", curriculum_level: "JSS 3" }).label, "SS 1");
   assert.equal(nextLevel({ school_system: "NG", curriculum_level: "SS 3" }), null);
   // Indija: šolsko leto se začne aprila, predlog konec marca.

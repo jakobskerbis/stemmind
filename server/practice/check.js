@@ -37,13 +37,14 @@ export function normUnit(u) {
 }
 
 // Razčleni vnos, npr. "12,5 cm²", "−3", "1 200", "2.5m".
-export function parseNumberWithUnit(input) {
+// dot: decimalna pika (angleške izpitne naloge); takrat "0.120" ni 120 s piko za tisočice.
+export function parseNumberWithUnit(input, { dot = false } = {}) {
   const s = String(input).trim().replace(/−/g, "-");
   const m = s.match(/^([+-]?\s*(?:\d{1,3}(?:[ .]\d{3})+|\d+)?(?:[.,]\d+)?)\s*(.*)$/);
   if (!m || !/\d/.test(m[1])) return null;
   let num = m[1].replace(/\s/g, "");
   // "1.200" s piko kot ločilom tisočic (natanko 3 števke po piki in brez vejice)
-  if (/^\d{1,3}(\.\d{3})+$/.test(num) && !num.includes(",")) num = num.replace(/\./g, "");
+  if (!dot && /^\d{1,3}(\.\d{3})+$/.test(num) && !num.includes(",")) num = num.replace(/\./g, "");
   num = num.replace(",", ".");
   const value = Number(num);
   if (!Number.isFinite(value)) return null;
@@ -65,7 +66,7 @@ function decimalsWord(d) {
 }
 
 function checkNumber(ans, input) {
-  const p = parseNumberWithUnit(input);
+  const p = parseNumberWithUnit(input, { dot: !!ans.dot });
   if (!p) return { kind: "format", message: "Vpiši število (decimalno vejico lahko zapišeš z vejico)." };
 
   // Enota

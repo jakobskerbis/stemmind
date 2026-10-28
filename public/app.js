@@ -110,7 +110,7 @@ function showView(name) {
   if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
   if (name === "textbook") showTextbook();
-  if (name === "competition") loadCompetition();
+  if (name === "competition") (examMode() ? loadExams() : loadCompetition());
   if (name === "feedback") showFeedback();
   if (name !== "topic") closePad();
   if (name !== "topic") setActiveMode(null);
@@ -1106,13 +1106,23 @@ document.addEventListener("click", (e) => {
 });
 $("#back-to-path").addEventListener("click", () => showView(state.backTo || "path"));
 // Tekmovanja so za osnovno in srednjo šolo; fakulteta zavihka nima.
+// Šolski sistemi zunaj Slovenije: isti zavihek je »Izpiti« (SAT, gaokao, JEE, NEET, CBSE …).
+const examMode = () => !!state.student && isRegional(state.student.settings.school_system);
+const prepLabel = () => (examMode() ? t("nav.exams") : t("nav.competition"));
+const prepBack = () => (examMode() ? t("exam.back") : t("result.toCompetitions"));
 function syncCompetitionTab() {
-  $("#competition-tab").hidden = $("#competition-tab-m").hidden = !state.student || isUni(state.student.settings) || isRegional(state.student.settings.school_system);
+  $("#competition-tab").hidden = $("#competition-tab-m").hidden = !state.student || isUni(state.student.settings);
+  for (const tab of [$("#competition-tab"), $("#competition-tab-m")]) {
+    const span = tab.querySelector("span");
+    span.dataset.i18n = examMode() ? "nav.exams" : "nav.competition";
+    span.textContent = prepLabel();
+    tab.querySelector("i, svg").outerHTML = icon(examMode() ? "clipboard-check" : "medal");
+  }
 }
 // Gumb »nazaj« na temi oziroma pri seriji nalog vodi tja, od koder je učenec prišel.
 function setBack(view) {
   state.backTo = view;
-  $("#back-to-path").innerHTML = `${icon("arrow-left")}${view === "competition" ? t("nav.competition") : t("nav.path")}`;
+  $("#back-to-path").innerHTML = `${icon("arrow-left")}${view === "competition" ? prepLabel() : t("nav.path")}`;
 }
 
 async function openTopic(topicId) {
@@ -1202,7 +1212,10 @@ const SESSIONS = {
 const SESSION_DONE = { review: t("sessionDone.review"), daily: t("sessionDone.daily"), unit: t("sessionDone.unit"), test: t("sessionDone.test"), tek: t("sessionDone.tek") };
 
 async function startSession(kind, body = {}) {
-  const cfg = SESSIONS[kind];
+  let cfg = SESSIONS[kind];
+  // Izpiti (zunaj Slovenije): isti mehanizem, a z izpitnimi naslovi.
+  if (examMode() && kind === "tek") cfg = { ...cfg, icon: "target", title: t("exam.train"), intro: t("exam.trainText") };
+  if (examMode() && kind === "contest") cfg = { ...cfg, title: t("exam.mock"), intro: t("exam.mockIntro") };
   setActiveMode({ review: "review", daily: "daily", "test-prep": "test" }[kind] || null);
   let out;
   try {
@@ -1230,7 +1243,7 @@ async function startSession(kind, body = {}) {
 function sessionDoneCard(mode, n) {
   return `<div class="card result celebrate"><div class="result-icon">${icon("trophy")}</div><h2>${SESSION_DONE[mode] || t("common.done")}!</h2>
     <p>${t("result.firstTry", { correct: n.correct, total: n.total })}${n.xp ? ` · +${n.xp.gained} XP` : ""}</p>
-    <button class="primary big" id="fb-back">${state.backTo === "competition" ? t("result.toCompetitions") : t("result.toPath")}</button></div>`;
+    <button class="primary big" id="fb-back">${state.backTo === "competition" ? prepBack() : t("result.toPath")}</button></div>`;
 }
 
 // Slike pri nalogah: graf premice in številska premica. Barve so enake v svetlem
@@ -1339,7 +1352,8 @@ async function showSideExplanation(task, ctx) {
 function renderTask(task, ctx) {
   showSideExplanation(task, ctx);
   const box = $("#practice");
-  const comp = ctx.mode === "tek" || ctx.mode === "contest" || (ctx.mode === "practice" && isCompTopic(state.topic?.id));
+  // Tekmovalna imena težavnosti (težja, zahtevna, izziv) samo pri slovenskih tekmovanjih, ne pri izpitih.
+  const comp = !examMode() && (ctx.mode === "tek" || ctx.mode === "contest" || (ctx.mode === "practice" && isCompTopic(state.topic?.id)));
   const stars = ctx.mode !== "placement" && task.level ? diffBadge(task.level, comp) : "";
   const pts = ctx.mode === "contest" && task.points ? `<span class="pts">${t("task.points", { n: task.points })}</span>` : "";
   const counter = ctx.total ? `<span class="count">${ctx.index} / ${ctx.total}</span>` : "";
@@ -1355,14 +1369,15 @@ function renderTask(task, ctx) {
     input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn secondary" title="${t("task.writeTitle")}">${icon("pencil")}<span>${t("task.write")}</span></button><button class="primary">${t("task.check")}</button></form>`;
   }
   const bar = ctx.mode === "contest" ? `<div class="contest-bar"><span id="contest-timer" class="contest-timer" role="timer">${icon("timer")}<b>${leftText(state.contestDeadline)}</b></span><span class="muted">${t("comp.timerNote")}</span></div>` : "";
+  const penalty = ctx.mode === "contest" && task.penalty ? `<span class="pts neg">${t("exam.penaltyPts", { n: String(task.penalty).replace("-", "−") })}</span>` : "";
   box.innerHTML = `${bar}<div class="card task">
-    <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${counter}</div>
+    <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${penalty}${counter}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
     ${task.figure ? figureSvg(task.figure) : ""}
     ${input}
     <div id="feedback" class="feedback" aria-live="polite"></div>
-    ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${t("comp.finish")}</button></div>` : ""}
+    ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${examMode() ? t("exam.finish") : t("comp.finish")}</button></div>` : ""}
   </div>`;
   const submit = (value) => checkTask(task, ctx, value);
   if (ctx.mode === "contest") {
@@ -1371,7 +1386,7 @@ function renderTask(task, ctx) {
       contestStep(await api(`/api/students/${state.student.id}/tasks/${task.id}/skip`, { method: "POST" }).catch((e) => ({ error: e.message })), ctx);
     });
     $("#c-finish").addEventListener("click", async () => {
-      if (!confirm(t("comp.confirmFinish"))) return;
+      if (!confirm(examMode() ? t("exam.confirmFinish") : t("comp.confirmFinish"))) return;
       finishContest(ctx.sessionId);
     });
   }
@@ -1571,6 +1586,89 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// ---------- priprave na izpite (šolski sistemi zunaj Slovenije) ----------
+
+async function loadExams(key = state.examKey, exam = null) {
+  const box = $("#competition-content");
+  const q = key ? `?key=${encodeURIComponent(key)}` : exam ? `?exam=${encodeURIComponent(exam)}` : "";
+  let c;
+  try {
+    c = await api(`/api/students/${state.student.id}/exams${q}`);
+  } catch (err) {
+    box.innerHTML = `<p class="muted">${t("comp.loadError", { msg: escapeHtml(err.message) })}</p>`;
+    return;
+  }
+  if (!c.key) {
+    box.innerHTML = `<h1>${t("exam.title")}</h1>`;
+    return;
+  }
+  state.examKey = state.compKey = c.key;
+  const seg = (items, cur, attr) =>
+    `<div class="seg" role="group">${items.map(([v, label]) => `<button type="button" class="${v === cur ? "active" : ""}" aria-pressed="${v === cur}" ${attr}="${v}">${escapeHtml(label)}</button>`).join("")}</div>`;
+  const left = c.openContest ? Math.max(1, Math.ceil((c.openContest.deadline - Date.now()) / 60000)) : 0;
+  const hist = c.history.length
+    ? `<ul class="contest-history">${c.history.map((h) => `<li><span>${escapeHtml(new Date(h.date).toLocaleDateString(locale()))}</span><b>${h.points} / ${h.maxPoints}</b><span class="bar"><i style="width:${Math.max(0, Math.round((h.points / h.maxPoints) * 100))}%"></i></span></li>`).join("")}</ul>`
+    : `<p class="muted small-note">${t("exam.historyEmpty")}</p>`;
+  const others = c.exams.other.filter((x) => x.id !== c.exam);
+  const ownIds = c.exams.own.map((x) => x.id);
+  const examSeg = [...c.exams.own, ...(ownIds.includes(c.exam) ? [] : [{ id: c.exam, name: c.name }])].map((x) => [x.id, x.name]);
+  const m = c.mock;
+  box.innerHTML = `
+    <h1>${t("exam.title")}</h1>
+    <div class="comp-pickers">
+      ${seg(examSeg, c.exam, "data-exam")}
+      ${others.length ? `<label class="field exam-other"><span class="field-label">${t("exam.otherExams")}</span><select data-exam-other><option value="">…</option>${others.map((x) => `<option value="${x.id}">${escapeHtml(`${x.name} (${x.country})`)}</option>`).join("")}</select></label>` : ""}
+      ${c.subjects.length > 1 ? seg(c.subjects.map((x) => [x.key, SUBJECT_NAMES[x.subject] || x.name]), c.key, "data-exam-subject") : ""}
+    </div>
+    <details class="card exam-about"><summary>${icon("info")}<span><b>${escapeHtml(c.full)}</b> · ${escapeHtml(c.country)}</span></summary><p lang="en">${escapeHtml(c.about)}</p></details>
+    <div class="card xp-card comp-hero">
+      <div class="hero">
+        <div class="hero-icon">${icon("target")}</div>
+        <div class="hero-text"><h2>${t("exam.train")}</h2><p>${t("exam.trainText")}</p></div>
+        <button class="primary big" data-comp-train>${t("common.start")}</button>
+      </div>
+    </div>
+    <section class="card contest-card">
+      <div class="contest-head">
+        <span class="session-icon">${icon("timer")}</span>
+        <div><h2>${t("exam.mock")}</h2>
+          <p class="muted">${t("exam.mockText", { tasks: m.tasks, choice: m.choice, minutes: m.minutes, max: m.maxPoints })}</p>
+          ${m.negative ? `<p class="muted small-note">${t("exam.negative", { p: String(m.penalty).replace("-", "−") })}</p>` : ""}
+          ${m.scale ? `<p class="muted small-note">${t("exam.scaleNote", { min: m.scale[0], max: m.scale[1] })}</p>` : ""}</div>
+      </div>
+      <button class="primary" data-comp-contest>${c.openContest ? t("comp.continue", { n: left }) : t("exam.startMock")}</button>
+      <span class="field-label">${t("comp.lastResults")}</span>
+      ${hist}
+    </section>
+    <h2 class="comp-topics-title">${t("comp.topics")}</h2>
+    <p class="muted small-note">${t("exam.topicsNote")}</p>
+    ${c.units
+      .map(
+        (u, ui) => `<section class="unit card">
+        <div class="unit-head"><div class="ring" style="--p:${Math.round(u.progress * 100)}"><span>${Math.round(u.progress * 100)}%</span></div>
+          <div class="unit-title"><span class="eyebrow">${t("unit.label", { n: ui + 1 })}</span><h2>${escapeHtml(u.title)}</h2></div></div>
+        <ol class="path">${u.topics
+          .map((tp) => {
+            const st = tp.due ? "due" : tp.status;
+            return `<li><button class="node ${st}" data-open="${tp.id}"><span class="node-dot">${icon(NODE[st][0])}</span>
+              <span class="node-text"><span class="node-name">${escapeHtml(tp.name)}</span><span class="node-sub">${NODE[st][1]}</span></span></button></li>`;
+          })
+          .join("")}</ol></section>`,
+      )
+      .join("")}`;
+}
+
+document.addEventListener("click", (e) => {
+  const ex = e.target.closest("[data-exam]");
+  if (ex) loadExams(null, ex.dataset.exam);
+  const sub = e.target.closest("[data-exam-subject]");
+  if (sub) loadExams(sub.dataset.examSubject);
+});
+document.addEventListener("change", (e) => {
+  const sel = e.target.closest("[data-exam-other]");
+  if (sel?.value) loadExams(null, sel.value);
+});
+
 // Odgovor ali preskok pri poskusnem tekmovanju: brez povratne informacije, takoj naslednja naloga.
 function contestStep(r, ctx) {
   if (r.error) return toast(r.error);
@@ -1632,8 +1730,10 @@ function showContestResult(c, timeUp = false) {
       ${timeUp ? `<p class="muted">${t("comp.timeUp")}</p>` : ""}
       <h2>${t("comp.score", { points: c.points, max: c.maxPoints })}</h2>
       <p>${t("comp.summary", { correct: c.correct, total: c.total, minutes: c.minutes })}${c.xp ? ` · +${c.xp.gained} XP` : ""}</p>
-      <p class="muted">${pct >= 75 ? t("comp.great") : pct >= 50 ? t("comp.good") : t("comp.hard")}</p>
-      <button class="primary big" id="fb-back">${t("result.toCompetitions")}</button>
+      ${c.scaled ? `<p>${t("exam.scaled", { value: c.scaled.value, min: c.scaled.min, max: c.scaled.max })}</p>` : ""}
+      ${c.wrong && c.items.some((x) => x.earned < 0) ? `<p class="muted">${t("exam.wrongPenalty", { n: c.wrong })}</p>` : ""}
+      <p class="muted">${examMode() ? (pct >= 75 ? t("exam.great") : pct >= 50 ? t("exam.good") : t("exam.hard")) : pct >= 75 ? t("comp.great") : pct >= 50 ? t("comp.good") : t("comp.hard")}</p>
+      <button class="primary big" id="fb-back">${prepBack()}</button>
     </div>
     <h2 class="comp-topics-title">${t("comp.review")}</h2>
     ${c.items

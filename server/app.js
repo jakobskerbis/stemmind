@@ -19,6 +19,7 @@ import { mountAccounts } from "./accounts/index.js";
 import { passwordGate } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
+import { examInfo, examKeyFor, isExamPath, examOf, examPrompt } from "./exams.js";
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 
@@ -278,7 +279,9 @@ export function createApp(store, opts = {}) {
         settings: tekTopic ? { ...student.settings, track: "COMPETITION" } : student.settings,
         weaknesses: weak,
         studentName: student.name,
-        learningPath: conv.path_topic ? [learningPathPrompt(conv.path_topic), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n") : "",
+        learningPath: conv.path_topic
+          ? [learningPathPrompt(conv.path_topic), examPrompt(getTopic(conv.path_topic)?.path), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n")
+          : "",
         lite,
       });
       // Prvi korak pri nalogi iz Vadnice sestavi koda (podatki, iskano, namig), brez klica modela.
@@ -496,6 +499,23 @@ export function createApp(store, opts = {}) {
       ...competitionInfo(key),
       ...progress.pathView(s.id, key),
       defaultKey,
+      history: progress.contestHistory(s.id, key),
+      openContest: progress.openContest(s.id, key),
+    });
+  });
+  // --- priprave na izpite (SAT, gaokao, JEE, NEET, CBSE): trening in poskusni izpit gresta
+  // prek /competition-training in /contest (isti mehanizem kot pri tekmovanjih) ---
+  app.get("/api/students/:id/exams", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const defaultKey = examKeyFor(s.settings);
+    const key = isExamPath(req.query.key) ? String(req.query.key) : examKeyFor(s.settings, String(req.query.exam || "")) || defaultKey;
+    if (!key) return res.json({ key: null });
+    res.json({
+      ...examInfo(key, s.settings.school_system),
+      ...progress.pathView(s.id, key),
+      defaultKey,
+      defaultExam: examOf(defaultKey),
       history: progress.contestHistory(s.id, key),
       openContest: progress.openContest(s.id, key),
     });

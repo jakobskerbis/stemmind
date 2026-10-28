@@ -292,6 +292,30 @@ export const SCHOOL_SYSTEMS = {
     exams: "SPM (Form 5) and STPM",
     help: "Talian Kasih 15999, emergency 999",
   },
+  US: {
+    name: "United States",
+    country: "US",
+    yearStart: 8,
+    syllabus: "INT",
+    stages: [
+      ["Middle school", g("Grade ", 6, 8, 6)],
+      ["High school", g("Grade ", 9, 12, 9)],
+    ],
+    exams: "state tests; SAT, ACT and AP exams for college admission",
+    help: "988 Suicide & Crisis Lifeline (call or text 988), Childhelp 1-800-422-4453, emergency 911",
+  },
+  CN: {
+    name: "China – 初中 / 高中",
+    country: "CN",
+    yearStart: 9,
+    syllabus: "INT",
+    stages: [
+      ["初中 (junior secondary)", [["Grade 7 (初一)", 7], ["Grade 8 (初二)", 8], ["Grade 9 (初三)", 9]]],
+      ["高中 (senior secondary)", [["Grade 10 (高一)", 10], ["Grade 11 (高二)", 11], ["Grade 12 (高三)", 12]]],
+    ],
+    exams: "中考 (zhongkao) after Grade 9 and 高考 (gaokao) after Grade 12",
+    help: "youth helpline 12355, police 110, ambulance 120",
+  },
   INTL: {
     name: "International (Grade 6–12)",
     country: "",
