@@ -42,7 +42,7 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     student_name: cleanText(studentName, 40) || "(ni podano)",
     personality_setting: settings.personality_setting || "nevtralna",
     weaknesses: weaknesses.length ? weaknesses.join(", ") : "(še ni podatkov)",
-    language: languagePrompt(settings.language),
+    language: languagePrompt(settings.language, settings.region),
   };
   // Zamenjamo samo znana imena, da LaTeX zapisi kot {,} ostanejo nedotaknjeni.
   return template.replace(/\{(\w+)\}/g, (match, key) =>
@@ -65,8 +65,13 @@ export function systemBlocks(prompt, { cacheStatic = true } = {}) {
 }
 
 // Jezik pogovora za prompt, npr. »slovenščina (sl)« ali »German – Deutsch (de)«.
-export function languagePrompt(code) {
+export function languagePrompt(code, region = "") {
   const l = langInfo(code || "sl");
-  if (l.code === "sl") return "slovenščina (sl)";
-  return `${l.english} – ${l.native} (${l.code})`;
+  const base = l.code === "sl" ? "slovenščina (sl)" : `${l.english} – ${l.native} (${l.code})`;
+  if (!region || (l.code === "sl" && region === "SI")) return base;
+  let name = region;
+  try {
+    name = new Intl.DisplayNames(["en"], { type: "region" }).of(region) || region;
+  } catch {}
+  return `${base}, regija: ${name} (${region})`;
 }

@@ -2,7 +2,7 @@
 // Izbrani jezik je shranjen na napravi in v profilu učenca (inštruktor odgovarja v njem).
 // Modul počaka na prevode (top-level await), zato lahko ostali moduli t() kličejo že ob nalaganju.
 import SL from "./i18n/sl.js";
-import { DEFAULT_LANGUAGE, LANGUAGES, isLanguage, langInfo, uiChain, UI_LANGUAGES } from "./i18n/languages.js";
+import { DEFAULT_LANGUAGE, LANGUAGES, isLanguage, langInfo, uiChain, UI_LANGUAGES, detectLanguage } from "./i18n/languages.js";
 
 const KEY = "stemmind.lang";
 let lang = DEFAULT_LANGUAGE;
@@ -59,11 +59,17 @@ async function load(code) {
   html.dir = langInfo(lang).rtl ? "rtl" : "ltr";
 }
 
-await load(stored() || DEFAULT_LANGUAGE);
+// Ob prvem zagonu jezik in regija naprave (npr. sl-SI → slovenščina, pt-BR → portugalščina za Brazilijo),
+// sicer najbližji jezik ali narečje, brez ujemanja angleščina. Izbira v Nastavitvah ima prednost.
+const detected = detectLanguage(typeof navigator === "undefined" ? [] : navigator.languages?.length ? navigator.languages : [navigator.language]);
+await load(stored() || detected.code);
 
 export const currentLang = () => lang;
+// Regija (ISO 3166, npr. "BR") velja, ko je izbrani jezik tisti, ki ga je zaznala naprava.
+export const regionFor = (code) => (code === detected.code ? detected.region : "");
+export const currentRegion = () => regionFor(lang);
 // Oznaka za Intl (datumi, števila); zh-Hant, sr-Latn … so veljavne BCP 47 oznake.
-export const locale = () => lang;
+export const locale = () => (currentRegion() ? `${lang}-${currentRegion()}` : lang);
 
 const plural = new Map();
 function pluralForm(n) {

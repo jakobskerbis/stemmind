@@ -1,7 +1,7 @@
 import { icon } from "./icons.js";
 import { loadPrograms, programsCache } from "./programs.js";
 import { mountLevelPicker } from "./level-picker.js";
-import { currentLang } from "./i18n.js";
+import { currentLang, currentRegion } from "./i18n.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku STEMMIND_ACCOUNTS=1.
 
@@ -315,7 +315,7 @@ function childForm(consentText, programs = []) {
 // Nastavitve profila iz obrazca: šola, program in letnik.
 function childSettings(f) {
   const track = f.educational_track.value;
-  const base = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value, language: currentLang() };
+  const base = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value, language: currentLang(), region: currentRegion() };
   if (track === "UNIVERZA") return { ...base, subject: programsCache().find((p) => p.id === f.study_program.value)?.mainSubject || "MAT" };
   return base;
 }

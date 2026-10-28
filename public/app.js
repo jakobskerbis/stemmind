@@ -1,7 +1,7 @@
 // STEMMind – odjemalec (brez ogrodja).
 import { attachPad, closePad, openPad, padIsSheet } from "./pad.js";
 import { icon, hydrateIcons } from "./icons.js";
-import { t, locale, currentLang, setLanguage } from "./i18n.js";
+import { t, locale, currentLang, currentRegion, regionFor, setLanguage } from "./i18n.js";
 import { mountLanguageCard } from "./language.js";
 
 hydrateIcons();
@@ -167,7 +167,7 @@ async function onboard(name = "") {
         return;
       }
       const track = f.educational_track.value;
-      const settings = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value, language: currentLang() };
+      const settings = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value, language: currentLang(), region: currentRegion() };
       if (track === "UNIVERZA") settings.subject = programs.find((p) => p.id === settings.study_program)?.mainSubject || "MAT";
       const s = await api("/api/students", { method: "POST", body: { name: f.name.value, settings } });
       document.body.classList.remove("onboarding");
@@ -520,7 +520,7 @@ async function fillSettingsForm() {
 mountLanguageCard($("#language-card"), {
   onChange: async (code) => {
     if (!state.student) return;
-    await api(`/api/students/${state.student.id}`, { method: "PUT", body: { settings: { language: code } } }).catch(() => null);
+    await api(`/api/students/${state.student.id}`, { method: "PUT", body: { settings: { language: code, region: regionFor(code) } } }).catch(() => null);
   },
 });
 $("#lang-note").hidden = currentLang() === "sl";
