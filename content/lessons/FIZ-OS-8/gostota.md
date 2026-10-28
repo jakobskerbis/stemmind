@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Iz 7. razreda že znaš, da ima vsako telo maso, ki jo izmeriš s tehtnico, in da ima prostornino, ki jo izražamo v $\text{cm}^3$, $\text{dm}^3$ ali $\text{m}^3$. Veš tudi, da je $1\,\text{dm}^3 = 1\,\text{l}$ in da je $1\,\text{cm}^3 = 1\,\text{ml}$.
+Iz prejšnjih razredov že znaš, da ima vsako telo maso, ki jo izmeriš s tehtnico, in da ima prostornino, ki jo izražamo v $\text{cm}^3$, $\text{dm}^3$ ali $\text{m}^3$. Veš tudi, da je $1\,\text{dm}^3 = 1\,\text{l}$ in da je $1\,\text{cm}^3 = 1\,\text{ml}$.
 
 Verjetno si že opazil, da sta lahko dve telesi enako veliki, a zelo različno težki: kos stiropora in kos železa iste oblike. Ali pa da nekatera telesa plavajo, druga pa potonejo. Fizikalna količina, ki to opiše, je **gostota**. Povezuje maso in prostornino in nam pove, koliko snovi je »natlačene« v določeni prostornini.
 
@@ -86,7 +86,7 @@ $V = a^3$, nato $m = \rho \cdot V$
 
 **Rešitev:**
 
-1. Najprej potrebujemo prostornino, saj masa ni podana: $V = a^3 = 5^3 = 125\,\text{cm}^3$.
+1. Najprej potrebujemo prostornino, saj ni podana: $V = a^3 = 5^3 = 125\,\text{cm}^3$.
 2. Iščemo maso, zato uporabimo $m = \rho \cdot V$.
 3. Vstavimo: $m = 7{,}9\,\dfrac{\text{g}}{\text{cm}^3} \cdot 125\,\text{cm}^3 = 987{,}5\,\text{g}$.
 4. Enote se skrajšajo: $\text{cm}^3$ se pokrajšajo, ostane $\text{g}$. To je znak, da je račun smiseln.
@@ -133,7 +133,7 @@ Predstavljaj si dve enaki škatli, vsaka s prostornino $1\,\text{dm}^3$. V prvo 
 
 Gostota je torej kot **»natlačenost«** snovi. Večja ko je gostota, več mase je v isti prostornini.
 
-V interaktivni simulaciji spodaj lahko izbiraš različne snovi in jih potapljaš v vodo. Opazuj: pri enaki prostornini ima gostejši blok večjo maso. Ko spreminjaš maso in prostornino, opazuj, kdaj blok plava in kdaj potone ter kako se to ujema z gostoto.
+V simulaciji »Gostota: plava ali potone?« spodaj izbiraš snov telesa in tekočino ter spreminjaš prostornino telesa. Opazuj: pri enaki prostornini ima gostejši blok večjo maso. Ko spreminjaš prostornino, opazuj, da se masa spreminja sorazmerno, ali blok plava ali potone, pa je odvisno le od primerjave gostot telesa in tekočine.
 
 ## Drugače: Iz vsakdanjega življenja
 

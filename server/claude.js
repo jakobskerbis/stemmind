@@ -8,8 +8,33 @@ const env = (k, d) => (process.env[k] === undefined || process.env[k] === "" ? d
 export const MODEL = env("STEMMIND_MODEL", "claude-haiku-5-5");
 export const MODEL_DEEP = env("STEMMIND_MODEL_DEEP", "claude-opus-5-5");
 const EFFORT = env("STEMMIND_EFFORT", "low");
-const EFFORT_DEEP = env("STEMMIND_EFFORT_DEEP", "medium");
-const MAX_TOKENS = Number(env("STEMMIND_MAX_TOKENS", 8000));
+// »Razloži podrobneje« je druga razlaga snovi, ne težko sklepanje: Opus pri effort low
+// razloži enako dobro z manj razmišljanja (manj izhodnih žetonov). Prej: medium.
+const EFFORT_DEEP = env("STEMMIND_EFFORT_DEEP", "low");
+// Stalni del prompta za Opus ostane v predpomnilniku 1 uro (klici Opusa so redki,
+// 5 minut bi pogosto poteklo in vsakič bi znova plačali zapis).
+const DEEP_CACHE_TTL = env("STEMMIND_DEEP_CACHE_TTL", "1h");
+// Hitri model z več razmisleka: Tekmovanja in »Razloži podrobneje«, ko je dnevna
+// ali mesečna omejitev za zmogljivejši model porabljena.
+const EFFORT_THINK = env("STEMMIND_EFFORT_THINK", "high");
+
+// Največ žetonov odgovora (z razmišljanjem vred) po načinu. Preprečuje predolge
+// (in drage) odgovore; običajen odgovor inštruktorja ima nekaj sto žetonov.
+export const MAX_TOKENS = {
+  chat: Number(env("STEMMIND_MAX_TOKENS", 3000)),
+  lite: Number(env("STEMMIND_MAX_TOKENS_LITE", 1200)),
+  think: Number(env("STEMMIND_MAX_TOKENS_THINK", 5000)),
+  deep: Number(env("STEMMIND_MAX_TOKENS_DEEP", 6000)),
+};
+
+// Način klica: "chat" (Haiku, malo razmisleka), "lite" (Haiku, kratko),
+// "think" (Haiku, več razmisleka), "deep" (Opus).
+export function modeParams(mode = "chat") {
+  if (mode === "deep") return { model: MODEL_DEEP, effort: EFFORT_DEEP, max_tokens: MAX_TOKENS.deep };
+  if (mode === "think") return { model: MODEL, effort: EFFORT_THINK, max_tokens: MAX_TOKENS.think };
+  if (mode === "lite") return { model: MODEL, effort: EFFORT, max_tokens: MAX_TOKENS.lite };
+  return { model: MODEL, effort: EFFORT, max_tokens: MAX_TOKENS.chat };
+}
 
 // Cene v USD na milijon žetonov (vhod, izhod, branje predpomnilnika, zapis v predpomnilnik).
 // Preveri na https://claude.com/pricing in po potrebi popravi.
@@ -46,6 +71,12 @@ export function getClient() {
   return client;
 }
 
+// Kratka opravila (prepis, anketa): brez razmišljanja, kjer model to dovoli
+// (Haiku 5.5 pri effort low); Opus 5.5 razmišljanja ne dovoli izklopiti.
+export function quickParams(model) {
+  return /haiku/.test(model) ? { thinking: { type: "disabled" }, output_config: { effort: "low" } } : { output_config: { effort: "low" } };
+}
+
 // Strežniški nadomestni model ob zavrnitvi podpirajo modeli Opus/Sonnet/Fable, Haiku ne.
 const supportsFallback = (model) => !/haiku/.test(model);
 
@@ -53,19 +84,19 @@ const supportsFallback = (model) => !/haiku/.test(model);
  * Pretoči odgovor modela.
  * @returns {Promise<{content, text, stopReason, usage, model}>}
  */
-export async function streamReply({ system, messages, deep = false, onText, signal }) {
-  const model = deep ? MODEL_DEEP : MODEL;
+export async function streamReply({ system, messages, deep = false, mode = deep ? "deep" : "chat", onText, signal }) {
+  const { model, effort, max_tokens } = modeParams(mode);
   if (isMockMode()) return mockReply({ messages, onText, signal, model });
 
   const params = {
     model,
-    max_tokens: MAX_TOKENS,
+    max_tokens,
     // Stalni del prompta (enak za vse učence) ima svojo oznako predpomnilnika,
     // zato se deli med vsemi pogovori; nastavitve učenca so v drugem bloku.
-    system: typeof system === "string" ? systemBlocks(system) : system,
+    system: typeof system === "string" ? systemBlocks(system, { ttl: mode === "deep" && DEEP_CACHE_TTL === "1h" ? "1h" : null }) : system,
     messages,
     thinking: { type: "adaptive" },
-    output_config: { effort: deep ? EFFORT_DEEP : EFFORT },
+    output_config: { effort },
     // Samodejni predpomnilnik še za zgodovino pogovora: ob naslednjem
     // sporočilu se prebere iz predpomnilnika za ~10 % cene.
     cache_control: { type: "ephemeral" },
@@ -152,6 +183,8 @@ export async function readHandwriting({ imageBase64, mediaType = "image/png", an
   const final = await getClient().messages.create({
     model: OCR_MODEL,
     max_tokens: 200,
+    // Samo prepis: brez razmišljanja (manj izhodnih žetonov, odgovor se ne odreže).
+    ...quickParams(OCR_MODEL),
     messages: [
       {
         role: "user",
