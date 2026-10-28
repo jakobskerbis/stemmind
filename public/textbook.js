@@ -3,7 +3,7 @@ import { mountDemo } from "./demos.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
-const tb = { subject: null, pathKey: null, query: "", topicId: null, paths: [] };
+const tb = { subject: null, book: null, query: "", topicId: null, books: [], myPath: null };
 
 // Ikone iz icons.js (ko je na voljo prenovljen vmesnik), sicer brez ikon.
 let iconFn = () => "";
@@ -14,7 +14,6 @@ import("./icons.js")
   .catch(() => {});
 const ic = (n) => iconFn(n);
 
-const SUBJECTS = { MAT: "Matematika", FIZ: "Fizika", KEM: "Kemija" };
 
 export function initTextbook(c) {
   ctx = c;
@@ -38,27 +37,40 @@ export async function openLesson(topicId) {
 async function renderHome() {
   const box = $("#view-textbook");
   const student = ctx.getStudent();
-  if (!tb.paths.length) tb.paths = await ctx.api("/api/paths");
-  if (!tb.subject) tb.subject = student?.settings?.subject || "MAT";
-  if (!tb.pathKey || !tb.pathKey.startsWith(tb.subject)) {
-    const mine = await ctx.api(`/api/students/${student.id}/path`).catch(() => null);
-    tb.pathKey = mine?.key?.startsWith(tb.subject) ? mine.key : tb.paths.find((p) => p.subject === tb.subject)?.key;
+  if (!tb.books.length) tb.books = await ctx.api("/api/textbook/books");
+  if (tb.myPath === null) tb.myPath = (await ctx.api(`/api/students/${student.id}/path`).catch(() => null))?.key || "";
+  // Privzeto: učbenik predmeta in ravni, ki ju učenec ima v učni poti.
+  if (!tb.subject) tb.subject = (tb.myPath || student?.settings?.subject || "MAT").split("-")[0];
+  const subjects = [...new Map(tb.books.map((b) => [b.subject, b.subjectName])).entries()];
+  if (!subjects.some(([k]) => k === tb.subject)) tb.subject = subjects[0]?.[0];
+  const books = tb.books.filter((b) => b.subject === tb.subject);
+  if (!books.some((b) => b.key === tb.book)) {
+    const mine = tb.myPath.split("-");
+    tb.book = (books.find((b) => mine[0] === b.subject && mine[1] === b.school) || books[0])?.key || null;
   }
-  const paths = tb.paths.filter((p) => p.subject === tb.subject);
+  const book = books.find((b) => b.key === tb.book);
+  const SHORT = { OS: "Osnovna šola", SS: "Srednja šola", TEK: "Tekmovanja" };
+  const levelName = (b) => SHORT[b.school] || b.schoolName.charAt(0).toUpperCase() + b.schoolName.slice(1);
   box.innerHTML = `
     <div class="tb-head">
       <h1>${ic("book-open")}Učbenik</h1>
-      <p class="muted">Razlage vseh tem z rešenimi primeri in poskusi, ki jih lahko premikaš sam.</p>
+      <p class="muted">Za vsak predmet svoj učbenik: razlage vseh tem, rešeni primeri in poskusi, ki jih lahko premikaš sam.</p>
       <div class="tb-search">
         <input id="tb-q" type="search" placeholder="Išči pojem, zakon ali poskus …" value="${esc(tb.query)}" aria-label="Išči po učbeniku" autocomplete="off">
       </div>
       <div class="tb-filters">
-        <div class="tb-seg" role="tablist">${Object.entries(SUBJECTS)
-          .map(([k, v]) => `<button type="button" role="tab" data-subj="${k}" class="${k === tb.subject ? "on" : ""}" aria-selected="${k === tb.subject}">${v}</button>`)
+        <div class="tb-seg" role="tablist" aria-label="Predmet">${subjects
+          .map(([k, v]) => `<button type="button" role="tab" data-subj="${esc(k)}" class="${k === tb.subject ? "on" : ""}" aria-selected="${k === tb.subject}">${esc(v)}</button>`)
           .join("")}</div>
-        <select id="tb-path" aria-label="Razred ali letnik">${paths.map((p) => `<option value="${p.key}" ${p.key === tb.pathKey ? "selected" : ""}>${esc(p.label)}</option>`).join("")}</select>
-        ${tb.pathKey ? `<a class="tb-pdf" id="tb-pdf-path" href="/ucbenik/${tb.pathKey}#natisni" target="_blank" rel="noopener">${ic("download")}Prenesi učbenik (PDF)</a>` : ""}
+        ${books.length > 1 ? `<div class="tb-seg" role="tablist" aria-label="Raven">${books
+          .map((b) => `<button type="button" role="tab" data-book="${esc(b.key)}" class="${b.key === tb.book ? "on" : ""}" aria-selected="${b.key === tb.book}">${esc(levelName(b))}</button>`)
+          .join("")}</div>` : ""}
       </div>
+      ${book ? `<div class="tb-book card">
+        <div><p class="eyebrow">Učbenik</p><h2>${esc(book.subjectName)} · ${esc(book.schoolName)}</h2>
+        <p class="muted">${book.lessons} od ${book.topics} lekcij${book.lessons < book.topics ? ", ostale nastajajo" : ""}</p></div>
+        <a class="primary tb-book-pdf" href="/ucbenik/${esc(book.key)}#natisni" target="_blank" rel="noopener">${ic("download")}Celoten učbenik (PDF)</a>
+      </div>` : ""}
     </div>
     <div id="tb-body"></div>`;
   const q = $("#tb-q");
@@ -73,15 +85,16 @@ async function renderHome() {
   box.querySelectorAll("[data-subj]").forEach((b) =>
     b.addEventListener("click", () => {
       tb.subject = b.dataset.subj;
-      tb.pathKey = null;
+      tb.book = null;
       renderHome();
     }),
   );
-  $("#tb-path").addEventListener("change", (e) => {
-    tb.pathKey = e.target.value;
-    $("#tb-pdf-path")?.setAttribute("href", `/ucbenik/${tb.pathKey}#natisni`);
-    renderBody();
-  });
+  box.querySelectorAll("[data-book]").forEach((b) =>
+    b.addEventListener("click", () => {
+      tb.book = b.dataset.book;
+      renderHome();
+    }),
+  );
   await renderBody();
 }
 
@@ -103,14 +116,12 @@ async function renderBody() {
       : `<div class="card"><p>Ni zadetkov za »${esc(tb.query)}«. Poskusi z drugo besedo ali vprašaj tutorja.</p></div>`;
     return;
   }
-  if (!tb.pathKey) {
-    body.innerHTML = `<div class="card"><p>Za ta predmet še ni učne poti.</p></div>`;
+  if (!tb.book) {
+    body.innerHTML = `<div class="card"><p>Za ta predmet še ni učbenika.</p></div>`;
     return;
   }
-  const toc = await ctx.api(`/api/textbook/toc?path=${encodeURIComponent(tb.pathKey)}`);
-  body.innerHTML = toc.units
-    .map(
-      (u, i) => `<section class="card tb-unit">
+  const book = await ctx.api(`/api/textbook/toc?book=${encodeURIComponent(tb.book)}`);
+  const unitHtml = (u, i) => `<section class="card tb-unit">
         <h2><span class="tb-num">${i + 1}</span>${esc(u.title)}</h2>
         <ul class="tb-list">${u.topics
           .map(
@@ -125,9 +136,26 @@ async function renderBody() {
             </button></li>`,
           )
           .join("")}</ul>
+      </section>`;
+  const parts = book.parts;
+  body.innerHTML = `${parts.length > 1 ? `<nav class="tb-jump" aria-label="Deli učbenika">${parts
+      .map((p) => `<a href="#tb-part-${esc(p.key)}" class="${p.key === tb.myPath ? "on" : ""}">${esc(p.label.split(",").slice(1).join(",").trim() || p.label)}</a>`)
+      .join("")}</nav>` : ""}
+    ${parts
+      .map(
+        (p) => `<section class="tb-part" id="tb-part-${esc(p.key)}">
+        <div class="tb-part-head"><h2>${esc(p.label)}</h2>
+          <a class="tb-pdf" href="/ucbenik/${esc(p.key)}#natisni" target="_blank" rel="noopener">${ic("download")}PDF tega dela</a></div>
+        ${p.units.map(unitHtml).join("")}
       </section>`,
-    )
-    .join("");
+      )
+      .join("")}`;
+  body.querySelectorAll(".tb-jump a").forEach((a) =>
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute("href"))?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }),
+  );
 }
 
 // Klik na temo v kazalu ali iskanju.

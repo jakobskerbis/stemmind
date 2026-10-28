@@ -198,7 +198,7 @@ const withFormulas = (parts, mode) => parts.map((x) => ({ ...x, md: expandFormul
 
 function lessonFile(topicId) {
   const [pathKey, slug] = topicId.split("/");
-  if (!/^[A-Z]+-[A-Z]+-\d$/.test(pathKey) || !/^[a-z0-9-]+$/.test(slug || "")) return null;
+  if (!/^[A-Z]+-[A-Z]+-[A-Z0-9]+$/.test(pathKey) || !/^[a-z0-9-]+$/.test(slug || "")) return null;
   return path.join(LESSONS_DIR, pathKey, `${slug}.md`);
 }
 
@@ -254,6 +254,44 @@ export function lessonView(topicId) {
     prev: nav(order[i - 1]),
     next: nav(order[i + 1]),
   };
+}
+
+// Učbeniki: za vsak predmet in vsako raven svoj učbenik (npr. MAT-OS = matematika
+// za osnovno šolo, vsi razredi). Nove poti (npr. univerzitetne) se samodejno
+// pridružijo; ime predmeta in ravni dopolni v SUBJECT_NAMES / SCHOOL_NAMES.
+export const SUBJECT_NAMES = { MAT: "Matematika", FIZ: "Fizika", KEM: "Kemija" };
+export const SCHOOL_NAMES = { OS: "osnovna šola", SS: "srednja šola", TEK: "tekmovanja in olimpijade" };
+const SCHOOL_ORDER = ["OS", "SS", "TEK"];
+const subjectName = (p) => SUBJECT_NAMES[p.subject] || p.label.split(",")[0].trim();
+const schoolName = (school) => SCHOOL_NAMES[school] || school;
+
+export function listBooks() {
+  const books = new Map();
+  for (const p of listPaths()) {
+    const key = `${p.subject}-${p.school}`;
+    if (!books.has(key))
+      books.set(key, { key, subject: p.subject, school: p.school, subjectName: subjectName(p), schoolName: schoolName(p.school), paths: [] });
+    books.get(key).paths.push({ key: p.key, label: p.label });
+  }
+  const rank = (s) => (SCHOOL_ORDER.includes(s) ? SCHOOL_ORDER.indexOf(s) : SCHOOL_ORDER.length);
+  const subjects = [...new Set(listPaths().map((p) => p.subject))];
+  return [...books.values()]
+    .sort((a, b) => subjects.indexOf(a.subject) - subjects.indexOf(b.subject) || rank(a.school) - rank(b.school))
+    .map((b) => {
+      const topics = b.paths.flatMap((p) => topicOrder(p.key));
+      return { ...b, label: `${b.subjectName} · ${b.schoolName}`, topics: topics.length, lessons: topics.filter((t) => loadLesson(t.id)).length };
+    });
+}
+
+export function getBook(bookKey) {
+  return listBooks().find((b) => b.key === bookKey) || null;
+}
+
+// Kazalo celega učbenika: deli = razredi oziroma letniki.
+export function bookView(bookKey) {
+  const b = getBook(bookKey);
+  if (!b) return null;
+  return { ...b, parts: b.paths.map((p) => tocView(p.key)) };
 }
 
 // Kazalo poti: sklopi in teme z oznakami, kaj je na voljo.

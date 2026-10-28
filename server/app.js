@@ -11,7 +11,7 @@ import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
 import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
-import { lessonView, tocView, searchTextbook, lessonSummaryForPrompt, lessonExplanation } from "./textbook.js";
+import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
@@ -326,7 +326,12 @@ export function createApp(store, opts = {}) {
     res.json({ ...t, pathLabel: getPath(t.path).label, explanation: getExplanation(t.id)?.text || lessonExplanation(t.id) });
   });
   // --- učbenik ---
+  app.get("/api/textbook/books", (req, res) => res.json(listBooks()));
   app.get("/api/textbook/toc", (req, res) => {
+    if (req.query.book) {
+      const book = bookView(String(req.query.book));
+      return book ? res.json(book) : res.status(404).json({ error: "Učbenik ne obstaja." });
+    }
     const toc = tocView(String(req.query.path || ""));
     if (!toc) return res.status(404).json({ error: "Učna pot ne obstaja." });
     res.json(toc);
@@ -349,7 +354,7 @@ export function createApp(store, opts = {}) {
     });
   });
   app.get("/api/textbook/search", (req, res) => {
-    const subject = ["MAT", "FIZ", "KEM"].includes(req.query.subject) ? req.query.subject : undefined;
+    const subject = /^[A-Z]{2,6}$/.test(req.query.subject || "") ? req.query.subject : undefined;
     res.json(searchTextbook(String(req.query.q || "").slice(0, 100), { subject }));
   });
   app.post("/api/students/:id/topic-status", (req, res) => {
