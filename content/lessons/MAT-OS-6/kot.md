@@ -5,21 +5,21 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Že poznaš točko, premico, poltrak in daljico ter veš, kaj pomeni pravokotnost. Pri pravokotnih premicah si že slišal za »pravi kot«, zdaj pa bomo kote spoznali natančno. Kote srečaš na vsakem koraku: ko odpreš vrata, ko se na kolesu zaviješ v ovinek, ko pogledaš na uro ali ko razrežeš pico na enake kose. Kadar rečemo »odpri okno malo bolj« ali »zavij močno desno«, pravzaprav govorimo o velikosti kota.
+Že poznaš točko, premico, poltrak in daljico ter veš, kaj pomeni pravokotnost. Pri pravokotnih premicah si že slišal za »pravi kot«, zdaj pa bomo kote spoznali natančno. Kote srečaš na vsakem koraku: ko odpreš vrata, ko na kolesu zaviješ v ovinek, ko pogledaš na uro ali ko razrežeš pico na enake kose. Kadar rečemo »odpri okno malo bolj« ali »zavij močno desno«, pravzaprav govorimo o velikosti kota.
 
-Da si pri tem natančno razumemo, potrebujemo skupno besedo (**kot**), skupno enoto (**stopinja**) in skupno orodje (**kotomer**). V tej lekciji se naučiš kote **označevati**, **meriti**, **risati** in **razvrščati** po velikosti. Brez tega ne gre pri načrtovanju stavb, pri navigaciji, pri računalniški grafiki, v naslednjih temah pa tudi ne pri konstrukcijah, krožnici in simetriji.
+Da se pri tem natančno razumemo, potrebujemo skupno besedo (**kot**), skupno enoto (**stopinja**) in skupno orodje (**kotomer**). V tej lekciji se naučiš kote **označevati**, **meriti**, **risati** in **razvrščati** po velikosti. Brez tega ne gre pri načrtovanju stavb, pri navigaciji, pri računalniški grafiki, v naslednjih temah pa tudi ne pri konstrukcijah, krožnici in simetriji.
 
 ## Razlaga
 
 **1. Kaj je kot.** Dva poltraka, ki imata isto krajišče, delita ravnino na dva dela. Vsak od obeh delov je **kot**. Skupno krajišče poltrakov imenujemo **vrh** kota, poltraka pa sta **kraka** kota.
 
-Kot zapišemo s tremi točkami: $\angle AVB$. Črka v sredini je vedno vrh $V$, črki $A$ in $B$ sta točki na krakih. Pogosto ga označimo kar z grško črko: $\alpha$ (alfa), $\beta$ (beta), $\gamma$ (gama). Kot običajno pokažemo z majhnim lokom med kraka.
+Kot zapišemo s tremi točkami: $\angle AVB$. Črka v sredini je vedno vrh $V$, črki $A$ in $B$ sta točki na krakih. Pogosto ga označimo kar z grško črko: $\alpha$ (alfa), $\beta$ (beta), $\gamma$ (gama). Kot običajno pokažemo z majhnim lokom med krakoma.
 
 **2. Enota stopinja.** Velikost kota merimo v **stopinjah**, znak je $^\circ$. Če poltrak zavrtimo za cel krog nazaj v začetno lego, je to **poln kot** in meri $360^\circ$. Ena stopinja je torej tristošestdesetinka polnega kota:
 
 $$1^\circ = \frac{1}{360} \text{ polnega kota}$$
 
-Pomembno: velikost kota **ni odvisna od dolžine krakov**. Kota z daljšima krakoma ni večji. Kot pove, koliko sta kraka razprta, ne kako sta dolga.
+Pomembno: velikost kota **ni odvisna od dolžine krakov**. Kot z daljšima krakoma ni večji. Kot pove, koliko sta kraka razprta, ne kako sta dolga.
 
 **3. Vrste kotov.** Kote razvrščamo po velikosti:
 
@@ -35,7 +35,7 @@ Pomembno: velikost kota **ni odvisna od dolžine krakov**. Kota z daljšima krak
 
 Pravi kot označimo s pikico ali kvadratkom ob vrhu. Če ni drugače rečeno, z zapisom $\angle AVB$ mislimo kot, ki ni večji od iztegnjenega.
 
-**4. Merjenje s kotomerom.** Kotomer je polkrožno ali krožno merilo z lestvico od $0^\circ$ do $180^\circ$. Ima dve lestvici, ki gresta v nasprotni smeri. Postopek:
+**4. Merjenje s kotomerom.** Kotomer je navadno polkrožno merilo z lestvico od $0^\circ$ do $180^\circ$. Ima dve lestvici, ki gresta v nasprotni smeri. Postopek:
 
 1. Središče kotomera (majhna zareza ali križec) položi na vrh kota.
 2. Ničelno črto kotomera položi na en krak kota.
@@ -56,13 +56,13 @@ Pred merjenjem vedno oceni: je kot ostri ali topi? Če je topi, mora biti rezult
 
 Kar manjka do iztegnjenega kota, izračunamo kot $180^\circ - \alpha$. Izbočeni kot, ki pripada istima krakoma kot kot $\alpha$ (kjer je $\alpha < 180^\circ$), je $360^\circ - \alpha$. Pri računih ne pozabi na enote: $38^\circ + 52^\circ = 90^\circ$.
 
-Za vajo si pomagaj z listom papirja: vogal lista je pravi kot ($90^\circ$), če ga prepogneš po diagonali, dobiš kot $45^\circ$.
+Za vajo si pomagaj z listom papirja: vogal lista je pravi kot ($90^\circ$), če ga prepogneš tako, da se robova pokrijeta, dobiš kot $45^\circ$.
 
 ## Rešeni primeri
 
 ### Primer 1 (lažji)
 
-Dani so koti $35^\circ$, $90^\circ$, $128^\circ$, $180^\circ$ in $250^\circ$. Razvrsti vsakega med ostre, prave, topi, iztegnjene ali izbočene kote.
+Dani so koti $35^\circ$, $90^\circ$, $128^\circ$, $180^\circ$ in $250^\circ$. Razvrsti vsakega med ostre, prave, tope, iztegnjene ali izbočene kote.
 
 **Podatki:** koti $35^\circ$, $90^\circ$, $128^\circ$, $180^\circ$, $250^\circ$ (računanja ni, dani so samo koti)
 **Iščemo:** vrsto vsakega kota
@@ -139,14 +139,14 @@ kot med sosednjima številkama: $360^\circ : 12$; kot = število presledkov $\cd
 
 ## Drugače: Na sliki
 
-Predstavljaj si vrsto narisanih kotov. Vsak ima vrh na levem robu lista, prvi krak vodoravno v desno, drugi krak pa vsakič zavrtimo še malo naprej v nasprotni smeri urinih kazalcev:
+Predstavljaj si vrsto narisanih kotov. Vsak ima vrh na sredini lista, prvi krak vodoravno v desno, drugi krak pa vsakič zavrtimo še malo naprej v nasprotni smeri urinih kazalcev:
 
-| Kje je drugi krak | Kako izgleda | Vrsta kota |
+| Kje je drugi krak | Kako je videti | Vrsta kota |
 |---|---|---|
 | tik ob prvem | kraka skoraj sovpadata | ostri (ozek) |
 | na pol poti do navpičnice | »polovica« vogala lista | ostri ($45^\circ$) |
 | natanko navpično | oblika črke L | pravi ($90^\circ$) |
-| poševno navzgor in nazaj | kot odprta škarje | topi |
+| poševno navzgor in nazaj | kot odprte škarje | topi |
 | vodoravno v nasprotno smer | ravna črta | iztegnjeni ($180^\circ$) |
 | pod vodoravnico, na levi | drugi krak je zavrten že mimo ravne črte | izbočeni |
 
@@ -156,14 +156,14 @@ Kotomer si predstavljaj takole: vrh kota je na sredini ravne spodnje črte kotom
 
 Kote srečaš vsak dan:
 
-- **Vrata.** Ko jih odpreš do polovice, nastane kot približno $45^\circ$. Ko jih odpreš tako, da stojijo pravokotno na steno, je kot $90^\circ$. Povsem odprta vrata na steno so $180^\circ$.
+- **Vrata.** Ko jih odpreš le malo, nastane ostri kot, na primer približno $45^\circ$. Ko jih odpreš tako, da stojijo pravokotno na steno, je kot $90^\circ$. Povsem odprta vrata na steno so $180^\circ$.
 - **Ura.** Kazalca ob $3$:$00$ oklepata pravi kot, ob $6$:$00$ iztegnjeni kot.
 - **Pica.** Razrezana na $8$ enakih kosov: vsak kos ima ob vrhu kot $360^\circ : 8 = 45^\circ$. Če pico razrežeš na $4$ enake kose, ima vsak kos pri vrhu pravi kot.
-- **Kolesar ali avto v ovinku.** Zavoj za $90^\circ$ je oster ovinek (pravi kot), blagi ovinek pa pomeni, da se smer spremeni za manj kot $90^\circ$.
+- **Kolesar ali avto v ovinku.** Pri zavoju za $90^\circ$ se smer spremeni za pravi kot, pri blagem ovinku pa za manj kot $90^\circ$ (za ostri kot).
 - **Zasuk.** Če rečeš »obrni se za polovico kroga«, pomeni zasuk za $180^\circ$; če se obrneš na mestu cel krog, si se zavrtel za $360^\circ$.
-- **Streha.** Strma streha ima večji kot med slemenom in tlemi kot položna.
+- **Streha.** Strma streha ima večji kot med strešino in vodoravnico kot položna.
 
-Besede iz vsakdanjega govora, na primer »ostri ovinek« ali »polni obrat«, imajo v matematiki natančen pomen.
+Besede iz vsakdanjega govora, na primer »pravi kot« ali »polni obrat«, imajo v matematiki natančen pomen.
 
 ## Drugače: Korak za korakom s številkami
 
@@ -179,7 +179,7 @@ Besede iz vsakdanjega govora, na primer »ostri ovinek« ali »polni obrat«, im
 
 1. Oceni: $125^\circ$ je več kot $90^\circ$, kot bo torej topi.
 2. Nariši poltrak $VA$ in nanj položi kotomer (središče na $V$, ničla na $VA$).
-3. Na lestvici, ki se začne z $0$ na krak $VA$, poišči $125$ in označi piko $B$.
+3. Na lestvici, ki se na kraku $VA$ začne z $0$, poišči $125$ in označi piko $B$.
 4. Skozi piko $B$ iz $V$ potegni drugi poltrak $VB$.
 5. Preveri: kot je širši od vogala lista, vendar manjši od ravne črte. Res je topi.
 

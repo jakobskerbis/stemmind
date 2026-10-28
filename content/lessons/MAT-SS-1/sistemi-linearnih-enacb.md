@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Linearne enačbe z eno neznanko že obvladaš: iz enačbe $2x + 5 = 11$ izračunaš $x = 3$. V resničnih problemih pa pogosto iščemo dve količini hkrati, med njima pa imamo dve podatka. V trgovini veš, koliko stanejo dva kilograma jabolk in trije kilogrami hrušk skupaj, pa tudi koliko stanejo trije kilogrami jabolk in dva kilograma hrušk. Cene posameznega sadja ne poznaš, dobiš pa jo, če oba podatka obravnavaš skupaj. Takemu paru enačb rečemo **sistem dveh linearnih enačb z dvema neznankama**.
+Linearne enačbe z eno neznanko že obvladaš: iz enačbe $2x + 5 = 11$ izračunaš $x = 3$. V resničnih problemih pa pogosto iščemo dve količini hkrati, med njima pa imamo dva podatka. V trgovini veš, koliko stanejo dva kilograma jabolk in trije kilogrami hrušk skupaj, pa tudi koliko stanejo trije kilogrami jabolk in dva kilograma hrušk. Cene posameznega sadja ne poznaš, dobiš pa jo, če oba podatka obravnavaš skupaj. Takemu paru enačb rečemo **sistem dveh linearnih enačb z dvema neznankama**.
 
 Sisteme potrebuješ pri mešanicah (koliko litrov kakšne raztopine zmešati), pri cenah, hitrostih in časih, pri iskanju presečišča dveh premic in pozneje tudi v fiziki in kemiji. V tej lekciji spoznaš tri načine reševanja: **grafično**, z **zamenjavo** in z **nasprotnimi koeficienti** (imenujemo ga tudi seštevalna metoda). Naučiš se tudi, kdaj sistem nima rešitve ali jih ima neskončno mnogo.
 
@@ -23,11 +23,11 @@ kjer so $a_1, b_1, c_1, a_2, b_2, c_2$ znana števila. **Rešitev sistema** je u
 - narišemo obe premici (dovolj sta po dve točki, za natančnost vzamemo tri),
 - rešitev sistema so koordinate **presečišča** premic, ker je presečišče edina točka, ki leži na obeh premicah.
 
-Grafična metoda je nazorna, a ni vedno natančna: če je presečišče pri nepravih številih, ga iz risbe le ocenimo. Zato vedno naredimo **preizkus** z vstavljanjem v obe enačbi.
+Grafična metoda je nazorna, a ni vedno natančna: če je presečišče pri necelih številih, ga iz risbe le ocenimo. Zato vedno naredimo **preizkus** z vstavljanjem v obe enačbi.
 
 **3. Zamenjalna metoda.** Postopek:
 
-1. Iz ene enačbe izrazimo eno neznanko (najraje tisto, ki nima koeficienta, ki bi ga bilo težko delili).
+1. Iz ene enačbe izrazimo eno neznanko (najraje tisto, ki nima koeficienta, s katerim bi bilo težko deliti).
 2. Dobljeni izraz vstavimo v *drugo* enačbo. Nastane enačba z eno neznanko.
 3. Rešimo jo.
 4. Rešitev vstavimo v izraženo neznanko in izračunamo še drugo.
@@ -103,9 +103,9 @@ Iz ene enačbe izrazimo neznanko (npr. $y = 11 - 2x$) in jo vstavimo v drugo ena
 
 ### Primer 3 (težji)
 
-Dva kilograma jabolk in trije kilogrami hrušk stanejo skupaj $8{,}10\,€$. Trije kilogrami jabolk in dva kilograma hrušk stanejo skupaj $7{,}90\,€$. Kolikšna je cena kilograma jabolk in kolikšna cena kilograma hrušk?
+Dva kilograma jabolk in trije kilogrami hrušk stanejo skupaj $8{,}10\,\text{€}$. Trije kilogrami jabolk in dva kilograma hrušk stanejo skupaj $7{,}90\,\text{€}$. Kolikšna je cena kilograma jabolk in kolikšna cena kilograma hrušk?
 
-**Podatki:** $2\,\text{kg}$ jabolk + $3\,\text{kg}$ hrušk = $8{,}10\,€$; $3\,\text{kg}$ jabolk + $2\,\text{kg}$ hrušk = $7{,}90\,€$
+**Podatki:** $2\,\text{kg}$ jabolk + $3\,\text{kg}$ hrušk = $8{,}10\,\text{€}$; $3\,\text{kg}$ jabolk + $2\,\text{kg}$ hrušk = $7{,}90\,\text{€}$
 
 **Iščemo:** ceno kilograma jabolk $a$ in ceno kilograma hrušk $b$ (v evrih)
 
@@ -121,7 +121,7 @@ Sistem: $2a + 3b = 8{,}10$ in $3a + 2b = 7{,}90$. Rešimo ga z nasprotnimi koefi
 4. Enačbi seštejemo, $a$ izpade: $5b = 8{,}50$, torej $b = 1{,}70$.
 5. Vstavimo v prvo enačbo: $2a + 3 \cdot 1{,}70 = 8{,}10$, to je $2a + 5{,}10 = 8{,}10$, torej $2a = 3{,}00$ in $a = 1{,}50$.
 6. Preizkus v drugi enačbi: $3 \cdot 1{,}50 + 2 \cdot 1{,}70 = 4{,}50 + 3{,}40 = 7{,}90$, kar velja.
-7. Odgovor: kilogram jabolk stane $1{,}50\,€$, kilogram hrušk pa $1{,}70\,€$.
+7. Odgovor: kilogram jabolk stane $1{,}50\,\text{€}$, kilogram hrušk pa $1{,}70\,\text{€}$.
 
 ## Pogoste napake
 
@@ -144,15 +144,15 @@ Sistem: $2a + 3b = 8{,}10$ in $3a + 2b = 7{,}90$. Rešimo ga z nasprotnimi koefi
 
 Predstavljaj si koordinatni sistem, v katerega narišeš dve premici. Vsaka točka na prvi premici ustreza prvi enačbi, vsaka točka na drugi premici pa drugi. Rešitev sistema je točka, ki leži na obeh premicah hkrati, torej presečišče.
 
-Poglejmo sistem $y = x + 1$ in $y = 5 - x$. Prva premica gre skozi $(0, 1)$ in se dviga za $1$ navzgor na vsak korak v desno. Druga gre skozi $(0, 5)$ in pada za $1$ na vsak korak v desno. Na začetku je druga višje: pri $x = 0$ je $5 > 1$. Prva dviga, druga pada, zato se premici srečata. To se zgodi pri $x = 2$, ko sta obe na višini $3$.
+Poglejmo sistem $y = x + 1$ in $y = 5 - x$. Prva premica gre skozi $(0, 1)$ in se dviga za $1$ navzgor na vsak korak v desno. Druga gre skozi $(0, 5)$ in pada za $1$ na vsak korak v desno. Na začetku je druga višje: pri $x = 0$ je $5 > 1$. Prva se dviga, druga pada, zato se premici srečata. To se zgodi pri $x = 2$, ko sta obe na višini $3$.
 
 Če sta premici vzporedni, imata isti naklon in se nikoli ne srečata: sistem nima rešitve. Če sta ena in ista premica, se prekrivata po vsej dolžini in vsaka točka je rešitev.
 
 ## Drugače: Iz vsakdanjega življenja
 
-V pekarni dva kroasana in ena kava stanejo $5\,€$, en kroasan in dve kavi pa $5{,}50\,€$. Koliko stane kroasan in koliko kava?
+V pekarni dva kroasana in ena kava stanejo $5\,\text{€}$, en kroasan in dve kavi pa $5{,}50\,\text{€}$. Koliko stane kroasan in koliko kava?
 
-Razmišljaj brez črk. Če bi kupil dvakrat več drugega naročila, bi naročil dva kroasana in štiri kave za $11\,€$. Primerjaj to s prvim naročilom (dva kroasana in ena kava za $5\,€$). Kroasanov je enako, kav pa je v dvojnem naročilu tri več. Naročili se razlikujeta za $11 - 5 = 6\,€$, torej tri kave stanejo $6\,€$ in ena kava $2\,€$. Potem dva kroasana stanejo $5 - 2 = 3\,€$, en kroasan $1{,}50\,€$.
+Razmišljaj brez črk. Če bi kupil dvakrat več drugega naročila, bi naročil dva kroasana in štiri kave za $11\,\text{€}$. Primerjaj to s prvim naročilom (dva kroasana in ena kava za $5\,\text{€}$). Kroasanov je enako, kav pa je v dvojnem naročilu tri več. Naročili se razlikujeta za $11 - 5 = 6\,\text{€}$, torej tri kave stanejo $6\,\text{€}$ in ena kava $2\,\text{€}$. Potem dva kroasana stanejo $5 - 2 = 3\,\text{€}$, en kroasan $1{,}50\,\text{€}$.
 
 Točno to počneš z metodo nasprotnih koeficientov: naročilo »povečaš« (pomnožiš enačbo) in dve naročili primerjaš, da ti ena količina izpade. Preizkus: $1{,}50 + 2 \cdot 2 = 5{,}50$ velja.
 
@@ -168,7 +168,7 @@ Reši sistem $3x + 2y = 7$ in $5x - 4y = -3$ z nasprotnimi koeficienti.
 6. Preizkus v prvi enačbi: $3 + 4 = 7$ velja. V drugi: $5 \cdot 1 - 4 \cdot 2 = 5 - 8 = -3$ velja.
 7. Odgovor: $(x, y) = (1, 2)$.
 
-Če bi izbral, da izpade $x$, bi imel več dela (koeficienta $3$ in $5$ ne razdeliš tako preprosto). Zato si vedno ogledaj koeficiente in izberi neznanko, pri kateri je množenje najkrajše.
+Če bi izbral, da izpade $x$, bi imel več dela (prvo enačbo bi moral pomnožiti s $5$, drugo z $-3$). Zato si vedno ogledaj koeficiente in izberi neznanko, pri kateri je množenje najkrajše.
 
 ## Drugače: Bolj natančno
 
@@ -200,7 +200,7 @@ Pozneje boš sisteme z več neznankami reševal po enakem načelu: neznanke post
 - natanko eno
 - neskončno mnogo
 + nobene
-> Prvo enačbo pomnožimo z $2$: $2x + 2y = 6$, druga pa pravi $2x + 2y = 8$. To je protislovje, saj sta premici vzporedni in različni.
+> Prvo enačbo pomnožimo z $2$: $2x + 2y = 6$, druga pa pravi $2x + 2y = 8$. To je protislovje, zato rešitve ni: premici sta vzporedni in različni.
 
 ? Sistem $2x + 3y = 12$ in $4x - 3y = 6$ rešujemo z nasprotnimi koeficienti. Kolikšna je rešitev?
 - $(2, 3)$
