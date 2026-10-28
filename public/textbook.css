@@ -323,3 +323,5 @@
 .demo-svg .face.smooth { stroke: color-mix(in srgb, var(--face-col) var(--lit, 100%), #0b1020); stroke-width: 0.5; }
 .demo-svg .face.sphere { --face-col: var(--demo-c); }
 .demo-stage > .graf-eq { flex-basis: 100%; text-align: center; margin: 0; }
+.demo-pick { margin-bottom: 12px; }
+.demo-sub { border-top: 1px solid var(--border); padding-top: 12px; }

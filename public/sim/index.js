@@ -78,6 +78,14 @@ export const ENGINES = {
   obresti: ["mat-funkcije.js", "obresti"],
   kompleksna: ["mat-funkcije.js", "kompleksna"],
   srecanje: ["mat-funkcije.js", "srecanje"],
+  // matematika: trigonometrija, vektorji, stožnice, obodni kot
+  "trig-trikotnik": ["mat-trig.js", "trigTrikotnik"],
+  enotska: ["mat-trig.js", "enotska"],
+  vektorji: ["mat-trig.js", "vektorji"],
+  stozernice: ["mat-trig.js", "stozernice"],
+  obodni: ["mat-trig.js", "obodni"],
+  // zbirka več simulacij (za mešane maturitetne naloge)
+  zbirka: ["index.js", "zbirka"],
 };
 
 export const hasEngine = (id) => Object.hasOwn(ENGINES, id);
@@ -101,3 +109,27 @@ export async function mountSim(id, el, opts = {}) {
   }
   return true;
 }
+
+// Zbirka: izbirni seznam več simulacij, npr. za ponavljanje pred maturo.
+// items: [[id, naslov, opts?], …]; prikažemo le tiste, ki obstajajo.
+export function zbirka(el, { items = [] } = {}) {
+  const list = items.map((it) => (Array.isArray(it) ? { id: it[0], title: it[1], opts: it[2] || {} } : it)).filter((d) => d && hasEngine(d.id) && d.id !== "zbirka");
+  if (!list.length) return;
+  const mk = (tag, cls, text) => Object.assign(document.createElement(tag), cls ? { className: cls } : {}, text != null ? { textContent: text } : {});
+  const sel = mk("select");
+  sel.setAttribute("aria-label", "Izberi simulacijo");
+  list.forEach((d, i) => sel.append(Object.assign(mk("option", "", d.title), { value: String(i) })));
+  const lab = mk("label", "demo-slider demo-pick");
+  lab.append(mk("span", "demo-slider-label", "simulacija"), sel);
+  const box = mk("div", "demo-sub");
+  const show = () => {
+    const inner = mk("div");
+    box.replaceChildren(inner);
+    const d = list[Number(sel.value)];
+    mountSim(d.id, inner, d.opts);
+  };
+  sel.addEventListener("change", show);
+  el.append(lab, box);
+  show();
+}
+

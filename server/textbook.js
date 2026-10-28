@@ -18,7 +18,8 @@ export const LESSONS_DIR = process.env.STEMMIND_LESSONS || path.join(here, "..",
 // Lastne interaktivne simulacije (public/sim/). Katera se pokaže pri kateri temi,
 // je zapisano v public/sim/katalog.js; prikažemo samo že narejene.
 export function simsFor(topicId, lesson = loadLesson(topicId)) {
-  const list = simsForTopic(topicId).filter((d) => hasEngine(d.id));
+  const usable = (d) => hasEngine(d.id) && (d.id !== "zbirka" || (d.opts?.items || []).some((it) => hasEngine(it[0])));
+  const list = simsForTopic(topicId).filter(usable);
   const extra = lesson?.meta.demo;
   if (extra && hasEngine(extra) && !list.some((d) => d.id === extra)) list.unshift({ id: extra, title: "Interaktivni poskus", opts: {} });
   return list;
