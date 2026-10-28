@@ -483,5 +483,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Mazoezi",
   "refs.type.tecaj": "Kozi ya mtandaoni",
-  "refs.type.prirocnik": "Mwongozo"
+  "refs.type.prirocnik": "Mwongozo",
+  "exam.grade": "Alama ya makadirio: <b>{grade}</b>",
+  "exam.gradeNote": "Mwishoni utapata pia alama ya makadirio kwa kipimo cha mtihani."
 }

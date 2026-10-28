@@ -483,5 +483,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Problem set",
   "refs.type.tecaj": "Online course",
-  "refs.type.prirocnik": "Handbook"
+  "refs.type.prirocnik": "Handbook",
+  "exam.grade": "Approximate grade: <b>{grade}</b>",
+  "exam.gradeNote": "At the end you also get an approximate grade on the exam's scale."
 }

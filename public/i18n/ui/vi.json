@@ -478,5 +478,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Bộ bài tập",
   "refs.type.tecaj": "Khóa học trực tuyến",
-  "refs.type.prirocnik": "Sổ tay"
+  "refs.type.prirocnik": "Sổ tay",
+  "exam.grade": "Điểm ước tính: <b>{grade}</b>",
+  "exam.gradeNote": "Cuối bài bạn cũng nhận được điểm ước tính theo thang của kỳ thi."
 }

@@ -478,5 +478,7 @@
   "refs.type.video": "動画",
   "refs.type.naloge": "問題集",
   "refs.type.tecaj": "オンライン講座",
-  "refs.type.prirocnik": "ハンドブック"
+  "refs.type.prirocnik": "ハンドブック",
+  "exam.grade": "おおよその評価：<b>{grade}</b>",
+  "exam.gradeNote": "最後に試験の基準によるおおよその評価も表示されます。"
 }

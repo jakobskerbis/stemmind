@@ -483,5 +483,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Përmbledhje ushtrimesh",
   "refs.type.tecaj": "Kurs në internet",
-  "refs.type.prirocnik": "Manual"
+  "refs.type.prirocnik": "Manual",
+  "exam.grade": "Nota e përafërt: <b>{grade}</b>",
+  "exam.gradeNote": "Në fund merr edhe një notë të përafërt sipas shkallës së provimit."
 }

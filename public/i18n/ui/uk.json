@@ -493,5 +493,7 @@
   "refs.type.video": "Відео",
   "refs.type.naloge": "Збірник задач",
   "refs.type.tecaj": "Онлайн-курс",
-  "refs.type.prirocnik": "Довідник"
+  "refs.type.prirocnik": "Довідник",
+  "exam.grade": "Приблизна оцінка: <b>{grade}</b>",
+  "exam.gradeNote": "Наприкінці ти також отримаєш приблизну оцінку за шкалою іспиту."
 }

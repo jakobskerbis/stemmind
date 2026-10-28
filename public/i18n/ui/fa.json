@@ -483,5 +483,7 @@
   "refs.type.video": "ویدیو",
   "refs.type.naloge": "مجموعه‌تمرین",
   "refs.type.tecaj": "دورهٔ آنلاین",
-  "refs.type.prirocnik": "راهنما"
+  "refs.type.prirocnik": "راهنما",
+  "exam.grade": "نمره تقریبی: <b>{grade}</b>",
+  "exam.gradeNote": "در پایان یک نمره تقریبی بر اساس مقیاس آزمون هم می‌گیری."
 }

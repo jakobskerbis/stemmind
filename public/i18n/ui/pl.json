@@ -493,5 +493,7 @@
   "refs.type.video": "Wideo",
   "refs.type.naloge": "Zbiór zadań",
   "refs.type.tecaj": "Kurs online",
-  "refs.type.prirocnik": "Kompendium"
+  "refs.type.prirocnik": "Kompendium",
+  "exam.grade": "Przybliżona ocena: <b>{grade}</b>",
+  "exam.gradeNote": "Na końcu dostajesz też przybliżoną ocenę według skali egzaminu."
 }

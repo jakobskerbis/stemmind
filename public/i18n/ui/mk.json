@@ -483,5 +483,7 @@
   "refs.type.video": "Видео",
   "refs.type.naloge": "Збирка задачи",
   "refs.type.tecaj": "Онлајн курс",
-  "refs.type.prirocnik": "Прирачник"
+  "refs.type.prirocnik": "Прирачник",
+  "exam.grade": "Приближна оценка: <b>{grade}</b>",
+  "exam.gradeNote": "На крајот добиваш и приближна оценка според скалата на испитот."
 }

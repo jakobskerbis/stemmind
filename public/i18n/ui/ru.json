@@ -493,5 +493,7 @@
   "refs.type.video": "Видео",
   "refs.type.naloge": "Сборник задач",
   "refs.type.tecaj": "Онлайн-курс",
-  "refs.type.prirocnik": "Справочник"
+  "refs.type.prirocnik": "Справочник",
+  "exam.grade": "Примерная оценка: <b>{grade}</b>",
+  "exam.gradeNote": "В конце ты также получишь примерную оценку по шкале экзамена."
 }

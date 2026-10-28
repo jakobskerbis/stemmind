@@ -483,5 +483,7 @@
   "refs.type.video": "ویڈیو",
   "refs.type.naloge": "مشقوں کا مجموعہ",
   "refs.type.tecaj": "آن لائن کورس",
-  "refs.type.prirocnik": "رہنما کتاب"
+  "refs.type.prirocnik": "رہنما کتاب",
+  "exam.grade": "تقریبی گریڈ: <b>{grade}</b>",
+  "exam.gradeNote": "آخر میں تمہیں امتحان کے پیمانے پر تقریبی گریڈ بھی ملے گا۔"
 }

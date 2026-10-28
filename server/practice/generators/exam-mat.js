@@ -674,6 +674,50 @@ export const EXAM_MAT = [
     },
   },
   {
+    id: "ex-binomial",
+    topics: [T("binomial-distribution")],
+    gen(level, r) {
+      if (level === 1) {
+        const n = r.int(3, 6), k = r.int(1, n - 1);
+        return task({
+          text: `A fair coin is tossed ${n} times. What is the probability of getting exactly ${k} heads? Write it as a fraction.`,
+          answer: fraction(nCr(n, k), 2 ** n),
+          inputHint: "e.g. 3/8",
+          hint: "$P(X = k) = \\binom{n}{k} \\left(\\tfrac12\\right)^n$",
+          solution: `$P(X = ${k}) = \\binom{${n}}{${k}} \\cdot \\dfrac{1}{${2 ** n}} = ${fracTex(nCr(n, k), 2 ** n)}$`,
+        });
+      }
+      if (level === 2) {
+        const n = r.int(5, 12), p = r.pick([0.1, 0.2, 0.25, 0.3, 0.4, 0.6, 0.7]), k = Math.max(1, Math.min(n - 1, Math.round(n * p) + r.int(-1, 1)));
+        const P = nCr(n, k) * p ** k * (1 - p) ** (n - k);
+        return task({
+          text: `$X \\sim B(${n}, ${en(p)})$. Find $P(X = ${k})$.${roundTo(3)}`,
+          answer: num(P, 3),
+          hint: "$P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}$",
+          formula: "P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}",
+          solution: `$P(X = ${k}) = \\binom{${n}}{${k}} \\cdot ${en(p)}^{${k}} \\cdot ${en(1 - p)}^{${n - k}} \\approx ${en(P, 3)}$`,
+        });
+      }
+      const n = r.int(8, 20), p = r.pick([0.05, 0.1, 0.15, 0.2]);
+      if (r.next() < 0.5) {
+        const P = (1 - p) ** n + n * p * (1 - p) ** (n - 1);
+        return task({
+          text: `In a factory ${en(p * 100)}% of items are faulty. A sample of ${n} items is taken. Find the probability that at most one item is faulty.${roundTo(3)}`,
+          answer: num(P, 3),
+          hint: "$P(X \\le 1) = P(X = 0) + P(X = 1)$",
+          solution: `$P(X \\le 1) = ${en(1 - p)}^{${n}} + ${n} \\cdot ${en(p)} \\cdot ${en(1 - p)}^{${n - 1}} \\approx ${en(P, 3)}$`,
+        });
+      }
+      const V = n * p * (1 - p);
+      return task({
+        text: `$X \\sim B(${n}, ${en(p)})$. Find the variance $\\operatorname{Var}(X)$.${roundTo(2)}`,
+        answer: num(V, 2),
+        hint: "$\\operatorname{Var}(X) = np(1-p)$",
+        solution: `$\\operatorname{Var}(X) = ${n} \\cdot ${en(p)} \\cdot ${en(1 - p)} = ${en(V, 2)}$`,
+      });
+    },
+  },
+  {
     id: "ex-percent-ratio",
     topics: [T("ratios-rates-and-percentages")],
     gen(level, r) {

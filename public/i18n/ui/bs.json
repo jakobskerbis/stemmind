@@ -488,5 +488,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Zbirka zadataka",
   "refs.type.tecaj": "Online kurs",
-  "refs.type.prirocnik": "Priručnik"
+  "refs.type.prirocnik": "Priručnik",
+  "exam.grade": "Približna ocjena: <b>{grade}</b>",
+  "exam.gradeNote": "Na kraju dobiješ i približnu ocjenu prema skali ispita."
 }

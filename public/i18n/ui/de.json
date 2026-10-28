@@ -483,5 +483,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Aufgabensammlung",
   "refs.type.tecaj": "Online-Kurs",
-  "refs.type.prirocnik": "Handbuch"
+  "refs.type.prirocnik": "Handbuch",
+  "exam.grade": "Ungefähre Note: <b>{grade}</b>",
+  "exam.gradeNote": "Am Ende bekommst du auch eine ungefähre Note nach der Skala der Prüfung."
 }

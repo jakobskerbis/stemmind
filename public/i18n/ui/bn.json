@@ -483,5 +483,7 @@
   "refs.type.video": "ভিডিও",
   "refs.type.naloge": "প্রশ্নসংগ্রহ",
   "refs.type.tecaj": "অনলাইন কোর্স",
-  "refs.type.prirocnik": "হ্যান্ডবুক"
+  "refs.type.prirocnik": "হ্যান্ডবুক",
+  "exam.grade": "আনুমানিক গ্রেড: <b>{grade}</b>",
+  "exam.gradeNote": "শেষে পরীক্ষার স্কেলে একটি আনুমানিক গ্রেডও পাবে।"
 }

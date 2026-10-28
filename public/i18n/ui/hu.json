@@ -483,5 +483,7 @@
   "refs.type.video": "Videó",
   "refs.type.naloge": "Feladatgyűjtemény",
   "refs.type.tecaj": "Online kurzus",
-  "refs.type.prirocnik": "Kézikönyv"
+  "refs.type.prirocnik": "Kézikönyv",
+  "exam.grade": "Becsült jegy: <b>{grade}</b>",
+  "exam.gradeNote": "A végén a vizsga skáláján becsült jegyet is kapsz."
 }

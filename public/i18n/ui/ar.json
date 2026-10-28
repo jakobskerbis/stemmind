@@ -503,5 +503,7 @@
   "refs.type.video": "فيديو",
   "refs.type.naloge": "مجموعة تمارين",
   "refs.type.tecaj": "دورة عبر الإنترنت",
-  "refs.type.prirocnik": "دليل"
+  "refs.type.prirocnik": "دليل",
+  "exam.grade": "الدرجة التقريبية: <b>{grade}</b>",
+  "exam.gradeNote": "في النهاية تحصل أيضًا على درجة تقريبية وفق سلّم الامتحان."
 }

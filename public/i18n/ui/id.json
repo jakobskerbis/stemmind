@@ -478,5 +478,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Kumpulan soal",
   "refs.type.tecaj": "Kursus daring",
-  "refs.type.prirocnik": "Buku pegangan"
+  "refs.type.prirocnik": "Buku pegangan",
+  "exam.grade": "Perkiraan nilai: <b>{grade}</b>",
+  "exam.gradeNote": "Di akhir kamu juga mendapat perkiraan nilai menurut skala ujian."
 }

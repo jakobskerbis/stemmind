@@ -478,5 +478,7 @@
   "refs.type.video": "视频",
   "refs.type.naloge": "习题集",
   "refs.type.tecaj": "在线课程",
-  "refs.type.prirocnik": "手册"
+  "refs.type.prirocnik": "手册",
+  "exam.grade": "估计等级：<b>{grade}</b>",
+  "exam.gradeNote": "结束时还会按考试的评分标准给出估计等级。"
 }

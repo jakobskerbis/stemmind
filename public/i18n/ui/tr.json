@@ -483,5 +483,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Problem seti",
   "refs.type.tecaj": "Çevrimiçi kurs",
-  "refs.type.prirocnik": "El kitabı"
+  "refs.type.prirocnik": "El kitabı",
+  "exam.grade": "Yaklaşık not: <b>{grade}</b>",
+  "exam.gradeNote": "Sonunda sınavın ölçeğine göre yaklaşık bir not da alırsın."
 }

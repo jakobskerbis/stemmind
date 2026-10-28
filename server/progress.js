@@ -5,7 +5,7 @@ import { getPath, getTopic } from "./curriculum.js";
 import { generateTask, hasGenerator, publicTask } from "./practice/index.js";
 import { checkAnswer } from "./practice/check.js";
 import { CONTEST, TRAINING_TASKS, isCompetitionPath } from "./competition.js";
-import { isExamPath, mockPlan, scaledScore } from "./exams.js";
+import { isExamPath, mockPlan, scaledScore, examGrade } from "./exams.js";
 import { toChoice } from "./practice/choice.js";
 
 // Tekmovalni trening in poskusno tekmovanje veljata tudi za priprave na izpite.
@@ -242,7 +242,7 @@ export class Progress {
       const level = item.level ?? st.level;
       let task = generateTask(item.topic, level);
       // Izpitni format: izbirna vprašanja (A–D) namesto vpisa števila.
-      if (item.format === "choice") task = toChoice(task);
+      if (item.format === "choice") task = toChoice(task, task.seed, item.options || 4);
       const id = this.saveTask(sess.student_id, task, item.mode, sessionId);
       all = this.db.prepare("SELECT * FROM tasks WHERE session_id = ? ORDER BY id").all(sessionId);
       open = all.find((t) => t.id === id);
@@ -448,8 +448,9 @@ export class Progress {
     const maxPoints = items.reduce((s, x) => s + x.points, 0);
     const usedMs = Math.min((sess.params.finishedAt || Date.now()) - sess.params.started, sess.params.minutes * 60000);
     const scaled = scaledScore(sess.params.path, points, maxPoints);
+    const grade = examGrade(sess.params.path, points, maxPoints);
     const wrong = items.filter((x) => x.answered && !x.correct).length;
-    return { points, maxPoints, correct: items.filter((x) => x.correct).length, wrong, total: items.length, minutes: Math.ceil(usedMs / 60000), scaled, items };
+    return { points, maxPoints, correct: items.filter((x) => x.correct).length, wrong, total: items.length, minutes: Math.ceil(usedMs / 60000), scaled, grade, items };
   }
 
   // Zaključi tekmovanje (vse rešeno, učenec je končal ali je čas potekel). XP enkrat.

@@ -483,5 +483,7 @@
   "refs.type.video": "वीडियो",
   "refs.type.naloge": "प्रश्न-संग्रह",
   "refs.type.tecaj": "ऑनलाइन कोर्स",
-  "refs.type.prirocnik": "पुस्तिका"
+  "refs.type.prirocnik": "पुस्तिका",
+  "exam.grade": "अनुमानित ग्रेड: <b>{grade}</b>",
+  "exam.gradeNote": "अंत में तुम्हें परीक्षा के पैमाने पर एक अनुमानित ग्रेड भी मिलेगा।"
 }

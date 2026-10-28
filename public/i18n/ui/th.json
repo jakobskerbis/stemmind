@@ -478,5 +478,7 @@
   "refs.type.video": "วิดีโอ",
   "refs.type.naloge": "แบบฝึกหัด",
   "refs.type.tecaj": "คอร์สออนไลน์",
-  "refs.type.prirocnik": "คู่มือ"
+  "refs.type.prirocnik": "คู่มือ",
+  "exam.grade": "เกรดโดยประมาณ: <b>{grade}</b>",
+  "exam.gradeNote": "ตอนท้ายจะได้เกรดโดยประมาณตามเกณฑ์ของข้อสอบด้วย"
 }

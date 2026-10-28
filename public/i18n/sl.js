@@ -473,6 +473,8 @@ export default {
   "exam.otherExams": "Drugi izpiti",
   "exam.trainText": "Deset prepletenih nalog iz tem izpita, z namigi in rešitvami. Težavnost se prilagaja tebi.",
   "exam.mock": "Poskusni izpit",
+  "exam.grade": "Približna ocena: <b>{grade}</b>",
+  "exam.gradeNote": "Na koncu dobiš tudi približno oceno po lestvici izpita.",
   "exam.train": "Vadba za izpit",
   "exam.mockIntro": "Vprašanja v formatu izpita, na čas, en poskus in brez namigov. Točke vidiš na koncu.",
   "exam.mockText": "{tasks} vprašanj (od tega {choice} izbirnih), {minutes} minut, en poskus in brez namigov. Največ {max} točk.",

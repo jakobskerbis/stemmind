@@ -64,7 +64,9 @@ export function examInfo(key, system) {
       maxPoints: groups.reduce((n, g) => n + g.n * g.points, 0),
       negative: groups.some((g) => g.penalty < 0),
       penalty: Math.min(0, ...groups.map((g) => g.penalty)),
-      scale: mock.scale || null,
+      scale: mock.scale ? mock.scale.slice(0, 2) : null,
+      graded: !!mock.grades,
+      options: Math.max(4, ...groups.map((g) => g.options || 4)),
     },
   };
 }
@@ -97,18 +99,27 @@ export function mockPlan(key) {
       const list = pool.length ? pool : unit.topics;
       const topic = list[crypto.randomInt(list.length)];
       used.set(topic, (used.get(topic) || 0) + 1);
-      plan.push({ topic, mode: "contest", level: g.level, format: g.format, points: g.points, penalty: g.penalty });
+      plan.push({ topic, mode: "contest", level: g.level, format: g.format, points: g.points, penalty: g.penalty, ...(g.options ? { options: g.options } : {}) });
     }
   }
   return { plan, minutes: def.mock.minutes };
 }
 
-// Ocena na lestvici izpita (npr. SAT 200–800), zaokrožena na 10.
+// Ocena na lestvici izpita (npr. SAT 200–800 na 10 natančno, bac 0–20 na pol točke).
 export function scaledScore(key, points, maxPoints) {
-  const scale = isExamPath(key) && mockOf(key).scale;
-  if (!scale || !maxPoints) return null;
-  const [lo, hi] = scale;
-  return { value: Math.round((lo + ((hi - lo) * Math.max(0, points)) / maxPoints) / 10) * 10, min: lo, max: hi };
+  const mock = isExamPath(key) && mockOf(key);
+  if (!mock?.scale || !maxPoints) return null;
+  const [lo, hi, step = 10] = mock.scale;
+  const value = Math.round((lo + ((hi - lo) * Math.max(0, points)) / maxPoints) / step) * step;
+  return { value: Number(value.toFixed(2)), min: lo, max: hi };
+}
+
+// Približna ocena po odstotku točk (A-level A*–E, WAEC A1–F9, Abitur 15–0 točk …).
+export function examGrade(key, points, maxPoints) {
+  const grades = isExamPath(key) && mockOf(key).grades;
+  if (!grades || !maxPoints) return null;
+  const pct = (100 * Math.max(0, points)) / maxPoints;
+  return (grades.find(([min]) => pct >= min) || grades[grades.length - 1])[1];
 }
 
 // Besedilo za sistemski prompt, ko pogovor teče o izpitni temi.

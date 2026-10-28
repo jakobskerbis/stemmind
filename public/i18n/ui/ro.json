@@ -488,5 +488,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Culegere de probleme",
   "refs.type.tecaj": "Curs online",
-  "refs.type.prirocnik": "Ghid"
+  "refs.type.prirocnik": "Ghid",
+  "exam.grade": "Notă aproximativă: <b>{grade}</b>",
+  "exam.gradeNote": "La final primești și o notă aproximativă pe scala examenului."
 }

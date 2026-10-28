@@ -493,5 +493,7 @@
   "refs.type.video": "Video",
   "refs.type.naloge": "Zbierka úloh",
   "refs.type.tecaj": "Online kurz",
-  "refs.type.prirocnik": "Príručka"
+  "refs.type.prirocnik": "Príručka",
+  "exam.grade": "Približná známka: <b>{grade}</b>",
+  "exam.gradeNote": "Na konci dostaneš aj približnú známku podľa stupnice skúšky."
 }
