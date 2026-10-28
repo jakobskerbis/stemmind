@@ -423,10 +423,10 @@ export class Progress {
         level: p.level,
         points: pts,
         earned: correct ? pts : 0,
-        answered: !!t?.attempts,
+        answered: t?.last_answer != null,
         correct,
         yourAnswer: t?.last_answer ?? null,
-        task: payload ? { ...publicTask(payload), solution: payload.solution } : null,
+        task: payload ? { ...publicTask(payload), solution: payload.solution, correctIndex: payload.answer.type === "choice" ? payload.answer.index : null } : null,
       };
     });
     const points = items.reduce((s, x) => s + x.earned, 0);
@@ -450,6 +450,19 @@ export class Progress {
       return result;
     }
     return this.contestResult(sess);
+  }
+
+  // Tekmovanje: naloga ostane brez odgovora (0 točk), naprej na naslednjo.
+  skipContestTask(studentId, taskId) {
+    const row = this.getTask(taskId);
+    if (!row || row.student_id !== studentId || row.mode !== "contest") return { error: "Naloga ne obstaja." };
+    if (row.solved || row.attempts >= 1) return { error: "Ta naloga je že zaključena." };
+    const sess = this.getSession(row.session_id);
+    if (!sess || sess.finished) return { error: "To tekmovanje je že končano." };
+    if (Date.now() > sess.params.deadline) return { timeUp: true, contest: this.finishContest(sess) };
+    this.db.prepare("UPDATE tasks SET attempts = 1, solved = 0, first_try_correct = 0 WHERE id = ?").run(taskId);
+    const next = this.sessionNext(row.session_id);
+    return { saved: true, skipped: true, next, ...(next.contest ? { contest: next.contest } : {}) };
   }
 
   // Zadnji rezultati poskusnih tekmovanj na tej poti.

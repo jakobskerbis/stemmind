@@ -1,0 +1,45 @@
+/* Razdelek Tekmovanja */
+.comp-pickers { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+.seg { display: inline-flex; background: var(--surface-2); border-radius: 999px; padding: 4px; gap: 2px; }
+.seg button { border: 0; background: none; border-radius: 999px; padding: 8px 14px; font-weight: 800; color: var(--muted); min-height: 40px; }
+.seg button.active { background: var(--surface); color: var(--accent); box-shadow: var(--shadow); }
+.comp-intro { margin: 0 0 16px; }
+.contest-card { display: flex; flex-direction: column; gap: 12px; }
+.contest-head { display: flex; gap: 14px; align-items: flex-start; }
+.contest-head h2 { margin: 0; font-size: 1.15rem; }
+.contest-head p { margin: 4px 0 0; }
+.contest-card > button.primary { align-self: flex-start; }
+.contest-history { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.contest-history li { display: grid; grid-template-columns: 7.5em 4.5em 1fr; align-items: center; gap: 10px; font-weight: 700; font-size: 0.92rem; }
+.contest-history .bar { height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.contest-history .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--gold), #ffd166); border-radius: 99px; }
+.comp-topics-title { margin: 22px 0 4px; font-size: 1.2rem; }
+
+/* med tekmovanjem */
+.contest-bar { position: sticky; top: 0; z-index: 3; display: flex; align-items: center; gap: 12px; padding: 8px 0; margin-top: -6px; background: var(--bg); font-size: 0.86rem; font-weight: 700; }
+.comp-hero .hero-icon svg.i { fill: none; }
+.contest-timer { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 900; font-variant-numeric: tabular-nums; font-size: 1.05rem; flex: none; }
+.contest-timer.warn { background: var(--danger-bg); color: var(--danger); }
+.pts { font-size: 0.8rem; font-weight: 800; color: #8a5a00; background: color-mix(in srgb, var(--gold) 22%, transparent); padding: 3px 10px; border-radius: 999px; }
+@media (prefers-color-scheme: dark) { .pts { color: #ffd27a; } }
+.contest-actions { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+/* pregled po tekmovanju */
+.review-item { padding: 0; margin-top: 10px; overflow: hidden; }
+.review-item summary { display: flex; align-items: center; gap: 10px; padding: 14px 16px; cursor: pointer; font-weight: 800; list-style: none; }
+.review-item summary::-webkit-details-marker { display: none; }
+.review-item[open] summary { border-bottom: 1px solid var(--border); }
+.review-item > :not(summary) { margin-left: 16px; margin-right: 16px; }
+.review-item > :last-child { margin-bottom: 16px; }
+.ri-name { flex: 1; min-width: 0; }
+.ri-pts { font-variant-numeric: tabular-nums; color: var(--muted); }
+.review-item.ok .ri-icon { color: var(--ok); }
+.review-item.bad .ri-icon { color: var(--danger); }
+.review-item.skip .ri-icon { color: var(--muted); }
+.choices.static .choice { cursor: default; }
+.choices.static .choice.right { border-color: var(--ok); background: var(--ok-bg); }
+.choices.static .choice.picked:not(.right) { border-color: var(--danger); background: var(--danger-bg); }
+
+@media (max-width: 480px) {
+  .contest-history li { grid-template-columns: 6.5em 4em 1fr; font-size: 0.86rem; }
+}

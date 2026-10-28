@@ -191,3 +191,62 @@ test("test prep: harder tasks closer to the date; unit practice only when unlock
   assert.ok(u.task.id);
   assert.equal(p.startUnit(s.id, path, ui).task.id, u.task.id);
 });
+
+test("tekmovanja: trening brez zaklepanja, poskusno tekmovanje s točkami in časom", () => {
+  const { p, s } = setup();
+  const view = p.pathView(s.id, "MAT-TEK-OS");
+  assert.ok(view.units.length > 1 && view.units.every((u) => !u.locked), "tekmovalni sklopi niso zaklenjeni");
+
+  const tr = p.startCompetition(s.id, "MAT-TEK-OS");
+  assert.equal(tr.total, 10);
+  assert.ok(tr.task.topicName);
+
+  let n = p.startContest(s.id, "MAT-TEK-SS");
+  assert.equal(n.total, 10);
+  assert.ok(n.deadline > Date.now());
+  assert.equal(n.task.points, 3);
+  // Prva naloga pravilno, druga narobe, tretjo preskočimo, nato končamo.
+  let row = p.getTask(n.task.id);
+  let r = p.answer(s.id, n.task.id, correctInput(row.payload.answer));
+  assert.equal(r.saved, true);
+  assert.equal(r.correct, undefined, "med tekmovanjem ni povratne informacije");
+  assert.equal(r.hint, undefined);
+  n = r.next;
+  const a2 = p.getTask(n.task.id).payload.answer;
+  const wrong = a2.type === "number" ? fmt(a2.value + 1000) + (a2.unit ? " " + a2.unit : "") : a2.type === "choice" ? String((a2.index + 1) % a2.options.length) : a2.type === "fraction" ? `${a2.num + 1}/${a2.den}` : a2.values.map((v) => v + 1).join(",");
+  r = p.answer(s.id, n.task.id, wrong);
+  assert.equal(r.saved, true);
+  assert.equal(p.answer(s.id, n.task.id, "1").error, "Ta naloga je že zaključena.", "en poskus");
+  n = r.next;
+  r = p.skipContestTask(s.id, n.task.id);
+  assert.equal(r.skipped, true);
+  assert.equal(p.openContest(s.id, "MAT-TEK-SS") != null, true);
+  const res = p.finishContest(r.next.sessionId);
+  assert.equal(res.points, 3);
+  assert.equal(res.maxPoints, 40);
+  assert.equal(res.items[0].correct, true);
+  assert.equal(res.items[2].yourAnswer, null);
+  assert.ok(res.items[0].task.solution);
+  assert.equal(res.xp.gained, 3);
+  assert.equal(p.openContest(s.id, "MAT-TEK-SS"), null);
+  assert.deepEqual(p.contestHistory(s.id, "MAT-TEK-SS").map((h) => [h.points, h.maxPoints]), [[3, 40]]);
+  // Po koncu odgovori ne štejejo več; ponovni zaključek ne doda XP.
+  const ids = p.db.prepare("SELECT id FROM tasks WHERE session_id = ? ORDER BY id").all(r.next.sessionId).map((x) => x.id);
+  assert.equal(p.answer(s.id, ids.at(-1), "1").error, "To tekmovanje je že končano.");
+  assert.equal(p.finishContest(r.next.sessionId).xp, undefined);
+});
+
+test("tekmovanja: po izteku časa odgovor ne šteje", () => {
+  const { p, s } = setup();
+  const n = p.startContest(s.id, "FIZ-TEK-OS");
+  const sess = p.getSession(n.sessionId);
+  sess.params.deadline = Date.now() - 1000;
+  p.db.prepare("UPDATE sessions SET params = ? WHERE id = ?").run(JSON.stringify(sess.params), sess.id);
+  const row = p.getTask(n.task.id);
+  const r = p.answer(s.id, n.task.id, correctInput(row.payload.answer));
+  assert.equal(r.timeUp, true);
+  assert.equal(r.contest.points, 0);
+  // Nov začetek ustvari novo tekmovanje.
+  const again = p.startContest(s.id, "FIZ-TEK-OS");
+  assert.notEqual(again.sessionId, n.sessionId);
+});

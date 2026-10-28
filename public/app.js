@@ -75,6 +75,9 @@ function renderRich(text) {
 // ---------- pogledi ----------
 
 function showView(name) {
+  $("#competition-tab").hidden = !state.student || isUni(state.student.settings);
+  if (name === "path" || name === "competition") setBack(name);
+  if (name !== "topic") stopContestTimer();
   document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("active", t.dataset.view === name));
   document.querySelectorAll(".view").forEach((v) => (v.hidden = v.id !== `view-${name}`));
   if (name === "settings") {
@@ -85,6 +88,7 @@ function showView(name) {
   if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
   if (name === "textbook") showTextbook();
+  if (name === "competition") loadCompetition();
   if (name !== "topic") closePad();
   if (name !== "topic") setActiveMode(null);
   window.scrollTo(0, 0);
@@ -583,8 +587,11 @@ const NODE = {
   learning: ["pencil", "v učenju"],
   new: ["play", "še ne"],
 };
-const diffBadge = (level) =>
-  `<span class="diff d${level}" title="Težavnost"><span class="dots"><i></i><i></i><i></i></span>${LEVEL_NAMES[level] || ""}</span>`;
+// Tekmovalni razdelek ima svoja imena težavnosti: tudi najlažja raven je nad rednim poukom.
+const COMP_LEVEL_NAMES = { 1: "težja", 2: "zahtevna", 3: "izziv" };
+const isCompTopic = (id) => /^(MAT|FIZ|KEM)-TEK-/.test(String(id || ""));
+const diffBadge = (level, comp = false) =>
+  `<span class="diff d${level}" title="Težavnost"><span class="dots"><i></i><i></i><i></i></span>${(comp ? COMP_LEVEL_NAMES : LEVEL_NAMES)[level] || ""}</span>`;
 
 async function refreshXp() {
   if (!state.student) return;
@@ -805,14 +812,22 @@ async function loadPath(key = state.pathKey) {
 $("#path-select").addEventListener("change", (e) => loadPath(e.target.value));
 document.addEventListener("click", (e) => {
   const open = e.target.closest("[data-open]");
-  if (open && !open.disabled) openTopic(open.dataset.open);
+  if (open && !open.disabled) {
+    setBack(open.closest("#view-competition") ? "competition" : open.closest("#view-path") ? "path" : state.backTo || "path");
+    openTopic(open.dataset.open);
+  }
   const pl = e.target.closest("[data-placement]");
   if (pl) startSession("placement", { path: state.pathKey, unit: Number(pl.dataset.placement) });
   const un = e.target.closest("[data-unit]");
   if (un) startSession("unit-practice", { path: state.pathKey, unit: Number(un.dataset.unit) });
   if (e.target.closest("[data-daily]")) startSession("daily", { path: state.pathKey });
 });
-$("#back-to-path").addEventListener("click", () => showView("path"));
+$("#back-to-path").addEventListener("click", () => showView(state.backTo || "path"));
+// Gumb »nazaj« na temi oziroma pri seriji nalog vodi tja, od koder je učenec prišel.
+function setBack(view) {
+  state.backTo = view;
+  $("#back-to-path").innerHTML = `${icon("arrow-left")}${view === "competition" ? "Tekmovanja" : "Učna pot"}`;
+}
 
 async function openTopic(topicId) {
   const t = await api(`/api/topic?id=${encodeURIComponent(topicId)}`);
@@ -895,21 +910,30 @@ const SESSIONS = {
   daily: { mode: "daily", icon: "zap", title: "Današnji trening", intro: "Približno 15 minut: nova snov, vmes ponavljanje.", empty: "Na tej poti še ni nalog za trening. Začni z novo snovjo." },
   "unit-practice": { mode: "unit", icon: "puzzle", title: "Vaja sklopa", intro: "Prepletene naloge iz vseh tem tega sklopa." },
   "test-prep": { mode: "test", icon: "clipboard-check", title: "Priprava na test", intro: "Mešane naloge iz snovi za test. Bližje kot je test, težje so." },
+  tek: { mode: "tek", endpoint: "competition-training", icon: "medal", title: "Tekmovalni trening", intro: "Prepletene težje naloge iz vseh tem tekmovanja. Namigi in rešitve so na voljo kot pri vadbi." },
+  contest: { mode: "contest", icon: "timer", title: "Poskusno tekmovanje", intro: "En poskus na nalogo, brez namigov. Točke vidiš na koncu." },
 };
-const SESSION_DONE = { review: "Ponavljanje končano", daily: "Današnji trening opravljen", unit: "Vaja sklopa končana", test: "Današnji niz za test opravljen" };
+const SESSION_DONE = { review: "Ponavljanje končano", daily: "Današnji trening opravljen", unit: "Vaja sklopa končana", test: "Današnji niz za test opravljen", tek: "Tekmovalni trening končan" };
 
 async function startSession(kind, body = {}) {
   const cfg = SESSIONS[kind];
   setActiveMode({ review: "review", daily: "daily", "test-prep": "test" }[kind] || null);
   let out;
   try {
-    out = await api(`/api/students/${state.student.id}/${kind}`, { method: "POST", body });
+    out = await api(`/api/students/${state.student.id}/${cfg.endpoint || kind}`, { method: "POST", body });
   } catch (err) {
     toast(err.message);
     return;
   }
+  if (kind !== "tek" && kind !== "contest") setBack("path");
   showView("topic");
   $("#topic-content").innerHTML = `<div class="session-head"><span class="session-icon">${icon(cfg.icon)}</span><div><h1>${cfg.title}</h1><p class="muted">${cfg.intro}</p></div></div><div id="practice"></div>`;
+  if (kind === "contest") {
+    if (out.contest) return showContestResult(out.contest);
+    state.contestDeadline = out.deadline;
+    renderTask(out.task, { mode: "contest", index: out.index, total: out.total, sessionId: out.sessionId });
+    return startContestTimer(out.sessionId, out.deadline);
+  }
   if (out.finished) {
     $("#practice").innerHTML = out.empty ? `<p>${cfg.empty || "Ni nalog."}</p>` : sessionDoneCard(cfg.mode, out);
     return;
@@ -920,7 +944,7 @@ async function startSession(kind, body = {}) {
 function sessionDoneCard(mode, n) {
   return `<div class="card result celebrate"><div class="result-icon">${icon("trophy")}</div><h2>${SESSION_DONE[mode] || "Končano"}!</h2>
     <p>Pravilno v prvem poskusu: <b>${n.correct} od ${n.total}</b>${n.xp ? ` · +${n.xp.gained} XP` : ""}</p>
-    <button class="primary big" id="fb-back">Na učno pot</button></div>`;
+    <button class="primary big" id="fb-back">${state.backTo === "competition" ? "Nazaj na tekmovanja" : "Na učno pot"}</button></div>`;
 }
 
 // Slike pri nalogah: graf premice in številska premica. Barve so enake v svetlem
@@ -1005,7 +1029,9 @@ document.addEventListener("keydown", (e) => {
 
 function renderTask(task, ctx) {
   const box = $("#practice");
-  const stars = ctx.mode !== "placement" && task.level ? diffBadge(task.level) : "";
+  const comp = ctx.mode === "tek" || ctx.mode === "contest" || (ctx.mode === "practice" && isCompTopic(state.topic?.id));
+  const stars = ctx.mode !== "placement" && task.level ? diffBadge(task.level, comp) : "";
+  const pts = ctx.mode === "contest" && task.points ? `<span class="pts">${task.points} ${task.points === 3 || task.points === 4 ? "točke" : "točk"}</span>` : "";
   const counter = ctx.total ? `<span class="count">${ctx.index} / ${ctx.total}</span>` : "";
   let input;
   if (task.answerType === "choice") {
@@ -1018,15 +1044,27 @@ function renderTask(task, ctx) {
       (task.answerType === "coefficients" ? "npr. 2, 1, 2" : task.unit ? `število in enota, npr. 12,5 ${task.unit}` : "vpiši rezultat");
     input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn secondary" title="Vnos s prstom ali miško: tipke ali pisanje">${icon("pencil")}<span>Piši</span></button><button class="primary">Preveri</button></form>`;
   }
-  box.innerHTML = `<div class="card task">
-    <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${counter}</div>
+  const bar = ctx.mode === "contest" ? `<div class="contest-bar"><span id="contest-timer" class="contest-timer" role="timer">${icon("timer")}<b>${leftText(state.contestDeadline)}</b></span><span class="muted">Odgovori se shranijo, točke vidiš na koncu.</span></div>` : "";
+  box.innerHTML = `${bar}<div class="card task">
+    <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${counter}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
     ${task.figure ? figureSvg(task.figure) : ""}
     ${input}
     <div id="feedback" class="feedback" aria-live="polite"></div>
+    ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}Preskoči</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}Končaj tekmovanje</button></div>` : ""}
   </div>`;
   const submit = (value) => checkTask(task, ctx, value);
+  if (ctx.mode === "contest") {
+    $("#c-skip").addEventListener("click", async () => {
+      if (!confirm("Preskočiš nalogo? Nazaj se ne moreš vrniti, naloga ne prinese točk.")) return;
+      contestStep(await api(`/api/students/${state.student.id}/tasks/${task.id}/skip`, { method: "POST" }).catch((e) => ({ error: e.message })), ctx);
+    });
+    $("#c-finish").addEventListener("click", async () => {
+      if (!confirm("Res končaš tekmovanje? Naloge brez odgovora ne prinesejo točk.")) return;
+      finishContest(ctx.sessionId);
+    });
+  }
   box.querySelector("form")?.addEventListener("submit", (e) => {
     e.preventDefault();
     submit($("#answer").value);
@@ -1076,6 +1114,7 @@ async function checkTask(task, ctx, value) {
   }
   const next = (label = "Naslednja naloga") => `<div class="actions"><button class="primary big" id="fb-next">${label}${icon("arrow-right")}</button></div>`;
   let html = "";
+  if (ctx.mode === "contest" && !r.retry) return contestStep(r, ctx);
   if (r.retry) {
     html = `<div class="fb info">${escapeHtml(r.message)}</div>`;
   } else if (ctx.mode === "placement") {
@@ -1128,12 +1167,184 @@ async function checkTask(task, ctx, value) {
     await openConversation(h.conversation.id);
     send(h.text);
   });
-  $("#fb-back")?.addEventListener("click", () => showView("path"));
+  $("#fb-back")?.addEventListener("click", () => showView(state.backTo || "path"));
   $("#fb-next")?.addEventListener("click", () => {
     if (ctx.mode === "practice") return nextPractice();
     const n = r.next;
     if (n && !n.finished) renderTask(n.task, { mode: ctx.mode, index: n.index, total: n.total });
   });
+}
+
+// ---------- tekmovanja ----------
+
+const SCHOOL_NAMES = { OS: "Osnovna šola", SS: "Srednja šola" };
+
+async function loadCompetition(key = state.compKey) {
+  const box = $("#competition-content");
+  const q = key ? `?key=${encodeURIComponent(key)}` : "";
+  let c;
+  try {
+    c = await api(`/api/students/${state.student.id}/competition${q}`);
+  } catch (err) {
+    box.innerHTML = `<p class="muted">Tekmovanj nisem mogel naložiti (${escapeHtml(err.message)}).</p>`;
+    return;
+  }
+  if (!c.key) {
+    box.innerHTML = `<h1>Tekmovanja</h1><p class="muted">${escapeHtml(c.message)}</p>`;
+    return;
+  }
+  state.compKey = c.key;
+  const seg = (items, cur, attr) =>
+    `<div class="seg" role="group">${items.map(([v, label]) => `<button type="button" class="${v === cur ? "active" : ""}" aria-pressed="${v === cur}" ${attr}="${v}">${label}</button>`).join("")}</div>`;
+  const left = c.openContest ? Math.max(1, Math.ceil((c.openContest.deadline - Date.now()) / 60000)) : 0;
+  const hist = c.history.length
+    ? `<ul class="contest-history">${c.history.map((h) => `<li><span>${escapeHtml(h.date.split("-").reverse().map(Number).join(". "))}</span><b>${h.points} / ${h.maxPoints}</b><span class="bar"><i style="width:${Math.round((h.points / h.maxPoints) * 100)}%"></i></span></li>`).join("")}</ul>`
+    : `<p class="muted small-note">Rezultati tvojih poskusnih tekmovanj se bodo pokazali tukaj.</p>`;
+  const learning = c.units.flatMap((u) => u.topics).filter((t) => t.status !== "new").length;
+  box.innerHTML = `
+    <h1>Tekmovanja</h1>
+    <div class="comp-pickers">
+      ${seg(Object.entries(SUBJECT_NAMES), c.subject, "data-comp-subject")}
+      ${seg(Object.entries(SCHOOL_NAMES), c.school, "data-comp-school")}
+    </div>
+    <p class="muted comp-intro">Samo težje naloge v slogu tekmovanj: <b>${c.competitions.map(escapeHtml).join(", ")}</b>. Naloge sestavi aplikacija po zgledu tekmovalnih nalog, zato niso kopije preteklih tekmovanj.</p>
+    <div class="card xp-card comp-hero">
+      <div class="hero">
+        <div class="hero-icon">${icon("medal")}</div>
+        <div class="hero-text"><h2>Tekmovalni trening</h2><p>Deset prepletenih nalog iz vseh tem, z namigi in rešitvami.</p></div>
+        <button class="primary big" data-comp-train>Začni</button>
+      </div>
+    </div>
+    <section class="card contest-card">
+      <div class="contest-head">
+        <span class="session-icon">${icon("timer")}</span>
+        <div><h2>Poskusno tekmovanje</h2>
+          <p class="muted">${c.contest.tasks} nalog, ${c.contest.minutes} minut, en poskus na nalogo in brez namigov. Točke 3, 4 ali 5 glede na težavnost (največ ${c.contest.maxPoints}).</p></div>
+      </div>
+      <button class="primary" data-comp-contest>${c.openContest ? `Nadaljuj (še ${left} min)` : "Začni tekmovanje"}</button>
+      <span class="field-label">Zadnji rezultati</span>
+      ${hist}
+    </section>
+    <h2 class="comp-topics-title">Teme</h2>
+    <p class="muted small-note">${learning ? "Tvoje teme in težavnost se shranjujejo kot pri učni poti." : "Izberi temo in vadi samo njo. Sklopi niso zaklenjeni, začneš lahko kjerkoli."}</p>
+    ${c.units
+      .map(
+        (u, ui) => `<section class="unit card">
+        <div class="unit-head"><div class="ring" style="--p:${Math.round(u.progress * 100)}"><span>${Math.round(u.progress * 100)}%</span></div>
+          <div class="unit-title"><span class="eyebrow">Sklop ${ui + 1}</span><h2>${escapeHtml(u.title)}</h2></div></div>
+        <ol class="path">${u.topics
+          .map((t) => {
+            const st = t.due ? "due" : t.status;
+            const sub = NODE[st][1] + (t.practice && t.status === "learning" ? ` · ${COMP_LEVEL_NAMES[t.level]}` : "");
+            return `<li><button class="node ${st}" data-open="${t.id}"><span class="node-dot">${icon(NODE[st][0])}</span>
+              <span class="node-text"><span class="node-name">${escapeHtml(t.name)}</span><span class="node-sub">${sub}</span></span></button></li>`;
+          })
+          .join("")}</ol></section>`,
+      )
+      .join("")}`;
+}
+
+document.addEventListener("click", (e) => {
+  const subj = e.target.closest("[data-comp-subject]");
+  const school = e.target.closest("[data-comp-school]");
+  if (subj || school) {
+    const [s0, , sc0] = (state.compKey || "MAT-TEK-OS").split("-");
+    loadCompetition(`${subj ? subj.dataset.compSubject : s0}-TEK-${school ? school.dataset.compSchool : sc0}`);
+  }
+  if (e.target.closest("[data-comp-train]")) {
+    setBack("competition");
+    startSession("tek", { path: state.compKey });
+  }
+  if (e.target.closest("[data-comp-contest]")) {
+    setBack("competition");
+    startSession("contest", { path: state.compKey });
+  }
+});
+
+// Odgovor ali preskok pri poskusnem tekmovanju: brez povratne informacije, takoj naslednja naloga.
+function contestStep(r, ctx) {
+  if (r.error) return toast(r.error);
+  if (r.contest) return showContestResult(r.contest, r.timeUp);
+  const n = r.next;
+  if (n && !n.finished) {
+    toast(r.skipped ? "Naloga preskočena." : "Odgovor je shranjen.", r.skipped ? "skip-forward" : "check");
+    renderTask(n.task, { mode: "contest", index: n.index, total: n.total, sessionId: n.sessionId });
+    $("#practice").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+async function finishContest(sessionId, timeUp = false) {
+  try {
+    const r = await api(`/api/students/${state.student.id}/contest/finish`, { method: "POST", body: { sessionId } });
+    showContestResult(r.contest, timeUp);
+  } catch (err) {
+    toast(err.message);
+  }
+}
+
+function startContestTimer(sessionId, deadline) {
+  stopContestTimer();
+  const tick = () => {
+    const el = $("#contest-timer");
+    const ms = deadline - Date.now();
+    if (el) {
+      el.querySelector("b").textContent = leftText(deadline);
+      el.classList.toggle("warn", ms <= 300000);
+    }
+    if (ms <= 0) {
+      stopContestTimer();
+      finishContest(sessionId, true);
+    }
+  };
+  tick();
+  state.contestTimer = setInterval(tick, 1000);
+}
+function leftText(deadline) {
+  const s = Math.max(0, Math.ceil(((deadline || 0) - Date.now()) / 1000));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+}
+function stopContestTimer() {
+  if (state.contestTimer) clearInterval(state.contestTimer);
+  state.contestTimer = null;
+}
+
+function showContestResult(c, timeUp = false) {
+  stopContestTimer();
+  closePad();
+  const yours = (it) => {
+    if (it.yourAnswer == null) return "brez odgovora";
+    if (it.task?.answerType === "choice") return it.task.options?.[Number(it.yourAnswer)] ?? it.yourAnswer;
+    return it.yourAnswer;
+  };
+  const pct = c.maxPoints ? Math.round((c.points / c.maxPoints) * 100) : 0;
+  $("#practice").innerHTML = `<div class="card result ${pct >= 50 ? "celebrate" : ""}">
+      <div class="result-icon">${icon("medal")}</div>
+      ${timeUp ? `<p class="muted">Čas je potekel.</p>` : ""}
+      <h2>${c.points} od ${c.maxPoints} točk</h2>
+      <p>Pravilno: <b>${c.correct} od ${c.total}</b> · čas: ${c.minutes} min${c.xp ? ` · +${c.xp.gained} XP` : ""}</p>
+      <p class="muted">${pct >= 75 ? "Odlično, to je raven za priznanje." : pct >= 50 ? "Dobro! Poglej rešitve nalog, ki ti niso uspele." : "Tekmovalne naloge so težke. Preglej rešitve in vadi teme, ki so ti delale težave."}</p>
+      <button class="primary big" id="fb-back">Nazaj na tekmovanja</button>
+    </div>
+    <h2 class="comp-topics-title">Pregled nalog</h2>
+    ${c.items
+      .map((it, i) => {
+        const st = it.correct ? "ok" : it.yourAnswer == null ? "skip" : "bad";
+        return `<details class="card review-item ${st}">
+        <summary><span class="ri-icon">${icon(st === "ok" ? "circle-check" : st === "skip" ? "skip-forward" : "circle-x")}</span>
+          <span class="ri-name">${i + 1}. ${escapeHtml(it.topicName)}</span><span class="ri-pts">${it.earned}/${it.points}</span></summary>
+        ${
+          it.task
+            ? `<div class="task-text">${renderRich(it.task.text)}</div>
+          ${it.task.answerType === "choice" ? `<div class="choices static">${it.task.options.map((o, k) => `<div class="choice ${String(k) === String(it.yourAnswer) ? "picked" : ""} ${k === it.task.correctIndex ? "right" : ""}">${it.task.optionsTex ? renderMath(o, false) : escapeHtml(o)}</div>`).join("")}</div>` : ""}
+          <p><b>Tvoj odgovor:</b> ${it.task.optionsTex && it.yourAnswer != null && it.task.answerType === "choice" ? renderMath(yours(it), false) : escapeHtml(yours(it))}</p>
+          ${workedBlock(it.task, it.task.solution, "Rešitev")}`
+            : `<p class="muted">Do te naloge nisi prišel.</p>`
+        }
+      </details>`;
+      })
+      .join("")}`;
+  $("#fb-back").addEventListener("click", () => showView("competition"));
+  refreshXp();
 }
 
 // ---------- poraba in lestvica ----------

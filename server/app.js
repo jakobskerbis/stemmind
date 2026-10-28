@@ -483,6 +483,14 @@ export function createApp(store, opts = {}) {
     if (out.error) return res.status(400).json(out);
     res.json(out);
   });
+  // Poskusno tekmovanje: preskoči nalogo (0 točk).
+  app.post("/api/students/:id/tasks/:taskId/skip", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.skipContestTask(s.id, intParam(req.params.taskId));
+    if (out.error) return res.status(400).json(out);
+    res.json(out);
+  });
   // Branje odgovora, napisanega s prstom/miško. Vrne prepis, ki ga učenec potrdi.
   app.post("/api/students/:id/tasks/:taskId/read", async (req, res) => {
     const s = loadStudent(req, res);

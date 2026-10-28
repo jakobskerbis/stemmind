@@ -8,7 +8,7 @@ const NAMES = [
   "star", "flame", "check", "x", "lock", "pencil", "keyboard", "eraser", "undo-2", "trash-2", "plus", "eye",
   "camera", "send", "arrow-left", "arrow-right", "lightbulb", "trophy", "target", "puzzle", "book-open",
   "sparkles", "circle-help", "menu", "chevron-right", "graduation-cap", "play", "rotate-ccw", "award",
-  "calendar", "info", "search", "users", "circle-check", "circle-x", "bot", "trending-up", "download", "flask-conical", "monitor-play", "refresh-cw",
+  "calendar", "info", "search", "users", "circle-check", "circle-x", "bot", "trending-up", "download", "flask-conical", "monitor-play", "refresh-cw", "medal", "timer", "skip-forward", "flag",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};
