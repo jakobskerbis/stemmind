@@ -1,21 +1,21 @@
 ---
 stanje: osnutek
 phet: forces-and-motion-basics
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
 Že veš, da je **sila** merilo za medsebojno delovanje teles, da jo merimo v newtonih ($\text{N}$) in da jo narišemo kot puščico, ki ima velikost, smer in prijemališče. Veš tudi, da je teža sila, s katero Zemlja privlači telesa, in da trenje deluje proti gibanju.
 
-Zdaj se vprašamo: **kaj sila sploh naredi s telesom?** Zakaj se žoga na tleh ustavi, vesoljska sonda pa se brez motorja giblje milijone kilometrov? Zakaj je težje pospešiti poln nakupovalni voziček kot prazen? Zakaj te ob odrivu od zidu zidu odnese nazaj?
+Zdaj se vprašamo: **kaj sila sploh naredi s telesom?** Zakaj se žoga na tleh ustavi, vesoljska sonda pa se brez motorja giblje milijone kilometrov? Zakaj je težje pospešiti poln nakupovalni voziček kot prazen? Zakaj te ob odrivu od zidu odnese nazaj?
 
 Na ta vprašanja odgovarjajo **trije Newtonovi zakoni**. Z njimi razložimo vožnjo avtomobila, skok v vodo, izstrelitev rakete in tudi, zakaj moraš v avtu pripeti pas.
 
 ## Razlaga
 
 **1. Prvi zakon: zakon o ravnovesju (vztrajnostni zakon).**
-Telo miruje ali se enakomerno giblje po premici, dokler vsota vseh sil nanj ni različna od nič.
+Telo miruje ali se enakomerno giblje po premici, dokler je vsota vseh sil nanj enaka nič.
 
 To pomeni:
 
@@ -26,7 +26,7 @@ To pomeni:
 Pogosta zmota je, da za gibanje vedno potrebujemo silo. Ni res: za *enakomerno gibanje* sila ni potrebna, potrebna je za *spremembo* gibanja. Predmet na ledu zdrsi daleč, ker je trenje majhno. Na grobih tleh se hitro ustavi, ker ga zavira trenje.
 
 **2. Drugi zakon: $F = m \cdot a$.**
-Če je rezultanta sil na telo različna od nič, telo pospešuje. Pospešek je sorazmeren rezultanti in obratno sorazmeren masi:
+Če je rezultanta sil na telo različna od nič, telo pospešuje. Pospešek je premo sorazmeren rezultanti in obratno sorazmeren masi:
 
 $$a = \frac{F}{m} \qquad\text{oziroma}\qquad F = m \cdot a$$
 
@@ -58,9 +58,9 @@ Pomembno:
 
 - Sili sta vedno **par**: nastaneta in izgineta hkrati.
 - Sili sta enako veliki, nasprotno usmerjeni in ležita na isti premici.
-- Prijemata se na **različnih telesih**. Zato se med seboj ne izničita, saj ju ne seštevamo za isto telo.
+- Prijemališči imata na **različnih telesih**. Zato se med seboj ne izničita, saj ju ne seštevamo za isto telo.
 
-Primer: ko stojiš na tleh, ti na tla delujejo s silo (tvoja teža), tla pa delujejo s silo enake velikosti navzgor na tebe.
+Primer: ko stojiš na tleh, na tla pritiskaš s silo (enako veliko, kot je tvoja teža), tla pa nate delujejo z enako veliko silo navzgor.
 
 ## Rešeni primeri
 
@@ -68,24 +68,52 @@ Primer: ko stojiš na tleh, ti na tla delujejo s silo (tvoja teža), tla pa delu
 
 Na voziček z maso $4\,\text{kg}$ deluje vodoravna rezultanta $12\,\text{N}$. Kolikšen je pospešek?
 
-1. Znane količine: $m = 4\,\text{kg}$, $F = 12\,\text{N}$. Iščemo $a$.
-2. Uporabimo drugi zakon, ker nas zanima pospešek zaradi sile: $a = \dfrac{F}{m}$.
-3. Vstavimo: $a = \dfrac{12\,\text{N}}{4\,\text{kg}} = 3\,\dfrac{\text{m}}{\text{s}^2}$.
-4. Smiselnost: pospešek ima smer sile in je manjši od sile v številčni vrednosti, ker je masa večja od $1\,\text{kg}$. ✓
+**Podatki:** $m = 4\,\text{kg}$, $F = 12\,\text{N}$ (vodoravna rezultanta)
+**Iščemo:** pospešek $a$
+
+:::formula
+Drugi Newtonov zakon: $a = \dfrac{F}{m}$
+:::
+
+**Rešitev:**
+
+1. Uporabimo drugi zakon, ker nas zanima pospešek zaradi sile: $a = \dfrac{F}{m}$.
+2. Vstavimo: $a = \dfrac{12\,\text{N}}{4\,\text{kg}} = 3\,\dfrac{\text{m}}{\text{s}^2}$.
+3. Smiselnost: pospešek ima smer sile in je v številčni vrednosti manjši od sile, ker je masa večja od $1\,\text{kg}$. ✓
+4. Odgovor: voziček pospešuje s $3\,\dfrac{\text{m}}{\text{s}^2}$ v smeri rezultante.
 
 ### Primer 2: rezultanta s trenjem
 
 Škatlo z maso $5\,\text{kg}$ vlečeš po tleh z vodoravno silo $35\,\text{N}$. Trenje je $10\,\text{N}$. Kolikšen je pospešek škatle?
+
+**Podatki:** $m = 5\,\text{kg}$, vlečna sila $F_1 = 35\,\text{N}$ (vodoravna), trenje $F_{\text{tr}} = 10\,\text{N}$
+**Iščemo:** pospešek škatle $a$
+
+:::formula
+Rezultanta nasprotno usmerjenih sil: $F = F_1 - F_{\text{tr}}$, nato drugi Newtonov zakon: $a = \dfrac{F}{m}$
+:::
+
+**Rešitev:**
 
 1. **Sile v vodoravni smeri:** vlečna sila $35\,\text{N}$ naprej, trenje $10\,\text{N}$ nazaj.
 2. **Rezultanta:** sili sta nasprotni, zato odštejemo: $F = 35\,\text{N} - 10\,\text{N} = 25\,\text{N}$.
 3. **Navpična smer:** teža in sila podlage se izničita, zato škatla ne pospešuje navpično in ju ne potrebujemo.
 4. **Drugi zakon:** $a = \dfrac{F}{m} = \dfrac{25\,\text{N}}{5\,\text{kg}} = 5\,\dfrac{\text{m}}{\text{s}^2}$.
 5. **Preverimo:** če bi uporabili samo $35\,\text{N}$, bi dobili $7\,\dfrac{\text{m}}{\text{s}^2}$, kar je preveč, saj trenje zavira.
+6. **Odgovor:** škatla pospešuje s $5\,\dfrac{\text{m}}{\text{s}^2}$ v smeri vlečne sile.
 
 ### Primer 3 (težji): sila in gibanje iz mirovanja
 
 Avto z maso $1000\,\text{kg}$ miruje. Motor ga potiska naprej s silo $2500\,\text{N}$, upor in trenje skupaj zavirata s silo $500\,\text{N}$. Kolikšno hitrost ima avto po $6\,\text{s}$?
+
+**Podatki:** $m = 1000\,\text{kg}$, začetna hitrost $v_0 = 0$ (avto miruje), sila motorja $F_1 = 2500\,\text{N}$, zaviralna sila (upor in trenje) $F_2 = 500\,\text{N}$, $t = 6\,\text{s}$
+**Iščemo:** hitrost $v$ po $6\,\text{s}$
+
+:::formula
+Rezultanta: $F = F_1 - F_2$, pospešek: $a = \dfrac{F}{m}$, hitrost pri gibanju iz mirovanja: $v = a \cdot t$
+:::
+
+**Rešitev:**
 
 1. **Rezultanta:** $F = 2500\,\text{N} - 500\,\text{N} = 2000\,\text{N}$.
 2. **Pospešek:** $a = \dfrac{F}{m} = \dfrac{2000\,\text{N}}{1000\,\text{kg}} = 2\,\dfrac{\text{m}}{\text{s}^2}$.
@@ -98,7 +126,7 @@ Avto z maso $1000\,\text{kg}$ miruje. Motor ga potiska naprej s silo $2500\,\tex
 - **»Brez sile ni gibanja.«** Narobe. Brez rezultante se telo giblje enakomerno naprej. Sila je potrebna za spremembo hitrosti.
 - **Ravnovesje pomeni mirovanje.** Ne nujno. Ravnovesje pomeni, da je rezultanta nič; telo lahko miruje ali se enakomerno giblje.
 - **Pozabljeno trenje.** V $F = m \cdot a$ vstavljamo **rezultanto**, ne le ene sile.
-- **Sili akcije in reakcije se izničita.** Ne, ker delujeta na različni telesi. Izničita se lahko le sili na isto telo (npr. teža in podlaga pri knjigi na mizi, a to ni par po tretjem zakonu).
+- **Sili akcije in reakcije se izničita.** Ne, ker delujeta na različni telesi. Izničita se lahko le sili na isto telo (npr. teža in sila podlage pri knjigi na mizi, a to ni par po tretjem zakonu).
 - **Mešanje mase in teže.** Masa je v $\text{kg}$, teža pa sila v $\text{N}$: $F_g = m \cdot g$.
 - **Enote.** Pred računom pretvori vse v $\text{kg}$, $\text{m}$, $\text{s}$.
 
@@ -121,7 +149,7 @@ Nariši škatlo kot kvadrat in vse sile kot puščice, ki izhajajo iz njega:
 
 Dolžina puščice pove velikost sile. Če sta navpični puščici enako dolgi, se škatla v navpični smeri ne giblje. Če je puščica v desno daljša od puščice v levo, je rezultanta v desno in škatla pospešuje v desno.
 
-V simulaciji spodaj postavi na vrv dve ekipi z enako močjo: sile se izravnajo in vozel miruje (1. zakon). Če eni ekipi dodaš moč, se vozel začne pospeševati (2. zakon). Pri »Pospešek« lahko opaziš, da večja masa pri isti sili pomeni manjši pospešek.
+V interaktivni simulaciji spodaj postavi na vrv dve enako močni ekipi: sili se izravnata in voziček miruje (1. zakon). Če eni ekipi dodaš člana, rezultanta ni več nič in voziček začne pospeševati (2. zakon). V zavihku »Pospešek« opaziš, da večja masa pri isti sili pomeni manjši pospešek.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -164,7 +192,7 @@ Drugi zakon je v splošni obliki zapisan z gibalno količino $p = m \cdot v$: re
 
 Pri tretjem zakonu je ključno vprašanje, na katero telo delujeta sili. Knjiga miruje na mizi. Sili na **knjigo** sta teža (Zemlja deluje na knjigo) in sila mize navzgor. Ti sili se izničita, ker delujeta na isto telo, vendar nista par po tretjem zakonu, saj ju povzročata različni telesi. Pravi par teže je sila, s katero knjiga privlači Zemljo. Pravi par sile mize na knjigo je sila, s katero knjiga pritiska na mizo.
 
-Ker je masa Zemlje ogromna, enaka sila Zemlji da zanemarljiv pospešek, žogi pa velikega. Zato opazimo padanje žoge, ne pa premikanja Zemlje.
+Ker je masa Zemlje ogromna, enaka sila Zemlji da zanemarljiv pospešek, žogi pa velik pospešek. Zato opazimo padanje žoge, ne pa premikanja Zemlje.
 
 ## Preveri se
 
@@ -186,4 +214,4 @@ Ker je masa Zemlje ogromna, enaka sila Zemlji da zanemarljiv pospešek, žogi pa
 - Zid deluje na tebe z manjšo silo, kot ti nanj.
 + Zid deluje na tebe z enako veliko, nasprotno usmerjeno silo, kot ti nanj.
 - Zid ne deluje na tebe s silo, ker miruje.
-> Po tretjem zakonu sta sili vzajemnega učinka vedno enako veliki in nasprotno usmerjeni. Zid je miren, a vseeno deluje s silo na tvoje roke.
+> Po tretjem zakonu sta sili vzajemnega učinka vedno enako veliki in nasprotno usmerjeni. Zid miruje, a vseeno deluje s silo na tvoje roke.

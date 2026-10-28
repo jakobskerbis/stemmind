@@ -6,15 +6,15 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Že dolgo veš, kaj pomeni deliti: čokolado med prijatelje, torto na enake kose, denar med sorojence. Pri deljenju pa se pogosto zgodi, da se celota ne razdeli na cela števila. Tri pice si lahko razdelijo trije otroci in vsak dobi eno celo pico, če pa so otroci štirje, vsak dobi le del pice. Kako natančno povemo, kolikšen del pice je to? Za to potrebujemo **ulomke**.
+Že dolgo veš, kaj pomeni deliti: čokolado med prijatelje, torto na enake kose, denar med sorojence. Pogosto pa se celota ne razdeli na cela števila. Tri pice si lahko razdelijo trije otroci in vsak dobi eno celo pico, če pa so otroci štirje, vsak dobi le del pice. Kako natančno povemo, kolikšen del pice je to? Za to potrebujemo **ulomke**.
 
-Ulomke uporabljaš vsak dan, pogosto kar brez premisleka. Praviš »polovica ure«, »četrt litra mleka«, »tretjina poti«, v receptu piše »tri četrtine skodelice moke«, na razprodaji beremo »polovična cena«. Kdor ulomek zna pravilno prebrati, zapisati in narisati, se v takih podatkih ne zmoti.
+Ulomke uporabljaš vsak dan, pogosto kar brez premisleka. Praviš »polovica ure«, »četrt litra mleka«, »tretjina poti«, v receptu piše »tri četrtine skodelice moke«, na razprodaji beremo »polovična cena«.
 
-V tej lekciji spoznaš ulomek kot **del celote**: kaj pomenita števec in imenovalec, kako ulomek pobarvaš na liku, kako ga označiš na številski premici in kako izračunaš, koliko je ulomek neke skupine. Pri tem uporabiš znanje o deljenju, deliteljih in večkratnikih. Lekcija je tudi priprava na naslednje teme: desetiški ulomki in decimalna števila (na primer $2{,}50\,€$) so posebna vrsta ulomkov.
+V tej lekciji spoznaš ulomek kot **del celote**: kaj pomenita števec in imenovalec, kako ulomek pobarvaš na liku, kako ga označiš na številski premici in kako izračunaš, koliko je ulomek neke skupine. Pri tem uporabiš znanje o deljenju, deliteljih in večkratnikih. Lekcija je priprava na desetiške ulomke in decimalna števila, na primer $2{,}50\,€$.
 
 ## Razlaga
 
-**1. Celota in enaki deli.** Celota je lahko karkoli: ena pica, ena ura, dolžina enega metra ali skupina $20$ učencev. Ko celoto razdelimo na **enake dele**, vsak tak del imenujemo ulomek celote. Beseda *enake* je pomembna: če torto razrežemo na dva neenaka kosa, nobeden od njiju ni polovica. Dele poimenujemo glede na to, na koliko delov smo celoto razdelili:
+**1. Celota in enaki deli.** Celota je lahko karkoli: ena pica, ena ura, dolžina enega metra ali skupina $20$ učencev. Ko celoto razdelimo na **enake dele**, je vsak tak del ulomek celote. Beseda *enake* je pomembna: če torto razrežemo na dva neenaka kosa, nobeden od njiju ni polovica. Dele poimenujemo glede na to, na koliko delov smo celoto razdelili:
 
 | na koliko enakih delov | ime enega dela | zapis |
 |---|---|---|
@@ -47,9 +47,9 @@ Za spomin: *imenovalec poimenuje, števec šteje*. Ulomek $\dfrac{3}{5}$ torej p
 1. Lik razdelimo na toliko **enako velikih** delov, kot pove imenovalec $b$.
 2. Pobarvamo toliko delov, kot pove števec $a$.
 
-Če je pravokotnik razdeljen na $6$ enakih delov in so pobarvani $4$, je pobarvan del $\dfrac{4}{6}$ celote, nepobarvana sta $2$ dela, torej $\dfrac{2}{6}$. Vseh šest delov skupaj je cel pravokotnik. Obratno ulomek z lika preberemo tako, da preštejemo vse enake dele (imenovalec) in med njimi pobarvane (števec).
+Če je pravokotnik razdeljen na $6$ enakih delov in so pobarvani $4$, je pobarvan del $\dfrac{4}{6}$ celote, nepobarvana sta $2$ dela, torej $\dfrac{2}{6}$. Obratno ulomek z lika preberemo tako, da preštejemo vse enake dele (imenovalec) in med njimi pobarvane (števec).
 
-Ulomek si najlaže predstaviš, če ga vidiš. Poskusi z interaktivno simulacijo spodaj: z drsnikoma spreminjaš števec in imenovalec ter opazuješ, kako se pobarva krog in kam se postavi točka na številski premici.
+Poskusi z interaktivno simulacijo spodaj: z drsnikoma spreminjaš števec in imenovalec ter opazuješ, kako se pobarva krog in kam se postavi točka na številski premici.
 
 **4. Ulomek na številski premici.** Na številski premici označimo točki $0$ in $1$. Razdalja med njima je **enota** (celota). Ulomek $\dfrac{a}{b}$ označimo takole:
 
@@ -59,8 +59,8 @@ Ulomek si najlaže predstaviš, če ga vidiš. Poskusi z interaktivno simulacijo
 Enoto si je pametno izbrati tako, da je njena dolžina **deljiva z imenovalcem**. Za $\dfrac{3}{4}$ vzemimo enoto, dolgo $8$ kvadratkov v zvezku. Ena četrtina je $8 : 4 = 2$ kvadratka, torej $\dfrac{3}{4}$ leži $3 \cdot 2 = 6$ kvadratkov desno od $0$.
 
 ```
-0    1/4  2/4  3/4   1
 |----|----|----|----|
+0   1/4  2/4  3/4   1
 ```
 
 Pozor: imenovalec je število **delov** (razmakov med črticami), ne število črtic. Če je enota razdeljena na $4$ dele, so med $0$ in $1$ le tri vmesne črtice.
@@ -69,9 +69,9 @@ Pozor: imenovalec je število **delov** (razmakov med črticami), ne število č
 
 - **Pravi ulomek** ima števec manjši od imenovalca, na primer $\dfrac{3}{5}$. Je manjši od $1$ in leži med $0$ in $1$.
 - Če je števec enak imenovalcu, vzamemo vse dele: $\dfrac{5}{5} = 1$.
-- **Nepravi ulomek** ima števec večji ali enak imenovalcu, na primer $\dfrac{7}{4}$. Je večji ali enak $1$ in leži pri $1$ ali desno od njega.
+- **Nepravi ulomek** ima števec večji ali enak imenovalcu, na primer $\dfrac{7}{4}$. Leži pri $1$ ali desno od njega.
 
-Številska premica se nadaljuje čez $1$: naslednjo enoto, od $1$ do $2$, razdelimo na enake dele kot prvo. Ulomek $\dfrac{7}{4}$ pomeni sedem četrtin. Štiri četrtine so ena cela, ostanejo še tri četrtine, zato je $\dfrac{7}{4} = 1\dfrac{3}{4}$. Takemu zapisu rečemo **mešano število** (beremo »ena cela in tri četrtine«).
+Številska premica se nadaljuje čez $1$: enoto od $1$ do $2$ razdelimo enako kot prvo. Ulomek $\dfrac{7}{4}$ pomeni sedem četrtin. Štiri četrtine so ena cela, ostanejo še tri četrtine, zato je $\dfrac{7}{4} = 1\dfrac{3}{4}$. Takemu zapisu rečemo **mešano število** (»ena cela in tri četrtine«).
 
 - Nepravi ulomek v mešano število: števec delimo z imenovalcem. Količnik je celi del, ostanek je števec ostanka. Za $\dfrac{7}{4}$: $7 : 4 = 1$, ostanek $3$, torej $1\dfrac{3}{4}$.
 - Mešano število v nepravi ulomek: celi del pomnožimo z imenovalcem in prištejemo števec. Za $2\dfrac{3}{5}$: $2 \cdot 5 + 3 = 13$, torej $\dfrac{13}{5}$.
@@ -81,9 +81,9 @@ Pozor: imenovalec je število **delov** (razmakov med črticami), ne število č
 1. Celoto delimo z imenovalcem: $20 : 4 = 5$ (to je ena četrtina).
 2. Rezultat pomnožimo s števcem: $5 \cdot 3 = 15$.
 
-Torej je $\dfrac{3}{4}$ od $20$ jabolk enako $15$ jabolk. Pravilo: delimo z imenovalcem, množimo s števcem. Če se število deli z imenovalcem brez ostanka, dobimo celo število predmetov. Skupine $12$ učencev na primer ne moreš razdeliti na $5$ enakih skupin, zato petine od $12$ učencev ni.
+Torej je $\dfrac{3}{4}$ od $20$ jabolk enako $15$ jabolk. Pravilo: delimo z imenovalcem, množimo s števcem. Skupino lahko pošteno razdelimo le, če je njeno število deljivo z imenovalcem: $12$ učencev ne moreš razdeliti na $5$ enakih skupin.
 
-**7. Iz dela poiščemo celoto.** Včasih poznamo vrednost nekaj delov in iščemo celoto. Če je $\dfrac{3}{5}$ celote enako $15$, najprej poiščemo vrednost ene petine ($15 : 3 = 5$), nato celote, ki ima pet petin ($5 \cdot 5 = 25$). Postopek je obraten kot pri točki 6: najprej delimo s števcem, potem množimo z imenovalcem.
+**7. Iz dela poiščemo celoto.** Včasih poznamo vrednost nekaj delov in iščemo celoto. Če je $\dfrac{3}{5}$ celote enako $15$, najprej poiščemo eno petino ($15 : 3 = 5$), nato celoto s petimi petinami ($5 \cdot 5 = 25$). Najprej delimo s števcem, potem množimo z imenovalcem.
 
 ## Rešeni primeri
 
@@ -148,11 +148,11 @@ V razredu so $\dfrac{3}{5}$ učencev dekleta. Deklet je $15$. Koliko učencev je
 
 ## Pogoste napake
 
-- **Deli niso enaki.** Pica, razrezana na štiri neenake kose, ni razdeljena na četrtine, zato noben kos ni $\dfrac{1}{4}$. Razlog: ulomek velja le za enake dele. Pravilno: najprej preveri, da so vsi deli enako veliki, šele nato preštej in zapiši ulomek.
-- **Štetje črtic namesto delov.** Na številski premici je enota razdeljena na $4$ dele, ti pa imajo med $0$ in $1$ samo $3$ vmesne črtice. Kdor šteje črtice, napiše napačen imenovalec. Pravilno: štej razmake, to je dele, ali pa štej od $0$ do $1$ in vključi tudi črtico pri $1$.
+- **Deli niso enaki.** Pica, razrezana na štiri neenake kose, ni razdeljena na četrtine, zato noben kos ni $\dfrac{1}{4}$. Razlog: ulomek velja le za enake dele. Pravilno: najprej preveri, da so vsi deli enako veliki, nato preštej in zapiši ulomek.
+- **Štetje črtic namesto delov.** Enota, razdeljena na $4$ dele, ima med $0$ in $1$ samo $3$ vmesne črtice. Kdor šteje črtice, napiše imenovalec $3$. Pravilno: štej razmake med črticami (dele) ali pa črtice od $0$ naprej do vključno $1$.
 - **Deljenje s števcem.** Pri $\dfrac{3}{4}$ od $20$ nekateri delijo $20 : 3$. Razlog: pozabijo, da imenovalec pove, na koliko delov razdelimo celoto. Pravilno: delimo z imenovalcem ($20 : 4 = 5$), nato množimo s števcem ($5 \cdot 3 = 15$).
 - **Napačna pretvorba mešanega števila.** Pri $1\dfrac{2}{5}$ nekdo napiše $\dfrac{12}{5}$, ker zapiše številki ena in dva skupaj. Razlog: celi del je cela enota in ima $5$ petin. Pravilno: $1 \cdot 5 + 2 = 7$, torej $\dfrac{7}{5}$.
-- **»Ulomek je vedno manjši od 1.«** Ulomka $\dfrac{7}{4}$ nekateri ne priznajo, ker »7 ne more biti večje od 4«. Razlog: ulomek ni nujno en sam kos. Pravilno: števec šteje dele, in če jih vzamemo več, kot jih ima ena celota, dobimo nepravi ulomek, večji od $1$: $\dfrac{7}{4} = 1\dfrac{3}{4}$.
+- **»Ulomek je vedno manjši od 1.«** Ulomka $\dfrac{7}{4}$ nekateri ne priznajo, ker »7 ne more biti večje od 4«. Razlog: števec šteje dele. Pravilno: če jih vzamemo več, kot jih ima ena celota, dobimo nepravi ulomek: $\dfrac{7}{4} = 1\dfrac{3}{4}$.
 
 ## Povzetek
 
@@ -166,7 +166,7 @@ V razredu so $\dfrac{3}{5}$ učencev dekleta. Deklet je $15$. Koliko učencev je
 
 ## Drugače: Na sliki
 
-Predstavljaj si čokolado s $12$ kockami, razporejenimi v $3$ vrstice po $4$ kocke. To je celota. Ko jo režeš po stolpcih ali po vrsticah, vidiš različne ulomke:
+Predstavljaj si čokolado s $12$ kockami v $3$ vrsticah po $4$ kocke. To je celota. Če jo režeš po stolpcih ali po vrsticah, vidiš različne ulomke:
 
 | ulomek | kaj je to na čokoladi | število kock |
 |---|---|---|
@@ -176,14 +176,14 @@ Predstavljaj si čokolado s $12$ kockami, razporejenimi v $3$ vrstice po $4$ koc
 | $\dfrac{2}{3}$ | dve vrstici | 8 |
 | $\dfrac{12}{12}$ | vse kocke | 12 |
 
-Isto čokolado si lahko predstavljaš kot trak, ki ga postaviš na številsko premico od $0$ do $1$. Če ga razdeliš na četrtine in za prvim trakom položiš še drugega, dobiš premico do $2$:
+Isto čokolado si lahko predstavljaš kot trak na številski premici od $0$ do $1$. Če ga razdeliš na četrtine in za njim položiš še en enak trak, dobiš premico do $2$:
 
 ```
 |----|----|----|----|----|----|----|----|
 0   1/4  2/4  3/4   1   5/4  6/4  7/4   2
 ```
 
-Točke so enako razmaknjene, zato so ulomki urejeni od leve proti desni: večji ulomek je bolj desno. Štiri četrtine ($\dfrac{4}{4}$) padejo v točko $1$, osem četrtin ($\dfrac{8}{4}$) pa v točko $2$. Ulomka, ki sta pri $1$ ali desno od njega, sta nepravi. V interaktivni simulaciji spodaj lahko števec povečaš prek imenovalca in opazuješ, kako krog dobi več pobarvanih celot. Gumba »Razširi z 2« in »Okrajšaj« zaenkrat pusti pri miru, ta ulomkovska opravila spoznaš pozneje.
+Točke so enako razmaknjene. Štiri četrtine ($\dfrac{4}{4}$) padejo v točko $1$, osem četrtin ($\dfrac{8}{4}$) pa v točko $2$. V interaktivni simulaciji spodaj lahko števec povečaš prek imenovalca in opazuješ, kako se pobarva več krogov. Gumbov »Razširi z 2« in »Okrajšaj« zaenkrat ne potrebuješ, o tem se učiš pozneje.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -191,15 +191,11 @@ Točke so enako razmaknjene, zato so ulomki urejeni od leve proti desni: večji 
 
 **Denar.** Evro ima $100$ centov. Četrtina evra je $100 : 4 = 25$ centov, petina evra je $20$ centov, tri četrtine evra pa $75$ centov. Zato lahko »tri četrtine evra« plačaš s tremi kovanci po $25$ centov.
 
-**Jajca.** Ducat jajc je $12$ jajc. Polovica ducata je $6$ jajc, tretjina ducata $4$ jajca, dve tretjini ducata $8$ jajc, tri četrtine ducata pa $9$ jajc.
-
-**Glasba.** Pri notah dolžino tona povemo z ulomkom celinke: polovinka traja polovico celinke, četrtinka četrtino celinke, osminka osmino. Štiri četrtinke skupaj trajajo toliko kot ena celinka, kar je ravno $\dfrac{4}{4} = 1$.
-
-**Recept.** Če receptu manjka tretjina sestavin, jih moraš dodati toliko, da dobiš tri tretjine, torej celoto. Ulomek ti vedno pove, koliko od celote že imaš in koliko še manjka.
+**Glasba.** Pri notah dolžino tona povemo z ulomkom celinke: polovinka traja polovico celinke, četrtinka četrtino, osminka osmino. Štiri četrtinke skupaj trajajo toliko kot ena celinka: $\dfrac{4}{4} = 1$.
 
 ## Drugače: Korak za korakom s številkami
 
-Tri naloge rešimo po zaporednih korakih, vsakič s konkretnimi števili.
+Tri naloge rešimo po korakih, s konkretnimi števili.
 
 **Postopek A: ulomek dela skupine.** Koliko je $\dfrac{5}{6}$ od $42$ minut?
 
@@ -226,15 +222,13 @@ Točka $\dfrac{7}{3}$ je za $28 - 24 = 4$ kvadratke desno od točke $2$ (ki je p
 
 ## Drugače: Bolj natančno
 
-Ulomek $\dfrac{a}{b}$ je zapis z naravnima številoma $a$ in $b$, pri čemer $b$ ni nič. Zakaj ne? Imenovalec pove, na koliko delov razdelimo celoto, celote pa ne moremo razdeliti na nič delov. Števec je lahko tudi nič: $\dfrac{0}{5} = 0$ pomeni, da nismo vzeli nobenega dela.
+Ulomek $\dfrac{a}{b}$ zapišemo z naravnima številoma $a$ in $b$. Imenovalec ne sme biti nič, saj celote ne moremo razdeliti na nič delov. Če ne vzamemo nobenega dela, dobimo $\dfrac{0}{5} = 0$.
 
 **Ulomek in deljenje.** Ulomkova črta pomeni deljenje: $\dfrac{a}{b} = a : b$. Če si tri pice razdelijo štirje otroci, vsak dobi $3 : 4 = \dfrac{3}{4}$ pice. Preverimo: štirje otroci po tri četrtine pice so skupaj $12$ četrtin pice, to je $3$ cele pice. Ulomek je torej tudi odgovor na deljenje, ki ne gre brez ostanka.
 
-**Večkratnik enotskega dela.** Ulomek $\dfrac{a}{b}$ je $a$-kratnik ulomka $\dfrac{1}{b}$. Tako je $\dfrac{3}{5}$ trikratnik petine, kar natanko ustreza drugemu koraku risanja na številski premici: od $0$ naredimo $a$ korakov, vsak je dolg $\dfrac{1}{b}$ enote.
+**Naravna števila kot ulomki.** Vsako naravno število je ulomek z imenovalcem $1$: $5 = \dfrac{5}{1}$. Tudi $1 = \dfrac{b}{b}$ za vsak $b$. Zato ulomki vsebujejo vsa naravna števila, ki jih že poznaš. Ulomek $\dfrac{a}{b}$ je tudi $a$-kratnik ulomka $\dfrac{1}{b}$: $\dfrac{3}{5}$ je trikratnik petine.
 
-**Naravna števila kot ulomki.** Vsako naravno število je ulomek z imenovalcem $1$: $5 = \dfrac{5}{1}$. Tudi $1 = \dfrac{b}{b}$ za vsak $b$. Zato ulomki vsebujejo vsa števila, ki jih že poznaš.
-
-**Več zapisov za isto lego.** Če na številski premici razdeliš enoto na dva dela in na štiri dele, ima nekaj točk različna imena, a leži na istem mestu. O tem, kako to pojasniti in izkoristiti, se boš učil pozneje. Zaenkrat zadošča, da je ulomek **točka na številski premici**, ne le dvojica števil.
+**Isto mesto, dva zapisa.** Točka »polovica« in točka »dve četrtini« sta na številski premici ista točka, čeprav ulomka zapišemo različno. Zakaj je tako in kako to izkoristimo, se učiš pozneje. Zaenkrat si zapomni, da je ulomek **točka na številski premici**, ne le dvojica števil.
 
 **Pravilo za mešano število.** Splošno velja $c\dfrac{a}{b} = \dfrac{c \cdot b + a}{b}$, ker ima $c$ celih enot skupaj $c \cdot b$ delov z imenovalcem $b$ in jim prištejemo še $a$ delov.
 

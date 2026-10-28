@@ -7,7 +7,7 @@ avtor: AI (vzorčna lekcija za pregled)
 
 ## Zakaj se tega učimo
 
-Že veš, da v sklenjenem električnem krogu teče **električni tok** $I$ (merimo ga v amperih, A, z ampermetrom) in da ga poganja **napetost** $U$ vira (v voltih, V, merimo jo z voltmetrom). Opazil si tudi, da ista baterija z eno žarnico sveti močneje kot z dvema zaporedno vezanima.
+Že veš, da v sklenjenem električnem krogu teče **električni tok** $I$ (merimo ga v amperih, A, z ampermetrom) in da ga poganja **napetost** $U$ vira (v voltih, V, merimo jo z voltmetrom). Opazil si tudi, da ena žarnica, priključena na baterijo, sveti močneje kot dve zaporedno vezani žarnici na isti bateriji.
 
 Zakaj? Ker vsak porabnik toku **nasprotuje**. Tej lastnosti rečemo **upor**. Ohmov zakon pove, kako so napetost, tok in upor povezani. Z njim izračunaš, kolikšen tok bo tekel skozi žarnico, grelec ali polnilnik, in izbereš pravo varovalko.
 
@@ -21,7 +21,7 @@ Zakaj? Ker vsak porabnik toku **nasprotuje**. Tej lastnosti rečemo **upor**. Oh
 
 Ko napetost podvojimo, se podvoji tudi tok. **Tok je premo sorazmeren z napetostjo.** Graf $I(U)$ je premica skozi izhodišče.
 
-**2. Upor.** Količnik $\dfrac{U}{I}$ je pri tem upornik vedno enak: $\dfrac{2\,\text{V}}{0{,}1\,\text{A}} = 20$. Ta stalni količnik imenujemo **električni upor**:
+**2. Upor.** Količnik $\dfrac{U}{I}$ je pri tem upornik vedno enak: $\dfrac{2\,\text{V}}{0{,}1\,\text{A}} = 20\,\dfrac{\text{V}}{\text{A}}$. Ta stalni količnik imenujemo **električni upor**:
 
 $$R = \frac{U}{I}$$
 
@@ -88,6 +88,7 @@ $R = \dfrac{U_1}{I_1}$, nato $I_2 = \dfrac{U_2}{R}$
 2. $R = \dfrac{U_1}{I_1} = \dfrac{6\,\text{V}}{0{,}25\,\text{A}} = 24\,\Omega$.
 3. Pri $3\,\text{V}$: $I_2 = \dfrac{3\,\text{V}}{24\,\Omega} = 0{,}125\,\text{A}$.
 4. Napetost smo prepolovili, tok se je prepolovil, kar se ujema s premim sorazmerjem.
+5. Odgovor: upor žarnice je $24\,\Omega$; pri $3\,\text{V}$ skoznjo teče tok $0{,}125\,\text{A}$ ($125\,\text{mA}$).
 
 ## Pogoste napake
 
