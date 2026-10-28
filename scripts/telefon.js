@@ -190,9 +190,18 @@ async function ensureNgrok() {
   if (!res.ok) throw new Error(`prenos ni uspel (${res.status})`);
   const archive = path.join(toolsDir, `ngrok.${a.ext}`);
   fs.writeFileSync(archive, Buffer.from(await res.arrayBuffer()));
-  execFileSync("tar", [a.ext === "tgz" ? "-xzf" : "-xf", archive, "-C", toolsDir]);
+  // Windows Defender ngrok včasih takoj premakne v karanteno; takrat povemo, kako ga dovoliti.
+  const defender = isWin
+    ? "Verjetno ga je izbrisal Windows Defender. Odpri Varnost sistema Windows > Zaščita pred virusi in grožnjami > " +
+      "Zgodovina zaščite, odpri vnos z ngrok, izberi Dejanja > Dovoli v napravi in znova zaženi to datoteko"
+    : "orodja ngrok ni v prenesenem paketu";
+  try {
+    execFileSync("tar", [a.ext === "tgz" ? "-xzf" : "-xf", archive, "-C", toolsDir], { stdio: "ignore" });
+  } catch {
+    throw new Error(defender);
+  }
   fs.rmSync(archive, { force: true });
-  if (!fs.existsSync(bin)) throw new Error("orodja ngrok ni v prenesenem paketu");
+  if (!fs.existsSync(bin)) throw new Error(defender);
   if (!isWin) fs.chmodSync(bin, 0o755);
   return bin;
 }
@@ -226,6 +235,7 @@ function startNgrok(bin, { token, domain }) {
       };
       t.stdout.on("data", onData);
       t.stderr.on("data", onData);
+      t.on("error", (e) => { if (!started) reject(new Error(isWin ? "ngrok se ne zažene (morda ga je izbrisal Windows Defender)" : e.message)); });
       t.on("exit", async (code) => {
         if (stopping) return;
         if (!started) return reject(new Error(NGROK_HINTS[last] || last || `koda ${code}`));
