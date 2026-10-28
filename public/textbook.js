@@ -77,7 +77,10 @@ async function renderHome() {
       ${book ? `<div class="tb-book card">
         <div><p class="eyebrow">Učbenik</p><h2>${esc(book.subjectName)} · ${esc(book.schoolName)}</h2>
         <p class="muted">${book.lessons} od ${book.topics} lekcij${book.lessons < book.topics ? ", ostale nastajajo" : ""}</p></div>
-        <a class="primary tb-book-pdf" href="/ucbenik/${esc(book.key)}#natisni" target="_blank" rel="noopener">${ic("download")}Celoten učbenik (PDF)</a>
+        <div class="tb-book-actions">
+          <a class="primary tb-book-pdf" href="/ucbenik/${esc(book.key)}#natisni" target="_blank" rel="noopener">${ic("download")}Celoten učbenik (PDF)</a>
+          ${book.formulas ? `<a class="tb-book-pdf secondary-link" href="/ucbenik/${esc(book.key)}/formule#natisni" target="_blank" rel="noopener">${ic("sigma")}Formule in konstante (PDF)</a>` : ""}
+        </div>
       </div>` : ""}
     </div>
     <div id="tb-body"></div>`;
