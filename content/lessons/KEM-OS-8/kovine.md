@@ -7,11 +7,11 @@ avtor: AI
 
 Že veš, da so snovi sestavljene iz atomov in da so atomi različnih elementov razporejeni v periodnem sistemu. Okoli sebe vidiš veliko kovin: bakrene žice v kablih, aluminijasto folijo, železne žeblje, zlat prstan. Večina elementov v periodnem sistemu so prav kovine.
 
-Če poznaš skupne lastnosti kovin in razumeš, kako se razlikujejo po skupinah, lahko predvidiš, kako se bo nek element obnašal, ne da bi ga preizkusil. Zato natrij hranimo pod oljem, aluminij pa uporabljamo za pločevinke. V tej lekciji spoznaš splošne lastnosti kovin ter dve pomembni skupini: **alkalijske kovine** (1. skupina) in **zemeljskoalkalijske kovine** (2. skupina).
+Če poznaš skupne lastnosti kovin in razumeš, kako se razlikujejo po skupinah, lahko predvidiš, kako se bo neki element obnašal, ne da bi ga preizkusil. Zato natrij hranimo pod oljem, aluminij pa uporabljamo za pločevinke. V tej lekciji spoznaš splošne lastnosti kovin ter dve pomembni skupini: **alkalijske kovine** (1. skupina) in **zemeljskoalkalijske kovine** (2. skupina).
 
 ## Razlaga
 
-**1. Kje so kovine v periodnem sistemu.** Kovine so na levi in v sredini periodnega sistema. Nekovine so na desni strani (vodik je poseben primer, čeprav stoji zgoraj levo). Med njimi poteka stopničasta črta, ob kateri so polkovine.
+**1. Kje so kovine v periodnem sistemu.** Kovine so na levi in v sredini periodnega sistema. Nekovine so na desni strani. Vodik je poseben primer: je nekovina, čeprav stoji zgoraj levo. Med njimi poteka stopničasta črta, ob kateri so polkovine.
 
 **2. Skupne lastnosti kovin.**
 
@@ -21,12 +21,12 @@ avtor: AI
 - **Pri sobni temperaturi so trdne snovi**. Izjema je živo srebro ($\mathrm{Hg}$), ki je tekoče.
 - Večinoma imajo **visoko tališče** in **veliko gostoto**. Tudi tu so izjeme, ki jih spoznaš spodaj.
 
-**3. Kovine in kemijske reakcije.** Atomi kovin pri reakcijah radi oddajo elektrone in tvorijo pozitivno nabite ione. Zato kovine tvorijo ionske spojine, na primer s klorom.
+**3. Kovine in kemijske reakcije.** Atomi kovin pri reakcijah radi oddajo elektrone in tvorijo pozitivno nabite ione. Zato kovine z nekovinami tvorijo ionske spojine, na primer s klorom.
 
 **4. Alkalijske kovine (1. skupina, razen vodika).**
 Litij ($\mathrm{Li}$), natrij ($\mathrm{Na}$), kalij ($\mathrm{K}$), rubidij ($\mathrm{Rb}$), cezij ($\mathrm{Cs}$), francij ($\mathrm{Fr}$).
 
-- Mehke so, da jih lahko režemo z nožem. Na prerezu se svetijo, a na zraku hitro potemnijo.
+- Tako mehke so, da jih lahko režemo z nožem. Na prerezu se svetijo, a na zraku hitro potemnijo.
 - Imajo nizko gostoto in nizko tališče. Litij, natrij in kalij so celo lažji od vode.
 - Zelo so **reaktivne**: reagirajo z vodo, kisikom in drugimi snovmi. Reaktivnost narašča od litija proti ceziju.
 - Zaradi reaktivnosti jih v naravi ne najdemo kot čiste kovine, ampak v spojinah (npr. kuhinjska sol $\mathrm{NaCl}$). Hranimo jih pod oljem.
@@ -39,7 +39,7 @@ $$2\,\mathrm{Na} + 2\,\mathrm{H_2O} \rightarrow 2\,\mathrm{NaOH} + \mathrm{H_2}$
 **5. Zemeljskoalkalijske kovine (2. skupina).**
 Berilij ($\mathrm{Be}$), magnezij ($\mathrm{Mg}$), kalcij ($\mathrm{Ca}$), stroncij ($\mathrm{Sr}$), barij ($\mathrm{Ba}$), radij ($\mathrm{Ra}$).
 
-- So trša in gostejša od alkalijskih kovin ter imajo višja tališča.
+- So trše in gostejše od alkalijskih kovin ter imajo višja tališča.
 - So reaktivne, a manj kot alkalijske kovine v isti periodi. Reaktivnost narašča od berilija proti radiju.
 - Tudi njih v naravi najdemo v spojinah (npr. kalcij v apnencu $\mathrm{CaCO_3}$).
 - V spojinah tvorijo ione z nabojem $2+$, npr. $\mathrm{Mg^{2+}}$, $\mathrm{Ca^{2+}}$.
@@ -53,6 +53,15 @@ Berilij ($\mathrm{Be}$), magnezij ($\mathrm{Mg}$), kalcij ($\mathrm{Ca}$), stron
 
 Snov se sveti, prevaja elektriko, jo lahko skujemo v ploščo in je pri sobni temperaturi trdna. Je kovina?
 
+**Podatki:** snov ima sijaj, prevaja električni tok, je kovna (skujemo jo v ploščo), pri sobni temperaturi je trdna
+**Iščemo:** ali je snov kovina
+
+:::formula
+Lastnosti kovin: kovinski sijaj, dobra električna in toplotna prevodnost, kovnost in raztegljivost, pri sobni temperaturi so trdne (izjema je $\mathrm{Hg}$).
+:::
+
+**Rešitev:**
+
 1. Pogledamo lastnosti kovin: sijaj, prevodnost, kovnost, trdno stanje.
 2. Snov izpolnjuje vse štiri. Zato je to zelo verjetno kovina.
 3. Odgovor: da, gre za kovino.
@@ -60,6 +69,15 @@ Snov se sveti, prevaja elektriko, jo lahko skujemo v ploščo in je pri sobni te
 ### Primer 2: kam spada element
 
 Element ima ime kalcij ($\mathrm{Ca}$). V katero skupino spada in kakšen ion tvori?
+
+**Podatki:** element kalcij, simbol $\mathrm{Ca}$
+**Iščemo:** skupino, v katero spada kalcij, in ion, ki ga tvori
+
+:::formula
+Pri 1. in 2. skupini je število zunanjih elektronov enako številki skupine. Atom kovine odda zunanje elektrone, zato je naboj iona $1+$ (1. skupina) oziroma $2+$ (2. skupina).
+:::
+
+**Rešitev:**
 
 1. Kalcij je v 2. skupini periodnega sistema, torej je zemeljskoalkalijska kovina.
 2. Atomi te skupine imajo dva zunanja elektrona, ki ju oddajo.
@@ -69,6 +87,17 @@ Element ima ime kalcij ($\mathrm{Ca}$). V katero skupino spada in kakšen ion tv
 ### Primer 3 (težji): reakcija z vodo
 
 Napiši enačbo reakcije kalija z vodo in razloži, zakaj mora biti kalij shranjen pod oljem.
+
+**Podatki:** reaktanta sta kalij $\mathrm{K}$ (alkalijska kovina) in voda $\mathrm{H_2O}$
+**Iščemo:** urejeno enačbo reakcije in razlog, zakaj kalij hranimo pod oljem
+
+:::formula
+alkalijska kovina + voda $\rightarrow$ hidroksid + vodik
+
+Pri urejeni enačbi je število atomov vsakega elementa na levi in desni strani enako.
+:::
+
+**Rešitev:**
 
 1. Kalij je alkalijska kovina, zato z vodo reagira podobno kot natrij. Nastaneta kalijev hidroksid in vodik.
 2. Zapišemo shemo: $\mathrm{K} + \mathrm{H_2O} \rightarrow \mathrm{KOH} + \mathrm{H_2}$.
@@ -109,8 +138,8 @@ Predstavljaj si še stolpec 1. skupine kot stavbo. Zgoraj je litij, spodaj cezij
 - **Aluminij** je v foliji, ker ga lahko stanjšamo v tanek list (kovnost).
 - **Železo** je v mostovih in orodju, ker je trdo.
 - **Natrij** srečaš vsak dan v kuhinjski soli $\mathrm{NaCl}$. Čista kovina bi pri stiku z mokrimi rokami povzročila nevarno reakcijo, spojina pa je neškodljiva v primerni količini.
-- **Magnezij** gori z močno svetlobo, zato se uporablja v bliskavicah in ognjemetu.
-- **Kalcij** je v kosteh, zobeh in v apnencu.
+- **Magnezij** gori z močno belo svetlobo, zato so ga uporabljali v starih fotografskih bliskavicah, danes pa ga uporabljamo v ognjemetih.
+- **Kalcij** je v obliki spojin v kosteh, zobeh in v apnencu.
 
 Primerjava: alkalijske kovine so kot zelo živahni otroci, ki takoj stopijo v stik z vsem, kar je blizu. Zato jih »zapremo« pod olje.
 
@@ -130,13 +159,13 @@ Tabela za primerjavo skupin:
 Kako iz skupine ugotoviš naboj iona:
 
 1. Poglej, v kateri skupini je element: kalij je v 1. skupini.
-2. Število zunanjih elektronov je enako številu skupine (pri teh dveh skupinah): $1$.
+2. Število zunanjih elektronov je enako številki skupine (pri teh dveh skupinah): $1$.
 3. Atom odda te elektrone in nastane ion s tolikšnim pozitivnim nabojem: $\mathrm{K^+}$.
 4. Za magnezij (2. skupina): odda $2$ elektrona, nastane $\mathrm{Mg^{2+}}$.
 
 ## Drugače: Bolj natančno
 
-Zakaj so kovine take, kot so? V kovini atomi oddajo zunanje elektrone, ki se prosto gibljejo med pozitivnimi ioni. Pravimo, da je kovinska vez tako urejena in da je elektronski oblak skupen vsem atomom. Ker se elektroni lahko gibljejo, kovine prevajajo elektriko. Ko kovino udarimo, se plasti ionov premaknejo, a jih oblak elektronov še vedno drži skupaj, zato se kovina ne zdrobi, ampak oblikuje.
+Zakaj so kovine take, kot so? V kovini atomi oddajo zunanje elektrone, ki se prosto gibljejo med pozitivnimi ioni. Privlaku med pozitivnimi ioni in skupnim »oblakom« elektronov pravimo **kovinska vez**. Ker se elektroni lahko gibljejo, kovine prevajajo elektriko. Ko kovino udarimo, se plasti ionov premaknejo, a jih oblak elektronov še vedno drži skupaj, zato se kovina ne zdrobi, ampak oblikuje.
 
 Reaktivnost narašča navzdol po skupini, ker je zunanji elektron pri večjih atomih dlje od jedra in je šibkeje vezan. Zato ga atom lažje odda. Alkalijske kovine imajo en zunanji elektron, ki ga oddajo zelo zlahka. Zemeljskoalkalijske kovine morajo oddati dva, kar je nekoliko težje, zato so manj reaktivne od alkalijskih kovin iz iste periode.
 
