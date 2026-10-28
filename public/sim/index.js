@@ -84,6 +84,15 @@ export const ENGINES = {
   vektorji: ["mat-trig.js", "vektorji"],
   stozernice: ["mat-trig.js", "stozernice"],
   obodni: ["mat-trig.js", "obodni"],
+  // fizika: merjenje, sile, gostota, tlak, gibanje
+  meritve: ["fiz-meh.js", "meritve"],
+  vzmet: ["fiz-meh.js", "vzmet"],
+  teza: ["fiz-meh.js", "teza"],
+  sile: ["fiz-meh.js", "sile"],
+  klada: ["fiz-meh.js", "klada"],
+  gostota: ["fiz-meh.js", "gostota"],
+  tlak: ["fiz-meh.js", "tlak"],
+  gibanje: ["fiz-meh.js", "gibanje"],
   // zbirka več simulacij (za mešane maturitetne naloge)
   zbirka: ["index.js", "zbirka"],
 };
