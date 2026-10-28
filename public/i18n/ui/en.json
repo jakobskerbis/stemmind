@@ -463,5 +463,7 @@
   "exam.back": "Back to exams",
   "exam.penaltyPts": "wrong: {n}",
   "exam.train": "Exam practice",
-  "exam.mockIntro": "Questions in the exam format, timed, one attempt and no hints. You see your marks at the end."
+  "exam.mockIntro": "Questions in the exam format, timed, one attempt and no hints. You see your marks at the end.",
+  "exam.grade": "Approximate grade: <b>{grade}</b>",
+  "exam.gradeNote": "At the end you also get an approximate grade on the exam's scale."
 }

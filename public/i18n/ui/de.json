@@ -463,5 +463,7 @@
   "exam.back": "Zurück zu den Prüfungen",
   "exam.penaltyPts": "falsch: {n}",
   "exam.train": "Prüfungstraining",
-  "exam.mockIntro": "Fragen im Prüfungsformat, auf Zeit, ein Versuch und keine Hinweise. Die Punkte siehst du am Ende."
+  "exam.mockIntro": "Fragen im Prüfungsformat, auf Zeit, ein Versuch und keine Hinweise. Die Punkte siehst du am Ende.",
+  "exam.grade": "Ungefähre Note: <b>{grade}</b>",
+  "exam.gradeNote": "Am Ende bekommst du auch eine ungefähre Note nach der Skala der Prüfung."
 }

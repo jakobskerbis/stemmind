@@ -458,5 +458,7 @@
   "exam.back": "Quay lại kỳ thi",
   "exam.penaltyPts": "sai: {n}",
   "exam.train": "Luyện thi",
-  "exam.mockIntro": "Câu hỏi theo định dạng kỳ thi, có giới hạn thời gian, một lần làm và không có gợi ý. Bạn xem điểm ở cuối."
+  "exam.mockIntro": "Câu hỏi theo định dạng kỳ thi, có giới hạn thời gian, một lần làm và không có gợi ý. Bạn xem điểm ở cuối.",
+  "exam.grade": "Điểm ước tính: <b>{grade}</b>",
+  "exam.gradeNote": "Cuối bài bạn cũng nhận được điểm ước tính theo thang của kỳ thi."
 }

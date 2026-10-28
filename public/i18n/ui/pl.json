@@ -473,5 +473,7 @@
   "exam.back": "Wróć do egzaminów",
   "exam.penaltyPts": "źle: {n}",
   "exam.train": "Trening do egzaminu",
-  "exam.mockIntro": "Pytania w formacie egzaminu, na czas, jedna próba i bez podpowiedzi. Punkty zobaczysz na końcu."
+  "exam.mockIntro": "Pytania w formacie egzaminu, na czas, jedna próba i bez podpowiedzi. Punkty zobaczysz na końcu.",
+  "exam.grade": "Przybliżona ocena: <b>{grade}</b>",
+  "exam.gradeNote": "Na końcu dostajesz też przybliżoną ocenę według skali egzaminu."
 }

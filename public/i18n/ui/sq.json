@@ -463,5 +463,7 @@
   "exam.back": "Kthehu te provimet",
   "exam.penaltyPts": "gabim: {n}",
   "exam.train": "Ushtrim për provimin",
-  "exam.mockIntro": "Pyetje në formatin e provimit, me kohë, një përpjekje dhe pa ndihmë. Pikët i sheh në fund."
+  "exam.mockIntro": "Pyetje në formatin e provimit, me kohë, një përpjekje dhe pa ndihmë. Pikët i sheh në fund.",
+  "exam.grade": "Nota e përafërt: <b>{grade}</b>",
+  "exam.gradeNote": "Në fund merr edhe një notë të përafërt sipas shkallës së provimit."
 }

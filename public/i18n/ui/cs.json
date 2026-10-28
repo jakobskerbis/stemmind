@@ -473,5 +473,7 @@
   "exam.back": "Zpět na zkoušky",
   "exam.penaltyPts": "špatně: {n}",
   "exam.train": "Trénink na zkoušku",
-  "exam.mockIntro": "Otázky ve formátu zkoušky, na čas, jeden pokus a bez nápověd. Body uvidíš na konci."
+  "exam.mockIntro": "Otázky ve formátu zkoušky, na čas, jeden pokus a bez nápověd. Body uvidíš na konci.",
+  "exam.grade": "Přibližná známka: <b>{grade}</b>",
+  "exam.gradeNote": "Na konci dostaneš i přibližnou známku podle stupnice zkoušky."
 }

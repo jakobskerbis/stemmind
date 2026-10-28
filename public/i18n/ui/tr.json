@@ -463,5 +463,7 @@
   "exam.back": "Sınavlara dön",
   "exam.penaltyPts": "yanlış: {n}",
   "exam.train": "Sınav alıştırması",
-  "exam.mockIntro": "Sınav formatında sorular, süreli, tek deneme ve ipucu yok. Puanlarını sonunda görürsün."
+  "exam.mockIntro": "Sınav formatında sorular, süreli, tek deneme ve ipucu yok. Puanlarını sonunda görürsün.",
+  "exam.grade": "Yaklaşık not: <b>{grade}</b>",
+  "exam.gradeNote": "Sonunda sınavın ölçeğine göre yaklaşık bir not da alırsın."
 }

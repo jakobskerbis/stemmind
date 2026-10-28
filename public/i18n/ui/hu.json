@@ -463,5 +463,7 @@
   "exam.back": "Vissza a vizsgákhoz",
   "exam.penaltyPts": "rossz: {n}",
   "exam.train": "Vizsgagyakorlás",
-  "exam.mockIntro": "Kérdések a vizsga formátumában, időre, egy próbálkozással, tippek nélkül. A pontokat a végén látod."
+  "exam.mockIntro": "Kérdések a vizsga formátumában, időre, egy próbálkozással, tippek nélkül. A pontokat a végén látod.",
+  "exam.grade": "Becsült jegy: <b>{grade}</b>",
+  "exam.gradeNote": "A végén a vizsga skáláján becsült jegyet is kapsz."
 }

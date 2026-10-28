@@ -5,7 +5,7 @@ import { createApp } from "../server/app.js";
 import { Progress } from "../server/progress.js";
 import { getPath, listPaths } from "../server/curriculum.js";
 import { EXAMS, EXAM_IDS } from "../server/exam-data.js";
-import { examInfo, examKeyFor, examsFor, isExamPath, mockPlan, scaledScore, examPrompt } from "../server/exams.js";
+import { examInfo, examKeyFor, examsFor, examGrade, isExamPath, mockPlan, scaledScore, examPrompt } from "../server/exams.js";
 import { generateTask, hasGenerator } from "../server/practice/index.js";
 import { toChoice } from "../server/practice/choice.js";
 import { checkAnswer, parseNumberWithUnit, roundHalfUp, fmt } from "../server/practice/check.js";
@@ -50,7 +50,7 @@ test("exams: own exams per school system and default key", () => {
   assert.equal(examKeyFor({ school_system: "US", subject: "FIZ" }), "MAT-EX-SAT");
   assert.equal(examKeyFor({ school_system: "IN-CBSE", subject: "FIZ" }, "NEET"), "FIZ-EX-NEET");
   assert.equal(examKeyFor({ school_system: "IN-CBSE", subject: "MAT" }, "NEET"), "FIZ-EX-NEET");
-  assert.equal(examKeyFor({ school_system: "KE", subject: "MAT" }), "MAT-EX-SAT");
+  assert.equal(examKeyFor({ school_system: "BD", subject: "MAT" }), "MAT-EX-SAT");
   const info = examInfo("MAT-EX-JEEM", "IN-CBSE");
   assert.equal(info.mock.tasks, 25);
   assert.equal(info.mock.maxPoints, 100);
@@ -175,4 +175,44 @@ test("API: exams view for a US and an Indian student", async () => {
   } finally {
     server.close();
   }
+});
+
+test("exams: second batch (UK, DE, AT, CH, FR, BR, West Africa, Kenya, South Africa)", () => {
+  assert.deepEqual(examsFor("GB").own, ["GCSE", "ALEVEL"]);
+  assert.deepEqual(examsFor("DE").own, ["ABITUR"]);
+  assert.deepEqual(examsFor("AT").own, ["MATURAAT"]);
+  assert.deepEqual(examsFor("NG").own, ["WASSCE", "JAMB"]);
+  assert.deepEqual(examsFor("FR-AF").own, ["BAC"]);
+  assert.equal(examKeyFor({ school_system: "AT", subject: "FIZ" }), "MAT-EX-MATURAAT", "AT: samo matematika");
+  assert.equal(examKeyFor({ school_system: "KE", subject: "KEM" }), "KEM-EX-KCSE");
+  // Približne ocene po odstotku.
+  assert.equal(examGrade("MAT-EX-ALEVEL", 64, 80), "A*");
+  assert.equal(examGrade("MAT-EX-ALEVEL", 10, 80), "U");
+  assert.equal(examGrade("FIZ-EX-WASSCE", 15, 25), "C4");
+  assert.equal(examGrade("MAT-EX-MATURACH", 30, 50), "4");
+  assert.equal(examGrade("MAT-EX-MATURACH", 50, 50), "6");
+  assert.equal(examGrade("MAT-EX-ABITUR", 0, 54), "00 Notenpunkte");
+  assert.equal(examGrade("MAT-EX-SAT", 10, 22), null);
+  // Lestvice: bac na pol točke, JAMB na točko.
+  assert.equal(scaledScore("MAT-EX-BAC", 13, 27).value, 9.5);
+  assert.equal(scaledScore("MAT-EX-JAMB", 37, 100).value, 37);
+  assert.equal(examInfo("MAT-EX-ENEM", "BR").mock.options, 5);
+  assert.equal(examInfo("MAT-EX-GCSE", "GB").mock.graded, true);
+  assert.deepEqual(examInfo("MAT-EX-BAC", "FR").mock.scale, [0, 20]);
+});
+
+test("exam mock: ENEM has five options, A-level result has a grade", () => {
+  const store = openDb(":memory:");
+  const p = new Progress(store);
+  const s = store.createStudent("Ana");
+  const n = p.startContest(s.id, "MAT-EX-ENEM");
+  assert.equal(n.total, 15);
+  assert.equal(n.task.answerType, "choice");
+  assert.equal(n.task.options.length, 5);
+  const a = p.startContest(s.id, "MAT-EX-ALEVEL");
+  const row = p.getTask(a.task.id);
+  const r = p.answer(s.id, a.task.id, correctInput(row.payload.answer));
+  const res = p.finishContest(r.next.sessionId);
+  assert.equal(res.points, 4);
+  assert.equal(res.grade, "U");
 });

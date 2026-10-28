@@ -468,5 +468,7 @@
   "exam.back": "Înapoi la examene",
   "exam.penaltyPts": "greșit: {n}",
   "exam.train": "Antrenament pentru examen",
-  "exam.mockIntro": "Întrebări în formatul examenului, cronometrate, o singură încercare și fără indicii. Vezi punctele la final."
+  "exam.mockIntro": "Întrebări în formatul examenului, cronometrate, o singură încercare și fără indicii. Vezi punctele la final.",
+  "exam.grade": "Notă aproximativă: <b>{grade}</b>",
+  "exam.gradeNote": "La final primești și o notă aproximativă pe scala examenului."
 }

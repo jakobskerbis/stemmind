@@ -463,5 +463,7 @@
   "exam.back": "Retour aux examens",
   "exam.penaltyPts": "faux : {n}",
   "exam.train": "Entraînement à l'examen",
-  "exam.mockIntro": "Questions au format de l'examen, chronométrées, une seule tentative et sans indices. Tu vois tes points à la fin."
+  "exam.mockIntro": "Questions au format de l'examen, chronométrées, une seule tentative et sans indices. Tu vois tes points à la fin.",
+  "exam.grade": "Note approximative : <b>{grade}</b>",
+  "exam.gradeNote": "À la fin, tu obtiens aussi une note approximative selon le barème de l'examen."
 }

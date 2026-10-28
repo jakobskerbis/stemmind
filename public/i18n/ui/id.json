@@ -458,5 +458,7 @@
   "exam.back": "Kembali ke ujian",
   "exam.penaltyPts": "salah: {n}",
   "exam.train": "Latihan ujian",
-  "exam.mockIntro": "Soal dengan format ujian, berwaktu, satu kali coba dan tanpa petunjuk. Nilaimu terlihat di akhir."
+  "exam.mockIntro": "Soal dengan format ujian, berwaktu, satu kali coba dan tanpa petunjuk. Nilaimu terlihat di akhir.",
+  "exam.grade": "Perkiraan nilai: <b>{grade}</b>",
+  "exam.gradeNote": "Di akhir kamu juga mendapat perkiraan nilai menurut skala ujian."
 }

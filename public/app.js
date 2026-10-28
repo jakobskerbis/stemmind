@@ -1634,7 +1634,8 @@ async function loadExams(key = state.examKey, exam = null) {
         <div><h2>${t("exam.mock")}</h2>
           <p class="muted">${t("exam.mockText", { tasks: m.tasks, choice: m.choice, minutes: m.minutes, max: m.maxPoints })}</p>
           ${m.negative ? `<p class="muted small-note">${t("exam.negative", { p: String(m.penalty).replace("-", "−") })}</p>` : ""}
-          ${m.scale ? `<p class="muted small-note">${t("exam.scaleNote", { min: m.scale[0], max: m.scale[1] })}</p>` : ""}</div>
+          ${m.scale ? `<p class="muted small-note">${t("exam.scaleNote", { min: m.scale[0], max: m.scale[1] })}</p>` : ""}
+          ${m.graded ? `<p class="muted small-note">${t("exam.gradeNote")}</p>` : ""}</div>
       </div>
       <button class="primary" data-comp-contest>${c.openContest ? t("comp.continue", { n: left }) : t("exam.startMock")}</button>
       <span class="field-label">${t("comp.lastResults")}</span>
@@ -1731,6 +1732,7 @@ function showContestResult(c, timeUp = false) {
       <h2>${t("comp.score", { points: c.points, max: c.maxPoints })}</h2>
       <p>${t("comp.summary", { correct: c.correct, total: c.total, minutes: c.minutes })}${c.xp ? ` · +${c.xp.gained} XP` : ""}</p>
       ${c.scaled ? `<p>${t("exam.scaled", { value: c.scaled.value, min: c.scaled.min, max: c.scaled.max })}</p>` : ""}
+      ${c.grade ? `<p>${t("exam.grade", { grade: escapeHtml(c.grade) })}</p>` : ""}
       ${c.wrong && c.items.some((x) => x.earned < 0) ? `<p class="muted">${t("exam.wrongPenalty", { n: c.wrong })}</p>` : ""}
       <p class="muted">${examMode() ? (pct >= 75 ? t("exam.great") : pct >= 50 ? t("exam.good") : t("exam.hard")) : pct >= 75 ? t("comp.great") : pct >= 50 ? t("comp.good") : t("comp.hard")}</p>
       <button class="primary big" id="fb-back">${prepBack()}</button>

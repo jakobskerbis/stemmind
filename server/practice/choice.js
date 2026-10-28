@@ -1,5 +1,5 @@
 // Izbirna vprašanja za izpite (SAT, JEE, NEET, gaokao …): številski ali ulomkovni odgovor
-// spremeni v štiri možnosti s pravilnim odgovorom in verjetnimi napakami (dvakrat, polovica,
+// spremeni v štiri (ali pet, ENEM) možnosti s pravilnim odgovorom in verjetnimi napakami (dvakrat, polovica,
 // nasprotni predznak, zamik za korak, napačna desetiška enota, obrnjen ulomek).
 import { makeRng } from "./rng.js";
 import { fmt, gcd, roundHalfUp } from "./check.js";
@@ -22,7 +22,7 @@ function place(r, right, picked) {
   return { options, index };
 }
 
-function numberOptions(ans, lang, r) {
+function numberOptions(ans, lang, r, wrong) {
   const v = ans.value;
   const d = ans.decimals ?? (Number.isInteger(v) ? 0 : null);
   const show = (x) => {
@@ -43,9 +43,9 @@ function numberOptions(ans, lang, r) {
     if (seen.has(s)) continue;
     seen.add(s);
     picked.push(s);
-    if (picked.length === 3) break;
+    if (picked.length === wrong) break;
   }
-  for (let k = 3; picked.length < 3 && k < 20; k++) {
+  for (let k = 3; picked.length < wrong && k < 24; k++) {
     const s = show(v + (k % 2 ? 1 : -1) * Math.ceil(k / 2) * step);
     if (!seen.has(s)) {
       seen.add(s);
@@ -55,7 +55,7 @@ function numberOptions(ans, lang, r) {
   return { ...place(r, right, picked), tex: false };
 }
 
-function fractionOptions(ans, r) {
+function fractionOptions(ans, r, wrong) {
   const { num: n, den: d } = ans;
   const right = fracTex(n, d);
   const value = n / d;
@@ -65,7 +65,7 @@ function fractionOptions(ans, r) {
   const seen = new Set([right]);
   const picked = [];
   const add = (a, b) => {
-    if (!b || picked.length >= 3) return;
+    if (!b || picked.length >= wrong) return;
     if (unitRange && !(a / b > 0 && a / b < 1)) return;
     const s = fracTex(a, b);
     if (seen.has(s)) return;
@@ -73,18 +73,18 @@ function fractionOptions(ans, r) {
     picked.push(s);
   };
   for (const [a, b] of r.shuffle(raw)) add(a, b);
-  for (let k = 1; picked.length < 3 && k < 12; k++) add(n + k * (k % 2 ? 1 : -1), d + k);
-  for (let k = 1; picked.length < 3 && k < 12; k++) add(k * (k % 2 ? 1 : -1), 1 + (k % 3));
+  for (let k = 1; picked.length < wrong && k < 14; k++) add(n + k * (k % 2 ? 1 : -1), d + k);
+  for (let k = 1; picked.length < wrong && k < 14; k++) add(k * (k % 2 ? 1 : -1), 1 + (k % 3));
   return { ...place(r, right, picked), tex: true };
 }
 
 // Vrne nalogo z izbirnim odgovorom (ali isto nalogo, če je že izbirna ali je ni mogoče spremeniti).
-export function toChoice(task, seed = task.seed || 1) {
+export function toChoice(task, seed = task.seed || 1, count = 4) {
   const a = task.answer;
   if (!a || a.type === "choice" || (a.type !== "number" && a.type !== "fraction")) return task;
   const r = makeRng((seed ^ 0x5bd1e995) >>> 0);
-  const o = a.type === "number" ? numberOptions(a, task.lang, r) : fractionOptions(a, r);
-  if (o.options.length < 4 || o.index < 0) return task;
+  const o = a.type === "number" ? numberOptions(a, task.lang, r, count - 1) : fractionOptions(a, r, count - 1);
+  if (o.options.length < count || o.index < 0) return task;
   return {
     ...task,
     answer: { type: "choice", options: o.options, index: o.index },

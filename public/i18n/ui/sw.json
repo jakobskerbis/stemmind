@@ -463,5 +463,7 @@
   "exam.back": "Rudi kwenye mitihani",
   "exam.penaltyPts": "si sahihi: {n}",
   "exam.train": "Mazoezi ya mtihani",
-  "exam.mockIntro": "Maswali kwa muundo wa mtihani, kwa muda, jaribio moja na bila vidokezo. Utaona alama mwishoni."
+  "exam.mockIntro": "Maswali kwa muundo wa mtihani, kwa muda, jaribio moja na bila vidokezo. Utaona alama mwishoni.",
+  "exam.grade": "Alama ya makadirio: <b>{grade}</b>",
+  "exam.gradeNote": "Mwishoni utapata pia alama ya makadirio kwa kipimo cha mtihani."
 }

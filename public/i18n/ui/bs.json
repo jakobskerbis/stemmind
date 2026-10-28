@@ -468,5 +468,7 @@
   "exam.back": "Nazad na ispite",
   "exam.penaltyPts": "netačno: {n}",
   "exam.train": "Vježba za ispit",
-  "exam.mockIntro": "Pitanja u formatu ispita, na vrijeme, jedan pokušaj i bez savjeta. Bodove vidiš na kraju."
+  "exam.mockIntro": "Pitanja u formatu ispita, na vrijeme, jedan pokušaj i bez savjeta. Bodove vidiš na kraju.",
+  "exam.grade": "Približna ocjena: <b>{grade}</b>",
+  "exam.gradeNote": "Na kraju dobiješ i približnu ocjenu prema skali ispita."
 }

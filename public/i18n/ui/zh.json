@@ -458,5 +458,7 @@
   "exam.back": "返回考试",
   "exam.penaltyPts": "答错:{n}",
   "exam.train": "考试练习",
-  "exam.mockIntro": "按考试格式出题，限时，只能作答一次，没有提示。最后才显示得分。"
+  "exam.mockIntro": "按考试格式出题，限时，只能作答一次，没有提示。最后才显示得分。",
+  "exam.grade": "估计等级：<b>{grade}</b>",
+  "exam.gradeNote": "结束时还会按考试的评分标准给出估计等级。"
 }
