@@ -11,7 +11,7 @@ avtor: AI
 
 ## Razlaga
 
-**1. Kje so kovine v periodnem sistemu.** Kovine so na levi in v sredini periodnega sistema. Nekovine so na desni strani. Vodik je poseben primer: je nekovina, čeprav stoji zgoraj levo. Med njimi poteka stopničasta črta, ob kateri so polkovine.
+**1. Kje so kovine v periodnem sistemu.** Kovine so na levi in v sredini periodnega sistema. Nekovine so na desni strani. Vodik je poseben primer: je nekovina, čeprav stoji zgoraj levo. Med kovinami in nekovinami poteka stopničasta črta, ob kateri so polkovine.
 
 **2. Skupne lastnosti kovin.**
 

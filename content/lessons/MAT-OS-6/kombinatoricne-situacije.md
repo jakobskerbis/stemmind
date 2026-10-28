@@ -57,7 +57,7 @@ V interaktivni simulaciji spodaj (**Drevesni prikaz možnosti**) lahko sam izbir
 Nika ima 3 majice: rdečo, modro in zeleno. Ima tudi 2 para hlač: kavbojke in kratke hlače. Na koliko različnih načinov se lahko obleče, če obleče eno majico in ene hlače?
 
 **Podatki:** majice: rdeča (R), modra (M), zelena (Z), to so 3 majice; hlače: kavbojke (K), kratke hlače (H), to sta 2 para hlač; izbere eno majico in ene hlače
-**Iščemo:** število različnih oblačil (parov majica in hlače)
+**Iščemo:** število različnih načinov oblačenja (parov majica in hlače)
 
 :::formula
 Drevesni prikaz: iz začetka 3 veje (majice), iz vsake 2 veji (hlače). Število možnosti $= 3 \cdot 2$.
@@ -178,7 +178,7 @@ Zakaj smemo množiti, kadar je v vsakem koraku enako število izbir? V drevesu i
 
 Pravilo velja tudi, ko se izbire ne smejo ponoviti. Res se spremeni, *katere* izbire ostanejo, a *koliko* jih ostane, je pri vsaki veji enako. Pri dvomestnih številih iz $1, 2, 3$ brez ponavljanja ostaneta po izbiri $1$ števki $2$ in $3$, po izbiri $2$ pa števki $1$ in $3$, a vsakič sta $2$.
 
-Pravilo pa ne velja, ko je število izbir odvisno od prejšnje izbire. Pri dvomestnih številih iz $0, 1, 2, 3$ s ponavljanjem je za desetice $3$ izbir ($0$ ni dovoljena), za enice pa $4$, torej $3 \cdot 4 = 12$ števil; to še gre. Če pa bi zahtevali, da je druga števka večja od prve, bi bilo po prvi števki $1$ še $2$ izbiri ($2$ ali $3$), po $2$ le $1$ izbira in po $3$ nobena. Takrat množenje ne pomaga, možnosti seštejemo po vejah: $2 + 1 + 0 = 3$ (števila $12, 13, 23$). Drevo deluje vedno, bližnjica le včasih.
+Pravilo pa ne velja, ko je število izbir odvisno od prejšnje izbire. Pri dvomestnih številih iz $0, 1, 2, 3$ s ponavljanjem je za desetice $3$ izbire ($0$ ni dovoljena), za enice pa $4$, torej $3 \cdot 4 = 12$ števil; to še gre. Če pa bi zahtevali, da je druga števka večja od prve, bi bilo po prvi števki $1$ še $2$ izbiri ($2$ ali $3$), po $2$ le $1$ izbira in po $3$ nobena. Takrat množenje ne pomaga, možnosti seštejemo po vejah: $2 + 1 + 0 = 3$ (števila $12, 13, 23$). Drevo deluje vedno, bližnjica le včasih.
 
 ## Preveri se
 

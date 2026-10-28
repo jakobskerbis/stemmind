@@ -152,7 +152,7 @@ Predstavljaj si dva testa. Pri matematiki si dosegel $17$ od $20$ točk, pri fiz
 
 Najmanjši skupni večkratnik števil $20$ in $25$ je $100$. Razširimo: $\dfrac{17}{20} = \dfrac{85}{100}$ in $\dfrac{21}{25} = \dfrac{84}{100}$. Pri matematiki si torej dosegel malo boljši rezultat, čeprav si pri fiziki zbral več točk. Število točk samo po sebi ne pove dovolj, pomembno je, od koliko možnih.
 
-Podobno je pri receptih. Če en recept zahteva $\dfrac{2}{3}$ skodelice sladkorja, drug pa $\dfrac{3}{4}$ skodelice, je drugi slajši, saj je $\dfrac{2}{3} = \dfrac{8}{12}$ in $\dfrac{3}{4} = \dfrac{9}{12}$. Ko se odločaš, kateri ponudbi ali kateremu rezultatu verjeti, ti primerjanje ulomkov pomaga, da te večja števila ne zavedejo.
+Podobno je pri receptih. Če en recept zahteva $\dfrac{2}{3}$ skodelice sladkorja, drug pa $\dfrac{3}{4}$ skodelice, drugi zahteva več sladkorja, saj je $\dfrac{2}{3} = \dfrac{8}{12}$ in $\dfrac{3}{4} = \dfrac{9}{12}$. Ko se odločaš, kateri ponudbi ali kateremu rezultatu verjeti, ti primerjanje ulomkov pomaga, da te večja števila ne zavedejo.
 
 ## Drugače: Korak za korakom s številkami
 

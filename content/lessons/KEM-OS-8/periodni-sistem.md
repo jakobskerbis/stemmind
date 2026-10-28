@@ -52,7 +52,7 @@ Ker imajo elementi iste skupine enako število valenčnih elektronov, imajo **po
 
 Atom magnezija ima 12 elektronov, razporejenih po lupinah: 2, 8, 2. V kateri periodi in skupini je magnezij?
 
-**Podatki:** število elektronov $12$, razporeditev po lupinah 2, 8, 2
+**Podatki:** element magnezij ($\mathrm{Mg}$), število elektronov $12$, razporeditev po lupinah 2, 8, 2
 **Iščemo:** periodo in skupino magnezija
 
 :::formula
@@ -104,7 +104,11 @@ Natrij ($\mathrm{Na}$) ima 11 elektronov (2, 8, 1). Kateri od elementov $\mathrm
 :::formula
 Podobne kemijske lastnosti imajo elementi z enakim številom valenčnih elektronov (ista skupina).
 
+razporeditev po lupinah (prvih 20 elementov): v 1. lupini največ $2$, v 2. lupini največ $8$, v 3. lupini največ $8$ elektronov, ostali gredo v naslednjo lupino
+
 številka periode = število zasedenih lupin
+
+številka skupine = število valenčnih elektronov (skupini 1 in 2)
 :::
 
 **Rešitev:**
@@ -121,10 +125,10 @@ Podobne kemijske lastnosti imajo elementi z enakim številom valenčnih elektron
 ## Pogoste napake
 
 - **Zamenjava skupine in periode.** Perioda je vodoravna vrstica in pove število lupin. Skupina je navpični stolpec in pove število valenčnih elektronov. Pomagaj si z mislijo: *perioda = lupine*.
-- **Štetje vseh elektronov namesto valenčnih.** Za skupino štejemo samo elektrone v zadnji lupini. Klor ima 17 elektronov, a v 17. skupini je zato, ker jih je 7 v zunanji lupini. Da se številki ujemata, je naključje, ki velja le v 3. periodi: brom ima 35 elektronov in je prav tako v 17. skupini.
+- **Štetje vseh elektronov namesto valenčnih.** Za skupino štejemo samo elektrone v zadnji lupini. Klor ima 17 elektronov, a v 17. skupini je zato, ker jih je 7 v zunanji lupini. Da se številki ujemata, je naključje: brom ima 35 elektronov, pa je prav tako v 17. skupini.
 - **Vodik med kovine.** Vodik stoji v 1. skupini, a je nekovina.
 - **Mešanje podobnosti.** Podobne lastnosti imajo elementi v isti *skupini* (navpično), ne v isti periodi.
-- **»Vse nekovine so plini, vsi trdni elementi pa kovine.«** Ni res: žveplo, ogljik in jod so trdne nekovine, brom je tekoča nekovina, živo srebro pa tekoča kovina.
+- **»Vse nekovine so plini, vsi trdni elementi pa kovine.«** Ni res: žveplo, ogljik in jod so trdne nekovine, brom je tekoča nekovina. Tudi vse kovine niso trdne: živo srebro je tekoče.
 
 ## Povzetek
 
@@ -157,7 +161,7 @@ Periodni sistem je kot **naslov v bloku**: nadstropje in številka stanovanja v 
 - **Perioda** je kot nadstropje, le da v periodnem sistemu štejemo od zgoraj navzdol: nižje ko je element v tabeli, več lupin ima njegov atom.
 - **Skupina** je kot stolpec stanovanj. Vsa stanovanja v istem stolpcu so si podobna (enako število valenčnih elektronov).
 
-Podobno je s hladilnikom, v katerem ima vsaka vrsta hrane svojo polico: če veš, kje v tabeli je element, takoj veš tudi veliko o njegovih lastnostih. Natrij je v 1. skupini med kovinami, ki burno reagirajo z vodo, klor je v 17. skupini med halogeni.
+Podobno je v trgovini, kjer ima vsaka vrsta izdelkov svoj oddelek: če veš, v katerem oddelku je izdelek, že približno veš, kakšen je. Prav tako ti lega elementa v tabeli takoj pove veliko o njegovih lastnostih. Natrij je v 1. skupini med kovinami, ki burno reagirajo z vodo, klor je v 17. skupini med halogeni.
 
 Iz vsakdanjega življenja poznaš tudi kovine in nekovine. Bakrena žica prevaja električni tok (kovina), plastična ovojnica pa ne. Žveplo je rumen, krhek prah in ne prevaja toka (nekovina). Če pade na tla, se razbije, medtem ko se železna žica samo ukrivi.
 
