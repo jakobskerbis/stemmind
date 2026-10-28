@@ -53,5 +53,8 @@ export function publicTask(task) {
     options: answer.type === "choice" ? answer.options : null,
     optionsTex: !!task.options_tex,
     coefficientCount: answer.type === "coefficients" ? answer.values.length : null,
+    // Podatki iz besedila (Podatki / Iščemo) in potrebna formula za rešen zgled.
+    data: task.data || null,
+    formula: task.formula || null,
   };
 }
