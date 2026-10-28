@@ -17,6 +17,100 @@ const ic = (n) => iconFn(n);
 
 export function initTextbook(c) {
   ctx = c;
+  wireSelectionAsk();
+}
+
+// ---------- Označi besedilo in vprašaj tutorja ----------
+// Učenec v lekciji označi del besedila (z miško ali prstom), ob izboru se
+// pokaže gumb »Razloži«, ki odpre klepet s tutorjem z označenim delom.
+let current = null; // { id, name } odprte lekcije
+const SELECT_AREA = ".tb-section, .tb-alt-body, .tb-checks, .tb-goals, .tb-title";
+const MAX_QUOTE = 800;
+
+// Besedilo izbora; formule (KaTeX) zamenja z LaTeX-om, da jih tutor prebere pravilno.
+function selectionText(sel) {
+  const parts = [];
+  for (let i = 0; i < sel.rangeCount; i++) {
+    const frag = sel.getRangeAt(i).cloneContents();
+    frag.querySelectorAll(".katex").forEach((k) => {
+      const tex = k.querySelector('annotation[encoding="application/x-tex"]')?.textContent;
+      if (tex) k.replaceWith(document.createTextNode(` $${tex.trim()}$ `));
+    });
+    frag.querySelectorAll(".katex-mathml, button, .i").forEach((n) => n.remove());
+    const div = document.createElement("div");
+    div.appendChild(frag);
+    parts.push(div.innerText ?? div.textContent);
+  }
+  return parts.join(" ").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function selectionInLesson(sel) {
+  if (!current || !sel || sel.isCollapsed || !sel.rangeCount) return null;
+  const view = $("#view-textbook");
+  if (!view || view.hidden || view.offsetParent === null) return null;
+  const node = sel.getRangeAt(0).commonAncestorContainer;
+  const el = node.nodeType === 1 ? node : node.parentElement;
+  if (!el || !view.contains(el)) return null;
+  // Izbor mora biti znotraj besedila lekcije (ne v gumbih ali menijih).
+  const start = sel.anchorNode?.nodeType === 1 ? sel.anchorNode : sel.anchorNode?.parentElement;
+  if (!el.closest(SELECT_AREA) && !start?.closest(SELECT_AREA)) return null;
+  const text = selectionText(sel);
+  return text.length >= 2 ? text : null;
+}
+
+function askButton() {
+  let b = document.getElementById("tb-sel-ask");
+  if (b) return b;
+  b = document.createElement("button");
+  b.type = "button";
+  b.id = "tb-sel-ask";
+  b.className = "tb-sel-ask";
+  b.hidden = true;
+  b.innerHTML = `${ic("message-circle")}Razloži`;
+  // Ne izgubi izbora ob pritisku na gumb.
+  b.addEventListener("mousedown", (e) => e.preventDefault());
+  b.addEventListener("click", () => {
+    const text = selectionInLesson(document.getSelection()) || b.dataset.text;
+    b.hidden = true;
+    if (!text || !current) return;
+    const quote = text.length > MAX_QUOTE ? `${text.slice(0, MAX_QUOTE)} …` : text;
+    document.getSelection()?.removeAllRanges();
+    ctx.learnWithTutor(current, `V lekciji »${current.name}« mi ni jasen ta del:\n\n»${quote}«\n\nMi ga razložiš preprosteje, po korakih?`);
+  });
+  document.body.appendChild(b);
+  return b;
+}
+
+function placeAskButton() {
+  const b = askButton();
+  const sel = document.getSelection();
+  const text = selectionInLesson(sel);
+  if (!text) {
+    b.hidden = true;
+    return;
+  }
+  b.dataset.text = text;
+  b.hidden = false;
+  const rects = [...sel.getRangeAt(0).getClientRects()].filter((r) => r.width || r.height);
+  const r = rects.length ? rects[rects.length - 1] : sel.getRangeAt(0).getBoundingClientRect();
+  // Pod izborom (nad njim telefon pokaže svoj meni Kopiraj/Izberi vse).
+  const coarse = matchMedia("(pointer: coarse)").matches;
+  const w = b.offsetWidth || 110;
+  const left = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), document.documentElement.clientWidth - w - 8);
+  let top = r.bottom + (coarse ? 30 : 8);
+  if (top + 44 > window.innerHeight) top = Math.max(8, r.top - 52);
+  b.style.left = `${left + window.scrollX}px`;
+  b.style.top = `${top + window.scrollY}px`;
+}
+
+function wireSelectionAsk() {
+  let t = null;
+  document.addEventListener("selectionchange", () => {
+    clearTimeout(t);
+    // Počakamo, da učenec konča z označevanjem (posebej na telefonu).
+    t = setTimeout(placeAskButton, 250);
+  });
+  window.addEventListener("resize", () => document.getElementById("tb-sel-ask") && placeAskButton());
 }
 
 const esc = (s) => ctx.escapeHtml(String(s ?? ""));
@@ -35,6 +129,7 @@ export async function openLesson(topicId) {
 }
 
 async function renderHome() {
+  current = null;
   const box = $("#view-textbook");
   const student = ctx.getStudent();
   // Študent fakultete: najprej učbenik njegovega študijskega programa, nato OŠ/SŠ.
@@ -195,6 +290,7 @@ async function renderLesson(topicId) {
     tb.topicId = null;
     return renderHome();
   }
+  current = { id: L.id, name: L.name };
   const R = ctx.renderRich;
   const lesson = L.lesson;
   const sections = lesson?.sections || [];
@@ -263,6 +359,7 @@ async function renderLesson(topicId) {
     <p class="muted tb-crumb">${esc(L.pathLabel)} · ${esc(L.unit)}</p>
     <h1 class="tb-title">${esc(L.name)}</h1>
     ${lesson ? `<a class="tb-pdf" href="/ucbenik/${L.path}/${L.id.split("/")[1]}#natisni" target="_blank" rel="noopener">${ic("download")}PDF lekcije</a>` : ""}
+    <p class="muted tb-sel-hint">${ic("message-circle")}Ti kakšen del ni jasen? Označi ga in pritisni »Razloži«.</p>
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
     ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej tutorju.</p>` : ""}
     ${sectionHtml}${fallback}${checksHtml}
