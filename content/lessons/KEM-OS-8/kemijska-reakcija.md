@@ -151,7 +151,7 @@ Kisik smo urejali nazadnje, ker je v več snoveh. Tako se izognemo ponavljanju p
 
 ## Drugače: Na sliki
 
-V simulaciji »Kemijska reakcija: atomi se preuredijo« pod rešenimi primeri vidiš atome kot krogce, povezane v molekule. Spreminjaj koeficiente in opazuj, kako se spremeni število krogcev vsake vrste na levi in desni strani.
+V simulaciji spodaj (»Kemijska reakcija: atomi se preuredijo«) vidiš atome kot krogce, povezane v molekule. Spreminjaj koeficiente in opazuj, kako se spremeni število krogcev vsake vrste na levi in desni strani.
 
 Bodi pozoren na tole:
 

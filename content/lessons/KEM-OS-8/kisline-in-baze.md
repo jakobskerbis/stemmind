@@ -64,7 +64,7 @@ Pri hidroksidih ($\mathrm{NaOH}$, $\mathrm{KOH}$, $\mathrm{Ca(OH)_2}$) opaziš s
 | sok rdečega zelja | rdeč do roza | vijoličen | zelen do rumen |
 | univerzalni indikator | rdeč, oranžen | zelen | moder, vijoličen |
 
-Vsak indikator spremeni barvo le v svojem območju pH. Metiloranž jo spremeni že pri pH med $3$ in $4$ (v prehodu je oranžen), zato nevtralne raztopine ne loči od bazične. Fenolftalein jo spremeni šele pri bazičnih vrednostih (nad približno $\mathrm{pH} = 8$). Zato uporabljamo več indikatorjev ali univerzalni indikator.
+Vsak indikator spremeni barvo le v svojem območju pH. Metiloranž jo spremeni že pri pH približno med $3$ in $4{,}4$ (v prehodu je oranžen), zato nevtralne raztopine ne loči od bazične. Fenolftalein jo spremeni šele pri bazičnih vrednostih (nad približno $\mathrm{pH} = 8$). Zato uporabljamo več indikatorjev ali univerzalni indikator.
 
 **6. pH vrednost.** Kislost ali bazičnost izrazimo s števili na **pH lestvici**, ki običajno poteka od $0$ do $14$:
 
@@ -150,7 +150,7 @@ Univerzalni indikator: rdeč ali oranžen pomeni kislo ($\mathrm{pH} < 7$), zele
    - čista voda: zelena barva ($\mathrm{pH} = 7$),
    - raztopina $\mathrm{NaOH}$: modra ali vijolična barva ($\mathrm{pH} > 7$).
 5. **Zakaj sveži košček?** Če bi isti košček pomakal v več tekočin, bi se tekočine mešale in bi bil rezultat napačen.
-6. **Odgovor.** Tekočino z rdečo barvo označimo kot kis, zeleno kot vodo in modro kot raztopino natrijevega hidroksida.
+6. **Odgovor.** Tekočino z rdečo (ali oranžno) barvo označimo kot kis, zeleno kot vodo in modro (ali vijolično) kot raztopino natrijevega hidroksida.
 
 ## Pogoste napake
 
@@ -174,12 +174,12 @@ Univerzalni indikator: rdeč ali oranžen pomeni kislo ($\mathrm{pH} < 7$), zele
 
 Predstavljaj si pH lestvico kot **termometer za kislost**. Na levi strani je $0$, kjer so zelo kisle raztopine, na sredini $7$ (čista voda), na desni $14$, kjer so zelo bazične raztopine.
 
-V simulaciji »Kisline, baze in pH« pod rešenimi primeri premikaj drsnik po lestvici in opazuj:
+V simulaciji spodaj (»Kisline, baze in pH«) premikaj drsnik po lestvici in opazuj:
 
 - barvo, ki jo ima univerzalni indikator pri izbranem pH (od rdeče prek oranžne, rumene in zelene do modre in vijolične),
 - kam na lestvici sodijo znane snovi iz vsakdanjega življenja (limona, kis, voda, milo, čistila).
 
-Opaziš, da se barva spreminja postopoma. Že ob premiku za eno enoto pH se količina vodikovih ionov spremeni desetkrat, barva indikatorja pa se spremeni le malo, zato barvna lestvica pomaga ugotoviti le približen pH.
+Opaziš, da se barva spreminja postopoma. Že ob premiku za eno enoto pH se količina vodikovih ionov spremeni desetkrat, barva indikatorja pa se spreminja le postopoma (sosednji odtenki so si podobni), zato barvna lestvica pomaga ugotoviti le približen pH.
 
 Z gumbi snovi lahko dodatno primerjaš pH različnih raztopin in poiščeš, kje na lestvici se ustavijo kisline in baze.
 
@@ -191,7 +191,7 @@ Z gumbi snovi lahko dodatno primerjaš pH različnih raztopin in poiščeš, kje
 
 **Rdeče zelje kot domač indikator.** Če skuhaš rdeče zelje, dobiš vijoličen sok. V kis ga kapni in postane rdeč do roza. V raztopino pecilnega praška v vodi ga kapni in postane modro-zelen. Sok je tako preprost domač indikator.
 
-**Telo.** Želodčni sok je zelo kisel, ker vsebuje klorovodikovo kislino. Kisla raztopina pomaga pri prebavi. Če je kisline preveč ali se zaleze v požiralnik, nastane zgaga, zato nam pomagajo zdravila z bazami (antacidi), ki kislino nevtralizirajo.
+**Telo.** Želodčni sok je zelo kisel, ker vsebuje klorovodikovo kislino. Kisla raztopina pomaga pri prebavi. Če je kisline preveč ali se vrača v požiralnik, nastane zgaga, zato nam pomagajo zdravila z bazami (antacidi), ki kislino nevtralizirajo.
 
 ## Drugače: Korak za korakom s številkami
 

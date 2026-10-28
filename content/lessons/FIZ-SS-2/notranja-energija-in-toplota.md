@@ -49,7 +49,7 @@ Toplota, potrebna za izparevanje pri vrelišču:
 
 $$Q = m\,q_i$$
 
-Pri vodi je pri normalnem tlaku $q_t \approx 334\,\dfrac{\mathrm{kJ}}{\text{kg}}$ ($0\,^\circ\text{C}$) in $q_i \approx 2260\,\dfrac{\mathrm{kJ}}{\text{kg}}$ ($100\,^\circ\text{C}$). Pri strjevanju in kondenzaciji se ista toplota sprosti.
+Pri vodi je pri normalnem tlaku $q_t \approx 334\,\dfrac{\text{kJ}}{\text{kg}}$ ($0\,^\circ\text{C}$) in $q_i \approx 2260\,\dfrac{\text{kJ}}{\text{kg}}$ ($100\,^\circ\text{C}$). Pri strjevanju in kondenzaciji se ista toplota sprosti.
 
 **7. Kako računamo, če so v nalogi vmes fazni prehodi.** Račun razdelimo na odseke: segrevanje v eni fazi ($Q = mc\Delta T$), nato fazni prehod ($Q = mq$), nato spet segrevanje, in na koncu toplote seštejemo.
 
@@ -99,7 +99,7 @@ Koliko toplote potrebujemo, da $0{,}20\,\text{kg}$ ledu s temperaturo $-10\,^\ci
 **Iščemo:** skupno toploto $Q$
 
 :::formula
-$Q = m c_{\text{led}} \Delta T_1 + m q_t + m c_{\text{voda}} \Delta T_2$
+$Q = m c_{\text{led}} \Delta T_1 + m q_t + m c_{\text{voda}} \Delta T_2$, kjer je $\Delta T_1 = 0\,^\circ\text{C} - T_1$ in $\Delta T_2 = T_2 - 0\,^\circ\text{C}$
 :::
 
 **Rešitev:**
@@ -145,7 +145,7 @@ Predstavljaj si graf temperature v odvisnosti od dovedene toplote za led, ki ga 
 
 Naklon poševnih delov je odvisen od specifične toplote: večja ko je $c$, več toplote potrebuješ za isto zvišanje temperature, zato je graf položnejši. Vodoravna dela sta daljša ali krajša glede na $q_t$ in $q_i$. Vodoravni del pri vrenju je veliko daljši kot pri taljenju, ker je $q_i$ precej večja od $q_t$.
 
-V simulaciji pod rešenimi primeri (»Toplotna bilanca pri mešanju«) zmešaš dve snovi z različnima temperaturama in opazuješ, kakšna je končna temperatura. Toploto, ki jo odda toplejša snov, prejme hladnejša. Poskusi spreminjati mase in snovi ter napovej rezultat, preden ga preveriš.
+V simulaciji spodaj (»Toplotna bilanca pri mešanju«) zmešaš dve snovi z različnima temperaturama in opazuješ, kakšna je končna temperatura. Toploto, ki jo odda toplejša snov, prejme hladnejša. Poskusi spreminjati mase in snovi ter napovej rezultat, preden ga preveriš.
 
 ## Drugače: Iz vsakdanjega življenja
 

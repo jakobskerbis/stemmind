@@ -1,7 +1,7 @@
 ---
 stanje: osnutek
 demo: ulomki
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
