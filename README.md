@@ -101,6 +101,16 @@ node scripts/generate-lessons.js --yes --limit 5     # preizkus na petih temah
 node scripts/generate-lessons.js --yes --path FIZ-OS-9 --model claude-sonnet-5-5
 ```
 
+## Fakultete (1. stopnja)
+
+Ob ustvarjanju profila (ali v Nastavitvah) lahko študent izbere **Fakulteta (1. stopnja)**, študijski program in letnik. Zajeti so univerzitetni programi 1. stopnje: UL FKKT (Kemija, Biokemija, Kemijsko inženirstvo, Tehniška varnost), UL FS (Strojništvo – RRP), UL FMF (Matematika, Finančna matematika, Fizika) in UM FKKT (Kemija, Kemijsko inženirstvo).
+
+- Predmeti po letnikih in njihove teme so v `server/university-data.js`, povzeti po javnih predmetnikih fakultet (povezava na vir je ob vsakem programu in se pokaže tudi v aplikaciji). Zajeti so obvezni predmeti z matematično, fizikalno, kemijsko ali inženirsko vsebino; praktikumi in izbirni predmeti brez take vsebine niso. Vsebine tem naj pred javno objavo preveri asistent ali študent višjega letnika; popravke vnesi kar v to datoteko.
+- Vsak predmet je učna pot (ključ `UNI-<fakulteta>-<predmet>`, npr. `UNI-ULFS-ANDE`) z vajami, ponavljanjem, pripravo na test in učbenikom kot pri OŠ/SŠ. Generatorji nalog za fakultetne teme so v `server/practice/generators/uni*.js`; vežejo se na naslov teme, zato isti generator velja za vse fakultete, ki imajo to temo.
+- Tutor v univerzitetnem načinu (razdelek »Univerza« v `prompts/system_prompt.md`) razlaga formalno, z izpeljavami in izpitnimi nalogami, pri FMF zahteva dokaze, pri FKKT/FS poudarja enote SI in presojo rezultata.
+- Preverjanje vseh generatorjev: `node scripts/preveri-generatorje.js` (ali `node scripts/preveri-generatorje.js uni-` samo za fakultete).
+- Zbrani predmetniki z viri in opombami so v `docs/predmetniki-1-stopnja-UN.md`.
+
 ## Objava
 
 Aplikacija je en proces Node z bazo v eni datoteki, zato potrebuje gostovanje s **trajnim diskom**:

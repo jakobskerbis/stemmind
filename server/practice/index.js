@@ -4,8 +4,14 @@ import { makeRng } from "./rng.js";
 import { MAT_GENERATORS } from "./generators/mat.js";
 import { FIZ_GENERATORS } from "./generators/fiz.js";
 import { KEM_GENERATORS } from "./generators/kem.js";
+import { UNI_GENERATORS } from "./generators/uni.js";
 
-export const GENERATORS = [...MAT_GENERATORS, ...FIZ_GENERATORS, ...KEM_GENERATORS];
+export const GENERATORS = [
+  ...MAT_GENERATORS,
+  ...FIZ_GENERATORS,
+  ...KEM_GENERATORS,
+  ...UNI_GENERATORS,
+];
 
 const BY_TOPIC = {};
 for (const g of GENERATORS) {

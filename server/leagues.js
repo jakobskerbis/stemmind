@@ -56,7 +56,7 @@ const weekBounds = (week) => {
   end.setUTCDate(end.getUTCDate() + 7);
   return [`${week} 00:00:00`, end.toISOString().slice(0, 10) + " 00:00:00"];
 };
-const stageOf = (student) => (student.settings.educational_track === "SREDNJA_SOLA" ? "SS" : "OS");
+const stageOf = (student) => ({ SREDNJA_SOLA: "SS", UNIVERZA: "UNI" })[student.settings.educational_track] || "OS";
 
 export class Leagues {
   constructor(store, { now = () => new Date() } = {}) {
@@ -75,7 +75,7 @@ export class Leagues {
         id INTEGER PRIMARY KEY,
         week TEXT NOT NULL,          -- ponedeljek tedna
         tier INTEGER NOT NULL,
-        stage TEXT NOT NULL,         -- OS | SS
+        stage TEXT NOT NULL,         -- OS | SS | UNI
         finalized INTEGER NOT NULL DEFAULT 0,
         created_at TEXT NOT NULL DEFAULT (datetime('now'))
       );

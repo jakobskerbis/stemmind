@@ -242,6 +242,7 @@ button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shad
 .path-head { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
 .field-label { font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
 .path-head select { padding: 11px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--surface); font-weight: 800; font-size: 1rem; min-height: 48px; }
+.path-note { font-size: .9rem; margin: -8px 0 16px; }
 .card.xp-card { padding: 0; overflow: hidden; }
 .hero { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; padding: 20px; background: linear-gradient(135deg, var(--accent), var(--accent-grad)); color: #fff; }
 .hero h2 { margin: 0; font-size: 1.25rem; }

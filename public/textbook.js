@@ -38,11 +38,18 @@ export async function openLesson(topicId) {
 async function renderHome() {
   const box = $("#view-textbook");
   const student = ctx.getStudent();
-  if (!tb.paths.length) tb.paths = await ctx.api("/api/paths");
+  // Študent: najprej predmeti njegovega programa, nato še OŠ/SŠ poti.
+  const program = student?.settings?.educational_track === "UNIVERZA" ? student.settings.study_program : "";
+  if (!tb.paths.length || tb.program !== program) {
+    tb.program = program;
+    tb.paths = [...(program ? await ctx.api(`/api/paths?program=${encodeURIComponent(program)}`) : []), ...(await ctx.api("/api/paths"))];
+    tb.pathKey = null;
+  }
   if (!tb.subject) tb.subject = student?.settings?.subject || "MAT";
-  if (!tb.pathKey || !tb.pathKey.startsWith(tb.subject)) {
+  const subjectOf = (key) => tb.paths.find((p) => p.key === key)?.subject;
+  if (!tb.pathKey || subjectOf(tb.pathKey) !== tb.subject) {
     const mine = await ctx.api(`/api/students/${student.id}/path`).catch(() => null);
-    tb.pathKey = mine?.key?.startsWith(tb.subject) ? mine.key : tb.paths.find((p) => p.subject === tb.subject)?.key;
+    tb.pathKey = subjectOf(mine?.key) === tb.subject ? mine.key : tb.paths.find((p) => p.subject === tb.subject)?.key;
   }
   const paths = tb.paths.filter((p) => p.subject === tb.subject);
   box.innerHTML = `
