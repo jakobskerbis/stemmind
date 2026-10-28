@@ -67,16 +67,16 @@ function decimalsWord(d) {
 
 function checkNumber(ans, input) {
   const p = parseNumberWithUnit(input, { dot: !!ans.dot });
-  if (!p) return { kind: "format", message: "Vpiši število (decimalno vejico lahko zapišeš z vejico)." };
+  if (!p) return { kind: "format", code: "chk.number", message: "Vpiši število (decimalno vejico lahko zapišeš z vejico)." };
 
   // Enota
   if (ans.unit) {
     const want = normUnit(ans.unit);
     const got = normUnit(p.unit);
-    if (!got) return { kind: "unit", message: `Število je zapisano, dodaj še enoto. V kateri enoti je rezultat?` };
+    if (!got) return { kind: "unit", code: "chk.addUnit", message: `Število je zapisano, dodaj še enoto. V kateri enoti je rezultat?` };
     const alts = (ans.unitAlternatives || []).map(normUnit);
     if (got !== want && !alts.includes(got)) {
-      return { kind: "unit", message: `Preveri enoto: rezultat zapiši v ${ans.unit}.` };
+      return { kind: "unit", code: "chk.unit", params: { unit: ans.unit }, message: `Preveri enoto: rezultat zapiši v ${ans.unit}.` };
     }
   }
 
@@ -116,6 +116,8 @@ function checkNumber(ans, input) {
     const next = Math.floor(Math.abs(e) * 10 ** (d + 1) + 1e-9) % 10;
     return {
       kind: "rounding",
+      code: "chk.rounding",
+      params: { right: (ans.dot ? roundHalfUp(right, d).toFixed(d) : fmt(right, d)) + (ans.unit ? ` ${ans.unit}` : "") },
       message:
         `Izračun je pravilen, popraviti je treba le zaokroževanje. ${what} ${ROUNDING_RULE} ` +
         `Tu je natančnejši rezultat ${fmt(e, Math.min(d + 3, 6))}, števka za ${d === 0 ? "enicami" : `${d}. decimalko`} je ${next}, ` +
@@ -144,11 +146,11 @@ function parseFraction(input) {
 function checkFraction(ans, input) {
   const f = parseFraction(input);
   if (!f || f.den === 0) {
-    return { kind: "format", message: "Zapiši ulomek v obliki a/b (npr. 3/4) ali mešano število (npr. 1 1/2)." };
+    return { kind: "format", code: "chk.fraction", message: "Zapiši ulomek v obliki a/b (npr. 3/4) ali mešano število (npr. 1 1/2)." };
   }
   const same = f.num * ans.den === ans.num * f.den;
   if (!same) return { kind: "wrong" };
-  if (gcd(f.num, f.den) !== 1) return { kind: "simplify", message: "Vrednost je pravilna, a ulomek še okrajšaj do konca." };
+  if (gcd(f.num, f.den) !== 1) return { kind: "simplify", code: "chk.simplify", message: "Vrednost je pravilna, a ulomek še okrajšaj do konca." };
   return { kind: "correct" };
 }
 
@@ -162,19 +164,19 @@ function checkCoefficients(ans, input) {
     .filter(Boolean)
     .map(Number);
   if (nums.length !== ans.values.length || nums.some((n) => !Number.isInteger(n) || n < 1)) {
-    return { kind: "format", message: `Vpiši ${ans.values.length} celih števil, ločenih z vejico (koeficient 1 tudi zapiši).` };
+    return { kind: "format", code: "chk.coef", params: { n: ans.values.length }, message: `Vpiši ${ans.values.length} celih števil, ločenih z vejico (koeficient 1 tudi zapiši).` };
   }
   if (nums.every((n, i) => n === ans.values[i])) return { kind: "correct" };
   const ratio = nums[0] / ans.values[0];
   if (nums.every((n, i) => Math.abs(n / ans.values[i] - ratio) < 1e-9)) {
-    return { kind: "simplify", message: "Enačba je urejena, a koeficienti morajo biti najmanjša možna cela števila." };
+    return { kind: "simplify", code: "chk.coefMin", message: "Enačba je urejena, a koeficienti morajo biti najmanjša možna cela števila." };
   }
   return { kind: "wrong" };
 }
 
 export function checkAnswer(answer, input) {
   if (input === undefined || input === null || String(input).trim() === "") {
-    return { kind: "format", message: "Najprej vpiši odgovor." };
+    return { kind: "format", code: "chk.empty", message: "Najprej vpiši odgovor." };
   }
   switch (answer.type) {
     case "number":
