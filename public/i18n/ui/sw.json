@@ -421,5 +421,19 @@
   "fb.adminNote": "Yanaonekana tu kwenye kompyuta inayoendesha STEMMind.",
   "fb.adminCount": "Maoni yaliyokusanywa: {n}",
   "fb.download": "Pakua maoni yote",
-  "fb.downloadSummary": "Pakua muhtasari"
+  "fb.downloadSummary": "Pakua muhtasari",
+  "set.system": "Nchi na mfumo wa shule",
+  "lp.qStage": "Ngazi gani ya shule?",
+  "path.regionNote": "Njia yako ya kujifunza inafuata {system} (rasimu). Mazoezi na masomo bado yanatoka kwenye maudhui ya Kislovenia; mwalimu anakueleza kila kitu kwa lugha yako.",
+  "set.dataMode": "Hali nyepesi (data kidogo)",
+  "set.dataAuto": "Kiotomatiki (mtandao ukiwa wa polepole au kiokoa data)",
+  "set.dataLite": "Imewashwa daima",
+  "set.dataNormal": "Imezimwa",
+  "set.dataNote": "Majibu mafupi ya mwalimu, picha ndogo, bila uhuishaji wala fonti ya ziada. Mazoezi ya njia yako huhifadhiwa ili ufanye mazoezi bila mtandao.",
+  "off.noConnection": "Hakuna muunganisho wa intaneti.",
+  "off.banner": "Uko nje ya mtandao. Unaweza kufanya mazoezi yaliyohifadhiwa kwenye kifaa ({n}).",
+  "off.bannerEmpty": "Uko nje ya mtandao. Ukiunganishwa tena, mazoezi yatahifadhiwa kwenye kifaa.",
+  "off.pending": "Majibu ya nje ya mtandao yanasubiri kutumwa ({n}).",
+  "off.synced": "Majibu ya nje ya mtandao yametumwa: {n}.",
+  "off.xpLater": "XP ukiwa mtandaoni"
 }

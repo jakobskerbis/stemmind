@@ -9,9 +9,8 @@ import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TE
 import { Usage, LIMITS, windowHistory } from "./usage.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
-import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt, listPrograms, listProgramPaths } from "./curriculum.js";
-import { getExplanation } from "./explanations.js";
-import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation } from "./textbook.js";
+import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths } from "./curriculum.js";
+import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
@@ -19,6 +18,7 @@ import { mountAccounts } from "./accounts/index.js";
 import { passwordGate } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
+import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -28,13 +28,15 @@ const MAX_TEXT = 6000;
 const ANSWER_CACHE = process.env.STEMMIND_ANSWER_CACHE !== "0";
 
 // Ključ za ponovno uporabo odgovora: isto prvo vprašanje pri istih nastavitvah.
-function cacheKey(text, settings, deep) {
+function cacheKey(text, settings, deep, lite = false) {
   const norm = text.toLowerCase().replace(/\s+/g, " ").replace(/[\s.!?]+$/, "").trim();
   if (norm.length < 8) return null;
   const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, deep ? 1 : 0];
   // Jezik dodamo samo, kadar ni slovenščina, da obstoječi shranjeni odgovori ostanejo veljavni.
   if (settings.language && settings.language !== "sl") parts.push(settings.language);
   if (settings.region && settings.region !== "SI") parts.push(settings.region);
+  if (settings.school_system && settings.school_system !== "SI") parts.push(settings.school_system);
+  if (lite) parts.push("lite");
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
 
@@ -52,9 +54,26 @@ export function createApp(store, opts = {}) {
     });
     next();
   });
-  app.use(express.static(path.join(here, "..", "public")));
   // Knjižnice za izris strežemo lokalno (brez odvisnosti od CDN).
   const modules = path.join(here, "..", "node_modules");
+  const publicDir = path.join(here, "..", "public");
+  // Lahki način: stisnjene datoteke in JSON (brotli/gzip) za počasne in drage mobilne povezave.
+  if (process.env.STEMMIND_COMPRESS !== "0") {
+    app.use(
+      compressedStatic([
+        ["/vendor/katex/", path.join(modules, "katex", "dist")],
+        ["/vendor/marked/", path.join(modules, "marked")],
+        ["/vendor/dompurify/", path.join(modules, "dompurify", "dist")],
+        ["/vendor/nunito/", path.join(modules, "@fontsource-variable", "nunito")],
+        ["/practice/", path.join(here, "practice")],
+        ["/", publicDir],
+      ]),
+    );
+    app.use("/api", compressedJson());
+  }
+  app.use(express.static(publicDir));
+  // Preverjanje odgovorov tudi v brskalniku (vaje brez povezave); datoteka nima odvisnosti.
+  app.get("/practice/check.js", (_req, res) => res.type("text/javascript").sendFile(path.join(here, "practice", "check.js")));
   app.use("/vendor/katex", express.static(path.join(modules, "katex", "dist")));
   app.use("/vendor/marked", express.static(path.join(modules, "marked")));
   app.use("/vendor/dompurify", express.static(path.join(modules, "dompurify", "dist")));
@@ -207,13 +226,15 @@ export function createApp(store, opts = {}) {
     busy.add(conv.id);
     // Zmogljivejši model: gumb »Razloži podrobneje« ali program Tekmovanja.
     const deep = req.body?.deep === true || student.settings.track === "COMPETITION";
+    // Lahki način: vedno (lite), nikoli (normal) ali po povezavi naprave, ki jo sporoči odjemalec (auto).
+    const lite = student.settings.data_mode === "lite" || (student.settings.data_mode !== "normal" && req.body?.lite === true);
 
     const userContent = [];
     if (image) userContent.push({ type: "image", source: { type: "base64", media_type: image.media_type, data: image.data } });
     userContent.push({ type: "text", text: text || "(Pošiljam fotografijo naloge.)" });
     const isFirst = store.listMessages(conv.id).length === 0;
     const userMsgId = store.addMessage(conv.id, "user", userContent, text, !!image);
-    const key = ANSWER_CACHE && isFirst && !image && !conv.path_topic ? cacheKey(text, student.settings, req.body?.deep === true) : null;
+    const key = ANSWER_CACHE && isFirst && !image && !conv.path_topic ? cacheKey(text, student.settings, req.body?.deep === true, lite) : null;
     if (conv.title === "Nov pogovor") {
       store.renameConversation(conv.id, cleanText(text, 50) || "Naloga s fotografije");
     }
@@ -241,6 +262,7 @@ export function createApp(store, opts = {}) {
         weaknesses: weaknessesForPrompt(store, student),
         studentName: student.name,
         learningPath: conv.path_topic ? [learningPathPrompt(conv.path_topic), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n") : "",
+        lite,
       });
       const cached = key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
       const run = cached
@@ -320,7 +342,11 @@ export function createApp(store, opts = {}) {
   // --- učne poti ---
   app.get("/api/paths", (req, res) =>
     // Tekmovalne poti so v svojem razdelku (zavihek Tekmovanja), ne na učni poti.
-    res.json(req.query.program ? listProgramPaths(String(req.query.program)) : listPaths(req.query.subject).filter((p) => p.school !== "TEK")),
+    res.json(
+      req.query.program
+        ? listProgramPaths(String(req.query.program))
+        : listPaths(req.query.subject, String(req.query.system || "SI")).filter((p) => p.school !== "TEK"),
+    ),
   );
   app.get("/api/programs", (req, res) => res.json(listPrograms()));
   app.get("/api/students/:id/path", (req, res) => {
@@ -329,18 +355,19 @@ export function createApp(store, opts = {}) {
     const key = req.query.key || pathKeyFor(s.settings);
     const view = key && progress.pathView(s.id, key);
     if (!view) return res.json({ key: null, message: "Za to raven še ni učne poti." });
-    res.json({ ...view, defaultKey: pathKeyFor(s.settings), xp: progress.xpSummary(s.id) });
+    res.json({ ...view, label: pathLabelFor(key, s.settings.school_system), defaultKey: pathKeyFor(s.settings), xp: progress.xpSummary(s.id) });
   });
   app.get("/api/topic", (req, res) => {
     const t = getTopic(req.query.id);
     if (!t) return res.status(404).json({ error: "Tema ne obstaja." });
-    res.json({ ...t, pathLabel: getPath(t.path).label, explanation: getExplanation(t.id)?.text || lessonExplanation(t.id) });
+    res.json({ ...t, pathLabel: getPath(t.path).label, explanation: explanationFor(t.id) || lessonExplanation(t.id) });
   });
   // --- učbenik ---
-  app.get("/api/textbook/books", (req, res) => res.json(listBooks({ program: req.query.program ? String(req.query.program) : null })));
+  const systemOf = (req) => String(req.query.system || "SI");
+  app.get("/api/textbook/books", (req, res) => res.json(listBooks({ program: req.query.program ? String(req.query.program) : null, system: systemOf(req) })));
   app.get("/api/textbook/toc", (req, res) => {
     if (req.query.book) {
-      const book = bookView(String(req.query.book));
+      const book = bookView(String(req.query.book), systemOf(req));
       return book ? res.json(book) : res.status(404).json({ error: "Učbenik ne obstaja." });
     }
     const toc = tocView(String(req.query.path || ""));
@@ -366,7 +393,7 @@ export function createApp(store, opts = {}) {
   });
   app.get("/api/textbook/search", (req, res) => {
     const subject = /^[A-Z]{2,6}$/.test(req.query.subject || "") ? req.query.subject : undefined;
-    res.json(searchTextbook(String(req.query.q || "").slice(0, 100), { subject }));
+    res.json(searchTextbook(String(req.query.q || "").slice(0, 100), { subject, system: systemOf(req) }));
   });
   app.post("/api/students/:id/topic-status", (req, res) => {
     const s = loadStudent(req, res);
@@ -384,6 +411,21 @@ export function createApp(store, opts = {}) {
     const out = progress.nextPractice(s.id, req.body?.topic_id);
     if (!out) return res.status(400).json({ error: "Za to temo še ni vaj." });
     res.json(out);
+  });
+  // Lahki način: paket nalog za vaje brez povezave in kasnejša sinhronizacija odgovorov.
+  app.get("/api/students/:id/offline-pack", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const key = getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings);
+    const pack = key && progress.offlinePack(s.id, key);
+    if (!pack) return res.status(404).json({ error: "Za to raven še ni učne poti." });
+    res.json({ ...pack, view: { ...pack.view, label: pathLabelFor(key, s.settings.school_system) } });
+  });
+  app.post("/api/students/:id/offline-sync", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const results = Array.isArray(req.body?.results) ? req.body.results : [];
+    res.json({ ...progress.offlineSync(s.id, results), xp: progress.xpSummary(s.id) });
   });
   app.post("/api/students/:id/review", (req, res) => {
     const s = loadStudent(req, res);

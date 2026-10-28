@@ -416,5 +416,19 @@
   "fb.adminNote": "只在运行 STEMMind 的电脑上可见。",
   "fb.adminCount": "已收集意见：{n} 条",
   "fb.download": "下载全部意见",
-  "fb.downloadSummary": "下载摘要"
+  "fb.downloadSummary": "下载摘要",
+  "set.system": "国家和学制",
+  "lp.qStage": "哪个学段？",
+  "path.regionNote": "你的学习路径按照 {system}（草案）。练习和课程目前仍来自斯洛文尼亚教材；导师会用你的语言讲解一切。",
+  "set.dataMode": "轻量模式（节省流量）",
+  "set.dataAuto": "自动（网速慢或开启省流量时）",
+  "set.dataLite": "始终开启",
+  "set.dataNormal": "关闭",
+  "set.dataNote": "导师回答更简短、照片更小、无动画、不加载额外字体。学习路径的练习会保存下来，便于离线练习。",
+  "off.noConnection": "没有网络连接。",
+  "off.banner": "你已离线。可以练习保存在设备上的题目（{n}）。",
+  "off.bannerEmpty": "你已离线。重新联网后，练习题会保存到设备上。",
+  "off.pending": "离线作答的答案等待发送（{n}）。",
+  "off.synced": "已发送离线答案：{n}。",
+  "off.xpLater": "联网后获得 XP"
 }

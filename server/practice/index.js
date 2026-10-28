@@ -9,6 +9,7 @@ import { TEK_MAT_OS } from "./generators/tek-mat-os.js";
 import { TEK_MAT_SS } from "./generators/tek-mat-ss.js";
 import { TEK_FIZ } from "./generators/tek-fiz.js";
 import { TEK_KEM } from "./generators/tek-kem.js";
+import { baseTopicIds } from "../curriculum.js";
 
 export const GENERATORS = [
   ...MAT_GENERATORS,
@@ -27,8 +28,14 @@ for (const g of GENERATORS) {
   for (const t of g.topics) (BY_TOPIC[t] ||= []).push(g);
 }
 
+// Regijska tema (npr. MAT-IN-8/…) vzame generatorje svojih osnovnih tem.
+function gensFor(topicId) {
+  if (BY_TOPIC[topicId]) return BY_TOPIC[topicId].map((g) => [g, topicId]);
+  return baseTopicIds(topicId).flatMap((b) => (b === topicId ? [] : (BY_TOPIC[b] || []).map((g) => [g, b])));
+}
+
 export function hasGenerator(topicId) {
-  return !!BY_TOPIC[topicId];
+  return gensFor(topicId).length > 0;
 }
 
 export function topicsWithGenerators() {
@@ -37,13 +44,13 @@ export function topicsWithGenerators() {
 
 // Ustvari nalogo za temo. level: 1 (lažje) – 3 (težje).
 export function generateTask(topicId, level = 1, seed = crypto.randomInt(2 ** 31)) {
-  const gens = BY_TOPIC[topicId];
-  if (!gens) return null;
+  const gens = gensFor(topicId);
+  if (!gens.length) return null;
   const r = makeRng(seed);
-  const g = r.pick(gens);
+  const [g, genTopic] = r.pick(gens);
   // Nekaj poskusov, če bi generator vrnil neveljavno nalogo.
   for (let i = 0; i < 5; i++) {
-    const t = g.gen(level, r, topicId);
+    const t = g.gen(level, r, genTopic);
     if (t && t.text && t.answer) return { ...t, generator: g.id, topicId, level, seed };
   }
   throw new Error(`Generator ${g.id} ni ustvaril naloge.`);

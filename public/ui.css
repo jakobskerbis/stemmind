@@ -237,3 +237,22 @@ body.pad-open #session-side { display: none !important; }
 .lang-field .i { width: 18px; height: 18px; vertical-align: -3px; }
 .onb-lang { margin: 4px 0 2px; }
 .lang-ui-note { margin: 6px 0 0; }
+
+/* ---------- Šolski sistem (regijski profili) ---------- */
+.system-field { margin-bottom: 8px; }
+
+/* ---------- Brez povezave ---------- */
+.offline-banner { border-radius: var(--radius-sm); margin: 0 0 12px; padding: 9px 12px; }
+.offline-banner .i { width: 18px; height: 18px; flex: none; }
+
+/* ---------- Lahki način (varčevanje s podatki, šibki telefoni) ----------
+   Sistemska pisava (spletna se ne prenese), brez animacij, senc in zamegljevanja. */
+html.lite body,
+html.lite .fig text,
+html.lite .fig .nums text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+html.lite *,
+html.lite *::before,
+html.lite *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+html.lite .card,
+html.lite .topbar,
+html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }

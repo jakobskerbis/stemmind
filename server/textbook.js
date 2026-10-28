@@ -7,10 +7,12 @@ import { SUBJECT_NAMES } from "./subjects.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getTopic, getPath, listPaths, topicOrder, getProgram, listProgramPaths, sameTopics } from "./curriculum.js";
+import { getTopic, getPath, listPaths, topicOrder, getProgram, listProgramPaths, sameTopics, baseTopicIds } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
 import { hasGenerator } from "./practice/index.js";
 import { simsForTopic } from "../public/sim/katalog.js";
+import { SCHOOL_SYSTEMS, isRegional } from "../public/regions.js";
+import { SUBJECT_EN } from "./region-curricula.js";
 import { hasEngine } from "../public/sim/index.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -20,7 +22,11 @@ export const LESSONS_DIR = process.env.STEMMIND_LESSONS || path.join(here, "..",
 // je zapisano v public/sim/katalog.js; prikažemo samo že narejene.
 export function simsFor(topicId, lesson = loadLesson(topicId)) {
   const usable = (d) => hasEngine(d.id) && (d.id !== "zbirka" || (d.opts?.items || []).some((it) => hasEngine(it[0])));
-  const list = simsForTopic(topicId).filter(usable);
+  // Regijska tema vzame simulacije svojih osnovnih tem (brez ponovitev).
+  const seen = new Set();
+  const list = baseTopicIds(topicId)
+    .flatMap((id) => simsForTopic(id))
+    .filter((d) => usable(d) && !seen.has(d.id + JSON.stringify(d.opts)) && seen.add(d.id + JSON.stringify(d.opts)));
   const extra = lesson?.meta.demo;
   if (extra && hasEngine(extra) && !list.some((d) => d.id === extra)) list.unshift({ id: extra, title: "Interaktivni poskus", opts: {} });
   return list;
@@ -107,8 +113,17 @@ const cache = new Map(); // datoteka -> { mtime, lesson }
 // Lekcija teme. Fakultetna tema, ki se ponovi v več predmetih (enak naslov in
 // predmet), ima eno lekcijo: če je ni v mapi tega predmeta, vzamemo prvo, ki obstaja.
 export function loadLesson(topicId) {
+  const t = getTopic(topicId);
+  // Regijska tema: lekcija prve osnovne teme, ki jo ima.
+  if (t?.base) {
+    for (const id of t.base) {
+      const l = loadLesson(id);
+      if (l) return l;
+    }
+    return null;
+  }
   const own = readLesson(lessonFile(topicId));
-  if (own !== null || !getTopic(topicId)) return own;
+  if (own !== null || !t) return own;
   for (const id of sameTopics(topicId)) {
     if (id === topicId) continue;
     const l = readLesson(lessonFile(id));
@@ -131,6 +146,15 @@ function readLesson(file) {
   const lesson = parseLesson(fs.readFileSync(file, "utf8"));
   cache.set(file, { mtime: st.mtimeMs, lesson });
   return lesson;
+}
+
+// Vnaprej pripravljena razlaga teme (pri regijski temi prve osnovne teme, ki jo ima).
+export function explanationFor(topicId) {
+  for (const id of baseTopicIds(topicId)) {
+    const e = getExplanation(id)?.text;
+    if (e) return e;
+  }
+  return null;
 }
 
 // Vse, kar potrebuje stran lekcije.
@@ -159,7 +183,7 @@ export function lessonView(topicId) {
         }
       : null,
     // Če lekcije še ni, pokažemo vsaj kratko razlago teme (če obstaja).
-    explanation: lesson ? null : getExplanation(topicId)?.text || null,
+    explanation: lesson ? null : explanationFor(topicId),
     demos,
     demo: demos[0] || null,
     practice: hasGenerator(topicId),
@@ -200,21 +224,31 @@ function programBook(programId) {
   };
 }
 
-export function listBooks({ program } = {}) {
+export function listBooks({ program, system = "SI" } = {}) {
   const prog = program ? programBook(program) : null;
-  return prog ? [prog, ...schoolBooks()] : schoolBooks();
+  return prog ? [prog, ...schoolBooks(system)] : schoolBooks(system);
 }
 
-function schoolBooks() {
+// Regijski sistem (public/regions.js) ima svoje učbenike: po en na predmet (npr. MAT-IN, FIZ-INT).
+function schoolBooks(system = "SI") {
+  const regional = isRegional(system);
+  const all = listPaths(undefined, system);
   const books = new Map();
-  for (const p of listPaths()) {
+  for (const p of all) {
     const key = `${p.subject}-${p.school}`;
     if (!books.has(key))
-      books.set(key, { key, subject: p.subject, school: p.school, subjectName: subjectName(p), schoolName: schoolName(p.school), paths: [] });
+      books.set(key, {
+        key,
+        subject: p.subject,
+        school: p.school,
+        subjectName: regional ? SUBJECT_EN[p.subject] || subjectName(p) : subjectName(p),
+        schoolName: regional ? SCHOOL_SYSTEMS[system].name : schoolName(p.school),
+        paths: [],
+      });
     books.get(key).paths.push({ key: p.key, label: p.label });
   }
   const rank = (s) => (SCHOOL_ORDER.includes(s) ? SCHOOL_ORDER.indexOf(s) : SCHOOL_ORDER.length);
-  const subjects = [...new Set(listPaths().map((p) => p.subject))];
+  const subjects = [...new Set(all.map((p) => p.subject))];
   return [...books.values()]
     .sort((a, b) => subjects.indexOf(a.subject) - subjects.indexOf(b.subject) || rank(a.school) - rank(b.school))
     .map((b) => {
@@ -240,14 +274,19 @@ export function formulaSheet(bookKey) {
   }
 }
 
-export function getBook(bookKey) {
+export function getBook(bookKey, system = "SI") {
   if (String(bookKey).startsWith("P-")) return programBook(String(bookKey).slice(2));
-  return schoolBooks().find((b) => b.key === bookKey) || null;
+  // Regijski učbenik brez podanega sistema (npr. povezava za PDF): vzamemo tipičen sistem učnega načrta.
+  for (const sys of [system, "SI", "IN-CBSE", "INTL"]) {
+    const b = schoolBooks(sys).find((x) => x.key === bookKey);
+    if (b) return b;
+  }
+  return null;
 }
 
 // Kazalo celega učbenika: deli = razredi oziroma letniki.
-export function bookView(bookKey) {
-  const b = getBook(bookKey);
+export function bookView(bookKey, system = "SI") {
+  const b = getBook(bookKey, system);
   if (!b) return null;
   // group: letnik pri študijskem programu (več predmetov skupaj), sicer vsak del zase.
   return { ...b, parts: b.paths.map((p) => ({ ...tocView(p.key), group: p.group || null })) };
@@ -282,11 +321,11 @@ const fold = (s) =>
 
 // Iskanje po naslovih, ciljih in besedilu lekcij. Brez stroškov, brez indeksa:
 // tem je nekaj sto, zato preprosto preletimo vse.
-export function searchTextbook(q, { subject, limit = 30 } = {}) {
+export function searchTextbook(q, { subject, limit = 30, system = "SI" } = {}) {
   const words = fold(q).split(/[^a-z0-9]+/).filter((w) => w.length >= 2);
   if (!words.length) return [];
   const hits = [];
-  for (const p of listPaths(subject)) {
+  for (const p of listPaths(subject, system)) {
     for (const t of topicOrder(p.key)) {
       const lesson = loadLesson(t.id);
       const title = fold(t.name);

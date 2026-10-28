@@ -431,5 +431,19 @@
   "fb.adminNote": "Widoczne tylko na komputerze, na którym działa STEMMind.",
   "fb.adminCount": "Zebrane opinie: {n}",
   "fb.download": "Pobierz wszystkie opinie",
-  "fb.downloadSummary": "Pobierz podsumowanie"
+  "fb.downloadSummary": "Pobierz podsumowanie",
+  "set.system": "Kraj i system szkolny",
+  "lp.qStage": "Jaki etap szkoły?",
+  "path.regionNote": "Ścieżka nauki odpowiada systemowi {system} (wersja robocza). Zadania i lekcje pochodzą jeszcze ze słoweńskich materiałów; tutor wyjaśni ci wszystko w twoim języku.",
+  "set.dataMode": "Tryb lekki (mniej danych)",
+  "set.dataAuto": "Automatycznie (przy wolnym połączeniu lub oszczędzaniu danych)",
+  "set.dataLite": "Zawsze włączony",
+  "set.dataNormal": "Wyłączony",
+  "set.dataNote": "Krótsze odpowiedzi tutora, mniejsze zdjęcia, bez animacji i dodatkowej czcionki. Zadania ze ścieżki zapisują się do ćwiczeń offline.",
+  "off.noConnection": "Brak połączenia z internetem.",
+  "off.banner": "Jesteś offline. Możesz ćwiczyć zadania zapisane na urządzeniu ({n}).",
+  "off.bannerEmpty": "Jesteś offline. Gdy znów będziesz online, zadania do ćwiczeń zapiszą się na urządzeniu.",
+  "off.pending": "Odpowiedzi z trybu offline czekają na wysłanie ({n}).",
+  "off.synced": "Wysłane odpowiedzi z trybu offline: {n}.",
+  "off.xpLater": "XP po połączeniu"
 }

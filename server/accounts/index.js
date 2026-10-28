@@ -3,7 +3,7 @@
 import express from "express";
 import { migrateAccounts } from "./schema.js";
 import { hashPassword, verifyPassword, randomToken, sha256, readCookie, Sessions, setSessionCookie, clearSessionCookie, Throttle } from "./auth.js";
-import { PLANS, planByKey, planFor, monthlyAmount, accessFor, isPremiumChild, isoIn, freeDailyQuestions, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION } from "./plans.js";
+import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, isPremiumChild, isoIn, freeDailyQuestions, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION } from "./plans.js";
 import { Stripe, verifyWebhook } from "./stripe.js";
 import { Mailer, verifyEmail, resetEmail, referralRewardEmail } from "./email.js";
 import { buildWeeklyReport, weekKey, isSendTime } from "./weekly.js";
@@ -189,6 +189,8 @@ export function mountAccounts(app, store, opts = {}) {
       )
       .run(email, hashPassword(password), cleanText(req.body?.name, 60), isAdmin, sha256(token), PRIVACY_VERSION, isoIn(TRIAL_DAYS), randomToken(18), code, referrer?.id ?? null);
     const id = Number(r.lastInsertRowid);
+    const country = String(req.headers["cf-ipcountry"] || req.body?.country || "").toUpperCase();
+    if (/^[A-Z]{2}$/.test(country)) db.prepare("UPDATE parents SET country = ? WHERE id = ?").run(country, id);
     // Skrbnik prevzame učence iz časa pred računi.
     if (isAdmin) db.prepare("UPDATE students SET parent_id = ? WHERE parent_id IS NULL").run(id);
 
@@ -280,6 +282,17 @@ export function mountAccounts(app, store, opts = {}) {
     });
   });
 
+  // Država za ceno: Cloudflare (CF-IPCountry, npr. tunel ali gostovanje za Cloudflare), sicer
+  // država, shranjena ob registraciji, sicer Slovenija. Naročnina ostane v valuti, v kateri je sklenjena.
+  const countryOf = (req, p) => {
+    const cf = String(req.headers["cf-ipcountry"] || "").toUpperCase();
+    return /^[A-Z]{2}$/.test(cf) && cf !== "XX" && cf !== "T1" ? cf : p?.country || "SI";
+  };
+  const currencyOf = (req, p) => {
+    const sub = p?.sub_plan && planByKey(p.sub_plan);
+    return sub?.currency || currencyForCountry(countryOf(req, p));
+  };
+
   function accountView(req, p) {
     const access = accessFor(p);
     const ids = childIds(p.id);
@@ -299,7 +312,9 @@ export function mountAccounts(app, store, opts = {}) {
       max_children: Math.min(MAX_CHILDREN, access.seats || 1),
       device_warn_limit: deviceWarnLimit(),
       swap_blocked_until: devices.swapBlockedUntil(p.id),
-      plans: PLANS,
+      plans: plansFor(currencyOf(req, p)),
+      currency: currencyOf(req, p),
+      prices_draft: REGIONAL_DRAFT && currencyOf(req, p) !== "EUR",
       billing: stripe.enabled,
       email: mailer.enabled,
       referral: { code: p.referral_code, url: `${baseUrl(req)}/?ref=${p.referral_code}`, rewards, days: REFERRAL_DAYS },
@@ -446,12 +461,13 @@ export function mountAccounts(app, store, opts = {}) {
   app.post("/api/billing/checkout", json, async (req, res) => {
     if (needStripe(res)) return;
     const p = req.parent;
-    const plan = planFor(Number(req.body?.seats), req.body?.interval);
+    const currency = currencyOf(req, p);
+    const plan = planFor(Number(req.body?.seats), req.body?.interval, currency);
     if (!plan) return res.status(400).json({ error: "Neznan paket." });
     if (PAID.has(p.sub_status)) return res.status(409).json({ error: "Naročnino že imate. Paket spremenite v portalu.", portal: true });
     try {
       const customer = await ensureCustomer(p);
-      const { prices } = await stripe.ensurePrices();
+      const { prices } = await stripe.ensurePrices(currency);
       const base = baseUrl(req);
       // Preostanek 7-dnevnega preizkusa se prenese v Stripe (če je še vsaj 2 dni).
       const trialEnd = Date.parse(p.trial_ends_at || 0);
@@ -464,7 +480,7 @@ export function mountAccounts(app, store, opts = {}) {
         line_items: [{ price: prices[plan.key], quantity: 1 }],
         success_url: `${base}/?billing=success&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${base}/?billing=cancel`,
-        locale: "sl",
+        locale: currency === "EUR" ? "sl" : "auto",
         allow_promotion_codes: "true",
         subscription_data,
         metadata: { parent_id: p.id },
@@ -530,8 +546,8 @@ export function mountAccounts(app, store, opts = {}) {
     if (stripe.enabled && p.stripe_customer_id && PAID.has(p.sub_status)) {
       try {
         await stripe.request("POST", `/customers/${p.stripe_customer_id}/balance_transactions`, {
-          amount: -monthlyAmount(p.sub_seats || 1),
-          currency: "eur",
+          amount: -monthlyAmount(p.sub_seats || 1, planByKey(p.sub_plan)?.currency || "EUR"),
+          currency: (planByKey(p.sub_plan)?.currency || "EUR").toLowerCase(),
           description: "STEMMind: brezplačni mesec (priporočilo)",
         });
         return "credit";

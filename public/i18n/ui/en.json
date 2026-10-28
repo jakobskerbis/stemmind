@@ -421,5 +421,19 @@
   "fb.adminNote": "Only visible on the computer where STEMMind is running.",
   "fb.adminCount": "Feedback collected: {n}",
   "fb.download": "Download all feedback",
-  "fb.downloadSummary": "Download summary"
+  "fb.downloadSummary": "Download summary",
+  "set.system": "Country and school system",
+  "lp.qStage": "Which stage of school?",
+  "path.regionNote": "Your learning path follows {system} (draft). Practice tasks and lessons still come from the Slovenian material; the tutor explains everything in your language.",
+  "set.dataMode": "Lite mode (uses less data)",
+  "set.dataAuto": "Automatic (on slow connections or with data saver)",
+  "set.dataLite": "Always on",
+  "set.dataNormal": "Off",
+  "set.dataNote": "Shorter tutor replies, smaller photos, no animations and no extra font. Tasks for your learning path are saved so you can practise offline.",
+  "off.noConnection": "No internet connection.",
+  "off.banner": "You're offline. You can practise tasks saved on this device ({n}).",
+  "off.bannerEmpty": "You're offline. Once you're back online, practice tasks will be saved to this device.",
+  "off.pending": "Answers from offline practice are waiting to be sent ({n}).",
+  "off.synced": "Offline answers sent: {n}.",
+  "off.xpLater": "XP when online"
 }

@@ -68,6 +68,7 @@
       <select id="path-select"></select>
     </div>
     <p id="path-note" class="muted path-note" hidden></p>
+    <p id="offline-banner" class="banner offline-banner" hidden role="status"></p>
     <p id="lang-note" class="muted path-note" hidden data-i18n="path.curriculumNote"></p>
     <div id="level-card" class="level-slot" hidden></div>
     <div id="feedback-card" hidden></div>
@@ -139,6 +140,9 @@
       <label><span data-i18n="set.name">Ime</span> <input name="name" maxlength="40" required></label>
       <fieldset class="level-field">
         <legend data-i18n="set.school">Šola in letnik</legend>
+        <label class="system-field"><span data-i18n="set.system">Država in šolski sistem</span>
+          <select name="school_system" id="settings-system"></select>
+        </label>
         <div id="settings-level" class="level-picker"></div>
         <small class="muted" data-i18n="set.schoolNote">Učna pot, naloge in učbenik se prilagodijo izbiri. Pri fakulteti sledijo javnemu predmetniku programa.</small>
         <input type="hidden" name="educational_track">
@@ -169,6 +173,14 @@
       <label><span data-i18n="set.pace">Hitrost izpisa odgovorov</span>
         <select id="pace-select" name="pace"></select>
         <small class="muted" data-i18n="set.paceNote">Kako hitro se pojavlja besedilo inštruktorja. Dotik sporočila pokaže vse naenkrat.</small>
+      </label>
+      <label><span data-i18n="set.dataMode">Lahki način (manj prenosa podatkov)</span>
+        <select name="data_mode">
+          <option value="auto" data-i18n="set.dataAuto">Samodejno (pri počasni povezavi ali varčevanju s podatki)</option>
+          <option value="lite" data-i18n="set.dataLite">Vedno vklopljen</option>
+          <option value="normal" data-i18n="set.dataNormal">Izklopljen</option>
+        </select>
+        <small class="muted" data-i18n="set.dataNote">Krajši odgovori inštruktorja, manjše fotografije, brez animacij in brez dodatne pisave. Naloge za učno pot se shranijo za vadbo brez povezave.</small>
       </label>
       <label><span data-i18n="set.weak">Znane šibke točke (ločene z vejico)</span>
         <input name="manual_weaknesses" placeholder="npr. ulomki, pretvarjanje enot" data-i18n-ph="set.weakPh">

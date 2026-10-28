@@ -2,6 +2,7 @@
 // Na začetku šolskega leta učencu predlagamo naslednjo raven (en klik),
 // ob prehodu OŠ → SŠ → fakulteta pa pokažemo, kaj je na novi ravni novega.
 import { PROGRAMS } from "./university-data.js";
+import { SCHOOL_SYSTEMS, isRegional, gradesOf, trackForLevel } from "../public/regions.js";
 
 export const STAGES = { OSNOVNA_SOLA: "OS", SREDNJA_SOLA: "SS", UNIVERZA: "UNI" };
 const ORDER = ["OS", "SS", "UNI"];
@@ -26,6 +27,14 @@ const programYears = (id) => {
  */
 export function nextLevel(settings) {
   const s = settings || {};
+  // Regijski sistem: naslednji razred s seznama sistema (fakultet tam ni).
+  if (isRegional(s.school_system)) {
+    const list = gradesOf(s.school_system);
+    const i = list.findIndex((g) => g.label === s.curriculum_level);
+    const next = i >= 0 ? list[i + 1] : null;
+    if (!next) return null;
+    return { label: next.label, settings: { educational_track: trackForLevel(next.level), curriculum_level: next.label } };
+  }
   const n = num(s.curriculum_level);
   const stage = stageOf(s);
   if (stage === "OS") {
@@ -57,14 +66,16 @@ const parseTime = (iso) => (iso ? Date.parse(String(iso).replace(" ", "T") + (/[
  * če je bila raven nazadnje nastavljena pred 1. julijem tega leta (torej v prejšnjem šolskem letu).
  */
 export function levelUpSuggestion(student, now = new Date()) {
-  const y = now.getUTCFullYear();
-  const from = Date.UTC(y, 7, 20);
-  const to = Date.UTC(y, 9, 31, 23, 59);
+  // Šolsko leto se v regijskih sistemih začne ob drugem mesecu (Indija aprila, Kenija januarja …):
+  // predlog od 12 dni pred začetkom do konca naslednjega meseca. Slovenija: 20. avgust–31. oktober.
+  const start = SCHOOL_SYSTEMS[student.settings?.school_system]?.yearStart || 9;
   const t = now.getTime();
-  if (t < from || t > to) return null;
+  // Pri začetku v januarju okno seže v december prejšnjega leta.
+  const y = [now.getUTCFullYear(), now.getUTCFullYear() + 1].find((yy) => t >= Date.UTC(yy, start - 1, 1) - 12 * 86400000 && t <= Date.UTC(yy, start + 1, 1) - 60000);
+  if (!y) return null;
   const since = parseTime(student.level_since || student.created_at);
-  if (!(since < Date.UTC(y, 6, 1))) return null;
+  if (!(since < Date.UTC(y, start - 3, 1))) return null;
   const next = nextLevel(student.settings);
   if (!next) return null;
-  return { ...next, current: student.settings.curriculum_level, schoolYear: `${y}/${String(y + 1).slice(2)}` };
+  return { ...next, current: student.settings.curriculum_level, schoolYear: start >= 7 ? `${y}/${String(y + 1).slice(2)}` : `${y}` };
 }

@@ -416,5 +416,19 @@
   "fb.adminNote": "STEMMind が動いているパソコンでのみ表示されます。",
   "fb.adminCount": "集まった意見：{n} 件",
   "fb.download": "すべての意見をダウンロード",
-  "fb.downloadSummary": "まとめをダウンロード"
+  "fb.downloadSummary": "まとめをダウンロード",
+  "set.system": "国と学校制度",
+  "lp.qStage": "どの学校段階？",
+  "path.regionNote": "学習パスは {system} に沿っています（草案）。練習と授業はまだスロベニアの教材です。チューターがあなたの言語ですべて説明します。",
+  "set.dataMode": "ライトモード（データ節約）",
+  "set.dataAuto": "自動（回線が遅いときやデータセーバー時）",
+  "set.dataLite": "常にオン",
+  "set.dataNormal": "オフ",
+  "set.dataNote": "チューターの返答が短く、写真が小さく、アニメーションや追加フォントなし。学習パスの問題はオフライン練習用に保存されます。",
+  "off.noConnection": "インターネットに接続されていません。",
+  "off.banner": "オフラインです。端末に保存された問題で練習できます（{n}）。",
+  "off.bannerEmpty": "オフラインです。再接続すると練習問題が端末に保存されます。",
+  "off.pending": "オフラインで解いた答えが送信待ちです（{n}）。",
+  "off.synced": "オフラインの答えを送信しました：{n}。",
+  "off.xpLater": "接続時に XP"
 }

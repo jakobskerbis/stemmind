@@ -4,6 +4,7 @@
 // curriculum_level), zato jo obrazci berejo kot prej.
 
 import { t } from "./i18n.js";
+import { SCHOOL_SYSTEMS, isRegional, gradesOf, gradeInfo, trackForLevel } from "./regions.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
@@ -20,8 +21,26 @@ const SS_LEVELS = [
 ];
 const UNI_YEARS = ["1. letnik", "2. letnik", "3. letnik", "4. letnik"];
 
+// Regijski šolski sistem (public/regions.js): stopnja → razred z imeni tega sistema.
+function regionFromSettings(s, sys) {
+  const g = gradeInfo(sys, s.curriculum_level);
+  return { sys, stage: g?.stage || "", grade: g?.label || "" };
+}
+function regionSteps(v) {
+  const stages = SCHOOL_SYSTEMS[v.sys].stages;
+  const out = [["stage", t("lp.qStage"), stages.map(([name, grades]) => [name, name, grades.map((x) => x[0]).join(", ")]), v.stage]];
+  const stage = stages.find(([name]) => name === v.stage);
+  if (stage) out.push(["grade", t("lp.qGrade"), stage[1].map(([label]) => [label, label]), v.grade]);
+  return out;
+}
+function regionToSettings(v) {
+  const g = v.grade && gradeInfo(v.sys, v.grade);
+  return g ? { school_system: v.sys, educational_track: trackForLevel(g.level), study_program: "", curriculum_level: g.label } : null;
+}
+
 // Iz shranjenih nastavitev sestavi korake izbire.
 function fromSettings(s, programs) {
+  if (isRegional(s.school_system)) return regionFromSettings(s, s.school_system);
   const v = { track: s.educational_track || "" };
   const level = String(s.curriculum_level || "");
   if (v.track === "OSNOVNA_SOLA") v.grade = OS_GRADES.find((g) => level.startsWith(g[0])) || "";
@@ -39,6 +58,7 @@ function fromSettings(s, programs) {
 
 // Nastavitve iz izbire (ali null, dokler izbira ni končana).
 function toSettings(v) {
+  if (v.sys) return regionToSettings(v);
   if (v.track === "OSNOVNA_SOLA" && v.grade) return { educational_track: v.track, study_program: "", curriculum_level: v.grade };
   if (v.track === "SREDNJA_SOLA" && v.year && v.ssLevel) return { educational_track: v.track, study_program: "", curriculum_level: `${v.year} ${v.ssLevel}` };
   if (v.track === "UNIVERZA" && v.program && v.year) return { educational_track: v.track, study_program: v.program, curriculum_level: v.year };
@@ -47,6 +67,7 @@ function toSettings(v) {
 
 // Vrstni red korakov za trenutno izbiro: [ključ, vprašanje, možnosti [vrednost, oznaka, opis], izbrana oznaka].
 function steps(v, programs) {
+  if (v.sys) return regionSteps(v);
   const out = [["track", t("lp.qTrack"), TRACKS, TRACKS.find((t) => t[0] === v.track)?.[1]]];
   if (v.track === "OSNOVNA_SOLA") out.push(["grade", t("lp.qGrade"), OS_GRADES.map((g) => [g, levelLabel(g)]), v.grade && levelLabel(v.grade)]);
   if (v.track === "SREDNJA_SOLA") {
@@ -81,6 +102,7 @@ const AFTER = {
   faculty: ["program", "year"],
   program: ["year"],
   year: ["ssLevel"],
+  stage: ["grade"],
 };
 
 // Namesti izbirnik v element `box` znotraj obrazca `form`.
@@ -91,6 +113,7 @@ export function mountLevelPicker(box, form, { programs, settings = {}, onChange 
 
   const write = () => {
     const s = toSettings(v) || { educational_track: v.track || "", study_program: "", curriculum_level: "" };
+    s.school_system = v.sys || "SI";
     for (const [k, val] of Object.entries(s)) if (form[k]) form[k].value = val;
     onChange(toSettings(v), v.track);
   };
@@ -143,7 +166,26 @@ export function mountLevelPicker(box, form, { programs, settings = {}, onChange 
       render();
     },
     complete: () => !!toSettings(v),
+    // Zamenjava šolskega sistema (Slovenija ali država): izbira razreda se začne znova.
+    setSystem(sys) {
+      v = isRegional(sys) ? { sys, stage: "", grade: "" } : { track: "" };
+      const list = steps(v, programs);
+      // Sistem z eno samo stopnjo: takoj izbira razreda.
+      if (v.sys && SCHOOL_SYSTEMS[sys].stages.length === 1) v.stage = SCHOOL_SYSTEMS[sys].stages[0][0];
+      open = steps(v, programs).find((x) => !x[3])?.[0] || list[0][0];
+      write();
+      render();
+    },
   };
+}
+
+// <option> za šolske sisteme: najprej Slovenija, nato države po imenu, mednarodni na koncu.
+export function schoolSystemOptions(selected = "SI") {
+  const ids = Object.keys(SCHOOL_SYSTEMS).sort((a, b) => {
+    const rank = (id) => (id === "SI" ? 0 : id === "INTL" ? 2 : 1);
+    return rank(a) - rank(b) || SCHOOL_SYSTEMS[a].name.localeCompare(SCHOOL_SYSTEMS[b].name, "en");
+  });
+  return ids.map((id) => `<option value="${id}" ${id === selected ? "selected" : ""}>${esc(SCHOOL_SYSTEMS[id].name)}</option>`).join("");
 }
 
 // Prikaz ravni v izbranem jeziku: »8. razred« → »Grade 8«, »2. letnik VR« → »Year 2 VR«. Shranjena vrednost ostane slovenska.

@@ -416,5 +416,19 @@
   "fb.adminNote": "Hanya terlihat di komputer tempat STEMMind berjalan.",
   "fb.adminCount": "Masukan terkumpul: {n}",
   "fb.download": "Unduh semua masukan",
-  "fb.downloadSummary": "Unduh ringkasan"
+  "fb.downloadSummary": "Unduh ringkasan",
+  "set.system": "Negara dan sistem sekolah",
+  "lp.qStage": "Jenjang sekolah apa?",
+  "path.regionNote": "Jalur belajarmu mengikuti {system} (draf). Latihan dan pelajaran masih dari materi Slovenia; tutor menjelaskan semuanya dalam bahasamu.",
+  "set.dataMode": "Mode ringan (hemat data)",
+  "set.dataAuto": "Otomatis (saat koneksi lambat atau penghemat data)",
+  "set.dataLite": "Selalu aktif",
+  "set.dataNormal": "Mati",
+  "set.dataNote": "Jawaban tutor lebih singkat, foto lebih kecil, tanpa animasi dan tanpa font tambahan. Latihan jalur belajar disimpan agar bisa berlatih tanpa koneksi.",
+  "off.noConnection": "Tidak ada koneksi internet.",
+  "off.banner": "Kamu sedang offline. Kamu bisa berlatih soal yang tersimpan di perangkat ({n}).",
+  "off.bannerEmpty": "Kamu sedang offline. Saat online lagi, soal latihan akan disimpan di perangkat.",
+  "off.pending": "Jawaban offline menunggu dikirim ({n}).",
+  "off.synced": "Jawaban offline terkirim: {n}.",
+  "off.xpLater": "XP saat online"
 }

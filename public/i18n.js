@@ -68,6 +68,8 @@ export const currentLang = () => lang;
 // Regija (ISO 3166, npr. "BR") velja, ko je izbrani jezik tisti, ki ga je zaznala naprava.
 export const regionFor = (code) => (code === detected.code ? detected.region : "");
 export const currentRegion = () => regionFor(lang);
+// Država naprave (ne glede na izbrani jezik), npr. za privzeti šolski sistem.
+export const deviceRegion = () => detected.region || "";
 // Oznaka za Intl (datumi, števila); zh-Hant, sr-Latn … so veljavne BCP 47 oznake.
 export const locale = () => (currentRegion() ? `${lang}-${currentRegion()}` : lang);
 

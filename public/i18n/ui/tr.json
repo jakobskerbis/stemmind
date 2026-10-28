@@ -421,5 +421,19 @@
   "fb.adminNote": "Yalnızca STEMMind'ın çalıştığı bilgisayarda görünür.",
   "fb.adminCount": "Toplanan görüş: {n}",
   "fb.download": "Tüm görüşleri indir",
-  "fb.downloadSummary": "Özeti indir"
+  "fb.downloadSummary": "Özeti indir",
+  "set.system": "Ülke ve okul sistemi",
+  "lp.qStage": "Hangi okul kademesi?",
+  "path.regionNote": "Öğrenme yolun {system} sistemini izliyor (taslak). Alıştırmalar ve dersler henüz Slovence materyalden geliyor; öğretmen her şeyi senin dilinde açıklar.",
+  "set.dataMode": "Hafif mod (daha az veri)",
+  "set.dataAuto": "Otomatik (yavaş bağlantıda veya veri tasarrufunda)",
+  "set.dataLite": "Her zaman açık",
+  "set.dataNormal": "Kapalı",
+  "set.dataNote": "Daha kısa öğretmen yanıtları, daha küçük fotoğraflar, animasyon ve ek yazı tipi yok. Öğrenme yolundaki alıştırmalar çevrimdışı çalışma için kaydedilir.",
+  "off.noConnection": "İnternet bağlantısı yok.",
+  "off.banner": "Çevrimdışısın. Cihazda kayıtlı alıştırmalarla çalışabilirsin ({n}).",
+  "off.bannerEmpty": "Çevrimdışısın. Tekrar bağlandığında alıştırmalar cihaza kaydedilecek.",
+  "off.pending": "Çevrimdışı verilen yanıtlar gönderilmeyi bekliyor ({n}).",
+  "off.synced": "Gönderilen çevrimdışı yanıtlar: {n}.",
+  "off.xpLater": "Bağlanınca XP"
 }

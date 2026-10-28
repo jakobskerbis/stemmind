@@ -18,9 +18,67 @@ export const PLANS = [
   { key: "stemmind_2_month", seats: 2, interval: "month", amount: 1599, label: "2 otroka, mesečno" },
   { key: "stemmind_2_year", seats: 2, interval: "year", amount: 13900, label: "2 otroka, šolsko leto" },
 ];
-export const planByKey = (key) => PLANS.find((p) => p.key === key) || null;
-export const planFor = (seats, interval) => PLANS.find((p) => p.seats === seats && p.interval === interval) || null;
-export const monthlyAmount = (seats) => planFor(seats >= 2 ? 2 : 1, "month").amount;
+
+// ---------- regijske cene (PREDLOG, še ni potrjen) ----------
+// Cene, prilagojene kupni moči, v lokalni valuti: [1 otrok mesečno, 1 otrok šolsko leto,
+// 2 otroka mesečno, 2 otroka šolsko leto] v glavnih enotah valute (rupije, naire …).
+// Merilo: ~2–2,6 € na mesec za enega otroka, ker strošek AI na aktivnega učenca (1–2 €)
+// s kupno močjo ne pade. Slovenija in ostale države ostanejo pri cenah v evrih zgoraj.
+export const REGIONAL_DRAFT = true;
+export const REGIONAL_PRICES = {
+  INR: { countries: ["IN"], prices: [249, 1999, 399, 3199] },
+  PKR: { countries: ["PK"], prices: [699, 5499, 1099, 8699] },
+  BDT: { countries: ["BD"], prices: [299, 2399, 449, 3599] },
+  NGN: { countries: ["NG"], prices: [3500, 28000, 5500, 44000] },
+  GHS: { countries: ["GH"], prices: [29, 229, 45, 359] },
+  KES: { countries: ["KE"], prices: [349, 2799, 549, 4399] },
+  ZAR: { countries: ["ZA"], prices: [79, 649, 129, 1049] },
+  EGP: { countries: ["EG"], prices: [129, 999, 199, 1599] },
+  PHP: { countries: ["PH"], prices: [149, 1199, 229, 1849] },
+  IDR: { countries: ["ID"], prices: [39000, 299000, 59000, 469000] },
+  VND: { countries: ["VN"], prices: [59000, 469000, 89000, 699000] },
+  XOF: { countries: ["SN", "CI", "ML", "BF", "NE", "BJ", "TG", "GW"], prices: [1500, 12000, 2500, 19000] },
+  // Ostale države z nižjimi dohodki v Afriki in Aziji: ena cena v dolarjih.
+  USD: {
+    countries: ["NP", "LK", "TZ", "UG", "RW", "ET", "ZM", "ZW", "MW", "MZ", "CM", "CD", "CG", "GA", "TD", "GN", "MG", "SL", "LR", "GM", "SD", "SS", "SO", "MM", "KH", "LA", "AF", "TJ", "KG", "UZ", "MN", "BT", "MV", "LS", "SZ", "BW", "NA", "AO"],
+    prices: [2.99, 23.99, 4.49, 35.99],
+  },
+};
+// Valute brez decimalk v Stripu (znesek je v celih enotah).
+const ZERO_DECIMAL = new Set(["VND", "XOF", "XAF", "UGX", "RWF", "JPY", "KRW", "GNF", "MGA"]);
+const SHAPE = [
+  [1, "month", "1 otrok, mesečno"],
+  [1, "year", "1 otrok, šolsko leto"],
+  [2, "month", "2 otroka, mesečno"],
+  [2, "year", "2 otroka, šolsko leto"],
+];
+// Znesek v najmanjših enotah (centi, paise …), kot ga pričakuje Stripe.
+export const minorUnits = (currency, major) => Math.round(major * (ZERO_DECIMAL.has(currency) ? 1 : 100));
+export const currencyDecimals = (currency) => (ZERO_DECIMAL.has(currency) ? 0 : 2);
+
+export const currencyForCountry = (country) => {
+  const c = String(country || "").toUpperCase();
+  return Object.entries(REGIONAL_PRICES).find(([, v]) => v.countries.includes(c))?.[0] || "EUR";
+};
+
+// Paketi v valuti: EUR = PLANS (lookup_key brez pripone), drugje lookup_key s pripono valute.
+export function plansFor(currency = "EUR") {
+  const r = REGIONAL_PRICES[currency];
+  if (!r) return PLANS.map((p) => ({ ...p, currency: "EUR" }));
+  return SHAPE.map(([seats, interval, label], i) => ({
+    key: `stemmind_${seats}_${interval}_${currency.toLowerCase()}`,
+    seats,
+    interval,
+    amount: minorUnits(currency, r.prices[i]),
+    label,
+    currency,
+  }));
+}
+export const ALL_PLANS = [...PLANS.map((p) => ({ ...p, currency: "EUR" })), ...Object.keys(REGIONAL_PRICES).flatMap(plansFor)];
+
+export const planByKey = (key) => ALL_PLANS.find((p) => p.key === key) || null;
+export const planFor = (seats, interval, currency = "EUR") => plansFor(currency).find((p) => p.seats === seats && p.interval === interval) || null;
+export const monthlyAmount = (seats, currency = "EUR") => planFor(seats >= 2 ? 2 : 1, "month", currency).amount;
 
 export const freeDailyQuestions = () => {
   const v = Number(process.env.STEMMIND_FREE_DAILY_QUESTIONS);

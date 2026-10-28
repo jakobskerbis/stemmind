@@ -421,5 +421,19 @@
   "fb.adminNote": "Solo se ve en el ordenador donde se ejecuta STEMMind.",
   "fb.adminCount": "Opiniones recogidas: {n}",
   "fb.download": "Descargar todas las opiniones",
-  "fb.downloadSummary": "Descargar resumen"
+  "fb.downloadSummary": "Descargar resumen",
+  "set.system": "País y sistema escolar",
+  "lp.qStage": "¿Qué etapa escolar?",
+  "path.regionNote": "Tu ruta de aprendizaje sigue {system} (borrador). Los ejercicios y las lecciones aún provienen del material esloveno; el tutor te lo explica todo en tu idioma.",
+  "set.dataMode": "Modo ligero (usa menos datos)",
+  "set.dataAuto": "Automático (con conexión lenta o ahorro de datos)",
+  "set.dataLite": "Siempre activado",
+  "set.dataNormal": "Desactivado",
+  "set.dataNote": "Respuestas del tutor más cortas, fotos más pequeñas, sin animaciones y sin fuente adicional. Los ejercicios de tu ruta se guardan para practicar sin conexión.",
+  "off.noConnection": "Sin conexión a Internet.",
+  "off.banner": "Estás sin conexión. Puedes practicar los ejercicios guardados en el dispositivo ({n}).",
+  "off.bannerEmpty": "Estás sin conexión. Cuando vuelvas a conectarte, los ejercicios se guardarán en el dispositivo.",
+  "off.pending": "Las respuestas hechas sin conexión esperan para enviarse ({n}).",
+  "off.synced": "Respuestas sin conexión enviadas: {n}.",
+  "off.xpLater": "XP al conectarte"
 }

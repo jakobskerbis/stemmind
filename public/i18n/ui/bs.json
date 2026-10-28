@@ -426,5 +426,19 @@
   "fb.adminNote": "Ovo vidiš samo na računaru na kojem radi STEMMind.",
   "fb.adminCount": "Prikupljenih mišljenja: {n}",
   "fb.download": "Preuzmi sva mišljenja",
-  "fb.downloadSummary": "Preuzmi sažetak"
+  "fb.downloadSummary": "Preuzmi sažetak",
+  "set.system": "Država i školski sistem",
+  "lp.qStage": "Koji nivo škole?",
+  "path.regionNote": "Put učenja prati sistem {system} (nacrt). Zadaci i lekcije su još iz slovenačkog materijala; instruktor ti sve objasni na tvom jeziku.",
+  "set.dataMode": "Lagani način (manje prenosa podataka)",
+  "set.dataAuto": "Automatski (kod spore veze ili uštede podataka)",
+  "set.dataLite": "Uvijek uključen",
+  "set.dataNormal": "Isključen",
+  "set.dataNote": "Kraći odgovori instruktora, manje fotografije, bez animacija i bez dodatnog fonta. Zadaci za put učenja se spremaju za vježbu bez veze.",
+  "off.noConnection": "Nema internet veze.",
+  "off.banner": "Nisi povezan. Možeš vježbati zadatke spremljene na uređaju ({n}).",
+  "off.bannerEmpty": "Nisi povezan. Kad se ponovo povežeš, zadaci za vježbu će se spremiti na uređaj.",
+  "off.pending": "Odgovori riješeni bez veze čekaju slanje ({n}).",
+  "off.synced": "Poslani odgovori riješeni bez veze: {n}.",
+  "off.xpLater": "XP nakon povezivanja"
 }
