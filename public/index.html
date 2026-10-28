@@ -60,6 +60,7 @@
       <select id="path-select"></select>
     </div>
     <p id="path-note" class="muted path-note" hidden></p>
+    <div id="level-card" class="level-slot" hidden></div>
     <div id="xp-card" class="card xp-card"></div>
     <nav id="modebar" class="modes" aria-label="Način učenja">
       <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span class="m-name">Nova snov</span><span class="m-sub">Nadaljuj, kjer si ostal</span></button>
@@ -104,14 +105,17 @@
           <img alt="Predogled fotografije">
           <button type="button" id="remove-image" aria-label="Odstrani sliko">×</button>
         </div>
+        <div id="sym-panel" class="sym-panel" hidden aria-label="Simboli"></div>
         <div class="composer-row">
           <label class="icon-btn" title="Fotografiraj nalogo" aria-label="Fotografiraj nalogo">
             <i data-icon="camera"></i><input id="image-input" type="file" accept="image/*" capture="environment" hidden>
           </label>
+          <button type="button" id="sym-btn" class="icon-btn" title="Simboli: √, π, ∫, H₂O …" aria-label="Simboli" aria-pressed="false"><i data-icon="sigma"></i></button>
           <textarea id="input" rows="1" placeholder="Napiši nalogo ali vprašanje …"></textarea>
+          <button type="button" id="mic-btn" class="icon-btn mic-btn" title="Povej vprašanje" aria-label="Povej vprašanje" aria-pressed="false"><i data-icon="mic"></i></button>
           <button id="send" class="primary send" type="submit" aria-label="Pošlji"><i data-icon="send"></i><span>Pošlji</span></button>
         </div>
-        <div class="hint">Lahko napišeš tudi »zdaj kemija« ali »razloži skozi nogomet«.</div>
+        <div class="hint">Nalogo lahko fotografiraš, poveš (mikrofon) ali napišeš s simboli (Σ). Lahko napišeš tudi »zdaj kemija«.</div>
       </form>
     </section>
   </main>

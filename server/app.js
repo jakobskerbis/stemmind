@@ -16,6 +16,7 @@ import { printPage } from "./textbook-print.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
+import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -121,6 +122,12 @@ export function createApp(store, opts = {}) {
         manual_weaknesses: req.body?.manual_weaknesses,
       }),
     );
+  });
+  // Prehod v višji razred/letnik: predlog na začetku šolskega leta in ali ima učenec poln paket.
+  app.get("/api/students/:id/level-up", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    res.json({ suggestion: levelUpSuggestion(s), next: nextLevel(s.settings), premium: !accounts || accounts.premiumFor(s.id) });
   });
   app.delete("/api/students/:id", (req, res) => {
     const s = loadStudent(req, res);

@@ -130,6 +130,9 @@ export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
     CREATE INDEX IF NOT EXISTS idx_events_student ON events(student_id, created_at);
   `);
   // Migracije za starejše baze
+  const studentCols = db.prepare("PRAGMA table_info(students)").all().map((c) => c.name);
+  // Kdaj je učenec nazadnje spremenil šolo ali letnik (za predlog prehoda na začetku šolskega leta).
+  if (!studentCols.includes("level_changed_at")) db.exec("ALTER TABLE students ADD COLUMN level_changed_at TEXT");
   const convCols = db.prepare("PRAGMA table_info(conversations)").all().map((c) => c.name);
   if (!convCols.includes("path_topic")) db.exec("ALTER TABLE conversations ADD COLUMN path_topic TEXT");
   if (!convCols.includes("deep")) db.exec("ALTER TABLE conversations ADD COLUMN deep INTEGER NOT NULL DEFAULT 0");
@@ -168,6 +171,7 @@ const parseStudent = (row) =>
     settings: normalizeSettings(JSON.parse(row.settings)),
     manual_weaknesses: JSON.parse(row.manual_weaknesses),
     created_at: row.created_at,
+    level_since: row.level_changed_at || row.created_at,
   };
 
 export class Store {
@@ -191,11 +195,15 @@ export class Store {
   updateStudent(id, { name, settings, manual_weaknesses }) {
     const cur = this.getStudent(id);
     if (!cur) return null;
+    const next = normalizeSettings({ ...cur.settings, ...(settings || {}) });
+    const levelChanged = ["educational_track", "curriculum_level", "study_program"].some((k) => next[k] !== cur.settings[k]);
     this.db
-      .prepare("UPDATE students SET name = ?, settings = ?, manual_weaknesses = ? WHERE id = ?")
+      .prepare(
+        `UPDATE students SET name = ?, settings = ?, manual_weaknesses = ?${levelChanged ? ", level_changed_at = datetime('now')" : ""} WHERE id = ?`,
+      )
       .run(
         name ?? cur.name,
-        JSON.stringify(normalizeSettings({ ...cur.settings, ...(settings || {}) })),
+        JSON.stringify(next),
         JSON.stringify(manual_weaknesses !== undefined ? normalizeWeaknessList(manual_weaknesses) : cur.manual_weaknesses),
         id,
       );
