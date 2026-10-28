@@ -1,12 +1,12 @@
 ---
 stanje: osnutek
 demo: prosti-pad
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Že znaš, da je hitrost podatek o tem, kako hitro se telo giblje: $v = \dfrac{s}{t}$. Pri enakomernem gibanju je hitrost ves čas enaka. V resnici pa se skoraj nič ne giblje tako. Avto se ob semaforju zapelje s hitrostjo $0$ in jo postopoma povečuje, kolesar pred ovinkom zavira, kamen, ki ga spustiš, pada vedno hitreje.
+Že znaš, da je hitrost podatek o tem, kako hitro se telo giblje: $v = \dfrac{s}{t}$. Pri enakomernem gibanju je hitrost ves čas enaka. V resnici pa se skoraj nič ne giblje tako. Avto ob semaforju spelje iz mirovanja in hitrost postopoma povečuje, kolesar pred ovinkom zavira, kamen, ki ga spustiš, pada vedno hitreje.
 
 Zato potrebujemo novo količino, ki pove, **kako hitro se spreminja hitrost**. Imenujemo jo **pospešek**. Z njim lahko napovemo, kako hitra bo vožnja po nekaj sekundah, kako daleč bo telo prišlo in kako dolgo bo padal predmet, ki ga spustimo z balkona.
 
@@ -34,13 +34,22 @@ $$s = \frac{a \cdot t^2}{2}$$
 
 Pot ne narašča sorazmerno s časom, ampak s **kvadratom časa**. Če je čas dvakrat daljši, je pot štirikrat daljša.
 
-**6. Prosti pad.** Telo, ki ga spustimo in nanj deluje samo težnost (zanemarimo zračni upor), pada enakomerno pospešeno. Pospešek je tam **težnostni pospešek** $g$. Na Zemlji je približno $g \approx 10\,\mathrm{m/s^2}$ (natančneje $9{,}8\,\mathrm{m/s^2}$), na Luni približno $1{,}6\,\mathrm{m/s^2}$, na Marsu približno $3{,}7\,\mathrm{m/s^2}$. Pri prostem padu v formule namesto $a$ vstavimo $g$.
+**6. Prosti pad.** Telo, ki ga spustimo in nanj deluje samo težnost (zanemarimo zračni upor), pada enakomerno pospešeno. Ta pospešek imenujemo **težnostni pospešek** $g$. Na Zemlji je približno $g \approx 10\,\mathrm{m/s^2}$ (natančneje $9{,}8\,\mathrm{m/s^2}$), na Luni približno $1{,}6\,\mathrm{m/s^2}$, na Marsu približno $3{,}7\,\mathrm{m/s^2}$. Pri prostem padu v formule namesto $a$ vstavimo $g$.
 
 ## Rešeni primeri
 
 ### Primer 1: izračun pospeška
 
 Avto se iz mirovanja v $5\,\text{s}$ zapelje do hitrosti $20\,\mathrm{m/s}$. Kolikšen je pospešek?
+
+**Podatki:** $v_0 = 0$ (iz mirovanja), $v = 20\,\mathrm{m/s}$, $\Delta t = 5\,\text{s}$
+**Iščemo:** pospešek $a$
+
+:::formula
+$a = \dfrac{\Delta v}{\Delta t}$, kjer je $\Delta v = v - v_0$
+:::
+
+**Rešitev:**
 
 1. Hitrost se je spremenila od $0$ do $20\,\mathrm{m/s}$, torej $\Delta v = 20\,\mathrm{m/s}$.
 2. Čas spremembe je $\Delta t = 5\,\text{s}$.
@@ -51,6 +60,15 @@ Avto se iz mirovanja v $5\,\text{s}$ zapelje do hitrosti $20\,\mathrm{m/s}$. Kol
 
 Kolesar se iz mirovanja pospešuje s pospeškom $0{,}5\,\mathrm{m/s^2}$. Kolikšna je njegova hitrost in kolikšno pot prevozi v $8\,\text{s}$?
 
+**Podatki:** $v_0 = 0$ (iz mirovanja), $a = 0{,}5\,\mathrm{m/s^2}$, $t = 8\,\text{s}$
+**Iščemo:** hitrost $v$ in pot $s$ po $8\,\text{s}$
+
+:::formula
+$v = a \cdot t$, $s = \dfrac{a \cdot t^2}{2}$
+:::
+
+**Rešitev:**
+
 1. **Hitrost.** Začel je iz mirovanja, zato $v = a \cdot t = 0{,}5 \cdot 8 = 4\,\mathrm{m/s}$.
 2. **Pot.** $s = \dfrac{a t^2}{2} = \dfrac{0{,}5 \cdot 8^2}{2} = \dfrac{0{,}5 \cdot 64}{2} = \dfrac{32}{2} = 16\,\text{m}$.
 3. **Preverimo.** Hitrost je rasla od $0$ do $4\,\mathrm{m/s}$, zato je bila povprečna hitrost $\dfrac{0 + 4}{2} = 2\,\mathrm{m/s}$. Pot je $2 \cdot 8 = 16\,\text{m}$. ✓
@@ -59,6 +77,15 @@ Kolesar se iz mirovanja pospešuje s pospeškom $0{,}5\,\mathrm{m/s^2}$. Kolikš
 ### Primer 3: prosti pad na Zemlji in Luni
 
 Astronavt spusti kladivo z višine $20\,\text{m}$. Kako dolgo pada in s kolikšno hitrostjo zadene tla, če je to (a) na Zemlji ($g = 10\,\mathrm{m/s^2}$), (b) na Luni ($g = 1{,}6\,\mathrm{m/s^2}$)? Zračni upor zanemari.
+
+**Podatki:** višina $s = 20\,\text{m}$, $v_0 = 0$ (kladivo spusti); a) Zemlja $g = 10\,\mathrm{m/s^2}$, b) Luna $g = 1{,}6\,\mathrm{m/s^2}$; zračni upor zanemarimo
+**Iščemo:** čas padanja $t$ in hitrost ob tleh $v$ na Zemlji in na Luni
+
+:::formula
+$s = \dfrac{g \cdot t^2}{2}$, od tod $t^2 = \dfrac{2s}{g}$; nato $v = g \cdot t$
+:::
+
+**Rešitev:**
 
 1. **Preoblikujemo formulo za pot.** Iz $s = \dfrac{g t^2}{2}$ sledi $t^2 = \dfrac{2s}{g}$. To storimo, ker poznamo pot, iščemo pa čas.
 2. **(a) Zemlja.** $t^2 = \dfrac{2 \cdot 20}{10} = 4$, zato $t = \sqrt{4} = 2\,\text{s}$. Hitrost ob tleh: $v = g t = 10 \cdot 2 = 20\,\mathrm{m/s}$.
@@ -94,11 +121,11 @@ Opazuj dvoje:
 
 ## Drugače: Iz vsakdanjega življenja
 
-**Semafor.** Ko se prižge zelena, voznik pritisne na plin. Po 1 s ima avto majhno hitrost, po 2 s večjo, po 3 s še večjo. Če je pospešek $2\,\mathrm{m/s^2}$, ima avto po $1\,\text{s}$ hitrost $2\,\mathrm{m/s}$, po $2\,\text{s}$ $4\,\mathrm{m/s}$, po $3\,\text{s}$ $6\,\mathrm{m/s}$. Vsako sekundo hitrost naraste za enako vrednost. To je enakomerno pospešeno gibanje.
+**Semafor.** Ko se prižge zelena, voznik pritisne na plin. Po $1\,\text{s}$ ima avto majhno hitrost, po $2\,\text{s}$ večjo, po $3\,\text{s}$ še večjo. Če je pospešek $2\,\mathrm{m/s^2}$, ima avto po $1\,\text{s}$ hitrost $2\,\mathrm{m/s}$, po $2\,\text{s}$ $4\,\mathrm{m/s}$, po $3\,\text{s}$ $6\,\mathrm{m/s}$. Vsako sekundo hitrost naraste za enako vrednost. To je enakomerno pospešeno gibanje.
 
-**Skok v vodo.** Skakalec s tri metrskega trampolina v vodo zadene z večjo hitrostjo kot otrok, ki skoči z roba bazena. Pada namreč dlje časa, hitrost pa med padanjem ves čas narašča.
+**Skok v vodo.** Skakalec s trimetrske skakalne deske zadene vodo z večjo hitrostjo kot otrok, ki skoči z roba bazena. Pada namreč dlje časa, hitrost pa med padanjem ves čas narašča.
 
-**Primerjava.** Pospešek je za hitrost to, kar je hitrost za pot. Hitrost pove, koliko poti nastane v eni sekundi, pospešek pa, koliko hitrosti se doda v eni sekundi.
+**Primerjava.** Pospešek je za hitrost to, kar je hitrost za pot. Hitrost pove, koliko poti telo prepotuje v eni sekundi, pospešek pa, koliko hitrosti se doda v eni sekundi.
 
 ## Drugače: Korak za korakom s številkami
 
@@ -138,7 +165,7 @@ Pot je enaka povprečni hitrosti, pomnoženi s časom:
 
 $$s = v_{\text{povp}} \cdot t = \frac{a t}{2} \cdot t = \frac{a t^2}{2}$$
 
-Isto vidimo na grafu $v$–$t$. Pot je enaka **ploščini pod grafom**. Pod premico od $0$ do $t$ nastane pravokotni trikotnik s osnovnico $t$ in višino $v = a t$. Njegova ploščina je $\dfrac{t \cdot a t}{2} = \dfrac{a t^2}{2}$.
+Isto vidimo na grafu $v$–$t$. Pot je enaka **ploščini pod grafom**. Pod premico od $0$ do $t$ nastane pravokotni trikotnik z osnovnico $t$ in višino $v = a t$. Njegova ploščina je $\dfrac{t \cdot a t}{2} = \dfrac{a t^2}{2}$.
 
 Ta izpeljava velja le za enakomerno pospešeno gibanje, kjer povprečna hitrost leži natanko na sredini. Pri gibanju s spreminjajočim se pospeškom tako ne moremo računati.
 

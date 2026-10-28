@@ -1,12 +1,12 @@
 ---
 stanje: osnutek
 phet: hookes-law
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Veš že, da se predmeti gibljejo, mirujejo, padajo in da jih lahko potiskamo ali vlečemo. Ko odpreš težka vrata, potisneš voziček ali stegneš elastiko, na telo vplivaš s **silo**. Sila je v fiziki ena najpomembnejših količin, saj z njo razložimo, zakaj se telo začne gibati, zaustavi ali spremeni obliko.
+Veš že, da se predmeti gibljejo, mirujejo, padajo in da jih lahko potiskamo ali vlečemo. Ko odpreš težka vrata, potisneš voziček ali raztegneš elastiko, na telo vplivaš s **silo**. Sila je v fiziki ena najpomembnejših količin, saj z njo razložimo, zakaj se telo začne gibati, zaustavi ali spremeni obliko.
 
 Sile pa ne moremo videti, vidimo le njene učinke. Da lahko o njej govorimo natančno, jo moramo **izmeriti** in izraziti s številom in enoto. Prav to se naučiš v tej lekciji: kaj je sila, kako jo merimo z vzmetno tehtnico in zakaj je enota newton ($\mathrm{N}$).
 
@@ -16,7 +16,7 @@ Sile pa ne moremo videti, vidimo le njene učinke. Da lahko o njej govorimo nata
 
 **2. Učinki sile.** Sila lahko:
 
-- spremeni **gibanje** telesa (telo se začne gibati, se ustavi, pospeši, počasneje se giblje ali spremeni smer),
+- spremeni **gibanje** telesa (telo se začne gibati, se ustavi, pospeši, upočasni ali spremeni smer),
 - spremeni **obliko** telesa (stisne ali raztegne vzmet, upogne letev, pomečka plastelin).
 
 Če opazimo takšen učinek, vemo, da je na telo delovala sila.
@@ -31,7 +31,7 @@ Uporabljamo tudi večjo enoto kilonewton: $1\,\mathrm{kN} = 1000\,\mathrm{N}$.
 
 **6. Zakaj to deluje.** Pri majhnih raztezkih je raztezek vzmeti **sorazmeren** s silo. Če je sila dvakrat večja, je raztezek dvakrat večji. Če je trikrat večja, je raztezek trikrat večji. Zato lahko na ohišje narišemo enakomerno lestvico.
 
-**7. Kako pravilno merimo s silomerjem.**
+**7. Kako pravilno merimo s silomerom.**
 
 - Pred merjenjem preveri, ali kazalec kaže $0$ (silomer brez obremenitve). Če ne, ga nastavi na nič.
 - Silomer drži v smeri, v kateri meriš silo (navpično za težo, vodoravno pri vlečenju po mizi).
@@ -39,13 +39,22 @@ Uporabljamo tudi večjo enoto kilonewton: $1\,\mathrm{kN} = 1000\,\mathrm{N}$.
 - Preveri, kolikšna je vrednost ene najmanjše črtice na lestvici.
 - Ne preseži največje sile, ki jo silomer še lahko meri, sicer se vzmet trajno deformira.
 
-**8. Simulacija.** Spodaj lahko preizkusiš vzmet v simulaciji PhET. Obešaj uteži in opazuj, kako se vzmet raztegne. Poskusi ugotoviti: kaj se zgodi z raztezkom, če utež zamenjaš z dvakrat težjo?
+**8. Simulacija.** V interaktivni simulaciji spodaj lahko preizkusiš vzmet. Obešaj uteži in opazuj, kako se vzmet raztegne. Poskusi ugotoviti: kaj se zgodi z raztezkom, če utež zamenjaš z dvakrat težjo?
 
 ## Rešeni primeri
 
 ### Primer 1: odčitavanje silomera (lažji)
 
-Silomer ima lestvico od $0$ do $5\,\mathrm{N}$. Med oznakama $0$ in $1\,\mathrm{N}$ je pet enakih razmikov. Kazalec se ustavi na tretji črtici nad $1\,\mathrm{N}$ (torej po oznaki $1\,\mathrm{N}$ je še tri črtice naprej). Kolikšna je sila?
+Silomer ima lestvico od $0$ do $5\,\mathrm{N}$. Med oznakama $0$ in $1\,\mathrm{N}$ je pet enakih razmikov. Kazalec se ustavi na tretji črtici nad $1\,\mathrm{N}$ (torej tri črtice naprej od oznake $1\,\mathrm{N}$). Kolikšna je sila?
+
+**Podatki:** lestvica od $0$ do $5\,\mathrm{N}$; med oznakama $0$ in $1\,\mathrm{N}$ je $5$ enakih razmikov; kazalec je $3$ črtice nad oznako $1\,\mathrm{N}$
+**Iščemo:** silo $F$
+
+:::formula
+Vrednost enega razmika: $\dfrac{\text{razlika sosednjih oznak}}{\text{število razmikov}}$, nato $F = \text{oznaka} + \text{število črtic} \cdot \text{vrednost razmika}$
+:::
+
+**Rešitev:**
 
 1. **Vrednost ene črtice.** Med $0$ in $1\,\mathrm{N}$ je pet razmikov, zato je en razmik $1\,\mathrm{N} : 5 = 0{,}2\,\mathrm{N}$.
 2. **Štetje.** Kazalec je pri $1\,\mathrm{N}$ in še tri črtice naprej: $3 \cdot 0{,}2\,\mathrm{N} = 0{,}6\,\mathrm{N}$.
@@ -56,6 +65,15 @@ Silomer ima lestvico od $0$ do $5\,\mathrm{N}$. Med oznakama $0$ in $1\,\mathrm{
 
 Vzmetna tehtnica se pri sili $2\,\mathrm{N}$ raztegne za $4\,\mathrm{cm}$. Za koliko se raztegne pri sili $5\,\mathrm{N}$? (Predpostavi, da je raztezek še vedno sorazmeren s silo.)
 
+**Podatki:** $F_1 = 2\,\mathrm{N}$, $x_1 = 4\,\mathrm{cm}$, $F_2 = 5\,\mathrm{N}$; raztezek je sorazmeren s silo
+**Iščemo:** raztezek $x_2$ pri sili $F_2$
+
+:::formula
+Raztezek je sorazmeren s silo: $\dfrac{x_2}{x_1} = \dfrac{F_2}{F_1}$, torej $x_2 = \dfrac{x_1}{F_1} \cdot F_2$ (raztezek na $1\,\mathrm{N}$ krat sila)
+:::
+
+**Rešitev:**
+
 1. **Raztezek pri $1\,\mathrm{N}$.** Ker je raztezek sorazmeren s silo, delimo: $4\,\mathrm{cm} : 2 = 2\,\mathrm{cm}$ na vsak $1\,\mathrm{N}$.
 2. **Raztezek pri $5\,\mathrm{N}$.** Pri petkratni sili je raztezek petkrat večji: $5 \cdot 2\,\mathrm{cm} = 10\,\mathrm{cm}$.
 3. **Preverimo.** Razmerje sil je $5 : 2 = 2{,}5$. Razmerje raztezkov: $10 : 4 = 2{,}5$. Razmerji sta enaki. ✓
@@ -65,9 +83,18 @@ Vzmetna tehtnica se pri sili $2\,\mathrm{N}$ raztegne za $4\,\mathrm{cm}$. Za ko
 
 Iz vzmeti si naredimo silomer. Ko nanjo obesimo utež, na katero Zemlja deluje s silo $1\,\mathrm{N}$, se vzmet raztegne za $2{,}5\,\mathrm{cm}$. Obesimo neznan predmet in vzmet se raztegne za $7{,}5\,\mathrm{cm}$. Kolikšna je sila, s katero Zemlja privlači ta predmet? Kje na lestvici bi bila oznaka $4\,\mathrm{N}$?
 
+**Podatki:** utež: $F_1 = 1\,\mathrm{N}$, $x_1 = 2{,}5\,\mathrm{cm}$; neznani predmet: $x_2 = 7{,}5\,\mathrm{cm}$; oznaka $F_3 = 4\,\mathrm{N}$
+**Iščemo:** silo $F_2$ na neznani predmet in raztezek $x_3$, pri katerem je oznaka $4\,\mathrm{N}$
+
+:::formula
+Raztezek je sorazmeren s silo. Raztezek na $1\,\mathrm{N}$ je $\dfrac{x_1}{F_1}$, zato je $F = x : \dfrac{x_1}{F_1}$ in obratno $x = \dfrac{x_1}{F_1} \cdot F$
+:::
+
+**Rešitev:**
+
 1. **Sorazmerje.** Raztezek je sorazmeren s silo, zato velja: sila = raztezek $:$ raztezek na $1\,\mathrm{N}$.
-2. **Neznani predmet.** $F = 7{,}5\,\mathrm{cm} : 2{,}5\,\mathrm{cm/N} = 3\,\mathrm{N}$. Raztezek je torej trikrat večji kot pri $1\,\mathrm{N}$, zato je tudi sila trikrat večja.
-3. **Oznaka $4\,\mathrm{N}$.** Raztezek je $4 \cdot 2{,}5\,\mathrm{cm} = 10\,\mathrm{cm}$. Oznaka $4\,\mathrm{N}$ je $10\,\mathrm{cm}$ pod začetnim položajem kazalca.
+2. **Neznani predmet.** $F_2 = 7{,}5\,\mathrm{cm} : 2{,}5\,\mathrm{cm/N} = 3\,\mathrm{N}$. Raztezek je torej trikrat večji kot pri $1\,\mathrm{N}$, zato je tudi sila trikrat večja.
+3. **Oznaka $4\,\mathrm{N}$.** Raztezek je $x_3 = 4 \cdot 2{,}5\,\mathrm{cm} = 10\,\mathrm{cm}$. Oznaka $4\,\mathrm{N}$ je $10\,\mathrm{cm}$ pod začetnim položajem kazalca.
 4. **Razmislek.** Črtice na lestvici so enako narazen ($2{,}5\,\mathrm{cm}$ za vsak $1\,\mathrm{N}$). To je posledica sorazmernosti.
 5. **Odgovor.** Sila je $3\,\mathrm{N}$, oznaka $4\,\mathrm{N}$ je $10\,\mathrm{cm}$ od ničle.
 
@@ -96,7 +123,7 @@ Ker so premiki enaki za vsako dodano utež, so črtice na lestvici enakomerno ra
 
 Silo na skici narišemo kot puščico. Če sta dve puščici enake smeri in ena je dvakrat daljša, ta ponazarja dvakrat večjo silo.
 
-V simulaciji PhET to opaziš sam: ko vzmet obremeniš z dvakrat težjo utežjo, se njen konec spusti dvakrat nižje.
+V interaktivni simulaciji spodaj to opaziš sam: ko vzmet obremeniš z dvakrat težjo utežjo, se njen konec spusti dvakrat nižje.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -104,7 +131,7 @@ Vzmetno tehtnico poznaš iz vsakdana: ribiči z njo tehtajo ulov, v trgovini ali
 
 Podoben pojav poznaš pri **gumi (elastiki)**: čim močneje jo potegneš, tem bolj se raztegne, ker nanjo deluješ z večjo silo. Zato lahko po raztezku elastike približno ocenjuješ, kako močno vlečeš.
 
-Pri trampolinu, vzmetnici ali vzmetenju kolesa se vzmeti stisnejo, ko nanje deluje sila tvoje teže. Težji ko si, bolj se stisnejo.
+Pri trampolinu, vzmetnici ali vzmetenju kolesa se vzmeti stisnejo, ko nanje deluje tvoja teža. Težji ko si, bolj se stisnejo.
 
 Za občutek: pri $1\,\mathrm{N}$ komaj opaziš silo (npr. ko držiš jabolko), pri $10\,\mathrm{N}$ že čutiš napor (npr. ko dvigaš vrečo okoli $1\,\mathrm{kg}$). Pri tem je to le približna ocena.
 
@@ -138,7 +165,7 @@ kjer je $x$ raztezek vzmeti, $k$ pa konstanta, ki je odvisna od vzmeti in ji pra
 
 Zgled: če se vzmet pri $F = 2\,\mathrm{N}$ raztegne za $x = 0{,}04\,\mathrm{m}$, je $k = F/x = 2\,\mathrm{N} / 0{,}04\,\mathrm{m} = 50\,\mathrm{N/m}$.
 
-Zakon velja le do neke meje. Če vzmet preveč raztegneš, se trajno deformira in sorazmerje ne velja več. Zato ima vsak silomer označeno največjo silo, ki jo še lahko meri. Simulacija PhET prikazuje prav to odvisnost: če v njej zamenjaš vzmet s trdnejšo (večji $k$), se pri isti uteži raztegne manj.
+Zakon velja le do neke meje. Če vzmet preveč raztegneš, se trajno deformira in sorazmerje ne velja več. Zato ima vsak silomer označeno največjo silo, ki jo še lahko meri. Interaktivna simulacija spodaj prikazuje prav to odvisnost: če v njej zamenjaš vzmet s trdnejšo (večji $k$), se pri isti uteži raztegne manj.
 
 ## Preveri se
 
@@ -158,4 +185,4 @@ Zakon velja le do neke meje. Če vzmet preveč raztegneš, se trajno deformira i
 - $0{,}6\,\mathrm{N}$
 - $3\,\mathrm{N}$
 + $1{,}2\,\mathrm{N}$
-> En razmik je $2\,\mathrm{N} : 5 = 0{,}4\,\mathrm{N}$, tri razmiki so $3 \cdot 0{,}4\,\mathrm{N} = 1{,}2\,\mathrm{N}$. Odgovor $3\,\mathrm{N}$ dobiš, če vsako črtico štejemo kot $1\,\mathrm{N}$.
+> En razmik je $2\,\mathrm{N} : 5 = 0{,}4\,\mathrm{N}$, trije razmiki so $3 \cdot 0{,}4\,\mathrm{N} = 1{,}2\,\mathrm{N}$. Odgovor $3\,\mathrm{N}$ dobiš, če vsako črtico šteješ kot $1\,\mathrm{N}$.

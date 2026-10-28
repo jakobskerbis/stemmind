@@ -1,7 +1,7 @@
 ---
 stanje: osnutek
 phet: density
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -20,7 +20,7 @@ $$\rho = \frac{m}{V}$$
 
 pri čemer je $m$ masa telesa in $V$ njegova prostornina.
 
-**2. Enote.** Osnovna enota za gostoto je $\mathrm{kg/m^3}$. V praksi pogosto uporabljamo tudi $\mathrm{g/cm^3}$. Zveza med njima:
+**2. Enote.** Enota SI za gostoto je $\mathrm{kg/m^3}$. V praksi pogosto uporabljamo tudi $\mathrm{g/cm^3}$. Zveza med njima:
 
 $$1\,\frac{\text{g}}{\text{cm}^3} = 1000\,\frac{\text{kg}}{\text{m}^3}$$
 
@@ -30,7 +30,7 @@ Gostota vode je približno $1\,\text{g/cm}^3 = 1000\,\text{kg/m}^3$.
 
 $$m = \rho \cdot V \qquad\qquad V = \frac{m}{\rho}$$
 
-**4. Gostota je lastnost snovi.** Če imamo dva kosa iste snovi (npr. železa), je en lahko večji in težji, a razmerje $m/V$ je enako. Zato lahko po gostoti sklepamo, iz katere snovi je telo.
+**4. Gostota je lastnost snovi.** Če imamo dva kosa iste snovi (npr. železa), je lahko eden večji in težji, a razmerje $m/V$ je enako. Zato lahko po gostoti sklepamo, iz katere snovi je telo.
 
 **5. Nekaj približnih gostot** (pri sobni temperaturi):
 
@@ -42,10 +42,10 @@ $$m = \rho \cdot V \qquad\qquad V = \frac{m}{\rho}$$
 | voda | $1{,}0$ |
 | aluminij | $2{,}7$ |
 | železo | $7{,}9$ |
-| baker | $9{,}0$ |
+| baker | $8{,}9$ |
 | svinec | $11{,}3$ |
 
-**6. Merjenje gostote.** Gostote ne moremo izmeriti neposredno, izmerimo $m$ in $V$ in izračunamo:
+**6. Merjenje gostote.** Gostote navadno ne merimo neposredno: izmerimo $m$ in $V$ ter jo izračunamo:
 
 - **Masa:** stehtamo s tehtnico.
 - **Prostornina pravilnega telesa** (kvader, valj): izmerimo dolžine in izračunamo prostornino, npr. $V = a \cdot b \cdot c$.
@@ -60,6 +60,15 @@ $$m = \rho \cdot V \qquad\qquad V = \frac{m}{\rho}$$
 
 Kos kovine ima maso $270\,\text{g}$ in prostornino $100\,\text{cm}^3$. Kolikšna je njegova gostota? Iz katere kovine je verjetno?
 
+**Podatki:** $m = 270\,\text{g}$, $V = 100\,\text{cm}^3$
+**Iščemo:** gostoto $\rho$ in iz katere kovine je kos
+
+:::formula
+$\rho = \dfrac{m}{V}$, nato primerjava s tabelo gostot
+:::
+
+**Rešitev:**
+
 1. Iščemo gostoto, zato uporabimo $\rho = \dfrac{m}{V}$.
 2. Vstavimo: $\rho = \dfrac{270\,\text{g}}{100\,\text{cm}^3} = 2{,}7\,\dfrac{\text{g}}{\text{cm}^3}$.
 3. Primerjamo s tabelo: gostota $2{,}7\,\text{g/cm}^3$ ustreza aluminiju.
@@ -68,6 +77,15 @@ Kos kovine ima maso $270\,\text{g}$ in prostornino $100\,\text{cm}^3$. Kolikšna
 ### Primer 2: masa iz gostote
 
 Kolikšna je masa železne kocke z robom $5\,\text{cm}$? Gostota železa je $7{,}9\,\text{g/cm}^3$.
+
+**Podatki:** rob kocke $a = 5\,\text{cm}$, $\rho = 7{,}9\,\text{g/cm}^3$
+**Iščemo:** maso $m$
+
+:::formula
+$V = a^3$, nato $m = \rho \cdot V$
+:::
+
+**Rešitev:**
 
 1. Najprej potrebujemo prostornino, saj masa ni podana: $V = a^3 = 5^3 = 125\,\text{cm}^3$.
 2. Iščemo maso, zato uporabimo $m = \rho \cdot V$.
@@ -78,6 +96,15 @@ Kolikšna je masa železne kocke z robom $5\,\text{cm}$? Gostota železa je $7{,
 ### Primer 3: merjenje nepravilnega telesa
 
 Učenec stehta kamen in dobi $m = 130\,\text{g}$. V merilnem valju je voda do oznake $200\,\text{ml}$. Ko vanj potopi kamen, voda naraste do oznake $250\,\text{ml}$. Kolikšna je gostota kamna? Ali kamen v vodi plava?
+
+**Podatki:** $m = 130\,\text{g}$, $V_1 = 200\,\text{ml}$ (voda), $V_2 = 250\,\text{ml}$ (voda s kamnom); gostota vode $\rho_{\text{vode}} = 1\,\text{g/cm}^3$ (iz tabele)
+**Iščemo:** gostoto kamna $\rho$ in ali kamen plava
+
+:::formula
+$V = V_2 - V_1$, $\rho = \dfrac{m}{V}$; telo plava, če je $\rho < \rho_{\text{vode}}$
+:::
+
+**Rešitev:**
 
 1. **Prostornina kamna** je enaka povečanju gladine: $V = 250\,\text{ml} - 200\,\text{ml} = 50\,\text{ml}$. Ker je $1\,\text{ml} = 1\,\text{cm}^3$, je $V = 50\,\text{cm}^3$.
 2. **Gostota:** $\rho = \dfrac{m}{V} = \dfrac{130\,\text{g}}{50\,\text{cm}^3} = 2{,}6\,\dfrac{\text{g}}{\text{cm}^3}$.
@@ -103,15 +130,15 @@ Učenec stehta kamen in dobi $m = 130\,\text{g}$. V merilnem valju je voda do oz
 
 ## Drugače: Na sliki
 
-Predstavljaj si dve enaki škatli, vsaka s prostornino $1\,\text{dm}^3$. V prvo spraviš kroglice iz stiropora, v drugo kroglice iz svinca, vsaka je enako velika. Obe škatli sta napolnjeni do vrha, prostornina je enaka, a druga škatla je veliko težja. Razlog: v isti prostornini je v svincu »več snovi« (težji in tesneje zloženi delci).
+Predstavljaj si dve enaki škatli, vsaka s prostornino $1\,\text{dm}^3$. V prvo spraviš kroglice iz stiropora, v drugo kroglice iz svinca; vse kroglice so enako velike. Obe škatli sta napolnjeni do vrha, prostornina je enaka, a druga škatla je veliko težja. Razlog: v isti prostornini je v svincu »več snovi« (težji in tesneje zloženi delci).
 
 Gostota je torej kot **»natlačenost«** snovi. Večja ko je gostota, več mase je v isti prostornini.
 
-V simulaciji spodaj lahko izbiraš različne snovi in jih potapljaš v vodo. Opazuj: pri enaki prostornini ima gostejši blok večjo maso. Ko spreminjaš maso in prostornino, opazuj, kdaj blok plava in kdaj potone ter kako se to ujema z gostoto.
+V interaktivni simulaciji spodaj lahko izbiraš različne snovi in jih potapljaš v vodo. Opazuj: pri enaki prostornini ima gostejši blok večjo maso. Ko spreminjaš maso in prostornino, opazuj, kdaj blok plava in kdaj potone ter kako se to ujema z gostoto.
 
 ## Drugače: Iz vsakdanjega življenja
 
-**Olje in voda.** Če v kozarec vode vlješ olje, se olje zbere na vrhu. Olje ima gostoto okoli $0{,}9\,\text{g/cm}^3$, torej manjšo od vode, zato plava nad njo.
+**Olje in voda.** Če v kozarec vode vliješ olje, se olje zbere na vrhu. Olje ima gostoto okoli $0{,}9\,\text{g/cm}^3$, torej manjšo od vode, zato plava nad njo.
 
 **Balon.** Balon, napolnjen s helijem, se dvigne, ker je helij redkejši (manj gost) od zraka. Navaden balon, napolnjen z izdihanim zrakom, pade na tla.
 
@@ -166,7 +193,7 @@ Opomba: gostota je odvisna od temperature in pri plinih tudi od tlaka, saj se pr
 + $4\,\text{g/cm}^3$
 - $10\,000\,\text{g/cm}^3$
 - $250\,\text{g/cm}^3$
-> $\rho = \dfrac{m}{V} = \dfrac{200\,\text{g}}{50\,\text{cm}^3} = 4\,\text{g/cm}^3$. Odgovor $0{,}25$ dobiš, če masi in prostornino zamenjaš, $10\,000$ pa, če ju množiš.
+> $\rho = \dfrac{m}{V} = \dfrac{200\,\text{g}}{50\,\text{cm}^3} = 4\,\text{g/cm}^3$. Odgovor $0{,}25$ dobiš, če maso in prostornino zamenjaš, $10\,000$ pa, če ju množiš.
 
 ? Kolikšna je masa $2\,\text{l}$ olja z gostoto $0{,}9\,\text{g/cm}^3$?
 - $1{,}8\,\text{g}$
