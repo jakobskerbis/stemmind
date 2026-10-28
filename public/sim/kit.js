@@ -241,22 +241,35 @@ export function svgPoint(svg, ev) {
 }
 
 // Vlečenje elementa (miška, prst, pisalo). onMove(x, y) v koordinatah SVG.
+// Premike poslušamo na oknu, zato vlečenje deluje tudi, ko simulacija ročico med vlečenjem nariše na novo.
 export function draggable(svg, target, onMove, { onStart, onEnd } = {}) {
   target.classList.add("drag");
+  // Brskalniki ne upoštevajo touch-action na oblikah SVG: brez tega bi prst namesto vlečenja premaknil stran.
+  target.addEventListener("touchstart", (e) => e.cancelable && e.preventDefault(), { passive: false });
   target.addEventListener("pointerdown", (ev) => {
+    if (ev.button > 0) return;
     ev.preventDefault();
-    target.setPointerCapture?.(ev.pointerId);
+    const id = ev.pointerId;
+    // Zajem na celotni sliki: ročica sme med vlečenjem izginiti in se narisati znova.
+    try {
+      svg.setPointerCapture?.(id);
+    } catch {}
     onStart?.(...svgPoint(svg, ev));
-    const move = (e) => onMove(...svgPoint(svg, e));
-    const up = () => {
-      target.removeEventListener("pointermove", move);
-      target.removeEventListener("pointerup", up);
-      target.removeEventListener("pointercancel", up);
+    const move = (e) => {
+      if (e.pointerId !== id) return;
+      e.preventDefault();
+      onMove(...svgPoint(svg, e));
+    };
+    const up = (e) => {
+      if (e.pointerId !== id) return;
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", up);
       onEnd?.();
     };
-    target.addEventListener("pointermove", move);
-    target.addEventListener("pointerup", up);
-    target.addEventListener("pointercancel", up);
+    window.addEventListener("pointermove", move, { passive: false });
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", up);
   });
 }
 

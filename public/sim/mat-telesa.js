@@ -231,6 +231,7 @@ export function telesa(el, { bodies = ["kocka", "kvader"] } = {}) {
   };
   // vrtenje z vlečenjem
   let drag = null;
+  svg.addEventListener("touchstart", (e) => !net && e.cancelable && e.preventDefault(), { passive: false });
   svg.addEventListener("pointerdown", (e) => {
     if (net) return;
     drag = [...svgPoint(svg, e), yaw, pitch];
