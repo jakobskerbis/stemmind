@@ -32,7 +32,7 @@ Brez ključa se aplikacija zažene v preizkusnem načinu. Teste zaženeš z `npm
 
 Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac.command` (Mac). Skript ob prvem zagonu vpraša za ključ, namesti knjižnice in odpre brskalnik. `ustvari-bliznjico.bat` / `ustvari-bliznjico-mac.command` naredi bližnjico STEMMind na namizju.
 
-**Na telefonu (testno):** dvakrat klikni `telefon-windows.bat` (ali `node scripts/telefon.js`). Skript posodobi aplikacijo, ob prvem zagonu vpraša za geslo (`STEMMIND_PASSWORD` v `.env`), zažene strežnik in odpre brezplačno povezavo Cloudflare (`https://…trycloudflare.com`). Povezava se izpiše v oknu, kopira v odložišče in shrani v `data/telefon-povezava.txt`. Deluje, dokler je okno odprto in računalnik prižgan; ob vsakem zagonu je nova.
+**Na telefonu (testno):** dvakrat klikni `telefon-windows.bat` (ali `node scripts/telefon.js`). Skript posodobi aplikacijo, ob prvem zagonu vpraša za geslo (`STEMMIND_PASSWORD` v `.env`), zažene strežnik in odpre povezavo z interneta. **Stalna povezava** (ista ob vsakem zagonu): ob prvem zagonu prilepi žeton in brezplačni naslov iz računa [ngrok](https://dashboard.ngrok.com/signup); shranita se v `.env` (`NGROK_AUTHTOKEN`, `NGROK_DOMAIN`). Brez tega (Enter) se odpre začasna povezava Cloudflare (`https://…trycloudflare.com`), ki je ob vsakem zagonu nova. Povezava se izpiše v oknu in shrani v `data/telefon-povezava.txt`; povezava za prijatelje z geslom (`…/?geslo=…`) se kopira v odložišče in shrani v `data/povezava-za-prijatelje.txt`. Deluje, dokler je okno odprto in računalnik prižgan. Na telefonu v meniju brskalnika izberi »Dodaj na začetni zaslon« (ikona in `manifest.webmanifest`).
 
 **Posodobitev na najnovejšo različico**: dvakrat klikni `posodobi-windows.bat` ali `posodobi-mac.command`. Skript prenese zadnjo različico z GitHuba, jo prekopira čez to mapo (ključ `.env`, podatki `data/` in knjižnice ostanejo) in aplikacijo znova zažene.
 
@@ -41,7 +41,8 @@ Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac
 | Spremenljivka | Privzeto | Pomen |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | – | Ključ iz console.anthropic.com. Brez njega preizkusni način. |
-| `STEMMIND_PASSWORD` | – | Če je nastavljeno, stran zahteva geslo (HTTP Basic, uporabniško ime poljubno). Priporočeno, dokler ni pravih prijav. |
+| `STEMMIND_PASSWORD` | – | Če je nastavljeno, stran zahteva geslo: stran za prijavo, ki si geslo zapomni v piškotku za eno leto (deluje tudi v aplikaciji na začetnem zaslonu). Povezava `/?geslo=…` prijavi takoj. Star način HTTP Basic še deluje. |
+| `NGROK_AUTHTOKEN` / `NGROK_DOMAIN` | – | Za stalno povezavo v `scripts/telefon.js` (brezplačen račun ngrok). |
 | `STEMMIND_MODEL` | `claude-haiku-5-5` | Privzeti model za klepet (poceni). |
 | `STEMMIND_MODEL_DEEP` | `claude-opus-5-5` | Za »Razloži podrobneje« in program Tekmovanja. |
 | `STEMMIND_EFFORT` / `STEMMIND_EFFORT_DEEP` | `low` / `medium` | Koliko model razmišlja. |
@@ -56,6 +57,8 @@ Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac
 | `STEMMIND_EXPLAIN_MODEL` | `claude-opus-5-5` | Model za skript z razlagami. |
 | `STEMMIND_DB` | `data/stemmind.db` | Pot do baze SQLite. Mora biti na trajnem disku. |
 | `STEMMIND_DEBUG` | `0` | `1` omogoči `/api/students/:id/prompt` (ogled sestavljenega prompta). |
+| `STEMMIND_FEEDBACK_PROMPT` | `1` | Kartica »Kako ti je všeč STEMMind?« na Učni poti in zavihek Mnenje (za testno različico). `0` ju skrije; vprašalnik ostane pod Jaz. |
+| `STEMMIND_FEEDBACK_AI` | `0` | `1` = pogovor za povratne informacije vodi Haiku (največ 6 vprašanj, ~0,1 ¢ na pogovor). Privzeto pripravljena vprašanja, brez stroškov. |
 | `PORT` | `3000` | Vrata strežnika. |
 
 ## Starševski računi in plačila
@@ -64,7 +67,7 @@ Vklopiš jih z `STEMMIND_ACCOUNTS=1`. Brez tega aplikacija deluje kot prej (brez
 
 - **Prijava staršev**: registracija z e-naslovom in geslom, potrditev e-naslova, pozabljeno geslo. Vsi klici `/api` zahtevajo prijavo; starš vidi samo svoje otroke in njihove pogovore.
 - **Soglasje (GDPR čl. 8, ZVOP-2)**: otroka doda starš z letnico rojstva in izjavo zakonitega zastopnika. Soglasje se shrani (različica, besedilo, e-naslov, čas). Obvestilo o zasebnosti je na `/zasebnost.html` (vpiši podatke upravljavca, označene rumeno).
-- **Paketi**: 7 dni brezplačnega preizkusa brez kartice (do 2 otroka), nato brezplačni paket (vadnica neomejeno, `STEMMIND_FREE_DAILY_QUESTIONS` vprašanj na dan) ali naročnina: 1 otrok 8,99 €/mesec ali 69 €/šolsko leto, 2 otroka 14,49 €/mesec ali 109 €/šolsko leto.
+- **Paketi**: 7 dni brezplačnega preizkusa brez kartice (do 2 otroka), nato brezplačni paket (vadnica neomejeno, `STEMMIND_FREE_DAILY_QUESTIONS` vprašanj na dan) ali naročnina: 1 otrok 9,99 €/mesec ali 89 €/šolsko leto, 2 otroka 15,99 €/mesec ali 139 €/šolsko leto (ena cena za vse ravni; zneski v `server/accounts/plans.js`).
 - **Stripe**: izdelek, cene in portal za stranke aplikacija ustvari sama ob prvem plačilu (`lookup_key` `stemmind_1_month` …). Če se starš naroči med preizkusom, Stripe prvič zaračuna šele po koncu preizkusa. Paket, kartico, račune in odpoved ureja v portalu.
 - **Webhook**: v Stripe → Developers → Webhooks dodaj `https://<naslov>/api/stripe/webhook` z dogodki `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid` in vpiši `STRIPE_WEBHOOK_SECRET`. Lokalno webhook ni nujen: stanje se prebere ob vrnitvi s plačilne strani in iz portala.
 - **Priporočila**: vsak starš ima kodo in povezavo `/?ref=KODA`. Ko povabljeni prvič plača, oba dobita mesec brezplačno (dobropis v Stripu ali 30 dni dostopa, če naročnine nima).
@@ -133,6 +136,7 @@ server/curriculum*.js      učne poti po učnem načrtu (osnutek, naj ga pregled
 server/practice/           generatorji nalog in preverjanje odgovorov
 server/progress.js         napredovanje, ponavljanje, preizkus znanja, XP
 server/usage.js            beleženje porabe in omejitve
+server/feedback.js         povratne informacije testerjev (vprašalnik, pogovor, povzetek); glej docs/povratne-informacije.md
 public/pad.js              vnos z dotikom (tipke, pisanje, branje rokopisa)
 scripts/                   ustvarjanje razlag (Batch API)
 public/                    vmesnik (brez ogrodja)

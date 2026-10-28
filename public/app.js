@@ -16,6 +16,7 @@ import { attachMic } from "./speech.js";
 import { mountSymbols } from "./symbols.js";
 import { renderSuggestion, renderWelcome, stageUp } from "./level-up.js";
 import { offlineApi, refreshPack, syncOffline, packTaskCount, pendingCount } from "./offline.js";
+import { initFeedback, showFeedback } from "./feedback.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -110,13 +111,14 @@ function showView(name) {
   if (name === "path") loadPath();
   if (name === "textbook") showTextbook();
   if (name === "competition") loadCompetition();
+  if (name === "feedback") showFeedback();
   if (name !== "topic") closePad();
   if (name !== "topic") setActiveMode(null);
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback"];
 function renderMe() {
   const s = state.student;
   if (!s) return;
@@ -1747,6 +1749,7 @@ initTextbook({
 (async () => {
   const cfg = await api("/api/config");
   $("#mock-banner").hidden = !cfg.mock;
+  initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   // Starševski računi (account.js): prijava, potrditev, prvi otrok.
   const start = async (o) => {
     await loadStudents();

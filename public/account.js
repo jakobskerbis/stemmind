@@ -177,7 +177,7 @@ function renderLogin(mode = "login") {
   const ref = store.get("stemmind_ref") || "";
   shell(`
     <h1>${mode === "login" ? "Prijava" : "Nov račun"}</h1>
-    <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za študente fakultet (lasten profil)." : `STEMMind je 7 dni brezplačen, brez kartice. Nato ${eur(899)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
+    <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za študente fakultet (lasten profil)." : `STEMMind je 7 dni brezplačen, brez kartice. Nato ${eur(999)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
     <form id="auth-form" class="card form">
       ${mode === "register" ? `<label>Vaše ime (neobvezno) <input name="name" maxlength="60" autocomplete="name"></label>` : ""}
       <label>E-naslov <input name="email" type="email" required autocomplete="email"></label>

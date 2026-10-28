@@ -15,9 +15,11 @@ import { printPage } from "./textbook-print.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
+import { passwordGate } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
 import { compressedStatic, compressedJson } from "./compress.js";
+import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -38,23 +40,12 @@ function cacheKey(text, settings, deep, lite = false) {
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
 
-function basicAuth(password) {
-  const expected = Buffer.from(password);
-  return (req, res, next) => {
-    const header = req.headers.authorization || "";
-    const [, b64] = header.split(" ");
-    const pass = Buffer.from(Buffer.from(b64 || "", "base64").toString().split(":").slice(1).join(":"));
-    if (pass.length === expected.length && crypto.timingSafeEqual(pass, expected)) return next();
-    res.set("WWW-Authenticate", 'Basic realm="STEMMind"').status(401).send("Potrebna je prijava.");
-  };
-}
-
 export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
   const app = express();
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
-  if (process.env.STEMMIND_PASSWORD) app.use(basicAuth(process.env.STEMMIND_PASSWORD));
+  if (process.env.STEMMIND_PASSWORD) app.use(passwordGate(process.env.STEMMIND_PASSWORD)); // stran za prijavo + piškotek
   app.use(express.json({ limit: "10mb" }));
   // Neuspele klice API zapišemo v dnevnik, da je napako na telefonu mogoče poiskati.
   app.use("/api", (req, res, next) => {
@@ -111,7 +102,9 @@ export function createApp(store, opts = {}) {
     return c;
   };
 
-  app.get("/api/config", (_req, res) => {
+  mountFeedback(app, store, { usage, file: opts.feedbackFile ?? null, createFn: opts.feedbackCreateFn });
+
+  app.get("/api/config", (req, res) => {
     res.json({
       mock: isMockMode(),
       model: MODEL,
@@ -119,6 +112,7 @@ export function createApp(store, opts = {}) {
       enums: ENUMS,
       defaults: DEFAULT_SETTINGS,
       daily_questions: LIMITS.dailyQuestions() || null,
+      feedback: { prompt: feedbackPromptOn(), ai: feedbackAiOn(), admin: isLocalRequest(req) },
     });
   });
 

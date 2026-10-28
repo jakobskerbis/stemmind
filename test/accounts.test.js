@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
-import { signWebhook, verifyWebhook, formEncode } from "../server/accounts/stripe.js";
+import { Stripe, signWebhook, verifyWebhook, formEncode } from "../server/accounts/stripe.js";
 import { accessFor, isPremiumChild } from "../server/accounts/plans.js";
 import { weekKey, isSendTime } from "../server/accounts/weekly.js";
 
@@ -233,7 +233,7 @@ test("referral: both parents get a free month after the first payment", async ()
 
     const credits = calls.filter((c) => c.path.endsWith("/balance_transactions"));
     assert.equal(credits.length, 1);
-    assert.equal(credits[0].body.amount, "-1449"); // povabljeni: dobropis v višini mesečne naročnine
+    assert.equal(credits[0].body.amount, "-1599"); // povabljeni: dobropis v višini mesečne naročnine
     const referrer = (await a("/api/account")).body;
     assert.equal(referrer.referral.rewards, 1);
     assert.equal(referrer.access.tier, "trial"); // še v preizkusu, mesec se doda kot bonus
@@ -432,3 +432,45 @@ test("leagues with accounts: teacher's classes belong to the account; children j
     assert.equal((await teacher(`/api/classes/${cls.code}`)).body.members.length, 1);
   });
 });
+
+test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari znova", async () => {
+  const calls = [];
+  const kv = new Map();
+  kv.set("stripe_prices", JSON.stringify({ product: "prod_1", prices: { stemmind_1_month: "price_old" }, amounts: { stemmind_1_month: 899 } }));
+  kv.set("stripe_portal_config", "bpc_old");
+  const fetchFn = async (url, init) => {
+    const u = new URL(url);
+    const body = init.body ? Object.fromEntries(new URLSearchParams(init.body)) : null;
+    calls.push({ method: init.method, path: u.pathname, body });
+    const ok = (data) => ({ ok: true, status: 200, json: async () => data });
+    if (u.pathname === "/v1/prices" && init.method === "GET") {
+      // Stara cena za 1 otroka (8,99 €), ostale so že prave.
+      return ok({
+        data: [
+          { id: "price_old", lookup_key: "stemmind_1_month", unit_amount: 899, product: "prod_1" },
+          { id: "price_1y", lookup_key: "stemmind_1_year", unit_amount: 8900, product: "prod_1" },
+          { id: "price_2m", lookup_key: "stemmind_2_month", unit_amount: 1599, product: "prod_1" },
+          { id: "price_2y", lookup_key: "stemmind_2_year", unit_amount: 13900, product: "prod_1" },
+        ],
+      });
+    }
+    if (u.pathname === "/v1/prices") return ok({ id: "price_new" });
+    if (u.pathname === "/v1/prices/price_old") return ok({ id: "price_old", active: false });
+    return { ok: false, status: 404, json: async () => ({ error: { message: "ni" } }) };
+  };
+  const stripe = new Stripe({ secretKey: "sk_test_x", fetchFn, kv: { get: (k) => kv.get(k), set: (k, v) => kv.set(k, v) } });
+  const r = await stripe.ensurePrices();
+  assert.equal(r.prices.stemmind_1_month, "price_new");
+  assert.equal(r.prices.stemmind_1_year, "price_1y");
+  const created = calls.find((c) => c.path === "/v1/prices" && c.method === "POST");
+  assert.equal(created.body.unit_amount, "999");
+  assert.equal(created.body.transfer_lookup_key, "true");
+  assert.equal(calls.find((c) => c.path === "/v1/prices/price_old").body.active, "false");
+  assert.equal(kv.get("stripe_portal_config"), ""); // portal z novimi cenami
+  assert.equal(JSON.parse(kv.get("stripe_prices")).amounts.stemmind_1_month, 999);
+  // Drugi klic bere iz predpomnilnika.
+  const n = calls.length;
+  await stripe.ensurePrices();
+  assert.equal(calls.length, n);
+});
+
