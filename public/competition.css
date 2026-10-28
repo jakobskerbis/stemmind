@@ -18,7 +18,7 @@
 .contest-timer { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 900; font-variant-numeric: tabular-nums; font-size: 1.05rem; flex: none; }
 .contest-timer.warn { background: var(--danger-bg); color: var(--danger); }
 .pts { font-size: 0.8rem; font-weight: 800; color: #8a5a00; background: color-mix(in srgb, var(--gold) 22%, transparent); padding: 3px 10px; border-radius: 999px; }
-@media (prefers-color-scheme: dark) { .pts { color: #ffd27a; } }
+.dark .pts { color: #ffd27a; }
 .contest-actions { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
 
 /* pregled po tekmovanju */
