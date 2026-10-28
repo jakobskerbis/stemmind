@@ -629,7 +629,8 @@ export class Progress {
 
     const task = row.payload;
     const res = checkAnswer(task.answer, input);
-    const out = { kind: res.kind, message: res.message || null };
+    // code/params: prevod sporočila v jeziku vmesnika (message ostane slovenski).
+    const out = { kind: res.kind, message: res.message || null, ...(res.code ? { code: res.code, params: res.params || {} } : {}) };
 
     // Napake v zapisu (manjka enota, neokrajšan ulomek ...) ne štejemo kot poskus.
     if (["format", "unit", "simplify"].includes(res.kind)) {
@@ -718,13 +719,12 @@ export class Progress {
     if (row.mode === "review" && firstTry) this.advanceReview(studentId, row.topic_id, false);
     this.db.prepare("UPDATE tasks SET hint_used = 1 WHERE id = ?").run(taskId);
     out.hint = task.hint;
-    if (res.kind === "rounding") out.message = res.message;
-    else out.message = "Ni še pravilno. Poglej namig in poskusi znova. Kje si se zataknil?";
+    if (res.kind !== "rounding") Object.assign(out, { message: "Ni še pravilno. Poglej namig in poskusi znova. Kje si se zataknil?", code: "chk.tryAgain", params: {} });
     out.attemptsLeft = maxAttempts - attempts;
     if (out.attemptsLeft <= 0) {
       // Po treh poskusih: rešen zgled (učenje iz zgleda), nato nova naloga.
       out.solution = task.solution;
-      out.message = "Poglejva rešen zgled, nato poskusiš podobno nalogo.";
+      Object.assign(out, { message: "Poglejva rešen zgled, nato poskusiš podobno nalogo.", code: "chk.example", params: {} });
     }
     if (row.session_id && out.attemptsLeft <= 0) out.next = this.sessionNext(row.session_id);
     return out;

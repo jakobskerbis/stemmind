@@ -216,3 +216,21 @@ test("exam mock: ENEM has five options, A-level result has a grade", () => {
   assert.equal(res.points, 4);
   assert.equal(res.grade, "U");
 });
+
+test("check results carry a message code for translated feedback", () => {
+  assert.equal(checkAnswer({ type: "number", value: 2 }, "").code, "chk.empty");
+  assert.equal(checkAnswer({ type: "number", value: 2 }, "abc").code, "chk.number");
+  const r = checkAnswer({ type: "number", value: 2.513, decimals: 2, dot: true }, "2.5");
+  assert.equal(r.code, "chk.rounding");
+  assert.equal(r.params.right, "2.51");
+  assert.deepEqual(checkAnswer({ type: "number", value: 5, unit: "m" }, "5 kg").params, { unit: "m" });
+  assert.equal(checkAnswer({ type: "fraction", num: 1, den: 2 }, "2/4").code, "chk.simplify");
+  // Napačen odgovor pri vadbi: koda za »poskusi znova«.
+  const store = openDb(":memory:");
+  const p = new Progress(store);
+  const s = store.createStudent("Ana");
+  p.nextPractice(s.id, "MAT-EXB/probability");
+  const { task } = p.nextPractice(s.id, "MAT-EXB/probability");
+  const out = p.answer(s.id, task.id, wrongInput(p.getTask(task.id).payload.answer));
+  assert.equal(out.code, "chk.tryAgain");
+});

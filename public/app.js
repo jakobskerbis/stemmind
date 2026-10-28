@@ -1107,6 +1107,8 @@ document.addEventListener("click", (e) => {
 $("#back-to-path").addEventListener("click", () => showView(state.backTo || "path"));
 // Tekmovanja so za osnovno in srednjo šolo; fakulteta zavihka nima.
 // Šolski sistemi zunaj Slovenije: isti zavihek je »Izpiti« (SAT, gaokao, JEE, NEET, CBSE …).
+// Sporočilo preverjanja: slovensko besedilo s strežnika, v drugih jezikih prevod po kodi.
+const fbText = (r) => (r.code && currentLang() !== "sl" ? t(r.code, r.params || {}) : r.message);
 const examMode = () => !!state.student && isRegional(state.student.settings.school_system);
 const prepLabel = () => (examMode() ? t("nav.exams") : t("nav.competition"));
 const prepBack = () => (examMode() ? t("exam.back") : t("result.toCompetitions"));
@@ -1441,9 +1443,9 @@ async function checkTask(task, ctx, value) {
   let html = "";
   if (ctx.mode === "contest" && !r.retry) return contestStep(r, ctx);
   if (r.retry) {
-    html = `<div class="fb info">${escapeHtml(r.message)}</div>`;
+    html = `<div class="fb info">${escapeHtml(fbText(r))}</div>`;
   } else if (ctx.mode === "placement") {
-    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? t("task.correct") : t("task.wrong")}</span></div>${r.message ? `<div class="fb info">${icon("info")}<span>${escapeHtml(r.message)}</span></div>` : ""}`;
+    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? t("task.correct") : t("task.wrong")}</span></div>${r.message ? `<div class="fb info">${icon("info")}<span>${escapeHtml(fbText(r))}</span></div>` : ""}`;
     if (r.placement) {
       const p = r.placement;
       html += `<div class="card result ${p.passed ? "celebrate" : ""}">${p.passed ? `<div class="result-icon">${icon("award")}</div>` : ""}<h2>${p.passed ? t("placement.passed") : t("placement.notYet")}</h2>
@@ -1458,7 +1460,7 @@ async function checkTask(task, ctx, value) {
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next();
     if (!r.offline) refreshXp();
   } else {
-    html = `<div class="fb bad shake">${icon("circle-x")}<span>${escapeHtml(r.message || t("task.wrong"))}</span></div>
+    html = `<div class="fb bad shake">${icon("circle-x")}<span>${escapeHtml(fbText(r) || t("task.wrong"))}</span></div>
       ${r.levelDown ? `<div class="muted">${t("task.easier")}</div>` : ""}
       ${r.hint ? `<div class="fb hint">${icon("lightbulb")}<div><b>${t("task.hint")}</b> ${renderRich(r.hint)}</div></div>` : ""}`;
     if (r.solution) {
