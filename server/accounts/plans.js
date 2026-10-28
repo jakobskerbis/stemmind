@@ -19,29 +19,30 @@ export const PLANS = [
   { key: "stemmind_2_year", seats: 2, interval: "year", amount: 13900, label: "2 otroka, šolsko leto" },
 ];
 
-// ---------- regijske cene (PREDLOG, še ni potrjen) ----------
-// Cene, prilagojene kupni moči, v lokalni valuti: [1 otrok mesečno, 1 otrok šolsko leto,
-// 2 otroka mesečno, 2 otroka šolsko leto] v glavnih enotah valute (rupije, naire …).
-// Merilo: ~2–2,6 € na mesec za enega otroka, ker strošek AI na aktivnega učenca (1–2 €)
-// s kupno močjo ne pade. Slovenija in ostale države ostanejo pri cenah v evrih zgoraj.
-export const REGIONAL_DRAFT = true;
+// ---------- regijske cene (potrdil j, 2026-10-28) ----------
+// Cene v lokalni valuti: [1 otrok mesečno, 1 otrok šolsko leto, 2 otroka mesečno,
+// 2 otroka šolsko leto] v glavnih enotah valute (rupije, naire …).
+// Merilo: ~4–5 € na mesec za enega otroka, da pokrijejo strošek AI na aktivnega učenca
+// (1–2 €), ki s kupno močjo ne pade. Razmerja med paketi so kot pri cenah v evrih.
+// Slovenija in ostale države ostanejo pri cenah v evrih zgoraj.
+export const REGIONAL_DRAFT = false;
 export const REGIONAL_PRICES = {
-  INR: { countries: ["IN"], prices: [249, 1999, 399, 3199] },
-  PKR: { countries: ["PK"], prices: [699, 5499, 1099, 8699] },
-  BDT: { countries: ["BD"], prices: [299, 2399, 449, 3599] },
-  NGN: { countries: ["NG"], prices: [3500, 28000, 5500, 44000] },
-  GHS: { countries: ["GH"], prices: [29, 229, 45, 359] },
-  KES: { countries: ["KE"], prices: [349, 2799, 549, 4399] },
-  ZAR: { countries: ["ZA"], prices: [79, 649, 129, 1049] },
-  EGP: { countries: ["EG"], prices: [129, 999, 199, 1599] },
-  PHP: { countries: ["PH"], prices: [149, 1199, 229, 1849] },
-  IDR: { countries: ["ID"], prices: [39000, 299000, 59000, 469000] },
-  VND: { countries: ["VN"], prices: [59000, 469000, 89000, 699000] },
-  XOF: { countries: ["SN", "CI", "ML", "BF", "NE", "BJ", "TG", "GW"], prices: [1500, 12000, 2500, 19000] },
+  INR: { countries: ["IN"], prices: [399, 3499, 649, 5599] },
+  PKR: { countries: ["PK"], prices: [1399, 11999, 2199, 18999] },
+  BDT: { countries: ["BD"], prices: [549, 4799, 899, 7699] },
+  NGN: { countries: ["NG"], prices: [7500, 64000, 12000, 103000] },
+  GHS: { countries: ["GH"], prices: [59, 499, 95, 799] },
+  KES: { countries: ["KE"], prices: [649, 5599, 1049, 8999] },
+  ZAR: { countries: ["ZA"], prices: [89, 779, 149, 1249] },
+  EGP: { countries: ["EG"], prices: [249, 2199, 399, 3499] },
+  PHP: { countries: ["PH"], prices: [279, 2399, 449, 3899] },
+  IDR: { countries: ["ID"], prices: [79000, 699000, 129000, 1099000] },
+  VND: { countries: ["VN"], prices: [129000, 1099000, 199000, 1799000] },
+  XOF: { countries: ["SN", "CI", "ML", "BF", "NE", "BJ", "TG", "GW"], prices: [2900, 25000, 4700, 40000] },
   // Ostale države z nižjimi dohodki v Afriki in Aziji: ena cena v dolarjih.
   USD: {
     countries: ["NP", "LK", "TZ", "UG", "RW", "ET", "ZM", "ZW", "MW", "MZ", "CM", "CD", "CG", "GA", "TD", "GN", "MG", "SL", "LR", "GM", "SD", "SS", "SO", "MM", "KH", "LA", "AF", "TJ", "KG", "UZ", "MN", "BT", "MV", "LS", "SZ", "BW", "NA", "AO"],
-    prices: [2.99, 23.99, 4.49, 35.99],
+    prices: [4.99, 42.99, 7.99, 68.99],
   },
 };
 // Valute brez decimalk v Stripu (znesek je v celih enotah).
