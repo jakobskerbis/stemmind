@@ -3,6 +3,7 @@
 // Lekcije so Markdown datoteke v content/lessons/<pot>/<slug-teme>.md, da jih
 // učitelj lahko pregleda in popravi kar v repozitoriju. Branje ne stane nič.
 // Oblika je opisana v content/lessons/README.md.
+import { SUBJECT_NAMES } from "./subjects.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -259,7 +260,7 @@ export function lessonView(topicId) {
 // Učbeniki: za vsak predmet in vsako raven svoj učbenik (npr. MAT-OS = matematika
 // za osnovno šolo, vsi razredi). Nove poti (npr. univerzitetne) se samodejno
 // pridružijo; ime predmeta in ravni dopolni v SUBJECT_NAMES / SCHOOL_NAMES.
-export const SUBJECT_NAMES = { MAT: "Matematika", FIZ: "Fizika", KEM: "Kemija" };
+export { SUBJECT_NAMES };
 export const SCHOOL_NAMES = { OS: "osnovna šola", SS: "srednja šola", TEK: "tekmovanja in olimpijade" };
 const SCHOOL_ORDER = ["OS", "SS", "TEK"];
 const subjectName = (p) => SUBJECT_NAMES[p.subject] || p.label.split(",")[0].trim();
