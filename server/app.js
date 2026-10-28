@@ -6,7 +6,8 @@ import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
 import { createStreamFilter, parseMeta, stripMeta } from "./meta.js";
 import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
-import { Usage, LIMITS, windowHistory } from "./usage.js";
+import { Usage, LIMITS, windowHistory, recentHistory } from "./usage.js";
+import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
 import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths } from "./curriculum.js";
@@ -28,10 +29,14 @@ const MAX_TEXT = 6000;
 const ANSWER_CACHE = process.env.STEMMIND_ANSWER_CACHE !== "0";
 
 // Ključ za ponovno uporabo odgovora: isto prvo vprašanje pri istih nastavitvah.
-function cacheKey(text, settings, deep, lite = false) {
+// mode: način klica (chat/lite/think/deep); pathTopic: tema učne poti (npr. »Začniva s temo …«).
+function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = []) {
   const norm = text.toLowerCase().replace(/\s+/g, " ").replace(/[\s.!?]+$/, "").trim();
   if (norm.length < 8) return null;
-  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, deep ? 1 : 0];
+  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, mode === "deep" ? 1 : 0];
+  if (mode === "think") parts.push("think");
+  // Pri temi učne poti tudi šibke točke, da se osebni odgovor ne prenese k drugemu učencu.
+  if (pathTopic) parts.push(`tema:${pathTopic}`, weak.join(","));
   // Jezik dodamo samo, kadar ni slovenščina, da obstoječi shranjeni odgovori ostanejo veljavni.
   if (settings.language && settings.language !== "sl") parts.push(settings.language);
   if (settings.region && settings.region !== "SI") parts.push(settings.region);
@@ -87,6 +92,8 @@ export function createApp(store, opts = {}) {
   });
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
+  // »Vprašaj STEMMind« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
+  const helpTasks = new Map();
   const usage = new Usage(store.db);
   const progress = new Progress(store);
 
@@ -224,17 +231,27 @@ export function createApp(store, opts = {}) {
     const blocked = usage.blockReason(student.id);
     if (blocked) return res.status(429).json({ error: blocked, limit: true });
     busy.add(conv.id);
-    // Zmogljivejši model: gumb »Razloži podrobneje« ali program Tekmovanja.
-    const deep = req.body?.deep === true || student.settings.track === "COMPETITION";
     // Lahki način: vedno (lite), nikoli (normal) ali po povezavi naprave, ki jo sporoči odjemalec (auto).
     const lite = student.settings.data_mode === "lite" || (student.settings.data_mode !== "normal" && req.body?.lite === true);
+    // Model: Haiku za običajne odgovore, Opus za »Razloži podrobneje« (z dnevno in mesečno
+    // omejitvijo, nato Haiku z več razmisleka), Tekmovanja privzeto Haiku z več razmisleka.
+    const { mode, note } = usage.chooseMode(student.id, {
+      wantDeep: req.body?.deep === true,
+      competition: student.settings.track === "COMPETITION",
+      lite,
+      deepModel: MODEL_DEEP,
+    });
+    const deep = mode === "deep";
 
     const userContent = [];
     if (image) userContent.push({ type: "image", source: { type: "base64", media_type: image.media_type, data: image.data } });
     userContent.push({ type: "text", text: text || "(Pošiljam fotografijo naloge.)" });
     const isFirst = store.listMessages(conv.id).length === 0;
     const userMsgId = store.addMessage(conv.id, "user", userContent, text, !!image);
-    const key = ANSWER_CACHE && isFirst && !image && !conv.path_topic ? cacheKey(text, student.settings, req.body?.deep === true, lite) : null;
+    const help = isFirst && !image ? helpTasks.get(conv.id) : null;
+    if (help) helpTasks.delete(conv.id);
+    const weak = weaknessesForPrompt(store, student);
+    const key = ANSWER_CACHE && isFirst && !image && !help ? cacheKey(text, student.settings, mode, lite, conv.path_topic, weak) : null;
     if (conv.title === "Nov pogovor") {
       store.renameConversation(conv.id, cleanText(text, 50) || "Naloga s fotografije");
     }
@@ -259,25 +276,38 @@ export function createApp(store, opts = {}) {
       const tekTopic = conv.path_topic && isCompetitionPath(getTopic(conv.path_topic)?.path);
       const system = buildSystemPrompt({
         settings: tekTopic ? { ...student.settings, track: "COMPETITION" } : student.settings,
-        weaknesses: weaknessesForPrompt(store, student),
+        weaknesses: weak,
         studentName: student.name,
         learningPath: conv.path_topic ? [learningPathPrompt(conv.path_topic), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n") : "",
         lite,
       });
-      const cached = key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
+      // Prvi korak pri nalogi iz Vadnice sestavi koda (podatki, iskano, namig), brez klica modela.
+      const hinted =
+        help && help.text === text && student.settings.solving_mode !== "B" && (student.settings.language || "sl") === "sl"
+          ? codeHint(help.task.payload, {
+              subject: getTopic(help.task.topic_id)?.subject || student.settings.subject,
+              topicName: getTopic(help.task.topic_id)?.name,
+              lastAnswer: help.task.last_answer,
+            })
+          : null;
+      const cached = hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
+      if (note) send("delta", { text: note });
       const run = cached
         ? async ({ onText }) => {
             // Ime učenca je v predpomnilniku shranjeno kot {{IME}}.
             const t = cached.text.replaceAll("{{IME}}", student.name);
             for (let i = 0; i < t.length; i += 40) onText(t.slice(i, i + 40));
-            store.db.prepare("UPDATE answer_cache SET hits = hits + 1 WHERE key = ?").run(key);
+            if (!cached.hint) store.db.prepare("UPDATE answer_cache SET hits = hits + 1 WHERE key = ?").run(key);
+            usage.logSaved(student.id, cached.hint ? "hint" : "reuse");
             return { content: [{ type: "text", text: t }], text: t, stopReason: "end_turn", usage: null, model: "cache" };
           }
         : streamFn;
       const result = await run({
         system,
-        messages: windowHistory(store.apiHistory(conv.id)),
+        // Opus dobi samo zadnje izmenjave; Haiku daljše okno (predpomnjeno).
+        messages: deep ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id)),
         deep,
+        mode,
         signal: controller.signal,
         onText: (chunk) => {
           const out = filter.push(chunk);
@@ -290,7 +320,7 @@ export function createApp(store, opts = {}) {
       if (rest) send("delta", { text: rest });
 
       let meta = parseMeta(result.text);
-      let display = stripMeta(result.text);
+      let display = (note || "") + stripMeta(result.text);
       // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
       let content = [{ type: "text", text: result.text || "…" }];
@@ -321,7 +351,8 @@ export function createApp(store, opts = {}) {
         text: display,
         state: meta ? { subject: meta.subject, mode: meta.mode } : null,
         title: store.getConversation(conv.id).title,
-        deep,
+        // Brez ponovnega gumba »Razloži podrobneje«, tudi če je odgovor pripravil hitri model.
+        deep: deep || req.body?.deep === true,
         cost_usd: Math.round(cost * 10000) / 10000,
       });
       res.end();
@@ -566,6 +597,8 @@ export function createApp(store, opts = {}) {
     if (!t || t.student_id !== s.id) return res.status(404).json({ error: "Naloga ne obstaja." });
     const conv = store.createConversation(s.id, { pathTopic: t.topic_id, title: `Naloga: ${getTopic(t.topic_id)?.name ?? "vadnica"}` });
     const text = `Rešujem nalogo iz Vadnice:\n\n${t.payload.text}\n\n${t.last_answer ? `Moj odgovor je bil: ${t.last_answer}. Ni pravilen.` : "Ne vem, kako začeti."} Mi pomagaš najti, kje se zatakne? Rešitve mi ne povej.`;
+    helpTasks.set(conv.id, { text: text.trim().slice(0, MAX_TEXT), task: t });
+    if (helpTasks.size > 500) helpTasks.delete(helpTasks.keys().next().value);
     res.json({ conversation: conv, text });
   });
 
@@ -580,6 +613,10 @@ export function createApp(store, opts = {}) {
 
   // --- poraba AI ---
   app.get("/api/usage", (_req, res) => res.json(usage.summary()));
+  app.get("/api/students/:id/usage", (req, res) => {
+    const s = loadStudent(req, res);
+    if (s) res.json(usage.studentMonth(s.id));
+  });
 
   return app;
 }

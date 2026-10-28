@@ -440,5 +440,11 @@
   "off.bannerEmpty": "Nisi povezan. Kad se ponovno povežeš, zadaci za vježbu spremit će se na uređaj.",
   "off.pending": "Odgovori riješeni bez veze čekaju slanje ({n}).",
   "off.synced": "Poslani odgovori riješeni bez veze: {n}.",
-  "off.xpLater": "XP nakon povezivanja"
+  "off.xpLater": "XP nakon povezivanja",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Aktivni učenici: {active} · prosječno {avg} € po učeniku · {msg} € po odgovoru · procjena za cijeli mjesec: {proj} €",
+  "usage.saved": "Odgovori bez poziva AI-ju (ponovno korišteni odgovori i savjeti iz vježbi): {count}",
+  "usage.limits": "Ograničenja po učeniku: {deep}× detaljno objašnjenje dnevno; iznad {soft} $ mjesečno brži model; iznad {hard} $ mjesečno samo vježbe.",
+  "usage.savedCol": "Bez AI-ja",
+  "usage.model": "Model"
 }
