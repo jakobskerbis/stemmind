@@ -7,7 +7,7 @@ import { SUBJECT_NAMES } from "./subjects.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getTopic, getPath, listPaths, topicOrder, getProgram, listProgramPaths } from "./curriculum.js";
+import { getTopic, getPath, listPaths, topicOrder, getProgram, listProgramPaths, sameTopics } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
 import { hasGenerator } from "./practice/index.js";
 import { simsForTopic } from "../public/sim/katalog.js";
@@ -102,21 +102,34 @@ function lessonFile(topicId) {
   return path.join(LESSONS_DIR, pathKey, `${slug}.md`);
 }
 
-const cache = new Map(); // topicId -> { mtime, lesson }
+const cache = new Map(); // datoteka -> { mtime, lesson }
+
+// Lekcija teme. Fakultetna tema, ki se ponovi v več predmetih (enak naslov in
+// predmet), ima eno lekcijo: če je ni v mapi tega predmeta, vzamemo prvo, ki obstaja.
 export function loadLesson(topicId) {
-  const file = lessonFile(topicId);
+  const own = readLesson(lessonFile(topicId));
+  if (own !== null || !getTopic(topicId)) return own;
+  for (const id of sameTopics(topicId)) {
+    if (id === topicId) continue;
+    const l = readLesson(lessonFile(id));
+    if (l) return l;
+  }
+  return null;
+}
+
+function readLesson(file) {
   if (!file) return null;
   let st;
   try {
     st = fs.statSync(file);
   } catch {
-    cache.delete(topicId);
+    cache.delete(file);
     return null;
   }
-  const hit = cache.get(topicId);
+  const hit = cache.get(file);
   if (hit && hit.mtime === st.mtimeMs) return hit.lesson;
   const lesson = parseLesson(fs.readFileSync(file, "utf8"));
-  cache.set(topicId, { mtime: st.mtimeMs, lesson });
+  cache.set(file, { mtime: st.mtimeMs, lesson });
   return lesson;
 }
 

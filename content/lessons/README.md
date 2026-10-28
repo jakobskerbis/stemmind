@@ -76,3 +76,15 @@ Obliko preveriš z `node scripts/check-lesson.js content/lessons/<pot>/<slug>.md
 
 Demonstracija se pokaže za razdelkom »Rešeni primeri«. Formule piši v LaTeX z
 decimalno vejico (`$3{,}5$`).
+
+## Fakultetne lekcije
+
+Fakultetna tema z enakim naslovom in predmetom se pojavi v več predmetih (npr.
+»Odvod funkcije« v 42 programih). Lekcijo napišeš enkrat, v mapo prvega
+predmeta (`sameTopics(id)[0]` v `server/curriculum.js`), in velja za vse
+predmete s to temo. Lastna datoteka v mapi drugega predmeta ima prednost.
+Zato naj bo fakultetna lekcija splošna (brez imena enega predmeta ali
+fakultete), strožje dokaze pa daj v »Drugače: Bolj natančno«.
+
+Katere teme še nimajo lekcije, urejeno po številu programov:
+`node scripts/fakultetne-lekcije.js --letnik 1 --n 40`.
