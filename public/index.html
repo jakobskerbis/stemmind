@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="account.css">
   <link rel="stylesheet" href="textbook.css">
   <link rel="stylesheet" href="leagues.css">
+  <link rel="stylesheet" href="competition.css">
 </head>
 <body>
   <header class="topbar">
@@ -22,6 +23,7 @@
       <button class="tab active" data-view="path"><i data-icon="map"></i><span>Učna pot</span></button>
       <button class="tab" data-view="textbook"><i data-icon="book-open"></i><span>Učbenik</span></button>
       <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span>Inštruktor</span></button>
+      <button class="tab" data-view="competition" id="competition-tab"><i data-icon="medal"></i><span>Tekmovanja</span></button>
       <button class="tab" data-view="progress"><i data-icon="chart-column"></i><span>Napredek</span></button>
       <button class="tab" data-view="settings"><i data-icon="settings"></i><span>Nastavitve</span></button>
       <button class="tab" data-view="account" id="account-tab" hidden><i data-icon="user"></i><span>Račun</span></button>
@@ -62,6 +64,11 @@
   <main id="view-topic" class="view narrow" hidden>
     <button id="back-to-path" type="button" class="ghost back"><i data-icon="arrow-left"></i>Učna pot</button>
     <div id="topic-content"></div>
+  </main>
+
+  <!-- TEKMOVANJA -->
+  <main id="view-competition" class="view narrow" hidden>
+    <div id="competition-content"><p class="muted">Nalagam …</p></div>
   </main>
 
   <!-- UČBENIK (textbook.js) -->

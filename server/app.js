@@ -16,6 +16,7 @@ import { printPage } from "./textbook-print.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
+import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -229,8 +230,10 @@ export function createApp(store, opts = {}) {
 
     const filter = createStreamFilter();
     try {
+      // Pogovor o tekmovalni temi: inštruktor namiguje v slogu tekmovanj (model ostane isti).
+      const tekTopic = conv.path_topic && isCompetitionPath(getTopic(conv.path_topic)?.path);
       const system = buildSystemPrompt({
-        settings: student.settings,
+        settings: tekTopic ? { ...student.settings, track: "COMPETITION" } : student.settings,
         weaknesses: weaknessesForPrompt(store, student),
         studentName: student.name,
         learningPath: conv.path_topic ? [learningPathPrompt(conv.path_topic), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n") : "",
@@ -312,7 +315,8 @@ export function createApp(store, opts = {}) {
 
   // --- učne poti ---
   app.get("/api/paths", (req, res) =>
-    res.json(req.query.program ? listProgramPaths(String(req.query.program)) : listPaths(req.query.subject)),
+    // Tekmovalne poti so v svojem razdelku (zavihek Tekmovanja), ne na učni poti.
+    res.json(req.query.program ? listProgramPaths(String(req.query.program)) : listPaths(req.query.subject).filter((p) => p.school !== "TEK")),
   );
   app.get("/api/programs", (req, res) => res.json(listPrograms()));
   app.get("/api/students/:id/path", (req, res) => {
@@ -404,6 +408,43 @@ export function createApp(store, opts = {}) {
     if (!out) return res.status(400).json({ error: "Ta sklop je še zaklenjen ali nima vaj." });
     res.json(out);
   });
+  // --- tekmovanja: samo težje naloge v slogu tekmovanj ---
+  app.get("/api/students/:id/competition", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const defaultKey = competitionKeyFor(s.settings);
+    const key = isCompetitionPath(req.query.key) ? String(req.query.key) : defaultKey;
+    if (!key) return res.json({ key: null, message: "Tekmovanja so na voljo za osnovno in srednjo šolo." });
+    res.json({
+      ...competitionInfo(key),
+      ...progress.pathView(s.id, key),
+      defaultKey,
+      history: progress.contestHistory(s.id, key),
+      openContest: progress.openContest(s.id, key),
+    });
+  });
+  app.post("/api/students/:id/competition-training", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.startCompetition(s.id, String(req.body?.path || ""));
+    if (!out) return res.status(400).json({ error: "Za to tekmovanje še ni nalog." });
+    res.json(out);
+  });
+  app.post("/api/students/:id/contest", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.startContest(s.id, String(req.body?.path || ""));
+    if (!out) return res.status(400).json({ error: "Za to tekmovanje še ni nalog." });
+    res.json(out);
+  });
+  app.post("/api/students/:id/contest/finish", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const sess = progress.getSession(String(req.body?.sessionId || ""));
+    if (!sess || sess.student_id !== s.id || sess.kind !== "contest") return res.status(404).json({ error: "Tekmovanje ne obstaja." });
+    res.json({ contest: progress.finishContest(sess) });
+  });
+
   app.get("/api/students/:id/test-plan", (req, res) => {
     const s = loadStudent(req, res);
     if (s) res.json({ plan: progress.testPlan(s.id) });
@@ -439,6 +480,14 @@ export function createApp(store, opts = {}) {
     const s = loadStudent(req, res);
     if (!s) return;
     const out = progress.answer(s.id, intParam(req.params.taskId), req.body?.answer);
+    if (out.error) return res.status(400).json(out);
+    res.json(out);
+  });
+  // Poskusno tekmovanje: preskoči nalogo (0 točk).
+  app.post("/api/students/:id/tasks/:taskId/skip", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.skipContestTask(s.id, intParam(req.params.taskId));
     if (out.error) return res.status(400).json(out);
     res.json(out);
   });

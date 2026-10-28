@@ -140,3 +140,30 @@ test("handwriting read: validates image, returns transcript and logs usage", asy
     assert.equal(row.kind, "ocr");
   }, { readFn });
 });
+
+test("tekmovanja: razdelek po nastavitvah, brez tekmovalnih poti na učni poti", async () => {
+  await withServer(["ok"], async ({ call }) => {
+    const s = (await call("/api/students", { method: "POST", body: { name: "Tim" } })).body;
+    const c = (await call(`/api/students/${s.id}/competition`)).body;
+    assert.equal(c.key, c.defaultKey);
+    assert.match(c.key, /^MAT-TEK-(OS|SS)$/);
+    assert.ok(c.competitions.includes("Kenguru"));
+    assert.equal(c.contest.maxPoints, 40);
+    const k = (await call(`/api/students/${s.id}/competition?key=KEM-TEK-SS`)).body;
+    assert.equal(k.key, "KEM-TEK-SS");
+    assert.ok(k.units.length);
+    const paths = (await call("/api/paths?subject=MAT")).body;
+    assert.ok(paths.length && paths.every((p) => !p.key.includes("-TEK-")));
+    const tr = await call(`/api/students/${s.id}/competition-training`, { method: "POST", body: { path: "FIZ-TEK-SS" } });
+    assert.equal(tr.status, 200);
+    assert.equal(tr.body.total, 10);
+    const ct = (await call(`/api/students/${s.id}/contest`, { method: "POST", body: { path: "FIZ-TEK-SS" } })).body;
+    const sk = (await call(`/api/students/${s.id}/tasks/${ct.task.id}/skip`, { method: "POST" })).body;
+    assert.equal(sk.skipped, true);
+    const fin = (await call(`/api/students/${s.id}/contest/finish`, { method: "POST", body: { sessionId: ct.sessionId } })).body;
+    assert.equal(fin.contest.points, 0);
+    await call(`/api/students/${s.id}`, { method: "PUT", body: { settings: { educational_track: "UNIVERZA" } } });
+    const u = (await call(`/api/students/${s.id}/competition`)).body;
+    assert.equal(u.key, null);
+  });
+});
