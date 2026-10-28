@@ -49,6 +49,14 @@ self.addEventListener("message", (e) => {
   );
 });
 
+// Povezava do računalnika je prekinjena (ngrok ali Cloudflare javita, da strežnik ne teče):
+// obravnavamo kot brez povezave, da se aplikacija odpre iz shranjene kopije.
+// ERR_NGROK_6024 je samo opozorilna stran ngrok ob prvem obisku, ta ni izpad.
+function tunnelDown(res) {
+  const code = res.headers.get("ngrok-error-code");
+  return (code && code !== "ERR_NGROK_6024") || [502, 504, 530].includes(res.status);
+}
+
 function withTimeout(promise, ms) {
   return new Promise((resolve, reject) => {
     const t = setTimeout(() => reject(new Error("timeout")), ms);
@@ -69,6 +77,7 @@ function withTimeout(promise, ms) {
 async function networkFirst(req, cacheName, ms) {
   const cache = await caches.open(cacheName);
   const net = fetch(req).then((res) => {
+    if (tunnelDown(res)) throw new Error("tunnel down");
     if (res.ok && res.type === "basic") cache.put(req, res.clone()).catch(() => null);
     return res;
   });

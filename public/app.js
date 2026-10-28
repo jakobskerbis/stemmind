@@ -21,6 +21,19 @@ import { initFeedback, showFeedback } from "./feedback.js";
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
 const fromPack = (url, opts) => (state.student ? offlineApi(state.student.id, url, opts) : undefined);
+// Računalnik s STEMMind je ugasnjen ali okno ni odprto: ngrok ali Cloudflare vrneta
+// svojo napako. Takrat delamo kot brez povezave (vaje iz shranjenega paketa).
+function serverDown(res) {
+  const code = res.headers.get("ngrok-error-code");
+  const down = !!(code && code !== "ERR_NGROK_6024") || [502, 504, 530].includes(res.status);
+  if (down !== serverIsDown) {
+    serverIsDown = !!down;
+    setTimeout(() => syncOfflineBanner(), 0);
+  }
+  return down;
+}
+let serverIsDown = false;
+
 const api = async (url, opts = {}) => {
   if (/\/tasks\/off-/.test(url)) {
     const local = fromPack(url, opts);
@@ -37,7 +50,7 @@ const api = async (url, opts = {}) => {
   } catch {
     res = null;
   }
-  if (!res || (res.status === 503 && res.headers.get("X-Offline"))) {
+  if (!res || (res.status === 503 && res.headers.get("X-Offline")) || serverDown(res)) {
     const local = fromPack(url, opts);
     if (local !== undefined) return local;
     throw new Error(t("off.noConnection"));
@@ -552,7 +565,7 @@ function syncOfflineBanner() {
   const box = $("#offline-banner");
   if (!box || !state.student) return;
   const sid = state.student.id;
-  const off = !navigator.onLine;
+  const off = !navigator.onLine || serverIsDown;
   const n = packTaskCount(sid);
   const pending = pendingCount(sid);
   box.hidden = !off && !pending;
