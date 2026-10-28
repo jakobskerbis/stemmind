@@ -124,7 +124,8 @@ export function languageOptions(selected = lang) {
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   return list
     .map(([code, native, english]) => {
-      const label = native === english ? native : `${native} (${english})`;
+      // Isolating the English name keeps "العربية (Arabic)" readable in both directions.
+      const label = native === english ? native : `${native} (\u2068${english}\u2069)`;
       return `<option value="${code}" ${code === selected ? "selected" : ""}>${esc(label)}</option>`;
     })
     .join("");

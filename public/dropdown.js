@@ -24,7 +24,7 @@ export function enhanceSelect(sel) {
   btn.className = "dd-btn";
   btn.setAttribute("aria-haspopup", "listbox");
   btn.setAttribute("aria-expanded", "false");
-  btn.innerHTML = `<span class="dd-label"></span>${CHEVRON}`;
+  btn.innerHTML = `<span class="dd-label" dir="auto"></span>${CHEVRON}`;
   const label = sel.getAttribute("aria-label") || sel.labels?.[0]?.textContent?.trim();
   if (label) btn.setAttribute("aria-label", label);
   sel.before(wrap);
@@ -80,7 +80,7 @@ function open(sel, btn) {
   function optHtml(o) {
     if (o.hidden) return "";
     const i = o.index;
-    return `<div class="dd-opt" role="option" data-i="${i}" aria-selected="${i === current}"${o.disabled ? ' aria-disabled="true"' : ""}><span>${esc(o.textContent)}</span>${CHECK}</div>`;
+    return `<div class="dd-opt" role="option" data-i="${i}" aria-selected="${i === current}"${o.disabled ? ' aria-disabled="true"' : ""}><span dir="auto">${esc(o.textContent)}</span>${CHECK}</div>`;
   }
   // Dolg seznam (npr. jeziki) ima na vrhu iskalnik: <select data-search data-search-ph="Išči …">.
   const searchable = sel.hasAttribute("data-search");
@@ -189,7 +189,7 @@ function onKey(state, e, inSearch = false) {
   else if (!inSearch && e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
     typed = Date.now() - typedAt > 700 ? e.key.toLowerCase() : typed + e.key.toLowerCase();
     typedAt = Date.now();
-    const i = state.items.findIndex((el) => el.textContent.trim().toLowerCase().startsWith(typed));
+    const i = state.items.findIndex((el) => el.textContent.replace(/[\u2066-\u2069]/g, "").trim().toLowerCase().startsWith(typed));
     if (i >= 0) setActive(state, i);
   }
 }
