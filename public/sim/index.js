@@ -108,6 +108,13 @@ export const ENGINES = {
   prenos: ["fiz-toplota.js", "prenos"],
   raztezanje: ["fiz-toplota.js", "raztezanje"],
   pv: ["fiz-toplota.js", "pv"],
+  // fizika: elektrika in magnetizem
+  naboji: ["fiz-elektro.js", "naboji"],
+  "krog-el": ["fiz-elektro.js", "krogEl"],
+  poraba: ["fiz-elektro.js", "poraba"],
+  magnet: ["fiz-elektro.js", "magnet"],
+  lorentz: ["fiz-elektro.js", "lorentz"],
+  indukcija: ["fiz-elektro.js", "indukcija"],
   // zbirka več simulacij (za mešane maturitetne naloge)
   zbirka: ["index.js", "zbirka"],
 };
