@@ -19,6 +19,7 @@ import { mountAccounts } from "./accounts/index.js";
 import { passwordGate } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
+import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -82,7 +83,9 @@ export function createApp(store, opts = {}) {
     return c;
   };
 
-  app.get("/api/config", (_req, res) => {
+  mountFeedback(app, store, { usage, file: opts.feedbackFile ?? null, createFn: opts.feedbackCreateFn });
+
+  app.get("/api/config", (req, res) => {
     res.json({
       mock: isMockMode(),
       model: MODEL,
@@ -90,6 +93,7 @@ export function createApp(store, opts = {}) {
       enums: ENUMS,
       defaults: DEFAULT_SETTINGS,
       daily_questions: LIMITS.dailyQuestions() || null,
+      feedback: { prompt: feedbackPromptOn(), ai: feedbackAiOn(), admin: isLocalRequest(req) },
     });
   });
 
