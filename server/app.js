@@ -344,6 +344,7 @@ export function createApp(store, opts = {}) {
       ...view,
       interactive: false,
       locked: { demo: view.demo?.title || null, phet: !!view.phet },
+      demos: [],
       demo: null,
       phet: null,
     });

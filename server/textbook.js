@@ -9,49 +9,20 @@ import { fileURLToPath } from "node:url";
 import { getTopic, getPath, listPaths, topicOrder } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
 import { hasGenerator } from "./practice/index.js";
+import { simsForTopic } from "../public/sim/katalog.js";
+import { hasEngine } from "../public/sim/index.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const LESSONS_DIR = process.env.STEMMIND_LESSONS || path.join(here, "..", "content", "lessons");
 
-// Lastne interaktivne demonstracije (public/demos.js) in teme, kjer se pokažejo.
-export const DEMOS = {
-  linearna: {
-    title: "Graf funkcije y = kx + n",
-    topics: ["MAT-OS-9/linearna-funkcija", "MAT-OS-9/graf-linearne-funkcije", "MAT-SS-1/linearna-funkcija", "MAT-OS-7/premo-sorazmerje"],
-  },
-  pitagora: {
-    title: "Pitagorov izrek s kvadrati",
-    topics: ["MAT-OS-8/pitagorov-izrek", "MAT-OS-8/uporaba-pitagorovega-izreka"],
-  },
-  ulomki: {
-    title: "Ulomek kot del celote",
-    topics: ["MAT-OS-6/ulomek-kot-del-celote", "MAT-OS-7/razsirjanje-in-krajsanje-ulomkov", "MAT-OS-7/primerjanje-in-urejanje-ulomkov"],
-  },
-  ohm: {
-    title: "Ohmov zakon v električnem krogu",
-    topics: ["FIZ-OS-9/upor-in-ohmov-zakon", "FIZ-OS-9/elektricni-tok-in-napetost", "FIZ-SS-2/elektricni-tok"],
-  },
-  "prosti-pad": {
-    title: "Prosti pad na Zemlji, Luni in Marsu",
-    topics: ["FIZ-OS-9/prosti-pad", "FIZ-SS-1/prosti-pad-in-navpicni-met", "FIZ-OS-8/pospeseno-gibanje"],
-  },
-  nihalo: {
-    title: "Matematično nihalo",
-    topics: ["FIZ-SS-3/nihanje"],
-  },
-  plini: {
-    title: "Plin v posodi: tlak, prostornina, temperatura",
-    topics: ["FIZ-SS-2/plinska-enacba", "KEM-SS-1/plini"],
-  },
-  enacbe: {
-    title: "Urejanje kemijskih enačb",
-    topics: ["KEM-OS-8/urejanje-kemijskih-enacb", "KEM-SS-1/urejanje-enacb", "KEM-OS-8/kemijska-reakcija"],
-  },
-  ph: {
-    title: "pH lestvica",
-    topics: ["KEM-OS-8/ph-lestvica", "KEM-SS-2/ph", "KEM-OS-8/kisline-in-baze", "KEM-SS-2/kisline-in-baze"],
-  },
-};
+// Lastne interaktivne simulacije (public/sim/). Katera se pokaže pri kateri temi,
+// je zapisano v public/sim/katalog.js; prikažemo samo že narejene.
+export function simsFor(topicId, lesson = loadLesson(topicId)) {
+  const list = simsForTopic(topicId).filter((d) => hasEngine(d.id));
+  const extra = lesson?.meta.demo;
+  if (extra && hasEngine(extra) && !list.some((d) => d.id === extra)) list.unshift({ id: extra, title: "Interaktivni poskus", opts: {} });
+  return list;
+}
 
 // Simulacije PhET (University of Colorado Boulder, CC BY 4.0), za teme brez
 // lastne demonstracije ali kot dodatek. Ime = mapa simulacije na phet.colorado.edu.
@@ -118,9 +89,6 @@ export const PHET = {
   "KEM-SS-1/raztopine": "molarity",
   "KEM-SS-1/plini": "gas-properties",
 };
-
-const DEMO_BY_TOPIC = {};
-for (const [id, d] of Object.entries(DEMOS)) for (const t of d.topics) DEMO_BY_TOPIC[t] ??= id;
 
 export function phetUrl(sim) {
   return `https://phet.colorado.edu/sims/html/${sim}/latest/${sim}_all.html?locale=sl`;
@@ -211,8 +179,9 @@ export function lessonView(topicId) {
   const t = getTopic(topicId);
   if (!t) return null;
   const lesson = loadLesson(topicId);
-  const demo = lesson?.meta.demo && DEMOS[lesson.meta.demo] ? lesson.meta.demo : DEMO_BY_TOPIC[topicId] || null;
-  const sim = lesson?.meta.phet || PHET[topicId] || null;
+  const demos = simsFor(topicId, lesson);
+  // PhET le še tam, kjer lastne simulacije še ni.
+  const sim = demos.length ? null : PHET[topicId] || null;
   const order = topicOrder(t.path);
   const i = order.findIndex((x) => x.id === topicId);
   const nav = (x) => (x ? { id: x.id, name: x.name } : null);
@@ -229,7 +198,8 @@ export function lessonView(topicId) {
       : null,
     // Če lekcije še ni, pokažemo vsaj kratko razlago teme (če obstaja).
     explanation: lesson ? null : getExplanation(topicId)?.text || null,
-    demo: demo ? { id: demo, title: DEMOS[demo].title } : null,
+    demos,
+    demo: demos[0] || null,
     phet: sim ? { sim, url: phetUrl(sim) } : null,
     practice: hasGenerator(topicId),
     prev: nav(order[i - 1]),
@@ -251,8 +221,8 @@ export function tocView(pathKey) {
         id: t.id,
         name: t.name,
         lesson: !!loadLesson(t.id),
-        demo: !!DEMO_BY_TOPIC[t.id],
-        phet: !!PHET[t.id],
+        demo: simsFor(t.id).length > 0,
+        phet: !simsFor(t.id).length && !!PHET[t.id],
         practice: hasGenerator(t.id),
       })),
     })),
@@ -275,7 +245,7 @@ export function searchTextbook(q, { subject, limit = 30 } = {}) {
     for (const t of topicOrder(p.key)) {
       const lesson = loadLesson(t.id);
       const title = fold(t.name);
-      const meta = fold(`${t.goals} ${t.unit} ${DEMO_BY_TOPIC[t.id] ? DEMOS[DEMO_BY_TOPIC[t.id]].title : ""}`);
+      const meta = fold(`${t.goals} ${t.unit} ${simsFor(t.id, lesson).map((d) => d.title).join(" ")}`);
       const text = lesson ? fold([...lesson.sections, ...lesson.alternatives].map((s) => `${s.title} ${s.md}`).join(" ")) : "";
       let score = 0;
       for (const w of words) {

@@ -541,6 +541,7 @@ export function trikotnik(el, { mode = "vrste" } = {}) {
     place();
   };
   const place = dragPoints(svg, top, pts, draw, { bounds: [10, 10, 330, 280] });
+  if (mode === "tocke") show.T = true;
   const ctl = mode === "tocke" ? [buttons(...["O", "S", "T", "H"].map((k) => toggle({ O: "simetrale stranic", S: "simetrale kotov", T: "težiščnice", H: "višine" }[k], show[k], (v) => ((show[k] = v), draw()))))] : [];
   layout(el, {
     stage: [svg],
@@ -548,7 +549,6 @@ export function trikotnik(el, { mode = "vrste" } = {}) {
     out,
     tryText: mode === "tocke" ? "Vklopi vse štiri. Povleci C tako, da je trikotnik topokoten. Katere točke pridejo ven?" : mode === "izreki" ? "Naredi kot γ pravi. V kaj se spremeni kosinusni izrek?" : "Povleci oglišča in naredi enakokraki pravokotni trikotnik. Koliko merita ostra kota?",
   });
-  if (mode === "tocke") show.T = true;
   draw();
 }
 

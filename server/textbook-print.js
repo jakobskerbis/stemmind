@@ -3,7 +3,7 @@
 import katex from "katex";
 import { marked } from "marked";
 import { getPath, getTopic, topicOrder } from "./curriculum.js";
-import { loadLesson, DEMOS } from "./textbook.js";
+import { loadLesson, simsFor } from "./textbook.js";
 
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -21,10 +21,7 @@ export function renderMd(text) {
     .replace(/@@MATH(\d+)@@/g, (_, i) => katex.renderToString(math[i].tex, { displayMode: math[i].display, throwOnError: false, strict: "ignore" }));
 }
 
-const demoFor = (topicId, lesson) => {
-  const id = lesson.meta.demo && DEMOS[lesson.meta.demo] ? lesson.meta.demo : Object.keys(DEMOS).find((k) => DEMOS[k].topics.includes(topicId));
-  return id ? DEMOS[id] : null;
-};
+const demoFor = (topicId, lesson) => simsFor(topicId, lesson)[0] || null;
 
 function lessonHtml(t, lesson, n) {
   const demo = demoFor(t.id, lesson);

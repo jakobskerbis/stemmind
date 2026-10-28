@@ -1,5 +1,5 @@
 // Učbenik: kazalo, iskanje in lekcije z interaktivnimi demonstracijami.
-import { mountDemo } from "./demos.js";
+import { mountSim } from "./sim/index.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
@@ -159,8 +159,9 @@ async function renderLesson(topicId) {
   const altAt = explainAt >= 0 ? explainAt : 0;
 
   const locked = !L.interactive && (L.locked?.demo || L.locked?.phet);
-  const demoHtml = L.demo
-    ? `<section class="card tb-demo"><h2>${ic("flask-conical")}Preizkusi sam: ${esc(L.demo.title)}</h2><div id="tb-demo-mount"></div></section>`
+  const demos = L.demos || (L.demo ? [L.demo] : []);
+  const demoHtml = demos.length
+    ? demos.map((d, i) => `<section class="card tb-demo"><h2>${ic("flask-conical")}Preizkusi sam: ${esc(d.title)}</h2><div class="tb-demo-mount" data-sim="${i}"></div></section>`).join("")
     : locked
       ? `<section class="card tb-locked"><h2>${ic("lock")}${L.locked.demo ? `Poskus: ${esc(L.locked.demo)}` : "Simulacija"}</h2>
           <p>Interaktivni poskusi, simulacije in sprotno preverjanje so na voljo v plačljivem paketu in med 7-dnevnim preizkusom. Besedilo lekcije in PDF sta brezplačna.</p>
@@ -244,7 +245,10 @@ async function renderLesson(topicId) {
     tb.topicId = null;
     renderHome();
   });
-  if (L.demo) mountDemo(L.demo.id, $("#tb-demo-mount"));
+  box.querySelectorAll(".tb-demo-mount").forEach((m) => {
+    const d = demos[Number(m.dataset.sim)];
+    mountSim(d.id, m, d.opts);
+  });
   $("#tb-upgrade")?.addEventListener("click", () => ctx.showView("account"));
   $("#tb-phet-load")?.addEventListener("click", () => {
     $("#tb-phet-mount").innerHTML = `<div class="tb-frame"><iframe src="${esc(L.phet.url)}" title="Simulacija PhET" allowfullscreen loading="lazy"></iframe></div>`;
