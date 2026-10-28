@@ -7,6 +7,7 @@ import { KEM_GENERATORS } from "./generators/kem.js";
 import { UNI_GENERATORS } from "./generators/uni.js";
 import { TEK_MAT_OS } from "./generators/tek-mat-os.js";
 import { TEK_MAT_SS } from "./generators/tek-mat-ss.js";
+import { TEK_FIZ } from "./generators/tek-fiz.js";
 
 export const GENERATORS = [
   ...MAT_GENERATORS,
@@ -16,6 +17,7 @@ export const GENERATORS = [
   // Tekmovanja (razdelek »Tekmovanja«): samo težje naloge v slogu tekmovanj.
   ...TEK_MAT_OS,
   ...TEK_MAT_SS,
+  ...TEK_FIZ,
 ];
 
 const BY_TOPIC = {};
