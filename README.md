@@ -56,6 +56,8 @@ Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac
 | `STEMMIND_EXPLAIN_MODEL` | `claude-opus-5-5` | Model za skript z razlagami. |
 | `STEMMIND_DB` | `data/stemmind.db` | Pot do baze SQLite. Mora biti na trajnem disku. |
 | `STEMMIND_DEBUG` | `0` | `1` omogoči `/api/students/:id/prompt` (ogled sestavljenega prompta). |
+| `STEMMIND_FEEDBACK_PROMPT` | `1` | Kartica »Kako ti je všeč STEMMind?« na Učni poti in zavihek Mnenje (za testno različico). `0` ju skrije; vprašalnik ostane pod Jaz. |
+| `STEMMIND_FEEDBACK_AI` | `0` | `1` = pogovor za povratne informacije vodi Haiku (največ 6 vprašanj, ~0,1 ¢ na pogovor). Privzeto pripravljena vprašanja, brez stroškov. |
 | `PORT` | `3000` | Vrata strežnika. |
 
 ## Starševski računi in plačila
@@ -133,6 +135,7 @@ server/curriculum*.js      učne poti po učnem načrtu (osnutek, naj ga pregled
 server/practice/           generatorji nalog in preverjanje odgovorov
 server/progress.js         napredovanje, ponavljanje, preizkus znanja, XP
 server/usage.js            beleženje porabe in omejitve
+server/feedback.js         povratne informacije testerjev (vprašalnik, pogovor, povzetek); glej docs/povratne-informacije.md
 public/pad.js              vnos z dotikom (tipke, pisanje, branje rokopisa)
 scripts/                   ustvarjanje razlag (Batch API)
 public/                    vmesnik (brez ogrodja)

@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="textbook.css">
   <link rel="stylesheet" href="leagues.css">
   <link rel="stylesheet" href="competition.css">
+  <link rel="stylesheet" href="feedback.css">
   <link rel="stylesheet" href="touch.css">
 </head>
 <body>
@@ -31,6 +32,7 @@
       <button class="tab" data-view="settings"><i data-icon="settings"></i><span data-i18n="nav.settings">Nastavitve</span></button>
       <button class="tab" data-view="account" id="account-tab" hidden><i data-icon="user"></i><span data-i18n="nav.account">Račun</span></button>
       <button class="tab" data-view="league"><i data-icon="trophy"></i><span data-i18n="nav.league">Lige</span></button>
+      <button class="tab" data-view="feedback" id="feedback-tab" hidden><i data-icon="message-square-heart"></i><span data-i18n="nav.feedbackShort">Mnenje</span></button>
     </nav>
     <div id="xp-badge" class="xp-badge">
       <span class="stat xp" title="Točke izkušenj (XP)" data-i18n-title="xp.title"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span></span>
@@ -62,6 +64,7 @@
     <p id="path-note" class="muted path-note" hidden></p>
     <p id="lang-note" class="muted path-note" hidden data-i18n="path.curriculumNote"></p>
     <div id="level-card" class="level-slot" hidden></div>
+    <div id="feedback-card" hidden></div>
     <div id="xp-card" class="card xp-card"></div>
     <nav id="modebar" class="modes" aria-label="Način učenja" data-i18n-aria="path.modes">
       <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span class="m-name" data-i18n="mode.new">Nova snov</span><span class="m-sub" data-i18n="mode.newSub">Nadaljuj, kjer si ostal</span></button>
@@ -234,6 +237,7 @@
       <button type="button" class="list-row" data-go="progress"><span class="ic"><i data-icon="chart-column"></i></span><span class="lr-text"><b data-i18n="nav.progress">Napredek</b><small data-i18n="me.progressSub">Šibke točke, aktivnost in teme</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="league"><span class="ic"><i data-icon="trophy"></i></span><span class="lr-text"><b data-i18n="nav.league">Lige</b><small data-i18n="me.leagueSub">Tedenska lestvica, razred in prijatelji</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="settings"><span class="ic"><i data-icon="settings"></i></span><span class="lr-text"><b data-i18n="nav.settings">Nastavitve</b><small data-i18n="me.settingsSub">Profil, šola, jezik, videz in barve</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="feedback"><span class="ic"><i data-icon="message-square-heart"></i></span><span class="lr-text"><b data-i18n="nav.feedback">Povratne informacije</b><small data-i18n="me.feedbackSub">Povej, kaj je dobro in kaj ne</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="account" id="me-account" hidden><span class="ic"><i data-icon="user"></i></span><span class="lr-text"><b data-i18n="nav.account">Račun</b><small data-i18n="me.accountSub">Naročnina in otroci</small></span><i data-icon="chevron-right"></i></button>
     </div>
   </main>
@@ -243,6 +247,13 @@
     <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
     <h1 data-i18n="nav.league">Lige</h1>
     <div id="league-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
+  </main>
+
+  <!-- POVRATNE INFORMACIJE (feedback.js): vprašalnik, pogovor z inštruktorjem, zbrana mnenja -->
+  <main id="view-feedback" class="view narrow" hidden>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <h1 data-i18n="nav.feedback">Povratne informacije</h1>
+    <div id="feedback-content"></div>
   </main>
 
   <!-- SPODNJA VRSTICA (telefon) -->
