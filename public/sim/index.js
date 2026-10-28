@@ -102,6 +102,12 @@ export const ENGINES = {
   trki: ["fiz-energija.js", "trki"],
   krozenje: ["fiz-energija.js", "krozenje"],
   orbita: ["fiz-energija.js", "orbita"],
+  // fizika: toplota
+  delci: ["fiz-toplota.js", "delci"],
+  mesanje: ["fiz-toplota.js", "mesanje"],
+  prenos: ["fiz-toplota.js", "prenos"],
+  raztezanje: ["fiz-toplota.js", "raztezanje"],
+  pv: ["fiz-toplota.js", "pv"],
   // zbirka več simulacij (za mešane maturitetne naloge)
   zbirka: ["index.js", "zbirka"],
 };
