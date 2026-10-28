@@ -101,6 +101,13 @@ function setTab(tab) {
   pad.dataset.tab = tab;
   pad.querySelectorAll("[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
   if (tab === "draw") ink.fit();
+  // Plošča za pisanje je višja: naloga naj ostane vidna nad njo.
+  if (!pad.hidden && padIsSheet()) showTask();
+}
+
+function showTask() {
+  const card = cur?.form.closest(".task");
+  requestAnimationFrame(() => card?.scrollIntoView({ block: "start" }));
 }
 
 function syncValue() {
@@ -225,8 +232,7 @@ export function openPad(tab) {
   if (isTouch()) cur.input.setAttribute("inputmode", "none");
   document.documentElement.style.setProperty("--pad-h", pad.offsetHeight + "px");
   // Naloga naj bo na vrhu vidnega dela.
-  const card = cur.form.closest(".task");
-  requestAnimationFrame(() => card?.scrollIntoView({ block: "start" }));
+  showTask();
 }
 
 // Ali je plošča odprta kot list čez spodnji del zaslona (telefon pokončno) in ne ob strani.

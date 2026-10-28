@@ -157,8 +157,9 @@ a.btn-secondary svg { color: var(--accent); }
 .me-stats b { font-size: 1.35rem; font-weight: 900; line-height: 1.1; }
 .me-stats span:last-child { font-size: 0.82rem; color: var(--muted); font-weight: 700; }
 
-/* ---------- široki zasloni: več stolpcev, da je več informacij hkrati na pregledu ---------- */
-@media (min-width: 1200px) {
+/* ---------- široki zasloni: več stolpcev, da je več informacij hkrati na pregledu ----------
+   Enako na tablici ležeče (na dotik, od 1000 px); ožji stolpci zanjo so v touch.css. */
+@media (min-width: 1200px), (min-width: 1000px) and (hover: none) and (pointer: coarse) {
   /* Učna pot: levo izbira, trening in načini (ostanejo vidni), desno sklopi in teme. */
   #view-path { max-width: 1320px; display: grid; grid-template-columns: minmax(360px, 440px) minmax(0, 1fr); gap: 0 28px; align-items: start; align-content: start; }
   #view-path > .path-side { position: sticky; top: 0; }
@@ -215,7 +216,7 @@ a.btn-secondary svg { color: var(--accent); }
 }
 @media (min-width: 1700px) { body.pad-open #view-topic > #topic-content:has(.topic-grid) { max-width: 1300px; } }
 /* Razlaga ob seriji nalog je samo za široke zaslone (na telefonu bi bila predolga). */
-@media (max-width: 1199px) { #session-side { display: none !important; } }
+@media (max-width: 999px), (max-width: 1199px) and (hover: hover), (max-width: 1199px) and (pointer: fine) { #session-side { display: none !important; } }
 body.pad-open #session-side { display: none !important; }
 @media (min-width: 1700px) {
   body.pad-open #session-side:not([hidden]) { display: block !important; }
