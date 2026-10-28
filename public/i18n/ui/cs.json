@@ -445,5 +445,11 @@
   "off.bannerEmpty": "Jsi offline. Až budeš znovu online, úlohy k procvičování se uloží do zařízení.",
   "off.pending": "Odpovědi z režimu offline čekají na odeslání ({n}).",
   "off.synced": "Odeslané odpovědi z režimu offline: {n}.",
-  "off.xpLater": "XP po připojení"
+  "off.xpLater": "XP po připojení",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Aktivní žáci: {active} · průměrně {avg} € na žáka · {msg} € na odpověď · odhad za celý měsíc: {proj} €",
+  "usage.saved": "Odpovědi bez volání AI (znovu použité odpovědi a nápovědy z procvičování): {count}",
+  "usage.limits": "Limity na žáka: {deep}× podrobné vysvětlení denně; nad {soft} $ měsíčně rychlejší model; nad {hard} $ měsíčně jen procvičování.",
+  "usage.savedCol": "Bez AI",
+  "usage.model": "Model"
 }

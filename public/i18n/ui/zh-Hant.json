@@ -430,5 +430,11 @@
   "off.bannerEmpty": "你已離線。重新連線後，練習題會儲存到裝置上。",
   "off.pending": "離線作答的答案等待傳送（{n}）。",
   "off.synced": "已傳送離線答案：{n}。",
-  "off.xpLater": "連線後獲得 XP"
+  "off.xpLater": "連線後獲得 XP",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "活躍學生：{active} · 平均每名學生 {avg} € · 每則回覆 {msg} € · 本月全月預估：{proj} €",
+  "usage.saved": "無需呼叫 AI 的回覆（重複使用的答案和練習提示）：{count}",
+  "usage.limits": "每名學生的限額：每天 {deep} 次詳細講解；每月超過 {soft} $ 改用更快的模型；每月超過 {hard} $ 只能練習。",
+  "usage.savedCol": "無 AI",
+  "usage.model": "模型"
 }

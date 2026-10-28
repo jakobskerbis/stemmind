@@ -430,5 +430,11 @@
   "off.bannerEmpty": "Kamu sedang offline. Saat online lagi, soal latihan akan disimpan di perangkat.",
   "off.pending": "Jawaban offline menunggu dikirim ({n}).",
   "off.synced": "Jawaban offline terkirim: {n}.",
-  "off.xpLater": "XP saat online"
+  "off.xpLater": "XP saat online",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Siswa aktif: {active} · rata-rata {avg} € per siswa · {msg} € per jawaban · perkiraan sebulan penuh: {proj} €",
+  "usage.saved": "Jawaban tanpa panggilan AI (jawaban yang dipakai ulang dan petunjuk latihan): {count}",
+  "usage.limits": "Batas per siswa: {deep}× penjelasan rinci per hari; di atas {soft} $ per bulan model yang lebih cepat; di atas {hard} $ per bulan hanya latihan.",
+  "usage.savedCol": "Tanpa AI",
+  "usage.model": "Model"
 }

@@ -435,5 +435,11 @@
   "off.bannerEmpty": "Uko nje ya mtandao. Ukiunganishwa tena, mazoezi yatahifadhiwa kwenye kifaa.",
   "off.pending": "Majibu ya nje ya mtandao yanasubiri kutumwa ({n}).",
   "off.synced": "Majibu ya nje ya mtandao yametumwa: {n}.",
-  "off.xpLater": "XP ukiwa mtandaoni"
+  "off.xpLater": "XP ukiwa mtandaoni",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Wanafunzi hai: {active} · wastani {avg} € kwa mwanafunzi · {msg} € kwa jibu · makadirio ya mwezi mzima: {proj} €",
+  "usage.saved": "Majibu bila kuita AI (majibu yaliyotumika tena na vidokezo vya mazoezi): {count}",
+  "usage.limits": "Mipaka kwa kila mwanafunzi: maelezo ya kina {deep}× kwa siku; zaidi ya {soft} $ kwa mwezi modeli ya haraka zaidi; zaidi ya {hard} $ kwa mwezi mazoezi tu.",
+  "usage.savedCol": "Bila AI",
+  "usage.model": "Modeli"
 }

@@ -445,5 +445,11 @@
   "off.bannerEmpty": "Jesteś offline. Gdy znów będziesz online, zadania do ćwiczeń zapiszą się na urządzeniu.",
   "off.pending": "Odpowiedzi z trybu offline czekają na wysłanie ({n}).",
   "off.synced": "Wysłane odpowiedzi z trybu offline: {n}.",
-  "off.xpLater": "XP po połączeniu"
+  "off.xpLater": "XP po połączeniu",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Aktywni uczniowie: {active} · średnio {avg} € na ucznia · {msg} € na odpowiedź · szacunek na cały miesiąc: {proj} €",
+  "usage.saved": "Odpowiedzi bez wywołania AI (ponownie użyte odpowiedzi i podpowiedzi z ćwiczeń): {count}",
+  "usage.limits": "Limity na ucznia: {deep}× szczegółowe wyjaśnienie dziennie; powyżej {soft} $ miesięcznie szybszy model; powyżej {hard} $ miesięcznie tylko ćwiczenia.",
+  "usage.savedCol": "Bez AI",
+  "usage.model": "Model"
 }

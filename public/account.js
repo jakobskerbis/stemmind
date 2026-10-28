@@ -381,6 +381,15 @@ const STATUS_TEXT = {
   paused: "zaustavljena",
 };
 
+
+// Poraba inštruktorja ta mesec kot delež mesečne omejitve (brez zneskov).
+function aiPill(a) {
+  if (!a || a.percent == null) return "";
+  if (a.hard_reached) return `<span class="pill warn" title="Inštruktor bo spet na voljo 1. v mesecu. Vadnica deluje naprej.">inštruktor ta mesec porabljen</span>`;
+  const extra = a.soft_reached ? " · podrobne razlage pripravlja hitrejši model" : "";
+  return `<span class="pill" title="Delež mesečne omejitve za AI inštruktorja">AI ta mesec ${a.percent} %${extra}</span>`;
+}
+
 function planText(acc) {
   const { access, parent } = acc;
   const sub = parent.subscription;
@@ -441,7 +450,7 @@ async function renderAccount() {
       <ul class="child-list">${acc.children
         .map((c) => `<li><b>${esc(c.name)}</b> <span class="muted">(${c.birth_year || "–"})</span> ${
           c.premium ? `<span class="pill ok">poln dostop</span>` : `<span class="pill">brezplačni paket · danes ${c.questions_today}/${acc.free_daily_questions}</span>`
-        }</li>`)
+        } ${aiPill(c.ai_month)}</li>`)
         .join("")}</ul>
       ${acc.children
         .filter((c) => c.devices.length > acc.device_warn_limit)

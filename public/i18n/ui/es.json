@@ -435,5 +435,11 @@
   "off.bannerEmpty": "Estás sin conexión. Cuando vuelvas a conectarte, los ejercicios se guardarán en el dispositivo.",
   "off.pending": "Las respuestas hechas sin conexión esperan para enviarse ({n}).",
   "off.synced": "Respuestas sin conexión enviadas: {n}.",
-  "off.xpLater": "XP al conectarte"
+  "off.xpLater": "XP al conectarte",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Estudiantes activos: {active} · media {avg} € por estudiante · {msg} € por respuesta · estimación del mes completo: {proj} €",
+  "usage.saved": "Respuestas sin llamada a la IA (respuestas reutilizadas y pistas de práctica): {count}",
+  "usage.limits": "Límites por estudiante: {deep}× explicación detallada al día; por encima de {soft} $ al mes un modelo más rápido; por encima de {hard} $ al mes solo práctica.",
+  "usage.savedCol": "Sin IA",
+  "usage.model": "Modelo"
 }

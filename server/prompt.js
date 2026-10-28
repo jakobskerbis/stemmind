@@ -58,14 +58,14 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
 
 // Razdeli sestavljeni prompt na stalni del (predpomnjen) in del z nastavitvami.
 // Vrne bloke za polje `system` Claude API; če oznake ni, en sam blok.
-export function systemBlocks(prompt, { cacheStatic = true } = {}) {
+export function systemBlocks(prompt, { cacheStatic = true, ttl = null } = {}) {
   const at = prompt.indexOf(SPLIT_MARKER);
   if (at === -1) return [{ type: "text", text: prompt }];
   const end = prompt.indexOf("\n", at);
   const staticPart = prompt.slice(0, at).trimEnd();
   const dynamicPart = (end === -1 ? "" : prompt.slice(end + 1)).trim();
   const blocks = [{ type: "text", text: staticPart }];
-  if (cacheStatic) blocks[0].cache_control = { type: "ephemeral" };
+  if (cacheStatic) blocks[0].cache_control = ttl ? { type: "ephemeral", ttl } : { type: "ephemeral" };
   if (dynamicPart) blocks.push({ type: "text", text: dynamicPart });
   return blocks;
 }
