@@ -1,6 +1,6 @@
 // Tanek odjemalec za Stripe REST API (brez dodatne knjižnice) in preverjanje webhookov.
 import crypto from "node:crypto";
-import { PLANS } from "./plans.js";
+import { plansFor } from "./plans.js";
 
 const API = "https://api.stripe.com/v1";
 
@@ -44,25 +44,29 @@ export class Stripe {
     return body;
   }
 
-  // Izdelek in štiri cene (po lookup_key). Ustvari jih, če manjkajo.
-  // Če se znesek v PLANS spremeni, ustvari novo ceno (lookup_key se prenese nanjo)
+  // Izdelek in štiri cene v valuti (po lookup_key). Ustvari jih, če manjkajo.
+  // EUR: cene iz PLANS; regijske valute (INR, NGN …) imajo svoje cene istega izdelka.
+  // Če se znesek spremeni, ustvari novo ceno (lookup_key se prenese nanjo)
   // in staro arhivira; obstoječe naročnine ostanejo pri stari ceni.
-  async ensurePrices() {
-    const amounts = Object.fromEntries(PLANS.map((p) => [p.key, p.amount]));
-    const cached = this.kv?.get("stripe_prices");
+  async ensurePrices(currency = "EUR") {
+    const cacheKey = currency === "EUR" ? "stripe_prices" : `stripe_prices_${currency}`;
+    const plans = plansFor(currency);
+    const amounts = Object.fromEntries(plans.map((p) => [p.key, p.amount]));
+    const cached = this.kv?.get(cacheKey);
     if (cached) {
       const c = JSON.parse(cached);
       if (JSON.stringify(c.amounts) === JSON.stringify(amounts)) return c;
     }
-    const found = await this.request("GET", "/prices", { lookup_keys: PLANS.map((p) => p.key), active: "true", limit: 10 });
+    const found = await this.request("GET", "/prices", { lookup_keys: plans.map((p) => p.key), active: "true", limit: 10 });
     const existing = Object.fromEntries(found.data.map((p) => [p.lookup_key, p]));
     let product = found.data[0]?.product;
+    if (!product && currency !== "EUR") product = (await this.ensurePrices("EUR")).product;
     if (!product) {
       product = (await this.request("POST", "/products", { name: "STEMMind", description: "AI inštruktor za matematiko, fiziko in kemijo" })).id;
     }
     const byKey = {};
     let replaced = false;
-    for (const plan of PLANS) {
+    for (const plan of plans) {
       const old = existing[plan.key];
       if (old && old.unit_amount === plan.amount) {
         byKey[plan.key] = old.id;
@@ -70,12 +74,12 @@ export class Stripe {
       }
       const price = await this.request("POST", "/prices", {
         product,
-        currency: "eur",
+        currency: currency.toLowerCase(),
         unit_amount: plan.amount,
         tax_behavior: "inclusive",
         lookup_key: plan.key,
         transfer_lookup_key: old ? true : undefined,
-        nickname: plan.label,
+        nickname: currency === "EUR" ? plan.label : `${plan.label} (${currency})`,
         recurring: { interval: plan.interval },
         metadata: { seats: plan.seats },
       });
@@ -86,9 +90,9 @@ export class Stripe {
       }
     }
     const result = { product, prices: byKey, amounts };
-    this.kv?.set("stripe_prices", JSON.stringify(result));
-    // Portal za stranke našteva cene za preklop paketa: z novimi cenami se ustvari znova.
-    if (replaced) this.kv?.set("stripe_portal_config", "");
+    this.kv?.set(cacheKey, JSON.stringify(result));
+    // Portal za stranke našteva cene (EUR) za preklop paketa: z novimi cenami se ustvari znova.
+    if (replaced && currency === "EUR") this.kv?.set("stripe_portal_config", "");
     return result;
   }
 

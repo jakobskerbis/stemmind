@@ -2,6 +2,9 @@
 import { PATHS } from "./curriculum-data.js";
 import { UNI_PATHS, PROGRAMS, FACULTIES, FAC_SHORT, UNIVERSITIES } from "./university-data.js";
 import { ALL_SUBJECTS } from "./subjects.js";
+import { EN, EN_UNITS, INT_LEVELS, IN_PATHS, SUBJECT_EN } from "./region-curricula.js";
+import { SCHOOL_SYSTEMS, isRegional, gradeInfo, gradesOf } from "../public/regions.js";
+import { BANK, EXAMS, SUBJECT_NAMES_EN } from "./exam-data.js";
 
 export function slugify(s) {
   return s
@@ -30,6 +33,99 @@ for (const [key, p] of Object.entries({ ...PATHS, ...UNI_PATHS })) {
   BUILT[key] = { key, label: p.label, subject, school, grade: Number(grade), units };
 }
 
+// ---------- regijske poti (public/regions.js, server/region-curricula.js) ----------
+// Teme imajo »base«: osnovne teme, iz katerih vzamejo naloge, lekcije in simulacije.
+function addRegionPath(key, label, subject, school, grade, units, extra = {}) {
+  BUILT[key] = {
+    key,
+    label,
+    subject,
+    school,
+    grade,
+    region: true,
+    ...extra,
+    units: units.map(([title, topics], ui) => ({
+      title,
+      topics: topics.map(({ name, goals, base }) => {
+        for (const b of base) if (!TOPICS[b] || TOPICS[b].base) throw new Error(`${key}: osnovna tema ${b} ne obstaja`);
+        const topic = { id: `${key}/${slugify(name)}`, name, goals, unit: title, unitIndex: ui, path: key, subject, base };
+        if (TOPICS[topic.id]) throw new Error(`${key}: tema »${name}« se ponovi`);
+        TOPICS[topic.id] = topic;
+        return topic;
+      }),
+    })),
+  };
+}
+
+// Mednarodni načrt: slovenske poti z angleškimi imeni, po letih šolanja.
+for (const [subject, levels] of Object.entries(INT_LEVELS)) {
+  for (const [level, keys] of Object.entries(levels)) {
+    const units = keys.flatMap((k) =>
+      BUILT[k].units.map((u) => [
+        EN_UNITS[u.title] || u.title,
+        u.topics.map((t) => {
+          const [name, goals = ""] = (EN[t.id] || `${t.name} | ${t.goals}`).split("|").map((x) => x.trim());
+          return { name, goals, base: [t.id] };
+        }),
+      ]),
+    );
+    addRegionPath(`${subject}-INT-${level}`, `${SUBJECT_EN[subject]}, year ${level} of school`, subject, "INT", Number(level), units);
+  }
+}
+
+// Indija (CBSE / NCERT): "Ime | cilji => POT/tema, POT/tema".
+for (const [key, p] of Object.entries(IN_PATHS)) {
+  const [subject, , grade] = key.split("-");
+  const units = p.units.map(([title, topics]) => [
+    title,
+    topics.map((line) => {
+      const [text, refs = ""] = line.split("=>");
+      const [name, goals = ""] = text.split("|").map((x) => x.trim());
+      return { name, goals, base: refs.split(",").map((x) => x.trim()).filter(Boolean) };
+    }),
+  ]);
+  addRegionPath(key, p.label, subject, "IN", Number(grade), units);
+}
+
+// Banka izpitnih nalog (angleške naloge, server/exam-data.js): teme brez »base«, ki jih
+// izpitne poti uporabijo kot osnovo. Niso na nobenem seznamu poti.
+for (const [key, topics] of Object.entries(BANK)) {
+  const subject = key.split("-")[0];
+  BUILT[key] = {
+    key,
+    label: `${SUBJECT_NAMES_EN[subject]} – exam question bank`,
+    subject,
+    school: "EXB",
+    grade: 0,
+    region: true,
+    hidden: true,
+    units: [
+      {
+        title: "Exam topics",
+        topics: topics.map((line) => {
+          const [name, goals = ""] = line.split("|").map((x) => x.trim());
+          const topic = { id: `${key}/${slugify(name)}`, name, goals, unit: "Exam topics", unitIndex: 0, path: key, subject };
+          TOPICS[topic.id] = topic;
+          return topic;
+        }),
+      },
+    ],
+  };
+}
+
+// Priprave na izpite: pot "<predmet>-EX-<izpit>", npr. MAT-EX-SAT (server/exams.js).
+const parseRefs = (line) => {
+  const [text, refs = ""] = line.split("=>");
+  const [name, goals = ""] = text.split("|").map((x) => x.trim());
+  return { name, goals, base: refs.split(",").map((x) => x.trim()).filter(Boolean) };
+};
+for (const [examId, exam] of Object.entries(EXAMS)) {
+  for (const [subject, def] of Object.entries(exam.subjects)) {
+    const units = def.units.map(([title, topics]) => [title, topics.map(parseRefs)]);
+    addRegionPath(`${subject}-EX-${examId}`, `${exam.name} – ${SUBJECT_NAMES_EN[subject]}`, subject, "EX", 0, units, { exam: examId });
+  }
+}
+
 // Letnik predmeta v programu (za oznako "moj letnik").
 for (const prog of Object.values(PROGRAMS)) {
   prog.courseKeys.forEach((keys, yi) => keys.forEach((k) => (BUILT[k].grade ||= yi + 1)));
@@ -45,11 +141,43 @@ export function getTopic(id) {
 
 const brief = ({ key, label, subject, school, grade }) => ({ key, label, subject, school, grade });
 
+// Osnovne teme regijske teme (za naloge, lekcije, razlage); pri ostalih tema sama.
+export function baseTopicIds(id) {
+  const t = TOPICS[id];
+  return t?.base || (t ? [id] : []);
+}
+
 // Poti OŠ in SŠ (fakultetni predmeti gredo prek listProgramPaths).
-export function listPaths(subject) {
+// Brez šolskega sistema ali s »SI« samo slovenske poti; z regijskim sistemom njegove poti
+// z imeni razredov tega sistema (npr. »Mathematics, JSS 2«).
+export function listPaths(subject, system = "SI") {
+  const syllabus = isRegional(system) ? SCHOOL_SYSTEMS[system].syllabus : null;
+  const levels = syllabus ? [...new Set(gradesOf(system).map((g) => g.level))] : [];
+  // Pot je v sistemu, če ima sistem razred na njeni ravni ali če je zamenjava za razred brez poti.
+  const used = (p) => levels.includes(p.grade) || levels.some((l) => pickPath(syllabus, p.subject, l)?.key === p.key);
   return Object.values(BUILT)
     .filter((p) => p.school !== "UNI" && (!subject || p.subject === subject))
-    .map(brief);
+    .filter((p) => (syllabus ? p.school === syllabus && used(p) : !p.region))
+    .map((p) => ({ ...brief(p), label: pathLabelFor(p.key, system) }));
+}
+
+// Pot učnega načrta za leto šolanja; če je ni, najbližja višja (sicer zadnja nižja).
+function pickPath(syllabus, subject, level) {
+  const all = Object.values(BUILT)
+    .filter((p) => p.school === syllabus && p.subject === subject)
+    .sort((a, b) => a.grade - b.grade);
+  return all.find((p) => p.grade === level) || all.find((p) => p.grade > level) || all[all.length - 1] || null;
+}
+
+// Ime poti v šolskem sistemu: INT poti dobijo imena razredov sistema.
+export function pathLabelFor(key, system = "SI") {
+  const p = BUILT[key];
+  if (!p) return "";
+  if (p.school !== "INT" || !isRegional(system)) return p.label;
+  const grades = gradesOf(system).filter((g) => g.level === p.grade).map((g) => g.label);
+  if (grades.length) return `${SUBJECT_EN[p.subject]}, ${grades.join(" / ")}`;
+  const below = gradesOf(system).filter((g) => g.level < p.grade).pop();
+  return below ? `${SUBJECT_EN[p.subject]}, ${below.label}+` : p.label;
 }
 
 // ---------- fakultete ----------
@@ -125,6 +253,7 @@ export function topicOrder(key) {
 // Iz nastavitev učenca ugane ustrezno pot, npr. "8. razred" -> MAT-OS-8.
 export function pathKeyFor(settings) {
   const level = settings.curriculum_level || "";
+  if (isRegional(settings.school_system)) return regionPathKeyFor(settings);
   if (settings.educational_track === "UNIVERZA") return uniPathKeyFor(settings);
   const school = settings.educational_track === "SREDNJA_SOLA" ? "SS" : "OS";
   const num = Number((level.match(/([1-9])\s*\.?/) || [])[1]);
@@ -134,6 +263,12 @@ export function pathKeyFor(settings) {
   if (exact) return exact.key;
   // OŠ 6. in 7. razred pri FIZ/KEM: naravoslovje, ponudimo prvo pot predmeta.
   return candidates[0].key;
+}
+
+// Regijski sistem: pot za leto šolanja izbranega razreda.
+function regionPathKeyFor(settings) {
+  const level = gradeInfo(settings.school_system, settings.curriculum_level)?.level ?? 8;
+  return pickPath(SCHOOL_SYSTEMS[settings.school_system].syllabus, settings.subject, level)?.key || null;
 }
 
 // Besedilo za sistemski prompt, ko pogovor teče o temi učne poti.

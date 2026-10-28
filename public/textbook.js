@@ -185,9 +185,11 @@ async function renderHome() {
   syncProfile();
   // Študent fakultete: najprej učbenik njegovega študijskega programa, nato OŠ/SŠ.
   const program = student?.settings?.educational_track === "UNIVERZA" ? student.settings.study_program || "" : "";
-  if (!tb.books.length || tb.program !== program) {
+  const system = student?.settings?.school_system || "SI";
+  if (!tb.books.length || tb.program !== program || tb.system !== system) {
     tb.program = program;
-    tb.books = await ctx.api(`/api/textbook/books${program ? `?program=${encodeURIComponent(program)}` : ""}`);
+    tb.system = system;
+    tb.books = await ctx.api(`/api/textbook/books?system=${encodeURIComponent(system)}${program ? `&program=${encodeURIComponent(program)}` : ""}`);
     tb.subject = null;
     tb.book = null;
     tb.group = null;
@@ -276,7 +278,7 @@ async function renderBody() {
   const body = $("#tb-body");
   if (!body) return;
   if (tb.query.length >= 2) {
-    const hits = await ctx.api(`/api/textbook/search?q=${encodeURIComponent(tb.query)}`);
+    const hits = await ctx.api(`/api/textbook/search?q=${encodeURIComponent(tb.query)}&system=${encodeURIComponent(tb.system || "SI")}`);
     body.innerHTML = hits.length
       ? `<p class="muted">Zadetki za »${esc(tb.query)}«</p><ul class="tb-list">${hits
           .map(
@@ -294,7 +296,7 @@ async function renderBody() {
     body.innerHTML = `<div class="card"><p>Za ta predmet še ni učbenika.</p></div>`;
     return;
   }
-  const book = await ctx.api(`/api/textbook/toc?book=${encodeURIComponent(tb.book)}`);
+  const book = await ctx.api(`/api/textbook/toc?book=${encodeURIComponent(tb.book)}&system=${encodeURIComponent(tb.system || "SI")}`);
   if (book.subject === "PROG" && tb.mode === "refs") return renderRefs(body, book);
   const unitHtml = (u, i) => `<section class="card tb-unit">
         <h2><span class="tb-num">${i + 1}</span>${esc(u.title)}</h2>

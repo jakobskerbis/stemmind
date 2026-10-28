@@ -13,7 +13,7 @@ V tej lekciji zapišemo gibanje s fizikalnimi količinami. Naučil se boš izra�
 
 **1. Pot in čas.** **Pot** ($s$) je dolžina, ki jo telo prepotuje. Enota je meter ($\mathrm{m}$), pri daljših poteh kilometer ($\mathrm{km}$). **Čas** ($t$) je trajanje gibanja. Enota je sekunda ($\mathrm{s}$), tudi minuta ($\mathrm{min}$) ali ura ($\mathrm{h}$).
 
-**2. Enakomerno gibanje.** Telo se giblje **enakomerno**, kadar v enakih časovnih razmikih prepotuje enake poti. Pri tem se giblje po ravni črti in njegova hitrost se ne spreminja.
+**2. Enakomerno gibanje.** Telo se giblje **enakomerno**, kadar v enakih časovnih razmikih prepotuje enake poti. Njegova hitrost se ne spreminja. V tej lekciji obravnavamo gibanje po ravni črti (premo enakomerno gibanje).
 
 **3. Hitrost.** **Hitrost** ($v$) pove, kolikšno pot telo prepotuje v enoti časa:
 
@@ -81,11 +81,11 @@ a) $s = v \cdot t$, b) $t = \dfrac{s}{v}$
 2. $t = \dfrac{45\,\mathrm{km}}{90\,\frac{\mathrm{km}}{\mathrm{h}}} = 0{,}5\,\mathrm{h}$.
 3. To je $30\,\mathrm{min}$. Preverimo: v pol ure pri $90\,\dfrac{\mathrm{km}}{\mathrm{h}}$ prevozimo polovico od $90\,\mathrm{km}$, torej $45\,\mathrm{km}$. ✓
 
-### Primer 3: branje grafa in dve telesi
+### Primer 3: dve telesi in grafa
 
-Pešec hodi enakomerno in je po $10\,\mathrm{s}$ prehodil $15\,\mathrm{m}$. Kolesar začne ob istem času na istem mestu in vozi s hitrostjo $5\,\dfrac{\mathrm{m}}{\mathrm{s}}$. Primerjaj njuni gibanji.
+Pešec hodi enakomerno in je po $10\,\mathrm{s}$ prehodil $15\,\mathrm{m}$. Kolesar začne ob istem času na istem mestu in vozi v isti smeri s hitrostjo $5\,\dfrac{\mathrm{m}}{\mathrm{s}}$. Izračunaj hitrost pešca, primerjaj njuni hitrosti in poti po $10\,\mathrm{s}$, opiši grafa $s(t)$ in $v(t)$ ter izračunaj, kako daleč sta narazen po $10\,\mathrm{s}$.
 
-**Podatki:** pešec: $t = 10\,\mathrm{s}$, $s_1 = 15\,\mathrm{m}$; kolesar: $v_2 = 5\,\dfrac{\mathrm{m}}{\mathrm{s}}$; oba začneta ob istem času na istem mestu
+**Podatki:** pešec: $t = 10\,\mathrm{s}$, $s_1 = 15\,\mathrm{m}$; kolesar: $v_2 = 5\,\dfrac{\mathrm{m}}{\mathrm{s}}$; oba začneta ob istem času na istem mestu in se gibljeta v isti smeri
 **Iščemo:** hitrost pešca $v_1$, primerjavo hitrosti in poti po $10\,\mathrm{s}$, grafa $s(t)$ in $v(t)$ ter razdaljo med njima
 
 :::formula

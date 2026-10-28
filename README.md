@@ -32,7 +32,7 @@ Brez ključa se aplikacija zažene v preizkusnem načinu. Teste zaženeš z `npm
 
 Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac.command` (Mac). Skript ob prvem zagonu vpraša za ključ, namesti knjižnice in odpre brskalnik. `ustvari-bliznjico.bat` / `ustvari-bliznjico-mac.command` naredi bližnjico STEMMind na namizju.
 
-**Na telefonu (testno):** dvakrat klikni `telefon-windows.bat` (ali `node scripts/telefon.js`). Skript posodobi aplikacijo, ob prvem zagonu vpraša za geslo (`STEMMIND_PASSWORD` v `.env`), zažene strežnik in odpre brezplačno povezavo Cloudflare (`https://…trycloudflare.com`). Povezava se izpiše v oknu, kopira v odložišče in shrani v `data/telefon-povezava.txt`. Deluje, dokler je okno odprto in računalnik prižgan; ob vsakem zagonu je nova.
+**Na telefonu (testno):** dvakrat klikni `telefon-windows.bat` (ali `node scripts/telefon.js`). Skript posodobi aplikacijo, ob prvem zagonu vpraša za geslo (`STEMMIND_PASSWORD` v `.env`), zažene strežnik in odpre povezavo z interneta. **Stalna povezava** (ista ob vsakem zagonu): ob prvem zagonu prilepi žeton in brezplačni naslov iz računa [ngrok](https://dashboard.ngrok.com/signup); shranita se v `.env` (`NGROK_AUTHTOKEN`, `NGROK_DOMAIN`). Brez tega (Enter) se odpre začasna povezava Cloudflare (`https://…trycloudflare.com`), ki je ob vsakem zagonu nova. Povezava se izpiše v oknu in shrani v `data/telefon-povezava.txt`; povezava za prijatelje z geslom (`…/?geslo=…`) se kopira v odložišče in shrani v `data/povezava-za-prijatelje.txt`. Deluje, dokler je okno odprto in računalnik prižgan. Na telefonu v meniju brskalnika izberi »Dodaj na začetni zaslon« (ikona in `manifest.webmanifest`).
 
 **Posodobitev na najnovejšo različico**: dvakrat klikni `posodobi-windows.bat` ali `posodobi-mac.command`. Skript prenese zadnjo različico z GitHuba, jo prekopira čez to mapo (ključ `.env`, podatki `data/` in knjižnice ostanejo) in aplikacijo znova zažene.
 
@@ -41,21 +41,30 @@ Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac
 | Spremenljivka | Privzeto | Pomen |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | – | Ključ iz console.anthropic.com. Brez njega preizkusni način. |
-| `STEMMIND_PASSWORD` | – | Če je nastavljeno, stran zahteva geslo (HTTP Basic, uporabniško ime poljubno). Priporočeno, dokler ni pravih prijav. |
+| `STEMMIND_PASSWORD` | – | Če je nastavljeno, stran zahteva geslo: stran za prijavo, ki si geslo zapomni v piškotku za eno leto (deluje tudi v aplikaciji na začetnem zaslonu). Povezava `/?geslo=…` prijavi takoj. Star način HTTP Basic še deluje. |
+| `NGROK_AUTHTOKEN` / `NGROK_DOMAIN` | – | Za stalno povezavo v `scripts/telefon.js` (brezplačen račun ngrok). |
 | `STEMMIND_MODEL` | `claude-haiku-5-5` | Privzeti model za klepet (poceni). |
-| `STEMMIND_MODEL_DEEP` | `claude-opus-5-5` | Za »Razloži podrobneje« in program Tekmovanja. |
-| `STEMMIND_EFFORT` / `STEMMIND_EFFORT_DEEP` | `low` / `medium` | Koliko model razmišlja. |
-| `STEMMIND_MAX_TOKENS` | `8000` | Najdaljši odgovor. |
+| `STEMMIND_MODEL_DEEP` | `claude-opus-5-5` | Za »Razloži podrobneje« (največ `STEMMIND_DAILY_DEEP` na dan). |
+| `STEMMIND_EFFORT` / `STEMMIND_EFFORT_DEEP` / `STEMMIND_EFFORT_THINK` | `low` / `low` / `high` | Koliko model razmišlja: Haiku, Opus, Haiku z več razmisleka (Tekmovanja, nad omejitvijo Opusa). |
+| `STEMMIND_MAX_TOKENS` (`_LITE`, `_THINK`, `_DEEP`) | `3000` (`1200`, `5000`, `6000`) | Najdaljši odgovor po načinu (z razmišljanjem vred). |
+| `STEMMIND_COMPETITION_DEEP` | `0` | `1` = program Tekmovanja vedno z Opusom (prej privzeto, ~20× dražje). |
+| `STEMMIND_DEEP_HISTORY_TURNS` | `3` | Koliko zadnjih izmenjav dobi Opus. |
+| `STEMMIND_DEEP_CACHE_TTL` | `1h` | Predpomnilnik prompta za Opus (`5m` = privzeti API). |
 | `STEMMIND_OCR_MODEL` | = `STEMMIND_MODEL` | Model za branje rokopisa. |
 | `STEMMIND_HISTORY_TURNS` | `10` | Koliko izmenjav zgodovine gre v API (starejše se odrežejo po kosih, da predpomnilnik deluje). |
 | `STEMMIND_ANSWER_CACHE` | `1` | Enaka prva vprašanja dobijo shranjen odgovor brez klica API. |
 | `STEMMIND_DAILY_QUESTIONS` | `0` | Vprašanj za inštruktorja na učenca na dan (0 = brez omejitve). Vadnica je vedno neomejena. |
 | `STEMMIND_MONTHLY_BUDGET_USD` | `0` | Skupni mesečni proračun v $; pri 80 % opozorilo, pri 100 % se klepet ustavi. |
-| `STEMMIND_STUDENT_MONTHLY_USD` | `0` | Mesečna omejitev na učenca v $. |
+| `STEMMIND_STUDENT_SOFT_USD` | `1` | Nad to mesečno porabo na učenca (v $) podrobne razlage pripravi hitri model. |
+| `STEMMIND_STUDENT_MONTHLY_USD` | `3` | Trda mesečna omejitev na učenca v $ (nato samo Vadnica do 1. v mesecu). `0` = brez. |
+| `STEMMIND_DAILY_DEEP` | `5` | Odgovorov Opusa na učenca na dan; nato Haiku z več razmisleka. `0` = brez omejitve. |
+| `STEMMIND_EUR_PER_USD` | `0.87` | Tečaj za prikaz stroškov v evrih (Nastavitve → Poraba AI). |
 | `STEMMIND_EXPLANATIONS` | `content/explanations.json` | Datoteka z vnaprej pripravljenimi razlagami tem. |
 | `STEMMIND_EXPLAIN_MODEL` | `claude-opus-5-5` | Model za skript z razlagami. |
 | `STEMMIND_DB` | `data/stemmind.db` | Pot do baze SQLite. Mora biti na trajnem disku. |
 | `STEMMIND_DEBUG` | `0` | `1` omogoči `/api/students/:id/prompt` (ogled sestavljenega prompta). |
+| `STEMMIND_FEEDBACK_PROMPT` | `1` | Kartica »Kako ti je všeč STEMMind?« na Učni poti in zavihek Mnenje (za testno različico). `0` ju skrije; vprašalnik ostane pod Jaz. |
+| `STEMMIND_FEEDBACK_AI` | `0` | `1` = pogovor za povratne informacije vodi Haiku (največ 6 vprašanj, ~0,1 ¢ na pogovor). Privzeto pripravljena vprašanja, brez stroškov. |
 | `PORT` | `3000` | Vrata strežnika. |
 
 ## Starševski računi in plačila
@@ -133,6 +142,7 @@ server/curriculum*.js      učne poti po učnem načrtu (osnutek, naj ga pregled
 server/practice/           generatorji nalog in preverjanje odgovorov
 server/progress.js         napredovanje, ponavljanje, preizkus znanja, XP
 server/usage.js            beleženje porabe in omejitve
+server/feedback.js         povratne informacije testerjev (vprašalnik, pogovor, povzetek); glej docs/povratne-informacije.md
 public/pad.js              vnos z dotikom (tipke, pisanje, branje rokopisa)
 scripts/                   ustvarjanje razlag (Batch API)
 public/                    vmesnik (brez ogrodja)

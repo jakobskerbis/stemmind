@@ -126,6 +126,14 @@ export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
       test_date TEXT NOT NULL,                   -- YYYY-MM-DD
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
+    -- Odgovori na naloge, rešene brez povezave (da se ista naloga ne prešteje dvakrat)
+    CREATE TABLE IF NOT EXISTS offline_results (
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      topic_id TEXT NOT NULL,
+      seed INTEGER NOT NULL,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      PRIMARY KEY (student_id, topic_id, seed)
+    );
     CREATE INDEX IF NOT EXISTS idx_msg_conv ON messages(conversation_id, id);
     CREATE INDEX IF NOT EXISTS idx_events_student ON events(student_id, created_at);
   `);
@@ -196,7 +204,7 @@ export class Store {
     const cur = this.getStudent(id);
     if (!cur) return null;
     const next = normalizeSettings({ ...cur.settings, ...(settings || {}) });
-    const levelChanged = ["educational_track", "curriculum_level", "study_program"].some((k) => next[k] !== cur.settings[k]);
+    const levelChanged = ["educational_track", "curriculum_level", "study_program", "school_system"].some((k) => next[k] !== cur.settings[k]);
     this.db
       .prepare(
         `UPDATE students SET name = ?, settings = ?, manual_weaknesses = ?${levelChanged ? ", level_changed_at = datetime('now')" : ""} WHERE id = ?`,

@@ -227,3 +227,15 @@
   apply();
   mq.addEventListener?.("change", () => apply());
 })();
+
+// Lahki način pred prvim izrisom (da se spletna pisava sploh ne prenese): zadnja izbira na tej
+// napravi ("stemmind.lite" = "1" / "0") ali, če je ni, varčevanje s podatki / počasna povezava.
+(function () {
+  let saved = null;
+  try {
+    saved = localStorage.getItem("stemmind.lite");
+  } catch {}
+  const c = navigator.connection;
+  const auto = !!(c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || "")));
+  if (saved === "1" || (saved === null && auto)) document.documentElement.classList.add("lite");
+})();

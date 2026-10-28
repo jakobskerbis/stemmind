@@ -98,6 +98,9 @@ export function migrateAccounts(db) {
       value TEXT NOT NULL
     );
   `);
+  // Država starša (za ceno v lokalni valuti); ob registraciji iz naprave oziroma omrežja.
+  const pcols = db.prepare("PRAGMA table_info(parents)").all().map((c) => c.name);
+  if (!pcols.includes("country")) db.exec("ALTER TABLE parents ADD COLUMN country TEXT");
   const cols = db.prepare("PRAGMA table_info(students)").all().map((c) => c.name);
   if (!cols.includes("parent_id")) db.exec("ALTER TABLE students ADD COLUMN parent_id INTEGER REFERENCES parents(id) ON DELETE CASCADE");
   if (!cols.includes("birth_year")) db.exec("ALTER TABLE students ADD COLUMN birth_year INTEGER");

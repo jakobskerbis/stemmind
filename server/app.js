@@ -6,19 +6,23 @@ import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
 import { createStreamFilter, parseMeta, stripMeta } from "./meta.js";
 import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
-import { Usage, LIMITS, windowHistory } from "./usage.js";
+import { Usage, LIMITS, windowHistory, recentHistory } from "./usage.js";
+import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
-import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt, listPrograms, listProgramPaths } from "./curriculum.js";
-import { getExplanation } from "./explanations.js";
-import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation } from "./textbook.js";
+import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths } from "./curriculum.js";
+import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
 import { programReferences, referencesFor, themesFor } from "./references.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
+import { passwordGate } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
+import { examInfo, examKeyFor, isExamPath, examOf, examPrompt } from "./exams.js";
+import { compressedStatic, compressedJson } from "./compress.js";
+import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -27,25 +31,20 @@ const MAX_TEXT = 6000;
 const ANSWER_CACHE = process.env.STEMMIND_ANSWER_CACHE !== "0";
 
 // Ključ za ponovno uporabo odgovora: isto prvo vprašanje pri istih nastavitvah.
-function cacheKey(text, settings, deep) {
+// mode: način klica (chat/lite/think/deep); pathTopic: tema učne poti (npr. »Začniva s temo …«).
+function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = []) {
   const norm = text.toLowerCase().replace(/\s+/g, " ").replace(/[\s.!?]+$/, "").trim();
   if (norm.length < 8) return null;
-  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, deep ? 1 : 0];
+  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, mode === "deep" ? 1 : 0];
+  if (mode === "think") parts.push("think");
+  // Pri temi učne poti tudi šibke točke, da se osebni odgovor ne prenese k drugemu učencu.
+  if (pathTopic) parts.push(`tema:${pathTopic}`, weak.join(","));
   // Jezik dodamo samo, kadar ni slovenščina, da obstoječi shranjeni odgovori ostanejo veljavni.
   if (settings.language && settings.language !== "sl") parts.push(settings.language);
   if (settings.region && settings.region !== "SI") parts.push(settings.region);
+  if (settings.school_system && settings.school_system !== "SI") parts.push(settings.school_system);
+  if (lite) parts.push("lite");
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
-}
-
-function basicAuth(password) {
-  const expected = Buffer.from(password);
-  return (req, res, next) => {
-    const header = req.headers.authorization || "";
-    const [, b64] = header.split(" ");
-    const pass = Buffer.from(Buffer.from(b64 || "", "base64").toString().split(":").slice(1).join(":"));
-    if (pass.length === expected.length && crypto.timingSafeEqual(pass, expected)) return next();
-    res.set("WWW-Authenticate", 'Basic realm="STEMMind"').status(401).send("Potrebna je prijava.");
-  };
 }
 
 export function createApp(store, opts = {}) {
@@ -53,7 +52,7 @@ export function createApp(store, opts = {}) {
   const app = express();
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
-  if (process.env.STEMMIND_PASSWORD) app.use(basicAuth(process.env.STEMMIND_PASSWORD));
+  if (process.env.STEMMIND_PASSWORD) app.use(passwordGate(process.env.STEMMIND_PASSWORD)); // stran za prijavo + piškotek
   app.use(express.json({ limit: "10mb" }));
   // Neuspele klice API zapišemo v dnevnik, da je napako na telefonu mogoče poiskati.
   app.use("/api", (req, res, next) => {
@@ -62,9 +61,26 @@ export function createApp(store, opts = {}) {
     });
     next();
   });
-  app.use(express.static(path.join(here, "..", "public")));
   // Knjižnice za izris strežemo lokalno (brez odvisnosti od CDN).
   const modules = path.join(here, "..", "node_modules");
+  const publicDir = path.join(here, "..", "public");
+  // Lahki način: stisnjene datoteke in JSON (brotli/gzip) za počasne in drage mobilne povezave.
+  if (process.env.STEMMIND_COMPRESS !== "0") {
+    app.use(
+      compressedStatic([
+        ["/vendor/katex/", path.join(modules, "katex", "dist")],
+        ["/vendor/marked/", path.join(modules, "marked")],
+        ["/vendor/dompurify/", path.join(modules, "dompurify", "dist")],
+        ["/vendor/nunito/", path.join(modules, "@fontsource-variable", "nunito")],
+        ["/practice/", path.join(here, "practice")],
+        ["/", publicDir],
+      ]),
+    );
+    app.use("/api", compressedJson());
+  }
+  app.use(express.static(publicDir));
+  // Preverjanje odgovorov tudi v brskalniku (vaje brez povezave); datoteka nima odvisnosti.
+  app.get("/practice/check.js", (_req, res) => res.type("text/javascript").sendFile(path.join(here, "practice", "check.js")));
   app.use("/vendor/katex", express.static(path.join(modules, "katex", "dist")));
   app.use("/vendor/marked", express.static(path.join(modules, "marked")));
   app.use("/vendor/dompurify", express.static(path.join(modules, "dompurify", "dist")));
@@ -78,6 +94,8 @@ export function createApp(store, opts = {}) {
   });
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
+  // »Vprašaj STEMMind« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
+  const helpTasks = new Map();
   const usage = new Usage(store.db);
   const progress = new Progress(store);
 
@@ -93,7 +111,9 @@ export function createApp(store, opts = {}) {
     return c;
   };
 
-  app.get("/api/config", (_req, res) => {
+  mountFeedback(app, store, { usage, file: opts.feedbackFile ?? null, createFn: opts.feedbackCreateFn });
+
+  app.get("/api/config", (req, res) => {
     res.json({
       mock: isMockMode(),
       model: MODEL,
@@ -101,6 +121,7 @@ export function createApp(store, opts = {}) {
       enums: ENUMS,
       defaults: DEFAULT_SETTINGS,
       daily_questions: LIMITS.dailyQuestions() || null,
+      feedback: { prompt: feedbackPromptOn(), ai: feedbackAiOn(), admin: isLocalRequest(req) },
     });
   });
 
@@ -212,15 +233,27 @@ export function createApp(store, opts = {}) {
     const blocked = usage.blockReason(student.id);
     if (blocked) return res.status(429).json({ error: blocked, limit: true });
     busy.add(conv.id);
-    // Zmogljivejši model: gumb »Razloži podrobneje« ali program Tekmovanja.
-    const deep = req.body?.deep === true || student.settings.track === "COMPETITION";
+    // Lahki način: vedno (lite), nikoli (normal) ali po povezavi naprave, ki jo sporoči odjemalec (auto).
+    const lite = student.settings.data_mode === "lite" || (student.settings.data_mode !== "normal" && req.body?.lite === true);
+    // Model: Haiku za običajne odgovore, Opus za »Razloži podrobneje« (z dnevno in mesečno
+    // omejitvijo, nato Haiku z več razmisleka), Tekmovanja privzeto Haiku z več razmisleka.
+    const { mode, note } = usage.chooseMode(student.id, {
+      wantDeep: req.body?.deep === true,
+      competition: student.settings.track === "COMPETITION",
+      lite,
+      deepModel: MODEL_DEEP,
+    });
+    const deep = mode === "deep";
 
     const userContent = [];
     if (image) userContent.push({ type: "image", source: { type: "base64", media_type: image.media_type, data: image.data } });
     userContent.push({ type: "text", text: text || "(Pošiljam fotografijo naloge.)" });
     const isFirst = store.listMessages(conv.id).length === 0;
     const userMsgId = store.addMessage(conv.id, "user", userContent, text, !!image);
-    const key = ANSWER_CACHE && isFirst && !image && !conv.path_topic ? cacheKey(text, student.settings, req.body?.deep === true) : null;
+    const help = isFirst && !image ? helpTasks.get(conv.id) : null;
+    if (help) helpTasks.delete(conv.id);
+    const weak = weaknessesForPrompt(store, student);
+    const key = ANSWER_CACHE && isFirst && !image && !help ? cacheKey(text, student.settings, mode, lite, conv.path_topic, weak) : null;
     if (conv.title === "Nov pogovor") {
       store.renameConversation(conv.id, cleanText(text, 50) || "Naloga s fotografije");
     }
@@ -245,24 +278,40 @@ export function createApp(store, opts = {}) {
       const tekTopic = conv.path_topic && isCompetitionPath(getTopic(conv.path_topic)?.path);
       const system = buildSystemPrompt({
         settings: tekTopic ? { ...student.settings, track: "COMPETITION" } : student.settings,
-        weaknesses: weaknessesForPrompt(store, student),
+        weaknesses: weak,
         studentName: student.name,
-        learningPath: conv.path_topic ? [learningPathPrompt(conv.path_topic), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n") : "",
+        learningPath: conv.path_topic
+          ? [learningPathPrompt(conv.path_topic), examPrompt(getTopic(conv.path_topic)?.path), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n")
+          : "",
+        lite,
       });
-      const cached = key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
+      // Prvi korak pri nalogi iz Vadnice sestavi koda (podatki, iskano, namig), brez klica modela.
+      const hinted =
+        help && help.text === text && student.settings.solving_mode !== "B" && (student.settings.language || "sl") === "sl"
+          ? codeHint(help.task.payload, {
+              subject: getTopic(help.task.topic_id)?.subject || student.settings.subject,
+              topicName: getTopic(help.task.topic_id)?.name,
+              lastAnswer: help.task.last_answer,
+            })
+          : null;
+      const cached = hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
+      if (note) send("delta", { text: note });
       const run = cached
         ? async ({ onText }) => {
             // Ime učenca je v predpomnilniku shranjeno kot {{IME}}.
             const t = cached.text.replaceAll("{{IME}}", student.name);
             for (let i = 0; i < t.length; i += 40) onText(t.slice(i, i + 40));
-            store.db.prepare("UPDATE answer_cache SET hits = hits + 1 WHERE key = ?").run(key);
+            if (!cached.hint) store.db.prepare("UPDATE answer_cache SET hits = hits + 1 WHERE key = ?").run(key);
+            usage.logSaved(student.id, cached.hint ? "hint" : "reuse");
             return { content: [{ type: "text", text: t }], text: t, stopReason: "end_turn", usage: null, model: "cache" };
           }
         : streamFn;
       const result = await run({
         system,
-        messages: windowHistory(store.apiHistory(conv.id)),
+        // Opus dobi samo zadnje izmenjave; Haiku daljše okno (predpomnjeno).
+        messages: deep ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id)),
         deep,
+        mode,
         signal: controller.signal,
         onText: (chunk) => {
           const out = filter.push(chunk);
@@ -275,7 +324,7 @@ export function createApp(store, opts = {}) {
       if (rest) send("delta", { text: rest });
 
       let meta = parseMeta(result.text);
-      let display = stripMeta(result.text);
+      let display = (note || "") + stripMeta(result.text);
       // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
       let content = [{ type: "text", text: result.text || "…" }];
@@ -306,7 +355,8 @@ export function createApp(store, opts = {}) {
         text: display,
         state: meta ? { subject: meta.subject, mode: meta.mode } : null,
         title: store.getConversation(conv.id).title,
-        deep,
+        // Brez ponovnega gumba »Razloži podrobneje«, tudi če je odgovor pripravil hitri model.
+        deep: deep || req.body?.deep === true,
         cost_usd: Math.round(cost * 10000) / 10000,
       });
       res.end();
@@ -327,7 +377,11 @@ export function createApp(store, opts = {}) {
   // --- učne poti ---
   app.get("/api/paths", (req, res) =>
     // Tekmovalne poti so v svojem razdelku (zavihek Tekmovanja), ne na učni poti.
-    res.json(req.query.program ? listProgramPaths(String(req.query.program)) : listPaths(req.query.subject).filter((p) => p.school !== "TEK")),
+    res.json(
+      req.query.program
+        ? listProgramPaths(String(req.query.program))
+        : listPaths(req.query.subject, String(req.query.system || "SI")).filter((p) => p.school !== "TEK"),
+    ),
   );
   app.get("/api/programs", (req, res) => res.json(listPrograms()));
   app.get("/api/students/:id/path", (req, res) => {
@@ -336,18 +390,19 @@ export function createApp(store, opts = {}) {
     const key = req.query.key || pathKeyFor(s.settings);
     const view = key && progress.pathView(s.id, key);
     if (!view) return res.json({ key: null, message: "Za to raven še ni učne poti." });
-    res.json({ ...view, defaultKey: pathKeyFor(s.settings), xp: progress.xpSummary(s.id) });
+    res.json({ ...view, label: pathLabelFor(key, s.settings.school_system), defaultKey: pathKeyFor(s.settings), xp: progress.xpSummary(s.id) });
   });
   app.get("/api/topic", (req, res) => {
     const t = getTopic(req.query.id);
     if (!t) return res.status(404).json({ error: "Tema ne obstaja." });
-    res.json({ ...t, pathLabel: getPath(t.path).label, explanation: getExplanation(t.id)?.text || lessonExplanation(t.id) });
+    res.json({ ...t, pathLabel: getPath(t.path).label, explanation: explanationFor(t.id) || lessonExplanation(t.id) });
   });
   // --- učbenik ---
-  app.get("/api/textbook/books", (req, res) => res.json(listBooks({ program: req.query.program ? String(req.query.program) : null })));
+  const systemOf = (req) => String(req.query.system || "SI");
+  app.get("/api/textbook/books", (req, res) => res.json(listBooks({ program: req.query.program ? String(req.query.program) : null, system: systemOf(req) })));
   app.get("/api/textbook/toc", (req, res) => {
     if (req.query.book) {
-      const book = bookView(String(req.query.book));
+      const book = bookView(String(req.query.book), systemOf(req));
       return book ? res.json(book) : res.status(404).json({ error: "Učbenik ne obstaja." });
     }
     const toc = tocView(String(req.query.path || ""));
@@ -384,7 +439,7 @@ export function createApp(store, opts = {}) {
   });
   app.get("/api/textbook/search", (req, res) => {
     const subject = /^[A-Z]{2,6}$/.test(req.query.subject || "") ? req.query.subject : undefined;
-    res.json(searchTextbook(String(req.query.q || "").slice(0, 100), { subject }));
+    res.json(searchTextbook(String(req.query.q || "").slice(0, 100), { subject, system: systemOf(req) }));
   });
   app.post("/api/students/:id/topic-status", (req, res) => {
     const s = loadStudent(req, res);
@@ -402,6 +457,21 @@ export function createApp(store, opts = {}) {
     const out = progress.nextPractice(s.id, req.body?.topic_id);
     if (!out) return res.status(400).json({ error: "Za to temo še ni vaj." });
     res.json(out);
+  });
+  // Lahki način: paket nalog za vaje brez povezave in kasnejša sinhronizacija odgovorov.
+  app.get("/api/students/:id/offline-pack", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const key = getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings);
+    const pack = key && progress.offlinePack(s.id, key);
+    if (!pack) return res.status(404).json({ error: "Za to raven še ni učne poti." });
+    res.json({ ...pack, view: { ...pack.view, label: pathLabelFor(key, s.settings.school_system) } });
+  });
+  app.post("/api/students/:id/offline-sync", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const results = Array.isArray(req.body?.results) ? req.body.results : [];
+    res.json({ ...progress.offlineSync(s.id, results), xp: progress.xpSummary(s.id) });
   });
   app.post("/api/students/:id/review", (req, res) => {
     const s = loadStudent(req, res);
@@ -441,6 +511,23 @@ export function createApp(store, opts = {}) {
       ...competitionInfo(key),
       ...progress.pathView(s.id, key),
       defaultKey,
+      history: progress.contestHistory(s.id, key),
+      openContest: progress.openContest(s.id, key),
+    });
+  });
+  // --- priprave na izpite (SAT, gaokao, JEE, NEET, CBSE): trening in poskusni izpit gresta
+  // prek /competition-training in /contest (isti mehanizem kot pri tekmovanjih) ---
+  app.get("/api/students/:id/exams", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const defaultKey = examKeyFor(s.settings);
+    const key = isExamPath(req.query.key) ? String(req.query.key) : examKeyFor(s.settings, String(req.query.exam || "")) || defaultKey;
+    if (!key) return res.json({ key: null });
+    res.json({
+      ...examInfo(key, s.settings.school_system),
+      ...progress.pathView(s.id, key),
+      defaultKey,
+      defaultExam: examOf(defaultKey),
       history: progress.contestHistory(s.id, key),
       openContest: progress.openContest(s.id, key),
     });
@@ -542,6 +629,8 @@ export function createApp(store, opts = {}) {
     if (!t || t.student_id !== s.id) return res.status(404).json({ error: "Naloga ne obstaja." });
     const conv = store.createConversation(s.id, { pathTopic: t.topic_id, title: `Naloga: ${getTopic(t.topic_id)?.name ?? "vadnica"}` });
     const text = `Rešujem nalogo iz Vadnice:\n\n${t.payload.text}\n\n${t.last_answer ? `Moj odgovor je bil: ${t.last_answer}. Ni pravilen.` : "Ne vem, kako začeti."} Mi pomagaš najti, kje se zatakne? Rešitve mi ne povej.`;
+    helpTasks.set(conv.id, { text: text.trim().slice(0, MAX_TEXT), task: t });
+    if (helpTasks.size > 500) helpTasks.delete(helpTasks.keys().next().value);
     res.json({ conversation: conv, text });
   });
 
@@ -556,6 +645,10 @@ export function createApp(store, opts = {}) {
 
   // --- poraba AI ---
   app.get("/api/usage", (_req, res) => res.json(usage.summary()));
+  app.get("/api/students/:id/usage", (req, res) => {
+    const s = loadStudent(req, res);
+    if (s) res.json(usage.studentMonth(s.id));
+  });
 
   return app;
 }

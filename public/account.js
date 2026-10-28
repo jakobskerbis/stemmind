@@ -1,13 +1,22 @@
 import { icon } from "./icons.js";
 import { loadPrograms, programsCache } from "./programs.js";
-import { mountLevelPicker } from "./level-picker.js";
-import { currentLang, currentRegion } from "./i18n.js";
+import { mountLevelPicker, schoolSystemOptions } from "./level-picker.js";
+import { systemForCountry } from "./regions.js";
+import { currentLang, currentRegion, deviceRegion } from "./i18n.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku STEMMIND_ACCOUNTS=1.
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const eur = (cents) => (cents / 100).toLocaleString("sl-SI", { style: "currency", currency: "EUR" });
+// Cena v valuti paketa (regijske cene: rupije, naire …); valute brez decimalk imajo cele enote.
+const ZERO_DECIMAL = new Set(["VND", "XOF", "XAF", "UGX", "RWF", "JPY", "KRW", "GNF", "MGA"]);
+const money = (minor, currency = "EUR") => {
+  if (currency === "EUR") return eur(minor);
+  const major = ZERO_DECIMAL.has(currency) ? minor : minor / 100;
+  const whole = Number.isInteger(major);
+  return major.toLocaleString(currentLang() === "sl" ? "sl-SI" : undefined, { style: "currency", currency, minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: whole ? 0 : 2 });
+};
 const date = (iso) => (iso ? new Date(iso).toLocaleDateString("sl-SI", { day: "numeric", month: "long", year: "numeric" }) : "");
 const store = {
   get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
@@ -195,7 +204,7 @@ function renderLogin(mode = "login") {
       } else {
         const r = await api("/api/auth/register", {
           method: "POST",
-          body: { name: f.name.value, email: f.email.value, password: f.password.value, referral_code: f.referral_code.value, accept_privacy: f.accept_privacy.checked },
+          body: { name: f.name.value, email: f.email.value, password: f.password.value, referral_code: f.referral_code.value, accept_privacy: f.accept_privacy.checked, country: deviceRegion() },
         });
         store.set("stemmind_ref", null);
         if (r.dev_verify_url) store.set("stemmind_dev_verify", r.dev_verify_url);
@@ -295,6 +304,9 @@ function childForm(consentText, programs = []) {
       <label>Ime ali vzdevek <input name="name" maxlength="40" required placeholder="npr. Miha"></label>
       <fieldset class="level-field">
         <legend>Šola in letnik</legend>
+        <label class="system-field"><span>Država in šolski sistem</span>
+          <select name="school_system">${schoolSystemOptions(systemForCountry(deviceRegion()))}</select>
+        </label>
         <div class="level-picker child-level"></div>
         <small class="muted">Vsebina se prilagodi izbiri; pri fakulteti sledi javnemu predmetniku programa. Izbiro lahko kadar koli spremeniš v profilu.</small>
         <input type="hidden" name="educational_track">
@@ -315,7 +327,7 @@ function childForm(consentText, programs = []) {
 // Nastavitve profila iz obrazca: šola, program in letnik.
 function childSettings(f) {
   const track = f.educational_track.value;
-  const base = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value, language: currentLang(), region: currentRegion() };
+  const base = { school_system: f.school_system.value, educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value, language: currentLang(), region: currentRegion() };
   if (track === "UNIVERZA") return { ...base, subject: programsCache().find((p) => p.id === f.study_program.value)?.mainSubject || "MAT" };
   return base;
 }
@@ -327,7 +339,8 @@ function bindChildForm(after) {
     f.querySelector(".consent-child").hidden = uni;
     f.querySelector(".consent-adult").hidden = !uni;
   };
-  const picker = mountLevelPicker(f.querySelector(".child-level"), f, { programs: programsCache(), onChange: toggle });
+  const picker = mountLevelPicker(f.querySelector(".child-level"), f, { programs: programsCache(), settings: { school_system: f.school_system.value }, onChange: toggle });
+  f.school_system.addEventListener("change", () => picker.setSystem(f.school_system.value));
   f.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!picker.complete()) return showError(f, new Error("Izberite šolo in letnik do konca."));
@@ -368,6 +381,15 @@ const STATUS_TEXT = {
   paused: "zaustavljena",
 };
 
+
+// Poraba inštruktorja ta mesec kot delež mesečne omejitve (brez zneskov).
+function aiPill(a) {
+  if (!a || a.percent == null) return "";
+  if (a.hard_reached) return `<span class="pill warn" title="Inštruktor bo spet na voljo 1. v mesecu. Vadnica deluje naprej.">inštruktor ta mesec porabljen</span>`;
+  const extra = a.soft_reached ? " · podrobne razlage pripravlja hitrejši model" : "";
+  return `<span class="pill" title="Delež mesečne omejitve za AI inštruktorja">AI ta mesec ${a.percent} %${extra}</span>`;
+}
+
 function planText(acc) {
   const { access, parent } = acc;
   const sub = parent.subscription;
@@ -384,15 +406,17 @@ function planText(acc) {
 function plansPicker(acc) {
   const cell = (seats, interval) => {
     const p = acc.plans.find((x) => x.seats === seats && x.interval === interval);
-    const perMonth = interval === "year" ? `<span class="muted">≈ ${eur(Math.round(p.amount / 10))} / mesec (10 mesecev)</span>` : "";
+    const cur = p.currency || "EUR";
+    const perMonth = interval === "year" ? `<span class="muted">≈ ${money(Math.round(p.amount / 10), cur)} / mesec (10 mesecev)</span>` : "";
     return `<label class="plan"><input type="radio" name="plan" value="${seats}-${interval}" ${seats === 1 && interval === "month" ? "checked" : ""}>
-      <span><b>${eur(p.amount)}</b> / ${interval === "year" ? "šolsko leto" : "mesec"}<br>${perMonth}</span></label>`;
+      <span><b>${money(p.amount, cur)}</b> / ${interval === "year" ? "šolsko leto" : "mesec"}<br>${perMonth}</span></label>`;
   };
   return `
     <form id="plan-form" class="plans">
       <div class="plan-row"><div class="plan-head">1 otrok</div>${cell(1, "month")}${cell(1, "year")}</div>
       <div class="plan-row"><div class="plan-head">2 otroka</div>${cell(2, "month")}${cell(2, "year")}</div>
       <p class="form-error" hidden></p>
+      ${acc.prices_draft ? `<p class="muted">Cene v lokalni valuti so predlog (razvojna različica).</p>` : ""}
       <button class="primary" type="submit">Nadaljuj na plačilo</button>
       <p class="muted">Plačilo poteka varno prek Stripe. Naročnino lahko kadar koli prekličete.${
         acc.access.tier === "trial" ? " Preostanek preizkusa se ohrani: prvo plačilo bo šele po njegovem koncu." : ""
@@ -426,7 +450,7 @@ async function renderAccount() {
       <ul class="child-list">${acc.children
         .map((c) => `<li><b>${esc(c.name)}</b> <span class="muted">(${c.birth_year || "–"})</span> ${
           c.premium ? `<span class="pill ok">poln dostop</span>` : `<span class="pill">brezplačni paket · danes ${c.questions_today}/${acc.free_daily_questions}</span>`
-        }</li>`)
+        } ${aiPill(c.ai_month)}</li>`)
         .join("")}</ul>
       ${acc.children
         .filter((c) => c.devices.length > acc.device_warn_limit)
