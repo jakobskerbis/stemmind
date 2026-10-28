@@ -1,8 +1,20 @@
 # Spremembe sistemskega prompta
 
-Primerjava z izvirno verzijo. Trenutni prompt je v `prompts/system_prompt.md`.
+Trenutni prompt je v `prompts/system_prompt.md`.
 
-## Odpravljena nasprotja
+## Različica 3 (2026-10-28): širši obseg in predpomnjenje
+
+- **Dva dela, ločena z vrstico `<!-- STEMMIND:NASTAVITVE … -->`.** Vse nad njo je stalno in enako za vse učence; strežnik (`server/prompt.js`, `systemBlocks`) ga pošlje kot prvi blok `system` z oznako `cache_control`, zato se pri Claude API predpomni in deli med vsemi pogovori. Nastavitve učenca (ime, predmet, šola, raven, program, način, osebnost, šibke točke, učna pot) so v drugem bloku na koncu. Prej so bile nastavitve na vrhu, kar je prekinilo skupni predpomnilnik že v prvi vrstici.
+- **Šola in raven** zdaj pokrivata OŠ, SŠ in UNIVERZA v enem razdelku; univerza velja za vse fakultete in programe iz nastavitev (ne le FKKT/FS/FMF), z ločenim slogom za matematično-fizikalne in tehniške programe.
+- **Strokovni predmeti** BIO, GEO, RAC in EKO imajo svoja pravila ob MAT/FIZ/KEM.
+- **Tekmovanja** opisujejo razdelek Tekmovanja (trening, poskusno tekmovanje, olimpijade) in kako voditi učenca po nalogi, ki je ni rešil.
+- **Vzorec Podatki / Iščemo / formula** ustreza rešenim zgledom v Vadnici: v načinu A učenec formulo najprej poskusi poimenovati sam, pokaže se šele po poskusu.
+- **Posebne situacije** v enem razdelku: učna pot, naloga iz Vadnice z napačnim odgovorom, označen del učbenika (gumb »Razloži«), gumb »Razloži podrobneje« (zamenjaj pristop, ne ponavljaj), fotografija naloge (najprej »Prebral sem: …«), ponavljanje in priprava na test.
+- **Skrajšana zgodovina.** Strežnik pošlje le zadnjih nekaj izmenjav; prompt naroča, naj inštruktor nadaljuje od zadnjega stanja in ne sprašuje znova.
+- **Krajše, brez podvajanj.** Pravila o tempu so zapisana enkrat; način A/B, meje in ščit so nespremenjeni, META vrstica je enaka (strežnik jo bere enako kot prej).
+- Stiska: TOM telefon za otroke in mladostnike, Samarijan za študente, 112 za nujne primere (prej v dveh razdelkih).
+
+## Različica 2: odpravljena nasprotja
 
 - **Vrstni red pravil.** Dodan je izrecen vrstni red: Varnostni ščit in Meje > spremembe iz klepeta > nadzorna plošča > ostalo. Prej ni bilo jasno, ali lahko »daj mi celo rešitev« ali »razloži skozi Harryja Potterja« obide meje ali ščit.
 - **Tema proti ščitu.** Izvirni ščit je prepovedal »prevzemanje druge vloge«, nastavitve pa so dovoljevale razlago »skozi Harryja Potterja«. Zdaj je jasno: tematska razlaga in izobraževalno igranje vlog (»razloži kot Newton«) sta dovoljena, zamenjava identitete ni.
