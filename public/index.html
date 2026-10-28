@@ -59,6 +59,11 @@
     </div>
     <p id="path-note" class="muted path-note" hidden></p>
     <div id="xp-card" class="card xp-card"></div>
+    <nav id="modebar" class="modes" aria-label="Način učenja">
+      <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span class="m-name">Nova snov</span><span class="m-sub">Nadaljuj, kjer si ostal</span></button>
+      <button type="button" data-mode="review"><span class="ic"><i data-icon="repeat"></i><b class="badge" hidden></b></span><span class="m-name">Ponavljanje</span><span class="m-sub">Da znanje ne zbledi</span></button>
+      <button type="button" data-mode="test"><span class="ic"><i data-icon="clipboard-check"></i></span><span class="m-name">Priprava na test</span><span class="m-sub">Izberi snov in datum</span></button>
+    </nav>
     <div id="path-content"></div>
   </main>
 
@@ -204,18 +209,37 @@
     </div>
   </main>
 
-  <!-- NAČINI UČENJA (vedno dosegljivi) -->
+  <!-- JAZ (telefon): profil in povezave na Napredek, Lige, Nastavitve, Račun -->
+  <main id="view-me" class="view narrow" hidden>
+    <div class="card me-head">
+      <span class="me-avatar" id="me-avatar" aria-hidden="true"></span>
+      <div class="me-who"><h1 id="me-name"></h1><p class="muted" id="me-level"></p></div>
+    </div>
+    <div class="me-stats">
+      <div class="card"><span class="stat-ic xp"><i data-icon="star"></i></span><b id="me-xp">0</b><span>XP</span></div>
+      <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span>dni zapored</span></div>
+    </div>
+    <div class="card list-card">
+      <button type="button" class="list-row" data-go="progress"><span class="ic"><i data-icon="chart-column"></i></span><span class="lr-text"><b>Napredek</b><small>Šibke točke, aktivnost in teme</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="league"><span class="ic"><i data-icon="trophy"></i></span><span class="lr-text"><b>Lige</b><small>Tedenska lestvica, razred in prijatelji</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="settings"><span class="ic"><i data-icon="settings"></i></span><span class="lr-text"><b>Nastavitve</b><small>Profil, šola, videz in barve</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="account" id="me-account" hidden><span class="ic"><i data-icon="user"></i></span><span class="lr-text"><b>Račun</b><small>Naročnina in otroci</small></span><i data-icon="chevron-right"></i></button>
+    </div>
+  </main>
+
   <!-- LIGE -->
   <main id="view-league" class="view narrow" hidden>
     <h1>Lige</h1>
     <div id="league-content"><p class="muted">Nalagam …</p></div>
   </main>
 
-  <nav id="modebar" class="modebar" aria-label="Način učenja">
-    <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span>Nova snov</span></button>
-    <button type="button" data-mode="review"><span class="ic"><i data-icon="repeat"></i><b class="badge" hidden></b></span><span>Ponavljanje</span></button>
-    <button type="button" data-mode="daily" class="hero"><span class="ic"><i data-icon="zap"></i></span><span class="long">Današnji trening</span><span class="short">Trening</span></button>
-    <button type="button" data-mode="test"><span class="ic"><i data-icon="clipboard-check"></i></span><span class="long">Priprava na test</span><span class="short">Test</span></button>
+  <!-- SPODNJA VRSTICA (telefon) -->
+  <nav id="tabbar" class="tabbar" aria-label="Glavni meni">
+    <button class="tab" data-view="path"><i data-icon="map"></i><span>Učna pot</span></button>
+    <button class="tab" data-view="textbook"><i data-icon="book-open"></i><span>Učbenik</span></button>
+    <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span>Inštruktor</span></button>
+    <button class="tab" data-view="competition" id="competition-tab-m"><i data-icon="medal"></i><span>Tekmovanja</span></button>
+    <button class="tab" data-view="me"><i data-icon="user"></i><span>Jaz</span></button>
   </nav>
 
   <!-- UVODNI OGLED -->

@@ -31,9 +31,17 @@ Pisava je Nunito. Naslovi so debeli (800), gumbi 700–800.
 - **Preklopnik** (2–4 možnosti, ena izbrana, npr. predmet ali raven): `<div class="seg"><button class="active">…</button>…</div>`.
 - **Filtrirni žetoni** (vrstica, ki se na telefonu pomika vstran): `<div class="chip-row"><button class="active">…</button>…</div>`.
 - **Izbrana možnost** (kartica ali kljukica): moder rob in `--accent-soft` ozadje (`.lp-opt.on`, `label.check`).
+- **Seznam povezav** (npr. stran Jaz): `<div class="card list-card"><button class="list-row"><span class="ic">ikona</span><span class="lr-text"><b>Naslov</b><small>opis</small></span>…</button></div>`.
+- **Izmerjene vrednosti v simulacijah**: `values([["čas t", "3,16 s"], …])` iz `public/sim/kit.js` (kartice, na telefonu dve v vrsti). Tabela `.demo-table` samo za prave tabele z več vrsticami.
 - **Kartica**: `.card`; poudarjena kartica z modrim prelivom: `.hero`.
 
 Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `--accent-soft` ozadje).
+
+## Navigacija
+
+- Računalnik in tablica: zavihki v zgornji vrstici.
+- Telefon (do 760 px): spodnja vrstica `#tabbar` s petimi zavihki (Učna pot, Učbenik, Inštruktor, Tekmovanja, Jaz). Napredek, Lige, Nastavitve in Račun so pod »Jaz« (`#view-me`). Nov glavni del aplikacije dodaj v zgornje zavihke in na stran Jaz, ne kot šesti zavihek spodaj.
+- Načini učenja (Nova snov, Ponavljanje, Priprava na test) so kartice `#modebar.modes` na Učni poti; Današnji trening je modra kartica nad njimi.
 
 ## Telefon
 

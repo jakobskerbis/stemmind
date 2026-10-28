@@ -133,6 +133,9 @@ export function button(text, onclick, cls = "secondary small") {
 }
 export const buttons = (...kids) => h("div", { class: "demo-buttons" }, ...kids);
 export const controls = (...kids) => h("div", { class: "demo-controls" }, ...kids);
+// Izmerjene vrednosti kot kartice: values([["čas t", "3,16 s"], …]) vrne HTML.
+export const values = (list) =>
+  `<div class="demo-values">${list.map(([label, v]) => `<div class="demo-val"><span>${label}</span><b>${v}</b></div>`).join("")}</div>`;
 export const readout = () => h("div", { class: "demo-readout", "aria-live": "polite" });
 export const stage = (...kids) => h("div", { class: "demo-stage" }, ...kids);
 export const tryIt = (text) => (text ? h("p", { class: "demo-try" }, h("b", {}, "Poskusi: "), text) : null);
