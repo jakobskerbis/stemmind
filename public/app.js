@@ -69,7 +69,7 @@ function renderRich(text) {
 // ---------- pogledi ----------
 
 function showView(name) {
-  $("#competition-tab").hidden = !state.student || isUni(state.student.settings);
+  syncCompetitionTab();
   if (name === "path" || name === "competition") setBack(name);
   if (name !== "topic") stopContestTimer();
   document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("active", t.dataset.view === name));
@@ -149,6 +149,7 @@ async function onboard(name = "") {
 
 async function selectStudent(id) {
   state.student = state.students.find((s) => s.id === Number(id));
+  syncCompetitionTab();
   localStorageSet("studentId", state.student.id);
   state.conversationId = null;
   await loadConversations();
@@ -495,6 +496,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
   const i = state.students.findIndex((s) => s.id === updated.id);
   state.students[i] = updated;
   state.student = updated;
+  syncCompetitionTab();
   $("#student-select").options[$("#student-select").selectedIndex].textContent = updated.name;
   renderState(null);
   const ok = $("#settings-saved");
@@ -868,6 +870,10 @@ document.addEventListener("click", (e) => {
   if (e.target.closest("[data-daily]")) startSession("daily", { path: state.pathKey });
 });
 $("#back-to-path").addEventListener("click", () => showView(state.backTo || "path"));
+// Tekmovanja so za osnovno in srednjo šolo; fakulteta zavihka nima.
+function syncCompetitionTab() {
+  $("#competition-tab").hidden = !state.student || isUni(state.student.settings);
+}
 // Gumb »nazaj« na temi oziroma pri seriji nalog vodi tja, od koder je učenec prišel.
 function setBack(view) {
   state.backTo = view;
@@ -1249,7 +1255,7 @@ async function loadCompetition(key = state.compKey) {
   box.innerHTML = `
     <h1>Tekmovanja</h1>
     <div class="comp-pickers">
-      ${seg(Object.entries(SUBJECT_NAMES), c.subject, "data-comp-subject")}
+      ${seg(["MAT", "FIZ", "KEM"].map((k) => [k, SUBJECT_NAMES[k] || k]), c.subject, "data-comp-subject")}
       ${seg(Object.entries(SCHOOL_NAMES), c.school, "data-comp-school")}
     </div>
     <p class="muted comp-intro">Samo težje naloge v slogu tekmovanj: <b>${c.competitions.map(escapeHtml).join(", ")}</b>. Naloge sestavi aplikacija po zgledu tekmovalnih nalog, zato niso kopije preteklih tekmovanj.</p>

@@ -33,7 +33,9 @@ export function competitionKey(subject, school) {
 // Privzeta tekmovalna pot iz nastavitev učenca (fakulteta: ni tekmovanj).
 export function competitionKeyFor(settings) {
   if (settings.educational_track === "UNIVERZA") return null;
-  return competitionKey(settings.subject, settings.educational_track === "SREDNJA_SOLA" ? "SS" : "OS");
+  // Tekmovanja so za MAT, FIZ in KEM; pri drugih predmetih (npr. biologija) pokažemo matematiko.
+  const subject = ["MAT", "FIZ", "KEM"].includes(settings.subject) ? settings.subject : "MAT";
+  return competitionKey(subject, settings.educational_track === "SREDNJA_SOLA" ? "SS" : "OS");
 }
 
 export function competitionInfo(key) {
