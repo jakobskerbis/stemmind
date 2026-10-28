@@ -6,7 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getTopic, getPath, listPaths, topicOrder } from "./curriculum.js";
+import { getTopic, getPath, listPaths, topicOrder, getProgram, listProgramPaths } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
 import { hasGenerator } from "./practice/index.js";
 
@@ -265,7 +265,34 @@ const SCHOOL_ORDER = ["OS", "SS", "TEK"];
 const subjectName = (p) => SUBJECT_NAMES[p.subject] || p.label.split(",")[0].trim();
 const schoolName = (school) => SCHOOL_NAMES[school] || school;
 
-export function listBooks() {
+// Študijski program (fakulteta): en učbenik, deli so predmeti programa po letnikih.
+function programBook(programId) {
+  const prog = getProgram(programId);
+  if (!prog) return null;
+  const paths = listProgramPaths(programId).map((p) => ({
+    key: p.key,
+    label: `${p.elective ? "Izbirni predmet" : `${p.year}. letnik`}: ${p.label}`,
+  }));
+  const topics = paths.flatMap((p) => topicOrder(p.key));
+  return {
+    key: `P-${programId}`,
+    subject: "PROG",
+    school: "UNI",
+    subjectName: prog.label || prog.name,
+    schoolName: "študijski program",
+    paths,
+    label: prog.label || prog.name,
+    topics: topics.length,
+    lessons: topics.filter((t) => loadLesson(t.id)).length,
+  };
+}
+
+export function listBooks({ program } = {}) {
+  const prog = program ? programBook(program) : null;
+  return prog ? [prog, ...schoolBooks()] : schoolBooks();
+}
+
+function schoolBooks() {
   const books = new Map();
   for (const p of listPaths()) {
     const key = `${p.subject}-${p.school}`;
@@ -284,7 +311,8 @@ export function listBooks() {
 }
 
 export function getBook(bookKey) {
-  return listBooks().find((b) => b.key === bookKey) || null;
+  if (String(bookKey).startsWith("P-")) return programBook(String(bookKey).slice(2));
+  return schoolBooks().find((b) => b.key === bookKey) || null;
 }
 
 // Kazalo celega učbenika: deli = razredi oziroma letniki.

@@ -1,9 +1,11 @@
 // Nastavitve učenca (nadzorna plošča) in njihovo preverjanje.
+import { PROGRAMS } from "./university-data.js";
 
 export const ENUMS = {
   subject: ["MAT", "FIZ", "KEM"],
   track: ["REGULAR", "COMPETITION"],
-  educational_track: ["OSNOVNA_SOLA", "SREDNJA_SOLA"],
+  educational_track: ["OSNOVNA_SOLA", "SREDNJA_SOLA", "UNIVERZA"],
+  study_program: ["", ...Object.keys(PROGRAMS)],
   solving_mode: ["A", "B"],
 };
 
@@ -12,6 +14,7 @@ export const DEFAULT_SETTINGS = {
   track: "REGULAR",
   educational_track: "OSNOVNA_SOLA",
   curriculum_level: "8. razred",
+  study_program: "",
   solving_mode: "A",
   personality_setting: "prijazen in spodbuden",
 };
@@ -31,6 +34,11 @@ export function normalizeSettings(input = {}) {
   if (input.curriculum_level !== undefined) {
     out.curriculum_level = cleanText(input.curriculum_level, 60) || DEFAULT_SETTINGS.curriculum_level;
   }
+  // Fakulteta: program je obvezen, tekmovanj ni; brez fakultete programa ne hranimo.
+  if (out.educational_track === "UNIVERZA") {
+    if (!out.study_program) out.study_program = Object.keys(PROGRAMS)[0];
+    out.track = "REGULAR";
+  } else out.study_program = "";
   if (input.personality_setting !== undefined) {
     out.personality_setting = cleanText(input.personality_setting, 200);
   }

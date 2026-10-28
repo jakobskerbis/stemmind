@@ -1,5 +1,5 @@
 // STEMMind – odjemalec (brez ogrodja).
-import { attachPad, closePad } from "./pad.js";
+import { attachPad, closePad, openPad, padIsSheet } from "./pad.js";
 import { icon, hydrateIcons } from "./icons.js";
 
 hydrateIcons();
@@ -7,6 +7,7 @@ import { initAccount, accountsOn, openAddChild } from "./account.js";
 import { initTextbook, showTextbook, openLesson } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
+import { loadPrograms, programOptions, programsCache } from "./programs.js";
 
 const $ = (sel) => document.querySelector(sel);
 const api = async (url, opts = {}) => {
@@ -27,7 +28,11 @@ const MODE_NAMES = { A: "Vodenje", B: "Celotna rešitev" };
 const LEVELS = {
   OSNOVNA_SOLA: ["6. razred", "7. razred", "8. razred", "9. razred"],
   SREDNJA_SOLA: ["1. letnik OR", "1. letnik VR", "2. letnik OR", "2. letnik VR", "3. letnik OR", "3. letnik VR", "4. letnik OR", "4. letnik VR"],
+  UNIVERZA: ["1. letnik", "2. letnik", "3. letnik"],
 };
+const LEVEL_PLACEHOLDER = { OSNOVNA_SOLA: "npr. 8. razred", SREDNJA_SOLA: "npr. 2. letnik VR", UNIVERZA: "npr. 1. letnik" };
+
+const isUni = (s) => s?.educational_track === "UNIVERZA";
 
 const state = {
   students: [],
@@ -169,7 +174,8 @@ function renderState(convState) {
   const s = state.student.settings;
   const subject = convState?.subject || s.subject;
   const mode = convState?.mode || s.solving_mode;
-  $("#chat-state").innerHTML = [SUBJECT_NAMES[subject], MODE_NAMES[mode], s.curriculum_level]
+  const program = isUni(s) ? programsCache().find((p) => p.id === s.study_program)?.label : null;
+  $("#chat-state").innerHTML = [SUBJECT_NAMES[subject], MODE_NAMES[mode], program, s.curriculum_level]
     .filter(Boolean)
     .map((t) => `<span class="chip">${escapeHtml(t)}</span>`)
     .join("");
@@ -384,13 +390,20 @@ input.addEventListener("paste", (e) => {
 
 function fillLevelOptions(track) {
   $("#level-options").innerHTML = (LEVELS[track] || []).map((l) => `<option value="${l}">`).join("");
+  $("#settings-form").curriculum_level.placeholder = LEVEL_PLACEHOLDER[track] || "";
+  // Fakulteta: izbira programa namesto tekmovanj.
+  const uni = track === "UNIVERZA";
+  $("#study-program-row").hidden = !uni;
+  $("#track-row").hidden = uni;
 }
 
-function fillSettingsForm() {
+async function fillSettingsForm() {
   const f = $("#settings-form");
   const s = state.student.settings;
   f.name.value = state.student.name;
+  f.study_program.innerHTML = programOptions(await loadPrograms(api), s.study_program);
   for (const key of ["subject", "track", "educational_track", "curriculum_level", "personality_setting"]) f[key].value = s[key];
+  if (s.study_program) f.study_program.value = s.study_program;
   f.querySelector(`input[name=solving_mode][value=${s.solving_mode}]`).checked = true;
   f.manual_weaknesses.value = state.student.manual_weaknesses.join(", ");
   fillLevelOptions(s.educational_track);
@@ -404,7 +417,12 @@ function fillSettingsForm() {
   sel.value = PACES[localStorageGet("pace")] ? localStorageGet("pace") : DEFAULT_PACE;
   sel.addEventListener("change", () => localStorageSet("pace", sel.value));
 }
-$("#settings-form").educational_track.addEventListener("change", (e) => fillLevelOptions(e.target.value));
+$("#settings-form").educational_track.addEventListener("change", (e) => {
+  fillLevelOptions(e.target.value);
+  // Ob preklopu šole stara raven ne velja več: ponudimo prvo.
+  const f = $("#settings-form");
+  if (!(LEVELS[e.target.value] || []).includes(f.curriculum_level.value)) f.curriculum_level.value = LEVELS[e.target.value]?.[0] || "";
+});
 
 $("#settings-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -418,6 +436,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
         subject: f.subject.value,
         track: f.track.value,
         educational_track: f.educational_track.value,
+        study_program: f.educational_track.value === "UNIVERZA" ? f.study_program.value : "",
         curriculum_level: f.curriculum_level.value,
         solving_mode: f.querySelector("input[name=solving_mode]:checked").value,
         personality_setting: f.personality_setting.value,
@@ -703,16 +722,29 @@ async function loadPath(key = state.pathKey) {
   const q = key ? `?key=${encodeURIComponent(key)}` : "";
   const p = await api(`/api/students/${state.student.id}/path${q}`);
   const content = $("#path-content");
-  // izbira poti (vse poti predmeta)
-  const paths = await api(`/api/paths?subject=${state.student.settings.subject}`);
-  $("#path-select").innerHTML = paths
-    .map((x) => `<option value="${x.key}" ${x.key === p.key ? "selected" : ""}>${escapeHtml(x.label)}${x.key === p.defaultKey ? " (moja raven)" : ""}</option>`)
-    .join("");
+  // izbira poti: vse poti predmeta oziroma vsi predmeti študijskega programa po letnikih
+  const uni = isUni(state.student.settings);
+  if (uni) await loadPrograms(api);
+  const paths = await api(uni ? `/api/paths?program=${encodeURIComponent(state.student.settings.study_program)}` : `/api/paths?subject=${state.student.settings.subject}`);
+  const opt = (x) => `<option value="${x.key}" ${x.key === p.key ? "selected" : ""}>${escapeHtml(x.label.replace(/ \(U[LM] [A-Z]+\)$/, ""))}${x.key === p.defaultKey ? (uni ? " (moj predmet)" : " (moja raven)") : ""}</option>`;
+  $("#path-select").innerHTML = uni
+    ? [1, 2, 3]
+        .map((y) => paths.filter((x) => x.year === y))
+        .filter((list) => list.length)
+        .map((list) => `<optgroup label="${list[0].year}. letnik">${list.map(opt).join("")}</optgroup>`)
+        .join("")
+    : paths.map(opt).join("");
   if (!p.key) {
     content.innerHTML = `<p class="muted">${escapeHtml(p.message)}</p>`;
     return;
   }
   state.pathKey = p.key;
+  // Fakulteta: vir predmetnika in opozorilo, da je osnutek.
+  const prog = uni ? programsCache().find((x) => x.id === state.student.settings.study_program) : null;
+  $("#path-note").hidden = !prog;
+  if (prog) {
+    $("#path-note").innerHTML = `${escapeHtml(prog.facultyName)}, ${escapeHtml(prog.name)} (UN, 1. stopnja). Predmeti in teme sledijo javnemu predmetniku (${escapeHtml(prog.sourceYear || "")}); praktikumi in izbirni predmeti brez naravoslovne vsebine niso zajeti. ${prog.source ? `<a href="${escapeHtml(prog.source)}" target="_blank" rel="noopener">Uradni predmetnik</a>.` : ""}`;
+  }
   const x = p.xp;
   const done = state.modes?.daily?.done;
   $("#xp-card").innerHTML = `
@@ -846,7 +878,7 @@ async function nextPractice() {
       <div class="task-top"><span class="eyebrow with-icon">${icon("book-open")} Rešen zgled</span></div>
       <div class="task-text">${renderRich(out.example.text)}</div>
       ${out.example.figure ? figureSvg(out.example.figure) : ""}
-      <div class="solution"><span class="sol-label">Rešitev</span>${renderRich(out.example.solution)}</div>
+      ${workedBlock(out.example, out.example.solution, "Rešitev")}
       <div class="fb hint">${icon("lightbulb")}<div>${renderRich(out.example.hint)}</div></div>
       <div class="actions"><button class="primary big" id="ex-next">Zdaj ti${icon("arrow-right")}</button></div>
     </div>`;
@@ -1013,6 +1045,24 @@ function renderTask(task, ctx) {
   } else closePad();
 }
 
+// Rešitev z izpisanimi podatki iz besedila (Podatki / Iščemo) in formulo, skrito za gumbom.
+function workedBlock(task, solution, label = "Rešitev") {
+  const d = task.data;
+  const tex = (t) => renderMath(String(t), false);
+  const dataHtml =
+    d && Array.isArray(d.given) && d.given.length
+      ? `<div class="task-data">
+          <div class="data-col"><span class="sol-label">Podatki</span><div class="data-list">${d.given.map((x) => `<div>${tex(x)}</div>`).join("")}</div></div>
+          ${Array.isArray(d.find) && d.find.length ? `<div class="data-col"><span class="sol-label">Iščemo</span><div class="data-list">${d.find.map((x) => `<div>${tex(`${x} = \\,?`)}</div>`).join("")}</div></div>` : ""}
+        </div>`
+      : "";
+  const formulas = task.formula ? (Array.isArray(task.formula) ? task.formula : [task.formula]) : [];
+  const formulaHtml = formulas.length
+    ? `<details class="formula"><summary>${icon("eye")}Pokaži formulo</summary><div class="formula-body">${formulas.map((f) => `<div>${tex(f)}</div>`).join("")}</div></details>`
+    : "";
+  return `<div class="solution">${dataHtml}${formulaHtml}<span class="sol-label">${label}</span>${renderRich(solution)}</div>`;
+}
+
 async function checkTask(task, ctx, value) {
   const fb = $("#feedback");
   let r;
@@ -1039,7 +1089,7 @@ async function checkTask(task, ctx, value) {
   } else if (r.correct) {
     html = `<div class="fb ok pop">${icon("circle-check")}<span><b>Pravilno!</b>${r.levelUp ? " Naslednje naloge bodo malo težje." : ""}</span><span class="xp-gain">+${r.xp.gained} XP</span></div>
       ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>Tema je osvojena! Jutri te povabim k ponovitvi.</span></div>` : ""}
-      <div class="solution"><span class="sol-label">Rešitev</span>${renderRich(r.solution)}</div>
+      ${workedBlock(task, r.solution, "Rešitev")}
       ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}`;
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next();
     refreshXp();
@@ -1048,7 +1098,7 @@ async function checkTask(task, ctx, value) {
       ${r.levelDown ? `<div class="muted">Naslednje naloge bodo malo lažje, da utrdiš osnove.</div>` : ""}
       ${r.hint ? `<div class="fb hint">${icon("lightbulb")}<div><b>Namig:</b> ${renderRich(r.hint)}</div></div>` : ""}`;
     if (r.solution) {
-      html += `<div class="solution"><span class="sol-label">Rešen zgled</span>${renderRich(r.solution)}</div>`;
+      html += workedBlock(task, r.solution, "Rešen zgled");
       html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" ? "Poskusi podobno nalogo" : "Naslednja naloga");
     } else {
       html += `<div class="actions"><button id="fb-retry" class="primary big">Poskusi znova</button>
@@ -1058,11 +1108,18 @@ async function checkTask(task, ctx, value) {
   }
   fb.innerHTML = html;
   // Ko je naloga zaključena, plošča izgine, da sta razlaga in gumb »Naprej« vidna.
+  let padClosedForFeedback = false;
   if (!r.retry && (r.correct || r.solution || ctx.mode === "placement")) closePad();
+  else if (!r.retry && padIsSheet()) {
+    // Na telefonu plošča prekrije povratno informacijo; zapremo jo, »Poskusi znova« jo spet odpre.
+    closePad();
+    padClosedForFeedback = true;
+  }
   fb.scrollIntoView({ block: "nearest", behavior: "smooth" });
   $("#fb-retry")?.addEventListener("click", () => {
     fb.innerHTML = "";
-    $("#answer")?.select();
+    if (padClosedForFeedback) openPad();
+    else $("#answer")?.select();
   });
   $("#fb-help")?.addEventListener("click", async () => {
     const h = await api(`/api/students/${state.student.id}/tasks/${task.id}/help`, { method: "POST" });

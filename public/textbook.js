@@ -3,7 +3,7 @@ import { mountDemo } from "./demos.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
-const tb = { subject: null, book: null, query: "", topicId: null, books: [], myPath: null };
+const tb = { subject: null, book: null, query: "", topicId: null, books: [], myPath: null, program: null };
 
 // Ikone iz icons.js (ko je na voljo prenovljen vmesnik), sicer brez ikon.
 let iconFn = () => "";
@@ -37,11 +37,19 @@ export async function openLesson(topicId) {
 async function renderHome() {
   const box = $("#view-textbook");
   const student = ctx.getStudent();
-  if (!tb.books.length) tb.books = await ctx.api("/api/textbook/books");
+  // Študent fakultete: najprej učbenik njegovega študijskega programa, nato OŠ/SŠ.
+  const program = student?.settings?.educational_track === "UNIVERZA" ? student.settings.study_program || "" : "";
+  if (!tb.books.length || tb.program !== program) {
+    tb.program = program;
+    tb.books = await ctx.api(`/api/textbook/books${program ? `?program=${encodeURIComponent(program)}` : ""}`);
+    tb.subject = null;
+    tb.book = null;
+    tb.myPath = null;
+  }
   if (tb.myPath === null) tb.myPath = (await ctx.api(`/api/students/${student.id}/path`).catch(() => null))?.key || "";
   // Privzeto: učbenik predmeta in ravni, ki ju učenec ima v učni poti.
-  if (!tb.subject) tb.subject = (tb.myPath || student?.settings?.subject || "MAT").split("-")[0];
-  const subjects = [...new Map(tb.books.map((b) => [b.subject, b.subjectName])).entries()];
+  if (!tb.subject) tb.subject = program ? "PROG" : (tb.myPath || student?.settings?.subject || "MAT").split("-")[0];
+  const subjects = [...new Map(tb.books.map((b) => [b.subject, b.subject === "PROG" ? "Moj študij" : b.subjectName])).entries()];
   if (!subjects.some(([k]) => k === tb.subject)) tb.subject = subjects[0]?.[0];
   const books = tb.books.filter((b) => b.subject === tb.subject);
   if (!books.some((b) => b.key === tb.book)) {

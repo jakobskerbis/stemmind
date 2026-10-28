@@ -9,7 +9,7 @@ import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TE
 import { Usage, LIMITS, windowHistory } from "./usage.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
-import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt } from "./curriculum.js";
+import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt, listPrograms, listProgramPaths } from "./curriculum.js";
 import { getExplanation } from "./explanations.js";
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
@@ -27,7 +27,7 @@ const ANSWER_CACHE = process.env.STEMMIND_ANSWER_CACHE !== "0";
 function cacheKey(text, settings, deep) {
   const norm = text.toLowerCase().replace(/\s+/g, " ").replace(/[\s.!?]+$/, "").trim();
   if (norm.length < 8) return null;
-  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.curriculum_level, settings.solving_mode, settings.personality_setting, deep ? 1 : 0];
+  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, deep ? 1 : 0];
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
 
@@ -311,7 +311,10 @@ export function createApp(store, opts = {}) {
   });
 
   // --- učne poti ---
-  app.get("/api/paths", (req, res) => res.json(listPaths(req.query.subject)));
+  app.get("/api/paths", (req, res) =>
+    res.json(req.query.program ? listProgramPaths(String(req.query.program)) : listPaths(req.query.subject)),
+  );
+  app.get("/api/programs", (req, res) => res.json(listPrograms()));
   app.get("/api/students/:id/path", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
@@ -326,7 +329,7 @@ export function createApp(store, opts = {}) {
     res.json({ ...t, pathLabel: getPath(t.path).label, explanation: getExplanation(t.id)?.text || lessonExplanation(t.id) });
   });
   // --- učbenik ---
-  app.get("/api/textbook/books", (req, res) => res.json(listBooks()));
+  app.get("/api/textbook/books", (req, res) => res.json(listBooks({ program: req.query.program ? String(req.query.program) : null })));
   app.get("/api/textbook/toc", (req, res) => {
     if (req.query.book) {
       const book = bookView(String(req.query.book));

@@ -50,7 +50,7 @@
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html, body { height: 100%; }
+html, body { height: 100%; overscroll-behavior-y: none; } /* brez osveževanja s potegom med pisanjem */
 body {
   margin: 0;
   background: var(--bg);
@@ -136,7 +136,7 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 /* ---------- pogledi, kartice, obrazci ---------- */
 .view { flex: 1; min-height: 0; }
 .view[hidden] { display: none !important; }
-.narrow { max-width: 780px; width: 100%; margin: 0 auto; padding: 24px 16px 48px; overflow-y: auto; }
+.narrow { max-width: 780px; width: 100%; margin: 0 auto; padding: 24px 16px 48px; overflow-y: auto; overscroll-behavior: contain; }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
 .form { display: flex; flex-direction: column; gap: 14px; }
 .form label { display: flex; flex-direction: column; gap: 6px; font-weight: 800; font-size: 0.92rem; }
@@ -242,6 +242,7 @@ button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shad
 .path-head { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
 .field-label { font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
 .path-head select { padding: 11px 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--surface); font-weight: 800; font-size: 1rem; min-height: 48px; }
+.path-note { font-size: .9rem; margin: -8px 0 16px; }
 .card.xp-card { padding: 0; overflow: hidden; }
 .hero { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; padding: 20px; background: linear-gradient(135deg, var(--accent), var(--accent-grad)); color: #fff; }
 .hero h2 { margin: 0; font-size: 1.25rem; }
@@ -364,6 +365,15 @@ button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shad
 .solution { background: var(--surface-2); border-radius: var(--radius-sm); padding: 12px 14px; overflow-x: auto; }
 .sol-label { display: block; font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 4px; }
 .small-note { margin: 0; font-size: 0.85rem; }
+/* Podatki / Iščemo in formula v rešenem zgledu */
+.task-data { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 10px; }
+.task-data .data-col { min-width: 120px; }
+.task-data .data-list { display: flex; flex-direction: column; gap: 2px; font-size: 1.05rem; }
+.formula { margin-bottom: 10px; }
+.formula summary { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none; padding: 6px 12px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--surface); font-weight: 700; font-size: 0.92rem; user-select: none; }
+.formula summary::-webkit-details-marker { display: none; }
+.formula[open] summary { border-color: var(--accent); color: var(--accent); }
+.formula-body { padding: 8px 2px 0; font-size: 1.05rem; display: flex; flex-direction: column; gap: 4px; }
 .example { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
 .example .solution { margin-top: 14px; }
 .example .fb.hint { margin-top: 10px; }
@@ -473,7 +483,7 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
 .pad {
   --ink-h: 30vh;
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
-  max-height: 66vh; overflow-y: auto; display: flex; flex-direction: column;
+  max-height: 66vh; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column;
   background: var(--surface); border-top: 1px solid var(--border);
   border-radius: 16px 16px 0 0; box-shadow: 0 -8px 24px rgba(0,0,0,.12);
   padding: 6px 12px calc(10px + env(safe-area-inset-bottom));
@@ -498,6 +508,9 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
 .draw-tools button { padding: 6px 12px; border-radius: 10px; }
 .draw-tools button.on { outline: 2px solid var(--accent); }
 .canvas-wrap { height: var(--ink-h); overflow-y: auto; border: 1px solid var(--border); border-radius: 10px; }
+/* Gumbi na plošči: brez povečave ob dvojnem dotiku in brez označevanja besedila (iOS). */
+.pad button, .pad summary { touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+.canvas-wrap, canvas.ink { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 canvas.ink {
   display: block; width: 100%; height: 100%; touch-action: none; cursor: crosshair; color: var(--text);
   background: repeating-linear-gradient(to bottom, transparent 0 39px, color-mix(in srgb, var(--border) 80%, transparent) 39px 40px), var(--bg);
@@ -507,8 +520,16 @@ canvas.ink {
 .read-result:not(:empty) { margin-bottom: 8px; }
 .read-result .actions { margin: 6px 0 0; }
 body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
+/* Vidni del zaslona (brez orodne vrstice brskalnika), kjer brskalnik to zna. */
+@supports (height: 1dvh) {
+  .pad { max-height: 66dvh; --ink-h: 30dvh; }
+}
+/* Ko je prikazano »Prebral sem …«, namig spodaj skrijemo, da platno ostane vidno. */
+.read-result:not(:empty) ~ .pad-draw .draw-foot { display: none; }
 /* Telefon: besedilo naloge ostane pripeto na vrhu, plošča je spodaj. */
 @media (max-width: 899px) {
+  /* Pisanje se ne začne na samem robu zaslona (poteg nazaj v iOS/Android). */
+  .pad[data-tab="draw"] .canvas-wrap { margin: 0 8px; }
   /* Med vnosom skrijemo zavihke in obvestila, da je za nalogo več prostora. */
   body.pad-open .tabs, body.pad-open .banner, body.pad-open #back-to-path, body.pad-open .task-tag { display: none !important; }
   body.pad-open .pad-tabs button, body.pad-open .pad-close { padding: 6px 10px !important; }
@@ -528,6 +549,29 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
   .pad .canvas-wrap { flex: 1; height: auto; min-height: 120px; }
   body.pad-open #view-topic { padding-bottom: 40px; margin-right: 400px; width: calc(100% - 400px); max-width: none; }
   body.pad-open #view-topic > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+}
+/* Telefon ležeče: plošča spodaj bi prekrila nalogo, zato je tudi tu ob strani. */
+@media (max-width: 899px) and (min-width: 600px) and (max-height: 500px) {
+  .pad {
+    top: var(--pad-top, 60px); left: auto; width: min(400px, 48vw); max-height: none; overflow-y: auto;
+    border-top: 0; border-left: 1px solid var(--border); border-radius: 0; box-shadow: -8px 0 24px rgba(0,0,0,.08);
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  }
+  .pad[data-tab="draw"] .pad-draw { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .pad .canvas-wrap { flex: 1; height: auto; min-height: 90px; margin: 0; }
+  .draw-foot { display: none; }
+  /* Strnjeno, da je platno vidno brez drsenja. */
+  .pad-head { margin-bottom: 0; }
+  .pad-tabs button, .pad-close { padding: 4px 8px !important; }
+  .pad-answer { margin: 2px 0 6px; }
+  .pad-value { min-height: 36px; font-size: 1.05rem; padding: 4px 10px; }
+  .pad-check { padding: 6px 12px; min-height: 36px; }
+  .draw-tools { margin-bottom: 4px; gap: 4px; }
+  .draw-tools button { padding: 4px 8px; min-height: 34px; }
+  .draw-tools button span { display: none; }
+  .read-result .fb { padding: 6px 10px; font-size: 0.92rem; }
+  body.pad-open #view-topic { padding-bottom: 24px; margin-right: min(400px, 48vw); width: calc(100% - min(400px, 48vw)); max-width: none; }
+  body.pad-open .task .task-text { position: static; max-height: none; margin: 0; padding: 0; border: 0; }
 }
 
 

@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { cleanText } from "./settings.js";
+import { studyProgramPrompt } from "./curriculum.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const TEMPLATE_PATH = process.env.STEMMIND_PROMPT_PATH || path.join(here, "..", "prompts", "system_prompt.md");
@@ -19,6 +20,7 @@ const PLACEHOLDERS = [
   "track",
   "educational_track",
   "curriculum_level",
+  "study_program",
   "solving_mode",
   "personality_setting",
   "weaknesses",
@@ -30,6 +32,7 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
   const values = {
     learning_path: learningPath || "(Prost pogovor: ni izbrane teme učne poti.)",
     ...settings,
+    study_program: studyProgramPrompt(settings),
     student_name: cleanText(studentName, 40) || "(ni podano)",
     personality_setting: settings.personality_setting || "nevtralna",
     weaknesses: weaknesses.length ? weaknesses.join(", ") : "(še ni podatkov)",
