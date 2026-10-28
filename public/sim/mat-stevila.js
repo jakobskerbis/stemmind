@@ -292,7 +292,7 @@ export function evklid(el) {
   let a = 42, b = 30;
   const draw = () => {
     svg.replaceChildren();
-    const sc = Math.min(300 / a, 210 / b);
+    const sc = 210 / 80; // stalno merilo: večji števili → večji pravokotnik
     let x = 20, y = 15, w = a, hh = b, steps = [], k = 0;
     s("rect", { x, y, width: a * sc, height: b * sc, class: "box" }, svg);
     while (w > 0 && hh > 0 && k < 40) {
@@ -664,7 +664,9 @@ export function razmerje(el) {
     // vrč z mešanico
     const mix = a / n;
     s("path", { d: "M235,110 h70 v70 q0,8 -8,8 h-54 q-8,0 -8,-8 z", class: "beaker" }, svg);
-    s("rect", { x: 236, y: 130, width: 68, height: 57, rx: 6, fill: `color-mix(in srgb, var(--demo-a) ${Math.round(mix * 100)}%, var(--demo-b))` }, svg);
+    const hl = (total / 2000) * 74; // višina mešanice v vrču je sorazmerna s prostornino
+    s("rect", { x: 236, y: 187 - hl, width: 68, height: hl, rx: 6, fill: `color-mix(in srgb, var(--demo-a) ${Math.round(mix * 100)}%, var(--demo-b))` }, svg);
+    label(svg, 270, 102, `${total} mL`, "tick small");
     const g = gcd(a, b);
     const pa = (total * a) / n, pb = (total * b) / n;
     for (let k = 1; k <= 4; k++) s("text", { x: 20, y: 120 + k * 18, class: "tick" }, svg, `${a * k} : ${b * k}`);

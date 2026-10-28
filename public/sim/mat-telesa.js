@@ -98,20 +98,39 @@ function formulas(kind, p) {
   return { P: `P = 4\\pi r^2 \\approx ${T(4 * Math.PI * r * r)}`, V: `V = \\frac{4\\pi r^3}{3} \\approx ${T((4 * Math.PI * r ** 3) / 3)}`, note: `Površina krogle je enaka ploščini štirih največjih krogov. Prostornina je 2/3 prostornine valja, ki krogli očrtamo (r, v = 2r): ${fmt((4 / 3) * Math.PI * r ** 3)} : ${fmt(2 * Math.PI * r ** 3)}.` };
 }
 
+// Merilo mreže za dane mere (uporabimo največje mere, da je merilo stalno in se sprememba vidi).
+function netScale(kind, p) {
+  if (kind === "kocka" || kind === "kvader") {
+    const [a, b, c] = kind === "kocka" ? [p[0], p[0], p[0]] : p;
+    return Math.min(320 / (2 * (a + b)), 280 / (2 * b + c));
+  }
+  if (kind === "prizma" || kind === "valj") {
+    const curved = kind === "valj", n = curved ? 1 : p[0], a = curved ? 2 * Math.PI * p[0] : p[1], v = curved ? p[1] : p[2];
+    const R = curved ? p[0] : a / (2 * Math.sin(Math.PI / n));
+    return Math.min(320 / (curved ? a : n * a), 280 / (v + 4 * R));
+  }
+  if (kind === "piramida") {
+    const [n, a, v] = p, R = a / (2 * Math.sin(Math.PI / n)), ri = a / (2 * Math.tan(Math.PI / n)), va = Math.hypot(v, ri);
+    return Math.min(150 / (ri + va), 140 / (R + va));
+  }
+  if (kind === "stozec") {
+    const [r, v] = p, sl = Math.hypot(r, v);
+    return Math.min(110 / sl, 260 / (sl + 2 * r));
+  }
+  return 1;
+}
+
 // Mreža v ravnini (SVG).
-function drawNet(svg, kind, p) {
+function drawNet(svg, kind, p, SC = netScale(kind, p)) {
   svg.replaceChildren();
   const g = s("g", {}, svg);
   const poly = (pts, cls) => s("polygon", { points: pts.map((q) => q.join(",")).join(" "), class: `shape ${cls}` }, g);
   const regular = (n, R, cx, cy, off) => Array.from({ length: n }, (_, i) => [cx + R * Math.cos(off + (2 * Math.PI * i) / n), cy + R * Math.sin(off + (2 * Math.PI * i) / n)]);
-  let W = 1, H = 1;
   if (kind === "kocka" || kind === "kvader") {
     const [a, b, c] = kind === "kocka" ? [p[0], p[0], p[0]] : p;
     // križ: zgoraj b, sredina c (stranice: b a b a), spodaj b
     const rects = [[b, 0, a, b, "fill-a"], [0, b, b, c, "fill-c"], [b, b, a, c, "fill-b"], [b + a, b, b, c, "fill-c"], [2 * b + a, b, a, c, "fill-b"], [b, b + c, a, b, "fill-a"]];
-    W = 2 * (a + b);
-    H = 2 * b + c;
-    const sc = Math.min(320 / W, 280 / H);
+    const sc = SC;
     rects.forEach(([x, y, w, hh, cls]) => poly([[x, y], [x + w, y], [x + w, y + hh], [x, y + hh]].map(([u, v]) => [10 + u * sc, 10 + v * sc]), cls));
     return;
   }
@@ -120,7 +139,7 @@ function drawNet(svg, kind, p) {
     const n = curved ? 1 : p[0], a = curved ? 2 * Math.PI * p[0] : p[1], v = curved ? p[1] : p[2];
     const R = curved ? p[0] : a / (2 * Math.sin(Math.PI / n));
     const total = curved ? a : n * a;
-    const sc = Math.min(320 / total, 280 / (v + 4 * R));
+    const sc = SC;
     const ox = 10, oy = 10 + 2 * R * sc;
     if (curved) poly([[0, 0], [a, 0], [a, v], [0, v]].map(([u, w]) => [ox + u * sc, oy + w * sc]), "fill-b");
     else for (let i = 0; i < n; i++) poly([[i * a, 0], [(i + 1) * a, 0], [(i + 1) * a, v], [i * a, v]].map(([u, w]) => [ox + u * sc, oy + w * sc]), i % 2 ? "fill-b" : "fill-c");
@@ -138,7 +157,7 @@ function drawNet(svg, kind, p) {
   if (kind === "piramida") {
     const [n, a, v] = p;
     const R = a / (2 * Math.sin(Math.PI / n)), ri = a / (2 * Math.tan(Math.PI / n)), va = Math.hypot(v, ri);
-    const sc = Math.min(150 / (ri + va), 140 / (R + va));
+    const sc = SC;
     const C = [170, 150];
     const base = regular(n, R * sc, C[0], C[1], -Math.PI / 2 + Math.PI / n);
     poly(base, "fill-a");
@@ -152,7 +171,7 @@ function drawNet(svg, kind, p) {
   if (kind === "stozec") {
     const [r, v] = p;
     const sl = Math.hypot(r, v), ang = (2 * Math.PI * r) / sl;
-    const sc = Math.min(110 / sl, 260 / (sl + 2 * r));
+    const sc = SC;
     const C = [170, 20];
     const p0 = -Math.PI / 2 - ang / 2 + Math.PI;
     const P = (t) => [C[0] + sl * sc * Math.cos(p0 + t), C[1] + sl * sc * Math.sin(p0 + t)];
@@ -171,16 +190,20 @@ export function telesa(el, { bodies = ["kocka", "kvader"] } = {}) {
   let kind = bodies[0], p = BODIES[kind].params.map((q) => q[3]), yaw = 0.6, pitch = 0.45, net = false, units = false;
   const ctl = h("div", { class: "demo-controls" });
   const draw = () => {
-    if (net) drawNet(svg, kind, p);
+    // stalno merilo: izračunamo ga za največje mere telesa, zato večje telo izgleda večje
+    const pMax = BODIES[kind].params.map((q) => q[2]);
+    if (net) drawNet(svg, kind, p, netScale(kind, pMax));
     else {
       svg.replaceChildren();
       const F = mesh(kind, p, units && (kind === "kocka" || kind === "kvader"));
       const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
       // velikost
       let maxD = 0;
-      F.forEach(([pts]) => pts.forEach((q) => (maxD = Math.max(maxD, Math.hypot(q[0], q[2]), q[1]))));
+      const FM = mesh(kind, pMax, false);
+      FM.forEach(([pts]) => pts.forEach((q) => (maxD = Math.max(maxD, Math.hypot(q[0], q[2]), q[1]))));
+      const hgtM = Math.max(...FM.flatMap(([pts]) => pts.map((q) => q[1])));
       const hgt = Math.max(...F.flatMap(([pts]) => pts.map((q) => q[1])));
-      const sc = 120 / Math.max(maxD, hgt * 0.75, 1);
+      const sc = 120 / Math.max(maxD, hgtM * 0.75, 1);
       // zavrti v koordinate pogleda: x desno, y gor, z proti gledalcu
       const rot = ([x, y, z]) => {
         y -= hgt / 2;

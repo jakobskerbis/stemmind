@@ -25,7 +25,7 @@ export function vzvod(el, { mode = "vzvod" } = {}) {
       if (i) label(svg, x, y + 14, String(Math.abs(i)), "tick small");
     }
     [[x1, m1, "a", (v) => (x1 = v)], [x2, m2, "b", (v) => (x2 = v)]].forEach(([x, m, col, set]) => {
-      const [px, py] = P(x), sz = 10 + m * 3;
+      const [px, py] = P(x), sz = 12 * Math.cbrt(m); // prostornina uteži ∝ masa
       s("line", { x1: px, y1: py, x2: px, y2: py + 22, class: "string" }, svg);
       s("rect", { x: px - sz / 2, y: py + 22, width: sz, height: sz, rx: 3, class: `fill-${col}` }, svg);
       label(svg, px, py + 22 + sz / 2, `${m}`, "tick small b inv");
@@ -62,31 +62,40 @@ function skripec(el) {
     svg.replaceChildren();
     const n = [1, 2, 4][sys];
     s("rect", { x: 20, y: 6, width: 300, height: 10, class: "wall" }, svg);
-    const yLoad = 230 - h * 60;
+    // breme se dvigne za 40 px, prosti konec vrvi pa za n-krat več (s = n·h)
+    const lift = h * 40, yLoad = 200 - lift, bs = 26 * Math.cbrt(m / 20), fs = 0.12; // 0,12 px na N
+    const F = (m * G) / n;
+    let xr, yr0;
     if (n === 1) {
       s("circle", { cx: 170, cy: 50, r: 22, class: "pulley" }, svg);
       s("line", { x1: 170, y1: 16, x2: 170, y2: 50, class: "string" }, svg);
       s("line", { x1: 148, y1: 50, x2: 148, y2: yLoad, class: "string" }, svg);
-      s("line", { x1: 192, y1: 50, x2: 192, y2: 190 + h * 60 * n, class: "string" }, svg);
-      arrow(svg, 192, 190 + h * 60 * n, 192, 220 + h * 60 * n, "danger", 3);
-      s("rect", { x: 128, y: yLoad, width: 40, height: 36, rx: 4, class: "fill-a" }, svg);
+      s("rect", { x: 148 - bs / 2, y: yLoad, width: bs, height: bs, rx: 4, class: "fill-a" }, svg);
+      xr = 192;
+      yr0 = 120;
     } else {
       const k = n / 2;
       for (let i = 0; i < k; i++) {
         s("circle", { cx: 150 + i * 30, cy: 46, r: 14, class: "pulley" }, svg);
         s("circle", { cx: 150 + i * 30, cy: yLoad - 30, r: 14, class: "pulley" }, svg);
       }
-      for (let j = 0; j < n; j++) {
-        const x = 136 + j * 15 + (j % 2 ? 0 : 0);
-        s("line", { x1: x, y1: 46, x2: x, y2: yLoad - 30, class: "string" }, svg);
-      }
-      s("line", { x1: 136 + n * 15 + 8, y1: 46, x2: 136 + n * 15 + 8, y2: 190 + h * 60 * n * 0.5, class: "string" }, svg);
-      arrow(svg, 136 + n * 15 + 8, 190 + h * 60 * n * 0.5, 136 + n * 15 + 8, 222 + h * 60 * n * 0.5, "danger", 3);
-      s("line", { x1: 150 + (k - 1) * 15, y1: yLoad - 16, x2: 150 + (k - 1) * 15, y2: yLoad, class: "string" }, svg);
-      s("rect", { x: 130 + (k - 1) * 15, y: yLoad, width: 40, height: 36, rx: 4, class: "fill-a" }, svg);
+      for (let j = 0; j < n; j++) s("line", { x1: 136 + j * 15, y1: 46, x2: 136 + j * 15, y2: yLoad - 30, class: "string" }, svg);
+      const cxl = 150 + (k - 1) * 15;
+      s("line", { x1: cxl, y1: yLoad - 16, x2: cxl, y2: yLoad, class: "string" }, svg);
+      s("rect", { x: cxl - bs / 2, y: yLoad, width: bs, height: bs, rx: 4, class: "fill-a" }, svg);
+      xr = 136 + n * 15 + 8;
+      yr0 = 90;
     }
-    label(svg, 60, 120, `F = ${fmt((m * G) / n, 0)} N`, "lbl fill-danger");
+    const yr = yr0 + n * lift;
+    s("line", { x1: xr, y1: n === 1 ? 50 : 46, x2: xr, y2: yr, class: "string" }, svg);
+    arrow(svg, xr, yr, xr, yr + F * fs, "danger", 3);
+    label(svg, xr + 8, yr + (F * fs) / 2, "F", "lbl small", "start");
+    const lx = n === 1 ? 148 : 150 + (n / 2 - 1) * 15;
+    arrow(svg, lx, yLoad + bs, lx, yLoad + bs + m * G * fs, "text", 2);
+    label(svg, 60, 120, `F = ${fmt(F, 0)} N`, "lbl fill-danger");
     label(svg, 60, 140, `teža = ${fmt(m * G, 0)} N`, "lbl small");
+    label(svg, 60, 160, `vrv: ${fmt(n * h * 0.5, 2)} m, breme: ${fmt(h * 0.5, 2)} m`, "tick small");
+    label(svg, 334, 272, "puščici sil v istem merilu", "tick small", "end");
   };
   const info = () => {
     const n = [1, 2, 4][sys];
@@ -171,13 +180,13 @@ export function stojece(el) {
   let n = 2, Lm = 0.65, v = 240, t = 0;
   const draw = () => {
     svg.replaceChildren();
-    const x0 = 20, x1 = 320, y0 = 90, A = 45;
+    const x0 = 20, x1 = 20 + Lm * 250, y0 = 90, A = 45; // dolžina strune v merilu (250 px na meter)
     s("rect", { x: x0 - 8, y: 40, width: 8, height: 100, class: "wall" }, svg);
     s("rect", { x: x1, y: 40, width: 8, height: 100, class: "wall" }, svg);
     const env = (u, sg) => `M${x0} ${y0} ` + Array.from({ length: 101 }, (_, i) => `L${x0 + ((x1 - x0) * i) / 100} ${y0 + sg * A * Math.sin((n * Math.PI * i) / 100)}`).join(" ");
     s("path", { d: env(0, 1), class: "guide", fill: "none" }, svg);
     s("path", { d: env(0, -1), class: "guide", fill: "none" }, svg);
-    const c = Math.cos(t * 2 * Math.PI * 0.8);
+    const c = Math.cos(t * 2 * Math.PI * ((n * v) / (2 * Lm) / 400)); // nihanje upočasnjeno 400-krat
     s("path", { d: `M${x0} ${y0} ` + Array.from({ length: 151 }, (_, i) => `L${x0 + ((x1 - x0) * i) / 150} ${y0 + c * A * Math.sin((n * Math.PI * i) / 150)}`).join(" "), class: "graph-line", fill: "none" }, svg);
     for (let k = 0; k <= n; k++) {
       s("circle", { cx: x0 + ((x1 - x0) * k) / n, cy: y0, r: 4.5, class: "fill-danger" }, svg);
@@ -189,7 +198,7 @@ export function stojece(el) {
     const f = (n * v) / (2 * Lm);
     out.innerHTML = texBlock(`f_n = \\frac{n\\,c}{2L} = \\frac{${n}\\cdot ${v}}{2\\cdot ${fmt(Lm, 2)}} = ${fmt(f, 0)}\\ \\text{Hz}`) +
       `<p>Na struni, vpeti na obeh koncih, nastane stoječe valovanje le, če gre na dolžino strune celo število polovic valovne dolžine: L = n·λ/2. Rdeče točke so <b>vozli</b> (ne nihajo), zelene <b>hrbti</b>. ${n === 1 ? "To je osnovni ton." : `To je ${n}. lastno nihanje (${n - 1}. višji harmonik).`}</p>
-       <p class="muted">Hitrost valovanja na struni je c = √(F/μ): bolj napeta struna da višji ton.</p>`;
+       <p class="muted">Hitrost valovanja na struni je c = √(F/μ): bolj napeta struna da višji ton. Dolžina strune je v merilu, nihanje pa je upočasnjeno 400-krat (višja frekvenca → hitrejše nihanje).</p>`;
   };
   animate(el, (dt) => {
     t += dt;

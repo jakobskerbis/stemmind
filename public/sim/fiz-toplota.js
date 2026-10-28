@@ -93,6 +93,7 @@ export function delci(el, { mode = "temperatura" } = {}) {
 
 // ------------------------------------------------------------ toplota: segrevanje in mešanje
 const SUB = [["voda", "voda", 4200], ["olje", "olje", 2000], ["aluminij", "aluminij", 900], ["zelezo", "železo", 450]];
+const RHO = { voda: 1000, olje: 920, aluminij: 2700, zelezo: 7870 };
 export function mesanje(el, { mode = "segrevanje" } = {}) {
   if (mode === "mesanje") return mesanjeVode(el);
   const svg = svgBox(340, 200), svg2 = svgBox(340, 190);
@@ -111,7 +112,8 @@ export function mesanje(el, { mode = "segrevanje" } = {}) {
     s("rect", { x: 90, y: 160, width: 120, height: 14, rx: 4, class: "fill-danger", opacity: 0.4 + 0.6 * Math.min(1, P / 3000) }, svg);
     label(svg, 150, 188, `grelnik ${P} W`, "tick");
     s("path", { d: "M100,60 V156 H200 V60", class: "beaker" }, svg);
-    s("rect", { x: 101, y: 156 - 60 * Math.min(1.5, m) * 0.8, width: 98, height: 60 * Math.min(1.5, m) * 0.8, class: sub === "voda" ? "fill-b" : "fill-a", opacity: 0.4 }, svg);
+    const hv = (m / RHO[sub]) * 1000 * 40; // višina je sorazmerna s prostornino (40 px na liter)
+    s("rect", { x: 101, y: 156 - hv, width: 98, height: hv, class: sub === "voda" ? "fill-b" : "fill-a", opacity: 0.4 }, svg);
     if (sub === "voda" && Tn >= 99.9) for (let i = 0; i < 6; i++) s("circle", { cx: 112 + i * 16, cy: 120 + ((t * 7 + i * 13) % 30), r: 3, class: "stroke-b", fill: "none", "stroke-width": 1.5 }, svg);
     s("rect", { x: 250, y: 30, width: 12, height: 130, rx: 6, class: "box" }, svg);
     const ht = clamp(Tn / 150, 0, 1) * 120;
@@ -157,17 +159,18 @@ function mesanjeVode(el) {
     const c1 = 4200, c2 = SUB.find((q) => q[0] === sub2)[2];
     const Tk = (m1 * c1 * T1 + m2 * c2 * T2) / (m1 * c1 + m2 * c2);
     const col = (TT) => `hsl(${clamp(220 - TT * 2.2, 0, 220)} 75% 55%)`;
-    const beaker = (x, m, TT, name, w = 70) => {
+    const beaker = (x, V, TT, name, w = 70) => {
       s("path", { d: `M${x},60 V170 H${x + w} V60`, class: "beaker" }, svg);
-      const hh = Math.min(100, m * 30);
+      const hh = V * 16; // 16 px na liter: višina je sorazmerna s prostornino
       s("rect", { x: x + 1, y: 169 - hh, width: w - 2, height: hh, fill: col(TT), opacity: 0.55 }, svg);
       label(svg, x + w / 2, 186, name, "tick");
       label(svg, x + w / 2, 50, `${fmt(TT, 1)} °C`, "lbl small");
     };
-    beaker(20, m1, T1, `voda ${m1} kg`);
-    beaker(110, m2, T2, `${SUB.find((q) => q[0] === sub2)[1]} ${m2} kg`);
+    const V1 = m1, V2 = (m2 / RHO[sub2]) * 1000;
+    beaker(20, V1, T1, `voda ${m1} kg`);
+    beaker(110, V2, T2, `${SUB.find((q) => q[0] === sub2)[1]} ${m2} kg`);
     arrow(svg, 196, 115, 226, 115, "text", 2);
-    beaker(240, m1 + m2, Tk, "po mešanju", 80);
+    beaker(240, V1 + V2, Tk, "po mešanju", 80);
     const Qod = m1 * c1 * (T1 - Tk), Qpr = m2 * c2 * (Tk - T2);
     out.innerHTML = texBlock(`m_1 c_1 (T_1 - T_k) = m_2 c_2 (T_k - T_2)`) + texBlock(`T_k = \\frac{m_1 c_1 T_1 + m_2 c_2 T_2}{m_1 c_1 + m_2 c_2} = ${T(Tk, 1)}\\ ^\\circ\\text{C}`) +
       `<p>Toplejša voda odda ${fmt(Qod / 1000, 1)} kJ toplote, hladnejša ${sub2 === "voda" ? "voda" : "snov"} prejme ${fmt(Qpr / 1000, 1)} kJ. <b>Oddana toplota = prejeta toplota</b> (toplotna bilanca, če ni izgub).</p>
@@ -215,6 +218,7 @@ export function prenos(el) {
         label(svg, x0 + (i + 0.5) * w, 134, `${fmt(u[i], 0)}°`, "tick small");
       });
       label(svg, 170, 60, `palica iz: ${COND.find((q) => q[0] === mat)[1]}`, "lbl small");
+      label(svg, 170, 206, "čas na sliki teče 10-krat hitreje", "tick small");
       html = `<p><b>Prevajanje:</b> delci na vročem koncu nihajo močneje in z trki predajajo energijo sosednjim delcem. Snov se pri tem ne premika.</p>
         <p class="muted">Kovine (zlasti baker in aluminij) so dobri toplotni prevodniki, les, steklo in zrak so dobri izolatorji. Po ${fmt(t, 0)} s je drugi konec ${fmt(u[u.length - 1], 0)} °C.</p>`;
     } else if (kind === "konvekcija") {
@@ -283,18 +287,19 @@ export function raztezanje(el) {
     svg.replaceChildren();
     const a = ALPHA.find((q) => q[0] === mat)[2], dL = a * L0 * dT;
     if (!bimetal) {
-      const px = 250, x0 = 40, ex = 1000;
+      // palica v merilu (25 px na meter), raztezek povečan 500-krat
+      const x0 = 20, px = L0 * 25, ex = 500, xmax = 332;
       s("rect", { x: x0, y: 50, width: px, height: 16, class: "fill-muted", opacity: 0.4 }, svg);
-      label(svg, x0 + px / 2, 40, `pri 20 °C: ${fmt(L0, 1)} m`, "tick");
-      const w = px * (1 + (dL / L0) * ex);
-      s("rect", { x: x0, y: 110, width: w, height: 16, fill: `hsl(${clamp(200 - dT, 0, 200)} 80% 55%)` }, svg);
-      label(svg, x0 + px / 2, 100, `pri ${20 + dT} °C`, "tick");
+      label(svg, x0, 40, `pri 20 °C: ${fmt(L0, 1)} m`, "tick", "start");
+      const wFull = px + dL * ex * 25, w = Math.min(wFull, xmax - x0), cut = wFull > w;
+      s("rect", { x: x0, y: 110, width: Math.max(1, w), height: 16, fill: `hsl(${clamp(200 - dT, 0, 200)} 80% 55%)`, ...(cut ? { "stroke-dasharray": "4 3", stroke: "var(--text)" } : {}) }, svg);
+      label(svg, x0, 100, `pri ${20 + dT} °C${cut ? " (palica sega čez rob slike)" : ""}`, "tick", "start");
       s("line", { x1: x0 + px, y1: 40, x2: x0 + px, y2: 150, class: "guide" }, svg);
-      if (dL > 0) {
+      if (Math.abs(dL) > 0) {
         arrow(svg, x0 + px, 145, x0 + w, 145, "a", 2);
-        label(svg, x0 + px, 165, `ΔL = ${fmt(dL * 1000, 2)} mm`, "lbl small", "end");
+        label(svg, Math.min(x0 + px, 320), 165, `ΔL = ${fmt(dL * 1000, 2)} mm`, "lbl small", dL > 0 ? "end" : "start");
       }
-      label(svg, 170, 210, "(raztezek je na sliki povečan 1000-krat)", "tick");
+      label(svg, 170, 210, "(dolžina v merilu 25 px/m, raztezek povečan 500-krat)", "tick");
     } else {
       // bimetalni trak: zgoraj aluminij, spodaj železo
       const k = (23e-6 - 12e-6) * dT * 900;
