@@ -5,8 +5,10 @@ import path from "node:path";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { getTopic, listPaths, topicOrder } from "../server/curriculum.js";
-import { parseLesson, lessonView, searchTextbook, tocView, DEMOS, PHET, LESSONS_DIR, lessonSummaryForPrompt, expandFormulaBlocks } from "../server/textbook.js";
+import { parseLesson, lessonView, searchTextbook, tocView, simsFor, LESSONS_DIR, lessonSummaryForPrompt, expandFormulaBlocks } from "../server/textbook.js";
 import { checkLessonSource } from "../server/lesson-check.js";
+import { SIM_TOPICS, simsForTopic } from "../public/sim/katalog.js";
+import { hasEngine } from "../public/sim/index.js";
 
 test("parseLesson: front matter, sections, alternatives, checks", () => {
   const l = parseLesson(`---
@@ -95,9 +97,21 @@ test("every lesson file belongs to a topic and is complete", () => {
   }
 });
 
-test("demo and PhET mappings point at real topics", () => {
-  for (const [id, d] of Object.entries(DEMOS)) for (const t of d.topics) assert.ok(getTopic(t), `${id}: ${t}`);
-  for (const t of Object.keys(PHET)) assert.ok(getTopic(t), t);
+test("simulation catalog points at real topics and engines", () => {
+  for (const t of Object.keys(SIM_TOPICS)) {
+    assert.ok(getTopic(t), `tema ne obstaja: ${t}`);
+    for (const d of simsForTopic(t)) {
+      assert.ok(hasEngine(d.id), `${t}: simulacija ${d.id} ne obstaja`);
+      for (const it of d.opts?.items || []) assert.ok(hasEngine(it[0]), `${t}: ${it[0]}`);
+    }
+  }
+});
+
+test("every school and competition topic has its own simulation", () => {
+  const paths = listPaths().filter((p) => /-(OS|SS|TEK)(-|$)/.test(p.key));
+  assert.ok(paths.some((p) => p.key.includes("TEK")), "tekmovalne poti so v kurikulu");
+  const bare = paths.flatMap((p) => topicOrder(p.key)).filter((t) => !simsFor(t.id).length).map((t) => t.id);
+  assert.deepEqual(bare, []);
 });
 
 test("search ranks title matches and folds diacritics", () => {
@@ -129,7 +143,7 @@ test("textbook API and PDF page", async () => {
     const topic = await (await fetch(`${base}/api/topic?id=FIZ-OS-9/upor-in-ohmov-zakon`)).json();
     assert.match(topic.explanation || "", /### Bistvo/);
     assert.equal(lesson.demo.id, "ohm");
-    assert.match(lesson.phet.url, /^https:\/\/phet\.colorado\.edu\/sims\/html\/ohms-law\//);
+    assert.equal(lesson.phet, undefined, "brez zunanjih simulacij");
     assert.equal(lesson.next.id.startsWith("FIZ-OS-9/"), true);
     const fall = await (await fetch(lessonUrl("FIZ-OS-9/prosti-pad"))).json();
     assert.equal(fall.demo.id, "prosti-pad");
