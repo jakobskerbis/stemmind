@@ -119,6 +119,12 @@ export const ENGINES = {
   senca: ["fiz-valovi.js", "senca"], zarki: ["fiz-valovi.js", "zarki"], osoncje: ["fiz-valovi.js", "osoncje"],
   val: ["fiz-valovi.js", "val"], lece: ["fiz-valovi.js", "lece"], interferenca: ["fiz-valovi.js", "interferenca"],
   fotoefekt: ["fiz-valovi.js", "fotoefekt"], spektri: ["fiz-valovi.js", "spektri"], razpad: ["fiz-valovi.js", "razpad"],
+  // kemija: snovi, atom, periodni sistem, vezi
+  razvrsti: ["kem-snov.js", "razvrsti"], atom: ["kem-snov.js", "atom"], periodni: ["kem-snov.js", "periodni"], vezi: ["kem-snov.js", "vezi"],
+  formule: ["kem-snov.js", "formule"], medmolekulske: ["kem-snov.js", "medmolekulske"], oksidacijska: ["kem-snov.js", "oksidacijska"],
+  // kemija: reakcije
+  "energija-reakcije": ["kem-reakcije.js", "energijaReakcije"], reaktivnost: ["kem-reakcije.js", "reaktivnost"], titracija: ["kem-reakcije.js", "titracija"],
+  hitrost: ["kem-reakcije.js", "hitrost"], ravnotezje: ["kem-reakcije.js", "ravnotezje"], disociacija: ["kem-reakcije.js", "disociacija"], galvanski: ["kem-reakcije.js", "galvanski"],
   // zbirka več simulacij (za mešane maturitetne naloge)
   zbirka: ["index.js", "zbirka"],
 };

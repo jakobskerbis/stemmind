@@ -325,3 +325,68 @@
 .demo-stage > .graf-eq { flex-basis: 100%; text-align: center; margin: 0; }
 .demo-pick { margin-bottom: 12px; }
 .demo-sub { border-top: 1px solid var(--border); padding-top: 12px; }
+
+/* ---------- kemija ---------- */
+.demo-readout .bad-text { color: var(--danger); }
+.demo-counter { display: flex; align-items: center; gap: 8px; }
+.demo-counter .demo-slider-label { min-width: 90px; }
+.demo-counter .cnt-val { min-width: 2.2em; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.demo-svg .ghs { cursor: pointer; }
+.demo-svg .ghs-frame { fill: #fff; stroke: #e5484d; stroke-width: 6; stroke-linejoin: round; }
+.demo-svg .ghs.on .ghs-frame { stroke-width: 9; filter: drop-shadow(0 0 6px var(--accent)); }
+.demo-svg .ghs-ink { fill: #111; stroke: none; }
+.demo-svg .ghs-line { stroke: #111; stroke-width: 3; stroke-linecap: round; fill: none; }
+.demo-svg .ghs-bone { stroke: #111; stroke-width: 4; stroke-linecap: round; }
+.demo-svg .ghs-hole { fill: #fff; }
+.demo-svg .shell { fill: none; stroke: var(--border); stroke-width: 1.5; }
+.demo-svg .shell.last { stroke: color-mix(in srgb, var(--demo-c) 45%, var(--border)); stroke-dasharray: 4 3; }
+.demo-svg .electron-dot { fill: var(--accent); }
+.demo-svg .electron-dot.val { fill: var(--demo-c); }
+.demo-svg .proton { fill: var(--danger); stroke: var(--surface); stroke-width: 1; }
+.demo-svg .neutron { fill: var(--muted); stroke: var(--surface); stroke-width: 1; }
+.demo-svg.ptable { max-width: 100%; }
+.demo-svg .pt-cell { cursor: pointer; }
+.demo-svg .pt-bg { fill: var(--surface-2); stroke: var(--border); stroke-width: 0.6; }
+.demo-svg .pt-cell.sel .pt-bg { stroke: var(--text); stroke-width: 2.4; }
+.demo-svg .pt-z { font-size: 7.5px; fill: var(--muted); }
+.demo-svg .pt-sym { font-size: 13px; font-weight: 700; fill: var(--text); }
+.demo-svg .pt-legend { font-size: 9.5px; fill: var(--text); }
+.demo-svg .k-alkalijska, .demo-svg .g-1 { fill: color-mix(in srgb, #f59e0b 45%, var(--surface)); }
+.demo-svg .k-zemeljskoalkalijska, .demo-svg .g-2 { fill: color-mix(in srgb, #facc15 40%, var(--surface)); }
+.demo-svg .k-prehodna { fill: color-mix(in srgb, #fb7185 30%, var(--surface)); }
+.demo-svg .k-lantanoid { fill: color-mix(in srgb, #f472b6 25%, var(--surface)); }
+.demo-svg .k-aktinoid { fill: color-mix(in srgb, #c084fc 25%, var(--surface)); }
+.demo-svg .k-ostala, .demo-svg .g-13 { fill: color-mix(in srgb, #94a3b8 40%, var(--surface)); }
+.demo-svg .k-polkovina, .demo-svg .g-14 { fill: color-mix(in srgb, #2dd4bf 35%, var(--surface)); }
+.demo-svg .k-nekovina, .demo-svg .g-15 { fill: color-mix(in srgb, #4ade80 40%, var(--surface)); }
+.demo-svg .g-16 { fill: color-mix(in srgb, #60a5fa 35%, var(--surface)); }
+.demo-svg .k-halogen, .demo-svg .g-17 { fill: color-mix(in srgb, #a3e635 45%, var(--surface)); }
+.demo-svg .k-zlahtni, .demo-svg .g-18 { fill: color-mix(in srgb, #818cf8 40%, var(--surface)); }
+.demo-svg .k-neznano, .demo-svg .k-dim { fill: var(--surface-2); }
+.demo-svg .k-sel { fill: color-mix(in srgb, var(--accent) 45%, var(--surface)); }
+.demo-svg .trend-arrow { stroke: var(--text); stroke-width: 2; }
+.demo-svg .bond { stroke: var(--text); stroke-width: 1.8; stroke-linecap: round; }
+.demo-svg .bond.thick { stroke-width: 2.4; }
+.demo-svg .atom-lbl { font-weight: 700; }
+.demo-svg .mol-hl { fill: color-mix(in srgb, var(--demo-a) 30%, transparent); }
+.demo-svg .atom-ball { stroke: color-mix(in srgb, var(--text) 35%, transparent); stroke-width: 0.8; }
+.demo-svg .shared-pair { fill: color-mix(in srgb, var(--demo-a) 25%, transparent); stroke: var(--demo-a); stroke-width: 1; }
+.demo-svg .ion-m { fill: color-mix(in srgb, var(--accent) 22%, var(--surface)); stroke: var(--accent); stroke-width: 1.5; }
+.demo-svg .ion-x { fill: color-mix(in srgb, var(--demo-b) 22%, var(--surface)); stroke: var(--demo-b); stroke-width: 1.5; }
+.demo-svg .e-cloud { fill: color-mix(in srgb, var(--demo-c) 28%, transparent); stroke: var(--demo-c); stroke-width: 1; stroke-dasharray: 3 3; }
+.demo-svg .e-cloud.weak { fill: color-mix(in srgb, var(--demo-c) 8%, transparent); }
+.demo-svg .zone-a { fill: color-mix(in srgb, var(--demo-b) 40%, var(--surface)); }
+.demo-svg .zone-b { fill: color-mix(in srgb, var(--demo-c) 40%, var(--surface)); }
+.demo-svg .zone-c { fill: color-mix(in srgb, var(--demo-a) 45%, var(--surface)); }
+.demo-svg .ion-tile.cat { fill: color-mix(in srgb, var(--accent) 22%, var(--surface)); stroke: var(--accent); stroke-width: 1.5; }
+.demo-svg .ion-tile.an { fill: color-mix(in srgb, var(--danger) 18%, var(--surface)); stroke: var(--danger); stroke-width: 1.5; }
+.demo-svg .ox-chip { fill: var(--surface-2); stroke: var(--border); }
+.demo-svg .ox-chip.unk { fill: color-mix(in srgb, var(--demo-a) 25%, var(--surface)); stroke: var(--demo-a); stroke-width: 2; }
+.demo-svg .bar.on { stroke: var(--text); stroke-width: 2; }
+.demo-svg .liquid { stroke: none; }
+.demo-svg .glass { fill: color-mix(in srgb, var(--surface-2) 60%, transparent); stroke: var(--text); stroke-width: 1.5; }
+.demo-svg .bubble { fill: none; stroke: var(--muted); stroke-width: 1.2; }
+.demo-svg .metal { fill: #9aa5b8; stroke: var(--text); stroke-width: 1; }
+.demo-svg .atom-txt { font-weight: 700; font-size: 11px; }
+.demo-svg .salt-bridge { fill: none; stroke: color-mix(in srgb, var(--demo-a) 45%, var(--surface)); stroke-width: 12; stroke-linejoin: round; }
+.demo-svg .graph-line.dashed { stroke-dasharray: 6 4; }
