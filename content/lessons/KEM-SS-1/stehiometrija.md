@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: reactants-products-and-leftovers
 avtor: AI (claude-sonnet-5-5)
 ---
 

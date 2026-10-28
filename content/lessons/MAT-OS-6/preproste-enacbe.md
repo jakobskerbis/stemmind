@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: equality-explorer
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -87,7 +86,7 @@ Predstavljaj si tehtnico. Na levi strani je škatla z neznanim številom kroglic
 
 Če z leve odvzameš 5 kroglic, v škatli ostane $x$ kroglic. Da ostane ravnovesje, moraš tudi z desne odvzeti 5: ostane $12 - 5 = 7$. Torej v škatli je $7$ kroglic.
 
-V PhET simulaciji **Equality Explorer** lahko to preizkusiš sam: na tehtnico postaviš predmete in opazuješ, kaj se zgodi, če na obeh straneh odvzameš ali dodaš enako.
+V simulaciji spodaj (**Enačba kot tehtnica**) lahko to preizkusiš sam: opazuješ, kaj se zgodi, če na obeh straneh odvzameš ali dodaš enako.
 
 ## Drugače: Iz vsakdanjega življenja
 

@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: number-line-integers
 avtor: AI (claude-sonnet-5-5)
 ---
 

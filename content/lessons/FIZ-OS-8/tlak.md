@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: under-pressure
 avtor: AI
 ---
 

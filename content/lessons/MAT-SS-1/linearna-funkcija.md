@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: linearna
-phet: graphing-lines
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -108,7 +107,7 @@ V demonstraciji »Graf funkcije $y = kx + n$« zgoraj spreminjaj drsnika za $k$ 
 
 Smerni koeficient lahko na sliki vidiš kot »stopnico«: ko greš za $1$ v desno, se premica dvigne (ali spusti) za $k$. Pri $k = 2$ greš $1$ desno in $2$ gor, pri $k = -\tfrac{1}{2}$ greš $2$ desno in $1$ dol.
 
-Simulacija PhET (Graphing Lines) ti omogoča, da premice raziskuješ še naprej: spreminjaš točke in naklon ter opazuješ, kako se spremeni enačba.
+Simulacija spodaj (»Graf funkcije y = kx + n«) ti omogoča, da premice raziskuješ še naprej: spreminjaš naklon in začetno vrednost ter opazuješ, kako se spremeni enačba.
 
 ## Drugače: Iz vsakdanjega življenja
 

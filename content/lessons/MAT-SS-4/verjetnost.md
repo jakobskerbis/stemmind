@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: plinko-probability
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -114,7 +113,7 @@ Predstavljaj si pravokotnik s ploščino $1$, ki predstavlja vse izide. Dogodek 
 
 Pri računanju po stopnjah nariši **drevo**. Iz začetka potegni veje za možne izide prvega koraka in nanje napiši verjetnosti. Iz konca vsake veje potegni nove veje s pogojnimi verjetnostmi drugega koraka. Verjetnost cele poti dobiš tako, da verjetnosti na poti zmnožiš.
 
-V simulaciji PhET (Plinko Probability) kroglice padajo skozi vrste žebljičkov. Na vsakem žebljičku se kroglica odloči za levo ali desno. Vsak žebljiček je en dogodek v zaporedju, pot do posamezne košare pa je produkt takih dogodkov. Ker se kroglica na vsakem žebljičku odloča neodvisno, verjetnosti na poti množimo. Do iste košare vodi več različnih poti, njihove verjetnosti pa seštevamo (poti so med seboj nezdružljive). Pri treh vrstah in enaki verjetnosti levo/desno pridemo do skrajne košare le na eni poti: $\left(\dfrac{1}{2}\right)^3 = \dfrac{1}{8}$. V srednji košari končamo po $3$ poteh, torej $\dfrac{3}{8}$. Poskusi to preveriti: spusti veliko kroglic in primerjaj delež v posamezni košari z izračunom.
+Predstavljaj si desko z vrstami žebljičkov (Galtonova deska), skozi katero padajo kroglice. Na vsakem žebljičku se kroglica odloči za levo ali desno. Vsak žebljiček je en dogodek v zaporedju, pot do posamezne košare pa je produkt takih dogodkov. Ker se kroglica na vsakem žebljičku odloča neodvisno, verjetnosti na poti množimo. Do iste košare vodi več različnih poti, njihove verjetnosti pa seštevamo (poti so med seboj nezdružljive). Pri treh vrstah in enaki verjetnosti levo/desno pridemo do skrajne košare le na eni poti: $\left(\dfrac{1}{2}\right)^3 = \dfrac{1}{8}$. V srednji košari končamo po $3$ poteh, torej $\dfrac{3}{8}$. V simulaciji spodaj (»Verjetnost in relativna frekvenca«) lahko preveriš podobno: ko poskus ponoviš velikokrat, se relativna frekvenca približa izračunani verjetnosti.
 
 ## Drugače: Iz vsakdanjega življenja
 

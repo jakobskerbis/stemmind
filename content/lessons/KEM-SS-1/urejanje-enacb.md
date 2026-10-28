@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: enacbe
-phet: balancing-chemical-equations
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -105,7 +104,7 @@ V interaktivni demonstraciji zgoraj si molekule predstavljaj kot sestavljanke iz
 
 Opazuj, kaj se zgodi pri $\mathrm{H_2 + O_2 \rightarrow H_2O}$: na levi sta dve rdeči kroglici (kisik), na desni samo ena. Dokler ne povečaš števila molekul vode, se tehtnica ne uravnovesi. Nato opaziš, da zmanjka vodika, zato povečaš še njegov koeficient.
 
-Isto lahko preizkusiš v simulaciji PhET »Balancing Chemical Equations«. Pomembno je, da vidiš: molekul ne spreminjaš, samo njihovo število.
+Isto lahko preizkusiš v simulaciji spodaj (»Urejanje kemijskih enačb«). Pomembno je, da vidiš: molekul ne spreminjaš, samo njihovo število.
 
 ## Drugače: Iz vsakdanjega življenja
 

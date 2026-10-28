@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: energy-forms-and-changes
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -119,7 +118,7 @@ Predstavljaj si graf temperature v odvisnosti od dovedene toplote za led, ki ga 
 
 Naklon poševnih delov je odvisen od specifične toplote: večja ko je $c$, več toplote potrebuješ za isto zvišanje temperature, zato je graf položnejši. Vodoravna dela sta daljša ali krajša glede na $q_t$ in $q_i$. Vodoravni del pri vrenju je veliko daljši kot pri taljenju, ker je $q_i$ precej večja od $q_t$.
 
-V simulaciji PhET lahko na blok snovi (npr. železo, opeka, voda) postaviš grelnik in opazuješ, kako se temperatura spreminja. Poskusi isti grelnik dati različnim snovem in primerjaj, katera se hitreje segreje.
+V simulaciji spodaj (»Toplotna bilanca pri mešanju«) zmešaš dve snovi z različnima temperaturama in opazuješ, kakšna je končna temperatura. Toploto, ki jo odda toplejša snov, prejme hladnejša. Poskusi spreminjati mase in snovi ter napovej rezultat, preden ga preveriš.
 
 ## Drugače: Iz vsakdanjega življenja
 

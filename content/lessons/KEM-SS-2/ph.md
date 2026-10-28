@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: ph
-phet: ph-scale
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -107,7 +106,7 @@ V interaktivni demonstraciji »pH lestvica« zgoraj vidiš lestvico od 0 do 14. 
 
 Pomembna ugotovitev: lestvica je **logaritemska**. Vsak korak v desno pomeni desetkrat manj $\mathrm{H^+}$ ionov. Raztopina s pH 3 ima torej $100$-krat več $\mathrm{H^+}$ kot raztopina s pH 5. Zato je lestvica videti enakomerna, čeprav so razlike v koncentracijah ogromne.
 
-Preizkusi še simulacijo PhET »pH lestvica«. Tam lahko merilnik pH potopiš v različne tekočine, spreminjaš količino in koncentracijo ter opazuješ števila ionov $\mathrm{H_3O^+}$ in $\mathrm{OH^-}$.
+Preizkusi še simulacijo spodaj (»pH lestvica«), kjer primerjaš pH različnih raztopin in razmisliš, kje so ioni $\mathrm{H_3O^+}$ v presežku in kje $\mathrm{OH^-}$.
 
 ## Drugače: Iz vsakdanjega življenja
 

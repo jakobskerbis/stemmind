@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: molarity
 avtor: AI (claude-sonnet-5-5)
 ---
 

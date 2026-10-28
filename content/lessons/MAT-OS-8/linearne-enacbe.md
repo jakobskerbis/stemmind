@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: equality-explorer
 avtor: AI (claude-sonnet-5-5)
 ---
 

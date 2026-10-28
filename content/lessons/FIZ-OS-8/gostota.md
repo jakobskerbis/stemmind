@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: density
 avtor: AI
 ---
 

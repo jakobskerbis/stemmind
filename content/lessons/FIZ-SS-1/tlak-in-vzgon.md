@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: under-pressure
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -116,7 +115,7 @@ Predstavljaj si navpičen stolp iz škatel, naloženih ena na drugo. Spodnja šk
 
 Vzgon si predstavljaj kot puščice. Na spodnjo ploskev potopljene kocke kažejo puščice tlaka navzgor in so daljše, na zgornjo ploskev kažejo navzdol in so krajše. Stranske puščice se izničijo. Ostane razlika, ki kaže navzgor, in to je vzgon.
 
-V simulaciji PhET spodaj spreminjaj globino merilnika tlaka in opazuj, kako se tlak spreminja. Nato zamenjaj tekočino (npr. vodo z medom) in primerjaj. Spreminjaj tudi obliko posode: tlak na isti globini ostane enak.
+V simulaciji spodaj (»Hidrostatični tlak«) spreminjaj globino in opazuj, kako se tlak spreminja. Primerjaj tudi tekočine z različno gostoto. Tlak na isti globini je odvisen samo od globine in gostote tekočine, ne od oblike posode.
 
 ## Drugače: Iz vsakdanjega življenja
 

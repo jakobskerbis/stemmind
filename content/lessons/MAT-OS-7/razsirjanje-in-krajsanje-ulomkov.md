@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: ulomki
-phet: fractions-equality
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -95,7 +94,7 @@ V demonstraciji »Ulomek kot del celote« zgoraj lahko celoto razdeliš na razli
 
 Opaziš, da so deli manjši, a jih je sorazmerno več, zato pobarvani del ostane enak. To je **razširjanje**. Če greš v nasprotno smer (iz $\dfrac{4}{8}$ nazaj na $\dfrac{1}{2}$), več manjših delov združiš v večje. To je **krajšanje**.
 
-V simulaciji PhET (fractions-equality) lahko poiščeš različne ulomke, ki se na številski premici ali v likih ujemajo. Poskusi najti čim več ulomkov, ki so enakovredni $\dfrac{1}{2}$.
+V simulaciji spodaj (»Razširjanje in krajšanje ulomkov«) lahko poiščeš različne zapise istega ulomka. Poskusi najti čim več ulomkov, ki so enakovredni $\dfrac{1}{2}$.
 
 ## Drugače: Iz vsakdanjega življenja
 
