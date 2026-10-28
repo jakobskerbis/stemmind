@@ -94,7 +94,7 @@ export function offlineApi(sid, url, opts = {}) {
   if (m && lastTask?.id === decodeURIComponent(m[1])) {
     if (m[2] !== "answer") throw new OfflineError();
     const res = checkAnswer(lastTask.answer, body.answer);
-    const out = { kind: res.kind, message: res.message || null, offline: true };
+    const out = { kind: res.kind, message: res.message || null, ...(res.code ? { code: res.code, params: res.params || {} } : {}), offline: true };
     if (["format", "unit", "simplify"].includes(res.kind)) return { ...out, retry: true };
     lastTask.attempts += 1;
     // V vrsto gre samo prvi odgovor (tako kot prvi poskus na strežniku).

@@ -5,6 +5,11 @@ import { getPath, getTopic } from "./curriculum.js";
 import { generateTask, hasGenerator, publicTask } from "./practice/index.js";
 import { checkAnswer } from "./practice/check.js";
 import { CONTEST, TRAINING_TASKS, isCompetitionPath } from "./competition.js";
+import { isExamPath, mockPlan, scaledScore, examGrade } from "./exams.js";
+import { toChoice } from "./practice/choice.js";
+
+// Tekmovalni trening in poskusno tekmovanje veljata tudi za priprave na izpite.
+const isPrepPath = (key) => isCompetitionPath(key) || isExamPath(key);
 
 export const RULES = {
   levelUpStreak: 3, // 3 pravilni zapored -> težje
@@ -134,9 +139,9 @@ export class Progress {
     });
     // Odklepanje: sklop z vajami je zaklenjen, dokler ni obvladan prejšnji sklop z vajami
     // (razen če ga je učenec že začel ali opravil preizkus znanja).
-    // Tekmovalne poti niso zaklenjene: sklopi so neodvisni, tekmovalec izbira sam.
+    // Tekmovalne in izpitne poti niso zaklenjene: sklopi so neodvisni, učenec izbira sam.
     let prevGate = null;
-    const gated = !isCompetitionPath(pathKey);
+    const gated = !isPrepPath(pathKey);
     for (const u of units) {
       u.locked = !!(gated && u.hasPractice && prevGate && !prevGate.mastered && !u.started);
       if (u.hasPractice) prevGate = u;
@@ -235,7 +240,10 @@ export class Progress {
         this.saveState(st);
       }
       const level = item.level ?? st.level;
-      const id = this.saveTask(sess.student_id, generateTask(item.topic, level), item.mode, sessionId);
+      let task = generateTask(item.topic, level);
+      // Izpitni format: izbirna vprašanja (A–D) namesto vpisa števila.
+      if (item.format === "choice") task = toChoice(task, task.seed, item.options || 4);
+      const id = this.saveTask(sess.student_id, task, item.mode, sessionId);
       all = this.db.prepare("SELECT * FROM tasks WHERE session_id = ? ORDER BY id").all(sessionId);
       open = all.find((t) => t.id === id);
     }
@@ -261,7 +269,9 @@ export class Progress {
     };
     if (sess?.kind === "contest") {
       next.deadline = sess.params.deadline;
-      next.task.points = CONTEST.points[payload.level] || 0;
+      const item = sess.plan[all.indexOf(open)] || {};
+      next.task.points = item.points ?? (CONTEST.points[payload.level] || 0);
+      next.task.penalty = item.penalty || 0;
     }
     return next;
   }
@@ -363,7 +373,7 @@ export class Progress {
   // Tekmovalni trening: prepletene naloge iz vseh tem tekmovalne poti. Teme, ki se
   // jih učenec že uči, pridejo večkrat; težavnost se prilagaja kot pri vadnici.
   startCompetition(studentId, pathKey) {
-    if (!isCompetitionPath(pathKey)) return null;
+    if (!isPrepPath(pathKey)) return null;
     const view = this.pathView(studentId, pathKey);
     const topics = view?.units.flatMap((u) => u.topics).filter((t) => t.practice) || [];
     if (!topics.length) return null;
@@ -394,7 +404,7 @@ export class Progress {
   // Poskusno tekmovanje: 10 nalog iz različnih tem, od lažjih k težjim, na čas,
   // en poskus, brez namigov. Rezultat (točke) je viden šele na koncu.
   startContest(studentId, pathKey) {
-    if (!isCompetitionPath(pathKey)) return null;
+    if (!isPrepPath(pathKey)) return null;
     const path = getPath(pathKey);
     const topics = path.units.flatMap((u) => u.topics).filter((t) => hasGenerator(t.id)).map((t) => t.id);
     if (!topics.length) return null;
@@ -403,10 +413,13 @@ export class Progress {
       if (Date.now() <= open.params.deadline) return this.sessionNext(open.id);
       this.finishContest(open);
     }
+    // Izpit: vprašanja in čas po formatu izpita; tekmovanje: 10 nalog od lažjih k težjim.
+    const exam = isExamPath(pathKey) ? mockPlan(pathKey) : null;
     const order = shuffle(topics);
-    const plan = CONTEST.levels.map((level, i) => ({ topic: order[i % order.length], mode: "contest", level }));
+    const plan = exam ? exam.plan : CONTEST.levels.map((level, i) => ({ topic: order[i % order.length], mode: "contest", level }));
+    const minutes = exam ? exam.minutes : CONTEST.minutes;
     const now = Date.now();
-    const params = { path: pathKey, started: now, deadline: now + CONTEST.minutes * 60000, minutes: CONTEST.minutes };
+    const params = { path: pathKey, started: now, deadline: now + minutes * 60000, minutes };
     return this.sessionNext(this.createSession(studentId, "contest", plan, params));
   }
 
@@ -416,14 +429,16 @@ export class Progress {
     const items = sess.plan.map((p, i) => {
       const t = tasks[i];
       const payload = t ? JSON.parse(t.payload) : null;
-      const pts = CONTEST.points[p.level] || 0;
+      const pts = p.points ?? (CONTEST.points[p.level] || 0);
       const correct = !!t?.first_try_correct;
+      const answered = t?.last_answer != null;
       return {
         topicName: getTopic(p.topic)?.name || "",
         level: p.level,
         points: pts,
-        earned: correct ? pts : 0,
-        answered: t?.last_answer != null,
+        // Negativne točke (JEE, NEET) samo za napačen odgovor, ne za izpuščeno vprašanje.
+        earned: correct ? pts : answered ? p.penalty || 0 : 0,
+        answered,
         correct,
         yourAnswer: t?.last_answer ?? null,
         task: payload ? { ...publicTask(payload), solution: payload.solution, correctIndex: payload.answer.type === "choice" ? payload.answer.index : null } : null,
@@ -432,7 +447,10 @@ export class Progress {
     const points = items.reduce((s, x) => s + x.earned, 0);
     const maxPoints = items.reduce((s, x) => s + x.points, 0);
     const usedMs = Math.min((sess.params.finishedAt || Date.now()) - sess.params.started, sess.params.minutes * 60000);
-    return { points, maxPoints, correct: items.filter((x) => x.correct).length, total: items.length, minutes: Math.ceil(usedMs / 60000), items };
+    const scaled = scaledScore(sess.params.path, points, maxPoints);
+    const grade = examGrade(sess.params.path, points, maxPoints);
+    const wrong = items.filter((x) => x.answered && !x.correct).length;
+    return { points, maxPoints, correct: items.filter((x) => x.correct).length, wrong, total: items.length, minutes: Math.ceil(usedMs / 60000), scaled, grade, items };
   }
 
   // Zaključi tekmovanje (vse rešeno, učenec je končal ali je čas potekel). XP enkrat.
@@ -446,7 +464,9 @@ export class Progress {
       sess.params.maxPoints = result.maxPoints;
       this.db.prepare("UPDATE sessions SET finished = 1, params = ? WHERE id = ?").run(JSON.stringify(sess.params), sess.id);
       sess.finished = 1;
-      if (result.points) result.xp = this.award(sess.student_id, [[result.points, "poskusno tekmovanje"]]);
+      // XP: pri izpitu največ 40 (kot pri tekmovanju), sorazmerno z rezultatom.
+      const xp = isExamPath(sess.params.path) ? Math.round((40 * Math.max(0, result.points)) / result.maxPoints) : result.points;
+      if (xp > 0) result.xp = this.award(sess.student_id, [[xp, isExamPath(sess.params.path) ? "poskusni izpit" : "poskusno tekmovanje"]]);
       return result;
     }
     return this.contestResult(sess);
@@ -609,7 +629,8 @@ export class Progress {
 
     const task = row.payload;
     const res = checkAnswer(task.answer, input);
-    const out = { kind: res.kind, message: res.message || null };
+    // code/params: prevod sporočila v jeziku vmesnika (message ostane slovenski).
+    const out = { kind: res.kind, message: res.message || null, ...(res.code ? { code: res.code, params: res.params || {} } : {}) };
 
     // Napake v zapisu (manjka enota, neokrajšan ulomek ...) ne štejemo kot poskus.
     if (["format", "unit", "simplify"].includes(res.kind)) {
@@ -698,13 +719,12 @@ export class Progress {
     if (row.mode === "review" && firstTry) this.advanceReview(studentId, row.topic_id, false);
     this.db.prepare("UPDATE tasks SET hint_used = 1 WHERE id = ?").run(taskId);
     out.hint = task.hint;
-    if (res.kind === "rounding") out.message = res.message;
-    else out.message = "Ni še pravilno. Poglej namig in poskusi znova. Kje si se zataknil?";
+    if (res.kind !== "rounding") Object.assign(out, { message: "Ni še pravilno. Poglej namig in poskusi znova. Kje si se zataknil?", code: "chk.tryAgain", params: {} });
     out.attemptsLeft = maxAttempts - attempts;
     if (out.attemptsLeft <= 0) {
       // Po treh poskusih: rešen zgled (učenje iz zgleda), nato nova naloga.
       out.solution = task.solution;
-      out.message = "Poglejva rešen zgled, nato poskusiš podobno nalogo.";
+      Object.assign(out, { message: "Poglejva rešen zgled, nato poskusiš podobno nalogo.", code: "chk.example", params: {} });
     }
     if (row.session_id && out.attemptsLeft <= 0) out.next = this.sessionNext(row.session_id);
     return out;

@@ -5,11 +5,11 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-V 8. razredu si že spoznal, da so snovi sestavljene iz atomov, da so elementi razporejeni v periodnem sistemu v skupine (navpični stolpci) in periode (vodoravne vrstice) in da se elementi delijo na kovine in nekovine.
+Že veš, da so snovi sestavljene iz atomov, da so elementi razporejeni v periodnem sistemu v skupine (navpični stolpci) in periode (vodoravne vrstice) in da se elementi delijo na kovine in nekovine.
 
-Zdaj si bomo podrobneje ogledali dve skupini nekovin, ki ležita na desni strani periodnega sistema: **halogene** (17. skupina) in **žlahtne ppline** (18. skupina). Prvi so zelo reaktivni, drugi skoraj nikoli ne reagirajo. Prav ta razlika nam pove veliko o tem, kako so elementi urejeni in zakaj se obnašajo tako, kot se.
+Zdaj si bomo podrobneje ogledali dve skupini nekovin, ki ležita na desni strani periodnega sistema: **halogene** (17. skupina) in **žlahtne pline** (18. skupina). Prvi so zelo reaktivni, drugi skoraj nikoli ne reagirajo. Prav ta razlika nam pove veliko o tem, kako so elementi urejeni in zakaj se obnašajo tako, kot se.
 
-Halogene srečaš vsak dan: klor v bazenu in v belilu, jod v razkužilu, fluor v zobni pasti. Žlahtni plini pa svetijo v neonskih reklamah, polnijo balone (helij) in varujejo žarnice.
+Halogene srečaš vsak dan: klor v bazenu in v belilu, jod v razkužilu, fluor (v obliki fluoridov) v zobni pasti. Žlahtni plini pa svetijo v neonskih reklamah, polnijo balone (helij) in žarnice (argon).
 
 ## Razlaga
 
@@ -24,6 +24,8 @@ Halogene srečaš vsak dan: klor v bazenu in v belilu, jod v razkužilu, fluor v
 | brom | $\mathrm{Br}$ | tekočina | rjavordeč |
 | jod | $\mathrm{I}$ | trdna snov | temnovijoličen do skoraj črn |
 
+V 17. skupino spada še radioaktivni astat ($\mathrm{At}$), ki je zelo redek.
+
 Ime »halogen« pomeni »tvorec soli«: halogeni z drugimi elementi (zlasti s kovinami) tvorijo soli. Na primer natrij in klor dasta kuhinjsko sol $\mathrm{NaCl}$.
 
 **3. Lastnosti halogenov.**
@@ -32,7 +34,7 @@ Ime »halogen« pomeni »tvorec soli«: halogeni z drugimi elementi (zlasti s ko
 - V naravi jih ne najdemo kot proste elemente, ampak vezane v spojinah (npr. v soli).
 - Kot elementi tvorijo **dvoatomne molekule**: $\mathrm{F_2}$, $\mathrm{Cl_2}$, $\mathrm{Br_2}$, $\mathrm{I_2}$.
 - Večina je strupenih ali dražilnih, zato z njimi ravnamo previdno.
-- Z raztopinami ali pari nekaterih halogenov razkužujemo in beljenje poteka z reakcijo, ne zgolj z mešanjem.
+- Klor in jod uničujeta mikroorganizme, zato ju (oziroma njune spojine) uporabljamo za razkuževanje, klorove spojine pa tudi za beljenje.
 
 **4. Žlahtni plini.** Med žlahtne pline spadajo helij $\mathrm{He}$, neon $\mathrm{Ne}$, argon $\mathrm{Ar}$, kripton $\mathrm{Kr}$, ksenon $\mathrm{Xe}$ in radon $\mathrm{Rn}$.
 
@@ -60,6 +62,15 @@ Ime »halogen« pomeni »tvorec soli«: halogeni z drugimi elementi (zlasti s ko
 
 Element ima simbol $\mathrm{Cl}$. Kateri skupini pripada in kakšne lastnosti pričakuješ?
 
+**Podatki:** simbol elementa $\mathrm{Cl}$ (klor)
+**Iščemo:** skupino, v kateri je element, in njegove pričakovane lastnosti
+
+:::formula
+17. skupina = halogeni (zelo reaktivne nekovine, dvoatomne molekule); 18. skupina = žlahtni plini (skoraj nereaktivni, enoatomni).
+:::
+
+**Rešitev:**
+
 1. Poiščemo klor v periodnem sistemu: je v 17. skupini.
 2. Ta skupina so halogeni.
 3. Pričakujemo: zelo reaktiven nekovinski element, pri sobni temperaturi plin, dvoatomne molekule $\mathrm{Cl_2}$.
@@ -68,6 +79,15 @@ Element ima simbol $\mathrm{Cl}$. Kateri skupini pripada in kakšne lastnosti pr
 ### Primer 2: primerjava dveh elementov
 
 Primerjaj neon $\mathrm{Ne}$ in fluor $\mathrm{F}$: kaj imata skupnega in v čem se razlikujeta?
+
+**Podatki:** elementa neon $\mathrm{Ne}$ in fluor $\mathrm{F}$
+**Iščemo:** skupne lastnosti in razlike med elementoma
+
+:::formula
+Halogenom (17. skupina) do zapolnjene zunanje lupine manjka en elektron, zato so zelo reaktivni. Žlahtni plini (18. skupina) imajo zapolnjeno zunanjo lupino, zato skoraj ne reagirajo.
+:::
+
+**Rešitev:**
 
 1. **Skupno:** oba sta nekovini in oba sta plina pri sobni temperaturi.
 2. **Skupina:** fluor je halogen (17. skupina), neon je žlahtni plin (18. skupina). Sta soseda v isti periodi.
@@ -78,7 +98,16 @@ Primerjaj neon $\mathrm{Ne}$ in fluor $\mathrm{F}$: kaj imata skupnega in v čem
 
 Balon želimo napolniti s plinom, ki je lažji od zraka in ne gori. Hkrati iščemo plin za polnjenje žarnice, ki naj ne reagira z razbeljeno žarilno nitko. Kateri plin izbereš v vsakem primeru in zakaj?
 
-1. **Za balon:** potrebujemo plin, ki je lažji od zraka in negorljiv. Izberemo **helij** $\mathrm{He}$. Je žlahtni plin, zato ne gori in ni nevaren.
+**Podatki:** plin za balon mora biti lažji od zraka in negorljiv; plin za žarnico ne sme reagirati z razbeljeno žarilno nitko
+**Iščemo:** primeren plin za balon in primeren plin za žarnico
+
+:::formula
+Žlahtni plini (18. skupina) so negorljivi in skoraj nereaktivni. Helij je lažji od zraka.
+:::
+
+**Rešitev:**
+
+1. **Za balon:** potrebujemo plin, ki je lažji od zraka in negorljiv. Izberemo **helij** $\mathrm{He}$. Je žlahtni plin, zato ne gori in ni strupen. Vodik je sicer še lažji, a je gorljiv, zato ni varen.
 2. **Za žarnico:** potrebujemo plin, ki ne reagira. Žlahtni plini so skoraj nereaktivni, zato izberemo **argon** $\mathrm{Ar}$.
 3. **Zakaj ne klor?** Klor je reaktiven in strupen, zato ni primeren za polnjenje balonov ali žarnic.
 4. **Sklep:** za varno uporabo, kjer ne želimo reakcij, uporabimo žlahtne pline.
@@ -175,6 +204,7 @@ Reaktivnost halogenov upada od fluora proti jodu, ker so atomi navzdol po skupin
 
 ? Kateri plin je primeren za polnjenje balonov, ker je lažji od zraka in ne gori?
 - klor
-- neon
+- argon
+- vodik
 + helij
-> Helij je žlahtni plin, lažji od zraka in negorljiv. Klor je strupen in težji od zraka. Neon se uporablja v svetlobnih reklamah.
+> Helij je žlahtni plin, lažji od zraka in negorljiv. Klor je strupen in težji od zraka, argon je prav tako težji od zraka, vodik pa je sicer lažji od zraka, a gori.

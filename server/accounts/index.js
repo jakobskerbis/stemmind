@@ -9,6 +9,7 @@ import { Mailer, verifyEmail, resetEmail, referralRewardEmail } from "./email.js
 import { buildWeeklyReport, weekKey, isSendTime } from "./weekly.js";
 import { Devices, deviceLabel, deviceWarnLimit } from "./devices.js";
 import { cleanText } from "../settings.js";
+import { Usage } from "../usage.js";
 
 export const CONSENT_TEXT =
   "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da STEMMind obdeluje otrokove osebne podatke " +
@@ -34,6 +35,7 @@ export function mountAccounts(app, store, opts = {}) {
 
   const db = store.db;
   migrateAccounts(db);
+  const aiUsage = new Usage(db);
   app.set("trust proxy", 1);
 
   const kv = {
@@ -307,6 +309,7 @@ export function mountAccounts(app, store, opts = {}) {
         birth_year: c.birth_year,
         premium: isPremiumChild(access, ids, c.id),
         questions_today: questionsToday(c.id),
+        ai_month: aiUsage.studentMonth(c.id),
         devices: devices.recent(c.id),
       })),
       max_children: Math.min(MAX_CHILDREN, access.seats || 1),

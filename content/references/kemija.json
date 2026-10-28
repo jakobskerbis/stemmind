@@ -1,0 +1,3839 @@
+{
+  "themes": {
+    "kem-splosna-kemija": {
+      "title": "Splošna kemija",
+      "items": [
+        {
+          "title": "Chemistry 2e",
+          "url": "https://openstax.org/details/books/chemistry-2e",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Celovit uvodni učbenik splošne kemije: zgradba snovi, stehiometrija, ravnotežja, termodinamika, redoks, z nalogami in rešitvami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Chemistry: Atoms First 2e",
+          "url": "https://openstax.org/details/books/chemistry-atoms-first-2e",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Isti obseg kot Chemistry 2e, a se začne z zgradbo atomov in vezmi; primeren za predmete, ki najprej obravnavajo zgradbo snovi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Principles of Chemical Science (5.111SC)",
+          "url": "https://ocw.mit.edu/courses/5-111sc-principles-of-chemical-science-fall-2014/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Celoten uvodni tečaj kemije z video predavanji: zgradba atoma, vezi, termodinamika, kinetika, kisline in baze, elektrokemija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Catherine Drennan"
+        },
+        {
+          "title": "Chem1 Virtual Textbook (Lower)",
+          "url": "https://chem.libretexts.org/Bookshelves/General_Chemistry/Chem1_(Lower)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Obsežen spletni učbenik splošne kemije z jasnimi razlagami in poglavji o plinih, ravnotežjih, termodinamiki, kinetiki in elektrokemiji.",
+          "license": "CC BY 3.0",
+          "author": "Stephen Lower"
+        },
+        {
+          "title": "Zbirka nalog in vprašanj iz kemije z rešitvami",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/701",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Zbirka računskih nalog in vprašanj iz splošne kemije z rešitvami za biotehnologijo, mikrobiologijo in živilstvo.",
+          "license": "CC BY-SA 4.0",
+          "author": "Iztok Prislan"
+        },
+        {
+          "title": "Laboratorijske vaje iz kemije",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/718",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Skripta za laboratorijske vaje iz kemije: varno delo, priprava raztopin, titracije, meritve in poročanje.",
+          "license": "CC BY-SA 4.0",
+          "author": "Helena Abramovič, Miha Bahun, Lea Pogačnik da Silva, Iztok Prislan, Mihaela Skrt, Nataša Šegatin"
+        },
+        {
+          "title": "Kemija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Kemija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Pregled področij kemije, osnovnih pojmov in zgodovine v slovenščini; dobra izhodiščna točka za strokovno terminologijo.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Chemistry (Khan Academy)",
+          "url": "https://www.khanacademy.org/science/chemistry",
+          "source": "Khan Academy",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Video lekcije in vaje iz splošne kemije: atomi, vezi, stehiometrija, kinetika, ravnotežja, termodinamika in elektrokemija.",
+          "license": "prost dostop"
+        }
+      ]
+    },
+    "kem-zgradba-atomov-vezi": {
+      "title": "Zgradba atomov, kemijske vezi in periodni sistem",
+      "items": [
+        {
+          "title": "Chemistry 2e, poglavje 7: Chemical Bonding and Molecular Geometry",
+          "url": "https://openstax.org/books/chemistry-2e/pages/7-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Poglavje o ionskih in kovalentnih vezeh, Lewisovih strukturah, VSEPR in polarnosti molekul.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Atomic Theory (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Atomic_Theory",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o zgradbi atoma: Bohrov model, kvantna števila, orbitale in periodični trendi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Chemical Bonding (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Chemical_Bonding",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o kemijskih vezeh: ionska, kovalentna, hibridizacija, MO-teorija in medmolekulske sile.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Principles of Chemical Science (5.112)",
+          "url": "https://ocw.mit.edu/courses/5-112-principles-of-chemical-science-fall-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvodni tečaj splošne kemije z zapiski predavanj, nalogami in rešitvami; poudarek na kvantni zgradbi, vezeh in ravnotežjih.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Christopher Cummins, Sylvia Ceyer"
+        },
+        {
+          "title": "Build an Atom (PhET)",
+          "url": "https://phet.colorado.edu/en/simulations/build-an-atom",
+          "source": "PhET, University of Colorado Boulder",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Simulacija, kjer gradiš atom iz protonov, nevtronov in elektronov ter spremljaš naboj, maso in izotope.",
+          "license": "CC BY 4.0"
+        },
+        {
+          "title": "Molecule Shapes (PhET)",
+          "url": "https://phet.colorado.edu/en/simulations/molecule-shapes",
+          "source": "PhET, University of Colorado Boulder",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Simulacija VSEPR: opazuj, kako število vezi in prostih elektronskih parov določa geometrijo molekul.",
+          "license": "CC BY 4.0"
+        },
+        {
+          "title": "Atom (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Atom",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o zgradbi atoma, subatomskih delcih, izotopih in energijskih nivojih.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kemična vez (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Kemijska_vez",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski pregled ionske, kovalentne in kovinske vezi ter medmolekulskih interakcij.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-raztopine-ravnotezja": {
+      "title": "Stehiometrija, raztopine in kemijska ravnotežja",
+      "items": [
+        {
+          "title": "Chemistry 2e, poglavje 11: Solutions and Colloids",
+          "url": "https://openstax.org/books/chemistry-2e/pages/11-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Raztopine, topnost, koligativne lastnosti in koloidi z računskimi zgledi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Chemistry 2e, poglavje 14: Acid-Base Equilibria",
+          "url": "https://openstax.org/books/chemistry-2e/pages/14-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Kisline, baze, pH, pufri in titracijske krivulje s številnimi računskimi zgledi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Solutions and Mixtures (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Physical_Properties_of_Matter/Solutions_and_Mixtures",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o raztopinah: koncentracije, topnost, koligativne lastnosti, koloidi in disperzni sistemi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Acids and Bases (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Acids_and_Bases",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o kislinah in bazah: definicije, pH, pufri, titracije in ravnotežja v raztopinah.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Equilibria (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Equilibria",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o kemijskih ravnotežjih: ravnotežne konstante, Le Chatelierjevo načelo, topnost in fazna ravnotežja.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Acid-Base Solutions (PhET)",
+          "url": "https://phet.colorado.edu/en/simulations/acid-base-solutions",
+          "source": "PhET, University of Colorado Boulder",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Simulacija šibkih in močnih kislin ter baz: pH, koncentracije in ravnotežja v raztopinah.",
+          "license": "CC BY 4.0"
+        },
+        {
+          "title": "Stehiometrija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Stehiometrija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenska razlaga stehiometrije, množine snovi, molskih razmerij in računov pri kemijskih reakcijah.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Raztopina (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Raztopina",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o raztopinah: topilo in topljenec, koncentracija, topnost.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-elektrokemija-redoks": {
+      "title": "Elektrokemija in redoks reakcije",
+      "items": [
+        {
+          "title": "Chemistry 2e, poglavje 17: Electrochemistry",
+          "url": "https://openstax.org/books/chemistry-2e/pages/17-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Redoks reakcije, galvanski členi, Nernstova enačba, elektroliza in korozija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Electrochemistry (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Supplemental_Modules_(Analytical_Chemistry)/Electrochemistry",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o elektrokemiji: redoks, galvanski členi, Nernstova enačba, elektrolitski členi in Faradayevi zakoni.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Elektrokemija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Elektrokemija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o elektrokemiji: redoks reakcije, elektrokemijski členi, elektroliza in potenciali.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "The Nernst Equation and Pourbaix Diagrams (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/pourbaix/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o Nernstovi enačbi in Pourbaixevih diagramih za napovedovanje korozije kovin.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Electrochemical Energy Systems (10.626)",
+          "url": "https://ocw.mit.edu/courses/10-626-electrochemical-energy-systems-spring-2014/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Elektrokemijski sistemi: baterije, gorivne celice, kinetika elektrodnih reakcij, transport ionov in termodinamika.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Martin Bazant"
+        }
+      ]
+    },
+    "kem-anorganska-kemija": {
+      "title": "Anorganska kemija",
+      "items": [
+        {
+          "title": "Inorganic Chemistry (LibreTexts)",
+          "url": "https://chem.libretexts.org/Bookshelves/Inorganic_Chemistry/Inorganic_Chemistry_(LibreTexts)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Zbirka modulov anorganske kemije: atomska zgradba, simetrija, vezi, kemija glavnih skupin, prehodni elementi, koordinacijske spojine.",
+          "license": "CC BY 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Chemistry of the Main Group Elements (Barron)",
+          "url": "https://chem.libretexts.org/Bookshelves/Inorganic_Chemistry/Chemistry_of_the_Main_Group_Elements_(Barron)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Sistematičen pregled kemije elementov glavnih skupin: pridobivanje, lastnosti in reakcije elementov ter njihovih spojin.",
+          "license": "CC BY 3.0",
+          "author": "Andrew R. Barron"
+        },
+        {
+          "title": "Introduction to Inorganic Chemistry (Wikibook)",
+          "url": "https://chem.libretexts.org/Bookshelves/Inorganic_Chemistry/Introduction_to_Inorganic_Chemistry_(Wikibook)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v anorgansko kemijo: elektronska zgradba, periodični trendi, kisline in baze, molekulska simetrija, kristalne strukture.",
+          "license": "CC BY-SA 4.0",
+          "author": "Wikibooks"
+        },
+        {
+          "title": "Inorganic Coordination Chemistry (Landskron)",
+          "url": "https://chem.libretexts.org/Bookshelves/Inorganic_Chemistry/Inorganic_Coordination_Chemistry_(Landskron)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Koordinacijske spojine: nomenklatura, izomerija, teorija kristalnega polja, spektri in magnetne lastnosti kompleksov.",
+          "license": "CC BY 4.0",
+          "author": "Kai Landskron"
+        },
+        {
+          "title": "Chemistry 2e, poglavje 18: Representative Metals, Metalloids, and Nonmetals",
+          "url": "https://openstax.org/books/chemistry-2e/pages/18-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Periodičnost, pridobivanje in kemija glavnih skupin elementov ter njihovih spojin.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Chemistry 2e, poglavje 19: Transition Metals and Coordination Chemistry",
+          "url": "https://openstax.org/books/chemistry-2e/pages/19-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Prehodne kovine, koordinacijske spojine, teorija ligandnega polja, barva in magnetne lastnosti.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Anorganska kemija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Anorganska_kemija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski pregled anorganske kemije: elementi, spojine, koordinacijske spojine in sorodna področja.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Principles of Inorganic Chemistry III (5.05)",
+          "url": "https://ocw.mit.edu/courses/5-05-principles-of-inorganic-chemistry-iii-spring-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Napredna anorganska kemija: simetrija, molekulske orbitale, ligandno polje in kemija prehodnih kovin.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Christopher Cummins"
+        }
+      ]
+    },
+    "kem-trdnine-kristali": {
+      "title": "Zgradba trdnin in kristalografija",
+      "items": [
+        {
+          "title": "Introduction to Solid State Chemistry",
+          "url": "https://chem.libretexts.org/Bookshelves/Inorganic_Chemistry/Introduction_to_Solid_State_Chemistry",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Zgradba kristalov, kristalne mreže, vezi v trdninah, defekti, pasovna teorija in lastnosti materialov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Crystallography in a Nutshell (Ripoll and Cano)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Crystallography_in_a_Nutshell_(Ripoll_and_Cano)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Kratek uvod v kristalografijo: simetrija, mreže, Millerjevi indeksi, difrakcija rentgenskih žarkov in določanje strukture.",
+          "license": "CC BY-NC 4.0",
+          "author": "Ripoll, Cano"
+        },
+        {
+          "title": "Introduction to Solid-State Chemistry (3.091)",
+          "url": "https://ocw.mit.edu/courses/3-091-introduction-to-solid-state-chemistry-fall-2018/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v kemijo trdnin: atomska zgradba, vezi, kristali, defekti, polimeri, fazni diagrami in elektrokemija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Jeffrey Grossman"
+        },
+        {
+          "title": "Crystallography (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/crystallography3/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o kristalografiji: mreže, simetrija, osnovne celice in Bravaisove mreže.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Lattice Planes and Miller Indices (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/miller_indices/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o ravninah v kristalu in Millerjevih indeksih z vizualizacijo.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "X-ray Diffraction Techniques 2 (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/xray-diffraction-2/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o rentgenski difrakciji: Braggov zakon, praškovna metoda in interpretacija difraktogramov.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Strukturna kemija: navodila za vaje",
+          "url": "https://press.um.si/index.php/ump/catalog/book/1119",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Štiri vaje o kristalizaciji (nukleacija, oblika kristalov) in rentgenski praškovni difrakciji za analizo kristaliničnih snovi.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Matjaž Kristl, Janja Stergar"
+        },
+        {
+          "title": "Kristalna struktura (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Kristalna_struktura",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o kristalnih strukturah, osnovnih celicah in Bravaisovih mrežah.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-analizna-kemija": {
+      "title": "Analizna kemija",
+      "items": [
+        {
+          "title": "Analytical Chemistry 2.1",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Analytical_Chemistry_2.1_by_David_Harvey",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Standardni odprti učbenik analizne kemije: statistika meritev, ravnotežja, titrimetrija, spektrometrija, kromatografija, elektrokemija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "David Harvey"
+        },
+        {
+          "title": "Qualitative Analysis of Common Cations in Water (Malik)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Qualitative_Analysis_of_Common_Cations_in_Water_(Malik)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Shema kvalitativne analize pogostih kationov v vodi: reakcije, izločanje in dokazovanje ionov v laboratoriju.",
+          "license": "javna domena",
+          "author": "Malik"
+        },
+        {
+          "title": "Data Analysis (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Supplemental_Modules_(Analytical_Chemistry)/Data_Analysis",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o obdelavi analiznih podatkov: napake, statistika, regresija in umerjanje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Chemometrics Using R (Harvey)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Chemometrics_Using_R_(Harvey)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Statistična obdelava analiznih podatkov v jeziku R: regresija, umerjanje, validacija metod in večspremenljivčna analiza.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "David Harvey"
+        },
+        {
+          "title": "Analizna kemija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Analizna_kemija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski pregled analizne kemije: kvalitativna in kvantitativna analiza, klasične in instrumentalne metode.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kemijske analizne metode v kmetijstvu in toksične snovi v ekosistemih: navodila za laboratorijske vaje",
+          "url": "https://press.um.si/index.php/ump/catalog/book/654",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Postopki priprave vzorcev in določanja (ekstrakcija, AAS, UV-VIS, HPLC, razklop) v živilih in vinu; uporabno za analizno kemijo.",
+          "license": "CC BY 4.0",
+          "author": "Janja Kristl"
+        }
+      ]
+    },
+    "kem-instrumentalna-analiza": {
+      "title": "Instrumentalna analiza (spektrometrija, kromatografija, masna spektrometrija)",
+      "items": [
+        {
+          "title": "Instrumental Analysis (LibreTexts)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Instrumental_Analysis_(LibreTexts)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Zbirka modulov o instrumentalnih metodah: atomska in molekulska spektroskopija, masna spektrometrija, kromatografija, elektroanaliza.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Molecular and Atomic Spectroscopy (Wenzel)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Molecular_and_Atomic_Spectroscopy_(Wenzel)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v UV-VIS, IR, fluorescenco, atomsko absorpcijo in emisijo ter NMR kot analizne metode.",
+          "license": "CC BY-NC 4.0",
+          "author": "Thomas Wenzel"
+        },
+        {
+          "title": "An Introduction to Mass Spectrometry (Van Bramer)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/An_Introduction_to_Mass_Spectrometry_(Van_Bramer)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Načela masne spektrometrije: ionizacija, analizatorji, detektorji, sklopitev s kromatografijo in razlaga spektrov.",
+          "license": "CC BY 4.0",
+          "author": "Scott Van Bramer"
+        },
+        {
+          "title": "Instrumentation and Analysis (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Supplemental_Modules_(Analytical_Chemistry)/Instrumentation_and_Analysis",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o instrumentalnih metodah: spektrometrija, kromatografija, masna spektrometrija in elektroanalitske tehnike.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Analizna kemija II in industrijska analiza: navodila za vaje",
+          "url": "https://press.um.si/index.php/ump/catalog/book/817",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Vaje iz potenciometrije, konduktometrije, elektrogravimetrije, spektrofotometrije in drugih instrumentalnih metod.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Maša Islamčević Razboršek, Mitja Kolar"
+        },
+        {
+          "title": "Analiza in nadzor zdravil: učno gradivo za vaje",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/497",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Učno gradivo za vaje iz farmacevtske analize in nadzora kakovosti zdravil s poudarkom na natančnem in odgovornem laboratorijskem delu.",
+          "license": "prost dostop",
+          "author": "Stane Pajk, Martina Hrast Rambaher, Damijan Knez"
+        },
+        {
+          "title": "Kromatografija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Kromatografija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o kromatografskih tehnikah (plinska, tekočinska, tankoplastna) in načelih ločevanja.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Masna spektrometrija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Masna_spektrometrija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o masni spektrometriji: ionizacija, analizatorji, detekcija.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-spektroskopija": {
+      "title": "Spektroskopija in določanje strukture",
+      "items": [
+        {
+          "title": "Spectroscopy (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Spectroscopy",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o molekulski spektroskopiji: rotacijska, vibracijska, elektronska, NMR in Raman.",
+          "license": "CC BY 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Quantum Chemistry with Applications in Spectroscopy (Fleming)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Quantum_Chemistry_with_Applications_in_Spectroscopy_(Fleming)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Kvantna kemija z uporabo v spektroskopiji: rotacije, vibracije, elektronski prehodi in izbirna pravila.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Fleming"
+        },
+        {
+          "title": "Small-Molecule Spectroscopy and Dynamics (5.80)",
+          "url": "https://ocw.mit.edu/courses/5-80-small-molecule-spectroscopy-and-dynamics-fall-2008/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Napredni tečaj spektroskopije majhnih molekul: rotacijski, vibracijski in elektronski spektri.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Robert Field"
+        },
+        {
+          "title": "NMR Info/Data (Hans Reich Collection)",
+          "url": "https://www.chem.wisc.edu/areas/reich/nmr/",
+          "source": "OrganicChemistryData.org",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Zbirka podatkov in razlag za NMR spektroskopijo: kemijski premiki, sklopitve in določanje struktur.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Spectral Database for Organic Compounds (SDBS)",
+          "url": "https://sdbs.db.aist.go.jp/",
+          "source": "AIST",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Brezplačna zbirka IR, NMR, MS in Raman spektrov organskih spojin za vaje prepoznavanja struktur.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Spektroskopija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Spektroskopija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski pregled spektroskopskih metod in interakcije elektromagnetnega sevanja s snovjo.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Jedrska magnetna resonanca (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Jedrska_magnetna_resonanca",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o NMR: jedrski spin, kemijski premik in uporaba pri določanju strukture.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-organska-kemija": {
+      "title": "Organska kemija (zgradba in reakcije)",
+      "items": [
+        {
+          "title": "Organic Chemistry: A Tenth Edition",
+          "url": "https://openstax.org/details/books/organic-chemistry",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Celoten učbenik organske kemije (McMurry): funkcionalne skupine, mehanizmi, spektroskopija, biomolekule, z vajami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "John McMurry"
+        },
+        {
+          "title": "Organic Chemistry (Morsch et al.)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Organic_Chemistry_(Morsch_et_al.)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Celoten učbenik organske kemije: zgradba, nomenklatura, stereokemija, alkeni, alkil halidi, mehanizmi in spektroskopija.",
+          "license": "CC BY-SA 4.0",
+          "author": "Layne Morsch et al."
+        },
+        {
+          "title": "OCLUE: Organic Chemistry, Life, the Universe and Everything",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/OCLUE%3A_Organic_Chemistry_Life_the_Universe_and_Everything_(Copper_and_Klymkowsky)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Organska kemija, vodena z mehanizmi: kaj določa stabilnost in reaktivnost molekul ter kako napovedati reakcije.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Melanie Cooper, Michael Klymkowsky"
+        },
+        {
+          "title": "Organic Chemistry with a Biological Emphasis (Soderberg)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Book%3A_Organic_Chemistry_with_a_Biological_Emphasis_v2.0_(Soderberg)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Organska kemija, prilagojena biološkim vedam: funkcionalne skupine, mehanizmi, spektroskopija in biokemijsko pomembne reakcije.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Tim Soderberg"
+        },
+        {
+          "title": "Organic Chemistry I (5.12)",
+          "url": "https://ocw.mit.edu/courses/5-12-organic-chemistry-i-spring-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Prvi semester organske kemije: zgradba, stereokemija, reakcije alkenov, alkoholov, nukleofilne substitucije; z nalogami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Sarah O'Connor, Kimberly Berkowski"
+        },
+        {
+          "title": "Organic Chemistry Nomenclature Workbook (O'Donnell)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Organic_Chemistry_Nomenclature_Workbook_(O'Donnell)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "naloge",
+          "desc": "Delovni zvezek za vaje v IUPAC poimenovanju organskih spojin z nalogami.",
+          "license": "CC BY 4.0",
+          "author": "O'Donnell"
+        },
+        {
+          "title": "Organic Chemistry (Khan Academy)",
+          "url": "https://www.khanacademy.org/science/organic-chemistry",
+          "source": "Khan Academy",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Video lekcije in vaje iz organske kemije: nomenklatura, stereokemija, reakcijski mehanizmi, spektroskopija.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Organska kemija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Organska_kemija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski pregled organske kemije: razredi spojin, funkcionalne skupine in reakcije.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-organska-sinteza-heterocikli": {
+      "title": "Napredna organska kemija, sinteza in heterocikli",
+      "items": [
+        {
+          "title": "Organic Chemistry II (Morsch et al.)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Organic_Chemistry_II_(Morsch_et_al.)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Drugi del učbenika: alkoholi, etri, aldehidi in ketoni, karboksilne kisline in derivati ter reakcije karbonilne skupine.",
+          "license": "CC BY-SA 4.0",
+          "author": "Layne Morsch et al."
+        },
+        {
+          "title": "Organic Chemistry III: 24 Amines and Heterocycles",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Organic_Chemistry_III_(Morsch_et_al.)/24:_Amines_and_Heterocycles",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Poglavje o aminih in heterociklih: pirol, piridin, imidazol, bazičnost, aromatičnost in reakcije.",
+          "license": "CC BY-SA 4.0",
+          "author": "Layne Morsch et al."
+        },
+        {
+          "title": "Organic Chemistry, razdelek 24.9: Heterocyclic Amines",
+          "url": "https://openstax.org/books/organic-chemistry/pages/24-9-heterocyclic-amines",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Pirol, piridin, imidazol in drugi aromatski heterocikli: zgradba, bazičnost in reaktivnost.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "John McMurry"
+        },
+        {
+          "title": "Organic Chemistry II (5.13)",
+          "url": "https://ocw.mit.edu/courses/5-13-organic-chemistry-ii-fall-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Drugi semester: karbonilna kemija, aromati, amini, spektroskopska določitev strukture in sinteza z nalogami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Timothy Jamison, Kimberly Berkowski"
+        },
+        {
+          "title": "Advanced Organic Chemistry (5.43)",
+          "url": "https://ocw.mit.edu/courses/5-43-advanced-organic-chemistry-spring-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Napredna organska kemija: reakcijski mehanizmi, stereoselektivnost, pericikliske reakcije in heterocikli.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Mohammad Movassaghi"
+        },
+        {
+          "title": "Organic Synthesis (Shea)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Organic_Synthesis_(Shea)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Pristopi k organski sintezi: retrosintetska analiza, zaščitne skupine, tvorba vezi C-C in selektivnost.",
+          "license": "CC BY 4.0",
+          "author": "Kenneth Shea"
+        },
+        {
+          "title": "Logic of Organic Synthesis (Rao)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Logic_of_Organic_Synthesis_(Rao)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Logika načrtovanja organskih sintez z retrosintezo in primeri večstopenjskih sintez.",
+          "license": "CC BY-NC-ND 3.0",
+          "author": "Rao"
+        },
+        {
+          "title": "Heterociklična spojina (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Heterociklična_spojina",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o heterociklih: pet- in šestčlenski obroči, aromatičnost in pomen v naravi.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-organski-praktikum-analiza": {
+      "title": "Organski laboratorij: tehnike, sinteze in karakterizacija produktov",
+      "items": [
+        {
+          "title": "Organic Chemistry Lab Techniques (Nichols)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Organic_Chemistry_Lab_Techniques_(Nichols)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Priročnik tehnik v organskem laboratoriju: destilacija, ekstrakcija, kristalizacija, kromatografija, tališče in IR/NMR identifikacija.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Lisa Nichols"
+        },
+        {
+          "title": "Chemistry Laboratory Techniques (5.301)",
+          "url": "https://ocw.mit.edu/courses/5-301-chemistry-laboratory-techniques-january-iap-2012/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Intenzivni tečaj laboratorijskih tehnik: varnost, kromatografija, destilacija, ekstrakcija, kristalizacija in poročila.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "John Dolhun"
+        },
+        {
+          "title": "Introduction to Organic Synthesis Laboratory (5.37)",
+          "url": "https://ocw.mit.edu/courses/5-37-introduction-to-organic-synthesis-laboratory-spring-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Laboratorijski tečaj organske sinteze: tehnike, izolacija in karakterizacija produktov ter spektroskopija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Rick Danheiser, Timothy Swager"
+        },
+        {
+          "title": "Spectral Database for Organic Compounds (SDBS)",
+          "url": "https://sdbs.db.aist.go.jp/",
+          "source": "AIST",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Brezplačna zbirka IR, NMR, MS in Raman spektrov organskih spojin za vaje prepoznavanja struktur.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "NMR Info/Data (Hans Reich Collection)",
+          "url": "https://www.chem.wisc.edu/areas/reich/nmr/",
+          "source": "OrganicChemistryData.org",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Zbirka podatkov in razlag za NMR spektroskopijo: kemijski premiki, sklopitve in določanje struktur.",
+          "license": "prost dostop"
+        }
+      ]
+    },
+    "kem-fizikalna-kemija": {
+      "title": "Fizikalna kemija",
+      "items": [
+        {
+          "title": "Physical Chemistry (LibreTexts)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_(LibreTexts)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Zbirka modulov fizikalne kemije: plini, termodinamika, ravnotežja, kinetika, kvantna mehanika, spektroskopija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "The Live Textbook of Physical Chemistry (Peverati)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/The_Live_Textbook_of_Physical_Chemistry_(Peverati)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Spletni učbenik fizikalne kemije z interaktivnimi elementi: termodinamika, kinetika, kvantna kemija in statistična termodinamika.",
+          "license": "CC BY-SA 4.0",
+          "author": "Roberto Peverati"
+        },
+        {
+          "title": "Physical Chemistry for the Biosciences (LibreTexts)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Physical_Chemistry_for_the_Biosciences_(LibreTexts)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Fizikalna kemija z biološkimi primeri: termodinamika, ravnotežja, kinetika, transportni pojavi in spektroskopija biomolekul.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Thermodynamics & Kinetics (5.60)",
+          "url": "https://ocw.mit.edu/courses/5-60-thermodynamics-kinetics-spring-2008/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Fizikalna kemija: zakoni termodinamike, ravnotežja, fazna ravnotežja, kemijska kinetika, z zapiski in nalogami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Keith Nelson, Moungi Bawendi"
+        },
+        {
+          "title": "Physical Chemistry (5.61)",
+          "url": "https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v kvantno kemijo, atomske in molekulske orbitale ter spektroskopijo z zapiski in nalogami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Robert Field"
+        },
+        {
+          "title": "Mathematical Methods in Chemistry (Levitus)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Mathematical_Methods_in_Chemistry_(Levitus)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Matematika za kemike: funkcije, odvodi, integrali, diferencialne enačbe, vektorji in uvod v obdelavo podatkov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Marcia Levitus"
+        },
+        {
+          "title": "Fizikalna kemija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Fizikalna_kemija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski pregled fizikalne kemije: termodinamika, kinetika, kvantna kemija in statistična mehanika.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Chemistry 2e, poglavje 16: Thermodynamics",
+          "url": "https://openstax.org/books/chemistry-2e/pages/16-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Spontanost, entropija, Gibbsova prosta energija in zveza z ravnotežno konstanto.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        }
+      ]
+    },
+    "kem-kemijska-termodinamika": {
+      "title": "Kemijska termodinamika",
+      "items": [
+        {
+          "title": "Thermodynamics and Chemistry (DeVoe)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/DeVoes_Thermodynamics_and_Chemistry",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Poglobljen učbenik kemijske termodinamike: zakoni, fazna ravnotežja, kemijska ravnotežja, raztopine in elektrokemijski členi.",
+          "license": "CC BY 4.0",
+          "author": "Howard DeVoe"
+        },
+        {
+          "title": "Thermodynamics and Chemical Equilibrium (Ellgen)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Thermodynamics_and_Chemical_Equilibrium_(Ellgen)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik termodinamike in kemijskih ravnotežij z izpeljavami, primeri in nalogami.",
+          "license": "CC BY-SA 4.0",
+          "author": "Paul Ellgen"
+        },
+        {
+          "title": "Thermodynamics (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Thermodynamics",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o zakonih termodinamike, entalpiji, entropiji, Gibbsovi energiji in kemijskem ravnotežju.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Chemical Engineering Thermodynamics (10.40)",
+          "url": "https://ocw.mit.edu/courses/10-40-chemical-engineering-thermodynamics-fall-2003/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Kemijsko inženirska termodinamika: fazna in kemijska ravnotežja, mešanice, aktivnostni koeficienti in modeli.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Bernhardt Trout, Jefferson Tester"
+        },
+        {
+          "title": "Thermodynamics of Materials (3.020)",
+          "url": "https://ocw.mit.edu/courses/3-020-thermodynamics-of-materials-spring-2021/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Termodinamika materialov: Gibbsova energija, fazni diagrami, raztopine in ravnotežja z zapiski.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Rafael Jaramillo"
+        },
+        {
+          "title": "Chemistry 2e, poglavje 16: Thermodynamics",
+          "url": "https://openstax.org/books/chemistry-2e/pages/16-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Spontanost, entropija, Gibbsova prosta energija in zveza z ravnotežno konstanto.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Termodinamika (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Termodinamika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o zakonih termodinamike, energiji, entropiji in termodinamskih potencialih.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-kinetika-kataliza": {
+      "title": "Kemijska kinetika in kataliza",
+      "items": [
+        {
+          "title": "Chemistry 2e, poglavje 12: Kinetics",
+          "url": "https://openstax.org/books/chemistry-2e/pages/12-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Hitrost reakcij, hitrostni zakoni, Arrheniusova enačba, mehanizmi in kataliza.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Kinetics (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Kinetics",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o hitrostih reakcij, hitrostnih zakonih, mehanizmih, eksperimentalnih metodah in difuziji.",
+          "license": "CC BY 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Kemijska kinetika (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Kemijska_kinetika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o hitrosti kemijskih reakcij, redu reakcije, aktivacijski energiji in mehanizmih.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kataliza (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Kataliza",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o katalizi: homogena in heterogena kataliza, katalizatorji in encimi.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Chemical and Biological Reaction Engineering (10.37)",
+          "url": "https://ocw.mit.edu/courses/10-37-chemical-and-biological-reaction-engineering-spring-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Reakcijsko inženirstvo: kinetika, idealni reaktorji, katalitske reakcije, difuzija in encimski sistemi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "K. Dane Wittrup, William Green"
+        }
+      ]
+    },
+    "kem-kvantna-kemija": {
+      "title": "Kvantna kemija in zgradba atomov ter molekul",
+      "items": [
+        {
+          "title": "Quantum Chemistry (Blinder)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Quantum_Chemistry_(Blinder)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v kvantno kemijo: Schrödingerjeva enačba, vodikov atom, molekulske orbitale in približne metode.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Seymour Blinder"
+        },
+        {
+          "title": "Quantum States of Atoms and Molecules (Zielinski et al.)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Book%3A_Quantum_States_of_Atoms_and_Molecules_(Zielinksi_et_al)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v kvantna stanja atomov in molekul: valovne funkcije, orbitale, elektronska struktura in spektri.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Zielinski et al."
+        },
+        {
+          "title": "Symmetry (Vallance)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Symmetry_(Vallance)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Simetrija molekul in teorija grup: točkovne skupine, karakterne tabele in uporaba pri vibracijah ter molekulskih orbitalah.",
+          "license": "CC BY 4.0",
+          "author": "Claire Vallance"
+        },
+        {
+          "title": "Quantum Mechanics (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Quantum_Mechanics",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli kvantne mehanike za kemike: valovne funkcije, delec v škatli, harmonski oscilator, vodikov atom.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Quantum Mechanics I (5.73)",
+          "url": "https://ocw.mit.edu/courses/5-73-quantum-mechanics-i-fall-2018/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Kvantna mehanika za kemike: formalizem, harmonski oscilator, vrtilna količina, vodikov atom in perturbacije.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Robert Field"
+        },
+        {
+          "title": "Physical Chemistry (5.61)",
+          "url": "https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2017/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v kvantno kemijo, atomske in molekulske orbitale ter spektroskopijo z zapiski in nalogami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Robert Field"
+        },
+        {
+          "title": "Quantum Chemistry with Applications in Spectroscopy (Fleming)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Quantum_Chemistry_with_Applications_in_Spectroscopy_(Fleming)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Kvantna kemija z uporabo v spektroskopiji: rotacije, vibracije, elektronski prehodi in izbirna pravila.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Fleming"
+        }
+      ]
+    },
+    "kem-biokemija": {
+      "title": "Biokemija (biomolekule in presnova)",
+      "items": [
+        {
+          "title": "Biochemistry Free For All",
+          "url": "https://bio.libretexts.org/Bookshelves/Biochemistry/Book%3A_Biochemistry_Free_For_All_(Ahern_Rajagopal_and_Tan)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Celoten uvodni učbenik biokemije: aminokisline, proteini, encimi, ogljikovi hidrati, lipidi, presnova in njena regulacija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Kevin Ahern, Indira Rajagopal, Taralyn Tan"
+        },
+        {
+          "title": "Fundamentals of Biochemistry (Jakubowski and Flatt)",
+          "url": "https://bio.libretexts.org/Bookshelves/Biochemistry/Fundamentals_of_Biochemistry_(Jakubowski_and_Flatt)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik biokemije z interaktivnimi 3D prikazi struktur: proteini, encimska kinetika, metabolizem in signaliziranje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Henry Jakubowski, Pamela Flatt"
+        },
+        {
+          "title": "Biological Chemistry I (5.07SC)",
+          "url": "https://ocw.mit.edu/courses/5-07sc-biological-chemistry-i-fall-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Biokemija z video predavanji: aminokisline, proteini, encimska kinetika, ogljikovi hidrati, lipidi in nukleinske kisline.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "John Essigmann, Joanne Stubbe, Bogdan Fedeles"
+        },
+        {
+          "title": "General Biochemistry (7.05)",
+          "url": "https://ocw.mit.edu/courses/7-05-general-biochemistry-spring-2020/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Splošna biokemija: zgradba in funkcija proteinov, encimi, bioenergetika, presnova in regulacija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Michael Yaffe, Matthew Vander Heiden"
+        },
+        {
+          "title": "Biology 2e",
+          "url": "https://openstax.org/details/books/biology-2e",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Splošni univerzitetni učbenik biologije z uvodnimi poglavji o kemiji življenja, biomolekulah, encimih in celičnem metabolizmu.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Mary Ann Clark et al."
+        },
+        {
+          "title": "Biokemija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Biokemija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski pregled biokemije: biomolekule, presnova in molekularni mehanizmi življenja.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Beljakovina (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Beljakovina",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o beljakovinah: aminokisline, strukture proteinov in njihove funkcije.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-encimi": {
+      "title": "Encimi in encimska kinetika",
+      "items": [
+        {
+          "title": "Encim (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Encim",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o encimih: zgradba, mehanizem delovanja, kinetika in inhibicija.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Biological Chemistry II (5.08J)",
+          "url": "https://ocw.mit.edu/courses/5-08j-biological-chemistry-ii-spring-2016/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Drugi del biokemije: presnovne poti, kofaktorji, encimski mehanizmi in kemija biosinteze.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Joanne Stubbe, Elizabeth Nolan"
+        },
+        {
+          "title": "Introduction to Biocatalysis (10.492)",
+          "url": "https://ocw.mit.edu/courses/10-492-2-integrated-chemical-engineering-topics-i-introduction-to-biocatalysis-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v biokatalizo: encimi kot katalizatorji, kinetika, inženiring encimov in industrijska uporaba.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Kristala Jones Prather"
+        },
+        {
+          "title": "Biochemistry Laboratory (5.36)",
+          "url": "https://ocw.mit.edu/courses/5-36-biochemistry-laboratory-spring-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Biokemijski laboratorij: čiščenje proteinov, encimska kinetika, elektroforeza in analiza podatkov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Elizabeth Vogel Taylor"
+        },
+        {
+          "title": "Fundamentals of Biochemistry (Jakubowski and Flatt)",
+          "url": "https://bio.libretexts.org/Bookshelves/Biochemistry/Fundamentals_of_Biochemistry_(Jakubowski_and_Flatt)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik biokemije z interaktivnimi 3D prikazi struktur: proteini, encimska kinetika, metabolizem in signaliziranje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Henry Jakubowski, Pamela Flatt"
+        },
+        {
+          "title": "Biochemistry Free For All",
+          "url": "https://bio.libretexts.org/Bookshelves/Biochemistry/Book%3A_Biochemistry_Free_For_All_(Ahern_Rajagopal_and_Tan)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Celoten uvodni učbenik biokemije: aminokisline, proteini, encimi, ogljikovi hidrati, lipidi, presnova in njena regulacija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Kevin Ahern, Indira Rajagopal, Taralyn Tan"
+        }
+      ]
+    },
+    "kem-struktura-biomolekul": {
+      "title": "Struktura bioloških molekul, proteomika in modeliranje",
+      "items": [
+        {
+          "title": "PDB-101: Learn",
+          "url": "https://pdb101.rcsb.org/",
+          "source": "RCSB Protein Data Bank",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Izobraževalni portal o strukturah proteinov in nukleinskih kislin z molekulskimi vizualizacijami in zgodbami.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Concepts in Biophysical Chemistry (Tokmakoff)",
+          "url": "https://chem.libretexts.org/Bookshelves/Biological_Chemistry/Concepts_in_Biophysical_Chemistry_(Tokmakoff)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Biofizikalna kemija: termodinamika in kinetika biomolekul, zvijanje proteinov, nukleinske kisline, interakcije in spektroskopske metode.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Andrei Tokmakoff"
+        },
+        {
+          "title": "Thermodynamics of Biomolecular Systems (20.110J)",
+          "url": "https://ocw.mit.edu/courses/20-110j-thermodynamics-of-biomolecular-systems-fall-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Termodinamika biomolekul: energijski vidiki zvijanja, vezave, ravnotežij in statistične termodinamike.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Kim Hamad-Schifferli, Linda Griffith, Moungi Bawendi"
+        },
+        {
+          "title": "Bioinformatics and Proteomics (6.092)",
+          "url": "https://ocw.mit.edu/courses/6-092-bioinformatics-and-proteomics-january-iap-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v bioinformatiko in proteomiko: podatkovne zbirke, zaporedja in strukture proteinov, masna spektrometrija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Gil Alterovitz, Manolis Kellis, Marco Ramoni"
+        },
+        {
+          "title": "Fundamentals of Biochemistry (Jakubowski and Flatt)",
+          "url": "https://bio.libretexts.org/Bookshelves/Biochemistry/Fundamentals_of_Biochemistry_(Jakubowski_and_Flatt)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik biokemije z interaktivnimi 3D prikazi struktur: proteini, encimska kinetika, metabolizem in signaliziranje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Henry Jakubowski, Pamela Flatt"
+        },
+        {
+          "title": "Beljakovina (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Beljakovina",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o beljakovinah: aminokisline, strukture proteinov in njihove funkcije.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-klinicna-biokemija-analitika": {
+      "title": "Klinična biokemija in biomedicinska analitika",
+      "items": [
+        {
+          "title": "Laboratory quality management system: handbook",
+          "url": "https://www.who.int/publications/i/item/9789241548274",
+          "source": "World Health Organization",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Priročnik WHO za sistem kakovosti v laboratoriju: preanalitika, analitika, validacija in nadzor kakovosti.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "MedlinePlus: Medical Tests",
+          "url": "https://medlineplus.gov/lab-tests/",
+          "source": "MedlinePlus (NIH)",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Abecedni pregled laboratorijskih preiskav: kaj merijo, kdaj se naročijo in kako razlagati rezultate.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Analiza in nadzor zdravil: učno gradivo za vaje",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/497",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Učno gradivo za vaje iz farmacevtske analize in nadzora kakovosti zdravil s poudarkom na natančnem in odgovornem laboratorijskem delu.",
+          "license": "prost dostop",
+          "author": "Stane Pajk, Martina Hrast Rambaher, Damijan Knez"
+        },
+        {
+          "title": "The Fitness for Purpose of Analytical Methods (Eurachem Guide, 3rd ed.)",
+          "url": "https://www.eurachem.org/index.php/publications/guides/mv",
+          "source": "Eurachem",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Priročnik za validacijo analiznih metod: točnost, preciznost, selektivnost, meje določanja in negotovost.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Biochemistry Free For All",
+          "url": "https://bio.libretexts.org/Bookshelves/Biochemistry/Book%3A_Biochemistry_Free_For_All_(Ahern_Rajagopal_and_Tan)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Celoten uvodni učbenik biokemije: aminokisline, proteini, encimi, ogljikovi hidrati, lipidi, presnova in njena regulacija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Kevin Ahern, Indira Rajagopal, Taralyn Tan"
+        },
+        {
+          "title": "Bioinformatics and Proteomics (6.092)",
+          "url": "https://ocw.mit.edu/courses/6-092-bioinformatics-and-proteomics-january-iap-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v bioinformatiko in proteomiko: podatkovne zbirke, zaporedja in strukture proteinov, masna spektrometrija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Gil Alterovitz, Manolis Kellis, Marco Ramoni"
+        }
+      ]
+    },
+    "kem-kemijsko-inzenirstvo-osnove": {
+      "title": "Osnove kemijskega inženirstva (bilance procesov)",
+      "items": [
+        {
+          "title": "Foundations of Chemical and Biological Engineering I",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Foundations_of_Chemical_and_Biological_Engineering_I_(Verret_Qiao_Barghout)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v kemijsko inženirstvo: enote, bilance mase in energije, prenos toplote, tekočine in osnove reaktorjev.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Verret, Qiao, Barghout"
+        },
+        {
+          "title": "Introduction to Chemical Engineering Processes",
+          "url": "https://en.wikibooks.org/wiki/Introduction_to_Chemical_Engineering_Processes",
+          "source": "Wikibooks",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Wikibook o osnovah kemijskega inženirstva: materialne in energijske bilance, enote, fazna ravnotežja in reaktorji.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Integrated Chemical Engineering I (10.490)",
+          "url": "https://ocw.mit.edu/courses/10-490-integrated-chemical-engineering-i-fall-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Integrirani tečaj kemijskega inženirstva: bilance, termodinamika, transport in reaktorji na realnih procesnih problemih.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Barry Johnston"
+        },
+        {
+          "title": "Laboratorijske vaje iz Tehnološkega procesništva",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/699",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Skripta za laboratorijske vaje pri predmetu Tehnološko procesništvo (UL BF), nastala v okviru odprtih učnih gradiv UL.",
+          "license": "CC BY-SA 4.0",
+          "author": "Blaž Jug, Nik Mahnič, Ilja Gasan Osojnik Črnivec"
+        },
+        {
+          "title": "Numerical Methods Applied to Chemical Engineering (10.34)",
+          "url": "https://ocw.mit.edu/courses/10-34-numerical-methods-applied-to-chemical-engineering-fall-2015/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Numerične metode za kemijske inženirje: sistemi enačb, diferencialne enačbe, optimizacija in ocenjevanje parametrov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "William Green, James Swan"
+        },
+        {
+          "title": "Python v kemiji in kemijskem inženirstvu",
+          "url": "https://press.um.si/index.php/ump/catalog/book/1068",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Osnove Pythona na primerih iz kemije in kemijskega inženirstva; uvod v podatkovno analizo in umetno inteligenco.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Zorka Novak Pintarič, Sanja Potrč, Miloš Bogataj"
+        }
+      ]
+    },
+    "kem-transportni-pojavi": {
+      "title": "Transportni pojavi: mehanika tekočin, prenos toplote in snovi",
+      "items": [
+        {
+          "title": "Transport Processes (10.302)",
+          "url": "https://ocw.mit.edu/courses/10-302-transport-processes-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Prenos gibalne količine, toplote in snovi z zapiski predavanj in nalogami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Clark Colton, Kenneth Smith, William Dalzell"
+        },
+        {
+          "title": "Mechanics of Fluids (10.52)",
+          "url": "https://ocw.mit.edu/courses/10-52-mechanics-of-fluids-spring-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehanika tekočin za kemijske inženirje: Navier-Stokesove enačbe, laminarni tok, mejne plasti.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Kenneth Smith"
+        },
+        {
+          "title": "A Heat Transfer Textbook, 6th edition",
+          "url": "https://ahtt.mit.edu/",
+          "source": "MIT",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Brezplačen učbenik prenosa toplote in snovi (Lienhard): prevajanje, konvekcija, sevanje in izmenjevalniki.",
+          "license": "prost dostop",
+          "author": "John H. Lienhard IV, John H. Lienhard V"
+        },
+        {
+          "title": "Prenos toplote (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Prenos_toplote",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o prenosu toplote: prevajanje, konvekcija in sevanje.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Mehanika tekočin (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Mehanika_tekočin",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o mehaniki tekočin: statika, pretoki, viskoznost, Bernoullijeva enačba.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Foundations of Chemical and Biological Engineering I",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Foundations_of_Chemical_and_Biological_Engineering_I_(Verret_Qiao_Barghout)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v kemijsko inženirstvo: enote, bilance mase in energije, prenos toplote, tekočine in osnove reaktorjev.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Verret, Qiao, Barghout"
+        }
+      ]
+    },
+    "kem-reakcijsko-inzenirstvo": {
+      "title": "Kemijsko reakcijsko inženirstvo",
+      "items": [
+        {
+          "title": "Chemical and Biological Reaction Engineering (10.37)",
+          "url": "https://ocw.mit.edu/courses/10-37-chemical-and-biological-reaction-engineering-spring-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Reakcijsko inženirstvo: kinetika, idealni reaktorji, katalitske reakcije, difuzija in encimski sistemi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "K. Dane Wittrup, William Green"
+        },
+        {
+          "title": "Kemijska reakcijska tehnika I: navodila za opravljanje laboratorijskih vaj",
+          "url": "https://press.um.si/index.php/ump/catalog/book/989",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Navodila za opravljanje laboratorijskih vaj pri predmetu Kemijska reakcijska tehnika I.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Darja Pečar"
+        },
+        {
+          "title": "Chemical Reaction Engineering I: Manual for Performing Laboratory Exercises",
+          "url": "https://press.um.si/index.php/ump/catalog/book/991",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Angleška različica navodil za laboratorijske vaje iz kemijske reakcijske tehnike I.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Darja Pečar"
+        },
+        {
+          "title": "Kemijska reakcijska tehnika II: navodila za opravljanje laboratorijskih vaj",
+          "url": "https://press.um.si/index.php/ump/catalog/book/990",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Navodila za opravljanje laboratorijskih vaj pri predmetu Kemijska reakcijska tehnika II.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Darja Pečar"
+        },
+        {
+          "title": "Foundations of Chemical and Biological Engineering I",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Foundations_of_Chemical_and_Biological_Engineering_I_(Verret_Qiao_Barghout)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v kemijsko inženirstvo: enote, bilance mase in energije, prenos toplote, tekočine in osnove reaktorjev.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Verret, Qiao, Barghout"
+        }
+      ]
+    },
+    "kem-separacijski-procesi": {
+      "title": "Separacijski procesi",
+      "items": [
+        {
+          "title": "Chemical Engineering Separations: A Handbook for Students (Lamm and Jarboe)",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Chemical_Engineering_Separations%3A_A_Handbook_for_Students_(Lamm_and_Jarboe)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Priročnik separacijskih procesov: destilacija, absorpcija, ekstrakcija, membranske tehnike in adsorpcija z računskimi zgledi.",
+          "license": "CC BY-NC 4.0",
+          "author": "Lamm, Jarboe"
+        },
+        {
+          "title": "Distillation Science (Coleman)",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Distillation_Science_(Coleman)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Teorija in računanje destilacije: parno-tekoče ravnotežje, McCabe-Thiele, kolone in destilacijske naprave.",
+          "license": "CC BY 4.0",
+          "author": "Coleman"
+        },
+        {
+          "title": "Separation Processes (10.32)",
+          "url": "https://ocw.mit.edu/courses/10-32-separation-processes-spring-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Separacijski procesi: membrane, adsorpcija, ionska izmenjava, kromatografija in destilacija z zapiski.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "William Dalzell"
+        },
+        {
+          "title": "Destilacija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Destilacija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o destilaciji kot separacijski operaciji: enostavna, frakcijska in vakuumska destilacija.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Ekstrakcija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Ekstrakcija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o ekstrakciji: tekoče-tekoča in trdno-tekoča ekstrakcija ter uporaba v industriji.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Separation Processes for Biochemical Products (10.445)",
+          "url": "https://ocw.mit.edu/courses/10-445-separation-processes-for-biochemical-products-summer-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Izolacija bioloških produktov: filtracija, centrifugiranje, kromatografija, membrane in kristalizacija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Charles Cooney"
+        }
+      ]
+    },
+    "kem-biokemijsko-inzenirstvo": {
+      "title": "Biokemijsko inženirstvo in bioprocesi",
+      "items": [
+        {
+          "title": "Biochemical Engineering (10.442)",
+          "url": "https://ocw.mit.edu/courses/10-442-biochemical-engineering-spring-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Biokemijsko inženirstvo: encimska kinetika, rast celic, bioreaktorji, prenos snovi in procesiranje produktov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Kristala Jones Prather"
+        },
+        {
+          "title": "Separation Processes for Biochemical Products (10.445)",
+          "url": "https://ocw.mit.edu/courses/10-445-separation-processes-for-biochemical-products-summer-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Izolacija bioloških produktov: filtracija, centrifugiranje, kromatografija, membrane in kristalizacija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Charles Cooney"
+        },
+        {
+          "title": "Biotehnološki tehnikum: učbenik za vaje",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/961",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Sedem vaj in računskih nalog iz biotehnoloških procesov: kako vzdrževati delovne organizme in iz njih pridobiti čim več kakovostnega produkta.",
+          "license": "CC BY-SA 4.0",
+          "author": "Maja Paš, Aleš Podgornik, Hrvoje Petković"
+        },
+        {
+          "title": "Introduction to Biocatalysis (10.492)",
+          "url": "https://ocw.mit.edu/courses/10-492-2-integrated-chemical-engineering-topics-i-introduction-to-biocatalysis-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v biokatalizo: encimi kot katalizatorji, kinetika, inženiring encimov in industrijska uporaba.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Kristala Jones Prather"
+        },
+        {
+          "title": "Foundations of Chemical and Biological Engineering I",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Foundations_of_Chemical_and_Biological_Engineering_I_(Verret_Qiao_Barghout)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v kemijsko inženirstvo: enote, bilance mase in energije, prenos toplote, tekočine in osnove reaktorjev.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Verret, Qiao, Barghout"
+        }
+      ]
+    },
+    "kem-polimeri": {
+      "title": "Polimeri: kemija, lastnosti in predelava",
+      "items": [
+        {
+          "title": "Polymer Chemistry (Schaller)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Polymer_Chemistry_(Schaller)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v kemijo polimerov: vrste polimerizacij, struktura, lastnosti, adicijski in kondenzacijski polimeri.",
+          "license": "CC BY-NC 3.0",
+          "author": "Chris Schaller"
+        },
+        {
+          "title": "Polymers (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Supplemental_Modules_(Organic_Chemistry)/Polymers",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o polimerih: adicijski in kondenzacijski polimeri, naravni polimeri, plastika in lastnosti.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Polymer Physics (Steimel)",
+          "url": "https://eng.libretexts.org/Bookshelves/Materials_Science/Polymer_Physics_(Steimel)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Fizika polimerov: konformacije verig, raztopine, steklast prehod, kristalnost in viskoelastičnost.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Joshua Steimel"
+        },
+        {
+          "title": "Synthesis of Polymers (10.569)",
+          "url": "https://ocw.mit.edu/courses/10-569-synthesis-of-polymers-fall-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Sinteza polimerov: stopenjska, radikalska, ionska in koordinacijska polimerizacija ter kopolimeri.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paula Hammond"
+        },
+        {
+          "title": "Polymer Engineering (3.064)",
+          "url": "https://ocw.mit.edu/courses/3-064-polymer-engineering-fall-2003/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Polimerno inženirstvo: viskoelastičnost, reologija, predelava polimerov in lastnosti plastike.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "David Roylance"
+        },
+        {
+          "title": "The Macrogalleria (Polymer Science Learning Center)",
+          "url": "https://pslc.ws/macrog/",
+          "source": "Polymer Science Learning Center",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Spletna razstava polimerov: osnove, vrste polimerov (poliolefini, poliamidi …), sinteza in uporaba.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Polymer Basics (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/polymerbasics/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o osnovah polimerov: zgradba, molekulska masa, konformacije in lastnosti.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Polimer (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Polimer",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o polimerih: zgradba makromolekul, vrste polimerov in lastnosti.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-koloidi-povrsine": {
+      "title": "Površinska in koloidna kemija",
+      "items": [
+        {
+          "title": "Surface Science (Nix)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Surface_Science_(Nix)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Znanost o površinah: adsorpcija, struktura površin, reakcije na površinah in eksperimentalne metode.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Roger Nix"
+        },
+        {
+          "title": "Chemistry 2e, poglavje 11: Solutions and Colloids",
+          "url": "https://openstax.org/books/chemistry-2e/pages/11-introduction",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Raztopine, topnost, koligativne lastnosti in koloidi z računskimi zgledi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul Flowers et al."
+        },
+        {
+          "title": "Solutions and Mixtures (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Supplemental_Modules_(Physical_and_Theoretical_Chemistry)/Physical_Properties_of_Matter/Solutions_and_Mixtures",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o raztopinah: koncentracije, topnost, koligativne lastnosti, koloidi in disperzni sistemi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Površinska napetost (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Površinska_napetost",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o površinski napetosti, omakanju in kapilarnosti.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Koloid (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Koloid",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o koloidnih sistemih: disperzije, emulzije, geli in stabilnost.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-kemija-okolja": {
+      "title": "Kemija okolja (atmosfera, vode, tla, onesnaževala)",
+      "items": [
+        {
+          "title": "Aquatic Chemistry (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Environmental_Chemistry/Supplemental_Modules_(Environmental_Chemistry)/Aquatic_Chemistry",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o kemiji voda: karbonatni sistem, kisline in baze v naravnih vodah, topnost, redoks in onesnaževala.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Atmospheric Chemistry (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Environmental_Chemistry/Supplemental_Modules_(Environmental_Chemistry)/Atmospheric_Chemistry",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o kemiji atmosfere: ozon, smog, toplogredni plini, aerosoli in kisli dež.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Environmental Toxicology (van Gestel et al.)",
+          "url": "https://chem.libretexts.org/Bookshelves/Environmental_Chemistry/Environmental_Toxicology_(van_Gestel_et_al.)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Ekotoksikologija: usoda onesnaževal v okolju, biorazpoložljivost, učinki na organizme in ocena tveganja.",
+          "license": "CC BY 4.0",
+          "author": "Kees van Gestel et al."
+        },
+        {
+          "title": "Aquatic Chemistry (1.76)",
+          "url": "https://ocw.mit.edu/courses/1-76-aquatic-chemistry-fall-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Kemija voda: karbonatni sistem, kisline in baze, kompleksi, topnost, redoks in sorpcija.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Jeff Seewald, Jim Moffett, Meg Tivey"
+        },
+        {
+          "title": "Atmospheric Chemistry (1.84J)",
+          "url": "https://ocw.mit.edu/courses/1-84j-atmospheric-chemistry-fall-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Kemija atmosfere: ozon, radikali, onesnaževala, aerosoli in kemijske reakcije v zraku.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Jesse Kroll"
+        },
+        {
+          "title": "Chemicals in the Environment: Fate and Transport (1.725J)",
+          "url": "https://ocw.mit.edu/courses/1-725j-chemicals-in-the-environment-fate-and-transport-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Usoda in transport kemikalij v okolju: porazdelitev med fazami, razgradnja, sorpcija in hlapnost.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Harold Hemond, Janet Chuang"
+        },
+        {
+          "title": "Toksične snovi v ekosistemih: urejeni zapiski predavanj",
+          "url": "https://press.um.si/index.php/ump/catalog/book/694",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "Ekotoksikologija: kovine (svinec, živo srebro), radioaktivni izotopi, dušikovi oksidi in nitrati ter njihova toksičnost v okolju.",
+          "license": "CC BY 4.0",
+          "author": "Janja Kristl"
+        },
+        {
+          "title": "Okoljska kemija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Kemija_okolja",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o okoljski kemiji: onesnaževala, kemijski procesi v zraku, vodi in tleh.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-obdelava-voda-odpadki": {
+      "title": "Obdelava voda, odpadnih voda in odpadkov",
+      "items": [
+        {
+          "title": "Water and Wastewater Treatment Engineering (1.85)",
+          "url": "https://ocw.mit.edu/courses/1-85-water-and-wastewater-treatment-engineering-spring-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Priprava pitne vode in čiščenje odpadnih voda: koagulacija, filtracija, dezinfekcija, biološko čiščenje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Peter Shanahan"
+        },
+        {
+          "title": "Desalination and Water Purification (2.500)",
+          "url": "https://ocw.mit.edu/courses/2-500-desalination-and-water-purification-spring-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Razsoljevanje in čiščenje vode: reverzna osmoza, destilacija, elektrodializa in energijska učinkovitost.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "John Lienhard, Miriam Balaban"
+        },
+        {
+          "title": "Waste Containment and Remediation Technology (1.34)",
+          "url": "https://ocw.mit.edu/courses/1-34-waste-containment-and-remediation-technology-spring-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Odlagališča, zaščita podtalnice in postopki sanacije onesnaženih tal ter podtalnice.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Peter Shanahan"
+        },
+        {
+          "title": "Tehnologija vod: laboratorijske vaje",
+          "url": "https://press.um.si/index.php/ump/catalog/book/1116",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Vaje: pH, prevodnost, motnost, trdota, karbonatno ravnotežje, JAR test in reverzna osmoza ter navodila za varno delo.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Marjana Simonič, Maša Islamčević Razboršek"
+        },
+        {
+          "title": "Ekologija plemenitilnih procesov",
+          "url": "https://press.um.si/index.php/ump/catalog/book/928",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "Skripta o plemenitenju tekstilij in njegovih okoljskih vplivih: obremenjene odpadne vode (KPK, BPK, barvila, tenzidi) in njihovo čiščenje.",
+          "license": "CC BY 4.0",
+          "author": "Alenka Ojstršek, Darinka Fakin, Selestina Gorgieva"
+        },
+        {
+          "title": "Ekologija plemenitilnih procesov: navodila za vaje",
+          "url": "https://press.um.si/index.php/ump/catalog/book/732",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Vaje o čiščenju odpadnih tehnoloških voda iz tekstilne industrije in razbarvanju odplak.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Darinka Fakin, Selestina Gorgieva, Alenka Ojstršek"
+        }
+      ]
+    },
+    "kem-zelena-kemija-trajnost": {
+      "title": "Zelena kemija in trajnostni razvoj",
+      "items": [
+        {
+          "title": "Key Elements of Green Chemistry (Lucia)",
+          "url": "https://chem.libretexts.org/Bookshelves/Environmental_Chemistry/Key_Elements_of_Green_Chemistry_(Lucia)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Ključni elementi zelene kemije: dvanajst načel, atomska ekonomija, E-faktor, zelena topila in kataliza.",
+          "license": "CC BY 4.0",
+          "author": "Lucia"
+        },
+        {
+          "title": "Green Chemistry and the Ten Commandments of Sustainability (Manahan)",
+          "url": "https://chem.libretexts.org/Bookshelves/Environmental_Chemistry/Green_Chemistry_and_the_Ten_Commandments_of_Sustainability_(Manahan)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Zelena kemija in trajnostna kemija: načela, industrijska ekologija, energija, odpadki in kemijski procesi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Stanley Manahan"
+        },
+        {
+          "title": "Basics of Green Chemistry (US EPA)",
+          "url": "https://www.epa.gov/greenchemistry/basics-green-chemistry",
+          "source": "US EPA",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Uradna razlaga načel zelene kemije z dvanajstimi načeli in primeri iz industrije.",
+          "license": "javna domena"
+        },
+        {
+          "title": "Zelena kemija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Zelena_kemija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o zeleni kemiji: načela, zmanjševanje odpadkov in varnejši procesi.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Economic & Environmental Issues in Materials Selection (3.080)",
+          "url": "https://ocw.mit.edu/courses/3-080-economic-environmental-issues-in-materials-selection-fall-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Izbira materialov z vidika stroškov in okolja: ocena življenjskega cikla, recikliranje in krožna raba.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Randolph Kirchain"
+        },
+        {
+          "title": "Recycling of Metals (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/recycling-metals/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o recikliranju kovin: energija, materialni tokovi in krožno gospodarstvo.",
+          "license": "CC BY-NC-SA 4.0"
+        }
+      ]
+    },
+    "kem-varnost-nevarne-snovi-pozari": {
+      "title": "Nevarne snovi, kemijska varnost, gorenje in požari",
+      "items": [
+        {
+          "title": "Toxicology MSDT",
+          "url": "https://chem.libretexts.org/Bookshelves/Environmental_Chemistry/Toxicology_MSDT",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v toksikologijo: odmerek in odziv, absorpcija in izločanje strupov, varnostni listi in nevarne kemikalije.",
+          "license": "CC BY-NC 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Chemicals in the Environment: Toxicology and Public Health (20.104J)",
+          "url": "https://ocw.mit.edu/courses/20-104j-chemicals-in-the-environment-toxicology-and-public-health-be-104j-spring-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Toksikologija kemikalij v okolju: izpostavljenost, odmerek-odziv, ocena tveganja in javno zdravje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "James Sherley, Laura Green, Steven Tannenbaum"
+        },
+        {
+          "title": "PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov",
+          "source": "NCBI / NIH",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Podatkovna zbirka kemijskih spojin: strukture, lastnosti, varnostni podatki in toksikologija.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Nevarne snovi (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Nevarne_snovi",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o nevarnih snoveh: razvrščanje, označevanje in ravnanje.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Toksikologija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Toksikologija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o toksikologiji: strupi, odmerek in učinek, izpostavljenost.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Požar (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Požar",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o požarih: nastanek, razvoj, vrste in preprečevanje.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Fundamentals of Advanced Energy Conversion (2.60J)",
+          "url": "https://ocw.mit.edu/courses/2-60j-fundamentals-of-advanced-energy-conversion-spring-2020/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Temelji pretvorbe energije: izgorevanje, goriva, gorivne celice, vodik in elektrokemijski pretvorniki.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Ahmed Ghoniem"
+        }
+      ]
+    },
+    "kem-laboratorij-meritve": {
+      "title": "Laboratorijsko delo, meritve in obdelava rezultatov",
+      "items": [
+        {
+          "title": "Laboratorijske vaje iz kemije",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/718",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Skripta za laboratorijske vaje iz kemije: varno delo, priprava raztopin, titracije, meritve in poročanje.",
+          "license": "CC BY-SA 4.0",
+          "author": "Helena Abramovič, Miha Bahun, Lea Pogačnik da Silva, Iztok Prislan, Mihaela Skrt, Nataša Šegatin"
+        },
+        {
+          "title": "Eksperiment v splošni anorganski kemiji: navodila",
+          "url": "https://press.um.si/index.php/ump/catalog/book/630",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Laboratorijski inventar, osnovne tehnike, sestavljanje aparatur, računske naloge, pisanje poročil in varnost pri delu v kemijskem laboratoriju.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Mojca Slemnik, Irena Ban, Matjaž Kristl, Janja Stergar"
+        },
+        {
+          "title": "Chemistry Labs (Trufan and Bouhoutsos-Brown)",
+          "url": "https://chem.libretexts.org/Bookshelves/General_Chemistry/Chemistry_Labs_(Trufan_and_Bouhoutsos-Brown)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Zbirka navodil za laboratorijske vaje splošne kemije: varnost, meritve, titracije, ravnotežja, obdelava rezultatov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Elena Trufan, Bouhoutsos-Brown"
+        },
+        {
+          "title": "Chemistry Laboratory Techniques (5.301)",
+          "url": "https://ocw.mit.edu/courses/5-301-chemistry-laboratory-techniques-january-iap-2012/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Intenzivni tečaj laboratorijskih tehnik: varnost, kromatografija, destilacija, ekstrakcija, kristalizacija in poročila.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "John Dolhun"
+        },
+        {
+          "title": "The Fitness for Purpose of Analytical Methods (Eurachem Guide, 3rd ed.)",
+          "url": "https://www.eurachem.org/index.php/publications/guides/mv",
+          "source": "Eurachem",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Priročnik za validacijo analiznih metod: točnost, preciznost, selektivnost, meje določanja in negotovost.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "JCGM Publications: Guides in Metrology (GUM, VIM)",
+          "url": "https://www.bipm.org/en/committees/jc/jcgm/publications",
+          "source": "BIPM / JCGM",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Uradna zbirka brezplačnih vodičev meroslovja: GUM (merilna negotovost) in VIM (osnovni pojmi).",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Osnovna merjenja: uvod v merske napake in kvantitativno analizo fizikalnih meritev",
+          "url": "https://press.um.si/index.php/ump/catalog/book/530",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Merske napake pri fizikalnih meritvah ter risanje in branje diagramov z upoštevanjem napak: temelj za obdelavo laboratorijskih meritev.",
+          "license": "prost dostop",
+          "author": "Andrej Dobovišek"
+        },
+        {
+          "title": "Data Analysis (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Supplemental_Modules_(Analytical_Chemistry)/Data_Analysis",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o obdelavi analiznih podatkov: napake, statistika, regresija in umerjanje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        }
+      ]
+    },
+    "kem-zivilska-kemija": {
+      "title": "Živilska kemija",
+      "items": [
+        {
+          "title": "Dodatno študijsko gradivo za vaje iz živilske kemije",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/510",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Teorija in obdelava podatkov za laboratorijske vaje iz živilske kemije (slovenska in angleška različica).",
+          "license": "CC BY-SA 4.0",
+          "author": "Helena Abramovič, Blaž Cigić"
+        },
+        {
+          "title": "Chemistry of Cooking (Rodriguez-Velazquez)",
+          "url": "https://chem.libretexts.org/Bookshelves/Biological_Chemistry/Chemistry_of_Cooking_(Rodriguez-Velazquez)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Kemija hrane skozi kuhanje: voda, ogljikovi hidrati, beljakovine, maščobe, emulzije, Maillardova reakcija in aditivi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Sorangel Rodriguez-Velazquez"
+        },
+        {
+          "title": "Fermentation in Food Chemistry (Graham)",
+          "url": "https://chem.libretexts.org/Bookshelves/Biological_Chemistry/Fermentation_in_Food_Chemistry_(Graham)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Fermentacije v živilih (kruh, pivo, vino, mlečni izdelki): biokemijske poti, mikroorganizmi in kemija okusa.",
+          "license": "CC BY-NC 4.0",
+          "author": "Graham"
+        },
+        {
+          "title": "Carbohydrates (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Supplemental_Modules_(Organic_Chemistry)/Carbohydrates",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o ogljikovih hidratih: monosaharidi, glikozidne vezi, polisaharidi (škrob, celuloza).",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Lipids (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Supplemental_Modules_(Organic_Chemistry)/Lipids",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o lipidih: maščobne kisline, trigliceridi, fosfolipidi, steroidi in vosek.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Kemijski dejavniki tveganja v prehrani",
+          "url": "https://press.um.si/index.php/ump/catalog/book/711",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Kemijske sestavine hrane (beljakovine, maščobe, ogljikovi hidrati), aditivi, naravni toksini in kemična onesnaževala v prehranski verigi.",
+          "license": "prost dostop",
+          "author": "Sonja Šostar Turk, Urška Rozman, Urška Blaznik et al."
+        },
+        {
+          "title": "Kemijske analizne metode v kmetijstvu in toksične snovi v ekosistemih: navodila za laboratorijske vaje",
+          "url": "https://press.um.si/index.php/ump/catalog/book/654",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Postopki priprave vzorcev in določanja (ekstrakcija, AAS, UV-VIS, HPLC, razklop) v živilih in vinu; uporabno za analizno kemijo.",
+          "license": "CC BY 4.0",
+          "author": "Janja Kristl"
+        },
+        {
+          "title": "Lipid (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Lipid",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o lipidih: maščobne kisline, trigliceridi, fosfolipidi in steroidi.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-les-celuloza": {
+      "title": "Kemija in zgradba lesa, celuloza",
+      "items": [
+        {
+          "title": "Wood handbook: Wood as an engineering material (FPL-GTR-282)",
+          "url": "https://research.fs.usda.gov/treesearch/62200",
+          "source": "US Forest Service",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Priročnik o lesu: zgradba in kemija, lastnosti, sušenje, lepila, ploščni kompoziti, zaščita in površinska obdelava.",
+          "license": "javna domena",
+          "author": "Robert J. Ross (ur.)"
+        },
+        {
+          "title": "The Structure and Mechanical Behaviour of Wood (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/wood/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o zgradbi lesa (celična stena, celuloza, lignin) in mehanskem obnašanju.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Design, Characterisation and Applications of Cellulose-Based Thin Films, Nanofibers and 3D Printed Structures: A Laboratory Manual",
+          "url": "https://press.um.si/index.php/ump/catalog/book/540",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Celuloza in njeni derivati: priprava tankih filmov, nanovlaken in 3D-tiskanih struktur ter metode karakterizacije.",
+          "license": "prost dostop",
+          "author": "Tanja Pivec, Tamilselvan Mohan, Rupert Kargl"
+        },
+        {
+          "title": "Cellulose",
+          "url": "https://www.intechopen.com/books/7363",
+          "source": "IntechOpen",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Odprta knjiga o celulozi: surovine za papir in vlakna, pridobivanje in uporaba celuloznih materialov.",
+          "license": "CC BY-NC 4.0"
+        },
+        {
+          "title": "Les (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Les",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o lesu: zgradba, kemijska sestava in lastnosti.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Celuloza (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Celuloza",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o celulozi: zgradba, lastnosti, pridobivanje in uporaba.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Cellular Solids (3.054)",
+          "url": "https://ocw.mit.edu/courses/3-054-cellular-solids-structure-properties-and-applications-spring-2015/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Celični materiali (pene, les, satje): struktura, lastnosti in uporaba; vključuje les in polimerne pene.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Lorna Gibson"
+        }
+      ]
+    },
+    "kem-kovine-korozija": {
+      "title": "Kovinski materiali, metalurgija in korozija",
+      "items": [
+        {
+          "title": "Phase Diagrams and Solidification (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/phase-diagrams/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni učni paket o faznih diagramih, ravnotežnem in neravnotežnem strjevanju zlitin.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Casting (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/casting/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o litju: livarski postopki, strjevanje in napake ulitkov.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Production and recycling of steel (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/steel/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o proizvodnji jekla (plavž, konverter) in recikliranju jekla.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Kinetics of Aqueous Corrosion (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/aqueous_corrosion/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o kinetiki korozije v vodnih raztopinah: Evansovi diagrami, polarizacija in pasivacija.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Physical Metallurgy (3.40J)",
+          "url": "https://ocw.mit.edu/courses/3-40j-physical-metallurgy-fall-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Fizikalna metalurgija: fazni diagrami, difuzija, strjevanje, fazne premene in mehanske lastnosti kovin.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Chris Schuh"
+        },
+        {
+          "title": "Konstrukcijski materiali: učbenik",
+          "url": "https://press.um.si/index.php/ump/catalog/book/651",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Učbenik o skupinah konstrukcijskih materialov, njihovi zgradbi, lastnostih in izbiri za uporabo (UM FS).",
+          "license": "CC BY 4.0",
+          "author": "Ivan Anžel, Mihael Brunčko"
+        },
+        {
+          "title": "The Challenges of Corrosion Control on Metallic Surfaces",
+          "url": "https://www.intechopen.com/books/1004624",
+          "source": "IntechOpen",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Odprta knjiga o korozijski zaščiti kovin: prevleke, inhibitorji, katodna zaščita in zlitine.",
+          "license": "CC BY 3.0"
+        },
+        {
+          "title": "Korozija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Korozija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o koroziji kovin: vrste, mehanizmi in zaščita.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-keramika-kompoziti-gradiva": {
+      "title": "Keramika, kompoziti in gradiva (nekovinski materiali)",
+      "items": [
+        {
+          "title": "Nekovinski materiali",
+          "url": "https://press.um.si/index.php/ump/catalog/book/979",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Zgradba, lastnosti in tehnologije izdelave polimernih, keramičnih in kompozitnih materialov.",
+          "license": "CC BY 4.0",
+          "author": "Ivan Anžel, Franc Zupanič, Mihael Brunčko"
+        },
+        {
+          "title": "Sodobni inženirski materiali",
+          "url": "https://press.um.si/index.php/ump/catalog/book/958",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Zgradba kovinskih, keramičnih, polimernih in kompozitnih materialov, njihove lastnosti in izbira za aplikacije.",
+          "license": "CC BY 4.0",
+          "author": "Ivan Anžel, Franc Zupanič, Mihael Brunčko"
+        },
+        {
+          "title": "Ceramics (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/ceramics/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o keramiki: zgradba, lastnosti, krhek lom in uporaba keramičnih materialov.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Mechanics of Fibre-reinforced Composites (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/fibre_composites/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o mehaniki kompozitov, ojačanih z vlakni: pravila mešanic, togost in trdnost.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Amorphous Materials (3.071)",
+          "url": "https://ocw.mit.edu/courses/3-071-amorphous-materials-fall-2015/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Amorfni materiali: steklo, steklast prehod, zgradba in lastnosti ter uporaba v tehnologiji.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Juejun Hu"
+        },
+        {
+          "title": "Fundamentals of Materials Science (3.012)",
+          "url": "https://ocw.mit.edu/courses/3-012-fundamentals-of-materials-science-fall-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Osnove znanosti o materialih: kristalna struktura, termodinamika, kinetika in lastnosti materialov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Darrell Irvine, Nicola Marzari"
+        },
+        {
+          "title": "Keramika (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Keramika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o keramiki: surovine, izdelava, lastnosti in uporaba.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-nanomateriali-karakterizacija": {
+      "title": "Nanomateriali in karakterizacija materialov",
+      "items": [
+        {
+          "title": "Nanochemistry and Materials: A Laboratory Manual",
+          "url": "https://press.um.si/index.php/ump/catalog/book/708",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Navodila za vaje iz sinteze in karakterizacije nanodelcev ter nanomaterialov.",
+          "license": "CC BY 4.0",
+          "author": "Janja Stergar, Irena Ban"
+        },
+        {
+          "title": "Physical Methods in Chemistry and Nano Science (Barron)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Physical_Methods_in_Chemistry_and_Nano_Science_(Barron)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Karakterizacijske metode za materiale in nanomateriale: XRD, elektronska mikroskopija, AFM, spektroskopija, termična analiza.",
+          "license": "CC BY 4.0",
+          "author": "Andrew R. Barron"
+        },
+        {
+          "title": "Basics of Thermal Analysis (Shetty)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Basics_of_Thermal_Analysis_(Shetty)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Osnove termične analize (TGA, DSC, DTA) za karakterizacijo materialov, polimerov in snovi.",
+          "license": "CC BY-NC 4.0",
+          "author": "Shetty"
+        },
+        {
+          "title": "Microscopy (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Supplemental_Modules_(Analytical_Chemistry)/Microscopy",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o mikroskopskih metodah (optična, elektronska, AFM) za karakterizacijo snovi in materialov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "X-ray Diffraction Techniques 2 (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/xray-diffraction-2/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o rentgenski difrakciji: Braggov zakon, praškovna metoda in interpretacija difraktogramov.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Nanomechanics of Materials and Biomaterials (3.052)",
+          "url": "https://ocw.mit.edu/courses/3-052-nanomechanics-of-materials-and-biomaterials-spring-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Nanomehanika materialov in biomaterialov: AFM, medmolekulske sile, nanoindentacija in lastnosti polimerov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Christine Ortiz"
+        },
+        {
+          "title": "Nanotehnologija (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Nanotehnologija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o nanotehnologiji: nanomateriali, lastnosti in uporaba.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-tekstil-barvila": {
+      "title": "Tekstilna kemija: vlakna, barvila in plemenitenje",
+      "items": [
+        {
+          "title": "Textile Dyeing",
+          "url": "https://www.intechopen.com/books/276",
+          "source": "IntechOpen",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Odprta monografija o barvanju tekstilij: barvila, postopki barvanja, kinetika in ekologija.",
+          "license": "CC BY 3.0"
+        },
+        {
+          "title": "Ekologija plemenitilnih procesov",
+          "url": "https://press.um.si/index.php/ump/catalog/book/928",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "Skripta o plemenitenju tekstilij in njegovih okoljskih vplivih: obremenjene odpadne vode (KPK, BPK, barvila, tenzidi) in njihovo čiščenje.",
+          "license": "CC BY 4.0",
+          "author": "Alenka Ojstršek, Darinka Fakin, Selestina Gorgieva"
+        },
+        {
+          "title": "Ekologija plemenitilnih procesov: navodila za vaje",
+          "url": "https://press.um.si/index.php/ump/catalog/book/732",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Vaje o čiščenju odpadnih tehnoloških voda iz tekstilne industrije in razbarvanju odplak.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Darinka Fakin, Selestina Gorgieva, Alenka Ojstršek"
+        },
+        {
+          "title": "Barvila in razbarvanje odplak: navodila za vaje",
+          "url": "https://press.um.si/index.php/ump/catalog/book/520",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Vaje o barvilih v odpadnih vodah: njihova kemija, okoljska problematika in postopki razbarvanja odplak.",
+          "license": "prost dostop",
+          "author": "Darinka Fakin, Alenka Ojstršek, Selestina Gorgieva"
+        },
+        {
+          "title": "Nega in higiena tekstilij: dnevnik laboratorijskih vaj",
+          "url": "https://press.um.si/index.php/ump/catalog/book/607",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Vaje o vrednotenju uspešnosti odstranjevanja nečistoč in razkuževalnega učinka pri pranju tekstilij.",
+          "license": "CC BY 4.0",
+          "author": "Manja Kurečič, Branko Neral"
+        },
+        {
+          "title": "Barvilo (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Barvilo",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o barvilih: kemijska zgradba, vrste in uporaba.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Tekstil (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Tekstil",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o tekstilu: vlakna, izdelava in uporaba.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-kozmetika": {
+      "title": "Kozmetična kemija",
+      "items": [
+        {
+          "title": "Cosmetic Products and Industry - New Advances and Applications",
+          "url": "https://www.intechopen.com/books/12315",
+          "source": "IntechOpen",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Odprta zbirka poglavij o kozmetičnih sestavinah, tehnologijah in varnosti kozmetičnih izdelkov.",
+          "license": "CC BY 3.0"
+        },
+        {
+          "title": "Cosmetic Industry - Trends, Products and Quality Control",
+          "url": "https://www.intechopen.com/books/1004546",
+          "source": "IntechOpen",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Odprta zbirka poglavij o kozmetični industriji: izdelki, nadzor kakovosti in varnostno vrednotenje.",
+          "license": "CC BY 4.0"
+        },
+        {
+          "title": "Kozmetika (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Kozmetika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o kozmetiki: vrste izdelkov in sestavine.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Koloid (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Koloid",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o koloidnih sistemih: disperzije, emulzije, geli in stabilnost.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Lipids (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Supplemental_Modules_(Organic_Chemistry)/Lipids",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o lipidih: maščobne kisline, trigliceridi, fosfolipidi, steroidi in vosek.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        },
+        {
+          "title": "Polymers (LibreTexts modules)",
+          "url": "https://chem.libretexts.org/Bookshelves/Organic_Chemistry/Supplemental_Modules_(Organic_Chemistry)/Polymers",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moduli o polimerih: adicijski in kondenzacijski polimeri, naravni polimeri, plastika in lastnosti.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "LibreTexts"
+        }
+      ]
+    },
+    "kem-embalaza-papir-grafika": {
+      "title": "Embalaža, papir in grafični materiali",
+      "items": [
+        {
+          "title": "Technological Options of Packaging to Control Food Quality",
+          "url": "https://www.intechopen.com/chapters/41669",
+          "source": "IntechOpen",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Poglavje o embalažnih tehnologijah (modificirana atmosfera, aktivna embalaža) za ohranjanje kakovosti živil.",
+          "license": "CC BY 3.0"
+        },
+        {
+          "title": "Overview of Food Antimicrobial Packaging",
+          "url": "https://www.intechopen.com/chapters/84858",
+          "source": "IntechOpen",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Pregledno poglavje o protimikrobni embalaži za živila: aktivne snovi, polimerni materiali in učinkovitost.",
+          "license": "CC BY 4.0"
+        },
+        {
+          "title": "Embalaža (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Embalaža",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o embalaži: materiali, funkcije in vrste.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Papir (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Papir",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o papirju: surovine, izdelava in vrste papirja.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Plastika (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Plastika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o plastiki: vrste plastičnih mas, uporaba in vpliv na okolje.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "kem-kemijsko-racunanje": {
+      "title": "Kemijsko računanje, Python in kemoinformatika",
+      "items": [
+        {
+          "title": "Python v kemiji in kemijskem inženirstvu",
+          "url": "https://press.um.si/index.php/ump/catalog/book/1068",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Osnove Pythona na primerih iz kemije in kemijskega inženirstva; uvod v podatkovno analizo in umetno inteligenco.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Zorka Novak Pintarič, Sanja Potrč, Miloš Bogataj"
+        },
+        {
+          "title": "TeachOpenCADD",
+          "url": "https://projects.volkamerlab.org/teachopencadd/",
+          "source": "Volkamer Lab",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Odprte interaktivne vaje (Jupyter) iz kemoinformatike: molekulski deskriptorji, podobnost, iskanje po bazah.",
+          "license": "CC BY 4.0",
+          "author": "Volkamer Lab"
+        },
+        {
+          "title": "Mathematical Methods in Chemistry (Levitus)",
+          "url": "https://chem.libretexts.org/Bookshelves/Physical_and_Theoretical_Chemistry_Textbook_Maps/Mathematical_Methods_in_Chemistry_(Levitus)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Matematika za kemike: funkcije, odvodi, integrali, diferencialne enačbe, vektorji in uvod v obdelavo podatkov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Marcia Levitus"
+        },
+        {
+          "title": "Chemometrics Using R (Harvey)",
+          "url": "https://chem.libretexts.org/Bookshelves/Analytical_Chemistry/Chemometrics_Using_R_(Harvey)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Statistična obdelava analiznih podatkov v jeziku R: regresija, umerjanje, validacija metod in večspremenljivčna analiza.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "David Harvey"
+        },
+        {
+          "title": "PubChem",
+          "url": "https://pubchem.ncbi.nlm.nih.gov",
+          "source": "NCBI / NIH",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Podatkovna zbirka kemijskih spojin: strukture, lastnosti, varnostni podatki in toksikologija.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "NIST Chemistry WebBook",
+          "url": "https://webbook.nist.gov/chemistry/",
+          "source": "NIST",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Brezplačna zbirka termodinamskih in spektralnih podatkov za kemijske spojine, uporabna pri računih.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Numerical Methods Applied to Chemical Engineering (10.34)",
+          "url": "https://ocw.mit.edu/courses/10-34-numerical-methods-applied-to-chemical-engineering-fall-2015/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Numerične metode za kemijske inženirje: sistemi enačb, diferencialne enačbe, optimizacija in ocenjevanje parametrov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "William Green, James Swan"
+        }
+      ]
+    },
+    "kem-vodik-energija": {
+      "title": "Vodik in energetske tehnologije",
+      "items": [
+        {
+          "title": "Advances in Hydrogen Energy - Production, Storage, and Utilization",
+          "url": "https://www.intechopen.com/books/1004796",
+          "source": "IntechOpen",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Odprta knjiga o pridobivanju, shranjevanju in uporabi vodika, gorivnih celicah in varnosti.",
+          "license": "CC BY 3.0"
+        },
+        {
+          "title": "Hydrogen Storage",
+          "url": "https://www.intechopen.com/books/2873",
+          "source": "IntechOpen",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Odprta knjiga o shranjevanju vodika: fizikalni in kemijski načini, hidridi in nanostrukturirani materiali.",
+          "license": "CC BY 3.0"
+        },
+        {
+          "title": "Hydrogen (US Department of Energy)",
+          "url": "https://www.energy.gov/eere/fuelcells/hydrogen-production",
+          "source": "US Department of Energy",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Uradni pregled pridobivanja, shranjevanja in uporabe vodika z razlago tehnologij.",
+          "license": "javna domena"
+        },
+        {
+          "title": "Fuel Cells (DoITPoMS)",
+          "url": "https://www.doitpoms.ac.uk/tlplib/fuel-cells/index.php",
+          "source": "DoITPoMS, University of Cambridge",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni paket o gorivnih celicah: načelo delovanja, tipi, vodik in termodinamika.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Electrochemical Energy Systems (10.626)",
+          "url": "https://ocw.mit.edu/courses/10-626-electrochemical-energy-systems-spring-2014/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Elektrokemijski sistemi: baterije, gorivne celice, kinetika elektrodnih reakcij, transport ionov in termodinamika.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Martin Bazant"
+        },
+        {
+          "title": "Fundamentals of Advanced Energy Conversion (2.60J)",
+          "url": "https://ocw.mit.edu/courses/2-60j-fundamentals-of-advanced-energy-conversion-spring-2020/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Temelji pretvorbe energije: izgorevanje, goriva, gorivne celice, vodik in elektrokemijski pretvorniki.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Ahmed Ghoniem"
+        },
+        {
+          "title": "Vodik (Wikipedija)",
+          "url": "https://sl.wikipedia.org/wiki/Vodik",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovenski članek o vodiku: lastnosti, pridobivanje, uporaba in shranjevanje.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    }
+  },
+  "courses": {
+    "UNI-ULFKKT-KEMIJA": [
+      "kem-splosna-kemija",
+      "kem-zgradba-atomov-vezi",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-ULFKKT-SPLKEM": [
+      "kem-splosna-kemija",
+      "kem-raztopine-ravnotezja",
+      "kem-elektrokemija-redoks"
+    ],
+    "UNI-ULFKKT-ANORG": [
+      "kem-anorganska-kemija",
+      "kem-trdnine-kristali"
+    ],
+    "UNI-ULFKKT-TRDNINE": [
+      "kem-trdnine-kristali",
+      "kem-nanomateriali-karakterizacija"
+    ],
+    "UNI-ULFKKT-ANAL1": [
+      "kem-analizna-kemija",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-ULFKKT-ANAL2": [
+      "kem-instrumentalna-analiza",
+      "kem-analizna-kemija"
+    ],
+    "UNI-ULFKKT-ORG1": [
+      "kem-organska-kemija"
+    ],
+    "UNI-ULFKKT-ORG2": [
+      "kem-organska-kemija",
+      "kem-organska-sinteza-heterocikli",
+      "kem-spektroskopija"
+    ],
+    "UNI-ULFKKT-ORG3": [
+      "kem-organska-sinteza-heterocikli"
+    ],
+    "UNI-ULFKKT-ORG": [
+      "kem-organska-kemija",
+      "kem-organska-sinteza-heterocikli"
+    ],
+    "UNI-ULFKKT-ORGANAL": [
+      "kem-organski-praktikum-analiza",
+      "kem-spektroskopija"
+    ],
+    "UNI-ULFKKT-FIZKEM": [
+      "kem-fizikalna-kemija",
+      "kem-kemijska-termodinamika",
+      "kem-kinetika-kataliza"
+    ],
+    "UNI-ULFKKT-STRUKT": [
+      "kem-kvantna-kemija",
+      "kem-zgradba-atomov-vezi"
+    ],
+    "UNI-ULFKKT-SPEKTRO": [
+      "kem-spektroskopija",
+      "kem-kvantna-kemija"
+    ],
+    "UNI-ULFKKT-INSTR": [
+      "kem-instrumentalna-analiza",
+      "kem-spektroskopija"
+    ],
+    "UNI-ULFKKT-INSTRANAL": [
+      "kem-instrumentalna-analiza",
+      "kem-analizna-kemija"
+    ],
+    "UNI-ULFKKT-BIOLKEM": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-ULFKKT-OSNKI": [
+      "kem-kemijsko-inzenirstvo-osnove",
+      "kem-transportni-pojavi"
+    ],
+    "UNI-ULFKKT-TEMBIOKEM": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-ULFKKT-BIOKEM": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-ULFKKT-STRUKTBIO": [
+      "kem-struktura-biomolekul",
+      "kem-biokemija"
+    ],
+    "UNI-ULFKKT-SPEKTROBIO": [
+      "kem-spektroskopija",
+      "kem-struktura-biomolekul"
+    ],
+    "UNI-ULFKKT-ENCIM": [
+      "kem-encimi",
+      "kem-biokemija"
+    ],
+    "UNI-ULFKKT-KEMTERMO": [
+      "kem-kemijska-termodinamika",
+      "kem-fizikalna-kemija"
+    ],
+    "UNI-ULFKKT-MATINZ": [
+      "kem-kovine-korozija",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-ULFKKT-KRI": [
+      "kem-reakcijsko-inzenirstvo",
+      "kem-kinetika-kataliza"
+    ],
+    "UNI-ULFKKT-KITERMO": [
+      "kem-kemijska-termodinamika"
+    ],
+    "UNI-ULFKKT-PRODUKT": [
+      "kem-kemijsko-inzenirstvo-osnove",
+      "kem-koloidi-povrsine"
+    ],
+    "UNI-ULFKKT-SEPAR": [
+      "kem-separacijski-procesi"
+    ],
+    "UNI-ULFKKT-OSNMAT": [
+      "kem-kovine-korozija",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-ULFKKT-GORENJE": [
+      "kem-varnost-nevarne-snovi-pozari",
+      "kem-kinetika-kataliza"
+    ],
+    "UNI-ULFKKT-NPRSAK": [
+      "kem-laboratorij-meritve",
+      "kem-splosna-kemija",
+      "kem-anorganska-kemija"
+    ],
+    "UNI-ULFKKT-NPRAK": [
+      "kem-laboratorij-meritve",
+      "kem-analizna-kemija"
+    ],
+    "UNI-ULFKKT-NPROK": [
+      "kem-organski-praktikum-analiza",
+      "kem-laboratorij-meritve"
+    ],
+    "UNI-ULFKKT-NPRFK": [
+      "kem-laboratorij-meritve",
+      "kem-fizikalna-kemija"
+    ],
+    "UNI-ULFKKT-NINSTRAN": [
+      "kem-instrumentalna-analiza",
+      "kem-laboratorij-meritve"
+    ],
+    "UNI-ULFKKT-NPRINSTR": [
+      "kem-instrumentalna-analiza",
+      "kem-laboratorij-meritve"
+    ],
+    "UNI-ULFKKT-NKEMPRAK": [
+      "kem-laboratorij-meritve",
+      "kem-splosna-kemija"
+    ],
+    "UNI-ULFKKT-NBIOKPRAK": [
+      "kem-biokemija",
+      "kem-laboratorij-meritve"
+    ],
+    "UNI-ULFKKT-NPRIMA": [
+      "kem-instrumentalna-analiza",
+      "kem-laboratorij-meritve"
+    ],
+    "UNI-ULFKKT-NKPVAR": [
+      "kem-varnost-nevarne-snovi-pozari",
+      "kem-kemijsko-inzenirstvo-osnove"
+    ],
+    "UNI-ULFKKT-NPRKI": [
+      "kem-kemijsko-inzenirstvo-osnove",
+      "kem-transportni-pojavi",
+      "kem-separacijski-procesi"
+    ],
+    "UNI-ULFKKT-NNEVSNOV": [
+      "kem-varnost-nevarne-snovi-pozari"
+    ],
+    "UNI-ULFKKT-NGASENJE": [
+      "kem-varnost-nevarne-snovi-pozari"
+    ],
+    "UNI-ULFKKT-NKEMOK": [
+      "kem-kemija-okolja"
+    ],
+    "UNI-ULFKKT-NZELENA": [
+      "kem-zelena-kemija-trajnost"
+    ],
+    "UNI-ULFKKT-WTRAJN": [
+      "kem-zelena-kemija-trajnost",
+      "kem-kemija-okolja"
+    ],
+    "UNI-ULFKKT-WHETERO": [
+      "kem-organska-sinteza-heterocikli"
+    ],
+    "UNI-ULFKKT-WKOLOID": [
+      "kem-koloidi-povrsine"
+    ],
+    "UNI-ULFKKT-WMAKROMOL": [
+      "kem-polimeri"
+    ],
+    "UNI-ULFKKT-WBIOKINZ": [
+      "kem-biokemijsko-inzenirstvo",
+      "kem-encimi"
+    ],
+    "UNI-ULFKKT-WPOLINZ": [
+      "kem-polimeri"
+    ],
+    "UNI-ULFKKT-WKARAKT": [
+      "kem-nanomateriali-karakterizacija",
+      "kem-trdnine-kristali"
+    ],
+    "UNI-ULFKKT-WPOLMAT": [
+      "kem-polimeri"
+    ],
+    "UNI-ULFS-NEKOVMAT": [
+      "kem-keramika-kompoziti-gradiva",
+      "kem-polimeri"
+    ],
+    "UNI-ULFS-KOVMAT": [
+      "kem-kovine-korozija"
+    ],
+    "UNI-ULFMF-KEMIJA1": [
+      "kem-splosna-kemija",
+      "kem-zgradba-atomov-vezi",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-UMFKKT-SPLKEM": [
+      "kem-splosna-kemija",
+      "kem-raztopine-ravnotezja",
+      "kem-elektrokemija-redoks"
+    ],
+    "UNI-UMFKKT-ANORG": [
+      "kem-anorganska-kemija"
+    ],
+    "UNI-UMFKKT-ANAL1": [
+      "kem-analizna-kemija",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-UMFKKT-ANAL2": [
+      "kem-instrumentalna-analiza"
+    ],
+    "UNI-UMFKKT-KEMRAC": [
+      "kem-kemijsko-racunanje"
+    ],
+    "UNI-UMFKKT-BILANCE": [
+      "kem-kemijsko-inzenirstvo-osnove"
+    ],
+    "UNI-UMFKKT-FIZKEM1": [
+      "kem-fizikalna-kemija",
+      "kem-kemijska-termodinamika"
+    ],
+    "UNI-UMFKKT-FIZKEM2": [
+      "kem-kinetika-kataliza",
+      "kem-elektrokemija-redoks",
+      "kem-kvantna-kemija"
+    ],
+    "UNI-UMFKKT-ORG1": [
+      "kem-organska-kemija"
+    ],
+    "UNI-UMFKKT-ORG2": [
+      "kem-organska-kemija",
+      "kem-organska-sinteza-heterocikli",
+      "kem-spektroskopija"
+    ],
+    "UNI-UMFKKT-PRENOSS": [
+      "kem-transportni-pojavi"
+    ],
+    "UNI-UMFKKT-SEP1": [
+      "kem-separacijski-procesi"
+    ],
+    "UNI-UMFKKT-SEP2": [
+      "kem-separacijski-procesi"
+    ],
+    "UNI-UMFKKT-SEPTEH": [
+      "kem-separacijski-procesi"
+    ],
+    "UNI-UMFKKT-TERMO": [
+      "kem-kemijska-termodinamika"
+    ],
+    "UNI-UMFKKT-ORGSINT": [
+      "kem-organska-sinteza-heterocikli"
+    ],
+    "UNI-UMFKKT-BIOKEMUVOD": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-UMFKKT-KRT1": [
+      "kem-reakcijsko-inzenirstvo"
+    ],
+    "UNI-UMFKKT-ORGANAL": [
+      "kem-organski-praktikum-analiza",
+      "kem-spektroskopija"
+    ],
+    "UNI-UMFKKT-NMEROSL": [
+      "kem-laboratorij-meritve",
+      "kem-analizna-kemija"
+    ],
+    "UNI-UMFKKT-NGRADIVA": [
+      "kem-kovine-korozija",
+      "kem-keramika-kompoziti-gradiva",
+      "kem-polimeri"
+    ],
+    "UNI-UMFKKT-NNANO": [
+      "kem-nanomateriali-karakterizacija"
+    ],
+    "UNI-UMFKKT-NKEMOK": [
+      "kem-kemija-okolja"
+    ],
+    "UNI-UMFKKT-NPOLIM": [
+      "kem-polimeri"
+    ],
+    "UNI-UMFKKT-NORGTEH": [
+      "kem-kemijsko-inzenirstvo-osnove",
+      "kem-kinetika-kataliza"
+    ],
+    "UNI-UMFKKT-NINSTRAN": [
+      "kem-instrumentalna-analiza",
+      "kem-laboratorij-meritve"
+    ],
+    "UNI-UMFKKT-NPOVRS": [
+      "kem-koloidi-povrsine"
+    ],
+    "UNI-UMFKKT-WTEHVOD": [
+      "kem-obdelava-voda-odpadki"
+    ],
+    "UNI-UMFKKT-WANORGTEH": [
+      "kem-anorganska-kemija",
+      "kem-kemijsko-inzenirstvo-osnove"
+    ],
+    "UNI-UMFKKT-WPOLIMER": [
+      "kem-polimeri"
+    ],
+    "UNI-UMFKKT-WTEHKER": [
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-ULBF-ASPLKEM": [
+      "kem-splosna-kemija",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-ULBF-AORGKEM": [
+      "kem-organska-kemija"
+    ],
+    "UNI-ULBF-ABIOKEM": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-ULBF-AKEM": [
+      "kem-splosna-kemija",
+      "kem-raztopine-ravnotezja",
+      "kem-elektrokemija-redoks"
+    ],
+    "UNI-ULBF-ABIOKEMMB": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-ULBF-BKEM": [
+      "kem-splosna-kemija",
+      "kem-raztopine-ravnotezja",
+      "kem-organska-kemija"
+    ],
+    "UNI-ULBF-BBIOKEM": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-ULBF-BUPENCIM": [
+      "kem-encimi",
+      "kem-biokemijsko-inzenirstvo"
+    ],
+    "UNI-ULBF-BANALZIV": [
+      "kem-analizna-kemija",
+      "kem-instrumentalna-analiza",
+      "kem-zivilska-kemija"
+    ],
+    "UNI-ULBF-BZIVKEM": [
+      "kem-zivilska-kemija"
+    ],
+    "UNI-ULBF-BPAKIR": [
+      "kem-embalaza-papir-grafika"
+    ],
+    "UNI-ULBF-CKEMBIO": [
+      "kem-splosna-kemija",
+      "kem-organska-kemija",
+      "kem-biokemija"
+    ],
+    "UNI-ULBF-DSPLKEM": [
+      "kem-splosna-kemija",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-ULBF-DKEMLES": [
+      "kem-les-celuloza"
+    ],
+    "UNI-ULBF-DMATER": [
+      "kem-keramika-kompoziti-gradiva",
+      "kem-les-celuloza"
+    ],
+    "UNI-ULBF-ENANOBT": [
+      "kem-nanomateriali-karakterizacija"
+    ],
+    "UNI-ULBF-EKLINKEM": [
+      "kem-klinicna-biokemija-analitika"
+    ],
+    "UNI-ULBF-FLEPILA": [
+      "kem-les-celuloza",
+      "kem-polimeri"
+    ],
+    "UNI-ULBF-FZASC": [
+      "kem-les-celuloza"
+    ],
+    "UNI-ULBF-FBIORAF": [
+      "kem-les-celuloza",
+      "kem-zelena-kemija-trajnost"
+    ],
+    "UNI-ULBF-FPLOSC": [
+      "kem-les-celuloza",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-ULBF-FPOVRS": [
+      "kem-les-celuloza",
+      "kem-polimeri"
+    ],
+    "UNI-ULBF-FKEMZGR": [
+      "kem-les-celuloza"
+    ],
+    "UNI-ULBF-FNANOCEL": [
+      "kem-les-celuloza",
+      "kem-nanomateriali-karakterizacija"
+    ],
+    "UNI-ULNTF-GOKEM1": [
+      "kem-splosna-kemija",
+      "kem-zgradba-atomov-vezi",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-ULNTF-GOKEM2": [
+      "kem-anorganska-kemija",
+      "kem-kemija-okolja"
+    ],
+    "UNI-ULNTF-MKEM1": [
+      "kem-splosna-kemija",
+      "kem-zgradba-atomov-vezi",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-ULNTF-MKEM2": [
+      "kem-anorganska-kemija",
+      "kem-elektrokemija-redoks",
+      "kem-organska-kemija"
+    ],
+    "UNI-ULNTF-MZGRADBA": [
+      "kem-trdnine-kristali",
+      "kem-nanomateriali-karakterizacija"
+    ],
+    "UNI-ULNTF-MMATLAST": [
+      "kem-kovine-korozija",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-ULNTF-MTERMO": [
+      "kem-kemijska-termodinamika",
+      "kem-kovine-korozija"
+    ],
+    "UNI-ULNTF-MTERMOPR": [
+      "kem-kemijska-termodinamika",
+      "kem-laboratorij-meritve"
+    ],
+    "UNI-ULNTF-MFIZMET1": [
+      "kem-kovine-korozija"
+    ],
+    "UNI-ULNTF-TKEM1": [
+      "kem-splosna-kemija",
+      "kem-raztopine-ravnotezja",
+      "kem-kinetika-kataliza"
+    ],
+    "UNI-ULNTF-TKEM2": [
+      "kem-organska-kemija",
+      "kem-polimeri"
+    ],
+    "UNI-ULNTF-TGRMAT": [
+      "kem-embalaza-papir-grafika"
+    ],
+    "UNI-ULNTF-TTISKFOR": [
+      "kem-embalaza-papir-grafika",
+      "kem-polimeri"
+    ],
+    "UNI-ULNTF-TEMBMAT": [
+      "kem-embalaza-papir-grafika"
+    ],
+    "UNI-ULNTF-TEKOGR": [
+      "kem-embalaza-papir-grafika",
+      "kem-zelena-kemija-trajnost"
+    ],
+    "UNI-ULNTF-TVLAKNA": [
+      "kem-tekstil-barvila",
+      "kem-polimeri"
+    ],
+    "UNI-ULNTF-TINTERD": [
+      "kem-tekstil-barvila"
+    ],
+    "UNI-ULNTF-TTEHTEX": [
+      "kem-tekstil-barvila",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-ULNTF-TTEORPL": [
+      "kem-tekstil-barvila",
+      "kem-kinetika-kataliza"
+    ],
+    "UNI-ULNTF-TPRIPPL": [
+      "kem-tekstil-barvila"
+    ],
+    "UNI-ULNTF-TBARVAN": [
+      "kem-tekstil-barvila"
+    ],
+    "UNI-ULNTF-TAPRET": [
+      "kem-tekstil-barvila",
+      "kem-polimeri"
+    ],
+    "UNI-ULNTF-TTISKTEX": [
+      "kem-tekstil-barvila"
+    ],
+    "UNI-ULNTF-TNEGA1": [
+      "kem-tekstil-barvila"
+    ],
+    "UNI-ULNTF-TEKOTEX": [
+      "kem-tekstil-barvila",
+      "kem-zelena-kemija-trajnost",
+      "kem-obdelava-voda-odpadki"
+    ],
+    "UNI-ULNTF-TNEKONV": [
+      "kem-tekstil-barvila"
+    ],
+    "UNI-ULNTF-VMATPR": [
+      "kem-kovine-korozija",
+      "kem-nanomateriali-karakterizacija"
+    ],
+    "UNI-ULNTF-VPREISK": [
+      "kem-kovine-korozija",
+      "kem-nanomateriali-karakterizacija"
+    ],
+    "UNI-ULNTF-VPIROFE": [
+      "kem-kovine-korozija"
+    ],
+    "UNI-ULNTF-VPROCLIV": [
+      "kem-kovine-korozija"
+    ],
+    "UNI-ULNTF-VLIVAR": [
+      "kem-kovine-korozija"
+    ],
+    "UNI-ULNTF-VFMJEK": [
+      "kem-kovine-korozija"
+    ],
+    "UNI-ULNTF-VKERAM": [
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-ULNTF-VKOMPOZ": [
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-ULNTF-VPOLIM": [
+      "kem-polimeri"
+    ],
+    "UNI-ULNTF-VKOROZ": [
+      "kem-kovine-korozija",
+      "kem-elektrokemija-redoks"
+    ],
+    "UNI-ULNTF-VGRADIV": [
+      "kem-keramika-kompoziti-gradiva",
+      "kem-kovine-korozija"
+    ],
+    "UNI-UMFNM-NKEM": [
+      "kem-splosna-kemija",
+      "kem-organska-kemija",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-UMFNM-NBIOKEM": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-UMFNM-NOOKEM": [
+      "kem-kemija-okolja"
+    ],
+    "UNI-UMFNM-NANKEMO": [
+      "kem-kemija-okolja",
+      "kem-instrumentalna-analiza"
+    ],
+    "UNI-UMFNM-NNANOOK": [
+      "kem-nanomateriali-karakterizacija",
+      "kem-kemija-okolja"
+    ],
+    "UNI-UPFAMNIT-ORGBIOK": [
+      "kem-organska-kemija",
+      "kem-biokemija"
+    ],
+    "UNI-UPFAMNIT-STRBM": [
+      "kem-struktura-biomolekul"
+    ],
+    "UNI-UPFAMNIT-FKKI": [
+      "kem-fizikalna-kemija",
+      "kem-kemijsko-racunanje"
+    ],
+    "UNI-UPFAMNIT-BIOMOD": [
+      "kem-struktura-biomolekul",
+      "kem-kemijsko-racunanje"
+    ],
+    "UNI-UPFAMNIT-SAKEM": [
+      "kem-splosna-kemija",
+      "kem-anorganska-kemija"
+    ],
+    "UNI-UNGFN-FTS10": [
+      "kem-splosna-kemija",
+      "kem-anorganska-kemija",
+      "kem-kinetika-kataliza"
+    ],
+    "UNI-UNGFZO-OK004": [
+      "kem-splosna-kemija",
+      "kem-organska-kemija"
+    ],
+    "UNI-UNGFZO-OK011": [
+      "kem-biokemija"
+    ],
+    "UNI-UNGFZO-OK027": [
+      "kem-instrumentalna-analiza"
+    ],
+    "UNI-UNGFZO-OK022": [
+      "kem-obdelava-voda-odpadki",
+      "kem-zelena-kemija-trajnost"
+    ],
+    "UNI-UNGFZO-OK060": [
+      "kem-obdelava-voda-odpadki"
+    ],
+    "UNI-UNGFZO-OK028": [
+      "kem-kemija-okolja"
+    ],
+    "UNI-UMFKBV-AGROKEM": [
+      "kem-splosna-kemija",
+      "kem-kemija-okolja"
+    ],
+    "UNI-UMFKBV-KEMOK": [
+      "kem-kemija-okolja"
+    ],
+    "UNI-UMFKBV-BIOKEM": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-UMFE-PROCTEH": [
+      "kem-kemijsko-inzenirstvo-osnove",
+      "kem-transportni-pojavi",
+      "kem-separacijski-procesi"
+    ],
+    "UNI-UMFE-VODIK": [
+      "kem-vodik-energija"
+    ],
+    "UNI-ULFFA-SOK": [
+      "kem-splosna-kemija",
+      "kem-organska-kemija"
+    ],
+    "UNI-ULFFA-UBMA": [
+      "kem-klinicna-biokemija-analitika",
+      "kem-instrumentalna-analiza"
+    ],
+    "UNI-ULFFA-ANALKEM": [
+      "kem-analizna-kemija",
+      "kem-instrumentalna-analiza"
+    ],
+    "UNI-ULFFA-BMANAL": [
+      "kem-instrumentalna-analiza",
+      "kem-klinicna-biokemija-analitika"
+    ],
+    "UNI-ULFFA-KBK1": [
+      "kem-klinicna-biokemija-analitika",
+      "kem-biokemija"
+    ],
+    "UNI-ULFFA-BIOKEM": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-ULFFA-FIZKEM": [
+      "kem-fizikalna-kemija",
+      "kem-kinetika-kataliza"
+    ],
+    "UNI-ULFFA-KBK2": [
+      "kem-klinicna-biokemija-analitika"
+    ],
+    "UNI-ULFFA-URGLD": [
+      "kem-klinicna-biokemija-analitika"
+    ],
+    "UNI-ULFFA-PROTEOM": [
+      "kem-struktura-biomolekul",
+      "kem-instrumentalna-analiza"
+    ],
+    "UNI-ULFFA-KOZIZD1": [
+      "kem-kozmetika",
+      "kem-koloidi-povrsine"
+    ],
+    "UNI-ULFFA-KOZIZD2": [
+      "kem-kozmetika"
+    ],
+    "UNI-ULFFA-EMBSTAB": [
+      "kem-embalaza-papir-grafika",
+      "kem-kozmetika"
+    ],
+    "UNI-ULFFA-KOZSNI": [
+      "kem-kozmetika"
+    ],
+    "UNI-ULFFA-INSTAN": [
+      "kem-instrumentalna-analiza",
+      "kem-kozmetika"
+    ],
+    "UNI-ULFFA-NANOKOZ": [
+      "kem-kozmetika",
+      "kem-nanomateriali-karakterizacija"
+    ],
+    "UNI-ULFFA-POJMP": [
+      "kem-koloidi-povrsine"
+    ],
+    "UNI-ULFFA-REAKTIV": [
+      "kem-organska-kemija",
+      "kem-biokemija"
+    ],
+    "UNI-ULFFA-KOZMKEM": [
+      "kem-kozmetika",
+      "kem-koloidi-povrsine"
+    ],
+    "UNI-ULZF-KEM": [
+      "kem-splosna-kemija",
+      "kem-organska-kemija"
+    ],
+    "UNI-ULZF-BIOKEM": [
+      "kem-biokemija"
+    ],
+    "UNI-ULZF-ANALKEM": [
+      "kem-analizna-kemija",
+      "kem-instrumentalna-analiza"
+    ],
+    "UNI-ULZF-KEMTEH": [
+      "kem-kemijsko-inzenirstvo-osnove",
+      "kem-zelena-kemija-trajnost"
+    ],
+    "UNI-ULZF-NEVSN": [
+      "kem-varnost-nevarne-snovi-pozari"
+    ],
+    "UNI-ULFGG-VKEM": [
+      "kem-splosna-kemija",
+      "kem-anorganska-kemija",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-ULFGG-VGRADIVA": [
+      "kem-keramika-kompoziti-gradiva",
+      "kem-kovine-korozija"
+    ]
+  },
+  "courseItems": {
+    "UNI-ULBF-AKEM": [
+      {
+        "title": "Zbirka nalog in vprašanj iz kemije z rešitvami",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/701",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "naloge",
+        "desc": "Zbirka računskih nalog in vprašanj iz splošne kemije z rešitvami za biotehnologijo, mikrobiologijo in živilstvo.",
+        "license": "CC BY-SA 4.0",
+        "author": "Iztok Prislan"
+      },
+      {
+        "title": "Laboratorijske vaje iz kemije",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/718",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "prirocnik",
+        "desc": "Skripta za laboratorijske vaje iz kemije: varno delo, priprava raztopin, titracije, meritve in poročanje.",
+        "license": "CC BY-SA 4.0",
+        "author": "Helena Abramovič, Miha Bahun, Lea Pogačnik da Silva, Iztok Prislan, Mihaela Skrt, Nataša Šegatin"
+      }
+    ],
+    "UNI-ULBF-BKEM": [
+      {
+        "title": "Zbirka nalog in vprašanj iz kemije z rešitvami",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/701",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "naloge",
+        "desc": "Zbirka računskih nalog in vprašanj iz splošne kemije z rešitvami za biotehnologijo, mikrobiologijo in živilstvo.",
+        "license": "CC BY-SA 4.0",
+        "author": "Iztok Prislan"
+      },
+      {
+        "title": "Laboratorijske vaje iz kemije",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/718",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "prirocnik",
+        "desc": "Skripta za laboratorijske vaje iz kemije: varno delo, priprava raztopin, titracije, meritve in poročanje.",
+        "license": "CC BY-SA 4.0",
+        "author": "Helena Abramovič, Miha Bahun, Lea Pogačnik da Silva, Iztok Prislan, Mihaela Skrt, Nataša Šegatin"
+      }
+    ],
+    "UNI-ULBF-BZIVKEM": [
+      {
+        "title": "Dodatno študijsko gradivo za vaje iz živilske kemije",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/510",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "prirocnik",
+        "desc": "Teorija in obdelava podatkov za laboratorijske vaje iz živilske kemije (slovenska in angleška različica).",
+        "license": "CC BY-SA 4.0",
+        "author": "Helena Abramovič, Blaž Cigić"
+      }
+    ],
+    "UNI-UMFKKT-KRT1": [
+      {
+        "title": "Kemijska reakcijska tehnika I: navodila za opravljanje laboratorijskih vaj",
+        "url": "https://press.um.si/index.php/ump/catalog/book/989",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "sl",
+        "type": "prirocnik",
+        "desc": "Navodila za opravljanje laboratorijskih vaj pri predmetu Kemijska reakcijska tehnika I.",
+        "license": "CC BY-NC-ND 4.0",
+        "author": "Darja Pečar"
+      },
+      {
+        "title": "Chemical Reaction Engineering I: Manual for Performing Laboratory Exercises",
+        "url": "https://press.um.si/index.php/ump/catalog/book/991",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "en",
+        "type": "prirocnik",
+        "desc": "Angleška različica navodil za laboratorijske vaje iz kemijske reakcijske tehnike I.",
+        "license": "CC BY-NC-ND 4.0",
+        "author": "Darja Pečar"
+      }
+    ],
+    "UNI-UMFKKT-ANAL2": [
+      {
+        "title": "Analizna kemija II in industrijska analiza: navodila za vaje",
+        "url": "https://press.um.si/index.php/ump/catalog/book/817",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "sl",
+        "type": "prirocnik",
+        "desc": "Vaje iz potenciometrije, konduktometrije, elektrogravimetrije, spektrofotometrije in drugih instrumentalnih metod.",
+        "license": "CC BY-NC-ND 4.0",
+        "author": "Maša Islamčević Razboršek, Mitja Kolar"
+      }
+    ],
+    "UNI-UMFKKT-SPLKEM": [
+      {
+        "title": "Eksperiment v splošni anorganski kemiji: navodila",
+        "url": "https://press.um.si/index.php/ump/catalog/book/630",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "sl",
+        "type": "prirocnik",
+        "desc": "Laboratorijski inventar, osnovne tehnike, sestavljanje aparatur, računske naloge, pisanje poročil in varnost pri delu v kemijskem laboratoriju.",
+        "license": "CC BY-NC-ND 4.0",
+        "author": "Mojca Slemnik, Irena Ban, Matjaž Kristl, Janja Stergar"
+      },
+      {
+        "title": "Experiments in General and Inorganic Chemistry: Laboratory Exercises Instructions",
+        "url": "https://press.um.si/index.php/ump/catalog/book/1115",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "en",
+        "type": "prirocnik",
+        "desc": "Angleška različica navodil za laboratorijske vaje iz splošne in anorganske kemije.",
+        "license": "CC BY-NC-ND 4.0",
+        "author": "Mojca Slemnik"
+      }
+    ],
+    "UNI-UMFKKT-WTEHVOD": [
+      {
+        "title": "Tehnologija vod: laboratorijske vaje",
+        "url": "https://press.um.si/index.php/ump/catalog/book/1116",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "sl",
+        "type": "prirocnik",
+        "desc": "Vaje: pH, prevodnost, motnost, trdota, karbonatno ravnotežje, JAR test in reverzna osmoza ter navodila za varno delo.",
+        "license": "CC BY-NC-ND 4.0",
+        "author": "Marjana Simonič, Maša Islamčević Razboršek"
+      }
+    ],
+    "UNI-UMFKKT-NNANO": [
+      {
+        "title": "Nanochemistry and Materials: A Laboratory Manual",
+        "url": "https://press.um.si/index.php/ump/catalog/book/708",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "en",
+        "type": "prirocnik",
+        "desc": "Navodila za vaje iz sinteze in karakterizacije nanodelcev ter nanomaterialov.",
+        "license": "CC BY 4.0",
+        "author": "Janja Stergar, Irena Ban"
+      }
+    ]
+  }
+}

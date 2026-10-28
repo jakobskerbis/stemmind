@@ -2,6 +2,7 @@
 // Na telefonu se odpre spodaj (besedilo naloge ostane pripeto zgoraj),
 // na širšem zaslonu ob strani, tako da je naloga ves čas vidna.
 import { icon } from "./icons.js";
+import { t as tr, currentLang } from "./i18n.js";
 
 const LS_KEY = "stemmind.pad";
 const prefs = (() => {
@@ -30,34 +31,34 @@ function el(html) {
 }
 
 function build() {
-  pad = el(`<aside id="pad" class="pad" hidden aria-label="Vnos odgovora">
+  pad = el(`<aside id="pad" class="pad" hidden aria-label="${tr("pad.label")}">
     <div class="pad-head">
       <div class="pad-tabs" role="tablist">
-        <button type="button" data-tab="keys" role="tab">${icon("keyboard")}Tipke</button>
-        <button type="button" data-tab="draw" role="tab">${icon("pencil")}Piši</button>
+        <button type="button" data-tab="keys" role="tab">${icon("keyboard")}${tr("pad.keys")}</button>
+        <button type="button" data-tab="draw" role="tab">${icon("pencil")}${tr("task.write")}</button>
       </div>
-      <button type="button" class="pad-close" aria-label="Zapri">${icon("x")}</button>
+      <button type="button" class="pad-close" aria-label="${tr("pad.close")}">${icon("x")}</button>
     </div>
-    <div class="pad-answer"><span class="pad-value" aria-live="polite"></span><span class="pad-units"></span><button type="button" class="primary pad-check">Preveri</button></div>
+    <div class="pad-answer"><span class="pad-value" aria-live="polite"></span><span class="pad-units"></span><button type="button" class="primary pad-check">${tr("task.check")}</button></div>
     <div class="read-result" aria-live="polite"></div>
     <div class="pad-body pad-keys">
       <div class="keys">
         ${["7", "8", "9", "⌫", "4", "5", "6", ",", "1", "2", "3", "−", "0", "/", "␣", "C"]
-          .map((k) => `<button type="button" class="key${k === "⌫" || k === "C" ? " fn" : ""}" data-k="${k}">${k === "␣" ? "presl." : k}</button>`)
+          .map((k) => `<button type="button" class="key${k === "⌫" || k === "C" ? " fn" : ""}" data-k="${k}">${k === "␣" ? tr("pad.space") : k}</button>`)
           .join("")}
       </div>
     </div>
     <div class="pad-body pad-draw">
       <div class="draw-tools">
-        <button type="button" data-tool="pen" class="on" title="Pisalo" aria-label="Pisalo">${icon("pencil")}<span>Pisalo</span></button>
-        <button type="button" data-tool="eraser" title="Radirka" aria-label="Radirka">${icon("eraser")}<span>Radirka</span></button>
-        <button type="button" data-act="undo" title="Razveljavi" aria-label="Razveljavi">${icon("undo-2")}</button>
-        <button type="button" data-act="clear" title="Počisti" aria-label="Počisti">${icon("trash-2")}</button>
-        <button type="button" data-act="grow" title="Več prostora" aria-label="Več prostora">${icon("plus")}<span>Prostor</span></button>
+        <button type="button" data-tool="pen" class="on" title="${tr("pad.pen")}" aria-label="${tr("pad.pen")}">${icon("pencil")}<span>${tr("pad.pen")}</span></button>
+        <button type="button" data-tool="eraser" title="${tr("pad.eraser")}" aria-label="${tr("pad.eraser")}">${icon("eraser")}<span>${tr("pad.eraser")}</span></button>
+        <button type="button" data-act="undo" title="${tr("pad.undo")}" aria-label="${tr("pad.undo")}">${icon("undo-2")}</button>
+        <button type="button" data-act="clear" title="${tr("pad.clear")}" aria-label="${tr("pad.clear")}">${icon("trash-2")}</button>
+        <button type="button" data-act="grow" title="${tr("pad.grow")}" aria-label="${tr("pad.grow")}">${icon("plus")}<span>${tr("pad.growShort")}</span></button>
       </div>
-      <div class="canvas-wrap"><canvas class="ink" aria-label="Površina za pisanje"></canvas></div>
+      <div class="canvas-wrap"><canvas class="ink" aria-label="${tr("pad.canvas")}"></canvas></div>
       <div class="draw-foot">
-        <span class="muted">Piši sproti, kot v zvezek. Končni odgovor napiši v zadnjo vrstico, nato pritisni Preveri.</span>
+        <span class="muted">${tr("pad.drawNote", { check: tr("task.check") })}</span>
       </div>
     </div>
   </aside>`);
@@ -143,7 +144,7 @@ function submit() {
   // V načinu Piši gumb Preveri najprej prebere zapis (učenec ga potrdi), nato odgovor preveri.
   if (drawing && ink.hasInk() && (ink.changed || !cur.input.value.trim())) return readInk();
   if (!cur.input.value.trim()) {
-    box.innerHTML = `<div class="fb info">${drawing ? "Najprej napiši odgovor na črte spodaj." : "Najprej vpiši odgovor."}</div>`;
+    box.innerHTML = `<div class="fb info">${drawing ? tr("pad.emptyDraw") : tr("chk.empty")}</div>`;
     return;
   }
   box.innerHTML = "";
@@ -158,22 +159,22 @@ async function readInk() {
   const box = pad.querySelector(".read-result");
   const image = ink.exportImage();
   if (!image) {
-    box.innerHTML = `<div class="fb info">Najprej nekaj napiši. 🙂</div>`;
+    box.innerHTML = `<div class="fb info">${tr("pad.writeFirst")}</div>`;
     return;
   }
-  box.innerHTML = `<div class="fb info">Berem zapis …</div>`;
+  box.innerHTML = `<div class="fb info">${tr("pad.reading")}</div>`;
   const version = ink.version;
   reading = true;
   try {
     const r = await cur.readFn(image);
     if (!r.text) {
-      box.innerHTML = `<div class="fb info">${escapeHtml(r.message || "Zapisa nisem uspel prebrati. Poskusi pisati večje ali uporabi tipke.")}</div>`;
+      box.innerHTML = `<div class="fb info">${escapeHtml(currentLang() === "sl" && r.message ? r.message : tr("pad.readFail"))}</div>`;
       return;
     }
     // Prebrano; če je učenec medtem še kaj dopisal, Preveri zapis prebere znova.
     ink.changed = ink.version !== version;
-    box.innerHTML = `<div class="fb info"><span>Prebral sem: <b class="read-text"></b>. Je prav?</span></div>
-      <div class="actions"><button type="button" class="primary" data-ok>Da, preveri</button><button type="button" data-fix>Popravi s tipkami</button></div>`;
+    box.innerHTML = `<div class="fb info"><span>${tr("pad.readAs", { text: '<b class="read-text"></b>' })}</span></div>
+      <div class="actions"><button type="button" class="primary" data-ok>${tr("pad.okCheck")}</button><button type="button" data-fix>${tr("pad.fix")}</button></div>`;
     box.querySelector(".read-text").textContent = r.text;
     box.querySelector("[data-ok]").addEventListener("click", () => {
       cur.input.value = r.text;

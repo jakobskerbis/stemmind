@@ -424,3 +424,26 @@
 .demo-svg .edge-on { stroke: var(--muted); }
 .demo-svg .lone-pair { fill: color-mix(in srgb, var(--demo-c) 35%, transparent); stroke: var(--demo-c); stroke-width: 1; }
 .demo-svg .pulley { fill: var(--surface-2); stroke: var(--text); stroke-width: 2; }
+
+/* ---------- Referenčni material (Moj študij) ---------- */
+.tb-mode { flex-basis: 100%; }
+.tb-mode > button { display: inline-flex; align-items: center; gap: 6px; }
+.tb-mode svg.i { width: 18px; height: 18px; }
+.ref-intro { margin: 4px 0 10px; }
+.ref-filters { margin: 8px 0 14px; }
+.ref-courses { display: grid; gap: 14px; }
+.ref-course h2 { margin: 0 0 2px; font-size: 1.1rem; }
+.ref-area { margin: 0 0 8px; font-size: 0.9rem; }
+.ref-list { padding: 0; box-shadow: none; border: 0; background: none; }
+a.ref-row { text-decoration: none; align-items: flex-start; }
+a.ref-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ref-row .lr-text b { color: var(--accent); }
+.ref-row .ref-desc { color: var(--text); font-size: 0.92rem; margin-top: 2px; }
+.ref-badges { margin-top: 6px; align-items: center; }
+.ref-badge, .ref-lang { background: var(--surface-2); color: var(--muted); }
+.ref-license { font-size: 0.75rem; color: var(--muted); }
+.ref-row > svg.i { flex: none; width: 18px; height: 18px; margin-top: 4px; }
+.ref-more { margin-top: 6px; color: var(--accent); font-weight: 700; }
+@media (min-width: 1200px) {
+  .ref-courses { grid-template-columns: 1fr 1fr; align-items: start; }
+}
