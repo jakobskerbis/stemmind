@@ -49,7 +49,7 @@ for (const g of GENERATORS) {
           const res = checkAnswer(a, correctInput(a));
           if (res.kind !== "correct") throw new Error(`lastni odgovor ${correctInput(a)} ni sprejet: ${JSON.stringify(res)}`);
           const text = [t.text, t.hint, t.solution].join(" ");
-          if (/undefined|NaN|Infinity/.test(text)) throw new Error(`besedilo vsebuje undefined/NaN: ${t.text}`);
+          if (/undefined|NaN(?!O)|Infinity/.test(text)) throw new Error(`besedilo vsebuje undefined/NaN: ${t.text}`);
           if (/\$\$|\\\\\(/.test(t.text) === false && (t.text.split("$").length - 1) % 2) throw new Error(`neparno število $ v besedilu: ${t.text}`);
         } catch (e) {
           bad++;
