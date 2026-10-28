@@ -93,6 +93,15 @@ export const ENGINES = {
   gostota: ["fiz-meh.js", "gostota"],
   tlak: ["fiz-meh.js", "tlak"],
   gibanje: ["fiz-meh.js", "gibanje"],
+  // fizika: delo, energija, met, klanec, trki, kroženje, orbite
+  delo: ["fiz-energija.js", "delo"],
+  skejt: ["fiz-energija.js", "skejt"],
+  izkoristek: ["fiz-energija.js", "izkoristek"],
+  met: ["fiz-energija.js", "met"],
+  klanec: ["fiz-energija.js", "klanec"],
+  trki: ["fiz-energija.js", "trki"],
+  krozenje: ["fiz-energija.js", "krozenje"],
+  orbita: ["fiz-energija.js", "orbita"],
   // zbirka več simulacij (za mešane maturitetne naloge)
   zbirka: ["index.js", "zbirka"],
 };
