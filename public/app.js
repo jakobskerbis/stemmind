@@ -1,5 +1,5 @@
 // STEMMind – odjemalec (brez ogrodja).
-import { attachPad, closePad } from "./pad.js";
+import { attachPad, closePad, openPad, padIsSheet } from "./pad.js";
 import { icon, hydrateIcons } from "./icons.js";
 
 hydrateIcons();
@@ -846,7 +846,7 @@ async function nextPractice() {
       <div class="task-top"><span class="eyebrow with-icon">${icon("book-open")} Rešen zgled</span></div>
       <div class="task-text">${renderRich(out.example.text)}</div>
       ${out.example.figure ? figureSvg(out.example.figure) : ""}
-      <div class="solution"><span class="sol-label">Rešitev</span>${renderRich(out.example.solution)}</div>
+      ${workedBlock(out.example, out.example.solution, "Rešitev")}
       <div class="fb hint">${icon("lightbulb")}<div>${renderRich(out.example.hint)}</div></div>
       <div class="actions"><button class="primary big" id="ex-next">Zdaj ti${icon("arrow-right")}</button></div>
     </div>`;
@@ -1013,6 +1013,24 @@ function renderTask(task, ctx) {
   } else closePad();
 }
 
+// Rešitev z izpisanimi podatki iz besedila (Podatki / Iščemo) in formulo, skrito za gumbom.
+function workedBlock(task, solution, label = "Rešitev") {
+  const d = task.data;
+  const tex = (t) => renderMath(String(t), false);
+  const dataHtml =
+    d && Array.isArray(d.given) && d.given.length
+      ? `<div class="task-data">
+          <div class="data-col"><span class="sol-label">Podatki</span><div class="data-list">${d.given.map((x) => `<div>${tex(x)}</div>`).join("")}</div></div>
+          ${Array.isArray(d.find) && d.find.length ? `<div class="data-col"><span class="sol-label">Iščemo</span><div class="data-list">${d.find.map((x) => `<div>${tex(`${x} = \\,?`)}</div>`).join("")}</div></div>` : ""}
+        </div>`
+      : "";
+  const formulas = task.formula ? (Array.isArray(task.formula) ? task.formula : [task.formula]) : [];
+  const formulaHtml = formulas.length
+    ? `<details class="formula"><summary>${icon("eye")}Pokaži formulo</summary><div class="formula-body">${formulas.map((f) => `<div>${tex(f)}</div>`).join("")}</div></details>`
+    : "";
+  return `<div class="solution">${dataHtml}${formulaHtml}<span class="sol-label">${label}</span>${renderRich(solution)}</div>`;
+}
+
 async function checkTask(task, ctx, value) {
   const fb = $("#feedback");
   let r;
@@ -1039,7 +1057,7 @@ async function checkTask(task, ctx, value) {
   } else if (r.correct) {
     html = `<div class="fb ok pop">${icon("circle-check")}<span><b>Pravilno!</b>${r.levelUp ? " Naslednje naloge bodo malo težje." : ""}</span><span class="xp-gain">+${r.xp.gained} XP</span></div>
       ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>Tema je osvojena! Jutri te povabim k ponovitvi.</span></div>` : ""}
-      <div class="solution"><span class="sol-label">Rešitev</span>${renderRich(r.solution)}</div>
+      ${workedBlock(task, r.solution, "Rešitev")}
       ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}`;
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next();
     refreshXp();
@@ -1048,7 +1066,7 @@ async function checkTask(task, ctx, value) {
       ${r.levelDown ? `<div class="muted">Naslednje naloge bodo malo lažje, da utrdiš osnove.</div>` : ""}
       ${r.hint ? `<div class="fb hint">${icon("lightbulb")}<div><b>Namig:</b> ${renderRich(r.hint)}</div></div>` : ""}`;
     if (r.solution) {
-      html += `<div class="solution"><span class="sol-label">Rešen zgled</span>${renderRich(r.solution)}</div>`;
+      html += workedBlock(task, r.solution, "Rešen zgled");
       html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" ? "Poskusi podobno nalogo" : "Naslednja naloga");
     } else {
       html += `<div class="actions"><button id="fb-retry" class="primary big">Poskusi znova</button>
@@ -1058,11 +1076,18 @@ async function checkTask(task, ctx, value) {
   }
   fb.innerHTML = html;
   // Ko je naloga zaključena, plošča izgine, da sta razlaga in gumb »Naprej« vidna.
+  let padClosedForFeedback = false;
   if (!r.retry && (r.correct || r.solution || ctx.mode === "placement")) closePad();
+  else if (!r.retry && padIsSheet()) {
+    // Na telefonu plošča prekrije povratno informacijo; zapremo jo, »Poskusi znova« jo spet odpre.
+    closePad();
+    padClosedForFeedback = true;
+  }
   fb.scrollIntoView({ block: "nearest", behavior: "smooth" });
   $("#fb-retry")?.addEventListener("click", () => {
     fb.innerHTML = "";
-    $("#answer")?.select();
+    if (padClosedForFeedback) openPad();
+    else $("#answer")?.select();
   });
   $("#fb-help")?.addEventListener("click", async () => {
     const h = await api(`/api/students/${state.student.id}/tasks/${task.id}/help`, { method: "POST" });
