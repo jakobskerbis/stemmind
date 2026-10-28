@@ -55,7 +55,7 @@ Tok teče samo, če je krog **sklenjen**. Če ga kjer koli prekinemo (odpremo st
 
 Dve žarnici sta zaporedno vezani na baterijo z napetostjo $6\,\text{V}$. Ampermeter pokaže $0{,}2\,\text{A}$. Na prvi žarnici izmerimo $2\,\text{V}$. Kolikšen je tok skozi drugo žarnico in kolikšna je napetost na njej?
 
-**Podatki:** zaporedna vezava dveh žarnic, $U = 6\,\text{V}$, $I_1 = 0{,}2\,\text{A}$ (kaže ampermeter), $U_1 = 2\,\text{V}$
+**Podatki:** zaporedna vezava dveh žarnic, $U = 6\,\text{V}$, $I = 0{,}2\,\text{A}$ (kaže ampermeter), $U_1 = 2\,\text{V}$
 **Iščemo:** tok $I_2$ skozi drugo žarnico in napetost $U_2$ na njej
 
 :::formula
@@ -64,7 +64,7 @@ Zaporedna vezava: $I = I_1 = I_2$, $U = U_1 + U_2$
 
 **Rešitev:**
 
-1. Vezava je zaporedna, zato je tok povsod enak: $I_2 = I_1 = 0{,}2\,\text{A}$.
+1. Vezava je zaporedna, zato je tok povsod enak: $I_2 = I = 0{,}2\,\text{A}$.
 2. Napetosti se seštevajo: $U = U_1 + U_2$.
 3. Izrazimo: $U_2 = U - U_1 = 6\,\text{V} - 2\,\text{V} = 4\,\text{V}$.
 4. Preverimo: $2\,\text{V} + 4\,\text{V} = 6\,\text{V}$, kar je enako napetosti baterije.
@@ -99,7 +99,7 @@ Tri enake žarnice so vezane na baterijo. Najprej so vezane zaporedno, nato vzpo
 **Iščemo:** ali ostali dve žarnici še svetita in kako močno
 
 :::formula
-Zaporedna vezava: tok ima eno samo pot, zato prekinitev kjer koli ustavi tok v celotnem krogu. Vzporedna vezava: vsaka veja je samostojna in na vsaki je polna napetost vira ($U = U_1 = U_2$).
+Zaporedna vezava: tok ima eno samo pot, zato prekinitev kjer koli ustavi tok v celotnem krogu. Vzporedna vezava: vsaka veja je samostojna in na vsaki je polna napetost vira ($U = U_1 = U_2 = U_3$).
 :::
 
 **Rešitev:**
@@ -137,7 +137,7 @@ Predstavljaj si krog kot zaprto krožno cesto.
 
 Na skici kroga pri vzporedni vezavi poišči dve vozlišči: v prvem se tok razcepi, v drugem se združi. Med njima je na obeh vejah enaka napetost.
 
-V simulaciji lahko kazalce merilnikov postaviš na različna mesta in to sam preveriš.
+V interaktivni simulaciji spodaj lahko merilnike postaviš na različna mesta in to sam preveriš.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -218,4 +218,4 @@ $$U = U_1 = U_2$$
 - Ker so luči vezane zaporedno.
 + Ker so luči vezane vzporedno, vsaka v svoji veji.
 - Ker se pri ugasnitvi ene luči napetost poveča na ostalih.
-> Pri vzporedni vezavi ima vsak porabnik svojo vejo, zato prekinitev ene veje ne vpliva na druge. Pri zaporedni vezavi bi se z odklopom ene luči prekinil celoten krog, napetost na ostalih lučeh pa ostane enaka napetosti vira.
+> Pri vzporedni vezavi ima vsak porabnik svojo vejo, zato prekinitev ene veje ne vpliva na druge. Pri zaporedni vezavi bi se z odklopom ene luči prekinil celoten krog. Pri vzporedni vezavi pa napetost na ostalih lučeh ostane enaka napetosti vira, zato se ne poveča.

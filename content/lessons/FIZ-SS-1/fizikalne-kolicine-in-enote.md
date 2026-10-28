@@ -86,6 +86,7 @@ $1\,\text{km} = 10^3\,\text{m}$, $1\,\text{g} = 10^{-3}\,\text{kg}$
 1. Predpona $\text{k}$ pomeni $10^3$: $4{,}5\,\text{km} = 4{,}5 \cdot 10^3\,\text{m} = 4500\,\text{m}$.
 2. Osnovna enota za maso je kilogram. Ker je $1\,\text{g} = 10^{-3}\,\text{kg}$, velja $730\,\text{g} = 730 \cdot 10^{-3}\,\text{kg} = 0{,}73\,\text{kg}$.
 3. Preverimo smiselnost: kilometer je veliko več kot meter, zato mora biti število v metrih večje. Gram je manj kot kilogram, zato mora biti število v kilogramih manjše. ✓
+4. Odgovor: $4{,}5\,\text{km} = 4500\,\text{m}$ in $730\,\text{g} = 0{,}73\,\text{kg}$.
 
 ### Primer 2: ploščina in prostornina
 
@@ -104,6 +105,7 @@ $1\,\text{cm}^2 = (10^{-2}\,\text{m})^2 = 10^{-4}\,\text{m}^2$, $1\,\text{L} = 1
 2. Za prostornino vemo, da je $1\,\text{L} = 1\,\text{dm}^3$. Ker je $1\,\text{dm} = 10^{-1}\,\text{m}$, je $1\,\text{dm}^3 = (10^{-1}\,\text{m})^3 = 10^{-3}\,\text{m}^3$.
 3. Torej $2{,}5\,\text{L} = 2{,}5 \cdot 10^{-3}\,\text{m}^3 = 0{,}0025\,\text{m}^3$.
 4. Pri ploščini nismo pretvorili samo z $10^{-2}$, ker je enota kvadratna, zato je faktor $(10^{-2})^2 = 10^{-4}$.
+5. Odgovor: $350\,\text{cm}^2 = 0{,}035\,\text{m}^2$ in $2{,}5\,\text{L} = 0{,}0025\,\text{m}^3$.
 
 ### Primer 3 (težji): hitrost in sestavljena enota
 
@@ -123,6 +125,7 @@ $1\,\dfrac{\text{km}}{\text{h}} = \dfrac{1000\,\text{m}}{3600\,\text{s}}$ (delim
 3. Čas v osnovno enoto: $2\,\text{min} = 2 \cdot 60\,\text{s} = 120\,\text{s}$.
 4. Pot je hitrost krat čas: $s = v \cdot t = 7{,}5\,\dfrac{\text{m}}{\text{s}} \cdot 120\,\text{s} = 900\,\text{m}$.
 5. Enote se pokrajšajo: $\dfrac{\text{m}}{\text{s}} \cdot \text{s} = \text{m}$, kar je res enota za dolžino. ✓
+6. Odgovor: kolesar vozi s hitrostjo $7{,}5\,\dfrac{\text{m}}{\text{s}}$ in v $2\,\text{min}$ prevozi $900\,\text{m}$.
 
 ## Pogoste napake
 

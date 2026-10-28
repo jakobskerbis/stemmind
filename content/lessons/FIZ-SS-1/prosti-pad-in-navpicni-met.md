@@ -73,7 +73,7 @@ Prosti pad: $h = \dfrac{g t^2}{2}$ in $v = g\,t$ (preverjanje: $v^2 = 2\,g\,h$)
 **Iščemo:** največjo višino $h_\text{max}$, čas vzpona $t_\text{vrh}$ in čas vrnitve v roko
 
 :::formula
-$t_\text{vrh} = \dfrac{v_0}{g}$, $h_\text{max} = \dfrac{v_0^2}{2g}$, celoten let traja $2\,t_\text{vrh}$
+$t_\text{vrh} = \dfrac{v_0}{g}$, $h_\text{max} = \dfrac{v_0^2}{2g}$, celoten let traja $2\,t_\text{vrh}$ (preverjanje: $y = v_0\,t - \dfrac{g t^2}{2}$)
 :::
 
 **Rešitev:**
@@ -93,7 +93,7 @@ Z roba stavbe, ki je $25\,\text{m}$ visoka, vržemo kamen navpično navzgor s hi
 **Iščemo:** čas $t$ do padca na tla in hitrost $v$ ob padcu
 
 :::formula
-Os navzgor: $y = y_0 + v_0\,t - \dfrac{g t^2}{2}$ (ob padcu $y = 0$, rešimo kvadratno enačbo), $v = v_0 - g\,t$
+Os navzgor: $y = y_0 + v_0\,t - \dfrac{g t^2}{2}$ (ob padcu $y = 0$, rešimo kvadratno enačbo), $v = v_0 - g\,t$ (preverjanje: $v^2 = v_0^2 + 2\,g\,y_0$)
 :::
 
 **Rešitev:**
@@ -170,7 +170,7 @@ Postopek za vsako nalogo o prostem padu in metih:
 | Mars | $3{,}71$ | $5{,}39$ | $2{,}32$ |
 | Luna | $1{,}62$ | $12{,}35$ | $3{,}51$ |
 
-Na Luni je $g$ približno šestkrat manjši kot na Zemlji ($9{,}81 / 1{,}62 \approx 6{,}06$), čas padanja pa je le $2{,}5$-krat daljši ($3{,}51/1{,}43 \approx 2{,}46$). Razlog je koren: čas je sorazmeren z $1/\sqrt{g}$, ne z $1/g$.
+Na Luni je $g$ približno šestkrat manjši kot na Zemlji ($9{,}81 / 1{,}62 \approx 6{,}06$), čas padanja pa je le $2{,}5$-krat daljši ($\sqrt{6{,}06} \approx 2{,}46$). Razlog je koren: čas je sorazmeren z $1/\sqrt{g}$, ne z $1/g$.
 
 ## Drugače: Bolj natančno
 

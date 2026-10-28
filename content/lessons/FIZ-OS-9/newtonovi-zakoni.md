@@ -58,7 +58,7 @@ Pomembno:
 
 - Sili sta vedno **par**: nastaneta in izgineta hkrati.
 - Sili sta enako veliki, nasprotno usmerjeni in ležita na isti premici.
-- Prijemališči imata na **različnih telesih**. Zato se med seboj ne izničita, saj ju ne seštevamo za isto telo.
+- Prijemališči sil sta na **različnih telesih**. Zato se med seboj ne izničita, saj ju ne seštevamo za isto telo.
 
 Primer: ko stojiš na tleh, na tla pritiskaš s silo (enako veliko, kot je tvoja teža), tla pa nate delujejo z enako veliko silo navzgor.
 

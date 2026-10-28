@@ -93,7 +93,7 @@ Iz $h = \dfrac{1}{2}\,g\,t^2$ izrazimo čas: $t = \sqrt{\dfrac{2h}{g}}$, nato $v
 3. **Koren.** Iščemo $t$, ne $t^2$: $t = \sqrt{4} = 2\,\mathrm{s}$.
 4. **Hitrost.** $v = g\,t = 10 \cdot 2 = 20\,\mathrm{\frac{m}{s}}$.
 5. **Preverimo.** $\dfrac{1}{2} \cdot 10 \cdot 2^2 = 20\,\mathrm{m}$, kar je res višina balkona. ✓
-6. **Občutek.** $20\,\mathrm{\frac{m}{s}} = 72\,\mathrm{\frac{km}{h}}$, saj $20 \cdot 3{,}6 = 72$. Predmet torej tla zadene s hitrostjo avtomobila v naselju.
+6. **Občutek.** $20\,\mathrm{\frac{m}{s}} = 72\,\mathrm{\frac{km}{h}}$, saj $20 \cdot 3{,}6 = 72$. Predmet torej tla zadene s hitrostjo avtomobila zunaj naselja (več kot dovoljenih $50\,\mathrm{\frac{km}{h}}$ v naselju).
 
 **Odgovor:** pada $2\,\mathrm{s}$ in zadene tla s hitrostjo $20\,\mathrm{\frac{m}{s}}$.
 
@@ -128,7 +128,7 @@ Pomisli na skok z vrha 1-metrskega zidu in skok z vrha stavbe. Pri nizkem skoku 
 
 Primer: skok z višine $1{,}25\,\mathrm{m}$. Čas: $t^2 = \dfrac{2 \cdot 1{,}25}{10} = 0{,}25$, torej $t = 0{,}5\,\mathrm{s}$. Hitrost ob tleh: $v = 10 \cdot 0{,}5 = 5\,\mathrm{\frac{m}{s}}$, to je $18\,\mathrm{\frac{km}{h}}$. Pri štirikrat večji višini ($5\,\mathrm{m}$) čas ni štirikrat, ampak le dvakrat daljši ($1\,\mathrm{s}$), hitrost pa je dvakrat večja ($10\,\mathrm{\frac{m}{s}}$).
 
-Zakaj list pade počasneje kot kamen? Ker ima velik upor zraka glede na svojo težo. Če list zmečkaš v kepico, se upor zmanjša in pade skoraj kot kamen. Astronavt David Scott je na Luni, kjer zraka ni, spustil kladivo in pero in obe sta padli hkrati.
+Zakaj list pade počasneje kot kamen? Ker ima velik upor zraka glede na svojo težo. Če list zmečkaš v kepico, se upor zmanjša in pade skoraj kot kamen. Astronavt David Scott je na Luni, kjer zraka ni, spustil kladivo in pero in oba sta padla hkrati.
 
 ## Drugače: Korak za korakom s številkami
 

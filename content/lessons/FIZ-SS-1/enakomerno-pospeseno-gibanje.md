@@ -63,6 +63,7 @@ $v = v_0 + a\,t$, $s = v_0\,t + \dfrac{a\,t^2}{2}$
 1. Hitrost: $v = v_0 + at = 0 + 2{,}0 \cdot 5{,}0 = 10\,\mathrm{\frac{m}{s}}$.
 2. Pot (ker je $v_0 = 0$): $s = \dfrac{a t^2}{2} = \dfrac{2{,}0 \cdot 25}{2} = 25\,\mathrm{m}$.
 3. Preverimo s povprečno hitrostjo: $\bar v = \dfrac{0 + 10}{2} = 5\,\mathrm{\frac{m}{s}}$, $s = 5 \cdot 5{,}0 = 25\,\mathrm{m}$. ✓
+4. Odgovor: po $5{,}0\,\mathrm{s}$ ima avto hitrost $10\,\mathrm{\frac{m}{s}}$ in prevozi $25\,\mathrm{m}$.
 
 ### Primer 2: zaviranje
 
@@ -81,6 +82,7 @@ $a = \dfrac{v - v_0}{t}$, $s = v_0\,t + \dfrac{a\,t^2}{2}$ (hitrost najprej pret
 2. Pospešek: $a = \dfrac{v - v_0}{t} = \dfrac{0 - 10}{4{,}0} = -2{,}5\,\mathrm{\frac{m}{s^2}}$. Predznak je negativen, ker kolesar zavira.
 3. Pot: $s = v_0 t + \dfrac{a t^2}{2} = 10 \cdot 4{,}0 + \dfrac{(-2{,}5)\cdot 16}{2} = 40 - 20 = 20\,\mathrm{m}$.
 4. Preverimo s povprečno hitrostjo: $\bar v = \dfrac{10 + 0}{2} = 5\,\mathrm{\frac{m}{s}}$, $s = 5 \cdot 4{,}0 = 20\,\mathrm{m}$. ✓
+5. Odgovor: pospešek je $-2{,}5\,\mathrm{\frac{m}{s^2}}$ (kolesar zavira), zavorna pot pa $20\,\mathrm{m}$.
 
 ### Primer 3: pot brez podanega časa
 
@@ -99,6 +101,7 @@ Enačba brez časa $v^2 = v_0^2 + 2\,a\,s$, nato $t = \dfrac{v - v_0}{a}$
 2. Iz $v^2 = v_0^2 + 2as$ izrazimo: $a = \dfrac{v^2 - v_0^2}{2s} = \dfrac{900 - 400}{200} = 2{,}5\,\mathrm{\frac{m}{s^2}}$.
 3. Čas iz enačbe za hitrost: $t = \dfrac{v - v_0}{a} = \dfrac{30 - 20}{2{,}5} = 4{,}0\,\mathrm{s}$.
 4. Preverimo s potjo: $s = \dfrac{v_0 + v}{2}\, t = 25 \cdot 4{,}0 = 100\,\mathrm{m}$. ✓
+5. Odgovor: vlak pospešuje z $2{,}5\,\mathrm{\frac{m}{s^2}}$, pospeševanje traja $4{,}0\,\mathrm{s}$.
 
 ## Pogoste napake
 

@@ -42,7 +42,7 @@ $$m = \rho \cdot V \qquad\qquad V = \frac{m}{\rho}$$
 | voda | $1{,}0$ |
 | aluminij | $2{,}7$ |
 | železo | $7{,}9$ |
-| baker | $8{,}9$ |
+| baker | $8{,}96$ |
 | svinec | $11{,}3$ |
 
 **6. Merjenje gostote.** Gostote navadno ne merimo neposredno: izmerimo $m$ in $V$ ter jo izračunamo:

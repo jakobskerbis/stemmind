@@ -5,13 +5,13 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Iz naravoslovja že poznaš temperaturo (merimo jo v stopinjah Celzija) in veš, da se snovi pri segrevanju raztezajo. Poznaš tudi pojma masa ($m$, v kilogramih) in energija (v joulih).
+Iz naravoslovja in prejšnje teme že poznaš temperaturo (merimo jo v stopinjah Celzija) in veš, da se snovi pri segrevanju raztezajo. Poznaš tudi pojma masa ($m$, v kilogramih) in energija (v joulih).
 
 Zdaj se vprašamo: **koliko energije moramo dovesti, da se nekaj segreje?** Zakaj se voda v loncu segreva dlje kot kovinska žlica? Zakaj je pesek na plaži opoldne vroč, morje pa precej hladnejše? Zakaj za polno skodelico čaja porabimo več energije kot za pol skodelice? Odgovore da enačba $Q = m \cdot c \cdot \Delta T$, ki jo spoznaš v tej lekciji.
 
 ## Razlaga
 
-**1. Toplota.** Toplota $Q$ je energija, ki se zaradi temperaturne razlike prenese z toplejšega telesa na hladnejše. Merimo jo v joulih ($\mathrm{J}$), pogosto tudi v kilojoulih ($1\,\text{kJ} = 1000\,\text{J}$).
+**1. Toplota.** Toplota $Q$ je energija, ki se zaradi temperaturne razlike prenese s toplejšega telesa na hladnejše. Merimo jo v joulih ($\mathrm{J}$), pogosto tudi v kilojoulih ($1\,\text{kJ} = 1000\,\text{J}$).
 
 **2. Od česa je odvisna toplota za segrevanje?** Od treh stvari:
 
