@@ -1,5 +1,6 @@
 import { icon } from "./icons.js";
-import { loadPrograms, programOptions, UNI_YEARS } from "./programs.js";
+import { loadPrograms, programsCache } from "./programs.js";
+import { mountLevelPicker } from "./level-picker.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku STEMMIND_ACCOUNTS=1.
 
@@ -291,20 +292,14 @@ function childForm(consentText, programs = []) {
   return `
     <form id="child-form" class="card form">
       <label>Ime ali vzdevek <input name="name" maxlength="40" required placeholder="npr. Miha"></label>
-      <label>Kdo bo uporabljal profil
-        <select name="educational_track">
-          <option value="OSNOVNA_SOLA">Učenec osnovne šole</option>
-          <option value="SREDNJA_SOLA">Dijak srednje šole</option>
-          <option value="UNIVERZA">Študent fakultete (1. stopnja)</option>
-        </select>
-      </label>
-      <label class="uni-only" hidden>Študijski program
-        <select name="study_program">${programOptions(programs)}</select>
-        <small class="muted">Snov in naloge sledijo javnemu predmetniku izbranega programa (UL FKKT, UL FS, UL FMF, UM FKKT).</small>
-      </label>
-      <label class="uni-only" hidden>Letnik
-        <select name="uni_year">${UNI_YEARS.map((v) => `<option>${v}</option>`).join("")}</select>
-      </label>
+      <fieldset class="level-field">
+        <legend>Šola in letnik</legend>
+        <div class="level-picker child-level"></div>
+        <small class="muted">Vsebina se prilagodi izbiri; pri fakulteti sledi javnemu predmetniku programa. Izbiro lahko kadar koli spremeniš v profilu.</small>
+        <input type="hidden" name="educational_track">
+        <input type="hidden" name="study_program">
+        <input type="hidden" name="curriculum_level">
+      </fieldset>
       <label>Letnica rojstva
         <select name="birth_year" required><option value="">Izberite …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
       </label>
@@ -319,22 +314,22 @@ function childForm(consentText, programs = []) {
 // Nastavitve profila iz obrazca: šola, program in letnik.
 function childSettings(f) {
   const track = f.educational_track.value;
-  if (track === "UNIVERZA") return { educational_track: track, study_program: f.study_program.value, curriculum_level: f.uni_year.value, subject: "MAT" };
-  return { educational_track: track, curriculum_level: track === "SREDNJA_SOLA" ? "1. letnik OR" : "8. razred" };
+  const base = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value };
+  if (track === "UNIVERZA") return { ...base, subject: programsCache().find((p) => p.id === f.study_program.value)?.mainSubject || "MAT" };
+  return base;
 }
 
 function bindChildForm(after) {
   const f = $("#child-form");
-  const toggle = () => {
-    const uni = f.educational_track.value === "UNIVERZA";
-    f.querySelectorAll(".uni-only").forEach((el) => (el.hidden = !uni));
+  const toggle = (_, track) => {
+    const uni = track === "UNIVERZA";
     f.querySelector(".consent-child").hidden = uni;
     f.querySelector(".consent-adult").hidden = !uni;
   };
-  f.educational_track.addEventListener("change", toggle);
-  toggle();
+  const picker = mountLevelPicker(f.querySelector(".child-level"), f, { programs: programsCache(), onChange: toggle });
   f.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (!picker.complete()) return showError(f, new Error("Izberite šolo in letnik do konca."));
     try {
       const s = await api("/api/students", {
         method: "POST",

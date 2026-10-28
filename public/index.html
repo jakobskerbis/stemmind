@@ -47,6 +47,7 @@
   <!-- PRIJAVA STARŠEV IN RAČUN (account.js) -->
   <main id="view-auth" class="view narrow" hidden></main>
   <main id="view-account" class="view narrow" hidden></main>
+  <main id="view-onboard" class="view narrow" hidden></main>
 
   <!-- UČNA POT -->
   <main id="view-path" class="view narrow">
@@ -110,21 +111,14 @@
     <h1>Nastavitve</h1>
     <form id="settings-form" class="card form">
       <label>Ime <input name="name" maxlength="40" required></label>
-      <label>Šola
-        <select name="educational_track">
-          <option value="OSNOVNA_SOLA">Osnovna šola</option>
-          <option value="SREDNJA_SOLA">Srednja šola</option>
-          <option value="UNIVERZA">Fakulteta (1. stopnja)</option>
-        </select>
-      </label>
-      <label id="study-program-row" hidden>Študijski program
-        <select name="study_program"></select>
-        <small class="muted">Snov in naloge sledijo javnemu predmetniku izbranega programa.</small>
-      </label>
-      <label>Raven
-        <input name="curriculum_level" maxlength="60" list="level-options" placeholder="npr. 8. razred, 2. letnik VR">
-        <datalist id="level-options"></datalist>
-      </label>
+      <fieldset class="level-field">
+        <legend>Šola in letnik</legend>
+        <div id="settings-level" class="level-picker"></div>
+        <small class="muted">Učna pot, naloge in učbenik se prilagodijo izbiri. Pri fakulteti sledijo javnemu predmetniku programa.</small>
+        <input type="hidden" name="educational_track">
+        <input type="hidden" name="study_program">
+        <input type="hidden" name="curriculum_level">
+      </fieldset>
       <label>Predmet
         <select name="subject">
           <option value="MAT">Matematika</option>
