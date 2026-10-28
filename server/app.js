@@ -23,6 +23,7 @@ import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competi
 import { examInfo, examKeyFor, isExamPath, examOf, examPrompt } from "./exams.js";
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
+import { mountGraphs } from "./graphs.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -642,6 +643,7 @@ export function createApp(store, opts = {}) {
 
   // --- tedenske lige, razredi in skupine prijateljev ---
   mountLeagues(app, store, { loadStudent });
+  mountGraphs(app, store, { loadStudent });
 
   // --- poraba AI ---
   app.get("/api/usage", (_req, res) => res.json(usage.summary()));

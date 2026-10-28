@@ -76,3 +76,13 @@ Vrstica za vnos ima od leve proti desni: fotografija naloge, simboli (Σ), besed
 
 Kartica `.level-card` na vrhu Učne poti (`#level-card`, `public/level-up.js`): od 20. 8. do 31. 10. predlaga naslednji razred ali letnik (en klik), ob prehodu OŠ → SŠ ali SŠ → fakulteta pa pokaže, kaj je novega. Brez naročnine doda gumb »Poglej pakete« (zavihek Račun); cen ne prikazuje.
 
+
+## Grafični kalkulator
+
+Koda je v `public/graph/` (`math.js` razčlenjevalnik, odvodi in integrali; `model.js` razvrsti izraze; `plot.js` riše na platno; `calc.js` seznam in menije; `examples.js` primere), slog v `public/graph.css`, shranjeni grafi na strežniku v `server/graphs.js`. Vse teče v brskalniku, brez API in brez zunanjih knjižnic (KaTeX je že v `/vendor/`).
+
+- **Navigacija**: zgornji zavihek »Kalkulator« za Inštruktorjem; na telefonu vrstica v zavihku Jaz. Iz naloge (gumb pod nalogo, razen na tekmovanju in uvrstitvenem testu) in iz odgovora inštruktorja (»Nariši graf«, ko odgovor vsebuje enačbo z x ali y) se kalkulator odpre kot prekrivni zaslon `.graph-overlay` z gumbom nazaj.
+- **Postavitev**: na računalniku seznam izrazov levo (380 px), graf desno. Do 860 px je graf zgoraj, seznam pod njim, tipkovnica čisto spodaj. Gumbi za povečavo so na telefonu v vrsti.
+- **Tipkovnica**: na zaslonu na dotik polja ne odprejo sistemske tipkovnice (`inputmode="none"`), ampak lastno (123, f(x), Σ iz `public/symbols.js`, ABC). Ko je odprta, se skrijejo spodnja vrstica zavihkov, pas testnega načina in gumb nazaj (`body.gc-kp`).
+- **Barve krivulj** so podatkovne barve (`--g-red`, `--g-blue` … v `graph.css`), z različico za temni način. Niso barve gumbov in se ne mešajo z barvo poudarka iz Nastavitve → Videz.
+- **Shranjevanje**: zadnji graf se samodejno shrani v brskalnik za vsakega učenca; »Moji grafi« jih hrani na strežniku (z majhno sličico).
