@@ -358,3 +358,39 @@ export function uiChain(code) {
 export function uiLanguage(code) {
   return uiChain(code).find((c) => UI_LANGUAGES.includes(c) || c === "sr-Latn");
 }
+
+// Brskalniške oznake, ki isti jezik imenujejo z drugo kodo.
+const ALIASES = { no: "nb", nn: "nb", fil: "tl", iw: "he", in: "id", mo: "ro", sh: "sr-Latn", tw: "ak", pes: "fa", zsm: "ms", cmn: "zh", arb: "ar", swh: "sw", khk: "mn", lvs: "lv", ekk: "et", uzn: "uz", azj: "az", npi: "ne", gaz: "om", ory: "or", plt: "mg" };
+// Različica, ki v državi najbolj ustreza (pisava ali narečje).
+const BY_SCRIPT = { "zh-Hant": "zh-Hant", "sr-Latn": "sr-Latn", "pa-Arab": "pnb", "az-Arab": "azb" };
+const BY_REGION = {
+  ar: { EG: "arz", SY: "apc", LB: "apc", JO: "apc", PS: "apc", MA: "ary", DZ: "arq", IQ: "acm", SD: "apd", TN: "aeb", LY: "ayl", YE: "ayn", TD: "shu", KW: "afb", BH: "afb", QA: "afb", AE: "afb", OM: "afb" },
+  fa: { AF: "prs" },
+};
+
+// Jezik in regija iz nastavitev naprave (navigator.languages), npr. ["de-AT", "en"] → de, AT.
+// Prvi znani jezik zmaga; regija lahko izbere narečje ali pisavo (zh-TW → zh-Hant, ar-EG → arz).
+// Brez ujemanja angleščina.
+export function detectLanguage(tags = []) {
+  const byLower = new Map(LANGUAGE_CODES.map((c) => [c.toLowerCase(), c]));
+  for (const tag of tags) {
+    if (typeof tag !== "string" || !tag) continue;
+    let loc;
+    try {
+      loc = new Intl.Locale(tag);
+    } catch {
+      continue;
+    }
+    const region = /^[A-Z]{2}$/.test(loc.region || "") ? loc.region : "";
+    const exact = byLower.get(tag.toLowerCase());
+    if (exact) return { code: exact, region };
+    const base = ALIASES[loc.language] || loc.language;
+    let script = loc.script;
+    try {
+      script = script || new Intl.Locale(tag).maximize().script;
+    } catch {}
+    const code = BY_SCRIPT[`${base}-${script}`] || BY_REGION[base]?.[region] || base;
+    if (BY_CODE.has(code)) return { code, region };
+  }
+  return { code: "en", region: "" };
+}

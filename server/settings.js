@@ -21,6 +21,7 @@ export const DEFAULT_SETTINGS = {
   solving_mode: "A",
   personality_setting: "prijazen in spodbuden",
   language: DEFAULT_LANGUAGE,
+  region: "",
 };
 
 // Proste besedilne nastavitve gredo v sistemski prompt, zato jih skrajšamo
@@ -47,6 +48,8 @@ export function normalizeSettings(input = {}) {
     // Strokovni predmeti fakultet (biologija …) v OŠ/SŠ ne obstajajo.
     if (!SCHOOL_SUBJECTS.includes(out.subject)) out.subject = DEFAULT_SETTINGS.subject;
   }
+  // Regija naprave (ISO 3166, npr. "BR"): inštruktor prilagodi izraze in zapis.
+  if (typeof input.region === "string" && /^[A-Z]{2}$/.test(input.region)) out.region = input.region;
   if (input.personality_setting !== undefined) {
     out.personality_setting = cleanText(input.personality_setting, 200);
   }

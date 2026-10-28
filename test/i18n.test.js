@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import SL from "../public/i18n/sl.js";
-import { LANGUAGES, LANGUAGE_CODES, UI_LANGUAGES, RTL, uiChain, uiLanguage, langInfo } from "../public/i18n/languages.js";
+import { LANGUAGES, LANGUAGE_CODES, UI_LANGUAGES, RTL, uiChain, uiLanguage, langInfo, detectLanguage } from "../public/i18n/languages.js";
 import { buildSystemPrompt, systemBlocks, languagePrompt } from "../server/prompt.js";
 import { normalizeSettings } from "../server/settings.js";
 
@@ -67,4 +67,31 @@ test("chosen language reaches the tutor prompt below the cache line; default is 
   assert.match(dDe.text, /Jezik pogovora: German – Deutsch \(de\)/);
   assert.match(dSl.text, /Jezik pogovora: slovenščina \(sl\)/);
   assert.equal(languagePrompt("ar"), "Arabic (Standard) – العربية (ar)");
+});
+
+test("first start picks the device language and region, the nearest variant, else English", () => {
+  const d = (...tags) => detectLanguage(tags);
+  assert.deepEqual(d("sl-SI", "en"), { code: "sl", region: "SI" });
+  assert.deepEqual(d("de-AT"), { code: "de", region: "AT" });
+  assert.deepEqual(d("pt-BR"), { code: "pt", region: "BR" });
+  assert.equal(d("zh-TW").code, "zh-Hant");
+  assert.equal(d("zh-HK").code, "zh-Hant");
+  assert.equal(d("zh-CN").code, "zh");
+  assert.equal(d("sr-Latn-RS").code, "sr-Latn");
+  assert.equal(d("ar-EG").code, "arz");
+  assert.equal(d("ar-SA").code, "ar");
+  assert.equal(d("no").code, "nb");
+  assert.equal(d("fil-PH").code, "tl");
+  assert.equal(d("xx-YY", "fr-CA").code, "fr");
+  assert.deepEqual(d("qq"), { code: "en", region: "" });
+  assert.deepEqual(d(), { code: "en", region: "" });
+});
+
+test("region reaches the tutor prompt and is validated", () => {
+  assert.equal(normalizeSettings({ region: "BR" }).region, "BR");
+  assert.equal(normalizeSettings({ region: "brazil" }).region, "");
+  assert.equal(languagePrompt("pt", "BR"), "Portuguese – Português (pt), regija: Brazil (BR)");
+  assert.equal(languagePrompt("sl", "SI"), "slovenščina (sl)");
+  const p = buildSystemPrompt({ settings: normalizeSettings({ language: "pt", region: "BR" }), studentName: "Ana" });
+  assert.match(systemBlocks(p)[1].text, /Jezik pogovora: Portuguese – Português \(pt\), regija: Brazil \(BR\)/);
 });
