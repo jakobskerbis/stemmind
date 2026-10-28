@@ -374,5 +374,19 @@
   "ap.red": "Rot",
   "ap.orange": "Orange",
   "ap.green": "Grün",
-  "ap.teal": "Türkis"
+  "ap.teal": "Türkis",
+  "set.system": "Land und Schulsystem",
+  "lp.qStage": "Welche Schulstufe?",
+  "path.regionNote": "Dein Lernpfad folgt {system} (Entwurf). Übungen und Lektionen stammen noch aus dem slowenischen Material; der Tutor erklärt dir alles in deiner Sprache.",
+  "set.dataMode": "Sparmodus (weniger Datenverbrauch)",
+  "set.dataAuto": "Automatisch (bei langsamer Verbindung oder Datensparmodus)",
+  "set.dataLite": "Immer an",
+  "set.dataNormal": "Aus",
+  "set.dataNote": "Kürzere Antworten des Tutors, kleinere Fotos, keine Animationen und keine Zusatzschrift. Aufgaben deines Lernpfads werden zum Üben ohne Verbindung gespeichert.",
+  "off.noConnection": "Keine Internetverbindung.",
+  "off.banner": "Du bist offline. Du kannst auf dem Gerät gespeicherte Aufgaben üben ({n}).",
+  "off.bannerEmpty": "Du bist offline. Sobald du wieder online bist, werden Übungsaufgaben auf dem Gerät gespeichert.",
+  "off.pending": "Offline gelöste Antworten warten auf das Senden ({n}).",
+  "off.synced": "Offline gelöste Antworten gesendet: {n}.",
+  "off.xpLater": "XP, sobald online"
 }

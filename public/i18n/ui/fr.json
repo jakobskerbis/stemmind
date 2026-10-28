@@ -374,5 +374,19 @@
   "ap.red": "Rouge",
   "ap.orange": "Orange",
   "ap.green": "Vert",
-  "ap.teal": "Turquoise"
+  "ap.teal": "Turquoise",
+  "set.system": "Pays et système scolaire",
+  "lp.qStage": "Quel niveau scolaire ?",
+  "path.regionNote": "Ton parcours suit {system} (brouillon). Les exercices et les leçons viennent encore du matériel slovène ; le tuteur t'explique tout dans ta langue.",
+  "set.dataMode": "Mode léger (moins de données)",
+  "set.dataAuto": "Automatique (connexion lente ou économiseur de données)",
+  "set.dataLite": "Toujours activé",
+  "set.dataNormal": "Désactivé",
+  "set.dataNote": "Réponses du tuteur plus courtes, photos plus petites, pas d'animations ni de police supplémentaire. Les exercices de ton parcours sont enregistrés pour t'entraîner hors connexion.",
+  "off.noConnection": "Pas de connexion Internet.",
+  "off.banner": "Tu es hors connexion. Tu peux t'entraîner avec les exercices enregistrés sur l'appareil ({n}).",
+  "off.bannerEmpty": "Tu es hors connexion. Dès que tu seras de nouveau connecté, des exercices seront enregistrés sur l'appareil.",
+  "off.pending": "Des réponses faites hors connexion attendent d'être envoyées ({n}).",
+  "off.synced": "Réponses hors connexion envoyées : {n}.",
+  "off.xpLater": "XP à la connexion"
 }

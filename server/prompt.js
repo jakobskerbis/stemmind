@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { cleanText } from "./settings.js";
 import { studyProgramPrompt } from "./curriculum.js";
 import { langInfo } from "../public/i18n/languages.js";
+import { SCHOOL_SYSTEMS, isRegional, gradeInfo } from "../public/regions.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const TEMPLATE_PATH = process.env.STEMMIND_PROMPT_PATH || path.join(here, "..", "prompts", "system_prompt.md");
@@ -31,10 +32,13 @@ const PLACEHOLDERS = [
   "weaknesses",
   "learning_path",
   "language",
+  "school_system",
+  "reply_length",
 ];
 
 // settings: normalizirane nastavitve; weaknesses: seznam nizov.
-export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "" }, template = loadTemplate()) {
+// lite: lahki način (kratki odgovori za drag ali počasen prenos podatkov).
+export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "", lite = false }, template = loadTemplate()) {
   const values = {
     learning_path: learningPath || "(Prost pogovor: ni izbrane teme učne poti.)",
     ...settings,
@@ -43,6 +47,8 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     personality_setting: settings.personality_setting || "nevtralna",
     weaknesses: weaknesses.length ? weaknesses.join(", ") : "(še ni podatkov)",
     language: languagePrompt(settings.language, settings.region),
+    school_system: schoolSystemPrompt(settings),
+    reply_length: lite ? "kratka (lahki način)" : "običajna",
   };
   // Zamenjamo samo znana imena, da LaTeX zapisi kot {,} ostanejo nedotaknjeni.
   return template.replace(/\{(\w+)\}/g, (match, key) =>
@@ -74,4 +80,18 @@ export function languagePrompt(code, region = "") {
     name = new Intl.DisplayNames(["en"], { type: "region" }).of(region) || region;
   } catch {}
   return `${base}, regija: ${name} (${region})`;
+}
+
+// Šolski sistem za prompt: »Slovenija« ali npr. »India – CBSE / NCERT; razred Class 8 (8. leto šolanja); …«.
+export function schoolSystemPrompt(settings) {
+  if (!isRegional(settings.school_system)) return "Slovenija (slovenski učni načrt)";
+  const sys = SCHOOL_SYSTEMS[settings.school_system];
+  const g = gradeInfo(settings.school_system, settings.curriculum_level);
+  return [
+    `${sys.name}; razred ${settings.curriculum_level}${g ? ` (${g.level}. leto šolanja, ${g.stage})` : ""}`,
+    sys.exams ? `izpiti: ${sys.exams}` : "",
+    sys.help ? `pomoč v stiski: ${sys.help}` : "",
+  ]
+    .filter(Boolean)
+    .join("; ");
 }

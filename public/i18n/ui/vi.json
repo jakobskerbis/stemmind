@@ -369,5 +369,19 @@
   "ap.red": "Đỏ",
   "ap.orange": "Cam",
   "ap.green": "Xanh lá",
-  "ap.teal": "Xanh mòng két"
+  "ap.teal": "Xanh mòng két",
+  "set.system": "Quốc gia và hệ thống trường học",
+  "lp.qStage": "Cấp học nào?",
+  "path.regionNote": "Lộ trình học theo {system} (bản nháp). Bài tập và bài học vẫn lấy từ tài liệu Slovenia; gia sư giải thích mọi thứ bằng ngôn ngữ của bạn.",
+  "set.dataMode": "Chế độ nhẹ (ít dữ liệu)",
+  "set.dataAuto": "Tự động (khi mạng chậm hoặc bật tiết kiệm dữ liệu)",
+  "set.dataLite": "Luôn bật",
+  "set.dataNormal": "Tắt",
+  "set.dataNote": "Gia sư trả lời ngắn hơn, ảnh nhỏ hơn, không có hiệu ứng và phông chữ bổ sung. Bài tập của lộ trình được lưu để luyện tập khi không có mạng.",
+  "off.noConnection": "Không có kết nối Internet.",
+  "off.banner": "Bạn đang ngoại tuyến. Bạn có thể luyện các bài đã lưu trên thiết bị ({n}).",
+  "off.bannerEmpty": "Bạn đang ngoại tuyến. Khi có mạng lại, bài luyện tập sẽ được lưu vào thiết bị.",
+  "off.pending": "Câu trả lời ngoại tuyến đang chờ gửi ({n}).",
+  "off.synced": "Đã gửi câu trả lời ngoại tuyến: {n}.",
+  "off.xpLater": "XP khi có mạng"
 }

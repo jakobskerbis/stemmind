@@ -552,6 +552,47 @@ export class Progress {
     };
   }
 
+  // ---------- vaje brez povezave (lahki način) ----------
+  // Paket nalog za odklenjene teme poti: naloge z rešitvami, da jih odjemalec preveri sam.
+  // Ob ponovni povezavi strežnik iz semena znova ustvari isto nalogo in odgovor preveri še enkrat.
+  offlinePack(studentId, pathKey, perTopic = 6) {
+    const view = this.pathView(studentId, pathKey);
+    if (!view) return null;
+    const topics = view.units.filter((u) => !u.locked).flatMap((u) => u.topics.map((t) => ({ ...t, unit: u.title }))).filter((t) => t.practice);
+    const path = getPath(pathKey);
+    const tasks = {};
+    const info = {};
+    for (const t of topics) {
+      const topic = getTopic(t.id);
+      info[t.id] = { id: t.id, name: topic.name, goals: topic.goals, unit: topic.unit, path: pathKey, subject: topic.subject, pathLabel: path.label };
+      tasks[t.id] = Array.from({ length: perTopic }, (_, i) => {
+        const level = Math.max(1, Math.min(3, t.level + (i % 3 === 2 ? 1 : 0)));
+        const task = generateTask(t.id, level);
+        return { level, seed: task.seed, task: publicTask(task), answer: task.answer, solution: task.solution, hint: task.hint };
+      });
+    }
+    return { path: pathKey, created: new Date().toISOString(), view, topics: info, tasks };
+  }
+
+  // Odgovori brez povezave: [{ topic_id, level, seed, answer }]. Vsako nalogo štejemo enkrat.
+  offlineSync(studentId, results = []) {
+    let synced = 0;
+    let correct = 0;
+    const seen = this.db.prepare("INSERT OR IGNORE INTO offline_results (student_id, topic_id, seed) VALUES (?, ?, ?)");
+    for (const r of results.slice(0, 300)) {
+      const level = Number(r?.level);
+      const seed = Number(r?.seed);
+      if (!getTopic(r?.topic_id) || !hasGenerator(r.topic_id) || ![1, 2, 3].includes(level) || !Number.isInteger(seed) || seed < 0 || seed >= 2 ** 31) continue;
+      if (!seen.run(studentId, r.topic_id, seed).changes) continue;
+      const task = generateTask(r.topic_id, level, seed);
+      const id = this.saveTask(studentId, task, "practice");
+      const out = this.answer(studentId, id, String(r.answer ?? "").slice(0, 200));
+      synced += 1;
+      if (out.correct) correct += 1;
+    }
+    return { synced, correct };
+  }
+
   // ---------- odgovor ----------
   answer(studentId, taskId, input) {
     const row = this.getTask(taskId);

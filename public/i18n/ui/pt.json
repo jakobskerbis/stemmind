@@ -374,5 +374,19 @@
   "ap.red": "Vermelho",
   "ap.orange": "Laranja",
   "ap.green": "Verde",
-  "ap.teal": "Turquesa"
+  "ap.teal": "Turquesa",
+  "set.system": "País e sistema escolar",
+  "lp.qStage": "Que nível de ensino?",
+  "path.regionNote": "O teu percurso segue {system} (rascunho). Os exercícios e as lições ainda vêm do material esloveno; o tutor explica-te tudo na tua língua.",
+  "set.dataMode": "Modo leve (usa menos dados)",
+  "set.dataAuto": "Automático (com ligação lenta ou poupança de dados)",
+  "set.dataLite": "Sempre ligado",
+  "set.dataNormal": "Desligado",
+  "set.dataNote": "Respostas do tutor mais curtas, fotos mais pequenas, sem animações e sem tipo de letra extra. Os exercícios do percurso ficam guardados para praticares sem ligação.",
+  "off.noConnection": "Sem ligação à Internet.",
+  "off.banner": "Estás sem ligação. Podes praticar os exercícios guardados no dispositivo ({n}).",
+  "off.bannerEmpty": "Estás sem ligação. Quando voltares a estar ligado, os exercícios ficarão guardados no dispositivo.",
+  "off.pending": "Respostas feitas sem ligação à espera de envio ({n}).",
+  "off.synced": "Respostas sem ligação enviadas: {n}.",
+  "off.xpLater": "XP quando estiveres ligado"
 }

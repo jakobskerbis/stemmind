@@ -374,5 +374,19 @@
   "ap.red": "Piros",
   "ap.orange": "Narancs",
   "ap.green": "Zöld",
-  "ap.teal": "Türkiz"
+  "ap.teal": "Türkiz",
+  "set.system": "Ország és iskolarendszer",
+  "lp.qStage": "Melyik iskolafokozat?",
+  "path.regionNote": "A tanulási út a(z) {system} rendszert követi (vázlat). A feladatok és leckék még a szlovén anyagból származnak; a tutor mindent elmagyaráz a nyelveden.",
+  "set.dataMode": "Könnyített mód (kevesebb adat)",
+  "set.dataAuto": "Automatikus (lassú kapcsolatnál vagy adattakarékosságnál)",
+  "set.dataLite": "Mindig be",
+  "set.dataNormal": "Ki",
+  "set.dataNote": "Rövidebb tutorválaszok, kisebb fotók, animációk és extra betűtípus nélkül. A tanulási út feladatai elmentődnek offline gyakorláshoz.",
+  "off.noConnection": "Nincs internetkapcsolat.",
+  "off.banner": "Offline vagy. Gyakorolhatod az eszközön mentett feladatokat ({n}).",
+  "off.bannerEmpty": "Offline vagy. Ha újra lesz kapcsolat, a gyakorló feladatok elmentődnek az eszközre.",
+  "off.pending": "Offline megoldott válaszok várnak elküldésre ({n}).",
+  "off.synced": "Elküldött offline válaszok: {n}.",
+  "off.xpLater": "XP kapcsolódáskor"
 }

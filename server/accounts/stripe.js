@@ -1,6 +1,6 @@
 // Tanek odjemalec za Stripe REST API (brez dodatne knjižnice) in preverjanje webhookov.
 import crypto from "node:crypto";
-import { PLANS } from "./plans.js";
+import { plansFor } from "./plans.js";
 
 const API = "https://api.stripe.com/v1";
 
@@ -44,32 +44,36 @@ export class Stripe {
     return body;
   }
 
-  // Izdelek in štiri cene (po lookup_key). Ustvari jih, če manjkajo.
-  async ensurePrices() {
-    const cached = this.kv?.get("stripe_prices");
+  // Izdelek in štiri cene v valuti (po lookup_key). Ustvari jih, če manjkajo.
+  // EUR: dosedanje cene; regijske valute (INR, NGN …) imajo svoje cene istega izdelka.
+  async ensurePrices(currency = "EUR") {
+    const cacheKey = currency === "EUR" ? "stripe_prices" : `stripe_prices_${currency}`;
+    const cached = this.kv?.get(cacheKey);
     if (cached) return JSON.parse(cached);
-    const found = await this.request("GET", "/prices", { lookup_keys: PLANS.map((p) => p.key), active: "true", limit: 10 });
+    const plans = plansFor(currency);
+    const found = await this.request("GET", "/prices", { lookup_keys: plans.map((p) => p.key), active: "true", limit: 10 });
     const byKey = Object.fromEntries(found.data.map((p) => [p.lookup_key, p.id]));
     let product = found.data[0]?.product;
+    if (!product && currency !== "EUR") product = (await this.ensurePrices("EUR")).product;
     if (!product) {
       product = (await this.request("POST", "/products", { name: "STEMMind", description: "AI inštruktor za matematiko, fiziko in kemijo" })).id;
     }
-    for (const plan of PLANS) {
+    for (const plan of plans) {
       if (byKey[plan.key]) continue;
       const price = await this.request("POST", "/prices", {
         product,
-        currency: "eur",
+        currency: currency.toLowerCase(),
         unit_amount: plan.amount,
         tax_behavior: "inclusive",
         lookup_key: plan.key,
-        nickname: plan.label,
+        nickname: currency === "EUR" ? plan.label : `${plan.label} (${currency})`,
         recurring: { interval: plan.interval },
         metadata: { seats: plan.seats },
       });
       byKey[plan.key] = price.id;
     }
     const result = { product, prices: byKey };
-    this.kv?.set("stripe_prices", JSON.stringify(result));
+    this.kv?.set(cacheKey, JSON.stringify(result));
     return result;
   }
 

@@ -384,5 +384,19 @@
   "ap.red": "Červená",
   "ap.orange": "Oranžová",
   "ap.green": "Zelená",
-  "ap.teal": "Tyrkysová"
+  "ap.teal": "Tyrkysová",
+  "set.system": "Krajina a školský systém",
+  "lp.qStage": "Aký stupeň školy?",
+  "path.regionNote": "Študijná cesta sleduje systém {system} (návrh). Úlohy a lekcie sú zatiaľ zo slovinského materiálu; tútor ti všetko vysvetlí v tvojom jazyku.",
+  "set.dataMode": "Úsporný režim (menej dát)",
+  "set.dataAuto": "Automaticky (pri pomalom pripojení alebo šetrení dát)",
+  "set.dataLite": "Vždy zapnutý",
+  "set.dataNormal": "Vypnutý",
+  "set.dataNote": "Kratšie odpovede tútora, menšie fotky, bez animácií a bez ďalšieho písma. Úlohy zo študijnej cesty sa uložia na precvičovanie bez pripojenia.",
+  "off.noConnection": "Žiadne pripojenie na internet.",
+  "off.banner": "Si offline. Môžeš precvičovať úlohy uložené v zariadení ({n}).",
+  "off.bannerEmpty": "Si offline. Keď budeš opäť online, úlohy na precvičovanie sa uložia do zariadenia.",
+  "off.pending": "Odpovede z režimu offline čakajú na odoslanie ({n}).",
+  "off.synced": "Odoslané odpovede z režimu offline: {n}.",
+  "off.xpLater": "XP po pripojení"
 }
