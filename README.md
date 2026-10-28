@@ -32,7 +32,7 @@ Brez ključa se aplikacija zažene v preizkusnem načinu. Teste zaženeš z `npm
 
 Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac.command` (Mac). Skript ob prvem zagonu vpraša za ključ, namesti knjižnice in odpre brskalnik. `ustvari-bliznjico.bat` / `ustvari-bliznjico-mac.command` naredi bližnjico STEMMind na namizju.
 
-**Na telefonu (testno):** dvakrat klikni `telefon-windows.bat` (ali `node scripts/telefon.js`). Skript posodobi aplikacijo, ob prvem zagonu vpraša za geslo (`STEMMIND_PASSWORD` v `.env`), zažene strežnik in odpre brezplačno povezavo Cloudflare (`https://…trycloudflare.com`). Povezava se izpiše v oknu, kopira v odložišče in shrani v `data/telefon-povezava.txt`. Deluje, dokler je okno odprto in računalnik prižgan; ob vsakem zagonu je nova.
+**Na telefonu (testno):** dvakrat klikni `telefon-windows.bat` (ali `node scripts/telefon.js`). Skript posodobi aplikacijo, ob prvem zagonu vpraša za geslo (`STEMMIND_PASSWORD` v `.env`), zažene strežnik in odpre povezavo z interneta. **Stalna povezava** (ista ob vsakem zagonu): ob prvem zagonu prilepi žeton in brezplačni naslov iz računa [ngrok](https://dashboard.ngrok.com/signup); shranita se v `.env` (`NGROK_AUTHTOKEN`, `NGROK_DOMAIN`). Brez tega (Enter) se odpre začasna povezava Cloudflare (`https://…trycloudflare.com`), ki je ob vsakem zagonu nova. Povezava se izpiše v oknu in shrani v `data/telefon-povezava.txt`; povezava za prijatelje z geslom (`…/?geslo=…`) se kopira v odložišče in shrani v `data/povezava-za-prijatelje.txt`. Deluje, dokler je okno odprto in računalnik prižgan. Na telefonu v meniju brskalnika izberi »Dodaj na začetni zaslon« (ikona in `manifest.webmanifest`).
 
 **Posodobitev na najnovejšo različico**: dvakrat klikni `posodobi-windows.bat` ali `posodobi-mac.command`. Skript prenese zadnjo različico z GitHuba, jo prekopira čez to mapo (ključ `.env`, podatki `data/` in knjižnice ostanejo) in aplikacijo znova zažene.
 
@@ -41,7 +41,8 @@ Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac
 | Spremenljivka | Privzeto | Pomen |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | – | Ključ iz console.anthropic.com. Brez njega preizkusni način. |
-| `STEMMIND_PASSWORD` | – | Če je nastavljeno, stran zahteva geslo (HTTP Basic, uporabniško ime poljubno). Priporočeno, dokler ni pravih prijav. |
+| `STEMMIND_PASSWORD` | – | Če je nastavljeno, stran zahteva geslo: stran za prijavo, ki si geslo zapomni v piškotku za eno leto (deluje tudi v aplikaciji na začetnem zaslonu). Povezava `/?geslo=…` prijavi takoj. Star način HTTP Basic še deluje. |
+| `NGROK_AUTHTOKEN` / `NGROK_DOMAIN` | – | Za stalno povezavo v `scripts/telefon.js` (brezplačen račun ngrok). |
 | `STEMMIND_MODEL` | `claude-haiku-5-5` | Privzeti model za klepet (poceni). |
 | `STEMMIND_MODEL_DEEP` | `claude-opus-5-5` | Za »Razloži podrobneje« in program Tekmovanja. |
 | `STEMMIND_EFFORT` / `STEMMIND_EFFORT_DEEP` | `low` / `medium` | Koliko model razmišlja. |
