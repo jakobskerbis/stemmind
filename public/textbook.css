@@ -20,6 +20,8 @@
 .tb-book p { margin: 0; }
 .tb-book .eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; }
 .tb-book-pdf { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; border-radius: 12px; padding: 10px 16px; background: var(--accent); color: var(--accent-text, #fff); font-weight: 700; }
+.tb-book-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.tb-book-pdf.secondary-link { background: var(--surface-2); color: var(--accent); border: 1px solid var(--border); }
 .tb-jump { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0; background: var(--bg, var(--surface)); }
 .tb-jump a { flex: none; text-decoration: none; border: 1px solid var(--border); border-radius: 99px; padding: 5px 12px; color: var(--text); font-size: 0.88rem; font-weight: 600; }
 .tb-jump a.on { border-color: var(--accent); color: var(--accent); }
