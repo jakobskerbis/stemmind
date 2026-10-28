@@ -2,6 +2,8 @@
 
 Zbrano 28. 10. 2026 s spletnim iskanjem. Strani fakultet v tem okolju niso bile neposredno dosegljive (omrežne omejitve), zato so predmetniki povzeti po iskalnih izvlečkih uradnih strani in PDF-jev. Pri vsakem programu je navedeno, kaj je preverjeno. Vsebine tem so standardne vsebine predmetov in jih mora pred javno objavo pregledati asistent ali študent.
 
+Stanje 28. 10. 2026 popoldne: vseh 44 programov je preverjenih po uradnih predmetnikih fakultet (2. in 3. krog spodaj). Prvi krog je ostal le kot zgodovina.
+
 Podatki v aplikaciji: `server/university-extra.js` (ustvarjen s `scripts/uvozi-fakultete.py`).
 
 ## Sklop ul-bf-bio – v aplikaciji
@@ -99,7 +101,7 @@ Podatki v aplikaciji: `server/university-extra.js` (ustvarjen s `scripts/uvozi-f
 
 **Izpuščeno:** UL NTF Grafične in interaktivne komunikacije (UN): predmetnik ni preverjen (spletna stran NTF v tej seji ni dosegljiva, omejitev spletnih iskanj je bila izčrpana); UL NTF Načrtovanje tekstilij in oblačil (UN): predmetnik ni preverjen (isti razlog); UL NTF Metalurgija (UN): ni potrjeno, da obstaja kot samostojen UN program 1. stopnje; v rezultatih iskanja sta se pojavila le UN Inženirstvo materialov in magistrski program Metalurgija in materiali; Inženirstvo materialov, 1. letnik: približno 4 ECTS do 60 nista razložena (na strani je 56 ECTS) – verjetno izbirni predmet ali praktično usposabljanje, zato izpuščeno; Inženirstvo materialov, 4. semester in 3. letnik (obvezni in izbirni predmeti): ni preverjeno; Predelava materialov, Funkcionalni materiali (strani predmetov OMM): letnik in program nista potrjena, zato nista uvrščena
 
-## Sklop ul-ffa-fmf – NI v aplikaciji (ni preverjeno, čaka na ponovno zbiranje)
+## Sklop ul-ffa-fmf – NI v aplikaciji (nadomeščeno z uradnimi podatki v 2. krogu)
 
 - **UL-FFA-LBM Laboratorijska biomedicina** (NEPREVERJENO (spletni viri nedosegljivi); rekonstrukcija po znanju modela, razporeditev po letnikih ni preverjena) – vir: https://www.ffa.uni-lj.si/studij/studijski-programi/1-stopnja
   - 1. letnik: Splošna in anorganska kemija, Fizika, Matematika, Biologija celice, Anatomija s histologijo, Organska kemija, Informatika v biomedicini
@@ -171,7 +173,7 @@ Podatki v aplikaciji: `server/university-extra.js` (ustvarjen s `scripts/uvozi-f
 
 **Izpuščeno:** Diplomsko delo / Zaključna naloga (vsi programi); Praktično usposabljanje (UL FKKT, UM FKKT); Splošni in prosto izbirni predmeti kot nadomestna mesta (vsi programi); Proseminar A/B (UL FMF Matematika, Fizika) in Proseminar (UL FMF Finančna matematika): problemski seminar brez lastnega učnega načrta z novo vsebino; Seminar (UL FMF Finančna matematika 2. l, UL FMF Fizika 3. l) in Diplomski seminar (UL FMF): predstavitve študentov; Praktikum I (UL FKKT Tehniška varnost, 3. l): vsebina iz zbranih podatkov ni znana, zato ni zapisan; Obvezni predmeti drugih smeri UL FMF Fizika (Astronomska, Izobraževalna, Meteorologija: npr. Didaktika fizike, Psihologija učenja in pouka, Klimatologija), ker je v aplikaciji modelirana samo smer Fizika; Ostali strokovni izbirni predmeti (npr. Makromolekularna kemija, Površinska in koloidna kemija, Osnove farmakologije, Funkcijska genomika, Osnove polimernega inženirstva, Tehnologija keramike, Elektronika I/II, Matematična fizika II); dodani so le izbrani tipični izbirni predmeti
 
-## Sklop um-fnm-mat – NI v aplikaciji (ni preverjeno, čaka na ponovno zbiranje)
+## Sklop um-fnm-mat – NI v aplikaciji (nadomeščeno z uradnimi podatki v 2. krogu)
 
 - **UM-FNM-MAT Matematika** (NI PREVERJENO – predmetnik ni bil dosegljiv (fnm.um.si blokiran, iskanje izčrpano); seznam po spominu, potrebna potrditev) – vir: https://www.fnm.um.si/
   - 1. letnik: Analiza 1, Linearna algebra, Logika in množice, Diskretna matematika 1, Programiranje 1
@@ -188,21 +190,21 @@ Podatki v aplikaciji: `server/university-extra.js` (ustvarjen s `scripts/uvozi-f
 
 **Izpuščeno:** UM FNM pedagoški/dvopredmetni programi (Izobraževalna matematika, Izobraževalna fizika, dvopredmetni pedagoški programi z matematiko/fiziko) – izven obsega; Tuji jeziki, športna vzgoja, diplomski seminar / zaključno delo in splošni »izbirni predmet« (prosto izbirni) – niso zajeti
 
-## Sklop um-fnm-bio – NI v aplikaciji (ni preverjeno, čaka na ponovno zbiranje)
+## Sklop um-fnm-bio – NI v aplikaciji (nadomeščeno z uradnimi podatki v 2. krogu)
 
 
 **Negotovosti:** Za UM FNM ni potrjeno nič. Iskanje po spletu je bilo za ta krog izčrpano (porabljena je bila skupna omejitev 200 iskanj, ki jo delijo vsi agenti), WebFetch pa za www.fnm.um.si in fnm.um.si javi ENOTFOUND, ker domeni nista na seznamu dovoljenih omrežnih domen te seje. Po navodilu sem nehal poskušati druge strani (um.si, NAKVIS, studij portale). Ker naloga prepoveduje izmišljene predmete, nisem vrnil nobenega programa ali predmeta iz spomina: točnih imen predmetov in njihove razporeditve po letnikih se ne spominjam dovolj zanesljivo. Za ponovni poskus mora uporabnik v omrežnih nastavitvah seje dovoliti fnm.um.si (in po možnosti um.si). Potem lahko korak ponovno zaženemo, ko bo spet na voljo kvota za iskanje.
 
 **Izpuščeno:** UM FNM Biologija (UN): predmetnika ni bilo mogoče preveriti, ker vir ni bil dosegljiv; UM FNM Ekologija z naravovarstvom (UN): predmetnika ni bilo mogoče preveriti, ker vir ni bil dosegljiv; UM FNM Biologija in ekologija z naravovarstvom (UN, če program obstaja v tej obliki): ni preverjeno; drugi nepedagoški UN programi UM FNM (razen Matematike in Fizike): seznama programov ni bilo mogoče preveriti
 
-## Sklop um-fkbv-fe – NI v aplikaciji (ni preverjeno, čaka na ponovno zbiranje)
+## Sklop um-fkbv-fe – NI v aplikaciji (nadomeščeno z uradnimi podatki v 2. krogu)
 
 
 **Negotovosti:** Nisem mogel preveriti nobenega predmetnika, zato ne vračam nobenega programa (navodilo: predmetov ne izmišljam). Vzroka: (1) skupni proračun 200 klicev WebSearch v tem koraku je bil porabljen, še preden sem začel, zato je vsako iskanje vrnilo napako; (2) WebFetch domen www.fkbv.um.si, fkbv.um.si in fe.um.si ne razreši (ENOTFOUND). Te domene so zunaj dovoljenih omrežnih domen te seje ali ne obstajajo. Za ponovni zagon je treba v nastavitvah omrežja seje dovoliti fkbv.um.si, fe.um.si in po možnosti www.um.si (predmetniki, učni načrti), nato pa ta korak zagnati znova z novim proračunom za iskanje. Iz spomina vem le približno, katere programe ima FKBV (UN Kmetijstvo – agronomija, Kmetijstvo – zootehnika, Agrarna ekonomika, Biosistemsko inženirstvo; Ekološko kmetijstvo morda ni UN) in da ima FE en UN program Energetika (3 leta). Seznamov predmetov po letnikih ne morem potrditi, zato jih nisem vključil.
 
 **Izpuščeno:** UM FKBV – vsi UN programi 1. stopnje (Kmetijstvo – agronomija, Kmetijstvo – zootehnika, Biosistemsko inženirstvo, Agrarna ekonomika, Ekološko kmetijstvo …): predmetnika ni bilo mogoče preveriti; UM FE – UN program Energetika: predmetnika ni bilo mogoče preveriti
 
-## Sklop up-famnit – NI v aplikaciji (ni preverjeno, čaka na ponovno zbiranje)
+## Sklop up-famnit – NI v aplikaciji (nadomeščeno z uradnimi podatki v 2. krogu)
 
 - **UP-FAMNIT-MAT Matematika** (NEPREVERJENO – rekonstrukcija po stanju ~2023/24 (vir ni bil dosegljiv); vsi letniki niso preverjeni) – vir: https://www.famnit.upr.si/sl/studij/dodiplomski/
   - 1. letnik: Analiza I – temelji analize, Analiza II – infinitezimalni račun, Algebra I – linearna algebra, Diskretna matematika I – kombinatorika, Programiranje I, Računalniški praktikum
@@ -240,7 +242,7 @@ Podatki v aplikaciji: `server/university-extra.js` (ustvarjen s `scripts/uvozi-f
 
 **Izpuščeno:** Angleški jezik / tuji jezik (vsi programi); Zaključna projektna naloga / diplomsko delo (vsi programi); Praktično usposabljanje / študijska praksa (Sredozemsko kmetijstvo, Varstvena biologija); Terenske vaje in terensko delo brez samostojne akademske vsebine (Varstvena biologija, Sredozemsko kmetijstvo); Splošni izbirni predmeti (placeholderji 'izbirni predmet' v vseh programih); Morebitni drugi UN programi FAMNIT (npr. Podatkovna znanost, Inženirska matematika, Psihologija) – obstoja ni bilo mogoče preveriti, zato niso vključeni
 
-## Sklop ung – NI v aplikaciji (ni preverjeno, čaka na ponovno zbiranje)
+## Sklop ung – NI v aplikaciji (nadomeščeno z uradnimi podatki v 2. krogu)
 
 
 **Negotovosti:** I verified nothing for this scope. WebSearch returned 'budget used up' (the 200-search limit per turn is shared by all agents) on the first call. WebFetch to both www.ung.si and ung.si failed with ENOTFOUND: the host is outside this cloud session's allowed network domains, so ung.si has to be allowed in the session's network settings before a rerun. I followed the tool guidance and did not try more mirrors. From memory only (UNVERIFIED, do not publish as is): UNG Fakulteta za naravoslovje runs the UN programme 'Fizika in astrofizika' (3 years, 180 ECTS). It has year-1 maths (Matematika I/II, linearna algebra), general physics (Fizika I/II), programming/computer tools, chemistry and a physics lab. In years 2–3 come classical mechanics, electromagnetism, mathematical methods of physics, modern/quantum physics, thermodynamics and statistical physics, solid state, nuclear and particle physics, and astrophysics/cosmology, plus elective modules. Likely reusable blocks once confirmed: MAT_1, MAT_2, FIZ_1, FIZ_2, MATFIZ_1, KLAS_MEH, EM_POLJE, MODERNA_1, MODERNA_2, KVANTNA, STAT_TERMO, FTS. UNG's environmental UN programme ('Okolje', historically at Fakulteta za znanosti o okolju; it may since have been renamed or moved under FN) likely has maths, physics, general and organic chemistry, biology, ecology, environmental chemistry, analytical and physical chemistry, microbiology, statistics/informatics, hydrology/meteorology, environmental economics and law, and waste-water/waste technologies. Exact names, years and whether faculties merged all need checking against ung.si.
@@ -448,3 +450,117 @@ Strani fakultet so bile tokrat dosegljive (curl + pdftotext), zato so ti predmet
 
 **Negotovosti:** Vsebina novih predmetov je standardna, ne iz učnih načrtov; posebej razdelitev vsebin med Biotehnologija rastlin 1 (Štajner) in 2 (Luthar) je ocena. Statistika v MIKRO (MB011, Kastelec) je uradno drug predmet kot BIO Statistika (BI049, Kajin), vendar je referencirana z obstoječo kodo ASTAT, ker gre za enako vsebino. BUPENCIM v podatkih nosi ime "Uporabna encimologija", uradno ime je "Uporabna encimatika" (obstoječega predmeta ni bilo dovoljeno spreminjati). BMATMET/BKEM/BBIOL/BUVEKON se uporabljajo v BT in ZP, čeprav imajo programa delno različne nosilce. Študijsko leto na spletnem predmetniku Biologije ni izpisano; ujema se z verzijo programa 2025-2.
 
+
+# 3. krog (28. 10. 2026): preverjeni ostali predmetniki
+
+## Sklop v-bf-2
+
+- **UL-BF-AGR Kmetijstvo – agronomija** (2026/27 (spletni predmetnik BF, prebran 28. 10. 2026): vsi trije letniki in seznam izbirnih predmetov preverjeni) – vir: https://www.bf.uni-lj.si/sl/studij/studijski-programi/predmetnik/2020091415054283/kmetijstvo--agronomija
+  - 1. letnik: CMAT, CKEMBIO, CBOT, CAGRMET, CPEDO, CBTINF, CMIKRO, CEKONVK, CUREJZ
+  - 2. letnik: CFIZRAS, Osnove poljedelstva, CGENRAS, Splošno vinogradništvo, CSTAT, CKMTEH, CZLAHT, CSPLSAD, CSPLVRT
+  - 3. letnik: Ekonomika kmetijske proizvodnje, CFITOM1, Osnove ekologije in varstva okolja, Osnove rastlinske biotehnologije, Tehnologije pridelovanja sadja, grozdja, vrtnin in okrasnih rastlin, CTRAVN
+  - izbirni: CKLIM, CRODTAL, CEKOTAL, CZDRAR, CSPLZIV, Politika in pravo kmetijstva, Pridelava vrtnin za trg
+- **UL-BF-ZOO Kmetijstvo – zootehnika** (2026/27 (spletni predmetnik BF, prebran 28. 10. 2026): vsi trije letniki in seznam izbirnih predmetov preverjeni) – vir: https://www.bf.uni-lj.si/sl/studij/studijski-programi/predmetnik/2020091415073424/kmetijstvo--zootehnika
+  - 1. letnik: CBIODZ, CBOT, CETOL, CKEMBIO, CMAT, CEKONVK, CMIKIMU, COSPEDGN, CSPLZIV, CSPLPOLJ, CVARRAS
+  - 2. letnik: CFIZANA, Krma in konzerviranje krme, Osnove biometrije, Osnove genetike živali, COSPREH, Uvod v trženje v agroživilstvu, Ekologija in varstvo okolja v kmetijstvu, CKMTEH, Kvantitativna genetika in selekcija domačih živali
+  - 3. letnik: Gradnja in oprema živinorejskih obratov, Politika in pravo kmetijstva, Reja drobnice, Reja goved, Reja prašičev, Sonaravno kmetijstvo, Reja perutnine, Uvod v ekonomiko kmetijskih gospodarstev
+  - izbirni: CSADVIN, BREJLAB, Čebelarstvo, Konjereja, Prehrana in krmljenje divjadi
+- **UL-BF-GOZD Gozdarstvo in obnovljivi gozdni viri** (2026/27 (spletni predmetnik BF, prebran 28. 10. 2026): vsi trije letniki in seznam izbirnih predmetov preverjeni) – vir: https://www.bf.uni-lj.si/sl/studij/studijski-programi/predmetnik/2020091415050778/gozdarstvo-in-obnovljivi-gozdni-viri
+  - 1. letnik: DBOTFIZ, DDENDRO, DGOZZOO, DMAT, DRACPRAK, DSPLKEM, DGEODEZ, DMETEO, DPEDOL
+  - 2. letnik: Dendrometrija in daljinsko pridobivanje podatkov, Gozdni proizvodi, DGOZPODJ, Krajinska ekologija, Metode raziskovalnega dela v gozdarstvu I, Zgradba lesa, DFITOCEN, Gozdna fitopatologija, Organizacija gozdarskih del, DPRIDLES
+  - 3. letnik: Ekologija divjadi in lovno gospodarsko načrtovanje, Ergonomija, Gospodarjenje s povirji in hudourniki, DGOZEKN, Gozdne prometnice, Zgradba, rast in donos gozda, Osnove odločanja in modeliranja, DUREJ, Varstvo gozdov
+  - izbirni: DEKORAST, DGLOBSPR, Dendrokronologija, Gozdna hidrologija, Gozdna mikoriza, Uvod v ekologijo
+- **UL-BF-LES Lesarstvo** (2026/27 (spletni predmetnik BF, prebran 28. 10. 2026): vsi trije letniki in seznam izbirnih predmetov preverjeni) – vir: https://www.bf.uni-lj.si/sl/studij/studijski-programi/predmetnik/2020091415093487/lesarstvo
+  - 1. letnik: DFIZ, DKEMLES, DLESSKOD, DMAT, DMEH, DMATER, DSTROJ, DTEHRIS, DZGLES1
+  - 2. letnik: Konstruiranje in oblikovanje, Lepila in lepljenje lesa, Management lesnega podjetja z osnovami mikroekonomike, DTEHLES, Primarne obdelovalne tehnologije, Tehnologije sušenja lesa, Upravljanje proizvodnih procesov v lesarstvu, Zaščita lesa
+  - 3. letnik: Lesna biomasa v biorafinerijah, Lesni ploščni kompoziti I, Management trženja v lesarstvu, DMEHOBD, Konstrukcijski lesni kompoziti, Kvantitativne metode in statistika, Obdelava površin lesa in lignoceluloznih materialov
+  - izbirni: DRACKON, DBIOTLES, Zgradba lesa II, Kemična zgradba lesa, Nanofibrilirana celuloza iz lesnih vlaken
+
+**Opombe:** I read the official BF predmetnik pages for all four programmes for every year (?year=10/20/30) plus the elective list (?year=01). The URLs were the existing source URLs: .../predmetnik/2020091415054283/kmetijstvo--agronomija, .../2020091415073424/kmetijstvo--zootehnika, .../2020091415050778/gozdarstvo-in-obnovljivi-gozdni-viri and .../2020091415093487/lesarstvo. Year 1 of all four programmes already matched the data, and years 2–3 were incomplete. I filled them in completely, and the content of the 58 new F-courses follows the 'Vsebina predmeta' section of each course's učni načrt page on bf.uni-lj.si. Validation passed: all codes resolve to existing UL-BF codes or new ones, there are no duplicate topics, and every course has 3–5 units of 2–3 topics.
+
+**Negotovosti:** Spletni predmetnik BF ne navaja izrecno študijskega leta (stran navaja pogoje za vpis od 2025/26 do 2028/29); prebrano 28. 10. 2026, zato ga obravnavam kot 2026/27. Več obstoječih kod je uporabljenih za predmete z nekoliko drugačnim uradnim imenom, ker gre za isti predmet: CSTAT = »Statistika I«, CTRAVN = »Osnove travništva in pašništva«, DMEHOBD = »Mehanske obdelovalne tehnologije lesa in lesnih kompozitov« (3. letnik LES, prej v 2. letniku), BREJLAB (Reja laboratorijskih živali, isti nosilec). Kot NOVA predmeta sem definiral »Osnove poljedelstva« (AGR, 7 KT) in »Zgradba lesa« (GOZD, 4 KT), čeprav obstajata CSPLPOLJ (ZOO, 4 KT) in DZGLES1 (LES, 8 KT) z istim nosilcem, ker sta to ločena predmeta z drugačnim obsegom. DEKORAST (Ekologija rastlin) in CSPLZIV pri AGR sta v uradnem predmetniku izbirna, zato sta zdaj med izbirnimi predmeti in ne v letniku. Predmeti, ki se izvajajo v dveh semestrih (npr. Botanika, Pedologija, Fitomedicina I), so našteti enkrat.
+
+**Izpuščeno:** Praktično usposabljanje / Praksa (AG012, ZO020) – praksa; Diplomsko delo (AG052, ZO057, GG041, LE057); Generični 'Izbirni predmet(i)' sloti v predmetnikih; Športna vzgoja (obvezna obštudijska dejavnost); Izbirni predmeti, izpuščeni zaradi omejitve ~8 ali ker niso naravoslovni: AGR – Gojenje gob, Sociologija podeželja, Prehrana živali, Namakanje, Pridelava namiznega grozdja, Uporabne in strupene samonikle rastline in glive; ZOO – Reja kuncev, Reja alternativnih vrst perutnine, Reja hišnih živali, Mehanizacija za spravilo in konzerviranje krme, Prehrana hišnih živali, Prehrana konj, Razvoj podeželja, Vrednotenje klavne vrednosti; GOZD – Proizvodnja gozdnega reprodukcijskega materiala, Gospodarjenje z gozdovi v Sloveniji, Sociologija gozdnih virov, Tujerodne gozdne živali; LES – Dendrologija, Lesno-plastični in lahki lesni ploščni kompoziti, Računalniške tehnologije pri poslovanju, Mikroskopske metode za analizo različnih materialov (brez strani z učnim načrtom)
+
+## Sklop v-ntf
+
+- **UL-NTF-GEO Geologija (UN)** (2026/27, predmetnik preverjen (vsi 3 letniki, predstavitveni zbornik 2026/27); vsebine novih predmetov po učnih načrtih Geologija_Ucni_nacrti_UNI.pdf) – vir: https://www.ntf.uni-lj.si/og/wp-content/uploads/sites/3/2026/04/Geologija_BScPredstavitvenizbornik2026-27.pdf
+  - 1. letnik: GFIZ1, GGIS, MKEM1, GKRIST, GMAT1, GOSNGEO, Geomehanika, GMINER, GPALEO, Pedologija, Preiskave mineralnih materialov, GSTAT, Uvod v strokovno-raziskovalno delo
+  - 2. letnik: GGEOKEM, Mineralne surovine, GPETMAG, GPETMET, GSEDPET, GKVART, Geomorfologija, GSTRAT, Stratigrafska orodja, GSTRUKT
+  - 3. letnik: GGEOSLO, GHIDRO, GINZGEO, GOKOLJE, GREGGEO, GGEOFIZ, GKRAS, GTERKART, GUVKART
+  - izbirni: GMAT2, GVULK, GZGOD, GRUDISC, Osnove seizmologije, Paleontologija vretenčarjev, Geomedicina, Biogeokemija
+- **UL-NTF-GIO Geotehnologija in okolje (UN)** (2026/27, predmetnik preverjen (vsi 3 letniki, zbornik 2026/27 in spletne strani predmetnika); vsebine novih predmetov po učnih načrtih 2023) – vir: https://www.ntf.uni-lj.si/ogro/wp-content/uploads/sites/4/2026/03/2026-27_Geotehnologija_in_okolje.pdf
+  - 1. letnik: GOFIZ1, GOGEOM, GORI, GOKEM1, GOMAT1, GOMEH1, GOFIZ2, Geologija z mineralogijo in petrologijo, Geometrija v inženirstvu II, GOKEM2, GOMAT2, GOMEH2
+  - 2. letnik: GOEKON, Gospodarjenje in predelava odpadnih snovi, GOMEHT, Mehanska procesna tehnika, GOGEOD, Osnove strojništva I, Uporabna geofizika I, Matematika 3, Mehanika tal II, Nižja geodezija II, Osnove strojništva II, Ravnanje z okoljem
+  - 3. letnik: GOVRT, GOINZHG, Pridobivanje mineralnih surovin I, Temeljenje objektov, Bogatenje mineralnih in sekundarnih surovin, Globinsko vrtanje II, Mehanika kamnin, Merstvo v geoznanosti
+  - izbirni: Gradiva, Uporabna geofizika II, Geotehnične konstrukcije, Fluidi v geotehnologiji
+- **UL-NTF-IM Inženirstvo materialov** (2026/27, predmetnik preverjen (vsi 3 letniki, zbornik 2026/27); učni načrti niso bili prebrani, vsebine novih predmetov so standardne) – vir: https://www.ntf.uni-lj.si/omm/wp-content/uploads/sites/5/2026/04/Zbornik-Inzenirstvo-materialov-26-27.pdf
+  - 1. letnik: MMAT1, MFIZ1, MKEM1, MOSNMEH, MOSNINZ, MRACPR, MMAT2, MFIZ2, MKEM2, MMATLAST, MZGRADBA, Materialografski praktikum
+  - 2. letnik: Prenos toplote in snovi, MFIZMET1, Matematika 3, MMEHMAT, MTERMO, MTERMOPR, Numerično modeliranje, Proizvodni sistemi v trdnem, Preiskava materialov, Pirometalurgija železa in zlitin, Procesni in livarski praktikum
+  - 3. letnik: Energetsko predelovalni praktikum, Organizacija in menedžment podjetja, Modelski praktikum
+  - izbirni: Livarstvo, Predelava materialov, Toplotna tehnika, Fizikalna metalurgija jekla, Keramika, Kompoziti, Polimeri, Korozija in zaščita
+
+**Opombe:** I checked all three UL NTF programmes, every year, against the official 2026/27 predmetniki. Geologija: the Slovenian predstavitveni zbornik (ntf.uni-lj.si/og/wp-content/uploads/sites/3/2026/04/Geologija_BScPredstavitvenizbornik2026-27.pdf), cross-checked with the 2025/26 predmetnik PDF; new course content follows the Geologija_Ucni_nacrti_UNI.pdf syllabi (2026/01). Geotehnologija in okolje: the 2026/27 zbornik (ntf.uni-lj.si/ogro/wp-content/uploads/sites/4/2026/03/2026-27_Geotehnologija_in_okolje.pdf) and the 1st, 2nd and 3rd year predmetnik web pages; content follows the 2023 Ucni_nacrti_Geotehnologija_in_okolje_2023.pdf syllabi. Inženirstvo materialov: the given 2026/27 zbornik (Zbornik-Inzenirstvo-materialov-26-27.pdf), which completes years 2 and 3 that the old data had only partly or not at all.
+
+**Negotovosti:** Some existing codes are reused for courses whose official name differs a little. IM: MZGRADBA 'Zgradba materialov' is officially 'Struktura materialov', and MTERMO 'Termodinamika materialov' is officially 'Termodinamika materialov 1'. GEO: GOKOLJE 'Geologija okolja' is officially 'Okoljska geologija'. GEO year 1 uses MKEM1 for 'Kemija 1' because the lecturer (Lavrenčič Štangar) and hours (60/15, 5 ECTS) are the same, although the UL course code differs (0067460 vs 0067584). VMAT3 'Matematika 3' is one course shared by IM (0067595) and GIO (0067541, officially 'Matematika III'): same lecturer, same hours. Its content follows the GIO syllabus; the IM syllabus was not read. GEO 'Geomehanika' (0067458) is defined as a new course, VGEOMEH, instead of reusing GOMEHT 'Mehanika tal I', because the names differ; it copies GOMEHT's topic lines verbatim. In GIO, 'Pridobivanje mineralnih surovin I' takes its content from the 2023 syllabus of 'Tehnično rudarstvo I', which looks like the same course under its old name. The English 'Geologija_BSc_Predmetnik_Ang2026-27.pdf' is headed 2025/2026, so the Slovenian 2026/27 zbornik was used as the source.
+
+**Izpuščeno:** Splošni izbirni predmeti / Izbirni predmet 1 / Strokovni izbirni 1–6 / Splošni izbirni predmet 01–02 (generic placeholders); Diplomsko delo (GEO, GIO, IM); Praksa / Praktično usposabljanje I in II (GEO, GIO, IM); Strokovna angleščina (GIO, IM); GEO electives not included (over the ~8 cap): Fizikalna kemija, Geodezija, Inženirska geologija pri posegih v prostor, Morska geokemija 1, Osnove mikroskopije rud, Mikroskopija karbonatov, Nanomateriali, Projektno delo, Raba prostora in presoja vplivov na okolje, Raziskovalna naloga, Raziskovalni praktikum, Strukturnogeološki praktikum; IM electives not included (over the ~8 cap): Procesna jeklarska tehnika, Procesna metalurgija neželeznih kovin, Fizikalna metalurgija neželeznih kovin, Polimerna kemija, Reciklaža materialov, Meritve in regulacije, Posebne tehnike preoblikovanja, Posebne tehnike litja, Fizikalno kemijske osnove spajanja, Arheometalurgija, Elektrotehnika, Ognjevzdržna gradiva, Metalurgija prahov, Umetnostno oblikovanje kovin, Industrijske peči, Menedžment kakovosti, Nanotehnologije in nanomateriali, and the general electives of year 2 (economics/management courses, Krožno gospodarstvo materialov, Informacijske kompetence); GMIKRO (Osnove mikroskopije) removed from the GEO electives: the official course is 'Osnove mikroskopije rud' (ore microscopy in reflected light), and the existing GMIKRO content covers transmitted-light polarising microscopy; GKVART moved from the GEO electives to the compulsory courses of year 2
+
+## Sklop v-obstojece
+
+- **UL-FKKT-KEM Kemija** (2026/27, predmetnik preverjen (predstavitveni zbornik, vsi 3 letniki)) – vir: https://fkkt.uni-lj.si/fileadmin/user_upload/Studentski_referat/Zborniki/2026-2027/1000373_Kemija.pdf
+  - 1. letnik: MAT, FIZ, SPLKEM, NPRSAK, NMOVZ, ANORG, TRDNINE, ANAL1
+  - 2. letnik: ANAL2, NPRAK, ORG1, FIZKEM, STRUKT, NOSNPROG, ORG2, NPROK, NPRFK, SPEKTRO
+  - 3. letnik: ORG3, ORGANAL, INSTR, BIOLKEM, NINSTRAN, NPRINSTR, OSNKI
+  - izbirni: NZELENA, NKEMOK, Kemija heterocikličnih spojin, Površinska in koloidna kemija, Makromolekularna kemija, Kemija za trajnostni razvoj
+- **UL-FKKT-BIO Biokemija** (2026/27, predmetnik preverjen (predstavitveni zbornik, vsi 3 letniki)) – vir: https://fkkt.uni-lj.si/fileadmin/user_upload/Studentski_referat/Zborniki/2026-2027/1000371_Biokemija.pdf
+  - 1. letnik: MAT, FIZ, SPLKEM, NKEMPRAK, NSPLBIO, ANORG, ORG1, TEMBIOKEM, NBIOKPRAK
+  - 2. letnik: ORG2, FIZKEM, NBIOCEL, BIOKEM, INSTRANAL, NOSNPROG, NMOLBIO, NSTRBIO, STRUKTBIO, NBIOKINF, NMIKRO
+  - 3. letnik: SPEKTROBIO, NKLON, ENCIM, NIMUNO, NGENET, NFIZIOL
+  - izbirni: NVIROL, Osnove biokemijskega inženirstva, Osnove farmakologije, Rastlinska biokemija, Funkcijska genomika, Molekularna evolucija in razvoj
+- **UL-FKKT-KI Kemijsko inženirstvo** (2026/27, predmetnik preverjen (predstavitveni zbornik, vsi 3 letniki)) – vir: https://fkkt.uni-lj.si/fileadmin/user_upload/Studentski_referat/Zborniki/2026-2027/1000372_Kemijsko_inzenirstvo.pdf
+  - 1. letnik: MAT, FIZ, SPLKEM, NMOVZ, OSNINZ, NOSNPROG, NPRFIZ, ANORG, NPRSAK, KI1
+  - 2. letnik: MAT2, ORG, KEMTERMO, INSTRANAL, NPRIMA, KI2, MEHFLU, MATINZ, KVANT, NKPVAR
+  - 3. letnik: PRENOS, KRI, KITERMO, PRODUKT, SEPAR, NPRKI
+  - izbirni: NBIOTEH, Osnove polimernega inženirstva, Sodobne metode karakterizacije materialov, Mehanske in hidrodinamske operacije, Osnove okoljskega inženirstva, Polimerni materiali
+- **UL-FKKT-TV Tehniška varnost** (2026/27, predmetnik preverjen (predstavitveni zbornik, vsi 3 letniki)) – vir: https://fkkt.uni-lj.si/fileadmin/user_upload/Studentski_referat/Zborniki/2026-2027/1000370_Tehniska_varnost.pdf
+  - 1. letnik: MAT1, FIZ1, KEMIJA, NVARGRAD, MAT2, FIZ2, NOSNVAR, NVARSTROJ
+  - 2. letnik: NPRAVVAR, NDELOK, NUMVAR, STROJGRAD, PROCTEH, NVAROK, OSNMAT, GORENJE, NMEDDELA
+  - 3. letnik: STATVAR, NTVEGANJE, ELEKTROVAR, NNEVSNOV, NPSIHDEL, NERGO, NGASENJE
+  - izbirni: NPOZOBJ, Meritve v delovnem okolju, Delovne priprave in naprave, Uvod v programiranje
+- **UL-FS-RRP Strojništvo – razvojno raziskovalni program** (veljavni predmetnik na strani programa (stanje oktober 2026), vsi 3 letniki preverjeni) – vir: https://www.fs.uni-lj.si/studij/studij-1-stopnje/un/
+  - 1. letnik: ANDE, FIZ, NMERITVE, STATKIN, NTEHRIS, LAVA, TRDNOST, NEKOVMAT, TERMO, KOVMAT, ELEKTRO
+  - 2. letnik: INTFOUR, DINAMIKA, TEKOCINE, NUMERIKA, STROJEL1, PDEKOMPL, NSTROJEL2, NIZDTEH1, PRENOS, NKRMIL, NKONSTR
+  - 3. letnik: NUMMOD, NTRIBO, NIZDTEH2, HIDRAVLIKA, NPOGONI, ENERGETSKI, PODATKI, NMEHATR
+  - izbirni: Napredna računalniška orodja, Proizvodno inženirstvo, Okoljsko inženirstvo, Inoviranje v strojništvu – RRP
+- **UL-FMF-MAT Matematika** (2026/27, predmetnik preverjen (vsi 3 letniki; enak kot 2025/26)) – vir: https://www.fmf.uni-lj.si/sl/studij-matematike/programi/1mate/2026/
+  - 1. letnik: ALGEBRA1, ANALIZA1, FIZIKA1, LOGIKA, NRACPRAK, NUVPROG
+  - 2. letnik: ALGEBRA2, ANALIZA2A, ANALIZA2B, DISKRETNA1, FIZIKA2, NPROG1, TOPOLOGIJA
+  - 3. letnik: ANALIZA3, ANALIZA4, MEHANIKA1, STATISTIKA, UVODNUM, VERJETNOST
+  - izbirni: Mehanika 2, Numerična linearna algebra, XMATMOD, Diskretna matematika 2, Optimizacija 1, NPSA1, NKRIPTO, FINMAT1
+- **UL-FMF-FIMA Finančna matematika** (2026/27, predmetnik preverjen (vsi 3 letniki)) – vir: https://www.fmf.uni-lj.si/sl/studij-matematike/programi/1fima/2026/
+  - 1. letnik: ALGEBRA1, ANALIZA1, ANALIZA2, DISKRETNE, NMIKROEK, OPTIM, NRACPRAK, NUVPROG
+  - 2. letnik: ANALIZA3F, NANALR, NDENAR, FINMAT1, NMAKROEK, NUM1, NUM2, OPERRAZ, VERJ1, VERJSTAT
+  - 3. letnik: NFINPRAK, NFINTRG, SLUCPROC, STAT1, IGRE, VERJMERA
+  - izbirni: Ekonometrija 1, Monetarna ekonomija, Organizacija in struktura trga, Temelji finančnega in poslovodnega računovodstva, NPSA1, NKRIPTO, XMATMOD, Diskretna matematika 2
+- **UL-FMF-FIZ Fizika** (2026/27, predmetnik smeri Fizika preverjen (vsi 3 letniki)) – vir: https://www.fmf.uni-lj.si/sl/studij-fizike/programi/1Fiz/2026/7000777/
+  - 1. letnik: NFIZPRAK1, NFIZPRAK2, KEMIJA1, KLASFIZ, MAT1, MAT2, NRACPRAKF
+  - 2. letnik: NFIZPRAK3, NFIZPRAK4, KLASMEH, MAT3, MAT4, MODERNA1, MODERNA2, STATTERMO, VERJFIZ
+  - 3. letnik: EMPOLJE, NFIZMER, NFIZPRAK5, FTS, KVANT
+  - izbirni: MATFIZ, NUMERIKA, OPTIKA, NJEDRA, NMEHKONT, NASTRO1, Uvod v fiziko atmosfere, Elektronika I
+- **UM-FKKT-KEM Kemija** (2025/26 (veljavni predmetnik, povezan na strani fakultete oktobra 2026), vsi 3 letniki preverjeni) – vir: https://www.fkkt.um.si/wp-content/uploads/2025/09/Predmetnik-1.-stopnja-UN-KE.pdf
+  - 1. letnik: MATA, SPLKEM, FIZ1, NRACKEM, MATB, ANORG, ANAL1, FIZ2, KEMRAC
+  - 2. letnik: MATC, FIZKEM1, ORG1, ANAL2, NMEROSL, ORG2, FIZKEM2, NGRADIVA, NNANO
+  - 3. letnik: TERMO, ORGSINT, BIOKEMUVOD, SEPTEH, KRT1, ORGANAL, NKEMOK, NPOLIM
+  - izbirni: NINSTRAN, PRENOST, PRENOSS, NPOVRS, NBIOINFG, Tehnologija keramike
+- **UM-FKKT-KI Kemijsko inženirstvo** (2025/26 (veljavni predmetnik, povezan na strani fakultete oktobra 2026), vsi 3 letniki preverjeni) – vir: https://www.fkkt.um.si/wp-content/uploads/2025/09/Predmetnik-1.-stopnja-UN-KI.pdf
+  - 1. letnik: MATA, SPLKEM, FIZ1, NRACKEM, NELPROC, MATB, ANORG, ANAL1, FIZ2, BILANCE
+  - 2. letnik: MATC, FIZKEM1, ORG1, MEHFLU1, PRENOST, ANAL2, PRENOSS, SEP1, ORG2, FIZKEM2, NGRADIVA
+  - 3. letnik: TERMO, SEP2, KRT1, DINPROC, NBIOKMB, NBIOKTEH, OPTIM
+  - izbirni: NORGTEH, NEKOPOD, ORGSINT, NBIOINFG, Tehnologija vod, Anorganska tehnologija, Biotehnologija, Polimeri
+
+**Opombe:** I read the official predmetniki for all 10 programmes. UL FMF pages for 2026/27: /sl/studij-matematike/programi/1mate/2026/, /1fima/2026/ and /sl/studij-fizike/programi/1Fiz/2026/7000777/. The FMF server leaves out its HARICA "GEANT TLS RSA 1" intermediate certificate, so I took it from repo.harica.gr and checked the chain against it. Verification stayed on. The UL FKKT sources are the 2026-2027 zbornik PDFs (1000370–1000373), UL FS is www.fs.uni-lj.si/studij/studij-1-stopnje/un/, and UM FKKT is the wp-content/uploads/2025/09 Predmetnik-1.-stopnja-UN-KE/KI PDFs, still linked from the faculty's 1st-cycle page. UL-FMF-MAT's compulsory courses for 2026/27 match the app's union of the two files; UM-FKKT-KI year 3 is now verified (Termodinamika, Separacijska tehnika II, KRT I, Dinamika procesov, Biokemija in molekularna biologija, Biokemijska tehnika, Optimiranje procesov). All codes were checked with a script against both data files.
+
+**Negotovosti:** UL FKKT lists Matematika, Fizika (and at Kemija/Biokemija also Fizikalna kemija, Praktikum iz SAK) as two separate same-named courses (1st and 2nd semester); I kept the existing single combined codes MAT, FIZ, FIZKEM, NPRSAK, whose content covers both semesters. UL FMF FIMA's Analiza 1 (7 ECTS) and Algebra 1 reuse the Matematika codes ANALIZA1/ALGEBRA1 as before, although the FIMA versions are shorter. UL FS page carries no explicit year label; it is the current UN page (Oct 2026) and its 1st year matches the 2026/27 zbornik. UM FKKT predmetnik PDFs are dated Sept 2025 (2025/26) but are still the ones linked from the faculty's 1st-cycle page; no 2026/27 PDF found. UM-FKKT-KI: NORGTEH and NEKOPOD are moved from 3rd-year compulsory to electives (they are 'Izbirni predmet I' options). New-course content is standard content, not taken from the učni načrt.
+
+**Izpuščeno:** Seminar, Diplomski seminar, Proseminar A/B (UL FMF) – seminarji brez vsebine predmeta; Praktikum I (UL FKKT TV, 3. letnik), Praktično usposabljanje, Diplomsko delo/Zaključna naloga – praksa/zaključno delo; Splošni izbirni predmeti (Razvijanje sporazumevalne zmožnosti v slovenščini, Tehniška angleščina, Poročanje v strojništvu – RRP, Interdisciplinarni projekt – RRP, Industrijski projekt) – jeziki/projekti/generični izbirni; Generic 'Izbirni predmet', 'Prosto izbirni predmet', 'Izbirni predmet iz drugih programov' placeholders; Further typical electives beyond ~8 per programme (e.g. FMF-MAT Algebra 3, Afina in projektivna geometrija, Teorija iger, Slučajni procesi 1; FKKT-KEM Anorganska sinteza, Sintezna organska kemija, Kemijska analiza živil; UM-FKKT-KI Energetski management, Računalniško projektiranje procesov, Prehrambena tehnologija ...); UL-FMF-FIZ: NOSNMET (Osnove meteorologije) removed from electives – not in the 2026/27 smer Fizika list (replaced by WFIZATM Uvod v fiziko atmosfere)

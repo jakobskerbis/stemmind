@@ -5319,6 +5319,1910 @@ export const EXTRA_FACULTIES = [
             ]
           ]
         ]
+      ],
+      "FOSPOLJ": [
+        "Osnove poljedelstva",
+        "BIO",
+        [],
+        [
+          [
+            "Poljedelska pridelava",
+            [
+              "Večnamembnost poljedelstva | hrana, krma, industrijske surovine, obnovljivi viri energije, trajnostna raba zemljišč",
+              "Sistemi pridelave poljščin | konvencionalna, integrirana in ekološka pridelava, definicija pridelka",
+              "Poljščine in okolje | vpliv podnebja in vremena, rast in razvoj po lestvici BBCH"
+            ]
+          ],
+          [
+            "Tla in obdelava",
+            [
+              "Tla kot rastišče | obdelava in oskrba tal glede na lastnosti tal",
+              "Sistemi obdelave tal | konvencionalna in konzervirajoča obdelava, direktna setev, prednosti in slabosti",
+              "Organska snov in hranila | gospodarjenje s humusom, kroženje hranil"
+            ]
+          ],
+          [
+            "Seme in sorte",
+            [
+              "Semenarstvo | certificirano seme, kontrola semena po ISTA, promet s semenom",
+              "Sorte poljščin | introdukcija sort, sortna lista, Skupni katalog EU"
+            ]
+          ],
+          [
+            "Zasnova in oskrba posevka",
+            [
+              "Setev poljščin | količina semena, čas setve, gostota sklopa",
+              "Plevelna flora | škodljivost, razmnoževanje in širjenje, prag škode, načini zatiranja",
+              "Spravilo posevkov | čas in način spravila glede na tehnološko raven"
+            ]
+          ],
+          [
+            "Kolobar",
+            [
+              "Pomen kolobarja | zgodovina, temeljna pravila kolobarjenja",
+              "Vrste kolobarjev | norfolški, staroslovenski, renski kolobar, sestava kolobarja"
+            ]
+          ]
+        ]
+      ],
+      "FSPLVIN": [
+        "Splošno vinogradništvo",
+        "BIO",
+        [],
+        [
+          [
+            "Vinska trta",
+            [
+              "Rod Vitis | botanična opredelitev, divja in gojena trta, geografska klasifikacija po Negrulju",
+              "Morfologija vinske trte | korenina, trs, mladika, list, cvet, grozd, vinogradniško izrazoslovje",
+              "Ampelografija | ampelografske metode, določanje sort"
+            ]
+          ],
+          [
+            "Sortiment",
+            [
+              "Trsni izbor Slovenije | vinorodne dežele, priporočene sorte, primerjava s tujimi sortimenti",
+              "Podlage in sorte | izbor glede na rastišče in namen"
+            ]
+          ],
+          [
+            "Fiziologija in ampelotehnika",
+            [
+              "Rastni in rodni potencial | fenofaze, razmerje med rastjo in rodnostjo",
+              "Fiziološki principi ampelotehnike | rez, gojitvene oblike, zelena dela"
+            ]
+          ],
+          [
+            "Vinograd in grozdje",
+            [
+              "Kakovost grozdja | tehnološka in polna zrelost, spremljanje dozorevanja",
+              "Obnova in vzdrževanje vinograda | terroir, izbor lege, kulturna krajina in vinske ceste",
+              "Trgatev in vinarstvo | čas trgatve, dobra enološka praksa, namizno grozdje"
+            ]
+          ]
+        ]
+      ],
+      "FEKKMPR": [
+        "Ekonomika kmetijske proizvodnje",
+        "EKO",
+        [],
+        [
+          [
+            "Kmetijstvo v gospodarstvu",
+            [
+              "Kmetijstvo v narodnem gospodarstvu | delež, vloga, posebnosti kmetijske proizvodnje",
+              "Kmetijska gospodarstva | socio-ekonomska in velikostna struktura, proizvodni tipi, standardno pokritje"
+            ]
+          ],
+          [
+            "Teorija proizvodnje in stroškov",
+            [
+              "Proizvodna funkcija | spremenljivi in stalni vložki, produktivnost, mejni proizvod",
+              "Stroškovne funkcije | stalni in spremenljivi stroški, prag pokritja, ekonomski optimum vložka",
+              "Kombinacija vložkov in aktivnosti | optimalno razmerje vložkov, optimalna kombinacija proizvodnje"
+            ]
+          ],
+          [
+            "Knjigovodstvo in računovodstvo",
+            [
+              "Poslovne evidence kmetije | knjigovodstvo, vrednotenje premoženja, amortizacija",
+              "Bilance kmetije | bilanca stanja, izkaz uspeha, zaključni račun",
+              "Kalkulacije stroškov | kalkulacija pokritja, lastna cena pridelka"
+            ]
+          ],
+          [
+            "Načrtovanje in naložbe",
+            [
+              "Načrtovanje proizvodnje | načelo mejne koristi, izbor tehnologije, linearno programiranje",
+              "Donosnost naložb | pojem investicije, metode izračuna donosnosti",
+              "Davki v kmetijstvu | katastrski dohodek, DDV, obdavčitev kmetij"
+            ]
+          ],
+          [
+            "Ekonomika panog",
+            [
+              "Ekonomika rastlinske pridelave | poljedelstvo, hortikultura",
+              "Ekonomika živinoreje | stroški in pokritje v živinorejski proizvodnji"
+            ]
+          ]
+        ]
+      ],
+      "FEKOVO": [
+        "Osnove ekologije in varstva okolja",
+        "BIO",
+        [],
+        [
+          [
+            "Organizem in okolje",
+            [
+              "Ekologija kot veda | ravni organizacije, ekološki dejavniki",
+              "Dejavniki okolja pri rastlinah | temperatura, svetloba, voda, hranila"
+            ]
+          ],
+          [
+            "Populacije in združbe",
+            [
+              "Ekologija populacij | gostota, razmnoževalna vrednost, fitnes, znotrajvrstna kompeticija",
+              "Interakcije med organizmi | kompeticija, mutualizem, antagonizem",
+              "Ekologija združb | pestrost in koeksistenca vrst, ekološka sukcesija, življenjske strategije"
+            ]
+          ],
+          [
+            "Ekosistemi",
+            [
+              "Zgradba in dinamika ekosistema | trofični nivoji, trofična učinkovitost",
+              "Primarna produkcija in kroženje ogljika | respiracija, razgradnja organske snovi, bilanca ogljika",
+              "Biodiverziteta | pomen, grožnje, zavarovana območja"
+            ]
+          ],
+          [
+            "Varstvo okolja",
+            [
+              "Kmetijstvo in okolje | vplivi kmetijskih dejavnosti, multifunkcionalnost kmetijskega prostora",
+              "Onesnaževanje zraka, tal in voda | viri onesnažil, usoda v sistemu tla-rastlina-podtalnica",
+              "Okoljski standardi in zakonodaja | mejne vrednosti, interpretacija okoljskih podatkov"
+            ]
+          ]
+        ]
+      ],
+      "FRASTBT": [
+        "Osnove rastlinske biotehnologije",
+        "BIO",
+        [],
+        [
+          [
+            "Rekombinantna DNA",
+            [
+              "Sodobna biotehnologija | razvoj, področja, pomen za kmetijstvo",
+              "Metode rekombinantne DNA | kloniranje genov, hibridizacija, PCR"
+            ]
+          ],
+          [
+            "Molekulski markerji",
+            [
+              "Vrste molekulskih markerjev | RAPD, AFLP, SSR, ITS",
+              "Uporaba markerjev v kmetijstvu | identifikacija sort, genska raznolikost, diagnostika patogenov",
+              "Genomski pristopi | sekvenciranje genomov, funkcijska genomika rastlin"
+            ]
+          ],
+          [
+            "Tkivne kulture",
+            [
+              "Rastlinske tkivne kulture | mikropropagacija, gojišča, vzgoja zdravih rastlin",
+              "Brezvirusne sadike | meristemske kulture, termoterapija, certificiran sadilni material"
+            ]
+          ],
+          [
+            "Gensko spremenjene rastline",
+            [
+              "Vnos genov | Agrobacterium tumefaciens, biolistika, selekcija transformant",
+              "Lastnosti GS rastlin | odpornost na viruse, škodljivce in herbicide, kakovost pridelka",
+              "Biološka varnost in regulativa | predpisi o GSO, javno mnenje, sprejemljivost biotehnologije"
+            ]
+          ]
+        ]
+      ],
+      "FTEHPRID": [
+        "Tehnologije pridelovanja sadja, grozdja, vrtnin in okrasnih rastlin",
+        "BIO",
+        [],
+        [
+          [
+            "Zasnova nasada",
+            [
+              "Integrirana in ekološka pridelava | načela, smernice, certificiranje",
+              "Postavitev nasada | izbira lege, ureditev zemljišča, infrastruktura, sajenje"
+            ]
+          ],
+          [
+            "Sadjarstvo",
+            [
+              "Sorta, podlaga in gojitvena oblika | interakcije s tlemi, gostota sajenja",
+              "Tehnologija pridelave sadja | vzdrževanje do rodnosti, oskrba v rodnosti",
+              "Pomologija | sorte pečkarjev, koščičarjev, lupinarjev, jagodičja"
+            ]
+          ],
+          [
+            "Vrtnine in okrasne rastline",
+            [
+              "Gojenje na prostem in v zavarovanih prostorih | izbor vrst in sort, kakovost, trženje",
+              "Vzgoja sadik | razmnoževanje, cepljenje, sadike s koreninsko grudico, časovni načrt",
+              "Gojenje v substratih | organski in anorganski substrati, hidroponski sistemi"
+            ]
+          ],
+          [
+            "Vinogradništvo",
+            [
+              "Trajnostni vinogradi | izbor lege, sorte in podlage, obremenitev trte, gojitvene oblike",
+              "Oskrba vinograda | obdelava tal, zatravljanje, spremljanje kakovosti grozdja"
+            ]
+          ]
+        ]
+      ],
+      "FPOLPRAV": [
+        "Politika in pravo kmetijstva",
+        "EKO",
+        [],
+        [
+          [
+            "Teorija kmetijske politike",
+            [
+              "Utemeljitev kmetijske politike | dohodkovni problem, tržne zgrešitve, cilji",
+              "Instrumenti kmetijske politike | cenovni in proračunski transferji, merjenje PSE po OECD",
+              "Nosilci in odločanje | uradništvo, interesne organizacije, lobiranje"
+            ]
+          ],
+          [
+            "Skupna kmetijska politika EU",
+            [
+              "Razvoj SKP | zgodovinske faze, reforme, neposredna plačila",
+              "Mednarodna trgovina s kmetijskimi proizvodi | Svetovna trgovinska organizacija, trgovinska pogajanja",
+              "Pravna ureditev SKP | uredbe, prvi in drugi steber"
+            ]
+          ],
+          [
+            "Slovensko kmetijstvo",
+            [
+              "Kmetijska politika Slovenije | razvoj po letu 1991, vstop v EU",
+              "Ekonomski položaj kmetijstva | proizvodnja, zunanja trgovina, posestna struktura, ekonomski račun za kmetijstvo"
+            ]
+          ],
+          [
+            "Kmetijsko pravo",
+            [
+              "Pravni temelji države | ustava, delitev oblasti, ustavnost in zakonitost",
+              "Kmetijska zakonodaja | promet s kmetijskimi zemljišči, zakon o kmetijstvu, dedovanje kmetij"
+            ]
+          ]
+        ]
+      ],
+      "FVRTTRG": [
+        "Pridelava vrtnin za trg",
+        "BIO",
+        [],
+        [
+          [
+            "Rokovanje s pridelkom",
+            [
+              "Pobiranje vrtnin | zrelost za trg, rokovanje po pobiranju na njivi",
+              "Dodelava vrtnin | ščetkanje, pranje, kalibriranje"
+            ]
+          ],
+          [
+            "Pakiranje in označevanje",
+            [
+              "Embalaža za vrtnine | načini pakiranja, vrste embalaže, pakiranje hitro venečih vrtnin",
+              "Tržni standardi | označevanje, nadzor tržne kakovosti"
+            ]
+          ],
+          [
+            "Varnost in skladiščenje",
+            [
+              "Varnost vrtnin | ostanki pesticidov, nitrati, mikrobiološka kontaminacija",
+              "Skladiščenje vrtnin | temperatura, vlaga, trajanje skladiščenja po skupinah vrtnin"
+            ]
+          ]
+        ]
+      ],
+      "FKRMA": [
+        "Krma in konzerviranje krme",
+        "BIO",
+        [],
+        [
+          [
+            "Hranilna vrednost krme",
+            [
+              "Kemijska analiza krme | Weendska analiza, vlaknine po Van Soestu, vzorčenje krme",
+              "Prebavljivost in razgradljivost | in vivo in in vitro metode, energijska vrednost",
+              "Vrste krme | voluminozna krma, močna krmila, mineralni in vitaminski dodatki"
+            ]
+          ],
+          [
+            "Konzerviranje krme",
+            [
+              "Sušenje krme | seno, hitrost sušenja, izgube hranljivih snovi",
+              "Siliranje | mikroorganizmi v silaži, potek fermentacije, silirni dodatki",
+              "Kvarjenje silaže | aerobna stabilnost, izgube, ocena kakovosti silaže"
+            ]
+          ],
+          [
+            "Krmne mešanice",
+            [
+              "Tehnologija krmnih mešanic | mletje, doziranje, mešanje, peletiranje, ekstrudiranje",
+              "Izboljševanje hranilne vrednosti | fizikalni, kemični in biološki postopki"
+            ]
+          ],
+          [
+            "Varnost krme",
+            [
+              "Škodljive snovi v krmi | tanini, plesni, mikotoksini, vpliv na zdravje živali",
+              "Zakonodaja o krmi | pravilniki o krmi in krmilih, škodljivci v skladiščih"
+            ]
+          ]
+        ]
+      ],
+      "FOSBIOM": [
+        "Osnove biometrije",
+        "MAT",
+        [
+          "STATISTIKA"
+        ],
+        [
+          [
+            "Opisna statistika",
+            [
+              "Populacija in vzorec | osnovni statistični pojmi, vrste spremenljivk",
+              "Mere srednje vrednosti in razpršenosti | povprečje, mediana, varianca, koeficient variabilnosti",
+              "Normalna porazdelitev | parametri, standardizacija, uporaba tabel"
+            ]
+          ],
+          [
+            "Poskusi in podatki",
+            [
+              "Načrtovanje poskusov z živalmi | ponovitve, randomizacija, struktura podatkov",
+              "Urejanje in preverjanje podatkov | napake, osamelci, pregledovanje podatkov"
+            ]
+          ],
+          [
+            "Statistični modeli",
+            [
+              "Korelacija | Pearsonov koeficient, interpretacija",
+              "Linearna regresija | metoda najmanjših kvadratov, determinacijski koeficient",
+              "Statistični model | vplivi in lastnosti, zapis in razvoj modela, izbor metode"
+            ]
+          ],
+          [
+            "Prikaz rezultatov",
+            [
+              "Preglednice in grafi | prikaz rezultatov poskusa, interpretacija",
+              "Interpretacija rezultatov | statistična in biološka značilnost, poročanje"
+            ]
+          ]
+        ]
+      ],
+      "FGENZIV": [
+        "Osnove genetike živali",
+        "BIO",
+        [],
+        [
+          [
+            "Molekularne osnove",
+            [
+              "DNA in replikacija | zgradba DNA, mehanizem podvajanja",
+              "Transkripcija in translacija | zgradba gena, prepisovanje in prevajanje, regulacija izražanja"
+            ]
+          ],
+          [
+            "Mendelsko dedovanje",
+            [
+              "Geni kot enote dedovanja | dominanca, recesivnost, penetranca, ekspresivnost",
+              "Mendlova pravila | monohibridno in dihibridno križanje, kvalitativne lastnosti",
+              "Interakcije genov | komplementacija, plejotropija, epistaza"
+            ]
+          ],
+          [
+            "Kromosomi in kartiranje",
+            [
+              "Citogenetika | kromatin, nukleosom, kariotip, FISH",
+              "Vezano dedovanje | mejoza, rekombinacija, genetske karte"
+            ]
+          ],
+          [
+            "Genetika v živinoreji",
+            [
+              "Genetski označevalci | vrste označevalcev in uporaba v živinoreji",
+              "Sistemi križanja | poskusna križanja, križanje v živinoreji",
+              "Bioetika v genetiki živali | etični vidiki sodobnih metod"
+            ]
+          ]
+        ]
+      ],
+      "FTRZ": [
+        "Uvod v trženje v agroživilstvu",
+        "EKO",
+        [],
+        [
+          [
+            "Osnove trženja",
+            [
+              "Koncept trženja | trženje in prodaja, trženjska usmeritev podjetja",
+              "Trženjsko okolje | makro in mikro okolje",
+              "Nakupno vedenje | modeli nakupnega vedenja, proces nakupne odločitve"
+            ]
+          ],
+          [
+            "Trženjske raziskave",
+            [
+              "Trženjski informacijski sistem | zbiranje podatkov, trženjska analiza",
+              "Segmentacija, ciljanje in pozicioniranje | segmentacijske spremenljivke, pozicioniranje izdelka"
+            ]
+          ],
+          [
+            "Trženjski splet",
+            [
+              "Izdelek in blagovna znamka | življenjski cikel izdelka, trgovske in proizvajalčeve znamke",
+              "Distribucija | trženjske poti, agroživilska veriga, kratke verige, prodaja na kmetiji",
+              "Cena in promocija | strategije oblikovanja cen, promocijski splet"
+            ]
+          ],
+          [
+            "Trženjsko načrtovanje",
+            [
+              "Trženjski načrt | SWOT analiza, cilji, strategije, nadzor",
+              "Tekmeci in konkurenčne strategije | analiza konkurence, izbor strategije"
+            ]
+          ]
+        ]
+      ],
+      "FEKOKMET": [
+        "Ekologija in varstvo okolja v kmetijstvu",
+        "BIO",
+        [],
+        [
+          [
+            "Osnove ekologije",
+            [
+              "Osnovni ekološki pojmi | habitat, ekološka niša, odnosi znotraj vrst in med vrstami",
+              "Abiotski dejavniki | osnove meteorologije, vpliv na organizme",
+              "Kroženje biogenih elementov | ogljik, dušik, fosfor"
+            ]
+          ],
+          [
+            "Agroekosistemi",
+            [
+              "Lastnosti agroekosistemov | interakcije rastlina-rastlina in rastlina-žival",
+              "Biodiverziteta v kmetijstvu | pomen in ohranjanje"
+            ]
+          ],
+          [
+            "Živinoreja in okolje",
+            [
+              "Vplivi reje živali na okolje | emisije amoniaka in toplogrednih plinov, onesnaženje voda",
+              "Živinska gnojila | skladiščenje, kompostiranje, bioplin, nitratna direktiva",
+              "Stranski proizvodi kmetijstva | recikliranje, sekundarne surovine"
+            ]
+          ],
+          [
+            "Varstvo kmetijskega okolja",
+            [
+              "Ukrepi za kakovost zraka, tal in voda | dobra kmetijska praksa, okoljska zakonodaja",
+              "Ekološka in integrirana pridelava | vplivi na okolje, GS organizmi in okolje"
+            ]
+          ]
+        ]
+      ],
+      "FKVGEN": [
+        "Kvantitativna genetika in selekcija domačih živali",
+        "BIO",
+        [],
+        [
+          [
+            "Populacijska genetika",
+            [
+              "Genetski sestav populacije | frekvence alelov in genotipov, spolno vezani geni",
+              "Hardy-Weinbergovo ravnotežje | pogoji, odstopanja zaradi migracij, mutacij in selekcije",
+              "Končne populacije in inbriding | naključni genetski zdrs, efektivna velikost, koeficient inbridinga"
+            ]
+          ],
+          [
+            "Kontinuirana variabilnost",
+            [
+              "Fenotipska in genotipska vrednost | povprečni učinek, plemenska vrednost, dominanca in epistaza",
+              "Komponente variance | heritabiliteta, ponovljivost, ocenjevanje parametrov"
+            ]
+          ],
+          [
+            "Napoved plemenske vrednosti",
+            [
+              "Selekcijski indeks | lastna vrednost, potomci, sorodniki, točnost",
+              "Metoda BLUP | mešani modeli, uporaba v rejskih programih"
+            ]
+          ],
+          [
+            "Selekcija",
+            [
+              "Genetski napredek | selekcijski diferencial, intenzivnost, generacijski interval",
+              "Selekcija na več lastnosti | genetske korelacije, indirektna selekcija, rejski programi"
+            ]
+          ]
+        ]
+      ],
+      "FGRADNJA": [
+        "Gradnja in oprema živinorejskih obratov",
+        "BIO",
+        [],
+        [
+          [
+            "Načela gradnje",
+            [
+              "Biotehnološki kriteriji gradnje hlevov | upravni postopki, dokumentacija, normativi",
+              "Mikroklima v hlevu | zračenje, temperatura, emisije v zrak"
+            ]
+          ],
+          [
+            "Hlevi za govedo",
+            [
+              "Hlevi za krave molznice | ležalni boksi, krmilni prostor, molzišča, hlajenje mleka",
+              "Hlevi za mlado govedo in pitance | teleta, telice, krave dojilje"
+            ]
+          ],
+          [
+            "Hlevi za druge vrste",
+            [
+              "Hlevi za prašiče | normativi po kategorijah, oprema, napajanje, odvajanje gnojevke",
+              "Hlevi za drobnico in konje | normativi, molzišča, oprema"
+            ]
+          ],
+          [
+            "Pomožni objekti in načrtovanje",
+            [
+              "Skladišča krme in gnoja | silosi, dimenzioniranje gnojišč in jam za gnojevko",
+              "Sodobna oprema in senzorji | avtomatizacija, delo na obratu, finančni vidiki naložb"
+            ]
+          ]
+        ]
+      ],
+      "FDROB": [
+        "Reja drobnice",
+        "BIO",
+        [],
+        [
+          [
+            "Biologija drobnice",
+            [
+              "Reja drobnice v svetu | razširjenost, proizvodne usmeritve",
+              "Biološke značilnosti ovc in koz | prebava, vedenje, volna",
+              "Pasme ovc in koz | mlečne, mesne in kombinirane pasme, avtohtone pasme"
+            ]
+          ],
+          [
+            "Prireja",
+            [
+              "Reprodukcija drobnice | sezonskost, pripust, jagnjitev",
+              "Ovčje in kozje mleko | sestava, posebnosti, molža",
+              "Rast in klavna kakovost | pitanje jagnjet in kozličev"
+            ]
+          ],
+          [
+            "Tehnologija reje",
+            [
+              "Prehrana drobnice | pašna in hlevska reja",
+              "Hlevi in oprema za drobnico | posebnosti objektov",
+              "Selekcija in gospodarnost | selekcijski programi, podatkovne baze, ekonomika reje"
+            ]
+          ]
+        ]
+      ],
+      "FGOVED": [
+        "Reja goved",
+        "BIO",
+        [],
+        [
+          [
+            "Pasme in tipi goved",
+            [
+              "Proizvodne usmeritve govedoreje | mlečne, mesne in kombinirane pasme",
+              "Zunanjost in lastnosti | ocenjevanje zunanjosti, dolgoživost, zdravje"
+            ]
+          ],
+          [
+            "Reprodukcija in vzreja",
+            [
+              "Reprodukcija goved | vodenje reprodukcije, potek telitve",
+              "Vzreja telet in telic | postnatalna rast, vzreja plemenskih telic"
+            ]
+          ],
+          [
+            "Prireja mleka in mesa",
+            [
+              "Laktacija in mlečnost | izločanje mleka, dejavniki mlečnosti",
+              "Prireja govejega mesa | pitanje različnih kategorij, klavna kakovost",
+              "Pašna reja goved | tehnologije paše za različne kategorije"
+            ]
+          ],
+          [
+            "Selekcija",
+            [
+              "Preizkušanje lastnosti goved | kontrola prireje, interpretacija rezultatov",
+              "Rejski programi v govedoreji | selekcija v čredi, organizacije in zakonodaja"
+            ]
+          ]
+        ]
+      ],
+      "FPRAS": [
+        "Reja prašičev",
+        "BIO",
+        [],
+        [
+          [
+            "Organizacija prašičereje",
+            [
+              "Pomen prašičereje | organizacija, tržni položaj",
+              "Pasme in hibridi prašičev | materne in očetne pasme, križanje"
+            ]
+          ],
+          [
+            "Reprodukcija",
+            [
+              "Reprodukcijski ciklus svinje | uravnavanje plodnosti, velikost gnezda, vloga merjasca",
+              "Uspešnost reprodukcije | dolgoživost, življenjska prireja, izločanje plemenskih živali",
+              "Vzreja plemenskega podmladka | preizkus, odbira, ocenjevanje zunanjosti"
+            ]
+          ],
+          [
+            "Pitanje in kakovost",
+            [
+              "Uravnavanje pitanja | rast, izgube od rojstva do zakola",
+              "Ocenjevanje na liniji klanja | mesnatost, kakovost mesa"
+            ]
+          ],
+          [
+            "Tehnologija reje",
+            [
+              "Počutje in zoohigiena | normativi, ureditev svinjakov, ravnanje s prašiči",
+              "Zdravstvena preventiva in informacijski sistem | biovarnost, spremljanje prireje, kritične točke"
+            ]
+          ]
+        ]
+      ],
+      "FSONAR": [
+        "Sonaravno kmetijstvo",
+        "BIO",
+        [],
+        [
+          [
+            "Načela sonaravnega kmetovanja",
+            [
+              "Pomen sonaravnega kmetovanja | okoljska etika, načela, krogotoki v kmetijstvu",
+              "Načela v praksi | ekološko, integrirano in biodinamično kmetovanje"
+            ]
+          ],
+          [
+            "Tla in rastlinska pridelava",
+            [
+              "Rodovitnost tal | humus, talni organizmi in njihova vloga",
+              "Obdelava tal in gnojenje | ohranjevalna obdelava, organska gnojila, vrstenje poljščin"
+            ]
+          ],
+          [
+            "Živinoreja",
+            [
+              "Živinoreja v sonaravnem kmetovanju | etologija, dobrobit živali",
+              "Sonaravne reje živali | posebnosti reje posameznih vrst"
+            ]
+          ],
+          [
+            "Razvoj podeželja",
+            [
+              "Kmetovanje in podeželje | vpliv oblik kmetovanja na prostor in razvoj podeželja",
+              "Sonaravno kmetovanje v Sloveniji | ukrepi, podpore, ekološka kontrola"
+            ]
+          ]
+        ]
+      ],
+      "FPERUT": [
+        "Reja perutnine",
+        "BIO",
+        [],
+        [
+          [
+            "Perutninarstvo",
+            [
+              "Pomen in organizacija perutninarstva | prireja mesa in jajc v Sloveniji",
+              "Pasme in linije | pasemske skupine, genski viri, selekcijske sheme",
+              "Biologija perutnine | termoregulacija, operjenost, spolno vezane lastnosti"
+            ]
+          ],
+          [
+            "Reprodukcija in valjenje",
+            [
+              "Tvorba jajca | dozorevanje foliklov, nesnost, osvetljevalni programi",
+              "Valjenje | valilno jajce, oplojenost, potek valjenja"
+            ]
+          ],
+          [
+            "Prireja jajc in mesa",
+            [
+              "Kakovost jedilnega jajca | fizikalne in senzorične lastnosti",
+              "Prireja perutninskega mesa | rast piščancev, intenzivna, prosta in ekološka reja",
+              "Sistemi reje kokoši | hlevi, oprema, klima, zakonodaja"
+            ]
+          ],
+          [
+            "Zdravje in ekonomika",
+            [
+              "Bolezni perutnine | bakterijske, virusne in parazitske bolezni, imunoprofilaksa",
+              "Ekonomika perutninarstva | proizvodni rezultati, stroški prireje"
+            ]
+          ]
+        ]
+      ],
+      "FEKGOSP": [
+        "Uvod v ekonomiko kmetijskih gospodarstev",
+        "EKO",
+        [],
+        [
+          [
+            "Upravljanje kmetije",
+            [
+              "Management kmetijskega gospodarstva | funkcije upravljanja, razvrščanje kmetij",
+              "Knjigovodstvo in računovodstvo kmetije | evidence, bilance, analiza poslovanja"
+            ]
+          ],
+          [
+            "Proizvodnja in stroški",
+            [
+              "Teorija proizvodnje in stroškov na kmetiji | mejne metode, optimum vložka",
+              "Kalkulacije v živinoreji | stroški reje goved, drobnice, prašičev in perutnine",
+              "Ekonomski pomen bolezni živali | izgube, stroški preventive"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Matematično programiranje na kmetiji | linearni program, optimiranje proizvodnje",
+              "Investicijsko načrtovanje | osnove presoje naložb na kmetiji"
+            ]
+          ],
+          [
+            "Tveganje",
+            [
+              "Odločanje v negotovosti | osnovni koncepti teorije odločanja",
+              "Tveganja v kmetijstvu | viri tveganj, upravljanje s tveganji, zavarovanja"
+            ]
+          ]
+        ]
+      ],
+      "FCEBEL": [
+        "Čebelarstvo",
+        "BIO",
+        [],
+        [
+          [
+            "Biologija čebel",
+            [
+              "Čebelja družina | matica, delavke, troti, socialno življenje",
+              "Razvoj in dedovanje čebel | partenogeneza, kranjska čebela",
+              "Prehrana čebel | nektar, cvetni prah, mana, čebelja paša"
+            ]
+          ],
+          [
+            "Čebelarjenje",
+            [
+              "Panji in oprema | AŽ panj, nakladni panj, čebelnjak, prevozni čebelnjak",
+              "Čebelarska opravila | sezonska dela, rojenje, vzreja matic",
+              "Čebelji pridelki | med, vosek, cvetni prah, propolis, matični mleček"
+            ]
+          ],
+          [
+            "Zdravje in varstvo",
+            [
+              "Bolezni in škodljivci čebel | varoza, hude gnilobe, zastrupitve",
+              "Čebele v ekosistemu | opraševanje, ohranjanje populacij"
+            ]
+          ]
+        ]
+      ],
+      "FKONJ": [
+        "Konjereja",
+        "BIO",
+        [],
+        [
+          [
+            "Konj in pasme",
+            [
+              "Domestikacija konja | izvor, zgodovina reje",
+              "Pasme konj | toplokrvni, hladnokrvni, poniji, lipicanec",
+              "Anatomija in vedenje konja | zgradba telesa, čutila, socialno vedenje"
+            ]
+          ],
+          [
+            "Reja in selekcija",
+            [
+              "Reprodukcija konj | spolni cikel, pripust, žrebitev",
+              "Selekcija in ocenjevanje zunanjosti | rejski cilji, preizkušnje",
+              "Prireja mleka in mesa kopitarjev | posebnosti"
+            ]
+          ],
+          [
+            "Uporaba konj",
+            [
+              "Delo s konjem in nega | oskrba, kopita, oprema",
+              "Zgradbe v konjereji in konjeniški šport | hlevi, izpusti, discipline"
+            ]
+          ]
+        ]
+      ],
+      "FPREHDIV": [
+        "Prehrana in krmljenje divjadi",
+        "BIO",
+        [],
+        [
+          [
+            "Prebava divjadi",
+            [
+              "Prebavni trakt divjadi | anatomske posebnosti prežvekovalcev in neprežvekovalcev",
+              "Energija in hranljive snovi | potrebe divjadi, posebnosti oskrbe"
+            ]
+          ],
+          [
+            "Krma za divjad",
+            [
+              "Krma v naravnem okolju | rastlinska in živalska krma, prehranske navade jelenjadi, srnjadi, divjega prašiča",
+              "Dokrmljevanje | krmilne naprave, konzervirana krma, pomen in pasti dokrmljevanja"
+            ]
+          ],
+          [
+            "Prehrana in populacije",
+            [
+              "Prehrana in dinamika populacij | številčnost, plodnost, preživetje",
+              "Divjad in kmetijstvo | škode, preventivni ukrepi",
+              "Obroki za divjad | prebavljivost krme, dopolnilni in popolni obroki v oborah"
+            ]
+          ]
+        ]
+      ],
+      "FDENDROM": [
+        "Dendrometrija in daljinsko pridobivanje podatkov",
+        "BIO",
+        [],
+        [
+          [
+            "Merjenje dreves",
+            [
+              "Dendrometrijski znaki | premer, višina, oblika debla, krošnja, starost",
+              "Volumen drevesa | deblovnice, volumenske funkcije, tarife",
+              "Prirastek drevesa | analiza debla, debelinski in višinski prirastek"
+            ]
+          ],
+          [
+            "Gozdni sestoji",
+            [
+              "Zgradba sestoja | debelinska struktura, sestojne višine, temeljnica, lesna zaloga",
+              "Prirastek sestoja | metode ocenjevanja prirastka"
+            ]
+          ],
+          [
+            "Gozdna inventura",
+            [
+              "Vzorčne metode | vzorčne ploskve, slučajno in sistematično vzorčenje, stratifikacija",
+              "Kontrolna vzorčna metoda | zbiranje podatkov, ocena lesne zaloge in prirastka"
+            ]
+          ],
+          [
+            "Daljinsko zaznavanje",
+            [
+              "Aerofotografija | geometrija letalskih posnetkov, fotointerpretacija sestojev",
+              "Lasersko skeniranje | lidar, digitalni modeli krošenj, ocena sestojnih parametrov",
+              "Satelitski posnetki | spektralni indeksi, kartiranje gozdov"
+            ]
+          ]
+        ]
+      ],
+      "FGOZPROI": [
+        "Gozdni proizvodi",
+        "BIO",
+        [],
+        [
+          [
+            "Gozdni lesni sortimenti",
+            [
+              "Merjenje gozdnih sortimentov | prostornina, nadmera, merjenje okroglega lesa",
+              "Napake lesa | vrste napak, merjenje, kvarni vpliv na vrednost",
+              "Standardi za gozdne proizvode | razvrščanje v kakovostne razrede"
+            ]
+          ],
+          [
+            "Krojenje",
+            [
+              "Krojenje debel | vrednostna razmerja med sortimenti, optimizacija krojenja",
+              "Raba sortimentov | uporaba sortimentov z napakami za različne namene in vrednost"
+            ]
+          ],
+          [
+            "Predelava in trg",
+            [
+              "Mehanska in kemična predelava lesa | žagan les, plošče, celuloza, energija",
+              "Nelesni gozdni proizvodi | vrste, obseg, vpliv na gozdni ekosistem",
+              "Trg z gozdnimi proizvodi | Slovenija, EU, svet"
+            ]
+          ]
+        ]
+      ],
+      "FKRAJEK": [
+        "Krajinska ekologija",
+        "BIO",
+        [],
+        [
+          [
+            "Ekosistem",
+            [
+              "Zgradba in delovanje ekosistema | stabilnost, sukcesija, ekotoni",
+              "Manjšinski ekosistemi | biotska pestrost, ekološke lastnosti pogostih ekosistemov"
+            ]
+          ],
+          [
+            "Krajina",
+            [
+              "Krajina kot ekološki sistem | zaznava krajine, ekološke spremenljivke",
+              "Kulturna krajina | nastanek, razvoj, socio-ekološki sistem",
+              "Krajinska zgradba | matica, zaplata, koridor, vloga gozda v krajini"
+            ]
+          ],
+          [
+            "Analiza krajine",
+            [
+              "Krajinski tipi Slovenije | analiza letalskih posnetkov",
+              "Kvantitativne metode | GIS, merilo, hierarhična in perkolacijska teorija, krajinski indeksi",
+              "Spremembe krajine | ohranjanje vrednih krajin, scenariji prihodnosti"
+            ]
+          ]
+        ]
+      ],
+      "FMETRAZ": [
+        "Metode raziskovalnega dela v gozdarstvu I",
+        "MAT",
+        [
+          "STATISTIKA"
+        ],
+        [
+          [
+            "Podatki",
+            [
+              "Statistika v gozdarstvu | osnovni pojmi, tipi spremenljivk",
+              "Priprava podatkov | urejanje, preverjanje, omejitve podatkov"
+            ]
+          ],
+          [
+            "Univariatna analiza",
+            [
+              "Opisne statistike | srednje vrednosti, mere variabilnosti, grafični prikazi",
+              "Teoretične porazdelitve | normalna, t-porazdelitev, vzorčenje",
+              "Preizkušanje hipotez | veliki in mali vzorci, t-test"
+            ]
+          ],
+          [
+            "Bivariatna analiza",
+            [
+              "Kontingenčne tabele | asociacija, hi-kvadrat test",
+              "Korelacija in regresija | linearna regresijska analiza, interpretacija"
+            ]
+          ]
+        ]
+      ],
+      "FZGLES": [
+        "Zgradba lesa",
+        "BIO",
+        [],
+        [
+          [
+            "Nastanek lesa",
+            [
+              "Nastanek lesa | kambij, ksilem, branika, rani in kasni les",
+              "Beljava in jedrovina | ojedritev, diskoloriran les, sekundarne spremembe"
+            ]
+          ],
+          [
+            "Anatomija lesa",
+            [
+              "Les iglavcev | traheide, trakovi, smolni kanali",
+              "Les listavcev | traheje, vlakna, aksialni parenhim, venčasto in difuzno porozen les",
+              "Evolucija lesa | golosemenke in kritosemenke"
+            ]
+          ],
+          [
+            "Identifikacija in lastnosti",
+            [
+              "Makroskopska identifikacija lesa | barva, beljava in jedrovina, določevalni ključi",
+              "Zgradba in lastnosti lesa | gostota, fizikalne in mehanske lastnosti",
+              "Domače lesne vrste | zgradba in lastnosti izbranih vrst"
+            ]
+          ]
+        ]
+      ],
+      "FFITOPAT": [
+        "Gozdna fitopatologija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna fitopatologija",
+            [
+              "Bolezen rastline | simptomi, etiologija, poškodbe in škode",
+              "Glive kot povzročitelji bolezni | taksonomija in sistematika gliv, parazitizem",
+              "Patogeneza | mehanizem infekcije, inkubacija, vpliv okolja"
+            ]
+          ],
+          [
+            "Epifitocije in obramba",
+            [
+              "Epifitocije | potek, prognoza, karantena in predpisi",
+              "Odpornost rastlin | specifična in nespecifična, pasivna in aktivna odpornost, fungicidi"
+            ]
+          ],
+          [
+            "Bolezni gozdnega drevja",
+            [
+              "Bolezni korenin in semen | trohnobe korenin, padanje kalic",
+              "Bolezni listja, iglic, debla in vej | rje, sipe, raki, parazitske cvetnice",
+              "Neparazitske bolezni in bolezni lesa | abiotski dejavniki, barvne napake lesa"
+            ]
+          ],
+          [
+            "Glive v gozdu",
+            [
+              "Mikorizne in saprobne glive | vloga v ekosistemu, užitne glive, pravna ureditev nabiranja",
+              "Glive razkrojevalke lesa | bela, rjava in mehka trohnoba"
+            ]
+          ]
+        ]
+      ],
+      "FORGDEL": [
+        "Organizacija gozdarskih del",
+        "EKO",
+        [],
+        [
+          [
+            "Organizacija dela",
+            [
+              "Osnove organizacije dela | proizvodni procesi v gozdarstvu",
+              "Delavec in tim | delavec kot dejavnik proizvodnje, timsko delo, komunikacija"
+            ]
+          ],
+          [
+            "Študij dela",
+            [
+              "Študij časa | časovne študije, normativi",
+              "Oblikovanje in vrednotenje dela | metode vrednotenja, nagrajevanje"
+            ]
+          ],
+          [
+            "Priprava dela",
+            [
+              "Priprava dela v gozdni proizvodnji | tehnologije sečnje in spravila, delovišča",
+              "Uporaba GIS pri pripravi dela | prostorski podatki, načrtovanje spravila",
+              "Zasebna gozdna posest | posebnosti organizacije del na drobni posesti"
+            ]
+          ]
+        ]
+      ],
+      "FDIVJAD": [
+        "Ekologija divjadi in lovno gospodarsko načrtovanje",
+        "BIO",
+        [],
+        [
+          [
+            "Divjad v ekosistemu",
+            [
+              "Vloga divjadi v gozdnih združbah | raznos semen, transport hranil, selektivno objedanje",
+              "Človek in divjad | zgodovinski vplivi na razširjenost in velikost populacij"
+            ]
+          ],
+          [
+            "Populacije divjadi",
+            [
+              "Populacijski procesi in parametri | rodnost, smrtnost, gostota",
+              "Divjad in habitat | interakcije, habitatni izbor, vplivi na gozdno mladje",
+              "Metode raziskovanja divjadi | ocenjevanje številčnosti, telemetrija"
+            ]
+          ],
+          [
+            "Upravljanje",
+            [
+              "Divjad kot naravni vir | načela trajnostne rabe, problematične vrste",
+              "Lovno gospodarsko načrtovanje | načela, časovni in prostorski okviri, odzivno upravljanje",
+              "Kazalniki stanja | indikatorji populacij in vplivov na okolje"
+            ]
+          ]
+        ]
+      ],
+      "FERGON": [
+        "Ergonomija",
+        "BIO",
+        [],
+        [
+          [
+            "Človek pri delu",
+            [
+              "Ergonomija | pojem, področja, antropometrija",
+              "Psihofizične sposobnosti in utrujanje | statično in dinamično delo",
+              "Težavnost dela | poraba energije, srčni utrip, telesna temperatura"
+            ]
+          ],
+          [
+            "Delovno okolje",
+            [
+              "Dejavniki delovnega okolja | hrup, vibracije, kemijski, biotski in psihosocialni dejavniki",
+              "Obremenitve v gozdarstvu | sekač, traktorist, voznik, strojniki"
+            ]
+          ],
+          [
+            "Varstvo pri delu",
+            [
+              "Nezgode v gozdarstvu | analiza nezgod, vzroki",
+              "Tehnično in zdravstveno varstvo | osebna varovalna oprema, prva pomoč, preventivni pregledi",
+              "Organizacija varstva pri delu | varstvena vzgoja, zakonodaja"
+            ]
+          ]
+        ]
+      ],
+      "FHUDOUR": [
+        "Gospodarjenje s povirji in hudourniki",
+        "GEO",
+        [],
+        [
+          [
+            "Hudourniki in gozd",
+            [
+              "Hudourništvo | zgodovina, osnovni pojmi, plavine, vodozbirno območje",
+              "Hidrološka in varovalna funkcija gozda | voda v gozdni krajini",
+              "Geomorfologija | relief, preperevanje, denudacija, pobočni procesi"
+            ]
+          ],
+          [
+            "Hidrologija in hidravlika",
+            [
+              "Rečna morfologija | vzdolžni padci strug, morfološke oblike, leseno plavje",
+              "Visoke vode | odtočni koeficient, empirični obrazci za Q100",
+              "Hidravlična analiza | pretočne hitrosti, Manningova enačba, dimenzioniranje profilov"
+            ]
+          ],
+          [
+            "Ukrepi",
+            [
+              "Varstvo pred hudourniki in erozijo | gradbeno-tehnični, biotehnični in upravni ukrepi",
+              "Hudourniški objekti | pragovi, pregrade, drče, obrežna zavarovanja",
+              "Inženirska biologija | ustalitev pobočij, vegetacijska zavarovanja brežin"
+            ]
+          ]
+        ]
+      ],
+      "FPROMET": [
+        "Gozdne prometnice",
+        "GEO",
+        [],
+        [
+          [
+            "Promet v gozdu",
+            [
+              "Gozdne in javne prometnice | vrste, razvoj, pomen za gozdarstvo",
+              "Prometna obremenitev | transportna količina, prevoznost, prometna sredstva"
+            ]
+          ],
+          [
+            "Projektiranje gozdne ceste",
+            [
+              "Vzdolžni profil | naklon nivelete, vertikalne krivine, protivzpon",
+              "Prečni profil | normalni prečni profil, širina planuma, prečni naklon",
+              "Os ceste | horizontalne krivine, razširitve, serpentine"
+            ]
+          ],
+          [
+            "Gradnja in vzdrževanje",
+            [
+              "Gradnja gozdne ceste | spodnji in zgornji ustroj, nestabilne podlage",
+              "Odvodnjavanje | prepusti, jarki, odvodnja vozišča",
+              "Vzdrževanje gozdnih cest | kategorizacija, standardi, organizacija"
+            ]
+          ]
+        ]
+      ],
+      "FDONOS": [
+        "Zgradba, rast in donos gozda",
+        "BIO",
+        [],
+        [
+          [
+            "Produkcija gozda",
+            [
+              "Produkcija gozdnega ekosistema | fotosinteza, respiracija, neto primarna produkcija",
+              "Okoljski dejavniki produkcije | svetloba, toplota, voda, veter, tla, relief"
+            ]
+          ],
+          [
+            "Rast drevesa",
+            [
+              "Rast drevesa | višinska, debelinska, temeljnična in volumenska rast",
+              "Deli drevesa in stabilnost | korenine, krošnja, deblo, mehanska stabilnost",
+              "Rastne funkcije | tekoči in povprečni prirastek, rastni pospešek"
+            ]
+          ],
+          [
+            "Rast in zgradba sestojev",
+            [
+              "Rast sestojev | zgornja višina, volumenska in vrednostna rast, mortaliteta",
+              "Zgradba sestojev | horizontalna, vertikalna in starostna struktura, prebiralni gozd",
+              "Proizvodna sposobnost rastišč | proizvodna doba, sečna zrelost, odziv na podnebne spremembe"
+            ]
+          ]
+        ]
+      ],
+      "FODLOC": [
+        "Osnove odločanja in modeliranja",
+        "MAT",
+        [
+          "OPTIM",
+          "TEORIJA_IGER"
+        ],
+        [
+          [
+            "Odločanje in modeli",
+            [
+              "Odločanje v gozdarstvu | elementi odločanja, cilji, omejitve, vrste modelov",
+              "Sistemi linearnih enačb in neenačb | Gaussova eliminacija, računalniško reševanje"
+            ]
+          ],
+          [
+            "Principi odločanja",
+            [
+              "Odločitveno drevo | struktura, pričakovana vrednost",
+              "Odločanje v negotovosti | optimistično, pesimistično, Laplaceovo, Hurwiczevo pravilo",
+              "Odločanje s tveganjem | Bayesovo pravilo, vrednost popolne informacije"
+            ]
+          ],
+          [
+            "Planiranje",
+            [
+              "Dinamično programiranje | Bellmanova enačba, najkrajše poti",
+              "Mrežno planiranje | Ganttov diagram, kritična pot, časovne rezerve",
+              "Analitični hierarhični proces | parne primerjave, konsistentnost, uteži"
+            ]
+          ]
+        ]
+      ],
+      "FVARGOZ": [
+        "Varstvo gozdov",
+        "BIO",
+        [],
+        [
+          [
+            "Škodljivi dejavniki",
+            [
+              "Abiotski dejavniki | ujme, požari, suša, onesnažen zrak",
+              "Fitofagi | populacijska dinamika gozdnih žuželk, gradacije, naravni sovražniki",
+              "Kompleksne bolezni | propadanje hrastov, borov, smreke, jelke in bukve"
+            ]
+          ],
+          [
+            "Podnebje in zdravje gozda",
+            [
+              "Podnebne spremembe in varstvo gozda | odnos patogen-herbivor-drevo",
+              "Monitoring zdravja gozda | popisi, prognoza škod, poročilo-diagnoza-prognoza"
+            ]
+          ],
+          [
+            "Ukrepi varstva",
+            [
+              "Strategije varstva gozda | preventivno, protektivno in terapevtsko varstvo",
+              "Metode varstva | tehnične, biotične, biotehniške in kemične metode, integrirano varstvo",
+              "Sanacija in predpisi | načrtovanje sanacij, zakonodaja varstva gozdov"
+            ]
+          ]
+        ]
+      ],
+      "FDENKRON": [
+        "Dendrokronologija",
+        "BIO",
+        [],
+        [
+          [
+            "Osnove",
+            [
+              "Dendrokronologija kot veda | branike, okoljski signali, osnovna načela",
+              "Vzorčenje in meritve | izbira objektov, izvrtki, merjenje širin branik"
+            ]
+          ],
+          [
+            "Datiranje",
+            [
+              "Sinhronizacija zaporedij | t-vrednost po Baillie-Pilcherju, koeficient časovne skladnosti",
+              "Analiza zaporedij branik | značilna leta, občutljivost, avtokorelacija",
+              "Standardizacija in kronologije | lokalne in regionalne kronologije"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Dendroklimatologija | response in transfer funkcije, rekonstrukcija klime",
+              "Področja uporabe | dendroekologija, arheologija, datiranje objektov"
+            ]
+          ]
+        ]
+      ],
+      "FGOZHID": [
+        "Gozdna hidrologija",
+        "GEO",
+        [],
+        [
+          [
+            "Vodni cikel",
+            [
+              "Padavine | vrste, režimi, časovna in prostorska variabilnost",
+              "Fizikalne in kemijske lastnosti vode | vodni cikel v gozdu"
+            ]
+          ],
+          [
+            "Vodna bilanca gozda",
+            [
+              "Sestojne padavine | intercepcija krošenj, prepuščene padavine, odtok po deblu",
+              "Evapotranspiracija in infiltracija | voda v gozdnih tleh, površinski odtok",
+              "Snežna hidrologija | intercepcija snega, preobrazba snežne odeje, snežni plazovi"
+            ]
+          ],
+          [
+            "Modeliranje in vodotoki",
+            [
+              "Hidrološko modeliranje | modeli padavine-odtok, koeficient odtoka, model ZEMOKOST",
+              "Leseno plavje in sedimenti | vnos, transport, vpliv gospodarjenja z gozdom"
+            ]
+          ]
+        ]
+      ],
+      "FMIKORIZ": [
+        "Gozdna mikoriza",
+        "BIO",
+        [],
+        [
+          [
+            "Rizosfera",
+            [
+              "Biologija gozdnih tal | interakcije v rizosferi",
+              "Mineralna prehrana drevja | zgradba in funkcija korenin"
+            ]
+          ],
+          [
+            "Mikorizne simbioze",
+            [
+              "Tipi mikorize | ektomikoriza, arbuskularna mikoriza, partnerji v simbiozi",
+              "Ektomikorizne korenine | zgradba, razvoj, identifikacija tipov",
+              "Mikoriza in kroženje hranil | ogljik, dušik, fosfor"
+            ]
+          ],
+          [
+            "Ekologija in uporaba",
+            [
+              "Mikorizne združbe | sukcesija, molekularna ekologija, vpliv gozdnogojitvenih ukrepov",
+              "Mikobioindikacija in inokulum | indikacija stresa, mikoremediacija"
+            ]
+          ]
+        ]
+      ],
+      "FUVEKOL": [
+        "Uvod v ekologijo",
+        "BIO",
+        [],
+        [
+          [
+            "Organizem in okolje",
+            [
+              "Ekologija kot veda | povezovalna vloga, ravni proučevanja",
+              "Abiotski dejavniki | vpliv na organizme, toleranca",
+              "Prilagoditve organizmov | življenjske strategije, ekološka niša"
+            ]
+          ],
+          [
+            "Populacije in interakcije",
+            [
+              "Dinamika populacij | populacijski parametri, rast populacij",
+              "Interakcije med vrstami | neposredne in posredne interakcije, dekompozicija"
+            ]
+          ],
+          [
+            "Združbe in ekosistemi",
+            [
+              "Struktura in funkcija ekosistemov | kroženje snovi, pretok energije",
+              "Prehranjevalni spleti | trofični nivoji, produkcija",
+              "Sukcesija | primarna in sekundarna sukcesija"
+            ]
+          ]
+        ]
+      ],
+      "FKONSTR": [
+        "Konstruiranje in oblikovanje",
+        "FIZ",
+        [],
+        [
+          [
+            "Razvoj izdelka",
+            [
+              "Razvoj izdelka iz lesa | faze razvoja, metode, projektni pristop",
+              "Življenjski cikel izdelka | izdelava, raba, recikliranje, LCA"
+            ]
+          ],
+          [
+            "Konstrukcija",
+            [
+              "Konstrukcijski elementi in sklopi | lesne zveze, okovje",
+              "Konstrukcijska dokumentacija | načrti, kosovnice, standardi in predpisi",
+              "Energetsko učinkovita lesena gradnja | konstrukcijski sistemi"
+            ]
+          ],
+          [
+            "Oblikovanje in kakovost",
+            [
+              "Teorija dizajna | oblika, funkcija, ergonomija izdelka",
+              "Kakovost in preizkušanje izdelkov | preskusi pohištva, kompleksna kakovost",
+              "Proizvodni proces izdelka | izbor tehnologije, poraba materiala"
+            ]
+          ]
+        ]
+      ],
+      "FLEPILA": [
+        "Lepila in lepljenje lesa",
+        "KEM",
+        [],
+        [
+          [
+            "Lepilna vez",
+            [
+              "Oblikovanje lepilne vezi | nanos, tok, penetracija lepila",
+              "Omočitev in površinska napetost | kontaktni kot, prosta površinska energija",
+              "Adhezija in kohezija | teorije adhezije, primarne in sekundarne sile"
+            ]
+          ],
+          [
+            "Vrste lepil",
+            [
+              "Naravna lepila | lepila iz naravnih surovin, utekočinjen les",
+              "Sintetična lepila | polimerizacijska, polikondenzacijska in poliadicijska lepila, UF, MUF, PVAc, PUR",
+              "Utrjevanje lepil | fizikalni in kemijski procesi, kinetika utrjevanja"
+            ]
+          ],
+          [
+            "Tehnologija lepljenja",
+            [
+              "Postopki lepljenja | priprava površine, lepilna mešanica, klasično in visokofrekvenčno lepljenje",
+              "Trdnost in trajnost spoja | preskusne metode za lepila in lepljene spoje"
+            ]
+          ]
+        ]
+      ],
+      "FMANLES": [
+        "Management lesnega podjetja z osnovami mikroekonomike",
+        "EKO",
+        [],
+        [
+          [
+            "Management",
+            [
+              "Ravnalni proces | načrtovanje, organiziranje, vodenje, kontroliranje",
+              "Strateško in operativno načrtovanje | odločanje, poslovni izkazi",
+              "Organizacijska kultura | vrednote, management sprememb, vodenje zaposlenih"
+            ]
+          ],
+          [
+            "Kakovost in inovacije",
+            [
+              "Celovito ravnanje kakovosti | TQM, standardi kakovosti",
+              "Podjetništvo in inovacije | podjetniški proces, kazalniki inovativnosti"
+            ]
+          ],
+          [
+            "Mikroekonomika",
+            [
+              "Teorija proizvodnje in stroškov podjetja | stroškovne funkcije, kalkulacije",
+              "Kazalniki uspešnosti | bilanca stanja, izkaz poslovnega izida, produktivnost, ekonomičnost, rentabilnost",
+              "Vrednotenje naložb | denarni tokovi, neto sedanja vrednost, doba vračila"
+            ]
+          ]
+        ]
+      ],
+      "FPRIMOBD": [
+        "Primarne obdelovalne tehnologije",
+        "FIZ",
+        [],
+        [
+          [
+            "Surovina",
+            [
+              "Izbira hlodovine | kakovost, namembnost izdelka",
+              "Načrt razžagovanja | delitev surovine, izkoristek"
+            ]
+          ],
+          [
+            "Tehnološki sistemi",
+            [
+              "Žagarstvo iglavcev in listavcev | tehnološki sistemi, žagalni stroji",
+              "Proizvodnja furnirja | luščenje in rezanje furnirja, tehnološki parametri",
+              "Tehnološka ureditev obrata | kapaciteta tehnoloških sistemov"
+            ]
+          ],
+          [
+            "Optimizacija",
+            [
+              "Optimiranje tehnološkega postopka | količinski, kakovostni in vrednostni izkoristek",
+              "Razvrščanje žaganega lesa | nedestruktivne metode, trdnostno razvrščanje",
+              "Izraba ostankov | sekanci, žagovina, energetska raba"
+            ]
+          ]
+        ]
+      ],
+      "FSUSEN": [
+        "Tehnologije sušenja lesa",
+        "FIZ",
+        [],
+        [
+          [
+            "Vlažni zrak",
+            [
+              "Vlažnost lesa in zraka | vsebnost vode, ravnovesna vlažnost lesa",
+              "Termodinamika vlažnega zraka | entalpija, Mollierov diagram, psihrometrija",
+              "Toplotne in masne bilance sušenja | rekuperacija energije, reciklirno razmerje"
+            ]
+          ],
+          [
+            "Kinetika sušenja",
+            [
+              "Konvekcija in prestop toplote | toplotna prestopnost, brezdimenzijska števila",
+              "Difuzija in prenos snovi | Fickov zakon, snovna prestopnost",
+              "Kapilarni tok in permeabilnost | Darcyjev zakon, sušilna krivulja, kritična točka"
+            ]
+          ],
+          [
+            "Kakovost sušenja",
+            [
+              "Sušilne napetosti | nastanek, ugotavljanje, sušilne napake in sanacija",
+              "Lezne deformacije pri sušenju | mehanosorptivno lezenje, kondicioniranje"
+            ]
+          ],
+          [
+            "Postopki sušenja",
+            [
+              "Naravno in konvekcijsko sušenje | sušenje na prostem, komorne sušilnice",
+              "Posebni postopki sušenja | kondenzacijsko, vakuumsko, solarno, visokofrekvenčno sušenje",
+              "Vodenje in ekonomika sušenja | merjenje, avtomatizacija, poraba energije"
+            ]
+          ]
+        ]
+      ],
+      "FUPRPROC": [
+        "Upravljanje proizvodnih procesov v lesarstvu",
+        "EKO",
+        [],
+        [
+          [
+            "Proizvodni sistem",
+            [
+              "Proizvodni sistem in proces | strateški pomen proizvodnje, proizvodne funkcije",
+              "Izbira procesa in lokacije | tipi proizvodnje, razmestitev opreme"
+            ]
+          ],
+          [
+            "Načrtovanje proizvodnje",
+            [
+              "Načrtovanje proizvodnega programa | napovedovanje povpraševanja",
+              "Načrtovanje materialnih potreb | MRP, kosovnice, zaloge",
+              "Načrtovanje kapacitet | ozka grla, izkoriščenost"
+            ]
+          ],
+          [
+            "Vodenje in izboljšave",
+            [
+              "Management kakovosti v proizvodnji | statistična kontrola procesa",
+              "Reinženiring in vitka proizvodnja | alternativni pristopi, okoljevarstvo",
+              "Računalniško podprto vodenje proizvodnje | sistemi ERP in podpora odločanju"
+            ]
+          ]
+        ]
+      ],
+      "FZASC": [
+        "Zaščita lesa",
+        "KEM",
+        [],
+        [
+          [
+            "Osnove zaščite",
+            [
+              "Pomen zaščite lesa | preventivna, represivna in naknadna zaščita",
+              "Naravna in konstrukcijska zaščita | naravna odpornost, konstrukcijski ukrepi"
+            ]
+          ],
+          [
+            "Biocidna zaščita",
+            [
+              "Biocidni proizvodi za les | tipi učinkovin, razvoj zaščitnih sredstev",
+              "Tehnike zaščite lesa | impregnacija, premazovanje, vakuumsko-tlačni postopki",
+              "Biocidi in okolje | vpliv na zdravje in okolje, varnost, zakonodaja"
+            ]
+          ],
+          [
+            "Sodobni pristopi",
+            [
+              "Modifikacija lesa | termična, kemična modifikacija",
+              "Protipožarna zaščita lesa | gorljivost lesa, zaviralci gorenja"
+            ]
+          ]
+        ]
+      ],
+      "FBIORAF": [
+        "Lesna biomasa v biorafinerijah",
+        "KEM",
+        [],
+        [
+          [
+            "Biorafinerije",
+            [
+              "Koncept biorafinerije | tipi biorafinerij, kemijska vrednost lesne biomase",
+              "Zelena kemija v predelavi lesa | topila, energija, katalizatorji"
+            ]
+          ],
+          [
+            "Kemikalije in materiali iz lesa",
+            [
+              "Ogljikovi hidrati iz lesa | celuloza, hemiceluloze, sladkorji",
+              "Lignin in ekstraktivi | lignosulfonati, terpentin, talovo olje, vanilin",
+              "Biomateriali | regenerirana celuloza, celulozni estri in etri, biorazgradljivi polimeri"
+            ]
+          ],
+          [
+            "Energija iz biomase",
+            [
+              "Biogoriva | bioetanol, biodizel, bioplin, peleti in briketi",
+              "Termokemični procesi | zgorevanje, uplinjanje, piroliza, utekočinjanje"
+            ]
+          ]
+        ]
+      ],
+      "FPLOSC": [
+        "Lesni ploščni kompoziti I",
+        "KEM",
+        [],
+        [
+          [
+            "Vrste kompozitov",
+            [
+              "Razdelitev lesnih ploščnih kompozitov | iverne, vlaknene, OSB in vezane plošče",
+              "Gradniki kompozitov | izdelava, spremembe zaradi temperature in tlaka"
+            ]
+          ],
+          [
+            "Sestava in lastnosti",
+            [
+              "Sestava kompozita | prepletanje, usmerjanje in povezovanje gradnikov",
+              "Fizikalne in sorpcijske lastnosti | gostota, nabrekanje, vpijanje vode",
+              "Elastomehanske lastnosti | modul elastičnosti, upogibna, natezna in strižna trdnost"
+            ]
+          ],
+          [
+            "Kakovost in emisije",
+            [
+              "Kakovost zlepljenosti | dejavniki, preskušanje",
+              "Emisije iz kompozitov | formaldehid, hlapne organske spojine",
+              "Tehnologija proizvodnje | vpliv procesnih parametrov na lastnosti"
+            ]
+          ]
+        ]
+      ],
+      "FTRZLES": [
+        "Management trženja v lesarstvu",
+        "EKO",
+        [],
+        [
+          [
+            "Trženjske raziskave",
+            [
+              "Proces trženjskega raziskovanja | zvrsti raziskav, merjenje pojavov",
+              "Tržno usmerjeno strateško načrtovanje | analiza trga, cilji"
+            ]
+          ],
+          [
+            "Izdelek in cena",
+            [
+              "Razvoj novega izdelka | življenjski cikel izdelka, trženjske strategije",
+              "Blagovna znamka | pomen, upravljanje",
+              "Cenovne strategije | oblikovanje cen"
+            ]
+          ],
+          [
+            "Distribucija in komuniciranje",
+            [
+              "Tržne poti in logistika | trgovina na debelo in drobno",
+              "Trženjsko komuniciranje | splet komuniciranja",
+              "Posebna področja trženja | medorganizacijsko trženje, trženje storitev, okoljevarstveno trženje"
+            ]
+          ]
+        ]
+      ],
+      "FKONKOMP": [
+        "Konstrukcijski lesni kompoziti",
+        "FIZ",
+        [],
+        [
+          [
+            "Snovanje kompozitov",
+            [
+              "Konstrukcijski lesni kompoziti | pregled, splošne zahteve",
+              "Principi snovanja | vpliv sestave na lastnosti, inženirski pristop",
+              "Modeliranje trdnosti | izračun predvidenih trdnostnih lastnosti"
+            ]
+          ],
+          [
+            "Lepljen les",
+            [
+              "Lepljen lameliran les | zasnova nosilcev, tehnologija proizvodnje",
+              "Križno lepljen les | zasnova, sestava, tehnologija CLT",
+              "Konstrukcijska lepila | zahteve, preskušanje"
+            ]
+          ],
+          [
+            "Kompoziti iz furnirja in sodobni razvoj",
+            [
+              "Kompozitni les iz furnirja | vezan les, LVL, PSL, LSL, I-nosilci",
+              "Modificiran les v konstrukcijah | termično modificiran in zgoščen les, lesena gradnja"
+            ]
+          ]
+        ]
+      ],
+      "FKVSTAT": [
+        "Kvantitativne metode in statistika",
+        "MAT",
+        [
+          "OPTIM",
+          "TEORIJA_IGER",
+          "STATISTIKA"
+        ],
+        [
+          [
+            "Odločanje",
+            [
+              "Modeliranje in optimizacija | postavitev problema, pregled metod",
+              "Dinamično programiranje | Bellmanova enačba, najkrajše poti",
+              "Večkriterijsko odločanje | uteži kriterijev, MAUT, analitični hierarhični proces"
+            ]
+          ],
+          [
+            "Opisna statistika",
+            [
+              "Relativna števila in opisne statistike | kvantili, mere sredine, mere variabilnosti",
+              "Podatkovne zbirke | vrtilne tabele v Excelu",
+              "Normalna porazdelitev | standardizacija, verjetnosti"
+            ]
+          ],
+          [
+            "Sklepanje in poskusi",
+            [
+              "Načrtovanje poskusov | ponovitve, randomizacija",
+              "Korelacija in regresija | enostavna linearna regresija, korelacijski koeficient"
+            ]
+          ]
+        ]
+      ],
+      "FPOVRS": [
+        "Obdelava površin lesa in lignoceluloznih materialov",
+        "KEM",
+        [],
+        [
+          [
+            "Priprava površine",
+            [
+              "Funkcije obdelave površin | estetske, zaščitne in mehanske zahteve",
+              "Priprava podlage | brušenje, beljenje, luženje"
+            ]
+          ],
+          [
+            "Premazi",
+            [
+              "Sestava premaznih sredstev | veziva, pigmenti, topila, reologija",
+              "Nanašanje premazov | tehnologije nanosa, omakanje in penetracija",
+              "Utrjevanje premazov | fizikalno in kemijsko utrjevanje, UV utrjevanje"
+            ]
+          ],
+          [
+            "Lastnosti in staranje",
+            [
+              "Lastnosti utrjenih premazov | odpornost, trdota, oprijem, standardi",
+              "Staranje lesa na prostem | razkroj zaradi UV in vlage, pospešeno staranje",
+              "Napake in okolje | napake pri obdelavi površin, emisije in ukrepi"
+            ]
+          ]
+        ]
+      ],
+      "FZGLES2": [
+        "Zgradba lesa II",
+        "BIO",
+        [],
+        [
+          [
+            "Variabilnost lesa",
+            [
+              "Variabilnost zgradbe lesa | vpliv na gostoto in lastnosti",
+              "Prirastne plasti | rani in kasni les, nastanek in variabilnost",
+              "Potek aksialnih elementov | teksture lesa, zavitost"
+            ]
+          ],
+          [
+            "Lesne vrste",
+            [
+              "Biološke lastnosti lesa | vpliv na predelavo in rabo",
+              "Komercialne lesne vrste | zgradba in lastnosti, računalniški ključi za identifikacijo"
+            ]
+          ],
+          [
+            "Les in dediščina",
+            [
+              "Les v kulturni dediščini in arheologiji | osnove, dendrokronološko datiranje",
+              "Raziskovalne metode | struktura znanstvenega dela, viri"
+            ]
+          ]
+        ]
+      ],
+      "FKEMZGR": [
+        "Kemična zgradba lesa",
+        "KEM",
+        [],
+        [
+          [
+            "Celična stena",
+            [
+              "Primarna celična stena | molekularni modeli",
+              "Sekundarna celična stena | normalni in reakcijski les, razporeditev gradnikov"
+            ]
+          ],
+          [
+            "Ekstraktivi in jedrovina",
+            [
+              "Hranilne snovi v lesu | škrob, sladkorji, razporeditev v beljavi in skorji",
+              "Ojedritev | kemizem nastanka jedrovine",
+              "Barva in diskoloracije | kemizem barve lesa, mokro srce, kompartmentalizacija"
+            ]
+          ],
+          [
+            "Kakovost lesa",
+            [
+              "Variabilnost kemijske sestave | parametri kemijske kakovosti, končna raba",
+              "Glavni gradniki lesa | celuloza, hemiceluloze, lignin, deleži pri iglavcih in listavcih"
+            ]
+          ]
+        ]
+      ],
+      "FNANOCEL": [
+        "Nanofibrilirana celuloza iz lesnih vlaken",
+        "KEM",
+        [],
+        [
+          [
+            "Celuloza",
+            [
+              "Molekularna struktura celuloze | konformacija, vodikove vezi, nadmolekularna zgradba",
+              "Sistematika celuloznih materialov | makro-, mikro- in nanofibrilirana celuloza, nanokristali"
+            ]
+          ],
+          [
+            "Pridobivanje",
+            [
+              "Mehanski in kemijski postopki | homogenizacija, TEMPO oksidacija, encimska predobdelava",
+              "Karakterizacija | kristaliničnost, FT-IR spektroskopija",
+              "Sušenje nanoceluloze | hornifikacija, redispergacija"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Uporaba celuloznih nanofibril | kompoziti, filmi, embalaža, ojačitve",
+              "Reološke lastnosti suspenzij | viskoznost, gelska struktura, stabilnost"
+            ]
+          ]
+        ]
       ]
     },
     "programs": {
@@ -5516,7 +7420,7 @@ export const EXTRA_FACULTIES = [
       "UL-BF-AGR": {
         "name": "Kmetijstvo – agronomija",
         "source": "https://www.bf.uni-lj.si/sl/studij/studijski-programi/predmetnik/2020091415054283/kmetijstvo--agronomija",
-        "sourceYear": "2025/26 (1. letnik); 2. in 3. letnik ni v celoti preverjen",
+        "sourceYear": "2026/27 (spletni predmetnik BF, prebran 28. 10. 2026): vsi trije letniki in seznam izbirnih predmetov preverjeni",
         "years": [
           [
             "CMAT",
@@ -5530,16 +7434,22 @@ export const EXTRA_FACULTIES = [
             "CUREJZ"
           ],
           [
-            "CSTAT",
             "CFIZRAS",
+            "FOSPOLJ",
             "CGENRAS",
+            "FSPLVIN",
+            "CSTAT",
+            "CKMTEH",
             "CZLAHT",
-            "CSPLVRT",
             "CSPLSAD",
-            "CKMTEH"
+            "CSPLVRT"
           ],
           [
+            "FEKKMPR",
             "CFITOM1",
+            "FEKOVO",
+            "FRASTBT",
+            "FTEHPRID",
             "CTRAVN"
           ]
         ],
@@ -5547,20 +7457,24 @@ export const EXTRA_FACULTIES = [
           "CKLIM",
           "CRODTAL",
           "CEKOTAL",
-          "CZDRAR"
-        ]
+          "CZDRAR",
+          "CSPLZIV",
+          "FPOLPRAV",
+          "FVRTTRG"
+        ],
+        "replace": true
       },
       "UL-BF-ZOO": {
         "name": "Kmetijstvo – zootehnika",
         "source": "https://www.bf.uni-lj.si/sl/studij/studijski-programi/predmetnik/2020091415073424/kmetijstvo--zootehnika",
-        "sourceYear": "2025/26 (1. letnik); 2. letnik ni v celoti preverjen; 3. letnik ni preverjen",
+        "sourceYear": "2026/27 (spletni predmetnik BF, prebran 28. 10. 2026): vsi trije letniki in seznam izbirnih predmetov preverjeni",
         "years": [
           [
-            "CMAT",
-            "CKEMBIO",
-            "CBOT",
             "CBIODZ",
+            "CBOT",
             "CETOL",
+            "CKEMBIO",
+            "CMAT",
             "CEKONVK",
             "CMIKIMU",
             "COSPEDGN",
@@ -5570,19 +7484,39 @@ export const EXTRA_FACULTIES = [
           ],
           [
             "CFIZANA",
+            "FKRMA",
+            "FOSBIOM",
+            "FGENZIV",
             "COSPREH",
-            "CKMTEH"
+            "FTRZ",
+            "FEKOKMET",
+            "CKMTEH",
+            "FKVGEN"
           ],
-          []
+          [
+            "FGRADNJA",
+            "FPOLPRAV",
+            "FDROB",
+            "FGOVED",
+            "FPRAS",
+            "FSONAR",
+            "FPERUT",
+            "FEKGOSP"
+          ]
         ],
         "electives": [
-          "CSADVIN"
-        ]
+          "CSADVIN",
+          "BREJLAB",
+          "FCEBEL",
+          "FKONJ",
+          "FPREHDIV"
+        ],
+        "replace": true
       },
       "UL-BF-GOZD": {
         "name": "Gozdarstvo in obnovljivi gozdni viri",
         "source": "https://www.bf.uni-lj.si/sl/studij/studijski-programi/predmetnik/2020091415050778/gozdarstvo-in-obnovljivi-gozdni-viri",
-        "sourceYear": "2025/26; 2. in 3. letnik nista v celoti preverjena",
+        "sourceYear": "2026/27 (spletni predmetnik BF, prebran 28. 10. 2026): vsi trije letniki in seznam izbirnih predmetov preverjeni",
         "years": [
           [
             "DBOTFIZ",
@@ -5596,30 +7530,49 @@ export const EXTRA_FACULTIES = [
             "DPEDOL"
           ],
           [
+            "FDENDROM",
+            "FGOZPROI",
             "DGOZPODJ",
+            "FKRAJEK",
+            "FMETRAZ",
+            "FZGLES",
             "DFITOCEN",
-            "DPRIDLES",
-            "DEKORAST"
+            "FFITOPAT",
+            "FORGDEL",
+            "DPRIDLES"
           ],
           [
+            "FDIVJAD",
+            "FERGON",
+            "FHUDOUR",
             "DGOZEKN",
-            "DUREJ"
+            "FPROMET",
+            "FDONOS",
+            "FODLOC",
+            "DUREJ",
+            "FVARGOZ"
           ]
         ],
         "electives": [
-          "DGLOBSPR"
-        ]
+          "DEKORAST",
+          "DGLOBSPR",
+          "FDENKRON",
+          "FGOZHID",
+          "FMIKORIZ",
+          "FUVEKOL"
+        ],
+        "replace": true
       },
       "UL-BF-LES": {
         "name": "Lesarstvo",
         "source": "https://www.bf.uni-lj.si/sl/studij/studijski-programi/predmetnik/2020091415093487/lesarstvo",
-        "sourceYear": "2025/26; 2. letnik le delno, 3. letnik ni preverjen",
+        "sourceYear": "2026/27 (spletni predmetnik BF, prebran 28. 10. 2026): vsi trije letniki in seznam izbirnih predmetov preverjeni",
         "years": [
           [
-            "DMAT",
-            "DKEMLES",
             "DFIZ",
+            "DKEMLES",
             "DLESSKOD",
+            "DMAT",
             "DMEH",
             "DMATER",
             "DSTROJ",
@@ -5627,15 +7580,33 @@ export const EXTRA_FACULTIES = [
             "DZGLES1"
           ],
           [
+            "FKONSTR",
+            "FLEPILA",
+            "FMANLES",
             "DTEHLES",
-            "DMEHOBD"
+            "FPRIMOBD",
+            "FSUSEN",
+            "FUPRPROC",
+            "FZASC"
           ],
-          []
+          [
+            "FBIORAF",
+            "FPLOSC",
+            "FTRZLES",
+            "DMEHOBD",
+            "FKONKOMP",
+            "FKVSTAT",
+            "FPOVRS"
+          ]
         ],
         "electives": [
           "DRACKON",
-          "DBIOTLES"
-        ]
+          "DBIOTLES",
+          "FZGLES2",
+          "FKEMZGR",
+          "FNANOCEL"
+        ],
+        "replace": true
       }
     }
   },
@@ -8647,30 +10618,1452 @@ export const EXTRA_FACULTIES = [
             ]
           ]
         ]
+      ],
+      "VMATPR": [
+        "Materialografski praktikum",
+        "KEM",
+        [],
+        [
+          [
+            "Priprava metalografskih vzorcev",
+            [
+              "Vzorčenje in rezanje | izbira mesta vzorčenja, rezanje, vlaganje v maso",
+              "Brušenje in poliranje | zaporedje brusnih papirjev, diamantne paste, artefakti priprave",
+              "Jedkanje | kemijsko in elektrolitsko jedkanje, jedkala za jekla in neželezne kovine"
+            ]
+          ],
+          [
+            "Svetlobna mikroskopija",
+            [
+              "Metalografski mikroskop | odbita svetloba, svetlo in temno polje, polarizirana svetloba",
+              "Mikrostruktura jekel in litin | ferit, perlit, cementit, martenzit, oblike grafita v litinah"
+            ]
+          ],
+          [
+            "Kvantitativna metalografija",
+            [
+              "Velikost zrn | linijska metoda, primerjalne tablice, standard ASTM E112",
+              "Delež faz in vključkov | točkovna metoda, analiza slike, nekovinski vključki"
+            ]
+          ]
+        ]
+      ],
+      "VPRENOS": [
+        "Prenos toplote in snovi",
+        "FIZ",
+        [
+          "PRENOS_TOPLOTE",
+          "PRENOS_SNOVI"
+        ],
+        [
+          [
+            "Prenos v metalurških procesih",
+            [
+              "Nestacionarni prevod toplote | Biotovo in Fourierjevo število, ohlajanje ulitkov in odkovkov",
+              "Difuzija pri toplotni obdelavi | cementacija, nitriranje, globina difuzijske plasti"
+            ]
+          ]
+        ]
+      ],
+      "VMAT3": [
+        "Matematika 3",
+        "MAT",
+        [],
+        [
+          [
+            "Navadne diferencialne enačbe",
+            [
+              "Diferencialne enačbe prvega reda | ločljive in linearne enačbe, začetni problem, modeli rasti in razpada",
+              "Linearne diferencialne enačbe drugega reda | homogene s konstantnimi koeficienti, nastavek za partikularno rešitev"
+            ]
+          ],
+          [
+            "Funkcije več spremenljivk",
+            [
+              "Graf in zveznost funkcij več spremenljivk | definicijsko območje, nivojnice, limita in zveznost",
+              "Parcialni odvodi | parcialni odvodi, totalni diferencial, gradient, verižno pravilo",
+              "Ekstremi funkcij več spremenljivk | stacionarne točke, Hessejeva matrika, vezani ekstremi"
+            ]
+          ],
+          [
+            "Večkratni integrali",
+            [
+              "Večkratni integrali | dvojni in trojni integral, polarne, cilindrične in sferne koordinate",
+              "Uporaba večkratnih integralov | ploščina, prostornina, masa in težišče telesa"
+            ]
+          ]
+        ]
+      ],
+      "VNUMMOD": [
+        "Numerično modeliranje",
+        "MAT",
+        [
+          "METODE_NUM_MOD"
+        ],
+        [
+          [
+            "Modeliranje procesov v materialih",
+            [
+              "Metoda končnih razlik | diskretizacija, eksplicitna in implicitna shema, stabilnost",
+              "Simulacija prevoda toplote | ohlajanje ulitka, robni pogoji, programska orodja",
+              "Simulacija preoblikovanja | elastoplastični model materiala, napetosti in deformacije"
+            ]
+          ]
+        ]
+      ],
+      "VPROIZS": [
+        "Proizvodni sistemi v trdnem",
+        "FIZ",
+        [],
+        [
+          [
+            "Preoblikovanje kovin",
+            [
+              "Osnove plastične deformacije | napetost tečenja, krivulja utrjevanja, deformacijska hitrost",
+              "Kovanje in valjanje | sile in delo preoblikovanja, valjarniške proge",
+              "Iztiskanje in vlečenje | iztiskovalna sila, trenje, vlečenje žice in cevi"
+            ]
+          ],
+          [
+            "Spajanje in odrezavanje",
+            [
+              "Varjenje in spajanje | talilni postopki, toplotno vplivana cona",
+              "Odrezavanje | struženje, frezanje, obstojnost orodja"
+            ]
+          ],
+          [
+            "Organizacija proizvodnje",
+            [
+              "Proizvodne linije | takt, ozka grla, pretok materiala",
+              "Avtomatizacija in kakovost | krmiljenje procesa, statistična kontrola procesa"
+            ]
+          ]
+        ]
+      ],
+      "VPREISK": [
+        "Preiskava materialov",
+        "KEM",
+        [],
+        [
+          [
+            "Mehanske preiskave",
+            [
+              "Natezni preizkus | diagram napetost-deformacija, meja plastičnosti, raztezek",
+              "Trdota in udarna žilavost | Brinell, Vickers, Rockwell, Charpyjev preizkus",
+              "Utrujanje in lezenje | Wöhlerjeva krivulja, krivulja lezenja"
+            ]
+          ],
+          [
+            "Mikrostrukturne preiskave",
+            [
+              "Elektronska mikroskopija materialov | SEM, EDS, TEM",
+              "Rentgenska difrakcija | Braggov zakon, fazna analiza, zaostale napetosti"
+            ]
+          ],
+          [
+            "Neporušne preiskave",
+            [
+              "Ultrazvočne in radiografske preiskave | odkrivanje notranjih napak, merjenje debeline",
+              "Magnetne in penetrantske preiskave | površinske razpoke, potek preiskave"
+            ]
+          ]
+        ]
+      ],
+      "VPIROFE": [
+        "Pirometalurgija železa in zlitin",
+        "KEM",
+        [],
+        [
+          [
+            "Surovine in plavž",
+            [
+              "Železove rude in priprava vložka | sintranje, peletiranje, koks",
+              "Plavžni proces | redukcija železovih oksidov, Boudouardova reakcija, grodelj"
+            ]
+          ],
+          [
+            "Proizvodnja jekla",
+            [
+              "Kisikovi konvertorji | oksidacija spremljevalnih elementov, žlindra",
+              "Elektroobločna peč | vložek, staljevanje, energijska bilanca"
+            ]
+          ],
+          [
+            "Sekundarna metalurgija in litje",
+            [
+              "Ponovčna metalurgija | dezoksidacija, razžveplanje, vakuumska obdelava",
+              "Kontinuirno litje jekla | kristalizator, strjevanje gredic in slabov",
+              "Ferozlitine | proizvodnja, uporaba pri legiranju"
+            ]
+          ]
+        ]
+      ],
+      "VPROCLIV": [
+        "Procesni in livarski praktikum",
+        "KEM",
+        [],
+        [
+          [
+            "Livarske forme",
+            [
+              "Formarske mešanice | kremenov pesek, veziva, lastnosti mešanic",
+              "Izdelava form in jeder | modeli, ročno in strojno formanje"
+            ]
+          ],
+          [
+            "Taljenje in litje",
+            [
+              "Taljenje zlitin | indukcijska peč, merjenje temperature, obdelava taline",
+              "Ulivanje in strjevanje | ulivni sistem, napajalniki, krčenje"
+            ]
+          ],
+          [
+            "Kontrola ulitkov",
+            [
+              "Napake ulitkov | poroznost, usadine, vroče razpoke",
+              "Termična analiza | ohlajevalne krivulje, določanje likvidusa in solidusa"
+            ]
+          ]
+        ]
+      ],
+      "VENPRED": [
+        "Energetsko predelovalni praktikum",
+        "FIZ",
+        [],
+        [
+          [
+            "Toplotna obdelava",
+            [
+              "Peči za toplotno obdelavo | ogrevanje, zaščitna atmosfera, merjenje temperature",
+              "Žarjenje in kaljenje vzorcev | režimi obdelave, merjenje trdote"
+            ]
+          ],
+          [
+            "Preoblikovanje v praksi",
+            [
+              "Valjanje in kovanje vzorcev | stopnja deformacije, sile, mikrostruktura",
+              "Vroče preoblikovanje | preoblikovalnost, krivulje tečenja"
+            ]
+          ],
+          [
+            "Energijske bilance in meritve",
+            [
+              "Energijska bilanca peči | toplotne izgube, izkoristek",
+              "Meritve v procesu | termočleni, pirometri, zajem podatkov"
+            ]
+          ]
+        ]
+      ],
+      "VORGMEN": [
+        "Organizacija in menedžment podjetja",
+        "EKO",
+        [],
+        [
+          [
+            "Podjetje",
+            [
+              "Podjetje in okolje | pravnoorganizacijske oblike, deležniki",
+              "Organizacijska struktura | funkcijska, divizijska, matrična struktura"
+            ]
+          ],
+          [
+            "Menedžment",
+            [
+              "Funkcije menedžmenta | planiranje, organiziranje, vodenje, kontrola",
+              "Strateški menedžment | analiza SWOT, poslovna strategija"
+            ]
+          ],
+          [
+            "Poslovanje",
+            [
+              "Stroški in kalkulacije | fiksni in variabilni stroški, prag rentabilnosti",
+              "Investicije | denarni tok, neto sedanja vrednost, doba vračanja"
+            ]
+          ]
+        ]
+      ],
+      "VMODPR": [
+        "Modelski praktikum",
+        "FIZ",
+        [],
+        [
+          [
+            "Fizikalno modeliranje",
+            [
+              "Teorija podobnosti | brezdimenzijska števila, merilo modela",
+              "Vodni modeli metalurških naprav | tok taline v ponovci, mešanje"
+            ]
+          ],
+          [
+            "Računalniško modeliranje",
+            [
+              "Simulacija strjevanja ulitkov | programi za simulacijo litja, napovedovanje napak",
+              "Simulacija kovanja | model končnih elementov, materialni podatki"
+            ]
+          ],
+          [
+            "Ovrednotenje modelov",
+            [
+              "Validacija modela | primerjava z meritvami, napake modela",
+              "Občutljivost parametrov | vpliv vhodnih podatkov, optimizacija procesa"
+            ]
+          ]
+        ]
+      ],
+      "VLIVAR": [
+        "Livarstvo",
+        "KEM",
+        [],
+        [
+          [
+            "Livarske zlitine",
+            [
+              "Litine | siva, nodularna in bela litina, vpliv ogljika in silicija",
+              "Neželezne livarske zlitine | zlitine Al-Si, bakrove in cinkove zlitine"
+            ]
+          ],
+          [
+            "Livarski postopki",
+            [
+              "Litje v peščene forme | formarske mešanice, jedra",
+              "Tlačno in kokilno litje | kovinske forme, livnost"
+            ]
+          ],
+          [
+            "Strjevanje in napake",
+            [
+              "Strjevanje ulitkov | Chvorinovo pravilo, napajanje",
+              "Livarske napake | plinska poroznost, krčilne votline, razpoke"
+            ]
+          ]
+        ]
+      ],
+      "VPREDEL": [
+        "Predelava materialov",
+        "FIZ",
+        [],
+        [
+          [
+            "Plastičnost",
+            [
+              "Plastičnost kovin | kriterija tečenja Tresca in von Mises, krivulja tečenja",
+              "Preoblikovalnost | vpliv temperature in hitrosti, dinamična rekristalizacija"
+            ]
+          ],
+          [
+            "Postopki predelave",
+            [
+              "Valjanje | prijemni kot, sila valjanja, vroče in hladno valjanje",
+              "Kovanje | prosto in utopno kovanje, orodja",
+              "Iztiskanje in vlečenje | iztiskovalna sila, vlečenje žice"
+            ]
+          ],
+          [
+            "Lastnosti izdelkov",
+            [
+              "Mikrostruktura po predelavi | tekstura, velikost zrn",
+              "Termomehanska obdelava | kontrolirano valjanje, mehanske lastnosti"
+            ]
+          ]
+        ]
+      ],
+      "VTOPLT": [
+        "Toplotna tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Goriva in zgorevanje",
+            [
+              "Goriva | kurilnost, trda, tekoča in plinasta goriva",
+              "Zgorevanje | potreba po zraku, sestava dimnih plinov"
+            ]
+          ],
+          [
+            "Prenos toplote v napravah",
+            [
+              "Prenos toplote v pečeh | sevanje plamena, konvekcija",
+              "Rekuperatorji in regeneratorji | vračanje toplote, izkoristek"
+            ]
+          ],
+          [
+            "Toplotne naprave",
+            [
+              "Industrijske peči | vrste peči, ognjevzdržna obloga, izolacija",
+              "Energijska učinkovitost | energijska bilanca, izgube, ukrepi"
+            ]
+          ]
+        ]
+      ],
+      "VFMJEK": [
+        "Fizikalna metalurgija jekla",
+        "KEM",
+        [],
+        [
+          [
+            "Sistem Fe-C",
+            [
+              "Diagram Fe-Fe3C | fazne premene, evtektoid, ledeburit",
+              "Legirni elementi v jeklu | gamageni in alfageni elementi, karbidi"
+            ]
+          ],
+          [
+            "Premene pri toplotni obdelavi",
+            [
+              "Diagrami TTT in CCT jekel | perlitna, bainitna in martenzitna premena",
+              "Kaljivost | Jominyjev preizkus, kritična hitrost ohlajanja"
+            ]
+          ],
+          [
+            "Vrste jekel",
+            [
+              "Konstrukcijska in orodna jekla | lastnosti, toplotna obdelava",
+              "Nerjavna jekla | feritna, avstenitna, dupleks jekla, pasivacija"
+            ]
+          ]
+        ]
+      ],
+      "VKERAM": [
+        "Keramika",
+        "KEM",
+        [],
+        [
+          [
+            "Zgradba keramike",
+            [
+              "Kristalne strukture keramike | ionska in kovalentna vez, oksidi, karbidi, nitridi",
+              "Steklo | steklasto stanje, steklotvorni oksidi"
+            ]
+          ],
+          [
+            "Izdelava keramike",
+            [
+              "Priprava prahov in oblikovanje | stiskanje, litje suspenzij, ekstrudiranje",
+              "Sintranje | mehanizmi sintranja, zgoščevanje, rast zrn"
+            ]
+          ],
+          [
+            "Lastnosti in uporaba",
+            [
+              "Mehanske lastnosti keramike | krhkost, lomna žilavost, Weibullova statistika",
+              "Funkcionalna keramika | dielektriki, piezoelektriki, bioaktivna keramika"
+            ]
+          ]
+        ]
+      ],
+      "VKOMPOZ": [
+        "Kompoziti",
+        "KEM",
+        [],
+        [
+          [
+            "Osnove kompozitov",
+            [
+              "Zgradba kompozitov | matrica, ojačitve, mejna plast",
+              "Ojačitvena vlakna | steklena, ogljikova in aramidna vlakna"
+            ]
+          ],
+          [
+            "Vrste kompozitov",
+            [
+              "Polimerni kompoziti | duromerne in termoplastične matrice, laminati",
+              "Kovinski in keramični kompoziti | MMC, CMC, postopki izdelave"
+            ]
+          ],
+          [
+            "Lastnosti kompozitov",
+            [
+              "Pravilo mešanic | modul elastičnosti vzdolž in prečno na vlakna",
+              "Porušitev kompozitov | delaminacija, utrujanje, preskušanje"
+            ]
+          ]
+        ]
+      ],
+      "VPOLIM": [
+        "Polimeri",
+        "KEM",
+        [],
+        [
+          [
+            "Zgradba polimerov",
+            [
+              "Makromolekule | polimerizacija, molska masa in njena porazdelitev",
+              "Morfologija polimerov | amorfni in delno kristalinični polimeri, steklasti prehod"
+            ]
+          ],
+          [
+            "Lastnosti polimerov",
+            [
+              "Mehanske lastnosti polimerov | viskoelastičnost, lezenje, relaksacija",
+              "Toplotne lastnosti polimerov | temperatura steklastega prehoda, tališče, toplotna obstojnost"
+            ]
+          ],
+          [
+            "Predelava in uporaba",
+            [
+              "Predelava polimerov | brizganje, ekstrudiranje, pihanje",
+              "Recikliranje polimerov | mehansko in kemijsko recikliranje, biorazgradljivi polimeri"
+            ]
+          ]
+        ]
+      ],
+      "VKOROZ": [
+        "Korozija in zaščita",
+        "KEM",
+        [],
+        [
+          [
+            "Osnove korozije",
+            [
+              "Elektrokemijska korozija | anodna in katodna reakcija, korozijski potencial",
+              "Pourbaixovi diagrami | termodinamika korozije, pasivnost"
+            ]
+          ],
+          [
+            "Oblike korozije",
+            [
+              "Enakomerna in lokalna korozija | jamičasta, špranjska, interkristalna korozija",
+              "Napetostna korozija | korozijsko utrujanje, vodikova krhkost"
+            ]
+          ],
+          [
+            "Zaščita pred korozijo",
+            [
+              "Katodna zaščita | žrtvovane anode, vsiljeni tok",
+              "Prevleke in inhibitorji | kovinske in organske prevleke, inhibitorji korozije"
+            ]
+          ]
+        ]
+      ],
+      "VGEOMEH": [
+        "Geomehanika",
+        "GEO",
+        [],
+        [
+          [
+            "Nastanek in sestava zemljin",
+            [
+              "Nastanek tal | preperevanje, transport, rezidualne in transportirane zemljine",
+              "Fazni sestav zemljin | vlažnost, poroznost, količnik por, gostota",
+              "Klasifikacija zemljin | granulometrija, Atterbergove meje, plastičnost"
+            ]
+          ],
+          [
+            "Voda v zemljinah",
+            [
+              "Prepustnost zemljin | Darcyjev zakon, laboratorijski preizkusi prepustnosti",
+              "Efektivne napetosti | Terzaghijevo načelo, porni tlak",
+              "Kapilarnost in sukcija | kapilarni dvig, nenasičene zemljine"
+            ]
+          ],
+          [
+            "Deformacije in trdnost",
+            [
+              "Stisljivost in konsolidacija | edometrski preizkus, posedki, Terzaghijeva teorija konsolidacije",
+              "Strižna trdnost zemljin | Mohr-Coulombov kriterij, triosni preizkus",
+              "Zgoščevanje zemljin | Proctorjev preizkus, optimalna vlažnost"
+            ]
+          ]
+        ]
+      ],
+      "VPEDO": [
+        "Pedologija",
+        "GEO",
+        [],
+        [
+          [
+            "Tla kot sistem",
+            [
+              "Zgradba tal | trifazni sistem, talni horizonti, talni profil",
+              "Tlotvorni dejavniki | matična podlaga, relief, klima, organizmi, čas"
+            ]
+          ],
+          [
+            "Lastnosti tal",
+            [
+              "Fizikalne lastnosti tal | tekstura, struktura, gostota, poroznost, vodne lastnosti",
+              "Kemijske lastnosti tal | talni koloidi, sorpcija, kationska izmenjalna kapaciteta, pH",
+              "Organska snov tal | razgradnja, humus, pomen za tla",
+              "Biogeokemično kroženje hranil | dušik, fosfor, kalij, kalcij, magnezij"
+            ]
+          ],
+          [
+            "Klasifikacija in varstvo tal",
+            [
+              "Klasifikacija tal | diagnostični horizonti, slovenska klasifikacija, WRB",
+              "Degradacija tal | erozija, onesnaženje, zbijanje tal"
+            ]
+          ]
+        ]
+      ],
+      "VPREIMM": [
+        "Preiskave mineralnih materialov",
+        "GEO",
+        [],
+        [
+          [
+            "Vzorčenje in priprava",
+            [
+              "Vzorčenje | reprezentativnost vzorca, metode vzorčenja",
+              "Priprava vzorcev za analizo | drobljenje, mletje, zbruski, razklop"
+            ]
+          ],
+          [
+            "Mikroskopske metode",
+            [
+              "Optična mikroskopija mineralov | polarizacijski mikroskop, refraktometrija, izotropni in anizotropni minerali",
+              "Elektronska mikroskopija | SEM, TEM, EDS in WDS"
+            ]
+          ],
+          [
+            "Kemijske in strukturne analize",
+            [
+              "Spektroskopske metode | ICP-MS, ICP-ES, XRF",
+              "Rentgenska praškovna difrakcija | Braggov zakon, identifikacija mineralov",
+              "Kakovost meritev | napaka meritve, natančnost, občutljivost"
+            ]
+          ]
+        ]
+      ],
+      "VUSRD": [
+        "Uvod v strokovno-raziskovalno delo",
+        "GEO",
+        [],
+        [
+          [
+            "Znanost",
+            [
+              "Znanost kot spoznavna dejavnost | pojem znanosti, znanstvena metoda",
+              "Znanstvene razlage | hipoteza, teorija, paradigma, falsifikabilnost"
+            ]
+          ],
+          [
+            "Viri in citiranje",
+            [
+              "Iskanje virov | COBISS, Web of Science, SICRIS",
+              "Citiranje literature | bibliografska pravila, sinteza virov"
+            ]
+          ],
+          [
+            "Pisanje in predstavitev",
+            [
+              "Vrste strokovnih in znanstvenih tekstov | članek, poročilo, seminar, diploma, projekt",
+              "Predstavitev raziskovalnega dela | predavanje, poster, grafične priloge"
+            ]
+          ]
+        ]
+      ],
+      "VMINSUR": [
+        "Mineralne surovine",
+        "GEO",
+        [],
+        [
+          [
+            "Nastanek rudnih nahajališč",
+            [
+              "Magmatska rudišča | likvacijska, segregacijska in pegmatitna rudišča",
+              "Hidrotermalna rudišča | porfirska, žilna in skarnska rudišča",
+              "Sedimentna rudišča | rezidualna, sedimentno-eksalacijska in nanosna rudišča"
+            ]
+          ],
+          [
+            "Ruda",
+            [
+              "Makroskopsko prepoznavanje rud | rudni minerali, teksture in strukture rude",
+              "Vrednotenje nahajališča | vsebnost, zaloge, ekonomičnost"
+            ]
+          ],
+          [
+            "Druge surovine",
+            [
+              "Nahajališča ogljikovodikov | matične kamnine, migracija, pasti",
+              "Nekovinske mineralne surovine | gradbeni kamen, gline, industrijski minerali"
+            ]
+          ]
+        ]
+      ],
+      "VGEOMORF": [
+        "Geomorfologija",
+        "GEO",
+        [],
+        [
+          [
+            "Osnove geomorfologije",
+            [
+              "Geomorfološki procesi | endogeni in eksogeni procesi, denudacija",
+              "Geomorfologija velikih meril | tektonska geomorfologija, reliefne enote"
+            ]
+          ],
+          [
+            "Geomorfni sistemi",
+            [
+              "Pobočni in fluvialni procesi | pobočni transport, rečna erozija in akumulacija",
+              "Glacialni in eolski procesi | ledeniške oblike, eolska akumulacija",
+              "Antropogena geomorfologija | človekov vpliv na relief"
+            ]
+          ],
+          [
+            "Geomorfološko kartiranje",
+            [
+              "Terensko kartiranje geomorfnih oblik | terenska merjenja, simbolizacija",
+              "Digitalno kartiranje površja | digitalni model reliefa, vizualizacija, kvantifikacija"
+            ]
+          ]
+        ]
+      ],
+      "VSTRORD": [
+        "Stratigrafska orodja",
+        "GEO",
+        [],
+        [
+          [
+            "Temelji stratigrafije",
+            [
+              "Principi stratigrafske analize | zgodovina stratigrafije, definicije, prikaz podatkov",
+              "Litostratigrafija | litostratigrafske enote, meje, diskontinuitete"
+            ]
+          ],
+          [
+            "Stratigrafske metode",
+            [
+              "Biostratigrafija | vodilni fosili, biocone",
+              "Kemostratigrafija in magnetostratigrafija | izotopska kemostratigrafija, enote polarnosti",
+              "Sekvenčna stratigrafija in ciklostratigrafija | sekvence, cikli, korelacija"
+            ]
+          ],
+          [
+            "Čas in bazeni",
+            [
+              "Kronostratigrafska lestvica | standardna geološka časovna lestvica, GSSP",
+              "Sedimentacijski bazeni | geodinamika nastanka bazenov, historična geologija"
+            ]
+          ]
+        ]
+      ],
+      "VSEIZM": [
+        "Osnove seizmologije",
+        "FIZ",
+        [],
+        [
+          [
+            "Potresi",
+            [
+              "Vrste potresov | teorija elastične povratne zveze, zgodovina seizmologije",
+              "Potresni valovi | prostorski in površinski valovi, seizmogram"
+            ]
+          ],
+          [
+            "Merjenje potresov",
+            [
+              "Seizmometri in opazovalnice | seizmograf, akcelerometer, lociranje potresov",
+              "Magnituda in intenziteta | evropska potresna lestvica EMS, učinki potresov"
+            ]
+          ],
+          [
+            "Seizmotektonika in potresna nevarnost",
+            [
+              "Žariščni mehanizmi | prelomi, dolžina pretrga, premik ob prelomu",
+              "Ocena potresne nevarnosti | karte nevarnosti, lokalni vplivi tal, Eurocode 8",
+              "Notranja zgradba Zemlje | seizmična tomografija, hitrostne diskontinuitete"
+            ]
+          ]
+        ]
+      ],
+      "VPALVRT": [
+        "Paleontologija vretenčarjev",
+        "GEO",
+        [],
+        [
+          [
+            "Kosti in fosilizacija",
+            [
+              "Zgradba kosti | vrste in značilnosti kosti",
+              "Tafonomija | fosilizacija kosti, tafonomski dejavniki"
+            ]
+          ],
+          [
+            "Skupine vretenčarjev",
+            [
+              "Izvor strunarjev in vretenčarjev | značilnosti, najstarejši vretenčarji",
+              "Ribe in dvoživke | razvoj čeljusti, prehod na kopno",
+              "Reptili in ptiči | izvor amniotov, dinozavri, razvoj ptičev"
+            ]
+          ],
+          [
+            "Sesalci in človek",
+            [
+              "Radiacija sesalcev | paleogenska radiacija, paleobiogeografija",
+              "Razvoj človeka | hominini, ključna fosilna najdišča"
+            ]
+          ]
+        ]
+      ],
+      "VGEOMED": [
+        "Geomedicina",
+        "GEO",
+        [],
+        [
+          [
+            "Prvine v okolju",
+            [
+              "Naravna porazdelitev prvin | geogeni in antropogeni viri",
+              "Biološka razpoložljivost prvin v tleh | speciacija, prevzem v rastline"
+            ]
+          ],
+          [
+            "Prvine in zdravje",
+            [
+              "Vnos prvin v organizem | kemijski in biološki vidik, biološka funkcija prvin",
+              "Izbrani elementi | radon, fluor, jod, selen, potencialno strupeni elementi",
+              "Vulkanske emisije in zdravje | plini, pepel, vplivi na zdravje"
+            ]
+          ],
+          [
+            "Medicinska geologija",
+            [
+              "Okoljska epidemiologija in toksikologija | izpostavljenost, odziv na odmerek",
+              "Geofagija in mineralogija kosti | uživanje zemlje, biominerali"
+            ]
+          ]
+        ]
+      ],
+      "VBIOGK": [
+        "Biogeokemija",
+        "GEO",
+        [],
+        [
+          [
+            "Osnove biogeokemije",
+            [
+              "Od geokemije do biogeokemije | osnovna načela, izvor življenja",
+              "Geomikrobiologija | mikrobni metabolizem, mikrobno preperevanje"
+            ]
+          ],
+          [
+            "Biogeokemični procesi",
+            [
+              "Biomineralizacija | biološko povzročena in biološko kontrolirana mineralizacija",
+              "Organska snov in biomarkerji | kroženje organske snovi, biomarkerji v sedimentih",
+              "Biogeokemični cikli | kisikov, dušikov in fosforjev cikel"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Bio- in fitoremediacija | bakterije, rastline hiperakumulatorji",
+              "Dendrogeokemija in terroir | sistem kamnina-tla-drevo, vinska trta"
+            ]
+          ]
+        ]
+      ],
+      "VGEOMP": [
+        "Geologija z mineralogijo in petrologijo",
+        "GEO",
+        [],
+        [
+          [
+            "Zemlja",
+            [
+              "Zgradba Zemlje | nastanek, plasti, fizikalne veličine, izvori energije",
+              "Tektonika in geološka karta | tektonika plošč, stratigrafija, geološka karta",
+              "Preperevanje in erozija | fizikalno in kemijsko preperevanje, erozija"
+            ]
+          ],
+          [
+            "Kristalografija in minerali",
+            [
+              "Geometrijska kristalografija | osnovna celica, vezi v kristalnih strukturah",
+              "Kristalofizika | optična indikatrisa, dvolom, trdota, razkolnost",
+              "Minerali | optične in kemične lastnosti, nastanek, prepoznavanje rudnih in kamninotvornih mineralov"
+            ]
+          ],
+          [
+            "Kamnine",
+            [
+              "Magmatske kamnine | nastanek, klasifikacija, geokemične značilnosti",
+              "Sedimentne in metamorfne kamnine | geneza, klasifikacija, nastopanje v Sloveniji"
+            ]
+          ]
+        ]
+      ],
+      "VGEOM2": [
+        "Geometrija v inženirstvu II",
+        "MAT",
+        [],
+        [
+          [
+            "Aksonometrija",
+            [
+              "Ortogonalna aksonometrija | izometrija, dimetrija, aksonometrične osi",
+              "Risanje teles v aksonometriji | prizme, valji, presečišča"
+            ]
+          ],
+          [
+            "Rudarska kartografija in geometrizacija",
+            [
+              "Rudarske karte | vrste, merila, vsebina",
+              "Geometrizacija nahajališč | izolinije, profili, izračun zalog"
+            ]
+          ],
+          [
+            "Računalniško modeliranje",
+            [
+              "3D modeliranje objektov v prostoru | CAD, žični in ploskovni modeli",
+              "Modeliranje terena in nahajališč | digitalni model reliefa, blokovni model"
+            ]
+          ]
+        ]
+      ],
+      "VODPAD": [
+        "Gospodarjenje in predelava odpadnih snovi",
+        "GEO",
+        [],
+        [
+          [
+            "Odpadki",
+            [
+              "Nastajanje in vrste odpadkov | količine, klasifikacija, nevarni odpadki",
+              "Zbiranje in transport odpadkov | ločeno zbiranje, logistika"
+            ]
+          ],
+          [
+            "Ravnanje z odpadki",
+            [
+              "Hierarhija ravnanja z odpadki | preprečevanje, ponovna uporaba, recikliranje",
+              "Predelava odpadkov | mehanska, biološka in termična obdelava"
+            ]
+          ],
+          [
+            "Odlagališča",
+            [
+              "Vrste odlagališč | inertni, nenevarni in nevarni odpadki, tesnjenje",
+              "Vplivi odlagališč na okolje in monitoring | izcedne vode, odlagališčni plin"
+            ]
+          ]
+        ]
+      ],
+      "VMPT": [
+        "Mehanska procesna tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Disperzni sistemi",
+            [
+              "Karakterizacija delcev | velikost, oblika, porazdelitev, gostota, poroznost",
+              "Sejalna analiza | granulometrijska krivulja, Rosin-Rammlerjeva porazdelitev"
+            ]
+          ],
+          [
+            "Spreminjanje velikosti delcev",
+            [
+              "Drobljenje in mletje | Rittingerjev, Kickov in Bondov zakon, drobilniki in mlini",
+              "Aglomeriranje | briketiranje, peletiranje"
+            ]
+          ],
+          [
+            "Ločevanje in mešanje",
+            [
+              "Sejanje in klasiranje | sita, hidrociklon, učinkovitost ločevanja",
+              "Zgoščevanje in filtriranje | sedimentacija, filtri, odpraševanje",
+              "Mešanje in skladiščenje sipkih snovi | mešalniki, silosi, vzorčenje"
+            ]
+          ]
+        ]
+      ],
+      "VSTROJ1": [
+        "Osnove strojništva I",
+        "FIZ",
+        [],
+        [
+          [
+            "Kinematika",
+            [
+              "Kinematika točke | pot, hitrost, pospešek, krivočrtno gibanje",
+              "Kinematika togega telesa | translacija, rotacija, prenos gibanja"
+            ]
+          ],
+          [
+            "Dinamika",
+            [
+              "Newtonovi zakoni in sile | trenje, sile pri kroženju, gravitacija",
+              "Delo, energija in gibalna količina | izrek o kinetični energiji, ohranitveni zakoni, trki",
+              "Vrtenje togega telesa | navor, vztrajnostni moment, vrtilna količina"
+            ]
+          ],
+          [
+            "Trenje in moč",
+            [
+              "Vrste trenja | drsno in kotalno trenje, trenje v ležajih",
+              "Moč in izkoristek strojev | moč, prenos moči, izkoristek"
+            ]
+          ]
+        ]
+      ],
+      "VSTROJ2": [
+        "Osnove strojništva II",
+        "FIZ",
+        [
+          "MEH_TEKOCIN",
+          "TERMO_FS"
+        ],
+        [
+          [
+            "Stroji v geotehnologiji",
+            [
+              "Črpalke | karakteristika črpalke, moč, izkoristek",
+              "Kompresorji | stiskanje zraka, delo kompresije"
+            ]
+          ]
+        ]
+      ],
+      "VUGF1": [
+        "Uporabna geofizika I",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeliranje v geofiziki",
+            [
+              "Formulacija geofizikalnih problemov | direktni in inverzni problem, vhodni parametri",
+              "Diskretni in zvezni modeli | mreže, robni pogoji"
+            ]
+          ],
+          [
+            "Matematični modeli",
+            [
+              "Modeli geofizikalnih polj | potencialna polja, difuzijska in valovna enačba",
+              "Numerične simulacije | metoda končnih razlik, metoda končnih elementov"
+            ]
+          ],
+          [
+            "Vrednotenje simulacij",
+            [
+              "Stabilnost in občutljivost simulacij | konvergenca, analiza občutljivosti",
+              "Optimizacija modela | prilagajanje modela meritvam, primeri iz prakse"
+            ]
+          ]
+        ]
+      ],
+      "VMEHT2": [
+        "Mehanika tal II",
+        "GEO",
+        [],
+        [
+          [
+            "Napetosti v tleh",
+            [
+              "Začetne napetosti | geostatične napetosti, koeficient mirnega zemeljskega pritiska",
+              "Prirastek napetosti zaradi obtežbe | Boussinesqova rešitev, porazdelitev pod temeljem"
+            ]
+          ],
+          [
+            "Tok vode in posedki",
+            [
+              "Precejanje in precejne mreže | Laplaceova enačba, hidravlični gradient, vzgon",
+              "Pomiki in posedki | izračun posedkov, časovni potek konsolidacije"
+            ]
+          ],
+          [
+            "Stabilnost in zemeljski pritiski",
+            [
+              "Stabilnost pobočij in brežin | metoda lamel, faktor varnosti, monitoring brežin",
+              "Zemeljski pritiski | Rankinova in Coulombova teorija, aktivni in pasivni pritisk",
+              "Dopustna nosilnost temeljnih tal | mejna nosilnost, varnostni faktor"
+            ]
+          ]
+        ]
+      ],
+      "VGEOD2": [
+        "Nižja geodezija II",
+        "GEO",
+        [],
+        [
+          [
+            "Fotogrametrija in daljinsko zaznavanje",
+            [
+              "Osnove fotogrametrije | aerofotografija, stereopar, ortofoto",
+              "Daljinsko zaznavanje | satelitski posnetki, lidar, spektralni kanali"
+            ]
+          ],
+          [
+            "Satelitsko določanje položaja",
+            [
+              "Osnove GNSS | GPS, določanje položaja, koordinatni sistemi",
+              "Metode izmere GNSS | statična izmera, RTK, natančnost"
+            ]
+          ],
+          [
+            "Izmera in kartiranje",
+            [
+              "Izmera terena | tahimetrija, terestrični laserski skener",
+              "Kartiranje | izdelava načrtov, topografske karte"
+            ]
+          ]
+        ]
+      ],
+      "VRAVOK": [
+        "Ravnanje z okoljem",
+        "GEO",
+        [],
+        [
+          [
+            "Okolje in posegi",
+            [
+              "Okoljske sestavine | zemlja, voda, zrak",
+              "Posegi v okolje | lokalni in globalni vplivi"
+            ]
+          ],
+          [
+            "Upravljanje okolja",
+            [
+              "Standard ISO 14000 | sistem ravnanja z okoljem, presoja",
+              "Zakonodaja in ekonomija okolja | okoljska zakonodaja doma in v svetu, okoljske dajatve"
+            ]
+          ],
+          [
+            "Odpadki in čiste tehnologije",
+            [
+              "Karakterizacija odpadkov in kontaminantov | vrste, lastnosti, analize",
+              "Minimiziranje odpadkov in sekundarne surovine | preprečevanje, ponovna raba",
+              "Čiste tehnologije | učinkovita raba virov, manj emisij"
+            ]
+          ]
+        ]
+      ],
+      "VPRIDMS": [
+        "Pridobivanje mineralnih surovin I",
+        "GEO",
+        [],
+        [
+          [
+            "Rudne zaloge",
+            [
+              "Ugotavljanje rudnih zalog | kategorije zalog, izračun zalog",
+              "Vodenje zalog | evidenca, izkoristek nahajališča"
+            ]
+          ],
+          [
+            "Odpiranje nahajališč",
+            [
+              "Pripravljalna in odpiralna dela | jaški, jamske proge, niskopi",
+              "Gradnja jaškov in jamskih prog | vrtanje, miniranje, podporje"
+            ]
+          ],
+          [
+            "Odkopavanje",
+            [
+              "Odkopne metode | komorne, širokočelne in podetažne metode",
+              "Zasipavanje | vrste zasipa, načini zasipavanja"
+            ]
+          ]
+        ]
+      ],
+      "VTEMELJ": [
+        "Temeljenje objektov",
+        "GEO",
+        [],
+        [
+          [
+            "Osnove temeljenja",
+            [
+              "Geomehanske raziskave za temeljenje | vrtine, sondiranja, parametri tal",
+              "Principi temeljenja | izbira vrste temeljenja, mejna stanja"
+            ]
+          ],
+          [
+            "Plitvo temeljenje",
+            [
+              "Nosilnost plitvih temeljev | Terzaghijeva in Brinch Hansenova enačba",
+              "Posedki temeljev | dopustni in diferenčni posedki"
+            ]
+          ],
+          [
+            "Globoko temeljenje",
+            [
+              "Temeljenje na pilotih | nosilnost pilotov, izvedba",
+              "Temeljenje na vodnjakih | nosilnost vodnjakov, izvedba"
+            ]
+          ],
+          [
+            "Gradbene jame",
+            [
+              "Načrtovanje gradbenih jam | zaščita, odvodnjavanje",
+              "Vpliv temeljenja na sosednje objekte | posedki okolice, monitoring"
+            ]
+          ]
+        ]
+      ],
+      "VBOGAT": [
+        "Bogatenje mineralnih in sekundarnih surovin",
+        "GEO",
+        [],
+        [
+          [
+            "Osnove bogatenja",
+            [
+              "Lastnosti vhodnih surovin | mineralna sestava, sproščenost, vsebnost",
+              "Sortiranje | optično in ročno sortiranje"
+            ]
+          ],
+          [
+            "Fizikalni postopki ločevanja",
+            [
+              "Gravitacijsko ločevanje | težke tekočine, tanek vodni sloj, pulzirajoč vodni tok",
+              "Magnetno in električno ločevanje | magnetna susceptibilnost, elektrostatični separatorji"
+            ]
+          ],
+          [
+            "Flotacija",
+            [
+              "Teorija flotacije | omočljivost, zbiralci, penilci",
+              "Vrste flotacij | direktna, obratna in selektivna flotacija"
+            ]
+          ],
+          [
+            "Posebne surovine",
+            [
+              "Bogatenje premoga | gostotno ločevanje, vsebnost pepela",
+              "Bogatenje sekundarnih surovin | recikliranje, ločevanje odpadkov"
+            ]
+          ]
+        ]
+      ],
+      "VVRT2": [
+        "Globinsko vrtanje II",
+        "GEO",
+        [],
+        [
+          [
+            "Reologija izplak",
+            [
+              "Reološki modeli izplak | Binghamov in potenčni model",
+              "Merjenje reoloških lastnosti | viskozimeter, meja tečenja"
+            ]
+          ],
+          [
+            "Tehnologije vrtanja",
+            [
+              "Vrtanje pri sidranju in pilotiranju | oprema, postopki",
+              "Vrtanje za injektiranje | injekcijske vrtine, tlaki"
+            ]
+          ],
+          [
+            "Projekt vrtanja",
+            [
+              "Organizacija projekta vrtanja | načrtovanje, izvedba, stroški",
+              "Okoljski monitoring vrtanja | vplivi na okolje, nadzor"
+            ]
+          ]
+        ]
+      ],
+      "VMEHKAM": [
+        "Mehanika kamnin",
+        "GEO",
+        [],
+        [
+          [
+            "Osnove mehanike kamnin",
+            [
+              "Napetosti in deformacije v kamninah | tenzor napetosti, elastične konstante",
+              "Struktura hribin | diskontinuitete, anomalije"
+            ]
+          ],
+          [
+            "Trdnost hribin",
+            [
+              "Porušitveni kriteriji kamnin | Mohr-Coulomb, Hoek-Brown",
+              "Hribinske klasifikacije | RMR, Q-sistem, GSI",
+              "Meritve napetosti v hribinah | metode razbremenitve, hidravlično lomljenje"
+            ]
+          ],
+          [
+            "Podzemni objekti",
+            [
+              "Napetosti okrog podzemnih prostorov | primarno in sekundarno stanje, Kirschova rešitev",
+              "Podporje in sidranje | sidra, brizgani beton, sistem hribina-podporje",
+              "Geotehnični monitoring | konvergenčne meritve, ekstenzometri"
+            ]
+          ]
+        ]
+      ],
+      "VMERST": [
+        "Merstvo v geoznanosti",
+        "GEO",
+        [],
+        [
+          [
+            "Koordinatni sistemi in mreže",
+            [
+              "Rudniški koordinatni sistem | lokalni in državni sistem, transformacije",
+              "Jamomerske mreže | površinske, orientacijske in jamske mreže"
+            ]
+          ],
+          [
+            "Izmera objektov",
+            [
+              "Geometrične osnove merskih mrež | natančnost, izravnava",
+              "Izmera in prikaz geotehničnih objektov | jamske karte, profili"
+            ]
+          ],
+          [
+            "Realizacija projekta",
+            [
+              "Zakoličevanje | prenos projekta na teren, smeri prog",
+              "Preračun natančnosti | pogreški, ocena natančnosti"
+            ]
+          ]
+        ]
+      ],
+      "VGRADIV": [
+        "Gradiva",
+        "KEM",
+        [],
+        [
+          [
+            "Kovinski in nekovinski materiali",
+            [
+              "Zgradba materialov | kovinski in nekovinski materiali, kompoziti",
+              "Jeklo za podzemne gradnje | izdelava, lastnosti, preskušanje"
+            ]
+          ],
+          [
+            "Beton",
+            [
+              "Sestava betona | cement, agregat, hidratacija",
+              "Lastnosti in preskušanje betona | trdnost, obstojnost, korozija armature",
+              "Betoni za podzemne gradnje | brizgani in mikroarmirani beton"
+            ]
+          ],
+          [
+            "Drugi materiali",
+            [
+              "Les in hidroizolacije | lastnosti, uporaba v podzemnih gradnjah",
+              "Polimerni izdelki in certificiranje | cevi, drenaže, certificiranje gradbenih proizvodov"
+            ]
+          ]
+        ]
+      ],
+      "VUGF2": [
+        "Uporabna geofizika II",
+        "FIZ",
+        [],
+        [
+          [
+            "Polja Zemlje",
+            [
+              "Težnostno polje | gravimetrija, Bouguerjeva anomalija",
+              "Magnetno polje Zemlje | magnetometrija, magnetne anomalije",
+              "Geotermično polje | toplotni tok, geotermični gradient"
+            ]
+          ],
+          [
+            "Električne in seizmične metode",
+            [
+              "Geoelektrične metode | specifična upornost, elektrotomografija",
+              "Elektromagnetne metode | georadar, elektromagnetna indukcija",
+              "Seizmične metode | refrakcija, refleksija"
+            ]
+          ],
+          [
+            "Meritve in interpretacija",
+            [
+              "Terenske geofizikalne meritve | načrtovanje meritev, oprema",
+              "Obdelava in interpretacija podatkov | korekcije, inverzija, uporaba metod"
+            ]
+          ]
+        ]
+      ],
+      "VGTKON": [
+        "Geotehnične konstrukcije",
+        "GEO",
+        [],
+        [
+          [
+            "Izboljšanje temeljnih tal",
+            [
+              "Injektiranje | cementne in kemične injekcijske mase, tlaki",
+              "Utrjevanje in odvodnjevanje | zgoščevanje, drenaže, znižanje podtalnice"
+            ]
+          ],
+          [
+            "Vkopi in nasipi",
+            [
+              "Gradnja vkopov in nasipov | stabilnost, vgrajevanje materiala",
+              "Mejna nosilnost temeljnih tal | izračuni, varnostni faktorji"
+            ]
+          ],
+          [
+            "Podporne konstrukcije",
+            [
+              "Geotehnična sidra | nosilnost, preizkušanje sider",
+              "Oporne in podporne konstrukcije | težnostni in kamniti zidovi, armirana zemljina",
+              "Sidrane pilotne stene | uvrtani in zabiti piloti, dimenzioniranje"
+            ]
+          ]
+        ]
+      ],
+      "VFLUID": [
+        "Fluidi v geotehnologiji",
+        "FIZ",
+        [],
+        [
+          [
+            "Lastnosti fluidov",
+            [
+              "Splošne lastnosti fluidov | gostota, viskoznost, stisljivost",
+              "Reološke lastnosti tekočin | newtonske in nenewtonske tekočine"
+            ]
+          ],
+          [
+            "Statika in dinamika tekočin",
+            [
+              "Statika tekočin | hidrostatični tlak, vzgon",
+              "Dinamika tekočin | Bernoullijeva enačba, tok v ceveh",
+              "Načini pretakanja tekočin | laminarni in turbulentni tok, črpanje"
+            ]
+          ],
+          [
+            "Fluidi v praksi",
+            [
+              "Cementne mešanice in izplake | lastnosti, priprava",
+              "Mineralne in geotermalne vode | kemijska sestava, temperatura, vodonosniki"
+            ]
+          ]
+        ]
       ]
     },
     "programs": {
       "UL-NTF-GEO": {
         "name": "Geologija (UN)",
-        "source": "https://www.ntf.uni-lj.si/og/en/study/geology-un/curriculum/",
-        "sourceYear": "2025/26 (iz iskalnih povzetkov); 1. in 2. letnik nista v celoti preverjena",
+        "source": "https://www.ntf.uni-lj.si/og/wp-content/uploads/sites/3/2026/04/Geologija_BScPredstavitvenizbornik2026-27.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki, predstavitveni zbornik 2026/27); vsebine novih predmetov po učnih načrtih Geologija_Ucni_nacrti_UNI.pdf",
         "years": [
           [
-            "GMAT1",
             "GFIZ1",
-            "GOSNGEO",
+            "GGIS",
+            "MKEM1",
             "GKRIST",
+            "GMAT1",
+            "GOSNGEO",
+            "VGEOMEH",
             "GMINER",
             "GPALEO",
-            "GGIS",
-            "GSTAT"
+            "VPEDO",
+            "VPREIMM",
+            "GSTAT",
+            "VUSRD"
           ],
           [
+            "GGEOKEM",
+            "VMINSUR",
             "GPETMAG",
             "GPETMET",
             "GSEDPET",
-            "GGEOKEM",
+            "GKVART",
+            "VGEOMORF",
             "GSTRAT",
+            "VSTRORD",
             "GSTRUKT"
           ],
           [
@@ -8679,53 +12072,80 @@ export const EXTRA_FACULTIES = [
             "GINZGEO",
             "GOKOLJE",
             "GREGGEO",
-            "GUVKART",
-            "GTERKART",
             "GGEOFIZ",
-            "GKRAS"
+            "GKRAS",
+            "GTERKART",
+            "GUVKART"
           ]
         ],
         "electives": [
-          "GZGOD",
           "GMAT2",
-          "GMIKRO",
-          "GKVART",
+          "GVULK",
+          "GZGOD",
           "GRUDISC",
-          "GVULK"
-        ]
+          "VSEIZM",
+          "VPALVRT",
+          "VGEOMED",
+          "VBIOGK"
+        ],
+        "replace": true
       },
       "UL-NTF-GIO": {
         "name": "Geotehnologija in okolje (UN)",
-        "source": "https://www.ntf.uni-lj.si/ogro/studij/1-stopnja/geotehnologija-in-okolje-un/predmetnik/1-letnik/",
-        "sourceYear": "2025/26; 2. in 3. letnik nista preverjena (le posamezni predmeti)",
+        "source": "https://www.ntf.uni-lj.si/ogro/wp-content/uploads/sites/4/2026/03/2026-27_Geotehnologija_in_okolje.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki, zbornik 2026/27 in spletne strani predmetnika); vsebine novih predmetov po učnih načrtih 2023",
         "years": [
           [
-            "GOMAT1",
             "GOFIZ1",
-            "GOKEM1",
-            "GOMEH1",
             "GOGEOM",
             "GORI",
-            "GOMAT2",
+            "GOKEM1",
+            "GOMAT1",
+            "GOMEH1",
             "GOFIZ2",
+            "VGEOMP",
+            "VGEOM2",
             "GOKEM2",
+            "GOMAT2",
             "GOMEH2"
           ],
           [
             "GOEKON",
+            "VODPAD",
             "GOMEHT",
-            "GOGEOD"
+            "VMPT",
+            "GOGEOD",
+            "VSTROJ1",
+            "VUGF1",
+            "VMAT3",
+            "VMEHT2",
+            "VGEOD2",
+            "VSTROJ2",
+            "VRAVOK"
           ],
           [
             "GOVRT",
-            "GOINZHG"
+            "GOINZHG",
+            "VPRIDMS",
+            "VTEMELJ",
+            "VBOGAT",
+            "VVRT2",
+            "VMEHKAM",
+            "VMERST"
           ]
-        ]
+        ],
+        "electives": [
+          "VGRADIV",
+          "VUGF2",
+          "VGTKON",
+          "VFLUID"
+        ],
+        "replace": true
       },
       "UL-NTF-IM": {
         "name": "Inženirstvo materialov",
-        "source": "https://www.ntf.uni-lj.si/omm/en/study/bachelors-degree/materials-engineering-un/curriculum/",
-        "sourceYear": "nedatirana (verjetno starejša) angleška stran predmetnika OMM; 1. letnik preverjen, 2. letnik le delno (3. semester), 3. letnik ni preverjen",
+        "source": "https://www.ntf.uni-lj.si/omm/wp-content/uploads/sites/5/2026/04/Zbornik-Inzenirstvo-materialov-26-27.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki, zbornik 2026/27); učni načrti niso bili prebrani, vsebine novih predmetov so standardne",
         "years": [
           [
             "MMAT1",
@@ -8734,20 +12154,43 @@ export const EXTRA_FACULTIES = [
             "MOSNMEH",
             "MOSNINZ",
             "MRACPR",
-            "MZGRADBA",
             "MMAT2",
             "MFIZ2",
             "MKEM2",
-            "MMATLAST"
+            "MMATLAST",
+            "MZGRADBA",
+            "VMATPR"
           ],
           [
+            "VPRENOS",
+            "MFIZMET1",
+            "VMAT3",
+            "MMEHMAT",
             "MTERMO",
             "MTERMOPR",
-            "MMEHMAT",
-            "MFIZMET1"
+            "VNUMMOD",
+            "VPROIZS",
+            "VPREISK",
+            "VPIROFE",
+            "VPROCLIV"
           ],
-          []
-        ]
+          [
+            "VENPRED",
+            "VORGMEN",
+            "VMODPR"
+          ]
+        ],
+        "electives": [
+          "VLIVAR",
+          "VPREDEL",
+          "VTOPLT",
+          "VFMJEK",
+          "VKERAM",
+          "VKOMPOZ",
+          "VPOLIM",
+          "VKOROZ"
+        ],
+        "replace": true
       },
       "UL-NTF-GIK": {
         "name": "Grafične in interaktivne komunikacije (UN)",
@@ -10331,104 +13774,673 @@ export const EXTRA_FACULTIES = [
             ]
           ]
         ]
+      ],
+      "WTRAJN": [
+        "Kemija za trajnostni razvoj",
+        "KEM",
+        [],
+        [
+          [
+            "Trajnostni razvoj in kemija",
+            [
+              "Cilji trajnostnega razvoja | vloga kemije, krožno gospodarstvo, življenjski cikel izdelka",
+              "Ocena življenjskega cikla | LCA, ogljični odtis, okoljski kazalniki"
+            ]
+          ],
+          [
+            "Viri in energija",
+            [
+              "Obnovljivi viri surovin | biomasa, biorafinerije, platformne kemikalije",
+              "Kemija za energijo | baterije, gorivne celice, vodik, sončne celice"
+            ]
+          ],
+          [
+            "Odpadki in recikliranje",
+            [
+              "Recikliranje materialov | mehansko in kemijsko recikliranje polimerov, kovine",
+              "Ravnanje z nevarnimi odpadki | ločevanje, obdelava, zakonodaja REACH"
+            ]
+          ]
+        ]
+      ],
+      "WHETERO": [
+        "Kemija heterocikličnih spojin",
+        "KEM",
+        [],
+        [
+          [
+            "Osnove heterociklov",
+            [
+              "Nomenklatura heterociklov | Hantzsch-Widmanov sistem, trivialna imena",
+              "Aromatičnost heterociklov | π-presežni in π-pomanjkljivi sistemi, bazičnost"
+            ]
+          ],
+          [
+            "Petčlenski heterocikli",
+            [
+              "Pirol, furan in tiofen | elektrofilna substitucija, sinteza po Paal-Knorru",
+              "Azoli | imidazol, pirazol, oksazol, tiazol, reaktivnost"
+            ]
+          ],
+          [
+            "Šestčlenski in kondenzirani heterocikli",
+            [
+              "Piridin in diazini | nukleofilna substitucija, N-oksidi, Hantzscheva sinteza",
+              "Indol, kinolin in purini | Fischerjeva sinteza indola, Skraupova sinteza, biološki pomen"
+            ]
+          ]
+        ]
+      ],
+      "WKOLOID": [
+        "Površinska in koloidna kemija",
+        "KEM",
+        [],
+        [
+          [
+            "Površine in medfazne meje",
+            [
+              "Površinska napetost | Young-Laplaceova enačba, kapilarnost, močenje in kontaktni kot",
+              "Adsorpcija | Gibbsova adsorpcijska izoterma, Langmuirjeva in BET izoterma"
+            ]
+          ],
+          [
+            "Koloidni sistemi",
+            [
+              "Vrste koloidov | soli, emulzije, pene, geli, asociacijski koloidi",
+              "Površinsko aktivne snovi | micele, kritična micelna koncentracija, HLB"
+            ]
+          ],
+          [
+            "Stabilnost koloidov",
+            [
+              "Električna dvojna plast | zeta potencial, elektrokinetični pojavi",
+              "Teorija DLVO | van der Waalsove in elektrostatske interakcije, koagulacija"
+            ]
+          ],
+          [
+            "Karakterizacija koloidov",
+            [
+              "Sipanje svetlobe | dinamično sipanje, velikost delcev",
+              "Reologija koloidnih sistemov | viskoznost, nenewtonske tekočine"
+            ]
+          ]
+        ]
+      ],
+      "WMAKROMOL": [
+        "Makromolekularna kemija",
+        "KEM",
+        [],
+        [
+          [
+            "Zgradba makromolekul",
+            [
+              "Polimeri in molska masa | številsko in masno povprečje, porazdelitev, polidisperznost",
+              "Konformacija verig | idealna veriga, radij sukanja, persistenčna dolžina"
+            ]
+          ],
+          [
+            "Polimerizacije",
+            [
+              "Stopenjska polimerizacija | Carothersova enačba, poliestri, poliamidi",
+              "Verižna polimerizacija | radikalska, ionska in koordinacijska, kinetika",
+              "Kopolimerizacija | reaktivnostna razmerja, vrste kopolimerov"
+            ]
+          ],
+          [
+            "Raztopine in lastnosti polimerov",
+            [
+              "Polimerne raztopine | Flory-Hugginsova teorija, topnost, viskozimetrija",
+              "Toplotne in mehanske lastnosti | steklasti prehod, kristaliničnost, viskoelastičnost"
+            ]
+          ]
+        ]
+      ],
+      "WBIOKINZ": [
+        "Osnove biokemijskega inženirstva",
+        "KEM",
+        [],
+        [
+          [
+            "Biokataliza in kinetika",
+            [
+              "Kinetika encimskih reakcij v reaktorju | Michaelis-Mentenova kinetika, inhibicija, imobilizirani encimi",
+              "Kinetika rasti mikroorganizmov | Monodov model, faze rasti, izkoristek biomase"
+            ]
+          ],
+          [
+            "Bioreaktorji",
+            [
+              "Vrste bioreaktorjev | šaržni, šaržni z dohranjevanjem, kontinuirni kemostat",
+              "Prenos kisika in mešanje | kLa, aeracija, sterilizacija"
+            ]
+          ],
+          [
+            "Izolacija produktov",
+            [
+              "Procesi izolacije in čiščenja | centrifugiranje, filtracija, kromatografija",
+              "Primeri bioprocesov | antibiotiki, rekombinantni proteini, etanol"
+            ]
+          ]
+        ]
+      ],
+      "WFARMAK": [
+        "Osnove farmakologije",
+        "BIO",
+        [],
+        [
+          [
+            "Farmakokinetika",
+            [
+              "Absorpcija in porazdelitev zdravil | biološka uporabnost, volumen porazdelitve",
+              "Presnova in izločanje | citokromi P450, očistek, razpolovni čas"
+            ]
+          ],
+          [
+            "Farmakodinamika",
+            [
+              "Receptorji in učinkovine | agonisti, antagonisti, krivulja odmerek-odziv",
+              "Mehanizmi delovanja zdravil | encimski inhibitorji, ionski kanalčki, prenašalci"
+            ]
+          ],
+          [
+            "Skupine zdravil",
+            [
+              "Zdravila za živčni in srčno-žilni sistem | primeri učinkovin in tarč",
+              "Protimikrobna zdravila | antibiotiki, odpornost, protivirusne učinkovine"
+            ]
+          ]
+        ]
+      ],
+      "WRASTBIOK": [
+        "Rastlinska biokemija",
+        "BIO",
+        [],
+        [
+          [
+            "Fotosinteza",
+            [
+              "Svetlobne reakcije | fotosistema I in II, transport elektronov, nastanek ATP in NADPH",
+              "Calvinov cikel | RuBisCO, fotorespiracija, C4 in CAM rastline"
+            ]
+          ],
+          [
+            "Presnova rastlin",
+            [
+              "Sinteza ogljikovih hidratov | škrob, saharoza, celuloza",
+              "Asimilacija dušika in žvepla | nitratna reduktaza, fiksacija dušika"
+            ]
+          ],
+          [
+            "Sekundarni metaboliti in hormoni",
+            [
+              "Sekundarni metaboliti | terpenoidi, fenolne spojine, alkaloidi",
+              "Rastlinski hormoni | avksini, citokinini, giberelini, abscizinska kislina, etilen"
+            ]
+          ]
+        ]
+      ],
+      "WFUNKGEN": [
+        "Funkcijska genomika",
+        "BIO",
+        [],
+        [
+          [
+            "Genom in transkriptom",
+            [
+              "Sekvenciranje genomov | metode NGS, sestavljanje in anotacija genomov",
+              "Analiza transkriptoma | RNA-seq, mikromreže, diferencialno izražanje"
+            ]
+          ],
+          [
+            "Funkcija genov",
+            [
+              "Utišanje in izbitje genov | RNAi, CRISPR-Cas9, modelni organizmi",
+              "Proteomika in interaktomika | masna spektrometrija, interakcije proteinov"
+            ]
+          ],
+          [
+            "Integracija podatkov",
+            [
+              "Regulacija izražanja na ravni genoma | epigenetika, ChIP-seq",
+              "Sistemska biologija | mreže genov, podatkovne zbirke, obogatitvena analiza"
+            ]
+          ]
+        ]
+      ],
+      "WMOLEVO": [
+        "Molekularna evolucija in razvoj",
+        "BIO",
+        [],
+        [
+          [
+            "Mehanizmi molekularne evolucije",
+            [
+              "Mutacije in naravni izbor | nevtralna teorija, genetski zdrs, hitrost evolucije",
+              "Evolucija genov in genomov | podvojitve genov, horizontalni prenos, eksoni in introni"
+            ]
+          ],
+          [
+            "Filogenetika",
+            [
+              "Filogenetska drevesa | poravnave zaporedij, metode razdalj in največjega verjetja",
+              "Molekularna ura | ocenjevanje časa razhajanja vrst"
+            ]
+          ],
+          [
+            "Evolucija razvoja",
+            [
+              "Razvojni geni | Hox geni, morfogeni, signalne poti",
+              "Evo-devo | evolucija telesnih načrtov, ohranjenost razvojnih programov"
+            ]
+          ]
+        ]
+      ],
+      "WPOLINZ": [
+        "Osnove polimernega inženirstva",
+        "KEM",
+        [],
+        [
+          [
+            "Polimeri kot inženirski materiali",
+            [
+              "Vrste polimernih materialov | termoplasti, duromeri, elastomeri, aditivi",
+              "Toplotne lastnosti polimerov | steklasti prehod, taljenje, toplotna obstojnost"
+            ]
+          ],
+          [
+            "Reologija talin",
+            [
+              "Viskoznost polimernih talin | strižno redčenje, potenčni zakon, temperaturna odvisnost",
+              "Viskoelastičnost | Maxwellov in Kelvin-Voigtov model, relaksacija"
+            ]
+          ],
+          [
+            "Predelava polimerov",
+            [
+              "Ekstrudiranje | zgradba ekstruderja, tok v kanalu, orodja",
+              "Brizganje in oblikovanje | cikel brizganja, pihanje, termoformiranje"
+            ]
+          ]
+        ]
+      ],
+      "WKARAKT": [
+        "Sodobne metode karakterizacije materialov",
+        "KEM",
+        [],
+        [
+          [
+            "Strukturna analiza",
+            [
+              "Rentgenska praškovna difrakcija | Braggov zakon, identifikacija faz, velikost kristalitov",
+              "Elektronska mikroskopija | SEM, TEM, EDS analiza"
+            ]
+          ],
+          [
+            "Površina in poroznost",
+            [
+              "Analiza površine | XPS, AFM",
+              "Specifična površina in poroznost | BET metoda, porozimetrija"
+            ]
+          ],
+          [
+            "Termične metode",
+            [
+              "Termogravimetrija in DSC | fazni prehodi, razpad, toplotna kapaciteta",
+              "Spektroskopske metode za materiale | FTIR, Ramanova spektroskopija"
+            ]
+          ]
+        ]
+      ],
+      "WMEHHID": [
+        "Mehanske in hidrodinamske operacije",
+        "FIZ",
+        [],
+        [
+          [
+            "Delci in delčni sistemi",
+            [
+              "Velikost in porazdelitev delcev | sejalna analiza, povprečni premeri",
+              "Mletje in drobljenje | zakoni drobljenja, energija mletja"
+            ]
+          ],
+          [
+            "Gibanje delcev v tekočini",
+            [
+              "Sedimentacija | Stokesov zakon, upor delca, zgoščevanje",
+              "Fluidizacija | minimalna hitrost fluidizacije, padec tlaka v sloju"
+            ]
+          ],
+          [
+            "Ločevanje trdno-tekoče",
+            [
+              "Filtracija | Darcyjev zakon, filtracijska enačba, filtrski kolač",
+              "Centrifugiranje in cikloni | ločilna meja, izkoristek ločevanja"
+            ]
+          ],
+          [
+            "Mešanje",
+            [
+              "Mešanje tekočin | moč mešala, Reynoldsovo število mešanja, vrste mešal",
+              "Povečevanje mešalnikov | geometrijska podobnost, enaka moč na volumen, čas mešanja"
+            ]
+          ]
+        ]
+      ],
+      "WOKOLINZ": [
+        "Osnove okoljskega inženirstva",
+        "GEO",
+        [],
+        [
+          [
+            "Onesnaževanje okolja",
+            [
+              "Viri onesnaženja | zrak, voda, tla, emisije in imisije",
+              "Širjenje onesnažil v okolju | disperzija, prenos med mediji, bioakumulacija"
+            ]
+          ],
+          [
+            "Čiščenje odpadnih voda",
+            [
+              "Mehansko in kemijsko čiščenje | usedanje, koagulacija, nevtralizacija",
+              "Biološko čiščenje | aktivno blato, BPK in KPK, odstranjevanje dušika"
+            ]
+          ],
+          [
+            "Zrak in odpadki",
+            [
+              "Čiščenje odpadnih plinov | filtri, pralniki, katalitski sežig",
+              "Ravnanje z odpadki | sežig, kompostiranje, odlagališča"
+            ]
+          ]
+        ]
+      ],
+      "WPOLMAT": [
+        "Polimerni materiali",
+        "KEM",
+        [],
+        [
+          [
+            "Vrste polimernih materialov",
+            [
+              "Masovni polimeri | polietilen, polipropilen, PVC, polistiren",
+              "Inženirski in specialni polimeri | poliamidi, polikarbonat, fluoropolimeri"
+            ]
+          ],
+          [
+            "Lastnosti in sestava",
+            [
+              "Mehanske lastnosti polimerov | natezni preskus, žilavost, lezenje",
+              "Kompoziti in mešanice | polnila, ojačitve z vlakni, kompatibilnost"
+            ]
+          ],
+          [
+            "Uporaba in okolje",
+            [
+              "Biorazgradljivi polimeri | PLA, PHA, škrobni materiali",
+              "Staranje in razgradnja polimerov | UV, toplota, stabilizatorji"
+            ]
+          ]
+        ]
+      ],
+      "WMERDEL": [
+        "Meritve v delovnem okolju",
+        "FIZ",
+        [],
+        [
+          [
+            "Fizikalni dejavniki",
+            [
+              "Merjenje hrupa | zvočni tlak, decibelna lestvica, A-vrednotenje, izpostavljenost",
+              "Mikroklima in razsvetljava | temperatura, vlaga, hitrost zraka, osvetljenost"
+            ]
+          ],
+          [
+            "Kemijski dejavniki",
+            [
+              "Vzorčenje onesnažil v zraku | aktivno in pasivno vzorčenje, mejne vrednosti",
+              "Merjenje prahu | inhalabilna in respirabilna frakcija"
+            ]
+          ],
+          [
+            "Vrednotenje meritev",
+            [
+              "Merilna negotovost | ponovljivost, kalibracija, poročilo o meritvah",
+              "Vibracije | merjenje vibracij roka-dlan in celotnega telesa"
+            ]
+          ]
+        ]
+      ],
+      "WDELPRIP": [
+        "Delovne priprave in naprave",
+        "FIZ",
+        [],
+        [
+          [
+            "Delovna oprema",
+            [
+              "Vrste delovne opreme | stroji, orodja, dvigala, tlačna oprema",
+              "Nevarnosti strojev | mehanske nevarnosti, nevarna območja, zaščitne naprave"
+            ]
+          ],
+          [
+            "Dvižne in transportne naprave",
+            [
+              "Dvigala in žerjavi | nosilnost, varnostni faktorji, pregledi",
+              "Transportna sredstva | viličarji, tekoči trakovi, varno delo"
+            ]
+          ],
+          [
+            "Pregledi in preizkusi",
+            [
+              "Varnostni pregledi delovne opreme | periodični preizkusi, dokumentacija",
+              "Varnostni sistemi strojev | zasilni izklop, blokade, varnostni krmilniki"
+            ]
+          ]
+        ]
+      ],
+      "WUVPROG": [
+        "Uvod v programiranje",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove programiranja",
+            [
+              "Spremenljivke in tipi | števila, nizi, izrazi, vnos in izpis",
+              "Pogojni stavki in zanke | if, while, for"
+            ]
+          ],
+          [
+            "Strukture podatkov",
+            [
+              "Seznami in slovarji | indeksiranje, iteracija, osnovne operacije",
+              "Funkcije | parametri, vračanje vrednosti, moduli"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Delo z datotekami | branje in pisanje, obdelava podatkov",
+              "Preprosta obdelava meritev | povprečje, grafi, knjižnice"
+            ]
+          ]
+        ]
       ]
     },
     "programs": {
       "UL-FKKT-KEM": {
         "name": "Kemija",
         "source": "https://fkkt.uni-lj.si/fileadmin/user_upload/Studentski_referat/Zborniki/2026-2027/1000373_Kemija.pdf",
-        "sourceYear": "2026/27",
+        "sourceYear": "2026/27, predmetnik preverjen (predstavitveni zbornik, vsi 3 letniki)",
         "years": [
           [
+            "MAT",
+            "FIZ",
+            "SPLKEM",
             "NPRSAK",
-            "NMOVZ"
+            "NMOVZ",
+            "ANORG",
+            "TRDNINE",
+            "ANAL1"
           ],
           [
+            "ANAL2",
             "NPRAK",
+            "ORG1",
+            "FIZKEM",
+            "STRUKT",
             "NOSNPROG",
+            "ORG2",
             "NPROK",
-            "NPRFK"
+            "NPRFK",
+            "SPEKTRO"
           ],
           [
+            "ORG3",
+            "ORGANAL",
+            "INSTR",
+            "BIOLKEM",
             "NINSTRAN",
-            "NPRINSTR"
+            "NPRINSTR",
+            "OSNKI"
           ]
         ],
         "electives": [
+          "NZELENA",
           "NKEMOK",
-          "NZELENA"
-        ]
+          "WHETERO",
+          "WKOLOID",
+          "WMAKROMOL",
+          "WTRAJN"
+        ],
+        "replace": true
       },
       "UL-FKKT-BIO": {
         "name": "Biokemija",
         "source": "https://fkkt.uni-lj.si/fileadmin/user_upload/Studentski_referat/Zborniki/2026-2027/1000371_Biokemija.pdf",
-        "sourceYear": "2026/27",
+        "sourceYear": "2026/27, predmetnik preverjen (predstavitveni zbornik, vsi 3 letniki)",
         "years": [
           [
+            "MAT",
+            "FIZ",
+            "SPLKEM",
             "NKEMPRAK",
             "NSPLBIO",
+            "ANORG",
+            "ORG1",
+            "TEMBIOKEM",
             "NBIOKPRAK"
           ],
           [
+            "ORG2",
+            "FIZKEM",
             "NBIOCEL",
+            "BIOKEM",
+            "INSTRANAL",
             "NOSNPROG",
             "NMOLBIO",
             "NSTRBIO",
+            "STRUKTBIO",
             "NBIOKINF",
             "NMIKRO"
           ],
           [
+            "SPEKTROBIO",
             "NKLON",
+            "ENCIM",
             "NIMUNO",
             "NGENET",
             "NFIZIOL"
           ]
         ],
         "electives": [
-          "NVIROL"
-        ]
+          "NVIROL",
+          "WBIOKINZ",
+          "WFARMAK",
+          "WRASTBIOK",
+          "WFUNKGEN",
+          "WMOLEVO"
+        ],
+        "replace": true
       },
       "UL-FKKT-KI": {
         "name": "Kemijsko inženirstvo",
         "source": "https://fkkt.uni-lj.si/fileadmin/user_upload/Studentski_referat/Zborniki/2026-2027/1000372_Kemijsko_inzenirstvo.pdf",
-        "sourceYear": "2026/27",
+        "sourceYear": "2026/27, predmetnik preverjen (predstavitveni zbornik, vsi 3 letniki)",
         "years": [
           [
+            "MAT",
+            "FIZ",
+            "SPLKEM",
             "NMOVZ",
+            "OSNINZ",
             "NOSNPROG",
             "NPRFIZ",
-            "NPRSAK"
+            "ANORG",
+            "NPRSAK",
+            "KI1"
           ],
           [
+            "MAT2",
+            "ORG",
+            "KEMTERMO",
+            "INSTRANAL",
             "NPRIMA",
+            "KI2",
+            "MEHFLU",
+            "MATINZ",
+            "KVANT",
             "NKPVAR"
           ],
           [
+            "PRENOS",
+            "KRI",
+            "KITERMO",
+            "PRODUKT",
+            "SEPAR",
             "NPRKI"
           ]
         ],
         "electives": [
-          "NBIOTEH"
-        ]
+          "NBIOTEH",
+          "WPOLINZ",
+          "WKARAKT",
+          "WMEHHID",
+          "WOKOLINZ",
+          "WPOLMAT"
+        ],
+        "replace": true
       },
       "UL-FKKT-TV": {
         "name": "Tehniška varnost",
         "source": "https://fkkt.uni-lj.si/fileadmin/user_upload/Studentski_referat/Zborniki/2026-2027/1000370_Tehniska_varnost.pdf",
-        "sourceYear": "2026/27",
+        "sourceYear": "2026/27, predmetnik preverjen (predstavitveni zbornik, vsi 3 letniki)",
         "years": [
           [
+            "MAT1",
+            "FIZ1",
+            "KEMIJA",
             "NVARGRAD",
+            "MAT2",
+            "FIZ2",
             "NOSNVAR",
             "NVARSTROJ"
           ],
           [
             "NPRAVVAR",
             "NDELOK",
+            "NUMVAR",
+            "STROJGRAD",
+            "PROCTEH",
             "NVAROK",
+            "OSNMAT",
+            "GORENJE",
             "NMEDDELA"
           ],
           [
+            "STATVAR",
             "NTVEGANJE",
+            "ELEKTROVAR",
             "NNEVSNOV",
             "NPSIHDEL",
             "NERGO",
@@ -10436,8 +14448,12 @@ export const EXTRA_FACULTIES = [
           ]
         ],
         "electives": [
-          "NPOZOBJ"
-        ]
+          "NPOZOBJ",
+          "WMERDEL",
+          "WDELPRIP",
+          "WUVPROG"
+        ],
+        "replace": true
       }
     }
   },
@@ -10827,31 +14843,170 @@ export const EXTRA_FACULTIES = [
             ]
           ]
         ]
+      ],
+      "WNAPRRAC": [
+        "Napredna računalniška orodja",
+        "RAC",
+        [],
+        [
+          [
+            "Programiranje za inženirje",
+            [
+              "Skriptni jeziki v inženirstvu | Python, MATLAB, osnovne podatkovne strukture",
+              "Vektorizacija in knjižnice | NumPy, SciPy, risanje grafov"
+            ]
+          ],
+          [
+            "Numerično računanje",
+            [
+              "Reševanje inženirskih problemov | sistemi enačb, optimizacija, diferencialne enačbe",
+              "Obdelava podatkov | branje meritev, filtriranje, prileganje krivulj"
+            ]
+          ],
+          [
+            "Vzporedno in visokozmogljivo računanje",
+            [
+              "Osnove HPC | vzporedenje, gruče, oddaljeno delo",
+              "Avtomatizacija in različice | skripte, Git, dokumentiranje kode"
+            ]
+          ]
+        ]
+      ],
+      "WPROIZV": [
+        "Proizvodno inženirstvo",
+        "EKO",
+        [],
+        [
+          [
+            "Proizvodni sistemi",
+            [
+              "Vrste proizvodnje | posamična, serijska, masovna, tok materiala",
+              "Planiranje proizvodnje | terminiranje, zmogljivosti, zaloge"
+            ]
+          ],
+          [
+            "Vitka proizvodnja",
+            [
+              "Načela vitke proizvodnje | izgube, kanban, just-in-time",
+              "Kazalniki učinkovitosti | OEE, pretočni čas, produktivnost"
+            ]
+          ],
+          [
+            "Digitalizacija proizvodnje",
+            [
+              "Industrija 4.0 | kibernetsko-fizični sistemi, senzorji, digitalni dvojček",
+              "Avtomatizacija in robotizacija | montažni sistemi, roboti v proizvodnji"
+            ]
+          ]
+        ]
+      ],
+      "WOKOLJ": [
+        "Okoljsko inženirstvo",
+        "FIZ",
+        [],
+        [
+          [
+            "Energija in okolje",
+            [
+              "Raba energije in emisije | toplogredni plini, energetska učinkovitost",
+              "Obnovljivi viri energije | sončna, vetrna, geotermalna energija"
+            ]
+          ],
+          [
+            "Toplotne naprave v stavbah",
+            [
+              "Ogrevanje in hlajenje | toplotne izgube, toplotne črpalke, grelno število",
+              "Prezračevanje in klimatizacija | vlažni zrak, rekuperacija toplote"
+            ]
+          ],
+          [
+            "Toplotno ugodje",
+            [
+              "Bivalno ugodje | operativna temperatura, PMV in PPD",
+              "Energijska bilanca stavbe | toplotna prehodnost, potrebna toplota za ogrevanje"
+            ]
+          ]
+        ]
+      ],
+      "WINOV": [
+        "Inoviranje v strojništvu – RRP",
+        "EKO",
+        [],
+        [
+          [
+            "Inovacijski proces",
+            [
+              "Vrste inovacij | produktne, procesne, prebojne in postopne",
+              "Ustvarjalne tehnike | viharjenje možganov, TRIZ, design thinking"
+            ]
+          ],
+          [
+            "Od ideje do izdelka",
+            [
+              "Vrednotenje idej | tržni potencial, tehnična izvedljivost",
+              "Prototipiranje in preizkušanje | MVP, iterativni razvoj"
+            ]
+          ],
+          [
+            "Varovanje in trženje",
+            [
+              "Intelektualna lastnina | patenti, modeli, znamke",
+              "Poslovni model | model Canvas, financiranje, zagonska podjetja"
+            ]
+          ]
+        ]
       ]
     },
     "programs": {
       "UL-FS-RRP": {
         "name": "Strojništvo – razvojno raziskovalni program",
-        "source": "https://www.fs.uni-lj.si/studij/studij-1-stopnje/un/predmetnik-2023-2024/",
-        "sourceYear": "2023/24; 1. letnik potrjen z zbornikom 2026/27",
+        "source": "https://www.fs.uni-lj.si/studij/studij-1-stopnje/un/",
+        "sourceYear": "veljavni predmetnik na strani programa (stanje oktober 2026), vsi 3 letniki preverjeni",
         "years": [
           [
+            "ANDE",
+            "FIZ",
             "NMERITVE",
-            "NTEHRIS"
+            "STATKIN",
+            "NTEHRIS",
+            "LAVA",
+            "TRDNOST",
+            "NEKOVMAT",
+            "TERMO",
+            "KOVMAT",
+            "ELEKTRO"
           ],
           [
+            "INTFOUR",
+            "DINAMIKA",
+            "TEKOCINE",
+            "NUMERIKA",
+            "STROJEL1",
+            "PDEKOMPL",
             "NSTROJEL2",
             "NIZDTEH1",
+            "PRENOS",
             "NKRMIL",
             "NKONSTR"
           ],
           [
+            "NUMMOD",
             "NTRIBO",
             "NIZDTEH2",
+            "HIDRAVLIKA",
             "NPOGONI",
+            "ENERGETSKI",
+            "PODATKI",
             "NMEHATR"
           ]
-        ]
+        ],
+        "electives": [
+          "WNAPRRAC",
+          "WPROIZV",
+          "WOKOLJ",
+          "WINOV"
+        ],
+        "replace": true
       }
     }
   },
@@ -12296,78 +16451,419 @@ export const EXTRA_FACULTIES = [
             ]
           ]
         ]
+      ],
+      "WMEH2": [
+        "Mehanika 2",
+        "FIZ",
+        [],
+        [
+          [
+            "Dinamika togega telesa",
+            [
+              "Vztrajnostni tenzor | glavne osi, Steinerjev izrek",
+              "Eulerjeve enačbe | prosta vrtavka, stabilnost vrtenja, precesija"
+            ]
+          ],
+          [
+            "Hamiltonova mehanika",
+            [
+              "Hamiltonov formalizem | Hamiltonove enačbe, ohranitveni zakoni",
+              "Poissonovi oklepaji in kanonične transformacije | integrali gibanja, generatorske funkcije"
+            ]
+          ],
+          [
+            "Variacijski principi",
+            [
+              "Hamiltonov princip | Euler-Lagrangeove enačbe, variacijski račun",
+              "Noetherin izrek | simetrije in ohranitveni zakoni"
+            ]
+          ]
+        ]
+      ],
+      "WNLA": [
+        "Numerična linearna algebra",
+        "MAT",
+        [],
+        [
+          [
+            "Direktne metode",
+            [
+              "Numerično reševanje sistemov | LU razcep, iterativne metode, napake",
+              "Razcep Choleskega in QR razcep | Householderjeva zrcaljenja, Givensove rotacije, občutljivost"
+            ]
+          ],
+          [
+            "Problem najmanjših kvadratov",
+            [
+              "Predoločeni sistemi | normalni sistem, QR in SVD rešitev",
+              "Singularni razcep | psevdoinverz, nizkorangovne aproksimacije"
+            ]
+          ],
+          [
+            "Lastne vrednosti",
+            [
+              "Lastne vrednosti numerično | potenčna metoda, QR",
+              "Iterativne metode za velike sisteme | Jacobi, Gauss-Seidel, konjugirani gradienti"
+            ]
+          ]
+        ]
+      ],
+      "WDM2": [
+        "Diskretna matematika 2",
+        "MAT",
+        [],
+        [
+          [
+            "Teorija grafov",
+            [
+              "Povezanost grafov | prerezna vozlišča, Mengerjev izrek, k-povezanost",
+              "Prirejanja | Hallov izrek, Königov izrek, madžarska metoda"
+            ]
+          ],
+          [
+            "Barvanja in ravninski grafi",
+            [
+              "Barvanja grafov | kromatično število, Brooksov izrek, barvanje povezav",
+              "Ravninski grafi | Eulerjeva formula, Kuratowskijev izrek, izrek štirih barv"
+            ]
+          ],
+          [
+            "Napredna kombinatorika",
+            [
+              "Rodovne funkcije | eksponentne rodovne funkcije, Catalanova števila",
+              "Ramseyjeva teorija | Ramseyjeva števila, Erdős-Szekeresov izrek"
+            ]
+          ]
+        ]
+      ],
+      "WOPT1": [
+        "Optimizacija 1",
+        "MAT",
+        [
+          "OPTIM"
+        ],
+        [
+          [
+            "Nelinearna optimizacija",
+            [
+              "Konveksne množice in funkcije | konveksnost, Jensenova neenakost, ekstremi",
+              "Optimalnostni pogoji | Lagrangeovi multiplikatorji, pogoji KKT"
+            ]
+          ],
+          [
+            "Algoritmi",
+            [
+              "Gradientne metode | metoda najstrmejšega spusta, Newtonova metoda, konvergenca",
+              "Dualnost v optimizaciji | Lagrangeeva dualnost, šibka in krepka dualnost"
+            ]
+          ]
+        ]
+      ],
+      "WEKONOM1": [
+        "Ekonometrija 1",
+        "EKO",
+        [],
+        [
+          [
+            "Linearni regresijski model",
+            [
+              "Metoda najmanjših kvadratov | ocene parametrov, Gauss-Markovov izrek",
+              "Statistično sklepanje v regresiji | t-test, F-test, intervali zaupanja"
+            ]
+          ],
+          [
+            "Kršitve predpostavk",
+            [
+              "Heteroskedastičnost in avtokorelacija | testi, robustne standardne napake",
+              "Multikolinearnost in specifikacija | izbira spremenljivk, slamnate spremenljivke"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Modeli časovnih vrst | trend, sezonskost, AR modeli",
+              "Ekonometrična analiza podatkov | uporaba programske opreme, interpretacija"
+            ]
+          ]
+        ]
+      ],
+      "WMONEK": [
+        "Monetarna ekonomija",
+        "EKO",
+        [],
+        [
+          [
+            "Denar in denarni sistem",
+            [
+              "Funkcije denarja | denarni agregati, ponudba denarja, denarni multiplikator",
+              "Povpraševanje po denarju | kvantitativna teorija, Keynesova teorija likvidnosti"
+            ]
+          ],
+          [
+            "Centralna banka in denarna politika",
+            [
+              "Instrumenti denarne politike | obrestne mere, operacije odprtega trga, obvezne rezerve",
+              "Transmisijski mehanizem | vpliv na inflacijo, proizvod, devizni tečaj"
+            ]
+          ],
+          [
+            "Inflacija in evrsko območje",
+            [
+              "Inflacija | vzroki, merjenje, Phillipsova krivulja",
+              "Evropska centralna banka | cilji, strategija, nekonvencionalni ukrepi"
+            ]
+          ]
+        ]
+      ],
+      "WORGTRG": [
+        "Organizacija in struktura trga",
+        "EKO",
+        [],
+        [
+          [
+            "Tržne strukture",
+            [
+              "Popolna konkurenca in monopol | ravnovesje, mrtva izguba, tržna moč",
+              "Oligopol | Cournotov, Bertrandov in Stackelbergov model"
+            ]
+          ],
+          [
+            "Strateško obnašanje podjetij",
+            [
+              "Cenovna diskriminacija | stopnje diskriminacije, paketna prodaja",
+              "Vstop na trg in ovire | odvračanje vstopa, ekonomija obsega"
+            ]
+          ],
+          [
+            "Regulacija",
+            [
+              "Konkurenčno pravo | karteli, prevzemi, zloraba prevladujočega položaja",
+              "Diferenciacija proizvodov | Hotellingov model, oglaševanje"
+            ]
+          ]
+        ]
+      ],
+      "WRACUN": [
+        "Temelji finančnega in poslovodnega računovodstva",
+        "EKO",
+        [],
+        [
+          [
+            "Finančno računovodstvo",
+            [
+              "Bilanca stanja | sredstva, obveznosti, kapital, bilančno ravnotežje",
+              "Izkaz poslovnega izida | prihodki, odhodki, dobiček, denarni tokovi"
+            ]
+          ],
+          [
+            "Knjiženje in analiza",
+            [
+              "Dvostavno knjigovodstvo | konti, temeljnica, poslovni dogodki",
+              "Analiza računovodskih izkazov | kazalniki likvidnosti, donosnosti, zadolženosti"
+            ]
+          ],
+          [
+            "Poslovodno računovodstvo",
+            [
+              "Stroški in kalkulacije | stalni in spremenljivi stroški, prag pokritja",
+              "Odločanje in planiranje | proračun, odmiki, kratkoročne odločitve"
+            ]
+          ]
+        ]
+      ],
+      "WFIZATM": [
+        "Uvod v fiziko atmosfere",
+        "FIZ",
+        [],
+        [
+          [
+            "Zgradba atmosfere",
+            [
+              "Sestava in plasti atmosfere | troposfera, stratosfera, tlak z višino",
+              "Sevanje v atmosferi | sončno in zemeljsko sevanje, učinek tople grede"
+            ]
+          ],
+          [
+            "Termodinamika atmosfere",
+            [
+              "Suhoadiabatni in vlažnoadiabatni gradient | potencialna temperatura, stabilnost",
+              "Vlaga in oblaki | nasičenost, rosišče, nastanek oblakov in padavin"
+            ]
+          ],
+          [
+            "Dinamika atmosfere",
+            [
+              "Sile v atmosferi | sila gradienta tlaka, Coriolisova sila, geostrofski veter",
+              "Splošna cirkulacija | Hadleyjeva celica, fronte, cikloni"
+            ]
+          ]
+        ]
+      ],
+      "WELEKTR1": [
+        "Elektronika I",
+        "FIZ",
+        [],
+        [
+          [
+            "Električna vezja",
+            [
+              "Linearna vezja | Kirchhoffova zakona, Theveninov izrek, RC in RL vezja",
+              "Izmenični tok | impedanca, kazalci, filtri, resonanca"
+            ]
+          ],
+          [
+            "Polprevodniški elementi",
+            [
+              "Diode | p-n spoj, usmerniki, Zenerjeva dioda",
+              "Tranzistorji | bipolarni in poljski tranzistor, delovna točka, ojačevalnik"
+            ]
+          ],
+          [
+            "Operacijski ojačevalniki",
+            [
+              "Idealni operacijski ojačevalnik | invertirajoči in neinvertirajoči ojačevalnik",
+              "Uporaba operacijskih ojačevalnikov | seštevalnik, integrator, aktivni filtri"
+            ]
+          ]
+        ]
       ]
     },
     "programs": {
       "UL-FMF-MAT": {
         "name": "Matematika",
-        "source": "https://www.fmf.uni-lj.si/sl/studij-matematike/programi/1mate/2025/",
-        "sourceYear": "2018/19; novejši predmetnik še ni preverjen",
+        "source": "https://www.fmf.uni-lj.si/sl/studij-matematike/programi/1mate/2026/",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki; enak kot 2025/26)",
         "years": [
           [
+            "ALGEBRA1",
+            "ANALIZA1",
+            "FIZIKA1",
+            "LOGIKA",
             "NRACPRAK",
             "NUVPROG"
           ],
           [
-            "NPROG1"
+            "ALGEBRA2",
+            "ANALIZA2A",
+            "ANALIZA2B",
+            "DISKRETNA1",
+            "FIZIKA2",
+            "NPROG1",
+            "TOPOLOGIJA"
           ],
-          []
+          [
+            "ANALIZA3",
+            "ANALIZA4",
+            "MEHANIKA1",
+            "STATISTIKA",
+            "UVODNUM",
+            "VERJETNOST"
+          ]
         ],
         "electives": [
+          "WMEH2",
+          "WNLA",
+          "XMATMOD",
+          "WDM2",
+          "WOPT1",
           "NPSA1",
-          "NKRIPTO"
-        ]
+          "NKRIPTO",
+          "FINMAT1"
+        ],
+        "replace": true
       },
       "UL-FMF-FIMA": {
         "name": "Finančna matematika",
-        "source": "https://www.fmf.uni-lj.si/documents/1414/1000403_Finan%C4%8Dna_matematika.pdf",
-        "sourceYear": "2025/26",
+        "source": "https://www.fmf.uni-lj.si/sl/studij-matematike/programi/1fima/2026/",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki)",
         "years": [
           [
-            "NRACPRAK",
+            "ALGEBRA1",
+            "ANALIZA1",
+            "ANALIZA2",
+            "DISKRETNE",
             "NMIKROEK",
+            "OPTIM",
+            "NRACPRAK",
             "NUVPROG"
           ],
           [
-            "NMAKROEK",
+            "ANALIZA3F",
             "NANALR",
-            "NDENAR"
+            "NDENAR",
+            "FINMAT1",
+            "NMAKROEK",
+            "NUM1",
+            "NUM2",
+            "OPERRAZ",
+            "VERJ1",
+            "VERJSTAT"
           ],
           [
             "NFINPRAK",
-            "NFINTRG"
+            "NFINTRG",
+            "SLUCPROC",
+            "STAT1",
+            "IGRE",
+            "VERJMERA"
           ]
         ],
         "electives": [
+          "WEKONOM1",
+          "WMONEK",
+          "WORGTRG",
+          "WRACUN",
           "NPSA1",
-          "NKRIPTO"
-        ]
+          "NKRIPTO",
+          "XMATMOD",
+          "WDM2"
+        ],
+        "replace": true
       },
       "UL-FMF-FIZ": {
         "name": "Fizika",
-        "source": "https://www.fmf.uni-lj.si/documents/343/1000406_Fizika.pdf",
-        "sourceYear": "smer Fizika; 1. letnik je skupen vsem smerem",
+        "source": "https://www.fmf.uni-lj.si/sl/studij-fizike/programi/1Fiz/2026/7000777/",
+        "sourceYear": "2026/27, predmetnik smeri Fizika preverjen (vsi 3 letniki)",
         "years": [
           [
-            "NRACPRAKF",
             "NFIZPRAK1",
-            "NFIZPRAK2"
+            "NFIZPRAK2",
+            "KEMIJA1",
+            "KLASFIZ",
+            "MAT1",
+            "MAT2",
+            "NRACPRAKF"
           ],
           [
             "NFIZPRAK3",
-            "NFIZPRAK4"
+            "NFIZPRAK4",
+            "KLASMEH",
+            "MAT3",
+            "MAT4",
+            "MODERNA1",
+            "MODERNA2",
+            "STATTERMO",
+            "VERJFIZ"
           ],
           [
+            "EMPOLJE",
+            "NFIZMER",
             "NFIZPRAK5",
-            "NFIZMER"
+            "FTS",
+            "KVANT"
           ]
         ],
         "electives": [
+          "MATFIZ",
+          "NUMERIKA",
+          "OPTIKA",
           "NJEDRA",
           "NMEHKONT",
-          "NOSNMET",
-          "NASTRO1"
-        ]
+          "NASTRO1",
+          "WFIZATM",
+          "WELEKTR1"
+        ],
+        "replace": true
       },
       "UL-FMF-RM": {
         "name": "Računalništvo in matematika (interdisciplinarni, FRI in FMF)",
@@ -12874,52 +17370,248 @@ export const EXTRA_FACULTIES = [
             ]
           ]
         ]
+      ],
+      "WTEHVOD": [
+        "Tehnologija vod",
+        "KEM",
+        [],
+        [
+          [
+            "Kakovost vode",
+            [
+              "Parametri kakovosti vode | trdota, pH, KPK, BPK, mikrobiološki parametri",
+              "Zakonodaja o vodah | pitna voda, mejne vrednosti odpadnih voda"
+            ]
+          ],
+          [
+            "Priprava vode",
+            [
+              "Priprava pitne vode | koagulacija, filtracija, dezinfekcija",
+              "Mehčanje in demineralizacija | ionska izmenjava, reverzna osmoza"
+            ]
+          ],
+          [
+            "Čiščenje odpadnih voda",
+            [
+              "Fizikalno-kemijsko čiščenje | usedanje, flotacija, oksidacija",
+              "Biološko čiščenje odpadnih voda | aktivno blato, biofiltri, anaerobni procesi"
+            ]
+          ]
+        ]
+      ],
+      "WANORGTEH": [
+        "Anorganska tehnologija",
+        "KEM",
+        [],
+        [
+          [
+            "Industrijski plini in kisline",
+            [
+              "Proizvodnja amoniaka | Haber-Boschev proces, ravnotežje, katalizatorji",
+              "Proizvodnja žveplove in dušikove kisline | kontaktni postopek, Ostwaldov postopek"
+            ]
+          ],
+          [
+            "Alkalije in soli",
+            [
+              "Kloralkalna elektroliza | membranska celica, NaOH in klor",
+              "Soda in mineralna gnojila | Solvayev postopek, fosfatna in dušikova gnojila"
+            ]
+          ],
+          [
+            "Anorganski materiali",
+            [
+              "Proizvodnja cementa in stekla | surovine, žganje, lastnosti",
+              "Pigmenti in kovine | titanov dioksid, pridobivanje aluminija"
+            ]
+          ]
+        ]
+      ],
+      "WBIOTEH": [
+        "Biotehnologija",
+        "BIO",
+        [],
+        [
+          [
+            "Biotehnološki procesi",
+            [
+              "Mikroorganizmi v biotehnologiji | izbira sevov, gojišča, rast",
+              "Fermentacija | šaržna in kontinuirna, bioreaktorji, sterilizacija"
+            ]
+          ],
+          [
+            "Produkti biotehnologije",
+            [
+              "Encimi in rekombinantni proteini | izražanje, izolacija, uporaba",
+              "Biogoriva in organske kisline | etanol, bioplin, citronska kislina"
+            ]
+          ],
+          [
+            "Izolacija in uporaba",
+            [
+              "Izolacija bioproduktov | filtracija, ekstrakcija, kromatografija",
+              "Okoljska in živilska biotehnologija | bioremediacija, mlečnokislinske bakterije"
+            ]
+          ]
+        ]
+      ],
+      "WPOLIMER": [
+        "Polimeri",
+        "KEM",
+        [],
+        [
+          [
+            "Sinteza polimerov",
+            [
+              "Stopenjska polimerizacija | Carothersova enačba, poliestri, poliamidi",
+              "Verižna polimerizacija | radikalska, ionska in koordinacijska, kinetika"
+            ]
+          ],
+          [
+            "Lastnosti polimerov",
+            [
+              "Molska masa polimerov | povprečja, porazdelitev, določanje z GPC",
+              "Toplotne in mehanske lastnosti | steklasti prehod, kristaliničnost, viskoelastičnost"
+            ]
+          ],
+          [
+            "Polimerni materiali v praksi",
+            [
+              "Predelava polimerov | ekstrudiranje, brizganje, aditivi",
+              "Porozni in funkcionalni polimeri | polimerne pene, nosilci, membrane"
+            ]
+          ]
+        ]
+      ],
+      "WTEHKER": [
+        "Tehnologija keramike",
+        "KEM",
+        [],
+        [
+          [
+            "Keramični materiali",
+            [
+              "Vrste keramike | tradicionalna in tehnična keramika, oksidi, karbidi, nitridi",
+              "Zgradba in lastnosti keramike | ionska in kovalentna vez, krhkost, trdota"
+            ]
+          ],
+          [
+            "Priprava keramike",
+            [
+              "Priprava prahov | mletje, sol-gel postopek, granulacija",
+              "Oblikovanje in sintranje | stiskanje, litje suspenzij, mehanizmi sintranja"
+            ]
+          ],
+          [
+            "Uporaba keramike",
+            [
+              "Funkcionalna keramika | dielektriki, piezoelektriki, feriti",
+              "Ognjevzdržni materiali in steklokeramika | uporaba, toplotna obstojnost"
+            ]
+          ]
+        ]
       ]
     },
     "programs": {
       "UM-FKKT-KEM": {
         "name": "Kemija",
         "source": "https://www.fkkt.um.si/wp-content/uploads/2025/09/Predmetnik-1.-stopnja-UN-KE.pdf",
-        "sourceYear": "2025/26",
+        "sourceYear": "2025/26 (veljavni predmetnik, povezan na strani fakultete oktobra 2026), vsi 3 letniki preverjeni",
         "years": [
           [
-            "NRACKEM"
+            "MATA",
+            "SPLKEM",
+            "FIZ1",
+            "NRACKEM",
+            "MATB",
+            "ANORG",
+            "ANAL1",
+            "FIZ2",
+            "KEMRAC"
           ],
           [
+            "MATC",
+            "FIZKEM1",
+            "ORG1",
+            "ANAL2",
             "NMEROSL",
+            "ORG2",
+            "FIZKEM2",
             "NGRADIVA",
             "NNANO"
           ],
           [
+            "TERMO",
+            "ORGSINT",
+            "BIOKEMUVOD",
+            "SEPTEH",
+            "KRT1",
+            "ORGANAL",
             "NKEMOK",
             "NPOLIM"
           ]
         ],
         "electives": [
           "NINSTRAN",
+          "PRENOST",
+          "PRENOSS",
           "NPOVRS",
-          "NBIOINFG"
-        ]
+          "NBIOINFG",
+          "WTEHKER"
+        ],
+        "replace": true
       },
       "UM-FKKT-KI": {
         "name": "Kemijsko inženirstvo",
         "source": "https://www.fkkt.um.si/wp-content/uploads/2025/09/Predmetnik-1.-stopnja-UN-KI.pdf",
-        "sourceYear": "2025/26; 3. letnik še ni preverjen",
+        "sourceYear": "2025/26 (veljavni predmetnik, povezan na strani fakultete oktobra 2026), vsi 3 letniki preverjeni",
         "years": [
           [
+            "MATA",
+            "SPLKEM",
+            "FIZ1",
             "NRACKEM",
-            "NELPROC"
+            "NELPROC",
+            "MATB",
+            "ANORG",
+            "ANAL1",
+            "FIZ2",
+            "BILANCE"
           ],
           [
+            "MATC",
+            "FIZKEM1",
+            "ORG1",
+            "MEHFLU1",
+            "PRENOST",
+            "ANAL2",
+            "PRENOSS",
+            "SEP1",
+            "ORG2",
+            "FIZKEM2",
             "NGRADIVA"
           ],
           [
+            "TERMO",
+            "SEP2",
+            "KRT1",
+            "DINPROC",
             "NBIOKMB",
-            "NORGTEH",
-            "NEKOPOD",
-            "NBIOKTEH"
+            "NBIOKTEH",
+            "OPTIM"
           ]
-        ]
+        ],
+        "electives": [
+          "NORGTEH",
+          "NEKOPOD",
+          "ORGSINT",
+          "NBIOINFG",
+          "WTEHVOD",
+          "WANORGTEH",
+          "WBIOTEH",
+          "WPOLIMER"
+        ],
+        "replace": true
       }
     }
   },
