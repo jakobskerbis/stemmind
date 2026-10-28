@@ -1,5 +1,5 @@
 import { icon } from "./icons.js";
-import { loadPrograms, programOptions, UNI_YEARS } from "./programs.js";
+import { loadPrograms, programOptions, programsCache, UNI_YEARS } from "./programs.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku STEMMIND_ACCOUNTS=1.
 
@@ -300,7 +300,7 @@ function childForm(consentText, programs = []) {
       </label>
       <label class="uni-only" hidden>Študijski program
         <select name="study_program">${programOptions(programs)}</select>
-        <small class="muted">Snov in naloge sledijo javnemu predmetniku izbranega programa (UL FKKT, UL FS, UL FMF, UM FKKT).</small>
+        <small class="muted">Snov in naloge sledijo javnemu predmetniku izbranega programa (naravoslovne in tehniške fakultete UL, UM, UP in UNG).</small>
       </label>
       <label class="uni-only" hidden>Letnik
         <select name="uni_year">${UNI_YEARS.map((v) => `<option>${v}</option>`).join("")}</select>
@@ -319,7 +319,7 @@ function childForm(consentText, programs = []) {
 // Nastavitve profila iz obrazca: šola, program in letnik.
 function childSettings(f) {
   const track = f.educational_track.value;
-  if (track === "UNIVERZA") return { educational_track: track, study_program: f.study_program.value, curriculum_level: f.uni_year.value, subject: "MAT" };
+  if (track === "UNIVERZA") return { educational_track: track, study_program: f.study_program.value, curriculum_level: f.uni_year.value, subject: programsCache().find((p) => p.id === f.study_program.value)?.subjects?.[0] || "MAT" };
   return { educational_track: track, curriculum_level: track === "SREDNJA_SOLA" ? "1. letnik OR" : "8. razred" };
 }
 

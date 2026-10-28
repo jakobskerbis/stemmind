@@ -2,8 +2,10 @@
 //
 // Predmetniki so povzeti po javno objavljenih dokumentih fakultet (zbrano
 // 27.–28. 10. 2026; glej PROGRAMS[*].source). Zajeti so obvezni predmeti z
-// vsebino iz matematike, fizike, kemije, mehanike in inženirstva; praktikumi,
-// splošni izbirni predmeti in nenaravoslovni predmeti niso zajeti.
+// vsebino iz matematike, fizike, kemije, mehanike in inženirstva. Ostale
+// naravoslovne fakultete in strokovni predmeti (biologija, geologija,
+// računalništvo, ekonomija) so v university-extra.js; jeziki, praksa in
+// zaključno delo niso zajeti.
 // Vsebine predmetov (teme) so sestavljene po poglavju »Vsebina« učnih načrtov
 // in običajnih učbenikih; pred javno objavo naj jih preveri asistent ali
 // študent višjega letnika. Popravke vnašaj kar tukaj.
@@ -16,6 +18,8 @@
 // Isti naslov teme v več predmetih pomeni isto vsebino: generatorji nalog
 // (server/practice/generators/uni.js) se nanjo vežejo po naslovu, zato
 // naslovov ne spreminjaj brez generatorjev.
+
+import { EXTRA_FACULTIES } from "./university-extra.js";
 
 // ============================================================ vsebine (sklopi)
 
@@ -1013,6 +1017,9 @@ const OBDELAVA_PODATKOV = [
   ]],
 ];
 
+// Vsebinski bloki po imenu (za dodatne fakultete v university-extra.js).
+const BLOCKS = { MAT_1, MAT_2, MAT_A, MAT_B, MAT_C, ANALIZA_NDE, LA_VA, INTEG_FOURIER, PDE_KOMPL_OPT, ANALIZA_1, ANALIZA_2A, ANALIZA_2B, ANALIZA_3, ALGEBRA_1, ALGEBRA_2, LOGIKA, DISKRETNA, DISKRETNE_STRUKTURE, TOPOLOGIJA, VERJETNOST_1, STATISTIKA, VERJ_STAT, VERJ_MERA, SLUC_PROC, NUMERIKA, NUMERIKA_1, NUMERIKA_2, KOMPLEKSNA, OPTIM, OPER_RAZ, TEORIJA_IGER, FINMAT, FIZ_1, FIZ_2, KLASICNA_FIZIKA, MAT_3_FIZ, MAT_4_FIZ, MATFIZ_1, KLAS_MEH, MEHANIKA_1, EM_POLJE, MODERNA_1, MODERNA_2, KVANTNA, STAT_TERMO, VERJ_FIZ, FTS, OPTIKA, SPL_KEM, KEM_RACUNANJE, ANORG, TRDNINE, ANAL_1, ANAL_2, ORG_1, ORG_2, ORG_1_2, ORG_3, ORG_SINTEZA, ORG_ANALIZA, SPEKTROSKOPIJA, STRUKTURA_AM, FIZKEM_1, FIZKEM_2, FIZKEM, KEM_TERMO, BIOKEM_TEMELJI, BIOKEM, BIOKEM_UVOD, STRUKT_BIOMOL, ENCIMATIKA, SPEKTRO_BIOKEM, BILANCE, OSN_INZ, MEH_TEKOCIN, PRENOS_TOPLOTE, PRENOS_SNOVI, PRENOS, KI_1, KI_2, OSN_KI, KI_TERMO, KRT, SEPARACIJE, SEP_1, SEP_2, PRODUKTNO, DIN_PROCESOV, OPTIMIRANJE, PROC_TEHNIKA, GORENJE, STATIKA, TRDNOST, TERMO_FS, DINAMIKA, KOV_MAT, NEKOV_MAT, MATERIALI, ELEKTRO, STROJNI_EL, STROJNI_GRADBENI, METODE_NUM_MOD, HIDRAVLIKA, ENERGETSKI, OBDELAVA_PODATKOV };
+
 // ============================================================ fakultete
 
 export const FACULTIES = {
@@ -1295,6 +1302,32 @@ export const PROGRAMS = {
     ],
   },
 };
+
+// Dodatne fakultete in predmeti (zbrani predmetniki naravoslovnih fakultet).
+// Predmet: [ime, predmet, [imena blokov], [[sklop, [teme]]]]; programi kot zgoraj.
+// Pri že obstoječi fakulteti se predmeti dodajo, letniki istega programa pa združijo.
+for (const fac of EXTRA_FACULTIES) {
+  FACULTIES[fac.id] ||= fac.name;
+  FAC_SHORT[fac.id] ||= fac.short;
+  COURSES[fac.id] ||= {};
+  for (const [code, [name, subject, blocks, units]] of Object.entries(fac.courses)) {
+    const content = [...blocks.flatMap((b) => {
+      if (!BLOCKS[b]) throw new Error(`university-extra: neznan blok ${b}`);
+      return BLOCKS[b];
+    }), ...units];
+    if (COURSES[fac.id][code]) throw new Error(`university-extra: podvojen predmet ${fac.id} ${code}`);
+    COURSES[fac.id][code] = [name, subject, content];
+  }
+  for (const [id, p] of Object.entries(fac.programs)) {
+    const old = PROGRAMS[id];
+    if (!old) {
+      PROGRAMS[id] = { faculty: fac.id, ...p };
+      continue;
+    }
+    p.years.forEach((codes, i) => (old.years[i] = [...(old.years[i] || []), ...codes.filter((c) => !(old.years[i] || []).includes(c))]));
+    old.electives = [...(old.electives || []), ...(p.electives || [])];
+  }
+}
 
 const courseKey = (fac, code) => `UNI-${fac.replace("-", "")}-${code}`;
 

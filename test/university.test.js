@@ -9,6 +9,7 @@ import { normalizeSettings } from "../server/settings.js";
 import { buildSystemPrompt } from "../server/prompt.js";
 import { GENERATORS, generateTask, hasGenerator } from "../server/practice/index.js";
 import { checkAnswer, roundHalfUp, fmt } from "../server/practice/check.js";
+import { ALL_SUBJECTS } from "../server/subjects.js";
 
 const UNI_SETTINGS = { educational_track: "UNIVERZA", study_program: "UL-FKKT-KEM", curriculum_level: "1. letnik", subject: "KEM" };
 
@@ -22,8 +23,8 @@ test("programs: every course of every faculty programme is a learning path with 
     for (const path of paths) {
       const full = getPath(path.key);
       assert.ok(full && full.school === "UNI" && full.units.length, path.key);
-      assert.ok([1, 2, 3].includes(path.year) || path.elective, `${path.key}: letnik`);
-      assert.ok(["MAT", "FIZ", "KEM"].includes(path.subject), `${path.key}: predmet`);
+      assert.ok([1, 2, 3, 4].includes(path.year) || path.elective, `${path.key}: letnik`);
+      assert.ok(ALL_SUBJECTS.includes(path.subject), `${path.key}: predmet`);
     }
   }
   // Fakultetne poti ne vdirajo v sezname OŠ/SŠ in nimajo podvojenih tem.
