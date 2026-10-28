@@ -11,6 +11,19 @@ const term = (v, suffix = "", first = false) => {
   const a = Math.abs(v), coef = suffix && Math.abs(a - 1) < 1e-12 ? "" : T(a);
   return first ? `${v < 0 ? "-" : ""}${coef}${suffix}` : ` ${sgn(v)} ${coef}${suffix}`;
 };
+// koeficient pred izrazom: 1 → "", −1 → "-"
+const cf = (v) => (Math.abs(v - 1) < 1e-12 ? "" : Math.abs(v + 1) < 1e-12 ? "-" : T(v));
+// negativna števila v oklepaju
+const par = (v) => (v < 0 ? `(${T(v)})` : T(v));
+// večkratnik π/12 v zapisu LaTeX
+const piTex = (v) => {
+  const k = Math.round((v / PI) * 12);
+  if (Math.abs(v - (k * PI) / 12) > 1e-9) return T(v);
+  if (k === 0) return "0";
+  const g = ((a, b) => { while (b) [a, b] = [b, a % b]; return a; })(Math.abs(k), 12);
+  const n = Math.abs(k) / g, d = 12 / g, sg = k < 0 ? "-" : "";
+  return d === 1 ? `${sg}${n === 1 ? "" : n}\\pi` : `${sg}\\frac{${n === 1 ? "" : n}\\pi}{${d}}`;
+};
 const shift = (name, v) => (Math.abs(v) < 1e-12 ? name : `(${name} ${sgn(-v)} ${T(Math.abs(v))})`);
 // Ničle (iskanje sprememb predznaka).
 function zeros(f, a, b, n = 600) {
@@ -46,7 +59,7 @@ const PRESETS = {
   kvadratna: {
     params: [["a", -3, 3, 0.25, 1], ["p", -4, 4, 0.5, 1], ["q", -5, 5, 0.5, -2]],
     f: (x, P) => P.a * (x - P.p) ** 2 + P.q,
-    tex: (P) => `f(x) = ${term(P.a || 0.0001, "", true)}${shift("x", P.p)}^2${term(P.q)}`,
+    tex: (P) => (P.a ? `f(x) = ${cf(P.a)}${shift("x", P.p)}^2${term(P.q)}` : `f(x) = ${T(P.q)}`),
     marks: (A, P, svg) => {
       s("line", { x1: A.X(P.p), y1: A.T, x2: A.X(P.p), y2: A.B, class: "guide" }, svg);
       dot(svg, A, P.p, P.q, "c", "T");
@@ -56,7 +69,7 @@ const PRESETS = {
       const b = -2 * P.a * P.p, c = P.a * P.p * P.p + P.q;
       const D = b * b - 4 * P.a * c;
       return `<p>Teme <b>T(${fmt(P.p)}, ${fmt(P.q)})</b>, simetrijska os x = ${fmt(P.p)}. ${P.a > 0 ? "a > 0: parabola je odprta navzgor, teme je najnižja točka." : P.a < 0 ? "a < 0: parabola je odprta navzdol, teme je najvišja točka." : "a = 0: to ni več kvadratna funkcija."} ${Math.abs(P.a) > 1 ? "|a| > 1: ožja od y = x²." : Math.abs(P.a) < 1 && P.a ? "|a| < 1: širša od y = x²." : ""}</p>
-        <p>Splošna oblika: ${tex(`f(x) = ${term(P.a || 0.0001, "x^2", true)}${term(b, "x")}${term(c)}`)}. Presečišče z osjo y: (0, ${fmt(c)}). ${P.a ? (D > 0 ? `Ničli: ${fmt(P.p - Math.sqrt(-P.q / P.a))} in ${fmt(P.p + Math.sqrt(-P.q / P.a))}.` : D === 0 ? `Ena dvojna ničla: ${fmt(P.p)}.` : "Ničel ni (D < 0).") : ""}</p>
+        <p>${P.a ? `Splošna oblika: ${tex(`f(x) = ${term(P.a, "x^2", true)}${term(b, "x")}${term(c)}`)}. ` : ""}Presečišče z osjo y: (0, ${fmt(c)}). ${P.a ? (D > 0 ? `Ničli: ${fmt(P.p - Math.sqrt(-P.q / P.a))} in ${fmt(P.p + Math.sqrt(-P.q / P.a))}.` : D === 0 ? `Ena dvojna ničla: ${fmt(P.p)}.` : "Ničel ni (D < 0).") : ""}</p>
         <p class="muted">Zaloga vrednosti: ${P.a > 0 ? `[${fmt(P.q)}, ∞)` : P.a < 0 ? `(−∞, ${fmt(P.q)}]` : "{" + fmt(P.q) + "}"}. Parameter p premakne graf vodoravno, q navpično.</p>`;
     },
     tryText: "Kaj naredi parameter p? Zakaj se pri p = 2 graf premakne v desno, čeprav v oklepaju piše x − 2?",
@@ -75,7 +88,7 @@ const PRESETS = {
       if (!P.a) return "<p>Pri a = 0 enačba ni kvadratna, ampak linearna.</p>";
       const D = P.b * P.b - 4 * P.a * P.c;
       const x1 = (-P.b - Math.sqrt(D)) / (2 * P.a), x2 = (-P.b + Math.sqrt(D)) / (2 * P.a);
-      return texBlock(`D = b^2 - 4ac = ${T(P.b)}^2 - 4\\cdot ${T(P.a)}\\cdot ${T(P.c)} = ${T(D)}`) +
+      return texBlock(`D = b^2 - 4ac = ${par(P.b)}^2 - 4\\cdot ${par(P.a)}\\cdot ${par(P.c)} = ${T(D)}`) +
         (D > 0 ? texBlock(`x_{1,2} = \\frac{-b \\pm \\sqrt{D}}{2a}:\\quad x_1 = ${T(Math.min(x1, x2))},\\ x_2 = ${T(Math.max(x1, x2))}`) + `<p><b>D > 0</b>: dve realni rešitvi, parabola seka os x v dveh točkah.</p>`
           : D === 0 ? texBlock(`x = -\\frac{b}{2a} = ${T(-P.b / (2 * P.a))}`) + `<p><b>D = 0</b>: ena (dvojna) rešitev, teme leži na osi x.</p>`
           : `<p><b>D < 0</b>: realnih rešitev ni, parabola ne seka osi x. (Rešitvi sta kompleksni.)</p>`) +
@@ -132,7 +145,11 @@ const PRESETS = {
       return x < 0 && m % 2 ? -v : v;
     },
     win: [-4, 4, -4, 4],
-    tex: (P) => `f(x) = x^{${P["m (števec)"]}/${P["n (imenovalec)"]}} = \\sqrt[${P["n (imenovalec)"]}]{x^{${P["m (števec)"]}}}`,
+    tex: (P) => {
+      const m = P["m (števec)"], n = P["n (imenovalec)"];
+      if (n === 1) return `f(x) = x^{${m}}`;
+      return `f(x) = x^{${m}/${n}} = ${n === 2 ? "\\sqrt" : `\\sqrt[${n}]`}{${m === 1 ? "x" : `x^{${m}}`}}`;
+    },
     marks: (A, P, svg) => dot(svg, A, 1, 1, "c", "(1, 1)"),
     info: (P) => {
       const m = P["m (števec)"], n = P["n (imenovalec)"];
@@ -225,7 +242,11 @@ const PRESETS = {
     win: [-2 * PI, 2 * PI, -4, 4],
     xStep: PI / 2,
     xFmt: piTicks,
-    tex: (P) => `f(x) = ${T(P.A, 1)}\\sin\\big(${T(P.b, 1)}${shift("x", P.c).replace(/\{,\}/g, ",")}\\big)${term(P.d)}`,
+    tex: (P) => {
+      const c = Math.abs(P.c) < 1e-9 ? "" : ` ${P.c > 0 ? "-" : "+"} ${piTex(Math.abs(P.c))}`;
+      const inner = !c ? `${cf(P.b)}x` : Math.abs(P.b - 1) < 1e-12 ? `x${c}` : `${cf(P.b)}\\left(x${c}\\right)`;
+      return `f(x) = ${cf(P.A)}\\sin\\left(${inner}\\right)${term(P.d)}`;
+    },
     marks: (A, P, svg) => {
       s("line", { x1: A.L, y1: A.Y(P.d + P.A), x2: A.R, y2: A.Y(P.d + P.A), class: "guide" }, svg);
       s("line", { x1: A.L, y1: A.Y(P.d - P.A), x2: A.R, y2: A.Y(P.d - P.A), class: "guide" }, svg);
@@ -252,7 +273,7 @@ const PRESETS = {
   racionalna: {
     params: [["a", -3, 3, 0.5, 1], ["ničla", -4, 4, 0.5, -2], ["pol", -4, 4, 0.5, 1], ["stopnja pola", 1, 2, 1, 1]],
     f: (x, P) => (P.a * (x - P["ničla"])) / (x - P.pol) ** P["stopnja pola"],
-    tex: (P) => `f(x) = \\frac{${T(P.a)}${shift("x", P["ničla"])}}{${shift("x", P.pol)}${P["stopnja pola"] > 1 ? "^2" : ""}}`,
+    tex: (P) => (P.a ? `f(x) = \\frac{${cf(P.a)}${shift("x", P["ničla"])}}{${shift("x", P.pol)}${P["stopnja pola"] > 1 ? "^2" : ""}}` : "f(x) = 0"),
     marks: (A, P, svg) => {
       s("line", { x1: A.X(P.pol), y1: A.T, x2: A.X(P.pol), y2: A.B, class: "guide stroke-danger" }, svg);
       const hy = P["stopnja pola"] === 1 ? P.a : 0;
@@ -479,10 +500,10 @@ export function integral(el, { mode = "doloceni" } = {}) {
     } else {
       // družina primitivnih funkcij in polje smeri
       const A = axes(svg, { W: 340, H: 300, x: [x0, x1], y: [-4, 6] });
-      for (let i = 0; i <= 16; i++) for (let j = 0; j <= 12; j++) {
-        const x = x0 + ((x1 - x0) * i) / 16, y = -4 + (10 * j) / 12, k = Fn.f(x);
+      for (let i = 0; i < 13; i++) for (let j = 0; j < 10; j++) {
+        const x = x0 + ((x1 - x0) * (i + 0.5)) / 13, y = -4 + (10 * (j + 0.5)) / 10, k = Fn.f(x);
         if (!Number.isFinite(k)) continue;
-        const L = 7 / Math.hypot(1, k * ((A.Y(0) - A.Y(1)) / (A.X(1) - A.X(0))));
+        const L = 5 / Math.hypot(1, k * ((A.Y(0) - A.Y(1)) / (A.X(1) - A.X(0))));
         const dx = L, dy = -k * L * ((A.Y(0) - A.Y(1)) / (A.X(1) - A.X(0)));
         s("line", { x1: A.X(x) - dx, y1: A.Y(y) - dy, x2: A.X(x) + dx, y2: A.Y(y) + dy, class: "field" }, svg);
       }

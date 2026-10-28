@@ -181,29 +181,38 @@ export function telesa(el, { bodies = ["kocka", "kvader"] } = {}) {
       F.forEach(([pts]) => pts.forEach((q) => (maxD = Math.max(maxD, Math.hypot(q[0], q[2]), q[1]))));
       const hgt = Math.max(...F.flatMap(([pts]) => pts.map((q) => q[1])));
       const sc = 120 / Math.max(maxD, hgt * 0.75, 1);
-      // zavrti v koordinate pogleda: x desno, y gor, z stran od gledalca
+      // zavrti v koordinate pogleda: x desno, y gor, z proti gledalcu
       const rot = ([x, y, z]) => {
         y -= hgt / 2;
         const x1 = x * cy - z * sy, z1 = x * sy + z * cy;
         return [x1, y * cp - z1 * sp, y * sp + z1 * cp];
       };
-      const Lx = -0.45, Ly = 0.7, Lz = -0.55, Ln = Math.hypot(Lx, Ly, Lz);
-      const faces = F.map(([pts, cls]) => {
-        const R = pts.map(rot);
+      const RF = F.map(([pts, cls]) => [pts.map(rot), cls]);
+      // središče telesa (vsa telesa so konveksna): ploskev vidimo, če njena zunanja normala kaže proti nam
+      let cx = 0, cyy = 0, cz = 0, n = 0;
+      RF.forEach(([R]) => R.forEach((q) => ((cx += q[0]), (cyy += q[1]), (cz += q[2]), n++)));
+      (cx /= n), (cyy /= n), (cz /= n);
+      const Lx = -0.45, Ly = 0.7, Lz = 0.55, Ln = Math.hypot(Lx, Ly, Lz);
+      const faces = [];
+      RF.forEach(([R, cls]) => {
         // normala po Newellu (deluje tudi za ploskve s ponovljenim ogliščem)
-        let nx = 0, ny = 0, nz = 0;
+        let nx = 0, ny = 0, nz = 0, fx = 0, fy = 0, fz = 0;
         R.forEach((a, i) => {
           const b = R[(i + 1) % R.length];
           nx += (a[1] - b[1]) * (a[2] + b[2]);
           ny += (a[2] - b[2]) * (a[0] + b[0]);
           nz += (a[0] - b[0]) * (a[1] + b[1]);
+          (fx += a[0]), (fy += a[1]), (fz += a[2]);
         });
-        const nn = Math.hypot(nx, ny, nz) || 1;
-        if (nz > 0) (nx = -nx), (ny = -ny), (nz = -nz); // normala proti gledalcu
+        (fx /= R.length), (fy /= R.length), (fz /= R.length);
+        const nn = Math.hypot(nx, ny, nz);
+        if (nn < 1e-9) return;
+        if (nx * (fx - cx) + ny * (fy - cyy) + nz * (fz - cz) < 0) (nx = -nx), (ny = -ny), (nz = -nz);
+        if (nz / nn < -1e-6) return; // zadnja stran
         const lit = Math.max(0, (nx * Lx + ny * Ly + nz * Lz) / (nn * Ln));
-        return { P: R.map((q) => [170 + q[0] * sc, 155 - q[1] * sc]), cls, z: R.reduce((t, q) => t + q[2], 0) / R.length, lit: Math.round(58 + 42 * lit) };
+        faces.push({ P: R.map((q) => [170 + q[0] * sc, 155 - q[1] * sc]), cls, z: fz, lit: Math.round(55 + 45 * lit) });
       });
-      faces.sort((u, v) => v.z - u.z);
+      faces.sort((u, v) => u.z - v.z);
       faces.forEach((f) => s("polygon", { points: f.P.map((q) => `${q[0].toFixed(1)},${q[1].toFixed(1)}`).join(" "), class: `face ${f.cls}`, style: `--lit:${f.lit}%` }, svg));
     }
     const f = formulas(kind, p);
@@ -243,6 +252,13 @@ export function telesa(el, { bodies = ["kocka", "kvader"] } = {}) {
     yaw += dt * 0.5;
     draw();
   }, { autoplay: false });
-  layout(el, { stage: [svg], controls: ctl, out, tryText: "Primerjaj prostornini valja in stožca z enakim r in v. Kolikokrat je valj večji?" });
+  const tryText = bodies.includes("stozec") && bodies.includes("valj") ? "Primerjaj prostornini valja in stožca z enakim r in v. Kolikokrat je valj večji?"
+    : bodies.includes("krogla") ? "Podvoji polmer krogle. Kolikokrat se poveča površina in kolikokrat prostornina?"
+    : bodies.includes("piramida") ? "Primerjaj piramido in prizmo z enako osnovo in višino. Kolikšen del prizme je piramida?"
+    : bodies.includes("stozec") ? "Vklopi mrežo. Kaj se zgodi z lokom plašča, ko večaš višino stožca?"
+    : bodies.includes("valj") ? "Vklopi mrežo. Kako dolga je daljša stranica pravokotnika, ki je plašč valja?"
+    : bodies.includes("prizma") ? "Povečaj število oglišč osnove. Kateremu telesu je prizma vedno bolj podobna?"
+    : "Podvoji rob kocke. Kolikokrat se poveča površina in kolikokrat prostornina?";
+  layout(el, { stage: [svg], controls: ctl, out, tryText });
   build();
 }
