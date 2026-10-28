@@ -1,0 +1,4457 @@
+{
+  "themes": {
+    "fiz-splosna-fizika-uvod": {
+      "title": "Splošna fizika (pregled za naravoslovce in inženirje)",
+      "items": [
+        {
+          "title": "University Physics Volume 1",
+          "url": "https://openstax.org/details/books/university-physics-volume-1",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Mehanika, nihanje, valovanje in zvok: kinematika, Newtonovi zakoni, energija, vrtenje, gravitacija, tekočine; z zgledi in nalogami.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "University Physics Volume 2",
+          "url": "https://openstax.org/details/books/university-physics-volume-2",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Termodinamika, elektrika in magnetizem: Gaussov zakon, vezja, indukcija, Maxwellove enačbe, elektromagnetno valovanje; z nalogami.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "University Physics Volume 3",
+          "url": "https://openstax.org/details/books/university-physics-volume-3",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Optika in moderna fizika: interferenca, uklon, posebna relativnost, kvantna mehanika, atomi, trdna snov, jedrska fizika, delci.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "Zapiski predavanj iz Fizike (Mehanika, Toplota, Elektrika, Valovanje, Relativnost)",
+          "url": "https://users.fmf.uni-lj.si/seliger/pedag1.htm",
+          "source": "UL FMF",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "Zbirka PDF-jev prof. Seligerja: mehanika, toplota, elektrika, valovanje in posebna teorija relativnosti, z vprašanji in zgledi za utrjevanje.",
+          "license": "prost dostop",
+          "author": "Janez Seliger"
+        },
+        {
+          "title": "Fizika (TOTP-I): skripta in povzetki predavanj",
+          "url": "https://users.fmf.uni-lj.si/kladnik/courses/fizika-totp/",
+          "source": "UL FMF",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "Skripta, pregled programa in povzetki predavanj ter primeri izpitnih vprašanj iz splošne fizike za tehniške študente.",
+          "license": "prost dostop",
+          "author": "Gregor Kladnik"
+        },
+        {
+          "title": "College Physics 2e",
+          "url": "https://openstax.org/details/books/college-physics-2e",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvodna fizika brez zahtevnejše analize, z veliko primeri iz biologije in medicine: mehanika, toplota, elektrika, optika, jedrska fizika.",
+          "license": "CC BY 4.0",
+          "author": "Paul Peter Urone, Roger Hinrichs"
+        },
+        {
+          "title": "PhET Interaktivne simulacije: fizika",
+          "url": "https://phet.colorado.edu/en/simulations/category/physics",
+          "source": "PhET (University of Colorado Boulder)",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivne simulacije za mehaniko, valovanje, toploto, elektriko, optiko in kvantne pojave; uporabne za razumevanje pojavov pred reševanjem nalog.",
+          "license": "CC BY 4.0"
+        }
+      ]
+    },
+    "fiz-splosna-mehanika": {
+      "title": "Splošna fizika: mehanika (kinematika, dinamika, togo telo, tekočine)",
+      "items": [
+        {
+          "title": "Fizika: Mehanika (zapiski predavanj)",
+          "url": "https://users.fmf.uni-lj.si/seliger/mehanika.pdf",
+          "source": "UL FMF",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "84 strani zapiskov: enote in merjenje, kinematika, Newtonovi zakoni, delo in energija, vrtenje togega telesa, gravitacija; jasna razlaga s fizikalnimi zgledi.",
+          "license": "prost dostop",
+          "author": "Janez Seliger"
+        },
+        {
+          "title": "University Physics Volume 1",
+          "url": "https://openstax.org/details/books/university-physics-volume-1",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Mehanika, nihanje, valovanje in zvok: kinematika, Newtonovi zakoni, energija, vrtenje, gravitacija, tekočine; z zgledi in nalogami.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "Mechanics and Relativity (Idema)",
+          "url": "https://phys.libretexts.org/Bookshelves/University_Physics/Mechanics_and_Relativity_(Idema)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik mehanike in posebne relativnosti za študente fizike in inženirstva, z nalogami in primeri.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Timon Idema"
+        },
+        {
+          "title": "Classical Mechanics (MIT 8.01SC)",
+          "url": "https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Celoten tečaj mehanike z video predavanji, zapiski in nalogami z rešitvami: kinematika, Newtonovi zakoni, energija, vrtenje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Deepto Chakrabarty idr."
+        },
+        {
+          "title": "Classical Mechanics (Dourmashkin)",
+          "url": "https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Classical_Mechanics_(Dourmashkin)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Celotno besedilo MIT-jevega uvodnega tečaja mehanike: kinematika, dinamika, energija, vrtenje in nihanje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Peter Dourmashkin"
+        },
+        {
+          "title": "Dynamics and Relativity (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/relativity.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Newtonova mehanika in posebna teorija relativnosti za uvodni tečaj fizike.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "Mehanika",
+          "url": "https://sl.wikipedia.org/wiki/Mehanika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Pregled mehanike: statika, kinematika, dinamika, klasična in kvantna mehanika, z razlago osnovnih pojmov.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kinematika",
+          "url": "https://sl.wikipedia.org/wiki/Kinematika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Osnovni pojmi kinematike: pot, hitrost, pospešek, gibanje po krožnici.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-nihanje-valovanje": {
+      "title": "Nihanje in valovanje",
+      "items": [
+        {
+          "title": "Fizika: Valovanje (zapiski predavanj)",
+          "url": "https://users.fmf.uni-lj.si/seliger/valovanje1.pdf",
+          "source": "UL FMF",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "Mehansko valovanje, valovna enačba, hitrost valovanja v elastičnih sredstvih, stoječe valovanje in zvok; kratki, razumljivi zapiski.",
+          "license": "prost dostop",
+          "author": "Janez Seliger"
+        },
+        {
+          "title": "Fizika, 2. del: zbrano gradivo",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/288",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Nihanje, mehansko in elektromagnetno valovanje, geometrijska optika, foton, atom, molekule in jedro; z mnogimi primeri.",
+          "license": "prost dostop",
+          "author": "Jana Padežnik Gomilšek, Robert Hauko"
+        },
+        {
+          "title": "University Physics Volume 1",
+          "url": "https://openstax.org/details/books/university-physics-volume-1",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Mehanika, nihanje, valovanje in zvok: kinematika, Newtonovi zakoni, energija, vrtenje, gravitacija, tekočine; z zgledi in nalogami.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "Physics III: Vibrations and Waves (MIT 8.03SC)",
+          "url": "https://ocw.mit.edu/courses/8-03sc-physics-iii-vibrations-and-waves-fall-2016/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Nihanje in valovanje: sklopljeni oscilatorji, stoječi in potujoči valovi, interferenca, uklon; video predavanja z nalogami.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "The Physics of Waves (Goergi)",
+          "url": "https://phys.libretexts.org/Bookshelves/Waves_and_Acoustics/The_Physics_of_Waves_(Goergi)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Fizika valovanja: sklopljena nihanja, valovna enačba, disperzija, stoječi valovi, interferenca.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Howard Georgi"
+        },
+        {
+          "title": "Waves: An Interactive Tutorial (Forinash and Christian)",
+          "url": "https://phys.libretexts.org/Bookshelves/Waves_and_Acoustics/Waves%3A_An_Interactive_Tutorial_(Forinash_and_Christian)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivni tečaj valovanja s simulacijami: nihanje, valovi na struni, interferenca, uklon.",
+          "license": "CC BY-NC-SA 3.0",
+          "author": "Kyle Forinash, Wolfgang Christian"
+        }
+      ]
+    },
+    "fiz-toplota-temperatura": {
+      "title": "Toplota in temperatura (splošna fizika)",
+      "items": [
+        {
+          "title": "Fizika: Toplota (zapiski predavanj)",
+          "url": "https://users.fmf.uni-lj.si/seliger/toplota.pdf",
+          "source": "UL FMF",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "40 strani zapiskov o temperaturi, toplotnih kapacitetah, idealnem plinu, prvem in drugem zakonu termodinamike in prenosu toplote.",
+          "license": "prost dostop",
+          "author": "Janez Seliger"
+        },
+        {
+          "title": "University Physics Volume 2",
+          "url": "https://openstax.org/details/books/university-physics-volume-2",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Termodinamika, elektrika in magnetizem: Gaussov zakon, vezja, indukcija, Maxwellove enačbe, elektromagnetno valovanje; z nalogami.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "Heat and Thermodynamics (Tatum)",
+          "url": "https://phys.libretexts.org/Bookshelves/Thermodynamics_and_Statistical_Mechanics/Heat_and_Thermodynamics_(Tatum)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Kratek učbenik toplote in termodinamike: temperatura, idealni plin, zakoni termodinamike, entropija.",
+          "license": "CC BY-NC 4.0",
+          "author": "Jeremy Tatum"
+        },
+        {
+          "title": "College Physics 2e",
+          "url": "https://openstax.org/details/books/college-physics-2e",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvodna fizika brez zahtevnejše analize, z veliko primeri iz biologije in medicine: mehanika, toplota, elektrika, optika, jedrska fizika.",
+          "license": "CC BY 4.0",
+          "author": "Paul Peter Urone, Roger Hinrichs"
+        },
+        {
+          "title": "Termodinamika",
+          "url": "https://sl.wikipedia.org/wiki/Termodinamika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Obsežen pregled termodinamike: zakoni, entropija, kroženja in uporaba; za hiter pregled pojmov.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "PhET Interaktivne simulacije: fizika",
+          "url": "https://phet.colorado.edu/en/simulations/category/physics",
+          "source": "PhET (University of Colorado Boulder)",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Interaktivne simulacije za mehaniko, valovanje, toploto, elektriko, optiko in kvantne pojave; uporabne za razumevanje pojavov pred reševanjem nalog.",
+          "license": "CC BY 4.0"
+        }
+      ]
+    },
+    "fiz-elektrika-magnetizem": {
+      "title": "Elektrika in magnetizem (splošna fizika)",
+      "items": [
+        {
+          "title": "Fizika: Elektrika (zapiski predavanj)",
+          "url": "https://users.fmf.uni-lj.si/seliger/elektrika.pdf",
+          "source": "UL FMF",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "74 strani zapiskov: električni naboj in polje, Gaussov zakon, potencial, tok, magnetno polje, indukcija; z razlago in zgledi.",
+          "license": "prost dostop",
+          "author": "Janez Seliger"
+        },
+        {
+          "title": "University Physics Volume 2",
+          "url": "https://openstax.org/details/books/university-physics-volume-2",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Termodinamika, elektrika in magnetizem: Gaussov zakon, vezja, indukcija, Maxwellove enačbe, elektromagnetno valovanje; z nalogami.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "Physics II: Electricity and Magnetism (MIT 8.02)",
+          "url": "https://ocw.mit.edu/courses/8-02-physics-ii-electricity-and-magnetism-spring-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Elektrika in magnetizem: Coulomb, Gauss, potencial, vezja, indukcija, Maxwell; video, zapiski, naloge z rešitvami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Walter Lewin"
+        },
+        {
+          "title": "Electricity and Magnetism (Tatum)",
+          "url": "https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electricity_and_Magnetism_(Tatum)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Pregleden učbenik elektrostatike, elektrike in magnetizma s številnimi rešenimi zgledi.",
+          "license": "CC BY-NC 4.0",
+          "author": "Jeremy Tatum"
+        },
+        {
+          "title": "Fizika, 2. del: zbrano gradivo",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/288",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Nihanje, mehansko in elektromagnetno valovanje, geometrijska optika, foton, atom, molekule in jedro; z mnogimi primeri.",
+          "license": "prost dostop",
+          "author": "Jana Padežnik Gomilšek, Robert Hauko"
+        },
+        {
+          "title": "Elektromagnetizem",
+          "url": "https://sl.wikipedia.org/wiki/Elektromagnetizem",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Pregled elektromagnetizma: električno in magnetno polje, indukcija, Maxwellove enačbe.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Električni tok",
+          "url": "https://sl.wikipedia.org/wiki/Električni_tok",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Električni tok, upornost in Ohmov zakon: osnove za začetnike.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-optika-fotonika": {
+      "title": "Optika, fotonika in laserji",
+      "items": [
+        {
+          "title": "Fizika, 2. del: zbrano gradivo",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/288",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Nihanje, mehansko in elektromagnetno valovanje, geometrijska optika, foton, atom, molekule in jedro; z mnogimi primeri.",
+          "license": "prost dostop",
+          "author": "Jana Padežnik Gomilšek, Robert Hauko"
+        },
+        {
+          "title": "University Physics Volume 3",
+          "url": "https://openstax.org/details/books/university-physics-volume-3",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Optika in moderna fizika: interferenca, uklon, posebna relativnost, kvantna mehanika, atomi, trdna snov, jedrska fizika, delci.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "Optics (Konijnenberg, Adam, and Urbach)",
+          "url": "https://phys.libretexts.org/Bookshelves/Optics/BSc_Optics_(Konijnenberg_Adam_and_Urbach)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik optike z TU Delft: valovna in geometrijska optika, polarizacija, interferenca in uklon.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Sander Konijnenberg, Aurèle Adam, Paul Urbach"
+        },
+        {
+          "title": "Geometric Optics (Tatum)",
+          "url": "https://phys.libretexts.org/Bookshelves/Optics/Geometric_Optics_(Tatum)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Geometrijska optika: odboj, lom, leče, zrcala, optični instrumenti in aberacije.",
+          "license": "CC BY-NC 4.0",
+          "author": "Jeremy Tatum"
+        },
+        {
+          "title": "Physical Optics (Tatum)",
+          "url": "https://phys.libretexts.org/Bookshelves/Optics/Physical_Optics_(Tatum)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Valovna optika: Fermatov princip, Fresnelove enačbe, uklon, polarizacija.",
+          "license": "CC BY-NC 4.0",
+          "author": "Jeremy Tatum"
+        },
+        {
+          "title": "Optics (MIT 2.71)",
+          "url": "https://ocw.mit.edu/courses/2-71-optics-spring-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Geometrijska in valovna optika, interferenca, uklon, optični instrumenti in laserji; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Optika",
+          "url": "https://sl.wikipedia.org/wiki/Optika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Geometrijska in valovna optika: odboj, lom, uklon, interferenca, polarizacija.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Laser",
+          "url": "https://sl.wikipedia.org/wiki/Laser",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Delovanje laserja, vrste laserjev in uporaba.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-moderna-fizika": {
+      "title": "Moderna fizika: relativnost, kvanti, atomi",
+      "items": [
+        {
+          "title": "Posebna teorija relativnosti (zapiski predavanj)",
+          "url": "https://users.fmf.uni-lj.si/seliger/POSEBNA%20TEORIJA%20RELATIVNOSTI.pdf",
+          "source": "UL FMF",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "Zapiski o posebni teoriji relativnosti: Lorentzove transformacije, dilatacija časa, relativistična dinamika in energija.",
+          "license": "prost dostop",
+          "author": "Janez Seliger"
+        },
+        {
+          "title": "University Physics Volume 3",
+          "url": "https://openstax.org/details/books/university-physics-volume-3",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Optika in moderna fizika: interferenca, uklon, posebna relativnost, kvantna mehanika, atomi, trdna snov, jedrska fizika, delci.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "Spiral Modern Physics (D'Alessandris)",
+          "url": "https://phys.libretexts.org/Bookshelves/Modern_Physics/Spiral_Modern_Physics_(D'Alessandris)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Moderna fizika: relativnost, kvantna fizika, atomi, jedra, delci; s številnimi nalogami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Paul D'Alessandris"
+        },
+        {
+          "title": "Special Relativity (Crowell)",
+          "url": "https://phys.libretexts.org/Bookshelves/Relativity/Special_Relativity_(Crowell)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Posebna teorija relativnosti: Lorentzove transformacije, dinamika, energija in gibalna količina.",
+          "license": "CC BY-SA 4.0",
+          "author": "Benjamin Crowell"
+        },
+        {
+          "title": "Relativity (MIT 8.033)",
+          "url": "https://ocw.mit.edu/courses/8-033-relativity-fall-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Posebna teorija relativnosti z uvodom v splošno: Lorentzove transformacije, relativistična mehanika, elektrodinamika; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Teorija relativnosti",
+          "url": "https://sl.wikipedia.org/wiki/Teorija_relativnosti",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Posebna in splošna teorija relativnosti: osnovne ideje in posledice.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Kvantna mehanika",
+          "url": "https://sl.wikipedia.org/wiki/Kvantna_mehanika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Pregled kvantne mehanike: valovna funkcija, kvantna stanja, merjenje; slovenski uvod.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-merjenje-napake": {
+      "title": "Merjenje, merske napake in fizikalni praktikum",
+      "items": [
+        {
+          "title": "Osnovna merjenja: Uvod v merske napake in kvantitativno analizo fizikalnih meritev",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/530",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Merske napake, statistika meritev, prilagajanje funkcij in poročanje rezultatov; osnova za vsak fizikalni praktikum.",
+          "license": "prost dostop",
+          "author": "Andrej Dobovišek"
+        },
+        {
+          "title": "Fizikalni eksperimenti 2: Zbirka laboratorijskih vaj",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/696",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Navodila za laboratorijske vaje iz termodinamike in elektromagnetizma z obdelavo meritev.",
+          "license": "CC BY-SA 4.0",
+          "author": "Robert Repnik, Mitja Slavinec, Eva Klemenčič"
+        },
+        {
+          "title": "Fizikalni eksperimenti 3: Zbirka laboratorijskih vaj",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/697",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Navodila za laboratorijske vaje iz nihanja, valovanja in optike z obdelavo meritev.",
+          "license": "CC BY-SA 4.0",
+          "author": "Robert Repnik, Robert Hauko"
+        },
+        {
+          "title": "Experimental Physics I & II: Junior Lab (MIT 8.13/8.14)",
+          "url": "https://ocw.mit.edu/courses/8-13-14-experimental-physics-i-ii-junior-lab-fall-2016-spring-2017/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Fizikalni praktikum: navodila za poskuse, analiza meritev in napak, pisanje poročil; koristno za laboratorijske vaje.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Tehniške meritve: zbrano gradivo",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/211",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Metode merjenja pomembnejših fizikalnih veličin v strojništvu: merilni sistem, vplivne veličine, zmanjševanje napak.",
+          "license": "prost dostop",
+          "author": "Aleš Hribernik"
+        },
+        {
+          "title": "Math, Numerics, and Programming (for Mechanical Engineers)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Math_Numerics_and_Programming_(for_Mechanical_Engineers)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Numerične metode in programiranje za inženirje: simulacije, diferencialne enačbe, statistika meritev.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Masayuki Yano idr."
+        }
+      ]
+    },
+    "fiz-analiticna-mehanika": {
+      "title": "Analitična mehanika (Lagrange, Hamilton, togo telo)",
+      "items": [
+        {
+          "title": "Analitična mehanika",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/827",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Slovenski učbenik Lagrangeove in Hamiltonove mehanike z zgledi in nalogami.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Milan Ambrožič, Arbresha Hölbl"
+        },
+        {
+          "title": "Načela mehanike: 1. del",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/668",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Boltzmannova predavanja o načelih mehanike v slovenskem prevodu: Newton, Lagrange, Hamilton.",
+          "license": "CC BY-SA 4.0",
+          "author": "Ludwig Boltzmann, Milan Batista"
+        },
+        {
+          "title": "Načela in metode dinamike",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/663",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Slovenski prevod učbenika dinamike: načela mehanike in metode za sisteme s končnim številom prostostnih stopenj.",
+          "license": "prost dostop",
+          "author": "Udo Fischer, Wolfgang Stephan"
+        },
+        {
+          "title": "Classical Dynamics (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/dynamics.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Lagrangeova in Hamiltonova mehanika, togo telo, kanonične transformacije; jasni, dovršeni zapiski.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "Graduate Classical Mechanics (Fowler)",
+          "url": "https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Graduate_Classical_Mechanics_(Fowler)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Lagrangeova in Hamiltonova mehanika, variacijski principi, togo telo in kanonične transformacije; razlaga korak za korakom.",
+          "license": "CC BY 3.0",
+          "author": "Michael Fowler"
+        },
+        {
+          "title": "Variational Principles in Classical Mechanics (Cline)",
+          "url": "https://phys.libretexts.org/Bookshelves/Classical_Mechanics/Variational_Principles_in_Classical_Mechanics_(Cline)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik analitične mehanike: Lagrangeov in Hamiltonov formalizem, variacijski principi in uporaba v fiziki.",
+          "license": "CC BY 2.5",
+          "author": "Douglas Cline"
+        },
+        {
+          "title": "Classical Mechanics III (MIT 8.09)",
+          "url": "https://ocw.mit.edu/courses/8-09-classical-mechanics-iii-fall-2014/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Analitična mehanika: Lagrangeova in Hamiltonova mehanika, togo telo, kanonične transformacije; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Classical Mechanics II (MIT 8.223)",
+          "url": "https://ocw.mit.edu/courses/8-223-classical-mechanics-ii-january-iap-2017/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Napredna mehanika: Lagrangeov in Hamiltonov formalizem, variacijski principi; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        }
+      ]
+    },
+    "fiz-elektrodinamika": {
+      "title": "Elektromagnetno polje in elektrodinamika",
+      "items": [
+        {
+          "title": "Elektromagnetno polje: učbenik za študente fizike",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/406",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Učbenik elektromagnetnega polja za študente fizike, razdeljen na nižji in višji nivo zahtevnosti.",
+          "license": "prost dostop",
+          "author": "Milan Ambrožič, Uroš Tkalec, Samo Kralj"
+        },
+        {
+          "title": "Electromagnetics I (Ellingson)",
+          "url": "https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Electromagnetics_I_(Ellingson)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Elektromagnetno polje: vektorska analiza, elektrostatika, magnetostatika, Maxwellove enačbe; za inženirje in fizike.",
+          "license": "CC BY-SA 4.0",
+          "author": "Steven W. Ellingson"
+        },
+        {
+          "title": "Essential Graduate Physics - Classical Electrodynamics (Likharev)",
+          "url": "https://phys.libretexts.org/Bookshelves/Electricity_and_Magnetism/Essential_Graduate_Physics_-_Classical_Electrodynamics_(Likharev)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Klasična elektrodinamika z veliko rešenimi nalogami: elektrostatika, magnetostatika, valovi, sevanje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Konstantin Likharev"
+        },
+        {
+          "title": "Electromagnetism (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/em.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Elektrostatika, magnetostatika, Maxwellove enačbe, valovanje in relativistična formulacija elektromagnetizma.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "Electromagnetism II (MIT 8.07)",
+          "url": "https://ocw.mit.edu/courses/8-07-electromagnetism-ii-fall-2012/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Elektrodinamika: Maxwellove enačbe, elektromagnetni valovi, sevanje, relativistična formulacija; zapiski predavanj in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Electromagnetic Theory (MIT 8.311)",
+          "url": "https://ocw.mit.edu/courses/8-311-electromagnetic-theory-spring-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Teorija elektromagnetnega polja: elektrostatika, magnetostatika, valovanje in sevanje; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Electromagnetic Field Theory: A Problem Solving Approach (Zahn)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electro-Optics/Electromagnetic_Field_Theory%3A_A_Problem_Solving_Approach_(Zahn)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Teorija elektromagnetnega polja s poudarkom na reševanju nalog: elektrostatika, magnetostatika, valovi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Markus Zahn"
+        }
+      ]
+    },
+    "fiz-kvantna-mehanika": {
+      "title": "Kvantna mehanika",
+      "items": [
+        {
+          "title": "Introductory Quantum Mechanics (Fitzpatrick)",
+          "url": "https://phys.libretexts.org/Bookshelves/Quantum_Mechanics/Introductory_Quantum_Mechanics_(Fitzpatrick)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvodni učbenik kvantne mehanike: valovna funkcija, Schrödingerjeva enačba, vrtilna količina, atom vodika, spin.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Richard Fitzpatrick"
+        },
+        {
+          "title": "Quantum Mechanics (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/quantum.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Kvantna mehanika: Schrödingerjeva enačba, vrtilna količina, atom vodika, spin, motnje.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "Quantum Physics I (MIT 8.04)",
+          "url": "https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2016/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v kvantno mehaniko: valovna funkcija, Schrödingerjeva enačba, potencialne jame, harmonski oscilator; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Barton Zwiebach"
+        },
+        {
+          "title": "Quantum Physics (Ackland)",
+          "url": "https://phys.libretexts.org/Bookshelves/Quantum_Mechanics/Quantum_Physics_(Ackland)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v kvantno fiziko: valovno-delčni dualizem, Schrödingerjeva enačba, atomi in molekule.",
+          "license": "CC BY 4.0",
+          "author": "Graeme Ackland"
+        },
+        {
+          "title": "Quantum Mechanics (Walet)",
+          "url": "https://phys.libretexts.org/Bookshelves/Quantum_Mechanics/Quantum_Mechanics_(Walet)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Zapiski predavanj iz kvantne mehanike: formalizem, enodimenzionalni problemi, vrtilna količina, atomi.",
+          "license": "CC BY-NC-SA 2.0",
+          "author": "Niels Walet"
+        },
+        {
+          "title": "Essential Graduate Physics - Quantum Mechanics (Likharev)",
+          "url": "https://phys.libretexts.org/Bookshelves/Quantum_Mechanics/Essential_Graduate_Physics_-_Quantum_Mechanics_(Likharev)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Obsežen tečaj kvantne mehanike z rešenimi nalogami: postulati, 1D problemi, vrtilna količina, motnje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Konstantin Likharev"
+        },
+        {
+          "title": "Kvantna mehanika",
+          "url": "https://sl.wikipedia.org/wiki/Kvantna_mehanika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Pregled kvantne mehanike: valovna funkcija, kvantna stanja, merjenje; slovenski uvod.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-statisticna-fizika": {
+      "title": "Statistična fizika in termodinamika",
+      "items": [
+        {
+          "title": "Statistical Physics (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/statphys.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Statistična mehanika in termodinamika: ansambli, plini, kvantne porazdelitve, fazni prehodi; ~190 strani.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "Statistical Physics I (MIT 8.044)",
+          "url": "https://ocw.mit.edu/courses/8-044-statistical-physics-i-spring-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Termodinamika in statistična fizika: entropija, kanonična porazdelitev, plini, kvantne statistike; zapiski, naloge in izpiti.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Mehran Kardar"
+        },
+        {
+          "title": "Statistical Mechanics (Styer)",
+          "url": "https://phys.libretexts.org/Bookshelves/Thermodynamics_and_Statistical_Mechanics/Statistical_Mechanics_(Styer)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Statistična mehanika: ansambli, entropija, idealni plini, kvantni plini, fazni prehodi; z nalogami.",
+          "license": "CC BY-SA 4.0",
+          "author": "Daniel Styer"
+        },
+        {
+          "title": "Thermodynamics and Statistical Mechanics (Nair)",
+          "url": "https://phys.libretexts.org/Bookshelves/Thermodynamics_and_Statistical_Mechanics/Thermodynamics_and_Statistical_Mechanics_(Nair)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik termodinamike in statistične mehanike: zakoni, potenciali, ansambli, kvantne statistike.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Vijay Nair"
+        },
+        {
+          "title": "Essential Graduate Physics - Statistical Mechanics (Likharev)",
+          "url": "https://phys.libretexts.org/Bookshelves/Thermodynamics_and_Statistical_Mechanics/Essential_Graduate_Physics_-_Statistical_Mechanics_(Likharev)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Statistična mehanika z rešenimi nalogami: termodinamika, Gibbsova porazdelitev, kvantni plini, fazni prehodi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Konstantin Likharev"
+        },
+        {
+          "title": "Statistična mehanika",
+          "url": "https://sl.wikipedia.org/wiki/Statistična_mehanika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Statistična mehanika: ansambli, entropija in zveza med mikroskopskim in makroskopskim opisom.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-fizika-trdne-snovi": {
+      "title": "Fizika trdne snovi",
+      "items": [
+        {
+          "title": "Solid State Physics (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/solidstate.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Fizika trdne snovi: kristalna zgradba, fononi, elektroni v kristalu, pasovna teorija, magnetizem.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "Physics of Solids I (MIT 8.231)",
+          "url": "https://ocw.mit.edu/courses/8-231-physics-of-solids-i-fall-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Fizika trdne snovi: kristali, fononi, elektroni v kovinah, pasovna teorija; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "University Physics Volume 3",
+          "url": "https://openstax.org/details/books/university-physics-volume-3",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Optika in moderna fizika: interferenca, uklon, posebna relativnost, kvantna mehanika, atomi, trdna snov, jedrska fizika, delci.",
+          "license": "CC BY 4.0",
+          "author": "Samuel J. Ling, Jeff Sanny, William Moebs"
+        },
+        {
+          "title": "Introduction to Physical Electronics (Wilson)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electronics/Introduction_to_Physical_Electronics_(Wilson)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Fizika elektronskih elementov: kristali, energijski pasovi, polprevodniki, spoji p-n.",
+          "license": "CC BY 1.0",
+          "author": "Dennis Wilson"
+        },
+        {
+          "title": "Electronic, Optical and Magnetic Properties of Materials (MIT 3.024)",
+          "url": "https://ocw.mit.edu/courses/3-024-electronic-optical-and-magnetic-properties-of-materials-spring-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Električne, optične in magnetne lastnosti materialov: pasovna teorija, polprevodniki, dielektriki; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Kristal",
+          "url": "https://sl.wikipedia.org/wiki/Kristal",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Kristali: kristalna rešetka, simetrije in vrste kristalov; osnova za fiziko trdne snovi.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-jedrska-fizika-energetika": {
+      "title": "Jedrska fizika, sevanje in jedrska energetika",
+      "items": [
+        {
+          "title": "Introduction to Applied Nuclear Physics (Cappellaro)",
+          "url": "https://phys.libretexts.org/Bookshelves/Nuclear_and_Particle_Physics/Introduction_to_Applied_Nuclear_Physics_(Cappellaro)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v uporabno jedrsko fiziko: jedrska zgradba, radioaktivni razpadi, jedrske reakcije in uporaba.",
+          "license": "CC BY-SA 2.0",
+          "author": "Paola Cappellaro"
+        },
+        {
+          "title": "Nuclear and Particle Physics (Walet)",
+          "url": "https://phys.libretexts.org/Bookshelves/Nuclear_and_Particle_Physics/Nuclear_and_Particle_Physics_(Walet)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Jedrska in delčna fizika: jedrski modeli, temeljne sile, simetrije, standardni model.",
+          "license": "CC BY-NC-SA 2.0",
+          "author": "Niels Walet"
+        },
+        {
+          "title": "Introduction to Applied Nuclear Physics (MIT 22.02)",
+          "url": "https://ocw.mit.edu/courses/22-02-introduction-to-applied-nuclear-physics-spring-2012/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uporabna jedrska fizika: kvantna mehanika za jedra, radioaktivni razpad, jedrske reakcije, uporaba sevanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Introduction to Nuclear Engineering and Ionizing Radiation (MIT 22.01)",
+          "url": "https://ocw.mit.edu/courses/22-01-introduction-to-nuclear-engineering-and-ionizing-radiation-fall-2016/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Jedrsko inženirstvo: radioaktivnost, interakcija sevanja s snovjo, dozimetrija, jedrski reaktorji; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Neutron Science and Reactor Physics (MIT 22.05)",
+          "url": "https://ocw.mit.edu/courses/22-05-neutron-science-and-reactor-physics-fall-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Nevtronska fizika in fizika reaktorjev: nevtronska difuzija, verižna reakcija, kritičnost in kinetika reaktorja.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Introduction to Nuclear and Particle Physics (MIT 8.701)",
+          "url": "https://ocw.mit.edu/courses/8-701-introduction-to-nuclear-and-particle-physics-fall-2020/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Jedrska in delčna fizika: lastnosti jeder, razpadi, standardni model; predavanja, zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Nuclear Reactor Safety (MIT 22.091)",
+          "url": "https://ocw.mit.edu/courses/22-091-nuclear-reactor-safety-spring-2008/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Varnost jedrskih elektrarn kot celotnega sistema: varnostni sistemi, odvisnosti med podsistemi in analiza nezgod.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Jedrska fizika",
+          "url": "https://sl.wikipedia.org/wiki/Jedrska_fizika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Jedrska fizika: zgradba jedra, razpadi, jedrske reakcije.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-mehanika-kontinuov": {
+      "title": "Mehanika kontinuov (deformacije, elastičnost, tekočine)",
+      "items": [
+        {
+          "title": "Trdnost I",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/459",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Slovenski učbenik mehanike trdnih teles in kontinuuma: napetosti, deformacije, elastičnost, plastičnost.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Stane Srpčič"
+        },
+        {
+          "title": "Mechanics of Materials (Roylance)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Mechanics_of_Materials_(Roylance)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Osnove trdnosti: napetosti, deformacije, nosilci, torzija, uklon; kratek učbenik MIT.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "David Roylance"
+        },
+        {
+          "title": "Solid Mechanics (MIT 1.050)",
+          "url": "https://ocw.mit.edu/courses/1-050-solid-mechanics-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehanika trdnih teles: napetostno in deformacijsko stanje, elastičnost, plastičnost, nosilci; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Mechanics & Materials I (MIT 2.001)",
+          "url": "https://ocw.mit.edu/courses/2-001-mechanics-materials-i-fall-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Statika, napetosti, deformacije, upogib in torzija nosilcev ter lastnosti materialov; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Fluid Mechanics (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/fluids.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Uvod v mehaniko tekočin: kinematika, idealne in viskozne tekočine, valovanje, stisljivost.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "All Things Flow (Smyth)",
+          "url": "https://eng.libretexts.org/Bookshelves/Civil_Engineering/All_Things_Flow_-_Fluid_Mechanics_for_the_Natural_Sciences_(Smyth)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Mehanika tekočin za naravoslovce: hidrostatika, Bernoullijeva enačba, viskoznost, turbulenca.",
+          "license": "CC BY-NC 4.0",
+          "author": "William Smyth"
+        },
+        {
+          "title": "Mehanika tekočin",
+          "url": "https://sl.wikipedia.org/wiki/Mehanika_tekočin",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Mehanika tekočin: hidrostatika, tok idealnih in realnih tekočin, Bernoullijeva enačba.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-astronomija-astrofizika": {
+      "title": "Astronomija, astrofizika in kozmologija",
+      "items": [
+        {
+          "title": "Astronomy 2e",
+          "url": "https://openstax.org/details/books/astronomy-2e",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Celovit uvod v astronomijo: osončje, zvezde, galaksije in kozmologija, z vprašanji in slikami za samostojno učenje.",
+          "license": "CC BY 4.0",
+          "author": "Andrew Fraknoi, David Morrison, Sidney C. Wolff"
+        },
+        {
+          "title": "Introduction to Astronomy (MIT 8.282J)",
+          "url": "https://ocw.mit.edu/courses/8-282j-introduction-to-astronomy-spring-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v astronomijo: zvezde, Osončje, galaksije in kozmologija; zapiski in naloge za študente brez posebnega predznanja.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "The Fundamentals of Stellar Astrophysics (Collins)",
+          "url": "https://phys.libretexts.org/Bookshelves/Astronomy__Cosmology/The_Fundamentals_of_Stellar_Astrophysics_(Collins)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik astrofizike zvezd: zvezdne notranjosti, prenos sevanja, jedrske reakcije, razvoj zvezd.",
+          "license": "javna domena",
+          "author": "George W. Collins"
+        },
+        {
+          "title": "Cosmology (Knox)",
+          "url": "https://phys.libretexts.org/Bookshelves/Astronomy__Cosmology/Cosmology_(Knox)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v kozmologijo: širjenje vesolja, mikrovalovno ozadje, temna snov in temna energija.",
+          "license": "javna domena",
+          "author": "Lloyd Knox"
+        },
+        {
+          "title": "Cosmology (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/cosmo.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Uvod v kozmologijo: Friedmannove enačbe, termična zgodovina vesolja, nastanek struktur.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "Modern Astrophysics (MIT 8.284)",
+          "url": "https://ocw.mit.edu/courses/8-284-modern-astrophysics-spring-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Sodobna astrofizika: zvezdna evolucija, kompaktni objekti, galaksije in kozmologija; predavanja in zapiski.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Astronomija",
+          "url": "https://sl.wikipedia.org/wiki/Astronomija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Obsežen slovenski pregled astronomije: zgodovina, opazovanja, Osončje, zvezde, galaksije.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Astrofizika",
+          "url": "https://sl.wikipedia.org/wiki/Astrofizika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Astrofizika: fizika zvezd, galaksij in vesolja.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-atmosfera-meteorologija": {
+      "title": "Fizika atmosfere, meteorologija in klimatologija",
+      "items": [
+        {
+          "title": "Fundamentals of Atmospheric Science (Brune)",
+          "url": "https://geo.libretexts.org/Bookshelves/Meteorology_and_Climate_Science/Fundamentals_of_Atmospheric_Science_(Brune)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Osnove fizike atmosfere: zgradba ozračja, sevanje, termodinamika, dinamika in podnebje.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "William Brune"
+        },
+        {
+          "title": "Practical Meteorology (Stull)",
+          "url": "https://geo.libretexts.org/Bookshelves/Meteorology_and_Climate_Science/Practical_Meteorology_(Stull)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Obsežen uvod v meteorologijo: sevanje, termodinamika atmosfere, oblaki, vetrovi, fronte in napoved vremena.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Roland Stull"
+        },
+        {
+          "title": "Introduction to Climate Science (Schmittner)",
+          "url": "https://geo.libretexts.org/Bookshelves/Meteorology_and_Climate_Science/Introduction_to_Climate_Science_(Schmittner_2021)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Fizika podnebnega sistema: energijska bilanca, učinek tople grede, krožni tokovi in podnebne spremembe.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Andreas Schmittner"
+        },
+        {
+          "title": "Atmospheric Processes and Phenomena",
+          "url": "https://geo.libretexts.org/Bookshelves/Meteorology_and_Climate_Science/Atmospheric_Processes_and_Phenomena",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Atmosferski procesi: vlaga, oblaki, padavine, nevihte in vremenski pojavi; z razlago in slikami.",
+          "license": "CC BY-SA 4.0",
+          "author": "več avtorjev"
+        },
+        {
+          "title": "Atmosphere, Ocean and Climate Dynamics (MIT 12.003)",
+          "url": "https://ocw.mit.edu/courses/12-003-atmosphere-ocean-and-climate-dynamics-fall-2008/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Fizika atmosfere in podnebja: energijska bilanca, atmosferski krogi, dinamika ozračja; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Dynamics of the Atmosphere (MIT 12.810)",
+          "url": "https://ocw.mit.edu/courses/12-810-dynamics-of-the-atmosphere-spring-2008/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Dinamika ozračja: osnovne enačbe gibanja, geostrofski veter, vrtinčnost, valovi v ozračju; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Meteorologija",
+          "url": "https://sl.wikipedia.org/wiki/Meteorologija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Meteorologija: ozračje, vreme, vremenski pojavi in napovedovanje.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Klimatologija",
+          "url": "https://sl.wikipedia.org/wiki/Klimatologija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Klimatologija: podnebni dejavniki, podnebni tipi in spremembe.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-geofizika-seizmologija": {
+      "title": "Geofizika in seizmologija",
+      "items": [
+        {
+          "title": "Potresi (Agencija RS za okolje)",
+          "url": "https://www.arso.gov.si/potresi/",
+          "source": "ARSO",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Uradni slovenski seizmološki portal: pregled potresov, razlaga nastanka, magnitude in intenzitete ter potresna nevarnost.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Essentials of Geophysics (MIT 12.201)",
+          "url": "https://ocw.mit.edu/courses/12-201-essentials-of-geophysics-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Osnove geofizike: gravitacija, magnetizem, seizmika, toplotni tok in zgradba Zemlje; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Introduction to Seismology (MIT 12.510)",
+          "url": "https://ocw.mit.edu/courses/12-510-introduction-to-seismology-spring-2010/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v seizmologijo: potresni valovi, seizmografi, lokacija potresov, zgradba Zemlje; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Geofizika",
+          "url": "https://sl.wikipedia.org/wiki/Geofizika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Geofizika: fizikalne lastnosti Zemlje, gravitacija, magnetizem, seizmika.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Seizmologija",
+          "url": "https://sl.wikipedia.org/wiki/Seizmologija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Seizmologija: potresni valovi, merjenje in zgradba Zemlje.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Potres",
+          "url": "https://sl.wikipedia.org/wiki/Potres",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Potres: vzroki, magnituda, intenziteta in potresna nevarnost.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-biofizika-medicina": {
+      "title": "Biofizika in fizika v medicini",
+      "items": [
+        {
+          "title": "College Physics 2e",
+          "url": "https://openstax.org/details/books/college-physics-2e",
+          "source": "OpenStax",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvodna fizika brez zahtevnejše analize, z veliko primeri iz biologije in medicine: mehanika, toplota, elektrika, optika, jedrska fizika.",
+          "license": "CC BY 4.0",
+          "author": "Paul Peter Urone, Roger Hinrichs"
+        },
+        {
+          "title": "Biofizika",
+          "url": "https://sl.wikipedia.org/wiki/Biofizika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Biofizika: fizikalni opis bioloških sistemov in metode.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Statistical Physics in Biology (MIT 8.592J)",
+          "url": "https://ocw.mit.edu/courses/8-592j-statistical-physics-in-biology-spring-2011/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Statistična fizika bioloških sistemov: polimeri, membrane, molekulski motorji, gensko uravnavanje; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Principles of Medical Imaging (MIT 22.058)",
+          "url": "https://ocw.mit.edu/courses/22-058-principles-of-medical-imaging-fall-2002/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Fizikalna načela medicinskega slikanja: rentgen, CT, ultrazvok, MRI in nuklearne metode; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Principles of Radiation Interactions (MIT 22.55J)",
+          "url": "https://ocw.mit.edu/courses/22-55j-principles-of-radiation-interactions-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Interakcije sevanja s snovjo in biološkimi sistemi: fotoni, nabiti delci, nevtroni, dozimetrija.",
+          "license": "CC BY-NC-SA 4.0"
+        }
+      ]
+    },
+    "fiz-akustika-hrup": {
+      "title": "Akustika, zvok, hrup in vibracije",
+      "items": [
+        {
+          "title": "Understanding Sound (Abbot)",
+          "url": "https://phys.libretexts.org/Bookshelves/Waves_and_Acoustics/Understanding_Sound_(Abbot)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v akustiko: zvočni valovi, hrup, sluh, zvočna izolacija in prostorska akustika.",
+          "license": "CC BY 4.0",
+          "author": "Patrick Abbot"
+        },
+        {
+          "title": "Sound - An Interactive eBook (Forinash and Christian)",
+          "url": "https://phys.libretexts.org/Bookshelves/Waves_and_Acoustics/Sound_-_An_Interactive_eBook_(Forinash_and_Christian)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Interaktivna e-knjiga o zvoku: nihanje, zvočni valovi, glasba in sluh, s simulacijami.",
+          "license": "CC BY-NC-SA 3.0",
+          "author": "Kyle Forinash, Wolfgang Christian"
+        },
+        {
+          "title": "Acoustics (zbirka)",
+          "url": "https://phys.libretexts.org/Bookshelves/Waves_and_Acoustics/Acoustics",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Zbirka gradiv o akustiki: zvok, resonanca, zvočni tlak, merjenje in uporaba.",
+          "license": "CC BY-SA 4.0",
+          "author": "več avtorjev"
+        },
+        {
+          "title": "Akustika",
+          "url": "https://sl.wikipedia.org/wiki/Akustika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Akustika: zvok, valovanje, sluh in prostorska akustika.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Hrup",
+          "url": "https://sl.wikipedia.org/wiki/Hrup",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Hrup: merjenje, učinki na zdravje in zaščita.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Engineering Dynamics (MIT 2.003SC)",
+          "url": "https://ocw.mit.edu/courses/2-003sc-engineering-dynamics-fall-2011/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Dinamika togih teles in nihanja: kinematika, Newton-Euler, energija, vibracije; video predavanja z nalogami.",
+          "license": "CC BY-NC-SA 4.0"
+        }
+      ]
+    },
+    "fiz-matematicna-fizika-sistemi": {
+      "title": "Matematična fizika, dinamični in kompleksni sistemi",
+      "items": [
+        {
+          "title": "Višja matematika v fiziki",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/215",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Matematične metode za fiziko: navadne in parcialne diferencialne enačbe ter sistemi sklopljenih enačb.",
+          "license": "prost dostop",
+          "author": "Milan Ambrožič, Robert Repnik, Mitja Slavinec"
+        },
+        {
+          "title": "Vector Calculus (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/vc.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Vektorska analiza za fizike: gradient, divergenca, rotor, integralski izreki.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "Complex Methods for the Sciences (Chong)",
+          "url": "https://phys.libretexts.org/Bookshelves/Mathematical_Physics_and_Pedagogy/Complex_Methods_for_the_Sciences_(Chong)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Kompleksna analiza za fizike: analitične funkcije, residui, integrali, Fourierova in Laplaceova transformacija.",
+          "license": "CC BY-SA 4.0",
+          "author": "Yi Dong Chong"
+        },
+        {
+          "title": "Computational Physics (Chong)",
+          "url": "https://phys.libretexts.org/Bookshelves/Mathematical_Physics_and_Pedagogy/Computational_Physics_(Chong)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Numerične metode v fiziki: diferencialne enačbe, simulacije dinamičnih sistemov in Monte Carlo.",
+          "license": "CC BY-SA 4.0",
+          "author": "Yi Dong Chong"
+        },
+        {
+          "title": "Nonlinear Dynamics and Waves (MIT 2.034J)",
+          "url": "https://ocw.mit.edu/courses/2-034j-nonlinear-dynamics-and-waves-spring-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Nelinearni dinamični sistemi: fazni prostor, bifurkacije, kaos in nelinearni valovi; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Dynamic Systems and Control (Dahleh, Dahleh, and Verghese)",
+          "url": "https://eng.libretexts.org/Bookshelves/Industrial_and_Systems_Engineering/Book%3A_Dynamic_Systems_and_Control_(Dahleh_Dahleh_and_Verghese)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Dinamični sistemi in regulacija: modeli v prostoru stanj, stabilnost, vodljivost in opazljivost.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Munther Dahleh idr."
+        }
+      ]
+    },
+    "fiz-statika": {
+      "title": "Statika (ravnovesje, paličja, notranje sile)",
+      "items": [
+        {
+          "title": "Engineering Statics: Open and Interactive (Baker and Haynes)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Engineering_Statics%3A_Open_and_Interactive_(Baker_and_Haynes)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Interaktivni učbenik statike: vektorji, sile, momenti, ravnovesje, paličja in težišča, z nalogami.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Daniel W. Baker, William Haynes"
+        },
+        {
+          "title": "Engineering Mechanics - Statics (Osgood, Cameron, and Christensen)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Engineering_Mechanics_-_Statics_(Osgood_Cameron_and_Christensen)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik inženirske statike z rešenimi zgledi: ravnovesje, trenje, paličja, težišča.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Osgood, Cameron, Christensen"
+        },
+        {
+          "title": "Mechanics & Materials I (MIT 2.001)",
+          "url": "https://ocw.mit.edu/courses/2-001-mechanics-materials-i-fall-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Statika, napetosti, deformacije, upogib in torzija nosilcev ter lastnosti materialov; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Solid Mechanics (MIT 1.050)",
+          "url": "https://ocw.mit.edu/courses/1-050-solid-mechanics-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehanika trdnih teles: napetostno in deformacijsko stanje, elastičnost, plastičnost, nosilci; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Statika",
+          "url": "https://sl.wikipedia.org/wiki/Statika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Statika: ravnovesje sil in momentov, podpore in notranje sile v konstrukcijah.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Zbirka vaj iz Gradbene mehanike 2",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/261",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Rešene naloge: upogibnice in račun statično nedoločenih konstrukcij.",
+          "license": "prost dostop",
+          "author": "Denis Imamović, Mojmir Uranjek"
+        }
+      ]
+    },
+    "fiz-dinamika-togih-teles": {
+      "title": "Kinematika in dinamika togih teles",
+      "items": [
+        {
+          "title": "Mehanika II",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/513",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Kinematika in dinamika delcev ter togih teles, delo in energija, trki, nihanja in analitična mehanika.",
+          "license": "prost dostop",
+          "author": "Marko Kegl, Matej Vesenjak, Boštjan Harl"
+        },
+        {
+          "title": "Dinamika masnih sistemov",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/854",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Kinematika in dinamika togih teles: rotacijska matrika, Eulerjevi koti, gibalna in vrtilna količina, nihanja.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Boštjan Harl, Marko Kegl, Timi Karner"
+        },
+        {
+          "title": "Introductory Dynamics (Steeneken)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Introductory_Dynamics%3A_2D_Kinematics_and_Kinetics_of_Point_Masses_and_Rigid_Bodies_(Steeneken)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v dinamiko: ravninska kinematika in kinetika točkastih mas in togih teles, energijske metode.",
+          "license": "CC BY 4.0",
+          "author": "Peter Steeneken"
+        },
+        {
+          "title": "Engineering Dynamics (MIT 2.003SC)",
+          "url": "https://ocw.mit.edu/courses/2-003sc-engineering-dynamics-fall-2011/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Dinamika togih teles in nihanja: kinematika, Newton-Euler, energija, vibracije; video predavanja z nalogami.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Analiza in sinteza mehanizmov: postopki reševanja izbranih primerov",
+          "url": "https://www.fs.uni-lj.si/publication/analiza-in-sinteza-mehanizmov-postopki-resevanja-izbranih-primerov/",
+          "source": "UL Fakulteta za strojništvo",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Postopki reševanja izbranih nalog iz kinematike mehanizmov: analiza gibanja in sinteza mehanizmov.",
+          "license": "prost dostop",
+          "author": "UL Fakulteta za strojništvo"
+        },
+        {
+          "title": "Načela in metode dinamike",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/663",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Slovenski prevod učbenika dinamike: načela mehanike in metode za sisteme s končnim številom prostostnih stopenj.",
+          "license": "prost dostop",
+          "author": "Udo Fischer, Wolfgang Stephan"
+        },
+        {
+          "title": "Dinamika",
+          "url": "https://sl.wikipedia.org/wiki/Dinamika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Newtonovi zakoni, sila, gibalna količina in energija: pregled dinamike.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-trdnost": {
+      "title": "Trdnost in mehanika materialov",
+      "items": [
+        {
+          "title": "Trdnost I",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/459",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Slovenski učbenik mehanike trdnih teles in kontinuuma: napetosti, deformacije, elastičnost, plastičnost.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Stane Srpčič"
+        },
+        {
+          "title": "Trdnost II",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/460",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Drugi del učbenika: problemi trdnosti elementov konstrukcij in metode za njihovo reševanje.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Stane Srpčič"
+        },
+        {
+          "title": "Mechanics of Materials (Roylance)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Mechanics_of_Materials_(Roylance)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Osnove trdnosti: napetosti, deformacije, nosilci, torzija, uklon; kratek učbenik MIT.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "David Roylance"
+        },
+        {
+          "title": "Mechanics & Materials I (MIT 2.001)",
+          "url": "https://ocw.mit.edu/courses/2-001-mechanics-materials-i-fall-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Statika, napetosti, deformacije, upogib in torzija nosilcev ter lastnosti materialov; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Solid Mechanics (MIT 1.050)",
+          "url": "https://ocw.mit.edu/courses/1-050-solid-mechanics-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehanika trdnih teles: napetostno in deformacijsko stanje, elastičnost, plastičnost, nosilci; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Mechanical Behavior of Materials (MIT 3.032)",
+          "url": "https://ocw.mit.edu/courses/3-032-mechanical-behavior-of-materials-fall-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehanske lastnosti materialov: elastičnost, plastičnost, lom, utrujanje in lezenje; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Trdnost",
+          "url": "https://sl.wikipedia.org/wiki/Trdnost",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Trdnost materialov: napetosti, deformacije in kriteriji porušitve; osnovni pojmi.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-mehanika-konstrukcij": {
+      "title": "Mehanika konstrukcij (paličja, okvirji, nosilci, napetosti)",
+      "items": [
+        {
+          "title": "Zbirka vaj iz Gradbene mehanike 2",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/261",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Rešene naloge: upogibnice in račun statično nedoločenih konstrukcij.",
+          "license": "prost dostop",
+          "author": "Denis Imamović, Mojmir Uranjek"
+        },
+        {
+          "title": "Osnove projektiranja konstrukcij",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/212",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Teoretične osnove projektiranja gradbenih konstrukcij, analiza obtežb in osnove potresnega inženirstva.",
+          "license": "prost dostop",
+          "author": "Miroslav Premrov, Erika Kozem Šilih"
+        },
+        {
+          "title": "Structural Analysis (Udoeyo)",
+          "url": "https://eng.libretexts.org/Bookshelves/Civil_Engineering/Structural_Analysis_(Udoeyo)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Analiza konstrukcij: reakcije, paličja, nosilci in okvirji, notranje sile in pomiki.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Felix Udoeyo"
+        },
+        {
+          "title": "Structural Mechanics (Wierzbicki)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Structural_Mechanics_(Wierzbicki)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Mehanika konstrukcij: nosilci, plošče, stabilnost, plastična analiza; zapiski MIT.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Tomasz Wierzbicki"
+        },
+        {
+          "title": "Structural Mechanics (MIT 2.080J)",
+          "url": "https://ocw.mit.edu/courses/2-080j-structural-mechanics-fall-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehanika konstrukcij: nosilci, plošče, stabilnost, plastična analiza; zapiski predavanj in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Solid Mechanics (MIT 1.050)",
+          "url": "https://ocw.mit.edu/courses/1-050-solid-mechanics-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehanika trdnih teles: napetostno in deformacijsko stanje, elastičnost, plastičnost, nosilci; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        }
+      ]
+    },
+    "fiz-jeklo-les-beton": {
+      "title": "Jeklene, lesene in betonske konstrukcije",
+      "items": [
+        {
+          "title": "Dimenzioniranje armiranobetonskih konstrukcij po metodi mejnih stanj",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/844",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Dimenzioniranje linijskih in ploskovnih armiranobetonskih elementov po metodi mejnih stanj, s teorijo in primeri.",
+          "license": "CC BY 4.0",
+          "author": "Peter Dobrila"
+        },
+        {
+          "title": "Osnove projektiranja konstrukcij",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/212",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Teoretične osnove projektiranja gradbenih konstrukcij, analiza obtežb in osnove potresnega inženirstva.",
+          "license": "prost dostop",
+          "author": "Miroslav Premrov, Erika Kozem Šilih"
+        },
+        {
+          "title": "Mechanics and Design of Concrete Structures (MIT 1.054)",
+          "url": "https://ocw.mit.edu/courses/1-054-mechanics-and-design-of-concrete-structures-spring-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehanika in dimenzioniranje armiranobetonskih konstrukcij: upogib, strig, stebri; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Basic Structural Design (MIT 4.440)",
+          "url": "https://ocw.mit.edu/courses/4-440-basic-structural-design-spring-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Osnove konstruiranja nosilnih konstrukcij: obtežbe, nosilci, stebri, paličja in okvirji v jeklu, lesu in betonu.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Wood Handbook: Wood as an Engineering Material",
+          "url": "https://research.fs.usda.gov/treesearch/62200",
+          "source": "USDA Forest Products Laboratory",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Standardni priročnik o lesu: zgradba, vlažnost, sušenje, mehanske in fizikalne lastnosti ter lepljeni kompoziti.",
+          "license": "javna domena",
+          "author": "Forest Products Laboratory"
+        },
+        {
+          "title": "Beton",
+          "url": "https://sl.wikipedia.org/wiki/Beton",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Beton: sestava, lastnosti in uporaba; osnove za gradbeništvo.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Jeklo",
+          "url": "https://sl.wikipedia.org/wiki/Jeklo",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Jeklo: sestava, vrste, lastnosti in proizvodnja.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Les",
+          "url": "https://sl.wikipedia.org/wiki/Les",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Les: zgradba, lastnosti in uporaba lesa kot materiala.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-potresno-inzenirstvo": {
+      "title": "Potresno inženirstvo in dinamika konstrukcij",
+      "items": [
+        {
+          "title": "Potresno inženirstvo: Zbirka rešenih primerov",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/495",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Rešeni primeri analize stavb: velikost in porazdelitev potresnega vpliva ter osnovne kontrole po Evrokodu 8.",
+          "license": "prost dostop",
+          "author": "Matjaž Skrinar, Denis Imamović"
+        },
+        {
+          "title": "Potresi (Agencija RS za okolje)",
+          "url": "https://www.arso.gov.si/potresi/",
+          "source": "ARSO",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Uradni slovenski seizmološki portal: pregled potresov, razlaga nastanka, magnitude in intenzitete ter potresna nevarnost.",
+          "license": "prost dostop"
+        },
+        {
+          "title": "Introduction to Seismology (MIT 12.510)",
+          "url": "https://ocw.mit.edu/courses/12-510-introduction-to-seismology-spring-2010/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v seizmologijo: potresni valovi, seizmografi, lokacija potresov, zgradba Zemlje; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Potres",
+          "url": "https://sl.wikipedia.org/wiki/Potres",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Potres: vzroki, magnituda, intenziteta in potresna nevarnost.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Engineering Dynamics (MIT 2.003SC)",
+          "url": "https://ocw.mit.edu/courses/2-003sc-engineering-dynamics-fall-2011/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Dinamika togih teles in nihanja: kinematika, Newton-Euler, energija, vibracije; video predavanja z nalogami.",
+          "license": "CC BY-NC-SA 4.0"
+        }
+      ]
+    },
+    "fiz-mehanika-tekocin": {
+      "title": "Mehanika tekočin (hidrostatika, dinamika tekočin)",
+      "items": [
+        {
+          "title": "Fluid Mechanics (Bar-Meir)",
+          "url": "https://eng.libretexts.org/Bookshelves/Civil_Engineering/Fluid_Mechanics_(Bar-Meir)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik mehanike tekočin: hidrostatika, enačbe toka, cevovodi, stisljivi tok; GNU FDL.",
+          "license": "GNU FDL",
+          "author": "Genick Bar-Meir"
+        },
+        {
+          "title": "All Things Flow (Smyth)",
+          "url": "https://eng.libretexts.org/Bookshelves/Civil_Engineering/All_Things_Flow_-_Fluid_Mechanics_for_the_Natural_Sciences_(Smyth)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Mehanika tekočin za naravoslovce: hidrostatika, Bernoullijeva enačba, viskoznost, turbulenca.",
+          "license": "CC BY-NC 4.0",
+          "author": "William Smyth"
+        },
+        {
+          "title": "Intermediate Fluid Mechanics (Liburdy)",
+          "url": "https://eng.libretexts.org/Bookshelves/Civil_Engineering/Intermediate_Fluid_Mechanics_(Liburdy)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Nadaljevalna mehanika tekočin: Navier-Stokesove enačbe, mejna plast, turbulenca, potencialni tok.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "James Liburdy"
+        },
+        {
+          "title": "Fluid Mechanics (lecture notes)",
+          "url": "https://www.damtp.cam.ac.uk/user/tong/fluids.html",
+          "source": "University of Cambridge (DAMTP)",
+          "lang": "en",
+          "type": "zapiski",
+          "desc": "Uvod v mehaniko tekočin: kinematika, idealne in viskozne tekočine, valovanje, stisljivost.",
+          "license": "prost dostop",
+          "author": "David Tong"
+        },
+        {
+          "title": "Fluid Dynamics (MIT 2.06)",
+          "url": "https://ocw.mit.edu/courses/2-06-fluid-dynamics-spring-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Dinamika tekočin: kinematika, ohranitveni zakoni, viskozni tok, mejna plast; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Mechanics of Fluids (MIT 10.52)",
+          "url": "https://ocw.mit.edu/courses/10-52-mechanics-of-fluids-spring-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Zahtevnejša mehanika tekočin in kontinuuma: napetostni tenzor, mazanje, mejna plast, stabilnost in turbulenca.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Engineering Mechanics II (MIT 1.060)",
+          "url": "https://ocw.mit.edu/courses/1-060-engineering-mechanics-ii-spring-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v mehaniko tekočin za gradbene in okoljske inženirje: lastnosti tekočin, osnovni zakoni, reševanje praktičnih nalog.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Mehanika tekočin",
+          "url": "https://sl.wikipedia.org/wiki/Mehanika_tekočin",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Mehanika tekočin: hidrostatika, tok idealnih in realnih tekočin, Bernoullijeva enačba.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-hidravlika-vodni-tokovi": {
+      "title": "Hidravlika: tok v cevovodih, iztoki in odprti vodotoki",
+      "items": [
+        {
+          "title": "Applied Fluid Mechanics Lab Manual (Ahmari and Kabir)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Applied_Fluid_Mechanics_Lab_Manual_(Ahmari_and_Kabir)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Laboratorijski priročnik mehanike tekočin: tlak, pretok, izgube v cevovodih, odprti kanali; z navodili.",
+          "license": "CC BY 4.0",
+          "author": "Habib Ahmari, Salah Kabir"
+        },
+        {
+          "title": "Fluid Mechanics (Bar-Meir)",
+          "url": "https://eng.libretexts.org/Bookshelves/Civil_Engineering/Fluid_Mechanics_(Bar-Meir)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik mehanike tekočin: hidrostatika, enačbe toka, cevovodi, stisljivi tok; GNU FDL.",
+          "license": "GNU FDL",
+          "author": "Genick Bar-Meir"
+        },
+        {
+          "title": "Engineering Mechanics II (MIT 1.060)",
+          "url": "https://ocw.mit.edu/courses/1-060-engineering-mechanics-ii-spring-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v mehaniko tekočin za gradbene in okoljske inženirje: lastnosti tekočin, osnovni zakoni, reševanje praktičnih nalog.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Fluid Dynamics (MIT 2.06)",
+          "url": "https://ocw.mit.edu/courses/2-06-fluid-dynamics-spring-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Dinamika tekočin: kinematika, ohranitveni zakoni, viskozni tok, mejna plast; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Fizikalno ozadje delovanja hidravličnih sistemov",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/358",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Fizikalne osnove hidravličnih pogonov: prenos sil in gibanj s hidravlično tekočino, razlaga delovanja sistemov.",
+          "license": "prost dostop",
+          "author": "Darko Lovrec"
+        },
+        {
+          "title": "Uvod v hidroenergetske sisteme",
+          "url": "https://www.fs.uni-lj.si/publication/uvod-v-hidroenergetske-sisteme/",
+          "source": "UL Fakulteta za strojništvo",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Elektronski učbenik: vrste vodnih turbin, teorija podobnosti, kavitacija, izkoristki in delovni režimi hidroelektrarn.",
+          "license": "prost dostop",
+          "author": "Marko Hočevar, Matevž Dular"
+        }
+      ]
+    },
+    "fiz-hidravlicni-pogoni": {
+      "title": "Hidravlika in pnevmatika (fluidna tehnika)",
+      "items": [
+        {
+          "title": "Hidravlika za mehatronike",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/372",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Zgradba hidravličnih sistemov ter prenos moči, sil, gibanj in signalov s tekočino; za avtomatizacijo.",
+          "license": "prost dostop",
+          "author": "Darko Lovrec, Vito Tič"
+        },
+        {
+          "title": "Uvod v hidravlično pogonsko-krmilno tehniko",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/357",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Uvod v hidravlične pogone in krmilja: področja uporabe, zgradba in osnovne komponente.",
+          "license": "prost dostop",
+          "author": "Darko Lovrec"
+        },
+        {
+          "title": "Fizikalno ozadje delovanja hidravličnih sistemov",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/358",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Fizikalne osnove hidravličnih pogonov: prenos sil in gibanj s hidravlično tekočino, razlaga delovanja sistemov.",
+          "license": "prost dostop",
+          "author": "Darko Lovrec"
+        },
+        {
+          "title": "Applied Fluid Mechanics Lab Manual (Ahmari and Kabir)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Applied_Fluid_Mechanics_Lab_Manual_(Ahmari_and_Kabir)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Laboratorijski priročnik mehanike tekočin: tlak, pretok, izgube v cevovodih, odprti kanali; z navodili.",
+          "license": "CC BY 4.0",
+          "author": "Habib Ahmari, Salah Kabir"
+        },
+        {
+          "title": "Fluid Mechanics (Bar-Meir)",
+          "url": "https://eng.libretexts.org/Bookshelves/Civil_Engineering/Fluid_Mechanics_(Bar-Meir)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Učbenik mehanike tekočin: hidrostatika, enačbe toka, cevovodi, stisljivi tok; GNU FDL.",
+          "license": "GNU FDL",
+          "author": "Genick Bar-Meir"
+        }
+      ]
+    },
+    "fiz-turbinski-stroji-hidroenergija": {
+      "title": "Turbinski stroji, črpalke in hidroenergija",
+      "items": [
+        {
+          "title": "Uvod v hidroenergetske sisteme",
+          "url": "https://www.fs.uni-lj.si/publication/uvod-v-hidroenergetske-sisteme/",
+          "source": "UL Fakulteta za strojništvo",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Elektronski učbenik: vrste vodnih turbin, teorija podobnosti, kavitacija, izkoristki in delovni režimi hidroelektrarn.",
+          "license": "prost dostop",
+          "author": "Marko Hočevar, Matevž Dular"
+        },
+        {
+          "title": "Hidroenergetski sistemi",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/927",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Skripta o hidroenergetiki: obnovljivi viri, hidrologija, hidroelektrarne in energijski parametri vodnih turbin.",
+          "license": "CC BY 4.0",
+          "author": "Ignacijo Biluš"
+        },
+        {
+          "title": "Hidravlični turbinski stroji 1",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/468",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Hidravlični turbinski stroji: osnovne enačbe prenosnih pojavov, teorija podobnosti, radialni in drugi stroji.",
+          "license": "prost dostop",
+          "author": "Ignacijo Biluš"
+        },
+        {
+          "title": "Vetrne turbine",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/985",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Vetrne turbine: veter in njegov potencial, aerodinamika, zgradba in energijski parametri; z energetskim uvodom.",
+          "license": "CC BY-SA 4.0",
+          "author": "Ignacijo Biluš, Luka Kevorkijan, Luka Lešnik"
+        },
+        {
+          "title": "Uvod v računalniško dinamiko tekočin",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/194",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Fizikalno ozadje in numerične metode računalniške dinamike tekočin: od modelov do uporabe simulacijskih orodij.",
+          "license": "prost dostop",
+          "author": "Matjaž Hriberšek"
+        },
+        {
+          "title": "Turbina",
+          "url": "https://sl.wikipedia.org/wiki/Turbina",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Turbine: vrste (parne, plinske, vodne), delovanje in uporaba.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Hidroelektrarna",
+          "url": "https://sl.wikipedia.org/wiki/Hidroelektrarna",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Hidroelektrarne: vrste, delovanje in vpliv na okolje.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-prenos-toplote": {
+      "title": "Prenos toplote (prevajanje, konvekcija, sevanje)",
+      "items": [
+        {
+          "title": "Introduction to Heat Transfer (MIT 2.051)",
+          "url": "https://ocw.mit.edu/courses/2-051-introduction-to-heat-transfer-fall-2015/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Prenos toplote: prevajanje, konvekcija in sevanje; video predavanja, zapiski in naloge z rešitvami.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Intermediate Heat and Mass Transfer (MIT 2.51)",
+          "url": "https://ocw.mit.edu/courses/2-51-intermediate-heat-and-mass-transfer-fall-2008/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Zahtevnejši prenos toplote in snovi: difuzija, konvekcija, fazne spremembe; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Foundations of Chemical and Biological Engineering I (Verret, Qiao, Barghout)",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Foundations_of_Chemical_and_Biological_Engineering_I_(Verret_Qiao_Barghout)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Osnove kemijskega inženirstva: enote, snovne in energijske bilance, prenos toplote in snovi, tok tekočin.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Verret, Qiao, Barghout"
+        },
+        {
+          "title": "Industrijska energetika: zbirka rešenih nalog s kratkimi teoretičnimi osnovami",
+          "url": "https://www.fs.uni-lj.si/publication/industrijska-energetika-zbirka-resenih-nalog-s-kratkimi-teoreticnimi-osnovami/",
+          "source": "UL Fakulteta za strojništvo",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Rešene naloge: idealni plini, vodna para, parni krožni proces, prenos toplote; pripravljeno za študente lesarstva na BF.",
+          "license": "prost dostop",
+          "author": "Boštjan Drobnič, Andrej Senegačnik"
+        },
+        {
+          "title": "Prenos toplote",
+          "url": "https://sl.wikipedia.org/wiki/Prenos_toplote",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Prevajanje, konvekcija in sevanje: osnovni zakoni in enačbe prenosa toplote.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-termodinamika-inzenirska": {
+      "title": "Inženirska termodinamika, krožni procesi in zgorevanje",
+      "items": [
+        {
+          "title": "Introduction to Engineering Thermodynamics (Yan)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Introduction_to_Engineering_Thermodynamics_(Yan)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Inženirska termodinamika: prvi in drugi zakon, lastnosti snovi, krožni procesi in uporaba v napravah.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Jun Yan"
+        },
+        {
+          "title": "Thermal Energy (MIT 16.050)",
+          "url": "https://ocw.mit.edu/courses/16-050-thermal-energy-fall-2002/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Inženirska termodinamika: prvi in drugi zakon, krožni procesi, entropija in eksergija; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Chemical Engineering Thermodynamics (MIT 10.40)",
+          "url": "https://ocw.mit.edu/courses/10-40-chemical-engineering-thermodynamics-fall-2003/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Kemijsko-inženirska termodinamika: lastnosti snovi, zmesi, fazna ravnovesja; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Internal Combustion Engines (MIT 2.61)",
+          "url": "https://ocw.mit.edu/courses/2-61-internal-combustion-engines-spring-2017/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Motorji z notranjim zgorevanjem: termodinamika, zgorevanje, izmenjava plinov, emisije; predavanja.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Industrijska energetika: zbirka rešenih nalog s kratkimi teoretičnimi osnovami",
+          "url": "https://www.fs.uni-lj.si/publication/industrijska-energetika-zbirka-resenih-nalog-s-kratkimi-teoreticnimi-osnovami/",
+          "source": "UL Fakulteta za strojništvo",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Rešene naloge: idealni plini, vodna para, parni krožni proces, prenos toplote; pripravljeno za študente lesarstva na BF.",
+          "license": "prost dostop",
+          "author": "Boštjan Drobnič, Andrej Senegačnik"
+        },
+        {
+          "title": "Control of Air Conditioning (Vodenje sistemov klimatizacije)",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/285",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Termodinamika vlažnega zraka, procesi v hladilnem stolpu in toplotne črpalke, z nalogami (v angleščini).",
+          "license": "prost dostop",
+          "author": "Jurij Avsec, Urška Novosel"
+        },
+        {
+          "title": "Termodinamika",
+          "url": "https://sl.wikipedia.org/wiki/Termodinamika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Obsežen pregled termodinamike: zakoni, entropija, kroženja in uporaba; za hiter pregled pojmov.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Gorenje",
+          "url": "https://sl.wikipedia.org/wiki/Gorenje",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Gorenje: kemijski in fizikalni pogoji, plameni in produkti gorenja.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-procesna-tehnika": {
+      "title": "Osnove procesnega inženirstva (bilance, procesništvo)",
+      "items": [
+        {
+          "title": "Laboratorijske vaje iz Tehnološkega procesništva",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/699",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Skripta z navodili za laboratorijske vaje pri predmetu Tehnološko procesništvo (odprto učno gradivo UL).",
+          "license": "CC BY-SA 4.0",
+          "author": "Blaž Jug idr."
+        },
+        {
+          "title": "Naloge iz tehnološkega procesništva z rešitvami",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/700",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Zbirka nalog in vprašanj z rešitvami pri predmetu Tehnološko procesništvo (živilstvo in prehrana).",
+          "license": "CC BY-SA 4.0",
+          "author": "Iztok Prislan"
+        },
+        {
+          "title": "Biotehnološki tehnikum. Učbenik za vaje",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/961",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Sedem laboratorijskih vaj in računske naloge: delo z delovnimi organizmi in pridobivanje kakovostnih produktov.",
+          "license": "CC BY-SA 4.0",
+          "author": "Maja Paš, Aleš Podgornik, Hrvoje Petković"
+        },
+        {
+          "title": "Foundations of Chemical and Biological Engineering I (Verret, Qiao, Barghout)",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Foundations_of_Chemical_and_Biological_Engineering_I_(Verret_Qiao_Barghout)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Osnove kemijskega inženirstva: enote, snovne in energijske bilance, prenos toplote in snovi, tok tekočin.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Verret, Qiao, Barghout"
+        },
+        {
+          "title": "Basic Engineering Science (Richards)",
+          "url": "https://eng.libretexts.org/Bookshelves/Introductory_Engineering/Basic_Engineering_Science_-_A_Systems_Accounting_and_Modeling_Approach_(Richards)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Osnove inženirskih ved: bilance mase, energije in drugih količin, modeliranje procesov.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Richards"
+        }
+      ]
+    },
+    "fiz-prenos-snovi-separacije": {
+      "title": "Prenos snovi, ločevalni in mehanski procesi",
+      "items": [
+        {
+          "title": "Chemical Engineering Separations: A Handbook for Students (Lamm and Jarboe)",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Chemical_Engineering_Separations%3A_A_Handbook_for_Students_(Lamm_and_Jarboe)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Priročnik za ločevalne procese: destilacija, absorpcija, ekstrakcija, filtracija in membrane.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Lamm, Jarboe"
+        },
+        {
+          "title": "Distillation Science (Coleman)",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Distillation_Science_(Coleman)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Destilacija: fazna ravnovesja, ravnovesne stopnje, kolone in načrtovanje ločevanja.",
+          "license": "CC BY 4.0",
+          "author": "Coleman"
+        },
+        {
+          "title": "Foundations of Chemical and Biological Engineering I (Verret, Qiao, Barghout)",
+          "url": "https://eng.libretexts.org/Bookshelves/Chemical_Engineering/Foundations_of_Chemical_and_Biological_Engineering_I_(Verret_Qiao_Barghout)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Osnove kemijskega inženirstva: enote, snovne in energijske bilance, prenos toplote in snovi, tok tekočin.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Verret, Qiao, Barghout"
+        },
+        {
+          "title": "Intermediate Heat and Mass Transfer (MIT 2.51)",
+          "url": "https://ocw.mit.edu/courses/2-51-intermediate-heat-and-mass-transfer-fall-2008/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Zahtevnejši prenos toplote in snovi: difuzija, konvekcija, fazne spremembe; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Laboratorijske vaje iz Tehnološkega procesništva",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/699",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Skripta z navodili za laboratorijske vaje pri predmetu Tehnološko procesništvo (odprto učno gradivo UL).",
+          "license": "CC BY-SA 4.0",
+          "author": "Blaž Jug idr."
+        }
+      ]
+    },
+    "fiz-elektrotehnika-vezja": {
+      "title": "Elektrotehnika: električna vezja in izmenični tok",
+      "items": [
+        {
+          "title": "Elektrotehnika",
+          "url": "https://www.fs.uni-lj.si/publication/elektrotehnika/",
+          "source": "UL Fakulteta za strojništvo",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Učbenik elektrotehnike za strojnike (286 str.): napetost, tok, Ohmov zakon, zaporedna in vzporedna vezja, Thévenin, Norton.",
+          "license": "prost dostop",
+          "author": "Marjan Jenko"
+        },
+        {
+          "title": "DC Electrical Circuit Analysis (Fiore)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electronics/DC_Electrical_Circuit_Analysis_-_A_Practical_Approach_(Fiore)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Analiza enosmernih vezij: Ohmov in Kirchhoffov zakon, Thévenin, Norton, kondenzatorji, tuljave.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "James Fiore"
+        },
+        {
+          "title": "AC Electrical Circuit Analysis (Fiore)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electronics/AC_Electrical_Circuit_Analysis%3A_A_Practical_Approach_(Fiore)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Izmenična vezja: fazorji, impedanca, moč, resonanca, trifazni sistemi in transformatorji.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "James Fiore"
+        },
+        {
+          "title": "Electrical Engineering (Johnson)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Introductory_Electrical_Engineering/Electrical_Engineering_(Johnson)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v elektrotehniko: vezja, analiza v frekvenčnem prostoru, signali, sistemi in komunikacije.",
+          "license": "CC BY 1.0",
+          "author": "Don Johnson"
+        },
+        {
+          "title": "A First Course in Electrical and Computer Engineering (Scharf)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Introductory_Electrical_Engineering/A_First_Course_in_Electrical_and_Computer_Engineering_(Scharf)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Prvi tečaj elektrotehnike: enosmerna in izmenična vezja, Fourierova analiza, signali.",
+          "license": "CC BY 3.0",
+          "author": "Louis Scharf"
+        },
+        {
+          "title": "Circuits and Electronics (MIT 6.002)",
+          "url": "https://ocw.mit.edu/courses/6-002-circuits-and-electronics-spring-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Električna vezja in elektronika: Kirchhoff, RC/RLC, operacijski ojačevalniki, tranzistorji; video, zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Električni tok",
+          "url": "https://sl.wikipedia.org/wiki/Električni_tok",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Električni tok, upornost in Ohmov zakon: osnove za začetnike.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-elektronika-pretvorniki": {
+      "title": "Elektronika, polprevodniki in močnostna elektronika",
+      "items": [
+        {
+          "title": "Semiconductor Devices (Fiore)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electronics/Semiconductor_Devices_-_Theory_and_Application_(Fiore)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Polprevodniški elementi: diode, bipolarni in poljski tranzistorji, ojačevalniki; teorija in uporaba.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "James Fiore"
+        },
+        {
+          "title": "Operational Amplifiers and Linear Integrated Circuits (Fiore)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electronics/Operational_Amplifiers_and_Linear_Integrated_Circuits_-_Theory_and_Application_(Fiore)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Operacijski ojačevalniki: osnovne vezave, filtri, komparatorji in uporaba v praksi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "James Fiore"
+        },
+        {
+          "title": "Osnove mikroelektronike: Zbirka vaj z rešitvami",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/444",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Rešene naloge iz polprevodniških elementov in osnovnih elektronskih vezij.",
+          "license": "prost dostop",
+          "author": "Tomaž Dogša"
+        },
+        {
+          "title": "Uvod v integrirana vezja",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/707",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Uvod v načrtovanje in delovanje integriranih vezij: MOS tranzistorji, CMOS, digitalne in analogne celice.",
+          "license": "CC BY 4.0",
+          "author": "Tomaž Dogša"
+        },
+        {
+          "title": "Microelectronic Devices and Circuits (MIT 6.012)",
+          "url": "https://ocw.mit.edu/courses/6-012-microelectronic-devices-and-circuits-fall-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Polprevodniški elementi in analogna vezja: diode, bipolarni tranzistorji, MOSFET, ojačevalniki.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Power Electronics (MIT 6.334)",
+          "url": "https://ocw.mit.edu/courses/6-334-power-electronics-spring-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Močnostna elektronika: pretvorniki, usmerniki, stikalna napajanja; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Elektronika",
+          "url": "https://sl.wikipedia.org/wiki/Elektronika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Osnove elektronike: elementi, polprevodniki, ojačevalniki in digitalna vezja.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-elektricni-stroji-energetika": {
+      "title": "Električni stroji, pogoni in elektroenergetika",
+      "items": [
+        {
+          "title": "Električni rotacijski stroji",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/758",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Zgradba in delovanje električnih rotacijskih strojev: enosmerni, asinhronski in sinhronski stroji.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Ivan Zagradišnik, Bojan Slemnik"
+        },
+        {
+          "title": "Električni in elektromehanski pretvorniki: Zapiski predavanj",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/716",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "Transformatorji in elektromehanski pretvorniki: princip delovanja, nadomestna vezja in karakteristike.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Ivan Zagradišnik, Jožef Ritonja"
+        },
+        {
+          "title": "Electric Machines (MIT 6.685)",
+          "url": "https://ocw.mit.edu/courses/6-685-electric-machines-fall-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Električni stroji: transformatorji, sinhronski, asinhronski in enosmerni stroji; zapiski predavanj in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Introduction to Electric Power Systems (MIT 6.061)",
+          "url": "https://ocw.mit.edu/courses/6-061-introduction-to-electric-power-systems-spring-2011/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Elektroenergetski sistemi: trifazni sistemi, transformatorji, daljnovodi, stroji; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Introduction to Electric Power Systems (Kirtley)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electro-Optics/Introduction_to_Electric_Power_Systems_(Kirtley)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Elektroenergetski sistemi: trifazni sistemi, transformatorji, daljnovodi, sinhronski in asinhronski stroji.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "James Kirtley"
+        },
+        {
+          "title": "Elektromotor",
+          "url": "https://sl.wikipedia.org/wiki/Elektromotor",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Elektromotor: princip delovanja in vrste elektromotorjev.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Transformator",
+          "url": "https://sl.wikipedia.org/wiki/Transformator",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Transformator: princip delovanja, prestava in izgube.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-regulacija-mehatronika": {
+      "title": "Regulacijska tehnika, sistemsko inženirstvo in mehatronika",
+      "items": [
+        {
+          "title": "Introduction to Control Systems (Iqbal)",
+          "url": "https://eng.libretexts.org/Bookshelves/Industrial_and_Systems_Engineering/Introduction_to_Control_Systems_(Iqbal)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v regulacijske sisteme: modeli, prenosne funkcije, stabilnost, regulatorji PID.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Kashif Iqbal"
+        },
+        {
+          "title": "Dynamic Systems and Control (Dahleh, Dahleh, and Verghese)",
+          "url": "https://eng.libretexts.org/Bookshelves/Industrial_and_Systems_Engineering/Book%3A_Dynamic_Systems_and_Control_(Dahleh_Dahleh_and_Verghese)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Dinamični sistemi in regulacija: modeli v prostoru stanj, stabilnost, vodljivost in opazljivost.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Munther Dahleh idr."
+        },
+        {
+          "title": "Control Systems (Wikibooks)",
+          "url": "https://en.wikibooks.org/wiki/Control_Systems",
+          "source": "Wikibooks",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Prosta knjiga o regulacijskih sistemih: Laplaceova transformacija, prenosne funkcije, stabilnost, prostor stanj.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Analysis and Design of Feedback Control Systems (MIT 2.14)",
+          "url": "https://ocw.mit.edu/courses/2-14-analysis-and-design-of-feedback-control-systems-spring-2014/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Regulacijska tehnika: modeli sistemov, stabilnost, frekvenčna analiza, regulatorji PID; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Principles of Automatic Control (MIT 16.06)",
+          "url": "https://ocw.mit.edu/courses/16-06-principles-of-automatic-control-fall-2012/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Osnove avtomatskega vodenja: prenosne funkcije, korenske krivulje, frekvenčne metode, načrtovanje regulatorjev.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Mechatronics (MIT 2.737)",
+          "url": "https://ocw.mit.edu/courses/2-737-mechatronics-fall-2014/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehatronika: senzorji, aktuatorji, mikrokrmilniki in modeliranje elektromehanskih sistemov; predavanja in laboratorij.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Avtomatika v energetiki: Zbirka računalniških vaj",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/644",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Računalniške vaje iz avtomatike v energetiki z orodjem Matlab/Simulink; od uvoda v orodje do regulacije.",
+          "license": "CC BY 4.0",
+          "author": "Gregor Srpčič, Dalibor Igrec"
+        },
+        {
+          "title": "Automation With Programmable Logic Controllers: Textbook",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/1133",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Učbenik o programirljivih logičnih krmilnikih (PLC): programiranje, krmilni algoritmi in uporaba v avtomatizaciji.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Jožef Ritonja"
+        }
+      ]
+    },
+    "fiz-merilna-tehnika": {
+      "title": "Merilna tehnika, senzorji in zajem podatkov",
+      "items": [
+        {
+          "title": "Tehniške meritve: zbrano gradivo",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/211",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Metode merjenja pomembnejših fizikalnih veličin v strojništvu: merilni sistem, vplivne veličine, zmanjševanje napak.",
+          "license": "prost dostop",
+          "author": "Aleš Hribernik"
+        },
+        {
+          "title": "Parametrični vplivi na kakovost in zanesljivost merilnega vezja: Učbenik",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/666",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Vplivi parametrov na kakovost in zanesljivost merilnih vezij ter optimiranje merilnih vezij; za merilno tehniko.",
+          "license": "CC BY-NC 4.0",
+          "author": "Vojko Matko"
+        },
+        {
+          "title": "Osnovna merjenja: Uvod v merske napake in kvantitativno analizo fizikalnih meritev",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/530",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Merske napake, statistika meritev, prilagajanje funkcij in poročanje rezultatov; osnova za vsak fizikalni praktikum.",
+          "license": "prost dostop",
+          "author": "Andrej Dobovišek"
+        },
+        {
+          "title": "Introduction to Electronics, Signals, and Measurement (MIT 6.071J)",
+          "url": "https://ocw.mit.edu/courses/6-071j-introduction-to-electronics-signals-and-measurement-spring-2006/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Uvod v elektroniko, signale in meritve: senzorji, ojačevalniki, zajem podatkov; zapiski in laboratorijske vaje.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Operational Amplifiers and Linear Integrated Circuits (Fiore)",
+          "url": "https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Electronics/Operational_Amplifiers_and_Linear_Integrated_Circuits_-_Theory_and_Application_(Fiore)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Operacijski ojačevalniki: osnovne vezave, filtri, komparatorji in uporaba v praksi.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "James Fiore"
+        }
+      ]
+    },
+    "fiz-materiali": {
+      "title": "Inženirski materiali (kovine, polimeri, lomna mehanika)",
+      "items": [
+        {
+          "title": "Konstrukcijski materiali: Učbenik",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/651",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Znanja o materialih in tehnologijah za strojništvo, elektrotehniko in energetiko v treh samostojnih poglavjih.",
+          "license": "CC BY 4.0",
+          "author": "Ivan Anžel, Mihael Brunčko"
+        },
+        {
+          "title": "Sodobni inženirski materiali",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/958",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Zgradba in izbira inženirskih materialov, njihove lastnosti in primeri sodobnih inženirskih materialov.",
+          "license": "CC BY 4.0",
+          "author": "Ivan Anžel, Franc Zupanič, Mihael Brunčko"
+        },
+        {
+          "title": "Nekovinski materiali",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/979",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Pomen nekovinskih materialov v sodobnem inženirstvu: njihove lastnosti in uporaba pri načrtovanju izdelkov.",
+          "license": "CC BY 4.0",
+          "author": "Ivan Anžel, Franc Zupanič, Mihael Brunčko"
+        },
+        {
+          "title": "Fundamentals of Materials Science (MIT 3.012)",
+          "url": "https://ocw.mit.edu/courses/3-012-fundamentals-of-materials-science-fall-2005/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Osnove znanosti o materialih: kristalna zgradba, fazni diagrami, termodinamika, lastnosti materialov.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Mechanical Behavior of Materials (MIT 3.032)",
+          "url": "https://ocw.mit.edu/courses/3-032-mechanical-behavior-of-materials-fall-2007/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Mehanske lastnosti materialov: elastičnost, plastičnost, lom, utrujanje in lezenje; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Zlitina",
+          "url": "https://sl.wikipedia.org/wiki/Zlitina",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Zlitine: sestava, vrste in lastnosti kovinskih zlitin.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Mechanics of Materials (Roylance)",
+          "url": "https://eng.libretexts.org/Bookshelves/Mechanical_Engineering/Mechanics_of_Materials_(Roylance)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Osnove trdnosti: napetosti, deformacije, nosilci, torzija, uklon; kratek učbenik MIT.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "David Roylance"
+        }
+      ]
+    },
+    "fiz-strojni-elementi-konstruiranje": {
+      "title": "Strojni elementi, konstruiranje in tribologija",
+      "items": [
+        {
+          "title": "Osnove konstruiranja: Učbenik",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/582",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Teoretične osnove konstruiranja strojnih delov: načrtovanje, koncipiranje, snovanje in razdelava, s praktičnimi primeri.",
+          "license": "prost dostop",
+          "author": "Stanislav Pehan, Srečko Glodež, Janez Kramberger"
+        },
+        {
+          "title": "Konstruiranje strojev in naprav: Učbenik",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/795",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Sistemski postopki konstruiranja strojev in naprav: zahteve glede varnosti strojev, ergonomsko načrtovanje.",
+          "license": "prost dostop",
+          "author": "Janez Kramberger, Stanislav Pehan, Srečko Glodež"
+        },
+        {
+          "title": "Konstruiranje naprednih sistemov",
+          "url": "https://www.fs.uni-lj.si/publication/konstruiranje-naprednih-sistemov/",
+          "source": "UL Fakulteta za strojništvo",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Uporaba teoretičnih izhodišč konstruiranja na praktičnem primeru z računskimi nalogami.",
+          "license": "prost dostop",
+          "author": "UL Fakulteta za strojništvo"
+        },
+        {
+          "title": "Razvoj izdelka",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/1161",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Razvoj izdelka od potreb in specifikacij do konceptov (morfološka matrika, TRIZ) in snovanja po metodah DfX.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Gregor Harih, Vasja Plesec"
+        },
+        {
+          "title": "Elements of Mechanical Design (MIT 2.72)",
+          "url": "https://ocw.mit.edu/courses/2-72-elements-of-mechanical-design-spring-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Strojni elementi in konstruiranje: ležaji, zobniki, gredi, vijaki, dimenzioniranje; predavanja in projekti.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Tribology (MIT 2.800)",
+          "url": "https://ocw.mit.edu/courses/2-800-tribology-fall-2004/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Tribologija: trenje, obraba in mazanje, kontakt površin, tribološki sistemi; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Tribologija",
+          "url": "https://sl.wikipedia.org/wiki/Tribologija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Tribologija: trenje, obraba in mazanje.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Inženirske računalniške simulacije v konstrukterstvu: univerzitetni učbenik",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/321",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Računalniške simulacije in metoda končnih elementov pri konstruiranju in analizi trdnosti.",
+          "license": "prost dostop",
+          "author": "Zoran Ren, Miran Ulbin, Matej Vesenjak"
+        }
+      ]
+    },
+    "fiz-izdelovalne-tehnologije": {
+      "title": "Izdelovalne tehnologije (odrezavanje, preoblikovanje, spajanje, aditivne)",
+      "items": [
+        {
+          "title": "Tehnologija numerično krmiljenih stružnic z gnanimi orodji: Univerzitetni učbenik",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/613",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "CNC stružnice z gnanimi orodji: priprava tehnologije, obdelovalne operacije in programiranje.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Mirko Ficko, Lucijano Berus, David Potočnik"
+        },
+        {
+          "title": "Materials Processing (MIT 3.044)",
+          "url": "https://ocw.mit.edu/courses/3-044-materials-processing-spring-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Fizikalno razumevanje predelave materialov: prenos toplote in snovi v postopkih, zakoni skaliranja, kakovost materiala.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Design and Manufacturing I (MIT 2.007)",
+          "url": "https://ocw.mit.edu/courses/2-007-design-and-manufacturing-i-spring-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Prvi tečaj inženirskega konstruiranja: načrtovanje in izdelava robota, mehanizmi, izdelovalni postopki; predavanja in zapiski.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Control of Manufacturing Processes (MIT 2.830J)",
+          "url": "https://ocw.mit.edu/courses/2-830j-control-of-manufacturing-processes-sma-6303-spring-2008/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Statistično vodenje izdelovalnih procesov: variabilnost, kakovost, optimizacija procesov; predavanja in zapiski.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Introduction to Manufacturing Systems (MIT 2.854)",
+          "url": "https://ocw.mit.edu/courses/2-854-introduction-to-manufacturing-systems-fall-2016/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Analiza proizvodnih sistemov: tok materiala, zaloge, čakalne vrste, kapacitete in planiranje proizvodnje; zapiski.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "3D-tiskanje",
+          "url": "https://sl.wikipedia.org/wiki/3D-tiskanje",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "3D-tiskanje: aditivne tehnologije, postopki in materiali.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-obnovljivi-viri-energija": {
+      "title": "Obnovljivi viri energije in pretvorba energije",
+      "items": [
+        {
+          "title": "Introduction to Sustainable Energy (MIT 22.081J)",
+          "url": "https://ocw.mit.edu/courses/22-081j-introduction-to-sustainable-energy-fall-2010/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Energetski viri, obnovljivi viri, jedrska energija in podnebni vpliv; zapiski predavanj in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "The Physics of Energy (MIT 8.21)",
+          "url": "https://ocw.mit.edu/courses/8-21-the-physics-of-energy-fall-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Fizika energije: pretvorbe, termodinamika, sončna in jedrska energija, vetrne elektrarne; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Fundamentals of Photovoltaics (MIT 2.627)",
+          "url": "https://ocw.mit.edu/courses/2-627-fundamentals-of-photovoltaics-fall-2013/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Osnove fotovoltaike: sončno sevanje, polprevodniki, sončne celice in moduli; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Fundamentals of Advanced Energy Conversion (MIT 2.60J)",
+          "url": "https://ocw.mit.edu/courses/2-60j-fundamentals-of-advanced-energy-conversion-spring-2020/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Pretvorba energije: termodinamika, gorivne celice, motorji in turbine; predavanja in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Vetrne turbine",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/985",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Vetrne turbine: veter in njegov potencial, aerodinamika, zgradba in energijski parametri; z energetskim uvodom.",
+          "license": "CC BY-SA 4.0",
+          "author": "Ignacijo Biluš, Luka Kevorkijan, Luka Lešnik"
+        },
+        {
+          "title": "Hidroenergetski sistemi",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/927",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Skripta o hidroenergetiki: obnovljivi viri, hidrologija, hidroelektrarne in energijski parametri vodnih turbin.",
+          "license": "CC BY 4.0",
+          "author": "Ignacijo Biluš"
+        },
+        {
+          "title": "Sončna energija",
+          "url": "https://sl.wikipedia.org/wiki/Sončna_energija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Sončna energija: viri, sončne celice in sončni kolektorji.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Fotovoltaika",
+          "url": "https://sl.wikipedia.org/wiki/Fotovoltaika",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Fotovoltaika: sončne celice, moduli in elektrarne.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-energetika-stavb-okolje": {
+      "title": "Energetika stavb, toplotno ugodje in okolje",
+      "items": [
+        {
+          "title": "Fundamentals of Energy in Buildings (MIT 4.42J)",
+          "url": "https://ocw.mit.edu/courses/4-42j-fundamentals-of-energy-in-buildings-fall-2010/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Energija v stavbah: toplotne izgube, ogrevanje, hlajenje, prezračevanje in toplotno ugodje; predavanja.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Control of Air Conditioning (Vodenje sistemov klimatizacije)",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/285",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Termodinamika vlažnega zraka, procesi v hladilnem stolpu in toplotne črpalke, z nalogami (v angleščini).",
+          "license": "prost dostop",
+          "author": "Jurij Avsec, Urška Novosel"
+        },
+        {
+          "title": "Toplotna črpalka",
+          "url": "https://sl.wikipedia.org/wiki/Toplotna_črpalka",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Toplotna črpalka: princip, vrste in uporaba za ogrevanje.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Industrijska energetika: zbirka rešenih nalog s kratkimi teoretičnimi osnovami",
+          "url": "https://www.fs.uni-lj.si/publication/industrijska-energetika-zbirka-resenih-nalog-s-kratkimi-teoreticnimi-osnovami/",
+          "source": "UL Fakulteta za strojništvo",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Rešene naloge: idealni plini, vodna para, parni krožni proces, prenos toplote; pripravljeno za študente lesarstva na BF.",
+          "license": "prost dostop",
+          "author": "Boštjan Drobnič, Andrej Senegačnik"
+        },
+        {
+          "title": "The Physics of Energy (MIT 8.21)",
+          "url": "https://ocw.mit.edu/courses/8-21-the-physics-of-energy-fall-2009/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Fizika energije: pretvorbe, termodinamika, sončna in jedrska energija, vetrne elektrarne; zapiski in naloge.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Introduction to Climate Science (Schmittner)",
+          "url": "https://geo.libretexts.org/Bookshelves/Meteorology_and_Climate_Science/Introduction_to_Climate_Science_(Schmittner_2021)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Fizika podnebnega sistema: energijska bilanca, učinek tople grede, krožni tokovi in podnebne spremembe.",
+          "license": "CC BY-NC-SA 4.0",
+          "author": "Andreas Schmittner"
+        }
+      ]
+    },
+    "fiz-varnost-delovno-okolje": {
+      "title": "Varnost pri delu, požarna varnost in delovno okolje",
+      "items": [
+        {
+          "title": "Gradivo za pripravo na strokovni izpit iz varstva pred požarom",
+          "url": "https://www.gov.si/assets/organi-v-sestavi/URSZR/Datoteke/Izpit-iz-varstva-pred-pozarom/varstvo_pred_pozarom_delno_gradivo.pdf",
+          "source": "Uprava RS za zaščito in reševanje",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "125 strani gradiva (UL FKKT): predpisi, osnove gorenja in gašenja, širjenje požara, gradbeni ukrepi in evakuacija.",
+          "license": "prost dostop",
+          "author": "UL FKKT"
+        },
+        {
+          "title": "Požar",
+          "url": "https://sl.wikipedia.org/wiki/Požar",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Požar: gorenje, širjenje, gašenje in požarna varnost.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Gorenje",
+          "url": "https://sl.wikipedia.org/wiki/Gorenje",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Gorenje: kemijski in fizikalni pogoji, plameni in produkti gorenja.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Študij dela in ergonomija: Navodila za vaje",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/501",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Vaje iz študija dela in ergonomije: delovno okolje, obremenitve, meritve in ocena tveganja.",
+          "license": "prost dostop",
+          "author": "več avtorjev"
+        },
+        {
+          "title": "Ergonomski vidiki razvoja izdelkov",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/549",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Ergonomija pri razvoju izdelkov: človek in delovno okolje, antropometrija, obremenitve in varnost.",
+          "license": "prost dostop",
+          "author": "Bojan Dolšak, Jasmin Kaljun"
+        },
+        {
+          "title": "System Safety (MIT 16.63J)",
+          "url": "https://ocw.mit.edu/courses/16-63j-system-safety-spring-2016/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Varnost sistemov: analiza nevarnosti in tveganja, vzroki nesreč, načrtovanje varnih sistemov; zapiski predavanj.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Understanding Sound (Abbot)",
+          "url": "https://phys.libretexts.org/Bookshelves/Waves_and_Acoustics/Understanding_Sound_(Abbot)",
+          "source": "LibreTexts",
+          "lang": "en",
+          "type": "ucbenik",
+          "desc": "Uvod v akustiko: zvočni valovi, hrup, sluh, zvočna izolacija in prostorska akustika.",
+          "license": "CC BY 4.0",
+          "author": "Patrick Abbot"
+        }
+      ]
+    },
+    "fiz-lesarstvo": {
+      "title": "Tehnologija lesa: lastnosti, sušenje in lesni kompoziti",
+      "items": [
+        {
+          "title": "Wood Handbook: Wood as an Engineering Material",
+          "url": "https://research.fs.usda.gov/treesearch/62200",
+          "source": "USDA Forest Products Laboratory",
+          "lang": "en",
+          "type": "prirocnik",
+          "desc": "Standardni priročnik o lesu: zgradba, vlažnost, sušenje, mehanske in fizikalne lastnosti ter lepljeni kompoziti.",
+          "license": "javna domena",
+          "author": "Forest Products Laboratory"
+        },
+        {
+          "title": "Les",
+          "url": "https://sl.wikipedia.org/wiki/Les",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Les: zgradba, lastnosti in uporaba lesa kot materiala.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Industrijska energetika: zbirka rešenih nalog s kratkimi teoretičnimi osnovami",
+          "url": "https://www.fs.uni-lj.si/publication/industrijska-energetika-zbirka-resenih-nalog-s-kratkimi-teoreticnimi-osnovami/",
+          "source": "UL Fakulteta za strojništvo",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Rešene naloge: idealni plini, vodna para, parni krožni proces, prenos toplote; pripravljeno za študente lesarstva na BF.",
+          "license": "prost dostop",
+          "author": "Boštjan Drobnič, Andrej Senegačnik"
+        },
+        {
+          "title": "Cellular Solids (MIT 3.054)",
+          "url": "https://ocw.mit.edu/courses/3-054-cellular-solids-structure-properties-and-applications-spring-2015/",
+          "source": "MIT OpenCourseWare",
+          "lang": "en",
+          "type": "tecaj",
+          "desc": "Celičasti materiali (pena, les, kosti): zgradba in mehanske lastnosti, med drugim les kot naravni kompozit.",
+          "license": "CC BY-NC-SA 4.0"
+        },
+        {
+          "title": "Konstrukcijski materiali: Učbenik",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/651",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Znanja o materialih in tehnologijah za strojništvo, elektrotehniko in energetiko v treh samostojnih poglavjih.",
+          "license": "CC BY 4.0",
+          "author": "Ivan Anžel, Mihael Brunčko"
+        }
+      ]
+    },
+    "fiz-tekstil": {
+      "title": "Tekstilne tehnologije: preje, tkanine, pletiva",
+      "items": [
+        {
+          "title": "Preje in pletiva: Zapiski predavanj",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/1091",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "zapiski",
+          "desc": "Zapiski o prejah in pletivih: vlakna, predenje, struktura in lastnosti pletiv.",
+          "license": "CC BY-NC-ND 4.0",
+          "author": "Polona Dobnik Dubrovski"
+        },
+        {
+          "title": "Konstrukcija tekstilij: preje, tkanine, pletiva",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/421",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Konstrukcija prej, tkanin in pletiv: parametri, vezave in izračun lastnosti.",
+          "license": "prost dostop",
+          "author": "Polona Dobnik Dubrovski"
+        },
+        {
+          "title": "Nega in higiena tekstilij: Dnevnik laboratorijskih vaj",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/607",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Dnevnik laboratorijskih vaj: vrednotenje odstranjevanja nečistoč in razkuževalnega učinka pranja tekstilij.",
+          "license": "CC BY 4.0",
+          "author": "Manja Kurečič, Branko Neral"
+        },
+        {
+          "title": "Sodobni postopki barvanja in barva: Navodila za vaje",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/522",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Navodila za vaje: nomenklatura barvil, fizikalna kemija barvanja in sodobni postopki barvanja tekstilij.",
+          "license": "prost dostop",
+          "author": "Darinka Fakin, Selestina Gorgieva, Alenka Ojstršek"
+        },
+        {
+          "title": "Tkanje",
+          "url": "https://sl.wikipedia.org/wiki/Tkanje",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Tkanje: osnove, tkalski stroji in vezave.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-barve-tisk-fotografija": {
+      "title": "Barve, tisk, fotografija in 3D tehnologije",
+      "items": [
+        {
+          "title": "Angleško-slovenski in slovensko-angleški slovar osnovnih pojmov v barvni metriki",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/647",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Slovar pojmov barvne metrike (kolorimetrija, CIE, barvni prostori) za razumevanje strokovne literature.",
+          "license": "CC BY-SA 4.0",
+          "author": "Sabina Bračko, Barbara Blaznik, Barbara Luštek Preskar"
+        },
+        {
+          "title": "Zgodovina fotografije",
+          "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/691",
+          "source": "Založba Univerze v Ljubljani",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Zgodovina fotografije od izuma do digitalne dobe: tehnike, aparati in razvoj medija.",
+          "license": "CC BY-SA 4.0",
+          "author": "Emina Djukić, Urška Savič, Miha Colner"
+        },
+        {
+          "title": "Digitalno oblikovanje in tisk",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/368",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Digitalno oblikovanje vzorcev, digitalni tisk tekstilij in vrednotenje kakovosti odtisa.",
+          "license": "prost dostop",
+          "author": "Sonja Šterman, Branko Neral"
+        },
+        {
+          "title": "Sodobni postopki barvanja in barva: Navodila za vaje",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/522",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "naloge",
+          "desc": "Navodila za vaje: nomenklatura barvil, fizikalna kemija barvanja in sodobni postopki barvanja tekstilij.",
+          "license": "prost dostop",
+          "author": "Darinka Fakin, Selestina Gorgieva, Alenka Ojstršek"
+        },
+        {
+          "title": "Tisk",
+          "url": "https://sl.wikipedia.org/wiki/Tisk",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Tisk: zgodovina, tiskarski postopki in tehnike.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Fotografija",
+          "url": "https://sl.wikipedia.org/wiki/Fotografija",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Fotografija: tehnika, svetloba, aparat, zgodovina in žanri.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "3D-tiskanje",
+          "url": "https://sl.wikipedia.org/wiki/3D-tiskanje",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "3D-tiskanje: aditivne tehnologije, postopki in materiali.",
+          "license": "CC BY-SA 4.0"
+        }
+      ]
+    },
+    "fiz-kmetijska-tehnika": {
+      "title": "Kmetijska tehnika (traktor, stroji, varnost)",
+      "items": [
+        {
+          "title": "Mehanizacija v biotehniki",
+          "url": "https://nova.bts.si/wp-content/uploads/2022/09/Mehanizacija_v_biotehniki_NPI.pdf",
+          "source": "Šolski center Ptuj, Biotehniška šola",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Elektronski učbenik (69 str.): traktor, goriva in maziva, vzdrževanje in osnovni kmetijski stroji.",
+          "license": "prost dostop",
+          "author": "Dušan Meznarič"
+        },
+        {
+          "title": "Varno delo s traktorji in traktorskimi priključki",
+          "url": "https://www.dlib.si/details/URN:NBN:SI:DOC-HP1P9HMU",
+          "source": "dLib.si",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Priročnik o varni uporabi traktorjev in priključkov: zgradba traktorja, nevarnosti in pravila varnega dela.",
+          "license": "prost dostop",
+          "author": "Marko Glušič"
+        },
+        {
+          "title": "Traktor",
+          "url": "https://sl.wikipedia.org/wiki/Traktor",
+          "source": "Wikipedija",
+          "lang": "sl",
+          "type": "prirocnik",
+          "desc": "Traktor: zgradba, pogon, priključki in uporaba v kmetijstvu.",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "title": "Hidravlika za mehatronike",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/372",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Zgradba hidravličnih sistemov ter prenos moči, sil, gibanj in signalov s tekočino; za avtomatizacijo.",
+          "license": "prost dostop",
+          "author": "Darko Lovrec, Vito Tič"
+        },
+        {
+          "title": "Vetrne turbine",
+          "url": "https://press.um.si/index.php/ump/sl/catalog/book/985",
+          "source": "Univerzitetna založba Univerze v Mariboru",
+          "lang": "sl",
+          "type": "ucbenik",
+          "desc": "Vetrne turbine: veter in njegov potencial, aerodinamika, zgradba in energijski parametri; z energetskim uvodom.",
+          "license": "CC BY-SA 4.0",
+          "author": "Ignacijo Biluš, Luka Kevorkijan, Luka Lešnik"
+        }
+      ]
+    }
+  },
+  "courses": {
+    "UNI-ULFKKT-FIZ": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-ULFKKT-FIZ1": [
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULFKKT-FIZ2": [
+      "fiz-elektrika-magnetizem",
+      "fiz-optika-fotonika",
+      "fiz-moderna-fizika"
+    ],
+    "UNI-ULFKKT-OSNINZ": [
+      "fiz-procesna-tehnika"
+    ],
+    "UNI-ULFKKT-KI1": [
+      "fiz-procesna-tehnika",
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-ULFKKT-KI2": [
+      "fiz-prenos-toplote",
+      "fiz-prenos-snovi-separacije"
+    ],
+    "UNI-ULFKKT-MEHFLU": [
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-ULFKKT-KVANT": [
+      "fiz-kvantna-mehanika"
+    ],
+    "UNI-ULFKKT-PRENOS": [
+      "fiz-prenos-toplote",
+      "fiz-prenos-snovi-separacije"
+    ],
+    "UNI-ULFKKT-STROJGRAD": [
+      "fiz-trdnost",
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-ULFKKT-PROCTEH": [
+      "fiz-procesna-tehnika",
+      "fiz-mehanika-tekocin",
+      "fiz-prenos-toplote"
+    ],
+    "UNI-ULFKKT-ELEKTROVAR": [
+      "fiz-elektrotehnika-vezja"
+    ],
+    "UNI-ULFKKT-NPRFIZ": [
+      "fiz-merjenje-napake",
+      "fiz-splosna-mehanika"
+    ],
+    "UNI-ULFKKT-NVARGRAD": [
+      "fiz-varnost-delovno-okolje",
+      "fiz-statika"
+    ],
+    "UNI-ULFKKT-NOSNVAR": [
+      "fiz-varnost-delovno-okolje"
+    ],
+    "UNI-ULFKKT-NVARSTROJ": [
+      "fiz-varnost-delovno-okolje",
+      "fiz-trdnost"
+    ],
+    "UNI-ULFKKT-NDELOK": [
+      "fiz-varnost-delovno-okolje",
+      "fiz-akustika-hrup"
+    ],
+    "UNI-ULFKKT-NPOZOBJ": [
+      "fiz-varnost-delovno-okolje",
+      "fiz-prenos-toplote"
+    ],
+    "UNI-ULFKKT-WMEHHID": [
+      "fiz-prenos-snovi-separacije",
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-ULFKKT-WMERDEL": [
+      "fiz-merilna-tehnika",
+      "fiz-varnost-delovno-okolje"
+    ],
+    "UNI-ULFKKT-WDELPRIP": [
+      "fiz-varnost-delovno-okolje",
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-ULFS-FIZ": [
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULFS-STATKIN": [
+      "fiz-statika",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-ULFS-TRDNOST": [
+      "fiz-trdnost"
+    ],
+    "UNI-ULFS-TERMO": [
+      "fiz-termodinamika-inzenirska"
+    ],
+    "UNI-ULFS-ELEKTRO": [
+      "fiz-elektrotehnika-vezja"
+    ],
+    "UNI-ULFS-DINAMIKA": [
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-ULFS-TEKOCINE": [
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-ULFS-STROJEL1": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-ULFS-PRENOS": [
+      "fiz-prenos-toplote"
+    ],
+    "UNI-ULFS-HIDRAVLIKA": [
+      "fiz-hidravlicni-pogoni"
+    ],
+    "UNI-ULFS-ENERGETSKI": [
+      "fiz-turbinski-stroji-hidroenergija",
+      "fiz-termodinamika-inzenirska"
+    ],
+    "UNI-ULFS-NMERITVE": [
+      "fiz-merilna-tehnika",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-ULFS-NTEHRIS": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-ULFS-NSTROJEL2": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-ULFS-NIZDTEH1": [
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-ULFS-NKONSTR": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-ULFS-NTRIBO": [
+      "fiz-strojni-elementi-konstruiranje",
+      "fiz-materiali"
+    ],
+    "UNI-ULFS-NIZDTEH2": [
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-ULFS-NPOGONI": [
+      "fiz-elektricni-stroji-energetika",
+      "fiz-termodinamika-inzenirska"
+    ],
+    "UNI-ULFS-NMEHATR": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-ULFS-WOKOLJ": [
+      "fiz-energetika-stavb-okolje",
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-ULFMF-FIZIKA1": [
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULFMF-FIZIKA2": [
+      "fiz-elektrika-magnetizem",
+      "fiz-optika-fotonika",
+      "fiz-moderna-fizika"
+    ],
+    "UNI-ULFMF-MEHANIKA1": [
+      "fiz-splosna-mehanika",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-ULFMF-KLASFIZ": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-elektrika-magnetizem",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULFMF-MODERNA1": [
+      "fiz-moderna-fizika",
+      "fiz-kvantna-mehanika"
+    ],
+    "UNI-ULFMF-VERJFIZ": [
+      "fiz-statisticna-fizika",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-ULFMF-STATTERMO": [
+      "fiz-statisticna-fizika"
+    ],
+    "UNI-ULFMF-MODERNA2": [
+      "fiz-jedrska-fizika-energetika",
+      "fiz-fizika-trdne-snovi"
+    ],
+    "UNI-ULFMF-KLASMEH": [
+      "fiz-analiticna-mehanika"
+    ],
+    "UNI-ULFMF-MATFIZ": [
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-ULFMF-EMPOLJE": [
+      "fiz-elektrodinamika"
+    ],
+    "UNI-ULFMF-KVANT": [
+      "fiz-kvantna-mehanika"
+    ],
+    "UNI-ULFMF-FTS": [
+      "fiz-fizika-trdne-snovi"
+    ],
+    "UNI-ULFMF-OPTIKA": [
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULFMF-NFIZPRAK1": [
+      "fiz-merjenje-napake",
+      "fiz-splosna-mehanika"
+    ],
+    "UNI-ULFMF-NFIZPRAK2": [
+      "fiz-merjenje-napake",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULFMF-NFIZPRAK3": [
+      "fiz-merjenje-napake",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULFMF-NFIZPRAK4": [
+      "fiz-merjenje-napake",
+      "fiz-jedrska-fizika-energetika"
+    ],
+    "UNI-ULFMF-NFIZPRAK5": [
+      "fiz-merjenje-napake",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULFMF-NFIZMER": [
+      "fiz-merilna-tehnika",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-ULFMF-NJEDRA": [
+      "fiz-jedrska-fizika-energetika"
+    ],
+    "UNI-ULFMF-NMEHKONT": [
+      "fiz-mehanika-kontinuov"
+    ],
+    "UNI-ULFMF-NASTRO1": [
+      "fiz-astronomija-astrofizika"
+    ],
+    "UNI-ULFMF-WMEH2": [
+      "fiz-analiticna-mehanika",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-ULFMF-WFIZATM": [
+      "fiz-atmosfera-meteorologija"
+    ],
+    "UNI-ULFMF-WELEKTR1": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-elektrotehnika-vezja"
+    ],
+    "UNI-UMFKKT-FIZ1": [
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-UMFKKT-FIZ2": [
+      "fiz-elektrika-magnetizem",
+      "fiz-optika-fotonika",
+      "fiz-moderna-fizika"
+    ],
+    "UNI-UMFKKT-MEHFLU1": [
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-UMFKKT-PRENOST": [
+      "fiz-prenos-toplote"
+    ],
+    "UNI-UMFKKT-NELPROC": [
+      "fiz-trdnost",
+      "fiz-strojni-elementi-konstruiranje",
+      "fiz-materiali"
+    ],
+    "UNI-ULBF-AFIZ": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-ULBF-BFIZBT": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-ULBF-BBTTEH": [
+      "fiz-procesna-tehnika"
+    ],
+    "UNI-ULBF-BFIZ": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-ULBF-BTEHPROC": [
+      "fiz-procesna-tehnika",
+      "fiz-mehanika-tekocin",
+      "fiz-prenos-toplote"
+    ],
+    "UNI-ULBF-CAGRMET": [
+      "fiz-atmosfera-meteorologija",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULBF-CKMTEH": [
+      "fiz-kmetijska-tehnika"
+    ],
+    "UNI-ULBF-CKLIM": [
+      "fiz-atmosfera-meteorologija"
+    ],
+    "UNI-ULBF-DMETEO": [
+      "fiz-atmosfera-meteorologija"
+    ],
+    "UNI-ULBF-DFIZ": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-ULBF-DMEH": [
+      "fiz-statika",
+      "fiz-trdnost",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-ULBF-DSTROJ": [
+      "fiz-izdelovalne-tehnologije",
+      "fiz-lesarstvo"
+    ],
+    "UNI-ULBF-DTEHLES": [
+      "fiz-lesarstvo"
+    ],
+    "UNI-ULBF-DMEHOBD": [
+      "fiz-lesarstvo",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-ULBF-EBIOFIZ": [
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-ULBF-FKONSTR": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-ULBF-FPRIMOBD": [
+      "fiz-lesarstvo"
+    ],
+    "UNI-ULBF-FSUSEN": [
+      "fiz-lesarstvo",
+      "fiz-termodinamika-inzenirska"
+    ],
+    "UNI-ULBF-FKONKOMP": [
+      "fiz-lesarstvo",
+      "fiz-materiali"
+    ],
+    "UNI-ULNTF-GFIZ1": [
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULNTF-GGEOFIZ": [
+      "fiz-geofizika-seizmologija"
+    ],
+    "UNI-ULNTF-GOFIZ1": [
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULNTF-GOFIZ2": [
+      "fiz-elektrika-magnetizem",
+      "fiz-optika-fotonika",
+      "fiz-moderna-fizika"
+    ],
+    "UNI-ULNTF-GOMEH1": [
+      "fiz-statika",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-ULNTF-GOMEH2": [
+      "fiz-trdnost"
+    ],
+    "UNI-ULNTF-MFIZ1": [
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULNTF-MFIZ2": [
+      "fiz-elektrika-magnetizem",
+      "fiz-optika-fotonika",
+      "fiz-moderna-fizika"
+    ],
+    "UNI-ULNTF-MOSNMEH": [
+      "fiz-statika",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-ULNTF-MOSNINZ": [
+      "fiz-procesna-tehnika",
+      "fiz-strojni-elementi-konstruiranje",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-ULNTF-MMEHMAT": [
+      "fiz-trdnost",
+      "fiz-materiali"
+    ],
+    "UNI-ULNTF-TFIZ1": [
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULNTF-TFIZ2": [
+      "fiz-elektrika-magnetizem",
+      "fiz-optika-fotonika",
+      "fiz-moderna-fizika"
+    ],
+    "UNI-ULNTF-TTISK1": [
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULNTF-TTGP": [
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULNTF-TFOTOVID": [
+      "fiz-barve-tisk-fotografija",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULNTF-TMERBAR": [
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULNTF-TBARUPR": [
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULNTF-TSTUDFOT": [
+      "fiz-barve-tisk-fotografija",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULNTF-TTISK2": [
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULNTF-T3DTEH": [
+      "fiz-barve-tisk-fotografija",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-ULNTF-TPREDEN": [
+      "fiz-tekstil"
+    ],
+    "UNI-ULNTF-TVLAKNOV": [
+      "fiz-tekstil"
+    ],
+    "UNI-ULNTF-TTKANJE": [
+      "fiz-tekstil"
+    ],
+    "UNI-ULNTF-TPLETENJE": [
+      "fiz-tekstil"
+    ],
+    "UNI-ULNTF-TPREISK": [
+      "fiz-tekstil",
+      "fiz-materiali"
+    ],
+    "UNI-ULNTF-TKOMPTK": [
+      "fiz-tekstil"
+    ],
+    "UNI-ULNTF-TKOMPPL": [
+      "fiz-tekstil"
+    ],
+    "UNI-ULNTF-TKROJI": [
+      "fiz-tekstil"
+    ],
+    "UNI-ULNTF-TKONF": [
+      "fiz-tekstil"
+    ],
+    "UNI-ULNTF-TBARMET": [
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULNTF-TSPECKR": [
+      "fiz-tekstil"
+    ],
+    "UNI-ULNTF-VPRENOS": [
+      "fiz-prenos-toplote",
+      "fiz-prenos-snovi-separacije"
+    ],
+    "UNI-ULNTF-VPROIZS": [
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-ULNTF-VENPRED": [
+      "fiz-termodinamika-inzenirska",
+      "fiz-prenos-toplote"
+    ],
+    "UNI-ULNTF-VMODPR": [
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-ULNTF-VPREDEL": [
+      "fiz-izdelovalne-tehnologije",
+      "fiz-materiali"
+    ],
+    "UNI-ULNTF-VTOPLT": [
+      "fiz-termodinamika-inzenirska",
+      "fiz-prenos-toplote"
+    ],
+    "UNI-ULNTF-VSEIZM": [
+      "fiz-geofizika-seizmologija"
+    ],
+    "UNI-ULNTF-VMPT": [
+      "fiz-prenos-snovi-separacije"
+    ],
+    "UNI-ULNTF-VSTROJ1": [
+      "fiz-dinamika-togih-teles",
+      "fiz-statika"
+    ],
+    "UNI-ULNTF-VSTROJ2": [
+      "fiz-mehanika-tekocin",
+      "fiz-turbinski-stroji-hidroenergija"
+    ],
+    "UNI-ULNTF-VUGF1": [
+      "fiz-geofizika-seizmologija",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-ULNTF-VUGF2": [
+      "fiz-geofizika-seizmologija"
+    ],
+    "UNI-ULNTF-VFLUID": [
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-UMFNM-NFZM": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-elektrika-magnetizem",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-UMFNM-NMEH": [
+      "fiz-splosna-mehanika",
+      "fiz-dinamika-togih-teles",
+      "fiz-mehanika-kontinuov"
+    ],
+    "UNI-UMFNM-NOSMER": [
+      "fiz-merjenje-napake"
+    ],
+    "UNI-UMFNM-NSISM": [
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-UMFNM-NEM": [
+      "fiz-elektrodinamika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UMFNM-NFE1": [
+      "fiz-merjenje-napake",
+      "fiz-splosna-mehanika"
+    ],
+    "UNI-UMFNM-NTERM": [
+      "fiz-toplota-temperatura",
+      "fiz-statisticna-fizika"
+    ],
+    "UNI-UMFNM-NMSD": [
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-UMFNM-NNIHVAL": [
+      "fiz-nihanje-valovanje",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-UMFNM-NFE2": [
+      "fiz-merjenje-napake",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-UMFNM-NFIZMER": [
+      "fiz-merilna-tehnika"
+    ],
+    "UNI-UMFNM-NMODF": [
+      "fiz-moderna-fizika",
+      "fiz-kvantna-mehanika"
+    ],
+    "UNI-UMFNM-NFE3": [
+      "fiz-merjenje-napake",
+      "fiz-nihanje-valovanje",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-UMFNM-NFE4": [
+      "fiz-jedrska-fizika-energetika",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-UMFNM-NUPFIZ": [
+      "fiz-splosna-fizika-uvod"
+    ],
+    "UNI-UMFNM-NKOMPS": [
+      "fiz-matematicna-fizika-sistemi",
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-UMFNM-NUKM": [
+      "fiz-kvantna-mehanika"
+    ],
+    "UNI-UMFNM-NTRDS": [
+      "fiz-fizika-trdne-snovi"
+    ],
+    "UNI-UMFNM-NDINS": [
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-UMFNM-NFOTON": [
+      "fiz-optika-fotonika"
+    ],
+    "UNI-UMFNM-NFTEK": [
+      "fiz-mehanika-tekocin",
+      "fiz-mehanika-kontinuov"
+    ],
+    "UNI-UMFNM-NAKUST": [
+      "fiz-akustika-hrup"
+    ],
+    "UNI-UMFNM-NANMEH": [
+      "fiz-analiticna-mehanika"
+    ],
+    "UNI-UMFNM-NMKONT": [
+      "fiz-mehanika-kontinuov",
+      "fiz-trdnost"
+    ],
+    "UNI-UMFNM-NFMED": [
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-UMFNM-NFOKOL": [
+      "fiz-atmosfera-meteorologija",
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-UMFNM-NFBS": [
+      "fiz-biofizika-medicina",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-UMFNM-NFIZB": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-UPFAMNIT-FIZ": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UPFAMNIT-TFB": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-UNGFN-FAF03": [
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-UNGFN-FAF05": [
+      "fiz-astronomija-astrofizika"
+    ],
+    "UNI-UNGFN-FAF06": [
+      "fiz-mehanika-tekocin",
+      "fiz-toplota-temperatura",
+      "fiz-elektrotehnika-vezja"
+    ],
+    "UNI-UNGFN-FAF08": [
+      "fiz-merjenje-napake",
+      "fiz-splosna-mehanika"
+    ],
+    "UNI-UNGFN-FAF12": [
+      "fiz-elektrodinamika"
+    ],
+    "UNI-UNGFN-FAF13": [
+      "fiz-analiticna-mehanika"
+    ],
+    "UNI-UNGFN-FAF14": [
+      "fiz-merjenje-napake",
+      "fiz-elektrotehnika-vezja"
+    ],
+    "UNI-UNGFN-FAF19": [
+      "fiz-merjenje-napake",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-UNGFN-FAF17": [
+      "fiz-kvantna-mehanika"
+    ],
+    "UNI-UNGFN-FTS15": [
+      "fiz-statisticna-fizika"
+    ],
+    "UNI-UNGFN-FAF24": [
+      "fiz-jedrska-fizika-energetika"
+    ],
+    "UNI-UNGFN-FTS21": [
+      "fiz-fizika-trdne-snovi"
+    ],
+    "UNI-UNGFN-FAF25": [
+      "fiz-merjenje-napake",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-UNGFN-FAF22": [
+      "fiz-mehanika-kontinuov"
+    ],
+    "UNI-UNGFN-FAF30": [
+      "fiz-optika-fotonika"
+    ],
+    "UNI-UNGFN-FAF10": [
+      "fiz-astronomija-astrofizika"
+    ],
+    "UNI-UNGFN-FAF18": [
+      "fiz-astronomija-astrofizika",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-UNGFN-FAF21": [
+      "fiz-astronomija-astrofizika"
+    ],
+    "UNI-UNGFN-FAF15": [
+      "fiz-astronomija-astrofizika"
+    ],
+    "UNI-UNGFN-FAF28": [
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-UNGFN-FAF23": [
+      "fiz-atmosfera-meteorologija"
+    ],
+    "UNI-UNGFZO-OK002": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UNGFZO-OK014": [
+      "fiz-atmosfera-meteorologija"
+    ],
+    "UNI-UNGFZO-OK038": [
+      "fiz-jedrska-fizika-energetika"
+    ],
+    "UNI-UNGFZO-OK030": [
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-UMFKBV-KMINZ": [
+      "fiz-kmetijska-tehnika"
+    ],
+    "UNI-UMFKBV-OBNEN": [
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-UMFE-FIZIKA": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-nihanje-valovanje"
+    ],
+    "UNI-UMFE-ET1": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UMFE-ET2": [
+      "fiz-elektrotehnika-vezja"
+    ],
+    "UNI-UMFE-MERTEH": [
+      "fiz-merilna-tehnika"
+    ],
+    "UNI-UMFE-REGTEH": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFE-ELEKEN": [
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFE-MEHTEH": [
+      "fiz-materiali",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFE-MESN": [
+      "fiz-statika",
+      "fiz-dinamika-togih-teles",
+      "fiz-trdnost"
+    ],
+    "UNI-UMFE-HAET1": [
+      "fiz-mehanika-tekocin",
+      "fiz-turbinski-stroji-hidroenergija"
+    ],
+    "UNI-UMFE-TERMO": [
+      "fiz-termodinamika-inzenirska",
+      "fiz-prenos-toplote"
+    ],
+    "UNI-UMFE-ENPEE": [
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFE-ESTROJI": [
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFE-OVEP": [
+      "fiz-elektricni-stroji-energetika",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFE-HAET2": [
+      "fiz-turbinski-stroji-hidroenergija",
+      "fiz-hidravlika-vodni-tokovi"
+    ],
+    "UNI-UMFE-OJES": [
+      "fiz-jedrska-fizika-energetika"
+    ],
+    "UNI-UMFE-SISTINZ": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFE-UJM": [
+      "fiz-jedrska-fizika-energetika"
+    ],
+    "UNI-UMFE-EMI1": [
+      "fiz-energetika-stavb-okolje"
+    ],
+    "UNI-UMFE-PTM": [
+      "fiz-termodinamika-inzenirska",
+      "fiz-turbinski-stroji-hidroenergija"
+    ],
+    "UNI-UMFE-SONCE": [
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-UMFE-FTVR": [
+      "fiz-jedrska-fizika-energetika"
+    ],
+    "UNI-UMFE-OVJN": [
+      "fiz-jedrska-fizika-energetika"
+    ],
+    "UNI-UMFE-EMOB": [
+      "fiz-elektricni-stroji-energetika",
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-UMFE-ENPRET": [
+      "fiz-obnovljivi-viri-energija",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFE-OGROVE": [
+      "fiz-obnovljivi-viri-energija",
+      "fiz-energetika-stavb-okolje"
+    ],
+    "UNI-ULFFA-FIZ": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-ULZF-BIOFIZ": [
+      "fiz-biofizika-medicina",
+      "fiz-splosna-fizika-uvod"
+    ],
+    "UNI-ULZF-SPBIOFIZ": [
+      "fiz-biofizika-medicina",
+      "fiz-akustika-hrup"
+    ],
+    "UNI-ULZF-KONSTAV": [
+      "fiz-energetika-stavb-okolje"
+    ],
+    "UNI-ULZF-DELOKO": [
+      "fiz-varnost-delovno-okolje"
+    ],
+    "UNI-ULZF-BIOKLIM": [
+      "fiz-energetika-stavb-okolje"
+    ],
+    "UNI-ULZF-OZRACJE": [
+      "fiz-atmosfera-meteorologija"
+    ],
+    "UNI-ULZF-ENOKO": [
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-ULZF-HRUP": [
+      "fiz-akustika-hrup"
+    ],
+    "UNI-ULFGG-VFIZ": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-ULFGG-VHIDMEH": [
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-ULFGG-VMEH": [
+      "fiz-mehanika-konstrukcij",
+      "fiz-trdnost"
+    ],
+    "UNI-ULFGG-VHIDRAV": [
+      "fiz-hidravlika-vodni-tokovi"
+    ],
+    "UNI-ULFGG-VJEKL": [
+      "fiz-jeklo-les-beton"
+    ],
+    "UNI-ULFGG-VLES": [
+      "fiz-jeklo-les-beton"
+    ],
+    "UNI-ULFGG-VPOTRES": [
+      "fiz-potresno-inzenirstvo"
+    ],
+    "UNI-ULFGG-VBETON": [
+      "fiz-jeklo-les-beton"
+    ]
+  },
+  "courseItems": {
+    "UNI-ULFS-ELEKTRO": [
+      {
+        "title": "Elektrotehnika",
+        "url": "https://www.fs.uni-lj.si/publication/elektrotehnika/",
+        "source": "UL Fakulteta za strojništvo",
+        "lang": "sl",
+        "type": "ucbenik",
+        "desc": "Učbenik elektrotehnike za strojnike (286 str.): napetost, tok, Ohmov zakon, zaporedna in vzporedna vezja, Thévenin, Norton.",
+        "license": "prost dostop",
+        "author": "Marjan Jenko"
+      }
+    ],
+    "UNI-ULFMF-FIZIKA1": [
+      {
+        "title": "Fizika: Mehanika (zapiski predavanj)",
+        "url": "https://users.fmf.uni-lj.si/seliger/mehanika.pdf",
+        "source": "UL FMF",
+        "lang": "sl",
+        "type": "zapiski",
+        "desc": "84 strani zapiskov: enote in merjenje, kinematika, Newtonovi zakoni, delo in energija, vrtenje togega telesa, gravitacija; jasna razlaga s fizikalnimi zgledi.",
+        "license": "prost dostop",
+        "author": "Janez Seliger"
+      },
+      {
+        "title": "Fizika: Toplota (zapiski predavanj)",
+        "url": "https://users.fmf.uni-lj.si/seliger/toplota.pdf",
+        "source": "UL FMF",
+        "lang": "sl",
+        "type": "zapiski",
+        "desc": "40 strani zapiskov o temperaturi, toplotnih kapacitetah, idealnem plinu, prvem in drugem zakonu termodinamike in prenosu toplote.",
+        "license": "prost dostop",
+        "author": "Janez Seliger"
+      },
+      {
+        "title": "Fizika: Valovanje (zapiski predavanj)",
+        "url": "https://users.fmf.uni-lj.si/seliger/valovanje1.pdf",
+        "source": "UL FMF",
+        "lang": "sl",
+        "type": "zapiski",
+        "desc": "Mehansko valovanje, valovna enačba, hitrost valovanja v elastičnih sredstvih, stoječe valovanje in zvok; kratki, razumljivi zapiski.",
+        "license": "prost dostop",
+        "author": "Janez Seliger"
+      }
+    ],
+    "UNI-ULFMF-FIZIKA2": [
+      {
+        "title": "Fizika: Elektrika (zapiski predavanj)",
+        "url": "https://users.fmf.uni-lj.si/seliger/elektrika.pdf",
+        "source": "UL FMF",
+        "lang": "sl",
+        "type": "zapiski",
+        "desc": "74 strani zapiskov: električni naboj in polje, Gaussov zakon, potencial, tok, magnetno polje, indukcija; z razlago in zgledi.",
+        "license": "prost dostop",
+        "author": "Janez Seliger"
+      },
+      {
+        "title": "Posebna teorija relativnosti (zapiski predavanj)",
+        "url": "https://users.fmf.uni-lj.si/seliger/POSEBNA%20TEORIJA%20RELATIVNOSTI.pdf",
+        "source": "UL FMF",
+        "lang": "sl",
+        "type": "zapiski",
+        "desc": "Zapiski o posebni teoriji relativnosti: Lorentzove transformacije, dilatacija časa, relativistična dinamika in energija.",
+        "license": "prost dostop",
+        "author": "Janez Seliger"
+      }
+    ],
+    "UNI-UMFNM-NEM": [
+      {
+        "title": "Elektromagnetno polje: učbenik za študente fizike",
+        "url": "https://press.um.si/index.php/ump/sl/catalog/book/406",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "sl",
+        "type": "ucbenik",
+        "desc": "Učbenik elektromagnetnega polja za študente fizike, razdeljen na nižji in višji nivo zahtevnosti.",
+        "license": "prost dostop",
+        "author": "Milan Ambrožič, Uroš Tkalec, Samo Kralj"
+      }
+    ],
+    "UNI-UMFNM-NOSMER": [
+      {
+        "title": "Osnovna merjenja: Uvod v merske napake in kvantitativno analizo fizikalnih meritev",
+        "url": "https://press.um.si/index.php/ump/sl/catalog/book/530",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "sl",
+        "type": "ucbenik",
+        "desc": "Merske napake, statistika meritev, prilagajanje funkcij in poročanje rezultatov; osnova za vsak fizikalni praktikum.",
+        "license": "prost dostop",
+        "author": "Andrej Dobovišek"
+      }
+    ],
+    "UNI-UMFNM-NFE2": [
+      {
+        "title": "Fizikalni eksperimenti 2: Zbirka laboratorijskih vaj",
+        "url": "https://press.um.si/index.php/ump/sl/catalog/book/696",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "sl",
+        "type": "naloge",
+        "desc": "Navodila za laboratorijske vaje iz termodinamike in elektromagnetizma z obdelavo meritev.",
+        "license": "CC BY-SA 4.0",
+        "author": "Robert Repnik, Mitja Slavinec, Eva Klemenčič"
+      }
+    ],
+    "UNI-UMFNM-NFE3": [
+      {
+        "title": "Fizikalni eksperimenti 3: Zbirka laboratorijskih vaj",
+        "url": "https://press.um.si/index.php/ump/sl/catalog/book/697",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "sl",
+        "type": "naloge",
+        "desc": "Navodila za laboratorijske vaje iz nihanja, valovanja in optike z obdelavo meritev.",
+        "license": "CC BY-SA 4.0",
+        "author": "Robert Repnik, Robert Hauko"
+      }
+    ],
+    "UNI-UMFNM-NANMEH": [
+      {
+        "title": "Analitična mehanika",
+        "url": "https://press.um.si/index.php/ump/sl/catalog/book/827",
+        "source": "Univerzitetna založba Univerze v Mariboru",
+        "lang": "sl",
+        "type": "ucbenik",
+        "desc": "Slovenski učbenik Lagrangeove in Hamiltonove mehanike z zgledi in nalogami.",
+        "license": "CC BY-NC-ND 4.0",
+        "author": "Milan Ambrožič, Arbresha Hölbl"
+      }
+    ],
+    "UNI-ULBF-BBTTEH": [
+      {
+        "title": "Biotehnološki tehnikum. Učbenik za vaje",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/961",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "ucbenik",
+        "desc": "Sedem laboratorijskih vaj in računske naloge: delo z delovnimi organizmi in pridobivanje kakovostnih produktov.",
+        "license": "CC BY-SA 4.0",
+        "author": "Maja Paš, Aleš Podgornik, Hrvoje Petković"
+      }
+    ],
+    "UNI-ULBF-BTEHPROC": [
+      {
+        "title": "Laboratorijske vaje iz Tehnološkega procesništva",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/699",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "naloge",
+        "desc": "Skripta z navodili za laboratorijske vaje pri predmetu Tehnološko procesništvo (odprto učno gradivo UL).",
+        "license": "CC BY-SA 4.0",
+        "author": "Blaž Jug idr."
+      },
+      {
+        "title": "Naloge iz tehnološkega procesništva z rešitvami",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/700",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "naloge",
+        "desc": "Zbirka nalog in vprašanj z rešitvami pri predmetu Tehnološko procesništvo (živilstvo in prehrana).",
+        "license": "CC BY-SA 4.0",
+        "author": "Iztok Prislan"
+      }
+    ],
+    "UNI-ULNTF-TBARMET": [
+      {
+        "title": "Angleško-slovenski in slovensko-angleški slovar osnovnih pojmov v barvni metriki",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/647",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "prirocnik",
+        "desc": "Slovar pojmov barvne metrike (kolorimetrija, CIE, barvni prostori) za razumevanje strokovne literature.",
+        "license": "CC BY-SA 4.0",
+        "author": "Sabina Bračko, Barbara Blaznik, Barbara Luštek Preskar"
+      }
+    ],
+    "UNI-ULNTF-TMERBAR": [
+      {
+        "title": "Angleško-slovenski in slovensko-angleški slovar osnovnih pojmov v barvni metriki",
+        "url": "https://ebooks.uni-lj.si/ZalozbaUL/catalog/book/647",
+        "source": "Založba Univerze v Ljubljani",
+        "lang": "sl",
+        "type": "prirocnik",
+        "desc": "Slovar pojmov barvne metrike (kolorimetrija, CIE, barvni prostori) za razumevanje strokovne literature.",
+        "license": "CC BY-SA 4.0",
+        "author": "Sabina Bračko, Barbara Blaznik, Barbara Luštek Preskar"
+      }
+    ]
+  }
+}
