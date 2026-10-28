@@ -58,6 +58,11 @@ export function getProgram(id) {
   return PROGRAMS[id] || null;
 }
 
+function mainSubject(keys) {
+  const count = (s) => keys.filter((k) => UNI_PATHS[k].subject === s).length;
+  return ALL_SUBJECTS.reduce((best, s) => (count(s) > count(best) ? s : best), ALL_SUBJECTS[0]);
+}
+
 export function listPrograms() {
   return Object.entries(PROGRAMS).map(([id, p]) => ({
     id,
@@ -73,6 +78,8 @@ export function listPrograms() {
     years: p.years.length,
     // Predmeti aplikacije, ki jih program ima (za izbirnik predmeta).
     subjects: ALL_SUBJECTS.filter((s) => [...p.courseKeys.flat(), ...p.electiveKeys].some((k) => UNI_PATHS[k].subject === s)),
+    // Glavni predmet programa (največ obveznih predmetov), npr. BIO pri biologiji.
+    mainSubject: mainSubject(p.courseKeys.flat()),
   }));
 }
 
