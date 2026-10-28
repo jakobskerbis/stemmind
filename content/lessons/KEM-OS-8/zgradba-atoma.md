@@ -179,7 +179,7 @@ Preverjanje: $13 + 14 = 27$. ✓
 
 ## Drugače: Bolj natančno
 
-**Kako so odkrili delce?** Zgradbo atoma so odkrivali postopoma. Elektron je odkril J. J. Thomson (1897), jedro je pokazal Ernest Rutherford s poskusom (1911), pri katerem je tanko zlato folijo obstreljeval z delci alfa. Večina delcev je šla skozi folijo, nekaj pa se jih je močno odklonilo. Iz tega je sklepal, da je večina atoma prazen prostor, v središču pa je majhno, gosto, pozitivno nabito jedro. Nevtron je kasneje odkril James Chadwick (1932).
+**Kako so odkrili delce?** Zgradbo atoma so odkrivali postopoma. Elektron je odkril J. J. Thomson (1897), jedro pa je leta 1911 pokazal Ernest Rutherford z razlago poskusa, pri katerem so v njegovem laboratoriju tanko zlato folijo obstreljevali z delci alfa. Večina delcev je šla skozi folijo, nekaj pa se jih je močno odklonilo. Iz tega je sklepal, da je večina atoma prazen prostor, v središču pa je majhno, gosto, pozitivno nabito jedro. Nevtron je kasneje odkril James Chadwick (1932).
 
 **Relativna atomska masa.** Mase atomov so zelo majhne, zato jih izražamo relativno, glede na dvanajstino mase atoma $^{12}\mathrm{C}$, kar je približno masa enega protona ali nevtrona. Zato je masno število približno enako relativni masi atoma. Relativna atomska masa $A_\mathrm{r}$ elementa v periodnem sistemu ni celo število, ker je to povprečje mas vseh njegovih izotopov glede na njihovo pogostost. Pri kloru je zato vrednost približno $35{,}5$, ker v naravi prevladuje izotop $^{35}\mathrm{Cl}$, vendar je prisoten tudi $^{37}\mathrm{Cl}$.
 

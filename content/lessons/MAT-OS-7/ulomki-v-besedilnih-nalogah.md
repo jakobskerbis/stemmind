@@ -54,7 +54,7 @@ $$\frac{1}{4} \cdot \frac{2}{3} = \frac{2}{12} = \frac{1}{6} \text{ prvotne celo
 | 5. | Izračunaj vrednost enega dela, nato iskano količino. |
 | 6. | Preveri rezultat v besedilu in zapiši odgovor v stavku. |
 
-V interaktivni simulaciji spodaj lahko trak razdeliš na poljubno število delov, obarvaš del in opazuješ, kako se spreminjata del in celota.
+V simulaciji spodaj (»Trakovni prikaz za besedilne naloge«) trak razdeliš na $2$ do $10$ enakih delov, izbereš, koliko delov je znanih in koliko merijo, ter opazuješ, kako iz dela dobiš en del in celoto.
 
 ## Rešeni primeri
 
@@ -122,7 +122,7 @@ Ostanek: $1 - \dfrac{a}{b}$; del ostanka: $\dfrac{1}{4} \cdot \text{ostanek}$; c
 - **Pri iskanju celote množiš z ulomkom.** Če je $\dfrac{2}{5}$ knjige $96$ strani, račun $\dfrac{2}{5} \cdot 96$ ni pravilen, ker bi dobil manj kot $96$, celota pa mora biti večja od svojega dela. Pravilno je $96 : \dfrac{2}{5} = 96 : 2 \cdot 5 = 240$.
 - **Seštevaš ulomke različnih celot.** $\dfrac{1}{3}$ žepnine in $\dfrac{1}{4}$ ostanka nista skupaj $\dfrac{7}{12}$ žepnine, ker se nanašata na različni celoti. Oba dela najprej izrazi kot del iste celote: $\dfrac{1}{3}$ in $\dfrac{1}{6}$, šele nato seštevaj.
 - **Odgovoriš na napačno vprašanje.** Naloga vpraša, koliko ostane, ti pa izračunaš, koliko je porabljeno. Na koncu še enkrat preberi vprašanje in preveri, ali tvoj rezultat odgovarja nanj.
-- **Zamenjaš števec in imenovalec.** Celoto deliš s števcem in množiš z imenovalcem le, ko iščeš celoto. Ko iščeš del, deliš z imenovalcem in množiš s števcem. Pomagaj si s trakom: imenovalec je vedno število vseh delov traku.
+- **Zamenjaš števec in imenovalec.** Ko iščeš celoto, znani del deliš s števcem in množiš z imenovalcem. Ko iščeš del, celoto deliš z imenovalcem in množiš s števcem. Pomagaj si s trakom: imenovalec je vedno število vseh delov traku.
 
 ## Povzetek
 

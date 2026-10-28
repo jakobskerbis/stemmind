@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Že poznaš dele trikotnika: oglišča $A$, $B$, $C$, stranice $a$, $b$, $c$ in notranje kote $\alpha$, $\beta$, $\gamma$. Veš, da stranica $a$ leži nasproti oglišča $A$ in da je vsota notranjih kotov $180^\circ$. Z ravnilom, šestilom in kotomerom znaš narisati daljico dane dolžine, prenesti kot, narisati pravokotnico in razpolovišče kota.
+Že poznaš dele trikotnika: oglišča $A$, $B$, $C$, stranice $a$, $b$, $c$ in notranje kote $\alpha$, $\beta$, $\gamma$. Veš, da stranica $a$ leži nasproti oglišča $A$ in da je vsota notranjih kotov $180^\circ$. Z ravnilom, šestilom in kotomerom znaš narisati daljico dane dolžine, prenesti kot, narisati pravokotnico in simetralo kota.
 
 Zdaj vse to združimo. Iz nekaj podatkov bomo **natančno načrtali trikotnik**. Pri tem se bomo vprašali: koliko podatkov sploh potrebujemo, da je trikotnik določen? Odgovor dajo **izreki o skladnosti**. Načrtovanje trikotnikov potrebujejo tesarji, ki sestavljajo ostrešje, inženirji pri gradnji mostov in geodeti, ki merijo zemljišča: če poznajo tri prave podatke, lahko trikotnik prenesejo na papir ali na teren.
 
@@ -20,9 +20,9 @@ Zdaj vse to združimo. Iz nekaj podatkov bomo **natančno načrtali trikotnik**.
 | **sss** | vseh treh stranicah | $a$, $b$, $c$ |
 | **sks** | dveh stranicah in kotu **med njima** | $b$, $c$, $\alpha$ |
 | **ksk** | eni stranici in **obeh priležnih kotih** | $c$, $\alpha$, $\beta$ |
-| **ssk** | dveh stranicah in kotu, ki leži **nasproti daljši** od njiju | $a$, $b$, $\alpha$, kjer je $a > b$ |
+| **ssk** | dveh stranicah in kotu, ki leži **nasproti daljše** od njiju | $a$, $b$, $\alpha$, kjer je $a > b$ |
 
-Če trikotnika skladata v takih treh podatkih, sta skladna. Zato ti trije podatki **določajo** trikotnik: vsak trikotnik, ki ga načrtaš iz njih, je enak (skladen) vsem drugim.
+Če se trikotnika ujemata v takih treh podatkih, sta skladna. Zato ti trije podatki **določajo** trikotnik: vsak trikotnik, ki ga načrtaš iz njih, je enak (skladen) vsem drugim.
 
 Pozor: trije koti ne določajo trikotnika. Trikotnik s koti $60^\circ$, $60^\circ$, $60^\circ$ je lahko majhen ali velik.
 
@@ -132,9 +132,9 @@ $\alpha + \beta + \gamma = 180^\circ \;\Rightarrow\; \beta = 180^\circ - \alpha 
 
 ## Drugače: Na sliki
 
-Predstavljaj si konstrukcijo sss kot igro dveh krožnic. Na list položiš daljico $AB$ dolžine $c$. Okoli oglišča $A$ zarišeš krožnico s polmerom $b$: vse točke na njej so od $A$ oddaljene točno $b$. Okoli oglišča $B$ zarišeš krožnico s polmerom $a$. Oglišče $C$ mora biti na obeh krožnicah hkrati, zato ga najdeš v njunem presečišču.
+Predstavljaj si konstrukcijo sss kot igro dveh krožnic. Na list položiš najdaljšo stranico, daljico $AB$ dolžine $c$. Okoli oglišča $A$ zarišeš krožnico s polmerom $b$: vse točke na njej so od $A$ oddaljene točno $b$. Okoli oglišča $B$ zarišeš krožnico s polmerom $a$. Oglišče $C$ mora biti na obeh krožnicah hkrati, zato ga najdeš v njunem presečišču.
 
-Če sta polmera premajhna, krožnici sta preveč narazen in se ne sekata: trikotnik ne obstaja. Če sta ravno tako dolga, da se krožnici le dotikata na daljici $AB$, je $a + b = c$ in »trikotnik« se splošči v daljico. Šele ko je $a + b > c$, se krožnici sekata v dveh točkah, ena nad daljico in ena pod njo. Oba trikotnika sta zrcalni sliki in sta skladna. V interaktivni simulaciji spodaj lahko podatke spreminjaš in opazuješ, kdaj se loka nehata sekati.
+Če sta polmera premajhna, se krožnici ne sekata: trikotnik ne obstaja. Če sta ravno tako dolga, da se krožnici le dotikata na daljici $AB$, je $a + b = c$ in »trikotnik« se splošči v daljico. Šele ko je $a + b > c$, se krožnici sekata v dveh točkah, ena nad daljico in ena pod njo. Oba trikotnika sta zrcalni sliki in sta skladna. V interaktivni simulaciji spodaj lahko podatke spreminjaš in opazuješ, kdaj se loka nehata sekati.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -169,7 +169,7 @@ Naj bo $c = 6\,\text{cm}$ in $\alpha = 30^\circ$. Načrtamo $AB$, v $A$ nanesemo
 - Če je $a = 4\,\text{cm}$, torej krajša od $c$, lok seka krak v **dveh** točkah. Dobimo dva različna trikotnika, ki **nista** skladna: eden ima pri $C$ ostri kot, drugi topi.
 - Če bi bila $a$ še krajša (manjša od $3\,\text{cm}$, kolikor je oddaljena točka $B$ od kraka), lok kraka sploh ne bi dosegel in trikotnik ne bi obstajal.
 
-Ker sta dva ujemajoča se podatka in kot nasproti krajše stranice lahko dala dva različna trikotnika, ta trojica podatkov ne določa trikotnika. Zato izrek ssk velja le, ko kot leži nasproti daljše od obeh danih stranic.
+Ker lahko dve stranici in kot nasproti krajše od njiju dajo dva različna trikotnika, taka trojica podatkov ne določa trikotnika. Zato izrek ssk velja le, ko kot leži nasproti daljše od obeh danih stranic.
 
 ## Preveri se
 

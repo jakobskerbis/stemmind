@@ -144,7 +144,7 @@ $\beta = 3 \cdot \alpha$, $\quad \gamma = 180^\circ - \beta$; pri deljenju ostan
 
 Predstavljaj si kotomer, ki ga povečaš pod lupo. Med dvema sosednjima črticama za stopinjo, recimo med $35^\circ$ in $36^\circ$, bi pod lupo zagledal še $60$ drobnih črtic. Vsaka predstavlja eno minuto. Kot $35^\circ 48'$ torej sega čez črtico za $35^\circ$ in še $48$ drobnih črtic naprej, malo čez tri četrtine poti do $36^\circ$.
 
-Ko seštevaš dva kota, si predstavljaj, da ju položiš drug ob drugega s skupnim temenom in skupnim krakom. Najprej se »zložijo« stopinje, nato drobne minute. Ko drobnih črtic naštej $60$, si prišel do naslednje cele stopinje. Tako $62^\circ 73'$ na kotomeru pomeni $63$ celih stopinj in še $13$ drobnih črtic. Prav to pokaže tudi interaktivna simulacija spodaj: ko vsota minut doseže $60$ ali več, izpiše pretvorbo $60' = 1^\circ$.
+Ko seštevaš dva kota, si predstavljaj, da ju položiš drug ob drugega s skupnim temenom in skupnim krakom. Najprej se »zložijo« stopinje, nato drobne minute. Ko našteješ $60$ drobnih črtic, si prišel do naslednje cele stopinje. Tako $62^\circ 73'$ na kotomeru pomeni $63$ celih stopinj in še $13$ drobnih črtic. Prav to pokaže tudi interaktivna simulacija spodaj: ko vsota minut doseže $60$ ali več, izpiše pretvorbo $60' = 1^\circ$.
 
 ## Drugače: Iz vsakdanjega življenja
 

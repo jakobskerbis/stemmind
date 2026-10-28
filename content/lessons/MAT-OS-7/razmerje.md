@@ -47,9 +47,9 @@ $$50\,\text{cm} : 2\,\text{m} = 50\,\text{cm} : 200\,\text{cm} = 50 : 200 = 1 : 
 | 3. | Prvi del dobi $a$ delov, drugi $b$ delov. |
 | 4. | Preveri, ali je vsota delov enaka $c$. |
 
-Enako deliš v razmerju s tremi členi $a : b : c$, le delov je $a + b + c$. Pri razmerju $a : b$ prvi del znaša $\dfrac{a}{a + b}$ celote, drugi pa $\dfrac{b}{a + b}$ celote.
+Enako deliš v razmerju s tremi členi, na primer $a : b : d$, le delov je $a + b + d$. Pri razmerju $a : b$ prvi del znaša $\dfrac{a}{a + b}$ celote, drugi pa $\dfrac{b}{a + b}$ celote.
 
-V interaktivni simulaciji spodaj mešaš sirup in vodo v različnih razmerjih in opazuješ, kdaj je sok enako sladek.
+V simulaciji spodaj (»Razmerje pri mešanju soka«) mešaš sok in vodo v različnih razmerjih in opazuješ, kdaj ima mešanica enako barvo in okus.
 
 ## Rešeni primeri
 
@@ -136,14 +136,14 @@ Predstavljaj si vrsto kozarcev enake velikosti. Pri malinovcu v razmerju $1 : 5$
 
 Če želiš več pijače, k vsakemu kozarcu sirupa dodaš novih pet kozarcev vode: dva rdeča in deset prozornih, tri rdeči in petnajst prozornih. Vrsta kozarcev se podaljša, vzorec pa ostane enak: en rdeč na pet prozornih. Zato je sok enako sladek. To je razširjanje razmerja: $1 : 5 = 2 : 10 = 3 : 15$.
 
-Pri deljenju v razmerju naredi obratno: celotno količino razdeli na toliko enakih kozarcev, kolikor je vseh delov, nato jih prešteješ za vsako sestavino.
+Pri deljenju v razmerju naredi obratno: celotno količino razdeli na toliko enakih kozarcev, kolikor je vseh delov, nato jih preštej za vsako sestavino.
 
 ## Drugače: Iz vsakdanjega življenja
 
 Razmerja uporabljaš pogosteje, kot misliš:
 
 - **Kuhanje.** Za riž vzameš riž in vodo v razmerju približno $1 : 2$. Za eno skodelico riža dve skodelici vode, za tri skodelice riža šest skodelic vode.
-- **Gradnja.** Zidar meša cement in pesek na primer v razmerju $1 : 3$. Če ima $20$ lopat mešanice, je to $4$ dele, en del je $5$ lopat: $5$ lopat cementa in $15$ lopat peska.
+- **Gradnja.** Zidar meša cement in pesek na primer v razmerju $1 : 3$. Če ima $20$ lopat mešanice, je vseh delov $1 + 3 = 4$, en del je $5$ lopat: $5$ lopat cementa in $15$ lopat peska.
 - **Delitev denarja.** Če Jure za skupno darilo prispeva $10$ €, Tina pa $15$ €, je razmerje prispevkov $10 : 15 = 2 : 3$. Če darilo prodata naprej za $30$ €, je pošteno, da si denar razdelita v istem razmerju: Jure $12$ €, Tina $18$ €.
 
 V vseh primerih razmerje pove, kako so deli med seboj povezani, ne glede na to, koliko je celota.

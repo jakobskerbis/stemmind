@@ -80,7 +80,7 @@ $D = b^2 - 4ac$, $\; x_{1,2} = \dfrac{-b \pm \sqrt{D}}{2a}$; pri $a < 0$ je $f(x
 1. Diskriminanta: $D = 5^2 - 4 \cdot (-2) \cdot 3 = 25 + 24 = 49$.
 2. Ničli: $x_{1,2} = \dfrac{-5 \pm 7}{2 \cdot (-2)} = \dfrac{-5 \pm 7}{-4}$. Torej $x_1 = \dfrac{2}{-4} = -\dfrac{1}{2}$ in $x_2 = \dfrac{-12}{-4} = 3$.
 3. Ker je $a = -2 < 0$, je parabola odprta navzdol. Nad osjo $x$ je med ničlama.
-4. Neenačaj je neostri, zato ničli spadata v rešitev: $x \in \left[-\dfrac{1}{2}, 3\right]$.
+4. Neenačaj je neoster, zato ničli spadata v rešitev: $x \in \left[-\dfrac{1}{2}, 3\right]$.
 5. Cela števila v tem intervalu so $0$, $1$, $2$ in $3$ (število $-1$ je manjše od $-\dfrac{1}{2}$).
 6. Preizkus: za $x = 3$ je $-18 + 15 + 3 = 0 \ge 0$, za $x = -1$ pa $-2 - 5 + 3 = -4 < 0$, zato $-1$ res ni rešitev.
 7. Odgovor: rešitev je interval $\left[-\dfrac{1}{2}, 3\right]$, v njem so štiri cela števila: $0$, $1$, $2$ in $3$.
@@ -197,7 +197,7 @@ Izraz v oglatem oklepaju je vsota nenegativnega kvadrata in pozitivnega števila
 - $(-\infty, 2] \cup [4, \infty)$
 + $[2, 4]$
 - $(2, 4)$
-> Ničli sta $2$ in $4$. Parabola je odprta navzdol, nad osjo je med ničlama; neenačaj je neostri, zato ničli vključimo.
+> Ničli sta $2$ in $4$. Parabola je odprta navzdol, nad osjo je med ničlama; neenačaj je neoster, zato ničli vključimo.
 
 ? Rešitev neenačbe $(x - 1)^2 \le 0$ je:
 - $\emptyset$

@@ -40,7 +40,7 @@ Pri $2^x$ se vrednost ob povečanju $x$ za $1$ vsakič **podvoji**, pri $\left(\
 
 Vsak graf gre skozi točki $(0, 1)$ in $(1, a)$, ker je $a^0 = 1$ in $a^1 = a$. Os $x$ (premica $y = 0$) je **vodoravna asimptota**: graf se ji poljubno približa, a je nikoli ne doseže.
 
-**4. Vpliv osnove.** Pri $a > 1$ je graf za $x > 0$ tem strmejši, čim večja je osnova: $3^x$ raste hitreje kot $2^x$. Za $x < 0$ je obratno, tam je $3^x$ pod $2^x$. Pri $0 < a < 1$ graf pada tem hitreje, čim bližje $0$ je osnova.
+**4. Vpliv osnove.** Pri $a > 1$ je graf za $x > 0$ tem strmejši, čim večja je osnova: $3^x$ raste hitreje kot $2^x$. Za $x < 0$ je obratno, tam je $3^x$ pod $2^x$. Pri $0 < a < 1$ velja zrcalno: za $x < 0$ je graf tem strmejši, čim bližje $0$ je osnova.
 
 **5. Zrcaljenje.** Ker je $\left(\dfrac{1}{a}\right)^x = a^{-x}$, je graf funkcije $y = \left(\dfrac{1}{a}\right)^x$ zrcalna slika grafa $y = a^x$ čez os $y$. To vidiš tudi v tabeli zgoraj: vrstici sta zrcalni.
 
@@ -175,7 +175,7 @@ $$a^{x_2} = a^{x_1} \cdot a^{x_2 - x_1}.$$
 
 Za $a > 1$ in pozitiven eksponent je $a^{x_2 - x_1} > 1$ (za racionalni eksponent $\frac{m}{n} > 0$ je $\sqrt[n]{a^m} > 1$, ker je $a^m > 1$). Ker je $a^{x_1} > 0$, sledi $a^{x_2} > a^{x_1}$. Pri $0 < a < 1$ je $a^{x_2 - x_1} < 1$ in neenakost se obrne.
 
-**Iracionalni eksponenti.** Do zdaj smo znali izračunati $a^x$ le za racionalne $x$. Kaj pomeni $2^{\sqrt{2}}$? Število $\sqrt{2} = 1{,}41421\ldots$ približujemo z racionalnimi števili $1{,}4$; $1{,}41$; $1{,}414$; … Potence $2^{1{,}4}$, $2^{1{,}41}$, $2^{1{,}414}$, … zaradi monotonosti naraščajo, so omejene z $2^{1{,}5}$ in se vedno bolj približujejo enemu samemu številu. Tega imenujemo $2^{\sqrt{2}} \approx 2{,}665$. Tako je $a^x$ definirana za vsako realno število in graf je sklenjena krivulja brez lukenj.
+**Iracionalni eksponenti.** Do zdaj smo znali izračunati $a^x$ le za racionalne $x$. Kaj pomeni $2^{\sqrt{2}}$? Število $\sqrt{2} = 1{,}41421\ldots$ približujemo z racionalnimi števili $1{,}4$; $1{,}41$; $1{,}414$; … Potence $2^{1{,}4}$, $2^{1{,}41}$, $2^{1{,}414}$, … zaradi monotonosti naraščajo, so omejene z $2^{1{,}5}$ in se vedno bolj približujejo enemu samemu številu. To število označimo z $2^{\sqrt{2}} \approx 2{,}665$. Tako je $a^x$ definirana za vsako realno število in graf je sklenjena krivulja brez lukenj.
 
 **Značilna lastnost.** Za eksponentno funkcijo velja $f(x + y) = f(x) \cdot f(y)$, ker je $a^{x+y} = a^x \cdot a^y$. Povečanje argumenta za stalno vrednost pomeni množenje vrednosti s stalnim faktorjem. Zaradi stroge monotonosti je funkcija tudi injektivna: različnim $x$ pripadata različni vrednosti. To bo temelj za reševanje eksponentnih enačb.
 

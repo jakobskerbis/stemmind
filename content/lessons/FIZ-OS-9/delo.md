@@ -11,7 +11,7 @@ V vsakdanjem govoru rečemo, da »delamo«, ko se učimo, razmišljamo ali drži
 
 ## Razlaga
 
-**1. Kdaj telo opravi delo.** Sila opravi delo, kadar telo premika. Pri tem mora imeti sila smer (vsaj približno) v smeri gibanja telesa. Potrebujemo torej dvoje: **silo** in **pot**, na kateri sila deluje.
+**1. Kdaj telo opravi delo.** Sila opravi delo, kadar telo premika. Pri tem mora sila vsaj delno kazati v smeri gibanja telesa. Potrebujemo torej dvoje: **silo** in **pot**, na kateri sila deluje.
 
 **2. Formula.** Če na telo deluje stalna sila $F$ v smeri gibanja in telo prepotuje pot $s$, je opravljeno delo:
 
@@ -57,6 +57,7 @@ $A = F \cdot s$
 2. Vstavimo: $A = 20\,\mathrm{N} \cdot 5\,\mathrm{m} = 100\,\mathrm{N\,m}$.
 3. Ker je $1\,\mathrm{N\,m} = 1\,\mathrm{J}$, je $A = 100\,\mathrm{J}$.
 4. Smiselnost: večja sila ali daljša pot bi dala več dela, kar se ujema s formulo.
+5. Odgovor: otrok opravi $100\,\mathrm{J}$ dela.
 
 ### Primer 2: dviganje škatle
 

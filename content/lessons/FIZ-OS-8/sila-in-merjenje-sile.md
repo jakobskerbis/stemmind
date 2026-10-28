@@ -33,7 +33,7 @@ Uporabljamo tudi večjo enoto kilonewton: $1\,\mathrm{kN} = 1000\,\mathrm{N}$.
 **7. Kako pravilno merimo s silomerom.**
 
 - Pred merjenjem preveri, ali kazalec kaže $0$ (silomer brez obremenitve). Če ne, ga nastavi na nič.
-- Silomer drži v smeri, v kateri meriš silo (navpično za težo, vodoravno pri vlečenju po mizi).
+- Silomer drži v smeri, v kateri meriš silo (navpično, ko nanj obesiš predmet, vodoravno pri vlečenju po mizi).
 - Počakaj, da se kazalec umiri, in odčitaj vrednost pri kazalcu z očmi v isti višini kot kazalec.
 - Preveri, kolikšna je vrednost ene najmanjše črtice na lestvici.
 - Ne preseži največje sile, ki jo silomer še lahko meri, sicer se vzmet trajno deformira.
@@ -122,7 +122,7 @@ Ker so premiki enaki za vsako dodano utež, so črtice na lestvici enakomerno ra
 
 Silo na skici narišemo kot puščico. Če sta dve puščici enake smeri in ena je dvakrat daljša, ta ponazarja dvakrat večjo silo.
 
-V interaktivni simulaciji spodaj to opaziš sam: ko vzmet obremeniš z dvakrat težjo utežjo, se njen konec spusti dvakrat nižje.
+V interaktivni simulaciji spodaj to opaziš sam: ko vzmet obremeniš z dvakrat težjo utežjo, se raztegne za dvakrat več.
 
 ## Drugače: Iz vsakdanjega življenja
 

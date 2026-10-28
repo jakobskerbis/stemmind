@@ -39,7 +39,7 @@ $$m = \dfrac{F_g}{g}$$
 
 **7. Tehtnica in merjenje.** Domača tehtnica meri silo, s katero pritiskaš nanjo, in jo preračuna v kilograme. Zato kaže maso, če jo uporabljaš na Zemlji. Silomer (vzmetna tehtnica) neposredno meri težo v newtonih.
 
-**8. Pogosto zaokrožanje.** Pri računih v šoli včasih uporabljamo $g \approx 10\,\dfrac{\text{N}}{\text{kg}}$. V tej lekciji računamo z $9{,}81\,\dfrac{\text{N}}{\text{kg}}$, razen kjer je napisano drugače.
+**8. Pogosto zaokroževanje.** Pri računih v šoli včasih uporabljamo $g \approx 10\,\dfrac{\text{N}}{\text{kg}}$. V tej lekciji računamo z $9{,}81\,\dfrac{\text{N}}{\text{kg}}$, razen kjer je napisano drugače.
 
 ## Rešeni primeri
 
@@ -128,7 +128,7 @@ Zamisli si še graf: na vodoravno os nanesi maso v $\text{kg}$, na navpično te�
 
 Ko v trgovini kupiš vrečko sladkorja z oznako $1\,\text{kg}$, ti oznaka pove maso. Če jo držiš v roki, čutiš njeno težo, to je silo, s katero jo Zemlja vleče navzdol. Ta sila je približno $9{,}81\,\text{N}$.
 
-Še ena primerjava: telo z maso $100\,\text{g}$, na primer manjša čokolada, ima težo približno $1\,\text{N}$. Ko torej držiš čokolado, na dlan deluješ s silo okoli enega newtona.
+Še ena primerjava: telo z maso $100\,\text{g}$, na primer manjša čokolada, ima težo približno $1\,\text{N}$. Ko torej držiš čokolado, ta pritiska na dlan s silo okoli enega newtona.
 
 Ko stopiš na kopalniško tehtnico, se vzmet v njej stisne zaradi tvoje teže. Tehtnica je narejena tako, da to silo že preračuna v kilograme (deli z $g$). Če bi isto tehtnico odnesli na Luno, bi kazala približno šestkrat manj, čeprav je tvoja masa ista. Tehtnica bi bila namreč še vedno nastavljena za zemeljski $g$.
 
@@ -165,7 +165,7 @@ Enota $\dfrac{\text{N}}{\text{kg}}$ pove, koliko newtonov sile deluje na vsak ki
 Pomembno je razlikovati dve količini:
 
 - masa je **skalar** in ni odvisna od kraja,
-- teža je **vektor** (sila), ki je odvisna od kraja, kjer se telo nahaja.
+- teža je **vektor** (sila), ki je odvisna od kraja, kjer je telo.
 
 Vrednost $g = 9{,}81\,\dfrac{\text{N}}{\text{kg}}$ je povprečna vrednost za Zemljo. Na različnih krajih se nekoliko razlikuje, a je za šolske naloge to dovolj dober podatek.
 

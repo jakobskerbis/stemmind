@@ -53,7 +53,7 @@ Hidrostatični tlak je odvisen od gostote tekočine in globine, **ne pa od oblik
 
 ### Primer 1: tlak trdnega telesa
 
-Opeka teži $40\,\mathrm{N}$. Njena ploskev, s katero leži na tleh, ima ploščino $200\,\mathrm{cm^2}$. Kolikšen tlak povzroča na tla?
+Teža opeke je $40\,\mathrm{N}$. Njena ploskev, s katero leži na tleh, ima ploščino $200\,\mathrm{cm^2}$. Kolikšen tlak povzroča na tla?
 
 **Podatki:** $F = F_g = 40\,\mathrm{N}$, $S = 200\,\mathrm{cm^2}$
 **Iščemo:** tlak $p$ na tla
@@ -129,11 +129,11 @@ Predstavljaj si stolp iz zloženih vrečk vode. Spodnja vrečka nosi vse nad seb
 
 Zdaj si zamisli dve posodi: ozko visoko cev in široko nizko skledo, obe napolnjeni do višine $h$. V cevi je vode malo, v skledi veliko. Vendar je vsaka točka na dnu obremenjena z istim "stolpcem" vode višine $h$ nad njo, zato je tlak enak.
 
-V interaktivni simulaciji spodaj premikaj merilnik tlaka globlje v vodo in opazuj, kako se vrednost veča. Spreminjaj obliko posode in ugotovi, da se tlak na enaki globini ne spremeni. Poskusi tudi z drugo tekočino (večja gostota pomeni večji tlak).
+V interaktivni simulaciji spodaj (»Tlak na ploskev in tlak v tekočini«) postavi opeko pokonci, na bok ali plosko in opazuj, kako se pri isti teži spreminja tlak na podlago. Pri človeku primerjaj čevlje, krplje in smuči: večja ploskev pomeni manjši tlak.
 
 ## Drugače: Iz vsakdanjega življenja
 
-- **Žebelj in kladivo.** Z roko pritiskaš na glavico žeblja z enako silo, kot jo ima konica na les. Ploščina konice je mnogo manjša, zato je tlak na les mnogo večji in žebelj prodre.
+- **Žebelj in kladivo.** S kladivom deluješ na glavico žeblja, konica pa z enako silo deluje na les. Ploščina konice je mnogo manjša, zato je tlak na les mnogo večji in žebelj prodre.
 - **Smuči.** Težka oseba stoji na dveh ozkih čevljih in se pogrezne v sneg. S smučmi je ista teža razporejena na veliko ploščino, tlak je manjši in se ne pogrezne.
 - **Bazen.** Na dnu globokega dela čutiš pritisk na ušesa. Tam je tlak večji zaradi večje globine, ne zaradi tega, da je voda "težja".
 - **Jez.** Zid jezu je ob dnu debelejši kot zgoraj, ker je tlak ob dnu večji.
