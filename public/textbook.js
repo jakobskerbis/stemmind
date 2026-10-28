@@ -162,19 +162,19 @@ async function renderHome() {
         <input id="tb-q" type="search" placeholder="Išči pojem, zakon ali poskus …" value="${esc(tb.query)}" aria-label="Išči po učbeniku" autocomplete="off">
       </div>
       <div class="tb-filters">
-        <div class="tb-seg" role="tablist" aria-label="Predmet">${subjects
-          .map(([k, v]) => `<button type="button" role="tab" data-subj="${esc(k)}" class="${k === tb.subject ? "on" : ""}" aria-selected="${k === tb.subject}">${esc(v)}</button>`)
+        <div class="seg" role="tablist" aria-label="Predmet">${subjects
+          .map(([k, v]) => `<button type="button" role="tab" data-subj="${esc(k)}" class="${k === tb.subject ? "active" : ""}" aria-selected="${k === tb.subject}">${esc(v)}</button>`)
           .join("")}</div>
-        ${books.length > 1 ? `<div class="tb-seg" role="tablist" aria-label="Raven">${books
-          .map((b) => `<button type="button" role="tab" data-book="${esc(b.key)}" class="${b.key === tb.book ? "on" : ""}" aria-selected="${b.key === tb.book}">${esc(levelName(b))}</button>`)
+        ${books.length > 1 ? `<div class="seg" role="tablist" aria-label="Raven">${books
+          .map((b) => `<button type="button" role="tab" data-book="${esc(b.key)}" class="${b.key === tb.book ? "active" : ""}" aria-selected="${b.key === tb.book}">${esc(levelName(b))}</button>`)
           .join("")}</div>` : ""}
       </div>
       ${book ? `<div class="tb-book card">
         <div><p class="eyebrow">Učbenik</p><h2>${esc(book.subjectName)} · ${esc(book.schoolName)}</h2>
         <p class="muted">${book.lessons} od ${book.topics} lekcij${book.lessons < book.topics ? ", ostale nastajajo" : ""}</p></div>
         <div class="tb-book-actions">
-          <a class="primary tb-book-pdf" href="/ucbenik/${esc(book.key)}#natisni" target="_blank" rel="noopener">${ic("download")}Celoten učbenik (PDF)</a>
-          ${book.formulas ? `<a class="tb-book-pdf secondary-link" href="/ucbenik/${esc(book.key)}/formule#natisni" target="_blank" rel="noopener">${ic("sigma")}Formule in konstante (PDF)</a>` : ""}
+          <a class="btn-primary tb-book-pdf" href="/ucbenik/${esc(book.key)}#natisni" target="_blank" rel="noopener">${ic("download")}Celoten učbenik (PDF)</a>
+          ${book.formulas ? `<a class="btn-secondary tb-book-pdf" href="/ucbenik/${esc(book.key)}/formule#natisni" target="_blank" rel="noopener">${ic("sigma")}Formule in konstante (PDF)</a>` : ""}
         </div>
       </div>` : ""}
     </div>
@@ -243,8 +243,8 @@ async function renderBody() {
           .join("")}</ul>
       </section>`;
   const parts = book.parts;
-  body.innerHTML = `${parts.length > 1 ? `<nav class="tb-jump" aria-label="Deli učbenika">${parts
-      .map((p) => `<a href="#tb-part-${esc(p.key)}" class="${p.key === tb.myPath ? "on" : ""}">${esc(p.label.split(",").slice(1).join(",").trim() || p.label)}</a>`)
+  body.innerHTML = `${parts.length > 1 ? `<nav class="tb-jump chip-row" aria-label="Deli učbenika">${parts
+      .map((p) => `<a href="#tb-part-${esc(p.key)}" class="${p.key === tb.myPath ? "active" : ""}">${esc(p.label.split(",").slice(1).join(",").trim() || p.label)}</a>`)
       .join("")}</nav>` : ""}
     ${parts
       .map(
@@ -314,8 +314,8 @@ async function renderLesson(topicId) {
     ? `<div class="tb-alt">
         <button type="button" class="secondary" id="tb-alt-btn">${ic("refresh-cw")}Razloži drugače</button>
         <div id="tb-alt-box" hidden>
-          <div class="tb-alt-tabs" role="tablist">${lesson.alternatives
-            .map((a, i) => `<button type="button" role="tab" data-alt="${i}" class="${i ? "" : "on"}">${esc(a.title)}</button>`)
+          <div class="tb-alt-tabs chip-row" role="tablist">${lesson.alternatives
+            .map((a, i) => `<button type="button" role="tab" data-alt="${i}" class="${i ? "" : "active"}">${esc(a.title)}</button>`)
             .join("")}</div>
           <div class="tb-alt-body" id="tb-alt-body"></div>
         </div>
@@ -390,7 +390,7 @@ async function renderLesson(topicId) {
   // Razloži drugače
   const altBody = $("#tb-alt-body");
   const showAlt = (i) => {
-    box.querySelectorAll("[data-alt]").forEach((b) => b.classList.toggle("on", Number(b.dataset.alt) === i));
+    box.querySelectorAll("[data-alt]").forEach((b) => b.classList.toggle("active", Number(b.dataset.alt) === i));
     altBody.innerHTML = `<div class="explanation">${R(lesson.alternatives[i].md)}</div>`;
     wireFormulas(altBody);
   };
