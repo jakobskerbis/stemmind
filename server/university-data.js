@@ -1331,6 +1331,11 @@ for (const fac of EXTRA_FACULTIES) {
       PROGRAMS[id] = { faculty: fac.id, ...p };
       continue;
     }
+    // replace: preverjen celoten predmetnik zamenja prejšnjega.
+    if (p.replace) {
+      Object.assign(old, { years: p.years, electives: p.electives || [] }, p.source ? { source: p.source } : {}, p.sourceYear ? { sourceYear: p.sourceYear } : {});
+      continue;
+    }
     p.years.forEach((codes, i) => (old.years[i] = [...(old.years[i] || []), ...codes.filter((c) => !(old.years[i] || []).includes(c))]));
     old.electives = [...(old.electives || []), ...(p.electives || [])];
   }
