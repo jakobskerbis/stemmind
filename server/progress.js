@@ -4,6 +4,7 @@ import crypto from "node:crypto";
 import { getPath, getTopic } from "./curriculum.js";
 import { generateTask, hasGenerator, publicTask } from "./practice/index.js";
 import { checkAnswer } from "./practice/check.js";
+import { CONTEST, TRAINING_TASKS, isCompetitionPath } from "./competition.js";
 
 export const RULES = {
   levelUpStreak: 3, // 3 pravilni zapored -> težje
@@ -133,9 +134,11 @@ export class Progress {
     });
     // Odklepanje: sklop z vajami je zaklenjen, dokler ni obvladan prejšnji sklop z vajami
     // (razen če ga je učenec že začel ali opravil preizkus znanja).
+    // Tekmovalne poti niso zaklenjene: sklopi so neodvisni, tekmovalec izbira sam.
     let prevGate = null;
+    const gated = !isCompetitionPath(pathKey);
     for (const u of units) {
-      u.locked = !!(u.hasPractice && prevGate && !prevGate.mastered && !u.started);
+      u.locked = !!(gated && u.hasPractice && prevGate && !prevGate.mastered && !u.started);
       if (u.hasPractice) prevGate = u;
     }
     const next =
@@ -220,7 +223,7 @@ export class Progress {
 
   sessionNext(sessionId) {
     const sess = this.getSession(sessionId);
-    const maxA = (t) => (t.mode === "placement" ? 1 : RULES.maxAttempts);
+    const maxA = (t) => (t.mode === "placement" || t.mode === "contest" ? 1 : RULES.maxAttempts);
     const isDone = (t) => t.solved || t.attempts >= maxA(t);
     let all = this.db.prepare("SELECT * FROM tasks WHERE session_id = ? ORDER BY id").all(sessionId);
     let open = all.find((t) => !isDone(t));
@@ -241,6 +244,7 @@ export class Progress {
     const kind = sess?.kind ?? all[0]?.mode;
     if (!open) {
       const out = { finished: true, sessionId, kind, total: all.length, correct: all.filter((t) => t.first_try_correct).length };
+      if (sess?.kind === "contest") return { ...out, contest: this.finishContest(sess) };
       if (sess && !sess.finished) {
         this.db.prepare("UPDATE sessions SET finished = 1 WHERE id = ?").run(sessionId);
         if (sess.kind === "daily") out.xp = this.award(sess.student_id, [[XP.daily, "dnevni trening"]]);
@@ -248,13 +252,18 @@ export class Progress {
       return out;
     }
     const payload = JSON.parse(open.payload);
-    return {
+    const next = {
       sessionId,
       kind,
       index: done + 1,
       total,
       task: { id: open.id, mode: open.mode, topicName: getTopic(open.topic_id)?.name, ...publicTask(payload) },
     };
+    if (sess?.kind === "contest") {
+      next.deadline = sess.params.deadline;
+      next.task.points = CONTEST.points[payload.level] || 0;
+    }
+    return next;
   }
 
   reviewBacklog(studentId) {
@@ -350,6 +359,116 @@ export class Progress {
     return this.sessionNext(this.createSession(studentId, "unit", plan, { path: pathKey, unit: unitIndex }));
   }
 
+  // ---------- tekmovanja ----------
+  // Tekmovalni trening: prepletene naloge iz vseh tem tekmovalne poti. Teme, ki se
+  // jih učenec že uči, pridejo večkrat; težavnost se prilagaja kot pri vadnici.
+  startCompetition(studentId, pathKey) {
+    if (!isCompetitionPath(pathKey)) return null;
+    const view = this.pathView(studentId, pathKey);
+    const topics = view?.units.flatMap((u) => u.topics).filter((t) => t.practice) || [];
+    if (!topics.length) return null;
+    const open = this.openSession(studentId, "tek", (x) => x.params.path === pathKey);
+    if (open) return this.sessionNext(open.id);
+    const learning = shuffle(topics.filter((t) => t.status === "learning"));
+    const rest = shuffle(topics.filter((t) => t.status !== "learning"));
+    // Približno polovica nalog iz tem v učenju, ostalo iz drugih (tudi novih) tem.
+    const pickLearning = learning.slice(0, Math.min(learning.length, 3));
+    const pool = [...pickLearning, ...pickLearning, ...rest, ...learning.slice(3)];
+    const chosen = [];
+    for (const t of pool) {
+      if (chosen.length >= TRAINING_TASKS) break;
+      chosen.push(t.id);
+    }
+    while (chosen.length < TRAINING_TASKS) chosen.push(topics[chosen.length % topics.length].id);
+    // Ista tema ne pride dvakrat zapored.
+    const order = shuffle(chosen);
+    for (let i = 1; i < order.length; i++) {
+      if (order[i] !== order[i - 1]) continue;
+      const j = order.findIndex((x, k) => k > i && x !== order[i - 1] && x !== order[i + 1]);
+      if (j > 0) [order[i], order[j]] = [order[j], order[i]];
+    }
+    const plan = order.map((topic) => ({ topic, mode: "practice" }));
+    return this.sessionNext(this.createSession(studentId, "tek", plan, { path: pathKey }));
+  }
+
+  // Poskusno tekmovanje: 10 nalog iz različnih tem, od lažjih k težjim, na čas,
+  // en poskus, brez namigov. Rezultat (točke) je viden šele na koncu.
+  startContest(studentId, pathKey) {
+    if (!isCompetitionPath(pathKey)) return null;
+    const path = getPath(pathKey);
+    const topics = path.units.flatMap((u) => u.topics).filter((t) => hasGenerator(t.id)).map((t) => t.id);
+    if (!topics.length) return null;
+    const open = this.openSession(studentId, "contest", (x) => x.params.path === pathKey);
+    if (open) {
+      if (Date.now() <= open.params.deadline) return this.sessionNext(open.id);
+      this.finishContest(open);
+    }
+    const order = shuffle(topics);
+    const plan = CONTEST.levels.map((level, i) => ({ topic: order[i % order.length], mode: "contest", level }));
+    const now = Date.now();
+    const params = { path: pathKey, started: now, deadline: now + CONTEST.minutes * 60000, minutes: CONTEST.minutes };
+    return this.sessionNext(this.createSession(studentId, "contest", plan, params));
+  }
+
+  // Točke tekmovanja: pravilno v edinem poskusu in pred iztekom časa.
+  contestResult(sess) {
+    const tasks = this.db.prepare("SELECT * FROM tasks WHERE session_id = ? ORDER BY id").all(sess.id);
+    const items = sess.plan.map((p, i) => {
+      const t = tasks[i];
+      const payload = t ? JSON.parse(t.payload) : null;
+      const pts = CONTEST.points[p.level] || 0;
+      const correct = !!t?.first_try_correct;
+      return {
+        topicName: getTopic(p.topic)?.name || "",
+        level: p.level,
+        points: pts,
+        earned: correct ? pts : 0,
+        answered: !!t?.attempts,
+        correct,
+        yourAnswer: t?.last_answer ?? null,
+        task: payload ? { ...publicTask(payload), solution: payload.solution } : null,
+      };
+    });
+    const points = items.reduce((s, x) => s + x.earned, 0);
+    const maxPoints = items.reduce((s, x) => s + x.points, 0);
+    const usedMs = Math.min((sess.params.finishedAt || Date.now()) - sess.params.started, sess.params.minutes * 60000);
+    return { points, maxPoints, correct: items.filter((x) => x.correct).length, total: items.length, minutes: Math.ceil(usedMs / 60000), items };
+  }
+
+  // Zaključi tekmovanje (vse rešeno, učenec je končal ali je čas potekel). XP enkrat.
+  finishContest(sess) {
+    if (typeof sess === "string") sess = this.getSession(sess);
+    if (!sess || sess.kind !== "contest") return null;
+    if (!sess.finished) {
+      sess.params.finishedAt = Math.min(Date.now(), sess.params.deadline);
+      const result = this.contestResult(sess);
+      sess.params.points = result.points;
+      sess.params.maxPoints = result.maxPoints;
+      this.db.prepare("UPDATE sessions SET finished = 1, params = ? WHERE id = ?").run(JSON.stringify(sess.params), sess.id);
+      sess.finished = 1;
+      if (result.points) result.xp = this.award(sess.student_id, [[result.points, "poskusno tekmovanje"]]);
+      return result;
+    }
+    return this.contestResult(sess);
+  }
+
+  // Zadnji rezultati poskusnih tekmovanj na tej poti.
+  contestHistory(studentId, pathKey, limit = 5) {
+    return this.db
+      .prepare("SELECT * FROM sessions WHERE student_id = ? AND kind = 'contest' AND finished = 1 ORDER BY created_at DESC, rowid DESC")
+      .all(studentId)
+      .map((r) => ({ ...r, params: JSON.parse(r.params) }))
+      .filter((r) => r.params.path === pathKey && r.params.maxPoints)
+      .slice(0, limit)
+      .map((r) => ({ date: r.created_at.slice(0, 10), points: r.params.points, maxPoints: r.params.maxPoints }));
+  }
+
+  // Odprto tekmovanje (za gumb »Nadaljuj«), če čas še teče.
+  openContest(studentId, pathKey) {
+    const open = this.openSession(studentId, "contest", (x) => x.params.path === pathKey);
+    return open && Date.now() <= open.params.deadline ? { deadline: open.params.deadline } : null;
+  }
+
   // ---------- priprava na test ----------
   testPlan(studentId) {
     const r = this.db.prepare("SELECT * FROM test_plans WHERE student_id = ?").get(studentId);
@@ -424,8 +543,15 @@ export class Progress {
   answer(studentId, taskId, input) {
     const row = this.getTask(taskId);
     if (!row || row.student_id !== studentId) return { error: "Naloga ne obstaja." };
-    const maxAttempts = row.mode === "placement" ? 1 : RULES.maxAttempts;
+    const oneShot = row.mode === "placement" || row.mode === "contest";
+    const maxAttempts = oneShot ? 1 : RULES.maxAttempts;
     if (row.solved || row.attempts >= maxAttempts) return { error: "Ta naloga je že zaključena." };
+    if (row.mode === "contest") {
+      const sess = this.getSession(row.session_id);
+      if (!sess || sess.finished) return { error: "To tekmovanje je že končano." };
+      // Po izteku časa odgovor ne šteje več.
+      if (Date.now() > sess.params.deadline) return { timeUp: true, contest: this.finishContest(sess) };
+    }
 
     const task = row.payload;
     const res = checkAnswer(task.answer, input);
@@ -458,6 +584,12 @@ export class Progress {
       flag: "none",
     });
 
+    if (row.mode === "contest") {
+      out.saved = true;
+      out.next = this.sessionNext(row.session_id);
+      if (out.next.contest) out.contest = out.next.contest;
+      return out;
+    }
     if (row.mode === "placement") {
       out.correct = correct;
       if (!correct && res.kind === "rounding") out.message = res.message;
