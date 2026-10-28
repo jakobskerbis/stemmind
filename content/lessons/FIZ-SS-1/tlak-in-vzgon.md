@@ -63,11 +63,11 @@ Pri plavajočem telesu je vzgon enak teži telesa: $F_v = F_g$.
 
 Kolikšen je hidrostatični tlak v jezeru na globini $5{,}0\,\text{m}$? Gostota vode je $1000\,\text{kg/m}^3$.
 
-**Podatki:** $h = 5{,}0\,\text{m}$, $\rho = 1000\,\text{kg/m}^3$ (voda), $g = 9{,}8\,\text{m/s}^2$
-**Iščemo:** hidrostatični tlak $p_h$
+**Podatki:** $h = 5{,}0\,\text{m}$, $\rho = 1000\,\text{kg/m}^3$ (voda), $g = 9{,}8\,\text{m/s}^2$, zračni tlak $p_0 \approx 100\,000\,\text{Pa}$ (za skupni tlak)
+**Iščemo:** hidrostatični tlak $p_h$ (in še skupni tlak $p$)
 
 :::formula
-$p_h = \rho\,g\,h$
+$p_h = \rho\,g\,h$, skupni tlak $p = p_0 + p_h$
 :::
 
 **Rešitev:**
@@ -106,6 +106,8 @@ Lesen kvader ima gostoto $600\,\text{kg/m}^3$ in prostornino $0{,}020\,\text{m}^
 **Iščemo:** delež potopljenega dela $\dfrac{V_i}{V}$
 
 :::formula
+Masa in teža telesa: $m = \rho\,V$, $F_g = m\,g$; vzgon: $F_v = \rho_t\,g\,V_i$
+
 Telo plava, zato je vzgon enak teži: $F_v = F_g$, torej $\rho_t\,g\,V_i = \rho\,g\,V$
 :::
 
@@ -142,7 +144,7 @@ Predstavljaj si navpičen stolp iz škatel, naloženih ena na drugo. Spodnja šk
 
 Vzgon si predstavljaj kot puščice. Na spodnjo ploskev potopljene kocke kažejo puščice tlaka navzgor in so daljše, na zgornjo ploskev kažejo navzdol in so krajše. Stranske puščice se izničijo. Ostane razlika, ki kaže navzgor, in to je vzgon.
 
-V interaktivni simulaciji spodaj (»Hidrostatični tlak«) spreminjaj globino in opazuj, kako se tlak spreminja. Primerjaj tudi tekočine z različno gostoto. Simulacija »Vzgon in Arhimedov zakon« pa pokaže, kako vzgon določa, ali telo plava ali potone. Tlak na isti globini je odvisen samo od globine in gostote tekočine, ne od oblike posode.
+V interaktivni simulaciji spodaj (»Hidrostatični tlak«) spreminjaj globino in opazuj, kako se tlak spreminja. Primerjaj tudi tekočine z različno gostoto. Tlak na isti globini je odvisen samo od globine in gostote tekočine, ne od oblike posode. Simulacija »Vzgon in Arhimedov zakon« spodaj pa pokaže, kako vzgon določa, ali telo plava ali potone.
 
 ## Drugače: Iz vsakdanjega življenja
 

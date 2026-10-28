@@ -16,13 +16,13 @@ V tej lekciji se boš naučil:
 - jih narisati v **stolpčnem prikazu** in v **črtičnem prikazu**,
 - prikaze pravilno **brati** in razbrati, kar sprašuje naloga.
 
-Za računanje potrebuješ le seštevanje, odštevanje in deljenje, ki ga že znaš. Pri merilu na osi ti pomaga znanje o merskih enotah.
+Za računanje potrebuješ le seštevanje, odštevanje, množenje in deljenje, ki ga že znaš. Pri merilu na osi ti pomaga znanje o merskih enotah.
 
 ## Razlaga
 
 **1. Podatki in zbiranje.** **Podatek** je zapisana informacija: ime ljubljenčka, število bratov in sester, temperatura, rezultat tekme. Podatke zbiramo z anketo (vprašamo ljudi), s štetjem (preštejemo avtomobile mimo šole) ali z merjenjem (vsak dan izmerimo temperaturo). Pri vsaki zbirki vedno vemo, kaj sprašujemo in koga smo vprašali.
 
-Pogosto štejemo s črticami. Za vsak odgovor potegnemo eno črtico, pri petem odgovoru pa prve štiri črtice prečrtamo, tako da nastane »peterček«. Devet nogometašev zapišemo kot en prečrtan peterček in še štiri črtice, šest košarkarjev pa kot en peterček in še eno črtico:
+Pogosto štejemo s črticami. Za vsak odgovor potegnemo eno črtico, pri petem odgovoru pa prve štiri črtice prečrtamo, tako da nastane »peterček«. Devet glasov za nogomet zapišemo kot en prečrtan peterček in še štiri črtice, šest glasov za košarko pa kot en peterček in še eno črtico:
 
 ```
 nogomet:  ||||/  ||||    -> 9
@@ -62,7 +62,7 @@ $$\text{višina stolpca} = \text{vrednost} : \text{merilo}$$
 
 **5. Črtični prikaz.** Za podatke, ki se **spreminjajo skozi čas** (temperatura po dnevih, višina rastline po tednih, število obiskovalcev po mesecih), uporabimo **črtični prikaz** (črtni diagram). Za vsak čas narišemo točko na višini ustrezne vrednosti, točke pa povežemo z daljicami. Črta nam pokaže, kdaj vrednosti **naraščajo** (črta se dviguje), **padajo** (črta se spušča) ali so **stalne** (črta je vodoravna).
 
-Točke povezujemo samo tedaj, ko imajo vmesne vrednosti smisel. Temperatura med ponedeljkom in torkom je pozno ponoči nekje med obema vrednostma, zato črta ima smisel. Pri številu učencev v različnih razredih pa vmesnega »razreda« ni, zato tam rišemo stolpce.
+Točke povezujemo samo tedaj, ko imajo vmesne vrednosti smisel. Temperatura se med dvema meritvama spreminja postopoma in ima ves čas neko vrednost, zato ima črta smisel (vmesne vrednosti na njej so le ocena). Pri številu učencev v različnih razredih pa vmesnega »razreda« ni, zato tam rišemo stolpce.
 
 **6. Kako beremo prikaz.**
 
@@ -74,7 +74,7 @@ Točke povezujemo samo tedaj, ko imajo vmesne vrednosti smisel. Temperatura med 
 
 Pri primerjavah računamo z razlikami: »za koliko več« pomeni odštevanje, »skupaj« pa seštevanje.
 
-Interaktivna simulacija spodaj ti omogoča, da vnašaš podatke in opazuješ, kako se oblikuje stolpčni prikaz.
+Interaktivna simulacija spodaj (**Prikazi podatkov**) ti omogoča, da vnašaš podatke in opazuješ, kako se oblikuje stolpčni prikaz.
 
 ## Rešeni primeri
 
@@ -121,7 +121,7 @@ $\text{višina stolpca} = \text{vrednost} : \text{merilo}$
 Gregor je vsak dan ob osmih zjutraj izmeril temperaturo zraka. V ponedeljek je bilo $4\,^\circ\text{C}$, v torek $7\,^\circ\text{C}$, v sredo $9\,^\circ\text{C}$, v četrtek $9\,^\circ\text{C}$, v petek $6\,^\circ\text{C}$ in v soboto $2\,^\circ\text{C}$. Podatke je narisal v črtični prikaz. Katera dneva sta bila najtoplejša? Za koliko stopinj se razlikujeta najtoplejši in najhladnejši dan? Med katerima zaporednima dnevoma je temperatura najbolj padla in zakaj je tu primeren črtični prikaz?
 
 **Podatki:** ponedeljek $4\,^\circ\text{C}$, torek $7\,^\circ\text{C}$, sreda $9\,^\circ\text{C}$, četrtek $9\,^\circ\text{C}$, petek $6\,^\circ\text{C}$, sobota $2\,^\circ\text{C}$ (temperatura ob osmih zjutraj)
-**Iščemo:** najtoplejša dneva, razliko med največjo in najmanjšo temperaturo, največji padec med zaporednima dnevoma
+**Iščemo:** najtoplejša dneva, razliko med največjo in najmanjšo temperaturo, največji padec med zaporednima dnevoma in zakaj je primeren črtični prikaz
 
 :::formula
 Razlika zaporednih vrednosti: $\text{novejša} - \text{starejša}$ ($>0$ naraščanje, $<0$ padanje, $0$ stalno). Razpon: $\text{največja} - \text{najmanjša}$.
@@ -133,8 +133,8 @@ Razlika zaporednih vrednosti: $\text{novejša} - \text{starejša}$ ($>0$ naraš�
 2. Najnižja točka je pri $2\,^\circ\text{C}$ (sobota). Razlika: $9 - 2 = 7\,^\circ\text{C}$.
 3. Spremembe po dnevih: ponedeljek-torek $7 - 4 = +3$, torek-sreda $9 - 7 = +2$, sreda-četrtek $9 - 9 = 0$, četrtek-petek $6 - 9 = -3$, petek-sobota $2 - 6 = -4$.
 4. Največji padec je za $4\,^\circ\text{C}$, od petka do sobote. To je tudi najstrmejši spust črte.
-5. Črtični prikaz je primeren, ker se temperatura skozi čas spreminja in nas zanima potek: črta kaže naraščanje (do srede), mirovanje (sreda do četrtek) in padanje (od četrtka naprej).
-6. Odgovor: najtoplejša sta sreda in četrtek ($9\,^\circ\text{C}$); razlika med najtoplejšim in najhladnejšim dnem je $7\,^\circ\text{C}$; temperatura je najbolj padla od petka do sobote, za $4\,^\circ\text{C}$.
+5. Črtični prikaz je primeren, ker se temperatura skozi čas spreminja in nas zanima potek: črta kaže naraščanje (do srede), mirovanje (od srede do četrtka) in padanje (od četrtka naprej).
+6. Odgovor: najtoplejša sta sreda in četrtek ($9\,^\circ\text{C}$); razlika med najtoplejšim in najhladnejšim dnem je $7\,^\circ\text{C}$; temperatura je najbolj padla od petka do sobote, za $4\,^\circ\text{C}$; črtični prikaz je primeren, ker prikazuje spreminjanje temperature skozi čas.
 
 ## Pogoste napake
 
@@ -202,13 +202,13 @@ Nariši stolpčni prikaz iz teh podatkov: število avtomobilov, ki so v petih mi
 6. **Dodaj naslov** (»Barve avtomobilov mimo šole«) in oznako osi (»število avtomobilov«).
 7. **Preveri:** najvišji stolpec je beli ($20$), najnižji modri ($5$). Razlika med njima: $20 - 5 = 15$ avtomobilov.
 
-Ko prikaz berš nazaj, postopek obrneš: stolpec je visok $3$ kvadratke, merilo je $5$, torej je vrednost $3 \cdot 5 = 15$.
+Ko prikaz bereš nazaj, postopek obrneš: stolpec je visok $3$ kvadratke, merilo je $5$, torej je vrednost $3 \cdot 5 = 15$.
 
 ## Drugače: Bolj natančno
 
 **Vrste podatkov.** Pri stolpčnem prikazu so kategorije pogosto **opisni podatki** (barva, šport, žival), števila pa so **štetja**. Pri črtičnem prikazu je na vodoravni osi čas, pogosto neprekinjena količina, zato lahko točke povežemo.
 
-**Zakaj se os začne pri $0$.** Višina stolpca mora biti sorazmerna z vrednostjo: stolpec za dvakrat večjo vrednost mora biti dvakrat višji. To drži samo, če os začne pri $0$. Primer: dva razreda imata $48$ in $50$ učencev. Če narišemo os od $46$, sta stolpca visoka $48 - 46 = 2$ in $50 - 46 = 4$ enoti. Drugi stolpec je videti dvakrat višji, čeprav je v resnici le za dva učenca (približno $4\,\%$) večji. To je zavajajoč prikaz.
+**Zakaj se os začne pri $0$.** Višina stolpca mora biti sorazmerna z vrednostjo: stolpec za dvakrat večjo vrednost mora biti dvakrat višji. To drži samo, če se os začne pri $0$. Primer: dva razreda imata $48$ in $50$ učencev. Če narišemo os od $46$, sta stolpca visoka $48 - 46 = 2$ in $50 - 46 = 4$ enoti. Drugi stolpec je videti dvakrat višji, čeprav je v resnici le za dva učenca večji. To je zavajajoč prikaz.
 
 **Izbira merila.** Merilo izberemo tako, da je največji stolpec dovolj velik, a se prilega na list, in tako da so vse višine lahko odčitati. Priročna merila so $1$, $2$, $5$, $10$, $20$ in podobno. Če izberemo merilo $3$, so oznake na osi $3, 6, 9, \dots$ in prikaz je težje brati.
 
@@ -240,4 +240,4 @@ Ko prikaz berš nazaj, postopek obrneš: stolpec je visok $3$ kvadratke, merilo 
 + Majhne razlike so videti zelo velike.
 - Stolpci postanejo preširoki.
 - Števila na osi postanejo negativna.
-> Če os ne začne pri $0$, višina stolpca ni več sorazmerna z vrednostjo, zato se razlike zdijo večje, kot so.
+> Če se os ne začne pri $0$, višina stolpca ni več sorazmerna z vrednostjo, zato se razlike zdijo večje, kot so.

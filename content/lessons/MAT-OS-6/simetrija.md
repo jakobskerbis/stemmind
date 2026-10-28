@@ -14,7 +14,7 @@ V tej lekciji se naučiš, kako točko in lik **zrcalimo čez premico**, in kako
 
 ## Razlaga
 
-**1. Zrcaljenje točke čez premico.** Izberemo premico $o$, ki ji rečemo **os zrcaljenja** (ogledalo). Točki $A$ priredimo točko $A'$ (beremo »A prim«), imenujemo jo **zrcalna slika** točke $A$, tako da je $o$ **simetrala daljice** $AA'$. To pomeni:
+**1. Zrcaljenje točke čez premico.** Izberemo premico $o$, ki ji rečemo **os zrcaljenja** (ogledalo). Točki $A$ priredimo točko $A'$ (beremo »A črtica«), imenujemo jo **zrcalna slika** točke $A$, tako da je $o$ **simetrala daljice** $AA'$. To pomeni:
 
 - daljica $AA'$ je **pravokotna** na os $o$,
 - os $o$ razpolovi daljico $AA'$, zato sta $A$ in $A'$ **enako oddaljeni od osi**, vsaka na svoji strani.
@@ -31,7 +31,7 @@ $$\lvert AA'\rvert = 2d$$
 2. Z ravnilom ali šestilom odmeri razdaljo $\lvert FA\rvert$.
 3. Isto razdaljo nanesi od $F$ po pravokotnici na **drugo stran** osi. Dobiš točko $A'$.
 
-Namesto merjenja lahko uporabiš šestilo: zapiči ga v $F$, odmeri $A$ in prenesi lok na drugo stran.
+Namesto merjenja lahko uporabiš šestilo: zapiči ga v $F$, razpon nastavi do točke $A$ in nariši lok na drugi strani osi. Kjer lok seka pravokotnico, je $A'$.
 
 **3. Zrcaljenje lika.** Lik sestavljajo točke. Če ima lik oglišča, zrcalimo vsako oglišče posebej in nato slike povežemo v enakem vrstnem redu. Na primer za trikotnik $ABC$ dobimo $A'B'C'$. Najprej zrcalimo $A$ v $A'$, nato $B$ v $B'$ in $C$ v $C'$, na koncu narišemo stranice $A'B'$, $B'C'$ in $C'A'$.
 
@@ -54,7 +54,7 @@ Lik ima lahko več simetrijskih osi, ali pa nobene:
 | enakostranični trikotnik | $3$ |
 | pravokotnik (ki ni kvadrat) | $2$ |
 | kvadrat | $4$ |
-| krog | neskončno mnogo (vsak premer) |
+| krog | neskončno mnogo (vsaka premica skozi središče) |
 
 Primeri črk (pisanih brez okraskov): črka **A** ima $1$ os (navpična), črka **H** ima $2$ osi, črka **F** nima nobene.
 
@@ -62,7 +62,7 @@ Osi pravokotnika sta premici skozi sredini nasprotnih stranic. Diagonali pravoko
 
 **6. Os je lahko poljubno obrnjena.** Do zdaj smo si osi predstavljali kot navpične ali vodoravne črte. Os je lahko tudi poševna in zrcaljenje deluje enako: zmeraj merimo razdaljo *pravokotno* na os.
 
-Zrcaljenje si oglej v interaktivni simulaciji spodaj: premikaj oglišča trikotnika in opazuj, kako se premikajo oglišča slike. Preklopiš lahko tudi na poševno os.
+Zrcaljenje si oglej v interaktivni simulaciji spodaj (**Zrcaljenje čez os in središčna simetrija**): premikaj oglišča trikotnika in opazuj, kako se premikajo oglišča slike. Preklopiš lahko tudi na poševno os.
 
 ## Rešeni primeri
 
@@ -88,7 +88,7 @@ Razdalja slike od osi je enaka razdalji izvirnika: $d' = d$. Razdalja med točko
 
 Trikotnik $ABC$ leži na levi strani navpične osi $o$. Točka $A$ je od osi oddaljena $2\,\text{cm}$, točka $B$ $5\,\text{cm}$, točka $C$ $2\,\text{cm}$. Stranice merijo $\lvert AB\rvert = 3\,\text{cm}$, $\lvert AC\rvert = 4\,\text{cm}$ in $\lvert BC\rvert = 5\,\text{cm}$. Stranica $AC$ je vzporedna z osjo, stranica $AB$ je pravokotna nanjo. Trikotnik prezrcalimo čez os $o$. Kje ležijo oglišča slike $A'B'C'$ in kolikšen je obseg slike?
 
-**Podatki:** razdalje od osi: $d_A = 2\,\text{cm}$, $d_B = 5\,\text{cm}$, $d_C = 2\,\text{cm}$; stranice $\lvert AB\rvert = 3\,\text{cm}$, $\lvert AC\rvert = 4\,\text{cm}$, $\lvert BC\rvert = 5\,\text{cm}$; trikotnik je na levi strani osi
+**Podatki:** razdalje od osi: $d_A = 2\,\text{cm}$, $d_B = 5\,\text{cm}$, $d_C = 2\,\text{cm}$; stranice $\lvert AB\rvert = 3\,\text{cm}$, $\lvert AC\rvert = 4\,\text{cm}$, $\lvert BC\rvert = 5\,\text{cm}$; $AC$ je vzporedna z osjo, $AB$ je pravokotna nanjo; os $o$ je navpična, trikotnik je na levi strani osi
 **Iščemo:** razdalje oglišč slike od osi, dolžine $\lvert AA'\rvert$, $\lvert BB'\rvert$, $\lvert CC'\rvert$ in obseg trikotnika $A'B'C'$
 
 :::formula
@@ -191,7 +191,7 @@ Zrcaljenje ohranja razdalje med točkami, zato je slika lika skladna izvirniku. 
 
 Osno simetričen lik pomeni natančno to: njegova zrcalna slika čez neko premico $s$ je ta isti lik. Simetrijska os je torej premica, ki jo lik »sprejme«.
 
-**Za radovedne.** Interaktivna simulacija spodaj prikazuje tudi **središčno simetrijo**: točko $A$ zrcalimo čez točko $S$ tako, da je $S$ razpolovišče daljice $AA'$. Lik je središčno simetričen, če se po zasuku za $180^\circ$ okoli središča $S$ prekrije sam s seboj. Takšna je na primer črka H ali kvadrat. Podrobneje se je boš učil kasneje.
+**Za radovedne.** Interaktivna simulacija spodaj prikazuje tudi **središčno simetrijo**: točko $A$ zrcalimo čez točko $O$ tako, da je $O$ razpolovišče daljice $AA'$. Lik je središčno simetričen, če se po zasuku za $180^\circ$ okoli središča $O$ prekrije sam s seboj. Takšna je na primer črka H ali kvadrat. Podrobneje se je boš učil kasneje.
 
 ## Preveri se
 

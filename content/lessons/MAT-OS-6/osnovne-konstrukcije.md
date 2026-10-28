@@ -10,7 +10,7 @@ avtor: AI
 
 Odgovor je **konstrukcija**: risanje samo s šestilom in ravnilom, brez merjenja. Šestilo ti pomaga, da dobiš enake razdalje, ravnilo pa, da potegneš ravno črto. Tako dobiš zelo natančne rezultate, in to z zelo malo orodja. Konstrukcije so že več kot 2000 let osnova geometrije. Uporabljajo jih arhitekti, mizarji in inženirji. Pri pouku jih boš potreboval še pri risanju trikotnikov in drugih likov.
 
-V tej lekciji se naučiš tri osnovne konstrukcije: **simetralo daljice**, **pravokotnico** in **simetralo kota**. Poskusi jih sproti narisati na list papirja.
+V tej lekciji se naučiš treh osnovnih konstrukcij: **simetrale daljice**, **pravokotnice** in **simetrale kota**. Poskusi jih sproti narisati na list papirja.
 
 ## Razlaga
 
@@ -18,7 +18,7 @@ V tej lekciji se naučiš tri osnovne konstrukcije: **simetralo daljice**, **pra
 
 - **šestilo**, s katerim narišeš krožni lok z izbranim središčem in polmerom,
 - **ravnilo** (brez merjenja, samo za risanje premic),
-- **svinčnik**, ki ga ostriš, da so črte tanke.
+- **svinčnik**, ki ga dobro ošiliš, da so črte tanke.
 
 Pravila: razpona šestila med enim korakom ne spreminjaj, pomožne loke in črte pusti na listu (ne briši jih), končni rezultat pa potegni močneje, da ga je lahko videti.
 
@@ -55,7 +55,7 @@ Primeri dolžin:
 1. Zapiči šestilo v $T$ in nariši lok z dovolj velikim polmerom, da seka premico $p$ v dveh točkah $A$ in $B$.
 2. Konstruiraj simetralo daljice $AB$. Ker je $T$ enako oddaljena od $A$ in $B$, leži simetrala skozi $T$ in je pravokotna na $p$.
 
-Pravokotnica je torej le poseben primer simetrale daljice. Dolžini daljice od točke $T$ do pravokotne črte na $p$ pravimo **razdalja točke od premice**. To je najkrajša pot od točke do premice.
+Pravokotnica je torej le poseben primer simetrale daljice. Dolžini daljice od točke $T$ do presečišča pravokotnice s premico $p$ pravimo **razdalja točke od premice**. To je najkrajša pot od točke do premice.
 
 **5. Simetrala kota.** Kot ima **vrh** $V$ in dva **kraka** (poltraka iz vrha). **Simetrala kota** je poltrak iz vrha, ki kot razdeli na dva enaka dela.
 
@@ -72,7 +72,7 @@ Postopek:
 |---|---|---|---|
 | vsak del $\dfrac{\alpha}{2}$ | $35^\circ$ | $45^\circ$ | $60^\circ$ |
 
-**6. Preverjanje.** Rezultat lahko preveriš z merjenjem. Pri simetrali daljice izmeri obe polovici, pri pravokotnici uporabi kotomer ali geotrikotnik, pri simetrali kota izmeri oba dela kota. Pri natančni konstrukciji se bosta rezultata razlikovala le za malo. Korake lahko po vrsti prikažeš tudi v interaktivni simulaciji spodaj.
+**6. Preverjanje.** Rezultat lahko preveriš z merjenjem. Pri simetrali daljice izmeri obe polovici, pri pravokotnici uporabi kotomer ali geotrikotnik, pri simetrali kota izmeri oba dela kota. Pri natančni konstrukciji se bosta rezultata razlikovala le za malo. Korake lahko po vrsti prikažeš tudi v interaktivni simulaciji spodaj (**Osnovne konstrukcije po korakih**).
 
 ## Rešeni primeri
 
@@ -129,16 +129,16 @@ $90^\circ : 2 = 45^\circ$ in $180^\circ - 45^\circ = 135^\circ$
 
 1. Narišemo premico $p$ in na njej točko $V$. Konstruiramo pravokotnico na $p$ skozi $V$. Dobimo kot $90^\circ$ med premico in pravokotnico.
 2. Pravi kot razpolovimo s konstrukcijo simetrale kota. Vsak del meri $90^\circ : 2 = 45^\circ$.
-3. Kot med eno polovico premice $p$ in simetralo je $45^\circ$. Kot na drugi strani je $180^\circ - 45^\circ = 135^\circ$.
+3. Kot med enim poltrakom premice $p$ z izhodiščem $V$ in simetralo je $45^\circ$. Kot na drugi strani je $180^\circ - 45^\circ = 135^\circ$.
 4. Preverimo z drugim računom: kot $135^\circ$ je sestavljen iz pravega kota in polovice pravega kota, $90^\circ + 45^\circ = 135^\circ$.
-5. Odgovor: kot $135^\circ$ je kot med simetralo pravega kota in tistim krakom premice $p$, ki leži na drugi strani pravokotnice; z isto konstrukcijo dobiš tudi kot $45^\circ$.
+5. Odgovor: kot $135^\circ$ je kot med simetralo pravega kota in tistim poltrakom premice $p$, ki leži na drugi strani pravokotnice; z isto konstrukcijo dobiš tudi kot $45^\circ$.
 
 ## Pogoste napake
 
 - **Razpon šestila se med korakom spremeni.** Če pri loku v $A$ uporabiš en polmer, pri loku v $B$ pa drugega, presečišči nista enako oddaljeni od $A$ in $B$ in premica ni simetrala. Pravilno: polmer nastavi enkrat, pri lokih v $A$ in $B$ ga ne spreminjaj, šestilo pa drži za ročaj in ne za krake.
 - **Polmer je premajhen.** Če je polmer manjši ali enak polovici daljice $AB$, se loka ne sekata. Pravilno: polmer vedno izberi večji od $\dfrac{\lvert AB\rvert}{2}$. Pri daljici $6\,\text{cm}$ vzemi na primer $4\,\text{cm}$.
 - **Zamenjava simetrale in pravokotnice skozi krajišče.** Simetrala daljice gre skozi *razpolovišče*, ne skozi krajišče. Pravilno: preveri, da sta obe polovici daljice enako dolgi, vsaka $\dfrac{\lvert AB\rvert}{2}$, in da je kot $90^\circ$.
-- **Središče loka pri simetrali kota.** Prvi lok mora imeti središče v *vrhu* kota $V$, ne v katerem koli drugem krajišču. Pravilno: najprej zapiči šestilo v $V$, šele nato iz točk $A$ in $B$ na krakih nadaljuj.
+- **Središče loka pri simetrali kota.** Prvi lok mora imeti središče v *vrhu* kota $V$, ne v kateri koli drugi točki. Pravilno: najprej zapiči šestilo v $V$, šele nato iz točk $A$ in $B$ na krakih nadaljuj.
 - **Brisanje pomožnih lokov.** Če loke pobrišeš, ne moreš preveriti, ali je konstrukcija prava. Pravilno: pusti jih na papirju, končni rezultat pa poudari z močnejšo črto.
 
 ## Povzetek
@@ -146,7 +146,7 @@ $90^\circ : 2 = 45^\circ$ in $180^\circ - 45^\circ = 135^\circ$
 - Konstrukcija je risanje s šestilom in ravnilom, brez merjenja. Razpona šestila med korakom ne spreminjaj.
 - **Simetrala daljice** $AB$: loka z enakim polmerom $r > \dfrac{\lvert AB\rvert}{2}$ okrog $A$ in $B$, presečišči povežeš. Poteka skozi razpolovišče in je pravokotna na $AB$.
 - Točke simetrale daljice so enako oddaljene od krajišč.
-- **Pravokotnica** skozi točko $T$: lok okrog $T$ na premici $p$ izreže $A$ in $B$, nato simetrala daljice $AB$. Velja $a \perp b$, kot je $90^\circ$.
+- **Pravokotnica** skozi točko $T$: lok okrog $T$ na premici $p$ izreže $A$ in $B$, nato simetrala daljice $AB$. Pravokotnica in $p$ oklepata kot $90^\circ$.
 - **Simetrala kota** $\alpha$: lok okrog vrha $V$, nato loka okrog presečišč s kraki. Vsak del je $\dfrac{\alpha}{2}$.
 - Ko razpolovimo pravi kot, dobimo kot $45^\circ$.
 
@@ -154,13 +154,13 @@ $90^\circ : 2 = 45^\circ$ in $180^\circ - 45^\circ = 135^\circ$
 
 Predstavljaj si list papirja in opazuj, kaj se zgodi po korakih. Uporabi lahko tudi interaktivno simulacijo spodaj.
 
-**Simetrala daljice.** Na vodoravni črti sta točki $A$ levo in $B$ desno. Okoli $A$ nastane lok, ki izgleda kot oklepaj »)«, saj se vije proti desni, okoli $B$ pa lok, ki izgleda kot »(«. Ob njunem stiku nastaneta dve presečišči, ena nad daljico in ena pod njo. Premica skozi obe je navpična in seka daljico točno na sredini.
+**Simetrala daljice.** Na vodoravni črti sta točki $A$ levo in $B$ desno. Okoli $A$ nastane lok, ki je videti kot oklepaj »)«, saj se vije proti desni, okoli $B$ pa lok, ki je videti kot »(«. Ob njunem stiku nastaneta dve presečišči, eno nad daljico in eno pod njo. Premica skozi obe je navpična in seka daljico točno na sredini.
 
-**Simetrala kota.** Narisan kot je kot odprta škarje. Lok okoli vrha preseka oba kraka. Iz teh presečišč se dva manjša loka srečata v točki, ki leži točno »v sredi« med kraka. Poltrak skozi to točko škarje razdeli na dva enaka dela.
+**Simetrala kota.** Narisan kot je kot odprte škarje. Lok okoli vrha preseka oba kraka. Iz teh presečišč se dva manjša loka srečata v točki, ki leži točno »v sredi« med krakoma. Poltrak skozi to točko škarje razdeli na dva enaka dela.
 
-**Pravokotnica.** Ko je točka $T$ nad premico, lok izreže dve točki na premici, levo in desno od mesta, kjer bo stala pravokotnica. Navpična črta skozi $T$ je potem simetrala teh dveh točk, zato stoji pod pravim kotom.
+**Pravokotnica.** Ko je točka $T$ nad premico, lok izreže dve točki na premici, levo in desno od mesta, kjer bo stala pravokotnica. Navpična črta skozi $T$ je potem simetrala daljice med tema točkama, zato stoji pod pravim kotom.
 
-Opazuj, da je v vseh treh primerih slika **simetrična**: leva stran izgleda kot zrcalna slika desne.
+Opazuj, da je v vseh treh primerih slika **simetrična**: leva stran je videti kot zrcalna slika desne.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -183,7 +183,7 @@ Vzemimo tri konkretne primere.
 1. Polovica: $8\,\text{cm} : 2 = 4\,\text{cm}$.
 2. Polmer mora biti večji od $4\,\text{cm}$, izbereš $5\,\text{cm}$.
 3. Preveri: $5\,\text{cm} > 4\,\text{cm}$, loka se bosta sekala.
-4. Nariši loka okoli $A$ in $B$ in povežeš presečišči. Razpolovišče je od $A$ in od $B$ oddaljeno $4\,\text{cm}$. Skupaj $4\,\text{cm} + 4\,\text{cm} = 8\,\text{cm}$.
+4. Nariši loka okoli $A$ in $B$ in poveži presečišči. Razpolovišče je od $A$ in od $B$ oddaljeno $4\,\text{cm}$. Skupaj $4\,\text{cm} + 4\,\text{cm} = 8\,\text{cm}$.
 
 **B. Simetrala kota $50^\circ$.**
 
@@ -203,9 +203,9 @@ Vzemimo tri konkretne primere.
 
 Zakaj konstrukcije res delujejo? Pri simetrali daljice narišemo dva loka z istim polmerom $r$. Njuno presečišče $C$ je od $A$ oddaljeno za $r$ in od $B$ prav tako za $r$. Enako velja za drugo presečišče $D$. Točki $C$ in $D$ sta torej obe enako oddaljeni od $A$ in $B$. Štirikotnik $ACBD$ ima vse štiri stranice enake $r$ in diagonali $AB$ in $CD$ se sekata pod pravim kotom ter se razpolavljata. Zato je premica $CD$ res simetrala daljice $AB$.
 
-**Definicija z množico točk.** Simetralo daljice $AB$ lahko natančno definiramo tudi takole: to je množica vseh točk v ravnini, ki so od $A$ in $B$ enako oddaljene. Simetralo kota pa je množica vseh točk, ki so enako oddaljene od obeh krakov kota.
+**Definicija z množico točk.** Simetralo daljice $AB$ lahko natančno definiramo tudi takole: to je množica vseh točk v ravnini, ki so od $A$ in $B$ enako oddaljene. Simetrala kota pa je množica vseh točk znotraj kota, ki so enako oddaljene od obeh krakov kota.
 
-**Posebna pozornost za oznake.** Dolžino daljice zapišemo z navpičnicama $\lvert AB\rvert$ (lahko tudi $\overline{AB}$), samo oznaka $AB$ pomeni daljico kot lik. Kot zapišemo kot $\angle AVB$ ali z grško črko, npr. $\alpha$.
+**Posebna pozornost za oznake.** Dolžino daljice zapišemo z navpičnicama $\lvert AB\rvert$, samo oznaka $AB$ pomeni daljico kot lik. Kot zapišemo kot $\angle AVB$ ali z grško črko, npr. $\alpha$.
 
 **Uporaba pri krogu.** Ker velja, da je središče krožnice enako oddaljeno od vsake točke na njej, leži središče na simetrali vsake tetive, to je daljice med dvema točkama krožnice. Če narišeš simetrali dveh različnih tetiv, se sekata natanko v središču. Tako lahko najdeš središče krožnice, ki je ne poznaš.
 

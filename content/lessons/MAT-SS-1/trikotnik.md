@@ -8,7 +8,7 @@ avtor: AI
 
 Trikotnik je najpreprostejši lik, ki ga omejujejo daljice, a skoraj vsa ravninska geometrija sloni nanj. Vsak večkotnik lahko razrežemo na trikotnike, zato s tem, kar izveš o trikotniku, računaš tudi s štirikotniki, peterokotniki in drugimi liki. Trikotnik je tudi »toga« oblika: če poznaš dolžine treh stranic, je oblika trikotnika natanko določena. Zato so mostovi, ogrodja streh in žerjavi grajeni iz trikotnikov, štirikotnik iz palic pa bi se zvil.
 
-Iz osnovne šole že poznaš vrste trikotnikov, vsoto notranjih kotov in koti ob premicah. V tej lekciji to znanje poglobimo v tri smeri:
+Iz osnovne šole že poznaš vrste trikotnikov, vsoto notranjih kotov in kote ob premicah. V tej lekciji to znanje poglobimo v tri smeri:
 
 - **kdaj sta dva trikotnika enaka** (skladnost) in kako to dokažemo z minimalnim številom podatkov,
 - **katere dolžine stranic sploh lahko tvorijo trikotnik** (trikotniška neenakost),
@@ -114,7 +114,7 @@ Pravokotni trikotnik ima kateti $a = 6\,\text{cm}$ in $b = 8\,\text{cm}$. Izrač
 **Iščemo:** hipotenuzo $c$, polmera $R$ in $r$, razdaljo $|TC|$
 
 :::formula
-$c^2 = a^2 + b^2$, $\;R = \dfrac{c}{2}$ (Talesov izrek), $\;S = r \cdot s$, $\;|TC| = \dfrac{2}{3}\, t_c$
+$c^2 = a^2 + b^2$, $\;R = \dfrac{c}{2}$ (Talesov izrek), $\;S = \dfrac{a b}{2}$, $\;S = r \cdot s$, $\;|TC| = \dfrac{2}{3}\, t_c$
 :::
 
 **Rešitev:**
@@ -133,7 +133,7 @@ $c^2 = a^2 + b^2$, $\;R = \dfrac{c}{2}$ (Talesov izrek), $\;S = r \cdot s$, $\;|
 - **Preverjanje neenakosti le za eno stranico.** Za trojico $4$, $5$, $10$ nekdo preveri samo $5 < 4 + 10$ in sklene, da trikotnik obstaja. Razlog: trikotniška neenakost mora veljati za vse tri stranice hkrati. Pravilno: primerjaj **najdaljšo** stranico z vsoto drugih dveh. Če je ta vsota večja, so izpolnjeni vsi pogoji.
 - **Zamenjava višine in težiščnice.** Višina je pravokotna na nasprotno stranico, težiščnica pa gre do njene sredine. Razlog: obe potegnemo iz oglišča in sta pogosto podobni. Pravilno: pri težiščnici pomeni »sredina«, pri višini »pravi kot«. Sovpadata le v enakokrakem trikotniku za osnovnico.
 - **Težišče deli težiščnico v razmerju 1:1.** Razlog: iz sredine prenesemo vtis, da je težišče »na polovici«. Pravilno: od oglišča do $T$ je dve tretjini težiščnice, od $T$ do sredine stranice pa ena tretjina. Za težiščnico dolžine $9\,\text{cm}$ je $|AT| = 6\,\text{cm}$.
-- **Višinska točka vedno znotraj trikotnika.** Razlog: pri ostrokotnih trikotnikih, ki jih najpogosteje rišemo, to drži. Pravilno: pri topokotnem trikotniku višine sekata svoje podaljške zunaj trikotnika, pri pravokotnem je $V$ v oglišču pravega kota.
+- **Višinska točka vedno znotraj trikotnika.** Razlog: pri ostrokotnih trikotnikih, ki jih najpogosteje rišemo, to drži. Pravilno: pri topokotnem trikotniku se nosilke višin sekajo zunaj trikotnika, pri pravokotnem je $V$ v oglišču pravega kota.
 
 ## Povzetek
 
@@ -147,11 +147,11 @@ $c^2 = a^2 + b^2$, $\;R = \dfrac{c}{2}$ (Talesov izrek), $\;S = r \cdot s$, $\;|
 
 ## Drugače: Na sliki
 
-Odpri interaktivno simulacijo spodaj in v njej premikaj oglišča trikotnika. Opazuj, kaj se spremeni in kaj ostane enako.
+Odpri simulacijo spodaj »Trikotnik: stranice in koti« in v njej premikaj oglišča trikotnika. Opazuj, kaj se spremeni in kaj ostane enako.
 
 - Pri premikanju oglišč se posamezni koti spreminjajo, njihova vsota pa ves čas kaže $180^\circ$. Če oglišče $C$ potegneš skoraj na premico $AB$, se $\gamma$ približuje $180^\circ$, $\alpha$ in $\beta$ pa $0^\circ$.
 - Zunanji kot pri $C$ je vedno enak vsoti kotov pri $A$ in $B$.
-- V načinu z značilnimi točkami opazuj, kje so štiri točke. Pri ostrokotnem trikotniku so vse znotraj. Ko trikotnik »odpreš« v topokotnega, se središče očrtane krožnice in višinska točka premakneta ven, težišče in središče včrtane krožnice pa ostaneta znotraj.
+- V simulaciji spodaj »Značilne točke trikotnika« opazuj, kje so štiri točke. Pri ostrokotnem trikotniku so vse znotraj. Ko trikotnik »odpreš« v topokotnega, se središče očrtane krožnice in višinska točka premakneta ven, težišče in središče včrtane krožnice pa ostaneta znotraj.
 - Ko oglišče poravnaš v pravokotni trikotnik, središče očrtane krožnice pristane na sredini najdaljše stranice, višinska točka pa na pravem kotu.
 
 | Vrsta trikotnika | $O$ (očrtana) | $V$ (višinska točka) |
@@ -162,13 +162,13 @@ Odpri interaktivno simulacijo spodaj in v njej premikaj oglišča trikotnika. Op
 
 ## Drugače: Iz vsakdanjega življenja
 
-**Težišče** je točka, v kateri lahko trikotnik iz kartona uravnovesiš na konici svinčnika. Zaradi razmerja $2:1$ ga najdeš tako, da trikotnik prepogneš (da dobiš sredine stranic) in potegneš težiščnice.
+**Težišče** je točka, v kateri lahko trikotnik iz kartona uravnovesiš na konici svinčnika. Najdeš ga tako, da trikotnik prepogneš (da dobiš sredine stranic) in potegneš težiščnice.
 
-**Središče očrtane krožnice** potrebuješ, ko iščeš točko, enako oddaljeno od treh krajev. Predstavljaj si tri vasi: kjer bi postavili skupno zvonik ali oddajnik, da bi bil enako daleč od vseh, je središče očrtane krožnice. Najdeš ga s simetralama dveh povezav med vasmi.
+**Središče očrtane krožnice** potrebuješ, ko iščeš točko, enako oddaljeno od treh krajev. Predstavljaj si tri vasi: kjer bi postavili skupni zvonik ali oddajnik, da bi bil enako daleč od vseh, je središče očrtane krožnice. Najdeš ga s simetralama dveh povezav med vasmi.
 
 **Središče včrtane krožnice** je točka, enako oddaljena od treh cest, ki tvorijo trikotnik. Tam bi bil najboljši položaj za fontano na trikotnem trgu, ki naj bo od vseh robov enako daleč. Največji okrogel vodnjak, ki ga lahko postaviš na trg, ima polmer $r$.
 
-**Togost trikotnika** vidiš pri kolesu in pri škarjastem dvigalu. Okvir kolesa je sestavljen iz trikotnikov, ker se jih ne da deformirati, ne da bi se spremenila dolžina kakšne palice. Če trikotnik zamenjaš s štirikotnikom iz palic, se bo vsak vogal zvil.
+**Togost trikotnika** vidiš pri kolesu in pri ogrodju strehe. Okvir kolesa je sestavljen iz trikotnikov, ker se jih ne da deformirati, ne da bi se spremenila dolžina kakšne palice. Če trikotnik zamenjaš s štirikotnikom iz palic, se bo vsak vogal zvil.
 
 ## Drugače: Korak za korakom s številkami
 
@@ -187,7 +187,7 @@ Pri vsakem koraku preveri enote ($\text{cm}$ in $\text{cm}^2$) in smiselnost: po
 
 **Zakaj se simetrale stranic sekajo v eni točki?** Točke simetrale daljice $AB$ so natanko tiste, ki so enako oddaljene od $A$ in $B$. Presečišče simetral stranic $AB$ in $BC$ je zato točka $O$ z $|OA| = |OB|$ in $|OB| = |OC|$, torej tudi $|OA| = |OC|$. Točka $O$ leži zato tudi na simetrali stranice $AC$. Enako dokažemo za simetrale kotov, kjer so točke simetrale kota natanko tiste, ki so enako oddaljene od obeh krakov.
 
-**Eulerjeva premica.** V vsakem trikotniku, ki ni enakostraničen, ležijo $O$, $T$ in $V$ na isti premici in velja $|VT| = 2\,|TO|$. Preizkus na trikotniku s kateto $6$ in $8$: postavimo $C = (0,0)$, $B = (6,0)$, $A = (0,8)$. Tedaj je $O = (3,4)$ (sredina hipotenuze), $T = \left(2, \tfrac{8}{3}\right)$ in $V = (0,0)$. Res je $\overrightarrow{TV} = \left(-2, -\tfrac{8}{3}\right) = -2 \cdot \left(1, \tfrac{4}{3}\right) = -2\,\overrightarrow{TO}$.
+**Eulerjeva premica.** V vsakem trikotniku, ki ni enakostraničen, ležijo $O$, $T$ in $V$ na isti premici in velja $|VT| = 2\,|TO|$. Preizkus na trikotniku s katetama $6$ in $8$: postavimo $C = (0,0)$, $B = (6,0)$, $A = (0,8)$. Tedaj je $O = (3,4)$ (sredina hipotenuze), $T = \left(2, \tfrac{8}{3}\right)$ in $V = (0,0)$. Vse tri točke ležijo na premici $y = \tfrac{4}{3}x$ (preveri: $\tfrac{4}{3} \cdot 3 = 4$, $\tfrac{4}{3} \cdot 2 = \tfrac{8}{3}$), $T$ leži med $V$ in $O$, razdalji pa sta $|VT| = \sqrt{2^2 + \left(\tfrac{8}{3}\right)^2} = \tfrac{10}{3}$ in $|TO| = \sqrt{1^2 + \left(\tfrac{4}{3}\right)^2} = \tfrac{5}{3}$, torej res $|VT| = 2\,|TO|$.
 
 **Težišče kot povprečje.** Koordinate težišča so povprečje koordinat oglišč, $T = \dfrac{A + B + C}{3}$, kar se ujema s številkami zgoraj: $\dfrac{0 + 6 + 0}{3} = 2$ in $\dfrac{0 + 0 + 8}{3} = \dfrac{8}{3}$. Zato je težišče tudi fizično težišče homogene trikotne plošče.
 

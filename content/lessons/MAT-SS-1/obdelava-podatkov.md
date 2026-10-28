@@ -10,13 +10,13 @@ Iz osnovne šole že poznaš aritmetično sredino, ki ji pravimo tudi povprečje
 
 Predstavljaj si, da dva razreda pri isti kontrolni nalogi dosežeta enako povprečje. Ali sta razreda enako uspešna? Ni nujno. V prvem so lahko vsi približno povprečni, v drugem pa je polovica odličnih in polovica na robu padca. Povprečje samo tega ne pove. Povedo pa ti to **mere razpršenosti**. Statistiko srečaš povsod: pri vremenski napovedi, v športnih rezultatih, v anketah in pri branju novic. Če jo razumeš, ne nasedaš preprosto izbranim številkam.
 
-Vse, kar potrebuješ iz prejšnjih tem, so osnovni računi, preoblikovanje izrazov in reševanje enačb. Nove ideje te lekcije so srednje vrednosti, mere razpršenosti in prikazi podatkov. Pri preverjanju razumevanja ti pomaga interaktivna simulacija spodaj.
+Vse, kar potrebuješ iz prejšnjih tem, so osnovni računi, preoblikovanje izrazov in reševanje enačb. Nove ideje te lekcije so srednje vrednosti, mere razpršenosti in prikazi podatkov. Pri preverjanju razumevanja ti pomaga interaktivna simulacija spodaj (»Obdelava podatkov: sredine in razpršenost«).
 
 ## Razlaga
 
 **1. Osnovni pojmi.** Statistična enota je en predmet opazovanja (učenec, meritev). Spremenljivka je lastnost, ki jo opazujemo (točke na testu). Vrednosti zapišemo kot $x_1, x_2, \ldots, x_n$, kjer je $n$ število podatkov. **Frekvenca** $f$ pove, kolikokrat se vrednost pojavi. **Relativna frekvenca** je delež $\dfrac{f}{n}$, običajno v odstotkih.
 
-**2. Srednje vrednosti.** To so števila, ki predstavijo "sredino" podatkov.
+**2. Srednje vrednosti.** To so števila, ki predstavijo »sredino« podatkov.
 
 - **Aritmetična sredina** je vsota podatkov, deljena z njihovim številom:
 $$\bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n}$$
@@ -115,7 +115,7 @@ $\bar{x} = \dfrac{\sum f_i x_i}{n}$, $\;\sigma^2 = \dfrac{\sum f_i (x_i - \bar{x
 ## Pogoste napake
 
 - **Mediana neurejenih podatkov.** Če vzameš srednji podatek v prvotnem vrstnem redu, dobiš napačno število. Mediana je definirana za *urejene* podatke. Najprej uredi, nato poišči sredino.
-- **Pozabljeno deljenje s frekvencami.** Pri frekvenčni tabeli učenci pogosto delijo s številom različnih vrednosti (v primeru zgoraj s $5$), ne s številom podatkov ($20$). Pravilno: $\bar{x} = \dfrac{\sum f_i x_i}{\sum f_i}$.
+- **Napačen imenovalec pri frekvenčni tabeli.** Pri frekvenčni tabeli učenci pogosto delijo s številom različnih vrednosti (v primeru zgoraj s $5$), ne s številom podatkov ($20$). Pravilno: $\bar{x} = \dfrac{\sum f_i x_i}{\sum f_i}$.
 - **Standardni odklon brez korena.** Varianca ima enoto na kvadrat (npr. $\text{min}^2$), zato je ni smiselno primerjati s podatki. Vedno dokončaj z $\sigma = \sqrt{\sigma^2}$.
 - **Vsota odklonov namesto vsote kvadratov.** $\sum (x_i - \bar{x}) = 0$ za vsak nabor podatkov. Odklone moraš najprej kvadrirati in šele nato sešteti.
 - **Povprečje kot edina številka.** Povprečje brez razpršenosti je lahko zavajajoče. Ob njem vedno pogledaj mediano in standardni odklon ali medkvartilni razmik.
@@ -143,7 +143,7 @@ Predstavljaj si urejene podatke iz Primera 2 na številski premici. Škatla z br
 | desni brk se konča | $18$ | največji podatek znotraj mej |
 | posamezna pika | $45$ | osamelec |
 
-Širina škatle je medkvartilni razmik: v njej leži sredinska polovica podatkov. Če je črta mediane bližje levemu robu škatle, so podatki na levi strani bolj zgoščeni, na desni pa razvlečeni. Histogram pa je kot "ogrodje iz stolpcev": višji stolpec pomeni več podatkov v tistem razredu. Krožni diagram prikazuje le deleže celote, zato ne pokaže, kako veliki so podatki.
+Širina škatle je medkvartilni razmik: v njej leži sredinska polovica podatkov. Če je črta mediane bližje levemu robu škatle, so podatki na levi strani bolj zgoščeni, na desni pa razvlečeni. Histogram pa je kot »ogrodje iz stolpcev«: višji stolpec pomeni več podatkov v tistem razredu. Krožni diagram prikazuje le deleže celote, zato ne pokaže, kako veliki so podatki.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -177,7 +177,7 @@ Izračunajmo standardni odklon za podatke $3, 5, 6, 8, 8$. Pomagaj si s tabelo.
 
 **Drugi zapis variance.** Raztegnemo kvadrate in dobimo
 $$\sigma^2 = \frac{\sum x_i^2}{n} - \bar{x}^2,$$
-torej "povprečje kvadratov minus kvadrat povprečja". Preizkus za podatke $2, 4, 4, 4, 5, 5, 7, 9$: povprečje je $5$, povprečje kvadratov $\dfrac{232}{8} = 29$, zato je $\sigma^2 = 29 - 25 = 4$ in $\sigma = 2$.
+torej »povprečje kvadratov minus kvadrat povprečja«. Preizkus za podatke $2, 4, 4, 4, 5, 5, 7, 9$: povprečje je $5$, povprečje kvadratov $\dfrac{232}{8} = 29$, zato je $\sigma^2 = 29 - 25 = 4$ in $\sigma = 2$.
 
 **Vzorec in populacija.** Zgornja formula, kjer delimo z $n$, velja, kadar imamo vse podatke populacije. Pri vzorcu, ki iz njega ocenjujemo širšo populacijo, delimo z $n - 1$ (to boš podrobneje spoznal pozneje). Različni računalniški programi tudi različno računajo kvartile, zato lahko dobiš nekoliko drugačne vrednosti kot tukaj.
 

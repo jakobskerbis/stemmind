@@ -20,14 +20,14 @@ $$\alpha + \beta + \gamma + \delta = 360^\circ$$
 
 | Lik | Definicija | Lastnosti |
 |---|---|---|
-| **paralelogram** | nasprotni stranici vzporedni | nasprotni stranici sta enaki, nasprotna kota enaka, sosednja kota se dopolnjujeta do $180^\circ$, diagonali se razpolavljata |
+| **paralelogram** | oba para nasprotnih stranic vzporedna | nasprotni stranici sta enaki, nasprotna kota enaka, sosednja kota se dopolnjujeta do $180^\circ$, diagonali se razpolavljata |
 | **pravokotnik** | paralelogram s pravimi koti | diagonali sta enako dolgi |
 | **romb** | paralelogram z enakimi stranicami | diagonali sta pravokotni in razpolavljata kote |
 | **kvadrat** | pravokotnik z enakimi stranicami (hkrati romb) | ima vse lastnosti pravokotnika in romba |
 | **trapez** | en par vzporednih stranic (osnovnici $a$, $c$, kraka $b$, $d$) | srednjica je vzporedna osnovnicama |
 | **deltoid** | dva para sosednjih enakih stranic | diagonali sta pravokotni, ena diagonala je simetrala druge |
 
-Lastnosti so »podedovane«: vsak kvadrat je romb, vsak romb je paralelogram, vsak paralelogram ni nujno pravokotnik. Če si nalogo ogledaš s te strani, pogosto prihraniš dokaz.
+Lastnosti so »podedovane«: vsak kvadrat je romb, vsak romb je paralelogram, paralelogram pa ni nujno pravokotnik. Če si nalogo ogledaš s te strani, pogosto prihraniš dokaz.
 
 **3. Ploščine in obsegi štirikotnikov.**
 
@@ -48,7 +48,7 @@ $$o = 2\pi r, \qquad S = \pi r^2$$
 
 Tangenta se krožnice dotika v eni točki in je pravokotna na polmer, ki gre v dotikališče.
 
-**5. Krožni lok in izsek.** Središčni kot $\alpha$ določa krožni lok in izsek. Njuna deleža krožnice sta enaka $\dfrac{\alpha}{360^\circ}$:
+**5. Krožni lok in izsek.** Središčni kot $\alpha$ določa krožni lok in izsek. Lok je delež $\dfrac{\alpha}{360^\circ}$ krožnice, izsek pa enak delež kroga:
 
 $$l = \frac{\pi r \alpha}{180^\circ}, \qquad S_{\text{izs}} = \frac{\pi r^2 \alpha}{360^\circ}$$
 
@@ -93,7 +93,7 @@ Enakokraki trapez ima osnovnici $a = 14\,\text{cm}$ in $c = 8\,\text{cm}$ ter kr
 **Iščemo:** višino $v$, ploščino $S$, obseg $o$
 
 :::formula
-$S = \dfrac{(a + c)\, v}{2}$, $\;o = a + b + c + d$, višina iz Pitagorovega izreka
+$S = \dfrac{(a + c)\, v}{2}$, $\;o = a + b + c + d$, višina iz Pitagorovega izreka: $v^2 = b^2 - \left(\dfrac{a - c}{2}\right)^2$
 :::
 
 **Rešitev:**
@@ -118,7 +118,7 @@ $\varphi = \dfrac{\alpha}{2}$, $\;\varphi + \angle ADB = 180^\circ$, $\;l = \dfr
 **Rešitev:**
 
 1. Obodni kot nad manjšim lokom je polovica središčnega: $\varphi = \dfrac{80^\circ}{2} = 40^\circ$.
-2. Štirikotnik $ACBD$ je tetivni, zato sta nasprotna kota pri $C$ in $D$ dopolnilna: $\angle ADB = 180^\circ - 40^\circ = 140^\circ$.
+2. Štirikotnik $ACBD$ je tetivni, zato sta nasprotna kota pri $C$ in $D$ suplementarna (vsota $180^\circ$): $\angle ADB = 180^\circ - 40^\circ = 140^\circ$.
 3. Dolžina loka: $l = \dfrac{\pi \cdot 9\,\text{cm} \cdot 80^\circ}{180^\circ} = 4\pi\,\text{cm} \approx 12{,}57\,\text{cm}$.
 4. Ploščina izseka: $S_{\text{izs}} = \dfrac{\pi \cdot (9\,\text{cm})^2 \cdot 80^\circ}{360^\circ} = 18\pi\,\text{cm}^2 \approx 56{,}55\,\text{cm}^2$.
 5. Odgovor: $\varphi = 40^\circ$, $\angle ADB = 140^\circ$, $l = 4\pi\,\text{cm} \approx 12{,}57\,\text{cm}$, $S_{\text{izs}} = 18\pi\,\text{cm}^2 \approx 56{,}55\,\text{cm}^2$.
@@ -142,11 +142,11 @@ $\varphi = \dfrac{\alpha}{2}$, $\;\varphi + \angle ADB = 180^\circ$, $\;l = \dfr
 
 ## Drugače: Na sliki
 
-Odpri interaktivno simulacijo spodaj in izberi eno od vrst štirikotnikov.
+Odpri simulacijo spodaj »Štirikotniki« in izberi eno od vrst štirikotnikov.
 
 - Premikaj oglišča paralelograma in opazuj diagonali: vedno se sekata v skupni sredini. Ko postaneta enako dolgi, je paralelogram pravokotnik. Ko se sekata pod pravim kotom, je romb. Ko velja oboje, dobiš kvadrat.
 - Pri trapezu opazuj višino, ki jo kaže pravokotna črta med osnovnicama. Če krak bolj nagneš, se višina in s tem ploščina zmanjšata, čeprav je krak enako dolg.
-- V simulaciji z obodnim kotom premikaj točko po krožnici: obodni kot nad izbranim lokom ostane ves čas enak, središčni pa je dvakrat večji. Ko izbrani lok postane polkrožnica (tetiva je premer), je obodni kot pravi.
+- V simulaciji spodaj »Obodni in središčni kot« premikaj točko po krožnici: obodni kot nad izbranim lokom ostane ves čas enak, središčni pa je dvakrat večji. Ko izbrani lok postane polkrožnica (tetiva je premer), je obodni kot pravi.
 - Ko premakneš točko na drugo stran tetive (na drugi lok), se kot spremeni v $180^\circ$ minus prejšnja vrednost.
 
 | Lik | Kaj spremeniš | Kaj ostane enako |
@@ -157,7 +157,7 @@ Odpri interaktivno simulacijo spodaj in izberi eno od vrst štirikotnikov.
 
 ## Drugače: Iz vsakdanjega življenja
 
-**Pizza.** Pica s premerom $30\,\text{cm}$ je krog s polmerom $15\,\text{cm}$. Razrežemo jo na $8$ enakih kosov. Vsak kos je krožni izsek s središčnim kotom $\dfrac{360^\circ}{8} = 45^\circ$ in s ploščino $\dfrac{\pi \cdot 15^2}{8} \approx 88{,}36\,\text{cm}^2$. Dolžina skorje na enem kosu je lok $\dfrac{2\pi \cdot 15}{8} \approx 11{,}78\,\text{cm}$. Dve pici s premerom $20\,\text{cm}$ imata skupaj manj pice kot ena s premerom $30\,\text{cm}$ ($2 \cdot \pi \cdot 10^2 \approx 628$ proti $\pi \cdot 15^2 \approx 707\,\text{cm}^2$), saj ploščina narašča s kvadratom polmera.
+**Pica.** Pica s premerom $30\,\text{cm}$ je krog s polmerom $15\,\text{cm}$. Razrežemo jo na $8$ enakih kosov. Vsak kos je krožni izsek s središčnim kotom $\dfrac{360^\circ}{8} = 45^\circ$ in s ploščino $\dfrac{\pi \cdot 15^2}{8} \approx 88{,}36\,\text{cm}^2$. Dolžina skorje na enem kosu je lok $\dfrac{2\pi \cdot 15}{8} \approx 11{,}78\,\text{cm}$. Dve pici s premerom $20\,\text{cm}$ imata skupaj manj pice kot ena s premerom $30\,\text{cm}$ ($2 \cdot \pi \cdot 10^2 \approx 628$ proti $\pi \cdot 15^2 \approx 707\,\text{cm}^2$), saj ploščina narašča s kvadratom polmera.
 
 **Škarjasti dvigalni oder.** Paralelogram iz palic se lahko poševno zvije, a nasprotni stranici ostaneta enako dolgi in vzporedni. Zato se platforma dviga vodoravno. Ploščina paralelograma se pri tem spreminja, ker se višina spreminja, stranice ostanejo enake.
 
@@ -171,7 +171,7 @@ Vzemimo pravokotnik s stranicama $a = 9\,\text{cm}$ in $b = 12\,\text{cm}$ ter m
 
 1. **Ploščina in obseg pravokotnika:** $S = 9 \cdot 12 = 108\,\text{cm}^2$, $o = 2 \cdot (9 + 12) = 42\,\text{cm}$.
 2. **Diagonala:** $d = \sqrt{9^2 + 12^2} = \sqrt{225} = 15\,\text{cm}$.
-3. **Zakaj je pravokotnik tetiven:** vsi štirje koti so pravi, zato so nasprotni koti dopolnilni ($90^\circ + 90^\circ = 180^\circ$). Obe diagonali sta premera očrtane krožnice (Talesov izrek: kot $90^\circ$ stoji nad diagonalo).
+3. **Zakaj je pravokotnik tetiven:** vsi štirje koti so pravi, zato so nasprotni koti suplementarni ($90^\circ + 90^\circ = 180^\circ$). Obe diagonali sta premera očrtane krožnice (Talesov izrek: kot $90^\circ$ stoji nad diagonalo).
 4. **Polmer očrtane krožnice:** $R = \dfrac{d}{2} = 7{,}5\,\text{cm}$.
 5. **Ploščina kroga:** $S_k = \pi \cdot 7{,}5^2 = 56{,}25\pi \approx 176{,}71\,\text{cm}^2$.
 6. **Delež pravokotnika v krogu:** $\dfrac{108}{176{,}71} \approx 0{,}611$, torej približno $61\,\%$.
@@ -207,7 +207,7 @@ Vzemimo pravokotnik s stranicama $a = 9\,\text{cm}$ in $b = 12\,\text{cm}$ ter m
 - $3\pi\,\text{cm}^2$
 > $S = \pi r^2 = \pi \cdot 3^2 = 9\pi\,\text{cm}^2$. Vrednost $6\pi$ bi bila obseg ($2\pi r$) in ima drugo enoto, $\text{cm}$.
 
-? Tetivnemu štirikotniku je en kot $105^\circ$. Kolikšen je kot nasproti?
+? V tetivnem štirikotniku meri en kot $105^\circ$. Kolikšen je njemu nasprotni kot?
 - $105^\circ$
 - $255^\circ$
 + $75^\circ$

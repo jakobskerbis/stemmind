@@ -6,7 +6,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Kocke in kvadre srečaš na vsakem koraku. Škatla za čevlje, kos mila, opeka, kartonska embalaža za mleko, igralna kocka, omara, učilnica in bazen so vse kvadri ali kocke. Doslej si merila obseg in ploščino ravnih likov, na primer pravokotnika in kvadrata. Kocka in kvader pa nista ravna lika, ampak **telesi**: imata dolžino, širino in višino.
+Kocke in kvadre srečaš na vsakem koraku. Škatla za čevlje, kos mila, opeka, kartonska embalaža za mleko, igralna kocka, omara, učilnica in bazen so vse kvadri ali kocke. Doslej si meril obseg in ploščino ravnih likov, na primer pravokotnika in kvadrata. Kocka in kvader pa nista ravna lika, ampak **telesi**: imata dolžino, širino in višino.
 
 Pri telesih se vedno vprašamo dvoje:
 
@@ -54,7 +54,7 @@ Zato velja:
 
 $$P = 2 \cdot (a \cdot b + a \cdot c + b \cdot c)$$
 
-**4. Prostornina.** **Prostornina telesa** pove, koliko prostora telo zavzema. Merimo jo tako, da štejemo, koliko enotnih kock s robom $1$ enote gre vanj. Kocka s robom $1\,\text{cm}$ ima prostornino $1\,\text{cm}^3$ (en kubični centimeter).
+**4. Prostornina.** **Prostornina telesa** pove, koliko prostora telo zavzema. Merimo jo tako, da štejemo, koliko enotnih kock z robom $1$ enote gre vanj. Kocka z robom $1\,\text{cm}$ ima prostornino $1\,\text{cm}^3$ (en kubični centimeter).
 
 Za kvader z dolžino $a$, širino $b$ in višino $c$ v dno položimo $a \cdot b$ enotnih kock, to je ena plast. Plasti je toliko, kot je višina, torej $c$. Skupaj imamo:
 
@@ -80,7 +80,7 @@ Pri pretvarjanju površin pa velja po $100$: $1\,\text{dm}^2 = 100\,\text{cm}^2$
 4. Vstavi v ustrezno formulo in izračunaj.
 5. Odgovori v stavku in napiši pravo enoto: kvadratno za površino, kubično za prostornino.
 
-Interaktivna simulacija spodaj ti omogoča, da kocko in kvader razgrneš v mrežo, spreminjaš robove in opazuješ, kako se spreminjata površina in prostornina.
+Interaktivna simulacija spodaj (**Kocka in kvader: mreža, površina, prostornina**) ti omogoča, da kocko in kvader razgrneš v mrežo, spreminjaš robove in opazuješ, kako se spreminjata površina in prostornina.
 
 ## Rešeni primeri
 
@@ -128,7 +128,7 @@ Pravokotni akvarij brez pokrova ima notranje mere dna $80\,\text{cm}$ in $40\,\t
 **Iščemo:** površino stekla (brez zgornje ploskve) v $\text{cm}^2$ in $\text{dm}^2$ ter prostornino vode v litrih
 
 :::formula
-$P = a \cdot b + 2 \cdot a \cdot c + 2 \cdot b \cdot c$, $V = a \cdot b \cdot h$, $1\,\text{l} = 1\,\text{dm}^3 = 1000\,\text{cm}^3$
+$P = a \cdot b + 2 \cdot a \cdot c + 2 \cdot b \cdot c$, $V = a \cdot b \cdot h$, $1\,\text{dm}^2 = 100\,\text{cm}^2$, $1\,\text{l} = 1\,\text{dm}^3 = 1000\,\text{cm}^3$
 :::
 
 **Rešitev:**
@@ -228,7 +228,7 @@ Za konec preveri smiselnost: prostornina ima vedno kubično enoto, površina pa 
 
 **Površina kot dve osnovni ploskvi in plašč.** Površino kvadra lahko razdelimo na dve osnovni ploskvi (dno in vrh) ter **plašč**, to so štiri stranske ploskve. Plašč je pravokotnik, ko ga razgrnemo, z osnovnico, ki je enaka obsegu dna $o = 2 \cdot (a + b)$, in višino $c$. Za kvader iz prejšnjega razdelka: $S = 36\,\text{cm}^2$, $o = 2 \cdot (9 + 4) = 26\,\text{cm}$, plašč $= 26 \cdot 5 = 130\,\text{cm}^2$, torej $P = 2 \cdot 36 + 130 = 202\,\text{cm}^2$. Rezultat se ujema z zgornjim.
 
-**Zakaj po $1000$?** Kocka z robom $1\,\text{dm}$ ima rob tudi $10\,\text{cm}$. Vanjo gre $10$ kock v vrsti, $10$ vrst v plasti in $10$ plasti: $10 \cdot 10 \cdot 10 = 1000$. Zato je pri prostornini faktor $10^3 = 1000$, pri ploščini $10^2 = 100$ in pri dolžini $10$.
+**Zakaj po $1000$?** Rob kocke, dolg $1\,\text{dm}$, meri $10\,\text{cm}$. Vanjo gre $10$ kock v vrsti, $10$ vrst v plasti in $10$ plasti: $10 \cdot 10 \cdot 10 = 1000$. Zato je pri prostornini faktor $10^3 = 1000$, pri ploščini $10^2 = 100$ in pri dolžini $10$.
 
 **Kaj se zgodi, če rob podvojimo?** Kocka z robom $2\,\text{cm}$ ima $P = 24\,\text{cm}^2$ in $V = 8\,\text{cm}^3$. Kocka z robom $4\,\text{cm}$ ima $P = 96\,\text{cm}^2$ in $V = 64\,\text{cm}^3$. Ko rob podvojimo, se površina poveča $4$-krat, prostornina pa kar $8$-krat. Večja kot so telesa, hitreje raste njihova prostornina v primerjavi s površino.
 

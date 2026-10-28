@@ -12,7 +12,7 @@ Električni tok je osnova skoraj vsega, kar uporabljaš: telefona, svetilke, pol
 
 ## Razlaga
 
-**1. Električni tok.** Električni tok je urejeno gibanje nabitih delcev. V kovinskem vodniku se gibljejo prosti elektroni. Električni tok $I$ je enak naboju, ki steče skozi presek vodnika v določenem času:
+**1. Električni tok.** Električni tok je urejeno gibanje nabitih delcev. V kovinskem vodniku se gibljejo prosti elektroni. Električni tok $I$ pove, koliko naboja steče skozi presek vodnika v enoti časa. Naboj, ki steče skozi presek, delimo s časom, v katerem steče:
 
 $$I = \frac{e}{t}$$
 

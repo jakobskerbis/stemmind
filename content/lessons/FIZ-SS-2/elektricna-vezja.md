@@ -29,7 +29,7 @@ $$U_{\text{vira}} = U_1 + U_2 + \dots$$
 
 To je zakon o ohranitvi energije: vsak naboj dobi na viru toliko energije, kot jo odda na porabnikih.
 
-**4. Zaporedna vezava.** Upori so vezani drug za drugim, med njimi ni vozlišča.
+**4. Zaporedna vezava.** Uporniki so vezani drug za drugim, med njimi ni vozlišča.
 
 - Tok je povsod enak: $I = I_1 = I_2$.
 - Napetosti se seštevajo: $U = U_1 + U_2$.
@@ -37,7 +37,7 @@ To je zakon o ohranitvi energije: vsak naboj dobi na viru toliko energije, kot j
 
 Če en element odpove (prekine vezje), tok ne teče nikjer.
 
-**5. Vzporedna vezava.** Upori so vezani na isti dve vozlišči.
+**5. Vzporedna vezava.** Uporniki so vezani na isti dve vozlišči.
 
 - Napetost je na vseh vejah enaka: $U = U_1 = U_2$.
 - Tokovi se seštevajo: $I = I_1 + I_2$.
@@ -108,7 +108,7 @@ Upornik $R_1 = 10\,\Omega$ je zaporedno vezan z vzporedno vezavo upornikov $R_2 
 **Iščemo:** tokove $I_1$, $I_2$, $I_3$ in moč $P_1$ na $R_1$
 
 :::formula
-Vzporedni del: $R_{23} = \dfrac{R_2 R_3}{R_2 + R_3}$; celoten upor $R = R_1 + R_{23}$; $I = \dfrac{U}{R}$; $P_1 = I^2 R_1$
+Vzporedni del: $R_{23} = \dfrac{R_2 R_3}{R_2 + R_3}$; celoten upor $R = R_1 + R_{23}$; $I = \dfrac{U}{R}$; $U_1 = I R_1$, $U_{23} = U - U_1$; $I_2 = \dfrac{U_{23}}{R_2}$, $I_3 = \dfrac{U_{23}}{R_3}$; $P_1 = I^2 R_1$
 :::
 
 **Rešitev:**

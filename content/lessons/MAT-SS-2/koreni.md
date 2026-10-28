@@ -6,9 +6,9 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Iz osnovne šole že veš, da je kvadratni koren števila $a$ tisto nenegativno število, ki ga pomnoženo samo s seboj dobimo $a$. Tako je $\sqrt{49} = 7$. Poznaš tudi iracionalna števila: $\sqrt{2}$ ni ulomek in ima neskončen neperiodičen decimalni zapis. Takih števil ne moremo zapisati natančno z decimalkami, zato jih puščamo v obliki korena in računamo z njimi.
+Iz osnovne šole že veš, da je kvadratni koren števila $a$ tisto nenegativno število, ki pomnoženo samo s seboj da $a$. Tako je $\sqrt{49} = 7$. Poznaš tudi iracionalna števila: $\sqrt{2}$ ni ulomek in ima neskončen neperiodičen decimalni zapis. Takih števil ne moremo zapisati natančno z decimalkami, zato jih puščamo v obliki korena in računamo z njimi.
 
-Pri tem se hitro pokaže, da je $\sqrt{72}$ nerodna oblika števila $6\sqrt{2}$ in da se z izrazom $\dfrac{1}{\sqrt{5} - \sqrt{2}}$ težko računa, dokler korenov ne spravimo iz imenovalca. V tej lekciji se naučiš pravil za računanje s koreni, **delnega korenjenja** in **racionalizacije**. Brez tega ne gre pri reševanju kvadratnih enačb, pri izračunu diagonal in višin v geometriji ali pri računanju z razdaljami v koordinatnem sistemu. Pri vadbi približkov in grafa korenske funkcije ti pomaga interaktivna simulacija spodaj.
+Pri tem se hitro pokaže, da je $\sqrt{72}$ nerodna oblika števila $6\sqrt{2}$ in da se z izrazom $\dfrac{1}{\sqrt{5} - \sqrt{2}}$ težko računa, dokler korenov ne spravimo iz imenovalca. V tej lekciji se naučiš pravil za računanje s koreni, **delnega korenjenja** in **racionalizacije**. Brez tega ne gre pri reševanju kvadratnih enačb, pri izračunu diagonal in višin v geometriji ali pri računanju z razdaljami v koordinatnem sistemu. Pri vadbi približkov in grafa korenske funkcije ti pomagata interaktivni simulaciji spodaj (»Kvadratni koren in približki« in »Grafi korenskih funkcij«).
 
 ## Razlaga
 
@@ -35,13 +35,13 @@ Pravila ne veljajo za seštevanje: **$\sqrt{a + b} \ne \sqrt{a} + \sqrt{b}$**. P
 
 **4. Seštevanje in odštevanje.** Seštevamo lahko samo **istovrstne korene**, to so členi z enakim številom pod korenom, kot seštevamo podobne člene v algebrskih izrazih: $2\sqrt{3} + 5\sqrt{3} = 7\sqrt{3}$. Člena $2\sqrt{3}$ in $3\sqrt{5}$ ne moremo združiti.
 
-**5. Delno korenjenje.** Pod korenom poiščemo največji popolni kvadrat, ki je faktor, in ga "izvlečemo":
+**5. Delno korenjenje.** Pod korenom poiščemo največji popolni kvadrat, ki je faktor, in ga »izvlečemo«:
 
 $$\sqrt{a^2 \cdot b} = a\sqrt{b} \quad (a \ge 0,\ b \ge 0).$$
 
-Primer: $\sqrt{72} = \sqrt{36 \cdot 2} = 6\sqrt{2}$. Z neznankami: $\sqrt{18a^3} = \sqrt{9a^2 \cdot 2a} = 3a\sqrt{2a}$ za $a \ge 0$. Pri kubičnem korenu iščemo popolne kubuse (kocke naravnih števil): $\sqrt[3]{54} = \sqrt[3]{27 \cdot 2} = 3\sqrt[3]{2}$. Obratno, faktor lahko vnesemo pod koren: $3\sqrt{2} = \sqrt{9 \cdot 2} = \sqrt{18}$ (če je faktor pozitiven).
+Primer: $\sqrt{72} = \sqrt{36 \cdot 2} = 6\sqrt{2}$. Z neznankami: $\sqrt{18a^3} = \sqrt{9a^2 \cdot 2a} = 3a\sqrt{2a}$ za $a \ge 0$. Pri kubičnem korenu iščemo popolne kube (tretje potence naravnih števil): $\sqrt[3]{54} = \sqrt[3]{27 \cdot 2} = 3\sqrt[3]{2}$. Obratno, faktor lahko vnesemo pod koren: $3\sqrt{2} = \sqrt{9 \cdot 2} = \sqrt{18}$ (če je faktor pozitiven).
 
-**6. Racionalizacija imenovalca.** Za izraz je lepša oblika, v kateri v imenovalcu ni korena. Ulomek razširimo tako, da vrednost ostane enaka.
+**6. Racionalizacija imenovalca.** Lepša je oblika izraza, v kateri v imenovalcu ni korena. Ulomek razširimo tako, da vrednost ostane enaka.
 
 - Imenovalec je en koren: $\dfrac{a}{\sqrt{b}} = \dfrac{a \cdot \sqrt{b}}{\sqrt{b} \cdot \sqrt{b}} = \dfrac{a\sqrt{b}}{b}$.
 - Imenovalec je vsota ali razlika dveh členov s korenom: razširimo s **konjugiranim izrazom** (isti členi, nasprotni znak), ker velja razlika kvadratov
@@ -68,7 +68,7 @@ $\sqrt{a^2 \cdot b} = a\sqrt{b}$ in $\;p\sqrt{b} + q\sqrt{b} = (p + q)\sqrt{b}$
 
 1. Vsak koren delno korenimo: $\sqrt{50} = \sqrt{25 \cdot 2} = 5\sqrt{2}$, $\sqrt{18} = \sqrt{9 \cdot 2} = 3\sqrt{2}$, $\sqrt{8} = \sqrt{4 \cdot 2} = 2\sqrt{2}$.
 2. Zdaj imamo istovrstne korene: $5\sqrt{2} + 3\sqrt{2} - 2\sqrt{2} = (5 + 3 - 2)\sqrt{2} = 6\sqrt{2}$.
-3. Preverjanje: $\sqrt{50} + \sqrt{18} - \sqrt{8} \approx 7{,}071 + 4{,}243 - 2{,}828 = 8{,}485$ in $6\sqrt{2} \approx 8{,}485$.
+3. Preverjanje: $\sqrt{50} + \sqrt{18} - \sqrt{8} \approx 7{,}0711 + 4{,}2426 - 2{,}8284 = 8{,}4853$ in $6\sqrt{2} \approx 8{,}4853$.
 4. Odgovor: izraz je enak $6\sqrt{2}$.
 
 ### Primer 2 (srednji)
@@ -114,7 +114,7 @@ $\left(\sqrt{a} \pm \sqrt{b}\right)^2 = a \pm 2\sqrt{ab} + b$ in $\;\left(\sqrt{
 
 - **Koren vsote kot vsota korenov.** Zapis $\sqrt{a + b} = \sqrt{a} + \sqrt{b}$ je napačen, saj pravilo velja le za produkt in količnik. Če je v korenu vsota, je ne smeš razdeliti. Preizkus: $\sqrt{9 + 16} = 5 \ne 7$.
 - **$\sqrt{x^2} = x$.** To velja le za $x \ge 0$. Za $x = -3$ je $\sqrt{(-3)^2} = 3$. Pravilno: $\sqrt{x^2} = |x|$.
-- **Seštevanje različnih korenov.** $2\sqrt{3} + 3\sqrt{5} = 5\sqrt{8}$ ni res. Seštejemo samo člene z enakim številom pod korenom. Najprej delno korenimo, nato šele ugotovi, ali so istovrstni.
+- **Seštevanje različnih korenov.** $2\sqrt{3} + 3\sqrt{5} = 5\sqrt{8}$ ni res. Seštejemo samo člene z enakim številom pod korenom. Najprej delno korenimo, nato šele ugotovimo, ali so istovrstni.
 - **Napačen faktor pri racionalizaciji.** Pri $\dfrac{1}{\sqrt{5} - \sqrt{2}}$ ulomka ne smeš razširiti z $\sqrt{5} - \sqrt{2}$, ker dobiš $\left(\sqrt{5} - \sqrt{2}\right)^2 = 7 - 2\sqrt{10}$, ki še vedno vsebuje koren. Razširiti moraš z izrazom nasprotnega znaka $\sqrt{5} + \sqrt{2}$, da dobiš $5 - 2 = 3$.
 - **Delno korenjenje do polovice.** $\sqrt{72} = 2\sqrt{18}$ drži, a ni končna oblika, ker je v $18$ še popolni kvadrat $9$. Izvleči moraš *največji* popolni kvadrat: $72 = 36 \cdot 2$, zato je $\sqrt{72} = 6\sqrt{2}$.
 
@@ -130,17 +130,17 @@ $\left(\sqrt{a} \pm \sqrt{b}\right)^2 = a \pm 2\sqrt{ab} + b$ in $\;\left(\sqrt{
 
 ## Drugače: Na sliki
 
-Kvadratni koren je **dolžina stranice kvadrata** z dano ploščino. Kvadrat s stranico $1\,\text{cm}$ ima ploščino $1\,\text{cm}^2$, njegova diagonala pa je po Pitagorovem izreku dolga $\sqrt{2}\,\text{cm}$. Kvadrat s ploščino $2\,\text{cm}^2$ ima torej stranico $\sqrt{2}\,\text{cm} \approx 1{,}41\,\text{cm}$.
+Kvadratni koren je **dolžina stranice kvadrata** z dano ploščino. Kvadrat s stranico $1\,\text{cm}$ ima ploščino $1\,\text{cm}^2$, njegova diagonala pa je po Pitagorovem izreku dolga $\sqrt{2}\,\text{cm}$. Kvadrat s ploščino $2\,\text{cm}^2$ ima stranico $\sqrt{2}\,\text{cm} \approx 1{,}41\,\text{cm}$.
 
 Pravilo za produkt vidimo na pravokotniku s stranicama $\sqrt{2}$ in $\sqrt{3}$: njegova ploščina je $\sqrt{2} \cdot \sqrt{3}$, kar je enako ploščini kvadrata s stranico $\sqrt{6}$. Zato je $\sqrt{2}\sqrt{3} = \sqrt{6}$. Pri $\sqrt{6} \approx 2{,}449$ to tudi preveriš: $1{,}414 \cdot 1{,}732 \approx 2{,}449$.
 
-Graf funkcije $y = \sqrt{x}$ je v prvem kvadrantu "položena polovica parabole". Začne se v izhodišču, nato pa vedno bolj počasi raste. Nekaj točk:
+Graf funkcije $y = \sqrt{x}$ leži v prvem kvadrantu. Začne se v izhodišču, nato pa vedno bolj počasi raste. Nekaj točk:
 
 | $x$ | $0$ | $1$ | $4$ | $9$ | $16$ |
 |---|---|---|---|---|---|
 | $y = \sqrt{x}$ | $0$ | $1$ | $2$ | $3$ | $4$ |
 
-Za negativen $x$ grafa ni, saj koren negativnega števila ni realen. Graf lahko preizkusiš v simulaciji spodaj.
+Za negativen $x$ grafa ni, saj koren negativnega števila ni realen. Graf lahko preizkusiš v simulaciji spodaj (»Grafi korenskih funkcij«).
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -164,7 +164,7 @@ Poglej list papirja A4. Njegovi stranici sta dolgi $297\,\text{mm}$ in $210\,\te
 3. Rezultat: $\dfrac{7\sqrt{5}}{10}$.
 4. Preverjanje: $\dfrac{7}{2 \cdot 2{,}236} \approx 1{,}565$ in $\dfrac{7 \cdot 2{,}236}{10} \approx 1{,}565$.
 
-**Kubični koren $\sqrt[3]{54}$.** Najdemo popolni kubus: $54 = 27 \cdot 2$, zato je $\sqrt[3]{54} = 3\sqrt[3]{2} \approx 3{,}78$.
+**Kubični koren $\sqrt[3]{54}$.** Najdemo popolni kub: $54 = 27 \cdot 2$, zato je $\sqrt[3]{54} = 3\sqrt[3]{2} \approx 3{,}78$.
 
 ## Drugače: Bolj natančno
 
