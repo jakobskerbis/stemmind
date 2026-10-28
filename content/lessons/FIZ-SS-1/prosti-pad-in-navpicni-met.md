@@ -2,7 +2,7 @@
 stanje: osnutek
 demo: prosti-pad
 phet: projectile-motion
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -47,7 +47,16 @@ $$t_\text{vrh} = \frac{v_0}{g} \qquad h_\text{max} = \frac{v_0^2}{2g}$$
 
 ### Primer 1: kamen z mostu (lažji)
 
-Kamen spustimo z mostu in v vodo pade čez $3{,}0\,\text{s}$. Kako visoko je most nad vodo in kolikšna je hitrost kamna tik pred udarcem? Zračni upor zanemari.
+Kamen spustimo z mostu in v vodo pade po $3{,}0\,\text{s}$. Kako visoko je most nad vodo in kolikšna je hitrost kamna tik pred udarcem? Zračni upor zanemari.
+
+**Podatki:** $t = 3{,}0\,\text{s}$, $v_0 = 0$ (kamen spustimo), $g = 9{,}81\,\mathrm{m/s^2}$, zračni upor zanemarimo
+**Iščemo:** višino mostu $h$ in hitrost $v$ tik pred udarcem v vodo
+
+:::formula
+Prosti pad: $h = \dfrac{g t^2}{2}$ in $v = g\,t$ (preverjanje: $v^2 = 2\,g\,h$)
+:::
+
+**Rešitev:**
 
 1. Gre za prosti pad (začetna hitrost je $0$), zato uporabimo $h = \dfrac{g t^2}{2}$.
 2. Vstavimo: $h = \dfrac{9{,}81 \cdot 3{,}0^2}{2} = \dfrac{9{,}81 \cdot 9}{2} = 44{,}145\,\text{m} \approx 44\,\text{m}$.
@@ -60,6 +69,15 @@ Kamen spustimo z mostu in v vodo pade čez $3{,}0\,\text{s}$. Kako visoko je mos
 
 Žogo vržemo navpično navzgor s hitrostjo $14{,}0\,\mathrm{m/s}$. Kako visoko poleti, kdaj doseže vrh in kdaj pade nazaj v roko?
 
+**Podatki:** $v_0 = 14{,}0\,\mathrm{m/s}$ (navzgor), $g = 9{,}81\,\mathrm{m/s^2}$, v vrhu je $v = 0$
+**Iščemo:** največjo višino $h_\text{max}$, čas vzpona $t_\text{vrh}$ in čas vrnitve v roko
+
+:::formula
+$t_\text{vrh} = \dfrac{v_0}{g}$, $h_\text{max} = \dfrac{v_0^2}{2g}$, celoten let traja $2\,t_\text{vrh}$
+:::
+
+**Rešitev:**
+
 1. V vrhu je $v = 0$. Čas vzpona: $t_\text{vrh} = \dfrac{v_0}{g} = \dfrac{14{,}0}{9{,}81} \approx 1{,}43\,\text{s}$.
 2. Višina: $h_\text{max} = \dfrac{v_0^2}{2g} = \dfrac{14{,}0^2}{2 \cdot 9{,}81} = \dfrac{196}{19{,}62} \approx 9{,}99\,\text{m}$.
 3. Čas padanja nazaj je enak času vzpona, zato je skupni čas $2 \cdot 1{,}43 \approx 2{,}85\,\text{s}$.
@@ -69,7 +87,16 @@ Kamen spustimo z mostu in v vodo pade čez $3{,}0\,\text{s}$. Kako visoko je mos
 
 ### Primer 3: met z roba stavbe (težji)
 
-Z roba stavbe, ki je $25\,\text{m}$ visoka, vržemo kamen navpično navzgor s hitrostjo $10\,\mathrm{m/s}$. Čez koliko časa pade na tla in s kolikšno hitrostjo?
+Z roba stavbe, ki je $25\,\text{m}$ visoka, vržemo kamen navpično navzgor s hitrostjo $10\,\mathrm{m/s}$. Po kolikšnem času pade na tla in s kolikšno hitrostjo?
+
+**Podatki:** $y_0 = 25\,\text{m}$ (višina stavbe), $v_0 = 10\,\mathrm{m/s}$ (navzgor), $g = 9{,}81\,\mathrm{m/s^2}$, ob padcu na tla je $y = 0$
+**Iščemo:** čas $t$ do padca na tla in hitrost $v$ ob padcu
+
+:::formula
+Os navzgor: $y = y_0 + v_0\,t - \dfrac{g t^2}{2}$ (ob padcu $y = 0$, rešimo kvadratno enačbo), $v = v_0 - g\,t$
+:::
+
+**Rešitev:**
 
 1. **Izbira osi.** Os $y$ usmerimo navzgor, izhodišče postavimo na tla. Začetni položaj je $y_0 = 25\,\text{m}$, začetna hitrost $v_0 = +10\,\mathrm{m/s}$.
 2. **Enačba gibanja.** $y = y_0 + v_0 t - \dfrac{g t^2}{2}$. Ob padcu na tla je $y = 0$:
@@ -88,7 +115,7 @@ Z roba stavbe, ki je $25\,\text{m}$ visoka, vržemo kamen navpično navzgor s hi
 - **Mešanje predznakov.** Če os usmeriš navzgor, mora imeti $g$ v enačbah nasprotno smer od $v_0$. Izberi smer in je ne spreminjaj sredi naloge.
 - **Pozabljen faktor $\tfrac{1}{2}$ ali kvadrat časa.** Pravilno je $h = \dfrac{g t^2}{2}$. Ne piši $h = g t$ in ne $h = \dfrac{g t}{2}$.
 - **»Težja telesa padajo hitreje.«** Brez zračnega upora vsa telesa padajo z istim pospeškom. V resnici razliko povzroča zračni upor.
-- **Poravnava časa pri kvadratni enačbi.** Pri kvadratni enačbi dobiš dve rešitvi za čas. Negativna ali nesmiselna rešitev ne ustreza nalogi.
+- **Dve rešitvi kvadratne enačbe.** Pri kvadratni enačbi dobiš dve rešitvi za čas. Negativna ali nesmiselna rešitev ne ustreza nalogi.
 - **Enote.** Pospešek je v $\mathrm{m/s^2}$, ne v $\mathrm{m/s}$. Pred računom pretvori vse v osnovne enote.
 
 ## Povzetek
@@ -108,18 +135,18 @@ V demonstraciji »Prosti pad na Zemlji, Luni in Marsu« spustiš telo na treh ne
 Opaziš lahko:
 
 - Na Zemlji ($g \approx 9{,}81\,\mathrm{m/s^2}$) telo pade najhitreje.
-- Na Marsu ($g \approx 3{,}71\,\mathrm{m/s^2}$) isto višino prepada počasneje.
+- Na Marsu ($g \approx 3{,}71\,\mathrm{m/s^2}$) telo isto višino preleti počasneje.
 - Na Luni ($g \approx 1{,}62\,\mathrm{m/s^2}$) je padanje najpočasnejše.
 
 Če narišeš graf hitrosti v odvisnosti od časa, dobiš premico skozi izhodišče, njen naklon pa je $g$. Strmejša premica pomeni večji težni pospešek. Pot je ploščina pod to premico: pri času $t$ je to trikotnik s ploščino $\dfrac{1}{2}\, t \cdot g t = \dfrac{g t^2}{2}$.
 
-Za vajo odpri še simulacijo PhET »Projectile Motion«. Žogo izstreli navpično navzgor (kot $90^\circ$) in opazuj, kako se vektor hitrosti krajša do vrha in nato spet daljša v nasprotni smeri.
+Za vajo odpri še interaktivno simulacijo spodaj. Žogo izstreli navpično navzgor (kot $90^\circ$) in opazuj, kako se vektor hitrosti krajša do vrha in nato spet daljša v nasprotni smeri.
 
 ## Drugače: Iz vsakdanjega življenja
 
-**Skok v vodo.** Skakalec skoči z deskice, ki je $3\,\text{m}$ nad vodo, in pri tem začetna hitrost v navpični smeri skoraj izgine. Čas padanja je $t = \sqrt{\dfrac{2h}{g}} = \sqrt{\dfrac{6}{9{,}81}} \approx 0{,}78\,\text{s}$. V manj kot sekundi mora izvesti vse, kar želi pokazati.
+**Skok v vodo.** Skakalec skoči s skakalne deske, ki je $3\,\text{m}$ nad vodo, pri čemer je njegova začetna hitrost v navpični smeri skoraj nič. Čas padanja je $t = \sqrt{\dfrac{2h}{g}} = \sqrt{\dfrac{6}{9{,}81}} \approx 0{,}78\,\text{s}$. V manj kot sekundi mora izvesti vse, kar želi pokazati.
 
-**Globina vodnjaka.** Spustiš kamen in šteješ sekunde do pljuska. Če se pljusk sliši po $2{,}0\,\text{s}$ (in zvok zanemariš), je globina približno $\dfrac{9{,}81 \cdot 4}{2} \approx 19{,}6\,\text{m}$. Pri večjih globinah ta približek postane slab, ker zvok potrebuje čas, da pride do tebe.
+**Globina vodnjaka.** Spustiš kamen in šteješ sekunde do pljuska. Če se pljusk sliši po $2{,}0\,\text{s}$ (in čas potovanja zvoka zanemariš), je globina približno $\dfrac{9{,}81 \cdot 4}{2} \approx 19{,}6\,\text{m}$. Pri večjih globinah ta približek postane slab, ker zvok potrebuje čas, da pride do tebe.
 
 **Skok pri košarki.** Igralec se z mesta odrine navzgor in je v zraku okoli $0{,}8\,\text{s}$. Zdi se, da obvisi, a v resnici zgolj sledi enačbam metov. Približno polovico časa se vzpenja, polovico pada.
 
@@ -167,7 +194,7 @@ $$h = \frac{g}{2}\cdot\frac{v^2}{g^2} = \frac{v^2}{2g} \quad\Rightarrow\quad v^2
 - $9{,}81\,\mathrm{m/s}$
 - $39{,}2\,\mathrm{m/s}$
 + $19{,}6\,\mathrm{m/s}$
-> Pri prostem padu je $v = g t = 9{,}81 \cdot 2{,}0 \approx 19{,}6\,\mathrm{m/s}$. Vrednost $39{,}2\,\mathrm{m/s}$ dobiš, če časa ne kvadriraš pravilno ($g t^2$), vrednost $9{,}81\,\mathrm{m/s}$ pa je kar $g$, ki je pospešek, ne hitrost.
+> Pri prostem padu je $v = g t = 9{,}81 \cdot 2{,}0 \approx 19{,}6\,\mathrm{m/s}$. Vrednost $39{,}2\,\mathrm{m/s}$ dobiš, če po pomoti računaš $g t^2$ in čas kvadriraš, vrednost $9{,}81\,\mathrm{m/s}$ pa je kar $g$, ki je pospešek, ne hitrost.
 
 ? Kaj velja za žogo v najvišji točki navpičnega meta navzgor?
 - Hitrost in pospešek sta enaka $0$.

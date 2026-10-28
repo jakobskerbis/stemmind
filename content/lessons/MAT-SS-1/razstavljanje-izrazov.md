@@ -15,7 +15,7 @@ Zakaj je to koristno? Izraz v obliki produkta je veliko lažje obvladati. Produk
 
 **1. Kaj pomeni razstaviti.** Razstaviti izraz pomeni zapisati ga kot produkt faktorjev. Razcep je **popoln**, ko noben faktor ni več mogoče razstaviti naprej. Pravilnost vedno preveriš s preizkusom: faktorje zmnožiš in moraš dobiti prvotni izraz.
 
-**2. Izpostavljanje skupnega faktorja.** Zakon o razčlenjevanju (distributivnost) $ab + ac = a(b + c)$ preberemo v obratni smeri. Postopek:
+**2. Izpostavljanje skupnega faktorja.** Distributivnostni zakon $ab + ac = a(b + c)$ preberemo v obratni smeri. Postopek:
 
 1. Poišči največji skupni delitelj vseh koeficientov.
 2. Vsako spremenljivko, ki nastopa v vseh členih, vzemi z najmanjšim eksponentom.
@@ -37,7 +37,7 @@ $$ax + ay + bx + by = a(x+y) + b(x+y) = (a+b)(x+y).$$
 | trije členi, kvadrat vsote | $a^2 + 2ab + b^2 = (a+b)^2$ | $x^2 + 10x + 25 = (x+5)^2$ |
 | trije členi, kvadrat razlike | $a^2 - 2ab + b^2 = (a-b)^2$ | $4x^2 - 12x + 9 = (2x-3)^2$ |
 
-Pri razliki kvadratov je pomembno, da prepoznaš kvadrata: $9x^2 = (3x)^2$ in $16 = 4^2$. Izraz $a^2 + b^2$ (z znakom plus) z realnimi števili ni mogoče razstaviti.
+Pri razliki kvadratov je pomembno, da prepoznaš kvadrata: $9x^2 = (3x)^2$ in $16 = 4^2$. Vsote kvadratov $a^2 + b^2$ (z znakom plus) z realnimi števili ni mogoče razstaviti.
 
 **4. Vietovo pravilo.** Poglej, kaj dobiš, ko zmnožiš dva dvočlenika:
 
@@ -53,7 +53,7 @@ in potem je $x^2 + px + q = (x+a)(x+b)$. Najprej zapiši vse pare celih faktorje
 |---|---|---|
 | $q > 0$ | $p > 0$ | obe števili sta pozitivni |
 | $q > 0$ | $p < 0$ | obe števili sta negativni |
-| $q < 0$ | poljuben | števili imata različna predznaka, večje po absolutni vrednosti ima predznak števila $p$ |
+| $q < 0$ | poljuben | števili imata različna predznaka; če je $p \neq 0$, ima večje po absolutni vrednosti enak predznak kot $p$ |
 
 Primer: $x^2 + 7x + 12$. Iščemo števili z vsoto $7$ in produktom $12$. Pari faktorjev števila $12$ so $1\cdot12$, $2\cdot6$, $3\cdot4$. Vsoto $7$ ima par $3$ in $4$, zato je $x^2 + 7x + 12 = (x+3)(x+4)$. Če takega para ni, trinoma s celimi števili ne moremo razstaviti.
 
@@ -134,7 +134,7 @@ $ab + ac = a(b + c)$, $\quad ax + ay + bx + by = (a+b)(x+y)$, $\quad a^2 - b^2 =
 - **Pozabljena enica pri izpostavljanju.** Zapišeš $4x^2 + 4x = 4x \cdot x$. Razlog: ko je cel člen enak skupnemu faktorju, ne ostane nič, ampak $1$. Pravilno: $4x^2 + 4x = 4x(x + 1)$. Preizkus: $4x(x+1) = 4x^2 + 4x$.
 - **Razcep ni popoln.** Zapišeš $6x^2 - 9x = 3(2x^2 - 3x)$ ali se ustaviš pri $x^4 - 16 = (x^2-4)(x^2+4)$. Razlog: nisi izpostavil največjega skupnega faktorja (tudi spremenljivke) oziroma nisi pogledal, ali se kak faktor da razstaviti naprej. Pravilno: $6x^2 - 9x = 3x(2x - 3)$ in $x^4 - 16 = (x-2)(x+2)(x^2+4)$.
 - **Napačen predznak pri izpostavljanju minusa.** Zapišeš $-x^2 + 4x = -x(x + 4)$. Razlog: ko izpostaviš $-x$, se predznaka vseh členov v oklepaju obrneta. Pravilno: $-x^2 + 4x = -x(x - 4)$. Preizkus: $-x \cdot x = -x^2$ in $-x \cdot (-4) = 4x$.
-- **Mešanje obrazcev.** Zapišeš $x^2 + 9 = (x+3)^2$ ali $x^2 - 9 = (x-3)^2$. Razlog: $(x+3)^2 = x^2 + 6x + 9$ ima srednji člen, razlika kvadratov pa ga nima, vsota kvadratov pa se ne da razstaviti. Pravilno: $x^2 - 9 = (x-3)(x+3)$, izraz $x^2 + 9$ ostane nerazstavljen.
+- **Mešanje obrazcev.** Zapišeš $x^2 + 9 = (x+3)^2$ ali $x^2 - 9 = (x-3)^2$. Razlog: $(x+3)^2 = x^2 + 6x + 9$ ima srednji člen, razlika kvadratov ga nima, vsote kvadratov pa ni mogoče razstaviti. Pravilno: $x^2 - 9 = (x-3)(x+3)$, izraz $x^2 + 9$ ostane nerazstavljen.
 - **Vietovo pravilo z napačnimi predznaki.** Za $x^2 - 5x + 6$ zapišeš $(x+2)(x+3)$, ker je $2 \cdot 3 = 6$. Razlog: preveril si le produkt, ne pa vsote; $2 + 3 = 5$, ne $-5$. Pravilno: iščeš števili z vsoto $-5$ in produktom $6$, to sta $-2$ in $-3$, zato je $x^2 - 5x + 6 = (x-2)(x-3)$.
 
 ## Povzetek
@@ -170,7 +170,7 @@ Vsota ploščin je $x^2 + 4x + 3x + 12 = x^2 + 7x + 12$. Srednji člen je nastal
 
 **Računanje na pamet.** Razliko kvadratov uporabiš za hitre račune: $98 \cdot 102 = (100-2)(100+2) = 100^2 - 2^2 = 10\,000 - 4 = 9\,996$. Tudi $52^2 - 48^2 = (52-48)(52+48) = 4 \cdot 100 = 400$. Preveri: $2\,704 - 2\,304 = 400$.
 
-**Dimenzije.** Pravokotna terasa ima ploščino $x^2 + 7x + 12$ kvadratnih metrov. Če nariše načrt, mora delavec vedeti, koliko merita stranici. Razcep $(x+3)(x+4)$ pove, da sta stranici dolgi $x+3$ in $x+4$ metra. Za $x = 2$ je to pravokotnik $5\,\text{m} \times 6\,\text{m}$ s ploščino $30\,\text{m}^2$, kar se ujema z $4 + 14 + 12 = 30$.
+**Dimenzije.** Pravokotna terasa ima ploščino $x^2 + 7x + 12$ kvadratnih metrov. Pri risanju načrta mora delavec vedeti, koliko merita stranici. Razcep $(x+3)(x+4)$ pove, da sta stranici dolgi $x+3$ in $x+4$ metra. Za $x = 2$ je to pravokotnik $5\,\text{m} \times 6\,\text{m}$ s ploščino $30\,\text{m}^2$, kar se ujema z $4 + 14 + 12 = 30$.
 
 ## Drugače: Korak za korakom s številkami
 
@@ -199,7 +199,7 @@ Vsoto $2$ ima zadnji par, zato je $x^2 + 2x - 24 = (x-4)(x+6)$. Preizkus pri $x 
 
 **Zakaj Vietovo pravilo deluje.** Iz $(x+a)(x+b) = x^2 + bx + ax + ab = x^2 + (a+b)x + ab$ vidiš, da je koeficient pri $x$ vsota števil $a$ in $b$, prosti člen pa njun produkt. Primerjava s $x^2 + px + q$ da natanko pogoja $a + b = p$ in $a \cdot b = q$.
 
-**Zakaj vsote kvadratov ni mogoče razstaviti.** Denimo, da bi veljalo $x^2 + 1 = (x+a)(x+b)$ za vse $x$. Pri $x = -a$ bi bila desna stran enaka $0$, leva pa $a^2 + 1 \ge 1$. To je protislovje. Podobno velja za vsak $a^2 + b^2$ z $b \neq 0$.
+**Zakaj vsote kvadratov ni mogoče razstaviti.** Denimo, da bi veljalo $x^2 + 1 = (x+a)(x+b)$ za vse $x$. Pri $x = -a$ bi bila desna stran enaka $0$, leva pa $a^2 + 1 \ge 1$. To je protislovje. Enako velja za $x^2 + c$ pri vsakem $c > 0$.
 
 **Odvisnost od množice števil.** Izraz $x^2 - 2$ ni razstavljiv s celimi števili, z realnimi števili pa je $x^2 - 2 = (x - \sqrt{2})(x + \sqrt{2})$. V tej temi razstavljamo s celimi števili, razlika kvadratov pa deluje, kadar sta oba člena kvadrata.
 

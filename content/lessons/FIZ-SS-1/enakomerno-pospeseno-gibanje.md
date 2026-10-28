@@ -1,13 +1,13 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
 Pri enakomernem gibanju že znaš: hitrost je stalna, pot izračunaš kot $s = v \cdot t$. V resnici pa se le redko gibljemo s stalno hitrostjo. Avtomobil na semaforju pospešuje, kamen v prostem padu se vedno hitreje giblje, kolo pred križiščem zavira.
 
-Najpreprostejši primer spreminjanja hitrosti je **enakomerno pospešeno gibanje**: hitrost se v vsaki sekundi spremeni za enako vrednost. Z njim opišemo zaviranje vozil (in s tem varnostno razdaljo), prosti pad, met navzdol in številne druge pojave. Z enačbami lahko vnaprej izračunaš, kako hitro bo telo in kje bo po določenem času.
+Najpreprostejši primer spreminjanja hitrosti je **enakomerno pospešeno gibanje**: hitrost se v vsaki sekundi spremeni za enako vrednost. Z njim opišemo zaviranje vozil (in s tem varnostno razdaljo), prosti pad, met navzdol in številne druge pojave. Z enačbami lahko vnaprej izračunaš, kako hitro se bo telo gibalo in kje bo po določenem času.
 
 ## Razlaga
 
@@ -29,7 +29,7 @@ kjer je $v_0$ začetna hitrost (ob $t = 0$).
 
 $$s = v_0\,t + \frac{a\,t^2}{2}$$
 
-Če telo startá iz mirovanja ($v_0 = 0$), je $s = \dfrac{a t^2}{2}$.
+Če se telo začne gibati iz mirovanja ($v_0 = 0$), je $s = \dfrac{a t^2}{2}$.
 
 **5. Enačba brez časa.** Iz obeh enačb izločimo $t$ in dobimo:
 
@@ -49,16 +49,33 @@ Uporabna je, kadar čas ni podan ali ni zahtevan.
 
 ### Primer 1: zagon avtomobila
 
-Avto štarta iz mirovanja in pospešuje s $2{,}0\,\mathrm{\frac{m}{s^2}}$. Kolikšna je hitrost in prepotovana pot po $5{,}0\,\mathrm{s}$?
+Avto spelje iz mirovanja in pospešuje z $2{,}0\,\mathrm{\frac{m}{s^2}}$. Kolikšna je hitrost in prepotovana pot po $5{,}0\,\mathrm{s}$?
 
-1. Podatki: $v_0 = 0$, $a = 2{,}0\,\mathrm{\frac{m}{s^2}}$, $t = 5{,}0\,\mathrm{s}$.
-2. Hitrost: $v = v_0 + at = 0 + 2{,}0 \cdot 5{,}0 = 10\,\mathrm{\frac{m}{s}}$.
-3. Pot (ker je $v_0 = 0$): $s = \dfrac{a t^2}{2} = \dfrac{2{,}0 \cdot 25}{2} = 25\,\mathrm{m}$.
-4. Preverimo s povprečno hitrostjo: $\bar v = \dfrac{0 + 10}{2} = 5\,\mathrm{\frac{m}{s}}$, $s = 5 \cdot 5{,}0 = 25\,\mathrm{m}$. ✓
+**Podatki:** $v_0 = 0$, $a = 2{,}0\,\mathrm{\frac{m}{s^2}}$, $t = 5{,}0\,\mathrm{s}$
+**Iščemo:** hitrost $v$ in pot $s$ po $5{,}0\,\mathrm{s}$
+
+:::formula
+$v = v_0 + a\,t$, $s = v_0\,t + \dfrac{a\,t^2}{2}$
+:::
+
+**Rešitev:**
+
+1. Hitrost: $v = v_0 + at = 0 + 2{,}0 \cdot 5{,}0 = 10\,\mathrm{\frac{m}{s}}$.
+2. Pot (ker je $v_0 = 0$): $s = \dfrac{a t^2}{2} = \dfrac{2{,}0 \cdot 25}{2} = 25\,\mathrm{m}$.
+3. Preverimo s povprečno hitrostjo: $\bar v = \dfrac{0 + 10}{2} = 5\,\mathrm{\frac{m}{s}}$, $s = 5 \cdot 5{,}0 = 25\,\mathrm{m}$. ✓
 
 ### Primer 2: zaviranje
 
 Kolesar vozi s hitrostjo $36\,\mathrm{\frac{km}{h}}$ in enakomerno zavira, dokler se ne ustavi po $4{,}0\,\mathrm{s}$. Kolikšen je pospešek in kolikšna je zavorna pot?
+
+**Podatki:** $v_0 = 36\,\mathrm{\frac{km}{h}}$, $v = 0$ (ustavi se), $t = 4{,}0\,\mathrm{s}$
+**Iščemo:** pospešek $a$ in zavorno pot $s$
+
+:::formula
+$a = \dfrac{v - v_0}{t}$, $s = v_0\,t + \dfrac{a\,t^2}{2}$ (hitrost najprej pretvorimo iz $\mathrm{km/h}$ v $\mathrm{m/s}$: delimo s $3{,}6$)
+:::
+
+**Rešitev:**
 
 1. Pretvorba: $36\,\mathrm{km/h} = 36 : 3{,}6 = 10\,\mathrm{\frac{m}{s}}$. Torej $v_0 = 10\,\mathrm{\frac{m}{s}}$, $v = 0$, $t = 4{,}0\,\mathrm{s}$.
 2. Pospešek: $a = \dfrac{v - v_0}{t} = \dfrac{0 - 10}{4{,}0} = -2{,}5\,\mathrm{\frac{m}{s^2}}$. Predznak je negativen, ker kolesar zavira.
@@ -69,14 +86,23 @@ Kolesar vozi s hitrostjo $36\,\mathrm{\frac{km}{h}}$ in enakomerno zavira, dokle
 
 Vlak se pelje s hitrostjo $20\,\mathrm{\frac{m}{s}}$ in na razdalji $100\,\mathrm{m}$ pospeši na $30\,\mathrm{\frac{m}{s}}$. Kolikšen je pospešek in koliko časa traja pospeševanje?
 
-1. Podatki: $v_0 = 20\,\mathrm{\frac{m}{s}}$, $v = 30\,\mathrm{\frac{m}{s}}$, $s = 100\,\mathrm{m}$. Časa ne poznamo, zato izberemo enačbo brez $t$.
+**Podatki:** $v_0 = 20\,\mathrm{\frac{m}{s}}$, $v = 30\,\mathrm{\frac{m}{s}}$, $s = 100\,\mathrm{m}$
+**Iščemo:** pospešek $a$ in čas pospeševanja $t$
+
+:::formula
+Enačba brez časa $v^2 = v_0^2 + 2\,a\,s$, nato $t = \dfrac{v - v_0}{a}$
+:::
+
+**Rešitev:**
+
+1. Časa ne poznamo, zato izberemo enačbo brez $t$.
 2. Iz $v^2 = v_0^2 + 2as$ izrazimo: $a = \dfrac{v^2 - v_0^2}{2s} = \dfrac{900 - 400}{200} = 2{,}5\,\mathrm{\frac{m}{s^2}}$.
 3. Čas iz enačbe za hitrost: $t = \dfrac{v - v_0}{a} = \dfrac{30 - 20}{2{,}5} = 4{,}0\,\mathrm{s}$.
 4. Preverimo s potjo: $s = \dfrac{v_0 + v}{2}\, t = 25 \cdot 4{,}0 = 100\,\mathrm{m}$. ✓
 
 ## Pogoste napake
 
-- **Km/h namesto m/s.** Enačbe delujejo v osnovnih enotah. Najprej pretvori ($\mathrm{km/h} : 3{,}6 = \mathrm{m/s}$).
+- **Enota km/h namesto m/s.** Enačbe delujejo v osnovnih enotah. Najprej pretvori ($\mathrm{km/h} : 3{,}6 = \mathrm{m/s}$).
 - **Pozabljen predznak pospeška.** Pri zaviranju je $a$ negativen. Če vstaviš pozitivnega, dobiš hitrost, ki ob zaviranju raste.
 - **Napačna formula za pot.** $s = v_0 t + \dfrac{a t^2}{2}$ ima polovico pri drugem členu. Napaka je $s = v_0 t + a t^2$ ali $s = a t$.
 - **Kvadriranje.** V $\dfrac{a t^2}{2}$ se kvadrira samo $t$, ne produkt $a t$.
@@ -95,7 +121,7 @@ Vlak se pelje s hitrostjo $20\,\mathrm{\frac{m}{s}}$ in na razdalji $100\,\mathr
 
 ## Drugače: Na sliki
 
-Predstavljaj si graf $v(t)$ za avto, ki štarta iz mirovanja s $2\,\mathrm{\frac{m}{s^2}}$. Premica gre iz izhodišča navzgor: pri $1\,\mathrm{s}$ je $2\,\mathrm{\frac{m}{s}}$, pri $2\,\mathrm{s}$ je $4\,\mathrm{\frac{m}{s}}$, pri $5\,\mathrm{s}$ je $10\,\mathrm{\frac{m}{s}}$.
+Predstavljaj si graf $v(t)$ za avto, ki spelje iz mirovanja z $2\,\mathrm{\frac{m}{s^2}}$. Premica gre iz izhodišča navzgor: pri $1\,\mathrm{s}$ je $2\,\mathrm{\frac{m}{s}}$, pri $2\,\mathrm{s}$ je $4\,\mathrm{\frac{m}{s}}$, pri $5\,\mathrm{s}$ je $10\,\mathrm{\frac{m}{s}}$.
 
 - **Naklon** premice je $\dfrac{10}{5} = 2\,\mathrm{\frac{m}{s^2}}$, torej pospešek.
 - **Ploščina** pod premico od $0$ do $5\,\mathrm{s}$ je pravokotni trikotnik s katetama $5\,\mathrm{s}$ in $10\,\mathrm{\frac{m}{s}}$: $\dfrac{5 \cdot 10}{2} = 25\,\mathrm{m}$. To je ravno prepotovana pot.
@@ -108,11 +134,11 @@ Graf $s(t)$ je parabola: v prvi sekundi telo prepotuje malo, v naslednjih vedno 
 
 Ko na semaforju zelena zasveti, voznik pospeši. Vozilo, ki pospešuje z $2\,\mathrm{\frac{m}{s^2}}$, ima po prvi sekundi $2\,\mathrm{\frac{m}{s}}$ (približno $7\,\mathrm{km/h}$), po drugi $4\,\mathrm{\frac{m}{s}}$ in tako naprej. Hitrost raste enakomerno, pot pa vse hitreje, saj vsako naslednjo sekundo vozilo prevozi več kot prejšnjo.
 
-Zaviranje je enak pojav v obratni smeri. Zato ima pot zaviranja pomembno posledico: pri dvakratni začetni hitrosti in enakem pojemku je zavorna pot **štirikrat** daljša, ker v $v^2 = 2 a s$ hitrost nastopa kvadratno. Če kolesar zavira z $2{,}5\,\mathrm{\frac{m}{s^2}}$ iz $10\,\mathrm{\frac{m}{s}}$, potrebuje $20\,\mathrm{m}$; iz $20\,\mathrm{\frac{m}{s}}$ pa $80\,\mathrm{m}$. Zato je pri večji hitrosti varnostna razdalja tako pomembna.
+Zaviranje je enak pojav v obratni smeri. Zato ima pot zaviranja pomembno posledico: pri dvakratni začetni hitrosti in enakem pojemku je zavorna pot **štirikrat** daljša, ker je zavorna pot $s = \dfrac{v_0^2}{2|a|}$ in v njej začetna hitrost nastopa kvadratno. Če kolesar zavira z $2{,}5\,\mathrm{\frac{m}{s^2}}$ iz $10\,\mathrm{\frac{m}{s}}$, potrebuje $20\,\mathrm{m}$; iz $20\,\mathrm{\frac{m}{s}}$ pa $80\,\mathrm{m}$. Zato je pri večji hitrosti varnostna razdalja tako pomembna.
 
 ## Drugače: Korak za korakom s številkami
 
-Telo ima $v_0 = 3\,\mathrm{\frac{m}{s}}$ in $a = 2\,\mathrm{\frac{m}{s^2}}$. Poglejmo tabelo za prvih 4 sekunde:
+Telo ima $v_0 = 3\,\mathrm{\frac{m}{s}}$ in $a = 2\,\mathrm{\frac{m}{s^2}}$. Poglejmo tabelo za prve 4 sekunde:
 
 | $t\,(\mathrm{s})$ | $v = 3 + 2t\,(\mathrm{\frac{m}{s}})$ | $s = 3t + t^2\,(\mathrm{m})$ |
 |---|---|---|
@@ -150,14 +176,14 @@ Pri tej izpeljavi smo privzeli, da je gibanje po premici in da se smer gibanja n
 
 ## Preveri se
 
-? Avto štarta iz mirovanja in pospešuje z $3\,\mathrm{\frac{m}{s^2}}$. Kolikšna je njegova hitrost po $4\,\mathrm{s}$?
+? Avto spelje iz mirovanja in pospešuje s $3\,\mathrm{\frac{m}{s^2}}$. Kolikšna je njegova hitrost po $4\,\mathrm{s}$?
 - $7\,\mathrm{\frac{m}{s}}$
 + $12\,\mathrm{\frac{m}{s}}$
 - $24\,\mathrm{\frac{m}{s}}$
 - $0{,}75\,\mathrm{\frac{m}{s}}$
 > $v = v_0 + at = 0 + 3 \cdot 4 = 12\,\mathrm{\frac{m}{s}}$. Odgovor $7$ je vsota, $24$ je prepotovana pot v metrih ($a t^2/2$), ne hitrost, $0{,}75$ pa je količnik $a/t$.
 
-? Telo štarta iz mirovanja s pospeškom $2\,\mathrm{\frac{m}{s^2}}$. Kolikšno pot prepotuje v $6\,\mathrm{s}$?
+? Telo se začne gibati iz mirovanja s pospeškom $2\,\mathrm{\frac{m}{s^2}}$. Kolikšno pot prepotuje v $6\,\mathrm{s}$?
 - $12\,\mathrm{m}$
 - $72\,\mathrm{m}$
 + $36\,\mathrm{m}$

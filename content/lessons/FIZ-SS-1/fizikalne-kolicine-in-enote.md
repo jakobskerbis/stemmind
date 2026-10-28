@@ -1,6 +1,6 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -17,7 +17,7 @@ $$\text{količina} = \text{število} \cdot \text{enota}$$
 
 Primer: dolžina $l = 3{,}5\,\text{m}$. Tu je $l$ oznaka količine, $3{,}5$ številska vrednost in $\text{m}$ enota.
 
-**2. Mednarodni sistem enot (SI).** SI je dogovorjen sistem enot, ki ga uporablja znanost po vsem svetu. Ima sedem **osnovnih enot**. Pri tem predmetu najpogosteje uporabljamo:
+**2. Mednarodni sistem enot (SI).** SI je dogovorjen sistem enot, ki ga uporablja znanost po vsem svetu. Ima sedem **osnovnih enot**:
 
 | Količina | Oznaka količine | Osnovna enota SI | Oznaka enote |
 |---|---|---|---|
@@ -74,6 +74,15 @@ $$1\,\text{cm}^2 = (10^{-2}\,\text{m})^2 = 10^{-4}\,\text{m}^2, \qquad 1\,\text{
 
 Pretvori $4{,}5\,\text{km}$ v metre in $730\,\text{g}$ v kilograme.
 
+**Podatki:** dolžina $4{,}5\,\text{km}$, masa $730\,\text{g}$
+**Iščemo:** isto dolžino v $\text{m}$ in isto maso v $\text{kg}$
+
+:::formula
+$1\,\text{km} = 10^3\,\text{m}$, $1\,\text{g} = 10^{-3}\,\text{kg}$
+:::
+
+**Rešitev:**
+
 1. Predpona $\text{k}$ pomeni $10^3$: $4{,}5\,\text{km} = 4{,}5 \cdot 10^3\,\text{m} = 4500\,\text{m}$.
 2. Osnovna enota za maso je kilogram. Ker je $1\,\text{g} = 10^{-3}\,\text{kg}$, velja $730\,\text{g} = 730 \cdot 10^{-3}\,\text{kg} = 0{,}73\,\text{kg}$.
 3. Preverimo smiselnost: kilometer je veliko več kot meter, zato mora biti število v metrih večje. Gram je manj kot kilogram, zato mora biti število v kilogramih manjše. ✓
@@ -81,6 +90,15 @@ Pretvori $4{,}5\,\text{km}$ v metre in $730\,\text{g}$ v kilograme.
 ### Primer 2: ploščina in prostornina
 
 Pretvori $350\,\text{cm}^2$ v $\text{m}^2$ in $2{,}5\,\text{L}$ v $\text{m}^3$.
+
+**Podatki:** ploščina $350\,\text{cm}^2$, prostornina $2{,}5\,\text{L}$
+**Iščemo:** isto ploščino v $\text{m}^2$ in isto prostornino v $\text{m}^3$
+
+:::formula
+$1\,\text{cm}^2 = (10^{-2}\,\text{m})^2 = 10^{-4}\,\text{m}^2$, $1\,\text{L} = 1\,\text{dm}^3 = (10^{-1}\,\text{m})^3 = 10^{-3}\,\text{m}^3$
+:::
+
+**Rešitev:**
 
 1. Za ploščino: $1\,\text{cm}^2 = 10^{-4}\,\text{m}^2$, zato $350\,\text{cm}^2 = 350 \cdot 10^{-4}\,\text{m}^2 = 0{,}035\,\text{m}^2$.
 2. Za prostornino vemo, da je $1\,\text{L} = 1\,\text{dm}^3$. Ker je $1\,\text{dm} = 10^{-1}\,\text{m}$, je $1\,\text{dm}^3 = (10^{-1}\,\text{m})^3 = 10^{-3}\,\text{m}^3$.
@@ -90,6 +108,15 @@ Pretvori $350\,\text{cm}^2$ v $\text{m}^2$ in $2{,}5\,\text{L}$ v $\text{m}^3$.
 ### Primer 3 (težji): hitrost in sestavljena enota
 
 Kolesar vozi s hitrostjo $27\,\dfrac{\text{km}}{\text{h}}$. Izrazi hitrost v $\dfrac{\text{m}}{\text{s}}$. Nato izračunaj, koliko metrov prevozi v $2\,\text{min}$.
+
+**Podatki:** $v = 27\,\dfrac{\text{km}}{\text{h}}$, $t = 2\,\text{min}$
+**Iščemo:** hitrost $v$ v $\dfrac{\text{m}}{\text{s}}$ in pot $s$ v metrih
+
+:::formula
+$1\,\dfrac{\text{km}}{\text{h}} = \dfrac{1000\,\text{m}}{3600\,\text{s}}$ (delimo s $3{,}6$), $1\,\text{min} = 60\,\text{s}$, $s = v \cdot t$
+:::
+
+**Rešitev:**
 
 1. Pretvorba hitrosti: $27\,\dfrac{\text{km}}{\text{h}} = \dfrac{27 \cdot 1000\,\text{m}}{3600\,\text{s}} = \dfrac{27000}{3600}\,\dfrac{\text{m}}{\text{s}} = 7{,}5\,\dfrac{\text{m}}{\text{s}}$.
 2. Preverimo s pravilom: $27 : 3{,}6 = 7{,}5$. ✓
@@ -111,18 +138,18 @@ Kolesar vozi s hitrostjo $27\,\dfrac{\text{km}}{\text{h}}$. Izrazi hitrost v $\d
 - Fizikalna količina je zmnožek številske vrednosti in enote.
 - SI je mednarodni sistem enot; osnovne enote so meter, kilogram, sekunda, amper, kelvin, mol in kandela.
 - Izpeljane enote sestavimo iz osnovnih (npr. $\dfrac{\text{m}}{\text{s}}$, $\text{m}^3$, $\dfrac{\text{kg}}{\text{m}^3}$).
-- Predpone pomenijo potence števila $10$: $\text{k} = 10^3$, $\text{c} = 10^{-2}$, $\text{m} = 10^{-3}$, $\mu = 10^{-6}$ ...
+- Predpone pomenijo potence števila $10$: $\text{k} = 10^3$, $\text{c} = 10^{-2}$, $\text{m} = 10^{-3}$, $\mu = 10^{-6}$ itd.
 - Pri ploščinah in prostorninah potenco predpone potenciramo ($\text{cm}^2 \to 10^{-4}$, $\text{cm}^3 \to 10^{-6}$).
 - Iz $\text{km/h}$ v $\text{m/s}$ delimo s $3{,}6$.
 - Pred računom vse količine pretvori v osnovne enote SI.
 
 ## Drugače: Na sliki
 
-Predstavljaj si številsko premico dolžin, kjer vsak korak navzgor pomeni množenje s $10^3$:
+Predstavljaj si lestvico enot za dolžino, kjer je vsaka naslednja enota $10^3$-krat večja od prejšnje:
 
-$$\text{mm} \xrightarrow{\cdot 10^{-3}} \text{m} \xrightarrow{\cdot 10^{3}} \text{km}$$
+$$\text{mm} \xrightarrow{\cdot 10^{3}} \text{m} \xrightarrow{\cdot 10^{3}} \text{km}$$
 
-Meter je na sredini. Če greš proti večji enoti (npr. iz $\text{m}$ v $\text{km}$), potrebuješ manj enot, zato je število manjše. Če greš proti manjši enoti (iz $\text{m}$ v $\text{mm}$), potrebuješ več enot, zato je število večje.
+Številska vrednost se spreminja v nasprotno smer: pri vsakem koraku navzgor jo delimo s $10^3$, pri vsakem koraku navzdol pa jo množimo s $10^3$. Meter je na sredini. Če greš proti večji enoti (npr. iz $\text{m}$ v $\text{km}$), potrebuješ manj enot, zato je število manjše. Če greš proti manjši enoti (iz $\text{m}$ v $\text{mm}$), potrebuješ več enot, zato je število večje.
 
 Za ploščino si predstavljaj kvadrat s stranico $1\,\text{dm}$. Ta kvadrat ima ploščino $1\,\text{dm}^2$. Vanj gre $10 \cdot 10 = 100$ kvadratkov s stranico $1\,\text{cm}$, torej $1\,\text{dm}^2 = 100\,\text{cm}^2$. Za kocko s stranico $1\,\text{dm}$ gre vanjo $10 \cdot 10 \cdot 10 = 1000$ kockic s stranico $1\,\text{cm}$, torej $1\,\text{dm}^3 = 1000\,\text{cm}^3$. Zato je enota za ploščine in prostornine pri pretvarjanju »bolj občutljiva« kot pri dolžinah.
 
@@ -131,7 +158,7 @@ Za ploščino si predstavljaj kvadrat s stranico $1\,\text{dm}$. Ta kvadrat ima 
 Enote srečuješ ves dan:
 
 - Mleko v trgovini: $1\,\text{L}$ je $1\,\text{dm}^3$, torej $0{,}001\,\text{m}^3$.
-- Hitrost avtomobila na avtocesti: $130\,\dfrac{\text{km}}{\text{h}}$. To je $130 : 3{,}6 \approx 36{,}1\,\dfrac{\text{m}}{\text{s}}$. V sekundi avto prevozi več kot $36$ metrov, kar je skoraj dolžina bazena.
+- Hitrost avtomobila na avtocesti: $130\,\dfrac{\text{km}}{\text{h}}$. To je $130 : 3{,}6 \approx 36{,}1\,\dfrac{\text{m}}{\text{s}}$. V sekundi avto prevozi več kot $36$ metrov, kar je več kot dolžina $25$-metrskega bazena.
 - Spominska kartica ima napisano $64\,\text{GB}$. Predpona $\text{G}$ (giga) pomeni $10^9$, torej $64 \cdot 10^9$ bajtov.
 - Mikroskopske velikosti: debelina človeškega lasu je približno $70\,\mu\text{m} = 70 \cdot 10^{-6}\,\text{m}$.
 
@@ -142,7 +169,7 @@ Primer iz kuhinje: recept zahteva $250\,\text{g}$ moke. V SI je to $0{,}25\,\tex
 Recept za pretvarjanje:
 
 1. Zapiši dano vrednost z enoto, npr. $3600\,\text{mm}^2$.
-2. Ločeno zapiši predpono in osnovno enoto: $\text{mm}^2 = (\text{m} \cdot \text{m})^2$ ali natančneje $(10^{-3}\,\text{m})^2$.
+2. Ločeno zapiši predpono in osnovno enoto: $\text{mm}^2 = (\text{mm})^2 = (10^{-3}\,\text{m})^2$.
 3. Potenciraj: $(10^{-3})^2 = 10^{-6}$, torej $1\,\text{mm}^2 = 10^{-6}\,\text{m}^2$.
 4. Pomnoži: $3600 \cdot 10^{-6}\,\text{m}^2 = 0{,}0036\,\text{m}^2$.
 5. Preveri smiselnost: $\text{mm}^2$ je zelo majhna enota, zato mora biti število v $\text{m}^2$ veliko manjše. ✓
@@ -173,7 +200,7 @@ Enota $\text{km}$ se pokrajša, ostane $\text{m}$.
 
 **Dimenzijska analiza.** Obe strani enačbe morata imeti isto enoto. Če je $s = v \cdot t$, je desna stran $\dfrac{\text{m}}{\text{s}} \cdot \text{s} = \text{m}$, kar ustreza levi. Če pri izpeljavi dobiš na obeh straneh različni enoti, si naredil napako. Tako lahko preveriš formulo, še preden vstaviš števila.
 
-**Zakaj je ploščina kvadratna?** Če vsako stranico kvadrata pomnožimo z $k$, se ploščina pomnoži s $k^2$. Zato je $1\,\text{cm} = 10^{-2}\,\text{m}$ pri ploščini $(10^{-2})^2 = 10^{-4}$.
+**Zakaj je ploščina kvadratna?** Če vsako stranico kvadrata pomnožimo z $k$, se ploščina pomnoži s $k^2$. Zato iz $1\,\text{cm} = 10^{-2}\,\text{m}$ sledi $1\,\text{cm}^2 = (10^{-2})^2\,\text{m}^2 = 10^{-4}\,\text{m}^2$.
 
 ## Preveri se
 

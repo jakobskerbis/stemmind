@@ -1,15 +1,15 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
 Iz osnovne šole že poznaš pojma sila (merimo jo v newtonih, $\text{N}$) in pot (merimo jo v metrih, $\text{m}$). Veš tudi, da se pri vsakdanjih opravilih utrudimo: ko nosimo težko torbo po stopnicah, ko porivamo avto ali ko vlečemo voziček.
 
-Fiziki so želeli to »trud« izraziti s številom. Tako so uvedli **delo**. Z njim lahko primerjamo, koliko napora zahtevata dve različni opravili, in izračunamo, koliko energije je treba dovesti stroju. Ko pa nas zanima, kako **hitro** se delo opravi, uporabimo **moč**. Zato imajo avtomobili, dvigala in žarnice na napisni tablici podano moč.
+Fiziki so želeli ta »trud« izraziti s številom. Tako so uvedli **delo**. Z njim lahko primerjamo, koliko napora zahtevata dve različni opravili, in izračunamo, koliko energije je treba dovesti stroju. Ko pa nas zanima, kako **hitro** se delo opravi, uporabimo **moč**. Zato imajo avtomobili, dvigala in žarnice na napisni tablici podano moč.
 
-Delo je tudi vhod v naslednjo temo: delo sile spremeni energijo telesa.
+Delo je tudi uvod v naslednjo temo: delo sile spremeni energijo telesa.
 
 ## Razlaga
 
@@ -61,15 +61,33 @@ $$P = F \cdot v$$
 
 Voziček vlečemo s stalno vodoravno silo $40\,\text{N}$ po vodoravni poti $15\,\text{m}$. Koliko dela opravimo?
 
+**Podatki:** $F = 40\,\text{N}$ (vodoravna, v smeri gibanja), $s = 15\,\text{m}$
+**Iščemo:** delo $A$
+
+:::formula
+$A = F \cdot s$ (sila v smeri gibanja, $\alpha = 0^\circ$)
+:::
+
+**Rešitev:**
+
 1. Sila je v smeri gibanja, zato je $\alpha = 0^\circ$ in $A = F s$.
 2. Vstavimo: $A = 40\,\text{N} \cdot 15\,\text{m} = 600\,\text{J}$.
-3. Smiselnost: sila je pozitivna in v smeri gibanja, zato je delo pozitivno.
+3. Smiselnost: sila deluje v smeri gibanja, zato je delo pozitivno.
 
 **Odgovor:** opravimo $600\,\text{J}$ dela.
 
 ### Primer 2: sila pod kotom
 
 Kovček vlečemo po vodoravnih tleh s silo $50\,\text{N}$, ki je od vodoravnice nagnjena za $60^\circ$. Kovček se premakne za $8{,}0\,\text{m}$. Koliko dela opravi naša sila?
+
+**Podatki:** $F = 50\,\text{N}$, $\alpha = 60^\circ$ (kot med silo in vodoravnico, torej smerjo gibanja), $s = 8{,}0\,\text{m}$
+**Iščemo:** delo naše sile $A$
+
+:::formula
+$A = F \cdot s \cdot \cos\alpha$
+:::
+
+**Rešitev:**
 
 1. Sila ni v smeri gibanja, zato uporabimo $A = F s \cos\alpha$.
 2. Kot med silo in smerjo gibanja je $\alpha = 60^\circ$, $\cos 60^\circ = 0{,}5$.
@@ -81,6 +99,15 @@ Kovček vlečemo po vodoravnih tleh s silo $50\,\text{N}$, ki je od vodoravnice 
 ### Primer 3: dviganje bremena in moč (težji)
 
 Dvigalo enakomerno dvigne tovor z maso $200\,\text{kg}$ za $12\,\text{m}$ v $8{,}0\,\text{s}$. Vzemi $g = 10\,\text{m/s}^2$. Koliko dela opravi dvigalo in kolikšna je njegova moč?
+
+**Podatki:** $m = 200\,\text{kg}$, $s = 12\,\text{m}$ (višina dviga), $t = 8{,}0\,\text{s}$, $g = 10\,\text{m/s}^2$, dviganje je enakomerno
+**Iščemo:** delo dvigala $A$ in njegovo moč $P$
+
+:::formula
+Pri enakomernem dviganju je $F = m g$; delo $A = F \cdot s$, moč $P = \dfrac{A}{t}$ (preverimo s $P = F \cdot v$)
+:::
+
+**Rešitev:**
 
 1. **Sila dvigala.** Tovor se giblje enakomerno, zato je rezultanta sil nič. Sila dvigala je enaka teži: $F = m g = 200\,\text{kg} \cdot 10\,\text{m/s}^2 = 2000\,\text{N}$.
 2. **Delo.** Sila je v smeri gibanja (navzgor): $A = F s = 2000\,\text{N} \cdot 12\,\text{m} = 24\,000\,\text{J}$.
@@ -111,7 +138,7 @@ Dvigalo enakomerno dvigne tovor z maso $200\,\text{kg}$ za $12\,\text{m}$ v $8{,
 Predstavljaj si škatlo, ki jo vlečeš po tleh z vrvjo. Silo $F$ narišeš kot puščico pod kotom $\alpha$ glede na tla. To puščico razstaviš na dve komponenti:
 
 - vodoravno komponento $F\cos\alpha$, ki škatlo premika naprej,
-- navpično komponento $F\sin\alpha$, ki škatlo rahlo dviga in ne vpliva na premikanje po tleh.
+- navpično komponento $F\sin\alpha$, ki škatlo rahlo razbremenjuje in ne prispeva k premikanju po tleh.
 
 Delo opravi samo vodoravna komponenta: $A = (F\cos\alpha)\cdot s$. Večji kot je kot $\alpha$, krajša je vodoravna komponenta in manj dela opraviš z enako silo.
 
@@ -119,7 +146,7 @@ Delo opravi samo vodoravna komponenta: $A = (F\cos\alpha)\cdot s$. Večji kot je
 
 ## Drugače: Iz vsakdanjega življenja
 
-Dva učenca nesta po $20\,\text{kg}$ težko vrečo na isto polico, $3\,\text{m}$ visoko. Delo je pri obeh enako, saj sta dvignila enako težo za enako višino. Prvi je to opravil v $5\,\text{s}$, drugi v $20\,\text{s}$. Prvi je imel štirikrat večjo moč, ker je isto delo opravil v štirikrat krajšem času.
+Dva učenca neseta vsak svojo vrečo z maso $20\,\text{kg}$ na isto polico, $3\,\text{m}$ visoko. Delo je pri obeh enako, saj sta dvignila enako težo za enako višino. Prvi je to opravil v $5\,\text{s}$, drugi v $20\,\text{s}$. Prvi je imel štirikrat večjo moč, ker je isto delo opravil v štirikrat krajšem času.
 
 Podobno pri avtomobilih: motor z večjo močjo lahko isto delo (npr. pospešitev do določene hitrosti) opravi hitreje. Zato se avtomobili z močnejšim motorjem hitreje pospešijo.
 
