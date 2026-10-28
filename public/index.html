@@ -52,6 +52,7 @@
       <label class="field-label" for="path-select">Učna pot</label>
       <select id="path-select"></select>
     </div>
+    <p id="path-note" class="muted path-note" hidden></p>
     <div id="xp-card" class="card xp-card"></div>
     <div id="path-content"></div>
   </main>
@@ -106,7 +107,12 @@
         <select name="educational_track">
           <option value="OSNOVNA_SOLA">Osnovna šola</option>
           <option value="SREDNJA_SOLA">Srednja šola</option>
+          <option value="UNIVERZA">Fakulteta (1. stopnja)</option>
         </select>
+      </label>
+      <label id="study-program-row" hidden>Študijski program
+        <select name="study_program"></select>
+        <small class="muted">Snov in naloge sledijo javnemu predmetniku izbranega programa.</small>
       </label>
       <label>Raven
         <input name="curriculum_level" maxlength="60" list="level-options" placeholder="npr. 8. razred, 2. letnik VR">
@@ -119,7 +125,7 @@
           <option value="KEM">Kemija</option>
         </select>
       </label>
-      <label>Program
+      <label id="track-row">Program
         <select name="track">
           <option value="REGULAR">Redni pouk (NPZ / matura)</option>
           <option value="COMPETITION">Tekmovanja</option>
