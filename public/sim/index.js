@@ -115,6 +115,10 @@ export const ENGINES = {
   magnet: ["fiz-elektro.js", "magnet"],
   lorentz: ["fiz-elektro.js", "lorentz"],
   indukcija: ["fiz-elektro.js", "indukcija"],
+  // fizika: optika, valovanje, moderna fizika
+  senca: ["fiz-valovi.js", "senca"], zarki: ["fiz-valovi.js", "zarki"], osoncje: ["fiz-valovi.js", "osoncje"],
+  val: ["fiz-valovi.js", "val"], lece: ["fiz-valovi.js", "lece"], interferenca: ["fiz-valovi.js", "interferenca"],
+  fotoefekt: ["fiz-valovi.js", "fotoefekt"], spektri: ["fiz-valovi.js", "spektri"], razpad: ["fiz-valovi.js", "razpad"],
   // zbirka več simulacij (za mešane maturitetne naloge)
   zbirka: ["index.js", "zbirka"],
 };
