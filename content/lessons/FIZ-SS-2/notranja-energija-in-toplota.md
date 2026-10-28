@@ -1,6 +1,6 @@
 ---
 stanje: osnutek
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -13,7 +13,7 @@ V tej lekciji bomo ugotovili, **kam se ta energija porabi** in kako jo izračuna
 
 **1. Notranja energija.** Snov je zgrajena iz delcev (atomov, molekul), ki se neprestano gibljejo in med seboj delujejo. **Notranja energija** $W_n$ telesa je vsota kinetičnih energij vseh delcev (zaradi gibanja) in potencialnih energij zaradi medsebojnih sil med delci. Višja ko je temperatura, hitreje se v povprečju gibljejo delci in večja je notranja energija.
 
-**2. Toplota.** **Toplota** $Q$ je energija, ki se zaradi temperaturne razlike prenese z enega telesa na drugo (ali z okolice na telo). Toplota ni »shranjena« v telesu: telo ima notranjo energijo, toplota pa je energija, ki se *prenaša*. Merimo jo v joulih ($\mathrm{J}$). Toplota teče vedno z toplejšega telesa na hladnejše.
+**2. Toplota.** **Toplota** $Q$ je energija, ki se zaradi temperaturne razlike prenese z enega telesa na drugo (ali z okolice na telo). Toplota ni »shranjena« v telesu: telo ima notranjo energijo, toplota pa je energija, ki se *prenaša*. Merimo jo v joulih ($\text{J}$). Toplota sama od sebe teče vedno z toplejšega telesa na hladnejše.
 
 Notranjo energijo lahko spremenimo tudi z delom (npr. drgnjenje dlani, stiskanje zraka s tlačilko). Če se mehansko delo ne opravlja, velja: dovedena toplota poveča notranjo energijo, odvedena jo zmanjša:
 
@@ -21,7 +21,7 @@ $$\Delta W_n = Q$$
 
 **3. Specifična toplota.** Različne snovi za enako segrevanje potrebujejo različno toploto. **Specifična toplota** $c$ pove, koliko toplote potrebuje $1\,\text{kg}$ snovi, da se segreje za $1\,\text{K}$ (ali $1\,^\circ\text{C}$):
 
-$$c = \frac{Q}{m\,\Delta T}, \qquad \text{enota: } \frac{\mathrm{J}}{\mathrm{kg\,K}}$$
+$$c = \frac{Q}{m\,\Delta T}, \qquad \text{enota: } \frac{\text{J}}{\text{kg\,K}}$$
 
 Iz tega sledi osnovna enačba za segrevanje ali ohlajanje:
 
@@ -29,7 +29,7 @@ $$Q = m\,c\,\Delta T$$
 
 kjer je $\Delta T = T_{\text{končna}} - T_{\text{začetna}}$. Pri segrevanju je $Q>0$, pri ohlajanju $Q<0$ (telo toploto oddaja).
 
-Nekaj približnih vrednosti: voda $c \approx 4200\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$, led približno $2100\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$, železo približno $450\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$. Voda ima za snov zelo veliko specifično toploto: težko se segreje in težko ohladi.
+Nekaj približnih vrednosti: voda $c \approx 4200\,\dfrac{\text{J}}{\text{kg\,K}}$, led približno $2100\,\dfrac{\text{J}}{\text{kg\,K}}$, železo približno $450\,\dfrac{\text{J}}{\text{kg\,K}}$. Voda ima za snov zelo veliko specifično toploto: težko se segreje in težko ohladi.
 
 **4. Temperaturna razlika.** Razlika $1\,\text{K}$ je enaka razliki $1\,^\circ\text{C}$, zato pri $\Delta T$ ni treba pretvarjati stopinj Celzija v kelvine.
 
@@ -49,7 +49,7 @@ Toplota, potrebna za izparevanje pri vrelišču:
 
 $$Q = m\,q_i$$
 
-Pri vodi je pri normalnem tlaku $q_t \approx 334\,\dfrac{\mathrm{kJ}}{\mathrm{kg}}$ ($0\,^\circ\text{C}$) in $q_i \approx 2260\,\dfrac{\mathrm{kJ}}{\mathrm{kg}}$ ($100\,^\circ\text{C}$). Pri strjevanju in kondenzaciji se ista toplota sprosti.
+Pri vodi je pri normalnem tlaku $q_t \approx 334\,\dfrac{\text{kJ}}{\text{kg}}$ ($0\,^\circ\text{C}$) in $q_i \approx 2260\,\dfrac{\text{kJ}}{\text{kg}}$ ($100\,^\circ\text{C}$). Pri strjevanju in kondenzaciji se ista toplota sprosti.
 
 **7. Kako računamo, če so v nalogi vmes fazni prehodi.** Račun razdelimo na odseke: segrevanje v eni fazi ($Q = mc\Delta T$), nato fazni prehod ($Q = mq$), nato spet segrevanje, in na koncu toplote seštejemo.
 
@@ -57,25 +57,52 @@ Pri vodi je pri normalnem tlaku $q_t \approx 334\,\dfrac{\mathrm{kJ}}{\mathrm{kg
 
 ### Primer 1: segrevanje vode (lažji)
 
-Koliko toplote potrebujemo, da $2\,\text{kg}$ vode segrejemo z $20\,^\circ\text{C}$ na $70\,^\circ\text{C}$? Uporabi $c = 4200\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$.
+Koliko toplote potrebujemo, da $2\,\text{kg}$ vode segrejemo z $20\,^\circ\text{C}$ na $70\,^\circ\text{C}$? Uporabi $c = 4200\,\dfrac{\text{J}}{\text{kg\,K}}$.
+
+**Podatki:** $m = 2\,\text{kg}$, $T_1 = 20\,^\circ\text{C}$, $T_2 = 70\,^\circ\text{C}$, $c = 4200\,\dfrac{\text{J}}{\text{kg\,K}}$
+**Iščemo:** toploto $Q$
+
+:::formula
+$Q = m\,c\,\Delta T$, kjer je $\Delta T = T_2 - T_1$
+:::
+
+**Rešitev:**
 
 1. Voda se samo segreva (ostaja tekoča), zato uporabimo $Q = mc\Delta T$.
 2. Temperaturna razlika: $\Delta T = 70\,^\circ\text{C} - 20\,^\circ\text{C} = 50\,\text{K}$. Razliko lahko zapišemo v kelvinih, ker sta razliki v $^\circ\text{C}$ in K enaki.
-3. Vstavimo: $Q = 2\,\text{kg} \cdot 4200\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}} \cdot 50\,\text{K} = 420\,000\,\text{J}$.
+3. Vstavimo: $Q = 2\,\text{kg} \cdot 4200\,\dfrac{\text{J}}{\text{kg\,K}} \cdot 50\,\text{K} = 420\,000\,\text{J}$.
 4. Odgovor: $Q = 420\,\text{kJ}$. Preverimo smiselnost: $Q$ je pozitiven, kar ustreza segrevanju.
 
 ### Primer 2: iskanje specifične toplote
 
 Kos kovine z maso $0{,}50\,\text{kg}$ segrejemo s $20\,^\circ\text{C}$ na $60\,^\circ\text{C}$. Pri tem mu dovedemo $9000\,\text{J}$ toplote. Kolikšna je specifična toplota kovine?
 
+**Podatki:** $m = 0{,}50\,\text{kg}$, $T_1 = 20\,^\circ\text{C}$, $T_2 = 60\,^\circ\text{C}$, $Q = 9000\,\text{J}$
+**Iščemo:** specifično toploto $c$
+
+:::formula
+$c = \dfrac{Q}{m\,\Delta T}$, kjer je $\Delta T = T_2 - T_1$
+:::
+
+**Rešitev:**
+
 1. Izhajamo iz $Q = mc\Delta T$ in izrazimo $c$: $c = \dfrac{Q}{m\,\Delta T}$.
 2. $\Delta T = 60\,^\circ\text{C} - 20\,^\circ\text{C} = 40\,\text{K}$.
-3. Vstavimo: $c = \dfrac{9000\,\text{J}}{0{,}50\,\text{kg} \cdot 40\,\text{K}} = \dfrac{9000}{20}\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}} = 450\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$.
-4. Odgovor: $c = 450\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$. Ta vrednost je enaka približni vrednosti za železo, torej je kovina verjetno železo.
+3. Vstavimo: $c = \dfrac{9000\,\text{J}}{0{,}50\,\text{kg} \cdot 40\,\text{K}} = \dfrac{9000}{20}\,\dfrac{\text{J}}{\text{kg\,K}} = 450\,\dfrac{\text{J}}{\text{kg\,K}}$.
+4. Odgovor: $c = 450\,\dfrac{\text{J}}{\text{kg\,K}}$. Ta vrednost se ujema z vrednostjo za železo, zato je kovina lahko železo. Zanesljivo tega iz ene same vrednosti ne moremo trditi, ker imajo tudi druge snovi podobno $c$.
 
 ### Primer 3: led, ki ga segrejemo do vode (težji)
 
-Koliko toplote potrebujemo, da $0{,}20\,\text{kg}$ ledu s temperaturo $-10\,^\circ\text{C}$ spremenimo v vodo s temperaturo $20\,^\circ\text{C}$? Uporabi: $c_{\text{led}} = 2100\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$, $c_{\text{voda}} = 4200\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$, $q_t = 334\,000\,\dfrac{\mathrm{J}}{\mathrm{kg}}$.
+Koliko toplote potrebujemo, da $0{,}20\,\text{kg}$ ledu s temperaturo $-10\,^\circ\text{C}$ spremenimo v vodo s temperaturo $20\,^\circ\text{C}$? Uporabi: $c_{\text{led}} = 2100\,\dfrac{\text{J}}{\text{kg\,K}}$, $c_{\text{voda}} = 4200\,\dfrac{\text{J}}{\text{kg\,K}}$, $q_t = 334\,000\,\dfrac{\text{J}}{\text{kg}}$.
+
+**Podatki:** $m = 0{,}20\,\text{kg}$, začetna temperatura ledu $T_1 = -10\,^\circ\text{C}$, končna temperatura vode $T_2 = 20\,^\circ\text{C}$, $c_{\text{led}} = 2100\,\dfrac{\text{J}}{\text{kg\,K}}$, $c_{\text{voda}} = 4200\,\dfrac{\text{J}}{\text{kg\,K}}$, $q_t = 334\,000\,\dfrac{\text{J}}{\text{kg}}$ (tališče ledu je $0\,^\circ\text{C}$)
+**Iščemo:** skupno toploto $Q$
+
+:::formula
+$Q = m c_{\text{led}} \Delta T_1 + m q_t + m c_{\text{voda}} \Delta T_2$, kjer je $\Delta T_1 = 0\,^\circ\text{C} - T_1$ in $\Delta T_2 = T_2 - 0\,^\circ\text{C}$
+:::
+
+**Rešitev:**
 
 Proces ima tri odseke, ker je vmes fazni prehod pri $0\,^\circ\text{C}$.
 
@@ -100,9 +127,9 @@ Proces ima tri odseke, ker je vmes fazni prehod pri $0\,^\circ\text{C}$.
 ## Povzetek
 
 - Notranja energija je vsota kinetičnih in potencialnih energij delcev telesa; z naraščajočo temperaturo se povečuje.
-- Toplota $Q$ je energija, ki se zaradi temperaturne razlike prenaša s toplejšega na hladnejše telo; merimo jo v $\mathrm{J}$.
-- Segrevanje in ohlajanje: $Q = mc\Delta T$, specifična toplota $c$ ima enoto $\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$.
-- Voda ima $c \approx 4200\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$.
+- Toplota $Q$ je energija, ki se zaradi temperaturne razlike prenaša s toplejšega na hladnejše telo; merimo jo v $\text{J}$.
+- Segrevanje in ohlajanje: $Q = mc\Delta T$, specifična toplota $c$ ima enoto $\dfrac{\text{J}}{\text{kg\,K}}$.
+- Voda ima $c \approx 4200\,\dfrac{\text{J}}{\text{kg\,K}}$.
 - Med faznim prehodom se temperatura ne spreminja; toplota je $Q = mq_t$ (taljenje) ali $Q = mq_i$ (izparevanje).
 - Pri večstopenjskih nalogah račun razdelimo na odseke in toplote seštejemo.
 
@@ -124,7 +151,7 @@ V simulaciji spodaj (»Toplotna bilanca pri mešanju«) zmešaš dve snovi z raz
 
 **Morje in pesek.** Poleti je pesek na plaži opoldne vroč, morje pa le toplo. Voda ima veliko specifično toploto, zato potrebuje veliko več energije za isto zvišanje temperature kot pesek. Zvečer se pesek hitro ohladi, morje pa počasi. Zato je podnebje ob morju bolj uravnoteženo.
 
-**Pot z ledom.** Če v pijačo daš led, se pijača ohladi, ne le zato, ker je led hladen, ampak predvsem zato, ker led za taljenje porablja energijo iz pijače ($334\,\text{kJ}$ na kilogram). Led pri $0\,^\circ\text{C}$ ohladi pijačo bolje kot enaka masa hladne vode pri $0\,^\circ\text{C}$.
+**Led v pijači.** Če v pijačo daš led, se pijača ohladi, ne le zato, ker je led hladen, ampak predvsem zato, ker led za taljenje porablja energijo iz pijače ($334\,\text{kJ}$ na kilogram). Led pri $0\,^\circ\text{C}$ ohladi pijačo bolje kot enaka masa hladne vode pri $0\,^\circ\text{C}$.
 
 **Kuhanje.** Ko voda v loncu zavre, se temperatura ne dvigne več, čeprav ogenj gori močno naprej. Dodatna toplota se porabi za izparevanje, zato je pri kuhanju ob vrenju bolje zmanjšati ogenj: voda ne bo nič bolj vroča, le hitreje bo izparevala.
 
@@ -156,7 +183,7 @@ Uporabi samo tiste vrstice, ki jih proces res zajame, in rezultate seštej.
 
 ## Drugače: Bolj natančno
 
-**Zakaj se temperatura med taljenjem ne spremeni?** Temperatura je povezana s povprečno kinetično energijo delcev. V ledu so molekule vode vezane v urejeno kristalno strukturo. Ko ledu dovajamo toploto pri tališču, ta energija ne poveča hitrosti delcev, ampak prekine vezi med molekulami, zato se poveča potencialna energija delcev. Ko so vse vezi prekinjene, vsa dodana energija spet poveča kinetično energijo in temperatura začne naraščati.
+**Zakaj se temperatura med taljenjem ne spremeni?** Temperatura je povezana s povprečno kinetično energijo delcev. V ledu so molekule vode vezane v urejeno kristalno strukturo. Ko ledu dovajamo toploto pri tališču, ta energija ne poveča hitrosti delcev, ampak oslabi in prekine vezi med molekulami, zato se poveča potencialna energija delcev. Ko je ves led staljen, dodana energija spet poveča kinetično energijo delcev in temperatura začne naraščati.
 
 **Izpeljava enačbe $Q = mc\Delta T$.** Iz definicije specifične toplote $c = \dfrac{Q}{m\,\Delta T}$ takoj dobimo $Q = mc\Delta T$. Enačba velja približno, če se $c$ v obravnavanem temperaturnem območju bistveno ne spreminja. To pri šolskih nalogah predpostavimo.
 
@@ -168,7 +195,7 @@ To je poseben primer zakona o ohranitvi energije in je osnova za račun končne 
 
 ## Preveri se
 
-? Koliko toplote potrebujemo, da $3\,\text{kg}$ vode segrejemo za $10\,\text{K}$? Uporabi $c = 4200\,\dfrac{\mathrm{J}}{\mathrm{kg\,K}}$.
+? Koliko toplote potrebujemo, da $3\,\text{kg}$ vode segrejemo za $10\,\text{K}$? Uporabi $c = 4200\,\dfrac{\text{J}}{\text{kg\,K}}$.
 - $12\,600\,\text{J}$
 + $126\,000\,\text{J}$
 - $1260\,\text{J}$

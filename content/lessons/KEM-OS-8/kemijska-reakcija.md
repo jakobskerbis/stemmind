@@ -1,12 +1,12 @@
 ---
 stanje: osnutek
 demo: enacbe
-avtor: AI (claude-sonnet-5-5)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Okoli sebe nenehno vidiš spremembe snovi: železo zarjavi, les zgori, mleko se skisa, v želodcu se hrana prebavlja. Pri taljenju ledu ali raztapljanju sladkorja v čaju se snov le fizikalno spremeni, nastane pa ista snov (voda je še vedno voda). Pri zgoraj naštetih pa nastanejo **nove snovi z drugačnimi lastnostmi**. Takim spremembam rečemo **kemijske reakcije**.
+Okoli sebe nenehno vidiš spremembe snovi: železo zarjavi, les zgori, mleko se skisa, v želodcu se hrana prebavlja. Pri taljenju ledu ali raztapljanju sladkorja v čaju se snov le fizikalno spremeni, nova snov pa ne nastane (led in voda sta ista snov, sladkor je v čaju še vedno sladkor). Pri zgoraj naštetih pa nastanejo **nove snovi z drugačnimi lastnostmi**. Takim spremembam rečemo **kemijske reakcije**.
 
 Iz prejšnjih ur že veš, da so snovi zgrajene iz atomov in da so atomi povezani v molekule ali druge delce. Kemijska reakcija je pravzaprav **preurejanje atomov**: atomi se razvežejo in na novo povežejo. Zato bomo lahko razumeli, zakaj se pri reakciji masa ne izgubi in zakaj moramo kemijske enačbe urejati.
 
@@ -69,6 +69,15 @@ Levo: 4 atomi H in 2 atoma O. Desno: $2 \cdot 2 = 4$ atomi H in $2 \cdot 1 = 2$ 
 
 Pri segrevanju živosrebrovega(II) oksida nastaneta živo srebro in kisik. Zapiši besedno enačbo in določi reaktant ter produkta.
 
+**Podatki:** segrevamo živosrebrov(II) oksid; nastaneta živo srebro in kisik
+**Iščemo:** besedno enačbo, reaktant in produkta
+
+:::formula
+$\text{reaktanti} \longrightarrow \text{produkti}$
+:::
+
+**Rešitev:**
+
 1. Snov, ki jo segrevamo in se pri tem razgradi, je izhodna snov, torej reaktant: živosrebrov(II) oksid.
 2. Snovi, ki nastaneta, sta produkta: živo srebro in kisik.
 3. Besedna enačba:
@@ -79,7 +88,16 @@ Reaktant je levo od puščice, produkta sta desno.
 
 ### Primer 2: zakon o ohranitvi mase
 
-Pri gorenju $12\,\text{g}$ ogljika v kisiku nastane $44\,\text{g}$ ogljikovega dioksida. Koliko grama kisika je reagiralo?
+Pri gorenju $12\,\text{g}$ ogljika v kisiku nastane $44\,\text{g}$ ogljikovega dioksida. Koliko gramov kisika je reagiralo?
+
+**Podatki:** $m(\text{ogljik}) = 12\,\text{g}$, $m(\text{ogljikov dioksid}) = 44\,\text{g}$
+**Iščemo:** maso kisika $m(\text{kisik})$
+
+:::formula
+$m(\text{reaktantov}) = m(\text{produktov})$
+:::
+
+**Rešitev:**
 
 1. Zakon o ohranitvi mase: $m(\text{ogljik}) + m(\text{kisik}) = m(\text{ogljikov dioksid})$.
 2. Vstavimo: $12\,\text{g} + m(\text{kisik}) = 44\,\text{g}$.
@@ -93,6 +111,15 @@ Reagiralo je $32\,\text{g}$ kisika.
 Uredi enačbo za gorenje metana:
 
 $$\mathrm{CH_4} + \mathrm{O_2} \longrightarrow \mathrm{CO_2} + \mathrm{H_2O}$$
+
+**Podatki:** neurejena enačba $\mathrm{CH_4} + \mathrm{O_2} \longrightarrow \mathrm{CO_2} + \mathrm{H_2O}$
+**Iščemo:** koeficiente, pri katerih je število atomov vsake vrste na obeh straneh enako
+
+:::formula
+Število atomov vsake vrste je na levi in desni enako; spreminjamo le koeficiente, ne indeksov.
+:::
+
+**Rešitev:**
 
 1. **Preštejemo atome.** Levo: C 1, H 4, O 2. Desno: C 1, H 2, O $2 + 1 = 3$.
 2. **Ogljik** je že uravnotežen (1 = 1).
@@ -124,7 +151,7 @@ Kisik smo urejali nazadnje, ker je v več snoveh. Tako se izognemo ponavljanju p
 
 ## Drugače: Na sliki
 
-V interaktivni demonstraciji »Urejanje kemijskih enačb« zgoraj vidiš atome kot krogce, povezane v molekule. Spreminjaj koeficiente in opazuj, kako se spremeni število krogcev vsake vrste na levi in desni strani.
+V simulaciji spodaj (»Kemijska reakcija: atomi se preuredijo«) vidiš atome kot krogce, povezane v molekule. Spreminjaj koeficiente in opazuj, kako se spremeni število krogcev vsake vrste na levi in desni strani.
 
 Bodi pozoren na tole:
 
@@ -187,7 +214,7 @@ $$4\,\mathrm{Al} + 3\,\mathrm{O_2} \longrightarrow 2\,\mathrm{Al_2O_3}$$
 - Snovi, ki so zapisane desno od puščice.
 > Reaktanti so izhodne snovi in jih v enačbi pišemo levo od puščice. Snovi, ki nastanejo, so produkti.
 
-? Pri reakciji $20\,\text{g}$ snovi A s snovjo B nastane $50\,\text{g}$ produkta. Koliko grama snovi B je reagiralo?
+? Pri reakciji $20\,\text{g}$ snovi A s snovjo B nastane $50\,\text{g}$ produkta. Koliko gramov snovi B je reagiralo?
 - $70\,\text{g}$
 - $50\,\text{g}$
 + $30\,\text{g}$
