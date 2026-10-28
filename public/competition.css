@@ -1,8 +1,5 @@
 /* Razdelek Tekmovanja */
 .comp-pickers { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
-.seg { display: inline-flex; background: var(--surface-2); border-radius: 999px; padding: 4px; gap: 2px; }
-.seg button { border: 0; background: none; border-radius: 999px; padding: 8px 14px; font-weight: 800; color: var(--muted); min-height: 40px; }
-.seg button.active { background: var(--surface); color: var(--accent); box-shadow: var(--shadow); }
 .comp-intro { margin: 0 0 16px; }
 .contest-card { display: flex; flex-direction: column; gap: 12px; }
 .contest-head { display: flex; gap: 14px; align-items: flex-start; }
