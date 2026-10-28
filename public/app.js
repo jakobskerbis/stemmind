@@ -112,13 +112,15 @@ function showView(name) {
   if (name === "textbook") showTextbook();
   if (name === "competition") loadCompetition();
   if (name === "feedback") showFeedback();
+  if (name === "graph") showGraph();
+  else document.body.classList.remove("gc-kp");
   if (name !== "topic") closePad();
   if (name !== "topic") setActiveMode(null);
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph"];
 function renderMe() {
   const s = state.student;
   if (!s) return;
@@ -347,6 +349,7 @@ function addMessage(role, text, hasImage = false) {
   } else {
     el.innerHTML = renderRich(text);
     if (text) addDeepButton(el, false);
+    if (text) addGraphButton(el, text);
   }
   box.appendChild(el);
   box.scrollTop = box.scrollHeight;
@@ -420,6 +423,7 @@ async function send(text, { deep = false } = {}) {
       bubble.removeEventListener("click", skip);
       bubble.removeAttribute("title");
       if (doneData) addDeepButton(bubble, doneData.deep);
+      if (doneData?.text) addGraphButton(bubble, doneData.text);
       if (state.pacer === pacer) state.pacer = null;
     });
     await loadConversations();
@@ -1354,9 +1358,10 @@ function renderTask(task, ctx) {
       (task.answerType === "coefficients" ? t("task.phCoef") : task.unit ? t("task.phUnit", { unit: task.unit }) : t("task.phResult"));
     input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn secondary" title="${t("task.writeTitle")}">${icon("pencil")}<span>${t("task.write")}</span></button><button class="primary">${t("task.check")}</button></form>`;
   }
+  const calcBtn = ctx.mode === "contest" || ctx.mode === "placement" ? "" : `<button type="button" class="ghost task-calc icon-only" title="${escapeHtml(t("task.calc"))}" aria-label="${escapeHtml(t("task.calc"))}">${icon("chart-spline")}</button>`;
   const bar = ctx.mode === "contest" ? `<div class="contest-bar"><span id="contest-timer" class="contest-timer" role="timer">${icon("timer")}<b>${leftText(state.contestDeadline)}</b></span><span class="muted">${t("comp.timerNote")}</span></div>` : "";
   box.innerHTML = `${bar}<div class="card task">
-    <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${counter}</div>
+    <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${counter}${calcBtn}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
     ${task.figure ? figureSvg(task.figure) : ""}
@@ -1365,6 +1370,10 @@ function renderTask(task, ctx) {
     ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${t("comp.finish")}</button></div>` : ""}
   </div>`;
   const submit = (value) => checkTask(task, ctx, value);
+  box.querySelector(".task-calc")?.addEventListener("click", async () => {
+    const exprs = mayPlot(task.text) ? await plotFromText(task.text) : [];
+    openGraphOverlay(exprs, t("gc.backTask"));
+  });
   if (ctx.mode === "contest") {
     $("#c-skip").addEventListener("click", async () => {
       if (!confirm(t("comp.confirmSkip"))) return;
@@ -1730,8 +1739,95 @@ $("#tour-again").addEventListener("click", () => {
   setTimeout(startTour, 500);
 });
 
+// ---------- grafični kalkulator (public/graph/) ----------
+// Naloži se šele ob prvem odprtju. En kalkulator: v zavihku ali čez cel zaslon iz naloge / inštruktorja.
+
+let calcP = null;
+let calcStudent = null;
+function graphCalc() {
+  calcP ||= import("./graph/calc.js").then(({ createCalculator }) => {
+    const host = document.createElement("div");
+    host.id = "graph-host";
+    $("#graph-slot").append(host);
+    calcStudent = state.student?.id;
+    return createCalculator(host, {
+      t,
+      icon,
+      locale,
+      api,
+      toast: (m) => toast(m, "check"),
+      storageKey: () => `stemmind.graph.${state.student?.id ?? 0}`,
+      studentId: () => state.student?.id,
+      askTutor: (text) => {
+        closeGraphOverlay();
+        showView("chat");
+        const box = $("#input");
+        box.value = text;
+        autoGrow();
+        box.focus();
+      },
+      symbols: (panel, field, onChange) => mountSymbols(panel, field, { settings: () => state.student?.settings, onChange }),
+    });
+  });
+  return calcP;
+}
+async function showGraph() {
+  const calc = await graphCalc();
+  if (calcStudent !== state.student?.id) {
+    calcStudent = state.student?.id;
+    calc.reload();
+  }
+  if (calc.root.parentElement !== $("#graph-slot")) $("#graph-slot").append(calc.root);
+  calc.resize();
+}
+/** Odpre kalkulator čez cel zaslon z izrazi (npr. iz naloge) in gumbom nazaj. */
+async function openGraphOverlay(exprs = [], backLabel = t("nav.back")) {
+  const calc = await graphCalc();
+  if (calcStudent !== state.student?.id) {
+    calcStudent = state.student?.id;
+    calc.reload();
+  }
+  $("#graph-close-label").textContent = backLabel;
+  $("#graph-overlay-body").append(calc.root);
+  $("#graph-overlay").hidden = false;
+  document.body.classList.add("graph-open");
+  calc.resize();
+  if (exprs.length) calc.show(exprs);
+}
+function closeGraphOverlay() {
+  if ($("#graph-overlay").hidden) return;
+  $("#graph-overlay").hidden = true;
+  document.body.classList.remove("graph-open");
+  calcP?.then((calc) => $("#graph-slot").append(calc.root));
+}
+$("#graph-close").addEventListener("click", closeGraphOverlay);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !$("#graph-overlay").hidden && !document.querySelector(".gc-pop:not([hidden])")) closeGraphOverlay();
+});
+// Enačbe v besedilu (LaTeX) → izrazi za kalkulator. Hiter pregled brez nalaganja modula.
+const mayPlot = (text) => /\$[^$]*(?:[xy]\s*(?:=|<|>|\\le|\\ge)|=[^$]*\bx\b)/.test(String(text || "")) && /x/.test(String(text || ""));
+async function plotFromText(text) {
+  const { plottableFromText } = await import("./graph/math.js");
+  return plottableFromText(text);
+}
+// Gumb »Nariši graf« pod odgovorom inštruktorja, če ta vsebuje funkcijo ali enačbo krivulje.
+async function addGraphButton(bubble, text) {
+  if (!mayPlot(text) || bubble.querySelector(".graph-btn")) return;
+  const exprs = await plotFromText(text);
+  if (!exprs.length) return;
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "secondary small graph-btn";
+  b.innerHTML = `${icon("chart-spline")}<span>${escapeHtml(t("chat.drawGraph"))}</span>`;
+  b.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openGraphOverlay(exprs, t("nav.chat"));
+  });
+  bubble.append(b);
+}
+
 // Za samodejne preizkuse v brskalniku.
-window.stemmind = { openTopic, showView, openLesson };
+window.stemmind = { openTopic, showView, openLesson, openGraphOverlay };
 
 initTextbook({
   api,

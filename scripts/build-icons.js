@@ -10,6 +10,10 @@ const NAMES = [
   "sparkles", "circle-help", "menu", "chevron-right", "graduation-cap", "play", "rotate-ccw", "award",
   "calendar", "info", "search", "users", "circle-check", "circle-x", "bot", "trending-up", "download", "flask-conical", "monitor-play", "refresh-cw", "medal", "timer", "skip-forward", "flag",
   "sigma", "sun", "moon", "sun-moon", "palette", "dices", "paintbrush", "mic", "square", "circle-arrow-up", "party-popper", "globe", "wifi-off", "cloud-upload", "feather", "message-square-heart",
+  // grafični kalkulator
+  "chart-spline", "square-function", "zoom-in", "zoom-out", "house", "maximize", "maximize-2", "minimize-2", "image-down", "save",
+  "folder-open", "ellipsis-vertical", "pause", "table", "sliders-horizontal", "copy", "chevron-down", "delete", "corner-down-left",
+  "wrench", "text", "redo-2", "activity", "chart-area", "flower", "infinity", "spline", "circle",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

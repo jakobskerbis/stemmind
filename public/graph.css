@@ -1,0 +1,244 @@
+/* Grafični kalkulator (public/graph/). Barve krivulj so podatkovne barve (kot pri simulacijah),
+   zato so tu kot spremenljivke s svetlo in temno različico. Vse ostalo uporablja barve aplikacije. */
+:root {
+  --g-red: #c74440; --g-blue: #2d70b3; --g-green: #388c46; --g-purple: #6042a6;
+  --g-orange: #d9650b; --g-black: #1f2937; --g-teal: #0e8a8a; --g-pink: #c2367f;
+}
+:root.dark {
+  --g-red: #ff7d75; --g-blue: #6fabff; --g-green: #62d474; --g-purple: #b9a2ff;
+  --g-orange: #ffad5e; --g-black: #e5e7eb; --g-teal: #4fd6c9; --g-pink: #f37fbd;
+}
+
+/* pogled: kalkulator zapolni prostor med zgornjo in spodnjo vrstico */
+#view-graph { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+#view-graph[hidden] { display: none !important; }
+#view-graph .me-back { margin: 6px 10px 0; align-self: flex-start; }
+.graph-slot { flex: 1; min-height: 0; display: flex; }
+
+.gc {
+  --gc-panel: 380px;
+  position: relative; flex: 1; min-height: 0; min-width: 0;
+  display: grid; grid-template-columns: var(--gc-panel) 1fr; grid-template-rows: 1fr auto;
+  background: var(--bg);
+}
+.gc-panel {
+  grid-row: 1 / 3; min-height: 0; display: flex; flex-direction: column;
+  background: var(--surface); border-right: 1px solid var(--border);
+}
+.gc-stage { position: relative; min-height: 0; min-width: 0; display: flex; overflow: hidden; }
+.gc-graph { position: relative; flex: 1; min-width: 0; min-height: 0; overflow: hidden; }
+.gc-canvas { position: absolute; inset: 0; display: block; cursor: crosshair; outline: none; }
+.gc-canvas.dragging { cursor: grabbing; }
+.gc-canvas:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.gc-tip { position: absolute; pointer-events: none; }
+
+/* orodna vrstica nad seznamom */
+.gc-bar { display: flex; align-items: center; gap: 4px; padding: 8px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.gc-bar-sp { flex: 1; }
+.gc .gc-btn {
+  min-height: 40px; min-width: 40px; padding: 6px 8px; border-radius: 10px; border: 0; background: none;
+  color: var(--text); font-weight: 800; font-size: 0.88rem; gap: 6px;
+}
+.gc .gc-btn:hover:not(:disabled) { background: var(--surface-2); }
+.gc .gc-btn:disabled { opacity: 0.35; cursor: default; }
+.gc .gc-btn svg.i { width: 20px; height: 20px; }
+.gc .gc-btn[data-act="add"] { background: var(--accent); color: var(--accent-text); }
+.gc .gc-btn[data-act="add"]:hover { filter: brightness(1.06); background: var(--accent); }
+.gc-text-btn { white-space: nowrap; }
+.gc-text-btn svg.i { color: var(--accent); }
+
+/* seznam izrazov */
+.gc-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.gc-row {
+  position: relative; display: grid; grid-template-columns: 44px 1fr auto; align-items: start;
+  border-bottom: 1px solid var(--border); background: var(--surface); min-height: 56px;
+}
+.gc-row.selected, .gc-row.editing { background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface)); }
+.gc-row.editing { box-shadow: inset 3px 0 0 var(--accent); }
+.gc-side { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 0 6px; background: var(--surface-2); align-self: stretch; }
+.gc-num { font-size: 0.7rem; font-weight: 800; color: var(--muted); }
+.gc .gc-dot {
+  width: 28px; height: 28px; min-height: 0; padding: 0; border-radius: 50%;
+  border: 2.5px solid var(--c); background: var(--c); color: var(--surface);
+}
+.gc .gc-dot svg.i { width: 15px; height: 15px; }
+.gc-row:not(.plotted) .gc-dot { visibility: hidden; }
+.gc-row.hidden-item .gc-dot { background: transparent; color: var(--c); }
+.gc-row.hidden-item .gc-math, .gc-row.hidden-item .gc-input { opacity: 0.6; }
+.gc-main { min-width: 0; padding: 6px 4px 6px 10px; }
+.gc-math {
+  min-height: 44px; display: flex; align-items: center; font-size: 1.12rem; overflow-x: auto; overflow-y: hidden;
+  cursor: text; scrollbar-width: thin; padding: 2px 0;
+}
+.gc-input {
+  width: 100%; min-height: 44px; border: 0; background: transparent; outline: none; padding: 6px 2px;
+  font-size: 1.05rem; font-weight: 700; letter-spacing: 0.01em; color: var(--text);
+}
+.gc-input::placeholder { color: var(--muted); font-weight: 600; }
+.gc-row:not(.editing):not(.empty) .gc-input { display: none; }
+.gc-row.editing .gc-math, .gc-row.empty .gc-math { display: none; }
+.gc-preview { display: none; font-size: 0.95rem; color: var(--muted); overflow-x: auto; padding: 0 2px 2px; }
+.gc-row.editing .gc-preview:not(:empty) { display: block; }
+.gc-note .gc-input { display: block !important; resize: none; font-weight: 600; font-size: 0.98rem; color: var(--muted); font-style: italic; overflow: hidden; }
+.gc-note .gc-side { background: none; }
+.gc-acts { display: flex; align-items: center; padding: 6px 2px 0 0; }
+.gc .gc-x { min-height: 36px; min-width: 36px; padding: 6px; border: 0; background: none; color: var(--muted); border-radius: 10px; }
+.gc .gc-x:hover { background: var(--surface-2); color: var(--text); }
+.gc-row:not(:hover):not(.editing):not(.selected) .gc-acts .gc-x[data-act="del"] { opacity: 0; }
+@media (hover: none) { .gc-row .gc-acts .gc-x[data-act="del"] { opacity: 1 !important; } }
+
+.gc-extra:empty { display: none; }
+.gc-extra { display: grid; gap: 6px; padding: 0 2px 4px; }
+.gc-val { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--text); overflow-x: auto; font-size: 1rem; }
+.gc-val svg.i { color: var(--muted); }
+.gc-deriv { color: var(--muted); font-weight: 700; }
+.gc-err { display: flex; gap: 6px; align-items: flex-start; color: var(--danger); font-weight: 700; font-size: 0.88rem; line-height: 1.35; }
+.gc-err svg.i { margin-top: 2px; }
+.gc .gc-chip {
+  justify-self: start; min-height: 36px; padding: 4px 12px; border-radius: 999px; font-size: 0.85rem;
+  border: 1.5px solid var(--accent); color: var(--accent); background: var(--accent-soft); font-weight: 800;
+}
+
+/* drsnik */
+.gc-slider { display: grid; grid-template-columns: 40px 52px 1fr 52px; align-items: center; gap: 6px; }
+.gc .gc-play { width: 38px; height: 38px; min-height: 0; padding: 0; border-radius: 50%; border: 0; background: var(--accent-soft); color: var(--accent); }
+.gc .gc-play svg.i { width: 18px; height: 18px; }
+.gc-lim {
+  width: 100%; min-width: 0; font-size: 0.82rem; font-weight: 700; text-align: center; color: var(--muted);
+  border: 1px solid transparent; border-radius: 8px; background: none; padding: 4px 2px; min-height: 32px;
+}
+.gc-lim:hover, .gc-lim:focus { border-color: var(--border); outline: none; color: var(--text); background: var(--bg); }
+.gc-range { width: 100%; accent-color: var(--accent); height: 28px; margin: 0; }
+.gc-domain { display: flex; align-items: center; gap: 6px; color: var(--muted); }
+.gc-domain .gc-lim { width: 64px; flex: none; }
+
+/* tabela */
+.gc-tbl { overflow-x: auto; padding: 6px 0 2px; }
+.gc-table { border-collapse: collapse; font-size: 0.95rem; }
+.gc-table th, .gc-table td { border: 1px solid var(--border); padding: 0; }
+.gc-table th { background: var(--surface-2); }
+.gc-cell { width: 86px; min-height: 36px; border: 0; background: transparent; padding: 6px 8px; font-weight: 700; text-align: right; outline: none; }
+.gc-cell.gc-head { text-align: center; font-weight: 800; }
+.gc-cell:focus { box-shadow: inset 0 0 0 2px var(--accent); background: var(--surface); }
+.gc-cell[readonly] { color: var(--muted); }
+.gc-reg { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.gc-reg-pick { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 0.88rem; }
+.gc-fit { flex-wrap: wrap; }
+.gc-r2 { color: var(--muted); font-weight: 700; }
+.gc-check { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.92rem; min-height: 36px; cursor: pointer; }
+.gc-check input { width: 18px; height: 18px; accent-color: var(--accent); }
+
+.gc-help { padding: 10px 14px 14px; margin: 0; font-size: 0.85rem; line-height: 1.45; }
+.gc-list:has(.gc-row:nth-child(4)) + .gc-help { display: none; }
+
+/* gumbi na grafu */
+.gc-zoom { position: absolute; top: 10px; right: 10px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
+.gc .gc-fab {
+  width: 40px; height: 40px; min-height: 0; padding: 0; border-radius: 12px; display: grid; place-items: center;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text); box-shadow: var(--shadow);
+}
+.gc .gc-fab:hover { border-color: var(--accent); color: var(--accent); }
+.gc .gc-fab svg.i { width: 19px; height: 19px; }
+.gc .gc-expand { position: absolute; left: 10px; top: 10px; z-index: 2; display: none; }
+
+/* pojavni meni */
+.gc-pop {
+  position: absolute; z-index: 30; max-height: min(70vh, 560px); overflow-y: auto; padding: 8px;
+  background: var(--menu, var(--surface)); color: var(--menu-text, var(--text)); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow-lg);
+}
+.gc-pop-wide { width: 360px; }
+.gc-pop-h { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding: 8px 6px 4px; }
+.gc-pop-sep { height: 1px; background: var(--border); margin: 6px 0; }
+.gc .gc-menu-row {
+  display: flex; width: 100%; justify-content: flex-start; gap: 10px; min-height: 44px; padding: 8px 10px;
+  border: 0; background: none; border-radius: 10px; font-weight: 700; text-align: left; color: inherit;
+}
+.gc .gc-menu-row:hover { background: var(--surface-2); }
+.gc .gc-menu-row svg.i { color: var(--muted); }
+.gc .gc-menu-row[aria-pressed="true"] svg.i { color: var(--accent); }
+.gc .gc-menu-row.danger { color: var(--danger); }
+.gc .gc-menu-row.danger svg.i { color: var(--danger); }
+.gc-swatches, .gc-styles { display: flex; flex-wrap: wrap; gap: 8px; padding: 4px 6px 6px; }
+.gc .gc-swatch { width: 34px; height: 34px; min-height: 0; padding: 0; border-radius: 50%; background: var(--c); border: 3px solid var(--surface); box-shadow: 0 0 0 1.5px var(--border); }
+.gc .gc-swatch.on { box-shadow: 0 0 0 2.5px var(--accent); }
+.gc .gc-ls { width: 60px; min-height: 38px; padding: 0 10px; }
+.gc .gc-ls.on { border-color: var(--accent); background: var(--accent-soft); }
+.gc-ls span { display: block; width: 100%; border-top: 3px solid var(--text); }
+.gc-ls .ls-dash { border-top-style: dashed; }
+.gc-ls .ls-dot { border-top-style: dotted; }
+.gc-ex-list { display: grid; grid-template-columns: 1fr; gap: 4px; }
+.gc .gc-ex { display: flex; justify-content: flex-start; gap: 10px; min-height: 48px; border: 0; background: none; border-radius: 10px; padding: 6px 8px; text-align: left; overflow-x: auto; }
+.gc .gc-ex:hover { background: var(--surface-2); }
+.gc-ex-ic { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); flex: none; }
+.gc-ex-tex { font-size: 1rem; }
+.gc-save-row { display: flex; gap: 8px; padding: 4px 4px 8px; }
+.gc-save-row input { flex: 1; min-width: 0; min-height: 40px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg); padding: 6px 10px; font-weight: 700; }
+.gc-saved-row { display: flex; align-items: center; gap: 4px; }
+.gc .gc-saved-open { flex: 1; min-width: 0; display: flex; justify-content: flex-start; gap: 10px; border: 0; background: none; padding: 6px; border-radius: 10px; text-align: left; }
+.gc .gc-saved-open:hover { background: var(--surface-2); }
+.gc-saved-open img, .gc-thumb-empty { width: 64px; height: 44px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); flex: none; display: grid; place-items: center; color: var(--muted); }
+.gc-saved-open span { display: flex; flex-direction: column; min-width: 0; }
+.gc-saved-open b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gc-seg { margin: 4px 6px 8px; }
+.gc-win { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 2px 6px 6px; }
+.gc-win input { width: 100%; min-height: 38px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); padding: 4px 8px; font-weight: 700; }
+.gc-win4 label { display: flex; align-items: center; gap: 6px; }
+
+/* tipkovnica (telefon in tablica; na računalniku po izbiri) */
+.gc-keypad {
+  grid-column: 2; background: var(--surface-2); border-top: 1px solid var(--border);
+  padding: 6px 6px calc(6px + env(safe-area-inset-bottom)); user-select: none; -webkit-user-select: none;
+}
+.gc-keypad[hidden] { display: none; }
+.gc-kp-top { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.gc-kp-top .chip-row { flex: 1; }
+.gc-kp-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; }
+.gc .gc-key {
+  min-height: 44px; padding: 2px; border-radius: 10px; border: 0; background: var(--surface); color: var(--text);
+  font-weight: 800; font-size: 1rem; box-shadow: 0 1px 0 var(--border); touch-action: manipulation; white-space: nowrap; overflow: hidden;
+}
+.gc .gc-key.num { background: var(--bg); font-size: 1.12rem; }
+.gc .gc-key:active { background: var(--accent-soft); }
+.gc .gc-key.enter { background: var(--accent); color: var(--accent-text); }
+.gc-kp-nav { display: grid; grid-template-columns: 1fr 1fr 1fr 2fr; gap: 5px; margin-top: 5px; }
+.gc-kp-sym .sym-keys { max-height: 190px; overflow-y: auto; }
+
+/* odprt iz naloge ali inštruktorja: čez cel zaslon */
+.graph-overlay { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; background: var(--bg); }
+.graph-overlay[hidden] { display: none; }
+.go-head { display: flex; align-items: center; gap: 8px; padding: 6px 10px; padding-top: calc(6px + env(safe-area-inset-top)); background: var(--surface); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.go-head b { font-weight: 800; }
+.go-body { flex: 1; min-height: 0; display: flex; }
+body.graph-open { overflow: hidden; }
+
+/* gumb v nalogi in pod odgovorom inštruktorja */
+.task-calc { margin-left: auto; }
+.task-top .task-calc + .count, .task-top .task-calc ~ .count { margin-left: 8px; }
+.msg .graph-btn { margin-top: 10px; }
+
+/* ---------- telefon in tablica pokončno: graf zgoraj, seznam spodaj ---------- */
+@media (max-width: 860px) {
+  .gc { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto; }
+  .gc-stage { grid-row: 1; }
+  .gc-panel { grid-row: 2; border-right: 0; border-top: 1px solid var(--border); }
+  .gc-keypad { grid-column: 1; grid-row: 3; }
+  .gc.kp-open { grid-template-rows: minmax(0, 1fr) minmax(0, 0.9fr) auto; }
+  .gc.gc-full { grid-template-rows: 1fr 0 auto; }
+  .gc.gc-full .gc-panel { display: none; }
+  .gc .gc-expand { display: grid; }
+  .gc-text-btn span { display: none; }
+  .gc-zoom { top: 8px; right: 8px; gap: 5px; flex-direction: row; }
+  .gc .gc-fab { width: 38px; height: 38px; }
+  .gc.kp-open .gc-help { display: none; }
+  .gc.kp-open .gc .gc-key, .gc.kp-open .gc-key { min-height: 40px; }
+  body.gc-kp .tabbar, body.gc-kp #mock-banner, body.gc-kp #view-graph .me-back, body.gc-kp #offline-banner { display: none !important; }
+  .gc-pop { max-height: 60vh; }
+  .gc-row:not(.editing) .gc-math { min-height: 40px; }
+}
+@media (max-width: 380px) {
+  .gc-kp-grid { gap: 4px; }
+  .gc .gc-key { font-size: 0.92rem; min-height: 42px; }
+}
+/* tablica ležeče: seznam ožji */
+@media (min-width: 861px) and (max-width: 1100px) { .gc { --gc-panel: 330px; } }

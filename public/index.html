@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="leagues.css">
   <link rel="stylesheet" href="competition.css">
   <link rel="stylesheet" href="feedback.css">
+  <link rel="stylesheet" href="graph.css">
   <link rel="stylesheet" href="touch.css">
 </head>
 <body>
@@ -33,6 +34,7 @@
       <button class="tab active" data-view="path"><i data-icon="map"></i><span data-i18n="nav.path">Učna pot</span></button>
       <button class="tab" data-view="textbook"><i data-icon="book-open"></i><span data-i18n="nav.textbook">Učbenik</span></button>
       <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span data-i18n="nav.chat">Inštruktor</span></button>
+      <button class="tab" data-view="graph"><i data-icon="chart-spline"></i><span data-i18n="nav.graph">Kalkulator</span></button>
       <button class="tab" data-view="competition" id="competition-tab"><i data-icon="medal"></i><span data-i18n="nav.competition">Tekmovanja</span></button>
       <button class="tab" data-view="progress"><i data-icon="chart-column"></i><span data-i18n="nav.progress">Napredek</span></button>
       <button class="tab" data-view="settings"><i data-icon="settings"></i><span data-i18n="nav.settings">Nastavitve</span></button>
@@ -129,6 +131,12 @@
         <div class="hint" data-i18n="chat.hint">Nalogo lahko fotografiraš, poveš (mikrofon) ali napišeš s simboli (Σ). Lahko napišeš tudi »zdaj kemija«.</div>
       </form>
     </section>
+  </main>
+
+  <!-- GRAFIČNI KALKULATOR (public/graph/) -->
+  <main id="view-graph" class="view" hidden>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <div id="graph-slot" class="graph-slot"></div>
   </main>
 
   <!-- NASTAVITVE -->
@@ -252,6 +260,7 @@
       <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span data-i18n="me.streak">dni zapored</span></div>
     </div>
     <div class="card list-card">
+      <button type="button" class="list-row" data-go="graph"><span class="ic"><i data-icon="chart-spline"></i></span><span class="lr-text"><b data-i18n="gc.title">Grafični kalkulator</b><small data-i18n="me.graphSub">Grafi funkcij, krivulje, drsniki in tabele</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="progress"><span class="ic"><i data-icon="chart-column"></i></span><span class="lr-text"><b data-i18n="nav.progress">Napredek</b><small data-i18n="me.progressSub">Šibke točke, aktivnost in teme</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="league"><span class="ic"><i data-icon="trophy"></i></span><span class="lr-text"><b data-i18n="nav.league">Lige</b><small data-i18n="me.leagueSub">Tedenska lestvica, razred in prijatelji</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="settings"><span class="ic"><i data-icon="settings"></i></span><span class="lr-text"><b data-i18n="nav.settings">Nastavitve</b><small data-i18n="me.settingsSub">Profil, šola, jezik, videz in barve</small></span><i data-icon="chevron-right"></i></button>
@@ -282,6 +291,12 @@
     <button class="tab" data-view="competition" id="competition-tab-m"><i data-icon="medal"></i><span data-i18n="nav.competition">Tekmovanja</span></button>
     <button class="tab" data-view="me"><i data-icon="user"></i><span data-i18n="nav.me">Jaz</span></button>
   </nav>
+
+  <!-- KALKULATOR IZ NALOGE ALI INŠTRUKTORJA -->
+  <div id="graph-overlay" class="graph-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="go-title">
+    <div class="go-head"><button type="button" class="ghost back" id="graph-close"><i data-icon="arrow-left"></i><span id="graph-close-label" data-i18n="nav.back">Nazaj</span></button><b id="go-title" data-i18n="gc.title">Grafični kalkulator</b></div>
+    <div class="go-body" id="graph-overlay-body"></div>
+  </div>
 
   <!-- UVODNI OGLED -->
   <div id="tour" class="tour" hidden role="dialog" aria-modal="true" aria-labelledby="tour-title">
