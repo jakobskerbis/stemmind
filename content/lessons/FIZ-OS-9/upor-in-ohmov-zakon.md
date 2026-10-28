@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: ohm
-phet: ohms-law
 avtor: AI (vzorčna lekcija za pregled)
 ---
 

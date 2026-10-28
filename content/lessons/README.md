@@ -12,8 +12,7 @@ aplikacija spremembo pobere ob naslednjem odprtju lekcije.
 ```markdown
 ---
 stanje: osnutek        # osnutek | pregledano (osnutek pokaže opozorilo učencu)
-demo: pitagora         # neobvezno: lastna demonstracija (glej DEMOS v server/textbook.js)
-phet: pendulum-lab     # neobvezno: simulacija PhET (ime mape na phet.colorado.edu)
+demo: pitagora         # neobvezno: dodatna simulacija (simulacije za vsako temo so v public/sim/katalog.js)
 avtor: učitelj / AI    # neobvezno, za evidenco
 ---
 
@@ -73,7 +72,7 @@ Pravila za rešene primere (vsak `### Primer`):
 
 Obliko preveriš z `node scripts/check-lesson.js content/lessons/<pot>/<slug>.md`
 (brez argumentov preveri vse lekcije). Simulacijo v besedilu omeni kot
-»interaktivna simulacija spodaj«, ne z imenom ponudnika.
+»simulacija spodaj« z njenim naslovom iz public/sim/katalog.js.
 
 Demonstracija se pokaže za razdelkom »Rešeni primeri«. Formule piši v LaTeX z
 decimalno vejico (`$3{,}5$`).

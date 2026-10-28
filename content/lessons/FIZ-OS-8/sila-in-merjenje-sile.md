@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: hookes-law
 avtor: AI
 ---
 

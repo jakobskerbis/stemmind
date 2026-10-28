@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: circuit-construction-kit-dc
 avtor: AI
 ---
 

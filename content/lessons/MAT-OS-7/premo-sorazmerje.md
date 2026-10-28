@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: linearna
-phet: proportion-playground
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -103,7 +102,7 @@ Spodnja demonstracija »Graf funkcije y = kx + n« prikazuje premico v koordinat
 - Spreminjaj $k$: večji ko je $k$, strmejša je premica. Pri $k = 2$ se $y$ poveča za $2$, ko se $x$ poveča za $1$.
 - Zdaj nastavi $n$ na neko število, različno od $0$. Premica se premakne in ne gre več skozi izhodišče. Takšna zveza **ni** premo sorazmerje, ker $x = 0$ ne da $y = 0$.
 
-Poskusi še simulacijo PhET »Proportion Playground«, kjer lahko primerjaš razmerja in ugotoviš, kdaj sta dva para vrednosti v enakem razmerju.
+Poskusi še simulacijo spodaj (»Premo sorazmerje«), kjer lahko preveriš, kdaj sta dva para vrednosti v enakem razmerju.
 
 ## Drugače: Iz vsakdanjega življenja
 

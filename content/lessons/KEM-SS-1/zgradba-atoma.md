@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: build-an-atom
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -132,7 +131,7 @@ Prva lupina ima prostor za $2$ elektrona, druga za $8$, tretja za $18$. Elektron
 
 Pri izotopih si predstavljaj dve jedri z enakim številom rdečih kroglic (protonov) in različnim številom sivih kroglic (nevtronov). Ovojnica je pri obeh enaka, zato se kemijsko obnašata enako, le jedro je težje.
 
-V simulaciji PhET lahko sam dodajaš in odvzemaš protone, nevtrone in elektrone ter opazuješ, kako se spreminjajo element, naboj in masno število.
+V simulaciji spodaj (»Atom, ioni in izotopi«) lahko sam dodajaš in odvzemaš delce ter opazuješ, kako se spreminjajo element, naboj in masno število.
 
 ## Drugače: Iz vsakdanjega življenja
 

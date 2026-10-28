@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: forces-and-motion-basics
 avtor: AI
 ---
 

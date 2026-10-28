@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: enacbe
-phet: balancing-chemical-equations
 avtor: AI (vzorčna lekcija za pregled)
 ---
 

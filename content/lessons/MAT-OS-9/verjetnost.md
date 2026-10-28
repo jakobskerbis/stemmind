@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: plinko-probability
 avtor: AI (claude-sonnet-5-5)
 ---
 

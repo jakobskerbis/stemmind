@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: build-an-atom
 avtor: AI (claude-sonnet-5-5)
 ---
 

@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: energy-skate-park-basics
 avtor: AI
 ---
 

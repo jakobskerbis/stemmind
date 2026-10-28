@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: ph
-phet: acid-base-solutions
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -75,7 +74,7 @@ Barve pri nekaterih indikatorjih (zlasti pri metiloranžu) so manj izrazite okol
 
 Univerzalni indikator ima za vsak pH drugačno barvo. Primerjava z barvno lestvico nam pove približni pH.
 
-**7. Simulacija PhET.** V simulaciji *Acid-Base Solutions* lahko izbereš različne snovi, jih raztopiš v vodi in spremljaš pH ter prevodnost raztopine. Poskusi primerjati kisline, baze in vodo.
+**7. Simulacija.** V simulaciji spodaj (»Kisline, baze in pH«) lahko primerjaš različne snovi in spremljaš njihov pH. Poskusi primerjati kisline, baze in vodo.
 
 ## Rešeni primeri
 
@@ -155,7 +154,7 @@ V interaktivni demonstraciji »pH lestvica« premikaj drsnik po lestvici in opaz
 
 Opaziš, da se barva spreminja postopoma. Ob premiku za eno enoto pH se raztopina zelo spremeni, zato barvna lestvica pomaga ugotoviti približen pH.
 
-V simulaciji PhET lahko dodatno primerjaš pH različnih raztopin in poiščeš, kje na lestvici se ustavijo kisline in baze.
+V simulaciji lahko dodatno primerjaš pH različnih raztopin in poiščeš, kje na lestvici se ustavijo kisline in baze.
 
 ## Drugače: Iz vsakdanjega življenja
 

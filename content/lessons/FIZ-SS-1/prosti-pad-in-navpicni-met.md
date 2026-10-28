@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: prosti-pad
-phet: projectile-motion
 avtor: AI
 ---
 

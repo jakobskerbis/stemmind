@@ -1,6 +1,5 @@
 ---
 stanje: osnutek
-phet: area-builder
 avtor: AI (claude-sonnet-5-5)
 ---
 

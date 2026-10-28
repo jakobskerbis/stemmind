@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: linearna
-phet: graphing-slope-intercept
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -110,7 +109,7 @@ V interaktivni demonstraciji »Graf funkcije $y = kx + n$« spreminjaj $k$ in $n
 - Ko spreminjaš $k$, se premica vrti okoli točke $(0, n)$. Večji kot je $k$, strmejša je. Pri negativnem $k$ premica pada.
 - Poišči točko, kjer premica seka os $x$. Njena prva koordinata je ničla. Preveri, ali se ujema z $-\dfrac{n}{k}$.
 
-Poskusi še simulacijo PhET (graphing-slope-intercept): tam lahko premico premikaš in opazuješ, kako se spreminjata naklon in presečišče.
+Poskusi še simulacijo spodaj (»Graf funkcije y = kx + n«): spreminjaj $k$ in $n$ ter opazuj, kako se spreminjata naklon in presečišče z osjo $y$.
 
 ## Drugače: Iz vsakdanjega življenja
 

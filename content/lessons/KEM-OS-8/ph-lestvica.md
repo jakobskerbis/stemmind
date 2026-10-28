@@ -1,7 +1,6 @@
 ---
 stanje: osnutek
 demo: ph
-phet: ph-scale
 avtor: AI (claude-sonnet-5-5)
 ---
 
@@ -107,7 +106,7 @@ Predstavljaj si pH lestvico kot vodoravni trak. Na levem koncu ($0$) je rdeča b
 
 V interaktivni demonstraciji zgoraj izberi različne snovi in opazuj, kam na traku se uvrstijo. Opazuj tudi, kako se premika barva. Ugotovi, katere snovi so levo od zelene sredine (kisle) in katere desno (bazične). Primerjaj dve snovi, ki sta na lestvici narazen za dve enoti, in se spomni, da to pomeni stokratno razliko v kislosti.
 
-V simulaciji PhET lahko tudi sam izbiraš tekočine in opazuješ, kako se spreminja pH ter število vodikovih ionov.
+V simulaciji spodaj (»pH lestvica«) lahko tudi sam izbiraš tekočine in opazuješ, kje na lestvici se znajdejo.
 
 ## Drugače: Iz vsakdanjega življenja
 
