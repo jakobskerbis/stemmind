@@ -45,31 +45,50 @@ export class Stripe {
   }
 
   // Izdelek in štiri cene (po lookup_key). Ustvari jih, če manjkajo.
+  // Če se znesek v PLANS spremeni, ustvari novo ceno (lookup_key se prenese nanjo)
+  // in staro arhivira; obstoječe naročnine ostanejo pri stari ceni.
   async ensurePrices() {
+    const amounts = Object.fromEntries(PLANS.map((p) => [p.key, p.amount]));
     const cached = this.kv?.get("stripe_prices");
-    if (cached) return JSON.parse(cached);
+    if (cached) {
+      const c = JSON.parse(cached);
+      if (JSON.stringify(c.amounts) === JSON.stringify(amounts)) return c;
+    }
     const found = await this.request("GET", "/prices", { lookup_keys: PLANS.map((p) => p.key), active: "true", limit: 10 });
-    const byKey = Object.fromEntries(found.data.map((p) => [p.lookup_key, p.id]));
+    const existing = Object.fromEntries(found.data.map((p) => [p.lookup_key, p]));
     let product = found.data[0]?.product;
     if (!product) {
       product = (await this.request("POST", "/products", { name: "STEMMind", description: "AI inštruktor za matematiko, fiziko in kemijo" })).id;
     }
+    const byKey = {};
+    let replaced = false;
     for (const plan of PLANS) {
-      if (byKey[plan.key]) continue;
+      const old = existing[plan.key];
+      if (old && old.unit_amount === plan.amount) {
+        byKey[plan.key] = old.id;
+        continue;
+      }
       const price = await this.request("POST", "/prices", {
         product,
         currency: "eur",
         unit_amount: plan.amount,
         tax_behavior: "inclusive",
         lookup_key: plan.key,
+        transfer_lookup_key: old ? true : undefined,
         nickname: plan.label,
         recurring: { interval: plan.interval },
         metadata: { seats: plan.seats },
       });
       byKey[plan.key] = price.id;
+      if (old) {
+        await this.request("POST", `/prices/${old.id}`, { active: false });
+        replaced = true;
+      }
     }
-    const result = { product, prices: byKey };
+    const result = { product, prices: byKey, amounts };
     this.kv?.set("stripe_prices", JSON.stringify(result));
+    // Portal za stranke našteva cene za preklop paketa: z novimi cenami se ustvari znova.
+    if (replaced) this.kv?.set("stripe_portal_config", "");
     return result;
   }
 
