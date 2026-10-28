@@ -1,6 +1,8 @@
 // STEMMind – odjemalec (brez ogrodja).
 import { attachPad, closePad, openPad, padIsSheet } from "./pad.js";
 import { icon, hydrateIcons } from "./icons.js";
+import { t, locale, currentLang, setLanguage } from "./i18n.js";
+import { mountLanguageCard } from "./language.js";
 
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild } from "./account.js";
@@ -8,7 +10,7 @@ import { initTextbook, showTextbook, openLesson } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
 import { loadPrograms, programsCache, subjectOptions, SUBJECT_NAMES } from "./programs.js";
-import { mountLevelPicker } from "./level-picker.js";
+import { mountLevelPicker, levelLabel } from "./level-picker.js";
 import { attachMic } from "./speech.js";
 import { mountSymbols } from "./symbols.js";
 import { renderSuggestion, renderWelcome, stageUp } from "./level-up.js";
@@ -22,12 +24,12 @@ const api = async (url, opts = {}) => {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || `Napaka ${res.status}`);
+    throw new Error(err.error || t("common.error", { status: res.status }));
   }
   return res.json();
 };
 
-const MODE_NAMES = { A: "Vodenje", B: "Celotna rešitev" };
+const MODE_NAMES = { A: t("chatMode.A"), B: t("chatMode.B") };
 
 const isUni = (s) => s?.educational_track === "UNIVERZA";
 
@@ -101,7 +103,7 @@ function renderMe() {
   if (!s) return;
   $("#me-avatar").textContent = (s.name || "?").trim().charAt(0).toUpperCase();
   $("#me-name").textContent = s.name;
-  $("#me-level").textContent = $("#path-select").selectedOptions[0]?.textContent.replace(/\s*\(moja raven\)$/, "") || "";
+  $("#me-level").textContent = $("#path-select").selectedOptions[0]?.textContent.replace(t("path.myLevel"), "") || "";
   $("#me-xp").textContent = $("#xp-total").textContent;
   $("#me-streak").textContent = $("#xp-streak").textContent;
   $("#me-account").hidden = $("#account-tab").hidden;
@@ -136,20 +138,22 @@ async function onboard(name = "") {
   const box = $("#view-onboard");
   box.innerHTML = `
     <form id="onboard-form" class="card form">
-      <h1>Pozdravljen v STEMMind!</h1>
-      <p class="muted">Povej, kje se učiš, pa ti prilagodimo učno pot, naloge in učbenik. Izbiro lahko kadar koli spremeniš v profilu.</p>
-      <label>Ime ali vzdevek <input name="name" maxlength="40" required placeholder="npr. Miha" value="${escapeHtml(name)}"></label>
+      <h1>${t("onb.hello")}</h1>
+      <p class="muted">${t("onb.text")}</p>
+      <div class="onb-lang"></div>
+      <label>${t("onb.name")} <input name="name" maxlength="40" required placeholder="${escapeHtml(t("onb.namePh"))}" value="${escapeHtml(name)}"></label>
       <fieldset class="level-field">
-        <legend>Šola in letnik</legend>
+        <legend>${t("set.school")}</legend>
         <div class="level-picker"></div>
         <input type="hidden" name="educational_track">
         <input type="hidden" name="study_program">
         <input type="hidden" name="curriculum_level">
       </fieldset>
       <p class="form-error" hidden></p>
-      <button class="primary big" type="submit">Začni</button>
+      <button class="primary big" type="submit">${t("common.start")}</button>
     </form>`;
   const f = $("#onboard-form");
+  mountLanguageCard(f.querySelector(".onb-lang"), { compact: true });
   const picker = mountLevelPicker(f.querySelector(".level-picker"), f, { programs });
   showView("onboard");
   document.body.classList.add("onboarding");
@@ -158,12 +162,12 @@ async function onboard(name = "") {
       e.preventDefault();
       const err = f.querySelector(".form-error");
       if (!picker.complete()) {
-        err.textContent = "Izberi šolo in letnik do konca.";
+        err.textContent = t("onb.finish");
         err.hidden = false;
         return;
       }
       const track = f.educational_track.value;
-      const settings = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value };
+      const settings = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value, language: currentLang() };
       if (track === "UNIVERZA") settings.subject = programs.find((p) => p.id === settings.study_program)?.mainSubject || "MAT";
       const s = await api("/api/students", { method: "POST", body: { name: f.name.value, settings } });
       document.body.classList.remove("onboarding");
@@ -174,6 +178,12 @@ async function onboard(name = "") {
 
 async function selectStudent(id) {
   state.student = state.students.find((s) => s.id === Number(id));
+  // Jezik je del profila: ob menjavi učenca se vmesnik preklopi v njegov jezik (stran se naloži znova).
+  const want = state.student.settings.language;
+  if (want && want !== currentLang()) {
+    localStorageSet("studentId", state.student.id);
+    if (setLanguage(want)) return;
+  }
   syncCompetitionTab();
   localStorageSet("studentId", state.student.id);
   state.conversationId = null;
@@ -204,11 +214,11 @@ function renderConversationList() {
   for (const c of state.conversations) {
     const li = document.createElement("li");
     li.className = c.id === state.conversationId ? "active" : "";
-    li.innerHTML = `<span>${escapeHtml(c.title)}</span><button title="Izbriši pogovor" aria-label="Izbriši pogovor">${icon("trash-2")}</button>`;
+    li.innerHTML = `<span>${escapeHtml(c.title)}</span><button title="${t("chat.delete")}" aria-label="${t("chat.delete")}">${icon("trash-2")}</button>`;
     li.querySelector("span").addEventListener("click", () => openConversation(c.id));
     li.querySelector("button").addEventListener("click", async (e) => {
       e.stopPropagation();
-      if (!confirm("Izbrišem ta pogovor?")) return;
+      if (!confirm(t("chat.confirmDelete"))) return;
       await api(`/api/conversations/${c.id}`, { method: "DELETE" });
       if (state.conversationId === c.id) {
         state.conversationId = null;
@@ -221,12 +231,12 @@ function renderConversationList() {
 }
 
 function renderEmptyChat() {
-  $("#chat-title").textContent = "Nov pogovor";
-  const ideas = ["Kako rešim enačbo 2x + 3 = 11?", "Razloži mi Pitagorov izrek.", "Kaj je gostota?"];
+  $("#chat-title").textContent = t("chat.new");
+  const ideas = [t("chat.idea1"), t("chat.idea2"), t("chat.idea3")];
   $("#messages").innerHTML = `<div class="empty">
     <div class="tutor-avatar big" aria-hidden="true">${icon("sparkles")}</div>
-    <p class="big">Živjo, ${escapeHtml(state.student.name)}!</p>
-    <p>Napiši nalogo ali jo fotografiraj. Skupaj jo bova rešila po korakih.</p>
+    <p class="big">${t("chat.hello", { name: escapeHtml(state.student.name) })}</p>
+    <p>${t("chat.intro")}</p>
     <div class="ideas">${ideas.map((t) => `<button type="button" class="idea" data-idea="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("")}</div></div>`;
   $("#messages").querySelectorAll("[data-idea]").forEach((b) =>
     b.addEventListener("click", () => {
@@ -242,7 +252,7 @@ function renderState(convState) {
   const subject = convState?.subject || s.subject;
   const mode = convState?.mode || s.solving_mode;
   const program = isUni(s) ? programsCache().find((p) => p.id === s.study_program)?.label : null;
-  $("#chat-state").innerHTML = [SUBJECT_NAMES[subject], MODE_NAMES[mode], program, s.curriculum_level]
+  $("#chat-state").innerHTML = [SUBJECT_NAMES[subject], MODE_NAMES[mode], program, levelLabel(s.curriculum_level)]
     .filter(Boolean)
     .map((t) => `<span class="chip">${escapeHtml(t)}</span>`)
     .join("");
@@ -252,7 +262,7 @@ function renderState(convState) {
     const b = document.createElement("button");
     b.type = "button";
     b.className = "chip chip-btn";
-    b.textContent = "Preberi lekcijo";
+    b.textContent = t("chat.readLesson");
     b.addEventListener("click", () => openLesson(topicId));
     $("#chat-state").append(b);
   }
@@ -295,7 +305,7 @@ function addMessage(role, text, hasImage = false) {
     if (hasImage) {
       const note = document.createElement("div");
       note.className = "photo-note";
-      note.innerHTML = `${icon("camera")} fotografija naloge`;
+      note.innerHTML = `${icon("camera")} ${t("chat.photoNote")}`;
       el.prepend(note);
     }
   } else {
@@ -338,7 +348,7 @@ async function send(text, { deep = false } = {}) {
     state.pacer = pacer;
     const skip = () => pacer.skip();
     bubble.addEventListener("click", skip);
-    bubble.title = "Dotakni se za prikaz celega odgovora";
+    bubble.title = t("chat.tapToSkip");
 
     const res = await fetch(`/api/conversations/${state.conversationId}/messages`, {
       method: "POST",
@@ -348,13 +358,13 @@ async function send(text, { deep = false } = {}) {
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       bubble.remove();
-      throw new Error(err.error || `Napaka ${res.status}`);
+      throw new Error(err.error || t("common.error", { status: res.status }));
     }
 
     let doneData = null;
     await readSse(res, {
       delta: (d) => pacer.push(d.text),
-      mastered: (d) => toast(`Tema »${d.topic}« je osvojena!`, "trophy"),
+      mastered: (d) => toast(t("chat.mastered", { topic: d.topic }), "trophy"),
       done: (d) => {
         doneData = d;
         pacer.finish(d.text);
@@ -506,11 +516,20 @@ async function fillSettingsForm() {
     $("#settings-level").scrollIntoView({ block: "center" });
   }
 }
+// Jezik aplikacije in inštruktorja: shrani se v profil učenca in na napravo.
+mountLanguageCard($("#language-card"), {
+  onChange: async (code) => {
+    if (!state.student) return;
+    await api(`/api/students/${state.student.id}`, { method: "PUT", body: { settings: { language: code } } }).catch(() => null);
+  },
+});
+$("#lang-note").hidden = currentLang() === "sl";
+
 // Hitrost izpisa je nastavitev naprave (ne profila), shrani se takoj.
 {
   const sel = $("#pace-select");
   sel.innerHTML = Object.entries(PACES)
-    .map(([k, p]) => `<option value="${k}">${p.label}</option>`)
+    .map(([k]) => `<option value="${k}">${t(`pace.${k}`)}</option>`)
     .join("");
   sel.value = PACES[localStorageGet("pace")] ? localStorageGet("pace") : DEFAULT_PACE;
   sel.addEventListener("change", () => localStorageSet("pace", sel.value));
@@ -521,7 +540,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
   const f = e.target;
   const before = state.student.settings;
   if (levelPicker && !levelPicker.complete()) {
-    alert("Izbiro šole in letnika dokončaj do konca.");
+    alert(t("set.finishSchool"));
     return;
   }
   const updated = await api(`/api/students/${state.student.id}`, {
@@ -600,7 +619,7 @@ async function applyLevel(settings) {
   state.pathKey = null;
   const up = stageUp(before, updated.settings);
   if (up) state.welcome = { stage: up };
-  else toast(`Učna pot je zdaj za ${updated.settings.curriculum_level}.`, "circle-arrow-up");
+  else toast(t("path.levelNow", { level: levelLabel(updated.settings.curriculum_level) }), "circle-arrow-up");
   showView("path");
 }
 
@@ -619,7 +638,7 @@ $("#new-student-form").addEventListener("submit", async (e) => {
 });
 
 $("#delete-student").addEventListener("click", async () => {
-  if (!confirm(`Res izbrišem učenca ${state.student.name} in vse njegove pogovore?`)) return;
+  if (!confirm(t("set.confirmDelete", { name: state.student.name }))) return;
   await api(`/api/students/${state.student.id}`, { method: "DELETE" });
   localStorageSet("studentId", "");
   await loadStudents();
@@ -633,9 +652,9 @@ async function loadProgress() {
   const weak = $("#weak-list");
   const items = [
     ...p.manual_weaknesses.map((w) => `<li>${escapeHtml(w)}</li>`),
-    ...p.weak.map((w) => `<li class="auto" title="${Math.round(w.rate * 100)} % napak">${escapeHtml(w.topic)} (${w.subject ?? "?"})</li>`),
+    ...p.weak.map((w) => `<li class="auto" title="${t("prog.errRate", { n: Math.round(w.rate * 100) })}">${escapeHtml(w.topic)} (${w.subject ?? "?"})</li>`),
   ];
-  weak.innerHTML = items.length ? items.join("") : `<li>Še ni podatkov.</li>`;
+  weak.innerHTML = items.length ? items.join("") : `<li>${t("common.noData")}</li>`;
 
   // 30 stolpcev, en na dan (dnevi brez aktivnosti so prazni).
   const byDay = Object.fromEntries(p.activity.map((a) => [a.day, a]));
@@ -647,11 +666,11 @@ async function loadProgress() {
   $("#activity").innerHTML = p.activity.length
     ? days
         .map(
-          (a) => `<div class="bar" style="height:${(a.turns / max) * 100}%" title="${a.day}: ${a.turns} potez, ${a.errors} napak">
+          (a) => `<div class="bar" style="height:${(a.turns / max) * 100}%" title="${t("prog.dayTitle", { day: a.day, turns: a.turns, errors: a.errors })}">
             <div class="err" style="height:${a.turns ? (a.errors / a.turns) * 100 : 0}%"></div></div>`,
         )
         .join("")
-    : `<p class="muted">Še ni aktivnosti.</p>`;
+    : `<p class="muted">${t("prog.noActivity")}</p>`;
 
   $("#topic-rows").innerHTML = p.topics.length
     ? p.topics
@@ -660,14 +679,14 @@ async function loadProgress() {
             <td class="${t.rate >= 0.4 && t.turns >= 3 ? "bad" : ""}">${t.errors} (${Math.round(t.rate * 100)} %)</td></tr>`,
         )
         .join("")
-    : `<tr><td colspan="4" class="muted">Še ni podatkov.</td></tr>`;
+    : `<tr><td colspan="4" class="muted">${t("common.noData")}</td></tr>`;
 
-  const FLAG_NAMES = { distress: "stiska", unsafe: "nevarna prošnja", injection: "poskus obiti pravila", offtopic: "izven teme" };
+  const FLAG_NAMES = { distress: t("flag.distress"), unsafe: t("flag.unsafe"), injection: t("flag.injection"), offtopic: t("flag.offtopic") };
   const flags = p.flags.filter((f) => f.flag !== "offtopic");
   $("#flags-card").hidden = !flags.length;
   refreshXp();
   $("#flag-list").innerHTML = flags
-    .map((f) => `<li>${f.created_at.slice(0, 16)} – <b>${FLAG_NAMES[f.flag] ?? f.flag}</b> v pogovoru »${escapeHtml(f.title)}«</li>`)
+    .map((f) => `<li>${t("prog.flagIn", { when: f.created_at.slice(0, 16), flag: FLAG_NAMES[f.flag] ?? f.flag, title: escapeHtml(f.title) })}</li>`)
     .join("");
 }
 
@@ -678,10 +697,10 @@ function addDeepButton(el, wasDeep) {
   const b = document.createElement("button");
   b.className = "deep-btn";
   b.type = "button";
-  b.innerHTML = `${icon("search")} Razloži podrobneje`;
+  b.innerHTML = `${icon("search")} ${t("chat.deeper")}`;
   b.addEventListener("click", () => {
     b.remove();
-    send("Tega ne razumem dobro. Razloži podrobneje, korak za korakom.", { deep: true });
+    send(t("chat.deeperMsg"), { deep: true });
   });
   el.appendChild(b);
 }
@@ -689,7 +708,7 @@ function addDeepButton(el, wasDeep) {
 // Tiha napaka (npr. prekinjena povezava) se pokaže kot obvestilo, ne pa kot »nič se ne zgodi«.
 window.addEventListener("unhandledrejection", (e) => {
   const msg = e.reason?.message || String(e.reason || "");
-  if (msg) toast(`Napaka: ${msg}`, "circle-x");
+  if (msg) toast(t("common.errorMsg", { msg }), "circle-x");
 });
 
 function toast(msg, ic = null) {
@@ -732,19 +751,19 @@ function localStorageSet(k, v) {
 
 // ---------- učna pot ----------
 
-const LEVEL_NAMES = { 1: "lahka", 2: "srednja", 3: "težka" };
+const LEVEL_NAMES = { 1: t("level.1"), 2: t("level.2"), 3: t("level.3") };
 const NODE = {
-  locked: ["lock", "zaklenjeno"],
-  due: ["rotate-ccw", "za ponovitev"],
-  mastered: ["check", "osvojeno"],
-  learning: ["pencil", "v učenju"],
-  new: ["play", "še ne"],
+  locked: ["lock", t("node.locked")],
+  due: ["rotate-ccw", t("node.due")],
+  mastered: ["check", t("node.mastered")],
+  learning: ["pencil", t("node.learning")],
+  new: ["play", t("node.new")],
 };
 // Tekmovalni razdelek ima svoja imena težavnosti: tudi najlažja raven je nad rednim poukom.
-const COMP_LEVEL_NAMES = { 1: "težja", 2: "zahtevna", 3: "izziv" };
+const COMP_LEVEL_NAMES = { 1: t("level.comp1"), 2: t("level.comp2"), 3: t("level.comp3") };
 const isCompTopic = (id) => /^(MAT|FIZ|KEM)-TEK-/.test(String(id || ""));
 const diffBadge = (level, comp = false) =>
-  `<span class="diff d${level}" title="Težavnost"><span class="dots"><i></i><i></i><i></i></span>${(comp ? COMP_LEVEL_NAMES : LEVEL_NAMES)[level] || ""}</span>`;
+  `<span class="diff d${level}" title="${t("level.title")}"><span class="dots"><i></i><i></i><i></i></span>${(comp ? COMP_LEVEL_NAMES : LEVEL_NAMES)[level] || ""}</span>`;
 
 async function refreshXp() {
   if (!state.student) return;
@@ -773,11 +792,11 @@ async function refreshModes() {
   const badge = $("#modebar .badge");
   badge.hidden = !m.reviewBacklog;
   badge.textContent = m.reviewBacklog;
-  badge.title = `${m.reviewBacklog} nalog za ponavljanje`;
+  badge.title = t("mode.reviewBadge", { n: m.reviewBacklog });
   const daily = $('#modebar [data-mode="daily"]');
   if (!daily) return m;
   daily.classList.toggle("done", m.daily.done);
-  daily.title = m.daily.done ? "Današnji trening je opravljen" : m.daily.open ? "Nadaljuj današnji trening" : "Približno 15 minut: nova snov in ponavljanje";
+  daily.title = m.daily.done ? t("daily.doneTitle") : m.daily.open ? t("daily.continue") : t("daily.about");
   return m;
 }
 
@@ -800,9 +819,9 @@ async function goNew({ skipHint = false } = {}) {
     } catch {}
     showView("topic");
     $("#topic-content").innerHTML = `<div class="card suggest">
-      <h2>${icon("repeat")} Najprej 5 minut ponavljanja?</h2>
-      <p>Nabralo se je <b>${m.reviewBacklog}</b> nalog za ponavljanje. Kratka ponovitev pomaga, da osvojeno znanje ne zbledi. Lahko pa takoj nadaljuješ z novo snovjo.</p>
-      <div class="actions"><button class="primary" id="sg-review">Da, 5 minut ponavljanja</button><button id="sg-new">Ne, nova snov</button></div>
+      <h2>${icon("repeat")} ${t("suggest.title")}</h2>
+      <p>${t("suggest.text", { n: m.reviewBacklog })}</p>
+      <div class="actions"><button class="primary" id="sg-review">${t("suggest.yes")}</button><button id="sg-new">${t("suggest.no")}</button></div>
     </div>`;
     $("#sg-review").addEventListener("click", () => startSession("review", { quick: true }));
     $("#sg-new").addEventListener("click", () => goNew({ skipHint: true }));
@@ -810,7 +829,7 @@ async function goNew({ skipHint = false } = {}) {
   }
   if (!m?.newTopic) {
     showView("path");
-    toast("Vse teme te poti so osvojene. Izberi drugo pot ali ponavljaj.", "trophy");
+    toast(t("path.allDoneToast"), "trophy");
     return;
   }
   await openTopic(m.newTopic.id);
@@ -823,12 +842,12 @@ async function showTestPrep(edit = false) {
   showView("topic");
   const box = $("#topic-content");
   if (plan && !edit && plan.daysLeft >= 0) {
-    const when = plan.daysLeft === 0 ? "danes" : plan.daysLeft === 1 ? "jutri" : `čez ${plan.daysLeft} dni`;
-    box.innerHTML = `<h1 class="with-icon">${icon("clipboard-check")} Priprava na test</h1>
-      <div class="card"><p>Test je <b>${when}</b> (${escapeHtml(new Date(plan.date).toLocaleDateString("sl-SI"))}).</p>
-      <p class="muted">Snov: ${plan.unitTitles.map(escapeHtml).join(", ")}</p>
-      <p class="muted">Vsak dan reši niz mešanih nalog iz teh sklopov. Bližje kot je test, težje so naloge.</p>
-      <div class="actions"><button class="primary" id="tp-start">Začni današnji niz</button><button id="tp-edit">Spremeni</button></div></div>`;
+    const when = plan.daysLeft === 0 ? t("test.today") : plan.daysLeft === 1 ? t("test.tomorrow") : t("test.inDays", { n: plan.daysLeft });
+    box.innerHTML = `<h1 class="with-icon">${icon("clipboard-check")} ${t("mode.test")}</h1>
+      <div class="card"><p>${t("test.when", { when, date: escapeHtml(new Date(plan.date).toLocaleDateString(locale())) })}</p>
+      <p class="muted">${t("test.material", { list: plan.unitTitles.map(escapeHtml).join(", ") })}</p>
+      <p class="muted">${t("test.howto")}</p>
+      <div class="actions"><button class="primary" id="tp-start">${t("test.startToday")}</button><button id="tp-edit">${t("common.change")}</button></div></div>`;
     $("#tp-start").addEventListener("click", () => startSession("test-prep"));
     $("#tp-edit").addEventListener("click", () => showTestPrep(true));
     return;
@@ -836,9 +855,9 @@ async function showTestPrep(edit = false) {
   const p = await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(state.pathKey || "")}`);
   const today = new Date().toISOString().slice(0, 10);
   const chosen = new Set(plan?.path === p.key ? plan.units : []);
-  box.innerHTML = `<h1 class="with-icon">${icon("clipboard-check")} Priprava na test</h1>
+  box.innerHTML = `<h1 class="with-icon">${icon("clipboard-check")} ${t("mode.test")}</h1>
     <form id="tp-form" class="card">
-      <p><b>Katera snov bo na testu?</b> <span class="muted">(${escapeHtml(p.label || "")})</span></p>
+      <p><b>${t("test.which")}</b> <span class="muted">(${escapeHtml(p.label || "")})</span></p>
       <div class="tp-units">${p.units
         .map((u, i) =>
           u.hasPractice
@@ -846,15 +865,15 @@ async function showTestPrep(edit = false) {
             : "",
         )
         .join("")}</div>
-      <p><label><b>Datum testa</b><br><input type="date" name="date" min="${today}" value="${plan?.date && plan.date >= today ? plan.date : ""}" required></label></p>
-      <div class="actions"><button class="primary">Shrani in začni</button>${plan ? `<button type="button" id="tp-del">Odstrani pripravo</button>` : ""}</div>
+      <p><label><b>${t("test.date")}</b><br><input type="date" name="date" min="${today}" value="${plan?.date && plan.date >= today ? plan.date : ""}" required></label></p>
+      <div class="actions"><button class="primary">${t("test.saveStart")}</button>${plan ? `<button type="button" id="tp-del">${t("test.remove")}</button>` : ""}</div>
       <div id="tp-err" class="muted"></div>
     </form>`;
   $("#tp-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const f = new FormData(e.target);
     const units = f.getAll("unit").map(Number);
-    if (!units.length) return ($("#tp-err").textContent = "Izberi vsaj en sklop.");
+    if (!units.length) return ($("#tp-err").textContent = t("test.pickUnit"));
     try {
       await api(`/api/students/${state.student.id}/test-plan`, { method: "POST", body: { path: p.key, units, date: f.get("date") } });
       startSession("test-prep");
@@ -887,12 +906,12 @@ async function loadPath(key = state.pathKey) {
   const uni = isUni(state.student.settings);
   if (uni) await loadPrograms(api);
   const paths = await api(uni ? `/api/paths?program=${encodeURIComponent(state.student.settings.study_program)}` : `/api/paths?subject=${state.student.settings.subject}`);
-  const opt = (x) => `<option value="${x.key}" ${x.key === p.key ? "selected" : ""}>${escapeHtml(x.label.replace(/ \((?:UL|UM|UP|UNG) [A-Z]+\)$/, ""))}${x.key === p.defaultKey ? (uni ? " (moj predmet)" : " (moja raven)") : ""}</option>`;
+  const opt = (x) => `<option value="${x.key}" ${x.key === p.key ? "selected" : ""}>${escapeHtml(x.label.replace(/ \((?:UL|UM|UP|UNG) [A-Z]+\)$/, ""))}${x.key === p.defaultKey ? t(uni ? "path.mySubject" : "path.myLevel") : ""}</option>`;
   $("#path-select").innerHTML = uni
     ? [1, 2, 3, 4, null]
         .map((y) => paths.filter((x) => x.year === y))
         .filter((list) => list.length)
-        .map((list) => `<optgroup label="${list[0].year ? `${list[0].year}. letnik` : "Izbirni predmeti"}">${list.map(opt).join("")}</optgroup>`)
+        .map((list) => `<optgroup label="${list[0].year ? t("path.year", { n: list[0].year }) : t("path.electives")}">${list.map(opt).join("")}</optgroup>`)
         .join("")
     : paths.map(opt).join("");
   if (!p.key) {
@@ -905,25 +924,25 @@ async function loadPath(key = state.pathKey) {
   const prog = uni ? programsCache().find((x) => x.id === state.student.settings.study_program) : null;
   $("#path-note").hidden = !prog;
   if (prog) {
-    $("#path-note").innerHTML = `${escapeHtml(prog.facultyName)}, ${escapeHtml(prog.name)} (UN, 1. stopnja). Predmeti in teme sledijo javnemu predmetniku (${escapeHtml(prog.sourceYear || "")}); jeziki, praksa in zaključno delo niso zajeti. ${prog.source ? `<a href="${escapeHtml(prog.source)}" target="_blank" rel="noopener">Uradni predmetnik</a>.` : ""}`;
+    $("#path-note").innerHTML = `${t("path.uniNote", { faculty: escapeHtml(prog.facultyName), program: escapeHtml(prog.name), year: escapeHtml(prog.sourceYear || "") })} ${prog.source ? `<a href="${escapeHtml(prog.source)}" target="_blank" rel="noopener">${t("path.uniSource")}</a>.` : ""}`;
   }
   const x = p.xp;
   const done = state.modes?.daily?.done;
   $("#xp-card").innerHTML = `
     <div class="hero">
       <div class="hero-icon">${icon("zap")}</div>
-      <div class="hero-text"><h2>Današnji trening</h2><p>${done ? "Opravljeno za danes. Lahko narediš še en krog." : "Približno 15 minut: nova snov in malo ponavljanja."}</p></div>
-      <button class="primary big" data-daily>${done ? "Še en krog" : "Začni trening"}</button>
+      <div class="hero-text"><h2>${t("daily.title")}</h2><p>${done ? t("daily.doneText") : t("daily.text")}</p></div>
+      <button class="primary big" data-daily>${done ? t("daily.again") : t("daily.start")}</button>
     </div>
     ${
       p.next
-        ? `<button class="next-row" data-open="${p.next.id}"><span class="eyebrow">Naslednja tema</span><span class="next-name">${escapeHtml(p.next.name)}</span>${icon("chevron-right")}</button>`
-        : `<div class="next-row done">${icon("trophy")}<span class="next-name">Vse teme te poti so osvojene!</span></div>`
+        ? `<button class="next-row" data-open="${p.next.id}"><span class="eyebrow">${t("path.next")}</span><span class="next-name">${escapeHtml(p.next.name)}</span>${icon("chevron-right")}</button>`
+        : `<div class="next-row done">${icon("trophy")}<span class="next-name">${t("path.allDone")}</span></div>`
     }
     <div class="stats-row">
-      <div><b>${x.level}</b><span>raven</span></div>
-      <div><b>${x.week}</b><span>XP ta teden</span></div>
-      <div><b>${x.streak}</b><span>${x.streak === 1 ? "dan" : "dni"} zapored</span></div>
+      <div><b>${x.level}</b><span>${t("stats.level")}</span></div>
+      <div><b>${x.week}</b><span>${t("stats.week")}</span></div>
+      <div><b>${x.streak}</b><span>${t("stats.streak", { n: x.streak })}</span></div>
     </div>`;
 
   content.innerHTML =
@@ -936,25 +955,25 @@ async function loadPath(key = state.pathKey) {
         return `<section class="unit card ${u.locked ? "locked" : ""} ${u.mastered ? "mastered" : ""}">
         <div class="unit-head">
           <div class="ring" style="--p:${pct}">${u.locked ? icon("lock") : u.mastered ? icon("award") : `<span>${pct}%</span>`}</div>
-          <div class="unit-title"><span class="eyebrow">Sklop ${ui + 1}</span><h2>${escapeHtml(u.title)}</h2>
-            <span class="muted">${u.locked ? "Odklene se, ko osvojiš prejšnji sklop." : `${nDone} od ${rel.length} osvojenih`}</span></div>
+          <div class="unit-title"><span class="eyebrow">${t("unit.label", { n: ui + 1 })}</span><h2>${escapeHtml(u.title)}</h2>
+            <span class="muted">${u.locked ? t("unit.lockedNote") : t("unit.progress", { done: nDone, total: rel.length })}</span></div>
         </div>
         <ol class="path">
           ${u.topics
-            .map((t) => {
-              const st = u.locked ? "locked" : t.due ? "due" : t.status;
-              const isNext = p.next && p.next.id === t.id;
-              const sub = NODE[st][1] + (t.practice && t.status === "learning" && !u.locked ? ` · ${LEVEL_NAMES[t.level]}` : "");
-              return `<li><button class="node ${st} ${isNext ? "current" : ""}" data-open="${t.id}" ${u.locked ? "disabled" : ""}>
+            .map((tp) => {
+              const st = u.locked ? "locked" : tp.due ? "due" : tp.status;
+              const isNext = p.next && p.next.id === tp.id;
+              const sub = NODE[st][1] + (tp.practice && tp.status === "learning" && !u.locked ? ` · ${LEVEL_NAMES[tp.level]}` : "");
+              return `<li><button class="node ${st} ${isNext ? "current" : ""}" data-open="${tp.id}" ${u.locked ? "disabled" : ""}>
                 <span class="node-dot">${icon(NODE[st][0])}</span>
-                <span class="node-text"><span class="node-name">${escapeHtml(t.name)}</span><span class="node-sub">${isNext ? "Naslednja · " : ""}${sub}</span></span>
+                <span class="node-text"><span class="node-name">${escapeHtml(tp.name)}</span><span class="node-sub">${isNext ? t("node.nextPrefix") : ""}${sub}</span></span>
               </button></li>`;
             })
             .join("")}
         </ol>
         <div class="unit-actions">
-          ${u.hasPractice && !u.locked && u.started ? `<button class="secondary small" data-unit="${ui}">${icon("puzzle")}Vadi sklop</button>` : ""}
-          ${u.hasPractice && !u.mastered ? `<button class="secondary small" data-placement="${ui}">${icon("target")}${u.locked ? "Odkleni s preizkusom znanja" : "Preizkus znanja"}</button>` : ""}
+          ${u.hasPractice && !u.locked && u.started ? `<button class="secondary small" data-unit="${ui}">${icon("puzzle")}${t("unit.practice")}</button>` : ""}
+          ${u.hasPractice && !u.mastered ? `<button class="secondary small" data-placement="${ui}">${icon("target")}${u.locked ? t("unit.unlockTest") : t("unit.test")}</button>` : ""}
         </div>
       </section>`;
       })
@@ -985,51 +1004,51 @@ function syncCompetitionTab() {
 // Gumb »nazaj« na temi oziroma pri seriji nalog vodi tja, od koder je učenec prišel.
 function setBack(view) {
   state.backTo = view;
-  $("#back-to-path").innerHTML = `${icon("arrow-left")}${view === "competition" ? "Tekmovanja" : "Učna pot"}`;
+  $("#back-to-path").innerHTML = `${icon("arrow-left")}${view === "competition" ? t("nav.competition") : t("nav.path")}`;
 }
 
 async function openTopic(topicId) {
-  const t = await api(`/api/topic?id=${encodeURIComponent(topicId)}`);
-  state.topic = t;
+  const tp = await api(`/api/topic?id=${encodeURIComponent(topicId)}`);
+  state.topic = tp;
   showView("topic");
-  const hasPractice = (await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(t.path)}`)).units
+  const hasPractice = (await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(tp.path)}`)).units
     .flatMap((u) => u.topics)
-    .find((x) => x.id === t.id);
+    .find((x) => x.id === tp.id);
   const canPractice = !!hasPractice?.practice;
   $("#topic-content").innerHTML = `<div class="topic-grid">
     <div class="card topic-head">
-      <span class="eyebrow">${escapeHtml(t.pathLabel)} · ${escapeHtml(t.unit)}</span>
-      <h1>${escapeHtml(t.name)}</h1>
-      <p class="goals">${icon("target")}<span>${escapeHtml(t.goals)}</span></p>
+      <span class="eyebrow">${escapeHtml(tp.pathLabel)} · ${escapeHtml(tp.unit)}</span>
+      <h1>${escapeHtml(tp.name)}</h1>
+      <p class="goals">${icon("target")}<span>${escapeHtml(tp.goals)}</span></p>
       <div class="actions">
-        ${canPractice ? `<button class="primary big" id="t-practice">${icon("pencil")}Vadi naloge</button>` : ""}
-        <button class="${canPractice ? "secondary" : "primary big"}" id="t-learn">${icon("message-circle")}Razloži mi z inštruktorjem</button>
-        <button id="t-lesson" class="secondary">${icon("book-open")}Lekcija</button>
+        ${canPractice ? `<button class="primary big" id="t-practice">${icon("pencil")}${t("topic.practice")}</button>` : ""}
+        <button class="${canPractice ? "secondary" : "primary big"}" id="t-learn">${icon("message-circle")}${t("topic.learn")}</button>
+        <button id="t-lesson" class="secondary">${icon("book-open")}${t("topic.lesson")}</button>
       </div>
-      ${hasPractice?.status === "mastered" ? "" : `<button id="t-done" class="text-btn">To temo že znam</button>`}
+      ${hasPractice?.status === "mastered" ? "" : `<button id="t-done" class="text-btn">${t("topic.known")}</button>`}
     </div>
     <div class="card explanation">
-      <h2 class="with-icon">${icon("book-open")} Razlaga</h2>
+      <h2 class="with-icon">${icon("book-open")} ${t("topic.explanation")}</h2>
       ${
-        t.explanation
-          ? renderRich(t.explanation)
-          : `<p class="muted">Razlaga za to temo še ni pripravljena. Inštruktor te najprej vpraša, kaj že znaš, nato razloži po korakih.</p>`
+        tp.explanation
+          ? renderRich(tp.explanation)
+          : `<p class="muted">${t("topic.noExplanation")}</p>`
       }
     </div>
     <div id="practice"></div></div>`;
   $("#t-practice")?.addEventListener("click", () => nextPractice());
-  $("#t-learn").addEventListener("click", () => learnWithTutor(t));
-  $("#t-lesson").addEventListener("click", () => openLesson(t.id));
+  $("#t-learn").addEventListener("click", () => learnWithTutor(tp));
+  $("#t-lesson").addEventListener("click", () => openLesson(tp.id));
   $("#t-done")?.addEventListener("click", async () => {
-    if (!confirm("Res znaš to temo? Označena bo kot osvojena in se bo pojavljala pri ponavljanju.")) return;
-    await api(`/api/students/${state.student.id}/topic-status`, { method: "POST", body: { topic_id: t.id, status: "mastered" } });
-    toast("Tema je označena kot osvojena.");
-    openTopic(t.id);
+    if (!confirm(t("topic.confirmKnown"))) return;
+    await api(`/api/students/${state.student.id}/topic-status`, { method: "POST", body: { topic_id: tp.id, status: "mastered" } });
+    toast(t("topic.markedKnown"));
+    openTopic(tp.id);
   });
 }
 
-async function learnWithTutor(t, firstMessage = `Začniva s temo: ${t.name}.`) {
-  const conv = await api(`/api/students/${state.student.id}/conversations`, { method: "POST", body: { topic_id: t.id } });
+async function learnWithTutor(topic, firstMessage = t("topic.startMsg", { name: topic.name })) {
+  const conv = await api(`/api/students/${state.student.id}/conversations`, { method: "POST", body: { topic_id: topic.id } });
   await loadConversations();
   showView("chat");
   await openConversation(conv.id);
@@ -1044,17 +1063,17 @@ async function nextPractice() {
   try {
     out = await api(`/api/students/${state.student.id}/practice/next`, { method: "POST", body: { topic_id: state.topic.id } });
   } catch (err) {
-    box.innerHTML = `<div class="card task"><div class="fb bad">${icon("circle-x")}<span>Naloge nisem mogel naložiti (${escapeHtml(err.message)}). Preveri povezavo in poskusi znova.</span></div></div>`;
+    box.innerHTML = `<div class="card task"><div class="fb bad">${icon("circle-x")}<span>${t("task.loadError", { msg: escapeHtml(err.message) })}</span></div></div>`;
     return;
   }
   if (out.example) {
     box.innerHTML = `<div class="card task example">
-      <div class="task-top"><span class="eyebrow with-icon">${icon("book-open")} Rešen zgled</span></div>
+      <div class="task-top"><span class="eyebrow with-icon">${icon("book-open")} ${t("task.example")}</span></div>
       <div class="task-text">${renderRich(out.example.text)}</div>
       ${out.example.figure ? figureSvg(out.example.figure) : ""}
-      ${workedBlock(out.example, out.example.solution, "Rešitev")}
+      ${workedBlock(out.example, out.example.solution)}
       <div class="fb hint">${icon("lightbulb")}<div>${renderRich(out.example.hint)}</div></div>
-      <div class="actions"><button class="primary big" id="ex-next">Zdaj ti${icon("arrow-right")}</button></div>
+      <div class="actions"><button class="primary big" id="ex-next">${t("task.yourTurn")}${icon("arrow-right")}</button></div>
     </div>`;
     $("#ex-next").addEventListener("click", nextPractice);
   } else {
@@ -1064,15 +1083,15 @@ async function nextPractice() {
 }
 
 const SESSIONS = {
-  review: { mode: "review", icon: "repeat", title: "Ponavljanje", intro: "Mešane naloge iz tem, ki jih je čas ponoviti, da znanje ostane.", empty: "Trenutno ni ničesar za ponoviti. Naloge za ponavljanje se pojavijo nekaj dni po novi snovi." },
-  placement: { mode: "placement", icon: "target", title: "Preizkus znanja", intro: "Brez namigov. Z vsaj 80 % se sklop odklene in šteje kot osvojen." },
-  daily: { mode: "daily", icon: "zap", title: "Današnji trening", intro: "Približno 15 minut: nova snov, vmes ponavljanje.", empty: "Na tej poti še ni nalog za trening. Začni z novo snovjo." },
-  "unit-practice": { mode: "unit", icon: "puzzle", title: "Vaja sklopa", intro: "Prepletene naloge iz vseh tem tega sklopa." },
-  "test-prep": { mode: "test", icon: "clipboard-check", title: "Priprava na test", intro: "Mešane naloge iz snovi za test. Bližje kot je test, težje so." },
-  tek: { mode: "tek", endpoint: "competition-training", icon: "medal", title: "Tekmovalni trening", intro: "Prepletene težje naloge iz vseh tem tekmovanja. Namigi in rešitve so na voljo kot pri vadbi." },
-  contest: { mode: "contest", icon: "timer", title: "Poskusno tekmovanje", intro: "En poskus na nalogo, brez namigov. Točke vidiš na koncu." },
+  review: { mode: "review", icon: "repeat", title: t("session.review"), intro: t("session.reviewIntro"), empty: t("session.reviewEmpty") },
+  placement: { mode: "placement", icon: "target", title: t("session.placement"), intro: t("session.placementIntro") },
+  daily: { mode: "daily", icon: "zap", title: t("session.daily"), intro: t("session.dailyIntro"), empty: t("session.dailyEmpty") },
+  "unit-practice": { mode: "unit", icon: "puzzle", title: t("session.unit"), intro: t("session.unitIntro") },
+  "test-prep": { mode: "test", icon: "clipboard-check", title: t("session.testPrep"), intro: t("session.testPrepIntro") },
+  tek: { mode: "tek", endpoint: "competition-training", icon: "medal", title: t("session.tek"), intro: t("session.tekIntro") },
+  contest: { mode: "contest", icon: "timer", title: t("session.contest"), intro: t("session.contestIntro") },
 };
-const SESSION_DONE = { review: "Ponavljanje končano", daily: "Današnji trening opravljen", unit: "Vaja sklopa končana", test: "Današnji niz za test opravljen", tek: "Tekmovalni trening končan" };
+const SESSION_DONE = { review: t("sessionDone.review"), daily: t("sessionDone.daily"), unit: t("sessionDone.unit"), test: t("sessionDone.test"), tek: t("sessionDone.tek") };
 
 async function startSession(kind, body = {}) {
   const cfg = SESSIONS[kind];
@@ -1094,16 +1113,16 @@ async function startSession(kind, body = {}) {
     return startContestTimer(out.sessionId, out.deadline);
   }
   if (out.finished) {
-    $("#practice").innerHTML = out.empty ? `<p>${cfg.empty || "Ni nalog."}</p>` : sessionDoneCard(cfg.mode, out);
+    $("#practice").innerHTML = out.empty ? `<p>${cfg.empty || t("session.noTasks")}</p>` : sessionDoneCard(cfg.mode, out);
     return;
   }
   renderTask(out.task, { mode: cfg.mode, index: out.index, total: out.total });
 }
 
 function sessionDoneCard(mode, n) {
-  return `<div class="card result celebrate"><div class="result-icon">${icon("trophy")}</div><h2>${SESSION_DONE[mode] || "Končano"}!</h2>
-    <p>Pravilno v prvem poskusu: <b>${n.correct} od ${n.total}</b>${n.xp ? ` · +${n.xp.gained} XP` : ""}</p>
-    <button class="primary big" id="fb-back">${state.backTo === "competition" ? "Nazaj na tekmovanja" : "Na učno pot"}</button></div>`;
+  return `<div class="card result celebrate"><div class="result-icon">${icon("trophy")}</div><h2>${SESSION_DONE[mode] || t("common.done")}!</h2>
+    <p>${t("result.firstTry", { correct: n.correct, total: n.total })}${n.xp ? ` · +${n.xp.gained} XP` : ""}</p>
+    <button class="primary big" id="fb-back">${state.backTo === "competition" ? t("result.toCompetitions") : t("result.toPath")}</button></div>`;
 }
 
 // Slike pri nalogah: graf premice in številska premica. Barve so enake v svetlem
@@ -1138,12 +1157,12 @@ function lineFigure(f) {
     .map((x) => {
       const y = f0(x);
       const right = X(x) < W - 90;
-      return `<g class="fig-pt" tabindex="0" role="button" aria-label="Točka (${x}, ${y})">
+      return `<g class="fig-pt" tabindex="0" role="button" aria-label="${t("task.pointAria", { x, y })}">
         <circle cx="${X(x)}" cy="${Y(y)}" r="14" class="hit"/><circle cx="${X(x)}" cy="${Y(y)}" r="6.5" class="dot"/>
         <text x="${X(x) + (right ? 12 : -12)}" y="${Y(y) - 10}" text-anchor="${right ? "start" : "end"}" class="coord">(${x}, ${y})</text></g>`;
     })
     .join("");
-  return `<figure class="fig"><svg viewBox="0 0 ${W} ${W}" role="img" aria-label="Graf premice v koordinatnem sistemu">
+  return `<figure class="fig"><svg viewBox="0 0 ${W} ${W}" role="img" aria-label="${t("task.graphAria")}">
     <defs><marker id="${id}a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="arrow"/></marker>
       <clipPath id="${id}c"><rect x="${X(-R)}" y="${Y(R)}" width="${2 * R * S}" height="${2 * R * S}"/></clipPath></defs>
     <rect x="0" y="0" width="${W}" height="${W}" rx="14" class="paper"/>
@@ -1154,7 +1173,7 @@ function lineFigure(f) {
     <text x="${X(R) + 6}" y="${Y(0) - 10}" class="axis-name">x</text><text x="${X(0) + 10}" y="${Y(R) - 4}" class="axis-name">y</text>
     <line clip-path="url(#${id}c)" x1="${X(-R - 1)}" y1="${Y(f0(-R - 1))}" x2="${X(R + 1)}" y2="${Y(f0(R + 1))}" class="plot"/>
     ${ptsSvg}</svg>
-    <figcaption>${icon("info")} Tapni oranžno točko, da vidiš njene koordinate.</figcaption></figure>`;
+    <figcaption>${icon("info")} ${t("task.tapPoint")}</figcaption></figure>`;
 }
 
 function numberLineFigure(f) {
@@ -1167,7 +1186,7 @@ function numberLineFigure(f) {
     ticks += `<line x1="${X(x)}" y1="${Y - 7}" x2="${X(x)}" y2="${Y + 7}" class="tick"/><text x="${X(x)}" y="${Y + 28}" text-anchor="middle" class="${x === f.x0 ? "strong" : ""}">${x < 0 ? "−" + -x : x}</text>`;
   }
   const end = f.dir < 0 ? P - 8 : W - P + 8;
-  return `<figure class="fig wide"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Številska premica z označeno rešitvijo">
+  return `<figure class="fig wide"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${t("task.lineAria")}">
     <defs><marker id="${id}a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="arrow"/></marker>
       <marker id="${id}b" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ray-arrow"/></marker></defs>
     <rect x="0" y="0" width="${W}" height="${H}" rx="14" class="paper"/>
@@ -1197,11 +1216,11 @@ async function showSideExplanation(task, ctx) {
   side.dataset.topic = task.topicId;
   try {
     if (!topicCache.has(task.topicId)) topicCache.set(task.topicId, await api(`/api/topic?id=${encodeURIComponent(task.topicId)}`));
-    const t = topicCache.get(task.topicId);
+    const tp = topicCache.get(task.topicId);
     if (side.dataset.topic !== task.topicId) return;
-    side.innerHTML = `<h2 class="with-icon">${icon("book-open")} ${escapeHtml(t.name)}</h2>${
-      t.explanation ? renderRich(t.explanation) : `<p class="muted">Razlaga za to temo še ni pripravljena.</p>`
-    }<button type="button" class="secondary small" id="side-lesson">${icon("book-open")}Celotna lekcija</button>`;
+    side.innerHTML = `<h2 class="with-icon">${icon("book-open")} ${escapeHtml(tp.name)}</h2>${
+      tp.explanation ? renderRich(tp.explanation) : `<p class="muted">${t("topic.noExplanationShort")}</p>`
+    }<button type="button" class="secondary small" id="side-lesson">${icon("book-open")}${t("topic.fullLesson")}</button>`;
     side.hidden = false;
     $("#side-lesson").addEventListener("click", () => openLesson(t.id));
   } catch {
@@ -1214,7 +1233,7 @@ function renderTask(task, ctx) {
   const box = $("#practice");
   const comp = ctx.mode === "tek" || ctx.mode === "contest" || (ctx.mode === "practice" && isCompTopic(state.topic?.id));
   const stars = ctx.mode !== "placement" && task.level ? diffBadge(task.level, comp) : "";
-  const pts = ctx.mode === "contest" && task.points ? `<span class="pts">${task.points} ${task.points === 3 || task.points === 4 ? "točke" : "točk"}</span>` : "";
+  const pts = ctx.mode === "contest" && task.points ? `<span class="pts">${t("task.points", { n: task.points })}</span>` : "";
   const counter = ctx.total ? `<span class="count">${ctx.index} / ${ctx.total}</span>` : "";
   let input;
   if (task.answerType === "choice") {
@@ -1224,10 +1243,10 @@ function renderTask(task, ctx) {
   } else {
     const ph =
       task.inputHint ||
-      (task.answerType === "coefficients" ? "npr. 2, 1, 2" : task.unit ? `število in enota, npr. 12,5 ${task.unit}` : "vpiši rezultat");
-    input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn secondary" title="Vnos s prstom ali miško: tipke ali pisanje">${icon("pencil")}<span>Piši</span></button><button class="primary">Preveri</button></form>`;
+      (task.answerType === "coefficients" ? t("task.phCoef") : task.unit ? t("task.phUnit", { unit: task.unit }) : t("task.phResult"));
+    input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn secondary" title="${t("task.writeTitle")}">${icon("pencil")}<span>${t("task.write")}</span></button><button class="primary">${t("task.check")}</button></form>`;
   }
-  const bar = ctx.mode === "contest" ? `<div class="contest-bar"><span id="contest-timer" class="contest-timer" role="timer">${icon("timer")}<b>${leftText(state.contestDeadline)}</b></span><span class="muted">Odgovori se shranijo, točke vidiš na koncu.</span></div>` : "";
+  const bar = ctx.mode === "contest" ? `<div class="contest-bar"><span id="contest-timer" class="contest-timer" role="timer">${icon("timer")}<b>${leftText(state.contestDeadline)}</b></span><span class="muted">${t("comp.timerNote")}</span></div>` : "";
   box.innerHTML = `${bar}<div class="card task">
     <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${counter}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
@@ -1235,16 +1254,16 @@ function renderTask(task, ctx) {
     ${task.figure ? figureSvg(task.figure) : ""}
     ${input}
     <div id="feedback" class="feedback" aria-live="polite"></div>
-    ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}Preskoči</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}Končaj tekmovanje</button></div>` : ""}
+    ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${t("comp.finish")}</button></div>` : ""}
   </div>`;
   const submit = (value) => checkTask(task, ctx, value);
   if (ctx.mode === "contest") {
     $("#c-skip").addEventListener("click", async () => {
-      if (!confirm("Preskočiš nalogo? Nazaj se ne moreš vrniti, naloga ne prinese točk.")) return;
+      if (!confirm(t("comp.confirmSkip"))) return;
       contestStep(await api(`/api/students/${state.student.id}/tasks/${task.id}/skip`, { method: "POST" }).catch((e) => ({ error: e.message })), ctx);
     });
     $("#c-finish").addEventListener("click", async () => {
-      if (!confirm("Res končaš tekmovanje? Naloge brez odgovora ne prinesejo točk.")) return;
+      if (!confirm(t("comp.confirmFinish"))) return;
       finishContest(ctx.sessionId);
     });
   }
@@ -1267,19 +1286,19 @@ function renderTask(task, ctx) {
 }
 
 // Rešitev z izpisanimi podatki iz besedila (Podatki / Iščemo) in formulo, skrito za gumbom.
-function workedBlock(task, solution, label = "Rešitev") {
+function workedBlock(task, solution, label = t("task.solution")) {
   const d = task.data;
   const tex = (t) => renderMath(String(t), false);
   const dataHtml =
     d && Array.isArray(d.given) && d.given.length
       ? `<div class="task-data">
-          <div class="data-col"><span class="sol-label">Podatki</span><div class="data-list">${d.given.map((x) => `<div>${tex(x)}</div>`).join("")}</div></div>
-          ${Array.isArray(d.find) && d.find.length ? `<div class="data-col"><span class="sol-label">Iščemo</span><div class="data-list">${d.find.map((x) => `<div>${tex(`${x} = \\,?`)}</div>`).join("")}</div></div>` : ""}
+          <div class="data-col"><span class="sol-label">${t("task.given")}</span><div class="data-list">${d.given.map((x) => `<div>${tex(x)}</div>`).join("")}</div></div>
+          ${Array.isArray(d.find) && d.find.length ? `<div class="data-col"><span class="sol-label">${t("task.find")}</span><div class="data-list">${d.find.map((x) => `<div>${tex(`${x} = \\,?`)}</div>`).join("")}</div></div>` : ""}
         </div>`
       : "";
   const formulas = task.formula ? (Array.isArray(task.formula) ? task.formula : [task.formula]) : [];
   const formulaHtml = formulas.length
-    ? `<details class="formula"><summary>${icon("eye")}Pokaži formulo</summary><div class="formula-body">${formulas.map((f) => `<div>${tex(f)}</div>`).join("")}</div></details>`
+    ? `<details class="formula"><summary>${icon("eye")}${t("task.showFormula")}</summary><div class="formula-body">${formulas.map((f) => `<div>${tex(f)}</div>`).join("")}</div></details>`
     : "";
   return `<div class="solution">${dataHtml}${formulaHtml}<span class="sol-label">${label}</span>${renderRich(solution)}</div>`;
 }
@@ -1288,44 +1307,44 @@ async function checkTask(task, ctx, value) {
   const fb = $("#feedback");
   let r;
   try {
-    fb.innerHTML = `<div class="fb info">Preverjam …</div>`;
+    fb.innerHTML = `<div class="fb info">${t("task.checking")}</div>`;
     r = await api(`/api/students/${state.student.id}/tasks/${task.id}/answer`, { method: "POST", body: { answer: value } });
   } catch (err) {
     // Napaka pri povezavi: učenec jo vidi, namesto da se ne zgodi nič.
-    fb.innerHTML = `<div class="fb bad">${icon("circle-x")}<span>Odgovora nisem mogel preveriti (${escapeHtml(err.message)}). Preveri povezavo in poskusi znova.</span></div>`;
+    fb.innerHTML = `<div class="fb bad">${icon("circle-x")}<span>${t("task.checkError", { msg: escapeHtml(err.message) })}</span></div>`;
     return;
   }
-  const next = (label = "Naslednja naloga") => `<div class="actions"><button class="primary big" id="fb-next">${label}${icon("arrow-right")}</button></div>`;
+  const next = (label = t("task.next")) => `<div class="actions"><button class="primary big" id="fb-next">${label}${icon("arrow-right")}</button></div>`;
   let html = "";
   if (ctx.mode === "contest" && !r.retry) return contestStep(r, ctx);
   if (r.retry) {
     html = `<div class="fb info">${escapeHtml(r.message)}</div>`;
   } else if (ctx.mode === "placement") {
-    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? "Pravilno" : "Ni pravilno"}</span></div>${r.message ? `<div class="fb info">${icon("info")}<span>${escapeHtml(r.message)}</span></div>` : ""}`;
+    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? t("task.correct") : t("task.wrong")}</span></div>${r.message ? `<div class="fb info">${icon("info")}<span>${escapeHtml(r.message)}</span></div>` : ""}`;
     if (r.placement) {
       const p = r.placement;
-      html += `<div class="card result ${p.passed ? "celebrate" : ""}">${p.passed ? `<div class="result-icon">${icon("award")}</div>` : ""}<h2>${p.passed ? "Sklop je odklenjen in osvojen!" : "Še ne čisto."}</h2>
-        <p>Pravilno: ${p.correct}/${p.total}.${p.passed ? ` +${p.xp.gained} XP` : " Sklop je odklenjen za učenje; začni pri prvi temi."}</p>
-        <button class="primary big" id="fb-back">Na učno pot</button></div>`;
+      html += `<div class="card result ${p.passed ? "celebrate" : ""}">${p.passed ? `<div class="result-icon">${icon("award")}</div>` : ""}<h2>${p.passed ? t("placement.passed") : t("placement.notYet")}</h2>
+        <p>${t("placement.score", { correct: p.correct, total: p.total })}${p.passed ? ` +${p.xp.gained} XP` : t("placement.unlocked")}</p>
+        <button class="primary big" id="fb-back">${t("result.toPath")}</button></div>`;
     } else html += next();
   } else if (r.correct) {
-    html = `<div class="fb ok pop">${icon("circle-check")}<span><b>Pravilno!</b>${r.levelUp ? " Naslednje naloge bodo malo težje." : ""}</span><span class="xp-gain">+${r.xp.gained} XP</span></div>
-      ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>Tema je osvojena! Jutri te povabim k ponovitvi.</span></div>` : ""}
-      ${workedBlock(task, r.solution, "Rešitev")}
+    html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">+${r.xp.gained} XP</span></div>
+      ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>${t("task.mastered")}</span></div>` : ""}
+      ${workedBlock(task, r.solution)}
       ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}`;
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next();
     refreshXp();
   } else {
     html = `<div class="fb bad shake">${icon("circle-x")}<span>${escapeHtml(r.message)}</span></div>
-      ${r.levelDown ? `<div class="muted">Naslednje naloge bodo malo lažje, da utrdiš osnove.</div>` : ""}
-      ${r.hint ? `<div class="fb hint">${icon("lightbulb")}<div><b>Namig:</b> ${renderRich(r.hint)}</div></div>` : ""}`;
+      ${r.levelDown ? `<div class="muted">${t("task.easier")}</div>` : ""}
+      ${r.hint ? `<div class="fb hint">${icon("lightbulb")}<div><b>${t("task.hint")}</b> ${renderRich(r.hint)}</div></div>` : ""}`;
     if (r.solution) {
-      html += workedBlock(task, r.solution, "Rešen zgled");
-      html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" ? "Poskusi podobno nalogo" : "Naslednja naloga");
+      html += workedBlock(task, r.solution, t("task.example"));
+      html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" ? t("task.similar") : t("task.next"));
     } else {
-      html += `<div class="actions"><button id="fb-retry" class="primary big">Poskusi znova</button>
-        <button id="fb-help" class="secondary">${icon("message-circle")}Vprašaj inštruktorja</button></div>
-        <p class="muted small-note">Še ${r.attemptsLeft} ${r.attemptsLeft === 1 ? "poskus" : "poskusa"}, nato pokažem rešen zgled.</p>`;
+      html += `<div class="actions"><button id="fb-retry" class="primary big">${t("task.retry")}</button>
+        <button id="fb-help" class="secondary">${icon("message-circle")}${t("task.askTutor")}</button></div>
+        <p class="muted small-note">${t("task.attemptsLeft", { n: r.attemptsLeft })}</p>`;
     }
   }
   fb.innerHTML = html;
@@ -1360,7 +1379,7 @@ async function checkTask(task, ctx, value) {
 
 // ---------- tekmovanja ----------
 
-const SCHOOL_NAMES = { OS: "Osnovna šola", SS: "Srednja šola" };
+const SCHOOL_NAMES = { OS: t("comp.os"), SS: t("comp.ss") };
 
 async function loadCompetition(key = state.compKey) {
   const box = $("#competition-content");
@@ -1369,11 +1388,11 @@ async function loadCompetition(key = state.compKey) {
   try {
     c = await api(`/api/students/${state.student.id}/competition${q}`);
   } catch (err) {
-    box.innerHTML = `<p class="muted">Tekmovanj nisem mogel naložiti (${escapeHtml(err.message)}).</p>`;
+    box.innerHTML = `<p class="muted">${t("comp.loadError", { msg: escapeHtml(err.message) })}</p>`;
     return;
   }
   if (!c.key) {
-    box.innerHTML = `<h1>Tekmovanja</h1><p class="muted">${escapeHtml(c.message)}</p>`;
+    box.innerHTML = `<h1>${t("comp.title")}</h1><p class="muted">${escapeHtml(c.message)}</p>`;
     return;
   }
   state.compKey = c.key;
@@ -1381,46 +1400,46 @@ async function loadCompetition(key = state.compKey) {
     `<div class="seg" role="group">${items.map(([v, label]) => `<button type="button" class="${v === cur ? "active" : ""}" aria-pressed="${v === cur}" ${attr}="${v}">${label}</button>`).join("")}</div>`;
   const left = c.openContest ? Math.max(1, Math.ceil((c.openContest.deadline - Date.now()) / 60000)) : 0;
   const hist = c.history.length
-    ? `<ul class="contest-history">${c.history.map((h) => `<li><span>${escapeHtml(h.date.split("-").reverse().map(Number).join(". "))}</span><b>${h.points} / ${h.maxPoints}</b><span class="bar"><i style="width:${Math.round((h.points / h.maxPoints) * 100)}%"></i></span></li>`).join("")}</ul>`
-    : `<p class="muted small-note">Rezultati tvojih poskusnih tekmovanj se bodo pokazali tukaj.</p>`;
+    ? `<ul class="contest-history">${c.history.map((h) => `<li><span>${escapeHtml(new Date(h.date).toLocaleDateString(locale()))}</span><b>${h.points} / ${h.maxPoints}</b><span class="bar"><i style="width:${Math.round((h.points / h.maxPoints) * 100)}%"></i></span></li>`).join("")}</ul>`
+    : `<p class="muted small-note">${t("comp.historyEmpty")}</p>`;
   const learning = c.units.flatMap((u) => u.topics).filter((t) => t.status !== "new").length;
   box.innerHTML = `
-    <h1>Tekmovanja</h1>
+    <h1>${t("comp.title")}</h1>
     <div class="comp-pickers">
       ${seg(["MAT", "FIZ", "KEM"].map((k) => [k, SUBJECT_NAMES[k] || k]), c.subject, "data-comp-subject")}
       ${seg(Object.entries(SCHOOL_NAMES), c.school, "data-comp-school")}
     </div>
-    <p class="muted comp-intro">Samo težje naloge v slogu tekmovanj: <b>${c.competitions.map(escapeHtml).join(", ")}</b>. Naloge sestavi aplikacija po zgledu tekmovalnih nalog, zato niso kopije preteklih tekmovanj.</p>
+    <p class="muted comp-intro">${t("comp.intro", { list: c.competitions.map(escapeHtml).join(", ") })}</p>
     <div class="card xp-card comp-hero">
       <div class="hero">
         <div class="hero-icon">${icon("medal")}</div>
-        <div class="hero-text"><h2>Tekmovalni trening</h2><p>Deset prepletenih nalog iz vseh tem, z namigi in rešitvami.</p></div>
-        <button class="primary big" data-comp-train>Začni</button>
+        <div class="hero-text"><h2>${t("session.tek")}</h2><p>${t("comp.trainText")}</p></div>
+        <button class="primary big" data-comp-train>${t("common.start")}</button>
       </div>
     </div>
     <section class="card contest-card">
       <div class="contest-head">
         <span class="session-icon">${icon("timer")}</span>
-        <div><h2>Poskusno tekmovanje</h2>
-          <p class="muted">${c.contest.tasks} nalog, ${c.contest.minutes} minut, en poskus na nalogo in brez namigov. Točke 3, 4 ali 5 glede na težavnost (največ ${c.contest.maxPoints}).</p></div>
+        <div><h2>${t("session.contest")}</h2>
+          <p class="muted">${t("comp.contestText", { tasks: c.contest.tasks, minutes: c.contest.minutes, max: c.contest.maxPoints })}</p></div>
       </div>
-      <button class="primary" data-comp-contest>${c.openContest ? `Nadaljuj (še ${left} min)` : "Začni tekmovanje"}</button>
-      <span class="field-label">Zadnji rezultati</span>
+      <button class="primary" data-comp-contest>${c.openContest ? t("comp.continue", { n: left }) : t("comp.startContest")}</button>
+      <span class="field-label">${t("comp.lastResults")}</span>
       ${hist}
     </section>
-    <h2 class="comp-topics-title">Teme</h2>
-    <p class="muted small-note">${learning ? "Tvoje teme in težavnost se shranjujejo kot pri učni poti." : "Izberi temo in vadi samo njo. Sklopi niso zaklenjeni, začneš lahko kjerkoli."}</p>
+    <h2 class="comp-topics-title">${t("comp.topics")}</h2>
+    <p class="muted small-note">${learning ? t("comp.topicsSaved") : t("comp.topicsFree")}</p>
     ${c.units
       .map(
         (u, ui) => `<section class="unit card">
         <div class="unit-head"><div class="ring" style="--p:${Math.round(u.progress * 100)}"><span>${Math.round(u.progress * 100)}%</span></div>
-          <div class="unit-title"><span class="eyebrow">Sklop ${ui + 1}</span><h2>${escapeHtml(u.title)}</h2></div></div>
+          <div class="unit-title"><span class="eyebrow">${t("unit.label", { n: ui + 1 })}</span><h2>${escapeHtml(u.title)}</h2></div></div>
         <ol class="path">${u.topics
-          .map((t) => {
-            const st = t.due ? "due" : t.status;
-            const sub = NODE[st][1] + (t.practice && t.status === "learning" ? ` · ${COMP_LEVEL_NAMES[t.level]}` : "");
-            return `<li><button class="node ${st}" data-open="${t.id}"><span class="node-dot">${icon(NODE[st][0])}</span>
-              <span class="node-text"><span class="node-name">${escapeHtml(t.name)}</span><span class="node-sub">${sub}</span></span></button></li>`;
+          .map((tp) => {
+            const st = tp.due ? "due" : tp.status;
+            const sub = NODE[st][1] + (tp.practice && tp.status === "learning" ? ` · ${COMP_LEVEL_NAMES[tp.level]}` : "");
+            return `<li><button class="node ${st}" data-open="${tp.id}"><span class="node-dot">${icon(NODE[st][0])}</span>
+              <span class="node-text"><span class="node-name">${escapeHtml(tp.name)}</span><span class="node-sub">${sub}</span></span></button></li>`;
           })
           .join("")}</ol></section>`,
       )
@@ -1450,7 +1469,7 @@ function contestStep(r, ctx) {
   if (r.contest) return showContestResult(r.contest, r.timeUp);
   const n = r.next;
   if (n && !n.finished) {
-    toast(r.skipped ? "Naloga preskočena." : "Odgovor je shranjen.", r.skipped ? "skip-forward" : "check");
+    toast(r.skipped ? t("comp.skipped") : t("comp.saved"), r.skipped ? "skip-forward" : "check");
     renderTask(n.task, { mode: "contest", index: n.index, total: n.total, sessionId: n.sessionId });
     $("#practice").scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -1495,20 +1514,20 @@ function showContestResult(c, timeUp = false) {
   stopContestTimer();
   closePad();
   const yours = (it) => {
-    if (it.yourAnswer == null) return "brez odgovora";
+    if (it.yourAnswer == null) return t("comp.noAnswer");
     if (it.task?.answerType === "choice") return it.task.options?.[Number(it.yourAnswer)] ?? it.yourAnswer;
     return it.yourAnswer;
   };
   const pct = c.maxPoints ? Math.round((c.points / c.maxPoints) * 100) : 0;
   $("#practice").innerHTML = `<div class="card result ${pct >= 50 ? "celebrate" : ""}">
       <div class="result-icon">${icon("medal")}</div>
-      ${timeUp ? `<p class="muted">Čas je potekel.</p>` : ""}
-      <h2>${c.points} od ${c.maxPoints} točk</h2>
-      <p>Pravilno: <b>${c.correct} od ${c.total}</b> · čas: ${c.minutes} min${c.xp ? ` · +${c.xp.gained} XP` : ""}</p>
-      <p class="muted">${pct >= 75 ? "Odlično, to je raven za priznanje." : pct >= 50 ? "Dobro! Poglej rešitve nalog, ki ti niso uspele." : "Tekmovalne naloge so težke. Preglej rešitve in vadi teme, ki so ti delale težave."}</p>
-      <button class="primary big" id="fb-back">Nazaj na tekmovanja</button>
+      ${timeUp ? `<p class="muted">${t("comp.timeUp")}</p>` : ""}
+      <h2>${t("comp.score", { points: c.points, max: c.maxPoints })}</h2>
+      <p>${t("comp.summary", { correct: c.correct, total: c.total, minutes: c.minutes })}${c.xp ? ` · +${c.xp.gained} XP` : ""}</p>
+      <p class="muted">${pct >= 75 ? t("comp.great") : pct >= 50 ? t("comp.good") : t("comp.hard")}</p>
+      <button class="primary big" id="fb-back">${t("result.toCompetitions")}</button>
     </div>
-    <h2 class="comp-topics-title">Pregled nalog</h2>
+    <h2 class="comp-topics-title">${t("comp.review")}</h2>
     ${c.items
       .map((it, i) => {
         const st = it.correct ? "ok" : it.yourAnswer == null ? "skip" : "bad";
@@ -1519,9 +1538,9 @@ function showContestResult(c, timeUp = false) {
           it.task
             ? `<div class="task-text">${renderRich(it.task.text)}</div>
           ${it.task.answerType === "choice" ? `<div class="choices static">${it.task.options.map((o, k) => `<div class="choice ${String(k) === String(it.yourAnswer) ? "picked" : ""} ${k === it.task.correctIndex ? "right" : ""}">${it.task.optionsTex ? renderMath(o, false) : escapeHtml(o)}</div>`).join("")}</div>` : ""}
-          <p><b>Tvoj odgovor:</b> ${it.task.optionsTex && it.yourAnswer != null && it.task.answerType === "choice" ? renderMath(yours(it), false) : escapeHtml(yours(it))}</p>
-          ${workedBlock(it.task, it.task.solution, "Rešitev")}`
-            : `<p class="muted">Do te naloge nisi prišel.</p>`
+          <p><b>${t("comp.yourAnswer")}</b> ${it.task.optionsTex && it.yourAnswer != null && it.task.answerType === "choice" ? renderMath(yours(it), false) : escapeHtml(yours(it))}</p>
+          ${workedBlock(it.task, it.task.solution)}`
+            : `<p class="muted">${t("comp.notReached")}</p>`
         }
       </details>`;
       })
@@ -1534,10 +1553,10 @@ function showContestResult(c, timeUp = false) {
 
 async function loadUsage() {
   const u = await api("/api/usage");
-  $("#usage").innerHTML = `<p>Skupaj: <b>${u.month_usd.toFixed(2)} $</b>${u.budget_usd ? ` od ${u.budget_usd} $ proračuna` : ""}${
-    u.daily_questions ? ` · omejitev ${u.daily_questions} vprašanj na dan` : ""
+  $("#usage").innerHTML = `<p>${t("usage.total", { usd: u.month_usd.toFixed(2) })}${u.budget_usd ? t("usage.budget", { budget: u.budget_usd }) : ""}${
+    u.daily_questions ? t("usage.limit", { n: u.daily_questions }) : ""
   }</p>
-  <table class="table"><thead><tr><th>Učenec</th><th>Klici</th><th>Žetoni (vhod / izhod / predpomnilnik)</th><th>Strošek</th></tr></thead><tbody>
+  <table class="table"><thead><tr><th>${t("usage.student")}</th><th>${t("usage.calls")}</th><th>${t("usage.tokens")}</th><th>${t("usage.cost")}</th></tr></thead><tbody>
   ${u.students
     .map((s) => `<tr><td>${escapeHtml(s.name)}</td><td>${s.calls}</td><td>${s.input_tokens} / ${s.output_tokens} / ${s.cache_read_tokens}</td><td>${s.cost_usd.toFixed(3)} $</td></tr>`)
     .join("")}</tbody></table>`;
@@ -1546,11 +1565,11 @@ async function loadUsage() {
 // ---------- uvodni ogled ----------
 
 const TOUR = [
-  { sel: "#xp-card", title: "Današnji trening", text: "Vsak dan približno 15 minut. Aplikacija sama zmeša novo snov in ponavljanje." },
-  { sel: "#path-content .unit", title: "Učna pot", text: "Teme si sledijo po učnem načrtu. Naslednji sklop se odklene, ko osvojiš prejšnjega. Tapni temo, da začneš." },
-  { sel: "#modebar", title: "Načini učenja", text: "Tu kadar koli preklopiš med novo snovjo, ponavljanjem in pripravo na test. Napredek se ohrani." },
-  { sel: '#tabbar [data-view="me"]', title: "Jaz", text: "Tu so tvoj napredek, lige in nastavitve, tudi videz in barve aplikacije." },
-  { sel: '.tab[data-view="chat"]', title: "Inštruktor", text: "Ko se zatakneš, vprašaj inštruktorja. Vodi te po korakih, rezultata pa ti ne pove kar tako." },
+  { sel: "#xp-card", title: t("daily.title"), text: t("tour.dailyText") },
+  { sel: "#path-content .unit", title: t("nav.path"), text: t("tour.pathText") },
+  { sel: "#modebar", title: t("tour.modes"), text: t("tour.modesText") },
+  { sel: '#tabbar [data-view="me"]', title: t("nav.me"), text: t("tour.meText") },
+  { sel: '.tab[data-view="chat"]', title: t("nav.chat"), text: t("tour.chatText") },
 ];
 const TOUR_KEY = "stemmind.tour";
 
@@ -1577,7 +1596,7 @@ function startTour() {
     box.querySelector(".tour-step").textContent = `${i + 1} / ${TOUR.length}`;
     box.querySelector("#tour-title").textContent = step.title;
     box.querySelector(".tour-text").textContent = step.text;
-    box.querySelector('[data-tour="next"]').textContent = i === TOUR.length - 1 ? "Začniva" : "Naprej";
+    box.querySelector('[data-tour="next"]').textContent = i === TOUR.length - 1 ? t("tour.start") : t("tour.next");
   };
   const end = () => {
     box.hidden = true;

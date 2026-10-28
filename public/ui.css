@@ -8,7 +8,7 @@
   display: flex !important; align-items: center; justify-content: space-between; gap: 10px;
   width: 100%; min-width: 0; min-height: 44px; padding: 9px 12px 9px 14px !important;
   border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: var(--surface);
-  color: var(--text); font-weight: 700; text-align: left; cursor: pointer;
+  color: var(--text); font-weight: 700; text-align: start; cursor: pointer;
   transition: border-color 0.15s, box-shadow 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
@@ -42,6 +42,11 @@
   padding: 10px 12px 4px; font-size: 0.74rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
 }
 .dd-group:not(:first-child) { margin-top: 4px; border-top: 1px solid var(--border); padding-top: 12px; }
+.dd-opt[hidden], .dd-group[hidden] { display: none; }
+/* Iskalnik v dolgem seznamu (npr. jeziki) ostane na vrhu med pomikanjem. */
+.dd-search { position: sticky; top: -6px; z-index: 1; margin: -6px -6px 4px; padding: 8px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.dd-search input { width: 100%; min-height: 40px; }
+.dd-search + .dd-group { border-top: 0; margin-top: 0; }
 
 /* Meni čez celo širino (učna pot, obrazci) */
 .path-head .dd, .form label .dd, .form .dd { display: flex; width: 100%; }
@@ -224,3 +229,11 @@ body.pad-open #session-side { display: none !important; }
   body.pad-open .session-grid:has(> aside:not([hidden])) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 24px; align-items: start; }
   body.pad-open #view-topic > #topic-content:has(.session-grid > aside:not([hidden])) { max-width: 1300px; }
 }
+
+/* ---------- izbira jezika (language.js) ---------- */
+.lang-field { display: flex; flex-direction: column; gap: 6px; font-weight: 700; }
+.lang-field .dd { display: flex; width: 100%; }
+.lang-field .dd-btn { background: var(--bg); }
+.lang-field .i { width: 18px; height: 18px; vertical-align: -3px; }
+.onb-lang { margin: 4px 0 2px; }
+.lang-ui-note { margin: 6px 0 0; }

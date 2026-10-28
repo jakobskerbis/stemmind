@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { cleanText } from "./settings.js";
 import { studyProgramPrompt } from "./curriculum.js";
+import { langInfo } from "../public/i18n/languages.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const TEMPLATE_PATH = process.env.STEMMIND_PROMPT_PATH || path.join(here, "..", "prompts", "system_prompt.md");
@@ -29,6 +30,7 @@ const PLACEHOLDERS = [
   "personality_setting",
   "weaknesses",
   "learning_path",
+  "language",
 ];
 
 // settings: normalizirane nastavitve; weaknesses: seznam nizov.
@@ -40,6 +42,7 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     student_name: cleanText(studentName, 40) || "(ni podano)",
     personality_setting: settings.personality_setting || "nevtralna",
     weaknesses: weaknesses.length ? weaknesses.join(", ") : "(še ni podatkov)",
+    language: languagePrompt(settings.language),
   };
   // Zamenjamo samo znana imena, da LaTeX zapisi kot {,} ostanejo nedotaknjeni.
   return template.replace(/\{(\w+)\}/g, (match, key) =>
@@ -59,4 +62,11 @@ export function systemBlocks(prompt, { cacheStatic = true } = {}) {
   if (cacheStatic) blocks[0].cache_control = { type: "ephemeral" };
   if (dynamicPart) blocks.push({ type: "text", text: dynamicPart });
   return blocks;
+}
+
+// Jezik pogovora za prompt, npr. »slovenščina (sl)« ali »German – Deutsch (de)«.
+export function languagePrompt(code) {
+  const l = langInfo(code || "sl");
+  if (l.code === "sl") return "slovenščina (sl)";
+  return `${l.english} – ${l.native} (${l.code})`;
 }

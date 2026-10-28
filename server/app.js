@@ -30,6 +30,8 @@ function cacheKey(text, settings, deep) {
   const norm = text.toLowerCase().replace(/\s+/g, " ").replace(/[\s.!?]+$/, "").trim();
   if (norm.length < 8) return null;
   const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, deep ? 1 : 0];
+  // Jezik dodamo samo, kadar ni slovenščina, da obstoječi shranjeni odgovori ostanejo veljavni.
+  if (settings.language && settings.language !== "sl") parts.push(settings.language);
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
 

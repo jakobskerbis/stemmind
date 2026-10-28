@@ -18,33 +18,33 @@
 </head>
 <body>
   <header class="topbar">
-    <button type="button" class="brand" data-view="path" aria-label="STEMMind – na učno pot">
+    <button type="button" class="brand" data-view="path" aria-label="STEMMind – na učno pot" data-i18n-aria="nav.home">
       <span class="logo" aria-hidden="true"><i data-icon="graduation-cap"></i></span>
       <span class="brand-name">STEM<span>Mind</span></span>
     </button>
     <nav class="tabs" role="tablist">
-      <button class="tab active" data-view="path"><i data-icon="map"></i><span>Učna pot</span></button>
-      <button class="tab" data-view="textbook"><i data-icon="book-open"></i><span>Učbenik</span></button>
-      <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span>Inštruktor</span></button>
-      <button class="tab" data-view="competition" id="competition-tab"><i data-icon="medal"></i><span>Tekmovanja</span></button>
-      <button class="tab" data-view="progress"><i data-icon="chart-column"></i><span>Napredek</span></button>
-      <button class="tab" data-view="settings"><i data-icon="settings"></i><span>Nastavitve</span></button>
-      <button class="tab" data-view="account" id="account-tab" hidden><i data-icon="user"></i><span>Račun</span></button>
-      <button class="tab" data-view="league"><i data-icon="trophy"></i><span>Lige</span></button>
+      <button class="tab active" data-view="path"><i data-icon="map"></i><span data-i18n="nav.path">Učna pot</span></button>
+      <button class="tab" data-view="textbook"><i data-icon="book-open"></i><span data-i18n="nav.textbook">Učbenik</span></button>
+      <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span data-i18n="nav.chat">Inštruktor</span></button>
+      <button class="tab" data-view="competition" id="competition-tab"><i data-icon="medal"></i><span data-i18n="nav.competition">Tekmovanja</span></button>
+      <button class="tab" data-view="progress"><i data-icon="chart-column"></i><span data-i18n="nav.progress">Napredek</span></button>
+      <button class="tab" data-view="settings"><i data-icon="settings"></i><span data-i18n="nav.settings">Nastavitve</span></button>
+      <button class="tab" data-view="account" id="account-tab" hidden><i data-icon="user"></i><span data-i18n="nav.account">Račun</span></button>
+      <button class="tab" data-view="league"><i data-icon="trophy"></i><span data-i18n="nav.league">Lige</span></button>
     </nav>
     <div id="xp-badge" class="xp-badge">
-      <span class="stat xp" title="Točke izkušenj (XP)"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span></span>
-      <span class="stat streak" title="Dnevi zapored"><i data-icon="flame"></i><b id="xp-streak">0</b></span>
+      <span class="stat xp" title="Točke izkušenj (XP)" data-i18n-title="xp.title"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span></span>
+      <span class="stat streak" title="Dnevi zapored" data-i18n-title="xp.streakTitle"><i data-icon="flame"></i><b id="xp-streak">0</b></span>
     </div>
     <label class="student-picker">
-      <span class="sr-only">Učenec</span>
+      <span class="sr-only" data-i18n="student.label">Učenec</span>
       <select id="student-select"></select>
     </label>
   </header>
 
   <div id="toast" class="toast" hidden></div>
   <div id="mock-banner" class="banner" hidden>
-    <i data-icon="info"></i><span><b>Preizkusni način.</b> <span class="long">Brez API ključa inštruktor vrača pripravljene odgovore.</span></span>
+    <i data-icon="info"></i><span><b data-i18n="mock.title">Preizkusni način.</b> <span class="long" data-i18n="mock.text">Brez API ključa inštruktor vrača pripravljene odgovore.</span></span>
   </div>
 
   <!-- PRIJAVA STARŠEV IN RAČUN (account.js) -->
@@ -56,16 +56,17 @@
   <main id="view-path" class="view narrow">
     <div class="path-side">
     <div class="path-head">
-      <label class="field-label" for="path-select">Učna pot</label>
+      <label class="field-label" for="path-select" data-i18n="path.label">Učna pot</label>
       <select id="path-select"></select>
     </div>
     <p id="path-note" class="muted path-note" hidden></p>
+    <p id="lang-note" class="muted path-note" hidden data-i18n="path.curriculumNote"></p>
     <div id="level-card" class="level-slot" hidden></div>
     <div id="xp-card" class="card xp-card"></div>
-    <nav id="modebar" class="modes" aria-label="Način učenja">
-      <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span class="m-name">Nova snov</span><span class="m-sub">Nadaljuj, kjer si ostal</span></button>
-      <button type="button" data-mode="review"><span class="ic"><i data-icon="repeat"></i><b class="badge" hidden></b></span><span class="m-name">Ponavljanje</span><span class="m-sub">Da znanje ne zbledi</span></button>
-      <button type="button" data-mode="test"><span class="ic"><i data-icon="clipboard-check"></i></span><span class="m-name">Priprava na test</span><span class="m-sub">Izberi snov in datum</span></button>
+    <nav id="modebar" class="modes" aria-label="Način učenja" data-i18n-aria="path.modes">
+      <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span class="m-name" data-i18n="mode.new">Nova snov</span><span class="m-sub" data-i18n="mode.newSub">Nadaljuj, kjer si ostal</span></button>
+      <button type="button" data-mode="review"><span class="ic"><i data-icon="repeat"></i><b class="badge" hidden></b></span><span class="m-name" data-i18n="mode.review">Ponavljanje</span><span class="m-sub" data-i18n="mode.reviewSub">Da znanje ne zbledi</span></button>
+      <button type="button" data-mode="test"><span class="ic"><i data-icon="clipboard-check"></i></span><span class="m-name" data-i18n="mode.test">Priprava na test</span><span class="m-sub" data-i18n="mode.testSub">Izberi snov in datum</span></button>
     </nav>
     </div>
     <div id="path-content"></div>
@@ -73,13 +74,13 @@
 
   <!-- TEMA / VADNICA -->
   <main id="view-topic" class="view narrow" hidden>
-    <button id="back-to-path" type="button" class="ghost back"><i data-icon="arrow-left"></i>Učna pot</button>
+    <button id="back-to-path" type="button" class="ghost back"><i data-icon="arrow-left"></i><span data-i18n="topic.backPath">Učna pot</span></button>
     <div id="topic-content"></div>
   </main>
 
   <!-- TEKMOVANJA -->
   <main id="view-competition" class="view narrow" hidden>
-    <div id="competition-content"><p class="muted">Nalagam …</p></div>
+    <div id="competition-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
   </main>
 
   <!-- UČBENIK (textbook.js) -->
@@ -88,13 +89,13 @@
   <!-- KLEPET -->
   <main id="view-chat" class="view chat-view" hidden>
     <aside class="sidebar">
-      <button id="new-chat" class="primary"><i data-icon="plus"></i>Nov pogovor</button>
+      <button id="new-chat" class="primary"><i data-icon="plus"></i><span data-i18n="chat.new">Nov pogovor</span></button>
       <ul id="conversation-list"></ul>
     </aside>
     <section class="chat">
       <div class="chat-head">
-        <button id="toggle-sidebar" class="mobile-only icon-only" type="button" aria-label="Pogovori"><i data-icon="menu"></i></button>
-        <h1 id="chat-title">Nov pogovor</h1>
+        <button id="toggle-sidebar" class="mobile-only icon-only" type="button" aria-label="Pogovori" data-i18n-aria="chat.list"><i data-icon="menu"></i></button>
+        <h1 id="chat-title" data-i18n="chat.new">Nov pogovor</h1>
         <div id="chat-state" class="chips"></div>
       </div>
       <div id="messages" class="messages" aria-live="polite">
@@ -102,118 +103,119 @@
       </div>
       <form id="composer" class="composer">
         <div id="image-preview" class="image-preview" hidden>
-          <img alt="Predogled fotografije">
-          <button type="button" id="remove-image" aria-label="Odstrani sliko">×</button>
+          <img alt="Predogled fotografije" data-i18n-alt="chat.photoPreview">
+          <button type="button" id="remove-image" aria-label="Odstrani sliko" data-i18n-aria="chat.removeImage">×</button>
         </div>
         <div id="sym-panel" class="sym-panel" hidden aria-label="Simboli"></div>
         <div class="composer-row">
-          <label class="icon-btn" title="Fotografiraj nalogo" aria-label="Fotografiraj nalogo">
+          <label class="icon-btn" title="Fotografiraj nalogo" aria-label="Fotografiraj nalogo" data-i18n-title="chat.photo" data-i18n-aria="chat.photo">
             <i data-icon="camera"></i><input id="image-input" type="file" accept="image/*" capture="environment" hidden>
           </label>
-          <button type="button" id="sym-btn" class="icon-btn" title="Simboli: √, π, ∫, H₂O …" aria-label="Simboli" aria-pressed="false"><i data-icon="sigma"></i></button>
-          <textarea id="input" rows="1" placeholder="Napiši nalogo ali vprašanje …"></textarea>
-          <button type="button" id="mic-btn" class="icon-btn mic-btn" title="Povej vprašanje" aria-label="Povej vprašanje" aria-pressed="false"><i data-icon="mic"></i></button>
-          <button id="send" class="primary send" type="submit" aria-label="Pošlji"><i data-icon="send"></i><span>Pošlji</span></button>
+          <button type="button" id="sym-btn" class="icon-btn" title="Simboli: √, π, ∫, H₂O …" aria-label="Simboli" aria-pressed="false" data-i18n-title="chat.symbolsTitle" data-i18n-aria="chat.symbols"><i data-icon="sigma"></i></button>
+          <textarea id="input" rows="1" placeholder="Napiši nalogo ali vprašanje …" data-i18n-ph="chat.placeholder"></textarea>
+          <button type="button" id="mic-btn" class="icon-btn mic-btn" title="Povej vprašanje" aria-label="Povej vprašanje" aria-pressed="false" data-i18n-title="chat.mic" data-i18n-aria="chat.mic"><i data-icon="mic"></i></button>
+          <button id="send" class="primary send" type="submit" aria-label="Pošlji" data-i18n-aria="chat.send"><i data-icon="send"></i><span data-i18n="chat.send">Pošlji</span></button>
         </div>
-        <div class="hint">Nalogo lahko fotografiraš, poveš (mikrofon) ali napišeš s simboli (Σ). Lahko napišeš tudi »zdaj kemija«.</div>
+        <div class="hint" data-i18n="chat.hint">Nalogo lahko fotografiraš, poveš (mikrofon) ali napišeš s simboli (Σ). Lahko napišeš tudi »zdaj kemija«.</div>
       </form>
     </section>
   </main>
 
   <!-- NASTAVITVE -->
   <main id="view-settings" class="view narrow" hidden>
-    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i>Jaz</button>
-    <h1>Nastavitve</h1>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <h1 data-i18n="set.title">Nastavitve</h1>
+    <div id="language-card" class="card"></div>
     <form id="settings-form" class="card form">
-      <label>Ime <input name="name" maxlength="40" required></label>
+      <label><span data-i18n="set.name">Ime</span> <input name="name" maxlength="40" required></label>
       <fieldset class="level-field">
-        <legend>Šola in letnik</legend>
+        <legend data-i18n="set.school">Šola in letnik</legend>
         <div id="settings-level" class="level-picker"></div>
-        <small class="muted">Učna pot, naloge in učbenik se prilagodijo izbiri. Pri fakulteti sledijo javnemu predmetniku programa.</small>
+        <small class="muted" data-i18n="set.schoolNote">Učna pot, naloge in učbenik se prilagodijo izbiri. Pri fakulteti sledijo javnemu predmetniku programa.</small>
         <input type="hidden" name="educational_track">
         <input type="hidden" name="study_program">
         <input type="hidden" name="curriculum_level">
       </fieldset>
-      <label>Predmet
+      <label><span data-i18n="set.subject">Predmet</span>
         <select name="subject">
-          <option value="MAT">Matematika</option>
-          <option value="FIZ">Fizika</option>
-          <option value="KEM">Kemija</option>
+          <option value="MAT" data-i18n="subj.MAT">Matematika</option>
+          <option value="FIZ" data-i18n="subj.FIZ">Fizika</option>
+          <option value="KEM" data-i18n="subj.KEM">Kemija</option>
         </select>
       </label>
-      <label id="track-row">Program
+      <label id="track-row"><span data-i18n="set.program">Program</span>
         <select name="track">
-          <option value="REGULAR">Redni pouk (NPZ / matura)</option>
-          <option value="COMPETITION">Tekmovanja</option>
+          <option value="REGULAR" data-i18n="set.regular">Redni pouk (NPZ / matura)</option>
+          <option value="COMPETITION" data-i18n="set.competition">Tekmovanja</option>
         </select>
       </label>
       <fieldset>
-        <legend>Način</legend>
-        <label class="radio"><input type="radio" name="solving_mode" value="A"> A – vodenje korak za korakom</label>
-        <label class="radio"><input type="radio" name="solving_mode" value="B"> B – celotna rešitev z razlago</label>
+        <legend data-i18n="set.mode">Način</legend>
+        <label class="radio"><input type="radio" name="solving_mode" value="A"> <span data-i18n="set.modeA">A – vodenje korak za korakom</span></label>
+        <label class="radio"><input type="radio" name="solving_mode" value="B"> <span data-i18n="set.modeB">B – celotna rešitev z razlago</span></label>
       </fieldset>
-      <label>Osebnost / tema razlage
-        <input name="personality_setting" maxlength="200" placeholder="npr. strog, šaljiv, primeri iz nogometa">
+      <label><span data-i18n="set.personality">Osebnost / tema razlage</span>
+        <input name="personality_setting" maxlength="200" placeholder="npr. strog, šaljiv, primeri iz nogometa" data-i18n-ph="set.personalityPh">
       </label>
-      <label>Hitrost izpisa odgovorov
+      <label><span data-i18n="set.pace">Hitrost izpisa odgovorov</span>
         <select id="pace-select" name="pace"></select>
-        <small class="muted">Kako hitro se pojavlja besedilo inštruktorja. Dotik sporočila pokaže vse naenkrat.</small>
+        <small class="muted" data-i18n="set.paceNote">Kako hitro se pojavlja besedilo inštruktorja. Dotik sporočila pokaže vse naenkrat.</small>
       </label>
-      <label>Znane šibke točke (ločene z vejico)
-        <input name="manual_weaknesses" placeholder="npr. ulomki, pretvarjanje enot">
+      <label><span data-i18n="set.weak">Znane šibke točke (ločene z vejico)</span>
+        <input name="manual_weaknesses" placeholder="npr. ulomki, pretvarjanje enot" data-i18n-ph="set.weakPh">
       </label>
       <div class="form-actions">
-        <button class="primary" type="submit">Shrani</button>
-        <span id="settings-saved" class="muted" hidden>Shranjeno ✓</span>
+        <button class="primary" type="submit" data-i18n="common.save">Shrani</button>
+        <span id="settings-saved" class="muted" hidden data-i18n="common.saved">Shranjeno ✓</span>
       </div>
     </form>
 
     <div id="appearance" class="card appearance"></div>
 
     <div class="card">
-      <h2>Poraba AI ta mesec</h2>
+      <h2 data-i18n="set.usage">Poraba AI ta mesec</h2>
       <div id="usage"></div>
     </div>
 
     <div class="card">
-      <h2>Pomoč</h2>
-      <p class="muted">Kratek ogled pokaže, kje je kaj v aplikaciji.</p>
-      <button id="tour-again" type="button" class="secondary"><i data-icon="circle-help"></i>Ponovi uvodni ogled</button>
+      <h2 data-i18n="set.help">Pomoč</h2>
+      <p class="muted" data-i18n="set.helpText">Kratek ogled pokaže, kje je kaj v aplikaciji.</p>
+      <button id="tour-again" type="button" class="secondary"><i data-icon="circle-help"></i><span data-i18n="set.tourAgain">Ponovi uvodni ogled</span></button>
     </div>
 
     <div class="card form">
-      <h2>Nov učenec</h2>
+      <h2 data-i18n="set.newStudent">Nov učenec</h2>
       <form id="new-student-form" class="inline">
-        <input name="name" maxlength="40" placeholder="Ime" required>
-        <button type="submit">Dodaj</button>
+        <input name="name" maxlength="40" placeholder="Ime" required data-i18n-ph="set.namePh">
+        <button type="submit" data-i18n="common.add">Dodaj</button>
       </form>
-      <button id="delete-student" class="danger" type="button">Izbriši tega učenca in vse njegove pogovore</button>
+      <button id="delete-student" class="danger" type="button" data-i18n="set.deleteStudent">Izbriši tega učenca in vse njegove pogovore</button>
     </div>
   </main>
 
   <!-- NAPREDEK -->
   <main id="view-progress" class="view narrow" hidden>
-    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i>Jaz</button>
-    <h1>Napredek</h1>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <h1 data-i18n="prog.title">Napredek</h1>
     <div class="card">
-      <h2>Šibke točke</h2>
-      <p class="muted">Samodejno zaznane iz pogovorov (vsaj 3 poteze, vsaj 40 % napak v zadnjih 60 dneh) in ročno vnesene. STEMMind jih upošteva pri razlagi.</p>
+      <h2 data-i18n="prog.weak">Šibke točke</h2>
+      <p class="muted" data-i18n="prog.weakNote">Samodejno zaznane iz pogovorov (vsaj 3 poteze, vsaj 40 % napak v zadnjih 60 dneh) in ročno vnesene. STEMMind jih upošteva pri razlagi.</p>
       <ul id="weak-list" class="pill-list"></ul>
     </div>
     <div class="card">
-      <h2>Aktivnost (30 dni)</h2>
+      <h2 data-i18n="prog.activity">Aktivnost (30 dni)</h2>
       <div id="activity" class="activity"></div>
     </div>
     <div class="card">
-      <h2>Teme</h2>
+      <h2 data-i18n="prog.topics">Teme</h2>
       <table class="table">
-        <thead><tr><th>Predmet</th><th>Tema</th><th>Poteze</th><th>Napake</th></tr></thead>
+        <thead><tr><th data-i18n="prog.subject">Predmet</th><th data-i18n="prog.topic">Tema</th><th data-i18n="prog.turns">Poteze</th><th data-i18n="prog.errors">Napake</th></tr></thead>
         <tbody id="topic-rows"></tbody>
       </table>
     </div>
     <div class="card" id="flags-card">
-      <h2>Opozorila</h2>
-      <p class="muted">Pogovori, kjer je STEMMind zaznal stisko, nevarno prošnjo ali poskus obiti pravila.</p>
+      <h2 data-i18n="prog.flags">Opozorila</h2>
+      <p class="muted" data-i18n="prog.flagsNote">Pogovori, kjer je STEMMind zaznal stisko, nevarno prošnjo ali poskus obiti pravila.</p>
       <ul id="flag-list"></ul>
     </div>
   </main>
@@ -226,30 +228,30 @@
     </div>
     <div class="me-stats">
       <div class="card"><span class="stat-ic xp"><i data-icon="star"></i></span><b id="me-xp">0</b><span>XP</span></div>
-      <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span>dni zapored</span></div>
+      <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span data-i18n="me.streak">dni zapored</span></div>
     </div>
     <div class="card list-card">
-      <button type="button" class="list-row" data-go="progress"><span class="ic"><i data-icon="chart-column"></i></span><span class="lr-text"><b>Napredek</b><small>Šibke točke, aktivnost in teme</small></span><i data-icon="chevron-right"></i></button>
-      <button type="button" class="list-row" data-go="league"><span class="ic"><i data-icon="trophy"></i></span><span class="lr-text"><b>Lige</b><small>Tedenska lestvica, razred in prijatelji</small></span><i data-icon="chevron-right"></i></button>
-      <button type="button" class="list-row" data-go="settings"><span class="ic"><i data-icon="settings"></i></span><span class="lr-text"><b>Nastavitve</b><small>Profil, šola, videz in barve</small></span><i data-icon="chevron-right"></i></button>
-      <button type="button" class="list-row" data-go="account" id="me-account" hidden><span class="ic"><i data-icon="user"></i></span><span class="lr-text"><b>Račun</b><small>Naročnina in otroci</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="progress"><span class="ic"><i data-icon="chart-column"></i></span><span class="lr-text"><b data-i18n="nav.progress">Napredek</b><small data-i18n="me.progressSub">Šibke točke, aktivnost in teme</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="league"><span class="ic"><i data-icon="trophy"></i></span><span class="lr-text"><b data-i18n="nav.league">Lige</b><small data-i18n="me.leagueSub">Tedenska lestvica, razred in prijatelji</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="settings"><span class="ic"><i data-icon="settings"></i></span><span class="lr-text"><b data-i18n="nav.settings">Nastavitve</b><small data-i18n="me.settingsSub">Profil, šola, jezik, videz in barve</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="account" id="me-account" hidden><span class="ic"><i data-icon="user"></i></span><span class="lr-text"><b data-i18n="nav.account">Račun</b><small data-i18n="me.accountSub">Naročnina in otroci</small></span><i data-icon="chevron-right"></i></button>
     </div>
   </main>
 
   <!-- LIGE -->
   <main id="view-league" class="view narrow" hidden>
-    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i>Jaz</button>
-    <h1>Lige</h1>
-    <div id="league-content"><p class="muted">Nalagam …</p></div>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <h1 data-i18n="nav.league">Lige</h1>
+    <div id="league-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
   </main>
 
   <!-- SPODNJA VRSTICA (telefon) -->
-  <nav id="tabbar" class="tabbar" aria-label="Glavni meni">
-    <button class="tab" data-view="path"><i data-icon="map"></i><span>Učna pot</span></button>
-    <button class="tab" data-view="textbook"><i data-icon="book-open"></i><span>Učbenik</span></button>
-    <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span>Inštruktor</span></button>
-    <button class="tab" data-view="competition" id="competition-tab-m"><i data-icon="medal"></i><span>Tekmovanja</span></button>
-    <button class="tab" data-view="me"><i data-icon="user"></i><span>Jaz</span></button>
+  <nav id="tabbar" class="tabbar" aria-label="Glavni meni" data-i18n-aria="nav.main">
+    <button class="tab" data-view="path"><i data-icon="map"></i><span data-i18n="nav.path">Učna pot</span></button>
+    <button class="tab" data-view="textbook"><i data-icon="book-open"></i><span data-i18n="nav.textbook">Učbenik</span></button>
+    <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span data-i18n="nav.chat">Inštruktor</span></button>
+    <button class="tab" data-view="competition" id="competition-tab-m"><i data-icon="medal"></i><span data-i18n="nav.competition">Tekmovanja</span></button>
+    <button class="tab" data-view="me"><i data-icon="user"></i><span data-i18n="nav.me">Jaz</span></button>
   </nav>
 
   <!-- UVODNI OGLED -->
@@ -259,7 +261,7 @@
       <div class="tour-step"></div>
       <h2 id="tour-title"></h2>
       <p class="tour-text"></p>
-      <div class="tour-actions"><button type="button" class="ghost" data-tour="skip">Preskoči</button><button type="button" class="primary" data-tour="next">Naprej</button></div>
+      <div class="tour-actions"><button type="button" class="ghost" data-tour="skip" data-i18n="tour.skip">Preskoči</button><button type="button" class="primary" data-tour="next" data-i18n="tour.next">Naprej</button></div>
     </div>
   </div>
 
