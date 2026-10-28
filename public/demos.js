@@ -57,6 +57,10 @@ function controls(...kids) {
   return h("div", { class: "demo-controls" }, ...kids);
 }
 
+// Izmerjene vrednosti kot kartice (napis zgoraj, vrednost spodaj), na telefonu dve v vrsti.
+function values(list) {
+  return `<div class="demo-values">${list.map(([label, v]) => `<div class="demo-val"><span>${label}</span><b>${v}</b></div>`).join("")}</div>`;
+}
 function readout() {
   return h("div", { class: "demo-readout", "aria-live": "polite" });
 }
@@ -366,8 +370,7 @@ function prostiPad(el) {
       s("line", { x1: 172, y1: Y(y), x2: 172, y2: Y(y) + len, class: "vel" }, svg);
       s("text", { x: 180, y: Y(y) + len / 2, class: "circ-label" }, svg).textContent = `v = ${fmt(v, 1)} m/s`;
     }
-    out.innerHTML = `<table class="demo-table"><tr><th>čas t</th><td>${fmt(tt, 2)} s</td><th>hitrost v = g·t</th><td>${fmt(v, 1)} m/s</td></tr>
-      <tr><th>pot s = ½·g·t²</th><td>${fmt(H - y, 2)} m</td><th>višina</th><td>${fmt(y, 2)} m</td></tr></table>
+    out.innerHTML = `${values([["čas t", `${fmt(tt, 2)} s`], ["pot s = ½·g·t²", `${fmt(H - y, 2)} m`], ["hitrost v = g·t", `${fmt(v, 1)} m/s`], ["višina", `${fmt(y, 2)} m`]])}
       <p>${tex(`t = \\sqrt{\\frac{2h}{g}} = ${fmt(tEnd, 2).replace(",", "{,}")}\\,\\mathrm{s}`)}, hitrost ob padcu ${fmt(g * tEnd, 1)} m/s (${fmt(g * tEnd * 3.6, 0)} km/h).</p>
       <p class="muted">Sence kažejo položaj krogle na vsakih ${fmt(stroke(), 2)} s. Razmiki se večajo, ker krogla vsako sekundo pridobi enako hitrosti. Zračni upor zanemarimo, zato vsa telesa padajo enako hitro, ne glede na maso.</p>`;
   };

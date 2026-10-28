@@ -99,8 +99,13 @@
 .demo-readout ul { padding-left: 1.2em; }
 .demo-eq { font-size: 1.15rem; margin: 6px 0; overflow-x: auto; }
 .demo-try { background: var(--surface-2); border-radius: 10px; padding: 8px 12px; font-size: 0.92rem; }
-.demo-table { border-collapse: collapse; margin: 6px 0; font-variant-numeric: tabular-nums; }
-.demo-table th, .demo-table td { padding: 4px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+.demo-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 10px 0; }
+.demo-val { display: flex; flex-direction: column; gap: 2px; padding: 10px 14px; border-radius: var(--radius-sm); background: var(--surface-2); min-width: 0; }
+.demo-val span { font-size: 0.8rem; font-weight: 700; color: var(--muted); }
+.demo-val b { font-size: 1.2rem; font-weight: 900; font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 520px) { .demo-values { grid-template-columns: 1fr 1fr; } }
+.demo-table { border-collapse: collapse; margin: 8px 0; font-variant-numeric: tabular-nums; display: block; max-width: 100%; overflow-x: auto; }
+.demo-table th, .demo-table td { padding: 8px 14px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
 .demo-table th { color: var(--muted); font-weight: 600; }
 .demo-table.atoms tr.ok td:last-child { color: var(--ok); font-weight: 700; }
 .demo-table.atoms tr.bad td:last-child { color: var(--danger); font-weight: 700; }

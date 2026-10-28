@@ -73,6 +73,9 @@ function showView(name) {
   if (name === "path" || name === "competition") setBack(name);
   if (name !== "topic") stopContestTimer();
   document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("active", t.dataset.view === name));
+  // Na telefonu so Napredek, Lige, Nastavitve in Račun pod zavihkom »Jaz«.
+  if (ME_VIEWS.includes(name)) $('#tabbar [data-view="me"]').classList.add("active");
+  if (name === "me") renderMe();
   document.querySelectorAll(".view").forEach((v) => (v.hidden = v.id !== `view-${name}`));
   if (name === "settings") {
     fillSettingsForm();
@@ -88,6 +91,21 @@ function showView(name) {
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
+
+const ME_VIEWS = ["me", "progress", "league", "settings", "account"];
+function renderMe() {
+  const s = state.student;
+  if (!s) return;
+  $("#me-avatar").textContent = (s.name || "?").trim().charAt(0).toUpperCase();
+  $("#me-name").textContent = s.name;
+  $("#me-level").textContent = $("#path-select").selectedOptions[0]?.textContent.replace(/\s*\(moja raven\)$/, "") || "";
+  $("#me-xp").textContent = $("#xp-total").textContent;
+  $("#me-streak").textContent = $("#xp-streak").textContent;
+  $("#me-account").hidden = $("#account-tab").hidden;
+}
+document.querySelectorAll("#view-me [data-go]").forEach((b) =>
+  b.addEventListener("click", () => (b.dataset.go === "account" ? $("#account-tab").click() : showView(b.dataset.go))),
+);
 
 // ---------- učenci ----------
 
@@ -669,6 +687,7 @@ async function refreshModes() {
   badge.textContent = m.reviewBacklog;
   badge.title = `${m.reviewBacklog} nalog za ponavljanje`;
   const daily = $('#modebar [data-mode="daily"]');
+  if (!daily) return m;
   daily.classList.toggle("done", m.daily.done);
   daily.title = m.daily.done ? "Današnji trening je opravljen" : m.daily.open ? "Nadaljuj današnji trening" : "Približno 15 minut: nova snov in ponavljanje";
   return m;
@@ -872,7 +891,7 @@ document.addEventListener("click", (e) => {
 $("#back-to-path").addEventListener("click", () => showView(state.backTo || "path"));
 // Tekmovanja so za osnovno in srednjo šolo; fakulteta zavihka nima.
 function syncCompetitionTab() {
-  $("#competition-tab").hidden = !state.student || isUni(state.student.settings);
+  $("#competition-tab").hidden = $("#competition-tab-m").hidden = !state.student || isUni(state.student.settings);
 }
 // Gumb »nazaj« na temi oziroma pri seriji nalog vodi tja, od koder je učenec prišel.
 function setBack(view) {
@@ -1417,6 +1436,7 @@ const TOUR = [
   { sel: "#xp-card", title: "Današnji trening", text: "Vsak dan približno 15 minut. Aplikacija sama zmeša novo snov in ponavljanje." },
   { sel: "#path-content .unit", title: "Učna pot", text: "Teme si sledijo po učnem načrtu. Naslednji sklop se odklene, ko osvojiš prejšnjega. Tapni temo, da začneš." },
   { sel: "#modebar", title: "Načini učenja", text: "Tu kadar koli preklopiš med novo snovjo, ponavljanjem in pripravo na test. Napredek se ohrani." },
+  { sel: '#tabbar [data-view="me"]', title: "Jaz", text: "Tu so tvoj napredek, lige in nastavitve, tudi videz in barve aplikacije." },
   { sel: '.tab[data-view="chat"]', title: "Inštruktor", text: "Ko se zatakneš, vprašaj inštruktorja. Vodi te po korakih, rezultata pa ti ne pove kar tako." },
 ];
 const TOUR_KEY = "stemmind.tour";
@@ -1426,7 +1446,7 @@ function startTour() {
   let i = 0;
   const show = () => {
     const step = TOUR[i];
-    const target = document.querySelector(step.sel);
+    const target = [...document.querySelectorAll(step.sel)].find((el) => el.getClientRects().length); // vidni (telefon ali računalnik)
     if (!target) return next();
     target.scrollIntoView({ block: "nearest" });
     const r = target.getBoundingClientRect();
