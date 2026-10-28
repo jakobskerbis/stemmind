@@ -614,3 +614,17 @@ body.pad-open .modebar { display: none; }
 @media (prefers-color-scheme: dark) {
   .hero, .modebar button.hero .ic, .logo { background: linear-gradient(135deg, #1d4ed8, #0e8fc4); }
 }
+
+/* Izbira šole po korakih (level-picker.js) */
+.level-picker { display: grid; gap: 10px; }
+.lp-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.lp-crumbs:empty { display: none; }
+.lp-crumb { border: 1px solid var(--border) !important; background: var(--surface-2) !important; border-radius: 999px !important; padding: 5px 12px !important; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
+.lp-crumb:hover { border-color: var(--accent) !important; }
+.lp-sep { color: var(--muted); }
+.lp-q { margin: 4px 0 0; font-weight: 700; }
+.lp-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.lp-opt { min-height: 48px; font-size: 1rem; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; padding: 8px 12px; gap: 2px; }
+.lp-opt small { font-size: 0.78rem; font-weight: 500; color: var(--muted); line-height: 1.25; }
+.lp-opt.on { border-color: var(--accent); }
+body.onboarding .tabs, body.onboarding #modebar, body.onboarding #student-select { display: none !important; }

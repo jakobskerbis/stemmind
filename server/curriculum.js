@@ -1,6 +1,6 @@
 // Učne poti: dostop do podatkov iz curriculum-data.js.
 import { PATHS } from "./curriculum-data.js";
-import { UNI_PATHS, PROGRAMS, FACULTIES } from "./university-data.js";
+import { UNI_PATHS, PROGRAMS, FACULTIES, FAC_SHORT, UNIVERSITIES } from "./university-data.js";
 import { ALL_SUBJECTS } from "./subjects.js";
 
 export function slugify(s) {
@@ -65,6 +65,9 @@ export function listPrograms() {
     name: p.name,
     faculty: p.faculty,
     facultyName: FACULTIES[p.faculty],
+    facultyShort: FAC_SHORT[p.faculty],
+    university: p.faculty.split("-")[0],
+    universityName: UNIVERSITIES[p.faculty.split("-")[0]] || p.faculty.split("-")[0],
     source: p.source,
     sourceYear: p.sourceYear,
     years: p.years.length,

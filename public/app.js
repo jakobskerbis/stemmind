@@ -7,7 +7,8 @@ import { initAccount, accountsOn, openAddChild } from "./account.js";
 import { initTextbook, showTextbook, openLesson } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
-import { loadPrograms, programOptions, programsCache, programYears, subjectOptions, SUBJECT_NAMES, UNI_YEARS } from "./programs.js";
+import { loadPrograms, programsCache, subjectOptions, SUBJECT_NAMES } from "./programs.js";
+import { mountLevelPicker } from "./level-picker.js";
 
 const $ = (sel) => document.querySelector(sel);
 const api = async (url, opts = {}) => {
@@ -24,12 +25,6 @@ const api = async (url, opts = {}) => {
 };
 
 const MODE_NAMES = { A: "Vodenje", B: "Celotna rešitev" };
-const LEVELS = {
-  OSNOVNA_SOLA: ["6. razred", "7. razred", "8. razred", "9. razred"],
-  SREDNJA_SOLA: ["1. letnik OR", "1. letnik VR", "2. letnik OR", "2. letnik VR", "3. letnik OR", "3. letnik VR", "4. letnik OR", "4. letnik VR"],
-  UNIVERZA: UNI_YEARS,
-};
-const LEVEL_PLACEHOLDER = { OSNOVNA_SOLA: "npr. 8. razred", SREDNJA_SOLA: "npr. 2. letnik VR", UNIVERZA: "npr. 1. letnik" };
 
 const isUni = (s) => s?.educational_track === "UNIVERZA";
 
@@ -96,8 +91,7 @@ async function loadStudents(selectId) {
   state.students = await api("/api/students");
   if (!state.students.length) {
     if (accountsOn()) return openAddChild(); // otroka doda starš s soglasjem
-    const name = prompt("Kako ti je ime?", "") || "Učenec";
-    state.students = [await api("/api/students", { method: "POST", body: { name } })];
+    state.students = [await onboard()];
   }
   const sel = $("#student-select");
   sel.innerHTML = state.students.map((s) => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join("");
@@ -105,6 +99,48 @@ async function loadStudents(selectId) {
   const pick = state.students.find((s) => s.id === saved) || state.students[0];
   sel.value = pick.id;
   await selectStudent(pick.id);
+}
+
+// Nov profil: ime in izbira šole po korakih (OŠ / SŠ / fakulteta → … → letnik).
+async function onboard(name = "") {
+  const programs = await loadPrograms(api);
+  const box = $("#view-onboard");
+  box.innerHTML = `
+    <form id="onboard-form" class="card form">
+      <h1>Pozdravljen v STEMMind!</h1>
+      <p class="muted">Povej, kje se učiš, pa ti prilagodimo učno pot, naloge in učbenik. Izbiro lahko kadar koli spremeniš v profilu.</p>
+      <label>Ime ali vzdevek <input name="name" maxlength="40" required placeholder="npr. Miha" value="${escapeHtml(name)}"></label>
+      <fieldset class="level-field">
+        <legend>Šola in letnik</legend>
+        <div class="level-picker"></div>
+        <input type="hidden" name="educational_track">
+        <input type="hidden" name="study_program">
+        <input type="hidden" name="curriculum_level">
+      </fieldset>
+      <p class="form-error" hidden></p>
+      <button class="primary big" type="submit">Začni</button>
+    </form>`;
+  const f = $("#onboard-form");
+  const picker = mountLevelPicker(f.querySelector(".level-picker"), f, { programs });
+  showView("onboard");
+  document.body.classList.add("onboarding");
+  return new Promise((resolve) => {
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const err = f.querySelector(".form-error");
+      if (!picker.complete()) {
+        err.textContent = "Izberi šolo in letnik do konca.";
+        err.hidden = false;
+        return;
+      }
+      const track = f.educational_track.value;
+      const settings = { educational_track: track, study_program: f.study_program.value, curriculum_level: f.curriculum_level.value };
+      if (track === "UNIVERZA") settings.subject = programs.find((p) => p.id === settings.study_program)?.subjects?.[0] || "MAT";
+      const s = await api("/api/students", { method: "POST", body: { name: f.name.value, settings } });
+      document.body.classList.remove("onboarding");
+      resolve(s);
+    });
+  });
 }
 
 async function selectStudent(id) {
@@ -398,24 +434,23 @@ function fillSubjectOptions() {
 }
 
 function fillLevelOptions(track) {
-  const prog = track === "UNIVERZA" ? programsCache().find((p) => p.id === $("#settings-form").study_program.value) : null;
-  $("#level-options").innerHTML = (track === "UNIVERZA" ? programYears(prog) : LEVELS[track] || []).map((l) => `<option value="${l}">`).join("");
-  $("#settings-form").curriculum_level.placeholder = LEVEL_PLACEHOLDER[track] || "";
   // Fakulteta: izbira programa namesto tekmovanj.
-  const uni = track === "UNIVERZA";
-  $("#study-program-row").hidden = !uni;
-  $("#track-row").hidden = uni;
+  $("#track-row").hidden = track === "UNIVERZA";
   fillSubjectOptions();
 }
+
+// Izbira šole po korakih (OŠ/SŠ/fakulteta → … → letnik).
+let levelPicker = null;
 
 async function fillSettingsForm() {
   const f = $("#settings-form");
   const s = state.student.settings;
   f.name.value = state.student.name;
-  f.study_program.innerHTML = programOptions(await loadPrograms(api), s.study_program);
-  for (const key of ["track", "educational_track", "curriculum_level", "personality_setting"]) f[key].value = s[key];
-  if (s.study_program) f.study_program.value = s.study_program;
+  const programs = await loadPrograms(api);
+  for (const key of ["track", "personality_setting"]) f[key].value = s[key];
   f.subject.innerHTML = subjectOptions(isUni(s) ? programsCache().find((p) => p.id === s.study_program) : null, s.subject);
+  if (!levelPicker) levelPicker = mountLevelPicker($("#settings-level"), f, { programs, settings: s, onChange: (_, track) => fillLevelOptions(track) });
+  else levelPicker.set(s);
   f.querySelector(`input[name=solving_mode][value=${s.solving_mode}]`).checked = true;
   f.manual_weaknesses.value = state.student.manual_weaknesses.join(", ");
   fillLevelOptions(s.educational_track);
@@ -429,18 +464,14 @@ async function fillSettingsForm() {
   sel.value = PACES[localStorageGet("pace")] ? localStorageGet("pace") : DEFAULT_PACE;
   sel.addEventListener("change", () => localStorageSet("pace", sel.value));
 }
-$("#settings-form").study_program.addEventListener("change", () => fillLevelOptions("UNIVERZA"));
-$("#settings-form").educational_track.addEventListener("change", (e) => {
-  fillLevelOptions(e.target.value);
-  // Ob preklopu šole stara raven ne velja več: ponudimo prvo.
-  const f = $("#settings-form");
-  if (!(LEVELS[e.target.value] || []).includes(f.curriculum_level.value)) f.curriculum_level.value = LEVELS[e.target.value]?.[0] || "";
-  if (e.target.value === "UNIVERZA") loadPrograms(api).then(() => fillLevelOptions("UNIVERZA"));
-});
 
 $("#settings-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const f = e.target;
+  if (levelPicker && !levelPicker.complete()) {
+    alert("Izbiro šole in letnika dokončaj do konca.");
+    return;
+  }
   const updated = await api(`/api/students/${state.student.id}`, {
     method: "PUT",
     body: {
@@ -469,10 +500,10 @@ $("#settings-form").addEventListener("submit", async (e) => {
 
 $("#new-student-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const s = await api("/api/students", { method: "POST", body: { name: e.target.name.value } });
+  const s = await onboard(e.target.name.value);
   e.target.reset();
   await loadStudents(s.id);
-  fillSettingsForm();
+  showView("path");
 });
 
 $("#delete-student").addEventListener("click", async () => {

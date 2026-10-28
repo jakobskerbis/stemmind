@@ -1029,7 +1029,14 @@ export const FACULTIES = {
   "UM-FKKT": "UM Fakulteta za kemijo in kemijsko tehnologijo",
 };
 
-const FAC_SHORT = { "UL-FKKT": "UL FKKT", "UL-FS": "UL FS", "UL-FMF": "UL FMF", "UM-FKKT": "UM FKKT" };
+export const UNIVERSITIES = {
+  UL: "Univerza v Ljubljani",
+  UM: "Univerza v Mariboru",
+  UP: "Univerza na Primorskem",
+  UNG: "Univerza v Novi Gorici",
+};
+
+export const FAC_SHORT = { "UL-FKKT": "UL FKKT", "UL-FS": "UL FS", "UL-FMF": "UL FMF", "UM-FKKT": "UM FKKT" };
 
 // Predmeti po fakultetah: koda -> [ime predmeta, predmet aplikacije (MAT|FIZ|KEM), vsebina].
 // Isti predmet pri več programih iste fakultete je zapisan enkrat.
