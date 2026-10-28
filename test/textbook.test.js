@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
-import { getTopic, listPaths, topicOrder } from "../server/curriculum.js";
+import { getTopic, listPaths, topicOrder, sameTopics } from "../server/curriculum.js";
 import { parseLesson, lessonView, searchTextbook, tocView, simsFor, LESSONS_DIR, lessonSummaryForPrompt, expandFormulaBlocks } from "../server/textbook.js";
 import { checkLessonSource } from "../server/lesson-check.js";
 import { SIM_TOPICS, simsForTopic } from "../public/sim/katalog.js";
@@ -48,6 +48,25 @@ test("lesson files load for competition paths too", () => {
   } finally {
     if (!existed) fs.rmSync(real);
     if (!fs.readdirSync(dir).length) fs.rmdirSync(dir);
+  }
+});
+
+test("university topic shared by several courses uses one lesson", () => {
+  const shared = sameTopics("UNI-ULFKKT-MAT/" + tocView("UNI-ULFKKT-MAT").units[0].topics[0].id.split("/")[1]);
+  assert.ok(shared.length > 1, "prva tema UL FKKT Matematike je tudi v drugih predmetih");
+  const [first, other] = shared;
+  const dir = path.join(LESSONS_DIR, first.split("/")[0]);
+  const file = path.join(LESSONS_DIR, `${first}.md`);
+  const hadDir = fs.existsSync(dir);
+  const existed = fs.existsSync(file);
+  fs.mkdirSync(dir, { recursive: true });
+  if (!existed) fs.writeFileSync(file, fs.readFileSync(path.join(LESSONS_DIR, "FIZ-OS-9", "upor-in-ohmov-zakon.md"), "utf8"));
+  try {
+    assert.ok(lessonView(other).lesson, "druga kopija teme vzame skupno lekcijo");
+    assert.equal(getTopic(other).name, getTopic(first).name);
+  } finally {
+    if (!existed) fs.rmSync(file);
+    if (!hadDir) fs.rmdirSync(dir);
   }
 });
 

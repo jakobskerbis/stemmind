@@ -101,6 +101,21 @@ export function uniTopicIds(...names) {
     .map((t) => t.id);
 }
 
+// Ista fakultetna tema (enak naslov in predmet) v drugih predmetih in programih.
+// Lekcija učbenika se napiše enkrat in velja za vse (server/textbook.js).
+const SAME = new Map();
+for (const t of Object.values(TOPICS)) {
+  if (BUILT[t.path].school !== "UNI") continue;
+  const k = `${t.subject}|${slugify(t.name)}`;
+  if (!SAME.has(k)) SAME.set(k, []);
+  SAME.get(k).push(t.id);
+}
+export function sameTopics(id) {
+  const t = TOPICS[id];
+  if (!t || BUILT[t.path].school !== "UNI") return t ? [id] : [];
+  return SAME.get(`${t.subject}|${slugify(t.name)}`);
+}
+
 // Vsi id-ji tem po vrsti (za "naslednja tema").
 export function topicOrder(key) {
   const p = BUILT[key];
