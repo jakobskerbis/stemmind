@@ -182,6 +182,20 @@ function parseChecks(md) {
   return out.filter((c) => c.options.length >= 2 && c.correct >= 0);
 }
 
+// Blok s formulo v rešenem primeru: vrstice med »:::formula« in »:::«.
+// V aplikaciji je skrit za gumbom »Pokaži formulo« (učenec najprej poskusi sam),
+// v PDF-ju je izpisan kot okvir »Formula«, tutor ga dobi kot navadno besedilo.
+const FORMULA_RE = /^[ \t]*:::[ \t]*formula[ \t]*\n([\s\S]*?)\n[ \t]*:::[ \t]*$/gm;
+export function expandFormulaBlocks(md, mode = "html") {
+  return String(md ?? "").replace(FORMULA_RE, (_, body) => {
+    const inner = body.trim();
+    if (mode === "plain") return inner;
+    if (mode === "print") return `<div class="formula"><p class="formula-label">Formula</p>\n\n${inner}\n\n</div>`;
+    return `<details class="tb-formula"><summary>Pokaži formulo</summary>\n\n${inner}\n\n</details>`;
+  });
+}
+const withFormulas = (parts, mode) => parts.map((x) => ({ ...x, md: expandFormulaBlocks(x.md, mode) }));
+
 function lessonFile(topicId) {
   const [pathKey, slug] = topicId.split("/");
   if (!/^[A-Z]+-[A-Z]+-\d$/.test(pathKey) || !/^[a-z0-9-]+$/.test(slug || "")) return null;
@@ -225,7 +239,12 @@ export function lessonView(topicId) {
     pathLabel: getPath(t.path).label,
     subject: t.subject,
     lesson: lesson
-      ? { status: lesson.meta.stanje || "osnutek", sections: lesson.sections, alternatives: lesson.alternatives, checks: lesson.checks }
+      ? {
+          status: lesson.meta.stanje || "osnutek",
+          sections: withFormulas(lesson.sections, "html"),
+          alternatives: withFormulas(lesson.alternatives, "html"),
+          checks: lesson.checks,
+        }
       : null,
     // Če lekcije še ni, pokažemo vsaj kratko razlago teme (če obstaja).
     explanation: lesson ? null : getExplanation(topicId)?.text || null,
@@ -314,7 +333,7 @@ function snippet(lesson, words) {
 export function lessonExplanation(topicId) {
   const lesson = loadLesson(topicId);
   if (!lesson) return null;
-  const pick = (re) => lesson.sections.find((s) => re.test(s.title))?.md?.trim();
+  const pick = (re) => expandFormulaBlocks(lesson.sections.find((s) => re.test(s.title))?.md ?? "", "html").trim();
   const why = pick(/^zakaj/i);
   const sum = pick(/^povzetek/i);
   if (!why && !sum) return null;
@@ -330,5 +349,5 @@ export function lessonSummaryForPrompt(topicId) {
   if (!lesson) return "";
   const sum = lesson.sections.find((s) => /^povzetek/i.test(s.title));
   if (!sum) return "";
-  return `Učenec ima v učbeniku lekcijo o tej temi. Njen povzetek (razlagaj skladno z njim, a z drugimi besedami in primeri):\n${sum.md.slice(0, 1200)}`;
+  return `Učenec ima v učbeniku lekcijo o tej temi. Njen povzetek (razlagaj skladno z njim, a z drugimi besedami in primeri):\n${expandFormulaBlocks(sum.md, "plain").slice(0, 1200)}`;
 }

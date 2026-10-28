@@ -43,26 +43,50 @@ To so tri oblike istega zakona. Izbereš tisto, v kateri je neznanka sama na lev
 
 Na upornik z uporom $30\,\Omega$ priključimo baterijo z napetostjo $4{,}5\,\text{V}$. Kolikšen tok teče?
 
-1. Podatki: $U = 4{,}5\,\text{V}$, $R = 30\,\Omega$. Iščemo $I$.
-2. Izberemo obliko z $I$ na levi: $I = \dfrac{U}{R}$.
-3. $I = \dfrac{4{,}5\,\text{V}}{30\,\Omega} = 0{,}15\,\text{A}$.
-4. Odgovor: teče tok $0{,}15\,\text{A}$ ($150\,\text{mA}$).
+**Podatki:** $R = 30\,\Omega$, $U = 4{,}5\,\text{V}$
+**Iščemo:** tok $I$
+
+:::formula
+Ohmov zakon v obliki z $I$ na levi: $I = \dfrac{U}{R}$
+:::
+
+**Rešitev:**
+
+1. Vstavimo podatke: $I = \dfrac{4{,}5\,\text{V}}{30\,\Omega} = 0{,}15\,\text{A}$.
+2. Odgovor: teče tok $0{,}15\,\text{A}$ ($150\,\text{mA}$).
 
 ### Primer 2: napetost
 
 Skozi grelec z uporom $46\,\Omega$ teče tok $5\,\text{A}$. Kolikšna je napetost na grelcu?
 
-1. Podatki: $R = 46\,\Omega$, $I = 5\,\text{A}$. Iščemo $U$.
-2. $U = R \cdot I = 46\,\Omega \cdot 5\,\text{A} = 230\,\text{V}$.
-3. Odgovor: $230\,\text{V}$, kar je napetost v hišnem omrežju.
+**Podatki:** $R = 46\,\Omega$, $I = 5\,\text{A}$
+**Iščemo:** napetost $U$
+
+:::formula
+$U = R \cdot I$
+:::
+
+**Rešitev:**
+
+1. $U = 46\,\Omega \cdot 5\,\text{A} = 230\,\text{V}$.
+2. Odgovor: napetost je $230\,\text{V}$, kar je napetost v hišnem omrežju.
 
 ### Primer 3: upor iz meritve, s pretvorbo enot
 
 Voltmeter na žarnici kaže $6\,\text{V}$, ampermeter $250\,\text{mA}$. Kolikšen je upor žarnice? Kolikšen tok bi tekel, če bi napetost znižali na $3\,\text{V}$ in bi upor ostal enak?
 
-1. Pretvorimo enote: $250\,\text{mA} = 0{,}25\,\text{A}$ (deli s $1000$).
-2. $R = \dfrac{U}{I} = \dfrac{6\,\text{V}}{0{,}25\,\text{A}} = 24\,\Omega$.
-3. Pri $3\,\text{V}$: $I = \dfrac{3\,\text{V}}{24\,\Omega} = 0{,}125\,\text{A}$.
+**Podatki:** $U_1 = 6\,\text{V}$, $I_1 = 250\,\text{mA}$, $U_2 = 3\,\text{V}$, upor $R$ ostane enak
+**Iščemo:** upor $R$ in tok $I_2$ pri nižji napetosti
+
+:::formula
+$R = \dfrac{U_1}{I_1}$, nato $I_2 = \dfrac{U_2}{R}$
+:::
+
+**Rešitev:**
+
+1. Pretvorimo enote: $250\,\text{mA} = 0{,}25\,\text{A}$ (delimo s $1000$).
+2. $R = \dfrac{U_1}{I_1} = \dfrac{6\,\text{V}}{0{,}25\,\text{A}} = 24\,\Omega$.
+3. Pri $3\,\text{V}$: $I_2 = \dfrac{3\,\text{V}}{24\,\Omega} = 0{,}125\,\text{A}$.
 4. Napetost smo prepolovili, tok se je prepolovil, kar se ujema s premim sorazmerjem.
 
 ## Pogoste napake

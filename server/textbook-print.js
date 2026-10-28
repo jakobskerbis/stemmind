@@ -3,7 +3,7 @@
 import katex from "katex";
 import { marked } from "marked";
 import { getPath, getTopic, topicOrder } from "./curriculum.js";
-import { loadLesson, DEMOS } from "./textbook.js";
+import { loadLesson, DEMOS, expandFormulaBlocks } from "./textbook.js";
 
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -13,7 +13,7 @@ const esc = (s) =>
 export function renderMd(text) {
   const math = [];
   const stash = (tex, display) => `@@MATH${math.push({ tex, display }) - 1}@@`;
-  const src = String(text)
+  const src = expandFormulaBlocks(text, "print")
     .replace(/\$\$([\s\S]+?)\$\$/g, (_, t) => stash(t, true))
     .replace(/(^|[^\\$])\$([^$\n]+?)\$/g, (_, pre, t) => pre + stash(t, false));
   return marked
@@ -118,6 +118,8 @@ export function printPage(pathKey, topicSlug = null) {
   pre { background: #f3f5f9; padding: 8px; border-radius: 6px; }
   .demo-note { border: 1px dashed #2f6fed; border-radius: 8px; padding: 6px 10px; color: #2f6fed; font-family: system-ui, sans-serif; font-size: 0.9rem; margin: 10px 0; }
   .alt { border-left: 3px solid #7b61d1; padding-left: 12px; margin: 10px 0; }
+  .formula { border: 1px solid #c9d3ea; background: #f3f6fc; border-radius: 8px; padding: 4px 12px; margin: 8px 0; }
+  .formula-label { margin: 2px 0 0; font: 700 0.78rem system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; color: #2f6fed; }
   .checks .opts { list-style: lower-alpha; }
   .checks p { margin: 2px 0; }
   .key { margin-top: 10px; font-size: 0.92em; } .key summary { font-weight: 700; font-family: system-ui, sans-serif; }

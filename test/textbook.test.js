@@ -5,7 +5,8 @@ import path from "node:path";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { getTopic, listPaths, topicOrder } from "../server/curriculum.js";
-import { parseLesson, lessonView, searchTextbook, tocView, DEMOS, PHET, LESSONS_DIR, lessonSummaryForPrompt } from "../server/textbook.js";
+import { parseLesson, lessonView, searchTextbook, tocView, DEMOS, PHET, LESSONS_DIR, lessonSummaryForPrompt, expandFormulaBlocks } from "../server/textbook.js";
+import { checkLessonSource } from "../server/lesson-check.js";
 
 test("parseLesson: front matter, sections, alternatives, checks", () => {
   const l = parseLesson(`---
@@ -31,6 +32,26 @@ Slika.
   assert.deepEqual(l.alternatives, [{ title: "Na sliki", md: "Slika." }]);
   assert.equal(l.checks.length, 1, "vprašanje brez pravilnega odgovora se izpusti");
   assert.deepEqual(l.checks[0], { q: "Koliko je $2 + 2$?", options: ["3", "4"], correct: 1, why: "Ker je tako." });
+});
+
+test("formula blocks: hidden in app, printed in PDF, plain for the tutor", () => {
+  const md = "Besedilo.\n\n:::formula\n$s = v \\cdot t$\n:::\n\nNaprej.";
+  assert.match(expandFormulaBlocks(md), /<details class="tb-formula"><summary>Pokaži formulo<\/summary>\n\n\$s = v \\cdot t\$\n\n<\/details>/);
+  assert.match(expandFormulaBlocks(md, "print"), /<div class="formula">/);
+  assert.equal(expandFormulaBlocks(md, "plain"), "Besedilo.\n\n$s = v \\cdot t$\n\nNaprej.");
+  const v = lessonView("FIZ-OS-9/upor-in-ohmov-zakon");
+  const ex = v.lesson.sections.find((s) => /rešen/i.test(s.title)).md;
+  assert.match(ex, /\*\*Podatki:\*\*/);
+  assert.match(ex, /<details class="tb-formula">/);
+  assert.doesNotMatch(ex, /:::/);
+  assert.doesNotMatch(lessonSummaryForPrompt("FIZ-OS-9/upor-in-ohmov-zakon"), /:::/);
+  // Preverjevalnik oblike: vzorčna lekcija je v redu, pokvarjena ne.
+  const src = fs.readFileSync(path.join(LESSONS_DIR, "FIZ-OS-9", "upor-in-ohmov-zakon.md"), "utf8");
+  assert.deepEqual(checkLessonSource(src, "FIZ-OS-9/upor-in-ohmov-zakon").errors, []);
+  const broken = src.replace("**Podatki:** $R = 30", "Podatki $R = 30").replace("$U = R \\cdot I$", "$U = \\frac{R$");
+  const r = checkLessonSource(broken, "FIZ-OS-9/upor-in-ohmov-zakon");
+  assert.ok(r.errors.some((e) => /Podatki/.test(e)), r.errors.join("; "));
+  assert.ok(r.errors.some((e) => /ne izriše/.test(e)), r.errors.join("; "));
 });
 
 test("every lesson file belongs to a topic and is complete", () => {
@@ -113,6 +134,9 @@ test("textbook API and PDF page", async () => {
     assert.match(html, /Kazalo/);
     assert.match(html, /Rešitve/);
     assert.doesNotMatch(html, /@@MATH/);
+    const ohm = await (await fetch(`${base}/ucbenik/FIZ-OS-9/upor-in-ohmov-zakon`)).text();
+    assert.match(ohm, /<div class="formula">/);
+    assert.doesNotMatch(ohm, /:::/);
     const one = await (await fetch(`${base}/ucbenik/KEM-OS-8/urejanje-kemijskih-enacb`)).text();
     assert.match(one, /Razloži drugače/);
     assert.doesNotMatch(one, /Kazalo/);

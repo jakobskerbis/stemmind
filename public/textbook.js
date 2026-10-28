@@ -139,6 +139,15 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// Formula v rešenem primeru je skrita za gumbom, da učenec najprej poskusi sam.
+function wireFormulas(root) {
+  root.querySelectorAll("details.tb-formula").forEach((d) =>
+    d.addEventListener("toggle", () => {
+      d.querySelector("summary").textContent = d.open ? "Skrij formulo" : "Pokaži formulo";
+    }),
+  );
+}
+
 async function renderLesson(topicId) {
   const box = $("#view-textbook");
   let L;
@@ -244,6 +253,7 @@ async function renderLesson(topicId) {
     tb.topicId = null;
     renderHome();
   });
+  wireFormulas(box);
   if (L.demo) mountDemo(L.demo.id, $("#tb-demo-mount"));
   $("#tb-upgrade")?.addEventListener("click", () => ctx.showView("account"));
   $("#tb-phet-load")?.addEventListener("click", () => {
@@ -254,6 +264,7 @@ async function renderLesson(topicId) {
   const showAlt = (i) => {
     box.querySelectorAll("[data-alt]").forEach((b) => b.classList.toggle("on", Number(b.dataset.alt) === i));
     altBody.innerHTML = `<div class="explanation">${R(lesson.alternatives[i].md)}</div>`;
+    wireFormulas(altBody);
   };
   $("#tb-alt-btn")?.addEventListener("click", () => {
     const altBox = $("#tb-alt-box");

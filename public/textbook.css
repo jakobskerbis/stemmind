@@ -56,6 +56,13 @@
 .tb-why { border-left: 4px solid var(--accent); }
 .tb-summary { border-left: 4px solid var(--ok); }
 .tb-mistakes { border-left: 4px solid var(--danger); }
+.tb-formula { margin: 8px 0; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2); padding: 0 12px; }
+.tb-formula > summary { cursor: pointer; font-weight: 600; color: var(--accent); padding: 8px 0; list-style: none; }
+.tb-formula > summary::-webkit-details-marker { display: none; }
+.tb-formula > summary::before { content: "+ "; }
+.tb-formula[open] > summary::before { content: "− "; }
+.tb-formula[open] > summary { border-bottom: 1px solid var(--border); margin-bottom: 6px; }
+.tb-formula p { margin: 6px 0; }
 .tb-alt { margin-top: 12px; }
 .tb-alt-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 8px; }
 .tb-alt-tabs button { border-radius: 99px !important; padding: 5px 12px !important; font-size: 0.88rem; }
