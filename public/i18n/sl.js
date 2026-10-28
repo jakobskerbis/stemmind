@@ -297,6 +297,12 @@ export default {
   "usage.calls": "Klici",
   "usage.tokens": "Žetoni (vhod / izhod / predpomnilnik)",
   "usage.cost": "Strošek",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Aktivni učenci: {active} · povprečno {avg} € na učenca · {msg} € na odgovor · ocena za cel mesec: {proj} €",
+  "usage.saved": "Odgovori brez klica AI (ponovna raba in namigi iz Vadnice): {count}",
+  "usage.limits": "Omejitve na učenca: {deep}× podrobna razlaga na dan; nad {soft} $ na mesec hitrejši model; nad {hard} $ na mesec samo Vadnica.",
+  "usage.savedCol": "Brez AI",
+  "usage.model": "Model",
 
   // napredek
   "prog.title": "Napredek",

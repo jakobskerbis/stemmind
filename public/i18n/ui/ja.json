@@ -430,5 +430,11 @@
   "off.bannerEmpty": "オフラインです。再接続すると練習問題が端末に保存されます。",
   "off.pending": "オフラインで解いた答えが送信待ちです（{n}）。",
   "off.synced": "オフラインの答えを送信しました：{n}。",
-  "off.xpLater": "接続時に XP"
+  "off.xpLater": "接続時に XP",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "アクティブな生徒: {active} · 生徒1人あたり平均 {avg} € · 1回答あたり {msg} € · 今月全体の見込み: {proj} €",
+  "usage.saved": "AI を呼び出さない回答（再利用した回答と練習のヒント）: {count}",
+  "usage.limits": "生徒ごとの上限: 詳しい説明は1日 {deep} 回まで; 月 {soft} $ を超えると高速モデル; 月 {hard} $ を超えると練習のみ。",
+  "usage.savedCol": "AI なし",
+  "usage.model": "モデル"
 }

@@ -1661,13 +1661,22 @@ function showContestResult(c, timeUp = false) {
 
 async function loadUsage() {
   const u = await api("/api/usage");
-  $("#usage").innerHTML = `<p>${t("usage.total", { usd: u.month_usd.toFixed(2) })}${u.budget_usd ? t("usage.budget", { budget: u.budget_usd }) : ""}${
+  const eur = (x) => (x || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 3 });
+  const L = u.limits || {};
+  $("#usage").innerHTML = `<p>${t("usage.total", { usd: u.month_usd.toFixed(2) })}${t("usage.eur", { eur: eur(u.month_eur) })}${u.budget_usd ? t("usage.budget", { budget: u.budget_usd }) : ""}${
     u.daily_questions ? t("usage.limit", { n: u.daily_questions }) : ""
   }</p>
-  <table class="table"><thead><tr><th>${t("usage.student")}</th><th>${t("usage.calls")}</th><th>${t("usage.tokens")}</th><th>${t("usage.cost")}</th></tr></thead><tbody>
+  <p>${t("usage.summary", { active: u.active_students, avg: eur(u.per_active_eur), msg: eur(u.per_message_eur), proj: eur(u.projected_eur) })}</p>
+  <p class="muted">${t("usage.saved", { count: u.saved_answers || 0 })}</p>
+  ${L.daily_deep || L.student_soft_usd || L.student_hard_usd ? `<p class="muted">${t("usage.limits", { deep: L.daily_deep ?? "∞", soft: L.student_soft_usd ?? "∞", hard: L.student_hard_usd ?? "∞" })}</p>` : ""}
+  <table class="table"><thead><tr><th>${t("usage.student")}</th><th>${t("usage.calls")}</th><th>${t("usage.savedCol")}</th><th>${t("usage.tokens")}</th><th>${t("usage.cost")}</th></tr></thead><tbody>
   ${u.students
-    .map((s) => `<tr><td>${escapeHtml(s.name)}</td><td>${s.calls}</td><td>${s.input_tokens} / ${s.output_tokens} / ${s.cache_read_tokens}</td><td>${s.cost_usd.toFixed(3)} $</td></tr>`)
-    .join("")}</tbody></table>`;
+    .map((s) => `<tr><td>${escapeHtml(s.name)}</td><td>${s.calls}</td><td>${s.saved || 0}</td><td>${s.input_tokens} / ${s.output_tokens} / ${s.cache_read_tokens}</td><td>${eur(s.cost_eur)} € <span class="muted">(${s.cost_usd.toFixed(3)} $)</span></td></tr>`)
+    .join("")}</tbody></table>
+  ${(u.by_model || []).length ? `<table class="table"><thead><tr><th>${t("usage.model")}</th><th>${t("usage.calls")}</th><th>${t("usage.tokens")}</th><th>${t("usage.cost")}</th></tr></thead><tbody>
+  ${u.by_model
+    .map((m) => `<tr><td>${escapeHtml(m.model)} <span class="muted">· ${escapeHtml(m.kind)}</span></td><td>${m.calls}</td><td>${m.input_tokens} / ${m.output_tokens} / ${m.cache_read_tokens}</td><td>${eur(m.cost_eur)} €</td></tr>`)
+    .join("")}</tbody></table>` : ""}`;
 }
 
 // ---------- uvodni ogled ----------

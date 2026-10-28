@@ -3,7 +3,7 @@
 // pripravi seznam sprememb). Brez API ključa ali brez STEMMIND_FEEDBACK_AI=1 ne stane nič.
 import fs from "node:fs";
 import path from "node:path";
-import { getClient, isMockMode, MODEL } from "./claude.js";
+import { getClient, isMockMode, MODEL, quickParams } from "./claude.js";
 import { cleanText } from "./settings.js";
 
 export const AREAS = ["path", "tutor", "textbook", "competition", "design", "speed", "league"];
@@ -252,7 +252,7 @@ export async function nextInterviewQuestion({ answers, lang = "sl", createFn }) 
     messages.push({ role: "user", content: a });
   }
   const create = createFn || ((p) => getClient().messages.create(p));
-  const final = await create({ model: MODEL, max_tokens: 200, system: INTERVIEW_SYSTEM, messages });
+  const final = await create({ model: MODEL, max_tokens: 200, ...quickParams(MODEL), system: INTERVIEW_SYSTEM, messages });
   const raw = final.content.filter((b) => b.type === "text").map((b) => b.text).join("").trim();
   const done = /\[KONEC\]/.test(raw) || answers.length >= MAX_INTERVIEW_TURNS;
   return { question: raw.replace(/\[KONEC\]/g, "").trim().slice(0, 500), done, usage: final.usage, model: final.model || MODEL };

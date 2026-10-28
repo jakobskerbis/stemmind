@@ -430,5 +430,11 @@
   "off.bannerEmpty": "오프라인 상태입니다. 다시 연결되면 연습 문제가 기기에 저장됩니다.",
   "off.pending": "오프라인에서 푼 답이 전송을 기다리고 있습니다({n}).",
   "off.synced": "오프라인 답 전송 완료: {n}.",
-  "off.xpLater": "연결되면 XP"
+  "off.xpLater": "연결되면 XP",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "활동 중인 학생: {active} · 학생당 평균 {avg} € · 답변당 {msg} € · 이번 달 전체 예상: {proj} €",
+  "usage.saved": "AI 호출 없이 한 답변(재사용한 답변과 연습 힌트): {count}",
+  "usage.limits": "학생당 한도: 자세한 설명 하루 {deep}회; 월 {soft} $ 초과 시 더 빠른 모델; 월 {hard} $ 초과 시 연습만 가능.",
+  "usage.savedCol": "AI 없음",
+  "usage.model": "모델"
 }

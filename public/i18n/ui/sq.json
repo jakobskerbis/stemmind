@@ -435,5 +435,11 @@
   "off.bannerEmpty": "Je pa lidhje. Kur të lidhesh përsëri, ushtrimet do të ruhen në pajisje.",
   "off.pending": "Përgjigjet e zgjidhura pa lidhje presin të dërgohen ({n}).",
   "off.synced": "Përgjigje pa lidhje të dërguara: {n}.",
-  "off.xpLater": "XP kur të lidhesh"
+  "off.xpLater": "XP kur të lidhesh",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Nxënës aktivë: {active} · mesatarisht {avg} € për nxënës · {msg} € për përgjigje · vlerësim për gjithë muajin: {proj} €",
+  "usage.saved": "Përgjigje pa thirrje te AI (përgjigje të ripërdorura dhe sugjerime ushtrimesh): {count}",
+  "usage.limits": "Kufij për nxënës: {deep}× shpjegim i detajuar në ditë; mbi {soft} $ në muaj një model më i shpejtë; mbi {hard} $ në muaj vetëm ushtrime.",
+  "usage.savedCol": "Pa AI",
+  "usage.model": "Modeli"
 }

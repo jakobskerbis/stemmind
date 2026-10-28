@@ -435,5 +435,11 @@
   "off.bannerEmpty": "Sei offline. Quando tornerai online, gli esercizi verranno salvati sul dispositivo.",
   "off.pending": "Le risposte date offline aspettano di essere inviate ({n}).",
   "off.synced": "Risposte offline inviate: {n}.",
-  "off.xpLater": "XP quando sei online"
+  "off.xpLater": "XP quando sei online",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Studenti attivi: {active} · in media {avg} € per studente · {msg} € per risposta · stima per tutto il mese: {proj} €",
+  "usage.saved": "Risposte senza chiamata all'IA (risposte riutilizzate e suggerimenti degli esercizi): {count}",
+  "usage.limits": "Limiti per studente: {deep}× spiegazione dettagliata al giorno; oltre {soft} $ al mese un modello più veloce; oltre {hard} $ al mese solo esercizi.",
+  "usage.savedCol": "Senza IA",
+  "usage.model": "Modello"
 }

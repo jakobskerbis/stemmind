@@ -435,5 +435,11 @@
   "off.bannerEmpty": "Offline vagy. Ha újra lesz kapcsolat, a gyakorló feladatok elmentődnek az eszközre.",
   "off.pending": "Offline megoldott válaszok várnak elküldésre ({n}).",
   "off.synced": "Elküldött offline válaszok: {n}.",
-  "off.xpLater": "XP kapcsolódáskor"
+  "off.xpLater": "XP kapcsolódáskor",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Aktív tanulók: {active} · átlagosan {avg} € tanulónként · {msg} € válaszonként · becslés az egész hónapra: {proj} €",
+  "usage.saved": "Válaszok MI-hívás nélkül (újrahasznált válaszok és gyakorlási tippek): {count}",
+  "usage.limits": "Korlátok tanulónként: napi {deep}× részletes magyarázat; havi {soft} $ felett gyorsabb modell; havi {hard} $ felett csak gyakorlás.",
+  "usage.savedCol": "MI nélkül",
+  "usage.model": "Modell"
 }

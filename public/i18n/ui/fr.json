@@ -435,5 +435,11 @@
   "off.bannerEmpty": "Tu es hors connexion. Dès que tu seras de nouveau connecté, des exercices seront enregistrés sur l'appareil.",
   "off.pending": "Des réponses faites hors connexion attendent d'être envoyées ({n}).",
   "off.synced": "Réponses hors connexion envoyées : {n}.",
-  "off.xpLater": "XP à la connexion"
+  "off.xpLater": "XP à la connexion",
+  "usage.eur": " (≈ {eur} €)",
+  "usage.summary": "Élèves actifs : {active} · en moyenne {avg} € par élève · {msg} € par réponse · estimation pour tout le mois : {proj} €",
+  "usage.saved": "Réponses sans appel à l'IA (réponses réutilisées et indices d'exercices) : {count}",
+  "usage.limits": "Limites par élève : {deep}× explication détaillée par jour ; au-delà de {soft} $ par mois un modèle plus rapide ; au-delà de {hard} $ par mois exercices seulement.",
+  "usage.savedCol": "Sans IA",
+  "usage.model": "Modèle"
 }
