@@ -103,6 +103,10 @@ function renderMe() {
   $("#me-streak").textContent = $("#xp-streak").textContent;
   $("#me-account").hidden = $("#account-tab").hidden;
 }
+// Nazaj na »Jaz« s podstrani (viden samo, ko je spodnja vrstica: telefon in tablica).
+document.addEventListener("click", (e) => {
+  if (e.target.closest(".me-back")) showView("me");
+});
 document.querySelectorAll("#view-me [data-go]").forEach((b) =>
   b.addEventListener("click", () => (b.dataset.go === "account" ? $("#account-tab").click() : showView(b.dataset.go))),
 );

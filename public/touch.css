@@ -1,0 +1,53 @@
+/* Telefon in tablica (glej docs/oblikovanje.md, razdelek »Telefon in tablica«).
+   Barve samo iz spremenljivk v style.css. Pravila za široke zaslone (računalnik) so v ui.css. */
+
+/* Ko zgornjih zavihkov ni (spodnja vrstica ali odprta plošča za vnos), sta XP in učenec desno. */
+.xp-badge { margin-left: auto; }
+
+/* Nazaj na »Jaz« s podstrani (Napredek, Lige, Nastavitve, Račun): samo ob spodnji vrstici. */
+.me-back { display: none !important; }
+@media (max-width: 760px), (max-width: 1240px) and (hover: none) and (pointer: coarse) {
+  .me-back { display: inline-flex !important; }
+}
+
+/* ---------- tablica na dotik: spodnja vrstica z napisi namesto samih ikon zgoraj ---------- */
+@media (min-width: 761px) and (max-width: 1240px) and (hover: none) and (pointer: coarse) {
+  .topbar { padding: 10px 20px; gap: 12px; }
+  .brand-name { display: inline; }
+  .stat .xp-unit { display: inline; }
+  .tabbar { justify-content: center; padding: 6px 16px calc(6px + env(safe-area-inset-bottom)); }
+  .tabbar .tab { max-width: 150px; font-size: 0.8rem; }
+  .tabbar .tab:not(.active) span { display: block; }
+  /* Gumbi na dotik vsaj 44 px. */
+  button.ghost, .text-btn { min-height: 44px; }
+}
+
+/* ---------- plošča za vnos ---------- */
+/* Plošča spodaj (telefon in tablica pokončno; telefon ležeče ima ploščo ob strani). */
+@media (max-width: 599px), (max-width: 899px) and (min-height: 501px) {
+  /* Dovolj prostora pod nalogo, da jo lahko pomaknemo na vrh, nad ploščo. */
+  body.pad-open #view-topic { padding-bottom: max(calc(var(--pad-h, 0px) + 20px), 75dvh); }
+  body.pad-open .task { padding-top: 6px; }
+}
+.task-text > :first-child { margin-top: 0; }
+/* Tablica pokončno: plošča je spodaj čez celo širino, tipke in platno pa ne preširoki. */
+@media (min-width: 600px) and (max-width: 899px) and (min-height: 501px) {
+  .pad > * { width: 100%; max-width: 640px; margin-left: auto !important; margin-right: auto !important; }
+}
+
+/* ---------- telefon: posamezni glavni gumbi čez celo širino, kot v .actions ---------- */
+@media (max-width: 760px) {
+  .form-actions > button.primary { flex: 1; }
+  .contest-card > button.primary { width: 100%; }
+  .back { min-height: 44px; }
+}
+.contest-card > .field-label { display: block; margin-top: 18px; }
+
+/* ---------- tablica ležeče (na dotik, 1000–1199 px): dva stolpca kot na računalniku ----------
+   Sama postavitev je v ui.css (isti pogoj); tu samo ožji stolpci. */
+@media (min-width: 1000px) and (max-width: 1199px) and (hover: none) and (pointer: coarse) {
+  .tb-lesson-grid.has-side { grid-template-columns: minmax(0, 1fr) minmax(360px, 42%); gap: 0 20px; }
+  #view-path { grid-template-columns: minmax(320px, 380px) minmax(0, 1fr); gap: 0 20px; }
+  /* Levi stolpec je na tablici višji od zaslona: pripet bi skril spodnje načine. */
+  #view-path > .path-side { position: static; }
+}

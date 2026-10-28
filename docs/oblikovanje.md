@@ -39,11 +39,12 @@ Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `
 
 ## Navigacija
 
-- Računalnik in tablica: zavihki v zgornji vrstici.
-- Telefon (do 760 px): spodnja vrstica `#tabbar` s petimi zavihki (Učna pot, Učbenik, Inštruktor, Tekmovanja, Jaz). Napredek, Lige, Nastavitve in Račun so pod »Jaz« (`#view-me`). Nov glavni del aplikacije dodaj v zgornje zavihke in na stran Jaz, ne kot šesti zavihek spodaj.
+- Računalnik (miška): zavihki v zgornji vrstici.
+- Telefon (do 760 px) in tablica na dotik (do 1240 px): spodnja vrstica `#tabbar` s petimi zavihki z napisi (Učna pot, Učbenik, Inštruktor, Tekmovanja, Jaz). Napredek, Lige, Nastavitve in Račun so pod »Jaz« (`#view-me`), na vrhu imajo gumb »← Jaz« (`.me-back`). Nov glavni del aplikacije dodaj v zgornje zavihke in na stran Jaz, ne kot šesti zavihek spodaj.
+- Gumb nazaj je povsod enak: `button.ghost.back` z ikono `arrow-left` (»← Učna pot«, »← Učbenik«, »← Jaz«).
 - Načini učenja (Nova snov, Ponavljanje, Priprava na test) so kartice `#modebar.modes` na Učni poti; Današnji trening je modra kartica nad njimi.
 
-## Široki zasloni (od 1200 px)
+## Široki zasloni (od 1200 px, tablica ležeče od 1000 px)
 
 Prostor ob strani izkoristimo za informacije, ki jih učenec potrebuje hkrati:
 
@@ -53,8 +54,12 @@ Prostor ob strani izkoristimo za informacije, ki jih učenec potrebuje hkrati:
 - Kazalo učbenika in Napredek: kartice v dveh stolpcih.
 - Ko je odprta plošča za vnos (400 px desno), sta stolpca šele od 1700 px.
 
-## Telefon
+## Telefon in tablica
+
+Pravila so v `public/touch.css`. »Tablica« je zaslon na dotik (`(hover: none) and (pointer: coarse)`) do 1240 px; računalnik z miško iste širine ostane pri zgornjih zavihkih.
 
 - Najmanjša višina tipke za dotik je 44px.
-- Gumbi v `.actions` na telefonu zapolnijo vrstico.
+- Gumbi v `.actions` na telefonu zapolnijo vrstico; tudi posamezen glavni gumb pod obrazcem ali v kartici (Shrani, Začni tekmovanje).
 - Preklopniki so na telefonu čez celo širino.
+- Plošča za vnos: na telefonu in tablici pokončno je spodaj, naloga se pomakne na vrh nad njo (tudi ob preklopu na Piši). Na tablici pokončno so tipke in platno široki največ 640 px. Na tablici ležeče je plošča desno.
+- Tablica ležeče (od 1000 px): isti dva stolpca kot na računalniku (učna pot, lekcija s poskusi desno, kazalo, napredek), z nekoliko ožjim desnim stolpcem.

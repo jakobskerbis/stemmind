@@ -617,9 +617,9 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
   .modes .m-sub { display: none; }
 }
 
-/* ---------- spodnja vrstica (samo telefon) ---------- */
+/* ---------- spodnja vrstica (telefon in tablica na dotik) ---------- */
 .tabbar { display: none; }
-@media (max-width: 760px) {
+@media (max-width: 760px), (max-width: 1240px) and (hover: none) and (pointer: coarse) {
   .topbar .tabs { display: none; }
   .tabbar {
     display: flex; flex-shrink: 0; position: relative; z-index: 4;

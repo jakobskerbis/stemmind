@@ -124,7 +124,8 @@ export async function showTextbook() {
 }
 
 // Na širokem zaslonu so poskusi v desnem stolpcu (ostanejo vidni med branjem), sicer med besedilom.
-const WIDE = matchMedia("(min-width: 1200px)");
+// Isti pogoj kot v ui.css: računalnik od 1200 px ali tablica ležeče od 1000 px.
+const WIDE = matchMedia("(min-width: 1200px), (min-width: 1000px) and (hover: none) and (pointer: coarse)");
 function placeDemos(root = document) {
   root.querySelectorAll(".tb-lesson-grid").forEach((grid) => {
     const side = grid.querySelector(".tb-side");
@@ -370,7 +371,7 @@ async function renderLesson(topicId) {
     : "";
 
   box.innerHTML = `<div class="tb-lesson-grid${demoHtml ? " has-side" : ""}"><div class="tb-main">
-    <button type="button" class="text-btn tb-back" id="tb-back">← Učbenik</button>
+    <button type="button" class="ghost back tb-back" id="tb-back">${ic("arrow-left")}Učbenik</button>
     <p class="muted tb-crumb">${esc(L.pathLabel)} · ${esc(L.unit)}</p>
     <h1 class="tb-title">${esc(L.name)}</h1>
     ${lesson ? `<a class="tb-pdf" href="/ucbenik/${L.path}/${L.id.split("/")[1]}#natisni" target="_blank" rel="noopener">${ic("download")}PDF lekcije</a>` : ""}

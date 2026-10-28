@@ -411,6 +411,7 @@ async function renderAccount() {
   }
   const paid = acc.access.tier === "paid";
   view.innerHTML = `
+    <button type="button" class="ghost back me-back">${icon("arrow-left")}Jaz</button>
     <h1>Račun</h1>
     <div class="card">
       <h2>Naročnina</h2>
