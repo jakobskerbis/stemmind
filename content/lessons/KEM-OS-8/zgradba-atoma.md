@@ -13,7 +13,7 @@ Odgovor se skriva v **zgradbi atoma**. Ko veš, koliko protonov, nevtronov in el
 - razumeš, kako je razporejen periodni sistem,
 - kasneje razložiš, zakaj in kako atomi tvorijo spojine.
 
-V tej lekciji se naučiš, iz katerih delcev je atom, in kako iz dveh števil (vrstnega in masnega) razbereš sestavo atoma.
+V tej lekciji se naučiš, iz katerih delcev je atom in kako iz dveh števil (vrstnega in masnega) razbereš sestavo atoma.
 
 ## Razlaga
 
@@ -51,7 +51,7 @@ Masno število pišemo zgoraj, vrstno spodaj. Na primer $^{23}_{11}\mathrm{Na}$ 
 
 **8. Izotopi.** Atomi istega elementa imajo vedno enako število protonov, lahko pa se razlikujejo po številu nevtronov. Takim atomom pravimo **izotopi**. Imajo enako $Z$, različno $A$. Primer: $^{12}_{6}\mathrm{C}$ ima 6 nevtronov, $^{14}_{6}\mathrm{C}$ pa 8 nevtronov.
 
-V simulaciji spodaj sam sestavljaj atome: dodajaj protone, nevtrone in elektrone ter opazuj, kako se spreminjata element in naboj.
+V simulaciji spodaj (»Sestavi atom«) sam sestavljaj atome: dodajaj protone, nevtrone in elektrone ter opazuj, kako se spreminjata element in naboj.
 
 ## Rešeni primeri
 
@@ -59,34 +59,58 @@ V simulaciji spodaj sam sestavljaj atome: dodajaj protone, nevtrone in elektrone
 
 Določi število protonov, nevtronov in elektronov v atomu $^{19}_{9}\mathrm{F}$.
 
+**Podatki:** zapis $^{19}_{9}\mathrm{F}$: vrstno število $Z = 9$, masno število $A = 19$, atom je nevtralen
+**Iščemo:** število protonov, nevtronov $N$ in elektronov
+
+:::formula
+protoni $= Z$, elektroni $= Z$ (nevtralen atom), $N = A - Z$
+:::
+
+**Rešitev:**
+
 1. Vrstno število je spodaj: $Z = 9$. To je število protonov, torej $p^+ = 9$.
 2. Atom je nevtralen, zato je elektronov enako kot protonov: $e^- = 9$.
 3. Masno število je zgoraj: $A = 19$. Nevtrone dobimo tako, da od vseh delcev v jedru odštejemo protone: $N = A - Z = 19 - 9 = 10$.
 4. Preverimo: $9 + 10 = 19$, kar je res masno število. ✓
-
-**Odgovor:** 9 protonov, 10 nevtronov, 9 elektronov.
+5. Odgovor: atom fluora ima 9 protonov, 10 nevtronov in 9 elektronov.
 
 ### Primer 2: iskanje masnega števila
 
 Atom ima 15 protonov in 16 nevtronov. Za kateri element gre in kolikšno je njegovo masno število?
 
+**Podatki:** število protonov $Z = 15$, število nevtronov $N = 16$, atom je nevtralen
+**Iščemo:** element, masno število $A$ in zapis atoma
+
+:::formula
+$A = Z + N$; element določa vrstno število $Z$ (periodni sistem)
+:::
+
+**Rešitev:**
+
 1. Število protonov je vrstno število: $Z = 15$. Element poiščemo v periodnem sistemu po vrstnem številu: to je fosfor (P).
 2. Masno število je vsota protonov in nevtronov: $A = Z + N = 15 + 16 = 31$.
 3. Zapis: $^{31}_{15}\mathrm{P}$.
 4. Elektronov je 15, ker je atom nevtralen.
-
-**Odgovor:** fosfor, $A = 31$, zapis $^{31}_{15}\mathrm{P}$.
+5. Odgovor: gre za fosfor z masnim številom $A = 31$, zapis $^{31}_{15}\mathrm{P}$.
 
 ### Primer 3 (težji): dva izotopa
 
 Klor ima dva pogosta izotopa: $^{35}_{17}\mathrm{Cl}$ in $^{37}_{17}\mathrm{Cl}$. Primerjaj njuno sestavo in razloži, zakaj sta oba klor.
 
-1. **Prvi izotop:** $Z = 17$, torej 17 protonov in 17 elektronov. $N = 35 - 17 = 18$ nevtronov.
-2. **Drugi izotop:** $Z = 17$, torej 17 protonov in 17 elektronov. $N = 37 - 17 = 20$ nevtronov.
-3. **Primerjava:** Število protonov in elektronov je enako, število nevtronov se razlikuje za $20 - 18 = 2$, zato se razlikujeta tudi masni števili ($37 - 35 = 2$).
-4. **Zakaj sta oba klor?** Element določa število protonov. Obema atomoma je $Z = 17$, zato sta oba klorova atoma. Različno število nevtronov spremeni le maso, ne pa elementa.
+**Podatki:** $^{35}_{17}\mathrm{Cl}$: $Z = 17$, $A_1 = 35$; $^{37}_{17}\mathrm{Cl}$: $Z = 17$, $A_2 = 37$; atoma sta nevtralna
+**Iščemo:** število protonov, nevtronov in elektronov v obeh izotopih ter razlago, zakaj sta oba klor
 
-**Odgovor:** izotopa se razlikujeta le po številu nevtronov (18 in 20), oba imata 17 protonov in 17 elektronov.
+:::formula
+protoni $=$ elektroni $= Z$, $N = A - Z$; element določa število protonov
+:::
+
+**Rešitev:**
+
+1. **Prvi izotop:** $Z = 17$, torej 17 protonov in 17 elektronov. $N_1 = 35 - 17 = 18$ nevtronov.
+2. **Drugi izotop:** $Z = 17$, torej 17 protonov in 17 elektronov. $N_2 = 37 - 17 = 20$ nevtronov.
+3. **Primerjava:** Število protonov in elektronov je enako, število nevtronov se razlikuje za $20 - 18 = 2$, zato se razlikujeta tudi masni števili ($37 - 35 = 2$).
+4. **Zakaj sta oba klor?** Element določa število protonov. Oba atoma imata $Z = 17$, zato sta oba klorova atoma. Različno število nevtronov spremeni le maso, ne pa elementa.
+5. Odgovor: izotopa se razlikujeta le po številu nevtronov (18 in 20); oba imata 17 protonov in 17 elektronov, zato sta oba klor.
 
 ## Pogoste napake
 
@@ -107,7 +131,7 @@ Klor ima dva pogosta izotopa: $^{35}_{17}\mathrm{Cl}$ in $^{37}_{17}\mathrm{Cl}$
 
 ## Drugače: Na sliki
 
-Predstavljaj si atom kot majhno sončno sistemu podobno sliko, čeprav je prava slika bolj zapletena. V sredini je drobno jedro, ki ga narišemo kot kupček rdečih krogcev (protoni, $+$) in sivih krogcev (nevtroni). Okoli jedra krožijo majhni modri krogci (elektroni, $-$).
+Predstavljaj si atom kot majhen sončni sistem, čeprav je prava slika bolj zapletena. V sredini je drobno jedro, ki ga narišemo kot kupček rdečih krogcev (protoni, $+$) in sivih krogcev (nevtroni). Okoli jedra krožijo majhni modri krogci (elektroni, $-$).
 
 Primer za helij $^{4}_{2}\mathrm{He}$:
 
@@ -118,13 +142,13 @@ Primer za helij $^{4}_{2}\mathrm{He}$:
 
 Pomembno: slika ni v merilu. Če bi bilo jedro velikosti graha, bi bila elektronska ovojnica velika kot nogometno igrišče. Večina atoma je prazen prostor.
 
-V simulaciji spodaj to opazuj: ko dodaš proton, se spremeni element, ko dodaš nevtron, se spremeni samo masa, ko dodaš ali odvzameš elektron, pa se spremeni naboj.
+V simulaciji spodaj (»Sestavi atom«) to opazuj: ko dodaš proton, se spremeni element, ko dodaš nevtron, se spremeni samo masa, ko dodaš ali odvzameš elektron, pa se spremeni naboj.
 
 ## Drugače: Iz vsakdanjega življenja
 
 Poskusi si zamisliti atom z analogijo s sestavljanko iz kock.
 
-- **Protoni so kot vrsta kock, ki določa, kaj gradiš.** Če imaš 6 rdečih kock, je to »ogljik«, pri 8 rdečih pa »kisik«. Tako kot ime izdelka določa osnovni sestavni del, ime elementa določa število protonov.
+- **Protoni so kot vrsta kock, ki določa, kaj gradiš.** Če imaš 6 rdečih kock, je to »ogljik«, pri 8 rdečih pa »kisik«. Tako kot osnovni sestavni del določa, kateri izdelek dobiš, število protonov določa, kateri element je to.
 - **Nevtroni so kot dodatna teža v škatli.** Škatlo naredijo težjo, a ne spremenijo njene vrste. Dva atoma ogljika z različnim številom nevtronov sta še vedno ogljik, le težja ali lažja.
 - **Elektroni so kot mravlje okoli mravljišča.** Mravljišče (jedro) je v središču, mravlje (elektroni) so zelo lahke in se gibljejo okoli, skoraj nič ne prispevajo k teži celotnega mravljišča.
 
@@ -155,9 +179,9 @@ Preverjanje: $13 + 14 = 27$. ✓
 
 ## Drugače: Bolj natančno
 
-**Kako so odkrili delce?** Zgradbo atoma so odkrivali postopoma. Elektron je odkril J. J. Thomson (1897), jedro je pokazal Ernest Rutherford s poskusom, pri katerem je tanko zlato folijo obstreljeval z delci. Večina delcev je šla skozi folijo, nekaj pa se jih je močno odklonilo. Iz tega je sklepal, da je večina atoma prazen prostor, v središču pa je majhno, gosto, pozitivno nabito jedro. Nevtron je kasneje odkril James Chadwick (1932).
+**Kako so odkrili delce?** Zgradbo atoma so odkrivali postopoma. Elektron je odkril J. J. Thomson (1897), jedro pa je leta 1911 pokazal Ernest Rutherford z razlago poskusa, pri katerem so v njegovem laboratoriju tanko zlato folijo obstreljevali z delci alfa. Večina delcev je šla skozi folijo, nekaj pa se jih je močno odklonilo. Iz tega je sklepal, da je večina atoma prazen prostor, v središču pa je majhno, gosto, pozitivno nabito jedro. Nevtron je kasneje odkril James Chadwick (1932).
 
-**Relativna atomska masa.** Mase atomov so zelo majhne, zato jih izražamo relativno glede na maso protona (približno $1$). Zato je masno število približno enako masi atoma v tej enoti. Točna atomska masa elementa v periodnem sistemu ni celo število, ker je to povprečje po vseh izotopih, glede na njihovo pogostost. Pri kloru je zato vrednost približno $35{,}5$, ker v naravi prevladuje izotop $^{35}\mathrm{Cl}$, vendar je prisoten tudi $^{37}\mathrm{Cl}$.
+**Relativna atomska masa.** Mase atomov so zelo majhne, zato jih izražamo relativno, glede na dvanajstino mase atoma $^{12}\mathrm{C}$, kar je približno masa enega protona ali nevtrona. Zato je masno število približno enako relativni masi atoma. Relativna atomska masa $A_\mathrm{r}$ elementa v periodnem sistemu ni celo število, ker je to povprečje mas vseh njegovih izotopov glede na njihovo pogostost. Pri kloru je zato vrednost približno $35{,}5$, ker v naravi prevladuje izotop $^{35}\mathrm{Cl}$, vendar je prisoten tudi $^{37}\mathrm{Cl}$.
 
 **Naboj iona.** Če atom izgubi ali pridobi elektron, ni več nevtralen. Število protonov se ne spremeni, zato ostane isti element. Na primer, atom natrija ($Z = 11$) ima 11 elektronov. Če izgubi enega, ima 10 elektronov in 11 protonov, torej naboj $+1$ in ga zapišemo kot $\mathrm{Na^+}$.
 
@@ -180,4 +204,4 @@ Preverjanje: $13 + 14 = 27$. ✓
 - protoni in elektroni
 + protoni in nevtroni
 - nevtroni in elektroni
-> V jedru sta protona in nevtrona, ki ju skupaj imenujemo nukleona. Elektroni so zunaj jedra, v elektronski ovojnici.
+> V jedru so protoni in nevtroni, ki jih skupaj imenujemo nukleoni. Elektroni so zunaj jedra, v elektronski ovojnici.
