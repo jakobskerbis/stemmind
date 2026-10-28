@@ -128,6 +128,15 @@ export const ENGINES = {
   // kemija: računanje, organska kemija
   mol: ["kem-racun.js", "mol"], stehiometrija: ["kem-racun.js", "stehiometrija"], raztopina: ["kem-racun.js", "raztopina"],
   organska: ["kem-organska.js", "organska"], destilacija: ["kem-organska.js", "destilacija"], polimer: ["kem-organska.js", "polimer"], "organske-reakcije": ["kem-organska.js", "organskeReakcije"],
+  // tekmovanja: matematika
+  vitezi: ["mat-tek.js", "vitezi"], predalcki: ["mat-tek.js", "predalcki"], invarianta: ["mat-tek.js", "invarianta"], nim: ["mat-tek.js", "nim"],
+  ostanki: ["mat-tek.js", "ostanki"], poti: ["mat-tek.js", "poti"], diofant: ["mat-tek.js", "diofant"], ura: ["mat-tek.js", "ura"],
+  sredine: ["mat-tek.js", "sredine"], urejanje: ["mat-tek.js", "urejanje"], vieta: ["mat-tek.js", "vieta"], funkcijska: ["mat-tek.js", "funkcijska"],
+  hanoi: ["mat-tek.js", "hanoi"], grafi: ["mat-tek.js", "grafi"], potenca: ["mat-tek.js", "potenca"], ceva: ["mat-tek.js", "ceva"],
+  najkrajsa: ["mat-tek.js", "najkrajsa"], legendre: ["mat-tek.js", "legendre"],
+  // tekmovanja: fizika in kemija
+  vzvod: ["fiz-tek.js", "vzvod"], stojece: ["fiz-tek.js", "stojece"], kirchhoff: ["fiz-tek.js", "kirchhoff"], dimenzije: ["fiz-tek.js", "dimenzije"],
+  hess: ["kem-tek.js", "hess"], pufer: ["kem-tek.js", "pufer"], vsepr: ["kem-tek.js", "vsepr"],
   // zbirka več simulacij (za mešane maturitetne naloge)
   zbirka: ["index.js", "zbirka"],
 };

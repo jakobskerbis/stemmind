@@ -408,3 +408,18 @@
 .demo-svg .atom-txt { font-weight: 700; font-size: 11px; }
 .demo-svg .salt-bridge { fill: none; stroke: color-mix(in srgb, var(--demo-a) 45%, var(--surface)); stroke-width: 12; stroke-linejoin: round; }
 .demo-svg .graph-line.dashed { stroke-dasharray: 6 4; }
+
+/* ---------- tekmovanja ---------- */
+.demo-svg .bad-box { stroke: var(--danger); stroke-width: 2; }
+.demo-svg .beaker.hot { stroke: var(--danger); stroke-width: 3; }
+.demo-svg .cell-light { fill: var(--surface); stroke: var(--border); cursor: pointer; }
+.demo-svg .cell-dark { fill: color-mix(in srgb, var(--text) 55%, var(--surface)); stroke: var(--border); cursor: pointer; }
+.demo-svg .cell-gone { fill: color-mix(in srgb, var(--danger) 18%, transparent); stroke: var(--border); stroke-dasharray: 3 3; cursor: pointer; }
+.demo-svg .domino { fill: color-mix(in srgb, var(--demo-a) 55%, transparent); stroke: var(--demo-a); stroke-width: 2; pointer-events: none; }
+.demo-svg .hit-area { fill: transparent; }
+.demo-svg .edge-red { stroke: var(--danger); cursor: pointer; }
+.demo-svg .edge-blue { stroke: var(--accent); cursor: pointer; }
+.demo-svg .edge-none { stroke: var(--border); stroke-dasharray: 4 4; cursor: pointer; }
+.demo-svg .edge-on { stroke: var(--muted); }
+.demo-svg .lone-pair { fill: color-mix(in srgb, var(--demo-c) 35%, transparent); stroke: var(--demo-c); stroke-width: 1; }
+.demo-svg .pulley { fill: var(--surface-2); stroke: var(--text); stroke-width: 2; }
