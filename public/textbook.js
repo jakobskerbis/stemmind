@@ -1,5 +1,5 @@
 // Učbenik: kazalo, iskanje in lekcije z interaktivnimi demonstracijami.
-import { mountDemo } from "./demos.js";
+import { mountSim } from "./sim/index.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
@@ -236,7 +236,6 @@ async function renderBody() {
               <span class="tb-badges">
                 ${t.lesson ? `<span class="tb-badge">lekcija</span>` : ""}
                 ${t.demo ? `<span class="tb-badge demo">poskus</span>` : ""}
-                ${t.phet && !t.demo ? `<span class="tb-badge sim">simulacija</span>` : ""}
                 ${t.practice ? `<span class="tb-badge vaje">vaje</span>` : ""}
               </span>
             </button></li>`,
@@ -302,11 +301,12 @@ async function renderLesson(topicId) {
   const explainAt = sections.findIndex((s) => /razlag/i.test(s.title));
   const altAt = explainAt >= 0 ? explainAt : 0;
 
-  const locked = !L.interactive && (L.locked?.demo || L.locked?.phet);
-  const demoHtml = L.demo
-    ? `<section class="card tb-demo"><h2>${ic("flask-conical")}Preizkusi sam: ${esc(L.demo.title)}</h2><div id="tb-demo-mount"></div></section>`
+  const locked = !L.interactive && !!L.locked?.demo;
+  const demos = L.demos || (L.demo ? [L.demo] : []);
+  const demoHtml = demos.length
+    ? demos.map((d, i) => `<section class="card tb-demo"><h2>${ic("flask-conical")}Preizkusi sam: ${esc(d.title)}</h2><div class="tb-demo-mount" data-sim="${i}"></div></section>`).join("")
     : locked
-      ? `<section class="card tb-locked"><h2>${ic("lock")}${L.locked.demo ? `Poskus: ${esc(L.locked.demo)}` : "Simulacija"}</h2>
+      ? `<section class="card tb-locked"><h2>${ic("lock")}Poskus: ${esc(L.locked.demo)}</h2>
           <p>Interaktivni poskusi, simulacije in sprotno preverjanje so na voljo v plačljivem paketu in med 7-dnevnim preizkusom. Besedilo lekcije in PDF sta brezplačna.</p>
           <button type="button" class="primary" id="tb-upgrade">${ic("sparkles")}Poglej pakete</button></section>`
       : "";
@@ -332,16 +332,8 @@ async function renderLesson(topicId) {
 
   const fallback = !lesson
     ? `<section class="card tb-section"><div class="explanation">${
-        L.explanation ? R(L.explanation) : `<p>Lekcija za to temo še nastaja.${L.demo || L.phet ? " Medtem si oglej poskus spodaj" : ""}${L.practice ? ", reši nekaj nalog" : ""} ali vprašaj tutorja, ki ti temo razloži po korakih.</p>`
+        L.explanation ? R(L.explanation) : `<p>Lekcija za to temo še nastaja.${L.demo ? " Medtem si oglej poskus spodaj" : ""}${L.practice ? ", reši nekaj nalog" : ""} ali vprašaj tutorja, ki ti temo razloži po korakih.</p>`
       }</div></section>${demoHtml}`
-    : "";
-
-  const phetHtml = L.phet
-    ? `<section class="card tb-phet"><h2>${ic("monitor-play")}Simulacija</h2>
-        <div id="tb-phet-mount"><button type="button" class="secondary" id="tb-phet-load">Naloži simulacijo</button>
-        <a class="muted" href="${esc(L.phet.url)}" target="_blank" rel="noopener">ali jo odpri v novem oknu</a></div>
-        <p class="tb-credit">Simulacija PhET Interactive Simulations, University of Colorado Boulder, licenca CC BY 4.0 (phet.colorado.edu). Če prevod ni na voljo, se odpre v angleščini.</p>
-      </section>`
     : "";
 
   const staticChecks = () => `<section class="card tb-checks"><h2>${ic("circle-help")}Preveri se</h2><ol>${lesson.checks
@@ -370,7 +362,7 @@ async function renderLesson(topicId) {
     <p class="muted tb-sel-hint">${ic("message-circle")}Ti kakšen del ni jasen? Označi ga in pritisni »Razloži«.</p>
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
     ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej tutorju.</p>` : ""}
-    ${sectionHtml}${fallback}${phetHtml}${checksHtml}
+    ${sectionHtml}${fallback}${checksHtml}
     <section class="card tb-next">
       <h2>Kaj zdaj?</h2>
       <div class="actions">
@@ -390,11 +382,11 @@ async function renderLesson(topicId) {
     renderHome();
   });
   wireFormulas(box);
-  if (L.demo) mountDemo(L.demo.id, $("#tb-demo-mount"));
-  $("#tb-upgrade")?.addEventListener("click", () => ctx.showView("account"));
-  $("#tb-phet-load")?.addEventListener("click", () => {
-    $("#tb-phet-mount").innerHTML = `<div class="tb-frame"><iframe src="${esc(L.phet.url)}" title="Simulacija PhET" allowfullscreen loading="lazy"></iframe></div>`;
+  box.querySelectorAll(".tb-demo-mount").forEach((m) => {
+    const d = demos[Number(m.dataset.sim)];
+    mountSim(d.id, m, d.opts);
   });
+  $("#tb-upgrade")?.addEventListener("click", () => ctx.showView("account"));
   // Razloži drugače
   const altBody = $("#tb-alt-body");
   const showAlt = (i) => {
