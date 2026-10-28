@@ -3,7 +3,39 @@ import { mountSim } from "./sim/index.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
-const tb = { subject: null, book: null, query: "", topicId: null, books: [], myPath: null, program: null };
+const tb = { subject: null, book: null, group: null, query: "", topicId: null, books: [], myPath: null, program: null, profile: null };
+
+// Kar iz Nastavitev določa učbenik: smer, program, predmet in razred/letnik.
+const profileOf = (s) =>
+  s ? [s.id, s.settings?.educational_track, s.settings?.study_program, s.settings?.subject, s.settings?.curriculum_level].join("|") : "";
+
+// Ko učenec v Nastavitvah zamenja smer, predmet ali letnik, se učbenik znova prilagodi.
+function syncProfile() {
+  const key = profileOf(ctx.getStudent());
+  if (key === tb.profile) return;
+  Object.assign(tb, { profile: key, subject: null, book: null, group: null, myPath: null, topicId: null, query: "" });
+}
+
+// Deli učbenika v skupinah: pri šolskem učbeniku razred/letnik, pri študijskem programu letnik (z vsemi predmeti).
+function groupsOf(book) {
+  const groups = [];
+  for (const p of book.parts || []) {
+    const name = p.group || p.label.split(",").slice(1).join(",").trim() || p.label;
+    let g = groups.find((x) => x.name === name);
+    if (!g) groups.push((g = { name, parts: [] }));
+    g.parts.push(p);
+  }
+  return groups;
+}
+
+// Privzeta skupina: tista z učenčevo potjo, sicer isti razred/letnik pri drugem predmetu, sicer prva.
+function defaultGroup(groups) {
+  const mine = groups.find((g) => g.parts.some((p) => p.key === tb.myPath));
+  if (mine) return mine.name;
+  const grade = (tb.myPath.match(/-(\d)$/) || [])[1];
+  const same = grade && groups.find((g) => g.parts.some((p) => p.key.endsWith(`-${grade}`)));
+  return (same || groups[0])?.name || null;
+}
 
 // Ikone iz icons.js (ko je na voljo prenovljen vmesnik), sicer brez ikon.
 let iconFn = () => "";
@@ -119,6 +151,7 @@ const esc = (s) => ctx.escapeHtml(String(s ?? ""));
 export async function showTextbook() {
   const box = $("#view-textbook");
   if (!box) return;
+  syncProfile();
   if (tb.topicId) return renderLesson(tb.topicId);
   await renderHome();
 }
@@ -139,6 +172,7 @@ function placeDemos(root = document) {
 WIDE.addEventListener?.("change", () => placeDemos());
 
 export async function openLesson(topicId) {
+  syncProfile();
   tb.topicId = topicId;
   ctx.showView("textbook");
 }
@@ -147,6 +181,7 @@ async function renderHome() {
   current = null;
   const box = $("#view-textbook");
   const student = ctx.getStudent();
+  syncProfile();
   // Študent fakultete: najprej učbenik njegovega študijskega programa, nato OŠ/SŠ.
   const program = student?.settings?.educational_track === "UNIVERZA" ? student.settings.study_program || "" : "";
   if (!tb.books.length || tb.program !== program) {
@@ -154,6 +189,7 @@ async function renderHome() {
     tb.books = await ctx.api(`/api/textbook/books${program ? `?program=${encodeURIComponent(program)}` : ""}`);
     tb.subject = null;
     tb.book = null;
+    tb.group = null;
     tb.myPath = null;
   }
   if (tb.myPath === null) tb.myPath = (await ctx.api(`/api/students/${student.id}/path`).catch(() => null))?.key || "";
@@ -207,12 +243,14 @@ async function renderHome() {
     b.addEventListener("click", () => {
       tb.subject = b.dataset.subj;
       tb.book = null;
+      tb.group = null;
       renderHome();
     }),
   );
   box.querySelectorAll("[data-book]").forEach((b) =>
     b.addEventListener("click", () => {
       tb.book = b.dataset.book;
+      tb.group = null;
       renderHome();
     }),
   );
@@ -257,11 +295,17 @@ async function renderBody() {
           )
           .join("")}</ul>
       </section>`;
-  const parts = book.parts;
-  body.innerHTML = `${parts.length > 1 ? `<nav class="tb-jump chip-row" aria-label="Deli učbenika">${parts
-      .map((p) => `<a href="#tb-part-${esc(p.key)}" class="${p.key === tb.myPath ? "active" : ""}">${esc(p.label.split(",").slice(1).join(",").trim() || p.label)}</a>`)
-      .join("")}</nav>` : ""}
-    ${parts
+  // Prikažemo razred/letnik iz Nastavitev; druge lahko izbereš zgoraj (ali »Vse«).
+  const groups = groupsOf(book);
+  if (tb.group !== "ALL" && !groups.some((g) => g.name === tb.group)) tb.group = defaultGroup(groups);
+  const mineGroup = groups.find((g) => g.parts.some((p) => p.key === tb.myPath))?.name;
+  const shown = tb.group === "ALL" ? book.parts : groups.find((g) => g.name === tb.group)?.parts || book.parts;
+  const chip = (key, label) =>
+    `<button type="button" data-group="${esc(key)}" class="${key === tb.group ? "active" : ""}" aria-pressed="${key === tb.group}">${esc(label)}${key === mineGroup ? ` <span class="tb-mine">tvoj</span>` : ""}</button>`;
+  body.innerHTML = `${groups.length > 1 ? `<nav class="tb-jump chip-row" aria-label="${book.subject === "PROG" || book.school === "SS" ? "Letnik" : "Razred"}">${groups
+      .map((g) => chip(g.name, g.name))
+      .join("")}${chip("ALL", "Vse")}</nav>` : ""}
+    ${shown
       .map(
         (p) => `<section class="tb-part" id="tb-part-${esc(p.key)}">
         <div class="tb-part-head"><h2>${esc(p.label)}</h2>
@@ -270,10 +314,10 @@ async function renderBody() {
       </section>`,
       )
       .join("")}`;
-  body.querySelectorAll(".tb-jump a").forEach((a) =>
-    a.addEventListener("click", (e) => {
-      e.preventDefault();
-      document.querySelector(a.getAttribute("href"))?.scrollIntoView({ behavior: "smooth", block: "start" });
+  body.querySelectorAll("[data-group]").forEach((b) =>
+    b.addEventListener("click", () => {
+      tb.group = b.dataset.group;
+      renderBody();
     }),
   );
 }

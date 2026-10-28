@@ -1,8 +1,14 @@
-# Iz zbranih predmetnikov (JSON iz raziskave) ustvari server/university-extra.js.
-# Uporaba: python3 scripts/uvozi-fakultete.py <fakultete.json> <ključ skupine> ...
+# Zbrane predmetnike (JSON iz raziskave) doda v server/university-extra.js.
+# Uporaba: python3 scripts/uvozi-fakultete.py [--novo] <fakultete.json> <ključ skupine> ...
+#   --novo: datoteko ustvari na novo (sicer obstoječim fakultetam doda predmete in programe;
+#           program z replace: true zamenja letnike istega programa).
 import json, re, sys
 
-src, keys = sys.argv[1], sys.argv[2:]
+args = sys.argv[1:]
+fresh = args[0] == "--novo"
+if fresh:
+    args = args[1:]
+src, keys = args[0], args[1:]
 data = json.load(open(src))
 blocks_src = open("server/university-data.js").read()
 BLOCKS = set(re.search(r"const BLOCKS = \{ ([^}]*) \};", blocks_src).group(1).replace(" ", "").split(","))
@@ -10,6 +16,11 @@ SUBJ = {"MAT", "FIZ", "KEM", "BIO", "GEO", "RAC", "EKO"}
 
 facs = {}
 problems = []
+if not fresh:
+    old = open("server/university-extra.js").read()
+    old = old[old.index("export const EXTRA_FACULTIES = ") + len("export const EXTRA_FACULTIES = "):].rstrip().rstrip(";")
+    for f in json.loads(old):
+        facs[f["id"]] = f
 for r in data["results"]:
     if not r or r["key"] not in keys:
         continue
@@ -33,8 +44,10 @@ for r in data["results"]:
             prog = {"name": p["name"], "source": p["source"], "sourceYear": p["sourceYear"], "years": p["years"]}
             if p.get("electives"):
                 prog["electives"] = p["electives"]
-            if p["id"] in fac["programs"]:
-                problems.append(f"program {p['id']} podvojen")
+            if p.get("replace"):
+                prog["replace"] = True
+            elif p["id"] in fac["programs"]:
+                problems.append(f"program {p['id']} že obstaja; nov zapis brez replace ga prepiše")
             fac["programs"][p["id"]] = prog
 
 # Kode programov, ki niso definirane (in niso obstoječe kode fakultete), izpustimo.
