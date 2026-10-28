@@ -13,6 +13,7 @@ import { getTopic, getPath, listPaths, pathKeyFor, learningPathPrompt, listProgr
 import { getExplanation } from "./explanations.js";
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
+import { programReferences, referencesFor, themesFor } from "./references.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
@@ -369,6 +370,17 @@ export function createApp(store, opts = {}) {
       demos: [],
       demo: null,
     });
+  });
+  // Referenčni material fakultetnih predmetov (prosto dostopni zunanji viri; za vse, brez stroškov).
+  app.get("/api/references", (req, res) => {
+    if (req.query.program) {
+      const r = programReferences(String(req.query.program));
+      return r ? res.json(r) : res.status(404).json({ error: "Študijski program ne obstaja." });
+    }
+    const key = String(req.query.course || "");
+    const p = key.startsWith("UNI-") ? getPath(key) : null;
+    if (!p) return res.status(404).json({ error: "Predmet ne obstaja." });
+    res.json({ key, label: p.label, themes: themesFor(key), items: referencesFor(key) });
   });
   app.get("/api/textbook/search", (req, res) => {
     const subject = /^[A-Z]{2,6}$/.test(req.query.subject || "") ? req.query.subject : undefined;
