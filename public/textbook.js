@@ -1,9 +1,10 @@
 // Učbenik: kazalo, iskanje in lekcije z interaktivnimi demonstracijami.
 import { mountSim } from "./sim/index.js";
+import { t, locale } from "./i18n.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
-const tb = { subject: null, book: null, group: null, query: "", topicId: null, books: [], myPath: null, program: null, profile: null };
+const tb = { subject: null, book: null, group: null, query: "", topicId: null, books: [], myPath: null, program: null, profile: null, mode: "lessons", refType: "", refSl: false, refs: null, refOpen: new Set() };
 
 // Kar iz Nastavitev določa učbenik: smer, program, predmet in razred/letnik.
 const profileOf = (s) =>
@@ -13,7 +14,7 @@ const profileOf = (s) =>
 function syncProfile() {
   const key = profileOf(ctx.getStudent());
   if (key === tb.profile) return;
-  Object.assign(tb, { profile: key, subject: null, book: null, group: null, myPath: null, topicId: null, query: "" });
+  Object.assign(tb, { profile: key, subject: null, book: null, group: null, myPath: null, topicId: null, query: "", mode: "lessons", refs: null });
 }
 
 // Deli učbenika v skupinah: pri šolskem učbeniku razred/letnik, pri študijskem programu letnik (z vsemi predmeti).
@@ -229,6 +230,10 @@ async function renderHome() {
           <a class="btn-primary tb-book-pdf" href="/ucbenik/${esc(book.key)}#natisni" target="_blank" rel="noopener">${ic("download")}Celoten učbenik (PDF)</a>
           ${book.formulas ? `<a class="btn-secondary tb-book-pdf" href="/ucbenik/${esc(book.key)}/formule#natisni" target="_blank" rel="noopener">${ic("sigma")}Formule in konstante (PDF)</a>` : ""}
         </div>
+        ${book.subject === "PROG" ? `<div class="seg tb-mode" role="tablist" aria-label="${esc(t("refs.title"))}">
+          <button type="button" role="tab" data-mode="lessons" class="${tb.mode !== "refs" ? "active" : ""}" aria-selected="${tb.mode !== "refs"}">${ic("book-open")}${esc(t("refs.tabLessons"))}</button>
+          <button type="button" role="tab" data-mode="refs" class="${tb.mode === "refs" ? "active" : ""}" aria-selected="${tb.mode === "refs"}">${ic("library")}${esc(t("refs.title"))}</button>
+        </div>` : ""}
       </div>` : ""}
     </div>
     <div id="tb-body"></div>`;
@@ -247,6 +252,16 @@ async function renderHome() {
       tb.book = null;
       tb.group = null;
       renderHome();
+    }),
+  );
+  box.querySelectorAll("[data-mode]").forEach((b) =>
+    b.addEventListener("click", () => {
+      tb.mode = b.dataset.mode;
+      box.querySelectorAll("[data-mode]").forEach((x) => {
+        x.classList.toggle("active", x === b);
+        x.setAttribute("aria-selected", String(x === b));
+      });
+      renderBody();
     }),
   );
   box.querySelectorAll("[data-book]").forEach((b) =>
@@ -282,6 +297,7 @@ async function renderBody() {
     return;
   }
   const book = await ctx.api(`/api/textbook/toc?book=${encodeURIComponent(tb.book)}&system=${encodeURIComponent(tb.system || "SI")}`);
+  if (book.subject === "PROG" && tb.mode === "refs") return renderRefs(body, book);
   const unitHtml = (u, i) => `<section class="card tb-unit">
         <h2><span class="tb-num">${i + 1}</span>${esc(u.title)}</h2>
         <ul class="tb-list">${u.topics
@@ -485,5 +501,103 @@ async function renderLesson(topicId) {
   });
   $("#tb-ask").addEventListener("click", () =>
     ctx.learnWithTutor({ id: L.id, name: L.name }, `Prebral sem lekcijo »${L.name}«, pa mi še ni čisto jasno. Mi razložiš na drug način?`),
+  );
+}
+
+// ---------- Referenčni material (fakultetni predmeti) ----------
+// Prosto dostopni zunanji viri po predmetih programa: učbeniki, zapiski, video, naloge.
+// Podatki: content/references/*.json prek /api/references.
+const REF_TYPES = ["ucbenik", "zapiski", "video", "naloge", "tecaj", "prirocnik"];
+const REF_ICONS = { ucbenik: "book-open", zapiski: "notebook-pen", video: "monitor-play", naloge: "list-checks", tecaj: "graduation-cap", prirocnik: "file-text" };
+const REF_SHOWN = 5;
+
+function langName(code) {
+  try {
+    const n = new Intl.DisplayNames([locale()], { type: "language" }).of(code);
+    return n ? n.charAt(0).toUpperCase() + n.slice(1) : code;
+  } catch {
+    return code;
+  }
+}
+
+const refRow = (it) => `<a class="list-row ref-row" href="${esc(it.url)}" target="_blank" rel="noopener noreferrer">
+    <span class="ic">${ic(REF_ICONS[it.type] || "file-text")}</span>
+    <span class="lr-text">
+      <b>${esc(it.title)}</b>
+      <small>${esc([it.source, it.author].filter(Boolean).join(" · "))}</small>
+      ${it.desc ? `<span class="ref-desc">${esc(it.desc)}</span>` : ""}
+      <span class="tb-badges ref-badges">
+        <span class="tb-badge">${esc(t(`refs.type.${it.type}`))}</span>
+        <span class="tb-badge ref-lang">${esc(langName(it.lang))}</span>
+        ${it.theme ? "" : `<span class="tb-badge vaje">${esc(t("refs.faculty"))}</span>`}
+        ${it.license ? `<span class="ref-license">${esc(t("refs.license", { license: it.license }))}</span>` : ""}
+      </span>
+    </span>
+    ${ic("external-link")}<span class="sr-only">${esc(t("refs.newTab"))}</span>
+  </a>`;
+
+async function renderRefs(body, book) {
+  if (tb.refs?.program !== tb.program) {
+    body.innerHTML = `<p class="muted">${esc(t("common.loading"))}</p>`;
+    try {
+      tb.refs = await ctx.api(`/api/references?program=${encodeURIComponent(tb.program)}`);
+    } catch {
+      tb.refs = null;
+      body.innerHTML = `<div class="card"><p>${esc(t("refs.none"))}</p></div>`;
+      return;
+    }
+  }
+  const groups = groupsOf(book);
+  if (tb.group !== "ALL" && !groups.some((g) => g.name === tb.group)) tb.group = defaultGroup(groups);
+  const courses = tb.refs.courses.filter((c) => tb.group === "ALL" || c.group === tb.group);
+  const keep = (it) => (!tb.refType || it.type === tb.refType) && (!tb.refSl || it.lang === "sl");
+  const chip = (attr, key, label, on) =>
+    `<button type="button" ${attr}="${esc(key)}" class="${on ? "active" : ""}" aria-pressed="${on}">${esc(label)}</button>`;
+  const types = REF_TYPES.filter((ty) => tb.refs.courses.some((c) => c.items.some((it) => it.type === ty)));
+  const courseHtml = (c) => {
+    const items = c.items.filter(keep);
+    const open = tb.refOpen.has(c.key);
+    const shown = open ? items : items.slice(0, REF_SHOWN);
+    return `<section class="card ref-course">
+      <h2>${esc(c.label)}</h2>
+      ${c.themes.length ? `<p class="muted ref-area">${esc(t("refs.area", { areas: c.themes.join(", ") }))}</p>` : ""}
+      ${items.length
+        ? `<div class="list-card ref-list">${shown.map(refRow).join("")}</div>
+          ${items.length > REF_SHOWN ? `<button type="button" class="text-btn ref-more" data-ref-more="${esc(c.key)}">${esc(open ? t("refs.showLess") : t("refs.showAll", { count: items.length }))}</button>` : ""}`
+        : `<p class="muted">${esc(c.items.length ? t("refs.noneFilter") : t("refs.none"))}</p>`}
+    </section>`;
+  };
+  body.innerHTML = `
+    <p class="muted ref-intro">${esc(t("refs.intro"))}</p>
+    ${groups.length > 1 ? `<nav class="tb-jump chip-row" aria-label="Letnik">${groups.map((g) => chip("data-group", g.name, g.name, g.name === tb.group)).join("")}${chip("data-group", "ALL", t("refs.all"), tb.group === "ALL")}</nav>` : ""}
+    <div class="chip-row ref-filters" aria-label="${esc(t("refs.filter"))}">
+      ${chip("data-ref-type", "", t("refs.all"), !tb.refType)}
+      ${types.map((ty) => chip("data-ref-type", ty, t(`refs.type.${ty}`), tb.refType === ty)).join("")}
+      ${chip("data-ref-sl", "1", t("refs.onlySl"), tb.refSl)}
+    </div>
+    <div class="ref-courses">${courses.map(courseHtml).join("")}</div>`;
+  body.querySelectorAll("[data-group]").forEach((b) =>
+    b.addEventListener("click", () => {
+      tb.group = b.dataset.group;
+      renderBody();
+    }),
+  );
+  body.querySelectorAll("[data-ref-type]").forEach((b) =>
+    b.addEventListener("click", () => {
+      tb.refType = b.dataset.refType;
+      renderBody();
+    }),
+  );
+  body.querySelector("[data-ref-sl]")?.addEventListener("click", () => {
+    tb.refSl = !tb.refSl;
+    renderBody();
+  });
+  body.querySelectorAll("[data-ref-more]").forEach((b) =>
+    b.addEventListener("click", () => {
+      const k = b.dataset.refMore;
+      if (tb.refOpen.has(k)) tb.refOpen.delete(k);
+      else tb.refOpen.add(k);
+      renderBody();
+    }),
   );
 }
