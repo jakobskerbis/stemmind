@@ -3,18 +3,20 @@
 // Izbira se zapiše v skrita polja obrazca (educational_track, study_program,
 // curriculum_level), zato jo obrazci berejo kot prej.
 
+import { t } from "./i18n.js";
+
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
 const TRACKS = [
-  ["OSNOVNA_SOLA", "Osnovna šola", "6.–9. razred"],
-  ["SREDNJA_SOLA", "Srednja šola", "1.–4. letnik"],
-  ["UNIVERZA", "Fakulteta", "1. stopnja"],
+  ["OSNOVNA_SOLA", t("lp.os"), t("lp.osSub")],
+  ["SREDNJA_SOLA", t("lp.ss"), t("lp.ssSub")],
+  ["UNIVERZA", t("lp.uni"), t("lp.uniLevel")],
 ];
 const OS_GRADES = ["6. razred", "7. razred", "8. razred", "9. razred"];
 const SS_YEARS = ["1. letnik", "2. letnik", "3. letnik", "4. letnik"];
 const SS_LEVELS = [
-  ["OR", "Osnovna raven", "matura iz matematike na osnovni ravni"],
-  ["VR", "Višja raven", "matura iz matematike na višji ravni"],
+  ["OR", t("lp.or"), t("lp.orSub")],
+  ["VR", t("lp.vr"), t("lp.vrSub")],
 ];
 const UNI_YEARS = ["1. letnik", "2. letnik", "3. letnik", "4. letnik"];
 
@@ -45,28 +47,28 @@ function toSettings(v) {
 
 // Vrstni red korakov za trenutno izbiro: [ključ, vprašanje, možnosti [vrednost, oznaka, opis], izbrana oznaka].
 function steps(v, programs) {
-  const out = [["track", "Kje se učiš?", TRACKS, TRACKS.find((t) => t[0] === v.track)?.[1]]];
-  if (v.track === "OSNOVNA_SOLA") out.push(["grade", "Kateri razred?", OS_GRADES.map((g) => [g, g]), v.grade]);
+  const out = [["track", t("lp.qTrack"), TRACKS, TRACKS.find((t) => t[0] === v.track)?.[1]]];
+  if (v.track === "OSNOVNA_SOLA") out.push(["grade", t("lp.qGrade"), OS_GRADES.map((g) => [g, levelLabel(g)]), v.grade && levelLabel(v.grade)]);
   if (v.track === "SREDNJA_SOLA") {
-    out.push(["year", "Kateri letnik?", SS_YEARS.map((y) => [y, y]), v.year]);
-    if (v.year) out.push(["ssLevel", "Katera raven matematike?", SS_LEVELS, SS_LEVELS.find((l) => l[0] === v.ssLevel)?.[1]]);
+    out.push(["year", t("lp.qYear"), SS_YEARS.map((y) => [y, levelLabel(y)]), v.year && levelLabel(v.year)]);
+    if (v.year) out.push(["ssLevel", t("lp.qLevel"), SS_LEVELS, SS_LEVELS.find((l) => l[0] === v.ssLevel)?.[1]]);
   }
   if (v.track === "UNIVERZA") {
     const unis = [...new Map(programs.map((p) => [p.university, p.universityName])).entries()];
-    out.push(["uni", "Katera univerza?", unis.map(([k, n]) => [k, k, n]), unis.find(([k]) => k === v.uni)?.[0]]);
+    out.push(["uni", t("lp.qUni"), unis.map(([k, n]) => [k, k, n]), unis.find(([k]) => k === v.uni)?.[0]]);
     if (v.uni) {
       const facs = [...new Map(programs.filter((p) => p.university === v.uni).map((p) => [p.faculty, p])).values()];
       const fac = facs.find((p) => p.faculty === v.faculty);
-      out.push(["faculty", "Katera fakulteta?", facs.map((p) => [p.faculty, p.facultyShort.replace(`${v.uni} `, ""), p.facultyName.replace(/^U[A-Z]+ /, "")]), fac?.facultyShort.replace(`${v.uni} `, "")]);
+      out.push(["faculty", t("lp.qFaculty"), facs.map((p) => [p.faculty, p.facultyShort.replace(`${v.uni} `, ""), p.facultyName.replace(/^U[A-Z]+ /, "")]), fac?.facultyShort.replace(`${v.uni} `, "")]);
     }
     if (v.faculty) {
       const progs = programs.filter((p) => p.faculty === v.faculty);
-      out.push(["program", "Kateri študijski program?", progs.map((p) => [p.id, p.name, "univerzitetni, 1. stopnja"]), progs.find((p) => p.id === v.program)?.name]);
+      out.push(["program", t("lp.qProgram"), progs.map((p) => [p.id, p.name, t("lp.uniSub")]), progs.find((p) => p.id === v.program)?.name]);
     }
     if (v.program) {
       const p = programs.find((x) => x.id === v.program);
       const years = UNI_YEARS.slice(0, p?.years || 3);
-      out.push(["year", "Kateri letnik?", years.map((y) => [y, y]), v.year]);
+      out.push(["year", t("lp.qYear"), years.map((y) => [y, levelLabel(y)]), v.year && levelLabel(v.year)]);
     }
   }
   return out;
@@ -99,9 +101,9 @@ export function mountLevelPicker(box, form, { programs, settings = {}, onChange 
     const current = list.find((s) => s[0] === open) || list.find((s) => !s[3]);
     box.innerHTML = `
       <div class="lp-crumbs">${done
-        .map(([k, , , label]) => `<button type="button" class="lp-crumb" data-step="${k}" title="Spremeni">${esc(label)}</button>`)
+        .map(([k, , , label]) => `<button type="button" class="lp-crumb" data-step="${k}" title="${t("common.change")}">${esc(label)}</button>`)
         .join(`<span class="lp-sep" aria-hidden="true">›</span>`)}${
-        !current && done.length ? `<button type="button" class="text-btn lp-change" data-step="track">Spremeni</button>` : ""
+        !current && done.length ? `<button type="button" class="text-btn lp-change" data-step="track">${t("common.change")}</button>` : ""
       }</div>
       ${
         current
@@ -142,4 +144,11 @@ export function mountLevelPicker(box, form, { programs, settings = {}, onChange 
     },
     complete: () => !!toSettings(v),
   };
+}
+
+// Prikaz ravni v izbranem jeziku: »8. razred« → »Grade 8«, »2. letnik VR« → »Year 2 VR«. Shranjena vrednost ostane slovenska.
+export function levelLabel(level) {
+  const m = /^(\d+)\. (razred|letnik)(.*)$/.exec(String(level || ""));
+  if (!m) return String(level || "");
+  return t(m[2] === "razred" ? "lp.grade" : "path.year", { n: m[1] }) + m[3];
 }

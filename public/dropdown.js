@@ -82,7 +82,10 @@ function open(sel, btn) {
     const i = o.index;
     return `<div class="dd-opt" role="option" data-i="${i}" aria-selected="${i === current}"${o.disabled ? ' aria-disabled="true"' : ""}><span>${esc(o.textContent)}</span>${CHECK}</div>`;
   }
-  list.innerHTML = html || '<div class="dd-group">Ni možnosti</div>';
+  // Dolg seznam (npr. jeziki) ima na vrhu iskalnik: <select data-search data-search-ph="Išči …">.
+  const searchable = sel.hasAttribute("data-search");
+  const empty = `<div class="dd-group dd-empty"${html ? " hidden" : ""}>${esc(sel.dataset.emptyText || "Ni možnosti")}</div>`;
+  list.innerHTML = (searchable ? `<div class="dd-search"><input type="search" autocomplete="off" placeholder="${esc(sel.dataset.searchPh || "…")}" aria-label="${esc(sel.dataset.searchPh || "…")}"></div>` : "") + html + empty;
   list.querySelectorAll(".dd-opt").forEach((el) => items.push(el));
   document.body.append(list);
   btn.setAttribute("aria-expanded", "true");
@@ -90,9 +93,32 @@ function open(sel, btn) {
   btn.closest(".dd").classList.add("open");
   place(btn, list);
 
-  const state = { sel, btn, list, items, active: -1 };
+  const state = { sel, btn, list, items, active: -1, search: list.querySelector(".dd-search input") };
   openMenu = state;
   setActive(state, Math.max(0, items.findIndex((el) => Number(el.dataset.i) === current)), true);
+  if (state.search) {
+    const fold = (x) => x.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    state.search.addEventListener("input", () => {
+      const q = fold(state.search.value.trim());
+      let first = -1;
+      items.forEach((el, k) => {
+        el.hidden = !!q && !fold(el.textContent).includes(q);
+        if (!el.hidden && first < 0) first = k;
+      });
+      // Skupine brez zadetkov skrijemo.
+      list.querySelectorAll(".dd-group:not(.dd-empty)").forEach((g) => {
+        let n = g.nextElementSibling, any = false;
+        while (n && !n.classList.contains("dd-group")) { if (!n.hidden) any = true; n = n.nextElementSibling; }
+        g.hidden = !any;
+      });
+      list.querySelector(".dd-empty").hidden = first >= 0;
+      if (first >= 0) setActive(state, first);
+    });
+    state.search.addEventListener("keydown", (e) => onKey(state, e, true));
+    state.search.addEventListener("focus", () => (state.searching = true));
+    // Na zaslonu na dotik tipkovnica ne skoči gor sama; iskalnik odpre dotik.
+    if (!matchMedia("(pointer: coarse)").matches) state.search.focus({ preventScroll: true });
+  }
 
   list.addEventListener("click", (e) => {
     const el = e.target.closest(".dd-opt");
@@ -102,8 +128,8 @@ function open(sel, btn) {
     const el = e.target.closest(".dd-opt");
     if (el) setActive(state, items.indexOf(el));
   });
-  list.focus({ preventScroll: true });
-  list.addEventListener("keydown", (e) => onKey(state, e));
+  if (!state.search || matchMedia("(pointer: coarse)").matches) list.focus({ preventScroll: true });
+  list.addEventListener("keydown", (e) => e.target === state.search || onKey(state, e));
 }
 
 // Seznam pod gumbom (ali nad njim, če spodaj ni prostora), nikoli čez rob zaslona.
@@ -144,23 +170,23 @@ function setActive(state, i, center = false) {
 
 function step(state, dir) {
   let i = state.active;
-  do i += dir; while (i >= 0 && i < state.items.length && state.items[i].getAttribute("aria-disabled") === "true");
+  do i += dir; while (i >= 0 && i < state.items.length && (state.items[i].hidden || state.items[i].getAttribute("aria-disabled") === "true"));
   setActive(state, i);
 }
 
 let typed = "", typedAt = 0;
-function onKey(state, e) {
+function onKey(state, e, inSearch = false) {
   if (e.key === "ArrowDown") { e.preventDefault(); step(state, 1); }
   else if (e.key === "ArrowUp") { e.preventDefault(); step(state, -1); }
-  else if (e.key === "Home") { e.preventDefault(); setActive(state, 0); }
-  else if (e.key === "End") { e.preventDefault(); setActive(state, state.items.length - 1); }
-  else if (e.key === "Enter" || e.key === " ") {
+  else if (!inSearch && e.key === "Home") { e.preventDefault(); setActive(state, 0); }
+  else if (!inSearch && e.key === "End") { e.preventDefault(); setActive(state, state.items.length - 1); }
+  else if (e.key === "Enter" || (!inSearch && e.key === " ")) {
     e.preventDefault();
     const el = state.items[state.active];
     if (el && el.getAttribute("aria-disabled") !== "true") choose(state, Number(el.dataset.i));
   } else if (e.key === "Escape") { e.preventDefault(); closeMenu(true); }
   else if (e.key === "Tab") closeMenu(true);
-  else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+  else if (!inSearch && e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
     typed = Date.now() - typedAt > 700 ? e.key.toLowerCase() : typed + e.key.toLowerCase();
     typedAt = Date.now();
     const i = state.items.findIndex((el) => el.textContent.trim().toLowerCase().startsWith(typed));
@@ -193,10 +219,11 @@ export function closeMenu(refocus = false) {
 document.addEventListener("pointerdown", (e) => {
   if (openMenu && !openMenu.list.contains(e.target) && !openMenu.btn.contains(e.target)) closeMenu();
 }, true);
+// Med iskanjem (tipkovnica na telefonu premakne ali pomanjša zaslon) seznam ostane odprt.
 document.addEventListener("scroll", (e) => {
-  if (openMenu && !openMenu.list.contains(e.target)) closeMenu();
+  if (openMenu && !openMenu.searching && !openMenu.list.contains(e.target)) closeMenu();
 }, true);
-window.addEventListener("resize", () => closeMenu());
+window.addEventListener("resize", () => openMenu?.searching || closeMenu());
 
 export function enhanceAll(root = document) {
   if (root.tagName === "SELECT") enhanceSelect(root);

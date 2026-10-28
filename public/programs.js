@@ -1,4 +1,5 @@
 // Univerzitetni študijski programi (1. stopnja): seznam s strežnika in izbirnik.
+import { t } from "./i18n.js";
 let cache = null;
 
 export async function loadPrograms(api) {
@@ -31,15 +32,7 @@ export const UNI_YEARS = ["1. letnik", "2. letnik", "3. letnik", "4. letnik"];
 export const programYears = (program) => UNI_YEARS.slice(0, program?.years || 3);
 
 // Predmeti aplikacije. Študenti imajo še strokovne predmete svojega programa.
-export const SUBJECT_NAMES = {
-  MAT: "Matematika",
-  FIZ: "Fizika",
-  KEM: "Kemija",
-  BIO: "Biologija",
-  GEO: "Geologija in okolje",
-  RAC: "Računalništvo",
-  EKO: "Ekonomija",
-};
+export const SUBJECT_NAMES = Object.fromEntries(["MAT", "FIZ", "KEM", "BIO", "GEO", "RAC", "EKO"].map((k) => [k, t(`subj.${k}`)]));
 export const SCHOOL_SUBJECTS = ["MAT", "FIZ", "KEM"];
 
 // <option> za izbiro predmeta: OŠ/SŠ tri, študent predmete svojega programa.

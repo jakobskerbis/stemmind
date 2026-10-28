@@ -1,6 +1,7 @@
 // Nastavitve učenca (nadzorna plošča) in njihovo preverjanje.
 import { PROGRAMS } from "./university-data.js";
 import { ALL_SUBJECTS, SCHOOL_SUBJECTS } from "./subjects.js";
+import { LANGUAGE_CODES, DEFAULT_LANGUAGE } from "../public/i18n/languages.js";
 
 export const ENUMS = {
   subject: ALL_SUBJECTS,
@@ -8,6 +9,7 @@ export const ENUMS = {
   educational_track: ["OSNOVNA_SOLA", "SREDNJA_SOLA", "UNIVERZA"],
   study_program: ["", ...Object.keys(PROGRAMS)],
   solving_mode: ["A", "B"],
+  language: LANGUAGE_CODES,
 };
 
 export const DEFAULT_SETTINGS = {
@@ -18,6 +20,7 @@ export const DEFAULT_SETTINGS = {
   study_program: "",
   solving_mode: "A",
   personality_setting: "prijazen in spodbuden",
+  language: DEFAULT_LANGUAGE,
 };
 
 // Proste besedilne nastavitve gredo v sistemski prompt, zato jih skrajšamo

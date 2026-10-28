@@ -1,19 +1,20 @@
 // Nastavitve → Videz: svetli/temni način, poudarki, barve oken, menijev in pisave, naključne barve.
 // Vse se zgodi takoj in velja za to napravo (theme.js).
 import { icon } from "./icons.js";
+import { t } from "./i18n.js";
 
 const T = window.STEMTheme;
 const ACCENTS = [
-  ["#2563eb", "Modra"], ["#4f46e5", "Indigo"], ["#7c3aed", "Vijolična"], ["#db2777", "Roza"],
-  ["#dc2626", "Rdeča"], ["#ea580c", "Oranžna"], ["#16a34a", "Zelena"], ["#0d9488", "Turkizna"],
+  ["#2563eb", t("ap.blue")], ["#4f46e5", t("ap.indigo")], ["#7c3aed", t("ap.violet")], ["#db2777", t("ap.pink")],
+  ["#dc2626", t("ap.red")], ["#ea580c", t("ap.orange")], ["#16a34a", t("ap.green")], ["#0d9488", t("ap.teal")],
 ];
 const PARTS = [
-  ["bg", "Ozadje"],
-  ["surface", "Okna in kartice"],
-  ["menu", "Meniji"],
-  ["text", "Pisava"],
+  ["bg", t("ap.bg")],
+  ["surface", t("ap.surface")],
+  ["menu", t("ap.menu")],
+  ["text", t("ap.text")],
 ];
-const MODES = [["light", "sun", "Svetlo"], ["dark", "moon", "Temno"], ["system", "sun-moon", "Samodejno"]];
+const MODES = [["light", "sun", t("ap.light")], ["dark", "moon", t("ap.dark")], ["system", "sun-moon", t("ap.system")]];
 
 export function mountAppearance(box) {
   if (!box || !T) return;
@@ -27,39 +28,39 @@ export function mountAppearance(box) {
     const accentNow = (s.accent || ACCENTS[0][0]).toLowerCase(); // brez izbire = privzeta modra
     const textFixed = pal.text && c && c.vars["--text"].toLowerCase() !== pal.text.toLowerCase();
     box.innerHTML = `
-      <h2 class="h-icon">${icon("palette")}Videz</h2>
-      <p class="muted">Barve veljajo za to napravo. Besedilo ostane vedno dobro berljivo: če izbrana barva ni dovolj kontrastna, jo aplikacija sama malo potemni ali posvetli.</p>
+      <h2 class="h-icon">${icon("palette")}${t("ap.title")}</h2>
+      <p class="muted">${t("ap.note")}</p>
 
       <div class="ap-row">
-        <span class="field-label">Način</span>
-        <div class="seg" role="radiogroup" aria-label="Način">${MODES.map(([v, ic, label]) =>
+        <span class="field-label">${t("ap.mode")}</span>
+        <div class="seg" role="radiogroup" aria-label="${t("ap.mode")}">${MODES.map(([v, ic, label]) =>
           `<button type="button" role="radio" data-mode="${v}" class="${s.mode === v ? "active" : ""}" aria-checked="${s.mode === v}">${icon(ic)}${label}</button>`).join("")}</div>
       </div>
 
       <div class="ap-row">
-        <span class="field-label">Barva poudarkov</span>
-        <div class="swatches" role="radiogroup" aria-label="Barva poudarkov">
+        <span class="field-label">${t("ap.accent")}</span>
+        <div class="swatches" role="radiogroup" aria-label="${t("ap.accent")}">
           ${ACCENTS.map(([hex, name]) => `<button type="button" class="swatch${accentNow === hex ? " on" : ""}" role="radio" aria-checked="${accentNow === hex}" data-accent="${hex}" style="--sw:${hex}" title="${name}" aria-label="${name}"></button>`).join("")}
-          <label class="swatch custom${ACCENTS.some(([h]) => h === accentNow) ? "" : " on"}" title="Lastna barva" style="--sw:${current("accent")}">
-            <input type="color" data-accent-pick value="${current("accent")}" aria-label="Lastna barva poudarkov">${icon("plus")}
+          <label class="swatch custom${ACCENTS.some(([h]) => h === accentNow) ? "" : " on"}" title="${t("ap.customColor")}" style="--sw:${current("accent")}">
+            <input type="color" data-accent-pick value="${current("accent")}" aria-label="${t("ap.customAccent")}">${icon("plus")}
           </label>
         </div>
-        <div class="actions"><button type="button" class="secondary" data-random="accent">${icon("dices")}Naključni poudarki</button></div>
+        <div class="actions"><button type="button" class="secondary" data-random="accent">${icon("dices")}${t("ap.randomAccent")}</button></div>
       </div>
 
       <div class="ap-row">
-        <span class="field-label">Barve za ${key === "dark" ? "temni" : "svetli"} način</span>
+        <span class="field-label">${t(key === "dark" ? "ap.colorsDark" : "ap.colorsLight")}</span>
         <div class="color-rows">${PARTS.map(([k, label]) => `
           <label class="color-row">
             <span class="color-dot" style="--sw:${current(k)}"><input type="color" data-part="${k}" value="${current(k)}"></span>
             <span class="color-name">${label}</span>
-            ${pal[k] ? `<button type="button" class="ghost small" data-reset-part="${k}" aria-label="Privzeta barva: ${label}">${icon("rotate-ccw")}</button>` : ""}
+            ${pal[k] ? `<button type="button" class="ghost small" data-reset-part="${k}" aria-label="${t("ap.resetPart", { part: label })}">${icon("rotate-ccw")}</button>` : ""}
           </label>`).join("")}
         </div>
-        ${textFixed ? `<p class="small-note muted">Izbrana pisava je bila na tej podlagi slabo berljiva, zato je malo ${T.contrast(pal.text, "#000") > T.contrast(pal.text, "#fff") ? "potemnjena" : "posvetljena"}.</p>` : ""}
+        ${textFixed ? `<p class="small-note muted">${t(T.contrast(pal.text, "#000") > T.contrast(pal.text, "#fff") ? "ap.textDarker" : "ap.textLighter")}</p>` : ""}
         <div class="actions">
-          <button type="button" class="primary" data-random="all">${icon("dices")}Naključne barve</button>
-          <button type="button" class="secondary" data-reset>${icon("rotate-ccw")}Privzete barve</button>
+          <button type="button" class="primary" data-random="all">${icon("dices")}${t("ap.random")}</button>
+          <button type="button" class="secondary" data-reset>${icon("rotate-ccw")}${t("ap.reset")}</button>
         </div>
       </div>`;
   };
