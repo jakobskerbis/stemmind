@@ -25,7 +25,7 @@ $$D_{12} = \{1, 2, 3, 4, 6, 12\}$$
 
 Deliteljev je **končno mnogo**. Vsako število ima vsaj delitelja $1$ in samega sebe, noben delitelj pa ni večji od števila.
 
-**3. Dve strani iste zadeve.** Enakost $12 = 6 \cdot 2$ pove dvoje hkrati: $12$ je večkratnik števila $6$ in $6$ je delitelj števila $12$. Večkratnike dobimo z množenjem in so večji ali enaki številu, delitelje dobimo z deljenjem in so manjši ali enaki številu.
+**3. Dve strani iste zadeve.** Enakost $12 = 6 \cdot 2$ pove dvoje hkrati: $12$ je večkratnik števila $6$ in $6$ je delitelj števila $12$. Večkratnike števila $b$ dobimo z množenjem in so večji ali enaki $b$, delitelje števila $a$ dobimo z deljenjem in so manjši ali enaki $a$.
 
 Ali je $a$ večkratnik števila $b$, preveriš z deljenjem: če se $a : b$ izide brez ostanka, je odgovor da. Na primer $252 : 12 = 21$, zato je $252$ večkratnik števila $12$. Pri $250 : 12$ pa dobiš $20$ in ostanek $10$, zato $250$ ni večkratnik števila $12$. Pravila deljivosti za $2$, $3$, $5$, $9$ in $10$ ti pri tem prihranijo veliko dela.
 
@@ -44,7 +44,7 @@ $$\underbrace{a \cdot a \cdot \ldots \cdot a}_{n \text{ faktorjev}} = a^n$$
 | $n$ | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 |---|---|---|---|---|---|---|---|---|---|---|
 | $n^2$ | 1 | 4 | 9 | 16 | 25 | 36 | 49 | 64 | 81 | 100 |
-| $n^3$ | 1 | 8 | 27 | 64 | 125 | 216 | 343 | 512 | 729 | 1000 |
+| $n^3$ | 1 | 8 | 27 | 64 | 125 | 216 | 343 | 512 | 729 | $1\,000$ |
 
 **6. Pozor pri računanju s potencami.** Potenca ni produkt osnove in eksponenta: $2^3 = 2 \cdot 2 \cdot 2 = 8$, ne $2 \cdot 3 = 6$. Osnova in eksponent tudi nista zamenljiva: $2^3 = 8$, a $3^2 = 9$. V vrstnem redu operacij se potenca računa **pred množenjem**, torej: oklepaji, potence, množenje in deljenje, seštevanje in odštevanje. Primer: $3 \cdot 2^3 = 3 \cdot 8 = 24$. Če želimo najprej pomnožiti, potrebujemo oklepaj: $(3 \cdot 2)^3 = 6^3 = 216$.
 
@@ -76,7 +76,7 @@ Večkratniki števila $b$: $b \cdot 1,\ b \cdot 2,\ b \cdot 3,\ \dots$. Število
 
 1. Večkratnike dobimo z množenjem s $1, 2, 3, 4, 5, 6$: $7, 14, 21, 28, 35, 42$. Torej $V_7 = \{7, 14, 21, 28, 35, 42, \dots\}$.
 2. Delitelje števila $28$ iščemo kot pare faktorjev: $28 = 1 \cdot 28$, $28 = 2 \cdot 14$, $28 = 4 \cdot 7$.
-3. Števili $3$ in $5$ ne delita $28$ (ostanka sta $1$ in $3$). Pri $4 \cdot 7$ smo že prešli sredino, zato smo končali.
+3. Števili $3$ in $5$ ne delita $28$ (ostanka sta $1$ in $3$). Pri $6$ bi bil količnik že manjši od $6$, zato smo končali.
 4. Odgovor: $D_{28} = \{1, 2, 4, 7, 14, 28\}$, torej ima $28$ šest deliteljev. Opaziš lahko, da je $28$ hkrati večkratnik števila $7$ in $7$ je delitelj števila $28$.
 
 ### Primer 2 (srednji)
@@ -121,15 +121,15 @@ Delitelj: $b$ deli $a$, če se $a : b$ izide brez ostanka. Večkratnik: $a = b \
 ## Pogoste napake
 
 - **Pozabljena delitelja 1 in število samo.** Pri številu $20$ nekdo zapiše $\{2, 4, 5, 10\}$. Število $1$ deli vsako število in vsako število deli samo sebe. Pravilno: $20 = 1 \cdot 20 = 2 \cdot 10 = 4 \cdot 5$, torej $D_{20} = \{1, 2, 4, 5, 10, 20\}$.
-- **Zamenjava večkratnikov in deliteljev.** »Večkratniki števila $6$ so $1, 2, 3, 6$.« To so delitelji. Večkratnike dobiš z množenjem in so večji ali enaki številu: $6, 12, 18, 24, \dots$. Delitelje dobiš z deljenjem in so manjši ali enaki številu. Hiter test: večkratnik je v poštevanki števila, delitelj je faktor.
+- **Zamenjava večkratnikov in deliteljev.** »Večkratniki števila $6$ so $1, 2, 3, 6$.« To so delitelji. Večkratnike števila $6$ dobiš z množenjem in so večji ali enaki $6$: $6, 12, 18, 24, \dots$. Delitelje dobiš z deljenjem in so manjši ali enaki $6$. Hiter test: večkratnik je v poštevanki števila, delitelj je faktor.
 - **Pozabljen par delitelja.** Pri $36$ nekdo najde $1, 2, 3, 4, 6$ in se ustavi. Vsak delitelj ima partnerja: iz $36 : 4 = 9$ sledi, da je tudi $9$ delitelj. Pri vsakem najdenem delitelju zato izračunaj še količnik: $36 : 2 = 18$, $36 : 3 = 12$, $36 : 4 = 9$.
 - **Potenca kot produkt osnove in eksponenta.** »$2^3 = 2 \cdot 3 = 6$.« Eksponent pove, **koliko enakih faktorjev** pišemo: $2^3 = 2 \cdot 2 \cdot 2 = 8$.
 - **Napačen vrstni red pri potencah.** »$3 \cdot 2^3 = 6^3 = 216$.« Potenca se računa pred množenjem: $3 \cdot 2^3 = 3 \cdot 8 = 24$. Če res želiš najprej pomnožiti, moraš zapisati oklepaj: $(3 \cdot 2)^3 = 216$.
 
 ## Povzetek
 
-- Večkratniki števila $b$ so $b, 2b, 3b, \dots$ (množica $V_b$); je jih neskončno mnogo.
-- Delitelji števila $a$ so števila, ki jih delimo $a$ brez ostanka (množica $D_a$); jih je končno mnogo, med njimi sta vedno $1$ in $a$.
+- Večkratniki števila $b$ so $b, 2b, 3b, \dots$ (množica $V_b$) in jih je neskončno mnogo.
+- Delitelji števila $a$ so števila, s katerimi se $a$ deli brez ostanka (množica $D_a$). Jih je končno mnogo, med njimi sta vedno $1$ in $a$.
 - Če je $a = b \cdot n$, je $a$ večkratnik števila $b$ in $b$ je delitelj števila $a$.
 - Delitelje iščemo v parih faktorjev, npr. $36 = 1 \cdot 36 = 2 \cdot 18 = 3 \cdot 12 = 4 \cdot 9 = 6 \cdot 6$.
 - Potenca $a^n$ je produkt $n$ enakih faktorjev $a$ (osnova $a$, eksponent $n$), npr. $2^5 = 2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 = 32$; $a^1 = a$.
@@ -138,7 +138,7 @@ Delitelj: $b$ deli $a$, če se $a : b$ izide brez ostanka. Večkratnik: $a = b \
 
 ## Drugače: Na sliki
 
-**Pravokotniki iz kvadratkov.** Število delitelj vidiš kot dolžino stranice pravokotnika, ki ga sestaviš iz toliko kvadratkov, kolikor je število:
+**Pravokotniki iz kvadratkov.** Delitelje števila vidiš kot dolžine stranic pravokotnikov, ki jih sestaviš iz toliko kvadratkov, kolikor je število:
 
 | Število kvadratkov | Pravokotniki, ki jih lahko sestaviš | Delitelji |
 |---|---|---|
@@ -155,8 +155,6 @@ Iz 13 kvadratkov lahko sestaviš samo eno vrsto. Številom, ki imajo samo dva de
 ## Drugače: Iz vsakdanjega življenja
 
 **Večkratniki: plačevanje.** Če imaš samo bankovce po 20 €, lahko plačaš zneske 20 €, 40 €, 60 €, … To so večkratniki števila 20. Znesek 70 € ni večkratnik števila 20, zato ga z bankovci po 20 € ne moreš plačati brez vračila.
-
-**Večkratniki: ponavljajoči se dogodki.** Tramvaj odpelje vsakih 10 minut. Če je prvi odšel ob 12.00, vsi naslednji odhodi pridejo po večkratnikih števila 10 minut: 12.10, 12.20, 12.30, … Ob 12.25 tramvaj ne odpelje, ker 25 ni večkratnik števila 10.
 
 **Delitelji: pravična delitev.** Imaš 24 bonbonov. Delitelji števila 24 so $1, 2, 3, 4, 6, 8, 12, 24$. Razdeliš jih lahko med 2, 3, 4, 6, 8 ali 12 otrok, med 5 otrok pa ne: $24 : 5 = 4$ in ostanek $4$.
 
@@ -177,7 +175,7 @@ Iz 13 kvadratkov lahko sestaviš samo eno vrsto. Številom, ki imajo samo dva de
 | 7 | 8, ostanek 4 | ne | |
 | 8 | 7, ostanek 4 | ne | |
 
-Pri $d = 8$ je količnik ($7$) manjši od $d$. To pomeni, da smo vse pare že našli, zato nehamo. Odgovor: $D_{60} = \{1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60\}$, torej ima $60$ dvanajst deliteljev.
+Pri $d = 8$ je količnik že manjši od $8$. To pomeni, da so se faktorji prekrižali in da smo vse pare že našli, zato nehamo. Odgovor: $D_{60} = \{1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60\}$, torej ima $60$ dvanajst deliteljev.
 
 **B. Večkratniki števila 15 do 100.** $15 \cdot 1 = 15$, $15 \cdot 2 = 30$, $15 \cdot 3 = 45$, $15 \cdot 4 = 60$, $15 \cdot 5 = 75$, $15 \cdot 6 = 90$. Že $15 \cdot 7 = 105$ je več kot $100$. Do $100$ je šest večkratnikov števila $15$.
 
@@ -199,8 +197,6 @@ Izračunajmo še $2 \cdot 3^2 + 4^2 - 10$. Najprej potenci: $3^2 = 9$ in $4^2 = 
 
 **Potence kot ponavljano množenje.** Potence definiramo po korakih: $a^1 = a$ in $a^{n+1} = a^n \cdot a$. Vsak naslednji eksponent torej pomeni še en faktor $a$. Zato potence hitro rastejo: $2^{10} = 1\,024$, že $2^{20} = 1\,048\,576$ pa je več kot milijon. Potenciranje ni zamenljivo: $2^3 = 8$, $3^2 = 9$.
 
-**Desetiški sistem.** Mestne vrednosti so potence števila $10$: $1 = 10^0$ (za zdaj to sprejmi kot dogovor), $10 = 10^1$, $100 = 10^2$, $1\,000 = 10^3$. Razširjeni zapis $4\,305 = 4 \cdot 10^3 + 3 \cdot 10^2 + 5$ je torej le krajši zapis iste razstavitve po mestnih vrednostih, ki si jo spoznal pri velikih številih.
-
 ## Preveri se
 
 ? Koliko deliteljev ima število $20$?
@@ -221,7 +217,7 @@ Izračunajmo še $2 \cdot 3^2 + 4^2 - 10$. Najprej potenci: $3^2 = 9$ in $4^2 = 
 - $4^5$
 + $5^4$
 - $5 \cdot 4$
-> Faktor $5$ se ponovi štirikrat, zato je osnova $5$ in eksponent $4$: $5^4 = 625$. Zapis $4^5$ bi pomenil štiri, ki jih množimo petkrat ($1\,024$), $5 \cdot 4$ pa je samo $20$.
+> Faktor $5$ se ponovi štirikrat, zato je osnova $5$ in eksponent $4$: $5^4 = 625$. Zapis $4^5$ bi pomenil produkt petih faktorjev $4$ ($1\,024$), $5 \cdot 4$ pa je samo $20$.
 
 ? Kolikšna je vrednost izraza $3 \cdot 2^3$?
 - $18$
