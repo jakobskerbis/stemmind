@@ -26,76 +26,6 @@ export function simsFor(topicId, lesson = loadLesson(topicId)) {
   return list;
 }
 
-// Simulacije PhET (University of Colorado Boulder, CC BY 4.0), za teme brez
-// lastne demonstracije ali kot dodatek. Ime = mapa simulacije na phet.colorado.edu.
-export const PHET = {
-  "MAT-OS-6/ulomek-kot-del-celote": "fractions-intro",
-  "MAT-OS-7/razsirjanje-in-krajsanje-ulomkov": "fractions-equality",
-  "MAT-OS-7/primerjanje-in-urejanje-ulomkov": "fractions-equality",
-  "MAT-OS-6/preproste-enacbe": "equality-explorer",
-  "MAT-OS-8/linearne-enacbe": "equality-explorer",
-  "MAT-OS-6/obseg-in-ploscina-pravokotnika-in-kvadrata": "area-builder",
-  "MAT-OS-7/razmerje": "ratio-and-proportion",
-  "MAT-OS-7/premo-sorazmerje": "proportion-playground",
-  "MAT-OS-8/cela-stevila": "number-line-integers",
-  "MAT-OS-9/linearna-funkcija": "graphing-lines",
-  "MAT-OS-9/graf-linearne-funkcije": "graphing-slope-intercept",
-  "MAT-SS-1/linearna-funkcija": "graphing-lines",
-  "MAT-SS-2/kvadratna-funkcija": "graphing-quadratics",
-  "MAT-SS-3/kotne-funkcije-poljubnega-kota": "trig-tour",
-  "MAT-SS-3/grafi-kotnih-funkcij": "trig-tour",
-  "MAT-OS-9/verjetnost": "plinko-probability",
-  "MAT-SS-4/verjetnost": "plinko-probability",
-  "FIZ-OS-8/gostota": "density",
-  "FIZ-OS-8/tlak": "under-pressure",
-  "FIZ-SS-1/tlak-in-vzgon": "under-pressure",
-  "FIZ-OS-8/sila-in-merjenje-sile": "hookes-law",
-  "FIZ-OS-8/odboj-svetlobe": "bending-light",
-  "FIZ-OS-8/lom-svetlobe": "bending-light",
-  "FIZ-SS-3/geometrijska-optika": "geometric-optics",
-  "FIZ-OS-9/newtonovi-zakoni": "forces-and-motion-basics",
-  "FIZ-SS-1/newtonovi-zakoni": "forces-and-motion-basics",
-  "FIZ-SS-1/prosti-pad-in-navpicni-met": "projectile-motion",
-  "FIZ-OS-9/kineticna-in-potencialna-energija": "energy-skate-park-basics",
-  "FIZ-SS-1/energija": "energy-skate-park",
-  "FIZ-OS-9/temperatura-in-notranja-energija": "states-of-matter-basics",
-  "FIZ-OS-9/prenos-toplote": "energy-forms-and-changes",
-  "FIZ-SS-2/notranja-energija-in-toplota": "energy-forms-and-changes",
-  "FIZ-OS-9/elektricni-naboj": "balloons-and-static-electricity",
-  "FIZ-SS-2/elektricni-naboj-in-coulombov-zakon": "coulombs-law",
-  "FIZ-OS-9/elektricni-krog": "circuit-construction-kit-dc",
-  "FIZ-OS-9/elektricni-tok-in-napetost": "circuit-construction-kit-dc",
-  "FIZ-SS-2/elektricna-vezja": "circuit-construction-kit-dc",
-  "FIZ-OS-9/upor-in-ohmov-zakon": "ohms-law",
-  "FIZ-OS-9/magneti-in-magnetno-polje": "magnets-and-electromagnets",
-  "FIZ-OS-9/elektromagnet": "magnets-and-electromagnets",
-  "FIZ-SS-3/magnetno-polje": "magnets-and-electromagnets",
-  "FIZ-SS-3/indukcija": "faradays-law",
-  "FIZ-SS-2/plinska-enacba": "gas-properties",
-  "FIZ-SS-3/nihanje": "pendulum-lab",
-  "FIZ-SS-3/valovanje": "wave-on-a-string",
-  "FIZ-SS-3/valovna-optika": "wave-interference",
-  "KEM-OS-8/zgradba-atoma": "build-an-atom",
-  "KEM-SS-1/zgradba-atoma": "build-an-atom",
-  "KEM-OS-8/kovalentna-vez": "molecule-shapes-basics",
-  "KEM-SS-1/kemijske-vezi": "molecule-polarity",
-  "KEM-OS-8/urejanje-kemijskih-enacb": "balancing-chemical-equations",
-  "KEM-SS-1/urejanje-enacb": "balancing-chemical-equations",
-  "KEM-SS-1/stehiometrija": "reactants-products-and-leftovers",
-  "KEM-OS-8/ph-lestvica": "ph-scale",
-  "KEM-SS-2/ph": "ph-scale",
-  "KEM-OS-8/kisline-in-baze": "acid-base-solutions",
-  "KEM-SS-2/kisline-in-baze": "acid-base-solutions",
-  "KEM-SS-2/sibke-kisline-in-baze": "acid-base-solutions",
-  "KEM-OS-9/raztopine": "concentration",
-  "KEM-SS-1/raztopine": "molarity",
-  "KEM-SS-1/plini": "gas-properties",
-};
-
-export function phetUrl(sim) {
-  return `https://phet.colorado.edu/sims/html/${sim}/latest/${sim}_all.html?locale=sl`;
-}
-
 // Glave razdelkov, ki imajo v lekciji poseben pomen.
 const ALT_PREFIX = /^drugače\s*:\s*/i;
 const CHECKS = /^preveri se$/i;
@@ -196,8 +126,6 @@ export function lessonView(topicId) {
   if (!t) return null;
   const lesson = loadLesson(topicId);
   const demos = simsFor(topicId, lesson);
-  // PhET le še tam, kjer lastne simulacije še ni.
-  const sim = demos.length ? null : PHET[topicId] || null;
   const order = topicOrder(t.path);
   const i = order.findIndex((x) => x.id === topicId);
   const nav = (x) => (x ? { id: x.id, name: x.name } : null);
@@ -221,7 +149,6 @@ export function lessonView(topicId) {
     explanation: lesson ? null : getExplanation(topicId)?.text || null,
     demos,
     demo: demos[0] || null,
-    phet: sim ? { sim, url: phetUrl(sim) } : null,
     practice: hasGenerator(topicId),
     prev: nav(order[i - 1]),
     next: nav(order[i + 1]),
@@ -309,7 +236,6 @@ export function tocView(pathKey) {
         name: t.name,
         lesson: !!loadLesson(t.id),
         demo: simsFor(t.id).length > 0,
-        phet: !simsFor(t.id).length && !!PHET[t.id],
         practice: hasGenerator(t.id),
       })),
     })),

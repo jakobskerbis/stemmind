@@ -351,10 +351,9 @@ export function createApp(store, opts = {}) {
     res.json({
       ...view,
       interactive: false,
-      locked: { demo: view.demo?.title || null, phet: !!view.phet },
+      locked: { demo: view.demo?.title || null },
       demos: [],
       demo: null,
-      phet: null,
     });
   });
   app.get("/api/textbook/search", (req, res) => {

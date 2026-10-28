@@ -19,7 +19,7 @@ const out = ids.map((id) => {
   const siblings = order.filter((x) => x.id !== id && fs.existsSync(path.join(LESSONS_DIR, `${x.id}.md`))).map((x) => `content/lessons/${x.id}.md`);
   return {
     id, file: `content/lessons/${id}.md`, name: t.name, unit: t.unit, path: t.path, pathLabel: getPath(t.path).label, goals: t.goals,
-    demo: v.demo, phet: v.phet?.sim || null,
+    demos: v.demos.map((d) => d.title),
     before: order.slice(Math.max(0, i - 6), i).map((x) => x.name),
     after: order.slice(i + 1, i + 4).map((x) => x.name),
     lessonExists: fs.existsSync(path.join(LESSONS_DIR, `${id}.md`)),

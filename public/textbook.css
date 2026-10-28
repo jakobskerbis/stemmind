@@ -43,7 +43,6 @@
 .tb-badges { display: flex; gap: 4px; flex-wrap: wrap; }
 .tb-badge { font-size: 0.72rem; border-radius: 99px; padding: 1px 8px; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); font-weight: 600; }
 .tb-badge.demo { background: color-mix(in srgb, var(--demo-a) 18%, transparent); color: var(--demo-a); }
-.tb-badge.sim { background: color-mix(in srgb, var(--demo-c) 18%, transparent); color: var(--demo-c); }
 .tb-badge.vaje { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
 
 /* PDF in zaklenjen interaktivni del */
@@ -90,10 +89,6 @@
 .tb-checks .tb-why { margin-top: 8px; font-weight: 400; }
 .tb-checks .tb-why p { display: inline; }
 .tb-nav { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
-.tb-phet a { margin-left: 10px; }
-.tb-frame { position: relative; width: 100%; aspect-ratio: 4 / 3; max-height: 75vh; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-.tb-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.tb-credit { font-size: 0.78rem; color: var(--muted); margin-bottom: 0; }
 
 /* demonstracije */
 .demo-stage { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }

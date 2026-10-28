@@ -15,7 +15,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
 import { listPaths, topicOrder, getPath } from "../server/curriculum.js";
-import { LESSONS_DIR, loadLesson, DEMOS, PHET } from "../server/textbook.js";
+import { LESSONS_DIR, loadLesson, simsFor } from "../server/textbook.js";
 import { hasGenerator } from "../server/practice/index.js";
 import { PRICES } from "../server/claude.js";
 
@@ -66,13 +66,12 @@ ${SAMPLE}`;
 
 function userPrompt(t) {
   const p = getPath(t.path);
-  const demo = Object.entries(DEMOS).find(([, d]) => d.topics.includes(t.id));
+  const sims = simsFor(t.id, null);
   return `Napiši lekcijo za učno pot »${p.label}«.
 Sklop: ${t.unit}
 Tema: ${t.name}
 Cilji: ${t.goals}
-${demo ? `V lekciji bo za rešenimi primeri interaktivna demonstracija »${demo[1].title}«; v glavi zapiši "demo: ${demo[0]}" in se nanjo v razdelku »Drugače: Na sliki« sklicuj.` : ""}
-${PHET[t.id] ? `Lekcija bo imela tudi simulacijo PhET (${PHET[t.id]}).` : ""}
+${sims.length ? `Za rešenimi primeri bodo interaktivne simulacije: ${sims.map((d) => `»${d.title}«`).join(", ")}. V razdelku »Drugače: Na sliki« se nanje sklicuj kot na »simulacijo spodaj«.` : ""}
 V glavi zapiši "stanje: osnutek" in "avtor: AI (${model})".`;
 }
 
