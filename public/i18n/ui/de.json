@@ -43,7 +43,10 @@
   "mode.reviewSub": "Damit nichts vergessen wird",
   "mode.test": "Testvorbereitung",
   "mode.testSub": "Stoff und Datum wählen",
-  "mode.reviewBadge": { "one": "{n} Aufgabe zum Wiederholen", "other": "{n} Aufgaben zum Wiederholen" },
+  "mode.reviewBadge": {
+    "one": "{n} Aufgabe zum Wiederholen",
+    "other": "{n} Aufgaben zum Wiederholen"
+  },
   "daily.title": "Heutiges Training",
   "daily.doneTitle": "Das heutige Training ist erledigt",
   "daily.continue": "Heutiges Training fortsetzen",
@@ -55,9 +58,13 @@
   "path.next": "Nächstes Thema",
   "path.allDone": "Alle Themen dieses Pfads sind gemeistert!",
   "path.allDoneToast": "Alle Themen dieses Pfads sind gemeistert. Wähle einen anderen Pfad oder wiederhole.",
+  "path.levelNow": "Dein Lernpfad ist jetzt auf {level} eingestellt.",
   "stats.level": "Stufe",
   "stats.week": "XP diese Woche",
-  "stats.streak": { "one": "Tag in Folge", "other": "Tage in Folge" },
+  "stats.streak": {
+    "one": "Tag in Folge",
+    "other": "Tage in Folge"
+  },
   "node.locked": "gesperrt",
   "node.due": "zu wiederholen",
   "node.mastered": "gemeistert",
@@ -83,7 +90,10 @@
   "suggest.no": "Nein, neuer Stoff",
   "test.today": "heute",
   "test.tomorrow": "morgen",
-  "test.inDays": { "one": "in {n} Tag", "other": "in {n} Tagen" },
+  "test.inDays": {
+    "one": "in {n} Tag",
+    "other": "in {n} Tagen"
+  },
   "test.when": "Der Test ist <b>{when}</b> ({date}).",
   "test.material": "Stoff: {list}",
   "test.howto": "Löse jeden Tag eine Reihe gemischter Aufgaben aus diesen Abschnitten. Je näher der Test, desto schwerer die Aufgaben.",
@@ -112,7 +122,10 @@
   "task.given": "Gegeben",
   "task.find": "Gesucht",
   "task.showFormula": "Formel zeigen",
-  "task.points": { "one": "{n} Punkt", "other": "{n} Punkte" },
+  "task.points": {
+    "one": "{n} Punkt",
+    "other": "{n} Punkte"
+  },
   "task.phCoef": "z. B. 2, 1, 2",
   "task.phUnit": "Zahl und Einheit, z. B. 12,5 {unit}",
   "task.phResult": "Ergebnis eingeben",
@@ -132,7 +145,10 @@
   "task.hint": "Tipp:",
   "task.retry": "Nochmal versuchen",
   "task.askTutor": "Tutor fragen",
-  "task.attemptsLeft": { "one": "Noch {n} Versuch, dann zeige ich ein gelöstes Beispiel.", "other": "Noch {n} Versuche, dann zeige ich ein gelöstes Beispiel." },
+  "task.attemptsLeft": {
+    "one": "Noch {n} Versuch, dann zeige ich ein gelöstes Beispiel.",
+    "other": "Noch {n} Versuche, dann zeige ich ein gelöstes Beispiel."
+  },
   "task.tapPoint": "Tippe auf einen orangen Punkt, um seine Koordinaten zu sehen.",
   "task.graphAria": "Graph einer Geraden im Koordinatensystem",
   "task.lineAria": "Zahlenstrahl mit markierter Lösung",
@@ -204,7 +220,10 @@
   "chat.photo": "Aufgabe fotografieren",
   "chat.placeholder": "Schreib eine Aufgabe oder Frage …",
   "chat.send": "Senden",
-  "chat.hint": "Du kannst auch „jetzt Chemie“ oder „erklär es mit Fußball“ schreiben.",
+  "chat.hint": "Du kannst die Aufgabe fotografieren, sprechen (Mikrofon) oder mit Symbolen (Σ) schreiben. Du kannst auch „jetzt Chemie“ schreiben.",
+  "chat.symbols": "Symbole",
+  "chat.symbolsTitle": "Symbole: √, π, ∫, H₂O …",
+  "chat.mic": "Frage sprechen",
   "chat.delete": "Gespräch löschen",
   "chat.confirmDelete": "Dieses Gespräch löschen?",
   "chat.hello": "Hallo, {name}!",

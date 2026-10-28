@@ -43,7 +43,10 @@
   "mode.reviewSub": "Hogy ne felejts",
   "mode.test": "Felkészülés dolgozatra",
   "mode.testSub": "Válassz anyagot és dátumot",
-  "mode.reviewBadge": { "one": "{n} ismétlendő feladat", "other": "{n} ismétlendő feladat" },
+  "mode.reviewBadge": {
+    "one": "{n} ismétlendő feladat",
+    "other": "{n} ismétlendő feladat"
+  },
   "daily.title": "Mai edzés",
   "daily.doneTitle": "A mai edzés kész",
   "daily.continue": "Mai edzés folytatása",
@@ -55,9 +58,13 @@
   "path.next": "Következő téma",
   "path.allDone": "Az út minden témáját elsajátítottad!",
   "path.allDoneToast": "Az út minden témáját elsajátítottad. Válassz másik utat, vagy ismételj.",
+  "path.levelNow": "A tanulási út most erre van beállítva: {level}.",
   "stats.level": "szint",
   "stats.week": "XP ezen a héten",
-  "stats.streak": { "one": "nap egymás után", "other": "nap egymás után" },
+  "stats.streak": {
+    "one": "nap egymás után",
+    "other": "nap egymás után"
+  },
   "node.locked": "zárolva",
   "node.due": "ismétlendő",
   "node.mastered": "elsajátítva",
@@ -83,7 +90,10 @@
   "suggest.no": "Nem, új anyag",
   "test.today": "ma",
   "test.tomorrow": "holnap",
-  "test.inDays": { "one": "{n} nap múlva", "other": "{n} nap múlva" },
+  "test.inDays": {
+    "one": "{n} nap múlva",
+    "other": "{n} nap múlva"
+  },
   "test.when": "A dolgozat <b>{when}</b> lesz ({date}).",
   "test.material": "Anyag: {list}",
   "test.howto": "Minden nap oldj meg egy sor vegyes feladatot ezekből a fejezetekből. Minél közelebb a dolgozat, annál nehezebbek a feladatok.",
@@ -112,7 +122,10 @@
   "task.given": "Adatok",
   "task.find": "Keressük",
   "task.showFormula": "Képlet mutatása",
-  "task.points": { "one": "{n} pont", "other": "{n} pont" },
+  "task.points": {
+    "one": "{n} pont",
+    "other": "{n} pont"
+  },
   "task.phCoef": "pl. 2, 1, 2",
   "task.phUnit": "szám és mértékegység, pl. 12,5 {unit}",
   "task.phResult": "írd be az eredményt",
@@ -132,7 +145,10 @@
   "task.hint": "Tipp:",
   "task.retry": "Újra",
   "task.askTutor": "Kérdezd az oktatót",
-  "task.attemptsLeft": { "one": "Még {n} próbálkozás, utána megmutatok egy megoldott példát.", "other": "Még {n} próbálkozás, utána megmutatok egy megoldott példát." },
+  "task.attemptsLeft": {
+    "one": "Még {n} próbálkozás, utána megmutatok egy megoldott példát.",
+    "other": "Még {n} próbálkozás, utána megmutatok egy megoldott példát."
+  },
   "task.tapPoint": "Koppints egy narancssárga pontra a koordinátáiért.",
   "task.graphAria": "Egyenes grafikonja a koordináta-rendszerben",
   "task.lineAria": "Számegyenes a megjelölt megoldással",
@@ -204,7 +220,10 @@
   "chat.photo": "Feladat lefényképezése",
   "chat.placeholder": "Írj egy feladatot vagy kérdést …",
   "chat.send": "Küldés",
-  "chat.hint": "Írhatod azt is, hogy „most kémia” vagy „magyarázd el focival”.",
+  "chat.hint": "A feladatot lefényképezheted, elmondhatod (mikrofon) vagy beírhatod szimbólumokkal (Σ). Azt is írhatod: „most kémia”.",
+  "chat.symbols": "Szimbólumok",
+  "chat.symbolsTitle": "Szimbólumok: √, π, ∫, H₂O …",
+  "chat.mic": "Mondd el a kérdést",
   "chat.delete": "Beszélgetés törlése",
   "chat.confirmDelete": "Törlöd ezt a beszélgetést?",
   "chat.hello": "Szia, {name}!",

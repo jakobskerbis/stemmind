@@ -61,6 +61,7 @@
     </div>
     <p id="path-note" class="muted path-note" hidden></p>
     <p id="lang-note" class="muted path-note" hidden data-i18n="path.curriculumNote"></p>
+    <div id="level-card" class="level-slot" hidden></div>
     <div id="xp-card" class="card xp-card"></div>
     <nav id="modebar" class="modes" aria-label="Način učenja" data-i18n-aria="path.modes">
       <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span class="m-name" data-i18n="mode.new">Nova snov</span><span class="m-sub" data-i18n="mode.newSub">Nadaljuj, kjer si ostal</span></button>
@@ -105,14 +106,17 @@
           <img alt="Predogled fotografije" data-i18n-alt="chat.photoPreview">
           <button type="button" id="remove-image" aria-label="Odstrani sliko" data-i18n-aria="chat.removeImage">×</button>
         </div>
+        <div id="sym-panel" class="sym-panel" hidden aria-label="Simboli"></div>
         <div class="composer-row">
           <label class="icon-btn" title="Fotografiraj nalogo" aria-label="Fotografiraj nalogo" data-i18n-title="chat.photo" data-i18n-aria="chat.photo">
             <i data-icon="camera"></i><input id="image-input" type="file" accept="image/*" capture="environment" hidden>
           </label>
+          <button type="button" id="sym-btn" class="icon-btn" title="Simboli: √, π, ∫, H₂O …" aria-label="Simboli" aria-pressed="false" data-i18n-title="chat.symbolsTitle" data-i18n-aria="chat.symbols"><i data-icon="sigma"></i></button>
           <textarea id="input" rows="1" placeholder="Napiši nalogo ali vprašanje …" data-i18n-ph="chat.placeholder"></textarea>
+          <button type="button" id="mic-btn" class="icon-btn mic-btn" title="Povej vprašanje" aria-label="Povej vprašanje" aria-pressed="false" data-i18n-title="chat.mic" data-i18n-aria="chat.mic"><i data-icon="mic"></i></button>
           <button id="send" class="primary send" type="submit" aria-label="Pošlji" data-i18n-aria="chat.send"><i data-icon="send"></i><span data-i18n="chat.send">Pošlji</span></button>
         </div>
-        <div class="hint" data-i18n="chat.hint">Lahko napišeš tudi »zdaj kemija« ali »razloži skozi nogomet«.</div>
+        <div class="hint" data-i18n="chat.hint">Nalogo lahko fotografiraš, poveš (mikrofon) ali napišeš s simboli (Σ). Lahko napišeš tudi »zdaj kemija«.</div>
       </form>
     </section>
   </main>

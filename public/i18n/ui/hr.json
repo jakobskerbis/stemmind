@@ -43,7 +43,11 @@
   "mode.reviewSub": "Da znanje ne izblijedi",
   "mode.test": "Priprema za ispit",
   "mode.testSub": "Odaberi gradivo i datum",
-  "mode.reviewBadge": { "one": "{n} zadatak za ponavljanje", "few": "{n} zadatka za ponavljanje", "other": "{n} zadataka za ponavljanje" },
+  "mode.reviewBadge": {
+    "one": "{n} zadatak za ponavljanje",
+    "few": "{n} zadatka za ponavljanje",
+    "other": "{n} zadataka za ponavljanje"
+  },
   "daily.title": "Današnji trening",
   "daily.doneTitle": "Današnji trening je gotov",
   "daily.continue": "Nastavi današnji trening",
@@ -55,9 +59,14 @@
   "path.next": "Sljedeća tema",
   "path.allDone": "Sve teme ovog puta su savladane!",
   "path.allDoneToast": "Sve teme ovog puta su savladane. Odaberi drugi put ili ponavljaj.",
+  "path.levelNow": "Put učenja sada je za {level}.",
   "stats.level": "razina",
   "stats.week": "XP ovaj tjedan",
-  "stats.streak": { "one": "dan zaredom", "few": "dana zaredom", "other": "dana zaredom" },
+  "stats.streak": {
+    "one": "dan zaredom",
+    "few": "dana zaredom",
+    "other": "dana zaredom"
+  },
   "node.locked": "zaključano",
   "node.due": "za ponavljanje",
   "node.mastered": "savladano",
@@ -83,7 +92,11 @@
   "suggest.no": "Ne, novo gradivo",
   "test.today": "danas",
   "test.tomorrow": "sutra",
-  "test.inDays": { "one": "za {n} dan", "few": "za {n} dana", "other": "za {n} dana" },
+  "test.inDays": {
+    "one": "za {n} dan",
+    "few": "za {n} dana",
+    "other": "za {n} dana"
+  },
   "test.when": "Ispit je <b>{when}</b> ({date}).",
   "test.material": "Gradivo: {list}",
   "test.howto": "Svaki dan riješi niz miješanih zadataka iz ovih cjelina. Što je ispit bliže, zadaci su teži.",
@@ -112,7 +125,11 @@
   "task.given": "Zadano",
   "task.find": "Traži se",
   "task.showFormula": "Prikaži formulu",
-  "task.points": { "one": "{n} bod", "few": "{n} boda", "other": "{n} bodova" },
+  "task.points": {
+    "one": "{n} bod",
+    "few": "{n} boda",
+    "other": "{n} bodova"
+  },
   "task.phCoef": "npr. 2, 1, 2",
   "task.phUnit": "broj i jedinica, npr. 12,5 {unit}",
   "task.phResult": "upiši rezultat",
@@ -132,7 +149,11 @@
   "task.hint": "Savjet:",
   "task.retry": "Pokušaj ponovno",
   "task.askTutor": "Pitaj instruktora",
-  "task.attemptsLeft": { "one": "Još {n} pokušaj, zatim pokazujem riješeni primjer.", "few": "Još {n} pokušaja, zatim pokazujem riješeni primjer.", "other": "Još {n} pokušaja, zatim pokazujem riješeni primjer." },
+  "task.attemptsLeft": {
+    "one": "Još {n} pokušaj, zatim pokazujem riješeni primjer.",
+    "few": "Još {n} pokušaja, zatim pokazujem riješeni primjer.",
+    "other": "Još {n} pokušaja, zatim pokazujem riješeni primjer."
+  },
   "task.tapPoint": "Dodirni narančastu točku da vidiš njezine koordinate.",
   "task.graphAria": "Graf pravca u koordinatnom sustavu",
   "task.lineAria": "Brojevni pravac s označenim rješenjem",
@@ -204,7 +225,10 @@
   "chat.photo": "Fotografiraj zadatak",
   "chat.placeholder": "Napiši zadatak ili pitanje …",
   "chat.send": "Pošalji",
-  "chat.hint": "Možeš napisati i »sad kemija« ili »objasni kroz nogomet«.",
+  "chat.hint": "Zadatak možeš fotografirati, izgovoriti (mikrofon) ili napisati simbolima (Σ). Možeš napisati i »sad kemija«.",
+  "chat.symbols": "Simboli",
+  "chat.symbolsTitle": "Simboli: √, π, ∫, H₂O …",
+  "chat.mic": "Izgovori pitanje",
   "chat.delete": "Izbriši razgovor",
   "chat.confirmDelete": "Izbrisati ovaj razgovor?",
   "chat.hello": "Bok, {name}!",

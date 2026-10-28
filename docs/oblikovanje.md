@@ -63,3 +63,15 @@ Pravila so v `public/touch.css`. »Tablica« je zaslon na dotik (`(hover: none) 
 - Preklopniki so na telefonu čez celo širino.
 - Plošča za vnos: na telefonu in tablici pokončno je spodaj, naloga se pomakne na vrh nad njo (tudi ob preklopu na Piši). Na tablici pokončno so tipke in platno široki največ 640 px. Na tablici ležeče je plošča desno.
 - Tablica ležeče (od 1000 px): isti dva stolpca kot na računalniku (učna pot, lekcija s poskusi desno, kazalo, napredek), z nekoliko ožjim desnim stolpcem.
+
+## Vnos v Inštruktorju
+
+Vrstica za vnos ima od leve proti desni: fotografija naloge, simboli (Σ), besedilo, mikrofon, Pošlji.
+
+- **Simboli** (`public/symbols.js`): plošča nad vrstico, skupine kot `.chip-row`, tipke `.sym-key` (najmanj 44 px). Vrstni red skupin je po ravni (OŠ: osnovno; SŠ: + funkcije; fakulteta: analiza najprej; kemija najprej pri predmetu KEM). Tipke ne vzamejo fokusa polju. `@` v vstavljenem besedilu je mesto kazalca.
+- **Mikrofon** (`public/speech.js`): prepoznavanje govora v brskalniku (sl-SI), brez stroškov API. Med poslušanjem je gumb rdeč in utripa. Gumb se skrije, če ga brskalnik ne podpira (npr. Firefox).
+
+## Prehod na višjo raven
+
+Kartica `.level-card` na vrhu Učne poti (`#level-card`, `public/level-up.js`): od 20. 8. do 31. 10. predlaga naslednji razred ali letnik (en klik), ob prehodu OŠ → SŠ ali SŠ → fakulteta pa pokaže, kaj je novega. Brez naročnine doda gumb »Poglej pakete« (zavihek Račun); cen ne prikazuje.
+

@@ -43,7 +43,10 @@
   "mode.reviewSub": "Që dija të mos zbehet",
   "mode.test": "Përgatitje për test",
   "mode.testSub": "Zgjidh lëndën dhe datën",
-  "mode.reviewBadge": { "one": "{n} ushtrim për përsëritje", "other": "{n} ushtrime për përsëritje" },
+  "mode.reviewBadge": {
+    "one": "{n} ushtrim për përsëritje",
+    "other": "{n} ushtrime për përsëritje"
+  },
   "daily.title": "Stërvitja e sotme",
   "daily.doneTitle": "Stërvitja e sotme u krye",
   "daily.continue": "Vazhdo stërvitjen e sotme",
@@ -55,9 +58,13 @@
   "path.next": "Tema e radhës",
   "path.allDone": "Të gjitha temat e kësaj rruge janë zotëruar!",
   "path.allDoneToast": "Të gjitha temat e kësaj rruge janë zotëruar. Zgjidh një rrugë tjetër ose përsërit.",
+  "path.levelNow": "Rruga e të mësuarit tani është për {level}.",
   "stats.level": "niveli",
   "stats.week": "XP këtë javë",
-  "stats.streak": { "one": "ditë rresht", "other": "ditë rresht" },
+  "stats.streak": {
+    "one": "ditë rresht",
+    "other": "ditë rresht"
+  },
   "node.locked": "e kyçur",
   "node.due": "për përsëritje",
   "node.mastered": "e zotëruar",
@@ -83,7 +90,10 @@
   "suggest.no": "Jo, lëndë e re",
   "test.today": "sot",
   "test.tomorrow": "nesër",
-  "test.inDays": { "one": "pas {n} dite", "other": "pas {n} ditësh" },
+  "test.inDays": {
+    "one": "pas {n} dite",
+    "other": "pas {n} ditësh"
+  },
   "test.when": "Testi është <b>{when}</b> ({date}).",
   "test.material": "Lënda: {list}",
   "test.howto": "Çdo ditë zgjidh një seri ushtrimesh të përziera nga këta kapituj. Sa më afër testi, aq më të vështira ushtrimet.",
@@ -112,7 +122,10 @@
   "task.given": "Të dhënat",
   "task.find": "Kërkohet",
   "task.showFormula": "Shfaq formulën",
-  "task.points": { "one": "{n} pikë", "other": "{n} pikë" },
+  "task.points": {
+    "one": "{n} pikë",
+    "other": "{n} pikë"
+  },
   "task.phCoef": "p.sh. 2, 1, 2",
   "task.phUnit": "numri dhe njësia, p.sh. 12,5 {unit}",
   "task.phResult": "shkruaj rezultatin",
@@ -132,7 +145,10 @@
   "task.hint": "Ndihmë:",
   "task.retry": "Provo përsëri",
   "task.askTutor": "Pyet tutorin",
-  "task.attemptsLeft": { "one": "Edhe {n} përpjekje, pastaj të tregoj një shembull të zgjidhur.", "other": "Edhe {n} përpjekje, pastaj të tregoj një shembull të zgjidhur." },
+  "task.attemptsLeft": {
+    "one": "Edhe {n} përpjekje, pastaj të tregoj një shembull të zgjidhur.",
+    "other": "Edhe {n} përpjekje, pastaj të tregoj një shembull të zgjidhur."
+  },
   "task.tapPoint": "Prek një pikë portokalli për të parë koordinatat e saj.",
   "task.graphAria": "Grafiku i një drejtëze në sistemin koordinativ",
   "task.lineAria": "Boshti numerik me zgjidhjen e shënuar",
@@ -204,7 +220,10 @@
   "chat.photo": "Fotografo ushtrimin",
   "chat.placeholder": "Shkruaj një ushtrim ose pyetje …",
   "chat.send": "Dërgo",
-  "chat.hint": "Mund të shkruash edhe «tani kimi» ose «shpjegoje me futboll».",
+  "chat.hint": "Mund ta fotografosh ushtrimin, ta thuash (mikrofon) ose ta shkruash me simbole (Σ). Mund të shkruash edhe «tani kimi».",
+  "chat.symbols": "Simbole",
+  "chat.symbolsTitle": "Simbole: √, π, ∫, H₂O …",
+  "chat.mic": "Thuaje pyetjen",
   "chat.delete": "Fshi bisedën",
   "chat.confirmDelete": "Ta fshij këtë bisedë?",
   "chat.hello": "Përshëndetje, {name}!",

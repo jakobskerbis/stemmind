@@ -43,7 +43,10 @@
   "mode.reviewSub": "Para não esquecer",
   "mode.test": "Preparar um teste",
   "mode.testSub": "Escolhe a matéria e a data",
-  "mode.reviewBadge": { "one": "{n} exercício para rever", "other": "{n} exercícios para rever" },
+  "mode.reviewBadge": {
+    "one": "{n} exercício para rever",
+    "other": "{n} exercícios para rever"
+  },
   "daily.title": "Treino de hoje",
   "daily.doneTitle": "O treino de hoje está feito",
   "daily.continue": "Continuar o treino de hoje",
@@ -55,9 +58,13 @@
   "path.next": "Próximo tema",
   "path.allDone": "Todos os temas deste percurso estão dominados!",
   "path.allDoneToast": "Todos os temas deste percurso estão dominados. Escolhe outro percurso ou faz revisão.",
+  "path.levelNow": "O teu percurso agora é para {level}.",
   "stats.level": "nível",
   "stats.week": "XP esta semana",
-  "stats.streak": { "one": "dia seguido", "other": "dias seguidos" },
+  "stats.streak": {
+    "one": "dia seguido",
+    "other": "dias seguidos"
+  },
   "node.locked": "bloqueado",
   "node.due": "para rever",
   "node.mastered": "dominado",
@@ -83,7 +90,10 @@
   "suggest.no": "Não, matéria nova",
   "test.today": "hoje",
   "test.tomorrow": "amanhã",
-  "test.inDays": { "one": "daqui a {n} dia", "other": "daqui a {n} dias" },
+  "test.inDays": {
+    "one": "daqui a {n} dia",
+    "other": "daqui a {n} dias"
+  },
   "test.when": "O teste é <b>{when}</b> ({date}).",
   "test.material": "Matéria: {list}",
   "test.howto": "Todos os dias resolve uma série de exercícios variados destas unidades. Quanto mais perto do teste, mais difíceis são.",
@@ -112,7 +122,10 @@
   "task.given": "Dados",
   "task.find": "Pretende-se",
   "task.showFormula": "Mostrar fórmula",
-  "task.points": { "one": "{n} ponto", "other": "{n} pontos" },
+  "task.points": {
+    "one": "{n} ponto",
+    "other": "{n} pontos"
+  },
   "task.phCoef": "p. ex. 2, 1, 2",
   "task.phUnit": "número e unidade, p. ex. 12,5 {unit}",
   "task.phResult": "escreve o resultado",
@@ -132,7 +145,10 @@
   "task.hint": "Dica:",
   "task.retry": "Tentar outra vez",
   "task.askTutor": "Perguntar ao tutor",
-  "task.attemptsLeft": { "one": "Mais {n} tentativa, depois mostro um exemplo resolvido.", "other": "Mais {n} tentativas, depois mostro um exemplo resolvido." },
+  "task.attemptsLeft": {
+    "one": "Mais {n} tentativa, depois mostro um exemplo resolvido.",
+    "other": "Mais {n} tentativas, depois mostro um exemplo resolvido."
+  },
   "task.tapPoint": "Toca num ponto laranja para veres as coordenadas.",
   "task.graphAria": "Gráfico de uma reta no referencial",
   "task.lineAria": "Reta numérica com a solução assinalada",
@@ -204,7 +220,10 @@
   "chat.photo": "Fotografar o exercício",
   "chat.placeholder": "Escreve um exercício ou uma pergunta …",
   "chat.send": "Enviar",
-  "chat.hint": "Também podes escrever «agora química» ou «explica com futebol».",
+  "chat.hint": "Podes fotografar o exercício, dizê-lo (microfone) ou escrevê-lo com símbolos (Σ). Também podes escrever «agora química».",
+  "chat.symbols": "Símbolos",
+  "chat.symbolsTitle": "Símbolos: √, π, ∫, H₂O …",
+  "chat.mic": "Diz a tua pergunta",
   "chat.delete": "Apagar conversa",
   "chat.confirmDelete": "Apagar esta conversa?",
   "chat.hello": "Olá, {name}!",

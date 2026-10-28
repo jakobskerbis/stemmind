@@ -251,6 +251,34 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .icon-btn svg.i { width: 22px; height: 22px; }
 button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shadow: none; }
 .hint { font-size: 0.8rem; color: var(--muted); margin: 6px auto 0; max-width: 900px; padding-left: 8px; }
+
+/* Inštruktor: mikrofon (glasovni vnos) in napredna tipkovnica s simboli */
+button.icon-btn { border: 0; background: none; padding: 0; min-height: 0; box-shadow: none; flex: none; }
+button.icon-btn.on { color: var(--accent); background: var(--accent-soft); }
+button.mic-btn.rec { color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, transparent); animation: mic-pulse 1.3s ease-in-out infinite; }
+@keyframes mic-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 45%, transparent); } 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--danger) 0%, transparent); } }
+@media (prefers-reduced-motion: reduce) { button.mic-btn.rec { animation: none; } }
+.sym-panel { max-width: 900px; margin: 0 auto 8px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 8px; }
+.sym-head { margin-bottom: 8px; }
+.sym-head .chip-row > button { min-height: 36px; }
+.sym-keys { display: grid; grid-template-columns: repeat(auto-fill, minmax(54px, 1fr)); gap: 6px; max-height: 196px; overflow-y: auto; overscroll-behavior: contain; }
+button.sym-key { min-height: 44px; padding: 0 6px; font-size: 1.08rem; font-weight: 700; border-radius: var(--radius-sm); background: var(--bg); border: 1.5px solid var(--border); color: var(--text); box-shadow: none; white-space: nowrap; }
+button.sym-key:hover { border-color: var(--accent); color: var(--accent); }
+button.sym-key:active { background: var(--accent-soft); }
+.sym-foot { margin-top: 6px; }
+
+/* Učna pot: prehod v višji razred / na novo stopnjo */
+.level-card { border: 1.5px solid var(--accent); }
+.level-card h2 { margin: 0; font-size: 1.15rem; }
+.level-card p { margin: 10px 0 0; }
+.lc-head { display: flex; align-items: center; gap: 12px; }
+.lc-ic { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+.lc-ic svg.i { width: 22px; height: 22px; }
+.lc-close { margin-left: auto; align-self: flex-start; }
+.lc-list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 8px; }
+.lc-list li { display: flex; gap: 10px; align-items: flex-start; }
+.lc-list li svg.i { flex: none; color: var(--accent); width: 20px; height: 20px; margin-top: 2px; }
+.level-card .actions { margin-top: 14px; }
 .image-preview { position: relative; display: inline-block; margin-bottom: 8px; }
 .image-preview img { max-height: 120px; border-radius: 12px; border: 1px solid var(--border); }
 .image-preview button { position: absolute; top: -8px; right: -8px; border-radius: 50% !important; padding: 0 7px !important; min-height: 28px !important; }

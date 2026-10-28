@@ -11,6 +11,9 @@ import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
 import { loadPrograms, programsCache, subjectOptions, SUBJECT_NAMES } from "./programs.js";
 import { mountLevelPicker, levelLabel } from "./level-picker.js";
+import { attachMic } from "./speech.js";
+import { mountSymbols } from "./symbols.js";
+import { renderSuggestion, renderWelcome, stageUp } from "./level-up.js";
 
 const $ = (sel) => document.querySelector(sel);
 const api = async (url, opts = {}) => {
@@ -191,6 +194,8 @@ async function selectStudent(id) {
   if (!$("#view-progress").hidden) loadProgress();
   if (!$("#view-league").hidden) loadLeague(state.student.id);
   state.pathKey = null;
+  clearLevelCard();
+  state.symbols?.refresh();
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
   refreshXp();
 }
@@ -424,7 +429,21 @@ input.addEventListener("keydown", (e) => {
 });
 $("#composer").addEventListener("submit", (e) => {
   e.preventDefault();
+  setSymbols(false);
   send(input.value.trim());
+});
+
+// Glasovni vnos (brskalnik, sl-SI) in napredna tipkovnica s simboli.
+attachMic($("#mic-btn"), input, { onMessage: (m) => toast(m, "mic"), onChange: autoGrow });
+state.symbols = mountSymbols($("#sym-panel"), input, { settings: () => state.student?.settings, onChange: autoGrow });
+function setSymbols(open) {
+  open = state.symbols.toggle(open);
+  $("#sym-btn").setAttribute("aria-pressed", String(open));
+  $("#sym-btn").classList.toggle("on", open);
+  return open;
+}
+$("#sym-btn").addEventListener("click", () => {
+  if (setSymbols() && !matchMedia("(pointer: coarse)").matches) input.focus();
 });
 
 // ---------- fotografije ----------
@@ -491,6 +510,11 @@ async function fillSettingsForm() {
   f.querySelector(`input[name=solving_mode][value=${s.solving_mode}]`).checked = true;
   f.manual_weaknesses.value = state.student.manual_weaknesses.join(", ");
   fillLevelOptions(s.educational_track);
+  if (state.pickUniversity) {
+    state.pickUniversity = false;
+    levelPicker.set({ ...s, educational_track: "UNIVERZA", study_program: "", curriculum_level: "" });
+    $("#settings-level").scrollIntoView({ block: "center" });
+  }
 }
 // Jezik aplikacije in inštruktorja: shrani se v profil učenca in na napravo.
 mountLanguageCard($("#language-card"), {
@@ -514,6 +538,7 @@ $("#lang-note").hidden = currentLang() === "sl";
 $("#settings-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const f = e.target;
+  const before = state.student.settings;
   if (levelPicker && !levelPicker.complete()) {
     alert(t("set.finishSchool"));
     return;
@@ -540,10 +565,69 @@ $("#settings-form").addEventListener("submit", async (e) => {
   syncCompetitionTab();
   $("#student-select").options[$("#student-select").selectedIndex].textContent = updated.name;
   renderState(null);
+  state.symbols?.refresh();
+  if (levelChanged(before, updated.settings)) state.pathKey = null;
+  // Prehod OŠ → SŠ ali SŠ → fakulteta: na Učni poti pokažemo, kaj je novega.
+  const up = stageUp(before, updated.settings);
+  if (up) {
+    state.welcome = { stage: up };
+    return showView("path");
+  }
   const ok = $("#settings-saved");
   ok.hidden = false;
   setTimeout(() => (ok.hidden = true), 2000);
 });
+
+// ---------- prehod v višji razred / letnik ----------
+
+const levelChanged = (a, b) => ["educational_track", "curriculum_level", "study_program"].some((k) => a?.[k] !== b?.[k]);
+
+function clearLevelCard() {
+  const box = $("#level-card");
+  box.hidden = true;
+  box.innerHTML = "";
+  state.levelChecked = null;
+  state.welcome = null;
+}
+
+async function showLevelCard() {
+  const box = $("#level-card");
+  const sid = state.student?.id;
+  if (!sid) return;
+  if (state.welcome) {
+    const { stage } = state.welcome;
+    state.welcome = null;
+    const r = await api(`/api/students/${sid}/level-up`).catch(() => ({ premium: true }));
+    renderWelcome(box, { stage, premium: r.premium, accounts: accountsOn(), onAccount: () => $("#account-tab").click() });
+    return;
+  }
+  if (!box.hidden || state.levelChecked === sid) return;
+  state.levelChecked = sid;
+  const r = await api(`/api/students/${sid}/level-up`).catch(() => null);
+  if (!r?.suggestion || state.student?.id !== sid) return;
+  renderSuggestion(box, { studentId: sid, suggestion: r.suggestion, onApply: (s) => applyLevel(s.settings), onChoose: chooseUniversity });
+}
+
+// En klik: nov razred ali letnik.
+async function applyLevel(settings) {
+  const before = state.student.settings;
+  const updated = await api(`/api/students/${state.student.id}`, { method: "PUT", body: { settings } });
+  state.students[state.students.findIndex((s) => s.id === updated.id)] = updated;
+  state.student = updated;
+  syncCompetitionTab();
+  state.symbols?.refresh();
+  state.pathKey = null;
+  const up = stageUp(before, updated.settings);
+  if (up) state.welcome = { stage: up };
+  else toast(t("path.levelNow", { level: levelLabel(updated.settings.curriculum_level) }), "circle-arrow-up");
+  showView("path");
+}
+
+// Iz srednje šole na fakulteto: izbira univerze, fakultete in programa v Nastavitvah.
+function chooseUniversity() {
+  state.pickUniversity = true;
+  showView("settings");
+}
 
 $("#new-student-form").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -835,6 +919,7 @@ async function loadPath(key = state.pathKey) {
     return;
   }
   state.pathKey = p.key;
+  showLevelCard();
   // Fakulteta: vir predmetnika in opozorilo, da je osnutek.
   const prog = uni ? programsCache().find((x) => x.id === state.student.settings.study_program) : null;
   $("#path-note").hidden = !prog;
