@@ -62,7 +62,7 @@ Pravila so v `public/touch.css`. »Tablica« je zaslon na dotik (`(hover: none) 
 - Najmanjša višina tipke za dotik je 44px.
 - Gumbi v `.actions` na telefonu zapolnijo vrstico; tudi posamezen glavni gumb pod obrazcem ali v kartici (Shrani, Začni tekmovanje).
 - Preklopniki so na telefonu čez celo širino.
-- Plošča za vnos: na telefonu in tablici pokončno je spodaj, naloga se pomakne na vrh nad njo (tudi ob preklopu na Piši). Na tablici pokončno so tipke in platno široki največ 640 px. Na tablici ležeče je plošča desno.
+- Plošča za vnos ima svoje polje in Preveri; ko je odprta, je vrstica z vnosom v kartici naloge na telefonu in tablici skrita (en sam Preveri). Na telefonu in tablici pokončno je plošča spodaj, naloga se pomakne na vrh nad njo (tudi ob preklopu na Piši). Na tablici pokončno so tipke in platno široki največ 640 px. Na tablici ležeče je plošča desno.
 - Tablica ležeče (od 1000 px): isti dva stolpca kot na računalniku (učna pot, lekcija s poskusi desno, kazalo, napredek), z nekoliko ožjim desnim stolpcem.
 
 ## Vnos v Inštruktorju

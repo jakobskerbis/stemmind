@@ -30,6 +30,11 @@
   body.pad-open .task { padding-top: 6px; }
 }
 .task-text > :first-child { margin-top: 0; }
+/* Odprta plošča ima svoje polje in Preveri: vrstico z vnosom v kartici naloge takrat skrijemo
+   (telefon, tablica; na računalniku z miško ostane za tipkovnico). */
+@media (max-width: 599px), (max-width: 899px) and (min-height: 501px), (hover: none) and (pointer: coarse) {
+  body.pad-open .task .answer-row { display: none; }
+}
 /* Tablica pokončno: plošča je spodaj čez celo širino, tipke in platno pa ne preširoki. */
 @media (min-width: 600px) and (max-width: 899px) and (min-height: 501px) {
   .pad > * { width: 100%; max-width: 640px; margin-left: auto !important; margin-right: auto !important; }
