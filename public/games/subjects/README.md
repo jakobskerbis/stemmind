@@ -18,6 +18,8 @@ export const CONCEPTS = [
 ];
 ```
 
+Dodaten paket za predmet, ki že obstaja (npr. `mat15.js` za matematiko 1.–5. razreda, `mat2.js`, `fiz2.js`), izvozi še `export const SUBJECT = "MAT";` in v `AREAS` le nova področja (obstoječa uporabi po id-ju). Paketi `spo.js` (Spoznavanje okolja, 1.–3.) in `nit.js` (Naravoslovje in tehnika, 4.–5.) sta svoja predmeta. Vsak nov pojem dobi teme učne poti v `../lessons.js` (če jih ima), sicer velja njegov `year`.
+
 `gen` vrne `{ q, a, w }`: vprašanje, pravilni odgovor in vsaj 3 različne napačne odgovore (nikoli enake pravilnemu). Vse so nizi.
 
 ## Pravila kakovosti
