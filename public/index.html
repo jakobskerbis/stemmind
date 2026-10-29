@@ -141,7 +141,7 @@
     </aside>
     <section class="chat">
       <div class="chat-head">
-        <button id="toggle-sidebar" class="mobile-only icon-only" type="button" aria-label="Pogovori" data-i18n-aria="chat.list"><i data-icon="menu"></i></button>
+        <button id="toggle-sidebar" class="mobile-only icon-only" type="button" aria-label="Pogovori" data-i18n-aria="chat.list" aria-expanded="false" aria-controls="conversation-list"><i data-icon="menu"></i></button>
         <h1 id="chat-title" data-i18n="chat.new">Nov pogovor</h1>
         <div id="chat-state" class="chips"></div>
         <button type="button" class="ghost icon-only chat-calc calc-open" data-calc="sci" title="Kalkulator" aria-label="Kalkulator" data-i18n-title="nav.graph" data-i18n-aria="nav.graph"><i data-icon="calculator"></i></button>
@@ -154,7 +154,7 @@
           <img alt="Predogled fotografije" data-i18n-alt="chat.photoPreview">
           <button type="button" id="remove-image" aria-label="Odstrani sliko" data-i18n-aria="chat.removeImage">×</button>
         </div>
-        <div id="sym-panel" class="sym-panel" hidden aria-label="Simboli"></div>
+        <div id="sym-panel" class="sym-panel" hidden aria-label="Simboli" data-i18n-aria="chat.symbols"></div>
         <div class="composer-row">
           <label class="icon-btn" title="Fotografiraj nalogo" aria-label="Fotografiraj nalogo" data-i18n-title="chat.photo" data-i18n-aria="chat.photo">
             <i data-icon="camera"></i><input id="image-input" type="file" accept="image/*" capture="environment" hidden>
@@ -299,10 +299,10 @@
     </div>
     <div class="card">
       <h2 data-i18n="prog.topics">Teme</h2>
-      <table class="table">
+      <div class="md-table-wrap"><table class="table">
         <thead><tr><th data-i18n="prog.subject">Predmet</th><th data-i18n="prog.topic">Tema</th><th data-i18n="prog.turns">Poteze</th><th data-i18n="prog.errors">Napake</th></tr></thead>
         <tbody id="topic-rows"></tbody>
-      </table>
+      </table></div>
     </div>
     <div class="card" id="flags-card">
       <h2 data-i18n="prog.flags">Opozorila</h2>

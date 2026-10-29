@@ -135,7 +135,7 @@ a.btn-secondary svg { color: var(--accent); }
 .list-card { padding: 6px; }
 .list-row {
   display: flex; align-items: center; gap: 14px; width: 100%; min-height: 64px; padding: 10px 12px !important;
-  border: 0 !important; background: none !important; border-radius: var(--radius-sm) !important; text-align: left; color: var(--text);
+  border: 0 !important; background: none !important; border-radius: var(--radius-sm) !important; text-align: start; color: var(--text);
 }
 .list-row:hover { background: var(--surface-2) !important; }
 .list-row + .list-row { border-top: 1px solid var(--border) !important; border-radius: 0 !important; }
@@ -147,7 +147,7 @@ a.btn-secondary svg { color: var(--accent); }
 
 /* ---------- Jaz (profil na telefonu) ---------- */
 /* Kartica s profilom je gumb: odpre Nastavitve (šola in letnik, račun). */
-.me-head { display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; color: var(--text); font: inherit; cursor: pointer; }
+.me-head { display: flex; align-items: center; gap: 16px; width: 100%; text-align: start; color: var(--text); font: inherit; cursor: pointer; }
 .me-head:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
 .me-head:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 2px; }
 .me-head > svg.i { flex: none; color: var(--muted); }
@@ -182,7 +182,7 @@ a.btn-secondary svg { color: var(--accent); }
   #view-path .modes button { flex-direction: row; align-items: center; gap: 12px; padding: 10px 14px; }
   #view-path .modes .ic { margin: 0; }
   #view-path .modes .m-name { flex: none; }
-  #view-path .modes .m-sub { margin-left: auto; text-align: right; }
+  #view-path .modes .m-sub { margin-inline-start: auto; text-align: end; }
   #path-content .unit { margin-bottom: 16px; }
 
   /* Tema: levo naloga, desno razlaga, ki ostane vidna med reševanjem. */
@@ -244,6 +244,10 @@ body.pad-open #session-side { display: none !important; }
 .lang-field .i { width: 18px; height: 18px; vertical-align: -3px; }
 .onb-lang { margin: 4px 0 2px; }
 .lang-ui-note { margin: 6px 0 0; }
+/* Od desne proti levi (arabščina, perzijščina, urdujščina): puščice nazaj/naprej kažejo v smer branja.
+   Izjemi: tipka kazalca v kalkulatorju (izraz je vedno od leve proti desni) in zasukana puščica napredovanja v ligi. */
+[dir="rtl"] svg.i-dir { transform: scaleX(-1); }
+[dir="rtl"] .gc-key svg.i-dir, [dir="rtl"] .zone-mark svg.i-dir { transform: none; }
 
 /* ---------- Šolski sistem (regijski profili) ---------- */
 .system-field { margin-bottom: 8px; }
@@ -287,7 +291,7 @@ html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important;
 
 /* Izbira sloga v Nastavitve → Videz */
 .style-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-.style-card { display: flex !important; justify-content: flex-start !important; align-items: center; gap: 12px; text-align: left; padding: 12px 14px !important; min-height: 64px !important; }
+.style-card { display: flex !important; justify-content: flex-start !important; align-items: center; gap: 12px; text-align: start; padding: 12px 14px !important; min-height: 64px !important; }
 .style-card.on { border-color: var(--accent) !important; background: var(--accent-soft) !important; }
 .style-sw { display: flex; flex: none; }
 .style-sw i { width: 18px; height: 30px; border: 1px solid var(--border); }

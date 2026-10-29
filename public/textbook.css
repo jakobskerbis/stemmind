@@ -17,7 +17,7 @@
 .tb-book .eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; }
 .tb-book-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .tb-jump { padding: 8px 0; background: var(--bg, var(--surface)); }
-.tb-mine { margin-left: 4px; padding: 1px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 0.72rem; font-weight: 800; }
+.tb-mine { margin-inline-start: 4px; padding: 1px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 0.72rem; font-weight: 800; }
 .tb-jump .active .tb-mine { background: var(--surface); }
 .tb-part { scroll-margin-top: 130px; }
 .tb-part-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin: 22px 0 8px; }
@@ -29,7 +29,7 @@
 }
 .tb-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .tb-topic {
-  width: 100%; text-align: left; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px;
+  width: 100%; text-align: start; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 4px 10px;
   border: 0 !important; background: none !important; border-radius: 10px !important; padding: 9px 10px !important; cursor: pointer;
 }
 .tb-topic:hover { background: var(--surface-2) !important; }
@@ -38,14 +38,17 @@
 .tb-sub, .tb-snip { flex-basis: 100%; font-size: 0.85rem; color: var(--muted); }
 .tb-badges { display: flex; gap: 4px; flex-wrap: wrap; }
 .tb-badge { font-size: 0.72rem; border-radius: 99px; padding: 1px 8px; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); font-weight: 600; }
-.tb-badge.demo { background: color-mix(in srgb, var(--demo-a) 18%, transparent); color: var(--demo-a); }
-.tb-badge.vaje { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
+/* besedilo značk pomešano z barvo besedila, da ima na svetlem ozadju kontrast vsaj 4,5 : 1 (oranžna sama 2,3 : 1) */
+.tb-badge.demo { background: color-mix(in srgb, var(--demo-a) 18%, transparent); color: color-mix(in srgb, var(--demo-a) 58%, var(--text)); }
+.tb-badge.vaje { background: color-mix(in srgb, var(--ok) 16%, transparent); color: color-mix(in srgb, var(--ok) 72%, var(--text)); }
 
 /* PDF in zaklenjen interaktivni del */
 .tb-pdf { display: inline-flex; align-items: center; gap: 4px; color: var(--accent); font-weight: 600; text-decoration: none; font-size: 0.92rem; }
 .tb-pdf:hover { text-decoration: underline; }
+/* Na dotik je povezava visoka le 23 px: površino za dotik povečamo na 44 px, videz ostane enak. */
+@media (hover: none) and (pointer: coarse) { .tb-pdf { padding-block: 11px; margin-block: -11px; } }
 .tb-locked { border: 1px dashed var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
-.tb-checks ol { padding-left: 1.3em; }
+.tb-checks ol { padding-inline-start: 1.3em; }
 .tb-checks > ol > li { margin-bottom: 12px; }
 .tb-checks details { background: var(--surface-2); border-radius: 8px; padding: 4px 10px; margin-top: 4px; }
 
@@ -56,11 +59,11 @@
 .tb-draft { background: color-mix(in srgb, #e0a100 14%, transparent); border-radius: 10px; padding: 8px 12px; font-size: 0.9rem; }
 .tb-section .explanation { line-height: 1.65; }
 .tb-section .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
-.tb-why { border-left: 4px solid var(--accent); }
-.tb-summary { border-left: 4px solid var(--ok); }
-.tb-mistakes { border-left: 4px solid var(--danger); }
+.tb-why { border-inline-start: 4px solid var(--accent); }
+.tb-summary { border-inline-start: 4px solid var(--ok); }
+.tb-mistakes { border-inline-start: 4px solid var(--danger); }
 /* Vmesno vprašanje »Premisli« v razlagi (:::premisli) */
-.tb-think { margin: 12px 0; border-left: 4px solid var(--gold, #e0a100); background: var(--surface-2); border-radius: 0 10px 10px 0; padding: 4px 14px 8px; }
+.tb-think { margin: 12px 0; border-inline-start: 4px solid var(--gold, #e0a100); background: var(--surface-2); border-radius: 0; border-start-end-radius: 10px; border-end-end-radius: 10px; padding: 4px 14px 8px; }
 .tb-think-label { margin: 6px 0 0; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
 .tb-think > details > summary { cursor: pointer; font-weight: 600; color: var(--accent); padding: 4px 0; }
 .tb-formula { margin: 8px 0; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-2); padding: 0 12px; }

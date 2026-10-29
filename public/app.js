@@ -473,11 +473,19 @@ async function openConversation(id) {
   box.scrollTop = box.scrollHeight;
 }
 
-$("#toggle-sidebar").addEventListener("click", () => $(".sidebar").classList.toggle("open"));
-$("#conversation-list").addEventListener("click", () => $(".sidebar").classList.remove("open"));
+// Telefon: seznam pogovorov se odpre čez klepet; gumb ostane viden in ga zapre (tudi Esc).
+const setSidebar = (open) => {
+  $(".sidebar").classList.toggle("open", open);
+  $("#toggle-sidebar").setAttribute("aria-expanded", String(open));
+};
+$("#toggle-sidebar").addEventListener("click", () => setSidebar(!$(".sidebar").classList.contains("open")));
+$("#conversation-list").addEventListener("click", () => setSidebar(false));
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && $(".sidebar").classList.contains("open")) setSidebar(false);
+});
 
 $("#new-chat").addEventListener("click", () => {
-  $(".sidebar").classList.remove("open");
+  setSidebar(false);
   state.conversationId = null;
   renderConversationList();
   renderEmptyChat();

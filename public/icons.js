@@ -128,8 +128,11 @@ const P = {"map":"<path d=\"M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1
   "unlock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" /><path d=\"M7 11V7a5 5 0 0 1 9.9-1\" />",
   "castle":"<path d=\"M10 5V3\" /><path d=\"M14 5V3\" /><path d=\"M15 21v-3a3 3 0 0 0-6 0v3\" /><path d=\"M18 3v8\" /><path d=\"M18 5H6\" /><path d=\"M22 11H2\" /><path d=\"M22 9v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9\" /><path d=\"M6 3v8\" />"};
 
+// Puščice, ki kažejo smer branja (nazaj, naprej, »odpri«); v jezikih od desne proti levi se zrcalijo (ui.css).
+const DIR = new Set(["arrow-left", "arrow-right", "chevron-left", "chevron-right"]);
 export function icon(name, cls = "") {
   const body = P[name] || "";
+  if (DIR.has(name)) cls = `${cls} i-dir`.trim();
   return `<svg class="i ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
 }
 

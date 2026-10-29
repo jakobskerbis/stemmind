@@ -9,7 +9,7 @@
 .corner-head p { margin: 0; }
 .corner-tools { display: flex; gap: 8px; flex-wrap: wrap; }
 .corner-chips { margin: 4px 0 14px; }
-.corner-chips b { margin-left: 4px; color: var(--accent); }
+.corner-chips b { margin-inline-start: 4px; color: var(--accent); }
 .corner-note { display: flex; gap: 8px; align-items: center; color: var(--muted); margin: 0 0 12px; }
 .corner-sources { margin-top: 16px; }
 .corner-empty { text-align: center; padding: 28px 18px; }
@@ -29,7 +29,7 @@
 .news-card h3 a:hover { color: var(--accent); text-decoration: underline; }
 .news-sum { margin: 0; color: var(--muted); line-height: 1.45; overflow-wrap: anywhere; }
 .news-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 4px; }
-.news-actions .text-btn { display: inline-flex; gap: 4px; align-items: center; margin-left: auto; }
+.news-actions .text-btn { display: inline-flex; gap: 4px; align-items: center; margin-inline-start: auto; }
 .news-actions svg { width: 16px; height: 16px; }
 
 /* ---------- čez cel zaslon ---------- */
@@ -41,7 +41,7 @@ body.corner-board-open { overflow: hidden; }
 .cb-mast small { color: var(--muted); }
 .cb-modes { flex: 0 0 auto; }
 .cb-modes svg { width: 16px; height: 16px; }
-.cb-close span { margin-left: 4px; }
+.cb-close span { margin-inline-start: 4px; }
 .cb-chips { padding: 8px 16px 0; background: var(--bg); }
 .cb-chips .corner-chips { margin: 0 0 6px; }
 .cb-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 12px 16px 32px; padding-bottom: max(32px, env(safe-area-inset-bottom)); }
@@ -86,7 +86,7 @@ body.corner-board-open { overflow: hidden; }
 .iq h2 { margin: 0 0 6px; }
 .iq-step { margin: 0 0 6px; font-size: 13px; font-weight: 700; }
 .iq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin: 14px 0 6px; }
-.iq-opt, .iq-level { display: flex; align-items: center; justify-content: flex-start; gap: 10px; text-align: left; min-height: 48px; padding: 8px 12px; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font: inherit; font-weight: 700; cursor: pointer; }
+.iq-opt, .iq-level { display: flex; align-items: center; justify-content: flex-start; gap: 10px; text-align: start; min-height: 48px; padding: 8px 12px; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); font: inherit; font-weight: 700; cursor: pointer; }
 .iq-opt:hover, .iq-level:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
 .iq-opt.on, .iq-level.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 .iq-emoji { font-size: 22px; line-height: 1; }
