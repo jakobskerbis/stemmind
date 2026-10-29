@@ -39,23 +39,23 @@ Majhna svetilka sveti na zaslon, ki je $60\,\text{cm}$ od nje. Med njiju postavi
 | $20$ | $12$ | $3$-krat |
 | $30$ | $8$ | $2$-krat |
 
-Opaziš? Bliže svetilki je karton, večja je senca. In še natančneje: senca je tolikokrat večja od kartona, kolikokrat je zaslon dlje od svetilke kot karton. Pri $15\,\text{cm}$ je zaslon $4$-krat dlje, senca je $4$-krat večja. Če višino predmeta označimo s $h$, višino sence s $H$, razdaljo svetilo–predmet z $a$ in razdaljo svetilo–zaslon z $b$:
+Opaziš? Bliže svetilki je karton, večja je senca. Poglej še prvo vrstico: zaslon je od svetilke $4$-krat dlje kot karton ($60 : 15 = 4$), in senca je $4$-krat večja od kartona. Tako je v vsaki vrstici. Če višino predmeta označimo s $h$, višino sence s $H$, razdaljo svetilo–predmet z $a$ in razdaljo svetilo–zaslon z $b$:
 
 $$\frac{H}{h} = \frac{b}{a}$$
 
 Pravilo sledi iz premočrtnosti: žarka mimo robov se razhajata enakomerno, kot kraka črke V.
 
 :::premisli
-Kolikšna bo senca, če karton prestavimo na $40\,\text{cm}$ od svetilke? Napovej, ali bo večja ali manjša od $8\,\text{cm}$.
+Karton prestavimo na $40\,\text{cm}$ od svetilke. Najprej brez računanja napovej, ali bo senca večja ali manjša od $8\,\text{cm}$. Nato izračunaj, kolikšna bo.
 ---
 Manjša: $6\,\text{cm}$. Zaslon je od svetilke $\dfrac{60}{40} = 1{,}5$-krat dlje kot karton, zato je senca $1{,}5$-krat večja od $4\,\text{cm}$.
 :::
 
-**Polsenca.** Majhna svetilka da senco z ostrim robom. Sonce pa ni točka, ampak velika svetla krogla. Za oviro je prostor, kamor ne pride svetloba z nobenega dela Sonca: tam je **senca**. Okoli nje je pas, kamor sveti le del Sonca: to je **polsenca**, temnejša od okolice, a svetlejša od sence. Zato imajo sence dreves na soncu mehke robove.
+**Polsenca.** Majhna svetilka da senco z ostrim robom. Sonce pa ni točka, ampak velika svetla krogla. Vsak njen del je kot majhna svetilka, ki meče svojo senco, in te sence se le delno prekrivajo. Za oviro je prostor, kamor ne pride svetloba z nobenega dela Sonca: tam je **senca**. Okoli nje je pas, kamor sveti le del Sonca: to je **polsenca**, temnejša od okolice, a svetlejša od sence. Zato imajo sence dreves na soncu mehke robove.
 
 V simulaciji spodaj (»Premočrtno širjenje svetlobe: senca in polsenca«) najprej povleci oviro bliže izviru in opazuj, kako senca na zaslonu raste. Nato izberi dva izvora in poišči sivi pas polsence: tja sveti le eden od njiju.
 
-**Mrka.** Sonce, Luna in Zemlja so včasih na isti premici.
+**Sončev in Lunin mrk.** Sonce, Luna in Zemlja so včasih na isti premici.
 
 ```
 Sončev mrk:  Sonce ───→  Luna  ───→  Zemlja

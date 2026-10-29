@@ -24,7 +24,7 @@ Sestra pa je ostanek videla na lastne oči: $180\,\mathrm{ml}$. Isto količino, 
 
 $$500 - 40x = 180$$
 
-Enačbo rešimo kot vsako drugo: $-40x = 180 - 500$, torej $-40x = -320$ in $x = 8$.
+Enačbo rešimo kot vsako drugo. Na obeh straneh odštejemo $500$: $-40x = 180 - 500$, torej $-40x = -320$ in $x = 8$.
 
 Preizkus delamo v besedilu: v $8$ urah izteče $40 \cdot 8 = 320$ mililitrov, ostane $500 - 320 = 180$ mililitrov. Drži. Infuzija teče $8$ ur.
 
@@ -58,7 +58,7 @@ Pri prevajanju besed v znake si pomagaj s tabelo:
 **Gibanje: srečanje in dohitevanje.** Pri teh nalogah vedno velja: pot $=$ hitrost $\cdot$ čas, $s = v \cdot t$.
 
 - *Srečanje:* vozili peljeta drugo proti drugemu. Do srečanja skupaj prevozita vso razdaljo $d$ med krajema: $v_1 t + v_2 t = d$.
-- *Dohitevanje:* hitrejši pelje za počasnejšim, ki ima prednost $d$. Ko ga dohiti, je prevozil toliko več: $v_1 t = d + v_2 t$.
+- *Dohitevanje:* hitrejši pelje za počasnejšim, ki ima prednost $d$. Ko ga dohiti, je prevozil za $d$ več kot počasnejši: $v_1 t = d + v_2 t$.
 
 Odpri simulacijo »Gibanje: srečanje in dohitevanje« spodaj in izberi vožnjo nasproti. Na grafu poti v odvisnosti od časa vsako vozilo nariše svojo premico. Srečanje je točka, kjer se premici sekata. Nato preklopi na dohitevanje in obema vozilom nastavi enako hitrost. Opazuj, kaj se zgodi s premicama.
 
@@ -111,7 +111,7 @@ $\dfrac{x}{3} + \dfrac{x}{4} + 1 = x$
 1. Neznanka: $x$ je vsa tekočina tistega dne v litrih.
 2. Jutranji del je $\dfrac{x}{3}$, popoldanski $\dfrac{x}{4}$, večerni $1$. Vsota treh delov je vsa tekočina $x$.
 3. Najmanjši skupni večkratnik imenovalcev $3$ in $4$ je $12$. Z njim pomnožimo **vsak** člen: $4x + 3x + 12 = 12x$.
-4. Zberemo člene z $x$: $7x + 12 = 12x$, torej $12 = 5x$.
+4. Seštejemo $4x + 3x = 7x$ in dobimo $7x + 12 = 12x$. Na obeh straneh odštejemo $7x$: $12 = 5x$.
 5. Delimo s $5$: $x = 2{,}4$, ker $12 : 5 = 2{,}4$.
 6. Preizkus v besedilu: zjutraj $2{,}4 : 3 = 0{,}8$ litra, popoldne $2{,}4 : 4 = 0{,}6$ litra, zvečer $1$ liter. Skupaj $0{,}8 + 0{,}6 + 1 = 2{,}4$. Drži.
 7. Odgovor: bolnik je ta dan popil $2{,}4\,\mathrm{l}$ tekočine.
@@ -192,7 +192,7 @@ Kot zdravnik ne pozabi kontrolnega pregleda, tudi ti ne izpusti preizkusa. Šele
 
 ## Drugače: Bolj natančno
 
-Vsaka stran enačbe je opis iste količine. Če enačbo zapišemo kot dve linearni funkciji, dobimo dve premici. Pri Ani in Boru (Primer 4) sta to $y = -3x + 38$ in $y = -x + 24$. Rešitev enačbe je abscisa presečišča premic: $(7, 17)$.
+Vsaka stran enačbe je opis iste količine. Če vsako stran enačbe zapišemo kot linearno funkcijo, dobimo dve premici. Pri Ani in Boru (Primer 4) sta to $y = -3x + 38$ in $y = -x + 24$. Rešitev enačbe je abscisa presečišča premic: $(7, 17)$.
 
 Zato ima linearna enačba v besedilni nalogi lahko:
 
@@ -230,7 +230,7 @@ Rešitev enačbe še ni nujno rešitev naloge. Število tablet, dni ali ljudi mo
 - Srečala bi se pozneje, ker bi reševalci prevozili večji del poti.
 ~ Reševalci bi res prevozili več, a prav zato bi se srečala prej, ne pozneje.
 - Čas srečanja bi ostal enak, ker se hitrosti ne spremenita.
-~ Hitrosti se res ne spremenita, a reševalci bi vozili $10$ minut dlje in prevozili $15\,\mathrm{km}$ več.
+~ Hitrosti se res ne spremenita. A če bi se srečala ob isti uri, bi reševalci vozili $10$ minut dlje, prevozili $15\,\mathrm{km}$ več in skupaj bi prevozila več kot $60\,\mathrm{km}$.
 + Srečala bi se prej, po $24$ minutah, ker je $60t + 90t = 60$ in $t = 0{,}4\,\mathrm{h}$.
 - Ne bi se srečala, ker vozita nasproti.
 ~ Prav ker vozita nasproti, se srečata. Ne srečata se lahko le pri dohitevanju z enakima hitrostma.

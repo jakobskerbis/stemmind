@@ -7,7 +7,7 @@ avtor: AI
 
 Na začetku 20. stoletja sta si dva matematika zastavila vprašanje, ki se zdi bolj za igralce kot za znanstvenike. Ameriški matematik Charles Bouton je popolnoma razrešil igro z jemanjem predmetov s kupčkov in ji dal ime **Nim**: za vsak položaj vnaprej pove, kdo bo zmagal. Nemški matematik Ernst Zermelo pa se je spraševal o šahu: ali ima eden od igralcev pot do zmage ne glede na to, kako igra nasprotnik?
 
-Obema je šlo za isto: igro, v kateri ni sreče in oba igralca vidita vse, lahko **izračunaš**. Kasneje so na tej ideji gradili prve računalniške igralce.
+Obema je šlo za isto spoznanje: če v igri ni sreče in oba igralca vidita vse, lahko izid **izračunaš** vnaprej. Kasneje so na tej ideji gradili prve računalniške igralce.
 
 Na glasbenem taboru se Ana in Bor med odmorom igrata z bobnom: izmenično zaigrata $1$ ali $2$ udarca, kdor zaigra deseti udarec, zmaga. Ana začne. Ali lahko zmaga, kako dobro koli igra Bor? Na tekmovanjih so take igre pogoste, odgovor pa je strategija, ne sreča.
 
@@ -30,7 +30,7 @@ ostalo:  0  1  2  3  4  5  6  7  8  9  10
 Na začetku ostane $10$, to je **Z**. Ana zaigra $1$ udarec in Boru pusti $9$. Nato vsakič dopolni Borovo potezo do $3$: če Bor zaigra $1$, Ana $2$; če Bor zaigra $2$, Ana $1$. Ostanki gredo $9, 6, 3, 0$, in deseti udarec je Anin.
 
 :::premisli
-Kdo zmaga, če je udarcev do zmage $12$ namesto $10$? Napovej s premico, preden pogledaš.
+Kdo zmaga, če zmaga dvanajsti udarec namesto desetega? Napovej s premico, preden pogledaš.
 ---
 Bor. Število $12$ je večkratnik števila $3$, zato je to položaj **P** za Ano. Kar koli zaigra, Bor dopolni do $3$ in ji spet pusti večkratnik števila $3$.
 :::
@@ -42,7 +42,7 @@ Bor. Število $12$ je večkratnik števila $3$, zato je to položaj **P** za Ano
 
 **Strategija** je navodilo, kaj narediti v vsakem položaju. Zmagovalna strategija pomeni: nasprotniku vedno puščaj položaje **P**.
 
-**3. Posplošitev.** Če smeš vzeti od $1$ do $k$ žetonov in zmaga, kdor vzame zadnjega, so položaji **P** natanko večkratniki števila $k + 1$. Kar koli vzame nasprotnik, ti dopolniš do $k + 1$. V simulaciji spodaj (Igra z žetoni: najdi zmagovalno strategijo) nastavi $16$ žetonov in največ $3$ na potezo, nato vklopi »pokaži strategijo«. Opazi, da so izgubljeni položaji razmaknjeni za $4$.
+**3. Posplošitev.** Namesto udarcev pogosto jemljemo žetone s kupčka. Če smeš vzeti od $1$ do $k$ žetonov in zmaga, kdor vzame zadnjega, so položaji **P** natanko večkratniki števila $k + 1$. Kar koli vzame nasprotnik, ti dopolniš do $k + 1$. V simulaciji spodaj (Igra z žetoni: najdi zmagovalno strategijo) nastavi $16$ žetonov in največ $3$ na potezo, nato vklopi »pokaži strategijo«. Opazi, da so izgubljeni položaji razmaknjeni za $4$.
 
 **4. Simetrija.** Nekatere igre rešiš brez tabele. Recimo, da sta na mizi dva **enaka kupčka**, igralec pa na potezi vzame poljubno število žetonov z enega kupčka. Drugi igralec vsakič vzame enako število z drugega kupčka. Tako sta kupčka po njegovi potezi spet enaka. Če ima prvi še potezo, jo ima tudi drugi; zadnji žeton zato vzame drugi. Temu rečemo **zrcalna strategija**.
 

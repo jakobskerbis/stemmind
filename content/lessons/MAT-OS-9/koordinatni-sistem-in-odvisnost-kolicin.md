@@ -55,7 +55,7 @@ V simulaciji spodaj, »Koordinatni sistem in odvisnost količin«, izberi način
 
 Vsako vrstico zapišemo kot točko: $(1, 80)$, $(2, 160)$, $(3, 240)$, $(4, 320)$.
 
-Število oseb izberemo sami. Količina riža se mu prilagodi, je od njega odvisna. Zato je število oseb **neodvisna količina** in jo rišemo na os $x$. Riž je **odvisna količina** in sodi na os $y$.
+Število oseb izberemo sami. Količino riža pa izračunamo iz števila oseb, zato je od njega odvisna. Zato je število oseb **neodvisna količina** in jo rišemo na os $x$. Riž je **odvisna količina** in sodi na os $y$.
 
 Zdaj lahko odgovorimo Tinetu. Točka $(320, 4)$ bi pomenila »$320$ oseb in $4$ grami riža«: druga točka in zelo lačna druščina.
 
@@ -80,9 +80,9 @@ Pri rižu ne. Število oseb je celo število, točka med $(2, 160)$ in $(3, 240)
 
 Prva točka leži na osi $y$ pod izhodiščem, naslednji dve v IV. kvadrantu, zadnja na osi $x$. V prvih desetih minutah se zelenjava segreje za $8\,^\circ\mathrm{C}$, v naslednjih za $6\,^\circ\mathrm{C}$, nato le za $4\,^\circ\mathrm{C}$. Točke zato ne ležijo na premici. Graf je ukrivljena črta, ki se vzpenja vedno počasneje.
 
-Ko gre graf od leve proti desni navzgor, odvisna količina **narašča**. Ko se spušča, količina **pada**. Vodoraven graf pomeni, da se količina ne spreminja.
+Ko gre graf od leve proti desni navzgor, odvisna količina **narašča**. Ko se spušča, količina **pada**. Vodoraven graf pomeni, da se količina ne spreminja. Bolj strm graf pomeni, da se količina v enakem času spremeni bolj.
 
-**4. Branje grafa.** Od dane vrednosti na eni osi gremo naravnost do grafa, od tam naravnost do druge osi in preberemo. Upoštevamo merilo: vrednost = število razdelkov $\cdot$ vrednost razdelka.
+**4. Branje grafa.** Od dane vrednosti na eni osi gremo pravokotno na to os do grafa. Od tam gremo pravokotno do druge osi in preberemo vrednost. Upoštevamo merilo: vrednost = število razdelkov $\cdot$ vrednost razdelka.
 
 ## Rešeni primeri
 
@@ -124,7 +124,7 @@ merilo: vrednost enega kvadratka $=$ največja vrednost $:$ število kvadratkov
 2. Mleko je odvisno od števila jajc, zato jajca rišemo na os $x$, mleko na os $y$.
 3. Graf naj sega do $5$ jajc, torej do $150 \cdot 5 = 750$ ml. Merilo: $750 : 15 = 50$, en kvadratek na osi $y$ naj bo $50\,\mathrm{ml}$.
 4. Točka $(1, 150)$ je $1$ razdelek desno in $150 : 50 = 3$ kvadratke visoko. Točka $(4, 600)$ je $600 : 50 = 12$ kvadratkov visoko.
-5. Točk ne povežemo, ker jajc ne delimo, ležijo pa na premici skozi izhodišče. Vzorec nadaljujemo do $5$ jajc: točka je $15$ kvadratkov visoko, $15 \cdot 50 = 750$ ml.
+5. Točk ne povežemo, ker jajc ne delimo, ležijo pa na premici skozi izhodišče. Vsako jajce doda $3$ kvadratke višine, zato je točka za $5$ jajc $12 + 3 = 15$ kvadratkov visoko, $15 \cdot 50 = 750$ ml.
 6. Odgovor: za $5$ jajc potrebujemo $750\,\mathrm{ml}$ mleka.
 
 ### Primer 3: voda na štedilniku (težji)

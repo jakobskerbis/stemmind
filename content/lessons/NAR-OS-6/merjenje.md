@@ -5,15 +5,15 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Pred nekaj sto leti je trgovec s blagom dolžino meril s svojo roko. Ena enota je bila **laket**, pri nas so ji rekli **vatel**: dolžina od komolca do konca prstov ali podobna mera. Poznali so še **palec**, **čevelj** in **korak**. Težava je očitna. Roke in noge niso pri vseh ljudeh enako dolge. Vatel v enem mestu ni bil enak vatlu v drugem. Kupci in prodajalci so se prepirali, koliko blaga so v resnici dobili.
+Pred nekaj sto leti je trgovec s blagom dolžino meril s svojo roko. Ena takih enot je bil **laket**, pri nas **vatel**: približno dolžina od komolca do konca prstov. Poznali so še **palec**, **čevelj** in **korak**. Težava je očitna. Roke in noge niso pri vseh ljudeh enako dolge. Vatel v enem mestu ni bil enak vatlu v drugem. Kupci in prodajalci so se prepirali, koliko blaga so v resnici dobili.
 
-Konec 18. stoletja so v Franciji zato uvedli novo enoto, **meter**. Določili so ga kot desetmilijonti del razdalje od severnega tečaja do ekvatorja. Nihče ga ni nosil na svojem telesu, zato je bil za vse enak. Iz metra so izpeljali še enote za prostornino in maso. Leta 1875 se je o skupnih enotah dogovorilo več držav, danes jih uporablja skoraj ves svet.
+Konec 18. stoletja so v Franciji zato uvedli novo enoto, **meter**. Razdaljo od severnega tečaja do ekvatorja so si zamislili razdeljeno na deset milijonov enakih delov. En tak del je meter. Nihče ga ni nosil na svojem telesu, zato je bil za vse enak. Iz metra so izpeljali še enote za prostornino in maso. Leta 1875 se je o skupnih enotah dogovorilo več držav, danes jih uporablja skoraj ves svet.
 
 Zato je tekaška steza za $100\,\mathrm{m}$ v Ljubljani enako dolga kot v Tokiu. Rekorde lahko primerjamo, ker vsi merijo z enakimi enotami.
 
 ## Razlaga
 
-**Najprej en primer.** Jaka na šolskem tekmovanju skoči v daljino. Sodnik s trakom odčita $3\,\mathrm{m}$ in še $45\,\mathrm{cm}$. V zapisnik mora vpisati eno samo število: enkrat v centimetrih, enkrat v metrih.
+**Najprej en primer.** Jaka na šolskem tekmovanju skoči v daljino. Sodnik s trakom odčita $3\,\mathrm{m}$ in še $45\,\mathrm{cm}$. V zapisnik mora skok vpisati z enim samim številom. Poglejmo, kako ga zapišemo v centimetrih in kako v metrih.
 
 - Vemo: $1\,\mathrm{m} = 100\,\mathrm{cm}$. Torej so $3\,\mathrm{m}$ toliko kot $300\,\mathrm{cm}$.
 - Dodamo še $45\,\mathrm{cm}$ in dobimo $345\,\mathrm{cm}$.
@@ -50,21 +50,21 @@ cm
 mm
 ```
 
-Po lestvi navzdol: $1\,\mathrm{km} = 1000\,\mathrm{m} = 100\,000\,\mathrm{cm}$. Pri vsaki stopnici $\cdot 10$ se decimalna vejica premakne za eno mesto v desno, pri stopnici $\cdot 1000$ za tri mesta: $0{,}45\,\mathrm{m} = 4{,}5\,\mathrm{dm} = 45\,\mathrm{cm}$.
+Po lestvi navzdol: $1\,\mathrm{km} = 1000\,\mathrm{m} = 100\,000\,\mathrm{cm}$. Pri vsaki stopnici $\cdot 10$ se decimalna vejica premakne za eno mesto v desno: $0{,}45\,\mathrm{m} = 4{,}5\,\mathrm{dm} = 45\,\mathrm{cm}$. Pri stopnici $\cdot 1000$ se premakne za tri mesta.
 
 **Štiri količine, ki jih največ merimo.**
 
 - **Dolžina** pove, kako dolgo, široko ali visoko je nekaj. Osnovna enota je meter ($\mathrm{m}$). Merimo jo z ravnilom, merilnim trakom ali kljunastim merilom.
 - **Masa** pove, koliko snovi ima telo. Osnovna enota je kilogram ($\mathrm{kg}$). Velja $1\,\mathrm{kg} = 1000\,\mathrm{g}$ in $1\,\mathrm{t} = 1000\,\mathrm{kg}$ (t je tona). Maso merimo s tehtnico.
-- **Prostornina** pove, koliko prostora zavzame telo ali tekočina. Za tekočine uporabljamo liter: $1\,\mathrm{L} = 1000\,\mathrm{mL}$. Velja tudi $1\,\mathrm{L} = 1\,\mathrm{dm^3}$ in $1\,\mathrm{mL} = 1\,\mathrm{cm^3}$. Merimo z merilnim valjem. Oči imamo v višini gladine in beremo na dnu ukrivljene gladine.
+- **Prostornina** pove, koliko prostora zavzame telo ali tekočina. Za tekočine uporabljamo liter: $1\,\mathrm{L} = 1000\,\mathrm{mL}$. Velja tudi $1\,\mathrm{L} = 1\,\mathrm{dm^3}$ (kocka z robom $1\,\mathrm{dm}$) in $1\,\mathrm{mL} = 1\,\mathrm{cm^3}$. Merimo z merilnim valjem. Gladina je ob steni malo dvignjena. Zato imamo oči v višini gladine in beremo na njenem najnižjem delu, na sredini.
 - **Temperatura** pove, kako toplo ali hladno je telo. Merimo jo s termometrom v stopinjah Celzija ($^\circ\mathrm{C}$). Pri $0\,{}^\circ\mathrm{C}$ se led tali, pri $100\,{}^\circ\mathrm{C}$ voda zavre.
 
 Na vsakem merilu je **najmanjši razdelek**: najmanjša razdalja med dvema črticama. Na šolskem ravnilu je to $1\,\mathrm{mm}$. Natančneje od najmanjšega razdelka z merilom ne moremo meriti.
 
-Pri temperaturi predpon ne uporabljamo. Tudi seštevati je ne smemo kot dolžine ali mase.
+Pri temperaturi predpon ne uporabljamo.
 
 :::premisli
-V bidon naliješ pol vode s $20\,{}^\circ\mathrm{C}$ in pol vode s $40\,{}^\circ\mathrm{C}$. Ali bo voda v bidonu imela $60\,{}^\circ\mathrm{C}$?
+V bidon naliješ pol vode s $20\,{}^\circ\mathrm{C}$ in pol vode s $40\,{}^\circ\mathrm{C}$. Ali bo voda v bidonu imela $60\,{}^\circ\mathrm{C}$? Če ne, koliko približno?
 ---
 Ne. Topla voda segreje hladno, hladna ohladi toplo. Temperatura mešanice je med obema, pri enakih količinah približno $30\,{}^\circ\mathrm{C}$. Mase in prostornine se seštejejo, temperature ne.
 :::

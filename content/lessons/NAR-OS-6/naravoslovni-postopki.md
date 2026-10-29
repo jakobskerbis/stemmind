@@ -14,7 +14,7 @@ Nekaj možnosti:
 - Zrna si ogledaš z lupo. Zrna soli so pogosto podobna majhnim kockam, zrna sladkorja so bolj nepravilna.
 - Ščepec vsakega prahu ob pomoči odraslega segreješ v ponvi. Sladkor se stali in porjavi v karamelo. Sol ostane bela.
 
-Kar si naredil, ni bilo ugibanje. Najprej si **opazoval**, potem si imel **domnevo**, nato si jo preveril s **poskusom**. Tako delajo naravoslovci. Tem korakom rečemo **naravoslovni postopki**. Z njimi odgovoriš na vprašanja, ki jih ne moreš rešiti le z razmišljanjem.
+Kar si naredil, ni bilo ugibanje. Najprej si **opazoval**, potem si imel **domnevo** (napoved, kaj se bo zgodilo), nato si jo preveril s **poskusom**. Tako delajo naravoslovci. Tem korakom rečemo **naravoslovni postopki**. Z njimi odgovoriš na vprašanja, ki jih ne moreš rešiti le z razmišljanjem.
 
 ## Razlaga
 
@@ -26,7 +26,7 @@ Kar si naredil, ni bilo ugibanje. Najprej si **opazoval**, potem si imel **domne
 | Bor | žlička sladkorja, ne meša | žlička sladkorja, meša | mešanje |
 | Cene | $200\,\mathrm{mL}$ vode, žlička sladkorja, meša | $200\,\mathrm{mL}$ vode, žlička sladkorja, meša | nič |
 
-Pri Ani se je sladkor v topli vodi raztopil hitreje. Toda topla voda je imela tudi več vode. Kaj je bilo vzrok? Ne vemo. Enako velja za Bora, ki je mešal le en kozarec.
+Pri Ani se je sladkor v topli vodi raztopil hitreje. Toda v kozarcu s toplo vodo je bilo tudi več vode. Kaj je bilo vzrok? Ne vemo. Enako velja za Bora, ki je mešal le en kozarec.
 
 Le Cene lahko odgovori na vprašanje. Pri njem se kozarca razlikujeta samo v temperaturi vode.
 
@@ -44,12 +44,12 @@ Ne. Sladkor v prahu se raztaplja hitreje kot kocka, tudi v enako topli vodi. Spr
 2. **Vprašanje.** Iz opažanja nastane vprašanje: »Ali mleko prekipi tudi v večjem loncu?«
 3. **Domneva.** To je napoved, ki jo lahko preverimo: »V večjem loncu mleko ne bo prekipelo.«
 4. **Poskus.** Pošteno preverimo domnevo.
-5. **Merjenje.** Količino določimo z merilom in jo zapišemo s številom in **enoto**: $250\,\mathrm{mL}$, $4\,\mathrm{min}$, $90\,{}^\circ\mathrm{C}$. »Malo« ali »kar dolgo« ni meritev.
+5. **Merjenje.** Količino določimo z merilom (ravnilom, štoparico, termometrom) in jo zapišemo s številom in **enoto**: $250\,\mathrm{mL}$, $4\,\mathrm{min}$, $90\,{}^\circ\mathrm{C}$. »Malo« ali »kar dolgo« ni meritev.
 6. **Zapis.** Rezultate uredimo v tabelo. Enoto napišemo v glavo stolpca.
 7. **Prikaz.** Iz tabele narišemo stolpčni ali črtni diagram. Na njem razlike vidimo na prvi pogled.
 8. **Sklep.** Povemo, ali so rezultati domnevo potrdili ali ovrgli.
 
-**Zakaj ena meritev ni dovolj.** Če isto stvar izmerimo večkrat, dobimo malo različne rezultate. Štoparico pritisnemo prepozno, na merilo pogledamo postrani. Razliki med meritvijo in pravo vrednostjo rečemo **merska napaka**. Zato meritev ponovimo in izračunamo **povprečje**: vse meritve seštejemo in vsoto delimo s številom meritev.
+**Zakaj ena meritev ni dovolj.** Če isto stvar izmerimo večkrat, dobimo malo različne rezultate. Na primer: štoparico pritisnemo prepozno ali na merilo pogledamo postrani. Razliki med meritvijo in pravo vrednostjo rečemo **merska napaka**. Zato meritev ponovimo in izračunamo **povprečje**: vse meritve seštejemo in vsoto delimo s številom meritev.
 
 V simulaciji spodaj »Merjenje in merska napaka« večkrat izmeri isti svinčnik. Opazuj, da se meritve malo razlikujejo, povprečje pa se z vsako novo meritvijo spremeni vse manj. Potem zamenjaj ravnilo z bolj grobim in poglej, ali je napaka večja.
 
@@ -126,7 +126,7 @@ Povprečje dveh meritev: $\bar{o} = \dfrac{o_1 + o_2}{2}$
 5. Zdaj ti: zapiši sklep. Ali je Majina domneva potrjena?
 
 :::premisli
-Kakšen je diagram, razlika in sklep?
+Preveri: kakšen je tvoj diagram, kolikšna je razlika in kakšen je sklep?
 ---
 Stolpci rastejo od leve proti desni, vsak naslednji je višji. Razlika: $41 - 19 = 22$, torej $22\,\mathrm{cm}$. Sklep: v tem poskusu je kvas v toplejši vodi naredil več plina, domneva je potrjena za temperature od $10\,{}^\circ\mathrm{C}$ do $40\,{}^\circ\mathrm{C}$. Zato recept zahteva mlačno vodo. Za vročo vodo poskus ne pove ničesar, ker je nismo preizkusili.
 :::

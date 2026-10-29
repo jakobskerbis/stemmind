@@ -7,7 +7,7 @@ avtor: AI
 
 Na telefonu imaš aplikacijo, ki zapiska, ko nad tvojim krajem preleti satelit. Satelit A preleti vsakih $90$ minut, satelit B vsakih $120$ minut. Ob $20.00$ zapiskata oba hkrati. Kdaj bosta spet zapiskala skupaj?
 
-To je naloga o **najmanjšem skupnem večkratniku**, ki ga poznaš iz šole. Na tekmovanju pa števila niso tako prijazna. Kdaj se spet poravnata planeta z obhodnima časoma $84$ in $90$ dni? Koliko deliteljev ima $360$? Katero je najmanjše število z natanko $12$ delitelji? Z naštevanjem bi porabil pol ure, z **razcepom na prafaktorje** pa dve minuti. Ta lekcija pokaže, kako.
+To je naloga o **najmanjšem skupnem večkratniku**, ki ga poznaš iz šole. Na tekmovanju pa števila niso tako prijazna. Kdaj se spet poravnata planeta, ki obkrožita zvezdo v $84$ in $90$ dneh? Koliko deliteljev ima $360$? Katero je najmanjše število z natanko $12$ delitelji? Z naštevanjem bi porabil pol ure, z **razcepom na prafaktorje** pa dve minuti. Ta lekcija pokaže, kako.
 
 ## Razlaga
 
@@ -27,7 +27,7 @@ Pri planetih s $84$ in $90$ dnevi pa bi morali našteti $15$ večkratnikov štev
 
 V simulaciji spodaj, »Razcep na prafaktorje«, razcepi $360$ večkrat z gumbom »Razcepi drugače«. Drevo je vsakič drugačno, na koncu pa so vedno isti prafaktorji: $2^3 \cdot 3^2 \cdot 5$.
 
-**Prva razlika: D in v brez naštevanja.** Razcepa obeh števil postavimo enega pod drugega. Za vsak prafaktor primerjamo potenci:
+**Prva razlika: D in v brez naštevanja.** Z $D(a, b)$ označimo največji skupni delitelj, z $v(a, b)$ pa najmanjši skupni večkratnik števil $a$ in $b$. Razcepa obeh števil postavimo enega pod drugega. Za vsak prafaktor primerjamo potenci:
 
 | | $2$ | $3$ | $5$ |
 |---|---|---|---|
@@ -38,7 +38,7 @@ V simulaciji spodaj, »Razcep na prafaktorje«, razcepi $360$ večkrat z gumbom 
 
 Skupni delitelj lahko vsebuje le toliko dvojk, kolikor jih imata **obe** števili, zato vzamemo manjšo potenco: $D(90, 120) = 2 \cdot 3 \cdot 5 = 30$. Skupni večkratnik mora vsebovati dovolj dvojk za **vsako** od števil, zato vzamemo večjo: $v(90, 120) = 2^3 \cdot 3^2 \cdot 5 = 360$. Enak rezultat kot pri naštevanju, le da smo šli naravnost na cilj.
 
-Iz tabele vidiš še nekaj: vsak prafaktor gre enkrat v $D$, enkrat v $v$. Zato velja $D \cdot v = a \cdot b$. Res: $30 \cdot 360 = 10800$ in $90 \cdot 120 = 10800$. Če števili nimata skupnih prafaktorjev, jima pravimo **tuji** števili. Takrat je $D = 1$ in $v = a \cdot b$.
+Iz tabele vidiš še nekaj: pri vsakem prafaktorju gre ena potenca v $D$, druga pa v $v$. Zato velja $D \cdot v = a \cdot b$. Res: $30 \cdot 360 = 10800$ in $90 \cdot 120 = 10800$. Če števili nimata skupnih prafaktorjev, jima pravimo **tuji** števili. Takrat je $D = 1$ in $v = a \cdot b$.
 
 **Druga razlika: število deliteljev.** Stara pot je iskanje parov. Delitelji števila $36$ so v parih, ki dajo zmnožek $36$: $1 \cdot 36$, $2 \cdot 18$, $3 \cdot 12$, $4 \cdot 9$ in $6 \cdot 6$. Vsak par je pravokotnik iz $36$ kvadratkov. Deliteljev je $9$.
 
@@ -67,7 +67,7 @@ Katero število ima več deliteljev: $128 = 2^7$ ali $210 = 2 \cdot 3 \cdot 5 \c
 Več jih ima $210$. Število $128$ ima $7 + 1 = 8$ deliteljev, $210$ pa $2 \cdot 2 \cdot 2 \cdot 2 = 16$. Veliko različnih prafaktorjev prinese več deliteljev kot ena sama velika potenca.
 :::
 
-**Tretja razlika: ali je število praštevilo.** Stara pot bi bila deljenje z vsemi manjšimi števili. Delitelji pa so v parih in v vsakem paru je manjši delitelj največ $\sqrt{n}$. Zato zadošča preizkusiti praštevila do $\sqrt{n}$. Pri $91$ je $\sqrt{91} \approx 9{,}5$, preizkusimo $2$, $3$, $5$ in $7$. Ker je $91 = 7 \cdot 13$, $91$ ni praštevilo, čeprav je na prvi pogled podobno.
+**Tretja razlika: ali je število praštevilo.** Stara pot bi bila deljenje z vsemi manjšimi števili. Delitelji pa so v parih in v vsakem paru je manjši delitelj največ $\sqrt{n}$. Zato zadošča preizkusiti praštevila do $\sqrt{n}$. Pri $91$ je $\sqrt{91} \approx 9{,}5$, preizkusimo $2$, $3$, $5$ in $7$. Ker je $91 = 7 \cdot 13$, $91$ ni praštevilo, čeprav je na prvi pogled videti kot praštevilo.
 
 ## Rešeni primeri
 

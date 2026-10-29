@@ -9,24 +9,27 @@ Na rob mize položi dva kovanca, enega tik ob drugem. Z ravnilom, ki ga držiš 
 
 Večina pričakuje, da bo hitri kovanec letel dlje časa. V resnici zaslišiš en sam »klik«. Še bolje je, če met posnameš s telefonom v počasnem posnetku in ga pregledaš sličico za sličico: kovanca padata vštric, čeprav eden leti daleč stran.
 
-Ta poskus skriva dve ideji, ki ju boš potreboval pri vsakem gibanju v ravnini. Prva: hitrost ima smer, zato hitrosti ne seštevamo vedno kot navadna števila. Druga: vodoravno in navpično gibanje potekata neodvisno drug od drugega. S tem izračunaš, kam bo odneslo dron v vetru, kam pade telefon, ki zdrsne z mize, in kako hitro prileti na tla.
+Pri vsakem gibanju v ravnini boš potreboval dve ideji. Prva: hitrost ima smer, zato hitrosti ne seštevamo vedno kot navadna števila. Druga, ki jo pokaže poskus s kovancema: vodoravno in navpično gibanje potekata neodvisno drug od drugega. S tem izračunaš, kam bo odneslo dron v vetru, kam pade telefon, ki zdrsne z mize, in kako hitro prileti na tla.
 
 ## Razlaga
 
 **Staro: hitrosti v isti premici.** Dron leti s hitrostjo $8\,\text{m/s}$ glede na zrak. Če veter piha s hitrostjo $3\,\text{m/s}$ v smeri leta, je hitrost drona glede na tla $8 + 3 = 11\,\text{m/s}$. Če piha naravnost proti njemu, je $8 - 3 = 5\,\text{m/s}$. To je račun iz premega gibanja: hitrosti v isti premici seštevamo ali odštevamo.
 
-**Novo: veter s strani.** Zdaj naj veter piha pravokotno na smer leta. Dron se ne premika ne s $11$ ne s $5\,\text{m/s}$, ampak poševno. V eni sekundi preleti $8\,\text{m}$ naprej in hkrati ga veter odnese $3\,\text{m}$ vstran. Narišimo to:
+**Novo: veter s strani.** Zdaj naj veter piha pravokotno na smer leta. Dron se zdaj ne giblje niti z $11$ niti s $5\,\text{m/s}$, pa tudi ne naravnost naprej, ampak poševno. V eni sekundi preleti $8\,\text{m}$ naprej in hkrati ga veter odnese $3\,\text{m}$ vstran. Narišimo to:
 
 ```
-               ↗  dejanska pot
-     8 m  ↑   /
-          |  /
-          | /
-          |/
-          •——→ 3 m
+         3 m
+    ·——————→
+    ↑     ↗
+8 m |    /
+    |   /  dejanska pot
+    |  /
+    | /
+    |/
+    •
 ```
 
-Navpična puščica je let drona, vodoravna je premik zaradi vetra, poševna je dejanski premik. Trije premiki sestavljajo pravokotni trikotnik. Za poševno stranico velja Pitagorov izrek:
+Navpična puščica je let drona. Na njen konec smo narisali vodoravno puščico, premik zaradi vetra. Poševna puščica od začetka do konca je dejanski premik. Trije premiki sestavljajo pravokotni trikotnik. Za poševno stranico velja Pitagorov izrek:
 
 $$v = \sqrt{v_1^2 + v_2^2} = \sqrt{8^2 + 3^2}\,\text{m/s} \approx 8{,}5\,\text{m/s}$$
 
@@ -48,7 +51,7 @@ Cilj je $400\,\text{m}$ severno. Dron ves čas kaže proti severu in leti z $8\,
 Enako hitro, po $50\,\text{s}$. Veter je pravokoten na sever, zato ne spremeni severne komponente hitrosti, ta ostane $8\,\text{m/s}$. Dron pa ne pristane na cilju, ampak vzhodno od njega.
 :::
 
-**Vodoravni met: dve znani gibanji hkrati.** Telo vržemo vodoravno s hitrostjo $v_0$, na primer telefon, ki zdrsne z roba mize. Spet ga razstavimo na dve komponenti in vsako primerjamo z gibanjem, ki ga že poznaš:
+**Vodoravni met: dve znani gibanji hkrati.** Telo vržemo vodoravno s hitrostjo $v_0$, na primer telefon, ki zdrsne z roba mize. Njegovo gibanje spet razstavimo na dve komponenti in vsako primerjamo z gibanjem, ki ga že poznaš:
 
 - **Vodoravno** ni nobenega pospeška (zračni upor zanemarimo). To je premo enakomerno gibanje: $v_x = v_0$ in $x = v_0 t$.
 - **Navpično** telo pospešuje navzdol z $g$, začetna navpična hitrost pa je $0$. To je natanko prosti pad: $v_y = g t$ in $y = \dfrac{g t^2}{2}$, kjer je $y$ padec pod začetno višino.
@@ -178,11 +181,11 @@ Zanos: $s = 3\,\text{m/s} \cdot 6\,\text{s} = 18\,\text{m}$ navzdol po reki. Hit
 
 ## Drugače: Na sliki
 
-Predstavljaj si stroboskopsko sliko vodoravnega meta: telo fotografiramo vsako desetinko sekunde in vse lege narišemo na isto sliko. Ob njej narišemo še senci na dve steni.
+Predstavljaj si stroboskopsko sliko vodoravnega meta: telo fotografiramo vsako desetinko sekunde in vse lege narišemo na isto sliko. Ob njej narišemo še senci: eno na tleh, drugo na steni.
 
 - **Senca na tleh** (vodoravna komponenta): pike so enako razmaknjene, vsakič za $0{,}2\,\text{m}$ pri $v_0 = 2\,\text{m/s}$. Senca se giblje enakomerno.
 - **Senca na steni** (navpična komponenta): razmiki med pikami rastejo v razmerju $1 : 3 : 5 : 7$, natanko kot pri prostem padu.
-- **Pike same** ležijo na paraboli. Če ob pikah narišemo še telo, ki prosto pade z iste višine, sta na vsaki sliki na isti višini.
+- **Pike same** ležijo na paraboli. Če ob pikah narišemo še telo, ki prosto pade z iste višine, sta ob vsakem blisku na isti višini.
 
 Vodoravni met je torej le sestavljanje dveh senc, ki jih že poznaš.
 

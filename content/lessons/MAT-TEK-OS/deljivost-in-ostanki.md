@@ -9,7 +9,7 @@ Luka v knjigarni kupi $9$ enakih zvezkov. Prodajalka pogleda zaslon in reče: »
 
 Kako je to opazil tako hitro? Znesek v centih je $4735$. Če je $9$ zvezkov enakih, mora biti skupna cena deljiva z $9$. Luka je seštel števke: $4 + 7 + 3 + 5 = 19$. Vsota $19$ ni deljiva z $9$, zato tudi $4735$ ni. Pravilni znesek bi bil na primer $47{,}34$ €, kar je $9$ zvezkov po $5{,}26$ €.
 
-Takšne bližnjice so jedro mnogih tekmovalnih nalog. Ugotoviti moraš, ali je ogromno število deljivo s $3$ ali $11$, katera števka manjka na računu ali s katero števko se konča $7^{2026}$. Do konca tega ne izračunaš, opazuješ pa lahko **ostanke**.
+Takšne bližnjice so jedro mnogih tekmovalnih nalog. Ugotoviti moraš, ali je ogromno število deljivo s $3$ ali $11$, katera števka manjka na računu ali s katero števko se konča $7^{2026}$. Takih števil ne izračunaš do konca, lahko pa opazuješ njihove **ostanke**.
 
 ## Razlaga
 
@@ -20,7 +20,7 @@ Takšne bližnjice so jedro mnogih tekmovalnih nalog. Ugotoviti moraš, ali je o
                                    23
 ```
 
-Polnih zavitkov je $4$, do $23$ manjkajo še $3$ koraki po en kovanec. Zapišemo $23 = 4 \cdot 5 + 3$. Število $5$ je **delitelj**, $4$ je **količnik**, $3$ pa **ostanek**. Ostanek je vedno manjši od delitelja: če bi ostalo $5$ ali več kovancev, bi napolnili še en zavitek.
+Polnih zavitkov je $4$, od $20$ do $23$ pa ostanejo še $3$ kovanci. Zapišemo $23 = 4 \cdot 5 + 3$. Število $5$ je **delitelj**, $4$ je **količnik**, $3$ pa **ostanek**. Ostanek je vedno manjši od delitelja: če bi ostalo $5$ ali več kovancev, bi napolnili še en zavitek.
 
 Če je ostanek $0$, pravimo, da je število **deljivo** z deliteljem. Število $20$ je deljivo s $5$, število $23$ pa ne.
 
@@ -64,12 +64,12 @@ Z $9$. Ostanka pri deljenju z $10$ sta $9$ in $1$, $9 \cdot 1 = 9$. Res je $99 \
 
 Vsaka števka torej k ostanku prispeva samo sebe. Ostanek števila pri deljenju z $9$ je enak ostanku njegove **vsote števk**. Ker je $9$ deljivo s $3$, isto velja tudi za $3$. To je Lukov trik iz uvoda.
 
-- Za $11$ velja $10 = 11 - 1$. Števke zato izmenično prištevamo in odštevamo, od zadnje proti prvi. Pri $9284$: $4 - 8 + 2 - 9 = -11$, kar je deljivo z $11$. Res je $9284 = 844 \cdot 11$.
+- Za $11$ velja $10 = 11 - 1$: desetica je za $1$ manjša od večkratnika števila $11$, stotica $100 = 99 + 1$ za $1$ večja, tisočica $1000 = 1001 - 1$ spet za $1$ manjša. Števke zato izmenično prištevamo in odštevamo, od zadnje proti prvi. Pri $9284$: $4 - 8 + 2 - 9 = -11$, kar je deljivo z $11$. Res je $9284 = 844 \cdot 11$.
 
 **Sestavljeni delitelji.** Število je deljivo s $6$, če je deljivo z $2$ in s $3$. Deljivo s $36$ je, če je deljivo s $4$ in z $9$. Pri tem morata biti delitelja **tuji** števili, torej brez skupnega delitelja, večjega od $1$.
 
 :::premisli
-Število je deljivo z $2$ in s $4$. Ali je zato zagotovo deljivo z $8$?
+Število je deljivo z $2$ in s $4$. Ali je zato zagotovo deljivo z $8$? Če ne, poišči protiprimer.
 ---
 Ne. Primer je $12$: deljivo je z $2$ in s $4$, z $8$ pa ne. Števili $2$ in $4$ nista tuji. Vsak večkratnik števila $4$ je že sam po sebi sod, zato pogoj »deljivo z $2$« ne doda ničesar novega.
 :::
@@ -86,7 +86,7 @@ Ne. Primer je $12$: deljivo je z $2$ in s $4$, z $8$ pa ne. Števili $2$ in $4$ 
 
 Ko se pojavi števka $1$, se krog začne znova. Zadnje števke tečejo v krogu dolžine $4$: $7, 9, 3, 1$.
 
-V simulaciji spodaj, »Ostanki potenc in zadnja števka«, nastavi modul $m = 10$ in osnovo $a = 7$. Opazuj, da se puščice zaprejo v krog štirih ostankov. Nato preizkusi še $a = 4$ in $a = 5$. Pri $4$ je krog dolg samo $2$, pri $5$ pa se zadnja števka sploh ne spremeni.
+V simulaciji spodaj, »Ostanki potenc in zadnja števka«, nastavi modul (to je delitelj) $m = 10$ in osnovo $a = 7$. Opazuj, da se puščice zaprejo v krog štirih ostankov. Nato preizkusi še $a = 4$ in $a = 5$. Pri $4$ je krog dolg samo $2$, pri $5$ pa se zadnja števka sploh ne spremeni.
 
 **Na koncu še zapis.** Matematiki pišejo $a \equiv b \pmod{m}$ in berejo »$a$ je kongruentno $b$ po modulu $m$«. To pomeni le, da dasta $a$ in $b$ pri deljenju z $m$ enak ostanek. Na primer $23 \equiv 3 \pmod{5}$ in $7^5 \equiv 7 \pmod{10}$.
 
@@ -175,7 +175,7 @@ $1 \cdot 2 \cdot 3 = 6$, ker je $6$ manjše od $9$, je to že ostanek. Ostanek j
 
 ## Pogoste napake
 
-- **Vsota števk za vsak delitelj.** »Vsota števk števila $13$ je $4$, torej je $13$ deljivo s $4$.« Trik z vsoto števk deluje samo za $3$ in $9$, ker le tam velja, da da $10$ ostanek $1$. Za $4$ glej zadnji dve števki.
+- **Vsota števk za vsak delitelj.** »Vsota števk števila $13$ je $4$, torej je $13$ deljivo s $4$.« Trik z vsoto števk deluje samo za $3$ in $9$, ker le pri njiju da $10$ ostanek $1$. Za $4$ glej zadnji dve števki.
 - **Za $4$ samo zadnja števka.** »Število $14$ se konča s $4$, zato je deljivo s $4$.« Zadnja števka zadošča le pri $2$, $5$ in $10$. Pri $4$ odloča število iz zadnjih dveh števk: $14$ ni deljivo s $4$, $114$ tudi ne, $124$ pa je.
 - **Množenje deliteljev, ki nista tuja.** »Deljivo s $4$ in s $6$, torej deljivo s $24$.« Število $12$ je deljivo s $4$ in s $6$, s $24$ pa ne. Pravilo »deljivo z obema, torej s produktom« velja samo za tuja delitelja, na primer $3$ in $8$.
 - **Ostanek $0$ v krogu potenc.** »$100 = 4 \cdot 25 + 0$, ostanek je $0$, torej je zadnja števka števila $2^{100}$ prva v krogu, $2$.« Ostanek $0$ pomeni, da smo končali cel krog in stojimo na **zadnjem** mestu. Pravilna zadnja števka je $6$.
@@ -207,7 +207,7 @@ Pri tem smo naredili natanko to, kar delamo z ostanki:
 Pri blagajni se ostanki srečujejo vsak dan.
 
 - **Plačilo z bankovci po $10$ €.** Za znesek $87$ € daš $8$ bankovcev, ostanek $7$ € pa v kovancih. Ta ostanek je ravno zadnja števka. Zato je pri deljivosti z $10$, $5$ in $2$ pomembna samo zadnja števka: polni bankovci so že »razdeljeni«.
-- **Jajca po $6$.** Trgovina dobi $500$ jajc in jih pakira po $6$. Ker je $5 + 0 + 0 = 5$ in je $500$ sodo, je ostanek pri $3$ enak $2$, pri $6$ pa $2$ ali $5$. Sodo število ne more dati lihega ostanka $5$, torej ostaneta $2$ jajci. Res: $6 \cdot 83 = 498$.
+- **Jajca po $6$.** Trgovina dobi $500$ jajc in jih pakira po $6$. Vsota števk $5 + 0 + 0 = 5$ da pri $3$ ostanek $2$. Ostanek pri $6$ mora pri $3$ dati isto, zato je $2$ ali $5$. Sodo število $500$ ne more dati lihega ostanka $5$, torej ostaneta $2$ jajci. Res: $6 \cdot 83 = 498$.
 - **Kontrola računa.** Ko blagajna sešteje cene, lahko ostanek vsote pri $9$ primerjaš z ostankom, ki ga dobiš iz posameznih cen. Če se ne ujemata, je nekje napaka.
 
 ## Preveri se

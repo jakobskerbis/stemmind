@@ -13,7 +13,7 @@ Nobena meritev ni popolnoma točna. Zdravnik, ki izmeri vročino, mora vedeti, a
 
 ## Razlaga
 
-**Od kod napake.** Medicinska sestra petkrat izmeri višino istega fanta. Vsakič dobi malo drugačno število. Odčitek ni čisto pravokoten na skalo, fant se enkrat malo bolj zravna, lasje se stisnejo. Telo se spreminja tudi samo: zjutraj smo približno centimeter višji kot zvečer. Taki napaki rečemo **merska napaka**. Ne gre za zmoto, ampak za neizogibno negotovost vsake meritve.
+**Od kod napake.** Medicinska sestra petkrat izmeri višino istega fanta. Vsakič dobi malo drugačno število. Pogled na skalo ni čisto pravokoten, fant se enkrat malo bolj zravna, lasje se stisnejo. Telo se spreminja tudi samo: zjutraj smo približno centimeter višji kot zvečer. Taki napaki rečemo **merska napaka**. Ne gre za zmoto, ampak za neizogibno negotovost vsake meritve.
 
 **Meritve na številski premici.** Pet izmerjenih višin narišemo kot pike na številsko premico:
 
@@ -45,7 +45,7 @@ $$h = (172{,}5 \pm 0{,}4)\,\text{cm}$$
 
 Pravila zapisa:
 
-- Absolutno napako zaokrožimo na **eno veljavno mesto** (npr. $0{,}36 \to 0{,}4$).
+- Absolutno napako zaokrožimo na **eno veljavno mesto**, torej obdržimo le prvo neničelno števko (npr. $0{,}36 \to 0{,}4$).
 - Povprečje zaokrožimo na **isto decimalno mesto** kot napako ($172{,}46 \to 172{,}5$).
 - Več decimalk od tega nima pomena: če napaka sega že v desetinke, so stotinke zgolj naključne.
 
@@ -61,7 +61,7 @@ Relativna napaka nima enote, ker se enoti pokrajšata. Navadno jo zapišemo v od
 | mama na tehtnici | $0{,}5\,\text{kg}$ | $80\,\text{kg}$ | $0{,}625\,\%$ |
 | vročina s termometrom | $0{,}1\,^\circ\text{C}$ | $37\,^\circ\text{C}$ | $0{,}27\,\%$ |
 
-V tabeli ima termometer najmanjšo relativno napako, čeprav meri temperaturo, tehtnici pa maso. Prav zato je relativna napaka uporabna: z njo lahko primerjamo karkoli s čimerkoli.
+Termometer meri temperaturo, tehtnici pa maso, a jih vseeno lahko primerjamo: najmanjšo relativno napako ima termometer. Prav zato je relativna napaka uporabna: z njo primerjamo karkoli s čimerkoli.
 
 :::premisli
 Z istim ravnilom (razdelki po $1\,\text{mm}$) izmerimo dolžino prsta in dolžino stegnenice. Pri kateri meritvi je relativna napaka manjša? Zakaj?

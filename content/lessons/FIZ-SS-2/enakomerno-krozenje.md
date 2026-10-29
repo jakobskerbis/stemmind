@@ -27,7 +27,7 @@ Tej hitrosti rečemo **obodna hitrost**. Za ISS je $t_0 = 92\,\mathrm{min} = 552
 
 *Preveri:* dva satelita imata enak obhodni čas, prvi kroži na dvakrat večjem polmeru. Kateri je hitrejši? (Prvi, dvakrat: v enakem času prepotuje dvakrat daljšo pot.)
 
-**3. Smer hitrosti.** Hitrost je vektor, zato ima tudi smer. V vsaki točki kaže po **tangenti** na krožnico, to je pravokotno na polmer. Ko telo napreduje, se ta smer ves čas obrača. Velikost $v$ ostaja enaka, vektor $\vec v$ pa ne.
+**3. Smer hitrosti.** Hitrost je vektor, zato ima tudi smer. V vsaki točki kaže po **tangenti** na krožnico, to je pravokotno na polmer. Ko se telo premika po krožnici, se ta smer ves čas obrača. Velikost $v$ ostaja enaka, vektor $\vec v$ pa ne.
 
 :::premisli
 Kamen vrtiš na vrvici v vodoravni ravnini. Ravno ko je kamen severno od tvoje roke in se giblje proti vzhodu, se vrvica pretrga. Kam odleti: proti severu (navzven), proti vzhodu ali naprej po krivulji? Napovej, nato preveri v simulaciji spodaj.
@@ -37,7 +37,9 @@ Proti vzhodu, po tangenti. Ko vrvica ne vleče več, na kamen v vodoravni smeri 
 
 **4. Pospešek brez spremembe velikosti.** Pospešek pove, kako hitro se spreminja vektor hitrosti, ne le njegova velikost. Pri kroženju se spreminja smer, zato ima telo pospešek.
 
-Kam kaže? Nariši krožnico s središčem $S$. Na vrhu kaže hitrost vodoravno v desno. Četrt obhoda kasneje, na desni strani krožnice, kaže enako dolga hitrost navpično navzdol. Iz »desno« je nastalo »navzdol«, torej je bilo treba hitrosti dodati del, ki kaže navzdol in v levo. To je ravno smer proti $S$ s sredine tega loka. Na kateremkoli koščku krožnice dobimo isto: sprememba hitrosti kaže proti središču.
+Kam kaže? Nariši krožnico s središčem $S$ in telo, ki kroži v smeri urinih kazalcev. Na vrhu kaže hitrost vodoravno v desno. Četrt obhoda kasneje, na desni strani krožnice, kaže enako dolga hitrost navpično navzdol.
+
+Iz »desno« je nastalo »navzdol«, torej je bilo treba hitrosti dodati del, ki kaže navzdol in v levo. Če to puščico narišeš na sredini loka, kaže ravno proti $S$. Na kateremkoli koščku krožnice dobimo isto: sprememba hitrosti kaže proti središču.
 
 Takemu pospešku rečemo **centripetalni** ali **radialni pospešek** $a_r$. Beseda »centripetalen« pomeni »ki teži k središču«.
 
@@ -47,7 +49,7 @@ Takemu pospešku rečemo **centripetalni** ali **radialni pospešek** $a_r$. Bes
 
 $$a_r = \frac{v^2}{r}$$
 
-Zakaj kvadrat hitrosti? Pri večji hitrosti je vektor $\vec v$ daljši, zato pomeni enak zasuk večjo spremembo. Poleg tega se pri večji hitrosti smer zasuče hitreje. Vsak razlog prinese en faktor $v$. Večji polmer pomeni bolj položno krožnico: smer se obrača počasneje, zato je $a_r$ manjši.
+Zakaj kvadrat hitrosti? Pri večji hitrosti je vektor $\vec v$ daljši, zato pomeni enak zasuk večjo spremembo. Poleg tega telo pri večji hitrosti hitreje preteče lok, zato se smer zasuče hitreje. Vsak razlog prinese en faktor $v$. Večji polmer pomeni bolj položno krožnico: smer se obrača počasneje, zato je $a_r$ manjši.
 
 Za ISS: $a_r = \dfrac{(7730\,\mathrm{m/s})^2}{6{,}79 \cdot 10^6\,\mathrm{m}} \approx 8{,}8\,\mathrm{m/s^2}$. Ta in druga telesa so zbrana v tabeli.
 
@@ -112,7 +114,7 @@ $a_r = \dfrac{v^2}{r}$
 1. Pretvorimo v osnovne enote: $v = 7700\,\mathrm{m/s}$, $r = 6{,}79 \cdot 10^6\,\mathrm{m}$.
 2. Kvadrat hitrosti: $v^2 = (7700\,\mathrm{m/s})^2 = 5{,}93 \cdot 10^7\,\mathrm{m^2/s^2}$.
 3. Delimo s polmerom: $a_r = \dfrac{5{,}93 \cdot 10^7\,\mathrm{m^2/s^2}}{6{,}79 \cdot 10^6\,\mathrm{m}} \approx 8{,}7\,\mathrm{m/s^2}$.
-4. Odgovor: pospešek postaje je približno $8{,}7\,\mathrm{m/s^2}$, kar je skoraj toliko kot pospešek kamna, ki prosto pada blizu tal ($9{,}8\,\mathrm{m/s^2}$). Postaja v resnici ves čas pada proti Zemlji, le da zaradi velike hitrosti ves čas »zgreši« tla.
+4. Odgovor: pospešek postaje je približno $8{,}7\,\mathrm{m/s^2}$ (v razlagi je $8{,}8\,\mathrm{m/s^2}$, ker smo tam računali z nezaokroženo hitrostjo $7730\,\mathrm{m/s}$), kar je skoraj toliko kot pospešek kamna, ki prosto pada blizu tal ($9{,}8\,\mathrm{m/s^2}$). Postaja v resnici ves čas pada proti Zemlji, le da zaradi velike hitrosti ves čas »zgreši« tla.
 
 ### Primer 3: centrifuga za astronavte
 

@@ -23,7 +23,7 @@ Ta preprost poskus je jedro **Dirichletovega načela**. Na tekmovanjih z njim do
 
 **Načelo.** Imamo $n$ predalov in vanje razdelimo $n + 1$ predmetov. Potem sta v vsaj enem predalu vsaj $2$ predmeta.
 
-**Zakaj velja.** Uporabimo metodo »predpostavi in preveri«. Recimo, da je v vsakem predalu največ en predmet. Potem je vseh predmetov največ $n$. Imamo pa jih $n + 1$. Protislovje, zato predpostavka ne drži.
+**Zakaj velja.** Dokažemo s **protislovjem**: predpostavimo nasprotno in pokažemo, da to ne more veljati. Recimo, da je v vsakem predalu največ en predmet. Potem je vseh predmetov največ $n$. Imamo pa jih $n + 1$. Protislovje, zato predpostavka ne drži.
 
 :::premisli
 Imaš $n$ predmetov in $n$ predalov. Ali sta v nekem predalu gotovo dva? Napovej, preden pogledaš.
@@ -35,16 +35,16 @@ Ne. Vsak predmet lahko gre v svoj predal, in nobeden ni podvojen. Načelo zahtev
 
 Krajše: število predmetov deliš s številom predalov in rezultat **zaokrožiš navzgor**. Pri $9$ kamenčkih in $4$ lončkih je $9 : 4 = 2{,}25$, navzgor zaokroženo $3$.
 
-V simulaciji spodaj (Dirichletovo (predalčno) načelo) nastavi predale $n = 4$ in predmete $N = 9$. Nato predmete povečuj do $12$ in še na $13$. Opazuj, pri katerem številu predmetov zagotovljeno število v enem predalu skoči s $3$ na $4$.
-
 **Kje je razlika s povprečjem.** Povprečje $2{,}25$ kamenčka ne obstaja v resnici. Ker so kamenčki celi, mora vsaj en lonček preseči povprečje, torej imeti vsaj $3$.
 
-**Najslabši primer.** Pri vprašanju »najmanj koliko moramo vzeti, da gotovo …« si predstavljaj, da ti nagaja največji smolar. Razporedi predmete čim bolj enakomerno, da cilja še ni. Šele en predmet več ga zagotovo doseže.
+V simulaciji spodaj (Dirichletovo načelo) nastavi predale $n = 4$ in predmete $N = 9$. Nato predmete povečuj do $12$ in še na $13$. Opazuj, pri katerem številu predmetov zagotovljeno število v enem predalu skoči s $3$ na $4$.
+
+**Najslabši primer.** Pri vprašanju »najmanj koliko moramo vzeti, da gotovo …« si predstavljaj **smolarja**, ki ima vedno najslabšo možno srečo: predmeti se mu razporedijo čim bolj enakomerno, tako da cilja še ni. Šele en predmet več cilj zagotovo doseže.
 
 :::premisli
-Zakaj pri predalih štejemo predmete »čim bolj enakomerno«, ko iščemo najslabši primer?
+Zakaj je najslabši primer ravno *enakomerna* razporeditev in ne kup vseh predmetov v enem predalu?
 ---
-Ker kopičenje v enem predalu cilj doseže prej. Smolar želi, da je v vsakem predalu čim manj, zato predmete razporedi enakomerno.
+Ker kopičenje v enem predalu cilj doseže prej. Pri enakomerni razporeditvi je v vsakem predalu čim manj predmetov, zato cilj pride najpozneje.
 :::
 
 **Najtežji del je izbira predalov.** V nalogi o vremenu so predali vrste vremena. V nalogi o številih so lahko predali sodo in liho, ali pari števil. V geometriji so predali deli lika. Vprašaj se: kaj želim dokazati za dva predmeta? Predal naj bo tak, da dva predmeta v istem predalu to že izpolnita.
@@ -158,9 +158,9 @@ veja B | o o   |
 veja C | o o   |
 ```
 
-Smolar bi rad, da na nobeni veji niso tri ptice. Na vsako vejo posede po dve, to je šest ptic. Sedma nima več prazne izbire: kamor koli sede, nastane veja s tremi. Slika kaže tudi, da več kot tri ptice niso zagotovljene, ker razporeditev $3 + 2 + 2 = 7$ obstaja.
+Pri najslabši razporeditvi na nobeni veji še ni treh ptic: na vsaki sedita po dve, to je šest ptic. Sedma nima več prazne izbire: kamor koli sede, nastane veja s tremi. Slika kaže tudi, da več kot tri ptice niso zagotovljene, ker razporeditev $3 + 2 + 2 = 7$ obstaja.
 
-Enako nariši geometrijsko nalogo. Na travniku v obliki kvadrata s stranico $2\,\text{m}$ je $5$ krtin. Kvadrat razreži na $4$ kvadratke s stranico $1\,\text{m}$; to so predali. Dve krtini sta v istem kvadratku, zato sta oddaljeni največ za diagonalo kvadratka, to je približno $1{,}41\,\text{m}$.
+Enako nariši geometrijsko nalogo. Na travniku v obliki kvadrata s stranico $2\,\text{m}$ je $5$ krtin. Pokažimo, da sta dve krtini blizu skupaj. Kvadrat razreži na $4$ kvadratke s stranico $1\,\text{m}$; to so predali. Pet krtin v štirih predalih: dve sta v istem kvadratku, zato sta oddaljeni največ za diagonalo kvadratka, to je približno $1{,}41\,\text{m}$.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -182,7 +182,7 @@ V vseh primerih se vprašaš isto: kaj so predali, koliko jih je in koliko je pr
 ~ Na enem drevesu so $4$ ptice. Pokazati moraš razporeditev, kjer nobeno drevo nima več kot $3$.
 > Razporeditev $3 + 2 + 2 = 7$ ima največ $3$ ptice na drevesu, zato več kot $3$ ni zagotovljeno. Načelo pa zagotavlja vsaj $3$, ker bi pri največ $2$ na drevo bilo skupaj največ $6$ ptic.
 
-? V gozdu raste $1\,000\,000$ dreves, vsako ima največ $200\,000$ listov. Koliko je največje število dreves z enakim številom listov, ki ga načelo **zagotavlja**?
+? V gozdu raste $1\,000\,000$ dreves, vsako ima največ $200\,000$ listov. Najmanj koliko dreves ima gotovo enako število listov? Išči največje število, ki ga načelo še **zagotavlja**.
 - $2$
 ~ Dve drevesi sta res zagotovljeni, a načelo zagotavlja več. Predalov je $200\,001$, dreves pa skoraj petkrat toliko.
 + $5$

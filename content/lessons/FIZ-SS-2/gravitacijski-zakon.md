@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Zidarji in tesarji že stoletja preverjajo navpičnost sten s **svinčnico**: utež na vrvici, ki se napne proti središču Zemlje. Recimo, da svinčnico z utežjo $0{,}2\,\mathrm{kg}$ obesiš ob betonski blok z maso $50\,\mathrm{t}$, tako da je utež $2\,\mathrm{m}$ od težišča bloka. Ali blok povleče utež k sebi? In če jo, za koliko pokvari meritev?
+Zidarji in tesarji že stoletja preverjajo navpičnost sten s **svinčnico**: utež na vrvici. Napeta vrvica kaže proti središču Zemlje. Recimo, da svinčnico z utežjo $0{,}2\,\mathrm{kg}$ obesiš ob betonski blok z maso $50\,\mathrm{t}$, tako da je utež $2\,\mathrm{m}$ od težišča bloka. Ali blok povleče utež k sebi? In če jo, za koliko pokvari meritev?
 
 Newtonov gravitacijski zakon odgovori: da, vsako telo privlači vsako drugo. Blok vleče utež s silo približno $1{,}7 \cdot 10^{-7}\,\mathrm{N}$. Zemlja jo vleče z $2\,\mathrm{N}$, kar je več kot desetmilijonkrat več. Na metrski vrvici se svinčnica odmakne za manj kot desettisočinko milimetra, zato gradbeniku ni treba skrbeti. Ob veliki gori pa je odklon merljiv. Leta 1774 so ga izmerili na škotski gori in iz njega prvič ocenili maso Zemlje.
 
@@ -27,7 +27,7 @@ Razlike med starim in novim so zbrane v tabeli.
 
 | Lastnost | Sila teže $mg$ | Gravitacijski zakon |
 |---|---|---|
-| Kdo privlači | samo Zemlja | vsako telo vsako telo |
+| Kdo privlači | samo Zemlja | vsako telo |
 | Odvisnost od razdalje | ni je, $g$ je stalen | pada s kvadratom razdalje |
 | Na koga deluje | na telo | na obe telesi, enako močno |
 | Kje velja | blizu površja Zemlje | povsod |
@@ -42,7 +42,7 @@ Satelit kroži $6370\,\mathrm{km}$ nad površjem Zemlje. Kolikšen del svoje te�
 Četrtino. Višina nad površjem je en Zemljin polmer, zato je satelit od središča oddaljen $2 R_Z$. Razdalja od središča se je podvojila, sila pa je zato štirikrat manjša. Kdor vzame samo višino $6370\,\mathrm{km}$ kot razdaljo, dobi napačen rezultat.
 :::
 
-**Razlika 3: sila deluje na obe telesi.** Zemlja vleče jabolko in jabolko vleče Zemljo z enako veliko silo v nasprotni smeri, kot pravi 3. Newtonov zakon. V formuli to vidiš, ker sta $m_1$ in $m_2$ enakovredni.
+**Razlika 3: sila deluje na obe telesi.** Zemlja vleče jabolko in jabolko vleče Zemljo z enako veliko silo v nasprotni smeri, kot pravi 3. Newtonov zakon. To vidiš tudi v formuli: če zamenjaš $m_1$ in $m_2$, ostane sila enaka.
 
 :::premisli
 Če jabolko vleče Zemljo z enako silo kot Zemlja jabolko, zakaj jabolko pade na Zemljo in ne Zemlja na jabolko?
@@ -50,17 +50,23 @@ Satelit kroži $6370\,\mathrm{km}$ nad površjem Zemlje. Kolikšen del svoje te�
 Enaka sila ne pomeni enakega pospeška. Po 2. Newtonovem zakonu je $a = \dfrac{F}{m}$. Masa Zemlje je okoli $10^{25}$-krat večja od mase jabolka, zato je njen pospešek nemerljivo majhen. Premakne se jabolko.
 :::
 
-**Staro kot poseben primer novega.** Za telo na površju Zemlje vstavimo $m_1 = M_Z$ in $r = R_Z$. Gravitacijski zakon mora dati ravno težo $mg$:
+**Staro kot poseben primer novega.** Za telo na površju Zemlje vstavimo maso Zemlje $m_1 = M_Z$ in razdaljo $r = R_Z$. Gravitacijski zakon mora dati ravno težo $mg$:
 
 $$G\,\frac{M_Z\, m}{R_Z^2} = m g \quad\Rightarrow\quad g = \frac{G M_Z}{R_Z^2}$$
 
 Z maso Zemlje $M_Z = 5{,}97 \cdot 10^{24}\,\mathrm{kg}$ dobimo $g \approx 9{,}81\,\mathrm{m/s^2}$. Zdaj vemo več kot prej: na drugem planetu ali višje nad Zemljo je $g$ drugačen, $g = \dfrac{G M}{r^2}$.
 
-**Gibanje satelitov in planetov.** Spomni se kamna na vrvici: kroži, ker mu vrvica daje centripetalno silo $\dfrac{m v^2}{r}$. Satelit nima vrvice. Njegovo vlogo prevzame gravitacija Zemlje. Pri krožnem tiru mora biti gravitacijska sila enaka potrebni centripetalni sili:
+**Gibanje satelitov in planetov.** Spomni se kamna na vrvici: kroži, ker mu vrvica daje centripetalno silo $\dfrac{m v^2}{r}$. Satelit nima vrvice. Njeno vlogo prevzame gravitacija osrednjega telesa z maso $M$, na primer Zemlje. Pri krožnem tiru mora biti gravitacijska sila enaka potrebni centripetalni sili:
 
 $$G\,\frac{M m}{r^2} = \frac{m v^2}{r} \quad\Rightarrow\quad v = \sqrt{\frac{G M}{r}}$$
 
-Masa satelita $m$ se pokrajša. Majhen satelit in velika postaja na istem tiru letita enako hitro. Dlje od središča je hitrost manjša, pot okoli pa daljša, zato obhodni čas hitro raste. Iz $t_0 = \dfrac{2\pi r}{v}$ sledi $t_0^2 = \dfrac{4\pi^2}{G M}\, r^3$. Za vse planete okoli Sonca je torej razmerje $\dfrac{t_0^2}{r^3}$ enako. To je **3. Keplerjev zakon**.
+Masa satelita $m$ se pokrajša. Majhen satelit in velika postaja na istem tiru letita enako hitro.
+
+Dlje od središča je hitrost manjša, pot okoli pa daljša, zato obhodni čas hitro raste. To hitrost vstavimo v $t_0 = \dfrac{2\pi r}{v}$ in enačbo kvadriramo:
+
+$$t_0^2 = \frac{4\pi^2}{G M}\, r^3$$
+
+Ulomek pred $r^3$ je odvisen le od mase osrednjega telesa. Za vse planete okoli Sonca je torej razmerje $\dfrac{t_0^2}{r^3}$ enako. To je **3. Keplerjev zakon**.
 
 V simulaciji spodaj (»Gravitacijski zakon in orbite«) nastavi začetno hitrost na $1{,}00$-kratnik krožne in zaženi: tir je krožnica. Nato hitrost zmanjšaj na $0{,}80$. Opazi, da tir postane elipsa in da je planet blizu zvezde hitrejši kot daleč od nje.
 
@@ -174,7 +180,7 @@ r:   R_Z     2 R_Z    3 R_Z    4 R_Z
 g:   9,81    2,45     1,09     0,61   (m/s²)
 ```
 
-Vsak naslednji korak je manjši od prejšnjega: krivulja se hitro položi, a nikoli ne pade na nič.
+Vsak naslednji padec $g$ je manjši od prejšnjega: krivulja se hitro položi, a nikoli ne pade na nič.
 
 ## Drugače: Iz vsakdanjega življenja
 

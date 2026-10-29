@@ -23,12 +23,12 @@ Ima Žan prav? In katero število naj krožek zapiše v dnevnik opazovanj? Odgov
 | Tim | $41{,}6$ | $-0{,}5$ |
 | Lea | $42{,}6$ | $+0{,}5$ |
 
-Najprej opazi tri stvari. Vse meritve so blizu $42\,\text{s}$, nobena ni zelo daleč. Nekatere so nad sredino, nekatere pod njo. Odmiki navzgor in navzdol so si podobni po velikosti; če jih seštejemo, dobimo $0$.
+Tretji stolpec pove, za koliko je vsak čas nad ali pod $42{,}1\,\text{s}$; od kod ta številka, izveš malo niže. Najprej opazi tri stvari. Vse meritve so blizu $42\,\text{s}$, nobena ni zelo daleč. Nekatere so nad sredino, nekatere pod njo. Odmiki navzgor in navzdol so si podobni po velikosti; če jih seštejemo, dobimo $0$.
 
-**Zakaj se meritve razlikujejo.** Nihče se ni »zmotil«. Vsak pritisne štoparico malo prej ali malo pozneje, ker človek potrebuje čas, da opazi pikico ob dimniku in premakne prst. Enkrat pohiti, drugič zamudi. Taki napaki rečemo **naključna napaka**: pri vsaki meritvi je drugačna, enkrat poveča rezultat, drugič ga zmanjša. Razlika med izmerjeno in pravo vrednostjo je **merska napaka**. Ima jo vsaka meritev, tudi tvoja.
+**Zakaj se meritve razlikujejo.** Nihče se ni »zmotil«. Razlika med izmerjeno in pravo vrednostjo je **merska napaka**. Ima jo vsaka meritev, tudi tvoja. Pri štoparici nastane takole: vsak pritisne malo prej ali malo pozneje, ker človek potrebuje čas, da opazi pikico ob dimniku in premakne prst. Enkrat pohiti, drugič zamudi. Taki napaki rečemo **naključna napaka**: pri vsaki meritvi je drugačna, enkrat poveča rezultat, drugič ga zmanjša.
 
 :::premisli
-Žan pravi, da je njegova meritev prava. Zakaj tega ne more vedeti?
+Žan trdi, da je prava njegova meritev, $42{,}4\,\text{s}$. S čim bi jo moral primerjati, da bi to dokazal? Ali to sploh lahko stori?
 ---
 Prave vrednosti nihče ne pozna, saj tudi Žanova štoparica in njegov prst nista popolna. Njegovih $42{,}4\,\text{s}$ je le ena od petih enakovrednih meritev, ki so vse razpršene okoli neke sredine.
 :::
@@ -51,7 +51,7 @@ Za krožek: $\bar{t} = \dfrac{210{,}5\,\text{s}}{5} = 42{,}1\,\text{s}$.
 
 Pike se gnetejo okoli povprečja. Najbolj oddaljeni sta Tim in Lea, oba za $0{,}5\,\text{s}$.
 
-**Absolutna napaka.** Največji odmik od povprečja imenujemo **absolutna napaka** in jo označimo z $\Delta t$ (beri »delta t«). Pove, za koliko se lahko rezultat največ razlikuje od prave vrednosti. Tu je $\Delta t = 0{,}5\,\text{s}$. Rezultat zapišemo kot povprečje $\pm$ absolutna napaka:
+**Absolutna napaka.** Največji odmik od povprečja imenujemo **absolutna napaka** in jo označimo z $\Delta t$ (beri »delta t«). Pove, kako daleč od povprečja je lahko prava vrednost. Tu je $\Delta t = 0{,}5\,\text{s}$. Rezultat zapišemo kot povprečje $\pm$ absolutna napaka:
 
 $$t = (42{,}1 \pm 0{,}5)\,\text{s}$$
 
