@@ -1,4 +1,5 @@
 #!/bin/bash
+# EVKLID-SAMOPOSODOBITEV: kratka skripta, samodejna posodobitev jo sme prepisati.
 # Enkrat dvakrat klikni to datoteko: na namizju ustvari bližnjico "Evklid".
 DIR="$(cd "$(dirname "$0")" && pwd)"
 LINK="$HOME/Desktop/Evklid"

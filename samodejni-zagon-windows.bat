@@ -1,4 +1,5 @@
 @echo off
+rem EVKLID-SAMOPOSODOBITEV: kratka skripta, samodejna posodobitev jo sme prepisati.
 setlocal
 rem Enkrat dvakrat klikni: Evklid za telefon se odslej zazene sam, ko prizges racunalnik
 rem (okno se odpre pomanjsano). Ce ga zazenes se enkrat, samodejni zagon izklopis.
