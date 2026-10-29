@@ -33,7 +33,7 @@ Slika.
   assert.deepEqual(l.sections, [{ title: "Razlaga", md: "Besedilo." }]);
   assert.deepEqual(l.alternatives, [{ title: "Na sliki", md: "Slika." }]);
   assert.equal(l.checks.length, 1, "vprašanje brez pravilnega odgovora se izpusti");
-  assert.deepEqual(l.checks[0], { q: "Koliko je $2 + 2$?", options: ["3", "4"], correct: 1, why: "Ker je tako." });
+  assert.deepEqual(l.checks[0], { q: "Koliko je $2 + 2$?", options: ["3", "4"], correct: 1, why: "Ker je tako.", optionWhy: ["", ""] });
 });
 
 test("lesson files load for competition paths too", () => {
@@ -215,4 +215,12 @@ test("textbook API and PDF page", async () => {
   } finally {
     server.close();
   }
+});
+
+test("lesson: »Premisli« blocks and per-option feedback »~«", () => {
+  const l = parseLesson("## Preveri se\n? Q\n- a\n~ ker a ni prav\n+ b\n- c\n> zato b\n");
+  assert.deepEqual(l.checks[0].optionWhy, ["ker a ni prav", "", ""]);
+  const md = ":::premisli\nKaj je $2+2$?\n---\nJe $4$.\n:::";
+  assert.match(expandFormulaBlocks(md), /tb-think[\s\S]*Kaj je[\s\S]*<details><summary>Pokaži odgovor<\/summary>[\s\S]*Je \$4\$/);
+  assert.equal(expandFormulaBlocks(md, "plain"), "Vprašanje: Kaj je $2+2$?\nOdgovor: Je $4$.");
 });
