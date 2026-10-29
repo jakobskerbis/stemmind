@@ -23,6 +23,7 @@ if (missing.length) {
   process.exit(1);
 }
 const uni = topics.some((t) => t.id.startsWith("UNI-"));
+const tek = topics.some((t) => /(^|-)TEK(-|$)/.test(t.id.split("/")[0])); // tekmovanja
 const exemplar = topics[0].exemplar;
 const files = topics.map((t) => t.file).join(" ");
 
@@ -46,6 +47,10 @@ House rules: Slovenian with the terminology of the level; decimal comma \`$3{,}5
   uni
     ? "\nUniversity (UNI-*) lessons are shared by every course with the same topic: write them generically (no faculty or course name), put stricter proofs in »Drugače: Bolj natančno«, save to the listed `file`."
     : ""
+}${
+  tek
+    ? "\nCompetition topic (Kenguru, Vegovo, olimpijada; Stefanovo = FIZ, Preglovo = KEM): the student already masters regular school material. Teach strategies and typical problem types; examples at competition level (easy ≈ Kenguru/school round, hard ≈ national round/olympiad) with complete solutions. Never cite real past problems, years or results."
+    : ""
 }
 
 Workflow (docs/token-rules.md §2): one \`Write\` per file; one \`node -e\` for all numbers; then once \`node scripts/check-lesson.js -q ${files}\`; fix with \`Edit\`, never rewrite; do not read the file back. If \`lessonExists\` is true, upgrade the existing lesson: run the checker, fix what it and the bar flag, keep correct text.
@@ -61,7 +66,9 @@ Run first: \`node scripts/check-lesson.js -q ${files}\`. Format, LaTeX and pure-
 2. Level fits the path: nothing used that the path has not taught yet; every goal covered.
 3. »Podatki« lists all given data; steps say why; Primer 3 is a transfer case; the faded final step exists.
 4. Pogoste napake are real misconceptions of this topic and match the distractors; the 2 »premisli« ask for a prediction or a »zakaj«.
-5. Slovenian terminology of the level, decimal comma, tables ≤ 4 columns.${uni ? "\n6. University lesson: generic (no faculty or course name), proofs in »Drugače: Bolj natančno«." : ""}
+5. Slovenian terminology of the level, decimal comma, tables ≤ 4 columns.${uni ? "\n6. University lesson: generic (no faculty or course name), proofs in »Drugače: Bolj natančno«." : ""}${
+  tek ? "\n6. Competition lesson: strategies and typical problem types at competition level (easy ≈ school round, hard ≈ national round), complete solutions, no real past problems, years or results cited." : ""
+}
 Fix with small \`Edit\`s, never rewrite. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 5 lines.
 
 ## Lessons

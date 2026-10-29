@@ -11,15 +11,24 @@ import { Devices, deviceLabel, deviceWarnLimit } from "./devices.js";
 import { cleanText } from "../settings.js";
 import { Usage } from "../usage.js";
 import { promoConfig, createPromo } from "./promo.js";
+import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
 
 export const CONSENT_TEXT =
   "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da STEMMind obdeluje otrokove osebne podatke " +
   "(ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen " +
   "učenja, kot je opisano v Obvestilu o varstvu osebnih podatkov. Soglasje lahko kadar koli prekličem z izbrisom otrokovega profila.";
 
+// Soglasje dijaka, ki je dovolj star za lastno privolitev in ustvarja svoj profil.
+export const SELF_CONSENT_TEXT =
+  "Profil je moj. Prebral(a) sem Obvestilo o varstvu osebnih podatkov in soglašam, da STEMMind obdeluje moje podatke " +
+  "(ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.";
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PAID = new Set(["active", "trialing", "past_due"]);
 const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+// Piškotek po zavrnjeni registraciji zaradi starosti: 24 ur je na tej napravi mogoča samo
+// registracija polnoletnega (starša), da otrok ne poskusi znova z drugim datumom.
+const AGE_COOKIE = "stemmind_age";
 
 function referralCode() {
   let s = "";
@@ -73,10 +82,17 @@ export function mountAccounts(app, store, opts = {}) {
     db.prepare(`UPDATE parents SET ${keys.map((k) => `${k} = ?`).join(", ")} WHERE id = ?`).run(...keys.map((k) => fields[k]), id);
   };
 
+  // Imetnik računa, mlajši od 18 let (dijak, ki je račun ustvaril sam): sme imeti samo svoj profil.
+  const isMinor = (p) => {
+    const age = p?.birth_date ? ageOn(p.birth_date) : null;
+    return age !== null && age < ADULT_AGE;
+  };
+
   const publicParent = (p) => ({
     id: p.id,
     email: p.email,
     name: p.name,
+    minor: isMinor(p),
     verified: !!p.email_verified_at,
     is_admin: !!p.is_admin,
     weekly_email: !!p.weekly_email,
@@ -124,7 +140,7 @@ export function mountAccounts(app, store, opts = {}) {
     next();
   });
 
-  const PUBLIC = [/^\/auth\//, /^\/account\/status$/, /^\/account\/unsubscribe$/, /^\/stripe\/webhook$/, /^\/config$/];
+  const PUBLIC = [/^\/auth\//, /^\/account\/status$/, /^\/account\/prices$/, /^\/account\/unsubscribe$/, /^\/stripe\/webhook$/, /^\/config$/];
   app.use("/api", (req, res, next) => {
     if (PUBLIC.some((re) => re.test(req.path))) return next();
     const p = req.parent;
@@ -182,6 +198,23 @@ export function mountAccounts(app, store, opts = {}) {
     if (!EMAIL_RE.test(email) || email.length > 200) return res.status(400).json({ error: "Vpišite veljaven e-naslov." });
     if (password.length < 8) return res.status(400).json({ error: "Geslo mora imeti vsaj 8 znakov." });
     if (req.body?.accept_privacy !== true) return res.status(400).json({ error: "Potrebno je strinjanje z obvestilom o varstvu podatkov." });
+
+    // Preverjanje starosti: mlajši od starosti digitalne privolitve dobijo povezavo za starše.
+    const birth = parseBirthDate(req.body?.birth_date);
+    const age = birth ? ageOn(birth) : null;
+    if (age === null || age < 0 || age > 120) return res.status(400).json({ error: "Vpišite datum rojstva.", birth_date: true });
+    const cf = String(req.headers["cf-ipcountry"] || "").toUpperCase();
+    const minAge = minAgeOf(cf, req.body?.country);
+    const blockedBefore = readCookie(req, AGE_COOKIE) === "1";
+    if (age < minAge || (blockedBefore && age < ADULT_AGE)) {
+      const secure = req.secure ? "; Secure" : "";
+      res.append("Set-Cookie", `${AGE_COOKIE}=1; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400${secure}`);
+      return res.status(403).json({
+        error: `Za mlajše od ${minAge} let račun ustvari starš. Pokaži mu povezavo za starše.`,
+        under_age: true,
+        min_age: minAge,
+      });
+    }
     if (parentByEmail(email)) return res.status(409).json({ error: "Ta e-naslov je že registriran. Prijavite se." });
 
     const refCode = String(req.body?.referral_code || "").trim().toUpperCase();
@@ -197,6 +230,7 @@ export function mountAccounts(app, store, opts = {}) {
       )
       .run(email, hashPassword(password), cleanText(req.body?.name, 60), isAdmin, sha256(token), PRIVACY_VERSION, isoIn(TRIAL_DAYS), randomToken(18), code, referrer?.id ?? null);
     const id = Number(r.lastInsertRowid);
+    db.prepare("UPDATE parents SET birth_date = ? WHERE id = ?").run(`${birth.y}-${String(birth.m).padStart(2, "0")}-${String(birth.d).padStart(2, "0")}`, id);
     const country = String(req.headers["cf-ipcountry"] || req.body?.country || "").toUpperCase();
     if (/^[A-Z]{2}$/.test(country)) db.prepare("UPDATE parents SET country = ? WHERE id = ?").run(country, id);
     // Skrbnik prevzame učence iz časa pred računi.
@@ -347,6 +381,13 @@ export function mountAccounts(app, store, opts = {}) {
 
   app.get("/api/account", (req, res) => res.json(accountView(req, req.parent)));
 
+  // Cene in preizkus za stran za starše (starsi.html), brez prijave.
+  app.get("/api/account/prices", (req, res) => {
+    const country = String(req.query.country || "").toUpperCase();
+    const currency = currencyOf(req, /^[A-Z]{2}$/.test(country) ? { country } : null);
+    res.json({ currency, plans: plansFor(currency), trial_days: TRIAL_DAYS, free_daily_questions: freeDailyQuestions(), min_age: minAgeOf(String(req.headers["cf-ipcountry"] || ""), country) });
+  });
+
   app.post("/api/account/promo", json, (req, res) => {
     const key = `promo|${req.parent.id}`;
     if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
@@ -456,7 +497,12 @@ export function mountAccounts(app, store, opts = {}) {
     }
     const name = cleanText(req.body?.name, 40);
     if (!name) return res.status(400).json({ error: "Vpišite ime ali vzdevek otroka." });
-    const year = Number(req.body?.birth_year);
+    const minor = isMinor(p);
+    // Mladoletni imetnik (dijak, ki je račun ustvaril sam) ima samo svoj profil; za otroke soglaša starš.
+    if (minor && childIds(p.id).length) {
+      return res.status(403).json({ error: "Profile za druge otroke lahko doda samo polnoleten starš s svojim računom.", minor: true });
+    }
+    const year = minor ? Number(p.birth_date.slice(0, 4)) : Number(req.body?.birth_year);
     const now = new Date().getFullYear();
     // Tudi odrasli študenti fakultet ustvarijo svoj profil, zato ni zgornje starostne meje za otroke.
     if (!Number.isInteger(year) || year < now - 90 || year > now - 5) return res.status(400).json({ error: "Vpišite letnico rojstva." });
@@ -470,7 +516,7 @@ export function mountAccounts(app, store, opts = {}) {
       year,
       under15 ? 1 : 0,
       PRIVACY_VERSION,
-      CONSENT_TEXT,
+      minor ? SELF_CONSENT_TEXT : CONSENT_TEXT,
       p.email,
     );
     devices.logChange(p.id, "created", s.id);
