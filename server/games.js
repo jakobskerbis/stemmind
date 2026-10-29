@@ -13,7 +13,12 @@ const int = (v, max) => Math.max(0, Math.min(max, Math.floor(Number(v) || 0)));
 // Leto šolanja (1–13) za izbiro iger in začetno težavnost; študent = 14.
 export function schoolYear(settings = {}) {
   if (settings.educational_track === "UNIVERZA") return 14;
-  return gradeInfo(settings.school_system || "SI", settings.curriculum_level)?.level || 8;
+  const info = gradeInfo(settings.school_system || "SI", settings.curriculum_level);
+  if (info) return info.level;
+  // Slovenski sistem: »7. razred« → 7, »2. letnik« (srednja šola) → 11.
+  const m = /^(\d{1,2})\.\s*(razred|letnik)/.exec(String(settings.curriculum_level || "").trim());
+  if (m) return m[2] === "letnik" ? 9 + Math.min(4, +m[1]) : Math.min(9, +m[1]);
+  return 8;
 }
 
 export function mountGames(app, store, { loadStudent, progress, avatars }) {
