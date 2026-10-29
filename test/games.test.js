@@ -4,6 +4,9 @@ import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { CONCEPTS, AREAS, makeQuestion, setNumberStyle, fr, poly, cx } from "../public/games/topics.js";
 import { ENGINES, statement } from "../public/games/engines.js";
+import { PACE, gameLock, isCleared, topicYear } from "../public/games/unlock.js";
+import { LESSONS } from "../public/games/lessons.js";
+import { getTopic } from "../server/curriculum.js";
 
 test("games: every concept gives valid questions on every level, in both number styles", () => {
   for (const lang of ["sl", "en"]) {
@@ -95,7 +98,46 @@ test("games API: best score, level and capped XP", async () => {
     assert.equal(r.body.games["meteor:frac_add"].plays, 2);
     assert.equal(r.body.concepts.frac_add, 3);
     assert.equal(r.body.xpToday, 60);
+    assert.equal(r.body.games["meteor:frac_add"].cleared, true); // 12 od 15 = 80 %
+    assert.deepEqual(r.body.passed, []);
+    assert.equal((await call(`/api/students/${s.id}/games/unlock`, { concept: "lin2", correct: 3 })).status, 400);
+    assert.equal((await call(`/api/students/${s.id}/games/unlock`, { concept: "lin2", correct: 4 })).body.ok, true);
+    r = await call(`/api/students/${s.id}/games`);
+    assert.deepEqual(r.body.passed, ["lin2"]);
+    assert.ok(Array.isArray(r.body.known));
   } finally {
     server.close();
   }
+});
+
+test("games: unlocking by knowledge and by game speed", () => {
+  for (const e of ENGINES) assert.ok([1, 2, 3].includes(PACE[e.id]), `${e.id} nima hitrosti v unlock.js`);
+  assert.ok(ENGINES.some((e) => PACE[e.id] === 1) && ENGINES.some((e) => PACE[e.id] === 2));
+  const ids = new Set(CONCEPTS.map((c) => c.id));
+  for (const [cid, topics] of Object.entries(LESSONS)) {
+    assert.ok(ids.has(cid), `LESSONS: neznan pojem ${cid}`);
+    for (const t of topics) assert.ok(getTopic(t), `LESSONS ${cid}: tema ${t} ne obstaja`);
+  }
+  assert.equal(topicYear("MAT-OS-7/x"), 7);
+  assert.equal(topicYear("FIZ-SS-2/x"), 11);
+  assert.ok(isCleared(8, 2) && !isCleared(8, 3) && !isCleared(7, 0));
+  const calm = ENGINES.find((e) => PACE[e.id] === 1).id;
+  const mid = ENGINES.find((e) => PACE[e.id] === 2).id;
+  const fast = ENGINES.find((e) => PACE[e.id] === 3).id;
+  const c = CONCEPTS.find((x) => x.id === "lin2");
+  const st = (o = {}) => ({ year: c.year, known: new Set(), passed: new Set(), games: {}, ...o });
+  // Snov iz višjega ali tega razreda je zaklenjena, iz nižjega odprta (mirne igre).
+  assert.equal(gameLock(calm, c, st()).need, "learn");
+  assert.equal(gameLock(calm, c, st({ year: c.year + 1 })), null);
+  assert.equal(gameLock(calm, c, st({ passed: new Set(["lin2"]) })), null);
+  for (const t of LESSONS.lin2 || []) assert.equal(gameLock(calm, c, st({ known: new Set([t]) })), null);
+  // Hitrejše igre šele po opravljeni počasnejši igri te snovi.
+  const ok = st({ passed: new Set(["lin2"]) });
+  assert.deepEqual(gameLock(mid, c, ok), { need: "pace", pace: 1 });
+  ok.games[`${calm}:lin2`] = { cleared: true };
+  ok.games[`${mid}:frac_add`] = { cleared: true }; // druga snov ne šteje
+  assert.equal(gameLock(mid, c, ok), null);
+  assert.deepEqual(gameLock(fast, c, ok), { need: "pace", pace: 2 });
+  ok.games[`${mid}:lin2`] = { cleared: true };
+  assert.equal(gameLock(fast, c, ok), null);
 });

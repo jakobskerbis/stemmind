@@ -1072,5 +1072,18 @@
   "games.e.jumper": "跳跳",
   "games.e.jumper.how": "倾斜手机让皮普落在写有正确答案的平台上，或点击他要去的地方。按键 1–3。",
   "games.e.orb": "魔法球",
-  "games.e.orb.how": "摇动手机或点箭头按钮看下一个答案。看到正确答案时点球或 ✓。"
+  "games.e.orb.how": "摇动手机或点箭头按钮看下一个答案。看到正确答案时点球或 ✓。",
+  "games.locked": "已锁定",
+  "games.lockLearn": "掌握“{name}”后即可解锁这个游戏。在学习路径中学习，或在简短测验中展示你的知识。",
+  "games.lockPace": "这是更快的游戏。在本主题较慢的游戏中答对至少 {n} 题且正确率至少 80% 后解锁。",
+  "games.learnTopic": "学习这个主题",
+  "games.checkBtn": "测验：{n} 道题，不限时",
+  "games.checkQ": "第 {i} 题，共 {n} 题",
+  "games.checkRight": "答对了！",
+  "games.checkNext": "下一题",
+  "games.checkPass": "太棒了，{n} 题答对 {ok} 题！本主题的游戏已解锁。",
+  "games.checkFail": "{n} 题答对 {ok} 题。需要答对 {need} 题才能解锁。复习主题后再试一次。",
+  "games.unlockedFaster": "本主题更快的游戏已解锁！",
+  "subj.SPO": "常识",
+  "subj.NIT": "科学与技术"
 }

@@ -1,6 +1,8 @@
 // Igre (razdelek IGRE): najboljši rezultat in stopnja za vsako igro, XP za pravilne odgovore.
 // Igra = vrsta igre + pojem, npr. "meteor:frac_add". Naloge nastanejo v brskalniku (public/games/topics.js).
 import { gradeInfo } from "../public/regions.js";
+import { baseTopicIds } from "./curriculum.js";
+import { isCleared } from "../public/games/unlock.js";
 
 const GAME_ID = /^[a-z]{2,20}:[a-z0-9_]{2,30}$/;
 const XP_PER_GAME = 20; // največ na igro (1 XP za vsaka 2 pravilna odgovora)
@@ -28,7 +30,16 @@ export function mountGames(app, store, { loadStudent, progress }) {
       updated_at TEXT NOT NULL DEFAULT (datetime('now')),
       PRIMARY KEY (student_id, game)
     );
+    CREATE TABLE IF NOT EXISTS game_unlocks (
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      concept TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      PRIMARY KEY (student_id, concept)
+    );
   `);
+  // Igra je »opravljena«, ko je v eni igri dovolj pravilnih (unlock.js); odklene hitrejše igre te snovi.
+  const cols = db.prepare("PRAGMA table_info(game_scores)").all().map((c) => c.name);
+  if (!cols.includes("cleared")) db.exec("ALTER TABLE game_scores ADD COLUMN cleared INTEGER NOT NULL DEFAULT 0");
   const xpToday = (id) =>
     db
       .prepare("SELECT COALESCE(SUM(amount),0) AS s FROM xp_events WHERE student_id = ? AND reason LIKE 'igra:%' AND date(created_at) = date('now')")
@@ -37,15 +48,31 @@ export function mountGames(app, store, { loadStudent, progress }) {
   app.get("/api/students/:id/games", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
-    const rows = db.prepare("SELECT game, best, plays, tier FROM game_scores WHERE student_id = ?").all(s.id);
+    const rows = db.prepare("SELECT game, best, plays, tier, cleared FROM game_scores WHERE student_id = ?").all(s.id);
     const games = {};
     const concepts = {}; // zadnja stopnja pri pojmu (čez vse vrste iger)
     for (const r of rows) {
-      games[r.game] = { best: r.best, plays: r.plays, tier: r.tier };
+      games[r.game] = { best: r.best, plays: r.plays, tier: r.tier, cleared: !!r.cleared };
       const c = r.game.split(":")[1];
       concepts[c] = Math.max(concepts[c] || 1, r.tier);
     }
-    res.json({ year: schoolYear(s.settings), games, concepts, xpToday: xpToday(s.id), xpPerDay: XP_PER_DAY });
+    // Obvladane teme učne poti (brez »to že znam«), regijske teme kot njihove osnovne teme.
+    const known = new Set();
+    for (const r of db.prepare("SELECT topic_id FROM topic_state WHERE student_id = ? AND status = 'mastered' AND COALESCE(source, '') <> 'manual'").all(s.id))
+      for (const b of baseTopicIds(r.topic_id)) known.add(b);
+    const passed = db.prepare("SELECT concept FROM game_unlocks WHERE student_id = ?").all(s.id).map((r) => r.concept);
+    res.json({ year: schoolYear(s.settings), games, concepts, known: [...known], passed, xpToday: xpToday(s.id), xpPerDay: XP_PER_DAY });
+  });
+
+  // Preizkus pred igrami: 4 od 5 pravilnih odklene mirne igre te snovi.
+  app.post("/api/students/:id/games/unlock", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const concept = String(req.body?.concept || "");
+    if (!/^[a-z0-9_]{2,30}$/.test(concept)) return res.status(400).json({ error: "Neznana snov." });
+    if (int(req.body.correct, 100) < 4) return res.status(400).json({ error: "Premalo pravilnih." });
+    db.prepare("INSERT OR IGNORE INTO game_unlocks (student_id, concept) VALUES (?, ?)").run(s.id, concept);
+    res.json({ ok: true });
   });
 
   app.post("/api/students/:id/games/result", (req, res) => {
@@ -57,12 +84,13 @@ export function mountGames(app, store, { loadStudent, progress }) {
     const correct = int(req.body.correct, 1000);
     const wrong = int(req.body.wrong, 1000);
     const tier = Math.max(1, int(req.body.tier, 3));
-    const prev = db.prepare("SELECT best FROM game_scores WHERE student_id = ? AND game = ?").get(s.id, game);
+    const prev = db.prepare("SELECT best, cleared FROM game_scores WHERE student_id = ? AND game = ?").get(s.id, game);
+    const cleared = isCleared(correct, wrong) ? 1 : 0;
     db.prepare(
-      `INSERT INTO game_scores (student_id, game, best, plays, tier, correct, wrong) VALUES (?, ?, ?, 1, ?, ?, ?)
+      `INSERT INTO game_scores (student_id, game, best, plays, tier, correct, wrong, cleared) VALUES (?, ?, ?, 1, ?, ?, ?, ?)
        ON CONFLICT(student_id, game) DO UPDATE SET best = MAX(best, excluded.best), plays = plays + 1, tier = excluded.tier,
-         correct = correct + excluded.correct, wrong = wrong + excluded.wrong, updated_at = datetime('now')`,
-    ).run(s.id, game, score, tier, correct, wrong);
+         correct = correct + excluded.correct, wrong = wrong + excluded.wrong, cleared = MAX(cleared, excluded.cleared), updated_at = datetime('now')`,
+    ).run(s.id, game, score, tier, correct, wrong, cleared);
     const room = Math.max(0, XP_PER_DAY - xpToday(s.id));
     const xp = Math.min(XP_PER_GAME, Math.floor(correct / 2), room);
     const summary = xp > 0 ? progress.award(s.id, [[xp, `igra: ${game}`]]) : null;
@@ -70,6 +98,7 @@ export function mountGames(app, store, { loadStudent, progress }) {
       xp,
       best: Math.max(prev?.best || 0, score),
       newBest: !!prev && score > prev.best,
+      cleared: !!cleared,
       capped: room <= Math.floor(correct / 2) && correct >= 2,
       total: summary?.total ?? null,
     });

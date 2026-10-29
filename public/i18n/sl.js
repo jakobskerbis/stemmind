@@ -373,6 +373,8 @@ export default {
   "subj.GEO": "Geologija in okolje",
   "subj.RAC": "Računalništvo",
   "subj.EKO": "Ekonomija",
+  "subj.NIT": "Naravoslovje in tehnika",
+  "subj.SPO": "Spoznavanje okolja",
 
   // nastavitve
   "set.title": "Nastavitve",
@@ -1114,4 +1116,15 @@ export default {
   "games.speedMid": "Srednje",
   "games.speedFast": "Hitro",
   "games.chapter": "Poglavje {n}",
+  "games.unlockedFaster": "Odklenjene so hitrejše igre o tej snovi!",
+  "games.checkFail": "{ok} od {n} pravilnih. Za odklep potrebuješ {need}. Poglej snov in poskusi znova.",
+  "games.checkPass": "Odlično, {ok} od {n} pravilnih! Igre o tej snovi so odklenjene.",
+  "games.checkNext": "Naprej",
+  "games.checkRight": "Pravilno!",
+  "games.checkQ": "Naloga {i} od {n}",
+  "games.checkBtn": "Preizkus: {n} nalog brez časa",
+  "games.learnTopic": "Nauči se snov",
+  "games.lockPace": "To je hitrejša igra. Odklene se, ko v eni od mirnejših iger o tej snovi zbereš vsaj {n} pravilnih odgovorov in vsaj 80 % pravilnih.",
+  "games.lockLearn": "Ta igra se odklene, ko znaš snov »{name}«. Nauči se jo na učni poti ali pokaži znanje v kratkem preizkusu.",
+  "games.locked": "Zaklenjeno",
 };

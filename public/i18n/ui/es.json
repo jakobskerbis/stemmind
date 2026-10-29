@@ -1077,5 +1077,18 @@
   "games.e.jumper": "Saltarín",
   "games.e.jumper.how": "Inclina el móvil para que Pip aterrice en la plataforma correcta, o toca adonde debe ir. Teclas 1–3.",
   "games.e.orb": "Bola mágica",
-  "games.e.orb.how": "Agita el móvil o toca el botón de flechas para la siguiente respuesta. En la correcta, toca la bola o ✓."
+  "games.e.orb.how": "Agita el móvil o toca el botón de flechas para la siguiente respuesta. En la correcta, toca la bola o ✓.",
+  "games.locked": "Bloqueado",
+  "games.lockLearn": "Este juego se desbloquea cuando domines «{name}». Apréndelo en tu ruta o demuestra lo que sabes en una prueba corta.",
+  "games.lockPace": "Este es un juego más rápido. Se desbloquea cuando consigas al menos {n} respuestas correctas, con al menos un 80 % de aciertos, en uno de los juegos más tranquilos de este tema.",
+  "games.learnTopic": "Aprender el tema",
+  "games.checkBtn": "Prueba: {n} preguntas sin tiempo",
+  "games.checkQ": "Pregunta {i} de {n}",
+  "games.checkRight": "¡Correcto!",
+  "games.checkNext": "Siguiente",
+  "games.checkPass": "¡Genial, {ok} de {n} correctas! Los juegos de este tema están desbloqueados.",
+  "games.checkFail": "{ok} de {n} correctas. Necesitas {need} para desbloquear. Repasa el tema e inténtalo de nuevo.",
+  "games.unlockedFaster": "¡Se han desbloqueado juegos más rápidos de este tema!",
+  "subj.SPO": "Conocimiento del medio",
+  "subj.NIT": "Ciencias y tecnología"
 }

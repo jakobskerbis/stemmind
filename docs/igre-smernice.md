@@ -249,7 +249,30 @@ Highest learning value per engine, and widest reuse of the 120 concepts:
 - Passes the »test brez matematike« (section 0) and rules 1–10 (section 2).
 - Tested at 360 px and on desktop; one-finger play; keyboard-only play; `G.reduced` path.
 - No console errors; 60 fps on a mid phone (no blur/shadow, offscreen background).
+- A speed class in `PACE` (`public/games/unlock.js`); every new concept gets its curriculum topic(s) in
+  `public/games/lessons.js` (or none, if no lesson teaches it).
 - Generators: correct value computed in code, tolerance by tier, `why` for 1–3 typical mistakes,
   tested in `test/games.test.js` (40 seeds × 3 tiers, value inside `[min, max]`).
 - UI strings in `public/i18n/sl.js` + all `public/i18n/ui/*.json`.
 - Screenshot pair (phone + computer) in `/mnt/project-files/stemmind/posnetki-igre/`.
+
+## 11. Unlocking: play only what you can already solve (standing rule)
+
+j (2026-10-29): »igre naj bodo zaklenjene, dokler nimajo učenci določenega nivoja znanja, da bodo
+sploh sposobni reševati tako hitro kot zahtevajo«. This applies to every existing and future game.
+Logic is in `public/games/unlock.js` (shared by the portal and the server); the server stores
+results in `game_scores.cleared` and passed checks in `game_unlocks`.
+
+1. **Know the topic first.** A concept is known when the student has mastered one of its topics on
+   the learning path (`lessons.js` maps concept → topics; »I already know this« self-marks do not
+   count), or when the concept is first taught in an earlier school year than the student's, or
+   when the student passes the short check in the games (5 untimed questions, 4 right).
+2. **Then speed, step by step.** Every engine has a speed class: 1 calm (maze, castle, bubbles,
+   cannon, marble, orb), 2 medium, 3 fast (runner, heli, moles, jumper). Calm games open as soon
+   as the topic is known. Medium games open after one calm game on that topic with at least 8
+   right and at least 80 % right; fast games after one such medium game.
+3. **A locked tile explains itself.** It is grey with a lock and stays clickable: the card says
+   what is missing and offers the way forward (open the topic with lesson and practice, take the
+   check, or play the calmer game that unlocks it). Unlocked tiles are listed first.
+4. **New engines** must declare their speed class in `PACE` (a test checks this). Judge it by the
+   time a student has per answer and how much dexterity the game needs at the same time.

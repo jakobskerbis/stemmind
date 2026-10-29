@@ -1077,5 +1077,18 @@
   "games.e.jumper": "Hüpfer",
   "games.e.jumper.how": "Neige das Handy, damit Pip auf der Plattform mit der richtigen Antwort landet, oder tippe, wohin er soll. Tasten 1–3.",
   "games.e.orb": "Zauberkugel",
-  "games.e.orb.how": "Schüttle das Handy oder tippe auf die Pfeiltaste für die nächste Antwort. Bei der richtigen tippe auf die Kugel oder ✓."
+  "games.e.orb.how": "Schüttle das Handy oder tippe auf die Pfeiltaste für die nächste Antwort. Bei der richtigen tippe auf die Kugel oder ✓.",
+  "games.locked": "Gesperrt",
+  "games.lockLearn": "Dieses Spiel wird freigeschaltet, sobald du „{name}“ kannst. Lerne es auf deinem Lernpfad oder zeig dein Wissen in einem kurzen Test.",
+  "games.lockPace": "Das ist ein schnelleres Spiel. Es wird freigeschaltet, wenn du in einem ruhigeren Spiel zu diesem Thema mindestens {n} richtige Antworten und mindestens 80 % richtig hast.",
+  "games.learnTopic": "Thema lernen",
+  "games.checkBtn": "Test: {n} Aufgaben ohne Zeit",
+  "games.checkQ": "Aufgabe {i} von {n}",
+  "games.checkRight": "Richtig!",
+  "games.checkNext": "Weiter",
+  "games.checkPass": "Super, {ok} von {n} richtig! Die Spiele zu diesem Thema sind freigeschaltet.",
+  "games.checkFail": "{ok} von {n} richtig. Zum Freischalten brauchst du {need}. Schau dir das Thema an und versuch es noch einmal.",
+  "games.unlockedFaster": "Schnellere Spiele zu diesem Thema sind freigeschaltet!",
+  "subj.SPO": "Sachunterricht",
+  "subj.NIT": "Naturwissenschaft und Technik"
 }
