@@ -28,6 +28,8 @@ Strošek: paket Starter ≈ 7 $/mesec + disk 1 GB ≈ 0,25 $/mesec. Brezplačni 
 
 - `STEMMIND_STUDENT_MONTHLY_USD=1.5` – največ 1,5 $ na učenca na mesec.
 - `STEMMIND_FREE_DAILY_QUESTIONS=10` – brezplačni paket: 10 vprašanj na dan.
+- `STEMMIND_FREE_POOL_USD=10` – brezplačni paket: vsi brezplačni učenci skupaj porabijo največ 10 $ (≈ 8,7 €) na mesec, nato do 1. v mesecu samo Vadnica in lekcije.
+- `STEMMIND_FREE_STUDENT_USD=0.2` – brezplačni paket: največ 0,2 $ na brezplačnega učenca na mesec.
 - `STEMMIND_MONTHLY_BUDGET_USD=50` – opozorilo v dnevniku pri 80 % porabe.
 
 Vse lahko spremeniš v Render → Environment.
