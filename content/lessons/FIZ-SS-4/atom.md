@@ -48,7 +48,7 @@ Zakaj so energije negativne? Ničlo izberemo tam, kjer je elektron prost, daleč
 
 Pozor pri primerjanju: $-0{,}85\,\mathrm{eV}$ je *več* kot $-3{,}40\,\mathrm{eV}$. Večji $n$ pomeni višji nivo.
 
-Velja tudi obratno. Bela svetloba vsebuje fotone vseh energij. Ko gre skozi hladen vodik, atomi **absorbirajo** samo fotone, katerih energija je točno enaka razliki dveh nivojev; elektron pri tem skoči navzgor. V spektru ostanejo temne črte na mavričnem ozadju. To je **absorpcijski spekter**. Svetle črte žarečega plina so **emisijski spekter**. Žareča nitka ali Sonce pa dasta **zvezni spekter**, mavrico brez vrzeli.
+Velja tudi obratno. Bela svetloba vsebuje fotone vseh energij. Ko gre skozi hladnejši plin, atomi **absorbirajo** samo fotone, katerih energija je točno enaka razliki dveh nivojev; elektron pri tem skoči navzgor. V spektru ostanejo temne črte na mavričnem ozadju. Pri vodiku je treba paziti: hladen vodik je skoraj ves v osnovnem stanju $n = 1$, zato vpija le ultravijolične fotone. Temne *vidne* črte vodika nastanejo tam, kjer je veliko atomov na nivoju $n = 2$, na primer v ozračju vroče zvezde. To je **absorpcijski spekter**. Svetle črte žarečega plina so **emisijski spekter**. Žareča nitka ali Sonce pa dasta **zvezni spekter**, mavrico brez vrzeli.
 
 :::premisli
 Zakaj so temne črte v absorpcijskem spektru vodika točno na istih mestih kot svetle črte v emisijskem?
@@ -160,10 +160,10 @@ Danes ista ideja teče v tvojem telefonu: atomske ure v satelitih štejejo nihaj
 
 ## Preveri se
 
-? Bela svetloba gre skozi hladen vodik in nato skozi spektroskop. Kateri opis slike spektra ustreza?
+? Bela svetloba gre skozi razredčen vodik v ozračju vroče zvezde, kjer je veliko atomov na nivoju $n = 2$, in nato skozi spektroskop. Kateri opis slike spektra ustreza?
 + Mavrica s temnimi črtami pri $656$, $486$, $434$ in $410\,\mathrm{nm}$.
 - Temno ozadje s svetlimi barvnimi črtami pri $656$, $486$, $434$ in $410\,\mathrm{nm}$.
-~ To je emisijski spekter žarečega plina. Pri beli svetlobi skozi hladen plin ostane mavrica, iz nje pa manjkajo absorbirane barve.
+~ To je emisijski spekter žarečega plina. Pri beli svetlobi skozi plin ostane mavrica, iz nje pa manjkajo absorbirane barve.
 - Neprekinjena mavrica brez črt.
 ~ Atomi vodika absorbirajo fotone z energijami, ki ustrezajo razlikam nivojev, zato te barve manjkajo.
 - Mavrica s temnimi črtami na drugih mestih kot emisijske črte vodika.

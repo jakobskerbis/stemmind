@@ -26,7 +26,7 @@ Vsaka spodnja kocka dobi enako število zgornjih. Zato se število stolpcev vsak
 
 **Drevo možnosti.** Zakaj je tako, najlepše pokaže risba. Na levi nariši piko, to je **koren** drevesa. Iz nje nariši tri veje, za vsako spodnjo barvo eno. Iz konca vsake veje nariši še dve veji, za belo in črno. Na desni dobiš $3 \cdot 2 = 6$ končnih točk. Imenujemo jih **listi**. Vsaka pot od korena do lista je en stolpec.
 
-V simulaciji spodaj (»Drevo možnosti«) nastavi $3$ majice, $2$ hlače in $1$ par čevljev. Nato dodaj še en par čevljev in opazuj, kako se vsak list razcepi na dva.
+Simulacija spodaj (»Drevo možnosti«) namesto kock uporablja oblačila: majice so kot spodnje kocke, hlače kot zgornje. Nastavi $3$ majice, $2$ hlače in $1$ par čevljev. Nato dodaj še en par čevljev in opazuj, kako se vsak list razcepi na dva.
 
 **Pravilo produkta.** Odločitev sestavljamo v več korakih. Če ima prvi korak $a$ možnosti in ima drugi korak *pri vsaki* izbiri iz prvega $b$ možnosti, je vseh izidov $a \cdot b$. Pri več korakih množimo naprej.
 
@@ -36,14 +36,14 @@ Stolpcu iz treh spodnjih in dveh zgornjih barv dodaš še streho, ki je lahko ra
 $24$. Vsak od $6$ dosedanjih stolpcev dobi $4$ različne strehe: $3 \cdot 2 \cdot 4 = 24$. V drevesu se vsak od šestih listov razcepi na štiri.
 :::
 
-**Pravilo vsote.** Zgoraj na stolpec lahko namesto kocke postaviš tudi stožčasto streho. Imaš jih tri (zeleno, sivo, rjavo). Zgornji del je torej *ali* ena od $2$ kock *ali* ena od $3$ streh, nikoli oboje. Za zgornji del imaš $2 + 3 = 5$ možnosti.
+**Pravilo vsote.** Strehe iz prejšnjega vprašanja zdaj pozabi: stolpec ima spet le dva dela. Zgoraj lahko namesto kocke postaviš tudi stožčasto streho. Imaš jih tri (zeleno, sivo, rjavo). Zgornji del je torej *ali* ena od $2$ kock *ali* ena od $3$ streh, nikoli oboje. Za zgornji del imaš $2 + 3 = 5$ možnosti.
 
 Če se možnosti razdelijo v skupine, ki se ne prekrivajo, število vseh možnosti dobiš tako, da sešteješ skupine. Temu pravimo **pravilo vsote**. Ključna beseda je »ali«; pri pravilu produkta je ključna beseda »in nato«.
 
 :::premisli
-Zakaj pri zgornjem delu števil $2$ in $3$ ne smemo pomnožiti?
+Sošolec izračuna vse stolpce kot $3 \cdot 2 \cdot 3 = 18$. Kje se zmoti?
 ---
-Ker ne izbiraš kocke *in* strehe, ampak eno *ali* drugo. Produkt $2 \cdot 3$ bi štel pare (kocka, streha), takih stolpcev pa ni. S tremi spodnjimi kockami je vseh stolpcev $3 \cdot 5 = 15$.
+Pri zgornjem delu ne izbiraš kocke *in* strehe, ampak eno *ali* drugo. Produkt $2 \cdot 3$ bi štel pare (kocka, streha), takih stolpcev pa ni. S tremi spodnjimi kockami je vseh stolpcev $3 \cdot 5 = 15$.
 :::
 
 **Sistematično naštevanje.** Včasih se veje drevesa ne razcepijo enako. Takrat pravilo produkta odpove in možnosti naštejemo, a po strogem redu.
@@ -109,7 +109,7 @@ Uredi stranice $a \le b \le c$. Trikotnik obstaja, če je $a + b > c$.
 **Rešitev:**
 
 1. Ker vrstni red ni pomemben, vsak trikotnik zapišemo le enkrat, z urejenimi stranicami $a \le b \le c$.
-2. Meje za $c$: iz $a + b > c$ sledi $15 - c > c$, torej $c \le 7$. Ker je $c$ največja, je $3c \ge 15$ in $c \ge 5$.
+2. Meje za $c$: ker je $a + b = 15 - c$, iz $a + b > c$ sledi $15 - c > c$, torej $c \le 7$. Ker je $c$ največja, je vsota $15$ kvečjemu $3c$: $3c \ge 15$ in $c \ge 5$.
 3. $c = 5$: $a + b = 10$ in $b \le 5$, samo $(5, 5, 5)$. To je $1$ trikotnik.
 4. $c = 6$: $a + b = 9$ in $b \le 6$: $(4, 5, 6)$ in $(3, 6, 6)$. To sta $2$ trikotnika.
 5. $c = 7$: $a + b = 8$ in $b \le 7$: $(4, 4, 7)$, $(3, 5, 7)$, $(2, 6, 7)$, $(1, 7, 7)$. To so $4$ trikotniki.
@@ -145,7 +145,7 @@ Koliko je štirimestnih kod in koliko vseh skupaj?
 - **Množenje namesto seštevanja.** Pri »kocka *ali* streha« nekateri računajo $2 \cdot 3 = 6$. Produkt šteje pare, a para tu ni, ker postaviš le en kos. Pri »ali« z ločenimi skupinami seštevaj.
 - **Prestroga ali preohlapna omejitev.** Pri ograji, kjer sosednji deski ne smeta biti enaki, nekateri računajo $4 \cdot 3 \cdot 2 = 24$, kot da morajo biti vse tri različne. Drugi pa omejitev pozabijo in dobijo $4 \cdot 4 \cdot 4$. Pri vsakem koraku vprašaj: od česa *točno* se mora razlikovati?
 - **Neurejeno naštevanje.** Kdor trikotnike našteva na pamet, $(3, 5, 7)$ in $(5, 3, 7)$ šteje dvakrat ali kakšnega izpusti. Uredi $a \le b \le c$ in pojdi po največji stranici.
-- **Pozabljen pogoj.** Pri trikotnikih $(1, 3, 5)$ ni trikotnik, ker je $1 + 3 < 5$. Najprej zapiši vse pogoje, šele nato štej.
+- **Pozabljen pogoj.** Trojica $(1, 3, 5)$ ima obseg $9$, a ni trikotnik, ker je $1 + 3 < 5$. Najprej zapiši vse pogoje, šele nato štej.
 
 ## Povzetek
 

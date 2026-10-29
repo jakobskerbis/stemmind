@@ -15,7 +15,7 @@ To znanje je biologija. Zdravnik, carinik, kmet in pek ga uporabljajo vsak dan, 
 
 ## Razlaga
 
-**Zemljevid biologije.** Biologijo si predstavljaj kot zemljevid. V središču je mesto, kjer se sprašujemo, *kako* delujejo živa bitja. Iz njega vodijo ceste v mesta, kjer znanje *uporabimo*:
+**Zemljevid biologije.** Biologijo si predstavljaj kot zemljevid. Na vrhu je mesto, kjer se sprašujemo, *kako* delujejo živa bitja. Iz njega vodijo ceste navzdol v mesta, kjer znanje *uporabimo*:
 
 ```
      TEMELJNA ZNANOST
@@ -54,7 +54,7 @@ Ker mora razumeti živa bitja in odnose med njimi: kaj pikapolonice jedo, kdaj s
 **Od radovednosti do izdelka.** Leta 1969 so raziskovalci v vročih vrelcih narodnega parka Yellowstone v ZDA odkrili bakterijo, ki živi v skoraj vreli vodi. Zanimalo jih je le, kako preživi tako vročino.
 
 :::premisli
-Je bilo to temeljno ali uporabno raziskovanje? In ali napoveš, da je odkritje kdaj komu koristilo?
+Je bilo to temeljno ali uporabno raziskovanje? In kaj napoveš: zakaj bi bila bakterija, ki ji vroča voda ne škodi, nekoč lahko komu koristna?
 ---
 Temeljno: hoteli so razumeti, kako bakterija preživi. Koristilo je skoraj dvajset let pozneje. Ena od snovi te bakterije prenese visoko temperaturo, zato jo v laboratorijih uporabljajo pri preiskavah DNK, med drugim pri testih za viruse in pri iskanju storilcev kaznivih dejanj.
 :::
@@ -65,7 +65,7 @@ Takih zgodb je veliko. Uporabna znanost skoraj vedno stoji na odkritjih temeljne
 
 V simulaciji spodaj »Kje uporabljamo biologijo« razvrsti primere na področja. Poskusi s primerom kvasovk pri peki kruha in opazi: isto znanje o mikroorganizmih srečaš v kuhinji, v bolnišnici in v čistilni napravi.
 
-**Zapis s simboli.** Pot od odkritja do uporabe lahko zapišemo z leti:
+**Zapis s simboli.** Koliko let traja pot od odkritja do uporabe, izračunamo z odštevanjem:
 
 $$\text{čas do uporabe} = \text{leto uporabe} - \text{leto odkritja}$$
 
@@ -127,7 +127,7 @@ dejanska razdalja $= 8\,\text{cm} \cdot 500\,000$, nato $t = \dfrac{\text{razdal
 
 ### Primer 4: zdaj ti
 
-Zakaj v biotehnologiji za izdelavo insulina uporabljajo prav bakterije? Ker se hitro razmnožujejo. Bakterija v dobrih razmerah se razdeli na dve vsakih $20$ minut. Koliko bakterij nastane iz ene v $3$ urah?
+Zakaj v biotehnologiji za izdelavo insulina uporabljajo prav bakterije? Ker se hitro razmnožujejo. V dobrih razmerah se bakterija razdeli na dve vsakih $20$ minut, zato se število bakterij ob vsaki delitvi podvoji. Koliko bakterij nastane iz ene v $3$ urah?
 
 **Podatki:** začetek z $1$ bakterijo, delitev vsakih $20\,\text{min}$, čas $3\,\text{h}$
 **Iščemo:** število bakterij po $3$ urah

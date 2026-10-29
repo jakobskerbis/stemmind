@@ -29,11 +29,11 @@ Popravimo poskus korak za korakom.
 |---|---|---|
 | neodvisna spremenljivka | to *mi* spreminjamo | pijača X ali voda |
 | odvisna spremenljivka | to *merimo* | višina skoka v cm |
-| kontrolirani pogoji | ostanejo enaki | copate, ogrevanje, ura, spanec |
+| kontrolirani pogoji | ostanejo enaki | copati, ogrevanje, ura, spanec |
 
 Neodvisno spremenljivko spreminjamo namerno. Odvisna je »odvisna« od nje: ko spremenimo prvo, opazujemo, ali se spremeni druga. Vse drugo držimo enako, da na rezultat vpliva le neodvisna spremenljivka.
 
-Del poskusa, kjer neodvisne spremenljivke ne spremenimo (Nika pije vodo), je **kontrolni poskus**. Z njim primerjamo.
+Del poskusa, kjer neodvisne spremenljivke ne spremenimo (Nika pije vodo), je **kontrolni poskus**. Z njim primerjamo rezultat s pijačo.
 
 :::premisli
 Nika na dan s pijačo skače v telovadnici, na dan z vodo pa na igrišču na pesku. Zakaj iz rezultata ne bo mogla sklepati o pijači?
@@ -50,7 +50,7 @@ Ker se je poleg pijače spremenila še podlaga. Na pesku se slabše odrineš, za
 | 3. | 40 | 45 |
 | povprečje | 42 | 43 |
 
-**Povprečje** dobimo tako, da meritve seštejemo in vsoto delimo s številom meritev. Razlika povprečij je le $1\,\text{cm}$, posamezni skoki pa nihajo kar za $4\,\text{cm}$. Zato ne moremo trditi, da pijača pomaga. Več ponovitev bi dalo zanesljivejši odgovor.
+**Povprečje** dobimo tako, da meritve seštejemo in vsoto delimo s številom meritev. Razlika povprečij je le $1\,\text{cm}$, posamezni skoki pa nihajo kar za $4\,\text{cm}$. Tako majhno razliko lahko povzroči že naključje, zato ne moremo trditi, da pijača pomaga. Več ponovitev bi dalo zanesljivejši odgovor.
 
 Poskus je **ponovljiv**, če ga lahko kdo drug izvede po istem opisu in dobi podoben rezultat. Zato natančno zapišemo, kaj smo naredili. In zato en sam poskus nikoli ne zadošča za trden sklep.
 

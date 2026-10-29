@@ -20,16 +20,16 @@ Pomisli na zemljevid, s katerim načrtuješ pohod. Merilo $1 : 50\,000$ pove, da
 3. Dodaš kapljico barvila (metilensko modrilo), da se pokažejo deli celice.
 4. Pokriješ s **krovnim stekelcem**. Položiš ga postrani, da pod njim ne ostanejo zračni mehurčki.
 
-Tako pripravljen vzorec je **preparat**. Biti mora tanek, da svetloba gre skozenj.
+Tako pripravljen vzorec je **preparat**. Biti mora tanek, da gre svetloba skozenj.
 
-Preparat položiš na mizico mikroskopa. Začneš z najmanjšim objektivom in ostriš z velikim vijakom (makrovijakom). Celico premakneš na sredino, preklopiš na večji objektiv in ostriš samo še z malim vijakom (mikrovijakom).
+Preparat položiš na mizico mikroskopa. Začneš z najmanjšim **objektivom** (lečo tik nad preparatom) in ostriš z velikim vijakom (makrovijakom). Celico premakneš na sredino, preklopiš na večji objektiv in ostriš samo še z malim vijakom (mikrovijakom).
 
-Pri okularju $10\times$ in objektivu $40\times$ je povečava $10 \cdot 40 = 400$. Vidiš ploščate celice nepravilne oblike. Rob celice je tanka črta, **celična membrana**. Notranjost zapolnjuje zrnata **citoplazma**. Temno modro okroglo telo je **jedro**, v katerem je dedna informacija.
+Pri **okularju** (leči, v katero gledaš) $10\times$ in objektivu $40\times$ je povečava $10 \cdot 40 = 400$. Vidiš ploščate celice nepravilne oblike. Rob celice je tanka črta, **celična membrana**. Notranjost zapolnjuje zrnata **citoplazma**. Temno modro okroglo telo je **jedro**, v katerem je dedna informacija.
 
 :::premisli
 Z objektiva $10\times$ preklopiš na $40\times$, okular ostane $10\times$. Kaj se zgodi z velikostjo celice na sliki in s številom celic, ki jih vidiš hkrati?
 ---
-Povečava zraste s $100$ na $400$, zato je celica na sliki štirikrat večja. Vidiš le manjši del preparata, torej manj celic. Slika je tudi temnejša, zato odpreš zaslonko.
+Povečava zraste s $100$ na $400$, zato je celica na sliki štirikrat večja. Vidiš le manjši del preparata, torej manj celic. Slika je tudi temnejša, zato bolj odpreš zaslonko, ki uravnava svetlobo.
 :::
 
 **Deli mikroskopa.**
@@ -52,7 +52,7 @@ $$\text{dejanska velikost} = \frac{\text{velikost na sliki}}{\text{povečava}}$$
 
 Celice so tako majhne, da jih merimo v **mikrometrih**. En mikrometer je tisočinka milimetra: $1\,\mathrm{mm} = 1000\,\mu\mathrm{m}$.
 
-**Rastlinska celica.** Tanko povrhnjico z notranje strani čebulnega luskolista obarvaš z jodovico. Celice so podolgovate in zložene kot opeke v zidu. Vsako obdaja debela **celična stena** iz celuloze, ki ji daje trdno obliko. Membrana leži tik ob steni, zato jo komaj ločiš. Večino celice zavzema prozorna **vakuola** s celičnim sokom. Jedro je potisnjeno ob rob. V listu vodne kuge ali mahu vidiš še drobna zelena zrnca, **kloroplaste**. V njih poteka fotosinteza.
+**Rastlinska celica.** Tanko **povrhnjico** (prozorno kožico) z notranje strani čebulnega luskolista, ene od mesnatih plasti čebule, obarvaš z jodovico. Celice so podolgovate in zložene kot opeke v zidu. Vsako obdaja debela **celična stena** iz celuloze, ki ji daje trdno obliko. Membrana leži tik ob steni, zato jo komaj ločiš. Večino celice zavzema prozorna **vakuola** s celičnim sokom. Jedro je potisnjeno ob rob. V listu vodne kuge ali mahu vidiš še drobna zelena zrnca, **kloroplaste**. V njih poteka fotosinteza.
 
 :::premisli
 Zakaj v celicah čebulne povrhnjice ne vidiš kloroplastov, čeprav je čebula rastlina?
@@ -119,7 +119,9 @@ Luka je na taboru v Trenti z mobitelom fotografiral svoje lične celice skozi ok
 **Iščemo:** dejansko velikost celice
 
 :::formula
-$\text{povečava} = \dfrac{\text{merilce na sliki}}{\text{dejanska dolžina merilca}}$, nato $\text{dejanska velikost} = \dfrac{\text{velikost na sliki}}{\text{povečava}}$
+$\text{povečava} = \dfrac{\text{merilce na sliki}}{\text{dejanska dolžina merilca}}$
+
+$\text{dejanska velikost} = \dfrac{\text{velikost na sliki}}{\text{povečava}}$
 :::
 
 **Rešitev:**

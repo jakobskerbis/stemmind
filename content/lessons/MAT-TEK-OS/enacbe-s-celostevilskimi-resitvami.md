@@ -10,13 +10,13 @@ Dve zgodbi z izleta:
 - Ana na počitnicah kupuje vozovnice: za mestni avtobus po $3$ €, za vlak po $5$ €. Skupaj porabi natanko $31$ €. Koliko vozovnic vsake vrste je kupila?
 - Miha na zemljevidu pohodniških poti sestavlja krožno pot. Odseki med kočami merijo $3\,\mathrm{km}$ ali $5\,\mathrm{km}$, on pa želi prehoditi natanko $31\,\mathrm{km}$. Koliko odsekov katere dolžine naj izbere?
 
-Zgodbi sta različni, račun je isti: iščemo števili $x$ in $y$, za kateri velja $3x + 5y = 31$. Ena enačba z dvema neznankama ima običajno neskončno rešitev. Tukaj pa ne moremo kupiti $2{,}5$ vozovnice ali prehoditi $-1$ odseka. Prav ta omejitev, da so rešitve **cela števila**, iz nedoločene naloge naredi rešljivo uganko. Takih nalog je na tekmovanjih veliko, in vse se lotiš z istima orodjema: **omejevanjem** in **preizkušanjem**.
+Zgodbi sta različni, račun je isti: iščemo števili $x$ in $y$, za kateri velja $3x + 5y = 31$. Ena enačba z dvema neznankama ima običajno neskončno mnogo rešitev. Tukaj pa ne moremo kupiti $2{,}5$ vozovnice ali prehoditi $-1$ odseka. Prav ta omejitev, da so rešitve **cela števila**, iz nedoločene naloge naredi rešljivo uganko. Takih nalog je na tekmovanjih veliko, in vse se lotiš z istima orodjema: **omejevanjem** in **preizkušanjem**.
 
 ## Razlaga
 
 **Najprej do konca rešimo Anino nalogo.** Naj bo $x$ število avtobusnih in $y$ število vlakovnih vozovnic. Obe števili sta cela in nenegativna.
 
-Vlakovne vozovnice so dražje, zato jih je lahko manj: $5y$ ne sme preseči $31$, torej je $y$ največ $6$. Za vsak $y$ od $0$ do $6$ izračunamo, koliko denarja ostane za avtobus, in preverimo, ali je to večkratnik $3$:
+Vlakovnih vozovnic Ana ne more kupiti veliko: že same stanejo $5y$ €, to pa ne sme preseči $31$, torej je $y$ največ $6$. Za vsak $y$ od $0$ do $6$ izračunamo, koliko denarja ostane za avtobus, in preverimo, ali je to večkratnik $3$:
 
 | $y$ | ostane $31 - 5y$ | deljivo s $3$? | $x$ |
 |---|---|---|---|
@@ -39,7 +39,7 @@ Rešitvi sta dve: $7$ avtobusnih in $2$ vlakovni vozovnici ali $2$ avtobusni in 
 *Krajšanje z ostanki.* Iz tabele vidiš, da je $31 - 5y$ deljivo s $3$ le pri vsakem tretjem $y$. To ni naključje: ostanki pri deljenju s $3$ se pri večanju $y$ ponavljajo v krogu dolžine $3$. Ko najdeš prvo rešitev, naslednjo dobiš brez preizkušanja.
 
 :::premisli
-Ana bi namesto $5$ avtobusnih vozovnic lahko kupila $3$ vlakovne. Zakaj se znesek ne spremeni? Kako iz tega dobiš drugo rešitev iz prve?
+Primerjaj rešitvi $(7, 2)$ in $(2, 5)$: za koliko se spremeni $x$ in za koliko $y$? Zakaj se pri tem znesek ne spremeni in ali obstaja še tretja rešitev?
 ---
 $5 \cdot 3 = 15$ in $3 \cdot 5 = 15$: oba paketa staneta $15$ €. Iz rešitve $(7, 2)$ odvzameš $5$ avtobusnih in dodaš $3$ vlakovne, pa dobiš $(2, 5)$. Še en tak korak bi dal $x = -3$, kar ni dovoljeno, zato drugih rešitev ni.
 :::
@@ -60,7 +60,7 @@ Ima. Zdaj $3$ deli tudi $30$, zato enačbo smemo deliti s $3$: $2x + 3y = 10$. R
 
 Turistična skupina s $23$ ljudmi se pelje na otok s čolni. Na voljo so čolni s $4$ sedeži in čolni s $3$ sedeži. Vsi najeti čolni morajo biti polni. Na koliko načinov lahko izberejo čolne?
 
-**Podatki:** $23$ ljudi; čoln s $4$ sedeži; čoln s $3$ sedeži; vsi sedeži zasedeni
+**Podatki:** $23$ ljudi; čoln s $4$ sedeži (štirised); čoln s $3$ sedeži (trised); vsi sedeži zasedeni
 **Iščemo:** vse možne pare (število štirisedov $x$, število trisedov $y$)
 
 :::formula
@@ -89,7 +89,7 @@ $7x + 4y = 65$; $65 - 7x$ mora biti deljivo s $4$
 **Rešitev:**
 
 1. Omejimo: $7x \le 65$, zato je $x$ največ $9$.
-2. Namesto desetih preizkusov uporabimo ostanke pri deljenju s $4$. Število $65$ da ostanek $1$, $7x$ pa enak ostanek kot $3x$.
+2. Namesto desetih preizkusov uporabimo ostanke pri deljenju s $4$. Ker mora biti $65 - 7x$ deljivo s $4$, morata $65$ in $7x$ dati enak ostanek. Število $65$ da ostanek $1$, $7x = 4x + 3x$ pa enak ostanek kot $3x$.
 3. Potrebujemo $3x$ z ostankom $1$ pri $4$: $3 \cdot 1 = 3$, $3 \cdot 2 = 6$ (ostanek $2$), $3 \cdot 3 = 9$ (ostanek $1$). Ustreza $x = 3$, nato vsak četrti: $x = 3$ ali $x = 7$.
 4. Pri $x = 3$: $4y = 65 - 21 = 44$, $y = 11$. Pri $x = 7$: $4y = 65 - 49 = 16$, $y = 4$.
 5. Pogoj »več otrok kot odraslih« izpolni le prva rešitev: $11 > 3$, medtem ko je $4 < 7$.
@@ -153,9 +153,9 @@ Vrednosti $100 - 11y$ so $100, 78, 56, 34, 12$. Z $8$ je deljivo le $56$ pri $y 
 - Diofantska enačba: iščemo le celoštevilske (pogosto nenegativne) rešitve, npr. število vozovnic.
 - Omejevanje: iz nenegativnosti dobiš mejo, npr. $5y \le 31$ da $y \le 6$.
 - Preizkušanje: pregleduj neznanko z večjim koeficientom; ostanki in parnost skrajšajo seznam.
-- Pri $ax + by = c$ se rešitve ponavljajo: $x$ se spremeni za $b$, $y$ za $a$ (če $a$ in $b$ nimata skupnega delitelja).
+- Pri $ax + by = c$ se rešitve ponavljajo: $x$ se zmanjša za $b$, $y$ pa poveča za $a$, ali obratno (če $a$ in $b$ nimata skupnega delitelja).
 - Če skupni delitelj $a$ in $b$ ne deli $c$, rešitve ni.
-- Pri $xy$ v enačbi uredi neznanki ($x \le y$) in iz tega dobi mejo za manjšo.
+- Pri $xy$ v enačbi uredi neznanki ($x \le y$) in iz tega dobiš mejo za manjšo.
 - Na koncu preveri vse pogoje iz besedila.
 
 ## Drugače: Z analogijo

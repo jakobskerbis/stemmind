@@ -15,7 +15,7 @@ Odzivnost je lastnost živega telesa: omogočajo jo živčne celice, možgani in
 
 **Nikin poskus, korak za korakom.**
 
-1. **Raziskovalno vprašanje.** Nika zapiše: »Ali napitek skrajša reakcijski čas rokometašic?« Dobro raziskovalno vprašanje sprašuje po vplivu *ene* stvari na nekaj, kar lahko izmerimo.
+1. **Raziskovalno vprašanje.** Nika zapiše: »Ali napitek skrajša reakcijski čas rokometašic?« Reakcijski čas je čas od dražljaja (na primer žoge, ki prileti) do odziva. Dobro raziskovalno vprašanje sprašuje po vplivu *ene* stvari na nekaj, kar lahko izmerimo.
 2. **Domneva (hipoteza).** To je predvideni odgovor: »Igralke, ki popijejo napitek, bodo padajoče ravnilo ujele hitreje.« Poskus domnevo potrdi ali ovrže.
 3. **Poskus.** Deset igralk razdeli v dve skupini po pet. Prva popije napitek. Druga popije vodo z enakim okusom in barvo. Druga skupina je **kontrolna skupina**: z njo primerjamo. Nobena igralka ne ve, kaj je pila. Vse pijejo ob isti uri, v isti dvorani, po enakem ogrevanju. Razlikuje se le ena stvar, napitek.
 4. **Meritev.** Soigralka spusti ravnilo, igralka ga ujame s palcem in kazalcem. Odčita, koliko centimetrov je ravnilo padlo. Manj centimetrov pomeni hitrejši odziv.
@@ -37,11 +37,11 @@ Ne bi imela s čim primerjati. Ne bi vedela, ali bi igralke enako hitro lovile t
 
 *vprašanje → domneva → poskus → rezultati → sklep*
 
-V poskusu spreminjamo samo en dejavnik, vse drugo ostane enako. Kontrolna skupina je skupina, pri kateri tega dejavnika ne spremenimo. Poskus izvedemo na več osebkih, ker se ljudje, živali in rastline med seboj razlikujejo. Če domneva ne drži, poskus ni spodletel. Izvedeli smo nekaj novega.
+V poskusu spreminjamo samo en dejavnik (pri Niki je to napitek), vse drugo ostane enako. Kontrolna skupina je skupina, pri kateri tega dejavnika ne spremenimo. Poskus izvedemo na več osebkih (posameznih živih bitjih), ker se ljudje, živali in rastline med seboj razlikujejo. Če domneva ne drži, poskus ni spodletel. Izvedeli smo nekaj novega.
 
 V simulaciji spodaj »Koraki raziskave« uvrsti stavke o fižolu in kvasovkah med vprašanje, domnevo, poskus in sklep. Opazuj, po čem ločiš domnevo od sklepa: domneva napoveduje, sklep pa primerja napoved z izmerjenim.
 
-**Kaj preučuje biologija.** Biologija je veda o živih bitjih (grško *bios* pomeni življenje, *logos* pa veda). Živo bitje je zgrajeno iz celic, se hrani in diha, raste, se razmnožuje in se odziva na dražljaje. Nikin ulov ravnila je odziv na dražljaj. Področja biologije so na primer botanika (rastline), zoologija (živali), mikrobiologija (mikroorganizmi), ekologija (odnosi z okoljem) in fiziologija (delovanje telesa).
+**Kaj preučuje biologija.** Biologija je veda o živih bitjih (grško *bios* pomeni življenje, *logos* pa veda). Živo bitje je zgrajeno iz celic, se hrani in diha, raste, se razmnožuje in se odziva na dražljaje. Dražljaj je sprememba v okolju, ki jo telo zazna: padajoče ravnilo je dražljaj, Nikin ulov pa odziv nanj. Področja biologije so na primer botanika (rastline), zoologija (živali), mikrobiologija (mikroorganizmi), ekologija (odnosi z okoljem) in fiziologija (delovanje telesa).
 
 **Ravni organizacije živega.** Ko Nika ujame ravnilo, sodeluje marsikaj, od drobnih celic do celega telesa. Živo naravo zato opisujemo v ravneh. Vsaka raven je zgrajena iz ravni pod njo.
 
@@ -49,7 +49,7 @@ V simulaciji spodaj »Koraki raziskave« uvrsti stavke o fižolu in kvasovkah me
 |---|---|---|
 | celica | najmanjša enota živega | živčna celica v Nikini roki |
 | tkivo | skupina podobnih celic z enako nalogo | mišično tkivo v podlakti |
-| organ | več tkiv, ki skupaj opravljajo nalogo | možgani, srce |
+| organ | več tkiv, ki skupaj opravljajo nalogo | možgani, pljuča |
 | organski sistem | organi, ki sodelujejo pri isti nalogi | živčni sistem, gibala |
 | organizem | celo živo bitje | Nika |
 | populacija | osebki iste vrste na istem območju | vsi deževniki pod nogometnim igriščem |
@@ -179,7 +179,7 @@ Analogija ima meje: celice v tkivu so si podobnejše kot igralke.
 - **Slepi poskus.** Igralke niso vedele, kaj pijejo, zato pričakovanje ni vplivalo na rezultat. Že občutek »spil sem nekaj posebnega« lahko izboljša dosežek.
 - **Naključna razdelitev.** Osebke razdelimo v skupini z žrebom, da v eni ne pristanejo vsi najboljši.
 - **Ponovljivost.** Sklep velja šele, ko poskus ponovijo tudi drugi in dobijo podoben rezultat.
-- **Ravni pod celico.** Celica je najmanjša *živa* enota. Sestavljajo jo organeli, ti pa iz molekul in atomov, ki sami niso živi.
+- **Ravni pod celico.** Celica je najmanjša *živa* enota. Sestavljajo jo organeli (drobni deli celice z različnimi nalogami), ti pa iz molekul in atomov, ki sami niso živi.
 
 ## Preveri se
 

@@ -9,7 +9,7 @@ Pet članov šolskega benda se pred koncertom pozdravi. Vsak vsakemu enkrat sež
 
 Ob koncu koncerta publika zahteva dodatek. Bend ima pripravljenih pet pesmi, za dodatek pa bosta dovolj dve. Koliko je izbir para pesmi?
 
-Situaciji sta videti različni, a v obeh je odgovor $10$. V obeh namreč iz petih stvari izbereš dve in ti je vseeno, katera je prva. Kdor to prepozna, reši obe nalogi z istim računom. Na tekmovanjih se ista ideja skriva še v štetju premic skozi točke, tekem »vsak z vsakim« in komisij.
+Situaciji sta videti različni, a v obeh je odgovor $10$. V obeh namreč iz petih stvari izbereš dve in ti je vseeno, katera je prva. Kdor to prepozna, reši obe nalogi z istim računom. Ista ideja se v tekmovalnih nalogah skriva še v štetju premic skozi točke, tekem »vsak z vsakim« in komisij.
 
 ## Razlaga
 
@@ -33,9 +33,9 @@ Vsaki taki razvrstitvi vseh elementov v vrsto rečemo **permutacija**. Pri $n$ e
 | $6$ | $720$ |
 
 :::premisli
-Iz tabele: kolikokrat več seznamov dobiš, ko petim pesmim dodaš šesto? Napovej, preden deliš.
+Tabela kaže, da je $720$ natanko šestkrat več kot $120$. Zakaj ravno šestkrat? Razloži z mesti na seznamu, ne z računom.
 ---
-Šestkrat več. Nova pesem lahko stoji na katerem koli od $6$ mest, preostalih pet pa se razporedi na $120$ načinov: $6 \cdot 120 = 720$.
+Nova pesem lahko stoji na katerem koli od $6$ mest, preostalih pet pa se razporedi na $120$ načinov: $6 \cdot 120 = 720$.
 :::
 
 **Samo nekaj mest.** Na šolskem pevskem tekmovanju nastopa $8$ pevcev, nagrade pa so tri: zlata, srebrna in bronasta. Mesta so tri, kandidatov osem:
@@ -48,7 +48,7 @@ Iz tabele: kolikokrat več seznamov dobiš, ko petim pesmim dodaš šesto? Napov
 
 Razvrstitev za stopničke je $8 \cdot 7 \cdot 6 = 336$. Množimo le toliko faktorjev, kolikor je mest.
 
-**Ko vrstni red ne šteje.** Zdaj iz $4$ pesmi A, B, C, D izberi $2$ za dodatek, ne da bi določil, katera bo prva. Najprej preštej urejene pare: $4 \cdot 3 = 12$. Nato jih uredi v tabelo, kjer je v isti vrstici isti par pesmi:
+**Ko vrstni red ne šteje.** Zdaj iz $4$ pesmi A, B, C, D izberi $2$ za dodatek, ne da bi določil, katera bo prva. Najprej preštej urejene pare: $4 \cdot 3 = 12$. Nato jih uredi v tabelo, kjer je v isti vrstici isti par pesmi. Zavita oklepaja $\{\ \}$ pomenita, da vrstni red v paru ne šteje:
 
 | izbrani par | en vrstni red | drugi vrstni red |
 |---|---|---|
@@ -61,7 +61,7 @@ Razvrstitev za stopničke je $8 \cdot 7 \cdot 6 = 336$. Množimo le toliko fakto
 
 Vsak par se pojavi v dveh vrstnih redih. Izbir brez vrstnega reda je zato $12 : 2 = 6$.
 
-Pri treh izbranih pesmih isto skupino zapišemo na $3! = 6$ načinov. Za tri pesmi od osmih je zato urejenih trojic $336$, skupin pa $336 : 6 = 56$.
+Pri treh pesmih od osmih je urejenih trojic $336$, enako kot razvrstitev na stopničkah ($8 \cdot 7 \cdot 6$). Skupin brez vrstnega reda je $336 : 6 = 56$.
 
 Skupini $k$ elementov, izbrani iz $n$ elementov brez vrstnega reda, rečemo **kombinacija**. Njihovo število zapišemo $\binom{n}{k}$ in beremo »$n$ nad $k$«:
 
@@ -70,7 +70,7 @@ $$\binom{n}{k} = \frac{n \cdot (n - 1) \cdots (n - k + 1)}{k!}$$
 V števcu je toliko faktorjev, kolikor jih je v imenovalcu.
 
 :::premisli
-Zakaj pri treh izbranih pesmih delimo s $6$ in ne s $3$?
+Zakaj smo zgoraj $336$ delili s $6$ in ne s $3$, čeprav smo izbrali tri pesmi?
 ---
 Ker se ista trojica v seznamu urejenih trojic pojavi $3! = 3 \cdot 2 \cdot 1 = 6$-krat, ne trikrat. Na primer A, B, C kot ABC, ACB, BAC, BCA, CAB, CBA.
 :::
@@ -124,7 +124,7 @@ $\binom{7}{3} = \dfrac{7 \cdot 6 \cdot 5}{3 \cdot 2 \cdot 1}$
 **Rešitev:**
 
 1. Urejene trojice: $7 \cdot 6 \cdot 5 = 210$. To je že odgovor na drugo vprašanje.
-2. Vsaka skupina treh pesmi se med njimi pojavi $3 \cdot 2 \cdot 1 = 6$-krat.
+2. Vsaka skupina treh pesmi se med urejenimi trojicami pojavi $3 \cdot 2 \cdot 1 = 6$-krat.
 3. Skupin je zato $210 : 6 = 35$.
 4. Odgovor: izbir brez vrstnega reda je $35$, z vrstnim redom pa $210$.
 

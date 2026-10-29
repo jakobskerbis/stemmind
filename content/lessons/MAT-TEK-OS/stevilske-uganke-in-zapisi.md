@@ -62,12 +62,12 @@ Do $n$-tega dne se je zgodilo $n - 1$ dodajanj po $3\,\mathrm{cm}$, zato je $n$-
 *Hitri preizkus:* koliko snega je $10$. dan? *(Odgovor: $12 + 27 = 39\,\mathrm{cm}$.)*
 
 :::premisli
-Ali bo po tem pravilu kdaj točno $100\,\mathrm{cm}$ snega? Odgovori, preden računaš do konca: na kaj moraš paziti?
+Ali bo po tem pravilu kdaj točno $100\,\mathrm{cm}$ snega? Odgovori brez računanja dan za dnem: kaj imajo vsi členi skupnega?
 ---
 Ne bo. Vsi členi so $12$ plus večkratnik $3$, torej dajo pri deljenju s $3$ ostanek $0$. Ker je $100 - 12 = 88$ in $88$ ni deljivo s $3$, tudi $100$ ni člen zaporedja. $30$. dan je $99\,\mathrm{cm}$, naslednji dan že $102\,\mathrm{cm}$.
 :::
 
-**5. Vzorci, ki se ponavljajo.** Lune, plimovanje in letni časi se ponavljajo v krogu. Če ima vzorec dolžino $k$, je $n$-ti člen enak členu na mestu, ki ga pove ostanek $n$ pri deljenju s $k$. Kot pri zadnjih števkah potenc velja: ostanek $0$ pomeni **zadnje** mesto v krogu, ne prvega.
+**5. Vzorci, ki se ponavljajo.** Lunine mene, plimovanje in letni časi se ponavljajo v krogu. Če ima vzorec dolžino $k$, je $n$-ti člen enak členu na mestu, ki ga pove ostanek $n$ pri deljenju s $k$. Pozor: ostanek $0$ pomeni **zadnje** mesto v krogu, ne prvega, saj ga da že $k$-ti člen.
 
 *Hitri preizkus:* vzorec je rdeč, moder, zelen, rdeč, moder, zelen … Kakšne barve je $30$. člen? *(Odgovor: $30$ je deljivo s $3$, ostanek $0$, zato je zelen.)*
 
@@ -89,7 +89,7 @@ Mesto dneva $n$ v krogu je ostanek $n$ pri deljenju s $4$ (ostanek $0$ pomeni 4.
 1. 1. maj je na 1. mestu, 2. maj na 2. mestu …, zato je dan $n$ na mestu, ki ga da ostanek $n$ pri deljenju s $4$.
 2. $31 = 7 \cdot 4 + 3$, ostanek je $3$, torej 3. mesto: oblačno.
 3. Dež je na 4. mestu, to je pri ostanku $0$. Deževni dnevi so večkratniki $4$: $4, 8, \dots, 28$.
-4. Takih dni je $28 : 4 = 7$, ker je $32$ že junija.
+4. Takih dni je $28 : 4 = 7$; naslednji večkratnik $32$ je večji od $31$, torej že v juniju.
 5. Odgovor: 31. maja bo oblačno; maja bo $7$ deževnih dni.
 
 ### Primer 2: jata s skrivnostnim številom
@@ -184,7 +184,7 @@ Mestne vrednosti si predstavljaj kot predalčke: v levem so desetice, v desnem e
  4 · 10   | 7 · 1              7 · 10 | 4 · 1
 ```
 
-Ko števki zamenjaš, se $3$ enote preselijo iz predalčka enic v predalček desetic. Vsaka taka enota zraste z $1$ na $10$, torej pridobi $9$. Zato je $74 - 47 = 3 \cdot 9 = 27$.
+Ko števki zamenjaš, je v predalčku desetic $7$ namesto $4$, torej $3$ enote več, v predalčku enic pa $3$ enote manj. Vsaka taka enota se preseli iz enic v desetice in zraste z $1$ na $10$, torej pridobi $9$. Zato je $74 - 47 = 3 \cdot 9 = 27$.
 
 Kriptogram $\overline{\mathrm{LE}} + \overline{\mathrm{EL}}$ pa nariši kot pisno seštevanje s prenosom nad stolpci:
 
