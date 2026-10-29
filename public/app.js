@@ -718,8 +718,8 @@ function fillSubjectOptions() {
   if (uni) return fillCourseOptions();
   const prev = f.subject.value || state.student?.settings?.subject;
   const list = schoolSubjectsFor(f.educational_track.value, f.curriculum_level.value, isRegional(f.school_system.value));
-  // Predmet, ki ga razred nima: fizika ali kemija v 6./7. → naravoslovje, naravoslovje v 8. → fizika.
-  const want = list.includes(prev) ? prev : prev === "FIZ" || prev === "KEM" ? (list.includes("NAR") ? "NAR" : prev) : prev === "NAR" ? "FIZ" : "MAT";
+  // Predmet, ki ga razred nima: fizika, kemija ali biologija v 6./7. → naravoslovje, naravoslovje v 8. → fizika.
+  const want = list.includes(prev) ? prev : ["FIZ", "KEM", "BIO"].includes(prev) && list.includes("NAR") ? "NAR" : prev === "NAR" || prev === "BIO" ? "FIZ" : "MAT";
   f.subject.innerHTML = subjectOptions(null, want, list);
   if (![...f.subject.options].some((o) => o.value === want)) f.subject.selectedIndex = 0;
 }
