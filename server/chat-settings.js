@@ -424,7 +424,7 @@ export function createSettingsTools({ store, studentId, conversationId, device =
           for (const id of Array.isArray(v) ? v : [v]) {
             const x = itemOf(String(id));
             if (!x || x.slot !== slot) errors.push(`avatar: ${id} is not a ${slot} item`);
-            else if (x.price !== 0 && !owned.has(id)) errors.push(x.earn ? `avatar: ${id} is locked (unlocked only by learning, see Zbirke)` : `avatar: ${id} not owned yet (bought with game coins in the games shop)`);
+            else if (x.price !== 0 && !owned.has(id)) errors.push(x.earn ? `avatar: ${id} is locked (unlocked only by ${x.collection === "igre" ? "playing games" : "learning"}, see Zbirke)` : `avatar: ${id} not owned yet (bought with game coins in the games shop)`);
           }
         }
         avatarChange = a;

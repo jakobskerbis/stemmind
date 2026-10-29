@@ -57,7 +57,7 @@ export async function showZbirke(item = null, back = null) {
   }
 }
 
-const lang = () => ctx.currentLang?.() || "sl";
+const lang = () => ctx?.currentLang?.() || "sl"; // unlockedText kličejo tudi igre
 const collectionOf = (id) => itemOf(id)?.collection || "pse";
 const ownedSet = () => new Set((data?.items || []).map((x) => x.id));
 const equipped = () => data?.avatar?.equipped || { ...DEFAULT_AVATAR };
@@ -105,7 +105,7 @@ function card(id) {
   return `<button type="button" class="zb-card gm-r-${x.rarity}${own ? "" : " zb-locked"}${on ? " on" : ""}" data-zbopen="${esc(id)}">
     <span class="zb-thumb">${itemThumb(id, 72, DEFAULT_AVATAR)}${own ? "" : `<span class="zb-lock">${icon("lock")}</span>`}${shown ? `<span class="zb-star" title="${esc(t("zb.showcase"))}">${icon("star")}</span>` : ""}</span>
     <b>${esc(itemName(x, lang()))}</b>
-    <small>${own ? esc(on ? t("games.wearing") : t(`games.rarity.${x.rarity}`)) : esc(x.collection === "pass" ? t("zb.needPassShort", { tier: x.tier }) : x.need?.xp ? `${num(x.need.xp)} XP` : t("zb.locked"))}</small>
+    <small>${own ? esc(on ? t("games.wearing") : t(`games.rarity.${x.rarity}`)) : esc(x.collection === "pass" ? t("zb.needPassShort", { tier: x.tier }) : x.need?.xp ? `${num(x.need.xp)} XP` : x.need?.games ? `${num(Math.min(data?.games?.correct || 0, x.need.games))}/${num(x.need.games)}` : x.need?.cleared ? `${Math.min(data?.games?.cleared || 0, x.need.cleared)}/${x.need.cleared}` : t("zb.locked"))}</small>
   </button>`;
 }
 

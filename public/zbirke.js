@@ -388,7 +388,7 @@ const KIND = {
     front: () => `<ellipse cx="50" cy="66" rx="12" ry="9" fill="#fef3c7" stroke="${INK}" stroke-width="1.8"/><ellipse cx="50" cy="60.5" rx="4" ry="2.8" fill="${INK}"/>`,
   },
   kind_bunny: {
-    back: (u) => `<g stroke="${INK}" stroke-width="2.5"><ellipse cx="37" cy="14" rx="7" ry="18" transform="rotate(-12 37 14)" fill="${F(u)}"/><ellipse cx="63" cy="14" rx="7" ry="18" transform="rotate(12 63 14)" fill="${F(u)}"/></g><ellipse cx="37" cy="15" rx="3.2" ry="13" transform="rotate(-12 37 15)" fill="#fda4af"/><ellipse cx="63" cy="15" rx="3.2" ry="13" transform="rotate(12 63 15)" fill="#fda4af"/>`,
+    back: (u) => `<g stroke="${INK}" stroke-width="2.5"><ellipse cx="37" cy="18" rx="7" ry="16" transform="rotate(-12 37 18)" fill="${F(u)}"/><ellipse cx="63" cy="18" rx="7" ry="16" transform="rotate(12 63 18)" fill="${F(u)}"/></g><ellipse cx="37" cy="19" rx="3.2" ry="11.5" transform="rotate(-12 37 19)" fill="#fda4af"/><ellipse cx="63" cy="19" rx="3.2" ry="11.5" transform="rotate(12 63 19)" fill="#fda4af"/>`,
     front: () => `<ellipse cx="50" cy="61" rx="3" ry="2.2" fill="#fb7185"/><path d="M46 70h8v5h-8z" fill="#fff" stroke="${INK}" stroke-width="1.4"/><path d="M50 70v5" stroke="${INK}" stroke-width="1"/>`,
   },
   kind_mouse: {
@@ -409,15 +409,15 @@ const KIND = {
   },
   kind_koala: {
     back: (u) => `<circle cx="22" cy="38" r="15" fill="${F(u)}" stroke="${INK}" stroke-width="2.5"/><circle cx="78" cy="38" r="15" fill="${F(u)}" stroke="${INK}" stroke-width="2.5"/><circle cx="22" cy="38" r="8" fill="#fff" opacity=".6"/><circle cx="78" cy="38" r="8" fill="#fff" opacity=".6"/>`,
-    front: () => `<ellipse cx="50" cy="61" rx="6" ry="7.5" fill="#334155" stroke="${INK}" stroke-width="1.5"/><ellipse cx="48" cy="58" rx="1.6" ry="2.2" fill="#fff" opacity=".6"/>`,
+    front: () => `<ellipse cx="50" cy="58.5" rx="5.5" ry="5" fill="#334155" stroke="${INK}" stroke-width="1.5"/><ellipse cx="48.3" cy="56.8" rx="1.4" ry="1.7" fill="#fff" opacity=".6"/>`,
   },
   kind_alien: {
     back: (u) => `<g stroke="${INK}" stroke-width="2.5" stroke-linecap="round"><path d="M40 28L30 8M60 28L70 8"/></g><circle cx="30" cy="8" r="5" fill="#a3e635" stroke="${INK}" stroke-width="2"/><circle cx="70" cy="8" r="5" fill="#a3e635" stroke="${INK}" stroke-width="2"/>`,
     front: () => `<g stroke="${INK}" stroke-width="2"><circle cx="50" cy="38" r="5.5" fill="#fff"/></g><circle cx="50" cy="38.5" r="2.8" fill="${INK}"/>`,
   },
   kind_dino: {
-    back: () => `<path d="M30 30l-4-9 9 3 2-10 7 7 6-9 6 9 7-7 2 10 9-3-4 9z" fill="#facc15" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M78 80q14 0 18 10-10 2-20-2z" fill="#16a34a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`,
-    front: (u) => `<g clip-path="url(#c${u})" fill="#fff" opacity=".25"><circle cx="30" cy="70" r="4"/><circle cx="70" cy="74" r="5"/><circle cx="36" cy="86" r="3"/></g><path d="M42 72l2 3 2-3M54 72l2 3 2-3" fill="#fff" stroke="${INK}" stroke-width="1"/>`,
+    back: () => `<path d="M30 30l-4-9 9 3 2-10 7 7 6-9 6 9 7-7 2 10 9-3-4 9z" fill="#16a34a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M78 80q14 0 18 10-10 2-20-2z" fill="#16a34a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`,
+    front: (u) => `<g clip-path="url(#c${u})" fill="#fff" opacity=".25"><circle cx="30" cy="70" r="4"/><circle cx="70" cy="74" r="5"/><circle cx="36" cy="86" r="3"/></g>`,
   },
   kind_unicorn: {
     back: () => `<path d="M24 40q-10-14 0-26 6 10 10 12-8-12 4-22 2 12 8 14" fill="#f9a8d4" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`,
@@ -425,7 +425,7 @@ const KIND = {
   },
   kind_dragon: {
     back: (u) => `<path d="M22 56Q4 40 6 22q8 8 10 4 4 10 10 6 2 10 8 12z" fill="#7c3aed" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M78 56Q96 40 94 22q-8 8-10 4-4 10-10 6-2 10-8 12z" fill="#7c3aed" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M34 30q-8-10-4-22 6 8 12 16M66 30q8-10 4-22-6 8-12 16" fill="#fde68a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`,
-    front: () => `<path d="M44 61l2 1.5M56 61l-2 1.5" stroke="${INK}" stroke-width="2" stroke-linecap="round"/><g fill="#fef3c7" stroke="${INK}" stroke-width="1"><path d="M40 76h20l-3 4h-14z"/></g>`,
+    front: () => `<path d="M44 61l2 1.5M56 61l-2 1.5" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>`,
   },
 };
 
