@@ -46,6 +46,7 @@ Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `
 
 - Računalnik (miška): zavihki v zgornji vrstici.
 - Telefon (do 760 px) in tablica na dotik (do 1240 px): spodnja vrstica `#tabbar` s petimi zavihki z napisi (Učna pot, Učbenik, Inštruktor, Tekmovanja, Jaz). Napredek, Lige, Nastavitve in Račun so pod »Jaz« (`#view-me`), na vrhu imajo gumb »← Jaz« (`.me-back`). Nov glavni del aplikacije dodaj v zgornje zavihke in na stran Jaz, ne kot šesti zavihek spodaj.
+- Ime zgoraj desno (`#profile-btn`, `public/profile-menu.js`) odpre meni profila: kdo se uči (raven in predmet), zamenjava profila (če jih je več), Dodaj profil, Nastavitve, z računi še Račun in Odjava. Skriti `<select id="student-select">` še vedno hrani izbranega učenca. Na telefonu do 400 px je na gumbu samo začetnica.
 - Gumb nazaj je povsod enak: `button.ghost.back` z ikono `arrow-left` (»← Učna pot«, »← Učbenik«, »← Jaz«).
 - Povratne informacije (`#view-feedback`, `public/feedback.js`): na računalniku zavihek »Mnenje« (viden v testni različici), na telefonu vrstica na strani Jaz; na Učni poti kartica `.fb-card`, dokler tester ne pošlje mnenja ali je ne skrije.
 - Načini učenja (Nova snov, Ponavljanje, Priprava na test) so kartice `#modebar.modes` na Učni poti; Današnji trening je modra kartica nad njimi.

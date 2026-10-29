@@ -49,11 +49,15 @@
       <span class="stat xp" title="Točke izkušenj (XP)" data-i18n-title="xp.title"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span></span>
       <span class="stat streak" title="Dnevi zapored" data-i18n-title="xp.streakTitle"><i data-icon="flame"></i><b id="xp-streak">0</b></span>
     </div>
-    <label class="student-picker">
-      <span class="sr-only" data-i18n="student.label">Učenec</span>
-      <select id="student-select"></select>
-    </label>
+    <div class="student-picker">
+      <select id="student-select" data-native hidden aria-hidden="true" tabindex="-1"></select>
+      <button type="button" id="profile-btn" class="profile-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="profile-pop" aria-label="Profil in nastavitve" data-i18n-aria="pm.menu">
+        <span class="pm-avatar" aria-hidden="true"></span><span class="pm-name" dir="auto"></span><i data-icon="chevron-down"></i>
+      </button>
+    </div>
   </header>
+
+  <div id="profile-pop" class="profile-pop card" role="menu" aria-label="Profil in nastavitve" data-i18n-aria="pm.menu" hidden></div>
 
   <div id="usage-pop" class="usage-pop card" role="dialog" aria-label="Poraba AI" data-i18n-aria="meter.heading" hidden></div>
   <div id="toast" class="toast" hidden></div>

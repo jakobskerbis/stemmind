@@ -3,6 +3,7 @@ import { loadPrograms, programsCache } from "./programs.js";
 import { mountLevelPicker, schoolSystemOptions } from "./level-picker.js";
 import { systemForCountry } from "./regions.js";
 import { currentLang, currentRegion, deviceRegion } from "./i18n.js";
+import { openProfileMenu } from "./profile-menu.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku STEMMIND_ACCOUNTS=1.
 
@@ -74,7 +75,7 @@ function showTaken(d, rawFetch) {
   });
   $("#taken-other").addEventListener("click", () => {
     box.remove();
-    $("#student-select")?.focus();
+    openProfileMenu();
   });
 }
 
@@ -692,7 +693,7 @@ async function renderAccount() {
   });
 }
 
-async function logout() {
+export async function logout() {
   await api("/api/auth/logout", { method: "POST" }).catch(() => {});
   store.set("studentId", null);
   location.href = "/";
