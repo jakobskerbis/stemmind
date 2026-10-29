@@ -1039,7 +1039,7 @@ export function createCalculator(root, opts) {
   async function exportImage() {
     const blob = await view.toBlob(legend());
     if (!blob) return;
-    const file = typeof File !== "undefined" ? new File([blob], "stemmind-graf.png", { type: "image/png" }) : null;
+    const file = typeof File !== "undefined" ? new File([blob], "kompreno-graf.png", { type: "image/png" }) : null;
     if (isTouch() && file && navigator.canShare?.({ files: [file] })) {
       try {
         await navigator.share({ files: [file], title: t("gc.title") });
@@ -1050,7 +1050,7 @@ export function createCalculator(root, opts) {
     }
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "stemmind-graf.png";
+    a.download = "kompreno-graf.png";
     document.body.append(a);
     a.click();
     a.remove();

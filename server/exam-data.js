@@ -319,7 +319,7 @@ export const EXAMS = {
     country: "India",
     systems: ["IN-CBSE", "IN-ICSE"],
     about:
-      "NEET-UG has 180 multiple-choice questions in 3 hours: 45 Physics, 45 Chemistry and 90 Biology. Correct +4, wrong −1, unanswered 0. Maximum 720 marks. Biology is not in STEMMind yet; the mock covers one subject at the real pace of one minute per question.",
+      "NEET-UG has 180 multiple-choice questions in 3 hours: 45 Physics, 45 Chemistry and 90 Biology. Correct +4, wrong −1, unanswered 0. Maximum 720 marks. Biology is not in Kompreno yet; the mock covers one subject at the real pace of one minute per question.",
     subjects: {
       FIZ: {
         units: PHYSICS_UNITS,

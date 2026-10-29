@@ -1,4 +1,4 @@
-/* STEMMind – videz. Barve so v spremenljivkah; temni način je razred .dark na <html> (nastavi ga theme.js).
+/* Kompreno – videz. Barve so v spremenljivkah; temni način je razred .dark na <html> (nastavi ga theme.js).
    Lastne barve iz Nastavitve → Videz theme.js zapiše kot slog na <html> in prepišejo te privzete. */
 :root {
   /* Slog Čist (privzeti, docs/oblikovanje.md); Igriv in Temen sta v ui.css (»Slogi«) in theme.js. */

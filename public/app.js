@@ -1,4 +1,4 @@
-// STEMMind – odjemalec (brez ogrodja).
+// Kompreno – odjemalec (brez ogrodja).
 import { attachPad, closePad, openPad, padIsSheet } from "./pad.js";
 import { icon, hydrateIcons } from "./icons.js";
 import { t, locale, currentLang, currentRegion, regionFor, setLanguage, deviceRegion } from "./i18n.js";
@@ -34,7 +34,7 @@ import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName,
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
 const fromPack = (url, opts) => (state.student ? offlineApi(state.student.id, url, opts) : undefined);
-// Računalnik s STEMMind je ugasnjen ali okno ni odprto: ngrok ali Cloudflare vrneta
+// Računalnik s Komprenom je ugasnjen ali okno ni odprto: ngrok ali Cloudflare vrneta
 // svojo napako. Takrat delamo kot brez povezave (vaje iz shranjenega paketa).
 function serverDown(res) {
   const code = res.headers.get("ngrok-error-code");
@@ -145,7 +145,7 @@ function showView(name) {
 document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
 
 // Tipka Nazaj (Android, aplikacija na začetnem zaslonu, brskalnik): brez tega bi tipka Nazaj
-// v nameščeni aplikaciji takoj zaprla STEMMind. Zgodovina ima dve ravni: Učna pot (0) in
+// v nameščeni aplikaciji takoj zaprla Kompreno. Zgodovina ima dve ravni: Učna pot (0) in
 // trenutni pogled (1). Nazaj najprej zapre odprto okno (kalkulator, navodila) ali lekcijo,
 // s podstrani »Jaz« (Nastavitve, Napredek …) vodi na »Jaz«, sicer na Učno pot.
 let currentView = "path";
@@ -2673,7 +2673,7 @@ initFormulaInfo();
   const bar = document.querySelector(".topbar");
   const tabs = bar?.querySelector(".tabs");
   if (bar && tabs) {
-    // Koraki, dokler zavihki ne gredo v vrstico: ožji zavihki, brez napisa »STEMMind« ob logotipu,
+    // Koraki, dokler zavihki ne gredo v vrstico: ožji zavihki, brez napisa »Kompreno« ob logotipu,
     // manj pogosti zavihki samo z ikono, na koncu vsi samo z ikono (izbrani obdrži napis).
     const STEPS = ["tabs-tight", "tabs-nobrand", "tabs-minor", "tabs-compact"];
     const over = () => tabs.scrollWidth > tabs.clientWidth + 1;

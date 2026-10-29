@@ -1,4 +1,4 @@
-// Katera različica STEMMind teče (za samodejno osvežitev odprtih strani po posodobitvi).
+// Katera različica Kompreno teče (za samodejno osvežitev odprtih strani po posodobitvi).
 // Render: RENDER_GIT_COMMIT; računalnik: data/posodobitev.json (scripts/posodobitev.js) ali .git.
 import fs from "node:fs";
 import path from "node:path";

@@ -1,6 +1,6 @@
 # Quality bar: lessons, tasks, simulations
 
-j (2026-10-29): every lesson, task and simulation in STEMMind must be class-leading, i.e. better than
+j (2026-10-29): every lesson, task and simulation in Kompreno must be class-leading, i.e. better than
 Khan Academy (worked examples, hints, mastery), Brilliant (active learning inside the lesson),
 Photomath (step-by-step solutions), PhET (explorable sims with implicit scaffolding) and Desmos
 (direct manipulation). English on purpose: agents read this file (see `docs/token-rules.md`).

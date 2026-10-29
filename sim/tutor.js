@@ -121,7 +121,7 @@ class HttpTutor {
       headers: {
         "Content-Type": "application/json",
         "ngrok-skip-browser-warning": "1",
-        "User-Agent": "STEMMind-simulator/1.0",
+        "User-Agent": "Kompreno-simulator/1.0",
         Cookie: [...this.cookies].map(([k, v]) => `${k}=${v}`).join("; "),
       },
       body: body ? JSON.stringify(body) : undefined,

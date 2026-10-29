@@ -3,9 +3,9 @@ rem STEMMIND-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prep
 rem (dolgi ukazi so v eni vrstici z "exit /b", po posodobitvi se datoteka prebere znova).
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
-title STEMMind za telefon
+title Kompreno za telefon
 
-rem Odpre STEMMind na telefonu: posodobi aplikacijo, jo zazene z geslom in odpre
+rem Odpre Kompreno na telefonu: posodobi aplikacijo, jo zazene z geslom in odpre
 rem povezavo (stalno prek ngrok ali zacasno prek Cloudflare). Racunalnik mora ostati prizgan.
 rem Med tekom se aplikacija sama posodobi (preverja vsakih 15 minut), povezava ostane ista.
 
@@ -17,7 +17,7 @@ if errorlevel 1 (
 )
 
 if not "%~1"=="--posodobljeno" (
-  rem Ustavi STEMMind, ce ze tece ^(tudi okno zagon-windows.bat^), da se zazene z geslom.
+  rem Ustavi Kompreno, ce ze tece ^(tudi okno zagon-windows.bat^), da se zazene z geslom.
   powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'node.exe' -and $_.CommandLine -match 'scripts.(zaganjalnik|zagon|telefon)\.js' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>nul
   for /f "tokens=5" %%p in ('netstat -ano ^| findstr ":3000 " ^| findstr LISTENING') do taskkill /PID %%p /F >nul 2>nul
   rem Najnovejsa razlicica z GitHuba; nato to datoteko preberemo znova od zacetka.

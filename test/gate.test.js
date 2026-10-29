@@ -9,7 +9,7 @@ async function withServer(fn) {
   app.use(passwordGate("skrivno geslo"));
   app.get("/", (_req, res) => res.send("DOMOV"));
   app.get("/api/x", (_req, res) => res.json({ ok: true }));
-  app.get("/manifest.webmanifest", (_req, res) => res.json({ name: "STEMMind" }));
+  app.get("/manifest.webmanifest", (_req, res) => res.json({ name: "Kompreno" }));
   const server = app.listen(0);
   const base = `http://127.0.0.1:${server.address().port}`;
   try { await fn(base); } finally { server.close(); }
