@@ -908,7 +908,8 @@ async function loadProgress() {
 
 // Gumb »Razloži podrobneje« uporabi zmogljivejši (dražji) model samo na zahtevo.
 function addDeepButton(el, wasDeep) {
-  if (wasDeep || el.classList.contains("error") || el.querySelector(".deep-btn")) return;
+  // Ponovna razlaga je vedno na voljo (tudi po ponovni razlagi); strežnik izbere najcenejši model.
+  if (el.classList.contains("error") || el.querySelector(".deep-btn")) return;
   document.querySelectorAll(".deep-btn").forEach((x) => x.remove()); // samo pri zadnjem odgovoru
   const b = document.createElement("button");
   b.className = "deep-btn";

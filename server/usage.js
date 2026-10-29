@@ -72,7 +72,8 @@ export class Usage {
   }
   // Izbere način klica za sporočilo. Vrne { mode, note }: note je opomba za učenca,
   // kadar je zmogljivejši model zaradi omejitve nadomeščen.
-  chooseMode(studentId, { wantDeep = false, competition = false, lite = false, deepModel = "claude-opus" } = {}) {
+  // wantThink: prva ponovna razlaga (Haiku z več razmisleka); wantDeep: ponovna prošnja zapored (Opus).
+  chooseMode(studentId, { wantDeep = false, wantThink = false, competition = false, lite = false, deepModel = "claude-opus" } = {}) {
     if (competition && !wantDeep && !LIMITS.competitionDeep()) return { mode: "think", note: null };
     if (wantDeep || competition) {
       const daily = LIMITS.dailyDeep();
@@ -81,6 +82,7 @@ export class Usage {
       if (soft && this.monthTotal(studentId) >= soft) return { mode: "think", note: NOTES.softBudget };
       return { mode: "deep", note: null };
     }
+    if (wantThink) return { mode: "think", note: null };
     return { mode: lite ? "lite" : "chat", note: null };
   }
   // Odgovor brez klica modela (ponovna raba ali namig iz generatorja): zapišemo, da je viden prihranek.
