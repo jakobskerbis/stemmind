@@ -167,3 +167,15 @@ test("tekmovanja: razdelek po nastavitvah, brez tekmovalnih poti na učni poti",
     assert.equal(u.key, null);
   });
 });
+
+test("dvojni klik na Začni ne ustvari dveh enakih učencev", () =>
+  withServer([], async ({ call }) => {
+    const body = { name: "Mojca", settings: { subject: "MAT", curriculum_level: "6. razred" } };
+    const post = () => call("/api/students", { method: "POST", body });
+    const res = await Promise.all([post(), post(), post()]);
+    assert.equal(new Set(res.map((r) => r.body.id)).size, 1);
+    const list = (await call("/api/students")).body;
+    assert.equal(list.filter((s) => s.name === "Mojca").length, 1);
+    // drug učenec z drugim imenom je še vedno dovoljen
+    assert.equal((await call("/api/students", { method: "POST", body: { name: "Luka" } })).status, 201);
+  }));
