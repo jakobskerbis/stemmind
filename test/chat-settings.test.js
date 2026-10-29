@@ -147,3 +147,22 @@ test("chat turn: tool call changes settings, streams events, the answer is not c
   }
   assert.equal(calls, 1);
 });
+
+test("tutor can dress the avatar only in free or bought items", async () => {
+  const store = openDb(":memory:");
+  const student = store.createStudent("Avi", { educational_track: "OSNOVNA_SOLA", curriculum_level: "8. razred", subject: "MAT" });
+  const t = tools(store, student);
+  let r = await t.call("change_settings", { changes: { avatar: { hat: "hat_crown" } } });
+  assert.equal(r.status, "error");
+  assert.match(r.errors[0], /not owned/);
+  r = await t.call("change_settings", { changes: { avatar: { eyes: "eyes_happy", bg: "bg_mint" } } });
+  assert.deepEqual(r.applied.find((x) => x.setting === "avatar").to.eyes, "eyes_happy");
+  store.db.prepare("INSERT INTO avatar_items (student_id, item) VALUES (?, 'hat_crown')").run(student.id);
+  r = await t.call("change_settings", { changes: { avatar: { hat: "hat_crown" } } });
+  const to = r.applied.find((x) => x.setting === "avatar").to;
+  assert.equal(to.hat, "hat_crown");
+  assert.equal(to.eyes, "eyes_happy"); // ostali deli ostanejo
+  const g = JSON.parse((await t.onToolUse("get_settings", {})).content);
+  assert.equal(g.profile.avatar.hat, "hat_crown");
+  assert.ok(g.avatar_items_available.some((x) => x.includes("hat_crown")));
+});

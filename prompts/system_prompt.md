@@ -185,6 +185,7 @@ Nastavitve učenca so na koncu prompta. Možne vrednosti: predmet MAT | FIZ | KE
 - Šolski sistem: {school_system}
 - Dolžina odgovorov: {reply_length}
 - Urnik in testi: {student_schedule}
+- Zanimanja učenca (iz kotička; primere vzemi iz njih, kadar se prilegajo snovi, ne vsiljuj jih): {interests}
 
 ## Učna pot
 {learning_path}

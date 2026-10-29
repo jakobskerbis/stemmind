@@ -1,7 +1,7 @@
 # Samodejne posodobitve
 
 STEMMind se posodablja sam. Vse, kar pride v vejo `main` na GitHubu (nove lekcije, igre,
-orodja, prevodi, spremembe strežnika in baze), je v aplikaciji najkasneje v dveh urah.
+orodja, prevodi, spremembe strežnika in baze), je v aplikaciji v približno 15 minutah.
 Ročno ni treba narediti nič.
 
 ## Računalnik (Windows, Mac) in telefon prek računalnika
@@ -9,9 +9,9 @@ Ročno ni treba narediti nič.
 | Kdaj | Kaj se zgodi |
 |---|---|
 | Ob vsakem zagonu (`zagon-windows.bat`, `telefon-windows.bat`, bližnjica, samodejni zagon) | Najprej se prenese najnovejša različica, nato se aplikacija zažene. |
-| Med tekom, vsaki 2 uri | Preveri GitHub. Če je kaj novega: prenese, namesti nove knjižnice (če se je spremenil `package.json`), počaka na miren trenutek (nihče ne čaka na odgovor inštruktorja, največ 20 minut) in strežnik znova zažene. Povezava za telefon ostane ista. |
+| Med tekom, vsakih 15 minut | Preveri GitHub (en majhen klic). Če je kaj novega: prenese, namesti nove knjižnice (če se je spremenil `package.json`), počaka na miren trenutek (nihče ne čaka na odgovor inštruktorja, največ 20 minut) in strežnik znova zažene. Povezava za telefon ostane ista. |
 | Ob ponovnem zagonu strežnika | Baza se sama prilagodi novi različici (`server/db.js`), lekcije in naloge se naložijo na novo. |
-| Telefon ali brskalnik, ki je bil odprt | Ko se aplikacija po vsaj 3 minutah vrne v ospredje in teče nova različica, se stran tiho osveži. Nove datoteke pridejo same (service worker najprej vpraša strežnik), nove knjižnice dobijo nov predpomnilnik. |
+| Telefon ali brskalnik, ki je bil odprt | Ko teče nova različica, se stran tiho osveži: ko se aplikacija vrne v ospredje (vsaj 1 minuto v ozadju) ali po 10 minutah brez dotika. Nikoli med tekmovanjem ali ko je v polju napisano, a neposlano besedilo. Nove datoteke pridejo same (service worker najprej vpraša strežnik), nove knjižnice dobijo nov predpomnilnik. |
 
 Kaj ostane nedotaknjeno: `.env` (ključi, geslo, ngrok), mapa `data/` (učenci, napredek,
 dnevnik) in `node_modules/`. Pobrišejo se samo datoteke, ki jih je prinesla prejšnja
@@ -30,7 +30,7 @@ Windows Task Scheduler ni potreben.
 
 ## Render (ko bo aplikacija na spletu)
 
-Render novo različico objavi vsaki 2 uri, če je v `main` kaj novega
+Render novo različico objavi vsaki 2 uri (tam ponovni zagon s trajnim diskom pomeni kratek izpad), če je v `main` kaj novega
 (`.github/workflows/render-posodobitev.yml`; v `render.yaml` je `autoDeploy: false`, da se
 strežnik ne zaganja ob vsaki spremembi). Enkratna nastavitev: v Renderju odpri storitev
 stemmind > Settings > Deploy Hook in povezavo kopiraj v GitHub > Settings > Secrets and
@@ -40,7 +40,7 @@ variables > Actions kot skrivnost `RENDER_DEPLOY_HOOK`.
 
 | Nastavitev | Pomen |
 |---|---|
-| `STEMMIND_POSODOBITEV_URE=2` | Kako pogosto preveri (v urah). |
+| `STEMMIND_POSODOBITEV_MINUTE=15` | Kako pogosto preveri (v minutah). |
 | `STEMMIND_POSODOBITEV=0` | Izklopi samodejne posodobitve. |
 
 ## Kako deluje (za razvijalce)

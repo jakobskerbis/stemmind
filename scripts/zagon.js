@@ -1,5 +1,5 @@
-// STEMMind na tem računalniku: zažene strežnik, ga drži prižganega in ga vsake 2 uri
-// samodejno posodobi z GitHuba (docs/posodobitve.md).
+// STEMMind na tem računalniku: zažene strežnik, ga drži prižganega in ga
+// samodejno posodobi z GitHuba (preverja vsakih 15 minut) (docs/posodobitve.md).
 // Uporaba: node scripts/zaganjalnik.js zagon [--odpri]   (Windows: zagon-windows.bat)
 import path from "node:path";
 import { execFile } from "node:child_process";
@@ -33,7 +33,7 @@ if (!(await server.start())) say("Strežnik se še zaganja ...");
 openBrowser();
 say();
 say(`STEMMind teče na ${local}`);
-say("Za ustavitev zapri to okno. Posodobitve se namestijo same (vsake 2 uri).");
+say("Za ustavitev zapri to okno. Nove različice se namestijo same (preverjanje vsakih 15 minut).");
 autoUpdate({
   root, port, say: logSay(log), server,
   restartSelf: process.env.STEMMIND_ZAGANJALNIK ? () => stop(RESTART_CODE) : null,

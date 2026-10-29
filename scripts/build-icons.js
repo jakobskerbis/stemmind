@@ -29,6 +29,10 @@ const NAMES = [
   "user-plus", "log-out",
   // urnik
   "bell", "calendar-days", "calendar-clock", "link",
+  // kotiček zanimanj
+  "newspaper", "pin", "pin-off",
+  // igre: zaklenjene igre in gradnja
+  "unlock", "castle",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

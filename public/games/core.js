@@ -469,7 +469,7 @@ export function runGame(host, opts) {
         <h2>${esc(t("games.over"))}</h2>
         <div class="gm-big">${icon("star")}<b>${G.score}</b></div>
         ${info.newBest ? `<p class="gm-record">${icon("trophy")} ${esc(t("games.record"))}</p>` : info.best ? `<p class="muted">${esc(t("games.best"))}: <b>${info.best}</b></p>` : ""}
-        <p>${esc(t("games.summary", { ok: G.correct, all: G.correct + G.wrong }))}${info.xp ? ` · <b class="gm-xp">+${info.xp} XP</b>` : ""}</p>
+        <p>${esc(t("games.summary", { ok: G.correct, all: G.correct + G.wrong }))}${info.xp ? ` · <b class="gm-xp">+${info.xp} XP</b>` : ""}${info.coins ? ` · <b class="gm-coins">+${info.coins} ${icon("coins")}</b>` : ""}</p>
         ${info.unlocked ? `<p class="gm-record gm-unlocked">${icon("unlock")} ${esc(info.unlocked)}</p>` : ""}
         ${mist}
         <div class="actions"><button type="button" class="secondary" data-act="exit">${icon("arrow-left")}${esc(t("games.other"))}</button><button type="button" class="primary" data-act="again">${icon("rotate-ccw")}${esc(t("games.again"))}</button></div>

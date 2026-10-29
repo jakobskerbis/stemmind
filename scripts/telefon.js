@@ -3,7 +3,7 @@
 // NGROK_DOMAIN v .env, skript ju vpraša enkrat). Brez tega: začasna povezava Cloudflare.
 // Uporaba: node scripts/zaganjalnik.js telefon  (na Windows dvoklik na telefon-windows.bat)
 // Računalnik mora biti prižgan, dokler uporabljaš povezavo na telefonu.
-// Vsake 2 uri se aplikacija sama posodobi z GitHuba, povezava ostane ista (docs/posodobitve.md).
+// Aplikacija se sama posodobi z GitHuba (preverja vsakih 15 minut), povezava ostane ista (docs/posodobitve.md).
 import fs from "node:fs";
 import path from "node:path";
 import { spawn, execFileSync } from "node:child_process";

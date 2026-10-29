@@ -29,6 +29,8 @@ import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
+import { Avatars, mountAvatar } from "./avatar.js";
+import { mountCorner } from "./corner.js";
 import { mountWebApp } from "./webapp.js";
 import { Schedules, scheduleView, schedulePrompt, syncTestPlan } from "./schedule.js";
 import { mountSchedule } from "./schedule-api.js";
@@ -806,9 +808,12 @@ export function createApp(store, opts = {}) {
   });
 
   // --- tedenske lige, razredi in skupine prijateljev ---
+  const avatars = new Avatars(store.db);
   mountLeagues(app, store, { loadStudent });
   mountGraphs(app, store, { loadStudent });
-  mountGames(app, store, { loadStudent, progress });
+  mountGames(app, store, { loadStudent, progress, avatars });
+  mountAvatar(app, avatars, { loadStudent });
+  mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
   mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup });
 
   // --- poraba AI ---

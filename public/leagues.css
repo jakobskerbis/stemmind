@@ -31,6 +31,7 @@
 
 .league-board { list-style: none; padding: 0; margin: 8px 0 0; }
 .league-board li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: var(--radius-sm); border-bottom: 0; margin-bottom: 4px; background: var(--surface-2); }
+.league-board li .who .avatar-svg { flex: none; vertical-align: middle; margin-right: 8px; border-radius: 8px; }
 .league-board li .who { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
 .league-board li b { white-space: nowrap; }
 .league-board li .xp-unit { color: var(--muted); font-size: 0.8rem; }

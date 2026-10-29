@@ -2,6 +2,7 @@
 // z inštruktorjem. Na računalniku, kjer teče strežnik, še zbrana mnenja in povzetek.
 import { t } from "./i18n.js";
 import { icon, hydrateIcons } from "./icons.js";
+import { createRenderer } from "./rich.js";
 
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -288,7 +289,7 @@ async function renderAdmin(box) {
         <a class="btn-secondary" href="/api/feedback/export?format=md" download>${icon("download")}<span>${esc(t("fb.downloadSummary"))}</span></a>
         <a class="btn-secondary" href="/api/feedback/export?format=json" download>${icon("download")}<span>${esc(t("fb.download"))}</span></a>
       </div>
-      ${data.count ? `<div class="fb-summary">${window.DOMPurify ? DOMPurify.sanitize(marked.parse(data.summary)) : `<pre>${esc(data.summary)}</pre>`}</div>` : ""}
+      ${data.count ? `<div class="fb-summary">${window.DOMPurify && window.marked ? createRenderer().renderRich(data.summary) : `<pre>${esc(data.summary)}</pre>`}</div>` : ""}
     </div>`;
   hydrateIcons(box);
 }

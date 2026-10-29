@@ -16,7 +16,7 @@ export function schoolYear(settings = {}) {
   return gradeInfo(settings.school_system || "SI", settings.curriculum_level)?.level || 8;
 }
 
-export function mountGames(app, store, { loadStudent, progress }) {
+export function mountGames(app, store, { loadStudent, progress, avatars }) {
   const db = store.db;
   db.exec(`
     CREATE TABLE IF NOT EXISTS game_scores (
@@ -94,11 +94,13 @@ export function mountGames(app, store, { loadStudent, progress }) {
     const room = Math.max(0, XP_PER_DAY - xpToday(s.id));
     const xp = Math.min(XP_PER_GAME, Math.floor(correct / 2), room);
     const summary = xp > 0 ? progress.award(s.id, [[xp, `igra: ${game}`]]) : null;
+    const coins = avatars ? avatars.award(s.id, correct, `igra: ${game}`) : 0; // kovanci za avatar
     res.json({
       xp,
       best: Math.max(prev?.best || 0, score),
       newBest: !!prev && score > prev.best,
       cleared: !!cleared,
+      coins,
       capped: room <= Math.floor(correct / 2) && correct >= 2,
       total: summary?.total ?? null,
     });
