@@ -1368,5 +1368,7 @@
   "tour.profile": "Profilin",
   "tour.profileText": "Burada profilini değiştirir ya da yeni profil ekler, ayarları açarsın.",
   "tour.end": "Hepsi bu kadar",
-  "tour.endText": "Turu istediğin zaman Ayarlar'dan (“Tanıtım turunu yeniden başlat”) tekrarlayabilirsin. Bir şey bulamazsan özel öğretmenine sor."
+  "tour.endText": "Turu istediğin zaman Ayarlar'dan (“Tanıtım turunu yeniden başlat”) tekrarlayabilirsin. Bir şey bulamazsan özel öğretmenine sor.",
+  "games.pathMark": "Senin yolunda",
+  "games.pathHint": "Pusulalı oyunlar anlamaya giden yolundur: önce sakin olanlar, sonra daha hızlılar. Tüm oyunlar açık."
 }

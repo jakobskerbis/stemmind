@@ -1362,5 +1362,7 @@
   "tour.profile": "Hồ sơ của em",
   "tour.profileText": "Ở đây em đổi hoặc thêm hồ sơ và mở cài đặt.",
   "tour.end": "Vậy là xong",
-  "tour.endText": "Em có thể xem lại bất cứ lúc nào trong Cài đặt (“Xem lại hướng dẫn giới thiệu”). Nếu không tìm thấy gì, hãy hỏi gia sư."
+  "tour.endText": "Em có thể xem lại bất cứ lúc nào trong Cài đặt (“Xem lại hướng dẫn giới thiệu”). Nếu không tìm thấy gì, hãy hỏi gia sư.",
+  "games.pathMark": "Trên lộ trình của bạn",
+  "games.pathHint": "Trò chơi có la bàn là lộ trình giúp bạn hiểu bài: trước là trò chậm, sau là trò nhanh hơn. Mọi trò chơi đều mở."
 }

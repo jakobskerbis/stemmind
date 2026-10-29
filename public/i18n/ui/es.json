@@ -1368,5 +1368,7 @@
   "tour.profile": "Tu perfil",
   "tour.profileText": "Aquí cambias o añades un perfil y abres los ajustes.",
   "tour.end": "¡Eso es todo!",
-  "tour.endText": "Puedes repetir el recorrido cuando quieras en Ajustes («Repetir el recorrido inicial»). Si no encuentras algo, pregunta al tutor."
+  "tour.endText": "Puedes repetir el recorrido cuando quieras en Ajustes («Repetir el recorrido inicial»). Si no encuentras algo, pregunta al tutor.",
+  "games.pathMark": "En tu camino",
+  "games.pathHint": "Los juegos con brújula son tu camino para entender: primero los tranquilos, luego los más rápidos. Todos los juegos están abiertos."
 }

@@ -1380,5 +1380,7 @@
   "tour.profile": "Twój profil",
   "tour.profileText": "Tu zmieniasz lub dodajesz profil i otwierasz ustawienia.",
   "tour.end": "To wszystko",
-  "tour.endText": "Wprowadzenie możesz w każdej chwili powtórzyć w Ustawieniach („Powtórz wprowadzenie”). Jeśli czegoś nie możesz znaleźć, zapytaj korepetytora."
+  "tour.endText": "Wprowadzenie możesz w każdej chwili powtórzyć w Ustawieniach („Powtórz wprowadzenie”). Jeśli czegoś nie możesz znaleźć, zapytaj korepetytora.",
+  "games.pathMark": "Na twojej ścieżce",
+  "games.pathHint": "Gry z kompasem to twoja ścieżka do zrozumienia: najpierw spokojne, potem szybsze. Wszystkie gry są otwarte."
 }

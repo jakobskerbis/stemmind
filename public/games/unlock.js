@@ -11,6 +11,9 @@ export const PACE = {
   meteor: 2, balloons: 2, sorter: 2, snake: 2, bricks: 2, frog: 2, invaders: 2, lander: 2, crane: 2,
   runner: 3, heli: 3, moles: 3, jumper: 3,
 };
+// j (2026-10-29 18:04): »Odstrani zaporo iger« – zapora je izklopljena, vse igre so odprte.
+// Pravila spodaj ostajajo, da jo lahko spet vklopimo (true).
+export const LOCKS_ON = false;
 export const CLEAR_CORRECT = 8;
 export const CLEAR_RATE = 0.8;
 export const CHECK_TASKS = 5;

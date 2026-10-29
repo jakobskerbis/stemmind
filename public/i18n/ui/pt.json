@@ -1368,5 +1368,7 @@
   "tour.profile": "O teu perfil",
   "tour.profileText": "Aqui trocas ou adicionas um perfil e abres as definições.",
   "tour.end": "É tudo!",
-  "tour.endText": "Podes repetir a visita quando quiseres nas Definições («Repetir a visita inicial»). Se não encontrares alguma coisa, pergunta ao tutor."
+  "tour.endText": "Podes repetir a visita quando quiseres nas Definições («Repetir a visita inicial»). Se não encontrares alguma coisa, pergunta ao tutor.",
+  "games.pathMark": "No teu caminho",
+  "games.pathHint": "Os jogos com bússola são o teu caminho para perceber: primeiro os calmos, depois os mais rápidos. Todos os jogos estão abertos."
 }

@@ -1374,5 +1374,7 @@
   "tour.profile": "Tvoj profil",
   "tour.profileText": "Ovdje mijenjaš ili dodaješ profil i otvaraš postavke.",
   "tour.end": "To je sve",
-  "tour.endText": "Obilazak možeš ponoviti kad god hoćeš u Postavkama (»Ponovi uvodni obilazak«). Ako nešto ne možeš naći, pitaj instruktora."
+  "tour.endText": "Obilazak možeš ponoviti kad god hoćeš u Postavkama (»Ponovi uvodni obilazak«). Ako nešto ne možeš naći, pitaj instruktora.",
+  "games.pathMark": "Na tvom putu",
+  "games.pathHint": "Igre s kompasom su tvoj put do razumijevanja: prvo mirne, zatim brže. Sve igre su otvorene."
 }

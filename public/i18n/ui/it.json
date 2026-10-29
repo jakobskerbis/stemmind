@@ -1368,5 +1368,7 @@
   "tour.profile": "Il tuo profilo",
   "tour.profileText": "Qui cambi o aggiungi un profilo e apri le impostazioni.",
   "tour.end": "È tutto",
-  "tour.endText": "Puoi ripetere il tour quando vuoi nelle Impostazioni («Ripeti il tour iniziale»). Se non trovi qualcosa, chiedi al tutor."
+  "tour.endText": "Puoi ripetere il tour quando vuoi nelle Impostazioni («Ripeti il tour iniziale»). Se non trovi qualcosa, chiedi al tutor.",
+  "games.pathMark": "Sul tuo percorso",
+  "games.pathHint": "I giochi con la bussola sono il tuo percorso per capire: prima quelli tranquilli, poi quelli più veloci. Tutti i giochi sono aperti."
 }

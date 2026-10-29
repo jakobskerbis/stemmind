@@ -1374,5 +1374,7 @@
   "tour.profile": "Profilul tău",
   "tour.profileText": "Aici schimbi sau adaugi un profil și deschizi setările.",
   "tour.end": "Asta e tot",
-  "tour.endText": "Poți relua turul oricând din Setări („Repornește turul introductiv”). Dacă nu găsești ceva, întreabă tutorul."
+  "tour.endText": "Poți relua turul oricând din Setări („Repornește turul introductiv”). Dacă nu găsești ceva, întreabă tutorul.",
+  "games.pathMark": "Pe drumul tău",
+  "games.pathHint": "Jocurile cu busolă sunt drumul tău spre înțelegere: întâi cele liniștite, apoi cele mai rapide. Toate jocurile sunt deschise."
 }

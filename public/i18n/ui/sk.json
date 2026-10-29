@@ -1380,5 +1380,7 @@
   "tour.profile": "Tvoj profil",
   "tour.profileText": "Tu prepneš alebo pridáš profil a otvoríš nastavenia.",
   "tour.end": "To je všetko",
-  "tour.endText": "Prehliadku môžeš kedykoľvek zopakovať v Nastaveniach („Znova spustiť úvodnú prehliadku“). Ak niečo nenájdeš, opýtaj sa tútora."
+  "tour.endText": "Prehliadku môžeš kedykoľvek zopakovať v Nastaveniach („Znova spustiť úvodnú prehliadku“). Ak niečo nenájdeš, opýtaj sa tútora.",
+  "games.pathMark": "Na tvojej ceste",
+  "games.pathHint": "Hry s kompasom sú tvoja cesta k porozumeniu: najprv pokojné, potom rýchlejšie. Otvorené sú všetky hry."
 }

@@ -1368,5 +1368,7 @@
   "tour.profile": "Wasifu wako",
   "tour.profileText": "Hapa unabadilisha au kuongeza wasifu na kufungua mipangilio.",
   "tour.end": "Hiyo ndiyo yote",
-  "tour.endText": "Unaweza kurudia ziara hii wakati wowote katika Mipangilio (“Rudia ziara ya utangulizi”). Usipopata kitu, muulize mwalimu."
+  "tour.endText": "Unaweza kurudia ziara hii wakati wowote katika Mipangilio (“Rudia ziara ya utangulizi”). Usipopata kitu, muulize mwalimu.",
+  "games.pathMark": "Kwenye njia yako",
+  "games.pathHint": "Michezo yenye dira ni njia yako ya kuelewa: kwanza ile tulivu, kisha ya kasi zaidi. Michezo yote iko wazi."
 }

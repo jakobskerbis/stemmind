@@ -1368,5 +1368,7 @@
   "tour.profile": "A profilod",
   "tour.profileText": "Itt válthatsz profilt vagy adhatsz hozzá újat, és itt nyithatod meg a beállításokat.",
   "tour.end": "Ennyi volt",
-  "tour.endText": "A bemutatót bármikor megismételheted a Beállításokban („Bemutató újra”). Ha valamit nem találsz, kérdezd az oktatót."
+  "tour.endText": "A bemutatót bármikor megismételheted a Beállításokban („Bemutató újra”). Ha valamit nem találsz, kérdezd az oktatót.",
+  "games.pathMark": "Az utadon",
+  "games.pathHint": "Az iránytűs játékok vezetnek a megértéshez: előbb a nyugodtak, aztán a gyorsabbak. Minden játék nyitva van."
 }

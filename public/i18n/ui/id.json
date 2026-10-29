@@ -1362,5 +1362,7 @@
   "tour.profile": "Profilmu",
   "tour.profileText": "Di sini kamu bisa mengganti atau menambah profil dan membuka pengaturan.",
   "tour.end": "Itu saja",
-  "tour.endText": "Kamu bisa mengulang tur ini kapan saja di Pengaturan (“Putar ulang tur pengenalan”). Kalau ada yang tidak kamu temukan, tanya saja ke tutor."
+  "tour.endText": "Kamu bisa mengulang tur ini kapan saja di Pengaturan (“Putar ulang tur pengenalan”). Kalau ada yang tidak kamu temukan, tanya saja ke tutor.",
+  "games.pathMark": "Di jalurmu",
+  "games.pathHint": "Permainan berkompas adalah jalanmu menuju paham: yang tenang dulu, lalu yang lebih cepat. Semua permainan terbuka."
 }

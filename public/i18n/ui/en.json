@@ -1368,5 +1368,7 @@
   "tour.profile": "Your profile",
   "tour.profileText": "Switch or add a profile here and open the settings.",
   "tour.end": "That's it",
-  "tour.endText": "You can replay the tour any time in Settings (“Replay the intro tour”). If you can't find something, ask the tutor."
+  "tour.endText": "You can replay the tour any time in Settings (“Replay the intro tour”). If you can't find something, ask the tutor.",
+  "games.pathMark": "On your path",
+  "games.pathHint": "Games with a compass are your path to understanding: calm ones first, then faster ones. Every game is open."
 }
