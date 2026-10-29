@@ -11,6 +11,7 @@ import { normalizeSettings, courseKeysFor, cleanText, normalizeWeaknessList } fr
 import { LANGUAGE_CODES, langInfo } from "../public/i18n/languages.js";
 import { SCHOOL_SYSTEMS, SYSTEM_IDS, isRegional, gradesOf } from "../public/regions.js";
 import { PROFILE_SETTINGS, DEVICE_SETTINGS, deviceValue } from "../public/settings-registry.js";
+import { goalsFor, validDate } from "../public/goal-data.js";
 import { Avatars } from "./avatar.js";
 import { ITEM, ITEMS, SLOTS } from "../public/avatar.js";
 import { INTERESTS, cleanInterests } from "../public/interests.js";
@@ -160,6 +161,9 @@ function profileView(student) {
     personality_setting: s.personality_setting,
     language: s.language,
     data_mode: s.data_mode,
+    goal: s.goal,
+    goal_date: s.goal_date,
+    goal_reminder: s.goal_reminder ? "on" : "off",
     interests: s.interests ?? [],
     interest_custom: s.interest_custom || "",
     news_level: s.news_level,
@@ -278,6 +282,19 @@ function validateProfile(changes, student) {
     else errors.push(`${key}: allowed ${PROFILE_SETTINGS[key].values.join(", ")}`);
   }
   if (patch.track === "COMPETITION" && (track === "UNIVERZA" || isRegional(system))) errors.push("track: competitions exist only for Slovenian OŠ/SŠ");
+  if (changes.goal !== undefined) {
+    if (goalsFor({ ...cur, educational_track: track, school_system: system }).includes(changes.goal)) patch.goal = changes.goal;
+    else errors.push(`goal: allowed for this school ${goalsFor({ ...cur, educational_track: track, school_system: system }).join(", ")}`);
+  }
+  if (changes.goal_date !== undefined) {
+    const d = String(changes.goal_date).trim();
+    if (d === "" || validDate(d)) patch.goal_date = d;
+    else errors.push("goal_date: use YYYY-MM-DD or '' to delete");
+  }
+  if (changes.goal_reminder !== undefined) {
+    if (["on", "off"].includes(changes.goal_reminder)) patch.goal_reminder = changes.goal_reminder === "on";
+    else errors.push("goal_reminder: on or off");
+  }
   if (changes.personality_setting !== undefined) patch.personality_setting = cleanText(String(changes.personality_setting), 200);
   if (changes.language !== undefined) {
     const code = String(changes.language).trim();
@@ -455,6 +472,9 @@ export function mockToolCall(text, hasPending = false) {
 }
 
 const MOCK_LABELS = {
+  style: "slog",
+  goal: "cilj",
+  goal_date: "datum cilja",
   theme: "videz",
   colors: "barve",
   accent: "poudarek",
