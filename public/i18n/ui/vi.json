@@ -134,6 +134,8 @@
   "task.check": "Kiểm tra",
   "task.checking": "Đang kiểm tra …",
   "task.checkError": "Không kiểm tra được câu trả lời ({msg}). Hãy kiểm tra kết nối rồi thử lại.",
+  "task.checkFailed": "Mình không kiểm tra được câu trả lời: {msg}",
+  "task.alreadyChecked": "Câu trả lời cho bài này đã được lưu. Câu trả lời đầu tiên được tính.",
   "task.next": "Bài tiếp theo",
   "task.similar": "Thử bài tương tự",
   "task.correct": "Đúng",

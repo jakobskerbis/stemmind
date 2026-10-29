@@ -146,6 +146,8 @@
   "task.check": "Zkontrolovat",
   "task.checking": "Kontroluji …",
   "task.checkError": "Odpověď se nepodařilo zkontrolovat ({msg}). Zkontroluj připojení a zkus to znovu.",
+  "task.checkFailed": "Odpověď se nepodařilo zkontrolovat: {msg}",
+  "task.alreadyChecked": "Odpověď na tuto úlohu je už uložená. Platí první odpověď.",
   "task.next": "Další úloha",
   "task.similar": "Zkusit podobnou úlohu",
   "task.correct": "Správně",

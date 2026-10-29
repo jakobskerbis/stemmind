@@ -134,6 +134,8 @@
   "task.check": "확인",
   "task.checking": "확인 중 …",
   "task.checkError": "답을 확인하지 못했어요 ({msg}). 연결을 확인하고 다시 시도하세요.",
+  "task.checkFailed": "답을 확인하지 못했어요: {msg}",
+  "task.alreadyChecked": "이 문제의 답은 이미 저장되었어요. 첫 번째 답이 반영돼요.",
   "task.next": "다음 문제",
   "task.similar": "비슷한 문제 풀기",
   "task.correct": "정답",

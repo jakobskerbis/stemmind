@@ -41,6 +41,10 @@ for (const t of Object.values(TOPICS)) {
 }
 
 // ---------- regijske poti (public/regions.js, server/region-curricula.js) ----------
+// Mednarodna pot ima angleška imena; v slovenskem vmesniku (ui = "sl") pokažemo imena
+// izvirnih slovenskih tem in sklopov, da v slovenski aplikaciji ni angleških naslovov.
+export const localTopic = (t, ui) => (ui === "sl" && t?.sl ? { ...t, name: t.sl.name, goals: t.sl.goals, unit: t.sl.unit ?? t.unit } : t);
+export const localUnitTitle = (u, ui) => (ui === "sl" && u?.sl?.title) || u?.title;
 // Teme imajo »base«: osnovne teme, iz katerih vzamejo naloge, lekcije in simulacije.
 function addRegionPath(key, label, subject, school, grade, units, extra = {}) {
   BUILT[key] = {
@@ -51,11 +55,13 @@ function addRegionPath(key, label, subject, school, grade, units, extra = {}) {
     grade,
     region: true,
     ...extra,
-    units: units.map(([title, topics], ui) => ({
+    units: units.map(([title, topics, titleSl], ui) => ({
       title,
-      topics: topics.map(({ name, goals, base }) => {
+      ...(titleSl ? { sl: { title: titleSl } } : {}),
+      topics: topics.map(({ name, goals, base, sl }) => {
         for (const b of base) if (!TOPICS[b] || TOPICS[b].base) throw new Error(`${key}: osnovna tema ${b} ne obstaja`);
         const topic = { id: `${key}/${slugify(name)}`, name, goals, unit: title, unitIndex: ui, path: key, subject, base };
+        if (sl) topic.sl = { ...sl, unit: titleSl || title };
         if (TOPICS[topic.id]) throw new Error(`${key}: tema »${name}« se ponovi`);
         TOPICS[topic.id] = topic;
         return topic;
@@ -72,8 +78,10 @@ for (const [subject, levels] of Object.entries(INT_LEVELS)) {
         EN_UNITS[u.title] || u.title,
         u.topics.map((t) => {
           const [name, goals = ""] = (EN[t.id] || `${t.name} | ${t.goals}`).split("|").map((x) => x.trim());
-          return { name, goals, base: [t.id] };
+          // sl: izvirna slovenska imena za slovenski vmesnik (localTopic, localUnitTitle).
+          return { name, goals, base: [t.id], sl: { name: t.name, goals: t.goals } };
         }),
+        u.title,
       ]),
     );
     addRegionPath(`${subject}-INT-${level}`, `${SUBJECT_EN[subject]}, year ${level} of school`, subject, "INT", Number(level), units);
