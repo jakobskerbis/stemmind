@@ -2,7 +2,7 @@
 # Navodila: docs/objava.md
 services:
   - type: web
-    name: stemmind
+    name: kompreno
     runtime: node
     region: frankfurt          # najbližje Sloveniji
     plan: starter              # trajni disk ni na voljo v brezplačnem paketu

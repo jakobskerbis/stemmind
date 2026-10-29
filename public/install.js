@@ -1,4 +1,4 @@
-// STEMMind kot aplikacija na začetnem zaslonu (PWA).
+// Kompreno kot aplikacija na začetnem zaslonu (PWA).
 // - Android, Chrome in Edge na računalniku: gumb »Namesti aplikacijo« odpre okno brskalnika za namestitev.
 // - iPhone in iPad: Safari namestitve ne ponudi sam, zato pokažemo tri korake (Deli → Dodaj na začetni zaslon).
 // - Odprto v Instagramu, Messengerju …: najprej odpri v brskalniku.

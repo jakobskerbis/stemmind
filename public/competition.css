@@ -76,3 +76,4 @@
 .exam-other { max-width: 360px; }
 .exam-other select { width: 100%; }
 .task-top:has(.pts.neg) .task-topic { flex-basis: 100%; }
+.prep-switch { margin: 0 0 12px; }

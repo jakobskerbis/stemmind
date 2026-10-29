@@ -1,4 +1,4 @@
-// HTTP strežnik STEMMind: API + statični vmesnik.
+// HTTP strežnik Kompreno: API + statični vmesnik.
 import express from "express";
 import fs from "node:fs";
 import path from "node:path";
@@ -24,7 +24,7 @@ import { mountAccounts } from "./accounts/index.js";
 import { passwordGate } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
-import { examInfo, examKeyFor, isExamPath, examOf, examPrompt } from "./exams.js";
+import { examInfo, examKeyFor, isExamPath, examOf, examPrompt, taskLanguage, localizeExamView, localizeExamTopic } from "./exams.js";
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 import { mountGraphs } from "./graphs.js";
@@ -143,7 +143,7 @@ export function createApp(store, opts = {}) {
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
   const pendingSettings = new Map(); // pogovor → predlog spremembe šole/letnika, ki čaka na potrditev
-  // »Vprašaj STEMMind« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
+  // »Vprašaj Kompreno« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
   const helpTasks = new Map();
   const usage = new Usage(store.db);
   const progress = new Progress(store);
@@ -284,7 +284,7 @@ export function createApp(store, opts = {}) {
       return res.status(400).json({ error: "Slika mora biti JPG, PNG, WEBP ali GIF in manjša od 5 MB." });
     }
     if (!text && !image) return res.status(400).json({ error: "Sporočilo je prazno." });
-    if (busy.has(conv.id)) return res.status(409).json({ error: "Počakaj, da STEMMind odgovori." });
+    if (busy.has(conv.id)) return res.status(409).json({ error: "Počakaj, da Kompreno odgovori." });
     const blocked = usage.blockReason(student.id);
     if (blocked) return res.status(429).json({ error: blocked, limit: true });
     busy.add(conv.id);
@@ -302,6 +302,7 @@ export function createApp(store, opts = {}) {
       wantThink: againStreak === 1,
       competition: student.settings.track === "COMPETITION",
       lite,
+      free: !!accounts && !accounts.premiumFor(student.id),
       deepModel: MODEL_DEEP,
     });
     const deep = mode === "deep";
@@ -492,7 +493,9 @@ export function createApp(store, opts = {}) {
   app.get("/api/topic", (req, res) => {
     const t = getTopic(req.query.id);
     if (!t) return res.status(404).json({ error: "Tema ne obstaja." });
-    res.json({ ...t, pathLabel: getPath(t.path).label, explanation: explanationFor(t.id) || lessonExplanation(t.id) });
+    // lang: jezik vmesnika (indijski izpiti imajo imena tem tudi v hindijščini).
+    const topic = localizeExamTopic({ ...t, pathLabel: getPath(t.path).label }, taskLanguage(String(req.query.lang || "")));
+    res.json({ ...topic, explanation: explanationFor(t.id) || lessonExplanation(t.id) });
   });
   // --- učbenik ---
   const systemOf = (req) => String(req.query.system || "SI");
@@ -673,9 +676,10 @@ export function createApp(store, opts = {}) {
     const defaultKey = examKeyFor(s.settings);
     const key = isExamPath(req.query.key) ? String(req.query.key) : examKeyFor(s.settings, String(req.query.exam || "")) || defaultKey;
     if (!key) return res.json({ key: null });
+    const lang = taskLanguage(s.settings.language);
     res.json({
-      ...examInfo(key, s.settings.school_system),
-      ...progress.pathView(s.id, key),
+      ...examInfo(key, s.settings.school_system, lang),
+      ...localizeExamView(progress.pathView(s.id, key), lang),
       defaultKey,
       defaultExam: examOf(defaultKey),
       history: progress.contestHistory(s.id, key),
@@ -790,7 +794,7 @@ export function createApp(store, opts = {}) {
       res.status(502).json({ error: "Branje zapisa trenutno ne deluje. Odgovor vpiši s tipkami." });
     }
   });
-  // »Vprašaj STEMMind«: odpre pogovor z nalogo in učenčevim odgovorom.
+  // »Vprašaj Kompreno«: odpre pogovor z nalogo in učenčevim odgovorom.
   app.post("/api/students/:id/tasks/:taskId/help", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;

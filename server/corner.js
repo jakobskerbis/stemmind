@@ -169,7 +169,7 @@ export function createNews(store, { fetchFn = globalThis.fetch, now = () => Date
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), TIMEOUT);
     try {
-      const r = await fetchFn(f.url, { signal: ctl.signal, headers: { "User-Agent": "STEMMind/1.0 (news corner for students)", Accept: "application/rss+xml, application/xml, text/xml" } });
+      const r = await fetchFn(f.url, { signal: ctl.signal, headers: { "User-Agent": "Kompreno/1.0 (news corner for students)", Accept: "application/rss+xml, application/xml, text/xml" } });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const text = await r.text();
       if (text.length > MAX_BYTES) throw new Error("too big");

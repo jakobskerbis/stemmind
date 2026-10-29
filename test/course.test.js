@@ -36,3 +36,11 @@ test("predmetnik OŠ: v 6. in 7. razredu naravoslovje namesto fizike in kemije",
   assert.deepEqual(baseTopicIds("NAR-OS-7/raztopine"), ["KEM-OS-9/raztopine"]);
   assert.equal(getTopic("NAR-OS-6/zgradba-rastline").subject, "NAR");
 });
+
+test("OŠ 1.–5. razred: izbira je dovoljena, učna pot pa je zaenkrat snov 6. razreda", () => {
+  const three = normalizeSettings({ educational_track: "OSNOVNA_SOLA", curriculum_level: "3. razred", subject: "FIZ" });
+  assert.equal(three.curriculum_level, "3. razred");
+  assert.equal(three.subject, "NAR", "v nižjih razredih ni fizike");
+  assert.equal(pathKeyFor(three), "NAR-OS-6");
+  assert.equal(pathKeyFor({ ...three, subject: "MAT" }), "MAT-OS-6");
+});

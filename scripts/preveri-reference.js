@@ -17,7 +17,7 @@ const check = (u) =>
   new Promise((res) =>
     execFile(
       "curl",
-      ["-sS", "-o", "/dev/null", "-L", "-m", "30", "-A", "Mozilla/5.0 (STEMMind preverjanje povezav)", "-w", "%{http_code}", ...(ca ? ["--cacert", ca] : []), u],
+      ["-sS", "-o", "/dev/null", "-L", "-m", "30", "-A", "Mozilla/5.0 (Kompreno preverjanje povezav)", "-w", "%{http_code}", ...(ca ? ["--cacert", ca] : []), u],
       (err, out) => res(out || "000"),
     ),
   );

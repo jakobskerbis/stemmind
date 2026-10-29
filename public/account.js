@@ -192,7 +192,7 @@ function renderLogin(mode = "login") {
   const koda = store.get("stemmind_koda") || "";
   shell(`
     <h1>${mode === "login" ? "Prijava" : "Nov račun"}</h1>
-    <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za dijake ter študente (lasten profil)." : `STEMMind je 7 dni brezplačen, brez kartice. Nato ${eur(999)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
+    <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za dijake ter študente (lasten profil)." : `Kompreno je 7 dni brezplačen, brez kartice. Nato ${eur(999)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
     ${invited ? `<p class="card">Ustvarite svoj račun starša. Nato dodate otrokov profil (<b>${esc(invited)}</b>) in s tem date soglasje.</p>` : ""}
     <form id="auth-form" class="card form">
       ${mode === "register" ? `<label>Vaše ime (neobvezno) <input name="name" maxlength="60" autocomplete="name"></label>` : ""}
@@ -241,12 +241,12 @@ function renderLogin(mode = "login") {
   });
 }
 
-// Premlad za lasten račun: povezava za starše s vsemi podatki (kaj je STEMMind, podatki, cena, soglasje).
+// Premlad za lasten račun: povezava za starše s vsemi podatki (kaj je Kompreno, podatki, cena, soglasje).
 function renderAskParent(minAge) {
   const linkFor = (name) => `${location.origin}/starsi.html${name ? `?ime=${encodeURIComponent(name)}` : ""}`;
   shell(`
     <h1>Vprašaj starše</h1>
-    <p class="muted">${minAge ? `Za mlajše od ${minAge} let` : "Za mlajše učence"} račun ustvari starš ali skrbnik. Pošlji jim to povezavo: tam piše, kaj je STEMMind, katere podatke hranimo in koliko stane. Ko starš ustvari račun in doda tvoj profil, se lahko začneš učiti.</p>
+    <p class="muted">${minAge ? `Za mlajše od ${minAge} let` : "Za mlajše učence"} račun ustvari starš ali skrbnik. Pošlji jim to povezavo: tam piše, kaj je Kompreno, katere podatke hranimo in koliko stane. Ko starš ustvari račun in doda tvoj profil, se lahko začneš učiti.</p>
     <form id="ask-parent" class="card form">
       <label>Tvoje ime ali vzdevek (neobvezno) <input name="name" maxlength="40" placeholder="npr. Miha"></label>
       <label>Povezava za starše <input name="link" readonly value="${esc(linkFor(""))}"></label>
@@ -262,9 +262,9 @@ function renderAskParent(minAge) {
   const link = () => linkFor(f.name.value.trim());
   const text = () => {
     const n = f.name.value.trim();
-    return `${n ? `${n} bi rad(a)` : "Rad(a) bi"} uporabljal(a) STEMMind, AI inštruktorja za matematiko, fiziko in kemijo. Za to potrebujem tvoje dovoljenje:`;
+    return `${n ? `${n} bi rad(a)` : "Rad(a) bi"} uporabljal(a) Kompreno, AI inštruktorja za matematiko, fiziko in kemijo. Za to potrebujem tvoje dovoljenje:`;
   };
-  const mail = () => (location.href = `mailto:?subject=${encodeURIComponent("STEMMind – prosim za dovoljenje")}&body=${encodeURIComponent(`${text()}\n${link()}`)}`);
+  const mail = () => (location.href = `mailto:?subject=${encodeURIComponent("Kompreno – prosim za dovoljenje")}&body=${encodeURIComponent(`${text()}\n${link()}`)}`);
   f.name.addEventListener("input", () => (f.link.value = link()));
   f.querySelector('[data-act="mail"]').addEventListener("click", mail);
   f.querySelector('[data-act="copy"]').addEventListener("click", async () => {
@@ -278,7 +278,7 @@ function renderAskParent(minAge) {
   f.querySelector('[data-act="share"]').addEventListener("click", async () => {
     if (navigator.share) {
       try {
-        await navigator.share({ title: "STEMMind", text: text(), url: link() });
+        await navigator.share({ title: "Kompreno", text: text(), url: link() });
       } catch {}
     } else mail();
   });

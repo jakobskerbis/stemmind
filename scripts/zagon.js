@@ -1,4 +1,4 @@
-// STEMMind na tem računalniku: zažene strežnik, ga drži prižganega in ga
+// Kompreno na tem računalniku: zažene strežnik, ga drži prižganega in ga
 // samodejno posodobi z GitHuba (preverja vsakih 15 minut) (docs/posodobitve.md).
 // Uporaba: node scripts/zaganjalnik.js zagon [--odpri]   (Windows: zagon-windows.bat)
 import path from "node:path";
@@ -20,7 +20,7 @@ function openBrowser() {
 
 process.chdir(root);
 if (await serverStatus(port)) {
-  say("STEMMind že teče.");
+  say("Kompreno že teče.");
   openBrowser();
   process.exit(0);
 }
@@ -32,7 +32,7 @@ process.on("SIGTERM", () => stop());
 if (!(await server.start())) say("Strežnik se še zaganja ...");
 openBrowser();
 say();
-say(`STEMMind teče na ${local}`);
+say(`Kompreno teče na ${local}`);
 say("Za ustavitev zapri to okno. Nove različice se namestijo same (preverjanje vsakih 15 minut).");
 autoUpdate({
   root, port, say: logSay(log), server,

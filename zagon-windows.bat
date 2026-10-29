@@ -3,9 +3,9 @@ rem STEMMIND-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prep
 rem (dolgi ukazi so v eni vrstici z "exit /b", po posodobitvi se datoteka prebere znova).
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
-title STEMMind
+title Kompreno
 
-rem Ce STEMMind ze tece, samo odpri brskalnik.
+rem Ce Kompreno ze tece, samo odpri brskalnik.
 curl -s -o nul -m 2 http://localhost:3000 >nul 2>nul
 if not errorlevel 1 (
   start http://localhost:3000
@@ -55,6 +55,6 @@ if "!NEED_INSTALL!"=="1" (
 )
 
 echo.
-echo STEMMind se zaganja. Brskalnik se bo odprl sam.
+echo Kompreno se zaganja. Brskalnik se bo odprl sam.
 echo Za ustavitev zapri to okno. Nove razlicice se namestijo same (preverjanje vsakih 15 minut).
 node scripts\zaganjalnik.js zagon --odpri & pause & exit /b
