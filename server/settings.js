@@ -1,5 +1,5 @@
 // Nastavitve učenca (nadzorna plošča) in njihovo preverjanje.
-import { PROGRAMS } from "./university-data.js";
+import { PROGRAMS, UNI_PATHS } from "./university-data.js";
 import { ALL_SUBJECTS, SCHOOL_SUBJECTS } from "./subjects.js";
 import { LANGUAGE_CODES, DEFAULT_LANGUAGE } from "../public/i18n/languages.js";
 import { SYSTEM_IDS, DEFAULT_SYSTEM, isRegional, gradeInfo, defaultGrade, trackForLevel } from "../public/regions.js";
@@ -23,6 +23,7 @@ export const DEFAULT_SETTINGS = {
   educational_track: "OSNOVNA_SOLA",
   curriculum_level: "8. razred",
   study_program: "",
+  study_course: "", // fakulteta: izbrani predmet iz predmetnika (ključ poti), prazno = prvi predmet letnika
   solving_mode: "A",
   personality_setting: "prijazen in spodbuden",
   language: DEFAULT_LANGUAGE,
@@ -59,6 +60,13 @@ export function normalizeSettings(input = {}) {
   if (out.educational_track === "UNIVERZA") {
     if (!out.study_program) out.study_program = Object.keys(PROGRAMS)[0];
     out.track = "REGULAR";
+    // Predmet iz predmetnika: veljati mora za program in letnik (ali biti izbirni),
+    // sicer (npr. po prehodu v višji letnik) velja prvi predmet letnika. Predmet aplikacije sledi njemu.
+    const course = typeof input.study_course === "string" ? input.study_course : "";
+    if (course && courseKeysFor(out.study_program, out.curriculum_level).includes(course)) {
+      out.study_course = course;
+      if (ALL_SUBJECTS.includes(UNI_PATHS[course]?.subject)) out.subject = UNI_PATHS[course].subject;
+    }
   } else {
     out.study_program = "";
     // Strokovni predmeti fakultet (biologija …) v OŠ/SŠ ne obstajajo.
@@ -70,6 +78,14 @@ export function normalizeSettings(input = {}) {
     out.personality_setting = cleanText(input.personality_setting, 200);
   }
   return out;
+}
+
+// Ključi predmetov programa za letnik (»2. letnik«) in izbirni predmeti.
+export function courseKeysFor(programId, level) {
+  const p = PROGRAMS[programId];
+  if (!p) return [];
+  const year = Number((String(level || "").match(/([1-4])/) || [])[1]) || 1;
+  return [...(p.courseKeys[year - 1] || []), ...(p.electiveKeys || [])];
 }
 
 export function normalizeWeaknessList(value) {

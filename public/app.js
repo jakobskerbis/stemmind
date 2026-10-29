@@ -704,14 +704,43 @@ window.addEventListener("offline", syncOfflineBanner);
 
 // ---------- nastavitve ----------
 
-// Izbira predmeta: študent ima predmete svojega programa (tudi biologijo …).
+// Izbira predmeta: OŠ in SŠ matematika, fizika, kemija; fakulteta predmeti iz predmetnika
+// izbrane smeri in letnika (in izbirni predmeti).
 function fillSubjectOptions() {
   const f = $("#settings-form");
   const uni = f.educational_track.value === "UNIVERZA";
-  const program = uni ? programsCache().find((p) => p.id === f.study_program.value) : null;
+  $("#subject-row").hidden = uni;
+  $("#course-row").hidden = !uni;
+  if (uni) return fillCourseOptions();
   const prev = f.subject.value || state.student?.settings?.subject;
-  f.subject.innerHTML = subjectOptions(program, prev);
+  f.subject.innerHTML = subjectOptions(null, prev);
   if (![...f.subject.options].some((o) => o.value === prev)) f.subject.selectedIndex = 0;
+}
+
+const courseCache = new Map(); // program → predmeti po letnikih (/api/paths?program=)
+let courseReq = 0;
+async function fillCourseOptions() {
+  const f = $("#settings-form");
+  const program = f.study_program.value;
+  const sel = f.study_course;
+  if (!program) return (sel.innerHTML = "");
+  const req = ++courseReq;
+  if (!courseCache.has(program)) courseCache.set(program, await api(`/api/paths?program=${encodeURIComponent(program)}`).catch(() => []));
+  if (req !== courseReq) return; // medtem je bil izbran drug program
+  const list = courseCache.get(program);
+  const year = Number((String(f.curriculum_level.value).match(/([1-4])/) || [])[1]) || 1;
+  // Letnik brez predmetov (moduli): zadnji letnik s predmeti, kot na učni poti.
+  const years = [...new Set(list.filter((c) => c.year).map((c) => c.year))].filter((y) => y <= year);
+  const y = years.length ? Math.max(...years) : null;
+  const mine = list.filter((c) => c.year === y);
+  const elect = list.filter((c) => c.elective);
+  const s = state.student?.settings || {};
+  const keys = [...mine, ...elect].map((c) => c.key);
+  const prev = keys.includes(sel.value) ? sel.value : keys.includes(s.study_course) ? s.study_course : (mine.find((c) => c.subject === s.subject) || mine[0] || elect[0])?.key;
+  const opt = (c) => `<option value="${c.key}" data-subject="${c.subject}"${c.key === prev ? " selected" : ""}>${escapeHtml(c.label.replace(/ \([^)]*\)$/, ""))}</option>`;
+  sel.innerHTML =
+    (mine.length ? `<optgroup label="${escapeHtml(t("path.year", { n: y }))}">${mine.map(opt).join("")}</optgroup>` : "") +
+    (elect.length ? `<optgroup label="${escapeHtml(t("path.electives"))}">${elect.map(opt).join("")}</optgroup>` : "");
 }
 
 function fillLevelOptions(track) {
@@ -730,7 +759,8 @@ async function fillSettingsForm() {
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
   f.data_mode.value = s.data_mode || "auto";
-  f.subject.innerHTML = subjectOptions(isUni(s) ? programsCache().find((p) => p.id === s.study_program) : null, s.subject);
+  f.subject.innerHTML = subjectOptions(null, s.subject);
+  f.study_course.innerHTML = "";
   f.school_system.innerHTML = schoolSystemOptions(s.school_system || "SI");
   if (!levelPicker) {
     levelPicker = mountLevelPicker($("#settings-level"), f, { programs, settings: s, onChange: (_, track) => fillLevelOptions(track) });
@@ -779,7 +809,9 @@ $("#settings-form").addEventListener("submit", async (e) => {
       manual_weaknesses: f.manual_weaknesses.value,
       settings: {
         school_system: f.school_system.value,
-        subject: f.subject.value,
+        ...(f.educational_track.value === "UNIVERZA"
+          ? { study_course: f.study_course.value, subject: f.study_course.selectedOptions[0]?.dataset.subject || state.student.settings.subject }
+          : { subject: f.subject.value, study_course: "" }),
         track: isRegional(f.school_system.value) ? "REGULAR" : f.track.value,
         educational_track: f.educational_track.value,
         study_program: f.educational_track.value === "UNIVERZA" ? f.study_program.value : "",
