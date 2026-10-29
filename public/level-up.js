@@ -16,7 +16,7 @@ export function stageUp(before, after) {
   return b > a ? ["OS", "SS", "UNI"][b] : null;
 }
 
-const lsKey = (sid, year) => `stemmind.levelup.${sid}.${year}`;
+const lsKey = (sid, year) => `kompreno.levelup.${sid}.${year}`;
 const lsGet = (k) => {
   try {
     return localStorage.getItem(k);

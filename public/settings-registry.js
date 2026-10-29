@@ -19,7 +19,7 @@ const DIALECT_LIST = Object.entries(DIALECTS).map(([l, list]) => `${l}: ${list.m
 export const PROFILE_SETTINGS = {
   school_system: { confirm: true, desc: "country / school system id: SI = Slovenia (default), others are regional curricula (see get_settings)" },
   educational_track: { confirm: true, values: ["OSNOVNA_SOLA", "SREDNJA_SOLA", "UNIVERZA"], desc: "school stage: primary (OŠ), secondary (SŠ) or faculty" },
-  curriculum_level: { confirm: true, desc: "grade or year: OŠ '6. razred'…'9. razred'; SŠ '1. letnik'…'4. letnik', optional maths level ' OR'/' VR' (e.g. '3. letnik VR'); faculty '1. letnik'…; regional systems use their grade names (e.g. 'Class 8')" },
+  curriculum_level: { confirm: true, desc: "grade or year: OŠ '1. razred'…'9. razred'; SŠ '1. letnik'…'4. letnik', optional maths level ' OR'/' VR' (e.g. '3. letnik VR'); faculty '1. letnik'…; regional systems use their grade names (e.g. 'Class 8')" },
   study_program: { confirm: true, desc: "faculty study programme: id or name with faculty, e.g. 'Kemija UL FKKT' (get_settings options=study_program lists them)" },
   study_course: { desc: "faculty only: course of the programme's current year or an elective, by name (get_settings options=study_course)" },
   subject: { values: ["MAT", "FIZ", "KEM", "NAR", "BIO", "GEO", "RAC", "EKO"], desc: "school subject; OŠ 6./7. has MAT and NAR only; at faculty prefer study_course" },
@@ -56,9 +56,9 @@ export const DEVICE_SETTINGS = {
   calculator: { values: ["sci", "graph", "tools", "pse", "formulas"], ls: ["stemmind.calcMode"], desc: "calculator opens in: scientific, graphing, tools, periodic table, formulas" },
   writing_pad: { values: ["auto", "off"], desc: "touch keypad / handwriting pad opens by itself at tasks (auto) or only on tap (off)" },
   writing_pad_tab: { values: ["keys", "draw"], desc: "pad opens on keypad (keys) or handwriting (draw)" },
-  game_sound: { values: ["on", "off"], ls: ["stemmind.gameSound"], desc: "sound in games" },
-  game_speed: { values: ["slow", "mid", "fast"], ls: ["stemmind.gamePace"], desc: "game speed" },
-  schedule_reminders: { values: ["on", "off"], ls: ["stemmind.scheduleReminders", { on: "1", off: "0" }], desc: "notification on this device the day before a test from the timetable (the app also shows it in the app)" },
+  game_sound: { values: ["on", "off"], ls: ["kompreno.gameSound"], desc: "sound in games" },
+  game_speed: { values: ["slow", "mid", "fast"], ls: ["kompreno.gamePace"], desc: "game speed" },
+  schedule_reminders: { values: ["on", "off"], ls: ["kompreno.scheduleReminders", { on: "1", off: "0" }], desc: "notification on this device the day before a test from the timetable (the app also shows it in the app)" },
 };
 
 // Urnik učenca (Jaz → Urnik, server/schedule.js): ure v tednu ter testi in roki. Inštruktor ga bere in

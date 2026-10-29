@@ -1,15 +1,19 @@
 // Napredovanje: prilagodljiva težavnost, obvladanje tem, odklepanje sklopov,
 // preizkus znanja, razmaknjeno ponavljanje, XP in lestvica.
 import crypto from "node:crypto";
-import { getPath, getTopic } from "./curriculum.js";
+import { getPath, getTopic, localTopic, localUnitTitle } from "./curriculum.js";
+import { uiLanguage } from "../public/i18n/languages.js";
 import { generateTask, hasGenerator, publicTask, hintSteps } from "./practice/index.js";
 import { checkAnswer } from "./practice/check.js";
 import { CONTEST, TRAINING_TASKS, isCompetitionPath } from "./competition.js";
 import { isExamPath, mockPlan, scaledScore, examGrade } from "./exams.js";
 import { toChoice } from "./practice/choice.js";
+import { taskLanguage, localName } from "./exams.js";
 
 // Tekmovalni trening in poskusno tekmovanje veljata tudi za priprave na izpite.
 const isPrepPath = (key) => isCompetitionPath(key) || isExamPath(key);
+
+const pretestTier = (known) => (known >= 3 ? "višja" : known === 2 ? "srednja" : "osnovna");
 
 // Naloge z enim poskusom in brez namigov (preizkusi, tekmovanja, test predznanja).
 const ONE_SHOT = ["placement", "contest", "pretest"];
@@ -60,6 +64,16 @@ export class Progress {
   constructor(store) {
     this.store = store;
     this.db = store.db;
+  }
+
+  // Jezik nalog pri dvojezičnih generatorjih (indijski izpiti): hindijsko za hindijščino in
+  // jezike, ki v vmesniku padejo nazaj nanjo (bhodžpuri, maratščina …), sicer angleško.
+  taskLang(studentId) {
+    return taskLanguage(this.store.getStudent?.(studentId)?.settings?.language);
+  }
+  // Jezik vmesnika (za imena tem mednarodne poti v slovenskem vmesniku).
+  uiLang(studentId) {
+    return uiLanguage(this.store.getStudent?.(studentId)?.settings?.language);
   }
 
   // ---------- stanje teme ----------
@@ -116,8 +130,10 @@ export class Progress {
         .map((s) => [s.topic_id, s]),
     );
     const now = nowSql();
+    const ui = this.uiLang(studentId);
     const units = path.units.map((u) => {
-      const topics = u.topics.map((t) => {
+      const topics = u.topics.map((t0) => {
+        const t = localTopic(t0, ui);
         const s = states[t.id] || {};
         return {
           id: t.id,
@@ -133,7 +149,7 @@ export class Progress {
       const gated = topics.filter((t) => t.practice);
       const relevant = gated.length ? gated : topics;
       return {
-        title: u.title,
+        title: localUnitTitle(u, ui),
         topics,
         hasPractice: gated.length > 0,
         started: topics.some((t) => t.status !== "new"),
@@ -182,7 +198,7 @@ export class Progress {
     if (!hasGenerator(topicId)) return null;
     const s = this.state(studentId, topicId);
     if (!s.seen_example) {
-      const ex = generateTask(topicId, 1);
+      const ex = generateTask(topicId, 1, undefined, this.taskLang(studentId));
       s.seen_example = 1;
       if (s.status === "new") s.status = "learning";
       this.saveState(s);
@@ -199,7 +215,7 @@ export class Progress {
     if (pending) {
       return { task: { id: pending.id, mode: "practice", ...publicTask(JSON.parse(pending.payload)) }, state: { level: s.level, streak: s.streak }, resumed: true };
     }
-    const task = generateTask(topicId, s.level);
+    const task = generateTask(topicId, s.level, undefined, this.taskLang(studentId));
     const id = this.saveTask(studentId, task, "practice");
     return { task: { id, mode: "practice", ...publicTask(task) }, state: { level: s.level, streak: s.streak } };
   }
@@ -244,7 +260,7 @@ export class Progress {
         this.saveState(st);
       }
       const level = item.level ?? st.level;
-      let task = generateTask(item.topic, level);
+      let task = generateTask(item.topic, level, undefined, this.taskLang(sess.student_id));
       // Izpitni format: izbirna vprašanja (A–D) namesto vpisa števila.
       if (item.format === "choice") task = toChoice(task, task.seed, item.options || 4);
       const id = this.saveTask(sess.student_id, task, item.mode, sessionId);
@@ -269,7 +285,7 @@ export class Progress {
       kind,
       index: done + 1,
       total,
-      task: { id: open.id, mode: open.mode, topicName: getTopic(open.topic_id)?.name, ...publicTask(payload) },
+      task: { id: open.id, mode: open.mode, topicName: localName(localTopic(getTopic(open.topic_id), this.uiLang(open.student_id))?.name, payload.textLang), ...publicTask(payload) },
     };
     if (sess?.kind === "contest") {
       next.deadline = sess.params.deadline;
@@ -324,7 +340,8 @@ export class Progress {
     return this.sessionNext(this.createSession(studentId, "pretest", plan, { topic: topicId }));
   }
 
-  finishPretest(studentId, sessionId) {
+  // Izid testa predznanja brez sprememb (tudi za ponovni »Preveri« po koncu testa).
+  pretestScore(studentId, sessionId) {
     const all = this.db.prepare("SELECT level, first_try_correct, topic_id FROM tasks WHERE session_id = ? ORDER BY level, id").all(sessionId);
     const correct = all.filter((t) => t.first_try_correct).length;
     let known = 0; // stopnje, rešene zapored od najlažje
@@ -332,7 +349,12 @@ export class Progress {
       if (!t.first_try_correct) break;
       known = t.level;
     }
-    const topicId = all[0]?.topic_id;
+    const level = this.state(studentId, all[0]?.topic_id).level;
+    return { correct, total: all.length, known, level, tier: pretestTier(known), topicId: all[0]?.topic_id };
+  }
+
+  finishPretest(studentId, sessionId) {
+    const { correct, total, known, topicId } = this.pretestScore(studentId, sessionId);
     const s = this.state(studentId, topicId);
     if (s.status !== "mastered") {
       s.status = "learning";
@@ -341,8 +363,7 @@ export class Progress {
       this.saveState(s);
     }
     this.db.prepare("UPDATE topic_state SET pretest = ? WHERE student_id = ? AND topic_id = ?").run(known, studentId, topicId);
-    const tier = known >= 3 ? "višja" : known === 2 ? "srednja" : "osnovna";
-    return { correct, total: all.length, known, level: s.level, tier };
+    return { correct, total, known, level: s.level, tier: pretestTier(known) };
   }
 
   // Test predznanja: »Tega še ne znam« – naloga šteje kot nerešena, naprej na naslednjo.
@@ -508,7 +529,7 @@ export class Progress {
       const correct = !!t?.first_try_correct;
       const answered = t?.last_answer != null;
       return {
-        topicName: getTopic(p.topic)?.name || "",
+        topicName: localName(getTopic(p.topic)?.name || "", payload?.textLang),
         level: p.level,
         points: pts,
         // Negativne točke (JEE, NEET) samo za napačen odgovor, ne za izpuščeno vprašanje.
@@ -666,7 +687,7 @@ export class Progress {
       info[t.id] = { id: t.id, name: topic.name, goals: topic.goals, unit: topic.unit, path: pathKey, subject: topic.subject, pathLabel: path.label };
       tasks[t.id] = Array.from({ length: perTopic }, (_, i) => {
         const level = Math.max(1, Math.min(3, t.level + (i % 3 === 2 ? 1 : 0)));
-        const task = generateTask(t.id, level);
+        const task = generateTask(t.id, level, undefined, this.taskLang(studentId));
         return { level, seed: task.seed, task: publicTask(task), answer: task.answer, solution: task.solution, hint: task.hint };
       });
     }
@@ -683,7 +704,7 @@ export class Progress {
       const seed = Number(r?.seed);
       if (!getTopic(r?.topic_id) || !hasGenerator(r.topic_id) || ![1, 2, 3].includes(level) || !Number.isInteger(seed) || seed < 0 || seed >= 2 ** 31) continue;
       if (!seen.run(studentId, r.topic_id, seed).changes) continue;
-      const task = generateTask(r.topic_id, level, seed);
+      const task = generateTask(r.topic_id, level, seed, this.taskLang(studentId));
       const id = this.saveTask(studentId, task, "practice");
       const out = this.answer(studentId, id, String(r.answer ?? "").slice(0, 200));
       synced += 1;
@@ -698,7 +719,7 @@ export class Progress {
     if (!row || row.student_id !== studentId) return { error: "Naloga ne obstaja." };
     const oneShot = ONE_SHOT.includes(row.mode);
     const maxAttempts = oneShot ? 1 : RULES.maxAttempts;
-    if (row.solved || row.attempts >= maxAttempts) return { error: "Ta naloga je že zaključena." };
+    if (row.solved || row.attempts >= maxAttempts) return this.closedAnswer(studentId, row);
     if (row.mode === "contest") {
       const sess = this.getSession(row.session_id);
       if (!sess || sess.finished) return { error: "To tekmovanje je že končano." };
@@ -817,6 +838,22 @@ export class Progress {
     return out;
   }
 
+  // Ponovni »Preveri« pri že zaključeni nalogi (dvojni dotik, popravljen odgovor po edinem
+  // poskusu, izgubljen odziv prek tunela): vrnemo shranjeni izid in naslednjo nalogo namesto
+  // napake. Nič se ne šteje znova (brez XP, poskusov in sprememb stanja teme).
+  closedAnswer(studentId, row) {
+    const out = { closed: true, kind: row.solved ? "correct" : "wrong", correct: !!row.solved };
+    if (row.mode === "contest") out.saved = true;
+    if (!ONE_SHOT.includes(row.mode)) out.solution = row.payload.solution;
+    if (row.session_id) {
+      out.next = this.sessionNext(row.session_id);
+      if (out.next.contest) out.contest = out.next.contest;
+      if (out.next.finished && row.mode === "placement") out.placement = { ...this.placementScore(row.session_id), xp: null };
+      if (out.next.finished && row.mode === "pretest") out.pretest = this.pretestScore(studentId, row.session_id);
+    }
+    return out;
+  }
+
   // Lestev namigov pred odgovorom (practice/index.js hintSteps); uporaba namiga zmanjša XP.
   hint(studentId, taskId, upTo) {
     const row = this.getTask(taskId);
@@ -854,10 +891,15 @@ export class Progress {
     this.saveState(s);
   }
 
+  placementScore(sessionId) {
+    const all = this.db.prepare("SELECT first_try_correct FROM tasks WHERE session_id = ?").all(sessionId);
+    const correct = all.filter((t) => t.first_try_correct).length;
+    return { passed: correct / all.length >= RULES.placementPass, correct, total: all.length };
+  }
+
   finishPlacement(studentId, sessionId) {
     const all = this.db.prepare("SELECT * FROM tasks WHERE session_id = ?").all(sessionId);
-    const correct = all.filter((t) => t.first_try_correct).length;
-    const passed = correct / all.length >= RULES.placementPass;
+    const { passed, correct } = this.placementScore(sessionId);
     const topics = [...new Set(all.map((t) => t.topic_id))];
     let xp = null;
     if (passed) {
@@ -894,20 +936,29 @@ export class Progress {
     return { gained, items: [...(prev?.items || []), ...all.map(([amount, reason]) => ({ amount, reason }))], ...this.xpSummary(studentId) };
   }
 
-  // Koliko zaporednih dni do včeraj je učenec zbiral XP.
+  // Koliko zaporednih dni do včeraj je učenec zbiral XP. Današnji dan ga še ne prekine (milostni dan),
+  // en zamujen dan na teden pa ga tudi ne (samodejna zamrznitev, kot pri Duolingu); zamrznjen dan ne šteje.
   dayStreak(studentId) {
     const days = this.db
       .prepare("SELECT DISTINCT date(created_at) AS d FROM xp_events WHERE student_id = ? ORDER BY d DESC LIMIT 400")
       .all(studentId)
       .map((r) => r.d);
     const set = new Set(days);
-    let streak = 0;
     const d = new Date();
-    if (set.has(today())) streak = 1;
+    const dayAt = (i) => new Date(d.getTime() - i * 86400000).toISOString().slice(0, 10);
+    let streak = set.has(today()) ? 1 : 0;
+    let frozen = -Infinity; // zadnji zamrznjen dan (dni nazaj)
     for (let i = 1; i < 400; i++) {
-      const day = new Date(d.getTime() - i * 86400000).toISOString().slice(0, 10);
-      if (!set.has(day)) break;
-      streak += 1;
+      if (set.has(dayAt(i))) {
+        streak += 1;
+        continue;
+      }
+      // Zamrznitev: samo en manjkajoč dan med aktivnima (ali pred današnjim) in največ enkrat na 7 dni.
+      if (set.has(dayAt(i + 1)) && i - frozen >= 7) {
+        frozen = i;
+        continue;
+      }
+      break;
     }
     return streak;
   }

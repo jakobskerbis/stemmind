@@ -1,4 +1,4 @@
-// STEMMind – odjemalec (brez ogrodja).
+// Kompreno – odjemalec (brez ogrodja).
 import { attachPad, closePad, openPad, padIsSheet } from "./pad.js";
 import { icon, hydrateIcons } from "./icons.js";
 import { t, locale, currentLang, currentRegion, regionFor, setLanguage, deviceRegion } from "./i18n.js";
@@ -28,13 +28,14 @@ import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
+import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
 import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml } from "./goal.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
 const fromPack = (url, opts) => (state.student ? offlineApi(state.student.id, url, opts) : undefined);
-// Računalnik s STEMMind je ugasnjen ali okno ni odprto: ngrok ali Cloudflare vrneta
+// Računalnik s Komprenom je ugasnjen ali okno ni odprto: ngrok ali Cloudflare vrneta
 // svojo napako. Takrat delamo kot brez povezave (vaje iz shranjenega paketa).
 function serverDown(res) {
   const code = res.headers.get("ngrok-error-code");
@@ -70,7 +71,8 @@ const api = async (url, opts = {}) => {
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || t("common.error", { status: res.status }));
+    // status: strežnik je odgovoril (napaka ni v povezavi).
+    throw Object.assign(new Error(err.error || t("common.error", { status: res.status })), { status: res.status });
   }
   return res.json();
 };
@@ -129,6 +131,10 @@ function showView(name) {
   if (name === "feedback") showFeedback();
   if (name === "games") showGames();
   else leaveGames();
+  if (name === "zbirke") {
+    showZbirke(zbOpen.item, zbOpen.from);
+    zbOpen = {};
+  }
   if (name === "corner") showCorner();
   else closeBoard();
   if (name === "cards") {
@@ -145,7 +151,7 @@ function showView(name) {
 document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
 
 // Tipka Nazaj (Android, aplikacija na začetnem zaslonu, brskalnik): brez tega bi tipka Nazaj
-// v nameščeni aplikaciji takoj zaprla STEMMind. Zgodovina ima dve ravni: Učna pot (0) in
+// v nameščeni aplikaciji takoj zaprla Kompreno. Zgodovina ima dve ravni: Učna pot (0) in
 // trenutni pogled (1). Nazaj najprej zapre odprto okno (kalkulator, navodila) ali lekcijo,
 // s podstrani »Jaz« (Nastavitve, Napredek …) vodi na »Jaz«, sicer na Učno pot.
 let currentView = "path";
@@ -213,10 +219,27 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke"];
+// Zbirke in učni pass: odpre pogled, po želji s predmetom v pogledu »preglej« (from = pogled za Nazaj).
+let zbOpen = {};
+function openZbirke(item = null, from = null) {
+  zbOpen = { item, from };
+  showView("zbirke");
+}
+// Obvestilo o novih predmetih po nalogi ali pogovoru (z gumbom v zbirke).
+function unlockedHtml(ids) {
+  const text = unlockedText(ids);
+  if (!text) return "";
+  return `<button type="button" class="fb mastered pop zb-unlocked" data-zb="${escapeHtml(ids[0])}">${itemThumb(ids[0], 40)}<span>${escapeHtml(text)}</span>${icon("chevron-right")}</button>`;
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-zb]");
+  if (b) openZbirke(b.dataset.zb);
+});
 function renderMe() {
   const s = state.student;
   if (!s) return;
+  meCard($("#me-zbirke"));
   $("#me-avatar").textContent = (s.name || "?").trim().charAt(0).toUpperCase();
   $("#me-name").textContent = s.name;
   $("#me-level").textContent = $("#path-select").selectedOptions[0]?.textContent.replace(t("path.myLevel"), "") || "";
@@ -570,7 +593,7 @@ async function send(text, { deep = false } = {}) {
       // Inštruktor je spremenil urnik: kartica na Učni poti in stran Urnik se osvežita.
       schedule: () => scheduleChanged(),
       proposal: (d) => (proposal = d),
-      mastered: (d) => toast(t("chat.mastered", { topic: d.topic }), "trophy"),
+      mastered: (d) => toast(d.unlocked?.length ? `${t("chat.mastered", { topic: d.topic })} ${unlockedText(d.unlocked)}` : t("chat.mastered", { topic: d.topic }), "trophy"),
       done: (d) => {
         doneData = d;
         pacer.finish(d.text);
@@ -704,7 +727,7 @@ function liteActive() {
 function applyLite() {
   const on = liteActive();
   document.documentElement.classList.toggle("lite", on);
-  localStorageSet("stemmind.lite", on ? "1" : "0"); // za theme.js ob naslednjem odprtju
+  localStorageSet("kompreno.lite", on ? "1" : "0"); // za theme.js ob naslednjem odprtju
 }
 navigator.connection?.addEventListener?.("change", applyLite);
 
@@ -989,7 +1012,7 @@ async function confirmChatProposal(settings) {
 }
 
 // Nastavitve naprave, ki jih je spremenil inštruktor: posodobi odprte izbire.
-window.addEventListener("stemmind:device-setting", (e) => {
+window.addEventListener("kompreno:device-setting", (e) => {
   const { key, value } = e.detail || {};
   if (key === "reply_speed" && PACES[value]) $("#pace-select").value = value;
   if (key === "calculator" && CALC_MODES.includes(value)) calcMode = value;
@@ -1271,7 +1294,7 @@ function setActiveMode(mode) {
   document.querySelectorAll("#modebar [data-mode]").forEach((b) => b.classList.toggle("active", b.dataset.mode === mode));
 }
 
-const REVIEW_HINT_KEY = "stemmind.reviewHint";
+const REVIEW_HINT_KEY = "kompreno.reviewHint";
 async function goNew({ skipHint = false } = {}) {
   const m = (await refreshModes()) || state.modes;
   setActiveMode("new");
@@ -1395,7 +1418,11 @@ async function loadPath(key = state.pathKey) {
   if (!p.offline) refreshPack(api, state.student.id, p.key).then(syncOfflineBanner);
   // Fakulteta: vir predmetnika in opozorilo, da je osnutek.
   const prog = uni ? programsCache().find((x) => x.id === state.student.settings.study_program) : null;
-  $("#path-note").hidden = !prog && !isRegional(sys);
+  // OŠ 1.–5. razred: učne poti še ni, prikažemo snov 6. razreda (igre in inštruktor so prilagojeni razredu).
+  const st = state.student.settings;
+  const early = !prog && !isRegional(sys) && st.educational_track === "OSNOVNA_SOLA" && /^[1-5]\./.test(String(st.curriculum_level || "").trim());
+  $("#path-note").hidden = !prog && !isRegional(sys) && !early;
+  if (early) $("#path-note").textContent = t("path.earlyNote", { grade: levelLabel(st.curriculum_level) });
   // Regijski šolski sistem: učna pot je preslikana na snov te države (osnutek).
   if (!prog && isRegional(sys)) $("#path-note").textContent = t("path.regionNote", { system: SCHOOL_SYSTEMS[sys].name });
   $("#lang-note").hidden = currentLang() === "sl" || isRegional(sys);
@@ -1478,16 +1505,18 @@ $("#back-to-path").addEventListener("click", () => showView(state.backTo || "pat
 // Šolski sistemi zunaj Slovenije: isti zavihek je »Izpiti« (SAT, gaokao, JEE, NEET, CBSE …).
 // Sporočilo preverjanja: slovensko besedilo s strežnika, v drugih jezikih prevod po kodi.
 const fbText = (r) => (r.code && currentLang() !== "sl" ? t(r.code, r.params || {}) : r.message);
-const examMode = () => !!state.student && isRegional(state.student.settings.school_system);
-const prepLabel = () => (examMode() ? t("nav.exams") : t("nav.competition"));
+// Slovenski učenci imajo v zavihku »Tekmovanja« še preklop na NPZ in maturo (state.siExams).
+const regionalExams = () => !!state.student && isRegional(state.student.settings.school_system);
+const examMode = () => regionalExams() || (!!state.student && !!state.siExams);
+const prepLabel = () => (regionalExams() ? t("nav.exams") : t("nav.competition"));
 const prepBack = () => (examMode() ? t("exam.back") : t("result.toCompetitions"));
 function syncCompetitionTab() {
   $("#competition-tab").hidden = $("#competition-tab-m").hidden = !state.student || isUni(state.student.settings);
   for (const tab of [$("#competition-tab"), $("#competition-tab-m")]) {
     const span = tab.querySelector("span");
-    span.dataset.i18n = examMode() ? "nav.exams" : "nav.competition";
+    span.dataset.i18n = regionalExams() ? "nav.exams" : "nav.competition";
     span.textContent = prepLabel();
-    tab.querySelector("i, svg").outerHTML = icon(examMode() ? "clipboard-check" : "medal");
+    tab.querySelector("i, svg").outerHTML = icon(regionalExams() ? "clipboard-check" : "medal");
   }
 }
 // Gumb »nazaj« na temi oziroma pri seriji nalog vodi tja, od koder je učenec prišel.
@@ -1497,7 +1526,7 @@ function setBack(view) {
 }
 
 async function openTopic(topicId) {
-  const tp = await api(`/api/topic?id=${encodeURIComponent(topicId)}`);
+  const tp = await api(`/api/topic?id=${encodeURIComponent(topicId)}&lang=${encodeURIComponent(state.student?.settings?.language || "")}`);
   state.topic = tp;
   showView("topic");
   const hasPractice = (await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(tp.path)}`)).units
@@ -1584,7 +1613,7 @@ async function nextPractice() {
   if (out.example) {
     box.innerHTML = `<div class="card task example">
       <div class="task-top"><span class="eyebrow with-icon">${icon("book-open")} ${t("task.example")}</span></div>
-      <div class="task-text">${renderRich(out.example.text)}</div>
+      <div class="task-text"${out.example.textLang ? ` lang="${out.example.textLang}"` : ""}>${renderRich(out.example.text)}</div>
       ${out.example.figure ? figureSvg(out.example.figure) : ""}
       ${workedBlock(out.example, out.example.solution)}
       <div class="fb hint">${icon("lightbulb")}<div>${renderRich(out.example.hint)}</div></div>
@@ -1775,7 +1804,7 @@ function renderTask(task, ctx) {
   box.innerHTML = `${bar}${pretestHead}<div class="card task${["contest", "placement", "pretest"].includes(ctx.mode) ? " no-fx" : ""}">
     <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${penalty}${counter}${calcBtn}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
-    <div class="task-text">${renderRich(task.text)}</div>
+    <div class="task-text"${task.textLang ? ` lang="${task.textLang}"` : ""}>${renderRich(task.text)}</div>
     ${task.figure ? figureSvg(task.figure) : ""}
     ${workHtml()}
     ${input}
@@ -1785,7 +1814,24 @@ function renderTask(task, ctx) {
     ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${examMode() ? t("exam.finish") : t("comp.finish")}</button></div>` : ""}
   </div>`;
   wireWork(box, task);
-  const submit = (value) => checkTask(task, ctx, value);
+  // En »Preveri« naenkrat; po končnem izidu (edini poskus, rešeno, rešen zgled) se odgovor ne pošilja več.
+  // Elemente ujamemo zdaj: po odgovoru lahko #practice že prikazuje naslednjo nalogo.
+  const card = box.querySelector(".card.task");
+  const sendBtns = [...card.querySelectorAll(".answer-row button.primary, .choice")];
+  let checking = false;
+  let finished = false;
+  const submit = async (value) => {
+    if (checking || finished) return;
+    checking = true;
+    sendBtns.forEach((b) => (b.disabled = true));
+    try {
+      finished = await checkTask(task, ctx, value);
+    } finally {
+      checking = false;
+    }
+    if (finished) card.querySelectorAll(".answer-row input, .answer-row button, .choice").forEach((el) => (el.disabled = true));
+    else sendBtns.forEach((b) => (b.disabled = false));
+  };
   // Lestev namigov: vsak klik odpre en korak več (podatki → formula → prvi korak).
   let hintShown = 0;
   $("#hint-btn")?.addEventListener("click", async () => {
@@ -1845,8 +1891,8 @@ function renderTask(task, ctx) {
 }
 
 // ---------- vmesni koraki (kot v zvezek) in pomoč inštruktorja pri nalogi ----------
-const WORK_OPEN_KEY = "stemmind.workOpen";
-const workKey = (id) => `stemmind.work.${id}`;
+const WORK_OPEN_KEY = "kompreno.workOpen";
+const workKey = (id) => `kompreno.work.${id}`;
 function lsGet(k) {
   try {
     return localStorage.getItem(k);
@@ -1986,27 +2032,41 @@ async function checkTask(task, ctx, value) {
     fb.innerHTML = `<div class="fb info">${t("task.checking")}</div>`;
     r = await api(`/api/students/${state.student.id}/tasks/${task.id}/answer`, { method: "POST", body: { answer: value } });
   } catch (err) {
-    // Napaka pri povezavi: učenec jo vidi, namesto da se ne zgodi nič.
-    fb.innerHTML = `<div class="fb bad">${icon("circle-x")}<span>${t("task.checkError", { msg: escapeHtml(err.message) })}</span></div>`;
-    return;
+    // Učenec napako vidi, namesto da se ne zgodi nič. Z »Preveri povezavo« samo, ko strežnik ni odgovoril.
+    const msg = escapeHtml(err.message);
+    fb.innerHTML = `<div class="fb bad">${icon("circle-x")}<span>${err.status ? t("task.checkFailed", { msg }) : t("task.checkError", { msg })}</span></div>`;
+    return false;
   }
   const next = (label = t("task.next")) => `<div class="actions"><button class="primary big" id="fb-next">${label}${icon("arrow-right")}</button></div>`;
+  // Naloga je bila že preverjena (npr. drugi dotik na »Preveri«): pokažemo shranjeni izid, ne napake.
+  const closedNote = r.closed ? `<div class="fb info">${icon("info")}<span>${t("task.alreadyChecked")}</span></div>` : "";
   let html = "";
-  if (ctx.mode === "contest" && !r.retry) return contestStep(r, ctx);
-  if (ctx.mode === "pretest" && !r.retry) return pretestStep(r, ctx);
+  if (ctx.mode === "contest" && !r.retry) {
+    contestStep(r, ctx);
+    return true;
+  }
+  if (ctx.mode === "pretest" && !r.retry) {
+    pretestStep(r, ctx);
+    return true;
+  }
   if (r.retry) {
     html = `<div class="fb info">${escapeHtml(fbText(r))}</div>`;
   } else if (ctx.mode === "placement") {
-    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? t("task.correct") : t("task.wrong")}</span></div>${r.message ? `<div class="fb info">${icon("info")}<span>${escapeHtml(fbText(r))}</span></div>` : ""}`;
+    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? t("task.correct") : t("task.wrong")}</span></div>${closedNote}${r.message ? `<div class="fb info">${icon("info")}<span>${escapeHtml(fbText(r))}</span></div>` : ""}`;
     if (r.placement) {
       const p = r.placement;
       html += `<div class="card result ${p.passed ? "celebrate" : ""}">${p.passed ? `<div class="result-icon">${icon("award")}</div>` : ""}<h2>${p.passed ? t("placement.passed") : t("placement.notYet")}</h2>
-        <p>${t("placement.score", { correct: p.correct, total: p.total })}${p.passed ? ` +${p.xp.gained} XP` : t("placement.unlocked")}</p>
+        <p>${t("placement.score", { correct: p.correct, total: p.total })}${p.passed ? (p.xp ? ` +${p.xp.gained} XP` : "") : t("placement.unlocked")}</p>${r.unlocked ? unlockedHtml(r.unlocked) : ""}
         <button class="primary big" id="fb-back">${t("result.toPath")}</button></div>`;
     } else html += next();
+  } else if (r.closed) {
+    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? t("task.correct") : t("task.wrong")}</span></div>${closedNote}
+      ${r.solution ? workedBlock(task, r.solution, r.correct ? t("task.solution") : t("task.example")) : ""}`;
+    html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" && !r.correct ? t("task.similar") : t("task.next"));
   } else if (r.correct) {
     html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">${r.offline ? t("off.xpLater") : `+${r.xp.gained} XP`}</span></div>
       ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>${t("task.mastered")}</span></div>` : ""}
+      ${r.unlocked ? unlockedHtml(r.unlocked) : ""}
       ${workedBlock(task, r.solution)}
       ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}
       ${r.offline ? "" : tutorRow(task.id)}`;
@@ -2042,6 +2102,7 @@ async function checkTask(task, ctx, value) {
     if (padClosedForFeedback) openPad();
     else $("#answer")?.select();
   });
+  const done = !r.retry && (r.closed || r.correct || !!r.solution || ctx.mode === "placement");
   $("#fb-help")?.addEventListener("click", async () => {
     const h = await api(`/api/students/${state.student.id}/tasks/${task.id}/help`, { method: "POST", body: { work: workOf(task.id) } });
     await loadConversations();
@@ -2055,6 +2116,7 @@ async function checkTask(task, ctx, value) {
     const n = r.next;
     if (n && !n.finished) renderTask(n.task, { mode: ctx.mode, index: n.index, total: n.total });
   });
+  return done;
 }
 
 // Test predznanja: brez rešitve in namigov, takoj naslednja naloga; na koncu raven in nadaljevanje.
@@ -2104,6 +2166,7 @@ async function loadCompetition(key = state.compKey) {
   const learning = c.units.flatMap((u) => u.topics).filter((t) => t.status !== "new").length;
   box.innerHTML = `
     <h1>${t("comp.title")}</h1>
+    ${prepSwitch("comp")}
     <div class="comp-pickers">
       ${seg(["MAT", "FIZ", "KEM"].map((k) => [k, SUBJECT_NAMES[k] || k]), c.subject, "data-comp-subject")}
       ${seg(Object.entries(SCHOOL_NAMES), c.school, "data-comp-school")}
@@ -2191,12 +2254,13 @@ async function loadExams(key = state.examKey, exam = null) {
   const m = c.mock;
   box.innerHTML = `
     <h1>${t("exam.title")}</h1>
+    ${prepSwitch("exam")}
     <div class="comp-pickers">
       ${seg(examSeg, c.exam, "data-exam")}
       ${others.length ? `<label class="field exam-other"><span class="field-label">${t("exam.otherExams")}</span><select data-exam-other><option value="">…</option>${others.map((x) => `<option value="${x.id}">${escapeHtml(`${x.name} (${x.country})`)}</option>`).join("")}</select></label>` : ""}
       ${c.subjects.length > 1 ? seg(c.subjects.map((x) => [x.key, SUBJECT_NAMES[x.subject] || x.name]), c.key, "data-exam-subject") : ""}
     </div>
-    <details class="card exam-about"><summary>${icon("info")}<span><b>${escapeHtml(c.full)}</b> · ${escapeHtml(c.country)}</span></summary><p lang="en">${escapeHtml(c.about)}</p></details>
+    <details class="card exam-about"><summary>${icon("info")}<span><b>${escapeHtml(c.full)}</b> · ${escapeHtml(c.country)}</span></summary><p lang="${c.lang || "en"}">${escapeHtml(c.about)}</p></details>
     <div class="card xp-card comp-hero">
       <div class="hero">
         <div class="hero-icon">${icon("target")}</div>
@@ -2218,7 +2282,7 @@ async function loadExams(key = state.examKey, exam = null) {
       ${hist}
     </section>
     <h2 class="comp-topics-title">${t("comp.topics")}</h2>
-    <p class="muted small-note">${t("exam.topicsNote")}</p>
+    <p class="muted small-note">${c.tasksLang === "en" && currentLang() !== "en" ? t("exam.topicsNote") : t("exam.topicsPick")}</p>
     ${c.units
       .map(
         (u, ui) => `<section class="unit card">
@@ -2235,7 +2299,20 @@ async function loadExams(key = state.examKey, exam = null) {
       .join("")}`;
 }
 
+// Slovenija: preklop med tekmovanji ter NPZ in maturo (drugje je zavihek samo »Izpiti«).
+function prepSwitch(cur) {
+  if (regionalExams()) return "";
+  const items = [["comp", t("comp.title")], ["exam", t("exam.national")]];
+  return `<div class="seg prep-switch" role="group">${items.map(([v, label]) => `<button type="button" class="${v === cur ? "active" : ""}" aria-pressed="${v === cur}" data-prep="${v}">${escapeHtml(label)}</button>`).join("")}</div>`;
+}
+
 document.addEventListener("click", (e) => {
+  const prep = e.target.closest("[data-prep]");
+  if (prep) {
+    state.siExams = prep.dataset.prep === "exam";
+    state.examKey = null;
+    return state.siExams ? loadExams() : loadCompetition();
+  }
   const ex = e.target.closest("[data-exam]");
   if (ex) loadExams(null, ex.dataset.exam);
   const sub = e.target.closest("[data-exam-subject]");
@@ -2384,59 +2461,101 @@ async function loadUsage() {
 
 // ---------- uvodni ogled ----------
 
+// Vodič ob prvi uporabi (j, 29. 10. 2026): kako aplikacija deluje in kje je kaj. Vsak profil ga
+// vidi enkrat (settings.tour_version na strežniku, zato tudi na drugi napravi ne znova).
+// Korak brez »sel« je kartica na sredini; korak, katerega gumb ni viden (npr. zavihki, ki so na
+// telefonu pod »Jaz«), se preskoči.
+const TOUR_VERSION = 2;
 const TOUR = [
-  { sel: "#xp-card", title: t("daily.title"), text: t("tour.dailyText") },
-  { sel: "#path-content .unit", title: t("nav.path"), text: t("tour.pathText") },
-  { sel: "#modebar", title: t("tour.modes"), text: t("tour.modesText") },
-  { sel: '#tabbar [data-view="me"]', title: t("nav.me"), text: t("tour.meText") },
-  { sel: '.tab[data-view="chat"]', title: t("nav.chat"), text: t("tour.chatText") },
+  { title: "tour.welcome", text: "tour.welcomeText" },
+  { title: "tour.how", text: "tour.howText" },
+  { sel: "#xp-card", title: "daily.title", text: "tour.dailyText" },
+  { sel: "#path-content .unit", title: "nav.path", text: "tour.pathText" },
+  { sel: "#modebar", title: "tour.modes", text: "tour.modesText" },
+  { sel: '.tab[data-view="textbook"]', title: "nav.textbook", text: "tour.textbookText" },
+  { sel: '.tab[data-view="chat"]', title: "nav.chat", text: "tour.chatText" },
+  { sel: '.tab[data-view="graph"]', title: "nav.graph", text: "tour.graphText" },
+  { sel: '.tab[data-view="competition"]', title: "nav.competition", text: "tour.competitionText" },
+  { sel: '.tab[data-view="games"]', title: "nav.games", text: "tour.gamesText" },
+  { sel: '.tab[data-view="schedule"]', title: "sch.title", text: "tour.scheduleText" },
+  { sel: '.tab[data-view="corner"]', title: "nav.corner", text: "tour.cornerText" },
+  { sel: '.tab[data-view="progress"]', title: "nav.progress", text: "tour.progressText" },
+  { sel: '.tab[data-view="league"]', title: "nav.league", text: "tour.leagueText" },
+  { sel: '.tab[data-view="settings"]', title: "nav.settings", text: "tour.settingsText" },
+  { sel: '.tab[data-view="feedback"]', title: "nav.feedbackShort", text: "tour.feedbackText" },
+  { sel: '#tabbar [data-view="me"]', title: "nav.me", text: "tour.meText2" },
+  { sel: "#profile-btn", title: "tour.profile", text: "tour.profileText" },
+  { title: "tour.end", text: "tour.endText" },
 ];
-const TOUR_KEY = "stemmind.tour";
+const TOUR_KEY = "kompreno.tour";
+const visibleEl = (sel) => [...document.querySelectorAll(sel)].find((el) => el.getClientRects().length && !el.closest("[hidden]"));
 
 function startTour() {
   const box = $("#tour");
+  // Koraki, ki jih na tem zaslonu lahko pokažemo (števec »3 / 12« potem drži).
+  const steps = TOUR.filter((s) => !s.sel || visibleEl(s.sel));
   let i = 0;
+  const spot = box.querySelector(".tour-spot");
+  const card = box.querySelector(".tour-card");
   const show = () => {
-    const step = TOUR[i];
-    const target = [...document.querySelectorAll(step.sel)].find((el) => el.getClientRects().length); // vidni (telefon ali računalnik)
-    if (!target) return next();
-    target.scrollIntoView({ block: "nearest" });
-    const r = target.getBoundingClientRect();
-    const pad = 6;
-    Object.assign(box.querySelector(".tour-spot").style, {
-      left: `${r.left - pad}px`,
-      top: `${r.top - pad}px`,
-      width: `${r.width + 2 * pad}px`,
-      height: `${Math.min(r.height, innerHeight * 0.5) + 2 * pad}px`,
-    });
-    const card = box.querySelector(".tour-card");
-    const below = r.top + Math.min(r.height, innerHeight * 0.5) / 2 < innerHeight / 2;
-    card.style.top = below ? `${Math.min(r.top + Math.min(r.height, innerHeight * 0.5) + 16, innerHeight - 220)}px` : "auto";
-    card.style.bottom = below ? "auto" : `${Math.max(innerHeight - r.top + 16, 16)}px`;
-    box.querySelector(".tour-step").textContent = `${i + 1} / ${TOUR.length}`;
-    box.querySelector("#tour-title").textContent = step.title;
-    box.querySelector(".tour-text").textContent = step.text;
-    box.querySelector('[data-tour="next"]').textContent = i === TOUR.length - 1 ? t("tour.start") : t("tour.next");
+    const step = steps[i];
+    const target = step.sel && visibleEl(step.sel);
+    if (step.sel && !target) return next();
+    card.classList.toggle("center", !target);
+    if (target) {
+      target.scrollIntoView({ block: "nearest" });
+      const r = target.getBoundingClientRect();
+      const pad = 6;
+      const h = Math.min(r.height, innerHeight * 0.5);
+      Object.assign(spot.style, { left: `${r.left - pad}px`, top: `${r.top - pad}px`, width: `${r.width + 2 * pad}px`, height: `${h + 2 * pad}px` });
+      const below = r.top + h / 2 < innerHeight / 2;
+      card.style.top = below ? `${Math.min(r.top + h + 16, innerHeight - 240)}px` : "auto";
+      card.style.bottom = below ? "auto" : `${Math.max(innerHeight - r.top + 16, 16)}px`;
+    } else {
+      Object.assign(spot.style, { left: "50%", top: "50%", width: "0px", height: "0px" });
+      card.style.top = "";
+      card.style.bottom = "";
+    }
+    box.querySelector(".tour-step").textContent = `${i + 1} / ${steps.length}`;
+    box.querySelector("#tour-title").textContent = t(step.title);
+    box.querySelector(".tour-text").textContent = t(step.text);
+    box.querySelector('[data-tour="next"]').textContent = i === steps.length - 1 ? t("tour.start") : t("tour.next");
+    box.querySelector('[data-tour="back"]').hidden = i === 0;
+    box.querySelector('[data-tour="next"]').focus({ preventScroll: true });
   };
   const end = () => {
     box.hidden = true;
+    document.removeEventListener("keydown", onKey);
     try {
       localStorage.setItem(TOUR_KEY, "done");
     } catch {}
+    if (state.student && (state.student.settings?.tour_version || 0) < TOUR_VERSION) {
+      state.student.settings = { ...state.student.settings, tour_version: TOUR_VERSION };
+      api(`/api/students/${state.student.id}`, { method: "PUT", body: { settings: { tour_version: TOUR_VERSION } } }).catch(() => null);
+    }
   };
-  const next = () => (++i >= TOUR.length ? end() : show());
+  const next = () => (++i >= steps.length ? end() : show());
+  const back = () => {
+    i = Math.max(0, i - 1);
+    show();
+  };
+  const onKey = (e) => {
+    if (e.key === "Escape") end();
+    else if (e.key === "ArrowRight") next();
+    else if (e.key === "ArrowLeft") back();
+  };
   box.querySelector('[data-tour="next"]').onclick = next;
+  box.querySelector('[data-tour="back"]').onclick = back;
   box.querySelector('[data-tour="skip"]').onclick = end;
+  document.addEventListener("keydown", onKey);
   box.hidden = false;
   show();
 }
+// Vsak profil vidi vodič enkrat, ob prvi uporabi (tudi star profil, ki je videl le kratek ogled).
 function maybeTour() {
-  let seen = null;
-  try {
-    seen = localStorage.getItem(TOUR_KEY);
-  } catch {}
-  // Uvodni ogled šele, ko je vprašalnik kotička zaprt.
-  if (!seen) Promise.resolve(state.interestsAsk).then(() => setTimeout(startTour, 400));
+  if ((state.student?.settings?.tour_version || 0) >= TOUR_VERSION) return;
+  // Vodič šele, ko je vprašalnik kotička zaprt.
+  Promise.resolve(state.interestsAsk).then(() => setTimeout(startTour, 400));
 }
 $("#tour-again").addEventListener("click", () => {
   showView("path");
@@ -2450,7 +2569,7 @@ $("#tour-again").addEventListener("click", () => {
 const CALC_MODES = ["sci", "graph", "tools", "pse", "formulas"];
 let calcMode = "sci";
 try {
-  if (CALC_MODES.includes(localStorage.getItem("stemmind.calcMode"))) calcMode = localStorage.getItem("stemmind.calcMode");
+  if (CALC_MODES.includes(localStorage.getItem("kompreno.calcMode"))) calcMode = localStorage.getItem("kompreno.calcMode");
 } catch {}
 const calcTools = {};
 let calcP = null; // grafični kalkulator
@@ -2471,7 +2590,7 @@ function graphCalc() {
       locale,
       api,
       toast: (m) => toast(m, "check"),
-      storageKey: () => `stemmind.graph.${state.student?.id ?? 0}`,
+      storageKey: () => `kompreno.graph.${state.student?.id ?? 0}`,
       studentId: () => state.student?.id,
       askTutor: (text) => {
         closeCalcOverlay();
@@ -2506,7 +2625,7 @@ function calcTool(mode) {
   calcTools[mode] ||= (mode === "sci" ? import("./graph/sci.js") : import("./graph/tools.js")).then((m) => {
     const host = document.createElement("div");
     const base = { t, icon, locale, onInsert: insertIntoCalc };
-    if (mode === "sci") return m.createScientific(host, { ...base, storageKey: () => `stemmind.sci.${state.student?.id ?? 0}` });
+    if (mode === "sci") return m.createScientific(host, { ...base, storageKey: () => `kompreno.sci.${state.student?.id ?? 0}` });
     if (mode === "tools") return m.createTools(host, { ...base, subject: calcSubject });
     if (mode === "pse") return m.createPse(host, { ...base, lang: currentLang });
     return m.createFormulas(host, { ...base, api, renderRich, bookKey: formulaBook });
@@ -2518,7 +2637,7 @@ async function setCalcMode(mode) {
   if (!CALC_MODES.includes(mode)) mode = "sci";
   calcMode = mode;
   try {
-    localStorage.setItem("stemmind.calcMode", mode);
+    localStorage.setItem("kompreno.calcMode", mode);
   } catch {}
   document.querySelectorAll(".calc-modes [data-calc-mode]").forEach((b) => {
     b.classList.toggle("active", b.dataset.calcMode === mode);
@@ -2604,7 +2723,7 @@ async function addGraphButton(bubble, text) {
 }
 
 // Za samodejne preizkuse v brskalniku.
-window.stemmind = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay };
+window.kompreno = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay, openZbirke };
 
 initFlashcards({ api, renderRich, escapeHtml, toast, showView, getStudent: () => state.student, onDue: setCardsDue });
 
@@ -2641,6 +2760,7 @@ initFormulaInfo();
   $("#mock-banner").hidden = !cfg.mock;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   initGames({ api, getStudent: () => state.student, refreshXp, currentLang });
+  initZbirke({ api, getStudent: () => state.student, currentLang, showView });
   initCorner({
     api,
     getStudent: () => state.student,
@@ -2673,7 +2793,7 @@ initFormulaInfo();
   const bar = document.querySelector(".topbar");
   const tabs = bar?.querySelector(".tabs");
   if (bar && tabs) {
-    // Koraki, dokler zavihki ne gredo v vrstico: ožji zavihki, brez napisa »STEMMind« ob logotipu,
+    // Koraki, dokler zavihki ne gredo v vrstico: ožji zavihki, brez napisa »Kompreno« ob logotipu,
     // manj pogosti zavihki samo z ikono, na koncu vsi samo z ikono (izbrani obdrži napis).
     const STEPS = ["tabs-tight", "tabs-nobrand", "tabs-minor", "tabs-compact"];
     const over = () => tabs.scrollWidth > tabs.clientWidth + 1;

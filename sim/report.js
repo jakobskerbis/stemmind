@@ -231,7 +231,7 @@ details{background:var(--card);border:1px solid var(--line);border-radius:12px;m
 .st .bubble{background:var(--st)}.tu .bubble{background:var(--tu)}.thought,.warn{font-size:.8em;color:var(--muted);margin-top:2px}.warn{color:var(--mid)}.n{display:block;font-size:.75em;color:var(--muted)}
 .verdict{border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px}.end{color:var(--muted);font-size:.85em;text-align:center}
 </style></head><body><main>
-<h1>Digitalni razred</h1><div class="muted">Simulirani prvi uporabniki inštruktorja STEMMind · ${esc(s.zacetek ?? "")} · inštruktor: ${esc(s.instruktor ?? "")} · učenci: ${esc(s.modelUcenca ?? "")} · ocenjevalec: ${esc(s.modelOcenjevalca ?? "")}</div>
+<h1>Digitalni razred</h1><div class="muted">Simulirani prvi uporabniki inštruktorja Kompreno · ${esc(s.zacetek ?? "")} · inštruktor: ${esc(s.instruktor ?? "")} · učenci: ${esc(s.modelUcenca ?? "")} · ocenjevalec: ${esc(s.modelOcenjevalca ?? "")}</div>
 <div class="kpis"><div class="kpi"><span class="muted">Povprečna ocena</span><b>${fmt(s.povprecnaOcena)} / 5</b>${cmp ? `<span class="muted">prej ${fmt(cmp.povprecje.prej)} (${sign(cmp.povprecje.razlika)})</span>` : ""}</div>
 <div class="kpi"><span class="muted">Kritične težave</span><b class="${s.kriticnih ? "crit" : ""}">${s.kriticnih}</b></div>
 <div class="kpi"><span class="muted">Učenec napredoval</span><b>${s.napredovali}/${s.ocenjenih}</b></div>

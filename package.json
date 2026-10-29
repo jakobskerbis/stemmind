@@ -1,15 +1,15 @@
 {
-  "name": "stemmind",
+  "name": "kompreno",
   "version": "0.1.0",
   "private": true,
-  "description": "STEMMind – AI inštruktor za matematiko, fiziko in kemijo",
+  "description": "Kompreno – AI inštruktor za matematiko, fiziko in kemijo",
   "type": "module",
   "engines": {
     "node": ">=22.5"
   },
   "scripts": {
     "start": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning server/index.js",
-    "dev": "STEMMIND_MOCK=1 node --disable-warning=ExperimentalWarning --watch server/index.js",
+    "dev": "KOMPRENO_MOCK=1 node --disable-warning=ExperimentalWarning --watch server/index.js",
     "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js",
     "sim": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning sim/run.js"
   },

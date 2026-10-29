@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>STEMMind</title>
+  <title>Kompreno</title>
   <meta name="theme-color" content="#ffffff">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" type="image/png" href="/icons/icon-192.png">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="STEMMind">
+  <meta name="apple-mobile-web-app-title" content="Kompreno">
   <script src="theme.js"></script>
   <link rel="stylesheet" href="vendor/instrument-sans/index.css">
   <link rel="stylesheet" href="vendor/nunito/index.css">
@@ -25,15 +25,16 @@
   <link rel="stylesheet" href="feedback.css">
   <link rel="stylesheet" href="graph.css">
   <link rel="stylesheet" href="games.css">
+  <link rel="stylesheet" href="zbirke.css">
   <link rel="stylesheet" href="schedule.css">
   <link rel="stylesheet" href="corner.css">
   <link rel="stylesheet" href="touch.css">
 </head>
 <body>
   <header class="topbar">
-    <button type="button" class="brand" data-view="path" aria-label="STEMMind – na učno pot" data-i18n-aria="nav.home">
+    <button type="button" class="brand" data-view="path" aria-label="Kompreno – na učno pot" data-i18n-aria="nav.home">
       <span class="logo" aria-hidden="true"><i data-icon="graduation-cap"></i></span>
-      <span class="brand-name">STEM<span>Mind</span></span>
+      <span class="brand-name">Kompren<span>o</span></span>
     </button>
     <nav class="tabs" role="tablist">
       <button class="tab active" data-view="path"><i data-icon="map"></i><span data-i18n="nav.path">Učna pot</span></button>
@@ -122,6 +123,14 @@
   <main id="view-games" class="view games-view" hidden>
     <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
     <div id="games-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
+  </main>
+
+  <!-- ZBIRKE IN UČNI PASS (zbirke-view.js) -->
+  <main id="view-zbirke" class="view narrow" hidden>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <button type="button" class="ghost back zb-back" hidden><i data-icon="arrow-left"></i><span data-i18n="games.back">Nazaj na igre</span></button>
+    <h1 class="with-icon"><i data-icon="award"></i> <span data-i18n="zb.title">Zbirke in učni pass</span></h1>
+    <div id="zbirke-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
   </main>
 
   <!-- KOTIČEK ZANIMANJ (corner.js): novice o izbranih temah, pripete novice, oglasna deska -->
@@ -294,7 +303,7 @@
     <div id="prog-goal" class="card goal-card" hidden></div>
     <div class="card">
       <h2 data-i18n="prog.weak">Šibke točke</h2>
-      <p class="muted" data-i18n="prog.weakNote">Samodejno zaznane iz pogovorov (vsaj 3 poteze, vsaj 40 % napak v zadnjih 60 dneh) in ročno vnesene. STEMMind jih upošteva pri razlagi.</p>
+      <p class="muted" data-i18n="prog.weakNote">Samodejno zaznane iz pogovorov (vsaj 3 poteze, vsaj 40 % napak v zadnjih 60 dneh) in ročno vnesene. Kompreno jih upošteva pri razlagi.</p>
       <ul id="weak-list" class="pill-list"></ul>
     </div>
     <div class="card">
@@ -310,7 +319,7 @@
     </div>
     <div class="card" id="flags-card">
       <h2 data-i18n="prog.flags">Opozorila</h2>
-      <p class="muted" data-i18n="prog.flagsNote">Pogovori, kjer je STEMMind zaznal stisko, nevarno prošnjo ali poskus obiti pravila.</p>
+      <p class="muted" data-i18n="prog.flagsNote">Pogovori, kjer je Kompreno zaznal stisko, nevarno prošnjo ali poskus obiti pravila.</p>
       <ul id="flag-list"></ul>
     </div>
   </main>
@@ -326,6 +335,7 @@
       <div class="card"><span class="stat-ic xp"><i data-icon="star"></i></span><b id="me-xp">0</b><span>XP</span></div>
       <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span data-i18n="me.streak">dni zapored</span></div>
     </div>
+    <button type="button" class="card list-row zb-me-card" id="me-zbirke" data-go="zbirke" hidden></button>
     <div class="card list-card">
       <button type="button" class="list-row" data-go="schedule"><span class="ic"><i data-icon="calendar-days"></i></span><span class="lr-text"><b data-i18n="sch.title">Urnik</b><small data-i18n="sch.meSub">Ure v tednu in datumi testov</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="games"><span class="ic"><i data-icon="gamepad-2"></i></span><span class="lr-text"><b data-i18n="nav.games">Igre</b><small data-i18n="games.meSub">Matematika skozi igro</small></span><i data-icon="chevron-right"></i></button>
@@ -383,7 +393,7 @@
       <div class="tour-step"></div>
       <h2 id="tour-title"></h2>
       <p class="tour-text"></p>
-      <div class="tour-actions"><button type="button" class="ghost" data-tour="skip" data-i18n="tour.skip">Preskoči</button><button type="button" class="primary" data-tour="next" data-i18n="tour.next">Naprej</button></div>
+      <div class="tour-actions"><button type="button" class="ghost" data-tour="skip" data-i18n="tour.skip">Preskoči</button><span class="tour-nav"><button type="button" class="secondary" data-tour="back" data-i18n="tb.steps.prev" hidden>Nazaj</button><button type="button" class="primary" data-tour="next" data-i18n="tour.next">Naprej</button></span></div>
     </div>
   </div>
 

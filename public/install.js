@@ -1,4 +1,4 @@
-// STEMMind kot aplikacija na začetnem zaslonu (PWA).
+// Kompreno kot aplikacija na začetnem zaslonu (PWA).
 // - Android, Chrome in Edge na računalniku: gumb »Namesti aplikacijo« odpre okno brskalnika za namestitev.
 // - iPhone in iPad: Safari namestitve ne ponudi sam, zato pokažemo tri korake (Deli → Dodaj na začetni zaslon).
 // - Odprto v Instagramu, Messengerju …: najprej odpri v brskalniku.
@@ -6,7 +6,7 @@
 import { icon } from "./icons.js";
 import { t, currentLang } from "./i18n.js";
 
-const KEY = "stemmind.install"; // čas, ko je bila kartica na Učni poti skrita
+const KEY = "kompreno.install"; // čas, ko je bila kartica na Učni poti skrita
 const HIDE_DAYS = 21;
 let deferred = null; // beforeinstallprompt
 let ctx = { toast: () => {}, onSheet: () => {} };

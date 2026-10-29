@@ -56,7 +56,7 @@ const SCHEMA = {
   },
 };
 
-const SYSTEM = `Si izkušen slovenski učitelj matematike, fizike in kemije ter ocenjevalec AI inštruktorjev. Ocenjuješ pogovor med AI inštruktorjem STEMMind in digitalnim učencem (simulacija prvega uporabnika). Tvoja ocena je referenca, kaj je pri inštruktorju sprejemljivo in kaj ne, zato bodi strog, konkreten in pošten: ne nagrajuj vljudnosti, ki ne pomaga učenju, in ne kaznuj inštruktorja za napake simuliranega učenca.
+const SYSTEM = `Si izkušen slovenski učitelj matematike, fizike in kemije ter ocenjevalec AI inštruktorjev. Ocenjuješ pogovor med AI inštruktorjem Kompreno in digitalnim učencem (simulacija prvega uporabnika). Tvoja ocena je referenca, kaj je pri inštruktorju sprejemljivo in kaj ne, zato bodi strog, konkreten in pošten: ne nagrajuj vljudnosti, ki ne pomaga učenju, in ne kaznuj inštruktorja za napake simuliranega učenca.
 
 ## Merila (vsako oceni z OK, DELNO, NI_OK ali N/A, če se v pogovoru ni pokazalo)
 ${rubricText()}

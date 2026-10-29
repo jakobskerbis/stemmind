@@ -6,7 +6,8 @@
 //   local: ista koda in prompt kot aplikacija, v pomnilniku (prazna baza, brez omejitev);
 //          z API ključem odgovarja pravi model, brez njega preizkusni način.
 //   http:  tekoča aplikacija prek spleta (npr. ngrok), z geslom testne različice
-//          ali s prijavo v testni račun (STEMMIND_ACCOUNTS=1).
+//          ali s prijavo v testni račun (KOMPRENO_ACCOUNTS=1).
+import "../server/env.js";
 
 const TIMEOUT_MS = 180_000;
 
@@ -43,10 +44,10 @@ function readReply(body) {
 class LocalTutor {
   static async create(opts) {
     // Simulacija ne sme zadeti dnevnih omejitev, gesla ali prijave staršev iz .env.
-    Object.assign(process.env, { STEMMIND_ACCOUNTS: "0", STEMMIND_DAILY_QUESTIONS: "0", STEMMIND_MONTHLY_BUDGET_USD: "0" });
-    delete process.env.STEMMIND_PASSWORD;
-    if (opts.mock) process.env.STEMMIND_MOCK = "1";
-    if (opts.mockDelay !== undefined) process.env.STEMMIND_MOCK_DELAY_MS = String(opts.mockDelay);
+    Object.assign(process.env, { KOMPRENO_ACCOUNTS: "0", KOMPRENO_DAILY_QUESTIONS: "0", KOMPRENO_MONTHLY_BUDGET_USD: "0" });
+    delete process.env.KOMPRENO_PASSWORD;
+    if (opts.mock) process.env.KOMPRENO_MOCK = "1";
+    if (opts.mockDelay !== undefined) process.env.KOMPRENO_MOCK_DELAY_MS = String(opts.mockDelay);
     const { openDb } = await import("../server/db.js");
     const { createApp } = await import("../server/app.js");
     const claude = await import("../server/claude.js");
@@ -121,7 +122,7 @@ class HttpTutor {
       headers: {
         "Content-Type": "application/json",
         "ngrok-skip-browser-warning": "1",
-        "User-Agent": "STEMMind-simulator/1.0",
+        "User-Agent": "Kompreno-simulator/1.0",
         Cookie: [...this.cookies].map(([k, v]) => `${k}=${v}`).join("; "),
       },
       body: body ? JSON.stringify(body) : undefined,

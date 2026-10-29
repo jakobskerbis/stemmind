@@ -5,7 +5,7 @@ import { systemForCountry } from "./regions.js";
 import { currentLang, currentRegion, deviceRegion } from "./i18n.js";
 import { openProfileMenu } from "./profile-menu.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
-// Deluje samo, ko je na strežniku STEMMIND_ACCOUNTS=1.
+// Deluje samo, ko je na strežniku KOMPRENO_ACCOUNTS=1.
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -114,12 +114,12 @@ export async function initAccount({ onReady }) {
   $("#account-tab").addEventListener("click", renderAccount);
 
   const q = new URLSearchParams(location.search);
-  if (q.get("ref")) store.set("stemmind_ref", q.get("ref"));
-  if (q.get("koda")) store.set("stemmind_koda", q.get("koda"));
+  if (q.get("ref")) store.set("kompreno_ref", q.get("ref"));
+  if (q.get("koda")) store.set("kompreno_koda", q.get("koda"));
   // Povezava s strani za starše (starsi.html): starš ustvari račun, otrokovo ime je že vpisano.
   const parentInvite = q.get("starsi") === "1";
   if (parentInvite) {
-    store.set("stemmind_invite_name", (q.get("ime") || "").slice(0, 40) || null);
+    store.set("kompreno_invite_name", (q.get("ime") || "").slice(0, 40) || null);
     store.set(AGE_BLOCK, null);
   }
   const reset = q.get("reset");
@@ -182,17 +182,17 @@ function shell(inner) {
 }
 
 // Po zavrnjeni registraciji zaradi starosti naprava 24 ur kaže stran s povezavo za starše.
-const AGE_BLOCK = "stemmind_age_block";
+const AGE_BLOCK = "kompreno_age_block";
 const ageBlocked = () => Date.now() - Number(store.get(AGE_BLOCK) || 0) < 86400000;
 
 function renderLogin(mode = "login") {
   if (mode === "register" && ageBlocked()) return renderAskParent();
-  const invited = mode === "register" && store.get("stemmind_invite_name");
-  const ref = store.get("stemmind_ref") || "";
-  const koda = store.get("stemmind_koda") || "";
+  const invited = mode === "register" && store.get("kompreno_invite_name");
+  const ref = store.get("kompreno_ref") || "";
+  const koda = store.get("kompreno_koda") || "";
   shell(`
     <h1>${mode === "login" ? "Prijava" : "Nov račun"}</h1>
-    <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za dijake ter študente (lasten profil)." : `STEMMind je 7 dni brezplačen, brez kartice. Nato ${eur(999)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
+    <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za dijake ter študente (lasten profil)." : `Kompreno je 7 dni brezplačen, brez kartice. Nato ${eur(999)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
     ${invited ? `<p class="card">Ustvarite svoj račun starša. Nato dodate otrokov profil (<b>${esc(invited)}</b>) in s tem date soglasje.</p>` : ""}
     <form id="auth-form" class="card form">
       ${mode === "register" ? `<label>Vaše ime (neobvezno) <input name="name" maxlength="60" autocomplete="name"></label>` : ""}
@@ -224,11 +224,11 @@ function renderLogin(mode = "login") {
           method: "POST",
           body: { name: f.name.value, email: f.email.value, password: f.password.value, referral_code: f.referral_code.value, promo_code: f.promo_code.value, accept_privacy: f.accept_privacy.checked, birth_date: f.birth_date.value, country: deviceRegion() },
         });
-        store.set("stemmind_ref", null);
-        store.set("stemmind_koda", null);
+        store.set("kompreno_ref", null);
+        store.set("kompreno_koda", null);
         if (r.promo_until) toast(`Aktivacijska koda velja ✓ Poln dostop do ${date(r.promo_until)}.`);
         if (r.promo_error) toast(`Račun je ustvarjen, koda pa ni bila sprejeta: ${r.promo_error}`);
-        if (r.dev_verify_url) store.set("stemmind_dev_verify", r.dev_verify_url);
+        if (r.dev_verify_url) store.set("kompreno_dev_verify", r.dev_verify_url);
       }
       await continueFlow();
     } catch (err) {
@@ -241,12 +241,12 @@ function renderLogin(mode = "login") {
   });
 }
 
-// Premlad za lasten račun: povezava za starše s vsemi podatki (kaj je STEMMind, podatki, cena, soglasje).
+// Premlad za lasten račun: povezava za starše s vsemi podatki (kaj je Kompreno, podatki, cena, soglasje).
 function renderAskParent(minAge) {
   const linkFor = (name) => `${location.origin}/starsi.html${name ? `?ime=${encodeURIComponent(name)}` : ""}`;
   shell(`
     <h1>Vprašaj starše</h1>
-    <p class="muted">${minAge ? `Za mlajše od ${minAge} let` : "Za mlajše učence"} račun ustvari starš ali skrbnik. Pošlji jim to povezavo: tam piše, kaj je STEMMind, katere podatke hranimo in koliko stane. Ko starš ustvari račun in doda tvoj profil, se lahko začneš učiti.</p>
+    <p class="muted">${minAge ? `Za mlajše od ${minAge} let` : "Za mlajše učence"} račun ustvari starš ali skrbnik. Pošlji jim to povezavo: tam piše, kaj je Kompreno, katere podatke hranimo in koliko stane. Ko starš ustvari račun in doda tvoj profil, se lahko začneš učiti.</p>
     <form id="ask-parent" class="card form">
       <label>Tvoje ime ali vzdevek (neobvezno) <input name="name" maxlength="40" placeholder="npr. Miha"></label>
       <label>Povezava za starše <input name="link" readonly value="${esc(linkFor(""))}"></label>
@@ -262,9 +262,9 @@ function renderAskParent(minAge) {
   const link = () => linkFor(f.name.value.trim());
   const text = () => {
     const n = f.name.value.trim();
-    return `${n ? `${n} bi rad(a)` : "Rad(a) bi"} uporabljal(a) STEMMind, AI inštruktorja za matematiko, fiziko in kemijo. Za to potrebujem tvoje dovoljenje:`;
+    return `${n ? `${n} bi rad(a)` : "Rad(a) bi"} uporabljal(a) Kompreno, AI inštruktorja za matematiko, fiziko in kemijo. Za to potrebujem tvoje dovoljenje:`;
   };
-  const mail = () => (location.href = `mailto:?subject=${encodeURIComponent("STEMMind – prosim za dovoljenje")}&body=${encodeURIComponent(`${text()}\n${link()}`)}`);
+  const mail = () => (location.href = `mailto:?subject=${encodeURIComponent("Kompreno – prosim za dovoljenje")}&body=${encodeURIComponent(`${text()}\n${link()}`)}`);
   f.name.addEventListener("input", () => (f.link.value = link()));
   f.querySelector('[data-act="mail"]').addEventListener("click", mail);
   f.querySelector('[data-act="copy"]').addEventListener("click", async () => {
@@ -278,7 +278,7 @@ function renderAskParent(minAge) {
   f.querySelector('[data-act="share"]').addEventListener("click", async () => {
     if (navigator.share) {
       try {
-        await navigator.share({ title: "STEMMind", text: text(), url: link() });
+        await navigator.share({ title: "Kompreno", text: text(), url: link() });
       } catch {}
     } else mail();
   });
@@ -339,7 +339,7 @@ function renderReset(token) {
 }
 
 function renderVerify() {
-  const dev = store.get("stemmind_dev_verify");
+  const dev = store.get("kompreno_dev_verify");
   shell(`
     <h1>Potrdite e-naslov</h1>
     <div class="card">
@@ -355,7 +355,7 @@ function renderVerify() {
   $("#verify-done").addEventListener("click", continueFlow);
   $("#verify-resend").addEventListener("click", async () => {
     const r = await api("/api/auth/resend-verification", { method: "POST" });
-    if (r.dev_verify_url) store.set("stemmind_dev_verify", r.dev_verify_url);
+    if (r.dev_verify_url) store.set("kompreno_dev_verify", r.dev_verify_url);
     toast("Povezava je poslana znova.");
     if (r.dev_verify_url) renderVerify();
   });
@@ -369,7 +369,7 @@ function childForm(consentText, programs = []) {
   const years = Array.from({ length: 60 }, (_, i) => y - 6 - i);
   // Mladoletni imetnik računa ustvari samo svoj profil (letnica iz datuma rojstva ob registraciji).
   const self = !!status?.parent?.minor;
-  const invited = store.get("stemmind_invite_name") || "";
+  const invited = store.get("kompreno_invite_name") || "";
   // Polnoletni imetnik izbere: profil za otroka (soglasje starša) ali zase (dijak/študent, dovolj star za lastno soglasje).
   const choice = self ? "" : `
       <fieldset class="whose-field">
@@ -442,7 +442,7 @@ function bindChildForm(after) {
         body: { name: f.name.value, birth_year: Number(f.birth_year.value), self: isSelf(), consent: f.consent.checked, settings: childSettings(f) },
       });
       store.set("studentId", String(s.id));
-      store.set("stemmind_invite_name", null);
+      store.set("kompreno_invite_name", null);
       await after(s);
     } catch (err) {
       showError(f, err);
@@ -531,9 +531,9 @@ function promoBox(acc, paid) {
         <div class="inline"><input id="promo-url" readonly value="${esc(a.url)}"><button id="promo-copy" type="button">Kopiraj</button></div></div>`
     : "";
   if (!pr.available || pr.redeemed || paid) return admin;
-  return `<details${store.get("stemmind_koda") ? " open" : ""}><summary>Imate aktivacijsko kodo?</summary>
+  return `<details${store.get("kompreno_koda") ? " open" : ""}><summary>Imate aktivacijsko kodo?</summary>
       <form id="promo-form" class="inline form">
-        <input name="code" maxlength="40" required autocapitalize="characters" placeholder="npr. STEMMIND100" value="${esc(store.get("stemmind_koda") || "")}">
+        <input name="code" maxlength="40" required autocapitalize="characters" placeholder="npr. KOMPRENO100" value="${esc(store.get("kompreno_koda") || "")}">
         <button class="primary" type="submit">Aktiviraj</button>
         <p class="form-error" hidden></p>
       </form></details>${admin}`;
@@ -627,7 +627,7 @@ async function renderAccount() {
     btn.disabled = true;
     try {
       const r = await api("/api/account/promo", { method: "POST", body: { code: e.target.code.value } });
-      store.set("stemmind_koda", null);
+      store.set("kompreno_koda", null);
       toast(`Aktivacijska koda velja ✓ Poln dostop do ${date(r.access.until)}.`);
       await onReadyCb?.({ keepView: true });
       renderAccount();

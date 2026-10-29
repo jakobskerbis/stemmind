@@ -2,7 +2,7 @@
 # Navodila: docs/objava.md
 services:
   - type: web
-    name: stemmind
+    name: kompreno
     runtime: node
     region: frankfurt          # najbližje Sloveniji
     plan: starter              # trajni disk ni na voljo v brezplačnem paketu
@@ -11,31 +11,31 @@ services:
     healthCheckPath: /healthz
     autoDeploy: false          # nova različica vsaki 2 uri: .github/workflows/render-posodobitev.yml
     disk:
-      name: stemmind-data
+      name: kompreno-data
       mountPath: /var/data     # baza učencev ostane ob vsaki posodobitvi
       sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: "22.12.0"
-      - key: STEMMIND_DB
-        value: /var/data/stemmind.db
+      - key: KOMPRENO_DB
+        value: /var/data/kompreno.db
       - key: ANTHROPIC_API_KEY
         sync: false
-      - key: STEMMIND_PASSWORD
+      - key: KOMPRENO_PASSWORD
         sync: false
-      - key: STEMMIND_ACCOUNTS
+      - key: KOMPRENO_ACCOUNTS
         value: "1"
-      - key: STEMMIND_BASE_URL
+      - key: KOMPRENO_BASE_URL
         sync: false
-      - key: STEMMIND_ADMIN_EMAILS
+      - key: KOMPRENO_ADMIN_EMAILS
         sync: false
-      - key: STEMMIND_DAILY_QUESTIONS
+      - key: KOMPRENO_DAILY_QUESTIONS
         value: "0"
-      - key: STEMMIND_FREE_DAILY_QUESTIONS
+      - key: KOMPRENO_FREE_DAILY_QUESTIONS
         value: "10"
-      - key: STEMMIND_STUDENT_MONTHLY_USD
+      - key: KOMPRENO_STUDENT_MONTHLY_USD
         value: "1.5"
-      - key: STEMMIND_MONTHLY_BUDGET_USD
+      - key: KOMPRENO_MONTHLY_BUDGET_USD
         value: "50"
       - key: STRIPE_SECRET_KEY
         sync: false

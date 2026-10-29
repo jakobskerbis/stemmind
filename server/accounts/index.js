@@ -1,10 +1,11 @@
 // Starševski računi, soglasja, naročnine (Stripe), priporočila in tedenska poročila (Resend).
-// Vklop: STEMMIND_ACCOUNTS=1. Brez tega aplikacija deluje kot prej (brez prijave).
+// Vklop: KOMPRENO_ACCOUNTS=1. Brez tega aplikacija deluje kot prej (brez prijave).
+import "../env.js";
 import { isLocalRequest } from "../feedback.js";
 import express from "express";
 import { migrateAccounts } from "./schema.js";
 import { hashPassword, verifyPassword, randomToken, sha256, readCookie, Sessions, setSessionCookie, clearSessionCookie, Throttle } from "./auth.js";
-import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, isPremiumChild, isoIn, freeDailyQuestions, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION } from "./plans.js";
+import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, isPremiumChild, isoIn, freeDailyQuestions, freeMonthlyPoolUsd, freeStudentMonthlyUsd, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION } from "./plans.js";
 import { Stripe, verifyWebhook } from "./stripe.js";
 import { Mailer, verifyEmail, resetEmail, referralRewardEmail } from "./email.js";
 import { buildWeeklyReport, weekKey, isSendTime } from "./weekly.js";
@@ -16,13 +17,13 @@ import { promoConfig, createPromo } from "./promo.js";
 import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
 
 export const CONSENT_TEXT =
-  "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da STEMMind obdeluje otrokove osebne podatke " +
+  "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da Kompreno obdeluje otrokove osebne podatke " +
   "(ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen " +
   "učenja, kot je opisano v Obvestilu o varstvu osebnih podatkov. Soglasje lahko kadar koli prekličem z izbrisom otrokovega profila.";
 
 // Soglasje dijaka, ki je dovolj star za lastno privolitev in ustvarja svoj profil.
 export const SELF_CONSENT_TEXT =
-  "Profil je moj. Prebral(a) sem Obvestilo o varstvu osebnih podatkov in soglašam, da STEMMind obdeluje moje podatke " +
+  "Profil je moj. Prebral(a) sem Obvestilo o varstvu osebnih podatkov in soglašam, da Kompreno obdeluje moje podatke " +
   "(ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,7 +31,8 @@ const PAID = new Set(["active", "trialing", "past_due"]);
 const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 // Piškotek po zavrnjeni registraciji zaradi starosti: 24 ur je na tej napravi mogoča samo
 // registracija polnoletnega (starša), da otrok ne poskusi znova z drugim datumom.
-const AGE_COOKIE = "stemmind_age";
+const AGE_COOKIE = "kompreno_age";
+const LEGACY_AGE_COOKIE = "stemmind_age"; // ime iz časa STEMMind (velja en dan)
 
 function referralCode() {
   let s = "";
@@ -39,7 +41,7 @@ function referralCode() {
 }
 
 export function mountAccounts(app, store, opts = {}) {
-  const enabled = opts.accounts ?? process.env.STEMMIND_ACCOUNTS === "1";
+  const enabled = opts.accounts ?? process.env.KOMPRENO_ACCOUNTS === "1";
   if (!enabled) {
     app.get("/api/account/status", (_req, res) => res.json({ enabled: false }));
     return null;
@@ -58,7 +60,7 @@ export function mountAccounts(app, store, opts = {}) {
   const stripe = new Stripe({ secretKey: opts.stripeKey ?? env.STRIPE_SECRET_KEY, fetchFn: opts.fetchFn, kv });
   const mailer = new Mailer({ apiKey: opts.resendKey ?? env.RESEND_API_KEY, fetchFn: opts.fetchFn, log: opts.mailLog });
   const webhookSecret = opts.webhookSecret ?? env.STRIPE_WEBHOOK_SECRET;
-  const adminEmails = (env.STEMMIND_ADMIN_EMAILS || "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
+  const adminEmails = (env.KOMPRENO_ADMIN_EMAILS || "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
   const sessions = new Sessions(db);
   const devices = new Devices(db);
   const throttle = new Throttle();
@@ -66,10 +68,10 @@ export function mountAccounts(app, store, opts = {}) {
   const log = opts.log || console;
   const promoCfg = opts.promo ?? promoConfig(env);
   const promo = createPromo(db, promoCfg);
-  if (promoCfg.code) log.info?.(`[stemmind] aktivacijska koda ${promoCfg.code}: porabljenih ${promo.used()}/${promoCfg.limit}, ${promoCfg.days} dni`);
+  if (promoCfg.code) log.info?.(`[kompreno] aktivacijska koda ${promoCfg.code}: porabljenih ${promo.used()}/${promoCfg.limit}, ${promoCfg.days} dni`);
   const accessOf = (p) => accessFor(p, Date.now(), promoCfg.seats);
 
-  const baseUrl = (req) => (env.STEMMIND_BASE_URL || (req ? `${req.protocol}://${req.get("host")}` : `http://localhost:${env.PORT || 3000}`)).replace(/\/$/, "");
+  const baseUrl = (req) => (env.KOMPRENO_BASE_URL || (req ? `${req.protocol}://${req.get("host")}` : `http://localhost:${env.PORT || 3000}`)).replace(/\/$/, "");
 
   // --- podatki ---
   const getParent = (id) => db.prepare("SELECT * FROM parents WHERE id = ?").get(id);
@@ -116,6 +118,22 @@ export function mountAccounts(app, store, opts = {}) {
     return isPremiumChild(access, childIds(parentId), studentId);
   }
 
+  // Poraba AI brezplačnih učencev v tem mesecu (učenci brez naročnine, preizkusa, bonusa ali kode).
+  const monthUsdByStudent = () =>
+    db.prepare("SELECT student_id AS id, COALESCE(SUM(cost_usd),0) AS usd FROM usage WHERE created_at >= date('now','start of month') GROUP BY student_id").all();
+  function freeBudgetReason(studentId) {
+    const rows = monthUsdByStudent();
+    const per = freeStudentMonthlyUsd();
+    if (per && (rows.find((r) => r.id === studentId)?.usd || 0) >= per) {
+      return "Ta mesec si porabil brezplačna vprašanja za inštruktorja. Vadnica in lekcije delujejo naprej neomejeno. Za neomejena vprašanja naj starš izbere naročnino v zavihku Račun.";
+    }
+    const pool = freeMonthlyPoolUsd();
+    if (pool && rows.filter((r) => !premiumFor(r.id)).reduce((t, r) => t + r.usd, 0) >= pool) {
+      return "Brezplačna vprašanja za inštruktorja so ta mesec za vse porabljena. Vadnica in lekcije delujejo naprej neomejeno. Za neomejena vprašanja naj starš izbere naročnino v zavihku Račun.";
+    }
+    return null;
+  }
+
   function questionsToday(studentId) {
     return db
       .prepare(
@@ -130,7 +148,7 @@ export function mountAccounts(app, store, opts = {}) {
       await mailer.send({ to, ...msg });
       return true;
     } catch (err) {
-      log.error?.("[stemmind] pošiljanje e-pošte ni uspelo:", err.message);
+      log.error?.("[kompreno] pošiljanje e-pošte ni uspelo:", err.message);
       return false;
     }
   }
@@ -139,7 +157,7 @@ export function mountAccounts(app, store, opts = {}) {
   app.use("/api", (req, _res, next) => {
     const pid = sessions.parentId(readCookie(req));
     req.parent = pid ? getParent(pid) : null;
-    // Skrbnik: e-naslov v STEMMIND_ADMIN_EMAILS (tudi če je bil dodan po registraciji).
+    // Skrbnik: e-naslov v KOMPRENO_ADMIN_EMAILS (tudi če je bil dodan po registraciji).
     if (req.parent && adminEmails.includes(String(req.parent.email).toLowerCase())) req.parent.is_admin = 1;
     req.deviceId = devices.identify(req, _res);
     next();
@@ -194,6 +212,11 @@ export function mountAccounts(app, store, opts = {}) {
         });
       }
     }
+    // Mesečna meja porabe brezplačnega paketa velja za vse klice AI (inštruktor, branje zapisa, fotografija urnika).
+    if (studentId !== null && req.method === "POST" && /(\/messages|\/tasks\/\d+\/read|\/schedule\/photo)$/.test(req.path) && !premiumFor(studentId)) {
+      const blocked = freeBudgetReason(studentId);
+      if (blocked) return res.status(429).json({ error: blocked, limit: true, upgrade: true });
+    }
     next();
   });
 
@@ -211,7 +234,7 @@ export function mountAccounts(app, store, opts = {}) {
     if (age === null || age < 0 || age > 120) return res.status(400).json({ error: "Vpišite datum rojstva.", birth_date: true });
     const cf = String(req.headers["cf-ipcountry"] || "").toUpperCase();
     const minAge = minAgeOf(cf, req.body?.country);
-    const blockedBefore = readCookie(req, AGE_COOKIE) === "1";
+    const blockedBefore = readCookie(req, AGE_COOKIE) === "1" || readCookie(req, LEGACY_AGE_COOKIE) === "1";
     if (age < minAge || (blockedBefore && age < ADULT_AGE)) {
       const secure = req.secure ? "; Secure" : "";
       res.append("Set-Cookie", `${AGE_COOKIE}=1; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400${secure}`);
@@ -407,7 +430,7 @@ export function mountAccounts(app, store, opts = {}) {
 
   // Na računalniku, kjer teče strežnik: »ta račun je moj«, da števec porabe vidim tudi na telefonu.
   app.post("/api/usage/claim", (req, res) => {
-    if (!isLocalRequest(req)) return res.status(403).json({ error: "Samo na računalniku, kjer teče STEMMind." });
+    if (!isLocalRequest(req)) return res.status(403).json({ error: "Samo na računalniku, kjer teče Kompreno." });
     db.prepare("UPDATE parents SET is_admin = 1 WHERE id = ?").run(req.parent.id);
     res.json({ ok: true });
   });
@@ -451,7 +474,7 @@ export function mountAccounts(app, store, opts = {}) {
         })(),
       })),
     };
-    res.set("Content-Disposition", 'attachment; filename="stemmind-podatki.json"');
+    res.set("Content-Disposition", 'attachment; filename="kompreno-podatki.json"');
     res.json(data);
   });
 
@@ -463,7 +486,7 @@ export function mountAccounts(app, store, opts = {}) {
       try {
         await stripe.request("DELETE", `/subscriptions/${p.sub_id}`);
       } catch (err) {
-        log.error?.("[stemmind] preklic naročnine ni uspel:", err.message);
+        log.error?.("[kompreno] preklic naročnine ni uspel:", err.message);
         return res.status(502).json({ error: "Naročnine ni bilo mogoče preklicati. Poskusite znova ali jo prekličite v portalu." });
       }
     }
@@ -478,10 +501,10 @@ export function mountAccounts(app, store, opts = {}) {
     const p = token && db.prepare("SELECT id FROM parents WHERE unsubscribe_token = ?").get(token);
     if (p) update(p.id, { weekly_email: 0 });
     res.type("html").send(
-      `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STEMMind</title>` +
-        `<body style="font-family:sans-serif;max-width:480px;margin:40px auto;padding:0 16px"><h1>STEMMind</h1><p>${
+      `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kompreno</title>` +
+        `<body style="font-family:sans-serif;max-width:480px;margin:40px auto;padding:0 16px"><h1>Kompreno</h1><p>${
           p ? "Tedenskih poročil ne boste več prejemali. Ponovno jih vklopite v zavihku Račun." : "Povezava ni veljavna."
-        }</p><p><a href="/">Odpri STEMMind</a></p></body>`,
+        }</p><p><a href="/">Odpri Kompreno</a></p></body>`,
     );
   });
 
@@ -598,7 +621,7 @@ export function mountAccounts(app, store, opts = {}) {
       });
       res.json({ url: session.url });
     } catch (err) {
-      log.error?.("[stemmind] Stripe checkout:", err.message);
+      log.error?.("[kompreno] Stripe checkout:", err.message);
       res.status(502).json({ error: "Plačilne strani ni bilo mogoče odpreti. Poskusite znova." });
     }
   });
@@ -612,7 +635,7 @@ export function mountAccounts(app, store, opts = {}) {
       const s = await stripe.request("POST", "/billing_portal/sessions", { customer: p.stripe_customer_id, return_url: `${baseUrl(req)}/?billing=portal`, configuration });
       res.json({ url: s.url });
     } catch (err) {
-      log.error?.("[stemmind] Stripe portal:", err.message);
+      log.error?.("[kompreno] Stripe portal:", err.message);
       res.status(502).json({ error: "Portala ni bilo mogoče odpreti. Poskusite znova." });
     }
   });
@@ -647,7 +670,7 @@ export function mountAccounts(app, store, opts = {}) {
     try {
       await syncCustomer(req.parent);
     } catch (err) {
-      log.error?.("[stemmind] Stripe sync:", err.message);
+      log.error?.("[kompreno] Stripe sync:", err.message);
     }
     res.json(accountView(req, getParent(req.parent.id)));
   });
@@ -659,11 +682,11 @@ export function mountAccounts(app, store, opts = {}) {
         await stripe.request("POST", `/customers/${p.stripe_customer_id}/balance_transactions`, {
           amount: -monthlyAmount(p.sub_seats || 1, planByKey(p.sub_plan)?.currency || "EUR"),
           currency: (planByKey(p.sub_plan)?.currency || "EUR").toLowerCase(),
-          description: "STEMMind: brezplačni mesec (priporočilo)",
+          description: "Kompreno: brezplačni mesec (priporočilo)",
         });
         return "credit";
       } catch (err) {
-        log.error?.("[stemmind] dobropis ni uspel, dodajam dneve:", err.message);
+        log.error?.("[kompreno] dobropis ni uspel, dodajam dneve:", err.message);
       }
     }
     const from = Math.max(Date.now(), Date.parse(p.bonus_until || 0) || 0);
@@ -724,7 +747,7 @@ export function mountAccounts(app, store, opts = {}) {
       }
       res.json({ received: true });
     } catch (err) {
-      log.error?.("[stemmind] webhook:", event.type, err.message);
+      log.error?.("[kompreno] webhook:", event.type, err.message);
       res.status(500).json({ error: "Napaka pri obdelavi." });
     }
   });
@@ -782,8 +805,8 @@ export function mountAccounts(app, store, opts = {}) {
 
   if (opts.scheduler !== false) {
     const timer = setInterval(() => {
-      if (process.env.STEMMIND_WEEKLY_EMAIL !== "0" && isSendTime()) sendWeeklyAll().catch((e) => log.error?.("[stemmind] tedenska poročila:", e.message));
-      if (process.env.STEMMIND_GOAL_EMAIL !== "0" && isNoonTime()) sendGoalRemindersAll().catch((e) => log.error?.("[stemmind] opomniki cilja:", e.message));
+      if (process.env.KOMPRENO_WEEKLY_EMAIL !== "0" && isSendTime()) sendWeeklyAll().catch((e) => log.error?.("[kompreno] tedenska poročila:", e.message));
+      if (process.env.KOMPRENO_GOAL_EMAIL !== "0" && isNoonTime()) sendGoalRemindersAll().catch((e) => log.error?.("[kompreno] opomniki cilja:", e.message));
     }, 30 * 60000);
     timer.unref();
   }

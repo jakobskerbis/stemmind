@@ -163,8 +163,8 @@ function levelNumber(s) {
 function canonicalLevel(input, track, cur, program) {
   const n = levelNumber(input);
   if (track === "OSNOVNA_SOLA") {
-    if (n >= 6 && n <= 9) return { level: `${n}. razred` };
-    return { error: "OŠ grades are '6. razred' to '9. razred'" };
+    if (n >= 1 && n <= 9) return { level: `${n}. razred` };
+    return { error: "OŠ grades are '1. razred' to '9. razred'" };
   }
   if (track === "SREDNJA_SOLA") {
     if (!(n >= 1 && n <= 4)) return { error: "SŠ years are '1. letnik' to '4. letnik' (optionally with OR/VR)" };
@@ -534,7 +534,7 @@ export function createSettingsTools({ store, studentId, conversationId, device =
       if (name === "change_schedule") return changeSchedule(input);
       return { content: `unknown tool ${name}`, isError: true };
     } catch (err) {
-      console.error("[stemmind] orodje nastavitev:", err?.message ?? err);
+      console.error("[kompreno] orodje nastavitev:", err?.message ?? err);
       return { content: "internal error, settings not changed", isError: true };
     }
   }

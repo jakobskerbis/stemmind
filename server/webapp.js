@@ -1,4 +1,4 @@
-// STEMMind kot aplikacija na telefonu in računalniku (PWA).
+// Kompreno kot aplikacija na telefonu in računalniku (PWA).
 // - /manifest.webmanifest: opis aplikacije v jeziku vmesnika (?lang=… ali jezik brskalnika),
 //   z bližnjicami (dolg pritisk na ikono) in posnetki zaslona za okno »Namesti«.
 // - /.well-known/assetlinks.json: povezava z aplikacijo v Google Play (TWA), ko sta v .env
@@ -40,8 +40,8 @@ export function manifest(lang = "sl") {
   });
   return {
     id: "/",
-    name: "STEMMind",
-    short_name: "STEMMind",
+    name: "Kompreno",
+    short_name: "Kompreno",
     description: s["inst.desc"],
     lang,
     dir: RTL.has(lang) ? "rtl" : "ltr",
@@ -51,7 +51,7 @@ export function manifest(lang = "sl") {
     background_color: "#ffffff",
     theme_color: "#2563eb",
     categories: ["education"],
-    // Klik na ikono, ko je STEMMind že odprt, ga prikaže (brez drugega okna).
+    // Klik na ikono, ko je Kompreno že odprt, ga prikaže (brez drugega okna).
     launch_handler: { client_mode: ["navigate-existing", "auto"] },
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },

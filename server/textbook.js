@@ -3,6 +3,7 @@
 // Lekcije so Markdown datoteke v content/lessons/<pot>/<slug-teme>.md, da jih
 // učitelj lahko pregleda in popravi kar v repozitoriju. Branje ne stane nič.
 // Oblika je opisana v content/lessons/README.md.
+import "./env.js";
 import { SUBJECT_NAMES } from "./subjects.js";
 import fs from "node:fs";
 import path from "node:path";
@@ -16,7 +17,7 @@ import { SUBJECT_EN } from "./region-curricula.js";
 import { hasEngine } from "../public/sim/index.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const LESSONS_DIR = process.env.STEMMIND_LESSONS || path.join(here, "..", "content", "lessons");
+export const LESSONS_DIR = process.env.KOMPRENO_LESSONS || path.join(here, "..", "content", "lessons");
 
 // Lastne interaktivne simulacije (public/sim/). Katera se pokaže pri kateri temi,
 // je zapisano v public/sim/katalog.js; prikažemo samo že narejene.
@@ -289,7 +290,7 @@ function schoolBooks(system = "SI") {
 }
 
 // Formule in konstante predmeta: content/formulas/<učbenik>.md (npr. MAT-OS.md).
-export const FORMULAS_DIR = process.env.STEMMIND_FORMULAS || path.join(here, "..", "content", "formulas");
+export const FORMULAS_DIR = process.env.KOMPRENO_FORMULAS || path.join(here, "..", "content", "formulas");
 export function formulaSheet(bookKey) {
   if (!/^[A-Z]+-[A-Z]+$/.test(bookKey || "")) return null;
   try {

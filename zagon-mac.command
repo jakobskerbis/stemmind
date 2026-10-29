@@ -1,10 +1,10 @@
 #!/bin/bash
-# STEMMIND-SAMOPOSODOBITEV: vse je v funkciji main, ki jo bash prebere v celoti, zato lahko
+# KOMPRENO-SAMOPOSODOBITEV: vse je v funkciji main, ki jo bash prebere v celoti, zato lahko
 # samodejna posodobitev to datoteko varno prepiše tudi med tekom.
 main() {
   cd "$(dirname "$0")" || exit 1
 
-  # Če STEMMind že teče, samo odpri brskalnik.
+  # Če Kompreno že teče, samo odpri brskalnik.
   if lsof -iTCP:3000 -sTCP:LISTEN >/dev/null 2>&1; then
     open http://localhost:3000
     exit 0
@@ -30,13 +30,13 @@ main() {
   fi
 
   # Knjižnice namesti ob prvem zagonu in po vsaki posodobitvi (ko se package.json spremeni).
-  if ! cmp -s package.json node_modules/.stemmind-package.json; then
+  if ! cmp -s package.json node_modules/.kompreno-package.json; then
     echo "Nameščam potrebne knjižnice, to traja minuto ..."
-    npm install --omit=dev --no-audit --no-fund && cp package.json node_modules/.stemmind-package.json
+    npm install --omit=dev --no-audit --no-fund && cp package.json node_modules/.kompreno-package.json
   fi
 
   echo
-  echo "STEMMind se zaganja. Brskalnik se bo odprl sam."
+  echo "Kompreno se zaganja. Brskalnik se bo odprl sam."
   echo "Za ustavitev zapri to okno. Nove različice se namestijo same (preverjanje vsakih 15 minut)."
   node scripts/zaganjalnik.js zagon --odpri
   exit $?

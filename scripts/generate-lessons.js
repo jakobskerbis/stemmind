@@ -11,6 +11,7 @@
 //
 // Obstoječih lekcij ne prepiše (dodaj --force). Vzorec sloga je
 // content/lessons/MAT-OS-8/pitagorov-izrek.md.
+import "../server/env.js";
 import fs from "node:fs";
 import path from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
@@ -24,7 +25,7 @@ const arg = (name) => {
   const i = args.indexOf(name);
   return i === -1 ? null : args[i + 1];
 };
-const model = arg("--model") || process.env.STEMMIND_LESSON_MODEL || "claude-opus-5-5";
+const model = arg("--model") || process.env.KOMPRENO_LESSON_MODEL || "claude-opus-5-5";
 const onlyPath = arg("--path");
 const limit = Number(arg("--limit")) || Infinity;
 const force = args.includes("--force");
@@ -45,7 +46,7 @@ if (args.includes("--list")) {
 const SAMPLE = fs.readFileSync(path.join(LESSONS_DIR, "MAT-OS-8", "pitagorov-izrek.md"), "utf8");
 const FORMAT = fs.readFileSync(path.join(LESSONS_DIR, "README.md"), "utf8");
 
-const SYSTEM = `Si izkušena slovenska učiteljica matematike, fizike in kemije. Pišeš lekcije za spletni učbenik STEMMind v slovenščini (tikanje učenca).
+const SYSTEM = `Si izkušena slovenska učiteljica matematike, fizike in kemije. Pišeš lekcije za spletni učbenik Kompreno v slovenščini (tikanje učenca).
 
 Lekcija naj bo tako podrobna kot dobra učna ura povprečne učiteljice: navezava na predznanje in zakaj se snov učimo, definicije, razlaga po korakih, 2–3 rešeni primeri od lažjega do težjega (vsak korak z »zakaj«), pogoste napake, kratek povzetek. Dodaj 3–4 razlage z drugega zornega kota (razdelki »## Drugače: …«): na sliki/vizualno, iz vsakdanjega življenja ali z analogijo, korak za korakom s številkami ali tabelo, bolj natančno/formalno (dokaz ali ozadje). Na koncu 3 vprašanja izbirnega tipa v razdelku »## Preveri se«; napačni odgovori naj bodo tipične napake, pojasnilo pa naj pove, zakaj je pravilni odgovor pravilen.
 

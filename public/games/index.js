@@ -3,13 +3,24 @@
 import { t } from "../i18n.js";
 import { icon } from "../icons.js";
 import { CONCEPTS, AREAS, SUBJECTS, conceptName, areaName, setNumberStyle, makeQuestion, shuffle } from "./topics.js";
-import { gameLock, clearedPace, PACE, CLEAR_CORRECT, CHECK_TASKS, CHECK_PASS } from "./unlock.js";
+import { gameLock as ruleLock, clearedPace, lessonsOf, PACE, CLEAR_CORRECT, CHECK_TASKS, CHECK_PASS, LOCKS_ON } from "./unlock.js";
+// Zapora iger je izklopljena (LOCKS_ON v unlock.js): vse igre so odprte.
+const gameLock = (...a) => (LOCKS_ON ? ruleLock(...a) : null);
+// Označena pot (j 18:04: »samo označene poti, preko katerih lažje pridejo do razumevanja«): igra je
+// na poti, ko učenec snov že zna (pravila iz unlock.js), je snov iz njegovega ali prejšnjega razreda
+// oziroma obvladana na učni poti, in je naslednja po hitrosti: najprej mirna, nato srednja, nato hitra.
+function onPath(e, c) {
+  if (ruleLock(e.id, c, LS) || data.games[gameId(e, c)]?.cleared) return false;
+  if (PACE[e.id] !== clearedPace(c.id, LS) + 1) return false;
+  return c.year >= Math.min(data.year, 13) - 1 || lessonsOf(c.id).some((x) => LS.known.has(x));
+}
 import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
-import { ITEMS, ITEM, SLOTS, DEFAULT_AVATAR, avatarSvg, itemName, rarity } from "../avatar.js";
+import { ITEMS, SLOTS, DEFAULT_AVATAR, avatarSvg, itemName, itemOf, itemRarity } from "../avatar.js";
+import { seasonOf } from "../zbirke.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-const FILTER_KEY = "stemmind.gamesFilter";
+const FILTER_KEY = "kompreno.gamesFilter";
 
 // Velik znak na ploščici.
 const GLYPH = {
@@ -104,8 +115,10 @@ function saveFilter() {
 function tile(e, c) {
   const st = data.games[gameId(e, c)];
   const locked = !!gameLock(e.id, c, LS);
-  return `<button type="button" class="gm-tile gm-k-${e.id}${locked ? " gm-locked" : ""}" data-game="${gameId(e, c)}" style="--a:${tileColor(c)};--b:${e.colors[0]}"${locked ? ` aria-label="${esc(`${t("games.locked")}: ${conceptName(c)}, ${kindName(e)}`)}"` : ""}>
+  const path = !locked && onPath(e, c);
+  return `<button type="button" class="gm-tile gm-k-${e.id}${locked ? " gm-locked" : ""}${path ? " gm-path" : ""}" data-game="${gameId(e, c)}" style="--a:${tileColor(c)};--b:${e.colors[0]}"${locked ? ` aria-label="${esc(`${t("games.locked")}: ${conceptName(c)}, ${kindName(e)}`)}"` : path ? ` aria-label="${esc(`${t("games.pathMark")}: ${conceptName(c)}, ${kindName(e)}`)}"` : ""}>
     <span class="gm-kind">${icon(e.icon)}</span>
+    ${path ? `<span class="gm-pathmark" title="${esc(t("games.pathMark"))}">${icon("compass")}</span>` : ""}
     ${st?.best ? `<span class="gm-best">${icon("star")}${st.best}</span>` : ""}
     <span class="gm-glyph">${locked ? `<span class="gm-lock">${icon("lock")}</span>` : esc(GLYPH[c.id] || c.glyph || SUBJ_GLYPH[c.subject] || "∑")}</span>
     <span class="gm-name"><b>${esc(conceptName(c))}</b><small>${esc(kindName(e))}</small></span>
@@ -122,17 +135,20 @@ function renderPortal() {
   const area = filter.area === "you" && !anyForYou ? "all" : filter.area;
   const pick = (c) => (q || c.subject === filter.subject) && (area === "you" ? forYou(c) : area === "all" || c.area === area);
   let total = 0;
+  let paths = 0;
   const sections = AREAS.filter((a) => q || a[3] === filter.subject).map(([id]) => {
     const tiles = [];
     // Sosednji ploščici se razlikujeta po snovi in po vrsti igre (pisana mreža).
     const cs = CONCEPTS.filter((c) => c.area === id && pick(c));
+    const path = [];
     const open = [];
     const shut = [];
     for (let r = 0; r < kinds.length; r++) cs.forEach((c, i) => {
       const e = kinds[(i + r) % kinds.length];
-      if (match(c, e)) (gameLock(e.id, c, LS) ? shut : open).push(tile(e, c));
+      if (match(c, e)) (gameLock(e.id, c, LS) ? shut : onPath(e, c) ? path : open).push(tile(e, c));
     });
-    tiles.push(...open, ...shut); // odklenjene igre najprej
+    tiles.push(...path, ...open, ...shut); // igre na poti najprej
+    paths += path.length;
     total += tiles.length;
     if (!tiles.length) return "";
     return `<section class="gm-sec"><h2><span class="gm-dot" style="background:${areaColor(id)}"></span>${esc(areaName(id))}<span class="gm-count">${tiles.length}</span></h2><div class="gm-grid">${tiles.join("")}</div></section>`;
@@ -142,7 +158,8 @@ function renderPortal() {
     <div class="gm-portal">
       <div class="gm-top">
         <div><h1>${icon("gamepad-2")} ${esc(t("nav.games"))}</h1><p class="muted">${esc(t("games.intro", { n: allGamesCount() }))}</p></div>
-        <button type="button" class="gm-me" data-act="shop" title="${esc(t("games.shop"))}">${avatarSvg(av.equipped, { size: 46 })}<span><b>${esc(t("games.avatar"))}</b><small>${icon("coins")} ${av.coins}</small></span></button>
+        <span class="gm-me-row"><button type="button" class="gm-me" data-act="shop" title="${esc(t("games.shop"))}">${avatarSvg(av.equipped, { size: 46 })}<span><b>${esc(t("games.avatar"))}</b><small>${icon("coins")} ${av.coins}</small></span></button>
+        <button type="button" class="gm-me gm-zb" data-act="zbirke" title="${esc(t("zb.title"))}"><span class="gm-zb-ic">${icon("award")}</span><span><b>${esc(t("games.zbirke"))}</b><small>${esc(t("zb.pass"))}</small></span></button></span>
         <label class="gm-search">${icon("search")}<input type="search" value="${esc(filter.q)}" placeholder="${esc(t("games.search"))}" aria-label="${esc(t("games.search"))}"></label>
       </div>
       ${SUBJECTS.length > 1 ? `<div class="chip-row gm-subjects" role="group" aria-label="${esc(t("games.subjects"))}">${SUBJECTS.map((x) => chip(x, t(`subj.${x}`), filter.subject === x)).join("")}</div>` : ""}
@@ -153,6 +170,7 @@ function renderPortal() {
       <div class="chip-row gm-kinds" role="group" aria-label="${esc(t("games.kinds"))}">
         ${chip("all", t("games.allKinds"), filter.kind === "all")}${ENGINES.map((e) => chip(e.id, kindName(e), filter.kind === e.id)).join("")}
       </div>
+      ${paths ? `<p class="gm-pathhint">${icon("compass")} ${esc(t("games.pathHint"))}</p>` : ""}
       ${total ? sections : `<p class="muted gm-none">${esc(t("games.none"))}</p>`}
     </div>`;
   root.querySelector(".gm-subjects")?.addEventListener("click", (ev) => {
@@ -188,6 +206,7 @@ function renderPortal() {
   });
   root.querySelectorAll(".gm-tile").forEach((b) => b.addEventListener("click", () => openGame(b.dataset.game)));
   root.querySelector('[data-act="shop"]').addEventListener("click", () => renderShop("", true));
+  root.querySelector('.gm-top [data-act="zbirke"]')?.addEventListener("click", () => window.kompreno?.openZbirke(null, "games"));
 }
 
 function openGame(id) {
@@ -217,7 +236,7 @@ function openGame(id) {
       data.concepts[cid] = r.tier;
       LS = lockState();
       // Opravljena igra odklene hitrejše igre te snovi.
-      if (clearedPace(cid, LS) > before && clearedPace(cid, LS) < 3) info.unlocked = t("games.unlockedFaster");
+      if (LOCKS_ON && clearedPace(cid, LS) > before && clearedPace(cid, LS) < 3) info.unlocked = t("games.unlockedFaster");
       if (info.coins) av.coins += info.coins;
       if (info.xp) ctx.refreshXp?.();
       return info;
@@ -235,12 +254,12 @@ function showLock(engine, c, lock) {
     <h2>${icon("lock")} ${esc(`${kindName(engine)}: ${name}`)}</h2>
     <p>${esc(text)}</p>
     <div class="actions">
-      ${lock.topic && window.stemmind?.openTopic ? `<button type="button" class="primary" data-act="topic">${icon("book-open")}${esc(t("games.learnTopic"))}</button>` : ""}
+      ${lock.topic && window.kompreno?.openTopic ? `<button type="button" class="primary" data-act="topic">${icon("book-open")}${esc(t("games.learnTopic"))}</button>` : ""}
       ${lock.need === "learn" ? `<button type="button" class="${lock.topic ? "secondary" : "primary"}" data-act="check">${icon("clipboard-check")}${esc(t("games.checkBtn", { n: CHECK_TASKS }))}</button>` : ""}
       ${others.map((e, i) => `<button type="button" class="${i ? "secondary" : "primary"}" data-play="${gameId(e, c)}">${icon(e.icon)}${esc(kindName(e))}</button>`).join("")}
       <button type="button" class="text-btn" data-act="back">${icon("arrow-left")}${esc(t("games.back"))}</button>
     </div></div></div>`;
-  root.querySelector('[data-act="topic"]')?.addEventListener("click", () => window.stemmind.openTopic(lock.topic));
+  root.querySelector('[data-act="topic"]')?.addEventListener("click", () => window.kompreno.openTopic(lock.topic));
   root.querySelector('[data-act="check"]')?.addEventListener("click", () => runCheck(engine, c));
   root.querySelector('[data-act="back"]').addEventListener("click", renderPortal);
   root.querySelectorAll("[data-play]").forEach((b) => b.addEventListener("click", () => openGame(b.dataset.play)));
@@ -292,12 +311,12 @@ function runCheck(engine, c) {
     shell(`<p class="gm-check-res">${esc(t(pass ? "games.checkPass" : "games.checkFail", { ok, n: qs.length, need: CHECK_PASS }))}</p>
       <div class="actions">
         ${first ? `<button type="button" class="primary" data-play="${gameId(first, c)}">${icon(first.icon)}${esc(kindName(first))}</button>` : ""}
-        ${!pass && topic && window.stemmind?.openTopic ? `<button type="button" class="primary" data-act="topic">${icon("book-open")}${esc(t("games.learnTopic"))}</button>` : ""}
+        ${!pass && topic && window.kompreno?.openTopic ? `<button type="button" class="primary" data-act="topic">${icon("book-open")}${esc(t("games.learnTopic"))}</button>` : ""}
         ${!pass ? `<button type="button" class="secondary" data-act="retry">${icon("rotate-ccw")}${esc(t("games.again"))}</button>` : ""}
         <button type="button" class="text-btn" data-act="back">${icon("arrow-left")}${esc(t("games.back"))}</button>
       </div>`);
     root.querySelector("[data-play]")?.addEventListener("click", (ev) => openGame(ev.currentTarget.dataset.play));
-    root.querySelector('[data-act="topic"]')?.addEventListener("click", () => window.stemmind.openTopic(topic));
+    root.querySelector('[data-act="topic"]')?.addEventListener("click", () => window.kompreno.openTopic(topic));
     root.querySelector('[data-act="retry"]')?.addEventListener("click", () => runCheck(engine, c));
     root.querySelector('[data-act="back"]').addEventListener("click", renderPortal);
   };
@@ -305,27 +324,42 @@ function runCheck(engine, c) {
 }
 
 // Trgovina z deli avatarja: kovanci iz iger, brez pravega denarja. Avatar vidijo drugi v ligi.
+// Predmeti za znanje (public/zbirke.js) so tukaj samo za oblačenje: ne kupijo se, pogoj je v Zbirkah.
 let shop = { slot: "hat", pick: null };
+// Predmeti predala; sezonski predmeti passa s svojo sezono (imaš jih) ali s trenutno (zaklenjeni).
+function slotItems(slot, owned) {
+  const out = [];
+  for (const x of ITEMS.filter((i) => i.slot === slot)) {
+    if (x.collection !== "pass") out.push(x);
+    else {
+      const mine = [...owned].filter((id) => id.startsWith(`${x.id}~`));
+      for (const id of mine.length ? mine : [`${x.id}~${seasonOf().key}`]) out.push({ ...x, id });
+    }
+  }
+  return out;
+}
 function renderShop(msg = "", top = false) {
   const y = window.scrollY; // ob ponovnem izrisu ostane na istem mestu, na vrh samo ob odprtju trgovine
   const lang = ctx.currentLang?.() || "sl";
   const owned = new Set(av.owned);
   const has = (x) => x.price === 0 || owned.has(x.id);
-  const pick = shop.pick && ITEM[shop.pick];
+  const pick = shop.pick && itemOf(shop.pick) ? { ...itemOf(shop.pick), id: shop.pick } : null;
   const preview = pick ? { ...av.equipped, [pick.slot]: pick.id } : av.equipped;
-  const need = pick && !has(pick) ? pick.price - av.coins : 0;
+  const need = pick && !has(pick) && !pick.earn ? pick.price - av.coins : 0;
   const action = !pick || av.equipped[pick.slot] === pick.id
     ? ""
     : has(pick)
       ? `<button type="button" class="primary" data-act="wear">${esc(t("games.wear"))}</button>`
-      : need > 0
-        ? `<p class="muted">${esc(t("games.needMore", { n: need }))} ${icon("coins")}</p>`
-        : `<button type="button" class="primary" data-act="buy">${icon("coins")}${esc(t("games.buy", { n: pick.price }))}</button>`;
+      : pick.earn
+        ? `<button type="button" class="secondary" data-act="how">${esc(t("zb.how"))}</button>`
+        : need > 0
+          ? `<p class="muted">${esc(t("games.needMore", { n: need }))} ${icon("coins")}</p>`
+          : `<button type="button" class="primary" data-act="buy">${icon("coins")}${esc(t("games.buy", { n: pick.price }))}</button>`;
   const card = (x) => {
     const on = av.equipped[x.slot] === x.id;
-    const state = on ? t("games.wearing") : has(x) ? (x.price ? t("games.owned") : t("games.rarity.free")) : `${icon("coins")} ${x.price}`;
+    const state = on ? t("games.wearing") : has(x) ? (x.price ? t("games.owned") : x.earn ? t(`games.rarity.${x.rarity}`) : t("games.rarity.free")) : x.earn ? `${icon("lock")} ${esc(t("zb.byKnowledge"))}` : `${icon("coins")} ${x.price}`;
     // Izbran tuj predmet: gumb za nakup kar na kartici (na telefonu je predogled zgoraj izven zaslona).
-    return `<div class="gm-item gm-r-${rarity(x.price)}${on ? " on" : ""}${shop.pick === x.id ? " sel" : ""}">
+    return `<div class="gm-item gm-r-${itemRarity(x)}${on ? " on" : ""}${shop.pick === x.id ? " sel" : ""}${x.earn && !has(x) ? " gm-earn" : ""}">
       <button type="button" class="gm-item-btn" data-item="${x.id}" aria-pressed="${on}">${avatarSvg({ ...av.equipped, [x.slot]: x.id }, { size: 72 })}
       <b>${esc(itemName(x, lang))}</b><small>${state}</small></button>${shop.pick === x.id ? action : ""}</div>`;
   };
@@ -337,12 +371,13 @@ function renderShop(msg = "", top = false) {
         <h1>${esc(t("games.avatar"))}</h1>
         <p class="gm-coinbig">${icon("coins")} <b>${av.coins}</b> <span class="muted">${esc(t("games.coins"))}</span></p>
         <p class="muted">${esc(t("games.coinsHint", { n: av.perDay }))}</p>
-        ${pick ? `<p class="gm-pick"><b>${esc(itemName(pick, lang))}</b> · <span class="gm-rtag gm-r-${rarity(pick.price)}">${esc(t(`games.rarity.${rarity(pick.price)}`))}</span></p>` : ""}
+        ${pick ? `<p class="gm-pick"><b>${esc(itemName(pick, lang))}</b> · <span class="gm-rtag gm-r-${itemRarity(pick)}">${esc(t(`games.rarity.${itemRarity(pick)}`))}</span></p>` : ""}
         ${msg ? `<p class="gm-shop-msg" role="status">${esc(msg)}</p>` : ""}
       </div>
     </div>
     <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${esc(t(`games.slot.${x}`))}</button>`).join("")}</div>
-    <div class="gm-items">${ITEMS.filter((x) => x.slot === shop.slot).map(card).join("")}</div>
+    ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon("award")}<span>${esc(t("zb.shopHint"))} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
+    <div class="gm-items">${slotItems(shop.slot, owned).map(card).join("")}</div>
   </div>`;
   const s = ctx.getStudent();
   const save = async (url, body, okMsg) => {
@@ -361,7 +396,7 @@ function renderShop(msg = "", top = false) {
   root.querySelectorAll("[data-slot]").forEach((b) => b.addEventListener("click", () => ((shop.slot = b.dataset.slot), (shop.pick = null), renderShop())));
   root.querySelectorAll("[data-item]").forEach((b) =>
     b.addEventListener("click", () => {
-      const x = ITEM[b.dataset.item];
+      const x = { ...itemOf(b.dataset.item), id: b.dataset.item };
       // Svoj predmet takoj obleče, tujega najprej pokaže na avatarju.
       if (has(x)) return save("avatar", { equipped: { ...av.equipped, [x.slot]: x.id } }, "");
       shop.pick = x.id;
@@ -369,6 +404,8 @@ function renderShop(msg = "", top = false) {
     }),
   );
   root.querySelector('[data-act="wear"]')?.addEventListener("click", () => save("avatar", { equipped: preview }, ""));
+  root.querySelector('[data-act="how"]')?.addEventListener("click", () => window.kompreno?.openZbirke(pick.id, "games"));
+  root.querySelector('[data-act="zbirke"]')?.addEventListener("click", () => window.kompreno?.openZbirke(null, "games"));
   root.querySelector('[data-act="buy"]')?.addEventListener("click", async () => {
     if (!s) return;
     try {

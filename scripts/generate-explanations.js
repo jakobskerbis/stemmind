@@ -8,6 +8,7 @@
 //   node scripts/generate-explanations.js --yes --model claude-sonnet-5-5
 //
 // Že obstoječe razlage preskoči (dodaj --force, da jih ustvari znova).
+import "../server/env.js";
 import fs from "node:fs";
 import Anthropic from "@anthropic-ai/sdk";
 import { listPaths, topicOrder, getPath } from "../server/curriculum.js";
@@ -19,7 +20,7 @@ const arg = (name) => {
   const i = args.indexOf(name);
   return i === -1 ? null : args[i + 1];
 };
-const model = arg("--model") || process.env.STEMMIND_EXPLAIN_MODEL || "claude-opus-5-5";
+const model = arg("--model") || process.env.KOMPRENO_EXPLAIN_MODEL || "claude-opus-5-5";
 const onlyPath = arg("--path");
 const force = args.includes("--force");
 

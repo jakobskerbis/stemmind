@@ -1,11 +1,11 @@
 @echo off
-rem STEMMIND-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom
+rem KOMPRENO-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom
 rem (dolgi ukazi so v eni vrstici z "exit /b", po posodobitvi se datoteka prebere znova).
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
-title STEMMind
+title Kompreno
 
-rem Ce STEMMind ze tece, samo odpri brskalnik.
+rem Ce Kompreno ze tece, samo odpri brskalnik.
 curl -s -o nul -m 2 http://localhost:3000 >nul 2>nul
 if not errorlevel 1 (
   start http://localhost:3000
@@ -26,12 +26,12 @@ if not "%~1"=="--posodobljeno" (
   ) else (
     rem Starejsa mapa brez programa za posodobitev: prenesi celotno razlicico enkrat po starem.
     echo Prenasam najnovejso razlicico ...
-    if exist "%TEMP%\stemmind-posodobitev" rmdir /s /q "%TEMP%\stemmind-posodobitev"
-    mkdir "%TEMP%\stemmind-posodobitev"
-    curl -L -s -o "%TEMP%\stemmind-posodobitev\main.zip" https://github.com/jakobskerbis/stemmind/archive/refs/heads/main.zip
-    tar -xf "%TEMP%\stemmind-posodobitev\main.zip" -C "%TEMP%\stemmind-posodobitev" >nul 2>nul
-    if exist "%TEMP%\stemmind-posodobitev\stemmind-main\package.json" robocopy "%TEMP%\stemmind-posodobitev\stemmind-main" "%~dp0." /E /NFL /NDL /NJH /NJS /XF .env /XD data node_modules .git >nul
-    rmdir /s /q "%TEMP%\stemmind-posodobitev" >nul 2>nul
+    if exist "%TEMP%\kompreno-posodobitev" rmdir /s /q "%TEMP%\kompreno-posodobitev"
+    mkdir "%TEMP%\kompreno-posodobitev"
+    curl -L -s -o "%TEMP%\kompreno-posodobitev\main.zip" https://github.com/jakobskerbis/stemmind/archive/refs/heads/main.zip
+    tar -xf "%TEMP%\kompreno-posodobitev\main.zip" -C "%TEMP%\kompreno-posodobitev" >nul 2>nul
+    if exist "%TEMP%\kompreno-posodobitev\stemmind-main\package.json" robocopy "%TEMP%\kompreno-posodobitev\stemmind-main" "%~dp0." /E /NFL /NDL /NJH /NJS /XF .env /XD data node_modules .git >nul
+    rmdir /s /q "%TEMP%\kompreno-posodobitev" >nul 2>nul
   )
   call "%~f0" --posodobljeno
   exit /b
@@ -46,15 +46,15 @@ if not exist .env (
 
 rem Knjiznice namesti ob prvem zagonu in po vsaki posodobitvi (ko se package.json spremeni).
 set NEED_INSTALL=0
-if not exist node_modules\.stemmind-package.json set NEED_INSTALL=1
-if exist node_modules\.stemmind-package.json fc /b package.json node_modules\.stemmind-package.json >nul 2>nul || set NEED_INSTALL=1
+if not exist node_modules\.kompreno-package.json set NEED_INSTALL=1
+if exist node_modules\.kompreno-package.json fc /b package.json node_modules\.kompreno-package.json >nul 2>nul || set NEED_INSTALL=1
 if "!NEED_INSTALL!"=="1" (
   echo Namescam potrebne knjiznice, to traja minuto ...
   call npm install --omit=dev --no-audit --no-fund
-  copy /y package.json node_modules\.stemmind-package.json >nul
+  copy /y package.json node_modules\.kompreno-package.json >nul
 )
 
 echo.
-echo STEMMind se zaganja. Brskalnik se bo odprl sam.
+echo Kompreno se zaganja. Brskalnik se bo odprl sam.
 echo Za ustavitev zapri to okno. Nove razlicice se namestijo same (preverjanje vsakih 15 minut).
 node scripts\zaganjalnik.js zagon --odpri & pause & exit /b

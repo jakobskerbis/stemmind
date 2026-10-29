@@ -2,6 +2,7 @@
 // izbral v vprašalniku (public/interests.js), in pripete novice po učencu.
 // Brez API (model ne piše novic), brez osebnih podatkov: strežnik prebere javne vire in jih
 // hrani v predpomnilniku (pomnilnik + tabela news_cache), da kotiček deluje tudi brez povezave.
+import "./env.js";
 import crypto from "node:crypto";
 import { INTERESTS, interestById, feedInfo, SL_POOL, CUSTOM_POOL, NEWS_LEVELS } from "../public/interests.js";
 
@@ -137,7 +138,7 @@ export function mix(all) {
   return out;
 }
 
-export function createNews(store, { fetchFn = globalThis.fetch, now = () => Date.now(), offline = process.env.STEMMIND_NEWS === "0" } = {}) {
+export function createNews(store, { fetchFn = globalThis.fetch, now = () => Date.now(), offline = process.env.KOMPRENO_NEWS === "0" } = {}) {
   const db = store.db;
   db.exec(`
     CREATE TABLE IF NOT EXISTS news_cache (
@@ -169,7 +170,7 @@ export function createNews(store, { fetchFn = globalThis.fetch, now = () => Date
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), TIMEOUT);
     try {
-      const r = await fetchFn(f.url, { signal: ctl.signal, headers: { "User-Agent": "STEMMind/1.0 (news corner for students)", Accept: "application/rss+xml, application/xml, text/xml" } });
+      const r = await fetchFn(f.url, { signal: ctl.signal, headers: { "User-Agent": "Kompreno/1.0 (news corner for students)", Accept: "application/rss+xml, application/xml, text/xml" } });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const text = await r.text();
       if (text.length > MAX_BYTES) throw new Error("too big");
@@ -188,7 +189,7 @@ export function createNews(store, { fetchFn = globalThis.fetch, now = () => Date
         return { items, failed: false };
       })
       .catch((err) => {
-        console.warn(`[stemmind] novice ${f.source} (${f.key}): ${err?.message ?? err}`);
+        console.warn(`[kompreno] novice ${f.source} (${f.key}): ${err?.message ?? err}`);
         const entry = { at: cur?.at ?? 0, items: cur?.items || [], failedAt: now() };
         mem.set(f.key, entry);
         return { items: entry.items, failed: true };
@@ -264,7 +265,7 @@ export function mountCorner(app, store, { loadStudent, fetchFn, offline } = {}) 
       const r = await news.forStudent(s);
       res.json({ ...r, pinned: news.pins.list(s.id), interests: s.settings.interests, custom: s.settings.interest_custom || "" });
     } catch (err) {
-      console.error("[stemmind] kotiček:", err);
+      console.error("[kompreno] kotiček:", err);
       res.status(500).json({ error: "Novic trenutno ni mogoče naložiti." });
     }
   });
