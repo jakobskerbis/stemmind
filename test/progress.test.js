@@ -250,3 +250,39 @@ test("tekmovanja: po izteku časa odgovor ne šteje", () => {
   const again = p.startContest(s.id, "FIZ-TEK-OS");
   assert.notEqual(again.sessionId, n.sessionId);
 });
+
+test("prior-knowledge pretest: three levels, one try, skip = not known, sets level and tutor tier", async () => {
+  const { studentResults } = await import("../server/results.js");
+  const { store, p, s } = setup();
+  let out = p.startPretest(s.id, TOPIC);
+  assert.equal(out.total, 3);
+  assert.equal(out.task.level, 1);
+  assert.equal(p.startPretest(s.id, TOPIC).task.id, out.task.id, "odprt test se nadaljuje");
+  assert.equal(p.hint(s.id, out.task.id, 1).error, "Pri tej nalogi namigov ni.");
+  // Stopnja 1 pravilno, stopnja 2 napačno, stopnja 3 »Tega še ne znam«.
+  let r = p.answer(s.id, out.task.id, correctInput(p.getTask(out.task.id).payload.answer));
+  assert.equal(r.correct, true);
+  assert.equal(r.next.task.level, 2);
+  assert.equal(r.solution, undefined, "test ne pokaže rešitve");
+  const a2 = p.getTask(r.next.task.id).payload.answer;
+  r = p.answer(s.id, r.next.task.id, correctInput(a2.type === "number" ? { ...a2, value: a2.value * 3 + 7 } : { ...a2, index: (a2.index + 1) % 3, num: a2.num + 1, values: (a2.values || []).map((v) => v + 1) }));
+  assert.equal(r.correct, false);
+  assert.ok(p.answer(s.id, r.next.task.id - 1, "1").error, "en poskus");
+  r = p.skipContestTask(s.id, r.next.task.id);
+  assert.equal(r.skipped, true);
+  assert.deepEqual({ ...r.pretest, tier: r.pretest.tier }, { correct: 1, total: 3, known: 1, level: 1, tier: "osnovna" });
+  const st = p.state(s.id, TOPIC);
+  assert.equal(st.status, "learning");
+  assert.equal(st.pretest, 1);
+  assert.deepEqual(p.startPretest(s.id, TOPIC), { skip: true }, "test je samo enkrat");
+  // Napake v testu niso šibke točke; v promptu je rezultat testa.
+  assert.equal(store.topicStats(s.id).length, 0);
+  const res = studentResults(store, s.id, TOPIC);
+  assert.match(res.text, /začetni test predznanja: rešene stopnje 1 od 3/);
+  assert.equal(res.tier, "osnovna");
+  store.db.prepare("UPDATE topic_state SET pretest = 3 WHERE student_id = ?").run(s.id);
+  assert.equal(studentResults(store, s.id, TOPIC).tier, "višja");
+  // Tema, ki se je učenec že uči, testa nima.
+  p.nextPractice(s.id, "MAT-OS-8/uporaba-pitagorovega-izreka");
+  assert.deepEqual(p.startPretest(s.id, "MAT-OS-8/uporaba-pitagorovega-izreka"), { skip: true });
+});

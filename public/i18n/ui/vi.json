@@ -948,5 +948,20 @@
   "cards.open": "Mở thẻ ghi nhớ",
   "cards.own": "của em",
   "cards.keys": "Phím: dấu cách = hiện câu trả lời, 1 = chưa thuộc, 2 = đã thuộc",
-  "cards.cancel": "Hủy"
+  "cards.cancel": "Hủy",
+  "pretest.title": "Kiểm tra kiến thức nền",
+  "pretest.intro": "Ba bài ngắn, từ dễ đến khó, cho biết nên bắt đầu từ đâu. Nếu chưa làm được bài nào, hãy nhấn \"Mình chưa biết bài này\". Không sao, khi đó ta bắt đầu từ đầu.",
+  "pretest.lessonIntro": "Trước khi bắt đầu: ba bài ngắn cho biết em đã biết gì về chủ đề này. Sau đó gia sư và bài luyện tập sẽ điều chỉnh theo trình độ của em.",
+  "pretest.start": "Bắt đầu kiểm tra",
+  "pretest.dontKnow": "Mình chưa biết bài này",
+  "pretest.skipped": "Được, mình sẽ cùng học phần này.",
+  "pretest.noted": "Đã ghi nhận.",
+  "pretest.resultTitle": "Trình độ của em ở chủ đề này: {tier}",
+  "pretest.tierBasic": "cơ bản",
+  "pretest.tierMid": "trung bình",
+  "pretest.tierHigh": "nâng cao",
+  "pretest.score": "Số bài đúng: {correct} / {total}.",
+  "pretest.textBasic": "Ta sẽ học chủ đề này từ đầu, từng bước một. Tốt nhất em nên bắt đầu với gia sư hoặc bài học.",
+  "pretest.textMid": "Em đã biết phần cơ bản. Gia sư chỉ ôn lại ngắn gọn, còn bài tập sẽ ở mức trung bình.",
+  "pretest.textHigh": "Tuyệt, cả ba bài đều đúng. Ta chỉ ôn nhanh phần cơ bản rồi chuyển sang bài khó hơn."
 }

@@ -953,5 +953,20 @@
   "cards.open": "Ouvrir les fiches",
   "cards.own": "perso",
   "cards.keys": "Touches : espace = afficher la réponse, 1 = je ne sais pas encore, 2 = je sais",
-  "cards.cancel": "Annuler"
+  "cards.cancel": "Annuler",
+  "pretest.title": "Test des acquis",
+  "pretest.intro": "Trois exercices courts, du plus facile au plus difficile, montrent par où commencer. Si tu ne sais pas encore faire un exercice, appuie sur « Je ne sais pas encore ». Pas grave, on commencera alors depuis le début.",
+  "pretest.lessonIntro": "Avant de commencer : trois exercices courts montrent ce que tu sais déjà sur ce thème. Le tuteur et les exercices s'adaptent ensuite à ton niveau.",
+  "pretest.start": "Commencer le test",
+  "pretest.dontKnow": "Je ne sais pas encore",
+  "pretest.skipped": "D'accord, on va voir ça ensemble.",
+  "pretest.noted": "Noté.",
+  "pretest.resultTitle": "Ton niveau sur ce thème : {tier}",
+  "pretest.tierBasic": "de base",
+  "pretest.tierMid": "intermédiaire",
+  "pretest.tierHigh": "avancé",
+  "pretest.score": "Exercices justes : {correct} sur {total}.",
+  "pretest.textBasic": "On reprendra le thème depuis le début, étape par étape. Le mieux est de commencer avec le tuteur ou la leçon.",
+  "pretest.textMid": "Tu connais déjà les bases. Le tuteur les rappellera brièvement et les exercices seront de difficulté moyenne.",
+  "pretest.textHigh": "Bravo, les trois exercices sont justes. On revoit rapidement les bases, puis viennent des exercices plus difficiles."
 }

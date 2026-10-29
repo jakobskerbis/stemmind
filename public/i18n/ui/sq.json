@@ -953,5 +953,20 @@
   "cards.open": "Hap kartelat",
   "cards.own": "e jotja",
   "cards.keys": "Tastet: hapësirë = shfaq përgjigjen, 1 = ende nuk e di, 2 = e di",
-  "cards.cancel": "Anulo"
+  "cards.cancel": "Anulo",
+  "pretest.title": "Test i njohurive paraprake",
+  "pretest.intro": "Tri detyra të shkurtra, nga më e lehta te më e vështira, tregojnë nga ku të fillojmë. Nëse një detyrë ende nuk e di, shtyp „Këtë ende nuk e di”. S'ka gjë, atëherë fillojmë nga fillimi.",
+  "pretest.lessonIntro": "Para se të fillosh: tri detyra të shkurtra tregojnë çfarë di tashmë për këtë temë. Tutori dhe ushtrimet më pas përshtaten me nivelin tënd.",
+  "pretest.start": "Fillo testin",
+  "pretest.dontKnow": "Këtë ende nuk e di",
+  "pretest.skipped": "Mirë, do ta shohim së bashku.",
+  "pretest.noted": "U shënua.",
+  "pretest.resultTitle": "Niveli yt në këtë temë: {tier}",
+  "pretest.tierBasic": "bazë",
+  "pretest.tierMid": "mesatar",
+  "pretest.tierHigh": "i avancuar",
+  "pretest.score": "Detyra të sakta: {correct} nga {total}.",
+  "pretest.textBasic": "Temën do ta marrim nga fillimi, hap pas hapi. Më mirë fillo me tutorin ose me mësimin.",
+  "pretest.textMid": "Bazat i di tashmë. Tutori do t'i përsërisë shkurt, ndërsa detyrat do të jenë me vështirësi mesatare.",
+  "pretest.textHigh": "Shkëlqyeshëm, të tria detyrat janë të sakta. Bazat do t'i përsërisim shpejt, pastaj vijnë detyra më të vështira."
 }

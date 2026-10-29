@@ -953,5 +953,20 @@
   "cards.open": "Abrir tarjetas",
   "cards.own": "propia",
   "cards.keys": "Teclas: espacio = mostrar respuesta, 1 = aún no lo sé, 2 = lo sé",
-  "cards.cancel": "Cancelar"
+  "cards.cancel": "Cancelar",
+  "pretest.title": "Prueba de conocimientos previos",
+  "pretest.intro": "Tres tareas cortas, de la más fácil a la más difícil, muestran por dónde empezar. Si aún no sabes hacer una tarea, pulsa «Todavía no lo sé». No pasa nada, entonces empezamos desde el principio.",
+  "pretest.lessonIntro": "Antes de empezar: tres tareas cortas muestran lo que ya sabes de este tema. El tutor y la práctica se adaptan después a tu nivel.",
+  "pretest.start": "Empezar la prueba",
+  "pretest.dontKnow": "Todavía no lo sé",
+  "pretest.skipped": "Vale, lo veremos juntos.",
+  "pretest.noted": "Anotado.",
+  "pretest.resultTitle": "Tu nivel en este tema: {tier}",
+  "pretest.tierBasic": "básico",
+  "pretest.tierMid": "intermedio",
+  "pretest.tierHigh": "avanzado",
+  "pretest.score": "Tareas correctas: {correct} de {total}.",
+  "pretest.textBasic": "Veremos el tema desde el principio, paso a paso. Lo mejor es empezar con el tutor o con la lección.",
+  "pretest.textMid": "Ya sabes lo básico. El tutor solo lo repasará brevemente y las tareas serán de dificultad media.",
+  "pretest.textHigh": "Muy bien, las tres tareas son correctas. Repasaremos lo básico rápidamente y luego vendrán tareas más difíciles."
 }

@@ -11,6 +11,9 @@ import { toChoice } from "./practice/choice.js";
 // Tekmovalni trening in poskusno tekmovanje veljata tudi za priprave na izpite.
 const isPrepPath = (key) => isCompetitionPath(key) || isExamPath(key);
 
+// Naloge z enim poskusom in brez namigov (preizkusi, tekmovanja, test predznanja).
+const ONE_SHOT = ["placement", "contest", "pretest"];
+
 export const RULES = {
   levelUpStreak: 3, // 3 pravilni zapored -> težje
   masteryWindow: 10, // zadnjih 10 nalog
@@ -228,7 +231,7 @@ export class Progress {
 
   sessionNext(sessionId) {
     const sess = this.getSession(sessionId);
-    const maxA = (t) => (t.mode === "placement" || t.mode === "contest" ? 1 : RULES.maxAttempts);
+    const maxA = (t) => (ONE_SHOT.includes(t.mode) ? 1 : RULES.maxAttempts);
     const isDone = (t) => t.solved || t.attempts >= maxA(t);
     let all = this.db.prepare("SELECT * FROM tasks WHERE session_id = ? ORDER BY id").all(sessionId);
     let open = all.find((t) => !isDone(t));
@@ -305,6 +308,48 @@ export class Progress {
     const plan = [];
     for (let i = 0; i < n; i++) plan.push({ topic: topics[i % topics.length].id, mode: "placement", level: i % 2 ? 3 : 2 });
     return this.sessionNext(this.createSession(studentId, "placement", plan, { path: pathKey, unit: unitIndex }));
+  }
+
+  // Začetni test predznanja teme: tri naloge (stopnja 1, 2, 3), en poskus, brez namigov.
+  // Opravi ga vsak učenec na začetku nove teme; rezultat določi začetno stopnjo nalog
+  // in zahtevnost razlage pri inštruktorju (server/results.js). Vrne { skip: true }, ko ni potreben.
+  startPretest(studentId, topicId) {
+    if (!getTopic(topicId) || !hasGenerator(topicId)) return { skip: true };
+    const open = this.openSession(studentId, "pretest", (x) => x.params.topic === topicId);
+    if (open) return this.sessionNext(open.id);
+    const st = this.state(studentId, topicId);
+    if (st.status !== "new" || st.pretest != null) return { skip: true };
+    const plan = [1, 2, 3].map((level) => ({ topic: topicId, mode: "pretest", level }));
+    return this.sessionNext(this.createSession(studentId, "pretest", plan, { topic: topicId }));
+  }
+
+  finishPretest(studentId, sessionId) {
+    const all = this.db.prepare("SELECT level, first_try_correct, topic_id FROM tasks WHERE session_id = ? ORDER BY level, id").all(sessionId);
+    const correct = all.filter((t) => t.first_try_correct).length;
+    let known = 0; // stopnje, rešene zapored od najlažje
+    for (const t of all) {
+      if (!t.first_try_correct) break;
+      known = t.level;
+    }
+    const topicId = all[0]?.topic_id;
+    const s = this.state(studentId, topicId);
+    if (s.status !== "mastered") {
+      s.status = "learning";
+      s.level = Math.max(1, Math.min(3, known));
+      s.streak = 0;
+      this.saveState(s);
+    }
+    this.db.prepare("UPDATE topic_state SET pretest = ? WHERE student_id = ? AND topic_id = ?").run(known, studentId, topicId);
+    const tier = known >= 3 ? "višja" : known === 2 ? "srednja" : "osnovna";
+    return { correct, total: all.length, known, level: s.level, tier };
+  }
+
+  // Test predznanja: »Tega še ne znam« – naloga šteje kot nerešena, naprej na naslednjo.
+  skipPretestTask(studentId, row) {
+    if (row.solved || row.attempts >= 1) return { error: "Ta naloga je že zaključena." };
+    this.db.prepare("UPDATE tasks SET attempts = 1, solved = 0, first_try_correct = 0 WHERE id = ?").run(row.id);
+    const next = this.sessionNext(row.session_id);
+    return { skipped: true, correct: false, next, ...(next.finished ? { pretest: this.finishPretest(studentId, row.session_id) } : {}) };
   }
 
   // Tema za »Nova snov«: zadnja tema, ki se je učenec uči, sicer naslednja na poti.
@@ -476,6 +521,7 @@ export class Progress {
   // Tekmovanje: naloga ostane brez odgovora (0 točk), naprej na naslednjo.
   skipContestTask(studentId, taskId) {
     const row = this.getTask(taskId);
+    if (row && row.student_id === studentId && row.mode === "pretest") return this.skipPretestTask(studentId, row);
     if (!row || row.student_id !== studentId || row.mode !== "contest") return { error: "Naloga ne obstaja." };
     if (row.solved || row.attempts >= 1) return { error: "Ta naloga je že zaključena." };
     const sess = this.getSession(row.session_id);
@@ -618,7 +664,7 @@ export class Progress {
   answer(studentId, taskId, input) {
     const row = this.getTask(taskId);
     if (!row || row.student_id !== studentId) return { error: "Naloga ne obstaja." };
-    const oneShot = row.mode === "placement" || row.mode === "contest";
+    const oneShot = ONE_SHOT.includes(row.mode);
     const maxAttempts = oneShot ? 1 : RULES.maxAttempts;
     if (row.solved || row.attempts >= maxAttempts) return { error: "Ta naloga je že zaključena." };
     if (row.mode === "contest") {
@@ -648,8 +694,9 @@ export class Progress {
       .run(attempts, correct ? 1 : 0, String(input).slice(0, 200), firstTry ? (correct ? 1 : 0) : null, taskId);
 
     const topic = getTopic(row.topic_id);
-    // Analitika za šibke točke (enako kot META iz klepeta)
-    this.store.addEvent({
+    // Analitika za šibke točke (enako kot META iz klepeta); test predznanja ne šteje,
+    // saj nove snovi učenec še ne pozna.
+    if (row.mode !== "pretest") this.store.addEvent({
       student_id: studentId,
       conversation_id: null,
       message_id: null,
@@ -664,6 +711,12 @@ export class Progress {
       out.saved = true;
       out.next = this.sessionNext(row.session_id);
       if (out.next.contest) out.contest = out.next.contest;
+      return out;
+    }
+    if (row.mode === "pretest") {
+      out.correct = correct;
+      out.next = this.sessionNext(row.session_id);
+      if (out.next.finished) out.pretest = this.finishPretest(studentId, row.session_id);
       return out;
     }
     if (row.mode === "placement") {
@@ -736,7 +789,7 @@ export class Progress {
   hint(studentId, taskId, upTo) {
     const row = this.getTask(taskId);
     if (!row || row.student_id !== studentId) return { error: "Naloga ne obstaja." };
-    if (row.mode === "contest" || row.mode === "placement") return { error: "Pri tej nalogi namigov ni." };
+    if (ONE_SHOT.includes(row.mode)) return { error: "Pri tej nalogi namigov ni." };
     const steps = hintSteps(row.payload);
     const n = Math.max(1, Math.min(steps.length, Number(upTo) || 1));
     if (steps.length) this.db.prepare("UPDATE tasks SET hint_used = 1 WHERE id = ?").run(taskId);

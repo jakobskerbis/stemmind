@@ -953,5 +953,20 @@
   "cards.open": "Kartları aç",
   "cards.own": "kendi",
   "cards.keys": "Tuşlar: boşluk = cevabı göster, 1 = henüz bilmiyorum, 2 = biliyorum",
-  "cards.cancel": "İptal"
+  "cards.cancel": "İptal",
+  "pretest.title": "Ön bilgi testi",
+  "pretest.intro": "Kolaydan zora üç kısa görev nereden başlayacağımızı gösterir. Bir görevi henüz bilmiyorsan \"Bunu henüz bilmiyorum\"a bas. Sorun değil, o zaman en baştan başlarız.",
+  "pretest.lessonIntro": "Başlamadan önce: üç kısa görev bu konuda neler bildiğini gösterir. Öğretmen ve alıştırmalar sonra seviyene uyum sağlar.",
+  "pretest.start": "Teste başla",
+  "pretest.dontKnow": "Bunu henüz bilmiyorum",
+  "pretest.skipped": "Tamam, bunu birlikte çalışacağız.",
+  "pretest.noted": "Not edildi.",
+  "pretest.resultTitle": "Bu konudaki seviyen: {tier}",
+  "pretest.tierBasic": "temel",
+  "pretest.tierMid": "orta",
+  "pretest.tierHigh": "ileri",
+  "pretest.score": "Doğru görevler: {correct} / {total}.",
+  "pretest.textBasic": "Konuyu en baştan, adım adım ele alacağız. En iyisi öğretmenle ya da dersle başlamak.",
+  "pretest.textMid": "Temelleri zaten biliyorsun. Öğretmen onları kısaca tekrar edecek, görevler orta zorlukta olacak.",
+  "pretest.textHigh": "Harika, üç görevin hepsi doğru. Temelleri hızlıca tekrar edip daha zor görevlere geçeceğiz."
 }
