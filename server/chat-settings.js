@@ -534,7 +534,7 @@ export function createSettingsTools({ store, studentId, conversationId, device =
       if (name === "change_schedule") return changeSchedule(input);
       return { content: `unknown tool ${name}`, isError: true };
     } catch (err) {
-      console.error("[stemmind] orodje nastavitev:", err?.message ?? err);
+      console.error("[kompreno] orodje nastavitev:", err?.message ?? err);
       return { content: "internal error, settings not changed", isError: true };
     }
   }

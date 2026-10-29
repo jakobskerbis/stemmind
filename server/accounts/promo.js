@@ -1,16 +1,17 @@
 // Aktivacijska koda za prve stranke: prvih N računov dobi poln dostop za D dni.
-// Nastavitve v .env: STEMMIND_PROMO_CODE (privzeto STEMMIND100), STEMMIND_PROMO_LIMIT (100),
-// STEMMIND_PROMO_DAYS (365), STEMMIND_PROMO_SEATS (1 otrok). STEMMIND_PROMO_CODE=off kodo izklopi.
+// Nastavitve v .env: KOMPRENO_PROMO_CODE (privzeto KOMPRENO100), KOMPRENO_PROMO_LIMIT (100),
+// KOMPRENO_PROMO_DAYS (365), KOMPRENO_PROMO_SEATS (1 otrok). KOMPRENO_PROMO_CODE=off kodo izklopi.
+import "../env.js";
 import { isoIn } from "./plans.js";
 
 export function promoConfig(env = process.env) {
-  const code = String(env.STEMMIND_PROMO_CODE ?? "STEMMIND100").trim().toUpperCase();
+  const code = String(env.KOMPRENO_PROMO_CODE ?? "KOMPRENO100").trim().toUpperCase();
   const num = (v, def) => (Number.isFinite(Number(v)) && Number(v) > 0 ? Math.floor(Number(v)) : def);
   return {
     code: code === "OFF" || code === "" ? null : code,
-    limit: num(env.STEMMIND_PROMO_LIMIT, 100),
-    days: num(env.STEMMIND_PROMO_DAYS, 365),
-    seats: num(env.STEMMIND_PROMO_SEATS, 1),
+    limit: num(env.KOMPRENO_PROMO_LIMIT, 100),
+    days: num(env.KOMPRENO_PROMO_DAYS, 365),
+    seats: num(env.KOMPRENO_PROMO_SEATS, 1),
   };
 }
 

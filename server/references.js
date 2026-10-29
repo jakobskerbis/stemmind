@@ -6,13 +6,14 @@
 //   courses     – predmet (ključ poti UNI-…) → id-ji tem
 //   courseItems – gradivo, objavljeno prav za ta predmet (npr. skripta fakultete)
 // Branje ne stane nič; povezave preveri `node scripts/preveri-reference.js`.
+import "./env.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { getPath, getProgram, listProgramPaths } from "./curriculum.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const REFERENCES_DIR = process.env.STEMMIND_REFERENCES || path.join(here, "..", "content", "references");
+export const REFERENCES_DIR = process.env.KOMPRENO_REFERENCES || path.join(here, "..", "content", "references");
 
 export const REF_TYPES = ["ucbenik", "zapiski", "video", "naloge", "tecaj", "prirocnik"];
 

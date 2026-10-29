@@ -8,6 +8,7 @@
 //   node sim/run.js --tutor http --url https://….ngrok-free.dev --email … --geslo-racuna …
 //   node sim/run.js --seznam              seznam učencev
 // Vse možnosti: node sim/run.js --pomoc
+import "../server/env.js";
 import fs from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
@@ -30,7 +31,7 @@ Možnosti:
   --seme <n>                 seme za tipkarske napake (privzeto 1)
   --tutor local|http         lokalno (privzeto) ali tekoča aplikacija prek spleta
   --url <naslov>             naslov aplikacije za --tutor http
-  --geslo <geslo>            geslo testne različice (STEMMIND_PASSWORD)
+  --geslo <geslo>            geslo testne različice (KOMPRENO_PASSWORD)
   --email, --geslo-racuna    testni račun, če ima aplikacija prijavo staršev
   --motor cli|api            cli = prek Claude Code (porablja omejitev naročnine Claude, privzeto,
                              če je \`claude\` nameščen in prijavljen); api = Claude API s ključem

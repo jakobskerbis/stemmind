@@ -727,7 +727,7 @@ function liteActive() {
 function applyLite() {
   const on = liteActive();
   document.documentElement.classList.toggle("lite", on);
-  localStorageSet("stemmind.lite", on ? "1" : "0"); // za theme.js ob naslednjem odprtju
+  localStorageSet("kompreno.lite", on ? "1" : "0"); // za theme.js ob naslednjem odprtju
 }
 navigator.connection?.addEventListener?.("change", applyLite);
 
@@ -1012,7 +1012,7 @@ async function confirmChatProposal(settings) {
 }
 
 // Nastavitve naprave, ki jih je spremenil inštruktor: posodobi odprte izbire.
-window.addEventListener("stemmind:device-setting", (e) => {
+window.addEventListener("kompreno:device-setting", (e) => {
   const { key, value } = e.detail || {};
   if (key === "reply_speed" && PACES[value]) $("#pace-select").value = value;
   if (key === "calculator" && CALC_MODES.includes(value)) calcMode = value;
@@ -1294,7 +1294,7 @@ function setActiveMode(mode) {
   document.querySelectorAll("#modebar [data-mode]").forEach((b) => b.classList.toggle("active", b.dataset.mode === mode));
 }
 
-const REVIEW_HINT_KEY = "stemmind.reviewHint";
+const REVIEW_HINT_KEY = "kompreno.reviewHint";
 async function goNew({ skipHint = false } = {}) {
   const m = (await refreshModes()) || state.modes;
   setActiveMode("new");
@@ -1891,8 +1891,8 @@ function renderTask(task, ctx) {
 }
 
 // ---------- vmesni koraki (kot v zvezek) in pomoč inštruktorja pri nalogi ----------
-const WORK_OPEN_KEY = "stemmind.workOpen";
-const workKey = (id) => `stemmind.work.${id}`;
+const WORK_OPEN_KEY = "kompreno.workOpen";
+const workKey = (id) => `kompreno.work.${id}`;
 function lsGet(k) {
   try {
     return localStorage.getItem(k);
@@ -2487,7 +2487,7 @@ const TOUR = [
   { sel: "#profile-btn", title: "tour.profile", text: "tour.profileText" },
   { title: "tour.end", text: "tour.endText" },
 ];
-const TOUR_KEY = "stemmind.tour";
+const TOUR_KEY = "kompreno.tour";
 const visibleEl = (sel) => [...document.querySelectorAll(sel)].find((el) => el.getClientRects().length && !el.closest("[hidden]"));
 
 function startTour() {
@@ -2569,7 +2569,7 @@ $("#tour-again").addEventListener("click", () => {
 const CALC_MODES = ["sci", "graph", "tools", "pse", "formulas"];
 let calcMode = "sci";
 try {
-  if (CALC_MODES.includes(localStorage.getItem("stemmind.calcMode"))) calcMode = localStorage.getItem("stemmind.calcMode");
+  if (CALC_MODES.includes(localStorage.getItem("kompreno.calcMode"))) calcMode = localStorage.getItem("kompreno.calcMode");
 } catch {}
 const calcTools = {};
 let calcP = null; // grafični kalkulator
@@ -2590,7 +2590,7 @@ function graphCalc() {
       locale,
       api,
       toast: (m) => toast(m, "check"),
-      storageKey: () => `stemmind.graph.${state.student?.id ?? 0}`,
+      storageKey: () => `kompreno.graph.${state.student?.id ?? 0}`,
       studentId: () => state.student?.id,
       askTutor: (text) => {
         closeCalcOverlay();
@@ -2625,7 +2625,7 @@ function calcTool(mode) {
   calcTools[mode] ||= (mode === "sci" ? import("./graph/sci.js") : import("./graph/tools.js")).then((m) => {
     const host = document.createElement("div");
     const base = { t, icon, locale, onInsert: insertIntoCalc };
-    if (mode === "sci") return m.createScientific(host, { ...base, storageKey: () => `stemmind.sci.${state.student?.id ?? 0}` });
+    if (mode === "sci") return m.createScientific(host, { ...base, storageKey: () => `kompreno.sci.${state.student?.id ?? 0}` });
     if (mode === "tools") return m.createTools(host, { ...base, subject: calcSubject });
     if (mode === "pse") return m.createPse(host, { ...base, lang: currentLang });
     return m.createFormulas(host, { ...base, api, renderRich, bookKey: formulaBook });
@@ -2637,7 +2637,7 @@ async function setCalcMode(mode) {
   if (!CALC_MODES.includes(mode)) mode = "sci";
   calcMode = mode;
   try {
-    localStorage.setItem("stemmind.calcMode", mode);
+    localStorage.setItem("kompreno.calcMode", mode);
   } catch {}
   document.querySelectorAll(".calc-modes [data-calc-mode]").forEach((b) => {
     b.classList.toggle("active", b.dataset.calcMode === mode);
@@ -2723,7 +2723,7 @@ async function addGraphButton(bubble, text) {
 }
 
 // Za samodejne preizkuse v brskalniku.
-window.stemmind = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay, openZbirke };
+window.kompreno = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay, openZbirke };
 
 initFlashcards({ api, renderRich, escapeHtml, toast, showView, getStudent: () => state.student, onDue: setCardsDue });
 

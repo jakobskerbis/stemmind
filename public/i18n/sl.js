@@ -507,7 +507,7 @@ export default {
   "tour.modes": "Načini učenja",
   "tour.modesText": "Tu kadar koli preklopiš med novo snovjo, ponavljanjem in pripravo na test. Napredek se ohrani.",
   "tour.chatText": "Ko se zatakneš, vprašaj inštruktorja. Vodi te po korakih, rezultata pa ti ne pove kar tako.",
-  "tour.welcome": "Dobrodošel v STEMMind",
+  "tour.welcome": "Dobrodošel v Komprenu",
   "tour.welcomeText": "V eni minuti ti pokažem, kako aplikacija deluje in kje je kaj. Ogled lahko kadar koli preskočiš.",
   "tour.how": "Kako se učiš",
   "tour.howText": "Izbereš temo, prebereš kratko razlago in rešuješ naloge. Pri nalogi imaš namige, tipkovnico s simboli in kalkulator. Kar začneš pozabljati, ti aplikacija čez nekaj dni sama vrne v ponavljanje.",

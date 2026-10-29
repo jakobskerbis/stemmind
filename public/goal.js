@@ -131,7 +131,7 @@ const todayKey = () => {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 };
-const seenKey = (id) => `stemmind.goalSeen.${id}`;
+const seenKey = (id) => `kompreno.goalSeen.${id}`;
 export function reminderDue(student, now = new Date()) {
   const s = student?.settings || {};
   if (!s.goal_reminder || !validDate(s.goal_date)) return false;

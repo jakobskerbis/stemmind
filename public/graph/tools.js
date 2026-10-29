@@ -34,7 +34,7 @@ export function createTools(root, opts) {
   const num = (v, mode = "auto") => formatNumber(Number.isFinite(v) ? Number(v.toPrecision(8)) : v, { mode, comma: comma() });
   const insText = (v) => formatNumber(v, { comma: comma() }).text.replace(" · 10^", "E").replace("−", "-");
   const subj = () => opts.subject?.() || "MAT";
-  let tool = TOOLS.includes(remember.get("stemmind.tool")) ? remember.get("stemmind.tool") : toolOrder(subj())[0];
+  let tool = TOOLS.includes(remember.get("kompreno.tool")) ? remember.get("kompreno.tool") : toolOrder(subj())[0];
   const views = {};
 
   root.classList.add("tl");
@@ -60,11 +60,11 @@ export function createTools(root, opts) {
 
   // ---- statistika ----
   function stats_(el) {
-    const saved = remember.get("stemmind.tool.stats", "2 4 4 4 5 5 7 9");
+    const saved = remember.get("kompreno.tool.stats", "2 4 4 4 5 5 7 9");
     el.innerHTML = card(`<label class="tl-field"><span>${esc(t("sc.data"))}</span><textarea class="tl-data" rows="3" inputmode="decimal" spellcheck="false">${esc(saved)}</textarea></label><p class="muted tl-note">${esc(t("sc.dataHint"))}</p>`) + `<div class="tl-out" aria-live="polite"></div>`;
     const ta = el.querySelector(".tl-data");
     const run = () => {
-      remember.set("stemmind.tool.stats", ta.value);
+      remember.set("kompreno.tool.stats", ta.value);
       const s = stats(readList(ta.value));
       const out = el.querySelector(".tl-out");
       if (!s) return (out.innerHTML = "");
@@ -98,11 +98,11 @@ export function createTools(root, opts) {
 
   // ---- enačbe ----
   function eq_(el) {
-    const st = remember.get("stemmind.tool.eq", { kind: "poly", deg: 2, poly: ["1", "-5", "6", "0", "0"], n: 2, sys: [] });
+    const st = remember.get("kompreno.tool.eq", { kind: "poly", deg: 2, poly: ["1", "-5", "6", "0", "0"], n: 2, sys: [] });
     el.innerHTML = `<div class="seg tl-seg"><button type="button" data-kind="poly">${esc(t("sc.eq.poly"))}</button><button type="button" data-kind="sys">${esc(t("sc.eq.sys"))}</button></div><div class="tl-eq"></div><div class="tl-out" aria-live="polite"></div>`;
     const box = el.querySelector(".tl-eq");
     const out = el.querySelector(".tl-out");
-    const save = () => remember.set("stemmind.tool.eq", st);
+    const save = () => remember.set("kompreno.tool.eq", st);
     const LET = ["a", "b", "c", "d", "e"];
     function draw() {
       el.querySelectorAll(".tl-seg button").forEach((b) => b.classList.toggle("active", b.dataset.kind === st.kind));
@@ -175,10 +175,10 @@ export function createTools(root, opts) {
 
   // ---- kompleksna števila ----
   function complex_(el) {
-    el.innerHTML = card(`<label class="tl-field"><span>${esc(t("sc.input"))}</span><input class="tl-cx" autocomplete="off" spellcheck="false" value="${esc(remember.get("stemmind.tool.cx", "(2 + 3i)(1 − i)"))}"></label><p class="muted tl-note">${esc(t("sc.cx.hint"))}</p>`) + `<div class="tl-out" aria-live="polite"></div>`;
+    el.innerHTML = card(`<label class="tl-field"><span>${esc(t("sc.input"))}</span><input class="tl-cx" autocomplete="off" spellcheck="false" value="${esc(remember.get("kompreno.tool.cx", "(2 + 3i)(1 − i)"))}"></label><p class="muted tl-note">${esc(t("sc.cx.hint"))}</p>`) + `<div class="tl-out" aria-live="polite"></div>`;
     const inp = el.querySelector(".tl-cx");
     const run = () => {
-      remember.set("stemmind.tool.cx", inp.value);
+      remember.set("kompreno.tool.cx", inp.value);
       const out = el.querySelector(".tl-out");
       if (!inp.value.trim()) return (out.innerHTML = "");
       let z;
@@ -208,7 +208,7 @@ export function createTools(root, opts) {
 
   // ---- matrike ----
   function matrix_(el) {
-    const st = remember.get("stemmind.tool.mx", { A: "2 1\n1 3", B: "3\n5" });
+    const st = remember.get("kompreno.tool.mx", { A: "2 1\n1 3", B: "3\n5" });
     el.innerHTML =
       card(`<div class="tl-mx"><label class="tl-field"><span>${texHtml("A")}</span><textarea class="tl-A" rows="3" spellcheck="false">${esc(st.A)}</textarea></label><label class="tl-field"><span>${texHtml("B")}</span><textarea class="tl-B" rows="3" spellcheck="false">${esc(st.B)}</textarea></label></div>
       <p class="muted tl-note">${esc(t("sc.mx.hint"))}</p>
@@ -218,7 +218,7 @@ export function createTools(root, opts) {
     const run = () => {
       st.A = el.querySelector(".tl-A").value;
       st.B = el.querySelector(".tl-B").value;
-      remember.set("stemmind.tool.mx", st);
+      remember.set("kompreno.tool.mx", st);
       el.querySelectorAll(".tl-ops button").forEach((b) => b.classList.toggle("active", Number(b.dataset.op) === op));
       const A = readMatrix(st.A);
       const B = readMatrix(st.B);
@@ -279,13 +279,13 @@ export function createTools(root, opts) {
 
   // ---- številski sistemi ----
   function base_(el) {
-    const st = remember.get("stemmind.tool.base", { v: "2024", b: 10 });
+    const st = remember.get("kompreno.tool.base", { v: "2024", b: 10 });
     el.innerHTML = card(`<div class="tl-pair"><label class="tl-field"><span>${esc(t("sc.input"))}</span><input class="tl-bv" autocomplete="off" autocapitalize="characters" spellcheck="false" value="${esc(st.v)}"></label>
       <label class="tl-field tl-narrow"><span>${esc(t("sc.base.from"))}</span><select class="tl-bb">${[2, 8, 10, 16].map((b) => `<option value="${b}"${b === st.b ? " selected" : ""}>${b}</option>`).join("")}</select></label></div>`) + `<div class="tl-out" aria-live="polite"></div>`;
     const run = () => {
       st.v = el.querySelector(".tl-bv").value;
       st.b = Number(el.querySelector(".tl-bb").value);
-      remember.set("stemmind.tool.base", st);
+      remember.set("kompreno.tool.base", st);
       const out = el.querySelector(".tl-out");
       if (!st.v.trim()) return (out.innerHTML = "");
       const r = convertBase(st.v, st.b);
@@ -320,7 +320,7 @@ export function createTools(root, opts) {
   };
   function show(k) {
     tool = k;
-    remember.set("stemmind.tool", k);
+    remember.set("kompreno.tool", k);
     root.querySelectorAll(".tl-pick [data-tool]").forEach((b) => {
       b.classList.toggle("active", b.dataset.tool === k);
       b.setAttribute("aria-selected", String(b.dataset.tool === k));
@@ -368,10 +368,10 @@ export function createPse(root, opts) {
   const dec = (v, d) => (comma() ? v.toFixed(d).replace(".", ",") : v.toFixed(d));
   const nm = (e) => (opts.lang?.() === "sl" ? e.sl : e.en);
   const arText = (e) => (e.ar == null ? `[${e.a}]` : dec(e.ar, e.ar < 10 ? 3 : 2));
-  let sel = ELEMENTS[remember.get("stemmind.pse.sel", 6) - 1] || ELEMENTS[5];
+  let sel = ELEMENTS[remember.get("kompreno.pse.sel", 6) - 1] || ELEMENTS[5];
 
   root.classList.add("pse");
-  let show = ["ar", "en", "ox"].includes(remember.get("stemmind.pse.show")) ? remember.get("stemmind.pse.show") : "ar";
+  let show = ["ar", "en", "ox"].includes(remember.get("kompreno.pse.show")) ? remember.get("kompreno.pse.show") : "ar";
   root.innerHTML = `<div class="pse-wrap">
       <div class="pse-bar"><span class="muted">${esc(t("sc.pse.show"))}</span><div class="seg pse-show" role="group" aria-label="${esc(t("sc.pse.show"))}">${["ar", "en", "ox"].map((k) => `<button type="button" data-show="${k}" aria-pressed="false">${esc(t(`sc.pse.show.${k}`))}</button>`).join("")}</div></div>
       <div class="pse-scroll"><div class="pse-grid" role="group" aria-label="${esc(t("sc.pseTitle"))}"></div></div>
@@ -379,12 +379,12 @@ export function createPse(root, opts) {
       <div class="pse-cards">
         <div class="card pse-detail" aria-live="polite"></div>
         <div class="card pse-mm">
-          <label class="tl-field"><span>${esc(t("sc.molar"))}</span><input class="pse-f" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${esc(t("sc.formulaPh"))}" value="${esc(remember.get("stemmind.pse.f", "H2SO4"))}"></label>
+          <label class="tl-field"><span>${esc(t("sc.molar"))}</span><input class="pse-f" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${esc(t("sc.formulaPh"))}" value="${esc(remember.get("kompreno.pse.f", "H2SO4"))}"></label>
           <div class="pse-mm-out" aria-live="polite"></div>
         </div>
         <div class="card pse-bond">
           <div class="tl-h">${esc(t("sc.bond.title"))}</div>
-          <div class="tl-pair"><label class="tl-field"><span>${esc(t("sc.bond.a"))}</span><input class="pse-b1" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(remember.get("stemmind.pse.bond", ["Na", "Cl"])[0])}"></label><label class="tl-field"><span>${esc(t("sc.bond.b"))}</span><input class="pse-b2" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(remember.get("stemmind.pse.bond", ["Na", "Cl"])[1])}"></label></div>
+          <div class="tl-pair"><label class="tl-field"><span>${esc(t("sc.bond.a"))}</span><input class="pse-b1" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(remember.get("kompreno.pse.bond", ["Na", "Cl"])[0])}"></label><label class="tl-field"><span>${esc(t("sc.bond.b"))}</span><input class="pse-b2" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(remember.get("kompreno.pse.bond", ["Na", "Cl"])[1])}"></label></div>
           <div class="pse-bond-out" aria-live="polite"></div>
         </div>
       </div>
@@ -462,7 +462,7 @@ export function createPse(root, opts) {
 
   function molar() {
     const f = $(".pse-f").value;
-    remember.set("stemmind.pse.f", f);
+    remember.set("kompreno.pse.f", f);
     const out = $(".pse-mm-out");
     if (!f.trim()) return (out.innerHTML = "");
     const r = molarMass(f, MASSES);
@@ -482,7 +482,7 @@ export function createPse(root, opts) {
     const b = e.target.closest(".pse-el");
     if (!b) return;
     sel = ELEMENTS[Number(b.dataset.z) - 1];
-    remember.set("stemmind.pse.sel", sel.z);
+    remember.set("kompreno.pse.sel", sel.z);
     detail();
     // na telefonu so podrobnosti pod mrežo
     if (matchMedia("(max-width: 860px)").matches) $(".pse-detail").scrollIntoView({ block: "nearest", behavior: "smooth" });
@@ -490,7 +490,7 @@ export function createPse(root, opts) {
   function bond() {
     const a = $(".pse-b1").value.trim();
     const b = $(".pse-b2").value.trim();
-    remember.set("stemmind.pse.bond", [a, b]);
+    remember.set("kompreno.pse.bond", [a, b]);
     const out = $(".pse-bond-out");
     if (!a || !b) return (out.innerHTML = "");
     const ea = ELEMENTS.find((e) => e.sym === a);
@@ -510,7 +510,7 @@ export function createPse(root, opts) {
     const b = e.target.closest("[data-show]");
     if (!b) return;
     show = b.dataset.show;
-    remember.set("stemmind.pse.show", show);
+    remember.set("kompreno.pse.show", show);
     cellValues();
   });
   $(".pse-f").addEventListener("input", molar);

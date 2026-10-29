@@ -40,8 +40,8 @@ variables > Actions kot skrivnost `RENDER_DEPLOY_HOOK`.
 
 | Nastavitev | Pomen |
 |---|---|
-| `STEMMIND_POSODOBITEV_MINUTE=15` | Kako pogosto preveri (v minutah). |
-| `STEMMIND_POSODOBITEV=0` | Izklopi samodejne posodobitve. |
+| `KOMPRENO_POSODOBITEV_MINUTE=15` | Kako pogosto preveri (v minutah). |
+| `KOMPRENO_POSODOBITEV=0` | Izklopi samodejne posodobitve. |
 
 ## Kako deluje (za razvijalce)
 
@@ -53,7 +53,7 @@ variables > Actions kot skrivnost `RENDER_DEPLOY_HOOK`.
   miren trenutek prek `/healthz/stanje`, vrnitev ob napaki.
 - `scripts/zaganjalnik.js`: zažene `zagon.js` ali `telefon.js` in ju zažene znova, ko se
   posodobita sama (izhodna koda 75).
-- Zagonske datoteke `.bat`/`.command` imajo oznako `STEMMIND-SAMOPOSODOBITEV`: dolgi ukazi so v
+- Zagonske datoteke `.bat`/`.command` imajo oznako `KOMPRENO-SAMOPOSODOBITEV`: dolgi ukazi so v
   eni vrstici z `exit /b` (Mac: vse v funkciji `main`), zato jih posodobitev lahko prepiše med
   tekom. Datoteke brez oznake (stare različice) med tekom ne prepiše.
 - `server/razlicica.js`: različica za `/healthz/stanje` in ime predpomnilnika v `/sw.js`.

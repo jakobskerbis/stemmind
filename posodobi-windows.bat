@@ -1,5 +1,5 @@
 @echo off
-rem STEMMIND-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom.
+rem KOMPRENO-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom.
 setlocal
 cd /d "%~dp0"
 title Kompreno - posodobitev

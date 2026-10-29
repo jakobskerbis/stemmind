@@ -55,7 +55,7 @@ export function runClaude({ system, prompt, schema = null, model, effort = "medi
   delete env.ANTHROPIC_BASE_URL;
   return new Promise((resolve, reject) => {
     // V prazni mapi, da Claude Code ne naloži CLAUDE.md in nastavitev projekta.
-    const cwd = path.join(os.tmpdir(), "stemmind-sim-cli");
+    const cwd = path.join(os.tmpdir(), "kompreno-sim-cli");
     fs.mkdirSync(cwd, { recursive: true });
     const child = spawn(c.cmd, args, { env, cwd, stdio: ["pipe", "pipe", "pipe"], windowsHide: true });
     let out = "";

@@ -8,7 +8,7 @@ const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const AREAS = ["path", "tutor", "textbook", "competition", "design", "speed", "league"];
 const FACES = ["😞", "🙁", "😐", "🙂", "😄"];
-const KEY_HIDDEN = "stemmind.feedbackCard"; // "hidden" | "sent"
+const KEY_HIDDEN = "kompreno.feedbackCard"; // "hidden" | "sent"
 // Vprašanja pogovora brez AI; »where« je dodatno vprašanje, ko tester opiše težavo.
 const SCRIPT = ["used", "liked", "stuck", "where", "change", "use"];
 const NOTHING = /^[\s.!-]*(nič|nic|ne vem|nimam|ne|no|none|nothing|nope|-)?[\s.!-]*$/i;

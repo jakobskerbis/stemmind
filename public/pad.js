@@ -4,7 +4,7 @@
 import { icon } from "./icons.js";
 import { t as tr, currentLang } from "./i18n.js";
 
-const LS_KEY = "stemmind.pad";
+const LS_KEY = "kompreno.pad";
 const prefs = (() => {
   try {
     return JSON.parse(localStorage.getItem(LS_KEY)) || {};
@@ -13,7 +13,7 @@ const prefs = (() => {
   }
 })();
 // Inštruktor lahko nastavitev plošče spremeni iz klepeta (public/chat-settings.js).
-window.addEventListener("stemmind:device-setting", (e) => {
+window.addEventListener("kompreno:device-setting", (e) => {
   const { key, value } = e.detail || {};
   if (key === "writing_pad") prefs.auto = value === "auto";
   if (key === "writing_pad_tab") prefs.tab = value;

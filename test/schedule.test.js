@@ -102,7 +102,7 @@ test("view and prompt: today, tomorrow and upcoming tests; private summary reach
   const text = schedulePrompt(v);
   assert.match(text, /ponedeljek 2026-11-02.*danes: 08:20 Matematika; jutri: 09:10 Fizika; testi in roki: 2026-11-03 \(jutri\) test: Test – Fizika/);
   const prompt = buildSystemPrompt({ settings: s.settings, schedule: text });
-  assert.ok(prompt.indexOf(text) > prompt.indexOf("STEMMIND:NASTAVITVE"));
+  assert.ok(prompt.indexOf(text) > prompt.indexOf("KOMPRENO:NASTAVITVE"));
   assert.match(schedulePrompt({ lessons: [], events: [] }), /ni vnesel/);
 });
 

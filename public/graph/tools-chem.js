@@ -17,7 +17,7 @@ export function chemTools(ctx) {
 
   // ---- enačbe reakcij ----
   function rxn(el) {
-    const saved = remember.get("stemmind.tool.rxn", "Fe + O2 -> Fe2O3");
+    const saved = remember.get("kompreno.tool.rxn", "Fe + O2 -> Fe2O3");
     el.innerHTML =
       card(`<label class="tl-field"><span>${esc(t("sc.rxn.input"))}</span><input class="tl-rxn" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(saved)}"></label>
         <p class="muted tl-note">${esc(t("sc.rxn.hint"))}</p>`) + `<div class="tl-out" aria-live="polite"></div><div class="tl-st"></div>`;
@@ -27,7 +27,7 @@ export function chemTools(ctx) {
     let res = null;
     const known = {};
     function run() {
-      remember.set("stemmind.tool.rxn", inp.value);
+      remember.set("kompreno.tool.rxn", inp.value);
       for (const k of Object.keys(known)) delete known[k];
       st.innerHTML = "";
       res = null;
@@ -88,14 +88,14 @@ export function chemTools(ctx) {
   // ---- raztopine ----
   const CONC = ["ph", "acid", "conc", "dil", "w"];
   function conc(el) {
-    let part = CONC.includes(remember.get("stemmind.tool.concPart")) ? remember.get("stemmind.tool.concPart") : "ph";
+    let part = CONC.includes(remember.get("kompreno.tool.concPart")) ? remember.get("kompreno.tool.concPart") : "ph";
     el.innerHTML = `<div class="chip-row tl-sub" role="tablist">${CONC.map((k) => `<button type="button" role="tab" data-part="${k}">${esc(t(`sc.conc.${k}`))}</button>`).join("")}</div><div class="tl-part"></div>`;
     const box = el.querySelector(".tl-part");
     const views = {};
     const BUILD = { ph: ph_, acid: acid_, conc: conc_, dil: dil_, w: w_ };
     function show(k) {
       part = k;
-      remember.set("stemmind.tool.concPart", k);
+      remember.set("kompreno.tool.concPart", k);
       el.querySelectorAll(".tl-sub [data-part]").forEach((b) => {
         b.classList.toggle("active", b.dataset.part === k);
         b.setAttribute("aria-selected", String(b.dataset.part === k));
@@ -121,13 +121,13 @@ export function chemTools(ctx) {
     `<p class="tl-ph-kind"><b>${esc(t(Math.abs(r.ph - 7) < 0.005 ? "sc.ph.neutral" : r.ph < 7 ? "sc.ph.acidic" : "sc.ph.basic"))}</b> <span class="muted">${esc(t("sc.ph.at25"))}</span></p>`;
 
   function ph_(el) {
-    const st = remember.get("stemmind.tool.ph", { kind: "ph", v: "3" });
+    const st = remember.get("kompreno.tool.ph", { kind: "ph", v: "3" });
     const KINDS = [["ph", "pH"], ["poh", "pOH"], ["h", "[H₃O⁺]"], ["oh", "[OH⁻]"]];
     el.innerHTML = card(`<div class="tl-pair"><label class="tl-field tl-narrow"><span>${esc(t("sc.ph.known"))}</span><select class="tl-phk">${KINDS.map(([k, l]) => `<option value="${k}"${k === st.kind ? " selected" : ""}>${l}</option>`).join("")}</select></label>${field("tl-phv", esc(t("sc.ph.value")), st.v)}</div><p class="muted tl-note">${esc(t("sc.ph.hint"))}</p>`) + `<div class="tl-out" aria-live="polite"></div>`;
     const run = () => {
       st.kind = el.querySelector(".tl-phk").value;
       st.v = el.querySelector(".tl-phv").value;
-      remember.set("stemmind.tool.ph", st);
+      remember.set("kompreno.tool.ph", st);
       const r = phAll(st.kind, readNumber(st.v));
       el.querySelector(".tl-out").innerHTML = r ? card(phRows(r)) : st.v.trim() ? err(t("sc.ph.bad")) : "";
     };
@@ -137,7 +137,7 @@ export function chemTools(ctx) {
   }
 
   function acid_(el) {
-    const st = remember.get("stemmind.tool.acid", { type: "wa", c: "0,1", z: 1, K: "1,8E-5", kk: "K" });
+    const st = remember.get("kompreno.tool.acid", { type: "wa", c: "0,1", z: 1, K: "1,8E-5", kk: "K" });
     const TYPES = ["sa", "sb", "wa", "wb"];
     el.innerHTML = card(`<label class="tl-field"><span>${esc(t("sc.acid.type"))}</span><select class="tl-at">${TYPES.map((k) => `<option value="${k}"${k === st.type ? " selected" : ""}>${esc(t(`sc.acid.${k}`))}</option>`).join("")}</select></label>
       <div class="tl-pair">${field("tl-ac", texHtml("c\\ /\\ \\mathrm{(mol/L)}"), st.c)}
@@ -150,7 +150,7 @@ export function chemTools(ctx) {
       st.z = Number(el.querySelector(".tl-azs").value);
       st.kk = el.querySelector(".tl-akk").value;
       st.K = el.querySelector(".tl-akv").value;
-      remember.set("stemmind.tool.acid", st);
+      remember.set("kompreno.tool.acid", st);
       const strong = st.type[0] === "s";
       const base = st.type[1] === "b";
       el.querySelector(".tl-az").hidden = !strong;
@@ -171,7 +171,7 @@ export function chemTools(ctx) {
   }
 
   function conc_(el) {
-    const st = remember.get("stemmind.tool.cn", { f: "NaCl", m: "5,85", n: "", V: "500", Vu: "mL", c: "", g: "", M: "" });
+    const st = remember.get("kompreno.tool.cn", { f: "NaCl", m: "5,85", n: "", V: "500", Vu: "mL", c: "", g: "", M: "" });
     const fld = (k, tex) => field(`tl-cn tl-cn-${k}`, texHtml(tex), st[k], ` data-k="${k}"`);
     el.innerHTML =
       card(`<label class="tl-field"><span>${esc(t("sc.cn.formula"))}</span><input class="tl-cnf" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${esc(t("sc.formulaPh"))}" value="${esc(st.f)}"></label>
@@ -183,7 +183,7 @@ export function chemTools(ctx) {
       st.f = el.querySelector(".tl-cnf").value;
       st.Vu = el.querySelector(".tl-cnvu").value;
       el.querySelectorAll(".tl-cn").forEach((x) => (st[x.dataset.k] = x.value));
-      remember.set("stemmind.tool.cn", st);
+      remember.set("kompreno.tool.cn", st);
       const k = {};
       for (const key of ["m", "n", "c", "g", "M"]) if (st[key].trim()) k[key] = readNumber(st[key]);
       if (st.V.trim()) k.V = readNumber(st.V) / (st.Vu === "mL" ? 1000 : 1);
@@ -211,11 +211,11 @@ export function chemTools(ctx) {
   }
 
   function dil_(el) {
-    const st = remember.get("stemmind.tool.dil", { c1: "2", V1: "50", c2: "0,5", V2: "" });
+    const st = remember.get("kompreno.tool.dil", { c1: "2", V1: "50", c2: "0,5", V2: "" });
     el.innerHTML = card(`<div class="tl-formula">${texHtml("c_1 V_1 = c_2 V_2")}</div><div class="tl-grid2">${["c1", "V1", "c2", "V2"].map((k) => field(`tl-dl`, texHtml(`${k[0]}_${k[1]}`), st[k], ` data-k="${k}"`)).join("")}</div><p class="muted tl-note">${esc(t("sc.dil.hint"))}</p>`) + `<div class="tl-out" aria-live="polite"></div>`;
     const run = () => {
       el.querySelectorAll(".tl-dl").forEach((x) => (st[x.dataset.k] = x.value));
-      remember.set("stemmind.tool.dil", st);
+      remember.set("kompreno.tool.dil", st);
       const v = {};
       for (const k of ["c1", "V1", "c2", "V2"]) v[k] = st[k].trim() ? readNumber(st[k]) : undefined;
       const r = dilution(v);
@@ -227,12 +227,12 @@ export function chemTools(ctx) {
   }
 
   function w_(el) {
-    const st = remember.get("stemmind.tool.w", { mt: "20", mv: "80", mr: "", w: "" });
+    const st = remember.get("kompreno.tool.w", { mt: "20", mv: "80", mr: "", w: "" });
     const labels = { mt: `m_{\\text{${t("sc.w.solute")}}}\\ /\\ \\mathrm{g}`, mv: `m_{\\text{${t("sc.w.solvent")}}}\\ /\\ \\mathrm{g}`, mr: `m_{\\text{${t("sc.w.solution")}}}\\ /\\ \\mathrm{g}`, w: "w\\ /\\ \\%" };
     el.innerHTML = card(`<div class="tl-formula">${texHtml(`w = \\frac{m_{\\text{${t("sc.w.solute")}}}}{m_{\\text{${t("sc.w.solution")}}}}`)}</div><div class="tl-grid2">${["mt", "mv", "mr", "w"].map((k) => field("tl-wf", texHtml(labels[k]), st[k], ` data-k="${k}"`)).join("")}</div><p class="muted tl-note">${esc(t("sc.w.hint"))}</p>`) + `<div class="tl-out" aria-live="polite"></div>`;
     const run = () => {
       el.querySelectorAll(".tl-wf").forEach((x) => (st[x.dataset.k] = x.value));
-      remember.set("stemmind.tool.w", st);
+      remember.set("kompreno.tool.w", st);
       const v = {};
       for (const k of ["mt", "mv", "mr", "w"]) if (st[k].trim()) v[k] = readNumber(st[k]) / (k === "w" ? 100 : 1);
       const out = el.querySelector(".tl-out");

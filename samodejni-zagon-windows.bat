@@ -24,7 +24,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "$s.TargetPath=(Join-Path $d 'telefon-windows.bat');" ^
   "$s.WorkingDirectory=$d;" ^
   "$s.WindowStyle=7;" ^
-  "$s.IconLocation=(Join-Path $d 'assets\stemmind.ico');" ^
+  "$s.IconLocation=(Join-Path $d 'assets\kompreno.ico');" ^
   "$s.Description='Kompreno za telefon';" ^
   "$s.Save()"
 if errorlevel 1 (

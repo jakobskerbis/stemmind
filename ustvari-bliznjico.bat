@@ -9,7 +9,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "$old=(Join-Path $desk 'STEMMind.lnk'); if (Test-Path $old) { Remove-Item $old };" ^
   "$s.TargetPath=(Join-Path $d 'zagon-windows.bat');" ^
   "$s.WorkingDirectory=$d;" ^
-  "$s.IconLocation=(Join-Path $d 'assets\stemmind.ico');" ^
+  "$s.IconLocation=(Join-Path $d 'assets\kompreno.ico');" ^
   "$s.Description='Odpri Kompreno';" ^
   "$s.Save()"
 if errorlevel 1 (
