@@ -1,6 +1,6 @@
 # Kompreno
 
-(Do 29. 10. 2026 se je aplikacija imenovala STEMMind. Stare nastavitve `STEMMIND_*` v `.env` še delujejo kot `KOMPRENO_*`; baza `data/stemmind.db`, piškotki in nastavitve v brskalniku se ob prvem zagonu prenesejo sami. Repozitorij na GitHubu se še imenuje `stemmind`.)
+(Ime aplikacije je na enem mestu v `brand.json`; za novo ime zaženi `node scripts/preimenuj.js <Ime>`. Nastavitve, baza, piškotki in bližnjice s prejšnjimi imeni se ob zagonu prenesejo sami. Repozitorij na GitHubu se še imenuje po prvem imenu.)
 
 Osebni AI inštruktor za matematiko, fiziko in kemijo za slovenske učence (OŠ 6.–9. razred) in dijake (SŠ). Teče na Claude API.
 

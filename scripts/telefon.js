@@ -5,6 +5,7 @@
 // Računalnik mora biti prižgan, dokler uporabljaš povezavo na telefonu.
 // Aplikacija se sama posodobi z GitHuba (preverja vsakih 15 minut), povezava ostane ista (docs/posodobitve.md).
 import "../server/env.js";
+import { BRAND, LEGACY } from "../server/brand.js";
 import fs from "node:fs";
 import path from "node:path";
 import { spawn, execFileSync } from "node:child_process";
@@ -39,8 +40,13 @@ function readEnv() {
 function envValue(text, key) {
   const m = text.match(new RegExp(`^\\s*${key}\\s*=\\s*([^#\\r\\n]*)`, "m"));
   if (m) return m[1].trim();
-  // Starejša .env ima nastavitve z imenom iz časa STEMMind (STEMMIND_…).
-  return key.startsWith("KOMPRENO_") ? envValue(text, key.replace("KOMPRENO_", "STEMMIND_")) : "";
+  // Starejša .env ima nastavitve s prejšnjim imenom aplikacije (brand.json → legacy).
+  if (!key.startsWith(`${BRAND.env}_`)) return "";
+  for (const l of LEGACY) {
+    const v = envValue(text, `${l.env}_${key.slice(BRAND.env.length + 1)}`);
+    if (v) return v;
+  }
+  return "";
 }
 
 function appendEnv(lines) {

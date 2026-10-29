@@ -8,6 +8,7 @@
 // Uporaba: node scripts/posodobitev.js   (izhodna koda 0 = ni novega ali posodobljeno, 1 = napaka)
 // Navodila: docs/posodobitve.md
 import "../server/env.js";
+import { BRAND, LEGACY } from "../server/brand.js";
 import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
@@ -19,9 +20,9 @@ export const REPO = process.env.KOMPRENO_REPO || "jakobskerbis/stemmind";
 export const BRANCH = process.env.KOMPRENO_VEJA || "main";
 // Zagonske datoteke (.bat, .command) prepišemo le, če so že v »varni« obliki (imajo to oznako):
 // Windows in bash bereta skripto sproti, zato bi prepis stare oblike med tekom zmedel okno.
-export const MARKER = "KOMPRENO-SAMOPOSODOBITEV";
-// Enaka oznaka iz časa, ko se je aplikacija imenovala STEMMind (enako dolga, zato je prepis med tekom varen).
-export const LEGACY_MARKER = "STEMMIND-SAMOPOSODOBITEV";
+export const MARKER = `${BRAND.env}-SAMOPOSODOBITEV`;
+// Enaka oznaka s prejšnjimi imeni aplikacije (brand.json → legacy).
+export const LEGACY_MARKERS = LEGACY.map((l) => `${l.env}-SAMOPOSODOBITEV`);
 const KEEP_TOP = new Set([".env", "data", "node_modules", ".git"]);
 const LAUNCHER = /^[^/]+\.(bat|cmd|command)$/i;
 const isWin = process.platform === "win32";
@@ -110,7 +111,7 @@ export function planChanges(root, files, previousList = []) {
     let old = null;
     try { old = fs.readFileSync(file); } catch {}
     if (old && old.equals(data)) continue;
-    if (old && LAUNCHER.test(rel) && !old.includes(MARKER) && !old.includes(LEGACY_MARKER)) { skipped.push(rel); continue; }
+    if (old && LAUNCHER.test(rel) && ![MARKER, ...LEGACY_MARKERS].some((m) => old.includes(m))) { skipped.push(rel); continue; }
     write.push(rel);
   }
   const remove = previousList.filter((rel) => !files.has(rel) && !KEEP_TOP.has(rel.split("/")[0]) && fs.existsSync(path.join(root, rel)));
@@ -246,9 +247,10 @@ async function updateTarball(root, say) {
 // Namesti knjižnice, če se je package.json spremenil (ista oznaka kot v zagonskih datotekah).
 export function installIfNeeded(root = ROOT, say = console.log) {
   const pkg = path.join(root, "package.json");
-  const mark = path.join(root, "node_modules", ".kompreno-package.json");
-  const legacyMark = path.join(root, "node_modules", ".stemmind-package.json"); // ime iz časa STEMMind
-  try { if (!fs.existsSync(mark)) fs.renameSync(legacyMark, mark); } catch {}
+  const mark = path.join(root, "node_modules", `.${BRAND.slug}-package.json`);
+  for (const l of LEGACY) { // oznaka s prejšnjim imenom aplikacije
+    try { if (!fs.existsSync(mark)) fs.renameSync(path.join(root, "node_modules", `.${l.slug}-package.json`), mark); } catch {}
+  }
   try { if (fs.readFileSync(pkg).equals(fs.readFileSync(mark))) return true; } catch {}
   say("Nameščam knjižnice za novo različico ...");
   const r = spawnSync(isWin ? "npm.cmd" : "npm", ["install", "--omit=dev", "--no-audit", "--no-fund"],

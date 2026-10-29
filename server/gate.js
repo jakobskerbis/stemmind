@@ -3,12 +3,13 @@
 // zapomnimo v piškotku, ki deluje tudi v aplikaciji na začetnem zaslonu telefona.
 // Povezava ".../?geslo=..." prijavi takoj (za prijatelje, ki preizkušajo).
 import "./env.js";
+import { BRAND, LEGACY } from "./brand.js";
 import crypto from "node:crypto";
 import express from "express";
 
-const COOKIE = "kompreno_geslo";
-// Piškotek iz časa, ko se je aplikacija imenovala STEMMind: še velja, ob naslednjem obisku ga zamenja nov.
-const LEGACY_COOKIE = "stemmind_geslo";
+const COOKIE = `${BRAND.slug}_geslo`;
+// Piškotki iz časa prejšnjih imen (brand.json → legacy) še veljajo; ob naslednjem obisku jih zamenja nov.
+const LEGACY_COOKIES = LEGACY.map((l) => ({ name: `${l.slug}_geslo`, salt: `${l.slug}-gate-v1` }));
 const YEAR = 365 * 24 * 3600;
 // Brez gesla: zdravje strežnika, ikone in opis spletne aplikacije (telefon jih
 // prebere za bližnjico na začetnem zaslonu, preden je uporabnik prijavljen).
@@ -63,8 +64,8 @@ function loginPage({ next = "/", error = "" } = {}) {
 
 export function passwordGate(password) {
   const expected = Buffer.from(password);
-  const token = crypto.createHmac("sha256", password).update("kompreno-gate-v1").digest("hex");
-  const legacyToken = crypto.createHmac("sha256", password).update("stemmind-gate-v1").digest("hex");
+  const token = crypto.createHmac("sha256", password).update(`${BRAND.slug}-gate-v1`).digest("hex");
+  const legacyTokens = LEGACY_COOKIES.map((c) => ({ ...c, token: crypto.createHmac("sha256", password).update(c.salt).digest("hex") }));
   const fails = new Map(); // ip -> { n, until }
   const matches = (value) => {
     const b = Buffer.from(String(value ?? ""));
@@ -87,7 +88,7 @@ export function passwordGate(password) {
     return !!m && crypto.timingSafeEqual(Buffer.from(m[1]), Buffer.from(want));
   };
   const hasCookie = (req) => cookieMatches(req, COOKIE, token);
-  const hasLegacyCookie = (req) => cookieMatches(req, LEGACY_COOKIE, legacyToken);
+  const hasLegacyCookie = (req) => legacyTokens.some((c) => cookieMatches(req, c.name, c.token));
   const hasBasic = (req) => {
     const [scheme, b64] = String(req.headers.authorization || "").split(" ");
     if (!/^basic$/i.test(scheme || "")) return false;

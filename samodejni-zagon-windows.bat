@@ -5,10 +5,6 @@ rem (okno se odpre pomanjsano). Ce ga zazenes se enkrat, samodejni zagon izklopi
 cd /d "%~dp0"
 set "STEM_DIR=%~dp0"
 set "LINK=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\Kompreno za telefon.lnk"
-rem Aplikacija se je prej imenovala STEMMind: staro bliznjico preimenuj, da ni dveh zagonov.
-set "OLDLINK=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\STEMMind za telefon.lnk"
-if exist "%OLDLINK%" if not exist "%LINK%" move "%OLDLINK%" "%LINK%" >nul
-if exist "%OLDLINK%" del "%OLDLINK%"
 
 if exist "%LINK%" (
   choice /c DN /m "Samodejni zagon je ze vklopljen. Ga izklopim"

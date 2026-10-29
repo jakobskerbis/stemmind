@@ -52,7 +52,7 @@ function interestOf(db, now = Date.now()) {
 // sum = Usage.summary(). Vrne { economy, limit, price, interest } z besedili v slovenščini.
 export function pricingAdvice(db, sum, { now = new Date() } = {}) {
   const eur = sum.eur_per_usd || EUR_PER_USD();
-  const price = (PLANS.find((p) => p.key === "kompreno_1_month")?.amount || 999) / 100;
+  const price = (PLANS.find((p) => p.seats === 1 && p.interval === "month")?.amount || 999) / 100;
   const net = netOf(price);
   const hard = LIMITS.studentMonthlyUsd();
   const soft = LIMITS.studentSoftUsd();

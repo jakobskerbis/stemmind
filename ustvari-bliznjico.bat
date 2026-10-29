@@ -6,7 +6,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "$d=$env:STEM_DIR.TrimEnd('\');" ^
   "$desk=[Environment]::GetFolderPath('Desktop');" ^
   "$s=(New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desk 'Kompreno.lnk'));" ^
-  "$old=(Join-Path $desk 'STEMMind.lnk'); if (Test-Path $old) { Remove-Item $old };" ^
   "$s.TargetPath=(Join-Path $d 'zagon-windows.bat');" ^
   "$s.WorkingDirectory=$d;" ^
   "$s.IconLocation=(Join-Path $d 'assets\kompreno.ico');" ^

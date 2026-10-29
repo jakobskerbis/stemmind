@@ -3,6 +3,7 @@
 //   z bližnjicami (dolg pritisk na ikono) in posnetki zaslona za okno »Namesti«.
 // - /.well-known/assetlinks.json: povezava z aplikacijo v Google Play (TWA), ko sta v .env
 //   ANDROID_PACKAGE in ANDROID_SHA256 (glej docs/aplikacija.md).
+import { BRAND } from "./brand.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -40,8 +41,8 @@ export function manifest(lang = "sl") {
   });
   return {
     id: "/",
-    name: "Kompreno",
-    short_name: "Kompreno",
+    name: BRAND.name,
+    short_name: BRAND.name,
     description: s["inst.desc"],
     lang,
     dir: RTL.has(lang) ? "rtl" : "ltr",

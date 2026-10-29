@@ -1,5 +1,6 @@
 // Paketi, cene in pravica do polnega dostopa.
 import "../env.js";
+import { BRAND, LEGACY } from "../brand.js";
 
 export const TRIAL_DAYS = 7;
 export const REFERRAL_DAYS = 30;
@@ -14,10 +15,10 @@ export const PRIVACY_VERSION = "2026-10-29";
 // 7,8 €; AI stane 1–2 € na dejavnega učenca → 6–7 € na mesec za nas (≈ 75 %).
 // Šolsko leto: 89 € = 7,42 € na mesec (26 % ceneje), plačilo vnaprej, manj odpovedi.
 export const PLANS = [
-  { key: "kompreno_1_month", seats: 1, interval: "month", amount: 999, label: "1 otrok, mesečno" },
-  { key: "kompreno_1_year", seats: 1, interval: "year", amount: 8900, label: "1 otrok, šolsko leto" },
-  { key: "kompreno_2_month", seats: 2, interval: "month", amount: 1599, label: "2 otroka, mesečno" },
-  { key: "kompreno_2_year", seats: 2, interval: "year", amount: 13900, label: "2 otroka, šolsko leto" },
+  { key: `${BRAND.slug}_1_month`, seats: 1, interval: "month", amount: 999, label: "1 otrok, mesečno" },
+  { key: `${BRAND.slug}_1_year`, seats: 1, interval: "year", amount: 8900, label: "1 otrok, šolsko leto" },
+  { key: `${BRAND.slug}_2_month`, seats: 2, interval: "month", amount: 1599, label: "2 otroka, mesečno" },
+  { key: `${BRAND.slug}_2_year`, seats: 2, interval: "year", amount: 13900, label: "2 otroka, šolsko leto" },
 ];
 
 // ---------- regijske cene (potrdil j, 2026-10-28) ----------
@@ -68,7 +69,7 @@ export function plansFor(currency = "EUR") {
   const r = REGIONAL_PRICES[currency];
   if (!r) return PLANS.map((p) => ({ ...p, currency: "EUR" }));
   return SHAPE.map(([seats, interval, label], i) => ({
-    key: `kompreno_${seats}_${interval}_${currency.toLowerCase()}`,
+    key: `${BRAND.slug}_${seats}_${interval}_${currency.toLowerCase()}`,
     seats,
     interval,
     amount: minorUnits(currency, r.prices[i]),
@@ -78,8 +79,8 @@ export function plansFor(currency = "EUR") {
 }
 export const ALL_PLANS = [...PLANS.map((p) => ({ ...p, currency: "EUR" })), ...Object.keys(REGIONAL_PRICES).flatMap(plansFor)];
 
-// Cene, ustvarjene pred preimenovanjem (STEMMind), imajo v Stripu lookup_key »stemmind_…«.
-const currentKey = (key) => String(key ?? "").replace(/^stemmind_/, "kompreno_");
+// Cene, ustvarjene pod prejšnjim imenom aplikacije (brand.json → legacy), imajo v Stripu lookup_key »<staro>_…«.
+const currentKey = (key) => LEGACY.reduce((k, l) => (k.startsWith(`${l.slug}_`) ? `${BRAND.slug}_${k.slice(l.slug.length + 1)}` : k), String(key ?? ""));
 export const planByKey = (key) => ALL_PLANS.find((p) => p.key === currentKey(key)) || null;
 export const planFor = (seats, interval, currency = "EUR") => plansFor(currency).find((p) => p.seats === seats && p.interval === interval) || null;
 export const monthlyAmount = (seats, currency = "EUR") => planFor(seats >= 2 ? 2 : 1, "month", currency).amount;

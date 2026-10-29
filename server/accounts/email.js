@@ -1,4 +1,5 @@
 // Pošiljanje e-pošte prek Resend. Brez ključa se sporočilo izpiše v dnevnik (razvoj).
+import { BRAND } from "../brand.js";
 
 export const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -32,7 +33,7 @@ export class Mailer {
 export function layout(title, inner, footer = "") {
   return `<!doctype html><html lang="sl"><body style="margin:0;background:#f4f6fb;font-family:Arial,Helvetica,sans-serif;color:#1d2433">
 <div style="max-width:560px;margin:0 auto;padding:24px">
-<div style="font-size:22px;font-weight:bold;margin-bottom:16px">Kompren<span style="color:#4f6bed">o</span></div>
+<div style="font-size:22px;font-weight:bold;margin-bottom:16px">${BRAND.wordmark[0]}<span style="color:#4f6bed">${BRAND.wordmark[1]}</span></div>
 <div style="background:#fff;border-radius:12px;padding:24px">
 <h1 style="font-size:20px;margin:0 0 16px">${esc(title)}</h1>
 ${inner}

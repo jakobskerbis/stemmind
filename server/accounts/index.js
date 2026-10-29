@@ -1,6 +1,7 @@
 // Starševski računi, soglasja, naročnine (Stripe), priporočila in tedenska poročila (Resend).
 // Vklop: KOMPRENO_ACCOUNTS=1. Brez tega aplikacija deluje kot prej (brez prijave).
 import "../env.js";
+import { BRAND, LEGACY } from "../brand.js";
 import { isLocalRequest } from "../feedback.js";
 import express from "express";
 import { migrateAccounts } from "./schema.js";
@@ -31,8 +32,8 @@ const PAID = new Set(["active", "trialing", "past_due"]);
 const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 // Piškotek po zavrnjeni registraciji zaradi starosti: 24 ur je na tej napravi mogoča samo
 // registracija polnoletnega (starša), da otrok ne poskusi znova z drugim datumom.
-const AGE_COOKIE = "kompreno_age";
-const LEGACY_AGE_COOKIE = "stemmind_age"; // ime iz časa STEMMind (velja en dan)
+const AGE_COOKIE = `${BRAND.slug}_age`;
+const LEGACY_AGE_COOKIES = LEGACY.map((l) => `${l.slug}_age`); // prejšnja imena (velja en dan)
 
 function referralCode() {
   let s = "";
@@ -234,7 +235,7 @@ export function mountAccounts(app, store, opts = {}) {
     if (age === null || age < 0 || age > 120) return res.status(400).json({ error: "Vpišite datum rojstva.", birth_date: true });
     const cf = String(req.headers["cf-ipcountry"] || "").toUpperCase();
     const minAge = minAgeOf(cf, req.body?.country);
-    const blockedBefore = readCookie(req, AGE_COOKIE) === "1" || readCookie(req, LEGACY_AGE_COOKIE) === "1";
+    const blockedBefore = readCookie(req, AGE_COOKIE) === "1" || LEGACY_AGE_COOKIES.some((c) => readCookie(req, c) === "1");
     if (age < minAge || (blockedBefore && age < ADULT_AGE)) {
       const secure = req.secure ? "; Secure" : "";
       res.append("Set-Cookie", `${AGE_COOKIE}=1; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400${secure}`);

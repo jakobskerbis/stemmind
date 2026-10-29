@@ -7,15 +7,17 @@
 // in osnovne barve; lastne barve uporabnika veljajo nad njimi.
 // Iz teh nekaj barv izračunamo vse ostale (robove, sivo besedilo, poudarke …) in pri tem
 // pazimo na kontrast, da je besedilo vedno dobro berljivo.
-// Aplikacija se je do 29. 10. 2026 imenovala STEMMind: nastavitve te naprave so bile shranjene pod
-// ključi »stemmind.…« / »stemmind_…«. Enkrat jih prenesemo na »kompreno…«, da se nič ne izgubi.
-// (theme.js se naloži prvi na vsaki strani, zato to teče pred vsem drugim.)
+// Nastavitve te naprave so v localStorage pod ključi z imenom aplikacije (»kompreno.…« / »kompreno_…«).
+// Ključe s prejšnjimi imeni (brand.json → legacy; seznam spodaj posodobi scripts/preimenuj.js) enkrat
+// prenesemo na trenutno ime, da se nič ne izgubi. theme.js se naloži prvi na vsaki strani.
 (function () {
   try {
-    const OLD = "stemmind";
+    const NOW = "kompreno";
+    const LEGACY = ["stemmind"]; // brand:legacy
     for (const key of Object.keys(localStorage)) {
-      if (!key.startsWith(OLD + ".") && !key.startsWith(OLD + "_")) continue;
-      const next = "kompreno" + key.slice(OLD.length);
+      const old = LEGACY.find((o) => key.startsWith(o + ".") || key.startsWith(o + "_"));
+      if (!old) continue;
+      const next = NOW + key.slice(old.length);
       if (localStorage.getItem(next) === null) localStorage.setItem(next, localStorage.getItem(key));
       localStorage.removeItem(key);
     }

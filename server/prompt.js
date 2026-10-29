@@ -1,5 +1,6 @@
 // Sestavi sistemski prompt iz predloge in aktivnih nastavitev.
 import "./env.js";
+import { BRAND } from "./brand.js";
 import fs from "node:fs";
 import { goalPrompt } from "../public/goal-data.js";
 import path from "node:path";
@@ -16,7 +17,7 @@ const TEMPLATE_PATH = process.env.KOMPRENO_PROMPT_PATH || path.join(here, "..", 
 
 // Vrstica, ki loči stalni del prompta (enak za vse učence, predpomnjen pri
 // Claude API) od nastavitev učenca, ki jih vstavi strežnik.
-export const SPLIT_MARKER = "<!-- KOMPRENO:NASTAVITVE";
+export const SPLIT_MARKER = `<!-- ${BRAND.env}:NASTAVITVE`;
 
 let cached = null;
 export function loadTemplate() {
