@@ -9,6 +9,7 @@ import { dialectsFor } from "./dialects.js";
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock } from "./account.js";
 import { initProfileMenu, refreshProfileButton } from "./profile-menu.js";
+import { initAppsMenu } from "./apps-menu.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
@@ -154,7 +155,7 @@ function showView(name) {
   if (name !== "topic" && name !== "cards") setActiveMode(null);
   window.scrollTo(0, 0);
 }
-document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
+document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
 
 // Tipka Nazaj (Android, aplikacija na začetnem zaslonu, brskalnik): brez tega bi tipka Nazaj
 // v nameščeni aplikaciji takoj zaprla Evklid. Zgodovina ima dve ravni: Učna pot (0) in
@@ -425,6 +426,9 @@ async function selectStudent(id) {
   state.interestsAsk = maybeAskInterests();
 }
 $("#student-select").addEventListener("change", (e) => selectStudent(e.target.value));
+
+// Klik na klobuk zgoraj levo: mreža vseh delov aplikacije.
+initAppsMenu({ getState: () => state, showView, currentView: () => currentView });
 
 // Klik na ime zgoraj desno: meni profila (menjava, nov profil, nastavitve, račun, odjava).
 initProfileMenu({
