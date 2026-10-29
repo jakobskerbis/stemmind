@@ -306,10 +306,10 @@ async function main() {
     else {
       say(`Naslov ${pub} se ne odpre.`);
       say(cloudflaredServiceRunning()
-        ? "  Tunel Cloudflare teče, a ne kaže na ta računalnik: v Cloudflare preveri, da naslov vodi na http://localhost:" + port + "."
-        : "  Tunel Cloudflare ne teče: v Cloudflare (Zero Trust → Networks → Tunnels) preveri, da je tunel »Healthy«.");
+        ? "  Tunel Cloudflare teče, a ne kaže na ta računalnik: v nadzorni plošči Cloudflare preveri, da naslov vodi na http://localhost:" + port + "."
+        : "  Tunel Cloudflare ne teče: v nadzorni plošči Cloudflare (Zero Trust → Networks → Tunnels) preveri, da je tunel »Healthy«.");
       say("Odpiram drugo povezavo ...");
-      stable = await ngrokSettings().catch(() => null);
+      stable = await ngrokSettings().catch((e) => { say(`Stalna povezava ni uspela: ${e.message}`); return null; });
     }
   }
   if (!url && stable) {

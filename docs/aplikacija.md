@@ -38,11 +38,11 @@ Na računalniku z aplikacijo teče tunel Cloudflare kot storitev Windows (namest
 Cloudflare: Zero Trust → Networks → Tunnels → ukaz `cloudflared service install …`; javni naslov
 `evklid.app` → `http://localhost:3000`). Storitev se zažene sama ob prižigu računalnika, žeton je v
 njej in ne v `.env`. `scripts/telefon.js` storitev zazna (`sc query cloudflared`), preveri, da
-`https://evklid.app/manifest.webmanifest` vrne Evklid, in pokaže ta naslov namesto ngrok. Če se ne
+`https://evklid.app/manifest.webmanifest` vrne Evklid, in pokaže ta naslov namesto naslova ngrok. Če se ne
 odpre, izpiše, kaj preveriti, in odpre ngrok ali začasno povezavo. Domena je v `brand.json`
 (`domain`), drug naslov se nastavi z `EVKLID_JAVNI_NASLOV` v `.env` (`0` izklopi).
 
-Aplikacija, nameščena z ngrok naslova, je za telefon druga aplikacija: odpri `https://evklid.app`,
+Aplikacija, nameščena z naslova ngrok, je za telefon druga aplikacija: odpri `https://evklid.app`,
 se prijavi in jo znova dodaj na začetni zaslon (napredek je na strežniku, zato se nič ne izgubi);
 staro ikono lahko izbrišeš.
 
