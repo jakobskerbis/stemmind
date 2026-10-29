@@ -2235,21 +2235,25 @@ initTextbook({
 })();
 
 // Računalnik: če zavihki z napisi ne gredo v zgornjo vrstico (ožje okno ali več zavihkov),
-// jih najprej stisnemo, nato pokažemo samo ikone; izbrani zavihek obdrži napis, ostali ga pokažejo ob lebdenju (title).
+// jih postopoma stisnemo; zavihek brez napisa ga pokaže ob lebdenju (title).
 {
   const bar = document.querySelector(".topbar");
   const tabs = bar?.querySelector(".tabs");
   if (bar && tabs) {
-    tabs.querySelectorAll(".tab").forEach((t) => (t.title ||= t.textContent.trim()));
-    // Najprej poskusimo z ožjimi zavihki, šele nato samo ikone.
+    // Koraki, dokler zavihki ne gredo v vrstico: ožji zavihki, brez napisa »STEMMind« ob logotipu,
+    // manj pogosti zavihki samo z ikono, na koncu vsi samo z ikono (izbrani obdrži napis).
+    const STEPS = ["tabs-tight", "tabs-nobrand", "tabs-minor", "tabs-compact"];
     const over = () => tabs.scrollWidth > tabs.clientWidth + 1;
     const fit = () => {
-      bar.classList.remove("tabs-tight", "tabs-compact");
-      if (over()) bar.classList.add("tabs-tight");
-      if (over()) bar.classList.add("tabs-compact");
+      tabs.querySelectorAll(".tab").forEach((t) => (t.title = t.textContent.trim()));
+      bar.classList.remove(...STEPS);
+      for (const step of STEPS) {
+        if (!over()) break;
+        bar.classList.add(step);
+      }
     };
     new ResizeObserver(fit).observe(tabs);
-    new MutationObserver(fit).observe(tabs, { subtree: true, attributes: true, attributeFilter: ["hidden", "class"] });
+    new MutationObserver(fit).observe(tabs, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["hidden", "class"] });
     document.fonts?.ready.then(fit);
   }
 }
