@@ -281,7 +281,9 @@ export async function update({ root = ROOT, say = console.log, install = true } 
   }
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+// Zagnano kot program (node scripts/posodobitev.js)? Na Windows so poti lahko različno velike.
+const same = (a, b) => (isWin ? a.toLowerCase() === b.toLowerCase() : a === b);
+if (process.argv[1] && same(path.resolve(process.argv[1]), fileURLToPath(import.meta.url))) {
   if (process.env.STEMMIND_POSODOBITEV === "0") process.exit(0);
   console.log("Preverjam posodobitve ...");
   const r = await update();
