@@ -5,9 +5,9 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Kinematika opiše, **kako** se telo giblje (lega, hitrost, pospešek). Dinamika odgovori, **zakaj** se tako giblje. Odgovor so sile in trije Newtonovi zakoni. Z njimi napovemo gibanje vsega od zrna peska v centrifugi in eritrocita v krvni žili do avtomobila v ovinku in satelita na tirnici.
+Ko poln nakupovalni voziček potiskaš po trgovini s stalno hitrostjo, je vsota sil nanj natanko nič. Še več: voziček po tretjem zakonu potiska tebe nazaj z enako veliko silo, kot ga ti potiskaš naprej. Kako se potem sploh kaj premakne? Kinematika opiše, **kako** se telo giblje; dinamika s silami in tremi Newtonovimi zakoni pove, **zakaj**. Z njimi napoveš gibanje zrna peska v centrifugi, avtomobila v ovinku in satelita na tirnici.
 
-Na fakulteti Newtonove zakone uporabljamo vektorsko in sistematično: narišemo vse sile, izberemo koordinatni sistem, zapišemo enačbe po komponentah in jih rešimo. V tej lekciji se posebej posvetimo trem silam, ki jih srečaš povsod:
+Na fakulteti Newtonove zakone uporabljamo vektorsko in sistematično: narišemo vse sile, izberemo koordinatni sistem, zapišemo enačbe po komponentah in jih rešimo. Posebej natančno obravnavamo tri sile, ki jih srečaš povsod:
 
 - **trenju**, ki zavira drsenje in hkrati omogoča hojo, vožnjo in zaviranje,
 - **silam pri kroženju**, ki telo držijo na krivi poti,
@@ -16,6 +16,10 @@ Na fakulteti Newtonove zakone uporabljamo vektorsko in sistematično: narišemo 
 Enak postopek boš kasneje uporabil pri vrtenju, nihanju in gibanju tekočin, zato se ga splača dobro utrditi.
 
 ## Razlaga
+
+### Mamljiva napačna ideja: gibanje potrebuje silo
+
+Voziček, ki ga nehaš potiskati, se kmalu ustavi. Zato se zdi, da sila gibanje vzdržuje, in tako so po Aristotelu učili skoraj dva tisoč let. Napaka je v tem, da pozabimo na trenje in upor: tvoja sila jih le nadomesti, da je vsota sil nič. Na gladkem ledu bi voziček drsel naprej skoraj brez potiskanja. Sila ne vzdržuje hitrosti, ampak jo **spreminja**. To popravljeno sliko zapišejo Newtonovi zakoni.
 
 **1. Newtonovi zakoni.**
 
@@ -27,7 +31,15 @@ $$\sum \vec{F} = \frac{\mathrm{d}\vec{G}}{\mathrm{d}t} = m\vec{a} \quad (\text{p
   Enota sile je newton: $1\,\mathrm{N} = 1\,\mathrm{kg\,m/s^2}$. Enačba je vektorska, zato velja po vsaki komponenti posebej: $\sum F_x = ma_x$, $\sum F_y = ma_y$.
 - **Tretji zakon (zakon o vzajemnem učinku).** Če telo $A$ deluje na telo $B$ s silo $\vec{F}_{AB}$, deluje $B$ na $A$ s silo $\vec{F}_{BA} = -\vec{F}_{AB}$. Sili delujeta na **različni** telesi, zato se v enačbi gibanja enega telesa ne odštejeta.
 
+:::premisli
+Voziček te potiska nazaj z enako silo, kot ga ti potiskaš naprej. Zakaj se potem voziček in ti sploh premaknete?
+---
+Sili delujeta na različni telesi, zato se ne izničita. Za voziček štejejo le sile **nanj**: tvoja sila naprej in trenje nazaj; če je tvoja večja, voziček pospeši. Ti se premakneš, ker te tla z lepenjem pod podplati potiskajo naprej; ko pospešuješ, je ta sila večja od sile vozička nate.
+:::
+
 **2. Postopek reševanja.** (1) Izberi telo. (2) Nariši **diagram sil** (vse sile, ki delujejo **na** to telo). (3) Izberi osi, najbolje eno v smeri pospeška. (4) Zapiši drugi zakon po komponentah. (5) Reši in preveri enote ter mejne primere.
+
+### Sile, ki jih rišemo v diagram
 
 **3. Pogoste sile.**
 
@@ -43,11 +55,21 @@ $$\sum \vec{F} = \frac{\mathrm{d}\vec{G}}{\mathrm{d}t} = m\vec{a} \quad (\text{p
 
 Koeficienta $k_l$ in $k_t$ sta brezdimenzijska in odvisna od para materialov; običajno je $k_t < k_l$. Zato je težje premakniti omaro kot jo potem potiskati. Na klancu telo začne drseti, ko $\tan\alpha > k_l$.
 
+### Kroženje in gravitacija
+
 **5. Sile pri kroženju.** Pri enakomernem kroženju s polmerom $r$ in obodno hitrostjo $v$ (kotno hitrostjo $\omega = v/r$) se smer hitrosti stalno spreminja. Telo ima **radialni (centripetalni) pospešek** proti središču:
 
 $$a_r = \frac{v^2}{r} = \omega^2 r.$$
 
-Po drugem zakonu mora vsota sil v radialni smeri kazati proti središču in biti $F_r = m v^2/r$. To ni nova vrsta sile, ampak **vloga**, ki jo opravlja neka znana sila: napetost vrvi pri vrtenju kamna, lepenje med gumo in cesto v ovinku, gravitacija pri satelitu, električna sila pri elektronu v klasičnem modelu atoma. Če ta sila izgine, telo nadaljuje po tangenti. »Centrifugalna sila« nastopa le v vrtečem se (neinercialnem) sistemu, v inercialnem sistemu je ne pišemo.
+Po drugem zakonu mora vsota sil v radialni smeri kazati proti središču in biti $F_r = m v^2/r$.
+
+:::premisli
+Kovanec leži na vrteči se plošči in kroži z njo. Mnogi rečejo, da ga »centrifugalna sila vleče navzven«. Katera sila ga v resnici drži na krožnici in kaj se zgodi, ko ploščo zavrtiš hitreje?
+---
+Lepenje med kovancem in ploščo, usmerjeno proti središču. Potrebna sila $m\omega^2 r$ narašča s kvadratom kotne hitrosti; ko preseže največje lepenje $k_l mg$, kovanec zdrsne in odleti približno po tangenti, ne radialno navzven.
+:::
+
+To ni nova vrsta sile, ampak **vloga**, ki jo opravlja neka znana sila: napetost vrvi pri vrtenju kamna, lepenje med gumo in cesto v ovinku, gravitacija pri satelitu, električna sila pri elektronu v klasičnem modelu atoma. Če ta sila izgine, telo nadaljuje po tangenti. »Centrifugalna sila« nastopa le v vrtečem se (neinercialnem) sistemu, v inercialnem sistemu je ne pišemo.
 
 **6. Gravitacija.** Newtonov gravitacijski zakon: točkasti (ali krogelno simetrični) telesi z masama $m_1$ in $m_2$ na razdalji $r$ se privlačita s silo
 
@@ -63,7 +85,7 @@ Druga enačba je tretji Keplerjev zakon. Masa satelita se pokrajša, zato vsa te
 
 ### Primer 1 (lažji)
 
-Zaboj z maso $10\,\mathrm{kg}$ vlečemo po vodoravnih tleh z vodoravno silo $50\,\mathrm{N}$. Koeficient kinetičnega trenja med zabojem in tlemi je $0{,}30$. Kolikšen je pospešek zaboja? Vzemi $g = 9{,}81\,\mathrm{m/s^2}$.
+Zaboj pijače z maso $10\,\mathrm{kg}$ vlečemo po vodoravnih tleh skladišča trgovine z vodoravno silo $50\,\mathrm{N}$. Koeficient kinetičnega trenja med zabojem in tlemi je $0{,}30$. Kolikšen je pospešek zaboja? Vzemi $g = 9{,}81\,\mathrm{m/s^2}$.
 
 **Podatki:** $m = 10\,\mathrm{kg}$, $F = 50\,\mathrm{N}$ (vodoravno), $k_t = 0{,}30$, $g = 9{,}81\,\mathrm{m/s^2}$
 **Iščemo:** pospešek $a$
@@ -75,8 +97,8 @@ $F_N = mg$, $F_{tr} = k_t F_N$, $\sum F_x = F - F_{tr} = ma$
 **Rešitev:**
 
 1. Navpično ni pospeška: $F_N = mg = 10\,\mathrm{kg} \cdot 9{,}81\,\mathrm{m/s^2} = 98{,}1\,\mathrm{N}$.
-2. Sila trenja: $F_{tr} = 0{,}30 \cdot 98{,}1\,\mathrm{N} = 29{,}4\,\mathrm{N}$.
-3. Vodoravno: $ma = 50\,\mathrm{N} - 29{,}4\,\mathrm{N} = 20{,}6\,\mathrm{N}$.
+2. Zaboj drsi, zato velja kinetično trenje: $F_{tr} = 0{,}30 \cdot 98{,}1\,\mathrm{N} = 29{,}4\,\mathrm{N}$.
+3. Vodoravno trenje kaže nasproti vlečni sili: $ma = 50\,\mathrm{N} - 29{,}4\,\mathrm{N} = 20{,}6\,\mathrm{N}$.
 4. $a = 20{,}6\,\mathrm{N} / 10\,\mathrm{kg} \approx 2{,}06\,\mathrm{m/s^2}$.
 5. Odgovor: zaboj se giblje s pospeškom približno $2{,}06\,\mathrm{m/s^2}$ v smeri vlečne sile.
 
@@ -94,10 +116,10 @@ Zdrsne, če $\tan\alpha > k_l$. Vzdolž klanca: $ma = mg\sin\alpha - k_t\,mg\cos
 **Rešitev:**
 
 1. $\tan 30^\circ \approx 0{,}577 > 0{,}25$, zato lepenje klade ne more zadržati: klada zdrsne.
-2. Dinamična komponenta teže vzdolž klanca: $mg\sin\alpha = 5{,}0 \cdot 9{,}81 \cdot 0{,}5\,\mathrm{N} \approx 24{,}5\,\mathrm{N}$.
-3. Normalna sila: $F_N = mg\cos\alpha = 5{,}0 \cdot 9{,}81 \cdot 0{,}866\,\mathrm{N} \approx 42{,}5\,\mathrm{N}$; trenje $F_{tr} = 0{,}20 \cdot 42{,}5\,\mathrm{N} \approx 8{,}50\,\mathrm{N}$.
+2. Komponenta teže vzdolž klanca vleče klado navzdol: $mg\sin\alpha = 5{,}0 \cdot 9{,}81 \cdot 0{,}5\,\mathrm{N} \approx 24{,}5\,\mathrm{N}$.
+3. Pravokotno na klanec ni pospeška, zato je normalna sila $F_N = mg\cos\alpha = 5{,}0 \cdot 9{,}81 \cdot 0{,}866\,\mathrm{N} \approx 42{,}5\,\mathrm{N}$; trenje $F_{tr} = 0{,}20 \cdot 42{,}5\,\mathrm{N} \approx 8{,}50\,\mathrm{N}$.
 4. Rezultanta vzdolž klanca: $24{,}5\,\mathrm{N} - 8{,}50\,\mathrm{N} \approx 16{,}0\,\mathrm{N}$, pospešek $a = 16{,}0\,\mathrm{N} / 5{,}0\,\mathrm{kg} \approx 3{,}21\,\mathrm{m/s^2}$.
-5. Hitrost: $v = \sqrt{2as} = \sqrt{2 \cdot 3{,}21\,\mathrm{m/s^2} \cdot 2{,}0\,\mathrm{m}} \approx 3{,}58\,\mathrm{m/s}$.
+5. Klada začne iz mirovanja ($v_0 = 0$), zato $v = \sqrt{2as} = \sqrt{2 \cdot 3{,}21\,\mathrm{m/s^2} \cdot 2{,}0\,\mathrm{m}} \approx 3{,}58\,\mathrm{m/s}$.
 6. Odgovor: klada zdrsne s pospeškom približno $3{,}21\,\mathrm{m/s^2}$ in po $2{,}0\,\mathrm{m}$ doseže hitrost približno $3{,}58\,\mathrm{m/s}$.
 
 ### Primer 3 (težji)
@@ -121,15 +143,38 @@ $G\dfrac{mM_Z}{r^2} = m\omega^2 r$, $\omega = \dfrac{2\pi}{T}$ $\Rightarrow$ $r 
 6. Hitrost: $v = \dfrac{2\pi \cdot 4{,}216 \cdot 10^7\,\mathrm{m}}{86\,164\,\mathrm{s}} \approx 3{,}07 \cdot 10^3\,\mathrm{m/s}$. Preizkus: $\sqrt{GM_Z/r} = \sqrt{3{,}986 \cdot 10^{14} / 4{,}216 \cdot 10^7}\,\mathrm{m/s} \approx 3{,}07 \cdot 10^3\,\mathrm{m/s}$.
 7. Odgovor: tir ima polmer približno $42\,160\,\mathrm{km}$, satelit je približno $35\,790\,\mathrm{km}$ nad površjem in se giblje s hitrostjo približno $3{,}07\,\mathrm{km/s}$.
 
+### Primer 4 – zdaj ti
+
+Na tekočem traku pri blagajni leži paket mleka z maso $1{,}0\,\mathrm{kg}$. Blagajničarka zažene trak, ki enakomerno pospešuje in v $0{,}50\,\mathrm{s}$ doseže hitrost $0{,}40\,\mathrm{m/s}$. Koeficient lepenja med embalažo in trakom je $0{,}35$. Kolikšna sila lepenja deluje na paket in ali paket na traku zdrsne? Vzemi $g = 9{,}81\,\mathrm{m/s^2}$.
+
+**Podatki:** $m = 1{,}0\,\mathrm{kg}$, $v_0 = 0$, $v = 0{,}40\,\mathrm{m/s}$, $\Delta t = 0{,}50\,\mathrm{s}$, $k_l = 0{,}35$, $g = 9{,}81\,\mathrm{m/s^2}$, trak je vodoraven
+**Iščemo:** potrebno silo lepenja $F_l$, ali paket zdrsne, največji pospešek traku brez zdrsa
+
+:::formula
+$a = \dfrac{\Delta v}{\Delta t}$, $F_l = ma$, $F_{l,\max} = k_l mg$
+:::
+
+**Rešitev:**
+
+1. Če paket ne drsi, ima enak pospešek kot trak: $a = 0{,}40\,\mathrm{m/s} / 0{,}50\,\mathrm{s} = 0{,}80\,\mathrm{m/s^2}$.
+2. Lepenje je edina vodoravna sila na paket, zato mora dati ves pospešek: $F_l = 1{,}0\,\mathrm{kg} \cdot 0{,}80\,\mathrm{m/s^2} = 0{,}80\,\mathrm{N}$.
+3. Navpično ni pospeška, zato $F_N = mg = 9{,}81\,\mathrm{N}$ in $F_{l,\max} = 0{,}35 \cdot 9{,}81\,\mathrm{N} \approx 3{,}43\,\mathrm{N}$.
+4. Primerjaj sili in sklepaj sam, nato preveri:
+
+:::premisli
+Ali paket zdrsne? Kolikšen je največji pospešek traku, pri katerem paket še ne zdrsne, in ali je odvisen od mase paketa?
+---
+Ne zdrsne, ker je potrebna sila $0{,}80\,\mathrm{N}$ manjša od največjega lepenja $3{,}43\,\mathrm{N}$. Iz $ma_{\max} = k_l mg$ je $a_{\max} = k_l g \approx 3{,}43\,\mathrm{m/s^2}$; masa se pokrajša, zato velja enako za lahek in težek paket.
+:::
+
 ## Pogoste napake
 
+- **Gibanje potrebuje silo.** Sila ne vzdržuje hitrosti, ampak jo spreminja. Pri enakomernem gibanju je vsota sil nič; potiskanje le uravnoteži trenje.
 - **$F_N = mg$ vedno.** Na klancu je $F_N = mg\cos\alpha$, če vlečemo poševno navzgor ali smo v pospešenem dvigalu, pa je drugačna. Normalno silo vedno izračunaj iz ravnovesja pravokotno na podlago.
 - **Lepenje kot $k_l F_N$ tudi v mirovanju.** $k_l F_N$ je le **največja** sila lepenja. Če omaro potiskamo s $20\,\mathrm{N}$ in se ne premakne, je sila lepenja $20\,\mathrm{N}$, ne $k_l F_N$.
-- **Centripetalna sila kot dodatna sila v diagramu.** V diagram sil rišemo le prave sile (teža, vrv, trenje, gravitacija). Njihova radialna rezultanta je $mv^2/r$.
-- **Centrifugalna sila v inercialnem sistemu.** Telo v ovinku ne »vleče navzven«; ko sila proti središču popusti, telo nadaljuje po tangenti.
+- **Centripetalna ali centrifugalna sila kot dodatna sila v diagramu.** V diagram sil rišemo le prave sile (teža, vrv, trenje, gravitacija). Njihova radialna rezultanta je $mv^2/r$. Telo v ovinku ne »vleče navzven«; ko sila proti središču popusti, telo nadaljuje po tangenti.
 - **Par sil po tretjem zakonu se odšteje.** Sili $\vec{F}_{AB}$ in $\vec{F}_{BA}$ delujeta na različni telesi, zato ne moreta biti v ravnovesju na istem telesu.
-- **Razdalja pri gravitaciji od površja.** V $G\frac{m_1 m_2}{r^2}$ je $r$ razdalja med središčema, ne višina nad tlemi.
-- **Stopinje in kilometri.** Preveri, da je kalkulator v stopinjah, in razdalje pretvori v metre pred vstavljanjem v $G$.
+- **Razdalja pri gravitaciji od površja.** V $G\frac{m_1 m_2}{r^2}$ je $r$ razdalja med središčema, ne višina nad tlemi. Razdalje pretvori v metre pred vstavljanjem v $G$, pri klancih pa preveri, da je kalkulator v stopinjah.
 
 ## Povzetek
 
@@ -198,24 +243,40 @@ Na mokri cesti je $k_l$ lahko le okoli $0{,}4$; ker je $v_{\max} \propto \sqrt{k
 
 ? Omaro, pri kateri je največja sila lepenja $30\,\mathrm{N}$, potiskamo z vodoravno silo $20\,\mathrm{N}$ in se ne premakne. Kolikšna je sila lepenja?
 - $30\,\mathrm{N}$
+~ $k_l F_N$ je le največja možna sila lepenja; dokler omara miruje, je lepenje toliko, kot je treba za ravnovesje.
 + $20\,\mathrm{N}$
 - $10\,\mathrm{N}$
+~ Odštel si $30\,\mathrm{N} - 20\,\mathrm{N}$; lepenje ni »preostanek« do meje, ampak natanko uravnoteži potiskanje.
 > Omara miruje, zato je vsota sil nič: lepenje je natanko $20\,\mathrm{N}$ in nasprotno sili potiskanja. $30\,\mathrm{N}$ je le zgornja meja.
 
 ? Telo z maso $0{,}20\,\mathrm{kg}$ kroži s hitrostjo $3{,}0\,\mathrm{m/s}$ po krožnici s polmerom $0{,}50\,\mathrm{m}$. Kolikšna je radialna rezultanta sil?
 - $1{,}2\,\mathrm{N}$
+~ Hitrosti nisi kvadriral: $0{,}20 \cdot 3{,}0/0{,}50 = 1{,}2$. Radialni pospešek je $v^2/r$.
 - $0{,}90\,\mathrm{N}$
+~ S polmerom si množil namesto delil: $0{,}20 \cdot 9{,}0 \cdot 0{,}50 = 0{,}90$. Večji polmer pri isti hitrosti pomeni manjšo silo.
 + $3{,}6\,\mathrm{N}$
 > $F_r = mv^2/r = 0{,}20 \cdot 9{,}0 / 0{,}50\,\mathrm{N} = 3{,}6\,\mathrm{N}$. Odgovor $1{,}2\,\mathrm{N}$ dobiš, če hitrosti ne kvadriraš.
 
 ? Kako se spremeni gravitacijska sila med telesoma, če se razdalja med njunima središčema podvoji?
 - Zmanjša se na polovico.
+~ Silo si vzel za obratno sorazmerno z razdaljo; v gravitacijskem zakonu je v imenovalcu $r^2$.
 + Zmanjša se na četrtino.
 - Ostane enaka.
+~ Masi se res ne spremenita, a sila je odvisna tudi od razdalje med središčema.
 > Sila je obratno sorazmerna s kvadratom razdalje: $1/2^2 = 1/4$.
 
 ? Človek z maso $60\,\mathrm{kg}$ stoji v dvigalu, ki pospešuje navzgor s $2{,}0\,\mathrm{m/s^2}$. Kolikšna je normalna sila tal nanj ($g = 9{,}81\,\mathrm{m/s^2}$)?
 - $589\,\mathrm{N}$
+~ To je teža $mg$. Dvigalo pospešuje, zato vsota sil ni nič in mora biti $F_N$ večja od teže.
 - $469\,\mathrm{N}$
+~ Pospešek si odštel, kot da bi dvigalo pospeševalo navzdol: $m(g - a)$.
 + $709\,\mathrm{N}$
 > $F_N - mg = ma$, torej $F_N = m(g + a) = 60 \cdot 11{,}81\,\mathrm{N} \approx 709\,\mathrm{N}$. $589\,\mathrm{N}$ je teža, $469\,\mathrm{N}$ bi bila pri pospešku navzdol.
+
+? Nakupovalni voziček, ki ga potiskaš, se po tleh trgovine giblje premo s stalno hitrostjo. Kaj o silah nanj pove prvi Newtonov zakon?
+- Vsota sil nanj kaže v smeri gibanja, sicer bi se ustavil.
+~ To je Aristotelova ideja, da gibanje vzdržuje neuravnotežena sila. Sila ne vzdržuje hitrosti, ampak jo spreminja; potiskanje le uravnoteži trenje.
+- Nanj ne deluje nobena sila.
+~ Sile delujejo (teža, normalna sila, potiskanje, trenje), le njihova vsota je nič.
++ Vsota vseh sil nanj je nič.
+> Prvi zakon: telo se giblje premo enakomerno natanko takrat, ko je vsota sil nanj nič. Posamezne sile so lahko velike, a se uravnotežijo.

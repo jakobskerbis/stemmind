@@ -5,11 +5,9 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Modra galica $\mathrm{CuSO_4 \cdot 5\,H_2O}$ je živo modra. Cinkov sulfat $\mathrm{ZnSO_4 \cdot 7\,H_2O}$ je bel, njegova raztopina brezbarvna. Baker in cink sta v periodnem sistemu soseda. Zakaj je ena sol obarvana, druga pa ne?
+Uganka, preden prebereš kar koli teorije. Mars je na nebu rdečkast zaradi železovih oksidov v prahu. Modra galica $\mathrm{CuSO_4 \cdot 5\,H_2O}$ je živo modra, cinkov sulfat $\mathrm{ZnSO_4 \cdot 7\,H_2O}$ pa je bel in njegova raztopina brezbarvna, čeprav sta baker in cink v periodnem sistemu soseda. Kalcij ima v spojinah vedno $+2$, mangan, le nekaj mest desno, pa od $+2$ (bledo rožnati $\mathrm{Mn^{2+}}$) do $+7$ (vijolični $\mathrm{KMnO_4}$). Kaj imajo železo, baker in mangan, česar cink in kalcij nimata?
 
-Še ena uganka: kalcij ima v spojinah vedno $+2$. Mangan, le nekaj mest desno, pa ima od $+2$ (bledo rožnati $\mathrm{Mn^{2+}}$) do $+7$ (vijolični $\mathrm{KMnO_4}$).
-
-Prehodni elementi so tudi kovine industrije in katalize: železo v Haberjevem postopku za amoniak, vanadijev oksid pri proizvodnji žveplove kisline, platina, paladij in rodij v avtomobilskem katalizatorju. Vse tri lastnosti, veliko oksidacijskih števil, barve in katalizo, razloži ena stvar: delno zasedene orbitale $d$.
+Prehodne kovine so tudi katalizatorji: železo v Haberjevem postopku za amoniak, vanadijev oksid pri proizvodnji žveplove kisline, platina, paladij in rodij v avtomobilskem katalizatorju. Vse troje, barve, mnoga oksidacijska števila in katalizo, razloži ena stvar: delno zasedene orbitale $d$.
 
 ## Razlaga
 
@@ -17,7 +15,16 @@ Prehodni elementi so tudi kovine industrije in katalize: železo v Haberjevem po
 
 **2. Elektronska konfiguracija ionov.** V atomu se orbitala $4s$ zapolni pred $3d$: železo je $[\mathrm{Ar}]\,3d^6\,4s^2$. Pri ionizaciji pa atom najprej izgubi elektrone $4s$. Zato je $\mathrm{Fe^{2+}}$ $[\mathrm{Ar}]\,3d^6$ in $\mathrm{Fe^{3+}}$ $[\mathrm{Ar}]\,3d^5$. Izjemi v atomih sta Cr ($3d^5\,4s^1$) in Cu ($3d^{10}\,4s^1$).
 
-Hitro pravilo: število elektronov $d$ v ionu = številka skupine $-$ oksidacijsko število. Za $\mathrm{Fe^{3+}}$: $8 - 3 = 5$, torej $d^5$.
+Primerjaj nekaj ionov, ki se pojavljajo v tej lekciji:
+
+| Ion | Skupina | Oksidacijsko število | Elektroni $d$ |
+|---|---|---|---|
+| $\mathrm{Ti^{3+}}$ | 4 | $+3$ | $d^1$ |
+| $\mathrm{Fe^{2+}}$ | 8 | $+2$ | $d^6$ |
+| $\mathrm{Fe^{3+}}$ | 8 | $+3$ | $d^5$ |
+| $\mathrm{Cu^{2+}}$ | 11 | $+2$ | $d^9$ |
+
+Ali vidiš, kako se zadnji stolpec izračuna iz srednjih dveh? To je hitro pravilo: število elektronov $d$ v ionu = številka skupine $-$ oksidacijsko število. Za $\mathrm{Fe^{3+}}$: $8 - 3 = 5$, torej $d^5$.
 
 **3. Mnogo oksidacijskih števil.** Pri kalciju sta po energiji dostopna le dva elektrona $4s$. Tretji bi prišel iz notranje lupine, kar stane ogromno energije. Pri prehodnih elementih sta $3d$ in $4s$ po energiji blizu, zato atom lahko odda različno število elektronov. Ionizacijske energije rastejo postopoma, brez velikega skoka.
 
@@ -63,7 +70,7 @@ Iz bele svetlobe se vsrka ena barva, mi pa vidimo **komplementarno** barvo, preo
 | $580$–$620\,\mathrm{nm}$ | oranžna | modro |
 | $620$–$800\,\mathrm{nm}$ | rdeča | modro-zeleno |
 
-Ion $d^0$ (npr. $\mathrm{Sc^{3+}}$, $\mathrm{Ti^{4+}}$) nima elektronov $d$, ki bi skočili. Ion $d^{10}$ ($\mathrm{Zn^{2+}}$, $\mathrm{Cu^+}$) nima prostega mesta v $e_g$. Oba sta zato brezbarvna. To je odgovor na uganko z galico in cinkovim sulfatom.
+Razvrsti ione iz uganke in tabele zgoraj po številu elektronov $d$. Obarvani so $\mathrm{Ti^{3+}}$ ($d^1$), $\mathrm{Fe^{2+}}$ ($d^6$) in $\mathrm{Cu^{2+}}$ ($d^9$); brezbarvni so $\mathrm{Sc^{3+}}$ in $\mathrm{Ti^{4+}}$ ($d^0$) ter $\mathrm{Zn^{2+}}$ in $\mathrm{Cu^+}$ ($d^{10}$). Vzorec: ion $d^0$ nima elektronov $d$, ki bi skočili, ion $d^{10}$ pa nima prostega mesta v $e_g$, zato sta oba brezbarvna. To je odgovor na uganko z galico in cinkovim sulfatom.
 
 :::premisli
 $\mathrm{MnO_4^-}$ je intenzivno vijoličen, $\mathrm{Cr_2O_7^{2-}}$ oranžen. Izračunaj število elektronov $d$ v obeh. Ali barvo lahko povzroča prehod d–d?
@@ -103,7 +110,7 @@ Vsota oksidacijskih števil v spojini je $0$; število elektronov $d$ = skupina 
 
 ### Primer 2: razcep iz barve
 
-Raztopina $[\mathrm{Ti(H_2O)_6}]^{3+}$ najmočneje vsrkava svetlobo pri $500\,\mathrm{nm}$. Kolikšen je razcep $\Delta_\mathrm{o}$ v $\mathrm{kJ/mol}$? Kakšne barve je raztopina?
+Astronomi sestavo zvezd berejo iz absorpcijskih črt v spektru; kemik na enak način bere razcep orbital iz spektra raztopine. Raztopina $[\mathrm{Ti(H_2O)_6}]^{3+}$ najmočneje vsrkava svetlobo pri $500\,\mathrm{nm}$. Kolikšen je razcep $\Delta_\mathrm{o}$ v $\mathrm{kJ/mol}$? Kakšne barve je raztopina?
 
 **Podatki:** $\lambda = 500\,\mathrm{nm} = 5{,}00 \cdot 10^{-7}\,\mathrm{m}$, $h = 6{,}626 \cdot 10^{-34}\,\mathrm{J\,s}$, $c = 2{,}998 \cdot 10^{8}\,\mathrm{m/s}$, $N_\mathrm{A} = 6{,}022 \cdot 10^{23}\,\mathrm{mol^{-1}}$
 **Iščemo:** $\Delta_\mathrm{o}$ v $\mathrm{kJ/mol}$ in barvo raztopine

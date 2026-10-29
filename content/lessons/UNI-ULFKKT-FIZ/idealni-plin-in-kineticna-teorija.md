@@ -5,11 +5,15 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Plin v jeklenki, zrak v pljučih, para v turbini in pline, ki nastajajo pri kemijski reakciji, opišemo z istimi tremi količinami: tlakom $p$, prostornino $V$ in temperaturo $T$. Pri nizkih tlakih in dovolj visokih temperaturah so med njimi preproste zveze, ki jih združuje **plinska enačba** $pV = nRT$.
+Po dolgi vožnji po avtocesti pokaže merilnik v pnevmatikah višji tlak kot zjutraj pred hišo. Zaprta vrečka čipsa, kupljena v dolini, je na vrhu Vršiča napeta kot balon. Enkrat se plin segreje, drugič se zmanjša zunanji tlak, a oba pojava opiše ista zveza med tlakom $p$, prostornino $V$ in temperaturo $T$: **plinska enačba** $pV = nRT$.
 
-Kinetična teorija gre korak dlje: pokaže, **zakaj** plinska enačba velja. Plin si predstavljamo kot ogromno število drobnih molekul, ki se naključno gibljejo in prožno trkajo ob stene. Iz Newtonovih zakonov za posamezne molekule dobimo tlak in temperaturo celotnega plina. Tako izvemo, kaj temperatura sploh je, koliko **notranje energije** ima plin in zakaj imajo različni plini različne **toplotne kapacitete**. Ta znanja potrebuješ pri termodinamiki, kemijski kinetiki, difuziji, fiziologiji dihanja in povsod, kjer računaš s plini.
+Kinetična teorija pokaže, **zakaj** ta enačba velja: tlak so sunki ogromnega števila molekul ob stene, temperatura pa meri, kako hitro se molekule gibljejo. Iz te slike sledita tudi **notranja energija** plina in njegove **toplotne kapacitete**, ki jih potrebuješ pri termodinamiki, kemijski kinetiki, difuziji in fiziologiji dihanja.
 
 ## Razlaga
+
+### Najprej slika: molekule v škatli
+
+Nariši si škatlo z redko posejanimi pikami, ki letijo v vse smeri, se odbijajo od sten in le redko zadenejo druga drugo. Vsak odboj je drobna puščica sunka na steno. Vse, kar sledi, je branje te slike: koliko je pik (množina), kako pogosto in kako močno udarjajo (tlak) in kako hitre so (temperatura).
 
 **1. Model idealnega plina.** Idealni plin je model, v katerem:
 
@@ -22,17 +26,27 @@ Model dobro opiše realne pline pri tlakih do nekaj barov in temperaturah daleč
 
 **2. Množina snovi in temperatura.** Množina $n$ (enota $\mathrm{mol}$) je povezana s številom molekul $N$ prek Avogadrove konstante: $N = nN_A$, $N_A = 6{,}022 \cdot 10^{23}\,\mathrm{mol^{-1}}$. Masa je $m = nM$, kjer je $M$ molska masa. V plinskih enačbah je temperatura vedno **absolutna**, v kelvinih: $T/\mathrm{K} = t/{}^\circ\mathrm{C} + 273{,}15$.
 
+### Od slike do enačb
+
 **3. Plinska enačba.** Za idealni plin velja
 
 $$pV = nRT = Nk_BT,$$
 
 kjer je $R = 8{,}314\,\mathrm{J/(mol\,K)}$ splošna plinska konstanta in $k_B = R/N_A = 1{,}381 \cdot 10^{-23}\,\mathrm{J/K}$ Boltzmannova konstanta. Za stalno množino plina, ki preide iz stanja 1 v stanje 2, velja $\dfrac{p_1V_1}{T_1} = \dfrac{p_2V_2}{T_2}$. Posebni primeri so:
 
-- **izotermna** sprememba ($T$ stalna): $pV = \text{konst.}$ (Boyle-Mariotte),
-- **izobarna** sprememba ($p$ stalen): $V/T = \text{konst.}$ (Gay-Lussac),
-- **izohorna** sprememba ($V$ stalna): $p/T = \text{konst.}$
+| Sprememba | Stalno | Zveza | Primer iz vsakdana |
+|---|---|---|---|
+| **izotermna** | $T$ | $pV = \text{konst.}$ (Boyle-Mariotte) | zrak v pljučih potapljača, ki se dviga |
+| **izobarna** | $p$ | $V/T = \text{konst.}$ (Gay-Lussac) | mehka plastična vrečka z zrakom se na soncu napihne |
+| **izohorna** | $V$ | $p/T = \text{konst.}$ | pnevmatika se med vožnjo segreje |
 
 Pri $0\,^\circ\mathrm{C}$ in $101{,}325\,\mathrm{kPa}$ zavzame $1\,\mathrm{mol}$ idealnega plina $22{,}4\,\mathrm{L}$. Iz plinske enačbe sledi tudi gostota plina $\rho = pM/(RT)$.
+
+:::premisli
+Zakaj se vrečka čipsa na prelazu napihne, čeprav vanjo ni prišel noben plin?
+---
+Množina plina v vrečki je enaka, temperatura skoraj tudi. Zunanji tlak je na višini manjši, zato se vrečka razteza, dokler se tlak v njej ne izenači z zunanjim; pri stalnem $nT$ manjši $p$ pomeni večjo $V$.
+:::
 
 **4. Tlak iz kinetične teorije.** Molekula z maso $m_0$, ki s hitrostjo $v_x$ zadene steno, se odbije z $-v_x$ in steni preda gibalno količino $2m_0v_x$. Ko seštejemo sunke vseh molekul na enoto ploščine in časa (izpeljava je v razdelku »Bolj natančno«), dobimo
 
@@ -47,6 +61,14 @@ $$\langle W_k\rangle = \tfrac{3}{2}k_BT.$$
 **Absolutna temperatura je mera za povprečno kinetično energijo naključnega gibanja molekul.** Pri isti temperaturi imajo molekule vseh plinov enako povprečno kinetično energijo, lažje molekule pa se zato gibljejo hitreje. Koren povprečnega kvadrata hitrosti je
 
 $$v_{\text{ef}} = \sqrt{\langle v^2\rangle} = \sqrt{\frac{3k_BT}{m_0}} = \sqrt{\frac{3RT}{M}}.$$
+
+:::premisli
+Molekule vodika ($M = 2\,\mathrm{g/mol}$) in kisika ($M = 32\,\mathrm{g/mol}$) so v isti posodi. Katere so hitrejše in kolikokrat?
+---
+Pri isti temperaturi imajo enako $\langle W_k\rangle$, zato je $v_{\text{ef}} \propto 1/\sqrt{M}$. Vodik je hitrejši za faktor $\sqrt{32/2} = 4$.
+:::
+
+### Energija plina
 
 **6. Notranja energija in ekviparticijski izrek.** Notranja energija $W_n$ (v kemiji in tehniki $U$) idealnega plina je vsota energij vseh molekul. Ker med molekulami ni sil, je odvisna le od temperature. **Ekviparticijski izrek** pravi, da vsaka prostostna stopnja, ki v energiji nastopa s kvadratnim členom, prispeva v povprečju $\tfrac{1}{2}k_BT$ na molekulo:
 
@@ -73,7 +95,7 @@ Razmerje $\kappa = C_p/C_V$ (adiabatni eksponent) je $5/3 \approx 1{,}67$ za eno
 
 ### Primer 1 (lažji)
 
-Jeklenka s prostornino $20\,\mathrm{L}$ vsebuje kisik pod tlakom $150\,\mathrm{bar}$ pri temperaturi $20\,^\circ\mathrm{C}$. Kolikšna sta množina in masa kisika? Kolikšno prostornino bi ta kisik zavzel pri $0\,^\circ\mathrm{C}$ in $101{,}325\,\mathrm{kPa}$? Kisik obravnavaj kot idealni plin.
+Za alpinistično odpravo na osemtisočak napolnijo jeklenko s prostornino $20\,\mathrm{L}$; vsebuje kisik pod tlakom $150\,\mathrm{bar}$ pri temperaturi $20\,^\circ\mathrm{C}$. Kolikšna sta množina in masa kisika? Kolikšno prostornino bi ta kisik zavzel pri $0\,^\circ\mathrm{C}$ in $101{,}325\,\mathrm{kPa}$? Kisik obravnavaj kot idealni plin.
 
 **Podatki:** $V = 20\,\mathrm{L} = 0{,}020\,\mathrm{m^3}$, $p = 150\,\mathrm{bar} = 1{,}50 \cdot 10^7\,\mathrm{Pa}$, $T = 293{,}15\,\mathrm{K}$, $M(\mathrm{O_2}) = 32\,\mathrm{g/mol}$, $R = 8{,}314\,\mathrm{J/(mol\,K)}$; normalni pogoji $T_0 = 273{,}15\,\mathrm{K}$, $p_0 = 101\,325\,\mathrm{Pa}$
 **Iščemo:** množino $n$, maso $m$, prostornino $V_0$ pri normalnih pogojih
@@ -84,9 +106,9 @@ $pV = nRT \Rightarrow n = \dfrac{pV}{RT}$, $m = nM$, $V_0 = \dfrac{nRT_0}{p_0}$
 
 **Rešitev:**
 
-1. $n = \dfrac{1{,}50 \cdot 10^7\,\mathrm{Pa} \cdot 0{,}020\,\mathrm{m^3}}{8{,}314\,\mathrm{J/(mol\,K)} \cdot 293{,}15\,\mathrm{K}} = \dfrac{3{,}00 \cdot 10^5\,\mathrm{J}}{2437\,\mathrm{J/mol}} \approx 123\,\mathrm{mol}$.
+1. Množina iz plinske enačbe (tlak v $\mathrm{Pa}$ in prostornina v $\mathrm{m^3}$, da se enote ujemajo z $R$): $n = \dfrac{1{,}50 \cdot 10^7\,\mathrm{Pa} \cdot 0{,}020\,\mathrm{m^3}}{8{,}314\,\mathrm{J/(mol\,K)} \cdot 293{,}15\,\mathrm{K}} = \dfrac{3{,}00 \cdot 10^5\,\mathrm{J}}{2437\,\mathrm{J/mol}} \approx 123\,\mathrm{mol}$.
 2. $m = 123{,}1\,\mathrm{mol} \cdot 32\,\mathrm{g/mol} \approx 3{,}94 \cdot 10^3\,\mathrm{g} = 3{,}94\,\mathrm{kg}$.
-3. $V_0 = \dfrac{123{,}1 \cdot 8{,}314 \cdot 273{,}15}{101\,325}\,\mathrm{m^3} \approx 2{,}76\,\mathrm{m^3}$.
+3. Ista množina pri drugih $p$ in $T$, spet iz plinske enačbe: $V_0 = \dfrac{123{,}1 \cdot 8{,}314 \cdot 273{,}15}{101\,325}\,\mathrm{m^3} \approx 2{,}76\,\mathrm{m^3}$.
 4. Odgovor: v jeklenki je približno $123\,\mathrm{mol}$ oziroma $3{,}94\,\mathrm{kg}$ kisika, ki bi pri normalnih pogojih zavzel približno $2{,}76\,\mathrm{m^3}$. (Pri $150\,\mathrm{bar}$ je model idealnega plina le približek; napaka je nekaj odstotkov.)
 
 ### Primer 2
@@ -102,10 +124,10 @@ $\langle W_k\rangle = \tfrac{3}{2}k_BT$, $v_{\text{ef}} = \sqrt{\dfrac{3RT}{M}}$
 
 **Rešitev:**
 
-1. $\langle W_k\rangle = 1{,}5 \cdot 1{,}381 \cdot 10^{-23}\,\mathrm{J/K} \cdot 300\,\mathrm{K} \approx 6{,}21 \cdot 10^{-21}\,\mathrm{J}$. Velja za vse pline.
+1. $\langle W_k\rangle = 1{,}5 \cdot 1{,}381 \cdot 10^{-23}\,\mathrm{J/K} \cdot 300\,\mathrm{K} \approx 6{,}21 \cdot 10^{-21}\,\mathrm{J}$. Velja za vse pline, ker je odvisna le od temperature.
 2. Dušik: $v_{\text{ef}} = \sqrt{\dfrac{3 \cdot 8{,}314 \cdot 300}{0{,}028}}\,\mathrm{m/s} \approx 517\,\mathrm{m/s}$ (molska masa v $\mathrm{kg/mol}$!).
 3. Helij: $v_{\text{ef}} = \sqrt{\dfrac{3 \cdot 8{,}314 \cdot 300}{0{,}0040}}\,\mathrm{m/s} \approx 1{,}37 \cdot 10^3\,\mathrm{m/s}$.
-4. Razmerje hitrosti je $\sqrt{28/4{,}0} = \sqrt{7} \approx 2{,}65$.
+4. Ker je $v_{\text{ef}} \propto 1/\sqrt{M}$, je razmerje hitrosti $\sqrt{28/4{,}0} = \sqrt{7} \approx 2{,}65$.
 5. Odgovor: povprečna kinetična energija je približno $6{,}21 \cdot 10^{-21}\,\mathrm{J}$; molekule dušika imajo efektivno hitrost približno $517\,\mathrm{m/s}$, atomi helija pa približno $1370\,\mathrm{m/s}$.
 
 ### Primer 3 (težji)
@@ -127,6 +149,29 @@ $C_V = \tfrac{5}{2}R$, $C_p = C_V + R = \tfrac{7}{2}R$; $Q_V = nC_V\Delta T$, $Q
 4. Notranja energija idealnega plina je odvisna le od temperature, zato je v obeh primerih $\Delta W_n = nC_V\Delta T \approx 4{,}16\,\mathrm{kJ}$.
 5. Delo plina pri stalnem tlaku: $A' = nR\Delta T = 2{,}0 \cdot 8{,}314 \cdot 100\,\mathrm{J} \approx 1{,}66\,\mathrm{kJ}$. Preizkus: $Q_p - \Delta W_n = 5{,}82 - 4{,}16 = 1{,}66\,\mathrm{kJ}$. ✓
 6. Odgovor: pri stalni prostornini potrebujemo približno $4{,}16\,\mathrm{kJ}$, pri stalnem tlaku približno $5{,}82\,\mathrm{kJ}$ toplote. Notranja energija se v obeh primerih poveča za $4{,}16\,\mathrm{kJ}$; pri stalnem tlaku gre razlika, $1{,}66\,\mathrm{kJ}$, v delo, ki ga plin opravi pri razširjanju.
+
+### Primer 4 – zdaj ti
+
+Pred odhodom na morje je absolutni tlak zraka v pnevmatiki pri $15\,^\circ\mathrm{C}$ enak $3{,}20\,\mathrm{bar}$. Po dveh urah vožnje se zrak v pnevmatiki segreje na $45\,^\circ\mathrm{C}$. Kolikšen je takrat absolutni tlak in kolikšen nadtlak pokaže merilnik, če je zunanji tlak $1{,}00\,\mathrm{bar}$? Prostornina pnevmatike se skoraj ne spremeni.
+
+**Podatki:** $p_1 = 3{,}20\,\mathrm{bar}$, $t_1 = 15\,^\circ\mathrm{C}$, $t_2 = 45\,^\circ\mathrm{C}$, $V$ stalna, zunanji tlak $p_z = 1{,}00\,\mathrm{bar}$
+**Iščemo:** absolutni tlak $p_2$ in nadtlak $p_2 - p_z$
+
+:::formula
+$\dfrac{p_1}{T_1} = \dfrac{p_2}{T_2}$ (izohorna sprememba), $T/\mathrm{K} = t/{}^\circ\mathrm{C} + 273{,}15$
+:::
+
+**Rešitev:**
+
+1. Plinska enačba zahteva absolutno temperaturo: $T_1 = 288{,}15\,\mathrm{K}$, $T_2 = 318{,}15\,\mathrm{K}$.
+2. Množina in prostornina sta stalni, zato je $p \propto T$: $p_2 = p_1 \cdot T_2/T_1$.
+3. Izračunaj $p_2$ in nadtlak sam, nato preveri:
+
+:::premisli
+Kolikšna sta $p_2$ in nadtlak? Za koliko odstotkov je zrasel nadtlak, ki ga pokaže merilnik?
+---
+$p_2 = 3{,}20\,\mathrm{bar} \cdot 318{,}15/288{,}15 \approx 3{,}53\,\mathrm{bar}$, nadtlak je $3{,}53 - 1{,}00 \approx 2{,}53\,\mathrm{bar}$ (zjutraj $2{,}20\,\mathrm{bar}$). Absolutni tlak je zrasel za okoli $10\,\%$, nadtlak pa za okoli $15\,\%$, ker od obeh odštejemo isti zunanji tlak $1{,}00\,\mathrm{bar}$.
+:::
 
 ## Pogoste napake
 
@@ -205,24 +250,40 @@ Iz nje sledijo najverjetnejša hitrost $\sqrt{2k_BT/m_0}$, povprečna $\sqrt{8k_
 
 ? Idealnemu plinu pri stalni temperaturi zmanjšamo prostornino na polovico. Kaj se zgodi s tlakom?
 - Zmanjša se na polovico.
+~ Zamenjano sorazmerje: pri stalni temperaturi sta $p$ in $V$ obratno sorazmerna, ker molekule v manjši posodi pogosteje zadevajo stene.
 + Podvoji se.
 - Ostane enak.
+~ Hitrost molekul se res ne spremeni, a v polovični prostornini zadene vsako steno dvakrat več molekul na sekundo.
 > Pri izotermni spremembi je $pV = \text{konst.}$, zato pri polovični prostornini tlak naraste na dvakratno vrednost.
 
 ? Absolutno temperaturo plina podvojimo. Kako se spremeni efektivna hitrost molekul?
 - Podvoji se.
+~ Dvakrat se poveča povprečna kinetična energija, ki je sorazmerna z $v^2$; hitrost raste le s $\sqrt{T}$.
 - Poveča se štirikrat.
+~ Hitrost ni sorazmerna s $T^2$; v $v_{\text{ef}} = \sqrt{3RT/M}$ je temperatura pod korenom.
 + Poveča se za faktor $\sqrt{2}$.
 > $v_{\text{ef}} = \sqrt{3RT/M} \propto \sqrt{T}$, zato se pri dvakratni temperaturi hitrost poveča za $\sqrt{2} \approx 1{,}41$. Dvakrat se poveča povprečna kinetična energija.
 
 ? Kolikšna je molska toplotna kapaciteta pri stalni prostornini za enoatomni idealni plin?
 + $12{,}5\,\mathrm{J/(mol\,K)}$
 - $20{,}8\,\mathrm{J/(mol\,K)}$
+~ To je $\tfrac{5}{2}R$: velja za $C_V$ dvoatomnega plina ali za $C_p$ enoatomnega; enoatomni plin ima le $3$ prostostne stopnje.
 - $8{,}31\,\mathrm{J/(mol\,K)}$
+~ To je $R$, razlika $C_p - C_V$ po Mayerjevi enačbi, ne sama $C_V$.
 > $C_V = \tfrac{3}{2}R = 1{,}5 \cdot 8{,}314\,\mathrm{J/(mol\,K)} \approx 12{,}5\,\mathrm{J/(mol\,K)}$. $20{,}8$ velja za $C_p$ enoatomnega ali $C_V$ dvoatomnega plina.
 
 ? Zaprto jeklenko s plinom segrejemo s $27\,^\circ\mathrm{C}$ na $127\,^\circ\mathrm{C}$. Za kolikšen faktor se poveča tlak?
 - $4{,}7$
+~ To je $127/27$: temperaturi v stopinjah Celzija; plinska enačba zahteva kelvine.
 + $1{,}33$
-- $1{,}10$
+- $1{,}15$
+~ To je $\sqrt{T_2/T_1}$, za kolikor naraste efektivna hitrost molekul; tlak je sorazmeren z $\langle v^2\rangle$, torej s $T$.
 > Pri stalni prostornini je $p \propto T$ v kelvinih: $400{,}15/300{,}15 \approx 1{,}33$. Faktor $4{,}7$ dobiš, če napačno deliš temperaturi v stopinjah Celzija.
+
+? Zrak v kabini letala ima temperaturo $22\,^\circ\mathrm{C}$. Kaj ta temperatura po kinetični teoriji pove o molekulah zraka?
+- Vse molekule se gibljejo z isto hitrostjo, ki jo določa temperatura.
+~ Hitrosti molekul so porazdeljene (Maxwellova porazdelitev); temperatura določa le povprečje, posamezne molekule so hitrejše ali počasnejše.
++ Kolikšna je povprečna kinetična energija naključnega gibanja ene molekule.
+- Kolikšna je celotna notranja energija zraka v kabini.
+~ Notranja energija $W_n = \tfrac{f}{2}nRT$ je odvisna tudi od množine plina in prostostnih stopenj; temperatura je mera na eno molekulo.
+> $\langle W_k\rangle = \tfrac{3}{2}k_BT$: absolutna temperatura je mera za povprečno translacijsko kinetično energijo ene molekule, ne glede na to, koliko je plina.
