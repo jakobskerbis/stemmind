@@ -1320,5 +1320,11 @@
   "session.class": "مراجعة قبل الحصة",
   "session.classIntro": "خمسة تمارين قصيرة: ما تتعلّمه الآن والموضوعات التي أتقنتها مؤخرًا.",
   "session.classEmpty": "لا توجد بعد تمارين للمراجعة في هذه المادة. ابدأ بـ«درس جديد».",
-  "sessionDone.class": "انتهت المراجعة"
+  "sessionDone.class": "انتهت المراجعة",
+  "tb.steps.next": "التالي",
+  "tb.steps.prev": "السابق",
+  "tb.steps.count": "الخطوة {n} من {m}",
+  "tb.steps.all": "الكل دفعة واحدة",
+  "tb.steps.byStep": "خطوة بخطوة",
+  "tb.steps.quick": "تحقق سريع"
 }

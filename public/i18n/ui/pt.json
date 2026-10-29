@@ -1296,5 +1296,11 @@
   "session.class": "Revisão antes da aula",
   "session.classIntro": "Cinco exercícios curtos: a matéria que estás a estudar agora e os temas que dominaste há pouco.",
   "session.classEmpty": "Ainda não há exercícios de revisão nesta disciplina. Começa com matéria nova.",
-  "sessionDone.class": "Revisão concluída"
+  "sessionDone.class": "Revisão concluída",
+  "tb.steps.next": "Seguinte",
+  "tb.steps.prev": "Voltar",
+  "tb.steps.count": "Passo {n} de {m}",
+  "tb.steps.all": "Tudo de uma vez",
+  "tb.steps.byStep": "Passo a passo",
+  "tb.steps.quick": "Verificação rápida"
 }

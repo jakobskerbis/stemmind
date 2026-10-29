@@ -1290,5 +1290,11 @@
   "session.class": "Pengulangan sebelum pelajaran",
   "session.classIntro": "Lima soal singkat: materi yang sedang kamu pelajari dan topik yang baru kamu kuasai.",
   "session.classEmpty": "Belum ada soal pengulangan untuk mata pelajaran ini. Mulai dengan materi baru.",
-  "sessionDone.class": "Pengulangan selesai"
+  "sessionDone.class": "Pengulangan selesai",
+  "tb.steps.next": "Berikutnya",
+  "tb.steps.prev": "Kembali",
+  "tb.steps.count": "Langkah {n} dari {m}",
+  "tb.steps.all": "Semua sekaligus",
+  "tb.steps.byStep": "Langkah demi langkah",
+  "tb.steps.quick": "Cek cepat"
 }

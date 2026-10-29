@@ -1296,5 +1296,11 @@
   "session.class": "مرور قبل از کلاس",
   "session.classIntro": "پنج تمرین کوتاه: مطلبی که الان می‌خوانی و مباحثی که اخیراً یاد گرفته‌ای.",
   "session.classEmpty": "برای این درس هنوز تمرینی برای مرور نیست. با «درس جدید» شروع کن.",
-  "sessionDone.class": "مرور تمام شد"
+  "sessionDone.class": "مرور تمام شد",
+  "tb.steps.next": "بعدی",
+  "tb.steps.prev": "قبلی",
+  "tb.steps.count": "گام {n} از {m}",
+  "tb.steps.all": "همه با هم",
+  "tb.steps.byStep": "گام به گام",
+  "tb.steps.quick": "بررسی سریع"
 }

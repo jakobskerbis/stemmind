@@ -1296,5 +1296,11 @@
   "session.class": "Përsëritje para orës",
   "session.classIntro": "Pesë ushtrime të shkurtra: lënda që po mëson tani dhe temat e zotëruara së fundi.",
   "session.classEmpty": "Për këtë lëndë ende nuk ka ushtrime përsëritjeje. Fillo me Lëndë e re.",
-  "sessionDone.class": "Përsëritja përfundoi"
+  "sessionDone.class": "Përsëritja përfundoi",
+  "tb.steps.next": "Para",
+  "tb.steps.prev": "Prapa",
+  "tb.steps.count": "Hapi {n} nga {m}",
+  "tb.steps.all": "Të gjitha njëherësh",
+  "tb.steps.byStep": "Hap pas hapi",
+  "tb.steps.quick": "Kontroll i shpejtë"
 }

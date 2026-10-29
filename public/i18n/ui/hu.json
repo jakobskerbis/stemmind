@@ -1296,5 +1296,11 @@
   "session.class": "Ismétlés óra előtt",
   "session.classIntro": "Öt rövid feladat: az anyag, amelyet most tanulsz, és a legutóbb elsajátított témák.",
   "session.classEmpty": "Ennél a tantárgynál még nincsenek ismétlő feladatok. Kezdd új anyaggal.",
-  "sessionDone.class": "Ismétlés vége"
+  "sessionDone.class": "Ismétlés vége",
+  "tb.steps.next": "Tovább",
+  "tb.steps.prev": "Vissza",
+  "tb.steps.count": "{n}. lépés / {m}",
+  "tb.steps.all": "Egyszerre minden",
+  "tb.steps.byStep": "Lépésről lépésre",
+  "tb.steps.quick": "Gyors ellenőrzés"
 }

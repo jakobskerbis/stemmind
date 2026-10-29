@@ -1296,5 +1296,11 @@
   "session.class": "Repaso antes de clase",
   "session.classIntro": "Cinco ejercicios cortos: el temario que estás estudiando ahora y los temas que dominaste hace poco.",
   "session.classEmpty": "En esta asignatura aún no hay ejercicios de repaso. Empieza con temario nuevo.",
-  "sessionDone.class": "Repaso terminado"
+  "sessionDone.class": "Repaso terminado",
+  "tb.steps.next": "Siguiente",
+  "tb.steps.prev": "Atrás",
+  "tb.steps.count": "Paso {n} de {m}",
+  "tb.steps.all": "Todo a la vez",
+  "tb.steps.byStep": "Paso a paso",
+  "tb.steps.quick": "Comprobación rápida"
 }

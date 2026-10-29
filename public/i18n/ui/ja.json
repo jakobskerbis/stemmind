@@ -1290,5 +1290,11 @@
   "session.class": "授業前の復習",
   "session.classIntro": "短い問題が5つ：今学んでいる内容と、最近マスターしたテーマから。",
   "session.classEmpty": "この科目にはまだ復習問題がありません。新しい内容から始めましょう。",
-  "sessionDone.class": "復習完了"
+  "sessionDone.class": "復習完了",
+  "tb.steps.next": "次へ",
+  "tb.steps.prev": "戻る",
+  "tb.steps.count": "ステップ {n} / {m}",
+  "tb.steps.all": "まとめて表示",
+  "tb.steps.byStep": "ステップごと",
+  "tb.steps.quick": "クイックチェック"
 }

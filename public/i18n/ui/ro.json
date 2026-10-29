@@ -1302,5 +1302,11 @@
   "session.class": "Recapitulare înainte de oră",
   "session.classIntro": "Cinci exerciții scurte: materia pe care o înveți acum și temele stăpânite recent.",
   "session.classEmpty": "La această materie încă nu există exerciții de recapitulare. Începe cu materie nouă.",
-  "sessionDone.class": "Recapitulare încheiată"
+  "sessionDone.class": "Recapitulare încheiată",
+  "tb.steps.next": "Înainte",
+  "tb.steps.prev": "Înapoi",
+  "tb.steps.count": "Pasul {n} din {m}",
+  "tb.steps.all": "Tot deodată",
+  "tb.steps.byStep": "Pas cu pas",
+  "tb.steps.quick": "Verificare rapidă"
 }

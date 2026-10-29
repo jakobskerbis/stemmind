@@ -1296,5 +1296,11 @@
   "session.class": "Marudio kabla ya kipindi",
   "session.classIntro": "Maswali matano mafupi: maudhui unayojifunza sasa na mada ulizomudu hivi karibuni.",
   "session.classEmpty": "Bado hakuna maswali ya marudio kwa somo hili. Anza na Somo jipya.",
-  "sessionDone.class": "Marudio yamekamilika"
+  "sessionDone.class": "Marudio yamekamilika",
+  "tb.steps.next": "Endelea",
+  "tb.steps.prev": "Rudi",
+  "tb.steps.count": "Hatua {n} kati ya {m}",
+  "tb.steps.all": "Yote kwa pamoja",
+  "tb.steps.byStep": "Hatua kwa hatua",
+  "tb.steps.quick": "Ukaguzi wa haraka"
 }

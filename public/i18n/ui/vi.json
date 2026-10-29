@@ -1290,5 +1290,11 @@
   "session.class": "Ôn trước giờ học",
   "session.classIntro": "Năm bài ngắn: nội dung em đang học và các chủ đề em vừa thành thạo.",
   "session.classEmpty": "Môn này chưa có bài ôn. Hãy bắt đầu với bài mới.",
-  "sessionDone.class": "Đã ôn xong"
+  "sessionDone.class": "Đã ôn xong",
+  "tb.steps.next": "Tiếp",
+  "tb.steps.prev": "Quay lại",
+  "tb.steps.count": "Bước {n} / {m}",
+  "tb.steps.all": "Tất cả cùng lúc",
+  "tb.steps.byStep": "Từng bước",
+  "tb.steps.quick": "Kiểm tra nhanh"
 }

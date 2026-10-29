@@ -1290,5 +1290,11 @@
   "session.class": "課前複習",
   "session.classIntro": "五道小題：你現在正在學的內容和最近掌握的主題。",
   "session.classEmpty": "這個科目還沒有可複習的題目。先從新內容開始吧。",
-  "sessionDone.class": "複習完成"
+  "sessionDone.class": "複習完成",
+  "tb.steps.next": "下一步",
+  "tb.steps.prev": "上一步",
+  "tb.steps.count": "第 {n} 步，共 {m} 步",
+  "tb.steps.all": "全部顯示",
+  "tb.steps.byStep": "分步顯示",
+  "tb.steps.quick": "快速檢查"
 }
