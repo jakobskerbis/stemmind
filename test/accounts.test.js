@@ -953,7 +953,7 @@ test("guest: switched off (default) stops guests but lets them create an account
     assert.equal(r.body.guest_off, true);
     const up = await b("/api/auth/upgrade", { method: "POST", body: { email: "pozno@primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
     assert.equal(up.status, 200);
-  }, { guest: false });
+  });
 });
 
 test("guest mode is removed: off everywhere, EVKLID_GUEST cannot turn it on", async () => {

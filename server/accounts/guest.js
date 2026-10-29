@@ -1,6 +1,5 @@
 import "../env.js";
-// Uporaba brez registracije (gost). Samo za razvojno različico: ko gre Evklid v javnost,
-// nastavi EVKLID_GUEST=0 (glej docs/objava.md). Privzeto vklopljeno, razen pri NODE_ENV=production.
+// Uporaba brez registracije (gost) je odstranjena (j, 2026-10-29); ta koda ostane za stare goste in teste.
 //
 // Gost je račun brez e-naslova, vezan na piškotek naprave. Ima brezplačni paket; da brisanje piškotkov
 // ali profila ne da nove kvote, se vprašanja na dan in mesečna poraba AI štejejo za vse goste

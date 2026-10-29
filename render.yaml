@@ -25,9 +25,6 @@ services:
         sync: false
       - key: EVKLID_ACCOUNTS
         value: "1"
-      # Uporaba brez registracije je samo za razvojno različico (docs/objava.md, pred javno objavo).
-      - key: EVKLID_GUEST
-        value: "0"
       - key: EVKLID_BASE_URL
         sync: false
       - key: EVKLID_ADMIN_EMAILS
