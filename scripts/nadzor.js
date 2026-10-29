@@ -1,6 +1,6 @@
 // Skupno za scripts/zagon.js (računalnik) in scripts/telefon.js (telefon prek povezave):
 // - strežnik teče kot podproces; če se ustavi, ga zaženemo znova,
-// - vsake 2 uri (STEMMIND_POSODOBITEV_URE) preverimo GitHub in po potrebi posodobimo,
+// - vsakih 15 minut (STEMMIND_POSODOBITEV_MINUTE) preverimo GitHub in po potrebi posodobimo,
 //   strežnik pa znova zaženemo v mirnem trenutku (nihče ne čaka na odgovor).
 // Navodila: docs/posodobitve.md
 import fs from "node:fs";
@@ -99,11 +99,14 @@ async function waitQuiet(port, say) {
   }
 }
 
-// Vsake `hours` ur (privzeto 2) posodobi. Datoteka data/posodobi-zdaj (posodobi-windows.bat)
+// Vsakih 15 minut (STEMMIND_POSODOBITEV_MINUTE ali STEMMIND_POSODOBITEV_URE) preveri in posodobi. Datoteka data/posodobi-zdaj (posodobi-windows.bat)
 // sproži posodobitev takoj. restartSelf: ko se spremeni sam nadzorni program.
 export function autoUpdate({ root, port, say = console.log, server, restartSelf = null }) {
-  const hours = Number(process.env.STEMMIND_POSODOBITEV_URE ?? 2);
-  if (process.env.STEMMIND_POSODOBITEV === "0" || !(hours > 0)) {
+  // Preverjanje je en majhen klic GitHub API; prenos in ponovni zagon samo, ko je v main kaj novega.
+  const env = process.env;
+  const hours = env.STEMMIND_POSODOBITEV_MINUTE ? Number(env.STEMMIND_POSODOBITEV_MINUTE) / 60
+    : env.STEMMIND_POSODOBITEV_URE ? Number(env.STEMMIND_POSODOBITEV_URE) : 0.25;
+  if (env.STEMMIND_POSODOBITEV === "0" || !(hours > 0)) {
     say("Samodejne posodobitve so izklopljene (STEMMIND_POSODOBITEV v .env).");
     return () => {};
   }

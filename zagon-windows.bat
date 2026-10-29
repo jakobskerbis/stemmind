@@ -45,5 +45,5 @@ if "!NEED_INSTALL!"=="1" (
 
 echo.
 echo STEMMind se zaganja. Brskalnik se bo odprl sam.
-echo Za ustavitev zapri to okno. Nove razlicice se namestijo same vsaki 2 uri.
+echo Za ustavitev zapri to okno. Nove razlicice se namestijo same (preverjanje vsakih 15 minut).
 node scripts\zaganjalnik.js zagon --odpri & pause & exit /b
