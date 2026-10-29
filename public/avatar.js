@@ -86,24 +86,97 @@ export const ITEMS = [
 export const ITEM = Object.fromEntries(ITEMS.map((x) => [x.id, x]));
 // Predmet za id iz inventarja (tudi sezonski »pass_coat~2026-1«).
 export const itemOf = (id) => ITEM[baseId(id)] || null;
-export const DEFAULT_AVATAR = { body: "body_blue", eyes: "eyes_dots", mouth: "mouth_smile", hat: "hat_none", outfit: "outfit_none", acc: "acc_none", badge: "badge_none", bg: "bg_sky", fx: "fx_none" };
+// Predali, v katerih nosiš več predmetov hkrati (seznam id-jev, največ MULTI_MAX). Predmeta na istem
+// mestu (npr. dvoje očal) se izključujeta: novi zamenja starega. Ostali predali imajo en predmet.
+export const MULTI = ["hat", "outfit", "acc", "badge", "fx"];
+export const MULTI_MAX = 6;
+const SPOT = { hat_phones: "ears", hat_flower: "flower", pot_laurel: "wreath", outfit_bow: "neck", outfit_scarf: "neck", acc_blush: "cheeks", pot_pregl: "hand", pass_pencil: "pencil" };
+const SPOT_MAIN = { hat: "head", outfit: "body", acc: "eyes" };
+// Vrstni red risanja (spodaj → zgoraj); značke in efekti po vrsti oblačenja.
+const SPOT_ORDER = { hat: ["wreath", "head", "ears", "flower"], outfit: ["body", "neck"], acc: ["cheeks", "eyes", "hand", "pencil"] };
+export const spotOf = (x) => SPOT[x.id] || SPOT_MAIN[x.slot] || x.id;
+export const isMulti = (slot) => MULTI.includes(slot);
+
+export const DEFAULT_AVATAR = { body: "body_blue", eyes: "eyes_dots", mouth: "mouth_smile", hat: [], outfit: [], acc: [], badge: [], bg: "bg_sky", fx: [] };
 export const itemName = (x, lang) => x.name[lang] || x.name.en;
+const isNone = (id) => /_none$/.test(id);
+
+// Id-ji, ki jih avatar nosi v predalu (tudi star zapis z enim nizom).
+export function worn(eq, slot) {
+  const v = eq?.[slot];
+  const list = Array.isArray(v) ? v : v ? [v] : [];
+  return list.map(String).filter((id) => !isNone(id));
+}
+export const isWorn = (eq, id) => {
+  const x = itemOf(id);
+  return !!x && (isMulti(x.slot) ? worn(eq, x.slot).includes(id) : eq?.[x.slot] === id);
+};
+// Doda predmet v predal (predmet na istem mestu zamenja); »Brez« izprazni predal.
+export function wear(eq, id) {
+  const x = itemOf(id);
+  if (!x) return eq;
+  if (!isMulti(x.slot)) return { ...eq, [x.slot]: id };
+  if (isNone(id)) return { ...eq, [x.slot]: [] };
+  const spot = spotOf(x);
+  return { ...eq, [x.slot]: [...worn(eq, x.slot).filter((i) => itemOf(i) && spotOf(itemOf(i)) !== spot), id] };
+}
+export function takeOff(eq, id) {
+  const x = itemOf(id);
+  if (!x) return eq;
+  return isMulti(x.slot) ? { ...eq, [x.slot]: worn(eq, x.slot).filter((i) => i !== id) } : { ...eq, [x.slot]: DEFAULT_AVATAR[x.slot] };
+}
+// Ali je predal poln (nov predmet ne zamenja nobenega na istem mestu).
+export function slotFull(eq, id) {
+  const x = itemOf(id);
+  if (!x || !isMulti(x.slot) || isNone(id)) return false;
+  const list = worn(eq, x.slot);
+  return !list.includes(id) && list.length >= MULTI_MAX && !list.some((i) => itemOf(i) && spotOf(itemOf(i)) === spotOf(x));
+}
 
 // Popravi izbiro: vsak del obstaja, je v pravem predalu in ga učenec ima (ali je brezplačen).
 // any = true: samo znani deli, brez preverjanja lastništva (shranjen avatar za prikaz drugim).
 export function cleanAvatar(eq, owned = [], any = false) {
   const have = new Set(owned);
+  const ok = (id, slot) => {
+    const x = itemOf(id);
+    if (!x || x.slot !== slot) return false;
+    // Sezonski predmet samo s sezono, ostali brez pripone.
+    if (x.collection === "pass" ? !/^[a-z_]+~\d{4}-[12]$/.test(id) : id !== x.id) return false;
+    return any || x.price === 0 || have.has(id);
+  };
   const out = { ...DEFAULT_AVATAR };
   for (const slot of SLOTS) {
-    const id = String(eq?.[slot] ?? "");
-    const x = itemOf(id);
-    if (!x || x.slot !== slot) continue;
-    // Sezonski predmet samo s sezono, ostali brez pripone.
-    if (x.collection === "pass" ? !/^[a-z_]+~\d{4}-[12]$/.test(id) : id !== x.id) continue;
-    if (any || x.price === 0 || have.has(id)) out[slot] = id;
+    if (isMulti(slot)) {
+      let list = [];
+      for (const id of worn(eq, slot)) if (ok(id, slot)) list = wear({ [slot]: list }, id)[slot];
+      out[slot] = list.slice(-MULTI_MAX);
+    } else {
+      const id = eq?.[slot];
+      if (typeof id === "string" && ok(id, slot)) out[slot] = id;
+    }
   }
   return out;
 }
+
+// Mesta značk na prsih: ena ostane na svojem mestu, več jih je manjših (središče x, y in merilo).
+const BADGE_AT = {
+  2: [[35, 84], [65, 84]].map((p) => [...p, 0.78]),
+  3: [[30, 82], [50, 89], [70, 82]].map((p) => [...p, 0.64]),
+  4: [[29, 79], [71, 79], [38, 90], [62, 90]].map((p) => [...p, 0.56]),
+  5: [[28, 77], [72, 77], [32, 89], [50, 90], [68, 89]].map((p) => [...p, 0.52]),
+  6: [[29, 77], [50, 81], [71, 77], [33, 89], [50, 92], [67, 89]].map((p) => [...p, 0.46]),
+};
+function badges(list) {
+  if (list.length <= 1) return list.map((id) => DRAW.badge(id)).join("");
+  return list
+    .map((id, i) => {
+      const [x, y, k] = BADGE_AT[Math.min(list.length, MULTI_MAX)][i];
+      const [ox, oy] = itemOf(id)?.sym ? [66, 83] : [64, 82]; // središče značke na njenem mestu
+      return `<g transform="translate(${x} ${y}) scale(${k}) translate(${-ox} ${-oy})">${DRAW.badge(id)}</g>`;
+    })
+    .join("");
+}
+const byOrder = (slot, list) => (SPOT_ORDER[slot] ? [...list].sort((a, b) => SPOT_ORDER[slot].indexOf(spotOf(itemOf(a))) - SPOT_ORDER[slot].indexOf(spotOf(itemOf(b)))) : list);
 
 // ---------- risanje (viewBox 0 0 100 100) ----------
 const BODY = {
@@ -196,14 +269,18 @@ const OUTFIT = {
 };
 
 let uid = 0;
-// SVG niz avatarja; eq = { body, eyes, mouth, hat, outfit, acc, badge, bg, fx }.
+// SVG niz avatarja; eq = { body, eyes, mouth, bg: id; hat, outfit, acc, badge, fx: seznam id-jev }.
 export function avatarSvg(eq, { size = 64, title = "" } = {}) {
   const a = { ...DEFAULT_AVATAR, ...(eq || {}) };
   const u = `av${++uid}`;
   const body = BODY[a.body] ? a.body : "body_blue";
+  const W = (slot) => byOrder(slot, worn(a, slot).filter((id) => itemOf(id)));
+  const fx = W("fx");
+  const outfit = W("outfit");
+  const each = (list, f) => list.map(f).join("");
   return `<svg class="avatar-svg" viewBox="0 0 100 100" width="${size}" height="${size}" role="img"${title ? ` aria-label="${title.replace(/"/g, "&quot;")}"` : ` aria-hidden="true"`}>
-${defs(u, body)}${DRAW.bg(a.bg, u) ?? (BG[a.bg] || BG.bg_sky)(u)}${DRAW.fxBack(a.fx, u)}${(OUTFIT_BACK[a.outfit] || (() => ""))()}
+${defs(u, body)}${DRAW.bg(a.bg, u) ?? (BG[a.bg] || BG.bg_sky)(u)}${each(fx, (id) => DRAW.fxBack(id, u))}${each(outfit, (id) => (OUTFIT_BACK[id] || (() => ""))())}
 <path d="${BODY_PATH}" fill="url(#g${u})" stroke="${INK}" stroke-width="3"/>${(BODY_EXTRA[body] || (() => ""))()}
 <path d="M30 40q4-8 12-10" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".35"/>
-${DRAW.outfit(a.outfit, u) ?? (OUTFIT[a.outfit] || OUTFIT.outfit_none)(u)}${DRAW.badge(a.badge)}${(EYES[a.eyes] || EYES.eyes_dots)()}${(MOUTH[a.mouth] || MOUTH.mouth_smile)()}${DRAW.acc(a.acc, u) ?? (ACC[a.acc] || ACC.acc_none)()}${DRAW.hat(a.hat) ?? (HAT[a.hat] || HAT.hat_none)()}${DRAW.fxFront(a.fx)}</svg>`;
+${each(outfit, (id) => DRAW.outfit(id, u) ?? (OUTFIT[id] || OUTFIT.outfit_none)(u))}${badges(W("badge"))}${(EYES[a.eyes] || EYES.eyes_dots)()}${(MOUTH[a.mouth] || MOUTH.mouth_smile)()}${each(W("acc"), (id) => DRAW.acc(id, u) ?? (ACC[id] || ACC.acc_none)())}${each(W("hat"), (id) => DRAW.hat(id) ?? (HAT[id] || HAT.hat_none)())}${each(fx, (id) => DRAW.fxFront(id))}</svg>`;
 }

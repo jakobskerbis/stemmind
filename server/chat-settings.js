@@ -14,7 +14,7 @@ import { PROFILE_SETTINGS, DEVICE_SETTINGS, SCHEDULE_SETTINGS, EVENT_KINDS, devi
 import { scheduleView } from "./schedule.js";
 import { goalsFor, validDate } from "../public/goal-data.js";
 import { Avatars } from "./avatar.js";
-import { ITEM, ITEMS, SLOTS } from "../public/avatar.js";
+import { ITEMS, SLOTS, MULTI_MAX, isMulti, itemOf } from "../public/avatar.js";
 import { INTERESTS, cleanInterests } from "../public/interests.js";
 import { dialectsFor } from "../public/dialects.js";
 
@@ -408,14 +408,20 @@ export function createSettingsTools({ store, studentId, conversationId, device =
     let avatarChange = null;
     if (changes.avatar !== undefined) {
       const a = changes.avatar;
-      if (!a || typeof a !== "object" || Array.isArray(a)) errors.push("avatar: object {slot: item id}");
+      if (!a || typeof a !== "object" || Array.isArray(a)) errors.push("avatar: object {slot: item id or list of ids}");
       else {
         const owned = new Set(avatars.owned(studentId));
-        for (const [slot, id] of Object.entries(a)) {
-          const x = ITEM[id];
-          if (!SLOTS.includes(slot)) errors.push(`avatar: unknown slot ${slot}`);
-          else if (!x || x.slot !== slot) errors.push(`avatar: ${id} is not a ${slot} item`);
-          else if (x.price > 0 && !owned.has(id)) errors.push(`avatar: ${id} not owned yet (bought with game coins in the games shop)`);
+        for (const [slot, v] of Object.entries(a)) {
+          if (!SLOTS.includes(slot)) {
+            errors.push(`avatar: unknown slot ${slot}`);
+            continue;
+          }
+          if (Array.isArray(v) && (!isMulti(slot) || v.length > MULTI_MAX)) errors.push(isMulti(slot) ? `avatar: at most ${MULTI_MAX} items in ${slot}` : `avatar: ${slot} takes one item id`);
+          for (const id of Array.isArray(v) ? v : [v]) {
+            const x = itemOf(String(id));
+            if (!x || x.slot !== slot) errors.push(`avatar: ${id} is not a ${slot} item`);
+            else if (x.price !== 0 && !owned.has(id)) errors.push(x.earn ? `avatar: ${id} is locked (unlocked only by learning, see Zbirke)` : `avatar: ${id} not owned yet (bought with game coins in the games shop)`);
+          }
         }
         avatarChange = a;
       }

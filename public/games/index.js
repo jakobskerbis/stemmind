@@ -16,7 +16,7 @@ function onPath(e, c) {
 }
 import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
-import { ITEMS, SLOTS, DEFAULT_AVATAR, avatarSvg, itemName, itemOf, itemRarity } from "../avatar.js";
+import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
 import { seasonOf } from "../zbirke.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -344,23 +344,28 @@ function renderShop(msg = "", top = false) {
   const owned = new Set(av.owned);
   const has = (x) => x.price === 0 || owned.has(x.id);
   const pick = shop.pick && itemOf(shop.pick) ? { ...itemOf(shop.pick), id: shop.pick } : null;
-  const preview = pick ? { ...av.equipped, [pick.slot]: pick.id } : av.equipped;
+  const preview = pick ? wear(av.equipped, pick.id) : av.equipped;
+  const isOn = (x) => (/_none$/.test(x.id) && isMulti(x.slot) ? !worn(av.equipped, x.slot).length : isWorn(av.equipped, x.id));
   const need = pick && !has(pick) && !pick.earn ? pick.price - av.coins : 0;
-  const action = !pick || av.equipped[pick.slot] === pick.id
+  const action = !pick || isOn(pick)
     ? ""
     : has(pick)
-      ? `<button type="button" class="primary" data-act="wear">${esc(t("games.wear"))}</button>`
+      ? slotFull(av.equipped, pick.id)
+        ? `<p class="muted">${esc(t("games.slotFull", { n: MULTI_MAX }))}</p>`
+        : `<button type="button" class="primary" data-act="wear">${esc(t("games.wear"))}</button>`
       : pick.earn
         ? `<button type="button" class="secondary" data-act="how">${esc(t("zb.how"))}</button>`
         : need > 0
           ? `<p class="muted">${esc(t("games.needMore", { n: need }))} ${icon("coins")}</p>`
           : `<button type="button" class="primary" data-act="buy">${icon("coins")}${esc(t("games.buy", { n: pick.price }))}</button>`;
+  // Sličica pokaže samo ta predmet (na tvoji barvi), da se v polnem predalu predmeti ločijo med sabo.
+  const thumbBase = { ...DEFAULT_AVATAR, body: av.equipped.body };
   const card = (x) => {
-    const on = av.equipped[x.slot] === x.id;
+    const on = isOn(x);
     const state = on ? t("games.wearing") : has(x) ? (x.price ? t("games.owned") : x.earn ? t(`games.rarity.${x.rarity}`) : t("games.rarity.free")) : x.earn ? `${icon("lock")} ${esc(t("zb.byKnowledge"))}` : `${icon("coins")} ${x.price}`;
     // Izbran tuj predmet: gumb za nakup kar na kartici (na telefonu je predogled zgoraj izven zaslona).
     return `<div class="gm-item gm-r-${itemRarity(x)}${on ? " on" : ""}${shop.pick === x.id ? " sel" : ""}${x.earn && !has(x) ? " gm-earn" : ""}">
-      <button type="button" class="gm-item-btn" data-item="${x.id}" aria-pressed="${on}">${avatarSvg({ ...av.equipped, [x.slot]: x.id }, { size: 72 })}
+      <button type="button" class="gm-item-btn" data-item="${x.id}" aria-pressed="${on}">${avatarSvg(wear(thumbBase, x.id), { size: 72 })}
       <b>${esc(itemName(x, lang))}</b><small>${state}</small></button>${shop.pick === x.id ? action : ""}</div>`;
   };
   root.innerHTML = `<div class="gm-portal gm-shop">
@@ -375,7 +380,8 @@ function renderShop(msg = "", top = false) {
         ${msg ? `<p class="gm-shop-msg" role="status">${esc(msg)}</p>` : ""}
       </div>
     </div>
-    <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${esc(t(`games.slot.${x}`))}</button>`).join("")}</div>
+    <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${esc(t(`games.slot.${x}`))}${isMulti(x) && worn(av.equipped, x).length ? ` <small>${worn(av.equipped, x).length}/${MULTI_MAX}</small>` : ""}</button>`).join("")}</div>
+    ${isMulti(shop.slot) ? `<p class="muted gm-earn-hint">${icon("layers")}<span>${esc(t("games.multiHint", { n: MULTI_MAX }))}</span></p>` : ""}
     ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon("award")}<span>${esc(t("zb.shopHint"))} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
     <div class="gm-items">${slotItems(shop.slot, owned).map(card).join("")}</div>
   </div>`;
@@ -397,8 +403,12 @@ function renderShop(msg = "", top = false) {
   root.querySelectorAll("[data-item]").forEach((b) =>
     b.addEventListener("click", () => {
       const x = { ...itemOf(b.dataset.item), id: b.dataset.item };
-      // Svoj predmet takoj obleče, tujega najprej pokaže na avatarju.
-      if (has(x)) return save("avatar", { equipped: { ...av.equipped, [x.slot]: x.id } }, "");
+      // Svoj predmet takoj obleče (v predalu z več predmeti ga ponoven dotik sname), tujega najprej pokaže na avatarju.
+      if (has(x)) {
+        if (isOn(x)) return isMulti(x.slot) && !/_none$/.test(x.id) ? save("avatar", { equipped: takeOff(av.equipped, x.id) }, "") : undefined;
+        if (slotFull(av.equipped, x.id)) return ((shop.pick = null), renderShop(t("games.slotFull", { n: MULTI_MAX })));
+        return save("avatar", { equipped: wear(av.equipped, x.id) }, "");
+      }
       shop.pick = x.id;
       renderShop();
     }),
@@ -409,7 +419,9 @@ function renderShop(msg = "", top = false) {
   root.querySelector('[data-act="buy"]')?.addEventListener("click", async () => {
     if (!s) return;
     try {
+      const full = slotFull(av.equipped, pick.id);
       av = await ctx.api(`/api/students/${s.id}/avatar/buy`, { method: "POST", body: JSON.stringify({ item: pick.id }) });
+      if (full) return ((shop.pick = null), renderShop(t("games.boughtFull", { n: MULTI_MAX })));
       await save("avatar", { equipped: preview }, t("games.bought"));
     } catch (e) {
       renderShop(e.message);

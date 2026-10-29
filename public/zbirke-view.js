@@ -2,7 +2,7 @@
 // znanja z vnaprej vidnimi pogoji in pogled »preglej« (katera snov in kdaj je prinesla predmet).
 import { t } from "./i18n.js";
 import { icon } from "./icons.js";
-import { avatarSvg, itemName, itemOf, DEFAULT_AVATAR } from "./avatar.js";
+import { avatarSvg, itemName, itemOf, DEFAULT_AVATAR, isWorn, wear, takeOff, slotFull, MULTI_MAX } from "./avatar.js";
 import { COLLECTIONS, KNOWLEDGE, PASS_REWARDS, baseId, variantOf, seasonLabel, elementTile } from "./zbirke.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -97,7 +97,7 @@ function tabItems() {
 function card(id) {
   const x = itemOf(id);
   const own = ownedSet().has(id);
-  const on = equipped()[x.slot] === id;
+  const on = isWorn(equipped(), id);
   const shown = data.showcase.includes(id);
   return `<button type="button" class="zb-card gm-r-${x.rarity}${own ? "" : " zb-locked"}${on ? " on" : ""}" data-zbopen="${esc(id)}">
     <span class="zb-thumb">${itemThumb(id, 72, DEFAULT_AVATAR)}${own ? "" : `<span class="zb-lock">${icon("lock")}</span>`}${shown ? `<span class="zb-star" title="${esc(t("zb.showcase"))}">${icon("star")}</span>` : ""}</span>
@@ -148,13 +148,13 @@ function inspect(id) {
   if (!x) return "";
   const own = ownedSet().has(id);
   const row = data.items.find((i) => i.id === id);
-  const on = equipped()[x.slot] === id;
+  const on = isWorn(equipped(), id);
   const shown = data.showcase.includes(id);
   const v = variantOf(id);
   const where = row?.topic ? t("zb.fromTopic", { topic: `${row.topic.name} (${row.topic.path})` }) : row?.source === "pass" ? t("zb.fromPass", { season: seasonLabel(v) }) : row?.source === "set" ? t("zb.fromSet") : row?.source === "xp" ? t("zb.fromXp", { xp: num(x.need?.xp) }) : "";
   return `<div class="zb-inspect card" role="dialog" tabindex="-1" aria-modal="false" aria-label="${esc(itemName(x, lang()))}">
     <button type="button" class="ghost zb-x" data-act="close" aria-label="${esc(t("nav.back"))}">${icon("x")}</button>
-    <div class="zb-big">${x.sym ? itemThumb(id, 120) : avatarSvg({ ...equipped(), [x.slot]: id }, { size: 170, title: itemName(x, lang()) })}</div>
+    <div class="zb-big">${x.sym ? itemThumb(id, 120) : avatarSvg(wear(equipped(), id), { size: 170, title: itemName(x, lang()) })}</div>
     <div class="zb-info">
       <h2>${esc(itemName(x, lang()))}${v ? ` <small class="muted">${esc(seasonLabel(v))}</small>` : ""}</h2>
       <p><span class="gm-rtag gm-r-${x.rarity}">${esc(t(`games.rarity.${x.rarity}`))}</span> ${x.set ? `<span class="gm-rtag">${esc(t("zb.set"))}</span>` : ""}</p>
@@ -238,9 +238,9 @@ function render(focus = null) {
   );
   root.querySelector('[data-act="close"]')?.addEventListener("click", closeInspect);
   root.querySelector('[data-act="wear"]')?.addEventListener("click", () => {
-    const x = itemOf(open);
-    const on = equipped()[x.slot] === open;
-    save("avatar", { equipped: { ...equipped(), [x.slot]: on ? DEFAULT_AVATAR[x.slot] : open } }, (r) => ((data.avatar = r), ""));
+    const on = isWorn(equipped(), open);
+    if (!on && slotFull(equipped(), open)) return ((msg = t("games.slotFull", { n: MULTI_MAX })), render());
+    save("avatar", { equipped: on ? takeOff(equipped(), open) : wear(equipped(), open) }, (r) => ((data.avatar = r), ""));
   });
   root.querySelector('[data-act="show"]')?.addEventListener("click", () => {
     const has = show.includes(open);
