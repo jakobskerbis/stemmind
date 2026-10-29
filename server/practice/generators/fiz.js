@@ -92,7 +92,7 @@ export const FIZ_GENERATORS = [
           hint: "$F_g = m \\cdot g$, zato $m = \\dfrac{F_g}{g}$.",
           data: { given: [dat("F_g", tx(F), "N"), dat("g", G_TEX, "N/kg")], find: ["m"] },
           formula: ["F_g = m \\cdot g", "m = \\dfrac{F_g}{g}"],
-          solution: `$F_g = m \\cdot g \;\\Rightarrow\; m = \\dfrac{F_g}{g}$\n${eqs("m", `\\dfrac{${qty(tx(F), "N")}}{${qty(G_TEX, "N/kg")}}`, res(F / G, 2, "kg"))}`,
+          solution: `$F_g = m \\cdot g \\;\\Rightarrow\\; m = \\dfrac{F_g}{g}$\n${eqs("m", `\\dfrac{${qty(tx(F), "N")}}{${qty(G_TEX, "N/kg")}}`, res(F / G, 2, "kg"))}`,
         };
       }
       if (level === 2) {
@@ -216,7 +216,7 @@ export const FIZ_GENERATORS = [
             [s / (tmin / 100), "Ura ima 60 minut, ne 100."],
             [(s * tmin) / 60, "Hitrost je pot deljeno s časom, ne zmnožek."],
           ]),
-          hint: "Čas pretvori v ure ($t = \\dfrac{${tmin}}{60}\\ \\mathrm{h}$), nato $v = \\dfrac{s}{t}$.",
+          hint: "Čas pretvori v ure (minute deli s 60), nato $v = \\dfrac{s}{t}$.",
           data: { given: [dat("s", tx(s), "km"), dat("t", tmin, "min")], find: ["v"] },
           formula: ["v = \\dfrac{s}{t}", "1\\ \\mathrm{h} = 60\\ \\mathrm{min}"],
           solution: `$t = ${qty(tmin, "min")} = \\dfrac{${tmin}}{60}\\ \\mathrm{h}$\n$v = \\dfrac{s}{t} = \\dfrac{${qty(tx(s), "km")}}{\\frac{${tmin}}{60}\\ \\mathrm{h}} = \\dfrac{${tx(s)} \\cdot 60}{${tmin}}\\ \\mathrm{km/h} ${res(v, 1, "km/h")}$`,
@@ -496,7 +496,7 @@ export const FIZ_GENERATORS = [
           hint: "Iz $U = R I$ izrazi $I = \\dfrac{U}{R}$.",
           data: { given: [dat("R", R, "\\Omega"), dat("U", tx(U), "V")], find: ["I"] },
           formula: ["U = R \\cdot I", "I = \\dfrac{U}{R}"],
-          solution: `$U = R \\cdot I \;\\Rightarrow\; I = \\dfrac{U}{R}$\n${eqs("I", `\\dfrac{${qty(tx(U), "V")}}{${qty(R, "\\Omega")}}`, res(U / R, 3, "A"))}`,
+          solution: `$U = R \\cdot I \\;\\Rightarrow\\; I = \\dfrac{U}{R}$\n${eqs("I", `\\dfrac{${qty(tx(U), "V")}}{${qty(R, "\\Omega")}}`, res(U / R, 3, "A"))}`,
         };
       }
       const R1 = r.int(2, 60);

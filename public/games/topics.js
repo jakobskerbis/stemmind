@@ -661,7 +661,7 @@ def("line_eq", "fn", 9, "Enačba premice", "Equation of a line", (t) => {
 });
 def("quad_vertex", "fn", 10, "Teme parabole", "Vertex of a parabola", (t) => {
   const p = R(-6, 6), q = R(-9, 9), a = t === 1 ? 1 : R0(-3, 3);
-  if (t === 1) return mk(`y = (${lin(1, -p)})${sup(2)} ${q < 0 ? M : "+"} ${Math.abs(q)}: ${w("vertex")}`, pt(p, q), [pt(-p, q), pt(q, p), pt(p, -q)], () => pt(R(-6, 6), R(-9, 9)));
+  if (t === 1) return mk(`y = ${p ? `(${lin(1, -p)})` : "x"}${sup(2)}${q ? ` ${q < 0 ? M : "+"} ${Math.abs(q)}` : ""}: ${w("vertex")}`, pt(p, q), [pt(-p, q), pt(q, p), pt(p, -q)], () => pt(R(-6, 6), R(-9, 9)));
   return mk(`y = ${poly([a, -2 * a * p, a * p * p + q])}: ${w("vertex")}`, pt(p, q), [pt(-p, q), pt(p, a * p * p + q), pt(-2 * a * p, q)], () => pt(R(-6, 6), R(-9, 9)));
 });
 def("quad_zero", "fn", 10, "Ničle kvadratne funkcije", "Zeros of a quadratic", (t) => {
@@ -669,7 +669,9 @@ def("quad_zero", "fn", 10, "Ničle kvadratne funkcije", "Zeros of a quadratic", 
   let q = R(-8, 8);
   if (q === p) q = p + 1;
   const a = t === 3 ? R0(-3, 3) : 1;
-  if (t === 1) return mk(`f(x) = ${a === 1 ? "" : a}(${lin(1, -p)})(${lin(1, -q)}): ${w("zeros")}`, set([p, q]), [set([-p, -q]), set([p, -q]), set([p * q])], () => set([R(-8, 8), R(-8, 8)]));
+  // ničla 0 da faktor x (ne »(x)«), ki stoji spredaj
+  const fac = [p, q].sort((u, v) => (u === 0 ? -1 : v === 0 ? 1 : 0)).map((z) => (z ? `(${lin(1, -z)})` : "x")).join("");
+  if (t === 1) return mk(`f(x) = ${a === 1 ? "" : a === -1 ? "-" : a}${fac}: ${w("zeros")}`, set([p, q]), [set([-p, -q]), set([p, -q]), set([p * q])], () => set([R(-8, 8), R(-8, 8)]));
   return mk(`f(x) = ${poly([a, -a * (p + q), a * p * q])}: ${w("zeros")}`, set([p, q]), [set([-p, -q]), set([p + q, p * q]), set([a, p * q])], () => set([R(-8, 8), R(-8, 8)]));
 });
 def("compose", "fn", 11, "Sestavljanje funkcij", "Composite functions", (t) => {
@@ -790,7 +792,7 @@ def("surface", "ge", 9, "Površina teles", "Surface area", (t) => {
   if (t === 1) return num(`${w("surface")}: ⬛ a = ${a}`, 6 * a * a, [a ** 3, 4 * a * a, 12 * a]);
   if (t === 2) return num(`${w("surface")}: ${a} × ${b} × ${c}`, 2 * (a * b + b * c + a * c), [a * b * c, a * b + b * c + a * c, 4 * (a + b + c)]);
   const r = R(1, 6);
-  return mk(`${w("surface")}: ● r = ${r}`, `${fmt(4 * r * r)}π`, [`${fmt((4 * r ** 3) / 3)}π`.replace(/\d+[,.]\d+/, (m) => m), `${fmt(2 * r * r)}π`, `${fmt(4 * r)}π`], () => `${R(2, 150)}π`);
+  return mk(`${w("surface")}: ● r = ${r}`, `${fmt(4 * r * r)}π`, [`${fr(4 * r ** 3, 3).replace(/^(.+\/.+)$/, "($1)")}π`, `${fmt(2 * r * r)}π`, `${fmt(4 * r)}π`], () => `${R(2, 150)}π`);
 });
 def("similar", "ge", 9, "Podobnost likov", "Similar shapes", (t) => {
   const k = R(2, 5), a = R(2, 9), b = R(2, 9);

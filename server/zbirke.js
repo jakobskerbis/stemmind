@@ -137,7 +137,7 @@ export class Knowledge {
     try {
       const r = ok && this.db.prepare("SELECT equipped FROM avatar_state WHERE student_id = ?").get(id);
       if (r?.equipped.includes(`"${item}"`)) {
-        const eq = Object.fromEntries(Object.entries(JSON.parse(r.equipped)).filter(([, v]) => v !== item));
+        const eq = Object.fromEntries(Object.entries(JSON.parse(r.equipped)).filter(([, v]) => v !== item).map(([k, v]) => [k, Array.isArray(v) ? v.filter((i) => i !== item) : v]));
         this.db.prepare("UPDATE avatar_state SET equipped = ? WHERE student_id = ?").run(JSON.stringify(eq), id);
       }
     } catch {} // brez tabele avatarja ali s pokvarjenim zapisom ni česa sneti

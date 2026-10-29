@@ -193,7 +193,7 @@ export function pariKotov(el) {
     stage: [h("div", { class: "demo-seg-wrap" }, segmented({ options: [["dve", "Dve premici"], ["vzporedni", "Vzporednici in prečnica"]], value: mode, onChange: (v) => ((mode = v), draw()) })), svg],
     controls: [slider({ label: "kot α", min: 15, max: 165, value: phi, unit: "°", onInput: (v) => ((phi = v), draw()) })],
     out,
-    tryText: "Kateri koti so vedno enaki, ko vrtiš prečnico? Kateri dva skupaj vedno dasta 180°?",
+    tryText: "Kateri koti so vedno enaki, ko vrtiš prečnico? Katera dva skupaj vedno dasta 180°?",
   });
   draw();
 }

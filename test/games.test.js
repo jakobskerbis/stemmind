@@ -153,7 +153,7 @@ test("avatar: coins from games, buying and wearing items", async () => {
     assert.ok(svg.startsWith("<svg") && svg.endsWith("</svg>") && !/undefined|NaN/.test(svg), x.id);
   }
   assert.deepEqual(cleanAvatar({ hat: "hat_crown", eyes: "mouth_grin", body: "nope" }, []), DEFAULT_AVATAR);
-  assert.equal(cleanAvatar({ hat: "hat_crown" }, ["hat_crown"]).hat, "hat_crown");
+  assert.deepEqual(cleanAvatar({ hat: "hat_crown" }, ["hat_crown"]).hat, ["hat_crown"]);
 
   const store = openDb(":memory:");
   const app = createApp(store, {});
@@ -175,8 +175,8 @@ test("avatar: coins from games, buying and wearing items", async () => {
     assert.ok(r.body.owned.includes("hat_cap"));
     // Nošnja: samo kupljeni ali brezplačni deli.
     r = await call(`/api/students/${s.id}/avatar`, { equipped: { hat: "hat_cap", outfit: "outfit_armor" } });
-    assert.equal(r.body.equipped.hat, "hat_cap");
-    assert.equal(r.body.equipped.outfit, "outfit_none");
+    assert.deepEqual(r.body.equipped.hat, ["hat_cap"]);
+    assert.deepEqual(r.body.equipped.outfit, []);
     assert.equal((await call(`/api/students/${s.id}/avatar`, { equipped: { name: "x" } })).status, 400);
     // Dnevna meja kovancev.
     for (let i = 0; i < 6; i++) await call(`/api/students/${s.id}/games/result`, { game: "maze:frac_add", score: 1, correct: 40, wrong: 0, tier: 1 });

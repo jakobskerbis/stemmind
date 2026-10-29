@@ -657,7 +657,7 @@ export const CONCEPTS = [
       const a = stack ? lastS : lastQ;
       const other = stack ? lastQ : lastS;
       const rest = stack ? S : Q;
-      return mk(`${head}: ${parts.join("; ")} → ?`, String(a), [other, ...shuffle([...rest, ...pushed])].map(String));
+      return mk(`${head}: ${parts.join("; ")} → ${sl ? "zadnji vzeti" : "last removed"}?`, String(a), [other, ...shuffle([...rest, ...pushed])].map(String));
     },
   },
   {

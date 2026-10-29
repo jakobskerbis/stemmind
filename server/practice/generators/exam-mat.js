@@ -8,6 +8,8 @@ import { choices } from "../rng.js";
 import { en, sg, co, sco, par, frac, fracTex, reduce, num, fraction, task, nCr, fact, poly, factor, numM, fractionM, dq, bi, roundToL } from "./exam-util.js";
 
 const T = (slug) => `MAT-EXB/${slug}`;
+// Angleški vrstilni števnik: 1st, 2nd, 3rd, 11th, 23rd …
+const ordEn = (n) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th"}`;
 const gcd2 = (x, y) => (y ? gcd2(y, x % y) : x);
 const reduced = (t) => t.map((x) => x / gcd2(gcd2(t[0], t[1]), t[2]));
 const TRIPLES = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [6, 8, 10], [7, 24, 25], [9, 12, 15], [20, 21, 29]];
@@ -234,7 +236,7 @@ export const EXAM_MAT = [
       const an = `$a_{${n}} = ${a} + ${n - 1} \\cdot ${par(d)} = ${a + (n - 1) * d}$`;
       if (level === 1) {
         return task({
-          text: L(`An arithmetic progression begins ${seq} What is its ${n}th term?`, `एक समांतर श्रेढ़ी ${seq} से आरंभ होती है। इसका ${n}वाँ पद क्या है?`),
+          text: L(`An arithmetic progression begins ${seq} What is its ${ordEn(n)} term?`, `एक समांतर श्रेढ़ी ${seq} से आरंभ होती है। इसका ${n}वाँ पद क्या है?`),
           answer: num(a + (n - 1) * d),
           hint: L("$a_n = a_1 + (n-1)d$.", "सूत्र $a_n = a_1 + (n-1)d$ का प्रयोग कीजिए।"),
           formula: "a_n = a_1 + (n-1)d",
@@ -277,7 +279,7 @@ export const EXAM_MAT = [
       if (level === 1) {
         const an = `$a_{${n}} = ${a} \\cdot ${par(q)}^{${n - 1}} = ${a * q ** (n - 1)}$`;
         return task({
-          text: L(`A geometric sequence begins ${seq} What is its ${n}th term?`, `एक गुणोत्तर श्रेढ़ी ${seq} से आरंभ होती है। इसका ${n}वाँ पद क्या है?`),
+          text: L(`A geometric sequence begins ${seq} What is its ${ordEn(n)} term?`, `एक गुणोत्तर श्रेढ़ी ${seq} से आरंभ होती है। इसका ${n}वाँ पद क्या है?`),
           answer: num(a * q ** (n - 1)),
           hint: L("$a_n = a_1 q^{n-1}$.", "सूत्र $a_n = a_1 q^{n-1}$ का प्रयोग कीजिए।"),
           formula: "a_n = a_1 q^{\\,n-1}",
