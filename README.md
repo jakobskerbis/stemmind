@@ -155,4 +155,5 @@ docs/                      opombe k promptu in seznam za preizkušanje
 - **Zasebnost**: uporabniki so mladoletni. Za otroke, mlajše od 15 let, je v Sloveniji za take storitve potrebno soglasje staršev. Pripravi kratko obvestilo o zasebnosti. Pogovori in fotografije se hranijo v bazi.
 - **Prijava**: zdaj je le skupno geslo in izbira učenca. Za več družin ali razredov dodaj prave račune.
 - **Kakovost**: preden aplikacijo daš učencem, naj učitelj preizkusi naloge iz `docs/preizkus.md`.
+- **Digitalni razred**: `npm run sim` pusti 16 simuliranih učencev (različne starosti, znanje, napačne predstave, tipkarske napake, stiska, jailbreak) do inštruktorja in vsak pogovor oceni; prvi zagon shrani kot referenco in z njo primerjaj vsako spremembo prompta. Glej `sim/README.md`.
 - **Stroški**: v konzoli Anthropic nastavi mesečno omejitev porabe. Fotografije se pošljejo ob vsakem naslednjem odgovoru v istem pogovoru, zato je pri dolgih pogovorih s slikami bolje začeti nov pogovor.
