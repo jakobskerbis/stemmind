@@ -31,6 +31,17 @@ function pill(G, g, txt, x, y, maxW, h, fill, size = 18) {
   g.stroke();
   G.fit(txt, x, y + 1, w - 8, size, { color: INK, weight: 900 });
 }
+// Odgovor na gumbu: dolg odgovor z več besedami (»celična membrana«) gre v dve vrstici, da ostane berljiv
+// na telefonu, namesto da bi se pomanjšal na drobno pisavo.
+function answerText(G, txt, x, y, maxW, size, opt) {
+  const one = size * Math.min(1, maxW / Math.max(1, G.tw(txt, size, 900)));
+  let cut = txt.indexOf(" ");
+  if (one >= Math.min(size, 16) || cut < 0) return G.fit(txt, x, y, maxW, size, opt);
+  for (let i = cut; i >= 0; i = txt.indexOf(" ", i + 1)) if (Math.abs(i - txt.length / 2) < Math.abs(cut - txt.length / 2)) cut = i;
+  const lines = [txt.slice(0, cut), txt.slice(cut + 1)];
+  const s = Math.min(size, ...lines.map((l) => size * (maxW / Math.max(1, G.tw(l, size, 900)))));
+  lines.forEach((l, k) => G.fit(l, x, y + (k ? 0.55 : -0.55) * s, maxW, s, opt));
+}
 function sky(G, g, top, bottom) {
   const grd = g.createLinearGradient(0, 0, 0, G.H);
   grd.addColorStop(0, top);
@@ -175,6 +186,7 @@ export const diner = {
       },
       reset() {
         guest = null;
+        jars = []; // odgovori prejšnje igre ne ostanejo na zaslonu
         queue = [];
         leaving = [];
         fly = null;
@@ -190,6 +202,7 @@ export const diner = {
       },
       timeout() {
         if (guest) guest.mood = -2;
+        fly = null; // jed, ki je še v zraku, ne sme odgovoriti na nalogo, ki je že potekla
       },
       update(dt) {
         const tx = G.W * 0.38;
@@ -286,7 +299,7 @@ export const diner = {
           g.lineWidth = 3;
           g.strokeStyle = INK;
           g.stroke();
-          G.fit(j.txt, j.x + j.w / 2, j.y + j.h / 2 + 1, j.w - 30, Math.min(22, j.h * 0.42), { color: INK, weight: 900 });
+          answerText(G, j.txt, j.x + j.w / 2, j.y + j.h / 2 + 1, j.w - 30, Math.min(22, j.h * 0.42), { color: INK, weight: 900 });
           G.fit(`${i + 1}`, j.x + 13, j.y + 14, 20, 12, { color: "rgba(27,27,47,0.55)", weight: 900 });
         });
         if (fly) {
@@ -313,7 +326,8 @@ export const hills = {
     const amp = () => G.H * (0.06 + 0.02 * Math.min(3, (G.chapter || 1) - 1));
     const groundY = (x) => G.H * 0.66 + amp() * (Math.sin(x * 0.0042) + 0.55 * Math.sin(x * 0.011 + 1.3) + 0.25 * Math.sin(x * 0.027 + 2.1)) * (x < 300 ? x / 300 : 1);
     const slope = (x) => (groundY(x + 4) - groundY(x - 4)) / 8;
-    const gap = () => Math.max(G.W * 0.45, 230);
+    // razmik raste s hitrostjo, da je med dvema kanistroma vedno čas za pristanek in nov skok
+    const gap = () => Math.max(G.W * 0.45, 230, 330 * G.speed);
     const canH = () => clamp(G.H * 0.07, 30, 46);
     const spawn = () => {
       const start = car.x + G.W * 0.85;
@@ -343,6 +357,7 @@ export const hills = {
         const power = 230 * G.speed, grav = 520;
         car.v += (power - grav * s * 0.9 - car.v * 0.9) * dt;
         car.v = clamp(car.v, 70 * G.speed, 420 * G.speed);
+        const prevX = car.x;
         car.x += car.v * dt;
         dist += car.v * dt;
         const gy = groundY(car.x);
@@ -372,9 +387,10 @@ export const hills = {
         for (const c of cans) {
           c.t += dt;
           if (c.state !== "idle") continue;
-          const near = Math.abs(c.x - car.x) < 28;
-          const low = car.y > groundY(c.x) - canH() * 0.9;
-          if (near && low) {
+          // kanister šteje, ko ga avto prevozi: če je takrat v zraku, ga je preskočil (tudi počasi v klanec)
+          if (!(c.x > prevX && c.x <= car.x)) continue;
+          const low = car.y > groundY(c.x) - canH() * 0.6;
+          if (low) {
             if (G.waiting) {
               c.state = "gone";
               continue;
@@ -406,12 +422,12 @@ export const hills = {
       draw(g) {
         const [s0, s1, hill, ground0, far] = chap(G, [["#7dd3fc", "#e0f2fe", "#4ade80", "#15803d", "#86efac"], ["#fdba74", "#fef3c7", "#fcd34d", "#b45309", "#fde68a"], ["#bfdbfe", "#f8fafc", "#f1f5f9", "#94a3b8", "#e2e8f0"], ["#0f172a", "#312e81", "#cbd5e1", "#64748b", "#475569"]]);
         sky(G, g, s0, s1);
-        if ((G.chapter || 1) >= 4) for (let i = 0; i < 30; i++) circle(g, (i * 97 - cam * 0.05) % G.W, (i * 53) % (G.H * 0.5), 1.4, "#fff", 0);
+        if ((G.chapter || 1) >= 4) for (let i = 0; i < 30; i++) circle(g, (((i * 97 - cam * 0.05) % G.W) + G.W) % G.W, (i * 53) % (G.H * 0.5), 1.4, "#fff", 0);
         // oddaljeni hribi
         g.fillStyle = far;
         g.beginPath();
         g.moveTo(0, G.H);
-        for (let x = 0; x <= G.W; x += 16) g.lineTo(x, G.H * 0.5 + Math.sin((x + cam * 0.3) * 0.006) * G.H * 0.06);
+        for (let x = 0; x <= G.W + 16; x += 16) g.lineTo(x, G.H * 0.5 + Math.sin((x + cam * 0.3) * 0.006) * G.H * 0.06);
         g.lineTo(G.W, G.H);
         g.fill();
         // cesta
@@ -447,7 +463,8 @@ export const hills = {
           g.fillStyle = "#fca5a5";
           g.fillRect(-w * 0.25, -h * 0.75, w * 0.5, h * 0.12);
           g.restore();
-          pill(G, g, c.txt, x, y - h - 26 - Math.sin(c.t * 4) * 3, Math.min(G.W * 0.42, gap() * 0.9), 32, c.state === "hit" ? "#cbd5e1" : "#fde047", 17);
+          // napis prevoženega kanistra skrijemo, sicer ga pill() prisloni ob levi rob čez džip in naslednji napis
+          if (c.x >= car.x - 24) pill(G, g, c.txt, x, y - h - 26 - Math.sin(c.t * 4) * 3, Math.min(G.W * 0.42, gap() * 0.9), 32, c.state === "hit" ? "#cbd5e1" : "#fde047", 17);
         }
         for (const p of puffs) circle(g, p.x - cam, p.y, 6 * (1 - p.life), `rgba(148,163,184,${p.life})`, 0);
         // džip
@@ -495,7 +512,7 @@ export const pet = {
   id: "pet",
   story: {
     sl: [["Jajce se izvali", "Iz jajca pokuka mali Bibi."], ["Mladiček", "Bibi raste in je vedno lačen."], ["Igrivi Bibi", "Bibi ima svoje muhe, a te ima rad."], ["Veliki prijatelj", "Bibi je zrasel v velikega, srečnega prijatelja!"]],
-    en: [["The egg hatches", "Little Bibi peeks out of the egg."], ["The baby", "Bibi is growing and always hungry."], ["Playful Bibi", "Bibi has moods, but loves you."], ["Big friend", "Bibi has grown into a big, happy friend!"]],
+    en: [["The egg hatches", "Little Bibi peeks out of the egg."], ["The baby", "Bibi is growing and always hungry."], ["Playful Bibi", "Bibi can be moody, but he loves you."], ["Big friend", "Bibi has grown into a big, happy friend!"]],
   },
   icon: "paw-print",
   colors: ["#be185d", "#f472b6"],
@@ -520,6 +537,7 @@ export const pet = {
         if (G.q) layout();
       },
       reset() {
+        treats = [];
         hunger = 0.5;
         joy = 0.6;
         fly = drag = null;
@@ -555,7 +573,7 @@ export const pet = {
         } else {
           mood = -1;
           moodT = 1.2;
-          G.float(p.x, p.y - petR() * 1.2, "bljak", "#65a30d", 24);
+          G.float(p.x, p.y - petR() * 1.2, "🤢", "#65a30d", 30); // brez besedila: igra teče v vseh jezikih
           const t = treats.find((x) => x.txt === fly.txt);
           if (t) t.gone = true;
           G.answer(false, p.x, p.y - petR(), { keep: true });
@@ -678,7 +696,7 @@ export const pet = {
           g.stroke();
           circle(g, x + 18, y + 18, 9, "#fff", 2);
           G.fit(`${i + 1}`, x + 18, y + 19, 14, 11, { color: INK, weight: 900 });
-          G.fit(t.txt, x + t.w / 2, y + t.h / 2 + 4, t.w - 20, Math.min(24, t.h * 0.36), { color: INK, weight: 900 });
+          answerText(G, t.txt, x + t.w / 2, y + t.h / 2 + 6, t.w - 16, Math.min(24, t.h * 0.36), { color: INK, weight: 900 });
         });
         if (fly) {
           circle(g, fly.x, fly.y, 18, fly.color);
@@ -948,8 +966,11 @@ export const pairs = {
           g.lineWidth = 3;
           g.strokeStyle = INK;
           g.stroke();
-          if (front) G.fit(c.txt, 0, 1, c.w - 16, Math.min(24, c.h * 0.3), { color: INK, weight: 900 });
-          else {
+          if (front) {
+            answerText(G, c.txt, 0, 1, c.w - 16, Math.min(24, c.h * 0.3), { color: INK, weight: 900 });
+            // najden par: poleg barve še znak ✓ ali ✗ (ne samo barva)
+            if (c.done) G.fit(c.bad ? "✗" : "✓", c.w / 2 - 16, -c.h / 2 + 16, 22, 20, { color: c.bad ? "#b91c1c" : "#15803d", weight: 900 });
+          } else {
             g.fillStyle = dots;
             for (let k = 0; k < 9; k++) circle(g, ((k % 3) - 1) * c.w * 0.22, (Math.floor(k / 3) - 1) * c.h * 0.22, 4, dots, 0);
             G.fit(`${i + 1}`, 0, 1, 30, Math.min(22, c.h * 0.3), { color: "#fff", weight: 900, stroke: INK });
@@ -1031,7 +1052,8 @@ export const slicer = {
         }
         const k = Math.min(1.3, G.speed);
         for (const f of fruits) {
-          f.vy += grav * k * k * dt;
+          // k pospeši čas (hitrost in težnost), vrh leta ostane enak; s k·k je sadje pri »Počasi« letelo nad zaslon
+          f.vy += grav * k * dt;
           f.x += f.vx * k * dt;
           f.y += f.vy * k * dt;
           f.rot += f.vr * dt;
@@ -1094,6 +1116,9 @@ export const slicer = {
           g.ellipse(r * 0.2, -r * 0.95, r * 0.35, r * 0.14, -0.4, 0, Math.PI * 2);
           g.fill();
           g.restore();
+          // številka tipke (1–4), da se da igrati tudi s tipkovnico
+          const key = G.opts.indexOf(f.txt) + 1;
+          if (key > 0 && !f.cut) G.fit(`${key}`, f.x, f.y + 1, r, 12, { color: "rgba(27,27,47,0.6)", weight: 900 });
           pill(G, g, f.txt, f.x, f.y + r + 18, G.W * 0.42, 30, f.bad ? "#cbd5e1" : "#fff", 16);
           g.globalAlpha = 1;
         }
@@ -1152,30 +1177,65 @@ export const water = {
     const NEED = 18, MAX = 200;
     const idx = (c, r) => r * cols + c;
     const free = (c, r) => c >= 0 && c < cols && r >= 0 && r < rows && !cell[idx(c, r)] && !wet[idx(c, r)];
-    const geom = () => {
-      cols = G.W >= G.H ? 40 : 26;
-      cs = G.W / cols;
+    // keep: ista mreža (npr. ob manjši spremembi višine zaslona), samo nova velikost celic
+    const geom = (keep = false) => {
       const tubH = clamp(G.H * 0.14, 50, 90);
-      rows = Math.max(12, Math.floor((G.H - tubH - G.H * 0.06) / cs));
-      x0 = 0;
+      if (keep) {
+        cs = Math.min(G.W / cols, (G.H - tubH - G.H * 0.06) / rows);
+        x0 = (G.W - cols * cs) / 2;
+      } else {
+        cols = G.W >= G.H ? 40 : 26;
+        cs = G.W / cols;
+        rows = Math.max(12, Math.floor((G.H - tubH - G.H * 0.06) / cs));
+        x0 = 0;
+      }
       y0 = G.H - tubH - rows * cs;
+    };
+    // pot, po kateri voda lahko teče (navzdol in vstran, mimo skal) od izvira do sredine korita i
+    const route = (i) => {
+      const t = tubs[i];
+      if (!t) return null;
+      const lo = t.c0 + 1, hi = t.c1 - 2, start = idx(src, 0);
+      const prev = new Int32Array(cols * rows).fill(-1);
+      prev[start] = start;
+      const q = [start];
+      for (let h = 0; h < q.length; h++) {
+        const k = q[h], c = k % cols, r = (k - c) / cols;
+        if (r === rows - 1 && c >= lo && c <= hi) {
+          const path = [];
+          for (let x = k; x !== start; x = prev[x]) path.push(x);
+          return path.reverse();
+        }
+        for (const [dc, dr] of [[0, 1], [-1, 0], [1, 0]]) {
+          const C = c + dc, R = r + dr, K = idx(C, R);
+          if (C < 0 || C >= cols || R >= rows || prev[K] >= 0 || cell[K] === 2) continue;
+          if (R >= rows - 2 && (C < lo || C > hi)) continue; // ob dnu ne čez sosednje korito
+          prev[K] = k;
+          q.push(K);
+        }
+      }
+      return null;
     };
     const level = () => {
       geom();
-      cell = new Array(cols * rows).fill(1);
-      wet = new Array(cols * rows).fill(0);
-      drops = [];
-      src = Math.floor(cols / 2 + rand(-cols * 0.25, cols * 0.25));
-      // jezerce pod izvirom
-      for (let r = 0; r < 3; r++) for (let c = src - 2; c <= src + 2; c++) if (c >= 0 && c < cols) cell[idx(c, r)] = 0;
-      // skale: kratke prečke z odprtinami, več v višjih poglavjih
-      const bars = 2 + Math.min(4, (G.chapter || 1));
-      for (let b = 0; b < bars; b++) {
-        const r = Math.floor(rand(4, rows - 3)), len = Math.floor(rand(cols * 0.12, cols * 0.3)), c0 = Math.floor(rand(0, cols - len));
-        for (let c = c0; c < c0 + len; c++) cell[idx(c, r)] = 2;
+      // skale nikoli ne zaprejo poti do korita: sicer polje naredimo znova
+      for (let tries = 0; tries < 12; tries++) {
+        cell = new Array(cols * rows).fill(1);
+        wet = new Array(cols * rows).fill(0);
+        drops = [];
+        src = Math.floor(cols / 2 + rand(-cols * 0.25, cols * 0.25));
+        // jezerce pod izvirom
+        for (let r = 0; r < 3; r++) for (let c = src - 2; c <= src + 2; c++) if (c >= 0 && c < cols) cell[idx(c, r)] = 0;
+        // skale: kratke prečke z odprtinami, več v višjih poglavjih
+        const bars = 2 + Math.min(4, G.chapter || 1);
+        for (let b = 0; b < bars; b++) {
+          const r = Math.floor(rand(4, rows - 3)), len = Math.floor(rand(cols * 0.12, cols * 0.3)), c0 = Math.floor(rand(0, cols - len));
+          for (let c = c0; c < c0 + len; c++) cell[idx(c, r)] = 2;
+        }
+        const n = G.opts.length, w = cols / n;
+        tubs = G.opts.map((txt, i) => ({ txt, c0: Math.round(i * w), c1: Math.round((i + 1) * w), fill: 0, closed: false }));
+        if (tubs.every((_, i) => route(i))) break;
       }
-      const n = G.opts.length, w = cols / n;
-      tubs = G.opts.map((txt, i) => ({ txt, c0: Math.round(i * w), c1: Math.round((i + 1) * w), fill: 0, closed: false }));
     };
     const dig = (p) => {
       const c = (p.x - x0) / cs, r = (p.y - y0) / cs, rad = Math.max(1.4, 18 / cs);
@@ -1187,6 +1247,11 @@ export const water = {
     const digTo = (i) => {
       const t = tubs[i];
       if (!t || t.closed) return;
+      const path = route(i);
+      if (path) {
+        for (const k of path) dig({ x: x0 + ((k % cols) + 0.5) * cs, y: y0 + (Math.floor(k / cols) + 0.5) * cs });
+        return;
+      }
       const tc = (t.c0 + t.c1) / 2;
       for (let r = 0; r < rows; r++) {
         const c = src + ((tc - src) * r) / rows;
@@ -1223,10 +1288,13 @@ export const water = {
     };
     return {
       resize() {
-        if (G.q) level();
+        // ista usmerjenost: izkopana pot ostane; nova usmerjenost: novo polje
+        if (G.q && cell.length === cols * rows && (G.W >= G.H ? 40 : 26) === cols) geom(true);
+        else if (G.q) level();
       },
       reset() {
         drops = [];
+        tubs = [];
       },
       question() {
         level();
@@ -1289,7 +1357,7 @@ export const water = {
         g.strokeRect(sx - cs * 1.2, y0 - cs * 2.2, cs * 2.4, cs * 2.2);
         // korita z odgovori
         const ty = y0 + rows * cs, th = G.H - ty;
-        tubs.forEach((t) => {
+        tubs.forEach((t, i) => {
           const x = x0 + t.c0 * cs + 4, w = (t.c1 - t.c0) * cs - 8;
           G.rr(x, ty + 4, w, th - 10, 10);
           g.fillStyle = t.closed ? "#94a3b8" : "#f8fafc";
@@ -1303,7 +1371,10 @@ export const water = {
           g.lineWidth = 3;
           g.strokeStyle = INK;
           g.stroke();
-          G.fit(t.txt, x + w / 2, ty + th / 2, w - 12, Math.min(22, th * 0.32), { color: INK, weight: 900 });
+          // številka tipke zgoraj levo, odgovor nižje čez vso širino (dolg odgovor v dveh vrsticah)
+          answerText(G, t.txt, x + w / 2, ty + th / 2 + 4, w - 12, Math.min(22, th * 0.32), { color: INK, weight: 900 });
+          G.fit(`${i + 1}`, x + 13, ty + 18, 20, 12, { color: "rgba(27,27,47,0.55)", weight: 900 });
+          if (t.closed) G.fit("✗", x + w - 14, ty + 18, 20, 18, { color: "#b91c1c", weight: 900 }); // zaprto korito: ne samo siva barva
         });
       },
     };
@@ -1315,13 +1386,13 @@ export const mines = {
   id: "mines",
   story: {
     sl: [["Staro polje", "Robotek Bit preiskuje polje s skritimi minami."], ["Peščena puščava", "Pod peskom nekaj tiktaka."], ["Zasneženo polje", "Mine so skrite pod snegom."], ["Zadnje polje", "Še eno polje do Bitovega odlikovanja!"]],
-    en: [["Old field", "Bit the robot searches a field with hidden mines."], ["Sandy desert", "Something ticks under the sand."], ["Snowy field", "The mines are hidden under the snow."], ["The last field", "One more field to Bit's medal!"]],
+    en: [["Old field", "Bit the robot searches a field with hidden mines."], ["Sandy desert", "Something ticks under the sand."], ["Snowy field", "The mines are hidden under the snow."], ["The last field", "One more field and Bit gets a medal!"]],
   },
   icon: "bomb",
   colors: ["#3f3f46", "#a1a1aa"],
   options: 4,
   create(G) {
-    let n = 6, board = [], btns = [], flagMode = false, boom = 0, cleared = 0, flagBtn = null, gx = 0, gy = 0, cs = 30;
+    let n = 6, board = [], btns = [], flagMode = false, boom = 0, cleared = 0, charge = 0, flagBtn = null, gx = 0, gy = 0, cs = 30;
     const at = (c, r) => (c >= 0 && r >= 0 && c < n && r < n ? board[r * n + c] : null);
     const around = (c, r) => [-1, 0, 1].flatMap((dr) => [-1, 0, 1].map((dc) => (dc || dr ? at(c + dc, r + dr) : null))).filter(Boolean);
     const newBoard = () => {
@@ -1333,10 +1404,10 @@ export const mines = {
       boom = 0;
     };
     const layout = () => {
-      const bh = clamp(G.H * 0.1, 44, 64), area = G.H - bh * 2 - 30;
+      const bh = clamp(G.H * 0.1, 44, 64), area = G.H - bh * 2 - 52;
       cs = Math.floor(Math.min((G.W - 20) / n, area / n));
       gx = (G.W - cs * n) / 2;
-      gy = 10 + (area - cs * n) / 2;
+      gy = 32 + (area - cs * n) / 2;
       const m = G.opts.length, gap = 8, fw = bh;
       const top = G.H - bh * 2 - 12;
       const two = G.W < 560, cols = two ? 2 : m, rows = Math.ceil(m / cols);
@@ -1365,6 +1436,12 @@ export const mines = {
         return;
       }
       if (x.flag) return;
+      // odpiranje porabi naboj detektorja; naboj dajo le pravilni odgovori
+      if (charge <= 0) {
+        G.float(gx + (x.c + 0.5) * cs, gy + (x.r + 0.5) * cs, "⚡ 0", "#f59e0b", 22, 0.9);
+        return;
+      }
+      charge--;
       if (x.mine) {
         // mina: polje se podre, začneš znova (življenje ostane, izgubiš napredek)
         x.open = true;
@@ -1384,12 +1461,18 @@ export const mines = {
       const safe = board.filter((x) => !x.mine && !x.open);
       const zero = safe.filter((x) => x.adj === 0);
       const s = pickOne(zero.length ? zero : safe);
-      if (s) open(s);
+      if (s) {
+        s.flag = false; // napačno postavljena zastavica na varnem polju ne sme ustaviti detektorja
+        open(s);
+      }
     };
     const choose = (b) => {
       if (!b || G.waiting || boom > 0) return;
       const ok = G.isRight(b.txt);
-      if (ok) detect();
+      if (ok) {
+        detect();
+        charge += 2;
+      }
       G.answer(ok, b.x + b.w / 2, b.y, ok ? { delay: 0.5 } : { keep: true });
       if (ok) checkWin();
     };
@@ -1399,6 +1482,8 @@ export const mines = {
       },
       reset() {
         cleared = 0;
+        charge = 0;
+        btns = [];
         newBoard();
       },
       question() {
@@ -1455,6 +1540,14 @@ export const mines = {
         g.lineWidth = 3;
         g.strokeStyle = INK;
         g.strokeRect(gx, gy, cs * n, cs * n);
+        if (flagMode) {
+          // način zastavic: črtkan rob okoli polja (ne samo rumena barva gumba)
+          g.setLineDash([10, 6]);
+          g.lineWidth = 5;
+          g.strokeStyle = "#fde047";
+          g.strokeRect(gx - 5, gy - 5, cs * n + 10, cs * n + 10);
+          g.setLineDash([]);
+        }
         btns.forEach((b, i) => {
           G.rr(b.x, b.y, b.w, b.h, 12);
           g.fillStyle = NEON[i % NEON.length];
@@ -1462,19 +1555,21 @@ export const mines = {
           g.lineWidth = 3;
           g.strokeStyle = INK;
           g.stroke();
-          G.fit(b.txt, b.x + b.w / 2, b.y + b.h / 2 + 1, b.w - 26, Math.min(20, b.h * 0.42), { color: INK, weight: 900 });
+          answerText(G, b.txt, b.x + b.w / 2, b.y + b.h / 2 + 1, b.w - 26, Math.min(20, b.h * 0.42), { color: INK, weight: 900 });
           G.fit(`${i + 1}`, b.x + 12, b.y + 13, 18, 11, { color: "rgba(27,27,47,0.55)", weight: 900 });
         });
         if (flagBtn) {
           G.rr(flagBtn.x, flagBtn.y, flagBtn.w, flagBtn.h, 12);
           g.fillStyle = flagMode ? "#fde047" : "#e5e7eb";
           g.fill();
-          g.lineWidth = 3;
+          g.lineWidth = flagMode ? 6 : 3;
           g.strokeStyle = INK;
           g.stroke();
           G.fit("🚩", flagBtn.x + flagBtn.w / 2, flagBtn.y + flagBtn.h / 2, flagBtn.w - 8, 24, {});
         }
         if (cleared) G.fit(`🏅 ${cleared}`, G.W - 34, 18, 60, 15, { color: "#fff", weight: 900, stroke: INK });
+        // naboj detektorja: koliko polj lahko še odpreš
+        G.fit(`⚡ ${charge}`, 34, 18, 60, 16, { color: charge ? "#fde047" : "#fff", weight: 900, stroke: INK });
       },
     };
   },

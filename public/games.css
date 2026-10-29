@@ -136,7 +136,7 @@ body.gm-on .gm-host { flex: 1; min-height: 0; }
 .gm-title { position: relative; overflow: hidden; isolation: isolate; }
 .gm-title::before { content: ""; position: absolute; inset: -60%; z-index: -1; opacity: 0.07; background: repeating-conic-gradient(from 0deg, var(--gm-a) 0deg 10deg, transparent 10deg 20deg); }
 .gm-story { margin: 6px 0 10px; line-height: 1.45; }
-.gm-how { padding: 8px 10px; border-radius: var(--radius-sm); background: var(--surface-2); font-size: 0.92rem; }
+.gm-how { padding: 8px 10px; border-radius: var(--radius-sm); background: var(--surface-2); font-size: 0.92rem; text-wrap: pretty; } /* brez osamljenega »4.« v zadnji vrstici */
 .gm-pace { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; font-weight: 800; }
 .gm-pace .seg button { min-height: 44px; }
 
