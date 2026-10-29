@@ -534,6 +534,7 @@ Strani fakultet so bile tokrat dosegljive (curl + pdftotext), zato so ti predmet
   - 3. letnik: NUMMOD, NTRIBO, NIZDTEH2, HIDRAVLIKA, NPOGONI, ENERGETSKI, PODATKI, NMEHATR
   - izbirni: Napredna računalniška orodja, Proizvodno inženirstvo, Okoljsko inženirstvo, Inoviranje v strojništvu – RRP
 - **UL-FMF-MAT Matematika** (2026/27, predmetnik preverjen (vsi 3 letniki; enak kot 2025/26)) – vir: https://www.fmf.uni-lj.si/sl/studij-matematike/programi/1mate/2026/
+  - Potrditev z uradnim urnikom (urnik.fmf.uni-lj.si, zimski semester 2026/27, posnetki j 29. 10. 2026): 1. l Analiza 1, Algebra 1, Logika in množice, Računalniški praktikum, Proseminar A; 2. l Analiza 2a, Algebra 2, Diskretna matematika 1, Programiranje 1, Splošna topologija; 3. l Analiza 3, Uvod v numerične metode, Verjetnost, Mehanika 1, Diplomski seminar. Vse se ujema s predmetnikom v aplikaciji (Proseminar in Diplomski seminar sta namenoma izpuščena). Na urniku 3. letnika so še izbirni predmeti, ki jih v aplikaciji še ni: Teorija iger, Uvod v diferencialno geometrijo, Algebra 3, Analiza podatkov s strojnim učenjem (dodati po uradnih učnih načrtih). Letni semester iz urnika ni razviden.
   - 1. letnik: ALGEBRA1, ANALIZA1, FIZIKA1, LOGIKA, NRACPRAK, NUVPROG
   - 2. letnik: ALGEBRA2, ANALIZA2A, ANALIZA2B, DISKRETNA1, FIZIKA2, NPROG1, TOPOLOGIJA
   - 3. letnik: ANALIZA3, ANALIZA4, MEHANIKA1, STATISTIKA, UVODNUM, VERJETNOST
