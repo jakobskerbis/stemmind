@@ -33,6 +33,7 @@ Pisava je Nunito. Naslovi so debeli (800), gumbi 700–800.
 - **Izbrana možnost** (kartica ali kljukica): moder rob in `--accent-soft` ozadje (`.lp-opt.on`, `label.check`).
 - **Seznam povezav** (npr. stran Jaz): `<div class="card list-card"><button class="list-row"><span class="ic">ikona</span><span class="lr-text"><b>Naslov</b><small>opis</small></span>…</button></div>`.
 - **Izmerjene vrednosti v simulacijah**: `values([["čas t", "3,16 s"], …])` iz `public/sim/kit.js` (kartice, na telefonu dve v vrsti). Tabela `.demo-table` samo za prave tabele z več vrsticami.
+- **Tabela v besedilu** (Markdown iz inštruktorja, razlag, nalog in lekcij): sama dobi robove, sivo glavo in razmik; na ozkem zaslonu se pomika vstran (`ui.css`, »tabela v besedilu«). Ne dodajaj ji svojih slogov.
 - **Kartica**: `.card`; poudarjena kartica z modrim prelivom: `.hero`.
 
 Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `--accent-soft` ozadje).
@@ -62,7 +63,7 @@ Pravila so v `public/touch.css`. »Tablica« je zaslon na dotik (`(hover: none) 
 - Najmanjša višina tipke za dotik je 44px.
 - Gumbi v `.actions` na telefonu zapolnijo vrstico; tudi posamezen glavni gumb pod obrazcem ali v kartici (Shrani, Začni tekmovanje).
 - Preklopniki so na telefonu čez celo širino.
-- Plošča za vnos: na telefonu in tablici pokončno je spodaj, naloga se pomakne na vrh nad njo (tudi ob preklopu na Piši). Na tablici pokončno so tipke in platno široki največ 640 px. Na tablici ležeče je plošča desno.
+- Plošča za vnos ima svoje polje in Preveri; ko je odprta, je vrstica z vnosom v kartici naloge na telefonu in tablici skrita (en sam Preveri). Na telefonu in tablici pokončno je plošča spodaj, naloga se pomakne na vrh nad njo (tudi ob preklopu na Piši). Na tablici pokončno so tipke in platno široki največ 640 px. Na tablici ležeče je plošča desno.
 - Tablica ležeče (od 1000 px): isti dva stolpca kot na računalniku (učna pot, lekcija s poskusi desno, kazalo, napredek), z nekoliko ožjim desnim stolpcem.
 
 ## Vnos v Inštruktorju

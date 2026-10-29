@@ -10,6 +10,7 @@ import { buildWeeklyReport, weekKey, isSendTime } from "./weekly.js";
 import { Devices, deviceLabel, deviceWarnLimit } from "./devices.js";
 import { cleanText } from "../settings.js";
 import { Usage } from "../usage.js";
+import { promoConfig, createPromo } from "./promo.js";
 
 export const CONSENT_TEXT =
   "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da STEMMind obdeluje otrokove osebne podatke " +
@@ -52,6 +53,10 @@ export function mountAccounts(app, store, opts = {}) {
   const throttle = new Throttle();
   const json = express.json({ limit: "100kb" });
   const log = opts.log || console;
+  const promoCfg = opts.promo ?? promoConfig(env);
+  const promo = createPromo(db, promoCfg);
+  if (promoCfg.code) log.info?.(`[stemmind] aktivacijska koda ${promoCfg.code}: porabljenih ${promo.used()}/${promoCfg.limit}, ${promoCfg.days} dni`);
+  const accessOf = (p) => accessFor(p, Date.now(), promoCfg.seats);
 
   const baseUrl = (req) => (env.STEMMIND_BASE_URL || (req ? `${req.protocol}://${req.get("host")}` : `http://localhost:${env.PORT || 3000}`)).replace(/\/$/, "");
 
@@ -78,6 +83,7 @@ export function mountAccounts(app, store, opts = {}) {
     referral_code: p.referral_code,
     trial_ends_at: p.trial_ends_at,
     bonus_until: p.bonus_until,
+    promo_until: p.promo_until,
     has_customer: !!p.stripe_customer_id,
     subscription: p.sub_status
       ? { status: p.sub_status, plan: p.sub_plan, seats: p.sub_seats, period_end: p.sub_period_end, cancel_at_period_end: !!p.sub_cancel_at_period_end }
@@ -87,7 +93,7 @@ export function mountAccounts(app, store, opts = {}) {
   function premiumFor(studentId) {
     const parentId = ownerOf(studentId);
     if (!parentId) return true; // stari podatki brez starša
-    const access = accessFor(getParent(parentId));
+    const access = accessOf(getParent(parentId));
     return isPremiumChild(access, childIds(parentId), studentId);
   }
 
@@ -198,8 +204,16 @@ export function mountAccounts(app, store, opts = {}) {
 
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(email, verifyEmail(url));
+    // Aktivacijska koda ob registraciji; napačna koda registracije ne ustavi.
+    const promoRaw = String(req.body?.promo_code || "").trim();
+    const promoResult = promoRaw ? promo.redeem(getParent(id), promoRaw) : null;
     setSessionCookie(req, res, sessions.create(id));
-    res.status(201).json({ parent: publicParent(getParent(id)), referred: !!referrer, ...(mailer.enabled ? {} : { dev_verify_url: url }) });
+    res.status(201).json({
+      parent: publicParent(getParent(id)),
+      referred: !!referrer,
+      ...(promoResult?.ok ? { promo_until: promoResult.until } : promoResult ? { promo_error: promoResult.error } : {}),
+      ...(mailer.enabled ? {} : { dev_verify_url: url }),
+    });
   });
 
   app.get("/api/auth/verify", (req, res) => {
@@ -296,7 +310,7 @@ export function mountAccounts(app, store, opts = {}) {
   };
 
   function accountView(req, p) {
-    const access = accessFor(p);
+    const access = accessOf(p);
     const ids = childIds(p.id);
     const rewards = db.prepare("SELECT COUNT(*) AS n FROM referral_rewards WHERE referrer_id = ?").get(p.id).n;
     return {
@@ -320,12 +334,29 @@ export function mountAccounts(app, store, opts = {}) {
       prices_draft: REGIONAL_DRAFT && currencyOf(req, p) !== "EUR",
       billing: stripe.enabled,
       email: mailer.enabled,
+      promo: {
+        redeemed: !!db.prepare("SELECT 1 FROM promo_redemptions WHERE parent_id = ?").get(p.id),
+        available: !!promoCfg.code,
+        seats: promoCfg.seats,
+        ...(p.is_admin && promoCfg.code ? { admin: { ...promo.stats(), url: `${baseUrl(req)}/?koda=${promoCfg.code}` } } : {}),
+      },
       referral: { code: p.referral_code, url: `${baseUrl(req)}/?ref=${p.referral_code}`, rewards, days: REFERRAL_DAYS },
       consent_text: CONSENT_TEXT,
     };
   }
 
   app.get("/api/account", (req, res) => res.json(accountView(req, req.parent)));
+
+  app.post("/api/account/promo", json, (req, res) => {
+    const key = `promo|${req.parent.id}`;
+    if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
+    const r = promo.redeem(req.parent, req.body?.code);
+    if (r.error) {
+      throttle.fail(key);
+      return res.status(r.exhausted ? 410 : 400).json({ error: r.error });
+    }
+    res.json(accountView(req, getParent(req.parent.id)));
+  });
 
   app.put("/api/account", json, (req, res) => {
     const p = req.parent;
@@ -409,7 +440,7 @@ export function mountAccounts(app, store, opts = {}) {
     const p = req.parent;
     if (!p.email_verified_at) return res.status(403).json({ error: "Najprej potrdite e-naslov (povezava je v e-pošti).", verify: true });
     // Število profilov = paket (preizkus: 2, brezplačno: 1). Menjava profila največ enkrat na 30 dni.
-    const seats = Math.min(MAX_CHILDREN, accessFor(p).seats || 1);
+    const seats = Math.min(MAX_CHILDREN, accessOf(p).seats || 1);
     if (childIds(p.id).length >= seats) {
       return res.status(400).json({
         error: seats === 1 ? "Vaš paket ima 1 profil. Za drugega otroka izberite paket za 2 otroka v zavihku Račun." : `Vaš paket ima ${seats} profila.`,
@@ -472,8 +503,8 @@ export function mountAccounts(app, store, opts = {}) {
       const customer = await ensureCustomer(p);
       const { prices } = await stripe.ensurePrices(currency);
       const base = baseUrl(req);
-      // Preostanek 7-dnevnega preizkusa se prenese v Stripe (če je še vsaj 2 dni).
-      const trialEnd = Date.parse(p.trial_ends_at || 0);
+      // Preostanek 7-dnevnega preizkusa ali aktivacijske kode se prenese v Stripe (če sta še vsaj 2 dni).
+      const trialEnd = Math.max(Date.parse(p.trial_ends_at || 0) || 0, Date.parse(p.promo_until || 0) || 0);
       const subscription_data = { metadata: { parent_id: p.id } };
       if (trialEnd - Date.now() > 49 * 3600000) subscription_data.trial_end = Math.floor(trialEnd / 1000);
       const session = await stripe.request("POST", "/checkout/sessions", {

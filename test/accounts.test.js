@@ -474,3 +474,67 @@ test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari zn
   assert.equal(calls.length, n);
 });
 
+
+test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", async () => {
+  const promo = { code: "STEMMIND100", limit: 2, days: 365, seats: 1 };
+  await withServer(async ({ client, calls, store }) => {
+    // Ob registraciji (male črke, presledki), dostop po koncu preizkusa ostane.
+    const a = client();
+    const reg = await a("/api/auth/register", { method: "POST", body: { email: "a@kod.si", password: "geslo1234", accept_privacy: true, promo_code: " stemmind100 " } });
+    assert.equal(reg.status, 201);
+    const days = (Date.parse(reg.body.promo_until) - Date.now()) / 86400000;
+    assert.ok(days > 364.9 && days <= 365, String(days));
+    let acc = (await a("/api/account")).body;
+    assert.equal(acc.access.tier, "promo");
+    assert.equal(acc.access.seats, 2); // med preizkusom ostaneta 2 profila
+    assert.equal(acc.promo.redeemed, true);
+    assert.equal(acc.promo.admin, undefined);
+    store.db.prepare("UPDATE parents SET trial_ends_at = ? WHERE email = ?").run("2020-01-01T00:00:00Z", "a@kod.si");
+    acc = (await a("/api/account")).body;
+    assert.deepEqual([acc.access.tier, acc.access.seats], ["promo", 1]);
+    // Drugič na istem računu ne gre.
+    assert.equal((await a("/api/account/promo", { method: "POST", body: { code: "STEMMIND100" } })).status, 400);
+
+    // Napačna koda ne ustavi registracije.
+    const b = client();
+    const regB = await b("/api/auth/register", { method: "POST", body: { email: "b@kod.si", password: "geslo1234", accept_privacy: true, promo_code: "NAPAKA" } });
+    assert.equal(regB.status, 201);
+    assert.match(regB.body.promo_error, /ni veljavna/);
+    assert.equal((await b("/api/account")).body.access.tier, "trial");
+    // Pozneje v zavihku Račun.
+    const ok = await b("/api/account/promo", { method: "POST", body: { code: "STEMMIND100" } });
+    assert.equal(ok.status, 200);
+    assert.equal(ok.body.access.tier, "promo");
+
+    // Limit 2 je dosežen.
+    const c = client();
+    await registerVerified(c, calls, "c@kod.si");
+    const full = await c("/api/account/promo", { method: "POST", body: { code: "STEMMIND100" } });
+    assert.equal(full.status, 410);
+    assert.match(full.body.error, /Vseh 2 aktivacij/);
+    assert.equal(store.db.prepare("SELECT COUNT(*) AS n FROM promo_redemptions").get().n, 2);
+
+    // Preostanek kode se prenese v Stripe, da starš ne plača, dokler koda velja.
+    store.db.prepare("UPDATE parents SET email_verified_at = datetime('now') WHERE email = ?").run("a@kod.si");
+    await a("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "month" } });
+    const session = calls.find((x) => x.path === "/v1/checkout/sessions");
+    const left = (Number(session.body["subscription_data[trial_end]"]) * 1000 - Date.now()) / 86400000;
+    assert.ok(left > 364, String(left));
+  }, { promo });
+});
+
+test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
+  process.env.STEMMIND_ADMIN_EMAILS = "skrbnik@kod.si";
+  try {
+    await withServer(async ({ client }) => {
+      const a = client();
+      await a("/api/auth/register", { method: "POST", body: { email: "skrbnik@kod.si", password: "geslo1234", accept_privacy: true } });
+      const { admin } = (await a("/api/account")).body.promo;
+      assert.equal(admin.code, "STEMMIND100");
+      assert.deepEqual([admin.used, admin.limit, admin.days], [0, 100, 365]);
+      assert.match(admin.url, /\/\?koda=STEMMIND100$/);
+    });
+  } finally {
+    delete process.env.STEMMIND_ADMIN_EMAILS;
+  }
+});
