@@ -11,6 +11,8 @@ const NAMES = [
   "calendar", "info", "search", "users", "circle-check", "circle-x", "bot", "trending-up", "download", "flask-conical", "monitor-play", "refresh-cw", "medal", "timer", "skip-forward", "flag",
   "sigma", "sun", "moon", "sun-moon", "palette", "dices", "paintbrush", "mic", "square", "circle-arrow-up", "party-popper", "globe", "wifi-off", "cloud-upload", "feather", "message-square-heart",
   "library", "file-text", "list-checks", "external-link", "notebook-pen",
+  // znanstveni kalkulator in enote
+  "calculator", "atom", "ruler", "arrow-left-right",
   // grafični kalkulator
   "chart-spline", "square-function", "zoom-in", "zoom-out", "house", "maximize", "maximize-2", "minimize-2", "image-down", "save",
   "folder-open", "ellipsis-vertical", "pause", "table", "sliders-horizontal", "copy", "chevron-down", "delete", "corner-down-left",
