@@ -3,6 +3,8 @@
 // - ostale datoteke in branje API: najprej omrežje (vedno najnovejša različica), ob
 //   izpadu ali zelo počasni povezavi zadnja shranjena kopija,
 // - pošiljanje (POST …) gre vedno na strežnik; vaje brez povezave ureja public/offline.js.
+// Strežnik ime spodaj dopolni z različico knjižnic (server/razlicica.js): ob novi knjižnici se
+// stari predpomnilnik pobriše. Nove datoteke aplikacije pridejo same (najprej omrežje).
 const VERSION = "stemmind-v1";
 const STATIC = `${VERSION}-static`;
 const VENDOR = `${VERSION}-vendor`;
@@ -112,7 +114,7 @@ self.addEventListener("fetch", (e) => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
-  if (url.pathname === "/sw.js" || url.pathname === "/healthz") return;
+  if (url.pathname === "/sw.js" || url.pathname.startsWith("/healthz")) return;
   if (url.pathname.startsWith("/api/")) {
     if (NO_CACHE.test(url.pathname)) return;
     e.respondWith(networkFirst(req, API, TIMEOUT.api));

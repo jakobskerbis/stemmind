@@ -1,5 +1,6 @@
 // HTTP strežnik STEMMind: API + statični vmesnik.
 import express from "express";
+import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
@@ -28,6 +29,7 @@ import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from ".
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { mountWebApp } from "./webapp.js";
+import { appVersion, vendorVersion } from "./razlicica.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -58,9 +60,30 @@ export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
   const app = express();
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
+  // Različica in zasedenost: odprte strani se po posodobitvi osvežijo, samodejna posodobitev
+  // (scripts/nadzor.js) pa strežnik znova zažene, ko nihče ne čaka na odgovor.
+  const version = appVersion();
+  const activity = { active: 0, lastSend: 0 };
+  app.get("/healthz/stanje", (_req, res) => {
+    res.set("Cache-Control", "no-store");
+    res.json({ razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
+  });
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
   if (process.env.STEMMIND_PASSWORD) app.use(passwordGate(process.env.STEMMIND_PASSWORD)); // stran za prijavo + piškotek
   mountWebApp(app); // manifest v jeziku vmesnika, povezava za Google Play
+  app.use("/api", (req, res, next) => {
+    activity.active++;
+    if (req.method !== "GET") activity.lastSend = Date.now();
+    let done = false;
+    const end = () => {
+      if (done) return;
+      done = true;
+      activity.active--;
+    };
+    res.on("finish", end);
+    res.on("close", end);
+    next();
+  });
   app.use(express.json({ limit: "10mb" }));
   // Neuspele klice API zapišemo v dnevnik, da je napako na telefonu mogoče poiskati.
   app.use("/api", (req, res, next) => {
@@ -72,6 +95,12 @@ export function createApp(store, opts = {}) {
   // Knjižnice za izris strežemo lokalno (brez odvisnosti od CDN).
   const modules = path.join(here, "..", "node_modules");
   const publicDir = path.join(here, "..", "public");
+  // Service worker z različico knjižnic v imenu predpomnilnika (glej server/razlicica.js).
+  const swSource = fs.readFileSync(path.join(publicDir, "sw.js"), "utf8").replace('"stemmind-v1"', `"stemmind-v1-${vendorVersion()}"`);
+  app.get("/sw.js", (_req, res) => {
+    res.set("Cache-Control", "no-cache");
+    res.type("text/javascript").send(swSource);
+  });
   // Lahki način: stisnjene datoteke in JSON (brotli/gzip) za počasne in drage mobilne povezave.
   if (process.env.STEMMIND_COMPRESS !== "0") {
     app.use(
