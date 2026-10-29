@@ -178,3 +178,41 @@ test("logged-in teacher manages own classes without the key", () => {
   assert.deepEqual(leagues.teacherClasses(42).map((c) => c.name), ["7.a"]);
   assert.equal(leagues.teacherClasses(7).length, 0);
 });
+
+test("leaderboard wins give badges that cannot be bought; monthly board with avatars", async () => {
+  const { store, leagues, xp, setNow } = setup();
+  const ids = [];
+  for (let i = 0; i < 4; i++) {
+    const s = store.createStudent(`W${i}`);
+    ids.push(s.id);
+    xp(s.id, 50 - i * 10, "2026-10-27 09:00:00");
+  }
+  const lonely = store.createStudent("Sam").id; // sam v svoji skupini: zmaga ne šteje
+  leagues.profile(lonely);
+  store.db.prepare("UPDATE league_profiles SET tier = 3 WHERE student_id = ?").run(lonely);
+  xp(lonely, 500, "2026-10-27 09:00:00");
+  leagues.sync();
+  store.db.prepare("INSERT INTO avatar_state (student_id, equipped) VALUES (?, ?)").run(ids[0], JSON.stringify({ hat: ["hat_crown"], badge: "el_fe" }));
+
+  // Mesečna lestvica: vsi z XP v mesecu, z avatarjem.
+  const m = leagues.monthView(ids[1]);
+  assert.equal(m.month, "2026-10");
+  assert.deepEqual(m.board.map((r) => r.xp), [500, 50, 40, 30, 20]);
+  assert.ok(m.board[2].me && !m.me);
+  assert.deepEqual(m.board[1].avatar.hat, ["hat_crown"]);
+
+  // Nov teden: zmagovalec skupine dobi značko svoje lige, prvi trije stopničke; sam v skupini nič.
+  setNow("2026-11-03T08:00:00Z");
+  const v = leagues.leagueView(ids[0]);
+  assert.equal(v.lastWeek.award, "win_week_0");
+  assert.deepEqual(v.awards.sort(), ["win_month_podium", "win_week_0", "win_week_podium"]); // oktober je zaključen: 2. na mesečni
+  assert.equal(leagues.leagueView(ids[2]).lastWeek.award, "win_week_podium");
+  assert.equal(leagues.leagueView(ids[3]).lastWeek.award, null);
+  assert.deepEqual(leagues.awards(ids[3]), []);
+  assert.deepEqual(leagues.awards(lonely).sort(), ["win_month", "win_month_podium"]); // mesečni prvak, tedenska zmaga sam s sabo ne šteje
+  // Značke so v inventarju avatarja, kupiti jih ni mogoče.
+  const { Avatars } = await import("../server/avatar.js");
+  const av = new Avatars(store.db);
+  assert.ok(av.owned(lonely).includes("win_month"));
+  assert.equal(av.buy(ids[3], "win_month").error, "earn");
+});

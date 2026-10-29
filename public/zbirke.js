@@ -15,7 +15,13 @@ export const COLLECTIONS = [
   { id: "fiz", subject: "FIZ", slot: "fx", icon: "zap", name: { sl: "Fizikalni efekti", en: "Physics effects" } },
   { id: "krivulje", subject: "MAT", slot: "bg", icon: "chart-spline", name: { sl: "Matematične krivulje", en: "Maths curves" } },
   { id: "pot", subject: null, slot: null, icon: "trophy", name: { sl: "Pot znanja", en: "Path of knowledge" } },
+  { id: "lige", subject: null, slot: "badge", icon: "medal", name: { sl: "Zmage na lestvicah", en: "Leaderboard wins" } },
 ];
+
+// Zmaga na lestvici šteje, ko je na njej vsaj toliko učencev z XP (server/leagues.js).
+export const AWARD_MIN = 3;
+// Barve lig (kot .tier-0 … .tier-6 v leagues.css) za značke zmag.
+export const LEAGUE_COLORS = ["#c27c45", "#8d99ae", "#f5a524", "#3b82f6", "#e5484d", "#16a05a", "#7c6cff"];
 
 // Učni pass: dve sezoni na šolsko leto, 30 stopenj, XP samo iz učenja (nalog, obvladanih tem, treningov).
 export const PASS = { tiers: 30, perTier: 300, dayCap: 400 };
@@ -131,6 +137,19 @@ export const KNOWLEDGE = [
     ["pot_tesla", "outfit", "mythic", 100000, "Teslov plašč", "Tesla's coat"],
     ["pot_infinity", "badge", "mythic", 120000, "Neskončnost", "Infinity"],
   ].map(([id, slot, rarity, xp, sl, en]) => ({ id, collection: "pot", slot, rarity, name: { sl, en }, need: { xp }, ...(ABOUT[id] ? { about: ABOUT[id] } : {}) })),
+  // Zmage na lestvicah (server/leagues.js): 1. mesto v tedenski skupini po ligi, stopničke, mesečni prvak.
+  ...[
+    ["Bronasti", "Bronze", "rare"],
+    ["Srebrni", "Silver", "rare"],
+    ["Zlati", "Gold", "epic"],
+    ["Safirni", "Sapphire", "epic"],
+    ["Rubinasti", "Ruby", "legendary"],
+    ["Smaragdni", "Emerald", "legendary"],
+    ["Diamantni", "Diamond", "mythic"],
+  ].map(([sl, en, rarity], tier) => ({ id: `win_week_${tier}`, collection: "lige", slot: "badge", rarity, name: { sl: `Zmaga v ${sl} ligi`, en: `${en} league win` }, need: { league: "week", tier } })),
+  { id: "win_week_podium", collection: "lige", slot: "badge", rarity: "rare", name: { sl: "Tedenske stopničke", en: "Weekly podium" }, need: { league: "weekPodium" } },
+  { id: "win_month_podium", collection: "lige", slot: "badge", rarity: "epic", name: { sl: "Mesečne stopničke", en: "Monthly podium" }, need: { league: "monthPodium" } },
+  { id: "win_month", collection: "lige", slot: "badge", rarity: "legendary", name: { sl: "Mesečni prvak", en: "Monthly champion" }, need: { league: "month" } },
   // Učni pass (sezonski; barva in letnica sezone)
   { id: "pass_board", collection: "pass", slot: "bg", rarity: "common", tier: 5, name: { sl: "Šolska tabla", en: "Chalkboard" } },
   { id: "pass_badge", collection: "pass", slot: "badge", rarity: "common", tier: 10, name: { sl: "Značka sezone", en: "Season badge" } },
@@ -165,7 +184,17 @@ export function elementTile(x, { x0 = 56, y0 = 73, s = 20 } = {}) {
   return `<g transform="translate(${x0} ${y0}) scale(${s / 20})"><rect width="20" height="20" rx="3" fill="${bg}" stroke="${INK}" stroke-width="1.6"/><text x="3" y="6.6" font-size="5" font-family="system-ui,sans-serif" fill="${fg}">${x.z}</text><text x="10" y="16.4" font-size="${x.sym.length > 1 ? 9 : 10.5}" font-weight="700" text-anchor="middle" font-family="system-ui,sans-serif" fill="${INK}">${x.sym}</text></g>`;
 }
 
+// Medalja z barvnim trakom (središče 64, 82 kot ostale značke).
+const medal = (ribbon, face, inner) =>
+  `<g transform="translate(64 82)"><path d="M-7-14l4 9h6l4-9z" fill="${ribbon}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/><path d="M-2-14l2 5 2-5" stroke="#fff" stroke-width="1.2" fill="none" opacity=".7"/><circle r="9.5" fill="${face}" stroke="${INK}" stroke-width="1.8"/><circle r="7" fill="none" stroke="#fff" stroke-width=".9" opacity=".7"/>${inner}</g>`;
+const ONE = `<text y="3.6" font-size="10" font-weight="800" text-anchor="middle" font-family="system-ui,sans-serif" fill="${INK}">1</text>`;
 const BADGE = {
+  ...Object.fromEntries(LEAGUE_COLORS.map((c, i) => [`win_week_${i}`, () => medal(c, c, ONE)])),
+  win_week_podium: () =>
+    `<g transform="translate(64 83)"><rect x="-11" y="-2" width="7" height="9" fill="#cbd5e1" stroke="${INK}" stroke-width="1.4"/><rect x="-3.5" y="-7" width="7" height="14" fill="#facc15" stroke="${INK}" stroke-width="1.4"/><rect x="4" y="0" width="7" height="7" fill="#d97706" stroke="${INK}" stroke-width="1.4"/><path d="M0-14l1.6 3.3 3.6.4-2.7 2.4.8 3.5-3.3-1.9-3.3 1.9.8-3.5-2.7-2.4 3.6-.4z" fill="#fde047" stroke="${INK}" stroke-width=".9" stroke-linejoin="round"/></g>`,
+  win_month_podium: () => medal("#0ea5e9", "#e0f2fe", `<g fill="none" stroke="${INK}" stroke-width="1.3"><rect x="-4.5" y="-3.5" width="9" height="8" rx="1"/><path d="M-4.5-1h9"/></g><text y="3.6" font-size="4.2" font-weight="800" text-anchor="middle" font-family="system-ui,sans-serif" fill="${INK}">1–3</text>`),
+  win_month: () =>
+    `<g transform="translate(64 82)"><path d="M-9-11h18v4q0 9-9 10-9-1-9-10z" fill="#facc15" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/><path d="M-9-8h-3q0 6 4 7M9-8h3q0 6-4 7" fill="none" stroke="${INK}" stroke-width="1.4"/><path d="M-2 3h4v4h4v4h-12v-4h4z" fill="#ca8a04" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/><path d="M0-9l1.4 2.8 3 .4-2.2 2 .6 3-2.8-1.5-2.8 1.5.6-3-2.2-2 3-.4z" fill="#fff"/></g>`,
   pot_dividers: () => `<g transform="translate(64 81)"><circle r="12" fill="#ede9fe" stroke="${INK}" stroke-width="1.8"/><path d="M-6 6a9 9 0 0 1 12 0" stroke="#a855f7" stroke-width="2" fill="none"/><path d="M0-8L-6 7M0-8L6 7" stroke="#334155" stroke-width="2.6" stroke-linecap="round"/><circle cy="-8" r="2.4" fill="#a855f7" stroke="${INK}" stroke-width="1"/><path d="M6 7l1 3" stroke="#334155" stroke-width="1.6"/></g>`,
   pot_infinity: () => `<g transform="translate(64 82)"><circle r="11" fill="#fff1f2" stroke="#e11d48" stroke-width="1.8"/><circle r="8.6" fill="none" stroke="#fda4af" stroke-width=".8"/><path d="M0 0c-2-3-7-3-7 0s5 3 7 0 7-3 7 0-5 3-7 0z" fill="none" stroke="#be123c" stroke-width="2.2"/><circle cx="-7" cy="-8" r="1" fill="#fde047"/><circle cx="8" cy="7" r="1" fill="#fde047"/></g>`,
   pass_badge: (v) => {
