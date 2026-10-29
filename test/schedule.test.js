@@ -18,6 +18,7 @@ import {
   scheduleView,
   schedulePrompt,
   Schedules,
+  nowParts,
 } from "../server/schedule.js";
 
 const SCHOOL = normalizeSettings({ curriculum_level: "8. razred" });
@@ -127,7 +128,8 @@ async function withApp(opts, fn) {
   }
 }
 
-const inDays = (n) => new Date(Date.now() + n * 86400000).toISOString().slice(0, 10);
+// Datumi v slovenskem času, kot jih računa strežnik (nowParts); z UTC sta testa padla med 23:00 in 24:00 UTC.
+const inDays = (n) => new Date(Date.parse(`${nowParts().date}T12:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
 
 test("API: saving a test sets Priprava na test by itself, a manual plan wins, deleting the test removes the auto plan", async () => {
   await withApp({}, async ({ store, req }) => {
