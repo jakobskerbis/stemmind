@@ -141,6 +141,10 @@
   "task.hint": "ヒント：",
   "task.retry": "もう一度",
   "task.askTutor": "チューターに聞く",
+  "task.work": "途中式",
+  "task.workPh": "ノートのようにここに途中式を書こう …",
+  "task.explain": "説明して",
+  "task.reviewTutor": "チューターと確認",
   "task.attemptsLeft": {
     "other": "あと {n} 回挑戦できます。そのあと解き方の例を見せます。"
   },

@@ -141,6 +141,10 @@
   "task.hint": "Petunjuk:",
   "task.retry": "Coba lagi",
   "task.askTutor": "Tanya tutor",
+  "task.work": "Langkah pengerjaan",
+  "task.workPh": "Tulis langkahmu di sini, seperti di buku catatan …",
+  "task.explain": "Jelaskan",
+  "task.reviewTutor": "Periksa dengan tutor",
   "task.attemptsLeft": {
     "other": "Masih {n} kesempatan, lalu aku tunjukkan contoh pembahasan."
   },

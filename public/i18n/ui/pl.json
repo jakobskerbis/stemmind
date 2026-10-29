@@ -153,6 +153,10 @@
   "task.hint": "Wskazówka:",
   "task.retry": "Spróbuj ponownie",
   "task.askTutor": "Zapytaj korepetytora",
+  "task.work": "Kroki pośrednie",
+  "task.workPh": "Zapisz tu kroki pośrednie, jak w zeszycie …",
+  "task.explain": "Wyjaśnij mi",
+  "task.reviewTutor": "Sprawdź z korepetytorem",
   "task.attemptsLeft": {
     "one": "Jeszcze {n} próba, potem pokażę rozwiązany przykład.",
     "few": "Jeszcze {n} próby, potem pokażę rozwiązany przykład.",

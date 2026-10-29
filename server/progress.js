@@ -441,6 +441,7 @@ export class Progress {
         answered,
         correct,
         yourAnswer: t?.last_answer ?? null,
+        taskId: t?.id ?? null,
         task: payload ? { ...publicTask(payload), solution: payload.solution, correctIndex: payload.answer.type === "choice" ? payload.answer.index : null } : null,
       };
     });

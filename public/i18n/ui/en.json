@@ -145,6 +145,10 @@
   "task.hint": "Hint:",
   "task.retry": "Try again",
   "task.askTutor": "Ask the tutor",
+  "task.work": "Working",
+  "task.workPh": "Write your steps here, like in your notebook …",
+  "task.explain": "Explain it",
+  "task.reviewTutor": "Check with the tutor",
   "task.attemptsLeft": {
     "one": "{n} more attempt, then I'll show a worked example.",
     "other": "{n} more attempts, then I'll show a worked example."
