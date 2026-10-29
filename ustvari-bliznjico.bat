@@ -1,4 +1,5 @@
 @echo off
+rem EVKLID-SAMOPOSODOBITEV: kratka skripta, samodejna posodobitev jo sme prepisati.
 rem Enkrat dvakrat klikni to datoteko: na namizju ustvari bliznjico "Evklid".
 cd /d "%~dp0"
 set "STEM_DIR=%~dp0"
