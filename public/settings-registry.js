@@ -43,9 +43,18 @@ export const DEVICE_SETTINGS = {
   writing_pad_tab: { values: ["keys", "draw"], desc: "pad opens on keypad (keys) or handwriting (draw)" },
   game_sound: { values: ["on", "off"], ls: ["stemmind.gameSound"], desc: "sound in games" },
   game_speed: { values: ["slow", "mid", "fast"], ls: ["stemmind.gamePace"], desc: "game speed" },
+  schedule_reminders: { values: ["on", "off"], ls: ["stemmind.scheduleReminders", { on: "1", off: "0" }], desc: "notification on this device the day before a test from the timetable (the app also shows it in the app)" },
 };
 
-export const ALL_SETTING_KEYS = [...Object.keys(PROFILE_SETTINGS), ...Object.keys(DEVICE_SETTINGS)];
+// Urnik učenca (Jaz → Urnik, server/schedule.js): ure v tednu ter testi in roki. Inštruktor ga bere in
+// ureja z orodjema get_schedule / change_schedule (brez potrditve: to so učenčevi lastni podatki).
+export const EVENT_KINDS = ["test", "kolokvij", "izpit", "ustno", "naloga", "drugo"];
+export const SCHEDULE_SETTINGS = {
+  lessons: { desc: "weekly timetable: day 1-7 (1 = Monday), start and end 'HH:MM' (or school period 0-8 instead), name = subject as the student says it, optional room" },
+  events: { desc: "tests and deadlines: date 'YYYY-MM-DD', optional time 'HH:MM', kind test|kolokvij|izpit|ustno|naloga|drugo, name e.g. 'Kontrolna naloga iz matematike', optional note (material)" },
+};
+
+export const ALL_SETTING_KEYS = [...Object.keys(PROFILE_SETTINGS), ...Object.keys(DEVICE_SETTINGS), ...Object.keys(SCHEDULE_SETTINGS).map((k) => `schedule_${k}`)];
 export const HEX = /^#[0-9a-f]{6}$/i;
 
 // Preveri vrednost nastavitve naprave; vrne normalizirano vrednost ali null.

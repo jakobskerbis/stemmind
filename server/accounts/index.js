@@ -440,6 +440,14 @@ export function mountAccounts(app, store, opts = {}) {
         topics: q("SELECT * FROM topic_state WHERE student_id = ?", c.id),
         tasks: q("SELECT topic_id, mode, level, attempts, hint_used, solved, first_try_correct, last_answer, created_at FROM tasks WHERE student_id = ?", c.id),
         xp: q("SELECT amount, reason, created_at FROM xp_events WHERE student_id = ?", c.id),
+        schedule: (() => {
+          try {
+            const r = db.prepare("SELECT data FROM schedules WHERE student_id = ?").get(c.id);
+            return r ? JSON.parse(r.data) : null;
+          } catch {
+            return null; // tabela urnikov še ne obstaja
+          }
+        })(),
       })),
     };
     res.set("Content-Disposition", 'attachment; filename="stemmind-podatki.json"');

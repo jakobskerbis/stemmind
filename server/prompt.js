@@ -35,12 +35,13 @@ const PLACEHOLDERS = [
   "language",
   "school_system",
   "reply_length",
+  "student_schedule",
 ];
 
 // settings: normalizirane nastavitve; weaknesses: seznam nizov.
 // lite: lahki način (kratki odgovori za drag ali počasen prenos podatkov).
 // results: besedilo iz studentResults() (server/results.js) za zahtevnost primerov in nalog.
-export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "", lite = false, results = "" }, template = loadTemplate()) {
+export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "", lite = false, results = "", schedule = "" }, template = loadTemplate()) {
   const values = {
     learning_path: learningPath || "(Prost pogovor: ni izbrane teme učne poti.)",
     ...settings,
@@ -52,6 +53,7 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     language: languagePrompt(settings.language, settings.region),
     school_system: schoolSystemPrompt(settings),
     reply_length: lite ? "kratka (lahki način)" : "običajna",
+    student_schedule: schedule || "(ni podatkov)",
   };
   // Zamenjamo samo znana imena, da LaTeX zapisi kot {,} ostanejo nedotaknjeni.
   return template.replace(/\{(\w+)\}/g, (match, key) =>
