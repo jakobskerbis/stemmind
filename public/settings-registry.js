@@ -52,7 +52,7 @@ export const DEVICE_SETTINGS = {
   color_menus: { desc: "menus colour '#rrggbb'" },
   color_text: { desc: "text colour '#rrggbb' (adjusted for readability)" },
   reply_speed: { values: ["zelo_pocasi", "pocasi", "srednje", "hitro", "takoj"], ls: ["pace"], desc: "how fast tutor replies appear, takoj = no animation" },
-  fullscreen: { values: ["on", "off"], ls: ["stemmind.fullscreen", { on: "1", off: "0" }], desc: "full-screen mode in the browser" },
+  fullscreen: { values: ["on", "off"], ls: ["stemmind.fullscreen", { on: "1", off: "0" }], desc: "full-screen mode in the browser (off by default)" },
   calculator: { values: ["sci", "graph", "tools", "pse", "formulas"], ls: ["stemmind.calcMode"], desc: "calculator opens in: scientific, graphing, tools, periodic table, formulas" },
   writing_pad: { values: ["auto", "off"], desc: "touch keypad / handwriting pad opens by itself at tasks (auto) or only on tap (off)" },
   writing_pad_tab: { values: ["keys", "draw"], desc: "pad opens on keypad (keys) or handwriting (draw)" },

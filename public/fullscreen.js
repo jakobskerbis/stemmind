@@ -1,7 +1,11 @@
-// Celozaslonski način v brskalniku (privzeto vklopljen, izklop v Nastavitvah, velja za to napravo).
+// Celozaslonski način v brskalniku (privzeto izklopljen, vklop v Nastavitvah, velja za to napravo).
+// Privzeto je izklopljen, ker Chrome na Androidu ob vsakem vstopu za nekaj sekund pokaže obvestilo
+// »to exit full screen, drag from the top …«, ki ga stran ne more skriti in prekrije spodnji del zaslona.
+// Nameščena aplikacija (manifest display: standalone) je že brez naslovne vrstice, zato tam vstopa ne sprožimo.
 // Brskalnik ga dovoli šele po dejanju uporabnika, zato se vklopi ob prvem dotiku ali kliku.
 // Če ga uporabnik sam zapre (tipka Esc, poteg z roba), ga ne vsiljujemo znova, dokler se ne vrne v aplikacijo.
 import { t } from "./i18n.js";
+import { isStandalone } from "./install.js";
 
 const KEY = "stemmind.fullscreen";
 const root = document.documentElement;
@@ -10,9 +14,9 @@ const current = () => document.fullscreenElement || document.webkitFullscreenEle
 
 export function fullscreenOn() {
   try {
-    return localStorage.getItem(KEY) !== "0";
+    return localStorage.getItem(KEY) === "1";
   } catch {
-    return true;
+    return false;
   }
 }
 
@@ -20,7 +24,7 @@ let armed = true;
 let ours = false; // zadnjo spremembo smo sprožili mi
 
 function enter() {
-  if (!armed || !fullscreenOn() || !supported() || current()) return;
+  if (!armed || !fullscreenOn() || !supported() || current() || isStandalone()) return;
   armed = false;
   ours = true;
   const req = root.requestFullscreen?.bind(root) || root.webkitRequestFullscreen?.bind(root);
