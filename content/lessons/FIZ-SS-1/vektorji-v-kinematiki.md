@@ -18,7 +18,7 @@ Ta poskus skriva dve ideji, ki ju boš potreboval pri vsakem gibanju v ravnini. 
 **Novo: veter s strani.** Zdaj naj veter piha pravokotno na smer leta. Dron se ne premika ne s $11$ ne s $5\,\text{m/s}$, ampak poševno. V eni sekundi preleti $8\,\text{m}$ naprej in hkrati ga veter odnese $3\,\text{m}$ vstran. Narišimo to:
 
 ```
-            ↗  dejanska pot
+               ↗  dejanska pot
      8 m  ↑   /
           |  /
           | /
@@ -43,7 +43,7 @@ Tabela postavi staro in novo drugo ob drugo:
 Pri pravokotnih hitrostih je rezultanta vedno večja od vsake komponente, a manjša od njune vsote.
 
 :::premisli
-Cilj je $400\,\text{m}$ severno. Dron ves čas kaže proti severu in leti z $8\,\text{m/s}$, veter piha proti vzhodu. Napovej: bo na višino cilja prišel prej, pozneje ali enako hitro kot v brezvetrju?
+Cilj je $400\,\text{m}$ severno. Dron ves čas kaže proti severu in leti z $8\,\text{m/s}$, veter piha proti vzhodu. Napovej: bo $400\,\text{m}$ proti severu preletel prej, pozneje ali enako hitro kot v brezvetrju?
 ---
 Enako hitro, po $50\,\text{s}$. Veter je pravokoten na sever, zato ne spremeni severne komponente hitrosti, ta ostane $8\,\text{m/s}$. Dron pa ne pristane na cilju, ampak vzhodno od njega.
 :::
@@ -97,7 +97,7 @@ Hitrosti sta pravokotni: $v = \sqrt{v_1^2 + v_2^2}$
 1. Smeri sta pravokotni, zato hitrosti ne seštejemo, ampak uporabimo Pitagorov izrek.
 2. $v_1^2 + v_2^2 = 36 + 6{,}25 = 42{,}25$ (v $\text{m}^2/\text{s}^2$).
 3. $v = \sqrt{42{,}25}\,\text{m/s} = 6{,}5\,\text{m/s}$.
-4. Odgovor: dron se glede na tla giblje s hitrostjo $6{,}5\,\text{m/s}$, poševno proti severovzhodu.
+4. Odgovor: dron se glede na tla giblje s hitrostjo $6{,}5\,\text{m/s}$, poševno: večinoma proti severu in nekoliko proti vzhodu.
 
 ### Primer 2: telefon zdrsne z mize
 
@@ -190,7 +190,7 @@ Vodoravni met je torej le sestavljanje dveh senc, ki jih že poznaš.
 
 Na vlaku, ki enakomerno vozi, vrži ključe navpično navzgor. Padejo ti nazaj v roko, ne nekaj metrov za tabo. Ključi imajo poleg navpične še vodoravno hitrost vlaka in jo ohranijo ves čas leta, tako kot ti.
 
-Opazovalec na peronu vidi isti met drugače: ključi letijo po loku. Za njega je to sestavljeno gibanje, vodoravno enakomerno in navpično pospešeno. Tudi tekoče stopnice, po katerih hodiš poševno, ali plavalec, ki ga reka odnaša, so primeri sestavljanja hitrosti: tvoja hitrost glede na tla je rezultanta lastne hitrosti in hitrosti podlage.
+Opazovalec na peronu vidi isti met drugače: ključi letijo po loku. Za njega je to sestavljeno gibanje, vodoravno enakomerno in navpično pospešeno. Tudi letalo v bočnem vetru in plavalec, ki ga reka odnaša, sta primera sestavljanja hitrosti: hitrost glede na tla je rezultanta lastne hitrosti in hitrosti zraka ali vode.
 
 ## Preveri se
 

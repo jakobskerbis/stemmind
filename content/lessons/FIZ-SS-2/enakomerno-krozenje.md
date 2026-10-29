@@ -112,7 +112,7 @@ $a_r = \dfrac{v^2}{r}$
 1. Pretvorimo v osnovne enote: $v = 7700\,\mathrm{m/s}$, $r = 6{,}79 \cdot 10^6\,\mathrm{m}$.
 2. Kvadrat hitrosti: $v^2 = (7700\,\mathrm{m/s})^2 = 5{,}93 \cdot 10^7\,\mathrm{m^2/s^2}$.
 3. Delimo s polmerom: $a_r = \dfrac{5{,}93 \cdot 10^7\,\mathrm{m^2/s^2}}{6{,}79 \cdot 10^6\,\mathrm{m}} \approx 8{,}7\,\mathrm{m/s^2}$.
-4. Odgovor: pospešek postaje je približno $8{,}7\,\mathrm{m/s^2}$, kar je skoraj toliko kot pospešek kamna, ki pada na tleh ($9{,}8\,\mathrm{m/s^2}$). Postaja v resnici ves čas pada proti Zemlji, le da zaradi velike hitrosti ves čas »zgreši« tla.
+4. Odgovor: pospešek postaje je približno $8{,}7\,\mathrm{m/s^2}$, kar je skoraj toliko kot pospešek kamna, ki prosto pada blizu tal ($9{,}8\,\mathrm{m/s^2}$). Postaja v resnici ves čas pada proti Zemlji, le da zaradi velike hitrosti ves čas »zgreši« tla.
 
 ### Primer 3: centrifuga za astronavte
 

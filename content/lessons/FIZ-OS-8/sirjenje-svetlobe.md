@@ -51,7 +51,7 @@ Kolikšna bo senca, če karton prestavimo na $40\,\text{cm}$ od svetilke? Napove
 Manjša: $6\,\text{cm}$. Zaslon je od svetilke $\dfrac{60}{40} = 1{,}5$-krat dlje kot karton, zato je senca $1{,}5$-krat večja od $4\,\text{cm}$.
 :::
 
-**Polsenca.** Majhna svetilka da senco z ostrim robom. Sonce pa ni točka, ampak velika svetla krogla. Nekam za oviro ne pride svetloba z nobenega dela Sonca: tam je **senca**. Okoli nje je pas, kamor sveti le del Sonca: to je **polsenca**, temnejša od okolice, a svetlejša od sence. Zato imajo sence dreves na soncu mehke robove.
+**Polsenca.** Majhna svetilka da senco z ostrim robom. Sonce pa ni točka, ampak velika svetla krogla. Za oviro je prostor, kamor ne pride svetloba z nobenega dela Sonca: tam je **senca**. Okoli nje je pas, kamor sveti le del Sonca: to je **polsenca**, temnejša od okolice, a svetlejša od sence. Zato imajo sence dreves na soncu mehke robove.
 
 V simulaciji spodaj (»Premočrtno širjenje svetlobe: senca in polsenca«) najprej povleci oviro bliže izviru in opazuj, kako senca na zaslonu raste. Nato izberi dva izvora in poišči sivi pas polsence: tja sveti le eden od njiju.
 
@@ -167,7 +167,7 @@ Kako izračunaš velikost sence, če je svetilo majhno:
 1. **Nariši.** Svetilo, predmet in zaslon na eni črti; od svetila potegni žarka mimo zgornjega in spodnjega roba predmeta do zaslona.
 2. **Izpiši razdalje od svetila.** Primer: predmet $a = 25\,\text{cm}$, zaslon $b = 75\,\text{cm}$, predmet visok $h = 2\,\text{cm}$.
 3. **Kolikokrat dlje je zaslon?** $\dfrac{75}{25} = 3$.
-4. **Toliko krat povečaj predmet.** $H = 2 \cdot 3 = 6$, torej senca je visoka $6\,\text{cm}$.
+4. **Tolikokrat povečaj predmet.** $H = 2 \cdot 3 = 6$, torej je senca visoka $6\,\text{cm}$.
 5. **Preveri smisel.** Senca ne more biti manjša od predmeta, saj se žarka od svetila samo razhajata. Če dobiš manjšo, si delil v napačno smer.
 
 Pri Soncu je drugače: žarki so vzporedni, zato je senca predmeta na zaslonu tik za njim enako velika kot predmet.
@@ -184,7 +184,7 @@ Ena palica, njena senca in pravilo o premočrtnem širjenju svetlobe so bili dov
 
 ## Preveri se
 
-? Majhna svetilka sveti na zaslon $60\,\text{cm}$ stran. Vmes premikamo karton, visok $3\,\text{cm}$. Katera tabela se ujema s poskusom?
+? Majhna svetilka sveti na zaslon $60\,\text{cm}$ stran. Vmes premikamo karton, visok $3\,\text{cm}$. Kateri par meritev se ujema s poskusom?
 - karton na $20\,\text{cm}$: senca $6\,\text{cm}$; karton na $30\,\text{cm}$: senca $9\,\text{cm}$
 ~ Tu senca raste, ko karton odmikaš od svetilke. Velja obratno: bliže svetilki, večja senca.
 - karton na $20\,\text{cm}$: senca $3\,\text{cm}$; karton na $30\,\text{cm}$: senca $3\,\text{cm}$

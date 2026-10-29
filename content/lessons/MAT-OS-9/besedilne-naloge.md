@@ -60,7 +60,7 @@ Pri prevajanju besed v znake si pomagaj s tabelo:
 - *Srečanje:* vozili peljeta drugo proti drugemu. Do srečanja skupaj prevozita vso razdaljo $d$ med krajema: $v_1 t + v_2 t = d$.
 - *Dohitevanje:* hitrejši pelje za počasnejšim, ki ima prednost $d$. Ko ga dohiti, je prevozil toliko več: $v_1 t = d + v_2 t$.
 
-V simulaciji spodaj, »Gibanje: srečanje in dohitevanje«, izberi vožnjo nasproti. Na grafu poti v odvisnosti od časa vsako vozilo nariše svojo premico. Srečanje je točka, kjer se premici sekata. Nato preklopi na dohitevanje in obema vozilom nastavi enako hitrost. Opazuj, kaj se zgodi s premicama.
+Odpri simulacijo »Gibanje: srečanje in dohitevanje« spodaj in izberi vožnjo nasproti. Na grafu poti v odvisnosti od časa vsako vozilo nariše svojo premico. Srečanje je točka, kjer se premici sekata. Nato preklopi na dohitevanje in obema vozilom nastavi enako hitrost. Opazuj, kaj se zgodi s premicama.
 
 :::premisli
 Zakaj pri dohitevanju z enakima hitrostma ni rešitve? Kaj se zgodi z enačbo $v t = d + v t$?
@@ -228,9 +228,9 @@ Rešitev enačbe še ni nujno rešitev naloge. Število tablet, dni ali ljudi mo
 
 ? V Primeru 3 bi reševalno vozilo odpeljalo ob isti uri kot avto, ne $10$ minut pozneje. Kaj se zgodi s časom srečanja?
 - Srečala bi se pozneje, ker bi reševalci prevozili večji del poti.
-~ Reševalci bi res prevozili več, a zato bi se vozili prej približali, ne pozneje.
+~ Reševalci bi res prevozili več, a prav zato bi se srečala prej, ne pozneje.
 - Čas srečanja bi ostal enak, ker se hitrosti ne spremenita.
-~ Hitrosti sta enaki, a reševalci bi vozili $10$ minut dlje in prevozili $15\,\mathrm{km}$ več.
+~ Hitrosti se res ne spremenita, a reševalci bi vozili $10$ minut dlje in prevozili $15\,\mathrm{km}$ več.
 + Srečala bi se prej, po $24$ minutah, ker je $60t + 90t = 60$ in $t = 0{,}4\,\mathrm{h}$.
 - Ne bi se srečala, ker vozita nasproti.
 ~ Prav ker vozita nasproti, se srečata. Ne srečata se lahko le pri dohitevanju z enakima hitrostma.
@@ -248,7 +248,7 @@ Rešitev enačbe še ni nujno rešitev naloge. Število tablet, dni ali ljudi mo
 
 ? Kurir s krvnimi vzorci odpelje iz bolnišnice s hitrostjo $40\,\mathrm{km/h}$. Pol ure pozneje za njim odpelje avto s hitrostjo $60\,\mathrm{km/h}$. Koliko časa po svojem odhodu ga avto dohiti?
 - $0{,}2\,\mathrm{h}$
-~ Hitrosti sta seštete kot pri srečanju. Pri dohitevanju se razdalja manjša le za razliko $60 - 40 = 20\,\mathrm{km/h}$.
+~ Hitrosti sta sešteti kot pri srečanju. Pri dohitevanju se razdalja manjša le za razliko $60 - 40 = 20\,\mathrm{km/h}$.
 - $0{,}5\,\mathrm{h}$
 ~ To je zamik, ne čas dohitevanja.
 + $1\,\mathrm{h}$

@@ -7,7 +7,7 @@ avtor: AI
 
 V porodnišnici tehtajo dojenčka na tehtnici, ki kaže na $50\,\text{g}$ natančno. Mama stopi na navadno osebno tehtnico, ki kaže le na pol kilograma natančno. Katera tehtnica meri bolje?
 
-Na prvi pogled dojenčkova: $50\,\text{g}$ je desetkrat manj kot $500\,\text{g}$. Pa vendar je pri tehtanju mame napaka **v deležu** pol manjša. Dojenček ima $4\,\text{kg}$, zato je $50\,\text{g}$ kar $1{,}25\,\%$ njegove mase. Mama ima $80\,\text{kg}$, pol kilograma je le $0{,}625\,\%$ njene mase.
+Na prvi pogled dojenčkova: $50\,\text{g}$ je desetkrat manj kot $500\,\text{g}$. Pa vendar je pri tehtanju mame napaka **v deležu** dvakrat manjša. Dojenček ima $4\,\text{kg}$, zato je $50\,\text{g}$ kar $1{,}25\,\%$ njegove mase. Mama ima $80\,\text{kg}$, pol kilograma je le $0{,}625\,\%$ njene mase.
 
 Nobena meritev ni popolnoma točna. Zdravnik, ki izmeri vročino, mora vedeti, ali je razlika med $37{,}2\,^\circ\text{C}$ in $37{,}4\,^\circ\text{C}$ resnična ali le posledica termometra. Zato se naučimo dveh mer za napako in tega, kako rezultat zapišemo pošteno.
 
@@ -61,7 +61,7 @@ Relativna napaka nima enote, ker se enoti pokrajšata. Navadno jo zapišemo v od
 | mama na tehtnici | $0{,}5\,\text{kg}$ | $80\,\text{kg}$ | $0{,}625\,\%$ |
 | vročina s termometrom | $0{,}1\,^\circ\text{C}$ | $37\,^\circ\text{C}$ | $0{,}27\,\%$ |
 
-V tabeli ima termometer najmanjšo relativno napako, čeprav imajo vse tri meritve različne enote. Prav zato je relativna napaka uporabna: z njo lahko primerjamo karkoli s čimerkoli.
+V tabeli ima termometer najmanjšo relativno napako, čeprav meri temperaturo, tehtnici pa maso. Prav zato je relativna napaka uporabna: z njo lahko primerjamo karkoli s čimerkoli.
 
 :::premisli
 Z istim ravnilom (razdelki po $1\,\text{mm}$) izmerimo dolžino prsta in dolžino stegnenice. Pri kateri meritvi je relativna napaka manjša? Zakaj?
@@ -201,8 +201,8 @@ Absolutna napaka je v obeh primerih enaka, relativna pa zelo različna. Zato je 
 - A, C, B
 ~ To je razvrstitev po absolutni napaki ($0{,}05$, $0{,}1$, $0{,}5$). Ta ne upošteva velikosti količine in različnih enot.
 + C, B, A
-- B, A, C
-~ Večja masa še ne pomeni natančnejše meritve. Izračunaj deleže: A $1{,}25\,\%$, B $0{,}625\,\%$, C $0{,}27\,\%$.
+- B, C, A
+~ To je razvrstitev po velikosti izmerjene vrednosti ($80$, $37$, $4$). Večja vrednost sama še ne pomeni natančnejše meritve. Izračunaj deleže: A $1{,}25\,\%$, B $0{,}625\,\%$, C $0{,}27\,\%$.
 > Relativne napake so C $0{,}27\,\%$, B $0{,}625\,\%$, A $1{,}25\,\%$. Najnatančnejša je meritev z najmanjšo relativno napako.
 
 ? Z istim ravnilom (razdelki po $1\,\text{mm}$) izmerimo kost, ki je dvakrat daljša od prejšnje. Kaj se zgodi z relativno napako?

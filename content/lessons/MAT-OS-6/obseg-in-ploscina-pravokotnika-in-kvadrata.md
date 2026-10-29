@@ -156,8 +156,8 @@ $15 \cdot 3 = 45$ ploščic. Enako dobiš s ploščinami: pas meri $300 \cdot 60
 
 ## Povzetek
 
-- Obseg je dolžina roba, vsota vseh stranic. Pravokotnik: $o = 2 \cdot (a + b)$. Kvadrat: $o = 4 \cdot a$. Enota: $\text{cm}$, $\text{m}$ ...
-- Ploščina pove, koliko kvadratkov pokrije lik. Pravokotnik: $p = a \cdot b$. Kvadrat: $p = a^2$. Enota: $\text{cm}^2$, $\text{m}^2$ ...
+- Obseg je dolžina roba, vsota vseh stranic. Pravokotnik: $o = 2 \cdot (a + b)$. Kvadrat: $o = 4 \cdot a$. Enote: $\text{mm}$, $\text{cm}$, $\text{m}$, $\text{km}$.
+- Ploščina pove, koliko kvadratkov pokrije lik. Pravokotnik: $p = a \cdot b$. Kvadrat: $p = a^2$. Enote: $\text{mm}^2$, $\text{cm}^2$, $\text{m}^2$.
 - Pred računom obe stranici zapiši v isti enoti.
 - Neznana stranica: $b = p : a$ ali $b = o : 2 - a$.
 - Če podvojiš obe stranici, se obseg podvoji, ploščina pa poveča štirikrat.

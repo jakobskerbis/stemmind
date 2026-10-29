@@ -21,7 +21,7 @@ Ta preprost poskus je jedro **Dirichletovega načela**. Na tekmovanjih z njim do
 | Kaj poiščemo | lastnost, ki se ne spremeni | predale za predmete |
 | Tipičen odgovor | »nikoli« | »vedno vsaj …« |
 
-**Načelo.** Imamo $n$ predalov in vanje razdelimo $n + 1$ predmetov. Potem je v vsaj enem predalu vsaj $2$ predmetov.
+**Načelo.** Imamo $n$ predalov in vanje razdelimo $n + 1$ predmetov. Potem sta v vsaj enem predalu vsaj $2$ predmeta.
 
 **Zakaj velja.** Uporabimo metodo »predpostavi in preveri«. Recimo, da je v vsakem predalu največ en predmet. Potem je vseh predmetov največ $n$. Imamo pa jih $n + 1$. Protislovje, zato predpostavka ne drži.
 

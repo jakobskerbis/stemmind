@@ -67,9 +67,9 @@ Ostane $42{,}1\,\text{s}$. Nova meritev je enaka povprečju, zato sredine ne pre
 
 **Česar povprečje ne popravi.** Če bi vsi učenci štoparico vedno ustavljali prepozno, ker čakajo na Žanov klic »zdaj!«, bi bili vsi časi predolgi. Taka **sistematična napaka** vse meritve premakne v isto smer, zato je povprečje ne izniči. Odkriješ jo le, če spremeniš način merjenja. Še tretja vrsta je **groba napaka**: nekdo pozabi pritisniti in dobi $63\,\text{s}$. Tako meritev, ki močno odstopa od vseh drugih, izločimo, preden računamo povprečje.
 
-**Natančnost merila.** Kot že veš, instrumenta ne moreš odčitati natančneje od njegovega najmanjšega razdelka. Zato povprečje zaokrožimo na toliko decimalk, kot jih imajo meritve (največ eno več). Povprečje $42{,}133\ldots\,\text{s}$ zapišemo kot $42{,}1\,\text{s}$.
+**Natančnost merila.** Kot že veš, instrumenta ne moreš odčitati natančneje od njegovega najmanjšega razdelka. Zato povprečje zaokrožimo na toliko decimalk, kot jih imajo meritve (največ eno več). Če kalkulator pokaže $42{,}133\ldots\,\text{s}$, zapišemo $42{,}1\,\text{s}$.
 
-V simulaciji spodaj (»Merjenje in merska napaka«) izberi ravnilo s centimetri in klikni »Izmeri 5-krat« dvakrat. Nato ponovi z ravnilom z milimetri. Opazuj, kako široki sta modri pasovi okoli povprečja: pri natančnejšem merilu je pas ožji.
+V simulaciji spodaj (»Merjenje in merska napaka«) izberi ravnilo s centimetri in klikni »Izmeri 5-krat« dvakrat. Nato ponovi z ravnilom z milimetri. Opazuj, kako širok je modri pas okoli povprečja: pri natančnejšem merilu je ožji.
 
 ## Rešeni primeri
 
@@ -214,7 +214,7 @@ Nauk zgodbe: šele ko poznaš velikost svoje merske napake, lahko presodiš, ali
 - Narobe je seštel meritve.
 ~ Vsota $19{,}2\,\text{cm}$ je pravilna. Težava je v tem, katere meritve je seštel.
 - Povprečje bi moral zapisati natančneje, $4{,}80\,\text{cm}$.
-~ Več decimalk ne popravi napačnega povprečja. Poleg tega meritve imajo le desetinke.
+~ Več decimalk ne popravi napačnega povprečja. Poleg tega imajo meritve le desetinke.
 + Meritev $9{,}3\,\text{cm}$ je groba napaka, ki bi jo moral izločiti.
 - Napake ni, povprečje je pravilno.
 ~ Povprečje $4{,}8\,\text{cm}$ je večje od treh od štirih meritev, kar kaže, da ga je nekaj pokvarilo.

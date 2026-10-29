@@ -21,7 +21,7 @@ Novo idejo zgradimo ob znani. Primerjali bomo silo teže, ki jo poznaš, in grav
 
 $$F_g = G\,\frac{m_1 m_2}{r^2}$$
 
-Tu je $r$ razdalja med **središčema** teles (pri krogli je to njeno geometrijsko središče). $G = 6{,}67 \cdot 10^{-11}\,\mathrm{N\,m^2/kg^2}$ je **gravitacijska konstanta**, enaka za vsa telesa v vesolju.
+Tu je $r$ razdalja med **središčema** teles (pri krogli je to njeno geometrijsko središče). Natančno zakon velja za krogle in za telesa, ki so majhna v primerjavi z razdaljo med njima; za druga telesa da dobro oceno. $G = 6{,}67 \cdot 10^{-11}\,\mathrm{N\,m^2/kg^2}$ je **gravitacijska konstanta**, enaka za vsa telesa v vesolju.
 
 Razlike med starim in novim so zbrane v tabeli.
 
@@ -141,9 +141,9 @@ $v = \sqrt{\dfrac{G M_Z}{r}}$, nato $t_0 = \dfrac{2\pi r}{v}$
 3. Koreni in izračunaj obhodni čas sam, nato preveri:
 
 :::premisli
-Koliko sta $v$ in $t_0$?
+Najprej napovej: bo satelit GPS hitrejši ali počasnejši od ISS? Nato izračunaj $v$ in $t_0$.
 ---
-$v = \sqrt{1{,}50 \cdot 10^7}\,\mathrm{m/s} \approx 3870\,\mathrm{m/s}$ in $t_0 = \dfrac{1{,}67 \cdot 10^8\,\mathrm{m}}{3870\,\mathrm{m/s}} \approx 43\,200\,\mathrm{s} = 12\,\mathrm{h}$. Satelit GPS obkroži Zemljo dvakrat na dan.
+Počasnejši, ker je dlje od središča Zemlje. $v = \sqrt{1{,}50 \cdot 10^7}\,\mathrm{m/s} \approx 3870\,\mathrm{m/s}$ in $t_0 = \dfrac{1{,}67 \cdot 10^8\,\mathrm{m}}{3870\,\mathrm{m/s}} \approx 43\,200\,\mathrm{s} = 12\,\mathrm{h}$. Satelit GPS obkroži Zemljo dvakrat na dan.
 :::
 
 ## Pogoste napake

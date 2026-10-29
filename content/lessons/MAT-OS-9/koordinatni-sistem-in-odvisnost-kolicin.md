@@ -23,7 +23,7 @@ Lego točke opišemo s parom števil. Primerjaj tri točke:
 | $B(2, 3)$ | 2 desno | 3 gor |
 | $C(-3, 2)$ | 3 levo | 2 gor |
 
-Vse tri so zgrajene iz številk $2$ in $3$, pa vendar ležijo na treh različnih mestih. Vzorec je jasen: prvo število vedno pove premik vodoravno, drugo premik navpično. Pozitivno število pomeni desno ali gor, negativno levo ali dol.
+Vse tri so zgrajene iz števil $2$ in $3$, pa vendar ležijo na treh različnih mestih. Vzorec je jasen: prvo število vedno pove premik vodoravno, drugo premik navpično. Pozitivno število pomeni desno ali gor, negativno levo ali dol.
 
 Prvemu številu rečemo **abscisa**, drugemu **ordinata**. Ker je vrstni red pomemben, je $(x, y)$ **urejeni par**.
 
@@ -131,7 +131,7 @@ merilo: vrednost enega kvadratka $=$ največja vrednost $:$ število kvadratkov
 
 V lonec natočimo vodo s temperaturo $20\,^\circ\mathrm{C}$ in prižgemo štedilnik. Graf temperature je do $10$. minute premica od točke $(0, 20)$ do točke $(10, 100)$, nato je vodoraven. Ob kateri minuti ima voda $60\,^\circ\mathrm{C}$? Kolikšna je temperatura ob $12$. minuti?
 
-**Podatki:** začetek $(0, 20)$, točka $(10, 100)$, med njima premica, po $10$. minuti vodoraven graf; iščemo čas pri $60\,^\circ\mathrm{C}$ in temperaturo pri $12\,\mathrm{min}$
+**Podatki:** začetek $(0, 20)$, točka $(10, 100)$, med njima premica, po $10$. minuti vodoraven graf
 **Iščemo:** čas $t$, ko je temperatura $60\,^\circ\mathrm{C}$, in temperaturo ob $12$. minuti
 
 :::formula
