@@ -123,7 +123,7 @@ async function ensureCloudflared() {
 // Ali na računalniku teče tunel Cloudflare (storitev iz nadzorne plošče Cloudflare, »cloudflared service install«).
 function cloudflaredServiceRunning() {
   try {
-    if (isWin) return /RUNNING/.test(execFileSync("sc", ["query", "cloudflared"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }));
+    if (isWin) return /RUNNING|START_PENDING/.test(execFileSync("sc", ["query", "cloudflared"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }));
     execFileSync("pgrep", ["-f", "cloudflared.*tunnel.*run"], { stdio: "ignore" });
     return true;
   } catch { return false; }
