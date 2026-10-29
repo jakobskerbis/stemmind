@@ -4,11 +4,34 @@
 const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const pickOne = (a) => a[Math.floor(Math.random() * a.length)];
+const INK = "#1b1b2f";
+const chap = (G, list) => list[Math.min(list.length, G.chapter || 1) - 1];
+// Sončni žarki v ozadju, kot na naslovnicah starih Flash iger.
+function sunburst(g, G, cx, cy, color, n = 16) {
+  const R = Math.hypot(G.W, G.H);
+  g.fillStyle = color;
+  const rot = G.reduced ? 0 : G.time * 0.08;
+  for (let i = 0; i < n; i++) {
+    const a = rot + (i / n) * Math.PI * 2;
+    g.beginPath();
+    g.moveTo(cx, cy);
+    g.arc(cx, cy, R, a, a + Math.PI / n);
+    g.closePath();
+    g.fill();
+  }
+}
+const ink = (g, w = 3) => {
+  g.lineWidth = w;
+  g.strokeStyle = INK;
+  g.lineJoin = "round";
+  g.stroke();
+};
 const BRIGHT = ["#fde047", "#fca5a5", "#86efac", "#93c5fd", "#f9a8d4", "#fdba74", "#c4b5fd", "#67e8f9"];
 
 // ============ METEORJI: ladja sestreli meteor s pravilnim odgovorom, preden pade na ščit ============
 export const meteor = {
   id: "meteor",
+  story: {"sl": [["Meteorski dež", "Kapitanka Vega straži vesoljsko postajo Delta. Proti njej leti roj meteorjev, na katerih so zapisane številke. Zadeni pravega in postaja bo varna!"], ["Asteroidni pas", "Vega pelje ladjo skozi asteroidni pas. Skale so večje, a tvoj laser je natančen. Vsak pravilen odgovor odpre pot naprej."], ["Kometov rep", "Za kometom ostaja sled ledenih kamnov. Vega potrebuje pomočnika, ki hitro računa. To si ti!"], ["Domov", "Postaja Delta je že na obzorju. Še zadnji roj in posadka bo praznovala. Kapitanka Vega ti podeli zvezdo junaka."]], "en": [["Meteor shower", "Captain Vega guards space station Delta. A swarm of numbered meteors is heading its way. Hit the right one and the station stays safe!"], ["The asteroid belt", "Vega steers the ship through the asteroid belt. The rocks are bigger, but your laser is sharp. Every right answer clears the way."], ["The comet's tail", "A comet leaves a trail of icy rocks. Vega needs a helper who counts fast. That's you!"], ["Homeward", "Station Delta is on the horizon. One last swarm and the crew can celebrate. Captain Vega gives you the hero's star."]]},
   icon: "zap",
   colors: ["#1e1b4b", "#6d28d9"],
   options: 4,
@@ -30,7 +53,7 @@ export const meteor = {
         const n = G.opts.length, lane = G.W / n;
         rocks = G.opts.map((txt, i) => {
           const r = clamp(G.tw(txt, 20) / 2 + 16, 30, lane / 2 - 3);
-          return { txt, x: lane * (i + 0.5) + rand(-0.1, 0.1) * lane, y: -r - rand(0, 70), r, vy: (G.H / 8) * G.speed * rand(0.92, 1.08), rot: rand(0, 6), vr: rand(-0.8, 0.8), shape: shape(), state: "fly", a: 1 };
+          return { txt, x: lane * (i + 0.5) + rand(-0.1, 0.1) * lane, y: -r - rand(0, 70), r, vy: (G.H / 11) * G.speed * rand(0.92, 1.08), rot: rand(0, 6), vr: rand(-0.8, 0.8), shape: shape(), state: "fly", a: 1 };
         });
         sel = 0;
       },
@@ -94,8 +117,9 @@ export const meteor = {
       },
       draw(g) {
         const grd = g.createLinearGradient(0, 0, 0, G.H);
-        grd.addColorStop(0, "#0b1026");
-        grd.addColorStop(1, "#2a1458");
+        const [c0, c1, pl] = chap(G, [["#0b1026", "#2a1458", "#f472b6"], ["#1a0b2e", "#4a1d5c", "#fb923c"], ["#06283d", "#1b5e7a", "#a3e635"], ["#0f172a", "#7c2d12", "#38bdf8"]]);
+        grd.addColorStop(0, c0);
+        grd.addColorStop(1, c1);
         g.fillStyle = grd;
         g.fillRect(-20, -20, G.W + 40, G.H + 40);
         g.fillStyle = "#fff";
@@ -104,6 +128,23 @@ export const meteor = {
           g.fillRect(s.x, s.y, s.s, s.s);
         }
         g.globalAlpha = 1;
+        // planet v ozadju (barva se zamenja s poglavjem)
+        const pr = Math.min(G.W, G.H) * 0.16;
+        g.save();
+        g.translate(G.W * 0.82, G.H * 0.22);
+        g.fillStyle = pl;
+        g.beginPath();
+        g.arc(0, 0, pr, 0, 7);
+        g.fill();
+        ink(g, 4);
+        g.fillStyle = "rgba(255,255,255,0.25)";
+        g.beginPath();
+        g.arc(-pr * 0.35, -pr * 0.35, pr * 0.35, 0, 7);
+        g.fill();
+        g.beginPath();
+        g.ellipse(0, 0, pr * 1.6, pr * 0.35, -0.35, 0.2, Math.PI - 0.2);
+        ink(g, 4);
+        g.restore();
         // ščit
         g.strokeStyle = "rgba(103,232,249,0.55)";
         g.lineWidth = 3;
@@ -135,9 +176,7 @@ export const meteor = {
           g.closePath();
           g.fillStyle = "#c08457";
           g.fill();
-          g.lineWidth = 3;
-          g.strokeStyle = "#7c4a24";
-          g.stroke();
+          ink(g, 4);
           g.fillStyle = "rgba(124,74,36,0.35)";
           [[-0.4, -0.35, 0.18], [0.35, 0.3, 0.14], [0.3, -0.45, 0.1]].forEach(([cx, cy, cr]) => {
             g.beginPath();
@@ -145,9 +184,10 @@ export const meteor = {
             g.fill();
           });
           g.rotate(-r.rot);
-          g.fillStyle = "rgba(255,255,255,0.85)";
+          g.fillStyle = "#fffbeb";
           G.rr(-r.r * 0.86, -13, r.r * 1.72, 26, 9);
           g.fill();
+          ink(g, 2.5);
           G.fit(r.txt, 0, 1, r.r * 1.6, 19, { color: "#1f1235" });
           g.restore();
         });
@@ -179,6 +219,7 @@ export const meteor = {
         g.lineTo(-18, 14);
         g.closePath();
         g.fill();
+        ink(g, 3);
         g.fillStyle = "#6366f1";
         g.beginPath();
         g.arc(0, -2, 5, 0, Math.PI * 2);
@@ -192,10 +233,11 @@ export const meteor = {
 // ============ BALONI: iz roja balonov poči tistega s pravilnim odgovorom ============
 export const balloons = {
   id: "balloons",
+  story: {"sl": [["Sejem balonov", "Balonar Bor je za sejem v Oblakovem napihnil sto balonov. Nekdo je pomešal napise! Poči balone z napačnimi odgovori in reši pravega."], ["Veter z gora", "Močan veter odnaša balone čez travnik. Bor teče za njimi, ti pa poišči tistega s pravim odgovorom."], ["Nad oblaki", "Bor se z balonom dvigne nad oblake. Tu letijo baloni vseh barv. Ujemi pravega, preden odplava!"], ["Velika parada", "Danes je velika parada balonov. Ves kraj gleda, kako Bor in ti izbirata prave balone. Bravo, balonarski mojster!"]], "en": [["Balloon fair", "Bor the balloon maker blew up a hundred balloons for the fair in Cloudville. Someone mixed up the labels! Pick the balloon with the right answer."], ["Mountain wind", "A strong wind blows the balloons across the meadow. Bor runs after them while you find the right one."], ["Above the clouds", "Bor rises above the clouds in his balloon. Balloons of every colour float here. Catch the right one before it drifts away!"], ["The grand parade", "Today is the grand balloon parade. The whole town watches you and Bor pick the right balloons. Well done, balloon master!"]]},
   icon: "party-popper",
   colors: ["#075985", "#0284c7"],
   options: 4,
-  timer: 12,
+  timer: 18,
   create(G) {
     let list = [], clouds = [], spawnT = 0, sinceRight = 0, sel = -1;
     const make = () => {
@@ -203,7 +245,7 @@ export const balloons = {
       const txt = right ? G.q.a : pickOne(G.opts.filter((o) => !G.isRight(o)));
       sinceRight = right ? 0 : sinceRight + 1;
       const r = clamp(G.tw(txt, 19) / 2 + 14, 30, Math.min(64, G.W / 5));
-      list.push({ txt, r, x: rand(r + 4, G.W - r - 4), y: G.H + r + 30, vy: -(G.H / 6.5) * G.speed * rand(0.85, 1.15), ph: rand(0, 6), color: pickOne(BRIGHT), state: "fly", a: 1 });
+      list.push({ txt, r, x: rand(r + 4, G.W - r - 4), y: G.H + r + 30, vy: -(G.H / 9) * G.speed * rand(0.85, 1.15), ph: rand(0, 6), color: pickOne(BRIGHT), state: "fly", a: 1 });
     };
     return {
       resize() {
@@ -228,7 +270,7 @@ export const balloons = {
           spawnT -= dt;
           if (spawnT <= 0) {
             make();
-            spawnT = 0.85 / G.speed;
+            spawnT = 1.15 / G.speed;
           }
         }
         for (const b of list) {
@@ -270,21 +312,31 @@ export const balloons = {
       },
       draw(g) {
         const grd = g.createLinearGradient(0, 0, 0, G.H);
-        grd.addColorStop(0, "#38bdf8");
-        grd.addColorStop(1, "#e0f2fe");
+        const [s0, s1, gr] = chap(G, [["#38bdf8", "#e0f2fe", "#4ade80"], ["#0ea5e9", "#bae6fd", "#22c55e"], ["#1e40af", "#60a5fa", "#86efac"], ["#f97316", "#fde68a", "#65a30d"]]);
+        grd.addColorStop(0, s0);
+        grd.addColorStop(1, s1);
         g.fillStyle = grd;
         g.fillRect(-20, -20, G.W + 40, G.H + 40);
-        g.fillStyle = "rgba(255,255,255,0.85)";
+        sunburst(g, G, G.W / 2, G.H * 1.05, "rgba(255,255,255,0.12)");
         for (const c of clouds) {
           g.beginPath();
           g.arc(c.x, c.y, 26 * c.s, 0, 7);
           g.arc(c.x + 28 * c.s, c.y - 10 * c.s, 32 * c.s, 0, 7);
           g.arc(c.x + 60 * c.s, c.y, 24 * c.s, 0, 7);
+          g.fillStyle = "#ffffff";
+          g.fill();
+          g.lineWidth = 3;
+          g.strokeStyle = "rgba(27,27,47,0.25)";
+          g.stroke();
           g.fill();
         }
         // trava
-        g.fillStyle = "#4ade80";
+        g.fillStyle = gr;
         g.fillRect(-20, G.H - 18, G.W + 40, 40);
+        g.beginPath();
+        g.moveTo(-20, G.H - 18);
+        g.lineTo(G.W + 20, G.H - 18);
+        ink(g, 3);
         for (const b of list) {
           const x = b.x + Math.sin(b.ph) * 6;
           g.globalAlpha = Math.max(0, b.a);
@@ -298,6 +350,7 @@ export const balloons = {
           g.beginPath();
           g.ellipse(x, b.y, b.r, b.r * 1.15, 0, 0, Math.PI * 2);
           g.fill();
+          ink(g, 3);
           g.beginPath();
           g.moveTo(x - 6, b.y + b.r * 1.15 + 6);
           g.lineTo(x + 6, b.y + b.r * 1.15 + 6);
@@ -314,7 +367,7 @@ export const balloons = {
             g.ellipse(x, b.y, b.r + 6, b.r * 1.15 + 6, 0, 0, Math.PI * 2);
             g.stroke();
           }
-          G.fit(b.txt, x, b.y, b.r * 1.75, 19, { color: "#172554" });
+          G.fit(b.txt, x, b.y, b.r * 1.75, 19, { color: INK, weight: 900, stroke: "#ffffff", sw: 4 });
         }
         g.globalAlpha = 1;
       },
@@ -325,6 +378,7 @@ export const balloons = {
 // ============ TEKAČ: v pravem trenutku zavij na stezo s pravilnim odgovorom ============
 export const runner = {
   id: "runner",
+  story: {"sl": [["Start v dolini", "Tekačica Lina se pripravlja na veliki tek do vrha gore. Na poti so vrata z odgovori. Steci skozi prava vrata!"], ["Gozdna steza", "Steza vodi skozi temen gozd. Lina zaupa tvojim odgovorom, ko izbira pot med drevesi."], ["Puščavski most", "Za gozdom se začne vroča puščava in dolg most. Prava vrata vodijo na drugo stran."], ["Cilj na vrhu", "Zasneženi vrh je čisto blizu! Še nekaj vrat in Lina bo prva na cilju. Skupaj sta zmagala!"]], "en": [["Start in the valley", "Lina the runner is getting ready for the big race to the mountain top. Gates with answers stand on the road. Run through the right gate!"], ["Forest trail", "The trail goes through a dark forest. Lina trusts your answers to choose the path between the trees."], ["Desert bridge", "After the forest comes a hot desert and a long bridge. The right gates lead across."], ["Finish at the top", "The snowy peak is close! A few more gates and Lina finishes first. You won together!"]]},
   icon: "flag",
   colors: ["#14532d", "#15803d"],
   options: 3,
@@ -347,7 +401,7 @@ export const runner = {
         gate = { y: -70, opts: [...G.opts], done: false, a: 1 };
       },
       update(dt) {
-        const v = (G.H * 0.62) / 4.6 * G.speed;
+        const v = (G.H * 0.62) / 6.5 * G.speed;
         dash = (dash + v * dt) % 60;
         px += (lx(lane) - px) * Math.min(1, dt * 14);
         for (const t of trees) {
@@ -388,24 +442,32 @@ export const runner = {
         return false;
       },
       draw(g) {
-        g.fillStyle = "#4ade80";
+        const [grass, road, tree] = chap(G, [["#4ade80", "#d6b98c", "#15803d"], ["#166534", "#a16207", "#052e16"], ["#fbbf24", "#fde68a", "#65a30d"], ["#e2e8f0", "#94a3b8", "#0f766e"]]);
+        g.fillStyle = grass;
         g.fillRect(-20, -20, G.W + 40, G.H + 40);
         const L = lx(0) - lw() / 2, R = lx(2) + lw() / 2;
         // drevesa
         for (const t of trees) {
           const x = t.side ? R + (G.W - R) / 2 : L / 2;
           if ((t.side ? G.W - R : L) < 30) continue;
-          g.fillStyle = "#15803d";
+          g.fillStyle = tree;
           g.beginPath();
           g.arc(x, t.y, 18 * t.k, 0, 7);
           g.fill();
+          ink(g, 3);
           g.fillStyle = "#166534";
           g.beginPath();
           g.arc(x + 5, t.y - 4, 10 * t.k, 0, 7);
           g.fill();
         }
-        g.fillStyle = "#d6b98c";
+        g.fillStyle = road;
         g.fillRect(L, -20, R - L, G.H + 40);
+        g.beginPath();
+        g.moveTo(L, -20);
+        g.lineTo(L, G.H + 20);
+        g.moveTo(R, -20);
+        g.lineTo(R, G.H + 20);
+        ink(g, 4);
         g.strokeStyle = "rgba(255,255,255,0.75)";
         g.lineWidth = 4;
         g.setLineDash([28, 32]);
@@ -424,14 +486,20 @@ export const runner = {
           gate.opts.forEach((txt, i) => {
             const x = lx(i), w = lw() - 14;
             g.fillStyle = gate.hit === i ? "#ef4444" : ["#f97316", "#8b5cf6", "#0ea5e9"][i];
-            g.fillRect(x - w / 2, gate.y - 34, 8, 44);
-            g.fillRect(x + w / 2 - 8, gate.y - 34, 8, 44);
+            for (const px0 of [x - w / 2, x + w / 2 - 8]) {
+              g.beginPath();
+              g.rect(px0, gate.y - 34, 8, 44);
+              g.fill();
+              ink(g, 2.5);
+              g.fillStyle = gate.hit === i ? "#ef4444" : ["#f97316", "#8b5cf6", "#0ea5e9"][i];
+            }
             G.rr(x - w / 2, gate.y - 44, w, 30, 10);
             g.fill();
-            g.fillStyle = "rgba(255,255,255,0.92)";
+            ink(g, 3);
+            g.fillStyle = "#fffbeb";
             G.rr(x - w / 2 + 5, gate.y - 40, w - 10, 22, 7);
             g.fill();
-            G.fit(txt, x, gate.y - 29, w - 16, 17, { color: "#1e293b" });
+            G.fit(txt, x, gate.y - 29, w - 16, 17, { color: INK, weight: 900 });
           });
           g.globalAlpha = 1;
         }
@@ -454,10 +522,12 @@ export const runner = {
         g.fillStyle = "#2563eb";
         G.rr(px - 12, y - 14 + bob, 24, 26, 10);
         g.fill();
+        ink(g, 3);
         g.fillStyle = "#fcd9b6";
         g.beginPath();
         g.arc(px, y - 22 + bob, 11, 0, 7);
         g.fill();
+        ink(g, 3);
         g.fillStyle = "#7c2d12";
         g.beginPath();
         g.arc(px, y - 26 + bob, 11, Math.PI, 0);
@@ -477,6 +547,7 @@ export function statement(q, v) {
 }
 export const sorter = {
   id: "sorter",
+  story: {"sl": [["Prvi dan v tovarni", "Robot Zobko dela v tovarni števil. Po traku prihajajo zaboji s trditvami. Pravilne pošlji naprej, napačne izloči!"], ["Nočna izmena", "Ponoči je v tovarni več dela. Zobko je zaspan, zato potrebuje tvoje ostre oči."], ["Velika naročila", "Prispela so velika naročila iz vsega sveta. Vsak zaboj mora biti preverjen, preden odide."], ["Mojster tovarne", "Direktorica tovarne je navdušena. Zobko in ti sta najboljša ekipa. Dobita naziv mojstra tovarne!"]], "en": [["First day at the factory", "Zobko the robot works in the number factory. Crates with statements roll along the belt. Send true ones on, throw false ones out!"], ["Night shift", "There is more work at night. Zobko is sleepy, so he needs your sharp eyes."], ["Big orders", "Big orders arrived from all over the world. Every crate must be checked before it leaves."], ["Factory master", "The factory boss is thrilled. You and Zobko are the best team. You both become factory masters!"]]},
   icon: "list-checks",
   colors: ["#78350f", "#b45309"],
   options: 2,
@@ -508,7 +579,7 @@ export const sorter = {
         G.qText?.(q.q);
       },
       update(dt) {
-        const v = (G.W / 7) * G.speed;
+        const v = (G.W / 10) * G.speed;
         belt = (belt + v * dt) % 40;
         if (crate && !drag) {
           crate.x += v * dt;
@@ -545,14 +616,17 @@ export const sorter = {
         return false;
       },
       draw(g) {
-        g.fillStyle = "#fef3c7";
+        const [wall, ray] = chap(G, [["#fef3c7", "rgba(251,191,36,0.25)"], ["#e0e7ff", "rgba(129,140,248,0.25)"], ["#dcfce7", "rgba(74,222,128,0.25)"], ["#fce7f3", "rgba(244,114,182,0.25)"]]);
+        g.fillStyle = wall;
         g.fillRect(-20, -20, G.W + 40, G.H + 40);
-        g.fillStyle = "#fde68a";
-        for (let x = 0; x < G.W; x += 60) g.fillRect(x, 0, 30, G.H * 0.2);
+        sunburst(g, G, G.W / 2, beltY() - 30, ray, 18);
         // trak
         const y = beltY();
         g.fillStyle = "#374151";
-        g.fillRect(-10, y + 52, G.W + 20, 22);
+        g.beginPath();
+        g.rect(-10, y + 52, G.W + 20, 22);
+        g.fill();
+        ink(g, 3);
         g.fillStyle = "#6b7280";
         for (let x = -40 + belt; x < G.W + 40; x += 40) g.fillRect(x, y + 56, 20, 14);
         g.fillStyle = "#1f2937";
@@ -567,10 +641,11 @@ export const sorter = {
           g.fillStyle = s ? "#16a34a" : "#dc2626";
           G.rr(b.x, b.y, b.w, b.h, 18);
           g.fill();
+          ink(g, 4);
           g.fillStyle = "rgba(255,255,255,0.18)";
           G.rr(b.x + 6, b.y + 6, b.w - 12, b.h / 2 - 6, 12);
           g.fill();
-          G.fit(s ? "✓" : "✗", b.x + b.w / 2, b.y + b.h / 2, b.w - 20, 38, { color: "#ffffff", weight: 900 });
+          G.fit(s ? "✓" : "✗", b.x + b.w / 2, b.y + b.h / 2, b.w - 20, 38, { color: "#ffffff", weight: 900, stroke: INK, sw: 6 });
         });
         const drawCrate = (c, x, yy, sc = 1, alpha = 1) => {
           const w = cw() * sc, h = 104 * sc;
@@ -578,9 +653,7 @@ export const sorter = {
           g.fillStyle = "#b45309";
           G.rr(x - w / 2, yy - h / 2, w, h, 10 * sc);
           g.fill();
-          g.strokeStyle = "#78350f";
-          g.lineWidth = 3;
-          g.stroke();
+          ink(g, 4);
           g.fillStyle = "#fffbeb";
           G.rr(x - w / 2 + 8 * sc, yy - h / 2 + 8 * sc, w - 16 * sc, h - 16 * sc, 8 * sc);
           g.fill();

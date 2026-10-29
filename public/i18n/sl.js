@@ -1067,4 +1067,10 @@ export default {
   "games.e.runner.how": "Tapni stezo ali podrsaj levo in desno (tipke ← →), da tečeš skozi vrata s pravilnim odgovorom.",
   "games.e.sorter": "Sortirnica",
   "games.e.sorter.how": "Je trditev na zaboju pravilna? Tapni ✓ ali ✗ (tipki → in ←), preden zaboj odpelje s traku.",
+  "games.speed": "Hitrost",
+  "games.speedSlow": "Počasi",
+  "games.speedMid": "Srednje",
+  "games.speedFast": "Hitro",
+  "games.chapter": "Poglavje {n}",
+  "games.next": "Naprej",
 };

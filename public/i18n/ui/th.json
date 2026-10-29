@@ -1025,5 +1025,11 @@
   "games.e.runner.how": "แตะเลนหรือปัดซ้ายขวา (ปุ่ม ← →) เพื่อวิ่งผ่านประตูที่มีคำตอบถูก",
   "games.e.sorter": "สายพานคัดแยก",
   "games.e.sorter.how": "ข้อความบนลังถูกต้องไหม แตะ ✓ หรือ ✗ (ปุ่ม → และ ←) ก่อนลังออกจากสายพาน",
-  "subj.NAR": "วิทยาศาสตร์"
+  "subj.NAR": "วิทยาศาสตร์",
+  "games.speed": "ความเร็ว",
+  "games.speedSlow": "ช้า",
+  "games.speedMid": "ปานกลาง",
+  "games.speedFast": "เร็ว",
+  "games.chapter": "บทที่ {n}",
+  "games.next": "ถัดไป"
 }

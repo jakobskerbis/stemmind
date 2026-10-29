@@ -1025,5 +1025,11 @@
   "games.e.runner.how": "レーンをタップするか左右にスワイプして（キー ← →）、正しい答えのゲートを走り抜けよう。",
   "games.e.sorter": "仕分けライン",
   "games.e.sorter.how": "箱に書かれた式は正しい？箱がベルトから出る前に ✓ か ✗ をタップしよう（キー → と ←）。",
-  "subj.NAR": "理科"
+  "subj.NAR": "理科",
+  "games.speed": "スピード",
+  "games.speedSlow": "ゆっくり",
+  "games.speedMid": "ふつう",
+  "games.speedFast": "はやい",
+  "games.chapter": "第{n}章",
+  "games.next": "次へ"
 }

@@ -1,9 +1,21 @@
 // Skupno ogrodje iger: platno, zanka, vnos (dotik, miška, tipke), naloge, točke, življenja,
 // prilagajanje težavnosti, učinki in zvok. Vsaka igra (engine) samo riše in odloča, kaj je zadetek.
-import { makeQuestion, shuffle } from "./topics.js";
+import { makeQuestion, shuffle, gameLang } from "./topics.js";
 import { icon } from "../icons.js";
 
 const SOUND_KEY = "stemmind.gameSound";
+const PACE_KEY = "stemmind.gamePace";
+export const PACES = { slow: 0.7, mid: 1, fast: 1.3 };
+export const INK = "#1b1b2f"; // obroba v slogu starih Flash iger
+function getPace() {
+  try {
+    const p = localStorage.getItem(PACE_KEY);
+    return PACES[p] ? p : "slow";
+  } catch {
+    return "slow";
+  }
+}
+const CHAPTER_EVERY = 8;
 const reduced = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
@@ -19,14 +31,14 @@ function beep(kind) {
   if (!soundOn()) return;
   try {
     audio ||= new (window.AudioContext || window.webkitAudioContext)();
-    const notes = { ok: [[660, 0], [990, 0.08]], bad: [[200, 0], [150, 0.1]], pop: [[520, 0]], up: [[523, 0], [659, 0.08], [784, 0.16]], over: [[392, 0], [330, 0.15], [262, 0.3]] }[kind] || [[440, 0]];
+    const notes = { ok: [[523, 0], [784, 0.07]], bad: [[196, 0], [147, 0.09]], pop: [[880, 0]], up: [[523, 0], [659, 0.07], [784, 0.14], [1047, 0.21]], over: [[392, 0], [330, 0.14], [262, 0.28], [196, 0.42]], story: [[392, 0], [523, 0.1], [659, 0.2], [784, 0.3]] }[kind] || [[440, 0]];
     for (const [f, at] of notes) {
       const o = audio.createOscillator(), g = audio.createGain();
-      o.type = kind === "bad" ? "sawtooth" : "triangle";
+      o.type = "square"; // 8-bitni zvok
       o.frequency.value = f;
       const t0 = audio.currentTime + at;
       g.gain.setValueAtTime(0.0001, t0);
-      g.gain.exponentialRampToValueAtTime(0.12, t0 + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.05, t0 + 0.01);
       g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.16);
       o.connect(g).connect(audio.destination);
       o.start(t0);
@@ -36,16 +48,22 @@ function beep(kind) {
 }
 
 // Besedilo, ki se prilagodi širini (pomanjša pisavo do min).
-export function fitText(g, text, x, y, maxW, size = 20, { color = "#14213d", weight = 800, min = 10, align = "center" } = {}) {
+export function fitText(g, text, x, y, maxW, size = 20, { color = "#14213d", weight = 800, min = 10, align = "center", stroke = null, sw = 4 } = {}) {
   let s = size;
   g.font = `${weight} ${s}px Nunito, system-ui, sans-serif`;
   while (s > min && g.measureText(text).width > maxW) {
     s -= 1;
     g.font = `${weight} ${s}px Nunito, system-ui, sans-serif`;
   }
-  g.fillStyle = color;
   g.textAlign = align;
   g.textBaseline = "middle";
+  if (stroke) {
+    g.lineJoin = "round";
+    g.lineWidth = sw;
+    g.strokeStyle = stroke;
+    g.strokeText(text, x, y);
+  }
+  g.fillStyle = color;
   g.fillText(text, x, y);
   return s;
 }
@@ -88,12 +106,28 @@ export function runGame(host, opts) {
   const stage = $(".gm-stage");
 
   const G = {
-    W: 300, H: 300, time: 0, speed: 1, tier: opts.tier || 1, score: 0, lives: 3, correct: 0, wrong: 0, streak: 0, badStreak: 0,
+    W: 300, H: 300, time: 0, speed: 1, chapter: 1, tier: opts.tier || 1, score: 0, lives: 3, correct: 0, wrong: 0, streak: 0, badStreak: 0,
     q: null, opts: [], running: false, paused: false, over: false, reduced: reduced(), t,
     mistakes: [],
     fx: [], shakeT: 0,
   };
   const eng = engine.create(G);
+  // Zgodba: poglavje se odklene na vsakih CHAPTER_EVERY pravilnih odgovorov.
+  const story = () => engine.story?.[gameLang()] || engine.story?.en || [];
+  const storyLen = () => story().length;
+  const chapterCard = (n, extra = "") => {
+    const ch = story()[n - 1];
+    if (!ch) return "";
+    return `<div class="gm-story"><span class="gm-chap">${esc(t("games.chapter", { n }))}</span><h3>${esc(ch[0])}</h3><p>${esc(ch[1])}</p>${extra}</div>`;
+  };
+  function nextChapter() {
+    G.chapter++;
+    G.paused = true;
+    beep("story");
+    overlay.innerHTML = `<div class="gm-card gm-title">${chapterCard(G.chapter)}<button type="button" class="primary big" data-act="story">${icon("play")}${esc(t("games.next"))}</button></div>`;
+    overlay.hidden = false;
+    overlay.querySelector("[data-act=story]").focus({ preventScroll: true });
+  }
   let timer = null; // { left, total }
   let nextAt = 0; // čas naslednje naloge (po kratkem premoru)
 
@@ -108,7 +142,7 @@ export function runGame(host, opts) {
     const n = engine.options || 4;
     G.opts = shuffle([q.a, ...q.w.slice(0, n - 1)]);
     $(".gm-q").textContent = q.q;
-    if (engine.timer) startTimer(engine.timer / Math.min(1.6, G.speed));
+    if (engine.timer) startTimer(engine.timer / Math.max(0.8, Math.min(1.4, G.speed)));
     eng.question?.(q);
   }
   G.isRight = (s) => s === G.q?.a;
@@ -144,12 +178,13 @@ export function runGame(host, opts) {
         G.lives++;
         G.float(G.W / 2, G.H / 3, "+❤", "#ef4444");
       }
-      if (G.streak % 4 === 0 && G.tier < 3) {
+      if (G.streak % 5 === 0 && G.tier < 3) {
         G.tier++;
         beep("up");
         G.float(G.W / 2, G.H / 2, t("games.harder"), "#f59e0b", 28);
       }
-      G.speed = 1 + Math.min(0.8, G.correct * 0.03);
+      G.speed = PACES[getPace()] * (1 + Math.min(0.5, G.correct * 0.015));
+      if (G.correct % CHAPTER_EVERY === 0 && G.chapter < storyLen()) nextChapter();
     } else {
       G.wrong++;
       G.streak = 0;
@@ -345,29 +380,46 @@ export function runGame(host, opts) {
     const act = e.target.closest("[data-act]")?.dataset.act;
     if (act === "play" || act === "again") start();
     if (act === "resume") togglePause();
+    if (act === "story") {
+      G.paused = false;
+      overlay.hidden = true;
+      canvas.focus({ preventScroll: true });
+    }
+    const pace = e.target.closest("[data-pace]")?.dataset.pace;
+    if (pace) {
+      try {
+        localStorage.setItem(PACE_KEY, pace);
+      } catch {}
+      overlay.querySelectorAll("[data-pace]").forEach((b) => b.classList.toggle("active", b.dataset.pace === pace));
+    }
     if (act === "exit") opts.onExit?.();
   });
 
   // ---------- začetek in konec ----------
   function intro() {
     overlay.hidden = false;
-    overlay.innerHTML = `<div class="gm-card">
+    const p = getPace();
+    const seg = ["slow", "mid", "fast"].map((k) => `<button type="button" data-pace="${k}" class="${k === p ? "active" : ""}">${esc(t(`games.speed${k[0].toUpperCase()}${k.slice(1)}`))}</button>`).join("");
+    overlay.innerHTML = `<div class="gm-card gm-title">
       <div class="gm-card-ic">${icon(engine.icon)}</div>
       <h2>${esc(opts.title)}</h2>
-      <p>${esc(t(`games.e.${engine.id}.how`))}</p>
+      ${chapterCard(1)}
+      <p class="gm-how">${esc(t(`games.e.${engine.id}.how`))}</p>
+      <div class="gm-pace"><span>${esc(t("games.speed"))}</span><div class="seg" role="group" aria-label="${esc(t("games.speed"))}">${seg}</div></div>
       ${opts.best ? `<p class="muted">${esc(t("games.best"))}: <b>${opts.best}</b></p>` : ""}
       <button type="button" class="primary big" data-act="play">${icon("play")}${esc(t("games.play"))}</button>
     </div>`;
     overlay.querySelector("[data-act=play]").focus({ preventScroll: true });
   }
   function start() {
-    Object.assign(G, { time: 0, speed: 1, tier: opts.tier || 1, score: 0, lives: 3, correct: 0, wrong: 0, streak: 0, badStreak: 0, mistakes: [], fx: [], over: false, paused: false, waiting: false, q: null });
+    Object.assign(G, { chapter: 1, speed: PACES[getPace()], time: 0, tier: opts.tier || 1, score: 0, lives: 3, correct: 0, wrong: 0, streak: 0, badStreak: 0, mistakes: [], fx: [], over: false, paused: false, waiting: false, q: null });
     showFb("", "");
     overlay.hidden = true;
     eng.reset?.();
     G.running = true;
     hud();
-    newQuestion();
+    G.waiting = true; // kratek premor pred prvo nalogo
+    nextAt = 0.8;
     canvas.focus({ preventScroll: true });
     beep("pop");
   }
@@ -386,6 +438,7 @@ export function runGame(host, opts) {
         <div class="gm-big">${icon("star")}<b>${G.score}</b></div>
         ${info.newBest ? `<p class="gm-record">${icon("trophy")} ${esc(t("games.record"))}</p>` : info.best ? `<p class="muted">${esc(t("games.best"))}: <b>${info.best}</b></p>` : ""}
         <p>${esc(t("games.summary", { ok: G.correct, all: G.correct + G.wrong }))}${info.xp ? ` · <b class="gm-xp">+${info.xp} XP</b>` : ""}</p>
+        ${storyLen() ? `<p class="gm-chap-end">${esc(t("games.chapter", { n: G.chapter }))}: <b>${esc(story()[G.chapter - 1][0])}</b></p>` : ""}
         ${mist}
         <div class="actions"><button type="button" class="secondary" data-act="exit">${icon("arrow-left")}${esc(t("games.other"))}</button><button type="button" class="primary" data-act="again">${icon("rotate-ccw")}${esc(t("games.again"))}</button></div>
       </div>`;

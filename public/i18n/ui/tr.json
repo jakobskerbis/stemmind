@@ -1030,5 +1030,11 @@
   "games.e.runner.how": "Doğru cevaplı kapıdan geçmek için bir şeride dokun ya da sola sağa kaydır (← → tuşları).",
   "games.e.sorter": "Ayıklama",
   "games.e.sorter.how": "Kasadaki ifade doğru mu? Kasa banttan çıkmadan ✓ veya ✗ işaretine dokun (→ ve ← tuşları).",
-  "subj.NAR": "Fen bilimleri"
+  "subj.NAR": "Fen bilimleri",
+  "games.speed": "Hız",
+  "games.speedSlow": "Yavaş",
+  "games.speedMid": "Orta",
+  "games.speedFast": "Hızlı",
+  "games.chapter": "Bölüm {n}",
+  "games.next": "İleri"
 }

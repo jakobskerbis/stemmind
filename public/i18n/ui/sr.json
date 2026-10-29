@@ -1035,5 +1035,11 @@
   "games.e.runner.how": "Додирни стазу или превуци лево и десно (тастери ← →) да протрчиш кроз врата са тачним одговором.",
   "games.e.sorter": "Сортирница",
   "games.e.sorter.how": "Да ли је тврдња на сандуку тачна? Додирни ✓ или ✗ (тастери → и ←) пре него што сандук оде са траке.",
-  "subj.NAR": "Priroda"
+  "subj.NAR": "Priroda",
+  "games.speed": "Брзина",
+  "games.speedSlow": "Споро",
+  "games.speedMid": "Средње",
+  "games.speedFast": "Брзо",
+  "games.chapter": "Поглавље {n}",
+  "games.next": "Даље"
 }

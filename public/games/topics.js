@@ -4,6 +4,7 @@
 
 let DEC = ",";
 let LANG = "sl";
+export const gameLang = () => LANG;
 export function setNumberStyle(lang) {
   LANG = lang === "sl" ? "sl" : "en";
   try {
