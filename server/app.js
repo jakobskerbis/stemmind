@@ -243,10 +243,16 @@ export function createApp(store, opts = {}) {
     busy.add(conv.id);
     // Lahki način: vedno (lite), nikoli (normal) ali po povezavi naprave, ki jo sporoči odjemalec (auto).
     const lite = student.settings.data_mode === "lite" || (student.settings.data_mode !== "normal" && req.body?.lite === true);
-    // Model: Haiku za običajne odgovore, Opus za »Razloži podrobneje« (z dnevno in mesečno
-    // omejitvijo, nato Haiku z več razmisleka), Tekmovanja privzeto Haiku z več razmisleka.
+    // »Razloži podrobneje« je vedno na voljo, čim ceneje: prva ponovna razlaga je Haiku z več
+    // razmisleka (z novim pristopom), Opus šele, ko učenec zaporedoma prosi še enkrat (z dnevno in
+    // mesečno omejitvijo). Števec zaporednih prošenj je conversations.deep; običajno sporočilo ga ponastavi.
+    // Tekmovanja: privzeto Haiku z več razmisleka.
+    const again = req.body?.deep === true;
+    const againStreak = again ? (conv.deep || 0) + 1 : 0;
+    if (againStreak !== (conv.deep || 0)) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(againStreak, conv.id);
     const { mode, note } = usage.chooseMode(student.id, {
-      wantDeep: req.body?.deep === true,
+      wantDeep: againStreak >= 2,
+      wantThink: againStreak === 1,
       competition: student.settings.track === "COMPETITION",
       lite,
       deepModel: MODEL_DEEP,
@@ -385,6 +391,7 @@ export function createApp(store, opts = {}) {
       finished = true;
       // Neuspelo potezo odstranimo, da zgodovina ostane čista za ponovni poskus.
       store.db.prepare("DELETE FROM messages WHERE id = ?").run(userMsgId);
+      if (again) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(conv.deep || 0, conv.id);
       if (!controller.signal.aborted) {
         console.error("[stemmind] napaka pri klicu modela:", err?.status ?? "", err?.message ?? err);
         send("error", { error: ERROR_TEXT });
