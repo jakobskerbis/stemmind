@@ -32,6 +32,12 @@ $$\eta_C = 1 - \frac{T_2}{T_1}.$$
 
 **Carnotov izrek:** noben stroj, ki deluje med istima rezervoarjema, nima večjega izkoristka od povratnega stroja, in vsi povratni stroji imajo enak izkoristek $\eta_C$, ne glede na delovno snov. Izkoristek raste, čim večja je razlika temperatur. Temperature morajo biti v kelvinih.
 
+:::premisli
+Stroj deluje med $600\,\mathrm{K}$ in $300\,\mathrm{K}$. Kaj bolj poveča Carnotov izkoristek: topli rezervoar segreti za $100\,\mathrm{K}$ ali hladnega ohladiti za $100\,\mathrm{K}$?
+---
+Ohladiti hladnega: $1 - 200/600 \approx 67\,\%$, segreti toplega pa le $1 - 300/700 \approx 57\,\%$. Izkoristek je odvisen od razmerja $T_2/T_1$, ki se bolj spremeni, če spremenimo manjšo temperaturo. V praksi je hladni rezervoar okolica (reka, zrak), ki je ne moremo ohladiti, zato elektrarne višajo $T_1$.
+:::
+
 **5. Hladilnik in toplotna črpalka.** Če cikel obrnemo, stroj z dovedenim delom $A$ črpa toploto $Q_2$ iz hladnega in odda $Q_1 = Q_2 + A$ toplemu rezervoarju.
 
 - **Hladilno število** hladilnika: $\varepsilon_h = Q_2/A$, največ $\dfrac{T_2}{T_1 - T_2}$.
@@ -55,6 +61,12 @@ $$\Delta S_{\text{izol}} \ge 0.$$
 
 Enačaj velja za povratne, neenačaj za nepovratne spremembe. Entropija sistema se lahko tudi zmanjša, a le, če se entropija okolice poveča vsaj za toliko. Skupna entropija sistema in okolice se pri vsakem resničnem procesu poveča. Pri prehodu toplote $Q$ s telesa pri $T_1$ na telo pri $T_2 < T_1$ je $\Delta S = Q/T_2 - Q/T_1 > 0$, kar je Clausiusova oblika v jeziku entropije.
 
+:::premisli
+Voda v zamrzovalniku zmrzne in njena entropija se zmanjša. Ali to krši drugi zakon?
+---
+Ne. Voda ni izoliran sistem: toploto, ki jo odda pri zmrzovanju, zamrzovalnik z dovedenim delom prečrpa v kuhinjo, kjer je temperatura višja. Entropija kuhinje se poveča bolj, kot se zmanjša entropija vode, zato skupna entropija naraste.
+:::
+
 **8. Mikroskopski pomen.** Boltzmann je entropijo povezal s številom mikrostanj $\Omega$, ki dajo isto makroskopsko stanje: $S = k_B\ln\Omega$. Neurejeno stanje (plin, razporejen po vsej posodi) je mogoče doseči na neprimerno več načinov kot urejeno (ves plin v enem kotu), zato je veliko verjetnejše. Drugi zakon je v tem smislu statističen zakon.
 
 ## Rešeni primeri
@@ -72,8 +84,8 @@ $A' = Q_1 - Q_2$, $\eta = \dfrac{A'}{Q_1}$, $\eta_C = 1 - \dfrac{T_2}{T_1}$, $\D
 
 **Rešitev:**
 
-1. $A' = 2{,}0\,\mathrm{kJ} - 1{,}4\,\mathrm{kJ} = 0{,}60\,\mathrm{kJ}$.
-2. $\eta = 0{,}60/2{,}0 = 0{,}30 = 30\,\%$.
+1. Delovna snov se po ciklu vrne v začetno stanje, zato je po prvem zakonu delo razlika toplot: $A' = 2{,}0\,\mathrm{kJ} - 1{,}4\,\mathrm{kJ} = 0{,}60\,\mathrm{kJ}$.
+2. Izkoristek je delež prejete toplote, ki postane delo: $\eta = 0{,}60/2{,}0 = 0{,}30 = 30\,\%$.
 3. $\eta_C = 1 - 300/600 = 0{,}50 = 50\,\%$. Stroj torej ne krši drugega zakona, je pa nepovraten.
 4. Topli rezervoar izgubi entropijo $2000\,\mathrm{J}/600\,\mathrm{K} \approx 3{,}33\,\mathrm{J/K}$, hladni jo pridobi $1400\,\mathrm{J}/300\,\mathrm{K} \approx 4{,}67\,\mathrm{J/K}$. Delovna snov je po ciklu v začetnem stanju ($\Delta S = 0$).
 5. $\Delta S = -3{,}33\,\mathrm{J/K} + 4{,}67\,\mathrm{J/K} \approx +1{,}33\,\mathrm{J/K}$.
@@ -93,7 +105,7 @@ Taljenje (izotermno): $\Delta S_1 = \dfrac{mq_t}{T_0}$. Segrevanje: $\Delta S_2 
 **Rešitev:**
 
 1. Toplota za taljenje: $Q_1 = 0{,}50\,\mathrm{kg} \cdot 334\,\mathrm{kJ/kg} = 167\,\mathrm{kJ}$.
-2. $\Delta S_1 = 167\,000\,\mathrm{J}/273{,}15\,\mathrm{K} \approx 611\,\mathrm{J/K}$.
+2. Taljenje poteka pri stalni temperaturi, zato toploto le delimo s $T_0$: $\Delta S_1 = 167\,000\,\mathrm{J}/273{,}15\,\mathrm{K} \approx 611\,\mathrm{J/K}$.
 3. Pri segrevanju se temperatura spreminja, zato integriramo: $\Delta S_2 = 0{,}50 \cdot 4186 \cdot \ln(293{,}15/273{,}15)\,\mathrm{J/K} = 2093 \cdot 0{,}0707\,\mathrm{J/K} \approx 148\,\mathrm{J/K}$.
 4. $\Delta S = 611\,\mathrm{J/K} + 148\,\mathrm{J/K} \approx 759\,\mathrm{J/K}$.
 5. Odgovor: entropija vode se poveča za približno $759\,\mathrm{J/K}$, večino pri taljenju, ko se urejena kristalna mreža poruši.
@@ -112,11 +124,34 @@ $m_1c(T_1 - T_k) = m_2c(T_k - T_2)$; $\Delta S = m_1c\ln\dfrac{T_k}{T_1} + m_2c\
 **Rešitev:**
 
 1. Masi sta enaki, zato je $T_k$ aritmetična sredina: $T_k = 323{,}15\,\mathrm{K}$ ($50\,^\circ\mathrm{C}$).
-2. Topla voda se ohladi: $\Delta S_1 = 4186 \cdot \ln(323{,}15/353{,}15)\,\mathrm{J/K} \approx -371{,}6\,\mathrm{J/K}$.
+2. Topla voda se ohladi; ker se temperatura med tem spreminja, uporabimo logaritem: $\Delta S_1 = 4186 \cdot \ln(323{,}15/353{,}15)\,\mathrm{J/K} \approx -371{,}6\,\mathrm{J/K}$.
 3. Hladna voda se segreje: $\Delta S_2 = 4186 \cdot \ln(323{,}15/293{,}15)\,\mathrm{J/K} \approx +407{,}9\,\mathrm{J/K}$.
 4. Skupaj: $\Delta S = -371{,}6 + 407{,}9 \approx +36{,}2\,\mathrm{J/K}$.
 5. Entropija hladne vode naraste bolj, kot entropija tople pade, ker isto toploto ($125{,}6\,\mathrm{kJ}$) hladna voda prejema pri nižji temperaturi.
 6. Odgovor: končna temperatura je $50\,^\circ\mathrm{C}$, skupna entropija pa se poveča za približno $36\,\mathrm{J/K}$. Ker je $\Delta S > 0$ v izoliranem sistemu, je mešanje nepovratno: voda se sama od sebe ne bo več razdelila na toplo in hladno.
+
+### Primer 4 – zdaj ti
+
+Pozimi skozi steno hiše preide $1{,}0\,\mathrm{kJ}$ toplote iz sobe pri $20\,^\circ\mathrm{C}$ na zunanji zrak pri $-5\,^\circ\mathrm{C}$. Za koliko se pri tem spremeni skupna entropija sobe in zunanjega zraka? Soba in zunanji zrak sta tako velika, da se njuni temperaturi ne spremenita.
+
+**Podatki:** $Q = 1{,}0\,\mathrm{kJ} = 1000\,\mathrm{J}$, $T_1 = 293{,}15\,\mathrm{K}$, $T_2 = 268{,}15\,\mathrm{K}$, temperaturi rezervoarjev sta stalni
+**Iščemo:** spremembo skupne entropije $\Delta S$
+
+:::formula
+$\Delta S = -\dfrac{Q}{T_1} + \dfrac{Q}{T_2}$
+:::
+
+**Rešitev:**
+
+1. Temperature pretvorimo v kelvine, ker $\Delta S = Q/T$ velja le z absolutno temperaturo.
+2. Soba toploto odda pri stalni temperaturi, zato se njena entropija zmanjša za $Q/T_1$: $\Delta S_1 = -1000\,\mathrm{J}/293{,}15\,\mathrm{K} \approx -3{,}41\,\mathrm{J/K}$.
+3. Zdaj ti: izračunaj spremembo entropije zunanjega zraka, ki isto toploto prejme pri $T_2$, in obe spremembi seštej.
+
+:::premisli
+Kolikšna je sprememba skupne entropije in kaj pove njen predznak?
+---
+$\Delta S_2 = 1000\,\mathrm{J}/268{,}15\,\mathrm{K} \approx 3{,}73\,\mathrm{J/K}$, skupaj $\Delta S \approx -3{,}41 + 3{,}73 = +0{,}32\,\mathrm{J/K}$. Skupna entropija naraste, ker zunanji zrak toploto prejme pri nižji temperaturi; prehod toplote s toplejšega na hladnejše je nepovraten.
+:::
 
 ## Pogoste napake
 
@@ -196,24 +231,40 @@ za izoliran sistem ($\delta Q = 0$) pa $\Delta S \ge 0$.
 
 ? Kolikšen je Carnotov izkoristek stroja, ki deluje med $400\,\mathrm{K}$ in $300\,\mathrm{K}$?
 - $75\,\%$
+~ To je razmerje $T_2/T_1$; izkoristek je $1 - T_2/T_1$.
 + $25\,\%$
 - $33\,\%$
+~ Razliko temperatur si delil z nižjo temperaturo $T_2$; deliti jo moraš z višjo, $T_1$.
 > $\eta_C = 1 - 300/400 = 0{,}25$. $75\,\%$ je razmerje $T_2/T_1$, $33\,\%$ pa dobiš, če deliš razliko temperatur z nižjo temperaturo.
 
 ? Kolikšno je največje možno grelno število toplotne črpalke, ki greje na $35\,^\circ\mathrm{C}$ in jemlje toploto okolici pri $0\,^\circ\mathrm{C}$?
 - $1{,}0$
+~ Toliko ima električni grelnik, ki delo le pretvori v toploto; toplotna črpalka doda še toploto, prečrpano iz okolice.
 - $7{,}8$
+~ To je idealno hladilno število $T_2/(T_1 - T_2)$; grelno število ima v števcu višjo temperaturo $T_1$.
 + $8{,}8$
 > $\varepsilon_g = T_1/(T_1 - T_2) = 308{,}15/35 \approx 8{,}8$. $7{,}8$ je idealno hladilno število $T_2/(T_1 - T_2)$ za isti temperaturi.
 
 ? Za koliko se poveča entropija $1{,}0\,\mathrm{mol}$ idealnega plina, ki se pri stalni temperaturi razširi na dvakratno prostornino?
 - $0$
+~ Temperatura je res stalna, a plin pri izotermnem razširjanju prejme toploto $Q = nRT\ln 2$, zato je $\Delta S = Q/T > 0$.
 + $5{,}76\,\mathrm{J/K}$
 - $8{,}31\,\mathrm{J/K}$
+~ To je le $nR$; pozabil si na faktor $\ln(V_2/V_1) = \ln 2 \approx 0{,}693$.
 > $\Delta S = nR\ln(V_2/V_1) = 8{,}314 \cdot \ln 2\,\mathrm{J/K} \approx 5{,}76\,\mathrm{J/K}$. Enako velja za prosto ekspanzijo, saj je entropija funkcija stanja.
 
 ? Katera naprava bi kršila drugi zakon termodinamike?
 - Hladilnik, ki z $1\,\mathrm{kJ}$ dela iz notranjosti odvede $4\,\mathrm{kJ}$ toplote.
+~ Hladilno število $4$ je dovoljeno: drugi zakon zahteva le, da hladilniku dovajamo delo, prečrpana toplota pa je lahko večja od dela (za običajen hladilnik je idealno hladilno število okoli $14$).
 + Ladijski motor, ki toploto jemlje le morju in jo v celoti pretvarja v delo.
 - Toplotni stroj z izkoristkom $30\,\%$ med $600\,\mathrm{K}$ in $300\,\mathrm{K}$.
+~ Carnotov izkoristek med tema temperaturama je $50\,\%$; stroj s $30\,\%$ je pod to mejo, torej mogoč.
 > Stroj, ki toploto iz enega samega rezervoarja v celoti pretvarja v delo, krši Kelvin-Planckovo obliko. Hladilno število $4$ in izkoristek $30\,\% < 50\,\%$ sta dovoljena.
+
+? Stroj deluje med $400\,\mathrm{K}$ in $300\,\mathrm{K}$. Kako se spremeni njegov Carnotov izkoristek, če obe temperaturi podvojimo ($800\,\mathrm{K}$ in $600\,\mathrm{K}$)?
+- Podvoji se.
+~ Izkoristek ni sorazmeren s temperaturo (in ne more preseči $1$); odvisen je le od razmerja $T_2/T_1$.
+- Poveča se, ker se razlika temperatur poveča s $100\,\mathrm{K}$ na $200\,\mathrm{K}$.
+~ Večja razlika pomaga le pri isti $T_1$; tu se podvoji tudi $T_1$, zato je $(T_1 - T_2)/T_1 = 200/800 = 100/400$.
++ Ostane enak.
+> $\eta_C = 1 - 600/800 = 1 - 300/400 = 25\,\%$: razmerje $T_2/T_1$ se ne spremeni, zato se ne spremeni niti izkoristek.
