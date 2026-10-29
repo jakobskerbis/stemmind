@@ -471,6 +471,8 @@
   "exam.startMock": "Spustit zkušební test",
   "exam.historyEmpty": "Zde se zobrazí výsledky tvých zkušebních testů.",
   "exam.topicsNote": "Vyber téma a procvičuj jen ho. Zkouškové úlohy jsou v angličtině; lektor ti je vysvětlí ve tvém jazyce.",
+  "exam.topicsPick": "Vyber si téma a procvičuj jen ho.",
+  "exam.national": "Státní zkoušky (NPZ, maturita)",
   "exam.finish": "Ukončit zkoušku",
   "exam.confirmFinish": "Opravdu chceš zkoušku ukončit? Nezodpovězené otázky nepřinesou body.",
   "exam.scaled": "Výsledek na stupnici zkoušky: přibližně <b>{value}</b> ({min}–{max})",

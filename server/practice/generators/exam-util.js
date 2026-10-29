@@ -43,7 +43,16 @@ export const fraction = (n, d) => {
 export const roundTo = (d) => (d === 0 ? " Round to the nearest whole number." : ` Round to ${d} decimal place${d === 1 ? "" : "s"}.`);
 
 // Skupna oblika naloge: angleška naloga, oznaka jezika za izbirne odgovore.
-export const task = (o) => ({ lang: "en", formula: false, data: false, ...o });
+// Podatki so samo količine z vrednostjo (»x = …«); pojmovno vprašanje brez njih nima podatkov.
+export const task = (o) => {
+  const t = { lang: "en", formula: false, data: false, ...o };
+  if (t.data && Array.isArray(t.data.given)) {
+    const given = t.data.given.filter((g) => typeof g === "string" && g.includes("="));
+    const find = (t.data.find || []).filter((f) => typeof f === "string" && f && !f.includes("="));
+    t.data = given.length && find.length ? { ...t.data, given, find } : false;
+  }
+  return t;
+};
 
 export const nCr = (n, k) => {
   if (k < 0 || k > n) return 0;
@@ -75,3 +84,11 @@ export function fractionM(n, d, list) {
 }
 // Vrstica podatka v angleški nalogi: dq("m", 2.5, "kg") → "m = 2.5\ \mathrm{kg}" (število zapisano kot v besedilu).
 export const dq = (sym, v, u = "") => `${sym} = ${typeof v === "number" ? en(v) : v}${u ? `\\ \\mathrm{${u}}` : ""}`;
+
+// Dvojezične naloge za indijske izpite (angleško / hindijsko, exam-in-*.js).
+// Generator dobi jezik naloge (4. argument gen): const L = bi(lang); L("Find …", "ज्ञात कीजिए …").
+// Števila, LaTeX in naključne izbire so v obeh jezikih enaki (isto seme → ista naloga).
+export const bi = (lang) => (en, hi) => (lang === "hi" ? hi : en);
+// Navodilo za zaokroževanje v jeziku naloge.
+export const roundToL = (d, lang) =>
+  lang !== "hi" ? roundTo(d) : d === 0 ? " निकटतम पूर्ण संख्या तक पूर्णांकित कीजिए।" : ` ${d} दशमलव ${d === 1 ? "स्थान" : "स्थानों"} तक पूर्णांकित कीजिए।`;

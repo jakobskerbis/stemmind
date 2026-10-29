@@ -1328,16 +1328,18 @@ $("#back-to-path").addEventListener("click", () => showView(state.backTo || "pat
 // Šolski sistemi zunaj Slovenije: isti zavihek je »Izpiti« (SAT, gaokao, JEE, NEET, CBSE …).
 // Sporočilo preverjanja: slovensko besedilo s strežnika, v drugih jezikih prevod po kodi.
 const fbText = (r) => (r.code && currentLang() !== "sl" ? t(r.code, r.params || {}) : r.message);
-const examMode = () => !!state.student && isRegional(state.student.settings.school_system);
-const prepLabel = () => (examMode() ? t("nav.exams") : t("nav.competition"));
+// Slovenski učenci imajo v zavihku »Tekmovanja« še preklop na NPZ in maturo (state.siExams).
+const regionalExams = () => !!state.student && isRegional(state.student.settings.school_system);
+const examMode = () => regionalExams() || (!!state.student && !!state.siExams);
+const prepLabel = () => (regionalExams() ? t("nav.exams") : t("nav.competition"));
 const prepBack = () => (examMode() ? t("exam.back") : t("result.toCompetitions"));
 function syncCompetitionTab() {
   $("#competition-tab").hidden = $("#competition-tab-m").hidden = !state.student || isUni(state.student.settings);
   for (const tab of [$("#competition-tab"), $("#competition-tab-m")]) {
     const span = tab.querySelector("span");
-    span.dataset.i18n = examMode() ? "nav.exams" : "nav.competition";
+    span.dataset.i18n = regionalExams() ? "nav.exams" : "nav.competition";
     span.textContent = prepLabel();
-    tab.querySelector("i, svg").outerHTML = icon(examMode() ? "clipboard-check" : "medal");
+    tab.querySelector("i, svg").outerHTML = icon(regionalExams() ? "clipboard-check" : "medal");
   }
 }
 // Gumb »nazaj« na temi oziroma pri seriji nalog vodi tja, od koder je učenec prišel.
@@ -1347,7 +1349,7 @@ function setBack(view) {
 }
 
 async function openTopic(topicId) {
-  const tp = await api(`/api/topic?id=${encodeURIComponent(topicId)}`);
+  const tp = await api(`/api/topic?id=${encodeURIComponent(topicId)}&lang=${encodeURIComponent(state.student?.settings?.language || "")}`);
   state.topic = tp;
   showView("topic");
   const hasPractice = (await api(`/api/students/${state.student.id}/path?key=${encodeURIComponent(tp.path)}`)).units
@@ -1434,7 +1436,7 @@ async function nextPractice() {
   if (out.example) {
     box.innerHTML = `<div class="card task example">
       <div class="task-top"><span class="eyebrow with-icon">${icon("book-open")} ${t("task.example")}</span></div>
-      <div class="task-text">${renderRich(out.example.text)}</div>
+      <div class="task-text"${out.example.textLang ? ` lang="${out.example.textLang}"` : ""}>${renderRich(out.example.text)}</div>
       ${out.example.figure ? figureSvg(out.example.figure) : ""}
       ${workedBlock(out.example, out.example.solution)}
       <div class="fb hint">${icon("lightbulb")}<div>${renderRich(out.example.hint)}</div></div>
@@ -1624,7 +1626,7 @@ function renderTask(task, ctx) {
   box.innerHTML = `${bar}${pretestHead}<div class="card task">
     <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${penalty}${counter}${calcBtn}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
-    <div class="task-text">${renderRich(task.text)}</div>
+    <div class="task-text"${task.textLang ? ` lang="${task.textLang}"` : ""}>${renderRich(task.text)}</div>
     ${task.figure ? figureSvg(task.figure) : ""}
     ${workHtml()}
     ${input}
@@ -1953,6 +1955,7 @@ async function loadCompetition(key = state.compKey) {
   const learning = c.units.flatMap((u) => u.topics).filter((t) => t.status !== "new").length;
   box.innerHTML = `
     <h1>${t("comp.title")}</h1>
+    ${prepSwitch("comp")}
     <div class="comp-pickers">
       ${seg(["MAT", "FIZ", "KEM"].map((k) => [k, SUBJECT_NAMES[k] || k]), c.subject, "data-comp-subject")}
       ${seg(Object.entries(SCHOOL_NAMES), c.school, "data-comp-school")}
@@ -2040,12 +2043,13 @@ async function loadExams(key = state.examKey, exam = null) {
   const m = c.mock;
   box.innerHTML = `
     <h1>${t("exam.title")}</h1>
+    ${prepSwitch("exam")}
     <div class="comp-pickers">
       ${seg(examSeg, c.exam, "data-exam")}
       ${others.length ? `<label class="field exam-other"><span class="field-label">${t("exam.otherExams")}</span><select data-exam-other><option value="">…</option>${others.map((x) => `<option value="${x.id}">${escapeHtml(`${x.name} (${x.country})`)}</option>`).join("")}</select></label>` : ""}
       ${c.subjects.length > 1 ? seg(c.subjects.map((x) => [x.key, SUBJECT_NAMES[x.subject] || x.name]), c.key, "data-exam-subject") : ""}
     </div>
-    <details class="card exam-about"><summary>${icon("info")}<span><b>${escapeHtml(c.full)}</b> · ${escapeHtml(c.country)}</span></summary><p lang="en">${escapeHtml(c.about)}</p></details>
+    <details class="card exam-about"><summary>${icon("info")}<span><b>${escapeHtml(c.full)}</b> · ${escapeHtml(c.country)}</span></summary><p lang="${c.lang || "en"}">${escapeHtml(c.about)}</p></details>
     <div class="card xp-card comp-hero">
       <div class="hero">
         <div class="hero-icon">${icon("target")}</div>
@@ -2067,7 +2071,7 @@ async function loadExams(key = state.examKey, exam = null) {
       ${hist}
     </section>
     <h2 class="comp-topics-title">${t("comp.topics")}</h2>
-    <p class="muted small-note">${t("exam.topicsNote")}</p>
+    <p class="muted small-note">${c.tasksLang === "en" && currentLang() !== "en" ? t("exam.topicsNote") : t("exam.topicsPick")}</p>
     ${c.units
       .map(
         (u, ui) => `<section class="unit card">
@@ -2084,7 +2088,20 @@ async function loadExams(key = state.examKey, exam = null) {
       .join("")}`;
 }
 
+// Slovenija: preklop med tekmovanji ter NPZ in maturo (drugje je zavihek samo »Izpiti«).
+function prepSwitch(cur) {
+  if (regionalExams()) return "";
+  const items = [["comp", t("comp.title")], ["exam", t("exam.national")]];
+  return `<div class="seg prep-switch" role="group">${items.map(([v, label]) => `<button type="button" class="${v === cur ? "active" : ""}" aria-pressed="${v === cur}" data-prep="${v}">${escapeHtml(label)}</button>`).join("")}</div>`;
+}
+
 document.addEventListener("click", (e) => {
+  const prep = e.target.closest("[data-prep]");
+  if (prep) {
+    state.siExams = prep.dataset.prep === "exam";
+    state.examKey = null;
+    return state.siExams ? loadExams() : loadCompetition();
+  }
   const ex = e.target.closest("[data-exam]");
   if (ex) loadExams(null, ex.dataset.exam);
   const sub = e.target.closest("[data-exam-subject]");

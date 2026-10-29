@@ -15,6 +15,9 @@ function correctInput(a) {
   return a.values.join(",");
 }
 
+// Odgovor brez besedil (razlage napak in možnosti so v jeziku naloge).
+const stripWhy = (a) => ({ ...a, why: undefined, options: a.type === "choice" ? a.options.length : undefined, mistakes: (a.mistakes || []).map((m) => m.value) });
+
 let n = 0;
 let bad = 0;
 const ids = new Set();
@@ -56,6 +59,20 @@ for (const g of GENERATORS) {
           const text = [t.text, t.hint, t.solution].join(" ");
           if (/undefined|NaN(?!O)|Infinity/.test(text)) throw new Error(`besedilo vsebuje undefined/NaN: ${t.text}`);
           if (/\$\$|\\\\\(/.test(t.text) === false && (t.text.split("$").length - 1) % 2) throw new Error(`neparno število $ v besedilu: ${t.text}`);
+          // Dvojezični generatorji (indijski izpiti): hindijska naloga z istim semenom mora imeti
+          // enak odgovor, besedilo v devanagariju in prav toliko $ kot angleška.
+          if (g.langs?.includes("hi")) {
+            const h = generateTask(topicId, level, seed, "hi");
+            if (h.generator !== g.id || JSON.stringify(stripWhy(h.answer)) !== JSON.stringify(stripWhy(a))) throw new Error("hindijska naloga ima drug odgovor kot angleška (isto seme)");
+            for (const f of ["text", "hint", "solution"]) {
+              if (!h[f]) throw new Error(`hindijska naloga nima polja ${f}`);
+              if (!/[\u0900-\u097F]/.test(h[f].replace(/\$[^$]*\$/g, ""))) throw new Error(`hindijsko polje ${f} ni v devanagariju: ${h[f].slice(0, 80)}`);
+            }
+            if (a.type === "choice" && a.why && (!h.answer.why || h.answer.why.length !== a.why.length)) throw new Error("hindijska razlaga možnosti manjka");
+            for (const m of h.answer.mistakes || []) if (!/[\u0900-\u097F]/.test(m.why)) throw new Error(`hindijska razlaga napake ni v devanagariju: ${m.why}`);
+            if (/undefined|NaN(?!O)|Infinity/.test([h.text, h.hint, h.solution].join(" "))) throw new Error(`hindijsko besedilo vsebuje undefined/NaN: ${h.text}`);
+            if ((h.text.split("$").length - 1) % 2) throw new Error(`neparno število $ v hindijskem besedilu: ${h.text}`);
+          }
         } catch (e) {
           bad++;
           if (bad <= 40) console.log(`${g.id} | ${topicId} | raven ${level} | seme ${seed}: ${e.message}`);

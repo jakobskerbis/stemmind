@@ -456,6 +456,8 @@
   "exam.startMock": "開始模擬考試",
   "exam.historyEmpty": "你的模擬考試成績會顯示在這裡。",
   "exam.topicsNote": "選一個主題,只練這個主題。考題是英文的,輔導老師會用你的語言講解。",
+  "exam.topicsPick": "選一個主題，只練習這一個。",
+  "exam.national": "國家考試（NPZ、Matura）",
   "exam.finish": "結束考試",
   "exam.confirmFinish": "現在結束考試嗎?未作答的題目不得分。",
   "exam.scaled": "按考試分制的成績:約<b>{value}</b>({min}–{max})",

@@ -8,6 +8,13 @@
 // mock: poskusni izpit na čas v formatu izpita (izbirna vprašanja, številski odgovori,
 // točke in negativne točke). OSNUTEK: format in teme naj pred objavo preveri učitelj.
 
+import { M, F, K, Bi, group } from "./exam-helpers.js";
+import { EXAMS_ASIA } from "./exam-data-asia.js";
+import { EXAMS_AFRICA } from "./exam-data-africa.js";
+import { EXAMS_SOUTHASIA } from "./exam-data-southasia.js";
+import { EXAMS_WEST } from "./exam-data-west.js";
+import { EXAMS_SI } from "./exam-data-si.js";
+
 export const BANK = {
   "MAT-EXB": [
     "Quadratic equations | roots, factorising, sum and product of roots",
@@ -32,6 +39,28 @@ export const BANK = {
     "Ratios, rates and percentages | percent, percent change, sharing in a ratio",
     "Circles | area, equation of a circle, sectors",
     "Binomial distribution | exactly k successes, at most one, variance",
+    // Indija (CBSE, ICSE/ISC, državne šole, JEE): exam-in-mat.js, angleško in hindijsko.
+    "Real numbers | HCF and LCM, prime factorisation, Euclid's division lemma",
+    "Polynomials | zeros and coefficients, remainder and factor theorem",
+    "Similar triangles | basic proportionality theorem, areas of similar triangles, Pythagoras",
+    "Surface areas and volumes | cylinder, cone, sphere, combined solids, recasting",
+    "Statistics of grouped data | mean, median and mode of grouped data",
+    "Commercial mathematics | GST, recurring deposits, shares and dividends",
+    "Linear programming | corner-point method, maximum and minimum",
+    "Conditional probability and Bayes theorem | conditional probability, independence, total probability, Bayes' theorem",
+    "Inverse trigonometric functions | principal values, identities",
+    "Three-dimensional geometry | direction cosines, angle between lines, distance from a plane",
+    "Limits and continuity | standard limits, L'Hospital-free evaluation, continuity at a point",
+    "Differential equations | order and degree, variables separable, linear first-order equations",
+    // Vrzeli drugih državnih izpitov (exam-gap-mat.js), angleško in hindijsko.
+    "Sets and logic | set operations, Venn diagrams, counting with sets, truth tables",
+    "Indices and surds | laws of indices, rationalising, exponential equations",
+    "Measures of dispersion | range, quartiles, variance, standard deviation",
+    "Normal distribution | standardising, z-scores, normal probabilities from a table",
+    "Conic sections | parabola, ellipse, hyperbola: focus, directrix, eccentricity",
+    "Binomial theorem | general term, coefficient of a power, middle term",
+    "Correlation and regression | Pearson's r, line of best fit, prediction",
+    "Circle theorems | angles in a circle, cyclic quadrilaterals, tangents",
   ],
   "FIZ-EXB": [
     "Kinematics | equations of uniformly accelerated motion",
@@ -48,6 +77,21 @@ export const BANK = {
     "Magnetism and induction | force on a wire, Faraday's law, charged particle in a field",
     "Optics | refractive index, thin lenses, Snell's law",
     "Modern physics | half-life, photoelectric effect, de Broglie wavelength",
+    // Indija: exam-in-fiz.js
+    "Spherical mirrors | mirror formula, magnification",
+    "Electric power and household circuits | power, energy in kWh, cost, fuse rating",
+    "Machines | mechanical advantage, velocity ratio, efficiency, levers and pulleys",
+    "Moments and equilibrium | moment of a force, principle of moments, centre of gravity",
+    "Calorimetry | specific heat capacity, latent heat, method of mixtures",
+    "Alternating current | rms values, reactance, impedance, resonance, power factor",
+    "Rotational motion | moment of inertia, torque, angular momentum, rolling",
+    "Semiconductors and logic gates | diodes, rectifiers, logic gates, truth tables",
+    // Vrzeli drugih državnih izpitov (exam-gap-fiz.js)
+    "Units, measurement and errors | significant figures, dimensions, percentage error",
+    "Density and pressure | density, pressure in liquids, atmospheric pressure, hydraulics",
+    "Fluids and buoyancy | Archimedes' principle, flotation, Bernoulli's equation, viscosity",
+    "Elasticity | stress, strain, Young's modulus, Hooke's law",
+    "Wave optics | Young's double slit, fringe width, diffraction, polarisation",
   ],
   "KEM-EXB": [
     "Mole concept | moles, Avogadro's number, percentage composition",
@@ -60,13 +104,43 @@ export const BANK = {
     "Chemical kinetics | half-life, rate constant, rate law",
     "Electrochemistry | cell emf, electrolysis, Gibbs energy of a cell",
     "Atomic structure | protons, neutrons, electrons, hydrogen spectrum",
+    // Indija: exam-in-kem.js
+    "Chemical reactions and equations | balancing, types of reactions, oxidation and reduction",
+    "Metals and non-metals | reactivity series, displacement, extraction of metals",
+    "Periodic table and periodic properties | trends in radius, ionisation energy, electronegativity, valency",
+    "Chemical bonding | VSEPR shapes, hybridisation, bond order, polarity",
+    "Organic chemistry: nomenclature and isomerism | IUPAC names, functional groups, isomers, degree of unsaturation",
+    "Organic chemistry: reactions | reagents and products, name reactions, tests, reactivity order",
+    "Coordination compounds | oxidation state, coordination number, magnetic moment, isomerism",
+    "s-, p-, d- and f-block elements | oxidation states, properties, unpaired electrons, important compounds",
+    "Colligative properties | Raoult's law, boiling-point elevation, freezing-point depression, osmotic pressure",
+    "Identification of ions and gases | precipitate colours, gas tests, products of electrolysis",
+    // Vrzeli drugih državnih izpitov (exam-gap-kem.js)
+    "Polymers | addition and condensation polymers, monomers, natural and synthetic polymers",
+    "Industrial chemistry | Haber process, Contact process, extraction of metals, yields and conditions",
+    "Environmental chemistry | air and water pollution, greenhouse effect, ozone depletion, BOD",
+  ],
+  // Biologija (NEET, CBSE, ICSE/ISC, državne šole): exam-in-bio.js
+  "BIO-EXB": [
+    "Diversity of living organisms | kingdoms, plant and animal groups, key features",
+    "Cell structure and biomolecules | organelles, prokaryotes and eukaryotes, enzymes, biomolecules",
+    "Cell cycle and cell division | chromosome number and DNA content, mitosis, meiosis",
+    "Plant physiology | photosynthesis, respiration, transport, plant growth regulators",
+    "Human physiology | digestion, breathing, circulation, excretion, nerves and hormones",
+    "Reproduction | gametogenesis, menstrual cycle, reproduction in flowering plants",
+    "Genetics and inheritance | Mendelian ratios, incomplete dominance, blood groups, sex-linked traits",
+    "Molecular basis of inheritance | Chargaff's rule, DNA length, genetic code, replication, transcription",
+    "Evolution | Hardy–Weinberg principle, natural selection, evidence of evolution",
+    "Human health and disease | pathogens, immunity, vaccines, common diseases",
+    "Biotechnology | restriction enzymes, PCR, recombinant DNA, applications",
+    "Ecology and environment | energy flow, ecological pyramids, population growth, biodiversity",
+    // Vrzeli drugih državnih izpitov (exam-gap-bio.js)
+    "Plant anatomy and morphology | tissues, root, stem and leaf structure, inflorescence, flower",
+    "Microbes in human welfare | microbes in food, industry, sewage treatment, biogas, biocontrol",
+    "Animal behaviour and tissues | animal tissues, innate and learned behaviour",
   ],
 };
 
-const B = (subject, slug) => `${subject}-EXB/${slug}`;
-const M = (slug) => B("MAT", slug);
-const F = (slug) => B("FIZ", slug);
-const K = (slug) => B("KEM", slug);
 
 // Skupni sklopi fizike in kemije (JEE, NEET, gaokao).
 const PHYSICS_UNITS = [
@@ -109,11 +183,79 @@ const CHEMISTRY_UNITS = [
   ]],
 ];
 
-// Poskusni izpit: skupine vprašanj { n, format: "choice" | "numeric", level, points, penalty }.
-// scale: [min, max, korak] lestvica izpita; grades: [[najmanj %, ocena], …] od najboljše navzdol.
-// options: število možnosti pri izbirnih (privzeto 4, ENEM 5).
-const group = (n, format, level, points, penalty = 0, options = 0) => ({ n, format, level, points, penalty, ...(options ? { options } : {}) });
+// Indija (JEE, NEET, razred 12): skupni sklopi z dvojezičnimi temami iz exam-in-*.js.
+const PHYSICS_UNITS_IN = [
+  ["Mechanics", [
+    `Kinematics | motion in one and two dimensions => ${F("kinematics")}, ${F("projectile-motion")}`,
+    `Laws of motion | Newton's laws, friction, connected bodies => ${F("laws-of-motion")}`,
+    `Work, energy and power | work–energy theorem, conservation of energy => ${F("work-energy-and-power")}`,
+    `Momentum and collisions | impulse, conservation of momentum => ${F("momentum-and-collisions")}`,
+    `Rotational motion | moment of inertia, torque, rolling => ${F("rotational-motion")}`,
+    `Gravitation and circular motion | centripetal force, gravitational field => ${F("circular-motion-and-gravitation")}`,
+  ], 30],
+  ["Oscillations, waves and heat", [
+    `Oscillations | simple harmonic motion => ${F("oscillations")}`,
+    `Waves and sound | wave equation, standing waves, Doppler effect => ${F("waves-and-sound")}`,
+    `Thermal physics | calorimetry, gas laws, thermodynamics => ${F("thermal-physics")}, ${F("calorimetry")}`,
+  ], 20],
+  ["Electricity and magnetism", [
+    `Electrostatics and capacitors | Coulomb's law, capacitance => ${F("electrostatics-and-capacitors")}`,
+    `Current electricity | Ohm's law, circuits, emf => ${F("current-electricity")}`,
+    `Magnetism and induction | magnetic force, electromagnetic induction => ${F("magnetism-and-induction")}`,
+    `Alternating current | rms values, impedance, resonance => ${F("alternating-current")}`,
+  ], 30],
+  ["Optics, modern physics and electronics", [
+    `Ray optics | mirrors, refraction, lenses => ${F("spherical-mirrors")}, ${F("optics")}`,
+    `Modern physics | photoelectric effect, matter waves, radioactivity => ${F("modern-physics")}`,
+    `Semiconductor electronics | diodes, logic gates => ${F("semiconductors-and-logic-gates")}`,
+  ], 20],
+];
+const CHEMISTRY_UNITS_IN = [
+  ["Physical chemistry", [
+    `Mole concept and stoichiometry | moles, limiting reactant => ${K("mole-concept")}, ${K("stoichiometry")}`,
+    `Atomic structure | subatomic particles, hydrogen spectrum => ${K("atomic-structure")}`,
+    `Solutions and colligative properties | molarity, Raoult's law, osmotic pressure => ${K("solutions-and-concentration")}, ${K("colligative-properties")}`,
+    `States of matter | gas laws, ideal gas equation => ${K("gaseous-state")}`,
+    `Thermodynamics | enthalpy, Hess's law, Gibbs energy => ${K("thermochemistry")}`,
+    `Equilibrium | equilibrium constant, pH => ${K("chemical-equilibrium")}, ${K("acids-bases-and-ph")}`,
+    `Chemical kinetics | rate law, half-life => ${K("chemical-kinetics")}`,
+    `Electrochemistry | cells, electrolysis => ${K("electrochemistry")}`,
+  ], 35],
+  ["Inorganic chemistry", [
+    `Classification of elements and periodicity | periodic trends => ${K("periodic-table-and-periodic-properties")}`,
+    `Chemical bonding and molecular structure | VSEPR, hybridisation, MO theory => ${K("chemical-bonding")}`,
+    `s-, p-, d- and f-block elements | oxidation states, properties => ${K("s-p-d-and-f-block-elements")}`,
+    `Coordination compounds | isomerism, magnetic moment => ${K("coordination-compounds")}`,
+  ], 30],
+  ["Organic chemistry", [
+    `Basic principles of organic chemistry | IUPAC names, isomerism => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
+    `Organic reactions | hydrocarbons to amines, name reactions, tests => ${K("organic-chemistry-reactions")}`,
+  ], 35],
+];
+// NEET biologija: botanika in zoologija (po 45 vprašanj).
+const BIOLOGY_UNITS_NEET = [
+  ["Botany", [
+    `Plant kingdom and classification | kingdoms, plant groups => ${Bi("diversity-of-living-organisms")}`,
+    `Cell: the unit of life and biomolecules | organelles, enzymes => ${Bi("cell-structure-and-biomolecules")}`,
+    `Cell cycle and cell division | mitosis, meiosis => ${Bi("cell-cycle-and-cell-division")}`,
+    `Plant physiology | photosynthesis, respiration, growth => ${Bi("plant-physiology")}`,
+    `Sexual reproduction in flowering plants | pollination, double fertilisation => ${Bi("reproduction")}`,
+    `Principles of inheritance and variation | Mendelian ratios, sex-linked traits => ${Bi("genetics-and-inheritance")}`,
+    `Molecular basis of inheritance | DNA, replication, genetic code => ${Bi("molecular-basis-of-inheritance")}`,
+    `Ecology | populations, ecosystems, biodiversity => ${Bi("ecology-and-environment")}`,
+  ], 50],
+  ["Zoology", [
+    `Animal kingdom | phyla and key features => ${Bi("diversity-of-living-organisms")}`,
+    `Human physiology | breathing, circulation, excretion, nerves, hormones => ${Bi("human-physiology")}`,
+    `Human reproduction and reproductive health | gametogenesis, menstrual cycle => ${Bi("reproduction")}`,
+    `Evolution | Hardy–Weinberg principle, natural selection => ${Bi("evolution")}`,
+    `Human health and disease | pathogens, immunity => ${Bi("human-health-and-disease")}`,
+    `Biotechnology | principles, processes, applications => ${Bi("biotechnology")}`,
+  ], 50],
+];
 
+// Poskusni izpit: skupine vprašanj group(n, format, level, points, penalty, options) iz exam-helpers.js;
+// scale: [min, max, korak] lestvica izpita; grades: [[najmanj %, ocena], …] od najboljše navzdol.
 // Približne ocene po odstotku točk (meje se vsako leto nekoliko spremenijo).
 const GRADES_GCSE = [[80, "9"], [70, "8"], [60, "7"], [50, "6"], [40, "5"], [30, "4"], [22, "3"], [14, "2"], [7, "1"], [0, "U"]];
 const GRADES_ALEVEL = [[80, "A*"], [70, "A"], [60, "B"], [50, "C"], [40, "D"], [30, "E"], [0, "U"]];
@@ -215,13 +357,18 @@ export const EXAMS = {
       },
     },
   },
+  // ------------------------------------------------------------ Indija
+  // Vse teme indijskih izpitov so iz angleške banke (*-EXB) in dvojezične, kjer so iz
+  // exam-in-*.js (angleško in hindijsko); slovenskih osnovnih tem tu ni (test v exams.test.js).
+  // forLevel: razredi, za katere je izpit privzet (Class 6–10 → izpit 10. razreda …).
   JEEM: {
     name: "JEE Main",
     full: "JEE Main (Joint Entrance Examination – Main)",
     country: "India",
-    systems: ["IN-CBSE", "IN-ICSE"],
+    systems: ["IN-CBSE", "IN-ICSE", "IN-STATE"],
+    forLevel: [11, 12],
     about:
-      "JEE Main has 75 questions in 3 hours: 25 per subject (Mathematics, Physics, Chemistry). In each subject 20 are multiple choice (+4 correct, −1 wrong) and 5 have a numerical answer (+4, no negative marking). Maximum 300 marks. Organic and inorganic chemistry are not covered here yet.",
+      "JEE Main (NTA) has 75 questions in 3 hours: 25 per subject (Mathematics, Physics, Chemistry). In each subject 20 are multiple choice (+4 correct, −1 wrong) and 5 have a numerical answer (+4). Maximum 300 marks. The paper is also offered in Hindi. Check the current NTA information bulletin for the marking of numerical answers.",
     subjects: {
       MAT: {
         units: [
@@ -230,30 +377,32 @@ export const EXAMS = {
             `Complex numbers and quadratic equations | modulus, roots => ${M("complex-numbers")}, ${M("quadratic-equations")}`,
             `Matrices and determinants | determinants, singular matrices => ${M("matrices-and-determinants")}`,
             `Permutations and combinations | counting => ${M("permutations-and-combinations")}`,
+            `Binomial theorem and probability distributions | binomial probabilities => ${M("binomial-distribution")}`,
             `Sequences and series | AP, GP => ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
-          ]],
+          ], 30],
           ["Calculus", [
-            `Limits, continuity and differentiability | limits, derivatives => ${M("differentiation")}, UNI-ULFKKT-MAT/limita-in-zveznost-funkcije`,
-            `Integral calculus | definite integrals, areas => ${M("integration")}, UNI-ULFKKT-MAT/doloceni-integral`,
-            "Differential equations | first-order equations => UNI-ULFKKT-MAT/diferencialne-enacbe-prvega-reda",
-          ]],
+            `Limits, continuity and differentiability | standard limits, continuity => ${M("limits-and-continuity")}, ${M("differentiation")}`,
+            `Integral calculus | definite integrals, areas => ${M("integration")}`,
+            `Differential equations | variables separable, linear equations => ${M("differential-equations")}`,
+          ], 30],
           ["Coordinate geometry and vectors", [
             `Straight lines and circles | slope, distance, circles => ${M("coordinate-geometry")}, ${M("circles")}`,
-            `Vector algebra and 3D geometry | dot product, magnitude => ${M("vectors")}`,
-          ]],
+            `Vector algebra | dot product, magnitude => ${M("vectors")}`,
+            `Three-dimensional geometry | direction cosines, planes => ${M("three-dimensional-geometry")}`,
+          ], 25],
           ["Trigonometry, statistics and probability", [
-            `Trigonometry | identities, special angles => ${M("trigonometric-identities")}`,
-            `Statistics and probability | mean, median, probability => ${M("statistics-mean-median")}, ${M("probability")}`,
-          ]],
+            `Trigonometry | identities, inverse functions => ${M("trigonometric-identities")}, ${M("inverse-trigonometric-functions")}`,
+            `Statistics and probability | mean, conditional probability, Bayes' theorem => ${M("statistics-mean-median")}, ${M("probability")}, ${M("conditional-probability-and-bayes-theorem")}`,
+          ], 15],
         ],
         mock: { minutes: 60, groups: [group(8, "choice", 1, 4, -1), group(8, "choice", 2, 4, -1), group(4, "choice", 3, 4, -1), group(3, "numeric", 2, 4), group(2, "numeric", 3, 4)] },
       },
       FIZ: {
-        units: PHYSICS_UNITS,
+        units: PHYSICS_UNITS_IN,
         mock: { minutes: 60, groups: [group(8, "choice", 1, 4, -1), group(8, "choice", 2, 4, -1), group(4, "choice", 3, 4, -1), group(3, "numeric", 2, 4), group(2, "numeric", 3, 4)] },
       },
       KEM: {
-        units: CHEMISTRY_UNITS,
+        units: CHEMISTRY_UNITS_IN,
         mock: { minutes: 60, groups: [group(8, "choice", 1, 4, -1), group(8, "choice", 2, 4, -1), group(4, "choice", 3, 4, -1), group(3, "numeric", 2, 4), group(2, "numeric", 3, 4)] },
       },
     },
@@ -262,53 +411,41 @@ export const EXAMS = {
     name: "JEE Advanced",
     full: "JEE Advanced",
     country: "India",
-    systems: ["IN-CBSE", "IN-ICSE"],
+    systems: ["IN-CBSE", "IN-ICSE", "IN-STATE"],
+    forLevel: [12, 12],
     about:
       "JEE Advanced has two 3-hour papers with Mathematics, Physics and Chemistry. Question types change every year: single-correct and multiple-correct MCQs (often with negative marking), numerical answers and matching. Questions are harder and combine several ideas. The mock uses the hardest level.",
     subjects: {
       MAT: {
         units: [
           ["Algebra", [
-            `Quadratics, complex numbers and polynomials | Vieta's formulas, roots => ${M("quadratic-equations")}, ${M("complex-numbers")}, MAT-TEK-SS/polinomi-in-vietove-formule`,
-            `Sequences, series and counting | progressions, combinatorics => ${M("geometric-progressions")}, ${M("permutations-and-combinations")}, MAT-TEK-SS/zaporedja-rekurzije-in-indukcija`,
+            `Quadratics, complex numbers and polynomials | roots and coefficients => ${M("quadratic-equations")}, ${M("complex-numbers")}, ${M("polynomials")}`,
+            `Sequences, series and counting | progressions, combinatorics => ${M("geometric-progressions")}, ${M("permutations-and-combinations")}`,
             `Matrices and determinants | determinants => ${M("matrices-and-determinants")}`,
           ]],
           ["Calculus", [
-            `Differential calculus | extrema, tangents => ${M("differentiation")}, UNI-ULFKKT-MAT/odvod-funkcije`,
-            `Integral calculus | definite integrals, areas => ${M("integration")}, UNI-ULFKKT-MAT/doloceni-integral`,
+            `Limits and continuity | limits, continuity of piecewise functions => ${M("limits-and-continuity")}`,
+            `Differential calculus | extrema, tangents => ${M("differentiation")}`,
+            `Integral calculus | definite integrals, areas => ${M("integration")}`,
+            `Differential equations | first-order equations => ${M("differential-equations")}`,
           ]],
           ["Geometry and vectors", [
             `Coordinate geometry | lines, circles => ${M("coordinate-geometry")}, ${M("circles")}`,
-            `Vectors | dot product, perpendicularity => ${M("vectors")}`,
-            "Euclidean geometry | angles in circles, similar triangles => MAT-TEK-SS/koti-v-kroznici-in-tetivni-stirikotniki, MAT-TEK-SS/podobnost-menelaj-in-ceva",
+            `Vectors and 3D geometry | dot product, planes => ${M("vectors")}, ${M("three-dimensional-geometry")}`,
           ]],
           ["Probability and trigonometry", [
-            `Probability | complement, without replacement => ${M("probability")}`,
-            `Trigonometry | identities => ${M("trigonometric-identities")}`,
+            `Probability | conditional probability, Bayes' theorem => ${M("probability")}, ${M("conditional-probability-and-bayes-theorem")}`,
+            `Trigonometry | identities, inverse functions => ${M("trigonometric-identities")}, ${M("inverse-trigonometric-functions")}`,
           ]],
         ],
         mock: { minutes: 60, groups: [group(4, "choice", 2, 3, -1), group(8, "choice", 3, 3, -1), group(6, "numeric", 3, 4)] },
       },
       FIZ: {
-        units: [
-          ...PHYSICS_UNITS,
-          ["Advanced problems", [
-            "Rotation and torque | moment of inertia, torque, rolling => FIZ-TEK-SS/vrtenje-in-navor",
-            "Friction and inclined planes | connected bodies on inclines => FIZ-TEK-SS/newtonovi-zakoni-s-trenjem-in-klanci",
-            "Kirchhoff's rules | multi-loop circuits => FIZ-TEK-SS/tokokrogi-s-kirchhoffovimi-pravili",
-          ]],
-        ],
+        units: PHYSICS_UNITS_IN,
         mock: { minutes: 60, groups: [group(4, "choice", 2, 3, -1), group(8, "choice", 3, 3, -1), group(6, "numeric", 3, 4)] },
       },
       KEM: {
-        units: [
-          ...CHEMISTRY_UNITS,
-          ["Advanced problems", [
-            "Limiting reactant and yield | multi-step stoichiometry => KEM-TEK-SS/stehiometrija-z-omejitvenim-reaktantom-in-izkoristkom",
-            "Buffers and titrations | buffers, titration curves => KEM-TEK-SS/kisline-baze-ph-in-pufri, KEM-TEK-SS/analizna-kemija-titracije",
-            "Redox and electrochemistry | balancing redox, cells => KEM-TEK-SS/redoks-reakcije-in-elektrokemija",
-          ]],
-        ],
+        units: CHEMISTRY_UNITS_IN,
         mock: { minutes: 60, groups: [group(4, "choice", 2, 3, -1), group(8, "choice", 3, 3, -1), group(6, "numeric", 3, 4)] },
       },
     },
@@ -317,17 +454,22 @@ export const EXAMS = {
     name: "NEET",
     full: "NEET-UG (medical entrance)",
     country: "India",
-    systems: ["IN-CBSE", "IN-ICSE"],
+    systems: ["IN-CBSE", "IN-ICSE", "IN-STATE"],
+    forLevel: [11, 12],
     about:
-      "NEET-UG has 180 multiple-choice questions in 3 hours: 45 Physics, 45 Chemistry and 90 Biology. Correct +4, wrong −1, unanswered 0. Maximum 720 marks. Biology is not in STEMMind yet; the mock covers one subject at the real pace of one minute per question.",
+      "NEET-UG (NTA) has 180 compulsory multiple-choice questions in 3 hours: 45 Physics, 45 Chemistry and 90 Biology (Botany and Zoology). Correct +4, wrong −1, unanswered 0. Maximum 720 marks. The paper is offered in English, Hindi and other Indian languages. The mock covers one subject at the real pace of one minute per question.",
     subjects: {
       FIZ: {
-        units: PHYSICS_UNITS,
+        units: PHYSICS_UNITS_IN,
         mock: { minutes: 30, groups: [group(10, "choice", 1, 4, -1), group(14, "choice", 2, 4, -1), group(6, "choice", 3, 4, -1)] },
       },
       KEM: {
-        units: CHEMISTRY_UNITS,
+        units: CHEMISTRY_UNITS_IN,
         mock: { minutes: 30, groups: [group(12, "choice", 1, 4, -1), group(12, "choice", 2, 4, -1), group(6, "choice", 3, 4, -1)] },
+      },
+      BIO: {
+        units: BIOLOGY_UNITS_NEET,
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 4, -1), group(14, "choice", 2, 4, -1), group(6, "choice", 3, 4, -1)] },
       },
     },
   },
@@ -336,20 +478,22 @@ export const EXAMS = {
     full: "CBSE Class 10 board exams",
     country: "India",
     systems: ["IN-CBSE"],
+    board: true,
+    forLevel: [6, 10],
     about:
-      "CBSE Class 10 board papers are 3 hours and 80 marks: section A has 1-mark MCQs and assertion–reason questions, then 2-, 3-, 4- and 5-mark questions and case studies. Write every step for the longer answers. The mock covers the MCQ section and short numerical questions.",
+      "CBSE Class 10 papers are 3 hours and 80 marks (plus 20 internal assessment): section A has 1-mark MCQs and assertion–reason questions, then 2-, 3-, 4- and 5-mark questions and case studies. Science is one paper with physics, chemistry and biology. Write every step for the longer answers. The mock covers the MCQ section and short numerical questions.",
     subjects: {
       MAT: {
         units: [
           ["Number systems and algebra", [
-            "Real numbers | HCF, LCM, prime factorisation => MAT-OS-7/najvecji-skupni-delitelj-in-najmanjsi-skupni-veckratnik, MAT-OS-7/prastevila-in-razcep",
-            "Polynomials | factorising, zeros => MAT-OS-8/razstavljanje",
+            `Real numbers | HCF, LCM, prime factorisation => ${M("real-numbers")}`,
+            `Polynomials | zeros and coefficients => ${M("polynomials")}`,
             `Pair of linear equations in two variables | elimination, substitution => ${M("systems-of-linear-equations")}`,
             `Quadratic equations | factorising, discriminant => ${M("quadratic-equations")}`,
             `Arithmetic progressions | nth term, sum => ${M("arithmetic-progressions")}`,
           ]],
           ["Geometry and coordinate geometry", [
-            "Triangles | similarity => MAT-OS-9/podobni-trikotniki",
+            `Triangles | similarity, basic proportionality theorem => ${M("similar-triangles")}`,
             `Coordinate geometry | distance formula, section formula => ${M("coordinate-geometry")}`,
           ]],
           ["Trigonometry", [
@@ -357,9 +501,9 @@ export const EXAMS = {
             `Some applications of trigonometry | heights and distances => ${M("right-triangle-trigonometry")}`,
           ]],
           ["Mensuration, statistics and probability", [
-            `Areas related to circles | sectors and segments => ${M("circles")}, MAT-OS-8/krozni-lok-in-krozni-izsek`,
-            "Surface areas and volumes | cylinders, cones, spheres => MAT-OS-9/valj, MAT-OS-9/stozec, MAT-OS-9/krogla",
-            `Statistics | mean, median => ${M("statistics-mean-median")}`,
+            `Areas related to circles | sectors and segments => ${M("circles")}`,
+            `Surface areas and volumes | combined solids => ${M("surface-areas-and-volumes")}`,
+            `Statistics | mean, median and mode of grouped data => ${M("statistics-of-grouped-data")}`,
             `Probability | classical probability => ${M("probability")}`,
           ]],
         ],
@@ -368,9 +512,9 @@ export const EXAMS = {
       FIZ: {
         units: [
           ["Physics (Science paper)", [
-            `Light – reflection and refraction | refractive index, lenses => ${F("optics")}`,
-            "Electricity | Ohm's law, resistors, power => FIZ-OS-9/upor-in-ohmov-zakon, FIZ-OS-9/elektricno-delo-in-moc, FIZ-EXB/current-electricity",
-            `Magnetic effects of electric current | force on a conductor => ${F("magnetism-and-induction")}`,
+            `Light – reflection and refraction | mirror and lens formula, refractive index => ${F("spherical-mirrors")}, ${F("optics")}`,
+            `Electricity | Ohm's law, resistors, power, energy => ${F("current-electricity")}, ${F("electric-power-and-household-circuits")}`,
+            `Magnetic effects of electric current | force on a conductor, domestic circuits => ${F("magnetism-and-induction")}, ${F("electric-power-and-household-circuits")}`,
           ]],
         ],
         mock: { minutes: 30, groups: [group(8, "choice", 1, 1), group(4, "numeric", 2, 2), group(2, "numeric", 3, 3)] },
@@ -378,10 +522,22 @@ export const EXAMS = {
       KEM: {
         units: [
           ["Chemistry (Science paper)", [
-            "Chemical reactions and equations | balancing equations => KEM-OS-8/urejanje-kemijskih-enacb, KEM-OS-8/kemijska-reakcija",
-            "Acids, bases and salts | pH scale => KEM-OS-8/kisline-in-baze, KEM-OS-8/ph-lestvica",
-            "Metals and non-metals | properties and reactions => KEM-OS-8/kovine, KEM-OS-8/nekovine",
-            "Periodic classification of elements | periodic table => KEM-OS-8/periodni-sistem",
+            `Chemical reactions and equations | balancing, types of reactions => ${K("chemical-reactions-and-equations")}`,
+            `Acids, bases and salts | pH scale, neutralisation => ${K("acids-bases-and-ph")}`,
+            `Metals and non-metals | reactivity series, extraction => ${K("metals-and-non-metals")}`,
+            `Carbon and its compounds | functional groups, homologous series => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
+          ]],
+        ],
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(4, "choice", 2, 1)] },
+      },
+      BIO: {
+        units: [
+          ["Biology (Science paper)", [
+            `Life processes | nutrition, respiration, transport, excretion => ${Bi("human-physiology")}, ${Bi("plant-physiology")}`,
+            `Control and coordination | nervous system, hormones, plant hormones => ${Bi("human-physiology")}`,
+            `How do organisms reproduce? | sexual and asexual reproduction => ${Bi("reproduction")}`,
+            `Heredity | Mendel's experiments, sex determination => ${Bi("genetics-and-inheritance")}`,
+            `Our environment | food chains, ten per cent law => ${Bi("ecology-and-environment")}`,
           ]],
         ],
         mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(4, "choice", 2, 1)] },
@@ -393,26 +549,30 @@ export const EXAMS = {
     full: "CBSE Class 12 board exams",
     country: "India",
     systems: ["IN-CBSE"],
+    board: true,
+    forLevel: [11, 12],
     about:
-      "CBSE Class 12 papers are 3 hours: Mathematics 80 marks, Physics and Chemistry 70 marks (plus practicals). Section A has 1-mark MCQs and assertion–reason questions, followed by short and long answers and case studies. The mock covers the MCQ section and short numerical questions.",
+      "CBSE Class 12 papers are 3 hours: Mathematics 80 marks, Physics, Chemistry and Biology 70 marks (plus practicals). Section A has 1-mark MCQs and assertion–reason questions, followed by short and long answers and case studies. The mock covers the MCQ section and short numerical questions.",
     subjects: {
       MAT: {
         units: [
           ["Relations, functions and algebra", [
             `Relations and functions | composition, inverse => ${M("functions")}`,
-            `Inverse trigonometric functions | principal values => ${M("trigonometric-identities")}`,
+            `Inverse trigonometric functions | principal values => ${M("inverse-trigonometric-functions")}`,
             `Matrices and determinants | determinants, inverse => ${M("matrices-and-determinants")}`,
           ]],
           ["Calculus", [
-            `Continuity and differentiability | derivatives => ${M("differentiation")}, UNI-ULFKKT-MAT/limita-in-zveznost-funkcije`,
+            `Continuity and differentiability | continuity, derivatives => ${M("limits-and-continuity")}, ${M("differentiation")}`,
             `Applications of derivatives | tangents, maxima and minima => ${M("differentiation")}`,
-            `Integrals | definite integrals => ${M("integration")}, UNI-ULFKKT-MAT/doloceni-integral`,
+            `Integrals | definite integrals => ${M("integration")}`,
             `Applications of integrals | area under and between curves => ${M("integration")}`,
-            "Differential equations | first-order equations => UNI-ULFKKT-MAT/diferencialne-enacbe-prvega-reda",
+            `Differential equations | variables separable, linear equations => ${M("differential-equations")}`,
           ]],
-          ["Vectors and probability", [
-            `Vectors and three-dimensional geometry | dot product, magnitude => ${M("vectors")}`,
-            `Probability | conditional probability, complement => ${M("probability")}`,
+          ["Vectors, 3D geometry, linear programming and probability", [
+            `Vectors | dot product, magnitude => ${M("vectors")}`,
+            `Three-dimensional geometry | direction cosines, angle between lines => ${M("three-dimensional-geometry")}`,
+            `Linear programming | corner-point method => ${M("linear-programming")}`,
+            `Probability | conditional probability, Bayes' theorem => ${M("conditional-probability-and-bayes-theorem")}, ${M("probability")}`,
           ]],
         ],
         mock: { minutes: 60, groups: [group(10, "choice", 2, 1), group(6, "choice", 3, 1), group(4, "numeric", 2, 2), group(4, "numeric", 3, 3)] },
@@ -423,11 +583,12 @@ export const EXAMS = {
             `Electric charges, fields and capacitance | Coulomb's law, capacitors => ${F("electrostatics-and-capacitors")}`,
             `Current electricity | circuits, emf => ${F("current-electricity")}`,
             `Moving charges, magnetism and EMI | magnetic force, induction => ${F("magnetism-and-induction")}`,
-            "Alternating current | rms values, reactance => UNI-ULFKKT-ELEKTROVAR/izmenicni-tokovi",
+            `Alternating current | rms values, reactance, resonance => ${F("alternating-current")}`,
           ]],
-          ["Optics and modern physics", [
-            `Ray and wave optics | refraction, lenses => ${F("optics")}`,
+          ["Optics, modern physics and electronics", [
+            `Ray and wave optics | mirrors, refraction, lenses => ${F("spherical-mirrors")}, ${F("optics")}`,
             `Dual nature, atoms and nuclei | photoelectric effect, half-life => ${F("modern-physics")}`,
+            `Semiconductor electronics | diodes, logic gates => ${F("semiconductors-and-logic-gates")}`,
           ]],
         ],
         mock: { minutes: 45, groups: [group(8, "choice", 1, 1), group(8, "choice", 2, 1), group(4, "numeric", 2, 2), group(3, "numeric", 3, 3)] },
@@ -435,12 +596,362 @@ export const EXAMS = {
       KEM: {
         units: [
           ["Physical chemistry", [
-            `Solutions | concentration => ${K("solutions-and-concentration")}`,
+            `Solutions | concentration, colligative properties => ${K("solutions-and-concentration")}, ${K("colligative-properties")}`,
             `Electrochemistry | cells, electrolysis => ${K("electrochemistry")}`,
             `Chemical kinetics | rate law, half-life => ${K("chemical-kinetics")}`,
-          ]],
+          ], 35],
+          ["Inorganic chemistry", [
+            `The d- and f-block elements | oxidation states, magnetic moments => ${K("s-p-d-and-f-block-elements")}`,
+            `Coordination compounds | oxidation state, isomerism, magnetism => ${K("coordination-compounds")}`,
+          ], 25],
+          ["Organic chemistry", [
+            `Naming and isomerism of organic compounds | IUPAC names, isomers => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
+            `Haloalkanes to amines | reactions, tests, reactivity => ${K("organic-chemistry-reactions")}`,
+          ], 40],
         ],
         mock: { minutes: 30, groups: [group(8, "choice", 1, 1), group(4, "choice", 2, 1), group(3, "numeric", 3, 2)] },
+      },
+      BIO: {
+        units: [
+          ["Reproduction and genetics", [
+            `Sexual reproduction in flowering plants and humans | gametogenesis, menstrual cycle => ${Bi("reproduction")}`,
+            `Principles of inheritance and variation | Mendelian ratios, sex-linked traits => ${Bi("genetics-and-inheritance")}`,
+            `Molecular basis of inheritance | DNA, replication, genetic code => ${Bi("molecular-basis-of-inheritance")}`,
+            `Evolution | Hardy–Weinberg principle, natural selection => ${Bi("evolution")}`,
+          ], 45],
+          ["Biology and human welfare, biotechnology, ecology", [
+            `Human health and disease | pathogens, immunity => ${Bi("human-health-and-disease")}`,
+            `Biotechnology | restriction enzymes, PCR, applications => ${Bi("biotechnology")}`,
+            `Organisms, populations and ecosystems | population growth, energy flow => ${Bi("ecology-and-environment")}`,
+          ], 55],
+        ],
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(6, "choice", 2, 1), group(2, "numeric", 3, 2)] },
+      },
+    },
+  },
+  ICSE10: {
+    name: "ICSE Class 10",
+    full: "ICSE Class 10 examination (CISCE)",
+    country: "India",
+    systems: ["IN-ICSE"],
+    board: true,
+    forLevel: [6, 10],
+    about:
+      "ICSE papers are 80 marks (plus 20 internal assessment). Mathematics: Section A (40 marks) is compulsory and starts with 15 one-mark MCQs; in Section B you answer any four of seven longer questions. Physics, Chemistry and Biology (Science Papers 1–3): Section A (40 marks, compulsory, starting with MCQs), Section B any four of six questions. The mock covers the MCQs and short numerical questions of Section A.",
+    subjects: {
+      MAT: {
+        units: [
+          ["Commercial mathematics", [
+            `GST, banking, shares and dividends | GST, recurring deposits, dividends => ${M("commercial-mathematics")}`,
+          ], 10],
+          ["Algebra", [
+            `Linear inequations | solving, integer solutions => ${M("quadratic-inequalities")}`,
+            `Quadratic equations | roots, word problems => ${M("quadratic-equations")}`,
+            `Factorisation | remainder and factor theorem => ${M("polynomials")}`,
+            `Matrices | operations => ${M("matrices-and-determinants")}`,
+            `Arithmetic and geometric progressions | nth term, sum => ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
+            `Coordinate geometry | section and mid-point formula, equation of a line => ${M("coordinate-geometry")}`,
+          ], 35],
+          ["Geometry, mensuration and trigonometry", [
+            `Similarity | similar triangles, area ratios => ${M("similar-triangles")}`,
+            `Mensuration | cylinder, cone, sphere => ${M("surface-areas-and-volumes")}`,
+            `Trigonometry | identities, heights and distances => ${M("trigonometric-identities")}, ${M("right-triangle-trigonometry")}`,
+          ], 35],
+          ["Statistics and probability", [
+            `Statistics | mean, median, mode, quartiles => ${M("statistics-of-grouped-data")}, ${M("statistics-mean-median")}`,
+            `Probability | classical probability => ${M("probability")}`,
+          ], 20],
+        ],
+        mock: { minutes: 45, groups: [group(10, "choice", 1, 1), group(5, "choice", 2, 1), group(4, "numeric", 2, 3), group(2, "numeric", 3, 4)] },
+      },
+      FIZ: {
+        units: [
+          ["Force, work, power and energy", [
+            `Force and moments | moment of a force, centre of gravity => ${F("moments-and-equilibrium")}`,
+            `Work, energy and power | work, kinetic and potential energy, power => ${F("work-energy-and-power")}`,
+            `Machines | mechanical advantage, velocity ratio, efficiency => ${F("machines")}`,
+          ], 30],
+          ["Light and sound", [
+            `Refraction and lenses | refractive index, lens formula => ${F("optics")}`,
+            `Sound | echoes, wave speed, resonance => ${F("waves-and-sound")}`,
+          ], 20],
+          ["Electricity and magnetism", [
+            `Current electricity | Ohm's law, resistors in series and parallel => ${F("current-electricity")}`,
+            `Electrical power and household circuits | kWh, fuses => ${F("electric-power-and-household-circuits")}`,
+            `Electromagnetism | magnetic effect of current, induction => ${F("magnetism-and-induction")}`,
+          ], 25],
+          ["Heat and modern physics", [
+            `Calorimetry | specific heat capacity, latent heat => ${F("calorimetry")}`,
+            `Radioactivity | radiations, half-life => ${F("modern-physics")}`,
+          ], 25],
+        ],
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(5, "choice", 2, 1), group(3, "numeric", 2, 2), group(2, "numeric", 3, 3)] },
+      },
+      KEM: {
+        units: [
+          ["Periodic table and bonding", [
+            `Periodic properties | trends across periods and groups => ${K("periodic-table-and-periodic-properties")}`,
+            `Chemical bonding | ionic, covalent and coordinate bonds => ${K("chemical-bonding")}`,
+          ], 20],
+          ["Acids, analysis and electrolysis", [
+            `Acids, bases and salts | pH, salts => ${K("acids-bases-and-ph")}`,
+            `Analytical chemistry | precipitates with NaOH and NH4OH => ${K("identification-of-ions-and-gases")}`,
+            `Electrolysis and study of gases | electrode products, gas tests => ${K("identification-of-ions-and-gases")}`,
+          ], 30],
+          ["Mole concept and metallurgy", [
+            `Mole concept and stoichiometry | moles, gas volumes, empirical formula => ${K("mole-concept")}, ${K("stoichiometry")}`,
+            `Metallurgy | reactivity series, extraction => ${K("metals-and-non-metals")}`,
+          ], 30],
+          ["Organic chemistry", [
+            `Organic chemistry | homologous series, IUPAC names, isomers => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
+          ], 20],
+        ],
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(5, "choice", 2, 1), group(3, "numeric", 2, 2), group(2, "numeric", 3, 3)] },
+      },
+      BIO: {
+        units: [
+          ["Cells and genetics", [
+            `Cell cycle and cell division | mitosis, meiosis => ${Bi("cell-cycle-and-cell-division")}`,
+            `Genetics | Mendel's laws, sex-linked inheritance => ${Bi("genetics-and-inheritance")}`,
+          ], 25],
+          ["Plant physiology", [
+            `Absorption, transpiration and photosynthesis | osmosis, transpiration, photosynthesis => ${Bi("plant-physiology")}`,
+          ], 20],
+          ["Human anatomy and physiology", [
+            `Circulatory, excretory, nervous and endocrine systems | heart, kidney, neurons, hormones => ${Bi("human-physiology")}`,
+            `Reproductive system | gametes, menstrual cycle => ${Bi("reproduction")}`,
+          ], 40],
+          ["Evolution, population and environment", [
+            `Human evolution and population | evidence of evolution, population growth => ${Bi("evolution")}, ${Bi("ecology-and-environment")}`,
+          ], 15],
+        ],
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(5, "choice", 2, 1), group(3, "choice", 3, 2)] },
+      },
+    },
+  },
+  ISC12: {
+    name: "ISC Class 12",
+    full: "ISC Class 12 examination (CISCE)",
+    country: "India",
+    systems: ["IN-ICSE"],
+    board: true,
+    forLevel: [11, 12],
+    about:
+      "ISC papers are 3 hours. Mathematics (80 marks): Section A (65 marks) is compulsory; then you answer either Section B (vectors, 3D geometry, applications of integrals) or Section C (commerce and economics applications, regression, linear programming). Physics, Chemistry and Biology are 70 marks plus practicals and start with compulsory short and objective questions. The mock covers the objective and short numerical questions.",
+    subjects: {
+      MAT: {
+        units: [
+          ["Section A: algebra and calculus", [
+            `Relations, functions and inverse trigonometric functions | principal values => ${M("functions")}, ${M("inverse-trigonometric-functions")}`,
+            `Matrices and determinants | determinants, inverse => ${M("matrices-and-determinants")}`,
+            `Continuity and differentiability | limits, derivatives => ${M("limits-and-continuity")}, ${M("differentiation")}`,
+            `Integrals and differential equations | definite integrals, first-order equations => ${M("integration")}, ${M("differential-equations")}`,
+            `Probability | conditional probability, Bayes' theorem => ${M("conditional-probability-and-bayes-theorem")}`,
+          ], 80],
+          ["Section B or C", [
+            `Vectors and three-dimensional geometry | dot product, planes => ${M("vectors")}, ${M("three-dimensional-geometry")}`,
+            `Linear programming | corner-point method => ${M("linear-programming")}`,
+          ], 20],
+        ],
+        mock: { minutes: 60, groups: [group(10, "choice", 2, 1), group(5, "choice", 3, 1), group(4, "numeric", 2, 2), group(4, "numeric", 3, 4)] },
+      },
+      FIZ: {
+        units: [
+          ["Electricity and magnetism", [
+            `Electrostatics | Coulomb's law, capacitors => ${F("electrostatics-and-capacitors")}`,
+            `Current electricity | circuits, emf => ${F("current-electricity")}`,
+            `Magnetism and EMI | magnetic force, induction => ${F("magnetism-and-induction")}`,
+            `Alternating current | rms values, impedance, resonance => ${F("alternating-current")}`,
+          ], 50],
+          ["Optics, modern physics and electronics", [
+            `Ray and wave optics | mirrors, refraction, lenses => ${F("spherical-mirrors")}, ${F("optics")}`,
+            `Dual nature, atoms and nuclei | photoelectric effect, half-life => ${F("modern-physics")}`,
+            `Semiconductor devices | diodes, logic gates => ${F("semiconductors-and-logic-gates")}`,
+          ], 50],
+        ],
+        mock: { minutes: 45, groups: [group(8, "choice", 1, 1), group(6, "choice", 2, 1), group(4, "numeric", 2, 2), group(3, "numeric", 3, 3)] },
+      },
+      KEM: {
+        units: [
+          ["Physical chemistry", [
+            `Solutions | colligative properties => ${K("colligative-properties")}, ${K("solutions-and-concentration")}`,
+            `Electrochemistry | cells, electrolysis => ${K("electrochemistry")}`,
+            `Chemical kinetics | rate law, half-life => ${K("chemical-kinetics")}`,
+          ], 35],
+          ["Inorganic chemistry", [
+            `d- and f-block elements | oxidation states, magnetic moments => ${K("s-p-d-and-f-block-elements")}`,
+            `Coordination compounds | isomerism, magnetism => ${K("coordination-compounds")}`,
+          ], 25],
+          ["Organic chemistry", [
+            `Naming and isomerism | IUPAC names, isomers => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
+            `Organic reactions | haloalkanes, alcohols, carbonyls, amines => ${K("organic-chemistry-reactions")}`,
+          ], 40],
+        ],
+        mock: { minutes: 30, groups: [group(8, "choice", 1, 1), group(4, "choice", 2, 1), group(3, "numeric", 3, 2)] },
+      },
+      BIO: {
+        units: [
+          ["Reproduction, genetics and evolution", [
+            `Reproduction | flowering plants, human reproduction => ${Bi("reproduction")}`,
+            `Genetics and molecular biology | inheritance, DNA => ${Bi("genetics-and-inheritance")}, ${Bi("molecular-basis-of-inheritance")}`,
+            `Evolution | Hardy–Weinberg principle => ${Bi("evolution")}`,
+          ], 50],
+          ["Human welfare, biotechnology and ecology", [
+            `Biology and human welfare | health and disease => ${Bi("human-health-and-disease")}`,
+            `Biotechnology | tools and applications => ${Bi("biotechnology")}`,
+            `Ecology | populations, ecosystems => ${Bi("ecology-and-environment")}`,
+          ], 50],
+        ],
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(6, "choice", 2, 1), group(2, "numeric", 3, 2)] },
+      },
+    },
+  },
+  STATE10: {
+    name: "State board Class 10",
+    full: "State board Class 10 exams (SSC / SSLC / Matric)",
+    country: "India",
+    systems: ["IN-STATE"],
+    board: true,
+    forLevel: [6, 10],
+    about:
+      "Each state board sets its own Class 10 papers. Many boards use NCERT textbooks for mathematics and science; others (for example Maharashtra, Tamil Nadu or Kerala) have their own books that cover largely the same topics. Most papers start with objective questions (MCQs, fill in the blanks) followed by short and long answers. Check your board's latest blueprint; the mock covers objective and short numerical questions on the common topics.",
+    subjects: {
+      MAT: {
+        units: [
+          ["Algebra", [
+            `Real numbers | HCF, LCM => ${M("real-numbers")}`,
+            `Polynomials | zeros and coefficients => ${M("polynomials")}`,
+            `Linear equations in two variables | elimination, substitution => ${M("systems-of-linear-equations")}`,
+            `Quadratic equations | roots, discriminant => ${M("quadratic-equations")}`,
+            `Arithmetic progressions | nth term, sum => ${M("arithmetic-progressions")}`,
+          ]],
+          ["Geometry and trigonometry", [
+            `Similar triangles | basic proportionality theorem, Pythagoras => ${M("similar-triangles")}`,
+            `Coordinate geometry | distance and section formula => ${M("coordinate-geometry")}`,
+            `Trigonometry | ratios, identities, heights and distances => ${M("right-triangle-trigonometry")}, ${M("trigonometric-identities")}`,
+          ]],
+          ["Mensuration, statistics and probability", [
+            `Mensuration | areas of circles, surface areas and volumes => ${M("circles")}, ${M("surface-areas-and-volumes")}`,
+            `Statistics | mean, median and mode of grouped data => ${M("statistics-of-grouped-data")}`,
+            `Probability | classical probability => ${M("probability")}`,
+          ]],
+        ],
+        mock: { minutes: 45, groups: [group(10, "choice", 1, 1), group(5, "choice", 2, 1), group(4, "numeric", 2, 2), group(3, "numeric", 3, 3)] },
+      },
+      FIZ: {
+        units: [
+          ["Physics", [
+            `Light | mirrors, refraction, lenses => ${F("spherical-mirrors")}, ${F("optics")}`,
+            `Electricity | Ohm's law, power, energy => ${F("current-electricity")}, ${F("electric-power-and-household-circuits")}`,
+            `Magnetic effects of current | force, induction => ${F("magnetism-and-induction")}`,
+            `Heat | specific heat, latent heat => ${F("calorimetry")}`,
+          ]],
+        ],
+        mock: { minutes: 30, groups: [group(8, "choice", 1, 1), group(4, "numeric", 2, 2), group(2, "numeric", 3, 3)] },
+      },
+      KEM: {
+        units: [
+          ["Chemistry", [
+            `Chemical reactions and equations | balancing, types => ${K("chemical-reactions-and-equations")}`,
+            `Acids, bases and salts | pH, neutralisation => ${K("acids-bases-and-ph")}`,
+            `Metals and non-metals | reactivity series, extraction => ${K("metals-and-non-metals")}`,
+            `Periodic classification | periodic trends => ${K("periodic-table-and-periodic-properties")}`,
+            `Carbon and its compounds | functional groups, naming => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
+          ]],
+        ],
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(4, "choice", 2, 1)] },
+      },
+      BIO: {
+        units: [
+          ["Biology", [
+            `Life processes | nutrition, respiration, transport, excretion => ${Bi("human-physiology")}, ${Bi("plant-physiology")}`,
+            `Reproduction | sexual and asexual reproduction => ${Bi("reproduction")}`,
+            `Heredity | Mendel's experiments => ${Bi("genetics-and-inheritance")}`,
+            `Our environment | food chains, energy flow => ${Bi("ecology-and-environment")}`,
+          ]],
+        ],
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(4, "choice", 2, 1)] },
+      },
+    },
+  },
+  STATE12: {
+    name: "State board Class 12",
+    full: "State board Class 12 exams (HSC / PUC / Intermediate)",
+    country: "India",
+    systems: ["IN-STATE"],
+    board: true,
+    forLevel: [11, 12],
+    about:
+      "Each state board sets its own Class 12 (HSC, PUC or Intermediate) papers; many follow the NCERT syllabus, which is also the base of JEE Main, NEET and most state entrance tests (CETs). Papers usually start with objective questions followed by short and long answers. Check your board's latest blueprint; the mock covers objective and short numerical questions on the common topics.",
+    subjects: {
+      MAT: {
+        units: [
+          ["Algebra and functions", [
+            `Relations, functions and inverse trigonometric functions | principal values => ${M("functions")}, ${M("inverse-trigonometric-functions")}`,
+            `Matrices and determinants | determinants, inverse => ${M("matrices-and-determinants")}`,
+          ]],
+          ["Calculus", [
+            `Continuity and differentiability | limits, derivatives => ${M("limits-and-continuity")}, ${M("differentiation")}`,
+            `Integrals | definite integrals, areas => ${M("integration")}`,
+            `Differential equations | first-order equations => ${M("differential-equations")}`,
+          ]],
+          ["Vectors, 3D geometry, linear programming and probability", [
+            `Vectors and three-dimensional geometry | dot product, lines, planes => ${M("vectors")}, ${M("three-dimensional-geometry")}`,
+            `Linear programming | corner-point method => ${M("linear-programming")}`,
+            `Probability | conditional probability, Bayes' theorem => ${M("conditional-probability-and-bayes-theorem")}`,
+          ]],
+        ],
+        mock: { minutes: 60, groups: [group(10, "choice", 2, 1), group(6, "choice", 3, 1), group(4, "numeric", 2, 2), group(4, "numeric", 3, 3)] },
+      },
+      FIZ: {
+        units: [
+          ["Electricity and magnetism", [
+            `Electrostatics | Coulomb's law, capacitors => ${F("electrostatics-and-capacitors")}`,
+            `Current electricity | circuits, emf => ${F("current-electricity")}`,
+            `Magnetism and EMI | magnetic force, induction => ${F("magnetism-and-induction")}`,
+            `Alternating current | rms values, impedance => ${F("alternating-current")}`,
+          ]],
+          ["Optics, modern physics and electronics", [
+            `Optics | mirrors, refraction, lenses => ${F("spherical-mirrors")}, ${F("optics")}`,
+            `Dual nature, atoms and nuclei | photoelectric effect, half-life => ${F("modern-physics")}`,
+            `Semiconductor electronics | diodes, logic gates => ${F("semiconductors-and-logic-gates")}`,
+          ]],
+        ],
+        mock: { minutes: 45, groups: [group(8, "choice", 1, 1), group(8, "choice", 2, 1), group(4, "numeric", 2, 2), group(3, "numeric", 3, 3)] },
+      },
+      KEM: {
+        units: [
+          ["Physical chemistry", [
+            `Solutions | colligative properties => ${K("solutions-and-concentration")}, ${K("colligative-properties")}`,
+            `Electrochemistry | cells, electrolysis => ${K("electrochemistry")}`,
+            `Chemical kinetics | rate law, half-life => ${K("chemical-kinetics")}`,
+          ], 35],
+          ["Inorganic chemistry", [
+            `d- and f-block elements | oxidation states, magnetic moments => ${K("s-p-d-and-f-block-elements")}`,
+            `Coordination compounds | isomerism, magnetism => ${K("coordination-compounds")}`,
+          ], 25],
+          ["Organic chemistry", [
+            `Naming and isomerism | IUPAC names, isomers => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
+            `Organic reactions | reagents, tests, reactivity => ${K("organic-chemistry-reactions")}`,
+          ], 40],
+        ],
+        mock: { minutes: 30, groups: [group(8, "choice", 1, 1), group(4, "choice", 2, 1), group(3, "numeric", 3, 2)] },
+      },
+      BIO: {
+        units: [
+          ["Reproduction, genetics and evolution", [
+            `Reproduction | flowering plants, human reproduction => ${Bi("reproduction")}`,
+            `Genetics | Mendelian ratios, sex-linked traits => ${Bi("genetics-and-inheritance")}`,
+            `Molecular basis of inheritance | DNA, replication => ${Bi("molecular-basis-of-inheritance")}`,
+            `Evolution | Hardy–Weinberg principle => ${Bi("evolution")}`,
+          ], 50],
+          ["Human welfare, biotechnology and ecology", [
+            `Human health and disease | pathogens, immunity => ${Bi("human-health-and-disease")}`,
+            `Biotechnology | tools and applications => ${Bi("biotechnology")}`,
+            `Ecology | populations, ecosystems => ${Bi("ecology-and-environment")}`,
+          ], 50],
+        ],
+        mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(6, "choice", 2, 1), group(2, "numeric", 3, 2)] },
       },
     },
   },
@@ -980,5 +1491,8 @@ export const EXAMS = {
   },
 };
 
+// Izpiti drugih regij so v svojih datotekah (enaka oblika podatkov).
+Object.assign(EXAMS, EXAMS_SI, EXAMS_SOUTHASIA, EXAMS_ASIA, EXAMS_AFRICA, EXAMS_WEST);
+
 export const EXAM_IDS = Object.keys(EXAMS);
-export const SUBJECT_NAMES_EN = { MAT: "Mathematics", FIZ: "Physics", KEM: "Chemistry" };
+export const SUBJECT_NAMES_EN = { MAT: "Mathematics", FIZ: "Physics", KEM: "Chemistry", BIO: "Biology" };

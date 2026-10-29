@@ -466,6 +466,8 @@
   "exam.startMock": "Începe simularea",
   "exam.historyEmpty": "Aici vor apărea rezultatele simulărilor tale.",
   "exam.topicsNote": "Alege o temă și exersează doar pe ea. Întrebările de examen sunt în engleză; tutorele ți le explică în limba ta.",
+  "exam.topicsPick": "Alege o temă și exersează doar tema aceea.",
+  "exam.national": "Examene naționale (NPZ, Matura)",
   "exam.finish": "Termină examenul",
   "exam.confirmFinish": "Termini examenul acum? Întrebările fără răspuns nu aduc puncte.",
   "exam.scaled": "Scor pe scala examenului: aproximativ <b>{value}</b> ({min}–{max})",

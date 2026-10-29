@@ -46,11 +46,11 @@ test("exams: every exam subject is a hidden path whose topics all have tasks", (
 test("exams: own exams per school system and default key", () => {
   assert.deepEqual(examsFor("US").own, ["SAT"]);
   assert.ok(examsFor("IN-CBSE").own.includes("JEEM") && examsFor("IN-CBSE").own.includes("NEET"));
-  assert.deepEqual(examsFor("CN").own, ["GAOKAO"]);
+  assert.deepEqual(examsFor("CN").own, ["GAOKAO", "ZHONGKAO"]);
   assert.equal(examKeyFor({ school_system: "US", subject: "FIZ" }), "MAT-EX-SAT");
   assert.equal(examKeyFor({ school_system: "IN-CBSE", subject: "FIZ" }, "NEET"), "FIZ-EX-NEET");
   assert.equal(examKeyFor({ school_system: "IN-CBSE", subject: "MAT" }, "NEET"), "FIZ-EX-NEET");
-  assert.equal(examKeyFor({ school_system: "BD", subject: "MAT" }), "MAT-EX-SAT");
+  assert.equal(examKeyFor({ school_system: "PH", subject: "MAT" }), "MAT-EX-SAT");
   const info = examInfo("MAT-EX-JEEM", "IN-CBSE");
   assert.equal(info.mock.tasks, 25);
   assert.equal(info.mock.maxPoints, 100);

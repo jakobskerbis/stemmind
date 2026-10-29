@@ -456,6 +456,8 @@
   "exam.startMock": "开始模拟考试",
   "exam.historyEmpty": "你的模拟考试成绩会显示在这里。",
   "exam.topicsNote": "选一个主题,只练这个主题。考题是英文的,辅导老师会用你的语言讲解。",
+  "exam.topicsPick": "选一个主题，只练习这一个。",
+  "exam.national": "国家考试（NPZ、Matura）",
   "exam.finish": "结束考试",
   "exam.confirmFinish": "现在结束考试吗?未作答的题目不得分。",
   "exam.scaled": "按考试分制的成绩:约<b>{value}</b>({min}–{max})",

@@ -461,6 +461,8 @@
   "exam.startMock": "Start mock exam",
   "exam.historyEmpty": "Results of your mock exams will appear here.",
   "exam.topicsNote": "Pick a topic and practise just that. Exam questions are in English; the tutor explains them in your language.",
+  "exam.topicsPick": "Pick a topic and practise just that one.",
+  "exam.national": "National exams (NPZ, Matura)",
   "exam.finish": "Finish exam",
   "exam.confirmFinish": "Finish the exam now? Unanswered questions score no marks.",
   "exam.scaled": "Score on the exam scale: about <b>{value}</b> ({min}–{max})",

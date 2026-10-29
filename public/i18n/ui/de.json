@@ -461,6 +461,8 @@
   "exam.startMock": "Probeprüfung starten",
   "exam.historyEmpty": "Die Ergebnisse deiner Probeprüfungen erscheinen hier.",
   "exam.topicsNote": "Wähle ein Thema und übe nur dieses. Die Prüfungsaufgaben sind auf Englisch; der Tutor erklärt sie dir in deiner Sprache.",
+  "exam.topicsPick": "Wähle ein Thema und übe nur dieses.",
+  "exam.national": "Staatliche Prüfungen (NPZ, Matura)",
   "exam.finish": "Prüfung beenden",
   "exam.confirmFinish": "Prüfung jetzt beenden? Unbeantwortete Fragen bringen keine Punkte.",
   "exam.scaled": "Ergebnis auf der Prüfungsskala: etwa <b>{value}</b> ({min}–{max})",

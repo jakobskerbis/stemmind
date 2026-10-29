@@ -466,6 +466,8 @@
   "exam.startMock": "Započni probni ispit",
   "exam.historyEmpty": "Ovdje će se prikazati rezultati tvojih probnih ispita.",
   "exam.topicsNote": "Odaberi temu i vježbaj samo nju. Ispitni zadaci su na engleskom; instruktor ti ih objasni na tvom jeziku.",
+  "exam.topicsPick": "Izaberi temu i vježbaj samo nju.",
+  "exam.national": "Državni ispiti (NPZ, matura)",
   "exam.finish": "Završi ispit",
   "exam.confirmFinish": "Želiš li sada završiti ispit? Pitanja bez odgovora ne donose bodove.",
   "exam.scaled": "Rezultat na skali ispita: oko <b>{value}</b> ({min}–{max})",

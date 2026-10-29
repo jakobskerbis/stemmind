@@ -461,6 +461,8 @@
   "exam.startMock": "Começar simulado",
   "exam.historyEmpty": "Os resultados dos teus simulados aparecerão aqui.",
   "exam.topicsNote": "Escolhe um tema e pratica só esse. As questões do exame estão em inglês; o tutor explica-as na tua língua.",
+  "exam.topicsPick": "Escolhe um tema e pratica só esse.",
+  "exam.national": "Exames nacionais (NPZ, Matura)",
   "exam.finish": "Terminar exame",
   "exam.confirmFinish": "Terminar o exame agora? Questões sem resposta não valem pontos.",
   "exam.scaled": "Nota na escala do exame: cerca de <b>{value}</b> ({min}–{max})",
