@@ -194,6 +194,13 @@ export class Store {
   getStudent(id) {
     return parseStudent(this.db.prepare("SELECT * FROM students WHERE id = ?").get(id));
   }
+  // Isti učenec (ime in nastavitve), ustvarjen v zadnji minuti: dvojni klik ali ponovljena zahteva.
+  recentDuplicate(name, settings = DEFAULT_SETTINGS) {
+    const row = this.db
+      .prepare("SELECT * FROM students WHERE name = ? AND settings = ? AND created_at >= datetime('now', '-60 seconds') ORDER BY id DESC LIMIT 1")
+      .get(name, JSON.stringify(normalizeSettings(settings)));
+    return row ? parseStudent(row) : null;
+  }
   createStudent(name, settings = DEFAULT_SETTINGS) {
     const r = this.db
       .prepare("INSERT INTO students (name, settings) VALUES (?, ?)")
