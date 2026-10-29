@@ -46,10 +46,10 @@ checklists, but it is still a different agent from the author, and pass 1 still 
 2. second Opus reviewer: numbers, quiz keys and `~` lines, level, terminology (`lesson-brief.js --review`);
 3. third Opus reader (student's eyes, not numbers): reads the lesson as a student of that level would
    and checks that it is clear, not monotone and not the same shape as its neighbours on the path
-   (`docs/kakovost.md` §1b), that every `:::premisli` and the faded example make the student think,
-   and that it renders well on the phone (`/api/textbook/...` page at 360 px). One reader per
-   3 lessons, effort default, small `Edit`s only. Raised old lessons get the diff-only reviewer of
-   `docs/token-rules.md` §3 as their third pass. The optimizer thread sets how this fits the batch pace.
+   (`docs/kakovost.md` §1b), and that every `:::premisli` and the faded example make the student
+   think. Brief: `node scripts/lesson-brief.js --read <ids>` (3 lessons per reader, effort default,
+   small `Edit`s only, never numbers or quiz keys); stage described in `docs/token-rules.md` §3b,
+   which the optimizer thread owns.
 
 ## 3. Tasks, sims, games, exams (content written as code or data)
 
