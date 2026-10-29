@@ -600,5 +600,16 @@
   "gc.poi.min": "极小值",
   "gc.poi.yint": "在 y 轴上",
   "gc.poi.int": "交点",
-  "gc.poi.slope": "斜率"
+  "gc.poi.slope": "斜率",
+  "task.hintBtn": "提示",
+  "task.hintMore": "再给一个提示",
+  "task.hintStep": "提示 {n}/{total}:",
+  "task.hintData": "先写出已知条件和要求的量。",
+  "task.hintFormula": "你需要这个关系式:",
+  "chk.sign": "大小对了,但符号不对。检查结果是正还是负。",
+  "chk.magnitudeBig": "数字对了,但数量级不对:结果大了 {times} 倍。检查单位换算和小数点。",
+  "chk.magnitudeSmall": "数字对了,但数量级不对:结果小了 {times} 倍。检查单位换算和小数点。",
+  "chk.reciprocal": "你得到的是倒数。是不是除的顺序反了?",
+  "chk.factor2Big": "结果正好大了 2 倍。检查是否漏掉或多乘了因子 2(例如公式中的 ½,用直径代替了半径)。",
+  "chk.factor2Small": "结果正好小了一半。检查是否漏掉或多乘了因子 2(例如公式中的 ½,用直径代替了半径)。"
 }

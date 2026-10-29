@@ -600,5 +600,16 @@
   "gc.poi.min": "극소",
   "gc.poi.yint": "y축 위",
   "gc.poi.int": "교점",
-  "gc.poi.slope": "기울기"
+  "gc.poi.slope": "기울기",
+  "task.hintBtn": "힌트",
+  "task.hintMore": "힌트 하나 더",
+  "task.hintStep": "힌트 {n}/{total}:",
+  "task.hintData": "먼저 주어진 것과 구하는 것을 적어 보세요.",
+  "task.hintFormula": "이 관계식이 필요합니다:",
+  "chk.sign": "크기는 맞지만 부호가 틀렸습니다. 결과가 양수인지 음수인지 확인하세요.",
+  "chk.magnitudeBig": "숫자는 맞지만 자릿수가 틀렸습니다: 결과가 {times}배 큽니다. 단위 변환과 소수점을 확인하세요.",
+  "chk.magnitudeSmall": "숫자는 맞지만 자릿수가 틀렸습니다: 결과가 {times}배 작습니다. 단위 변환과 소수점을 확인하세요.",
+  "chk.reciprocal": "역수가 나왔습니다. 나누는 순서를 바꾸지 않았나요?",
+  "chk.factor2Big": "결과가 정확히 2배 큽니다. 인수 2를 빠뜨리거나 더하지 않았는지 확인하세요(예: 공식의 ½, 반지름 대신 지름).",
+  "chk.factor2Small": "결과가 정확히 2배 작습니다. 인수 2를 빠뜨리거나 더하지 않았는지 확인하세요(예: 공식의 ½, 반지름 대신 지름)."
 }

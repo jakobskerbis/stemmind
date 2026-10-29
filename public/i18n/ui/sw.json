@@ -605,5 +605,16 @@
   "gc.poi.min": "kima cha chini",
   "gc.poi.yint": "kwenye mhimili y",
   "gc.poi.int": "makutano",
-  "gc.poi.slope": "mteremko"
+  "gc.poi.slope": "mteremko",
+  "task.hintBtn": "Kidokezo",
+  "task.hintMore": "Kidokezo kingine",
+  "task.hintStep": "Kidokezo {n}/{total}:",
+  "task.hintData": "Kwanza andika kilichotolewa na unachotafuta.",
+  "task.hintFormula": "Unahitaji uhusiano huu:",
+  "chk.sign": "Ukubwa ni sahihi lakini alama si sahihi. Angalia kama jibu ni chanya au hasi.",
+  "chk.magnitudeBig": "Tarakimu ni sahihi lakini kiwango cha ukubwa si sahihi: jibu ni kubwa mara {times}. Angalia ubadilishaji wa vipimo na nukta ya desimali.",
+  "chk.magnitudeSmall": "Tarakimu ni sahihi lakini kiwango cha ukubwa si sahihi: jibu ni dogo mara {times}. Angalia ubadilishaji wa vipimo na nukta ya desimali.",
+  "chk.reciprocal": "Umepata kinyume (reciprocal). Je, uligawanya kwa mpangilio usio sahihi?",
+  "chk.factor2Big": "Jibu ni kubwa mara 2 kamili. Angalia kama uliacha au uliongeza kipengele 2 (k.m. ½ katika fomula, kipenyo badala ya nusu kipenyo).",
+  "chk.factor2Small": "Jibu ni dogo mara 2 kamili. Angalia kama uliacha au uliongeza kipengele 2 (k.m. ½ katika fomula, kipenyo badala ya nusu kipenyo)."
 }

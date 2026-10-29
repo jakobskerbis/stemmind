@@ -610,5 +610,16 @@
   "gc.poi.min": "minim",
   "gc.poi.yint": "pe axa y",
   "gc.poi.int": "intersecție",
-  "gc.poi.slope": "m"
+  "gc.poi.slope": "m",
+  "task.hintBtn": "Indiciu",
+  "task.hintMore": "Încă un indiciu",
+  "task.hintStep": "Indiciul {n}/{total}:",
+  "task.hintData": "Mai întâi scrie ce se dă și ce cauți.",
+  "task.hintFormula": "Ai nevoie de această relație:",
+  "chk.sign": "Valoarea este corectă, dar semnul nu. Verifică dacă rezultatul este pozitiv sau negativ.",
+  "chk.magnitudeBig": "Cifrele sunt corecte, dar ordinul de mărime nu: rezultatul este de {times} ori prea mare. Verifică transformarea unităților și virgula zecimală.",
+  "chk.magnitudeSmall": "Cifrele sunt corecte, dar ordinul de mărime nu: rezultatul este de {times} ori prea mic. Verifică transformarea unităților și virgula zecimală.",
+  "chk.reciprocal": "Ai obținut inversul. Ai împărțit în ordinea greșită?",
+  "chk.factor2Big": "Rezultatul este exact de 2 ori prea mare. Verifică dacă ai omis sau ai adăugat un factor 2 (de ex. ½ în formulă, diametru în loc de rază).",
+  "chk.factor2Small": "Rezultatul este exact de 2 ori prea mic. Verifică dacă ai omis sau ai adăugat un factor 2 (de ex. ½ în formulă, diametru în loc de rază)."
 }

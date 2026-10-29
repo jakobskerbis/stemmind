@@ -615,5 +615,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "na ose y",
   "gc.poi.int": "průsečík",
-  "gc.poi.slope": "k"
+  "gc.poi.slope": "k",
+  "task.hintBtn": "Nápověda",
+  "task.hintMore": "Další nápověda",
+  "task.hintStep": "Nápověda {n}/{total}:",
+  "task.hintData": "Nejdřív si zapiš, co je dáno a co hledáš.",
+  "task.hintFormula": "Potřebuješ tento vztah:",
+  "chk.sign": "Velikost je správně, znaménko ne. Zkontroluj, zda je výsledek kladný, nebo záporný.",
+  "chk.magnitudeBig": "Číslice jsou správně, řád ne: výsledek je {times}krát větší. Zkontroluj převod jednotek a desetinnou čárku.",
+  "chk.magnitudeSmall": "Číslice jsou správně, řád ne: výsledek je {times}krát menší. Zkontroluj převod jednotek a desetinnou čárku.",
+  "chk.reciprocal": "Vyšla ti převrácená hodnota. Nedělil jsi v opačném pořadí?",
+  "chk.factor2Big": "Výsledek je přesně 2krát větší. Zkontroluj, zda jsi nevynechal nebo nepřidal faktor 2 (např. ½ ve vzorci, průměr místo poloměru).",
+  "chk.factor2Small": "Výsledek je přesně 2krát menší. Zkontroluj, zda jsi nevynechal nebo nepřidal faktor 2 (např. ½ ve vzorci, průměr místo poloměru)."
 }

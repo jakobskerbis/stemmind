@@ -48,6 +48,11 @@ for (const g of GENERATORS) {
           }
           const res = checkAnswer(a, correctInput(a));
           if (res.kind !== "correct") throw new Error(`lastni odgovor ${correctInput(a)} ni sprejet: ${JSON.stringify(res)}`);
+          for (const m of a.mistakes || []) {
+            if (!Number.isFinite(m.value) || !m.why) throw new Error(`napaka brez vrednosti ali razlage: ${JSON.stringify(m)}`);
+            if (checkAnswer(a, fmt(m.value) + (a.unit ? " " + a.unit : "")).kind === "correct") throw new Error(`tipična napaka ${m.value} je sprejeta kot pravilna`);
+          }
+          if (a.type === "choice" && a.why && a.why.length !== a.options.length) throw new Error("answer.why mora imeti razlago za vsako možnost (pri pravilni null)");
           const text = [t.text, t.hint, t.solution].join(" ");
           if (/undefined|NaN(?!O)|Infinity/.test(text)) throw new Error(`besedilo vsebuje undefined/NaN: ${t.text}`);
           if (/\$\$|\\\\\(/.test(t.text) === false && (t.text.split("$").length - 1) % 2) throw new Error(`neparno število $ v besedilu: ${t.text}`);

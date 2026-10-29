@@ -615,5 +615,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "na osi y",
   "gc.poi.int": "przecięcie",
-  "gc.poi.slope": "a"
+  "gc.poi.slope": "a",
+  "task.hintBtn": "Podpowiedź",
+  "task.hintMore": "Kolejna podpowiedź",
+  "task.hintStep": "Podpowiedź {n}/{total}:",
+  "task.hintData": "Najpierw zapisz, co jest dane i czego szukasz.",
+  "task.hintFormula": "Potrzebujesz tej zależności:",
+  "chk.sign": "Wartość jest dobra, ale znak nie. Sprawdź, czy wynik jest dodatni, czy ujemny.",
+  "chk.magnitudeBig": "Cyfry są dobre, ale rząd wielkości nie: wynik jest {times} razy za duży. Sprawdź zamianę jednostek i przecinek.",
+  "chk.magnitudeSmall": "Cyfry są dobre, ale rząd wielkości nie: wynik jest {times} razy za mały. Sprawdź zamianę jednostek i przecinek.",
+  "chk.reciprocal": "Otrzymałeś odwrotność. Czy dzieliłeś w złej kolejności?",
+  "chk.factor2Big": "Wynik jest dokładnie 2 razy za duży. Sprawdź, czy nie pominąłeś lub nie dodałeś czynnika 2 (np. ½ we wzorze, średnica zamiast promienia).",
+  "chk.factor2Small": "Wynik jest dokładnie 2 razy za mały. Sprawdź, czy nie pominąłeś lub nie dodałeś czynnika 2 (np. ½ we wzorze, średnica zamiast promienia)."
 }

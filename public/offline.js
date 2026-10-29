@@ -6,6 +6,17 @@
 // odgovor preveri še enkrat in podeli XP.
 import { checkAnswer } from "/practice/check.js";
 
+// Enako kot hintSteps v server/practice/index.js: podatki → formula → namig.
+function hintSteps(t) {
+  const steps = [];
+  const given = t.data?.given?.filter(Boolean) || [];
+  if (given.length) steps.push({ kind: "data", given, find: t.data?.find?.filter(Boolean) || [] });
+  const formula = t.formula ? [].concat(t.formula).filter(Boolean) : [];
+  if (formula.length) steps.push({ kind: "formula", formula });
+  if (t.hint) steps.push({ kind: "hint", text: t.hint });
+  return steps;
+}
+
 const PACK = (sid) => `stemmind.offline.pack.${sid}`;
 const QUEUE = (sid) => `stemmind.offline.queue.${sid}`;
 const DAY = 86400000;
@@ -90,8 +101,12 @@ export function offlineApi(sid, url, opts = {}) {
     lastTask = { ...item, topic_id: body.topic_id, attempts: 0, id: `off-${item.seed}` };
     return { task: { id: lastTask.id, mode: "practice", ...item.task }, state: { level: item.level, streak: 0 }, offline: true };
   }
-  const m = /^\/api\/students\/\d+\/tasks\/(off-[^/]+)\/(answer|help|skip|read)$/.exec(p);
+  const m = /^\/api\/students\/\d+\/tasks\/(off-[^/]+)\/(answer|help|skip|read|hint)$/.exec(p);
   if (m && lastTask?.id === decodeURIComponent(m[1])) {
+    if (m[2] === "hint") {
+      const steps = hintSteps({ ...lastTask.task, hint: lastTask.hint });
+      return { steps: steps.slice(0, Math.max(1, Number(body.step) || 1)), total: steps.length, offline: true };
+    }
     if (m[2] !== "answer") throw new OfflineError();
     const res = checkAnswer(lastTask.answer, body.answer);
     const out = { kind: res.kind, message: res.message || null, ...(res.code ? { code: res.code, params: res.params || {} } : {}), offline: true };
@@ -104,7 +119,7 @@ export function offlineApi(sid, url, opts = {}) {
       write(QUEUE(sid), queue);
     }
     if (res.kind === "correct") return { ...out, correct: true, solution: lastTask.solution };
-    return { ...out, correct: false, hint: lastTask.hint, ...(lastTask.attempts >= 3 ? { solution: lastTask.solution, final: true } : {}) };
+    return { ...out, correct: false, hint: lastTask.hint, ...(res.mistake ? { mistake: res.mistake } : {}), ...(lastTask.attempts >= 3 ? { solution: lastTask.solution, final: true } : {}) };
   }
   return undefined;
 }

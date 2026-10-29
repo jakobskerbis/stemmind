@@ -47,7 +47,12 @@ export function checkLessonSource(src, topicId) {
   // Bloki s formulo morajo biti zaprti.
   const body = src.replace(/^---\n[\s\S]*?\n---\n?/, "");
   const stripped = expandFormulaBlocks(body, "plain");
-  if (/^[ \t]*:::/m.test(stripped)) err("nezaprt ali napačno zapisan blok »:::formula … :::« (vsak začetek in konec v svoji vrstici)");
+  if (/^[ \t]*:::/m.test(stripped)) err("nezaprt ali napačno zapisan blok »:::formula … :::« ali »:::premisli … :::« (vsak začetek in konec v svoji vrstici)");
+  // Merila docs/kakovost.md §1: vmesna vprašanja v razlagi in razlaga vsakega napačnega odgovora.
+  const thinks = body.match(/^[ \t]*:::[ \t]*premisli[ \t]*$/gm) || [];
+  if (thinks.length < 2) warn(`v razlagi sta priporočeni 2 vmesni vprašanji »:::premisli« (${thinks.length})`);
+  const noWhy = checks.reduce((n, c) => n + c.options.filter((_, i) => i !== c.correct && !c.optionWhy?.[i]).length, 0);
+  if (checks.length && noWhy) warn(`${noWhy} napačnih možnosti v »Preveri se« nima razlage »~ …«`);
 
   // Kviz: vsako vprašanje natanko en »+«, vsaj 3 možnosti, brez ponavljanja.
   const quizMd = body.split(/^## +/m).find((p) => /^preveri se/i.test(p)) || "";

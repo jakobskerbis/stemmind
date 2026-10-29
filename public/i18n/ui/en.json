@@ -605,5 +605,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "on y-axis",
   "gc.poi.int": "intersection",
-  "gc.poi.slope": "slope"
+  "gc.poi.slope": "slope",
+  "task.hintBtn": "Hint",
+  "task.hintMore": "Another hint",
+  "task.hintStep": "Hint {n}/{total}:",
+  "task.hintData": "First write down what is given and what you are looking for.",
+  "task.hintFormula": "You need this relation:",
+  "chk.sign": "The size is right but the sign is not. Check whether the result is positive or negative.",
+  "chk.magnitudeBig": "The digits are right but the order of magnitude is not: the result is {times} times too big. Check the unit conversion and the decimal point.",
+  "chk.magnitudeSmall": "The digits are right but the order of magnitude is not: the result is {times} times too small. Check the unit conversion and the decimal point.",
+  "chk.reciprocal": "You got the reciprocal. Did you divide in the wrong order?",
+  "chk.factor2Big": "The result is exactly 2 times too big. Check whether you left out or added a factor of 2 (e.g. ½ in the formula, diameter instead of radius).",
+  "chk.factor2Small": "The result is exactly 2 times too small. Check whether you left out or added a factor of 2 (e.g. ½ in the formula, diameter instead of radius)."
 }

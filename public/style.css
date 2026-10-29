@@ -694,3 +694,11 @@ body.pad-open .tabbar { display: none; }
 .lp-opt small { font-size: 0.78rem; font-weight: 500; color: var(--muted); line-height: 1.25; }
 .lp-opt.on { border-color: var(--accent); }
 body.onboarding .tabs, body.onboarding .tabbar, body.onboarding #modebar, body.onboarding .student-picker { display: none !important; }
+
+/* Lestev namigov in prepoznana napaka pri nalogi */
+.hint-row { display: flex; margin-top: 8px; }
+.hint-box:empty { display: none; }
+.hint-box { display: grid; gap: 8px; margin-top: 10px; }
+.hint-box .task-data { margin-top: 8px; }
+.hint-box .formula-body { margin-top: 6px; }
+.fb.mistake > svg.i { color: var(--accent); }

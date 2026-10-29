@@ -76,12 +76,17 @@ function parseChecks(md) {
     const kind = line[0];
     const text = line.slice(1).trim();
     if (kind === "?") {
-      cur = { q: text, options: [], correct: -1, why: "" };
+      cur = { q: text, options: [], correct: -1, why: "", optionWhy: [] };
       out.push(cur);
     } else if (!cur) continue;
     else if (kind === "+" || kind === "-") {
       if (kind === "+") cur.correct = cur.options.length;
       cur.options.push(text);
+      cur.optionWhy.push("");
+    } else if (kind === "~" && cur.options.length) {
+      // »~« pod napačno možnostjo: zakaj je napačna (tipična napačna predstava)
+      const i = cur.options.length - 1;
+      cur.optionWhy[i] += (cur.optionWhy[i] ? " " : "") + text;
     } else if (kind === ">") cur.why += (cur.why ? " " : "") + text;
     else if (!cur.options.length) cur.q += " " + line;
   }
@@ -93,11 +98,31 @@ function parseChecks(md) {
 // v PDF-ju je izpisan kot okvir »Formula«, tutor ga dobi kot navadno besedilo.
 const FORMULA_RE = /^[ \t]*:::[ \t]*formula[ \t]*\n([\s\S]*?)\n[ \t]*:::[ \t]*$/gm;
 export function expandFormulaBlocks(md, mode = "html") {
-  return String(md ?? "").replace(FORMULA_RE, (_, body) => {
+  return expandThinkBlocks(md, mode).replace(FORMULA_RE, (_, body) => {
     const inner = body.trim();
     if (mode === "plain") return inner;
     if (mode === "print") return `<div class="formula"><p class="formula-label">Formula</p>\n\n${inner}\n\n</div>`;
     return `<details class="tb-formula"><summary>Pokaži formulo</summary>\n\n${inner}\n\n</details>`;
+  });
+}
+// Vmesno vprašanje v razlagi (»Premisli«): vprašanje, vrstica »---«, odgovor.
+//   :::premisli
+//   Kaj se zgodi z gostoto, če kocko prerežemo na pol?
+//   ---
+//   Ostane enaka: masa in prostornina se razpolovita.
+//   :::
+// V aplikaciji je odgovor skrit za gumbom (učenec najprej odgovori v mislih).
+const THINK_RE = /^[ \t]*:::[ \t]*premisli[ \t]*\n([\s\S]*?)\n[ \t]*:::[ \t]*$/gm;
+export function expandThinkBlocks(md, mode = "html") {
+  return String(md ?? "").replace(THINK_RE, (_, body) => {
+    const [q, ...rest] = body.split(/^[ \t]*---[ \t]*$/m);
+    const question = q.trim();
+    const answer = rest.join("\n").trim();
+    if (mode === "plain") return `Vprašanje: ${question}${answer ? `\nOdgovor: ${answer}` : ""}`;
+    if (mode === "print") return `<div class="think"><p class="think-label">Premisli</p>\n\n${question}\n\n${answer ? `*Odgovor:* ${answer}\n\n` : ""}</div>`;
+    return `<div class="tb-think"><p class="tb-think-label">Premisli</p>\n\n${question}\n\n${
+      answer ? `<details><summary>Pokaži odgovor</summary>\n\n${answer}\n\n</details>` : ""
+    }</div>`;
   });
 }
 const withFormulas = (parts, mode) => parts.map((x) => ({ ...x, md: expandFormulaBlocks(x.md, mode) }));
