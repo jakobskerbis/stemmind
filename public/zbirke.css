@@ -105,3 +105,9 @@
   #zbirke-content:has(> .zb-inspect) { padding-bottom: 380px; }
   .zb-inspect { bottom: calc(76px + env(safe-area-inset-bottom)); max-height: calc(100dvh - 160px); overflow-y: auto; }
 }
+
+/* Pot znanja in mitična redkost (najvišja, za največ XP) */
+.zb-pot { margin-bottom: 12px; }
+.zb-pot p { margin: 0 0 6px; }
+.gm-r-mythic { border-color: #e11d48; background-image: linear-gradient(160deg, rgba(244, 63, 94, 0.2), rgba(168, 85, 247, 0.16) 45%, transparent 75%); }
+.gm-rtag.gm-r-mythic { color: #be123c; }
