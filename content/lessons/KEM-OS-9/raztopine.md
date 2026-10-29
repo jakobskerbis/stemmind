@@ -39,7 +39,7 @@ Običajna enota je $\dfrac{\text{g}}{\text{L}}$. Če je prostornina podana v $\t
 
 $$m(\text{topljenca}) = w \cdot m(\text{raztopine}) \qquad m(\text{topljenca}) = \gamma \cdot V(\text{raztopine})$$
 
-Spodaj lahko v simulaciji spreminjaš količino topljenca in prostornino raztopine ter opazuješ, kako se spremeni barva in koncentracija.
+V interaktivni simulaciji spodaj (»Masni delež raztopine«) lahko spreminjaš maso topljenca in maso vode ter opazuješ, kako se spreminjata barva raztopine in masni delež.
 
 ## Rešeni primeri
 
@@ -47,24 +47,52 @@ Spodaj lahko v simulaciji spreminjaš količino topljenca in prostornino raztopi
 
 V $180\,\text{g}$ vode raztopimo $20\,\text{g}$ kuhinjske soli. Kolikšen je masni delež soli v raztopini?
 
+**Podatki:** $m(\text{topljenca}) = 20\,\text{g}$, $m(\text{topila}) = 180\,\text{g}$
+**Iščemo:** masni delež soli $w$
+
+:::formula
+$m(\text{raztopine}) = m(\text{topljenca}) + m(\text{topila})$, nato $w = \dfrac{m(\text{topljenca})}{m(\text{raztopine})}$
+:::
+
+**Rešitev:**
+
 1. Topljenec je sol: $m(\text{topljenca}) = 20\,\text{g}$.
 2. Masa raztopine je vsota topljenca in topila, ker masni delež primerjamo z *vso* raztopino: $m(\text{raztopine}) = 20\,\text{g} + 180\,\text{g} = 200\,\text{g}$.
 3. Vstavimo: $w = \dfrac{20\,\text{g}}{200\,\text{g}} = 0{,}10$.
 4. V odstotkih: $0{,}10 \cdot 100 = 10\,\%$.
 5. Preverimo smiselnost: masni delež je manjši od $1$, saj je topljenec le del raztopine. ✓
+6. Odgovor: masni delež soli v raztopini je $0{,}10$ oziroma $10\,\%$.
 
 ### Primer 2: masna koncentracija
 
 V merilni bučki raztopimo $5\,\text{g}$ sladkorja in dopolnimo z vodo do oznake $250\,\text{mL}$. Kolikšna je masna koncentracija sladkorja?
 
-1. Podatki: $m(\text{topljenca}) = 5\,\text{g}$, $V(\text{raztopine}) = 250\,\text{mL}$.
-2. Prostornino pretvorimo v litre, ker želimo enoto $\text{g/L}$: $250\,\text{mL} = 0{,}250\,\text{L}$.
-3. Vstavimo: $\gamma = \dfrac{5\,\text{g}}{0{,}250\,\text{L}} = 20\,\dfrac{\text{g}}{\text{L}}$.
-4. Preverimo: v $1\,\text{L}$ (štirikratnik prostornine) bi bilo $4 \cdot 5\,\text{g} = 20\,\text{g}$ sladkorja. ✓
+**Podatki:** $m(\text{topljenca}) = 5\,\text{g}$, $V(\text{raztopine}) = 250\,\text{mL}$
+**Iščemo:** masno koncentracijo sladkorja $\gamma$
+
+:::formula
+$\gamma = \dfrac{m(\text{topljenca})}{V(\text{raztopine})}$
+:::
+
+**Rešitev:**
+
+1. Prostornino pretvorimo v litre, ker želimo enoto $\text{g/L}$: $250\,\text{mL} = 0{,}250\,\text{L}$.
+2. Vstavimo: $\gamma = \dfrac{5\,\text{g}}{0{,}250\,\text{L}} = 20\,\dfrac{\text{g}}{\text{L}}$.
+3. Preverimo: v $1\,\text{L}$ (štirikratnik prostornine) bi bilo $4 \cdot 5\,\text{g} = 20\,\text{g}$ sladkorja. ✓
+4. Odgovor: masna koncentracija sladkorja je $20\,\text{g/L}$.
 
 ### Primer 3: priprava raztopine
 
 Pripraviti želiš $500\,\text{g}$ raztopine soli z masnim deležem $0{,}9\,\%$ (takšna je fiziološka raztopina). Koliko soli in koliko vode potrebuješ?
+
+**Podatki:** $m(\text{raztopine}) = 500\,\text{g}$, $w = 0{,}9\,\%$
+**Iščemo:** maso soli $m(\text{soli})$ in maso vode $m(\text{vode})$
+
+:::formula
+$m(\text{topljenca}) = w \cdot m(\text{raztopine})$, nato $m(\text{topila}) = m(\text{raztopine}) - m(\text{topljenca})$
+:::
+
+**Rešitev:**
 
 1. **Masni delež zapišemo kot decimalno število.** $0{,}9\,\% = \dfrac{0{,}9}{100} = 0{,}009$.
 2. **Iščemo maso topljenca**, zato uporabimo $m(\text{topljenca}) = w \cdot m(\text{raztopine})$.
@@ -93,11 +121,12 @@ Pripraviti želiš $500\,\text{g}$ raztopine soli z masnim deležem $0{,}9\,\%$ 
 
 Predstavljaj si kozarec vode, v katerega dodajaš barvni prašek. Z vsako žličko je barva temnejša. Topljenca je v enaki količini vode več, zato je raztopina bolj koncentrirana.
 
-V simulaciji zgoraj opazuj tri stvari:
+V interaktivni simulaciji »Masni delež raztopine« opazuj:
 
-- Če dodajaš topljenec ob nespremenjeni prostornini, se barva potemni in koncentracija naraste.
-- Če dodajaš vodo ob nespremenjeni količini topljenca, se barva posvetli in koncentracija pade. Raztopina se *razredči*.
-- Če odliješ del raztopine, barva ostane enaka. Količina topljenca se zmanjša, njegov delež pa ne.
+- Če dodajaš topljenec ob nespremenjeni masi vode, se barva potemni in masni delež naraste.
+- Če dodajaš vodo ob nespremenjeni masi topljenca, se barva posvetli in masni delež pade. Raztopina se *razredči*.
+
+Premisli še tretji primer: če del raztopine odliješ, barva ostane enaka. Masa topljenca v kozarcu se zmanjša, njegov delež pa ne.
 
 Zadnja točka je pomembna: koncentracija ni isto kot količina topljenca. Pove le, koliko ga je v določenem delu raztopine.
 
@@ -105,7 +134,7 @@ Zadnja točka je pomembna: koncentracija ni isto kot količina topljenca. Pove l
 
 Pripravljaš sirup za pijačo. V posodo daš $100\,\text{g}$ sladkorja in dolivaš vodo, da je skupna masa $500\,\text{g}$. Masni delež sladkorja je $\dfrac{100}{500} = 0{,}20$, torej $20\,\%$.
 
-Če isti sirup razredčiš s še $500\,\text{g}$ vode, je skupna masa $1000\,\text{g}$, sladkorja pa je še vedno $100\,\text{g}$. Masni delež je zdaj $\dfrac{100}{1000} = 0{,}10$, torej $10\,\%$. Sirup je dvakrat bolj redek, ker je raztopine dvakrat več.
+Če isti sirup razredčiš s še $500\,\text{g}$ vode, je skupna masa $1000\,\text{g}$, sladkorja pa je še vedno $100\,\text{g}$. Masni delež je zdaj $\dfrac{100}{1000} = 0{,}10$, torej $10\,\%$. Masni delež sladkorja se je razpolovil, ker je raztopine dvakrat več, sladkorja pa enako.
 
 Podoben zapis boš našel na embalaži: pri kozmetiki, čistilih ali pijačah piše, koliko odstotkov neke snovi vsebujejo.
 
@@ -155,7 +184,7 @@ Iz tega se vidi, zakaj sta $w$ in $\gamma$ različni količini. Povezuje ju gost
 - $0{,}03\,\text{g/L}$
 + $30\,\text{g/L}$
 - $4800\,\text{g/L}$
-> Prostornina je $400\,\text{mL} = 0{,}4\,\text{L}$, zato je $\gamma = \dfrac{12\,\text{g}}{0{,}4\,\text{L}} = 30\,\text{g/L}$. Odgovor $0{,}03$ dobiš, če deliš z $400$ namesto z $0{,}4$.
+> Prostornina je $400\,\text{mL} = 0{,}4\,\text{L}$, zato je $\gamma = \dfrac{12\,\text{g}}{0{,}4\,\text{L}} = 30\,\text{g/L}$. Odgovor $0{,}03$ dobiš, če deliš z $400$ namesto z $0{,}4$, $4800$ pa, če množiš namesto deliš.
 
 ? Koliko gramov topljenca je v $250\,\text{g}$ raztopine z masnim deležem $8\,\%$?
 - $8\,\text{g}$

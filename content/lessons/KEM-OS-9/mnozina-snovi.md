@@ -15,11 +15,11 @@ Brez nje ne moremo odgovoriti na vprašanja, kot so: koliko gramov natrijevega k
 
 **1. Množina snovi.** Množina snovi je veličina, ki pove, koliko delcev (atomov, molekul, ionov) snovi je v vzorcu. Označimo jo z $n$, enota je **mol** ($\mathrm{mol}$).
 
-**2. Mol.** En mol je množina snovi, ki vsebuje $6{,}02 \cdot 10^{23}$ delcev. To število imenujemo **Avogadrovo število** (Avogadrova konstanta). Podobno kot je ducat $12$ kosov, je mol zelo velik »ducat«: $6{,}02 \cdot 10^{23}$ kosov.
+**2. Mol.** En mol je množina snovi, ki vsebuje $6{,}02 \cdot 10^{23}$ delcev. To število imenujemo **Avogadrovo število**. Ko ga zapišemo kot število delcev na mol, ga imenujemo **Avogadrova konstanta**: $N_A = 6{,}02 \cdot 10^{23}\,\mathrm{mol^{-1}}$. Podobno kot je ducat $12$ kosov, je mol zelo velik »ducat«: $6{,}02 \cdot 10^{23}$ kosov.
 
 Zato velja: $1\,\mathrm{mol}$ atomov vsebuje $6{,}02 \cdot 10^{23}$ atomov, $1\,\mathrm{mol}$ molekul vsebuje $6{,}02 \cdot 10^{23}$ molekul.
 
-**3. Molska masa.** Molska masa $M$ je masa enega mola snovi. Enota je $\mathrm{g/mol}$. Njena številska vrednost je enaka relativni atomski ali relativni molekulski masi snovi, ki jo preberemo v periodnem sistemu:
+**3. Molska masa.** Molska masa $M$ je masa enega mola snovi. Enota je $\mathrm{g/mol}$. Njena številska vrednost je enaka relativni atomski masi (pri elementih jo preberemo v periodnem sistemu) oziroma relativni molekulski masi (pri spojinah jo izračunamo iz formule):
 
 - $M(\mathrm{H}) = 1\,\mathrm{g/mol}$
 - $M(\mathrm{C}) = 12\,\mathrm{g/mol}$
@@ -41,13 +41,22 @@ Iz te enačbe dobimo še:
 
 $$m = n \cdot M \qquad M = \frac{m}{n}$$
 
-**6. Število delcev.** Če poznaš množino, je število delcev $N = n \cdot 6{,}02 \cdot 10^{23}$.
+**6. Število delcev.** Če poznaš množino, je število delcev $N = n \cdot N_A = n \cdot 6{,}02 \cdot 10^{23}\,\mathrm{mol^{-1}}$.
 
 ## Rešeni primeri
 
 ### Primer 1: molska masa spojine
 
-Izračunaj molsko maso ogljikovega dioksida $\mathrm{CO_2}$.
+Izračunaj molsko maso ogljikovega dioksida $\mathrm{CO_2}$. Uporabi $M(\mathrm{C}) = 12\,\mathrm{g/mol}$ in $M(\mathrm{O}) = 16\,\mathrm{g/mol}$.
+
+**Podatki:** formula $\mathrm{CO_2}$, $M(\mathrm{C}) = 12\,\mathrm{g/mol}$, $M(\mathrm{O}) = 16\,\mathrm{g/mol}$
+**Iščemo:** molsko maso $M(\mathrm{CO_2})$
+
+:::formula
+Molska masa spojine je vsota molskih mas vseh atomov v formuli (z upoštevanjem indeksov): $M(\mathrm{CO_2}) = M(\mathrm{C}) + 2 \cdot M(\mathrm{O})$
+:::
+
+**Rešitev:**
 
 1. Formula pove, da je v eni molekuli $1$ atom ogljika in $2$ atoma kisika.
 2. Seštejemo molske mase atomov, pri čemer upoštevamo indekse: $M(\mathrm{CO_2}) = 12 + 2 \cdot 16$.
@@ -56,24 +65,43 @@ Izračunaj molsko maso ogljikovega dioksida $\mathrm{CO_2}$.
 
 ### Primer 2: iz mase v množino
 
-Koliko molov vode je v $90\,\mathrm{g}$ vode?
+Koliko molov vode $\mathrm{H_2O}$ je v $90\,\mathrm{g}$ vode? Uporabi $M(\mathrm{H}) = 1\,\mathrm{g/mol}$ in $M(\mathrm{O}) = 16\,\mathrm{g/mol}$.
+
+**Podatki:** $m = 90\,\mathrm{g}$, formula $\mathrm{H_2O}$, $M(\mathrm{H}) = 1\,\mathrm{g/mol}$, $M(\mathrm{O}) = 16\,\mathrm{g/mol}$
+**Iščemo:** množino snovi $n$
+
+:::formula
+$n = \dfrac{m}{M}$
+:::
+
+**Rešitev:**
 
 1. Iščemo množino $n$, poznamo maso $m = 90\,\mathrm{g}$. Potrebujemo še molsko maso.
 2. $M(\mathrm{H_2O}) = 2 \cdot 1 + 16 = 18\,\mathrm{g/mol}$.
 3. Uporabimo $n = \dfrac{m}{M}$: 
 $$n = \frac{90\,\mathrm{g}}{18\,\mathrm{g/mol}} = 5\,\mathrm{mol}$$
-4. Smiselnost: en mol vode tehta $18\,\mathrm{g}$, v $90\,\mathrm{g}$ jih je torej $5$, ker je $5 \cdot 18 = 90$. ✓
+4. Smiselnost: en mol vode tehta $18\,\mathrm{g}$, v $90\,\mathrm{g}$ je torej $5$ molov, ker je $5 \cdot 18 = 90$. ✓
+5. Odgovor: v $90\,\mathrm{g}$ vode je $5\,\mathrm{mol}$ vode.
 
 ### Primer 3: iz množine v maso in število delcev
 
-Koliko gramov natrijevega klorida $\mathrm{NaCl}$ moramo odtehtati za $0{,}20\,\mathrm{mol}$ in koliko formulskih enot to je?
+Koliko gramov natrijevega klorida $\mathrm{NaCl}$ moramo odtehtati za $0{,}20\,\mathrm{mol}$ in koliko formulskih enot je to? Uporabi $M(\mathrm{Na}) = 23\,\mathrm{g/mol}$, $M(\mathrm{Cl}) = 35{,}5\,\mathrm{g/mol}$ in $N_A = 6{,}02 \cdot 10^{23}$ delcev na mol.
+
+**Podatki:** $n = 0{,}20\,\mathrm{mol}$, formula $\mathrm{NaCl}$, $M(\mathrm{Na}) = 23\,\mathrm{g/mol}$, $M(\mathrm{Cl}) = 35{,}5\,\mathrm{g/mol}$, $N_A = 6{,}02 \cdot 10^{23}\,\mathrm{mol^{-1}}$
+**Iščemo:** maso $m$ in število formulskih enot $N$
+
+:::formula
+$m = n \cdot M$, nato $N = n \cdot N_A$
+:::
+
+**Rešitev:**
 
 1. **Molska masa.** $M(\mathrm{NaCl}) = 23 + 35{,}5 = 58{,}5\,\mathrm{g/mol}$.
 2. **Masa.** Iščemo $m$, zato enačbo preoblikujemo: $m = n \cdot M$.
 3. Vstavimo: $m = 0{,}20\,\mathrm{mol} \cdot 58{,}5\,\mathrm{g/mol} = 11{,}7\,\mathrm{g}$.
 4. **Število delcev.** $N = n \cdot 6{,}02 \cdot 10^{23} = 0{,}20 \cdot 6{,}02 \cdot 10^{23} = 1{,}204 \cdot 10^{23}$.
 5. **Odgovor.** Odtehtati moramo $11{,}7\,\mathrm{g}$ soli, to je približno $1{,}2 \cdot 10^{23}$ formulskih enot.
-6. Smiselnost: $0{,}20\,\mathrm{mol}$ je petina mola, zato je masa petina od $58{,}5\,\mathrm{g}$, kar je približno $11{,}7\,\mathrm{g}$. ✓
+6. Smiselnost: $0{,}20\,\mathrm{mol}$ je petina mola, zato je masa petina od $58{,}5\,\mathrm{g}$, to je $11{,}7\,\mathrm{g}$. ✓
 
 ## Pogoste napake
 
@@ -139,7 +167,7 @@ $$M = \frac{m}{n}$$
 
 Iz tega neposredno sledi $n = \dfrac{m}{M}$.
 
-Zakaj je številska vrednost molske mase enaka relativni atomski masi? Relativna atomska masa pove, kolikokrat je atom težji od izbrane enote za maso atoma. Mol je izbran tako, da je masa $6{,}02 \cdot 10^{23}$ atomov v gramih številčno enaka masi enega atoma, izraženi v tej enoti. Zato npr. atom ogljika z relativno atomsko maso $12$ pripada molski masi $12\,\mathrm{g/mol}$.
+Zakaj je številska vrednost molske mase enaka relativni atomski masi? Relativna atomska masa pove, kolikokrat je atom težji od izbrane enote za maso atoma. Mol je izbran tako, da je masa $6{,}02 \cdot 10^{23}$ atomov v gramih številčno enaka masi enega atoma, izraženi v tej enoti. Zato ima npr. ogljik z relativno atomsko maso $12$ molsko maso $12\,\mathrm{g/mol}$.
 
 Pri spojinah velja, da je masa $1\,\mathrm{mol}$ molekul vsota mas atomov v molekuli. $1\,\mathrm{mol}$ molekul $\mathrm{H_2O}$ vsebuje $2\,\mathrm{mol}$ atomov vodika in $1\,\mathrm{mol}$ atomov kisika, zato je $M = 2 \cdot 1 + 16 = 18\,\mathrm{g/mol}$.
 
