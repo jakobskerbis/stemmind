@@ -1072,5 +1072,18 @@
   "games.e.jumper": "ジャンパー",
   "games.e.jumper.how": "スマホをかたむけてピップを正しい答えの台に着地させよう。行き先をタップしてもOK。キー1〜3。",
   "games.e.orb": "まほうの玉",
-  "games.e.orb.how": "スマホをふるか矢印ボタンで次の答え。正しい答えのとき玉か✓をタップ。"
+  "games.e.orb.how": "スマホをふるか矢印ボタンで次の答え。正しい答えのとき玉か✓をタップ。",
+  "games.locked": "ロック中",
+  "games.lockLearn": "「{name}」がわかるとこのゲームが開きます。学習コースで学ぶか、短いテストで力を見せましょう。",
+  "games.lockPace": "これは速いゲームです。このテーマのゆっくりしたゲームで、正解を{n}問以上、正答率80%以上とると開きます。",
+  "games.learnTopic": "テーマを学ぶ",
+  "games.checkBtn": "テスト：時間制限なしの{n}問",
+  "games.checkQ": "{n}問中{i}問目",
+  "games.checkRight": "正解！",
+  "games.checkNext": "次へ",
+  "games.checkPass": "すごい、{n}問中{ok}問正解！このテーマのゲームが開きました。",
+  "games.checkFail": "{n}問中{ok}問正解。開くには{need}問必要です。テーマを見直してもう一度やってみよう。",
+  "games.unlockedFaster": "このテーマの速いゲームが開きました！",
+  "subj.SPO": "生活科",
+  "subj.NIT": "理科と技術"
 }

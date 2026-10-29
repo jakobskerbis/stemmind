@@ -1077,5 +1077,18 @@
   "games.e.jumper": "Mrukaji",
   "games.e.jumper.how": "Inamisha simu ili Pip atue kwenye jukwaa lenye jibu sahihi, au gusa anapopaswa kuruka. Vitufe 1–3.",
   "games.e.orb": "Tufe la Uchawi",
-  "games.e.orb.how": "Tikisa simu au gusa kitufe cha vishale kwa jibu linalofuata. Kwenye sahihi, gusa tufe au ✓."
+  "games.e.orb.how": "Tikisa simu au gusa kitufe cha vishale kwa jibu linalofuata. Kwenye sahihi, gusa tufe au ✓.",
+  "games.locked": "Imefungwa",
+  "games.lockLearn": "Mchezo huu utafunguka ukishaelewa “{name}”. Jifunze kwenye njia yako ya kujifunza au onyesha ujuzi wako kwenye jaribio fupi.",
+  "games.lockPace": "Huu ni mchezo wa kasi zaidi. Utafunguka ukipata angalau majibu {n} sahihi, na angalau 80% sahihi, katika mmoja wa michezo tulivu zaidi ya mada hii.",
+  "games.learnTopic": "Jifunze mada",
+  "games.checkBtn": "Jaribio: maswali {n} bila muda",
+  "games.checkQ": "Swali {i} kati ya {n}",
+  "games.checkRight": "Sahihi!",
+  "games.checkNext": "Endelea",
+  "games.checkPass": "Safi, {ok} kati ya {n} sahihi! Michezo ya mada hii imefunguka.",
+  "games.checkFail": "{ok} kati ya {n} sahihi. Unahitaji {need} ili kufungua. Pitia mada kisha ujaribu tena.",
+  "games.unlockedFaster": "Michezo ya kasi zaidi ya mada hii imefunguka!",
+  "subj.SPO": "Masomo ya mazingira",
+  "subj.NIT": "Sayansi na teknolojia"
 }

@@ -1077,5 +1077,18 @@
   "games.e.jumper": "Jumper",
   "games.e.jumper.how": "Tilt the phone so Pip lands on the platform with the right answer, or tap where he should go. Keys 1–3.",
   "games.e.orb": "Magic Orb",
-  "games.e.orb.how": "Shake the phone or tap the arrows button for the next answer. At the right one, tap the orb or ✓."
+  "games.e.orb.how": "Shake the phone or tap the arrows button for the next answer. At the right one, tap the orb or ✓.",
+  "games.locked": "Locked",
+  "games.lockLearn": "This game unlocks once you know “{name}”. Learn it on your learning path or show what you know in a short check.",
+  "games.lockPace": "This is a faster game. It unlocks once you get at least {n} right answers, with at least 80% correct, in one of the calmer games on this topic.",
+  "games.learnTopic": "Learn the topic",
+  "games.checkBtn": "Check: {n} questions, no timer",
+  "games.checkQ": "Question {i} of {n}",
+  "games.checkRight": "Correct!",
+  "games.checkNext": "Next",
+  "games.checkPass": "Great, {ok} of {n} correct! Games on this topic are unlocked.",
+  "games.checkFail": "{ok} of {n} correct. You need {need} to unlock. Review the topic and try again.",
+  "games.unlockedFaster": "Faster games on this topic are unlocked!",
+  "subj.SPO": "Environmental studies",
+  "subj.NIT": "Science and technology"
 }

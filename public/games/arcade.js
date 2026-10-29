@@ -280,7 +280,7 @@ export const castle = {
     sl: [["Ječa pod gradom", "Arin se mora rešiti iz ječe pod starim gradom."], ["Palačni hodniki", "Hodniki palače so polni pasti."], ["Nočni stolp", "Arin pleza po stolpu pod zvezdami."], ["Na strehah", "S streh se že vidi svoboda!"]],
     en: [["The dungeon", "Arin must escape the dungeon under the old castle."], ["Palace halls", "The palace halls are full of traps."], ["The night tower", "Arin climbs the tower under the stars."], ["On the rooftops", "Freedom is in sight from the rooftops!"]],
   },
-  icon: "lock",
+  icon: "castle",
   colors: ["#1c1917", "#78350f"],
   options: 3,
   timer: 22,
