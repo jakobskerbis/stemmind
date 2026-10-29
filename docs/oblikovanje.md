@@ -33,6 +33,7 @@ Pisava je Nunito. Naslovi so debeli (800), gumbi 700–800.
 - **Izbrana možnost** (kartica ali kljukica): moder rob in `--accent-soft` ozadje (`.lp-opt.on`, `label.check`).
 - **Seznam povezav** (npr. stran Jaz): `<div class="card list-card"><button class="list-row"><span class="ic">ikona</span><span class="lr-text"><b>Naslov</b><small>opis</small></span>…</button></div>`.
 - **Izmerjene vrednosti v simulacijah**: `values([["čas t", "3,16 s"], …])` iz `public/sim/kit.js` (kartice, na telefonu dve v vrsti). Tabela `.demo-table` samo za prave tabele z več vrsticami.
+- **Tabela v besedilu** (Markdown iz inštruktorja, razlag, nalog in lekcij): sama dobi robove, sivo glavo in razmik; na ozkem zaslonu se pomika vstran (`ui.css`, »tabela v besedilu«). Ne dodajaj ji svojih slogov.
 - **Kartica**: `.card`; poudarjena kartica z modrim prelivom: `.hero`.
 
 Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `--accent-soft` ozadje).

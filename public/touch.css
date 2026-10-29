@@ -45,6 +45,8 @@
   .form-actions > button.primary { flex: 1; }
   .contest-card > button.primary { width: 100%; }
   .back { min-height: 44px; }
+  /* Dolg namig v polju klepeta naj ne gre v drugo vrstico. */
+  #input::placeholder { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
 .contest-card > .field-label { display: block; margin-top: 18px; }
 
