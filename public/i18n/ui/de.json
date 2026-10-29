@@ -1299,5 +1299,11 @@
   "session.class": "Wiederholung vor der Stunde",
   "session.classIntro": "Fünf kurze Aufgaben: Stoff, den du gerade lernst, und zuletzt gemeisterte Themen.",
   "session.classEmpty": "Für dieses Fach gibt es noch keine Wiederholungsaufgaben. Beginne mit Neuer Stoff.",
-  "sessionDone.class": "Wiederholung beendet"
+  "sessionDone.class": "Wiederholung beendet",
+  "tb.steps.next": "Weiter",
+  "tb.steps.prev": "Zurück",
+  "tb.steps.count": "Schritt {n} von {m}",
+  "tb.steps.all": "Alles auf einmal",
+  "tb.steps.byStep": "Schritt für Schritt",
+  "tb.steps.quick": "Kurzer Check"
 }

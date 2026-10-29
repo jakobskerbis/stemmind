@@ -1299,5 +1299,11 @@
   "session.class": "Ders öncesi tekrar",
   "session.classIntro": "Beş kısa soru: şu an çalıştığın konu ve son öğrendiğin konular.",
   "session.classEmpty": "Bu derste henüz tekrar edilecek soru yok. Yeni konu ile başla.",
-  "sessionDone.class": "Tekrar bitti"
+  "sessionDone.class": "Tekrar bitti",
+  "tb.steps.next": "İleri",
+  "tb.steps.prev": "Geri",
+  "tb.steps.count": "Adım {n} / {m}",
+  "tb.steps.all": "Hepsi bir arada",
+  "tb.steps.byStep": "Adım adım",
+  "tb.steps.quick": "Hızlı kontrol"
 }

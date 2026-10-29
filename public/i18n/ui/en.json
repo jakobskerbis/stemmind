@@ -1299,5 +1299,11 @@
   "session.class": "Pre-class review",
   "session.classIntro": "Five short tasks: what you're learning now and topics you've recently mastered.",
   "session.classEmpty": "There are no review tasks for this subject yet. Start with New material.",
-  "sessionDone.class": "Review done"
+  "sessionDone.class": "Review done",
+  "tb.steps.next": "Next",
+  "tb.steps.prev": "Back",
+  "tb.steps.count": "Step {n} of {m}",
+  "tb.steps.all": "All at once",
+  "tb.steps.byStep": "Step by step",
+  "tb.steps.quick": "Quick check"
 }

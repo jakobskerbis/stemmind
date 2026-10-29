@@ -1293,5 +1293,11 @@
   "session.class": "课前复习",
   "session.classIntro": "五道小题：你现在正在学的内容和最近掌握的主题。",
   "session.classEmpty": "这门科目还没有可复习的题目。先从新内容开始吧。",
-  "sessionDone.class": "复习完成"
+  "sessionDone.class": "复习完成",
+  "tb.steps.next": "下一步",
+  "tb.steps.prev": "上一步",
+  "tb.steps.count": "第 {n} 步，共 {m} 步",
+  "tb.steps.all": "全部显示",
+  "tb.steps.byStep": "分步显示",
+  "tb.steps.quick": "快速检查"
 }

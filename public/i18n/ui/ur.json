@@ -1299,5 +1299,11 @@
   "session.class": "کلاس سے پہلے دہرائی",
   "session.classIntro": "پانچ مختصر سوال: جو تم ابھی پڑھ رہے ہو اور حال ہی میں سیکھے ہوئے موضوعات۔",
   "session.classEmpty": "اس مضمون میں ابھی دہرائی کے لیے سوالات نہیں۔ «نیا سبق» سے شروع کرو۔",
-  "sessionDone.class": "دہرائی مکمل"
+  "sessionDone.class": "دہرائی مکمل",
+  "tb.steps.next": "آگے",
+  "tb.steps.prev": "پیچھے",
+  "tb.steps.count": "مرحلہ {n} از {m}",
+  "tb.steps.all": "سب ایک ساتھ",
+  "tb.steps.byStep": "مرحلہ وار",
+  "tb.steps.quick": "فوری جانچ"
 }

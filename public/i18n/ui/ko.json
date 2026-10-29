@@ -1293,5 +1293,11 @@
   "session.class": "수업 전 복습",
   "session.classIntro": "짧은 문제 다섯 개: 지금 배우고 있는 내용과 최근에 마스터한 주제에서 나와요.",
   "session.classEmpty": "이 과목에는 아직 복습 문제가 없어요. 새 내용부터 시작하세요.",
-  "sessionDone.class": "복습 완료"
+  "sessionDone.class": "복습 완료",
+  "tb.steps.next": "다음",
+  "tb.steps.prev": "이전",
+  "tb.steps.count": "{m}단계 중 {n}단계",
+  "tb.steps.all": "한 번에 모두",
+  "tb.steps.byStep": "단계별로",
+  "tb.steps.quick": "빠른 확인"
 }

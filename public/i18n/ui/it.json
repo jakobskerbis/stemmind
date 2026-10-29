@@ -1299,5 +1299,11 @@
   "session.class": "Ripasso prima della lezione",
   "session.classIntro": "Cinque esercizi brevi: gli argomenti che stai studiando ora e quelli padroneggiati di recente.",
   "session.classEmpty": "Per questa materia non ci sono ancora esercizi di ripasso. Inizia con argomenti nuovi.",
-  "sessionDone.class": "Ripasso completato"
+  "sessionDone.class": "Ripasso completato",
+  "tb.steps.next": "Avanti",
+  "tb.steps.prev": "Indietro",
+  "tb.steps.count": "Passo {n} di {m}",
+  "tb.steps.all": "Tutto insieme",
+  "tb.steps.byStep": "Passo dopo passo",
+  "tb.steps.quick": "Verifica rapida"
 }

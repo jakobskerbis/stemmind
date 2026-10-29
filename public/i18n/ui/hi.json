@@ -1299,5 +1299,11 @@
   "session.class": "क्लास से पहले दोहराव",
   "session.classIntro": "पाँच छोटे सवाल: जो तुम अभी पढ़ रहे हो और हाल में सीखे हुए टॉपिक।",
   "session.classEmpty": "इस विषय में अभी दोहराने के लिए सवाल नहीं हैं। “नया पाठ” से शुरू करो।",
-  "sessionDone.class": "दोहराव पूरा हुआ"
+  "sessionDone.class": "दोहराव पूरा हुआ",
+  "tb.steps.next": "आगे",
+  "tb.steps.prev": "पीछे",
+  "tb.steps.count": "चरण {n} / {m}",
+  "tb.steps.all": "सब एक साथ",
+  "tb.steps.byStep": "चरण दर चरण",
+  "tb.steps.quick": "त्वरित जाँच"
 }

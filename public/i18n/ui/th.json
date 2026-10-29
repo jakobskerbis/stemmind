@@ -1293,5 +1293,11 @@
   "session.class": "ทบทวนก่อนเรียน",
   "session.classIntro": "โจทย์สั้น ๆ ห้าข้อ: จากเนื้อหาที่กำลังเรียนและหัวข้อที่เพิ่งเชี่ยวชาญ",
   "session.classEmpty": "วิชานี้ยังไม่มีโจทย์ทบทวน เริ่มจากเนื้อหาใหม่ก่อน",
-  "sessionDone.class": "ทบทวนเสร็จแล้ว"
+  "sessionDone.class": "ทบทวนเสร็จแล้ว",
+  "tb.steps.next": "ถัดไป",
+  "tb.steps.prev": "ย้อนกลับ",
+  "tb.steps.count": "ขั้นที่ {n} จาก {m}",
+  "tb.steps.all": "แสดงทั้งหมด",
+  "tb.steps.byStep": "ทีละขั้น",
+  "tb.steps.quick": "ตรวจสอบด่วน"
 }

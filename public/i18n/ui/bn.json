@@ -1299,5 +1299,11 @@
   "session.class": "ক্লাসের আগে পুনরাবৃত্তি",
   "session.classIntro": "পাঁচটি ছোট প্রশ্ন: এখন যা পড়ছ আর সম্প্রতি আয়ত্ত করা অধ্যায়।",
   "session.classEmpty": "এই বিষয়ে এখনো পুনরাবৃত্তির প্রশ্ন নেই। “নতুন পাঠ” দিয়ে শুরু করো।",
-  "sessionDone.class": "পুনরাবৃত্তি শেষ"
+  "sessionDone.class": "পুনরাবৃত্তি শেষ",
+  "tb.steps.next": "পরবর্তী",
+  "tb.steps.prev": "পেছনে",
+  "tb.steps.count": "ধাপ {n} / {m}",
+  "tb.steps.all": "সব একসাথে",
+  "tb.steps.byStep": "ধাপে ধাপে",
+  "tb.steps.quick": "দ্রুত যাচাই"
 }

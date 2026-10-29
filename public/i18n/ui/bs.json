@@ -1305,5 +1305,11 @@
   "session.class": "Ponavljanje prije časa",
   "session.classIntro": "Pet kratkih zadataka: gradivo koje sada učiš i nedavno savladane teme.",
   "session.classEmpty": "Za ovaj predmet još nema zadataka za ponavljanje. Počni s Novim gradivom.",
-  "sessionDone.class": "Ponavljanje je završeno"
+  "sessionDone.class": "Ponavljanje je završeno",
+  "tb.steps.next": "Dalje",
+  "tb.steps.prev": "Nazad",
+  "tb.steps.count": "Korak {n} od {m}",
+  "tb.steps.all": "Sve odjednom",
+  "tb.steps.byStep": "Korak po korak",
+  "tb.steps.quick": "Brza provjera"
 }

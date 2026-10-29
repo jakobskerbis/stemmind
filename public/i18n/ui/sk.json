@@ -1311,5 +1311,11 @@
   "session.class": "Opakovanie pred hodinou",
   "session.classIntro": "Päť krátkych úloh: učivo, ktoré sa práve učíš, a naposledy zvládnuté témy.",
   "session.classEmpty": "Pri tomto predmete zatiaľ nie sú úlohy na opakovanie. Začni novým učivom.",
-  "sessionDone.class": "Opakovanie dokončené"
+  "sessionDone.class": "Opakovanie dokončené",
+  "tb.steps.next": "Ďalej",
+  "tb.steps.prev": "Späť",
+  "tb.steps.count": "Krok {n} z {m}",
+  "tb.steps.all": "Všetko naraz",
+  "tb.steps.byStep": "Krok za krokom",
+  "tb.steps.quick": "Rýchla kontrola"
 }

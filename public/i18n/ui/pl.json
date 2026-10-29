@@ -1311,5 +1311,11 @@
   "session.class": "Powtórka przed lekcją",
   "session.classIntro": "Pięć krótkich zadań: materiał, którego uczysz się teraz, i ostatnio opanowane tematy.",
   "session.classEmpty": "Z tego przedmiotu nie ma jeszcze zadań do powtórki. Zacznij od nowego materiału.",
-  "sessionDone.class": "Powtórka zakończona"
+  "sessionDone.class": "Powtórka zakończona",
+  "tb.steps.next": "Dalej",
+  "tb.steps.prev": "Wstecz",
+  "tb.steps.count": "Krok {n} z {m}",
+  "tb.steps.all": "Wszystko naraz",
+  "tb.steps.byStep": "Krok po kroku",
+  "tb.steps.quick": "Szybkie sprawdzenie"
 }
