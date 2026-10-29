@@ -275,7 +275,7 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 
 /* ---------- klepet z inštruktorjem ---------- */
 .chat-view { display: grid; grid-template-columns: 270px 1fr; }
-.sidebar { border-right: 1px solid var(--border); padding: 14px; overflow-y: auto; background: var(--surface); }
+.sidebar { border-inline-end: 1px solid var(--border); padding: 14px; overflow-y: auto; background: var(--surface); }
 .sidebar .primary { width: 100%; }
 #conversation-list { list-style: none; padding: 0; margin: 14px 0 0; }
 #conversation-list li {
@@ -643,7 +643,7 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
   /* Seznam pogovorov prekrije samo klepet: glava z gumbom ostane nad njim, spodnja vrstica zavihkov vidna. */
   .chat-view { position: relative; }
   .chat-head { position: relative; z-index: 6; }
-  .sidebar.open { display: block; position: absolute; inset: 0; z-index: 5; padding-top: 72px; border-right: 0; }
+  .sidebar.open { display: block; position: absolute; inset: 0; z-index: 5; padding-top: 72px; border-inline-end: 0; }
   .messages { padding: 16px 12px; }
   .msg { max-width: 100%; }
   .msg.assistant { margin-inline-start: 40px; }
