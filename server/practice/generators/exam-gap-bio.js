@@ -360,7 +360,7 @@ BANK["life-processes"] = {
     ["Stomata open when the guard cells lose water.", "द्वार कोशिकाओं से जल निकलने पर रंध्र खुलते हैं।", "Stomata close when guard cells shrink and open when they swell with water.", "द्वार कोशिकाएँ सिकुड़ने पर रंध्र बंद होते हैं और जल से फूलने पर खुलते हैं।"],
     ["Amphibians have a four-chambered heart.", "उभयचरों का हृदय चार कक्षीय होता है।", "Amphibians and many reptiles have a three-chambered heart.", "उभयचरों और अनेक सरीसृपों का हृदय तीन कक्षीय होता है।"],
     ["Urine is formed in the urinary bladder.", "मूत्र मूत्राशय में बनता है।", "Urine is formed in the nephrons of the kidneys; the bladder only stores it.", "मूत्र वृक्कों के वृक्काणुओं में बनता है; मूत्राशय केवल उसका संग्रह करता है।"],
-    ["Photosynthesis releases carbon dioxide.", "प्रकाश-संश्लेषण में कार्बन डाइऑक्साइड मुक्त होती है।", "Photosynthesis uses carbon dioxide and releases oxygen.", "प्रकाश-संश्लेषण में कार्बन डाइऑक्साइड उपयोग होती है और ऑक्सीजन मुक्त होती है।"],
+    ["Photosynthesis releases carbon dioxide.", "प्रकाश-संश्लेषण में कार्बन डाइऑक्साइड मुक्त होती है।", "Photosynthesis uses carbon dioxide and releases oxygen.", "प्रकाश-संश्लेषण में कार्बन डाइऑक्साइड का उपयोग होता है और ऑक्सीजन मुक्त होती है।"],
     ["Platelets carry oxygen to the tissues.", "प्लेटलेट्स ऊतकों तक ऑक्सीजन ले जाते हैं।", "Haemoglobin in red blood cells carries oxygen; platelets help blood clot.", "ऑक्सीजन लाल रुधिर कणिकाओं का हीमोग्लोबिन ले जाता है; प्लेटलेट्स थक्का बनाने में सहायक हैं।"],
     ["Bile contains enzymes that digest proteins.", "पित्त रस में प्रोटीन पचाने वाले एंजाइम होते हैं।", "Bile makes food alkaline and breaks fat into small globules; proteins are digested by pepsin and trypsin.", "पित्त रस भोजन को क्षारीय बनाता है और वसा को छोटी गोलिकाओं में तोड़ता है; प्रोटीन का पाचन पेप्सिन और ट्रिप्सिन करते हैं।"],
   ],
@@ -485,7 +485,7 @@ BANK["how-organisms-reproduce"] = {
         ["Spirogyra", "स्पाइरोगाइरा", "fragmentation of the filament into pieces that grow into new individuals", "तंतु के खंडों में टूटने (खंडन) से, प्रत्येक खंड नया जीव बनता है"],
         ["Planaria", "प्लेनेरिया", "regeneration of complete organisms from cut body pieces", "कटे हुए शरीर के टुकड़ों से पूरे जीवों का पुनर्जनन"],
         ["Rhizopus", "राइज़ोपस", "spores formed in sporangia", "बीजाणुधानी में बने बीजाणु"],
-        ["Bryophyllum", "ब्रायोफिलम", "buds in the notches along the leaf margin that grow into new plants", "पत्ती के किनारे की खाँचों में बनी कलिकाएँ, जो नए पौधे बनती हैं"],
+        ["Bryophyllum", "ब्रायोफिलम", "buds in the notches along the leaf margin that grow into new plants", "पत्ती के किनारे की खाँचों में बनी कलिकाएँ, जो विकसित होकर नए पौधे बनाती हैं"],
       ],
     },
     {
@@ -918,7 +918,7 @@ BANK["animal-behaviour-and-tissues"] = {
       items: [
         ["a reflex", "प्रतिवर्त", "the knee-jerk response when the tendon below the kneecap is tapped", "घुटने की टोपी के नीचे कंडरा पर थपकी देने पर पैर का झटके से उठना"],
         ["imprinting", "छापांकन (इम्प्रिंटिंग)", "newly hatched goslings following the first moving object they see", "अंडे से निकले हंस के बच्चों का पहली दिखी चलती वस्तु के पीछे चलना"],
-        ["habituation", "अभ्यस्तीकरण", "a snail no longer withdrawing into its shell after being touched gently many times", "बार-बार हल्का छूने पर घोंघे का खोल में सिमटना बंद कर देना"],
+        ["habituation", "अभ्यस्तीकरण (हैबिचुएशन)", "a snail no longer withdrawing into its shell after being touched gently many times", "बार-बार हल्का छूने पर घोंघे का खोल में सिमटना बंद कर देना"],
         ["classical conditioning", "प्राचीन अनुबंधन", "a dog salivating at the sound of a bell that was earlier rung with food", "पहले भोजन के साथ बजाई गई घंटी सुनकर कुत्ते के मुँह में लार आना"],
         ["operant conditioning", "क्रिया-प्रसूत अनुबंधन", "a rat learning to press a lever because it is rewarded with food", "भोजन का पुरस्कार मिलने से चूहे का लीवर दबाना सीखना"],
         ["insight learning", "अंतर्दृष्टि अधिगम", "a chimpanzee stacking boxes to reach bananas hung out of reach", "पहुँच से बाहर टँगे केले पाने के लिए चिंपैंज़ी का डिब्बे एक के ऊपर एक रखना"],

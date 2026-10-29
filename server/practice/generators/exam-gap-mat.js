@@ -489,7 +489,7 @@ export const EXAM_GAP_MAT = [
       const ctry = r.pick(COUNTRIES);
       const [i, j] = r.shuffle([0, 1, 2, 3, 4]).slice(0, 2);
       const a = r.int(11, 18) * 5, b = r.int(8, 17) * 5;
-      const askLeast = r.int(0, 1) === 0 || a + b <= 100;
+      const askLeast = r.int(0, 1) === 0 && a + b > 100;
       const X = L(...OWN[i]), Y = L(...OWN[j]), K = L(...ctry);
       const lo = Math.max(0, a + b - 100), hiV = Math.min(a, b);
       const ans = askLeast ? lo : hiV;
@@ -1083,7 +1083,7 @@ export const EXAM_GAP_MAT = [
       const v = r.int(0, 3);
       if (v === 0) {
         const n = r.pick([10, 15, 20, 25]), m = r.int(20, 60), s = r.pick([2, 3, 4, 5, 6]);
-        const p = m + r.int(-8, 8);
+        const p = m + r.int(-6, 6); // |p − m| ≤ s√(n − 1), sicer podatki niso mogoči
         let q;
         do q = p + r.int(-10, 10);
         while (q === p);
