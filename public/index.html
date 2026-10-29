@@ -165,7 +165,11 @@
         <input type="hidden" name="study_program">
         <input type="hidden" name="curriculum_level">
       </fieldset>
-      <label><span data-i18n="set.subject">Predmet</span>
+      <!-- Fakulteta: predmeti iz predmetnika izbrane smeri namesto MAT/FIZ/KEM -->
+      <label id="course-row" hidden><span data-i18n="set.subject">Predmet</span>
+        <select name="study_course"></select>
+      </label>
+      <label id="subject-row"><span data-i18n="set.subject">Predmet</span>
         <select name="subject">
           <option value="MAT" data-i18n="subj.MAT">Matematika</option>
           <option value="FIZ" data-i18n="subj.FIZ">Fizika</option>

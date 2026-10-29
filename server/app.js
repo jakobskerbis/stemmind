@@ -39,7 +39,7 @@ const ANSWER_CACHE = process.env.STEMMIND_ANSWER_CACHE !== "0";
 function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [], tier = "osnovna") {
   const norm = text.toLowerCase().replace(/\s+/g, " ").replace(/[\s.!?]+$/, "").trim();
   if (norm.length < 8) return null;
-  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, mode === "deep" ? 1 : 0];
+  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.study_course, settings.curriculum_level, settings.solving_mode, settings.personality_setting, mode === "deep" ? 1 : 0];
   if (mode === "think") parts.push("think");
   // Pri temi učne poti tudi šibke točke, da se osebni odgovor ne prenese k drugemu učencu.
   if (pathTopic) parts.push(`tema:${pathTopic}`, weak.join(","));

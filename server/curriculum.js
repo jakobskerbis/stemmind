@@ -295,6 +295,8 @@ function uniPathKeyFor(settings) {
   // Letnik brez zajetih predmetov (npr. moduli v 3. letniku): vzamemo zadnjega s predmeti.
   const years = p.courseKeys.slice(0, year).filter((k) => k.length);
   const keys = years[years.length - 1] || [];
+  // Predmet, ki ga je študent izbral v Nastavitvah (preveri ga normalizeSettings).
+  if (settings.study_course && BUILT[settings.study_course]) return settings.study_course;
   return keys.find((k) => BUILT[k].subject === settings.subject) || keys[0] || null;
 }
 
