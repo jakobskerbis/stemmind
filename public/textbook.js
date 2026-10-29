@@ -4,7 +4,7 @@ import { t, locale } from "./i18n.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
-const tb = { subject: null, book: null, group: null, query: "", topicId: null, books: [], myPath: null, program: null, profile: null, mode: "lessons", refType: "", refSl: false, refs: null, refOpen: new Set() };
+const tb = { browse: false, subject: null, book: null, group: null, query: "", topicId: null, books: [], myPath: null, program: null, profile: null, mode: "lessons", refType: "", refSl: false, refs: null, refOpen: new Set() };
 
 // Kar iz Nastavitev določa učbenik: smer, program, predmet in razred/letnik.
 const profileOf = (s) =>
@@ -14,7 +14,7 @@ const profileOf = (s) =>
 function syncProfile() {
   const key = profileOf(ctx.getStudent());
   if (key === tb.profile) return;
-  Object.assign(tb, { profile: key, subject: null, book: null, group: null, myPath: null, topicId: null, query: "", mode: "lessons", refs: null });
+  Object.assign(tb, { profile: key, browse: false, subject: null, book: null, group: null, myPath: null, topicId: null, query: "", mode: "lessons", refs: null });
 }
 
 // Deli učbenika v skupinah: pri šolskem učbeniku razred/letnik, pri študijskem programu letnik (z vsemi predmeti).
@@ -211,11 +211,12 @@ async function renderHome() {
   box.innerHTML = `
     <div class="tb-head">
       <h1>${ic("book-open")}Učbenik</h1>
-      <p class="muted">Za vsak predmet svoj učbenik: razlage vseh tem, rešeni primeri in poskusi, ki jih lahko premikaš sam.</p>
+      <p class="muted">${tb.browse ? "Za vsak predmet svoj učbenik: razlage" : "Razlage"} vseh tem, rešeni primeri in poskusi, ki jih lahko premikaš sam.</p>
       <div class="tb-search">
         <input id="tb-q" type="search" placeholder="Išči pojem, zakon ali poskus …" value="${esc(tb.query)}" aria-label="Išči po učbeniku" autocomplete="off">
       </div>
-      <div class="tb-filters">
+      ${tb.browse ? "" : `<button type="button" class="text-btn tb-browse" id="tb-browse">${ic("library")}Drugi učbeniki</button>`}
+      <div class="tb-filters"${tb.browse ? "" : " hidden"}>
         <div class="seg" role="tablist" aria-label="Predmet">${subjects
           .map(([k, v]) => `<button type="button" role="tab" data-subj="${esc(k)}" class="${k === tb.subject ? "active" : ""}" aria-selected="${k === tb.subject}">${esc(v)}</button>`)
           .join("")}</div>
@@ -245,6 +246,11 @@ async function renderHome() {
       tb.query = q.value.trim();
       renderBody();
     }, 200);
+  });
+  // Privzeto učenec vidi samo svoj učbenik (predmet in raven iz učne poti); druge odpre na zahtevo.
+  $("#tb-browse")?.addEventListener("click", () => {
+    tb.browse = true;
+    renderHome();
   });
   box.querySelectorAll("[data-subj]").forEach((b) =>
     b.addEventListener("click", () => {
