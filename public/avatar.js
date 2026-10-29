@@ -202,8 +202,8 @@ export function avatarSvg(eq, { size = 64, title = "" } = {}) {
   const u = `av${++uid}`;
   const body = BODY[a.body] ? a.body : "body_blue";
   return `<svg class="avatar-svg" viewBox="0 0 100 100" width="${size}" height="${size}" role="img"${title ? ` aria-label="${title.replace(/"/g, "&quot;")}"` : ` aria-hidden="true"`}>
-${defs(u, body)}${DRAW.bg(a.bg, u) ?? (BG[a.bg] || BG.bg_sky)(u)}${DRAW.fxBack(a.fx)}${(OUTFIT_BACK[a.outfit] || (() => ""))()}
+${defs(u, body)}${DRAW.bg(a.bg, u) ?? (BG[a.bg] || BG.bg_sky)(u)}${DRAW.fxBack(a.fx, u)}${(OUTFIT_BACK[a.outfit] || (() => ""))()}
 <path d="${BODY_PATH}" fill="url(#g${u})" stroke="${INK}" stroke-width="3"/>${(BODY_EXTRA[body] || (() => ""))()}
 <path d="M30 40q4-8 12-10" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".35"/>
-${DRAW.outfit(a.outfit, u) ?? (OUTFIT[a.outfit] || OUTFIT.outfit_none)(u)}${DRAW.badge(a.badge)}${(EYES[a.eyes] || EYES.eyes_dots)()}${(MOUTH[a.mouth] || MOUTH.mouth_smile)()}${DRAW.acc(a.acc, u) ?? (ACC[a.acc] || ACC.acc_none)()}${(HAT[a.hat] || HAT.hat_none)()}${DRAW.fxFront(a.fx)}</svg>`;
+${DRAW.outfit(a.outfit, u) ?? (OUTFIT[a.outfit] || OUTFIT.outfit_none)(u)}${DRAW.badge(a.badge)}${(EYES[a.eyes] || EYES.eyes_dots)()}${(MOUTH[a.mouth] || MOUTH.mouth_smile)()}${DRAW.acc(a.acc, u) ?? (ACC[a.acc] || ACC.acc_none)()}${DRAW.hat(a.hat) ?? (HAT[a.hat] || HAT.hat_none)()}${DRAW.fxFront(a.fx)}</svg>`;
 }

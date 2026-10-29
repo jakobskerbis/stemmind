@@ -7,7 +7,7 @@ import { KNOWLEDGE, COLLECTIONS, PASS, PASS_REWARDS, RARITY_TIER, seasonOf, seas
 import { avatarSvg, cleanAvatar, SLOTS, ITEMS } from "../public/avatar.js";
 import { publicAvatar } from "../server/avatar.js";
 
-test("zbirke: every item draws, every condition topic exists at the item's level, at most 2 % legendary", () => {
+test("zbirke: every item draws, every condition topic exists at the item's level, XP ladder rises with rarity", () => {
   assert.equal(new Set(ITEMS.map((x) => x.id)).size, ITEMS.length);
   for (const x of KNOWLEDGE) {
     assert.ok(SLOTS.includes(x.slot) && x.name.sl && x.name.en && RARITY_TIER[x.rarity], x.id);
@@ -22,8 +22,16 @@ test("zbirke: every item draws, every condition topic exists at the item's level
     // Zgled (prva tema) je natanko na ravni redkosti: pogoj, ki ga vidi učenec, ustreza redkosti.
     if (x.need?.t) assert.equal(topicTier(getPath(getTopic(x.need.t[0]).path)), RARITY_TIER[x.rarity], `${x.id}: zgled`);
   }
-  assert.ok(KNOWLEDGE.filter((x) => x.rarity === "legendary").length / KNOWLEDGE.length <= 0.02);
-  for (const c of COLLECTIONS) {
+  // Za znanje snovi je legendaren en sam predmet; ostali epski, legendarni in mitični so na Poti znanja (XP).
+  assert.deepEqual(KNOWLEDGE.filter((x) => x.rarity === "legendary" && !x.need?.xp).map((x) => x.id), ["fx_doppler"]);
+  const pot = KNOWLEDGE.filter((x) => x.collection === "pot");
+  assert.ok(pot.length >= 12 && pot.every((x) => x.need.xp > 0 && ["epic", "legendary", "mythic"].includes(x.rarity)));
+  for (let i = 1; i < pot.length; i++) {
+    assert.ok(pot[i].need.xp > pot[i - 1].need.xp, pot[i].id);
+    assert.ok(RARITY_TIER[pot[i].rarity] >= RARITY_TIER[pot[i - 1].rarity], pot[i].id);
+  }
+  assert.ok(KNOWLEDGE.filter((x) => x.rarity === "mythic").every((x) => x.collection === "pot"));
+  for (const c of COLLECTIONS.filter((c) => c.id !== "pot")) {
     const n = KNOWLEDGE.filter((x) => x.collection === c.id && !x.set).length;
     const set = KNOWLEDGE.find((x) => x.collection === c.id && x.set);
     assert.ok(set && set.need.own < n, c.id);
@@ -139,6 +147,20 @@ test("zbirke: items unlock only from mastered topics and the learning pass, neve
     assert.ok(!k.owned(s.id).includes("fx_doppler") && !k.sync(s.id).includes("fx_doppler"));
     master(s.id, "KEM-TEK-OS/raztopine-in-masni-delez", "chat");
     assert.ok(k.sync(s.id).includes("fx_doppler"));
+
+    // Pot znanja: skupni XP (tudi XP iz iger, kot ga učenec vidi ob zvezdici).
+    const first = KNOWLEDGE.find((x) => x.id === "pot_hourglass").need.xp;
+    const mythic = KNOWLEDGE.find((x) => x.id === "pot_noether").need.xp;
+    const have = k.xpTotal(s.id);
+    assert.ok(have >= first && k.owned(s.id).includes("pot_hourglass") && !k.owned(s.id).includes("pot_noether"));
+    xp(s.id, mythic - have, "pravilno");
+    assert.ok(k.sync(s.id).includes("pot_noether"));
+    assert.ok(!k.owned(s.id).includes("pot_aurora"));
+    r = await call(`/api/students/${s.id}/avatar`, { equipped: { hat: "pot_laurel", bg: "pot_noether", fx: "pot_aurora" } });
+    assert.equal(r.body.equipped.hat, "pot_laurel");
+    assert.equal(r.body.equipped.bg, "pot_noether");
+    assert.equal(r.body.equipped.fx, "fx_none");
+    assert.equal((await call(`/api/students/${s.id}/zbirke`)).body.xp, mythic);
   } finally {
     server.close();
   }

@@ -14,7 +14,8 @@ import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
-import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths } from "./curriculum.js";
+import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths, localTopic } from "./curriculum.js";
+import { uiLanguage } from "../public/i18n/languages.js";
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor, formulaSheet } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
 import { programReferences, referencesFor, themesFor } from "./references.js";
@@ -495,7 +496,8 @@ export function createApp(store, opts = {}) {
     const t = getTopic(req.query.id);
     if (!t) return res.status(404).json({ error: "Tema ne obstaja." });
     // lang: jezik vmesnika (indijski izpiti imajo imena tem tudi v hindijščini).
-    const topic = localizeExamTopic({ ...t, pathLabel: getPath(t.path).label }, taskLanguage(String(req.query.lang || "")));
+    const lang = String(req.query.lang || "");
+    const topic = localizeExamTopic({ ...localTopic(t, uiLanguage(lang)), pathLabel: getPath(t.path).label }, taskLanguage(lang));
     res.json({ ...topic, explanation: explanationFor(t.id) || lessonExplanation(t.id) });
   });
   // --- učbenik ---

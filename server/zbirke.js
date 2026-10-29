@@ -98,6 +98,12 @@ export class Knowledge {
         if (tek.length >= x.need.tek && (!x.need.chat || chat)) grant(x.id, chat?.topic_id || tek[0].topic_id, "chat");
       }
     }
+    // Pot znanja: skupni XP (kot ga učenec vidi ob zvezdici).
+    const xpItems = KNOWLEDGE.filter((x) => x.need?.xp && !have.has(x.id));
+    if (xpItems.length) {
+      const total = this.xpTotal(id);
+      for (const x of xpItems) if (total >= x.need.xp) grant(x.id, null, "xp");
+    }
     // Kompleti: dovolj predmetov iste zbirke (brez kompletov).
     for (const x of KNOWLEDGE.filter((k) => k.set)) {
       const n = [...have.keys()].filter((i) => {
@@ -118,6 +124,10 @@ export class Knowledge {
       for (const [item, topic, source] of add) ins.run(id, item, topic, source, at);
     }
     return add.map(([item]) => item);
+  }
+
+  xpTotal(id) {
+    return this.db.prepare("SELECT COALESCE(SUM(amount),0) AS s FROM xp_events WHERE student_id = ?").get(id).s;
   }
 
   // Odvzem (npr. sumljiv dosežek): predmet izgine iz inventarja, zapis ostane.
@@ -164,7 +174,7 @@ export class Knowledge {
       const ex = x.need?.t?.[0] && getTopic(x.need.t[0]);
       if (ex) hints[x.id] = { name: ex.name, path: getPath(ex.path)?.label || "", id: x.need.t[0] };
     }
-    return { items, fresh, hints, pass: this.pass(id), showcase: this.showcase(id), showcaseMax: SHOWCASE_MAX };
+    return { items, fresh, hints, xp: this.xpTotal(id), pass: this.pass(id), showcase: this.showcase(id), showcaseMax: SHOWCASE_MAX };
   }
 }
 
