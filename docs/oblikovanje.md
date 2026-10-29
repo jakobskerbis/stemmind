@@ -12,7 +12,22 @@ Vse barve so spremenljivke v `public/style.css` (`:root`, temni način pod njim)
 | `--surface`, `--surface-2`, `--bg` | kartica; sivo-modra podlaga (tirnica, hover); ozadje strani |
 | `--text`, `--muted`, `--border` | besedilo; drugotno besedilo; robovi |
 | `--ok`, `--danger`, `--gold` | pravilno; napaka; XP in ponavljanje |
-| `--radius` (16px), `--radius-sm` (12px) | kartice in seznami; gumbi, polja, možnosti |
+| `--radius` (Čist 14px), `--radius-sm` (10px) | kartice in seznami; gumbi, polja, možnosti |
+| `--press` (Čist 0, Igriv 3px) | globina »pritisnjenih« gumbov (spodnja senca); senc ne piši na roke, uporabi `0 var(--press) 0 …` |
+| `--warm` | odštevanje do cilja, niz dni |
+| `--font` | pisava sloga (ne piši imena pisave neposredno) |
+
+## Slogi (Nastavitve → Videz → Slog)
+
+Trije slogi iz osnutka »STEMMind UI« (2026-10-29). `theme.js` nastavi `data-style` na `<html>` in osnovne barve sloga; lastne barve uporabnika veljajo nad njimi.
+
+| Slog | Pisava | Oblike | Barve |
+|---|---|---|---|
+| **Čist** (privzeti) | Instrument Sans | robovi 14/10 px, brez senc pod gumbi, ravne kartice | ozadje #F6F7F9, okna bela, poudarek #2353D1; temni način #0D1117 / #6E9BFF |
+| **Igriv** | Nunito | robovi 22/14 px, pritisnjeni gumbi (`--press: 3px`) | toplo ozadje #FFF6EA, vijolični poudarek #6A3BD6 |
+| **Temen** | IBM Plex Sans | robovi 10/7 px | vedno temen: #0D1117, metin poudarek #4CD3A4 (izbira Svetlo/Temno se skrije) |
+
+Pravila za Čist veljajo v `style.css` (`:root`), Igriv in Temen v `ui.css` (»Slogi«). Pisave so v `node_modules/@fontsource-variable/*` in se prenesejo le, ko jih slog uporablja; v lahkem načinu ostane sistemska pisava. Inštruktor slog spremeni z nastavitvijo naprave `style`.
 
 Temni način je razred `.dark` na `<html>`, ne `@media (prefers-color-scheme)`: pravila za temni način piši kot `.dark .moj-razred { … }`. Razred nastavi `public/theme.js` (Nastavitve → Videz: Svetlo / Temno / Samodejno).
 
@@ -22,7 +37,7 @@ Lastne barve: uporabnik v Nastavitve → Videz izbere poudarek in barve ozadja, 
 - belo besedilo samo na prelivu `--hero-a` → `--hero-b`, besedilo na `--accent` je `--accent-text`;
 - meniji (`.topbar`, `.modebar`, `.sidebar`, `.dd-list`) imajo lahko svojo barvo; znotraj njih `--surface`, `--text` … že pomenijo barve menija.
 
-Pisava je Nunito. Naslovi so debeli (800), gumbi 700–800.
+Pisava je spremenljivka `--font` (po slogu). Naslovi so debeli (700, v slogu Igriv 800), gumbi 700–800.
 
 ## Gradniki (`public/ui.css`)
 
@@ -38,6 +53,9 @@ Pisava je Nunito. Naslovi so debeli (800), gumbi 700–800.
 - **Vmesni koraki** (`.work`, `style.css`): zvezek pod besedilom naloge, s črtami in tipkovnico Σ; shrani se za vsako nalogo posebej in gre tutorju zraven. Na računalniku je odprt sam, na telefonu ob kliku.
 - **Formula** (`.formula-body`): razkrita formula je vedno v svojem okvirju z modrim robom levo, nikoli prosto v besedilu.
 - **Vrstica s tutorjem** (`.tutor-row`): »Razloži mi« in »Preglej s tutorjem« pod vsako rešitvijo (Vadnica, pregled tekmovanja). Na telefonu gumba čez celo širino.
+- **Klikljive formule** (`public/formula-data.js` + `formula-info.js`): `renderMath` v `app.js` pred izrisom ovije znane simbole in enote v `\htmlData{fx=…}`. Simbol je rahlo podčrtan; klik ali Enter odpre kartico (ime, izračun, enota in njena sestava, npr. M → molska masa, M = m/n, g/mol = g ÷ mol). Pomen je po predmetu teme ali lekcije (a: MAT koeficient, FIZ pospešek), dvoumne črke imajo pogoj `ctx` (formula mora ustrezati). Enota šele za številom (9,81 m/s²), zato kemijske formule (H₂O) niso enote. Ne v gumbih (možnosti odgovora) in ne v Preizkusu znanja / tekmovanju (`.no-fx`), ker bi zveza izdala rešitev. Nov simbol ali enota: vnos v `formula-data.js` (sl + en); test `test/goal-formula.test.js` preveri, da se vse izriše.
+- **Cilj** (`public/goal.js`, `goal-data.js`): cilj (sprotno, test, NPZ v OŠ, matura v SŠ, tekmovanje, izpit) in neobvezni datum se vprašata samo ob novem profilu; potem je le vrstica »Srednja šola 1. letnik · Matura · 1. 6. 2027 · še 215 dni · Spremeni« na Učni poti in v Napredku ter značka v zgornji vrstici (od 1440 px). Spremeni ali izbriši v Nastavitve → Cilj. Opomnik ob 12.00 (stikalo, privzeto vključeno, le z datumom): kartica na Učni poti po 12.00 do dneva cilja (»Kasneje« jo skrije do jutri) in z računi e-pošta staršu (`server/accounts/goal-reminder.js`, Resend).
+- **Stikalo**: `<button class="switch" role="switch" aria-checked="true|false">`.
 - **Animacije**: samo `transform` in `opacity`, kratke (do ~0,6 s), zamik po kartici z `--i`; ob »manj gibanja« jih ni (`style.css` jih izklopi globalno, `countUp` takoj pokaže število).
 
 Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `--accent-soft` ozadje).

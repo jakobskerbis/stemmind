@@ -1,5 +1,6 @@
 // Sestavi sistemski prompt iz predloge in aktivnih nastavitev.
 import fs from "node:fs";
+import { goalPrompt } from "../public/goal-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { cleanText } from "./settings.js";
@@ -50,7 +51,7 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     weaknesses: weaknesses.length ? weaknesses.join(", ") : "(še ni podatkov)",
     student_results: results || "še ni podatkov. Predlagana začetna zahtevnost: osnovna.",
     language: languagePrompt(settings.language, settings.region),
-    school_system: schoolSystemPrompt(settings),
+    school_system: schoolSystemPrompt(settings) + goalPrompt(settings),
     reply_length: lite ? "kratka (lahki način)" : "običajna",
   };
   // Zamenjamo samo znana imena, da LaTeX zapisi kot {,} ostanejo nedotaknjeni.

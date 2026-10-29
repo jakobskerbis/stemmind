@@ -1,11 +1,11 @@
-// Nastavitve → Videz: svetli/temni način, poudarki, barve oken, menijev in pisave, naključne barve.
+// Nastavitve → Videz: slog (Čist / Igriv / Temen), svetli/temni način, poudarki, barve oken, menijev in pisave, naključne barve.
 // Vse se zgodi takoj in velja za to napravo (theme.js).
 import { icon } from "./icons.js";
 import { t } from "./i18n.js";
 
 const T = window.STEMTheme;
 const ACCENTS = [
-  ["#2563eb", t("ap.blue")], ["#4f46e5", t("ap.indigo")], ["#7c3aed", t("ap.violet")], ["#db2777", t("ap.pink")],
+  ["#2353d1", t("ap.blue")], ["#4f46e5", t("ap.indigo")], ["#7c3aed", t("ap.violet")], ["#db2777", t("ap.pink")],
   ["#dc2626", t("ap.red")], ["#ea580c", t("ap.orange")], ["#16a34a", t("ap.green")], ["#0d9488", t("ap.teal")],
 ];
 const PARTS = [
@@ -13,6 +13,12 @@ const PARTS = [
   ["surface", t("ap.surface")],
   ["menu", t("ap.menu")],
   ["text", t("ap.text")],
+];
+// Slogi: vzorec barv (ozadje, okno, poudarek) in pisava, v kateri je napisano ime.
+const STYLES = [
+  ["cist", t("ap.styleCist"), t("ap.styleCistText"), ["#f6f7f9", "#ffffff", "#2353d1"], "Instrument Sans Variable"],
+  ["igriv", t("ap.styleIgriv"), t("ap.styleIgrivText"), ["#fff6ea", "#ffc56b", "#6a3bd6"], "Nunito Variable"],
+  ["temen", t("ap.styleTemen"), t("ap.styleTemenText"), ["#0d1117", "#151b23", "#4cd3a4"], "IBM Plex Sans Variable"],
 ];
 const MODES = [["light", "sun", t("ap.light")], ["dark", "moon", t("ap.dark")], ["system", "sun-moon", t("ap.system")]];
 
@@ -22,19 +28,29 @@ export function mountAppearance(box) {
     const s = T.load();
     const key = T.isDarkMode(s) ? "dark" : "light";
     const c = T.compute(s);
-    const base = T.BASE[key];
+    const base = T.baseOf(s)[key];
     const pal = s[key] || {};
     const current = (k) => (c ? (k === "menu" ? c.menu : c.vars[`--${k}`] || c[k]) : base[k]);
-    const accentNow = (s.accent || ACCENTS[0][0]).toLowerCase(); // brez izbire = privzeta modra
+    const accentNow = (s.accent || base.accent).toLowerCase(); // brez izbire = poudarek sloga
     const textFixed = pal.text && c && c.vars["--text"].toLowerCase() !== pal.text.toLowerCase();
     box.innerHTML = `
       <h2 class="h-icon">${icon("palette")}${t("ap.title")}</h2>
       <p class="muted">${t("ap.note")}</p>
 
       <div class="ap-row">
+        <span class="field-label">${t("ap.style")}</span>
+        <div class="style-cards" role="radiogroup" aria-label="${t("ap.style")}">${STYLES.map(([v, name, text, sw, font]) => `
+          <button type="button" role="radio" class="style-card${s.style === v ? " on" : ""}" data-style="${v}" aria-checked="${s.style === v}">
+            <span class="style-sw" aria-hidden="true">${sw.map((c) => `<i style="background:${c}"></i>`).join("")}</span>
+            <span class="style-txt"><b style="font-family:'${font}', system-ui, sans-serif">${name}</b><small>${text}</small></span>
+          </button>`).join("")}
+        </div>
+      </div>
+
+      <div class="ap-row">
         <span class="field-label">${t("ap.mode")}</span>
-        <div class="seg" role="radiogroup" aria-label="${t("ap.mode")}">${MODES.map(([v, ic, label]) =>
-          `<button type="button" role="radio" data-mode="${v}" class="${s.mode === v ? "active" : ""}" aria-checked="${s.mode === v}">${icon(ic)}${label}</button>`).join("")}</div>
+        ${s.style === "temen" ? `<p class="small-note muted">${t("ap.temenMode")}</p>` : `<div class="seg" role="radiogroup" aria-label="${t("ap.mode")}">${MODES.map(([v, ic, label]) =>
+          `<button type="button" role="radio" data-mode="${v}" class="${s.mode === v ? "active" : ""}" aria-checked="${s.mode === v}">${icon(ic)}${label}</button>`).join("")}</div>`}
       </div>
 
       <div class="ap-row">
@@ -76,8 +92,9 @@ export function mountAppearance(box) {
   box.addEventListener("click", (e) => {
     const b = e.target.closest("button");
     if (!b) return;
-    if (b.dataset.mode) update((s) => (s.mode = b.dataset.mode));
-    else if (b.dataset.accent) update((s) => (s.accent = b.dataset.accent === "#2563eb" ? null : b.dataset.accent));
+    if (b.dataset.style) update((s) => { s.style = b.dataset.style; s.accent = null; });
+    else if (b.dataset.mode) update((s) => (s.mode = b.dataset.mode));
+    else if (b.dataset.accent) update((s) => (s.accent = b.dataset.accent === T.baseOf(s)[key(s)].accent ? null : b.dataset.accent));
     else if (b.dataset.random === "accent") update((s) => (s.accent = T.randomAccent(s)));
     else if (b.dataset.random === "all") update((s) => {
       const r = T.randomPalette(s);

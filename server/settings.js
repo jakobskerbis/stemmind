@@ -3,6 +3,7 @@ import { PROGRAMS, UNI_PATHS } from "./university-data.js";
 import { ALL_SUBJECTS, SCHOOL_SUBJECTS, REGIONAL_SUBJECTS, subjectForLevel } from "./subjects.js";
 import { LANGUAGE_CODES, DEFAULT_LANGUAGE } from "../public/i18n/languages.js";
 import { SYSTEM_IDS, DEFAULT_SYSTEM, isRegional, gradeInfo, defaultGrade, trackForLevel } from "../public/regions.js";
+import { GOALS, DEFAULT_GOAL, goalsFor, validDate } from "../public/goal-data.js";
 
 export const ENUMS = {
   subject: ALL_SUBJECTS,
@@ -15,6 +16,8 @@ export const ENUMS = {
   school_system: SYSTEM_IDS,
   // Lahki način (varčevanje s podatki): auto = po povezavi naprave, lite = vedno, normal = nikoli.
   data_mode: ["auto", "lite", "normal"],
+  // Cilj učenca (public/goal-data.js); datum je neobvezen, opomnik ob 12.00 velja le z datumom.
+  goal: GOALS,
 };
 
 export const DEFAULT_SETTINGS = {
@@ -30,6 +33,9 @@ export const DEFAULT_SETTINGS = {
   region: "",
   school_system: DEFAULT_SYSTEM,
   data_mode: "auto",
+  goal: DEFAULT_GOAL,
+  goal_date: "", // YYYY-MM-DD ali prazno
+  goal_reminder: true, // dnevni opomnik ob 12.00 do datuma cilja
 };
 
 // Proste besedilne nastavitve gredo v sistemski prompt, zato jih skrajšamo
@@ -80,6 +86,10 @@ export function normalizeSettings(input = {}) {
   if (input.personality_setting !== undefined) {
     out.personality_setting = cleanText(input.personality_setting, 200);
   }
+  // Cilj mora ustrezati šoli (NPZ le v OŠ, matura le v SŠ …), sicer sprotno učenje.
+  if (!goalsFor(out).includes(out.goal)) out.goal = DEFAULT_GOAL;
+  if (validDate(input.goal_date)) out.goal_date = input.goal_date;
+  if (input.goal_reminder !== undefined) out.goal_reminder = input.goal_reminder === true || input.goal_reminder === 1 || input.goal_reminder === "1" || input.goal_reminder === "true";
   return out;
 }
 

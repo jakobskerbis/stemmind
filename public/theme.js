@@ -1,15 +1,32 @@
 // Svetli/temni način in lastne barve. Navaden skript v <head>, da se barve nastavijo pred prvim izrisom.
 // Nastavitve so shranjene na tej napravi (localStorage "stemmind.theme"):
-//   { mode: "system" | "light" | "dark", accent: "#rrggbb" | null,
+//   { style: "cist" | "igriv" | "temen", mode: "system" | "light" | "dark", accent: "#rrggbb" | null,
 //     light: { bg, surface, menu, text } | null, dark: { … } | null }
+// Slog (docs/oblikovanje.md): Čist (privzeto, Instrument Sans, umirjen), Igriv (Nunito, zaobljen, topel),
+// Temen (IBM Plex Sans, vedno temen, metin poudarek). Slog nastavi data-style na <html> (pisava, oblike)
+// in osnovne barve; lastne barve uporabnika veljajo nad njimi.
 // Iz teh nekaj barv izračunamo vse ostale (robove, sivo besedilo, poudarke …) in pri tem
 // pazimo na kontrast, da je besedilo vedno dobro berljivo.
 (function () {
   const KEY = "stemmind.theme";
-  const BASE = {
-    light: { bg: "#f3f6fb", surface: "#ffffff", menu: "#ffffff", text: "#14213d", accent: "#2563eb" },
-    dark: { bg: "#0d1322", surface: "#151d30", menu: "#151d30", text: "#eceef8", accent: "#5b95ff" },
+  const STYLES = ["cist", "igriv", "temen"];
+  // Osnovne barve slogov. Čist je enak privzetim barvam v style.css (brez izračuna).
+  const BASES = {
+    cist: {
+      light: { bg: "#f6f7f9", surface: "#ffffff", menu: "#ffffff", text: "#141821", accent: "#2353d1" },
+      dark: { bg: "#0d1117", surface: "#151b23", menu: "#151b23", text: "#e6eaf0", accent: "#6e9bff" },
+    },
+    igriv: {
+      light: { bg: "#fff6ea", surface: "#ffffff", menu: "#ffffff", text: "#1f1a2e", accent: "#6a3bd6" },
+      dark: { bg: "#17121f", surface: "#211a2e", menu: "#211a2e", text: "#efeaf8", accent: "#a98bff" },
+    },
+    temen: {
+      light: { bg: "#0d1117", surface: "#151b23", menu: "#151b23", text: "#e6eaf0", accent: "#4cd3a4" },
+      dark: { bg: "#0d1117", surface: "#151b23", menu: "#151b23", text: "#e6eaf0", accent: "#4cd3a4" },
+    },
   };
+  const BASE = BASES.cist;
+  const baseOf = (s) => BASES[s && STYLES.includes(s.style) ? s.style : "cist"];
   // Najmanjši kontrast (WCAG): navadno besedilo 7 (AAA), sivo besedilo in poudarki 4.5 (AA).
   const MIN = { text: 7, muted: 4.5, accent: 4.5, onAccent: 4.5 };
   const mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : { matches: false, addEventListener() {} };
@@ -93,9 +110,9 @@
   function load() {
     try {
       const s = JSON.parse(localStorage.getItem(KEY) || "{}");
-      return { mode: ["light", "dark", "system"].includes(s.mode) ? s.mode : "system", accent: hexToRgb(s.accent) ? s.accent : null, light: s.light || null, dark: s.dark || null };
+      return { style: STYLES.includes(s.style) ? s.style : "cist", mode: ["light", "dark", "system"].includes(s.mode) ? s.mode : "system", accent: hexToRgb(s.accent) ? s.accent : null, light: s.light || null, dark: s.dark || null };
     } catch {
-      return { mode: "system", accent: null, light: null, dark: null };
+      return { style: "cist", mode: "system", accent: null, light: null, dark: null };
     }
   }
   function save(s) {
@@ -103,15 +120,16 @@
     apply(s);
     window.dispatchEvent(new CustomEvent("stemmind:theme", { detail: s }));
   }
-  const isDarkMode = (s) => s.mode === "dark" || (s.mode === "system" && mq.matches);
+  const isDarkMode = (s) => s.style === "temen" || s.mode === "dark" || (s.mode === "system" && mq.matches);
 
   // Iz nekaj izbranih barv izračuna vse spremenljivke. Vrne null, če ni lastnih barv.
   function compute(s) {
     const key = isDarkMode(s) ? "dark" : "light";
     const pal = s[key] || {};
-    const custom = Object.keys(pal).some((k) => hexToRgb(pal[k])) || s.accent;
+    // Čist brez lastnih barv = privzete barve iz style.css; drugi slogi se izračunajo iz svojih osnovnih barv.
+    const custom = Object.keys(pal).some((k) => hexToRgb(pal[k])) || s.accent || (s.style && s.style !== "cist");
     if (!custom) return null;
-    const base = BASE[key];
+    const base = baseOf(s)[key];
     const pick = (k) => (hexToRgb(pal[k]) ? pal[k] : base[k]);
     const bg = pick("bg"), surface = pick("surface");
     const menu = hexToRgb(pal.menu) ? pal.menu : hexToRgb(pal.surface) ? surface : base.menu;
@@ -161,6 +179,7 @@
 
   function apply(s = load()) {
     const root = document.documentElement;
+    root.dataset.style = STYLES.includes(s.style) ? s.style : "cist";
     const c = compute(s);
     for (const v of ALL_VARS) root.style.removeProperty(v);
     const dark = c ? c.dark : isDarkMode(s);
@@ -168,7 +187,7 @@
     root.style.colorScheme = dark ? "dark" : "light";
     if (c) for (const [k, v] of Object.entries(c.vars)) root.style.setProperty(k, v);
     const meta = document.querySelector('meta[name="theme-color"]');
-    const top = c ? c.menu : isDarkMode(s) ? BASE.dark.menu : BASE.light.menu;
+    const top = c ? c.menu : isDarkMode(s) ? baseOf(s).dark.menu : baseOf(s).light.menu;
     if (meta) meta.setAttribute("content", top);
   }
 
@@ -178,7 +197,7 @@
   function randomAccent(s = load()) {
     const key = isDarkMode(s) ? "dark" : "light";
     const pal = s[key] || {};
-    const against = [hexToRgb(pal.surface) ? pal.surface : BASE[key].surface, hexToRgb(pal.bg) ? pal.bg : BASE[key].bg];
+    const against = [hexToRgb(pal.surface) ? pal.surface : baseOf(s)[key].surface, hexToRgb(pal.bg) ? pal.bg : baseOf(s)[key].bg];
     const current = s.accent ? toHsl(s.accent)[0] : -999;
     let h;
     do h = rnd(0, 360); while (Math.abs(((h - current + 540) % 360) - 180) < 40);
@@ -223,7 +242,7 @@
     return pairs.every(([a, b, m]) => contrast(a, b) >= m - 0.01);
   }
 
-  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, MIN, readable };
+  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, baseOf, MIN, readable };
   apply();
   mq.addEventListener?.("change", () => apply());
 })();
