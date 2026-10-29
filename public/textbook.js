@@ -484,7 +484,8 @@ async function renderLesson(topicId) {
     const d = demos[Number(m.dataset.sim)];
     mountSim(d.id, m, d.opts);
   });
-  $("#tb-upgrade")?.addEventListener("click", () => ctx.showView("account"));
+  // Zavihek Račun se izriše ob kliku nanj (account.js); sam showView bi pokazal prazen pogled.
+  $("#tb-upgrade")?.addEventListener("click", () => document.querySelector("#account-tab")?.click());
   // Razloži drugače
   const altBody = $("#tb-alt-body");
   const showAlt = (i) => {
