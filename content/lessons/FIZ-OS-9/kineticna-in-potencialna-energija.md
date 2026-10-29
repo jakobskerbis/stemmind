@@ -7,7 +7,7 @@ avtor: AI
 
 Iz prejšnjih lekcij že veš, da sila, ki premakne telo po poti, opravi **delo** ($A = F \cdot s$), in da se delo meri v joulih ($\mathrm{J}$). Veš tudi, da je teža telesa sila, ki ga vleče proti tlom: $F_g = m \cdot g$, pri čemer je $g \approx 10\,\frac{\text{N}}{\text{kg}}$.
 
-Energija je zmožnost telesa, da opravi delo. Kadar telo miruje na vrhu klanca, ima »zalogo« energije zaradi višine. Ko se spusti, ta zaloga postane gibanje. Tako deluje tobogan, gugalnica, rolkarski park, hidroelektrarna in tudi kolo, ki se spušča po klancu. Če znaš izračunati kinetično in potencialno energijo, lahko brez merjenja napoveš, kako hitro bo telo na dnu klanca ali kako visoko bo prišlo.
+Energija je zmožnost telesa, da opravi delo. Kadar telo miruje na vrhu klanca, ima »zalogo« energije zaradi višine. Ko se spusti, ta zaloga postane gibanje. Tako delujejo tobogan, gugalnica, rolkarski park, hidroelektrarna in tudi kolo, ki se spušča po klancu. Če znaš izračunati kinetično in potencialno energijo, lahko brez merjenja napoveš, kako hitro bo telo na dnu klanca ali kako visoko bo prišlo.
 
 ## Razlaga
 
@@ -99,6 +99,7 @@ Ohranitev mehanske energije: $m g h = \dfrac{m v^2}{2}$, torej $v = \sqrt{2 g h}
 3. **Hitrost.** Iz $W_k = \dfrac{m v^2}{2}$ sledi $v^2 = \dfrac{2 W_k}{m} = \dfrac{2 \cdot 600}{30} = \dfrac{1200}{30} = 40$.
 4. Korenimo, ker iščemo $v$, ne $v^2$: $v = \sqrt{40} \approx 6{,}3\,\frac{\text{m}}{\text{s}}$.
 5. **Preverimo s formulo** $v = \sqrt{2 g h} = \sqrt{2 \cdot 10 \cdot 2} = \sqrt{40}$. ✓ Masa res ni potrebna.
+6. Odgovor: hitrost otroka na dnu tobogana je približno $6{,}3\,\frac{\text{m}}{\text{s}}$.
 
 ## Pogoste napake
 

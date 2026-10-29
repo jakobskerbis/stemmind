@@ -27,7 +27,7 @@ Tok teče samo, če je krog **sklenjen**. Če ga kjer koli prekinemo (odpremo st
 - Skozi vse porabnike teče **enak tok**: $I = I_1 = I_2$.
 - Napetost vira se **porazdeli** med porabnike: $U = U_1 + U_2$.
 - Če en porabnik izpade (pregori, odklopimo ga), se prekine **celoten** krog in vsi porabniki ugasnejo.
-- Več ko je porabnikov, manjši je tok (skupni upor je večji), zato žarnice svetijo šibkeje.
+- Več ko je porabnikov, manjši je tok, zato žarnice svetijo šibkeje.
 
 **4. Vzporedna vezava.** Porabniki so vezani v **ločenih vejah**, ki se razcepijo v vozlišču in spet združijo. Tok ima več poti.
 
@@ -140,7 +140,7 @@ V interaktivni simulaciji spodaj lahko merilnike postaviš na različna mesta in
 
 ## Drugače: Iz vsakdanjega življenja
 
-**Božične lučke.** Pri starejših verigah so bile žarnice vezane zaporedno. Ko je ena pregorela, je ugasnila cela veriga in iskati si moral pokvarjeno. Pri novejših so žarnice ali skupine žarnic vezane tako, da izpad ene ne ugasne vseh.
+**Božične lučke.** Pri starejših verigah so bile žarnice vezane zaporedno. Ko je ena pregorela, je ugasnila cela veriga in si moral poiskati pokvarjeno žarnico. Pri novejših so žarnice ali skupine žarnic vezane tako, da izpad ene ne ugasne vseh.
 
 **Stanovanje.** Vse vtičnice in luči so vezane vzporedno na omrežno napetost. Zato vsaka naprava dobi polno napetost in deluje neodvisno od drugih. Če ugasneš luč v kuhinji, hladilnik teče naprej.
 
@@ -195,8 +195,6 @@ $$U = U_1 + U_2$$
 Pri vzporedni vezavi gre naboj samo skozi eno vejo. Vsaka veja povezuje isti dve točki kroga, zato je napetost med njima za vse veje enaka:
 
 $$U = U_1 = U_2$$
-
-**Skupni upor** (za zanimivost, v tej lekciji ga ne računamo). Pri zaporedni vezavi se upori seštevajo, zato je skupni upor večji in tok manjši. Pri vzporedni vezavi je skupni upor manjši od najmanjšega posameznega upora, zato skupni tok naraste.
 
 ## Preveri se
 
