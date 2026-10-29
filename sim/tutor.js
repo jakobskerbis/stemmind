@@ -52,9 +52,10 @@ class LocalTutor {
     const claude = await import("../server/claude.js");
     const t = new LocalTutor();
     t.raw = new Map(); // pogovor → zadnji surovi odgovor modela (z META vrstico)
-    t.mock = claude.isMockMode();
+    t.mock = claude.isMockMode() && !opts.streamFn && opts.engine !== "cli";
     t.model = claude.MODEL;
-    const inner = opts.streamFn || claude.streamReply;
+    const { cliStreamFn } = await import("./cli.js");
+    const inner = opts.streamFn || (opts.engine === "cli" ? cliStreamFn({ modeParams: claude.modeParams }) : claude.streamReply);
     const streamFn = async (args) => {
       const result = await inner(args);
       t.lastRaw = { text: result.text, model: result.model, usage: result.usage, stopReason: result.stopReason };
@@ -64,7 +65,7 @@ class LocalTutor {
     t.server = createApp(t.store, { streamFn }).listen(0);
     await new Promise((r) => t.server.once("listening", r));
     t.base = `http://127.0.0.1:${t.server.address().port}`;
-    t.label = t.mock ? "lokalno (preizkusni način, brez modela)" : `lokalno (${claude.MODEL})`;
+    t.label = t.mock ? "lokalno (preizkusni način, brez modela)" : `lokalno (${claude.MODEL}${opts.engine === "cli" ? ", prek Claude Code" : ""})`;
     return t;
   }
 

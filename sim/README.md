@@ -4,7 +4,7 @@ Simulirani učenci, ki se kot prvi uporabniki pogovarjajo z inštruktorjem STEMM
 
 ## Zagon
 
-Potrebuješ isti `ANTHROPIC_API_KEY` kot aplikacija (v `.env`, prebere se samodejno).
+Učenci in ocenjevalec privzeto tečejo prek **Claude Code** (ukaz `claude`), torej porabljajo omejitev naročnine Claude (Pro/Max), ne API žetonov. Claude Code mora biti nameščen (`npm install -g @anthropic-ai/claude-code`) in prijavljen (zaženi `claude`). Inštruktor teče z API ključem aplikacije (Haiku, ~0,03 $ na razred), če je `ANTHROPIC_API_KEY` v `.env`; brez ključa tudi inštruktor prek naročnine (`--motor-instruktorja cli`, približek: brez predpomnilnika, zgodovina kot besedilo). `--motor api` požene vse prek API.
 
 ```bash
 npm run sim                                   # vseh 16 učencev, lokalni inštruktor
@@ -32,7 +32,7 @@ Brez API ključa (ali z `--skripta --mock`) teče suhi zagon: vnaprej napisani u
 
 ### Stroški (ocena)
 
-En pogovor stane okoli 0,3–0,5 $ (učenec in ocenjevalec sta Opus, inštruktor je Haiku kot v aplikaciji), vseh 16 učencev okoli 5–8 $. Ceneje: `--model-ucenca claude-sonnet-5-5` ali `--brez-ocene`. Dejanski stroški so na koncu poročila.
+Prek naročnine (privzeto) stanejo učenci in ocenjevalec 0 $, porabijo pa del omejitve naročnine (vseh 16 pogovorov je okoli 50 klicev Opusa z razmislekom). Prek API stane en pogovor okoli 0,3–0,5 $, vseh 16 okoli 5–8 $; ceneje: `--model-ucenca claude-sonnet-5-5` ali `--brez-ocene`. Inštruktor (Haiku) stane ~0,03 $ na razred. Dejanski stroški so na koncu poročila.
 
 ## Digitalni učenci
 
@@ -88,6 +88,7 @@ Poleg ocenjevalca vsak odgovor preverijo še samodejna preverjanja (`sim/checks.
 | `student.js` | učenec z modelom (in vnaprej napisan za suhi zagon) |
 | `noise.js` | realističen zapis (tipkarske napake, šumniki) |
 | `tutor.js` | vmesnik do inštruktorja: lokalno ali prek HTTP |
+| `cli.js`, `llm.js` | klic modela prek Claude Code (naročnina) ali Claude API |
 | `checks.js` | samodejna preverjanja |
 | `rubric.js`, `judge.js` | merila in ocenjevalec |
 | `report.js` | poročilo, primerjava z referenco |

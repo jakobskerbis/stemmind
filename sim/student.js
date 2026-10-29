@@ -61,6 +61,7 @@ function toApiMessages(history) {
       msgs.push({ role: "user", content: `INŠTRUKTOR:\n${turn.text}` });
     }
   }
+  if (history.length) msgs.push({ role: "user", content: "(Zdaj si na vrsti ti. Odgovori po pravilih igre.)" });
   return msgs;
 }
 

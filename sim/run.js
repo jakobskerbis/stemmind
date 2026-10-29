@@ -16,7 +16,8 @@ import { LlmStudent, ScriptedStudent } from "./student.js";
 import { createTutor } from "./tutor.js";
 import { checkReply, checkConversation, wordCount } from "./checks.js";
 import { judgeConversation } from "./judge.js";
-import { hasCredentials } from "./llm.js";
+import { hasCredentials, setEngine, defaultEngine } from "./llm.js";
+import { hasClaude } from "./cli.js";
 import { summarize, compare, markdownReport, transcriptMarkdown, htmlReport } from "./report.js";
 
 const HELP = `Digitalni razred – simulacija prvih uporabnikov inštruktorja STEMMind
@@ -31,6 +32,10 @@ Možnosti:
   --url <naslov>             naslov aplikacije za --tutor http
   --geslo <geslo>            geslo testne različice (STEMMIND_PASSWORD)
   --email, --geslo-racuna    testni račun, če ima aplikacija prijavo staršev
+  --motor cli|api            cli = prek Claude Code (porablja omejitev naročnine Claude, privzeto,
+                             če je \`claude\` nameščen in prijavljen); api = Claude API s ključem
+  --motor-instruktorja cli|api  inštruktor posebej (privzeto kot --motor); api = natanko kot v
+                             aplikaciji (Haiku, ~0,03 $ na razred), cli = približek prek naročnine
   --mock                     lokalni inštruktor v preizkusnem načinu (brez modela)
   --skripta                  vnaprej napisani učenci namesto modela (brez API ključa)
   --model-ucenca <id>        privzeto claude-opus-5-5
@@ -43,7 +48,10 @@ Možnosti:
   --seznam                   izpiši učence in končaj
   --pomoc                    ta pomoč
 
-API ključ: ANTHROPIC_API_KEY (prebere se tudi iz .env, kot pri aplikaciji).`;
+Naročnina (--motor cli): Claude Code mora biti nameščen (npm install -g @anthropic-ai/claude-code)
+in prijavljen (zaženi \`claude\` in se prijavi). Učenci, ocenjevalec in lokalni inštruktor takrat
+tečejo prek naročnine; API ključ se ne uporabi.
+API (--motor api): ANTHROPIC_API_KEY (prebere se tudi iz .env, kot pri aplikaciji).`;
 
 /**
  * En pogovor učenca z inštruktorjem.
@@ -117,6 +125,8 @@ export async function main(argv = process.argv.slice(2)) {
       geslo: { type: "string" },
       email: { type: "string" },
       "geslo-racuna": { type: "string" },
+      motor: { type: "string" },
+      "motor-instruktorja": { type: "string" },
       mock: { type: "boolean", default: false },
       skripta: { type: "boolean", default: false },
       "model-ucenca": { type: "string", default: "claude-opus-5-5" },
@@ -136,10 +146,14 @@ export async function main(argv = process.argv.slice(2)) {
     return;
   }
 
-  const keyOk = hasCredentials();
+  const engine = o.motor || defaultEngine();
+  if (engine === "cli" && !hasClaude()) throw new Error("--motor cli: Claude Code (ukaz `claude`) ni nameščen ali ni v PATH.");
+  if (engine === "api" && !hasCredentials()) throw new Error("--motor api: manjka ANTHROPIC_API_KEY.");
+  if (engine) setEngine(engine);
+  const keyOk = !!engine;
   const scripted = o.skripta || !keyOk;
-  const judge = !o["brez-ocene"] && keyOk;
-  if (!keyOk) console.warn("Ni ANTHROPIC_API_KEY: učenci so vnaprej napisani, ocene ni, lokalni inštruktor je v preizkusnem načinu.");
+  const judge = !o["brez-ocene"] && keyOk && !scripted;
+  if (!keyOk) console.warn("Ni Claude Code in ne ANTHROPIC_API_KEY: učenci so vnaprej napisani, ocene ni, lokalni inštruktor je v preizkusnem načinu.");
 
   const personas = findPersonas(o.ucenci);
   const reps = Math.max(1, Number(o.ponovitve) || 1);
@@ -147,9 +161,12 @@ export async function main(argv = process.argv.slice(2)) {
   const out = path.resolve(o.izhod || path.join("sim-results", stamp()));
   fs.mkdirSync(path.join(out, "pogovori"), { recursive: true });
 
-  const tutor = await createTutor({ kind: o.tutor, mock: o.mock, url: o.url, password: o.geslo, email: o.email, accountPassword: o["geslo-racuna"] });
+  const tutorEngine = o["motor-instruktorja"] || (engine === "cli" && hasCredentials() ? "api" : engine);
+  if (tutorEngine === "api" && !hasCredentials()) throw new Error("--motor-instruktorja api: manjka ANTHROPIC_API_KEY.");
+  const tutor = await createTutor({ kind: o.tutor, mock: o.mock, engine: o.mock || scripted ? null : tutorEngine, url: o.url, password: o.geslo, email: o.email, accountPassword: o["geslo-racuna"] });
   const started = new Date().toISOString();
-  console.log(`Inštruktor: ${tutor.label}\nUčenci: ${scripted ? "vnaprej napisani" : o["model-ucenca"]} · ocenjevalec: ${judge ? o["model-ocenjevalca"] : "brez"}\nPogovorov: ${jobs.length} → ${out}\n`);
+  const engineLabel = engine === "cli" ? "Claude Code (naročnina)" : engine === "api" ? "Claude API (ključ)" : "brez modela";
+  console.log(`Motor: ${engineLabel}\nInštruktor: ${tutor.label}\nUčenci: ${scripted ? "vnaprej napisani" : o["model-ucenca"]} · ocenjevalec: ${judge ? o["model-ocenjevalca"] : "brez"}\nPogovorov: ${jobs.length} → ${out}\n`);
 
   const convs = await pool(jobs, Number(o.vzporedno) || 3, async ({ p, r, key }) => {
     const seed = Number(o.seme) + r;
@@ -180,6 +197,7 @@ export async function main(argv = process.argv.slice(2)) {
     zacetek: started,
     izhod: out,
     instruktor: tutor.label,
+    motor: engineLabel,
     modelUcenca: scripted ? "vnaprej napisani" : o["model-ucenca"],
     modelOcenjevalca: judge ? o["model-ocenjevalca"] : "brez",
   });

@@ -1,12 +1,19 @@
 // Skupni klic Claude API za digitalne učence in ocenjevalca (strukturiran odgovor JSON).
 import Anthropic from "@anthropic-ai/sdk";
+import { runClaude, flattenMessages, hasClaude } from "./cli.js";
+
+// Motor: "api" (Claude API, plačilo po žetonih) ali "cli" (Claude Code, omejitev naročnine).
+let engine = "api";
+export const setEngine = (e) => (engine = e);
+export const getEngine = () => engine;
+export const hasCredentials = () => !!(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN);
+// Privzeti motor: naročnina, kadar je Claude Code nameščen; sicer API s ključem.
+export const defaultEngine = () => (hasClaude() ? "cli" : hasCredentials() ? "api" : null);
 
 let client = null;
 const getClient = () => (client ??= new Anthropic());
 // Za teste: nadomestni odjemalec z enakim vmesnikom (beta.messages.stream().finalMessage()).
 export const setClient = (c) => (client = c);
-
-export const hasCredentials = () => !!(process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_AUTH_TOKEN);
 
 const PRICES = {
   "claude-haiku-5-5": { in: 0.1, out: 0.5, cacheRead: 0.01, cacheWrite: 0.125 },
@@ -28,6 +35,12 @@ export function costUsd(model, u = {}) {
  * @returns {Promise<{data: object, usage: object, model: string, cost: number}>}
  */
 export async function callJson({ model, effort = "medium", system, messages, schema, maxTokens = 16000 }) {
+  if (engine === "cli") {
+    // Claude Code dobi zgodovino kot besedilo; zadnji vnos je navodilo za odgovor.
+    const prompt = messages.length === 1 && typeof messages[0].content === "string" ? messages[0].content : flattenMessages(messages);
+    const r = await runClaude({ system, prompt, schema, model, effort });
+    return { data: r.data, usage: r.usage, model: r.model, cost: r.cost };
+  }
   const params = {
     model,
     max_tokens: maxTokens,
