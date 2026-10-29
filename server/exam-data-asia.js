@@ -12,10 +12,11 @@ export const EXAMS_ASIA = {
   // Vir: https://lsvn.vn/cau-truc-de-thi-tot-nghiep-thpt-ap-dung-tu-nam-2025-1721520534.html (Bộ GD&ĐT, QĐ 764/QĐ-BGDĐT),
   //      https://thuvienphapluat.vn/hoi-dap-phap-luat/de-vat-li-thi-tot-nghiep-thpt-2026-bao-nhieu-cau-138084641.html
   // Toán 90 min: 12 MCQ (0,25) + 4 Đúng/Sai (1 t., 0,1/0,25/0,5/1) + 6 kratkih (0,5) = 10 t.
-  // Lí/Hóa/Sinh 50 min: 18 MCQ (0,25) + 4 Đúng/Sai + 6 kratkih (0,25) = 10 t. 2026 enako kot 2025.
-  // Vrzeli: prostorska geometrija (razdalje, koti v prostoru, 11. r.), mere razpršenosti združenih
-  // podatkov (12. r.), izmenični tok in elektromagnetno valovanje (banka: reaktanca, nad programom), polimeri; sprejemni izpit za 10. razred (Lớp 10) nima skupnega
-  // formata (vsaka provinca svoj), zato ga ni.
+  // Lí/Hóa/Sinh 50 min: 18 MCQ (0,25) + 4 Đúng/Sai + 6 kratkih (0,25) = 10 t. 2026 enako kot 2025
+  // (Bộ GD&ĐT: struktura ostane, izpit 11. 6. 2026; https://thuvienphapluat.vn/hoi-dap-phap-luat/de-toan-thi-tot-nghiep-thpt-2026-bao-nhieu-cau-138084541.html).
+  // Vrzeli: sintetična prostorska geometrija (razdalje, koti v prostoru, 11. r.), izmenični tok in
+  // elektromagnetno valovanje (banka: reaktanca, nad programom); sprejemni izpit za 10. razred (Lớp 10)
+  // nima skupnega formata (vsaka provinca svoj), zato ga ni.
   THPT: {
     name: "THPT graduation exam",
     full: "Kỳ thi tốt nghiệp THPT (Vietnam national high school graduation exam)",
@@ -40,6 +41,7 @@ export const EXAMS_ASIA = {
             `Conditional probability | total probability formula, Bayes' formula => ${M("conditional-probability-and-bayes-theorem")}`,
             `Probability and counting | classical probability, combinations => ${M("probability")}, ${M("permutations-and-combinations")}`,
             `Grouped data | mean, median, mode of grouped data => ${M("statistics-of-grouped-data")}`,
+            `Measures of dispersion for grouped data | range, interquartile range, variance, standard deviation => ${M("measures-of-dispersion")}`,
           ], 20],
           ["Grades 10–11: algebra and functions", [
             `Exponential and logarithmic functions | log laws, exponential equations => ${M("logarithms")}, ${M("exponential-growth-and-decay")}`,
@@ -71,6 +73,7 @@ export const EXAMS_ASIA = {
           ["Organic chemistry", [
             `Esters, lipids and carbohydrates | hydrolysis, saponification, glucose and starch => ${K("organic-chemistry-reactions")}`,
             `Nitrogen compounds | amines, amino acids, peptides, proteins => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
+            `Polymers | polymerisation, plastics, fibres, rubbers => ${K("polymers")}`,
           ]],
           ["Electrochemistry and metals", [
             `Electrochemistry | electrode potentials, galvanic cells, electrolysis => ${K("electrochemistry")}`,
@@ -142,8 +145,10 @@ export const EXAMS_ASIA = {
   //      https://www.detik.com/edu/detikpedia/d-8083189/3-jenis-soal-tka-jenjang-sma-dan-sederajat-2025-panduan-belajar-nih,
   //      https://www.kompas.tv/info-publik/621729/cara-menghitung-skor-tka-untuk-sd-smp-sma-dan-smk
   // 2026: Matematika 25 vprašanj / 75 min (2025: 30 vprašanj); izbirni predmet 25 / 60 min; skala 0–100.
-  // Vrzeli: Matematika Tingkat Lanjut (uradnega obsega nisem mogel preveriti, ni dodana), fluidi,
-  // dedovanje in evolucija (niso na seznamu snovi), analizna kemija.
+  //      https://www.detik.com/edu/sekolah/d-8112635/kisi-kisi-tka-sma-2025-lengkap-materi-contoh-soal-dan-link-simulasi
+  //      (elementi: fizika tudi Fluida; kemija tudi konteksti onesnaženje, učinek tople grede, ozon, izdelava osnovnih kemikalij).
+  // Vrzeli: Matematika Tingkat Lanjut (uradnega obsega nisem mogel preveriti, ni dodana), dedovanje in
+  // evolucija (niso na seznamu snovi), analizna kemija (titracija je pokrita le s koncentracijo).
   TKA: {
     name: "TKA (SMA)",
     full: "Tes Kemampuan Akademik (TKA) for SMA/MA/SMK",
@@ -182,6 +187,7 @@ export const EXAMS_ASIA = {
             `Kinematics | straight-line and projectile motion => ${F("kinematics")}, ${F("projectile-motion")}`,
             `Dynamics | Newton's laws, circular motion => ${F("laws-of-motion")}, ${F("circular-motion-and-gravitation")}`,
             `Work, energy and momentum | energy conservation, collisions => ${F("work-energy-and-power")}, ${F("momentum-and-collisions")}`,
+            `Fluida (static and dynamic fluids) | hydrostatic pressure, Archimedes' principle, continuity, Bernoulli's principle => ${F("density-and-pressure")}, ${F("fluids-and-buoyancy")}`,
           ]],
           ["Waves, heat and thermodynamics", [
             `Waves | wave speed, sound => ${F("waves-and-sound")}`,
@@ -200,16 +206,20 @@ export const EXAMS_ASIA = {
             `Atomic structure and periodic table | electron configuration, periodic trends => ${K("atomic-structure")}, ${K("periodic-table-and-periodic-properties")}`,
             `Chemical bonding | ionic, covalent, molecular shape => ${K("chemical-bonding")}`,
             `Stoichiometry | mole, masses from equations => ${K("mole-concept")}, ${K("stoichiometry")}`,
-          ]],
+          ], 30],
           ["Physical chemistry", [
             `Thermochemistry | enthalpy, Hess's law => ${K("thermochemistry")}`,
             `Reaction rate and equilibrium | rate, equilibrium constant => ${K("chemical-kinetics")}, ${K("chemical-equilibrium")}`,
             `Acids, bases and solutions | pH, concentration => ${K("acids-bases-and-ph")}, ${K("solutions-and-concentration")}`,
             `Redox and electrochemistry | cells, electrolysis => ${K("electrochemistry")}`,
-          ]],
+          ], 40],
           ["Organic chemistry", [
             `Carbon compounds | naming, functional groups, reactions => ${K("organic-chemistry-nomenclature-and-isomerism")}, ${K("organic-chemistry-reactions")}`,
-          ]],
+          ], 20],
+          ["Chemistry in context", [
+            `Environment | air and water pollution, greenhouse effect, acid rain, ozone depletion => ${K("environmental-chemistry")}`,
+            `Chemical industry | making basic chemicals, reaction conditions and yield => ${K("industrial-chemistry")}`,
+          ], 10],
         ],
         mock: { minutes: 35, groups: [group(5, "choice", 1, 1, 0, 5), group(5, "choice", 2, 1, 0, 5), group(2, "choice", 3, 1, 0, 5)], scale: [0, 100, 0.01] },
       },
@@ -239,9 +249,10 @@ export const EXAMS_ASIA = {
   //      https://app.pandai.org/spm/read/ph-spmprep-k1-s1, https://app.pandai.org/spm/read/bg-spmprep-k1-s1
   // 1449/1: 40 MCQ, 40 t., 1 h 30 min; 1449/2: A 10 (40 t.), B 5 (45 t.), C 1 od 2 (15 t.), 2 h 30 min; težavnost 5:3:2.
   // 4531/4541/4551 kertas 1: 40 MCQ, 1 h 15 min; kertas 2 strukturirana vprašanja (2 h 30 min), kertas 3 praktični.
-  // Vrzeli: številski sistemi (number bases), logično sklepanje, množice, grafi (omrežja), linearne neenačbe
-  // v dveh spremenljivkah, mere razpršenosti, variacija, potence in standardna oblika; pri fiziki tlak in
-  // elastičnost; pri kemiji hitrost reakcije (banka: red reakcije, razpolovni čas – nad SPM), polimeri in industrijska kemija.
+  // Vrzeli: številski sistemi (number bases), grafi (omrežja), linearne neenačbe v dveh spremenljivkah
+  // (banka: linearno programiranje – nad programom), variacija, potence in standardna oblika (snov 3. razreda);
+  // pri kemiji hitrost reakcije (banka: red reakcije, razpolovni čas – nad SPM) in industrijska kemija
+  // (KSSM: zlitine, steklo, keramika, kompoziti; banka: Haber/Contact – se ne ujema).
   SPM: {
     name: "SPM",
     full: "SPM (Sijil Pelajaran Malaysia)",
@@ -258,6 +269,7 @@ export const EXAMS_ASIA = {
             `Quadratic functions and equations | roots, factorising => ${M("quadratic-equations")}`,
             `Linear equations | simultaneous linear equations => ${M("systems-of-linear-equations")}`,
             `Matrices | operations, inverse matrix, solving equations => ${M("matrices-and-determinants")}`,
+            `Operations on sets and logical reasoning | Venn diagrams, statements, implications, arguments => ${M("sets-and-logic")}`,
           ]],
           ["Geometry and trigonometry", [
             `Straight lines | gradient, intercepts, equation of a line => ${M("coordinate-geometry")}`,
@@ -268,6 +280,7 @@ export const EXAMS_ASIA = {
           ]],
           ["Statistics, probability and consumer mathematics", [
             `Measures of central tendency | mean, median, mode => ${M("statistics-mean-median")}, ${M("statistics-of-grouped-data")}`,
+            `Measures of dispersion | range, interquartile range, variance, standard deviation, ungrouped and grouped data => ${M("measures-of-dispersion")}`,
             `Probability of combined events | dependent and independent events => ${M("probability")}`,
             `Consumer mathematics | savings, investment, credit, taxation => ${M("ratios-rates-and-percentages")}, ${M("exponential-growth-and-decay")}`,
           ]],
@@ -280,6 +293,8 @@ export const EXAMS_ASIA = {
             `Linear motion | motion graphs, equations of motion, free fall => ${F("kinematics")}`,
             `Force, momentum and impulse | Newton's laws, conservation of momentum => ${F("laws-of-motion")}, ${F("momentum-and-collisions")}`,
             `Gravitation | Newton's law of gravitation, satellites => ${F("circular-motion-and-gravitation")}`,
+            `Elasticity | Hooke's law, spring constant, elastic potential energy => ${F("elasticity")}`,
+            `Pressure | liquid and atmospheric pressure, Pascal's, Archimedes' and Bernoulli's principles => ${F("density-and-pressure")}, ${F("fluids-and-buoyancy")}`,
           ]],
           ["Heat, waves and light", [
             `Heat | specific heat capacity, latent heat, gas laws => ${F("calorimetry")}, ${F("thermal-physics")}`,
@@ -312,6 +327,7 @@ export const EXAMS_ASIA = {
           ["Redox, carbon compounds and thermochemistry", [
             `Redox equilibrium | oxidation numbers, electrochemical cells, electrolysis => ${K("chemical-reactions-and-equations")}, ${K("electrochemistry")}`,
             `Carbon compounds | homologous series, reactions => ${K("organic-chemistry-nomenclature-and-isomerism")}, ${K("organic-chemistry-reactions")}`,
+            `Polymers | natural and synthetic polymers, natural rubber => ${K("polymers")}`,
             `Thermochemistry | heat of reaction, energy profiles => ${K("thermochemistry")}`,
           ]],
         ],
@@ -345,7 +361,7 @@ export const EXAMS_ASIA = {
   // 3472/1: 2 h, 80 t. (A 12 vprašanj, 64 t.; B 2 od 3, 16 t.); 3472/2: 2 h 30 min, 100 t.
   // (A 7, 50 t.; B 3 od 4, 30 t.; C 2 od 4, 20 t.); vse odprta vprašanja; težavnost 5:3:2.
   // Vrzeli: linearni zakon, reševanje trikotnikov (sinusni/kosinusni izrek), indeksi (index numbers),
-  // normalna porazdelitev, kinematika premega gibanja.
+  // kinematika premega gibanja (z odvodi; banka: enakomerno pospešeno gibanje – se ne ujema).
   SPMAM: {
     name: "SPM Additional Mathematics",
     full: "SPM Additional Mathematics (Matematik Tambahan 3472)",
@@ -362,7 +378,7 @@ export const EXAMS_ASIA = {
             `Functions | composite and inverse functions => ${M("functions")}`,
             `Quadratic functions | roots, discriminant, quadratic inequalities => ${M("quadratic-equations")}, ${M("quadratic-inequalities")}`,
             `Systems of equations | linear and non-linear simultaneous equations => ${M("systems-of-linear-equations")}`,
-            `Indices, surds and logarithms | laws of logarithms, equations => ${M("logarithms")}`,
+            `Indices, surds and logarithms | laws of indices, surds, laws of logarithms, equations => ${M("indices-and-surds")}, ${M("logarithms")}`,
             `Progressions | arithmetic and geometric progressions => ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
           ], 30],
           ["Geometry and trigonometry", [
@@ -378,6 +394,7 @@ export const EXAMS_ASIA = {
           ["Statistics and linear programming", [
             `Permutations and combinations | arrangements, selections => ${M("permutations-and-combinations")}`,
             `Probability distribution | binomial distribution => ${M("binomial-distribution")}`,
+            `Normal distribution | standard normal, z-scores, probabilities => ${M("normal-distribution")}`,
             `Linear programming | regions, optimal values => ${M("linear-programming")}`,
           ], 20],
         ],
@@ -391,10 +408,10 @@ export const EXAMS_ASIA = {
   //      https://www.gz.gov.cn/zwfw/zxfw/jyfw7/content/mpost_10582314.html (Guangzhou)
   // Format določa vsaka provinca/mesto; tu je tipičen pokrajinski izpit (npr. Hunan 2026: matematika
   // 120 t./120 min: 10 izbirnih × 3, 6 dopolnjevanj × 3, 8 nalog = 72 t.; fizika in kemija 100 t./60 min).
-  // Vrzeli: realna števila in koreni, razstavljanje, gostota, tlak, vzgon, hitrost, optika in zvok,
-  // elektromagnetizem (kvalitativno), delo in energija (banka: Ek, delo pod kotom – nad programom),
-// funkcije (obratna sorazmernost, kvadratna funkcija), računanje po enačbah brez mola, masni delež raztopine;
-// biologija ni dodana.
+  // Vrzeli: razstavljanje, hitrost, optika in zvok, elektromagnetizem (kvalitativno), delo in energija
+  // (banka: Ek, delo pod kotom – nad programom), funkcije (obratna sorazmernost, kvadratna funkcija),
+  // računanje po enačbah brez mola, masni delež raztopine; biologija ni dodana (v večini provinc je
+  // ločen izpit 生物 že v 8. razredu, format se zelo razlikuje).
   ZHONGKAO: {
     name: "Zhongkao",
     full: "中考 Zhongkao (senior high school entrance exam)",
@@ -407,7 +424,8 @@ export const EXAMS_ASIA = {
     subjects: {
       MAT: {
         units: [
-          ["Equations and inequalities", [
+          ["Numbers and equations", [
+            `Real numbers and quadratic radicals | square roots, simplifying radicals, rationalising denominators => ${M("indices-and-surds")}`,
             `Systems of linear equations | elimination, word problems => ${M("systems-of-linear-equations")}`,
             `Quadratic equations in one variable | factorising, formula, discriminant => ${M("quadratic-equations")}`,
             `Inequalities | linear inequalities and their systems => ${M("quadratic-inequalities")}`,
@@ -418,10 +436,12 @@ export const EXAMS_ASIA = {
           ["Geometry", [
             `Similar triangles and Pythagoras | similarity, proportional segments => ${M("similar-triangles")}`,
             `Circles | arc length, sector area => ${M("circles")}`,
+            `Properties of circles | inscribed angles, cyclic quadrilaterals, tangents => ${M("circle-theorems")}`,
             `Solving right triangles | trigonometric ratios, angles of elevation => ${M("right-triangle-trigonometry")}`,
           ], 30],
           ["Statistics and probability", [
             `Statistics | mean, median, mode => ${M("statistics-mean-median")}`,
+            `Variance | range, variance as a measure of spread => ${M("measures-of-dispersion")}`,
             `Probability | lists and tree diagrams => ${M("probability")}`,
           ], 20],
         ],
@@ -430,6 +450,9 @@ export const EXAMS_ASIA = {
       FIZ: {
         units: [
           ["Mechanics", [
+            `Density | mass, volume, density => ${F("density-and-pressure")}`,
+            `Pressure | pressure of solids and liquids, atmospheric pressure, connected vessels => ${F("density-and-pressure")}`,
+            `Buoyancy | Archimedes' principle, floating and sinking => ${F("fluids-and-buoyancy")}`,
             `Simple machines | levers, pulleys, mechanical efficiency => ${F("machines")}`,
             `Levers and balance | moments, principle of the lever => ${F("moments-and-equilibrium")}`,
           ]],
@@ -465,9 +488,9 @@ export const EXAMS_ASIA = {
   //      https://www.fnnews.com/news/202603311100309651, https://www.etoday.co.kr/news/view/2390974
   // Matematika: 30 vprašanj, 100 min, 100 t. (2, 3, 4 t.), 30 % kratkih odgovorov (cela števila), ostalo 5 možnosti;
   // znanstveni predmeti: 20 vprašanj, 30 min, 50 t. (2 in 3 t.). Od 2028 nov format (통합과학 25 vprašanj, 40 min).
-  // Vrzeli: stožnice, normalna porazdelitev in ocenjevanje, odvodi/integrali transcendentnih funkcij (izbirni
-  // predmet »Calculus«), prostorske koordinate (banka: ravnine – niso v programu), posebna relativnost,
-// ravnotežje pri kemiji I (kvalitativno).
+  // Vrzeli: statistično ocenjevanje (intervali zaupanja), izbirni predmet »Calculus« (odvodi/integrali
+  // transcendentnih funkcij, vrste), prostorske koordinate (banka: ravnine – niso v programu), posebna
+  // relativnost, ravnotežje pri kemiji I (kvalitativno).
   CSAT: {
     name: "CSAT (수능)",
     full: "대학수학능력시험 CSAT (Suneung, College Scholastic Ability Test)",
@@ -493,8 +516,10 @@ export const EXAMS_ASIA = {
             `Permutations and combinations | arrangements, selections => ${M("permutations-and-combinations")}`,
             `Probability | conditional probability, independence => ${M("probability")}, ${M("conditional-probability-and-bayes-theorem")}`,
             `Random variables | binomial distribution => ${M("binomial-distribution")}`,
+            `Normal distribution | standardisation, standard normal table => ${M("normal-distribution")}`,
           ], 15],
           ["Elective: Geometry", [
+            `Conic sections | parabola, ellipse, hyperbola, foci, tangent lines => ${M("conic-sections")}`,
             `Plane vectors | dot product, magnitude => ${M("vectors")}`,
           ], 15],
         ],
@@ -567,7 +592,7 @@ export const EXAMS_ASIA = {
   // 数学① (I·A) 70 min/100 t., vsa vprašanja obvezna (数と式・図形と計量, 二次関数・データ, 図形の性質, 場合の数と確率);
   // 数学② (II·B·C) 70 min/100 t.: 1.–3. obvezna, 3 izmed 4.–7. (数列, 統計的な推測, ベクトル, 複素数平面と平面上の曲線);
   // 物理/化学/生物 60 min/100 t.; odgovori na listu z oznakami (izbira ali vpis števk).
-  // Vrzeli: stožnice, normalna porazdelitev, polimeri, razvoj in odzivi rastlin (podrobno).
+  // Vrzeli: statistično ocenjevanje in preizkus domnev (intervali), razvoj in odzivi rastlin (podrobno).
   JCT: {
     name: "Common Test (共通テスト)",
     full: "大学入学共通テスト (Common Test for University Admissions, Japan)",
@@ -583,10 +608,10 @@ export const EXAMS_ASIA = {
             `Numbers, expressions and inequalities | linear inequalities, absolute values => ${M("quadratic-inequalities")}`,
             `Figures and measurement | trigonometric ratios, sine and cosine rules => ${M("right-triangle-trigonometry")}`,
             `Quadratic functions | vertex, maximum and minimum, roots => ${M("quadratic-equations")}, ${M("functions")}`,
-            `Data analysis | mean, median, variance => ${M("statistics-mean-median")}`,
+            `Data analysis | mean, median, variance, standard deviation, correlation coefficient => ${M("statistics-mean-median")}, ${M("measures-of-dispersion")}, ${M("correlation-and-regression")}`,
           ], 25],
           ["数学A", [
-            `Properties of figures | similar triangles, circles => ${M("similar-triangles")}, ${M("circles")}`,
+            `Properties of figures | similar triangles, inscribed angles, power of a point, tangents => ${M("similar-triangles")}, ${M("circle-theorems")}`,
             `Combinatorics and probability | counting, conditional probability => ${M("permutations-and-combinations")}, ${M("probability")}, ${M("conditional-probability-and-bayes-theorem")}`,
           ], 20],
           ["数学II", [
@@ -598,8 +623,9 @@ export const EXAMS_ASIA = {
           ], 30],
           ["数学B・C (choose three)", [
             `Sequences | arithmetic and geometric sequences, sums => ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
-            `Statistical inference | binomial distribution => ${M("binomial-distribution")}`,
+            `Statistical inference | binomial and normal distributions => ${M("binomial-distribution")}, ${M("normal-distribution")}`,
             `Vectors | plane and space vectors => ${M("vectors")}`,
+            `Plane curves and the complex plane | parabola, ellipse, hyperbola, polar form, De Moivre's theorem => ${M("conic-sections")}, ${M("complex-numbers")}`,
           ], 25],
         ],
         mock: { minutes: 50, groups: [group(5, "numeric", 1, 3), group(6, "numeric", 2, 4), group(4, "numeric", 3, 5)] },
@@ -616,7 +642,8 @@ export const EXAMS_ASIA = {
           ["Heat and waves", [
             `Gases and thermodynamics | kinetic theory, first law => ${F("thermal-physics")}`,
             `Waves and sound | standing waves, Doppler effect => ${F("waves-and-sound")}`,
-            `Light | refraction, lenses, interference => ${F("optics")}`,
+            `Light | refraction, lenses => ${F("optics")}`,
+            `Interference and diffraction of light | Young's experiment, diffraction grating, thin films => ${F("wave-optics")}`,
           ]],
           ["Electricity and magnetism", [
             `Electric fields and capacitors | Coulomb's law, capacitors => ${F("electrostatics-and-capacitors")}`,
@@ -646,6 +673,7 @@ export const EXAMS_ASIA = {
           ["Organic chemistry", [
             `Organic compounds | structure, isomers, functional groups => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
             `Organic reactions | aliphatic and aromatic compounds => ${K("organic-chemistry-reactions")}`,
+            `Polymer compounds | synthetic and natural polymers, monomers => ${K("polymers")}`,
           ]],
         ],
         mock: { minutes: 30, groups: [group(5, "choice", 1, 3), group(5, "choice", 2, 4), group(3, "numeric", 2, 4), group(2, "numeric", 3, 5)] },
@@ -660,7 +688,8 @@ export const EXAMS_ASIA = {
           ]],
           ["Development and responses", [
             `Reproduction and development | gametogenesis, fertilisation => ${Bi("reproduction")}`,
-            `Animal responses | neurons, sense organs, behaviour => ${Bi("human-physiology")}`,
+            `Animal responses | neurons, sense organs, muscles => ${Bi("human-physiology")}`,
+            `Animal behaviour | innate and learned behaviour => ${Bi("animal-behaviour-and-tissues")}`,
           ]],
           ["Ecology and evolution", [
             `Ecology | populations, ecosystems => ${Bi("ecology-and-environment")}`,
