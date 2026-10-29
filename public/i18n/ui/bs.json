@@ -142,6 +142,8 @@
   "task.check": "Provjeri",
   "task.checking": "Provjeravam …",
   "task.checkError": "Nisam mogao provjeriti odgovor ({msg}). Provjeri vezu i pokušaj ponovno.",
+  "task.checkFailed": "Nisam mogao provjeriti odgovor: {msg}",
+  "task.alreadyChecked": "Odgovor na ovaj zadatak je već sačuvan. Vrijedi prvi odgovor.",
   "task.next": "Sljedeći zadatak",
   "task.similar": "Pokušaj sličan zadatak",
   "task.correct": "Tačno",

@@ -134,6 +134,8 @@
   "task.check": "ตรวจ",
   "task.checking": "กำลังตรวจ …",
   "task.checkError": "ตรวจคำตอบไม่ได้ ({msg}) ตรวจสอบการเชื่อมต่อแล้วลองใหม่",
+  "task.checkFailed": "ตรวจคำตอบไม่ได้: {msg}",
+  "task.alreadyChecked": "คำตอบของข้อนี้ถูกบันทึกไว้แล้ว นับคำตอบแรกเท่านั้น",
   "task.next": "ข้อถัดไป",
   "task.similar": "ลองโจทย์ที่คล้ายกัน",
   "task.correct": "ถูกต้อง",

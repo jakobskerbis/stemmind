@@ -134,6 +134,8 @@
   "task.check": "检查",
   "task.checking": "检查中 …",
   "task.checkError": "无法检查答案（{msg}）。请检查网络后重试。",
+  "task.checkFailed": "无法检查你的答案：{msg}",
+  "task.alreadyChecked": "这道题的答案已经保存，以第一次作答为准。",
   "task.next": "下一题",
   "task.similar": "试试类似的题",
   "task.correct": "正确",

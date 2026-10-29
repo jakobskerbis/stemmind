@@ -138,6 +138,8 @@
   "task.check": "Kontrollo",
   "task.checking": "Po kontrolloj …",
   "task.checkError": "Nuk e kontrollova dot përgjigjen ({msg}). Kontrollo lidhjen dhe provo përsëri.",
+  "task.checkFailed": "Nuk munda ta kontrolloj përgjigjen: {msg}",
+  "task.alreadyChecked": "Përgjigjja jote për këtë detyrë është ruajtur tashmë. Vlen përgjigjja e parë.",
   "task.next": "Ushtrimi tjetër",
   "task.similar": "Provo një të ngjashëm",
   "task.correct": "Saktë",

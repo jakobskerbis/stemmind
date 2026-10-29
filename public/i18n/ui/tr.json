@@ -138,6 +138,8 @@
   "task.check": "Kontrol et",
   "task.checking": "Kontrol ediliyor …",
   "task.checkError": "Cevap kontrol edilemedi ({msg}). Bağlantını kontrol edip tekrar dene.",
+  "task.checkFailed": "Cevabını kontrol edemedim: {msg}",
+  "task.alreadyChecked": "Bu sorudaki cevabın zaten kaydedildi. İlk cevabın geçerli.",
   "task.next": "Sonraki soru",
   "task.similar": "Benzer bir soru dene",
   "task.correct": "Doğru",
