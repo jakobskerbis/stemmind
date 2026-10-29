@@ -1049,6 +1049,7 @@ function studentUpdated(updated) {
   if (up) state.welcome = { stage: up };
   if (!$("#view-settings").hidden) fillSettingsForm();
   fillCornerSummary();
+  if (before.xp_goal !== updated.settings.xp_goal) refreshXp().catch(() => null); // dnevni cilj spremenil inštruktor
 }
 
 // Kotiček zanimanj v Nastavitvah: kratek seznam izbranih tem in gumb za vprašalnik.
@@ -1301,16 +1302,18 @@ const diffBadge = (level, comp = false) =>
   `<span class="diff d${level}" title="${t("level.title")}"><span class="dots"><i></i><i></i><i></i></span>${(comp ? COMP_LEVEL_NAMES : LEVEL_NAMES)[level] || ""}</span>`;
 
 // Povzetek XP (skupaj, raven, danes, cilj …). Ob rasti istega profila: animacija in čestitke (public/xp-fx.js).
+let xpSeq = 0; // samo zadnji odgovor velja (starejši, ki pride pozneje, ne sme povoziti novejšega)
 async function refreshXp() {
   if (!state.student) return;
   const sid = state.student.id;
+  const seq = ++xpSeq;
   const x = await api(`/api/students/${sid}/xp`);
-  if (state.student?.id !== sid) return;
+  if (state.student?.id !== sid || seq !== xpSeq) return x;
   const prev = state.xp?.sid === sid ? state.xp : null;
   state.xp = { ...x, sid };
   const chip = $("#xp-badge .stat.xp");
   paintBadge(chip, x);
-  if (prev && x.total > prev.total) celebrateXp(prev, x, { badge: chip, total: $("#xp-total") });
+  if (prev && x.total > prev.total) celebrateXp(prev, x, { badge: chip, total: $("#xp-total"), alive: () => state.student?.id === sid });
   else $("#xp-total").textContent = x.total;
   $("#xp-streak").textContent = x.streak;
   const card = $("#xp-card .xp-stats");
@@ -2126,7 +2129,7 @@ async function checkTask(task, ctx, value) {
       ${r.solution ? workedBlock(task, r.solution, r.correct ? t("task.solution") : t("task.example")) : ""}`;
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" && !r.correct ? t("task.similar") : t("task.next"));
   } else if (r.correct) {
-    html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">${r.offline ? t("off.xpLater") : `+${r.xp.gained} XP`}</span></div>
+    html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">${r.offline ? t("off.xpLater") : `<bdi dir="ltr">+${r.xp.gained} XP</bdi>`}</span></div>
       ${r.offline ? "" : xpItemsHtml(r.xp)}
       ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>${t("task.mastered")}</span></div>` : ""}
       ${r.unlocked ? unlockedHtml(r.unlocked) : ""}

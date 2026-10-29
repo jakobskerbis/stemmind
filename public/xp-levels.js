@@ -25,17 +25,15 @@ export function crossedMilestone(before, after) {
   return MILESTONES.filter((m) => before < m && after >= m).pop() ?? null;
 }
 
-// Razlog XP s strežnika (slovensko, xp_events.reason) → ključ prevoda v public/i18n (xp.r.*).
+// Razlog XP s strežnika (slovensko, xp_events.reason) → ključ prevoda v public/i18n (xp.r.*). Samo razlogi ob odgovoru
+// na nalogo (žetoni pod »Pravilno!«); za druge (dnevni trening, igra, tekmovanje) ni ključa in vrne null.
 export function reasonKey(reason) {
   const r = String(reason || "");
   if (r === "pravilno") return ["xp.r.correct"];
   if (r === "pravilno (s pomočjo)") return ["xp.r.helped"];
   if (r === "popravljena napaka") return ["xp.r.fix"];
   if (r === "obvladana tema") return ["xp.r.mastery"];
-  if (r === "dnevni trening") return ["xp.r.daily"];
   if (r === "preizkus znanja") return ["xp.r.placement"];
-  if (r === "poskusno tekmovanje" || r === "poskusni izpit") return ["xp.r.contest"];
-  if (r.startsWith("igra:")) return ["xp.r.game"];
   const m = /^(\d+) dni zapored$/.exec(r);
   if (m) return ["xp.r.streak", { n: Number(m[1]) }];
   return null;

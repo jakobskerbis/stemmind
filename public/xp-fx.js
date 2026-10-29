@@ -54,7 +54,7 @@ export function xpItemsHtml(xp) {
     ? xp.items
         .map((it) => {
           const k = reasonKey(it.reason);
-          return k ? `<span class="xp-chip">+${it.amount} ${esc(t(k[0], k[1]))}</span>` : "";
+          return k ? `<span class="xp-chip"><bdi dir="ltr">+${it.amount}</bdi> · ${esc(t(k[0], k[1]))}</span>` : "";
         })
         .join("")
     : "";
@@ -73,7 +73,8 @@ export function paintBadge(chip, x) {
 // ---------- animacije ----------
 
 // Števec od prej do zdaj (ob »manj gibanja« takoj).
-export function runCount(el, from, to, ms = 800) {
+// alive(): ob menjavi profila se štetje ustavi (znesek je takrat že nastavil novi profil).
+export function runCount(el, from, to, ms = 800, alive = () => true) {
   if (!el) return;
   if (calm() || from === to) {
     el.textContent = String(to);
@@ -81,6 +82,7 @@ export function runCount(el, from, to, ms = 800) {
   }
   const t0 = performance.now();
   const step = (now) => {
+    if (!alive()) return;
     const k = Math.min(1, (now - t0) / ms);
     el.textContent = String(Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))));
     if (k < 1) requestAnimationFrame(step);
@@ -209,7 +211,9 @@ function levelUp(x, extra, done) {
   const close = () => {
     document.removeEventListener("keydown", onKey, true);
     el.remove();
-    back?.focus?.({ preventScroll: true });
+    // Prejšnji element je lahko medtem izrisan znova: potem gumb »Naprej« / »Naslednja naloga«.
+    const target = back?.isConnected && back !== document.body ? back : document.querySelector("#fb-next, #fb-back");
+    target?.focus?.({ preventScroll: true });
     done();
   };
   const onKey = (e) => {
@@ -229,13 +233,15 @@ function levelUp(x, extra, done) {
 }
 
 // Primerjava prejšnjega in novega povzetka: animacija zneska in čestitke. from = element, od koder letijo zvezdice.
-export function celebrateXp(prev, x, { badge, total, from } = {}) {
+// alive(): ali je še isti profil (ob menjavi profila med animacijo se znesek in čestitka ne pokažeta).
+export function celebrateXp(prev, x, { badge, total, from, alive = () => true } = {}) {
   const gained = x.total - prev.total;
   if (gained <= 0) return;
   const source = from || [...document.querySelectorAll(".xp-gain, .gm-xp")].filter((e) => visible(e)).pop();
   const delay = flyStars(source, badge);
   setTimeout(() => {
-    runCount(total, prev.total, x.total);
+    if (!alive()) return;
+    runCount(total, prev.total, x.total, 800, alive);
     badge?.classList.remove("bump");
     void badge?.offsetWidth;
     badge?.classList.add("bump");
@@ -247,6 +253,7 @@ export function celebrateXp(prev, x, { badge, total, from } = {}) {
   const goalText = { ic: "target", text: t("xp.goalDone") };
   const mileText = milestone ? { ic: "trophy", text: t("xp.milestone", { xp: milestone }) } : null;
   setTimeout(() => {
+    if (!alive()) return;
     if (x.level > prev.level) {
       enqueue((done) => levelUp(x, [goalNow && goalText, mileText].filter(Boolean), done));
       return;
