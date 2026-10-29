@@ -205,6 +205,7 @@ function profileView(student) {
     goal: s.goal,
     goal_date: s.goal_date,
     goal_reminder: s.goal_reminder ? "on" : "off",
+    xp_goal: String(s.xp_goal ?? 50),
     interests: s.interests ?? [],
     interest_custom: s.interest_custom || "",
     news_level: s.news_level,
@@ -335,6 +336,10 @@ function validateProfile(changes, student) {
   if (changes.goal_reminder !== undefined) {
     if (["on", "off"].includes(changes.goal_reminder)) patch.goal_reminder = changes.goal_reminder === "on";
     else errors.push("goal_reminder: on or off");
+  }
+  if (changes.xp_goal !== undefined) {
+    if (PROFILE_SETTINGS.xp_goal.values.includes(String(changes.xp_goal))) patch.xp_goal = Number(changes.xp_goal);
+    else errors.push(`xp_goal: allowed ${PROFILE_SETTINGS.xp_goal.values.join(", ")}`);
   }
   if (changes.personality_setting !== undefined) patch.personality_setting = cleanText(String(changes.personality_setting), 200);
   if (changes.language !== undefined) {

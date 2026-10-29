@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="zbirke.css">
   <link rel="stylesheet" href="schedule.css">
   <link rel="stylesheet" href="corner.css">
+  <link rel="stylesheet" href="xp.css">
   <link rel="stylesheet" href="touch.css">
 </head>
 <body>
@@ -54,7 +55,7 @@
     <div id="xp-badge" class="xp-badge">
       <button type="button" id="goal-chip" class="stat goal-chip" hidden><i data-icon="target"></i><b></b></button>
       <button type="button" id="usage-meter" class="stat usage-meter" hidden aria-haspopup="dialog" aria-controls="usage-pop"><i data-icon="wallet"></i><b>0 €</b></button>
-      <span class="stat xp" title="Točke izkušenj (XP)" data-i18n-title="xp.title"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span></span>
+      <span class="stat xp" title="Točke izkušenj (XP)" data-i18n-title="xp.title"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span><span class="xp-lvl-bar" aria-hidden="true"></span></span>
       <span class="stat streak" title="Dnevi zapored" data-i18n-title="xp.streakTitle"><i data-icon="flame"></i><b id="xp-streak">0</b></span>
     </div>
     <div class="student-picker">
@@ -208,6 +209,15 @@
         <small class="muted" data-i18n="goal.setNote">Inštruktor prilagodi priporočila in tempo ponavljanja do datuma.</small>
         <div id="settings-goal"></div>
       </fieldset>
+      <label><span data-i18n="set.xpGoal">Dnevni cilj XP</span>
+        <select name="xp_goal">
+          <option value="30" data-i18n="set.xpGoal30">30 XP – sproščeno</option>
+          <option value="50" data-i18n="set.xpGoal50">50 XP – običajno</option>
+          <option value="100" data-i18n="set.xpGoal100">100 XP – resno</option>
+          <option value="200" data-i18n="set.xpGoal200">200 XP – zagnano</option>
+        </select>
+        <small class="muted" data-i18n="set.xpGoalNote">Približno 15 XP za vsako rešeno nalogo. Ko cilj dosežeš, ti aplikacija čestita.</small>
+      </label>
       <!-- Fakulteta: predmeti iz predmetnika izbrane smeri namesto MAT/FIZ/KEM -->
       <label id="course-row" hidden><span data-i18n="set.subject">Predmet</span>
         <select name="study_course"></select>
@@ -332,6 +342,7 @@
       <span class="me-who"><span class="me-name" id="me-name"></span><span class="muted me-level" id="me-level"></span></span>
       <i data-icon="chevron-right"></i>
     </button>
+    <div class="card me-lvl" id="me-lvl" hidden></div>
     <div class="me-stats">
       <div class="card"><span class="stat-ic xp"><i data-icon="star"></i></span><b id="me-xp">0</b><span>XP</span></div>
       <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span data-i18n="me.streak">dni zapored</span></div>
