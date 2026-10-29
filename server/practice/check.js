@@ -193,7 +193,16 @@ function checkFraction(ans, input) {
     return { kind: "format", code: "chk.fraction", message: "Zapiši ulomek v obliki a/b (npr. 3/4) ali mešano število (npr. 1 1/2)." };
   }
   const same = f.num * ans.den === ans.num * f.den;
-  if (!same) return { kind: "wrong" };
+  if (!same) {
+    // answer.mistakes: [{ value, why }] tudi pri ulomkih (value je vrednost ulomka, npr. 3/4 → 0.75)
+    const v = f.num / f.den;
+    const m = (ans.mistakes || []).find((x) => x && x.why && Math.abs(x.value - v) < 1e-9);
+    if (m) return { kind: "wrong", mistake: { message: m.why } };
+    if (f.num * ans.num !== 0 && f.den * ans.den === f.num * ans.num && Math.abs(v - 1) > 1e-9) {
+      return { kind: "wrong", mistake: { code: "chk.reciprocal", params: {}, message: "Dobil si obratno vrednost. Si morda delil v napačnem vrstnem redu?" } };
+    }
+    return { kind: "wrong" };
+  }
   if (gcd(f.num, f.den) !== 1) return { kind: "simplify", code: "chk.simplify", message: "Vrednost je pravilna, a ulomek še okrajšaj do konca." };
   return { kind: "correct" };
 }
