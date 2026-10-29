@@ -110,3 +110,26 @@ export function choiceAns(r, correct, distractors) {
   const options = r.shuffle([correct, ...uniq]);
   return { type: "choice", options, index: options.indexOf(correct) };
 }
+
+// Tipične napačne rezultate doda v answer.mistakes (največ 3): list = [[vrednost, zakaj], …].
+// Izpusti neveljavne, ponovljene in tiste, ki bi se zaokrožili v pravilni rezultat.
+export function withMistakes(ans, list) {
+  const d = ans.decimals;
+  const key = (x) => (d == null ? Number(x.toPrecision(9)) : roundHalfUp(x, d));
+  const seen = new Set([key(ans.value)]);
+  const out = [];
+  for (const [value, why] of list) {
+    if (!Number.isFinite(value) || !why || seen.has(key(value))) continue;
+    if (ans.tolerance && Math.abs(value - ans.value) <= ans.tolerance * Math.max(1, Math.abs(ans.value))) continue;
+    seen.add(key(value));
+    out.push({ value, why });
+  }
+  if (out.length) ans.mistakes = out.slice(0, 3);
+  return ans;
+}
+// Izbira z razlago za vsako napačno možnost: wrong = [[besedilo, zakaj], …]; pri pravilni je why null.
+export function choiceWhy(r, correct, wrong) {
+  const map = new Map(wrong.filter(([t]) => t !== correct));
+  const options = r.shuffle([correct, ...[...map.keys()].slice(0, 3)]);
+  return { type: "choice", options, index: options.indexOf(correct), why: options.map((o) => (o === correct ? null : map.get(o))) };
+}
