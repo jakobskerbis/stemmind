@@ -488,6 +488,7 @@
   "set.dataNormal": "Wyłączony",
   "set.dataNote": "Krótsze odpowiedzi tutora, mniejsze zdjęcia, bez animacji i dodatkowej czcionki. Zadania ze ścieżki zapisują się do ćwiczeń offline.",
   "off.noConnection": "Brak połączenia z internetem.",
+  "off.serverDown": "Aplikacja jest teraz niedostępna. Otworzy się sama, gdy znów będzie dostępna.",
   "off.banner": "Jesteś offline. Możesz ćwiczyć zadania zapisane na urządzeniu ({n}).",
   "off.bannerEmpty": "Jesteś offline. Gdy znów będziesz online, zadania do ćwiczeń zapiszą się na urządzeniu.",
   "off.pending": "Odpowiedzi z trybu offline czekają na wysłanie ({n}).",

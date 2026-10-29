@@ -478,6 +478,7 @@
   "set.dataNormal": "Kapalı",
   "set.dataNote": "Daha kısa öğretmen yanıtları, daha küçük fotoğraflar, animasyon ve ek yazı tipi yok. Öğrenme yolundaki alıştırmalar çevrimdışı çalışma için kaydedilir.",
   "off.noConnection": "İnternet bağlantısı yok.",
+  "off.serverDown": "Uygulamaya şu anda ulaşılamıyor. Yeniden kullanılabilir olduğunda kendiliğinden açılacak.",
   "off.banner": "Çevrimdışısın. Cihazda kayıtlı alıştırmalarla çalışabilirsin ({n}).",
   "off.bannerEmpty": "Çevrimdışısın. Tekrar bağlandığında alıştırmalar cihaza kaydedilecek.",
   "off.pending": "Çevrimdışı verilen yanıtlar gönderilmeyi bekliyor ({n}).",

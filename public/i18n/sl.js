@@ -649,6 +649,7 @@ export default {
   "set.dataNormal": "Izklopljen",
   "set.dataNote": "Krajši odgovori inštruktorja, manjše fotografije, brez animacij in brez dodatne pisave. Naloge za učno pot se shranijo za vadbo brez povezave.",
   "off.noConnection": "Ni povezave z internetom.",
+  "off.serverDown": "Aplikacija trenutno ni dosegljiva. Ko bo spet na voljo, se odpre sama.",
   "off.banner": "Brez povezave. Vadiš lahko naloge, shranjene na napravi ({n}).",
   "off.bannerEmpty": "Brez povezave. Ko boš spet povezan, se naloge za vadbo shranijo na napravo.",
   "off.pending": "Odgovori, rešeni brez povezave, čakajo na pošiljanje ({n}).",

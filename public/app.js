@@ -2839,7 +2839,35 @@ initFormulaInfo();
     first = false;
   };
   if (await initAccount({ onReady: start })) await start();
-})();
+})().catch(bootFailed);
+
+// Strežnik ni dosegljiv ob odprtju (računalnik ugasnjen, stara povezava): namesto prazne strani
+// sporočilo; ko je strežnik spet dosegljiv (ali stara povezava preusmeri drugam), se stran odpre.
+// Če strežnik odgovarja, napaka ni v povezavi: sporočila ne kažemo (sicer bi se stran vsakih 10 s
+// znova nalagala in skrila aplikacijo, ki morda deloma deluje).
+const serverReach = () =>
+  fetch("/healthz", { cache: "no-store", redirect: "manual" })
+    .then((r) => (r.type === "opaqueredirect" ? "moved" : r.ok && !r.headers.get("ngrok-error-code") ? "ok" : "down"))
+    .catch(() => "down");
+async function bootFailed(err) {
+  console.error(err);
+  if (document.getElementById("boot-down") || (await serverReach()) === "ok") return;
+  const box = document.createElement("div");
+  box.id = "boot-down";
+  box.className = "boot-down";
+  box.setAttribute("role", "alert");
+  box.innerHTML = `<div class="card">${icon("wifi-off")}<p>${t("off.serverDown")}</p><button class="primary" type="button">${t("task.retry")}</button></div>`;
+  box.querySelector("button").onclick = () => location.reload();
+  for (const el of document.body.children) el.inert = true; // prazna lupina pod sporočilom ni dosegljiva s tipkovnico
+  document.body.append(box);
+  box.querySelector("button").focus();
+  const timer = setInterval(async () => {
+    if ((await serverReach()) !== "down") {
+      clearInterval(timer);
+      location.reload();
+    }
+  }, 10000);
+}
 
 // Računalnik: če zavihki z napisi ne gredo v zgornjo vrstico (ožje okno ali več zavihkov),
 // jih postopoma stisnemo; zavihek brez napisa ga pokaže ob lebdenju (title).

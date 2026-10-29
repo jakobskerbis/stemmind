@@ -478,6 +478,7 @@
   "set.dataNormal": "Imezimwa",
   "set.dataNote": "Majibu mafupi ya mwalimu, picha ndogo, bila uhuishaji wala fonti ya ziada. Mazoezi ya njia yako huhifadhiwa ili ufanye mazoezi bila mtandao.",
   "off.noConnection": "Hakuna muunganisho wa intaneti.",
+  "off.serverDown": "Programu haipatikani kwa sasa. Itafunguka yenyewe itakapopatikana tena.",
   "off.banner": "Uko nje ya mtandao. Unaweza kufanya mazoezi yaliyohifadhiwa kwenye kifaa ({n}).",
   "off.bannerEmpty": "Uko nje ya mtandao. Ukiunganishwa tena, mazoezi yatahifadhiwa kwenye kifaa.",
   "off.pending": "Majibu ya nje ya mtandao yanasubiri kutumwa ({n}).",

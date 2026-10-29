@@ -483,6 +483,7 @@
   "set.dataNormal": "Dezactivat",
   "set.dataNote": "Răspunsuri mai scurte ale tutorelui, fotografii mai mici, fără animații și fără font suplimentar. Exercițiile traseului se salvează pentru exersare offline.",
   "off.noConnection": "Nu există conexiune la internet.",
+  "off.serverDown": "Aplicația nu este disponibilă acum. Se va deschide singură imediat ce revine.",
   "off.banner": "Ești offline. Poți exersa exercițiile salvate pe dispozitiv ({n}).",
   "off.bannerEmpty": "Ești offline. Când revii online, exercițiile vor fi salvate pe dispozitiv.",
   "off.pending": "Răspunsurile date offline așteaptă să fie trimise ({n}).",
