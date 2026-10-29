@@ -490,7 +490,12 @@ async function renderLesson(topicId) {
         const why = el.querySelector(".tb-why");
         why.hidden = false;
         why.className = `tb-why fb ${ok ? "ok" : "bad"}`;
-        why.innerHTML = ok ? `Pravilno! ${c.why ? R(c.why) : ""}` : "Ni čisto tako. Premisli še enkrat ali preberi razlago zgoraj.";
+        const wrongWhy = c.optionWhy?.[o];
+        why.innerHTML = ok
+          ? `Pravilno! ${c.why ? R(c.why) : ""}`
+          : wrongWhy
+          ? `Ni čisto tako. ${R(wrongWhy)} Poskusi še enkrat.`
+          : "Ni čisto tako. Premisli še enkrat ali preberi razlago zgoraj.";
         if (ok) el.querySelectorAll(".tb-opt").forEach((x) => (x.disabled = true));
       }),
     );

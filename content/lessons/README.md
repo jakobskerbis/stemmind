@@ -20,7 +20,14 @@ avtor: učitelj / AI    # neobvezno, za evidenco
 Navezava na znano in zakaj je tema uporabna.
 
 ## Razlaga
-Definicije in razlaga po korakih.
+Definicije in razlaga po korakih. Vmes 2 vprašanji »Premisli« (napoved ali
+»zakaj«), odgovor je v aplikaciji skrit za gumbom:
+
+:::premisli
+Kaj se zgodi z gostoto, če kocko prerežemo na pol?
+---
+Ostane enaka: masa in prostornina se razpolovita, razmerje ostane.
+:::
 
 ## Rešeni primeri
 ### Primer 1 (lažji)
@@ -55,10 +62,17 @@ Razdelki, ki se začnejo z »Drugače:«, se pokažejo pod gumbom »Razloži dru
 ## Preveri se
 ? Vprašanje (Markdown in $LaTeX$ sta dovoljena)
 - napačen odgovor
+~ Zakaj je ta odgovor napačen (tipična napačna predstava); pokaže se ob tej izbiri.
 + pravilen odgovor
 - napačen odgovor
+~ Razlaga za to napačno možnost.
 > Pojasnilo, ki se pokaže po pravilnem odgovoru.
 ```
+
+Merila kakovosti (vrhunska raven) za lekcije, naloge in simulacije so v
+`docs/kakovost.md`; pisec in pregledovalec jih preverita pri vsaki lekciji.
+Preverjevalnik opozori, če razlaga nima 2 blokov `:::premisli` ali če kateri
+napačni odgovor nima vrstice `~`.
 
 Pravila za rešene primere (vsak `### Primer`):
 

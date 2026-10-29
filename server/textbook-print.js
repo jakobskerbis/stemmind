@@ -187,6 +187,8 @@ function shell(title, content) {
   pre { background: #f3f5f9; padding: 8px; border-radius: 6px; }
   .demo-note { border: 1px dashed #2f6fed; border-radius: 8px; padding: 6px 10px; color: #2f6fed; font-family: system-ui, sans-serif; font-size: 0.9rem; margin: 10px 0; }
   .alt { border-left: 3px solid #7b61d1; padding-left: 12px; margin: 10px 0; }
+  .think { border-left: 4px solid #e0a100; background: #fbf7ea; padding: 4px 12px; margin: 8px 0; }
+  .think-label { margin: 2px 0 0; font: 700 0.78rem system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; color: #8a6a00; }
   .formula { border: 1px solid #c9d3ea; background: #f3f6fc; border-radius: 8px; padding: 4px 12px; margin: 8px 0; }
   .formula-label { margin: 2px 0 0; font: 700 0.78rem system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; color: #2f6fed; }
   .checks .opts { list-style: lower-alpha; }

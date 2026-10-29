@@ -1,7 +1,7 @@
 ---
 stanje: osnutek
 demo: ohm
-avtor: AI (vzorčna lekcija za pregled)
+avtor: AI
 ---
 
 ## Zakaj se tega učimo
@@ -20,6 +20,12 @@ Zakaj? Ker vsak porabnik toku **nasprotuje**. Tej lastnosti rečemo **upor**. Oh
 
 Ko napetost podvojimo, se podvoji tudi tok. **Tok je premo sorazmeren z napetostjo.** Graf $I(U)$ je premica skozi izhodišče.
 
+:::premisli
+Kolikšen tok bi pokazal ampermeter pri napetosti $10\,\text{V}$? Napovej, preden pogledaš.
+---
+$0{,}5\,\text{A}$. Vsaka $2\,\text{V}$ prineseta $0{,}1\,\text{A}$, torej $10\,\text{V}$ prinese petkrat toliko kot $2\,\text{V}$.
+:::
+
 **2. Upor.** Količnik $\dfrac{U}{I}$ je pri tem upornik vedno enak: $\dfrac{2\,\text{V}}{0{,}1\,\text{A}} = 20\,\dfrac{\text{V}}{\text{A}}$. Ta stalni količnik imenujemo **električni upor**:
 
 $$R = \frac{U}{I}$$
@@ -33,6 +39,14 @@ $$I = \frac{U}{R} \qquad U = R \cdot I \qquad R = \frac{U}{I}$$
 To so tri oblike istega zakona. Izbereš tisto, v kateri je neznanka sama na levi.
 
 **4. Večji upor, manjši tok.** Pri isti napetosti skozi večji upor teče manjši tok. Na grafu $I(U)$ je premica za večji upor bolj položna.
+
+V simulaciji spodaj nastavi napetost na $6\,\text{V}$ in upor najprej na $10\,\Omega$, nato na $20\,\Omega$. Opazuj, kako hitro tečejo elektroni in kako se nagne premica na grafu.
+
+:::premisli
+Imaš dva upornika, $10\,\Omega$ in $40\,\Omega$, na isti napetosti. Skozi katerega teče večji tok in kolikokrat večji?
+---
+Skozi $10\,\Omega$, in sicer štirikrat večji: upor je štirikrat manjši, $I = \dfrac{U}{R}$ pa je obratno sorazmeren z uporom.
+:::
 
 **5. Od česa je odvisen upor žice.** Daljša žica ima večji upor, debelejša manjšega. Odvisen je tudi od snovi (baker ima majhen upor, zato iz njega delamo kable) in od temperature. Pri žarnici se nitka segreje, zato njen upor med delovanjem naraste in Ohmov zakon zanjo velja le približno.
 
@@ -88,6 +102,29 @@ $R = \dfrac{U_1}{I_1}$, nato $I_2 = \dfrac{U_2}{R}$
 3. Pri $3\,\text{V}$: $I_2 = \dfrac{3\,\text{V}}{24\,\Omega} = 0{,}125\,\text{A}$.
 4. Napetost smo prepolovili, tok se je prepolovil, kar se ujema s premim sorazmerjem.
 5. Odgovor: upor žarnice je $24\,\Omega$; pri $3\,\text{V}$ skoznjo teče tok $0{,}125\,\text{A}$ ($125\,\text{mA}$).
+
+### Primer 4: zdaj ti
+
+Polnilnik telefona ima na izhodu napetost $5\,\text{V}$, skozi kabel in telefon teče tok $1{,}2\,\text{A}$. Kolikšen je skupni upor kabla in telefona? Rezultat zaokroži na eno decimalko.
+
+**Podatki:** $U = 5\,\text{V}$, $I = 1{,}2\,\text{A}$
+**Iščemo:** upor $R$
+
+:::formula
+$R = \dfrac{U}{I}$
+:::
+
+**Rešitev:**
+
+1. Neznanka je upor, zato vzamemo obliko $R = \dfrac{U}{I}$.
+2. Enote so že osnovne (V in A), pretvarjati ni treba.
+3. Izračunaj sam, nato preveri:
+
+:::premisli
+Koliko je $R = \dfrac{5\,\text{V}}{1{,}2\,\text{A}}$?
+---
+$R \approx 4{,}2\,\Omega$ (natančneje $4{,}166\ldots\,\Omega$, zaokroženo na eno decimalko $4{,}2\,\Omega$).
+:::
 
 ## Pogoste napake
 
@@ -156,18 +193,40 @@ Upor žice: $R = \zeta \dfrac{l}{S}$, kjer je $l$ dolžina, $S$ presek in $\zeta
 
 ? Napetost $12\,\text{V}$, upor $40\,\Omega$. Kolikšen je tok?
 - $480\,\text{A}$
+~ To je $U \cdot R$. Tok dobiš z deljenjem: $I = \dfrac{U}{R}$.
 + $0{,}3\,\text{A}$
 - $3{,}3\,\text{A}$
+~ To je $\dfrac{R}{U}$, deljenje v obratni smeri. Napetost je zgoraj: $I = \dfrac{U}{R}$.
 > $I = \dfrac{U}{R} = \dfrac{12\,\text{V}}{40\,\Omega} = 0{,}3\,\text{A}$.
 
 ? Napetost na uporniku podvojimo, upor ostane enak. Kaj se zgodi s tokom?
 - Ostane enak.
+~ Enak ostane upor, ne tok. Pri večji napetosti vir močneje poganja elektrone.
 - Se razpolovi.
+~ Tok se razpolovi, če podvojimo upor. Tu se je spremenila napetost.
 + Se podvoji.
 > Pri stalnem uporu je tok premo sorazmeren z napetostjo.
 
 ? Skozi upornik teče $20\,\text{mA}$ pri napetosti $5\,\text{V}$. Kolikšen je njegov upor?
 - $0{,}25\,\Omega$
+~ Tako dobiš, če mA vstaviš kot amper ($20$ namesto $0{,}02$). Najprej pretvori v A.
 - $100\,\Omega$
+~ To je $5 \cdot 20$. Upor je količnik $\dfrac{U}{I}$, ne produkt.
 + $250\,\Omega$
 > $20\,\text{mA} = 0{,}02\,\text{A}$, $R = \dfrac{5\,\text{V}}{0{,}02\,\text{A}} = 250\,\Omega$. Odgovor $0{,}25\,\Omega$ dobiš, če pozabiš pretvoriti mA v A.
+
+? Kaj meri enota ohm ($\Omega$)?
+- Kako hitro tečejo elektroni.
+~ Hitrost elektronov ni enota upora. Ohm pove razmerje med napetostjo in tokom.
++ Kolikšna napetost je potrebna za tok $1\,\text{A}$ skozi porabnik.
+- Koliko elektrine shrani porabnik.
+~ Shranjeno elektrino merimo v coulombih (pri kondenzatorjih), ne v ohmih.
+> $1\,\Omega = \dfrac{1\,\text{V}}{1\,\text{A}}$: upor $R$ pove, koliko voltov potrebuješ za vsak amper toka.
+
+? Dve žarnici vežemo zaporedno na isto baterijo kot prej eno. Zakaj svetita šibkeje?
+- Ker prva žarnica porabi tok in ga za drugo ostane manj.
+~ Tok se ne porabi: v zaporednem krogu je povsod enak. Manjši je v celem krogu.
++ Ker je skupni upor večji, zato je pri isti napetosti tok v celem krogu manjši.
+- Ker se napetost baterije zmanjša na polovico.
+~ Napetost baterije ostane enaka. Razdeli se med žarnici, tok pa se zmanjša zaradi večjega skupnega upora.
+> Večji skupni upor pri isti napetosti pomeni manjši tok ($I = \dfrac{U}{R}$), zato obe žarnici svetita šibkeje.
