@@ -1,5 +1,6 @@
 {
-  "nav.home": "Evklid – kwenye njia ya kujifunza",
+  "apps.menu": "Sehemu zote za programu",
+  "apps.zbirke": "Mikusanyiko",
   "nav.path": "Njia ya kujifunza",
   "nav.textbook": "Kitabu cha kiada",
   "nav.chat": "Mwalimu",
@@ -1491,7 +1492,6 @@
   "tour.endText": "Unaweza kurudia ziara hii wakati wowote katika Mipangilio (“Rudia ziara ya utangulizi”). Usipopata kitu, muulize mwalimu.",
   "games.pathMark": "Kwenye njia yako",
   "games.pathHint": "Michezo yenye dira ni njia yako ya kuelewa: kwanza ile tulivu, kisha ya kasi zaidi. Michezo yote iko wazi.",
-  "guest.startNote": "Maendeleo yako yanapatikana kwenye kifaa hiki tu. Unaweza kufungua akaunti wakati wowote baadaye, na maendeleo yako yatabaki.",
   "guest.privacy": "Taarifa ya faragha",
   "guest.title": "Unatumia Evklid bila akaunti",
   "guest.intro": "Maendeleo yako yanapatikana kwenye kifaa hiki tu. Fungua akaunti bila malipo ili usiyapoteze, uweze kuingia pia kwenye vifaa vingine na upate siku 7 za ufikiaji kamili.",

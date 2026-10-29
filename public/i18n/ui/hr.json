@@ -1,5 +1,6 @@
 {
-  "nav.home": "Evklid – na put učenja",
+  "apps.menu": "Svi dijelovi aplikacije",
+  "apps.zbirke": "Zbirke",
   "nav.path": "Put učenja",
   "nav.textbook": "Udžbenik",
   "nav.chat": "Instruktor",
@@ -1497,7 +1498,6 @@
   "tour.endText": "Obilazak možeš ponoviti kad god želiš u Postavkama (»Ponovi uvodni obilazak«). Ako nešto ne možeš pronaći, pitaj instruktora.",
   "games.pathMark": "Na tvom putu",
   "games.pathHint": "Igre s kompasom tvoj su put do razumijevanja: najprije mirne, zatim brže. Sve su igre otvorene.",
-  "guest.startNote": "Napredak je dostupan samo na ovom uređaju. Račun možeš izraditi bilo kada kasnije i napredak ostaje.",
   "guest.privacy": "Obavijest o zaštiti osobnih podataka",
   "guest.title": "Koristiš Evklid bez računa",
   "guest.intro": "Napredak je dostupan samo na ovom uređaju. Izradi besplatan račun da ga ne izgubiš, da se možeš prijaviti i na drugom uređaju i da dobiješ 7 dana punog pristupa.",

@@ -1,5 +1,6 @@
 {
-  "nav.home": "Evklid – vers le parcours",
+  "apps.menu": "Toutes les parties de l'application",
+  "apps.zbirke": "Collections",
   "nav.path": "Parcours",
   "nav.textbook": "Manuel",
   "nav.chat": "Tuteur",
@@ -1491,7 +1492,6 @@
   "tour.endText": "Tu peux revoir la visite à tout moment dans les Paramètres (« Revoir la visite guidée »). Si tu ne trouves pas quelque chose, demande au tuteur.",
   "games.pathMark": "Sur ton chemin",
   "games.pathHint": "Les jeux avec une boussole sont ton chemin vers la compréhension : d'abord les calmes, puis les plus rapides. Tous les jeux sont ouverts.",
-  "guest.startNote": "Ta progression n’est accessible que sur cet appareil. Tu peux créer un compte à tout moment plus tard, et ta progression sera conservée.",
   "guest.privacy": "Politique de confidentialité",
   "guest.title": "Tu utilises Evklid sans compte",
   "guest.intro": "Ta progression n’est accessible que sur cet appareil. Crée un compte gratuit pour ne pas la perdre, te connecter aussi sur d’autres appareils et profiter de 7 jours d’accès complet.",

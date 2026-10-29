@@ -1,5 +1,6 @@
 {
-  "nav.home": "Evklid – al percorso di studio",
+  "apps.menu": "Tutte le sezioni dell'app",
+  "apps.zbirke": "Collezioni",
   "nav.path": "Percorso",
   "nav.textbook": "Manuale",
   "nav.chat": "Tutor",
@@ -1491,7 +1492,6 @@
   "tour.endText": "Puoi ripetere il tour quando vuoi nelle Impostazioni («Ripeti il tour iniziale»). Se non trovi qualcosa, chiedi al tutor.",
   "games.pathMark": "Sul tuo percorso",
   "games.pathHint": "I giochi con la bussola sono il tuo percorso per capire: prima quelli tranquilli, poi quelli più veloci. Tutti i giochi sono aperti.",
-  "guest.startNote": "I tuoi progressi sono accessibili solo da questo dispositivo. Puoi creare un account in qualsiasi momento e i progressi resteranno.",
   "guest.privacy": "Informativa sulla privacy",
   "guest.title": "Stai usando Evklid senza account",
   "guest.intro": "I tuoi progressi sono accessibili solo da questo dispositivo. Crea un account gratuito per non perderli, accedere anche da altri dispositivi e ottenere 7 giorni di accesso completo.",

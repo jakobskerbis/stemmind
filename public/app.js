@@ -8,7 +8,8 @@ import { dialectsFor } from "./dialects.js";
 
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock } from "./account.js";
-import { initProfileMenu, refreshProfileButton } from "./profile-menu.js";
+import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
+import { initAppsMenu, closeAppsMenu } from "./apps-menu.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
@@ -107,7 +108,7 @@ function renderUserText(text) {
 // ---------- pogledi ----------
 
 function showView(name) {
-  // Uvod profila: logotip ali tipka Nazaj ga zapreta (prej so ostali skriti vsi zavihki).
+  // Uvod profila: izbira dela v meniju pod logotipom ali tipka Nazaj ga zapreta (prej so ostali skriti vsi zavihki).
   // Prvi profil na napravi mora nastati, zato takrat ostanemo na uvodu.
   if (name !== "onboard" && document.body.classList.contains("onboarding")) {
     if (!state.student) return;
@@ -154,7 +155,7 @@ function showView(name) {
   if (name !== "topic" && name !== "cards") setActiveMode(null);
   window.scrollTo(0, 0);
 }
-document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
+document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
 
 // Tipka Nazaj (Android, aplikacija na začetnem zaslonu, brskalnik): brez tega bi tipka Nazaj
 // v nameščeni aplikaciji takoj zaprla Evklid. Zgodovina ima dve ravni: Učna pot (0) in
@@ -206,6 +207,8 @@ window.addEventListener("popstate", () => {
   const wasOverlay = overlayEntry;
   overlayEntry = false;
   const keep = () => currentView !== "path" && history.pushState({ stm: 1, v: currentView }, "");
+  // Odprt meni (klobuk ali profil) Nazaj le zapre, pogled ostane.
+  if (closeAppsMenu() || closeProfileMenu()) return keep();
   if (installSheetOpen()) {
     closeInstallSheet({ fromBack: true });
     return keep();
@@ -425,6 +428,9 @@ async function selectStudent(id) {
   state.interestsAsk = maybeAskInterests();
 }
 $("#student-select").addEventListener("change", (e) => selectStudent(e.target.value));
+
+// Klik na klobuk zgoraj levo: mreža vseh delov aplikacije.
+initAppsMenu({ getState: () => state, showView, currentView: () => currentView });
 
 // Klik na ime zgoraj desno: meni profila (menjava, nov profil, nastavitve, račun, odjava).
 initProfileMenu({

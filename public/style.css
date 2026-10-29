@@ -193,6 +193,32 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .pm-item[aria-checked="true"] { background: var(--accent-soft); color: var(--accent); }
 .pm-item > svg.pm-check { width: 18px; height: 18px; color: var(--accent); }
 .pm-item[data-act="logout"] > svg.i { color: var(--danger); }
+/* Klik na klobuk: mreža vseh delov aplikacije (apps-menu.js). */
+.brand { cursor: pointer; border-radius: 12px; padding: 2px; margin: -2px; } /* 40 px za dotik */
+.brand:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 3px; }
+.brand[aria-expanded="true"] .logo { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); }
+.apps-pop {
+  position: fixed; z-index: 60; width: min(400px, calc(100vw - 16px)); max-height: calc(100dvh - 88px); overflow-y: auto;
+  margin: 0; padding: 10px; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0, 0, 0, 0.18)); animation: dd-in 0.14s ease; transform-origin: top left;
+}
+[dir="rtl"] .apps-pop { transform-origin: top right; }
+.apps-pop[hidden] { display: none; }
+.am-title { padding: 2px 6px 8px; font-size: 0.78rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.am-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+.am-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 76px; padding: 10px 4px 8px; border: 1px solid transparent; border-radius: 12px;
+  background: none; color: var(--text); font: inherit; font-size: 0.8rem; font-weight: 700; line-height: 1.2; text-align: center; cursor: pointer;
+}
+.am-ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); }
+.am-ic svg.i { width: 21px; height: 21px; }
+.am-label { max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
+.am-tile:hover, .am-tile:focus-visible { background: var(--surface-2); }
+.am-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.am-tile[aria-current="page"] { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); background: var(--accent-soft); }
+.am-tile[aria-current="page"] .am-ic { background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #fff; }
+@media (max-width: 400px) {
+  .am-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 /* Ozek telefon: samo začetnica, ime je v meniju. */
 @media (max-width: 400px) {
   .profile-btn { padding: 4px; gap: 0; }

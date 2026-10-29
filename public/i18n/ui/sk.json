@@ -1,5 +1,6 @@
 {
-  "nav.home": "Evklid – na vzdelávaciu cestu",
+  "apps.menu": "Všetky časti aplikácie",
+  "apps.zbirke": "Zbierky",
   "nav.path": "Vzdelávacia cesta",
   "nav.textbook": "Učebnica",
   "nav.chat": "Tútor",
@@ -1503,7 +1504,6 @@
   "tour.endText": "Prehliadku môžeš kedykoľvek zopakovať v Nastaveniach („Znova spustiť úvodnú prehliadku“). Ak niečo nenájdeš, opýtaj sa tútora.",
   "games.pathMark": "Na tvojej ceste",
   "games.pathHint": "Hry s kompasom sú tvoja cesta k porozumeniu: najprv pokojné, potom rýchlejšie. Otvorené sú všetky hry.",
-  "guest.startNote": "Pokrok je dostupný len v tomto zariadení. Účet si môžeš kedykoľvek neskôr vytvoriť a pokrok ti zostane.",
   "guest.privacy": "Informácie o ochrane osobných údajov",
   "guest.title": "Používaš Evklid bez účtu",
   "guest.intro": "Pokrok je dostupný len v tomto zariadení. Vytvor si bezplatný účet: pokrok tak nestratíš, prihlásiš sa aj v inom zariadení a získaš 7 dní plného prístupu.",

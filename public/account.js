@@ -219,7 +219,7 @@ export async function initAccount({ onReady }) {
   if (!enabled) return true;
   $("#account-tab").hidden = false;
   watchTakenProfiles();
-  watchGuestTrigger();
+  guardLogoOnAuth();
   $("#account-tab").addEventListener("click", renderAccount);
 
   const q = new URLSearchParams(location.search);
@@ -254,28 +254,15 @@ export async function initAccount({ onReady }) {
   return ready;
 }
 
-// Skrit vhod za goste (j, 2026-10-29): dotik logotipa zgoraj levo na prijavni strani.
-// Gumba ni; deluje samo, ko je na strežniku vklopljen gostujoči način (EVKLID_GUEST).
-let guestStarting = false;
-function watchGuestTrigger() {
+// Na zaslonih prijave logotip ne odpira menija delov aplikacije (ti brez profila ne delujejo).
+// Skriti vhod za goste (dotik logotipa) je odstranjen skupaj z uporabo brez računa (j, 2026-10-29).
+function guardLogoOnAuth() {
   document.addEventListener(
     "click",
-    async (e) => {
+    (e) => {
       if (!e.target.closest(".brand") || !document.body.classList.contains("auth-mode")) return;
-      // Na zaslonih prijave logotip ne odpira učne poti (ta brez profila ne deluje).
       e.preventDefault();
       e.stopImmediatePropagation();
-      if (!status?.guest_mode || status.logged_in || !$("#auth-form") || guestStarting) return;
-      guestStarting = true;
-      try {
-        await api("/api/auth/guest", { method: "POST", body: { accept_privacy: true, country: deviceRegion() } });
-        toast(t("guest.startNote"));
-        await continueFlow();
-      } catch (err) {
-        toast(err.message);
-      } finally {
-        guestStarting = false;
-      }
     },
     true,
   );

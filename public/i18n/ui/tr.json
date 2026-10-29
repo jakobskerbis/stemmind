@@ -1,5 +1,6 @@
 {
-  "nav.home": "Evklid – öğrenme yoluna",
+  "apps.menu": "Uygulamanın tüm bölümleri",
+  "apps.zbirke": "Koleksiyonlar",
   "nav.path": "Öğrenme yolu",
   "nav.textbook": "Ders kitabı",
   "nav.chat": "Özel öğretmen",
@@ -1491,7 +1492,6 @@
   "tour.endText": "Turu istediğin zaman Ayarlar'dan (“Tanıtım turunu yeniden başlat”) tekrarlayabilirsin. Bir şey bulamazsan özel öğretmenine sor.",
   "games.pathMark": "Senin yolunda",
   "games.pathHint": "Pusulalı oyunlar anlamaya giden yolundur: önce sakin olanlar, sonra daha hızlılar. Tüm oyunlar açık.",
-  "guest.startNote": "İlerlemene yalnızca bu cihazdan erişebilirsin. Daha sonra istediğin zaman hesap oluşturabilirsin; ilerlemen korunur.",
   "guest.privacy": "Gizlilik bildirimi",
   "guest.title": "Evklid'i hesapsız kullanıyorsun",
   "guest.intro": "İlerlemene yalnızca bu cihazdan erişebilirsin. Kaybetmemek, başka cihazlarda da giriş yapabilmek ve 7 gün tam erişim kazanmak için ücretsiz bir hesap oluştur.",

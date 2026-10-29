@@ -1,5 +1,6 @@
 {
-  "nav.home": "Evklid – a tanulási úthoz",
+  "apps.menu": "Az alkalmazás összes része",
+  "apps.zbirke": "Gyűjtemények",
   "nav.path": "Tanulási út",
   "nav.textbook": "Tankönyv",
   "nav.chat": "Oktató",
@@ -1491,7 +1492,6 @@
   "tour.endText": "A bemutatót bármikor megismételheted a Beállításokban („Bemutató újra”). Ha valamit nem találsz, kérdezd az oktatót.",
   "games.pathMark": "Az utadon",
   "games.pathHint": "Az iránytűs játékok vezetnek a megértéshez: előbb a nyugodtak, aztán a gyorsabbak. Minden játék nyitva van.",
-  "guest.startNote": "A haladásod csak ezen az eszközön érhető el. Fiókot később bármikor létrehozhatsz, és a haladásod megmarad.",
   "guest.privacy": "Adatvédelmi tájékoztató",
   "guest.title": "Fiók nélkül használod az Evklid alkalmazást",
   "guest.intro": "A haladásod csak ezen az eszközön érhető el. Hozz létre ingyenes fiókot, hogy ne veszítsd el, más eszközön is be tudj jelentkezni, és 7 napig teljes hozzáférést kapj.",

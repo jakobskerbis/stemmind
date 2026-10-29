@@ -1,5 +1,6 @@
 {
-  "nav.home": "Evklid – to the learning path",
+  "apps.menu": "All parts of the app",
+  "apps.zbirke": "Collections",
   "nav.path": "Learning path",
   "nav.textbook": "Textbook",
   "nav.chat": "Tutor",
@@ -1491,7 +1492,6 @@
   "tour.endText": "You can replay the tour any time in Settings (“Replay the intro tour”). If you can't find something, ask the tutor.",
   "games.pathMark": "On your path",
   "games.pathHint": "Games with a compass are your path to understanding: calm ones first, then faster ones. Every game is open.",
-  "guest.startNote": "Your progress is available only on this device. You can create an account any time later and keep your progress.",
   "guest.privacy": "Privacy notice",
   "guest.title": "You're using Evklid without an account",
   "guest.intro": "Your progress is available only on this device. Create a free account so you don't lose it, can sign in on other devices too, and get 7 days of full access.",

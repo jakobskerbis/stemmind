@@ -1,5 +1,6 @@
 {
-  "nav.home": "Evklid – ke jalur belajar",
+  "apps.menu": "Semua bagian aplikasi",
+  "apps.zbirke": "Koleksi",
   "nav.path": "Jalur belajar",
   "nav.textbook": "Buku pelajaran",
   "nav.chat": "Tutor",
@@ -1485,7 +1486,6 @@
   "tour.endText": "Kamu bisa mengulang tur ini kapan saja di Pengaturan (“Putar ulang tur pengenalan”). Kalau ada yang tidak kamu temukan, tanya saja ke tutor.",
   "games.pathMark": "Di jalurmu",
   "games.pathHint": "Permainan berkompas adalah jalanmu menuju paham: yang tenang dulu, lalu yang lebih cepat. Semua permainan terbuka.",
-  "guest.startNote": "Kemajuanmu hanya bisa diakses di perangkat ini. Kamu bisa membuat akun kapan saja nanti, dan kemajuanmu tetap ada.",
   "guest.privacy": "Pemberitahuan privasi",
   "guest.title": "Kamu menggunakan Evklid tanpa akun",
   "guest.intro": "Kemajuanmu hanya bisa diakses di perangkat ini. Buat akun gratis agar kemajuanmu tidak hilang, kamu bisa masuk juga di perangkat lain, dan dapat akses penuh selama 7 hari.",
