@@ -1250,7 +1250,8 @@ def("cx_pow", "la", 12, "Potence števila i", "Powers of i", (t) => {
 // Pojmi drugih predmetov: generator dobi še jezik in oblikovalnik števil.
 const CTX = { get lang() { return LANG; }, num: (x) => fmt(x) };
 const SUBJ_AREAS = [];
-for (const [subject, pack] of Object.entries(PACKS)) {
+for (const [key, pack] of Object.entries(PACKS)) {
+  const subject = pack.SUBJECT || key; // npr. mat15.js dopolni matematiko (SUBJECT = "MAT")
   for (const a of pack.AREAS || []) SUBJ_AREAS.push([a[0], a[1], a[2], subject]);
   for (const c of pack.CONCEPTS || []) C.push({ id: c.id, area: c.area, year: c.year, name: c.name, glyph: c.glyph, subject, gen: (tier) => c.gen(tier, CTX) });
 }

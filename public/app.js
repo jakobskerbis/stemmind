@@ -11,6 +11,7 @@ import { initProfileMenu, refreshProfileButton } from "./profile-menu.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
+import { createRenderer, streamSafe } from "./rich.js";
 import { loadPrograms, programsCache, subjectOptions, schoolSubjectsFor, SUBJECT_NAMES } from "./programs.js";
 import { mountLevelPicker, levelLabel, schoolSystemOptions } from "./level-picker.js";
 import { attachMic } from "./speech.js";
@@ -21,6 +22,7 @@ import { initFeedback, showFeedback } from "./feedback.js";
 import { initInstall, installSheetOpen, closeInstallSheet } from "./install.js";
 import { initFlashcards, showFlashcards, addCardsNote } from "./flashcards.js";
 import { initGames, showGames, gamesBack, leaveGames } from "./games/index.js";
+import { initCorner, showCorner, cornerBack, closeBoard, askInterests, maybeAskInterests, interestsSummary } from "./corner.js";
 import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
@@ -86,19 +88,8 @@ const state = {
 
 // ---------- izris matematike in markdowna ----------
 
-// Klikljive formule (formula-info.js): znani simboli in enote dobijo data-fx; fx = false za gumbe (možnosti odgovora).
-const KATEX_OPTS = { throwOnError: false, strict: "ignore", trust: (c) => c.command === "\\htmlData" };
-function renderMath(tex, display, fx = true) {
-  try {
-    return katex.renderToString(fx ? annotateTex(tex) : tex, { ...KATEX_OPTS, displayMode: display });
-  } catch {
-    try {
-      return katex.renderToString(tex, { displayMode: display, throwOnError: false, strict: "ignore" });
-    } catch {
-      return tex;
-    }
-  }
-}
+// Klikljive formule (formula-info.js): znani simboli in enote dobijo data-fx; renderMath(…, false) za gumbe.
+const { renderMath, renderRich } = createRenderer({ annotate: (tex) => annotateTex(tex) });
 // Predmet za pomen simbolov: tema naloge (FIZ-OS-9 …), sicer predmet učenca.
 const subjectOfId = (id) => (/^([A-Z]{3})-/.exec(id || "") || [])[1];
 setFormulaSubject(() => subjectOfId(state.topic?.id) || state.student?.settings?.subject || "MAT");
@@ -107,23 +98,6 @@ setFormulaSubject(() => subjectOfId(state.topic?.id) || state.student?.settings?
 function renderUserText(text) {
   const parts = String(text).split(/(\$[^$\n]+?\$)/g);
   return parts.map((p, i) => (i % 2 ? renderMath(p.slice(1, -1), false, false) : escapeHtml(p))).join("");
-}
-
-function renderRich(text) {
-  const math = [];
-  const stash = (tex, display) => `@@MATH${math.push({ tex, display }) - 1}@@`;
-  let src = text
-    .replace(/\$\$([\s\S]+?)\$\$/g, (_, t) => stash(t, true))
-    .replace(/\\\[([\s\S]+?)\\\]/g, (_, t) => stash(t, true))
-    .replace(/\\\((.+?)\\\)/g, (_, t) => stash(t, false))
-    .replace(/(^|[^\\$])\$([^$\n]+?)\$/g, (_, pre, t) => pre + stash(t, false));
-  let html = DOMPurify.sanitize(marked.parse(src, { breaks: true }));
-  // V tabelah so ulomki in potence v polni velikosti (\displaystyle), sicer so premajhni za branje.
-  html = html.replace(/<table[\s\S]*?<\/table>/g, (tbl) =>
-    tbl.replace(/@@MATH(\d+)@@/g, (_, i) => renderMath(math[i].display ? math[i].tex : `\\displaystyle ${math[i].tex}`, math[i].display)),
-  );
-  html = html.replace(/@@MATH(\d+)@@/g, (_, i) => renderMath(math[i].tex, math[i].display));
-  return html;
 }
 
 // ---------- pogledi ----------
@@ -152,6 +126,8 @@ function showView(name) {
   if (name === "feedback") showFeedback();
   if (name === "games") showGames();
   else leaveGames();
+  if (name === "corner") showCorner();
+  else closeBoard();
   if (name === "cards") {
     setActiveMode("cards");
     showFlashcards();
@@ -219,6 +195,7 @@ window.addEventListener("popstate", () => {
     closeCalcOverlay({ fromBack: true });
     return keep();
   }
+  if (cornerBack()) return keep();
   if (wasOverlay && currentView === "path") return;
   if (!$("#tour")?.hidden && $("#tour")) return keep();
   if (currentView === "textbook" && textbookBack()) return keep();
@@ -233,7 +210,7 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner"];
 function renderMe() {
   const s = state.student;
   if (!s) return;
@@ -394,6 +371,8 @@ async function selectStudent(id) {
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
   refreshProfileButton();
   refreshXp();
+  // Vprašalnik kotička zanimanj: profil, ki ga še ni izpolnil, ga dobi ob zagonu (enkrat).
+  state.interestsAsk = maybeAskInterests();
 }
 $("#student-select").addEventListener("change", (e) => selectStudent(e.target.value));
 
@@ -551,7 +530,7 @@ async function send(text, { deep = false } = {}) {
     const box = $("#messages");
     const paint = (shown) => {
       const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
-      bubble.innerHTML = renderRich(closeMarkdown(shown));
+      bubble.innerHTML = renderRich(streamSafe(shown));
       if (atBottom) box.scrollTop = box.scrollHeight;
     };
     // Odgovor se izpisuje z berljivim tempom; dotik sporočila pokaže vse naenkrat.
@@ -736,25 +715,43 @@ if ("serviceWorker" in navigator && location.protocol !== "file:") {
     .catch(() => null);
 }
 
-// Samodejna posodobitev (docs/posodobitve.md): ko se aplikacija vrne v ospredje po vsaj
-// 3 minutah in strežnik medtem teče z novejšo različico, se stran tiho osveži.
+// Samodejna posodobitev (docs/posodobitve.md): ko strežnik teče z novejšo različico, se stran
+// tiho osveži, a samo, ko to učenca ne zmoti: ob vrnitvi v aplikacijo (vsaj 1 minuto v ozadju)
+// ali po 10 minutah brez dotika, nikoli med tekmovanjem ali z napisanim, a neposlanim besedilom.
 let appVersion = null;
 let hiddenAt = 0;
+let lastInput = Date.now();
+for (const ev of ["pointerdown", "keydown", "input", "wheel", "touchstart"]) {
+  addEventListener(ev, () => (lastInput = Date.now()), { capture: true, passive: true });
+}
 const serverVersion = () =>
   fetch("/healthz/stanje", { cache: "no-store" })
     .then((r) => (r.ok ? r.json() : null))
     .then((s) => s?.razlicica || null)
     .catch(() => null);
+const unsentText = () =>
+  [...document.querySelectorAll("textarea, input[type=text], input[type=search], input:not([type])")].some(
+    (el) => el.offsetParent !== null && !el.readOnly && el.value.trim() && el.value !== el.defaultValue,
+  );
+async function reloadIfNewer() {
+  if (!appVersion || state.contestTimer || unsentText()) return;
+  const v = await serverVersion();
+  if (!v || v === appVersion) return;
+  const reg = await navigator.serviceWorker?.getRegistration?.().catch(() => null);
+  await reg?.update?.().catch(() => null); // nov service worker (nove knjižnice) pred osvežitvijo
+  location.reload();
+}
 serverVersion().then((v) => (appVersion = v));
-document.addEventListener("visibilitychange", async () => {
+document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") {
     hiddenAt = Date.now();
     return;
   }
-  if (!appVersion || !hiddenAt || Date.now() - hiddenAt < 3 * 60 * 1000) return;
-  const v = await serverVersion();
-  if (v && v !== appVersion && document.visibilityState === "visible") location.reload();
+  if (hiddenAt && Date.now() - hiddenAt >= 60 * 1000) reloadIfNewer();
 });
+setInterval(() => {
+  if (document.visibilityState === "visible" && Date.now() - lastInput >= 10 * 60 * 1000) reloadIfNewer();
+}, 5 * 60 * 1000);
 
 // Pasica brez povezave na učni poti in pošiljanje odgovorov, ko se povezava vrne.
 function syncOfflineBanner() {
@@ -850,6 +847,7 @@ let levelPicker = null;
 async function fillSettingsForm() {
   const f = $("#settings-form");
   const s = state.student.settings;
+  fillCornerSummary();
   f.name.value = state.student.name;
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
@@ -958,7 +956,15 @@ function studentUpdated(updated) {
   const up = stageUp(before, updated.settings);
   if (up) state.welcome = { stage: up };
   if (!$("#view-settings").hidden) fillSettingsForm();
+  fillCornerSummary();
 }
+
+// Kotiček zanimanj v Nastavitvah: kratek seznam izbranih tem in gumb za vprašalnik.
+function fillCornerSummary() {
+  const el = $("#corner-summary");
+  if (el && state.student) el.textContent = interestsSummary(state.student.settings) || t("set.cornerNone");
+}
+$("#corner-edit").addEventListener("click", () => askInterests());
 
 // Gumb »Da, spremeni« pod predlogom inštruktorja (šola, razred/letnik, program).
 async function confirmChatProposal(settings) {
@@ -1168,14 +1174,6 @@ function toast(msg, ic = null) {
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-}
-// Med postopnim izpisom zapre odprte ** in *, da se ne vidijo surove zvezdice.
-function closeMarkdown(t) {
-  const bold = (t.match(/\*\*/g) || []).length;
-  if (bold % 2) t += "**";
-  const single = (t.replace(/\*\*/g, "").match(/\*/g) || []).length;
-  if (single % 2) t += "*";
-  return t;
 }
 function currentPace() {
   return PACES[localStorageGet("pace")] || PACES[DEFAULT_PACE];
@@ -2420,7 +2418,8 @@ function maybeTour() {
   try {
     seen = localStorage.getItem(TOUR_KEY);
   } catch {}
-  if (!seen) setTimeout(startTour, 400);
+  // Uvodni ogled šele, ko je vprašalnik kotička zaprt.
+  if (!seen) Promise.resolve(state.interestsAsk).then(() => setTimeout(startTour, 400));
 }
 $("#tour-again").addEventListener("click", () => {
   showView("path");
@@ -2617,6 +2616,19 @@ initFormulaInfo();
   $("#mock-banner").hidden = !cfg.mock;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   initGames({ api, getStudent: () => state.student, refreshXp, currentLang });
+  initCorner({
+    api,
+    getStudent: () => state.student,
+    setStudent: studentUpdated,
+    toast: (m) => toast(m, "check"),
+    askTutor: (text) => {
+      showView("chat");
+      const box = $("#input");
+      box.value = text;
+      autoGrow();
+      box.focus();
+    },
+  });
   // Starševski računi (account.js): prijava, potrditev, prvi otrok.
   let first = true;
   const start = async (o) => {

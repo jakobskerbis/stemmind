@@ -12,6 +12,9 @@ import { LANGUAGE_CODES, langInfo } from "../public/i18n/languages.js";
 import { SCHOOL_SYSTEMS, SYSTEM_IDS, isRegional, gradesOf } from "../public/regions.js";
 import { PROFILE_SETTINGS, DEVICE_SETTINGS, deviceValue } from "../public/settings-registry.js";
 import { goalsFor, validDate } from "../public/goal-data.js";
+import { Avatars } from "./avatar.js";
+import { ITEM, ITEMS, SLOTS } from "../public/avatar.js";
+import { INTERESTS, cleanInterests } from "../public/interests.js";
 
 const PATH_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => PROFILE_SETTINGS[k].confirm);
 const PENDING_MS = 30 * 60 * 1000;
@@ -21,6 +24,7 @@ const PENDING_MS = 30 * 60 * 1000;
 
 function schemaFor(def, extra = {}) {
   if (def.list) return { type: "array", items: { type: "string" }, description: def.desc };
+  if (def.object) return { type: "object", additionalProperties: { type: "string" }, description: def.desc };
   return { type: "string", ...(def.values ? { enum: def.values } : {}), description: def.desc, ...extra };
 }
 
@@ -160,6 +164,10 @@ function profileView(student) {
     goal: s.goal,
     goal_date: s.goal_date,
     goal_reminder: s.goal_reminder ? "on" : "off",
+    interests: s.interests ?? [],
+    interest_custom: s.interest_custom || "",
+    news_level: s.news_level,
+    news_lang: s.news_lang,
     weak_points: student.manual_weaknesses || [],
   };
 }
@@ -260,7 +268,15 @@ function validateProfile(changes, student) {
       } else errors.push(`subject: this programme year has no ${changes.subject} course; courses: ${courseItems(program, level).map((x) => x.name).join("; ")}`);
     } else if (track !== "UNIVERZA") patch.subject = changes.subject;
   }
-  for (const key of ["track", "solving_mode", "data_mode"]) {
+  if (changes.interests !== undefined) {
+    const raw = Array.isArray(changes.interests) ? changes.interests : String(changes.interests).split(",");
+    const ids = cleanInterests(raw);
+    const bad = raw.filter((v) => String(v).trim() && !cleanInterests([v]).length);
+    if (bad.length) errors.push(`interests: unknown ${bad.join(", ")}; allowed ${INTERESTS.map((i) => `${i.id} (${i.en})`).join(", ")}`);
+    else patch.interests = ids;
+  }
+  if (changes.interest_custom !== undefined) patch.interest_custom = cleanText(String(changes.interest_custom ?? ""), 40);
+  for (const key of ["track", "solving_mode", "data_mode", "news_level", "news_lang"]) {
     if (changes[key] === undefined) continue;
     if (PROFILE_SETTINGS[key].values.includes(changes[key])) patch[key] = changes[key];
     else errors.push(`${key}: allowed ${PROFILE_SETTINGS[key].values.join(", ")}`);
@@ -293,7 +309,8 @@ function validateProfile(changes, student) {
 // Spremembe za poročilo modelu: [{ setting, from, to }].
 function diff(before, after, keys) {
   const show = (k, v) => (k === "study_program" ? programLabel(v) : k === "study_course" ? courseLabel(v) : v);
-  return keys.filter((k) => before[k] !== after[k]).map((k) => ({ setting: k, from: show(k, before[k]), to: show(k, after[k]) }));
+  const same = (a, b) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null); // seznami (interests)
+  return keys.filter((k) => !same(before[k], after[k])).map((k) => ({ setting: k, from: show(k, before[k]), to: show(k, after[k]) }));
 }
 
 const PROFILE_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => k !== "weak_points");
@@ -305,10 +322,14 @@ const PROFILE_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => k !== "weak_poi
 export function createSettingsTools({ store, studentId, conversationId, device = {}, pending, send = () => {} }) {
   const state = { used: false, proposal: null, language: null, student: null };
   const dev = { ...device };
+  const avatars = new Avatars(store.db);
 
   function getSettings(input = {}) {
     const student = store.getStudent(studentId);
     const out = { profile: profileView(student), device: dev, note: "Device settings not listed are at their defaults." };
+    const owned = new Set(avatars.owned(studentId));
+    out.profile.avatar = avatars.view(studentId).equipped;
+    out.avatar_items_available = ITEMS.filter((x) => x.price === 0 || owned.has(x.id)).map((x) => `${x.slot}: ${x.id} (${x.name.en})`);
     const s = student.settings;
     if (input.options === "study_program") out.options = programItems().map((p) => `${p.id}: ${p.label}`);
     if (input.options === "study_course")
@@ -331,6 +352,22 @@ export function createSettingsTools({ store, studentId, conversationId, device =
       else errors.push(`${key}: allowed ${DEVICE_SETTINGS[key].values?.join(", ") || DEVICE_SETTINGS[key].desc}`);
     }
     if (unknown.length) errors.push(`not changeable from chat: ${unknown.join(", ")} (financial and personal data only in Settings / Account)`);
+    // Avatar: samo brezplačni ali kupljeni deli; kupuje se le v trgovini v igrah (kovanci).
+    let avatarChange = null;
+    if (changes.avatar !== undefined) {
+      const a = changes.avatar;
+      if (!a || typeof a !== "object" || Array.isArray(a)) errors.push("avatar: object {slot: item id}");
+      else {
+        const owned = new Set(avatars.owned(studentId));
+        for (const [slot, id] of Object.entries(a)) {
+          const x = ITEM[id];
+          if (!SLOTS.includes(slot)) errors.push(`avatar: unknown slot ${slot}`);
+          else if (!x || x.slot !== slot) errors.push(`avatar: ${id} is not a ${slot} item`);
+          else if (x.price > 0 && !owned.has(id)) errors.push(`avatar: ${id} not owned yet (bought with game coins in the games shop)`);
+        }
+        avatarChange = a;
+      }
+    }
     if (errors.length) return { content: JSON.stringify({ status: "error", errors, applied: [] }), isError: true };
 
     // Šola, razred, program, sistem: predlog ali potrjena sprememba.
@@ -376,6 +413,11 @@ export function createSettingsTools({ store, studentId, conversationId, device =
       state.student = updated;
       send("settings", { student: updated, language: state.language });
       if (applyPatch.language && langInfo(applyPatch.language).code !== "sl") result.note = (result.note ? result.note + " " : "") + "Reply in the new language from now on.";
+    }
+    if (avatarChange) {
+      const to = avatars.equip(studentId, { ...avatars.view(studentId).equipped, ...avatarChange });
+      result.applied.push({ setting: "avatar", to });
+      send("avatar", { avatar: to });
     }
     if (Object.keys(deviceChanges).length) {
       Object.assign(dev, deviceChanges);

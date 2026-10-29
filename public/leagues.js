@@ -1,5 +1,6 @@
 // Pogled »Lige«: tedenska liga, vzdevek, razredi in skupine prijateljev.
 import { icon } from "./icons.js";
+import { avatarSvg } from "./avatar.js";
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const api = async (url, opts = {}) => {
@@ -35,7 +36,7 @@ function boardHtml(rows, zones = false) {
   return `<ol class="leaderboard league-board">${rows
     .map(
       (r) => `<li class="${r.me ? "me" : ""} ${zones ? `zone-${r.zone}` : ""}">
-        <span class="who"><span class="rank">${r.rank}</span>${esc(r.nickname)}${r.me ? ` <span class="you">ti</span>` : ""}</span>
+        <span class="who"><span class="rank">${r.rank}</span>${avatarSvg(r.avatar, { size: 30 })}${esc(r.nickname)}${r.me ? ` <span class="you">ti</span>` : ""}</span>
         <b>${r.xp} <span class="xp-unit">XP</span></b>${zones && r.zone !== "stay" ? `<span class="zone-mark" title="${r.zone === "up" ? "napreduje" : "izpade"}">${icon(r.zone === "up" ? "arrow-right" : "arrow-left")}</span>` : ""}</li>`,
     )
     .join("")}</ol>`;

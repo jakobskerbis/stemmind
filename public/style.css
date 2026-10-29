@@ -221,9 +221,41 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .pill-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
 .pill-list li { background: var(--surface-2); border-radius: 999px; padding: 5px 12px; font-size: 0.9rem; font-weight: 700; }
 .pill-list li.auto { border: 1.5px dashed var(--danger); }
-.table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
-.table th { text-align: left; padding: 8px 6px; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
-.table td { text-align: left; padding: 9px 6px; border-bottom: 1px solid var(--border); }
+/* ---------- tabele: en videz v vsej aplikaciji ----------
+   Okvir z zaobljenimi robovi, poudarjena siva glava, črte med vrsticami in stolpci, rahlo
+   progaste vrstice, števke enake širine. Velja za tabele iz Markdowna (.md-table: inštruktor,
+   razlage, naloge, lekcije, kartice, mnenja) in za tabele, ki jih sestavi koda. :where() ima
+   specifičnost 0, zato lahko posamezno orodje (npr. PSE) prepiše poravnavo ali razmik. */
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) {
+  border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--text); font-variant-numeric: tabular-nums; overflow-wrap: normal; margin: 10px 0;
+}
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) :where(th, td) {
+  padding: 10px 14px; text-align: left; vertical-align: middle; border: 0; border-bottom: 1px solid var(--border);
+}
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) :where(th, td) + :where(th, td) { border-left: 1px solid var(--border); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:last-child) > tr:last-child > :where(th, td) { border-bottom: 0; }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) :where(th) { background: var(--surface-2); font-weight: 800; color: var(--text); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(tbody) > tr:nth-child(even) > td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
+/* Zaobljeni vogali tudi pri sivi glavi in progastih vrsticah. */
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:first-child) > tr:first-child > :where(th, td):first-child { border-top-left-radius: calc(var(--radius-sm) - 1px); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:first-child) > tr:first-child > :where(th, td):last-child { border-top-right-radius: calc(var(--radius-sm) - 1px); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:last-child) > tr:last-child > :where(th, td):first-child { border-bottom-left-radius: calc(var(--radius-sm) - 1px); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:last-child) > tr:last-child > :where(th, td):last-child { border-bottom-right-radius: calc(var(--radius-sm) - 1px); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) [align="center"] { text-align: center; }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) [align="right"] { text-align: right; }
+
+/* Tabela iz Markdowna: tako široka kot vsebina; na ozkem zaslonu se pomika vstran, ne stisne.
+   Kratke celice in formule se ne prelamljajo (ulomki ostanejo celi), daljše besedilo se. */
+.md-table-wrap { max-width: 100%; overflow-x: auto; margin: 10px 0; -webkit-overflow-scrolling: touch; }
+.md-table-wrap > .md-table { margin: 0; }
+.md-table :is(th, td) { white-space: nowrap; }
+.md-table :is(th, td).wrap { white-space: normal; min-width: 11em; max-width: 26em; }
+.md-table .katex { white-space: nowrap; }
+.md-table td .katex { font-size: 1.1em; }
+.md-table :is(th, td) .katex-display { margin: 0; }
+
+.table { width: 100%; font-size: 0.93rem; }
 .table td.bad { color: var(--danger); font-weight: 800; }
 .activity { display: flex; align-items: flex-end; gap: 3px; height: 90px; }
 .activity .bar { flex: 1; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 2px; position: relative; width: auto; height: auto; }

@@ -58,8 +58,7 @@
 .fb-summary { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 6px; overflow-x: auto; }
 .fb-summary h1 { font-size: 1.2rem; }
 .fb-summary h2 { font-size: 1.05rem; margin-top: 18px; }
-.fb-summary table { border-collapse: collapse; font-size: 0.92rem; }
-.fb-summary th, .fb-summary td { border: 1px solid var(--border); padding: 4px 8px; text-align: left; }
+.fb-summary .md-table { font-size: 0.92rem; }
 
 @media (max-width: 760px) {
   .fb-row { flex-direction: column; align-items: stretch; gap: 2px; padding: 8px 10px 6px; }
