@@ -1029,5 +1029,6 @@
   "games.e.runner": "Coureur",
   "games.e.runner.how": "Touche une voie ou glisse à gauche et à droite (touches ← →) pour passer la porte avec la bonne réponse.",
   "games.e.sorter": "Tri",
-  "games.e.sorter.how": "L’affirmation sur la caisse est-elle vraie ? Touche ✓ ou ✗ (touches → et ←) avant que la caisse quitte le tapis."
+  "games.e.sorter.how": "L’affirmation sur la caisse est-elle vraie ? Touche ✓ ou ✗ (touches → et ←) avant que la caisse quitte le tapis.",
+  "subj.NAR": "Sciences"
 }

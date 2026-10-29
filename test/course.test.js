@@ -21,3 +21,18 @@ test("fakulteta: predmet iz predmetnika izbrane smeri določi učno pot in predm
   // OŠ in SŠ: brez predmeta iz predmetnika.
   assert.equal(normalizeSettings({ educational_track: "SREDNJA_SOLA", curriculum_level: "2. letnik", study_course: "UNI-UMFKKT-ANORG" }).study_course, "");
 });
+
+test("predmetnik OŠ: v 6. in 7. razredu naravoslovje namesto fizike in kemije", async () => {
+  const { getPath, getTopic, baseTopicIds } = await import("../server/curriculum.js");
+  const six = normalizeSettings({ educational_track: "OSNOVNA_SOLA", curriculum_level: "6. razred", subject: "FIZ" });
+  assert.equal(six.subject, "NAR");
+  assert.equal(pathKeyFor(six), "NAR-OS-6");
+  assert.equal(pathKeyFor(normalizeSettings({ ...six, curriculum_level: "7. razred" })), "NAR-OS-7");
+  assert.equal(normalizeSettings({ ...six, curriculum_level: "8. razred" }).subject, "FIZ", "v 8. razredu naravoslovja ni več");
+  assert.equal(normalizeSettings({ educational_track: "OSNOVNA_SOLA", curriculum_level: "7. razred", subject: "MAT" }).subject, "MAT");
+  assert.equal(normalizeSettings({ educational_track: "SREDNJA_SOLA", curriculum_level: "1. letnik", subject: "NAR" }).subject, "FIZ");
+  assert.ok(getPath("NAR-OS-6").units.length >= 4);
+  // Teme, ki se prekrivajo s fiziko in kemijo, vzamejo naloge iz osnovne teme.
+  assert.deepEqual(baseTopicIds("NAR-OS-7/raztopine"), ["KEM-OS-9/raztopine"]);
+  assert.equal(getTopic("NAR-OS-6/zgradba-rastline").subject, "NAR");
+});

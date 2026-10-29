@@ -10,7 +10,7 @@ import { initAccount, accountsOn, openAddChild } from "./account.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
-import { loadPrograms, programsCache, subjectOptions, SUBJECT_NAMES } from "./programs.js";
+import { loadPrograms, programsCache, subjectOptions, schoolSubjectsFor, SUBJECT_NAMES } from "./programs.js";
 import { mountLevelPicker, levelLabel, schoolSystemOptions } from "./level-picker.js";
 import { attachMic } from "./speech.js";
 import { mountSymbols } from "./symbols.js";
@@ -717,8 +717,11 @@ function fillSubjectOptions() {
   $("#course-row").hidden = !uni;
   if (uni) return fillCourseOptions();
   const prev = f.subject.value || state.student?.settings?.subject;
-  f.subject.innerHTML = subjectOptions(null, prev);
-  if (![...f.subject.options].some((o) => o.value === prev)) f.subject.selectedIndex = 0;
+  const list = schoolSubjectsFor(f.educational_track.value, f.curriculum_level.value, isRegional(f.school_system.value));
+  // Predmet, ki ga razred nima: fizika ali kemija v 6./7. → naravoslovje, naravoslovje v 8. → fizika.
+  const want = list.includes(prev) ? prev : prev === "FIZ" || prev === "KEM" ? (list.includes("NAR") ? "NAR" : prev) : prev === "NAR" ? "FIZ" : "MAT";
+  f.subject.innerHTML = subjectOptions(null, want, list);
+  if (![...f.subject.options].some((o) => o.value === want)) f.subject.selectedIndex = 0;
 }
 
 const courseCache = new Map(); // program → predmeti po letnikih (/api/paths?program=)
@@ -763,7 +766,7 @@ async function fillSettingsForm() {
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
   f.data_mode.value = s.data_mode || "auto";
-  f.subject.innerHTML = subjectOptions(null, s.subject);
+  f.subject.innerHTML = subjectOptions(null, s.subject, schoolSubjectsFor(s.educational_track, s.curriculum_level, isRegional(s.school_system)));
   f.study_course.innerHTML = "";
   f.school_system.innerHTML = schoolSystemOptions(s.school_system || "SI");
   if (!levelPicker) {

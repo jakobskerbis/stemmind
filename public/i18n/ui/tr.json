@@ -1029,5 +1029,6 @@
   "games.e.runner": "Koşucu",
   "games.e.runner.how": "Doğru cevaplı kapıdan geçmek için bir şeride dokun ya da sola sağa kaydır (← → tuşları).",
   "games.e.sorter": "Ayıklama",
-  "games.e.sorter.how": "Kasadaki ifade doğru mu? Kasa banttan çıkmadan ✓ veya ✗ işaretine dokun (→ ve ← tuşları)."
+  "games.e.sorter.how": "Kasadaki ifade doğru mu? Kasa banttan çıkmadan ✓ veya ✗ işaretine dokun (→ ve ← tuşları).",
+  "subj.NAR": "Fen bilimleri"
 }

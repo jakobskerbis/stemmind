@@ -1029,5 +1029,6 @@
   "games.e.runner": "Futó",
   "games.e.runner.how": "Koppints egy sávra, vagy húzd balra és jobbra (← → billentyűk), hogy a helyes válaszú kapun fuss át.",
   "games.e.sorter": "Válogató",
-  "games.e.sorter.how": "Igaz az állítás a ládán? Koppints a ✓ vagy ✗ gombra (→ és ← billentyű), mielőtt a láda lemegy a szalagról."
+  "games.e.sorter.how": "Igaz az állítás a ládán? Koppints a ✓ vagy ✗ gombra (→ és ← billentyű), mielőtt a láda lemegy a szalagról.",
+  "subj.NAR": "Természettudomány"
 }

@@ -24,13 +24,20 @@ for (const [key, p] of Object.entries({ ...PATHS, ...UNI_PATHS })) {
   const units = p.units.map(([title, topics], ui) => ({
     title,
     topics: topics.map((t) => {
-      const [name, goals = ""] = t.split("|").map((x) => x.trim());
+      // »Ime | cilji => POT/tema«: osnovna tema drugega predmeta (naravoslovje → fizika, kemija).
+      const [text, refs = ""] = t.split("=>");
+      const [name, goals = ""] = text.split("|").map((x) => x.trim());
       const topic = { id: `${key}/${slugify(name)}`, name, goals, unit: title, unitIndex: ui, path: key, subject };
+      const base = refs.split(",").map((x) => x.trim()).filter(Boolean);
+      if (base.length) topic.base = base;
       TOPICS[topic.id] = topic;
       return topic;
     }),
   }));
   BUILT[key] = { key, label: p.label, subject, school, grade: Number(grade), units };
+}
+for (const t of Object.values(TOPICS)) {
+  for (const b of t.base || []) if (!TOPICS[b] || TOPICS[b].base) throw new Error(`${t.id}: osnovna tema ${b} ne obstaja`);
 }
 
 // ---------- regijske poti (public/regions.js, server/region-curricula.js) ----------
@@ -261,7 +268,7 @@ export function pathKeyFor(settings) {
   if (!candidates.length) return null;
   const exact = candidates.find((p) => p.grade === num);
   if (exact) return exact.key;
-  // OŠ 6. in 7. razred pri FIZ/KEM: naravoslovje, ponudimo prvo pot predmeta.
+  // Ni poti za ta razred (npr. stara nastavitev): ponudimo prvo pot predmeta.
   return candidates[0].key;
 }
 

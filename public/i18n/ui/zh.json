@@ -1024,5 +1024,6 @@
   "games.e.runner": "跑酷",
   "games.e.runner.how": "点击跑道或左右滑动（← → 键），从写着正确答案的门中穿过。",
   "games.e.sorter": "分拣线",
-  "games.e.sorter.how": "箱子上的式子对吗？在箱子离开传送带前点击 ✓ 或 ✗（→ 和 ← 键）。"
+  "games.e.sorter.how": "箱子上的式子对吗？在箱子离开传送带前点击 ✓ 或 ✗（→ 和 ← 键）。",
+  "subj.NAR": "科学"
 }

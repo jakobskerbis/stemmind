@@ -359,6 +359,7 @@ export default {
   "subj.MAT": "Matematika",
   "subj.FIZ": "Fizika",
   "subj.KEM": "Kemija",
+  "subj.NAR": "Naravoslovje",
   "subj.BIO": "Biologija",
   "subj.GEO": "Geologija in okolje",
   "subj.RAC": "Računalništvo",

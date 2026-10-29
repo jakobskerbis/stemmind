@@ -1029,5 +1029,6 @@
   "games.e.runner": "Corridore",
   "games.e.runner.how": "Tocca una corsia o scorri a sinistra e a destra (tasti ← →) per passare dalla porta con la risposta giusta.",
   "games.e.sorter": "Smistamento",
-  "games.e.sorter.how": "L’affermazione sulla cassa è vera? Tocca ✓ o ✗ (tasti → e ←) prima che la cassa lasci il nastro."
+  "games.e.sorter.how": "L’affermazione sulla cassa è vera? Tocca ✓ o ✗ (tasti → e ←) prima che la cassa lasci il nastro.",
+  "subj.NAR": "Scienze"
 }

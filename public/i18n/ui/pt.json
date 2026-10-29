@@ -1029,5 +1029,6 @@
   "games.e.runner": "Corredor",
   "games.e.runner.how": "Toca numa pista ou desliza para a esquerda e para a direita (teclas ← →) para passar pela porta com a resposta certa.",
   "games.e.sorter": "Triagem",
-  "games.e.sorter.how": "A afirmação na caixa está certa? Toca em ✓ ou ✗ (teclas → e ←) antes de a caixa sair do tapete."
+  "games.e.sorter.how": "A afirmação na caixa está certa? Toca em ✓ ou ✗ (teclas → e ←) antes de a caixa sair do tapete.",
+  "subj.NAR": "Ciências naturais"
 }

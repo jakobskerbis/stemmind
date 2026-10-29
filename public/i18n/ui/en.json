@@ -1029,5 +1029,6 @@
   "games.e.runner": "Runner",
   "games.e.runner.how": "Tap a lane or swipe left and right (keys ← →) to run through the gate with the correct answer.",
   "games.e.sorter": "Sorting line",
-  "games.e.sorter.how": "Is the statement on the crate true? Tap ✓ or ✗ (keys → and ←) before the crate leaves the belt."
+  "games.e.sorter.how": "Is the statement on the crate true? Tap ✓ or ✗ (keys → and ←) before the crate leaves the belt.",
+  "subj.NAR": "Science"
 }

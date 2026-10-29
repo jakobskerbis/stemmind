@@ -1039,5 +1039,6 @@
   "games.e.runner": "Bežec",
   "games.e.runner.how": "Ťukni na dráhu alebo potiahni doľava a doprava (klávesy ← →) a prebehni bránou so správnou odpoveďou.",
   "games.e.sorter": "Triediareň",
-  "games.e.sorter.how": "Platí tvrdenie na debni? Ťukni na ✓ alebo ✗ (klávesy → a ←), kým debna neodíde z pásu."
+  "games.e.sorter.how": "Platí tvrdenie na debni? Ťukni na ✓ alebo ✗ (klávesy → a ←), kým debna neodíde z pásu.",
+  "subj.NAR": "Prírodoveda"
 }

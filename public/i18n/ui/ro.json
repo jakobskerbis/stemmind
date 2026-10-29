@@ -1034,5 +1034,6 @@
   "games.e.runner": "Alergătorul",
   "games.e.runner.how": "Atinge o bandă sau glisează la stânga și la dreapta (tastele ← →) ca să treci prin poarta cu răspunsul corect.",
   "games.e.sorter": "Sortatorul",
-  "games.e.sorter.how": "Afirmația de pe ladă este adevărată? Atinge ✓ sau ✗ (tastele → și ←) înainte ca lada să plece de pe bandă."
+  "games.e.sorter.how": "Afirmația de pe ladă este adevărată? Atinge ✓ sau ✗ (tastele → și ←) înainte ca lada să plece de pe bandă.",
+  "subj.NAR": "Științe ale naturii"
 }

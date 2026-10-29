@@ -1034,5 +1034,6 @@
   "games.e.runner": "Trkač",
   "games.e.runner.how": "Dodirni stazu ili povuci lijevo i desno (tipke ← →) da protrčiš kroz vrata s točnim odgovorom.",
   "games.e.sorter": "Sortirnica",
-  "games.e.sorter.how": "Je li tvrdnja na sanduku točna? Dodirni ✓ ili ✗ (tipke → i ←) prije nego što sanduk ode s trake."
+  "games.e.sorter.how": "Je li tvrdnja na sanduku točna? Dodirni ✓ ili ✗ (tipke → i ←) prije nego što sanduk ode s trake.",
+  "subj.NAR": "Priroda"
 }

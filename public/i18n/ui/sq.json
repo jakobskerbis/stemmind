@@ -1029,5 +1029,6 @@
   "games.e.runner": "Vrapuesi",
   "games.e.runner.how": "Prek një korsi ose rrëshqit majtas e djathtas (tastet ← →) për të kaluar nga porta me përgjigjen e saktë.",
   "games.e.sorter": "Renditësi",
-  "games.e.sorter.how": "A është e vërtetë pohimi në arkë? Prek ✓ ose ✗ (tastet → dhe ←) para se arka të largohet nga shiriti."
+  "games.e.sorter.how": "A është e vërtetë pohimi në arkë? Prek ✓ ose ✗ (tastet → dhe ←) para se arka të largohet nga shiriti.",
+  "subj.NAR": "Shkencat natyrore"
 }

@@ -1029,5 +1029,6 @@
   "games.e.runner": "Corredor",
   "games.e.runner.how": "Toca un carril o desliza a izquierda y derecha (teclas ← →) para pasar por la puerta con la respuesta correcta.",
   "games.e.sorter": "Clasificadora",
-  "games.e.sorter.how": "¿Es correcta la afirmación de la caja? Toca ✓ o ✗ (teclas → y ←) antes de que la caja salga de la cinta."
+  "games.e.sorter.how": "¿Es correcta la afirmación de la caja? Toca ✓ o ✗ (teclas → y ←) antes de que la caja salga de la cinta.",
+  "subj.NAR": "Ciencias naturales"
 }
