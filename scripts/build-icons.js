@@ -21,6 +21,8 @@ const NAMES = [
   "share", "square-plus", "smartphone",
   // kartice za ponavljanje
   "layers",
+  // igre
+  "gamepad-2", "volume-2", "volume-x", "heart",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

@@ -25,6 +25,7 @@ import { examInfo, examKeyFor, isExamPath, examOf, examPrompt } from "./exams.js
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 import { mountGraphs } from "./graphs.js";
+import { mountGames } from "./games.js";
 import { mountWebApp } from "./webapp.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -728,6 +729,7 @@ export function createApp(store, opts = {}) {
   // --- tedenske lige, razredi in skupine prijateljev ---
   mountLeagues(app, store, { loadStudent });
   mountGraphs(app, store, { loadStudent });
+  mountGames(app, store, { loadStudent, progress });
 
   // --- poraba AI ---
   app.get("/api/usage", (_req, res) => res.json(usage.summary()));

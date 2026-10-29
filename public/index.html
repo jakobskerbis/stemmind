@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="competition.css">
   <link rel="stylesheet" href="feedback.css">
   <link rel="stylesheet" href="graph.css">
+  <link rel="stylesheet" href="games.css">
   <link rel="stylesheet" href="touch.css">
 </head>
 <body>
@@ -36,6 +37,7 @@
       <button class="tab" data-view="chat"><i data-icon="message-circle"></i><span data-i18n="nav.chat">Inštruktor</span></button>
       <button class="tab" data-view="graph"><i data-icon="calculator"></i><span data-i18n="nav.graph">Kalkulator</span></button>
       <button class="tab" data-view="competition" id="competition-tab"><i data-icon="medal"></i><span data-i18n="nav.competition">Tekmovanja</span></button>
+      <button class="tab" data-view="games"><i data-icon="gamepad-2"></i><span data-i18n="nav.games">Igre</span></button>
       <button class="tab" data-view="progress"><i data-icon="chart-column"></i><span data-i18n="nav.progress">Napredek</span></button>
       <button class="tab" data-view="settings"><i data-icon="settings"></i><span data-i18n="nav.settings">Nastavitve</span></button>
       <button class="tab" data-view="account" id="account-tab" hidden><i data-icon="user"></i><span data-i18n="nav.account">Račun</span></button>
@@ -98,6 +100,12 @@
   <!-- TEKMOVANJA -->
   <main id="view-competition" class="view narrow" hidden>
     <div id="competition-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
+  </main>
+
+  <!-- IGRE (games/index.js) -->
+  <main id="view-games" class="view games-view" hidden>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <div id="games-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
   </main>
 
   <!-- UČBENIK (textbook.js) -->
@@ -268,6 +276,7 @@
       <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span data-i18n="me.streak">dni zapored</span></div>
     </div>
     <div class="card list-card">
+      <button type="button" class="list-row" data-go="games"><span class="ic"><i data-icon="gamepad-2"></i></span><span class="lr-text"><b data-i18n="nav.games">Igre</b><small data-i18n="games.meSub">Matematika skozi igro</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="graph"><span class="ic"><i data-icon="calculator"></i></span><span class="lr-text"><b data-i18n="nav.graph">Kalkulator</b><small data-i18n="sc.meSub">Znanstveni, grafični in pretvornik enot</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="progress"><span class="ic"><i data-icon="chart-column"></i></span><span class="lr-text"><b data-i18n="nav.progress">Napredek</b><small data-i18n="me.progressSub">Šibke točke, aktivnost in teme</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="league"><span class="ic"><i data-icon="trophy"></i></span><span class="lr-text"><b data-i18n="nav.league">Lige</b><small data-i18n="me.leagueSub">Tedenska lestvica, razred in prijatelji</small></span><i data-icon="chevron-right"></i></button>

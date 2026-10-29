@@ -19,6 +19,7 @@ import { offlineApi, refreshPack, syncOffline, packTaskCount, pendingCount } fro
 import { initFeedback, showFeedback } from "./feedback.js";
 import { initInstall, installSheetOpen, closeInstallSheet } from "./install.js";
 import { initFlashcards, showFlashcards, addCardsNote } from "./flashcards.js";
+import { initGames, showGames, gamesBack, leaveGames } from "./games/index.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -133,6 +134,8 @@ function showView(name) {
   if (name === "textbook") showTextbook();
   if (name === "competition") (examMode() ? loadExams() : loadCompetition());
   if (name === "feedback") showFeedback();
+  if (name === "games") showGames();
+  else leaveGames();
   if (name === "cards") {
     setActiveMode("cards");
     showFlashcards();
@@ -203,6 +206,7 @@ window.addEventListener("popstate", () => {
   if (wasOverlay && currentView === "path") return;
   if (!$("#tour")?.hidden && $("#tour")) return keep();
   if (currentView === "textbook" && textbookBack()) return keep();
+  if (currentView === "games" && gamesBack()) return keep();
   const subMe = ME_VIEWS.includes(currentView) && !["me", "graph"].includes(currentView);
   if (subMe && $("#tabbar").offsetParent) return showView("me"); // telefon: nazaj na »Jaz«
   fromBack = true;
@@ -213,7 +217,7 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games"];
 function renderMe() {
   const s = state.student;
   if (!s) return;
@@ -2325,6 +2329,7 @@ initInstall({ toast, onSheet: (open) => (open ? overlayOpened() : overlayClosed(
   const cfg = await api("/api/config");
   $("#mock-banner").hidden = !cfg.mock;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
+  initGames({ api, getStudent: () => state.student, refreshXp, currentLang });
   // Starševski računi (account.js): prijava, potrditev, prvi otrok.
   let first = true;
   const start = async (o) => {

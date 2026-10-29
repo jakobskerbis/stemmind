@@ -109,3 +109,14 @@ Isti zaslon kot grafični kalkulator ima zgoraj preklopnik `.calc-modes`: Znanst
 - **PSE**: v celicah se izbere atomska masa, elektronegativnost ali oksidacijska števila. Podrobnosti dodajo konfiguracijo, lupine, χ, oksidacijska števila, stanje, tališče, vrelišče, gostoto; spodaj je kartica za vez (meji 0,4 in 1,7). Vir dodatnih podatkov: periodni sistem PubChem (javna domena), `scripts/build-pse-extra.js` iz `scripts/pubchem-elementi.csv`.
 - **3D graf**: barva pove višino (modra → zelena → rumena, lestvica ob grafu); merilo je izbrano tako, da kocka ostane na platnu pri vsakem nagibu. Osi x in y sta označeni na sprednjih robovih, os z v skrajno levem kotu. Vrtenje s prstom, miško ali puščicami, povečava s kolescem, dvema prstoma ali + in −.
 - **Formule za fakulteto**: `MAT-UNI`, `FIZ-UNI`, `KEM-UNI`; študent (`educational_track` UNIVERZA) jih dobi privzeto.
+
+## Igre
+
+Razdelek IGRE (`public/games/`, slog `public/games.css`, strežnik `server/games.js`): mreža pisanih kvadratnih ploščic kot na portalih z igrami. Na računalniku zgornji zavihek »Igre«, na telefonu vrstica na strani Jaz (med igro se spodnja vrstica skrije).
+
+- **Igra = vrsta igre × pojem.** Vrste so v `engines.js` (Meteorji, Baloni, Tekač, Sortirnica), pojmi z generatorji nalog v `topics.js` (120 pojmov v 13 področjih, od aritmetike do analize, vektorjev in kompleksnih števil). Nova vrsta igre = nov predmet v `ENGINES` + ključi `games.e.<id>` in `games.e.<id>.how` v vseh jezikih; nov pojem = `def(...)` v `topics.js` in znak v `GLYPH` (`index.js`).
+- **Naloge** so kratke in v simbolih (`−`, `²`, `√`, `∫`, `{…}` za množico rešitev), ker se izrišejo na predmetu v igri. Napačni odgovori so tipične napake, nikoli enaki pravilnemu. `test/games.test.js` preveri vse pojme na vseh treh stopnjah.
+- **Težavnost**: začetna stopnja iz razreda učenca (`schoolYear`) ali zadnjega rezultata pri pojmu; 4 pravilni zapored → težje, 2 napačna → lažje; hitrost raste s pravilnimi odgovori.
+- **Učenje**: ob napaki se v glavi pokaže pravilni odgovor, na koncu seznam »Ponovi« (naloga → pravilni odgovor).
+- **XP**: 1 XP za 2 pravilna odgovora, največ 20 na igro in 60 na dan iz iger.
+- Prizori iger in ploščice imajo svoje barve (kot simulacije); okvir, kartice in gumbi uporabljajo spremenljivke. Vse igre delujejo z dotikom, miško in tipkami (1–4, ← →, preslednica, P ali Esc za premor).
