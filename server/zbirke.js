@@ -104,6 +104,12 @@ export class Knowledge {
       const total = this.xpTotal(id);
       for (const x of xpItems) if (total >= x.need.xp) grant(x.id, null, "xp");
     }
+    // Liki iz iger: pravilni odgovori v igrah ali različne uspešno končane igre.
+    const gameItems = KNOWLEDGE.filter((x) => (x.need?.games || x.need?.cleared) && !have.has(x.id));
+    if (gameItems.length) {
+      const g = this.gameStats(id);
+      for (const x of gameItems) if ((x.need.games && g.correct >= x.need.games) || (x.need.cleared && g.cleared >= x.need.cleared)) grant(x.id, null, "games");
+    }
     // Kompleti: dovolj predmetov iste zbirke (brez kompletov).
     for (const x of KNOWLEDGE.filter((k) => k.set)) {
       const n = [...have.keys()].filter((i) => {
@@ -126,6 +132,16 @@ export class Knowledge {
     return add.map(([item]) => item);
   }
 
+  // Pravilni odgovori v vseh igrah in število različnih uspešno končanih iger (server/games.js).
+  gameStats(id) {
+    try {
+      const r = this.db.prepare("SELECT COALESCE(SUM(correct),0) AS correct, COALESCE(SUM(cleared),0) AS cleared FROM game_scores WHERE student_id = ?").get(id);
+      return { correct: r.correct, cleared: r.cleared };
+    } catch {
+      return { correct: 0, cleared: 0 }; // brez tabele iger
+    }
+  }
+
   xpTotal(id) {
     return this.db.prepare("SELECT COALESCE(SUM(amount),0) AS s FROM xp_events WHERE student_id = ?").get(id).s;
   }
@@ -137,7 +153,7 @@ export class Knowledge {
     try {
       const r = ok && this.db.prepare("SELECT equipped FROM avatar_state WHERE student_id = ?").get(id);
       if (r?.equipped.includes(`"${item}"`)) {
-        const eq = Object.fromEntries(Object.entries(JSON.parse(r.equipped)).filter(([, v]) => v !== item));
+        const eq = Object.fromEntries(Object.entries(JSON.parse(r.equipped)).filter(([, v]) => v !== item).map(([k, v]) => [k, Array.isArray(v) ? v.filter((i) => i !== item) : v]));
         this.db.prepare("UPDATE avatar_state SET equipped = ? WHERE student_id = ?").run(JSON.stringify(eq), id);
       }
     } catch {} // brez tabele avatarja ali s pokvarjenim zapisom ni česa sneti
@@ -174,7 +190,7 @@ export class Knowledge {
       const ex = x.need?.t?.[0] && getTopic(x.need.t[0]);
       if (ex) hints[x.id] = { name: ex.name, path: getPath(ex.path)?.label || "", id: x.need.t[0] };
     }
-    return { items, fresh, hints, xp: this.xpTotal(id), pass: this.pass(id), showcase: this.showcase(id), showcaseMax: SHOWCASE_MAX };
+    return { items, fresh, hints, xp: this.xpTotal(id), games: this.gameStats(id), pass: this.pass(id), showcase: this.showcase(id), showcaseMax: SHOWCASE_MAX };
   }
 }
 
