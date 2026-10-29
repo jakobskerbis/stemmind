@@ -158,7 +158,7 @@ async function continueFlow() {
   if (await route()) await onReadyCb?.();
 }
 
-// Učenca dodaja starš s soglasjem v zavihku Račun, poraba je samo za skrbnika.
+// Učenca dodaja starš s soglasjem v zavihku Račun (porabo AI skrije strežnik vsem razen skrbniku).
 function adjustAppForAccounts() {
   const form = $("#new-student-form");
   if (form) {
@@ -166,8 +166,6 @@ function adjustAppForAccounts() {
     const h = form.closest(".card")?.querySelector("h2");
     if (h) h.textContent = "Profil otroka";
   }
-  const usage = $("#usage")?.closest(".card");
-  if (usage) usage.hidden = !status.parent?.is_admin;
 }
 
 // Ko starš izbriše zadnjega otroka.
@@ -371,8 +369,15 @@ function childForm(consentText, programs = []) {
   // Mladoletni imetnik računa ustvari samo svoj profil (letnica iz datuma rojstva ob registraciji).
   const self = !!status?.parent?.minor;
   const invited = store.get("stemmind_invite_name") || "";
+  // Polnoletni imetnik izbere: profil za otroka (soglasje starša) ali zase (dijak/študent, dovolj star za lastno soglasje).
+  const choice = self ? "" : `
+      <fieldset class="whose-field">
+        <legend>Za koga je profil?</legend>
+        <label class="check"><input type="radio" name="whose" value="child"${invited ? " checked" : ""} required> <span>Za mojega otroka (dam soglasje kot starš)</span></label>
+        <label class="check"><input type="radio" name="whose" value="self"> <span>Zame: sem dijak ali študent, star vsaj 15 let, in soglašam sam</span></label>
+      </fieldset>`;
   return `
-    <form id="child-form" class="card form${self ? " self-profile" : ""}">
+    <form id="child-form" class="card form${self ? " self-profile" : ""}">${choice}
       <label>${self ? "Tvoje ime ali vzdevek" : "Ime ali vzdevek"} <input name="name" maxlength="40" required placeholder="npr. Miha" value="${esc(invited)}"></label>
       <fieldset class="level-field">
         <legend>Šola in letnik</legend>
@@ -385,13 +390,13 @@ function childForm(consentText, programs = []) {
         <input type="hidden" name="study_program">
         <input type="hidden" name="curriculum_level">
       </fieldset>
-      <label${self ? " hidden" : ""}>Letnica rojstva
+      <label class="year-field"${self ? " hidden" : ""}>Letnica rojstva
         <select name="birth_year"${self ? "" : " required"}><option value="">Izberite …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
       </label>
       <label class="check"><input type="checkbox" name="consent" required>
         <span class="consent-self"${self ? "" : " hidden"}>Profil je moj. Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu podatkov</a> in soglašam z obdelavo svojih podatkov (ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.</span>
         <span class="consent-child"${self ? " hidden" : ""}>${esc(consentText)} <a href="/zasebnost.html" target="_blank">Obvestilo o varstvu podatkov</a>.</span>
-        <span class="consent-adult" hidden>Profil je moj (sem polnoleten študent) ali profil mojega otroka. Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu podatkov</a> in soglašam z obdelavo podatkov (ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.</span></label>
+</label>
       <p class="form-error" hidden></p>
       <button class="primary" type="submit">Ustvari profil</button>
     </form>`;
@@ -407,11 +412,23 @@ function childSettings(f) {
 
 function bindChildForm(after) {
   const f = $("#child-form");
+  const fixedSelf = f.classList.contains("self-profile");
+  const isSelf = () => fixedSelf || f.whose?.value === "self";
+  // Lasten profil: soglasje dijaka/študenta; letnica iz datuma rojstva ob registraciji, če ga imamo.
+  const sync = () => {
+    const own = isSelf();
+    f.querySelector(".consent-self").hidden = !own;
+    f.querySelector(".consent-child").hidden = own;
+    const knownYear = own && status?.parent?.birth_year;
+    f.querySelector(".year-field").hidden = fixedSelf || !!knownYear;
+    f.birth_year.required = !(fixedSelf || knownYear);
+  };
+  f.querySelectorAll('input[name="whose"]').forEach((r) => r.addEventListener("change", sync));
+  // Pri fakulteti je profil najpogosteje študentov lasten.
   const toggle = (_, track) => {
-    if (f.classList.contains("self-profile")) return;
-    const uni = track === "UNIVERZA";
-    f.querySelector(".consent-child").hidden = uni;
-    f.querySelector(".consent-adult").hidden = !uni;
+    if (fixedSelf || !f.whose) return;
+    if (track === "UNIVERZA" && !f.whose.value) f.querySelector('input[name="whose"][value="self"]').checked = true;
+    sync();
   };
   const picker = mountLevelPicker(f.querySelector(".child-level"), f, { programs: programsCache(), settings: { school_system: f.school_system.value }, onChange: toggle });
   f.school_system.addEventListener("change", () => picker.setSystem(f.school_system.value));
@@ -421,7 +438,7 @@ function bindChildForm(after) {
     try {
       const s = await api("/api/students", {
         method: "POST",
-        body: { name: f.name.value, birth_year: Number(f.birth_year.value), consent: f.consent.checked, settings: childSettings(f) },
+        body: { name: f.name.value, birth_year: Number(f.birth_year.value), self: isSelf(), consent: f.consent.checked, settings: childSettings(f) },
       });
       store.set("studentId", String(s.id));
       store.set("stemmind_invite_name", null);

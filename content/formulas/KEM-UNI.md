@@ -21,11 +21,11 @@
 
 | | |
 |---|---|
-| Entalpija | $\Delta H = Q_p$, $\; \Delta_r H^\circ = \sum \nu\,\Delta_f H^\circ(\text{prod.}) - \sum \nu\,\Delta_f H^\circ(\text{reakt.})$ |
+| Entalpija | $\Delta H = Q_p$, $\; \Delta_r H^\circ = \sum_{\text{prod.}} \nu\,\Delta_f H^\circ - \sum_{\text{reakt.}} \nu\,\Delta_f H^\circ$ |
 | Hessov zakon | entalpija reakcije ni odvisna od poti |
 | Toplota, kalorimetrija | $Q = m c \Delta T = C \Delta T$ |
 | Kirchhoffov zakon | $\Delta_r H(T_2) = \Delta_r H(T_1) + \Delta_r c_p\,(T_2 - T_1)$ |
-| Entropija | $\Delta_r S^\circ = \sum \nu S^\circ(\text{prod.}) - \sum \nu S^\circ(\text{reakt.})$, $\; \Delta S = \dfrac{Q_{\text{rev}}}{T}$ |
+| Entropija | $\Delta_r S^\circ = \sum_{\text{prod.}} \nu S^\circ - \sum_{\text{reakt.}} \nu S^\circ$, $\; \Delta S = \dfrac{Q_{\text{rev}}}{T}$ |
 | Gibbsova prosta entalpija | $\Delta G = \Delta H - T\Delta S$; $\Delta G < 0$ samodejna reakcija |
 | Zveza z ravnotežjem | $\Delta_r G = \Delta_r G^\circ + R T \ln Q$, $\; \Delta_r G^\circ = -R T \ln K$ |
 | Van 't Hoffova enačba | $\ln\dfrac{K_2}{K_1} = -\dfrac{\Delta_r H^\circ}{R}\left(\dfrac{1}{T_2} - \dfrac{1}{T_1}\right)$ |

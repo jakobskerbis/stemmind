@@ -23,6 +23,8 @@ const NAMES = [
   "layers",
   // igre
   "gamepad-2", "volume-2", "volume-x", "heart",
+  // števec porabe AI (samo skrbnik)
+  "wallet",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

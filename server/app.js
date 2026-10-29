@@ -8,6 +8,7 @@ import { createStreamFilter, parseMeta, parseCards, stripMeta } from "./meta.js"
 import { studentResults } from "./results.js";
 import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
 import { Usage, LIMITS, windowHistory, recentHistory } from "./usage.js";
+import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
@@ -39,7 +40,7 @@ const ANSWER_CACHE = process.env.STEMMIND_ANSWER_CACHE !== "0";
 function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [], tier = "osnovna") {
   const norm = text.toLowerCase().replace(/\s+/g, " ").replace(/[\s.!?]+$/, "").trim();
   if (norm.length < 8) return null;
-  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, mode === "deep" ? 1 : 0];
+  const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.study_course, settings.curriculum_level, settings.solving_mode, settings.personality_setting, mode === "deep" ? 1 : 0];
   if (mode === "think") parts.push("think");
   // Pri temi učne poti tudi šibke točke, da se osebni odgovor ne prenese k drugemu učencu.
   if (pathTopic) parts.push(`tema:${pathTopic}`, weak.join(","));
@@ -244,10 +245,16 @@ export function createApp(store, opts = {}) {
     busy.add(conv.id);
     // Lahki način: vedno (lite), nikoli (normal) ali po povezavi naprave, ki jo sporoči odjemalec (auto).
     const lite = student.settings.data_mode === "lite" || (student.settings.data_mode !== "normal" && req.body?.lite === true);
-    // Model: Haiku za običajne odgovore, Opus za »Razloži podrobneje« (z dnevno in mesečno
-    // omejitvijo, nato Haiku z več razmisleka), Tekmovanja privzeto Haiku z več razmisleka.
+    // »Razloži podrobneje« je vedno na voljo, čim ceneje: prva ponovna razlaga je Haiku z več
+    // razmisleka (z novim pristopom), Opus šele, ko učenec zaporedoma prosi še enkrat (z dnevno in
+    // mesečno omejitvijo). Števec zaporednih prošenj je conversations.deep; običajno sporočilo ga ponastavi.
+    // Tekmovanja: privzeto Haiku z več razmisleka.
+    const again = req.body?.deep === true;
+    const againStreak = again ? (conv.deep || 0) + 1 : 0;
+    if (againStreak !== (conv.deep || 0)) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(againStreak, conv.id);
     const { mode, note } = usage.chooseMode(student.id, {
-      wantDeep: req.body?.deep === true,
+      wantDeep: againStreak >= 2,
+      wantThink: againStreak === 1,
       competition: student.settings.track === "COMPETITION",
       lite,
       deepModel: MODEL_DEEP,
@@ -386,6 +393,7 @@ export function createApp(store, opts = {}) {
       finished = true;
       // Neuspelo potezo odstranimo, da zgodovina ostane čista za ponovni poskus.
       store.db.prepare("DELETE FROM messages WHERE id = ?").run(userMsgId);
+      if (again) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(conv.deep || 0, conv.id);
       if (!controller.signal.aborted) {
         console.error("[stemmind] napaka pri klicu modela:", err?.status ?? "", err?.message ?? err);
         send("error", { error: ERROR_TEXT });
@@ -439,9 +447,13 @@ export function createApp(store, opts = {}) {
     const view = lessonView(String(req.query.id || ""));
     if (!view) return res.status(404).json({ error: "Tema ne obstaja." });
     const interactive = !accounts || accounts.premiumFor(s.id);
-    if (interactive) return res.json({ ...view, interactive: true });
+    // Nova tema z nalogami: na začetku lekcije povabilo na test predznanja.
+    const st = progress.state(s.id, view.id);
+    const pretest_due = !!view.practice && st.status === "new" && st.pretest == null;
+    if (interactive) return res.json({ ...view, interactive: true, pretest_due });
     res.json({
       ...view,
+      pretest_due,
       interactive: false,
       locked: { demo: view.demo?.title || null },
       demos: [],
@@ -646,6 +658,12 @@ export function createApp(store, opts = {}) {
     if (!out) return res.status(400).json({ error: "Najprej nastavi pripravo na test (sklopi z vajami in datum)." });
     res.json(out);
   });
+  // Začetni test predznanja teme (ob odprtju nove teme).
+  app.post("/api/students/:id/pretest", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    res.json(progress.startPretest(s.id, String(req.body?.topic_id || "")));
+  });
   app.post("/api/students/:id/placement", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
@@ -732,7 +750,14 @@ export function createApp(store, opts = {}) {
   mountGames(app, store, { loadStudent, progress });
 
   // --- poraba AI ---
-  app.get("/api/usage", (_req, res) => res.json(usage.summary()));
+  // Poraba AI za vse profile: brez računov samo na računalniku, kjer teče strežnik
+  // (ne prek povezave za telefon); z računi tudi skrbnik (preveri accounts/index.js).
+  app.get("/api/usage", (req, res) => {
+    if (!accounts && !isLocalRequest(req)) return res.status(403).json({ error: "Samo za skrbnika." });
+    const claim = !!accounts && isLocalRequest(req) && !req.parent?.is_admin;
+    const sum = usage.summary();
+    res.json({ ...sum, can_claim: claim, advice: pricingAdvice(store.db, sum) });
+  });
   app.get("/api/students/:id/usage", (req, res) => {
     const s = loadStudent(req, res);
     if (s) res.json(usage.studentMonth(s.id));

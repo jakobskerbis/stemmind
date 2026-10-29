@@ -146,9 +146,16 @@ a.btn-secondary svg { color: var(--accent); }
 .list-row > svg.i { color: var(--muted); }
 
 /* ---------- Jaz (profil na telefonu) ---------- */
-.me-head { display: flex; align-items: center; gap: 16px; }
-.me-head h1 { margin: 0; }
-.me-head p { margin: 2px 0 0; }
+/* Kartica s profilom je gumb: odpre Nastavitve (šola in letnik, račun). */
+.me-head { display: flex; align-items: center; gap: 16px; width: 100%; text-align: left; color: var(--text); font: inherit; cursor: pointer; }
+.me-head:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+.me-head:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 2px; }
+.me-head > svg.i { flex: none; color: var(--muted); }
+.me-who { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.me-name { font-size: 1.55rem; line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.me-level { margin-top: 2px; }
+.flash-target { animation: flash-target 1.6s ease; }
+@keyframes flash-target { 0%, 40% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 60%, transparent); } 100% { box-shadow: var(--shadow); } }
 .me-avatar {
   flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 20px; color: #fff; font-size: 1.8rem; font-weight: 900;
   background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent);

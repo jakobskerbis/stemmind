@@ -45,6 +45,7 @@
       <button class="tab" data-view="feedback" id="feedback-tab" hidden><i data-icon="message-square-heart"></i><span data-i18n="nav.feedbackShort">Mnenje</span></button>
     </nav>
     <div id="xp-badge" class="xp-badge">
+      <button type="button" id="usage-meter" class="stat usage-meter" hidden aria-haspopup="dialog" aria-controls="usage-pop"><i data-icon="wallet"></i><b>0 €</b></button>
       <span class="stat xp" title="Točke izkušenj (XP)" data-i18n-title="xp.title"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span></span>
       <span class="stat streak" title="Dnevi zapored" data-i18n-title="xp.streakTitle"><i data-icon="flame"></i><b id="xp-streak">0</b></span>
     </div>
@@ -54,6 +55,7 @@
     </label>
   </header>
 
+  <div id="usage-pop" class="usage-pop card" role="dialog" aria-label="Poraba AI" data-i18n-aria="meter.heading" hidden></div>
   <div id="toast" class="toast" hidden></div>
   <div id="mock-banner" class="banner" hidden>
     <i data-icon="info"></i><span><b data-i18n="mock.title">Preizkusni način.</b> <span class="long" data-i18n="mock.text">Brez API ključa inštruktor vrača pripravljene odgovore.</span></span>
@@ -171,7 +173,11 @@
         <input type="hidden" name="study_program">
         <input type="hidden" name="curriculum_level">
       </fieldset>
-      <label><span data-i18n="set.subject">Predmet</span>
+      <!-- Fakulteta: predmeti iz predmetnika izbrane smeri namesto MAT/FIZ/KEM -->
+      <label id="course-row" hidden><span data-i18n="set.subject">Predmet</span>
+        <select name="study_course"></select>
+      </label>
+      <label id="subject-row"><span data-i18n="set.subject">Predmet</span>
         <select name="subject">
           <option value="MAT" data-i18n="subj.MAT">Matematika</option>
           <option value="FIZ" data-i18n="subj.FIZ">Fizika</option>
@@ -213,11 +219,17 @@
       </div>
     </form>
 
+    <div class="card list-card" id="settings-account" hidden>
+      <button type="button" class="list-row" data-go="account"><span class="ic"><i data-icon="user"></i></span><span class="lr-text"><b data-i18n="nav.account">Račun</b><small data-i18n="me.accountSub">Naročnina in otroci</small></span><i data-icon="chevron-right"></i></button>
+    </div>
+
     <div id="appearance" class="card appearance"></div>
+
+    <div id="fullscreen-card" class="card" hidden></div>
 
     <div id="install-settings" hidden></div>
 
-    <div class="card">
+    <div class="card" hidden>
       <h2 data-i18n="set.usage">Poraba AI ta mesec</h2>
       <div id="usage"></div>
     </div>
@@ -267,10 +279,11 @@
 
   <!-- JAZ (telefon): profil in povezave na Napredek, Lige, Nastavitve, Račun -->
   <main id="view-me" class="view narrow" hidden>
-    <div class="card me-head">
+    <button type="button" class="card me-head" id="me-head" title="Šolanje in račun" data-i18n-title="me.edit">
       <span class="me-avatar" id="me-avatar" aria-hidden="true"></span>
-      <div class="me-who"><h1 id="me-name"></h1><p class="muted" id="me-level"></p></div>
-    </div>
+      <span class="me-who"><span class="me-name" id="me-name"></span><span class="muted me-level" id="me-level"></span></span>
+      <i data-icon="chevron-right"></i>
+    </button>
     <div class="me-stats">
       <div class="card"><span class="stat-ic xp"><i data-icon="star"></i></span><b id="me-xp">0</b><span>XP</span></div>
       <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span data-i18n="me.streak">dni zapored</span></div>

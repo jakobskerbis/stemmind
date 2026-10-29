@@ -20,6 +20,8 @@ import { initFeedback, showFeedback } from "./feedback.js";
 import { initInstall, installSheetOpen, closeInstallSheet } from "./install.js";
 import { initFlashcards, showFlashcards, addCardsNote } from "./flashcards.js";
 import { initGames, showGames, gamesBack, leaveGames } from "./games/index.js";
+import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
+import { initFullscreen } from "./fullscreen.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -126,6 +128,7 @@ function showView(name) {
   document.querySelectorAll(".view").forEach((v) => (v.hidden = v.id !== `view-${name}`));
   if (name === "settings") {
     fillSettingsForm();
+    $("#settings-account").hidden = $("#account-tab").hidden;
     loadUsage();
   }
   if (name === "progress") loadProgress();
@@ -232,9 +235,21 @@ function renderMe() {
 document.addEventListener("click", (e) => {
   if (e.target.closest(".me-back")) showView("me");
 });
-document.querySelectorAll("#view-me [data-go]").forEach((b) =>
+document.querySelectorAll("#view-me [data-go], #settings-account [data-go]").forEach((b) =>
   b.addEventListener("click", () => (b.dataset.go === "account" ? $("#account-tab").click() : showView(b.dataset.go))),
 );
+// Klik na kartico s profilom: Nastavitve, na mestu šole in letnika (pod njimi je povezava na Račun).
+$("#me-head")?.addEventListener("click", () => {
+  showView("settings");
+  const el = $("#settings-form .level-field") || $("#settings-form");
+  requestAnimationFrame(() => {
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const card = $("#settings-form");
+    card?.classList.remove("flash-target");
+    void card?.offsetWidth;
+    card?.classList.add("flash-target");
+  });
+});
 
 // ---------- učenci ----------
 
@@ -540,6 +555,7 @@ async function send(text, { deep = false } = {}) {
       if (doneData?.text) addGraphButton(bubble, doneData.text);
       if (cardsData) addCardsNote(bubble, cardsData);
       if (state.pacer === pacer) state.pacer = null;
+      refreshUsageMeter();
     });
     await loadConversations();
   } catch (err) {
@@ -692,14 +708,43 @@ window.addEventListener("offline", syncOfflineBanner);
 
 // ---------- nastavitve ----------
 
-// Izbira predmeta: študent ima predmete svojega programa (tudi biologijo …).
+// Izbira predmeta: OŠ in SŠ matematika, fizika, kemija; fakulteta predmeti iz predmetnika
+// izbrane smeri in letnika (in izbirni predmeti).
 function fillSubjectOptions() {
   const f = $("#settings-form");
   const uni = f.educational_track.value === "UNIVERZA";
-  const program = uni ? programsCache().find((p) => p.id === f.study_program.value) : null;
+  $("#subject-row").hidden = uni;
+  $("#course-row").hidden = !uni;
+  if (uni) return fillCourseOptions();
   const prev = f.subject.value || state.student?.settings?.subject;
-  f.subject.innerHTML = subjectOptions(program, prev);
+  f.subject.innerHTML = subjectOptions(null, prev);
   if (![...f.subject.options].some((o) => o.value === prev)) f.subject.selectedIndex = 0;
+}
+
+const courseCache = new Map(); // program → predmeti po letnikih (/api/paths?program=)
+let courseReq = 0;
+async function fillCourseOptions() {
+  const f = $("#settings-form");
+  const program = f.study_program.value;
+  const sel = f.study_course;
+  if (!program) return (sel.innerHTML = "");
+  const req = ++courseReq;
+  if (!courseCache.has(program)) courseCache.set(program, await api(`/api/paths?program=${encodeURIComponent(program)}`).catch(() => []));
+  if (req !== courseReq) return; // medtem je bil izbran drug program
+  const list = courseCache.get(program);
+  const year = Number((String(f.curriculum_level.value).match(/([1-4])/) || [])[1]) || 1;
+  // Letnik brez predmetov (moduli): zadnji letnik s predmeti, kot na učni poti.
+  const years = [...new Set(list.filter((c) => c.year).map((c) => c.year))].filter((y) => y <= year);
+  const y = years.length ? Math.max(...years) : null;
+  const mine = list.filter((c) => c.year === y);
+  const elect = list.filter((c) => c.elective);
+  const s = state.student?.settings || {};
+  const keys = [...mine, ...elect].map((c) => c.key);
+  const prev = keys.includes(sel.value) ? sel.value : keys.includes(s.study_course) ? s.study_course : (mine.find((c) => c.subject === s.subject) || mine[0] || elect[0])?.key;
+  const opt = (c) => `<option value="${c.key}" data-subject="${c.subject}"${c.key === prev ? " selected" : ""}>${escapeHtml(c.label.replace(/ \([^)]*\)$/, ""))}</option>`;
+  sel.innerHTML =
+    (mine.length ? `<optgroup label="${escapeHtml(t("path.year", { n: y }))}">${mine.map(opt).join("")}</optgroup>` : "") +
+    (elect.length ? `<optgroup label="${escapeHtml(t("path.electives"))}">${elect.map(opt).join("")}</optgroup>` : "");
 }
 
 function fillLevelOptions(track) {
@@ -718,7 +763,8 @@ async function fillSettingsForm() {
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
   f.data_mode.value = s.data_mode || "auto";
-  f.subject.innerHTML = subjectOptions(isUni(s) ? programsCache().find((p) => p.id === s.study_program) : null, s.subject);
+  f.subject.innerHTML = subjectOptions(null, s.subject);
+  f.study_course.innerHTML = "";
   f.school_system.innerHTML = schoolSystemOptions(s.school_system || "SI");
   if (!levelPicker) {
     levelPicker = mountLevelPicker($("#settings-level"), f, { programs, settings: s, onChange: (_, track) => fillLevelOptions(track) });
@@ -767,7 +813,9 @@ $("#settings-form").addEventListener("submit", async (e) => {
       manual_weaknesses: f.manual_weaknesses.value,
       settings: {
         school_system: f.school_system.value,
-        subject: f.subject.value,
+        ...(f.educational_track.value === "UNIVERZA"
+          ? { study_course: f.study_course.value, subject: f.study_course.selectedOptions[0]?.dataset.subject || state.student.settings.subject }
+          : { subject: f.subject.value, study_course: "" }),
         track: isRegional(f.school_system.value) ? "REGULAR" : f.track.value,
         educational_track: f.educational_track.value,
         study_program: f.educational_track.value === "UNIVERZA" ? f.study_program.value : "",
@@ -912,7 +960,8 @@ async function loadProgress() {
 
 // Gumb »Razloži podrobneje« uporabi zmogljivejši (dražji) model samo na zahtevo.
 function addDeepButton(el, wasDeep) {
-  if (wasDeep || el.classList.contains("error") || el.querySelector(".deep-btn")) return;
+  // Ponovna razlaga je vedno na voljo (tudi po ponovni razlagi); strežnik izbere najcenejši model.
+  if (el.classList.contains("error") || el.querySelector(".deep-btn")) return;
   document.querySelectorAll(".deep-btn").forEach((x) => x.remove()); // samo pri zadnjem odgovoru
   const b = document.createElement("button");
   b.className = "deep-btn";
@@ -1062,8 +1111,8 @@ async function goNew({ skipHint = false } = {}) {
     toast(t("path.allDoneToast"), "trophy");
     return;
   }
-  await openTopic(m.newTopic.id);
-  if (m.newTopic.practice) await nextPractice();
+  const pretest = await openTopic(m.newTopic.id);
+  if (m.newTopic.practice && !pretest) await nextPractice();
 }
 
 async function showTestPrep(edit = false) {
@@ -1295,6 +1344,32 @@ async function openTopic(topicId) {
     toast(t("topic.markedKnown"));
     openTopic(tp.id);
   });
+  // Nova tema: najprej kratek test predznanja (tri naloge, od lažje do težje).
+  if (canPractice && hasPractice.status === "new") return startPretest(tp);
+  return false;
+}
+
+// Začetni test predznanja: rezultat določi začetno stopnjo vaj in zahtevnost inštruktorja.
+// Vrne true, če je test prikazan (»Nova snov« takrat ne odpre takoj vaje).
+async function startPretest(tp) {
+  const out = await api(`/api/students/${state.student.id}/pretest`, { method: "POST", body: { topic_id: tp.id } }).catch(() => null);
+  if (!out || out.skip || out.finished || !out.task) return false;
+  renderTask(out.task, { mode: "pretest", index: out.index, total: out.total });
+  return true;
+}
+
+function pretestResultHtml(p) {
+  const name = { osnovna: t("pretest.tierBasic"), srednja: t("pretest.tierMid"), "višja": t("pretest.tierHigh") }[p.tier];
+  return `<div class="card result pretest-result">
+    <div class="result-icon">${icon("target")}</div>
+    <h2>${t("pretest.resultTitle", { tier: name })}</h2>
+    <p>${t("pretest.score", { correct: p.correct, total: p.total })}</p>
+    <p class="muted">${t(p.known >= 3 ? "pretest.textHigh" : p.known === 2 ? "pretest.textMid" : "pretest.textBasic")}</p>
+    <div class="actions">
+      <button class="primary big" id="pt-learn">${icon("message-circle")}${t("topic.learn")}</button>
+      <button class="secondary" id="pt-practice">${icon("pencil")}${t("topic.practice")}</button>
+      <button class="secondary" id="pt-lesson">${icon("book-open")}${t("topic.lesson")}</button>
+    </div></div>`;
 }
 
 async function learnWithTutor(topic, firstMessage = t("topic.startMsg", { name: topic.name })) {
@@ -1486,7 +1561,7 @@ function renderTask(task, ctx) {
   const box = $("#practice");
   // Tekmovalna imena težavnosti (težja, zahtevna, izziv) samo pri slovenskih tekmovanjih, ne pri izpitih.
   const comp = !examMode() && (ctx.mode === "tek" || ctx.mode === "contest" || (ctx.mode === "practice" && isCompTopic(state.topic?.id)));
-  const stars = ctx.mode !== "placement" && task.level ? diffBadge(task.level, comp) : "";
+  const stars = !["placement", "pretest"].includes(ctx.mode) && task.level ? diffBadge(task.level, comp) : "";
   const pts = ctx.mode === "contest" && task.points ? `<span class="pts">${t("task.points", { n: task.points })}</span>` : "";
   const counter = ctx.total ? `<span class="count">${ctx.index} / ${ctx.total}</span>` : "";
   let input;
@@ -1500,11 +1575,13 @@ function renderTask(task, ctx) {
       (task.answerType === "coefficients" ? t("task.phCoef") : task.unit ? t("task.phUnit", { unit: task.unit }) : t("task.phResult"));
     input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn secondary" title="${t("task.writeTitle")}">${icon("pencil")}<span>${t("task.write")}</span></button><button class="primary">${t("task.check")}</button></form>`;
   }
-  const calcBtn = ctx.mode === "contest" || ctx.mode === "placement" ? "" : `<button type="button" class="ghost task-calc icon-only" title="${escapeHtml(t("nav.graph"))}" aria-label="${escapeHtml(t("nav.graph"))}">${icon("calculator")}</button>`;
+  const calcBtn = ["contest", "placement", "pretest"].includes(ctx.mode) ? "" : `<button type="button" class="ghost task-calc icon-only" title="${escapeHtml(t("nav.graph"))}" aria-label="${escapeHtml(t("nav.graph"))}">${icon("calculator")}</button>`;
   const bar = ctx.mode === "contest" ? `<div class="contest-bar"><span id="contest-timer" class="contest-timer" role="timer">${icon("timer")}<b>${leftText(state.contestDeadline)}</b></span><span class="muted">${t("comp.timerNote")}</span></div>` : "";
   const penalty = ctx.mode === "contest" && task.penalty ? `<span class="pts neg">${t("exam.penaltyPts", { n: String(task.penalty).replace("-", "−") })}</span>` : "";
-  const hintLadder = task.hintSteps > 0 && ctx.mode !== "contest" && ctx.mode !== "placement";
-  box.innerHTML = `${bar}<div class="card task">
+  const hintLadder = task.hintSteps > 0 && !["contest", "placement", "pretest"].includes(ctx.mode);
+  const pretestHead =
+    ctx.mode === "pretest" ? `<div class="card pretest-head"><h2 class="with-icon">${icon("target")} ${t("pretest.title")}</h2><p class="muted">${t("pretest.intro")}</p></div>` : "";
+  box.innerHTML = `${bar}${pretestHead}<div class="card task">
     <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${penalty}${counter}${calcBtn}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
@@ -1513,6 +1590,7 @@ function renderTask(task, ctx) {
     ${input}
     ${hintLadder ? `<div id="hint-box" class="hint-box" aria-live="polite"></div><div class="hint-row"><button type="button" class="ghost small" id="hint-btn">${icon("lightbulb")}<span>${t("task.hintBtn")}</span></button></div>` : ""}
     <div id="feedback" class="feedback" aria-live="polite"></div>
+    ${ctx.mode === "pretest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="p-skip">${icon("circle-help")}${t("pretest.dontKnow")}</button></div>` : ""}
     ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${examMode() ? t("exam.finish") : t("comp.finish")}</button></div>` : ""}
   </div>`;
   wireWork(box, task);
@@ -1540,6 +1618,12 @@ function renderTask(task, ctx) {
     const exprs = mayPlot(task.text) ? await plotFromText(task.text) : [];
     // enačba krivulje → graf, sicer računalo
     openCalcOverlay(exprs.length ? { mode: "graph", exprs, backLabel: t("gc.backTask") } : { mode: calcSubject() === "KEM" ? "pse" : calcMode === "graph" ? "sci" : calcMode, backLabel: t("gc.backTask") });
+  });
+  $("#p-skip")?.addEventListener("click", async () => {
+    $("#p-skip").disabled = true;
+    const r = await api(`/api/students/${state.student.id}/tasks/${task.id}/skip`, { method: "POST" }).catch((e) => ({ error: e.message }));
+    if (r.error) return toast(r.error);
+    pretestStep(r, ctx);
   });
   if (ctx.mode === "contest") {
     $("#c-skip").addEventListener("click", async () => {
@@ -1718,6 +1802,7 @@ async function checkTask(task, ctx, value) {
   const next = (label = t("task.next")) => `<div class="actions"><button class="primary big" id="fb-next">${label}${icon("arrow-right")}</button></div>`;
   let html = "";
   if (ctx.mode === "contest" && !r.retry) return contestStep(r, ctx);
+  if (ctx.mode === "pretest" && !r.retry) return pretestStep(r, ctx);
   if (r.retry) {
     html = `<div class="fb info">${escapeHtml(fbText(r))}</div>`;
   } else if (ctx.mode === "placement") {
@@ -1779,6 +1864,25 @@ async function checkTask(task, ctx, value) {
     const n = r.next;
     if (n && !n.finished) renderTask(n.task, { mode: ctx.mode, index: n.index, total: n.total });
   });
+}
+
+// Test predznanja: brez rešitve in namigov, takoj naslednja naloga; na koncu raven in nadaljevanje.
+function pretestStep(r, ctx) {
+  closePad();
+  if (r.pretest) {
+    const tp = state.topic;
+    $("#practice").innerHTML = pretestResultHtml(r.pretest);
+    $("#pt-learn").addEventListener("click", () => learnWithTutor(tp));
+    $("#pt-practice").addEventListener("click", () => nextPractice());
+    $("#pt-lesson").addEventListener("click", () => openLesson(tp.id));
+    $("#practice").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  const n = r.next;
+  if (n && !n.finished) {
+    toast(r.skipped ? t("pretest.skipped") : r.correct ? t("task.correct") : t("pretest.noted"), r.correct ? "circle-check" : "arrow-right");
+    renderTask(n.task, { mode: "pretest", index: n.index, total: n.total });
+  }
 }
 
 // ---------- tekmovanja ----------
@@ -2063,7 +2167,12 @@ function countUp(el, ms = 900) {
 // ---------- poraba in lestvica ----------
 
 async function loadUsage() {
-  const u = await api("/api/usage");
+  // Poraba je samo za skrbnika: strežnik drugim vrne 403, kartica ostane skrita.
+  const card = $("#usage")?.closest(".card");
+  const res = await fetch("/api/usage").catch(() => null);
+  if (card) card.hidden = !res?.ok;
+  if (!res?.ok) return;
+  const u = await res.json();
   const eur = (x) => (x || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 3 });
   const L = u.limits || {};
   $("#usage").innerHTML = `<p>${t("usage.total", { usd: u.month_usd.toFixed(2) })}${t("usage.eur", { eur: eur(u.month_eur) })}${u.budget_usd ? t("usage.budget", { budget: u.budget_usd }) : ""}${
@@ -2324,6 +2433,7 @@ initTextbook({
 const START_VIEW = ["chat", "textbook", "graph"].find((v) => v === new URLSearchParams(location.search).get("pogled"));
 if (new URLSearchParams(location.search).has("pogled")) history.replaceState(null, "", location.pathname);
 initInstall({ toast, onSheet: (open) => (open ? overlayOpened() : overlayClosed()) });
+initFullscreen();
 
 (async () => {
   const cfg = await api("/api/config");
@@ -2334,6 +2444,8 @@ initInstall({ toast, onSheet: (open) => (open ? overlayOpened() : overlayClosed(
   let first = true;
   const start = async (o) => {
     await loadStudents();
+    if (first) initUsageMeter({ escapeHtml, showView, toast });
+    else refreshUsageMeter();
     if (!o?.keepView) showView("path");
     if (first && START_VIEW && !o?.keepView) showView(START_VIEW);
     first = false;

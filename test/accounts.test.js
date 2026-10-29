@@ -126,7 +126,18 @@ test("register, verify, consent and ownership", async () => {
     const conv = (await a(`/api/students/${kid.body.id}/conversations`, { method: "POST" })).body;
     assert.equal((await b(`/api/conversations/${conv.id}`)).status, 404);
     assert.equal((await a(`/api/conversations/${conv.id}`)).status, 200);
-    assert.equal((await b("/api/usage")).status, 403);
+    // Poraba AI: starš prek povezave (telefon) je ne vidi; na računalniku s strežnikom jo vidi
+    // in lahko račun označi kot skrbniški, nato jo vidi tudi na telefonu.
+    const tunnel = { headers: { "X-Forwarded-For": "1.2.3.4" } };
+    assert.equal((await b("/api/usage", tunnel)).status, 403);
+    assert.equal((await b("/api/usage/claim", { method: "POST", ...tunnel })).status, 403);
+    const local = await b("/api/usage");
+    assert.equal(local.status, 200);
+    assert.equal(local.body.can_claim, true);
+    assert.equal((await b("/api/usage/claim", { method: "POST" })).status, 200);
+    assert.equal((await b("/api/usage", tunnel)).status, 200);
+    assert.equal((await b("/api/usage")).body.can_claim, false);
+    assert.equal((await a("/api/usage", tunnel)).status, 403);
 
     // Odjava in ponovna prijava.
     await a("/api/auth/logout", { method: "POST" });
@@ -530,6 +541,7 @@ test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
     await withServer(async ({ client }) => {
       const a = client();
       await a("/api/auth/register", { method: "POST", body: { email: "skrbnik@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
+      assert.equal((await a("/api/usage", { headers: { "X-Forwarded-For": "1.2.3.4" } })).status, 200);
       const { admin } = (await a("/api/account")).body.promo;
       assert.equal(admin.code, "STEMMIND100");
       assert.deepEqual([admin.used, admin.limit, admin.days], [0, 100, 365]);
@@ -590,5 +602,18 @@ test("preverjanje starosti: premlad otrok dobi povezavo za starše, dijak ima sa
     assert.match(consent.text, /^Profil je moj/);
     const sibling = await teen("/api/students", { method: "POST", body: { name: "Brat", birth_year: YEAR - 8, consent: true } });
     assert.equal(sibling.status, 403);
+
+    // Polnoleten dijak (npr. 18 let, SŠ) izbere »Zame«: lastno soglasje, letnica iz datuma rojstva.
+    const adult = client();
+    await registerVerified(adult, calls, "maturant@primer.si", { birth_date: ymd(18) });
+    const mine = await adult("/api/students", { method: "POST", body: { name: "Tina", birth_year: YEAR - 9, self: true, consent: true } });
+    assert.equal(mine.status, 201);
+    assert.equal(mine.body.birth_year, Number(ymd(18).slice(0, 4)));
+    assert.match(store.db.prepare("SELECT text FROM consents WHERE student_id = ?").get(mine.body.id).text, /^Profil je moj/);
+    // Star račun brez datuma rojstva: »Zame« samo, če je letnica dovolj stara.
+    store.db.prepare("UPDATE parents SET birth_date = NULL WHERE email = 'maturant@primer.si'").run();
+    const tooYoung = await adult("/api/students", { method: "POST", body: { name: "Mlajši", birth_year: YEAR - 15, self: true, consent: true } });
+    assert.equal(tooYoung.status, 403);
+    assert.equal(tooYoung.body.self_too_young, true);
   });
 });

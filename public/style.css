@@ -781,3 +781,54 @@ body.onboarding .tabs, body.onboarding .tabbar, body.onboarding #modebar, body.o
 .hint-box .task-data { margin-top: 8px; }
 .hint-box .formula-body { margin-top: 6px; }
 .fb.mistake > svg.i { color: var(--accent); }
+
+/* ---------- števec porabe AI (samo skrbnik, public/usage-meter.js) ---------- */
+.stat.usage-meter { border: 0; cursor: pointer; color: var(--text); font: inherit; font-weight: 800; font-size: 0.92rem; }
+.stat.usage-meter svg.i { color: var(--accent); }
+.stat.usage-meter:hover { background: var(--accent-soft); }
+.usage-pop {
+  position: fixed; z-index: 60; top: 64px; right: 16px; width: min(440px, calc(100vw - 32px));
+  max-height: calc(100vh - 88px); overflow-y: auto; margin: 0; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+.usage-pop[hidden] { display: none; }
+.um-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.um-head b { display: inline-flex; align-items: center; gap: 8px; font-size: 1.05rem; }
+.um-only { display: flex; align-items: center; gap: 6px; margin: 4px 0 12px; font-size: 0.85rem; }
+.um-totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.um-totals > div { display: flex; flex-direction: column; gap: 2px; padding: 10px; border-radius: 12px; background: var(--surface-2); min-width: 0; }
+.um-totals b { font-size: 1.15rem; }
+.um-totals small, .um-totals span { font-size: 0.8rem; }
+.um-table { font-size: 0.88rem; }
+.um-table td:not(:first-child), .um-table th:not(:first-child) { text-align: right; }
+.um-table td:not(:first-child) { white-space: nowrap; }
+.um-table th { white-space: normal; vertical-align: bottom; }
+.um-table td:first-child { overflow-wrap: anywhere; }
+.um-bar { display: block; height: 5px; margin-top: 4px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.um-bar i { display: block; height: 100%; border-radius: inherit; background: var(--ok); }
+.um-bar.mid i { background: #eab308; }
+.um-bar.hi i { background: var(--danger); }
+.um-advice { margin: 12px 0 6px; padding-top: 12px; border-top: 1px solid var(--border); }
+.um-advice h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; font-size: 1rem; }
+.um-econ { font-size: 0.85rem; margin: 0 0 10px; }
+.um-tip { padding: 10px 12px; border-radius: 12px; background: var(--surface-2); border-left: 4px solid var(--muted); margin-bottom: 8px; font-size: 0.9rem; }
+.um-tip.ok { border-left-color: var(--ok); }
+.um-tip.act { border-left-color: #eab308; }
+.um-tip p { margin: 4px 0 0; }
+.um-claim { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; }
+@media (max-width: 760px) {
+  .usage-pop { top: 56px; right: 16px; }
+  .stat.usage-meter { font-size: 0.85rem; }
+}
+@media (max-width: 420px) {
+  .stat.usage-meter { padding: 5px 8px; gap: 0; }
+  .stat.usage-meter svg.i { display: none; }
+}
+@media (max-width: 400px) {
+  .um-totals { grid-template-columns: 1fr 1fr; }
+  .um-totals > div:last-child { grid-column: 1 / -1; }
+}
+
+/* ---------- celozaslonski način (public/fullscreen.js) ---------- */
+.check-row { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+.check-row input { flex: none; width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--accent); }
+.check-row span { display: flex; flex-direction: column; gap: 2px; }
