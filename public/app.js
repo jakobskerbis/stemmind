@@ -1975,7 +1975,8 @@ function calcSubject() {
 function formulaBook() {
   const s = calcSubject();
   const subj = ["MAT", "FIZ", "KEM"].includes(s) ? s : "MAT";
-  return `${subj}-${state.student?.settings?.educational_track === "OSNOVNA_SOLA" ? "OS" : "SS"}`;
+  const track = state.student?.settings?.educational_track;
+  return `${subj}-${track === "OSNOVNA_SOLA" ? "OS" : track === "UNIVERZA" ? "UNI" : "SS"}`;
 }
 async function insertIntoCalc(text) {
   const tool = await setCalcMode("sci");
@@ -1987,7 +1988,7 @@ function calcTool(mode) {
     const host = document.createElement("div");
     const base = { t, icon, locale, onInsert: insertIntoCalc };
     if (mode === "sci") return m.createScientific(host, { ...base, storageKey: () => `stemmind.sci.${state.student?.id ?? 0}` });
-    if (mode === "tools") return m.createTools(host, base);
+    if (mode === "tools") return m.createTools(host, { ...base, subject: calcSubject });
     if (mode === "pse") return m.createPse(host, { ...base, lang: currentLang });
     return m.createFormulas(host, { ...base, api, renderRich, bookKey: formulaBook });
   });
@@ -2012,7 +2013,7 @@ async function setCalcMode(mode) {
     if (tool._student !== undefined) tool.reload?.();
     tool._student = state.student?.id;
   }
-  if (mode === "formulas") tool.reload();
+  if (mode === "formulas" || mode === "tools") tool.reload();
   const slot = calcSlot();
   if (tool.root.parentElement !== slot) slot.replaceChildren(tool.root);
   tool.resize?.();

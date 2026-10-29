@@ -2,7 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { evaluate, prepare, exactTex, formatNumber, convert, toFraction, CONSTANTS, QUANTITIES } from "../public/graph/scicore.js";
 import { stats, evalComplex, polyRoots, M, readMatrix, convertBase, molarMass } from "../public/graph/toolscore.js";
-import { ELEMENTS, MASSES, CATEGORIES, shells } from "../public/graph/pse-data.js";
+import { ELEMENTS, MASSES, CATEGORIES, shells, fullConfig, EXTRA } from "../public/graph/pse-data.js";
+import { balance, parseSpecies, stoich, phOf, phAll, solveConc, dilution, massFraction, saltFormula, solubility, SOL_CATIONS, SOL_ANIONS } from "../public/graph/chemcore.js";
+import { normal, studentT, chi2, binomial, poisson, probability, phiInv } from "../public/graph/probcore.js";
+import { fn, derivative, roots, limit, taylor, V, odeSolve, measurement, propagate, roundMeasurement, toTex } from "../public/graph/anacore.js";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 
@@ -50,6 +53,7 @@ test("natančni rezultati: ulomki, koreni, večkratniki π", () => {
 test("oblike zapisa števil", () => {
   assert.equal(formatNumber(2.5).text, "2,5");
   assert.equal(formatNumber(2.5, { comma: false }).text, "2.5");
+  assert.equal(formatNumber(2.5).tex, "2{,}5");
   assert.equal(formatNumber(Math.PI, { mode: "fix2" }).text, "3,14");
   assert.equal(formatNumber(123456, { mode: "sig3" }).text, "123000");
   assert.match(formatNumber(123456, { mode: "sci" }).text, /1,23.*10/);
@@ -129,6 +133,92 @@ test("periodni sistem: 118 elementov na pravih mestih", () => {
   assert.ok(MASSES.Tc > 0, "radioaktivni elementi imajo masno število");
   assert.equal(new Set(ELEMENTS.map((e) => e.cat)).size, CATEGORIES.length);
   assert.deepEqual(shells(11), [2, 8, 1]);
+  assert.deepEqual(shells(26), [2, 8, 14, 2]);
+  assert.equal(fullConfig(26), "1s2 2s2 2p6 3s2 3p6 4s2 3d6");
+  assert.equal(Object.keys(EXTRA).length, 118);
+});
+
+test("kemija: urejanje enačb reakcij in ionov", () => {
+  const co = (t) => balance(t, MASSES).coef;
+  assert.deepEqual(co("Fe + O2 -> Fe2O3"), [4, 3, 2]);
+  assert.deepEqual(co("C3H8 + O2 -> CO2 + H2O"), [1, 5, 3, 4]);
+  assert.deepEqual(co("MnO4^- + Fe^2+ + H^+ -> Mn^2+ + Fe^3+ + H2O"), [1, 5, 8, 1, 5, 4]);
+  assert.deepEqual(co("Cu + HNO3 -> Cu(NO3)2 + NO + H2O"), [3, 8, 3, 2, 4]);
+  assert.deepEqual(co("KMnO4 + HCl -> KCl + MnCl2 + Cl2 + H2O"), [2, 16, 2, 2, 5, 8]);
+  assert.equal(balance("H2 + O2 -> H2O2 + H2O", MASSES).error, "many");
+  assert.equal(balance("H2 + O2", MASSES).error, "arrow");
+  assert.equal(balance("Fe -> Cu", MASSES).error, "none");
+  assert.equal(parseSpecies("Fe3+", MASSES).charge, 3);
+  assert.equal(parseSpecies("NH4+", MASSES).charge, 1);
+  assert.equal(parseSpecies("SO4^2-", MASSES).charge, -2);
+  assert.equal(parseSpecies("SO₄²⁻", MASSES).charge, -2);
+  assert.ok(parseSpecies("e-", MASSES).electron);
+  // 2 H2 + O2 -> 2 H2O: pri 2 mol H2 in 2 mol O2 je omejujoči H2
+  const st = stoich([2, 1, 2], 2, { 0: 2, 1: 2 });
+  assert.equal(st.limiting, 0);
+  assert.deepEqual(st.n, [2, 1, 2]);
+});
+
+test("kemija: pH, koncentracije, redčenje, topnost", () => {
+  near(phOf("sa", 0.01).ph, 2, 1e-6);
+  near(phOf("sb", 0.005, { z: 2 }).ph, 12, 1e-6);
+  near(phOf("sa", 1e-8).ph, 6.978, 1e-3); // voda prispeva svoje H3O+
+  near(phOf("wa", 0.1, { K: 1.8e-5 }).ph, 2.875, 1e-3);
+  near(phAll("poh", 4).ph, 10);
+  const c = solveConc({ m: 5.844, V: 0.1, M: 58.44 });
+  near(c.n, 0.1); near(c.c, 1);
+  near(dilution({ c1: 2, V1: 50, c2: 0.5 }).V2, 200);
+  near(massFraction({ mt: 10, mv: 90 }).w, 0.1);
+  assert.equal(SOL_CATIONS.length, 14);
+  assert.equal(SOL_ANIONS.length, 9);
+  const at = (c, a) => solubility(SOL_CATIONS.findIndex((x) => x[0] === c), SOL_ANIONS.findIndex((x) => x[0] === a));
+  assert.equal(at("Na", "Cl"), "T");
+  assert.equal(at("Ag", "Cl"), "N");
+  assert.equal(at("Ca", "SO4"), "M");
+  assert.equal(at("Ba", "SO4"), "N");
+  assert.equal(saltFormula(["Al", 3], ["SO4", 2]), "Al2(SO4)3");
+});
+
+test("verjetnostne porazdelitve", () => {
+  const z = normal(0, 1);
+  near(z.cdf(1.96), 0.975, 1e-4);
+  near(phiInv(0.975), 1.959964, 1e-5);
+  near(probability(z, "between", -1, 1), 0.682689, 1e-5);
+  near(studentT(10).inv(0.975), 2.228139, 1e-5);
+  near(chi2(5).inv(0.95), 11.0705, 1e-4);
+  near(probability(binomial(10, 0.5), "eq", 5), 0.246094, 1e-5);
+  near(probability(poisson(2), "le", 2), 0.676676, 1e-5);
+  near(probability(binomial(10, 0.5), "lt", 5) + probability(binomial(10, 0.5), "ge", 5), 1, 1e-9);
+});
+
+test("analiza: ničle, limite, Taylor, odvod", () => {
+  const f = fn("x^3 - 3x");
+  const r = roots((x) => f.f({ x }), -3, 3);
+  assert.equal(r.length, 3);
+  near(r[2], Math.sqrt(3), 1e-6);
+  near(roots((x) => (x - 1) ** 2, -2, 3)[0], 1, 1e-4); // dvojna ničla
+  near(limit((x) => Math.sin(x) / x, 0), 1, 1e-6);
+  near(limit((x) => (1 + 1 / x) ** x, Infinity), Math.E, 1e-5);
+  assert.ok(!Number.isFinite(limit((x) => 1 / x, 0)));
+  const t = taylor(fn("e^x").node, 0, 3);
+  assert.ok(t, "Taylorjev polinom");
+  assert.ok(toTex(derivative(fn("x^2").node)).includes("x"));
+});
+
+test("vektorji, diferencialne enačbe, merske napake", () => {
+  assert.deepEqual(V.cross([1, 0, 0], [0, 1, 0]), [0, 0, 1]);
+  assert.equal(V.dot([1, 2, 3], [4, 5, 6]), 32);
+  near(V.angle([1, 0], [0, 1]), Math.PI / 2);
+  const ode = odeSolve(({ y }) => y, { x0: 0, y0: 1, x1: 1, N: 50 });
+  near(ode.at(-1).y, Math.E, 1e-7);
+  const osc = odeSolve(({ y }) => -y, { order: 2, x0: 0, y0: 1, yd0: 0, x1: Math.PI, N: 200 });
+  near(osc.at(-1).y, -1, 1e-6);
+  const m = measurement([1, 2, 3]);
+  near(m.mean, 2); near(m.s, 1); near(m.maxDev, 1);
+  const p = propagate(fn("a*b").node, { a: 2, b: 3 }, { a: 0.1, b: 0.2 });
+  near(p.value, 6); near(p.max, 0.7); near(p.quad, Math.hypot(0.3, 0.4));
+  assert.deepEqual(roundMeasurement(9.8123, 0.0345), { x: 9.81, dx: 0.03, dec: 2 });
+  assert.deepEqual(roundMeasurement(9.8123, 0.0145), { x: 9.812, dx: 0.015, dec: 3 });
 });
 
 test("zbirka formul prek API", async () => {
@@ -141,6 +231,7 @@ test("zbirka formul prek API", async () => {
     const body = await r.json();
     assert.equal(body.key, "KEM-OS");
     assert.ok(body.md.length > 100);
+    for (const k of ["MAT-UNI", "FIZ-UNI", "KEM-UNI"]) assert.equal((await fetch(`${base}/api/formulas?book=${k}`)).status, 200);
     assert.equal((await fetch(`${base}/api/formulas?book=../x`)).status, 404);
     assert.equal((await fetch(`${base}/api/formulas?book=ZGO-OS`)).status, 404);
   } finally {

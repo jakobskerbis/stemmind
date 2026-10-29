@@ -2,6 +2,8 @@
 // Ar: standardna relativna atomska masa (IUPAC/CIAAW, zaokrožena kot v šolskih tabelah).
 // Za elemente brez stabilnih izotopov je Ar = null, A pa masno število najstabilnejšega izotopa
 // (v tabeli v oglatem oklepaju). Pri ostalih je A masno število najpogostejšega izotopa.
+import { EXTRA } from "./pse-extra.js";
+
 const RAW = `H vodik Hydrogen 1.008 1
 He helij Helium 4.0026 4
 Li litij Lithium 6.94 7
@@ -166,15 +168,27 @@ export const CATEGORIES = ["alkali", "alkaline", "transition", "post", "metalloi
 /** Relativne atomske mase za molsko maso (za radioaktivne masno število najstabilnejšega izotopa). */
 export const MASSES = Object.fromEntries(ELEMENTS.map((e) => [e.sym, e.ar ?? e.a]));
 
-/** Elektroni po lupinah za prvih 20 elementov (šolsko pravilo 2, 8, 8, 2). */
+/** Elektroni po lupinah (iz elektronske konfiguracije; za prvih 20 velja šolsko pravilo 2, 8, 8, 2). */
 export function shells(z) {
-  if (z > 20) return null;
-  const out = [];
-  let left = z;
-  for (const cap of [2, 8, 8, 2]) {
-    if (left <= 0) break;
-    out.push(Math.min(cap, left));
-    left -= cap;
-  }
-  return out;
+  const e = EXTRA[z - 1];
+  if (!e) return null;
+  return shellsOf(fullConfig(z));
 }
+
+/** Celotna konfiguracija brez jedra žlahtnega plina, npr. »1s2 2s2 2p6 3s1«. */
+export function fullConfig(z) {
+  const e = EXTRA[z - 1];
+  if (!e) return "";
+  const m = /^\[(\w+)\]\s*(.*)$/.exec(e.conf);
+  if (!m) return e.conf;
+  const core = ELEMENTS.find((x) => x.sym === m[1]);
+  return `${fullConfig(core.z)} ${m[2]}`.trim();
+}
+
+function shellsOf(conf) {
+  const out = [];
+  for (const [, n, k] of conf.matchAll(/(\d)[spdf](\d+)/g)) out[n - 1] = (out[n - 1] || 0) + Number(k);
+  return out.map((v) => v || 0);
+}
+
+export { EXTRA };
