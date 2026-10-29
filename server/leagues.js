@@ -14,6 +14,7 @@
 // učenec izbere med predlogi (pridevnik + žival + številka). Prostega vnosa ni,
 // zato vzdevek ne more vsebovati pravega imena.
 import crypto from "node:crypto";
+import { ensureAvatarTables, publicAvatar } from "./avatar.js";
 
 export const TIERS = ["Bronasta", "Srebrna", "Zlata", "Safirna", "Rubinasta", "Smaragdna", "Diamantna"];
 export const LEAGUE = {
@@ -64,6 +65,8 @@ export class Leagues {
     this.db = store.db;
     this.now = now;
     this.failedJoins = new Map(); // studentId -> [časi]
+    ensureAvatarTables(this.db);
+    this.avatarOf = this.db.prepare("SELECT equipped FROM avatar_state WHERE student_id = ?");
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS league_profiles (
         student_id INTEGER PRIMARY KEY REFERENCES students(id) ON DELETE CASCADE,
@@ -261,6 +264,7 @@ export class Leagues {
       board: ranked.map((m, i) => ({
         rank: i + 1,
         nickname: m.nickname,
+        avatar: publicAvatar(this.avatarOf.get(m.student_id)?.equipped), // edino, kar si učenec izbere
         xp: m.xp,
         me: m.student_id === studentId,
         zone: i < up ? "up" : i >= n - down ? "down" : "stay",
@@ -369,7 +373,7 @@ export class Leagues {
     return members
       .map((m, order) => ({ id: m.student_id, nickname: m.nickname, xp: week.get(m.student_id) || 0, total: total.get(m.student_id) || 0, order }))
       .sort((a, b) => b.xp - a.xp || a.order - b.order)
-      .map((m, i) => ({ rank: i + 1, nickname: m.nickname, xp: m.xp, total: m.total, me: m.id === viewerId, _id: m.id }));
+      .map((m, i) => ({ rank: i + 1, nickname: m.nickname, avatar: publicAvatar(this.avatarOf.get(m.id)?.equipped), xp: m.xp, total: m.total, me: m.id === viewerId, _id: m.id }));
   }
 
   classesView(studentId) {

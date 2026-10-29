@@ -23,6 +23,7 @@ export const PROFILE_SETTINGS = {
   personality_setting: { desc: "tutor tone / theme of examples, max 200 chars, e.g. 'strog', 'šaljiv, primeri iz nogometa'" },
   language: { desc: "conversation and app language, ISO 639 code (e.g. 'sl', 'en', 'de', 'hr', 'zh-Hant'); the app reloads in it" },
   data_mode: { values: ["auto", "lite", "normal"], desc: "light mode (less data, shorter replies): auto = on slow connection, lite = always, normal = never" },
+  avatar: { object: true, desc: "avatar look (the only thing other students see): object {slot: item id}, slots body, eyes, mouth, hat, outfit, acc, bg; only free items or items the student owns (get_settings lists both); buying with game coins happens only in the games shop" },
   weak_points: { list: true, desc: "student's own list of weak points (whole new list, replaces the old one), e.g. ['ulomki', 'pretvarjanje enot']" },
 };
 

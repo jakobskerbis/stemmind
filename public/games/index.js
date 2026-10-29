@@ -6,6 +6,7 @@ import { CONCEPTS, AREAS, SUBJECTS, conceptName, areaName, setNumberStyle, makeQ
 import { gameLock, clearedPace, PACE, CLEAR_CORRECT, CHECK_TASKS, CHECK_PASS } from "./unlock.js";
 import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
+import { ITEMS, ITEM, SLOTS, DEFAULT_AVATAR, avatarSvg, itemName, rarity } from "../avatar.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const FILTER_KEY = "stemmind.gamesFilter";
@@ -48,6 +49,7 @@ let data = { year: 8, games: {}, concepts: {}, known: [], passed: [] };
 // Stanje za odklepanje (unlock.js), zgrajeno iz podatkov strežnika.
 const lockState = () => ({ year: data.year, games: data.games, known: new Set(data.known || []), passed: new Set(data.passed || []) });
 let LS = lockState();
+let av = { coins: 0, owned: [], equipped: { ...DEFAULT_AVATAR }, perDay: 150 }; // kovanci in avatar
 let filter = { subject: "MAT", area: "you", kind: "all", q: "" };
 // Znak na ploščici za pojme drugih predmetov, če pojem nima svojega.
 const SUBJ_GLYPH = { MAT: "∑", FIZ: "⚛", KEM: "⚗", BIO: "❀", NAR: "☼", GEO: "⛰", RAC: "01", EKO: "€" };
@@ -80,7 +82,7 @@ export async function showGames() {
   renderPortal();
   try {
     const s = ctx.getStudent();
-    if (s) data = await ctx.api(`/api/students/${s.id}/games`);
+    if (s) [data, av] = await Promise.all([ctx.api(`/api/students/${s.id}/games`), ctx.api(`/api/students/${s.id}/avatar`).catch(() => av)]);
     LS = lockState();
     if (!game) renderPortal();
   } catch {}
@@ -140,6 +142,7 @@ function renderPortal() {
     <div class="gm-portal">
       <div class="gm-top">
         <div><h1>${icon("gamepad-2")} ${esc(t("nav.games"))}</h1><p class="muted">${esc(t("games.intro", { n: allGamesCount() }))}</p></div>
+        <button type="button" class="gm-me" data-act="shop" title="${esc(t("games.shop"))}">${avatarSvg(av.equipped, { size: 46 })}<span><b>${esc(t("games.avatar"))}</b><small>${icon("coins")} ${av.coins}</small></span></button>
         <label class="gm-search">${icon("search")}<input type="search" value="${esc(filter.q)}" placeholder="${esc(t("games.search"))}" aria-label="${esc(t("games.search"))}"></label>
       </div>
       ${SUBJECTS.length > 1 ? `<div class="chip-row gm-subjects" role="group" aria-label="${esc(t("games.subjects"))}">${SUBJECTS.map((x) => chip(x, t(`subj.${x}`), filter.subject === x)).join("")}</div>` : ""}
@@ -184,6 +187,7 @@ function renderPortal() {
     i2.setSelectionRange(pos, pos);
   });
   root.querySelectorAll(".gm-tile").forEach((b) => b.addEventListener("click", () => openGame(b.dataset.game)));
+  root.querySelector('[data-act="shop"]').addEventListener("click", () => renderShop("", true));
 }
 
 function openGame(id) {
@@ -214,6 +218,7 @@ function openGame(id) {
       LS = lockState();
       // Opravljena igra odklene hitrejše igre te snovi.
       if (clearedPace(cid, LS) > before && clearedPace(cid, LS) < 3) info.unlocked = t("games.unlockedFaster");
+      if (info.coins) av.coins += info.coins;
       if (info.xp) ctx.refreshXp?.();
       return info;
     },
@@ -297,6 +302,84 @@ function runCheck(engine, c) {
     root.querySelector('[data-act="back"]').addEventListener("click", renderPortal);
   };
   ask();
+}
+
+// Trgovina z deli avatarja: kovanci iz iger, brez pravega denarja. Avatar vidijo drugi v ligi.
+let shop = { slot: "hat", pick: null };
+function renderShop(msg = "", top = false) {
+  const y = window.scrollY; // ob ponovnem izrisu ostane na istem mestu, na vrh samo ob odprtju trgovine
+  const lang = ctx.currentLang?.() || "sl";
+  const owned = new Set(av.owned);
+  const has = (x) => x.price === 0 || owned.has(x.id);
+  const pick = shop.pick && ITEM[shop.pick];
+  const preview = pick ? { ...av.equipped, [pick.slot]: pick.id } : av.equipped;
+  const need = pick && !has(pick) ? pick.price - av.coins : 0;
+  const action = !pick || av.equipped[pick.slot] === pick.id
+    ? ""
+    : has(pick)
+      ? `<button type="button" class="primary" data-act="wear">${esc(t("games.wear"))}</button>`
+      : need > 0
+        ? `<p class="muted">${esc(t("games.needMore", { n: need }))} ${icon("coins")}</p>`
+        : `<button type="button" class="primary" data-act="buy">${icon("coins")}${esc(t("games.buy", { n: pick.price }))}</button>`;
+  const card = (x) => {
+    const on = av.equipped[x.slot] === x.id;
+    const state = on ? t("games.wearing") : has(x) ? (x.price ? t("games.owned") : t("games.rarity.free")) : `${icon("coins")} ${x.price}`;
+    // Izbran tuj predmet: gumb za nakup kar na kartici (na telefonu je predogled zgoraj izven zaslona).
+    return `<div class="gm-item gm-r-${rarity(x.price)}${on ? " on" : ""}${shop.pick === x.id ? " sel" : ""}">
+      <button type="button" class="gm-item-btn" data-item="${x.id}" aria-pressed="${on}">${avatarSvg({ ...av.equipped, [x.slot]: x.id }, { size: 72 })}
+      <b>${esc(itemName(x, lang))}</b><small>${state}</small></button>${shop.pick === x.id ? action : ""}</div>`;
+  };
+  root.innerHTML = `<div class="gm-portal gm-shop">
+    <button type="button" class="text-btn" data-act="back">${icon("arrow-left")}${esc(t("games.back"))}</button>
+    <div class="gm-shop-top card">
+      <div class="gm-shop-me">${avatarSvg(preview, { size: 150, title: t("games.avatar") })}</div>
+      <div>
+        <h1>${esc(t("games.avatar"))}</h1>
+        <p class="gm-coinbig">${icon("coins")} <b>${av.coins}</b> <span class="muted">${esc(t("games.coins"))}</span></p>
+        <p class="muted">${esc(t("games.coinsHint", { n: av.perDay }))}</p>
+        ${pick ? `<p class="gm-pick"><b>${esc(itemName(pick, lang))}</b> · <span class="gm-rtag gm-r-${rarity(pick.price)}">${esc(t(`games.rarity.${rarity(pick.price)}`))}</span></p>` : ""}
+        ${msg ? `<p class="gm-shop-msg" role="status">${esc(msg)}</p>` : ""}
+      </div>
+    </div>
+    <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${esc(t(`games.slot.${x}`))}</button>`).join("")}</div>
+    <div class="gm-items">${ITEMS.filter((x) => x.slot === shop.slot).map(card).join("")}</div>
+  </div>`;
+  const s = ctx.getStudent();
+  const save = async (url, body, okMsg) => {
+    if (!s) return;
+    try {
+      av = await ctx.api(`/api/students/${s.id}/${url}`, { method: "POST", body: JSON.stringify(body) });
+      shop.pick = null;
+      renderShop(okMsg);
+    } catch (e) {
+      renderShop(e.message);
+    }
+  };
+  root.querySelector('[data-act="back"]').addEventListener("click", () => ((shop.pick = null), renderPortal()));
+  const sel = root.querySelector(".gm-item.sel .primary, .gm-item.sel p");
+  sel?.closest(".gm-item").scrollIntoView({ block: "nearest" });
+  root.querySelectorAll("[data-slot]").forEach((b) => b.addEventListener("click", () => ((shop.slot = b.dataset.slot), (shop.pick = null), renderShop())));
+  root.querySelectorAll("[data-item]").forEach((b) =>
+    b.addEventListener("click", () => {
+      const x = ITEM[b.dataset.item];
+      // Svoj predmet takoj obleče, tujega najprej pokaže na avatarju.
+      if (has(x)) return save("avatar", { equipped: { ...av.equipped, [x.slot]: x.id } }, "");
+      shop.pick = x.id;
+      renderShop();
+    }),
+  );
+  root.querySelector('[data-act="wear"]')?.addEventListener("click", () => save("avatar", { equipped: preview }, ""));
+  root.querySelector('[data-act="buy"]')?.addEventListener("click", async () => {
+    if (!s) return;
+    try {
+      av = await ctx.api(`/api/students/${s.id}/avatar/buy`, { method: "POST", body: JSON.stringify({ item: pick.id }) });
+      await save("avatar", { equipped: preview }, t("games.bought"));
+    } catch (e) {
+      renderShop(e.message);
+    }
+  });
+  if (top) window.scrollTo(0, 0);
+  else window.scrollTo(0, y);
 }
 
 function closeGame() {

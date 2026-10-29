@@ -141,3 +141,47 @@ test("games: unlocking by knowledge and by game speed", () => {
   ok.games[`${mid}:lin2`] = { cleared: true };
   assert.equal(gameLock(fast, c, ok), null);
 });
+
+test("avatar: coins from games, buying and wearing items", async () => {
+  const { ITEMS, ITEM, SLOTS, avatarSvg, cleanAvatar, DEFAULT_AVATAR } = await import("../public/avatar.js");
+  // Vsak predmet ima znan predal in izriše veljaven SVG.
+  assert.equal(new Set(ITEMS.map((x) => x.id)).size, ITEMS.length);
+  for (const slot of SLOTS) assert.ok(ITEMS.some((x) => x.slot === slot && x.price === 0), `${slot}: ni brezplačnega`);
+  for (const x of ITEMS) {
+    assert.ok(SLOTS.includes(x.slot) && x.name.sl && x.name.en, x.id);
+    const svg = avatarSvg({ [x.slot]: x.id });
+    assert.ok(svg.startsWith("<svg") && svg.endsWith("</svg>") && !/undefined|NaN/.test(svg), x.id);
+  }
+  assert.deepEqual(cleanAvatar({ hat: "hat_crown", eyes: "mouth_grin", body: "nope" }, []), DEFAULT_AVATAR);
+  assert.equal(cleanAvatar({ hat: "hat_crown" }, ["hat_crown"]).hat, "hat_crown");
+
+  const store = openDb(":memory:");
+  const app = createApp(store, {});
+  const server = app.listen(0);
+  const base = `http://localhost:${server.address().port}`;
+  const call = async (p, body) => {
+    const res = await fetch(base + p, { method: body ? "POST" : "GET", headers: { "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+    return { status: res.status, body: await res.json() };
+  };
+  try {
+    const s = (await call("/api/students", { name: "Kupec", settings: { curriculum_level: "8. razred" } })).body;
+    let r = await call(`/api/students/${s.id}/avatar`);
+    assert.equal(r.body.coins, 0);
+    assert.equal((await call(`/api/students/${s.id}/avatar/buy`, { item: "hat_cap" })).status, 400); // premalo kovancev
+    r = await call(`/api/students/${s.id}/games/result`, { game: "maze:frac_add", score: 10, correct: 30, wrong: 1, tier: 1 });
+    assert.equal(r.body.coins, 30);
+    r = await call(`/api/students/${s.id}/avatar/buy`, { item: "hat_cap" });
+    assert.equal(r.body.coins, 30 - ITEM.hat_cap.price);
+    assert.ok(r.body.owned.includes("hat_cap"));
+    // Nošnja: samo kupljeni ali brezplačni deli.
+    r = await call(`/api/students/${s.id}/avatar`, { equipped: { hat: "hat_cap", outfit: "outfit_armor" } });
+    assert.equal(r.body.equipped.hat, "hat_cap");
+    assert.equal(r.body.equipped.outfit, "outfit_none");
+    assert.equal((await call(`/api/students/${s.id}/avatar`, { equipped: { name: "x" } })).status, 400);
+    // Dnevna meja kovancev.
+    for (let i = 0; i < 6; i++) await call(`/api/students/${s.id}/games/result`, { game: "maze:frac_add", score: 1, correct: 40, wrong: 0, tier: 1 });
+    assert.equal((await call(`/api/students/${s.id}/avatar`)).body.earnedToday, 150);
+  } finally {
+    server.close();
+  }
+});
