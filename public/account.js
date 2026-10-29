@@ -254,7 +254,7 @@ export async function initAccount({ onReady }) {
   return ready;
 }
 
-// Na zaslonih prijave logotip ne odpira učne poti (ta brez profila ne deluje).
+// Na zaslonih prijave logotip ne odpira menija delov aplikacije (ti brez profila ne delujejo).
 // Skriti vhod za goste (dotik logotipa) je odstranjen skupaj z uporabo brez računa (j, 2026-10-29).
 function guardLogoOnAuth() {
   document.addEventListener(

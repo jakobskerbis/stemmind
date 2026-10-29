@@ -194,7 +194,7 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .pm-item > svg.pm-check { width: 18px; height: 18px; color: var(--accent); }
 .pm-item[data-act="logout"] > svg.i { color: var(--danger); }
 /* Klik na klobuk: mreža vseh delov aplikacije (apps-menu.js). */
-.brand { cursor: pointer; border-radius: 12px; }
+.brand { cursor: pointer; border-radius: 12px; padding: 2px; margin: -2px; } /* 40 px za dotik */
 .brand:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 3px; }
 .brand[aria-expanded="true"] .logo { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); }
 .apps-pop {
@@ -212,8 +212,8 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .am-ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); }
 .am-ic svg.i { width: 21px; height: 21px; }
 .am-label { max-width: 100%; overflow-wrap: anywhere; hyphens: auto; }
-.am-tile:hover, .am-tile:focus-visible { background: var(--surface-2); outline: none; }
-.am-tile:focus-visible { border-color: var(--accent); }
+.am-tile:hover, .am-tile:focus-visible { background: var(--surface-2); }
+.am-tile:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .am-tile[aria-current="page"] { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); background: var(--accent-soft); }
 .am-tile[aria-current="page"] .am-ic { background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #fff; }
 @media (max-width: 400px) {

@@ -45,6 +45,13 @@ export function initAppsMenu(deps) {
 
 const isOpen = () => !$("#apps-pop").hidden;
 
+// Tipka Nazaj najprej zapre odprt meni (vrne true, če je bil odprt).
+export function closeAppsMenu() {
+  if (!isOpen()) return false;
+  close();
+  return true;
+}
+
 function tiles() {
   const comp = $("#competition-tab");
   return TILES.filter(([view]) => {
@@ -80,9 +87,11 @@ function open() {
   const r = btn.getBoundingClientRect();
   const rtl = document.documentElement.dir === "rtl";
   pop.style.top = `${Math.round(r.bottom + 8)}px`;
-  pop.style.left = rtl ? "" : `${Math.max(8, Math.round(r.left))}px`;
-  pop.style.right = rtl ? `${Math.max(8, Math.round(window.innerWidth - r.right))}px` : "";
+  pop.style.left = pop.style.right = "";
   pop.hidden = false;
+  // Ob logotipu, a na ozkem telefonu enako daleč od obeh robov.
+  const edge = Math.max(8, Math.min(Math.round(rtl ? window.innerWidth - r.right : r.left), window.innerWidth - pop.offsetWidth - 8));
+  pop.style[rtl ? "right" : "left"] = `${edge}px`;
   btn.setAttribute("aria-expanded", "true");
   (pop.querySelector(".am-tile[aria-current]") || pop.querySelector(".am-tile"))?.focus({ preventScroll: true });
 }

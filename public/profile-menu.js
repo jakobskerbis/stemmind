@@ -47,6 +47,13 @@ export function openProfileMenu() {
 
 const isOpen = () => !$("#profile-pop").hidden;
 
+// Tipka Nazaj najprej zapre odprt meni (vrne true, če je bil odprt).
+export function closeProfileMenu() {
+  if (!isOpen()) return false;
+  close();
+  return true;
+}
+
 function open() {
   const btn = $("#profile-btn");
   const usage = $("#usage-pop");
