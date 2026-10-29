@@ -29,6 +29,8 @@ const NAMES = [
   "user-plus", "log-out",
   // kotiček zanimanj
   "newspaper", "pin", "pin-off",
+  // igre: zaklenjene igre in gradnja
+  "unlock", "castle",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};
