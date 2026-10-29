@@ -169,6 +169,9 @@ export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
   const convCols = db.prepare("PRAGMA table_info(conversations)").all().map((c) => c.name);
   if (!convCols.includes("path_topic")) db.exec("ALTER TABLE conversations ADD COLUMN path_topic TEXT");
   if (!convCols.includes("deep")) db.exec("ALTER TABLE conversations ADD COLUMN deep INTEGER NOT NULL DEFAULT 0");
+  // Priprava na test, ki jo je nastavil test iz urnika (server/schedule.js).
+  const planCols = db.prepare("PRAGMA table_info(test_plans)").all().map((c) => c.name);
+  if (!planCols.includes("event_id")) db.exec("ALTER TABLE test_plans ADD COLUMN event_id TEXT");
   // Starejše baze: events.conversation_id je bil NOT NULL, vaje (brez pogovora) pa zapisujejo NULL.
   const convIdCol = db.prepare("PRAGMA table_info(events)").all().find((c) => c.name === "conversation_id");
   if (convIdCol?.notnull) {

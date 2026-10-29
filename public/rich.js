@@ -3,14 +3,23 @@
 
 const lib = (name) => globalThis[name];
 
-export function createRenderer({ marked = lib("marked"), katex = lib("katex"), sanitize } = {}) {
+// annotate(tex): klikljive formule (formula-info.js) ovijejo znane simbole in enote v \htmlData{fx=…};
+// renderMath(tex, display, false) jih izpusti (npr. v gumbih z možnostmi odgovora).
+export function createRenderer({ marked = lib("marked"), katex = lib("katex"), sanitize, annotate = null } = {}) {
   const clean = sanitize || ((html) => lib("DOMPurify").sanitize(html));
+  const plain = { throwOnError: false, strict: "ignore" };
+  const trusted = { ...plain, trust: (c) => c.command === "\\htmlData" };
 
-  function renderMath(tex, display) {
+  function renderMath(tex, display, fx = true) {
     try {
-      return katex.renderToString(tex, { displayMode: display, throwOnError: false, strict: "ignore" });
+      if (annotate && fx) return katex.renderToString(annotate(tex), { ...trusted, displayMode: display });
+      return katex.renderToString(tex, { ...plain, displayMode: display });
     } catch {
-      return tex;
+      try {
+        return katex.renderToString(tex, { ...plain, displayMode: display });
+      } catch {
+        return tex;
+      }
     }
   }
 

@@ -1,5 +1,6 @@
 // Sestavi sistemski prompt iz predloge in aktivnih nastavitev.
 import fs from "node:fs";
+import { goalPrompt } from "../public/goal-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { cleanText } from "./settings.js";
@@ -38,13 +39,14 @@ const PLACEHOLDERS = [
   "dialect",
   "school_system",
   "reply_length",
+  "student_schedule",
   "interests",
 ];
 
 // settings: normalizirane nastavitve; weaknesses: seznam nizov.
 // lite: lahki način (kratki odgovori za drag ali počasen prenos podatkov).
 // results: besedilo iz studentResults() (server/results.js) za zahtevnost primerov in nalog.
-export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "", lite = false, results = "" }, template = loadTemplate()) {
+export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "", lite = false, results = "", schedule = "" }, template = loadTemplate()) {
   const values = {
     learning_path: learningPath || "(Prost pogovor: ni izbrane teme učne poti.)",
     ...settings,
@@ -55,8 +57,9 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     student_results: results || "še ni podatkov. Predlagana začetna zahtevnost: osnovna.",
     language: languagePrompt(settings.language, settings.region),
     dialect: dialectPrompt(settings),
-    school_system: schoolSystemPrompt(settings),
+    school_system: schoolSystemPrompt(settings) + goalPrompt(settings),
     reply_length: lite ? "kratka (lahki način)" : "običajna",
+    student_schedule: schedule || "(ni podatkov)",
     interests: interestsPrompt(settings),
   };
   // Zamenjamo samo znana imena, da LaTeX zapisi kot {,} ostanejo nedotaknjeni.

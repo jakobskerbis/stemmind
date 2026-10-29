@@ -21,7 +21,18 @@ if not "%~1"=="--posodobljeno" (
   powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'node.exe' -and $_.CommandLine -match 'scripts.(zaganjalnik|zagon|telefon)\.js' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>nul
   for /f "tokens=5" %%p in ('netstat -ano ^| findstr ":3000 " ^| findstr LISTENING') do taskkill /PID %%p /F >nul 2>nul
   rem Najnovejsa razlicica z GitHuba; nato to datoteko preberemo znova od zacetka.
-  node scripts\posodobitev.js
+  if exist scripts\posodobitev.js (
+    node scripts\posodobitev.js
+  ) else (
+    rem Starejsa mapa brez programa za posodobitev: prenesi celotno razlicico enkrat po starem.
+    echo Prenasam najnovejso razlicico ...
+    if exist "%TEMP%\stemmind-posodobitev" rmdir /s /q "%TEMP%\stemmind-posodobitev"
+    mkdir "%TEMP%\stemmind-posodobitev"
+    curl -L -s -o "%TEMP%\stemmind-posodobitev\main.zip" https://github.com/jakobskerbis/stemmind/archive/refs/heads/main.zip
+    tar -xf "%TEMP%\stemmind-posodobitev\main.zip" -C "%TEMP%\stemmind-posodobitev" >nul 2>nul
+    if exist "%TEMP%\stemmind-posodobitev\stemmind-main\package.json" robocopy "%TEMP%\stemmind-posodobitev\stemmind-main" "%~dp0." /E /NFL /NDL /NJH /NJS /XF .env /XD data node_modules .git >nul
+    rmdir /s /q "%TEMP%\stemmind-posodobitev" >nul 2>nul
+  )
   call "%~f0" --posodobljeno
   exit /b
 )
