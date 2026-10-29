@@ -45,6 +45,11 @@
 .gc .gc-btn[data-act="add"] { background: var(--accent); color: var(--accent-text); }
 .gc .gc-btn[data-act="add"]:hover { filter: brightness(1.06); background: var(--accent); }
 .gc-text-btn { white-space: nowrap; }
+.gc .gc-playall { color: var(--accent); background: var(--accent-soft); }
+.gc .gc-playall:hover:not(:disabled) { background: var(--accent-soft); filter: brightness(0.97); }
+.gc .gc-playall[hidden] { display: none; }
+/* ob gumbu »Predvajaj vse« je vrstica polna: »Moji grafi« ostane samo ikona */
+.gc-bar:has(.gc-playall:not([hidden])) [data-act="graphs"] span { display: none; }
 .gc-text-btn svg.i { color: var(--accent); }
 
 /* seznam izrazov */

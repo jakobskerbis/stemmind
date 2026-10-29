@@ -560,6 +560,8 @@
   "gc.max": "Juu",
   "gc.play": "Cheza",
   "gc.pause": "Simamisha",
+  "gc.playAll": "Cheza zote",
+  "gc.pauseAll": "Simamisha zote",
   "gc.tangent": "Tanjenti",
   "gc.deriv": "Kinyambuo",
   "gc.area": "Eneo chini ya mkunjo (kiunganishi)",

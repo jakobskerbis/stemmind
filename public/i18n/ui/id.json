@@ -555,6 +555,8 @@
   "gc.max": "Maks",
   "gc.play": "Putar",
   "gc.pause": "Jeda",
+  "gc.playAll": "Putar semua",
+  "gc.pauseAll": "Jeda semua",
   "gc.tangent": "Garis singgung",
   "gc.deriv": "Turunan",
   "gc.area": "Luas di bawah kurva (integral)",

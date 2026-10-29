@@ -570,6 +570,8 @@
   "gc.max": "Max",
   "gc.play": "Prehrať",
   "gc.pause": "Zastaviť",
+  "gc.playAll": "Prehrať všetky",
+  "gc.pauseAll": "Zastaviť všetky",
   "gc.tangent": "Dotyčnica",
   "gc.deriv": "Derivácia",
   "gc.area": "Plocha pod krivkou (integrál)",

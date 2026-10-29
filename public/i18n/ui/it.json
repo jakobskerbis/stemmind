@@ -560,6 +560,8 @@
   "gc.max": "Max",
   "gc.play": "Avvia",
   "gc.pause": "Pausa",
+  "gc.playAll": "Avvia tutti",
+  "gc.pauseAll": "Ferma tutti",
   "gc.tangent": "Tangente",
   "gc.deriv": "Derivata",
   "gc.area": "Area sotto la curva (integrale)",

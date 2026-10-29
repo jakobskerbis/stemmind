@@ -555,6 +555,8 @@
   "gc.max": "最大",
   "gc.play": "播放",
   "gc.pause": "暂停",
+  "gc.playAll": "全部播放",
+  "gc.pauseAll": "全部暂停",
   "gc.tangent": "切线",
   "gc.deriv": "导数",
   "gc.area": "曲线下面积（积分）",

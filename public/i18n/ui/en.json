@@ -560,6 +560,8 @@
   "gc.max": "Max",
   "gc.play": "Play",
   "gc.pause": "Pause",
+  "gc.playAll": "Play all",
+  "gc.pauseAll": "Pause all",
   "gc.tangent": "Tangent",
   "gc.deriv": "Derivative",
   "gc.area": "Area under the curve (integral)",

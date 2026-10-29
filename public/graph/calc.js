@@ -54,6 +54,7 @@ export function createCalculator(root, opts) {
         <button type="button" class="gc-btn" data-act="add" title="${esc(t("common.add"))}" aria-label="${esc(t("common.add"))}">${icon("plus")}</button>
         <button type="button" class="gc-btn" data-act="undo" title="${esc(t("gc.undo"))}" aria-label="${esc(t("gc.undo"))}">${icon("undo-2")}</button>
         <button type="button" class="gc-btn" data-act="redo" title="${esc(t("gc.redo"))}" aria-label="${esc(t("gc.redo"))}">${icon("redo-2")}</button>
+        <button type="button" class="gc-btn gc-playall" data-act="playall" data-on="false" hidden></button>
         <span class="gc-bar-sp"></span>
         <button type="button" class="gc-btn gc-text-btn" data-act="examples">${icon("sparkles")}<span>${esc(t("gc.examples"))}</span></button>
         <button type="button" class="gc-btn gc-text-btn" data-act="graphs">${icon("folder-open")}<span>${esc(t("gc.myGraphs"))}</span></button>
@@ -169,7 +170,34 @@ export function createCalculator(root, opts) {
   function refresh() {
     rebuild();
     for (const o of model.items) updateRow(o);
+    updatePlayAll();
     view.draw();
+  }
+
+  // »Predvajaj vse«: vidno, ko sta vsaj dva drsnika; med predvajanjem ustavi vse
+  const sliderItems = () => model.items.filter((o) => o.kind === "slider").map((o) => o.src);
+  function updatePlayAll() {
+    const btn = $(".gc-playall");
+    const sliders = sliderItems();
+    btn.hidden = sliders.length < 2;
+    const on = sliders.some((it) => it.slider?.play);
+    if (btn.dataset.on === String(on) && btn.innerHTML) return;
+    btn.dataset.on = String(on);
+    const label = t(on ? "gc.pauseAll" : "gc.playAll");
+    btn.innerHTML = icon(on ? "pause" : "play");
+    btn.title = label;
+    btn.setAttribute("aria-label", label);
+  }
+  function togglePlayAll() {
+    const sliders = sliderItems();
+    const on = sliders.some((it) => it.slider?.play);
+    for (const it of sliders) {
+      const o = modelItem(it.id);
+      it.slider = { ...sliderRange(o.value), ...(it.slider || {}), play: !on };
+    }
+    commit();
+    refresh();
+    animate();
   }
 
   const item = (id) => state.items.find((x) => x.id === id);
@@ -1124,6 +1152,7 @@ export function createCalculator(root, opts) {
       undo.push(JSON.stringify(state));
       restore(redo.pop());
     }
+    if (act === "playall") togglePlayAll();
     if (act === "examples") openExamples(b);
     if (act === "graphs") openGraphs(b);
     if (act === "more") openMore(b);

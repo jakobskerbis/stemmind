@@ -560,6 +560,8 @@
   "gc.max": "Max",
   "gc.play": "Lecture",
   "gc.pause": "Pause",
+  "gc.playAll": "Tout lire",
+  "gc.pauseAll": "Tout mettre en pause",
   "gc.tangent": "Tangente",
   "gc.deriv": "Dérivée",
   "gc.area": "Aire sous la courbe (intégrale)",
