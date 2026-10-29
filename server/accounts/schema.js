@@ -93,6 +93,11 @@ export function migrateAccounts(db) {
       student_id INTEGER,
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
+    CREATE TABLE IF NOT EXISTS promo_redemptions (
+      parent_id INTEGER PRIMARY KEY REFERENCES parents(id) ON DELETE CASCADE,
+      code TEXT NOT NULL,
+      redeemed_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
     CREATE TABLE IF NOT EXISTS kv (
       key TEXT PRIMARY KEY,
       value TEXT NOT NULL
@@ -101,6 +106,8 @@ export function migrateAccounts(db) {
   // Država starša (za ceno v lokalni valuti); ob registraciji iz naprave oziroma omrežja.
   const pcols = db.prepare("PRAGMA table_info(parents)").all().map((c) => c.name);
   if (!pcols.includes("country")) db.exec("ALTER TABLE parents ADD COLUMN country TEXT");
+  // Poln dostop iz aktivacijske kode (glej promo.js).
+  if (!pcols.includes("promo_until")) db.exec("ALTER TABLE parents ADD COLUMN promo_until TEXT");
   const cols = db.prepare("PRAGMA table_info(students)").all().map((c) => c.name);
   if (!cols.includes("parent_id")) db.exec("ALTER TABLE students ADD COLUMN parent_id INTEGER REFERENCES parents(id) ON DELETE CASCADE");
   if (!cols.includes("birth_year")) db.exec("ALTER TABLE students ADD COLUMN birth_year INTEGER");

@@ -90,9 +90,14 @@ const PAID = new Set(["active", "trialing", "past_due"]);
 const later = (iso, now) => iso && Date.parse(iso.replace(" ", "T") + (iso.includes("Z") ? "" : "Z")) > now;
 
 // Kaj starš trenutno ima: paid (naročnina), trial (preizkus), bonus (mesec iz priporočila) ali free.
-export function accessFor(parent, now = Date.now()) {
+export function accessFor(parent, now = Date.now(), promoSeats = 1) {
   if (parent.sub_status && PAID.has(parent.sub_status)) {
     return { tier: "paid", seats: parent.sub_seats || 1, until: parent.sub_period_end };
+  }
+  // Aktivacijska koda; med 7-dnevnim preizkusom ostaneta 2 profila.
+  if (later(parent.promo_until, now)) {
+    const seats = later(parent.trial_ends_at, now) ? Math.max(2, promoSeats) : promoSeats;
+    return { tier: "promo", seats, until: parent.promo_until };
   }
   if (later(parent.trial_ends_at, now)) return { tier: "trial", seats: 2, until: parent.trial_ends_at };
   if (later(parent.bonus_until, now)) return { tier: "bonus", seats: 1, until: parent.bonus_until };
