@@ -184,7 +184,7 @@ Nariši škatlo kot kvadrat in vse sile kot puščice, ki izhajajo iz njega:
 
 Dolžina puščice pove velikost sile. Če sta navpični puščici enako dolgi, se škatla v navpični smeri ne giblje. Če je puščica v desno daljša od puščice v levo, je rezultanta v desno in škatla pospešuje v desno.
 
-V interaktivni simulaciji spodaj postavi na vrv dve enako močni ekipi: sili se izravnata in voziček miruje (1. zakon). Če eni ekipi dodaš člana, rezultanta ni več nič in voziček začne pospeševati (2. zakon). V zavihku »Pospešek« opaziš, da večja masa pri isti sili pomeni manjši pospešek.
+V simulaciji spodaj so vse puščice sil narisane v istem merilu. Izberi podlago »les na lesu« in počasi večaj vlečno silo: dokler je puščica vlečne sile enako dolga kot puščica trenja, je rezultanta nič in klada se ne začne gibati.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -231,22 +231,50 @@ Ker je masa Zemlje ogromna, enaka sila Zemlji da zanemarljiv pospešek, žogi pa
 
 ## Preveri se
 
-? Škatla se po ravnih tleh giblje s stalno hitrostjo $2\,\dfrac{\text{m}}{\text{s}}$. Kaj lahko rečemo o silah na škatlo v vodoravni smeri?
+? Škatlo vlečeš po ravnih tleh in se giblje s stalno hitrostjo $2\,\dfrac{\text{m}}{\text{s}}$. Kaj lahko rečemo o silah na škatlo v vodoravni smeri?
 - Vlečna sila je večja od trenja.
+~ To je zmota »brez sile ni gibanja«. Če bi bila vlečna sila večja, bi škatla pospeševala, hitrost pa je stalna.
 - Na škatlo v vodoravni smeri ne deluje nobena sila.
+~ Ti jo vlečeš, tla pa jo zavirajo s trenjem. Stalna hitrost ne pomeni, da sil ni, ampak da je njihova vsota nič.
 + Rezultanta sil je enaka nič.
 - Trenje je večje od vlečne sile.
+~ Potem bi rezultanta kazala nazaj in škatla bi se ustavljala, ne bi se gibala s stalno hitrostjo.
 > Pri stalni hitrosti je pospešek nič, zato je po prvem zakonu rezultanta nič. Sili (vlečna in trenje) sta lahko obe prisotni, le enako veliki in nasprotni.
 
 ? Na telo z maso $3\,\text{kg}$ deluje rezultanta $12\,\text{N}$. Kolikšen je pospešek?
 - $36\,\dfrac{\text{m}}{\text{s}^2}$
+~ Silo in maso si pomnožil. Iz $F = m \cdot a$ sledi $a = F/m$, zato delimo.
 - $0{,}25\,\dfrac{\text{m}}{\text{s}^2}$
+~ Delil si maso s silo ($3 : 12$). Pospešek je sila, deljena z maso.
 + $4\,\dfrac{\text{m}}{\text{s}^2}$
 - $9\,\dfrac{\text{m}}{\text{s}^2}$
+~ Maso si odštel od sile. Masa in sila sta različni količini, zato ju ne moremo odštevati.
 > $a = \dfrac{F}{m} = \dfrac{12\,\text{N}}{3\,\text{kg}} = 4\,\dfrac{\text{m}}{\text{s}^2}$. Odgovor $36$ dobiš, če pomnožiš namesto deliš, odgovor $0{,}25$ pa, če deliš narobe obrnjeno.
 
 ? Odrineš se od zidu in zdrsneš nazaj. Katera trditev pravilno razloži pojav?
 - Zid deluje na tebe z manjšo silo, kot ti nanj.
+~ Ker se zid ne premakne, se zdi, da je njegova sila šibkejša. Po 3. zakonu sta sili vedno enako veliki; zid se ne premakne, ker je trdno vpet v stavbo.
 + Zid deluje na tebe z enako veliko, nasprotno usmerjeno silo, kot ti nanj.
 - Zid ne deluje na tebe s silo, ker miruje.
+~ Tudi mirujoča telesa delujejo s silo (miza drži knjigo). Brez sile zidu se ne bi začel gibati nazaj.
 > Po tretjem zakonu sta sili vzajemnega učinka vedno enako veliki in nasprotno usmerjeni. Zid miruje, a vseeno deluje s silo na tvoje roke.
+
+? V kateri enoti merimo maso in v kateri težo?
++ Maso v $\text{kg}$, težo v $\text{N}$.
+- Obe v $\text{kg}$.
+~ V vsakdanjem govoru rečemo »tehtam $50\,\text{kg}$«, a to je masa. Teža je sila, zato jo merimo v newtonih.
+- Maso v $\text{N}$, težo v $\text{kg}$.
+~ Enoti sta zamenjani. Masa pove, koliko snovi je v telesu ($\text{kg}$), teža je sila ($\text{N}$).
+- Obe v $\text{N}$.
+~ Masa ni sila. Iz mase šele izračunamo težo: $F_g = m \cdot g$.
+> Masa je v kilogramih, teža je sila, s katero Zemlja privlači telo, in jo merimo v newtonih: $F_g = m \cdot g$.
+
+? Sani z maso $20\,\text{kg}$ vlečeš z vodoravno silo $100\,\text{N}$, trenje jih zavira s $40\,\text{N}$. Kolikšen je pospešek sani?
+- $5\,\dfrac{\text{m}}{\text{s}^2}$
+~ Pozabil si trenje. V $a = F/m$ vstavimo rezultanto, ne le vlečne sile.
+- $7\,\dfrac{\text{m}}{\text{s}^2}$
+~ Sili si seštel. Trenje kaže v nasprotno smer, zato ga odštejemo.
++ $3\,\dfrac{\text{m}}{\text{s}^2}$
+- $1200\,\dfrac{\text{m}}{\text{s}^2}$
+~ Rezultanto si pomnožil z maso. Pospešek dobimo z deljenjem: $a = F/m$.
+> Rezultanta je $F = 100\,\text{N} - 40\,\text{N} = 60\,\text{N}$, pospešek pa $a = \dfrac{60\,\text{N}}{20\,\text{kg}} = 3\,\dfrac{\text{m}}{\text{s}^2}$ v smeri vlečne sile.

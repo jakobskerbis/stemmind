@@ -13,10 +13,13 @@ Iz prejšnje lekcije veš, da se vrednosti sinusa in kosinusa ponovijo po vsakem
 
 **1. Od krožnice do grafa.** Točka $T$ kroži po enotski krožnici. Njena navpična koordinata je $\sin x$, kjer je $x$ kot v radianih. Na vodoravno os nanašamo kot $x$, na navpično pa višino točke. Nekaj vrednosti:
 
-| $x$ | $0$ | $\frac{\pi}{2}$ | $\pi$ | $\frac{3\pi}{2}$ | $2\pi$ |
-|---|---|---|---|---|---|
-| $\sin x$ | $0$ | $1$ | $0$ | $-1$ | $0$ |
-| $\cos x$ | $1$ | $0$ | $-1$ | $0$ | $1$ |
+| $x$ | $\sin x$ | $\cos x$ |
+|---|---|---|
+| $0$ | $0$ | $1$ |
+| $\frac{\pi}{2}$ | $1$ | $0$ |
+| $\pi$ | $0$ | $-1$ |
+| $\frac{3\pi}{2}$ | $-1$ | $0$ |
+| $2\pi$ | $0$ | $1$ |
 
 Točke povežemo z gladko krivuljo. Dobimo **sinusoido**: val, ki se dvigne do $1$, pade do $-1$ in se vrne na $0$.
 
@@ -193,7 +196,7 @@ Vzemi zvok kitare. Struna niha in potiska zrak sem ter tja; tlak zraka se spremi
 
 - **Amplituda** je glasnost. Močneje udariš po struni, večji je odklon, glasnejši je ton. Višina tona ostane enaka.
 - **Perioda** določa višino tona. Krajša struna niha hitreje, perioda je krajša, ton je višji. To ustreza večjemu $b$.
-- **Premik $c$** pomeni, da je drug zvok enak, le začne kasneje, kot odmev.
+- **Premik $c$** pomeni, da je drug zvok enak, le da se začne kasneje, kot odmev.
 
 Še plima: gladina morja niha okoli povprečne gladine (to je $d$), razlika med plimo in oseko je dvakratna amplituda. Ker se gladina ponovi v približno $12{,}4$ urah, je to perioda. Tako lahko z eno formulo napoveš, kdaj bo voda dovolj visoka za ladjo.
 

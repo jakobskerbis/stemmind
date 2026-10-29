@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Predstavljaj si panoramsko kolo. Sedež začne na višini osi kolesa, na desni strani, in se dviga. Dokler se kolo zavrti za manj kot $90^\circ$, višino sedeža izračunaš s sinusom iz pravokotnega trikotnika, ki ga že poznaš. Kaj pa, ko se kolo zavrti za $150^\circ$, $210^\circ$ ali za dva cela obrata? Takega kota ni v nobenem pravokotnem trikotniku.
+Predstavljaj si panoramsko kolo. Sedež začne na višini osi kolesa, na desni strani, in se dviga. Če se kolo zavrti za manj kot $90^\circ$, višino sedeža izračunaš s sinusom iz pravokotnega trikotnika, ki ga že poznaš. Kaj pa, ko se kolo zavrti za $150^\circ$, $210^\circ$ ali za dva cela obrata? Takega kota ni v nobenem pravokotnem trikotniku.
 
 Zato kotne funkcije razširimo na **poljuben kot**: na tope kote, kote nad $360^\circ$ in tudi na negativne kote. Pri tem si pomagamo z **enotsko krožnico**. Hkrati spoznaš novo enoto za kote, **radian**, ki jo uporabljajo fizika, tehnika in vsa nadaljnja matematika.
 
@@ -65,9 +65,12 @@ $$360^\circ = 2\pi\,\text{rad}, \qquad 180^\circ = \pi\,\text{rad}$$
 
 En radian je $\frac{180^\circ}{\pi} \approx 57{,}3^\circ$. Pogoste kote si zapomni:
 
-| stopinje | $30^\circ$ | $45^\circ$ | $60^\circ$ | $90^\circ$ |
-|---|---|---|---|---|
-| radiani | $\frac{\pi}{6}$ | $\frac{\pi}{4}$ | $\frac{\pi}{3}$ | $\frac{\pi}{2}$ |
+| stopinje | radiani |
+|---|---|
+| $30^\circ$ | $\frac{\pi}{6}$ |
+| $45^\circ$ | $\frac{\pi}{4}$ |
+| $60^\circ$ | $\frac{\pi}{3}$ |
+| $90^\circ$ | $\frac{\pi}{2}$ |
 
 Ko je kot podan v radianih, enoto rad navadno izpustimo: $\sin\frac{\pi}{2} = 1$.
 
@@ -124,7 +127,7 @@ Panoramsko kolo ima polmer $20\,\text{m}$, njegova os je $22\,\text{m}$ nad tlem
 **Iščemo:** višino sedeža $h$ in vodoravno razdaljo $d$ od osi
 
 :::formula
-Točka na krožnici s polmerom $r$: $x = r\cos\varphi$, $y = r\sin\varphi$
+Točka na krožnici s polmerom $r$: $x = r\cos\varphi$, $y = r\sin\varphi$; višina $h = h_0 + y$
 :::
 
 **Rešitev:**

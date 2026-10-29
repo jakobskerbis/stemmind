@@ -48,7 +48,7 @@ Paralelogram naj ima $a = 5\,\text{cm}$, $b = 3\,\text{cm}$ in diagonalo $e = 9\
 Ne uspe. Loka okoli $A$ s polmerom $9\,\text{cm}$ in okoli $B$ s polmerom $3\,\text{cm}$ se ne sekata, ker $5 + 3 = 8 < 9$. Trikotnik $ABC$ ne obstaja, zato tak paralelogram ne obstaja.
 :::
 
-**5. Simulacija.** V simulaciji spodaj (»Konstrukcije štirikotnikov«) si oglej konstrukcijo paralelograma in trapeza po korakih. Pri vsakem koraku se vprašaj, katera lastnost lika ga upraviči. Opazi, da v obeh konstrukcijah najprej nastane trikotnik in šele nato četrto oglišče.
+**5. Simulacija.** V simulaciji spodaj (»Konstrukcije štirikotnikov«) nastavi paralelogram z $a = 5\,\text{cm}$, $b = 3\,\text{cm}$ in $\alpha = 60^\circ$ (kot v Primeru 1) ter si oglej konstrukcijo po korakih, nato še konstrukcijo trapeza. Pri vsakem koraku se vprašaj, katera lastnost lika ga upraviči. Opazi, da v obeh konstrukcijah najprej nastane trikotnik in šele nato četrto oglišče.
 
 ## Rešeni primeri
 
@@ -130,7 +130,7 @@ Pomožni trikotnik $ABC$ po izreku sss ($a$, $b$, $e$). Diagonala $e$ je os sime
 **Rešitev:**
 
 1. Preverimo obstoj trikotnika $ABC$: $5 + 3 = 8 > 6$, zato obstaja.
-2. Načrtamo $AC = 6\,\text{cm}$. Okoli $A$ zarišemo lok s polmerom $5\,\text{cm}$, okoli $C$ lok s polmerom $3\,\text{cm}$; presečišče je $B$.
+2. Načrtamo $AC = 6\,\text{cm}$. Okoli $A$ zarišemo lok s polmerom $5\,\text{cm}$, okoli $C$ lok s polmerom $3\,\text{cm}$; presečišče je $B$, ker mora veljati $|AB| = a$ in $|CB| = b$.
 3. Kako dobiš oglišče $D$? Premisli sam, nato preveri:
 
 :::premisli
@@ -145,7 +145,7 @@ $D$ je zrcalna slika $B$ čez diagonalo $AC$, ker je $e$ os simetrije. Na drugi 
 - **Diagonala zamenjana s stranico.** Pri pravokotniku z $a = 4\,\text{cm}$ in $e = 5\,\text{cm}$ učenec nanese $5\,\text{cm}$ na pravokotnico v $B$, kot da bi bil to $b$. Diagonala pa povezuje $A$ in $C$. Popravek: v $B$ postavi pravi kot, $C$ pa dobiš z lokom okoli $A$ s polmerom $e$.
 - **Pozabljeno preverjanje obstoja.** Paralelogram z $a = 6\,\text{cm}$, $b = 2\,\text{cm}$ in $e = 9\,\text{cm}$ ne obstaja, ker $6 + 2 < 9$. Popravek: pred konstrukcijo preveri trikotniško neenakost za pomožni trikotnik.
 - **Pri trapezu iz štirih stranic pomožni trikotnik s stranico $a$.** Učenec vzame stranice $a$, $b$, $d$. Pravilna stranica pa je razlika osnovnic $a - c$, ker smo krak $b$ premaknili za dolžino $c$. Popravek: najprej izračunaj $a - c$.
-- **Napačno označevanje.** Oglišča v smeri urnega kazalca ali stranica $b$ med $A$ in $B$ dajo drugačen lik, kot ga zahteva naloga. Popravek: oglišča označi v nasprotni smeri urnega kazalca, $b = |BC|$, $e = |AC|$.
+- **Napačno označevanje.** Stranica $b$ med $A$ in $B$ ali diagonala $e$ med $B$ in $D$ dasta drugačen lik, kot ga zahteva naloga. Popravek: oglišča označi v nasprotni smeri urnega kazalca, $b = |BC|$, $e = |AC|$.
 
 ## Povzetek
 
@@ -177,7 +177,7 @@ Načrtajmo pravokotnik z $a = 4\,\text{cm}$ in diagonalo $e = 5\,\text{cm}$.
 2. **Podatki za trikotnik:** $|AB| = 4\,\text{cm}$, $\beta = 90^\circ$, $|AC| = 5\,\text{cm}$. Dani kot $\beta$ leži nasproti daljše stranice $e$, zato gre za izrek ssk.
 3. **Obstoj:** $e = 5\,\text{cm} > a = 4\,\text{cm}$, ker je diagonala kot hipotenuza daljša od stranice. Trikotnik obstaja.
 4. **Načrtaj:** $AB = 4\,\text{cm}$, v $B$ pravokotnica, lok okoli $A$ s polmerom $5\,\text{cm}$ seka pravokotnico v $C$.
-5. **Četrto oglišče:** v $A$ pravokotnica na $AB$, lok okoli $A$ s polmerom $|BC|$ da $D$. Izmeriš $|BC| = 3\,\text{cm}$.
+5. **Četrto oglišče:** izmeriš $|BC| = 3\,\text{cm}$. V $A$ pravokotnica na $AB$, lok okoli $A$ s polmerom $3\,\text{cm}$ da $D$, ker je $|AD| = |BC|$.
 6. **Preveri:** izmeri $|BD|$; v pravokotniku mora biti $f = e = 5\,\text{cm}$.
 
 ## Drugače: Bolj natančno
@@ -186,7 +186,7 @@ Zakaj splošni štirikotnik potrebuje ravno $5$ podatkov? Diagonala $e$ ga razde
 
 Vsaka lastnost posebnega štirikotnika je ena »podarjena« enačba. Pri paralelogramu sta to $c = a$ in $d = b$, zato $5 - 2 = 3$. Pri rombu dodatno velja $b = a$, zato ostaneta $2$. Pri pravokotniku sta $c = a$, $d = b$ in pravi kot, zato $5 - 3 = 2$. Pri kvadratu je še $b = a$, zato zadošča $1$ podatek.
 
-Diskusija ni formalnost. Pri ssk lahko loka sekata premico v dveh točkah in dobiš dva različna lika. Takrat preveri, ali obe rešitvi izpolnjujeta pogoje naloge, na primer, ali so oglišča v pravem vrstnem redu in se stranice ne križajo.
+Diskusija ni formalnost. Pri ssk lahko lok seka krak kota v dveh točkah in dobiš dva različna lika. Takrat preveri, ali obe rešitvi izpolnjujeta pogoje naloge, na primer, ali so oglišča v pravem vrstnem redu in se stranice ne križajo.
 
 ## Preveri se
 
@@ -195,7 +195,7 @@ Diskusija ni formalnost. Pri ssk lahko loka sekata premico v dveh točkah in dob
 ~ Dva podatka zadoščata za pravokotnik ali romb, kjer lastnost lika poda obliko ali dolžino. Pri paralelogramu sta znani le zvezi $c = a$ in $d = b$.
 + $3$
 - $4$
-~ Štiri stranice niso potrebne, ker sta nasprotni stranici enaki; poleg tega bi brez kota ali diagonale oblika še vedno ne bila določena.
+~ Štiri stranice niso potrebne, ker sta nasprotni stranici enaki; poleg tega bi brez kota ali diagonale oblika še vedno ne bi bila določena.
 - $5$
 ~ Pet podatkov potrebuje splošni štirikotnik. Paralelogram ima lastnosti, ki dva podatka podarijo.
 > Npr. $a$, $b$ in $\alpha$: pomožni trikotnik $ABD$ po sks, nato $C$ iz lokov $|CD| = a$, $|BC| = b$.
@@ -228,6 +228,6 @@ Diskusija ni formalnost. Pri ssk lahko loka sekata premico v dveh točkah in dob
 - Na pravokotnico v $B$ naneseš $5\,\text{cm}$.
 ~ Tako si diagonalo zamenjal s stranico $b$. Diagonala povezuje $A$ in $C$, ne $B$ in $C$.
 - Na pravokotnico v $A$ naneseš $5\,\text{cm}$.
-~ Tako dobiš točko na razdalji $5\,\text{cm}$ od $A$ na stranici $AD$, ne oglišča $C$.
-+ Lok okoli $A$ s polmerom $5\,\text{cm}$ seka pravokotnico v $B$.
+~ Tako dobiš točko na premici $AD$, ki je od $A$ oddaljena $5\,\text{cm}$, ne oglišča $C$. Oglišče $C$ leži nad $B$, ne nad $A$.
++ Lok okoli $A$ s polmerom $5\,\text{cm}$ seka pravokotnico na $AB$, postavljeno v točki $B$.
 > $C$ leži na pravokotnici v $B$ (pravi kot) in je od $A$ oddaljen $e = 5\,\text{cm}$, zato je presečišče loka in pravokotnice.

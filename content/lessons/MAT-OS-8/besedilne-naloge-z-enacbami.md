@@ -20,7 +20,7 @@ Recimo, da ima Ana $x$ evrov. Tabela kaže, kako besedne zveze prevedeš v izraz
 | Bor ima za $5$ evrov več kot Ana. | $x + 5$ |
 | Bor ima za $5$ evrov manj kot Ana. | $x - 5$ |
 | Bor ima trikrat toliko kot Ana. | $3x$ |
-| Bor ima polovico toliko kot Ana. | $\dfrac{x}{2}$ |
+| Bor ima pol toliko kot Ana. | $\dfrac{x}{2}$ |
 
 Pazi na razliko: »za $3$ več« pomeni prištevanje ($x + 3$), »trikrat toliko« (pogovorno tudi »trikrat več«) pa množenje ($3x$).
 
@@ -57,7 +57,7 @@ Pri nalogi o številu učencev v razredu dobiš $x = 24{,}5$. Kaj to pomeni?
 Število učencev mora biti naravno število, zato $24{,}5$ ni smiseln odgovor. Najverjetneje si se zmotil pri sestavljanju ali reševanju enačbe, zato preveri vsak korak. Če je vse prav, naloga nima rešitve. Rešitev enačbe mora vedno ustrezati tudi pomenu v besedilu.
 :::
 
-**4. Preizkusi v simulaciji.** V simulaciji spodaj (»Od besedila do enačbe«) vzemi eno nalogo in najprej sam določi neznanko ter zapiši enačbo na list. Šele nato jo primerjaj z enačbo v simulaciji. Opazi, da se vsak podatek iz besedila pojavi v enačbi, en pogoj pa postane enačaj.
+**4. Preizkusi v simulaciji.** V simulaciji spodaj (»Od besedila do enačbe«) izberi »Vsota dveh števil« in nastavi »x (skrito)« na $9$, »kolikokrat« na $3$ in »za koliko več« na $0$. Dobiš nalogo o Ani in Boru z vsoto $36$. Preden pogledaš enačbo pod trakom, jo zapiši sam. Nato nastavi »za koliko več« na $4$. Opazi: na traku se pojavi košček $4$, v enačbi člen $+\,4$ ($4x + 4 = 40$), število trakov $x$ pa ostane $4$.
 
 ## Rešeni primeri
 
@@ -175,9 +175,9 @@ $3x = 69$, $x = 23$. Števila so $23$, $24$ in $25$. Preizkus: $23 + 24 + 25 = 7
 Količine si lahko predstaviš s **trakovi** enake dolžine. En trak pomeni neznanko $x$.
 
 ```
-Ana: [ x ]
-Bor: [ x ][ x ][ x ]
-     |------ skupaj 36 ------|
+Ana:    [ x ]
+Bor:    [ x ][ x ][ x ]
+Skupaj: [ x ][ x ][ x ][ x ] = 36
 ```
 
 Bor ima trikrat toliko kot Ana, zato ima tri trakove. Skupaj so štirje trakovi, ki merijo $36$. En trak je torej $36 : 4 = 9$. To je natanko enačba $4x = 36$.

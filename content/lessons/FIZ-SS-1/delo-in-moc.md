@@ -33,9 +33,21 @@ Posebni primeri:
 - $\alpha = 90^\circ$: $\cos\alpha = 0$, $A = 0$ (sila pravokotno na gibanje ne opravlja dela).
 - $\alpha = 180^\circ$: $\cos\alpha = -1$, $A = -F s$ (sila nasprotuje gibanju, npr. trenje).
 
+:::premisli
+Kovček vlečeš s silo $50\,\text{N}$ po isti poti enkrat pod kotom $30^\circ$, drugič pod kotom $60^\circ$ glede na tla. Kdaj opraviš več dela in zakaj?
+---
+Pod kotom $30^\circ$. Takrat je $\cos 30^\circ \approx 0{,}87$, pri $60^\circ$ pa le $0{,}5$: pri manjšem kotu kaže večji del sile v smer gibanja.
+:::
+
 **3. Predznak dela.** Pozitivno delo pomeni, da sila telo »poganja«. Negativno delo pomeni, da sila gibanje zavira. Če telo miruje ali se ne premakne ($s = 0$), je delo enako nič, ne glede na to, kako velika je sila.
 
 **4. Več sil.** Če deluje več sil, lahko izračunamo delo vsake posebej. Skupno delo je njihova vsota (z upoštevanjem predznakov).
+
+:::premisli
+Klado sunemo, da drsi po mizi, nato se zaradi trenja ustavi. Kakšen predznak ima delo sile trenja? Zakaj?
+---
+Negativen. Trenje kaže nasprotno smeri gibanja ($\alpha = 180^\circ$, $\cos\alpha = -1$), zato gibanje zavira.
+:::
 
 **5. Moč.** Moč pove, koliko dela se opravi v enoti časa:
 
@@ -46,6 +58,8 @@ Enota za moč je **vat**:
 $$1\,\text{W} = \frac{1\,\text{J}}{1\,\text{s}}$$
 
 Pogosto se uporablja tudi $1\,\text{kW} = 1000\,\text{W}$.
+
+V simulaciji spodaj (Delo in moč) nastavi maso $60\,\text{kg}$ in višino $10\,\text{m}$, nato čas najprej $20\,\text{s}$ in potem $10\,\text{s}$. Opazuj: delo ostane $5886\,\text{J}$, moč pa se podvoji (z $294\,\text{W}$ na $589\,\text{W}$), ker se isto delo opravi v pol krajšem času.
 
 **6. Moč pri stalni hitrosti.** Ker je $A = F s$ in $v = s/t$, velja
 
@@ -117,12 +131,35 @@ Pri enakomernem dviganju je $F = m g$; delo $A = F \cdot s$, moč $P = \dfrac{A}
 
 **Odgovor:** dvigalo opravi $24\,\text{kJ}$ dela, njegova moč je $3{,}0\,\text{kW}$.
 
+### Primer 4: zdaj ti
+
+Kolesar vozi po vodoravni cesti s stalno hitrostjo $5{,}0\,\text{m/s}$. Zračni upor in trenje skupaj nanj delujeta s silo $40\,\text{N}$. Kolikšno moč razvija kolesar in koliko dela opravi v $10\,\text{min}$?
+
+**Podatki:** $v = 5{,}0\,\text{m/s}$ (stalna), $F_\text{upor} = 40\,\text{N}$, $t = 10\,\text{min}$
+**Iščemo:** moč $P$ in delo $A$
+
+:::formula
+Pri stalni hitrosti je pogonska sila $F = F_\text{upor}$; $P = F \cdot v$, $A = P \cdot t$
+:::
+
+**Rešitev:**
+
+1. Hitrost je stalna, zato je rezultanta nič in pogonska sila je enaka uporu: $F = 40\,\text{N}$.
+2. Pogonska sila kaže v smeri hitrosti, zato velja $P = F v$. Čas pretvorimo v sekunde, ker je vat joule na sekundo: $t = 600\,\text{s}$.
+3. Izračunaj sam, nato preveri:
+
+:::premisli
+Koliko sta $P = 40\,\text{N} \cdot 5{,}0\,\text{m/s}$ in $A = P \cdot 600\,\text{s}$?
+---
+$P = 200\,\text{W}$ in $A = 200\,\text{W} \cdot 600\,\text{s} = 120\,000\,\text{J} = 120\,\text{kJ}$.
+:::
+
 ## Pogoste napake
 
 - **Sila brez poti.** Če se telo ne premakne, je delo nič. Držanje težkega predmeta na mestu v fizikalnem smislu ni delo, čeprav se utrudimo.
 - **Napačen kot.** Kot $\alpha$ je kot med silo in smerjo *gibanja*, ne med silo in navpičnico ali podlago, razen če se to ujema. Preden vstaviš, nariši skico.
 - **Pozabljen predznak.** Trenje in zračni upor običajno opravljata negativno delo. Če dobiš pozitivno delo trenja, si se zmotil.
-- **Zamenjava dela in moči.** Joule je enota za delo, vat za moč. Moč je delo na časovno enoto, zato pri enakem delu večja moč pomeni krajši čas.
+- **Zamenjava dela in moči.** »Hitrejši opravi več dela« ali »delo v vatih« je narobe. Joule je enota za delo, vat za moč. Moč je delo na časovno enoto, zato pri enakem delu večja moč pomeni krajši čas.
 - **Enote.** Pred računom pretvori vse v osnovne enote (m, s, kg, N). Npr. $2\,\text{kW} = 2000\,\text{W}$, $5\,\text{min} = 300\,\text{s}$.
 
 ## Povzetek
@@ -150,7 +187,7 @@ Dva učenca neseta vsak svojo vrečo z maso $20\,\text{kg}$ na isto polico, $3\,
 
 Podobno pri avtomobilih: motor z večjo močjo lahko isto delo (npr. pospešitev do določene hitrosti) opravi hitreje. Zato se avtomobili z močnejšim motorjem hitreje pospešijo.
 
-Za žarnice velja isto: žarnica z močjo $60\,\text{W}$ vsako sekundo porabi $60\,\text{J}$ električne energije, žarnica s $10\,\text{W}$ pa samo $10\,\text{J}$.
+Za žarnice velja isto: žarnica z močjo $60\,\text{W}$ vsako sekundo porabi $60\,\text{J}$ električne energije, žarnica z $10\,\text{W}$ pa samo $10\,\text{J}$.
 
 Računi za elektriko so v kilovatnih urah. Če grelnik z močjo $2\,\text{kW}$ deluje $3\,\text{h}$, porabi $2\,\text{kW} \cdot 3\,\text{h} = 6\,\text{kWh}$.
 
@@ -193,20 +230,46 @@ pri čemer smo uporabili $v = s/t$ za enakomerno gibanje.
 
 ? Fant porine omaro s stalno vodoravno silo $120\,\text{N}$ po tleh za $5{,}0\,\text{m}$ v smeri sile. Koliko dela opravi?
 - $24\,\text{J}$
+~ To je $120 : 5{,}0$. Delo je zmnožek sile in poti, ne količnik.
 - $125\,\text{J}$
+~ To je $120 + 5{,}0$. Sile in poti ne seštevamo, ker sta različni količini; delo je njun zmnožek.
 + $600\,\text{J}$
 - $600\,\text{W}$
-> Sila je v smeri gibanja, zato je $A = F s = 120\,\text{N} \cdot 5{,}0\,\text{m} = 600\,\text{J}$. Odgovor $24$ dobimo z deljenjem, $125$ s seštevanjem, enota $\text{W}$ pa je enota za moč, ne za delo.
+~ Število je pravo, enota pa ne: vat je enota za moč, delo merimo v joulih.
+> Sila je v smeri gibanja, zato je $A = F s = 120\,\text{N} \cdot 5{,}0\,\text{m} = 600\,\text{J}$.
 
 ? Nosač nosi težak nahrbtnik vodoravno po ravni poti z enakomerno hitrostjo. Teža nahrbtnika kaže navpično navzdol. Koliko dela opravi teža nahrbtnika?
 - Pozitivno delo, ker je nahrbtnik težak.
+~ Velikost sile ni dovolj. Šteje le komponenta sile v smeri gibanja, ta pa je pri navpični teži in vodoravnem premiku enaka nič.
 - Negativno delo, ker teža nasprotuje gibanju.
+~ Teža kaže navzdol, gibanje je vodoravno. Teža gibanju ne nasprotuje, ker ni usmerjena nazaj ($\alpha = 90^\circ$, ne $180^\circ$).
 + Nič, ker je teža pravokotna na smer gibanja.
 > Kot med težo (navpično navzdol) in premikom (vodoravno) je $90^\circ$, $\cos 90^\circ = 0$, zato je delo teže enako $0$.
 
 ? Stroj opravi $1800\,\text{J}$ dela v $30\,\text{s}$. Kolikšna je njegova moč?
 - $54\,000\,\text{W}$
+~ To je $1800 \cdot 30$. Zmnožek moči in časa je delo ($A = P t$); moč dobimo z deljenjem dela s časom.
 - $0{,}017\,\text{W}$
+~ To je $30 : 1800$, obrnjeno deljenje. Moč je delo, deljeno s časom, ne čas, deljen z delom.
 + $60\,\text{W}$
 - $1770\,\text{W}$
-> Moč je delo na enoto časa: $P = A/t = 1800\,\text{J} / 30\,\text{s} = 60\,\text{W}$. Odgovor $54\,000$ dobimo z množenjem, $0{,}017$ z obrnjenim deljenjem, $1770$ pa z odštevanjem.
+~ To je $1800 - 30$. Joulov in sekund ne odštevamo; moč je količnik dela in časa.
+> Moč je delo na enoto časa: $P = A/t = 1800\,\text{J} / 30\,\text{s} = 60\,\text{W}$.
+
+? Kaj je kot $\alpha$ v enačbi $A = F s \cos\alpha$?
++ Kot med silo in smerjo gibanja telesa.
+- Kot med silo in navpičnico.
+~ Šteje kot glede na smer gibanja. Navpičnica je smer gibanja le pri dviganju ali spuščanju.
+- Kot nagiba podlage (klanca) glede na vodoravnico.
+~ Naklon klanca je drug kot. V enačbo gre kot med puščico sile in puščico premika.
+> Delo opravi le komponenta sile v smeri gibanja, $F\cos\alpha$, zato je $\alpha$ kot med silo in smerjo gibanja.
+
+? Dve enaki dvigali dvigneta enak tovor na isto višino. Prvo potrebuje $10\,\text{s}$, drugo $20\,\text{s}$. Kaj drži?
+- Prvo opravi dvakrat več dela, ker je hitrejše.
+~ Delo je odvisno od sile in poti, ki sta pri obeh enaki. Hitrost vpliva na moč, ne na delo.
+- Drugo ima večjo moč, ker dela dlje časa.
+~ Moč je delo, deljeno s časom: pri enakem delu daljši čas pomeni manjšo moč.
++ Delo je enako, moč prvega je dvakrat večja.
+- Delo in moč sta pri obeh enaka.
+~ Delo je res enako, moč pa ne: prvo opravi isto delo v pol krajšem času.
+> Pri enaki sili in enaki poti je delo enako. Ker prvo dvigalo to delo opravi v pol krajšem času, je njegova moč $P = A/t$ dvakrat večja.

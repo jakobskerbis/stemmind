@@ -20,7 +20,7 @@ Nariši šestkotnik in iz oglišča $A$ potegni vse diagonale. Dobiš $6 - 3 = 3
 :::premisli
 Koliko diagonal izhaja iz enega oglišča desetkotnika in na koliko trikotnikov ga razdelijo?
 ---
-$10 - 3 = 7$ diagonal, ki ga razdelijo na $8$ trikotnikov. Trikotnikov je vedno za ena več kot diagonal, torej $n - 2$.
+$10 - 3 = 7$ diagonal, ki ga razdelijo na $8$ trikotnikov. Trikotnikov je vedno za enega več kot diagonal, torej $n - 2$.
 :::
 
 **3. Vsota notranjih kotov.** Koti vseh teh trikotnikov skupaj natanko zapolnijo notranje kote večkotnika. Vsak trikotnik prispeva $180^\circ$:

@@ -35,7 +35,7 @@ $6$. Vsota je zdaj $30$, podatkov je še vedno $5$, zato $30 : 5 = 6$. Dodatnih 
 
 **3. Na številski premici.** Podatke označi na številski premici: dve piki pri $3$, po eno pri $4$, $7$ in $8$. Predstavljaj si, da je premica lahka palica in da so pike enake uteži. Palica je v ravnovesju, če jo podpreš pri $5$. Uteži levo od $5$ so skupaj oddaljene $2 + 1 + 2 = 5$, uteži desno pa $2 + 3 = 5$. Aritmetična sredina je **točka ravnovesja** podatkov.
 
-V simulaciji spodaj (»Aritmetična sredina kot ravnovesje«) poskusi s podatki $2$, $4$ in $9$. Poišči točko ravnovesja in opazi: je pri $5$, čeprav noben podatek ni $5$. Bližje je majhnima podatkoma, ker sta dva, velik podatek pa je en sam in je zato bolj oddaljen.
+V simulaciji spodaj (»Aritmetična sredina kot ravnovesje«) odstrani pike, da ostanejo tri, in jih povleci na $2$, $4$ in $9$. Poglej, kam se postavi podpora (točka ravnovesja), in opazi: je pri $5$, čeprav noben podatek ni $5$. Bližje je majhnima podatkoma, ker sta dva, velik podatek pa je en sam in je zato bolj oddaljen.
 
 **4. Zapis s simboli.** Podatke označimo z $x_1, x_2, \dots, x_n$, kjer je $n$ število podatkov. Aritmetično sredino označimo z $\bar{x}$ (beri »x s črtico«):
 
@@ -224,7 +224,7 @@ Iz tega sledi nekaj pravil:
 ~ Sredina ni izmerjen podatek, ampak rezultat poštene delitve, zato je lahko decimalna.
 + Da, sredina je lahko decimalna, tudi če so vsi podatki celi.
 - Ne, sredina mora biti enaka enemu od podatkov.
-~ Sredina ni nujno med podatki: pri $2$, $4$, $9$ je $5$.
+~ Sredina ni nujno eden od podatkov: pri $2$, $4$, $9$ je $5$.
 > Npr. družine z $1$, $2$, $1$, $2$ in $2$ otrokoma imajo skupaj $8$ otrok, $8 : 5 = 1{,}6$.
 
 ? Podatkom dodaš nov podatek, ki je večji od njihove sredine. Kaj se zgodi s sredino?
