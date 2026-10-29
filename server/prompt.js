@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { cleanText } from "./settings.js";
+import { interestById } from "../public/interests.js";
 import { studyProgramPrompt } from "./curriculum.js";
 import { langInfo } from "../public/i18n/languages.js";
 import { SCHOOL_SYSTEMS, isRegional, gradeInfo } from "../public/regions.js";
@@ -35,6 +36,7 @@ const PLACEHOLDERS = [
   "language",
   "school_system",
   "reply_length",
+  "interests",
 ];
 
 // settings: normalizirane nastavitve; weaknesses: seznam nizov.
@@ -52,11 +54,20 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     language: languagePrompt(settings.language, settings.region),
     school_system: schoolSystemPrompt(settings),
     reply_length: lite ? "kratka (lahki način)" : "običajna",
+    interests: interestsPrompt(settings),
   };
   // Zamenjamo samo znana imena, da LaTeX zapisi kot {,} ostanejo nedotaknjeni.
   return template.replace(/\{(\w+)\}/g, (match, key) =>
     PLACEHOLDERS.includes(key) ? String(values[key] ?? "") : match,
   );
+}
+
+// Zanimanja iz kotička: inštruktor lahko primere vzame iz njih, kadar se prilegajo snovi.
+function interestsPrompt(settings) {
+  const names = (settings.interests || []).map((id) => interestById(id)?.name).filter(Boolean);
+  const own = cleanText(settings.interest_custom, 40);
+  if (own) names.push(own);
+  return names.length ? names.join(", ") : "(ni izbranih)";
 }
 
 // Razdeli sestavljeni prompt na stalni del (predpomnjen) in del z nastavitvami.

@@ -183,6 +183,7 @@ Nastavitve učenca so na koncu prompta. Možne vrednosti: predmet MAT | FIZ | KE
 - Jezik pogovora: {language}
 - Šolski sistem: {school_system}
 - Dolžina odgovorov: {reply_length}
+- Zanimanja učenca (iz kotička; primere vzemi iz njih, kadar se prilegajo snovi, ne vsiljuj jih): {interests}
 
 ## Učna pot
 {learning_path}

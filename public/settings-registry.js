@@ -9,6 +9,8 @@
 //
 // Opisi (desc) so v angleščini, ker jih bere model (manj žetonov); učencu jih ne kažemo.
 
+import { INTEREST_IDS, NEWS_LEVELS, NEWS_LANGS } from "./interests.js";
+
 // Profil učenca (shrani se na strežniku, velja na vseh napravah).
 // confirm: sprememba zamenja učno pot, zato jo učenec najprej potrdi (gumb ali »da«).
 export const PROFILE_SETTINGS = {
@@ -24,6 +26,10 @@ export const PROFILE_SETTINGS = {
   language: { desc: "conversation and app language, ISO 639 code (e.g. 'sl', 'en', 'de', 'hr', 'zh-Hant'); the app reloads in it" },
   data_mode: { values: ["auto", "lite", "normal"], desc: "light mode (less data, shorter replies): auto = on slow connection, lite = always, normal = never" },
   avatar: { object: true, desc: "avatar look (the only thing other students see): object {slot: item id}, slots body, eyes, mouth, hat, outfit, acc, bg; only free items or items the student owns (get_settings lists both); buying with game coins happens only in the games shop" },
+  interests: { list: true, values: INTEREST_IDS, desc: `news corner (Kotiček) interests, whole new list (replaces the old one), max 8, ids: ${INTEREST_IDS.join(", ")}` },
+  interest_custom: { desc: "own extra topic for the news corner, max 40 chars of keywords, e.g. 'črne luknje' (English keywords find more news); '' clears it" },
+  news_level: { values: NEWS_LEVELS, desc: "news corner depth: simple = written for kids and teens, all = also research news, auto = by school stage" },
+  news_lang: { values: NEWS_LANGS, desc: "news corner: all = also English sources, mine = only news in the app language (fewer)" },
   weak_points: { list: true, desc: "student's own list of weak points (whole new list, replaces the old one), e.g. ['ulomki', 'pretvarjanje enot']" },
 };
 

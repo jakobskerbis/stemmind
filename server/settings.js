@@ -2,6 +2,7 @@
 import { PROGRAMS, UNI_PATHS } from "./university-data.js";
 import { ALL_SUBJECTS, SCHOOL_SUBJECTS, REGIONAL_SUBJECTS, subjectForLevel } from "./subjects.js";
 import { LANGUAGE_CODES, DEFAULT_LANGUAGE } from "../public/i18n/languages.js";
+import { cleanInterests, NEWS_LEVELS, NEWS_LANGS } from "../public/interests.js";
 import { SYSTEM_IDS, DEFAULT_SYSTEM, isRegional, gradeInfo, defaultGrade, trackForLevel } from "../public/regions.js";
 
 export const ENUMS = {
@@ -15,6 +16,9 @@ export const ENUMS = {
   school_system: SYSTEM_IDS,
   // Lahki način (varčevanje s podatki): auto = po povezavi naprave, lite = vedno, normal = nikoli.
   data_mode: ["auto", "lite", "normal"],
+  // Kotiček zanimanj: kako zahtevne novice (auto = po šoli) in ali tudi v angleščini.
+  news_level: NEWS_LEVELS,
+  news_lang: NEWS_LANGS,
 };
 
 export const DEFAULT_SETTINGS = {
@@ -30,6 +34,11 @@ export const DEFAULT_SETTINGS = {
   region: "",
   school_system: DEFAULT_SYSTEM,
   data_mode: "auto",
+  // Kotiček zanimanj (public/interests.js): null = vprašalnik še ni bil izpolnjen, [] = preskočen.
+  interests: null,
+  interest_custom: "",
+  news_level: "auto",
+  news_lang: "all",
 };
 
 // Proste besedilne nastavitve gredo v sistemski prompt, zato jih skrajšamo
@@ -77,6 +86,8 @@ export function normalizeSettings(input = {}) {
   }
   // Regija naprave (ISO 3166, npr. "BR"): inštruktor prilagodi izraze in zapis.
   if (typeof input.region === "string" && /^[A-Z]{2}$/.test(input.region)) out.region = input.region;
+  if (input.interests !== undefined) out.interests = cleanInterests(input.interests);
+  if (input.interest_custom !== undefined) out.interest_custom = cleanText(input.interest_custom, 40);
   if (input.personality_setting !== undefined) {
     out.personality_setting = cleanText(input.personality_setting, 200);
   }

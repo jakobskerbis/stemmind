@@ -30,6 +30,7 @@ import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from ".
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { Avatars, mountAvatar } from "./avatar.js";
+import { mountCorner } from "./corner.js";
 import { mountWebApp } from "./webapp.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
 
@@ -798,6 +799,7 @@ export function createApp(store, opts = {}) {
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress, avatars });
   mountAvatar(app, avatars, { loadStudent });
+  mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
 
   // --- poraba AI ---
   // Poraba AI za vse profile: brez računov samo na računalniku, kjer teče strežnik

@@ -22,6 +22,7 @@ import { initFeedback, showFeedback } from "./feedback.js";
 import { initInstall, installSheetOpen, closeInstallSheet } from "./install.js";
 import { initFlashcards, showFlashcards, addCardsNote } from "./flashcards.js";
 import { initGames, showGames, gamesBack, leaveGames } from "./games/index.js";
+import { initCorner, showCorner, cornerBack, closeBoard, askInterests, maybeAskInterests, interestsSummary } from "./corner.js";
 import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
@@ -119,6 +120,8 @@ function showView(name) {
   if (name === "feedback") showFeedback();
   if (name === "games") showGames();
   else leaveGames();
+  if (name === "corner") showCorner();
+  else closeBoard();
   if (name === "cards") {
     setActiveMode("cards");
     showFlashcards();
@@ -186,6 +189,7 @@ window.addEventListener("popstate", () => {
     closeCalcOverlay({ fromBack: true });
     return keep();
   }
+  if (cornerBack()) return keep();
   if (wasOverlay && currentView === "path") return;
   if (!$("#tour")?.hidden && $("#tour")) return keep();
   if (currentView === "textbook" && textbookBack()) return keep();
@@ -200,7 +204,7 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner"];
 function renderMe() {
   const s = state.student;
   if (!s) return;
@@ -344,6 +348,8 @@ async function selectStudent(id) {
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
   refreshProfileButton();
   refreshXp();
+  // Vprašalnik kotička zanimanj: profil, ki ga še ni izpolnil, ga dobi ob zagonu (enkrat).
+  state.interestsAsk = maybeAskInterests();
 }
 $("#student-select").addEventListener("change", (e) => selectStudent(e.target.value));
 
@@ -790,6 +796,7 @@ let levelPicker = null;
 async function fillSettingsForm() {
   const f = $("#settings-form");
   const s = state.student.settings;
+  fillCornerSummary();
   f.name.value = state.student.name;
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
@@ -896,7 +903,15 @@ function studentUpdated(updated) {
   const up = stageUp(before, updated.settings);
   if (up) state.welcome = { stage: up };
   if (!$("#view-settings").hidden) fillSettingsForm();
+  fillCornerSummary();
 }
+
+// Kotiček zanimanj v Nastavitvah: kratek seznam izbranih tem in gumb za vprašalnik.
+function fillCornerSummary() {
+  const el = $("#corner-summary");
+  if (el && state.student) el.textContent = interestsSummary(state.student.settings) || t("set.cornerNone");
+}
+$("#corner-edit").addEventListener("click", () => askInterests());
 
 // Gumb »Da, spremeni« pod predlogom inštruktorja (šola, razred/letnik, program).
 async function confirmChatProposal(settings) {
@@ -2302,7 +2317,8 @@ function maybeTour() {
   try {
     seen = localStorage.getItem(TOUR_KEY);
   } catch {}
-  if (!seen) setTimeout(startTour, 400);
+  // Uvodni ogled šele, ko je vprašalnik kotička zaprt.
+  if (!seen) Promise.resolve(state.interestsAsk).then(() => setTimeout(startTour, 400));
 }
 $("#tour-again").addEventListener("click", () => {
   showView("path");
@@ -2498,6 +2514,19 @@ initFullscreen();
   $("#mock-banner").hidden = !cfg.mock;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   initGames({ api, getStudent: () => state.student, refreshXp, currentLang });
+  initCorner({
+    api,
+    getStudent: () => state.student,
+    setStudent: studentUpdated,
+    toast: (m) => toast(m, "check"),
+    askTutor: (text) => {
+      showView("chat");
+      const box = $("#input");
+      box.value = text;
+      autoGrow();
+      box.focus();
+    },
+  });
   // Starševski računi (account.js): prijava, potrditev, prvi otrok.
   let first = true;
   const start = async (o) => {
