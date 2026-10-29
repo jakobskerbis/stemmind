@@ -128,6 +128,7 @@ Razdelek IGRE (`public/games/`, slog `public/games.css`, strežnik `server/games
 - **Videz stare flash igre**: debele temne obrobe (`--gm-ink`), risankasti prelivi, sončni žarki na naslovni kartici, izbočeni gumbi, obrobljen tekst in 8-bitni zvoki.
 - **Učenje**: ob napaki se v glavi pokaže pravilni odgovor (pri igrah, kjer lahko poskusiš znova, le »Poskusi znova«), naslednje vprašanje pride šele čez ~2 s, na koncu seznam »Ponovi« (naloga → pravilni odgovor).
 - **XP**: 1 XP za 2 pravilna odgovora, največ 20 na igro in 60 na dan iz iger.
+- **Kovanci in avatar** (`public/avatar.js`, `server/avatar.js`): 1 kovanec za vsak pravilen odgovor v igrah, največ 150 na dan; z njimi učenec v trgovini (gumb »Moj avatar« na vrhu iger) kupuje dele avatarja (7 predalov, 56 izvirnih SVG delov, redkost po ceni: navaden, redek, epski, legendaren). Brez pravega denarja. Avatar je edino, kar učenec izbere in vidijo drugi (lige, razred); vzdevki ostanejo samodejni. Inštruktor sme avatar obleči v brezplačne ali kupljene dele (`avatar` v `settings-registry.js`), kupuje se samo v trgovini. Nov del = vnos v `ITEMS` in risba v istem predalu.
 - Prizori iger in ploščice imajo svoje barve (kot simulacije); okvir, kartice in gumbi uporabljajo spremenljivke. Vse igre delujejo z dotikom, miško in tipkami (1–4, ← →, preslednica, P ali Esc za premor).
 
 ## Kotiček zanimanj
