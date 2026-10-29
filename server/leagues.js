@@ -13,6 +13,7 @@
 // Zasebnost (uporabniki so mladoletni): drugim se prikazuje samo vzdevek, ki ga
 // učenec izbere med predlogi (pridevnik + žival + številka). Prostega vnosa ni,
 // zato vzdevek ne more vsebovati pravega imena.
+import "./env.js";
 import crypto from "node:crypto";
 import { ensureAvatarTables, publicAvatar } from "./avatar.js";
 
@@ -407,7 +408,7 @@ export class Leagues {
 }
 
 // HTTP poti. `loadStudent(req, res)` vrne učenca ali odgovori s 404.
-// Pri vklopljenih računih (STEMMIND_ACCOUNTS=1) so vse poti za prijavo in
+// Pri vklopljenih računih (KOMPRENO_ACCOUNTS=1) so vse poti za prijavo in
 // preverjanjem lastništva učenca; `req.parent` je prijavljeni račun.
 export function mountLeagues(app, store, { loadStudent }) {
   const leagues = new Leagues(store);

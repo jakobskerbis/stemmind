@@ -197,7 +197,7 @@ test("tutor flashcards: saved from a reply, shown as an event, reviewed with spa
     assert.equal(cardsEv.data.due, 1);
     assert.equal(ev.find((e) => e.event === "done").data.text, "Gostota pove, koliko mase je v enoti prostornine.");
     // Rezultati učenca in zahtevnost so v delu prompta pod črto.
-    assert.match(seen[0].system.split("STEMMIND:NASTAVITVE")[1], /Rezultati učenca: .*Predlagana začetna zahtevnost: osnovna/);
+    assert.match(seen[0].system.split("KOMPRENO:NASTAVITVE")[1], /Rezultati učenca: .*Predlagana začetna zahtevnost: osnovna/);
 
     // Ista kartica drugič ne nastane, opozorilo (ščit) kartic ne shrani.
     const r2 = events((await call(`/api/conversations/${c.id}/messages`, { method: "POST", body: { text: "še enkrat" } })).body);

@@ -52,13 +52,13 @@ export const DEVICE_SETTINGS = {
   color_menus: { desc: "menus colour '#rrggbb'" },
   color_text: { desc: "text colour '#rrggbb' (adjusted for readability)" },
   reply_speed: { values: ["zelo_pocasi", "pocasi", "srednje", "hitro", "takoj"], ls: ["pace"], desc: "how fast tutor replies appear, takoj = no animation" },
-  fullscreen: { values: ["on", "off"], ls: ["stemmind.fullscreen", { on: "1", off: "0" }], desc: "full-screen mode in the browser" },
-  calculator: { values: ["sci", "graph", "tools", "pse", "formulas"], ls: ["stemmind.calcMode"], desc: "calculator opens in: scientific, graphing, tools, periodic table, formulas" },
+  fullscreen: { values: ["on", "off"], ls: ["kompreno.fullscreen", { on: "1", off: "0" }], desc: "full-screen mode in the browser" },
+  calculator: { values: ["sci", "graph", "tools", "pse", "formulas"], ls: ["kompreno.calcMode"], desc: "calculator opens in: scientific, graphing, tools, periodic table, formulas" },
   writing_pad: { values: ["auto", "off"], desc: "touch keypad / handwriting pad opens by itself at tasks (auto) or only on tap (off)" },
   writing_pad_tab: { values: ["keys", "draw"], desc: "pad opens on keypad (keys) or handwriting (draw)" },
-  game_sound: { values: ["on", "off"], ls: ["stemmind.gameSound"], desc: "sound in games" },
-  game_speed: { values: ["slow", "mid", "fast"], ls: ["stemmind.gamePace"], desc: "game speed" },
-  schedule_reminders: { values: ["on", "off"], ls: ["stemmind.scheduleReminders", { on: "1", off: "0" }], desc: "notification on this device the day before a test from the timetable (the app also shows it in the app)" },
+  game_sound: { values: ["on", "off"], ls: ["kompreno.gameSound"], desc: "sound in games" },
+  game_speed: { values: ["slow", "mid", "fast"], ls: ["kompreno.gamePace"], desc: "game speed" },
+  schedule_reminders: { values: ["on", "off"], ls: ["kompreno.scheduleReminders", { on: "1", off: "0" }], desc: "notification on this device the day before a test from the timetable (the app also shows it in the app)" },
 };
 
 // Urnik učenca (Jaz → Urnik, server/schedule.js): ure v tednu ter testi in roki. Inštruktor ga bere in

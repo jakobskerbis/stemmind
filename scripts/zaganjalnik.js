@@ -2,6 +2,7 @@
 // (izhodna koda 75). Če se nova različica takoj sesuje, vrne prejšnjo. Ta datoteka naj ostane
 // kratka in se redko spreminja, saj se sama ne more posodobiti med tekom.
 // Uporaba: node scripts/zaganjalnik.js zagon|telefon [možnosti]
+import "../server/env.js";
 import path from "node:path";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
@@ -18,7 +19,7 @@ let afterUpdate = 0;
 function run() {
   const started = Date.now();
   const child = spawn(process.execPath, ["--disable-warning=ExperimentalWarning", path.join(root, "scripts", `${name}.js`), ...args],
-    { cwd: root, stdio: "inherit", env: { ...process.env, STEMMIND_ZAGANJALNIK: "1", ...(again ? { STEMMIND_PONOVNO: "1" } : {}) } });
+    { cwd: root, stdio: "inherit", env: { ...process.env, KOMPRENO_ZAGANJALNIK: "1", ...(again ? { KOMPRENO_PONOVNO: "1" } : {}) } });
   child.on("exit", async (code) => {
     if (code === 75) { again = true; afterUpdate = Date.now(); return run(); }
     // Posodobljeni zagonski program se je takoj sesul: vrnemo prejšnjo različico in poskusimo znova.

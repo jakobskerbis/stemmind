@@ -6,7 +6,7 @@
 import { icon } from "./icons.js";
 import { t, currentLang } from "./i18n.js";
 
-const KEY = "stemmind.install"; // čas, ko je bila kartica na Učni poti skrita
+const KEY = "kompreno.install"; // čas, ko je bila kartica na Učni poti skrita
 const HIDE_DAYS = 21;
 let deferred = null; // beforeinstallprompt
 let ctx = { toast: () => {}, onSheet: () => {} };

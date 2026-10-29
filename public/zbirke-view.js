@@ -6,7 +6,7 @@ import { avatarSvg, itemName, itemOf, DEFAULT_AVATAR } from "./avatar.js";
 import { COLLECTIONS, KNOWLEDGE, PASS_REWARDS, baseId, variantOf, seasonLabel, elementTile } from "./zbirke.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-const TAB_KEY = "stemmind.zbirkeTab";
+const TAB_KEY = "kompreno.zbirkeTab";
 
 let ctx = null; // { api, getStudent, currentLang, showView }
 let data = null; // odgovor /api/students/:id/zbirke

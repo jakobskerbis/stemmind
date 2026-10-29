@@ -57,7 +57,7 @@ const KEY_LABEL = { "#2nd": "sc.second", "#left": "sc.left", "#right": "sc.right
 export function createScientific(root, opts) {
   const { t, icon } = opts;
   const comma = () => usesComma(opts.locale?.());
-  const key = () => opts.storageKey?.() || "stemmind.sci.0";
+  const key = () => opts.storageKey?.() || "kompreno.sci.0";
   let st = load();
   let second = false;
 
@@ -372,7 +372,7 @@ export function createScientific(root, opts) {
 export function createUnits(root, opts) {
   const { t, icon } = opts;
   const comma = () => usesComma(opts.locale?.());
-  const saved = store.get("stemmind.units") || {};
+  const saved = store.get("kompreno.units") || {};
   let q = QUANTITIES.find((x) => x.id === saved.q) || QUANTITIES[0];
   let from = q.units.some((u) => u[0] === saved.from) ? saved.from : q.units[1]?.[0] || q.units[0][0];
   let to = q.units.some((u) => u[0] === saved.to) ? saved.to : q.units[0][0];
@@ -422,7 +422,7 @@ export function createUnits(root, opts) {
         .map((u) => `<button type="button" class="un-row" data-u="${esc(u[0])}"><span>${texHtml(show(convert(v, q.id, from, u[0])).tex)}</span><b>${esc(u[0])}</b></button>`)
         .join("");
     }
-    store.set("stemmind.units", { q: q.id, from, to, value: $(".un-val").value });
+    store.set("kompreno.units", { q: q.id, from, to, value: $(".un-val").value });
     return r;
   }
   $(".un-val").value = value;

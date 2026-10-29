@@ -11,6 +11,7 @@
 //
 // Obstoječih lekcij ne prepiše (dodaj --force). Vzorec sloga je
 // content/lessons/MAT-OS-8/pitagorov-izrek.md.
+import "../server/env.js";
 import fs from "node:fs";
 import path from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
@@ -24,7 +25,7 @@ const arg = (name) => {
   const i = args.indexOf(name);
   return i === -1 ? null : args[i + 1];
 };
-const model = arg("--model") || process.env.STEMMIND_LESSON_MODEL || "claude-opus-5-5";
+const model = arg("--model") || process.env.KOMPRENO_LESSON_MODEL || "claude-opus-5-5";
 const onlyPath = arg("--path");
 const limit = Number(arg("--limit")) || Infinity;
 const force = args.includes("--force");

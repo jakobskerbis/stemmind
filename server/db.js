@@ -1,12 +1,30 @@
 // Shramba (SQLite, vgrajen v Node 22).
+import "./env.js";
 import fs from "node:fs";
 import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { DEFAULT_SETTINGS, normalizeSettings, normalizeWeaknessList } from "./settings.js";
 import { Flashcards } from "./flashcards.js";
 
-export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
+// Do 29. 10. 2026 se je aplikacija imenovala STEMMind in baza data/stemmind.db. Ob prvem zagonu
+// z novim imenom jo prepišemo v data/kompreno.db (VACUUM INTO zajame tudi neshranjeni WAL).
+// Stara datoteka ostane kot varnostna kopija in za morebitno vrnitev na prejšnjo različico.
+export function migrateLegacyDb(file) {
+  if (file === ":memory:" || path.basename(file) !== "kompreno.db" || fs.existsSync(file)) return false;
+  const old = path.join(path.dirname(file), "stemmind.db");
+  if (!fs.existsSync(old)) return false;
+  const src = new DatabaseSync(old);
+  try {
+    src.exec(`VACUUM INTO '${file.replace(/'/g, "''")}'`);
+  } finally {
+    src.close();
+  }
+  return true;
+}
+
+export function openDb(file = process.env.KOMPRENO_DB || "data/kompreno.db") {
   if (file !== ":memory:") fs.mkdirSync(path.dirname(file), { recursive: true });
+  migrateLegacyDb(file);
   const db = new DatabaseSync(file);
   db.exec(`
     PRAGMA journal_mode = WAL;

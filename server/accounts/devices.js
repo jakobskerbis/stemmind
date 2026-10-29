@@ -1,11 +1,12 @@
 // Naprave: profil je hkrati odprt samo na eni napravi, menjava profilov je omejena,
 // starš vidi, na koliko napravah je bil profil odprt.
+import "../env.js";
 import { randomToken, sha256, readCookie } from "./auth.js";
 
 export const DEVICE_COOKIE = "sm_device";
 export const CLAIM_IDLE_MS = 30 * 60000; // po 30 minutah nedejavnosti profil prevzame druga naprava brez vprašanja
 export const SWAP_DAYS = 30;
-export const deviceWarnLimit = () => Number(process.env.STEMMIND_DEVICE_WARN) || 3;
+export const deviceWarnLimit = () => Number(process.env.KOMPRENO_DEVICE_WARN) || 3;
 
 export function deviceLabel(ua = "") {
   const os = /iPhone|iPad/.test(ua) ? (/iPad/.test(ua) ? "iPad" : "iPhone") : /Android/.test(ua) ? "Android" : /Windows/.test(ua) ? "Windows" : /Mac OS/.test(ua) ? "Mac" : /CrOS/.test(ua) ? "Chromebook" : /Linux/.test(ua) ? "Linux" : "Naprava";

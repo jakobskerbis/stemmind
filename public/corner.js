@@ -7,7 +7,7 @@ import { INTERESTS, MAX_INTERESTS } from "./interests.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const $ = (s, root = document) => root.querySelector(s);
-const MODE_KEY = "stemmind.cornerBoard";
+const MODE_KEY = "kompreno.cornerBoard";
 const SIMPLE = { OSNOVNA_SOLA: true };
 
 let ctx = null; // { api, getStudent, setStudent, toast, askTutor }

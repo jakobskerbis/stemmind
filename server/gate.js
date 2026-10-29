@@ -1,11 +1,14 @@
-// Zaščita testne različice z enim skupnim geslom (STEMMIND_PASSWORD).
+// Zaščita testne različice z enim skupnim geslom (KOMPRENO_PASSWORD).
 // Namesto okna brskalnika (HTTP Basic) pokažemo stran za prijavo in si geslo
 // zapomnimo v piškotku, ki deluje tudi v aplikaciji na začetnem zaslonu telefona.
 // Povezava ".../?geslo=..." prijavi takoj (za prijatelje, ki preizkušajo).
+import "./env.js";
 import crypto from "node:crypto";
 import express from "express";
 
-const COOKIE = "stemmind_geslo";
+const COOKIE = "kompreno_geslo";
+// Piškotek iz časa, ko se je aplikacija imenovala STEMMind: še velja, ob naslednjem obisku ga zamenja nov.
+const LEGACY_COOKIE = "stemmind_geslo";
 const YEAR = 365 * 24 * 3600;
 // Brez gesla: zdravje strežnika, ikone in opis spletne aplikacije (telefon jih
 // prebere za bližnjico na začetnem zaslonu, preden je uporabnik prijavljen).
@@ -60,7 +63,8 @@ function loginPage({ next = "/", error = "" } = {}) {
 
 export function passwordGate(password) {
   const expected = Buffer.from(password);
-  const token = crypto.createHmac("sha256", password).update("stemmind-gate-v1").digest("hex");
+  const token = crypto.createHmac("sha256", password).update("kompreno-gate-v1").digest("hex");
+  const legacyToken = crypto.createHmac("sha256", password).update("stemmind-gate-v1").digest("hex");
   const fails = new Map(); // ip -> { n, until }
   const matches = (value) => {
     const b = Buffer.from(String(value ?? ""));
@@ -78,10 +82,12 @@ export function passwordGate(password) {
     if (!f || f.until < now) fails.set(ip, { n: 1, until: now + 15 * 60 * 1000 });
     else f.n++;
   };
-  const hasCookie = (req) => {
-    const m = String(req.headers.cookie || "").match(new RegExp(`(?:^|;\\s*)${COOKIE}=([a-f0-9]{64})`));
-    return !!m && crypto.timingSafeEqual(Buffer.from(m[1]), Buffer.from(token));
+  const cookieMatches = (req, name, want) => {
+    const m = String(req.headers.cookie || "").match(new RegExp(`(?:^|;\\s*)${name}=([a-f0-9]{64})`));
+    return !!m && crypto.timingSafeEqual(Buffer.from(m[1]), Buffer.from(want));
   };
+  const hasCookie = (req) => cookieMatches(req, COOKIE, token);
+  const hasLegacyCookie = (req) => cookieMatches(req, LEGACY_COOKIE, legacyToken);
   const hasBasic = (req) => {
     const [scheme, b64] = String(req.headers.authorization || "").split(" ");
     if (!/^basic$/i.test(scheme || "")) return false;
@@ -125,6 +131,7 @@ export function passwordGate(password) {
     }
     if (PUBLIC.some((re) => re.test(req.path))) return next();
     if (hasCookie(req)) return next();
+    if (hasLegacyCookie(req)) { setCookie(req, res); return next(); }
     if (hasBasic(req)) { setCookie(req, res); return next(); }
     if (wantsPage(req)) return showLogin(req, res, 401);
     res.status(401).json({ error: "Potrebna je prijava. Osveži stran in vpiši geslo." });

@@ -4,7 +4,7 @@
 import SL from "./i18n/sl.js";
 import { DEFAULT_LANGUAGE, LANGUAGES, isLanguage, langInfo, uiChain, UI_LANGUAGES, detectLanguage } from "./i18n/languages.js";
 
-const KEY = "stemmind.lang";
+const KEY = "kompreno.lang";
 let lang = DEFAULT_LANGUAGE;
 let dicts = [SL]; // od izbranega jezika proti izvirniku
 

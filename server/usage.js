@@ -1,4 +1,5 @@
 // Poraba AI: beleženje žetonov in stroška, dnevne omejitve, mesečni proračun.
+import "./env.js";
 import { costUsd } from "./claude.js";
 
 const num = (k, d) => {
@@ -7,24 +8,24 @@ const num = (k, d) => {
 };
 
 export const LIMITS = {
-  dailyQuestions: () => num("STEMMIND_DAILY_QUESTIONS", 0), // 0 = brez omejitve
-  monthlyBudgetUsd: () => num("STEMMIND_MONTHLY_BUDGET_USD", 0), // 0 = brez omejitve
+  dailyQuestions: () => num("KOMPRENO_DAILY_QUESTIONS", 0), // 0 = brez omejitve
+  monthlyBudgetUsd: () => num("KOMPRENO_MONTHLY_BUDGET_USD", 0), // 0 = brez omejitve
   // Na učenca na mesec: nad mehko mejo »Razloži podrobneje« uporabi hitri model,
   // nad trdo mejo inštruktor počaka do naslednjega meseca (Vadnica deluje naprej).
-  studentSoftUsd: () => num("STEMMIND_STUDENT_SOFT_USD", 1),
-  studentMonthlyUsd: () => num("STEMMIND_STUDENT_MONTHLY_USD", 3),
+  studentSoftUsd: () => num("KOMPRENO_STUDENT_SOFT_USD", 1),
+  studentMonthlyUsd: () => num("KOMPRENO_STUDENT_MONTHLY_USD", 3),
   // Koliko odgovorov zmogljivejšega modela (Opus) na učenca na dan.
-  dailyDeep: () => num("STEMMIND_DAILY_DEEP", 5),
+  dailyDeep: () => num("KOMPRENO_DAILY_DEEP", 5),
   alertRatio: 0.8,
-  historyTurns: () => num("STEMMIND_HISTORY_TURNS", 10),
+  historyTurns: () => num("KOMPRENO_HISTORY_TURNS", 10),
   // Zmogljivejši model dobi samo zadnje izmenjave (njegov predpomnilnik je ločen, vsak žeton je drag).
-  deepHistoryTurns: () => num("STEMMIND_DEEP_HISTORY_TURNS", 3),
+  deepHistoryTurns: () => num("KOMPRENO_DEEP_HISTORY_TURNS", 3),
   // Tekmovanja: privzeto hitri model z več razmisleka; 1 = vedno zmogljivejši model (prej).
-  competitionDeep: () => process.env.STEMMIND_COMPETITION_DEEP === "1",
+  competitionDeep: () => process.env.KOMPRENO_COMPETITION_DEEP === "1",
 };
 
 // Za prikaz v evrih (Claude API zaračunava v dolarjih).
-export const EUR_PER_USD = () => num("STEMMIND_EUR_PER_USD", 0.87);
+export const EUR_PER_USD = () => num("KOMPRENO_EUR_PER_USD", 0.87);
 
 // Opombe, ko je zmogljivejši model nadomeščen s hitrejšim (pokažejo se nad odgovorom).
 export const NOTES = {
@@ -58,7 +59,7 @@ export class Usage {
     const month = this.monthTotal();
     const budget = LIMITS.monthlyBudgetUsd();
     if (budget && month >= budget * LIMITS.alertRatio && month - cost < budget * LIMITS.alertRatio) {
-      console.warn(`[stemmind] OPOZORILO: porabljenih ${Math.round((month / budget) * 100)} % mesečnega proračuna (${month.toFixed(2)} $).`);
+      console.warn(`[kompreno] OPOZORILO: porabljenih ${Math.round((month / budget) * 100)} % mesečnega proračuna (${month.toFixed(2)} $).`);
     }
     return cost;
   }

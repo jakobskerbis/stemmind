@@ -19,7 +19,7 @@ Vse barve so spremenljivke v `public/style.css` (`:root`, temni način pod njim)
 
 ## Slogi (Nastavitve → Videz → Slog)
 
-Trije slogi iz osnutka »STEMMind UI« (2026-10-29). `theme.js` nastavi `data-style` na `<html>` in osnovne barve sloga; lastne barve uporabnika veljajo nad njimi.
+Trije slogi iz osnutka »Kompreno UI« (2026-10-29). `theme.js` nastavi `data-style` na `<html>` in osnovne barve sloga; lastne barve uporabnika veljajo nad njimi.
 
 | Slog | Pisava | Oblike | Barve |
 |---|---|---|---|
@@ -118,7 +118,7 @@ Koda je v `public/graph/` (`math.js` razčlenjevalnik, odvodi in integrali; `mod
 Isti zaslon kot grafični kalkulator ima zgoraj preklopnik `.calc-modes`: Znanstveni | Grafični | Orodja | PSE | Formule. Koda: `public/graph/scicore.js` (računanje, ulomki, oblike zapisa, konstante, enote), `sci.js` (znanstveni kalkulator in pretvornik enot), `toolscore.js` (statistika, kompleksna števila, polinomi, matrike, številski sistemi, molska masa), `chemcore.js` (urejanje enačb, stehiometrija, pH, koncentracije, topnost), `probcore.js` (porazdelitve), `anacore.js` (odvod, ničle, limita, Taylor, vektorji, diferencialne enačbe, merske napake), `plot3d.js` (3D graf), `tools.js` + `tools-chem.js`, `tools-prob.js`, `tools-ana.js` (zaslon orodij, PSE, formule), `pse-data.js` in `pse-extra.js` (118 elementov). Zbirke formul so v `content/formulas/*.md`, strežnik jih da prek `/api/formulas?book=KEM-OS`. Vse teče v brskalniku, brez API.
 
 - **Kje se odpre**: zavihek »Kalkulator«; gumb s kalkulatorjem v Učni poti (ob naslovu), na zaslonu teme (ob »Nazaj«), pod nalogo in v glavi Inštruktorja. Od tam se odpre kot prekrivni zaslon in ne zapusti strani; Esc ali puščica nazaj ga zapre.
-- **Privzeti način**: zadnji uporabljeni (`stemmind.calcMode`). Pri kemiji (predmet teme ali profila KEM) se odpre PSE. Če naloga vsebuje funkcijo za risanje, se odpre Grafični z vpisanimi izrazi. Formule pokažejo zbirko za predmet in stopnjo (OŠ/SŠ) učenca.
+- **Privzeti način**: zadnji uporabljeni (`kompreno.calcMode`). Pri kemiji (predmet teme ali profila KEM) se odpre PSE. Če naloga vsebuje funkcijo za risanje, se odpre Grafični z vpisanimi izrazi. Formule pokažejo zbirko za predmet in stopnjo (OŠ/SŠ) učenca.
 - **Znanstveni**: na računalniku zgodovina levo, tipkovnica desno (360–460 px); do 860 px zgodovina zgoraj, tipkovnica spodaj (funkcijske tipke 38 px, številke 46 px). Rezultat je točen, kadar se da (ulomek, koren, večkratnik π), in decimalen. Dotik izraza v zgodovini ga vrne v vnos, dotik rezultata ga vstavi.
 - **Vstavljanje**: vsako orodje ima »V kalkulator«, ki preklopi na Znanstveni in vstavi vrednost (npr. molska masa iz PSE).
 - **PSE**: 18 stolpcev, na telefonu se pomika vodoravno. Barve skupin so podatkovne barve z besedilno legendo (nikoli samo barva). Lantanoidi in aktinoidi so v ločenih vrsticah spodaj.
@@ -142,7 +142,7 @@ Razdelek IGRE (`public/games/`, slog `public/games.css`, strežnik `server/games
 - **Senzorji**: igra z `sensors: true` bere nagib (`G.tilt`, umerjen ob začetku in po premoru) in tresenje (`shake()`); dovoljenje na iPhonu se zahteva ob kliku »Igraj«. Brez senzorjev (računalnik, zavrnjeno dovoljenje) se igra z dotikom, miško ali tipkami.
 - **Naloge** so kratke in v simbolih (`−`, `²`, `√`, `∫`, `{…}` za množico rešitev), ker se izrišejo na predmetu v igri. Napačni odgovori so tipične napake, nikoli enaki pravilnemu. `test/games.test.js` preveri vse pojme na vseh treh stopnjah.
 - **Označena pot** (`unlock.js`, `docs/igre-smernice.md` §11): zapora iger je izklopljena (j 2026-10-29: »Odstrani zaporo iger«, `LOCKS_ON = false`), vse igre so odprte. Igre, ki so učencu zdaj najbolj v pomoč (snov zna, iz njegovega ali prejšnjega razreda ali obvladana na učni poti, naslednja po hitrosti: mirna → srednja → hitra), imajo zlat rob in kompas, so prve v vsakem področju, nad mrežo pa je kratka razlaga.
-- **Težavnost**: vsaka igra se začne na stopnji 1 (ali na zadnji doseženi pri pojmu); 5 pravilnih zapored → težje, 2 napačna → lažje. Hitrost izbere učenec (Počasi/Srednje/Hitro, privzeto Počasi, `stemmind.gamePace`) in z odgovori naraste največ za polovico; prvo vprašanje pride po kratkem premoru.
+- **Težavnost**: vsaka igra se začne na stopnji 1 (ali na zadnji doseženi pri pojmu); 5 pravilnih zapored → težje, 2 napačna → lažje. Hitrost izbere učenec (Počasi/Srednje/Hitro, privzeto Počasi, `kompreno.gamePace`) in z odgovori naraste največ za polovico; prvo vprašanje pride po kratkem premoru.
 - **Zgodbe**: vsaka vrsta igre ima junaka in 4 poglavja (`story: { sl, en }` v `engines.js`); novo poglavje se odklene vsakih 8 pravilnih: igra se ne ustavi, pokaže se le kratek napis in nove barve prizora. Zgodba je ena kratka vrstica na začetni kartici (j: »naj bodo igre preproste«). Nova vrsta igre potrebuje zgodbo (test to preveri).
 - **Videz stare flash igre**: debele temne obrobe (`--gm-ink`), risankasti prelivi, sončni žarki na naslovni kartici, izbočeni gumbi, obrobljen tekst in 8-bitni zvoki.
 - **Učenje**: ob napaki se v glavi pokaže pravilni odgovor (pri igrah, kjer lahko poskusiš znova, le »Poskusi znova«), naslednje vprašanje pride šele čez ~2 s, na koncu seznam »Ponovi« (naloga → pravilni odgovor).
