@@ -44,7 +44,7 @@ const toEffort = (e) => (["low", "medium", "high"].includes(e) ? e : e === "xhig
 export function runClaude({ system, prompt, schema = null, model, effort = "medium", timeoutMs = 600_000 }) {
   const c = findClaude();
   if (!c) throw new Error("Claude Code (ukaz `claude`) ni nameščen ali ni v PATH. Namesti: npm install -g @anthropic-ai/claude-code, nato `claude` in prijava.");
-  const args = [...c.pre, "-p", "--bare", "--tools", "", "--no-session-persistence", "--output-format", "json", "--model", model, "--effort", toEffort(effort)];
+  const args = [...c.pre, "-p", "--tools", "", "--no-session-persistence", "--output-format", "json", "--model", model, "--effort", toEffort(effort)];
   if (system) args.push("--system-prompt", system);
   if (schema) args.push("--json-schema", JSON.stringify(schema));
   // Brez API ključa v okolju, sicer bi Claude Code zaračunal API namesto naročnine.
