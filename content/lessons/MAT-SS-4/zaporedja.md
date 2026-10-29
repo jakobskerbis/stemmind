@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Žogo spustiš z višine $2\,\text{m}$. Vsakič se odbije do polovice prejšnje višine: $2$, $1$, $0{,}5$, $0{,}25$ … metra. Višine so urejene po vrsti: prvi odboj, drugi, tretji. Vsaka je manjša od prejšnje, nobena ni negativna, in čim dlje čakaš, tem bližje so ničli.
+Žogo spustiš z višine $2\,\text{m}$. Vsakič se odbije do polovice prejšnje višine: $2$, $1$, $0{,}5$, $0{,}25$ … metra. Višine so urejene po vrsti: začetna višina, prvi odboj, drugi odboj … Vsaka je manjša od prejšnje, nobena ni negativna, in čim dlje čakaš, tem bližje so ničli.
 
 Tri opažanja, ki jih nosi ta primer, so natanko teme te lekcije: **monotonost** (višine se zmanjšujejo), **omejenost** (vse so med $0$ in $2$) in **limita** (približujejo se $0$). Zaporedja srečaš povsod, kjer se nekaj ponavlja v korakih: mesečni prihranki, število bakterij po urah, približki števila $\pi$ ali $\sqrt{2}$ na računalu. Limita zaporedja je tudi vrata v višjo matematiko: na njej stojita limita funkcije in odvod.
 
@@ -208,11 +208,11 @@ Med vsemi zgornjimi mejami navzgor omejenega zaporedja obstaja najmanjša, **nat
 ## Preveri se
 
 ? Kdaj je zaporedje $(a_n)$ navzgor omejeno?
-- Ko je njegov prvi člen največji.
-~ To velja za padajoča zaporedja, ni pa definicija. Omejeno je lahko tudi naraščajoče zaporedje, na primer $2 - \frac{1}{n}$.
+- Ko obstaja $M$, da je $a_n \le M$ za vsaj en $n$.
+~ Tak $M$ obstaja za vsako zaporedje (vzemi $M = a_1$). Meja mora veljati za vse člene hkrati.
 + Ko obstaja $M$, da je $a_n \le M$ za vsak $n$.
-- Ko ima limito, ki je enaka nekemu členu.
-~ Doseženost limite ni povezana z omejenostjo. Omejenost pomeni, da noben člen ne preseže neke meje $M$.
+- Ko so vsi njegovi členi pozitivni.
+~ To pomeni navzdol omejeno z $0$. Navzgor je lahko neomejeno, na primer $a_n = n$.
 > Zgornja meja $M$ mora biti nad vsemi členi hkrati; doseči je ni treba.
 
 ? Zaporedje $a_n = (-1)^n$ je omejeno. Ali je konvergentno?

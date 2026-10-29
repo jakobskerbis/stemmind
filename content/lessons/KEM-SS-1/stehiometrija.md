@@ -85,7 +85,7 @@ $m = n \cdot M$
 4. Množino pretvorimo v maso, ker nas zanima masa: $M(\mathrm{H_2O}) = 2 \cdot 1 + 16 = 18\,\text{g/mol}$, zato $m(\mathrm{H_2O}) = 2{,}0\,\text{mol} \cdot 18\,\text{g/mol} = 36\,\text{g}$.
 5. **Odgovor:** nastane $36\,\text{g}$ vode.
 
-### Primer 2: razmerje ni 1 : 1
+### Primer 2: enake množine, različne mase
 
 Pri segrevanju apnenca razpade kalcijev karbonat:
 
@@ -110,7 +110,7 @@ $m = n \cdot M$
 2. Maso pretvorimo v množino, ker koeficienti veljajo za mole: $n(\mathrm{CaCO_3}) = \dfrac{50\,\text{g}}{100\,\text{g/mol}} = 0{,}50\,\text{mol}$.
 3. Vsi koeficienti so $1$, zato nastane po $0{,}50\,\text{mol}$ vsakega produkta.
 4. Mase: $M(\mathrm{CaO}) = 40 + 16 = 56\,\text{g/mol}$, torej $m(\mathrm{CaO}) = 0{,}50\,\text{mol} \cdot 56\,\text{g/mol} = 28\,\text{g}$. $M(\mathrm{CO_2}) = 12 + 2 \cdot 16 = 44\,\text{g/mol}$, torej $m(\mathrm{CO_2}) = 0{,}50\,\text{mol} \cdot 44\,\text{g/mol} = 22\,\text{g}$.
-5. **Preverimo z zakonom o ohranitvi mase:** $28\,\text{g} + 22\,\text{g} = 50\,\text{g}$, kar je enako začetni masi. Mol produkta torej nima enake mase kot mol reaktanta, množini pa sta enaki.
+5. **Preverimo z zakonom o ohranitvi mase:** $28\,\text{g} + 22\,\text{g} = 50\,\text{g}$, kar je enako začetni masi. Množine vseh treh snovi so enake ($0{,}50\,\text{mol}$), mase pa ne, ker ima vsaka snov drugačno molsko maso.
 6. **Odgovor:** nastane $28\,\text{g}$ $\mathrm{CaO}$ in $22\,\text{g}$ $\mathrm{CO_2}$.
 
 ### Primer 3 (težji): prebitni reaktant

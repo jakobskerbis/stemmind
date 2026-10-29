@@ -161,7 +161,7 @@ Bolj polarna je vez $\mathrm{O{-}H}$ ($1{,}2 > 0{,}8$). Obe vezi sta polarni kov
 ## Pogoste napake
 
 - **Zamenjava smeri trenda.** Elektronegativnost raste *proti desni in navzgor*. Najbolj elektronegativen je fluor (zgoraj desno, brez žlahtnih plinov), ne cezij ali francij.
-- **»Več elektronov, večji atom.«** Napačno: »$\mathrm{Cl}$ ima več elektronov kot $\mathrm{Na}$, zato je večji.« V isti periodi se število lupin ne spremeni, naboj jedra pa raste, zato se atom manjša. Polmer odloča predvsem število lupin, šele nato naboj jedra.
+- **»Več elektronov, večji atom.«** Napačno: »$\mathrm{Cl}$ ima več elektronov kot $\mathrm{Na}$, zato je večji.« V isti periodi se število lupin ne spremeni, naboj jedra pa raste, zato se atom manjša. O polmeru odloča predvsem število lupin, šele nato naboj jedra.
 - **Mešanje polmera in elektronegativnosti.** Po periodi se polmer *manjša*, elektronegativnost pa *veča*. Trenda sta nasprotna, zato ju ne prenašaj z ene lastnosti na drugo.
 - **Napačno razmišljanje o številu lupin.** Številka periode pove število lupin, številka skupine pa (pri glavnih skupinah) število valenčnih elektronov, ne obratno. Pri skupinah 13 do 18 je število valenčnih elektronov številka skupine minus $10$.
 - **Pozabljena absolutna vrednost pri $\Delta EN$.** Napačno: »$1{,}3 - 3{,}4 = -2{,}1$ je manj od nič, torej je vez nepolarna.« Razlika je vedno pozitivna: $\Delta EN = |EN_1 - EN_2|$; vrstni red atomov ni pomemben.

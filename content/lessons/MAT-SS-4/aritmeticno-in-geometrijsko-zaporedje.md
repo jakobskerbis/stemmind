@@ -41,7 +41,7 @@ $d = 4$, $a_{10} = 3 + 9 \cdot 4 = 39$. Od prvega do desetega člena je le $9$ k
 
 **3. Vsota aritmetičnega zaporedja.** Z $S_n$ označimo **vsoto prvih $n$ členov**: $S_n = a_1 + a_2 + \ldots + a_n$. Mladi Gauss je baje v nekaj minutah seštel $1 + 2 + \ldots + 100$. Vsoto je zapisal še v obratnem vrstnem redu in seštel člene v parih: $1 + 100$, $2 + 99$, $3 + 98$ … Vsak par da $101$, parov je $100$, kar je dvojna vsota. Torej je vsota $\dfrac{100 \cdot 101}{2} = 5050$.
 
-Isti premislek velja za vsako aritmetično zaporedje, ker se pri prvem členu vsota v paru zmanjša za $d$ toliko, kolikor se pri drugem poveča:
+Isti premislek velja za vsako aritmetično zaporedje, ker se od para do para prvi člen poveča za $d$, drugi pa zmanjša za $d$, zato ima vsak od $n$ parov vsoto $a_1 + a_n$:
 
 $$S_n = \frac{n}{2}\,(a_1 + a_n) = \frac{n}{2}\,\bigl(2a_1 + (n-1)\,d\bigr).$$
 
@@ -156,7 +156,7 @@ $S_6 = 3 \cdot \dfrac{2^6 - 1}{2 - 1} = 3 \cdot 63 = 189$. Preizkus: $3 + 6 + 12
 - **$a_n = a_1 \cdot q^n$.** Ista napaka pri geometrijskem zaporedju: eksponent je $n - 1$, ker je množenj eno manj kot členov. Tudi tu preveri pri $n = 1$: $q^0 = 1$.
 - **Vrsta zaporedja iz prvih dveh členov.** Iz $2, 4$ ne moreš vedeti, ali je naslednji člen $6$ (aritmetično) ali $8$ (geometrijsko). Prav tako zaporedje $1, 2, 4, 8$ ni aritmetično, čeprav je $2 - 1 = 1$. Razliko oziroma količnik preveri pri vseh danih parih.
 - **Gaussova formula za geometrijsko vsoto.** Formula $S_n = \dfrac{n}{2}(a_1 + a_n)$ velja le za aritmetično zaporedje, ker so le tam vsote parov enake. Pri geometrijskem uporabi $S_n = a_1 \cdot \dfrac{q^n - 1}{q - 1}$.
-- **»Geometrijsko zaporedje z velikim $|q|$ vedno narašča.«** Pri $q = -2$ členi $5, -10, 20, -40$ menjajo predznak, zato zaporedje ni monotono. Monotonost določata predznak $q$ in to, ali je $|q|$ večji ali manjši od $1$.
+- **»Geometrijsko zaporedje z velikim $|q|$ vedno narašča.«** Pri $q = -2$ členi $5, -10, 20, -40$ menjajo predznak, zato zaporedje ni monotono. Pri $a_1 > 0$ monotonost določata predznak $q$ in to, ali je $|q|$ večji ali manjši od $1$.
 
 ## Povzetek
 

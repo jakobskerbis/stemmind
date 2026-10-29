@@ -150,7 +150,7 @@ $m = n \cdot M = 0{,}5\,\mathrm{mol} \cdot 56\,\mathrm{g/mol} = 28\,\mathrm{g}$.
 - **Mešanje mase in množine.** Masa $m$ je v gramih, množina $n$ v molih. $36\,\mathrm{g}$ vode ni $36\,\mathrm{mol}$ vode. Prav tako $1\,\mathrm{mol}$ vode in $1\,\mathrm{mol}$ železa nimata enake mase ($18\,\mathrm{g}$ in $56\,\mathrm{g}$), imata pa enako število delcev.
 - **Napačno upoštevanje indeksov v formuli.** Pri $\mathrm{CO_2}$ je $M = 12 + 2 \cdot 16 = 44\,\mathrm{g/mol}$, ne $12 + 16 = 28$ (pozabljen indeks) in ne $2 \cdot (12 + 16) = 56$. Indeks velja le za atom, za katerim stoji.
 - **Obrnjena ali pomnožena formula.** Kdor si zapomni le, da »nastopata $m$ in $M$«, izračuna $M/m$ ali $m \cdot M$. Pravilno je $n = m/M$. Preveri enote: rezultat mora biti v molih.
-- **Mol molekul ni mol atomov.** Napačno: »$1{,}5\,\mathrm{mol}$ vode ima $1{,}5\,\mathrm{mol}$ vodika.« En mol molekul $\mathrm{H_2O}$ vsebuje $1\,\mathrm{mol}$ molekul, a $2\,\mathrm{mol}$ atomov vodika in $1\,\mathrm{mol}$ atomov kisika. Množino molekul pomnoži z indeksom.
+- **Mol molekul ni mol atomov.** Napačno: »$1{,}5\,\mathrm{mol}$ vode ima $1{,}5\,\mathrm{mol}$ atomov vodika.« En mol molekul $\mathrm{H_2O}$ vsebuje $1\,\mathrm{mol}$ molekul, a $2\,\mathrm{mol}$ atomov vodika in $1\,\mathrm{mol}$ atomov kisika. Množino molekul pomnoži z indeksom.
 - **Napačno računanje s potencami.** Pri $n \cdot N_A$ pomnožiš števili ($0{,}5 \cdot 6{,}022$) in potenco $10^{23}$ pustiš.
 
 ## Povzetek
