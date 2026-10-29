@@ -100,6 +100,7 @@ export const EXAMS_WEST = {
   //      https://apcentral.collegeboard.org/courses/ap-chemistry/exam (60 MCQ v 90 min, 7 FRQ v 105 min),
   //      https://apcentral.collegeboard.org/courses/ap-biology/exam (60 MCQ v 90 min, 6 FRQ v 90 min).
   // Vsi hibridno digitalni (Bluebook, FRQ na papir); MCQ 4 možnosti, brez negativnih točk.
+  // Uteži sklopov po deležih enot v CED (Calculus AB: enote 2–5 ≈ 50 %, 6 in 8 ≈ 31 %).
   // Calculus BC ima isto obliko in dodatne teme; tu je AB. Vrzeli: slope fields, implicit differentiation
   // posebej (MAT); intermolecular forces, photoelectron spectroscopy (KEM); cell communication (BIO).
   AP: {
@@ -119,11 +120,11 @@ export const EXAMS_WEST = {
             `Differentiation: definition and rules | product, quotient and chain rules => ${M("differentiation")}`,
             `Contextual applications of differentiation | related rates, motion, linearisation => ${M("differentiation")}`,
             `Analytical applications of differentiation | extrema, concavity, optimisation => ${M("differentiation")}`,
-          ], 38],
+          ], 49],
           ["Integration", [
             `Integration and accumulation of change | Riemann sums, Fundamental Theorem => ${M("integration")}`,
             `Applications of integration | area between curves, volumes => ${M("integration")}`,
-          ], 39],
+          ], 31],
           ["Differential equations", [
             `Differential equations | separation of variables, exponential models => ${M("differential-equations")}, ${M("exponential-growth-and-decay")}`,
           ], 9],
@@ -184,7 +185,8 @@ export const EXAMS_WEST = {
   //      https://www.savemyexams.com/learning-hub/exam-guides/how-many-ib-physics-papers/ (fizika 1A: SL 25, HL 40 MCQ),
   //      https://www.savemyexams.com/learning-hub/exam-guides/how-many-ib-biology-papers/ (biologija 1A: SL 30, HL 40),
   //      https://www.revisiondojo.com/blog/ib-exam-structure-explained (Math AA: P1 brez računala, P2 z računalom, HL P3).
-  // Math AA nima izbirnih vprašanj. Vrzeli: proof, kinematika z analizo (MAT); relativity, greenhouse effect (FIZ);
+  // Math AA nima izbirnih vprašanj. Oznake tem pri biologiji in kemiji so iz vodnikov 2025 (A1–D4, S1–R3).
+// Vrzeli: proof, kinematika z analizo (MAT); relativity, greenhouse effect (FIZ);
   // entropy (KEM, delno v thermochemistry); neurobiology, homeostasis podrobno (BIO delno v human-physiology).
   IB: {
     name: "IB Diploma",
@@ -229,6 +231,7 @@ export const EXAMS_WEST = {
         units: [
           ["A. Space, time and motion", [
             `A.1–A.2 Kinematics, forces and momentum | projectiles, Newton's laws, impulse => ${F("kinematics")}, ${F("projectile-motion")}, ${F("laws-of-motion")}, ${F("momentum-and-collisions")}`,
+            `A.2 Buoyancy and viscous drag | Archimedes' principle, Stokes' law => ${F("fluids-and-buoyancy")}`,
             `A.3 Work, energy and power | efficiency => ${F("work-energy-and-power")}`,
             `A.4 Rigid body mechanics (HL) | torque, angular momentum => ${F("rotational-motion")}`,
           ], 27],
@@ -259,6 +262,7 @@ export const EXAMS_WEST = {
           ], 18],
           ["Structure 2. Models of bonding and structure", [
             `S2.1–S2.4 Ionic, covalent and metallic bonding | VSEPR, polarity, hybridisation => ${K("chemical-bonding")}`,
+            `S2.4 From models to materials: polymers | addition and condensation polymers => ${K("polymers")}`,
           ], 15],
           ["Structure 3. Classification of matter", [
             `S3.1 The periodic table | trends, transition elements => ${K("periodic-table-and-periodic-properties")}, ${K("s-p-d-and-f-block-elements")}`,
@@ -283,23 +287,23 @@ export const EXAMS_WEST = {
       BIO: {
         units: [
           ["A. Unity and diversity", [
-            `A.1 Water, nucleic acids and origins of cells | DNA structure => ${Bi("molecular-basis-of-inheritance")}`,
-            `A.2–A.3 Cells and diversity of organisms | cell structure, classification => ${Bi("cell-structure-and-biomolecules")}, ${Bi("diversity-of-living-organisms")}`,
-            `A.4 Evolution and speciation | natural selection => ${Bi("evolution")}`,
+            `A1 Water and nucleic acids | DNA and RNA structure => ${Bi("molecular-basis-of-inheritance")}`,
+            `A2–A3 Cells and diversity of organisms | cell structure, classification => ${Bi("cell-structure-and-biomolecules")}, ${Bi("diversity-of-living-organisms")}`,
+            `A4 Evolution, speciation and biodiversity | evidence, speciation, conservation => ${Bi("evolution")}`,
           ], 25],
           ["B. Form and function", [
-            `B.1–B.2 Molecules and membranes | carbohydrates, proteins, membranes => ${Bi("cell-structure-and-biomolecules")}`,
-            `B.3–B.4 Gas exchange, transport and adaptation | lungs, circulation, xylem and phloem => ${Bi("human-physiology")}, ${Bi("plant-physiology")}`,
+            `B1–B2 Molecules, membranes and organelles | carbohydrates, proteins, membranes => ${Bi("cell-structure-and-biomolecules")}`,
+            `B3 Gas exchange and transport | lungs, circulation, xylem and phloem => ${Bi("human-physiology")}, ${Bi("plant-physiology")}`,
           ], 25],
           ["C. Interaction and interdependence", [
-            `C.1 Enzymes and metabolism | photosynthesis, cell respiration => ${Bi("plant-physiology")}`,
-            `C.2–C.3 Signalling and defence against disease | hormones, nerves, immunity => ${Bi("human-physiology")}, ${Bi("human-health-and-disease")}`,
-            `C.4–C.5 Populations, communities and ecosystems | energy flow => ${Bi("ecology-and-environment")}`,
+            `C1 Enzymes, cell respiration and photosynthesis | metabolism, energy => ${Bi("plant-physiology")}`,
+            `C2–C3 Signalling, body systems and defence | hormones, nerves, immunity => ${Bi("human-physiology")}, ${Bi("human-health-and-disease")}`,
+            `C4 Populations, communities and energy transfer | energy flow => ${Bi("ecology-and-environment")}`,
           ], 25],
           ["D. Continuity and change", [
-            `D.1 DNA replication and protein synthesis | transcription, translation => ${Bi("molecular-basis-of-inheritance")}`,
-            `D.2 Cell division and reproduction | mitosis, meiosis, gametogenesis => ${Bi("cell-cycle-and-cell-division")}, ${Bi("reproduction")}`,
-            `D.3 Inheritance | Mendelian genetics, sex linkage => ${Bi("genetics-and-inheritance")}`,
+            `D1 DNA replication, protein synthesis and mutation | transcription, translation => ${Bi("molecular-basis-of-inheritance")}`,
+            `D2.1 and D3.1 Cell division and reproduction | mitosis, meiosis, gametogenesis => ${Bi("cell-cycle-and-cell-division")}, ${Bi("reproduction")}`,
+            `D3.2 Inheritance | Mendelian genetics, sex linkage => ${Bi("genetics-and-inheritance")}`,
           ], 25],
         ],
         mock: { minutes: 35, groups: [group(6, "choice", 1, 1), group(10, "choice", 2, 1), group(4, "choice", 3, 1)], grades: GRADES_IB },

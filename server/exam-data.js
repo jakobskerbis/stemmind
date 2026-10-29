@@ -189,6 +189,10 @@ const CHEMISTRY_UNITS = [
     `Electrochemistry | cells, electrolysis => ${K("electrochemistry")}`,
   ]],
 ];
+// Skupni sklopi z dodanimi temami enega izpita (vrzeli iz njegovega učnega načrta): { naslov sklopa: [teme] }.
+const withTopics = (units, extra) => units.map(([title, topics, ...rest]) => [title, [...topics, ...(extra[title] || [])], ...rest]);
+// Skupni sklopi z utežmi (deleži v poskusnem izpitu), ko izpit doda svoj sklop.
+const weighted = (units, weights) => units.map(([title, topics], i) => [title, topics, weights[i]]);
 
 // Indija (JEE, NEET, razred 12): skupni sklopi z dvojezičnimi temami iz exam-in-*.js.
 const PHYSICS_UNITS_IN = [
@@ -296,6 +300,7 @@ export const EXAMS = {
             `Quadratic equations | roots and Vieta's formulas => ${M("quadratic-equations")}`,
             `Nonlinear functions | evaluating, composition, inverse => ${M("functions")}`,
             `Exponential functions | growth and decay => ${M("exponential-growth-and-decay")}`,
+            `Radicals and rational exponents | equivalent forms, rationalising => ${M("indices-and-surds")}`,
           ], 35],
           ["Problem-solving and data analysis", [
             `Ratios, rates and percentages | percent change, ratios => ${M("ratios-rates-and-percentages")}, MAT-OS-7/odstotni-racun`,
@@ -308,6 +313,7 @@ export const EXAMS = {
             "Lines, angles and triangles | angle sums, similar triangles => MAT-OS-7/vrste-trikotnikov-in-notranji-koti, MAT-OS-9/podobni-trikotniki",
             `Right triangles and trigonometry | Pythagoras, SOH CAH TOA => ${M("right-triangle-trigonometry")}, MAT-OS-8/pitagorov-izrek`,
             `Circles | area, sectors, equation of a circle => ${M("circles")}`,
+            `Circle theorems | inscribed and central angles, tangents => ${M("circle-theorems")}`,
           ], 15],
         ],
         mock: { minutes: 35, groups: [group(5, "choice", 1, 1), group(8, "choice", 2, 1), group(3, "choice", 3, 1), group(3, "numeric", 2, 1), group(3, "numeric", 3, 1)], scale: [200, 800] },
@@ -344,11 +350,16 @@ export const EXAMS = {
           ["Analytic and solid geometry", [
             `Lines and circles | slope, distance, equation of a circle => ${M("coordinate-geometry")}, ${M("circles")}`,
             "Solid geometry | surface area and volume => MAT-SS-3/povrsina-in-prostornina-teles, MAT-OS-9/piramida",
+            `Conic sections | ellipse, hyperbola, parabola => ${M("conic-sections")}`,
           ], 15],
           ["Probability and statistics", [
             `Counting | permutations and combinations => ${M("permutations-and-combinations")}`,
             `Probability | classical probability => ${M("probability")}`,
             `Statistics | mean, median => ${M("statistics-mean-median")}`,
+            `Binomial theorem | general term, coefficients => ${M("binomial-theorem")}`,
+            `Variance and standard deviation | sample variance => ${M("measures-of-dispersion")}`,
+            `Paired data | correlation coefficient, linear regression => ${M("correlation-and-regression")}`,
+            `Normal distribution | 3σ rule, normal probabilities => ${M("normal-distribution")}`,
           ], 10],
           ["Derivatives", [`Derivatives and their applications | tangents, monotonicity, extrema => ${M("differentiation")}`], 10],
         ],
@@ -974,6 +985,7 @@ export const EXAMS = {
         units: [
           ["Number", [
             `Percentages and compound interest | percent change, repeated percentage change => ${M("ratios-rates-and-percentages")}, ${M("exponential-growth-and-decay")}`,
+            `Indices and surds | fractional and negative indices, rationalising denominators => ${M("indices-and-surds")}`,
           ], 15],
           ["Algebra", [
             `Quadratic equations | factorising, formula => ${M("quadratic-equations")}`,
@@ -990,6 +1002,7 @@ export const EXAMS = {
           ["Geometry and measures", [
             `Pythagoras and trigonometry | SOH CAH TOA => ${M("right-triangle-trigonometry")}`,
             `Circles | area, sectors, equation of a circle => ${M("circles")}`,
+            `Circle theorems | angles in a circle, cyclic quadrilaterals, tangents => ${M("circle-theorems")}`,
           ], 20],
           ["Probability and statistics", [
             `Probability | tree diagrams, without replacement => ${M("probability")}`,
@@ -1003,6 +1016,7 @@ export const EXAMS = {
           ["Energy and particles", [
             `Energy | kinetic and potential energy, power => ${F("work-energy-and-power")}`,
             `Particle model of matter | specific heat capacity, gas pressure => ${F("thermal-physics")}`,
+            `Density and pressure in fluids | density, pressure at depth => ${F("density-and-pressure")}`,
           ]],
           ["Electricity and magnetism", [
             `Electricity | series and parallel circuits, power => ${F("current-electricity")}`,
@@ -1036,6 +1050,11 @@ export const EXAMS = {
             `Rate of reaction | rate, half-life => ${K("chemical-kinetics")}`,
             `Reversible reactions and equilibrium | equilibrium position => ${K("chemical-equilibrium")}`,
           ]],
+          ["Organic chemistry, resources and the atmosphere", [
+            `Polymers | addition and condensation polymers => ${K("polymers")}`,
+            `Using resources | Haber process, extraction of metals, yield => ${K("industrial-chemistry")}`,
+            `Chemistry of the atmosphere | greenhouse gases, pollutants => ${K("environmental-chemistry")}`,
+          ]],
         ],
         mock: { minutes: 35, groups: [group(6, "choice", 1, 1), group(6, "numeric", 2, 3), group(4, "numeric", 3, 4)], grades: GRADES_GCSE },
       },
@@ -1060,11 +1079,15 @@ export const EXAMS = {
             `Differentiation | tangents, stationary points => ${M("differentiation")}`,
             `Integration | definite integrals, areas => ${M("integration")}`,
             `Vectors | magnitude, scalar product => ${M("vectors")}`,
+            `Binomial expansion | (a + b)^n, general term => ${M("binomial-theorem")}`,
           ], 67],
           ["Statistics", [
             `Probability | conditional probability, complement => ${M("probability")}`,
             `Binomial distribution | B(n, p), cumulative probabilities => ${M("binomial-distribution")}`,
             `Data | mean, median => ${M("statistics-mean-median")}`,
+            `Measures of spread | variance, standard deviation => ${M("measures-of-dispersion")}`,
+            `Correlation and regression | PMCC, regression line => ${M("correlation-and-regression")}`,
+            `Normal distribution | standardising, normal probabilities => ${M("normal-distribution")}`,
           ], 17],
           ["Mechanics", [
             `Kinematics | constant acceleration => ${F("kinematics")}, ${F("projectile-motion")}`,
@@ -1074,11 +1097,24 @@ export const EXAMS = {
         mock: { minutes: 50, groups: [group(5, "numeric", 2, 4), group(10, "numeric", 3, 6)], grades: GRADES_ALEVEL },
       },
       FIZ: {
-        units: PHYSICS_UNITS,
+        units: withTopics(PHYSICS_UNITS, {
+          Mechanics: [
+            `Measurements and their errors | SI units, uncertainties => ${F("units-measurement-and-errors")}`,
+            `Materials | stress, strain, Young's modulus => ${F("elasticity")}`,
+          ],
+          "Oscillations, waves and heat": [`Superposition and interference | double slit, diffraction => ${F("wave-optics")}`],
+        }),
         mock: { minutes: 45, groups: [group(10, "choice", 2, 1), group(5, "numeric", 2, 4), group(5, "numeric", 3, 6)], grades: GRADES_ALEVEL },
       },
       KEM: {
-        units: CHEMISTRY_UNITS,
+        units: [
+          ...weighted(CHEMISTRY_UNITS, [25, 40]),
+          ["Organic chemistry", [
+            `Organic nomenclature and isomerism | functional groups, structural and stereoisomers => ${K("organic-chemistry-nomenclature-and-isomerism")}`,
+            `Organic reactions | mechanisms, reagents => ${K("organic-chemistry-reactions")}`,
+            `Polymers | addition and condensation polymers => ${K("polymers")}`,
+          ], 35],
+        ],
         mock: { minutes: 45, groups: [group(10, "choice", 2, 1), group(5, "numeric", 2, 4), group(5, "numeric", 3, 6)], grades: GRADES_ALEVEL },
       },
     },
@@ -1175,6 +1211,7 @@ export const EXAMS = {
           ], 25],
           ["Probability and statistics", [
             `Statistics | mean, median => ${M("statistics-mean-median")}`,
+            `Measures of spread | range, quartiles, standard deviation => ${M("measures-of-dispersion")}`,
             `Probability | multi-stage experiments => ${M("probability")}`,
             `Binomial distribution | P(X = k), variance => ${M("binomial-distribution")}`,
           ], 25],
@@ -1307,17 +1344,29 @@ export const EXAMS = {
           ], 20],
           ["Estatística e probabilidade", [
             `Statistics | mean, median => ${M("statistics-mean-median")}`,
+            `Dispersion | variance, standard deviation => ${M("measures-of-dispersion")}`,
             `Counting and probability | combinations, probability => ${M("permutations-and-combinations")}, ${M("probability")}`,
           ], 25],
         ],
         mock: { minutes: 45, groups: [group(5, "choice", 1, 1, 0, 5), group(7, "choice", 2, 1, 0, 5), group(3, "choice", 3, 1, 0, 5)], scale: [300, 900] },
       },
       FIZ: {
-        units: PHYSICS_UNITS,
+        units: withTopics(PHYSICS_UNITS, {
+          Mechanics: [
+            `Hydrostatics | density, pressure, Pascal's principle => ${F("density-and-pressure")}`,
+            `Buoyancy | Archimedes' principle, flotation => ${F("fluids-and-buoyancy")}`,
+          ],
+        }),
         mock: { minutes: 45, groups: [group(5, "choice", 1, 1, 0, 5), group(7, "choice", 2, 1, 0, 5), group(3, "choice", 3, 1, 0, 5)], scale: [300, 900] },
       },
       KEM: {
-        units: CHEMISTRY_UNITS,
+        units: [
+          ...weighted(CHEMISTRY_UNITS, [30, 45]),
+          ["Environment and materials", [
+            `Environmental chemistry | acid rain, greenhouse effect, water treatment => ${K("environmental-chemistry")}`,
+            `Polymers | plastics, natural and synthetic polymers => ${K("polymers")}`,
+          ], 25],
+        ],
         mock: { minutes: 45, groups: [group(5, "choice", 1, 1, 0, 5), group(7, "choice", 2, 1, 0, 5), group(3, "choice", 3, 1, 0, 5)], scale: [300, 900] },
       },
     },
@@ -1336,6 +1385,8 @@ export const EXAMS = {
             `Indices and logarithms | laws of indices, log equations => ${M("logarithms")}`,
             `Percentages, ratio and interest | percent change, compound interest => ${M("ratios-rates-and-percentages")}, ${M("exponential-growth-and-decay")}`,
             `Sequences and series | AP and GP => ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
+            `Surds | simplifying and rationalising surds => ${M("indices-and-surds")}`,
+            `Sets and logical reasoning | Venn diagrams, simple statements => ${M("sets-and-logic")}`,
           ], 25],
           ["Algebraic processes", [
             `Quadratic equations | factorisation, formula => ${M("quadratic-equations")}`,
@@ -1346,20 +1397,35 @@ export const EXAMS = {
             `Circles and mensuration | arcs, sectors, areas => ${M("circles")}`,
             `Trigonometry | ratios, elevation and depression => ${M("right-triangle-trigonometry")}`,
             `Coordinate geometry | gradient, distance => ${M("coordinate-geometry")}`,
+            `Circle theorems | angles in a circle, cyclic quadrilaterals, tangents => ${M("circle-theorems")}`,
           ], 25],
           ["Statistics and probability", [
             `Statistics | mean, median => ${M("statistics-mean-median")}`,
+            `Measures of dispersion | range, variance, standard deviation => ${M("measures-of-dispersion")}`,
             `Probability | simple and combined events => ${M("probability")}`,
           ], 20],
         ],
         mock: { minutes: 40, groups: [group(10, "choice", 1, 1), group(10, "choice", 2, 1), group(5, "choice", 3, 1)], grades: GRADES_WAEC },
       },
       FIZ: {
-        units: PHYSICS_UNITS,
+        units: withTopics(PHYSICS_UNITS, {
+          Mechanics: [
+            `Fluids at rest | density, relative density, pressure in fluids => ${F("density-and-pressure")}`,
+            `Archimedes' principle and flotation | upthrust, law of flotation => ${F("fluids-and-buoyancy")}`,
+            `Elastic properties of solids | Hooke's law, Young's modulus => ${F("elasticity")}`,
+          ],
+        }),
         mock: { minutes: 40, groups: [group(10, "choice", 1, 1), group(10, "choice", 2, 1), group(5, "choice", 3, 1)], grades: GRADES_WAEC },
       },
       KEM: {
-        units: CHEMISTRY_UNITS,
+        units: [
+          ...weighted(CHEMISTRY_UNITS, [30, 50]),
+          ["Industry, environment and macromolecules", [
+            `Chemical industry | Haber and Contact processes, extraction of metals => ${K("industrial-chemistry")}`,
+            `Environmental pollution | air and water pollution => ${K("environmental-chemistry")}`,
+            `Polymers | plastics, rubber, addition and condensation => ${K("polymers")}`,
+          ], 20],
+        ],
         mock: { minutes: 40, groups: [group(10, "choice", 1, 1), group(10, "choice", 2, 1), group(5, "choice", 3, 1)], grades: GRADES_WAEC },
       },
     },
@@ -1379,22 +1445,42 @@ export const EXAMS = {
             `Equations and inequalities | quadratics, simultaneous equations => ${M("quadratic-equations")}, ${M("systems-of-linear-equations")}, ${M("quadratic-inequalities")}`,
             `Sequences and series | AP and GP => ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
             `Matrices and determinants | 2×2 and 3×3 determinants => ${M("matrices-and-determinants")}`,
+            `Surds | simplifying and rationalising => ${M("indices-and-surds")}`,
+            `Sets | set operations, Venn diagrams => ${M("sets-and-logic")}`,
           ]],
           ["Geometry and trigonometry", [
             `Coordinate geometry | gradient, distance, circles => ${M("coordinate-geometry")}, ${M("circles")}`,
             `Trigonometry | ratios, identities => ${M("right-triangle-trigonometry")}, ${M("trigonometric-identities")}`,
+            `Circle geometry | angles in a circle, cyclic quadrilaterals => ${M("circle-theorems")}`,
           ]],
           ["Calculus", [`Differentiation and integration | derivatives, definite integrals => ${M("differentiation")}, ${M("integration")}`]],
-          ["Statistics", [`Statistics and probability | mean, median, counting, probability => ${M("statistics-mean-median")}, ${M("permutations-and-combinations")}, ${M("probability")}`]],
+          ["Statistics", [
+            `Statistics and probability | mean, median, counting, probability => ${M("statistics-mean-median")}, ${M("permutations-and-combinations")}, ${M("probability")}`,
+            `Measures of dispersion | range, mean deviation, variance, standard deviation => ${M("measures-of-dispersion")}`,
+          ]],
         ],
         mock: { minutes: 15, groups: [group(8, "choice", 1, 5), group(8, "choice", 2, 5), group(4, "choice", 3, 5)], scale: [0, 100, 1] },
       },
       FIZ: {
-        units: PHYSICS_UNITS,
+        units: withTopics(PHYSICS_UNITS, {
+          Mechanics: [
+            `Measurements and units | dimensions, significant figures, errors => ${F("units-measurement-and-errors")}`,
+            `Density and pressure | relative density, atmospheric pressure => ${F("density-and-pressure")}`,
+            `Liquids at rest | Archimedes' principle, flotation => ${F("fluids-and-buoyancy")}`,
+            `Elasticity | Hooke's law, Young's modulus => ${F("elasticity")}`,
+          ],
+        }),
         mock: { minutes: 15, groups: [group(8, "choice", 1, 5), group(8, "choice", 2, 5), group(4, "choice", 3, 5)], scale: [0, 100, 1] },
       },
       KEM: {
-        units: CHEMISTRY_UNITS,
+        units: [
+          ...weighted(CHEMISTRY_UNITS, [30, 50]),
+          ["Industry, environment and macromolecules", [
+            `Chemical industry | Haber and Contact processes, extraction of metals => ${K("industrial-chemistry")}`,
+            `Environmental pollution | air and water pollution => ${K("environmental-chemistry")}`,
+            `Polymers | natural and synthetic polymers => ${K("polymers")}`,
+          ], 20],
+        ],
         mock: { minutes: 15, groups: [group(8, "choice", 1, 5), group(8, "choice", 2, 5), group(4, "choice", 3, 5)], scale: [0, 100, 1] },
       },
     },
@@ -1415,25 +1501,41 @@ export const EXAMS = {
             `Commercial arithmetic | percentages, compound interest => ${M("ratios-rates-and-percentages")}, ${M("exponential-growth-and-decay")}`,
             `Sequences and series | AP and GP => ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
             `Matrices | determinants => ${M("matrices-and-determinants")}`,
+            `Surds | simplifying, rationalising the denominator => ${M("indices-and-surds")}`,
+            `Binomial expansion | Pascal's triangle, approximations => ${M("binomial-theorem")}`,
           ]],
           ["Geometry and trigonometry", [
             `Trigonometry | ratios, identities => ${M("right-triangle-trigonometry")}, ${M("trigonometric-identities")}`,
             `Circles and coordinate geometry | arcs, sectors, equation of a circle => ${M("circles")}, ${M("coordinate-geometry")}`,
             `Vectors | magnitude, scalar product => ${M("vectors")}`,
+            `Angle properties of a circle | angles in a circle, cyclic quadrilaterals, tangents => ${M("circle-theorems")}`,
           ]],
           ["Statistics, probability and calculus", [
             `Statistics and probability | mean, median, probability => ${M("statistics-mean-median")}, ${M("probability")}`,
+            `Statistics II | quartiles, variance, standard deviation => ${M("measures-of-dispersion")}`,
             `Differentiation and area | derivatives, area under a curve => ${M("differentiation")}, ${M("integration")}`,
           ]],
         ],
         mock: { minutes: 50, groups: [group(8, "numeric", 1, 2), group(6, "numeric", 2, 3), group(3, "numeric", 3, 5)], grades: GRADES_KCSE },
       },
       FIZ: {
-        units: PHYSICS_UNITS,
+        units: withTopics(PHYSICS_UNITS, {
+          Mechanics: [
+            `Measurement | SI units, significant figures => ${F("units-measurement-and-errors")}`,
+            `Pressure | pressure in fluids, atmospheric pressure, hydraulics => ${F("density-and-pressure")}`,
+            `Floating and sinking and fluid flow | Archimedes' principle, Bernoulli's effect => ${F("fluids-and-buoyancy")}`,
+          ],
+        }),
         mock: { minutes: 45, groups: [group(6, "numeric", 1, 2), group(6, "numeric", 2, 3), group(3, "numeric", 3, 5)], grades: GRADES_KCSE },
       },
       KEM: {
-        units: CHEMISTRY_UNITS,
+        units: [
+          ...weighted(CHEMISTRY_UNITS, [30, 55]),
+          ["Industrial and organic chemistry", [
+            `Nitrogen, sulphur and metals in industry | Haber and Contact processes, extraction of metals => ${K("industrial-chemistry")}`,
+            `Organic chemistry II | polymers and fibres => ${K("polymers")}`,
+          ], 15],
+        ],
         mock: { minutes: 45, groups: [group(6, "numeric", 1, 2), group(6, "numeric", 2, 3), group(3, "numeric", 3, 5)], grades: GRADES_KCSE },
       },
     },
@@ -1444,7 +1546,7 @@ export const EXAMS = {
     country: "South Africa",
     systems: ["ZA"],
     about:
-      "The National Senior Certificate (matric) is written at the end of Grade 12. Mathematics has two 3-hour papers of 150 marks. Physical Sciences has paper 1 (physics) and paper 2 (chemistry), each 3 hours and 150 marks, starting with 10 multiple-choice questions. Results are given as achievement levels from 7 (80–100%) to 1. Organic chemistry is not covered here yet; the level is an estimate.",
+      "The National Senior Certificate (matric) is written at the end of Grade 12. Mathematics has two 3-hour papers of 150 marks. Physical Sciences has paper 1 (physics) and paper 2 (chemistry), each 3 hours and 150 marks, starting with 10 multiple-choice questions. Results are given as achievement levels from 7 (80–100%) to 1. Organic chemistry is covered only through polymers; the level is an estimate.",
     subjects: {
       MAT: {
         units: [
@@ -1458,7 +1560,10 @@ export const EXAMS = {
           ], 50],
           ["Paper 2: statistics, geometry and trigonometry", [
             `Statistics | mean, median => ${M("statistics-mean-median")}`,
+            `Statistics: spread | variance, standard deviation => ${M("measures-of-dispersion")}`,
+            `Regression and correlation | least-squares line, correlation coefficient => ${M("correlation-and-regression")}`,
             `Analytical geometry | lines and circles => ${M("coordinate-geometry")}, ${M("circles")}`,
+            `Euclidean geometry | circle theorems, cyclic quadrilaterals, tangents => ${M("circle-theorems")}`,
             `Trigonometry | identities, special angles => ${M("trigonometric-identities")}, ${M("right-triangle-trigonometry")}`,
           ], 50],
         ],
@@ -1490,6 +1595,8 @@ export const EXAMS = {
             `Chemical equilibrium | Kc, Le Chatelier => ${K("chemical-equilibrium")}`,
             `Acids and bases | pH, titrations => ${K("acids-bases-and-ph")}, ${K("solutions-and-concentration")}`,
             `Electrochemical reactions | galvanic and electrolytic cells => ${K("electrochemistry")}`,
+            `Plastics and polymers | addition and condensation polymerisation => ${K("polymers")}`,
+            `Chemical industry | fertilisers, Haber and Contact processes => ${K("industrial-chemistry")}`,
           ]],
         ],
         mock: { minutes: 45, groups: [group(5, "choice", 1, 2), group(4, "numeric", 2, 4), group(4, "numeric", 3, 6)], grades: GRADES_NSC },

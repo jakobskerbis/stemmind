@@ -4,6 +4,9 @@
 // (vrzeli so zapisane pri vsakem izpitu v komentarju »Vrzeli«).
 // Kjer uradnega opisa formata nismo našli (Ruanda, Etiopija, Zimbabve, nov UCE, BECE), je
 // format v »about« opisan splošno in brez izmišljenih številk.
+// Biologija na ravni O-level in nižje srednje šole (BECE, Ruanda S3) uporablja teme 10. razreda (life-processes,
+// control-and-coordination, how-organisms-reproduce, heredity-and-variation, our-environment); teme razreda 11/12
+// (human-physiology, plant-physiology, reproduction …) ostanejo le pri A-levelu, ESSLCE, NECO in kjer O-level gre dlje.
 import { M, F, K, Bi, group } from "./exam-helpers.js";
 
 // NECTA (uradna lestvica, bango viwango): CSEE A 75–100 … F 0–29; ACSEE A 80–100 … S 35–39, F 0–34.
@@ -125,15 +128,15 @@ export const EXAMS_AFRICA = {
             `Classification of living things | kingdoms, key features => ${Bi("diversity-of-living-organisms")}`,
           ]],
           ["Life processes", [
-            `Nutrition, transport and gaseous exchange | digestion, circulation, respiration => ${Bi("life-processes")}, ${Bi("human-physiology")}, ${Bi("plant-physiology")}`,
-            `Excretion, co-ordination and regulation | kidney, nervous system, hormones => ${Bi("control-and-coordination")}, ${Bi("human-physiology")}`,
+            `Nutrition, transport and gaseous exchange | digestion, circulation, respiration => ${Bi("life-processes")}`,
+            `Excretion, co-ordination and regulation | kidney, nervous system, hormones => ${Bi("control-and-coordination")}, ${Bi("life-processes")}`,
           ]],
           ["Health", [
             `Health and immunity | pathogens, vaccines => ${Bi("human-health-and-disease")}`,
             `HIV, AIDS and STIs | transmission, prevention => ${Bi("human-health-and-disease")}`,
           ]],
           ["Continuity of life and ecology", [
-            `Reproduction and growth | reproduction in plants and animals, cell division => ${Bi("how-organisms-reproduce")}, ${Bi("reproduction")}, ${Bi("cell-cycle-and-cell-division")}`,
+            `Reproduction and growth | reproduction in plants and animals, cell division => ${Bi("how-organisms-reproduce")}, ${Bi("cell-cycle-and-cell-division")}`,
             `Genetics | monohybrid crosses, sex determination => ${Bi("heredity-and-variation")}, ${Bi("genetics-and-inheritance")}`,
             `Evolution | natural selection, evidence => ${Bi("evolution")}`,
             `Balance of nature | food chains, energy flow, conservation => ${Bi("our-environment")}, ${Bi("ecology-and-environment")}`,
@@ -148,7 +151,7 @@ export const EXAMS_AFRICA = {
   //      (format 2025 enak kot 2019), https://necta.go.tz/files/bango viwango Division.pdf (ocene).
   // 142 Advanced Mathematics: P1 3 h, 10 strukturiranih po 10 t.; P2 3 h, A: 4 po 15 t., B: 2 od 4 po 20 t.
   // 131/132/133 P1: 3 h, A: 7 kratkih po 10 t., B: 2 od 3 po 15 t.; P2: 3 h, 5 od 6 po 20 t.; P3 praktični.
-  // Brez izbirnih vprašanj. Vrzeli: calculating devices, hyperbolic functions, numerical methods, logic (MAT);
+  // Brez izbirnih vprašanj. Vrzeli: calculating devices, hyperbolic functions, numerical methods (MAT);
   // environmental physics (FIZ); two-component liquid systems, amines, carbonyl compounds podrobno (KEM);
   // comparative studies of natural groups (BIO, le delno prek raznolikosti).
   ACSEE: {
@@ -159,7 +162,7 @@ export const EXAMS_AFRICA = {
     board: true,
     forLevel: [12, 12],
     about:
-      "The ACSEE is written at the end of Form 6 in English, with no multiple-choice questions. Advanced Mathematics has two 3-hour papers of 100 marks: Paper 1 has ten 10-mark structured questions; Paper 2 has four 15-mark questions and two of four 20-mark questions. Physics, Chemistry and Biology have Paper 1 (seven 10-mark short-answer questions and two of three 15-mark questions), Paper 2 (five of six 20-mark questions) and a practical Paper 3. Grades: A 80–100, B 70–79, C 60–69, D 50–59, E 40–49, S 35–39 (subsidiary), F below 35. The mock covers multi-step calculations; the grade is an estimate, check the latest NECTA format.",
+      "The ACSEE is written at the end of Form 6 in English, with no multiple-choice questions. Advanced Mathematics has two 3-hour papers of 100 marks: Paper 1 has ten 10-mark structured questions; Paper 2 has four 15-mark questions and two of four 20-mark questions. Physics, Chemistry and Biology have Paper 1 (seven 10-mark short-answer questions and two of three 15-mark questions), Paper 2 (five of six 20-mark questions) and a practical Paper 3. Grades: A 80–100, B 70–79, C 60–69, D 50–59, E 40–49, S 35–39 (subsidiary), F below 35. The mock covers multi-step calculations (Biology: objective questions on the same content); the grade is an estimate, check the latest NECTA format.",
     subjects: {
       MAT: {
         units: [
@@ -168,6 +171,7 @@ export const EXAMS_AFRICA = {
             `Linear programming | feasible region, optimal solution => ${M("linear-programming")}`,
             `Statistics | measures of dispersion, grouped data => ${M("measures-of-dispersion")}, ${M("statistics-of-grouped-data")}`,
             `Sets | set operations, Venn diagrams => ${M("sets-and-logic")}`,
+            `Logic | propositions, truth tables => ${M("sets-and-logic")}`,
             `Coordinate geometry I | lines, circles => ${M("coordinate-geometry")}, ${M("circles")}`,
             `Differentiation | rules, tangents, maxima and minima => ${M("differentiation")}`,
             `Integration | definite integrals, areas => ${M("integration")}`,
@@ -265,7 +269,7 @@ export const EXAMS_AFRICA = {
     board: true,
     forLevel: [8, 11],
     about:
-      "Since 2024 the UCE at the end of S4 follows the competence-based lower secondary curriculum. Papers are in English and every item is scenario-based: a real-life situation that you solve in several written steps. The end-of-cycle exam counts 80% and school-based continuous assessment 20%. Results are achievement levels A (exceptional), B (outstanding), C (satisfactory), D (basic) and E (elementary); UNEB publishes no percentage boundaries, so the mock gives no grade. The mock covers multi-step calculations from the syllabus; check UNEB's sample papers for the item layout.",
+      "Since 2024 the UCE at the end of S4 follows the competence-based lower secondary curriculum. Papers are in English and every item is scenario-based: a real-life situation that you solve in several written steps. The end-of-cycle exam counts 80% and school-based continuous assessment 20%. Results are achievement levels A (exceptional), B (outstanding), C (satisfactory), D (basic) and E (elementary); UNEB publishes no percentage boundaries, so the mock gives no grade. The mock covers multi-step calculations (Biology: objective questions on the same content) from the syllabus; check UNEB's sample papers for the item layout.",
     subjects: {
       MAT: {
         units: [
@@ -341,12 +345,12 @@ export const EXAMS_AFRICA = {
             `Classification | kingdoms, vertebrates and invertebrates => ${Bi("diversity-of-living-organisms")}`,
           ]],
           ["Life processes", [
-            `Nutrition, transport and gaseous exchange in humans | digestion, circulation, breathing => ${Bi("life-processes")}, ${Bi("human-physiology")}`,
-            `Plants | photosynthesis, transpiration => ${Bi("plant-physiology")}`,
+            `Nutrition, transport and gaseous exchange in humans | digestion, circulation, breathing => ${Bi("life-processes")}`,
+            `Plants | photosynthesis, transpiration => ${Bi("life-processes")}`,
             `Health and disease | pathogens, immunity, vaccines => ${Bi("human-health-and-disease")}`,
           ]],
           ["Continuity and environment", [
-            `Reproduction | in plants and humans => ${Bi("how-organisms-reproduce")}, ${Bi("reproduction")}`,
+            `Reproduction | in plants and humans => ${Bi("how-organisms-reproduce")}`,
             `Genetics | inheritance, variation => ${Bi("heredity-and-variation")}, ${Bi("genetics-and-inheritance")}`,
             `Ecology | food chains, ecosystems, conservation => ${Bi("our-environment")}, ${Bi("ecology-and-environment")}`,
           ]],
@@ -372,7 +376,7 @@ export const EXAMS_AFRICA = {
     board: true,
     forLevel: [12, 12],
     about:
-      "The UACE at the end of S6 is written in English. From 2026 it follows the abridged A-level curriculum with fewer papers and scenario-based items, each a long multi-step task. Principal Mathematics has two 2-hour papers (Paper 1: one item each on geometry, algebra and calculus; Paper 2: data analysis and probability, and mechanics). Physics Paper 1 (2 h 40 min) has seven 20-mark items of which you answer four; Chemistry Paper 1 (2 h 45 min) and Biology Paper 1 (3 h) follow the same idea, plus a practical paper. Principal subjects are graded A–E, O (subsidiary pass) and F. The mock covers multi-step calculations and gives no grade; check UNEB's latest sample papers.",
+      "The UACE at the end of S6 is written in English. From 2026 it follows the abridged A-level curriculum with fewer papers and scenario-based items, each a long multi-step task. Principal Mathematics has two 2-hour papers (Paper 1: one item each on geometry, algebra and calculus; Paper 2: data analysis and probability, and mechanics). Physics Paper 1 (2 h 40 min) has seven 20-mark items of which you answer four; Chemistry Paper 1 (2 h 45 min) and Biology Paper 1 (3 h) follow the same idea, plus a practical paper. Principal subjects are graded A–E, O (subsidiary pass) and F. The mock covers multi-step calculations (Biology: objective questions on the same content) and gives no grade; check UNEB's latest sample papers.",
     subjects: {
       MAT: {
         units: [
@@ -486,7 +490,7 @@ export const EXAMS_AFRICA = {
   // Vir: https://www.ktpress.rw/2022/08/rwanda-national-examination-body-introduces-new-grading-system/ (lestvica A–F),
   //      https://open-exam-prep.com/practice/rw-nesa-ordinary-level (S3, 3-urni pisni izpiti, NESA),
   //      https://www.mineduc.gov.rw/news-detail/the-ministry-of-education-announces-2024-2025-primary-leaving-and-olevel-national-examination-results
-  // Uradnega opisa zgradbe vprašalnic (oddelki, točke) nismo našli: format opisan splošno.
+  // Uradnega opisa zgradbe vprašalnic (oddelki, točke, trajanje) nismo našli: format opisan splošno.
   RWOL: {
     name: "Rwanda O-level national exam",
     full: "Rwanda Ordinary Level National Examination (S3, NESA)",
@@ -495,7 +499,7 @@ export const EXAMS_AFRICA = {
     board: true,
     forLevel: [7, 9],
     about:
-      "The O-level national examination is set by NESA at the end of S3 and written in English; Mathematics, Physics, Chemistry and Biology and Health Sciences are all compulsory. Papers are written (about 3 hours each) with short and structured questions. Each subject is graded A (70–100%), B (65–69), C (60–64), D (50–59), E (40–49), S (20–39) or F. The mock covers short calculations and objective questions; the grade is an estimate, check NESA's latest papers for the section layout.",
+      "The O-level national examination is set by NESA at the end of S3 and written in English; Mathematics, Physics, Chemistry and Biology and Health Sciences are all compulsory. Each subject is a written paper with short and structured questions. Each subject is graded A (70–100%), B (65–69), C (60–64), D (50–59), E (40–49), S (20–39) or F. The mock covers short calculations and objective questions; the grade is an estimate, check NESA's latest papers for the section layout.",
     subjects: {
       MAT: {
         units: [
@@ -561,13 +565,13 @@ export const EXAMS_AFRICA = {
             `Classification of living things | kingdoms => ${Bi("diversity-of-living-organisms")}`,
           ]],
           ["Human biology and health", [
-            `Human body systems | digestion, circulation, breathing => ${Bi("life-processes")}, ${Bi("human-physiology")}`,
+            `Human body systems | digestion, circulation, breathing => ${Bi("life-processes")}`,
             `Health and diseases | pathogens, prevention => ${Bi("human-health-and-disease")}`,
-            `Reproduction | human and plant reproduction => ${Bi("how-organisms-reproduce")}, ${Bi("reproduction")}`,
+            `Reproduction | human and plant reproduction => ${Bi("how-organisms-reproduce")}`,
           ]],
           ["Plants and environment", [
-            `Plant nutrition | photosynthesis, transport => ${Bi("plant-physiology")}`,
-            `Ecology | food chains, conservation => ${Bi("our-environment")}, ${Bi("ecology-and-environment")}`,
+            `Plant nutrition | photosynthesis, transport => ${Bi("life-processes")}`,
+            `Ecology | food chains, conservation => ${Bi("our-environment")}`,
           ]],
         ],
         mock: { minutes: 30, groups: [group(8, "choice", 1, 1), group(8, "choice", 2, 1), group(4, "choice", 3, 1)], grades: GRADES_NESA },
@@ -585,7 +589,7 @@ export const EXAMS_AFRICA = {
     board: true,
     forLevel: [10, 12],
     about:
-      "The A-level national examination is set by NESA at the end of S6 and written in English; students sit the subjects of their combination (for example MPC, MCB or PCB). Papers are written with short and structured questions; sciences also have a practical. Each subject is graded A (70–100%), B (65–69), C (60–64), D (50–59), E (40–49), S (20–39) or F. The mock covers multi-step calculations; the grade is an estimate, check NESA's latest papers for the section layout.",
+      "The A-level national examination is set by NESA at the end of S6 and written in English; students sit the subjects of their combination (for example MPC, MCB or PCB). Papers are written with short and structured questions; sciences also have a practical. Each subject is graded A (70–100%), B (65–69), C (60–64), D (50–59), E (40–49), S (20–39) or F. The mock covers multi-step calculations (Biology: objective questions on the same content); the grade is an estimate, check NESA's latest papers for the section layout.",
     subjects: {
       MAT: {
         units: [
@@ -675,7 +679,7 @@ export const EXAMS_AFRICA = {
   //      https://shega.co/news/only-84-of-ethiopian-students-pass-university-entrance-exams (50 % za vpis, 2024/25),
   //      https://shega.co/news/addis-ababa-to-administer-grade-12-national-exams-online (na univerzah, papir in spletno).
   // Število vprašanj po predmetih se med viri razlikuje (npr. 65 pri matematiki v vzorčnem izpitu): ni navedeno.
-  // Vrzeli: mathematical reasoning (logika je delno v sets-and-logic), electronics za naravoslovje na ravni ESSLCE.
+  // Vrzeli: dokazovanje (mathematical reasoning je le prek logike v sets-and-logic).
   ESSLCE: {
     name: "Ethiopian Grade 12 national exam",
     full: "Ethiopian Secondary School Leaving Certificate Examination (Grade 12, natural science stream)",
@@ -694,6 +698,7 @@ export const EXAMS_AFRICA = {
             `Equations and inequalities | quadratic equations and inequalities => ${M("quadratic-equations")}, ${M("quadratic-inequalities")}`,
             `Matrices and determinants | inverse, systems => ${M("matrices-and-determinants")}`,
             `Sequences and series | AP, GP => ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
+            `Mathematical reasoning | propositions, truth tables => ${M("sets-and-logic")}`,
           ], 35],
           ["Geometry and trigonometry", [
             `Trigonometric functions | identities, equations => ${M("trigonometric-identities")}, ${M("right-triangle-trigonometry")}`,
@@ -875,12 +880,12 @@ export const EXAMS_AFRICA = {
             `Classification | kingdoms and groups => ${Bi("diversity-of-living-organisms")}`,
           ]],
           ["Life processes", [
-            `Nutrition and transport in plants | photosynthesis, transpiration => ${Bi("plant-physiology")}`,
-            `Human physiology | digestion, respiration, circulation, excretion => ${Bi("life-processes")}, ${Bi("human-physiology")}`,
+            `Nutrition and transport in plants | photosynthesis, transpiration => ${Bi("life-processes")}`,
+            `Human physiology | digestion, respiration, circulation, excretion => ${Bi("life-processes")}, ${Bi("control-and-coordination")}`,
             `Diseases and immunity | pathogens, HIV and AIDS => ${Bi("human-health-and-disease")}`,
           ]],
           ["Continuity and ecology", [
-            `Reproduction | plants and humans => ${Bi("how-organisms-reproduce")}, ${Bi("reproduction")}`,
+            `Reproduction | plants and humans => ${Bi("how-organisms-reproduce")}`,
             `Genetics and evolution | inheritance, variation => ${Bi("heredity-and-variation")}, ${Bi("genetics-and-inheritance")}, ${Bi("evolution")}`,
             `Ecology | ecosystems, conservation => ${Bi("our-environment")}, ${Bi("ecology-and-environment")}`,
           ]],
@@ -974,12 +979,12 @@ export const EXAMS_AFRICA = {
             `Classification | kingdoms => ${Bi("diversity-of-living-organisms")}`,
           ]],
           ["Life processes", [
-            `Plant nutrition and transport | photosynthesis => ${Bi("plant-physiology")}`,
-            `Human systems | digestion, circulation, excretion => ${Bi("life-processes")}, ${Bi("human-physiology")}`,
+            `Plant nutrition and transport | photosynthesis => ${Bi("life-processes")}`,
+            `Human systems | digestion, circulation, excretion => ${Bi("life-processes")}, ${Bi("control-and-coordination")}`,
             `Health and disease | pathogens, immunity => ${Bi("human-health-and-disease")}`,
           ]],
           ["Continuity and ecology", [
-            `Reproduction | plants and humans => ${Bi("how-organisms-reproduce")}, ${Bi("reproduction")}`,
+            `Reproduction | plants and humans => ${Bi("how-organisms-reproduce")}`,
             `Genetics | inheritance => ${Bi("heredity-and-variation")}, ${Bi("genetics-and-inheritance")}`,
             `Ecology | ecosystems => ${Bi("our-environment")}, ${Bi("ecology-and-environment")}`,
           ]],
@@ -998,7 +1003,7 @@ export const EXAMS_AFRICA = {
     board: true,
     forLevel: [12, 12],
     about:
-      "ZIMSEC A-level is written at the end of Form 6 (Upper Six) in English. Pure Mathematics (6042) has two 3-hour written papers; Physics (6032), Chemistry (6031) and Biology (6030) have written theory papers and a practical. Grades go from A to E, then O (subsidiary pass) and F. The mock covers multi-step calculations and gives no grade; check the current ZIMSEC syllabus for each paper.",
+      "ZIMSEC A-level is written at the end of Form 6 (Upper Six) in English. Pure Mathematics (6042) has two 3-hour written papers; Physics (6032), Chemistry (6031) and Biology (6030) have written theory papers and a practical. Grades go from A to E, then O (subsidiary pass) and F. The mock covers multi-step calculations (Biology: objective questions on the same content) and gives no grade; check the current ZIMSEC syllabus for each paper.",
     subjects: {
       MAT: {
         units: [
@@ -1079,10 +1084,11 @@ export const EXAMS_AFRICA = {
   },
 
   // ------------------------------------------------------------ Nigerija in Gana
-  // Vir: https://syllabus.ng/neco/mathematics/ (NECO matematika: P1 50 MCQ v 1½ h za 50 t. + teoretični P2),
+  // Vir: https://syllabus.ng/neco/mathematics/ (učni načrt; navaja P1 50 MCQ v 1½ h, uradni urniki NECO pa imajo za objektivni
+//      del matematike 1 h 45 min, zato je število vprašanj v »about« splošno),
   //      https://nuffic.nl/en/education-systems/nigeria/grades-and-study-results (lestvica A1–F9 velja za WAEC in NECO),
   //      https://nannews.ng/neco-releases-2025-internal-ssce-results-lauds-tinubus-support/
-  // Ni forLevel: privzeti izpit za SS ostane WASSCE. Vrzeli: kot WASSCE (logika, vektorji v ravnini delno).
+  // Ni forLevel: privzeti izpit za SS ostane WASSCE. Vrzeli: transformations, number bases, constructions (MAT).
   NECO: {
     name: "NECO SSCE",
     full: "NECO SSCE – Senior School Certificate Examination (Nigeria)",
@@ -1090,14 +1096,14 @@ export const EXAMS_AFRICA = {
     systems: ["NG"],
     board: true,
     about:
-      "The NECO SSCE is Nigeria's own school-leaving exam at the end of SS 3, taken in June–July (internal) and November–December (external), in English. Each subject has an objective paper of multiple-choice questions (Mathematics: 50 questions in 1½ hours) and an essay paper; the sciences also have a practical. Grades go from A1 (best) to F9 as for WAEC; C6 or better is a credit. The mock covers the objective paper at about its real pace; the grade is an estimate.",
+      "The NECO SSCE is Nigeria's own school-leaving exam at the end of SS 3, taken in June–July (internal) and November–December (external), in English. Each subject has an objective paper of multiple-choice questions (Mathematics: about 50–60 questions, timetabled at 1 h 45 min) and an essay paper; the sciences also have a practical. Grades go from A1 (best) to F9 as for WAEC; C6 or better is a credit. The mock covers the objective paper at about its real pace; the grade is an estimate.",
     subjects: {
       MAT: {
         units: [
           ["Number and numeration", [
             `Indices and logarithms | laws of indices, log equations => ${M("indices-and-surds")}, ${M("logarithms")}`,
             `Percentages, ratio and interest | percent change, compound interest => ${M("ratios-rates-and-percentages")}, ${M("exponential-growth-and-decay")}`,
-            `Sets and sequences | Venn diagrams, AP and GP => ${M("sets-and-logic")}, ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
+            `Sets and sequences | Venn diagrams, logical reasoning, AP and GP => ${M("sets-and-logic")}, ${M("arithmetic-progressions")}, ${M("geometric-progressions")}`,
           ], 25],
           ["Algebraic processes", [
             `Quadratic and simultaneous equations | factorisation, formula, elimination => ${M("quadratic-equations")}, ${M("systems-of-linear-equations")}`,
@@ -1108,9 +1114,11 @@ export const EXAMS_AFRICA = {
             `Mensuration and circles | arcs, sectors, solids, circle theorems => ${M("circles")}, ${M("surface-areas-and-volumes")}, ${M("circle-theorems")}`,
             `Trigonometry | ratios, elevation and depression, sine and cosine rules => ${M("right-triangle-trigonometry")}, ${M("trigonometric-identities")}`,
             `Coordinate geometry | gradient, distance, midpoint => ${M("coordinate-geometry")}`,
+            `Vectors in a plane | components, magnitude, addition => ${M("vectors")}`,
           ], 25],
           ["Statistics and probability", [
             `Statistics | mean, median, grouped data => ${M("statistics-mean-median")}, ${M("statistics-of-grouped-data")}`,
+            `Measures of dispersion | range, variance, standard deviation => ${M("measures-of-dispersion")}`,
             `Probability | simple and combined events => ${M("probability")}`,
           ], 20],
         ],
@@ -1123,6 +1131,7 @@ export const EXAMS_AFRICA = {
             `Forces and momentum | Newton's laws, collisions => ${F("laws-of-motion")}, ${F("momentum-and-collisions")}`,
             `Work, energy, power and machines | efficiency, mechanical advantage => ${F("work-energy-and-power")}, ${F("machines")}`,
             `Equilibrium and pressure | moments, density, flotation => ${F("moments-and-equilibrium")}, ${F("density-and-pressure")}, ${F("fluids-and-buoyancy")}`,
+            `Elastic properties of solids | Hooke's law, Young's modulus => ${F("elasticity")}`,
           ]],
           ["Heat, waves and optics", [
             `Heat | specific heat, latent heat, gas laws => ${F("calorimetry")}, ${F("thermal-physics")}`,
@@ -1153,6 +1162,8 @@ export const EXAMS_AFRICA = {
           ["Inorganic and organic chemistry", [
             `Metals and non-metals | extraction, industrial processes => ${K("metals-and-non-metals")}, ${K("industrial-chemistry")}`,
             `Organic chemistry | hydrocarbons, functional groups => ${K("organic-chemistry-nomenclature-and-isomerism")}, ${K("organic-chemistry-reactions")}`,
+            `Polymers | plastics, rubber, addition and condensation => ${K("polymers")}`,
+            `Chemistry and the environment | air and water pollution => ${K("environmental-chemistry")}`,
           ]],
         ],
         mock: { minutes: 40, groups: [group(10, "choice", 1, 1), group(10, "choice", 2, 1), group(5, "choice", 3, 1)], grades: GRADES_NECO },
@@ -1164,14 +1175,14 @@ export const EXAMS_AFRICA = {
             `Classification of living things | kingdoms => ${Bi("diversity-of-living-organisms")}`,
           ]],
           ["Life processes", [
-            `Nutrition and transport | photosynthesis, digestion, circulation => ${Bi("plant-physiology")}, ${Bi("human-physiology")}`,
-            `Reproduction and growth | reproduction in plants and animals => ${Bi("reproduction")}`,
+            `Nutrition and transport | photosynthesis, digestion, circulation => ${Bi("life-processes")}, ${Bi("plant-physiology")}, ${Bi("human-physiology")}`,
+            `Reproduction and growth | reproduction in plants and animals => ${Bi("how-organisms-reproduce")}, ${Bi("reproduction")}`,
             `Health | diseases, immunity => ${Bi("human-health-and-disease")}`,
           ]],
           ["Genetics, evolution and ecology", [
-            `Genetics | Mendelian inheritance => ${Bi("genetics-and-inheritance")}`,
+            `Genetics | Mendelian inheritance, sex-linked traits => ${Bi("heredity-and-variation")}, ${Bi("genetics-and-inheritance")}`,
             `Evolution | theories, adaptation => ${Bi("evolution")}`,
-            `Ecology | ecosystems, food chains => ${Bi("ecology-and-environment")}`,
+            `Ecology | ecosystems, food chains => ${Bi("our-environment")}, ${Bi("ecology-and-environment")}`,
           ]],
         ],
         mock: { minutes: 40, groups: [group(10, "choice", 1, 1), group(10, "choice", 2, 1), group(5, "choice", 3, 1)], grades: GRADES_NECO },
@@ -1241,9 +1252,9 @@ export const EXAMS_AFRICA = {
         units: [
           ["Living things (Basic Science)", [
             `Living things | classification => ${Bi("diversity-of-living-organisms")}`,
-            `Human body systems | digestion, circulation, breathing => ${Bi("life-processes")}, ${Bi("human-physiology")}`,
-            `Reproduction and health | reproduction, diseases => ${Bi("how-organisms-reproduce")}, ${Bi("reproduction")}, ${Bi("human-health-and-disease")}`,
-            `Environment | ecosystems, pollution => ${Bi("our-environment")}, ${Bi("ecology-and-environment")}`,
+            `Human body systems | digestion, circulation, breathing => ${Bi("life-processes")}`,
+            `Reproduction and health | reproduction, diseases => ${Bi("how-organisms-reproduce")}, ${Bi("human-health-and-disease")}`,
+            `Environment | ecosystems, pollution => ${Bi("our-environment")}`,
           ]],
         ],
         mock: { minutes: 20, groups: [group(8, "choice", 1, 1), group(6, "choice", 2, 1)] },
@@ -1309,9 +1320,9 @@ export const EXAMS_AFRICA = {
         units: [
           ["Living systems (Science)", [
             `Diversity of living things | classification => ${Bi("diversity-of-living-organisms")}`,
-            `Cells and human body systems | cells, digestion, circulation => ${Bi("cell-structure-and-biomolecules")}, ${Bi("life-processes")}, ${Bi("human-physiology")}`,
-            `Reproduction and health | reproduction, diseases => ${Bi("how-organisms-reproduce")}, ${Bi("reproduction")}, ${Bi("human-health-and-disease")}`,
-            `Ecosystems | food chains, conservation => ${Bi("our-environment")}, ${Bi("ecology-and-environment")}`,
+            `Cells and human body systems | cells, digestion, circulation => ${Bi("cell-structure-and-biomolecules")}, ${Bi("life-processes")}`,
+            `Reproduction and health | reproduction, diseases => ${Bi("how-organisms-reproduce")}, ${Bi("human-health-and-disease")}`,
+            `Ecosystems | food chains, conservation => ${Bi("our-environment")}`,
           ]],
         ],
         mock: { minutes: 20, groups: [group(8, "choice", 1, 1), group(6, "choice", 2, 1)] },
