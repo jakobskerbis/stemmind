@@ -1,8 +1,11 @@
-// Simulacije pri naravoslovju (OŠ 6. in 7. razred): razvrščanje s takojšnjo razlago.
+// Razvrščanje s takojšnjo razlago pri naravoslovju (OŠ 6. in 7. razred) in biologiji.
 // Učenec vidi kartico (organ, organizem, pojav …) in izbere skupino; po izbiri dobi razlago,
 // napačne kartice pridejo na vrsto še enkrat na koncu kroga.
 import { s, svgBox, button, buttons, readout, layout, label } from "./kit.js";
-import { SETS } from "./nar-data.js";
+import { SETS as NAR } from "./nar-data.js";
+import { SETS as BIO } from "./bio-data.js";
+
+const SETS = { ...NAR, ...BIO };
 
 function sortSim(el, set) {
   const out = readout();

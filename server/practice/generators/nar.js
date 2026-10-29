@@ -3,7 +3,10 @@
 // 1. stopnja: dve možnosti; 2. stopnja: vse skupine; 3. stopnja: obratno vprašanje
 // (»Kaj od naštetega …?«) s štirimi primeri.
 // Teme, ki se prekrivajo s fiziko in kemijo (»=>« v curriculum-data.js), vzamejo naloge od tam.
-import { SETS } from "../../../public/sim/nar-data.js";
+import { SETS as NAR } from "../../../public/sim/nar-data.js";
+import { SETS as BIO } from "../../../public/sim/bio-data.js";
+
+const SETS = { ...NAR, ...BIO };
 
 const TOPIC_SETS = {
   "NAR-OS-6/naravoslovni-postopki": ["postopki"],
@@ -39,7 +42,8 @@ const TOPIC_SETS = {
 
 const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
 
-function sortTask(set, level, r) {
+// Izbirna naloga iz nabora za razvrščanje (tudi za biologijo, server/practice/generators/bio.js).
+export function sortTask(set, level, r) {
   const def = SETS[set];
   const name = (k) => def.cats.find((c) => c[0] === k)[1];
   // 3. stopnja: kateri primer sodi v izbrano skupino (en pravilen, trije iz drugih skupin).

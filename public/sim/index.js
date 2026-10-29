@@ -127,6 +127,14 @@ export const ENGINES = {
   hitrost: ["kem-reakcije.js", "hitrost"], ravnotezje: ["kem-reakcije.js", "ravnotezje"], disociacija: ["kem-reakcije.js", "disociacija"], galvanski: ["kem-reakcije.js", "galvanski"],
   // naravoslovje (OŠ 6. in 7. razred)
   uvrsti: ["nar.js", "uvrsti"],
+  // biologija
+  krizanje: ["bio.js", "krizanje"],
+  hw: ["bio.js", "hw"],
+  piramida: ["bio.js", "piramida"],
+  populacija: ["bio.js", "populacija"],
+  encim: ["bio.js", "encim"],
+  osmoza: ["bio.js", "osmoza"],
+  dna: ["bio.js", "dna"],
   // kemija: računanje, organska kemija
   mol: ["kem-racun.js", "mol"], stehiometrija: ["kem-racun.js", "stehiometrija"], raztopina: ["kem-racun.js", "raztopina"],
   organska: ["kem-organska.js", "organska"], destilacija: ["kem-organska.js", "destilacija"], polimer: ["kem-organska.js", "polimer"], "organske-reakcije": ["kem-organska.js", "organskeReakcije"],
