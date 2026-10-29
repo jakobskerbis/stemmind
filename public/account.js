@@ -158,7 +158,7 @@ async function continueFlow() {
   if (await route()) await onReadyCb?.();
 }
 
-// Učenca dodaja starš s soglasjem v zavihku Račun, poraba je samo za skrbnika.
+// Učenca dodaja starš s soglasjem v zavihku Račun (porabo AI skrije strežnik vsem razen skrbniku).
 function adjustAppForAccounts() {
   const form = $("#new-student-form");
   if (form) {
@@ -166,8 +166,6 @@ function adjustAppForAccounts() {
     const h = form.closest(".card")?.querySelector("h2");
     if (h) h.textContent = "Profil otroka";
   }
-  const usage = $("#usage")?.closest(".card");
-  if (usage) usage.hidden = !status.parent?.is_admin;
 }
 
 // Ko starš izbriše zadnjega otroka.

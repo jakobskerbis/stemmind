@@ -8,6 +8,7 @@ import { createStreamFilter, parseMeta, parseCards, stripMeta } from "./meta.js"
 import { studentResults } from "./results.js";
 import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
 import { Usage, LIMITS, windowHistory, recentHistory } from "./usage.js";
+import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
@@ -747,7 +748,14 @@ export function createApp(store, opts = {}) {
   mountGraphs(app, store, { loadStudent });
 
   // --- poraba AI ---
-  app.get("/api/usage", (_req, res) => res.json(usage.summary()));
+  // Poraba AI za vse profile: brez računov samo na računalniku, kjer teče strežnik
+  // (ne prek povezave za telefon); z računi tudi skrbnik (preveri accounts/index.js).
+  app.get("/api/usage", (req, res) => {
+    if (!accounts && !isLocalRequest(req)) return res.status(403).json({ error: "Samo za skrbnika." });
+    const claim = !!accounts && isLocalRequest(req) && !req.parent?.is_admin;
+    const sum = usage.summary();
+    res.json({ ...sum, can_claim: claim, advice: pricingAdvice(store.db, sum) });
+  });
   app.get("/api/students/:id/usage", (req, res) => {
     const s = loadStudent(req, res);
     if (s) res.json(usage.studentMonth(s.id));

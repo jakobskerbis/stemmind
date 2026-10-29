@@ -25,7 +25,7 @@ async function withServer(fn) {
   const call = async (path, opts = {}) => {
     const res = await fetch(base + path, {
       method: opts.method || "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
       body: opts.body ? JSON.stringify(opts.body) : undefined,
     });
     const type = res.headers.get("content-type") || "";
@@ -181,6 +181,13 @@ test("path topic start is reused across students; deep goes to Opus with a short
 
     const sum = (await call("/api/usage")).body;
     assert.ok(sum.month_eur > 0);
+    // Števec porabe: danes za vse profile, po profilih.
+    assert.ok(sum.today_eur > 0 && sum.today_calls > 0);
+    assert.equal(sum.can_claim, false);
+    const row = sum.students.find((x) => x.id === s.id);
+    assert.ok(row.today_eur > 0 && row.today_calls === row.calls);
+    // Prek povezave za telefon (tunel doda X-Forwarded-For) porabe brez računov ne vidi nihče.
+    assert.equal((await call("/api/usage", { headers: { "X-Forwarded-For": "1.2.3.4" } })).status, 403);
     assert.ok(sum.per_active_eur > 0);
     assert.ok(sum.by_model.some((m) => m.model === MODEL_DEEP));
     assert.equal(sum.limits.daily_deep, 5);

@@ -21,6 +21,8 @@ const NAMES = [
   "share", "square-plus", "smartphone",
   // kartice za ponavljanje
   "layers",
+  // števec porabe AI (samo skrbnik)
+  "wallet",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

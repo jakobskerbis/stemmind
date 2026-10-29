@@ -1,0 +1,153 @@
+// Predlog mesečne meje AI in cene za skrbnika (števec porabe, public/usage-meter.js).
+// Najprej kakovost (učenci naj meje ne čutijo), nato dobiček. Predlog nič ne spremeni sam:
+// mejo in ceno spremeni skrbnik (meja: STEMMIND_STUDENT_MONTHLY_USD, cena: server/accounts/plans.js).
+
+import { LIMITS, EUR_PER_USD } from "./usage.js";
+import { PLANS } from "./accounts/plans.js";
+
+const VAT = 0.22; // DDV v Sloveniji
+const STRIPE = (eur) => eur * 0.015 + 0.25; // provizija za evropske kartice
+const TARGET_PROFIT_EUR = 6; // cilj: vsaj ~6 € na naročnino na mesec ostane nam
+const MIN_PROFIT_EUR = 4; // tudi učenec, ki porabi vso mejo, prinese vsaj toliko
+const MIN_STUDENTS = 5; // manj aktivnih učencev = premalo podatkov za mejo
+const MIN_TRIALS = 10; // manj končanih preizkusov = premalo podatkov za ceno
+const r2 = (x) => Math.round(x * 100) / 100;
+const fmt = (x) => r2(x).toLocaleString("sl-SI", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+// Kaj od mesečne naročnine za enega otroka ostane po DDV in Stripu.
+export function netOf(priceEur) {
+  return priceEur / (1 + VAT) - STRIPE(priceEur);
+}
+
+// Najvišja meja AI na učenca (v $), pri kateri tudi učenec, ki jo porabi vso, prinese MIN_PROFIT_EUR.
+export function maxLimitUsd(priceEur, eurPerUsd = EUR_PER_USD()) {
+  return Math.max(0, (netOf(priceEur) - MIN_PROFIT_EUR) / eurPerUsd);
+}
+
+// Zanimanje iz starševskih računov (samo z računi): registracije, preizkusi, plačila.
+function interestOf(db, now = Date.now()) {
+  const has = db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'parents'").get();
+  if (!has) return null;
+  const rows = db.prepare("SELECT trial_ends_at, sub_status, created_at, promo_until FROM parents WHERE is_admin = 0").all();
+  const day = 86400000;
+  const ts = (s) => (s ? Date.parse(String(s).includes("T") ? s : String(s).replace(" ", "T") + "Z") : NaN);
+  const paid = (p) => ["active", "trialing", "past_due"].includes(p.sub_status);
+  const promo = (p) => ts(p.promo_until) > now;
+  const recent = rows.filter((p) => ts(p.created_at) > now - 30 * day).length;
+  // Končani preizkusi zadnjih 90 dni (brez aktivacijske kode, ki je brezplačno leto).
+  const ended = rows.filter((p) => !promo(p) && ts(p.trial_ends_at) <= now && ts(p.trial_ends_at) > now - 90 * day);
+  const converted = ended.filter(paid).length;
+  return {
+    signups_30d: recent,
+    trials_now: rows.filter((p) => ts(p.trial_ends_at) > now && !paid(p)).length,
+    trials_ended: ended.length,
+    converted,
+    conversion_pct: ended.length ? Math.round((100 * converted) / ended.length) : null,
+    paying: rows.filter(paid).length,
+    promo: rows.filter(promo).length,
+  };
+}
+
+// sum = Usage.summary(). Vrne { economy, limit, price, interest } z besedili v slovenščini.
+export function pricingAdvice(db, sum, { now = new Date() } = {}) {
+  const eur = sum.eur_per_usd || EUR_PER_USD();
+  const price = (PLANS.find((p) => p.key === "stemmind_1_month")?.amount || 999) / 100;
+  const net = netOf(price);
+  const hard = LIMITS.studentMonthlyUsd();
+  const soft = LIMITS.studentSoftUsd();
+  const day = now.getUTCDate();
+  const daysInMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0)).getUTCDate();
+  const scale = daysInMonth / Math.max(1, day);
+
+  const active = sum.students.filter((s) => s.calls > 0);
+  // Ocena za cel mesec po učencu (pri dnevu 1–2 je ocena groba).
+  const proj = active.map((s) => s.cost_usd * scale).sort((a, b) => a - b);
+  const avgEur = proj.length ? (proj.reduce((a, x) => a + x, 0) / proj.length) * eur : 0;
+  const p90Usd = proj.length ? proj[Math.min(proj.length - 1, Math.floor(proj.length * 0.9))] : 0;
+  const atHard = hard ? sum.students.filter((s) => s.cost_usd >= hard).length : 0;
+  const nearHard = hard ? proj.filter((x) => x >= hard * 0.8).length : 0;
+  const atSoft = soft ? sum.students.filter((s) => s.cost_usd >= soft).length : 0;
+  const profit = net - avgEur;
+  const maxUsd = maxLimitUsd(price, eur);
+
+  const economy = {
+    price_eur: price,
+    net_eur: r2(net),
+    ai_avg_eur: r2(avgEur),
+    profit_eur: r2(profit),
+    margin_pct: Math.round((100 * profit) / price),
+    hard_usd: hard || null,
+    soft_usd: soft || null,
+    max_limit_usd: r2(maxUsd),
+    at_hard: atHard,
+    near_hard: nearHard,
+    at_soft: atSoft,
+    active: active.length,
+  };
+
+  // --- meja: kakovost pred dobičkom ---
+  let limit;
+  if (!hard) limit = { status: "none", text: "Mesečne meje na učenca ni. Strošek omejuje le dnevna meja podrobnih razlag." };
+  else if (active.length < MIN_STUDENTS)
+    limit = { status: "data", text: `Meja ${fmt(hard)} $ ostane. Za predlog je potrebnih vsaj ${MIN_STUDENTS} aktivnih učencev (zdaj ${active.length}).` };
+  else if ((atHard + nearHard) / active.length >= 0.05 && hard < maxUsd) {
+    const to = Math.min(maxUsd, Math.max(hard * 1.5, p90Usd * 1.25));
+    limit = {
+      status: "raise",
+      suggest_usd: r2(to),
+      text: `${atHard + nearHard} od ${active.length} učencev je pri meji ali blizu nje: to že vpliva na učenje. Predlog: dvigni mejo na ${fmt(to)} $. Tudi učenec, ki jo porabi vso, še prinese vsaj ${fmt(MIN_PROFIT_EUR)} € na mesec.`,
+    };
+  } else if (hard > maxUsd)
+    limit = {
+      status: "lower",
+      suggest_usd: r2(maxUsd),
+      text: `Pri meji ${fmt(hard)} $ bi učenec, ki jo porabi vso, prinesel manj kot ${fmt(MIN_PROFIT_EUR)} € na mesec. Ker je ne doseže skoraj nihče, jo lahko pustiš; varnejša meja je ${fmt(maxUsd)} $.`,
+    };
+  else
+    limit = {
+      status: "keep",
+      text: `Meja ${fmt(hard)} $ je prava: 9 od 10 učencev porabi do ${fmt(p90Usd)} $ na mesec, meje ne čuti nihče.`,
+    };
+
+  // --- cena: po zanimanju, z dobičkom ---
+  const interest = interestOf(db, now.getTime());
+  let priceAdv;
+  if (!interest)
+    priceAdv = { status: "data", text: "Za predlog cene morajo biti vklopljeni starševski računi (STEMMIND_ACCOUNTS=1), da se vidi, koliko preizkusov se spremeni v naročnino." };
+  else if (interest.trials_ended < MIN_TRIALS)
+    priceAdv = {
+      status: "data",
+      text: `Cena ${fmt(price)} € ostane. Za predlog je potrebnih vsaj ${MIN_TRIALS} končanih 7-dnevnih preizkusov (zdaj ${interest.trials_ended}).`,
+    };
+  else if (interest.conversion_pct >= 35 && profit >= TARGET_PROFIT_EUR * 0.8) {
+    const to = Math.round(price * 1.2) - 0.01;
+    priceAdv = {
+      status: "raise",
+      suggest_eur: to,
+      text: `Zanimanje je veliko: ${interest.conversion_pct} % preizkusov se spremeni v naročnino. Predlog: za nove naročnike preizkusi ${fmt(to)} € na mesec (obstoječi ostanejo pri svoji ceni) in po 2 tednih primerjaj delež naročnin.`,
+    };
+  } else if (interest.conversion_pct <= 8) {
+    const to = Math.max(4.99, Math.round(price * 0.8) - 0.01);
+    const profitLow = netOf(to) - avgEur;
+    priceAdv = {
+      status: "lower",
+      suggest_eur: to,
+      text:
+        profitLow >= MIN_PROFIT_EUR
+          ? `Zanimanje je nizko: le ${interest.conversion_pct} % preizkusov se spremeni v naročnino. Najprej izboljšaj prvi teden (to pove zavihek Mnenje), nato preizkusi ${fmt(to)} €. Pri tej ceni ostane še ${fmt(profitLow)} € na učenca.`
+          : `Zanimanje je nizko (${interest.conversion_pct} %), a nižja cena ne bi pokrila stroška AI z dobičkom. Izboljšaj prvi teden (zavihek Mnenje), cene ne nižaj.`,
+    };
+  } else if (profit < TARGET_PROFIT_EUR)
+    priceAdv = {
+      status: "raise",
+      suggest_eur: Math.round(price + (TARGET_PROFIT_EUR - profit) * (1 + VAT)) - 0.01,
+      text: `Na učenca ostane ${fmt(profit)} €, cilj je ${fmt(TARGET_PROFIT_EUR)} €. Strošek AI na učenca je višji od načrtovanega: preveri, kdo porabi največ, ali dvigni ceno.`,
+    };
+  else
+    priceAdv = {
+      status: "keep",
+      text: `Cena ${fmt(price)} € je dobra: ${interest.conversion_pct} % preizkusov postane naročnina, na učenca ostane ${fmt(profit)} € (${economy.margin_pct} %).`,
+    };
+
+  return { economy, limit, price: priceAdv, interest };
+}
