@@ -42,3 +42,45 @@ test("buildSystemPrompt fills placeholders and keeps LaTeX braces", () => {
   assert.match(p, /Osebnost\/tema: strog ## Nov razdelek/); // brez preloma vrstice
   assert.doesNotMatch(p, /\{(subject|track|weaknesses|student_name)\}/);
 });
+
+test("flashcard blocks are parsed, stripped and never streamed", async () => {
+  const { parseCards } = await import("../server/meta.js");
+  const full =
+    "Hitrost je pot na čas.\n\n> 📌 **Zapomni si:** $v = s/t$\n" +
+    "<<KARTICA\nV: Kako izračunaš povprečno hitrost?\nO: $v = \\frac{s}{t}$, pot deljeno s časom; enota $\\mathrm{m/s}$.\n>>\n" +
+    "<<KARTICA\nV: kako izračunaš povprečno hitrost?\nO: podvojena\n>>\n" +
+    "<<KARTICA\nQ: What is 1 km in m?\nA: 1000 m\n>>\n" +
+    '<<META subject=FIZ topic="hitrost" error=0 mode=A flag=none done=0>>';
+  const cards = parseCards(full);
+  assert.equal(cards.length, 2, "podvojena kartica je preskočena");
+  assert.equal(cards[0].front, "Kako izračunaš povprečno hitrost?");
+  assert.match(cards[0].back, /enota/);
+  assert.deepEqual(cards[1], { front: "What is 1 km in m?", back: "1000 m" });
+  assert.equal(parseCards("<<KARTICA\nV: samo vprašanje\n>>").length, 0);
+  assert.equal(stripMeta(full), "Hitrost je pot na čas.\n\n> 📌 **Zapomni si:** $v = s/t$");
+  assert.equal(stripMeta("Ok.\n<<KARTICA\nV: odrez"), "Ok.");
+  for (const size of [1, 2, 3, 5, 9, 64]) {
+    const f = createStreamFilter();
+    let out = "";
+    for (let i = 0; i < full.length; i += size) out += f.push(full.slice(i, i + size));
+    assert.ok(!out.includes("<<"), `size ${size} leaked`);
+    assert.equal(out + f.end().rest, "Hitrost je pot na čas.\n\n> 📌 **Zapomni si:** $v = s/t$");
+  }
+  // Besedilo za kartico sredi sporočila pride na koncu.
+  const f = createStreamFilter();
+  const mid = "A\n<<KARTICA\nV: x\nO: y\n>>\nB\n<<META subject=MAT topic=\"-\" error=0 mode=A flag=none done=0>>";
+  let out = f.push(mid);
+  out += f.end().rest;
+  assert.equal(out.replace(/\s+/g, " "), "A B");
+});
+
+test("prompt: zero prior knowledge, summary box, adaptive difficulty and cards stay in the cached part", () => {
+  const p = buildSystemPrompt({ settings: normalizeSettings({}), results: "Vadnica: 9 od 10. Predlagana začetna zahtevnost: višja (x)." });
+  const [stat, dyn] = p.split("<!-- STEMMIND:NASTAVITVE");
+  assert.match(stat, /Ničelno predznanje teme/);
+  assert.match(stat, /Zapomni si/);
+  assert.match(stat, /<<KARTICA/);
+  assert.match(stat, /izrecno želi zahtevnejše primere/);
+  assert.match(dyn, /Rezultati učenca: Vadnica: 9 od 10\. Predlagana začetna zahtevnost: višja/);
+  assert.match(buildSystemPrompt({ settings: normalizeSettings({}) }), /Rezultati učenca: še ni podatkov\. Predlagana začetna zahtevnost: osnovna/);
+});

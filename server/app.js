@@ -4,7 +4,8 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
-import { createStreamFilter, parseMeta, stripMeta } from "./meta.js";
+import { createStreamFilter, parseMeta, parseCards, stripMeta } from "./meta.js";
+import { studentResults } from "./results.js";
 import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
 import { Usage, LIMITS, windowHistory, recentHistory } from "./usage.js";
 import { codeHint } from "./hints.js";
@@ -34,7 +35,7 @@ const ANSWER_CACHE = process.env.STEMMIND_ANSWER_CACHE !== "0";
 
 // Ključ za ponovno uporabo odgovora: isto prvo vprašanje pri istih nastavitvah.
 // mode: način klica (chat/lite/think/deep); pathTopic: tema učne poti (npr. »Začniva s temo …«).
-function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = []) {
+function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [], tier = "osnovna") {
   const norm = text.toLowerCase().replace(/\s+/g, " ").replace(/[\s.!?]+$/, "").trim();
   if (norm.length < 8) return null;
   const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.curriculum_level, settings.solving_mode, settings.personality_setting, mode === "deep" ? 1 : 0];
@@ -46,6 +47,8 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
   if (settings.region && settings.region !== "SI") parts.push(settings.region);
   if (settings.school_system && settings.school_system !== "SI") parts.push(settings.school_system);
   if (lite) parts.push("lite");
+  // Zahtevnost po rezultatih učenca (osnovna je privzeta, da shranjeni odgovori ostanejo veljavni).
+  if (tier && tier !== "osnovna") parts.push(`zahtevnost:${tier}`);
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
 
@@ -184,7 +187,7 @@ export function createApp(store, opts = {}) {
     const s = loadStudent(req, res);
     if (!s) return;
     res.type("text/plain").send(
-      buildSystemPrompt({ settings: s.settings, weaknesses: weaknessesForPrompt(store, s), studentName: s.name }),
+      buildSystemPrompt({ settings: s.settings, weaknesses: weaknessesForPrompt(store, s), studentName: s.name, results: studentResults(store, s.id).text }),
     );
   });
 
@@ -258,7 +261,8 @@ export function createApp(store, opts = {}) {
     const help = isFirst && !image ? helpTasks.get(conv.id) : null;
     if (help) helpTasks.delete(conv.id);
     const weak = weaknessesForPrompt(store, student);
-    const key = ANSWER_CACHE && isFirst && !image && !help ? cacheKey(text, student.settings, mode, lite, conv.path_topic, weak) : null;
+    const results = studentResults(store, student.id, conv.path_topic);
+    const key = ANSWER_CACHE && isFirst && !image && !help ? cacheKey(text, student.settings, mode, lite, conv.path_topic, weak, results.tier) : null;
     if (conv.title === "Nov pogovor") {
       store.renameConversation(conv.id, cleanText(text, 50) || "Naloga s fotografije");
     }
@@ -284,6 +288,7 @@ export function createApp(store, opts = {}) {
       const system = buildSystemPrompt({
         settings: tekTopic ? { ...student.settings, track: "COMPETITION" } : student.settings,
         weaknesses: weak,
+        results: results.text,
         studentName: student.name,
         learningPath: conv.path_topic
           ? [learningPathPrompt(conv.path_topic), examPrompt(getTopic(conv.path_topic)?.path), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n")
@@ -346,6 +351,17 @@ export function createApp(store, opts = {}) {
       if (!display) display = "…";
 
       const assistantId = store.addMessage(conv.id, "assistant", content, display);
+      // Kartice za ponavljanje iz odgovora (ne pri zavrnitvi in ne pri opozorilih).
+      const cards =
+        result.stopReason !== "refusal" && (!meta || meta.flag === "none")
+          ? store.cards.add(student.id, parseCards(result.text), {
+              conversationId: conv.id,
+              topicId: conv.path_topic,
+              subject: meta?.subject ?? student.settings.subject,
+              topic: meta?.topic ?? (conv.path_topic ? getTopic(conv.path_topic)?.name : null),
+            })
+          : [];
+      if (cards.length) send("cards", { cards: cards.map((c) => ({ id: c.id, front: c.front })), due: store.cards.dueCount(student.id) });
       if (meta) {
         store.addEvent({ student_id: student.id, conversation_id: conv.id, message_id: assistantId, ...meta });
         if (meta.done && conv.path_topic && progress.markMastered(student.id, conv.path_topic, "chat")) {
@@ -495,7 +511,46 @@ export function createApp(store, opts = {}) {
   // Načini učenja: nova snov, ponavljanje, priprava na test, dnevni trening.
   app.get("/api/students/:id/modes", (req, res) => {
     const s = loadStudent(req, res);
-    if (s) res.json(progress.modes(s.id, getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings)));
+    if (s) res.json({ ...progress.modes(s.id, getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings)), cardsDue: store.cards.dueCount(s.id) });
+  });
+
+  // --- kartice za ponavljanje ---
+  const cardId = (req) => intParam(req.params.cardId);
+  app.get("/api/students/:id/flashcards", (req, res) => {
+    const s = loadStudent(req, res);
+    if (s) res.json(store.cards.list(s.id));
+  });
+  app.post("/api/students/:id/flashcards", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const front = typeof req.body?.front === "string" ? req.body.front : "";
+    const back = typeof req.body?.back === "string" ? req.body.back : "";
+    if (!front.trim() || !back.trim()) return res.status(400).json({ error: "Kartica potrebuje vprašanje in odgovor." });
+    const [card] = store.cards.add(s.id, [{ front, back }], { source: "own", subject: s.settings.subject });
+    if (!card) return res.status(409).json({ error: "Kartico s tem vprašanjem že imaš." });
+    res.status(201).json(card);
+  });
+  app.put("/api/students/:id/flashcards/:cardId", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const r = store.cards.update(s.id, cardId(req), { front: req.body?.front, back: req.body?.back });
+    if (!r) return res.status(404).json({ error: "Kartica ne obstaja." });
+    if (r.error === "empty") return res.status(400).json({ error: "Kartica potrebuje vprašanje in odgovor." });
+    if (r.error === "duplicate") return res.status(409).json({ error: "Kartico s tem vprašanjem že imaš." });
+    res.json(r);
+  });
+  app.delete("/api/students/:id/flashcards/:cardId", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    if (!store.cards.remove(s.id, cardId(req))) return res.status(404).json({ error: "Kartica ne obstaja." });
+    res.json({ ok: true });
+  });
+  app.post("/api/students/:id/flashcards/:cardId/review", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const c = store.cards.review(s.id, cardId(req), req.body?.ok === true);
+    if (!c) return res.status(404).json({ error: "Kartica ne obstaja." });
+    res.json({ card: c, due: store.cards.dueCount(s.id) });
   });
   app.post("/api/students/:id/daily", (req, res) => {
     const s = loadStudent(req, res);

@@ -1,0 +1,137 @@
+// Kartice za ponavljanje: pomembna dejstva, ki jih inštruktor zapiše v blok <<KARTICA …>>,
+// ali kartice, ki jih učenec doda sam. Ponavljanje z razmiki (Leitnerjeve škatle):
+// pravilen priklic premakne kartico v naslednjo škatlo (1, 3, 7, 16, 35, 90 dni),
+// napačen jo vrne na začetek (na vrsti takoj, v isti seji še enkrat).
+
+export const INTERVALS = [1, 3, 7, 16, 35, 90];
+export const MAX_PER_REPLY = 3;
+export const MAX_CARDS = 2000;
+const FRONT_MAX = 300;
+const BACK_MAX = 600;
+
+const clean = (s, max) =>
+  String(s ?? "")
+    .replace(/\r/g, "")
+    .replace(/<<|>>/g, "")
+    .trim()
+    .slice(0, max);
+// Ključ za podvojene kartice: male črke, brez ločil na koncu in odvečnih presledkov.
+export const normCard = (front) =>
+  clean(front, FRONT_MAX)
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .replace(/[\s.?!:;…]+$/, "")
+    .trim();
+
+const view = (r) =>
+  r && {
+    id: r.id,
+    front: r.front,
+    back: r.back,
+    subject: r.subject,
+    topic: r.topic,
+    topic_id: r.topic_id,
+    source: r.source,
+    box: r.box,
+    due: r.due,
+    is_due: !!r.is_due,
+    reviews: r.reviews,
+    lapses: r.lapses,
+    created_at: r.created_at,
+  };
+
+export class Flashcards {
+  constructor(db) {
+    this.db = db;
+  }
+
+  // Doda kartice; podvojene (isto vprašanje pri istem učencu) preskoči. Vrne dodane kartice.
+  add(studentId, cards, { conversationId = null, topicId = null, subject = null, topic = null, source = "tutor" } = {}) {
+    const added = [];
+    if (this.count(studentId) >= MAX_CARDS) return added;
+    const ins = this.db.prepare(
+      `INSERT OR IGNORE INTO flashcards (student_id, conversation_id, topic_id, subject, topic, front, back, norm, source)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    );
+    for (const c of cards.slice(0, source === "tutor" ? MAX_PER_REPLY : 1)) {
+      const front = clean(c.front, FRONT_MAX);
+      const back = clean(c.back, BACK_MAX);
+      const norm = normCard(front);
+      if (!norm || !back) continue;
+      const r = ins.run(studentId, conversationId, topicId, subject, topic ? String(topic).slice(0, 80) : null, front, back, norm, source);
+      if (r.changes) added.push(this.get(studentId, Number(r.lastInsertRowid)));
+    }
+    return added;
+  }
+
+  get(studentId, id) {
+    return view(
+      this.db
+        .prepare("SELECT *, due <= datetime('now') AS is_due FROM flashcards WHERE id = ? AND student_id = ?")
+        .get(id, studentId),
+    );
+  }
+
+  count(studentId) {
+    return this.db.prepare("SELECT COUNT(*) AS n FROM flashcards WHERE student_id = ?").get(studentId).n;
+  }
+
+  dueCount(studentId) {
+    return this.db.prepare("SELECT COUNT(*) AS n FROM flashcards WHERE student_id = ? AND due <= datetime('now')").get(studentId).n;
+  }
+
+  // Vse kartice: najprej tiste na vrsti (najstarejše najprej), nato po času nastanka.
+  list(studentId) {
+    const rows = this.db
+      .prepare(
+        `SELECT *, due <= datetime('now') AS is_due FROM flashcards WHERE student_id = ?
+         ORDER BY is_due DESC, CASE WHEN due <= datetime('now') THEN due END, id DESC LIMIT ?`,
+      )
+      .all(studentId, MAX_CARDS)
+      .map(view);
+    // Kdaj je na vrsti naslednja kartica (za besedilo »naslednja jutri«).
+    const next = this.db
+      .prepare("SELECT MIN(due) AS d FROM flashcards WHERE student_id = ? AND due > datetime('now')")
+      .get(studentId).d;
+    return { cards: rows, total: rows.length, due: rows.filter((c) => c.is_due).length, next_due: next || null };
+  }
+
+  // ok = true (znal sem) | false (še ne znam).
+  review(studentId, id, ok) {
+    const c = this.get(studentId, id);
+    if (!c) return null;
+    if (ok) {
+      const box = Math.min(c.box + 1, INTERVALS.length);
+      this.db
+        .prepare(
+          `UPDATE flashcards SET box = ?, due = datetime('now', ?), reviews = reviews + 1, last_review = datetime('now') WHERE id = ?`,
+        )
+        .run(box, `+${INTERVALS[box - 1]} days`, id);
+    } else {
+      this.db
+        .prepare(
+          `UPDATE flashcards SET box = 0, due = datetime('now'), reviews = reviews + 1, lapses = lapses + 1, last_review = datetime('now') WHERE id = ?`,
+        )
+        .run(id);
+    }
+    return this.get(studentId, id);
+  }
+
+  update(studentId, id, { front, back }) {
+    const c = this.get(studentId, id);
+    if (!c) return null;
+    const f = front === undefined ? c.front : clean(front, FRONT_MAX);
+    const b = back === undefined ? c.back : clean(back, BACK_MAX);
+    if (!normCard(f) || !b) return { error: "empty" };
+    try {
+      this.db.prepare("UPDATE flashcards SET front = ?, back = ?, norm = ? WHERE id = ?").run(f, b, normCard(f), id);
+    } catch {
+      return { error: "duplicate" };
+    }
+    return this.get(studentId, id);
+  }
+
+  remove(studentId, id) {
+    return this.db.prepare("DELETE FROM flashcards WHERE id = ? AND student_id = ?").run(id, studentId).changes > 0;
+  }
+}

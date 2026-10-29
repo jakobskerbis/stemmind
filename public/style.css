@@ -666,7 +666,7 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
 
 
 /* ---------- načini učenja (kartice na učni poti) ---------- */
-.modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 0 16px; }
+.modes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 0 0 16px; }
 .modes button {
   display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; min-height: 0;
   padding: 14px; border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--surface);
@@ -684,11 +684,51 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
   background: var(--gold); color: #fff; font-size: 0.72rem; line-height: 20px; text-align: center; font-weight: 900; border: 2px solid var(--surface);
 }
 @media (max-width: 520px) {
-  .modes { gap: 8px; }
-  .modes button { align-items: center; text-align: center; padding: 12px 6px; }
-  .modes .m-name { font-size: 0.86rem; }
+  /* Telefon: štirje načini v mreži 2 × 2, ikona levo od imena. */
+  .modes { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .modes button { flex-direction: row; align-items: center; text-align: left; gap: 10px; padding: 10px; }
+  .modes .ic { margin: 0; width: 36px; height: 36px; flex: none; }
+  .modes .m-name { font-size: 0.9rem; }
   .modes .m-sub { display: none; }
 }
+
+/* ---------- kartice za ponavljanje (public/flashcards.js) ---------- */
+#view-cards h1.with-icon svg.i { color: var(--accent); }
+.fc-review { margin: 12px 0 16px; }
+.fc-card { padding: 18px; border: 1.5px solid var(--border); box-shadow: 0 3px 0 var(--border); }
+.fc-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; }
+.fc-front { font-size: 1.15rem; font-weight: 700; line-height: 1.45; overflow-wrap: anywhere; }
+.fc-backside { margin-top: 14px; padding-top: 14px; border-top: 1.5px dashed var(--border); line-height: 1.5; overflow-wrap: anywhere; }
+.fc-card .actions { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+.fc-card .actions button { flex: 1 1 140px; justify-content: center; min-height: 44px; }
+.fc-keys { font-size: 0.78rem; margin: 10px 0 0; }
+@media (hover: none) and (pointer: coarse) { .fc-keys { display: none; } }
+.fc-front .katex-display, .fc-backside .katex-display, .cards-note .katex-display { overflow-x: auto; overflow-y: hidden; }
+.fc-list summary { cursor: pointer; padding: 2px 0; }
+.fc-list ul { list-style: none; margin: 10px 0 0; padding: 0; }
+.fc-list li { display: flex; gap: 8px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--border); }
+.fc-row-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.fc-row-text p { margin: 0; }
+.fc-q { font-weight: 700; }
+.fc-a { margin-top: 2px; }
+.fc-row-btns { display: flex; gap: 2px; flex: none; }
+.fc-form { display: grid; gap: 10px; margin-top: 16px; }
+.fc-form h2 { margin: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
+.fc-form label { display: grid; gap: 4px; font-weight: 700; font-size: 0.9rem; }
+.fc-form textarea { width: 100%; box-sizing: border-box; resize: vertical; font: inherit; }
+.fc-list .fc-form { flex: 1; margin: 0; }
+.fc-err:empty { display: none; }
+.fc-done h2, .fc-empty p:first-child { margin-top: 0; }
+/* Pod odgovorom inštruktorja: dodane kartice */
+.cards-note { margin-top: 12px; padding: 10px 12px; border-radius: 12px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); font-size: 0.92rem; }
+.cards-note .cn-head { display: flex; align-items: center; gap: 6px; color: var(--accent); }
+.cards-note .cn-head b { color: var(--text); }
+.cards-note ul { margin: 6px 0 4px; padding-left: 20px; }
+.cards-note li p { margin: 0; }
+.cards-note .text-btn { display: inline-flex; align-items: center; gap: 4px; padding: 2px 0; }
+/* Okvir »Zapomni si« v odgovorih inštruktorja (Markdown citat) */
+.msg.assistant blockquote { margin: 10px 0; padding: 8px 12px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; }
+.msg.assistant blockquote p { margin: 0.2em 0; }
 
 /* ---------- spodnja vrstica (telefon in tablica na dotik) ---------- */
 .tabbar { display: none; }

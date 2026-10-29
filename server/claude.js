@@ -142,6 +142,16 @@ function mockAnswer(userText) {
   if (/x\s*=\s*4|rezultat je 4/.test(t)) {
     return 'Ni čisto prav, a si blizu. Poglej drugi korak: ko si odštel $3$ na obeh straneh, koliko ostane na desni?\n<<META subject=MAT topic="linearne enačbe" error=1 mode=A flag=none done=0>>';
   }
+  if (/^kaj je|kartic|zapomni/.test(t)) {
+    return (
+      "*(Preizkusni način.)*\n\n" +
+      "**Enačba** je zapis, v katerem sta dva izraza povezana z enačajem $=$, na primer $x + 3 = 5$. Črka $x$ je **neznanka**: število, ki ga še ne poznamo. Enačbo **rešimo**, ko najdemo število, ki zapis naredi resničen: tukaj $x = 2$, ker je $2 + 3 = 5$.\n\n" +
+      "> 📌 **Zapomni si:** rešitev enačbe je število, ki ga vstavimo namesto neznanke, da sta obe strani enaki.\n\n" +
+      "Ali je $x = 4$ rešitev enačbe $x + 1 = 5$? Preveri z vstavljanjem.\n" +
+      "<<KARTICA\nV: Kaj je rešitev enačbe?\nO: Število, ki ga vstavimo namesto neznanke, da sta leva in desna stran enaki (npr. $x = 2$ pri $x + 3 = 5$).\n>>\n" +
+      '<<META subject=MAT topic="enačbe" error=0 mode=A flag=none done=0>>'
+    );
+  }
   if (/začniva s temo/.test(t)) {
     return "*(Preizkusni način.)*\n\nPreden razložim: kaj že veš o tej temi? Poskusi odgovoriti na kratko vprašanje:\n\nKoliko je $3 \\cdot 4$?\n" + '<<META subject=MAT topic="-" error=0 mode=A flag=none done=0>>';
   }
