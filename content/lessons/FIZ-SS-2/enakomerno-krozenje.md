@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Let z letalom iz Ljubljane v New York traja približno $9$ ur. Mednarodna vesoljska postaja (ISS) v $92$ minutah obkroži celo Zemljo. Njen tir je skoraj natančno krožnica s polmerom $6790\,\mathrm{km}$, merjeno od središča Zemlje. Kako hitro torej leti?
+Let z letalom iz Ljubljane v New York traja približno $9$ ur. Mednarodna vesoljska postaja (ISS) v $93$ minutah obkroži celo Zemljo. Njen tir je skoraj natančno krožnica s polmerom $6790\,\mathrm{km}$, merjeno od središča Zemlje. Kako hitro torej leti?
 
 Izračun, ki ga boš znal narediti čez nekaj minut, da skoraj $7{,}7\,\mathrm{km}$ v sekundi. To je več kot $27\,000\,\mathrm{km/h}$, torej približno tridesetkrat hitreje od letala.
 
@@ -23,7 +23,7 @@ Kroženje bomo sestavili iz majhnih korakov. Za vsakim je kratko vprašanje za p
 
 $$v = \frac{2\pi r}{t_0}$$
 
-Tej hitrosti rečemo **obodna hitrost**. Za ISS je $t_0 = 92\,\mathrm{min} = 5520\,\mathrm{s}$ in $r = 6{,}79 \cdot 10^6\,\mathrm{m}$, zato je $v \approx 7730\,\mathrm{m/s}$.
+Tej hitrosti rečemo **obodna hitrost**. Za ISS je $t_0 = 93\,\mathrm{min} = 5580\,\mathrm{s}$ in $r = 6{,}79 \cdot 10^6\,\mathrm{m}$, zato je $v \approx 7650\,\mathrm{m/s}$.
 
 *Preveri:* dva satelita imata enak obhodni čas, prvi kroži na dvakrat večjem polmeru. Kateri je hitrejši? (Prvi, dvakrat: v enakem času prepotuje dvakrat daljšo pot.)
 
@@ -51,11 +51,11 @@ $$a_r = \frac{v^2}{r}$$
 
 Zakaj kvadrat hitrosti? Pri večji hitrosti je vektor $\vec v$ daljši, zato pomeni enak zasuk večjo spremembo. Poleg tega telo pri večji hitrosti hitreje preteče lok, zato se smer zasuče hitreje. Vsak razlog prinese en faktor $v$. Večji polmer pomeni bolj položno krožnico: smer se obrača počasneje, zato je $a_r$ manjši.
 
-Za ISS: $a_r = \dfrac{(7730\,\mathrm{m/s})^2}{6{,}79 \cdot 10^6\,\mathrm{m}} \approx 8{,}8\,\mathrm{m/s^2}$. Ta in druga telesa so zbrana v tabeli.
+Za ISS: $a_r = \dfrac{(7650\,\mathrm{m/s})^2}{6{,}79 \cdot 10^6\,\mathrm{m}} \approx 8{,}6\,\mathrm{m/s^2}$. Ta in druga telesa so zbrana v tabeli.
 
 | Telo (obhodni čas) | $r$ | $v$ | $a_r$ |
 |---|---|---|---|
-| ISS ($92\,\mathrm{min}$) | $6790\,\mathrm{km}$ | $7{,}7\,\mathrm{km/s}$ | $8{,}8\,\mathrm{m/s^2}$ |
+| ISS ($93\,\mathrm{min}$) | $6790\,\mathrm{km}$ | $7{,}65\,\mathrm{km/s}$ | $8{,}6\,\mathrm{m/s^2}$ |
 | TV satelit ($24\,\mathrm{h}$) | $42\,200\,\mathrm{km}$ | $3{,}1\,\mathrm{km/s}$ | $0{,}22\,\mathrm{m/s^2}$ |
 | Luna ($27{,}3$ dneva) | $384\,000\,\mathrm{km}$ | $1{,}0\,\mathrm{km/s}$ | $0{,}0027\,\mathrm{m/s^2}$ |
 | Zemlja okoli Sonca ($365$ dni) | $1{,}5 \cdot 10^{8}\,\mathrm{km}$ | $29{,}9\,\mathrm{km/s}$ | $0{,}0060\,\mathrm{m/s^2}$ |
@@ -114,7 +114,7 @@ $a_r = \dfrac{v^2}{r}$
 1. Pretvorimo v osnovne enote: $v = 7700\,\mathrm{m/s}$, $r = 6{,}79 \cdot 10^6\,\mathrm{m}$.
 2. Kvadrat hitrosti: $v^2 = (7700\,\mathrm{m/s})^2 = 5{,}93 \cdot 10^7\,\mathrm{m^2/s^2}$.
 3. Delimo s polmerom: $a_r = \dfrac{5{,}93 \cdot 10^7\,\mathrm{m^2/s^2}}{6{,}79 \cdot 10^6\,\mathrm{m}} \approx 8{,}7\,\mathrm{m/s^2}$.
-4. Odgovor: pospešek postaje je približno $8{,}7\,\mathrm{m/s^2}$ (v razlagi je $8{,}8\,\mathrm{m/s^2}$, ker smo tam računali z nezaokroženo hitrostjo $7730\,\mathrm{m/s}$), kar je skoraj toliko kot pospešek kamna, ki prosto pada blizu tal ($9{,}8\,\mathrm{m/s^2}$). Postaja v resnici ves čas pada proti Zemlji, le da zaradi velike hitrosti ves čas »zgreši« tla.
+4. Odgovor: pospešek postaje je približno $8{,}7\,\mathrm{m/s^2}$ (v razlagi je $8{,}6\,\mathrm{m/s^2}$, ker smo tam računali z natančnejšo hitrostjo $7650\,\mathrm{m/s}$), kar je skoraj toliko kot pospešek kamna, ki prosto pada blizu tal ($9{,}8\,\mathrm{m/s^2}$). Postaja v resnici ves čas pada proti Zemlji, le da zaradi velike hitrosti ves čas »zgreši« tla.
 
 ### Primer 3: centrifuga za astronavte
 

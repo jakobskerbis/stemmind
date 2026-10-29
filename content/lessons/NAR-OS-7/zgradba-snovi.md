@@ -9,7 +9,7 @@ Med malico Žan vrže dve žlički sladkorja v čaj, malo počaka in reče: »Gl
 
 Kdo ima prav? Na videz Žan: kristalčkov res ne vidiš več. Okus pa pravi drugače. Ta spor bomo razrešili do konca lekcije.
 
-Odgovor ni pomemben samo za čaj. Z njim razložiš, zakaj vonj pečenega peciva pride do tvoje sobe, zakaj se čaj iz vrečke v vroči vodi obarva hitreje kot v hladni in zakaj odprta čebula v hladilniku »odišavi« maslo.
+Odgovor ni pomemben samo za čaj. Z njim razložiš, zakaj vonj pečenega peciva pride do tvoje sobe, zakaj se voda okoli vrečke čaja obarva, čeprav je nihče ne meša, in zakaj odprta čebula v hladilniku »odišavi« maslo.
 
 ## Razlaga
 
@@ -18,11 +18,11 @@ Odgovor ni pomemben samo za čaj. Z njim razložiš, zakaj vonj pečenega peciva
 | Pojav | Kaj opazimo |
 |---|---|
 | Kuhaš juho v kuhinji. | Čez nekaj minut jo vohaš v dnevni sobi, čeprav nihče ne maha z zrakom. |
-| Vrečko čaja potopiš v vodo in je ne premikaš. | Rjava barva se počasi razleze po vsem kozarcu. V vroči vodi gre hitreje kot v hladni. |
+| Vrečko čaja potopiš v vodo in je ne premikaš. | Rjava barva se počasi razleze po vsem kozarcu. |
 | Zmešaš $50\,\mathrm{mL}$ vode in $50\,\mathrm{mL}$ alkohola. | V menzuri je manj kot $100\,\mathrm{mL}$ tekočine. |
 | Sladkor raztopiš v čaju. | Kristalov ne vidiš, čaj pa je sladek povsod in tehta toliko več, kolikor je tehtal sladkor. |
 
-Kaj imajo ti pojavi skupnega? Nekaj potuje, čeprav tega ne vidimo. Nekaj se umesti »vmes«, čeprav je bil kozarec poln.
+Kaj imajo ti pojavi skupnega? Nekaj potuje, čeprav tega ne vidimo. Pri vodi in alkoholu pa se zdi, kot da bi del tekočine kar izginil, čeprav nič ni izteklo.
 
 :::premisli
 Napovej: dve enaki vrečki čaja daš hkrati v kozarec vroče in v kozarec hladne vode. V katerem kozarcu bo voda prej enakomerno rjava? Zakaj misliš tako?
@@ -166,7 +166,7 @@ Tako deluje difuzija. Vsak delec se giblje naključno, a skupaj se razširijo od
 
 ## Preveri se
 
-? Katera trditev o delcih je pravilna?
+? Žan je o delcih zapisal štiri trditve. Katera drži?
 - Med delci vode je zrak.
 ~ Med delci ni nobene snovi, tudi zraka ne. Tam je prazen prostor.
 + Delci se ves čas gibljejo, tudi v trdni snovi.

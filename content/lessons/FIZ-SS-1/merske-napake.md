@@ -36,7 +36,7 @@ Kaj pa, če dobimo petkrat isto število ali merimo samo enkrat? Potem pasu ne m
 :::premisli
 Sestra bi izmerila višino še desetkrat z istim merilom. Bi bil pas okrog povprečja ožji, širši ali približno enak?
 ---
-Približno enak. Pas kaže, kako zelo se posamezne meritve razlikujejo, to pa je odvisno od merila in od načina merjenja, ne od števila meritev. Več meritev naredi zanesljivejše **povprečje**, pasu pa ne zoži. Ožji pas da šele natančnejše merilo.
+Približno enak, kvečjemu malo širši. Pas kaže, kako zelo se posamezne meritve razlikujejo, to pa je odvisno od merila in od načina merjenja, ne od števila meritev. Ker je napaka največji odmik od povprečja, ga nove meritve pogosto malo razširijo, bistveno ožji pa ne postane. Več meritev naredi zanesljivejše **povprečje**, ožji pas pa da šele natančnejše merilo.
 :::
 
 **Zapis rezultata.** Rezultat zapišemo kot povprečje in absolutno napako v oklepaju, enota je zunaj:

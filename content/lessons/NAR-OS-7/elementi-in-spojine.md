@@ -7,7 +7,7 @@ avtor: AI
 
 Na vrečki čipsa piše: »sol: $1{,}5\,\mathrm{g}$ na $100\,\mathrm{g}$«. Na kruhu iz druge trgovine piše: »natrij: $0{,}6\,\mathrm{g}$ na $100\,\mathrm{g}$«. Kaj je bolj slano? Na prvi pogled čips, saj je $1{,}5$ več kot $0{,}6$.
 
-Presenečenje: oba sta enako slana. Natrij in sol nista ista snov. Natrij je **element**, sol pa **spojina** natrija in klora. Ko razumeš razliko, znaš prebrati deklaracijo na hrani, razumeš, zakaj jemo sol, čeprav je klor strupen, in prepoznaš kemijske znake, kot so Fe, Cu ali Na, ki jih srečaš na embalaži, v trgovini s posodo in pri pouku.
+Presenečenje: oba sta enako slana. Natrij in sol nista ista snov. Natrij je **element**, sol pa **spojina** natrija in klora. Ko razumeš razliko, znaš prebrati deklaracijo na hrani in razumeš, zakaj jemo sol, čeprav je klor strupen. Spoznal boš tudi kemijske simbole, kot so Fe, Cu ali Na, ki jih srečaš na embalaži in pri pouku.
 
 ## Razlaga
 
@@ -30,6 +30,12 @@ spojina (voda):    ●○● ●○●     vsak delec: 2 vodika + 1 kisik
 zmes (slana voda): ●○● ◆◇ ●○●  dve vrsti delcev, pomešani
 ```
 
+:::premisli
+Slano vodo ločiš z izhlapevanjem. Ali bi lahko iz soli izločil natrij, če bi jo dal na sito, filter ali segrel v ponvi? Zakaj?
+---
+Ne. Natrij in klor sta povezana v vsakem delcu soli, zato ju sito, filter ali segrevanje v ponvi ne ločijo. Spojino razstavimo le s kemijsko reakcijo, na primer z elektriko v posebni napravi.
+:::
+
 | | Zmes (slana voda) | Spojina (sol) |
 |---|---|---|
 | Sestavine | voda in sol, vsaka ohrani svoje lastnosti | natrij in klor, ki svojih lastnosti nimata več |
@@ -38,13 +44,7 @@ zmes (slana voda): ●○● ◆◇ ●○●  dve vrsti delcev, pomešani
 
 Najpomembnejša razlika je v lastnostih. Natrij je mehka kovina, ki v vodi burno reagira. Klor je strupen zelenkast plin. Ko se povežeta, nastane bel kristal, ki ga posipamo po krompirju. Spojina je nova snov z novimi lastnostmi.
 
-:::premisli
-Slano vodo ločiš z izhlapevanjem. Ali bi lahko iz soli izločil natrij, če bi jo dal na sito, filter ali segrel v ponvi? Zakaj?
----
-Ne. Natrij in klor sta povezana v vsakem delcu soli, zato ju sito, filter ali segrevanje v ponvi ne ločijo. Spojino razstavimo le s kemijsko reakcijo, na primer z elektriko v posebni napravi.
-:::
-
-Ker je razmerje v spojini vedno enako, ima tudi sol stalno sestavo po masi. V vsakem gramu soli je približno $0{,}4\,\mathrm{g}$ natrija, ostalo je klor. Zato velja preprosto pravilo za deklaracije:
+Ker je razmerje v spojini vedno enako, ima tudi sol stalno sestavo po masi. V vsakem gramu soli je približno $0{,}4\,\mathrm{g}$ natrija, ostalo je klor. Soli je torej $1 : 0{,}4 = 2{,}5$-krat toliko kot natrija v njej. Zato velja preprosto pravilo za deklaracije:
 
 $$\text{masa soli} \approx 2{,}5 \cdot \text{masa natrija}$$
 
@@ -75,7 +75,7 @@ Element kobalt ima simbol Co. Kaj bi pomenil zapis CO z dvema velikima črkama?
 Vsaka velika črka začne nov simbol. CO sta torej dva elementa: C (ogljik) in O (kisik). To je spojina ogljika in kisika, strupen plin, ki nastaja pri slabem gorenju. Ena napačna velika črka tako iz kovine naredi strupen plin.
 :::
 
-V simulaciji spodaj »Element, spojina ali zmes?« razvrsti snovi iz kuhinje. Pri vsaki se najprej vprašaj: ali so vsi delci enaki? Če so, ali je v delcu ena vrsta atomov ali več? Opazi, da isti elementi (na primer vodik in kisik) nastopajo v elementih, spojinah in zmeseh.
+V simulaciji spodaj »Element, spojina ali zmes?« razvrsti snovi iz kuhinje. Pri vsaki se najprej vprašaj: ali so vsi delci enaki? Če so, ali je v delcu ena vrsta atomov ali več? Opazi, da iste vrste atomov (na primer vodik in kisik) najdeš v elementih, spojinah in zmeseh.
 
 ## Rešeni primeri
 
@@ -99,7 +99,7 @@ Ena vrsta atomov $\Rightarrow$ element. Več vrst atomov, povezanih v vsakem del
 
 ### Primer 2: kaj piše na sodi bikarboni?
 
-Na škatli sode bikarbone za peko piše njena formula: NaHCO₃. Katere elemente vsebuje in koliko jih je? Je soda bikarbona element ali spojina?
+Na škatli sode bikarbone za peko piše njena formula: NaHCO₃. Katere elemente vsebuje in koliko različnih elementov je to? Je soda bikarbona element ali spojina?
 
 **Podatki:** zapis NaHCO₃; mala številka ₃ pove, koliko atomov kisika je v delcu
 **Iščemo:** imena elementov, njihovo število in vrsto snovi
