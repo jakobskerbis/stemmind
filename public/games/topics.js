@@ -1,6 +1,8 @@
 // Naloge za igre: vsak pojem ima generator gen(stopnja 1–3) → { q, a, w: [napačni …] }.
 // Besedilo je kratko in čim bolj v simbolih, da se izriše na predmetu v igri (meteor, balon …).
 // Modul je čist (brez DOM), zato ga uporabljajo tudi testi na strežniku.
+// Drugi predmeti so v subjects/ (gen(stopnja, { lang, num })).
+import { PACKS } from "./subjects/index.js";
 
 let DEC = ",";
 let LANG = "sl";
@@ -1245,6 +1247,14 @@ def("cx_pow", "la", 12, "Potence števila i", "Powers of i", (t) => {
   return mk(`i${sup(n)}`, r, ["1", "i", `${M}1`, `${M}i`].filter((x) => x !== r), () => null);
 });
 
+// Pojmi drugih predmetov: generator dobi še jezik in oblikovalnik števil.
+const CTX = { get lang() { return LANG; }, num: (x) => fmt(x) };
+const SUBJ_AREAS = [];
+for (const [subject, pack] of Object.entries(PACKS)) {
+  for (const a of pack.AREAS || []) SUBJ_AREAS.push([a[0], a[1], a[2], subject]);
+  for (const c of pack.CONCEPTS || []) C.push({ id: c.id, area: c.area, year: c.year, name: c.name, glyph: c.glyph, subject, gen: (tier) => c.gen(tier, CTX) });
+}
+for (const c of C) c.subject ||= "MAT";
 export const CONCEPTS = C;
 export const AREAS = [
   ["ar", { sl: "Aritmetika", en: "Arithmetic" }, "#f97316"],
@@ -1260,7 +1270,8 @@ export const AREAS = [
   ["st", { sl: "Statistika in verjetnost", en: "Statistics and probability" }, "#eab308"],
   ["an", { sl: "Analiza", en: "Calculus" }, "#f59e0b"],
   ["la", { sl: "Vektorji, matrike, kompleksna števila", en: "Vectors, matrices, complex numbers" }, "#d946ef"],
-];
+].map((a) => [...a, "MAT"]).concat(SUBJ_AREAS);
+export const SUBJECTS = [...new Set(AREAS.map((a) => a[3]))];
 export const conceptName = (c) => c.name[LANG] || c.name.en;
 export const areaName = (id) => {
   const a = AREAS.find((x) => x[0] === id);

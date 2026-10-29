@@ -1,6 +1,11 @@
 // Vrste iger. Vsaka igra dobi G iz core.js (velikost, naloga, možnosti, G.answer …) in vrne
 // { question, update, draw, pointer, key, resize, reset }. Izvirne igre; navdih je žanr (strelec, tekač …).
 
+import { ARCADE } from "./arcade.js";
+import { BUILD_GAMES } from "./build.js";
+import { ARCADE2 } from "./arcade2.js";
+import { SENSOR_GAMES } from "./sensors.js";
+
 const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const pickOne = (a) => a[Math.floor(Math.random() * a.length)];
@@ -673,4 +678,4 @@ export const sorter = {
   },
 };
 
-export const ENGINES = [meteor, balloons, runner, sorter];
+export const ENGINES = [meteor, balloons, runner, sorter, ...ARCADE, ...ARCADE2, ...BUILD_GAMES, ...SENSOR_GAMES];
