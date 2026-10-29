@@ -2,7 +2,7 @@
 // Kratko poročilo o napredku lekcij in vaj (nalog) za j – samo štetje v repozitoriju, brez agentov.
 //   node scripts/napredek.js              # slovensko poročilo (vrstice, ≤ 60 besed)
 //   node scripts/napredek.js --json       # številke za primerjavo med poročili
-//   node scripts/napredek.js --tempo-sola 80 --tempo-faks 144   # predvideni tempo (novih lekcij/dan) po nitih
+//   node scripts/napredek.js --tempo-sola 128 --tempo-faks 192   # predvideni tempo (novih lekcij/dan) po nitih
 // Lekcije šteje po učnih poteh (OŠ+SŠ, tekmovanja, faks – vsaka fakultetna tema enkrat, glej sameTopics),
 // vaje po generatorjih nalog (server/practice). Tempo bere iz git zgodovine trenutne veje.
 import fs from "node:fs";
@@ -79,11 +79,12 @@ const zadnjih24h = added("24 hours ago");
 const ostaneLekcij = total("teme") - total("lekcije");
 const dvigi = total("lekcije") - total("novaRaven"); // stare lekcije, ki jih je treba dvigniti na novo raven
 // Ocena konca po nitih (docs/token-rules.md §4): učbenik (OŠ+SŠ+tekmovanja) in faks. Dvig štejemo kot pol lekcije.
-// Polni tempo od 29. 10. 13:00 UTC: učbenik 5 terminov × 16 novih lekcij, faks 6 × 24 na dan (med upočasnitvijo 6 oz. 4).
+// Polni tempo od 29. 10. 14:40 UTC: učbenik 8 terminov × 16 novih lekcij, faks 8 × 24 na dan (med upočasnitvijo 6 oz. 4).
+// Ko učbeniška nit konča OŠ+SŠ+tekmovanja, piše faks teme (--deli 2 --del 1), kar oceno za faks skrajša (ni modelirano).
 const num = (flag, dflt) => (args.includes(flag) && Number(args[args.indexOf(flag) + 1]) > 0 ? Number(args[args.indexOf(flag) + 1]) : dflt);
 const TEMPO = {
-  sola: { pocasi: num("--pocasi-sola", 6), polni: num("--tempo-sola", 80) },
-  faks: { pocasi: num("--pocasi-faks", 4), polni: num("--tempo-faks", 144) },
+  sola: { pocasi: num("--pocasi-sola", 6), polni: num("--tempo-sola", 128) },
+  faks: { pocasi: num("--pocasi-faks", 4), polni: num("--tempo-faks", 192) },
 };
 const now = Date.now();
 const DAY = 86400000;
