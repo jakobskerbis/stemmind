@@ -1040,5 +1040,11 @@
   "games.e.runner.how": "Stuknij tor lub przesuń w lewo i w prawo (klawisze ← →), aby przebiec przez bramę z poprawną odpowiedzią.",
   "games.e.sorter": "Sortownia",
   "games.e.sorter.how": "Czy zdanie na skrzyni jest prawdziwe? Stuknij ✓ lub ✗ (klawisze → i ←), zanim skrzynia zjedzie z taśmy.",
-  "subj.NAR": "Przyroda"
+  "subj.NAR": "Przyroda",
+  "games.speed": "Szybkość",
+  "games.speedSlow": "Wolno",
+  "games.speedMid": "Średnio",
+  "games.speedFast": "Szybko",
+  "games.chapter": "Rozdział {n}",
+  "games.next": "Dalej"
 }

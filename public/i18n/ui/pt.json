@@ -1030,5 +1030,11 @@
   "games.e.runner.how": "Toca numa pista ou desliza para a esquerda e para a direita (teclas ← →) para passar pela porta com a resposta certa.",
   "games.e.sorter": "Triagem",
   "games.e.sorter.how": "A afirmação na caixa está certa? Toca em ✓ ou ✗ (teclas → e ←) antes de a caixa sair do tapete.",
-  "subj.NAR": "Ciências naturais"
+  "subj.NAR": "Ciências naturais",
+  "games.speed": "Velocidade",
+  "games.speedSlow": "Lento",
+  "games.speedMid": "Médio",
+  "games.speedFast": "Rápido",
+  "games.chapter": "Capítulo {n}",
+  "games.next": "Seguinte"
 }

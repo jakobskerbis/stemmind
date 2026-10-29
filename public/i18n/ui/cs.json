@@ -1040,5 +1040,11 @@
   "games.e.runner.how": "Klepni na dráhu nebo přejeď doleva a doprava (klávesy ← →) a proběhni branou se správnou odpovědí.",
   "games.e.sorter": "Třídírna",
   "games.e.sorter.how": "Platí tvrzení na bedně? Klepni na ✓ nebo ✗ (klávesy → a ←), než bedna odjede z pásu.",
-  "subj.NAR": "Přírodověda"
+  "subj.NAR": "Přírodověda",
+  "games.speed": "Rychlost",
+  "games.speedSlow": "Pomalu",
+  "games.speedMid": "Středně",
+  "games.speedFast": "Rychle",
+  "games.chapter": "Kapitola {n}",
+  "games.next": "Dál"
 }

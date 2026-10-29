@@ -1030,5 +1030,11 @@
   "games.e.runner.how": "Gusa njia au telezesha kushoto na kulia (vitufe ← →) ili kukimbia kupitia lango lenye jibu sahihi.",
   "games.e.sorter": "Mpangaji",
   "games.e.sorter.how": "Je, kauli kwenye sanduku ni sahihi? Gusa ✓ au ✗ (vitufe → na ←) kabla sanduku halijaondoka kwenye ukanda.",
-  "subj.NAR": "Sayansi"
+  "subj.NAR": "Sayansi",
+  "games.speed": "Kasi",
+  "games.speedSlow": "Polepole",
+  "games.speedMid": "Wastani",
+  "games.speedFast": "Haraka",
+  "games.chapter": "Sura ya {n}",
+  "games.next": "Endelea"
 }

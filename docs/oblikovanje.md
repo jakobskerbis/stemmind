@@ -117,7 +117,9 @@ Razdelek IGRE (`public/games/`, slog `public/games.css`, strežnik `server/games
 
 - **Igra = vrsta igre × pojem.** Vrste so v `engines.js` (Meteorji, Baloni, Tekač, Sortirnica), pojmi z generatorji nalog v `topics.js` (120 pojmov v 13 področjih, od aritmetike do analize, vektorjev in kompleksnih števil). Nova vrsta igre = nov predmet v `ENGINES` + ključi `games.e.<id>` in `games.e.<id>.how` v vseh jezikih; nov pojem = `def(...)` v `topics.js` in znak v `GLYPH` (`index.js`).
 - **Naloge** so kratke in v simbolih (`−`, `²`, `√`, `∫`, `{…}` za množico rešitev), ker se izrišejo na predmetu v igri. Napačni odgovori so tipične napake, nikoli enaki pravilnemu. `test/games.test.js` preveri vse pojme na vseh treh stopnjah.
-- **Težavnost**: začetna stopnja iz razreda učenca (`schoolYear`) ali zadnjega rezultata pri pojmu; 4 pravilni zapored → težje, 2 napačna → lažje; hitrost raste s pravilnimi odgovori.
+- **Težavnost**: vsaka igra se začne na stopnji 1 (ali na zadnji doseženi pri pojmu); 5 pravilnih zapored → težje, 2 napačna → lažje. Hitrost izbere učenec (Počasi/Srednje/Hitro, privzeto Počasi, `stemmind.gamePace`) in z odgovori naraste največ za polovico; prvo vprašanje pride po kratkem premoru.
+- **Zgodbe**: vsaka vrsta igre ima junaka in 4 poglavja (`story: { sl, en }` v `engines.js`); novo poglavje se odklene vsakih 8 pravilnih in zamenja barve prizora. Nova vrsta igre potrebuje zgodbo (test to preveri).
+- **Videz stare flash igre**: debele temne obrobe (`--gm-ink`), risankasti prelivi, sončni žarki na naslovni kartici, izbočeni gumbi, obrobljen tekst in 8-bitni zvoki.
 - **Učenje**: ob napaki se v glavi pokaže pravilni odgovor, na koncu seznam »Ponovi« (naloga → pravilni odgovor).
 - **XP**: 1 XP za 2 pravilna odgovora, največ 20 na igro in 60 na dan iz iger.
 - Prizori iger in ploščice imajo svoje barve (kot simulacije); okvir, kartice in gumbi uporabljajo spremenljivke. Vse igre delujejo z dotikom, miško in tipkami (1–4, ← →, preslednica, P ali Esc za premor).

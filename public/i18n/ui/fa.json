@@ -1030,5 +1030,11 @@
   "games.e.runner.how": "روی یک مسیر بزن یا به چپ و راست بکش (کلیدهای ← →) تا از دروازه با پاسخ درست بگذری.",
   "games.e.sorter": "خط جداسازی",
   "games.e.sorter.how": "آیا جمله روی جعبه درست است؟ پیش از آنکه جعبه از نوار برود، ✓ یا ✗ را بزن (کلیدهای → و ←).",
-  "subj.NAR": "علوم تجربی"
+  "subj.NAR": "علوم تجربی",
+  "games.speed": "سرعت",
+  "games.speedSlow": "آهسته",
+  "games.speedMid": "متوسط",
+  "games.speedFast": "سریع",
+  "games.chapter": "فصل {n}",
+  "games.next": "بعدی"
 }

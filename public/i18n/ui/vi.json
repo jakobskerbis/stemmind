@@ -1025,5 +1025,11 @@
   "games.e.runner.how": "Chạm vào một làn hoặc vuốt trái phải (phím ← →) để chạy qua cổng có đáp án đúng.",
   "games.e.sorter": "Phân loại",
   "games.e.sorter.how": "Câu trên thùng có đúng không? Chạm ✓ hoặc ✗ (phím → và ←) trước khi thùng rời băng chuyền.",
-  "subj.NAR": "Khoa học tự nhiên"
+  "subj.NAR": "Khoa học tự nhiên",
+  "games.speed": "Tốc độ",
+  "games.speedSlow": "Chậm",
+  "games.speedMid": "Vừa",
+  "games.speedFast": "Nhanh",
+  "games.chapter": "Chương {n}",
+  "games.next": "Tiếp"
 }

@@ -58,6 +58,11 @@ test("games: at least 10 games in every area, unique ids, statements for the sor
   assert.deepEqual(statement("2x = 8", "x = 4"), ["2x = 8", "⇒ x = 4"]);
   assert.deepEqual(statement("7 · 8", "56"), ["7 · 8", "= 56"]);
   assert.ok(makeQuestion("int_def", 3).q.includes("∫"));
+  // Vsaka vrsta igre ima zgodbo (poglavja) v slovenščini in angleščini.
+  for (const e of ENGINES) for (const lang of ["sl", "en"]) {
+    assert.ok(e.story?.[lang]?.length >= 3, `${e.id} ${lang}: ni zgodbe`);
+    for (const [title, text] of e.story[lang]) assert.ok(title && text.length > 20, `${e.id} ${lang}`);
+  }
 });
 
 test("games API: best score, level and capped XP", async () => {

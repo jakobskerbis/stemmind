@@ -1040,5 +1040,11 @@
   "games.e.runner.how": "Ťukni na dráhu alebo potiahni doľava a doprava (klávesy ← →) a prebehni bránou so správnou odpoveďou.",
   "games.e.sorter": "Triediareň",
   "games.e.sorter.how": "Platí tvrdenie na debni? Ťukni na ✓ alebo ✗ (klávesy → a ←), kým debna neodíde z pásu.",
-  "subj.NAR": "Prírodoveda"
+  "subj.NAR": "Prírodoveda",
+  "games.speed": "Rýchlosť",
+  "games.speedSlow": "Pomaly",
+  "games.speedMid": "Stredne",
+  "games.speedFast": "Rýchlo",
+  "games.chapter": "Kapitola {n}",
+  "games.next": "Ďalej"
 }

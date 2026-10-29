@@ -1030,5 +1030,11 @@
   "games.e.runner.how": "Tippe auf eine Spur oder wische nach links und rechts (Tasten ← →), um durch das Tor mit der richtigen Antwort zu laufen.",
   "games.e.sorter": "Sortieranlage",
   "games.e.sorter.how": "Stimmt die Aussage auf der Kiste? Tippe ✓ oder ✗ (Tasten → und ←), bevor die Kiste das Band verlässt.",
-  "subj.NAR": "Naturwissenschaften"
+  "subj.NAR": "Naturwissenschaften",
+  "games.speed": "Tempo",
+  "games.speedSlow": "Langsam",
+  "games.speedMid": "Mittel",
+  "games.speedFast": "Schnell",
+  "games.chapter": "Kapitel {n}",
+  "games.next": "Weiter"
 }

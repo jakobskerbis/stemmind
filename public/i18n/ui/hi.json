@@ -1030,5 +1030,11 @@
   "games.e.runner.how": "सही उत्तर वाले द्वार से दौड़ने के लिए किसी लेन को छुओ या बाएँ-दाएँ स्वाइप करो (कुंजियाँ ← →)।",
   "games.e.sorter": "छँटाई",
   "games.e.sorter.how": "क्या डिब्बे पर लिखा कथन सही है? डिब्बा बेल्ट से जाने से पहले ✓ या ✗ छुओ (कुंजियाँ → और ←)।",
-  "subj.NAR": "विज्ञान"
+  "subj.NAR": "विज्ञान",
+  "games.speed": "गति",
+  "games.speedSlow": "धीमी",
+  "games.speedMid": "मध्यम",
+  "games.speedFast": "तेज़",
+  "games.chapter": "अध्याय {n}",
+  "games.next": "आगे"
 }

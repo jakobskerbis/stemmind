@@ -1030,5 +1030,11 @@
   "games.e.runner.how": "درست جواب والے دروازے سے دوڑنے کے لیے راستہ چھوؤ یا بائیں دائیں سوائپ کرو (کیز ← →)۔",
   "games.e.sorter": "چھانٹی",
   "games.e.sorter.how": "کیا ڈبے پر لکھی بات درست ہے؟ ڈبہ بیلٹ سے جانے سے پہلے ✓ یا ✗ چھوؤ (کیز → اور ←)۔",
-  "subj.NAR": "سائنس"
+  "subj.NAR": "سائنس",
+  "games.speed": "رفتار",
+  "games.speedSlow": "آہستہ",
+  "games.speedMid": "درمیانی",
+  "games.speedFast": "تیز",
+  "games.chapter": "باب {n}",
+  "games.next": "آگے"
 }

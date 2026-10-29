@@ -38,11 +38,8 @@ const tileColor = (c) => `hsl(${(CONCEPTS.indexOf(c) * 137.5) % 360} 78% 52%)`;
 const areaColor = (id) => AREAS.find((a) => a[0] === id)?.[2] || "#2563eb";
 // Pojem je »zate«, če je blizu tvojemu letu šolanja (malo za nazaj, eno leto naprej).
 const forYou = (c) => (data.year >= 13 ? c.year >= 10 : c.year <= data.year + 1 && c.year >= data.year - 4);
-function startTier(c) {
-  if (data.concepts[c.id]) return data.concepts[c.id];
-  const d = data.year - c.year;
-  return d >= 4 ? 3 : d >= 2 ? 2 : 1;
-}
+// Vsaka igra se začne lahko; težje gre šele, ko učencu gre (shranjena raven pojma).
+const startTier = (c) => data.concepts[c.id] || 1;
 
 export function initGames(c) {
   ctx = c;

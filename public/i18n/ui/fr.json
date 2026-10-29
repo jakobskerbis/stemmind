@@ -1030,5 +1030,11 @@
   "games.e.runner.how": "Touche une voie ou glisse à gauche et à droite (touches ← →) pour passer la porte avec la bonne réponse.",
   "games.e.sorter": "Tri",
   "games.e.sorter.how": "L’affirmation sur la caisse est-elle vraie ? Touche ✓ ou ✗ (touches → et ←) avant que la caisse quitte le tapis.",
-  "subj.NAR": "Sciences"
+  "subj.NAR": "Sciences",
+  "games.speed": "Vitesse",
+  "games.speedSlow": "Lent",
+  "games.speedMid": "Moyen",
+  "games.speedFast": "Rapide",
+  "games.chapter": "Chapitre {n}",
+  "games.next": "Suivant"
 }
