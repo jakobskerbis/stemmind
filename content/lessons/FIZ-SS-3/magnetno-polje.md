@@ -9,7 +9,7 @@ Na blagajni trgovine z oblačili prodajalka podrsa jakno čez ravno ploščo. Va
 
 Tu je nekaj, kar se zdi narobe. Baker ni magneten: magnet bakrene žice ne pritegne. Kako lahko potem bakrena žica nalepko razmagneti?
 
-Odgovor je eden najpomembnejših v fiziki: **magnetno polje ustvarja električni tok**. Na tem delujejo elektromagneti, motorji, zvočniki, naprava za magnetno resonanco v bolnišnici in tudi plošča na blagajni. Ko znaš polje opisati s številom, izračunaš, kako močno je ob žici ali v tuljavi, in presodiš, ali je kartici v denarnici sploh nevarno.
+Odgovor je eden najpomembnejših v fiziki: **električni tok ustvarja magnetno polje**. Na tem delujejo elektromagneti, motorji, zvočniki, naprava za magnetno resonanco v bolnišnici in tudi plošča na blagajni. Ko znaš polje opisati s številom, izračunaš, kako močno je ob žici ali v tuljavi, in presodiš, ali je kartici v denarnici sploh nevarno.
 
 ## Razlaga
 
@@ -44,7 +44,7 @@ Polje rišemo s **silnicami**. To so črte, na katere se tangentno postavljajo k
 
 Smer določiš s **pravilom desne roke**: žico objameš z desno roko, palec kaže v smeri toka, ukrivljeni prsti kažejo smer silnic.
 
-Slika v besedah, pogled od zgoraj na navpično žico, tok teče proti tebi (iz zaslona):
+Slika v besedah, pogled od zgoraj na navpično žico, tok teče proti tebi (iz zaslona). Znak $(\bullet)$ je konica puščice toka, ki gleda vate:
 
 ```
       ←  ←
@@ -66,16 +66,16 @@ Pozor: polje pada z $\dfrac{1}{r}$, ne z $\dfrac{1}{r^2}$ kot pri točkastem nab
 
 V simulaciji spodaj, »Magnetno polje magneta, žice in tuljave«, nastavi tok žice na $10\,\mathrm{A}$. Povleci vijolično točko z razdalje $1\,\mathrm{cm}$ na $2\,\mathrm{cm}$ in opazuj, kolikokrat se zmanjša $B$. Nato obrni tok in poglej, kako se obrnejo puščice.
 
-**5. Tuljava.** Žico navijemo v vijačnico z $N$ ovoji na dolžini $l$. Polja posameznih ovojev se v notranjosti seštejejo. Znotraj dolge tuljave je polje skoraj **homogeno** (povsod enako veliko in enako usmerjeno), zunaj pa je podobno polju paličastega magneta:
+**5. Tuljava.** Žico navijemo v vijačnico z $N$ ovoji na dolžini $l$. Polja posameznih ovojev se v notranjosti seštejejo. Zunaj je polje podobno polju paličastega magneta. Znotraj dolge tuljave je skoraj **homogeno** (povsod enako veliko in enako usmerjeno), njegova gostota pa je:
 
 $$B = \frac{\mu_0\, N\, I}{l}$$
 
 Pomemben je količnik $\dfrac{N}{l}$, to je število ovojev na meter. Gosto navita tuljava z velikim tokom da močno polje. Železno jedro ga še močno poveča, zato je tuljava z jedrom **elektromagnet**.
 
 :::premisli
-Tuljavo raztegnemo na dvojno dolžino, število ovojev in tok ostaneta enaka. Kaj se zgodi z gostoto polja v notranjosti in zakaj?
+Tuljavo raztegnemo na dvojno dolžino, število ovojev in tok ostaneta enaka. Sošolec pravi: »Žica je ista, tok je isti, torej se polje ne spremeni.« Kaj napoveš ti in zakaj?
 ---
-Razpolovi se. Ovojev je enako, a so razporejeni na dvakrat daljši dolžini, zato je $\dfrac{N}{l}$ dvakrat manjši. Več porabljene žice tu ne pomaga, šteje gostota navitja.
+Razpolovi se. Ovojev je enako, a so razporejeni na dvakrat daljši dolžini, zato je $\dfrac{N}{l}$ dvakrat manjši. Ista žica in isti tok ne zadoščata, šteje gostota navitja.
 :::
 
 ## Rešeni primeri
@@ -133,7 +133,7 @@ Iz $B = \dfrac{\mu_0\, I}{2\pi\, r}$ izrazimo $I = \dfrac{2\pi\, r\, B}{\mu_0}$.
 
 1. Enote: $B = 0{,}03\,\mathrm{T}$, $r = 0{,}01\,\mathrm{m}$.
 2. Tok izrazimo, ker je tokrat neznanka $I$, polje pa je dano.
-3. $I = \dfrac{2\pi \cdot 0{,}01\,\mathrm{m} \cdot 0{,}03\,\mathrm{T}}{4\pi\cdot10^{-7}\,\mathrm{V\,s/(A\,m)}} = \dfrac{0{,}01 \cdot 0{,}03}{2\cdot10^{-7}}\,\mathrm{A} = 1500\,\mathrm{A}$.
+3. $I = \dfrac{2\pi \cdot 0{,}01\,\mathrm{m} \cdot 0{,}03\,\mathrm{T}}{4\pi\cdot10^{-7}\,\mathrm{V\,s/(A\,m)}}$; skrajšamo $2\pi$: $I = \dfrac{0{,}01 \cdot 0{,}03}{2\cdot10^{-7}}\,\mathrm{A} = 1500\,\mathrm{A}$.
 4. Primerjava: $\dfrac{1500\,\mathrm{A}}{16\,\mathrm{A}} \approx 94$, potreben bi bil skoraj stokrat večji tok.
 5. Odgovor: potreben bi bil tok $1500\,\mathrm{A}$, zato kabel kartice ne ogrozi. Močan neodimov magnet ($0{,}5\,\mathrm{T}$) pa jo lahko.
 
@@ -170,7 +170,7 @@ $r = 0{,}04\,\mathrm{m} = 4\,\mathrm{cm}$. Bližje od $4\,\mathrm{cm}$ polje ži
 
 ## Povzetek
 
-- Magnetno polje ustvarja električni tok; tudi polje trajnega magneta izvira iz gibanja elektronov.
+- Električni tok ustvarja magnetno polje; tudi polje trajnega magneta izvira iz gibanja elektronov.
 - Gostota magnetnega polja $\vec B$ je vektor; smer kaže severni pol kompasove igle. Enota: tesla, $\mathrm{T}$. Zemlja: okoli $50\,\mu\mathrm{T}$.
 - Okoli ravne žice so silnice koncentrične krožnice (pravilo desne roke): $B = \dfrac{\mu_0 I}{2\pi r}$, pada z $\dfrac{1}{r}$.
 - V dolgi tuljavi je polje homogeno: $B = \dfrac{\mu_0 N I}{l}$; šteje gostota navitja $\dfrac{N}{l}$.

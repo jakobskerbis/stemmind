@@ -33,17 +33,17 @@ Kad. Delci čaja se res gibljejo hitreje, a v kadi je delcev več stokrat toliko
 
 Ko bučko potopiš v toplo vodo, delci vode trkajo ob steklo, steklo pa energijo preda alkoholu. Delci alkohola se začnejo gibati hitreje in se v povprečju razmaknejo. Alkohol se zato **razširi** in stolpec se dvigne po cevki. Ker je cevka tanka, že majhna sprememba prostornine premakne stolpec za opazen kos.
 
-Termometer vedno pokaže **svojo** temperaturo. Snovi enako pokaže šele takrat, ko sta oba enako topla in se stolpec ustavi. Temu stanju rečemo **toplotno ravnovesje**.
+Termometer vedno pokaže **svojo** temperaturo. Temperaturo snovi pokaže šele, ko sta termometer in snov enako topla in se stolpec ustavi. Temu stanju rečemo **toplotno ravnovesje**.
 
 :::premisli
-Termometer iz sobe ($20\,^\circ\mathrm{C}$) potisneš v čaj s $70\,^\circ\mathrm{C}$ in ga odčitaš že po dveh sekundah. Bo pokazal več ali manj kot $70\,^\circ\mathrm{C}$? Zakaj?
+Termometer iz sobe ($20\,^\circ\mathrm{C}$) potisneš v čaj s $70\,^\circ\mathrm{C}$ in ga odčitaš že po dveh sekundah. Bo pokazal več ali manj kot $70\,^\circ\mathrm{C}$? In kaj bi pokazal, če bi ga enako hitro odčital v ledeni vodi?
 ---
-Manj. Alkohol v bučki še ni prejel dovolj energije, da bi se segrel na temperaturo čaja. Stolpec še leze navzgor; odčitaš šele, ko obstane.
+Manj. Alkohol v bučki še ni prejel dovolj energije, da bi se segrel na temperaturo čaja. Stolpec še leze navzgor; odčitaš šele, ko obstane. V ledeni vodi je ravno obratno: alkohol še ni oddal dovolj energije, zato bi termometer pokazal preveč, stolpec pa bi še lezel navzdol.
 :::
 
 Poleg tekočinskih poznamo še druge termometre. **Digitalni** ima elektronski senzor, katerega lastnosti se s temperaturo spreminjajo. **Infrardeči** (na primer na čelu) meri nevidno svetlobo, ki jo oddaja površina, in se telesa sploh ne dotakne. **Bimetalni** ima dva sprijeta trakova različnih kovin, ki se pri segrevanju različno raztezata in zato ukrivita kazalec.
 
-**4. Lestvice na sliki.** Predstavljaj si tri termometre, postavljene drug ob drugem. Na vsakem je svoja lestvica, a vsi trije kažejo iste dogodke na isti višini:
+**4. Tri lestvice drug ob drugem.** Predstavljaj si tri termometre, postavljene drug ob drugem. Na vsakem je svoja lestvica, a vsi trije kažejo iste dogodke na isti višini:
 
 | Dogodek | Celzij [$^\circ\mathrm{C}$] | Kelvin [$\mathrm{K}$] | Fahrenheit [$^\circ\mathrm{F}$] |
 |---|---|---|---|
@@ -127,7 +127,7 @@ $t_2 = \dfrac{t_\mathrm{F} - 32}{1{,}8}$, nato $\Delta t = t_1 - t_2$
 
 ### Primer 4: zdaj ti
 
-Satelit posname zemljevid temperatur površja Julijskih Alp. Na barvni lestvici ob zemljevidu je vrh Triglava označen s $268\,\mathrm{K}$. Koliko je to v stopinjah Celzija? Ali je na vrhu sneg lahko kopen?
+Satelit posname zemljevid temperatur površja Julijskih Alp. Na barvni lestvici ob zemljevidu je vrh Triglava označen s $268\,\mathrm{K}$. Koliko je to v stopinjah Celzija? Ali se sneg na vrhu lahko tali?
 
 **Podatki:** $T = 268\,\mathrm{K}$
 **Iščemo:** temperaturo $t$ v $^\circ\mathrm{C}$
@@ -149,7 +149,7 @@ $t = -5\,^\circ\mathrm{C}$. To je pod zmrziščem vode, zato se sneg na vrhu ne 
 
 ## Pogoste napake
 
-- **»Bolj vroče telo ima vedno več notranje energije.«** Učenec gleda samo temperaturo. A notranja energija je vsota energij vseh delcev, zato je odvisna tudi od količine snovi. Velika kad mlačne vode ima več notranje energije kot skodelica vrelega čaja. Temperatura pove povprečje na en delec, ne vsote.
+- **»Bolj vroče telo ima vedno več notranje energije.«** Učenec gleda samo temperaturo. A notranja energija je vsota energij vseh delcev, zato je odvisna tudi od količine snovi. Ledena gora ima več notranje energije kot skodelica vrelega čaja, ker je v njej neprimerno več delcev. Temperatura pove povprečje na en delec, ne vsote.
 - **Pri pretvorbi v kelvine odštejemo $273$.** Učenec si zapomni le število $273$, ne pa smeri. Ker je absolutna ničla *pod* ničlo Celzija, so kelvini vedno večje število: $T = t + 273$. Preizkus: negativen rezultat v kelvinih je vedno napačen.
 - **Pri Fahrenheitu najprej delimo, šele nato odštejemo.** Tako iz $50\,^\circ\mathrm{F}$ nastane $\dfrac{50}{1{,}8} - 32 \approx -4{,}2\,^\circ\mathrm{C}$, kar je mraz namesto svežega jutra. Pravilno: najprej odštej $32$ (premik ničle), nato deli z $1{,}8$ (velikost koraka): $\dfrac{50 - 32}{1{,}8} = 10\,^\circ\mathrm{C}$.
 - **Termometer odčitamo takoj.** Termometer pokaže svojo temperaturo, ne temperature snovi. Šele ko se stolpec ustavi, sta oba v toplotnem ravnovesju.
@@ -181,7 +181,7 @@ Fahrenheitova lestvica je kot zemljevid, ki meri v čevljih namesto v metrih in 
 Termometre srečaš povsod, le da jih ne opaziš vedno:
 
 - **Vročinski termometer.** Digitalni pod pazduho piska, ko je dosegel ravnovesje s telesom. Zato ga ne vzameš ven prej.
-- **Infrardeči termometer na čelu.** Izmeri v sekundi, ker se ne rabi segreti: meri nevidno svetlobo, ki jo oddaja koža.
+- **Infrardeči termometer na čelu.** Izmeri v sekundi, ker se mu ni treba segreti: meri nevidno svetlobo, ki jo oddaja koža.
 - **Zunanji termometer v avtu.** Na poti v hribe že ob $3\,^\circ\mathrm{C}$ prižge opozorilo za poledico: zrak je še nad ničlo, cestišče, posebej na mostu, pa je lahko hladnejše in tam led nastane prej.
 - **Termometer v hladilniku** naj kaže okoli $4\,^\circ\mathrm{C}$, v zamrzovalniku okoli $-18\,^\circ\mathrm{C}$.
 

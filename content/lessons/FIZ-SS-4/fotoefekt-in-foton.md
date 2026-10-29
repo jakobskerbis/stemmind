@@ -25,7 +25,7 @@ Pri tem je $h = 6{,}63\cdot10^{-34}\,\mathrm{J\,s}$ **Planckova konstanta**.
 
 *Preizkus:* kaj se zgodi z energijo fotona, če frekvenco potrojimo?
 
-**2. Energija in valovna dolžina.** Odgovor: energija fotona se potroji. Za svetlobo velja še $c = \lambda\nu$, kjer je $c = 3{,}00\cdot10^{8}\,\mathrm{m/s}$. Ko frekvenco izrazimo z valovno dolžino $\lambda$, dobimo
+**2. Energija in valovna dolžina.** Odgovor: energija fotona se potroji. Za svetlobo velja še $c = \lambda\nu$, kjer je $c = 3{,}00\cdot10^{8}\,\mathrm{m/s}$. Ko v $W_f = h\nu$ vstavimo $\nu = \dfrac{c}{\lambda}$, dobimo
 
 $$W_f = \frac{hc}{\lambda}$$
 
@@ -59,7 +59,7 @@ $$W_k = h\nu - A_i$$
 
 Izbijanje elektronov iz kovine s svetlobo imenujemo **fotoefekt**, enačbo pa **Einsteinova enačba**. $W_k$ je *največja* kinetična energija izbitih elektronov; elektroni iz globljih plasti kovine del energije izgubijo že na poti do površine.
 
-Mejo, pri kateri je $W_k = 0$, imenujemo **mejna frekvenca** $\nu_m = \dfrac{A_i}{h}$. Pod njo fotoefekta ni.
+Frekvenco, pri kateri je $W_k = 0$, imenujemo **mejna frekvenca** $\nu_m = \dfrac{A_i}{h}$. Pod njo fotoefekta ni.
 
 :::premisli
 Na natrij posvetimo z rdečo svetlobo ($1{,}9\,\mathrm{eV}$), nato z modro ($2{,}8\,\mathrm{eV}$). Napovej, kaj se zgodi v vsakem primeru.
@@ -71,7 +71,7 @@ Rdeča elektronov ne izbije, ker je $1{,}9\,\mathrm{eV}$ manj od izstopnega dela
 
 **5. Jakost svetlobe.** Odgovor: $W_k$ se zmanjša, ker za izstop porabimo več energije. Kaj pa pomeni močnejša svetloba? Več fotonov v sekundi, vsak z enako energijo kot prej. Zato močnejša svetloba izbije **več** elektronov, ne pa hitrejših. Pod mejno frekvenco tudi najmočnejša svetloba ne izbije nobenega.
 
-V simulaciji spodaj »Fotoefekt« izberi natrij, nastavi $650\,\mathrm{nm}$ in jakost $100\,\%$. Nato zmanjšaj valovno dolžino na $450\,\mathrm{nm}$ in spreminjaj jakost. Opazuj: število elektronov se spreminja, točka na grafu $W_k(\nu)$ pa ostane na mestu.
+V simulaciji spodaj »Fotoefekt« izberi natrij, nastavi $650\,\mathrm{nm}$ in jakost $100\,\%$. Nato zmanjšaj valovno dolžino na $450\,\mathrm{nm}$ in spreminjaj jakost. Opazuj: število elektronov se spreminja, točka na grafu $W_k(\nu)$, ki kaže največjo kinetično energijo v odvisnosti od frekvence, pa ostane na mestu.
 
 :::premisli
 Zdaj reši uvodno uganko: zakaj UV-svetilka s $5\,\mathrm{W}$ poškoduje DNK, mikrovalovka z $800\,\mathrm{W}$ pa ne?

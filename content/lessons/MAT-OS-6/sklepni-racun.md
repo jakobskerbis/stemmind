@@ -248,7 +248,7 @@ Naloga: pet enakih svinčnikov stane $4$ €. Koliko stane osem svinčnikov?
 - 3. korak
 ~ Množenje je pravilno izračunano, a uporablja napačen rezultat iz prejšnjega koraka.
 - Noben, rešitev je pravilna.
-~ Če $3$ kg stanejo $2{,}40$ €, $5$ kg ne more stati več kot $6$ kg, torej več kot $4{,}80$ €. $6{,}25$ € je preveč.
+~ Če $3$ kg stanejo $2{,}40$ €, stane $6$ kg $4{,}80$ €. Manj kilogramov ne more stati več, zato je $6{,}25$ € za $5$ kg preveč.
 > Luka je delil v napačni smeri. Cena 1 kg je $2{,}40 : 3 = 0{,}80$ €, torej $5$ kg stane $5 \cdot 0{,}80 = 4$ €.
 
 ? Razred plača najem dvorane $120$ €; strošek si učenci delijo enakomerno. Najprej je bilo prijavljenih $20$ učencev, nato se jih prijavi še $4$. Koliko plača zdaj vsak?

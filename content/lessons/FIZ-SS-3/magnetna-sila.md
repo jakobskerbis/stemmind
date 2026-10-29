@@ -23,7 +23,7 @@ To je majhna sila, zato je v motorju veliko ovojev žice in sile se seštejejo.
 
 Iz tega dobimo tudi pomen tesle: $1\,\mathrm{T} = 1\,\dfrac{\mathrm{N}}{\mathrm{A\,m}}$. V polju $1\,\mathrm{T}$ deluje na $1\,\mathrm{m}$ žice s tokom $1\,\mathrm{A}$, ki je pravokotna na polje, sila $1\,\mathrm{N}$.
 
-**2. Kaj, če žica ni pravokotna?** Žico zasučemo, tako da s poljem oklepa kot $\alpha$. Sila je največja pri $90^\circ$, manjša pri manjšem kotu in nič, ko je žica vzporedna s poljem. Šteje le del žice, ki je pravokoten na polje:
+**2. Kaj, če žica ni pravokotna?** Žico zasučemo, tako da s poljem oklepa kot $\alpha$. Sila je največja pri $90^\circ$, manjša pri manjšem kotu in nič, ko je žica vzporedna s poljem. Šteje le tisti del dolžine žice, ki je pravokoten na polje, to je $l\sin\alpha$:
 
 $$F = I\, l\, B\, \sin\alpha$$
 
@@ -34,16 +34,16 @@ $$F = I\, l\, B\, \sin\alpha$$
 | $0^\circ$ | $0$ | $0$ |
 
 :::premisli
-Žico v avtomobilčku obrnemo, da leži vzdolž silnic. Tok in polje ostaneta enaka. Kaj napoveš za silo in zakaj?
+Žico v avtomobilčku zasučemo še naprej, da s poljem oklepa $150^\circ$. Tok in polje ostaneta enaka. Je sila večja, manjša ali enaka kot pri $30^\circ$?
 ---
-Sila je nič. Pri $\alpha = 0^\circ$ je $\sin\alpha = 0$: šteje le del žice, ki je pravokoten na polje, takega dela pa ni.
+Enaka, $0{,}015\,\mathrm{N}$. Ker je $\sin 150^\circ = \sin 30^\circ = 0{,}5$, je del dolžine, pravokoten na polje, v obeh legah enako dolg. Ko pa žica leži vzdolž silnic ($0^\circ$ ali $180^\circ$), takega dela ni in sila je nič.
 :::
 
 **3. Smer sile.** Sila je pravokotna na žico in na polje hkrati. Smer najdeš s **pravilom desne roke**: iztegnjeni prsti desne roke kažejo v smeri polja $\vec B$, palec v smeri toka, sila pa kaže iz dlani, kot bi z dlanjo potisnil.
 
 Slika v besedah: polje kaže od leve proti desni (od N proti S), tok teče po žici navzgor. Prsti v desno, palec navzgor: dlan gleda stran od tebe, zato sila potiska žico v zaslon. Če obrneš tok ali polje, se sila obrne.
 
-**4. Od žice do enega naboja.** Tok v žici so gibajoči se naboji. Naboj $e$, ki se giblje s hitrostjo $v$, prispeva v sili isto kot kos toka $I\, l$. Zato na en naboj deluje **magnetna (Lorentzova) sila**:
+**4. Od žice do enega naboja.** Tok v žici so gibajoči se naboji. Če naboj $e$ v času $t$ preleti kos žice dolžine $l$, je $I\, l = \dfrac{e}{t}\, l = e\, v$. V formuli za silo zato $I\, l$ zamenjamo z $e\, v$ in dobimo silo na en naboj, **magnetno (Lorentzovo) silo**:
 
 $$F = e\, v\, B\, \sin\alpha$$
 
@@ -165,9 +165,9 @@ $F_\mathrm{s} = 9{,}6\,\mathrm{N}$. Ena žica da le četrt newtona, šele mnogo 
 
 ## Drugače: Z analogijo
 
-Pomisli spet na met kladiva. Atlet vleče žico proti sebi, kladivo pa kroži. Vlečna sila je ves čas pravokotna na smer, v katero kladivo leti, zato ga ne pospeši naprej, le obrača.
+Kladivo iz uvoda že nosi bistvo: vlečna sila je ves čas pravokotna na smer leta, zato kladiva ne pospeši naprej, le obrača.
 
-Proton v magnetnem polju je kladivo, magnetna sila pa je žica. Razlika je v tem, kdo »vleče«. Pri kladivu je to atlet v središču, pri protonu ni ničesar v središču kroga. Sila nastane sama, iz gibanja naboja v polju, in vedno kaže pravokotno na hitrost.
+Proton v magnetnem polju je kladivo, magnetna sila pa ima vlogo napete žice kladiva. Razlika je v tem, kdo »vleče«. Pri kladivu je to atlet v središču, pri protonu ni ničesar v središču kroga. Sila nastane sama, iz gibanja naboja v polju, in vedno kaže pravokotno na hitrost.
 
 Druga analogija je drsalec, ki zavije na ledu. Rob drsalke ga potiska vstran, ne naprej, zato zavije, ne da bi pospešil. Če bi se ustavil, bi stranska sila izginila. Tudi magnetna sila izgine, ko se naboj ustavi.
 

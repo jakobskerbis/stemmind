@@ -7,9 +7,9 @@ avtor: AI
 
 Telefon določi tvoj položaj iz signalov satelitov GPS. Signal potuje s hitrostjo svetlobe, $3{,}00\cdot10^{8}\,\mathrm{m/s}$. Če ura na satelitu zgreši za eno milijoninko sekunde, je položaj napačen za $3{,}00\cdot10^{8}\,\mathrm{m/s} \cdot 10^{-6}\,\mathrm{s} = 300\,\mathrm{m}$. Zemljevid bi te postavil nekaj ulic stran.
 
-Zato sateliti nosijo **atomske ure**. Sekunda je danes definirana z atomom cezija: v eni sekundi naredi sevanje, ki ga oddaja cezij, natanko $9\,192\,631\,770$ nihajev. Vsak atom cezija na svetu seva s točno to frekvenco.
+Zato sateliti nosijo **atomske ure**. Sekunda je danes definirana z atomom cezija. Sevanje, ki ga oddaja cezij, v eni sekundi naredi natanko $9\,192\,631\,770$ nihajev. Vsak atom cezija na svetu seva s točno to frekvenco.
 
-Zakaj so vsi atomi enaki do zadnje števke? In zakaj ulična svetilka z natrijem skozi spektroskop, pripet na kamero telefona, pokaže skoraj samo eno rumeno črto pri $589\,\mathrm{nm}$, svetilka telefona pa celo mavrico? Odgovor je v zgradbi atoma.
+Zakaj so vsi atomi enaki do zadnje števke? In zakaj ulična svetilka z natrijem skozi spektroskop, pripet na kamero telefona, pokaže skoraj samo eno rumeno črto pri $589\,\mathrm{nm}$, svetilka telefona pa neprekinjeno mavrico? Spektroskop je priprava, ki svetlobo razkloni po valovnih dolžinah. Odgovor je v zgradbi atoma.
 
 ## Razlaga
 
@@ -28,7 +28,7 @@ Zdaj pa seznam števil, ki ga je predlagal Niels Bohr. Po njegovem modelu ima el
 
 $$E_n = -\frac{13{,}6\,\mathrm{eV}}{n^2}, \quad n = 1, 2, 3, \ldots$$
 
-To so $E_1 = -13{,}6\,\mathrm{eV}$, $E_2 = -3{,}40\,\mathrm{eV}$, $E_3 = -1{,}51\,\mathrm{eV}$, $E_4 = -0{,}85\,\mathrm{eV}$, $E_5 = -0{,}54\,\mathrm{eV}$ in $E_6 = -0{,}38\,\mathrm{eV}$.
+To so $E_1 = -13{,}6\,\mathrm{eV}$, $E_2 = -3{,}40\,\mathrm{eV}$, $E_3 = -1{,}51\,\mathrm{eV}$, $E_4 = -0{,}85\,\mathrm{eV}$, $E_5 = -0{,}54\,\mathrm{eV}$ in $E_6 = -0{,}38\,\mathrm{eV}$. Zakaj so negativne, pojasnimo malo niže.
 
 Poišči vzorec sam: izračunaj $E_3 - E_2$ in $E_4 - E_2$. Dobiš $1{,}89\,\mathrm{eV}$ in $2{,}55\,\mathrm{eV}$, točno energiji prvih dveh črt. Tudi $E_5 - E_2 = 2{,}86\,\mathrm{eV}$ in $E_6 - E_2 = 3{,}02\,\mathrm{eV}$ se ujemata. Vse štiri vidne črte so razlike med nekim višjim nivojem in nivojem $n = 2$.
 
@@ -56,7 +56,7 @@ Zakaj so temne črte v absorpcijskem spektru vodika točno na istih mestih kot s
 Ker gre v obeh primerih za iste nivoje. Pri emisiji elektron pade z $E_z$ na $E_k$ in odda foton $E_z - E_k$, pri absorpciji isti foton dvigne elektron z $E_k$ na $E_z$. Razlika energij je ista, zato tudi valovna dolžina.
 :::
 
-V simulaciji spodaj »Bohrov model in spekter vodika« nastavi začetno lupino 3 in končno 2 ter izsevaj foton. Ponovi za začetne lupine 4, 5 in 6. Opazuj, kako se črte proti vijoličnemu koncu zgoščujejo. Nato poskusi prehod z 2 na 1: črte v vidnem delu ni, ker je foton ultravijoličen.
+V simulaciji spodaj »Bohrov model in spekter vodika« nastavi začetni nivo 3 in končnega 2 (v simulaciji se nivoji imenujejo lupine) ter izsevaj foton. Ponovi za začetne nivoje 4, 5 in 6. Opazuj, kako se črte proti vijoličnemu koncu zgoščujejo. Nato poskusi prehod z 2 na 1: črte v vidnem delu ni, ker je foton ultravijoličen.
 
 ## Rešeni primeri
 
@@ -170,7 +170,7 @@ Danes ista ideja teče v tvojem telefonu: atomske ure v satelitih štejejo nihaj
 ~ Absorpcija in emisija gresta med istimi pari nivojev, zato so črte na istih mestih.
 > Absorpcijski spekter: atomi vzamejo iz bele svetlobe le fotone z energijo, ki je točno razlika nivojev, zato nastanejo temne črte na mestih emisijskih črt.
 
-? Približno kolikšna je energija fotona zelene svetlobe ($530\,\mathrm{nm}$) z zaslona telefona?
+? Zaslon telefona sveti zeleno pri $530\,\mathrm{nm}$. Približno za koliko se razlikujeta nivoja, med katerima elektron preskoči, ko izseva tak foton?
 - Približno $0{,}2\,\mathrm{eV}$.
 ~ Za desetkrat premalo: $\dfrac{1240}{530}$ je malo več kot $2$, ne $0{,}2$.
 + Približno $2\,\mathrm{eV}$.

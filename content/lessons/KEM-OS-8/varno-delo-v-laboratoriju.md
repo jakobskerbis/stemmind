@@ -7,7 +7,7 @@ avtor: AI
 
 Najnevarnejša snov, ki jo boš letos držal v rokah, morda ne bo v šolskem laboratoriju, ampak v nakupovalni košarici. Zveni napačno? Poglej čistilo za odtoke. V trgovini stoji na polici blizu šampona in stane nekaj evrov. Na etiketi pa ima **enak znak za nevarnost** kot koncentrirana žveplova kislina, ki jo učiteljica kemije hrani v zaklenjeni omari.
 
-Pri pouku kemije namreč večinoma delaš z **razredčenimi** raztopinami in z majhnimi količinami. Čistilo za odtoke pa je zgoščeno, ker mora raztopiti lase in maščobo v ceveh. Enako lahko razje tudi kožo.
+Pri pouku kemije namreč večinoma delaš z **razredčenimi** raztopinami in z majhnimi količinami. Čistilo za odtoke pa je zgoščeno (koncentrirano), ker mora raztopiti lase in maščobo v ceveh. Enako lahko razje tudi kožo.
 
 Zato se znakov in pravil ne učiš samo za laboratorij. Ko jih znaš prebrati, varno ravnaš tudi z barvami, lakom za nohte, bencinom ali čistilom za pečico.
 
@@ -107,7 +107,7 @@ $V_\text{največ} = \dfrac{V_\text{epruvete}}{3}$
 
 ### Primer 3: nakup zaščitne opreme
 
-V razredu je $26$ učencev. Letos bodo imeli $3$ vaje z razredčenim natrijevim hidroksidom, na katerega steklenici je znak za jedko snov. V omari je $20$ zaščitnih očal. Nova očala stanejo $3{,}80\,€$, škatla s $100$ rokavicami ($50$ parov) pa $6{,}90\,€$. Rokavice so za enkratno uporabo. Koliko bo stala manjkajoča oprema?
+V razredu je $26$ učencev. Letos bodo imeli $3$ vaje z razredčenim natrijevim hidroksidom, na katerega steklenici je znak za jedko snov. V omari je $20$ zaščitnih očal. Nova očala stanejo $3{,}80\,€$, škatla s $100$ rokavicami ($50$ parov) pa $6{,}90\,€$. Rokavic v omari ni, so pa za enkratno uporabo. Koliko bo stala manjkajoča oprema?
 
 **Podatki:** $26$ učencev, $3$ vaje, znak za jedko snov, $20$ očal v omari, očala $3{,}80\,€$ za kos, škatla rokavic ($50$ parov) $6{,}90\,€$
 **Iščemo:** potrebno opremo in skupno ceno

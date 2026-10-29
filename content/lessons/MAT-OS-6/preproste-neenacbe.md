@@ -203,7 +203,7 @@ Tabela potrdi: rešitve so $\{1, 2, 3, 4\}$. Preizkus vedno naredi pri meji: pri
 ~ »Največ« dovoli tudi točno $3\,\text{m}$, znak $<$ pa meje ne vključuje.
 + $v \le 3$
 - $v \ge 3$
-~ Znak $\ge$ pomeni »vsaj«. Tako bi bila dovoljena le visoka vozila.
+~ Znak $\ge$ pomeni »vsaj«. Tako bi smela mimo le vozila, visoka $3\,\text{m}$ ali več.
 - $v = 3$
 ~ Tako bi smela mimo samo vozila, visoka točno $3\,\text{m}$. Pogoj ima več rešitev.
 > »Največ« pomeni manjše ali enako, torej $v \le 3$. Mimo smejo vsa vozila do vključno $3\,\text{m}$.

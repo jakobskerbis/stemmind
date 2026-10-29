@@ -54,9 +54,9 @@ Vse tri poti na enem mestu:
 | sevanje | z infrardečo svetlobo | ne | reflektor greje obraz |
 
 :::premisli
-Termovka ima dve stekleni steni, med njima je prazen prostor (vakuum), notranja stena pa je posrebrena. Kateri način prenosa preprečuje vakuum in kateri srebrna plast?
+Gorski reševalci podhlajenega planinca zavijejo v tanko, sijočo folijo (»astronavtsko odejo«). Folija je tanka kot papir, zato prevajanja skoraj ne zavre. Kateri dve poti izgubljanja toplote kljub temu močno zmanjša?
 ---
-Vakuum prepreči prevajanje in konvekcijo, ker med stenama ni snovi, po kateri bi toplota potovala. Sevanje bi skozi vakuum prešlo, zato je stena sijoča: odbija infrardečo svetlobo nazaj v čaj.
+Sevanje: tudi telo oddaja nevidno infrardečo svetlobo, sijoča folija pa jo odbije nazaj k planincu. Konvekcijo: folija ne prepušča vetra, zato topel zrak ob telesu ne odteka in ga ne zamenja hladen.
 :::
 
 Ana se torej odloči takole: ustnik stisne v pest (prevajanje iz dlani) in stopi v svetlobo reflektorja (sevanje). Šal pa sam ne bi pomagal, dokler je ustnik mrzel: volna toplote ne ustvarja, le zadržuje tisto, ki jo že ima.
@@ -83,7 +83,7 @@ Dotik, snov miruje → prevajanje. Snov (kapljevina ali plin) se premika in nosi
 
 ### Primer 2: koliko toplote vzame ustnik
 
-Medeninast ustnik trobente ima maso $50\,\mathrm{g}$ in temperaturo $-2\,^\circ\mathrm{C}$. Ana ga drži v dlani, dokler se ne ogreje na $30\,^\circ\mathrm{C}$. Specifična toplota medenine je $380\,\dfrac{\mathrm{J}}{\mathrm{kg}\cdot{}^\circ\mathrm{C}}$. Koliko toplote preide iz dlani v ustnik?
+Medeninast ustnik trobente ima maso $50\,\mathrm{g}$ in temperaturo $-2\,^\circ\mathrm{C}$. Ana ga drži v dlani, dokler se ne ogreje na $30\,^\circ\mathrm{C}$. Specifična toplota medenine je $380\,\dfrac{\mathrm{J}}{\mathrm{kg}\cdot{}^\circ\mathrm{C}}$. Koliko toplote preide iz dlani v ustnik? Pomagaj si z enačbo iz lekcije o toploti.
 
 **Podatki:** $m = 50\,\mathrm{g}$, $T_{\text{zač}} = -2\,^\circ\mathrm{C}$, $T_{\text{konč}} = 30\,^\circ\mathrm{C}$, $c = 380\,\dfrac{\mathrm{J}}{\mathrm{kg}\cdot{}^\circ\mathrm{C}}$
 **Iščemo:** toploto $Q$

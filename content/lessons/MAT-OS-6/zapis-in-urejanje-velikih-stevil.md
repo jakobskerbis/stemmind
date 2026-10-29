@@ -230,7 +230,7 @@ Zaokroženo število ni »napačno«. Je dogovorjena natančnost: povemo, katera
 + $97\,000 < 99\,500 < 105\,000 < 120\,000$
 - $105\,000 < 120\,000 < 97\,000 < 99\,500$
 ~ Tu je primerjano samo po prvi števki ($1 < 9$), število mest pa ni upoštevano.
-> Petmestni števili sta manjši od šestmestnih. Med njima odloči desettisočica oziroma tisočica: $97\,000 < 99\,500$, nato $105\,000 < 120\,000$.
+> Petmestni števili sta manjši od šestmestnih. Med petmestnima odloči tisočica ($97\,000 < 99\,500$), med šestmestnima desettisočica ($105\,000 < 120\,000$).
 
 ? Kaj se zgodi s ceno $52\,000$ €, če ji na desni dopišemo še eno ničlo?
 - Ostane enaka, ker ničla nima vrednosti.

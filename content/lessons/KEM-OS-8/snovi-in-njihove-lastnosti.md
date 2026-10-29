@@ -13,7 +13,7 @@ V kuhinji je skoraj vse tako: juha, kis, čaj, solatni preliv. Ko razumeš, iz �
 
 ## Razlaga
 
-Začnimo s poskusom, ki ga lahko narediš doma. V tri enake lončke nalijemo destilirano vodo (iz trgovine, za likalnik), slano vodo (žlica soli v kozarcu vode) in mineralno vodo. Vse tri so prozorne in enotne; na pogled jih ne ločiš. Vsako segrejemo do vrenja in pustimo vreti, dokler ne izpari vsa voda.
+Začnimo s poskusom, ki ga lahko narediš doma. V tri enake lončke nalijemo destilirano vodo (iz trgovine, za likalnik), slano vodo (žlica soli v kozarcu vode) in mineralno vodo. Vse tri so prozorne in enotne; na pogled jih ne ločiš. Vsako segrejemo do vrenja in pustimo vreti, dokler ne izpari vsa voda. Ves čas s termometrom merimo temperaturo.
 
 :::premisli
 Napovej, preden pogledaš tabelo: ali bo slana voda zavrela pri isti temperaturi kot destilirana?
@@ -42,7 +42,7 @@ Zmesi delimo na dve vrsti:
 - **Homogena zmes** je povsod enaka in sestavin ne vidiš niti pod povečevalnim steklom: slana voda, sladek čaj, kis, zrak. Homogeni zmesi tekočine in raztopljene snovi rečemo **raztopina**.
 - **Heterogena zmes** ima vidne dele, ki se med seboj razlikujejo: juha z rezanci, solatni preliv iz olja in kisa, müsli.
 
-Lastnosti snovi, ki jih opazimo ali izmerimo, ne da bi snov spremenili v drugo snov, so na primer agregatno stanje, barva, vonj, tališče, vrelišče, gostota, topnost v vodi, magnetnost.
+Nekatere lastnosti opazimo ali izmerimo, ne da bi snov spremenili v drugo snov. Take so na primer agregatno stanje, barva, vonj, tališče, vrelišče, gostota, topnost v vodi, magnetnost.
 
 Simulacija »Čiste snovi in zmesi« spodaj nariše snovi kot slike delcev. Ko razvrščaš slike, opazi: pri čisti snovi so vsi delci enaki, pri zmesi sta vsaj dve vrsti različnih delcev.
 
@@ -59,7 +59,7 @@ Simulacija »Čiste snovi in zmesi« spodaj nariše snovi kot slike delcev. Ko r
 | z magnetom | magnetnost | železni opilki iz zmesi |
 | kromatografija | barvila potujejo po papirju različno hitro | barvila iz obarvanih bonbonov |
 
-Destilacijo si predstavljaj tako: tekočino segrevamo v bučki → snov z nižjim vreliščem prej izpari → para potuje po cevi skozi hladilnik → tam se ohladi in spet utekočini → kaplja v čašo. Tej tekočini rečemo **destilat**.
+Destilacijo si predstavljaj tako: tekočino segrevamo v bučki → snov z nižjim vreliščem prej izpari → para potuje po cevi skozi hladilnik (cev, ki jo od zunaj hladi tekoča voda) → tam se ohladi in spet utekočini → kaplja v čašo. Tej tekočini rečemo **destilat**.
 
 :::premisli
 Slano vodo zliješ skozi filtrirni papir. Zakaj sol ne ostane na papirju?
