@@ -1017,7 +1017,6 @@
   "games.back": "Назад к играм",
   "games.score": "Очки",
   "games.lives": "Жизни",
-  "games.level": "Сложность",
   "games.sound": "Звук",
   "games.pause": "Пауза",
   "games.paused": "Пауза",
@@ -1045,6 +1044,5 @@
   "games.speedSlow": "Медленно",
   "games.speedMid": "Средне",
   "games.speedFast": "Быстро",
-  "games.chapter": "Глава {n}",
-  "games.next": "Дальше"
+  "games.chapter": "Глава {n}"
 }

@@ -1044,7 +1044,6 @@ export default {
   "games.back": "Nazaj na igre",
   "games.score": "Točke",
   "games.lives": "Življenja",
-  "games.level": "Težavnost",
   "games.sound": "Zvok",
   "games.pause": "Premor",
   "games.paused": "Premor",
@@ -1072,5 +1071,4 @@ export default {
   "games.speedMid": "Srednje",
   "games.speedFast": "Hitro",
   "games.chapter": "Poglavje {n}",
-  "games.next": "Naprej",
 };

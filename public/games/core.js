@@ -92,7 +92,6 @@ export function runGame(host, opts) {
         <div class="gm-stats">
           <span class="gm-score" title="${esc(t("games.score"))}">${icon("star")}<b>0</b></span>
           <span class="gm-lives" aria-label="${esc(t("games.lives"))}"></span>
-          <span class="gm-tier" title="${esc(t("games.level"))}"></span>
         </div>
         <button type="button" class="gm-btn gm-sound" aria-label="${esc(t("games.sound"))}"></button>
         <button type="button" class="gm-btn gm-pause" aria-label="${esc(t("games.pause"))}">${icon("pause")}</button>
@@ -115,18 +114,12 @@ export function runGame(host, opts) {
   // Zgodba: poglavje se odklene na vsakih CHAPTER_EVERY pravilnih odgovorov.
   const story = () => engine.story?.[gameLang()] || engine.story?.en || [];
   const storyLen = () => story().length;
-  const chapterCard = (n, extra = "") => {
-    const ch = story()[n - 1];
-    if (!ch) return "";
-    return `<div class="gm-story"><span class="gm-chap">${esc(t("games.chapter", { n }))}</span><h3>${esc(ch[0])}</h3><p>${esc(ch[1])}</p>${extra}</div>`;
-  };
+  // Novo poglavje igre ne ustavi: samo kratek napis in nove barve prizora.
   function nextChapter() {
     G.chapter++;
-    G.paused = true;
     beep("story");
-    overlay.innerHTML = `<div class="gm-card gm-title">${chapterCard(G.chapter)}<button type="button" class="primary big" data-act="story">${icon("play")}${esc(t("games.next"))}</button></div>`;
-    overlay.hidden = false;
-    overlay.querySelector("[data-act=story]").focus({ preventScroll: true });
+    const ch = story()[G.chapter - 1];
+    G.float(G.W / 2, G.H * 0.42, `${t("games.chapter", { n: G.chapter })}: ${ch[0]}`, "#fde047", Math.min(30, G.W / 16), 2.4);
   }
   let timer = null; // { left, total }
   let nextAt = 0; // čas naslednje naloge (po kratkem premoru)
@@ -222,7 +215,7 @@ export function runGame(host, opts) {
       G.fx.push({ k: "p", x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 0.6 + Math.random() * 0.3, max: 0.9, color, r: 2 + Math.random() * 3 });
     }
   };
-  G.float = (x, y, text, color, size = 22) => G.fx.push({ k: "t", x, y, text, color, size, life: 1, max: 1 });
+  G.float = (x, y, text, color, size = 22, life = 1) => G.fx.push({ k: "t", x, y, text, color, size, life, max: life });
   G.shake = (a) => {
     if (!G.reduced) G.shakeT = Math.max(G.shakeT, a);
   };
@@ -266,7 +259,6 @@ export function runGame(host, opts) {
     $(".gm-score b").textContent = G.score;
     $(".gm-lives").innerHTML = Array.from({ length: Math.max(G.lives, 0) }, () => icon("heart")).join("");
     $(".gm-lives").setAttribute("aria-label", `${t("games.lives")}: ${G.lives}`);
-    $(".gm-tier").textContent = "★".repeat(G.tier) + "☆".repeat(3 - G.tier);
     $(".gm-sound").innerHTML = icon(soundOn() ? "volume-2" : "volume-x");
   }
 
@@ -380,11 +372,6 @@ export function runGame(host, opts) {
     const act = e.target.closest("[data-act]")?.dataset.act;
     if (act === "play" || act === "again") start();
     if (act === "resume") togglePause();
-    if (act === "story") {
-      G.paused = false;
-      overlay.hidden = true;
-      canvas.focus({ preventScroll: true });
-    }
     const pace = e.target.closest("[data-pace]")?.dataset.pace;
     if (pace) {
       try {
@@ -403,7 +390,7 @@ export function runGame(host, opts) {
     overlay.innerHTML = `<div class="gm-card gm-title">
       <div class="gm-card-ic">${icon(engine.icon)}</div>
       <h2>${esc(opts.title)}</h2>
-      ${chapterCard(1)}
+      ${story()[0] ? `<p class="gm-story"><b>${esc(story()[0][0])}.</b> ${esc(story()[0][1])}</p>` : ""}
       <p class="gm-how">${esc(t(`games.e.${engine.id}.how`))}</p>
       <div class="gm-pace"><span>${esc(t("games.speed"))}</span><div class="seg" role="group" aria-label="${esc(t("games.speed"))}">${seg}</div></div>
       ${opts.best ? `<p class="muted">${esc(t("games.best"))}: <b>${opts.best}</b></p>` : ""}
@@ -438,7 +425,6 @@ export function runGame(host, opts) {
         <div class="gm-big">${icon("star")}<b>${G.score}</b></div>
         ${info.newBest ? `<p class="gm-record">${icon("trophy")} ${esc(t("games.record"))}</p>` : info.best ? `<p class="muted">${esc(t("games.best"))}: <b>${info.best}</b></p>` : ""}
         <p>${esc(t("games.summary", { ok: G.correct, all: G.correct + G.wrong }))}${info.xp ? ` · <b class="gm-xp">+${info.xp} XP</b>` : ""}</p>
-        ${storyLen() ? `<p class="gm-chap-end">${esc(t("games.chapter", { n: G.chapter }))}: <b>${esc(story()[G.chapter - 1][0])}</b></p>` : ""}
         ${mist}
         <div class="actions"><button type="button" class="secondary" data-act="exit">${icon("arrow-left")}${esc(t("games.other"))}</button><button type="button" class="primary" data-act="again">${icon("rotate-ccw")}${esc(t("games.again"))}</button></div>
       </div>`;

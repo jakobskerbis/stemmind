@@ -1007,7 +1007,6 @@
   "games.back": "Rudi kwenye michezo",
   "games.score": "Pointi",
   "games.lives": "Maisha",
-  "games.level": "Ugumu",
   "games.sound": "Sauti",
   "games.pause": "Simamisha",
   "games.paused": "Imesimamishwa",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "Polepole",
   "games.speedMid": "Wastani",
   "games.speedFast": "Haraka",
-  "games.chapter": "Sura ya {n}",
-  "games.next": "Endelea"
+  "games.chapter": "Sura ya {n}"
 }

@@ -1002,7 +1002,6 @@
   "games.back": "Quay lại trò chơi",
   "games.score": "Điểm",
   "games.lives": "Mạng",
-  "games.level": "Độ khó",
   "games.sound": "Âm thanh",
   "games.pause": "Tạm dừng",
   "games.paused": "Đã tạm dừng",
@@ -1030,6 +1029,5 @@
   "games.speedSlow": "Chậm",
   "games.speedMid": "Vừa",
   "games.speedFast": "Nhanh",
-  "games.chapter": "Chương {n}",
-  "games.next": "Tiếp"
+  "games.chapter": "Chương {n}"
 }

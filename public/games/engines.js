@@ -31,7 +31,7 @@ const BRIGHT = ["#fde047", "#fca5a5", "#86efac", "#93c5fd", "#f9a8d4", "#fdba74"
 // ============ METEORJI: ladja sestreli meteor s pravilnim odgovorom, preden pade na ščit ============
 export const meteor = {
   id: "meteor",
-  story: {"sl": [["Meteorski dež", "Kapitanka Vega straži vesoljsko postajo Delta. Proti njej leti roj meteorjev, na katerih so zapisane številke. Zadeni pravega in postaja bo varna!"], ["Asteroidni pas", "Vega pelje ladjo skozi asteroidni pas. Skale so večje, a tvoj laser je natančen. Vsak pravilen odgovor odpre pot naprej."], ["Kometov rep", "Za kometom ostaja sled ledenih kamnov. Vega potrebuje pomočnika, ki hitro računa. To si ti!"], ["Domov", "Postaja Delta je že na obzorju. Še zadnji roj in posadka bo praznovala. Kapitanka Vega ti podeli zvezdo junaka."]], "en": [["Meteor shower", "Captain Vega guards space station Delta. A swarm of numbered meteors is heading its way. Hit the right one and the station stays safe!"], ["The asteroid belt", "Vega steers the ship through the asteroid belt. The rocks are bigger, but your laser is sharp. Every right answer clears the way."], ["The comet's tail", "A comet leaves a trail of icy rocks. Vega needs a helper who counts fast. That's you!"], ["Homeward", "Station Delta is on the horizon. One last swarm and the crew can celebrate. Captain Vega gives you the hero's star."]]},
+  story: {"sl": [["Meteorski dež", "Kapitanka Vega brani postajo Delta pred meteorji."], ["Asteroidni pas", "Vega leti skozi asteroidni pas."], ["Kometov rep", "Za kometom letijo ledeni kamni."], ["Domov", "Postaja Delta je že blizu!"]], "en": [["Meteor shower", "Captain Vega defends station Delta from meteors."], ["The asteroid belt", "Vega flies through the asteroid belt."], ["The comet's tail", "Icy rocks trail behind a comet."], ["Homeward", "Station Delta is close!"]]},
   icon: "zap",
   colors: ["#1e1b4b", "#6d28d9"],
   options: 4,
@@ -233,7 +233,7 @@ export const meteor = {
 // ============ BALONI: iz roja balonov poči tistega s pravilnim odgovorom ============
 export const balloons = {
   id: "balloons",
-  story: {"sl": [["Sejem balonov", "Balonar Bor je za sejem v Oblakovem napihnil sto balonov. Nekdo je pomešal napise! Poči balone z napačnimi odgovori in reši pravega."], ["Veter z gora", "Močan veter odnaša balone čez travnik. Bor teče za njimi, ti pa poišči tistega s pravim odgovorom."], ["Nad oblaki", "Bor se z balonom dvigne nad oblake. Tu letijo baloni vseh barv. Ujemi pravega, preden odplava!"], ["Velika parada", "Danes je velika parada balonov. Ves kraj gleda, kako Bor in ti izbirata prave balone. Bravo, balonarski mojster!"]], "en": [["Balloon fair", "Bor the balloon maker blew up a hundred balloons for the fair in Cloudville. Someone mixed up the labels! Pick the balloon with the right answer."], ["Mountain wind", "A strong wind blows the balloons across the meadow. Bor runs after them while you find the right one."], ["Above the clouds", "Bor rises above the clouds in his balloon. Balloons of every colour float here. Catch the right one before it drifts away!"], ["The grand parade", "Today is the grand balloon parade. The whole town watches you and Bor pick the right balloons. Well done, balloon master!"]]},
+  story: {"sl": [["Sejem balonov", "Balonar Bor je pomešal napise na balonih."], ["Veter z gora", "Veter odnaša balone čez travnik."], ["Nad oblaki", "Bor se z balonom dvigne nad oblake."], ["Velika parada", "Ves kraj gleda balonsko parado!"]], "en": [["Balloon fair", "Bor the balloon maker mixed up the labels."], ["Mountain wind", "The wind blows the balloons across the meadow."], ["Above the clouds", "Bor rises above the clouds."], ["The grand parade", "The whole town watches the balloon parade!"]]},
   icon: "party-popper",
   colors: ["#075985", "#0284c7"],
   options: 4,
@@ -378,7 +378,7 @@ export const balloons = {
 // ============ TEKAČ: v pravem trenutku zavij na stezo s pravilnim odgovorom ============
 export const runner = {
   id: "runner",
-  story: {"sl": [["Start v dolini", "Tekačica Lina se pripravlja na veliki tek do vrha gore. Na poti so vrata z odgovori. Steci skozi prava vrata!"], ["Gozdna steza", "Steza vodi skozi temen gozd. Lina zaupa tvojim odgovorom, ko izbira pot med drevesi."], ["Puščavski most", "Za gozdom se začne vroča puščava in dolg most. Prava vrata vodijo na drugo stran."], ["Cilj na vrhu", "Zasneženi vrh je čisto blizu! Še nekaj vrat in Lina bo prva na cilju. Skupaj sta zmagala!"]], "en": [["Start in the valley", "Lina the runner is getting ready for the big race to the mountain top. Gates with answers stand on the road. Run through the right gate!"], ["Forest trail", "The trail goes through a dark forest. Lina trusts your answers to choose the path between the trees."], ["Desert bridge", "After the forest comes a hot desert and a long bridge. The right gates lead across."], ["Finish at the top", "The snowy peak is close! A few more gates and Lina finishes first. You won together!"]]},
+  story: {"sl": [["Start v dolini", "Tekačica Lina teče na vrh gore."], ["Gozdna steza", "Pot vodi skozi gozd."], ["Puščavski most", "Čez puščavo vodi dolg most."], ["Cilj na vrhu", "Vrh je čisto blizu!"]], "en": [["Start in the valley", "Lina the runner races to the mountain top."], ["Forest trail", "The trail goes through a forest."], ["Desert bridge", "A long bridge crosses the desert."], ["Finish at the top", "The peak is close!"]]},
   icon: "flag",
   colors: ["#14532d", "#15803d"],
   options: 3,
@@ -547,7 +547,7 @@ export function statement(q, v) {
 }
 export const sorter = {
   id: "sorter",
-  story: {"sl": [["Prvi dan v tovarni", "Robot Zobko dela v tovarni števil. Po traku prihajajo zaboji s trditvami. Pravilne pošlji naprej, napačne izloči!"], ["Nočna izmena", "Ponoči je v tovarni več dela. Zobko je zaspan, zato potrebuje tvoje ostre oči."], ["Velika naročila", "Prispela so velika naročila iz vsega sveta. Vsak zaboj mora biti preverjen, preden odide."], ["Mojster tovarne", "Direktorica tovarne je navdušena. Zobko in ti sta najboljša ekipa. Dobita naziv mojstra tovarne!"]], "en": [["First day at the factory", "Zobko the robot works in the number factory. Crates with statements roll along the belt. Send true ones on, throw false ones out!"], ["Night shift", "There is more work at night. Zobko is sleepy, so he needs your sharp eyes."], ["Big orders", "Big orders arrived from all over the world. Every crate must be checked before it leaves."], ["Factory master", "The factory boss is thrilled. You and Zobko are the best team. You both become factory masters!"]]},
+  story: {"sl": [["Prvi dan v tovarni", "Robot Zobko preverja zaboje v tovarni števil."], ["Nočna izmena", "Ponoči je dela še več."], ["Velika naročila", "Prispela so velika naročila."], ["Mojster tovarne", "Zobko in ti sta najboljša ekipa!"]], "en": [["First day at the factory", "Zobko the robot checks crates in the number factory."], ["Night shift", "There is even more work at night."], ["Big orders", "Big orders have arrived."], ["Factory master", "You and Zobko are the best team!"]]},
   icon: "list-checks",
   colors: ["#78350f", "#b45309"],
   options: 2,

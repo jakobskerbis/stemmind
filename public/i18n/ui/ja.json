@@ -1002,7 +1002,6 @@
   "games.back": "ゲーム一覧に戻る",
   "games.score": "ポイント",
   "games.lives": "ライフ",
-  "games.level": "難しさ",
   "games.sound": "サウンド",
   "games.pause": "一時停止",
   "games.paused": "一時停止中",
@@ -1030,6 +1029,5 @@
   "games.speedSlow": "ゆっくり",
   "games.speedMid": "ふつう",
   "games.speedFast": "はやい",
-  "games.chapter": "第{n}章",
-  "games.next": "次へ"
+  "games.chapter": "第{n}章"
 }

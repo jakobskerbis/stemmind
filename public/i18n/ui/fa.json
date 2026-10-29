@@ -1007,7 +1007,6 @@
   "games.back": "بازگشت به بازی‌ها",
   "games.score": "امتیاز",
   "games.lives": "جان‌ها",
-  "games.level": "سختی",
   "games.sound": "صدا",
   "games.pause": "توقف",
   "games.paused": "متوقف",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "آهسته",
   "games.speedMid": "متوسط",
   "games.speedFast": "سریع",
-  "games.chapter": "فصل {n}",
-  "games.next": "بعدی"
+  "games.chapter": "فصل {n}"
 }

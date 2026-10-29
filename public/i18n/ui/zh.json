@@ -1002,7 +1002,6 @@
   "games.back": "返回游戏",
   "games.score": "得分",
   "games.lives": "生命",
-  "games.level": "难度",
   "games.sound": "声音",
   "games.pause": "暂停",
   "games.paused": "已暂停",
@@ -1030,6 +1029,5 @@
   "games.speedSlow": "慢",
   "games.speedMid": "中",
   "games.speedFast": "快",
-  "games.chapter": "第 {n} 章",
-  "games.next": "下一步"
+  "games.chapter": "第 {n} 章"
 }

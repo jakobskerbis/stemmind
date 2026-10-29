@@ -1007,7 +1007,6 @@
   "games.back": "খেলায় ফিরে যাও",
   "games.score": "পয়েন্ট",
   "games.lives": "জীবন",
-  "games.level": "কঠিনতা",
   "games.sound": "শব্দ",
   "games.pause": "বিরতি",
   "games.paused": "থামানো",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "ধীরে",
   "games.speedMid": "মাঝারি",
   "games.speedFast": "দ্রুত",
-  "games.chapter": "অধ্যায় {n}",
-  "games.next": "পরবর্তী"
+  "games.chapter": "অধ্যায় {n}"
 }

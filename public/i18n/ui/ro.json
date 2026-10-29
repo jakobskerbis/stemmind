@@ -1012,7 +1012,6 @@
   "games.back": "Înapoi la jocuri",
   "games.score": "Puncte",
   "games.lives": "Vieți",
-  "games.level": "Dificultate",
   "games.sound": "Sunet",
   "games.pause": "Pauză",
   "games.paused": "Pauză",
@@ -1040,6 +1039,5 @@
   "games.speedSlow": "Încet",
   "games.speedMid": "Mediu",
   "games.speedFast": "Rapid",
-  "games.chapter": "Capitolul {n}",
-  "games.next": "Mai departe"
+  "games.chapter": "Capitolul {n}"
 }

@@ -1002,7 +1002,6 @@
   "games.back": "게임 목록으로",
   "games.score": "점수",
   "games.lives": "목숨",
-  "games.level": "난이도",
   "games.sound": "소리",
   "games.pause": "일시 정지",
   "games.paused": "일시 정지됨",
@@ -1030,6 +1029,5 @@
   "games.speedSlow": "느리게",
   "games.speedMid": "보통",
   "games.speedFast": "빠르게",
-  "games.chapter": "{n}장",
-  "games.next": "다음"
+  "games.chapter": "{n}장"
 }

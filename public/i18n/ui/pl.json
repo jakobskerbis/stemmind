@@ -1017,7 +1017,6 @@
   "games.back": "Wróć do gier",
   "games.score": "Punkty",
   "games.lives": "Życia",
-  "games.level": "Trudność",
   "games.sound": "Dźwięk",
   "games.pause": "Pauza",
   "games.paused": "Pauza",
@@ -1045,6 +1044,5 @@
   "games.speedSlow": "Wolno",
   "games.speedMid": "Średnio",
   "games.speedFast": "Szybko",
-  "games.chapter": "Rozdział {n}",
-  "games.next": "Dalej"
+  "games.chapter": "Rozdział {n}"
 }

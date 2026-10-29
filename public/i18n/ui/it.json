@@ -1007,7 +1007,6 @@
   "games.back": "Torna ai giochi",
   "games.score": "Punti",
   "games.lives": "Vite",
-  "games.level": "Difficoltà",
   "games.sound": "Suono",
   "games.pause": "Pausa",
   "games.paused": "In pausa",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "Lento",
   "games.speedMid": "Medio",
   "games.speedFast": "Veloce",
-  "games.chapter": "Capitolo {n}",
-  "games.next": "Avanti"
+  "games.chapter": "Capitolo {n}"
 }

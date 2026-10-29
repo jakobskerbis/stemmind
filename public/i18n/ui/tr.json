@@ -1007,7 +1007,6 @@
   "games.back": "Oyunlara dön",
   "games.score": "Puan",
   "games.lives": "Can",
-  "games.level": "Zorluk",
   "games.sound": "Ses",
   "games.pause": "Duraklat",
   "games.paused": "Duraklatıldı",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "Yavaş",
   "games.speedMid": "Orta",
   "games.speedFast": "Hızlı",
-  "games.chapter": "Bölüm {n}",
-  "games.next": "İleri"
+  "games.chapter": "Bölüm {n}"
 }

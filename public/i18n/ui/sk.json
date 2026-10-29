@@ -1017,7 +1017,6 @@
   "games.back": "Späť na hry",
   "games.score": "Body",
   "games.lives": "Životy",
-  "games.level": "Obtiažnosť",
   "games.sound": "Zvuk",
   "games.pause": "Pauza",
   "games.paused": "Pozastavené",
@@ -1045,6 +1044,5 @@
   "games.speedSlow": "Pomaly",
   "games.speedMid": "Stredne",
   "games.speedFast": "Rýchlo",
-  "games.chapter": "Kapitola {n}",
-  "games.next": "Ďalej"
+  "games.chapter": "Kapitola {n}"
 }

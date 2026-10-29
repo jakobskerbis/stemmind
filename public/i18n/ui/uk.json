@@ -1017,7 +1017,6 @@
   "games.back": "Назад до ігор",
   "games.score": "Очки",
   "games.lives": "Життя",
-  "games.level": "Складність",
   "games.sound": "Звук",
   "games.pause": "Пауза",
   "games.paused": "Пауза",
@@ -1045,6 +1044,5 @@
   "games.speedSlow": "Повільно",
   "games.speedMid": "Середньо",
   "games.speedFast": "Швидко",
-  "games.chapter": "Розділ {n}",
-  "games.next": "Далі"
+  "games.chapter": "Розділ {n}"
 }

@@ -1027,7 +1027,6 @@
   "games.back": "العودة إلى الألعاب",
   "games.score": "النقاط",
   "games.lives": "الأرواح",
-  "games.level": "الصعوبة",
   "games.sound": "الصوت",
   "games.pause": "إيقاف مؤقت",
   "games.paused": "متوقفة مؤقتًا",
@@ -1055,6 +1054,5 @@
   "games.speedSlow": "بطيء",
   "games.speedMid": "متوسط",
   "games.speedFast": "سريع",
-  "games.chapter": "الفصل {n}",
-  "games.next": "التالي"
+  "games.chapter": "الفصل {n}"
 }

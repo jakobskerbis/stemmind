@@ -1007,7 +1007,6 @@
   "games.back": "Vissza a játékokhoz",
   "games.score": "Pontok",
   "games.lives": "Életek",
-  "games.level": "Nehézség",
   "games.sound": "Hang",
   "games.pause": "Szünet",
   "games.paused": "Szünet",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "Lassú",
   "games.speedMid": "Közepes",
   "games.speedFast": "Gyors",
-  "games.chapter": "{n}. fejezet",
-  "games.next": "Tovább"
+  "games.chapter": "{n}. fejezet"
 }
