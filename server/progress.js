@@ -9,6 +9,7 @@ import { CONTEST, TRAINING_TASKS, isCompetitionPath } from "./competition.js";
 import { isExamPath, mockPlan, scaledScore, examGrade } from "./exams.js";
 import { toChoice } from "./practice/choice.js";
 import { taskLanguage, localName } from "./exams.js";
+import { levelProgress, cleanXpGoal } from "../public/xp-levels.js";
 
 // Tekmovalni trening in poskusno tekmovanje veljata tudi za priprave na izpite.
 const isPrepPath = (key) => isCompetitionPath(key) || isExamPath(key);
@@ -968,7 +969,14 @@ export class Progress {
     const week = this.db
       .prepare("SELECT COALESCE(SUM(amount),0) AS s FROM xp_events WHERE student_id = ? AND created_at >= ?")
       .get(studentId, weekStart()).s;
-    return { total, week, streak: this.dayStreak(studentId), level: Math.floor(Math.sqrt(total / 50)) + 1 };
+    const today = this.db
+      .prepare("SELECT COALESCE(SUM(amount),0) AS s FROM xp_events WHERE student_id = ? AND date(created_at) = date('now')")
+      .get(studentId).s;
+    const lp = levelProgress(total);
+    // Raven in napredek do naslednje (levelFrom/levelTo = skupni XP na začetku te in naslednje ravni),
+    // današnji XP in dnevni cilj iz nastavitve profila xp_goal.
+    const goal = cleanXpGoal(this.store.getStudent?.(studentId)?.settings?.xp_goal);
+    return { total, week, today, goal, streak: this.dayStreak(studentId), level: lp.level, levelFrom: lp.from, levelTo: lp.to };
   }
 
   // Tedenska lestvica med učenci te namestitve (samo vzdevki).

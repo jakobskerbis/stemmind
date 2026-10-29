@@ -32,6 +32,7 @@ export const PROFILE_SETTINGS = {
   goal: { values: ["sprotno", "test", "npz", "matura", "tekmovanje", "izpit"], desc: "student's goal: sprotno = everyday learning, test = school test, npz (OŠ), matura (SŠ), tekmovanje (competition), izpit (faculty / regional exam)" },
   goal_date: { desc: "date of the goal 'YYYY-MM-DD', or '' to delete it (daily reminder at 12:00 until then)" },
   goal_reminder: { values: ["on", "off"], desc: "daily reminder at 12:00 until goal_date" },
+  xp_goal: { values: ["30", "50", "100", "200"], desc: "daily XP goal (≈ 15 XP per solved task): 30 relaxed, 50 normal (default), 100 serious, 200 intense" },
   avatar: { object: true, desc: "avatar look (the only thing other students see): object {slot: value}; kind (character: cat, fox, dragon …), body (colour), eyes, mouth, bg take one item id; hat, outfit, acc, badge, fx take a list of up to 6 item ids worn together (a single id is added to what the drawer already holds, a list replaces the whole drawer, [] empties it; two items on the same spot, e.g. two pairs of glasses, keep only the last); only free items or items the student owns (get_settings lists both); buying with game coins happens only in the games shop" },
   interests: { list: true, values: INTEREST_IDS, desc: `news corner (Kotiček) interests, whole new list (replaces the old one), max 8, ids: ${INTEREST_IDS.join(", ")}` },
   interest_custom: { desc: "own extra topic for the news corner, max 40 chars of keywords, e.g. 'črne luknje' (English keywords find more news); '' clears it" },

@@ -259,8 +259,22 @@ async function step(p, name, fn) {
   }
 }
 const visible = (p, sel) => p.locator(sel).filter({ visible: true }).first();
+// Čestitka ob novi ravni XP (public/xp-fx.js) prekrije zaslon, dokler je učenec ne zapre.
+async function closeLevelUp(p) {
+  if (!(await p.locator(".xp-cele").isVisible().catch(() => false))) return false;
+  await screen(p, "nova-raven").catch(() => {});
+  await p.locator(".xp-cele button").click({ timeout: 3000 });
+  return true;
+}
 async function click(p, sel, opts = {}) {
-  await visible(p, sel).click({ timeout: opts.timeout ?? 5000 });
+  await closeLevelUp(p);
+  try {
+    await visible(p, sel).click({ timeout: opts.timeout ?? 5000 });
+  } catch (e) {
+    // Čestitka se je odprla med klikom (pride malo za animacijo XP): zapri in klikni znova.
+    if (!(await closeLevelUp(p))) throw e;
+    await visible(p, sel).click({ timeout: opts.timeout ?? 5000 });
+  }
   await settle(p, opts.wait ?? 100);
 }
 async function expectVisible(p, sel, what, timeout = 5000) {

@@ -31,6 +31,7 @@ import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-setting
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
 import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
+import { xpStatsHtml, xpItemsHtml, levelRowHtml, paintBadge, celebrateXp } from "./xp-fx.js";
 import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml } from "./goal.js";
 
 const $ = (sel) => document.querySelector(sel);
@@ -259,9 +260,21 @@ function renderMe() {
   $("#me-avatar").textContent = (s.name || "?").trim().charAt(0).toUpperCase();
   $("#me-name").textContent = s.name;
   $("#me-level").textContent = $("#path-select").selectedOptions[0]?.textContent.replace(t("path.myLevel"), "") || "";
-  $("#me-xp").textContent = $("#xp-total").textContent;
+  $("#me-xp").textContent = state.xp?.total ?? $("#xp-total").textContent;
+  paintMeLevel();
   $("#me-streak").textContent = $("#xp-streak").textContent;
   $("#me-account").hidden = $("#account-tab").hidden;
+}
+// Raven z vrstico napredka na strani Jaz.
+function paintMeLevel() {
+  const box = $("#me-lvl");
+  if (!box) return;
+  box.hidden = !state.xp;
+  if (state.xp) {
+    box.innerHTML = levelRowHtml(state.xp);
+    $("#me-xp").textContent = state.xp.total;
+    $("#me-streak").textContent = state.xp.streak;
+  }
 }
 // Nazaj na »Jaz« s podstrani (viden samo, ko je spodnja vrstica: telefon in tablica).
 document.addEventListener("click", (e) => {
@@ -926,6 +939,7 @@ async function fillSettingsForm() {
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
   f.data_mode.value = s.data_mode || "auto";
+  f.xp_goal.value = String(s.xp_goal || 50);
   fillDialectOptions(f, s);
   f.subject.innerHTML = subjectOptions(null, s.subject, schoolSubjectsFor(s.educational_track, s.curriculum_level, isRegional(s.school_system)));
   f.study_course.innerHTML = "";
@@ -989,6 +1003,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
         personality_setting: f.personality_setting.value,
         dialect: f.dialect.value,
         data_mode: f.data_mode.value,
+        xp_goal: Number(f.xp_goal.value),
         ...readGoalFields($("#settings-goal")),
       },
     },
@@ -996,6 +1011,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
   const i = state.students.findIndex((s) => s.id === updated.id);
   state.students[i] = updated;
   state.student = updated;
+  if (before.xp_goal !== updated.settings.xp_goal) refreshXp().catch(() => null);
   syncCompetitionTab();
   applyLite();
   $("#student-select").options[$("#student-select").selectedIndex].textContent = updated.name;
@@ -1033,6 +1049,7 @@ function studentUpdated(updated) {
   if (up) state.welcome = { stage: up };
   if (!$("#view-settings").hidden) fillSettingsForm();
   fillCornerSummary();
+  if (before.xp_goal !== updated.settings.xp_goal) refreshXp().catch(() => null); // dnevni cilj spremenil inštruktor
 }
 
 // Kotiček zanimanj v Nastavitvah: kratek seznam izbranih tem in gumb za vprašalnik.
@@ -1284,17 +1301,24 @@ const isCompTopic = (id) => /^(MAT|FIZ|KEM)-TEK-/.test(String(id || ""));
 const diffBadge = (level, comp = false) =>
   `<span class="diff d${level}" title="${t("level.title")}"><span class="dots"><i></i><i></i><i></i></span>${(comp ? COMP_LEVEL_NAMES : LEVEL_NAMES)[level] || ""}</span>`;
 
+// Povzetek XP (skupaj, raven, danes, cilj …). Ob rasti istega profila: animacija in čestitke (public/xp-fx.js).
+let xpSeq = 0; // samo zadnji odgovor velja (starejši, ki pride pozneje, ne sme povoziti novejšega)
 async function refreshXp() {
   if (!state.student) return;
-  const x = await api(`/api/students/${state.student.id}/xp`);
-  const prev = Number($("#xp-total").textContent) || 0;
-  $("#xp-total").textContent = x.total;
-  if (x.total > prev && prev) {
-    $("#xp-badge").classList.remove("bump");
-    void $("#xp-badge").offsetWidth;
-    $("#xp-badge").classList.add("bump");
-  }
+  const sid = state.student.id;
+  const seq = ++xpSeq;
+  const x = await api(`/api/students/${sid}/xp`);
+  if (state.student?.id !== sid || seq !== xpSeq) return x;
+  const prev = state.xp?.sid === sid ? state.xp : null;
+  state.xp = { ...x, sid };
+  const chip = $("#xp-badge .stat.xp");
+  paintBadge(chip, x);
+  if (prev && x.total > prev.total) celebrateXp(prev, x, { badge: chip, total: $("#xp-total"), alive: () => state.student?.id === sid });
+  else $("#xp-total").textContent = x.total;
   $("#xp-streak").textContent = x.streak;
+  const card = $("#xp-card .xp-stats");
+  if (card) card.innerHTML = xpStatsHtml(x, prev);
+  if (!$("#view-me").hidden) paintMeLevel();
   state.leaderboard = x.leaderboard;
   refreshModes();
   return x;
@@ -1482,11 +1506,7 @@ async function loadPath(key = state.pathKey) {
         ? `<button class="next-row" data-open="${p.next.id}"><span class="eyebrow">${t("path.next")}</span><span class="next-name">${escapeHtml(p.next.name)}</span>${icon("chevron-right")}</button>`
         : `<div class="next-row done">${icon("trophy")}<span class="next-name">${t("path.allDone")}</span></div>`
     }
-    <div class="stats-row">
-      <div><b>${x.level}</b><span>${t("stats.level")}</span></div>
-      <div><b>${x.week}</b><span>${t("stats.week")}</span></div>
-      <div><b>${x.streak}</b><span>${t("stats.streak", { n: x.streak })}</span></div>
-    </div>`;
+    <div class="xp-stats">${xpStatsHtml(x)}</div>`;
 
   content.innerHTML =
     `<div class="legend">${["mastered", "learning", "due", "locked"].map((k) => `<span class="lg ${k}">${icon(NODE[k][0])}${NODE[k][1]}</span>`).join("")}</div>` +
@@ -2109,14 +2129,14 @@ async function checkTask(task, ctx, value) {
       ${r.solution ? workedBlock(task, r.solution, r.correct ? t("task.solution") : t("task.example")) : ""}`;
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" && !r.correct ? t("task.similar") : t("task.next"));
   } else if (r.correct) {
-    html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">${r.offline ? t("off.xpLater") : `+${r.xp.gained} XP`}</span></div>
+    html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">${r.offline ? t("off.xpLater") : `<bdi dir="ltr">+${r.xp.gained} XP</bdi>`}</span></div>
+      ${r.offline ? "" : xpItemsHtml(r.xp)}
       ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>${t("task.mastered")}</span></div>` : ""}
       ${r.unlocked ? unlockedHtml(r.unlocked) : ""}
       ${workedBlock(task, r.solution)}
       ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}
       ${r.offline ? "" : tutorRow(task.id)}`;
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next();
-    if (!r.offline) refreshXp();
   } else {
     html = `<div class="fb bad shake">${icon("circle-x")}<span>${escapeHtml(fbText(r) || t("task.wrong"))}</span></div>
       ${mistakeHtml(r.mistake)}
@@ -2133,6 +2153,8 @@ async function checkTask(task, ctx, value) {
     }
   }
   fb.innerHTML = html;
+  // Nov XP (pravilno, opravljen preizkus znanja, konec treninga): zgornji znesek se animira, ob novi ravni čestitka.
+  if (!r.offline && (r.correct || r.xp || r.placement?.xp || r.next?.xp)) refreshXp();
   // Ko je naloga zaključena, plošča izgine, da sta razlaga in gumb »Naprej« vidna.
   let padClosedForFeedback = false;
   if (!r.retry && (r.correct || r.solution || ctx.mode === "placement")) closePad();

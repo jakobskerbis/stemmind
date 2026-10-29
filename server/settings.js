@@ -6,6 +6,7 @@ import { cleanInterests, NEWS_LEVELS, NEWS_LANGS } from "../public/interests.js"
 import { cleanDialect } from "../public/dialects.js";
 import { SYSTEM_IDS, DEFAULT_SYSTEM, isRegional, gradeInfo, defaultGrade, trackForLevel } from "../public/regions.js";
 import { GOALS, DEFAULT_GOAL, goalsFor, validDate } from "../public/goal-data.js";
+import { DEFAULT_XP_GOAL, cleanXpGoal } from "../public/xp-levels.js";
 
 export const ENUMS = {
   subject: ALL_SUBJECTS,
@@ -43,6 +44,7 @@ export const DEFAULT_SETTINGS = {
   goal: DEFAULT_GOAL,
   goal_date: "", // YYYY-MM-DD ali prazno
   goal_reminder: true, // dnevni opomnik ob 12.00 do datuma cilja
+  xp_goal: DEFAULT_XP_GOAL, // dnevni cilj XP (public/xp-levels.js XP_GOALS)
   // Kotiček zanimanj (public/interests.js): null = vprašalnik še ni bil izpolnjen, [] = preskočen.
   interests: null,
   interest_custom: "",
@@ -105,6 +107,7 @@ export function normalizeSettings(input = {}) {
   // Cilj mora ustrezati šoli (NPZ le v OŠ, matura le v SŠ …), sicer sprotno učenje.
   if (!goalsFor(out).includes(out.goal)) out.goal = DEFAULT_GOAL;
   if (validDate(input.goal_date)) out.goal_date = input.goal_date;
+  if (input.xp_goal !== undefined) out.xp_goal = cleanXpGoal(input.xp_goal);
   if (input.goal_reminder !== undefined) out.goal_reminder = input.goal_reminder === true || input.goal_reminder === 1 || input.goal_reminder === "1" || input.goal_reminder === "true";
   // Različica vodiča ob prvi uporabi, ki jo je profil že videl (public/app.js TOUR_VERSION); ni nastavitev za inštruktorja.
   const tv = Number(input.tour_version);

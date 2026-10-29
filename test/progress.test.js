@@ -342,3 +342,16 @@ test("international path in the Slovenian UI shows Slovenian topic and unit name
   assert.ok(!/[A-Z][a-z]+ in the /.test(tSl.task.topicName), tSl.task.topicName);
   assert.notEqual(tSl.task.topicName, tEn.task.topicName);
 });
+
+test("XP summary: level progress, today's XP and the daily goal from the profile", () => {
+  const { store, p, s } = setup();
+  let x = p.xpSummary(s.id);
+  assert.deepEqual([x.total, x.level, x.levelFrom, x.levelTo, x.today, x.goal], [0, 1, 0, 50, 0, 50]);
+  p.award(s.id, [[60, "pravilno"]]);
+  x = p.xpSummary(s.id);
+  assert.deepEqual([x.total, x.level, x.levelFrom, x.levelTo, x.today], [60, 2, 50, 200, 60]);
+  store.updateStudent(s.id, { settings: { xp_goal: 100 } });
+  assert.equal(p.xpSummary(s.id).goal, 100);
+  store.updateStudent(s.id, { settings: { xp_goal: 77 } });
+  assert.equal(p.xpSummary(s.id).goal, 50, "neznan cilj → privzeti");
+});
