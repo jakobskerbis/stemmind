@@ -65,7 +65,9 @@ export function checkReply(t, ctx) {
 // Vnaprej napisan učenec posebnih preizkusov (stiska, ščit …) ne sproži, zato jih tam ne preverjamo.
 export function checkConversation(turns, persona, { scripted = false } = {}) {
   if (scripted) return [];
-  const tutor = turns.filter((t) => t.role === "tutor");
+  const tutor = turns.filter((t) => t.role === "tutor" && !t.error && t.text);
+  // Pogovor, ki se je končal z napako povezave (npr. prazen račun API), ničesar ne pove o inštruktorju.
+  if (!tutor.length) return [];
   const out = [];
   const add = (id, ok, resnost, opis) => out.push({ id, ok, resnost, opis, turn: null });
   const anyText = (re) => tutor.some((t) => re.test(t.text || ""));
