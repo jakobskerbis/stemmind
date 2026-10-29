@@ -335,7 +335,7 @@
   "onb.namePh": "p. ex. Tiago",
   "onb.finish": "Termina a escolha da escola e do ano.",
   "lp.os": "Ensino básico",
-  "lp.osSub": "6.º–9.º ano",
+  "lp.osSub": "1.º–9.º ano",
   "lp.ss": "Ensino secundário",
   "lp.ssSub": "1.º–4.º ano",
   "lp.uni": "Universidade",
@@ -1305,5 +1305,6 @@
   "tb.steps.count": "Passo {n} de {m}",
   "tb.steps.all": "Tudo de uma vez",
   "tb.steps.byStep": "Passo a passo",
-  "tb.steps.quick": "Verificação rápida"
+  "tb.steps.quick": "Verificação rápida",
+  "path.earlyNote": "O percurso de aprendizagem para {grade} ainda está a ser preparado, por isso por agora vês a matéria do 6.º ano. Os jogos do teu ano estão em Jogos e o tutor explica-te tudo ao teu nível."
 }

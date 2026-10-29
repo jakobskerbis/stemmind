@@ -330,7 +330,7 @@
   "onb.namePh": "例：ゆうき",
   "onb.finish": "学校と学年の選択を完了してください。",
   "lp.os": "小学校・中学校",
-  "lp.osSub": "6〜9年生",
+  "lp.osSub": "1〜9年生",
   "lp.ss": "高校",
   "lp.ssSub": "1〜4年",
   "lp.uni": "大学",
@@ -1299,5 +1299,6 @@
   "tb.steps.count": "ステップ {n} / {m}",
   "tb.steps.all": "まとめて表示",
   "tb.steps.byStep": "ステップごと",
-  "tb.steps.quick": "クイックチェック"
+  "tb.steps.quick": "クイックチェック",
+  "path.earlyNote": "{grade}の学習ルートはまだ準備中なので、今は6年生の内容が表示されます。あなたの学年のゲームは「ゲーム」にあり、チューターはあなたのレベルに合わせて説明します。"
 }

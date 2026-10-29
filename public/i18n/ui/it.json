@@ -335,7 +335,7 @@
   "onb.namePh": "es. Luca",
   "onb.finish": "Completa la scelta di scuola e classe.",
   "lp.os": "Scuola primaria e media",
-  "lp.osSub": "6ª–9ª classe",
+  "lp.osSub": "1ª–9ª classe",
   "lp.ss": "Scuola superiore",
   "lp.ssSub": "1°–4° anno",
   "lp.uni": "Università",
@@ -1305,5 +1305,6 @@
   "tb.steps.count": "Passo {n} di {m}",
   "tb.steps.all": "Tutto insieme",
   "tb.steps.byStep": "Passo dopo passo",
-  "tb.steps.quick": "Verifica rapida"
+  "tb.steps.quick": "Verifica rapida",
+  "path.earlyNote": "Il percorso per {grade} è ancora in preparazione, quindi per ora vedi gli argomenti della 6ª classe. I giochi per la tua classe sono in Giochi e il tutor ti spiega tutto al tuo livello."
 }

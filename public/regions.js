@@ -1,6 +1,6 @@
 // Šolski sistemi po državah (regijski profili). Uporabljata jih strežnik in vmesnik.
 //
-// Slovenija ("SI") je izvirni sistem z razredi 6–9 in letniki 1–4. Drugi sistemi imajo
+// Slovenija ("SI") je izvirni sistem z razredi 1–9 in letniki 1–4. Drugi sistemi imajo
 // svoje ime razredov (Class 8, JSS 2, Form 3 …) in svoj učni načrt:
 //   syllabus "IN"  = Indija, CBSE / NCERT (server/region-curricula.js, po poglavjih NCERT),
 //   syllabus "INT" = mednarodni angleški učni načrt po letih šolanja (za ostale države).

@@ -335,7 +335,7 @@
   "onb.namePh": "p. ex. Léa",
   "onb.finish": "Termine le choix de l'école et de la classe.",
   "lp.os": "École primaire et collège",
-  "lp.osSub": "6e–9e année",
+  "lp.osSub": "1e–9e année",
   "lp.ss": "Lycée",
   "lp.ssSub": "1re–4e année",
   "lp.uni": "Université",
@@ -1305,5 +1305,6 @@
   "tb.steps.count": "Étape {n} sur {m}",
   "tb.steps.all": "Tout d’un coup",
   "tb.steps.byStep": "Pas à pas",
-  "tb.steps.quick": "Vérification rapide"
+  "tb.steps.quick": "Vérification rapide",
+  "path.earlyNote": "Le parcours pour {grade} est encore en préparation, tu vois donc pour l'instant le programme de 6e année. Les jeux de ta classe sont dans Jeux, et le tuteur t'explique tout à ton niveau."
 }

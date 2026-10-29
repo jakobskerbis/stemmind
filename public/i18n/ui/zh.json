@@ -330,7 +330,7 @@
   "onb.namePh": "例如 小明",
   "onb.finish": "请完成学校和年级的选择。",
   "lp.os": "小学 / 初中",
-  "lp.osSub": "6–9 年级",
+  "lp.osSub": "1–9 年级",
   "lp.ss": "高中",
   "lp.ssSub": "1–4 年",
   "lp.uni": "大学",
@@ -1299,5 +1299,6 @@
   "tb.steps.count": "第 {n} 步，共 {m} 步",
   "tb.steps.all": "全部显示",
   "tb.steps.byStep": "分步显示",
-  "tb.steps.quick": "快速检查"
+  "tb.steps.quick": "快速检查",
+  "path.earlyNote": "{grade}的学习路径还在编写中，所以目前显示的是六年级的内容。你年级的游戏在“游戏”里，辅导老师会按你的水平讲解一切。"
 }

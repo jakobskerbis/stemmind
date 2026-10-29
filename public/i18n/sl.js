@@ -477,7 +477,7 @@ export default {
 
   // izbira šole (level-picker.js)
   "lp.os": "Osnovna šola",
-  "lp.osSub": "6.–9. razred",
+  "lp.osSub": "1.–9. razred",
   "lp.ss": "Srednja šola",
   "lp.ssSub": "1.–4. letnik",
   "lp.uni": "Fakulteta",
@@ -590,6 +590,7 @@ export default {
   // šolski sistemi, lahki način, vaje brez povezave
   "set.system": "Država in šolski sistem",
   "lp.qStage": "Katera stopnja šole?",
+  "path.earlyNote": "Za {grade} učna pot še nastaja, zato zdaj vidiš snov 6. razreda. Igre za tvoj razred najdeš v Igrah, inštruktor pa ti vse razloži na tvoji ravni.",
   "path.regionNote": "Učna pot sledi šolskemu sistemu {system} (osnutek). Vaje in lekcije so še iz slovenskega gradiva; inštruktor ti vse razloži v tvojem jeziku.",
   "set.dataMode": "Lahki način (manj prenosa podatkov)",
   "set.dataAuto": "Samodejno (pri počasni povezavi ali varčevanju s podatki)",

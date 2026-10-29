@@ -1395,7 +1395,11 @@ async function loadPath(key = state.pathKey) {
   if (!p.offline) refreshPack(api, state.student.id, p.key).then(syncOfflineBanner);
   // Fakulteta: vir predmetnika in opozorilo, da je osnutek.
   const prog = uni ? programsCache().find((x) => x.id === state.student.settings.study_program) : null;
-  $("#path-note").hidden = !prog && !isRegional(sys);
+  // OŠ 1.–5. razred: učne poti še ni, prikažemo snov 6. razreda (igre in inštruktor so prilagojeni razredu).
+  const st = state.student.settings;
+  const early = !prog && !isRegional(sys) && st.educational_track === "OSNOVNA_SOLA" && /^[1-5]\./.test(String(st.curriculum_level || "").trim());
+  $("#path-note").hidden = !prog && !isRegional(sys) && !early;
+  if (early) $("#path-note").textContent = t("path.earlyNote", { grade: levelLabel(st.curriculum_level) });
   // Regijski šolski sistem: učna pot je preslikana na snov te države (osnutek).
   if (!prog && isRegional(sys)) $("#path-note").textContent = t("path.regionNote", { system: SCHOOL_SYSTEMS[sys].name });
   $("#lang-note").hidden = currentLang() === "sl" || isRegional(sys);

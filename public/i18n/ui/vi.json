@@ -330,7 +330,7 @@
   "onb.namePh": "vd. Minh",
   "onb.finish": "Hãy chọn xong trường và lớp.",
   "lp.os": "Tiểu học / THCS",
-  "lp.osSub": "lớp 6–9",
+  "lp.osSub": "lớp 1–9",
   "lp.ss": "THPT",
   "lp.ssSub": "năm 1–4",
   "lp.uni": "Đại học",
@@ -1299,5 +1299,6 @@
   "tb.steps.count": "Bước {n} / {m}",
   "tb.steps.all": "Tất cả cùng lúc",
   "tb.steps.byStep": "Từng bước",
-  "tb.steps.quick": "Kiểm tra nhanh"
+  "tb.steps.quick": "Kiểm tra nhanh",
+  "path.earlyNote": "Lộ trình học cho {grade} vẫn đang được soạn, nên hiện tại bạn thấy nội dung lớp 6. Trò chơi cho lớp của bạn nằm trong mục Trò chơi, và gia sư sẽ giải thích mọi thứ theo trình độ của bạn."
 }

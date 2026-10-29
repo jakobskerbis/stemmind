@@ -13,7 +13,7 @@ const TRACKS = [
   ["SREDNJA_SOLA", t("lp.ss"), t("lp.ssSub")],
   ["UNIVERZA", t("lp.uni"), t("lp.uniLevel")],
 ];
-const OS_GRADES = ["6. razred", "7. razred", "8. razred", "9. razred"];
+const OS_GRADES = ["1. razred", "2. razred", "3. razred", "4. razred", "5. razred", "6. razred", "7. razred", "8. razred", "9. razred"];
 const SS_YEARS = ["1. letnik", "2. letnik", "3. letnik", "4. letnik"];
 const SS_LEVELS = [
   ["OR", t("lp.or"), t("lp.orSub")],
@@ -43,7 +43,7 @@ function fromSettings(s, programs) {
   if (isRegional(s.school_system)) return regionFromSettings(s, s.school_system);
   const v = { track: s.educational_track || "" };
   const level = String(s.curriculum_level || "");
-  if (v.track === "OSNOVNA_SOLA") v.grade = OS_GRADES.find((g) => level.startsWith(g[0])) || "";
+  if (v.track === "OSNOVNA_SOLA") v.grade = OS_GRADES.find((g) => level.startsWith(g.slice(0, 2))) || "";
   if (v.track === "SREDNJA_SOLA") {
     v.year = SS_YEARS.find((y) => level.startsWith(y[0])) || "";
     v.ssLevel = /VR/.test(level) ? "VR" : /OR/.test(level) ? "OR" : "";

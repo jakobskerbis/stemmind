@@ -330,7 +330,7 @@
   "onb.namePh": "mis. Rina",
   "onb.finish": "Selesaikan pilihan sekolah dan kelas.",
   "lp.os": "SD / SMP",
-  "lp.osSub": "kelas 6–9",
+  "lp.osSub": "kelas 1–9",
   "lp.ss": "SMA",
   "lp.ssSub": "tahun 1–4",
   "lp.uni": "Universitas",
@@ -1299,5 +1299,6 @@
   "tb.steps.count": "Langkah {n} dari {m}",
   "tb.steps.all": "Semua sekaligus",
   "tb.steps.byStep": "Langkah demi langkah",
-  "tb.steps.quick": "Cek cepat"
+  "tb.steps.quick": "Cek cepat",
+  "path.earlyNote": "Jalur belajar untuk {grade} masih disiapkan, jadi untuk sementara kamu melihat materi kelas 6. Permainan untuk kelasmu ada di Permainan, dan tutor menjelaskan semuanya sesuai tingkatmu."
 }
