@@ -33,11 +33,11 @@ export class Sessions {
   constructor(db) {
     this.db = db;
   }
-  create(parentId) {
+  create(parentId, days = SESSION_DAYS) {
     const token = randomToken();
-    const expires = new Date(Date.now() + SESSION_DAYS * 86400000).toISOString();
+    const expires = new Date(Date.now() + days * 86400000).toISOString();
     this.db.prepare("INSERT INTO parent_sessions (token_hash, parent_id, expires_at) VALUES (?, ?, ?)").run(sha256(token), parentId, expires);
-    return { token, maxAge: SESSION_DAYS * 86400 };
+    return { token, maxAge: days * 86400 };
   }
   parentId(token) {
     if (!token) return null;

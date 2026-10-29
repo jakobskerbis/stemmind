@@ -1464,5 +1464,31 @@
   "tour.end": "Vậy là xong",
   "tour.endText": "Em có thể xem lại bất cứ lúc nào trong Cài đặt (“Xem lại hướng dẫn giới thiệu”). Nếu không tìm thấy gì, hãy hỏi gia sư.",
   "games.pathMark": "Trên lộ trình của bạn",
-  "games.pathHint": "Trò chơi có la bàn là lộ trình giúp bạn hiểu bài: trước là trò chậm, sau là trò nhanh hơn. Mọi trò chơi đều mở."
+  "games.pathHint": "Trò chơi có la bàn là lộ trình giúp bạn hiểu bài: trước là trò chậm, sau là trò nhanh hơn. Mọi trò chơi đều mở.",
+  "guest.startNote": "Tiến độ học tập chỉ truy cập được trên thiết bị này. Em có thể tạo tài khoản bất cứ lúc nào sau này và tiến độ vẫn được giữ nguyên.",
+  "guest.privacy": "Thông báo về quyền riêng tư",
+  "guest.title": "Em đang dùng Kompreno mà không có tài khoản",
+  "guest.intro": "Tiến độ học tập chỉ truy cập được trên thiết bị này. Hãy tạo tài khoản miễn phí để không bị mất, đăng nhập được cả trên thiết bị khác và nhận 7 ngày dùng đầy đủ.",
+  "guest.limits": {
+    "other": "Khi không có tài khoản, em dùng gói miễn phí: {n} câu hỏi cho gia sư mỗi ngày, dùng chung cho tất cả những ai dùng Kompreno không có tài khoản trong mạng này."
+  },
+  "guest.upgradeTitle": "Tạo tài khoản và giữ tiến độ học tập",
+  "guest.name": "Tên của em (không bắt buộc)",
+  "guest.email": "Email",
+  "guest.password": "Mật khẩu (ít nhất 8 ký tự)",
+  "guest.loginPassword": "Mật khẩu",
+  "guest.birth": "Ngày sinh",
+  "guest.accept": "Tôi tạo tài khoản cho bản thân hoặc với tư cách cha mẹ hay người giám hộ hợp pháp, và tôi đã đọc thông báo sau:",
+  "guest.upgradeBtn": "Tạo tài khoản",
+  "guest.created": "Đã tạo tài khoản ✓ Giờ hãy xác nhận email.",
+  "guest.parentHint": "Khi bố mẹ đã tạo tài khoản riêng, hãy cùng đăng nhập bằng tài khoản đó trên thiết bị này, tiến độ sẽ được chuyển sang.",
+  "guest.parentLink": "Trang dành cho phụ huynh",
+  "guest.haveAccount": "Đã có tài khoản?",
+  "guest.loginBtn": "Đăng nhập và chuyển tiến độ",
+  "guest.loginNote": "Chúng tôi sẽ chuyển hồ sơ không có tài khoản vào tài khoản của em nếu gói vẫn còn chỗ.",
+  "guest.moved": "Tiến độ đã được chuyển vào tài khoản của em ✓",
+  "guest.delete": "Xóa hồ sơ và mọi dữ liệu",
+  "guest.deleteConfirm": "Xóa hồ sơ, tiến độ và các cuộc trò chuyện? Không thể hoàn tác.",
+  "guest.logoutConfirm": "Không có tài khoản thì sau khi đăng xuất em sẽ không thể truy cập tiến độ này nữa. Tốt hơn hãy tạo tài khoản ở thẻ Tài khoản. Vẫn đăng xuất?",
+  "guest.off": "Không thể dùng mà không có tài khoản nữa. Hãy tạo tài khoản để giữ tiến độ học tập."
 }

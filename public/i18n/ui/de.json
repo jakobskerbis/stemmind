@@ -1470,5 +1470,32 @@
   "tour.end": "Das war's",
   "tour.endText": "Du kannst die Einführung jederzeit in den Einstellungen wiederholen („Einführung wiederholen“). Wenn du etwas nicht findest, frag den Tutor.",
   "games.pathMark": "Auf deinem Weg",
-  "games.pathHint": "Spiele mit Kompass sind dein Weg zum Verstehen: zuerst ruhige, dann schnellere. Alle Spiele sind offen."
+  "games.pathHint": "Spiele mit Kompass sind dein Weg zum Verstehen: zuerst ruhige, dann schnellere. Alle Spiele sind offen.",
+  "guest.startNote": "Dein Fortschritt ist nur auf diesem Gerät verfügbar. Du kannst jederzeit später ein Konto erstellen, und dein Fortschritt bleibt erhalten.",
+  "guest.privacy": "Datenschutzhinweis",
+  "guest.title": "Du nutzt Kompreno ohne Konto",
+  "guest.intro": "Dein Fortschritt ist nur auf diesem Gerät verfügbar. Erstelle ein kostenloses Konto, damit du ihn nicht verlierst, dich auch auf anderen Geräten anmelden kannst und 7 Tage vollen Zugang bekommst.",
+  "guest.limits": {
+    "one": "Ohne Konto hast du den kostenlosen Tarif: {n} Frage an den Tutor pro Tag, gemeinsam für alle, die Kompreno in diesem Netzwerk ohne Konto nutzen.",
+    "other": "Ohne Konto hast du den kostenlosen Tarif: {n} Fragen an den Tutor pro Tag, gemeinsam für alle, die Kompreno in diesem Netzwerk ohne Konto nutzen."
+  },
+  "guest.upgradeTitle": "Konto erstellen und Fortschritt behalten",
+  "guest.name": "Dein Name (optional)",
+  "guest.email": "E-Mail-Adresse",
+  "guest.password": "Passwort (mindestens 8 Zeichen)",
+  "guest.loginPassword": "Passwort",
+  "guest.birth": "Geburtsdatum",
+  "guest.accept": "Ich erstelle das Konto für mich selbst oder als Elternteil bzw. gesetzliche Vertretung und habe folgenden Hinweis gelesen:",
+  "guest.upgradeBtn": "Konto erstellen",
+  "guest.created": "Konto erstellt ✓ Bestätige jetzt noch deine E-Mail-Adresse.",
+  "guest.parentHint": "Wenn ein Elternteil ein eigenes Konto erstellt hat, meldet ihr euch damit gemeinsam auf diesem Gerät an, und der Fortschritt wird übertragen.",
+  "guest.parentLink": "Seite für Eltern",
+  "guest.haveAccount": "Du hast schon ein Konto?",
+  "guest.loginBtn": "Anmelden und Fortschritt übertragen",
+  "guest.loginNote": "Wir übertragen das Profil ohne Konto in dein Konto, wenn im Tarif noch Platz ist.",
+  "guest.moved": "Dein Fortschritt wurde in dein Konto übertragen ✓",
+  "guest.delete": "Profil und alle Daten löschen",
+  "guest.deleteConfirm": "Profil, Fortschritt und Gespräche löschen? Das kann nicht rückgängig gemacht werden.",
+  "guest.logoutConfirm": "Ohne Konto kommst du nach dem Abmelden nicht mehr an diesen Fortschritt heran. Erstelle lieber unter „Konto“ ein Konto. Trotzdem abmelden?",
+  "guest.off": "Die Nutzung ohne Konto ist nicht mehr möglich. Erstelle ein Konto, um deinen Fortschritt zu behalten."
 }

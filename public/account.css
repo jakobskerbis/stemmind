@@ -41,3 +41,6 @@ details .card { margin-top: 8px; }
 #ask-parent .form-actions { flex-wrap: wrap; }
 .whose-field { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
 .whose-field legend { font-weight: 600; margin-bottom: 4px; padding: 0; }
+/* Uporaba brez registracije */
+.guest-login { margin-top: 14px; }
+.guest-login summary { cursor: pointer; font-weight: 600; }
