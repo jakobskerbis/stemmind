@@ -54,6 +54,16 @@ const k = (id, sym, z, cat, rarity, sl, en, t, kw) => ({ id, collection: "pse", 
 const f = (id, rarity, sl, en, t, kw) => ({ id, collection: "fiz", slot: "fx", rarity, name: { sl, en }, need: { t, kw } });
 const m = (id, rarity, sl, en, t, kw) => ({ id, collection: "krivulje", slot: "bg", rarity, name: { sl, en }, need: { t, kw } });
 
+// Kdo je bil znanstvenik za predmetom (ena vrstica v pogledu »preglej«).
+const ABOUT = {
+  pot_vega: { sl: "Jurij Vega (1754–1802), slovenski matematik in topniški častnik, avtor slavnih logaritemskih tablic.", en: "Jurij Vega (1754–1802), Slovenian mathematician and artillery officer, author of famous logarithm tables." },
+  pot_stefan: { sl: "Jožef Stefan (1835–1893), slovenski fizik: zakon sevanja j = σT⁴.", en: "Jožef Stefan (1835–1893), Slovenian physicist: radiation law j = σT⁴." },
+  pot_radium: { sl: "Marie Curie je odkrila radij in polonij ter dobila dve Nobelovi nagradi.", en: "Marie Curie discovered radium and polonium and won two Nobel Prizes." },
+  pot_pregl: { sl: "Friderik Pregl (1869–1930), slovenski kemik, Nobelova nagrada 1923 za mikroanalizo.", en: "Fritz Pregl (1869–1930), Slovenian chemist, Nobel Prize 1923 for microanalysis." },
+  pot_noether: { sl: "Emmy Noether (1882–1935) je pokazala, da iz vsake simetrije v naravi sledi en ohranitveni zakon.", en: "Emmy Noether (1882–1935) showed that every symmetry in nature gives a conservation law." },
+  pot_tesla: { sl: "Nikola Tesla (1856–1943), izumitelj izmeničnega toka in indukcijskega motorja.", en: "Nikola Tesla (1856–1943), inventor of alternating-current systems and the induction motor." },
+};
+
 export const KNOWLEDGE = [
   // Periodni sistem (značke elementov)
   k("el_h", "H", 1, "nonmetal", "common", "Vodik", "Hydrogen", ["KEM-OS-8/kisline-in-baze", "KEM-SS-2/kisline-in-baze"], "kislin"),
@@ -116,11 +126,11 @@ export const KNOWLEDGE = [
     ["pot_laurel", "hat", "legendary", 30000, "Lovorov venec", "Laurel wreath"],
     ["pot_observatory", "bg", "legendary", 40000, "Observatorij", "Observatory"],
     ["pot_pregl", "acc", "legendary", 50000, "Preglova lupa", "Pregl's magnifier"],
-    ["pot_noether", "bg", "mythic", 75000, "Noetherina simetrija", "Noether's symmetry"],
-    ["pot_aurora", "fx", "mythic", 100000, "Polarni sij", "Aurora"],
-    ["pot_tesla", "outfit", "mythic", 150000, "Teslov plašč", "Tesla's coat"],
-    ["pot_infinity", "badge", "mythic", 250000, "Neskončnost", "Infinity"],
-  ].map(([id, slot, rarity, xp, sl, en]) => ({ id, collection: "pot", slot, rarity, name: { sl, en }, need: { xp } })),
+    ["pot_noether", "bg", "mythic", 60000, "Simetrija Emmy Noether", "Emmy Noether's symmetry"],
+    ["pot_aurora", "fx", "mythic", 80000, "Polarni sij", "Aurora"],
+    ["pot_tesla", "outfit", "mythic", 100000, "Teslov plašč", "Tesla's coat"],
+    ["pot_infinity", "badge", "mythic", 120000, "Neskončnost", "Infinity"],
+  ].map(([id, slot, rarity, xp, sl, en]) => ({ id, collection: "pot", slot, rarity, name: { sl, en }, need: { xp }, ...(ABOUT[id] ? { about: ABOUT[id] } : {}) })),
   // Učni pass (sezonski; barva in letnica sezone)
   { id: "pass_board", collection: "pass", slot: "bg", rarity: "common", tier: 5, name: { sl: "Šolska tabla", en: "Chalkboard" } },
   { id: "pass_badge", collection: "pass", slot: "badge", rarity: "common", tier: 10, name: { sl: "Značka sezone", en: "Season badge" } },
@@ -156,7 +166,7 @@ export function elementTile(x, { x0 = 56, y0 = 73, s = 20 } = {}) {
 }
 
 const BADGE = {
-  pot_dividers: () => `<g transform="translate(64 82)"><circle r="10" fill="#ede9fe" stroke="${INK}" stroke-width="1.6"/><path d="M0-7L-5 6M0-7L5 6" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/><circle cy="-7" r="1.8" fill="#a855f7" stroke="${INK}" stroke-width=".8"/><path d="M-6 3q6 4 12 0" stroke="#a855f7" stroke-width="1" fill="none" stroke-dasharray="1.5 1"/></g>`,
+  pot_dividers: () => `<g transform="translate(64 81)"><circle r="12" fill="#ede9fe" stroke="${INK}" stroke-width="1.8"/><path d="M-6 6a9 9 0 0 1 12 0" stroke="#a855f7" stroke-width="2" fill="none"/><path d="M0-8L-6 7M0-8L6 7" stroke="#334155" stroke-width="2.6" stroke-linecap="round"/><circle cy="-8" r="2.4" fill="#a855f7" stroke="${INK}" stroke-width="1"/><path d="M6 7l1 3" stroke="#334155" stroke-width="1.6"/></g>`,
   pot_infinity: () => `<g transform="translate(64 82)"><circle r="11" fill="#fff1f2" stroke="#e11d48" stroke-width="1.8"/><circle r="8.6" fill="none" stroke="#fda4af" stroke-width=".8"/><path d="M0 0c-2-3-7-3-7 0s5 3 7 0 7-3 7 0-5 3-7 0z" fill="none" stroke="#be123c" stroke-width="2.2"/><circle cx="-7" cy="-8" r="1" fill="#fde047"/><circle cx="8" cy="7" r="1" fill="#fde047"/></g>`,
   pass_badge: (v) => {
     const h = seasonHue(v);
@@ -228,7 +238,7 @@ const FX = {
 
 const BG = {
   pot_library: () => `<rect width="100" height="100" fill="#78350f"/>${[8, 38, 68].map((y) => `<rect x="0" y="${y + 24}" width="100" height="4" fill="#451a03"/>${Array.from({ length: 12 }, (_, i) => `<rect x="${2 + i * 8.2}" y="${y + 4 + (i % 3) * 2}" width="7" height="${20 - (i % 3) * 2}" fill="${["#dc2626", "#2563eb", "#16a34a", "#ca8a04", "#7c3aed", "#0891b2"][(i + y) % 6]}" stroke="#1c1917" stroke-width=".5"/>`).join("")}`).join("")}`,
-  pot_observatory: () => `<rect width="100" height="100" fill="#0f172a"/><g fill="#e2e8f0">${[[8, 10], [22, 30], [40, 8], [60, 20], [78, 6], [92, 26], [70, 40], [12, 50]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.1"/>`).join("")}</g><path d="M20 24l3 1.5 3-1.5" stroke="#fde047" stroke-width=".8" fill="none"/><circle cx="84" cy="16" r="6" fill="#fef9c3"/><path d="M0 100V86h100v14z" fill="#1e293b"/><path d="M6 86a14 14 0 0 1 28 0z" fill="#cbd5e1" stroke="#475569" stroke-width="1"/><path d="M19 74l9-8" stroke="#94a3b8" stroke-width="3"/>`,
+  pot_observatory: () => `<rect width="100" height="100" fill="#0f172a"/><g fill="#e2e8f0">${[[8, 10], [22, 30], [40, 8], [60, 20], [78, 6], [92, 26], [70, 40], [12, 50]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.1"/>`).join("")}</g><circle cx="84" cy="16" r="6" fill="#fef9c3"/><path d="M0 100V86h100v14z" fill="#1e293b"/><path d="M91 77l8-8" stroke="#94a3b8" stroke-width="3"/><path d="M80 86a10 10 0 0 1 20 0z" fill="#cbd5e1" stroke="#475569" stroke-width="1"/><path d="M90 76v10" stroke="#475569" stroke-width="1.2"/>`,
   pot_noether: (v, u) => `<defs><radialGradient id="nb${u}"><stop offset="0" stop-color="#4c1d95"/><stop offset="1" stop-color="#1e1b4b"/></radialGradient></defs><rect width="100" height="100" fill="url(#nb${u})"/><g transform="translate(50 54)" fill="none">${Array.from({ length: 12 }, (_, i) => `<ellipse rx="44" ry="12" transform="rotate(${i * 15})" stroke="${i % 2 ? "#fbbf24" : "#c084fc"}" stroke-width=".8" opacity=".7"/>`).join("")}<circle r="20" stroke="#fde68a" stroke-width="1"/><circle r="46" stroke="#a78bfa" stroke-width=".8"/></g>`,
   bg_symmetry: () => `<rect width="100" height="100" fill="#fdf2f8"/><path d="M50 0V100" stroke="#f9a8d4" stroke-width="1" stroke-dasharray="3 2"/><g fill="#f472b6" opacity=".55"><path d="M50 10q-20 2-30 18q14 2 30-6z"/><path d="M50 10q20 2 30 18q-14 2-30-6z"/><circle cx="20" cy="70" r="7"/><circle cx="80" cy="70" r="7"/></g>`,
   bg_cube: () => `<rect width="100" height="100" fill="#eff6ff"/>${[[16, 18], [84, 22], [14, 78], [86, 80]].map(([x, y]) => `<g transform="translate(${x} ${y})"><path d="M0-9l9 5v10l-9 5-9-5V-4z" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1"/><path d="M0 1l9-5M0 1l-9-5M0 1v10" stroke="#1d4ed8" stroke-width="1" fill="none"/></g>`).join("")}`,
@@ -281,7 +291,7 @@ const BG = {
 
 const OUTFIT = {
   pot_vega: (u) => `<g clip-path="url(#c${u})"><path d="M0 72h100v32H0z" fill="#1e3a8a" stroke="${INK}" stroke-width="2"/><path d="M50 72v30" stroke="#172554" stroke-width="2"/>${[78, 85, 92].map((y) => `<circle cx="45" cy="${y}" r="1.6" fill="#facc15"/><circle cx="55" cy="${y}" r="1.6" fill="#facc15"/>`).join("")}</g><path d="M20 74h12l-2 4H22zM68 74h12l-2 4H70z" fill="#facc15" stroke="${INK}" stroke-width="1.2"/>`,
-  pot_stefan: (u) => `<g clip-path="url(#c${u})"><path d="M0 72h100v32H0z" fill="#111827" stroke="${INK}" stroke-width="2"/><path d="M40 72h20l-4 30h-12z" fill="#f8fafc"/></g><path d="M50 76l-7-4v8zM50 76l7-4v8z" fill="#111827" stroke="${INK}" stroke-width="1.2"/><text x="72" y="92" font-size="5" font-family="Georgia,serif" font-style="italic" fill="#e5e7eb" text-anchor="middle">σT⁴</text>`,
+  pot_stefan: (u) => `<g clip-path="url(#c${u})"><path d="M0 72h100v32H0z" fill="#111827" stroke="${INK}" stroke-width="2"/><path d="M40 72h20l-4 30h-12z" fill="#f8fafc"/></g><path d="M50 76l-7-4v8zM50 76l7-4v8z" fill="#111827" stroke="${INK}" stroke-width="1.2"/><path d="M66 84l4-6 4 6M64 90h12" stroke="#fbbf24" stroke-width="1.6" fill="none" stroke-linecap="round"/>`,
   pot_tesla: (u) => `<g clip-path="url(#c${u})"><path d="M0 72h100v32H0z" fill="#312e81" stroke="${INK}" stroke-width="2"/><path d="M50 72v30" stroke="#1e1b4b" stroke-width="2.5"/></g><path d="M24 76l6 5-4 2 7 6M76 76l-6 5 4 2-7 6" stroke="#67e8f9" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M8 60l6 4-3 2 6 4M92 60l-6 4 3 2-6 4" stroke="#a5f3fc" stroke-width="1.6" fill="none"/>`,
   outfit_pse: (u) => `<g clip-path="url(#c${u})"><path d="M0 74h100v30H0z" fill="#f8fafc" stroke="${INK}" stroke-width="2"/>${Array.from({ length: 12 }, (_, i) => `<rect x="${22 + (i % 6) * 9.5}" y="${78 + Math.floor(i / 6) * 8}" width="8" height="7" rx="1" fill="${["#bbf7d0", "#fecaca", "#fde68a", "#ddd6fe", "#a5f3fc", "#fed7aa"][i % 6]}" stroke="#64748b" stroke-width=".6"/>`).join("")}</g>`,
   outfit_euler: (u) => `<g clip-path="url(#c${u})"><path d="M0 74q50 8 100 0v30H0z" fill="#1e3a8a" stroke="${INK}" stroke-width="2"/><path d="M0 92h100" stroke="#facc15" stroke-width="1.6" stroke-dasharray="4 3"/></g><text x="50" y="87" font-size="7" text-anchor="middle" font-family="Georgia,serif" font-style="italic" fill="#fde68a">e^iπ+1=0</text>`,

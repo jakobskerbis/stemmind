@@ -81,7 +81,7 @@ export function itemThumb(id, size = 72, eq = DEFAULT_AVATAR) {
 const num = (n) => Number(n || 0).toLocaleString(lang());
 function condition(x, id) {
   if (x.collection === "pass") return t("zb.needPass", { tier: x.tier });
-  if (x.need?.xp) return t("zb.needXp", { xp: num(x.need.xp) });
+  if (x.need?.xp) return `${t("zb.needXp", { xp: num(x.need.xp) })} ${t("zb.potNow", { xp: num(data?.xp) })}.`;
   if (x.set) return t("zb.needSet", { count: x.need.own, name: itemName(COLLECTIONS.find((c) => c.id === x.collection), lang()) });
   if (x.need?.tek) return t("zb.needTek");
   const h = data?.hints?.[baseId(id)];
@@ -159,6 +159,7 @@ function inspect(id) {
       <h2>${esc(itemName(x, lang()))}${v ? ` <small class="muted">${esc(seasonLabel(v))}</small>` : ""}</h2>
       <p><span class="gm-rtag gm-r-${x.rarity}">${esc(t(`games.rarity.${x.rarity}`))}</span> ${x.set ? `<span class="gm-rtag">${esc(t("zb.set"))}</span>` : ""}</p>
       ${own ? `<p>${icon("calendar")}<span>${esc(t("zb.got", { date: fmtDate(row?.at) }))}</span></p>${where ? `<p>${icon("book-open")}<span>${esc(where)}</span></p>` : ""}` : `<p class="zb-need">${icon("lock")}<span>${esc(condition(x, id))}</span></p>`}
+      ${x.about ? `<p class="muted small">${icon("info")}<span>${esc(x.about[lang()] || x.about.en)}</span></p>` : ""}
       ${msg ? `<p class="gm-shop-msg" role="status">${esc(msg)}</p>` : ""}
       ${own ? `<div class="actions">
         <button type="button" class="primary" data-act="wear">${esc(on ? t("zb.takeOff") : t("games.wear"))}</button>
@@ -208,6 +209,10 @@ function render(focus = null) {
     <div class="zb-grid">${tabItems().map(card).join("")}</div>
     ${earlier.length ? `<h3 class="zb-sub">${esc(t("zb.earlier"))}</h3><div class="zb-grid">${earlier.map(card).join("")}</div>` : ""}
     ${open ? inspect(open) : ""}`;
+  // Izbran zavihek naj bo viden (vrstica zavihkov se na ozkem zaslonu drsi vodoravno).
+  const tabRow = root.querySelector(".zb-tabs");
+  const act = tabRow?.querySelector(".active");
+  if (tabRow && act && act.offsetLeft + act.offsetWidth > tabRow.scrollLeft + tabRow.clientWidth) tabRow.scrollLeft = act.offsetLeft - tabRow.offsetLeft - 16;
   // Trak passa: trenutna stopnja na sredini.
   const track = root.querySelector(".zb-track");
   const now = track?.querySelector(".now") || track?.querySelector(".got:last-of-type");
