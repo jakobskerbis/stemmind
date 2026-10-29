@@ -3,7 +3,7 @@
 export const TRIAL_DAYS = 7;
 export const REFERRAL_DAYS = 30;
 export const MAX_CHILDREN = 4;
-export const PRIVACY_VERSION = "2026-10-27";
+export const PRIVACY_VERSION = "2026-10-29";
 
 // Cene v centih (z DDV). lookup_key poveže ceno v Stripu s paketom.
 // Ena cena za vse ravni (OŠ, SŠ, fakulteta). Ob spremembi zneska Stripe sam

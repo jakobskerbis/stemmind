@@ -8,6 +8,7 @@ import { weekKey, isSendTime } from "../server/accounts/weekly.js";
 
 const SECRET = "whsec_test";
 const YEAR = new Date().getFullYear();
+const ADULT = "1985-04-12";
 
 // Lažni Stripe + Resend: zapomni si klice in vrne smiselne odgovore.
 function fakeFetch(calls) {
@@ -84,7 +85,7 @@ const verifyLink = (calls) => {
 };
 
 async function registerVerified(call, calls, email, extra = {}) {
-  const r = await call("/api/auth/register", { method: "POST", body: { email, password: "geslo1234", accept_privacy: true, ...extra } });
+  const r = await call("/api/auth/register", { method: "POST", body: { email, password: "geslo1234", accept_privacy: true, birth_date: ADULT, ...extra } });
   assert.equal(r.status, 201, JSON.stringify(r.body));
   const v = await call(verifyLink(calls));
   assert.equal(v.status, 302);
@@ -97,7 +98,7 @@ test("register, verify, consent and ownership", async () => {
     assert.equal((await a("/api/students")).status, 401);
     assert.equal((await a("/api/auth/register", { method: "POST", body: { email: "x@y.si", password: "geslo1234" } })).status, 400);
 
-    const reg = await a("/api/auth/register", { method: "POST", body: { email: "Ana@Primer.si", password: "geslo1234", accept_privacy: true } });
+    const reg = await a("/api/auth/register", { method: "POST", body: { email: "Ana@Primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
     assert.equal(reg.status, 201);
     assert.equal(reg.body.parent.email, "ana@primer.si");
     assert.equal(reg.body.dev_verify_url, undefined); // Resend je nastavljen
@@ -214,7 +215,7 @@ test("referral: both parents get a free month after the first payment", async ()
     const a = client();
     const ref = await registerVerified(a, calls, "eva@primer.si");
     const b = client();
-    const reg = await b("/api/auth/register", { method: "POST", body: { email: "fran@primer.si", password: "geslo1234", accept_privacy: true, referral_code: ref.referral_code.toLowerCase() } });
+    const reg = await b("/api/auth/register", { method: "POST", body: { email: "fran@primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT, referral_code: ref.referral_code.toLowerCase() } });
     assert.equal(reg.body.referred, true);
     await b("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month" } });
     const customer = store.db.prepare("SELECT stripe_customer_id FROM parents WHERE email = 'fran@primer.si'").get().stripe_customer_id;
@@ -480,7 +481,7 @@ test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", asyn
   await withServer(async ({ client, calls, store }) => {
     // Ob registraciji (male črke, presledki), dostop po koncu preizkusa ostane.
     const a = client();
-    const reg = await a("/api/auth/register", { method: "POST", body: { email: "a@kod.si", password: "geslo1234", accept_privacy: true, promo_code: " stemmind100 " } });
+    const reg = await a("/api/auth/register", { method: "POST", body: { email: "a@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT, promo_code: " stemmind100 " } });
     assert.equal(reg.status, 201);
     const days = (Date.parse(reg.body.promo_until) - Date.now()) / 86400000;
     assert.ok(days > 364.9 && days <= 365, String(days));
@@ -497,7 +498,7 @@ test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", asyn
 
     // Napačna koda ne ustavi registracije.
     const b = client();
-    const regB = await b("/api/auth/register", { method: "POST", body: { email: "b@kod.si", password: "geslo1234", accept_privacy: true, promo_code: "NAPAKA" } });
+    const regB = await b("/api/auth/register", { method: "POST", body: { email: "b@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT, promo_code: "NAPAKA" } });
     assert.equal(regB.status, 201);
     assert.match(regB.body.promo_error, /ni veljavna/);
     assert.equal((await b("/api/account")).body.access.tier, "trial");
@@ -528,7 +529,7 @@ test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
   try {
     await withServer(async ({ client }) => {
       const a = client();
-      await a("/api/auth/register", { method: "POST", body: { email: "skrbnik@kod.si", password: "geslo1234", accept_privacy: true } });
+      await a("/api/auth/register", { method: "POST", body: { email: "skrbnik@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
       const { admin } = (await a("/api/account")).body.promo;
       assert.equal(admin.code, "STEMMIND100");
       assert.deepEqual([admin.used, admin.limit, admin.days], [0, 100, 365]);
@@ -537,4 +538,57 @@ test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
   } finally {
     delete process.env.STEMMIND_ADMIN_EMAILS;
   }
+});
+
+test("preverjanje starosti: premlad otrok dobi povezavo za starše, dijak ima samo svoj profil", async () => {
+  const { minAgeOf, ageOn, parseBirthDate } = await import("../server/accounts/age.js");
+  assert.equal(minAgeOf("SI"), 15);
+  assert.equal(minAgeOf("US"), 15); // nikoli pod slovensko mejo
+  assert.equal(minAgeOf("DE"), 16);
+  assert.equal(minAgeOf("IN"), 18);
+  assert.equal(parseBirthDate("2010-02-30"), null);
+  assert.equal(ageOn("2010-06-15", new Date(2025, 5, 14)), 14);
+  assert.equal(ageOn("2010-06-15", new Date(2025, 5, 15)), 15);
+
+  const ymd = (yearsAgo) => {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() - yearsAgo);
+    d.setDate(d.getDate() - 1);
+    return d.toISOString().slice(0, 10);
+  };
+  await withServer(async ({ client, calls, store }) => {
+    const kid = client();
+    const body = { email: "otrok@primer.si", password: "geslo1234", accept_privacy: true, country: "SI" };
+    assert.equal((await kid("/api/auth/register", { method: "POST", body })).status, 400); // brez datuma
+    const young = await kid("/api/auth/register", { method: "POST", body: { ...body, birth_date: ymd(12) } });
+    assert.equal(young.status, 403);
+    assert.equal(young.body.under_age, true);
+    assert.equal(young.body.min_age, 15);
+    // Nič ni shranjeno; drug datum na isti napravi deluje samo za polnoletne (starša).
+    assert.equal(store.db.prepare("SELECT COUNT(*) AS n FROM parents").get().n, 0);
+    assert.equal((await kid("/api/auth/register", { method: "POST", body: { ...body, birth_date: ymd(16) } })).status, 403);
+    const parent = await kid("/api/auth/register", { method: "POST", body: { ...body, email: "stars@primer.si", birth_date: ymd(40) } });
+    assert.equal(parent.status, 201);
+    assert.equal(parent.body.parent.minor, false);
+
+    // Strani za starše: cene brez prijave.
+    const prices = await client()("/api/account/prices?country=SI");
+    assert.equal(prices.status, 200);
+    assert.equal(prices.body.currency, "EUR");
+    assert.equal(prices.body.plans.length, 4);
+
+    // Dijak (16) ustvari račun zase: samo en profil, letnica iz datuma rojstva.
+    const teen = client();
+    const reg = await teen("/api/auth/register", { method: "POST", body: { ...body, email: "dijak@primer.si", birth_date: ymd(16) } });
+    assert.equal(reg.status, 201);
+    assert.equal(reg.body.parent.minor, true);
+    await teen(verifyLink(calls));
+    const own = await teen("/api/students", { method: "POST", body: { name: "Jaka", birth_year: YEAR - 10, consent: true } });
+    assert.equal(own.status, 201);
+    assert.equal(own.body.birth_year, Number(ymd(16).slice(0, 4)));
+    const consent = store.db.prepare("SELECT text FROM consents WHERE student_id = ?").get(own.body.id);
+    assert.match(consent.text, /^Profil je moj/);
+    const sibling = await teen("/api/students", { method: "POST", body: { name: "Brat", birth_year: YEAR - 8, consent: true } });
+    assert.equal(sibling.status, 403);
+  });
 });
