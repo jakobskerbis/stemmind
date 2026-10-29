@@ -275,6 +275,9 @@ export function createCalculator(root, opts) {
     math.innerHTML = t1 || `<span class="muted">${esc(it.text)}</span>`;
     preview.innerHTML = o.tex && o.kind !== "error" ? t1 : "";
     const extra = row.querySelector(".gc-extra");
+    // drsnik med animacijo posodobimo na mestu: če bi ga vsako sličico zgradili znova,
+    // gumb za ustavitev in drsnik ne bi nikoli dobila klika
+    if (o.kind === "slider" && updateSliderInPlace(o, extra)) return;
     extra.innerHTML = extraHtml(o);
     if (o.kind === "slider") bindSlider(o, extra);
     if (o.kind === "param" || o.kind === "polar") bindDomain(o, extra);
@@ -294,7 +297,7 @@ export function createCalculator(root, opts) {
       const sl = { ...sliderRange(o.value), ...(it.slider || {}) };
       const val = Math.min(sl.max, Math.max(sl.min, o.value));
       return `<div class="gc-slider">
-        <button type="button" class="gc-play" data-act="play" aria-label="${esc(it.slider?.play ? t("gc.pause") : t("gc.play"))}">${icon(it.slider?.play ? "pause" : "play")}</button>
+        <button type="button" class="gc-play" data-act="play" data-on="${!!it.slider?.play}" aria-label="${esc(it.slider?.play ? t("gc.pause") : t("gc.play"))}">${icon(it.slider?.play ? "pause" : "play")}</button>
         <input class="gc-lim" data-lim="min" value="${esc(fmt(sl.min))}" inputmode="decimal" aria-label="${esc(t("gc.min"))}">
         <input type="range" class="gc-range" min="${sl.min}" max="${sl.max}" step="${sl.step || "any"}" value="${val}" aria-label="${esc(o.name)}">
         <input class="gc-lim" data-lim="max" value="${esc(fmt(sl.max))}" inputmode="decimal" aria-label="${esc(t("gc.max"))}">
@@ -338,16 +341,44 @@ export function createCalculator(root, opts) {
     return fmt(v, 4);
   }
 
+  function updateSliderInPlace(o, extra) {
+    const box = extra.querySelector(".gc-slider");
+    if (!box) return false;
+    const it = o.src;
+    const sl = { ...sliderRange(o.value), ...(it.slider || {}) };
+    const play = !!it.slider?.play;
+    const btn = box.querySelector(".gc-play");
+    if (btn.dataset.on !== String(play)) {
+      btn.dataset.on = String(play);
+      btn.setAttribute("aria-label", t(play ? "gc.pause" : "gc.play"));
+      btn.innerHTML = icon(play ? "pause" : "play");
+    }
+    const range = box.querySelector(".gc-range");
+    range.min = sl.min;
+    range.max = sl.max;
+    range.step = sl.step || "any";
+    if (document.activeElement !== range || play) range.value = Math.min(sl.max, Math.max(sl.min, o.value));
+    box.querySelectorAll("[data-lim]").forEach((inp) => {
+      if (document.activeElement !== inp) inp.value = fmt(sl[inp.dataset.lim]);
+    });
+    return true;
+  }
+
   function bindSlider(o, extra) {
     const range = extra.querySelector(".gc-range");
-    range.addEventListener("input", () => setSlider(o.id, Number(range.value), false));
+    range.addEventListener("input", () => {
+      // premik z roko ustavi samodejno predvajanje (nazaj na ročno)
+      const it = item(o.id);
+      if (it?.slider?.play) it.slider.play = false;
+      setSlider(o.id, Number(range.value), false);
+    });
     range.addEventListener("change", () => commit());
     extra.querySelectorAll("[data-lim]").forEach((inp) =>
       inp.addEventListener("change", () => {
         const it = item(o.id);
         const v = Number(inp.value.replace(",", ".").replace("−", "-"));
         if (!Number.isFinite(v)) return refresh();
-        it.slider = { ...sliderRange(o.value), ...(it.slider || {}), [inp.dataset.lim]: v };
+        it.slider = { ...sliderRange(modelItem(o.id)?.value ?? o.value), ...(it.slider || {}), [inp.dataset.lim]: v };
         if (it.slider.min >= it.slider.max) it.slider[inp.dataset.lim === "min" ? "max" : "min"] = v + (inp.dataset.lim === "min" ? 1 : -1);
         it.slider.step = niceStepFor(it.slider.max - it.slider.min);
         commit();
