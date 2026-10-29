@@ -3,7 +3,7 @@
 // Če ga uporabnik sam zapre (tipka Esc, poteg z roba), ga ne vsiljujemo znova, dokler se ne vrne v aplikacijo.
 import { t } from "./i18n.js";
 
-const KEY = "kompreno.fullscreen";
+const KEY = "evklid.fullscreen";
 const root = document.documentElement;
 const supported = () => !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
 const current = () => document.fullscreenElement || document.webkitFullscreenElement || null;
@@ -65,7 +65,7 @@ export function initFullscreen() {
   });
   mountSetting(document.getElementById("fullscreen-card"));
   // Sprememba iz klepeta z inštruktorjem (public/chat-settings.js).
-  window.addEventListener("kompreno:device-setting", (e) => {
+  window.addEventListener("evklid:device-setting", (e) => {
     if (e.detail?.key !== "fullscreen") return;
     const box = document.getElementById("fullscreen-toggle");
     if (box) box.checked = e.detail.value === "on";

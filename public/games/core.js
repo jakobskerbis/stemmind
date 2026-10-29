@@ -3,8 +3,8 @@
 import { makeQuestion, shuffle, gameLang } from "./topics.js";
 import { icon } from "../icons.js";
 
-const SOUND_KEY = "kompreno.gameSound";
-const PACE_KEY = "kompreno.gamePace";
+const SOUND_KEY = "evklid.gameSound";
+const PACE_KEY = "evklid.gamePace";
 export const PACES = { slow: 0.7, mid: 1, fast: 1.3 };
 export const INK = "#1b1b2f"; // obroba v slogu starih Flash iger
 function getPace() {

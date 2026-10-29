@@ -1275,7 +1275,7 @@ export class GraphView {
     ctx.fillStyle = C.poi;
     ctx.textAlign = "right";
     ctx.textBaseline = "bottom";
-    ctx.fillText("Kompreno", W - 10, H - 8);
+    ctx.fillText("Evklid", W - 10, H - 8);
     return new Promise((res) => c.toBlob(res, "image/png"));
   }
 

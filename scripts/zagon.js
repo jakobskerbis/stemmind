@@ -1,4 +1,4 @@
-// Kompreno na tem računalniku: zažene strežnik, ga drži prižganega in ga
+// Evklid na tem računalniku: zažene strežnik, ga drži prižganega in ga
 // samodejno posodobi z GitHuba (preverja vsakih 15 minut) (docs/posodobitve.md).
 // Uporaba: node scripts/zaganjalnik.js zagon [--odpri]   (Windows: zagon-windows.bat)
 import "../server/env.js";
@@ -14,7 +14,7 @@ const local = `http://localhost:${port}`;
 const say = (s = "") => console.log(s);
 
 function openBrowser() {
-  if (!process.argv.includes("--odpri") || process.env.KOMPRENO_PONOVNO) return;
+  if (!process.argv.includes("--odpri") || process.env.EVKLID_PONOVNO) return;
   const [cmd, args] = process.platform === "win32" ? ["cmd", ["/c", "start", "", local]]
     : process.platform === "darwin" ? ["open", [local]] : ["xdg-open", [local]];
   execFile(cmd, args, () => {});
@@ -23,7 +23,7 @@ function openBrowser() {
 process.chdir(root);
 renameLegacyShortcuts(root);
 if (await serverStatus(port)) {
-  say("Kompreno že teče.");
+  say("Evklid že teče.");
   openBrowser();
   process.exit(0);
 }
@@ -35,9 +35,9 @@ process.on("SIGTERM", () => stop());
 if (!(await server.start())) say("Strežnik se še zaganja ...");
 openBrowser();
 say();
-say(`Kompreno teče na ${local}`);
+say(`Evklid teče na ${local}`);
 say("Za ustavitev zapri to okno. Nove različice se namestijo same (preverjanje vsakih 15 minut).");
 autoUpdate({
   root, port, say: logSay(log), server,
-  restartSelf: process.env.KOMPRENO_ZAGANJALNIK ? () => stop(RESTART_CODE) : null,
+  restartSelf: process.env.EVKLID_ZAGANJALNIK ? () => stop(RESTART_CODE) : null,
 });

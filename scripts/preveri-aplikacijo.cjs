@@ -48,15 +48,15 @@ const freePort = () =>
 const servers = [];
 async function startServer(extraEnv = {}) {
   const port = await freePort();
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "kompreno-preveri-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "evklid-preveri-"));
   const env = {
     ...process.env,
     PORT: String(port),
-    KOMPRENO_MOCK: "1",
-    KOMPRENO_MOCK_DELAY_MS: "0",
-    KOMPRENO_NEWS: "0",
-    KOMPRENO_DB: path.join(dir, "t.db"),
-    KOMPRENO_PASSWORD: "",
+    EVKLID_MOCK: "1",
+    EVKLID_MOCK_DELAY_MS: "0",
+    EVKLID_NEWS: "0",
+    EVKLID_DB: path.join(dir, "t.db"),
+    EVKLID_PASSWORD: "",
     ANTHROPIC_API_KEY: "",
     RESEND_API_KEY: "",
     STRIPE_SECRET_KEY: "",
@@ -70,7 +70,7 @@ async function startServer(extraEnv = {}) {
   servers.push({ srv, dir });
   for (let i = 0; i < 100; i++) {
     try {
-      if ((await fetch(base + "/healthz")).ok) return { base, db: env.KOMPRENO_DB, log };
+      if ((await fetch(base + "/healthz")).ok) return { base, db: env.EVKLID_DB, log };
     } catch {}
     await new Promise((r) => setTimeout(r, 100));
   }
@@ -935,12 +935,12 @@ async function accounts(browser, app) {
     if (ONLY !== "telefon") await desktop(browser, app);
     if (ONLY !== "racunalnik") await phone(browser, app);
     if (ACCOUNTS && !ONLY) {
-      const acc = await startServer({ KOMPRENO_ACCOUNTS: "1" });
+      const acc = await startServer({ EVKLID_ACCOUNTS: "1" });
       await accounts(browser, acc);
-      const bad = acc.log.join("").split("\n").filter((l) => /napaka|Error|TypeError/.test(l) && !/\[kompreno\] 4\d\d /.test(l));
+      const bad = acc.log.join("").split("\n").filter((l) => /napaka|Error|TypeError/.test(l) && !/\[evklid\] 4\d\d /.test(l));
       bad.forEach((l) => problem("strežnik (računi)", l.slice(0, 200)));
     }
-    const bad = app.log.join("").split("\n").filter((l) => /napaka|Error|TypeError/.test(l) && !/\[kompreno\] 4\d\d /.test(l));
+    const bad = app.log.join("").split("\n").filter((l) => /napaka|Error|TypeError/.test(l) && !/\[evklid\] 4\d\d /.test(l));
     bad.forEach((l) => problem("strežnik", l.slice(0, 200)));
   } finally {
     await browser.close();

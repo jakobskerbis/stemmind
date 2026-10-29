@@ -9,9 +9,9 @@ let D = null; // { api, getStudent, showView, startSession, toast, escapeHtml, o
 let data = null; // zadnji odgovor strežnika { schedule, courses }
 let preview = null; // uvoz, ki ga učenec še preverja { lessons, events, source }
 
-const REMIND_KEY = "kompreno.scheduleReminders";
-const NOTIFIED_KEY = "kompreno.scheduleNotified";
-const HIDE_KEY = "kompreno.scheduleCardHidden";
+const REMIND_KEY = "evklid.scheduleReminders";
+const NOTIFIED_KEY = "evklid.scheduleNotified";
+const HIDE_KEY = "evklid.scheduleCardHidden";
 const ls = {
   get: (k) => {
     try {

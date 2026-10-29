@@ -1,6 +1,6 @@
 // Ocena stroška AI na učenca na mesec (v €), prej in zdaj.
 //   node scripts/ocena-stroska.js            ocena iz velikosti prompta in predpostavk
-//   node scripts/ocena-stroska.js --db       še dejanska poraba iz data/kompreno.db (ta mesec)
+//   node scripts/ocena-stroska.js --db       še dejanska poraba iz data/evklid.db (ta mesec)
 // Z nastavljenim ANTHROPIC_API_KEY prešteje žetone prompta prek count_tokens (brezplačno),
 // sicer jih oceni iz dolžine besedila. Ne kliče modela in ne porablja dobroimetja.
 import "../server/env.js";
@@ -117,7 +117,7 @@ for (const [name, p] of Object.entries(PROFILES)) {
 
 // --- 3. Dejanska poraba iz baze ---------------------------------------------
 if (process.argv.includes("--db")) {
-  const file = process.env.KOMPRENO_DB || path.join(here, "..", "data", "kompreno.db");
+  const file = process.env.EVKLID_DB || path.join(here, "..", "data", "evklid.db");
   if (!fs.existsSync(file)) {
     console.log(`\nBaze ${file} ni.`);
   } else {

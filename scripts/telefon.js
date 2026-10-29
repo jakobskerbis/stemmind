@@ -1,10 +1,13 @@
-// Odpre Kompreno na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
-// Stalna povezava (ista ob vsakem zagonu): brezplačen račun ngrok (NGROK_AUTHTOKEN in
-// NGROK_DOMAIN v .env, skript ju vpraša enkrat). Brez tega: začasna povezava Cloudflare.
+// Odpre Evklid na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
+// Lastna domena (npr. https://evklid.app): tunel Cloudflare, nameščen kot storitev na računalniku
+// (žeton je v storitvi, ne v .env). Skript storitev zazna sam, naslov je EVKLID_JAVNI_NASLOV v .env
+// ali domena iz brand.json. Sicer stalna povezava ngrok (NGROK_AUTHTOKEN in NGROK_DOMAIN v .env,
+// skript ju vpraša enkrat). Brez tega: začasna povezava Cloudflare.
 // Uporaba: node scripts/zaganjalnik.js telefon  (na Windows dvoklik na telefon-windows.bat)
 // Računalnik mora biti prižgan, dokler uporabljaš povezavo na telefonu.
 // Aplikacija se sama posodobi z GitHuba (preverja vsakih 15 minut), povezava ostane ista (docs/posodobitve.md).
 import "../server/env.js";
+import { BRAND, LEGACY } from "../server/brand.js";
 import fs from "node:fs";
 import path from "node:path";
 import { spawn, execFileSync } from "node:child_process";
@@ -39,8 +42,13 @@ function readEnv() {
 function envValue(text, key) {
   const m = text.match(new RegExp(`^\\s*${key}\\s*=\\s*([^#\\r\\n]*)`, "m"));
   if (m) return m[1].trim();
-  // Starejša .env ima nastavitve z imenom iz časa STEMMind (STEMMIND_…).
-  return key.startsWith("KOMPRENO_") ? envValue(text, key.replace("KOMPRENO_", "STEMMIND_")) : "";
+  // Starejša .env ima nastavitve s prejšnjim imenom aplikacije (brand.json → legacy).
+  if (!key.startsWith(`${BRAND.env}_`)) return "";
+  for (const l of LEGACY) {
+    const v = envValue(text, `${l.env}_${key.slice(BRAND.env.length + 1)}`);
+    if (v) return v;
+  }
+  return "";
 }
 
 function appendEnv(lines) {
@@ -51,7 +59,7 @@ function appendEnv(lines) {
 
 async function ensurePassword() {
   const text = readEnv();
-  if (envValue(text, "KOMPRENO_PASSWORD")) return;
+  if (envValue(text, "EVKLID_PASSWORD")) return;
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   say("Povezava za telefon bo zaščitena z geslom, da je ne more odpreti kdorkoli.");
   let pw = "";
@@ -60,7 +68,7 @@ async function ensurePassword() {
   }
   rl.close();
   const sep = text && !text.endsWith("\n") ? "\n" : "";
-  fs.writeFileSync(envFile, `${text}${sep}KOMPRENO_PASSWORD=${pw}\n`);
+  fs.writeFileSync(envFile, `${text}${sep}EVKLID_PASSWORD=${pw}\n`);
   say("Geslo je shranjeno v datoteko .env (spremeniš ga lahko tam).");
 }
 
@@ -71,7 +79,7 @@ async function ensureServer() {
   const s = await serverStatus(port);
   if (s === 401) return false; // že teče z geslom (v drugem oknu)
   if (s) {
-    say("Kompreno že teče brez gesla. Zapri drugo okno Kompreno in znova zaženi to datoteko.");
+    say("Evklid že teče brez gesla. Zapri drugo okno Evklida in znova zaženi to datoteko.");
     return stopAll(1);
   }
   log = openLog(root);
@@ -111,6 +119,38 @@ async function ensureCloudflared() {
   return bin;
 }
 
+// --- lastna domena (tunel Cloudflare kot storitev) ---
+// Ali na računalniku teče tunel Cloudflare (storitev iz nadzorne plošče Cloudflare, »cloudflared service install«).
+function cloudflaredServiceRunning() {
+  try {
+    if (isWin) return /RUNNING|START_PENDING/.test(execFileSync("sc", ["query", "cloudflared"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }));
+    execFileSync("pgrep", ["-f", "cloudflared.*tunnel.*run"], { stdio: "ignore" });
+    return true;
+  } catch { return false; }
+}
+
+// Naslov z lastno domeno: EVKLID_JAVNI_NASLOV v .env (0 = izklopljeno) ali domena iz brand.json, ko teče tunel.
+function publicUrl() {
+  const set = envValue(readEnv(), "EVKLID_JAVNI_NASLOV");
+  if (set === "0") return null;
+  const host = (set || (BRAND.domain && cloudflaredServiceRunning() ? BRAND.domain : ""))
+    .replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+  return host ? `https://${host}` : null;
+}
+
+// Ali naslov res pripelje do tega strežnika (tunel teče in kaže na localhost). Ob zagonu računalnika
+// se storitev lahko še povezuje, zato poskusi nekajkrat.
+async function reachable(url, tries = 4) {
+  for (let i = 0; i < tries; i++) {
+    try {
+      const res = await fetch(`${url}/manifest.webmanifest`, { signal: AbortSignal.timeout(10000), redirect: "manual" });
+      if (res.ok && (await res.json()).name === BRAND.name) return true;
+    } catch {}
+    if (i < tries - 1) await new Promise((r) => setTimeout(r, 5000));
+  }
+  return false;
+}
+
 // --- stalna povezava (ngrok) ---
 const TOKEN_RE = /\b[0-9A-Za-z]{20,}_[0-9A-Za-z]{10,}\b/;
 const DOMAIN_RE = /\b[a-z0-9][a-z0-9-]*(?:\.[a-z0-9-]+)*\.ngrok(?:-free)?\.(?:app|dev|io|pizza)\b/i;
@@ -120,7 +160,7 @@ async function ngrokSettings() {
   let token = envValue(text, "NGROK_AUTHTOKEN");
   let domain = envValue(text, "NGROK_DOMAIN").replace(/^https?:\/\//, "").replace(/\/.*$/, "");
   if (token && domain) return { token, domain };
-  if (envValue(text, "KOMPRENO_STALNA_POVEZAVA") === "0") return null;
+  if (envValue(text, "EVKLID_STALNA_POVEZAVA") === "0") return null;
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   const lines = rl[Symbol.asyncIterator]();
   const ask = async (q) => { process.stdout.write(q); const { value, done } = await lines.next(); if (done) throw new Error("ni vnosa"); return value.trim(); };
@@ -255,12 +295,24 @@ async function main() {
   renameLegacyShortcuts(root);
   process.chdir(root);
   await ensurePassword();
-  const stable = await ngrokSettings();
-  say("Zaganjam Kompreno ...");
+  const pub = publicUrl();
+  let stable = pub ? null : await ngrokSettings();
+  say("Zaganjam Evklid ...");
   const own = await ensureServer();
   say("Odpiram povezavo za telefon ...");
   let url = "";
-  if (stable) {
+  if (pub) {
+    if (await reachable(pub)) url = pub;
+    else {
+      say(`Naslov ${pub} se ne odpre.`);
+      say(cloudflaredServiceRunning()
+        ? "  Tunel Cloudflare teče, a ne kaže na ta računalnik: v nadzorni plošči Cloudflare preveri, da naslov vodi na http://localhost:" + port + "."
+        : "  Tunel Cloudflare ne teče: v nadzorni plošči Cloudflare (Zero Trust → Networks → Tunnels) preveri, da je tunel »Healthy«.");
+      say("Odpiram drugo povezavo ...");
+      stable = await ngrokSettings().catch((e) => { say(`Stalna povezava ni uspela: ${e.message}`); return null; });
+    }
+  }
+  if (!url && stable) {
     try {
       url = await startNgrok(await ensureNgrok(), stable);
     } catch (e) {
@@ -269,7 +321,7 @@ async function main() {
     }
   }
   if (!url) url = await startTunnel(await ensureCloudflared());
-  const pw = envValue(readEnv(), "KOMPRENO_PASSWORD");
+  const pw = envValue(readEnv(), "EVKLID_PASSWORD");
   const friend = `${url}/?geslo=${encodeURIComponent(pw)}`;
   fs.mkdirSync(path.dirname(urlFile), { recursive: true });
   fs.writeFileSync(urlFile, url + "\n");
@@ -277,7 +329,7 @@ async function main() {
   const copied = copyToClipboard(friend);
   say();
   say("==============================================================");
-  say("  Kompreno za telefon:");
+  say("  Evklid za telefon:");
   say();
   say(`  ${url}`);
   say();
@@ -290,14 +342,14 @@ async function main() {
   say("  Na telefonu v meniju brskalnika izberi »Dodaj na začetni zaslon«.");
   say();
   say("  Povezava deluje, dokler je to okno odprto in računalnik prižgan.");
-  say(stable && url.includes(stable.domain)
+  say(url === pub || (stable && url.includes(stable.domain))
     ? "  To je STALNA povezava: ob vsakem zagonu je enaka."
     : "  To je začasna povezava: ob vsakem zagonu je nova.");
   say("==============================================================");
   if (own) {
     autoUpdate({
       root, port, say: logSay(log), server,
-      restartSelf: process.env.KOMPRENO_ZAGANJALNIK ? () => stopAll(RESTART_CODE) : null,
+      restartSelf: process.env.EVKLID_ZAGANJALNIK ? () => stopAll(RESTART_CODE) : null,
     });
   }
 }

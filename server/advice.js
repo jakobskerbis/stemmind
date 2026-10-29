@@ -1,6 +1,6 @@
 // Predlog mesečne meje AI in cene za skrbnika (števec porabe, public/usage-meter.js).
 // Najprej kakovost (učenci naj meje ne čutijo), nato dobiček. Predlog nič ne spremeni sam:
-// mejo in ceno spremeni skrbnik (meja: KOMPRENO_STUDENT_MONTHLY_USD, cena: server/accounts/plans.js).
+// mejo in ceno spremeni skrbnik (meja: EVKLID_STUDENT_MONTHLY_USD, cena: server/accounts/plans.js).
 
 import "./env.js";
 import { LIMITS, EUR_PER_USD } from "./usage.js";
@@ -52,7 +52,7 @@ function interestOf(db, now = Date.now()) {
 // sum = Usage.summary(). Vrne { economy, limit, price, interest } z besedili v slovenščini.
 export function pricingAdvice(db, sum, { now = new Date() } = {}) {
   const eur = sum.eur_per_usd || EUR_PER_USD();
-  const price = (PLANS.find((p) => p.key === "kompreno_1_month")?.amount || 999) / 100;
+  const price = (PLANS.find((p) => p.seats === 1 && p.interval === "month")?.amount || 999) / 100;
   const net = netOf(price);
   const hard = LIMITS.studentMonthlyUsd();
   const soft = LIMITS.studentSoftUsd();
@@ -114,7 +114,7 @@ export function pricingAdvice(db, sum, { now = new Date() } = {}) {
   const interest = interestOf(db, now.getTime());
   let priceAdv;
   if (!interest)
-    priceAdv = { status: "data", text: "Za predlog cene morajo biti vklopljeni starševski računi (KOMPRENO_ACCOUNTS=1), da se vidi, koliko preizkusov se spremeni v naročnino." };
+    priceAdv = { status: "data", text: "Za predlog cene morajo biti vklopljeni starševski računi (EVKLID_ACCOUNTS=1), da se vidi, koliko preizkusov se spremeni v naročnino." };
   else if (interest.trials_ended < MIN_TRIALS)
     priceAdv = {
       status: "data",

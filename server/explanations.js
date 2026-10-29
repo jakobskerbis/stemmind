@@ -6,7 +6,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const EXPLANATIONS_PATH = process.env.KOMPRENO_EXPLANATIONS || path.join(here, "..", "content", "explanations.json");
+export const EXPLANATIONS_PATH = process.env.EVKLID_EXPLANATIONS || path.join(here, "..", "content", "explanations.json");
 
 let cache = null;
 let mtime = 0;

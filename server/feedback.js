@@ -1,6 +1,6 @@
 // Povratne informacije testerjev: vprašalnik (ocene po področjih + pripombe) in kratek pogovor.
 // Odgovori so v bazi in v data/povratne-informacije.json (za branje in za Clauda, ki iz njih
-// pripravi seznam sprememb). Brez API ključa ali brez KOMPRENO_FEEDBACK_AI=1 ne stane nič.
+// pripravi seznam sprememb). Brez API ključa ali brez EVKLID_FEEDBACK_AI=1 ne stane nič.
 import "./env.js";
 import fs from "node:fs";
 import path from "node:path";
@@ -27,9 +27,9 @@ const QUESTION_KEYS = ["used", "liked", "stuck", "where", "change", "use"];
 const QUESTION_BUCKET = { liked: "praise", stuck: "complaints", where: "complaints", change: "ideas", use: "other" };
 
 // Pogovor z AI samo, kadar je izrecno vklopljen (privzeto vprašanja iz aplikacije, brez stroškov).
-export const feedbackAiOn = () => process.env.KOMPRENO_FEEDBACK_AI === "1" && !isMockMode();
-// Kartica »Kako ti je všeč Kompreno?« na Učni poti (za testno različico; za javno objavo nastavi 0).
-export const feedbackPromptOn = () => process.env.KOMPRENO_FEEDBACK_PROMPT !== "0";
+export const feedbackAiOn = () => process.env.EVKLID_FEEDBACK_AI === "1" && !isMockMode();
+// Kartica »Kako ti je všeč Evklid?« na Učni poti (za testno različico; za javno objavo nastavi 0).
+export const feedbackPromptOn = () => process.env.EVKLID_FEEDBACK_PROMPT !== "0";
 
 // Zbrana mnenja vidi samo, kdor odpre aplikacijo na računalniku, kjer teče strežnik
 // (ne prek povezave za telefon, ta doda glavo Cf-Connecting-Ip / X-Forwarded-For).
@@ -134,7 +134,7 @@ export class FeedbackStore {
       fs.writeFileSync(tmp, JSON.stringify(this.list(), null, 2));
       fs.renameSync(tmp, this.file);
     } catch (e) {
-      console.warn(`[kompreno] povratnih informacij ni bilo mogoče zapisati v ${this.file}: ${e.message}`);
+      console.warn(`[evklid] povratnih informacij ni bilo mogoče zapisati v ${this.file}: ${e.message}`);
     }
   }
 }
@@ -236,9 +236,9 @@ export function summaryMarkdown(entries, now = new Date()) {
 }
 
 // ---------------------------------------------------------------------------
-// Pogovor z AI (samo s KOMPRENO_FEEDBACK_AI=1): Haiku, kratki odgovori, največ 6 vprašanj.
+// Pogovor z AI (samo s EVKLID_FEEDBACK_AI=1): Haiku, kratki odgovori, največ 6 vprašanj.
 
-const INTERVIEW_SYSTEM = `Si prijazen anketar za aplikacijo Kompreno (AI inštruktor za matematiko, fiziko in kemijo za osnovno in srednjo šolo ter fakulteto: Učna pot z nalogami, Inštruktor za klepet, Učbenik s simulacijami, Tekmovanja, Lige in točke).
+const INTERVIEW_SYSTEM = `Si prijazen anketar za aplikacijo Evklid (AI inštruktor za matematiko, fiziko in kemijo za osnovno in srednjo šolo ter fakulteto: Učna pot z nalogami, Inštruktor za klepet, Učbenik s simulacijami, Tekmovanja, Lige in točke).
 S testerjem (pogosto učenec) vodiš kratek pogovor, da izveš, kaj je dobro in kaj ne.
 - Vedno zastavi točno eno kratko vprašanje (največ 25 besed), brez uvoda in brez naštevanja.
 - Pokrij: kaj je uporabljal, kaj mu je bilo všeč, kje se je zataknil ali kaj ni delovalo (na katerem zaslonu), kaj bi spremenil, ali bi aplikacijo uporabljal.
@@ -292,13 +292,13 @@ export function mountFeedback(app, store, { usage, file = null, createFn } = {})
       if (r.usage) usage?.log(s.id, r.model, r.usage, "feedback");
       res.json({ question: r.question || null, done: r.done || !r.question });
     } catch (e) {
-      console.warn(`[kompreno] pogovor za povratne informacije: ${e.message}`);
+      console.warn(`[evklid] pogovor za povratne informacije: ${e.message}`);
       res.status(502).json({ error: "AI trenutno ni dosegljiv." });
     }
   });
 
   // Samo na računalniku, kjer teče strežnik.
-  const localOnly = (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Mnenja so vidna samo na računalniku, kjer teče Kompreno." }));
+  const localOnly = (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Mnenja so vidna samo na računalniku, kjer teče Evklid." }));
   app.get("/api/feedback", localOnly, (_req, res) => {
     const list = fb.list();
     res.json({ count: list.length, entries: list, summary: summaryMarkdown(list), file });

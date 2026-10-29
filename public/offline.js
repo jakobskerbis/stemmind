@@ -17,8 +17,8 @@ function hintSteps(t) {
   return steps;
 }
 
-const PACK = (sid) => `kompreno.offline.pack.${sid}`;
-const QUEUE = (sid) => `kompreno.offline.queue.${sid}`;
+const PACK = (sid) => `evklid.offline.pack.${sid}`;
+const QUEUE = (sid) => `evklid.offline.queue.${sid}`;
 const DAY = 86400000;
 
 const read = (key, fallback) => {

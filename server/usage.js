@@ -8,24 +8,24 @@ const num = (k, d) => {
 };
 
 export const LIMITS = {
-  dailyQuestions: () => num("KOMPRENO_DAILY_QUESTIONS", 0), // 0 = brez omejitve
-  monthlyBudgetUsd: () => num("KOMPRENO_MONTHLY_BUDGET_USD", 0), // 0 = brez omejitve
+  dailyQuestions: () => num("EVKLID_DAILY_QUESTIONS", 0), // 0 = brez omejitve
+  monthlyBudgetUsd: () => num("EVKLID_MONTHLY_BUDGET_USD", 0), // 0 = brez omejitve
   // Na učenca na mesec: nad mehko mejo »Razloži podrobneje« uporabi hitri model,
   // nad trdo mejo inštruktor počaka do naslednjega meseca (Vadnica deluje naprej).
-  studentSoftUsd: () => num("KOMPRENO_STUDENT_SOFT_USD", 1),
-  studentMonthlyUsd: () => num("KOMPRENO_STUDENT_MONTHLY_USD", 3),
+  studentSoftUsd: () => num("EVKLID_STUDENT_SOFT_USD", 1),
+  studentMonthlyUsd: () => num("EVKLID_STUDENT_MONTHLY_USD", 3),
   // Koliko odgovorov zmogljivejšega modela (Opus) na učenca na dan.
-  dailyDeep: () => num("KOMPRENO_DAILY_DEEP", 5),
+  dailyDeep: () => num("EVKLID_DAILY_DEEP", 5),
   alertRatio: 0.8,
-  historyTurns: () => num("KOMPRENO_HISTORY_TURNS", 10),
+  historyTurns: () => num("EVKLID_HISTORY_TURNS", 10),
   // Zmogljivejši model dobi samo zadnje izmenjave (njegov predpomnilnik je ločen, vsak žeton je drag).
-  deepHistoryTurns: () => num("KOMPRENO_DEEP_HISTORY_TURNS", 3),
+  deepHistoryTurns: () => num("EVKLID_DEEP_HISTORY_TURNS", 3),
   // Tekmovanja: privzeto hitri model z več razmisleka; 1 = vedno zmogljivejši model (prej).
-  competitionDeep: () => process.env.KOMPRENO_COMPETITION_DEEP === "1",
+  competitionDeep: () => process.env.EVKLID_COMPETITION_DEEP === "1",
 };
 
 // Za prikaz v evrih (Claude API zaračunava v dolarjih).
-export const EUR_PER_USD = () => num("KOMPRENO_EUR_PER_USD", 0.87);
+export const EUR_PER_USD = () => num("EVKLID_EUR_PER_USD", 0.87);
 
 // Opombe, ko je zmogljivejši model nadomeščen s hitrejšim (pokažejo se nad odgovorom).
 export const NOTES = {
@@ -59,7 +59,7 @@ export class Usage {
     const month = this.monthTotal();
     const budget = LIMITS.monthlyBudgetUsd();
     if (budget && month >= budget * LIMITS.alertRatio && month - cost < budget * LIMITS.alertRatio) {
-      console.warn(`[kompreno] OPOZORILO: porabljenih ${Math.round((month / budget) * 100)} % mesečnega proračuna (${month.toFixed(2)} $).`);
+      console.warn(`[evklid] OPOZORILO: porabljenih ${Math.round((month / budget) * 100)} % mesečnega proračuna (${month.toFixed(2)} $).`);
     }
     return cost;
   }

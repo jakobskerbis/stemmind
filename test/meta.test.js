@@ -76,7 +76,7 @@ test("flashcard blocks are parsed, stripped and never streamed", async () => {
 
 test("prompt: zero prior knowledge, summary box, adaptive difficulty and cards stay in the cached part", () => {
   const p = buildSystemPrompt({ settings: normalizeSettings({}), results: "Vadnica: 9 od 10. Predlagana začetna zahtevnost: višja (x)." });
-  const [stat, dyn] = p.split("<!-- KOMPRENO:NASTAVITVE");
+  const [stat, dyn] = p.split("<!-- EVKLID:NASTAVITVE");
   assert.match(stat, /Ničelno predznanje teme/);
   assert.match(stat, /Zapomni si/);
   assert.match(stat, /<<KARTICA/);

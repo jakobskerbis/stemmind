@@ -160,11 +160,19 @@ test("tutor can dress the avatar only in free or bought items", async () => {
   store.db.prepare("INSERT INTO avatar_items (student_id, item) VALUES (?, 'hat_crown')").run(student.id);
   r = await t.call("change_settings", { changes: { avatar: { hat: "hat_crown" } } });
   const to = r.applied.find((x) => x.setting === "avatar").to;
-  assert.equal(to.hat, "hat_crown");
+  assert.deepEqual(to.hat, ["hat_crown"]);
   assert.equal(to.eyes, "eyes_happy"); // ostali deli ostanejo
   const g = JSON.parse((await t.onToolUse("get_settings", {})).content);
-  assert.equal(g.profile.avatar.hat, "hat_crown");
+  assert.deepEqual(g.profile.avatar.hat, ["hat_crown"]);
   assert.ok(g.avatar_items_available.some((x) => x.includes("hat_crown")));
+  // Več predmetov v predalu: seznam do 6, samo svoji ali brezplačni.
+  store.db.prepare("INSERT INTO avatar_items (student_id, item) VALUES (?, 'hat_phones')").run(student.id);
+  r = await t.call("change_settings", { changes: { avatar: { hat: ["hat_crown", "hat_phones"] } } });
+  assert.deepEqual(r.applied.find((x) => x.setting === "avatar").to.hat, ["hat_crown", "hat_phones"]);
+  r = await t.call("change_settings", { changes: { avatar: { acc: ["acc_glasses", "acc_blush"] } } });
+  assert.equal(r.status, "error");
+  r = await t.call("change_settings", { changes: { avatar: { eyes: ["eyes_happy"] } } });
+  assert.match(r.errors[0], /one item/);
 });
 
 test("tutor dialect: per language, by id or name, reset on language change, in prompt and cache key", async () => {
@@ -183,7 +191,7 @@ test("tutor dialect: per language, by id or name, reset on language change, in p
   assert.ok(r.options.some((o) => o.startsWith("prekmursko")));
   // Prompt: narečje samo pod črto predpomnjenja, pravilo nad njo je enako za vse.
   const p = buildSystemPrompt({ settings: store.getStudent(student.id).settings });
-  const [stat, dyn] = p.split("<!-- KOMPRENO:NASTAVITVE");
+  const [stat, dyn] = p.split("<!-- EVKLID:NASTAVITVE");
   assert.ok(!stat.includes("Štajersko –") && dyn.includes("Narečje / različica jezika: Štajersko –"));
   assert.ok(stat.includes("**Narečje / različica jezika**"));
   assert.ok(buildSystemPrompt({ settings: normalizeSettings({}) }).includes("Narečje / različica jezika: knjižni jezik"));

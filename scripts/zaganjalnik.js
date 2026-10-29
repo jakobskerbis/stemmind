@@ -19,7 +19,7 @@ let afterUpdate = 0;
 function run() {
   const started = Date.now();
   const child = spawn(process.execPath, ["--disable-warning=ExperimentalWarning", path.join(root, "scripts", `${name}.js`), ...args],
-    { cwd: root, stdio: "inherit", env: { ...process.env, KOMPRENO_ZAGANJALNIK: "1", ...(again ? { KOMPRENO_PONOVNO: "1" } : {}) } });
+    { cwd: root, stdio: "inherit", env: { ...process.env, EVKLID_ZAGANJALNIK: "1", ...(again ? { EVKLID_PONOVNO: "1" } : {}) } });
   child.on("exit", async (code) => {
     if (code === 75) { again = true; afterUpdate = Date.now(); return run(); }
     // Posodobljeni zagonski program se je takoj sesul: vrnemo prejšnjo različico in poskusimo znova.

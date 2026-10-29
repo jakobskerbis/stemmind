@@ -1,6 +1,6 @@
 # Samodejne posodobitve
 
-Kompreno se posodablja sam. Vse, kar pride v vejo `main` na GitHubu (nove lekcije, igre,
+Evklid se posodablja sam. Vse, kar pride v vejo `main` na GitHubu (nove lekcije, igre,
 orodja, prevodi, spremembe strežnika in baze), je v aplikaciji v približno 15 minutah.
 Ročno ni treba narediti nič.
 
@@ -22,9 +22,9 @@ posodobitev in jih v `main` ni več; lastnih datotek v mapi posodobitev ne briš
 Kaj se je zgodilo, piše v oknu in v `data/dnevnik.txt`.
 
 **Takoj posodobi:** dvakrat klikni `posodobi-windows.bat` (Mac: `posodobi-mac.command`). Če
-Kompreno teče, se posodobi v pol minute; sicer se posodobi in zažene.
+Evklid teče, se posodobi v pol minute; sicer se posodobi in zažene.
 
-**Kdaj ne deluje:** ko je računalnik ugasnjen ali Kompreno ni zagnan. Ob naslednjem zagonu se
+**Kdaj ne deluje:** ko je računalnik ugasnjen ali Evklid ni zagnan. Ob naslednjem zagonu se
 posodobi sam. Za zagon ob prižigu računalnika enkrat zaženi `samodejni-zagon-windows.bat`;
 Windows Task Scheduler ni potreben.
 
@@ -33,15 +33,15 @@ Windows Task Scheduler ni potreben.
 Render novo različico objavi vsaki 2 uri (tam ponovni zagon s trajnim diskom pomeni kratek izpad), če je v `main` kaj novega
 (`.github/workflows/render-posodobitev.yml`; v `render.yaml` je `autoDeploy: false`, da se
 strežnik ne zaganja ob vsaki spremembi). Enkratna nastavitev: v Renderju odpri storitev
-kompreno > Settings > Deploy Hook in povezavo kopiraj v GitHub > Settings > Secrets and
+evklid > Settings > Deploy Hook in povezavo kopiraj v GitHub > Settings > Secrets and
 variables > Actions kot skrivnost `RENDER_DEPLOY_HOOK`.
 
 ## Nastavitve v `.env`
 
 | Nastavitev | Pomen |
 |---|---|
-| `KOMPRENO_POSODOBITEV_MINUTE=15` | Kako pogosto preveri (v minutah). |
-| `KOMPRENO_POSODOBITEV=0` | Izklopi samodejne posodobitve. |
+| `EVKLID_POSODOBITEV_MINUTE=15` | Kako pogosto preveri (v minutah). |
+| `EVKLID_POSODOBITEV=0` | Izklopi samodejne posodobitve. |
 
 ## Kako deluje (za razvijalce)
 
@@ -53,7 +53,7 @@ variables > Actions kot skrivnost `RENDER_DEPLOY_HOOK`.
   miren trenutek prek `/healthz/stanje`, vrnitev ob napaki.
 - `scripts/zaganjalnik.js`: zažene `zagon.js` ali `telefon.js` in ju zažene znova, ko se
   posodobita sama (izhodna koda 75).
-- Zagonske datoteke `.bat`/`.command` imajo oznako `KOMPRENO-SAMOPOSODOBITEV`: dolgi ukazi so v
+- Zagonske datoteke `.bat`/`.command` imajo oznako `EVKLID-SAMOPOSODOBITEV`: dolgi ukazi so v
   eni vrstici z `exit /b` (Mac: vse v funkciji `main`), zato jih posodobitev lahko prepiše med
   tekom. Datoteke brez oznake (stare različice) med tekom ne prepiše.
 - `server/razlicica.js`: različica za `/healthz/stanje` in ime predpomnilnika v `/sw.js`.

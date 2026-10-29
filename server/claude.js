@@ -7,26 +7,26 @@ import { mockToolCall, mockToolText } from "./chat-settings.js";
 const env = (k, d) => (process.env[k] === undefined || process.env[k] === "" ? d : process.env[k]);
 
 // Privzeto poceni hiter model; zmogljivejši za »Razloži podrobneje« in tekmovanja.
-export const MODEL = env("KOMPRENO_MODEL", "claude-haiku-5-5");
-export const MODEL_DEEP = env("KOMPRENO_MODEL_DEEP", "claude-opus-5-5");
-const EFFORT = env("KOMPRENO_EFFORT", "low");
+export const MODEL = env("EVKLID_MODEL", "claude-haiku-5-5");
+export const MODEL_DEEP = env("EVKLID_MODEL_DEEP", "claude-opus-5-5");
+const EFFORT = env("EVKLID_EFFORT", "low");
 // »Razloži podrobneje« je druga razlaga snovi, ne težko sklepanje: Opus pri effort low
 // razloži enako dobro z manj razmišljanja (manj izhodnih žetonov). Prej: medium.
-const EFFORT_DEEP = env("KOMPRENO_EFFORT_DEEP", "low");
+const EFFORT_DEEP = env("EVKLID_EFFORT_DEEP", "low");
 // Stalni del prompta za Opus ostane v predpomnilniku 1 uro (klici Opusa so redki,
 // 5 minut bi pogosto poteklo in vsakič bi znova plačali zapis).
-const DEEP_CACHE_TTL = env("KOMPRENO_DEEP_CACHE_TTL", "1h");
+const DEEP_CACHE_TTL = env("EVKLID_DEEP_CACHE_TTL", "1h");
 // Hitri model z več razmisleka: Tekmovanja in »Razloži podrobneje«, ko je dnevna
 // ali mesečna omejitev za zmogljivejši model porabljena.
-const EFFORT_THINK = env("KOMPRENO_EFFORT_THINK", "high");
+const EFFORT_THINK = env("EVKLID_EFFORT_THINK", "high");
 
 // Največ žetonov odgovora (z razmišljanjem vred) po načinu. Preprečuje predolge
 // (in drage) odgovore; običajen odgovor inštruktorja ima nekaj sto žetonov.
 export const MAX_TOKENS = {
-  chat: Number(env("KOMPRENO_MAX_TOKENS", 3000)),
-  lite: Number(env("KOMPRENO_MAX_TOKENS_LITE", 1200)),
-  think: Number(env("KOMPRENO_MAX_TOKENS_THINK", 5000)),
-  deep: Number(env("KOMPRENO_MAX_TOKENS_DEEP", 6000)),
+  chat: Number(env("EVKLID_MAX_TOKENS", 3000)),
+  lite: Number(env("EVKLID_MAX_TOKENS_LITE", 1200)),
+  think: Number(env("EVKLID_MAX_TOKENS_THINK", 5000)),
+  deep: Number(env("EVKLID_MAX_TOKENS_DEEP", 6000)),
 };
 
 // Način klica: "chat" (Haiku, malo razmisleka), "lite" (Haiku, kratko),
@@ -63,7 +63,7 @@ export const REFUSAL_TEXT =
 export const ERROR_TEXT = "Ups, nekaj je šlo narobe pri povezavi. Poskusi znova čez trenutek.";
 
 export function isMockMode() {
-  if (process.env.KOMPRENO_MOCK === "1") return true;
+  if (process.env.EVKLID_MOCK === "1") return true;
   return !process.env.ANTHROPIC_API_KEY && !process.env.ANTHROPIC_AUTH_TOKEN;
 }
 
@@ -217,7 +217,7 @@ async function mockReply({ messages, onText, signal, model, onToolUse = null }) 
     text = "*(Preizkusni način.)* " + mockToolText(r?.content) + '\n<<META subject=MAT topic="-" error=0 mode=A flag=none done=0>>';
   }
   if (text === null) text = mockAnswer(lastUserText(messages));
-  const delay = Number(process.env.KOMPRENO_MOCK_DELAY_MS ?? 15);
+  const delay = Number(process.env.EVKLID_MOCK_DELAY_MS ?? 15);
   for (let i = 0; i < text.length; i += 6) {
     if (signal?.aborted) break;
     onText(text.slice(i, i + 6));
@@ -230,7 +230,7 @@ async function mockReply({ messages, onText, signal, model, onToolUse = null }) 
 // Branje rokopisa: učenec odgovor napiše s prstom ali miško, model ga prepiše.
 // Model NE preverja pravilnosti (to naredi koda), samo prebere zapisano.
 
-const OCR_MODEL = env("KOMPRENO_OCR_MODEL", MODEL);
+const OCR_MODEL = env("EVKLID_OCR_MODEL", MODEL);
 
 export async function readHandwriting({ imageBase64, mediaType = "image/png", answerType = "number", unit = null }) {
   if (isMockMode()) return { text: null, mock: true, usage: null, model: OCR_MODEL };
