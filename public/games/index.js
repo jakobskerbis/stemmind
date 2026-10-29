@@ -360,7 +360,7 @@ function renderShop(msg = "", top = false) {
       </div>
     </div>
     <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${esc(t(`games.slot.${x}`))}</button>`).join("")}</div>
-    ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon("award")} ${esc(t("zb.shopHint"))} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></p>` : ""}
+    ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon("award")}<span>${esc(t("zb.shopHint"))} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
     <div class="gm-items">${slotItems(shop.slot, owned).map(card).join("")}</div>
   </div>`;
   const s = ctx.getStudent();

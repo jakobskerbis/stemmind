@@ -21,6 +21,11 @@ export function initZbirke(c) {
   try {
     tab = localStorage.getItem(TAB_KEY) || "pse";
   } catch {}
+  document.querySelector("#view-zbirke .zb-back")?.addEventListener("click", () => ctx.showView(from || "me"));
+  // Esc zapre pogled »preglej«, fokus se vrne na predmet, ki ga je odprl.
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && open && root && !root.closest(".view")?.hidden) closeInspect();
+  });
 }
 
 export async function loadZbirke() {
@@ -37,6 +42,11 @@ export async function showZbirke(item = null, back = null) {
   open = item;
   from = back;
   msg = "";
+  // Iz iger: namesto »← Jaz« gumb »← Nazaj na igre« (isto mesto, isti videz).
+  const view = root.closest(".view");
+  view?.classList.toggle("zb-from-games", from === "games");
+  const zbBack = view?.querySelector(".zb-back");
+  if (zbBack) zbBack.hidden = from !== "games";
   if (item) tab = collectionOf(item);
   if (data) render();
   try {
@@ -103,7 +113,10 @@ function passCard() {
     const n = i + 1;
     const r = PASS_REWARDS.find((x) => x.tier === n);
     const cls = `zb-cell${n <= p.tier ? " got" : ""}${r ? " reward" : ""}${n === p.tier + 1 ? " now" : ""}`;
-    return `<li class="${cls}" ${r ? `data-zbopen="${esc(`${r.id}~${p.season}`)}"` : ""}>${r ? itemThumb(`${r.id}~${p.season}`, 34) : `<span>${n}</span>`}</li>`;
+    if (!r) return `<li class="${cls}"><span>${n}</span></li>`;
+    const id = `${r.id}~${p.season}`;
+    const label = `${itemName(itemOf(id), lang())}, ${t("zb.needPassShort", { tier: n })}`;
+    return `<li class="${cls}"><button type="button" class="zb-cell-btn" data-zbopen="${esc(id)}" aria-label="${esc(label)}">${itemThumb(id, 34)}</button></li>`;
   }).join("");
   return `<section class="card zb-pass">
     <div class="zb-pass-head">
@@ -126,13 +139,13 @@ function inspect(id) {
   const shown = data.showcase.includes(id);
   const v = variantOf(id);
   const where = row?.topic ? t("zb.fromTopic", { topic: `${row.topic.name} (${row.topic.path})` }) : row?.source === "pass" ? t("zb.fromPass", { season: seasonLabel(v) }) : row?.source === "set" ? t("zb.fromSet") : "";
-  return `<div class="zb-inspect card" role="dialog" aria-modal="false" aria-label="${esc(itemName(x, lang()))}">
+  return `<div class="zb-inspect card" role="dialog" tabindex="-1" aria-modal="false" aria-label="${esc(itemName(x, lang()))}">
     <button type="button" class="ghost zb-x" data-act="close" aria-label="${esc(t("nav.back"))}">${icon("x")}</button>
     <div class="zb-big">${x.sym ? itemThumb(id, 120) : avatarSvg({ ...equipped(), [x.slot]: id }, { size: 170, title: itemName(x, lang()) })}</div>
     <div class="zb-info">
       <h2>${esc(itemName(x, lang()))}${v ? ` <small class="muted">${esc(seasonLabel(v))}</small>` : ""}</h2>
       <p><span class="gm-rtag gm-r-${x.rarity}">${esc(t(`games.rarity.${x.rarity}`))}</span> ${x.set ? `<span class="gm-rtag">${esc(t("zb.set"))}</span>` : ""}</p>
-      ${own ? `<p>${icon("calendar")} ${esc(t("zb.got", { date: fmtDate(row?.at) }))}</p>${where ? `<p>${icon("book-open")} ${esc(where)}</p>` : ""}` : `<p class="zb-need">${icon("lock")} ${esc(condition(x, id))}</p>`}
+      ${own ? `<p>${icon("calendar")}<span>${esc(t("zb.got", { date: fmtDate(row?.at) }))}</span></p>${where ? `<p>${icon("book-open")}<span>${esc(where)}</span></p>` : ""}` : `<p class="zb-need">${icon("lock")}<span>${esc(condition(x, id))}</span></p>`}
       ${msg ? `<p class="gm-shop-msg" role="status">${esc(msg)}</p>` : ""}
       ${own ? `<div class="actions">
         <button type="button" class="primary" data-act="wear">${esc(on ? t("zb.takeOff") : t("games.wear"))}</button>
@@ -142,8 +155,24 @@ function inspect(id) {
   </div>`;
 }
 
-function render() {
+// Fokus po ponovnem izrisu: isti gumb kot prej (Obleci, V vitrino, zavihek …), da tipkovnica ne skoči na začetek.
+function focusKey(el) {
+  if (!el || !root?.contains(el) || !el.dataset) return null;
+  if (el.dataset.act) return `[data-act="${el.dataset.act}"]`;
+  if (el.dataset.tab) return `[data-tab="${el.dataset.tab}"]`;
+  if (el.dataset.zbopen) return `.${el.classList[0]}[data-zbopen="${CSS.escape(el.dataset.zbopen)}"]`;
+  return null;
+}
+let opener = null; // izbirnik predmeta, ki je odprl »preglej«
+
+function closeInspect() {
+  open = null;
+  render(opener);
+}
+
+function render(focus = null) {
   if (!root || !data) return;
+  const keep = focus || focusKey(document.activeElement);
   const own = ownedSet();
   const counts = Object.fromEntries(COLLECTIONS.map((c) => [c.id, KNOWLEDGE.filter((x) => x.collection === c.id)]));
   const tabs = [...COLLECTIONS.map((c) => ({ id: c.id, label: itemName(c, lang()), ic: c.icon, n: counts[c.id].filter((x) => own.has(x.id)).length, of: counts[c.id].length })), { id: "pass", label: t("zb.pass"), ic: "award" }];
@@ -151,12 +180,11 @@ function render() {
   const earlier = tab === "pass" ? data.items.filter((i) => itemOf(i.id)?.collection === "pass" && variantOf(i.id) !== data.pass.season).map((i) => i.id) : [];
   const show = data.showcase;
   root.innerHTML = `
-    ${from === "games" ? `<button type="button" class="text-btn zb-back" data-act="back">${icon("arrow-left")}${esc(t("games.back"))}</button>` : ""}
     <div class="zb-top card">
       <div class="zb-me">${avatarSvg(equipped(), { size: 120, title: t("games.avatar") })}</div>
       <div class="zb-show">
         <h2>${icon("star")} ${esc(t("zb.showcase"))}</h2>
-        <div class="zb-slots">${Array.from({ length: data.showcaseMax }, (_, i) => (show[i] ? `<button type="button" class="zb-slot full" data-zbopen="${esc(show[i])}">${itemThumb(show[i], 56, equipped())}</button>` : `<span class="zb-slot"></span>`)).join("")}</div>
+        <div class="zb-slots">${Array.from({ length: data.showcaseMax }, (_, i) => (show[i] ? `<button type="button" class="zb-slot full" data-zbopen="${esc(show[i])}" aria-label="${esc(itemName(itemOf(show[i]), lang()))}">${itemThumb(show[i], 56, equipped())}</button>` : `<span class="zb-slot"></span>`)).join("")}</div>
         <p class="muted small">${esc(show.length ? t("zb.showcaseHint") : t("zb.showcaseEmpty"))}</p>
       </div>
     </div>
@@ -170,6 +198,7 @@ function render() {
   const track = root.querySelector(".zb-track");
   const now = track?.querySelector(".now") || track?.querySelector(".got:last-of-type");
   if (track && now) track.scrollLeft = Math.max(0, now.offsetLeft - track.offsetLeft - track.clientWidth / 2 + now.clientWidth / 2);
+  if (keep) root.querySelector(keep)?.focus({ preventScroll: true });
   root.querySelectorAll("[data-tab]").forEach((b) =>
     b.addEventListener("click", () => {
       tab = b.dataset.tab;
@@ -183,13 +212,12 @@ function render() {
   root.querySelectorAll("[data-zbopen]").forEach((b) =>
     b.addEventListener("click", () => {
       open = b.dataset.zbopen;
+      opener = focusKey(b);
       msg = "";
-      render();
-      root.querySelector(".zb-inspect")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      render(".zb-inspect");
     }),
   );
-  root.querySelector('[data-act="back"]')?.addEventListener("click", () => ctx.showView(from));
-  root.querySelector('[data-act="close"]')?.addEventListener("click", () => ((open = null), render()));
+  root.querySelector('[data-act="close"]')?.addEventListener("click", closeInspect);
   root.querySelector('[data-act="wear"]')?.addEventListener("click", () => {
     const x = itemOf(open);
     const on = equipped()[x.slot] === open;
@@ -226,7 +254,7 @@ export async function meCard(el) {
   try {
     const d = await loadZbirke();
     el.innerHTML = `<span class="zb-me-av">${avatarSvg(d.avatar.equipped, { size: 56 })}</span>
-      <span class="lr-text"><b>${esc(t("zb.title"))}</b><small>${esc(t("zb.passLevel", { tier: d.pass.tier, tiers: d.pass.tiers }))} · ${d.items.filter((i) => itemOf(i.id)?.collection !== "pass").length}/${KNOWLEDGE.filter((x) => x.collection !== "pass").length}</small></span>
+      <span class="lr-text"><b>${esc(t("zb.title"))}</b><small><span>${esc(t("zb.passLevel", { tier: d.pass.tier, tiers: d.pass.tiers }))}</span> · <span>${esc(t("zb.meCount", { n: d.items.filter((i) => itemOf(i.id)?.collection !== "pass").length, of: KNOWLEDGE.filter((x) => x.collection !== "pass").length }))}</span></small></span>
       <span class="zb-me-show">${d.showcase.map((id) => itemThumb(id, 34, d.avatar.equipped)).join("")}</span>${icon("chevron-right")}`;
     el.hidden = false;
   } catch {}

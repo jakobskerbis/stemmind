@@ -29,6 +29,12 @@ test("zbirke: every item draws, every condition topic exists at the item's level
     assert.ok(set && set.need.own < n, c.id);
   }
   assert.deepEqual(PASS_REWARDS.map((r) => r.tier).filter((t) => t > PASS.tiers), []);
+  // Ključne besede ne ujamejo sredine drugih besed.
+  const kw = (id, name) => new RegExp(KNOWLEDGE.find((x) => x.id === id).need.kw, "i").test(name);
+  assert.ok(kw("el_fe", "Kovine") && !kw("el_fe", "Nekovine") && !kw("el_fe", "Beljakovine"));
+  assert.ok(kw("el_n", "Amini in aminokisline") && !kw("el_n", "Vitamini in minerali v živilih"));
+  assert.ok(kw("el_c", "Organska kemija") && !kw("el_c", "Splošna in anorganska kemija"));
+  assert.ok(kw("bg_sine", "Grafi kotnih funkcij") && !kw("bg_sine", "Trikotnik") && !kw("bg_sine", "Pravokotna projekcija"));
 });
 
 test("zbirke: seasons follow the school half-years", () => {

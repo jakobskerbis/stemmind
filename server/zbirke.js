@@ -27,15 +27,19 @@ export function ensureKnowledgeTables(db) {
 
 const nowSql = () => new Date().toISOString().replace("T", " ").slice(0, 19);
 
-// Ali obvladana tema izpolni pogoj predmeta.
-function topicMatches(item, topicId) {
-  const t = getTopic(topicId);
-  const ids = new Set([topicId, ...baseTopicIds(topicId)]);
-  if (item.need.t?.some((id) => ids.has(id))) return true;
-  if (!t || !item.need.kw || t.subject !== subjectOf(item)) return false;
-  const tier = topicTier(getPath(t.path));
-  return tier >= RARITY_TIER[item.rarity] && new RegExp(item.need.kw, "i").test(t.name);
+// Obvladana tema z vsem, kar pogoji potrebujejo (enkrat na sync, ne za vsak predmet).
+function topicInfo(m) {
+  const t = getTopic(m.topic_id);
+  const path = t && getPath(t.path);
+  return { ...m, t, ids: new Set([m.topic_id, ...baseTopicIds(m.topic_id)]), tier: topicTier(path), school: path?.school };
 }
+// Ali obvladana tema izpolni pogoj predmeta.
+function topicMatches(item, m) {
+  if (item.need.t?.some((id) => m.ids.has(id))) return true;
+  if (!m.t || !item.need.kw || m.t.subject !== subjectOf(item)) return false;
+  return m.tier >= RARITY_TIER[item.rarity] && KW.get(item.id).test(m.t.name);
+}
+const KW = new Map(KNOWLEDGE.filter((x) => x.need?.kw).map((x) => [x.id, new RegExp(x.need.kw, "i")]));
 const SUBJECT = { pse: "KEM", fiz: "FIZ", krivulje: "MAT" };
 const subjectOf = (item) => SUBJECT[item.collection];
 
@@ -78,19 +82,18 @@ export class Knowledge {
       have.set(item, { item });
       add.push([item, topic, source]);
     };
-    const mastered = this.db
-      .prepare(
-        `SELECT topic_id, source FROM topic_state
-         WHERE student_id = ? AND status = 'mastered' AND COALESCE(source, '') <> 'manual'
-         ORDER BY mastered_at, topic_id`,
-      )
-      .all(id);
+    // Teme beremo samo, če kak predmet za temo še manjka (sync teče ob vsakem pravilnem odgovoru).
+    const need = KNOWLEDGE.some((x) => !have.has(x.id) && (x.need?.t || x.need?.kw || x.need?.tek));
+    const sql = `SELECT topic_id, source FROM topic_state
+      WHERE student_id = ? AND status = 'mastered' AND COALESCE(source, '') <> 'manual' ORDER BY mastered_at, topic_id`;
+    const mastered = need ? this.db.prepare(sql).all(id).map(topicInfo) : [];
     for (const x of KNOWLEDGE) {
+      if (have.has(x.id)) continue;
       if (x.need?.t || x.need?.kw) {
-        const hit = mastered.find((m) => topicMatches(x, m.topic_id));
+        const hit = mastered.find((m) => topicMatches(x, m));
         if (hit) grant(x.id, hit.topic_id, hit.source || "practice");
       } else if (x.need?.tek) {
-        const tek = mastered.filter((m) => getPath(getTopic(m.topic_id)?.path)?.school === "TEK");
+        const tek = mastered.filter((m) => m.school === "TEK");
         const chat = tek.find((m) => m.source === "chat");
         if (tek.length >= x.need.tek && (!x.need.chat || chat)) grant(x.id, chat?.topic_id || tek[0].topic_id, "chat");
       }
@@ -103,8 +106,12 @@ export class Knowledge {
       }).length;
       if (n >= x.need.own) grant(x.id, null, "set");
     }
-    const p = this.pass(id);
-    for (const r of PASS_REWARDS) if (p.tier >= r.tier) grant(`${r.id}~${p.season}`, null, "pass");
+    // Učni pass te in prejšnje sezone (XP zadnjih dni sezone se pretvori v nagrade tudi po njenem koncu).
+    const now = seasonOf();
+    for (const season of [now, seasonOf(new Date(Date.parse(`${now.from}T00:00:00Z`) - 86400000))]) {
+      const p = this.pass(id, season);
+      for (const r of PASS_REWARDS) if (p.tier >= r.tier) grant(`${r.id}~${p.season}`, null, "pass");
+    }
     if (add.length) {
       const ins = this.db.prepare("INSERT OR IGNORE INTO knowledge_items (student_id, item, topic_id, source, earned_at) VALUES (?, ?, ?, ?, ?)");
       const at = nowSql();
@@ -114,8 +121,17 @@ export class Knowledge {
   }
 
   // Odvzem (npr. sumljiv dosežek): predmet izgine iz inventarja, zapis ostane.
+  // Shranjen avatar ga izgubi tudi za druge (lige berejo shranjen avatar brez preverjanja lastništva).
   revoke(id, item, reason) {
-    return this.db.prepare("UPDATE knowledge_items SET revoked_at = ?, revoke_reason = ? WHERE student_id = ? AND item = ? AND revoked_at IS NULL").run(nowSql(), String(reason || ""), id, item).changes > 0;
+    const ok = this.db.prepare("UPDATE knowledge_items SET revoked_at = ?, revoke_reason = ? WHERE student_id = ? AND item = ? AND revoked_at IS NULL").run(nowSql(), String(reason || ""), id, item).changes > 0;
+    try {
+      const r = ok && this.db.prepare("SELECT equipped FROM avatar_state WHERE student_id = ?").get(id);
+      if (r?.equipped.includes(`"${item}"`)) {
+        const eq = Object.fromEntries(Object.entries(JSON.parse(r.equipped)).filter(([, v]) => v !== item));
+        this.db.prepare("UPDATE avatar_state SET equipped = ? WHERE student_id = ?").run(JSON.stringify(eq), id);
+      }
+    } catch {} // brez tabele avatarja ali s pokvarjenim zapisom ni česa sneti
+    return ok;
   }
 
   showcase(id) {

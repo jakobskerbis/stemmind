@@ -45,6 +45,7 @@ function seasonHue(key) {
 }
 
 // t: teme (id SŠ/OŠ poti; prva je zgled, ki ga pokažemo kot pogoj), kw: ključna beseda v imenu teme
+// (\b pred besedo, kjer bi sicer ujela sredino druge: nekovine, vitamini, anorganska, trikotnik)
 // istega predmeta, ki šteje, če je tema vsaj na ravni redkosti (velja tudi za regijske in fakultetne poti).
 const k = (id, sym, z, cat, rarity, sl, en, t, kw) => ({ id, collection: "pse", slot: "badge", sym, z, cat, rarity, name: { sl, en }, need: { t, kw } });
 const f = (id, rarity, sl, en, t, kw) => ({ id, collection: "fiz", slot: "fx", rarity, name: { sl, en }, need: { t, kw } });
@@ -57,11 +58,11 @@ export const KNOWLEDGE = [
   k("el_ne", "Ne", 10, "noble", "common", "Neon", "Neon", ["KEM-OS-8/periodni-sistem", "KEM-SS-1/periodni-sistem"], "periodni"),
   k("el_o", "O", 8, "nonmetal", "common", "Kisik", "Oxygen", ["KEM-OS-8/kemijska-reakcija"], "kemijska reakcija"),
   k("el_na", "Na", 11, "alkali", "common", "Natrij", "Sodium", ["KEM-OS-8/ionska-vez"], "ionsk"),
-  k("el_fe", "Fe", 26, "metal", "common", "Železo", "Iron", ["KEM-OS-8/kovine"], "kovin"),
+  k("el_fe", "Fe", 26, "metal", "common", "Železo", "Iron", ["KEM-OS-8/kovine"], "\\bkovin"),
   k("el_s", "S", 16, "nonmetal", "common", "Žveplo", "Sulfur", ["KEM-OS-8/nekovine"], "nekovin"),
   k("el_mg", "Mg", 12, "alkaline", "common", "Magnezij", "Magnesium", ["KEM-OS-8/energija-pri-reakcijah", "KEM-SS-1/energija-pri-reakcijah"], "energija pri reakcij"),
-  k("el_c", "C", 6, "nonmetal", "rare", "Ogljik", "Carbon", ["KEM-OS-9/ogljik-in-organske-spojine", "KEM-OS-9/alkani-alkeni-alkini", "KEM-SS-3/ogljikovodiki"], "ogljik|organsk"),
-  k("el_n", "N", 7, "nonmetal", "rare", "Dušik", "Nitrogen", ["KEM-OS-9/amini-in-aminokisline", "KEM-OS-9/beljakovine"], "amin|beljakovin"),
+  k("el_c", "C", 6, "nonmetal", "rare", "Ogljik", "Carbon", ["KEM-OS-9/ogljik-in-organske-spojine", "KEM-OS-9/alkani-alkeni-alkini", "KEM-SS-3/ogljikovodiki"], "ogljik|\\borgansk"),
+  k("el_n", "N", 7, "nonmetal", "rare", "Dušik", "Nitrogen", ["KEM-OS-9/amini-in-aminokisline", "KEM-OS-9/beljakovine"], "\\bamin|beljakovin"),
   k("el_ar", "Ar", 18, "noble", "rare", "Argon", "Argon", ["KEM-OS-9/mnozina-snovi", "KEM-OS-9/racunanje-z-mnozino-snovi", "KEM-SS-1/mnozina-snovi"], "množin"),
   k("el_cl", "Cl", 17, "halogen", "epic", "Klor", "Chlorine", ["KEM-SS-3/halogenoalkani-in-alkoholi"], "halogen"),
   k("el_cu", "Cu", 29, "metal", "epic", "Baker", "Copper", ["KEM-SS-2/galvanski-cleni-in-elektroliza", "KEM-SS-2/redoks-reakcije"], "redoks|galvansk|elektroliz"),
@@ -92,7 +93,7 @@ export const KNOWLEDGE = [
   m("bg_bell", "rare", "Gaussova krivulja", "Bell curve", ["MAT-OS-9/statisticna-raziskava", "MAT-SS-4/statistika"], "statisti"),
   m("bg_parabola", "epic", "Parabola", "Parabola", ["MAT-SS-2/kvadratna-funkcija", "MAT-SS-2/kvadratna-enacba"], "kvadratn"),
   m("bg_exp", "epic", "Eksponentna rast", "Exponential growth", ["MAT-SS-2/eksponentna-funkcija", "MAT-SS-2/logaritem"], "eksponent|logarit"),
-  m("bg_sine", "epic", "Sinusoida", "Sine wave", ["MAT-SS-3/grafi-kotnih-funkcij", "MAT-SS-3/kotne-funkcije-poljubnega-kota"], "kotn"),
+  m("bg_sine", "epic", "Sinusoida", "Sine wave", ["MAT-SS-3/grafi-kotnih-funkcij", "MAT-SS-3/kotne-funkcije-poljubnega-kota"], "\\bkotn"),
   m("bg_lissajous", "epic", "Lissajousova krivulja", "Lissajous curve", ["MAT-SS-3/adicijski-izreki", "MAT-SS-3/trigonometrijske-enacbe"], "adicijsk|trigonometrijsk"),
   m("bg_spiral", "epic", "Fibonaccijeva spirala", "Fibonacci spiral", ["MAT-SS-4/zaporedja", "MAT-SS-4/aritmeticno-in-geometrijsko-zaporedje"], "zaporedj"),
   m("bg_fractal", "epic", "Sierpińskijev trikotnik", "Sierpiński triangle", ["MAT-SS-4/geometrijska-vrsta"], "vrsta"),
