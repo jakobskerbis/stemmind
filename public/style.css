@@ -1,52 +1,59 @@
 /* STEMMind – videz. Barve so v spremenljivkah; temni način je razred .dark na <html> (nastavi ga theme.js).
    Lastne barve iz Nastavitve → Videz theme.js zapiše kot slog na <html> in prepišejo te privzete. */
 :root {
-  --bg: #f3f6fb;
+  /* Slog Čist (privzeti, docs/oblikovanje.md); Igriv in Temen sta v ui.css (»Slogi«) in theme.js. */
+  --bg: #f6f7f9;
   --surface: #ffffff;
-  --surface-2: #eaf0f9;
-  --text: #14213d;
-  --muted: #5d6b86;
-  --border: #dfe6f1;
-  --accent: #2563eb;
-  --accent-2: #4f86f7;
-  --accent-grad: #22b8f0;
-  --accent-soft: #e7efff;
+  --surface-2: #eef1f5;
+  --text: #141821;
+  --muted: #566070;
+  --border: #e1e5eb;
+  --accent: #2353d1;
+  --accent-2: #4a74e0;
+  --accent-grad: #3d6fe8;
+  --accent-soft: #e8eefc;
   --accent-text: #ffffff;
-  --hero-a: #2563eb;  /* preliv pod belim besedilom (kartica Današnji trening, logotip) */
-  --hero-b: #22b8f0;
+  --hero-a: #2353d1;  /* podlaga pod belim besedilom (kartica Današnji trening, logotip) */
+  --hero-b: #3563dc;
   --gold: #f5a524;
   --user-bubble: var(--accent);
   --user-text: #ffffff;
-  --ok: #16a05a;
-  --ok-bg: #e6f7ee;
-  --danger: #e5484d;
+  --ok: #1e7a4c;
+  --ok-bg: #e5f4ec;
+  --danger: #d33a3f;
   --danger-bg: #fdecec;
-  --radius: 16px;
-  --radius-sm: 12px;
-  --shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 6px 20px rgba(20, 33, 61, 0.06);
-  --shadow-lg: 0 10px 30px rgba(20, 33, 61, 0.14);
+  --warm: #b0500a;   /* niz dni, odštevanje do cilja */
+  --radius: 14px;
+  --radius-sm: 10px;
+  --press: 0px;      /* globina »pritisnjenih« gumbov (Igriv: 3px) */
+  --shadow: 0 1px 2px rgba(20, 24, 33, 0.06);
+  --shadow-lg: 0 10px 30px rgba(20, 24, 33, 0.14);
+  --font: "Instrument Sans Variable", "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   color-scheme: light;
 }
 :root.dark {
-  --bg: #0d1322;
-  --surface: #151d30;
-  --surface-2: #1f2a40;
-  --text: #eceef8;
-  --muted: #97a3bd;
-  --border: #2a3650;
-  --accent: #5b95ff;
-  --accent-2: #7eadff;
-  --accent-grad: #3cc6f5;
-  --accent-soft: #1c2d52;
-  --accent-text: #ffffff;
-  --hero-a: #1d4ed8;
-  --hero-b: #0e8fc4;
+  --bg: #0d1117;
+  --surface: #151b23;
+  --surface-2: #1e2631;
+  --text: #e6eaf0;
+  --muted: #9da7b6;
+  --border: #2a3340;
+  --accent: #6e9bff;
+  --accent-2: #8fb2ff;
+  --accent-grad: #5b8cf5;
+  --accent-soft: #1a2a4a;
+  --accent-text: #0d1117;
+  --hero-a: #2353d1;
+  --hero-b: #2f5fd8;
   --user-bubble: var(--accent);
-  --ok: #3dd68c;
+  --user-text: #0d1117;
+  --ok: #4cd38c;
   --ok-bg: #12301f;
   --danger: #ff6b6e;
   --danger-bg: #3a1a1f;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+  --warm: #f5a35c;
+  --shadow: none;
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.45);
   color-scheme: dark;
 }
@@ -74,7 +81,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 16px/1.55 "Nunito Variable", "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font: 16px/1.55 var(--font);
   display: flex;
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
@@ -100,11 +107,11 @@ button.primary {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   background: var(--accent); color: var(--accent-text); border: 0; border-radius: var(--radius-sm);
   padding: 10px 18px; min-height: 44px; font-weight: 800;
-  box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 65%, #000);
+  box-shadow: 0 var(--press) 0 color-mix(in srgb, var(--accent) 65%, #000);
   transition: transform 0.08s, box-shadow 0.08s, filter 0.15s;
 }
 button.primary:hover:not(:disabled) { filter: brightness(1.06); }
-button.primary:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 color-mix(in srgb, var(--accent) 65%, #000); }
+button.primary:active:not(:disabled) { transform: translateY(calc(var(--press) * 0.66)); box-shadow: 0 calc(var(--press) / 3) 0 color-mix(in srgb, var(--accent) 65%, #000); }
 button.primary:disabled { opacity: 0.5; cursor: default; }
 button.big { min-height: 52px; padding: 12px 24px; font-size: 1.05rem; }
 button.secondary, button:where(:not(.primary, .tab, .danger, .ghost, .text-btn, .node, .next-row, .brand, .link, .choice, .key, .idea)) {
@@ -214,9 +221,41 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .pill-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
 .pill-list li { background: var(--surface-2); border-radius: 999px; padding: 5px 12px; font-size: 0.9rem; font-weight: 700; }
 .pill-list li.auto { border: 1.5px dashed var(--danger); }
-.table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
-.table th { text-align: left; padding: 8px 6px; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
-.table td { text-align: left; padding: 9px 6px; border-bottom: 1px solid var(--border); }
+/* ---------- tabele: en videz v vsej aplikaciji ----------
+   Okvir z zaobljenimi robovi, poudarjena siva glava, črte med vrsticami in stolpci, rahlo
+   progaste vrstice, števke enake širine. Velja za tabele iz Markdowna (.md-table: inštruktor,
+   razlage, naloge, lekcije, kartice, mnenja) in za tabele, ki jih sestavi koda. :where() ima
+   specifičnost 0, zato lahko posamezno orodje (npr. PSE) prepiše poravnavo ali razmik. */
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) {
+  border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--text); font-variant-numeric: tabular-nums; overflow-wrap: normal; margin: 10px 0;
+}
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) :where(th, td) {
+  padding: 10px 14px; text-align: left; vertical-align: middle; border: 0; border-bottom: 1px solid var(--border);
+}
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) :where(th, td) + :where(th, td) { border-left: 1px solid var(--border); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:last-child) > tr:last-child > :where(th, td) { border-bottom: 0; }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) :where(th) { background: var(--surface-2); font-weight: 800; color: var(--text); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(tbody) > tr:nth-child(even) > td { background: color-mix(in srgb, var(--surface-2) 45%, transparent); }
+/* Zaobljeni vogali tudi pri sivi glavi in progastih vrsticah. */
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:first-child) > tr:first-child > :where(th, td):first-child { border-top-left-radius: calc(var(--radius-sm) - 1px); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:first-child) > tr:first-child > :where(th, td):last-child { border-top-right-radius: calc(var(--radius-sm) - 1px); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:last-child) > tr:last-child > :where(th, td):first-child { border-bottom-left-radius: calc(var(--radius-sm) - 1px); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:last-child) > tr:last-child > :where(th, td):last-child { border-bottom-right-radius: calc(var(--radius-sm) - 1px); }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) [align="center"] { text-align: center; }
+:where(.md-table, .table, .demo-table, .pse-tab, .doc table) [align="right"] { text-align: right; }
+
+/* Tabela iz Markdowna: tako široka kot vsebina; na ozkem zaslonu se pomika vstran, ne stisne.
+   Kratke celice in formule se ne prelamljajo (ulomki ostanejo celi), daljše besedilo se. */
+.md-table-wrap { max-width: 100%; overflow-x: auto; margin: 10px 0; -webkit-overflow-scrolling: touch; }
+.md-table-wrap > .md-table { margin: 0; }
+.md-table :is(th, td) { white-space: nowrap; }
+.md-table :is(th, td).wrap { white-space: normal; min-width: 11em; max-width: 26em; }
+.md-table .katex { white-space: nowrap; }
+.md-table td .katex { font-size: 1.1em; }
+.md-table :is(th, td) .katex-display { margin: 0; }
+
+.table { width: 100%; font-size: 0.93rem; }
 .table td.bad { color: var(--danger); font-weight: 800; }
 .activity { display: flex; align-items: flex-end; gap: 3px; height: 90px; }
 .activity .bar { flex: 1; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 2px; position: relative; width: auto; height: auto; }
@@ -337,7 +376,7 @@ button.sym-key:active { background: var(--accent-soft); }
 .hero p { margin: 2px 0 0; opacity: 0.9; font-weight: 600; }
 .hero-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: rgba(255, 255, 255, 0.18); }
 .hero-icon svg.i { width: 28px; height: 28px; color: #ffe27a; fill: #ffe27a; }
-.hero button.primary { background: #fff; color: var(--hero-a); box-shadow: 0 3px 0 rgba(0, 0, 0, 0.18); }
+.hero button.primary { background: #fff; color: var(--hero-a); box-shadow: 0 var(--press) 0 rgba(0, 0, 0, 0.18); }
 .next-row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 14px 20px; border: 0; border-bottom: 1px solid var(--border); background: var(--surface); text-align: left; color: var(--text); }
 .next-row:hover { background: var(--surface-2); }
 .next-row .eyebrow { flex: none; }
@@ -379,14 +418,14 @@ button.sym-key:active { background: var(--accent-soft); }
 .node-dot {
   flex: none; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%;
   background: var(--surface-2); color: var(--muted); border: 3px solid var(--surface); position: relative; z-index: 1;
-  box-shadow: 0 3px 0 color-mix(in srgb, var(--text) 10%, transparent);
+  box-shadow: 0 var(--press) 0 color-mix(in srgb, var(--text) 10%, transparent);
   transition: transform 0.15s;
 }
 .node:hover:not(:disabled) .node-dot { transform: scale(1.06); }
 .node-dot svg.i { width: 22px; height: 22px; }
-.node.mastered .node-dot { background: var(--ok); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--ok) 60%, #000); }
-.node.learning .node-dot { background: var(--accent); color: var(--accent-text); box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 60%, #000); }
-.node.due .node-dot { background: var(--gold); color: #fff; box-shadow: 0 3px 0 color-mix(in srgb, var(--gold) 60%, #000); }
+.node.mastered .node-dot { background: var(--ok); color: #fff; box-shadow: 0 var(--press) 0 color-mix(in srgb, var(--ok) 60%, #000); }
+.node.learning .node-dot { background: var(--accent); color: var(--accent-text); box-shadow: 0 var(--press) 0 color-mix(in srgb, var(--accent) 60%, #000); }
+.node.due .node-dot { background: var(--gold); color: #fff; box-shadow: 0 var(--press) 0 color-mix(in srgb, var(--gold) 60%, #000); }
 .node.new .node-dot { background: var(--surface); color: var(--accent); border-color: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent-soft); }
 .node.locked .node-dot { background: var(--surface-2); color: #a3adc3; }
 .node.current .node-dot { animation: pulse 1.8s ease-in-out infinite; }
@@ -427,9 +466,9 @@ button.sym-key:active { background: var(--accent-soft); }
 .answer-row input:focus { border-color: var(--accent); outline: none; }
 .answer-row button { min-height: 52px !important; }
 .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 16px; }
-.choice { min-height: 56px; font-size: 1.08rem; font-weight: 700; border: 2px solid var(--border); background: var(--surface); border-radius: var(--radius-sm); box-shadow: 0 3px 0 var(--border); transition: transform 0.08s; }
+.choice { min-height: 56px; font-size: 1.08rem; font-weight: 700; border: 2px solid var(--border); background: var(--surface); border-radius: var(--radius-sm); box-shadow: 0 var(--press) 0 var(--border); transition: transform 0.08s; }
 .choice:hover { border-color: var(--accent); }
-.choice:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--border); }
+.choice:active { transform: translateY(calc(var(--press) * 0.66)); box-shadow: 0 calc(var(--press) / 3) 0 var(--border); }
 .feedback { scroll-margin-bottom: calc(var(--pad-h, 0px) + 16px); margin-top: 14px; display: flex; flex-direction: column; gap: 10px; }
 .feedback:empty { display: none; }
 .fb { display: flex; gap: 10px; align-items: flex-start; border-radius: var(--radius-sm); padding: 12px 14px; font-weight: 600; }
@@ -520,7 +559,7 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
 .fig .grid line { stroke: #e8eef7; stroke-width: 1; }
 .fig .axis { stroke: #2b2f45; stroke-width: 2; }
 .fig .arrow { fill: #2b2f45; }
-.fig .nums text, .fig text { fill: #5d6b86; font: 600 11px "Nunito Variable", system-ui, sans-serif; }
+.fig .nums text, .fig text { fill: #5d6b86; font: 600 11px var(--font); }
 .fig text.strong { fill: #14213d; font-weight: 900; }
 .fig .axis-name { fill: #14213d; font-style: italic; font-weight: 800; font-size: 14px; }
 .fig .plot { stroke: var(--accent); stroke-width: 3.5; stroke-linecap: round; }
@@ -712,10 +751,10 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
 .modes button {
   display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; min-height: 0;
   padding: 14px; border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--surface);
-  box-shadow: 0 3px 0 var(--border); color: var(--text); transition: transform 0.08s, box-shadow 0.08s, border-color 0.15s;
+  box-shadow: 0 var(--press) 0 var(--border); color: var(--text); transition: transform 0.08s, box-shadow 0.08s, border-color 0.15s;
 }
 .modes button:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
-.modes button:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--border); }
+.modes button:active { transform: translateY(calc(var(--press) * 0.66)); box-shadow: 0 calc(var(--press) / 3) 0 var(--border); }
 .modes button.active { border-color: var(--accent); background: var(--accent-soft); }
 .modes .ic { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); margin-bottom: 6px; }
 .modes .ic svg.i { width: 22px; height: 22px; }
@@ -737,7 +776,7 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
 /* ---------- kartice za ponavljanje (public/flashcards.js) ---------- */
 #view-cards h1.with-icon svg.i { color: var(--accent); }
 .fc-review { margin: 12px 0 16px; }
-.fc-card { padding: 18px; border: 1.5px solid var(--border); box-shadow: 0 3px 0 var(--border); }
+.fc-card { padding: 18px; border: 1.5px solid var(--border); box-shadow: 0 var(--press) 0 var(--border); }
 .fc-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; }
 .fc-front { font-size: 1.15rem; font-weight: 700; line-height: 1.45; overflow-wrap: anywhere; }
 .fc-backside { margin-top: 14px; padding-top: 14px; border-top: 1.5px dashed var(--border); line-height: 1.5; overflow-wrap: anywhere; }
@@ -768,6 +807,18 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
 .cards-note ul { margin: 6px 0 4px; padding-left: 20px; }
 .cards-note li p { margin: 0; }
 .cards-note .text-btn { display: inline-flex; align-items: center; gap: 4px; padding: 2px 0; }
+/* Predlog spremembe šole/letnika, ki ga da inštruktor (public/chat-settings.js). */
+.set-proposal { margin-top: 12px; padding: 10px 12px; border-radius: 12px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); font-size: 0.92rem; }
+.set-proposal .sp-head { display: flex; align-items: center; gap: 6px; color: var(--accent); }
+.set-proposal .sp-head b { color: var(--text); }
+.set-proposal .sp-change { margin: 6px 0 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.set-proposal .sp-arrow { width: 16px; height: 16px; color: var(--muted); }
+[dir="rtl"] .set-proposal .sp-arrow { transform: scaleX(-1); }
+.set-proposal .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.set-proposal .actions button { min-height: 40px; }
+.set-proposal .sp-result { margin: 4px 0 0; display: flex; align-items: center; gap: 6px; color: var(--muted); }
+.set-proposal .sp-result.ok { color: var(--text); font-weight: 600; }
+.set-proposal .sp-result svg { width: 16px; height: 16px; color: var(--accent); }
 /* Okvir »Zapomni si« v odgovorih inštruktorja (Markdown citat) */
 .msg.assistant blockquote { margin: 10px 0; padding: 8px 12px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; }
 .msg.assistant blockquote p { margin: 0.2em 0; }

@@ -29,6 +29,22 @@ export function nextChunk(text, pos, final = false) {
   if (i >= n) return final ? { end: n, pause: "none" } : null;
   if (para && i > pos) return { end: i, pause: "para" };
 
+  // Vrstica tabele se pokaže v celoti (glava skupaj z ločilom), da tabela ne poskakuje.
+  const lineStart = text.lastIndexOf("\n", i - 1) + 1;
+  if (/^\s*(>\s*)?\|/.test(text.slice(lineStart, i + 1))) {
+    let nl = text.indexOf("\n", i);
+    if (nl === -1) return final ? { end: n, pause: "none" } : null;
+    const prev = text.slice(text.lastIndexOf("\n", lineStart - 2) + 1, Math.max(0, lineStart - 1));
+    if (!/^\s*(>\s*)?\|/.test(prev)) {
+      // Prva vrstica tabele (glava): počakamo še na ločilo pod njo.
+      const nl2 = text.indexOf("\n", nl + 1);
+      const next = text.slice(nl + 1, nl2 === -1 ? n : nl2);
+      if (nl2 === -1 && !final) return null;
+      if (/^\s*(>\s*)?\|?\s*:?-+/.test(next)) nl = nl2 === -1 ? n : nl2;
+    }
+    return { end: nl, pause: "sentence" };
+  }
+
   if (text[i] === "$") {
     const dbl = text[i + 1] === "$";
     const close = text.indexOf(dbl ? "$$" : "$", i + (dbl ? 2 : 1));

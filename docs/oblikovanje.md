@@ -12,7 +12,22 @@ Vse barve so spremenljivke v `public/style.css` (`:root`, temni način pod njim)
 | `--surface`, `--surface-2`, `--bg` | kartica; sivo-modra podlaga (tirnica, hover); ozadje strani |
 | `--text`, `--muted`, `--border` | besedilo; drugotno besedilo; robovi |
 | `--ok`, `--danger`, `--gold` | pravilno; napaka; XP in ponavljanje |
-| `--radius` (16px), `--radius-sm` (12px) | kartice in seznami; gumbi, polja, možnosti |
+| `--radius` (Čist 14px), `--radius-sm` (10px) | kartice in seznami; gumbi, polja, možnosti |
+| `--press` (Čist 0, Igriv 3px) | globina »pritisnjenih« gumbov (spodnja senca); senc ne piši na roke, uporabi `0 var(--press) 0 …` |
+| `--warm` | odštevanje do cilja, niz dni |
+| `--font` | pisava sloga (ne piši imena pisave neposredno) |
+
+## Slogi (Nastavitve → Videz → Slog)
+
+Trije slogi iz osnutka »STEMMind UI« (2026-10-29). `theme.js` nastavi `data-style` na `<html>` in osnovne barve sloga; lastne barve uporabnika veljajo nad njimi.
+
+| Slog | Pisava | Oblike | Barve |
+|---|---|---|---|
+| **Čist** (privzeti) | Instrument Sans | robovi 14/10 px, brez senc pod gumbi, ravne kartice | ozadje #F6F7F9, okna bela, poudarek #2353D1; temni način #0D1117 / #6E9BFF |
+| **Igriv** | Nunito | robovi 22/14 px, pritisnjeni gumbi (`--press: 3px`) | toplo ozadje #FFF6EA, vijolični poudarek #6A3BD6 |
+| **Temen** | IBM Plex Sans | robovi 10/7 px | vedno temen: #0D1117, metin poudarek #4CD3A4 (izbira Svetlo/Temno se skrije) |
+
+Pravila za Čist veljajo v `style.css` (`:root`), Igriv in Temen v `ui.css` (»Slogi«). Pisave so v `node_modules/@fontsource-variable/*` in se prenesejo le, ko jih slog uporablja; v lahkem načinu ostane sistemska pisava. Inštruktor slog spremeni z nastavitvijo naprave `style`.
 
 Temni način je razred `.dark` na `<html>`, ne `@media (prefers-color-scheme)`: pravila za temni način piši kot `.dark .moj-razred { … }`. Razred nastavi `public/theme.js` (Nastavitve → Videz: Svetlo / Temno / Samodejno).
 
@@ -22,7 +37,7 @@ Lastne barve: uporabnik v Nastavitve → Videz izbere poudarek in barve ozadja, 
 - belo besedilo samo na prelivu `--hero-a` → `--hero-b`, besedilo na `--accent` je `--accent-text`;
 - meniji (`.topbar`, `.modebar`, `.sidebar`, `.dd-list`) imajo lahko svojo barvo; znotraj njih `--surface`, `--text` … že pomenijo barve menija.
 
-Pisava je Nunito. Naslovi so debeli (800), gumbi 700–800.
+Pisava je spremenljivka `--font` (po slogu). Naslovi so debeli (700, v slogu Igriv 800), gumbi 700–800.
 
 ## Gradniki (`public/ui.css`)
 
@@ -33,11 +48,14 @@ Pisava je Nunito. Naslovi so debeli (800), gumbi 700–800.
 - **Izbrana možnost** (kartica ali kljukica): moder rob in `--accent-soft` ozadje (`.lp-opt.on`, `label.check`).
 - **Seznam povezav** (npr. stran Jaz): `<div class="card list-card"><button class="list-row"><span class="ic">ikona</span><span class="lr-text"><b>Naslov</b><small>opis</small></span>…</button></div>`.
 - **Izmerjene vrednosti v simulacijah**: `values([["čas t", "3,16 s"], …])` iz `public/sim/kit.js` (kartice, na telefonu dve v vrsti). Tabela `.demo-table` samo za prave tabele z več vrsticami.
-- **Tabela v besedilu** (Markdown iz inštruktorja, razlag, nalog in lekcij): sama dobi robove, sivo glavo in razmik; na ozkem zaslonu se pomika vstran (`ui.css`, »tabela v besedilu«). Ne dodajaj ji svojih slogov.
+- **Tabele** (vse v aplikaciji: klepet, razlage, naloge, lekcije, kartice, formule, orodja, Napredek, mnenja, strani za starše): en skupen videz v `style.css` (»tabele: en videz«): okvir z zaobljenimi robovi, siva poudarjena glava, črte med vrsticami in stolpci, rahle proge, števke enake širine; temni način prek barvnih spremenljivk. Markdown se izriše v `public/rich.js` (`renderRich`): tabela dobi `.md-table` v `.md-table-wrap` (na ozkem zaslonu se pomika vstran), stolpci s samimi števili ali formulami so na sredini, stolpci z daljšim besedilom se smejo prelomiti, formule nikoli. Med sprotnim izpisom odgovora se tabela pokaže po celih vrsticah (glava skupaj z ločilom), nikoli kot surove črte `|`. Novi tabeli v kodi daj razred `.table` ali `.demo-table` in ji ne dodajaj svojih robov ali barv.
 - **Kartica**: `.card`; poudarjena kartica z modrim prelivom: `.hero`.
 - **Vmesni koraki** (`.work`, `style.css`): zvezek pod besedilom naloge, s črtami in tipkovnico Σ; shrani se za vsako nalogo posebej in gre tutorju zraven. Na računalniku je odprt sam, na telefonu ob kliku.
 - **Formula** (`.formula-body`): razkrita formula je vedno v svojem okvirju z modrim robom levo, nikoli prosto v besedilu.
 - **Vrstica s tutorjem** (`.tutor-row`): »Razloži mi« in »Preglej s tutorjem« pod vsako rešitvijo (Vadnica, pregled tekmovanja). Na telefonu gumba čez celo širino.
+- **Klikljive formule** (`public/formula-data.js` + `formula-info.js`): `renderMath` v `app.js` pred izrisom ovije znane simbole in enote v `\htmlData{fx=…}`. Simbol je rahlo podčrtan; klik ali Enter odpre kartico (ime, izračun, enota in njena sestava, npr. M → molska masa, M = m/n, g/mol = g ÷ mol). Pomen je po predmetu teme ali lekcije (a: MAT koeficient, FIZ pospešek), dvoumne črke imajo pogoj `ctx` (formula mora ustrezati). Enota šele za številom (9,81 m/s²), zato kemijske formule (H₂O) niso enote. Ne v gumbih (možnosti odgovora) in ne v Preizkusu znanja / tekmovanju (`.no-fx`), ker bi zveza izdala rešitev. Nov simbol ali enota: vnos v `formula-data.js` (sl + en); test `test/goal-formula.test.js` preveri, da se vse izriše.
+- **Cilj** (`public/goal.js`, `goal-data.js`): cilj (sprotno, test, NPZ v OŠ, matura v SŠ, tekmovanje, izpit) in neobvezni datum se vprašata samo ob novem profilu; potem je le vrstica »Srednja šola 1. letnik · Matura · 1. 6. 2027 · še 215 dni · Spremeni« na Učni poti in v Napredku ter značka v zgornji vrstici (od 1440 px). Spremeni ali izbriši v Nastavitve → Cilj. Opomnik ob 12.00 (stikalo, privzeto vključeno, le z datumom): kartica na Učni poti po 12.00 do dneva cilja (»Kasneje« jo skrije do jutri) in z računi e-pošta staršu (`server/accounts/goal-reminder.js`, Resend).
+- **Stikalo**: `<button class="switch" role="switch" aria-checked="true|false">`.
 - **Animacije**: samo `transform` in `opacity`, kratke (do ~0,6 s), zamik po kartici z `--i`; ob »manj gibanja« jih ni (`style.css` jih izklopi globalno, `countUp` takoj pokaže število).
 
 Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `--accent-soft` ozadje).
@@ -48,6 +66,7 @@ Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `
 - Telefon (do 760 px) in tablica na dotik (do 1240 px): spodnja vrstica `#tabbar` s petimi zavihki z napisi (Učna pot, Učbenik, Inštruktor, Tekmovanja, Jaz). Napredek, Lige, Nastavitve in Račun so pod »Jaz« (`#view-me`), na vrhu imajo gumb »← Jaz« (`.me-back`). Nov glavni del aplikacije dodaj v zgornje zavihke in na stran Jaz, ne kot šesti zavihek spodaj.
 - Ime zgoraj desno (`#profile-btn`, `public/profile-menu.js`) odpre meni profila: kdo se uči (raven in predmet), zamenjava profila (če jih je več), Dodaj profil, Nastavitve, z računi še Račun in Odjava. Skriti `<select id="student-select">` še vedno hrani izbranega učenca. Na telefonu do 400 px je na gumbu samo začetnica.
 - Gumb nazaj je povsod enak: `button.ghost.back` z ikono `arrow-left` (»← Učna pot«, »← Učbenik«, »← Jaz«).
+- Urnik (`#view-schedule`, `public/schedule.js`, `docs/urnik.md`): zgornji zavihek »Urnik« in vrstica na strani Jaz. Na računalniku dnevi v stolpcih, na telefonu drug pod drugim z vrsticami ur (čas levo). Na Učni poti kartica `.sch-card` pod Današnjim treningom: opomnik pred testom (moder rob), ure danes/jutri kot žetoni (naslednja poudarjena), gumb »Ponovi pred uro«.
 - Povratne informacije (`#view-feedback`, `public/feedback.js`): na računalniku zavihek »Mnenje« (viden v testni različici), na telefonu vrstica na strani Jaz; na Učni poti kartica `.fb-card`, dokler tester ne pošlje mnenja ali je ne skrije.
 - Načini učenja (Nova snov, Ponavljanje, Priprava na test) so kartice `#modebar.modes` na Učni poti; Današnji trening je modra kartica nad njimi.
 
@@ -91,6 +110,7 @@ Koda je v `public/graph/` (`math.js` razčlenjevalnik, odvodi in integrali; `mod
 - **Postavitev**: na računalniku seznam izrazov levo (380 px), graf desno. Do 860 px je graf zgoraj, seznam pod njim, tipkovnica čisto spodaj. Gumbi za povečavo so na telefonu v vrsti.
 - **Tipkovnica**: na zaslonu na dotik polja ne odprejo sistemske tipkovnice (`inputmode="none"`), ampak lastno (123, f(x), Σ iz `public/symbols.js`, ABC). Ko je odprta, se skrijejo spodnja vrstica zavihkov, pas testnega načina in gumb nazaj (`body.gc-kp`).
 - **Barve krivulj** so podatkovne barve (`--g-red`, `--g-blue` … v `graph.css`), z različico za temni način. Niso barve gumbov in se ne mešajo z barvo poudarka iz Nastavitve → Videz.
+- **Drsniki**: vsak ima svoj ▶/⏸; premik z roko ustavi predvajanje. Ko sta vsaj dva drsnika, se v orodni vrstici pokaže »Predvajaj vse« / »Ustavi vse« (takrat je »Moji grafi« samo ikona). Med animacijo se vrstica drsnika posodablja na mestu, ne gradi znova, sicer gumbi ne dobijo klika.
 - **Shranjevanje**: zadnji graf se samodejno shrani v brskalnik za vsakega učenca; »Moji grafi« jih hrani na strežniku (z majhno sličico).
 
 ## Računska orodja (znanstveni kalkulator, orodja, PSE, formule)
@@ -118,11 +138,23 @@ Kako snov vgradimo v igro (učenje je igranje, ne kviz), animacije in kontrole: 
 
 Razdelek IGRE (`public/games/`, slog `public/games.css`, strežnik `server/games.js`): mreža pisanih kvadratnih ploščic kot na portalih z igrami. Na računalniku zgornji zavihek »Igre«, na telefonu vrstica na strani Jaz (med igro se spodnja vrstica skrije).
 
-- **Igra = vrsta igre × pojem.** Vrste so v `engines.js` (Meteorji, Baloni, Tekač, Sortirnica), pojmi z generatorji nalog v `topics.js` (120 pojmov v 13 področjih, od aritmetike do analize, vektorjev in kompleksnih števil). Nova vrsta igre = nov predmet v `ENGINES` + ključi `games.e.<id>` in `games.e.<id>.how` v vseh jezikih; nov pojem = `def(...)` v `topics.js` in znak v `GLYPH` (`index.js`).
+- **Igra = vrsta igre × pojem.** 19 vrst iger: `engines.js` (Meteorji, Baloni, Tekač, Sortirnica), `arcade.js` in `arcade2.js` (igre v slogu 80. in 90. let: labirint, grad, kača, žaba, krti, helikopter, opeke, vesoljci, pristajalnik, mehurčki), `build.js` (top, ki ruši stolpe, in žerjav, ki gradi stolp), `sensors.js` (kroglica, skakač, čarobna krogla z nagibom in tresenjem telefona). Matematični pojmi z generatorji so v `topics.js`, pojmi drugih predmetov (SPO in NIT za 1.–5. razred, NAR, FIZ, KEM, BIO, GEO, RAC, EKO) in dodatni matematični paketi (`mat15.js` za 1.–5. razred, `mat2.js` za teme učne poti brez igre) v `subjects/` (pravila v `subjects/README.md`). Nad področji je vrstica predmetov; iskanje išče po vseh. Nova vrsta igre = nov predmet v seznamu vrst + ključi `games.e.<id>` in `games.e.<id>.how` v vseh jezikih; nov pojem = `def(...)` v `topics.js` ali vnos v paketu predmeta in znak v `GLYPH` (`index.js`).
+- **Senzorji**: igra z `sensors: true` bere nagib (`G.tilt`, umerjen ob začetku in po premoru) in tresenje (`shake()`); dovoljenje na iPhonu se zahteva ob kliku »Igraj«. Brez senzorjev (računalnik, zavrnjeno dovoljenje) se igra z dotikom, miško ali tipkami.
 - **Naloge** so kratke in v simbolih (`−`, `²`, `√`, `∫`, `{…}` za množico rešitev), ker se izrišejo na predmetu v igri. Napačni odgovori so tipične napake, nikoli enaki pravilnemu. `test/games.test.js` preveri vse pojme na vseh treh stopnjah.
+- **Odklepanje** (`unlock.js`, pravila v `docs/igre-smernice.md` §11): igra je zaklenjena, dokler učenec snovi ne zna (obvladana tema učne poti, snov iz nižjega razreda ali preizkus 4 od 5 brez časa); hitrejše igre se odklenejo po opravljeni mirnejši igri iste snovi (8 pravilnih, 80 %). Zaklenjena ploščica je siva s ključavnico, klik pokaže, kaj manjka, in ponudi snov, preizkus ali mirnejšo igro.
 - **Težavnost**: vsaka igra se začne na stopnji 1 (ali na zadnji doseženi pri pojmu); 5 pravilnih zapored → težje, 2 napačna → lažje. Hitrost izbere učenec (Počasi/Srednje/Hitro, privzeto Počasi, `stemmind.gamePace`) in z odgovori naraste največ za polovico; prvo vprašanje pride po kratkem premoru.
 - **Zgodbe**: vsaka vrsta igre ima junaka in 4 poglavja (`story: { sl, en }` v `engines.js`); novo poglavje se odklene vsakih 8 pravilnih: igra se ne ustavi, pokaže se le kratek napis in nove barve prizora. Zgodba je ena kratka vrstica na začetni kartici (j: »naj bodo igre preproste«). Nova vrsta igre potrebuje zgodbo (test to preveri).
 - **Videz stare flash igre**: debele temne obrobe (`--gm-ink`), risankasti prelivi, sončni žarki na naslovni kartici, izbočeni gumbi, obrobljen tekst in 8-bitni zvoki.
-- **Učenje**: ob napaki se v glavi pokaže pravilni odgovor, na koncu seznam »Ponovi« (naloga → pravilni odgovor).
+- **Učenje**: ob napaki se v glavi pokaže pravilni odgovor (pri igrah, kjer lahko poskusiš znova, le »Poskusi znova«), naslednje vprašanje pride šele čez ~2 s, na koncu seznam »Ponovi« (naloga → pravilni odgovor).
 - **XP**: 1 XP za 2 pravilna odgovora, največ 20 na igro in 60 na dan iz iger.
+- **Kovanci in avatar** (`public/avatar.js`, `server/avatar.js`): 1 kovanec za vsak pravilen odgovor v igrah, največ 150 na dan; z njimi učenec v trgovini (gumb »Moj avatar« na vrhu iger) kupuje dele avatarja (7 predalov, 56 izvirnih SVG delov, redkost po ceni: navaden, redek, epski, legendaren). Brez pravega denarja. Avatar je edino, kar učenec izbere in vidijo drugi (lige, razred); vzdevki ostanejo samodejni. Inštruktor sme avatar obleči v brezplačne ali kupljene dele (`avatar` v `settings-registry.js`), kupuje se samo v trgovini. Nov del = vnos v `ITEMS` in risba v istem predalu.
 - Prizori iger in ploščice imajo svoje barve (kot simulacije); okvir, kartice in gumbi uporabljajo spremenljivke. Vse igre delujejo z dotikom, miško in tipkami (1–4, ← →, preslednica, P ali Esc za premor).
+
+## Kotiček zanimanj
+
+Kotiček (`public/corner.js`, slog `public/corner.css`, strežnik `server/corner.js`, področja in viri `public/interests.js`): novice iz znanosti o temah, ki jih učenec izbere. Na računalniku zgornji zavihek »Kotiček«, na telefonu vrstica »Moj kotiček« na strani Jaz.
+
+- **Vprašalnik** (`.iq`): ob zagonu ga enkrat dobi vsak profil, ki ga še ni izpolnil (`settings.interests === null`); uvodni ogled počaka nanj. Trije koraki: teme (do 8, ploščice `.iq-opt` z emojijem), kako podrobne novice (`.iq-level`), lastna tema in »tudi v angleščini«. »Pozneje« shrani prazen seznam, da se ne ponavlja. Znova ga odpre »Uredi zanimanja« v kotičku in v Nastavitvah (kartica Kotiček zanimanj); inštruktor zanimanja spremeni iz klepeta (`interests`, `interest_custom`, `news_level`, `news_lang` v registru).
+- **Novice**: kartice `.news-card` (tema, vir, datum, oznaka jezika, naslov, povzetek, Pripni, Razloži mi, Preberi ↗). »Razloži mi« vpiše prošnjo v Inštruktorja. Žetoni zgoraj: Vse, Pripeto, vsaka tema.
+- **Čez cel zaslon** (`.corner-board`): gumb »Oglasna deska« odpre pogled čez cel zaslon (tudi celozaslonski način brskalnika) z dvema načinoma: Časopis (serifni naslovi, stolpci s črtami, prva novica čez vse stolpce) in Oglasna deska (pluta, listki z bucikami; pripete novice na vrhu, rdeča bucika). Stolpcev je 1–4 po širini. Esc, Zapri ali tipka Nazaj ga zapre. Barvi plute sta podatkovni barvi z različico za temni način.
+- **Viri in varnost**: Science News Explores (za mlade), ScienceDaily, NASA, ESA, MMC RTV SLO, Kvarkadabra. OŠ dobi samo poljudne vire (`news_level` auto), SŠ in fakulteta tudi znanstvene. Za OŠ in SŠ strežnik izloči novice o nasilju, drogah, spolnosti in samomoru. Novice se preberejo na strežniku vsaki 2 uri in hranijo v `news_cache` (delujejo tudi brez povezave); model jih ne piše.

@@ -12,7 +12,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="STEMMind">
   <script src="theme.js"></script>
+  <link rel="stylesheet" href="vendor/instrument-sans/index.css">
   <link rel="stylesheet" href="vendor/nunito/index.css">
+  <link rel="stylesheet" href="vendor/ibm-plex-sans/index.css">
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="ui.css">
@@ -23,6 +25,8 @@
   <link rel="stylesheet" href="feedback.css">
   <link rel="stylesheet" href="graph.css">
   <link rel="stylesheet" href="games.css">
+  <link rel="stylesheet" href="schedule.css">
+  <link rel="stylesheet" href="corner.css">
   <link rel="stylesheet" href="touch.css">
 </head>
 <body>
@@ -38,6 +42,8 @@
       <button class="tab" data-view="graph"><i data-icon="calculator"></i><span data-i18n="nav.graph">Kalkulator</span></button>
       <button class="tab" data-view="competition" id="competition-tab"><i data-icon="medal"></i><span data-i18n="nav.competition">Tekmovanja</span></button>
       <button class="tab" data-view="games"><i data-icon="gamepad-2"></i><span data-i18n="nav.games">Igre</span></button>
+      <button class="tab" data-view="schedule"><i data-icon="calendar-days"></i><span data-i18n="sch.title">Urnik</span></button>
+      <button class="tab" data-view="corner"><i data-icon="newspaper"></i><span data-i18n="nav.corner">Kotiček</span></button>
       <button class="tab" data-view="progress"><i data-icon="chart-column"></i><span data-i18n="nav.progress">Napredek</span></button>
       <button class="tab" data-view="settings"><i data-icon="settings"></i><span data-i18n="nav.settings">Nastavitve</span></button>
       <button class="tab" data-view="account" id="account-tab" hidden><i data-icon="user"></i><span data-i18n="nav.account">Račun</span></button>
@@ -45,6 +51,7 @@
       <button class="tab" data-view="feedback" id="feedback-tab" hidden><i data-icon="message-square-heart"></i><span data-i18n="nav.feedbackShort">Mnenje</span></button>
     </nav>
     <div id="xp-badge" class="xp-badge">
+      <button type="button" id="goal-chip" class="stat goal-chip" hidden><i data-icon="target"></i><b></b></button>
       <button type="button" id="usage-meter" class="stat usage-meter" hidden aria-haspopup="dialog" aria-controls="usage-pop"><i data-icon="wallet"></i><b>0 €</b></button>
       <span class="stat xp" title="Točke izkušenj (XP)" data-i18n-title="xp.title"><i data-icon="star"></i><b id="xp-total">0</b><span class="xp-unit">XP</span></span>
       <span class="stat streak" title="Dnevi zapored" data-i18n-title="xp.streakTitle"><i data-icon="flame"></i><b id="xp-streak">0</b></span>
@@ -80,10 +87,13 @@
     <p id="path-note" class="muted path-note" hidden></p>
     <p id="offline-banner" class="banner offline-banner" hidden role="status"></p>
     <p id="lang-note" class="muted path-note" hidden data-i18n="path.curriculumNote"></p>
+    <div id="goal-line" class="goal-line" hidden></div>
+    <div id="goal-reminder" class="card goal-reminder" role="status" hidden></div>
     <div id="level-card" class="level-slot" hidden></div>
     <div id="feedback-card" hidden></div>
     <div id="install-card" hidden></div>
     <div id="xp-card" class="card xp-card"></div>
+    <div id="schedule-card" class="sch-slot" hidden></div>
     <nav id="modebar" class="modes" aria-label="Način učenja" data-i18n-aria="path.modes">
       <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span class="m-name" data-i18n="mode.new">Nova snov</span><span class="m-sub" data-i18n="mode.newSub">Nadaljuj, kjer si ostal</span></button>
       <button type="button" data-mode="review"><span class="ic"><i data-icon="repeat"></i><b class="badge" hidden></b></span><span class="m-name" data-i18n="mode.review">Ponavljanje</span><span class="m-sub" data-i18n="mode.reviewSub">Da znanje ne zbledi</span></button>
@@ -112,6 +122,12 @@
   <main id="view-games" class="view games-view" hidden>
     <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
     <div id="games-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
+  </main>
+
+  <!-- KOTIČEK ZANIMANJ (corner.js): novice o izbranih temah, pripete novice, oglasna deska -->
+  <main id="view-corner" class="view narrow corner-view" hidden>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <div id="corner-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
   </main>
 
   <!-- UČBENIK (textbook.js) -->
@@ -177,6 +193,11 @@
         <input type="hidden" name="study_program">
         <input type="hidden" name="curriculum_level">
       </fieldset>
+      <fieldset class="goal-field">
+        <legend data-i18n="goal.title">Cilj</legend>
+        <small class="muted" data-i18n="goal.setNote">Inštruktor prilagodi priporočila in tempo ponavljanja do datuma.</small>
+        <div id="settings-goal"></div>
+      </fieldset>
       <!-- Fakulteta: predmeti iz predmetnika izbrane smeri namesto MAT/FIZ/KEM -->
       <label id="course-row" hidden><span data-i18n="set.subject">Predmet</span>
         <select name="study_course"></select>
@@ -203,6 +224,10 @@
       </fieldset>
       <label><span data-i18n="set.personality">Osebnost / tema razlage</span>
         <input name="personality_setting" maxlength="200" placeholder="npr. strog, šaljiv, primeri iz nogometa" data-i18n-ph="set.personalityPh">
+      </label>
+      <label id="dialect-row" hidden><span data-i18n="set.dialect">Narečje inštruktorja</span>
+        <select name="dialect"></select>
+        <small class="muted" data-i18n="set.dialectNote">Spremeni se le ton pogovora. Strokovni izrazi, formule, povzetki in naloge ostanejo v knjižnem jeziku.</small>
       </label>
       <label><span data-i18n="set.pace">Hitrost izpisa odgovorov</span>
         <select id="pace-select" name="pace"></select>
@@ -233,6 +258,12 @@
 
     <div id="fullscreen-card" class="card" hidden></div>
 
+    <div class="card" id="corner-settings">
+      <h2 data-i18n="set.corner">Kotiček zanimanj</h2>
+      <p class="muted" id="corner-summary" data-i18n="set.cornerNone">Zanimanja še niso izbrana.</p>
+      <button type="button" class="secondary" id="corner-edit"><i data-icon="pencil"></i><span data-i18n="corner.edit">Uredi zanimanja</span></button>
+    </div>
+
     <div id="install-settings" hidden></div>
 
     <div class="card" hidden>
@@ -260,6 +291,7 @@
   <main id="view-progress" class="view narrow" hidden>
     <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
     <h1 data-i18n="prog.title">Napredek</h1>
+    <div id="prog-goal" class="card goal-card" hidden></div>
     <div class="card">
       <h2 data-i18n="prog.weak">Šibke točke</h2>
       <p class="muted" data-i18n="prog.weakNote">Samodejno zaznane iz pogovorov (vsaj 3 poteze, vsaj 40 % napak v zadnjih 60 dneh) in ročno vnesene. STEMMind jih upošteva pri razlagi.</p>
@@ -295,7 +327,9 @@
       <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span data-i18n="me.streak">dni zapored</span></div>
     </div>
     <div class="card list-card">
+      <button type="button" class="list-row" data-go="schedule"><span class="ic"><i data-icon="calendar-days"></i></span><span class="lr-text"><b data-i18n="sch.title">Urnik</b><small data-i18n="sch.meSub">Ure v tednu in datumi testov</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="games"><span class="ic"><i data-icon="gamepad-2"></i></span><span class="lr-text"><b data-i18n="nav.games">Igre</b><small data-i18n="games.meSub">Matematika skozi igro</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="corner"><span class="ic"><i data-icon="newspaper"></i></span><span class="lr-text"><b data-i18n="corner.title">Moj kotiček</b><small data-i18n="corner.meSub">Novice o tem, kar te zanima</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="graph"><span class="ic"><i data-icon="calculator"></i></span><span class="lr-text"><b data-i18n="nav.graph">Kalkulator</b><small data-i18n="sc.meSub">Znanstveni, grafični in pretvornik enot</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="progress"><span class="ic"><i data-icon="chart-column"></i></span><span class="lr-text"><b data-i18n="nav.progress">Napredek</b><small data-i18n="me.progressSub">Šibke točke, aktivnost in teme</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="league"><span class="ic"><i data-icon="trophy"></i></span><span class="lr-text"><b data-i18n="nav.league">Lige</b><small data-i18n="me.leagueSub">Tedenska lestvica, razred in prijatelji</small></span><i data-icon="chevron-right"></i></button>
@@ -304,6 +338,13 @@
       <button type="button" class="list-row" id="me-install" hidden><span class="ic"><i data-icon="smartphone"></i></span><span class="lr-text"><b data-i18n="inst.btn">Namesti aplikacijo</b><small data-i18n="inst.meSub">Na začetni zaslon telefona</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="account" id="me-account" hidden><span class="ic"><i data-icon="user"></i></span><span class="lr-text"><b data-i18n="nav.account">Račun</b><small data-i18n="me.accountSub">Naročnina in otroci</small></span><i data-icon="chevron-right"></i></button>
     </div>
+  </main>
+
+  <!-- URNIK (public/schedule.js) -->
+  <main id="view-schedule" class="view narrow" hidden>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <h1 class="with-icon"><i data-icon="calendar-days"></i> <span data-i18n="sch.title">Urnik</span></h1>
+    <div class="sch-body"></div>
   </main>
 
   <!-- LIGE -->

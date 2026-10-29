@@ -1,10 +1,13 @@
 // Sestavi sistemski prompt iz predloge in aktivnih nastavitev.
 import fs from "node:fs";
+import { goalPrompt } from "../public/goal-data.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { cleanText } from "./settings.js";
+import { interestById } from "../public/interests.js";
 import { studyProgramPrompt } from "./curriculum.js";
 import { langInfo } from "../public/i18n/languages.js";
+import { dialectInfo } from "../public/dialects.js";
 import { SCHOOL_SYSTEMS, isRegional, gradeInfo } from "../public/regions.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -33,14 +36,17 @@ const PLACEHOLDERS = [
   "student_results",
   "learning_path",
   "language",
+  "dialect",
   "school_system",
   "reply_length",
+  "student_schedule",
+  "interests",
 ];
 
 // settings: normalizirane nastavitve; weaknesses: seznam nizov.
 // lite: lahki način (kratki odgovori za drag ali počasen prenos podatkov).
 // results: besedilo iz studentResults() (server/results.js) za zahtevnost primerov in nalog.
-export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "", lite = false, results = "" }, template = loadTemplate()) {
+export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "", lite = false, results = "", schedule = "" }, template = loadTemplate()) {
   const values = {
     learning_path: learningPath || "(Prost pogovor: ni izbrane teme učne poti.)",
     ...settings,
@@ -50,13 +56,24 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     weaknesses: weaknesses.length ? weaknesses.join(", ") : "(še ni podatkov)",
     student_results: results || "še ni podatkov. Predlagana začetna zahtevnost: osnovna.",
     language: languagePrompt(settings.language, settings.region),
-    school_system: schoolSystemPrompt(settings),
+    dialect: dialectPrompt(settings),
+    school_system: schoolSystemPrompt(settings) + goalPrompt(settings),
     reply_length: lite ? "kratka (lahki način)" : "običajna",
+    student_schedule: schedule || "(ni podatkov)",
+    interests: interestsPrompt(settings),
   };
   // Zamenjamo samo znana imena, da LaTeX zapisi kot {,} ostanejo nedotaknjeni.
   return template.replace(/\{(\w+)\}/g, (match, key) =>
     PLACEHOLDERS.includes(key) ? String(values[key] ?? "") : match,
   );
+}
+
+// Zanimanja iz kotička: inštruktor lahko primere vzame iz njih, kadar se prilegajo snovi.
+function interestsPrompt(settings) {
+  const names = (settings.interests || []).map((id) => interestById(id)?.name).filter(Boolean);
+  const own = cleanText(settings.interest_custom, 40);
+  if (own) names.push(own);
+  return names.length ? names.join(", ") : "(ni izbranih)";
 }
 
 // Razdeli sestavljeni prompt na stalni del (predpomnjen) in del z nastavitvami.
@@ -71,6 +88,12 @@ export function systemBlocks(prompt, { cacheStatic = true, ttl = null } = {}) {
   if (cacheStatic) blocks[0].cache_control = ttl ? { type: "ephemeral", ttl } : { type: "ephemeral" };
   if (dynamicPart) blocks.push({ type: "text", text: dynamicPart });
   return blocks;
+}
+
+// Narečje za prompt: »knjižni jezik« ali »Štajersko – štajersko narečje (…)«.
+export function dialectPrompt(settings) {
+  const d = dialectInfo(settings.dialect, settings.language);
+  return d ? `${d.name} – ${d.hint}` : "knjižni jezik";
 }
 
 // Jezik pogovora za prompt, npr. »slovenščina (sl)« ali »German – Deutsch (de)«.

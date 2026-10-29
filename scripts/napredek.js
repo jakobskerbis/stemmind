@@ -2,7 +2,8 @@
 // Kratko poročilo o napredku lekcij in vaj (nalog) za j – samo štetje v repozitoriju, brez agentov.
 //   node scripts/napredek.js              # slovensko poročilo (vrstice, ≤ 60 besed)
 //   node scripts/napredek.js --json       # številke za primerjavo med poročili
-//   node scripts/napredek.js --tempo-sola 80 --tempo-faks 144   # predvideni tempo (novih lekcij/dan) po nitih
+//   node scripts/napredek.js --straza     # lahek nadzor (vsakih 30 min): izpiše OK ali vrstice POZOR: …
+//   node scripts/napredek.js --tempo-sola 128 --tempo-faks 192   # predvideni tempo (novih lekcij/dan) po nitih
 // Lekcije šteje po učnih poteh (OŠ+SŠ, tekmovanja, faks – vsaka fakultetna tema enkrat, glej sameTopics),
 // vaje po generatorjih nalog (server/practice). Tempo bere iz git zgodovine trenutne veje.
 import fs from "node:fs";
@@ -15,6 +16,7 @@ import { isCompetitionPath } from "../server/competition.js";
 
 const args = process.argv.slice(2);
 const json = args.includes("--json");
+const straza = args.includes("--straza");
 const UPOCASNITEV_DO = Date.parse("2026-10-29T13:00:00Z"); // upočasnitev se je končala z nakupom paketa Max 20x (j, 29. 10.)
 
 const lessonFile = (id) => path.join(LESSONS_DIR, `${id}.md`);
@@ -27,7 +29,7 @@ const newBar = (ids) => {
 // Skupine tem: vsaka tema kot seznam enakovrednih id-jev (faks: iste teme več programov).
 const groups = { sola: [], tek: [], faks: [], faks1: [] }; // faks1 = teme 1. letnika (podmnožica faks)
 for (const p of listPaths(undefined, "SI")) {
-  if (!/^(MAT|FIZ|KEM)-(OS|SS|TEK)-/.test(p.key)) continue;
+  if (!/^[A-Z]+-(OS|SS|TEK)-/.test(p.key)) continue; // vsi predmeti (MAT, FIZ, KEM, NAR, BIO …), brez UNI
   const g = isCompetitionPath(p.key) ? groups.tek : groups.sola;
   for (const t of topicOrder(p.key)) g.push([t.id]);
 }
@@ -60,7 +62,39 @@ const count = (list) => {
   return r;
 };
 const stats = { sola: count(groups.sola), tek: count(groups.tek), faks: count(groups.faks), faks1: count(groups.faks1) };
+const brezVaj = {}; // predmet -> število OŠ+SŠ tem brez generatorja nalog
+for (const [id] of groups.sola) if (!hasGenerator(id)) brezVaj[id.split("-")[0]] = (brezVaj[id.split("-")[0]] || 0) + 1;
+const brezVajText = Object.entries(brezVaj).map(([k, v]) => `${k} ${v}`).join(", ");
 const total = (k) => stats.sola[k] + stats.tek[k] + stats.faks[k];
+
+// Lahek nadzor (j 2026-10-29 15:49: »optimizator naj optimizira vse niti vsakih 5 min«): namesto dragega polnega
+// kroga vsakih 5 min teče ta skripta vsakih 30 min in opozori le, ko kaj ni v redu: nit za lekcije je izpustila
+// termin (brez nove lekcije v main dlje kot 4,5 h; termini so vsake 3 h, serija traja do 80 min), testi na main padejo.
+if (straza) {
+  const git = (...a) => execFileSync("git", a, { encoding: "utf8" }).trim();
+  const lastCommit = (...pathspec) => Number(git("log", "-1", "--format=%ct", "--", ...pathspec) || 0) * 1000;
+  const h = (ms) => (ms / 3600000).toFixed(1);
+  const now = Date.now();
+  const warnings = [];
+  const groups = [
+    ["učbenik (OŠ+SŠ+tekmovanja)", ["content/lessons", ":(exclude)content/lessons/UNI-*"]],
+    ["faks", ["content/lessons/UNI-*"]],
+  ];
+  for (const [name, spec] of groups) {
+    const age = now - lastCommit(...spec);
+    if (age > 4.5 * 3600000) warnings.push(`POZOR: ${name}: zadnja lekcija v main pred ${h(age)} h (termin verjetno izpuščen).`);
+  }
+  try {
+    const out = execFileSync("npm", ["test"], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    const fail = /^# fail (\d+)/m.exec(out);
+    if (fail && Number(fail[1]) > 0) warnings.push(`POZOR: npm test na main: ${fail[1]} testov pade.`);
+  } catch (e) {
+    const fail = /^# fail (\d+)/m.exec(String(e.stdout || ""));
+    warnings.push(`POZOR: npm test na main pade${fail ? ` (${fail[1]} testov)` : ""}.`);
+  }
+  console.log(warnings.length ? warnings.join("\n") : "OK");
+  process.exit(0);
+}
 
 // Tempo iz gita: dodane datoteke lekcij (merge-i ne štejejo dvakrat, ker git log brez -m ne izpiše diff-a merge-a).
 const added = (since) => {
@@ -79,11 +113,12 @@ const zadnjih24h = added("24 hours ago");
 const ostaneLekcij = total("teme") - total("lekcije");
 const dvigi = total("lekcije") - total("novaRaven"); // stare lekcije, ki jih je treba dvigniti na novo raven
 // Ocena konca po nitih (docs/token-rules.md §4): učbenik (OŠ+SŠ+tekmovanja) in faks. Dvig štejemo kot pol lekcije.
-// Polni tempo od 29. 10. 13:00 UTC: učbenik 5 terminov × 16 novih lekcij, faks 6 × 24 na dan (med upočasnitvijo 6 oz. 4).
+// Polni tempo od 29. 10. 14:40 UTC: učbenik 8 terminov × 16 novih lekcij, faks 8 × 24 na dan (med upočasnitvijo 6 oz. 4).
+// Ko učbeniška nit konča OŠ+SŠ+tekmovanja, piše faks teme (--deli 2 --del 1), kar oceno za faks skrajša (ni modelirano).
 const num = (flag, dflt) => (args.includes(flag) && Number(args[args.indexOf(flag) + 1]) > 0 ? Number(args[args.indexOf(flag) + 1]) : dflt);
 const TEMPO = {
-  sola: { pocasi: num("--pocasi-sola", 6), polni: num("--tempo-sola", 80) },
-  faks: { pocasi: num("--pocasi-faks", 4), polni: num("--tempo-faks", 144) },
+  sola: { pocasi: num("--pocasi-sola", 6), polni: num("--tempo-sola", 128) },
+  faks: { pocasi: num("--pocasi-faks", 4), polni: num("--tempo-faks", 192) },
 };
 const now = Date.now();
 const DAY = 86400000;
@@ -105,7 +140,7 @@ const result = {
   lekcije: { skupaj: total("lekcije"), teme: total("teme"), sola: stats.sola, tek: stats.tek, faks: stats.faks, faks1: stats.faks1 },
   novaRaven: total("novaRaven"),
   dvigi,
-  vaje: { teme: total("vaje"), generatorji: GENERATORS.length },
+  vaje: { teme: total("vaje"), generatorji: GENERATORS.length, solaBrezVaj: brezVaj },
   zadnje3h,
   zadnjih24h,
   ostaneLekcij,
@@ -124,7 +159,7 @@ if (json) {
   );
   console.log(`Na novi ravni kakovosti: ${total("novaRaven")}; starih lekcij za dvig: ${dvigi} (OŠ+SŠ ${stats.sola.lekcije - stats.sola.novaRaven}, faks ${stats.faks.lekcije - stats.faks.novaRaven}).`);
   console.log(
-    `Vaje (generatorji nalog): OŠ+SŠ ${stats.sola.vaje}/${stats.sola.teme} tem, tekmovanja ${stats.tek.vaje}/${stats.tek.teme}, faks ${stats.faks.vaje}/${stats.faks.teme}; skupaj ${GENERATORS.length} generatorjev.`
+    `Vaje (generatorji nalog): OŠ+SŠ ${stats.sola.vaje}/${stats.sola.teme} tem${brezVajText ? ` (brez: ${brezVajText})` : ""}, tekmovanja ${stats.tek.vaje}/${stats.tek.teme}, faks ${stats.faks.vaje}/${stats.faks.teme}; skupaj ${GENERATORS.length} generatorjev.`
   );
   console.log(
     `Še do konca: OŠ+SŠ ${ostane(stats.sola)} in tekmovanja ${ostane(stats.tek)} novih lekcij → ocena ${datum(konecSola)}; faks ${ostane(stats.faks)} novih → ocena ${datum(konecFaks)}`

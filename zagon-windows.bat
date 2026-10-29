@@ -21,7 +21,18 @@ if errorlevel 1 (
 
 rem Najprej najnovejsa razlicica z GitHuba; nato to datoteko preberemo znova od zacetka.
 if not "%~1"=="--posodobljeno" (
-  node scripts\posodobitev.js
+  if exist scripts\posodobitev.js (
+    node scripts\posodobitev.js
+  ) else (
+    rem Starejsa mapa brez programa za posodobitev: prenesi celotno razlicico enkrat po starem.
+    echo Prenasam najnovejso razlicico ...
+    if exist "%TEMP%\stemmind-posodobitev" rmdir /s /q "%TEMP%\stemmind-posodobitev"
+    mkdir "%TEMP%\stemmind-posodobitev"
+    curl -L -s -o "%TEMP%\stemmind-posodobitev\main.zip" https://github.com/jakobskerbis/stemmind/archive/refs/heads/main.zip
+    tar -xf "%TEMP%\stemmind-posodobitev\main.zip" -C "%TEMP%\stemmind-posodobitev" >nul 2>nul
+    if exist "%TEMP%\stemmind-posodobitev\stemmind-main\package.json" robocopy "%TEMP%\stemmind-posodobitev\stemmind-main" "%~dp0." /E /NFL /NDL /NJH /NJS /XF .env /XD data node_modules .git >nul
+    rmdir /s /q "%TEMP%\stemmind-posodobitev" >nul 2>nul
+  )
   call "%~f0" --posodobljeno
   exit /b
 )
@@ -45,5 +56,5 @@ if "!NEED_INSTALL!"=="1" (
 
 echo.
 echo STEMMind se zaganja. Brskalnik se bo odprl sam.
-echo Za ustavitev zapri to okno. Nove razlicice se namestijo same vsaki 2 uri.
+echo Za ustavitev zapri to okno. Nove razlicice se namestijo same (preverjanje vsakih 15 minut).
 node scripts\zaganjalnik.js zagon --odpri & pause & exit /b

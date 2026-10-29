@@ -1,6 +1,7 @@
 // Klic Claude API (pretakanje), izbira modela, strošek, preizkusni način.
 import Anthropic from "@anthropic-ai/sdk";
 import { systemBlocks } from "./prompt.js";
+import { mockToolCall, mockToolText } from "./chat-settings.js";
 
 const env = (k, d) => (process.env[k] === undefined || process.env[k] === "" ? d : process.env[k]);
 
@@ -84,9 +85,9 @@ const supportsFallback = (model) => !/haiku/.test(model);
  * Pretoči odgovor modela.
  * @returns {Promise<{content, text, stopReason, usage, model}>}
  */
-export async function streamReply({ system, messages, deep = false, mode = deep ? "deep" : "chat", onText, signal }) {
+export async function streamReply({ system, messages, deep = false, mode = deep ? "deep" : "chat", onText, signal, tools = null, onToolUse = null }) {
   const { model, effort, max_tokens } = modeParams(mode);
-  if (isMockMode()) return mockReply({ messages, onText, signal, model });
+  if (isMockMode()) return mockReply({ messages, onText, signal, model, onToolUse: tools?.length ? onToolUse : null });
 
   const params = {
     model,
@@ -101,21 +102,62 @@ export async function streamReply({ system, messages, deep = false, mode = deep 
     // sporočilu se prebere iz predpomnilnika za ~10 % cene.
     cache_control: { type: "ephemeral" },
   };
+  // Orodja (npr. nastavitve iz klepeta) so pred sistemskim promptom in enaka za vse učence,
+  // zato ostanejo v istem predpomnjenem začetku.
+  if (tools?.length) params.tools = tools;
   if (supportsFallback(model)) {
     params.betas = ["server-side-fallback-2026-07-01"];
     params.fallbacks = "default";
   }
 
-  const stream = getClient().beta.messages.stream(params, { signal });
-  for await (const event of stream) {
-    if (event.type === "content_block_delta" && event.delta.type === "text_delta") onText(event.delta.text);
+  // Zanka orodij: model pokliče orodje → rezultat → model nadaljuje (največ MAX_TOOL_ROUNDS krogov).
+  const content = [];
+  let text = "";
+  let usage = null;
+  let stopReason = null;
+  let finalModel = model;
+  let toolCalls = 0;
+  let msgs = messages;
+  for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
+    const p = { ...params, messages: msgs };
+    if (tools?.length && round === MAX_TOOL_ROUNDS) p.tool_choice = { type: "none" };
+    let gap = text && !text.endsWith("\n") ? "\n\n" : "";
+    const stream = getClient().beta.messages.stream(p, { signal });
+    for await (const event of stream) {
+      if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+        const chunk = gap + event.delta.text;
+        gap = "";
+        text += chunk;
+        onText(chunk);
+      }
+    }
+    const final = await stream.finalMessage();
+    usage = addUsage(usage, final.usage);
+    stopReason = final.stop_reason;
+    finalModel = final.model || model;
+    content.push(...final.content);
+    const calls = final.content.filter((b) => b.type === "tool_use");
+    if (stopReason !== "tool_use" || !calls.length || !onToolUse) break;
+    const results = [];
+    for (const c of calls) {
+      toolCalls++;
+      const r = await onToolUse(c.name, c.input || {});
+      results.push({ type: "tool_result", tool_use_id: c.id, content: String(r?.content ?? ""), ...(r?.isError ? { is_error: true } : {}) });
+    }
+    msgs = [...msgs, { role: "assistant", content: final.content }, { role: "user", content: results }];
   }
-  const final = await stream.finalMessage();
-  const text = final.content
-    .filter((b) => b.type === "text")
-    .map((b) => b.text)
-    .join("");
-  return { content: final.content, text, stopReason: final.stop_reason, usage: final.usage, model: final.model || model };
+  return { content, text, stopReason, usage, model: finalModel, toolCalls };
+}
+
+const MAX_TOOL_ROUNDS = 3;
+
+// Seštevek porabe žetonov več klicev (krogi orodij).
+export function addUsage(a, b) {
+  if (!b) return a;
+  if (!a) return { ...b };
+  const out = { ...a };
+  for (const k of ["input_tokens", "output_tokens", "cache_read_input_tokens", "cache_creation_input_tokens"]) out[k] = (a[k] || 0) + (b[k] || 0);
+  return out;
 }
 
 // ---------------------------------------------------------------------------
@@ -163,15 +205,24 @@ function mockAnswer(userText) {
   );
 }
 
-async function mockReply({ messages, onText, signal, model }) {
-  const text = mockAnswer(lastUserText(messages));
+async function mockReply({ messages, onText, signal, model, onToolUse = null }) {
+  let text = null;
+  let toolCalls = 0;
+  // Nastavitve iz klepeta tudi brez ključa (najpogostejše prošnje, glej server/chat-settings.js).
+  const call = onToolUse ? mockToolCall(lastUserText(messages), !!onToolUse.hasPending?.()) : null;
+  if (call) {
+    const r = await onToolUse(call.name, call.input);
+    toolCalls = 1;
+    text = "*(Preizkusni način.)* " + mockToolText(r?.content) + '\n<<META subject=MAT topic="-" error=0 mode=A flag=none done=0>>';
+  }
+  if (text === null) text = mockAnswer(lastUserText(messages));
   const delay = Number(process.env.STEMMIND_MOCK_DELAY_MS ?? 15);
   for (let i = 0; i < text.length; i += 6) {
     if (signal?.aborted) break;
     onText(text.slice(i, i + 6));
     if (delay) await new Promise((r) => setTimeout(r, delay));
   }
-  return { content: [{ type: "text", text }], text, stopReason: "end_turn", usage: { input_tokens: 0, output_tokens: 0 }, model };
+  return { content: [{ type: "text", text }], text, stopReason: "end_turn", usage: { input_tokens: 0, output_tokens: 0 }, model, toolCalls };
 }
 
 // ---------------------------------------------------------------------------

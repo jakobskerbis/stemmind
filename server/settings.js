@@ -2,7 +2,10 @@
 import { PROGRAMS, UNI_PATHS } from "./university-data.js";
 import { ALL_SUBJECTS, SCHOOL_SUBJECTS, REGIONAL_SUBJECTS, subjectForLevel } from "./subjects.js";
 import { LANGUAGE_CODES, DEFAULT_LANGUAGE } from "../public/i18n/languages.js";
+import { cleanInterests, NEWS_LEVELS, NEWS_LANGS } from "../public/interests.js";
+import { cleanDialect } from "../public/dialects.js";
 import { SYSTEM_IDS, DEFAULT_SYSTEM, isRegional, gradeInfo, defaultGrade, trackForLevel } from "../public/regions.js";
+import { GOALS, DEFAULT_GOAL, goalsFor, validDate } from "../public/goal-data.js";
 
 export const ENUMS = {
   subject: ALL_SUBJECTS,
@@ -15,6 +18,11 @@ export const ENUMS = {
   school_system: SYSTEM_IDS,
   // Lahki način (varčevanje s podatki): auto = po povezavi naprave, lite = vedno, normal = nikoli.
   data_mode: ["auto", "lite", "normal"],
+  // Cilj učenca (public/goal-data.js); datum je neobvezen, opomnik ob 12.00 velja le z datumom.
+  goal: GOALS,
+  // Kotiček zanimanj: kako zahtevne novice (auto = po šoli) in ali tudi v angleščini.
+  news_level: NEWS_LEVELS,
+  news_lang: NEWS_LANGS,
 };
 
 export const DEFAULT_SETTINGS = {
@@ -27,9 +35,19 @@ export const DEFAULT_SETTINGS = {
   solving_mode: "A",
   personality_setting: "prijazen in spodbuden",
   language: DEFAULT_LANGUAGE,
+  // Narečje inštruktorja / različica jezika (public/dialects.js), "" = knjižni jezik.
+  dialect: "",
   region: "",
   school_system: DEFAULT_SYSTEM,
   data_mode: "auto",
+  goal: DEFAULT_GOAL,
+  goal_date: "", // YYYY-MM-DD ali prazno
+  goal_reminder: true, // dnevni opomnik ob 12.00 do datuma cilja
+  // Kotiček zanimanj (public/interests.js): null = vprašalnik še ni bil izpolnjen, [] = preskočen.
+  interests: null,
+  interest_custom: "",
+  news_level: "auto",
+  news_lang: "all",
 };
 
 // Proste besedilne nastavitve gredo v sistemski prompt, zato jih skrajšamo
@@ -77,9 +95,17 @@ export function normalizeSettings(input = {}) {
   }
   // Regija naprave (ISO 3166, npr. "BR"): inštruktor prilagodi izraze in zapis.
   if (typeof input.region === "string" && /^[A-Z]{2}$/.test(input.region)) out.region = input.region;
+  if (input.interests !== undefined) out.interests = cleanInterests(input.interests);
+  if (input.interest_custom !== undefined) out.interest_custom = cleanText(input.interest_custom, 40);
+  // Narečje mora pripadati jeziku pogovora (ob menjavi jezika se vrne na knjižni jezik).
+  out.dialect = cleanDialect(input.dialect, out.language);
   if (input.personality_setting !== undefined) {
     out.personality_setting = cleanText(input.personality_setting, 200);
   }
+  // Cilj mora ustrezati šoli (NPZ le v OŠ, matura le v SŠ …), sicer sprotno učenje.
+  if (!goalsFor(out).includes(out.goal)) out.goal = DEFAULT_GOAL;
+  if (validDate(input.goal_date)) out.goal_date = input.goal_date;
+  if (input.goal_reminder !== undefined) out.goal_reminder = input.goal_reminder === true || input.goal_reminder === 1 || input.goal_reminder === "1" || input.goal_reminder === "true";
   return out;
 }
 

@@ -132,6 +132,7 @@ export function runGame(host, opts) {
       if (!G.q || q.q !== G.q.q) break;
     }
     G.q = q;
+    showFb("", "");
     const n = engine.options || 4;
     G.opts = shuffle([q.a, ...q.w.slice(0, n - 1)]);
     $(".gm-q").textContent = q.q;
@@ -190,7 +191,8 @@ export function runGame(host, opts) {
         G.shake(8);
       }
       beep("bad");
-      showFb(`${icon("x")} ${esc(t("games.correctWas", { a: G.q.a }))}`, "bad");
+      // Če naloga ostane (izbira med več predmeti), pravilnega odgovora še ne izdamo.
+      showFb(`${icon("x")} ${esc(keep ? t("games.tryAgain") : t("games.correctWas", { a: G.q.a }))}`, "bad");
       if (G.badStreak >= 2 && G.tier > 1) {
         G.tier--;
         G.badStreak = 0;
@@ -200,7 +202,8 @@ export function runGame(host, opts) {
     if (G.lives <= 0) return end();
     if (!keep || ok) {
       G.stopTimer();
-      nextAt = G.time + delay;
+      // po napaki je več časa, da se prebere pravilni odgovor, preden pride nova naloga
+      nextAt = G.time + (ok ? delay : Math.max(delay, 1.8));
       G.waiting = true;
     }
   };
@@ -357,6 +360,7 @@ export function runGame(host, opts) {
       overlay.hidden = false;
     } else {
       overlay.hidden = true;
+      beta0 = null; // po premoru znova umeri nagib
       canvas.focus({ preventScroll: true });
     }
   }
@@ -398,7 +402,48 @@ export function runGame(host, opts) {
     </div>`;
     overlay.querySelector("[data-act=play]").focus({ preventScroll: true });
   }
+  // ---------- senzorji telefona (nagib in tresenje) ----------
+  // Igre z engine.sensors berejo G.tilt (x, y od −1 do 1) in dobijo eng.shake() ob stresanju.
+  // Brez senzorjev (računalnik) ostane G.tilt.on = false in igra uporablja dotik ali tipke.
+  G.tilt = { x: 0, y: 0, on: false };
+  let beta0 = null, lastShake = -9, sensorsLive = false;
+  const cl1 = (v) => Math.max(-1, Math.min(1, v));
+  function onOrient(e) {
+    if (e.gamma == null || e.beta == null) return;
+    const ang = screen.orientation?.angle ?? window.orientation ?? 0;
+    let gx = e.gamma, gy = e.beta;
+    if (ang === 90) [gx, gy] = [e.beta, -e.gamma];
+    else if (ang === -90 || ang === 270) [gx, gy] = [-e.beta, e.gamma];
+    if (beta0 == null) beta0 = gy; // drža ob začetku = ničla
+    G.tilt.x = cl1(gx / 22);
+    G.tilt.y = cl1((gy - beta0) / 22);
+    G.tilt.on = true;
+  }
+  function onMotion(e) {
+    const a = e.acceleration?.x != null ? e.acceleration : e.accelerationIncludingGravity;
+    if (!a || a.x == null) return;
+    const m = Math.abs(Math.hypot(a.x, a.y || 0, a.z || 0) - (a === e.acceleration ? 0 : 9.81));
+    if (m > 13 && G.time - lastShake > 0.6 && G.running && !G.paused) {
+      lastShake = G.time;
+      eng.shake?.();
+    }
+  }
+  function sensorsOn() {
+    beta0 = null;
+    if (!engine.sensors || sensorsLive) return;
+    sensorsLive = true;
+    // iPhone zahteva dovoljenje ob dotiku (gumb Igraj je dotik).
+    try {
+      DeviceOrientationEvent?.requestPermission?.().catch(() => {});
+      DeviceMotionEvent?.requestPermission?.().catch(() => {});
+    } catch {}
+    window.addEventListener("deviceorientation", onOrient);
+    window.addEventListener("devicemotion", onMotion);
+  }
+  G.recenter = () => (beta0 = null);
+
   function start() {
+    sensorsOn();
     Object.assign(G, { chapter: 1, speed: PACES[getPace()], time: 0, tier: opts.tier || 1, score: 0, lives: 3, correct: 0, wrong: 0, streak: 0, badStreak: 0, mistakes: [], fx: [], over: false, paused: false, waiting: false, q: null });
     showFb("", "");
     overlay.hidden = true;
@@ -424,7 +469,8 @@ export function runGame(host, opts) {
         <h2>${esc(t("games.over"))}</h2>
         <div class="gm-big">${icon("star")}<b>${G.score}</b></div>
         ${info.newBest ? `<p class="gm-record">${icon("trophy")} ${esc(t("games.record"))}</p>` : info.best ? `<p class="muted">${esc(t("games.best"))}: <b>${info.best}</b></p>` : ""}
-        <p>${esc(t("games.summary", { ok: G.correct, all: G.correct + G.wrong }))}${info.xp ? ` · <b class="gm-xp">+${info.xp} XP</b>` : ""}</p>
+        <p>${esc(t("games.summary", { ok: G.correct, all: G.correct + G.wrong }))}${info.xp ? ` · <b class="gm-xp">+${info.xp} XP</b>` : ""}${info.coins ? ` · <b class="gm-coins">+${info.coins} ${icon("coins")}</b>` : ""}</p>
+        ${info.unlocked ? `<p class="gm-record gm-unlocked">${icon("unlock")} ${esc(info.unlocked)}</p>` : ""}
         ${mist}
         <div class="actions"><button type="button" class="secondary" data-act="exit">${icon("arrow-left")}${esc(t("games.other"))}</button><button type="button" class="primary" data-act="again">${icon("rotate-ccw")}${esc(t("games.again"))}</button></div>
       </div>`;
@@ -449,6 +495,8 @@ export function runGame(host, opts) {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("keyup", onKey);
       document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("deviceorientation", onOrient);
+      window.removeEventListener("devicemotion", onMotion);
       host.innerHTML = "";
     },
     get running() {

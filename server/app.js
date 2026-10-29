@@ -17,6 +17,7 @@ import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPro
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor, formulaSheet } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
 import { programReferences, referencesFor, themesFor } from "./references.js";
+import { SETTINGS_TOOLS, createSettingsTools, cleanDevice, looksLikeSettings } from "./chat-settings.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
@@ -28,7 +29,11 @@ import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
+import { Avatars, mountAvatar } from "./avatar.js";
+import { mountCorner } from "./corner.js";
 import { mountWebApp } from "./webapp.js";
+import { Schedules, scheduleView, schedulePrompt, syncTestPlan } from "./schedule.js";
+import { mountSchedule } from "./schedule-api.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -50,11 +55,16 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
   if (settings.language && settings.language !== "sl") parts.push(settings.language);
   if (settings.region && settings.region !== "SI") parts.push(settings.region);
   if (settings.school_system && settings.school_system !== "SI") parts.push(settings.school_system);
+  if (settings.dialect) parts.push(`d:${settings.dialect}`);
   if (lite) parts.push("lite");
   // Zahtevnost po rezultatih učenca (osnovna je privzeta, da shranjeni odgovori ostanejo veljavni).
   if (tier && tier !== "osnovna") parts.push(`zahtevnost:${tier}`);
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
+
+// Pisave slogov (docs/oblikovanje.md): Čist = Instrument Sans, Igriv = Nunito, Temen = IBM Plex Sans.
+// Brskalnik prenese le pisavo, ki jo slog res uporablja.
+const FONTS = [["nunito", "nunito"], ["instrument-sans", "instrument-sans"], ["ibm-plex-sans", "ibm-plex-sans"]];
 
 export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
@@ -108,7 +118,7 @@ export function createApp(store, opts = {}) {
         ["/vendor/katex/", path.join(modules, "katex", "dist")],
         ["/vendor/marked/", path.join(modules, "marked")],
         ["/vendor/dompurify/", path.join(modules, "dompurify", "dist")],
-        ["/vendor/nunito/", path.join(modules, "@fontsource-variable", "nunito")],
+        ...FONTS.map(([dir, pkg]) => [`/vendor/${dir}/`, path.join(modules, "@fontsource-variable", pkg)]),
         ["/practice/", path.join(here, "practice")],
         ["/", publicDir],
       ]),
@@ -121,7 +131,7 @@ export function createApp(store, opts = {}) {
   app.use("/vendor/katex", express.static(path.join(modules, "katex", "dist")));
   app.use("/vendor/marked", express.static(path.join(modules, "marked")));
   app.use("/vendor/dompurify", express.static(path.join(modules, "dompurify", "dist")));
-  app.use("/vendor/nunito", express.static(path.join(modules, "@fontsource-variable", "nunito")));
+  for (const [dir, pkg] of FONTS) app.use(`/vendor/${dir}`, express.static(path.join(modules, "@fontsource-variable", pkg)));
 
   // Učbenik za tiskanje / PDF: brezplačno in brez prijave.
   app.get("/ucbenik/:path{/:topic}", (req, res) => {
@@ -131,10 +141,14 @@ export function createApp(store, opts = {}) {
   });
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
+  const pendingSettings = new Map(); // pogovor → predlog spremembe šole/letnika, ki čaka na potrditev
   // »Vprašaj STEMMind« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
   const helpTasks = new Map();
   const usage = new Usage(store.db);
   const progress = new Progress(store);
+  // Urnik učenca (server/schedule.js): ure, testi; gre v prompt in v Pripravo na test.
+  const schedules = new Schedules(store.db);
+  const scheduleText = (s) => schedulePrompt(scheduleView(schedules.get(s.id), s.settings));
 
   const intParam = (v) => (/^\d+$/.test(v) ? Number(v) : NaN);
   const loadStudent = (req, res) => {
@@ -218,7 +232,7 @@ export function createApp(store, opts = {}) {
     const s = loadStudent(req, res);
     if (!s) return;
     res.type("text/plain").send(
-      buildSystemPrompt({ settings: s.settings, weaknesses: weaknessesForPrompt(store, s), studentName: s.name, results: studentResults(store, s.id).text }),
+      buildSystemPrompt({ settings: s.settings, weaknesses: weaknessesForPrompt(store, s), studentName: s.name, results: studentResults(store, s.id).text, schedule: scheduleText(s) }),
     );
   });
 
@@ -299,7 +313,8 @@ export function createApp(store, opts = {}) {
     if (help) helpTasks.delete(conv.id);
     const weak = weaknessesForPrompt(store, student);
     const results = studentResults(store, student.id, conv.path_topic);
-    const key = ANSWER_CACHE && isFirst && !image && !help ? cacheKey(text, student.settings, mode, lite, conv.path_topic, weak, results.tier) : null;
+    // Prošnja za spremembo nastavitev mora poklicati orodje, zato ne iz predpomnilnika odgovorov.
+    const key = ANSWER_CACHE && isFirst && !image && !help && !looksLikeSettings(text) ? cacheKey(text, student.settings, mode, lite, conv.path_topic, weak, results.tier) : null;
     if (conv.title === "Nov pogovor") {
       store.renameConversation(conv.id, cleanText(text, 50) || "Naloga s fotografije");
     }
@@ -319,6 +334,22 @@ export function createApp(store, opts = {}) {
     });
 
     const filter = createStreamFilter();
+    // Nastavitve iz klepeta (server/chat-settings.js): orodji za model, dogodki za odjemalca.
+    const settingsTools = createSettingsTools({
+      store,
+      studentId: student.id,
+      conversationId: conv.id,
+      device: cleanDevice(req.body?.device),
+      pending: pendingSettings,
+      send,
+      schedules,
+      onSchedule: () => {
+        const st = store.getStudent(student.id);
+        syncTestPlan(progress, st.id, scheduleView(schedules.get(st.id), st.settings));
+      },
+    });
+    const onToolUse = settingsTools.onToolUse;
+    onToolUse.hasPending = () => pendingSettings.has(conv.id);
     try {
       // Pogovor o tekmovalni temi: inštruktor namiguje v slogu tekmovanj (model ostane isti).
       const tekTopic = conv.path_topic && isCompetitionPath(getTopic(conv.path_topic)?.path);
@@ -326,6 +357,7 @@ export function createApp(store, opts = {}) {
         settings: tekTopic ? { ...student.settings, track: "COMPETITION" } : student.settings,
         weaknesses: weak,
         results: results.text,
+        schedule: scheduleText(student),
         studentName: student.name,
         learningPath: conv.path_topic
           ? [learningPathPrompt(conv.path_topic), examPrompt(getTopic(conv.path_topic)?.path), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n")
@@ -359,6 +391,8 @@ export function createApp(store, opts = {}) {
         messages: deep ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id)),
         deep,
         mode,
+        tools: SETTINGS_TOOLS,
+        onToolUse,
         signal: controller.signal,
         onText: (chunk) => {
           const out = filter.push(chunk);
@@ -376,7 +410,8 @@ export function createApp(store, opts = {}) {
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
       let content = [{ type: "text", text: result.text || "…" }];
       const cost = cached ? 0 : usage.log(student.id, result.model || (deep ? MODEL_DEEP : MODEL), result.usage);
-      if (key && !cached && result.stopReason === "end_turn" && result.text) {
+      if (settingsTools.state.proposal) send("proposal", settingsTools.state.proposal);
+      if (key && !cached && !result.toolCalls && !settingsTools.state.used && result.stopReason === "end_turn" && result.text) {
         const generic = student.name.length > 1 ? result.text.replaceAll(student.name, "{{IME}}") : result.text;
         store.db.prepare("INSERT OR REPLACE INTO answer_cache (key, text) VALUES (?, ?)").run(key, generic);
       }
@@ -415,6 +450,7 @@ export function createApp(store, opts = {}) {
         title: store.getConversation(conv.id).title,
         // Brez ponovnega gumba »Razloži podrobneje«, tudi če je odgovor pripravil hitri model.
         deep: deep || req.body?.deep === true,
+        settings: settingsTools.state.used || undefined,
         cost_usd: Math.round(cost * 10000) / 10000,
       });
       res.end();
@@ -555,7 +591,10 @@ export function createApp(store, opts = {}) {
   // Načini učenja: nova snov, ponavljanje, priprava na test, dnevni trening.
   app.get("/api/students/:id/modes", (req, res) => {
     const s = loadStudent(req, res);
-    if (s) res.json({ ...progress.modes(s.id, getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings)), cardsDue: store.cards.dueCount(s.id) });
+    if (!s) return;
+    // Priprava na test sledi najbližjemu testu iz urnika (če je učenec ni nastavil sam).
+    syncTestPlan(progress, s.id, scheduleView(schedules.get(s.id), s.settings));
+    res.json({ ...progress.modes(s.id, getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings)), cardsDue: store.cards.dueCount(s.id) });
   });
 
   // --- kartice za ponavljanje ---
@@ -777,9 +816,13 @@ export function createApp(store, opts = {}) {
   });
 
   // --- tedenske lige, razredi in skupine prijateljev ---
+  const avatars = new Avatars(store.db);
   mountLeagues(app, store, { loadStudent });
   mountGraphs(app, store, { loadStudent });
-  mountGames(app, store, { loadStudent, progress });
+  mountGames(app, store, { loadStudent, progress, avatars });
+  mountAvatar(app, avatars, { loadStudent });
+  mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
+  mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup });
 
   // --- poraba AI ---
   // Poraba AI za vse profile: brez računov samo na računalniku, kjer teče strežnik

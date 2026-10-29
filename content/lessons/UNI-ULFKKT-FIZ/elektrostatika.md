@@ -26,6 +26,12 @@ $$F = \frac{1}{4\pi\varepsilon_0}\,\frac{|q_1q_2|}{r^2}, \qquad \frac{1}{4\pi\va
 
 Sila leži na zveznici nabojev; $\varepsilon_0 = 8{,}85 \cdot 10^{-12}\,\mathrm{A\,s/(V\,m)}$ je **influenčna konstanta**. Če sta naboja v snovi z **dielektričnostjo** $\varepsilon$ (voda: $\varepsilon \approx 80$), je sila $\varepsilon$-krat manjša. Zato se soli v vodi raztapljajo: privlak med ioni je tam okoli osemdesetkrat šibkejši.
 
+:::premisli
+Oba naboja podvojimo in hkrati podvojimo tudi razdaljo med njima. Kaj se zgodi s silo?
+---
+Ostane enaka: produkt nabojev se poveča štirikrat, kvadrat razdalje pa tudi štirikrat, $2 \cdot 2/2^2 = 1$.
+:::
+
 **3. Električno polje.** Naboj spremeni prostor okoli sebe: v vsaki točki je **električna poljska jakost**
 
 $$\vec{E} = \frac{\vec{F}}{q},$$
@@ -55,6 +61,12 @@ Potencial je **skalar**, zato potenciale več nabojev preprosto seštejemo, s pr
 $$E_x = -\frac{\mathrm{d}\varphi}{\mathrm{d}x},$$
 
 v homogenem polju preprosto $E = U/d$. Polje kaže v smer najhitrejšega padanja potenciala; ploskve z enakim potencialom (**ekvipotencialne ploskve**) so pravokotne na silnice.
+
+:::premisli
+Elektron spustimo iz mirovanja v električnem polju. Ali se začne gibati proti višjemu ali proti nižjemu potencialu? Zakaj?
+---
+Proti višjemu. Sila naboj vedno vleče tja, kjer je njegova potencialna energija $W_p = q\varphi$ manjša. Ker je $q = -e_0$ negativen, je $W_p$ manjša tam, kjer je $\varphi$ večji. Pozitiven naboj bi se gibal proti nižjemu potencialu.
+:::
 
 **6. Elektronvolt.** V atomski in molekulski fiziki energijo pogosto merimo v **elektronvoltih**: $1\,\mathrm{eV}$ je energija, ki jo dobi osnovni naboj, ko preleti napetost $1\,\mathrm{V}$, torej $1\,\mathrm{eV} = 1{,}602 \cdot 10^{-19}\,\mathrm{J}$.
 
@@ -91,9 +103,9 @@ $F = \dfrac{1}{4\pi\varepsilon\varepsilon_0}\dfrac{|q_1q_2|}{r^2}$, $W_p = \dfra
 
 **Rešitev:**
 
-1. $F = 8{,}99 \cdot 10^9 \cdot (1{,}602 \cdot 10^{-19})^2/(2{,}82 \cdot 10^{-10})^2\,\mathrm{N} \approx 2{,}90 \cdot 10^{-9}\,\mathrm{N}$; sila je privlačna.
-2. V vodi: $F_\mathrm{v} = F/80 \approx 3{,}6 \cdot 10^{-11}\,\mathrm{N}$.
-3. $W_p = -8{,}99 \cdot 10^9 \cdot (1{,}602 \cdot 10^{-19})^2/2{,}82 \cdot 10^{-10}\,\mathrm{J} \approx -8{,}18 \cdot 10^{-19}\,\mathrm{J}$.
+1. $F = 8{,}99 \cdot 10^9 \cdot (1{,}602 \cdot 10^{-19})^2/(2{,}82 \cdot 10^{-10})^2\,\mathrm{N} \approx 2{,}90 \cdot 10^{-9}\,\mathrm{N}$; sila je privlačna, ker sta naboja raznoimenska.
+2. V vodi: $F_\mathrm{v} = F/80 \approx 3{,}6 \cdot 10^{-11}\,\mathrm{N}$, ker je v snovi z dielektričnostjo $\varepsilon$ sila $\varepsilon$-krat manjša.
+3. $W_p = -8{,}99 \cdot 10^9 \cdot (1{,}602 \cdot 10^{-19})^2/2{,}82 \cdot 10^{-10}\,\mathrm{J} \approx -8{,}18 \cdot 10^{-19}\,\mathrm{J}$. Tu predznaka nabojev ohranimo, ker je energija skalar s predznakom, ne velikost kot pri sili.
 4. V elektronvoltih: $W_p = -8{,}18 \cdot 10^{-19}/1{,}602 \cdot 10^{-19}\,\mathrm{eV} \approx -5{,}1\,\mathrm{eV}$. Negativna energija pomeni vezano stanje.
 5. Odgovor: ion deluje na ion s privlačno silo približno $2{,}9\,\mathrm{nN}$, v vodi pa le okoli $0{,}036\,\mathrm{nN}$; potencialna energija para je okoli $-5{,}1\,\mathrm{eV}$.
 
@@ -110,11 +122,11 @@ $E_k = \dfrac{1}{4\pi\varepsilon_0}\dfrac{|Q_k|}{r_k^2}$, $\vec{E} = \vec{E}_1 +
 
 **Rešitev:**
 
-1. Razdalja od vsakega naboja do $P$: $r = \sqrt{0{,}030^2 + 0{,}040^2}\,\mathrm{m} = 0{,}050\,\mathrm{m}$.
-2. Velikost vsakega polja: $E_1 = E_2 = 8{,}99 \cdot 10^9 \cdot 4{,}0 \cdot 10^{-9}/0{,}050^2\,\mathrm{V/m} \approx 1{,}44 \cdot 10^4\,\mathrm{V/m}$.
-3. Smeri: $\vec{E}_1$ kaže od $Q_1$ proti $P$, enotski vektor $(0{,}6;\,0{,}8)$. $\vec{E}_2$ kaže od $P$ proti $Q_2$, enotski vektor $(0{,}6;\,-0{,}8)$.
+1. Razdalja od vsakega naboja do $P$: $r = \sqrt{0{,}030^2 + 0{,}040^2}\,\mathrm{m} = 0{,}050\,\mathrm{m}$ (Pitagorov izrek, ker naboja in $P$ tvorijo pravokotna trikotnika).
+2. Velikost vsakega polja: $E_1 = E_2 = 8{,}99 \cdot 10^9 \cdot 4{,}0 \cdot 10^{-9}/0{,}050^2\,\mathrm{V/m} \approx 1{,}44 \cdot 10^4\,\mathrm{V/m}$; velikosti sta enaki, ker sta naboja enako velika in enako oddaljena.
+3. Smeri: $\vec{E}_1$ kaže od $Q_1$ proti $P$, enotski vektor $(0{,}6;\,0{,}8)$. $\vec{E}_2$ kaže od $P$ proti $Q_2$, enotski vektor $(0{,}6;\,-0{,}8)$, ker polje kaže stran od pozitivnega in k negativnemu naboju.
 4. Vsota: $\vec{E} = 1{,}44 \cdot 10^4\,\mathrm{V/m} \cdot (1{,}2;\,0) \approx (1{,}73 \cdot 10^4\,\mathrm{V/m};\,0)$. Navpični komponenti se odštejeta.
-5. Potencial: $\varphi_P = 8{,}99 \cdot 10^9\,(4{,}0 \cdot 10^{-9} - 4{,}0 \cdot 10^{-9})/0{,}050\,\mathrm{V} = 0$.
+5. Potencial: $\varphi_P = 8{,}99 \cdot 10^9\,(4{,}0 \cdot 10^{-9} - 4{,}0 \cdot 10^{-9})/0{,}050\,\mathrm{V} = 0$; potencial je skalar, zato se prispevka nasprotnih predznakov odštejeta.
 6. Odgovor: polje v točki $P$ ima velikost približno $1{,}7 \cdot 10^4\,\mathrm{V/m}$ in kaže vzporedno z zveznico nabojev, od pozitivnega proti negativnemu; potencial v $P$ je nič. Ničeln potencial ne pomeni ničelnega polja.
 
 ### Primer 3 (težji)
@@ -130,13 +142,36 @@ $C = \dfrac{\varepsilon\varepsilon_0S}{d}$, $Q = CU$, $E = U/d$, $W = \tfrac{1}{
 
 **Rešitev:**
 
-1. $C = 8{,}85 \cdot 10^{-12} \cdot 0{,}020/1{,}0 \cdot 10^{-3}\,\mathrm{F} \approx 1{,}77 \cdot 10^{-10}\,\mathrm{F} = 177\,\mathrm{pF}$.
+1. $C = 8{,}85 \cdot 10^{-12} \cdot 0{,}020/1{,}0 \cdot 10^{-3}\,\mathrm{F} \approx 1{,}77 \cdot 10^{-10}\,\mathrm{F} = 177\,\mathrm{pF}$; faktor $\varepsilon$ je $1{,}0$, ker je vmes zrak.
 2. $Q = 1{,}77 \cdot 10^{-10}\,\mathrm{F} \cdot 100\,\mathrm{V} \approx 1{,}77 \cdot 10^{-8}\,\mathrm{C}$.
-3. $E = 100\,\mathrm{V}/1{,}0 \cdot 10^{-3}\,\mathrm{m} = 1{,}0 \cdot 10^5\,\mathrm{V/m}$.
+3. $E = 100\,\mathrm{V}/1{,}0 \cdot 10^{-3}\,\mathrm{m} = 1{,}0 \cdot 10^5\,\mathrm{V/m}$, ker je polje med ploščama homogeno.
 4. $W = \tfrac{1}{2} \cdot 1{,}77 \cdot 10^{-10}\,\mathrm{F} \cdot (100\,\mathrm{V})^2 \approx 8{,}85 \cdot 10^{-7}\,\mathrm{J}$.
 5. Po odklopu je naboj stalen, kapaciteta pa se poveča na $C' = 4{,}0\,C \approx 708\,\mathrm{pF}$. Napetost: $U' = Q/C' = U/4{,}0 = 25\,\mathrm{V}$.
-6. Energija: $W' = Q^2/(2C') = W/4{,}0 \approx 2{,}2 \cdot 10^{-7}\,\mathrm{J}$.
+6. Energija: $W' = Q^2/(2C') = W/4{,}0 \approx 2{,}2 \cdot 10^{-7}\,\mathrm{J}$; obliko $Q^2/(2C)$ izberemo, ker je naboj stalen.
 7. Odgovor: kapaciteta je $177\,\mathrm{pF}$, naboj $17{,}7\,\mathrm{nC}$, poljska jakost $1{,}0 \cdot 10^5\,\mathrm{V/m}$, energija $0{,}89\,\mu\mathrm{J}$. Z dielektrikom napetost pade na $25\,\mathrm{V}$, energija pa na $0{,}22\,\mu\mathrm{J}$; razliko je opravilo polje, ki je dielektrik vleklo med plošči.
+
+### Primer 4 – zdaj ti
+
+Celična membrana deluje kot kondenzator s specifično kapaciteto $1{,}0\,\mu\mathrm{F/cm^2}$. Pri mirovni napetosti $70\,\mathrm{mV}$ je na vsaki strani membrane presežek nabojev. Koliko enkrat nabitih ionov presežka je na vsakem kvadratnem mikrometru membrane?
+
+**Podatki:** $C_s = 1{,}0\,\mu\mathrm{F/cm^2}$ (kapaciteta na enoto površine), $U = 70\,\mathrm{mV} = 0{,}070\,\mathrm{V}$, $S = 1{,}0\,\mu\mathrm{m^2} = 1{,}0 \cdot 10^{-12}\,\mathrm{m^2}$, naboj iona $e_0 = 1{,}602 \cdot 10^{-19}\,\mathrm{C}$
+**Iščemo:** število ionov $N$ na $1\,\mu\mathrm{m^2}$
+
+:::formula
+$Q = CU$, za del membrane $C = C_sS$; $N = Q/e_0$
+:::
+
+**Rešitev:**
+
+1. Pretvorba v enote SI: $C_s = 1{,}0 \cdot 10^{-6}\,\mathrm{F}/10^{-4}\,\mathrm{m^2} = 1{,}0 \cdot 10^{-2}\,\mathrm{F/m^2}$, ker je $1\,\mathrm{cm^2} = 10^{-4}\,\mathrm{m^2}$.
+2. Naboj na enoto površine: $\sigma = C_sU = 1{,}0 \cdot 10^{-2} \cdot 0{,}070\,\mathrm{C/m^2} = 7{,}0 \cdot 10^{-4}\,\mathrm{C/m^2}$, ker zveza $Q = CU$ velja za vsak kos membrane posebej.
+3. Izračunaj sam naboj na $1\,\mu\mathrm{m^2}$ in iz njega število ionov.
+
+:::premisli
+Koliko ionov presežka je na kvadratnem mikrometru?
+---
+$Q = \sigma S = 7{,}0 \cdot 10^{-4} \cdot 1{,}0 \cdot 10^{-12}\,\mathrm{C} = 7{,}0 \cdot 10^{-16}\,\mathrm{C}$, torej $N = Q/e_0 = 7{,}0 \cdot 10^{-16}/1{,}602 \cdot 10^{-19} \approx 4{,}4 \cdot 10^3$ ionov. To je drobcen delež vseh ionov v celici, zato se koncentracija pri nastanku napetosti skoraj ne spremeni.
+:::
 
 ## Pogoste napake
 
@@ -210,24 +245,40 @@ Za točkasti naboj je $\varphi(r) = -\int_\infty^r \frac{Q}{4\pi\varepsilon_0r'^
 
 ? Razdaljo med točkastima nabojema podvojimo. Kako se spremeni sila med njima?
 - Razpolovi se.
+~ Misliš, da sila z razdaljo pada linearno; Coulombova sila pada s kvadratom razdalje.
 + Zmanjša se na četrtino.
 - Ostane enaka.
+~ Naboja se res nista spremenila, a sila je odvisna tudi od razdalje med njima.
 > $F \propto 1/r^2$, zato je pri dvojni razdalji sila $1/2^2 = 1/4$ prvotne.
 
 ? Med ploščama na razmiku $4{,}0\,\mathrm{mm}$ je napetost $200\,\mathrm{V}$. Kolikšna je poljska jakost?
 + $5{,}0 \cdot 10^4\,\mathrm{V/m}$
 - $800\,\mathrm{V/m}$
+~ To je $U \cdot d$ z razmikom v milimetrih: napetost si pomnožil z razmikom, namesto da bi jo delil.
 - $50\,\mathrm{V/m}$
+~ Razmik si pustil v milimetrih; v $E = U/d$ mora biti $d$ v metrih.
 > $E = U/d = 200\,\mathrm{V}/0{,}0040\,\mathrm{m} = 5{,}0 \cdot 10^4\,\mathrm{V/m}$. $50\,\mathrm{V/m}$ dobiš, če razmika ne pretvoriš v metre.
 
 ? Koliko energije shrani kondenzator s kapaciteto $10\,\mu\mathrm{F}$ pri napetosti $12\,\mathrm{V}$?
 - $1{,}44\,\mathrm{mJ}$
+~ Izpustil si faktor $\tfrac{1}{2}$: napetost med polnjenjem narašča od nič, zato je delo le polovica $CU^2$.
 + $0{,}72\,\mathrm{mJ}$
 - $0{,}06\,\mathrm{mJ}$
+~ To je $\tfrac{1}{2}CU$; napetost v formuli za energijo nastopa v kvadratu.
 > $W = \tfrac{1}{2}CU^2 = \tfrac{1}{2} \cdot 10 \cdot 10^{-6} \cdot 144\,\mathrm{J} = 0{,}72\,\mathrm{mJ}$. $1{,}44\,\mathrm{mJ}$ je $CU^2$ brez faktorja $\tfrac{1}{2}$.
 
 ? Kondenzatorja s kapacitetama $2{,}0\,\mu\mathrm{F}$ in $3{,}0\,\mu\mathrm{F}$ vežemo zaporedno. Kolikšna je nadomestna kapaciteta?
 - $5{,}0\,\mu\mathrm{F}$
+~ Kapacitete si seštel kot pri uporih v zaporedni vezavi; pri kondenzatorjih tako velja za vzporedno vezavo.
 - $6{,}0\,\mu\mathrm{F}$
+~ To je le števec $C_1C_2$ formule $C = C_1C_2/(C_1 + C_2)$; pozabil si deliti z vsoto.
 + $1{,}2\,\mu\mathrm{F}$
 > $1/C = 1/2{,}0 + 1/3{,}0 = 5/6\,\mu\mathrm{F}^{-1}$, torej $C = 1{,}2\,\mu\mathrm{F}$. $5{,}0\,\mu\mathrm{F}$ velja za vzporedno vezavo.
+
+? Nabit kondenzator odklopimo od vira in plošči razmaknemo na dvojno razdaljo. Kaj se zgodi z napetostjo med ploščama?
+- Ostane enaka.
+~ Napetost ostane enaka le, če je kondenzator priključen na vir; odklopljen ohrani naboj.
++ Podvoji se.
+- Razpolovi se.
+~ Razpolovi se kapaciteta, ne napetost; pri stalnem naboju je $U = Q/C$, zato manjša kapaciteta pomeni večjo napetost.
+> $C = \varepsilon\varepsilon_0S/d$ se pri dvojnem razmiku razpolovi. Naboj odklopljenega kondenzatorja je stalen, zato se $U = Q/C$ podvoji; polje $E = U/d$ ostane enako.
