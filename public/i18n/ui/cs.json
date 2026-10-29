@@ -1532,5 +1532,21 @@
   "guest.delete": "Smazat profil a všechna data",
   "guest.deleteConfirm": "Smazat profil, pokrok a konverzace? Tuto akci nelze vrátit zpět.",
   "guest.logoutConfirm": "Bez účtu se po odhlášení k tomuto pokroku už nedostaneš. Raději si vytvoř účet v záložce Účet. Přesto se odhlásit?",
-  "guest.off": "Používání bez účtu už není možné. Vytvoř si účet a pokrok si zachováš."
+  "guest.off": "Používání bez účtu už není možné. Vytvoř si účet a pokrok si zachováš.",
+  "games.e.diner": "Bistro",
+  "games.e.diner.how": "Host si objedná úlohu. Klepni na surovinu se správnou odpovědí, než host ztratí trpělivost. Klávesy 1–4.",
+  "games.e.hills": "Jízda po kopcích",
+  "games.e.hills.how": "Džíp jede sám. Projeď kanystrem se správnou odpovědí a přes špatné přeskoč klepnutím. Klávesa: mezerník.",
+  "games.e.pet": "Mazlíček",
+  "games.e.pet.how": "Nakrm Bibiho pamlskem se správnou odpovědí: klepni na něj nebo ho přetáhni k Bibimu. Klávesy 1–3.",
+  "games.e.catcher": "Chytač",
+  "games.e.catcher.how": "Posouvej košík a chyť ovoce se správnou odpovědí. Špatnému se vyhni. Klávesy ← →.",
+  "games.e.pairs": "Pexeso",
+  "games.e.pairs.how": "Zapamatuj si karty, než se otočí, a pak otoč dvojici se správnou odpovědí. Klávesy 1–8.",
+  "games.e.slicer": "Krájení ovoce",
+  "games.e.slicer.how": "Tahem prstu rozkroj ovoce se správnou odpovědí. Špatné nekrájej. Klávesy 1–4.",
+  "games.e.water": "Kam teče voda",
+  "games.e.water.how": "Prstem vykopej cestu hlínou, aby voda natekla do koryta se správnou odpovědí. Klávesy 1–3.",
+  "games.e.mines": "Hledání min",
+  "games.e.mines.how": "Správná odpověď nabije detektor, který ukáže minu a bezpečné pole. Odkryj všechna bezpečná pole; 🚩 označí minu. Klávesy 1–4 a F."
 }

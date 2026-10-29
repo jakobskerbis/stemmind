@@ -1518,5 +1518,21 @@
   "guest.delete": "Borrar el perfil y todos los datos",
   "guest.deleteConfirm": "¿Borrar el perfil, el progreso y las conversaciones? Esto no se puede deshacer.",
   "guest.logoutConfirm": "Sin cuenta, después de cerrar sesión ya no podrás acceder a este progreso. Mejor crea una cuenta en la pestaña Cuenta. ¿Cerrar sesión de todos modos?",
-  "guest.off": "Ya no se puede usar Evklid sin cuenta. Crea una cuenta para conservar tu progreso."
+  "guest.off": "Ya no se puede usar Evklid sin cuenta. Crea una cuenta para conservar tu progreso.",
+  "games.e.diner": "Cafetería",
+  "games.e.diner.how": "Un cliente pide una tarea. Toca el ingrediente con la respuesta correcta antes de que pierda la paciencia. Teclas 1–4.",
+  "games.e.hills": "Ruta por colinas",
+  "games.e.hills.how": "El jeep avanza solo. Pasa por el bidón con la respuesta correcta y toca para saltar los incorrectos. Tecla: espacio.",
+  "games.e.pet": "Mascota",
+  "games.e.pet.how": "Dale a Bibi la golosina con la respuesta correcta: tócala o arrástrala hasta Bibi. Teclas 1–3.",
+  "games.e.catcher": "Atrapa",
+  "games.e.catcher.how": "Mueve la cesta y atrapa la fruta con la respuesta correcta. Evita las incorrectas. Teclas ← →.",
+  "games.e.pairs": "Memoria",
+  "games.e.pairs.how": "Recuerda las cartas antes de que se den la vuelta y luego abre la pareja con la respuesta correcta. Teclas 1–8.",
+  "games.e.slicer": "Corta fruta",
+  "games.e.slicer.how": "Desliza el dedo para cortar la fruta con la respuesta correcta. No cortes las incorrectas. Teclas 1–4.",
+  "games.e.water": "Por dónde va el agua",
+  "games.e.water.how": "Cava con el dedo un camino en la tierra para que el agua llegue a la tina con la respuesta correcta. Teclas 1–3.",
+  "games.e.mines": "Buscaminas",
+  "games.e.mines.how": "Una respuesta correcta carga el detector, que muestra una mina y una casilla segura. Abre todas las casillas seguras; 🚩 marca una mina. Teclas 1–4 y F."
 }

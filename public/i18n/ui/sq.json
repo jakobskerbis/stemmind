@@ -1518,5 +1518,21 @@
   "guest.delete": "Fshi profilin dhe të gjitha të dhënat",
   "guest.deleteConfirm": "Ta fshij profilin, përparimin dhe bisedat? Ky veprim nuk mund të zhbëhet.",
   "guest.logoutConfirm": "Pa llogari, pas daljes nuk do të kesh më qasje te ky përparim. Më mirë krijo një llogari te skeda Llogaria. Të dal gjithsesi?",
-  "guest.off": "Përdorimi pa llogari nuk është më i mundur. Krijo një llogari që ta ruash përparimin."
+  "guest.off": "Përdorimi pa llogari nuk është më i mundur. Krijo një llogari që ta ruash përparimin.",
+  "games.e.diner": "Bufe",
+  "games.e.diner.how": "Një mysafir porosit një detyrë. Prek përbërësin me përgjigjen e saktë para se mysafiri të humbasë durimin. Tastet 1–4.",
+  "games.e.hills": "Udhëtim nëpër kodra",
+  "games.e.hills.how": "Xhipi ecën vetë. Kalo nëpër bidonin me përgjigjen e saktë dhe prek për të kërcyer mbi të gabuarat. Tasti: hapësira.",
+  "games.e.pet": "Kafsha shtëpiake",
+  "games.e.pet.how": "Ushqeje Bibin me ëmbëlsirën me përgjigjen e saktë: preke ose tërhiqe te Bibi. Tastet 1–3.",
+  "games.e.catcher": "Kapësi",
+  "games.e.catcher.how": "Lëviz shportën dhe kap frutin me përgjigjen e saktë. Shmangi të gabuarat. Tastet ← →.",
+  "games.e.pairs": "Kujtesa",
+  "games.e.pairs.how": "Mbaji mend kartat para se të kthehen, pastaj hap çiftin me përgjigjen e saktë. Tastet 1–8.",
+  "games.e.slicer": "Prerje frutash",
+  "games.e.slicer.how": "Rrëshqit gishtin për të prerë frutin me përgjigjen e saktë. Mos i pri të gabuarat. Tastet 1–4.",
+  "games.e.water": "Ku rrjedh uji",
+  "games.e.water.how": "Gërmo me gisht një rrugë nëpër dhe që uji të rrjedhë në govatën me përgjigjen e saktë. Tastet 1–3.",
+  "games.e.mines": "Minat",
+  "games.e.mines.how": "Përgjigjja e saktë mbush detektorin, që tregon një minë dhe një kuti të sigurt. Hap të gjitha kutitë e sigurta; 🚩 shënon minën. Tastet 1–4 dhe F."
 }

@@ -1518,5 +1518,21 @@
   "guest.delete": "Profil und alle Daten löschen",
   "guest.deleteConfirm": "Profil, Fortschritt und Gespräche löschen? Das kann nicht rückgängig gemacht werden.",
   "guest.logoutConfirm": "Ohne Konto kommst du nach dem Abmelden nicht mehr an diesen Fortschritt heran. Erstelle lieber unter „Konto“ ein Konto. Trotzdem abmelden?",
-  "guest.off": "Die Nutzung ohne Konto ist nicht mehr möglich. Erstelle ein Konto, um deinen Fortschritt zu behalten."
+  "guest.off": "Die Nutzung ohne Konto ist nicht mehr möglich. Erstelle ein Konto, um deinen Fortschritt zu behalten.",
+  "games.e.diner": "Imbiss",
+  "games.e.diner.how": "Ein Gast bestellt eine Aufgabe. Tippe auf die Zutat mit der richtigen Antwort, bevor der Gast ungeduldig wird. Tasten 1–4.",
+  "games.e.hills": "Bergfahrt",
+  "games.e.hills.how": "Der Jeep fährt von selbst. Fahr durch den Kanister mit der richtigen Antwort und tippe, um über falsche zu springen. Taste: Leertaste.",
+  "games.e.pet": "Haustier",
+  "games.e.pet.how": "Füttere Bibi mit dem Leckerli mit der richtigen Antwort: tippe darauf oder zieh es zu Bibi. Tasten 1–3.",
+  "games.e.catcher": "Fänger",
+  "games.e.catcher.how": "Bewege den Korb und fang die Frucht mit der richtigen Antwort. Weich den falschen aus. Tasten ← →.",
+  "games.e.pairs": "Memory",
+  "games.e.pairs.how": "Merk dir die Karten, bevor sie sich umdrehen, und deck dann das Paar mit der richtigen Antwort auf. Tasten 1–8.",
+  "games.e.slicer": "Obst schneiden",
+  "games.e.slicer.how": "Wisch, um die Frucht mit der richtigen Antwort zu schneiden. Schneide keine falschen. Tasten 1–4.",
+  "games.e.water": "Wohin fließt das Wasser",
+  "games.e.water.how": "Grab mit dem Finger einen Weg durch die Erde, damit das Wasser in die Wanne mit der richtigen Antwort fließt. Tasten 1–3.",
+  "games.e.mines": "Minensucher",
+  "games.e.mines.how": "Eine richtige Antwort lädt den Detektor, der eine Mine und ein sicheres Feld zeigt. Öffne alle sicheren Felder; 🚩 markiert eine Mine. Tasten 1–4 und F."
 }

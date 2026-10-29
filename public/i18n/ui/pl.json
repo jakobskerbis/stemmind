@@ -1532,5 +1532,21 @@
   "guest.delete": "Usuń profil i wszystkie dane",
   "guest.deleteConfirm": "Usunąć profil, postępy i rozmowy? Tej operacji nie można cofnąć.",
   "guest.logoutConfirm": "Bez konta po wylogowaniu nie będziesz już mieć dostępu do tych postępów. Lepiej załóż konto w zakładce Konto. Wylogować mimo to?",
-  "guest.off": "Korzystanie bez konta nie jest już możliwe. Załóż konto, żeby zachować postępy."
+  "guest.off": "Korzystanie bez konta nie jest już możliwe. Załóż konto, żeby zachować postępy.",
+  "games.e.diner": "Bar",
+  "games.e.diner.how": "Gość zamawia zadanie. Dotknij składnika z poprawną odpowiedzią, zanim gość straci cierpliwość. Klawisze 1–4.",
+  "games.e.hills": "Jazda po wzgórzach",
+  "games.e.hills.how": "Dżip jedzie sam. Przejedź przez kanister z poprawną odpowiedzią, a nad błędnymi przeskocz dotknięciem. Klawisz: spacja.",
+  "games.e.pet": "Zwierzak",
+  "games.e.pet.how": "Nakarm Bibiego smakołykiem z poprawną odpowiedzią: dotknij go lub przeciągnij do Bibiego. Klawisze 1–3.",
+  "games.e.catcher": "Łapacz",
+  "games.e.catcher.how": "Przesuwaj koszyk i łap owoc z poprawną odpowiedzią. Unikaj błędnych. Klawisze ← →.",
+  "games.e.pairs": "Memory",
+  "games.e.pairs.how": "Zapamiętaj karty, zanim się odwrócą, a potem odkryj parę z poprawną odpowiedzią. Klawisze 1–8.",
+  "games.e.slicer": "Krojenie owoców",
+  "games.e.slicer.how": "Przesuń palcem, aby przeciąć owoc z poprawną odpowiedzią. Nie tnij błędnych. Klawisze 1–4.",
+  "games.e.water": "Dokąd płynie woda",
+  "games.e.water.how": "Wykop palcem drogę przez ziemię, aby woda wpłynęła do koryta z poprawną odpowiedzią. Klawisze 1–3.",
+  "games.e.mines": "Saper",
+  "games.e.mines.how": "Poprawna odpowiedź ładuje wykrywacz, który pokazuje minę i bezpieczne pole. Odkryj wszystkie bezpieczne pola; 🚩 oznacza minę. Klawisze 1–4 i F."
 }

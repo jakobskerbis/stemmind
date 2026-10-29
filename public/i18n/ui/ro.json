@@ -1525,5 +1525,21 @@
   "guest.delete": "Șterge profilul și toate datele",
   "guest.deleteConfirm": "Ștergi profilul, progresul și conversațiile? Acțiunea nu poate fi anulată.",
   "guest.logoutConfirm": "Fără cont, după deconectare nu mai ai acces la acest progres. Mai bine creează un cont în fila Cont. Te deconectezi totuși?",
-  "guest.off": "Folosirea fără cont nu mai este posibilă. Creează un cont ca să-ți păstrezi progresul."
+  "guest.off": "Folosirea fără cont nu mai este posibilă. Creează un cont ca să-ți păstrezi progresul.",
+  "games.e.diner": "Bistro",
+  "games.e.diner.how": "Un client comandă o sarcină. Atinge ingredientul cu răspunsul corect înainte să-și piardă clientul răbdarea. Taste 1–4.",
+  "games.e.hills": "Cursă pe dealuri",
+  "games.e.hills.how": "Jeepul merge singur. Treci prin canistra cu răspunsul corect și atinge ecranul ca să sari peste cele greșite. Tastă: spațiu.",
+  "games.e.pet": "Animăluț",
+  "games.e.pet.how": "Hrănește-l pe Bibi cu gustarea cu răspunsul corect: atinge-o sau trage-o la Bibi. Taste 1–3.",
+  "games.e.catcher": "Prinzătorul",
+  "games.e.catcher.how": "Mută coșul și prinde fructul cu răspunsul corect. Evită-le pe cele greșite. Taste ← →.",
+  "games.e.pairs": "Memorie",
+  "games.e.pairs.how": "Ține minte cărțile înainte să se întoarcă, apoi deschide perechea cu răspunsul corect. Taste 1–8.",
+  "games.e.slicer": "Tăiat fructe",
+  "games.e.slicer.how": "Glisează ca să tai fructul cu răspunsul corect. Nu le tăia pe cele greșite. Taste 1–4.",
+  "games.e.water": "Unde curge apa",
+  "games.e.water.how": "Sapă cu degetul un drum prin pământ, ca apa să curgă în cada cu răspunsul corect. Taste 1–3.",
+  "games.e.mines": "Căutătorul de mine",
+  "games.e.mines.how": "Un răspuns corect încarcă detectorul, care arată o mină și un pătrat sigur. Deschide toate pătratele sigure; 🚩 marchează o mină. Taste 1–4 și F."
 }

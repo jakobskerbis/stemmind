@@ -1511,5 +1511,21 @@
   "guest.delete": "Xóa hồ sơ và mọi dữ liệu",
   "guest.deleteConfirm": "Xóa hồ sơ, tiến độ và các cuộc trò chuyện? Không thể hoàn tác.",
   "guest.logoutConfirm": "Không có tài khoản thì sau khi đăng xuất em sẽ không thể truy cập tiến độ này nữa. Tốt hơn hãy tạo tài khoản ở thẻ Tài khoản. Vẫn đăng xuất?",
-  "guest.off": "Không thể dùng mà không có tài khoản nữa. Hãy tạo tài khoản để giữ tiến độ học tập."
+  "guest.off": "Không thể dùng mà không có tài khoản nữa. Hãy tạo tài khoản để giữ tiến độ học tập.",
+  "games.e.diner": "Quán ăn",
+  "games.e.diner.how": "Một vị khách gọi một bài toán. Chạm vào nguyên liệu có đáp án đúng trước khi khách hết kiên nhẫn. Phím 1–4.",
+  "games.e.hills": "Lái xe qua đồi",
+  "games.e.hills.how": "Xe jeep tự chạy. Lái qua can xăng có đáp án đúng và chạm để nhảy qua can sai. Phím: dấu cách.",
+  "games.e.pet": "Thú cưng",
+  "games.e.pet.how": "Cho Bibi ăn món có đáp án đúng: chạm vào hoặc kéo đến Bibi. Phím 1–3.",
+  "games.e.catcher": "Bắt trái cây",
+  "games.e.catcher.how": "Di chuyển giỏ và bắt trái cây có đáp án đúng. Tránh trái sai. Phím ← →.",
+  "games.e.pairs": "Trí nhớ",
+  "games.e.pairs.how": "Nhớ các thẻ trước khi chúng úp lại, rồi lật cặp có đáp án đúng. Phím 1–8.",
+  "games.e.slicer": "Cắt trái cây",
+  "games.e.slicer.how": "Vuốt để cắt trái cây có đáp án đúng. Đừng cắt trái sai. Phím 1–4.",
+  "games.e.water": "Nước chảy đi đâu",
+  "games.e.water.how": "Dùng ngón tay đào đường trong đất để nước chảy vào chậu có đáp án đúng. Phím 1–3.",
+  "games.e.mines": "Dò mìn",
+  "games.e.mines.how": "Đáp án đúng nạp máy dò, máy chỉ ra một quả mìn và một ô an toàn. Mở hết ô an toàn; 🚩 đánh dấu mìn. Phím 1–4 và F."
 }

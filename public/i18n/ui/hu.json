@@ -1518,5 +1518,21 @@
   "guest.delete": "Profil és minden adat törlése",
   "guest.deleteConfirm": "Törlöd a profilt, a haladást és a beszélgetéseket? Ez nem vonható vissza.",
   "guest.logoutConfirm": "Fiók nélkül kijelentkezés után már nem férsz hozzá ehhez a haladáshoz. Inkább hozz létre fiókot a Fiók lapon. Mégis kijelentkezel?",
-  "guest.off": "Fiók nélkül már nem lehet használni az Evklid alkalmazást. Hozz létre fiókot, hogy megtartsd a haladásodat."
+  "guest.off": "Fiók nélkül már nem lehet használni az Evklid alkalmazást. Hozz létre fiókot, hogy megtartsd a haladásodat.",
+  "games.e.diner": "Büfé",
+  "games.e.diner.how": "Egy vendég feladatot rendel. Koppints a jó választ tartalmazó hozzávalóra, mielőtt a vendég türelme elfogy. Billentyűk: 1–4.",
+  "games.e.hills": "Dombi autózás",
+  "games.e.hills.how": "A dzsip magától megy. Hajts át a jó választ mutató kannán, a rosszakon koppintással ugorj át. Billentyű: szóköz.",
+  "games.e.pet": "Kedvenc",
+  "games.e.pet.how": "Etesd meg Bibit a jó választ mutató csemegével: koppints rá, vagy húzd Bibihez. Billentyűk: 1–3.",
+  "games.e.catcher": "Elkapó",
+  "games.e.catcher.how": "Mozgasd a kosarat, és kapd el a jó választ mutató gyümölcsöt. Kerüld a rosszakat. Billentyűk: ← →.",
+  "games.e.pairs": "Memória",
+  "games.e.pairs.how": "Jegyezd meg a kártyákat, mielőtt megfordulnak, aztán fordítsd fel a jó választ mutató párt. Billentyűk: 1–8.",
+  "games.e.slicer": "Gyümölcsszeletelés",
+  "games.e.slicer.how": "Húzd az ujjad, hogy kettévágd a jó választ mutató gyümölcsöt. A rosszakat ne vágd. Billentyűk: 1–4.",
+  "games.e.water": "Merre folyik a víz",
+  "games.e.water.how": "Áss utat az ujjaddal a földben, hogy a víz a jó választ mutató kádba folyjon. Billentyűk: 1–3.",
+  "games.e.mines": "Aknakereső",
+  "games.e.mines.how": "A jó válasz feltölti a detektort, amely megmutat egy aknát és egy biztonságos mezőt. Nyisd fel az összes biztonságos mezőt; 🚩 jelöli az aknát. Billentyűk: 1–4 és F."
 }
