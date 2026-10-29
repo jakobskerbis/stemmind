@@ -1,4 +1,4 @@
-// Preimenuje aplikacijo: node scripts/preimenuj.js <Ime> [--slug ime] [--env IME] [--znak Ime,] [--suho]
+// Preimenuje aplikacijo: node scripts/preimenuj.js <Ime> [--slug ime] [--env IME] [--znak Ime,] [--domena ime.app] [--suho]
 //   --slug   notranje ime z malimi črkami (privzeto ime brez šumnikov, z malimi črkami): baza, ključi, dogodki
 //   --env    predpona nastavitev v .env (privzeto SLUG z velikimi črkami)
 //   --znak   logotip v dveh delih, drugi je v barvi poudarka (privzeto »Imen,o«: zadnja črka v barvi)
@@ -20,7 +20,7 @@ const opt = (k) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : un
 const name = args.find((a, i) => !a.startsWith("--") && !args[i - 1]?.startsWith("--"));
 const dry = args.includes("--suho");
 if (!name) {
-  console.log("Uporaba: node scripts/preimenuj.js <Ime> [--slug ime] [--env IME] [--znak Ime,] [--suho]");
+  console.log("Uporaba: node scripts/preimenuj.js <Ime> [--slug ime] [--env IME] [--znak Ime,] [--domena ime.app] [--suho]");
   process.exit(1);
 }
 const brandFile = path.join(root, "brand.json");
@@ -99,6 +99,7 @@ for (const file of walk(root)) {
 
 const next = {
   ...cur, name, slug, env, wordmark,
+  domain: opt("--domena") || undefined, // stara domena ne velja za novo ime
   legacy: [{ name: cur.name, slug: cur.slug, env: cur.env, until: new Date().toISOString().slice(0, 10), match: stem }, ...(cur.legacy || [])],
 };
 if (!dry) fs.writeFileSync(brandFile, JSON.stringify(next, null, 2) + "\n");

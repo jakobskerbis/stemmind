@@ -1,6 +1,8 @@
 // Odpre Evklid na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
-// Stalna povezava (ista ob vsakem zagonu): brezplačen račun ngrok (NGROK_AUTHTOKEN in
-// NGROK_DOMAIN v .env, skript ju vpraša enkrat). Brez tega: začasna povezava Cloudflare.
+// Lastna domena (npr. https://evklid.app): tunel Cloudflare, nameščen kot storitev na računalniku
+// (žeton je v storitvi, ne v .env). Skript storitev zazna sam, naslov je EVKLID_JAVNI_NASLOV v .env
+// ali domena iz brand.json. Sicer stalna povezava ngrok (NGROK_AUTHTOKEN in NGROK_DOMAIN v .env,
+// skript ju vpraša enkrat). Brez tega: začasna povezava Cloudflare.
 // Uporaba: node scripts/zaganjalnik.js telefon  (na Windows dvoklik na telefon-windows.bat)
 // Računalnik mora biti prižgan, dokler uporabljaš povezavo na telefonu.
 // Aplikacija se sama posodobi z GitHuba (preverja vsakih 15 minut), povezava ostane ista (docs/posodobitve.md).
@@ -115,6 +117,38 @@ async function ensureCloudflared() {
   }
   if (!isWin) fs.chmodSync(bin, 0o755);
   return bin;
+}
+
+// --- lastna domena (tunel Cloudflare kot storitev) ---
+// Ali na računalniku teče tunel Cloudflare (storitev iz nadzorne plošče Cloudflare, »cloudflared service install«).
+function cloudflaredServiceRunning() {
+  try {
+    if (isWin) return /RUNNING|START_PENDING/.test(execFileSync("sc", ["query", "cloudflared"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }));
+    execFileSync("pgrep", ["-f", "cloudflared.*tunnel.*run"], { stdio: "ignore" });
+    return true;
+  } catch { return false; }
+}
+
+// Naslov z lastno domeno: EVKLID_JAVNI_NASLOV v .env (0 = izklopljeno) ali domena iz brand.json, ko teče tunel.
+function publicUrl() {
+  const set = envValue(readEnv(), "EVKLID_JAVNI_NASLOV");
+  if (set === "0") return null;
+  const host = (set || (BRAND.domain && cloudflaredServiceRunning() ? BRAND.domain : ""))
+    .replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+  return host ? `https://${host}` : null;
+}
+
+// Ali naslov res pripelje do tega strežnika (tunel teče in kaže na localhost). Ob zagonu računalnika
+// se storitev lahko še povezuje, zato poskusi nekajkrat.
+async function reachable(url, tries = 4) {
+  for (let i = 0; i < tries; i++) {
+    try {
+      const res = await fetch(`${url}/manifest.webmanifest`, { signal: AbortSignal.timeout(10000), redirect: "manual" });
+      if (res.ok && (await res.json()).name === BRAND.name) return true;
+    } catch {}
+    if (i < tries - 1) await new Promise((r) => setTimeout(r, 5000));
+  }
+  return false;
 }
 
 // --- stalna povezava (ngrok) ---
@@ -261,12 +295,24 @@ async function main() {
   renameLegacyShortcuts(root);
   process.chdir(root);
   await ensurePassword();
-  const stable = await ngrokSettings();
+  const pub = publicUrl();
+  let stable = pub ? null : await ngrokSettings();
   say("Zaganjam Evklid ...");
   const own = await ensureServer();
   say("Odpiram povezavo za telefon ...");
   let url = "";
-  if (stable) {
+  if (pub) {
+    if (await reachable(pub)) url = pub;
+    else {
+      say(`Naslov ${pub} se ne odpre.`);
+      say(cloudflaredServiceRunning()
+        ? "  Tunel Cloudflare teče, a ne kaže na ta računalnik: v nadzorni plošči Cloudflare preveri, da naslov vodi na http://localhost:" + port + "."
+        : "  Tunel Cloudflare ne teče: v nadzorni plošči Cloudflare (Zero Trust → Networks → Tunnels) preveri, da je tunel »Healthy«.");
+      say("Odpiram drugo povezavo ...");
+      stable = await ngrokSettings().catch((e) => { say(`Stalna povezava ni uspela: ${e.message}`); return null; });
+    }
+  }
+  if (!url && stable) {
     try {
       url = await startNgrok(await ensureNgrok(), stable);
     } catch (e) {
@@ -296,7 +342,7 @@ async function main() {
   say("  Na telefonu v meniju brskalnika izberi »Dodaj na začetni zaslon«.");
   say();
   say("  Povezava deluje, dokler je to okno odprto in računalnik prižgan.");
-  say(stable && url.includes(stable.domain)
+  say(url === pub || (stable && url.includes(stable.domain))
     ? "  To je STALNA povezava: ob vsakem zagonu je enaka."
     : "  To je začasna povezava: ob vsakem zagonu je nova.");
   say("==============================================================");

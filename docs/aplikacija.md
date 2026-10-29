@@ -30,7 +30,21 @@ morda še enkrat prijaviti (to piše tudi v navodilih).
 - Posnetki zaslona za okno »Namesti« so v `public/icons/screen-*.png`; ob večji spremembi videza
   jih je dobro posneti znova (telefon 390 × 844 pri 2×, računalnik 1440 × 900).
 
-Namestitev deluje samo na naslovu `https://…` (ngrok, Cloudflare, Render) ali `http://localhost`.
+Namestitev deluje samo na naslovu `https://…` (evklid.app, ngrok, Cloudflare, Render) ali `http://localhost`.
+
+## Naslov evklid.app
+
+Na računalniku z aplikacijo teče tunel Cloudflare kot storitev Windows (namestitev iz nadzorne plošče
+Cloudflare: Zero Trust → Networks → Tunnels → ukaz `cloudflared service install …`; javni naslov
+`evklid.app` → `http://localhost:3000`). Storitev se zažene sama ob prižigu računalnika, žeton je v
+njej in ne v `.env`. `scripts/telefon.js` storitev zazna (`sc query cloudflared`), preveri, da
+`https://evklid.app/manifest.webmanifest` vrne Evklid, in pokaže ta naslov namesto naslova ngrok. Če se ne
+odpre, izpiše, kaj preveriti, in odpre ngrok ali začasno povezavo. Domena je v `brand.json`
+(`domain`), drug naslov se nastavi z `EVKLID_JAVNI_NASLOV` v `.env` (`0` izklopi).
+
+Aplikacija, nameščena z naslova ngrok, je za telefon druga aplikacija: odpri `https://evklid.app`,
+se prijavi in jo znova dodaj na začetni zaslon (napredek je na strežniku, zato se nič ne izgubi);
+staro ikono lahko izbrišeš.
 
 ## Pozneje: v trgovini Google Play in App Store
 
