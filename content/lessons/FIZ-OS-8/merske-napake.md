@@ -111,7 +111,7 @@ $\bar{l} = \dfrac{l_1 + l_2 + \dots + l_5}{n}$, $\Delta l$ = največji odmik od 
 
 ### Primer 3: prelet postaje in groba napaka
 
-Krožek drugič meri prelet ISS med istima točkama. Šest časov: $58{,}2\,\text{s}$, $57{,}9\,\text{s}$, $58{,}4\,\text{s}$, $63{,}1\,\text{s}$, $58{,}0\,\text{s}$ in $58{,}3\,\text{s}$. Tim prizna, da je pozno opazil postajo in štoparico zagnal šele čez nekaj sekund. Kolikšen je čas preleta?
+Krožek drugič meri prelet ISS med istima točkama. Šest časov: $58{,}2\,\text{s}$, $57{,}9\,\text{s}$, $58{,}4\,\text{s}$, $63{,}1\,\text{s}$, $58{,}0\,\text{s}$ in $58{,}3\,\text{s}$. Tim prizna, da je ob zvoniku gledal stran in štoparico ustavil šele nekaj sekund pozneje. Kolikšen je čas preleta?
 
 **Podatki:** $t_1 = 58{,}2\,\text{s}$, $t_2 = 57{,}9\,\text{s}$, $t_3 = 58{,}4\,\text{s}$, $t_4 = 63{,}1\,\text{s}$, $t_5 = 58{,}0\,\text{s}$, $t_6 = 58{,}3\,\text{s}$; ena meritev je pokvarjena
 **Iščemo:** čas preleta $t = (\bar{t} \pm \Delta t)$
@@ -156,7 +156,7 @@ $d_4 = 154{,}0\,\text{mm} - 115{,}7\,\text{mm} = 38{,}3\,\text{mm}$. Preizkus: $
 
 - **»Ena meritev je prava, druge so napačne.«** Tako je mislil Žan. Napako ima vsaka meritev, tudi najbolj skrbna, zato nobena ni »prava«. Najboljši približek je povprečje vseh.
 - **»Več decimalk pomeni bolj natančno.«** Kalkulator da $58{,}16$ ali $42{,}1333$, a štoparica s človeškim prstom ne meri na stotinke sekunde. Povprečje zaokroži na natančnost meritev.
-- **»Vse meritve gredo v povprečje.«** Meritev, ki je očitno pokvarjena (pozen zagon, napačno odčitan razdelek), povprečje močno premakne. Grobo napako najprej izloči.
+- **»Vse meritve gredo v povprečje.«** Meritev, ki je očitno pokvarjena (prepozno ustavljena štoparica, napačno odčitan razdelek), povprečje močno premakne. Grobo napako najprej izloči.
 - **»Povprečje odpravi vse napake.«** Odpravi le naključne, ki gredo enkrat gor, enkrat dol. Če vsi merijo z ravnilom, ki ima obrabljen začetek, so vse dolžine prekratke, in povprečje je prekratko prav tako.
 
 ## Povzetek
