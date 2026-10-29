@@ -731,7 +731,7 @@ export const TEK_MAT_OS = [
         const n = r.int(4, 8);
         const [a, b] = r.shuffle(NAMES).slice(0, 2);
         return {
-          text: `Skupina ${n} prijateljev, med njimi ${a} in ${b}, se posede v vrsto na ${nOf(n, "stol", "stola", "stole", "stolov")}. Na koliko načinov se lahko posedejo, če ${a} in ${b} želita sedeti drug ob drugem?`,
+          text: `Skupina ${n} prijateljev, med njimi ${a} in ${b}, se posede v vrsto na ${nOf(n, "stol", "stola", "stole", "stolov")}. Na koliko načinov se lahko posedejo, če ${a} in ${b} želita sedeti ${g(a, "", "f") + g(b, "", "f") === "ff" ? "druga ob drugi" : "drug ob drugem"}?`,
           answer: num(2 * fact(n - 1)),
           hint: `»Zlepi« ${a} in ${b} v en blok. Koliko »oseb« potem razporejaš? Na koliko načinov sta lahko razporejena znotraj bloka?`,
           data: { given: [`n = ${n}`], find: ["\\text{število razporeditev}"] },
@@ -745,7 +745,7 @@ export const TEK_MAT_OS = [
           const [a, b] = r.shuffle(NAMES).slice(0, 2);
           const ans = fact(n) - 2 * fact(n - 1);
           return {
-            text: `${n} otrok, med njimi ${a} in ${b}, stoji v vrsti. Na koliko načinov se lahko postavijo, če ${a} in ${b} ne smeta stati drug ob drugem?`,
+            text: `${n} otrok, med njimi ${a} in ${b}, stoji v vrsti. Na koliko načinov se lahko postavijo, če ${a} in ${b} ne smeta stati ${g(a, "", "f") + g(b, "", "f") === "ff" ? "druga ob drugi" : "drug ob drugem"}?`,
             answer: num(ans),
             hint: "Preštej vse razporeditve in odštej tiste, kjer stojita skupaj.",
             data: { given: [`n = ${n}`], find: ["\\text{število razporeditev}"] },
@@ -802,7 +802,7 @@ export const TEK_MAT_OS = [
         const avoid = r.next() < 0.5;
         const total = binom(m + n, n);
         return {
-          text: `Na mreži gremo od točke $A(0, 0)$ do točke $B(${m}, ${n})$ samo s koraki za 1 v desno ali navzgor. Koliko je poti, ki ${avoid ? "se izognejo" : "gredo skozi"} točki $C(${cx}, ${cy})$?`,
+          text: `Na mreži gremo od točke $A(0, 0)$ do točke $B(${m}, ${n})$ samo s koraki za 1 v desno ali navzgor. Koliko je poti, ki ${avoid ? "se izognejo točki" : "gredo skozi točko"} $C(${cx}, ${cy})$?`,
           answer: num(avoid ? total - through : through),
           hint: `Poti skozi $C$: pot od $A$ do $C$ in nato od $C$ do $B$ (pravilo produkta).${avoid ? " Izognejo se ji vse ostale." : ""}`,
           data: { given: [`B = (${m}, ${n})`, `C = (${cx}, ${cy})`], find: ["\\text{število poti}"] },

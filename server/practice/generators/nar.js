@@ -54,7 +54,7 @@ export function sortTask(set, level, r) {
     const wrong = r.shuffle(def.items.filter((i) => i[1] !== k)).slice(0, 3);
     const options = r.shuffle([right, ...wrong]);
     return {
-      text: `${def.q}\n\nPri katerem od naštetih je pravilen odgovor **${name(k)}**?`,
+      text: `${def.q}\n\nPoišči primer, pri katerem je odgovor **${name(k)}**.`,
       answer: {
         type: "choice",
         options: options.map((o) => cap(o[0])),

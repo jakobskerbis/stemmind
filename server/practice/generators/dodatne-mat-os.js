@@ -2359,11 +2359,11 @@ export const DODATNE_MAT_OS = [
         return T({
           text,
           answer: num(ans, unit, null, [
-            [q, `To je en del – celota ima ${d} takih delov.`],
+            [q, `To je en del ($${fr(1, d)}$) – celota je ${d}-krat večja.`],
             [(Y * n) / d, "Iščemo celoto, ne dela števila iz besedila."],
             [Y * d, `Najprej izračunaj en del: deli s števcem ${n}.`],
           ]),
-          hint: `${n} delov je ${Y}. Koliko je en del? Celota ima ${d} delov.`,
+          hint: `$${fr(n, d)}$ celote je ${Y}. Koliko je $${fr(1, d)}$? Celota je $${fr(d, d)}$.`,
           given: [`${fr(n, d)} \\text{ celote} = ${unit ? qty(Y, unit) : Y}`],
           find: ["\\text{celota}"],
           formula: "\\text{celota} = \\dfrac{\\text{del}}{n} \\cdot d",
@@ -4048,7 +4048,7 @@ export const DODATNE_MAT_OS = [
             text: `Graf premega sorazmerja kaže ${what}. Graf gre skozi točko $(${x1}, ${tx(y1)})$ (${ux} na osi x, ${uy} na osi y). Kolikšna je vrednost y pri $x = ${x2}$?`,
             answer: num(k * x2, null, null, [
               [y1 + (x2 - x1), "Pri premem sorazmerju se y poveča enakokrat kot x, ne za enako vrednost."],
-              [y1 * x2, `Najprej izračunaj y pri x = 1: ${tx(y1)} : ${x1}.`],
+              [y1 * x2, `Najprej izračunaj y pri x = 1: $${tx(y1)} : ${x1}$.`],
             ]),
             hint: "Graf premega sorazmerja je premica skozi izhodišče: $y = kx$. Najprej izračunaj k.",
             given: [`T = (${x1}, ${tx(y1)})`, `x = ${x2}`],

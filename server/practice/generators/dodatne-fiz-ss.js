@@ -425,11 +425,11 @@ export const DODATNE_FIZ_SS = [
     gen(level, r) {
       const n = ime(r);
       const W = r.pick([
-        { h: [0.7, 1.2], t: (h, v) => `Kroglica se s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$ odkotali z roba $${tx(h)}\\ \\mathrm{m}$ visoke mize.` },
-        { h: [5, 25], t: (h, v) => `${n} z mostu, ki je $${tx(h)}\\ \\mathrm{m}$ nad vodo, vrže kamen vodoravno s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$.` },
-        { h: [3, 12], t: (h, v) => `Z balkona v višini $${tx(h)}\\ \\mathrm{m}$ ${n} vrže žogo vodoravno s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$.` },
-        { h: [20, 60], t: (h, v) => `Iz $${tx(h)}\\ \\mathrm{m}$ visoke pečine skakalec v vodo odskoči vodoravno s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$.` },
-        { h: [0.8, 1.6], t: (h, v) => `Curek vode brizga vodoravno iz cevi v višini $${tx(h)}\\ \\mathrm{m}$ s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$.` },
+        { h: [0.7, 1.2], to: "na tla", t: (h, v) => `Kroglica se s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$ odkotali z roba $${tx(h)}\\ \\mathrm{m}$ visoke mize.` },
+        { h: [5, 25], to: "v vodo", t: (h, v) => `${n} z mostu, ki je $${tx(h)}\\ \\mathrm{m}$ nad vodo, vrže kamen vodoravno s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$.` },
+        { h: [3, 12], to: "na tla", t: (h, v) => `Z balkona v višini $${tx(h)}\\ \\mathrm{m}$ ${n} vrže žogo vodoravno s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$.` },
+        { h: [20, 60], to: "v vodo", t: (h, v) => `Iz $${tx(h)}\\ \\mathrm{m}$ visoke pečine skakalec v vodo odskoči vodoravno s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$.` },
+        { h: [0.8, 1.6], to: "na tla", t: (h, v) => `Curek vode brizga vodoravno iz cevi v višini $${tx(h)}\\ \\mathrm{m}$ s hitrostjo $${tx(v)}\\ \\mathrm{m/s}$.` },
       ]);
       const h = r.dec(W.h[0], W.h[1], 1);
       const v0 = r.dec(1.5, 12, 1);
@@ -476,7 +476,7 @@ export const DODATNE_FIZ_SS = [
         const vy = GZ * t;
         const v = Math.hypot(v0, vy);
         return T(
-          `${W.t(h, v0)} S kolikšno hitrostjo prileti na tla oz. vodo? Zračni upor zanemari. Zaokroži na eno decimalko.`,
+          `${W.t(h, v0)} S kolikšno hitrostjo prileti ${W.to}? Zračni upor zanemari. Zaokroži na eno decimalko.`,
           num(v, "m/s", 1, [M(v0 + vy, "Komponenti hitrosti sta pravokotni – ne seštej ju kot števili."), M(vy, "Upoštevati moraš tudi vodoravno komponento hitrosti."), M(Math.sqrt(GZ * h + v0 * v0), "Navpična komponenta je $v_y = \\sqrt{2gh}$; si pozabil faktor 2?")]),
           "Vodoravna komponenta hitrosti se ne spreminja, navpično pa telo prosto pada. Komponenti nato sestavi.",
           gi,
@@ -489,7 +489,7 @@ export const DODATNE_FIZ_SS = [
         const vy = GZ * t;
         const phi = todeg(Math.atan(vy / v0));
         return T(
-          `${W.t(h, v0)} Pod kolikšnim kotom glede na vodoravnico prileti na tla oz. vodo? Zračni upor zanemari. Zaokroži na eno decimalko.`,
+          `${W.t(h, v0)} Pod kolikšnim kotom glede na vodoravnico prileti ${W.to}? Zračni upor zanemari. Zaokroži na eno decimalko.`,
           num(phi, "°", 1, [M(90 - phi, "To je kot glede na navpičnico."), M(todeg(Math.atan(h / D)), "Kot hitrosti ni enak kotu zveznice med točko meta in točko pristanka.")]),
           "Izračunaj navpično komponento hitrosti ob pristanku; kot določa razmerje med navpično in vodoravno komponento.",
           gi,
@@ -1300,7 +1300,7 @@ export const DODATNE_FIZ_SS = [
         const as = 0.9e-5;
         const over = (L.b - 3 * as) * V * dT;
         return T(
-          `Steklena posoda je pri sobni temperaturi do roba napolnjena s $${V}\\ \\mathrm{mL}$ tekočine (z ${L.what}). Posodo s tekočino segrejemo za $${dT}\\ \\mathrm{K}$. Koliko mililitrov tekočine izteče? ($\\beta = ${L.bt}\\ \\mathrm{K^{-1}}$, za steklo $\\alpha = 0{,}9 \\cdot 10^{-5}\\ \\mathrm{K^{-1}}$) Zaokroži na dve decimalki.`,
+          `Steklena posoda je pri sobni temperaturi do roba napolnjena z ${L.what} ($${V}\\ \\mathrm{mL}$). Posodo s tekočino segrejemo za $${dT}\\ \\mathrm{K}$. Koliko mililitrov tekočine izteče? ($\\beta = ${L.bt}\\ \\mathrm{K^{-1}}$, za steklo $\\alpha = 0{,}9 \\cdot 10^{-5}\\ \\mathrm{K^{-1}}$) Zaokroži na dve decimalki.`,
           num(over, "mL", 2, [M(L.b * V * dT, "Razteza se tudi posoda – njena prostornina se poveča za $3\\alpha V \\Delta T$."), M((L.b - as) * V * dT, "Za prostornino posode uporabi $3\\alpha$, ne $\\alpha$.")]),
           "Izteče razlika med povečanjem prostornine tekočine in povečanjem prostornine posode.",
           [dat("V", V, "mL"), dat("\\Delta T", dT, "K"), `\\beta_{tek} = ${L.bt}\\ \\mathrm{K^{-1}}`, "\\alpha_{st} = 0{,}9 \\cdot 10^{-5}\\ \\mathrm{K^{-1}}"],
@@ -3348,7 +3348,7 @@ export const DODATNE_FIZ_SS = [
         const Wk = Ef(l) - Mt.A;
         const v = Math.sqrt((2 * Wk * E0) / ME) / 1000;
         return T(
-          `Iz ${Mt.name} (izstopno delo $${tx(Mt.A)}\\ \\mathrm{eV}$) svetloba z valovno dolžino $${l}\\ \\mathrm{nm}$ izbija elektrone. Kolikšna je največja hitrost izbitih elektronov? ${cs}, $m_e = 9{,}11 \\cdot 10^{-31}\\ \\mathrm{kg}$. Rezultat zapiši v km/s in zaokroži na celo število.`,
+          `Iz ${Mt.name} (izstopno delo $${tx(Mt.A)}\\ \\mathrm{eV}$) svetloba z valovno dolžino $${l}\\ \\mathrm{nm}$ izbija elektrone. Kolikšna je največja hitrost izbitih elektronov? ${cs.slice(0, -1)}, $m_e = 9{,}11 \\cdot 10^{-31}\\ \\mathrm{kg}$) Rezultat zapiši v km/s in zaokroži na celo število.`,
           num(v, "km/s", 0, [M(Math.sqrt((2 * Ef(l) * E0) / ME) / 1000, "Najprej od energije fotona odštej izstopno delo."), M(Math.sqrt((Wk * E0) / ME) / 1000, "Iz $W_k = \\frac{m v^2}{2}$ sledi $v = \\sqrt{2W_k/m}$."), M(v * 1000, "Rezultat pretvori v km/s.")]),
           "Izračunaj največjo kinetično energijo elektronov (v J), nato hitrost.",
           [dat("\\lambda", l, "nm"), dat("A_i", tx(Mt.A), "eV"), ...gi, K.me],
@@ -3707,7 +3707,7 @@ export const DODATNE_FIZ_SS = [
       if (level === 1) {
         const kind = r.pick(["wp", "ohm", "kwh", "valovna"]);
         if (kind === "wp") {
-          const m = r.int(2, 90);
+          const m = r.int(2, 20);
           const h = r.dec(1, 30, 1);
           const W = m * GZ * h;
           return T(
