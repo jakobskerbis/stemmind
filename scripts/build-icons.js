@@ -27,6 +27,8 @@ const NAMES = [
   "wallet",
   // meni profila (ime zgoraj desno)
   "user-plus", "log-out",
+  // kotiček zanimanj
+  "newspaper", "pin", "pin-off",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

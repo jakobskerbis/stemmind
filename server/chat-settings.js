@@ -11,6 +11,7 @@ import { normalizeSettings, courseKeysFor, cleanText, normalizeWeaknessList } fr
 import { LANGUAGE_CODES, langInfo } from "../public/i18n/languages.js";
 import { SCHOOL_SYSTEMS, SYSTEM_IDS, isRegional, gradesOf } from "../public/regions.js";
 import { PROFILE_SETTINGS, DEVICE_SETTINGS, deviceValue } from "../public/settings-registry.js";
+import { INTERESTS, cleanInterests } from "../public/interests.js";
 
 const PATH_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => PROFILE_SETTINGS[k].confirm);
 const PENDING_MS = 30 * 60 * 1000;
@@ -156,6 +157,10 @@ function profileView(student) {
     personality_setting: s.personality_setting,
     language: s.language,
     data_mode: s.data_mode,
+    interests: s.interests ?? [],
+    interest_custom: s.interest_custom || "",
+    news_level: s.news_level,
+    news_lang: s.news_lang,
     weak_points: student.manual_weaknesses || [],
   };
 }
@@ -256,7 +261,15 @@ function validateProfile(changes, student) {
       } else errors.push(`subject: this programme year has no ${changes.subject} course; courses: ${courseItems(program, level).map((x) => x.name).join("; ")}`);
     } else if (track !== "UNIVERZA") patch.subject = changes.subject;
   }
-  for (const key of ["track", "solving_mode", "data_mode"]) {
+  if (changes.interests !== undefined) {
+    const raw = Array.isArray(changes.interests) ? changes.interests : String(changes.interests).split(",");
+    const ids = cleanInterests(raw);
+    const bad = raw.filter((v) => String(v).trim() && !cleanInterests([v]).length);
+    if (bad.length) errors.push(`interests: unknown ${bad.join(", ")}; allowed ${INTERESTS.map((i) => `${i.id} (${i.en})`).join(", ")}`);
+    else patch.interests = ids;
+  }
+  if (changes.interest_custom !== undefined) patch.interest_custom = cleanText(String(changes.interest_custom ?? ""), 40);
+  for (const key of ["track", "solving_mode", "data_mode", "news_level", "news_lang"]) {
     if (changes[key] === undefined) continue;
     if (PROFILE_SETTINGS[key].values.includes(changes[key])) patch[key] = changes[key];
     else errors.push(`${key}: allowed ${PROFILE_SETTINGS[key].values.join(", ")}`);
@@ -276,7 +289,8 @@ function validateProfile(changes, student) {
 // Spremembe za poročilo modelu: [{ setting, from, to }].
 function diff(before, after, keys) {
   const show = (k, v) => (k === "study_program" ? programLabel(v) : k === "study_course" ? courseLabel(v) : v);
-  return keys.filter((k) => before[k] !== after[k]).map((k) => ({ setting: k, from: show(k, before[k]), to: show(k, after[k]) }));
+  const same = (a, b) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null); // seznami (interests)
+  return keys.filter((k) => !same(before[k], after[k])).map((k) => ({ setting: k, from: show(k, before[k]), to: show(k, after[k]) }));
 }
 
 const PROFILE_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => k !== "weak_points");

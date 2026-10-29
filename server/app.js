@@ -29,6 +29,7 @@ import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
+import { mountCorner } from "./corner.js";
 import { mountWebApp } from "./webapp.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
 
@@ -795,6 +796,7 @@ export function createApp(store, opts = {}) {
   mountLeagues(app, store, { loadStudent });
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress });
+  mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
 
   // --- poraba AI ---
   // Poraba AI za vse profile: brez računov samo na računalniku, kjer teče strežnik
