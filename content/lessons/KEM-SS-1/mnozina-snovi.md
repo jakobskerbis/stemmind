@@ -55,7 +55,7 @@ Imaš $10\,\mathrm{g}$ vodika $\mathrm{H_2}$ ($M = 2\,\mathrm{g/mol}$) in $10\,\
 V vodiku. Vodika je $\dfrac{10}{2} = 5\,\mathrm{mol}$, kisika le $\dfrac{10}{32} \approx 0{,}31\,\mathrm{mol}$. Molekule vodika so lažje, zato jih je v isti masi več. Enaka masa ne pomeni enakega števila delcev.
 :::
 
-V simulaciji spodaj »Mol, molska masa in Avogadrovo število« izberi vodo in pritisni gumb »1 mol«, nato izberi saharozo in spet pritisni »1 mol«. Opazi, da se masa močno spremeni, število delcev $N$ pa ostane približno $6{,}02 \cdot 10^{23}$. Simulacija računa z natančnejšimi relativnimi atomskimi masami (npr. $18{,}02\,\mathrm{g/mol}$ za vodo), zato so rezultati malo drugačni kot pri zaokroženih vrednostih.
+V simulaciji spodaj »Mol, molska masa in Avogadrovo število« izberi vodo in pritisni gumb »1 mol«, nato izberi glukozo in spet pritisni »1 mol«. Opazi, da se masa močno spremeni, število delcev $N$ pa ostane približno $6{,}02 \cdot 10^{23}$. Simulacija računa z natančnejšimi relativnimi atomskimi masami (npr. $18{,}02\,\mathrm{g/mol}$ za vodo), zato so rezultati malo drugačni kot pri zaokroženih vrednostih.
 
 ## Rešeni primeri
 
@@ -148,9 +148,9 @@ $m = n \cdot M = 0{,}5\,\mathrm{mol} \cdot 56\,\mathrm{g/mol} = 28\,\mathrm{g}$.
 ## Pogoste napake
 
 - **Mešanje mase in množine.** Masa $m$ je v gramih, množina $n$ v molih. $36\,\mathrm{g}$ vode ni $36\,\mathrm{mol}$ vode. Prav tako $1\,\mathrm{mol}$ vode in $1\,\mathrm{mol}$ železa nimata enake mase ($18\,\mathrm{g}$ in $56\,\mathrm{g}$), imata pa enako število delcev.
-- **Pozabljeno upoštevanje indeksov v formuli.** Pri $\mathrm{CO_2}$ je $M = 12 + 2 \cdot 16$, ne $12 + 16$.
-- **Obrnjena formula.** $n = m/M$, ne $n = M/m$. Preveri enote: rezultat mora biti v molih.
-- **Mol delcev ni mol atomov.** En mol molekul $\mathrm{H_2O}$ vsebuje $1\,\mathrm{mol}$ molekul, a $2\,\mathrm{mol}$ atomov vodika in $1\,\mathrm{mol}$ atomov kisika.
+- **Napačno upoštevanje indeksov v formuli.** Pri $\mathrm{CO_2}$ je $M = 12 + 2 \cdot 16 = 44\,\mathrm{g/mol}$, ne $12 + 16 = 28$ (pozabljen indeks) in ne $2 \cdot (12 + 16) = 56$. Indeks velja le za atom, za katerim stoji.
+- **Obrnjena ali pomnožena formula.** Kdor si zapomni le, da »nastopata $m$ in $M$«, izračuna $M/m$ ali $m \cdot M$. Pravilno je $n = m/M$. Preveri enote: rezultat mora biti v molih.
+- **Mol molekul ni mol atomov.** Napačno: »$1{,}5\,\mathrm{mol}$ vode ima $1{,}5\,\mathrm{mol}$ vodika.« En mol molekul $\mathrm{H_2O}$ vsebuje $1\,\mathrm{mol}$ molekul, a $2\,\mathrm{mol}$ atomov vodika in $1\,\mathrm{mol}$ atomov kisika. Množino molekul pomnoži z indeksom.
 - **Napačno računanje s potencami.** Pri $n \cdot N_A$ pomnožiš števili ($0{,}5 \cdot 6{,}022$) in potenco $10^{23}$ pustiš.
 
 ## Povzetek
@@ -199,7 +199,7 @@ Za drugo primerjavo: $24\,\mathrm{g}$ ogljika je $2\,\mathrm{mol}$, torej $1{,}2
 
 ## Drugače: Bolj natančno
 
-Mol je enota SI za množino snovi. Pri njeni definiciji se izhaja iz dogovora, da ima en mol natanko toliko delcev, kot jih pove Avogadrova konstanta; zato je $N_A$ konstanta z enoto $\mathrm{mol^{-1}}$ in ni brezdimenzijsko število.
+Mol je osnovna enota SI za množino snovi. Od leta 2019 je definiran tako, da ima Avogadrova konstanta natančno vrednost $N_A = 6{,}02214076 \cdot 10^{23}\,\mathrm{mol^{-1}}$; en mol ima torej natanko toliko delcev. Ker šteje delce na mol, je $N_A$ konstanta z enoto $\mathrm{mol^{-1}}$ in ni brezdimenzijsko število.
 
 Zakaj je molska masa v $\mathrm{g/mol}$ številsko enaka relativni atomski masi? Relativna atomska masa pove, kolikokrat je masa atoma večja od določene atomske enote mase. Ker mol vsebuje $N_A$ delcev, je masa enega mola enaka masi enega atoma, pomnoženi z $N_A$. Ta množitelj je izbran tako, da dobimo vrednost v gramih, ki je enaka relativni atomski masi. Zato npr. za ogljik ($A_r = 12$) velja $M = 12\,\mathrm{g/mol}$.
 
@@ -211,21 +211,44 @@ $$n = \frac{m}{M}: \quad \frac{\mathrm{g}}{\mathrm{g/mol}} = \mathrm{mol}, \qqua
 
 ## Preveri se
 
+? Koliko delcev vsebuje $1\,\mathrm{mol}$ katerekoli snovi?
+- Toliko, kolikor je njena molska masa v gramih.
+~ Molska masa pove maso enega mola, ne števila delcev. Število delcev v molu je za vse snovi enako.
++ Približno $6{,}022 \cdot 10^{23}$.
+- Odvisno od snovi: težje snovi imajo v molu manj delcev.
+~ Tu mešaš maso in množino. En mol vedno vsebuje $N_A$ delcev; težje snovi imajo le večjo maso mola.
+> En mol vsebuje $N_A \approx 6{,}022 \cdot 10^{23}$ delcev, ne glede na snov.
+
 ? Kolikšna je molska masa $\mathrm{CO_2}$? ($A_r(\mathrm{C}) = 12$, $A_r(\mathrm{O}) = 16$)
 - $28\,\mathrm{g/mol}$
+~ Tako dobiš, če pozabiš indeks 2: sešteješ le en atom kisika ($12 + 16$).
 - $60\,\mathrm{g/mol}$
+~ To bi bila molska masa skupine s tremi atomi kisika ($12 + 3 \cdot 16$). V $\mathrm{CO_2}$ sta le dva.
 + $44\,\mathrm{g/mol}$
 - $56\,\mathrm{g/mol}$
-> $M(\mathrm{CO_2}) = 12 + 2 \cdot 16 = 44\,\mathrm{g/mol}$. Odgovor $28$ pozabi en kisikov atom, $60$ in $56$ pa ne ustrezata seštevku.
+~ To je $2 \cdot (12 + 16)$: indeks 2 velja le za kisik, ne za ogljik.
+> $M(\mathrm{CO_2}) = 12 + 2 \cdot 16 = 44\,\mathrm{g/mol}$. Indeks 2 se nanaša le na atom kisika pred njim.
 
 ? Koliko molov je v $20\,\mathrm{g}$ natrijevega hidroksida $\mathrm{NaOH}$? ($M(\mathrm{NaOH}) = 40\,\mathrm{g/mol}$)
 - $2\,\mathrm{mol}$
+~ To je $\dfrac{M}{m} = \dfrac{40}{20}$, obrnjen ulomek. Enota bi bila $\mathrm{mol^{-1}}$, ne mol.
 + $0{,}5\,\mathrm{mol}$
 - $800\,\mathrm{mol}$
-> $n = m/M = 20\,\mathrm{g} / 40\,\mathrm{g/mol} = 0{,}5\,\mathrm{mol}$. Odgovor $2$ dobiš, če obrneš ulomek, $800$ pa, če masi množiš.
+~ To je $m \cdot M = 20 \cdot 40$. Maso z molsko maso delimo, ne množimo; produkt ima enoto $\mathrm{g^2/mol}$.
+> $n = \dfrac{m}{M} = \dfrac{20\,\mathrm{g}}{40\,\mathrm{g/mol}} = 0{,}5\,\mathrm{mol}$.
+
+? Koliko molov atomov vodika je v $1{,}5\,\mathrm{mol}$ vode $\mathrm{H_2O}$?
+- $1{,}5\,\mathrm{mol}$
+~ To je množina molekul vode. Vsaka molekula ima dva atoma vodika, zato je atomov vodika dvakrat več.
++ $3\,\mathrm{mol}$
+- $0{,}75\,\mathrm{mol}$
+~ Z 2 je treba pomnožiti, ne deliti: atomov vodika je več kot molekul vode, ne manj.
+> V vsaki molekuli $\mathrm{H_2O}$ sta 2 atoma vodika, zato $n(\mathrm{H}) = 2 \cdot 1{,}5\,\mathrm{mol} = 3\,\mathrm{mol}$.
 
 ? Koliko molekul je v $2\,\mathrm{mol}$ snovi?
 - $3{,}011 \cdot 10^{23}$
+~ To je število molekul v $0{,}5\,\mathrm{mol}$: delil si z 2, namesto da bi množil.
 - $6{,}022 \cdot 10^{23}$
+~ To je število molekul v $1\,\mathrm{mol}$. Pozabil si pomnožiti z množino $n = 2\,\mathrm{mol}$.
 + $1{,}2044 \cdot 10^{24}$
-> $N = n \cdot N_A = 2 \cdot 6{,}022 \cdot 10^{23} = 12{,}044 \cdot 10^{23} = 1{,}2044 \cdot 10^{24}$. Odgovor $6{,}022 \cdot 10^{23}$ je število za $1\,\mathrm{mol}$, odgovor $3{,}011 \cdot 10^{23}$ pa za $0{,}5\,\mathrm{mol}$.
+> $N = n \cdot N_A = 2 \cdot 6{,}022 \cdot 10^{23} = 12{,}044 \cdot 10^{23} = 1{,}2044 \cdot 10^{24}$.

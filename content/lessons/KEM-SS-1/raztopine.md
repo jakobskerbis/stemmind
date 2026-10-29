@@ -7,7 +7,7 @@ avtor: AI
 
 Pri kemiji so snovi pogosto raztopljene v vodi: fiziološka raztopina, kis, razkužilo, sok, krvna plazma. Iz prejšnjih ur že znaš izračunati množino snovi ($n = \dfrac{m}{M}$) in veš, da je molska masa $M$ v $\text{g/mol}$.
 
-Pri raztopinah pa nas običajno ne zanima samo, *koliko* snovi imamo, ampak *kako močna* je raztopina, torej koliko topljenca je v določeni količini raztopine. Za to uporabljamo **masni delež** in **množinsko koncentracijo**. Kadar iz bolj koncentrirane raztopine (z več topljenca v isti prostornini) pripravimo bolj razredčeno, temu postopku rečemo **redčenje**. To počnejo v laboratoriju, v lekarni in doma, ko razredčiš sirup.
+Pri raztopinah pa nas običajno ne zanima samo, *koliko* snovi imamo, ampak *kako koncentrirana* je raztopina, torej koliko topljenca je v določeni količini raztopine. Za to uporabljamo **masni delež** in **množinsko koncentracijo**. Kadar iz bolj koncentrirane raztopine (z več topljenca v isti prostornini) pripravimo bolj razredčeno, temu postopku rečemo **redčenje**. To počnejo v laboratoriju, v lekarni in doma, ko razredčiš sirup.
 
 ## Razlaga
 
@@ -61,39 +61,96 @@ Množina topljenca ostane enaka, ker smo dodali samo vodo. Koncentracija se zman
 
 V $180\,\text{g}$ vode raztopimo $20\,\text{g}$ kuhinjske soli. Kolikšen je masni delež soli v raztopini?
 
-1. Najprej izračunamo maso raztopine, ker v imenovalcu ni mase vode, ampak mase *cele raztopine*: $m(\text{raztopina}) = 20\,\text{g} + 180\,\text{g} = 200\,\text{g}$.
+**Podatki:** $m(\text{topljenec}) = 20\,\text{g}$ soli, $m(\text{topilo}) = 180\,\text{g}$ vode
+**Iščemo:** masni delež soli $w$
+
+:::formula
+$m(\text{raztopina}) = m(\text{topljenec}) + m(\text{topilo})$
+
+$w = \dfrac{m(\text{topljenec})}{m(\text{raztopina})}$
+:::
+
+**Rešitev:**
+
+1. Najprej izračunamo maso raztopine, ker v imenovalcu ni mase vode, ampak masa *cele raztopine*: $m(\text{raztopina}) = 20\,\text{g} + 180\,\text{g} = 200\,\text{g}$.
 2. Vstavimo v enačbo: $w = \dfrac{20\,\text{g}}{200\,\text{g}} = 0{,}10$.
-3. V odstotkih: $w = 10\,\%$.
-4. Preverimo smiselnost: masni delež mora biti med $0$ in $1$. ✓
+3. V odstotke pretvorimo z množenjem s $100$: $w = 10\,\%$.
+4. Preverimo smiselnost: masni delež mora biti med $0$ in $1$, ker topljenec ne more biti težji od cele raztopine. ✓
+5. Odgovor: masni delež soli je $0{,}10$ oziroma $10\,\%$.
 
 ### Primer 2: množinska koncentracija
 
 V merilni bučki raztopimo $11{,}7\,\text{g}$ NaCl in dopolnimo z vodo do $500\,\text{mL}$ raztopine. Kolikšna je množinska koncentracija?
 
-1. Molska masa: $M(\mathrm{NaCl}) = 23 + 35{,}5 = 58{,}5\,\text{g/mol}$.
-2. Množina: $n = \dfrac{11{,}7\,\text{g}}{58{,}5\,\text{g/mol}} = 0{,}20\,\text{mol}$.
+**Podatki:** $m(\mathrm{NaCl}) = 11{,}7\,\text{g}$, $V = 500\,\text{mL}$ raztopine; $A_\mathrm{r}(\mathrm{Na}) = 23$, $A_\mathrm{r}(\mathrm{Cl}) = 35{,}5$
+**Iščemo:** množinsko koncentracijo $c$
+
+:::formula
+$n = \dfrac{m}{M}$
+
+$c = \dfrac{n}{V}$
+:::
+
+**Rešitev:**
+
+1. Molska masa je vsota relativnih atomskih mas: $M(\mathrm{NaCl}) = 23 + 35{,}5 = 58{,}5\,\text{g/mol}$.
+2. Maso pretvorimo v množino, ker koncentracija šteje mole: $n = \dfrac{11{,}7\,\text{g}}{58{,}5\,\text{g/mol}} = 0{,}20\,\text{mol}$.
 3. Prostornino pretvorimo v litre, ker je koncentracija v $\text{mol/L}$: $V = 500\,\text{mL} = 0{,}500\,\text{L}$.
 4. Koncentracija: $c = \dfrac{0{,}20\,\text{mol}}{0{,}500\,\text{L}} = 0{,}40\,\text{mol/L}$.
-5. Preverimo: v $1\,\text{L}$ bi bilo $0{,}40\,\text{mol}$ NaCl, v pol litra pa polovico, $0{,}20\,\text{mol}$. ✓
+5. Preverimo: v $1\,\text{L}$ bi bilo $0{,}40\,\text{mol}$ NaCl, v pol litra pa polovica, $0{,}20\,\text{mol}$. ✓
+6. Odgovor: množinska koncentracija NaCl je $0{,}40\,\text{mol/L}$.
 
 ### Primer 3: redčenje
 
-Na voljo imamo raztopino s koncentracijo $2{,}0\,\text{mol/L}$. Pripraviti moramo $250\,\text{mL}$ raztopine s koncentracijo $0{,}50\,\text{mol/L}$. Koliko začetne raztopine potrebujemo?
+Na voljo imamo raztopino s koncentracijo $2{,}0\,\text{mol/L}$. Pripraviti moramo $250\,\text{mL}$ raztopine s koncentracijo $0{,}50\,\text{mol/L}$. Koliko začetne raztopine potrebujemo in kako jo pripravimo?
 
-1. Zapišemo znano: $c_1 = 2{,}0\,\text{mol/L}$, $c_2 = 0{,}50\,\text{mol/L}$, $V_2 = 250\,\text{mL}$. Iščemo $V_1$.
-2. Uporabimo $c_1 V_1 = c_2 V_2$ in izrazimo: $V_1 = \dfrac{c_2 \cdot V_2}{c_1}$.
-3. Vstavimo: $V_1 = \dfrac{0{,}50\,\text{mol/L} \cdot 250\,\text{mL}}{2{,}0\,\text{mol/L}} = 62{,}5\,\text{mL}$.
-4. **Postopek.** Odmerimo $62{,}5\,\text{mL}$ začetne raztopine v bučko in dolijemo vodo do oznake $250\,\text{mL}$. Ne dodamo $250\,\text{mL}$ vode, ampak dopolnimo do skupne prostornine $250\,\text{mL}$.
-5. Preverimo: začetna raztopina je $4$-krat močnejša kot končna ($2{,}0 : 0{,}50 = 4$), zato moramo vzeti $\dfrac{1}{4}$ končne prostornine: $\dfrac{250}{4} = 62{,}5\,\text{mL}$. ✓
+**Podatki:** $c_1 = 2{,}0\,\text{mol/L}$, $c_2 = 0{,}50\,\text{mol/L}$, $V_2 = 250\,\text{mL}$
+**Iščemo:** prostornino začetne raztopine $V_1$
+
+:::formula
+$c_1 \cdot V_1 = c_2 \cdot V_2$
+:::
+
+**Rešitev:**
+
+1. Pri redčenju se množina topljenca ne spremeni, zato velja $c_1 V_1 = c_2 V_2$. Izrazimo neznanko: $V_1 = \dfrac{c_2 \cdot V_2}{c_1}$.
+2. Vstavimo (obe prostornini sta v mL, zato pretvorba ni potrebna): $V_1 = \dfrac{0{,}50\,\text{mol/L} \cdot 250\,\text{mL}}{2{,}0\,\text{mol/L}} = 62{,}5\,\text{mL}$.
+3. **Postopek.** Odmerimo $62{,}5\,\text{mL}$ začetne raztopine v bučko in dolijemo vodo do oznake $250\,\text{mL}$. Ne dodamo $250\,\text{mL}$ vode, ker koncentracija velja za skupno prostornino raztopine.
+4. Preverimo: začetna raztopina je $4$-krat bolj koncentrirana kot končna ($2{,}0 : 0{,}50 = 4$), zato moramo vzeti $\dfrac{1}{4}$ končne prostornine: $\dfrac{250\,\text{mL}}{4} = 62{,}5\,\text{mL}$. ✓
+5. Odgovor: potrebujemo $62{,}5\,\text{mL}$ začetne raztopine, ki jo z vodo dopolnimo do $250\,\text{mL}$.
+
+### Primer 4: zdaj ti
+
+Pripraviti moraš $200\,\text{g}$ raztopine sladkorja z masnim deležem $8\,\%$. Koliko sladkorja in koliko vode potrebuješ?
+
+**Podatki:** $m(\text{raztopina}) = 200\,\text{g}$, $w = 8\,\% = 0{,}08$
+**Iščemo:** $m(\text{sladkor})$ in $m(\text{voda})$
+
+:::formula
+$m(\text{topljenec}) = w \cdot m(\text{raztopina})$
+
+$m(\text{topilo}) = m(\text{raztopina}) - m(\text{topljenec})$
+:::
+
+**Rešitev:**
+
+1. Odstotek pretvorimo v decimalno število, ker formula dela z deleži: $w = 0{,}08$.
+2. Iz $w = \dfrac{m(\text{topljenec})}{m(\text{raztopina})}$ izrazimo maso topljenca (pomnožimo obe strani z $m(\text{raztopina})$).
+3. Izračunaj sam, nato preveri:
+
+:::premisli
+Koliko sladkorja in koliko vode potrebuješ?
+---
+$m(\text{sladkor}) = 0{,}08 \cdot 200\,\text{g} = 16\,\text{g}$, $m(\text{voda}) = 200\,\text{g} - 16\,\text{g} = 184\,\text{g}$. Vode ni $200\,\text{g}$, ker je $200\,\text{g}$ masa cele raztopine.
+:::
 
 ## Pogoste napake
 
-- **Masa vode namesto mase raztopine.** Pri masnem deležu v imenovalec sodi masa topljenca *in* topila skupaj. V primeru 1 bi z $\dfrac{20}{180}$ dobili napačen rezultat.
-- **Mililitri namesto litrov.** Pri $c = \dfrac{n}{V}$ mora biti $V$ v litrih. Če vstaviš $500$ namesto $0{,}500$, je koncentracija tisočkrat premajhna.
-- **Prostornina topila namesto prostornine raztopine.** Koncentracija se nanaša na prostornino cele raztopine. Zato raztopino v bučki dopolnimo do oznake, ne dodamo kar določene količine vode.
-- **Seštevanje pri redčenju.** Pri redčenju z vodo ne smeš koncentracij ali prostornin enostavno seštevati. Velja $c_1 V_1 = c_2 V_2$.
-- **Pozabljen odstotek.** Masni delež $0{,}10$ in $10\,\%$ sta isto. Napaka je, če v račun vstaviš $10$ namesto $0{,}10$.
-- **Napačna molska masa.** Pred računom množine preveri, da si pravilno sešteval relativne atomske mase iz periodnega sistema.
+- **Masa vode namesto mase raztopine.** »$30\,\text{g}$ soli v $120\,\text{g}$ vode: $w = \dfrac{30}{120} = 25\,\%$.« To je narobe, ker masni delež primerja topljenec s *celo* raztopino. Pravilno: $m(\text{raztopina}) = 150\,\text{g}$, $w = 20\,\%$.
+- **Mililitri namesto litrov.** »$c = \dfrac{0{,}5\,\text{mol}}{250} = 0{,}002\,\text{mol/L}$.« Enota $\text{mol/L}$ zahteva litre, zato je rezultat tisočkrat premajhen. Pravilno: $V = 0{,}250\,\text{L}$, $c = 2\,\text{mol/L}$. Podobno je narobe množiti $0{,}5 \cdot 250$.
+- **Dodana voda namesto končne prostornine.** »Za $250\,\text{mL}$ raztopine dodam $250\,\text{mL}$ vode.« Koncentracija se nanaša na prostornino *cele raztopine*, zato bi bila raztopina preveč razredčena. Pravilno: raztopino v bučki dopolniš do oznake.
+- **Obrnjeno razmerje pri redčenju.** »Prostornina se poveča petkrat, zato se poveča tudi koncentracija: $c_2 = 5{,}0\,\text{mol/L}$.« Z dodajanjem vode topljenca ne dodaš, zato se koncentracija *zmanjša*. Pravilno: $c_2 = \dfrac{c_1 V_1}{V_2}$.
+- **Pozabljen odstotek.** Masni delež $0{,}10$ in $10\,\%$ sta isto. Če v račun $m = w \cdot m(\text{raztopina})$ vstaviš $10$ namesto $0{,}10$, dobiš maso, ki je večja od mase raztopine. Pred računom odstotek deli s $100$.
 
 ## Povzetek
 
@@ -107,10 +164,10 @@ Na voljo imamo raztopino s koncentracijo $2{,}0\,\text{mol/L}$. Pripraviti moram
 
 Predstavljaj si bučko z vodo, v kateri plavajo modre pikice. Vsaka pikica je delec topljenca.
 
-- Če v isto prostornino dodaš več pikic, je raztopina **močnejša** (koncentracija se poveča).
+- Če v isto prostornino dodaš več pikic, je raztopina **bolj koncentrirana** (koncentracija se poveča).
 - Če pikice pustiš in dodaš vodo, se razporedijo po večji prostornini. Je jih enako veliko kot prej, vendar so bolj razredčene (koncentracija se zmanjša).
 
-V simulaciji zgoraj lahko to opaziš: spreminjaj količino topljenca in prostornino raztopine ter opazuj prikazano koncentracijo. Ko prostornino podvojiš, se koncentracija prepolovi. Ko podvojiš količino topljenca pri isti prostornini, se podvoji tudi koncentracija.
+V simulaciji spodaj (»Koncentracija raztopine«) lahko to opaziš: spreminjaj množino topljenca in prostornino raztopine ter opazuj prikazano koncentracijo. Ko prostornino podvojiš, se koncentracija prepolovi. Ko podvojiš količino topljenca pri isti prostornini, se podvoji tudi koncentracija.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -152,20 +209,44 @@ $$c_1 V_1 = c_2 V_2$$
 
 ## Preveri se
 
+? Kaj pomeni $V$ v enačbi $c = \dfrac{n}{V}$?
+- Prostornino dodane vode (topila).
+~ Koncentracija se nanaša na celo raztopino. Zato raztopino dopolnimo do oznake in ne dodamo določene prostornine vode.
++ Prostornino cele raztopine, izraženo v litrih.
+- Prostornino topljenca pred raztapljanjem.
+~ Prostornina trdnega topljenca ni pomembna. Šteje, po kolikšni prostornini raztopine so delci topljenca porazdeljeni.
+> $c$ pove, koliko molov topljenca je v $1\,\text{L}$ raztopine, zato je $V$ prostornina cele raztopine v litrih.
+
 ? V $120\,\text{g}$ vode raztopimo $30\,\text{g}$ soli. Kolikšen je masni delež soli v raztopini?
 - $25\,\%$
+~ To je $\dfrac{30}{120}$: delil si z maso vode. V imenovalec sodi masa cele raztopine, $150\,\text{g}$.
 + $20\,\%$
 - $30\,\%$
+~ To je masa soli v gramih, zapisana kot odstotek. Odstotek dobiš šele, ko maso soli deliš z maso raztopine.
 > Masa raztopine je $30\,\text{g} + 120\,\text{g} = 150\,\text{g}$, zato je $w = \dfrac{30}{150} = 0{,}20 = 20\,\%$. Odgovor $25\,\%$ dobiš, če deliš z maso vode ($\dfrac{30}{120}$).
+
+? Raztopini sladkorja doliješ vodo. Kaj velja?
+- Množina in koncentracija sladkorja ostaneta enaki.
+~ Množina res ostane enaka, a se porazdeli po večji prostornini, zato je $c = \dfrac{n}{V}$ manjša.
+- Koncentracija se poveča, ker je tekočine več.
+~ Več tekočine ne pomeni več topljenca. Dodal si samo vodo, zato je sladkorja v vsakem litru manj.
++ Množina sladkorja ostane enaka, koncentracija se zmanjša.
+- Množina sladkorja se zmanjša.
+~ Sladkorja nisi odvzel, dodal si samo vodo. Spremeni se prostornina, ne množina topljenca.
+> Pri redčenju ostane $n$ enaka, $V$ se poveča, zato se $c = \dfrac{n}{V}$ zmanjša. Zato velja $c_1 V_1 = c_2 V_2$.
 
 ? V $250\,\text{mL}$ raztopine je raztopljeno $0{,}5\,\text{mol}$ topljenca. Kolikšna je množinska koncentracija?
 - $125\,\text{mol/L}$
+~ To je $0{,}5 \cdot 250$. Koncentracijo dobiš z deljenjem, $c = \dfrac{n}{V}$, prostornina pa mora biti v litrih.
 - $0{,}002\,\text{mol/L}$
+~ To je $\dfrac{0{,}5}{250}$: delil si z mililitri. Pretvori v litre: $250\,\text{mL} = 0{,}25\,\text{L}$.
 + $2\,\text{mol/L}$
 > Prostornino moramo pretvoriti v litre: $250\,\text{mL} = 0{,}25\,\text{L}$. Nato je $c = \dfrac{0{,}5\,\text{mol}}{0{,}25\,\text{L}} = 2\,\text{mol/L}$. Odgovora $125$ in $0{,}002$ sta posledica napačnega množenja ali deljenja z $250$ namesto z $0{,}25$.
 
 ? $100\,\text{mL}$ raztopine s koncentracijo $1{,}0\,\text{mol/L}$ razredčimo z vodo do skupne prostornine $500\,\text{mL}$. Kolikšna je nova koncentracija?
 - $5{,}0\,\text{mol/L}$
+~ Razmerje si obrnil ($\dfrac{1{,}0 \cdot 500}{100}$). Z dodajanjem vode se koncentracija zmanjša, ne poveča.
 - $0{,}17\,\text{mol/L}$
+~ Tako dobiš, če $500\,\text{mL}$ vode *dodaš* ($V_2 = 600\,\text{mL}$). Naloga pa pravi, da je *končna* prostornina $500\,\text{mL}$.
 + $0{,}20\,\text{mol/L}$
 > Iz $c_1 V_1 = c_2 V_2$ sledi $c_2 = \dfrac{1{,}0 \cdot 100}{500} = 0{,}20\,\text{mol/L}$. Odgovor $0{,}17\,\text{mol/L}$ bi dobil, če bi $500\,\text{mL}$ vode *dodal* ($V_2 = 600\,\text{mL}$), naloga pa pravi, da je končna prostornina $500\,\text{mL}$.

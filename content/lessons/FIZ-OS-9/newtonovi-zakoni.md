@@ -24,6 +24,12 @@ To pomeni:
 
 Pogosta zmota je, da za gibanje vedno potrebujemo silo. Ni res: za *enakomerno gibanje* sila ni potrebna, potrebna je za *spremembo* gibanja. Predmet na ledu zdrsi daleč, ker je trenje majhno. Na grobih tleh se hitro ustavi, ker ga zavira trenje.
 
+:::premisli
+Hokejski plošček drsi po gladkem ledu. Kaj bi se zgodilo s ploščkom, če ne bi bilo ne trenja ne upora zraka?
+---
+Drsel bi naprej v isti smeri z enako hitrostjo, dokler ga kaj ne ustavi. Rezultanta bi bila nič, za enakomerno gibanje pa sila ni potrebna.
+:::
+
 **2. Drugi zakon: $F = m \cdot a$.**
 Če je rezultanta sil na telo različna od nič, telo pospešuje. Pospešek je premo sorazmeren rezultanti in obratno sorazmeren masi:
 
@@ -40,7 +46,9 @@ Iz tega sledi:
 - dvakrat večja sila na isto telo da dvakrat večji pospešek,
 - dvakrat večja masa pri isti sili da dvakrat manjši pospešek.
 
-**3. Teža.** Pri prosto padajočem telesu je edina sila teža $F_g$, pospešek pa je težni pospešek $g \approx 10\,\dfrac{\text{m}}{\text{s}^2}$. Iz $F = m \cdot a$ sledi
+V simulaciji spodaj »Sila, masa in pospešek« (podlaga brez trenja) nastavi vlečno silo $10\,\text{N}$ in maso $5\,\text{kg}$ ter klikni Spusti. Nato podvoji oboje ($20\,\text{N}$, $10\,\text{kg}$). Opazi, da je premica na grafu hitrosti enako strma: pospešek je v obeh primerih $2\,\dfrac{\text{m}}{\text{s}^2}$. Če med gibanjem vlečno silo nastaviš na $0$, se klada giblje naprej s stalno hitrostjo (1. zakon).
+
+**3. Teža.** Teža $F_g$ je sila, s katero Zemlja privlači telo. Izračunamo jo z maso in težnim pospeškom $g \approx 10\,\dfrac{\text{m}}{\text{s}^2}$ (to je isto kot $10\,\dfrac{\text{N}}{\text{kg}}$):
 
 $$F_g = m \cdot g.$$
 
@@ -60,6 +68,12 @@ Pomembno:
 - Prijemališči sil sta na **različnih telesih**. Zato se med seboj ne izničita, saj ju ne seštevamo za isto telo.
 
 Primer: ko stojiš na tleh, na tla pritiskaš s silo (enako veliko, kot je tvoja teža), tla pa nate delujejo z enako veliko silo navzgor.
+
+:::premisli
+Na drsališču stojita oče ($80\,\text{kg}$) in sin ($40\,\text{kg}$). Sin odrine očeta. Kdo od njiju dobi večji pospešek in zakaj?
+---
+Sin. Po 3. zakonu delujeta drug na drugega z enako veliko silo, sin pa ima pol manjšo maso, zato po $a = F/m$ dobi dvakrat večji pospešek. Odpelje ga nazaj, čeprav je potiskal očeta.
+:::
 
 ## Rešeni primeri
 
@@ -120,14 +134,36 @@ Rezultanta: $F = F_1 - F_2$, pospešek: $a = \dfrac{F}{m}$, hitrost pri gibanju 
 4. **Hitrost:** $v = a \cdot t = 2\,\dfrac{\text{m}}{\text{s}^2}\cdot 6\,\text{s} = 12\,\dfrac{\text{m}}{\text{s}}$ (začetna hitrost je nič).
 5. **Odgovor:** po $6\,\text{s}$ je hitrost $12\,\dfrac{\text{m}}{\text{s}}$, kar je $43{,}2\,\dfrac{\text{km}}{\text{h}}$.
 
+### Primer 4: zdaj ti
+
+Kolesar s kolesom ima skupaj maso $80\,\text{kg}$. Pedala ga poganjajo naprej s silo $200\,\text{N}$, upor zraka in trenje ga zavirata s silo $40\,\text{N}$. Kolikšen je pospešek kolesarja?
+
+**Podatki:** $m = 80\,\text{kg}$, sila naprej $F_1 = 200\,\text{N}$, zaviralna sila $F_2 = 40\,\text{N}$
+**Iščemo:** pospešek $a$
+
+:::formula
+$F = F_1 - F_2$, nato $a = \dfrac{F}{m}$
+:::
+
+**Rešitev:**
+
+1. **Sile:** $200\,\text{N}$ naprej in $40\,\text{N}$ nazaj; sili sta nasprotni, zato ju odštejemo.
+2. **Rezultanta:** $F = 200\,\text{N} - 40\,\text{N} = 160\,\text{N}$ naprej.
+3. **Drugi zakon:** izračunaj sam, nato preveri:
+
+:::premisli
+Koliko je $a = \dfrac{160\,\text{N}}{80\,\text{kg}}$?
+---
+$a = 2\,\dfrac{\text{m}}{\text{s}^2}$ v smeri vožnje. Če bi pozabil na upor in vzel $200\,\text{N}$, bi dobil napačnih $2{,}5\,\dfrac{\text{m}}{\text{s}^2}$.
+:::
+
 ## Pogoste napake
 
 - **»Brez sile ni gibanja.«** Narobe. Brez rezultante se telo giblje enakomerno naprej. Sila je potrebna za spremembo hitrosti.
 - **Ravnovesje pomeni mirovanje.** Ne nujno. Ravnovesje pomeni, da je rezultanta nič; telo lahko miruje ali se enakomerno giblje.
 - **Pozabljeno trenje.** V $F = m \cdot a$ vstavljamo **rezultanto**, ne le ene sile.
 - **Sili akcije in reakcije se izničita.** Ne, ker delujeta na različni telesi. Izničita se lahko le sili na isto telo (npr. teža in sila podlage pri knjigi na mizi, a to ni par po tretjem zakonu).
-- **Mešanje mase in teže.** Masa je v $\text{kg}$, teža pa sila v $\text{N}$: $F_g = m \cdot g$.
-- **Enote.** Pred računom pretvori vse v $\text{kg}$, $\text{m}$, $\text{s}$.
+- **Mešanje mase in teže.** »Tehtam $50\,\text{kg}$, torej je moja teža $50\,\text{kg}$.« Masa je v $\text{kg}$, teža pa je sila v $\text{N}$: $F_g = m \cdot g \approx 500\,\text{N}$.
 
 ## Povzetek
 
