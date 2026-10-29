@@ -93,6 +93,7 @@ export function mountAccounts(app, store, opts = {}) {
     email: p.email,
     name: p.name,
     minor: isMinor(p),
+    birth_year: p.birth_date ? Number(p.birth_date.slice(0, 4)) : null,
     verified: !!p.email_verified_at,
     is_admin: !!p.is_admin,
     weekly_email: !!p.weekly_email,
@@ -502,11 +503,21 @@ export function mountAccounts(app, store, opts = {}) {
     if (minor && childIds(p.id).length) {
       return res.status(403).json({ error: "Profile za druge otroke lahko doda samo polnoleten starš s svojim računom.", minor: true });
     }
-    const year = minor ? Number(p.birth_date.slice(0, 4)) : Number(req.body?.birth_year);
+    // Lasten profil (dijak ali študent soglaša sam): letnica iz datuma rojstva ob registraciji.
+    const self = minor || req.body?.self === true;
+    const year = self && p.birth_date ? Number(p.birth_date.slice(0, 4)) : Number(req.body?.birth_year);
     const now = new Date().getFullYear();
+    if (self) {
+      const minAge = minAgeOf(p.country);
+      // Brez datuma rojstva (stari računi) štejemo previdno: rojeni v letu now-minAge so morda še mlajši.
+      const oldEnough = p.birth_date ? ageOn(p.birth_date) >= minAge : now - year > minAge;
+      if (!oldEnough) {
+        return res.status(403).json({ error: `Sam lahko soglašaš od ${minAge}. leta. Za mlajše otroke profil ustvari starš in izbere »Za mojega otroka«.`, self_too_young: true });
+      }
+    }
     // Tudi odrasli študenti fakultet ustvarijo svoj profil, zato ni zgornje starostne meje za otroke.
     if (!Number.isInteger(year) || year < now - 90 || year > now - 5) return res.status(400).json({ error: "Vpišite letnico rojstva." });
-    if (req.body?.consent !== true) return res.status(400).json({ error: "Za otrokov profil je potrebno soglasje starša.", consent: true });
+    if (req.body?.consent !== true) return res.status(400).json({ error: self ? "Označi soglasje za obdelavo podatkov." : "Za otrokov profil je potrebno soglasje starša.", consent: true });
     const under15 = now - year <= 15; // previdno: v letu 15. rojstnega dne še štejemo kot mlajšega od 15
     const s = store.createStudent(name, req.body?.settings);
     db.prepare("UPDATE students SET parent_id = ?, birth_year = ? WHERE id = ?").run(p.id, year, s.id);
@@ -516,7 +527,7 @@ export function mountAccounts(app, store, opts = {}) {
       year,
       under15 ? 1 : 0,
       PRIVACY_VERSION,
-      minor ? SELF_CONSENT_TEXT : CONSENT_TEXT,
+      self ? SELF_CONSENT_TEXT : CONSENT_TEXT,
       p.email,
     );
     devices.logChange(p.id, "created", s.id);
