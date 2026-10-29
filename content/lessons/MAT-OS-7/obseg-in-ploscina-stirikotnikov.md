@@ -5,146 +5,235 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Že znaš izračunati obseg in ploščino pravokotnika ($S = a \cdot b$) in kvadrata ($S = a^2$). Znaš tudi izračunati ploščino trikotnika ($S = \dfrac{a \cdot v}{2}$). Vse to bomo uporabili.
+Ponoči je zapadlo $20\,\text{cm}$ snega. V šolskem parku sta dve gredici. Prva je kvadrat s stranico $4\,\text{m}$. Druga je romb s stranico $4\,\text{m}$, ki je precej »sploščen«: razdalja med njegovima vzporednima stranicama je le $2\,\text{m}$.
 
-Večina predmetov okoli nas nima oblike pravokotnika. Streha, tlakovana ploščad, zmaj na nebu, opeka v zidu ali parcela s poševnimi robovi so paralelogrami, trapezi, rombi ali deltoidi. Če znaš izračunati njihov obseg in ploščino, veš, koliko ograje, barve ali ploščic potrebuješ.
+Tilen trdi: »Na obeh gredicah leži enako snega. Obe imata stranice po $4\,\text{m}$, torej enak obseg in enako ploščino.«
+
+Obseg res imata enak: $4 \cdot 4 = 16\,\text{m}$. Kaj pa ploščina? Ploščina kvadrata je $16\,\text{m}^2$. Za romb Tilen te formule ne sme kar prepisati. Ko boš znal računati ploščino paralelograma, romba, trapeza in deltoida, boš njegovo trditev preveril sam. Isto znanje uporabiš, ko oceniš, koliko semena potrebuje njiva, koliko vode pade na travnik ali koliko papirja potrebuješ za zmaja.
 
 ## Razlaga
 
-**1. Obseg** je vsota dolžin vseh stranic. **Ploščina** pove, koliko ploskve lik pokriva. Obseg merimo v $\text{cm}$, $\text{m}$, ploščino v $\text{cm}^2$, $\text{m}^2$.
+**Gradnik 1: obseg.** Obseg vsakega štirikotnika je vsota dolžin vseh štirih stranic: $o = a + b + c + d$. Pri likih z enakimi stranicami se zapis skrajša. Paralelogram ima dva para enakih stranic, zato je $o = 2(a + b)$. Romb ima vse štiri enake, zato je $o = 4a$. Deltoid ima dva para enakih sosednjih stranic, zato je tudi zanj $o = 2(a + b)$.
 
-**2. Paralelogram.** Ima dva para vzporednih stranic. Nasprotni stranici sta enako dolgi ($a$ in $b$).
+*Kratko vprašanje:* paralelogram ima stranici $9\,\text{cm}$ in $5\,\text{cm}$. Kolikšen je obseg? (Odgovor: $2 \cdot (9 + 5) = 28\,\text{cm}$.)
 
-- Obseg: $o = 2a + 2b = 2(a + b)$
-- Ploščina: $S = a \cdot v_a$
+**Gradnik 2: paralelogram.** Iz papirja izreži paralelogram s stranico $a$. Iz enega oglišča nariši **višino** $v_a$: daljico, ki je pravokotna na stranico $a$ in sega do nasprotne stranice. Ob višini odreži pravokotni trikotnik in ga prestavi na drugo stran. Nastane pravokotnik s stranicama $a$ in $v_a$. Papirja ni ne več ne manj, zato:
 
-Višina $v_a$ je razdalja med stranico $a$ in njej vzporedno stranico. Je **pravokotna** na stranico $a$. Stranica $b$ je poševna, zato **ni** višina.
+$$S = a \cdot v_a$$
 
-**3. Trapez.** Ima en par vzporednih stranic, ki ju imenujemo **osnovnici** ($a$ in $c$). Drugi dve stranici sta **kraka** ($b$ in $d$). Višina $v$ je razdalja med osnovnicama.
+Poševna stranica $b$ ni višina. Je daljša od višine, zato bi $a \cdot b$ dal preveliko ploščino.
 
-- Obseg: $o = a + b + c + d$
-- Ploščina: $S = \dfrac{(a + c) \cdot v}{2}$
+*Kratko vprašanje:* paralelogram ima $a = 9\,\text{cm}$, $b = 5\,\text{cm}$ in $v_a = 4\,\text{cm}$. Kolikšna je ploščina? (Odgovor: $9 \cdot 4 = 36\,\text{cm}^2$.)
 
-**4. Romb.** Paralelogram z vsemi štirimi stranicami enakimi. Diagonali $e$ in $f$ sta pravokotni in se razpolavljata.
+V simulaciji spodaj (Ploščine štirikotnikov) izberi paralelogram, nastavi $a = 7$ in $v = 4$, nato premikaj drsnik »zamik vrha«. Lik se nagiba, poševna stranica se daljša, ploščina pa ostane $7 \cdot 4 = 28$ kvadratkov.
 
-- Obseg: $o = 4a$
-- Ploščina: $S = \dfrac{e \cdot f}{2}$ (ali kot paralelogram $S = a \cdot v$)
+:::premisli
+Paralelogram iz palčk s stranicama $6\,\text{cm}$ in $5\,\text{cm}$ stisneš, da se kot zmanjša. Kaj se zgodi z obsegom in kaj s ploščino?
+---
+Obseg ostane $2 \cdot (6 + 5) = 22\,\text{cm}$, ker se palčke ne spremenijo. Ploščina se zmanjša, ker se zmanjša višina. Enak obseg torej ne pomeni enake ploščine.
+:::
 
-**5. Deltoid.** Ima dva para sosednjih enakih stranic ($a$ in $b$). Diagonali $e$ in $f$ sta pravokotni.
+**Gradnik 3: trapez.** Trapez ima vzporedni stranici $a$ in $c$, ki ju imenujemo **osnovnici**. Drugi dve stranici, $b$ in $d$, sta **kraka**. Višina $v$ je razdalja med osnovnicama. Vzemi dva enaka trapeza in drugega zasukaj za $180^\circ$. Ko ju zložiš skupaj, dobiš paralelogram z osnovnico $a + c$ in višino $v$. En trapez je polovica tega paralelograma:
 
-- Obseg: $o = 2a + 2b = 2(a + b)$
-- Ploščina: $S = \dfrac{e \cdot f}{2}$
+$$S = \frac{(a + c) \cdot v}{2}$$
 
-**6. Povezava.** Romb je poseben paralelogram in tudi poseben deltoid, zato zanj veljajo vse njune formule.
+Obseg trapeza je vsota vseh štirih stranic, kraka sta tu potrebna. V ploščini kraka ne nastopata.
+
+*Kratko vprašanje:* trapez ima osnovnici $7\,\text{cm}$ in $3\,\text{cm}$ ter višino $4\,\text{cm}$. Ploščina? (Odgovor: $\dfrac{(7 + 3) \cdot 4}{2} = 20\,\text{cm}^2$.)
+
+:::premisli
+Kaj da formula za trapez, če je $c = a$? Zakaj je to smiselno?
+---
+$\dfrac{(a + a) \cdot v}{2} = \dfrac{2a \cdot v}{2} = a \cdot v$, kar je ploščina paralelograma. Trapez z enako dolgima osnovnicama ima dva para vzporednih stranic, torej je paralelogram.
+:::
+
+**Gradnik 4: romb.** Romb je paralelogram, zato velja $S = a \cdot v$. Ima pa še eno lastnost: diagonali $e$ in $f$ sta pravokotni. Okoli romba nariši pravokotnik, katerega stranici sta dolgi kot diagonali. Diagonali razdelita pravokotnik na štiri manjše pravokotnike. Vsakega stranica romba razpolovi, en del je v rombu, drugi zunaj. Romb je zato natanko polovica velikega pravokotnika:
+
+$$S = \frac{e \cdot f}{2}$$
+
+*Kratko vprašanje:* romb ima diagonali $10\,\text{cm}$ in $4\,\text{cm}$. Ploščina? (Odgovor: $\dfrac{10 \cdot 4}{2} = 20\,\text{cm}^2$.)
+
+**Gradnik 5: deltoid.** Tudi deltoid ima pravokotni diagonali, zato zanj velja ista slika s pravokotnikom in ista formula $S = \dfrac{e \cdot f}{2}$. Deltoid pa ni paralelogram, zato formula $a \cdot v$ zanj ne velja.
+
+*Kratko vprašanje:* deltoid ima diagonali $9\,\text{cm}$ in $4\,\text{cm}$. Ploščina? (Odgovor: $\dfrac{9 \cdot 4}{2} = 18\,\text{cm}^2$.)
+
+**Nazaj k snegu.** Romb na gredici je paralelogram z $a = 4\,\text{m}$ in $v = 2\,\text{m}$: $S = 4 \cdot 2 = 8\,\text{m}^2$. Kvadrat ima $16\,\text{m}^2$. Na rombu je pol manj snega, Tilen se je zmotil.
 
 ## Rešeni primeri
 
-### Primer 1: paralelogram
+### Primer 1: njiva
 
-Paralelogram ima stranici $a = 8\,\text{cm}$ in $b = 5\,\text{cm}$ ter višino na stranico $a$ enako $v_a = 3\,\text{cm}$. Izračunaj obseg in ploščino.
+Njiva ima obliko paralelograma. Stranici sta dolgi $120\,\text{m}$ in $75\,\text{m}$, razdalja med daljšima stranicama pa je $60\,\text{m}$. Izračunaj obseg in ploščino njive.
 
-1. Obseg: nasprotni stranici sta enaki, zato $o = 2(a + b) = 2 \cdot (8 + 5) = 2 \cdot 13 = 26\,\text{cm}$.
-2. Ploščina: višina je dana na stranico $a$, zato množimo z $a$: $S = a \cdot v_a = 8 \cdot 3 = 24\,\text{cm}^2$.
-3. Pazimo: $5 \cdot 8$ ni ploščina, ker $b$ ni pravokotna na $a$.
+**Podatki:** $a = 120\,\text{m}$, $b = 75\,\text{m}$, $v_a = 60\,\text{m}$
+**Iščemo:** obseg $o$ in ploščino $S$
 
-### Primer 2: trapez
+:::formula
+$o = 2(a + b)$, $S = a \cdot v_a$
+:::
 
-Trapez ima osnovnici $a = 10\,\text{cm}$ in $c = 6\,\text{cm}$, kraka $b = 4{,}5\,\text{cm}$ in $d = 5\,\text{cm}$ ter višino $v = 4\,\text{cm}$. Izračunaj obseg in ploščino.
+**Rešitev:**
 
-1. Obseg seštejemo čez vse štiri stranice: $o = 10 + 4{,}5 + 6 + 5 = 25{,}5\,\text{cm}$.
-2. Ploščina: najprej seštejemo osnovnici, ker formula zahteva njuno vsoto: $a + c = 10 + 6 = 16\,\text{cm}$.
-3. $S = \dfrac{16 \cdot 4}{2} = \dfrac{64}{2} = 32\,\text{cm}^2$.
-4. Kraka v ploščini ne nastopata, potrebujemo ju samo za obseg.
+1. Obseg: nasprotni stranici sta enaki, zato $o = 2 \cdot (120 + 75) = 2 \cdot 195 = 390\,\text{m}$.
+2. Ploščina: višina $60\,\text{m}$ je razdalja med stranicama $a$, zato množimo z $a$: $S = 120 \cdot 60 = 7200\,\text{m}^2$.
+3. Stranica $b = 75\,\text{m}$ v ploščini ne nastopa, ker ni pravokotna na $a$.
+4. Odgovor: obseg njive je $390\,\text{m}$, ploščina $7200\,\text{m}^2$.
 
-### Primer 3: deltoid (iskanje diagonale)
+### Primer 2: travnik ob potoku
 
-Deltoid ima ploščino $60\,\text{cm}^2$ in diagonalo $e = 15\,\text{cm}$. Kolikšna je diagonala $f$? Če sta stranici $a = 9\,\text{cm}$ in $b = 5\,\text{cm}$, koliko je obseg?
+Travnik ima obliko pravokotnega trapeza. Ob potoku je dolg $80\,\text{m}$, ob poti $50\,\text{m}$; potok in pot sta vzporedna. Krak, ki je pravokoten na obe osnovnici, meri $40\,\text{m}$, poševni krak pa $50\,\text{m}$. Po nevihti je voda poplavila ves travnik. Kolikšna je poplavljena površina in koliko ograje je okoli travnika?
 
-1. Zapišemo formulo: $S = \dfrac{e \cdot f}{2}$.
-2. Vstavimo: $60 = \dfrac{15 \cdot f}{2}$.
-3. Pomnožimo z $2$: $120 = 15 \cdot f$.
-4. Delimo s $15$: $f = 120 : 15 = 8\,\text{cm}$.
-5. Preverimo: $\dfrac{15 \cdot 8}{2} = \dfrac{120}{2} = 60$. ✓
-6. Obseg: $o = 2(a + b) = 2 \cdot (9 + 5) = 2 \cdot 14 = 28\,\text{cm}$.
+**Podatki:** $a = 80\,\text{m}$, $c = 50\,\text{m}$, $d = 40\,\text{m}$ (pravokotni krak), $b = 50\,\text{m}$
+**Iščemo:** ploščino $S$ in obseg $o$
+
+:::formula
+$S = \dfrac{(a + c) \cdot v}{2}$, $o = a + b + c + d$
+:::
+
+**Rešitev:**
+
+1. Pravokotni krak je hkrati razdalja med osnovnicama, zato $v = 40\,\text{m}$.
+2. Vsota osnovnic: $80 + 50 = 130\,\text{m}$.
+3. Pomnožimo z višino: $130 \cdot 40 = 5200$.
+4. Delimo z $2$, ker je trapez polovica paralelograma: $5200 : 2 = 2600$, torej $S = 2600\,\text{m}^2$.
+5. Obseg: $80 + 50 + 50 + 40 = 220\,\text{m}$.
+6. Odgovor: poplavljena je površina $2600\,\text{m}^2$, ograje je $220\,\text{m}$.
+
+### Primer 3: zmaj v vetru (težji)
+
+Zmaj ima obliko deltoida. Prečna palica (diagonala $f$) je dolga $40\,\text{cm}$. Papir zmaja ima ploščino $1260\,\text{cm}^2$. Kako dolga je vzdolžna palica (diagonala $e$)? Stranice zmaja merijo $25\,\text{cm}$ in $52\,\text{cm}$. Koliko traku potrebujemo za rob zmaja?
+
+**Podatki:** $f = 40\,\text{cm}$, $S = 1260\,\text{cm}^2$, $a = 25\,\text{cm}$, $b = 52\,\text{cm}$
+**Iščemo:** diagonalo $e$ in obseg $o$
+
+:::formula
+$S = \dfrac{e \cdot f}{2}$, $o = 2(a + b)$
+:::
+
+**Rešitev:**
+
+1. Formula je obrnjena: znamo ploščino, iščemo diagonalo. Vstavimo podatke: $1260 = \dfrac{e \cdot 40}{2}$.
+2. Obe strani pomnožimo z $2$: $e \cdot 40 = 2 \cdot 1260 = 2520$.
+3. Delimo s $40$: $e = 2520 : 40 = 63\,\text{cm}$.
+4. Preizkus: $\dfrac{63 \cdot 40}{2} = 1260$. ✓
+5. Obseg: $o = 2 \cdot (25 + 52) = 2 \cdot 77 = 154\,\text{cm}$. Diagonali v obseg ne štejemo, ker nista na robu.
+6. Odgovor: vzdolžna palica je dolga $63\,\text{cm}$, traku potrebujemo $154\,\text{cm}$.
+
+### Primer 4: zdaj ti
+
+Ribnik v obliki romba je zamrznil. Stranica romba meri $10\,\text{m}$, diagonali pa $16\,\text{m}$ in $12\,\text{m}$. Kolikšna je ploščina ledu in kolikšna je razdalja med nasprotnima stranicama romba (višina)?
+
+**Podatki:** $a = 10\,\text{m}$, $e = 16\,\text{m}$, $f = 12\,\text{m}$
+**Iščemo:** ploščino $S$ in višino $v$
+
+:::formula
+$S = \dfrac{e \cdot f}{2}$ in $S = a \cdot v$
+:::
+
+**Rešitev:**
+
+1. Iz diagonal: $S = \dfrac{16 \cdot 12}{2} = 96\,\text{m}^2$.
+2. Romb je paralelogram, zato velja tudi $S = a \cdot v$, torej $96 = 10 \cdot v$.
+3. Izračunaj $v$ in zapiši odgovor.
+
+:::premisli
+Kolikšna je višina romba?
+---
+$v = 96 : 10 = 9{,}6\,\text{m}$. Odgovor: led pokriva $96\,\text{m}^2$, višina romba je $9{,}6\,\text{m}$. Višina je krajša od stranice, kar je pri rombu, ki ni kvadrat, pravilno.
+:::
 
 ## Pogoste napake
 
-- **Poševna stranica namesto višine.** Pri paralelogramu in trapezu moraš v ploščino vstaviti višino, ki je pravokotna na osnovnico, ne kraka ali poševne stranice.
-- **Pozabljeno deljenje z 2.** Pri trapezu, rombu in deltoidu je v formuli $:2$. Brez tega dobiš dvakrat preveliko ploščino.
-- **Obseg paralelograma kot $a + b$.** Stranici sta dve vsake vrste, zato $o = 2(a + b)$.
-- **Napačne enote.** Obseg je v $\text{cm}$, ploščina v $\text{cm}^2$. Pred računom pretvori vse mere v isto enoto.
-- **Diagonala kot stranica.** Pri rombu in deltoidu diagonal ne prištevaj k obsegu.
+- **Stranica namesto višine.** Kot Tilen: pri paralelogramu ali rombu množiš sosednji stranici. Tako dobiš ploščino pravokotnika, ki je večja. Vstavi višino, ki je pravokotna na osnovnico.
+- **Enak obseg, »torej« enaka ploščina.** Paralelogram iz istih palčk ima pri različnih kotih različno ploščino. Obseg in ploščina sta različni količini in ju računaš posebej.
+- **Brez deljenja z $2$ ali z deljenjem tam, kjer ga ni.** Pri trapezu, rombu (z diagonalama) in deltoidu je v formuli deljenje z $2$. Pri paralelogramu ga ni, $S = a \cdot v_a$. Deljenje z $2$ pri paralelogramu je zamenjava s formulo za trikotnik.
+- **Osnovnici zmnožiš namesto seštevaš.** Pri trapezu je v števcu $(a + c) \cdot v$, ne $a \cdot c \cdot v$.
+- **Diagonale ali višine v obsegu.** Obseg je samo rob lika. Diagonala in višina sta znotraj lika.
 
 ## Povzetek
 
-| Lik | Obseg | Ploščina |
+| lik | obseg | ploščina |
 |---|---|---|
-| Paralelogram | $2(a + b)$ | $a \cdot v_a$ |
-| Trapez | $a + b + c + d$ | $\dfrac{(a + c) \cdot v}{2}$ |
-| Romb | $4a$ | $\dfrac{e \cdot f}{2}$ |
-| Deltoid | $2(a + b)$ | $\dfrac{e \cdot f}{2}$ |
+| paralelogram | $2(a + b)$ | $a \cdot v_a$ |
+| trapez | $a + b + c + d$ | $\dfrac{(a + c) \cdot v}{2}$ |
+| romb | $4a$ | $a \cdot v$ ali $\dfrac{e \cdot f}{2}$ |
+| deltoid | $2(a + b)$ | $\dfrac{e \cdot f}{2}$ |
 
-- Višina je vedno pravokotna na osnovnico.
-- Pri trapezu seštej osnovnici, pri rombu in deltoidu zmnoži diagonali, nato deli z $2$.
-- Rezultat zapiši z ustrezno enoto ($\text{cm}$ za obseg, $\text{cm}^2$ za ploščino).
+- Višina je pravokotna na osnovnico; poševna stranica ni višina.
+- Paralelogram je pravokotnik po prestavitvi trikotnika; trapez je pol paralelograma; romb in deltoid sta pol pravokotnika iz diagonal.
+- Enak obseg ne pomeni enake ploščine.
+- Obseg je v dolžinskih enotah ($\text{m}$), ploščina v kvadratnih ($\text{m}^2$). Mere pred računom izrazi v isti enoti.
 
 ## Drugače: Na sliki
 
-**Paralelogram.** Na eni strani paralelograma odreži pravokotni trikotnik (ob višini) in ga prestavi na drugo stran. Dobiš pravokotnik z istima mer $a$ in $v_a$. Ploščina se ni spremenila, zato je $S = a \cdot v_a$.
+Predstavljaj si vse štiri like narisane na karirastem papirju, en kvadratek je $1\,\text{cm}^2$.
 
-**Trapez.** Naredi kopijo trapeza, jo obrni in prilepi h kraku prvega. Dva trapeza skupaj tvorita paralelogram z osnovnico $a + c$ in višino $v$. Ena kopija je polovica: $S = \dfrac{(a + c) \cdot v}{2}$.
+**Paralelogram** ($a = 7$, $v_a = 4$): na levi strani leži pravokotni trikotnik, ki štrli čez navpično črto višine. Odreži ga in ga prestavi na desno. Lik postane pravokotnik $7$ krat $4$, to je $28$ kvadratkov.
 
-**Romb in deltoid.** Okoli lika si predstavljaj pravokotnik s stranicama $e$ in $f$. Diagonali razdelita pravokotnik na štiri dele. Lik zavzema natanko polovico tega pravokotnika, zato je $S = \dfrac{e \cdot f}{2}$.
+**Trapez** ($a = 7$, $c = 3$, $v = 4$): poleg njega nariši enak trapez, obrnjen na glavo. Skupaj tvorita paralelogram z osnovnico $7 + 3 = 10$ in višino $4$, to je $40$ kvadratkov. En trapez je pol: $20$ kvadratkov.
 
-## Drugače: Iz vsakdanjega življenja
-
-**Zmaj.** Papirnati zmaj ima obliko deltoida. Dve palici (diagonali) sta dolgi $60\,\text{cm}$ in $40\,\text{cm}$. Za papir potrebuješ
-$$S = \frac{60 \cdot 40}{2} = \frac{2400}{2} = 1200\,\text{cm}^2.$$
-
-**Parcela.** Parcela ima obliko trapeza: ob cesti je široka $30\,\text{m}$, ob potoku $20\,\text{m}$, razdalja med njima je $12\,\text{m}$. Ploščina je
-$$S = \frac{(30 + 20) \cdot 12}{2} = \frac{600}{2} = 300\,\text{m}^2.$$
-Če je trava prodajana po $\text{m}^2$, zdaj veš, koliko semena potrebuješ.
-
-**Talne ploščice.** Romb s stranico $a$ ima obseg $4a$. Za rob ene rombaste ploščice s stranico $10\,\text{cm}$ potrebuješ $40\,\text{cm}$ fuge.
-
-## Drugače: Korak za korakom s številkami
-
-Naloga: trapez z osnovnicama $12\,\text{cm}$ in $8\,\text{cm}$ ter višino $5\,\text{cm}$. Ploščina?
-
-| Korak | Kaj naredimo | Rezultat |
-|---|---|---|
-| 1 | Prepoznamo lik | trapez |
-| 2 | Zapišemo formulo | $S = \dfrac{(a + c) \cdot v}{2}$ |
-| 3 | Seštejemo osnovnici | $12 + 8 = 20$ |
-| 4 | Pomnožimo z višino | $20 \cdot 5 = 100$ |
-| 5 | Delimo z $2$ | $100 : 2 = 50$ |
-| 6 | Zapišemo enoto | $50\,\text{cm}^2$ |
-
-Isti postopek (prepoznaj lik, formula, vstavi, izračunaj, enota) deluje pri vseh štirih likih.
+**Romb in deltoid** ($e = 8$, $f = 6$): okoli lika nariši pravokotnik $8$ krat $6$, ki ima $48$ kvadratkov. Diagonali ga razdelita na štiri pravokotnike. Stranica lika vsakega razreže na dva enaka trikotnika: eden je v liku, drugi zunaj. Lik ima $24$ kvadratkov, pol pravokotnika.
 
 ## Drugače: Bolj natančno
 
-**Zakaj velja formula za trapez?** Trapez s osnovnicama $a$, $c$ in višino $v$ prilepimo skupaj z njegovo kopijo, obrnjeno za $180^\circ$. Nastane lik z osnovnico $a + c$ in višino $v$. Ta je paralelogram, njegova ploščina je $(a + c) \cdot v$. Trapez je polovica, zato $S = \dfrac{(a + c) \cdot v}{2}$.
+**Od kod formula za trapez?** Trapez z osnovnicama $a$, $c$ in višino $v$ zasukamo za $180^\circ$ okoli razpolovišča kraka $b$. Kopija in izvirnik skupaj tvorita paralelogram z osnovnico $a + c$ in višino $v$. Njegova ploščina je $(a + c) \cdot v$, trapez je polovica.
 
-**Zakaj velja $S = \dfrac{e \cdot f}{2}$ za romb in deltoid?** Diagonali sta pravokotni. Diagonala $e$ deli lik na dva trikotnika z isto osnovnico $e$. Njuni višini na to osnovnico skupaj dasta diagonalo $f$. Ploščini trikotnikov sta $\dfrac{e \cdot f_1}{2}$ in $\dfrac{e \cdot f_2}{2}$, kjer je $f = f_1 + f_2$. Skupaj:
-$$S = \frac{e \cdot f_1}{2} + \frac{e \cdot f_2}{2} = \frac{e \cdot (f_1 + f_2)}{2} = \frac{e \cdot f}{2}.$$
+**Od kod $\dfrac{e \cdot f}{2}$?** Diagonala $e$ razdeli romb ali deltoid na dva trikotnika z osnovnico $e$. Diagonala $f$ je pravokotna na $e$, zato sta njena dela $f_1$ in $f_2$ višini teh trikotnikov, $f_1 + f_2 = f$:
+
+$$S = \frac{e \cdot f_1}{2} + \frac{e \cdot f_2}{2}$$
+
+$$S = \frac{e \cdot (f_1 + f_2)}{2} = \frac{e \cdot f}{2}$$
+
+**Obe formuli za romb se ujemata.** Romb s stranico $5\,\text{cm}$ in diagonalama $8\,\text{cm}$ in $6\,\text{cm}$ ima $S = \dfrac{8 \cdot 6}{2} = 24\,\text{cm}^2$. Njegova višina je zato $24 : 5 = 4{,}8\,\text{cm}$ in res je $5 \cdot 4{,}8 = 24$.
+
+**Zakaj ima kvadrat največjo ploščino?** Pri paralelogramu s stranicama $a$ in $b$ je višina $v_a$ kvečjemu tako dolga kot $b$; enaka je le, če je kot pravi. Zato je $S = a \cdot v_a \le a \cdot b$. Med vsemi rombi s stranico $4\,\text{m}$ ima zato največjo ploščino kvadrat, $16\,\text{m}^2$.
 
 ## Preveri se
 
-? Paralelogram ima stranici $a = 12\,\text{cm}$ in $b = 7\,\text{cm}$ ter višino na stranico $a$ enako $5\,\text{cm}$. Kolikšna je ploščina?
-- $84\,\text{cm}^2$
-- $38\,\text{cm}^2$
-+ $60\,\text{cm}^2$
-> Višina je dana na stranico $a$, zato $S = 12 \cdot 5 = 60\,\text{cm}^2$. Rezultat $84$ dobiš, če pomnožiš z napačno stranico $b$, $38$ pa je obseg.
-
 ? Trapez ima osnovnici $9\,\text{cm}$ in $5\,\text{cm}$ ter višino $6\,\text{cm}$. Kolikšna je ploščina?
 - $84\,\text{cm}^2$
+~ Pozabil si deliti z $2$. Trapez je pol paralelograma.
 + $42\,\text{cm}^2$
 - $135\,\text{cm}^2$
-> $S = \dfrac{(9 + 5) \cdot 6}{2} = \dfrac{84}{2} = 42\,\text{cm}^2$. Odgovor $84$ pozabi deljenje z $2$, $135$ pa dobiš, če osnovnici množiš namesto seštevaš.
-
-? Romb ima diagonali $e = 14\,\text{cm}$ in $f = 6\,\text{cm}$. Kolikšna je njegova ploščina?
-- $84\,\text{cm}^2$
+~ Osnovnici si zmnožil. V formuli ju seštejemo: $(a + c) \cdot v$.
 - $20\,\text{cm}^2$
-+ $42\,\text{cm}^2$
-> $S = \dfrac{e \cdot f}{2} = \dfrac{14 \cdot 6}{2} = \dfrac{84}{2} = 42\,\text{cm}^2$. Odgovor $84$ ne upošteva deljenja z $2$, $20$ je vsota diagonal.
+~ To je vsota $9 + 5 + 6$. Ploščino dobimo z množenjem.
+> $S = \dfrac{(9 + 5) \cdot 6}{2} = \dfrac{84}{2} = 42\,\text{cm}^2$.
+
+? Kaj velja za ploščino likov s pravokotnima diagonalama?
+- Ploščina romba je $e + f$.
+~ Vsota diagonal ni ploščina; diagonali zmnožimo in delimo z $2$.
+- Ploščina deltoida je $a \cdot v$, kot pri paralelogramu.
+~ Deltoid ni paralelogram, zato $a \cdot v$ zanj ne velja.
++ Ploščina romba in deltoida je $\dfrac{e \cdot f}{2}$.
+- Ploščina deltoida je $e \cdot f$.
+~ To je ploščina pravokotnika okoli deltoida. Deltoid je natanko njegova polovica.
+> Romb in deltoid zavzameta pol pravokotnika s stranicama $e$ in $f$.
+
+? Rok je izračunal ploščino paralelograma z $a = 12\,\text{cm}$, $b = 7\,\text{cm}$ in $v_a = 5\,\text{cm}$: $S = 12 \cdot 7 = 84\,\text{cm}^2$. Kje je napaka?
++ Namesto višine je vzel poševno stranico; pravilno je $S = 12 \cdot 5 = 60\,\text{cm}^2$.
+- Pozabil je deliti z $2$; pravilno je $42\,\text{cm}^2$.
+~ Deljenje z $2$ je pri trikotniku in trapezu, pri paralelogramu ne.
+- Napake ni.
+~ Stranica $b$ je poševna, zato ni razdalja med vzporednima stranicama.
+- Moral bi računati $2 \cdot (12 + 7) = 38\,\text{cm}^2$.
+~ To je obseg in ima enoto $\text{cm}$, ne $\text{cm}^2$.
+> Ploščina paralelograma je $a \cdot v_a = 12 \cdot 5 = 60\,\text{cm}^2$.
+
+? Romb ima diagonali $10\,\text{cm}$ in $6\,\text{cm}$. Paralelogram ima stranici $10\,\text{cm}$ in $5\,\text{cm}$, višina na daljšo stranico je $3\,\text{cm}$. Kateri lik ima večjo ploščino?
+- Romb, ker je $10 \cdot 6 = 60$ več kot $30$.
+~ Pri rombu je treba zmnožek diagonal deliti z $2$.
+- Paralelogram, ker je $10 \cdot 5 = 50$ več kot $30$.
+~ $5\,\text{cm}$ je poševna stranica, ne višina.
++ Ploščini sta enaki.
+> Romb: $\dfrac{10 \cdot 6}{2} = 30\,\text{cm}^2$. Paralelogram: $10 \cdot 3 = 30\,\text{cm}^2$.
+
+? Streha planinske koče ima obliko enakokrakega trapeza z osnovnicama $14\,\text{m}$ in $8\,\text{m}$, kraki po $5\,\text{m}$ in višino $4\,\text{m}$. Po sneženju je na vsakem kvadratnem metru $50\,\text{kg}$ snega. Koliko snega je na strehi?
+- $4400\,\text{kg}$
+~ Pozabil si deliti z $2$; ploščina je $44\,\text{m}^2$, ne $88\,\text{m}^2$.
+- $2750\,\text{kg}$
+~ Namesto višine $4\,\text{m}$ si vstavil krak $5\,\text{m}$.
+- $1600\,\text{kg}$
+~ To je obseg strehe $32\,\text{m}$ krat $50$. Sneg pokriva ploskev, zato potrebuješ ploščino.
++ $2200\,\text{kg}$
+> $S = \dfrac{(14 + 8) \cdot 4}{2} = 44\,\text{m}^2$, snega je $44 \cdot 50 = 2200\,\text{kg}$.

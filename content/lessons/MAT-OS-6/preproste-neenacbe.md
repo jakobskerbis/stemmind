@@ -5,112 +5,186 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Enačbe že znaš reševati: pri $x + 3 = 8$ iščeš število, ki ustreza enakosti, in dobiš $x = 5$. V življenju pa pogosto ne iščemo točno določenega števila, ampak **vsa števila, ki ustrezajo pogoju**. Na primer: »V dvigalo gre lahko največ 6 oseb«, »Za igralnico moraš imeti vsaj 10 let«, »V denarnici imam 20 evrov, zvezek stane 3 evre, koliko zvezkov lahko kupim?«
+Razred gre na izlet s kombijem. Kombi ima $9$ sedežev, voznik in učiteljica že sedita. Koliko učencev se lahko še pelje?
 
-Takšne pogoje zapišemo z **neenačbami**. Rešitev ni eno število, ampak lahko jih je več. Danes se bomo naučili neenačbe reševati in rešitve poiskati v množici naravnih števil $\mathbb{N} = \{1, 2, 3, 4, \dots\}$.
+Drug dan isti razred hodi po planinski poti. Na zemljevidu so prehodili že $4\,\text{km}$, do teme bi radi prehodili skupaj največ $10\,\text{km}$. Koliko celih kilometrov lahko še prehodijo?
+
+Situaciji sta si na videz različni: enkrat štejemo ljudi, drugič kilometre. Skrivata pa isto misel. V obeh je **zgornja meja**, ki je ne smemo preseči, in v obeh je pravih odgovorov **več**. V kombi lahko sede $7$ učencev, lahko pa tudi $5$ ali $1$. Takemu pogoju v matematiki rečemo **neenačba**.
 
 ## Razlaga
 
-**1. Znaki za primerjanje.** Poznaš že znaka $<$ in $>$. Dodamo še dva:
+**1. Mamljiva bližnjica.** Kombi zapišemo tako: $x$ je število učencev, skupaj z voznikom in učiteljico je v kombiju $x + 2$ oseb, to pa je največ $9$. Mnogi bi pogoj zapisali kot enačbo $x + 2 = 9$, izračunali $x = 7$ in končali. Je to res edini odgovor? Preverimo nekaj števil:
 
-| Znak | Beremo |
-|---|---|
-| $<$ | je manjše od |
-| $>$ | je večje od |
-| $\le$ | je manjše ali enako |
-| $\ge$ | je večje ali enako |
+| $x$ (učenci) | $x + 2$ (vse osebe) | Ali je to največ $9$? |
+|---|---|---|
+| $3$ | $5$ | da |
+| $5$ | $7$ | da |
+| $7$ | $9$ | da, točno $9$ |
+| $8$ | $10$ | ne, en sedež premalo |
 
-Primer: $5 \le 5$ drži (je enako), $5 < 5$ pa ne drži.
+Število $7$ ni edini odgovor, je le **največji**. Enačba nam je dala mejo, ne vseh odgovorov.
 
-**2. Kaj je neenačba.** Neenačba je zapis, v katerem sta dva izraza povezana z enim od teh znakov, npr. $x + 2 < 7$. Črka $x$ je **neznanka**.
+**2. Neenačba in njene rešitve.** Pogoj »največ $9$« zapišemo z znakom $\le$ (manjše ali enako):
 
-**3. Rešitev neenačbe.** Rešitev je vsako število, ki ga vstavimo namesto $x$ in neenačba postane resnična. Pri $x + 2 < 7$:
+$$x + 2 \le 9$$
 
-- $x = 3$: $3 + 2 = 5 < 7$ drži, torej je $3$ rešitev.
-- $x = 5$: $5 + 2 = 7 < 7$ ne drži, torej $5$ ni rešitev.
+Takemu zapisu rečemo **neenačba**: dva izraza sta povezana z znakom za primerjanje namesto z $=$. **Rešitev** neenačbe je vsako število, s katerim neenačba postane resnična. Vse rešitve skupaj tvorijo **množico rešitev**. Tu jih iščemo med **naravnimi števili** $1, 2, 3, \dots$ Število $0$ ni naravno, zato ga ne pišemo.
 
-**4. Množica rešitev.** Zbrane vse rešitve zapišemo v množico. Če iščemo v naravnih številih, pridejo v poštev samo $1, 2, 3, \dots$
+Za kombi je množica rešitev $\{1, 2, 3, 4, 5, 6, 7\}$.
 
-**5. Kako rešujemo.** Podobno kot enačbe: neznanko osamimo z nasprotno računsko operacijo. Pri tem na obeh straneh naredimo isto:
+**3. Štirje znaki.** Besede v nalogi povedo, kateri znak izbrati:
 
-- Če na obeh straneh odštejemo (ali prištejemo) isto število, znak ostane enak.
-- Če obe strani delimo (ali množimo) z istim naravnim številom, znak ostane enak.
+| Znak | Beremo | V besedilu |
+|---|---|---|
+| $<$ | je manjše od | manj kot |
+| $\le$ | je manjše ali enako | največ |
+| $>$ | je večje od | več kot |
+| $\ge$ | je večje ali enako | vsaj, najmanj |
 
-Primer: $x + 3 < 8$. Odštejemo $3$: $x < 5$.
+Pri $\le$ in $\ge$ meja **spada** med rešitve, pri $<$ in $>$ ne.
 
-**6. Končno ali neskončno rešitev.** Pri znakih $<$ in $\le$ je naravnih rešitev končno mnogo (števila do neke meje). Pri znakih $>$ in $\ge$ jih je neskončno mnogo (števila od neke meje naprej).
+:::premisli
+Na kombiju bi pisalo »manj kot $9$ oseb«. Ali bi bilo $7$ učencev še vedno rešitev? Napovej, nato preveri.
+---
+Ne. Zdaj je pogoj $x + 2 < 9$. Pri $x = 7$ dobimo $9 < 9$, kar ne drži. Rešitve so $1, 2, 3, 4, 5, 6$.
+:::
+
+**4. Druga past: rešitve niso vedno pod mejo.** Ko poiščemo mejo, moramo še ugotoviti, na kateri strani so rešitve. Pri $x + 3 > 10$ je meja $7$ (ker je $7 + 3 = 10$). Kdor rešitve kar avtomatsko išče pod mejo, se zmoti: $5 + 3 = 8$, in $8 > 10$ ne drži. Prava stran je nad mejo: $8 + 3 = 11 > 10$.
+
+**5. Postopek v štirih korakih.**
+
+1. **Meja.** Znak zamenjaj z $=$ in reši enačbo, kot že znaš.
+2. **Stran.** Vstavi eno število, ki je manjše od meje. Če neenačba drži, so rešitve pod mejo, sicer nad njo.
+3. **Meja sama.** Pri $\le$ in $\ge$ jo vzemi zraven, pri $<$ in $>$ ne.
+4. **Zapis.** Naštej naravna števila. Če jih je neskončno, napiši začetek in tri pike.
+
+Na številski premici to vidiš takole. Za $x + 2 \le 9$ poln krožec (●) pomeni rešitev, prazen (○) pa število, ki ni rešitev:
+
+```
+ 1  2  3  4  5  6  7  8  9
+ ●  ●  ●  ●  ●  ●  ●  ○  ○
+```
+
+V simulaciji spodaj »Neenačba na številski premici« nastavi $a = 1$, $b = 2$, znak $\le$ in $c = 9$. Premikaj »preizkusi x« od $6$ do $8$ in beri, kdaj se izpis zamenja iz »je rešitev« v »ni rešitev«. Premica pokaže tudi števila med celimi, mi beremo le naravna.
+
+**6. Končno ali neskončno mnogo.** Če so rešitve pod mejo, jih je med naravnimi števili končno mnogo, saj se ustavimo pri $1$. Če so nad mejo, jih je neskončno mnogo.
+
+:::premisli
+Ali ima neenačba $x + 3 > 10$ največjo rešitev? Zakaj?
+---
+Nima. Za vsako rešitev je tudi naslednje število rešitev, ker je $x + 3$ še večje. Zato pišemo $\{8, 9, 10, \dots\}$.
+:::
 
 ## Rešeni primeri
 
-### Primer 1 (lažji): $x + 3 < 8$
+### Primer 1 (lažji): manj kot
 
-Poišči rešitve v množici naravnih števil.
+Poišči vse naravne rešitve neenačbe $x + 5 < 12$.
 
-1. Neznanko osamimo: na obeh straneh odštejemo $3$ (nasprotna operacija seštevanju). Znak ostane: $x < 8 - 3$, torej $x < 5$.
-2. Iščemo naravna števila, ki so manjša od $5$: $1, 2, 3, 4$. Število $5$ ni rešitev, ker je znak $<$ in ne $\le$.
-3. **Preverimo** največjo rešitev: $4 + 3 = 7 < 8$ drži. Prvo število, ki ni rešitev: $5 + 3 = 8 < 8$ ne drži.
-4. **Rešitev:** $\{1, 2, 3, 4\}$.
+**Podatki:** neenačba $x + 5 < 12$, rešitve iščemo med naravnimi števili
+**Iščemo:** množico rešitev
 
-### Primer 2: $x - 4 \ge 3$
+:::formula
+Meja je rešitev enačbe $x + 5 = 12$. Znak $<$ meje ne vključuje.
+:::
 
-1. Na obeh straneh prištejemo $4$ (nasprotna operacija odštevanju): $x \ge 3 + 4$, torej $x \ge 7$.
-2. Iščemo naravna števila, ki so večja ali enaka $7$. Znak je $\ge$, zato je tudi $7$ rešitev.
-3. **Preverimo:** $7 - 4 = 3 \ge 3$ drži. Za $6$: $6 - 4 = 2 \ge 3$ ne drži.
-4. **Rešitev:** $\{7, 8, 9, 10, \dots\}$. Rešitev je neskončno mnogo, zato jih ne moremo vseh naštiti in zapišemo začetek ter pike.
+**Rešitev:**
 
-### Primer 3 (težji): besedilna naloga
+1. Meja: $x = 12 - 5 = 7$, ker je odštevanje obratno seštevanju.
+2. Stran: pri $x = 1$ je $1 + 5 = 6 < 12$, drži. Rešitve so pod mejo.
+3. Meja sama: $7 + 5 = 12 < 12$ ne drži, zato $7$ ni rešitev. Zadnja rešitev je $6$, saj je $6 + 5 = 11 < 12$.
+4. Odgovor: množica rešitev je $\{1, 2, 3, 4, 5, 6\}$.
 
-Ana ima $20\,\text{€}$. Zvezek stane $3\,\text{€}$. Koliko zvezkov lahko kupi (vsaj enega)?
+### Primer 2: vsaj
 
-1. **Neznanka:** $x$ je število zvezkov.
-2. **Zapis pogoja:** $x$ zvezkov stane $3 \cdot x$ evrov. To ne sme biti več od $20$, zato $3 \cdot x \le 20$.
-3. **Reševanje:** obe strani delimo s $3$: $x \le 20 : 3$. Ker $20 : 3$ ni naravno število, poiščemo večkratnike števila $3$ blizu $20$: $3 \cdot 6 = 18 \le 20$, $3 \cdot 7 = 21 > 20$. Torej $x \le 6$.
-4. **Preverimo:** $6$ zvezkov stane $18\,\text{€}$, kar je manj od $20\,\text{€}$. $7$ zvezkov stane $21\,\text{€}$, kar je več kot ima Ana.
-5. **Rešitev:** $\{1, 2, 3, 4, 5, 6\}$. Ana lahko kupi največ $6$ zvezkov.
+Avtobus je na poti na morje že ustavil $4$-krat. Vodič pravi, da bo vseh postankov skupaj vsaj $7$. Koliko postankov je še pred njimi? Zapiši neenačbo in poišči naravne rešitve.
+
+**Podatki:** že opravljeni postanki: $4$, vseh postankov: vsaj $7$
+**Iščemo:** število preostalih postankov $x$
+
+:::formula
+»Vsaj« pomeni $\ge$: $x + 4 \ge 7$
+:::
+
+**Rešitev:**
+
+1. Meja: $x = 7 - 4 = 3$.
+2. Stran: pri $x = 1$ je $1 + 4 = 5$, in $5 \ge 7$ ne drži. Rešitve so nad mejo.
+3. Meja sama: $3 + 4 = 7 \ge 7$ drži, ker znak $\ge$ dovoli enakost. Število $3$ je rešitev.
+4. Odgovor: pred njimi so še vsaj $3$ postanki, množica rešitev je $\{3, 4, 5, \dots\}$.
+
+### Primer 3 (težji): kolesarjenje do morja
+
+Kolesarji vsak dan prevozijo $25\,\text{km}$. Pot do morja je po zemljevidu dolga $110\,\text{km}$. Najmanj koliko dni potrebujejo, da prevozijo vso pot?
+
+**Podatki:** na dan $25\,\text{km}$, pot $110\,\text{km}$, število dni je naravno število
+**Iščemo:** najmanjše število dni $x$
+
+:::formula
+V $x$ dneh prevozijo $25 \cdot x$ kilometrov, to mora biti vsaj pot: $25 \cdot x \ge 110$
+:::
+
+**Rešitev:**
+
+1. Meja: $x = 110 : 25 = 4{,}4$. Meja ni naravno število, zato jo moramo pozorno obravnavati.
+2. Preverimo naravni števili ob meji: $25 \cdot 4 = 100$, in $100 \ge 110$ ne drži. $25 \cdot 5 = 125$, in $125 \ge 110$ drži.
+3. Rešitve so nad mejo: $\{5, 6, 7, \dots\}$. Zaokrožiti moramo navzgor, ker bi v $4$ dneh ostalo še $10\,\text{km}$.
+4. Odgovor: kolesarji potrebujejo najmanj $5$ dni.
+
+### Primer 4: zdaj ti
+
+Jakob bo pot razdelil na $3$ enake dneve. Na dan ne želi prehoditi več kot $8\,\text{km}$. Kako dolga (v celih kilometrih) je lahko vsa pot?
+
+**Podatki:** $3$ enaki dnevi, na dan največ $8\,\text{km}$
+**Iščemo:** možne dolžine poti $x$ v kilometrih
+
+:::formula
+Na dan prehodi $x : 3$ kilometrov: $x : 3 \le 8$
+:::
+
+**Rešitev:**
+
+1. Meja: iz $x : 3 = 8$ dobimo $x = 8 \cdot 3 = 24$, ker je množenje obratno deljenju.
+2. Stran: pri $x = 3$ je $3 : 3 = 1 \le 8$, drži. Rešitve so pod mejo.
+3. Odloči o meji in zapiši množico rešitev sam, nato preveri:
+
+:::premisli
+Ali je $24$ rešitev? Katera je množica rešitev?
+---
+Je, ker je $24 : 3 = 8 \le 8$. Pot je lahko dolga od $1$ do $24\,\text{km}$: $\{1, 2, 3, \dots, 24\}$. Najdaljša pot meri $24\,\text{km}$.
+:::
 
 ## Pogoste napake
 
-- **Zamenjava $<$ in $\le$.** Pri $x < 5$ število $5$ ni rešitev, pri $x \le 5$ pa je. Vedno preveri mejo z vstavljanjem.
-- **Napačna nasprotna operacija.** Pri $x + 3 < 8$ je treba $3$ odšteti, ne prišteti.
-- **Pozabljena naravna števila.** Če iščemo v $\mathbb{N}$, ne zapisuj $0$ ali ulomkov, npr. $2{,}5$.
-- **Neskončne rešitve zapisane do konca.** Pri $x \ge 7$ ni zadnje rešitve. Piši $7, 8, 9, \dots$
-- **Zaokroževanje pri deljenju.** Pri $3x \le 20$ ni pravilno vzeti $7$ zato, ker je $20 : 3$ približno $6{,}67$. Preveri z množenjem.
+- **Ena sama rešitev.** Učenec neenačbo reši kot enačbo in napiše $x = 7$. Toda $7$ je le meja, tudi $5$ ali $3$ izpolnita pogoj. Po izračunu meje vedno zapiši vsa števila na pravi strani.
+- **Meja pri $<$ in $\le$.** Pri $x + 2 < 9$ učenec napiše tudi $7$, ker ga je dobil v računu. Pri znaku $<$ meja ne spada zraven, saj $9 < 9$ ne drži. Mejo vedno vstavi in preveri.
+- **Napačna stran.** Pri $x + 3 > 10$ učenec našteje $1, 2, \dots, 6$, ker je navajen, da so rešitve pod mejo. Znak $>$ zahteva večje vrednosti. Vstavi eno število pod mejo in poglej, ali neenačba drži.
+- **Zaokroževanje navzdol.** Pri $25 \cdot x \ge 110$ učenec iz $4{,}4$ naredi $4$. Toda $25 \cdot 4 = 100$ je premalo. Kadar meja ni naravno število, preveri obe sosednji naravni števili.
+- **Ničla med rešitvami.** Pri $x + 5 < 12$ učenec začne z $0$. Ničla ni naravno število, zato množica rešitev začne z $1$.
 
 ## Povzetek
 
-- Neenačba povezuje izraza z znakom $<$, $>$, $\le$ ali $\ge$.
-- Rešitev je vsako število, ki neenačbo spremeni v resničen zapis.
-- Neznanko osamimo z nasprotno računsko operacijo na obeh straneh; znak ostane.
-- Pri znakih $<$ in $\le$ je naravnih rešitev končno mnogo, pri $>$ in $\ge$ neskončno mnogo.
-- Rešitev vedno preveri z vstavitvijo (še posebej mejno število).
+- Neenačba povezuje dva izraza z znakom $<$, $\le$, $>$ ali $\ge$; »največ« je $\le$, »vsaj« je $\ge$.
+- Rešitev je vsako število, s katerim neenačba drži. Rešitev je lahko več ali neskončno mnogo.
+- Postopek: mejo dobiš z enačbo, stran ugotoviš z enim preizkusom, pri $\le$ in $\ge$ meja spada zraven.
+- Če meja ni naravno število, preveri obe sosednji naravni števili.
+- Naravna števila so $1, 2, 3, \dots$; ničla ni med njimi. Neskončno rešitev zapišeš z začetkom in tremi pikami.
 
-## Drugače: Na sliki
+## Drugače: Kot zgodba
 
-Naravna števila si predstavljaj kot točke na številski premici: $1, 2, 3, 4, 5, 6, 7, \dots$
+Spomni se pohodnikov iz uvoda. Prehodili so že $4\,\text{km}$, skupaj jih želijo največ $10\,\text{km}$.
 
-Za $x < 5$ pobarvaš vse točke levo od $5$: $1, 2, 3, 4$. Točka $5$ ostane prazna (odprta), ker $5$ ni rešitev.
+Nika pravi: »Še $6\,\text{km}$ in smo na cilju.« Luka odgovori: »Lahko tudi samo $2\,\text{km}$ do razgledišča, pa smo še vedno pod mejo.« Oba imata prav. Nika je našla mejo, Luka pa je opazil, da so dovoljene tudi krajše poti.
 
-Za $x \le 5$ pobarvaš še točko $5$ (zapolnjena), torej $1, 2, 3, 4, 5$.
-
-Za $x \ge 7$ pobarvaš točko $7$ in vse desno od nje: $7, 8, 9, \dots$ Puščica na desno pove, da se rešitve nadaljujejo.
-
-Znak $<$ kaže »na manjše«, zato iščemo levo od meje. Znak $>$ kaže »na večje«, zato iščemo desno.
-
-## Drugače: Iz vsakdanjega življenja
-
-**Dvigalo.** Na dvigalu piše: »Največ $6$ oseb.« To pomeni $x \le 6$. Če je v dvigalu $6$ oseb, je še vredu, pri $7$ pa ne. Naravne rešitve so $1, 2, 3, 4, 5, 6$.
-
-**Vstopnica.** »Za ogled filma moraš imeti vsaj $12$ let.« To pomeni starost $\ge 12$. Rešitve so $12, 13, 14, \dots$ Tudi natanko $12$ let je dovolj.
-
-**Primerjaj besede:** »največ« pomeni $\le$, »vsaj« pomeni $\ge$, »manj kot« pomeni $<$, »več kot« pomeni $>$. Pozorno beri, katera beseda je v nalogi.
+Učiteljica na zemljevidu pokaže možnosti: $1, 2, 3, 4, 5$ ali $6\,\text{km}$. Pri $7\,\text{km}$ bi skupaj prehodili $11\,\text{km}$, to pa je preveč. Zapis zgodbe je neenačba $x + 4 \le 10$ z rešitvami $\{1, 2, 3, 4, 5, 6\}$.
 
 ## Drugače: Korak za korakom s številkami
 
 Rešimo $x + 6 \le 10$ in rezultat preverimo s tabelo.
 
-1. Odštejemo $6$ na obeh straneh: $x \le 4$.
-2. Naravna števila do $4$: $1, 2, 3, 4$.
-3. Preizkus v tabeli (tudi z vrednostmi zunaj rešitev):
+1. Meja: $x = 10 - 6 = 4$.
+2. Naravna števila do vključno $4$: $1, 2, 3, 4$.
+3. Preizkus v tabeli, tudi z vrednostmi zunaj rešitev:
 
 | $x$ | $x + 6$ | Ali je $x + 6 \le 10$? |
 |---|---|---|
@@ -122,33 +196,54 @@ Rešimo $x + 6 \le 10$ in rezultat preverimo s tabelo.
 
 Tabela potrdi: rešitve so $\{1, 2, 3, 4\}$. Preizkus vedno naredi pri meji: pri $4$ še velja, pri $5$ ne več.
 
-## Drugače: Bolj natančno
-
-Množico rešitev neenačbe v $\mathbb{N}$ zapišemo takole:
-
-$$\{x \in \mathbb{N} \mid x + 3 < 8\} = \{1, 2, 3, 4\}$$
-
-Beremo: »množica vseh naravnih števil $x$, za katera velja $x + 3 < 8$«.
-
-Zakaj smemo na obeh straneh odšteti isto število? Če je $a < b$, to pomeni, da je $a$ na številski premici levo od $b$. Če oba zamaknemo za isto razdaljo, ostaneta v istem vrstnem redu. Zato iz $x + 3 < 8$ sledi $x + 3 - 3 < 8 - 3$, torej $x < 5$. Isto velja za seštevanje. Pri množenju in deljenju z naravnim številom se razdalje med števili povečajo ali zmanjšajo v isti meri, zato je vrstni red spet enak. Zato lahko neenačbo rešujemo korak za korakom in vsak korak da neenačbo z enako množico rešitev.
-
 ## Preveri se
 
-? Katera množica je rešitev neenačbe $x + 2 < 6$ v množici naravnih števil?
-- $\{1, 2, 3, 4\}$
-+ $\{1, 2, 3\}$
-- $\{5, 6, 7, \dots\}$
-- $\{1, 2, 3, 4, 5\}$
-> Odštejemo $2$: $x < 4$. Naravna števila, manjša od $4$, so $1, 2, 3$. Število $4$ ni rešitev, ker je $4 + 2 = 6$ in $6 < 6$ ne drži.
+? Ob cesti stoji znak: »Višina vozila največ $3\,\text{m}$.« Kateri zapis pove pogoj za višino vozila $v$ v metrih?
+- $v < 3$
+~ »Največ« dovoli tudi točno $3\,\text{m}$, znak $<$ pa meje ne vključuje.
++ $v \le 3$
+- $v \ge 3$
+~ Znak $\ge$ pomeni »vsaj«. Tako bi smela mimo le vozila, visoka $3\,\text{m}$ ali več.
+- $v = 3$
+~ Tako bi smela mimo samo vozila, visoka točno $3\,\text{m}$. Pogoj ima več rešitev.
+> »Največ« pomeni manjše ali enako, torej $v \le 3$. Mimo smejo vsa vozila do vključno $3\,\text{m}$.
 
-? Katero je najmanjše naravno število, ki je rešitev neenačbe $x - 2 \ge 3$?
-- $3$
-- $6$
+? Razvrsti neenačbe po številu naravnih rešitev, od najmanj do največ: A: $x + 3 < 7$, B: $x + 3 \le 7$, C: $x + 3 > 7$.
++ A, B, C
+- B, A, C
+~ Znak $\le$ ima mejo zraven, zato ima B eno rešitev več kot A, ne manj.
+- C, A, B
+~ Pri C so rešitve nad mejo in jih je neskončno mnogo, ne najmanj.
+- A, C, B
+~ C nima zadnje rešitve, zato ima več rešitev kot vsaka neenačba s končno mnogo rešitvami.
+> Meja je povsod $4$. A: $\{1, 2, 3\}$, B: $\{1, 2, 3, 4\}$, C: $\{5, 6, 7, \dots\}$, kar je neskončno mnogo.
+
+? Kaj se zgodi z množico rešitev neenačbe $x + 2 \le 9$, če znak $\le$ zamenjamo z $<$?
+- Ostane enaka.
+~ Meja je res še vedno $7$, a pri znaku $<$ ne spada več zraven.
++ Izgubi število $7$.
+- Doda se število $8$.
+~ Pri $8$ je $8 + 2 = 10$, kar ni manjše od $9$. Znak $<$ je strožji, ne bolj ohlapen.
+- Rešitev postane neskončno mnogo.
+~ Rešitve so še vedno pod mejo, zato jih je končno mnogo.
+> Za $x + 2 < 9$ število $7$ ni več rešitev, ker $9 < 9$ ne drži. Rešitve so $\{1, 2, 3, 4, 5, 6\}$.
+
+? Katero je največje naravno število, ki reši neenačbo $4 \cdot x < 30$?
+- $8$
+~ Mejo $7{,}5$ si zaokrožil navzgor, a $4 \cdot 8 = 32$ ni manj kot $30$.
+- $7{,}5$
+~ $7{,}5$ je meja, ni pa naravno število in tudi ni rešitev, ker je $4 \cdot 7{,}5 = 30$.
++ $7$
+- $26$
+~ Odštel si $4$, toda $x$ je pomnožen s $4$, zato je obratna operacija deljenje.
+> Meja: $30 : 4 = 7{,}5$. Preverimo sosednji naravni števili: $4 \cdot 7 = 28 < 30$ drži, $4 \cdot 8 = 32 < 30$ ne drži.
+
+? Avtobus vsako uro prevozi $60\,\text{km}$. Do Dunaja je $270\,\text{km}$. Najmanj koliko celih ur mora voziti, da pride na cilj?
+- $4$
+~ V $4$ urah prevozi $60 \cdot 4 = 240\,\text{km}$, kar je premalo. Meje $4{,}5$ ne smeš zaokrožiti navzdol.
 + $5$
-> Prištejemo $2$: $x \ge 5$. Znak $\ge$ vključuje mejo, zato je najmanjša rešitev $5$. Preverimo: $5 - 2 = 3 \ge 3$ drži.
-
-? Katera množica je rešitev neenačbe $2 \cdot x < 9$ v množici naravnih števil?
-- $\{1, 2, 3\}$
-- $\{1, 2, 3, 4, 5\}$
-+ $\{1, 2, 3, 4\}$
-> Iščemo števila, za katera je $2x$ manjše od $9$. Za $x = 4$ je $2 \cdot 4 = 8 < 9$, za $x = 5$ pa je $10 > 9$. Rešitve so $1, 2, 3, 4$.
+- $4{,}5$
+~ Vprašanje sprašuje po celih urah, $4{,}5$ pa je le meja.
+- $210$
+~ Odštel si $60$ od $270$. Ker se kilometri množijo z urami, mejo dobiš z deljenjem.
+> Neenačba je $60 \cdot x \ge 270$, meja $270 : 60 = 4{,}5$. Prvo naravno število nad mejo je $5$: $60 \cdot 5 = 300 \ge 270$.

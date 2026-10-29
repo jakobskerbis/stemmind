@@ -5,226 +5,259 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Do zdaj si računal predvsem s števili do tisoč in morda do deset tisoč. Že v vsakdanjem življenju pa srečamo veliko večja števila: število prebivalcev Slovenije je okoli dva milijona, razdalja med mesti se meri v tisočih metrov, cena stanovanja pa v desettisočih evrov. Da se v teh številih ne izgubimo, moramo vedeti, **kaj pomeni vsaka številka glede na svoje mesto** v zapisu, kako število pravilno preberemo in zapišemo, kako med seboj primerjamo dve veliki števili in kdaj je smiselno števila **zaokrožiti**.
+Milijon in milijarda zvenita skoraj enako. Oboje je »ogromno denarja«, kajne? Predstavljaj si, da dobiš milijon evrov in vsak dan zapraviš $1\,000$ €. Denarja ti zmanjka po $1\,000$ dneh, to je v manj kot treh letih.
 
-Že iz prejšnjih razredov poznaš enice, desetice in stotice. V tej lekciji ta sistem razširimo naprej, do milijonov in še dlje.
+Z milijardo evrov in enakim zapravljanjem pa bi zdržal več kot $2\,700$ let. Če bi začel zapravljati v času starih Rimljanov, bi ti danes še vedno ostalo.
+
+Razlika se skriva v zapisu: milijon ima šest ničel, milijarda devet. Tri ničle več pomenijo tisočkrat več. Kdor zna brati velika števila, se ne ujame v take pasti pri cenah stanovanj, avtomobilov, plačah ali loterijskih dobitkih.
 
 ## Razlaga
 
-**1. Desetiški (dekadni) številski sistem.** Za zapis vseh števil uporabljamo deset številk: $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$. Vrednost številke je odvisna od **mesta** (mestne vrednosti), na katerem stoji. Vsako mesto je desetkrat vredno več kot mesto desno od njega.
+**Najprej en primer.** V loteriji piše, da je glavni dobitek $6080250$ €. Takega niza števk ne moremo kar prebrati. Zato ga od desne proti levi razdelimo v skupine po tri števke in med njimi pustimo presledek: $6\,080\,250$.
 
-**2. Mestne vrednosti.** Od desne proti levi si sledijo:
+Vsaka skupina je en **razred**. Desno je razred enic, levo od njega razred tisočic, nato razred milijonov. V vsakem razredu so tri mesta: stotice, desetice in enice.
 
-| razred | milijoni | | | tisoči | | | enice | | |
-|---|---|---|---|---|---|---|---|---|---|
-| mesto | S M | D M | E M | S T | D T | E T | S | D | E |
+| razred | stotice | desetice | enice |
+|---|---|---|---|
+| milijoni | | | 6 |
+| tisoči | 0 | 8 | 0 |
+| enice | 2 | 5 | 0 |
 
-Pomen kratic: E = enice, D = desetice, S = stotice, T = tisoči, M = milijoni. Tako je npr. DT desettisočice, SM stomilijonice.
+Vsak razred preberemo kot trimestno število in dodamo ime razreda: *šest milijonov osemdeset tisoč dvesto petdeset evrov*.
 
-Mesta so razdeljena v **razrede po tri**: razred enic (E, D, S), razred tisočic (ET, DT, ST) in razred milijonov (EM, DM, SM).
+**Iz primera splošno pravilo.** Na enak način beremo vsako veliko število:
 
-**3. Zapis s presledki.** Da je veliko število laže brati, ga od desne proti levi razdelimo v skupine po tri števke s presledkom: $3\,482\,015$. (Ne uporabljamo pike ali vejice, ker ima vejica pri nas vlogo decimalne vejice.)
+1. Od desne proti levi ga razdeliš v skupine po tri števke.
+2. Bereš od leve proti desni, skupino za skupino.
+3. Za vsako skupino poveš število in ime razreda (milijonov, tisoč). Razred, v katerem so same ničle, izpustiš.
 
-**4. Branje.** Število beremo od leve proti desni po razredih. Za vsak razred preberemo trimestno število in dodamo ime razreda:
+Pri zapisu s števkami gremo v obratni smeri. Vsak razred, razen skrajno levega, mora imeti natanko tri števke. Prazna mesta zapolnimo z ničlami.
 
-$$3\,482\,015 \;\to\; \text{tri milijone štiristo dvainosemdeset tisoč petnajst}$$
+**Mestna vrednost.** Ista števka ima različno vrednost glede na mesto, kjer stoji. V številu $6\,080\,250$ pomeni osmica $80\,000$, petica pa le $50$. Vsako mesto je **desetkrat** vredno toliko kot mesto desno od njega. Imena mest od desne: enice, desetice, stotice, tisočice, desettisočice, stotisočice, milijoni.
 
-Razred, ki ima same ničle, preskočimo.
+Ničla na nekem mestu pove, da tam ni ničesar. Kljub temu je pomembna, saj drži ostale števke na pravih mestih. $6\,080\,250$ in $680\,250$ se razlikujeta samo za eno ničlo, prvo število pa je skoraj desetkrat večje.
 
-**5. Pomen ničle.** Ničla na nekem mestu pove, da tam ni nobene enote tiste vrste. Je pa pomembna, saj »drži« druge številke na pravih mestih: $3\,000\,205$ in $3\,205$ sta zelo različni števili.
+**Milijon in milijarda.** Tisoč tisočev je milijon: $1\,000 \cdot 1\,000 = 1\,000\,000$. Tisoč milijonov je milijarda, zapišemo jo z enico in devetimi ničlami.
 
-**6. Večje enote.** Tisoč tisočev je milijon: $1\,000 \cdot 1\,000 = 1\,000\,000$. Tisoč milijonov je milijarda: $1\,000\,000\,000$. Zapis milijarde ima devet ničel.
+:::premisli
+Število $999\,999$ ima šest devetic, $1\,000\,000$ pa skoraj same ničle. Katero je večje in za koliko?
+---
+Večji je milijon, in sicer za $1$. Ko devetici na mestu enic prišteješ ena, nastane prenos skozi vsa mesta in dobiš sedemmestno število. Odloča število mest, ne velikost števk.
+:::
 
-**7. Razširjeni zapis.** Število lahko razstavimo po mestnih vrednostih:
+**Urejanje.** Stanovanje A stane $285\,400$ €, stanovanje B $258\,900$ €. Obe števili imata šest mest. Zato primerjamo števke od leve: stotisočice sta pri obeh $2$, desettisočice pa $8$ in $5$. Ker je $8 > 5$, je A dražje: $285\,400 > 258\,900$.
 
-$$3\,482\,015 = 3 \cdot 1\,000\,000 + 4 \cdot 100\,000 + 8 \cdot 10\,000 + 2 \cdot 1\,000 + 0 \cdot 100 + 1 \cdot 10 + 5 \cdot 1$$
+Splošno pravilo za naravni števili:
 
-**8. Urejanje in primerjanje.** Dve naravni števili primerjamo takole:
+- Število z več mesti je večje.
+- Če imata števili enako mest, primerjamo od leve proti desni. Prva števka, ki se razlikuje, odloči.
 
-- **Najprej primerjamo število mest (števk).** Število z več števkami je večje (če se ne začne z ničlo).
-- **Če imata enako števk**, primerjamo števki od leve proti desni, in sicer na mestu z največjo vrednostjo. Prva števka, v kateri se števili razlikujeta, odloči, katero je večje.
+Števila lahko uredimo **naraščajoče** (od najmanjšega) z znakom $<$ ali **padajoče** (od največjega) z znakom $>$.
 
-Uporabljamo znaka $<$ (manjše) in $>$ (večje). Števila uredimo **naraščajoče** (od najmanjšega do največjega) ali **padajoče** (od največjega do najmanjšega).
+**Zaokroževanje.** Avto stane $23\,680$ €. Prodajalec reče, da stane »približno $24\,000$ €«. Število je zaokrožil na **tisočice**. Na številski premici leži $23\,680$ med $23\,000$ in $24\,000$:
 
-**9. Zaokroževanje.** Včasih natančna vrednost ni potrebna (npr. »v dvorani je okoli 5000 ljudi«). Takrat število zaokrožimo na izbrano mesto (na desetice, stotice, tisočice, ...).
+```
+23 000 ------------ 23 500 ------------ 24 000
+                         ^      * 23 680
+                       sredina
+```
 
-Pravilo:
+Število je desno od sredine, zato je bližje $24\,000$. Zapišemo $23\,680 \approx 24\,000$. Znak $\approx$ pomeni »približno enako«.
 
-1. Določimo mesto, na katero zaokrožamo.
-2. Pogledamo **števko takoj desno** od tega mesta.
-3. Če je ta števka $0, 1, 2, 3$ ali $4$, številko na izbranem mestu **ohranimo** (zaokrožimo navzdol).
-4. Če je ta števka $5, 6, 7, 8$ ali $9$, številko na izbranem mestu **povečamo za 1** (zaokrožimo navzgor).
-5. Vse števke desno od izbranega mesta nadomestimo z ničlami.
+Brez risanja premice ugotovimo isto takole:
 
-Za zaokroževanje uporabljamo znak $\approx$ (približno enako).
+1. Poiščemo mesto, na katero zaokrožujemo (tu tisočice, števka $3$).
+2. Pogledamo **samo eno** števko desno od njega (tu stotice, števka $6$).
+3. Če je ta števka $0$, $1$, $2$, $3$ ali $4$, izbrano mesto ostane enako. Če je $5$, $6$, $7$, $8$ ali $9$, se poveča za $1$.
+4. Vse števke desno od izbranega mesta postanejo ničle.
+
+:::premisli
+Neka cena, zaokrožena na tisočice, je $24\,000$ €. Katera je najnižja in katera najvišja možna cena v celih evrih?
+---
+Najnižja je $23\,500$ €, saj se že petica na mestu stotic zaokroži navzgor. Najvišja je $24\,499$ €, ker se $24\,500$ zaokroži že na $25\,000$.
+:::
+
+V simulaciji spodaj (Mestne vrednosti in zaokroževanje) s puščicama ▲ in ▼ nastavi števko na vsakem mestu. Izberi »zaokroži na tisočice« in spreminjaj samo števko stotic od $4$ do $5$. Opazuj, kako puščica na številski premici preskoči z leve meje na desno.
 
 ## Rešeni primeri
 
-### Primer 1 (lažji): branje in zapis
+### Primer 1 (lažji): zapis s števkami
 
-a) Preberi število $7\,050\,300$.
-b) Zapiši s števkami: dvanajst milijonov šeststo tisoč štirideset.
+Na oglasu za hišo je cena zapisana z besedami: *pet milijonov dvajset tisoč osem evrov*. Zapiši ceno s števkami.
 
-**a)**
-1. Število razdelimo v razrede: $7 \mid 050 \mid 300$.
-2. Razred milijonov: $7$, torej »sedem milijonov«.
-3. Razred tisočic: $050$, torej »petdeset tisoč«.
-4. Razred enic: $300$, torej »tristo«.
-5. Preberemo: **sedem milijonov petdeset tisoč tristo**.
+**Podatki:** cena z besedami: pet milijonov dvajset tisoč osem evrov
+**Iščemo:** zapis cene s števkami
 
-**b)**
-1. »dvanajst milijonov« zapišemo kot $12$ v razredu milijonov.
-2. »šeststo tisoč« je $600$ v razredu tisočic.
-3. »štirideset« je $40$ v razredu enic, ki ga zapišemo kot $040$, ker mora imeti razred tri mesta.
-4. Zapis: $12\,600\,040$.
+:::formula
+milijoni | tisoči | enice; vsak razred razen prvega ima tri števke, prazna mesta so ničle
+:::
 
-Zakaj $040$ in ne samo $40$? Ker mora vsak razred imeti tri števke, sicer bi se števke premaknile na napačna mesta.
+**Rešitev:**
 
-### Primer 2: mestne vrednosti in urejanje
+1. Razred milijonov: »pet milijonov« da $5$.
+2. Razred tisočic: »dvajset tisoč« da $20$. Ker potrebujemo tri števke, pišemo $020$.
+3. Razred enic: »osem« da $8$, s tremi števkami $008$.
+4. Skupine zložimo: $5\,020\,008$.
+5. Preizkus z branjem: pet milijonov, dvajset tisoč, osem. Ujema se.
 
-V številu $5\,206\,470$ povej, kolikšna je vrednost števke $2$ in števke $4$. Nato uredi po velikosti (naraščajoče) števila: $5\,206\,470$, $983\,999$, $5\,206\,407$, $5\,260\,000$.
+Hiša stane $5\,020\,008$ €.
 
-**Vrednost števk:**
-1. Števko $2$ najdemo na mestu stotisočic (ST): $5\,\mathbf{2}06\,470$. Njena vrednost je $200\,000$.
-2. Števka $4$ stoji na mestu stotic: vrednost je $400$.
+### Primer 2: urejanje cen
 
-**Urejanje:**
-1. Število $983\,999$ ima 6 števk, ostala tri pa po 7. Torej je $983\,999$ najmanjše.
-2. Ostala tri števila imajo po 7 števk in vsa začnejo s $5$. Primerjamo naprej: drugo mesto je $2$ pri vseh.
-3. Tretja števka: $0, 0, 6$. Število $5\,260\,000$ ima na mestu desettisočic $6$, ostali dve $0$, zato je največje.
-4. Primerjamo $5\,206\,470$ in $5\,206\,407$. Števili se ujemata do vključno stotic ($4$ pri obeh), razlikujeta se šele pri deseticah: $7$ proti $0$. Torej je $5\,206\,407 < 5\,206\,470$.
-5. Naraščajoče: $983\,999 < 5\,206\,407 < 5\,206\,470 < 5\,260\,000$.
+Štiri stanovanja stanejo $312\,500$ €, $98\,900$ €, $321\,050$ € in $312\,050$ €. Uredi cene naraščajoče.
 
-### Primer 3 (težji): zaokroževanje
+**Podatki:** $312\,500$ €, $98\,900$ €, $321\,050$ €, $312\,050$ €
+**Iščemo:** cene od najnižje do najvišje
 
-Število $4\,596\,382$ zaokroži a) na tisočice, b) na stotisočice, c) na milijone.
+:::formula
+več mest pomeni večje število; pri enakem številu mest odloči prva različna števka z leve
+:::
 
-**a) Na tisočice:**
-1. Mesto tisočic je števka $6$ (v $4\,59\mathbf{6}\,382$).
-2. Števka takoj desno je $3$ (stotica). Ker je $3 < 5$, številko $6$ ohranimo.
-3. Vse desno nadomestimo z ničlami: $4\,596\,000$.
+**Rešitev:**
 
-**b) Na stotisočice:**
-1. Mesto stotisočic je števka $5$ (v $4\,\mathbf{5}96\,382$).
-2. Števka desno je $9$ (desettisočica). Ker je $9 \ge 5$, številko $5$ povečamo za $1$, torej $6$.
-3. Ostalo so ničle: $4\,600\,000$.
+1. Število $98\,900$ ima pet mest, ostala tri šest. Zato je najmanjše, čeprav se začne z $9$.
+2. Ostale tri cene imajo pri stotisočicah $3$. Na mestu desettisočic ima $321\,050$ dvojko, drugi dve enico. Zato je $321\,050$ največja.
+3. Ostaneta $312\,500$ in $312\,050$. Do tisočic sta enaki, na mestu stotic pa je $5 > 0$. Zato je $312\,500$ večja.
+4. Zapis: $98\,900 < 312\,050 < 312\,500 < 321\,050$.
 
-**c) Na milijone:**
-1. Mesto milijonov je števka $4$.
-2. Števka desno je $5$ (stotisočica). Ker je $5 \ge 5$, zaokrožimo navzgor: $4 \to 5$.
-3. Rezultat: $5\,000\,000$.
+Najcenejše stanovanje stane $98\,900$ €, najdražje $321\,050$ €.
 
-Opazi: pri c) smo pogledali **samo** števko takoj desno od izbranega mesta ($5$), ne celotnega števila. Pri b) bi moral števko $9$ pregledati enako, in ne $6$ ali $3$ iz desnih mest.
+### Primer 3 (težji): nazaj od zaokrožene cene
 
-Zapis: $4\,596\,382 \approx 4\,596\,000 \approx 4\,600\,000 \approx 5\,000\,000$ (vsak približek je zaokrožen neodvisno od originala).
+Prodajalec rabljenih avtomobilov pove, da avto stane »$15\,000$ €, zaokroženo na tisočice«. Kolikšna je lahko prava cena v celih evrih? Navedi najnižjo in najvišjo.
 
-*Opomba:* vsako zaokroževanje izvedi vedno iz **prvotnega** števila, ne iz že zaokroženega.
+**Podatki:** zaokrožena cena $15\,000$ €, zaokroženo na tisočice, cena v celih evrih
+**Iščemo:** najnižjo in najvišjo možno pravo ceno
+
+:::formula
+pri zaokroževanju na tisočice odloča števka stotic: $0$ do $4$ navzdol, $5$ do $9$ navzgor
+:::
+
+**Rešitev:**
+
+1. Navzgor na $15\,000$ se zaokrožijo cene od $14\,000$ naprej, pri katerih je števka stotic vsaj $5$. Najnižja taka je $14\,500$.
+2. Navzdol na $15\,000$ se zaokrožijo cene od $15\,000$ naprej, pri katerih je števka stotic največ $4$. Najvišja taka je $15\,499$.
+3. Preizkus mej: $14\,499 \approx 14\,000$ in $15\,500 \approx 16\,000$, zato sta ti ceni že zunaj.
+
+Prava cena je lahko od $14\,500$ € do $15\,499$ €.
+
+### Primer 4: zdaj ti
+
+Občina je za novo cesto porabila $2\,349\,950$ €. Zaokroži znesek na tisočice in na stotisočice.
+
+**Podatki:** znesek $2\,349\,950$ €
+**Iščemo:** znesek, zaokrožen na tisočice, in znesek, zaokrožen na stotisočice
+
+:::formula
+pogledamo eno števko desno od izbranega mesta: $0$ do $4$ navzdol, $5$ do $9$ navzgor
+:::
+
+**Rešitev:**
+
+1. Na tisočice: števka tisočic je $9$, desno od nje so stotice s števko $9$. Zaokrožimo navzgor. $9$ tisočic in še $1$ je $10$ tisočic, zato se poveča tudi mesto desettisočic.
+2. Na stotisočice: števka stotisočic je $3$, desno od nje so desettisočice s števko $4$.
+3. Dokončaj oba zapisa sam.
+
+:::premisli
+Kakšna sta zaokrožena zneska?
+---
+Na tisočice $2\,350\,000$ €, na stotisočice $2\,300\,000$ €. Pri drugem ne gledamo devetic desno, ker odloča samo števka $4$.
+:::
 
 ## Pogoste napake
 
-- **Pozabljene ničle v zapisu.** Pri zapisu »dvesto tisoč pet« nekdo napiše $2\,005$ ali $20\,005$. Pravilno je $200\,005$. Zapomni si: vsak razred ima tri števke.
-- **Primerjanje po prvi števki, ne po številu mest.** Število $9\,999$ ni večje od $10\,000$, čeprav se začne z večjo števko. Najprej primerjaj število števk.
-- **Zaokroževanje na napačno mesto.** Pri zaokroževanju na tisočice se odloča števka stotic, ne števka desetic.
-- **Zaokroževanje po več korakih.** Če $3\,449$ zaokrožiš na desetice ($3\,450$) in nato na stotice ($3\,500$), dobiš napačen rezultat. Pravilno: $3\,449 \approx 3\,400$, ker je števka desetic $4$.
-- **Napačno branje ničel.** Število $2\,000\,030$ ni »dva milijona tristo«, ampak »dva milijona trideset«.
-- **Mešanje mestne vrednosti.** V številu $350\,000$ ima števka $5$ vrednost $50\,000$, ne $5$.
+**Primerjanje samo po prvi števki.** Kdor misli, da je $98\,900 > 312\,500$, ker je $9 > 3$, pozabi na število mest. Šestmestno število je vedno večje od petmestnega. Najprej preštej mesta, šele nato primerjaj števke.
+
+**Izpuščene ničle.** »Pet milijonov dvajset tisoč osem« nekateri zapišejo kot $5\,208$ ali $520\,008$. Števke se premaknejo na napačna mesta. Vsak razred razen prvega mora imeti tri števke, zato $5\,020\,008$.
+
+**Zaokroževanje po korakih.** Število $14\,457$ nekdo zaokroži na tisočice tako: $14\,460$, nato $14\,500$, nato $15\,000$. Vsak korak prinese novo napako. Pravilno je pogledati samo stotice: $4$ pomeni navzdol, torej $14\,000$.
+
+**Pozabljen prenos.** Pri $199\,600$, zaokroženem na tisočice, se devetica na mestu tisočic poveča v $10$. Kdor zapiše $190\,000$, je prenos izpustil. Na enem mestu je lahko le ena števka: deset tisočic je ena desettisočica več, deset desettisočic pa ena stotisočica več. Zato $199\,600 \approx 200\,000$.
 
 ## Povzetek
 
-- Vrednost števke je odvisna od mesta: vsako mesto je desetkrat vredno več kot desno sosednje.
-- Števke so v razredih po tri: enice, tisočice, milijoni. Zapisujemo jih s presledki, npr. $12\,600\,040$.
-- $1\,000 \cdot 1\,000 = 1\,000\,000$ (milijon), $1\,000$ milijonov je milijarda.
-- Pri primerjanju najprej primerjamo število števk, nato števke od leve proti desni.
-- Zaokroževanje: pogledamo števko takoj desno od izbranega mesta; $0$ do $4$ navzdol, $5$ do $9$ navzgor; desno dopolnimo z ničlami.
+- Velika števila pišemo v skupinah po tri števke od desne: $6\,080\,250$.
+- Razredi so enice, tisoči, milijoni; v vsakem so stotice, desetice in enice.
+- Vsako mesto je desetkrat vredno toliko kot mesto desno od njega. Ničle držijo števke na pravih mestih.
+- Milijon ima šest ničel, milijarda devet; milijarda je tisoč milijonov.
+- Primerjanje: najprej število mest, nato prva različna števka z leve.
+- Zaokroževanje: pogledaš eno števko desno od izbranega mesta; $0$ do $4$ navzdol, $5$ do $9$ navzgor; desno vse ničle.
 
-## Drugače: Na sliki
+## Drugače: Z analogijo
 
-Predstavljaj si številsko premico z označenimi tisočicami: $4\,000$, $5\,000$, $6\,000$, $7\,000$. Število $5\,300$ leži med $5\,000$ in $6\,000$. Sredina med njima je $5\,500$.
+Predstavljaj si blagajno v banki, kjer denar zlagajo v vedno večje svežnje.
 
-- Števila levo od sredine ($5\,000$ do $5\,499$) so bližje $5\,000$, zato jih zaokrožimo na $5\,000$.
-- Števila od sredine naprej ($5\,500$ do $5\,999$) so bližje $6\,000$.
+- Deset kovancev po $1$ € zamenjaš za bankovec za $10$ €.
+- Deset bankovcev po $10$ € je en bankovec za $100$ €.
+- Deset bankovcev po $100$ € zložijo v kuverto s $1\,000$ €.
+- Deset kuvert gre v škatlico, deset škatlic v zaboj, deset zabojev v velik zaboj z milijonom evrov.
 
-Zato je pravilo »5 ali več navzgor« pravzaprav pravilo o tem, ali je število bližje spodnji ali zgornji okrogli vrednosti. Sredina sama se po dogovoru zaokroži navzgor.
+Vsako mesto v zapisu števila je ena vrsta svežnja. Števka pove, koliko svežnjev te vrste imaš. Nikoli jih ni več kot devet: deseti sveženj že zamenjaš za enega večje vrste. Prav to je prenos pri $999\,999 + 1$ in pri zaokroževanju $199\,600$ navzgor.
 
-Podobno si lahko tabelo mestnih vrednosti predstavljaš kot vrsto predalov. Vsak predal je desetkrat »težji« od desnega. Števka v predalu pove, koliko enot te teže imaš.
-
-## Drugače: Iz vsakdanjega življenja
-
-**Denar.** Če imaš $3$ bankovce po $100\,€$, $2$ po $10\,€$ in $5$ kovancev po $1\,€$, imaš $325\,€$. Števka $3$ pomeni stotice, $2$ desetice, $5$ enice. Če zamenjaš vrstni red števk, dobiš drugačen znesek: $523\,€$. Tako je z vsakim številom.
-
-**Prebivalci in stadioni.** Če poročajo, da je na koncertu $48\,732$ ljudi, novinar pogosto reče »okoli $49\,000$« (zaokroženo na tisočice) ali »skoraj $50\,000$« (na desettisočice). Zaokrožena vrednost je preprostejša za zapomniti in za primerjavo.
-
-**Razdalje.** Razdalja med Ljubljano in Mariborjem je približno $120\,000\,\text{m}$. Za pot pa je bolj praktično reči $120\,\text{km}$, ker števila iz razreda tisočic pretvorimo v enoto km.
-
-Zaokroževanje uporabljamo, kadar natančna vrednost ni pomembna ali je sploh ne poznamo natančno (štetje množice ljudi).
-
-## Drugače: Korak za korakom s številkami
-
-Vzemimo število $6\,073\,948$ in ga obdelajmo po korakih.
-
-**Razstavljanje v tabelo:**
-
-| SM | DM | EM | ST | DT | ET | S | D | E |
-|---|---|---|---|---|---|---|---|---|
-| | | 6 | 0 | 7 | 3 | 9 | 4 | 8 |
-
-Vidimo: $6$ milijonov, $0$ stotisočic, $7$ desettisočic, $3$ tisočice, $9$ stotic, $4$ desetice, $8$ enic.
-
-**Razširjeni zapis:**
-
-$$6\,073\,948 = 6\,000\,000 + 70\,000 + 3\,000 + 900 + 40 + 8$$
-
-(Člen z ničlo, torej stotisočice, izpustimo.)
-
-**Zaokroževanje na desettisočice (korak za korakom):**
-
-1. Mesto desettisočic ima števko $7$.
-2. Števka desno je $3$ (tisočica).
-3. $3 < 5$, zato števko $7$ ohranimo.
-4. Desno vse ničle: $6\,070\,000$.
-
-**Zaokroževanje na tisočice:**
-
-1. Mesto tisočic ima števko $3$.
-2. Števka desno je $9$ (stotica).
-3. $9 \ge 5$, zato $3 \to 4$.
-4. Rezultat: $6\,074\,000$.
-
-Opazi, da se rezultat zaokroževanja na različna mesta razlikuje, in sicer $6\,070\,000$ proti $6\,074\,000$.
+Ničla v zapisu je prazen predal: tega svežnja nimaš, a predal mora ostati, sicer bi se ostali svežnji premaknili.
 
 ## Drugače: Bolj natančno
 
-**Zakaj deluje desetiški sistem?** Vsako mesto predstavlja potenco števila $10$:
+Mestne vrednosti so zmnožki samih desetic:
 
-$$1 = 10^0,\quad 10 = 10^1,\quad 100 = 10^2,\quad 1\,000 = 10^3,\quad 1\,000\,000 = 10^6.$$
+- tisoč: $10 \cdot 10 \cdot 10 = 1\,000$,
+- milijon: šest desetic zmnoženih, $1\,000\,000$,
+- milijarda: devet desetic zmnoženih, $1\,000\,000\,000$.
 
-Število, ki ima števke $\overline{abc}$, ima vrednost $a \cdot 100 + b \cdot 10 + c$. Zato premik števke za eno mesto v levo pomeni množenje z $10$. To je razlog, da dodamo ničlo, ko število pomnožimo z $10$: $35 \cdot 10 = 350$.
+Za milijardo sledi **bilijon** (tisoč milijard, dvanajst ničel). Pozor pri branju angleških novic: angleška beseda *billion* pomeni našo **milijardo**, ne bilijona.
 
-**Zakaj primerjamo najprej število števk?** Število z $n$ števkami (brez začetne ničle) je vsaj $10^{n-1}$. Največje število z $n-1$ števkami pa je $10^{n-1} - 1$, kar je manj. Zato je vsako število z več števkami večje od vsakega števila z manj števkami.
+Pri zaokroževanju na tisočice je vsako število z istim zaokroženim rezultatom v natanko določenem razmiku. Na $24\,000$ se zaokrožijo vsa naravna števila od $23\,500$ do vključno $24\,499$. Sredina, števka $5$, se po dogovoru zaokroži navzgor. Levo od $24\,000$ so to števila od $23\,500$ do $23\,999$, desno od $24\,000$ do $24\,499$: na vsaki strani po $500$ števil.
 
-**Napaka zaokroževanja.** Pri zaokroževanju na mesto z vrednostjo $m$ (npr. $m = 1\,000$) je razlika med številom in zaokroženo vrednostjo največ $m/2$. Pri zaokroževanju na tisočice se torej zmotimo za največ $500$.
-
-**Zakaj ne zaokrožujemo v več korakih?** Ker vsak korak lahko doda napako. Primer: $1\,449$ zaokrožimo najprej na desetice ($1\,450$), nato na stotice ($1\,500$). Toda $1\,449$ je od $1\,500$ oddaljeno za $51$, od $1\,400$ pa le za $49$, zato pravilno zaokrožimo na $1\,400$.
+Zaokroženo število ni »napačno«. Je dogovorjena natančnost: povemo, katera mesta so pomembna, ostala zamenjamo z ničlami.
 
 ## Preveri se
 
-? Kako zapišemo število »trideset milijonov dvesto pet«?
-- $30\,200\,005$
-+ $30\,000\,205$
-- $30\,205$
-- $3\,000\,205$
-> Pravilni zapis je $30\,000\,205$: trideset milijonov, razred tisočic je prazen ($000$), nato dvesto pet ($205$). Pri napačnih odgovorih je razred tisočic izpuščen ali napačno zapolnjen ali pa je število milijonov napačno zapisano.
+? Na računu za stanovanje piše $245\,300$ €. Kaj pomeni števka $4$ v tem zapisu?
+- $4$ €
+~ Števka sama ne pove vrednosti; pomembno je mesto, kjer stoji.
+- $4\,000$ €
+~ Mesto tisočic zaseda petica. Štirica je eno mesto bolj levo.
++ $40\,000$ €
+- $400\,000$ €
+~ Na mestu stotisočic stoji dvojka. Štirica je na mestu desettisočic.
+> Od desne: enice $0$, desetice $0$, stotice $3$, tisočice $5$, desettisočice $4$. Štirica pomeni $40\,000$ €.
 
-? Katero število je največje?
-- $987\,654$
-- $99\,999$
-+ $1\,000\,000$
-- $998\,999$
-> Največje je $1\,000\,000$, ker ima sedem števk, ostala števila pa jih imajo šest ali manj. Pri primerjanju najprej štejemo števke, ne gledamo samo začetne števke.
+? Katera razvrstitev cen je naraščajoča?
+- $97\,000 < 105\,000 < 99\,500 < 120\,000$
+~ Tu je $105\,000$ pred $99\,500$, čeprav je šestmestno število večje od vsakega petmestnega.
+- $120\,000 < 105\,000 < 99\,500 < 97\,000$
+~ To je vrstni red od največje cene proti najmanjši, torej padajoča razvrstitev. Z znakom $<$ zapis ni resničen.
++ $97\,000 < 99\,500 < 105\,000 < 120\,000$
+- $105\,000 < 120\,000 < 97\,000 < 99\,500$
+~ Tu je primerjano samo po prvi števki ($1 < 9$), število mest pa ni upoštevano.
+> Petmestni števili sta manjši od šestmestnih. Med petmestnima odloči tisočica ($97\,000 < 99\,500$), med šestmestnima desettisočica ($105\,000 < 120\,000$).
 
-? Število $2\,849\,500$ zaokroži na tisočice.
-- $2\,849\,000$
-- $2\,800\,000$
-+ $2\,850\,000$
-- $2\,900\,000$
-> Mesto tisočic ima števko $9$ (v $2\,84\mathbf{9}\,500$). Števka desno je $5$, zato zaokrožimo navzgor: $9$ postane $10$, kar prenese enico na desettisočice ($4 \to 5$), in dobimo $2\,850\,000$. Odgovor $2\,849\,000$ bi veljal, če bi bila desna števka manjša od $5$, $2\,800\,000$ je zaokrožitev na stotisočice, $2\,900\,000$ pa bi bila napačna zaokrožitev na stotisočice navzgor.
+? Kaj se zgodi s ceno $52\,000$ €, če ji na desni dopišemo še eno ničlo?
+- Ostane enaka, ker ničla nima vrednosti.
+~ Ničla sama nima vrednosti, a vse ostale števke premakne za eno mesto v levo.
+- Poveča se za $10$ €.
+~ Dopisana ničla ne prišteje deset, ampak spremeni mesto vsake števke.
++ Poveča se desetkrat, na $520\,000$ €.
+- Poveča se tisočkrat.
+~ Tisočkrat večje bi bilo, če bi dopisali tri ničle.
+> Vsaka števka se premakne za eno mesto v levo, vsako mesto je desetkrat več vredno, zato je cena desetkrat večja: $520\,000$ €.
+
+? Zaokroži $2\,649\,500$ € na stotisočice.
+- $2\,700\,000$ €
+~ To dobiš z zaokroževanjem po korakih ($2\,650\,000$, nato $2\,700\,000$). Pogledati smeš samo eno števko desno.
+- $2\,650\,000$ €
+~ To je zaokroženo na desettisočice, ne na stotisočice.
++ $2\,600\,000$ €
+- $3\,000\,000$ €
+~ To je zaokroženo na milijone.
+> Števka stotisočic je $6$, desno od nje je $4$. Zaokrožimo navzdol: $2\,600\,000$ €.
+
+? Koliko bankovcev po $100$ € potrebuješ za milijon evrov?
+- $1\,000$
+~ $1\,000$ bankovcev po $100$ € je le $100\,000$ €, desetina milijona.
++ $10\,000$
+- $100\,000$
+~ To bi bilo $10\,000\,000$ €, desetkrat preveč. Preštej ničle: milijon jih ima šest, sto dve.
+- $100$
+~ Sto bankovcev po $100$ € je le $10\,000$ €.
+> $1\,000\,000 : 100 = 10\,000$. Milijonu odvzameš dve ničli, ker ima sto dve ničli.
