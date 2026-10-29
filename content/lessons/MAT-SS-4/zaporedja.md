@@ -183,7 +183,7 @@ Nariši koordinatni sistem: na vodoravno os nanašaš indekse $1, 2, 3, \ldots$,
 
 Predstavljaj si, da s kalkulatorjem iščeš $\sqrt{2}$ po korakih: $1{,}4$, nato $1{,}41$, $1{,}414$, $1{,}4142$ … To je zaporedje približkov. Je naraščajoče, saj vsakič dodaš števko. Je navzgor omejeno, saj noben približek ne preseže $1{,}5$. Zato ima limito, in ta limita je natanko $\sqrt{2}$, ki ga z nobenim končnim decimalnim zapisom ne zapišeš.
 
-Podobno je pri ohlajanju čaja. Če temperaturo merimo vsako minuto, dobimo padajoče zaporedje, ki je navzdol omejeno s temperaturo sobe. Temperatura se sobni bliža in je praktično ne preseže navzdol, zato se zaporedje meritev ustali. Okolica s polmerom $\varepsilon$ je kot natančnost termometra: od neke minute naprej termometer kaže »sobno temperaturo«, pa naj bo še tako natančen.
+Podobno je pri ohlajanju čaja. Če temperaturo merimo vsako minuto, dobimo padajoče zaporedje, ki je navzdol omejeno s temperaturo sobe. Temperatura se sobni bliža in pod njo ne pade, zato se zaporedje meritev ustali. Okolica s polmerom $\varepsilon$ je kot natančnost termometra: od neke minute naprej termometer kaže »sobno temperaturo«, pa naj bo še tako natančen.
 
 ## Drugače: Korak za korakom s številkami
 
@@ -199,7 +199,7 @@ Vzemimo $a_n = \dfrac{n+1}{n}$ in ga raziščimo s številkami.
 
 ## Drugače: Bolj natančno
 
-Definicija limite s simboli: $\lim\limits_{n \to \infty} a_n = L$ natanko tedaj, ko za vsak $\varepsilon > 0$ obstaja tak $n_0 \in \mathbb{N}$, da za vse $n > n_0$ velja $|a_n - L| < \varepsilon$. Vrstni red je pomemben: najprej nasprotnik izbere $\varepsilon$, nato ti poiščeš $n_0$, ki je smeše odvisen od $\varepsilon$.
+Definicija limite s simboli: $\lim\limits_{n \to \infty} a_n = L$ natanko tedaj, ko za vsak $\varepsilon > 0$ obstaja tak $n_0 \in \mathbb{N}$, da za vse $n > n_0$ velja $|a_n - L| < \varepsilon$. Vrstni red je pomemben: najprej nasprotnik izbere $\varepsilon$, nato ti poiščeš $n_0$, ki je lahko odvisen od $\varepsilon$.
 
 Limita je ena sama: če bi imelo zaporedje limiti $L_1 \ne L_2$, bi izbrali $\varepsilon$ manjši od polovice njune razdalje. Okolici se ne bi prekrivali, členi od nekod naprej pa bi morali biti v obeh hkrati, kar ni mogoče.
 

@@ -5,9 +5,9 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Pri kemiji so snovi pogosto raztopljene v vodi: fiziološka raztopina, kis, razkužilo, sok, kri. Iz prejšnjih ur že znaš izračunati množino snovi ($n = \dfrac{m}{M}$) in veš, da je molska masa $M$ v $\text{g/mol}$.
+Pri kemiji so snovi pogosto raztopljene v vodi: fiziološka raztopina, kis, razkužilo, sok, krvna plazma. Iz prejšnjih ur že znaš izračunati množino snovi ($n = \dfrac{m}{M}$) in veš, da je molska masa $M$ v $\text{g/mol}$.
 
-Pri raztopinah pa nas običajno ne zanima samo, *koliko* snovi imamo, ampak *kako močna* je raztopina, torej koliko topljenca je v določeni količini raztopine. Za to uporabljamo **masni delež** in **množinsko koncentracijo**. Kadar iz močne raztopine pripravimo šibkejšo, ji rečemo **redčenje**. To počnejo v laboratoriju, v lekarni in doma, ko razredčiš sirup.
+Pri raztopinah pa nas običajno ne zanima samo, *koliko* snovi imamo, ampak *kako močna* je raztopina, torej koliko topljenca je v določeni količini raztopine. Za to uporabljamo **masni delež** in **množinsko koncentracijo**. Kadar iz bolj koncentrirane raztopine (z več topljenca v isti prostornini) pripravimo bolj razredčeno, temu postopku rečemo **redčenje**. To počnejo v laboratoriju, v lekarni in doma, ko razredčiš sirup.
 
 ## Razlaga
 
@@ -27,6 +27,12 @@ $$w = \frac{m(\text{topljenec})}{m(\text{raztopina})}$$
 
 Masni delež nima enote. Lahko ga zapišemo kot decimalno število ($0{,}10$) ali v odstotkih ($10\,\%$). Za pretvorbo v odstotke ga pomnožimo s $100$.
 
+:::premisli
+V $100\,\text{g}$ vode raztopiš $10\,\text{g}$ soli. Ali je raztopina $10$-odstotna?
+---
+Ne. Masa raztopine je $110\,\text{g}$, zato je $w = \dfrac{10\,\text{g}}{110\,\text{g}} \approx 0{,}091 = 9{,}1\,\%$. Deliš z maso cele raztopine, ne z maso vode.
+:::
+
 **3. Množinska koncentracija.** Pove, koliko molov topljenca je v enem litru *raztopine*:
 
 $$c = \frac{n}{V}$$
@@ -39,9 +45,15 @@ $$c = \frac{m}{M \cdot V}$$
 
 $$n_1 = n_2 \quad\Rightarrow\quad c_1 \cdot V_1 = c_2 \cdot V_2$$
 
-Oznaka $1$ pomeni začetno (močnejšo) raztopino, oznaka $2$ končno (razredčeno). Enota za $V$ je na obeh straneh enaka, zato lahko tu uporabiš tudi $\text{mL}$, če sta obe prostornini v istih enotah.
+Oznaka $1$ pomeni začetno (bolj koncentrirano) raztopino, oznaka $2$ končno (bolj razredčeno). Enota za $V$ je na obeh straneh enaka, zato lahko tu uporabiš tudi $\text{mL}$, če sta obe prostornini v istih enotah.
 
-**5. Simulacija.** V simulaciji spodaj spreminjaš količino topljenca in prostornino raztopine ter opazuješ, kako se spreminja koncentracija.
+:::premisli
+$100\,\text{mL}$ raztopine dopolniš z vodo do $400\,\text{mL}$. Kaj se zgodi z množino topljenca in kaj s koncentracijo?
+---
+Množina topljenca ostane enaka, ker smo dodali samo vodo. Koncentracija se zmanjša na četrtino, ker je prostornina štirikrat večja: $c_2 = c_1 \cdot \dfrac{100}{400}$.
+:::
+
+**5. Simulacija.** V simulaciji spodaj (»Koncentracija raztopine«) nastavi množino topljenca $0{,}050\,\text{mol}$ in prostornino $250\,\text{mL}$. Napovej koncentracijo, nato preveri ($0{,}20\,\text{mol/L}$). Potem prostornino povečaj na $500\,\text{mL}$ in opazuj: množina ostane enaka, koncentracija se prepolovi, barva raztopine pa postane svetlejša.
 
 ## Rešeni primeri
 

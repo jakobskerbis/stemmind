@@ -5,9 +5,9 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Iz osnovne šole že veš, da so snovi zgrajene iz zelo majhnih delcev: atomov, molekul in ionov. Veš tudi, da lahko maso snovi izmeriš s tehtnico. Težava je v tem, da v kemijski reakciji delci reagirajo v določenih razmerjih, delcev pa ne moremo prešteti niti videti. En sam delec je neskončno lahek, zato bi bile številke ogromne.
+Iz osnovne šole že veš, da so snovi zgrajene iz zelo majhnih delcev: atomov, molekul in ionov. Veš tudi, da lahko maso snovi izmeriš s tehtnico. Težava je v tem, da v kemijski reakciji delci reagirajo v določenih razmerjih, delcev pa ne moremo prešteti niti videti. En sam delec je izjemno lahek, zato je že v kapljici vode ogromno molekul.
 
-Zato kemiki uporabljamo posebno količino, **množino snovi**. Z njo »štejemo« delce tako, da stehtamo snov. Ko veš, koliko molov snovi imaš, veš, koliko delcev je v njej, in lahko načrtuješ reakcije: koliko vodika potrebuješ za sintezo amoniaka, koliko apna za neutralizacijo kisline ali koliko zdravilne učinkovine je v tableti.
+Zato kemiki uporabljamo posebno količino, **množino snovi**. Z njo »štejemo« delce tako, da stehtamo snov. Ko veš, koliko molov snovi imaš, veš, koliko delcev je v njej, in lahko načrtuješ reakcije: koliko vodika potrebuješ za sintezo amoniaka, koliko apna za nevtralizacijo kisline ali koliko zdravilne učinkovine je v tableti.
 
 ## Razlaga
 
@@ -24,6 +24,12 @@ To pomeni: v $1\,\mathrm{mol}$ vode je približno $6{,}022 \cdot 10^{23}$ moleku
 **4. Število delcev in množina.** Če je $N$ število delcev, velja:
 
 $$N = n \cdot N_A \qquad\Longleftrightarrow\qquad n = \frac{N}{N_A}$$
+
+:::premisli
+V enem kozarcu so $3\,\mathrm{mol}$ vode, v drugem $3\,\mathrm{mol}$ sladkorja. Kje je več molekul?
+---
+Nikjer, število molekul je enako: $N = 3\,\mathrm{mol} \cdot N_A$. Množina snovi šteje delce, ne glede na to, kako veliki ali težki so.
+:::
 
 **5. Molska masa.** Molska masa $M$ je masa enega mola snovi:
 
@@ -43,38 +49,105 @@ Tako povežemo maso (ki jo izmerimo) s številom delcev (ki ga ne moremo prešte
 
 $$m \;\longleftrightarrow\; n \;\longleftrightarrow\; N$$
 
+:::premisli
+Imaš $10\,\mathrm{g}$ vodika $\mathrm{H_2}$ ($M = 2\,\mathrm{g/mol}$) in $10\,\mathrm{g}$ kisika $\mathrm{O_2}$ ($M = 32\,\mathrm{g/mol}$). Kje je več molekul?
+---
+V vodiku. Vodika je $\dfrac{10}{2} = 5\,\mathrm{mol}$, kisika le $\dfrac{10}{32} \approx 0{,}31\,\mathrm{mol}$. Molekule vodika so lažje, zato jih je v isti masi več. Enaka masa ne pomeni enakega števila delcev.
+:::
+
+V simulaciji spodaj »Mol, molska masa in Avogadrovo število« izberi vodo in pritisni gumb »1 mol«, nato izberi saharozo in spet pritisni »1 mol«. Opazi, da se masa močno spremeni, število delcev $N$ pa ostane približno $6{,}02 \cdot 10^{23}$. Simulacija računa z natančnejšimi relativnimi atomskimi masami (npr. $18{,}02\,\mathrm{g/mol}$ za vodo), zato so rezultati malo drugačni kot pri zaokroženih vrednostih.
+
 ## Rešeni primeri
 
 ### Primer 1: molska masa in množina
 
-Koliko molov je v $36\,\mathrm{g}$ vode? ($A_r(\mathrm{H}) = 1$, $A_r(\mathrm{O}) = 16$)
+Koliko molov je v $36\,\mathrm{g}$ vode? Uporabi $A_r(\mathrm{H}) = 1$ in $A_r(\mathrm{O}) = 16$.
+
+**Podatki:** $m = 36\,\mathrm{g}$, snov $\mathrm{H_2O}$, $A_r(\mathrm{H}) = 1$, $A_r(\mathrm{O}) = 16$
+**Iščemo:** množino $n$
+
+:::formula
+$M(\mathrm{H_2O}) = 2 \cdot A_r(\mathrm{H}) + A_r(\mathrm{O})$ v $\mathrm{g/mol}$, nato $n = \dfrac{m}{M}$
+:::
+
+**Rešitev:**
 
 1. Najprej potrebujemo molsko maso, ker je ta »most« med maso in množino: $M(\mathrm{H_2O}) = 2 \cdot 1 + 16 = 18\,\mathrm{g/mol}$.
 2. Iščemo množino, zato uporabimo $n = \dfrac{m}{M}$.
 3. Vstavimo: $n = \dfrac{36\,\mathrm{g}}{18\,\mathrm{g/mol}} = 2\,\mathrm{mol}$.
-4. Preverimo enoto: gram deljen z gram na mol da mol. ✓
+4. Preverimo enoto: gram, deljen z gramom na mol, da mol. ✓
+5. Odgovor: v $36\,\mathrm{g}$ vode sta $2\,\mathrm{mol}$ vode.
+
+To lahko preveriš v simulaciji spodaj: izberi vodo in nastavi maso na $36\,\mathrm{g}$. Dobiš približno $1{,}998\,\mathrm{mol}$, ker simulacija računa z $M = 18{,}02\,\mathrm{g/mol}$.
 
 ### Primer 2: masa iz množine
 
-Kolikšna je masa $0{,}5\,\mathrm{mol}$ ogljikovega dioksida $\mathrm{CO_2}$? ($A_r(\mathrm{C}) = 12$, $A_r(\mathrm{O}) = 16$)
+Kolikšna je masa $0{,}5\,\mathrm{mol}$ ogljikovega dioksida $\mathrm{CO_2}$? Uporabi $A_r(\mathrm{C}) = 12$ in $A_r(\mathrm{O}) = 16$.
+
+**Podatki:** $n = 0{,}5\,\mathrm{mol}$, snov $\mathrm{CO_2}$, $A_r(\mathrm{C}) = 12$, $A_r(\mathrm{O}) = 16$
+**Iščemo:** maso $m$
+
+:::formula
+$M(\mathrm{CO_2}) = A_r(\mathrm{C}) + 2 \cdot A_r(\mathrm{O})$ v $\mathrm{g/mol}$, nato $m = n \cdot M$
+:::
+
+**Rešitev:**
 
 1. Molska masa: $M(\mathrm{CO_2}) = 12 + 2 \cdot 16 = 44\,\mathrm{g/mol}$. Pri kisiku množimo z 2, ker sta v formuli dva atoma.
 2. Iščemo maso, zato $m = n \cdot M$.
 3. Vstavimo: $m = 0{,}5\,\mathrm{mol} \cdot 44\,\mathrm{g/mol} = 22\,\mathrm{g}$.
-4. Smiselnost: pol mola je polovica molske mase, torej polovica od $44\,\mathrm{g}$. ✓
+4. Smiselnost: pol mola tehta polovico molske mase, torej polovico od $44\,\mathrm{g}$. ✓
+5. Odgovor: $0{,}5\,\mathrm{mol}$ ogljikovega dioksida ima maso $22\,\mathrm{g}$.
 
 ### Primer 3: število delcev (težji)
 
-Koliko molekul vode in koliko atomov vodika je v $9\,\mathrm{g}$ vode? ($M(\mathrm{H_2O}) = 18\,\mathrm{g/mol}$)
+Koliko molekul vode in koliko atomov vodika je v $9\,\mathrm{g}$ vode? Molska masa vode je $18\,\mathrm{g/mol}$.
 
-1. **Množina vode:** $n = \dfrac{m}{M} = \dfrac{9\,\mathrm{g}}{18\,\mathrm{g/mol}} = 0{,}5\,\mathrm{mol}$.
+**Podatki:** $m = 9\,\mathrm{g}$, $M(\mathrm{H_2O}) = 18\,\mathrm{g/mol}$, $N_A = 6{,}022 \cdot 10^{23}\,\mathrm{mol^{-1}}$
+**Iščemo:** število molekul $N(\mathrm{H_2O})$ in število atomov vodika $N(\mathrm{H})$
+
+:::formula
+$n = \dfrac{m}{M}$
+
+$N = n \cdot N_A$
+
+$N(\mathrm{H}) = 2 \cdot N(\mathrm{H_2O})$
+:::
+
+**Rešitev:**
+
+1. **Množina vode:** do števila delcev pridemo le prek množine, zato najprej $n = \dfrac{m}{M} = \dfrac{9\,\mathrm{g}}{18\,\mathrm{g/mol}} = 0{,}5\,\mathrm{mol}$.
 2. **Število molekul:** $N = n \cdot N_A = 0{,}5\,\mathrm{mol} \cdot 6{,}022 \cdot 10^{23}\,\mathrm{mol^{-1}} = 3{,}011 \cdot 10^{23}$ molekul.
 3. **Atomi vodika:** vsaka molekula $\mathrm{H_2O}$ vsebuje 2 atoma vodika, zato je atomov dvakrat toliko: $2 \cdot 3{,}011 \cdot 10^{23} = 6{,}022 \cdot 10^{23}$ atomov vodika.
 4. **Preverimo:** $0{,}5\,\mathrm{mol}$ vode vsebuje $1\,\mathrm{mol}$ atomov vodika, kar je natanko $6{,}022 \cdot 10^{23}$ atomov. ✓
+5. Odgovor: v $9\,\mathrm{g}$ vode je $3{,}011 \cdot 10^{23}$ molekul vode in $6{,}022 \cdot 10^{23}$ atomov vodika.
+
+### Primer 4: zdaj ti
+
+Kemik je odtehtal vzorec železa, v katerem je $3{,}011 \cdot 10^{23}$ atomov železa. Kolikšna je masa vzorca? Molska masa železa je $56\,\mathrm{g/mol}$.
+
+**Podatki:** $N = 3{,}011 \cdot 10^{23}$, $M(\mathrm{Fe}) = 56\,\mathrm{g/mol}$, $N_A = 6{,}022 \cdot 10^{23}\,\mathrm{mol^{-1}}$
+**Iščemo:** maso $m$
+
+:::formula
+$n = \dfrac{N}{N_A}$, nato $m = n \cdot M$
+:::
+
+**Rešitev:**
+
+1. Tokrat gremo po verigi v obratni smeri, $N \to n \to m$, ker je dano število delcev.
+2. Množina: $n = \dfrac{3{,}011 \cdot 10^{23}}{6{,}022 \cdot 10^{23}\,\mathrm{mol^{-1}}} = 0{,}5\,\mathrm{mol}$. Potenci $10^{23}$ se pokrajšata.
+3. Izračunaj maso sam, nato preveri:
+
+:::premisli
+Kolikšna je masa $0{,}5\,\mathrm{mol}$ železa?
+---
+$m = n \cdot M = 0{,}5\,\mathrm{mol} \cdot 56\,\mathrm{g/mol} = 28\,\mathrm{g}$. Vzorec ima maso $28\,\mathrm{g}$.
+:::
 
 ## Pogoste napake
 
-- **Mešanje mase in množine.** Masa $m$ je v gramih, množina $n$ v molih. $36\,\mathrm{g}$ vode ni $36\,\mathrm{mol}$ vode.
+- **Mešanje mase in množine.** Masa $m$ je v gramih, množina $n$ v molih. $36\,\mathrm{g}$ vode ni $36\,\mathrm{mol}$ vode. Prav tako $1\,\mathrm{mol}$ vode in $1\,\mathrm{mol}$ železa nimata enake mase ($18\,\mathrm{g}$ in $56\,\mathrm{g}$), imata pa enako število delcev.
 - **Pozabljeno upoštevanje indeksov v formuli.** Pri $\mathrm{CO_2}$ je $M = 12 + 2 \cdot 16$, ne $12 + 16$.
 - **Obrnjena formula.** $n = m/M$, ne $n = M/m$. Preveri enote: rezultat mora biti v molih.
 - **Mol delcev ni mol atomov.** En mol molekul $\mathrm{H_2O}$ vsebuje $1\,\mathrm{mol}$ molekul, a $2\,\mathrm{mol}$ atomov vodika in $1\,\mathrm{mol}$ atomov kisika.
