@@ -200,8 +200,10 @@ async function onboard(name = "") {
   showView("onboard");
   document.body.classList.add("onboarding");
   return new Promise((resolve) => {
+    let busy = false; // ob počasni povezavi večkratni pritisk ne sme ustvariti več učencev
     f.addEventListener("submit", async (e) => {
       e.preventDefault();
+      if (busy) return;
       const err = f.querySelector(".form-error");
       if (!picker.complete()) {
         err.textContent = t("onb.finish");
@@ -218,7 +220,20 @@ async function onboard(name = "") {
         region: currentRegion(),
       };
       if (track === "UNIVERZA") settings.subject = programs.find((p) => p.id === settings.study_program)?.mainSubject || "MAT";
-      const s = await api("/api/students", { method: "POST", body: { name: f.name.value, settings } });
+      const btn = f.querySelector('button[type="submit"]');
+      busy = true;
+      btn.disabled = true;
+      err.hidden = true;
+      let s;
+      try {
+        s = await api("/api/students", { method: "POST", body: { name: f.name.value, settings } });
+      } catch (ex) {
+        err.textContent = ex.message;
+        err.hidden = false;
+        busy = false;
+        btn.disabled = false;
+        return;
+      }
       document.body.classList.remove("onboarding");
       resolve(s);
     });

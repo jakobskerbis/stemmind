@@ -131,6 +131,8 @@ export function createApp(store, opts = {}) {
   app.post("/api/students", (req, res) => {
     const name = cleanText(req.body?.name, 40);
     if (!name) return res.status(400).json({ error: "Vpiši ime." });
+    const dup = store.recentDuplicate(name, req.body?.settings);
+    if (dup) return res.status(200).json(dup);
     res.status(201).json(store.createStudent(name, req.body?.settings));
   });
   app.get("/api/students/:id", (req, res) => {
