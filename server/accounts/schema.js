@@ -108,6 +108,8 @@ export function migrateAccounts(db) {
   if (!pcols.includes("country")) db.exec("ALTER TABLE parents ADD COLUMN country TEXT");
   // Poln dostop iz aktivacijske kode (glej promo.js).
   if (!pcols.includes("promo_until")) db.exec("ALTER TABLE parents ADD COLUMN promo_until TEXT");
+  // Datum rojstva imetnika računa (preverjanje starosti, glej age.js). Stari računi: NULL = polnoleten.
+  if (!pcols.includes("birth_date")) db.exec("ALTER TABLE parents ADD COLUMN birth_date TEXT");
   const cols = db.prepare("PRAGMA table_info(students)").all().map((c) => c.name);
   if (!cols.includes("parent_id")) db.exec("ALTER TABLE students ADD COLUMN parent_id INTEGER REFERENCES parents(id) ON DELETE CASCADE");
   if (!cols.includes("birth_year")) db.exec("ALTER TABLE students ADD COLUMN birth_year INTEGER");

@@ -115,6 +115,12 @@ export async function initAccount({ onReady }) {
   const q = new URLSearchParams(location.search);
   if (q.get("ref")) store.set("stemmind_ref", q.get("ref"));
   if (q.get("koda")) store.set("stemmind_koda", q.get("koda"));
+  // Povezava s strani za starše (starsi.html): starš ustvari račun, otrokovo ime je že vpisano.
+  const parentInvite = q.get("starsi") === "1";
+  if (parentInvite) {
+    store.set("stemmind_invite_name", (q.get("ime") || "").slice(0, 40) || null);
+    store.set(AGE_BLOCK, null);
+  }
   const reset = q.get("reset");
   const verified = q.get("verified");
   const billing = q.get("billing");
@@ -131,13 +137,15 @@ export async function initAccount({ onReady }) {
     if (billing === "success") toast("Hvala! Naročnina je aktivna.");
     status = await api("/api/account/status");
   }
+  if (parentInvite) route.firstMode = "register";
   const ready = await route();
+  route.firstMode = null;
   if (ready && billing) setTimeout(() => $("#account-tab").click(), 0);
   return ready;
 }
 
 async function route() {
-  if (!status.logged_in) return renderLogin(), false;
+  if (!status.logged_in) return renderLogin(route.firstMode || "login"), false;
   if (!status.parent.verified) return renderVerify(), false;
   if (!status.children) return renderAddChild(), false;
   authMode(false);
@@ -174,21 +182,29 @@ function shell(inner) {
   $("#view-auth").innerHTML = `<div class="auth-box">${inner}</div>`;
 }
 
+// Po zavrnjeni registraciji zaradi starosti naprava 24 ur kaže stran s povezavo za starše.
+const AGE_BLOCK = "stemmind_age_block";
+const ageBlocked = () => Date.now() - Number(store.get(AGE_BLOCK) || 0) < 86400000;
+
 function renderLogin(mode = "login") {
+  if (mode === "register" && ageBlocked()) return renderAskParent();
+  const invited = mode === "register" && store.get("stemmind_invite_name");
   const ref = store.get("stemmind_ref") || "";
   const koda = store.get("stemmind_koda") || "";
   shell(`
     <h1>${mode === "login" ? "Prijava" : "Nov račun"}</h1>
-    <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za študente fakultet (lasten profil)." : `STEMMind je 7 dni brezplačen, brez kartice. Nato ${eur(999)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
+    <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za dijake ter študente (lasten profil)." : `STEMMind je 7 dni brezplačen, brez kartice. Nato ${eur(999)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
+    ${invited ? `<p class="card">Ustvarite svoj račun starša. Nato dodate otrokov profil (<b>${esc(invited)}</b>) in s tem date soglasje.</p>` : ""}
     <form id="auth-form" class="card form">
       ${mode === "register" ? `<label>Vaše ime (neobvezno) <input name="name" maxlength="60" autocomplete="name"></label>` : ""}
       <label>E-naslov <input name="email" type="email" required autocomplete="email"></label>
       <label>Geslo <input name="password" type="password" required minlength="8" autocomplete="${mode === "login" ? "current-password" : "new-password"}"></label>
       ${mode === "register" ? `
+        <label>Vaš datum rojstva <input name="birth_date" type="date" required min="1900-01-01" max="${new Date().toISOString().slice(0, 10)}" autocomplete="bday"></label>
         <label>Aktivacijska koda (neobvezno) <input name="promo_code" maxlength="40" autocapitalize="characters" value="${esc(koda)}"></label>
         <label>Koda priporočila (neobvezno) <input name="referral_code" maxlength="12" value="${esc(ref)}"></label>
         <label class="check"><input type="checkbox" name="accept_privacy" required>
-          <span>Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu osebnih podatkov</a> in sem polnoleten(a): starš oziroma zakoniti zastopnik ali študent, ki ustvarja lasten profil.</span></label>` : ""}
+          <span>Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu osebnih podatkov</a>. Račun ustvarjam kot starš oziroma zakoniti zastopnik ali zase (dijak ali študent).</span></label>` : ""}
       <p class="form-error" hidden></p>
       <button class="primary" type="submit">${mode === "login" ? "Prijava" : "Ustvari račun"}</button>
     </form>
@@ -207,7 +223,7 @@ function renderLogin(mode = "login") {
       } else {
         const r = await api("/api/auth/register", {
           method: "POST",
-          body: { name: f.name.value, email: f.email.value, password: f.password.value, referral_code: f.referral_code.value, promo_code: f.promo_code.value, accept_privacy: f.accept_privacy.checked, country: deviceRegion() },
+          body: { name: f.name.value, email: f.email.value, password: f.password.value, referral_code: f.referral_code.value, promo_code: f.promo_code.value, accept_privacy: f.accept_privacy.checked, birth_date: f.birth_date.value, country: deviceRegion() },
         });
         store.set("stemmind_ref", null);
         store.set("stemmind_koda", null);
@@ -217,8 +233,55 @@ function renderLogin(mode = "login") {
       }
       await continueFlow();
     } catch (err) {
+      if (err.data?.under_age) {
+        store.set(AGE_BLOCK, String(Date.now()));
+        return renderAskParent(err.data.min_age);
+      }
       showError(f, err);
     }
+  });
+}
+
+// Premlad za lasten račun: povezava za starše s vsemi podatki (kaj je STEMMind, podatki, cena, soglasje).
+function renderAskParent(minAge) {
+  const linkFor = (name) => `${location.origin}/starsi.html${name ? `?ime=${encodeURIComponent(name)}` : ""}`;
+  shell(`
+    <h1>Vprašaj starše</h1>
+    <p class="muted">${minAge ? `Za mlajše od ${minAge} let` : "Za mlajše učence"} račun ustvari starš ali skrbnik. Pošlji jim to povezavo: tam piše, kaj je STEMMind, katere podatke hranimo in koliko stane. Ko starš ustvari račun in doda tvoj profil, se lahko začneš učiti.</p>
+    <form id="ask-parent" class="card form">
+      <label>Tvoje ime ali vzdevek (neobvezno) <input name="name" maxlength="40" placeholder="npr. Miha"></label>
+      <label>Povezava za starše <input name="link" readonly value="${esc(linkFor(""))}"></label>
+      <div class="form-actions">
+        <button class="primary" type="button" data-act="share">Pošlji staršem</button>
+        <button type="button" data-act="copy">Kopiraj povezavo</button>
+        <button type="button" data-act="mail">Pošlji po e-pošti</button>
+      </div>
+    </form>
+    <p class="auth-links">Si starš? <a href="/starsi.html">Preberi več in ustvari račun</a> · <a href="#" data-go="login">Prijava</a></p>`);
+  bindLinks();
+  const f = $("#ask-parent");
+  const link = () => linkFor(f.name.value.trim());
+  const text = () => {
+    const n = f.name.value.trim();
+    return `${n ? `${n} bi rad(a)` : "Rad(a) bi"} uporabljal(a) STEMMind, AI inštruktorja za matematiko, fiziko in kemijo. Za to potrebujem tvoje dovoljenje:`;
+  };
+  const mail = () => (location.href = `mailto:?subject=${encodeURIComponent("STEMMind – prosim za dovoljenje")}&body=${encodeURIComponent(`${text()}\n${link()}`)}`);
+  f.name.addEventListener("input", () => (f.link.value = link()));
+  f.querySelector('[data-act="mail"]').addEventListener("click", mail);
+  f.querySelector('[data-act="copy"]').addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(link());
+      toast("Povezava je kopirana.");
+    } catch {
+      f.link.select();
+    }
+  });
+  f.querySelector('[data-act="share"]').addEventListener("click", async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "STEMMind", text: text(), url: link() });
+      } catch {}
+    } else mail();
   });
 }
 
@@ -305,9 +368,12 @@ function renderVerify() {
 function childForm(consentText, programs = []) {
   const y = new Date().getFullYear();
   const years = Array.from({ length: 60 }, (_, i) => y - 6 - i);
+  // Mladoletni imetnik računa ustvari samo svoj profil (letnica iz datuma rojstva ob registraciji).
+  const self = !!status?.parent?.minor;
+  const invited = store.get("stemmind_invite_name") || "";
   return `
-    <form id="child-form" class="card form">
-      <label>Ime ali vzdevek <input name="name" maxlength="40" required placeholder="npr. Miha"></label>
+    <form id="child-form" class="card form${self ? " self-profile" : ""}">
+      <label>${self ? "Tvoje ime ali vzdevek" : "Ime ali vzdevek"} <input name="name" maxlength="40" required placeholder="npr. Miha" value="${esc(invited)}"></label>
       <fieldset class="level-field">
         <legend>Šola in letnik</legend>
         <label class="system-field"><span>Država in šolski sistem</span>
@@ -319,11 +385,12 @@ function childForm(consentText, programs = []) {
         <input type="hidden" name="study_program">
         <input type="hidden" name="curriculum_level">
       </fieldset>
-      <label>Letnica rojstva
-        <select name="birth_year" required><option value="">Izberite …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
+      <label${self ? " hidden" : ""}>Letnica rojstva
+        <select name="birth_year"${self ? "" : " required"}><option value="">Izberite …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
       </label>
       <label class="check"><input type="checkbox" name="consent" required>
-        <span class="consent-child">${esc(consentText)} <a href="/zasebnost.html" target="_blank">Obvestilo o varstvu podatkov</a>.</span>
+        <span class="consent-self"${self ? "" : " hidden"}>Profil je moj. Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu podatkov</a> in soglašam z obdelavo svojih podatkov (ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.</span>
+        <span class="consent-child"${self ? " hidden" : ""}>${esc(consentText)} <a href="/zasebnost.html" target="_blank">Obvestilo o varstvu podatkov</a>.</span>
         <span class="consent-adult" hidden>Profil je moj (sem polnoleten študent) ali profil mojega otroka. Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu podatkov</a> in soglašam z obdelavo podatkov (ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.</span></label>
       <p class="form-error" hidden></p>
       <button class="primary" type="submit">Ustvari profil</button>
@@ -341,6 +408,7 @@ function childSettings(f) {
 function bindChildForm(after) {
   const f = $("#child-form");
   const toggle = (_, track) => {
+    if (f.classList.contains("self-profile")) return;
     const uni = track === "UNIVERZA";
     f.querySelector(".consent-child").hidden = uni;
     f.querySelector(".consent-adult").hidden = !uni;
@@ -356,6 +424,7 @@ function bindChildForm(after) {
         body: { name: f.name.value, birth_year: Number(f.birth_year.value), consent: f.consent.checked, settings: childSettings(f) },
       });
       store.set("studentId", String(s.id));
+      store.set("stemmind_invite_name", null);
       await after(s);
     } catch (err) {
       showError(f, err);
