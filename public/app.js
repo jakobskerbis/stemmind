@@ -1948,7 +1948,13 @@ function hintStepHtml(st, n, total) {
 }
 
 // Prepoznana tipična napaka (iz generatorja ali splošni vzorec: predznak, pretvorba enot …).
-const mistakeHtml = (m) => (m ? `<div class="fb info mistake">${icon("search")}<span>${escapeHtml(m.code ? fbText(m) : m.message)}</span></div>` : "");
+// Razlage generatorjev imajo pogosto formule ($\frac{1}{5}$): te izrišemo, preostalo besedilo ubežimo.
+const inlineMath = (s) =>
+  String(s ?? "")
+    .split(/(\$[^$\n]+\$)/)
+    .map((p) => (/^\$[^$\n]+\$$/.test(p) ? renderMath(p.slice(1, -1), false, false) : escapeHtml(p)))
+    .join("");
+const mistakeHtml = (m) => (m ? `<div class="fb info mistake">${icon("search")}<span>${m.code ? escapeHtml(fbText(m)) : inlineMath(m.message)}</span></div>` : "");
 
 // Rešitev z izpisanimi podatki iz besedila (Podatki / Iščemo) in formulo, skrito za gumbom.
 function workedBlock(task, solution, label = t("task.solution")) {

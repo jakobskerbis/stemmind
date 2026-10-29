@@ -1197,7 +1197,7 @@ const genOksStevila = {
     const q = charge(S);
     const others = q - n * x;
     const orgName = isOrg ? OX_ORG.find((o) => o[0] === S)[1] : "";
-    const mis = [[-x, "Preveri predznak: vsota oksidacijskih števil mora biti enaka naboju zvrsti."], [n * x, `V formuli je ${n} atom${n === 2 ? "a" : "ov"} ${El}; vsoto deli s številom atomov.`]];
+    const mis = [[-x, "Preveri predznak: vsota oksidacijskih števil mora biti enaka naboju zvrsti."], [n * x, `V formuli ${n === 2 ? "sta 2 atoma" : n <= 4 ? `so ${n} atomi` : `je ${n} atomov`} ${El}; vsoto deli s številom atomov.`]];
     if (q !== 0) mis.push([(n * x - q) / n, "Si pozabil na naboj iona? Vsota oksidacijskih števil je enaka naboju."]);
     return mk(
       isOrg

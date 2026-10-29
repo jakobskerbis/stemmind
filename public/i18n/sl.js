@@ -204,7 +204,7 @@ export default {
   "task.writeTitle": "Vnos s prstom ali miško: tipke ali pisanje",
   "task.check": "Preveri",
   "chk.empty": "Najprej vpiši odgovor.",
-  "chk.number": "Vpiši število (decimalno vejico lahko zapišeš z vejico).",
+  "chk.number": "Vpiši število (za decimalno ločilo lahko uporabiš vejico ali piko).",
   "chk.addUnit": "Število je zapisano, dodaj še enoto. V kateri enoti je rezultat?",
   "chk.unit": "Preveri enoto: rezultat zapiši v {unit}.",
   "chk.rounding": "Izračun je pravilen, popraviti je treba le zaokroževanje. Pravilno zaokroženo je {right}.",

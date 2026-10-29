@@ -6,6 +6,8 @@ import { choices } from "../rng.js";
 import { en, sg, co, sco, par, frac, fracTex, reduce, num, fraction, roundTo, task, nCr, fact, poly, factor, numM, fractionM, dq } from "./exam-util.js";
 
 const T = (slug) => `MAT-EXB/${slug}`;
+// Angleški vrstilni števnik: 1st, 2nd, 3rd, 11th, 23rd …
+const ordEn = (n) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th"}`;
 const TRIPLES = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [6, 8, 10], [7, 24, 25], [9, 12, 15], [20, 21, 29]];
 
 export const EXAM_MAT = [
@@ -157,7 +159,7 @@ export const EXAM_MAT = [
       const a = r.int(-10, 15), d = r.nonZero(-5, 7), n = r.int(8, 30);
       if (level === 1) {
         return task({
-          text: `An arithmetic progression begins $${a}, ${a + d}, ${a + 2 * d}, \\dots$ What is its ${n}th term?`,
+          text: `An arithmetic progression begins $${a}, ${a + d}, ${a + 2 * d}, \\dots$ What is its ${ordEn(n)} term?`,
           answer: num(a + (n - 1) * d),
           hint: "$a_n = a_1 + (n-1)d$.",
           formula: "a_n = a_1 + (n-1)d",
@@ -191,7 +193,7 @@ export const EXAM_MAT = [
       const a = r.pick([1, 2, 3, 5, -2]), q = r.pick([2, 3, -2]), n = r.int(5, 8);
       if (level === 1) {
         return task({
-          text: `A geometric sequence begins $${a}, ${a * q}, ${a * q * q}, \\dots$ What is its ${n}th term?`,
+          text: `A geometric sequence begins $${a}, ${a * q}, ${a * q * q}, \\dots$ What is its ${ordEn(n)} term?`,
           answer: num(a * q ** (n - 1)),
           hint: "$a_n = a_1 q^{n-1}$.",
           formula: "a_n = a_1 q^{\\,n-1}",

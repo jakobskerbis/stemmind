@@ -67,6 +67,25 @@ export function topicsWithGenerators() {
   return Object.keys(BY_TOPIC);
 }
 
+// TeX-ova vejica {,} zunaj formul ($…$, $$…$$) bi se izpisala dobesedno (»1{,}86 a.e.«):
+// tam jo zamenjamo z navadno vejico (tx() se uporablja tudi v navadnem besedilu).
+const MATH_SPLIT = /(\$\$[\s\S]+?\$\$|\$[^$\n]+\$)/;
+const plain = (s) => (typeof s === "string" && s.includes("{,}") ? s.split(MATH_SPLIT).map((p, i) => (i % 2 ? p : p.replaceAll("{,}", ","))).join("") : s);
+function plainCommas(t) {
+  const a = t.answer;
+  return {
+    ...t,
+    text: plain(t.text),
+    hint: plain(t.hint),
+    solution: Array.isArray(t.solution) ? t.solution.map(plain) : plain(t.solution),
+    answer: {
+      ...a,
+      ...(a.mistakes ? { mistakes: a.mistakes.map((m) => (m ? { ...m, why: plain(m.why) } : m)) } : {}),
+      ...(Array.isArray(a.why) ? { why: a.why.map(plain) } : {}),
+    },
+  };
+}
+
 // Ustvari nalogo za temo. level: 1 (lažje) – 3 (težje).
 export function generateTask(topicId, level = 1, seed = crypto.randomInt(2 ** 31)) {
   const gens = gensFor(topicId);
@@ -76,7 +95,7 @@ export function generateTask(topicId, level = 1, seed = crypto.randomInt(2 ** 31
   // Nekaj poskusov, če bi generator vrnil neveljavno nalogo.
   for (let i = 0; i < 5; i++) {
     const t = g.gen(level, r, genTopic);
-    if (t && t.text && t.answer) return { ...t, generator: g.id, topicId, level, seed };
+    if (t && t.text && t.answer) return plainCommas({ ...t, generator: g.id, topicId, level, seed });
   }
   throw new Error(`Generator ${g.id} ni ustvaril naloge.`);
 }
