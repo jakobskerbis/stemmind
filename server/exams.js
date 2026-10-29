@@ -1,4 +1,4 @@
-// Priprave na izpite (SAT, gaokao, JEE, NEET, CBSE): poti, poskusni izpit in točkovanje.
+// Priprave na izpite (SAT, gaokao, JEE, NEET, CBSE, ICSE/ISC …): poti, poskusni izpit in točkovanje.
 // Podatki so v exam-data.js, poti "<predmet>-EX-<izpit>" sestavi curriculum.js.
 // Trening uporablja isti mehanizem kot tekmovalni trening, poskusni izpit pa isti kot
 // poskusno tekmovanje (na čas, en poskus), le z izpitnim formatom in točkami.
@@ -6,26 +6,52 @@ import crypto from "node:crypto";
 import { getPath } from "./curriculum.js";
 import { hasGenerator } from "./practice/index.js";
 import { EXAMS, EXAM_IDS, SUBJECT_NAMES_EN } from "./exam-data.js";
+import { gradeInfo } from "../public/regions.js";
+import { uiChain } from "../public/i18n/languages.js";
+import { EXAM_HI, NAMES_HI, COUNTRY_HI, SUBJECT_HI } from "./exam-hi.js";
+
+// Jezik besedila pri dvojezičnih (angleško-hindijskih) nalogah in opisih izpitov: "hi", če je
+// hindijščina v verigi jezikov vmesnika pred angleščino (hi, bho, mai, mr …), sicer "en".
+export function taskLanguage(code) {
+  const chain = uiChain(code || "en");
+  const hi = chain.indexOf("hi");
+  return hi >= 0 && hi < chain.indexOf("en") ? "hi" : "en";
+}
 
 export const isExamPath = (key) => {
-  const m = /^(MAT|FIZ|KEM)-EX-([A-Z0-9]+)$/.exec(String(key || ""));
+  const m = /^(MAT|FIZ|KEM|BIO)-EX-([A-Z0-9]+)$/.exec(String(key || ""));
   return !!(m && EXAMS[m[2]]?.subjects[m[1]] && getPath(key));
 };
 export const examOf = (key) => (isExamPath(key) ? String(key).split("-")[2] : null);
 
 // Izpiti šolskega sistema (najprej domači), nato vsi ostali.
+// Slovenski izpiti (NPZ, matura: naloge v slovenščini) so med »drugimi« samo za slovenske učence.
 export function examsFor(system) {
   const own = EXAM_IDS.filter((id) => EXAMS[id].systems.includes(system));
-  return { own, other: EXAM_IDS.filter((id) => !own.includes(id)) };
+  const other = EXAM_IDS.filter((id) => !own.includes(id) && (system === "SI" || !EXAMS[id].systems.includes("SI")));
+  return { own, other };
 }
 
 // Ali ima šolski sistem svoje izpite (takrat je zavihek »Izpiti« namesto »Tekmovanja«).
 export const hasExams = (system) => examsFor(system).own.length > 0;
 
 // Privzeta pot: izbrani izpit (ali prvi domači) in predmet učenca, če ga izpit ima.
+// Slovenija: »7. razred« → 7, »2. letnik« srednje šole → 11 (leto šolanja).
+function slovenianLevel(settings) {
+  const n = parseInt(String(settings.curriculum_level || ""), 10);
+  if (!n) return null;
+  return settings.educational_track === "SREDNJA_SOLA" ? 9 + n : n;
+}
+
+// Brez izbire: domači izpit za učenčev razred (najprej šolski izpit, npr. CBSE 10 za Class 8,
+// CBSE 12 za Class 12), sicer prvi domači.
 export function examKeyFor(settings, examId = null) {
   const { own } = examsFor(settings.school_system);
-  const id = EXAMS[examId] ? examId : own[0] || "SAT"; // brez domačih izpitov: SAT (mednarodno najbolj razširjen)
+  const level = gradeInfo(settings.school_system, settings.curriculum_level)?.level || slovenianLevel(settings);
+  const fits = (x) =>
+    level && EXAMS[x].forLevel && level >= EXAMS[x].forLevel[0] && level <= EXAMS[x].forLevel[1] && (!EXAMS[x].track || EXAMS[x].track === settings.educational_track);
+  const forGrade = own.filter(fits).sort((a, b) => !!EXAMS[b].board - !!EXAMS[a].board);
+  const id = EXAMS[examId] ? examId : forGrade[0] || own[0] || "SAT"; // brez domačih izpitov: SAT (mednarodno najbolj razširjen)
   if (!id) return null;
   const subjects = Object.keys(EXAMS[id].subjects);
   const subject = subjects.includes(settings.subject) ? settings.subject : subjects[0];
@@ -38,14 +64,14 @@ const mockOf = (key) => {
 };
 
 // Opis za zavihek: izpit, predmeti, format poskusnega izpita.
-export function examInfo(key, system) {
+export function examInfo(key, system, lang = "en") {
   if (!isExamPath(key)) return null;
   const [subject, , id] = key.split("-");
-  const e = EXAMS[id];
+  const e = localExam(id, lang);
   const mock = mockOf(key);
   const groups = mock.groups;
   const { own, other } = examsFor(system);
-  const brief = (x) => ({ id: x, name: EXAMS[x].name, country: EXAMS[x].country });
+  const brief = (x) => ({ id: x, name: localExam(x, lang).name, country: localExam(x, lang).country });
   return {
     key,
     exam: id,
@@ -54,8 +80,11 @@ export function examInfo(key, system) {
     country: e.country,
     about: e.about,
     subject,
-    subjectName: SUBJECT_NAMES_EN[subject],
-    subjects: Object.keys(e.subjects).map((s) => ({ key: `${s}-EX-${id}`, subject: s, name: SUBJECT_NAMES_EN[s] })),
+    lang: e.lang,
+    // Jezik nalog: slovenski izpiti slovensko, indijski v hindijščini za hindijske učence, sicer angleško.
+    tasksLang: e.systems.includes("SI") ? "sl" : e.lang,
+    subjectName: e.subjectNames[subject],
+    subjects: Object.keys(e.subjects).map((s) => ({ key: `${s}-EX-${id}`, subject: s, name: e.subjectNames[s] })),
     exams: { own: own.map(brief), other: other.map(brief) },
     mock: {
       tasks: groups.reduce((n, g) => n + g.n, 0),
@@ -69,6 +98,29 @@ export function examInfo(key, system) {
       options: Math.max(4, ...groups.map((g) => g.options || 4)),
     },
   };
+}
+
+// Izpit v jeziku učenca: hindijska imena in opis, kjer obstajajo (indijski izpiti), sicer angleško.
+function localExam(id, lang) {
+  const e = EXAMS[id];
+  const hi = lang === "hi" && EXAM_HI[id];
+  if (!hi) return { ...e, lang: "en", subjectNames: SUBJECT_NAMES_EN };
+  return { ...e, ...hi, name: hi.name || e.name, country: COUNTRY_HI[e.country] || e.country, lang: "hi", subjectNames: { ...SUBJECT_NAMES_EN, ...SUBJECT_HI } };
+}
+
+// Hindijsko ime sklopa ali teme indijskega izpita (manjkajoče ostane angleško).
+export const localName = (name, lang) => (lang === "hi" && NAMES_HI[name]) || name;
+// Pogled poti izpita (pathView) z imeni sklopov in tem v jeziku učenca.
+export function localizeExamView(view, lang) {
+  if (lang !== "hi" || !view?.units) return view;
+  return { ...view, units: view.units.map((u) => ({ ...u, title: localName(u.title, lang), topics: u.topics.map((t) => ({ ...t, name: localName(t.name, lang) })) })) };
+}
+// Tema izpita (npr. /api/topic) z imeni v jeziku učenca.
+export function localizeExamTopic(topic, lang) {
+  if (lang !== "hi" || !isExamPath(topic.path)) return topic;
+  const id = examOf(topic.path);
+  const label = `${localExam(id, lang).name} – ${SUBJECT_HI[topic.subject] || topic.subject}`;
+  return { ...topic, name: localName(topic.name, lang), unit: localName(topic.unit, lang), pathLabel: label };
 }
 
 const pickWeighted = (items, weight) => {

@@ -335,7 +335,7 @@
   "onb.namePh": "p.sh. Arta",
   "onb.finish": "Përfundo zgjedhjen e shkollës dhe klasës.",
   "lp.os": "Shkolla fillore",
-  "lp.osSub": "klasat 6–9",
+  "lp.osSub": "klasat 1–9",
   "lp.ss": "Shkolla e mesme",
   "lp.ssSub": "vitet 1–4",
   "lp.uni": "Fakulteti",
@@ -469,6 +469,8 @@
   "exam.startMock": "Fillo provimin prove",
   "exam.historyEmpty": "Këtu do të shfaqen rezultatet e provimeve të tua prove.",
   "exam.topicsNote": "Zgjidh një temë dhe ushtrohu vetëm me të. Pyetjet e provimit janë në anglisht; tutori t'i shpjegon në gjuhën tënde.",
+  "exam.topicsPick": "Zgjidh një temë dhe ushtro vetëm atë.",
+  "exam.national": "Provimet kombëtare (NPZ, Matura)",
   "exam.finish": "Përfundo provimin",
   "exam.confirmFinish": "Ta përfundosh provimin tani? Pyetjet pa përgjigje nuk sjellin pikë.",
   "exam.scaled": "Rezultati në shkallën e provimit: rreth <b>{value}</b> ({min}–{max})",
@@ -1305,5 +1307,6 @@
   "tb.steps.count": "Hapi {n} nga {m}",
   "tb.steps.all": "Të gjitha njëherësh",
   "tb.steps.byStep": "Hap pas hapi",
-  "tb.steps.quick": "Kontroll i shpejtë"
+  "tb.steps.quick": "Kontroll i shpejtë",
+  "path.earlyNote": "Rruga e të mësuarit për {grade} është ende në përgatitje, ndaj tani për tani sheh lëndën e klasës 6. Lojërat për klasën tënde janë te Lojërat, dhe tutori të shpjegon gjithçka në nivelin tënd."
 }

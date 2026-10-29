@@ -345,7 +345,7 @@
   "onb.namePh": "np. Kuba",
   "onb.finish": "Dokończ wybór szkoły i klasy.",
   "lp.os": "Szkoła podstawowa",
-  "lp.osSub": "klasy 6–9",
+  "lp.osSub": "klasy 1–9",
   "lp.ss": "Szkoła średnia",
   "lp.ssSub": "klasy 1–4",
   "lp.uni": "Uczelnia",
@@ -479,6 +479,8 @@
   "exam.startMock": "Rozpocznij egzamin próbny",
   "exam.historyEmpty": "Tutaj pojawią się wyniki twoich egzaminów próbnych.",
   "exam.topicsNote": "Wybierz temat i ćwicz tylko go. Pytania egzaminacyjne są po angielsku; korepetytor wyjaśni je w twoim języku.",
+  "exam.topicsPick": "Wybierz temat i ćwicz tylko go.",
+  "exam.national": "Egzaminy państwowe (NPZ, matura)",
   "exam.finish": "Zakończ egzamin",
   "exam.confirmFinish": "Zakończyć egzamin teraz? Pytania bez odpowiedzi nie dają punktów.",
   "exam.scaled": "Wynik na skali egzaminu: około <b>{value}</b> ({min}–{max})",
@@ -1317,5 +1319,6 @@
   "tb.steps.count": "Krok {n} z {m}",
   "tb.steps.all": "Wszystko naraz",
   "tb.steps.byStep": "Krok po kroku",
-  "tb.steps.quick": "Szybkie sprawdzenie"
+  "tb.steps.quick": "Szybkie sprawdzenie",
+  "path.earlyNote": "Ścieżka nauki dla {grade} jest jeszcze przygotowywana, więc na razie widzisz materiał klasy 6. Gry dla twojej klasy są w Grach, a korepetytor wyjaśni ci wszystko na twoim poziomie."
 }

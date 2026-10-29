@@ -163,8 +163,8 @@ function levelNumber(s) {
 function canonicalLevel(input, track, cur, program) {
   const n = levelNumber(input);
   if (track === "OSNOVNA_SOLA") {
-    if (n >= 6 && n <= 9) return { level: `${n}. razred` };
-    return { error: "OŠ grades are '6. razred' to '9. razred'" };
+    if (n >= 1 && n <= 9) return { level: `${n}. razred` };
+    return { error: "OŠ grades are '1. razred' to '9. razred'" };
   }
   if (track === "SREDNJA_SOLA") {
     if (!(n >= 1 && n <= 4)) return { error: "SŠ years are '1. letnik' to '4. letnik' (optionally with OR/VR)" };

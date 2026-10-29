@@ -7,7 +7,8 @@ import { GENERATORS, generateTask } from "../server/practice/index.js";
 const SEEDS = 40;
 const norm = (s) => String(s).replace(/\{,\}/g, ",").replace(/\\[,;: ]|~/g, " ");
 // Števila v zapisu podatkov (npr. "9", "0,056", "9,81").
-const numbers = (s) => norm(s).match(/-?\d+(?:,\d+)?/g) || [];
+// Enote (\mathrm{m\ s^{-2}}) niso podatek: njihove eksponente izpustimo.
+const numbers = (s) => norm(s).replace(/\\mathrm\{(?:[^{}]|\{[^{}]*\})*\}/g, "").match(/-?\d+(?:,\d+)?/g) || [];
 
 function checkTask(t, where) {
   assert.ok(t.text && t.answer && t.solution && t.hint, `${where}: manjka text/answer/solution/hint`);
@@ -41,6 +42,8 @@ test("vsi generatorji vrnejo veljavne naloge pri vseh težavnostih", () => {
       for (let seed = 1; seed <= SEEDS; seed++) {
         const t = generateTask(g.topics[0], level, seed * 7919 + level);
         checkTask(t, `${g.id} L${level} seed ${seed}`);
+        // Dvojezični generatorji (indijski izpiti): tudi hindijska naloga.
+        if (g.langs?.includes("hi")) checkTask(generateTask(g.topics[0], level, seed * 7919 + level, "hi"), `${g.id} L${level} seed ${seed} hi`);
       }
     }
   }

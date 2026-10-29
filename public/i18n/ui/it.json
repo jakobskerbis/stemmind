@@ -335,7 +335,7 @@
   "onb.namePh": "es. Luca",
   "onb.finish": "Completa la scelta di scuola e classe.",
   "lp.os": "Scuola primaria e media",
-  "lp.osSub": "6ª–9ª classe",
+  "lp.osSub": "1ª–9ª classe",
   "lp.ss": "Scuola superiore",
   "lp.ssSub": "1°–4° anno",
   "lp.uni": "Università",
@@ -469,6 +469,8 @@
   "exam.startMock": "Inizia la simulazione",
   "exam.historyEmpty": "Qui compariranno i risultati delle tue simulazioni.",
   "exam.topicsNote": "Scegli un argomento ed esercitati solo su quello. Le domande d'esame sono in inglese; il tutor te le spiega nella tua lingua.",
+  "exam.topicsPick": "Scegli un argomento ed esercitati solo su quello.",
+  "exam.national": "Esami nazionali (NPZ, Matura)",
   "exam.finish": "Termina l'esame",
   "exam.confirmFinish": "Terminare l'esame ora? Le domande senza risposta non danno punti.",
   "exam.scaled": "Punteggio sulla scala dell'esame: circa <b>{value}</b> ({min}–{max})",
@@ -1305,5 +1307,6 @@
   "tb.steps.count": "Passo {n} di {m}",
   "tb.steps.all": "Tutto insieme",
   "tb.steps.byStep": "Passo dopo passo",
-  "tb.steps.quick": "Verifica rapida"
+  "tb.steps.quick": "Verifica rapida",
+  "path.earlyNote": "Il percorso per {grade} è ancora in preparazione, quindi per ora vedi gli argomenti della 6ª classe. I giochi per la tua classe sono in Giochi e il tutor ti spiega tutto al tuo livello."
 }

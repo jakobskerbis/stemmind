@@ -330,7 +330,7 @@
   "onb.namePh": "例如 小明",
   "onb.finish": "請完成學校和年級的選擇。",
   "lp.os": "國小 / 國中",
-  "lp.osSub": "6–9 年級",
+  "lp.osSub": "1–9 年級",
   "lp.ss": "高中",
   "lp.ssSub": "1–4 年",
   "lp.uni": "大學",
@@ -464,6 +464,8 @@
   "exam.startMock": "開始模擬考試",
   "exam.historyEmpty": "你的模擬考試成績會顯示在這裡。",
   "exam.topicsNote": "選一個主題,只練這個主題。考題是英文的,輔導老師會用你的語言講解。",
+  "exam.topicsPick": "選一個主題，只練習這一個。",
+  "exam.national": "國家考試（NPZ、Matura）",
   "exam.finish": "結束考試",
   "exam.confirmFinish": "現在結束考試嗎?未作答的題目不得分。",
   "exam.scaled": "按考試分制的成績:約<b>{value}</b>({min}–{max})",
@@ -1299,5 +1301,6 @@
   "tb.steps.count": "第 {n} 步，共 {m} 步",
   "tb.steps.all": "全部顯示",
   "tb.steps.byStep": "分步顯示",
-  "tb.steps.quick": "快速檢查"
+  "tb.steps.quick": "快速檢查",
+  "path.earlyNote": "{grade}的學習路徑仍在編寫中，所以目前顯示的是六年級的內容。你年級的遊戲在「遊戲」裡，家教會依你的程度講解一切。"
 }

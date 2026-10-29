@@ -330,7 +330,7 @@
   "onb.namePh": "vd. Minh",
   "onb.finish": "Hãy chọn xong trường và lớp.",
   "lp.os": "Tiểu học / THCS",
-  "lp.osSub": "lớp 6–9",
+  "lp.osSub": "lớp 1–9",
   "lp.ss": "THPT",
   "lp.ssSub": "năm 1–4",
   "lp.uni": "Đại học",
@@ -464,6 +464,8 @@
   "exam.startMock": "Bắt đầu thi thử",
   "exam.historyEmpty": "Kết quả các bài thi thử của em sẽ hiện ở đây.",
   "exam.topicsNote": "Chọn một chủ đề và chỉ luyện chủ đề đó. Câu hỏi thi bằng tiếng Anh; gia sư sẽ giải thích bằng ngôn ngữ của em.",
+  "exam.topicsPick": "Chọn một chủ đề và chỉ luyện chủ đề đó.",
+  "exam.national": "Kỳ thi quốc gia (NPZ, Matura)",
   "exam.finish": "Kết thúc bài thi",
   "exam.confirmFinish": "Kết thúc bài thi ngay bây giờ? Câu bỏ trống không được điểm.",
   "exam.scaled": "Điểm theo thang của kỳ thi: khoảng <b>{value}</b> ({min}–{max})",
@@ -1299,5 +1301,6 @@
   "tb.steps.count": "Bước {n} / {m}",
   "tb.steps.all": "Tất cả cùng lúc",
   "tb.steps.byStep": "Từng bước",
-  "tb.steps.quick": "Kiểm tra nhanh"
+  "tb.steps.quick": "Kiểm tra nhanh",
+  "path.earlyNote": "Lộ trình học cho {grade} vẫn đang được soạn, nên hiện tại bạn thấy nội dung lớp 6. Trò chơi cho lớp của bạn nằm trong mục Trò chơi, và gia sư sẽ giải thích mọi thứ theo trình độ của bạn."
 }

@@ -335,7 +335,7 @@
   "onb.namePh": "z. B. Lukas",
   "onb.finish": "Wähle Schule und Klasse vollständig aus.",
   "lp.os": "Grundschule",
-  "lp.osSub": "6.–9. Klasse",
+  "lp.osSub": "1.–9. Klasse",
   "lp.ss": "Weiterführende Schule",
   "lp.ssSub": "1.–4. Jahrgang",
   "lp.uni": "Universität",
@@ -469,6 +469,8 @@
   "exam.startMock": "Probeprüfung starten",
   "exam.historyEmpty": "Die Ergebnisse deiner Probeprüfungen erscheinen hier.",
   "exam.topicsNote": "Wähle ein Thema und übe nur dieses. Die Prüfungsaufgaben sind auf Englisch; der Tutor erklärt sie dir in deiner Sprache.",
+  "exam.topicsPick": "Wähle ein Thema und übe nur dieses.",
+  "exam.national": "Staatliche Prüfungen (NPZ, Matura)",
   "exam.finish": "Prüfung beenden",
   "exam.confirmFinish": "Prüfung jetzt beenden? Unbeantwortete Fragen bringen keine Punkte.",
   "exam.scaled": "Ergebnis auf der Prüfungsskala: etwa <b>{value}</b> ({min}–{max})",
@@ -1305,5 +1307,6 @@
   "tb.steps.count": "Schritt {n} von {m}",
   "tb.steps.all": "Alles auf einmal",
   "tb.steps.byStep": "Schritt für Schritt",
-  "tb.steps.quick": "Kurzer Check"
+  "tb.steps.quick": "Kurzer Check",
+  "path.earlyNote": "Der Lernpfad für {grade} entsteht noch, deshalb siehst du vorerst den Stoff der 6. Klasse. Spiele für deine Klasse findest du unter Spiele, und der Tutor erklärt dir alles auf deinem Niveau."
 }

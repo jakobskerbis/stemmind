@@ -335,7 +335,7 @@
   "onb.namePh": "p. ex. Tiago",
   "onb.finish": "Termina a escolha da escola e do ano.",
   "lp.os": "Ensino básico",
-  "lp.osSub": "6.º–9.º ano",
+  "lp.osSub": "1.º–9.º ano",
   "lp.ss": "Ensino secundário",
   "lp.ssSub": "1.º–4.º ano",
   "lp.uni": "Universidade",
@@ -469,6 +469,8 @@
   "exam.startMock": "Começar simulado",
   "exam.historyEmpty": "Os resultados dos teus simulados aparecerão aqui.",
   "exam.topicsNote": "Escolhe um tema e pratica só esse. As questões do exame estão em inglês; o tutor explica-as na tua língua.",
+  "exam.topicsPick": "Escolhe um tema e pratica só esse.",
+  "exam.national": "Exames nacionais (NPZ, Matura)",
   "exam.finish": "Terminar exame",
   "exam.confirmFinish": "Terminar o exame agora? Questões sem resposta não valem pontos.",
   "exam.scaled": "Nota na escala do exame: cerca de <b>{value}</b> ({min}–{max})",
@@ -1305,5 +1307,6 @@
   "tb.steps.count": "Passo {n} de {m}",
   "tb.steps.all": "Tudo de uma vez",
   "tb.steps.byStep": "Passo a passo",
-  "tb.steps.quick": "Verificação rápida"
+  "tb.steps.quick": "Verificação rápida",
+  "path.earlyNote": "O percurso de aprendizagem para {grade} ainda está a ser preparado, por isso por agora vês a matéria do 6.º ano. Os jogos do teu ano estão em Jogos e o tutor explica-te tudo ao teu nível."
 }

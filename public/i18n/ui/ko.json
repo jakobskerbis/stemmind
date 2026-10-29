@@ -330,7 +330,7 @@
   "onb.namePh": "예: 지민",
   "onb.finish": "학교와 학년 선택을 마쳐 주세요.",
   "lp.os": "초등학교 / 중학교",
-  "lp.osSub": "6–9학년",
+  "lp.osSub": "1–9학년",
   "lp.ss": "고등학교",
   "lp.ssSub": "1–4학년",
   "lp.uni": "대학교",
@@ -464,6 +464,8 @@
   "exam.startMock": "모의고사 시작",
   "exam.historyEmpty": "모의고사 결과가 여기에 표시돼.",
   "exam.topicsNote": "주제 하나를 골라 그것만 연습해. 시험 문제는 영어로 되어 있고, 튜터가 네 언어로 설명해 줘.",
+  "exam.topicsPick": "주제 하나를 골라 그것만 연습해 보세요.",
+  "exam.national": "국가 시험 (NPZ, 마투라)",
   "exam.finish": "시험 끝내기",
   "exam.confirmFinish": "지금 시험을 끝낼까? 답하지 않은 문제는 점수가 없어.",
   "exam.scaled": "시험 척도 점수: 약 <b>{value}</b> ({min}–{max})",
@@ -1299,5 +1301,6 @@
   "tb.steps.count": "{m}단계 중 {n}단계",
   "tb.steps.all": "한 번에 모두",
   "tb.steps.byStep": "단계별로",
-  "tb.steps.quick": "빠른 확인"
+  "tb.steps.quick": "빠른 확인",
+  "path.earlyNote": "{grade} 학습 경로는 아직 준비 중이라 지금은 6학년 내용을 보여 줘요. 네 학년 게임은 게임에 있고, 튜터가 네 수준에 맞게 설명해 줘요."
 }

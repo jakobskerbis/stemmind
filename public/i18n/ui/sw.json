@@ -335,7 +335,7 @@
   "onb.namePh": "mf. Amani",
   "onb.finish": "Kamilisha kuchagua shule na darasa.",
   "lp.os": "Shule ya msingi",
-  "lp.osSub": "darasa la 6–9",
+  "lp.osSub": "darasa la 1–9",
   "lp.ss": "Shule ya sekondari",
   "lp.ssSub": "kidato cha 1–4",
   "lp.uni": "Chuo kikuu",
@@ -469,6 +469,8 @@
   "exam.startMock": "Anza mtihani wa majaribio",
   "exam.historyEmpty": "Matokeo ya mitihani yako ya majaribio yataonekana hapa.",
   "exam.topicsNote": "Chagua mada moja na ufanye mazoezi yake tu. Maswali ya mtihani ni kwa Kiingereza; mwalimu anayaeleza kwa lugha yako.",
+  "exam.topicsPick": "Chagua mada moja na ufanye mazoezi ya hiyo tu.",
+  "exam.national": "Mitihani ya kitaifa (NPZ, Matura)",
   "exam.finish": "Maliza mtihani",
   "exam.confirmFinish": "Umalize mtihani sasa? Maswali yasiyojibiwa hayapati alama.",
   "exam.scaled": "Alama kwenye kipimo cha mtihani: takriban <b>{value}</b> ({min}–{max})",
@@ -1305,5 +1307,6 @@
   "tb.steps.count": "Hatua {n} kati ya {m}",
   "tb.steps.all": "Yote kwa pamoja",
   "tb.steps.byStep": "Hatua kwa hatua",
-  "tb.steps.quick": "Ukaguzi wa haraka"
+  "tb.steps.quick": "Ukaguzi wa haraka",
+  "path.earlyNote": "Njia ya kujifunza ya {grade} bado inaandaliwa, kwa hiyo kwa sasa unaona mada za darasa la 6. Michezo ya darasa lako iko kwenye Michezo, na mwalimu anakueleza kila kitu kwa kiwango chako."
 }

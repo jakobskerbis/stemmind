@@ -335,7 +335,7 @@
   "onb.namePh": "p. ej. Lucía",
   "onb.finish": "Termina de elegir el centro y el curso.",
   "lp.os": "Primaria y secundaria básica",
-  "lp.osSub": "6.º–9.º curso",
+  "lp.osSub": "1.º–9.º curso",
   "lp.ss": "Bachillerato",
   "lp.ssSub": "1.º–4.º curso",
   "lp.uni": "Universidad",
@@ -469,6 +469,8 @@
   "exam.startMock": "Empezar examen de prueba",
   "exam.historyEmpty": "Aquí aparecerán los resultados de tus exámenes de prueba.",
   "exam.topicsNote": "Elige un tema y practica solo ese. Las preguntas del examen están en inglés; el tutor te las explica en tu idioma.",
+  "exam.topicsPick": "Elige un tema y practica solo ese.",
+  "exam.national": "Exámenes nacionales (NPZ, Matura)",
   "exam.finish": "Terminar examen",
   "exam.confirmFinish": "¿Terminar el examen ahora? Las preguntas sin responder no suman puntos.",
   "exam.scaled": "Puntuación en la escala del examen: unos <b>{value}</b> ({min}–{max})",
@@ -1305,5 +1307,6 @@
   "tb.steps.count": "Paso {n} de {m}",
   "tb.steps.all": "Todo a la vez",
   "tb.steps.byStep": "Paso a paso",
-  "tb.steps.quick": "Comprobación rápida"
+  "tb.steps.quick": "Comprobación rápida",
+  "path.earlyNote": "La ruta de aprendizaje para {grade} aún se está preparando, así que por ahora ves el temario de 6.º. Los juegos de tu curso están en Juegos y el tutor te lo explica todo a tu nivel."
 }

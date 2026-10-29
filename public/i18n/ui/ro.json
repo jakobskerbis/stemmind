@@ -340,7 +340,7 @@
   "onb.namePh": "de ex. Andrei",
   "onb.finish": "Termină alegerea școlii și a clasei.",
   "lp.os": "Școala generală",
-  "lp.osSub": "clasele 6–9",
+  "lp.osSub": "clasele 1–9",
   "lp.ss": "Liceu",
   "lp.ssSub": "anii 1–4",
   "lp.uni": "Universitate",
@@ -474,6 +474,8 @@
   "exam.startMock": "Începe simularea",
   "exam.historyEmpty": "Aici vor apărea rezultatele simulărilor tale.",
   "exam.topicsNote": "Alege o temă și exersează doar pe ea. Întrebările de examen sunt în engleză; tutorele ți le explică în limba ta.",
+  "exam.topicsPick": "Alege o temă și exersează doar tema aceea.",
+  "exam.national": "Examene naționale (NPZ, Matura)",
   "exam.finish": "Termină examenul",
   "exam.confirmFinish": "Termini examenul acum? Întrebările fără răspuns nu aduc puncte.",
   "exam.scaled": "Scor pe scala examenului: aproximativ <b>{value}</b> ({min}–{max})",
@@ -1311,5 +1313,6 @@
   "tb.steps.count": "Pasul {n} din {m}",
   "tb.steps.all": "Tot deodată",
   "tb.steps.byStep": "Pas cu pas",
-  "tb.steps.quick": "Verificare rapidă"
+  "tb.steps.quick": "Verificare rapidă",
+  "path.earlyNote": "Traseul de învățare pentru {grade} este încă în lucru, așa că deocamdată vezi materia clasei a 6-a. Jocurile pentru clasa ta sunt la Jocuri, iar tutorele îți explică totul la nivelul tău."
 }
