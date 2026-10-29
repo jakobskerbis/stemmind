@@ -886,6 +886,7 @@ async function accounts(browser, app) {
     await p.fill('#child-form input[name="name"]', "Miha");
     for (const val of ["OSNOVNA_SOLA", "7. razred"]) await click(p, `#child-form .lp-opt[data-val="${val}"]`);
     await p.selectOption('#child-form select[name="birth_year"]', String(new Date().getFullYear() - 12));
+    await p.fill('#child-form input[name="profile_password"]', "miha-1");
     await p.check('#child-form input[name="consent"]');
     await screen(p, "otrok");
     await click(p, '#child-form button[type="submit"]', { wait: 600 });
@@ -913,6 +914,16 @@ async function accounts(browser, app) {
     await p.fill('#auth-form input[name="email"]', email);
     await p.fill('#auth-form input[name="password"]', "geslo1234");
     await click(p, '#auth-form button[type="submit"]', { wait: 600 });
+    // Vsak profil ima svoje geslo: po odjavi je profil na tej napravi zaklenjen.
+    await expectVisible(p, "#lock-overlay #lock-form", "geslo profila po prijavi", 8000);
+    await screen(p, "geslo-profila");
+    p.allow = [/^401 \/api\/students\/\d+\/unlock$/];
+    await p.fill('#lock-form input[name="password"]', "narobe");
+    await click(p, '#lock-form button[type="submit"]', { wait: 300 });
+    await expectVisible(p, "#lock-form .form-error", "napaka ob napačnem geslu profila");
+    p.allow = [];
+    await p.fill('#lock-form input[name="password"]', "miha-1");
+    await click(p, '#lock-form button[type="submit"]', { wait: 600 });
     await expectVisible(p, "#view-path #xp-card .hero", "učna pot po prijavi", 8000);
   });
   await step(p, "starsi", async () => {

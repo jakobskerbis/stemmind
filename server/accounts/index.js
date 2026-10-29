@@ -17,6 +17,7 @@ import { Usage } from "../usage.js";
 import { promoConfig, createPromo } from "./promo.js";
 import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
 import { guestModeOn, guestNet, guestPerDay, GuestQuota, GUEST_SESSION_DAYS } from "./guest.js";
+import { ProfileLocks, checkProfilePassword } from "./profile-lock.js";
 
 export const CONSENT_TEXT =
   "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da Evklid obdeluje otrokove osebne podatke " +
@@ -69,6 +70,8 @@ export function mountAccounts(app, store, opts = {}) {
   const sessions = new Sessions(db);
   const devices = new Devices(db);
   const throttle = new Throttle();
+  const locks = new ProfileLocks(db);
+  const profileThrottle = new Throttle(10);
   const json = express.json({ limit: "100kb" });
   const log = opts.log || console;
   const promoCfg = opts.promo ?? promoConfig(env);
@@ -184,11 +187,15 @@ export function mountAccounts(app, store, opts = {}) {
     if (p.is_guest && /^\/billing\//.test(req.path)) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
     if (p.is_guest && !guestOn) return res.status(401).json({ error: "Uporaba brez računa ni več mogoča. Ustvari račun, da obdržiš napredek.", login: true, guest_off: true });
     // Porabo AI vidi samo skrbnik ali kdor aplikacijo odpre na računalniku, kjer teče strežnik.
-    if (/^\/usage(\/|$)/.test(req.path) && !p.is_admin && !isLocalRequest(req)) return res.status(403).json({ error: "Samo za skrbnika." });
+    if (/^\/usage(\/|$)/i.test(req.path) && !p.is_admin && !isLocalRequest(req)) return res.status(403).json({ error: "Samo za skrbnika." });
 
+    // Express poti ujema brez ozira na velike črke in parametre dekodira (%31 = 1, Number(" 1") = 1),
+    // zato je id učenca ali pogovora v poti samo iz števk, sicer bi šel mimo preverjanja lastništva in zaklepa.
+    const seg = /^\/(students|conversations)\/([^/]+)/i.exec(req.path);
+    if (seg && !/^\d+$/.test(seg[2])) return res.status(404).json({ error: "Ne obstaja." });
     let studentId = null;
-    const s = /^\/students\/(\d+)(\/|$)/.exec(req.path);
-    const c = /^\/conversations\/(\d+)(\/|$)/.exec(req.path);
+    const s = /^\/students\/(\d+)(\/|$)/i.exec(req.path);
+    const c = /^\/conversations\/(\d+)(\/|$)/i.exec(req.path);
     if (s) studentId = Number(s[1]);
     if (c) {
       studentId = store.getConversation(Number(c[1]))?.student_id ?? null;
@@ -196,6 +203,17 @@ export function mountAccounts(app, store, opts = {}) {
     }
     if (studentId !== null && ownerOf(studentId) !== p.id) {
       return res.status(404).json({ error: s ? "Učenec ne obstaja." : "Pogovor ne obstaja." });
+    }
+
+    // Geslo profila: odklep je mogoč brez odklepa; profil z geslom je sicer odprt samo na napravi, kjer je bil odklenjen.
+    if (s && req.method === "POST" && req.path === `/students/${studentId}/unlock`) return next();
+    if (studentId !== null && !p.is_guest && locks.locked(studentId, req.deviceId)) {
+      return res.status(423).json({
+        error: "Profil je zaklenjen. Vpiši geslo profila.",
+        locked: true,
+        student_id: studentId,
+        name: store.getStudent(studentId)?.name || "",
+      });
     }
 
     // Profil je hkrati odprt samo na eni napravi. Izbris profila je dovoljen z vsake naprave staršu.
@@ -220,7 +238,7 @@ export function mountAccounts(app, store, opts = {}) {
     }
 
     // Brezplačni paket: omejeno število vprašanj inštruktorju na dan.
-    if (c && req.method === "POST" && /\/messages$/.test(req.path) && !premiumFor(studentId)) {
+    if (c && req.method === "POST" && /\/messages$/i.test(req.path) && !premiumFor(studentId)) {
       const limit = freeDailyQuestions();
       if (questionsToday(studentId) >= limit) {
         return res.status(429).json({
@@ -231,7 +249,7 @@ export function mountAccounts(app, store, opts = {}) {
       }
     }
     // Mesečna meja porabe brezplačnega paketa velja za vse klice AI (inštruktor, branje zapisa, fotografija urnika).
-    if (studentId !== null && req.method === "POST" && /(\/messages|\/tasks\/\d+\/read|\/schedule\/photo)$/.test(req.path) && !premiumFor(studentId)) {
+    if (studentId !== null && req.method === "POST" && /(\/messages|\/tasks\/\d+\/read|\/schedule\/photo)$/i.test(req.path) && !premiumFor(studentId)) {
       const blocked = freeBudgetReason(studentId);
       if (blocked) return res.status(429).json({ error: blocked, limit: true, upgrade: true });
     }
@@ -416,6 +434,7 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   app.post("/api/auth/logout", (req, res) => {
+    if (req.parent) locks.lockDevice(childIds(req.parent.id), req.deviceId);
     sessions.destroy(readCookie(req));
     clearSessionCookie(res);
     res.json({ ok: true });
@@ -492,6 +511,7 @@ export function mountAccounts(app, store, opts = {}) {
         questions_today: questionsToday(c.id),
         ai_month: aiUsage.studentMonth(c.id),
         devices: devices.recent(c.id),
+        has_password: locks.hasPassword(c.id),
       })),
       max_children: Math.min(MAX_CHILDREN, access.seats || 1),
       device_warn_limit: deviceWarnLimit(),
@@ -551,8 +571,16 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   // Izvoz vseh podatkov (GDPR čl. 15 in 20).
-  app.get("/api/account/export", (req, res) => {
+  // Prenos vseh podatkov: s seje računa, ki si jo delijo profili na napravi, zato z geslom računa
+  // (sicer bi brat prebral pogovore zaklenjenega sestrinega profila). Gost gesla nima.
+  app.post("/api/account/export", json, (req, res) => {
     const p = req.parent;
+    const key = `export${p.id}|${req.ip}`;
+    if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
+    if (!p.is_guest && !verifyPassword(String(req.body?.password || ""), p.password_hash)) {
+      throttle.fail(key);
+      return res.status(401).json({ error: "Napačno geslo." });
+    }
     const parent = { ...p };
     for (const k of ["password_hash", "verify_token_hash", "reset_token_hash", "reset_expires_at", "unsubscribe_token"]) delete parent[k];
     const q = (sql, ...a) => db.prepare(sql).all(...a);
@@ -616,7 +644,63 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   // --- otroci (nadomesti osnovni GET/POST /api/students) ---
-  app.get("/api/students", (req, res) => res.json(children(req.parent.id)));
+  // Zaklenjen profil (ima geslo, na tej napravi ni odklenjen): samo ime, nastavitve šele po odklepu.
+  // needs_password: profil še nima gesla; aplikacija ob odprtju zahteva, da ga nastaviš (gost ne).
+  app.get("/api/students", (req, res) => {
+    const p = req.parent;
+    res.json(
+      children(p.id).map((c) => {
+        if (p.is_guest) return c;
+        if (locks.locked(c.id, req.deviceId)) return { id: c.id, name: c.name, locked: true };
+        return { ...c, needs_password: !locks.hasPassword(c.id) };
+      }),
+    );
+  });
+
+  // Odklep profila na tej napravi z geslom profila. Profil brez gesla: { password, set: true } nastavi prvo geslo.
+  app.post("/api/students/:id/unlock", json, (req, res) => {
+    const p = req.parent;
+    const id = Number(req.params.id);
+    if (p.is_guest) return res.json({ ok: true });
+    const pw = req.body?.password;
+    if (!locks.hasPassword(id)) {
+      if (req.body?.set !== true) return res.status(409).json({ error: "Profil še nima gesla. Nastavi ga.", needs_password: true });
+      const bad = checkProfilePassword(pw);
+      if (bad) return res.status(400).json({ error: bad });
+      locks.setPassword(id, pw);
+      locks.unlock(id, req.deviceId, childIds(p.id));
+      return res.json({ ok: true });
+    }
+    const key = `${id}|${req.ip}`;
+    if (profileThrottle.blocked(key)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusi čez 15 minut." });
+    if (!locks.verify(id, pw)) {
+      profileThrottle.fail(key);
+      return res.status(401).json({ error: "Napačno geslo profila." });
+    }
+    profileThrottle.reset(key);
+    locks.unlock(id, req.deviceId, childIds(p.id));
+    res.json({ ok: true });
+  });
+
+  // Novo geslo profila (sprememba ali pozabljeno geslo): potrdi ga geslo računa ali sedanje geslo profila.
+  app.post("/api/account/profile-password", json, (req, res) => {
+    const p = req.parent;
+    if (p.is_guest) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
+    const id = Number(req.body?.student_id);
+    if (!Number.isInteger(id) || ownerOf(id) !== p.id) return res.status(404).json({ error: "Učenec ne obstaja." });
+    const key = `acct${p.id}|${req.ip}`;
+    if (profileThrottle.blocked(key)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusi čez 15 minut." });
+    const auth = String(req.body?.auth ?? "");
+    if (!verifyPassword(auth, p.password_hash) && !locks.verify(id, auth)) {
+      profileThrottle.fail(key);
+      return res.status(401).json({ error: "Napačno geslo računa." });
+    }
+    const bad = checkProfilePassword(req.body?.password);
+    if (bad) return res.status(400).json({ error: bad });
+    profileThrottle.reset(key);
+    locks.setPassword(id, req.body.password);
+    res.json({ ok: true });
+  });
 
   // Ta naprava prevzame profil (druga naprava se ustavi ob naslednji zahtevi).
   app.post("/api/students/:id/claim", (_req, res) => res.json({ ok: true }));
@@ -625,6 +709,7 @@ export function mountAccounts(app, store, opts = {}) {
   app.post("/api/account/logout-others", (req, res) => {
     sessions.destroyOthers(req.parent.id, readCookie(req));
     devices.releaseOthers(childIds(req.parent.id), req.deviceId);
+    locks.lockOtherDevices(childIds(req.parent.id), req.deviceId);
     res.json({ ok: true });
   });
 
@@ -668,6 +753,12 @@ export function mountAccounts(app, store, opts = {}) {
     // Tudi odrasli študenti fakultet ustvarijo svoj profil, zato ni zgornje starostne meje za otroke.
     if (!Number.isInteger(year) || year < now - 90 || year > now - 5) return res.status(400).json({ error: "Vpišite letnico rojstva." });
     if (req.body?.consent !== true) return res.status(400).json({ error: self ? "Označi soglasje za obdelavo podatkov." : "Za otrokov profil je potrebno soglasje starša.", consent: true });
+    // Geslo profila (neobvezno v API; brez njega ga aplikacija zahteva ob prvem odprtju profila).
+    const profilePw = req.body?.profile_password;
+    if (profilePw != null && profilePw !== "") {
+      const bad = checkProfilePassword(profilePw);
+      if (bad) return res.status(400).json({ error: bad, profile_password: true });
+    }
     const under15 = now - year <= 15; // previdno: v letu 15. rojstnega dne še štejemo kot mlajšega od 15
     const s = store.createStudent(name, req.body?.settings);
     db.prepare("UPDATE students SET parent_id = ?, birth_year = ? WHERE id = ?").run(p.id, year, s.id);
@@ -682,6 +773,10 @@ export function mountAccounts(app, store, opts = {}) {
     );
     devices.logChange(p.id, "created", s.id);
     devices.use(s.id, req.deviceId, deviceLabel(req.get("user-agent")));
+    if (profilePw) {
+      locks.setPassword(s.id, profilePw);
+      locks.unlock(s.id, req.deviceId, childIds(p.id));
+    }
     res.status(201).json({ ...store.getStudent(s.id), birth_year: year });
   });
 

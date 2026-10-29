@@ -50,6 +50,16 @@ function watchTakenProfiles() {
     if (res.status === 409) {
       res.clone().json().then((d) => d?.taken && showTaken(d, orig)).catch(() => {});
     }
+    // Profil je bil medtem zaklenjen (odklep drugega profila na tej napravi, novo geslo, odjava drugod).
+    if (res.status === 423) {
+      res.clone().json().then((d) => {
+        if (!d?.locked || $("#lock-overlay")) return;
+        openProfileLock({ id: d.student_id, name: d.name, locked: true }).then((id) => {
+          store.set("studentId", String(id));
+          location.reload();
+        });
+      }).catch(() => {});
+    }
     return res;
   };
 }
@@ -76,6 +86,104 @@ function showTaken(d, rawFetch) {
   $("#taken-other").addEventListener("click", () => {
     box.remove();
     openProfileMenu();
+  });
+}
+
+// ---------- geslo profila ----------
+// Vsak profil ima svoje geslo. Zaklenjen profil (locked) odpre geslo; profil brez gesla (needs_password)
+// pred prvo uporabo dobi geslo. Vrne id profila, ki ga odpremo: tega ali drugega, ki ga izbere uporabnik.
+const PROFILE_PW_MIN = 4;
+const lockError = (err) => (err.status === 401 ? t("lock.wrong") : err.status === 429 ? t("lock.tooMany") : err.message);
+
+export function openProfileLock(student, students = []) {
+  $("#lock-overlay")?.remove();
+  const set = !student.locked;
+  const others = students.filter((s) => s.id !== student.id);
+  const pw = (name, auto, label) =>
+    `<label>${esc(label)} <input type="password" name="${name}" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="${auto}" required></label>`;
+  const box = document.createElement("div");
+  box.id = "lock-overlay";
+  box.className = "overlay";
+  box.innerHTML = `<div class="card overlay-card lock-card" role="dialog" aria-modal="true" aria-labelledby="lock-title">
+    <span class="pm-avatar big" aria-hidden="true">${esc((student.name || "?").trim().charAt(0).toUpperCase() || "?")}</span>
+    <h2 id="lock-title" dir="auto">${esc(student.name)}</h2>
+    <form class="form" id="lock-form" novalidate>
+      <p class="muted">${esc(set ? t("lock.setText") : t("lock.text"))}</p>
+      ${pw("password", set ? "new-password" : "current-password", t("lock.password"))}
+      ${set ? `${pw("repeat", "new-password", t("lock.repeat"))}<small class="muted">${esc(t("lock.hint"))}</small>` : ""}
+      <p class="form-error" role="alert" hidden></p>
+      <button class="primary" type="submit">${esc(set ? t("lock.save") : t("lock.open"))}</button>
+    </form>
+    ${set ? "" : `<details class="lock-forgot"><summary>${esc(t("lock.forgot"))}</summary>
+      <form class="form" id="lock-reset" novalidate>
+        <p class="muted">${esc(t("lock.forgotText"))}</p>
+        ${pw("auth", "current-password", t("lock.accountPw"))}
+        ${pw("password", "new-password", t("lock.newPw"))}
+        <p class="form-error" role="alert" hidden></p>
+        <button type="submit">${esc(t("lock.save"))}</button>
+      </form></details>`}
+    ${others.length ? `<p class="muted lock-others-title">${esc(t("lock.other"))}</p>
+      <div class="lock-others">${others.map((o) => `<button type="button" data-id="${o.id}" dir="auto">${esc(o.name)}</button>`).join("")}</div>` : ""}
+    <button type="button" class="ghost" id="lock-logout">${esc(t("pm.logout"))}</button>
+  </div>`;
+  document.body.appendChild(box);
+  // Aplikacija za zaslonom ni dosegljiva s tipko Tab ali bralnikom zaslona, dokler je profil zaklenjen.
+  const behind = [...document.body.children].filter((el) => el !== box);
+  behind.forEach((el) => (el.inert = true));
+  const f = $("#lock-form", box);
+  f.password.focus();
+  const fail = (form, msg) => {
+    const e = $(".form-error", form);
+    e.textContent = msg;
+    e.hidden = false;
+  };
+  const checkNew = (form, a, b) => {
+    if (a.length < PROFILE_PW_MIN) return fail(form, t("lock.short")), false;
+    if (b !== undefined && a !== b) return fail(form, t("lock.mismatch")), false;
+    return true;
+  };
+  return new Promise((resolve) => {
+    const done = (id) => {
+      behind.forEach((el) => (el.inert = false));
+      box.remove();
+      resolve(id);
+    };
+    let busy = false;
+    const submit = (form, run) =>
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (busy) return;
+        busy = true;
+        const btn = $('button[type="submit"]', form);
+        btn.disabled = true;
+        try {
+          await run();
+        } catch (err) {
+          fail(form, lockError(err));
+        } finally {
+          busy = false;
+          btn.disabled = false;
+        }
+      });
+    submit(f, async () => {
+      const v = f.password.value;
+      if (set && !checkNew(f, v, f.repeat.value)) return;
+      if (!v) return fail(f, t("lock.wrong"));
+      await api(`/api/students/${student.id}/unlock`, { method: "POST", body: set ? { password: v, set: true } : { password: v } });
+      done(student.id);
+    });
+    const r = $("#lock-reset", box);
+    if (r) {
+      submit(r, async () => {
+        if (!checkNew(r, r.password.value)) return;
+        await api("/api/account/profile-password", { method: "POST", body: { student_id: student.id, auth: r.auth.value, password: r.password.value } });
+        await api(`/api/students/${student.id}/unlock`, { method: "POST", body: { password: r.password.value } });
+        toast(t("lock.saved"));
+        done(student.id);
+      });
+    }
+    box.querySelectorAll(".lock-others [data-id]").forEach((b) => b.addEventListener("click", () => done(Number(b.dataset.id))));
+    $("#lock-logout", box).addEventListener("click", () => logout());
   });
 }
 
@@ -424,6 +532,8 @@ function childForm(consentText, programs = []) {
       <label class="year-field"${self ? " hidden" : ""}>Letnica rojstva
         <select name="birth_year"${self ? "" : " required"}><option value="">Izberite …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
       </label>
+      ${status?.parent?.guest ? "" : `<label>${esc(t("lock.password"))} <input type="password" name="profile_password" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="new-password" required></label>
+      <small class="muted">${esc(t("lock.hint"))}</small>`}
       <label class="check"><input type="checkbox" name="consent" required>
         <span class="consent-self"${self ? "" : " hidden"}>Profil je moj. Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu podatkov</a> in soglašam z obdelavo svojih podatkov (ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.</span>
         <span class="consent-child"${self ? " hidden" : ""}>${esc(consentText)} <a href="/zasebnost.html" target="_blank">Obvestilo o varstvu podatkov</a>.</span>
@@ -466,10 +576,12 @@ function bindChildForm(after) {
   f.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!picker.complete()) return showError(f, new Error("Izberite šolo in letnik do konca."));
+    const profilePw = f.profile_password?.value;
+    if (f.profile_password && profilePw.length < PROFILE_PW_MIN) return showError(f, new Error(t("lock.short")));
     try {
       const s = await api("/api/students", {
         method: "POST",
-        body: { name: f.name.value, birth_year: Number(f.birth_year.value), self: isSelf(), consent: f.consent.checked, settings: childSettings(f) },
+        body: { name: f.name.value, birth_year: Number(f.birth_year.value), self: isSelf(), consent: f.consent.checked, settings: childSettings(f), ...(profilePw ? { profile_password: profilePw } : {}) },
       });
       store.set("studentId", String(s.id));
       store.set("evklid_invite_name", null);
@@ -718,8 +830,16 @@ async function renderAccount() {
       <ul class="child-list">${acc.children
         .map((c) => `<li><b>${esc(c.name)}</b> <span class="muted">(${c.birth_year || "–"})</span> ${
           c.premium ? `<span class="pill ok">poln dostop</span>` : `<span class="pill">brezplačni paket · danes ${c.questions_today}/${acc.free_daily_questions}</span>`
-        } ${aiPill(c.ai_month)}</li>`)
+        } ${aiPill(c.ai_month)}${c.has_password ? "" : ` <span class="pill">${esc(t("lock.none"))}</span>`}</li>`)
         .join("")}</ul>
+      ${acc.children.length ? `<details class="profile-pw"><summary>${esc(t("lock.change"))}</summary>
+        <form id="profile-pw-form" class="form" novalidate>
+          <label>${esc(t("meter.profile"))} <select name="student_id">${acc.children.map((c) => `<option value="${c.id}">${esc(c.name)}</option>`).join("")}</select></label>
+          <label>${esc(t("lock.auth"))} <input type="password" name="auth" autocomplete="current-password" required></label>
+          <label>${esc(t("lock.newPw"))} <input type="password" name="password" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="new-password" required></label>
+          <p class="form-error" role="alert" hidden></p>
+          <button class="primary" type="submit">${esc(t("lock.save"))}</button>
+        </form></details>` : ""}
       ${acc.children
         .filter((c) => c.devices.length > acc.device_warn_limit)
         .map((c) => `<p class="warn">${icon("info")} Profil <b>${esc(c.name)}</b> je bil v zadnjih 30 dneh odprt na ${c.devices.length} različnih napravah (${c.devices.map((d) => esc(d.label)).join(", ")}). Če to niste bili vi, kliknite »Odjavi vse druge naprave« in spremenite geslo.</p>`)
@@ -753,7 +873,7 @@ async function renderAccount() {
       <h2>Podatki in zasebnost</h2>
       <p class="muted"><a href="/zasebnost.html" target="_blank">Obvestilo o varstvu osebnih podatkov</a></p>
       <div class="form-actions">
-        <a href="/api/account/export" download>Prenesi vse moje podatke</a>
+        <button id="export-btn" type="button">Prenesi vse moje podatke</button>
         <button id="logout-btn" type="button">Odjava</button>
         <button id="logout-others" type="button">Odjavi vse druge naprave</button>
       </div>
@@ -818,6 +938,23 @@ async function renderAccount() {
       $("#ref-url").select();
     }
   });
+  const ppw = $("#profile-pw-form");
+  ppw?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    $(".form-error", ppw).hidden = true;
+    if (ppw.password.value.length < PROFILE_PW_MIN) return showError(ppw, new Error(t("lock.short")));
+    try {
+      const id = Number(ppw.student_id.value);
+      const password = ppw.password.value;
+      await api("/api/account/profile-password", { method: "POST", body: { student_id: id, auth: ppw.auth.value, password } });
+      // Novo geslo zaklene profil na vseh napravah; odprt profil na tej napravi ostane odprt.
+      if (id === Number(store.get("studentId"))) await api(`/api/students/${id}/unlock`, { method: "POST", body: { password } });
+      toast(t("lock.saved"));
+      renderAccount();
+    } catch (err) {
+      showError(ppw, new Error(lockError(err)));
+    }
+  });
   $("#weekly-toggle").addEventListener("change", (e) => api("/api/account", { method: "PUT", body: { weekly_email: e.target.checked } }));
   $("#weekly-send").addEventListener("click", async () => {
     try {
@@ -831,6 +968,22 @@ async function renderAccount() {
   $("#logout-others").addEventListener("click", async () => {
     await api("/api/account/logout-others", { method: "POST" });
     toast("Vse druge naprave so odjavljene.");
+  });
+  $("#export-btn").addEventListener("click", async () => {
+    const password = prompt("Za prenos vseh podatkov (tudi pogovorov vseh profilov) vpišite geslo računa.");
+    if (!password) return;
+    try {
+      const data = await api("/api/account/export", { method: "POST", body: { password } });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+      a.download = "evklid-podatki.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    } catch (err) {
+      toast(err.message);
+    }
   });
   $("#delete-account").addEventListener("click", async () => {
     const password = prompt("Za izbris računa, vseh otrokovih profilov in pogovorov vpišite geslo. Tega ni mogoče razveljaviti.");

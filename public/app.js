@@ -7,7 +7,7 @@ import { mountLanguageCard } from "./language.js";
 import { dialectsFor } from "./dialects.js";
 
 hydrateIcons();
-import { initAccount, accountsOn, openAddChild, logout } from "./account.js";
+import { initAccount, accountsOn, openAddChild, logout, openProfileLock } from "./account.js";
 import { initProfileMenu, refreshProfileButton } from "./profile-menu.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
@@ -392,7 +392,11 @@ async function onboard(name = "") {
 }
 
 async function selectStudent(id) {
-  state.student = state.students.find((s) => s.id === Number(id));
+  const target = state.students.find((s) => s.id === Number(id));
+  // Vsak profil ima svoje geslo (z računi): zaklenjen profil najprej odklenemo, profil brez gesla ga dobi.
+  // Uporabnik lahko namesto tega izbere drug profil; seznam se nato naloži znova (odklep zaklene druge profile).
+  if (target && (target.locked || target.needs_password)) return loadStudents(await openProfileLock(target, state.students));
+  state.student = target;
   // Jezik je del profila: ob menjavi učenca se vmesnik preklopi v njegov jezik (stran se naloži znova).
   const want = state.student.settings.language;
   if (want && want !== currentLang()) {

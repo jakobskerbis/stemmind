@@ -36,6 +36,21 @@ details .card { margin-top: 8px; }
 }
 .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
 .overlay-card { max-width: 420px; width: 100%; margin: 0; }
+/* Geslo profila: zaslon za odklep ali prvo geslo */
+#lock-overlay { z-index: 200; overflow-y: auto; align-items: flex-start; }
+.lock-card { margin: auto 0; display: flex; flex-direction: column; gap: 10px; }
+.lock-card > .pm-avatar { align-self: center; }
+.lock-card > h2 { text-align: center; margin: 0; overflow-wrap: anywhere; }
+.lock-card .form { gap: 10px; }
+.lock-card input[type="password"] { width: 100%; box-sizing: border-box; }
+.lock-card button { min-height: 44px; }
+/* summary ostane list-item (puščica kot pri »Imate aktivacijsko kodo?«), višina 44 px s paddingom */
+.lock-forgot summary, .profile-pw summary { margin: 0; padding: 10px 0; line-height: 24px; }
+.lock-forgot .form { margin-top: 6px; }
+.lock-others-title { margin: 6px 0 0; }
+.lock-others { display: flex; flex-wrap: wrap; gap: 8px; }
+.lock-others button { overflow-wrap: anywhere; }
+.profile-pw { margin-top: 10px; }
 .warn { background: #fff4d6; color: #6b4e00; padding: 8px 10px; border-radius: 10px; font-size: 0.92rem; }
 .dark .warn { background: #3a3014; color: #f3d98a; }
 #ask-parent .form-actions { flex-wrap: wrap; }
