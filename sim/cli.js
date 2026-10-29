@@ -2,6 +2,7 @@
 // Claude (Pro/Max), ne API žetonov. Zahteva nameščen in prijavljen Claude Code.
 import { spawn, execFileSync } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 
 let resolved = null;
@@ -44,7 +45,7 @@ const toEffort = (e) => (["low", "medium", "high"].includes(e) ? e : e === "xhig
 export function runClaude({ system, prompt, schema = null, model, effort = "medium", timeoutMs = 600_000 }) {
   const c = findClaude();
   if (!c) throw new Error("Claude Code (ukaz `claude`) ni nameščen ali ni v PATH. Namesti: npm install -g @anthropic-ai/claude-code, nato `claude` in prijava.");
-  const args = [...c.pre, "-p", "--tools", "", "--no-session-persistence", "--output-format", "json", "--model", model, "--effort", toEffort(effort)];
+  const args = [...c.pre, "-p", "--tools", "", "--strict-mcp-config", "--no-session-persistence", "--output-format", "json", "--model", model, "--effort", toEffort(effort)];
   if (system) args.push("--system-prompt", system);
   if (schema) args.push("--json-schema", JSON.stringify(schema));
   // Brez API ključa v okolju, sicer bi Claude Code zaračunal API namesto naročnine.
@@ -53,7 +54,10 @@ export function runClaude({ system, prompt, schema = null, model, effort = "medi
   delete env.ANTHROPIC_AUTH_TOKEN;
   delete env.ANTHROPIC_BASE_URL;
   return new Promise((resolve, reject) => {
-    const child = spawn(c.cmd, args, { env, stdio: ["pipe", "pipe", "pipe"], windowsHide: true });
+    // V prazni mapi, da Claude Code ne naloži CLAUDE.md in nastavitev projekta.
+    const cwd = path.join(os.tmpdir(), "stemmind-sim-cli");
+    fs.mkdirSync(cwd, { recursive: true });
+    const child = spawn(c.cmd, args, { env, cwd, stdio: ["pipe", "pipe", "pipe"], windowsHide: true });
     let out = "";
     let err = "";
     const timer = setTimeout(() => {
