@@ -64,6 +64,14 @@ export function initFullscreen() {
     if (document.visibilityState === "visible") armed = true;
   });
   mountSetting(document.getElementById("fullscreen-card"));
+  // Sprememba iz klepeta z inštruktorjem (public/chat-settings.js).
+  window.addEventListener("stemmind:device-setting", (e) => {
+    if (e.detail?.key !== "fullscreen") return;
+    const box = document.getElementById("fullscreen-toggle");
+    if (box) box.checked = e.detail.value === "on";
+    if (e.detail.value === "on") armed = true;
+    else exit();
+  });
 }
 
 function mountSetting(box) {

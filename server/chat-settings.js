@@ -1,0 +1,442 @@
+// Inštruktor spreminja nastavitve iz klepeta: orodji za model (get_settings, change_settings),
+// preverjanje vrednosti in uporaba. Seznam nastavitev je v public/settings-registry.js.
+//
+// - Profil (šola, razred/letnik, program, predmet, način, ton, jezik …) shrani strežnik.
+// - Šola, razred/letnik, program in šolski sistem zamenjajo učno pot: najprej predlog, ki ga učenec
+//   potrdi z gumbom ali z »da« (model nato pokliče orodje s confirmed=true).
+// - Nastavitve naprave (videz, hitrost izpisa, kalkulator, igre …) uporabi odjemalec (dogodek device_settings).
+// - Finančnih in osebnih podatkov orodji ne poznata (ne bereta in ne spreminjata).
+import { PROGRAMS, UNI_PATHS, FACULTIES, UNIVERSITIES } from "./university-data.js";
+import { normalizeSettings, courseKeysFor, cleanText, normalizeWeaknessList } from "./settings.js";
+import { LANGUAGE_CODES, langInfo } from "../public/i18n/languages.js";
+import { SCHOOL_SYSTEMS, SYSTEM_IDS, isRegional, gradesOf } from "../public/regions.js";
+import { PROFILE_SETTINGS, DEVICE_SETTINGS, deviceValue } from "../public/settings-registry.js";
+
+const PATH_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => PROFILE_SETTINGS[k].confirm);
+const PENDING_MS = 30 * 60 * 1000;
+
+// ---------------------------------------------------------------------------
+// Opis orodij za model. Stalen (enak za vse učence), da ostane v predpomnilniku skupaj s promptom.
+
+function schemaFor(def, extra = {}) {
+  if (def.list) return { type: "array", items: { type: "string" }, description: def.desc };
+  return { type: "string", ...(def.values ? { enum: def.values } : {}), description: def.desc, ...extra };
+}
+
+export const SETTINGS_TOOLS = [
+  {
+    name: "get_settings",
+    description:
+      "Read the student's current app settings (profile and this device). Optionally list allowed values for study_program, study_course or school_system. Financial and personal data are not available.",
+    input_schema: {
+      type: "object",
+      properties: { options: { type: "string", enum: ["study_program", "study_course", "school_system"], description: "list allowed values of this setting" } },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "change_settings",
+    description:
+      "Change app settings when the student explicitly asks (e.g. »zamenjaj na 2. letnik«, »vklopi temni način«, »piši hitreje«). Profile settings apply on all devices, device settings only here. school_system, educational_track, curriculum_level and study_program change the learning path: they are only proposed until the student confirms (button in the app, or a clear »da« to exactly this change; then call again with confirmed=true). No financial or personal data (plans, payments, codes, name, e-mail, password, age).",
+    input_schema: {
+      type: "object",
+      properties: {
+        changes: {
+          type: "object",
+          description: "only the settings to change",
+          properties: {
+            ...Object.fromEntries(Object.entries(PROFILE_SETTINGS).map(([k, d]) => [k, k === "school_system" ? schemaFor(d, { enum: SYSTEM_IDS }) : schemaFor(d)])),
+            ...Object.fromEntries(Object.entries(DEVICE_SETTINGS).map(([k, d]) => [k, schemaFor(d)])),
+          },
+          additionalProperties: false,
+        },
+        confirmed: { type: "boolean", description: "true only if the student's latest message clearly confirms the proposed learning-path change" },
+      },
+      required: ["changes"],
+      additionalProperties: false,
+    },
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Pomožne funkcije
+
+const norm = (s) =>
+  String(s ?? "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+const programLabel = (id) => (PROGRAMS[id]?.label || id || "").replace(/( \(UN\))+/g, " (UN)").replace(/ \(UN\) – /, " – ");
+const courseLabel = (key) => UNI_PATHS[key]?.label || key || "";
+
+// Najboljše ujemanje besedila z vnosi [{ id, text }]: vse besede poizvedbe morajo biti v besedilu.
+function bestMatch(query, items) {
+  const toks = norm(query).split(" ").filter(Boolean);
+  if (!toks.length) return { candidates: [] };
+  const q = norm(query);
+  const exact = items.filter((it) => norm(it.name || it.text) === q);
+  if (exact.length === 1) return { id: exact[0].id };
+  const scored = items.map((it) => {
+    const hay = ` ${norm(it.text)} `;
+    return { it, hit: toks.filter((t) => hay.includes(` ${t}`)).length };
+  });
+  const full = scored.filter((s) => s.hit === toks.length);
+  if (full.length === 1) return { id: full[0].it.id };
+  if (full.length > 1) return { candidates: full.map((s) => s.it) };
+  const best = Math.max(...scored.map((s) => s.hit));
+  const top = best > 0 ? scored.filter((s) => s.hit === best) : [];
+  return top.length === 1 && best >= Math.ceil(toks.length / 2) ? { id: top[0].it.id } : { candidates: top.map((s) => s.it) };
+}
+
+const programItems = () =>
+  Object.entries(PROGRAMS).map(([id, p]) => ({
+    id,
+    name: p.name,
+    label: programLabel(id),
+    text: `${id} ${p.label} ${FACULTIES[p.faculty] || ""} ${UNIVERSITIES[p.faculty.split("-")[0]] || ""}`,
+  }));
+
+function courseItems(program, level) {
+  return courseKeysFor(program, level).map((k) => {
+    const name = courseLabel(k).replace(/ \([^)]*\)$/, "");
+    return { id: k, name, label: courseLabel(k), text: name };
+  });
+}
+
+const WORDS = { prvi: 1, drugi: 2, tretji: 3, cetrti: 4, peti: 5, sesti: 6, sedmi: 7, osmi: 8, deveti: 9, first: 1, second: 2, third: 3, fourth: 4 };
+function levelNumber(s) {
+  const m = String(s).match(/([1-9])/);
+  if (m) return Number(m[1]);
+  const w = norm(s).split(" ").find((x) => WORDS[x]);
+  return w ? WORDS[w] : null;
+}
+
+// Razred ali letnik v zapisu aplikacije za izbrano šolo. Vrne { level } ali { error }.
+function canonicalLevel(input, track, cur, program) {
+  const n = levelNumber(input);
+  if (track === "OSNOVNA_SOLA") {
+    if (n >= 6 && n <= 9) return { level: `${n}. razred` };
+    return { error: "OŠ grades are '6. razred' to '9. razred'" };
+  }
+  if (track === "SREDNJA_SOLA") {
+    if (!(n >= 1 && n <= 4)) return { error: "SŠ years are '1. letnik' to '4. letnik' (optionally with OR/VR)" };
+    const raw = String(input).toUpperCase();
+    const suffix = /\bVR\b|VIŠJ|VISJ/.test(raw) ? " VR" : /\bOR\b|OSNOVN/.test(raw) ? " OR" : cur.educational_track === "SREDNJA_SOLA" ? (cur.curriculum_level.match(/ (OR|VR)$/)?.[0] ?? "") : "";
+    return { level: `${n}. letnik${suffix}` };
+  }
+  const years = PROGRAMS[program]?.years.length || 4;
+  if (n >= 1 && n <= years) return { level: `${n}. letnik` };
+  return { error: `this programme has years '1. letnik' to '${years}. letnik'` };
+}
+
+// Kratek opis šole za predlog: { system, track, level, program }.
+export function describeSchool(s) {
+  return {
+    system: isRegional(s.school_system) ? SCHOOL_SYSTEMS[s.school_system]?.name || s.school_system : null,
+    track: s.educational_track,
+    level: s.curriculum_level,
+    program: s.educational_track === "UNIVERZA" ? programLabel(s.study_program) : null,
+  };
+}
+
+function profileView(student) {
+  const s = student.settings;
+  return {
+    school_system: s.school_system,
+    educational_track: s.educational_track,
+    curriculum_level: s.curriculum_level,
+    study_program: s.study_program ? `${s.study_program} (${programLabel(s.study_program)})` : "",
+    study_course: s.study_course ? courseLabel(s.study_course) : "",
+    subject: s.subject,
+    track: s.track,
+    solving_mode: s.solving_mode,
+    personality_setting: s.personality_setting,
+    language: s.language,
+    data_mode: s.data_mode,
+    weak_points: student.manual_weaknesses || [],
+  };
+}
+
+// Nastavitve naprave, ki jih odjemalec pošlje s sporočilom (samo znani ključi in veljavne vrednosti).
+export function cleanDevice(input) {
+  const out = {};
+  if (!input || typeof input !== "object") return out;
+  for (const key of Object.keys(DEVICE_SETTINGS)) {
+    const v = deviceValue(key, input[key]);
+    if (v) out[key] = v;
+  }
+  return out;
+}
+
+// ---------------------------------------------------------------------------
+// Preverjanje sprememb profila. Vrne { patch, errors, extraWeak }.
+
+function validateProfile(changes, student) {
+  const cur = student.settings;
+  const errors = [];
+  const patch = {};
+  let weak;
+
+  if (changes.school_system !== undefined) {
+    if (SYSTEM_IDS.includes(changes.school_system)) patch.school_system = changes.school_system;
+    else errors.push(`school_system: unknown id; allowed ${SYSTEM_IDS.join(", ")}`);
+  }
+  const system = patch.school_system ?? cur.school_system;
+
+  if (changes.educational_track !== undefined) {
+    if (PROFILE_SETTINGS.educational_track.values.includes(changes.educational_track)) patch.educational_track = changes.educational_track;
+    else errors.push("educational_track: use OSNOVNA_SOLA, SREDNJA_SOLA or UNIVERZA");
+  }
+  if (isRegional(system) && (patch.educational_track || changes.study_program)) {
+    errors.push("regional school systems have no faculty programmes and pick the stage from the grade: set curriculum_level only");
+    delete patch.educational_track;
+  }
+
+  if (changes.study_program !== undefined && !isRegional(system)) {
+    const r = bestMatch(changes.study_program, programItems());
+    if (r.id) patch.study_program = r.id;
+    else
+      errors.push(
+        r.candidates.length
+          ? `study_program is ambiguous, ask which one: ${r.candidates.slice(0, 8).map((c) => c.label).join("; ")}`
+          : "study_program: no such programme (get_settings options=study_program lists all)",
+      );
+    if (patch.study_program && !patch.educational_track && cur.educational_track !== "UNIVERZA") patch.educational_track = "UNIVERZA";
+  }
+
+  let track = patch.educational_track ?? cur.educational_track;
+  const program = patch.study_program ?? (track === "UNIVERZA" ? cur.study_program : "");
+
+  if (changes.curriculum_level !== undefined) {
+    const raw = String(changes.curriculum_level);
+    if (isRegional(system)) {
+      const g = gradesOf(system).find((x) => norm(x.label) === norm(raw));
+      if (g) patch.curriculum_level = g.label;
+      else errors.push(`curriculum_level: grades of this system are ${gradesOf(system).map((x) => x.label).join(", ")}`);
+    } else {
+      // »8. razred« pove osnovno šolo; »letnik« ob osnovni šoli pa ni jasen (srednja šola ali fakulteta).
+      if (!patch.educational_track && /razred/i.test(raw) && track !== "OSNOVNA_SOLA") track = patch.educational_track = "OSNOVNA_SOLA";
+      if (!patch.educational_track && /letnik/i.test(raw) && track === "OSNOVNA_SOLA") {
+        errors.push("curriculum_level: 'letnik' needs educational_track SREDNJA_SOLA or UNIVERZA – ask the student which");
+      } else {
+        const r = canonicalLevel(raw, track, cur, program || Object.keys(PROGRAMS)[0]);
+        if (r.level) patch.curriculum_level = r.level;
+        else errors.push(`curriculum_level: ${r.error}`);
+      }
+    }
+  } else if (patch.educational_track && patch.educational_track !== cur.educational_track && !isRegional(system)) {
+    errors.push("curriculum_level is required when the school stage changes – ask which grade/year");
+  }
+  if (track === "UNIVERZA" && !program && !isRegional(system)) errors.push("study_program is required for faculty – ask which programme");
+
+  const level = patch.curriculum_level ?? cur.curriculum_level;
+  if (changes.study_course !== undefined) {
+    if (track !== "UNIVERZA") errors.push("study_course is only for faculty students; use subject");
+    else {
+      const r = bestMatch(changes.study_course, courseItems(program, level));
+      if (r.id) {
+        patch.study_course = r.id;
+        patch.subject = UNI_PATHS[r.id].subject;
+      } else
+        errors.push(
+          `study_course: ${r.candidates.length ? "ambiguous" : "not in this year"}; courses: ${(r.candidates.length ? r.candidates : courseItems(program, level)).map((c) => c.name).join("; ")}`,
+        );
+    }
+  }
+  if (changes.subject !== undefined) {
+    if (!PROFILE_SETTINGS.subject.values.includes(changes.subject)) errors.push("subject: unknown");
+    else if (track === "UNIVERZA" && !patch.study_course) {
+      const c = courseItems(program, level).find((x) => UNI_PATHS[x.id].subject === changes.subject);
+      if (c) {
+        patch.study_course = c.id;
+        patch.subject = changes.subject;
+      } else errors.push(`subject: this programme year has no ${changes.subject} course; courses: ${courseItems(program, level).map((x) => x.name).join("; ")}`);
+    } else if (track !== "UNIVERZA") patch.subject = changes.subject;
+  }
+  for (const key of ["track", "solving_mode", "data_mode"]) {
+    if (changes[key] === undefined) continue;
+    if (PROFILE_SETTINGS[key].values.includes(changes[key])) patch[key] = changes[key];
+    else errors.push(`${key}: allowed ${PROFILE_SETTINGS[key].values.join(", ")}`);
+  }
+  if (patch.track === "COMPETITION" && (track === "UNIVERZA" || isRegional(system))) errors.push("track: competitions exist only for Slovenian OŠ/SŠ");
+  if (changes.personality_setting !== undefined) patch.personality_setting = cleanText(String(changes.personality_setting), 200);
+  if (changes.language !== undefined) {
+    const code = String(changes.language).trim();
+    const found = LANGUAGE_CODES.find((c) => c.toLowerCase() === code.toLowerCase());
+    if (found) patch.language = found;
+    else errors.push("language: use an ISO 639 code the app supports, e.g. sl, en, de, hr, it, es, fr, uk, zh");
+  }
+  if (changes.weak_points !== undefined) weak = normalizeWeaknessList(changes.weak_points);
+  return { patch, errors, weak };
+}
+
+// Spremembe za poročilo modelu: [{ setting, from, to }].
+function diff(before, after, keys) {
+  const show = (k, v) => (k === "study_program" ? programLabel(v) : k === "study_course" ? courseLabel(v) : v);
+  return keys.filter((k) => before[k] !== after[k]).map((k) => ({ setting: k, from: show(k, before[k]), to: show(k, after[k]) }));
+}
+
+const PROFILE_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => k !== "weak_points");
+
+// ---------------------------------------------------------------------------
+// Orodja v enem pogovoru. pending: Map (pogovor → predlog, ki čaka na potrditev).
+// send(event, data): dogodki za odjemalca. Vrne { onToolUse, state }.
+
+export function createSettingsTools({ store, studentId, conversationId, device = {}, pending, send = () => {} }) {
+  const state = { used: false, proposal: null, language: null, student: null };
+  const dev = { ...device };
+
+  function getSettings(input = {}) {
+    const student = store.getStudent(studentId);
+    const out = { profile: profileView(student), device: dev, note: "Device settings not listed are at their defaults." };
+    const s = student.settings;
+    if (input.options === "study_program") out.options = programItems().map((p) => `${p.id}: ${p.label}`);
+    if (input.options === "study_course")
+      out.options = s.educational_track === "UNIVERZA" ? courseItems(s.study_program, s.curriculum_level).map((c) => c.name) : "only for faculty students";
+    if (input.options === "school_system") out.options = SYSTEM_IDS.map((id) => `${id}: ${SCHOOL_SYSTEMS[id].name}`);
+    return { content: JSON.stringify(out) };
+  }
+
+  function changeSettings(input = {}) {
+    const changes = input.changes && typeof input.changes === "object" ? input.changes : {};
+    const student = store.getStudent(studentId);
+    const cur = student.settings;
+    const unknown = Object.keys(changes).filter((k) => !PROFILE_SETTINGS[k] && !DEVICE_SETTINGS[k]);
+    const { patch, errors, weak } = validateProfile(changes, student);
+    const deviceChanges = {};
+    for (const key of Object.keys(DEVICE_SETTINGS)) {
+      if (changes[key] === undefined) continue;
+      const v = deviceValue(key, changes[key]);
+      if (v) deviceChanges[key] = v;
+      else errors.push(`${key}: allowed ${DEVICE_SETTINGS[key].values?.join(", ") || DEVICE_SETTINGS[key].desc}`);
+    }
+    if (unknown.length) errors.push(`not changeable from chat: ${unknown.join(", ")} (financial and personal data only in Settings / Account)`);
+    if (errors.length) return { content: JSON.stringify({ status: "error", errors, applied: [] }), isError: true };
+
+    // Šola, razred, program, sistem: predlog ali potrjena sprememba.
+    const pathPatch = {};
+    for (const k of Object.keys(patch)) if (PATH_KEYS.includes(k)) pathPatch[k] = patch[k];
+    const wantsPath = Object.keys(pathPatch).length > 0;
+    const prev = pending.get(conversationId);
+    const prevValid = prev && Date.now() - prev.at < PENDING_MS;
+    const result = { status: "applied", applied: [], needs_confirmation: [], device: [] };
+
+    let applyPatch = {};
+    if (wantsPath) {
+      // Predmet in predmet iz predmetnika sta odvisna od nove šole: gresta s predlogom.
+      for (const k of ["study_course", "subject"]) if (patch[k] !== undefined) pathPatch[k] = patch[k];
+      const next = normalizeSettings({ ...cur, ...pathPatch });
+      const same = prevValid && JSON.stringify(normalizeSettings({ ...cur, ...prev.patch })) === JSON.stringify(next);
+      const changed = diff(cur, next, PROFILE_KEYS);
+      if (!changed.length) {
+        result.note = "already set";
+      } else if (input.confirmed === true && same) {
+        applyPatch = { ...prev.patch };
+      } else {
+        const full = Object.fromEntries(["school_system", "educational_track", "curriculum_level", "study_program", "study_course", "subject"].map((k) => [k, next[k]]));
+        pending.set(conversationId, { patch: full, at: Date.now() });
+        state.proposal = { settings: full, from: describeSchool(cur), to: describeSchool(next) };
+        result.needs_confirmation = changed;
+        result.status = "needs_confirmation";
+        result.note =
+          "Not applied yet: the app shows the student a confirm button under your reply. Ask in one short sentence whether to change; if they answer yes in chat, call change_settings again with the same changes and confirmed=true.";
+      }
+      for (const k of Object.keys(patch)) if (!PATH_KEYS.includes(k) && k !== "study_course" && k !== "subject") applyPatch[k] = patch[k];
+    } else {
+      applyPatch = { ...patch };
+      if (input.confirmed === true && prevValid && !Object.keys(patch).length) applyPatch = { ...prev.patch };
+    }
+
+    if (Object.keys(applyPatch).length || weak) {
+      const updated = store.updateStudent(studentId, { settings: applyPatch, manual_weaknesses: weak });
+      result.applied = diff(cur, updated.settings, PROFILE_KEYS);
+      if (weak) result.applied.push({ setting: "weak_points", to: updated.manual_weaknesses });
+      if (PATH_KEYS.some((k) => applyPatch[k] !== undefined)) pending.delete(conversationId);
+      if (updated.settings.language !== cur.language) state.language = updated.settings.language;
+      state.student = updated;
+      send("settings", { student: updated, language: state.language });
+      if (applyPatch.language && langInfo(applyPatch.language).code !== "sl") result.note = (result.note ? result.note + " " : "") + "Reply in the new language from now on.";
+    }
+    if (Object.keys(deviceChanges).length) {
+      Object.assign(dev, deviceChanges);
+      result.device = Object.entries(deviceChanges).map(([setting, to]) => ({ setting, to }));
+      send("device_settings", { changes: deviceChanges });
+    }
+    if (result.status !== "needs_confirmation" && !result.applied.length && !result.device.length) result.note = result.note || "nothing changed (already set)";
+    return { content: JSON.stringify(result) };
+  }
+
+  async function onToolUse(name, input) {
+    state.used = true;
+    try {
+      if (name === "get_settings") return getSettings(input);
+      if (name === "change_settings") return changeSettings(input);
+      return { content: `unknown tool ${name}`, isError: true };
+    } catch (err) {
+      console.error("[stemmind] orodje nastavitev:", err?.message ?? err);
+      return { content: "internal error, settings not changed", isError: true };
+    }
+  }
+  return { onToolUse, state };
+}
+
+// Sporočila, ki morda prosijo za spremembo nastavitev: odgovora ne vzamemo iz predpomnilnika odgovorov.
+export const looksLikeSettings = (text) =>
+  /nastav|zamenjaj|spremeni|preklopi|vklopi|izklopi|temn|svetl|barv|hitrej|počasnej|jezik|sem (zdaj )?v \d|settings|dark mode|theme|language/i.test(String(text || ""));
+
+// ---------------------------------------------------------------------------
+// Preizkusni način (brez ključa): preprosto prepoznavanje najpogostejših prošenj.
+
+const ASK = /zamenjaj|spremeni|nastavi|preklopi|vklopi|izklopi|prestavi|daj\b|hočem|želim|rad bi|sem v|sem zdaj|piši|switch|change|set\b|turn/i;
+
+export function mockToolCall(text, hasPending = false) {
+  const t = String(text || "").toLowerCase().trim();
+  if (hasPending && /^(da|ja|ok|okej|potrdi|potrdim|seveda|yes)\b/.test(t)) return { name: "change_settings", input: { changes: {}, confirmed: true } };
+  if (!ASK.test(t)) return null;
+  const changes = {};
+  if (/temn|dark/.test(t)) changes.theme = "dark";
+  else if (/svetl|light/.test(t)) changes.theme = "light";
+  if (/naključne barve|random colou?rs/.test(t)) changes.colors = "random";
+  else if (/privzete barve|ponastavi barve/.test(t)) changes.colors = "default";
+  if (/hitrej|hitro/.test(t) && /piš|izpis|odgovor|besedil/.test(t)) changes.reply_speed = "hitro";
+  else if (/počasnej|počasi/.test(t) && /piš|izpis|odgovor|besedil/.test(t)) changes.reply_speed = "pocasi";
+  const lvl = t.match(/([1-9])\.\s*(letnik|razred)/);
+  if (lvl) changes.curriculum_level = `${lvl[1]}. ${lvl[2]}`;
+  const subj = [["MAT", /matematik/], ["FIZ", /fizik/], ["KEM", /kemij/], ["NAR", /naravoslov/], ["BIO", /biologij/]].find(([, re]) => re.test(t));
+  if (subj && /predmet|preklopi|zamenjaj/.test(t)) changes.subject = subj[0];
+  if (/celo rešitev|celotno rešitev|način b/.test(t)) changes.solving_mode = "B";
+  else if (/način a|korak za korakom/.test(t)) changes.solving_mode = "A";
+  return Object.keys(changes).length ? { name: "change_settings", input: { changes } } : null;
+}
+
+const MOCK_LABELS = {
+  theme: "videz",
+  colors: "barve",
+  accent: "poudarek",
+  reply_speed: "hitrost izpisa",
+  curriculum_level: "razred/letnik",
+  educational_track: "šola",
+  study_program: "program",
+  subject: "predmet",
+  solving_mode: "način",
+};
+
+// Besedilo odgovora v preizkusnem načinu iz rezultata orodja.
+export function mockToolText(resultContent) {
+  let r;
+  try {
+    r = JSON.parse(resultContent);
+  } catch {
+    return "Nastavitve ne morem spremeniti.";
+  }
+  const fmt = (list) => list.map((c) => `${MOCK_LABELS[c.setting] || c.setting}: ${c.from ? `${c.from} → ` : ""}${Array.isArray(c.to) ? c.to.join(", ") : c.to}`).join(", ");
+  if (r.status === "error") return `Tega ne morem nastaviti (${r.errors.join("; ")}).`;
+  const parts = [];
+  if (r.applied?.length || r.device?.length) parts.push(`Urejeno: ${fmt([...(r.applied || []), ...(r.device || [])])}. ✅`);
+  if (r.status === "needs_confirmation") parts.push(`Res želiš spremembo (${fmt(r.needs_confirmation)})? Potrdi z gumbom spodaj ali napiši »da«.`);
+  if (!parts.length) parts.push("To je že nastavljeno.");
+  return parts.join(" ");
+}

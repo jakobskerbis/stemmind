@@ -23,6 +23,7 @@ import { initFlashcards, showFlashcards, addCardsNote } from "./flashcards.js";
 import { initGames, showGames, gamesBack, leaveGames } from "./games/index.js";
 import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
+import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -535,7 +536,7 @@ async function send(text, { deep = false } = {}) {
     const res = await fetch(`/api/conversations/${state.conversationId}/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, deep, lite: liteActive(), image: image ? { media_type: image.media_type, data: image.data } : undefined }),
+      body: JSON.stringify({ text, deep, lite: liteActive(), device: deviceSnapshot(), image: image ? { media_type: image.media_type, data: image.data } : undefined }),
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
@@ -545,9 +546,18 @@ async function send(text, { deep = false } = {}) {
 
     let doneData = null;
     let cardsData = null;
+    let proposal = null;
+    let newLanguage = null;
     await readSse(res, {
       delta: (d) => pacer.push(d.text),
       cards: (d) => (cardsData = d),
+      // Inštruktor je spremenil nastavitve (server/chat-settings.js).
+      settings: (d) => {
+        studentUpdated(d.student);
+        if (d.language) newLanguage = d.language;
+      },
+      device_settings: (d) => applyDeviceSettings(d.changes),
+      proposal: (d) => (proposal = d),
       mastered: (d) => toast(t("chat.mastered", { topic: d.topic }), "trophy"),
       done: (d) => {
         doneData = d;
@@ -567,10 +577,14 @@ async function send(text, { deep = false } = {}) {
       bubble.classList.remove("typing");
       bubble.removeEventListener("click", skip);
       bubble.removeAttribute("title");
-      if (doneData) addDeepButton(bubble, doneData.deep);
+      // Odgovor, ki samo spremeni nastavitve, ne potrebuje »Razloži podrobneje«.
+      if (doneData && !doneData.settings) addDeepButton(bubble, doneData.deep);
       if (doneData?.text) addGraphButton(bubble, doneData.text);
       if (cardsData) addCardsNote(bubble, cardsData);
+      if (proposal) addProposal(bubble, proposal, { onConfirm: confirmChatProposal });
       if (state.pacer === pacer) state.pacer = null;
+      // Nov jezik: vmesnik se naloži znova v njem (ko je odgovor izpisan).
+      if (newLanguage && newLanguage !== currentLang()) setTimeout(() => setLanguage(newLanguage), 1200);
       refreshUsageMeter();
     });
     await loadConversations();
@@ -884,6 +898,40 @@ $("#settings-form").addEventListener("submit", async (e) => {
   const ok = $("#settings-saved");
   ok.hidden = false;
   setTimeout(() => (ok.hidden = true), 2000);
+});
+
+// ---------- nastavitve, ki jih spremeni inštruktor ----------
+
+// Posodobljen profil (iz klepeta): stanje, zavihki, pot in odprte Nastavitve.
+function studentUpdated(updated) {
+  if (!updated || updated.id !== state.student?.id) return;
+  const before = state.student.settings;
+  const i = state.students.findIndex((s) => s.id === updated.id);
+  if (i >= 0) state.students[i] = updated;
+  state.student = updated;
+  syncCompetitionTab();
+  applyLite();
+  refreshProfileButton();
+  renderState(null);
+  state.symbols?.refresh();
+  if (levelChanged(before, updated.settings) || before.subject !== updated.settings.subject || before.study_course !== updated.settings.study_course) state.pathKey = null;
+  const up = stageUp(before, updated.settings);
+  if (up) state.welcome = { stage: up };
+  if (!$("#view-settings").hidden) fillSettingsForm();
+}
+
+// Gumb »Da, spremeni« pod predlogom inštruktorja (šola, razred/letnik, program).
+async function confirmChatProposal(settings) {
+  const updated = await api(`/api/students/${state.student.id}`, { method: "PUT", body: { settings } });
+  studentUpdated(updated);
+  toast(t("chat.setDone"), "check");
+}
+
+// Nastavitve naprave, ki jih je spremenil inštruktor: posodobi odprte izbire.
+window.addEventListener("stemmind:device-setting", (e) => {
+  const { key, value } = e.detail || {};
+  if (key === "reply_speed" && PACES[value]) $("#pace-select").value = value;
+  if (key === "calculator" && CALC_MODES.includes(value)) calcMode = value;
 });
 
 // ---------- prehod v višji razred / letnik ----------

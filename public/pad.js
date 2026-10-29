@@ -12,6 +12,12 @@ const prefs = (() => {
     return {};
   }
 })();
+// Inštruktor lahko nastavitev plošče spremeni iz klepeta (public/chat-settings.js).
+window.addEventListener("stemmind:device-setting", (e) => {
+  const { key, value } = e.detail || {};
+  if (key === "writing_pad") prefs.auto = value === "auto";
+  if (key === "writing_pad_tab") prefs.tab = value;
+});
 const savePrefs = () => {
   try {
     localStorage.setItem(LS_KEY, JSON.stringify(prefs));
