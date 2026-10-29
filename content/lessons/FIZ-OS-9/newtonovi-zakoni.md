@@ -24,6 +24,12 @@ To pomeni:
 
 Pogosta zmota je, da za gibanje vedno potrebujemo silo. Ni res: za *enakomerno gibanje* sila ni potrebna, potrebna je za *spremembo* gibanja. Predmet na ledu zdrsi daleč, ker je trenje majhno. Na grobih tleh se hitro ustavi, ker ga zavira trenje.
 
+:::premisli
+Hokejski plošček drsi po gladkem ledu. Kaj bi se zgodilo s ploščkom, če ne bi bilo ne trenja ne upora zraka?
+---
+Drsel bi naprej v isti smeri z enako hitrostjo, dokler ga kaj ne ustavi. Rezultanta bi bila nič, za enakomerno gibanje pa sila ni potrebna.
+:::
+
 **2. Drugi zakon: $F = m \cdot a$.**
 Če je rezultanta sil na telo različna od nič, telo pospešuje. Pospešek je premo sorazmeren rezultanti in obratno sorazmeren masi:
 
@@ -40,7 +46,9 @@ Iz tega sledi:
 - dvakrat večja sila na isto telo da dvakrat večji pospešek,
 - dvakrat večja masa pri isti sili da dvakrat manjši pospešek.
 
-**3. Teža.** Pri prosto padajočem telesu je edina sila teža $F_g$, pospešek pa je težni pospešek $g \approx 10\,\dfrac{\text{m}}{\text{s}^2}$. Iz $F = m \cdot a$ sledi
+V simulaciji spodaj »Sila, masa in pospešek« (podlaga brez trenja) nastavi vlečno silo $10\,\text{N}$ in maso $5\,\text{kg}$ ter klikni Spusti. Nato podvoji oboje ($20\,\text{N}$, $10\,\text{kg}$). Opazi, da je premica na grafu hitrosti enako strma: pospešek je v obeh primerih $2\,\dfrac{\text{m}}{\text{s}^2}$. Če med gibanjem vlečno silo nastaviš na $0$, se klada giblje naprej s stalno hitrostjo (1. zakon).
+
+**3. Teža.** Teža $F_g$ je sila, s katero Zemlja privlači telo. Izračunamo jo z maso in težnim pospeškom $g \approx 10\,\dfrac{\text{m}}{\text{s}^2}$ (to je isto kot $10\,\dfrac{\text{N}}{\text{kg}}$):
 
 $$F_g = m \cdot g.$$
 
@@ -60,6 +68,12 @@ Pomembno:
 - Prijemališči sil sta na **različnih telesih**. Zato se med seboj ne izničita, saj ju ne seštevamo za isto telo.
 
 Primer: ko stojiš na tleh, na tla pritiskaš s silo (enako veliko, kot je tvoja teža), tla pa nate delujejo z enako veliko silo navzgor.
+
+:::premisli
+Na drsališču stojita oče ($80\,\text{kg}$) in sin ($40\,\text{kg}$). Sin odrine očeta. Kdo od njiju dobi večji pospešek in zakaj?
+---
+Sin. Po 3. zakonu delujeta drug na drugega z enako veliko silo, sin pa ima pol manjšo maso, zato po $a = F/m$ dobi dvakrat večji pospešek. Odpelje ga nazaj, čeprav je potiskal očeta.
+:::
 
 ## Rešeni primeri
 
@@ -120,14 +134,36 @@ Rezultanta: $F = F_1 - F_2$, pospešek: $a = \dfrac{F}{m}$, hitrost pri gibanju 
 4. **Hitrost:** $v = a \cdot t = 2\,\dfrac{\text{m}}{\text{s}^2}\cdot 6\,\text{s} = 12\,\dfrac{\text{m}}{\text{s}}$ (začetna hitrost je nič).
 5. **Odgovor:** po $6\,\text{s}$ je hitrost $12\,\dfrac{\text{m}}{\text{s}}$, kar je $43{,}2\,\dfrac{\text{km}}{\text{h}}$.
 
+### Primer 4: zdaj ti
+
+Kolesar s kolesom ima skupaj maso $80\,\text{kg}$. Pedala ga poganjajo naprej s silo $200\,\text{N}$, upor zraka in trenje ga zavirata s silo $40\,\text{N}$. Kolikšen je pospešek kolesarja?
+
+**Podatki:** $m = 80\,\text{kg}$, sila naprej $F_1 = 200\,\text{N}$, zaviralna sila $F_2 = 40\,\text{N}$
+**Iščemo:** pospešek $a$
+
+:::formula
+$F = F_1 - F_2$, nato $a = \dfrac{F}{m}$
+:::
+
+**Rešitev:**
+
+1. **Sile:** $200\,\text{N}$ naprej in $40\,\text{N}$ nazaj; sili sta nasprotni, zato ju odštejemo.
+2. **Rezultanta:** $F = 200\,\text{N} - 40\,\text{N} = 160\,\text{N}$ naprej.
+3. **Drugi zakon:** izračunaj sam, nato preveri:
+
+:::premisli
+Koliko je $a = \dfrac{160\,\text{N}}{80\,\text{kg}}$?
+---
+$a = 2\,\dfrac{\text{m}}{\text{s}^2}$ v smeri vožnje. Če bi pozabil na upor in vzel $200\,\text{N}$, bi dobil napačnih $2{,}5\,\dfrac{\text{m}}{\text{s}^2}$.
+:::
+
 ## Pogoste napake
 
 - **»Brez sile ni gibanja.«** Narobe. Brez rezultante se telo giblje enakomerno naprej. Sila je potrebna za spremembo hitrosti.
 - **Ravnovesje pomeni mirovanje.** Ne nujno. Ravnovesje pomeni, da je rezultanta nič; telo lahko miruje ali se enakomerno giblje.
 - **Pozabljeno trenje.** V $F = m \cdot a$ vstavljamo **rezultanto**, ne le ene sile.
 - **Sili akcije in reakcije se izničita.** Ne, ker delujeta na različni telesi. Izničita se lahko le sili na isto telo (npr. teža in sila podlage pri knjigi na mizi, a to ni par po tretjem zakonu).
-- **Mešanje mase in teže.** Masa je v $\text{kg}$, teža pa sila v $\text{N}$: $F_g = m \cdot g$.
-- **Enote.** Pred računom pretvori vse v $\text{kg}$, $\text{m}$, $\text{s}$.
+- **Mešanje mase in teže.** »Tehtam $50\,\text{kg}$, torej je moja teža $50\,\text{kg}$.« Masa je v $\text{kg}$, teža pa je sila v $\text{N}$: $F_g = m \cdot g \approx 500\,\text{N}$.
 
 ## Povzetek
 
@@ -148,7 +184,7 @@ Nariši škatlo kot kvadrat in vse sile kot puščice, ki izhajajo iz njega:
 
 Dolžina puščice pove velikost sile. Če sta navpični puščici enako dolgi, se škatla v navpični smeri ne giblje. Če je puščica v desno daljša od puščice v levo, je rezultanta v desno in škatla pospešuje v desno.
 
-V interaktivni simulaciji spodaj postavi na vrv dve enako močni ekipi: sili se izravnata in voziček miruje (1. zakon). Če eni ekipi dodaš člana, rezultanta ni več nič in voziček začne pospeševati (2. zakon). V zavihku »Pospešek« opaziš, da večja masa pri isti sili pomeni manjši pospešek.
+V simulaciji spodaj so vse puščice sil narisane v istem merilu. Izberi podlago »les na lesu« in počasi večaj vlečno silo: dokler je puščica vlečne sile enako dolga kot puščica trenja, je rezultanta nič in klada se ne začne gibati.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -195,22 +231,50 @@ Ker je masa Zemlje ogromna, enaka sila Zemlji da zanemarljiv pospešek, žogi pa
 
 ## Preveri se
 
-? Škatla se po ravnih tleh giblje s stalno hitrostjo $2\,\dfrac{\text{m}}{\text{s}}$. Kaj lahko rečemo o silah na škatlo v vodoravni smeri?
+? Škatlo vlečeš po ravnih tleh in se giblje s stalno hitrostjo $2\,\dfrac{\text{m}}{\text{s}}$. Kaj lahko rečemo o silah na škatlo v vodoravni smeri?
 - Vlečna sila je večja od trenja.
+~ To je zmota »brez sile ni gibanja«. Če bi bila vlečna sila večja, bi škatla pospeševala, hitrost pa je stalna.
 - Na škatlo v vodoravni smeri ne deluje nobena sila.
+~ Ti jo vlečeš, tla pa jo zavirajo s trenjem. Stalna hitrost ne pomeni, da sil ni, ampak da je njihova vsota nič.
 + Rezultanta sil je enaka nič.
 - Trenje je večje od vlečne sile.
+~ Potem bi rezultanta kazala nazaj in škatla bi se ustavljala, ne bi se gibala s stalno hitrostjo.
 > Pri stalni hitrosti je pospešek nič, zato je po prvem zakonu rezultanta nič. Sili (vlečna in trenje) sta lahko obe prisotni, le enako veliki in nasprotni.
 
 ? Na telo z maso $3\,\text{kg}$ deluje rezultanta $12\,\text{N}$. Kolikšen je pospešek?
 - $36\,\dfrac{\text{m}}{\text{s}^2}$
+~ Silo in maso si pomnožil. Iz $F = m \cdot a$ sledi $a = F/m$, zato delimo.
 - $0{,}25\,\dfrac{\text{m}}{\text{s}^2}$
+~ Delil si maso s silo ($3 : 12$). Pospešek je sila, deljena z maso.
 + $4\,\dfrac{\text{m}}{\text{s}^2}$
 - $9\,\dfrac{\text{m}}{\text{s}^2}$
+~ Maso si odštel od sile. Masa in sila sta različni količini, zato ju ne moremo odštevati.
 > $a = \dfrac{F}{m} = \dfrac{12\,\text{N}}{3\,\text{kg}} = 4\,\dfrac{\text{m}}{\text{s}^2}$. Odgovor $36$ dobiš, če pomnožiš namesto deliš, odgovor $0{,}25$ pa, če deliš narobe obrnjeno.
 
 ? Odrineš se od zidu in zdrsneš nazaj. Katera trditev pravilno razloži pojav?
 - Zid deluje na tebe z manjšo silo, kot ti nanj.
+~ Ker se zid ne premakne, se zdi, da je njegova sila šibkejša. Po 3. zakonu sta sili vedno enako veliki; zid se ne premakne, ker je trdno vpet v stavbo.
 + Zid deluje na tebe z enako veliko, nasprotno usmerjeno silo, kot ti nanj.
 - Zid ne deluje na tebe s silo, ker miruje.
+~ Tudi mirujoča telesa delujejo s silo (miza drži knjigo). Brez sile zidu se ne bi začel gibati nazaj.
 > Po tretjem zakonu sta sili vzajemnega učinka vedno enako veliki in nasprotno usmerjeni. Zid miruje, a vseeno deluje s silo na tvoje roke.
+
+? V kateri enoti merimo maso in v kateri težo?
++ Maso v $\text{kg}$, težo v $\text{N}$.
+- Obe v $\text{kg}$.
+~ V vsakdanjem govoru rečemo »tehtam $50\,\text{kg}$«, a to je masa. Teža je sila, zato jo merimo v newtonih.
+- Maso v $\text{N}$, težo v $\text{kg}$.
+~ Enoti sta zamenjani. Masa pove, koliko snovi je v telesu ($\text{kg}$), teža je sila ($\text{N}$).
+- Obe v $\text{N}$.
+~ Masa ni sila. Iz mase šele izračunamo težo: $F_g = m \cdot g$.
+> Masa je v kilogramih, teža je sila, s katero Zemlja privlači telo, in jo merimo v newtonih: $F_g = m \cdot g$.
+
+? Sani z maso $20\,\text{kg}$ vlečeš z vodoravno silo $100\,\text{N}$, trenje jih zavira s $40\,\text{N}$. Kolikšen je pospešek sani?
+- $5\,\dfrac{\text{m}}{\text{s}^2}$
+~ Pozabil si trenje. V $a = F/m$ vstavimo rezultanto, ne le vlečne sile.
+- $7\,\dfrac{\text{m}}{\text{s}^2}$
+~ Sili si seštel. Trenje kaže v nasprotno smer, zato ga odštejemo.
++ $3\,\dfrac{\text{m}}{\text{s}^2}$
+- $1200\,\dfrac{\text{m}}{\text{s}^2}$
+~ Rezultanto si pomnožil z maso. Pospešek dobimo z deljenjem: $a = F/m$.
+> Rezultanta je $F = 100\,\text{N} - 40\,\text{N} = 60\,\text{N}$, pospešek pa $a = \dfrac{60\,\text{N}}{20\,\text{kg}} = 3\,\dfrac{\text{m}}{\text{s}^2}$ v smeri vlečne sile.

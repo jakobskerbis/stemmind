@@ -20,6 +20,12 @@ $$g \approx 9{,}8\,\mathrm{\frac{m}{s^2}}$$
 
 To pomeni: vsako sekundo se hitrost padajočega telesa poveča za približno $9{,}8\,\mathrm{\frac{m}{s}}$. Za enostavnejše računanje pogosto vzamemo $g \approx 10\,\mathrm{\frac{m}{s^2}}$. V tej lekciji bomo uporabljali $g = 9{,}8\,\mathrm{\frac{m}{s^2}}$, razen kjer je zapisano drugače.
 
+:::premisli
+Z balkona hkrati spustiš kamen in desetkrat lažjo kroglico enake velikosti. Upor zraka zanemarimo. Kaj napoveš: katera prej pade na tla?
+---
+Padeta hkrati. Na kamen deluje desetkrat večja teža, a ima tudi desetkrat večjo maso, zato je po $a = F/m$ pospešek obeh enak.
+:::
+
 **3. Vsa telesa padajo enako.** Brez upora zraka težko in lahko telo padata z enakim pospeškom. Masa na pospešek ne vpliva. Težje telo sicer privlači večja sila, vendar ga je zaradi večje mase tudi težje pospešiti, in to se natanko izravna.
 
 **4. Hitrost pri prostem padu.** Telo spustimo (začetna hitrost je $0$). Po času $t$ je hitrost
@@ -30,9 +36,17 @@ $$v = g\,t$$
 
 $$h = \frac{1}{2}\,g\,t^2$$
 
+:::premisli
+Pri $g \approx 10\,\mathrm{\frac{m}{s^2}}$ kamen v prvi sekundi pade $5\,\mathrm{m}$. Koliko pade v prvih dveh sekundah: $10\,\mathrm{m}$ ali več? Zakaj?
+---
+Več, $20\,\mathrm{m}$: $h = \frac{1}{2} \cdot 10 \cdot 2^2 = 20\,\mathrm{m}$. V drugi sekundi je kamen že hitrejši, zato preleti daljšo pot kot v prvi.
+:::
+
 Pot narašča s **kvadratom** časa: če je čas dvakrat daljši, je pot štirikrat daljša.
 
 **6. Drugi nebesni objekti.** Težnostni pospešek je odvisen od nebesnega telesa. Na Luni je približno $1{,}6\,\mathrm{\frac{m}{s^2}}$, na Marsu približno $3{,}7\,\mathrm{\frac{m}{s^2}}$. Iste formule veljajo, le $g$ je drugačen.
+
+V simulaciji spodaj »Prosti pad na Zemlji, Luni in Marsu« nastavi višino $20\,\mathrm{m}$ in spusti kroglo najprej na Zemlji, nato na Luni. Opazi, da na Zemlji pada približno $2\,\mathrm{s}$, na Luni pa približno $5\,\mathrm{s}$, ker je tam $g$ manjši.
 
 ## Rešeni primeri
 
@@ -97,15 +111,36 @@ Iz $h = \dfrac{1}{2}\,g\,t^2$ izrazimo čas: $t = \sqrt{\dfrac{2h}{g}}$, nato $v
 
 **Odgovor:** pada $2\,\mathrm{s}$ in zadene tla s hitrostjo $20\,\mathrm{\frac{m}{s}}$.
 
+### Primer 4: zdaj ti
+
+Z mostu spustimo kamen, ki pade v reko po $3\,\mathrm{s}$. Kako visoko nad vodo je most? Vzemi $g = 10\,\mathrm{\frac{m}{s^2}}$ in zanemari upor zraka.
+
+**Podatki:** $t = 3\,\mathrm{s}$, začetna hitrost $v_0 = 0$ (kamen spustimo), $g = 10\,\mathrm{\frac{m}{s^2}}$, upor zraka zanemarimo
+**Iščemo:** višina mostu $h$
+
+:::formula
+$h = \dfrac{1}{2}\,g\,t^2$
+:::
+
+**Rešitev:**
+
+1. Dan je čas padanja, iščemo pot, zato uporabimo $h = \dfrac{1}{2}\,g\,t^2$.
+2. Najprej kvadriramo čas, ker v enačbi nastopa $t^2$: $t^2 = 3^2 = 9\,\mathrm{s^2}$.
+3. Izračunaj sam, nato preveri:
+
+:::premisli
+Koliko je $h = \dfrac{1}{2} \cdot 10\,\mathrm{\frac{m}{s^2}} \cdot 9\,\mathrm{s^2}$?
+---
+$h = 45\,\mathrm{m}$. Most je približno $45\,\mathrm{m}$ nad vodo (glej tudi tabelo v razdelku »Korak za korakom«).
+:::
+
 ## Pogoste napake
 
 - **Mislimo, da težja telesa padajo hitreje.** Brez upora zraka vsa telesa padajo z enakim pospeškom. Masa v formulah $v = g\,t$ in $h = \frac{1}{2} g t^2$ sploh ne nastopa.
-- **Pozabljeno kvadriranje časa.** Pri $h = \frac{1}{2} g t^2$ kvadriramo samo čas. Pri $t = 3\,\mathrm{s}$ je $t^2 = 9$, ne $6$.
+- **Pozabljeno kvadriranje časa.** Pri $h = \frac{1}{2} g t^2$ kvadriramo samo čas. Pri $t = 3\,\mathrm{s}$ je $t^2 = 9$, ne $6$ (kvadrat je $3 \cdot 3$, ne $3 \cdot 2$). Zato pot tudi ni sorazmerna s časom: hitrost med padanjem narašča, po dvakrat daljšem času je pot štirikrat daljša.
 - **Pozabljen faktor $\frac{1}{2}$.** Če izračunaš $g\,t^2$, dobiš dvakrat preveliko pot.
 - **Pozabljen koren.** Ko iz višine računaš čas, dobiš najprej $t^2$. Na koncu moraš koreniti.
-- **Mešanje pospeška in hitrosti.** $g$ ni hitrost telesa, ampak pove, kako hitro se hitrost spreminja. Enota $\mathrm{\frac{m}{s^2}}$ je drugačna od enote za hitrost $\mathrm{\frac{m}{s}}$.
-- **Pot je sorazmerna s časom.** Ni res: po dvakrat daljšem času je pot štirikrat daljša.
-
+- **Mešanje pospeška in hitrosti.** »Telo pada s hitrostjo $10\,\mathrm{\frac{m}{s}}$, zato $80\,\mathrm{m}$ preleti v $8\,\mathrm{s}$.« Narobe: $g$ ni hitrost telesa, ampak pove, kako hitro se hitrost spreminja. Enota $\mathrm{\frac{m}{s^2}}$ je drugačna od enote za hitrost $\mathrm{\frac{m}{s}}$.
 ## Povzetek
 
 - Prosti pad je gibanje samo pod vplivom težnosti (upor zraka zanemarimo).
@@ -177,19 +212,46 @@ Masa se pokrajša. To velja le, če upor zraka lahko zanemarimo. Pri realnem pad
 
 ? Kamen spustimo in pada $4\,\mathrm{s}$. Kolikšna je njegova hitrost ob koncu padca? Vzemi $g = 10\,\mathrm{\frac{m}{s^2}}$ in zanemari upor zraka.
 - $2{,}5\,\mathrm{\frac{m}{s}}$
+~ Delil si $g$ s časom ($10 : 4$). Hitrost s časom narašča, zato $g$ s časom množimo.
 - $14\,\mathrm{\frac{m}{s}}$
+~ Seštel si $g$ in čas. Hitrost se vsako sekundo poveča za $10\,\mathrm{\frac{m}{s}}$, v $4\,\mathrm{s}$ torej za $10 \cdot 4$.
 + $40\,\mathrm{\frac{m}{s}}$
 - $80\,\mathrm{\frac{m}{s}}$
+~ To je pot $h = \frac{1}{2} \cdot 10 \cdot 4^2 = 80\,\mathrm{m}$, ne hitrost. Za hitrost velja $v = g\,t$.
 > Pri prostem padu je $v = g\,t = 10 \cdot 4 = 40\,\mathrm{\frac{m}{s}}$. Odgovor $80$ je pot ($\frac{1}{2} \cdot 10 \cdot 16$) in ne hitrost, $2{,}5$ pa dobiš z napačnim deljenjem.
 
-? Z balkona hkrati spustimo težko železno kroglo in lahko lesno kroglico enake velikosti. Zanemari upor zraka. Kaj velja?
+? Z balkona hkrati spustimo težko železno kroglo in lahko leseno kroglico enake velikosti. Zanemari upor zraka. Kaj velja?
 - Železna krogla pade prej, ker je težja.
-- Lesna kroglica pade prej, ker je lažja.
+~ Na težjo kroglo res deluje večja teža, a ima tudi večjo maso, ki jo je treba pospešiti. Pospešek $a = F/m$ je za obe enak $g$.
+- Lesena kroglica pade prej, ker je lažja.
+~ Lažje telo ne pada hitreje. Brez upora zraka masa na pospešek ne vpliva, obe padata z $g$.
 + Obe padeta hkrati.
 > Pospešek pri prostem padu je za vsa telesa enak ($g$) in ni odvisen od mase. Težnostna sila je sicer večja pri težji krogli, vendar je večja tudi masa, ki jo je treba pospešiti.
 
 ? Predmet pada $1\,\mathrm{s}$ in preleti določeno pot. Kolikokrat daljšo pot preleti po $3\,\mathrm{s}$ padanja (merjeno od začetka)?
 - $3$-krat
+~ Misliš, da je pot sorazmerna s časom. To velja pri stalni hitrosti, pri padanju pa hitrost narašča.
 + $9$-krat
 - $6$-krat
+~ $3^2$ si izračunal kot $3 \cdot 2$. Kvadrat pomeni $3 \cdot 3 = 9$.
 > Pot je $h = \frac{1}{2}\,g\,t^2$, torej narašča s kvadratom časa. Trikrat daljši čas pomeni $3^2 = 9$-krat daljšo pot.
+
+? Kaj pove težni pospešek $g \approx 9{,}8\,\mathrm{\frac{m}{s^2}}$ pri prostem padu?
+- Telo pada s stalno hitrostjo $9{,}8\,\mathrm{\frac{m}{s}}$.
+~ Mešaš pospešek in hitrost. Hitrost padajočega telesa ni stalna, ampak narašča.
++ Hitrost padajočega telesa se vsako sekundo poveča za $9{,}8\,\mathrm{\frac{m}{s}}$.
+- Telo vsako sekundo pade $9{,}8\,\mathrm{m}$.
+~ $g$ ni pot. V prvi sekundi telo pade le $4{,}9\,\mathrm{m}$, v vsaki naslednji pa več.
+- Tako pospešujejo le težka telesa, lahka pospešujejo počasneje.
+~ Brez upora zraka vsa telesa pospešujejo z enakim $g$, ne glede na maso.
+> Pospešek pove, za koliko se hitrost spremeni v eni sekundi. Pri prostem padu se hitrost vsako sekundo poveča za približno $9{,}8\,\mathrm{\frac{m}{s}}$.
+
+? Kamen spustimo z višine $80\,\mathrm{m}$. Koliko časa pada? Vzemi $g = 10\,\mathrm{\frac{m}{s^2}}$ in zanemari upor zraka.
+- $16\,\mathrm{s}$
+~ Pozabil si koreniti. Izračunal si $t^2 = 16\,\mathrm{s^2}$, čas pa je $\sqrt{16} = 4\,\mathrm{s}$.
+- $8\,\mathrm{s}$
+~ Višino si delil z $g$, kot da bi kamen ves čas padal s hitrostjo $10\,\mathrm{\frac{m}{s}}$. Hitrost pa narašča, zato je čas krajši.
++ $4\,\mathrm{s}$
+- $2{,}8\,\mathrm{s}$
+~ Pozabil si faktor $\frac{1}{2}$: iz $80 = 10\,t^2$ dobiš $t^2 = 8$. Pravilno je $t^2 = \frac{2h}{g} = 16\,\mathrm{s^2}$.
+> Iz $h = \frac{1}{2}\,g\,t^2$ sledi $t^2 = \dfrac{2h}{g} = \dfrac{2 \cdot 80}{10} = 16\,\mathrm{s^2}$, torej $t = 4\,\mathrm{s}$.
