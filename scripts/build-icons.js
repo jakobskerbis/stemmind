@@ -25,6 +25,8 @@ const NAMES = [
   "gamepad-2", "volume-2", "volume-x", "heart",
   // števec porabe AI (samo skrbnik)
   "wallet",
+  // meni profila (ime zgoraj desno)
+  "user-plus", "log-out",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

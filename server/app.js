@@ -1,5 +1,6 @@
 // HTTP strežnik STEMMind: API + statični vmesnik.
 import express from "express";
+import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
@@ -16,6 +17,7 @@ import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPro
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor, formulaSheet } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
 import { programReferences, referencesFor, themesFor } from "./references.js";
+import { SETTINGS_TOOLS, createSettingsTools, cleanDevice, looksLikeSettings } from "./chat-settings.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
@@ -28,6 +30,7 @@ import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from ".
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { mountWebApp } from "./webapp.js";
+import { appVersion, vendorVersion } from "./razlicica.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -58,9 +61,30 @@ export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
   const app = express();
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
+  // Različica in zasedenost: odprte strani se po posodobitvi osvežijo, samodejna posodobitev
+  // (scripts/nadzor.js) pa strežnik znova zažene, ko nihče ne čaka na odgovor.
+  const version = appVersion();
+  const activity = { active: 0, lastSend: 0 };
+  app.get("/healthz/stanje", (_req, res) => {
+    res.set("Cache-Control", "no-store");
+    res.json({ razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
+  });
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
   if (process.env.STEMMIND_PASSWORD) app.use(passwordGate(process.env.STEMMIND_PASSWORD)); // stran za prijavo + piškotek
   mountWebApp(app); // manifest v jeziku vmesnika, povezava za Google Play
+  app.use("/api", (req, res, next) => {
+    activity.active++;
+    if (req.method !== "GET") activity.lastSend = Date.now();
+    let done = false;
+    const end = () => {
+      if (done) return;
+      done = true;
+      activity.active--;
+    };
+    res.on("finish", end);
+    res.on("close", end);
+    next();
+  });
   app.use(express.json({ limit: "10mb" }));
   // Neuspele klice API zapišemo v dnevnik, da je napako na telefonu mogoče poiskati.
   app.use("/api", (req, res, next) => {
@@ -72,6 +96,12 @@ export function createApp(store, opts = {}) {
   // Knjižnice za izris strežemo lokalno (brez odvisnosti od CDN).
   const modules = path.join(here, "..", "node_modules");
   const publicDir = path.join(here, "..", "public");
+  // Service worker z različico knjižnic v imenu predpomnilnika (glej server/razlicica.js).
+  const swSource = fs.readFileSync(path.join(publicDir, "sw.js"), "utf8").replace('"stemmind-v1"', `"stemmind-v1-${vendorVersion()}"`);
+  app.get("/sw.js", (_req, res) => {
+    res.set("Cache-Control", "no-cache");
+    res.type("text/javascript").send(swSource);
+  });
   // Lahki način: stisnjene datoteke in JSON (brotli/gzip) za počasne in drage mobilne povezave.
   if (process.env.STEMMIND_COMPRESS !== "0") {
     app.use(
@@ -102,6 +132,7 @@ export function createApp(store, opts = {}) {
   });
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
+  const pendingSettings = new Map(); // pogovor → predlog spremembe šole/letnika, ki čaka na potrditev
   // »Vprašaj STEMMind« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
   const helpTasks = new Map();
   const usage = new Usage(store.db);
@@ -270,7 +301,8 @@ export function createApp(store, opts = {}) {
     if (help) helpTasks.delete(conv.id);
     const weak = weaknessesForPrompt(store, student);
     const results = studentResults(store, student.id, conv.path_topic);
-    const key = ANSWER_CACHE && isFirst && !image && !help ? cacheKey(text, student.settings, mode, lite, conv.path_topic, weak, results.tier) : null;
+    // Prošnja za spremembo nastavitev mora poklicati orodje, zato ne iz predpomnilnika odgovorov.
+    const key = ANSWER_CACHE && isFirst && !image && !help && !looksLikeSettings(text) ? cacheKey(text, student.settings, mode, lite, conv.path_topic, weak, results.tier) : null;
     if (conv.title === "Nov pogovor") {
       store.renameConversation(conv.id, cleanText(text, 50) || "Naloga s fotografije");
     }
@@ -290,6 +322,17 @@ export function createApp(store, opts = {}) {
     });
 
     const filter = createStreamFilter();
+    // Nastavitve iz klepeta (server/chat-settings.js): orodji za model, dogodki za odjemalca.
+    const settingsTools = createSettingsTools({
+      store,
+      studentId: student.id,
+      conversationId: conv.id,
+      device: cleanDevice(req.body?.device),
+      pending: pendingSettings,
+      send,
+    });
+    const onToolUse = settingsTools.onToolUse;
+    onToolUse.hasPending = () => pendingSettings.has(conv.id);
     try {
       // Pogovor o tekmovalni temi: inštruktor namiguje v slogu tekmovanj (model ostane isti).
       const tekTopic = conv.path_topic && isCompetitionPath(getTopic(conv.path_topic)?.path);
@@ -330,6 +373,8 @@ export function createApp(store, opts = {}) {
         messages: deep ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id)),
         deep,
         mode,
+        tools: SETTINGS_TOOLS,
+        onToolUse,
         signal: controller.signal,
         onText: (chunk) => {
           const out = filter.push(chunk);
@@ -347,7 +392,8 @@ export function createApp(store, opts = {}) {
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
       let content = [{ type: "text", text: result.text || "…" }];
       const cost = cached ? 0 : usage.log(student.id, result.model || (deep ? MODEL_DEEP : MODEL), result.usage);
-      if (key && !cached && result.stopReason === "end_turn" && result.text) {
+      if (settingsTools.state.proposal) send("proposal", settingsTools.state.proposal);
+      if (key && !cached && !result.toolCalls && !settingsTools.state.used && result.stopReason === "end_turn" && result.text) {
         const generic = student.name.length > 1 ? result.text.replaceAll(student.name, "{{IME}}") : result.text;
         store.db.prepare("INSERT OR REPLACE INTO answer_cache (key, text) VALUES (?, ?)").run(key, generic);
       }
@@ -386,6 +432,7 @@ export function createApp(store, opts = {}) {
         title: store.getConversation(conv.id).title,
         // Brez ponovnega gumba »Razloži podrobneje«, tudi če je odgovor pripravil hitri model.
         deep: deep || req.body?.deep === true,
+        settings: settingsTools.state.used || undefined,
         cost_usd: Math.round(cost * 10000) / 10000,
       });
       res.end();

@@ -46,6 +46,7 @@ Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `
 
 - Računalnik (miška): zavihki v zgornji vrstici.
 - Telefon (do 760 px) in tablica na dotik (do 1240 px): spodnja vrstica `#tabbar` s petimi zavihki z napisi (Učna pot, Učbenik, Inštruktor, Tekmovanja, Jaz). Napredek, Lige, Nastavitve in Račun so pod »Jaz« (`#view-me`), na vrhu imajo gumb »← Jaz« (`.me-back`). Nov glavni del aplikacije dodaj v zgornje zavihke in na stran Jaz, ne kot šesti zavihek spodaj.
+- Ime zgoraj desno (`#profile-btn`, `public/profile-menu.js`) odpre meni profila: kdo se uči (raven in predmet), zamenjava profila (če jih je več), Dodaj profil, Nastavitve, z računi še Račun in Odjava. Skriti `<select id="student-select">` še vedno hrani izbranega učenca. Na telefonu do 400 px je na gumbu samo začetnica.
 - Gumb nazaj je povsod enak: `button.ghost.back` z ikono `arrow-left` (»← Učna pot«, »← Učbenik«, »← Jaz«).
 - Povratne informacije (`#view-feedback`, `public/feedback.js`): na računalniku zavihek »Mnenje« (viden v testni različici), na telefonu vrstica na strani Jaz; na Učni poti kartica `.fb-card`, dokler tester ne pošlje mnenja ali je ne skrije.
 - Načini učenja (Nova snov, Ponavljanje, Priprava na test) so kartice `#modebar.modes` na Učni poti; Današnji trening je modra kartica nad njimi.
@@ -90,6 +91,7 @@ Koda je v `public/graph/` (`math.js` razčlenjevalnik, odvodi in integrali; `mod
 - **Postavitev**: na računalniku seznam izrazov levo (380 px), graf desno. Do 860 px je graf zgoraj, seznam pod njim, tipkovnica čisto spodaj. Gumbi za povečavo so na telefonu v vrsti.
 - **Tipkovnica**: na zaslonu na dotik polja ne odprejo sistemske tipkovnice (`inputmode="none"`), ampak lastno (123, f(x), Σ iz `public/symbols.js`, ABC). Ko je odprta, se skrijejo spodnja vrstica zavihkov, pas testnega načina in gumb nazaj (`body.gc-kp`).
 - **Barve krivulj** so podatkovne barve (`--g-red`, `--g-blue` … v `graph.css`), z različico za temni način. Niso barve gumbov in se ne mešajo z barvo poudarka iz Nastavitve → Videz.
+- **Drsniki**: vsak ima svoj ▶/⏸; premik z roko ustavi predvajanje. Ko sta vsaj dva drsnika, se v orodni vrstici pokaže »Predvajaj vse« / »Ustavi vse« (takrat je »Moji grafi« samo ikona). Med animacijo se vrstica drsnika posodablja na mestu, ne gradi znova, sicer gumbi ne dobijo klika.
 - **Shranjevanje**: zadnji graf se samodejno shrani v brskalnik za vsakega učenca; »Moji grafi« jih hrani na strežniku (z majhno sličico).
 
 ## Računska orodja (znanstveni kalkulator, orodja, PSE, formule)
@@ -112,6 +114,8 @@ Isti zaslon kot grafični kalkulator ima zgoraj preklopnik `.calc-modes`: Znanst
 - **Formule za fakulteto**: `MAT-UNI`, `FIZ-UNI`, `KEM-UNI`; študent (`educational_track` UNIVERZA) jih dobi privzeto.
 
 ## Igre
+
+Kako snov vgradimo v igro (učenje je igranje, ne kviz), animacije in kontrole: `docs/igre-smernice.md`.
 
 Razdelek IGRE (`public/games/`, slog `public/games.css`, strežnik `server/games.js`): mreža pisanih kvadratnih ploščic kot na portalih z igrami. Na računalniku zgornji zavihek »Igre«, na telefonu vrstica na strani Jaz (med igro se spodnja vrstica skrije).
 

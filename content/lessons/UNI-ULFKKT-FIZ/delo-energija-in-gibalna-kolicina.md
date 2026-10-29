@@ -21,6 +21,12 @@ $$A = \int_{\vec{r}_1}^{\vec{r}_2} \vec{F}\cdot\mathrm{d}\vec{r}.$$
 
 V eni razsežnosti je to ploščina pod grafom $F(x)$. Za vzmet s silo $F = -kx$ je delo, ki ga moramo opraviti, da jo raztegnemo za $x$, enako $\tfrac{1}{2}kx^2$.
 
+:::premisli
+Težko torbo neseš s stalno hitrostjo po vodoravnem hodniku. Ali sila tvoje roke opravi delo na torbi?
+---
+Ne. Roka drži torbo s silo navpično navzgor, premik pa je vodoraven, zato je $\cos\varphi = \cos 90^\circ = 0$ in $A = 0$. Utrujenost je posledica porabe kemijske energije v mišicah samih (vlakna se ves čas krčijo), ne dela na torbi.
+:::
+
 **2. Moč.** Moč je delo na časovno enoto: $P = \mathrm{d}A/\mathrm{d}t = \vec{F}\cdot\vec{v}$. Enota je watt, $1\,\mathrm{W} = 1\,\mathrm{J/s}$.
 
 **3. Kinetična energija in izrek o kinetični energiji.** Kinetična energija telesa z maso $m$ in hitrostjo $v$ je $W_k = \tfrac{1}{2}mv^2$. **Izrek o kinetični energiji** pravi:
@@ -67,6 +73,12 @@ $$v_1' = \frac{m_1 - m_2}{m_1 + m_2}\,v_1, \qquad v_2' = \frac{2m_1}{m_1 + m_2}\
 
 Pri enakih masah si telesi zamenjata hitrosti. Lahko telo se od težkega odbije skoraj z nespremenjeno hitrostjo, težko telo pa lahkega odnese naprej s skoraj dvakratno svojo hitrostjo.
 
+:::premisli
+Ali se lahko pri trku dveh teles v notranjo energijo pretvori **vsa** kinetična energija? Kdaj?
+---
+Le če je celotna gibalna količina pred trkom nič, na primer ko se dve enaki telesi z enako velikima nasprotnima hitrostma zaletita in sprimeta. Ker se gibalna količina ohrani, se morata telesi po trku gibati, če je bila pred trkom različna od nič, in del kinetične energije ostane.
+:::
+
 **9. Masno središče.** Za sistem teles definiramo masno središče $\vec{r}_{ms} = \sum m_i\vec{r}_i / \sum m_i$. Celotna gibalna količina je $\vec{G} = m_{\text{cel}}\vec{v}_{ms}$, zato se masno središče sistema brez zunanjih sil giblje premo enakomerno, kar koli se dogaja med telesi.
 
 ## Rešeni primeri
@@ -85,7 +97,7 @@ $A = Fs$, $A = \Delta W_k = \tfrac{1}{2}mv_2^2 - \tfrac{1}{2}mv_1^2$
 **Rešitev:**
 
 1. Teža in normalna sila sta pravokotni na premik in ne opravita dela. Delo opravi le sila potiskanja: $A = 10\,\mathrm{N} \cdot 3{,}0\,\mathrm{m} = 30\,\mathrm{J}$.
-2. Po izreku o kinetični energiji je $\tfrac{1}{2}mv_2^2 = 30\,\mathrm{J}$.
+2. Po izreku o kinetični energiji je $\tfrac{1}{2}mv_2^2 = 30\,\mathrm{J}$ (ker klada na začetku miruje, je vse delo kar končna kinetična energija).
 3. $v_2 = \sqrt{2A/m} = \sqrt{2 \cdot 30\,\mathrm{J} / 2{,}0\,\mathrm{kg}} = \sqrt{30}\,\mathrm{m/s} \approx 5{,}48\,\mathrm{m/s}$.
 4. Odgovor: klada doseže hitrost približno $5{,}48\,\mathrm{m/s}$.
 
@@ -102,10 +114,10 @@ $\Delta W_k + \Delta W_p = A_{tr}$; brez trenja $\tfrac{1}{2}mv_0^2 = mgh$
 
 **Rešitev:**
 
-1. Sprememba potencialne energije: $\Delta W_p = -mgh = -20 \cdot 9{,}81 \cdot 10\,\mathrm{J} = -1962\,\mathrm{J}$.
+1. Sprememba potencialne energije je negativna, ker se sani spustijo: $\Delta W_p = -mgh = -20 \cdot 9{,}81 \cdot 10\,\mathrm{J} = -1962\,\mathrm{J}$.
 2. Sprememba kinetične energije: $\Delta W_k = \tfrac{1}{2} \cdot 20\,\mathrm{kg} \cdot (12\,\mathrm{m/s})^2 = 1440\,\mathrm{J}$.
-3. Delo trenja: $A_{tr} = 1440\,\mathrm{J} - 1962\,\mathrm{J} = -522\,\mathrm{J}$.
-4. Brez trenja: $v_0 = \sqrt{2gh} = \sqrt{2 \cdot 9{,}81 \cdot 10}\,\mathrm{m/s} \approx 14{,}0\,\mathrm{m/s}$.
+3. Trenje je edina nekonservativna sila, ki opravi delo, zato iz $\Delta W_k + \Delta W_p = A_{tr}$ sledi: $A_{tr} = 1440\,\mathrm{J} - 1962\,\mathrm{J} = -522\,\mathrm{J}$.
+4. Brez trenja se mehanska energija ohranja, zato $\tfrac{1}{2}mv_0^2 = mgh$ in masa se pokrajša: $v_0 = \sqrt{2gh} = \sqrt{2 \cdot 9{,}81 \cdot 10}\,\mathrm{m/s} \approx 14{,}0\,\mathrm{m/s}$.
 5. Odgovor: trenje je opravilo delo $-522\,\mathrm{J}$ (toliko mehanske energije je prešlo v notranjo energijo snega in sani); brez trenja bi bila hitrost približno $14{,}0\,\mathrm{m/s}$.
 
 ### Primer 3 (težji)
@@ -122,11 +134,34 @@ Trk: $mv = (m + M)v'$. Nihanje po trku: $\tfrac{1}{2}(m + M)v'^2 = (m + M)gh$.
 **Rešitev:**
 
 1. Med kratkim trkom vrvici ostaneta navpični, zato so vodoravne zunanje sile nič in se vodoravna gibalna količina ohranja. Energija se pri trku ne ohranja.
-2. $v' = \dfrac{mv}{m + M} = \dfrac{0{,}010 \cdot 400}{2{,}010}\,\mathrm{m/s} \approx 1{,}99\,\mathrm{m/s}$.
+2. Pred trkom ima gibalno količino le izstrelek, po trku pa se izstrelek in klada gibljeta skupaj: $v' = \dfrac{mv}{m + M} = \dfrac{0{,}010 \cdot 400}{2{,}010}\,\mathrm{m/s} \approx 1{,}99\,\mathrm{m/s}$.
 3. Po trku se ohranja mehanska energija (vrvici ne opravljata dela): $h = \dfrac{v'^2}{2g} = \dfrac{1{,}990^2}{2 \cdot 9{,}81}\,\mathrm{m} \approx 0{,}202\,\mathrm{m}$.
 4. Kinetična energija pred trkom: $\tfrac{1}{2} \cdot 0{,}010 \cdot 400^2\,\mathrm{J} = 800\,\mathrm{J}$; po trku: $\tfrac{1}{2} \cdot 2{,}010 \cdot 1{,}990^2\,\mathrm{J} \approx 3{,}98\,\mathrm{J}$.
 5. Delež izgube: $1 - 3{,}98/800 \approx 0{,}995$. Splošno je ta delež $M/(m + M) = 2{,}0/2{,}010 \approx 99{,}5\,\%$.
 6. Odgovor: klada se po trku giblje s hitrostjo približno $1{,}99\,\mathrm{m/s}$, dvigne se za približno $20\,\mathrm{cm}$, v notranjo energijo pa preide približno $99{,}5\,\%$ začetne kinetične energije.
+
+### Primer 4 – zdaj ti
+
+Klado z maso $0{,}50\,\mathrm{kg}$ potisnemo ob vzmet s koeficientom $200\,\mathrm{N/m}$, vzmet stisnemo za $10\,\mathrm{cm}$ in klado spustimo. Podlaga je gladka. S kolikšno hitrostjo klada odleti od vzmeti?
+
+**Podatki:** $m = 0{,}50\,\mathrm{kg}$, $k = 200\,\mathrm{N/m}$, $x = 10\,\mathrm{cm} = 0{,}10\,\mathrm{m}$, $v_1 = 0$, trenja ni
+**Iščemo:** hitrost $v$, ko klada zapusti vzmet
+
+:::formula
+$\tfrac{1}{2}kx^2 = \tfrac{1}{2}mv^2$
+:::
+
+**Rešitev:**
+
+1. Podlaga je gladka, teža in normalna sila pa sta pravokotni na premik in ne opravita dela. Zato se mehanska energija ohranja: prožnostna energija vzmeti se v celoti pretvori v kinetično energijo klade.
+2. Prožnostna energija stisnjene vzmeti: $W_p = \tfrac{1}{2} \cdot 200\,\mathrm{N/m} \cdot (0{,}10\,\mathrm{m})^2 = 1{,}0\,\mathrm{J}$.
+3. Zdaj ti: zapiši $\tfrac{1}{2}mv^2 = W_p$, izrazi $v$ in vstavi podatke.
+
+:::premisli
+Kolikšna je hitrost klade, ko zapusti vzmet?
+---
+$v = \sqrt{2W_p/m} = \sqrt{2 \cdot 1{,}0\,\mathrm{J}/0{,}50\,\mathrm{kg}} = 2{,}0\,\mathrm{m/s}$.
+:::
 
 ## Pogoste napake
 
@@ -203,24 +238,40 @@ $$\int_1^2\vec{F}\cdot\mathrm{d}\vec{r} = \int_{t_1}^{t_2} m\frac{\mathrm{d}\vec
 
 ? Kolikšna je kinetična energija telesa z maso $2{,}0\,\mathrm{kg}$, ki se giblje s hitrostjo $3{,}0\,\mathrm{m/s}$?
 - $6{,}0\,\mathrm{J}$
+~ To je $mv = 6{,}0\,\mathrm{kg\,m/s}$, gibalna količina, ne energija; v kinetični energiji je hitrost na kvadrat.
 + $9{,}0\,\mathrm{J}$
 - $18\,\mathrm{J}$
+~ To je $mv^2$: pozabil si faktor $\tfrac{1}{2}$.
 > $W_k = \tfrac{1}{2}mv^2 = \tfrac{1}{2} \cdot 2{,}0 \cdot 9{,}0\,\mathrm{J} = 9{,}0\,\mathrm{J}$. $18\,\mathrm{J}$ dobiš, če pozabiš na faktor $\tfrac{1}{2}$, $6{,}0$ pa je gibalna količina v $\mathrm{kg\,m/s}$.
 
 ? Voziček z maso $1{,}0\,\mathrm{kg}$ in hitrostjo $4{,}0\,\mathrm{m/s}$ se zaleti v mirujoč voziček z maso $3{,}0\,\mathrm{kg}$ in se z njim sprime. Kolikšna je skupna hitrost?
 + $1{,}0\,\mathrm{m/s}$
 - $1{,}3\,\mathrm{m/s}$
+~ Gibalno količino $4{,}0\,\mathrm{kg\,m/s}$ si delil le z maso mirujočega vozička; po trku se gibljeta oba, skupaj $4{,}0\,\mathrm{kg}$.
 - $2{,}0\,\mathrm{m/s}$
+~ To dobiš, če ohraniš kinetično energijo; pri trku, pri katerem se vozička sprimeta, del kinetične energije preide v notranjo.
 > $v' = \frac{1{,}0 \cdot 4{,}0}{4{,}0}\,\mathrm{m/s} = 1{,}0\,\mathrm{m/s}$. Ohranja se gibalna količina, ne kinetična energija.
 
 ? Kaj se zgodi pri čelnem prožnem trku dveh enakih krogel, če druga pred trkom miruje?
 - Obe se gibljeta naprej s polovično hitrostjo.
+~ Tako se konča popolnoma neprožen trk; pri prožnem trku se mora ohraniti tudi kinetična energija, tu pa bi se prepolovila.
 - Prva se odbije nazaj z nespremenjeno hitrostjo.
+~ Tako se lahka krogla odbije od zelo težke. Pri enakih masah bi morala druga krogla tedaj dobiti hitrost $2v$, da se ohrani gibalna količina, kinetična energija pa bi se povečala, kar ni mogoče.
 + Prva obstane, druga nadaljuje s hitrostjo prve.
 > Pri $m_1 = m_2$ je $v_1' = 0$ in $v_2' = v_1$: krogli si zamenjata hitrosti. Prvi odgovor bi bil popolnoma neprožen trk, pri katerem se izgubi polovica kinetične energije.
 
 ? Dvigalo dvigne tovor z maso $500\,\mathrm{kg}$ za $20\,\mathrm{m}$ v $25\,\mathrm{s}$ s stalno hitrostjo. Kolikšna je povprečna moč za dviganje ($g = 9{,}81\,\mathrm{m/s^2}$)?
 - $400\,\mathrm{W}$
+~ Računal si z maso namesto s težo: dvigalo mora premagati silo $mg$, zato manjka faktor $g$.
 - $98\,\mathrm{kW}$
+~ To je številka opravljenega dela $mgh \approx 98\,\mathrm{kJ}$; za moč ga moraš deliti še s časom.
 + $3{,}9\,\mathrm{kW}$
 > $P = mgh/t = 500 \cdot 9{,}81 \cdot 20 / 25\,\mathrm{W} \approx 3924\,\mathrm{W} \approx 3{,}9\,\mathrm{kW}$. $98\,\mathrm{kW}$ je opravljeno delo v $\mathrm{kJ}$, ne moč.
+
+? Žoga z maso $m$ pade navpično na tla s hitrostjo $v$ in se odbije navzgor z enako veliko hitrostjo. Kolikšna je sprememba njene gibalne količine?
+- Nič, ker je hitrost po odboju enako velika kot pred njim.
+~ Gibalna količina je vektor: velikost je res enaka, smer pa se obrne, zato $\Delta\vec{G} = m\vec{v}\,' - m\vec{v} \neq 0$.
++ $2mv$, usmerjena navzgor.
+- $mv$, usmerjena navzgor.
+~ Upošteval si le gibalno količino po odboju; odšteti moraš še začetno, ki kaže navzdol, zato se njeni velikosti seštejeta.
+> Navzgor vzemimo za pozitivno smer: $\Delta G = mv - (-mv) = 2mv$. Ta sunek žogi dajo tla, zato je sila tal med odbojem velika.

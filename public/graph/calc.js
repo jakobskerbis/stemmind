@@ -54,6 +54,7 @@ export function createCalculator(root, opts) {
         <button type="button" class="gc-btn" data-act="add" title="${esc(t("common.add"))}" aria-label="${esc(t("common.add"))}">${icon("plus")}</button>
         <button type="button" class="gc-btn" data-act="undo" title="${esc(t("gc.undo"))}" aria-label="${esc(t("gc.undo"))}">${icon("undo-2")}</button>
         <button type="button" class="gc-btn" data-act="redo" title="${esc(t("gc.redo"))}" aria-label="${esc(t("gc.redo"))}">${icon("redo-2")}</button>
+        <button type="button" class="gc-btn gc-playall" data-act="playall" data-on="false" hidden></button>
         <span class="gc-bar-sp"></span>
         <button type="button" class="gc-btn gc-text-btn" data-act="examples">${icon("sparkles")}<span>${esc(t("gc.examples"))}</span></button>
         <button type="button" class="gc-btn gc-text-btn" data-act="graphs">${icon("folder-open")}<span>${esc(t("gc.myGraphs"))}</span></button>
@@ -169,7 +170,34 @@ export function createCalculator(root, opts) {
   function refresh() {
     rebuild();
     for (const o of model.items) updateRow(o);
+    updatePlayAll();
     view.draw();
+  }
+
+  // »Predvajaj vse«: vidno, ko sta vsaj dva drsnika; med predvajanjem ustavi vse
+  const sliderItems = () => model.items.filter((o) => o.kind === "slider").map((o) => o.src);
+  function updatePlayAll() {
+    const btn = $(".gc-playall");
+    const sliders = sliderItems();
+    btn.hidden = sliders.length < 2;
+    const on = sliders.some((it) => it.slider?.play);
+    if (btn.dataset.on === String(on) && btn.innerHTML) return;
+    btn.dataset.on = String(on);
+    const label = t(on ? "gc.pauseAll" : "gc.playAll");
+    btn.innerHTML = icon(on ? "pause" : "play");
+    btn.title = label;
+    btn.setAttribute("aria-label", label);
+  }
+  function togglePlayAll() {
+    const sliders = sliderItems();
+    const on = sliders.some((it) => it.slider?.play);
+    for (const it of sliders) {
+      const o = modelItem(it.id);
+      it.slider = { ...sliderRange(o.value), ...(it.slider || {}), play: !on };
+    }
+    commit();
+    refresh();
+    animate();
   }
 
   const item = (id) => state.items.find((x) => x.id === id);
@@ -275,6 +303,9 @@ export function createCalculator(root, opts) {
     math.innerHTML = t1 || `<span class="muted">${esc(it.text)}</span>`;
     preview.innerHTML = o.tex && o.kind !== "error" ? t1 : "";
     const extra = row.querySelector(".gc-extra");
+    // drsnik med animacijo posodobimo na mestu: če bi ga vsako sličico zgradili znova,
+    // gumb za ustavitev in drsnik ne bi nikoli dobila klika
+    if (o.kind === "slider" && updateSliderInPlace(o, extra)) return;
     extra.innerHTML = extraHtml(o);
     if (o.kind === "slider") bindSlider(o, extra);
     if (o.kind === "param" || o.kind === "polar") bindDomain(o, extra);
@@ -294,7 +325,7 @@ export function createCalculator(root, opts) {
       const sl = { ...sliderRange(o.value), ...(it.slider || {}) };
       const val = Math.min(sl.max, Math.max(sl.min, o.value));
       return `<div class="gc-slider">
-        <button type="button" class="gc-play" data-act="play" aria-label="${esc(it.slider?.play ? t("gc.pause") : t("gc.play"))}">${icon(it.slider?.play ? "pause" : "play")}</button>
+        <button type="button" class="gc-play" data-act="play" data-on="${!!it.slider?.play}" aria-label="${esc(it.slider?.play ? t("gc.pause") : t("gc.play"))}">${icon(it.slider?.play ? "pause" : "play")}</button>
         <input class="gc-lim" data-lim="min" value="${esc(fmt(sl.min))}" inputmode="decimal" aria-label="${esc(t("gc.min"))}">
         <input type="range" class="gc-range" min="${sl.min}" max="${sl.max}" step="${sl.step || "any"}" value="${val}" aria-label="${esc(o.name)}">
         <input class="gc-lim" data-lim="max" value="${esc(fmt(sl.max))}" inputmode="decimal" aria-label="${esc(t("gc.max"))}">
@@ -338,16 +369,44 @@ export function createCalculator(root, opts) {
     return fmt(v, 4);
   }
 
+  function updateSliderInPlace(o, extra) {
+    const box = extra.querySelector(".gc-slider");
+    if (!box) return false;
+    const it = o.src;
+    const sl = { ...sliderRange(o.value), ...(it.slider || {}) };
+    const play = !!it.slider?.play;
+    const btn = box.querySelector(".gc-play");
+    if (btn.dataset.on !== String(play)) {
+      btn.dataset.on = String(play);
+      btn.setAttribute("aria-label", t(play ? "gc.pause" : "gc.play"));
+      btn.innerHTML = icon(play ? "pause" : "play");
+    }
+    const range = box.querySelector(".gc-range");
+    range.min = sl.min;
+    range.max = sl.max;
+    range.step = sl.step || "any";
+    if (document.activeElement !== range || play) range.value = Math.min(sl.max, Math.max(sl.min, o.value));
+    box.querySelectorAll("[data-lim]").forEach((inp) => {
+      if (document.activeElement !== inp) inp.value = fmt(sl[inp.dataset.lim]);
+    });
+    return true;
+  }
+
   function bindSlider(o, extra) {
     const range = extra.querySelector(".gc-range");
-    range.addEventListener("input", () => setSlider(o.id, Number(range.value), false));
+    range.addEventListener("input", () => {
+      // premik z roko ustavi samodejno predvajanje (nazaj na ročno)
+      const it = item(o.id);
+      if (it?.slider?.play) it.slider.play = false;
+      setSlider(o.id, Number(range.value), false);
+    });
     range.addEventListener("change", () => commit());
     extra.querySelectorAll("[data-lim]").forEach((inp) =>
       inp.addEventListener("change", () => {
         const it = item(o.id);
         const v = Number(inp.value.replace(",", ".").replace("−", "-"));
         if (!Number.isFinite(v)) return refresh();
-        it.slider = { ...sliderRange(o.value), ...(it.slider || {}), [inp.dataset.lim]: v };
+        it.slider = { ...sliderRange(modelItem(o.id)?.value ?? o.value), ...(it.slider || {}), [inp.dataset.lim]: v };
         if (it.slider.min >= it.slider.max) it.slider[inp.dataset.lim === "min" ? "max" : "min"] = v + (inp.dataset.lim === "min" ? 1 : -1);
         it.slider.step = niceStepFor(it.slider.max - it.slider.min);
         commit();
@@ -1093,6 +1152,7 @@ export function createCalculator(root, opts) {
       undo.push(JSON.stringify(state));
       restore(redo.pop());
     }
+    if (act === "playall") togglePlayAll();
     if (act === "examples") openExamples(b);
     if (act === "graphs") openGraphs(b);
     if (act === "more") openMore(b);

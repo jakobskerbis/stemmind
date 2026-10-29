@@ -49,6 +49,12 @@ Pri kratkem stiku ($R = 0$) teče največji tok $U_g/R_n$, ki baterijo hitro seg
 
 **5. Zaporedna in vzporedna vezava.** Pri **zaporedni** vezavi teče skozi vse upore isti tok, napetosti se seštejejo, zato je $R = R_1 + R_2 + \dots$ Pri **vzporedni** vezavi je na vseh uporih ista napetost, tokovi se seštejejo, zato je $1/R = 1/R_1 + 1/R_2 + \dots$ Nadomestni upor vzporedne vezave je vedno manjši od najmanjšega posameznega upora.
 
+:::premisli
+Žarnici z uporoma $R$ in $2R$ priključimo vzporedno na isto napetost. Katera sveti močneje? Kaj pa, če ju vežemo zaporedno?
+---
+Vzporedno imata isto napetost, zato je $P = U^2/R$ večja pri manjšem uporu: močneje sveti žarnica z $R$. Zaporedno teče skozi obe isti tok, zato je $P = I^2R$ večja pri večjem uporu: močneje sveti žarnica z $2R$ (upor žarnic tu jemljemo kot stalen).
+:::
+
 **6. Kirchhoffova zakona.** Vezja z več viri ali s prepletenimi vejami ne moremo vedno poenostaviti na zaporedne in vzporedne dele. Takrat uporabimo dva splošna zakona.
 
 - **Prvi (vozliščni) zakon:** vsota tokov, ki pritekajo v vozlišče, je enaka vsoti tokov, ki iz njega odtekajo, $\sum I_k = 0$ (pritekajoče štejemo pozitivno, odtekajoče negativno). To je ohranitev naboja: v vozlišču se naboj ne nabira.
@@ -68,6 +74,12 @@ $$Q(t) = CU_g\left(1 - e^{-t/\tau}\right), \qquad I(t) = \frac{U_g}{R}\,e^{-t/\t
 
 Količina $\tau$ je **časovna konstanta** (enota $\Omega \cdot \mathrm{F} = \mathrm{s}$). V času $\tau$ se kondenzator napolni do $1 - e^{-1} \approx 63\,\%$ končnega naboja, po $5\tau$ pa do več kot $99\,\%$. Pri **praznjenju** kondenzatorja z začetnim nabojem $Q_0$ prek upora $R$ je $Q(t) = Q_0\,e^{-t/\tau}$, napetost in tok pojemata z isto časovno konstanto. V napolnjenem kondenzatorju je shranjena energija $W = \tfrac{1}{2}CU^2$.
 
+:::premisli
+Zakaj je tok ob priključitvi praznega kondenzatorja največji, $U_g/R$, in ne nič, čeprav skozi izolator med ploščama naboj ne more preiti?
+---
+Na praznem kondenzatorju je napetost $Q/C = 0$, zato je ob $t = 0$ vsa gonilna napetost na uporu in teče tok $U_g/R$; naboj teče po žicah do plošč, ne skozi izolator. Ko se kondenzator polni, njegova napetost raste, napetost na uporu in tok pa pojemata.
+:::
+
 Pozor na zapis: v eksponentu je $e$ Eulerjevo število, osnovni naboj pa smo zato označili z $e_0$.
 
 ## Rešeni primeri
@@ -86,9 +98,9 @@ $R = \zeta l/S$, $U = RI$, $P = I^2R$, $I = ne_0vS$
 **Rešitev:**
 
 1. $R = 1{,}7 \cdot 10^{-8}\,\Omega\,\mathrm{m} \cdot 20\,\mathrm{m} / 1{,}5 \cdot 10^{-6}\,\mathrm{m^2} \approx 0{,}227\,\Omega$.
-2. $U = 0{,}227\,\Omega \cdot 10\,\mathrm{A} \approx 2{,}27\,\mathrm{V}$.
-3. $P = (10\,\mathrm{A})^2 \cdot 0{,}227\,\Omega \approx 22{,}7\,\mathrm{W}$.
-4. $v = I/(ne_0S) = 10\,\mathrm{A} / (8{,}5 \cdot 10^{28}\,\mathrm{m^{-3}} \cdot 1{,}6 \cdot 10^{-19}\,\mathrm{C} \cdot 1{,}5 \cdot 10^{-6}\,\mathrm{m^2}) \approx 4{,}9 \cdot 10^{-4}\,\mathrm{m/s}$.
+2. Po Ohmovem zakonu za žico: $U = 0{,}227\,\Omega \cdot 10\,\mathrm{A} \approx 2{,}27\,\mathrm{V}$.
+3. Vsa električna moč na žici se pretvori v toploto, zato $P = (10\,\mathrm{A})^2 \cdot 0{,}227\,\Omega \approx 22{,}7\,\mathrm{W}$.
+4. Iz $I = ne_0vS$ izrazimo hitrost: $v = I/(ne_0S) = 10\,\mathrm{A} / (8{,}5 \cdot 10^{28}\,\mathrm{m^{-3}} \cdot 1{,}6 \cdot 10^{-19}\,\mathrm{C} \cdot 1{,}5 \cdot 10^{-6}\,\mathrm{m^2}) \approx 4{,}9 \cdot 10^{-4}\,\mathrm{m/s}$.
 5. Odgovor: upor žice je približno $0{,}23\,\Omega$, padec napetosti $2{,}3\,\mathrm{V}$, na žici se sprošča okoli $23\,\mathrm{W}$ toplote; elektroni potujejo s hitrostjo le okoli $0{,}5\,\mathrm{mm/s}$.
 
 ### Primer 2
@@ -125,11 +137,34 @@ $\tau = RC$, $U_C(t) = U_g(1 - e^{-t/\tau})$, $I(t) = \dfrac{U_g}{R}e^{-t/\tau}$
 **Rešitev:**
 
 1. $\tau = 1{,}0 \cdot 10^5\,\Omega \cdot 4{,}7 \cdot 10^{-5}\,\mathrm{F} = 4{,}7\,\mathrm{s}$.
-2. Iz $5{,}0 = 9{,}0\,(1 - e^{-t_1/\tau})$ sledi $e^{-t_1/\tau} = 4/9$, torej $t_1 = \tau\ln(9/4) = 4{,}7\,\mathrm{s} \cdot 0{,}811 \approx 3{,}8\,\mathrm{s}$.
-3. Začetni tok je $U_g/R = 9{,}0\,\mathrm{V}/1{,}0 \cdot 10^5\,\Omega = 90\,\mu\mathrm{A}$. Ob $t_1$: $I = 90\,\mu\mathrm{A} \cdot 4/9 = 40\,\mu\mathrm{A}$.
+2. Napetost na kondenzatorju je $Q/C$, zato raste kot naboj. Iz $5{,}0 = 9{,}0\,(1 - e^{-t_1/\tau})$ sledi $e^{-t_1/\tau} = 4/9$, torej $t_1 = \tau\ln(9/4) = 4{,}7\,\mathrm{s} \cdot 0{,}811 \approx 3{,}8\,\mathrm{s}$.
+3. Tok pojema z istim faktorjem $e^{-t/\tau}$ kot napetost na uporu. Začetni tok je $U_g/R = 9{,}0\,\mathrm{V}/1{,}0 \cdot 10^5\,\Omega = 90\,\mu\mathrm{A}$. Ob $t_1$: $I = 90\,\mu\mathrm{A} \cdot 4/9 = 40\,\mu\mathrm{A}$.
 4. Preizkus z zančnim zakonom: $RI + U_C = 10^5\,\Omega \cdot 40 \cdot 10^{-6}\,\mathrm{A} + 5{,}0\,\mathrm{V} = 4{,}0\,\mathrm{V} + 5{,}0\,\mathrm{V} = 9{,}0\,\mathrm{V}$ ✓.
 5. $W = \tfrac{1}{2} \cdot 4{,}7 \cdot 10^{-5}\,\mathrm{F} \cdot (9{,}0\,\mathrm{V})^2 \approx 1{,}9 \cdot 10^{-3}\,\mathrm{J}$.
 6. Odgovor: časovna konstanta je $4{,}7\,\mathrm{s}$; napetost $5{,}0\,\mathrm{V}$ doseže po približno $3{,}8\,\mathrm{s}$, ko teče tok $40\,\mu\mathrm{A}$; napolnjen kondenzator hrani približno $1{,}9\,\mathrm{mJ}$ energije.
+
+### Primer 4 – zdaj ti
+
+Kondenzator s kapaciteto $10\,\mu\mathrm{F}$, napolnjen na $12\,\mathrm{V}$, odklopimo od vira in ga praznimo prek upora $220\,\mathrm{k}\Omega$. Kolikšna je napetost na kondenzatorju po $3{,}0\,\mathrm{s}$?
+
+**Podatki:** $C = 10\,\mu\mathrm{F} = 1{,}0 \cdot 10^{-5}\,\mathrm{F}$, $R = 220\,\mathrm{k}\Omega = 2{,}2 \cdot 10^{5}\,\Omega$, $U_0 = 12\,\mathrm{V}$, $t = 3{,}0\,\mathrm{s}$
+**Iščemo:** napetost $U_C$ ob času $t$
+
+:::formula
+$\tau = RC$, $U_C(t) = U_0\,e^{-t/\tau}$
+:::
+
+**Rešitev:**
+
+1. Enote pretvorimo v $\Omega$ in $\mathrm{F}$, da dobimo čas v sekundah: $\tau = 2{,}2 \cdot 10^5\,\Omega \cdot 1{,}0 \cdot 10^{-5}\,\mathrm{F} = 2{,}2\,\mathrm{s}$.
+2. Tok praznjenja $I = U_C/R$ je sorazmeren z napetostjo, zato napetost pojema eksponentno. Razmerje v eksponentu: $t/\tau = 3{,}0/2{,}2 \approx 1{,}36$.
+3. Zdaj ti: izračunaj $e^{-1{,}36}$ in pomnoži z začetno napetostjo.
+
+:::premisli
+Kolikšna je napetost na kondenzatorju po $3{,}0\,\mathrm{s}$?
+---
+$U_C = 12\,\mathrm{V} \cdot e^{-1{,}36} \approx 12\,\mathrm{V} \cdot 0{,}256 \approx 3{,}1\,\mathrm{V}$. Ker je $3{,}0\,\mathrm{s}$ nekaj več kot $\tau$, je ostalo nekaj manj kot $37\,\%$ začetne napetosti.
+:::
 
 ## Pogoste napake
 
@@ -215,24 +250,40 @@ Isti rezultat dobiš tudi s Kirchhoffovima zakonoma; poenostavljanje je le hitre
 
 ? Upora $4\,\Omega$ in $12\,\Omega$ sta vezana vzporedno. Kolikšen je nadomestni upor?
 - $16\,\Omega$
+~ To je zaporedna vezava; pri vzporedni se seštevajo obratne vrednosti uporov.
 + $3\,\Omega$
 - $8\,\Omega$
+~ Povprečje ni nadomestni upor: vzporedna vezava ima upor, manjši od najmanjšega posameznega ($4\,\Omega$), ker tok dobi dodatno pot.
 > $1/R = 1/4 + 1/12 = 4/12$, torej $R = 3\,\Omega$. $16\,\Omega$ je zaporedna vezava, $8\,\Omega$ pa povprečje.
 
 ? Kolikšna je časovna konstanta RC vezja z uporom $2{,}0\,\mathrm{k}\Omega$ in kondenzatorjem $50\,\mu\mathrm{F}$?
 - $100\,\mathrm{s}$
+~ Pomnožil si $2{,}0 \cdot 50$ brez predpon; $\mathrm{k} = 10^3$ in $\mu = 10^{-6}$ dasta skupaj faktor $10^{-3}$.
 - $0{,}01\,\mathrm{s}$
+~ Zmotil si se za red velikosti pri predponi, na primer $50\,\mu\mathrm{F}$ zapisal kot $5 \cdot 10^{-6}\,\mathrm{F}$.
 + $0{,}10\,\mathrm{s}$
 > $\tau = RC = 2{,}0 \cdot 10^3\,\Omega \cdot 50 \cdot 10^{-6}\,\mathrm{F} = 0{,}10\,\mathrm{s}$. $100\,\mathrm{s}$ dobiš, če predpon ne pretvoriš.
 
 ? Do kolikšnega deleža končnega naboja se prazen kondenzator napolni v času ene časovne konstante?
 - $37\,\%$
+~ To je $e^{-1}$: delež naboja, ki ostane pri praznjenju, ali delež začetnega toka; pri polnjenju je naboj $1 - e^{-1}$ končnega.
 - $50\,\%$
+~ Polovico naboja doseže že prej, po $\tau\ln 2 \approx 0{,}69\,\tau$; polnjenje ni linearno.
 + $63\,\%$
 > $Q(\tau)/Q_\infty = 1 - e^{-1} \approx 0{,}63$. $37\,\%$ je delež naboja, ki ostane po času $\tau$ pri praznjenju.
 
 ? Baterija z gonilno napetostjo $9{,}0\,\mathrm{V}$ in notranjim uporom $0{,}50\,\Omega$ poganja tok skozi upor $4{,}0\,\Omega$. Kolikšna je napetost na sponkah baterije?
 + $8{,}0\,\mathrm{V}$
 - $9{,}0\,\mathrm{V}$
+~ To je gonilna napetost, ki jo izmeriš, ko tok ne teče; ko tok teče, del napetosti pade na notranjem uporu.
 - $1{,}0\,\mathrm{V}$
+~ To je padec $IR_n$ na notranjem uporu, ne napetost na sponkah; ta je gonilna napetost, zmanjšana za ta padec.
 > $I = 9{,}0/(4{,}0 + 0{,}50) = 2{,}0\,\mathrm{A}$, $U = U_g - IR_n = 9{,}0 - 1{,}0 = 8{,}0\,\mathrm{V}$. $1{,}0\,\mathrm{V}$ je padec na notranjem uporu.
+
+? Pri reševanju vezja s Kirchhoffovima zakonoma dobiš za tok v neki veji $I_2 = -0{,}55\,\mathrm{A}$. Kaj to pomeni?
+- V računu je napaka, ker tok ne more biti negativen.
+~ Smer toka izberemo sami, preden ga poznamo; negativen rezultat pove le, da je bila izbira smeri napačna, račun pa je lahko pravilen.
++ V tej veji teče tok $0{,}55\,\mathrm{A}$ v nasprotni smeri od izbrane.
+- Smer toka v tej veji je treba obrniti in ves račun ponoviti.
+~ Ponavljanje ni potrebno: rešitev je že pravilna, le predznak beremo kot smer. Spreminjanje smeri sredi računa samo zameša predznake.
+> Predznak toka je glede na izbrano smer. Tako je v Primeru 2 desni vir tok prejemal: močnejši vir je šibkejšega polnil.

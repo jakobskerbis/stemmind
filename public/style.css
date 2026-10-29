@@ -148,7 +148,49 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .stat.streak svg.i { color: #ff7a1a; fill: #ffb21a; }
 .xp-badge.bump .stat.xp { animation: bump 0.6s ease; }
 @keyframes bump { 0% { transform: scale(1); } 35% { transform: scale(1.18); background: color-mix(in srgb, var(--gold) 30%, var(--surface-2)); } 100% { transform: scale(1); } }
-.student-picker .dd-btn { min-height: 40px; max-width: 180px; }
+/* Meni profila: klik na ime zgoraj desno (public/profile-menu.js). */
+.profile-btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; max-width: 200px; padding: 4px 10px 4px 4px;
+  border: 1.5px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text);
+  font: inherit; font-weight: 800; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.profile-btn:hover, .profile-btn[aria-expanded="true"] { border-color: var(--accent); }
+.profile-btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 2px; }
+.profile-btn .pm-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile-btn > svg.i { flex: none; width: 18px; height: 18px; color: var(--muted); transition: transform 0.15s; }
+.profile-btn[aria-expanded="true"] > svg.i { transform: rotate(180deg); }
+.pm-avatar {
+  flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: #fff; font-weight: 900; font-size: 0.95rem;
+  background: linear-gradient(135deg, var(--hero-a), var(--hero-b));
+}
+.pm-avatar.sm { width: 26px; height: 26px; font-size: 0.82rem; }
+.pm-avatar.big { width: 44px; height: 44px; border-radius: 14px; font-size: 1.25rem; }
+.profile-pop {
+  position: fixed; z-index: 60; width: min(290px, calc(100vw - 16px)); max-height: calc(100dvh - 88px); overflow-y: auto;
+  margin: 0; padding: 6px; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0, 0, 0, 0.18)); animation: dd-in 0.14s ease; transform-origin: top right;
+}
+.profile-pop[hidden] { display: none; }
+.pm-head { display: flex; align-items: center; gap: 12px; padding: 10px 10px 8px; }
+.pm-who { display: flex; flex-direction: column; min-width: 0; }
+.pm-who b { font-size: 1.05rem; overflow-wrap: anywhere; }
+.pm-who small { font-size: 0.82rem; }
+.pm-label { padding: 6px 12px 4px; font-size: 0.78rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.pm-sep { height: 1px; margin: 6px 4px; background: var(--border); }
+.pm-item {
+  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 8px 12px; border: 0; border-radius: 10px;
+  background: none; color: var(--text); font: inherit; font-weight: 700; text-align: start; cursor: pointer;
+}
+.pm-item > span:not(.pm-avatar) { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.pm-item > svg.i { flex: none; width: 20px; height: 20px; color: var(--muted); }
+.pm-item:hover, .pm-item:focus-visible { background: var(--surface-2); outline: none; }
+.pm-item[aria-checked="true"] { background: var(--accent-soft); color: var(--accent); }
+.pm-item > svg.pm-check { width: 18px; height: 18px; color: var(--accent); }
+.pm-item[data-act="logout"] > svg.i { color: var(--danger); }
+/* Ozek telefon: samo začetnica, ime je v meniju. */
+@media (max-width: 400px) {
+  .profile-btn { padding: 4px; gap: 0; }
+  .profile-btn .pm-name, .profile-btn > svg.i { display: none; }
+}
 .banner { display: flex; align-items: center; gap: 8px; background: #fff6e0; color: #6b4e00; padding: 7px 20px; font-size: 0.88rem; }
 .dark .banner { background: #352b12; color: #f3d98a; }
 
@@ -726,6 +768,18 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
 .cards-note ul { margin: 6px 0 4px; padding-left: 20px; }
 .cards-note li p { margin: 0; }
 .cards-note .text-btn { display: inline-flex; align-items: center; gap: 4px; padding: 2px 0; }
+/* Predlog spremembe šole/letnika, ki ga da inštruktor (public/chat-settings.js). */
+.set-proposal { margin-top: 12px; padding: 10px 12px; border-radius: 12px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); font-size: 0.92rem; }
+.set-proposal .sp-head { display: flex; align-items: center; gap: 6px; color: var(--accent); }
+.set-proposal .sp-head b { color: var(--text); }
+.set-proposal .sp-change { margin: 6px 0 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.set-proposal .sp-arrow { width: 16px; height: 16px; color: var(--muted); }
+[dir="rtl"] .set-proposal .sp-arrow { transform: scaleX(-1); }
+.set-proposal .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.set-proposal .actions button { min-height: 40px; }
+.set-proposal .sp-result { margin: 4px 0 0; display: flex; align-items: center; gap: 6px; color: var(--muted); }
+.set-proposal .sp-result.ok { color: var(--text); font-weight: 600; }
+.set-proposal .sp-result svg { width: 16px; height: 16px; color: var(--accent); }
 /* Okvir »Zapomni si« v odgovorih inštruktorja (Markdown citat) */
 .msg.assistant blockquote { margin: 10px 0; padding: 8px 12px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; }
 .msg.assistant blockquote p { margin: 0.2em 0; }

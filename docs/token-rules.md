@@ -9,6 +9,8 @@ Save tokens only where lesson quality stays the same. Never to save tokens:
 - shorten lessons, remove »Drugače« sections, worked examples or quiz questions;
 - switch writers or reviewers to Sonnet or Haiku (Opus or Fable only; Opus is the default).
 
+Since 2026-10-29 13:00 UTC j has the Claude Max 20x plan and set the rule (12:59): every thread spends the remaining usage on the best quality it can buy, relative to what is left. Quality steps (second review, raising old lessons to `docs/kakovost.md` §1, reviewer effort high) come before more lessons per day.
+
 Everything below cuts waste (re-reading, idle turns, long replies), not content.
 
 ## 1. Never read these whole
@@ -34,7 +36,7 @@ Read a big file only with `offset`/`limit` or `grep -n`, never twice in one agen
 
 ## 3. Reviewer agents (second Opus, keep it)
 
-- Give each reviewer **2–3 lessons** and only: the file paths, the topic level (path label + goals), and the checklist below. No exemplar, no README.
+- Give each reviewer **2 lessons** (3 only for diff-only raise reviews), effort `high`, and only: the file paths, the topic level (path label + goals), and the checklist below. No exemplar, no README.
 - Run `node scripts/check-lesson.js -q <files>` first; the format, LaTeX and every pure-number step (`$37 \cdot 7 = 259$`) are then already checked (the checker prints how many steps it recomputed and fails on a mismatch), so the reviewer reads for content only.
 - Checklist: the remaining numbers in worked examples recomputed (substitutions, rounding, units and significant figures; batch them into one `node -e`); every »+« quiz answer truly correct and every »-« truly wrong; level fits the path (nothing not yet taught); Slovenian terminology; »Podatki« lists all given data.
 - Fix with small `Edit`s. Never rewrite the whole file. Reply: `<id>: N popravkov – <5–10 words each>`, ≤ 5 lines per lesson.
@@ -45,8 +47,8 @@ Read a big file only with `offset`/`limit` or `grep -n`, never twice in one agen
 
 Each tool call resends the thread's whole context, which is large in long-running threads, so fewer calls matter most here.
 - One wake = launch the batch, end the turn. Do not poll; the workflow notifies you.
-- All threads share j's 5-hour and 7-day usage limits. Lesson batches run at fixed slots: OŠ/SŠ textbook thread 10:50, 15:50, 20:50, 00:50, 05:50 UTC; faks thread 04:20, 13:20, 18:20, 23:20 UTC. A thread that is not a lesson thread runs at most 2 agents at once and none in the first hour after a batch starts.
-- Before launching a batch, call `get_session` (claude-code-remote MCP, no arguments) and read `external_metadata.rate_limit_info`: launch only when `status` is `allowed`. `allowed_warning` with `rateLimitType: seven_day` means the weekly limit is near and every thread would stop until `resetsAt`: do not scale up, shrink or hold the batch and tell the optimizer thread.
+- All threads share j's 5-hour and 7-day usage limits (Claude Max 20x since 2026-10-29). Lesson batches run at fixed slots: OŠ/SŠ textbook thread 10:50, 15:50, 20:50, 00:50, 05:50 UTC (16 new lessons + 8 raises per batch); faks thread 13:20, 17:20, 21:20, 01:20, 05:20, 09:20 UTC (24 new + 6 raises). A thread that is not a lesson thread runs at most 4 agents at once.
+- Before launching a batch, call `get_session` (claude-code-remote MCP, no arguments) and read `external_metadata.rate_limit_info`: `allowed` → full batch; `allowed_warning` → half batch and tell the optimizer thread; `rejected`, or `rate_limited` on the 5-hour window → skip the slot and tell the optimizer thread. The optimizer thread steers the pace against j's daily Usage screenshot (target ≤ 12 % of the weekly limit per day).
 - Report each batch to the optimizer thread: agents per role, wall time, `subagent_tokens` (the Workflow tool's total: input + output over all turns, probably with cache reads; comparable between batches, not exact accounting) and tokens per lesson.
 - Do not read lesson files, memory files or old thread messages to report on a batch; use the agents' short replies.
 - After the batch, one command: `node scripts/check-lesson.js -q $(git diff --name-only origin/main -- content/lessons) && npm test 2>&1 | tail -6`, then one command for `git add/commit/push`.
@@ -55,8 +57,8 @@ Each tool call resends the thread's whole context, which is large in long-runnin
 
 ## 5. Model and effort
 
-- Opus writes and reviews (j's rule). Do not use Fable unless j asks: it costs more and Opus meets the quality bar with the second review.
-- Do not raise effort above the default for writers; reviewers may use the default too, since numbers are verified with `node -e`.
+- Opus writes and reviews (j's rule). Fable may do the second review of the hardest lessons (competition topics, faks 3rd year and up, proofs, numerics): at most 2 Fable reviewers per batch, because Fable has its own smaller weekly counter on j's Usage screen. Never Sonnet or Haiku for content.
+- Writers run at the default effort; reviewers at `high` (numbers are still verified with `node -e`, effort buys a more careful reading of level and reasoning).
 
 ## 6. App runtime cost (the tutor)
 
