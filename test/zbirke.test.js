@@ -23,7 +23,7 @@ test("zbirke: every item draws, every condition topic exists at the item's level
     if (x.need?.t) assert.equal(topicTier(getPath(getTopic(x.need.t[0]).path)), RARITY_TIER[x.rarity], `${x.id}: zgled`);
   }
   // Za znanje snovi je legendaren en sam predmet; ostali epski, legendarni in mitični so na Poti znanja (XP).
-  assert.deepEqual(KNOWLEDGE.filter((x) => x.rarity === "legendary" && !x.need?.xp && !x.need?.league).map((x) => x.id), ["fx_doppler"]);
+  assert.deepEqual(KNOWLEDGE.filter((x) => x.rarity === "legendary" && !x.need?.xp && !x.need?.league && x.collection !== "igre").map((x) => x.id), ["fx_doppler"]);
   const pot = KNOWLEDGE.filter((x) => x.collection === "pot");
   assert.ok(pot.length >= 12 && pot.every((x) => x.need.xp > 0 && ["epic", "legendary", "mythic"].includes(x.rarity)));
   for (let i = 1; i < pot.length; i++) {
@@ -34,7 +34,14 @@ test("zbirke: every item draws, every condition topic exists at the item's level
   // Zmage na lestvicah: samo značke, ena za vsako ligo, nobena se ne kupi.
   const lige = KNOWLEDGE.filter((x) => x.collection === "lige");
   assert.ok(lige.length === 10 && lige.every((x) => x.slot === "badge" && x.need.league && x.earn && !x.price));
-  for (const c of COLLECTIONS.filter((c) => !["pot", "lige"].includes(c.id))) {
+  // Liki iz iger: pogoj so igre (pravilni odgovori ali različne končane igre), redkost raste s pogojem.
+  const igre = KNOWLEDGE.filter((x) => x.collection === "igre");
+  assert.ok(igre.filter((x) => x.slot === "kind").length >= 12 && igre.every((x) => (x.need.games > 0) !== (x.need.cleared > 0) && x.earn && !x.price));
+  for (const key of ["games", "cleared"]) {
+    const l = igre.filter((x) => x.need[key]);
+    for (let i = 1; i < l.length; i++) assert.ok(l[i].need[key] > l[i - 1].need[key] && RARITY_TIER[l[i].rarity] >= RARITY_TIER[l[i - 1].rarity], l[i].id);
+  }
+  for (const c of COLLECTIONS.filter((c) => !["pot", "lige", "igre"].includes(c.id))) {
     const n = KNOWLEDGE.filter((x) => x.collection === c.id && !x.set).length;
     const set = KNOWLEDGE.find((x) => x.collection === c.id && x.set);
     assert.ok(set && set.need.own < n, c.id);
@@ -209,4 +216,33 @@ test("day streak: today does not break it yet, one missed day a week is frozen",
   assert.equal(p.dayStreak(sid), 9); // luknji 8 dni narazen: obe zamrznjeni
   on(0, 3);
   assert.equal(p.dayStreak(sid), 1); // dva zaporedna zamujena dneva
+});
+
+test("game characters unlock from game results, drawn in the student's colour, never bought", async () => {
+  const store = openDb(":memory:");
+  const app = createApp(store, {});
+  const server = app.listen(0);
+  const base = `http://localhost:${server.address().port}`;
+  const call = async (p, body) => {
+    const res = await fetch(base + p, { method: body ? "POST" : "GET", headers: { "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+    return { status: res.status, body: await res.json() };
+  };
+  try {
+    const s = (await call("/api/students", { name: "Igralka", settings: { curriculum_level: "8. razred" } })).body;
+    let r = await call(`/api/students/${s.id}/avatar`, { equipped: { kind: "kind_cat" } });
+    assert.equal(r.body.equipped.kind, "kind_blob"); // še zaklenjen
+    r = await call(`/api/students/${s.id}/games/result`, { game: "maze:frac_add", score: 10, correct: 25, wrong: 1, tier: 1 });
+    assert.ok(r.body.zbirke.includes("kind_cat") && !r.body.zbirke.includes("kind_bear"));
+    r = await call(`/api/students/${s.id}/avatar`, { equipped: { kind: "kind_cat", body: "body_green" } });
+    assert.equal(r.body.equipped.kind, "kind_cat");
+    assert.equal((await call(`/api/students/${s.id}/avatar/buy`, { item: "kind_bear" })).status, 400);
+    const z = (await call(`/api/students/${s.id}/zbirke`)).body;
+    assert.equal(z.games.correct, 25);
+    assert.equal(z.items.find((i) => i.id === "kind_cat").source, "games");
+    // Lik prevzame barvo telesa (gradient), ne svoje.
+    const svg = avatarSvg({ kind: "kind_cat", body: "body_green" });
+    assert.ok(svg.includes("M24 44L26 12") && /url\(#gav\d+\)/.test(svg) && !/undefined|NaN/.test(svg));
+  } finally {
+    server.close();
+  }
 });
