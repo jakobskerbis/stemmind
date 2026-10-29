@@ -5,115 +5,164 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Ulomke že poznaš: $\dfrac{1}{2}$ je polovica, $\dfrac{1}{4}$ je četrtina. Znaš tudi, da ulomek z imenovalcem $10$ pomeni, da celoto razdelimo na deset enakih delov. Pri računanju z denarjem, merjenju dolžin in tehtanju pa se ne srečujemo z ulomki, ampak z zapisi, kot so $2{,}50\,€$, $1{,}75\,\text{m}$ ali $0{,}5\,\text{kg}$. To so **decimalna števila**.
+Odpri kuhinjski predal in poišči merilni vrč. Ob črticah so napisi, na primer $0{,}1\,\text{l}$, $0{,}2\,\text{l}$, $0{,}3\,\text{l}$ in tako naprej do $1\,\text{l}$. Nalij vode do tretje črtice.
 
-Decimalna števila so le drugačen zapis desetiških ulomkov. Če znaš prehajati med obema zapisoma in decimalna števila primerjati ter urediti po velikosti, lahko hitro ugotoviš, kateri izdelek je cenejši, kateri tekač je bil hitrejši ali katera dolžina je večja.
+Koliko vode je v vrču? Preštej razdelke: od dna do oznake $1\,\text{l}$ jih je deset, vsi so enako visoki. Voda sega do treh, torej imaš $\dfrac{3}{10}$ litra. Ob črtici pa piše $0{,}3\,\text{l}$. Isto vodo lahko torej zapišeš na dva načina.
+
+Če vrča nimaš, si ga nariši: pokončen pravokotnik, ki ga z devetimi vodoravnimi črticami razdeliš na deset enakih delov.
+
+Podobno je s kuhinjsko tehtnico. Položi nanjo kos masla, preklopi na kilograme in zaslon pokaže na primer $0{,}25\,\text{kg}$. Recepti, embalaža in tehtnice uporabljajo zapis z vejico. Ko ga razumeš, hitro ugotoviš, ali je moke dovolj in kateri kos sira je večji.
 
 ## Razlaga
 
-**1. Desetiški ulomek.** To je ulomek, katerega imenovalec je $10$, $100$, $1000$ itd. (potenca števila $10$). Primeri: $\dfrac{3}{10}$, $\dfrac{47}{100}$, $\dfrac{251}{1000}$.
+**Opazuj vzorec.** Celoto (en liter, en kilogram, eno torto) razdelimo na $10$, $100$ ali $1000$ enakih delov. Primerjaj, kako isto količino zapišemo z ulomkom in z vejico:
 
-**2. Decimalno število.** Je zapis števila z decimalno vejico. Vejica loči **cele dele** od **decimalnih mest**.
+| ulomek | z vejico | ničle v imenovalcu | števke za vejico |
+|---|---|---|---|
+| $\dfrac{3}{10}$ | $0{,}3$ | 1 | 1 |
+| $\dfrac{25}{100}$ | $0{,}25$ | 2 | 2 |
+| $\dfrac{5}{100}$ | $0{,}05$ | 2 | 2 |
+| $\dfrac{125}{1000}$ | $0{,}125$ | 3 | 3 |
 
-**3. Decimalna mesta.** Pri številu $3{,}springtime$ ... 
+Zadnja dva stolpca se v vsaki vrstici ujemata. Ničel v imenovalcu je natanko toliko, kolikor je števk za vejico.
 
-Natančneje, poglejmo število $12{,}345$:
+Poglej še tretjo vrstico. Števec $5$ ima samo eno števko, mesti za vejico pa morata biti dve. Zato pred petico vpišemo ničlo: $0{,}05$.
 
-| mesto | desetice | enice | , | desetinke | stotinke | tisočinke |
-|---|---|---|---|---|---|---|
-| števka | 1 | 2 | , | 3 | 4 | 5 |
+**Poimenujmo, kar si opazil.** Ulomek z imenovalcem $10$, $100$, $1000$ … (to so potence števila $10$) je **desetiški ulomek**. Zapis z vejico je **decimalno število**. **Decimalna vejica** loči **celi del** (levo od nje) od **decimalnega dela** (desno). Vsaka števka za vejico stoji na svojem **decimalnem mestu**.
 
-Torej je $12{,}345 = 12 + \dfrac{3}{10} + \dfrac{4}{100} + \dfrac{5}{1000}$.
+**Mestna tabela.** Pri velikih številih je vsako mesto desetkrat večje od mesta desno od njega. Za vejico se to nadaljuje. Prvo mesto so **desetinke** ($\dfrac{1}{10}$), drugo **stotinke** ($\dfrac{1}{100}$), tretje **tisočinke** ($\dfrac{1}{1000}$). Vreča moke tehta $2{,}375\,\text{kg}$:
 
-**4. Pretvarjanje desetiškega ulomka v decimalno število.** Imenovalec pove, koliko decimalnih mest bo imelo število:
+| enice | desetinke | stotinke | tisočinke |
+|---|---|---|---|
+| 2 | 3 | 7 | 5 |
 
-- imenovalec $10$: eno decimalno mesto, $\dfrac{7}{10} = 0{,}7$,
-- imenovalec $100$: dve decimalni mesti, $\dfrac{29}{100} = 0{,}29$,
-- imenovalec $1000$: tri decimalna mesta, $\dfrac{43}{1000} = 0{,}043$.
+Moke je torej $2 + \dfrac{3}{10} + \dfrac{7}{100} + \dfrac{5}{1000}$ kilograma.
 
-Pri tem je treba na prazna mesta vpisati ničle: $\dfrac{43}{1000}$ ima tri decimalna mesta, zato pred $43$ dodamo ničlo: $0{,}043$.
+:::premisli
+Kako zapišeš $\dfrac{4}{100}$ z vejico: $0{,}4$ ali $0{,}04$? Napovej s pomočjo mestne tabele.
+---
+$0{,}04$. Imenovalec $100$ zahteva dve decimalni mesti. Štirica mora stati na mestu stotink, na mestu desetink pa ni ničesar, zato tja zapišemo $0$. Zapis $0{,}4$ bi pomenil $\dfrac{4}{10}$, kar je desetkrat več.
+:::
 
-**5. Pretvarjanje decimalnega števila v desetiški ulomek.** Preštejemo decimalna mesta. Za vsako mesto ima imenovalec eno ničlo. Števec je število brez vejice:
+**Nazaj v ulomek.** Vzorec deluje tudi v obratno smer. Preštej decimalna mesta in zapiši imenovalec z enakim številom ničel. Števec je število brez vejice. Tako je $0{,}35 = \dfrac{35}{100}$ in $1{,}5 = \dfrac{15}{10}$.
 
-$$0{,}75 = \dfrac{75}{100}, \qquad 2{,}4 = \dfrac{24}{10}.$$
+Če ima število celi del, ga zapišeš tudi kot mešano število: $1{,}5 = 1\dfrac{5}{10}$, torej en liter in še pet desetink litra.
 
-Ulomek lahko nato še okrajšamo: $\dfrac{75}{100} = \dfrac{3}{4}$.
+**Ničle na koncu.** $0{,}5\,\text{l}$ in $0{,}50\,\text{l}$ je ista voda: pet desetink je toliko kot petdeset stotink. Ničle na koncu decimalnega dela vrednosti ne spremenijo. Ničla takoj za vejico pa jo spremeni: $0{,}05$ je desetkrat manj kot $0{,}5$.
 
-**6. Ničle na koncu.** Decimalnemu številu lahko na koncu (za vejico) dodamo ali odvzamemo ničle, vrednost se ne spremeni: $0{,}5 = 0{,}50 = 0{,}500$.
+**Urejanje.** Decimalni števili primerjaš po mestih, od leve proti desni:
 
-**7. Urejanje (primerjanje) decimalnih števil.**
+1. Primerjaj cela dela.
+2. Če sta enaka, primerjaj desetinke, nato stotinke, nato tisočinke.
+3. Pomagaj si tako, da številoma dopišeš ničle do enakega števila decimalnih mest.
 
-1. Primerjaj **cele dele**. Večji celi del pomeni večje število.
-2. Če so cele enake, primerjaj **desetinke**, nato stotinke, nato tisočinke.
-3. Pomaga, če številom dopišeš ničle, da imajo enako decimalnih mest.
+Na številski premici je večje število bolj desno. Razdeli odsek od $0$ do $1$ na deset enakih delov; črtice so $0{,}1$; $0{,}2$; … $0{,}9$. Število $0{,}25$ leži na sredini med $0{,}2$ in $0{,}3$. Zato je $0{,}25 < 0{,}3$, čeprav ima $0{,}25$ več števk.
 
-Na številski premici je večje število vedno bolj desno.
+:::premisli
+Kateri kos sira je težji, $0{,}8\,\text{kg}$ ali $0{,}75\,\text{kg}$? Zakaj tu število z več števkami ni večje?
+---
+Težji je $0{,}8\,\text{kg}$. Dopišemo ničlo: $0{,}80$ in $0{,}75$. Odločijo že desetinke, $8 > 7$. Število števk ne pove ničesar. Šteje, na katerem mestu števka stoji.
+:::
+
+V simulaciji spodaj premakni drsnik na $0{,}3$, nato na $0{,}35$. Opazuj, da je en cel stolpec mreže ena desetinka ($10$ kvadratkov), en kvadratek pa ena stotinka. Na premici pod mrežo poglej, da se točka premakne le za pol razdelka naprej.
 
 ## Rešeni primeri
 
-### Primer 1: ulomek v decimalno število
+### Primer 1: iz recepta na tehtnico
 
-Zapiši $\dfrac{37}{100}$ in $\dfrac{9}{1000}$ kot decimalni števili.
+Recept za palačinke zahteva $\dfrac{7}{10}\,\text{l}$ mleka in $\dfrac{45}{1000}\,\text{kg}$ sladkorja. Merilni vrč in tehtnica kažeta decimalna števila. Kaj moraš na njih odčitati?
 
-1. Imenovalec $100$ ima dve ničli, zato bo imelo število dve decimalni mesti: $\dfrac{37}{100} = 0{,}37$.
-2. Imenovalec $1000$ ima tri ničle, zato bo imelo število tri decimalna mesta. Števec $9$ ima samo eno števko, zato dodamo dve ničli: $\dfrac{9}{1000} = 0{,}009$.
-3. Preverimo: $0{,}009$ ima mesta $0$ desetink, $0$ stotink in $9$ tisočink. ✓
+**Podatki:** mleko $\dfrac{7}{10}\,\text{l}$, sladkor $\dfrac{45}{1000}\,\text{kg}$
+**Iščemo:** obe količini kot decimalni števili
 
-### Primer 2: decimalno število v ulomek
+:::formula
+Število ničel v imenovalcu = število decimalnih mest.
+:::
 
-Zapiši $0{,}35$ in $4{,}6$ kot desetiška ulomka, nato ju okrajšaj.
+**Rešitev:**
 
-1. $0{,}35$ ima dve decimalni mesti, zato je imenovalec $100$, števec pa $35$: $0{,}35 = \dfrac{35}{100}$.
-2. Okrajšamo s $5$: $\dfrac{35}{100} = \dfrac{7}{20}$.
-3. $4{,}6$ ima eno decimalno mesto, zato je imenovalec $10$, števec pa $46$: $4{,}6 = \dfrac{46}{10}$.
-4. Okrajšamo z $2$: $\dfrac{46}{10} = \dfrac{23}{5}$. To je tudi $4\dfrac{3}{5}$.
-5. Preverimo: $\dfrac{3}{5} = \dfrac{6}{10} = 0{,}6$, torej res $4{,}6$. ✓
+1. Imenovalec $10$ ima eno ničlo, zato ima število eno decimalno mesto: $\dfrac{7}{10} = 0{,}7$.
+2. Imenovalec $1000$ ima tri ničle, zato potrebujemo tri decimalna mesta. Števec $45$ ima le dve števki, zato pred njim dopišemo eno ničlo: $\dfrac{45}{1000} = 0{,}045$.
+3. Preverimo z mestno tabelo: $0{,}045$ ima $0$ desetink, $4$ stotinke in $5$ tisočink, skupaj $45$ tisočink. ✓
+4. Odgovor: na vrču odčitaš $0{,}7\,\text{l}$ mleka, na tehtnici $0{,}045\,\text{kg}$ sladkorja.
 
-### Primer 3: urejanje po velikosti
+### Primer 2: z embalaže v ulomek
 
-Uredi po velikosti od najmanjšega do največjega: $2{,}35$; $2{,}4$; $2{,}305$; $1{,}99$; $2{,}350$.
+Na kosu sira piše $0{,}35\,\text{kg}$, v loncu pa je $2{,}08\,\text{l}$ juhe. Zapiši obe količini kot desetiška ulomka. Juho zapiši še kot mešano število.
 
-1. Vsem števila dopišemo ničle na tri decimalna mesta: $2{,}350$; $2{,}400$; $2{,}305$; $1{,}990$; $2{,}350$.
-2. Primerjamo cele dele: najmanjše je $1{,}990$, ker ima celi del $1$. Ostala imajo celi del $2$.
-3. Pri ostalih primerjamo desetinke: $2{,}305$ ima $3$, $2{,}350$ ima $3$ (dvakrat), $2{,}400$ ima $4$. Torej je $2{,}400$ največje.
-4. Med tistimi z desetinko $3$ primerjamo stotinke: $2{,}305$ ima $0$, $2{,}350$ ima $5$. Torej je $2{,}305$ manjše.
-5. Števili $2{,}35$ in $2{,}350$ sta enaki.
-6. Vrstni red: $$1{,}99 < 2{,}305 < 2{,}35 = 2{,}350 < 2{,}4.$$
+**Podatki:** sir $0{,}35\,\text{kg}$, juha $2{,}08\,\text{l}$
+**Iščemo:** desetiška ulomka in mešano število za juho
+
+:::formula
+Števec = število brez vejice. Imenovalec = $1$ in toliko ničel, kolikor je decimalnih mest.
+:::
+
+**Rešitev:**
+
+1. $0{,}35$ ima dve decimalni mesti, zato je imenovalec $100$. Števec je $35$, ničla pred vejico ne šteje: $0{,}35 = \dfrac{35}{100}$.
+2. Tudi $2{,}08$ ima dve decimalni mesti, zato je imenovalec $100$. Števec je $208$: $2{,}08 = \dfrac{208}{100}$.
+3. Celi del je $2$, za vejico pa je $8$ stotink: $2{,}08 = 2\dfrac{8}{100}$. Ničla za vejico pove, da desetink ni.
+4. Odgovor: sira je $\dfrac{35}{100}\,\text{kg}$, juhe pa $\dfrac{208}{100}\,\text{l}$, kar je $2\dfrac{8}{100}\,\text{l}$.
+
+### Primer 3: dovolj masla?
+
+Za pecivo potrebuješ vsaj $0{,}24\,\text{kg}$ masla. V hladilniku so štirje kosi z masami $0{,}3\,\text{kg}$, $0{,}125\,\text{kg}$, $0{,}2\,\text{kg}$ in $0{,}25\,\text{kg}$. Uredi kose od najlažjega do najtežjega. Kateri kosi zadoščajo vsak zase?
+
+**Podatki:** potrebno vsaj $0{,}24\,\text{kg}$; kosi $0{,}3\,\text{kg}$, $0{,}125\,\text{kg}$, $0{,}2\,\text{kg}$, $0{,}25\,\text{kg}$
+**Iščemo:** vrstni red kosov in kose z vsaj $0{,}24\,\text{kg}$
+
+:::formula
+Dopiši ničle do enakega števila decimalnih mest, nato primerjaj po mestih: cele, desetinke, stotinke, tisočinke.
+:::
+
+**Rešitev:**
+
+1. Največ decimalnih mest (tri) ima $0{,}125$, zato vsem dopišemo ničle do treh mest: $0{,}300$; $0{,}125$; $0{,}200$; $0{,}250$. Potrebna masa je $0{,}240$.
+2. Cela dela so povsod $0$, zato odločajo desetinke: $1$ pri $0{,}125$, $2$ pri $0{,}200$ in $0{,}250$, $3$ pri $0{,}300$.
+3. Med $0{,}200$ in $0{,}250$ odločijo stotinke. Ker je $0 < 5$, je lažji $0{,}2\,\text{kg}$.
+4. Vrstni red: $0{,}125 < 0{,}2 < 0{,}25 < 0{,}3$.
+5. Primerjamo s $0{,}240$. Kos $0{,}300$ ima več desetink, zadošča. Kos $0{,}250$ ima enako desetink, a več stotink ($5 > 4$), zadošča. Kos $0{,}200$ ima manj stotink ($0 < 4$), kos $0{,}125$ pa manj desetink, zato ne zadoščata.
+6. Odgovor: od najlažjega do najtežjega so kosi $0{,}125\,\text{kg}$, $0{,}2\,\text{kg}$, $0{,}25\,\text{kg}$ in $0{,}3\,\text{kg}$. Vsak zase zadoščata kosa z $0{,}25\,\text{kg}$ in $0{,}3\,\text{kg}$.
+
+### Primer 4: zdaj ti
+
+Za solatni preliv potrebuješ $0{,}1\,\text{l}$ kisa. Brat ga je odmeril $\dfrac{6}{100}\,\text{l}$. Je kisa dovolj?
+
+**Podatki:** potrebno $0{,}1\,\text{l}$, odmerjeno $\dfrac{6}{100}\,\text{l}$
+**Iščemo:** ali je odmerjenega kisa vsaj $0{,}1\,\text{l}$
+
+:::formula
+Oba podatka zapiši enako (z vejico), dopiši ničle in primerjaj po mestih.
+:::
+
+**Rešitev:**
+
+1. Ulomek zapišemo z vejico. Imenovalec $100$ ima dve ničli: $\dfrac{6}{100} = 0{,}06$.
+2. Številu $0{,}1$ dopišemo ničlo, da imata obe števili dve decimalni mesti: $0{,}10$.
+3. Primerjaj sam, nato preveri:
+
+:::premisli
+Katero število je večje, $0{,}06$ ali $0{,}10$, in zakaj? Je kisa dovolj?
+---
+Večje je $0{,}10$: odločijo desetinke, $1 > 0$. Velja $0{,}06 < 0{,}1$, zato kisa ni dovolj. Manjkajo še $4$ stotinke litra, to je $0{,}04\,\text{l}$.
+:::
 
 ## Pogoste napake
 
-- **Daljše število ni večje.** $0{,}25$ ni večje od $0{,}4$, čeprav ima več števk. Dopiši ničlo: $0{,}25 < 0{,}40$.
-- **Napačno število ničel pri ulomku.** $\dfrac{43}{1000}$ ni $0{,}43$, ampak $0{,}043$. Šteje imenovalec: tri ničle pomenijo tri decimalna mesta.
-- **Pozabljena ničla za vejico.** $\dfrac{5}{100}$ je $0{,}05$, ne $0{,}5$.
-- **Dodajanje ničle na napačno stran.** Ničle za vejico na koncu ne spremenijo vrednosti ($0{,}5 = 0{,}50$), ničle takoj za vejico pa jo spremenijo ($0{,}5 \ne 0{,}05$).
-- **Primerjanje delov, kot da sta ločeni celi števili.** $1{,}12$ ni večje od $1{,}9$ zato, ker je $12 > 9$. Primerjaj $1{,}12$ in $1{,}90$.
+- **»Več števk pomeni večje število.«** Učenec misli, da je $0{,}125 > 0{,}3$, ker je $125 > 3$. Števke za vejico pa niso celo število, vsaka ima svoje mesto. $0{,}3$ ima $3$ desetinke, $0{,}125$ le $1$. Popravek: dopiši ničle ($0{,}300$ in $0{,}125$) in primerjaj od leve proti desni.
+- **Mesta šteje po števcu, ne po imenovalcu.** $\dfrac{45}{1000}$ zapiše kot $0{,}45$, ker ima $45$ dve števki. A $0{,}45$ je $\dfrac{45}{100}$. Število decimalnih mest določi imenovalec: tri ničle, tri mesta, $0{,}045$.
+- **Izpuščena ničla za vejico.** $\dfrac{5}{100}$ zapiše kot $0{,}5$. To je pet desetink, desetkrat preveč. Petica mora stati na mestu stotink: $0{,}05$.
+- **Napačen imenovalec pri vračanju v ulomek.** $2{,}35$ zapiše kot $\dfrac{235}{1000}$, ker ima $235$ tri števke. Imenovalec določijo le mesta za vejico; dve mesti dajo $\dfrac{235}{100}$.
+- **»Ničla na koncu poveča število.«** $0{,}50$ se zdi večje od $0{,}5$. Toda pet desetink je toliko kot petdeset stotink; ničla na koncu vrednosti ne spremeni.
 
 ## Povzetek
 
-- Desetiški ulomek ima imenovalec $10$, $100$, $1000$ ...
-- Decimalno število ima celi del, vejico in decimalna mesta: desetinke, stotinke, tisočinke.
-- Število ničel v imenovalcu je enako številu decimalnih mest.
-- Decimalno število zapišemo kot ulomek tako, da števec napišemo brez vejice, imenovalec pa določi število decimalnih mest.
-- Ničle na koncu decimalnega dela vrednosti ne spremenijo.
-- Pri primerjanju najprej primerjamo cele dele, nato desetinke, stotinke in tako naprej.
-
-## Drugače: Na sliki
-
-Predstavljaj si kvadrat, ki ga razdeliš na $100$ enakih majhnih kvadratkov. Celoten kvadrat je $1$.
-
-- Ena vrstica ($10$ kvadratkov) je $\dfrac{10}{100} = \dfrac{1}{10} = 0{,}1$.
-- En sam kvadratek je $\dfrac{1}{100} = 0{,}01$.
-- Če pobarvaš $3$ vrstice in še $5$ kvadratkov, imaš pobarvanih $35$ kvadratkov: $\dfrac{35}{100} = 0{,}35$.
-
-Na številski premici med $0$ in $1$ narišeš $10$ enakih delov. Vsaka črtica je ena desetinka: $0{,}1$; $0{,}2$; ... Če razdelek med $0{,}3$ in $0{,}4$ spet razdeliš na deset delov, dobiš stotinke: $0{,}31$; $0{,}32$ ... Število $0{,}35$ je na sredini med $0{,}3$ in $0{,}4$. Bolj desno na premici pomeni večje število.
-
-## Drugače: Iz vsakdanjega življenja
-
-**Denar.** Evro ima $100$ centov. Torej je $1$ cent $\dfrac{1}{100}\,€ = 0{,}01\,€$. Znesek $2{,}35\,€$ pomeni $2$ evra in $35$ centov, kar je $2\dfrac{35}{100}$ evra.
-
-**Dolžina.** Meter ima $100$ centimetrov, zato je $1\,\text{cm} = \dfrac{1}{100}\,\text{m} = 0{,}01\,\text{m}$. Višina $1{,}45\,\text{m}$ je $1\,\text{m}$ in $45\,\text{cm}$.
-
-**Primerjanje.** Ana skoči $1{,}8\,\text{m}$ daleč, Tine pa $1{,}75\,\text{m}$. Kdo je skočil dlje? Dopišemo ničlo: $1{,}80$ in $1{,}75$. Ker je $80 > 75$, je dlje skočila Ana. Tine bi se zmotil, če bi mislil, da je $1{,}75$ večje, ker ima več števk.
+- Desetiški ulomek ima imenovalec $10$, $100$, $1000$ …; decimalno število je njegov zapis z vejico.
+- Vejica loči celi del od decimalnega dela. Mesta za vejico so desetinke, stotinke, tisočinke.
+- Število ničel v imenovalcu je enako številu decimalnih mest: $\dfrac{45}{1000} = 0{,}045$.
+- Nazaj: števec je število brez vejice, imenovalec ima toliko ničel, kolikor je decimalnih mest: $2{,}08 = \dfrac{208}{100} = 2\dfrac{8}{100}$.
+- Ničle na koncu decimalnega dela vrednosti ne spremenijo, ničle takoj za vejico jo.
+- Primerjamo po mestih od leve: cele, desetinke, stotinke …; prej dopišemo ničle. Več števk ne pomeni večjega števila.
 
 ## Drugače: Korak za korakom s številkami
 
@@ -121,57 +170,81 @@ Na številski premici med $0$ in $1$ narišeš $10$ enakih delov. Vsaka črtica 
 
 1. Preštej ničle v imenovalcu: $1000$ ima $3$ ničle.
 2. Število bo imelo $3$ decimalna mesta.
-3. Števec $27$ ima $2$ števki, zato pred njim dodaj $1$ ničlo: $027$.
-4. Pred to postavi $0$ in vejico: $0{,}027$.
+3. Števec $27$ ima $2$ števki, zato mu spredaj dodaj $1$ ničlo: $027$.
+4. Spredaj zapiši še $0$ in vejico: $0{,}027$.
 
 **Recept B: decimalno število v ulomek** (primer $3{,}08$)
 
 1. Preštej decimalna mesta: dve.
 2. Imenovalec je $100$.
 3. Števec je število brez vejice: $308$.
-4. Ulomek: $\dfrac{308}{100}$. Okrajšamo s $4$: $\dfrac{77}{25}$.
+4. Ulomek: $\dfrac{308}{100}$, kot mešano število $3\dfrac{8}{100}$.
 
 **Recept C: primerjanje** (primer $0{,}6$ in $0{,}58$)
 
-| število | enako št. mest | desetinke | stotinke |
-|---|---|---|---|
-| $0{,}6$ | $0{,}60$ | 6 | 0 |
-| $0{,}58$ | $0{,}58$ | 5 | 8 |
+| število | z ničlami | desetinke |
+|---|---|---|
+| $0{,}6$ | $0{,}60$ | 6 |
+| $0{,}58$ | $0{,}58$ | 5 |
 
-Desetinke se razlikujejo: $6 > 5$, zato $0{,}6 > 0{,}58$. Stotink sploh ni treba gledati.
+Desetinke se razlikujejo, $6 > 5$, zato je $0{,}6 > 0{,}58$. Stotink sploh ni treba gledati.
 
-## Drugače: Bolj natančno
+## Drugače: Kot zgodba
 
-Zapis v desetiškem sistemu temelji na tem, da je vsako mesto desetkrat manjše od mesta levo od njega. Mesta, ki so desno od enic, so zato:
+Nika peče piškote po babičinem zvezku. Babica piše količine z ulomki: $\dfrac{3}{10}\,\text{kg}$ moke in $\dfrac{15}{100}\,\text{kg}$ sladkorja. Nova tehtnica pa kaže le decimalna števila.
 
-$$\dfrac{1}{10},\quad \dfrac{1}{100},\quad \dfrac{1}{1000},\ \dots$$
+Z moko gre lahko. Deset desetink je cel kilogram, tri desetinke so $0{,}3$. Nika suje moko, dokler zaslon ne pokaže $0{,}3$.
 
-Zato je
+Pri sladkorju se zatakne. »Petnajst, to sta dve števki, torej $0{,}015$,« si misli. Strese žličko sladkorja in tehtnica že kaže $0{,}015$. »Tako malo?« se začudi.
 
-$$3{,}142 = 3\cdot 1 + 1\cdot\dfrac{1}{10} + 4\cdot\dfrac{1}{100} + 2\cdot\dfrac{1}{1000} = \dfrac{3000 + 100 + 40 + 2}{1000} = \dfrac{3142}{1000}.$$
+Babica pokuka čez ramo. »Poglej imenovalec, ne števca. Sto ima dve ničli, zato sta za vejico dve mesti: $0{,}15$. Ti si natehtala tisočinke, potrebuješ pa stotinke.«
 
-To pojasni pravilo: število brez vejice je števec, imenovalec pa je $1$ in toliko ničel, kolikor je decimalnih mest.
-
-Zakaj dopisovanje ničel ne spremeni vrednosti? Zato, ker ulomek razširimo: $\dfrac{5}{10} = \dfrac{50}{100}$, torej $0{,}5 = 0{,}50$. Števec in imenovalec smo pomnožili z $10$, vrednost ulomka pa ostane enaka.
+Nika dosuje sladkor do $0{,}15$. Na listek si zapiše: *ničle v imenovalcu povedo, koliko mest je za vejico.* Piškoti so tokrat sladki, kot morajo biti.
 
 ## Preveri se
 
-? Kako zapišemo ulomek $\dfrac{7}{100}$ kot decimalno število?
-- $0{,}7$
-+ $0{,}07$
-- $0{,}007$
-- $7{,}00$
-> Imenovalec $100$ ima dve ničli, zato mora imeti število dve decimalni mesti: $0{,}07$. Zapis $0{,}7$ je $\dfrac{7}{10}$.
+? Na mreži s $100$ kvadratki so pobarvani $4$ celi stolpci in še $7$ kvadratkov. Katero število prikazuje pobarvani del?
+- $4{,}7$
+~ Stolpec ni cela mreža. Cela mreža je $1$, en stolpec je le $0{,}1$, zato je pobarvani del manjši od $1$.
++ $0{,}47$
+- $0{,}407$
+~ Stolpcev in kvadratkov ne zapišeš ločeno. $4$ stolpci so $40$ kvadratkov, skupaj s $7$ jih je $47$ od $100$.
+- $47$
+~ To je število kvadratkov, ne del mreže. Ker je cela mreža $1$, je $47$ kvadratkov $\dfrac{47}{100}$.
+> $4$ stolpci so $40$ stotink, skupaj s $7$ kvadratki je pobarvanih $47$ stotink: $\dfrac{47}{100} = 0{,}47$.
 
-? Katero število je največje?
-- $0{,}9$
-- $0{,}099$
-- $0{,}89$
-+ $0{,}91$
-> Dopišemo ničle: $0{,}900$; $0{,}099$; $0{,}890$; $0{,}910$. Največ desetink ima $0{,}91$ ($9$ desetink in $1$ stotinka), kar je več kot $0{,}9$. Število z več števkami ni nujno večje.
+? Brez računanja oceni: kje na številski premici med $0$ in $1$ leži $0{,}48$?
+- Tik ob $0$, ker je števka $4$ majhna.
+~ $4$ desetinke niso majhne: to je skoraj polovica poti od $0$ do $1$.
++ Malo pred sredino, blizu $0{,}5$.
+- Tik ob $1$, ker je $48$ veliko število.
+~ $48$ ni celo število, ampak $48$ stotink, kar je manj kot polovica celote.
+- Desno od $1$.
+~ Celi del je $0$, zato je število manjše od $1$ in leži levo od njega.
+> $0{,}48 = 0{,}480$ ima $4$ desetinke in $8$ stotink, torej leži med $0{,}4$ in $0{,}5$, blizu sredine odseka.
 
-? Kateri desetiški ulomek je enak številu $2{,}35$?
-- $\dfrac{235}{10}$
-- $\dfrac{235}{1000}$
-+ $\dfrac{235}{100}$
-> Število $2{,}35$ ima dve decimalni mesti, zato je imenovalec $100$, števec pa $235$ (število brez vejice). Preverimo: $\dfrac{235}{100} = 2 + \dfrac{35}{100}$.
+? Zakaj je $0{,}5\,\text{l}$ enako $0{,}50\,\text{l}$?
+- Ker ničle v decimalnem številu nikoli ne spremenijo vrednosti.
+~ Ničla takoj za vejico vrednost spremeni: $0{,}05$ je desetkrat manj kot $0{,}5$.
++ Ker je $5$ desetink toliko kot $50$ stotink.
+- Ni res: $0{,}50$ je večje, ker ima več števk.
+~ Število števk ne odloča. Pet desetink je natanko toliko kot petdeset stotink.
+> Desetinka je deset stotink, zato je $5$ desetink $50$ stotink. Ničla na koncu le pove, da dodatnih stotink ni.
+
+? Kateri desetiški ulomek je enak številu $0{,}08$?
+- $\dfrac{8}{10}$
+~ $\dfrac{8}{10} = 0{,}8$ ima le eno decimalno mesto. Pri $0{,}08$ stoji osmica na mestu stotink.
++ $\dfrac{8}{100}$
+- $\dfrac{8}{1000}$
+~ Tri ničle pomenijo tri decimalna mesta: $\dfrac{8}{1000} = 0{,}008$.
+- $\dfrac{80}{100}$
+~ $\dfrac{80}{100} = 0{,}80 = 0{,}8$. Ničlo si postavil na napačno stran osmice.
+> $0{,}08$ ima dve decimalni mesti, zato je imenovalec $100$; števec je število brez vejice, $8$.
+
+? Recept zahteva $0{,}6\,\text{kg}$ moke, v vrečki pa je $0{,}55\,\text{kg}$. Je moke dovolj?
+- Da, ker je $55 > 6$.
+~ Števke za vejico niso celo število. Dopiši ničlo: $0{,}60$ in $0{,}55$, nato primerjaj.
+- Ne moremo vedeti, ker imata števili različno število decimalnih mest.
+~ Lahko: dopišeš ničlo do enakega števila mest, $0{,}6 = 0{,}60$.
++ Ne, ker je $0{,}55 < 0{,}60$.
+> Z ničlo: $0{,}60$ in $0{,}55$. Odločijo desetinke, $5 < 6$, zato je moke premalo.

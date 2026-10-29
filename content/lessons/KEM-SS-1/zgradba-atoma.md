@@ -5,13 +5,17 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Že veš, da je snov zgrajena iz atomov in da se atomi različnih elementov med seboj razlikujejo. V periodnem sistemu so elementi razporejeni po vrstnem (atomskem) številu in na videz urejeno: v isti skupini so elementi s podobnimi lastnostmi. Zakaj je tako?
+Ko naslednjič kuhaš na plinskem štedilniku, stresi ščepec kuhinjske soli v modri plamen. Za trenutek zagori živo rumeno. V šoli lahko poskus ponovite z žičko, pomočeno v raztopine različnih soli: z natrijevo soljo je plamen rumen, z bakrovo zelenkast, z litijevo rdeč. Vsak element ima svojo barvo.
 
-Odgovor je v zgradbi atoma. Število protonov določa, za kateri element gre, razporeditev elektronov pa določa, kako se bo atom vezal z drugimi atomi in kako bo reagiral. Zato je razumevanje zgradbe atoma temelj skoraj vsega, kar boš v kemiji spoznal: kemijskih vezi, reakcij, lastnosti snovi. Izotopi pa pojasnijo, zakaj imajo atomi istega elementa lahko različno maso, in jih uporabljamo na primer pri določanju starosti najdb (ogljik-14) ali v medicini.
+Astronomi razklonijo sončno svetlobo s prizmo in v njej najdejo natančno isto rumeno črto natrija. Tako vemo, da je na Soncu natrij, čeprav tja ne bo nikoli poletela sonda z merilnikom. Helij so leta 1868 najprej opazili v spektru Sonca, na Zemlji pa so ga našli šele $27$ let pozneje.
+
+Zakaj ima vsak element svojo barvo, kot prstni odtis? Odgovor je v zgradbi atoma: koliko delcev je v jedru in kako so okoli njega razporejeni elektroni. Ta razporeditev, **elektronska konfiguracija**, bo pozneje razložila periodni sistem in kemijske vezi. **Izotopi** pa razložijo, zakaj ima isti element atome z različno maso.
 
 ## Razlaga
 
-**1. Delci v atomu.** Atom sestavljajo trije osnovni delci:
+Atom sestavimo po kockah. Vsako preveri z vprašanjem v eni vrstici.
+
+**Kocka 1: trije delci.**
 
 | Delec | Oznaka | Naboj | Kje je |
 |---|---|---|---|
@@ -19,179 +23,233 @@ Odgovor je v zgradbi atoma. Število protonov določa, za kateri element gre, ra
 | nevtron | $n^0$ | $0$ | jedro |
 | elektron | $e^-$ | $-1$ | elektronska ovojnica |
 
-Protoni in nevtroni so v **jedru**, elektroni pa se gibljejo okoli jedra v **elektronski ovojnici**. Skoraj vsa masa atoma je v jedru, saj sta proton in nevtron približno $1840$-krat težja od elektrona. Masi protona in nevtrona sta približno enaki, zato ju štejemo kot eno **relativno atomsko enoto mase** vsakega.
+**Jedro** je drobno: če bi bilo veliko kot frnikola, bi bil atom velik kot stadion. Okoli jedra je **elektronska ovojnica**, v kateri se gibljejo elektroni. Proton in nevtron imata približno enako maso, elektron pa je približno $1840$-krat lažji. Zato je skoraj vsa masa atoma v jedru.
 
-**2. Atomsko in masno število.**
+*Preveri:* kje je skoraj vsa masa atoma? (V jedru.)
 
-- **Atomsko (vrstno) število** $Z$ je število protonov v jedru. Določa element.
-- **Masno (nukleonsko) število** $A$ je vsota protonov in nevtronov: $A = Z + N$, kjer je $N$ število nevtronov.
+**Kocka 2: dve števili.** **Vrstno (atomsko) število** $Z$ je število protonov. Določa element: vsak atom s $6$ protoni je ogljik. **Masno število** $A$ je število protonov in nevtronov skupaj. Če je $N$ število nevtronov, velja $A = Z + N$, torej $N = A - Z$. Atom zapišemo kot $^{A}_{Z}\mathrm{X}$.
 
-Zapis atoma elementa X:
+*Preveri:* koliko nevtronov ima $^{12}_{6}\mathrm{C}$? ($12 - 6 = 6$.)
 
-$$^{A}_{Z}\mathrm{X}$$
+**Kocka 3: atom in ion.** Atom je navzven nevtralen, zato ima toliko elektronov kot protonov, torej $Z$. Če elektrone odda, postane pozitivni **ion** (kation). Če jih sprejme, postane negativni ion (anion). Število protonov se pri tem ne spremeni. $\mathrm{Na^+}$ ima $11$ protonov in $10$ elektronov.
 
-Število nevtronov torej izračunaš kot $N = A - Z$.
+*Preveri:* koliko elektronov ima $\mathrm{O^{2-}}$, če je za kisik $Z = 8$? ($8 + 2 = 10$.)
 
-**3. Električna nevtralnost.** Atom je navzven nevtralen, zato je število elektronov enako številu protonov. Pri atomu je torej število elektronov enako $Z$. Če atom elektron odda ali sprejme, nastane **ion**: pozitivni (kation) ali negativni (anion).
+**Kocka 4: izotopi.** **Izotopi** so atomi istega elementa (enak $Z$) z različnim številom nevtronov, torej z različnim $A$. Vodik ima tri: $^{1}_{1}\mathrm{H}$ brez nevtrona, devterij $^{2}_{1}\mathrm{H}$ z enim in tritij $^{3}_{1}\mathrm{H}$ z dvema. V Soncu se protoni zlivajo v helij, devterij pa je vmesni korak te verige. Izotop ogljika $^{14}_{6}\mathrm{C}$ nastaja visoko v ozračju, ko vanj trkajo kozmični žarki. Po njegovem deležu v ostankih organizmov določajo starost najdb.
 
-**4. Izotopi.** **Izotopi** so atomi istega elementa (enako $Z$), ki imajo različno število nevtronov (različen $A$). Ker imajo enako število elektronov, so njihove kemijske lastnosti praktično enake. Razlikujejo se po masi.
+Izotopi imajo enako število elektronov, zato so kemijsko skoraj enaki. Razlikujejo se po masi. **Relativna atomska masa** v periodnem sistemu je povprečje mas naravnih izotopov, uteženo z njihovimi deleži. Zato običajno ni celo število.
 
-Primer vodika: $^{1}_{1}\mathrm{H}$ (brez nevtrona), $^{2}_{1}\mathrm{H}$ (devterij, en nevtron) in $^{3}_{1}\mathrm{H}$ (tritij, dva nevtrona).
+:::premisli
+Klor ima izotopa z masnima številoma $35$ in $37$, lažjega je trikrat več kot težjega. Napovej: bo povprečje bliže $35$ ali $37$, in zakaj ni $36$?
+---
+Bliže $35$, ker lažji izotop »vleče« povprečje k sebi. $36$ bi dobil, če bi bilo obeh enako, kot pri navadnem povprečju. Izračun je v Primeru 2: $35{,}5$.
+:::
 
-Relativna atomska masa elementa v periodnem sistemu je **povprečje** mas vseh naravnih izotopov, uteženo z njihovo pogostnostjo. Zato ni celo število.
+**Kocka 5: lupine in barva plamena.** Elektroni so razporejeni v **lupine** (energijske nivoje) $n = 1, 2, 3, \dots$ Lupina z manjšim $n$ je bliže jedru, elektron v njej ima nižjo energijo. Natrij ($11$ elektronov) narišemo z besedami takole:
 
-**5. Elektronska ovojnica.** Elektroni so razporejeni v **lupine** (energijske nivoje), označene z glavnim kvantnim številom $n = 1, 2, 3, \dots$. Lupina z manjšim $n$ je bliže jedru in ima nižjo energijo. Lupine se delijo na **podlupine** $s$, $p$, $d$, $f$. Vsaka podlupina ima več **orbital** (območij, kjer je verjetnost za elektron velika):
+jedro ($11\,p^+$) → lupina $n = 1$: $2\,e^-$ → $n = 2$: $8\,e^-$ → $n = 3$: $1\,e^-$
 
-| Podlupina | Število orbital | Največ elektronov |
+V plamenu toplota dvigne elektron na višji energijski nivo. Ko se vrne, odda svetlobo, katere barva je določena z razliko energij obeh nivojev. Ker ima vsak element drugačne razlike, sveti v svojih barvah.
+
+*Preveri:* koliko elektronov ima natrij v tretji lupini? ($1$.)
+
+**Kocka 6: podlupine in orbitale.** Lupine se delijo na **podlupine** $s$, $p$, $d$. Vsaka podlupina ima nekaj **orbital** (območij, kjer je elektron najverjetneje). V eni orbitali sta največ $2$ elektrona.
+
+| Podlupina | Orbital | Največ elektronov |
 |---|---|---|
-| $s$ | 1 | 2 |
-| $p$ | 3 | 6 |
-| $d$ | 5 | 10 |
+| $s$ | $1$ | $2$ |
+| $p$ | $3$ | $6$ |
+| $d$ | $5$ | $10$ |
 
-V eni orbitali sta lahko največ **dva** elektrona. Lupina $n$ vsebuje največ $2n^2$ elektronov: $2$, $8$, $18$, …
+Lupina $n$ sprejme največ $2n^2$ elektronov: $2$, $8$, $18$.
 
-**6. Elektronska konfiguracija.** Pove, kako so elektroni razporejeni po podlupinah. Zapis: $1s^2$ pomeni, da sta v podlupini $s$ prve lupine dva elektrona.
+*Preveri:* koliko elektronov največ sprejme $3p$? ($6$.)
 
-Elektrone polnimo po naraščajoči energiji podlupin. Vrstni red polnjenja:
+**Kocka 7: elektronska konfiguracija.** Pove, koliko elektronov je v kateri podlupini. Zapis $2p^6$ pomeni $6$ elektronov v podlupini $p$ druge lupine. Podlupine polnimo od najnižje energije navzgor:
 
-$$1s,\ 2s,\ 2p,\ 3s,\ 3p,\ 4s,\ 3d,\ 4p,\ \dots$$
+$$1s,\ 2s,\ 2p,\ 3s,\ 3p,\ 4s,\ 3d,\ 4p$$
 
-Pozoren bodi: podlupina $4s$ se napolni **pred** $3d$.
+Natrij ima zato $1s^2\,2s^2\,2p^6\,3s^1$.
 
-**7. Valenčni elektroni** so elektroni v zadnji (zunanji) lupini. Ti sodelujejo pri nastajanju kemijskih vezi. Pri elementih glavnih skupin je število valenčnih elektronov enako številu skupine (za skupine 1, 2 in 13–18 je to enako zadnji števki številke skupine).
+:::premisli
+Kalij ima $Z = 19$. Do $3p$ je napolnjenih $18$ mest. Napovej: gre devetnajsti elektron v $3d$ ali v $4s$, in kaj ima potem kalij skupnega z natrijem?
+---
+V $4s$, ker ima ta podlupina nižjo energijo kot $3d$: $1s^2\,2s^2\,2p^6\,3s^2\,3p^6\,4s^1$. Tako kot natrij ima en sam elektron v zunanji lupini. Zato sta v isti skupini in se kemijsko podobno vedeta.
+:::
+
+**Kocka 8: valenčni elektroni.** To so elektroni v zunanji lupini. Sodelujejo pri kemijskih vezeh. Pri elementih glavnih skupin jih je toliko, kot kaže zadnja števka številke skupine (natrij: skupina 1, en valenčni elektron).
+
+*Preveri:* koliko valenčnih elektronov ima $1s^2\,2s^2\,2p^3$? ($2 + 3 = 5$.)
+
+V simulaciji spodaj (»Atom, ioni in izotopi«) sestavi atom s $6$ protoni in $6$ elektroni, nato mu dodajaj nevtrone. Opazi: ime elementa ostane ogljik, spreminja se le masno število. Potem odvzemi elektron in opazuj naboj.
 
 ## Rešeni primeri
 
-### Primer 1 (lažji): delci v atomu
+### Primer 1 (lažji): natrij s Sonca
 
-Koliko protonov, nevtronov in elektronov ima atom $^{23}_{11}\mathrm{Na}$?
+Rumena črta v sončni svetlobi pripada natriju $^{23}_{11}\mathrm{Na}$. Koliko protonov, nevtronov in elektronov ima ta atom?
 
-1. Spodnje število je atomsko število: $Z = 11$, torej je v jedru $11$ protonov.
-2. Atom je nevtralen, zato je elektronov prav toliko kot protonov: $11$.
-3. Nevtrone dobimo iz razlike: $N = A - Z = 23 - 11 = 12$.
-4. Preverimo: $11 + 12 = 23$, kar je masno število. ✓
+**Podatki:** $A = 23$, $Z = 11$, atom je nevtralen
+**Iščemo:** število protonov, nevtronov in elektronov
 
-**Odgovor:** $11$ protonov, $12$ nevtronov, $11$ elektronov.
+:::formula
+$N = A - Z$; v nevtralnem atomu je elektronov toliko kot protonov ($Z$).
+:::
 
-### Primer 2: izotopi in relativna atomska masa
+**Rešitev:**
 
-Klor ima dva pogosta naravna izotopa: $^{35}\mathrm{Cl}$ z deležem $75\,\%$ in $^{37}\mathrm{Cl}$ z deležem $25\,\%$. Koliko nevtronov imata izotopa in kolikšna je povprečna relativna atomska masa?
+1. Spodnje število je $Z = 11$, zato ima jedro $11$ protonov.
+2. Atom je nevtralen, zato ima tudi $11$ elektronov.
+3. Nevtroni so razlika: $N = 23 - 11 = 12$.
+4. Preverimo: $11 + 12 = 23$, kar je masno število.
 
-1. Klor ima $Z = 17$ (to je njegovo mesto v periodnem sistemu).
-2. Nevtroni: $^{35}\mathrm{Cl}$ ima $35 - 17 = 18$ nevtronov, $^{37}\mathrm{Cl}$ ima $37 - 17 = 20$ nevtronov. Oba imata $17$ protonov, zato sta izotopa istega elementa.
-3. Povprečje utežimo z deleži (ker je lažjega izotopa več, mora biti povprečje bliže $35$):
-$$A_r = 0{,}75 \cdot 35 + 0{,}25 \cdot 37 = 26{,}25 + 9{,}25 = 35{,}5$$
-4. Preverimo: $35{,}5$ je med $35$ in $37$ in bliže $35$. ✓ To se ujema z vrednostjo v periodnem sistemu.
+Atom natrija ima $11$ protonov, $12$ nevtronov in $11$ elektronov.
 
-**Odgovor:** $18$ in $20$ nevtronov; povprečna relativna atomska masa je $35{,}5$.
+### Primer 2: izotopa klora
 
-### Primer 3 (težji): elektronska konfiguracija
+Klor ($Z = 17$) ima dva naravna izotopa: $^{35}\mathrm{Cl}$ z deležem $75\,\%$ in $^{37}\mathrm{Cl}$ z deležem $25\,\%$. Koliko nevtronov ima vsak izotop in kolikšna je relativna atomska masa klora?
 
-Zapiši elektronsko konfiguracijo atoma žvepla ($Z = 16$) in kalcija ($Z = 20$) ter določi število valenčnih elektronov.
+**Podatki:** $Z = 17$, $A_1 = 35$, $w_1 = 0{,}75$, $A_2 = 37$, $w_2 = 0{,}25$
+**Iščemo:** $N_1$, $N_2$ in relativno atomsko maso $A_r$
 
-**Žveplo, $Z = 16$** (16 elektronov):
+:::formula
+$N = A - Z$ in $A_r = w_1 \cdot A_1 + w_2 \cdot A_2$
+:::
 
-1. Polnimo po vrsti: $1s^2$ (skupaj $2$), $2s^2$ ($4$), $2p^6$ ($10$), $3s^2$ ($12$).
-2. Do $16$ manjka še $16 - 12 = 4$ elektrone, ki gredo v $3p$ (ta sprejme do $6$).
-3. Konfiguracija: $1s^2\,2s^2\,2p^6\,3s^2\,3p^4$.
-4. Preverimo vsoto: $2 + 2 + 6 + 2 + 4 = 16$. ✓
-5. Zadnja lupina je $n = 3$: $2 + 4 = 6$ valenčnih elektronov. To se ujema s skupino 16.
+**Rešitev:**
 
-**Kalcij, $Z = 20$** (20 elektronov):
+1. $^{35}\mathrm{Cl}$: $N_1 = 35 - 17 = 18$. $^{37}\mathrm{Cl}$: $N_2 = 37 - 17 = 20$. Protonov imata oba $17$, zato sta izotopa istega elementa.
+2. Uteženo povprečje, ker je izotopov različno veliko: $0{,}75 \cdot 35 = 26{,}25$ in $0{,}25 \cdot 37 = 9{,}25$.
+3. $A_r = 26{,}25 + 9{,}25 = 35{,}5$.
+4. Preverimo: $35{,}5$ je med $35$ in $37$ ter bliže $35$, kot smo napovedali.
 
-1. Do $3p$ pridemo z $1s^2\,2s^2\,2p^6\,3s^2\,3p^6$, to je $18$ elektronov.
-2. Preostala $2$ elektrona gresta v $4s$, ne v $3d$, ker je $4s$ nižje po energiji.
-3. Konfiguracija: $1s^2\,2s^2\,2p^6\,3s^2\,3p^6\,4s^2$.
-4. Preverimo vsoto: $2 + 2 + 6 + 2 + 6 + 2 = 20$. ✓
-5. Zadnja lupina je $n = 4$ z $2$ elektronoma: $2$ valenčna elektrona (skupina 2).
+Izotopa imata $18$ in $20$ nevtronov, relativna atomska masa klora je $35{,}5$.
+
+### Primer 3 (težji): kalcijevi ioni v zvezdah
+
+V spektrih Sonca in mnogih zvezd sta med najmočnejšimi dve črti, ki ju povzročajo ioni $\mathrm{Ca^+}$. Zapiši elektronsko konfiguracijo atoma kalcija in nato iona $\mathrm{Ca^+}$. Koliko valenčnih elektronov ima ion?
+
+**Podatki:** kalcij $Z = 20$, naboj iona $+1$
+**Iščemo:** konfiguraciji $\mathrm{Ca}$ in $\mathrm{Ca^+}$, število valenčnih elektronov iona
+
+:::formula
+Vrstni red: $1s,\ 2s,\ 2p,\ 3s,\ 3p,\ 4s,\ 3d$. Število elektronov iona $= Z -$ naboj.
+:::
+
+**Rešitev:**
+
+1. Atom ima $20$ elektronov. Do $3p$ jih gre $2 + 2 + 6 + 2 + 6 = 18$.
+2. Zadnja $2$ gresta v $4s$, ker ima nižjo energijo kot $3d$: $1s^2\,2s^2\,2p^6\,3s^2\,3p^6\,4s^2$.
+3. Ion $\mathrm{Ca^+}$ ima $20 - 1 = 19$ elektronov. Odide elektron iz zunanje lupine, ker je najdlje od jedra in najšibkeje vezan.
+4. Zdaj ti: zapiši konfiguracijo iona in preštej njegove valenčne elektrone.
+
+:::premisli
+Kakšna je konfiguracija $\mathrm{Ca^+}$ in koliko valenčnih elektronov ima?
+---
+$1s^2\,2s^2\,2p^6\,3s^2\,3p^6\,4s^1$, vsota $2 + 2 + 6 + 2 + 6 + 1 = 19$. V zunanji lupini $n = 4$ je $1$ elektron, zato ima ion $1$ valenčni elektron, tako kot atom kalija, ki ima prav tako $19$ elektronov.
+:::
 
 ## Pogoste napake
 
-- **Zamenjava $Z$ in $A$.** Število protonov je $Z$ (spodaj), ne $A$ (zgoraj). Nevtroni so $A - Z$.
-- **Izotopi z različnim številom protonov.** Če se spremeni število protonov, ni več isti element. Izotopi se razlikujejo samo po nevtronih.
-- **Napačno število elektronov pri ionu.** Atom $\mathrm{Na}$ ima $11$ elektronov, ion $\mathrm{Na^+}$ pa $10$. Naboj ioni spremeni število elektronov, ne protonov.
-- **Vrstni red polnjenja.** Po $3p$ sledi $4s$, šele nato $3d$.
-- **Preseženo največje število elektronov.** Podlupina $p$ sprejme največ $6$, ne $8$. Osem jih je v lupini $n=2$ skupaj ($2s^2\,2p^6$).
-- **Relativna atomska masa kot navadno povprečje.** Pri izotopih moraš povprečje utežiti z deleži, ne le sešteti in deliti z dva.
+- **Zamenjava $Z$ in $A$.** »Zgoraj je $40$, torej ima argon $40$ protonov.« Zgornje število je masno, protonov je $Z$ (spodaj). Nevtrone dobiš kot $A - Z$.
+- **Izotopi z različnim številom protonov.** Kdor spremeni število protonov, dobi drug element. Izotopi istega elementa se razlikujejo le po nevtronih.
+- **Naboj v napačno smer.** »$\mathrm{Na^+}$ je plus, torej ima elektron več.« Plus pomeni, da elektron *manjka*: elektroni so negativni, zato jih ima kation manj kot protonov.
+- **Navadno povprečje.** »Klor: $(35 + 37) : 2 = 36$.« To velja le, če je obeh izotopov enako. Povprečje uteži z deleži.
+- **Napačno polnjenje.** $3d$ pred $4s$ ali $2p^8$. Po $3p$ pride $4s$, šele nato $3d$, podlupina $p$ pa sprejme največ $6$ elektronov.
 
 ## Povzetek
 
-- Atom sestavljajo protoni ($+$) in nevtroni ($0$) v jedru ter elektroni ($-$) v ovojnici.
-- $Z$ = število protonov (= število elektronov v nevtralnem atomu); $A = Z + N$.
-- Izotopi so atomi istega elementa z različnim številom nevtronov; kemijsko so enaki, razlikujejo se po masi.
-- Relativna atomska masa je uteženo povprečje mas naravnih izotopov.
-- Elektrone polnimo po podlupinah: $1s, 2s, 2p, 3s, 3p, 4s, 3d, \dots$; $s$ sprejme $2$, $p$ $6$, $d$ $10$ elektronov.
-- Valenčni elektroni so v zunanji lupini in določajo kemijsko vedenje atoma.
+- Jedro: protoni ($+1$) in nevtroni ($0$), skoraj vsa masa. Ovojnica: elektroni ($-1$).
+- $Z$ je število protonov in določa element; $A = Z + N$; nevtralni atom ima $Z$ elektronov, kation manj, anion več.
+- Izotopi: enak $Z$, različno število nevtronov; kemijsko skoraj enaki, različna masa. Relativna atomska masa je uteženo povprečje izotopov.
+- Lupine $n = 1, 2, 3$ sprejmejo $2n^2$ elektronov; podlupine $s$, $p$, $d$ sprejmejo $2$, $6$, $10$.
+- Vrstni red polnjenja: $1s, 2s, 2p, 3s, 3p, 4s, 3d$. Valenčni elektroni so v zunanji lupini.
+- Prehodi elektronov med energijskimi nivoji dajo vsakemu elementu svoje barve svetlobe; po njih astronomi prepoznajo elemente v zvezdah.
 
 ## Drugače: Na sliki
 
-Predstavljaj si atom kot majhno sončno okolico, a s pomembno razliko. V sredini je drobno **jedro** (protoni in nevtroni), okoli njega pa so **lupine** kot koncentrični krogi, ki so vedno bolj oddaljeni od jedra.
+Izotopi vodika, narisani kot jedra (znak $+$ je proton, $0$ nevtron):
 
-Prva lupina ima prostor za $2$ elektrona, druga za $8$, tretja za $18$. Elektroni najprej zasedejo notranje lupine, nato zunanje. Pri natriju ($11$ elektronov) narišemo $2$ elektrona v prvi lupini, $8$ v drugi in $1$ v tretji. Ta zadnji, osamljeni elektron je valenčni in ga natrij zlahka odda.
+```
+1H:  [+]        1 elektron
+2H:  [+ 0]      1 elektron
+3H:  [+ 0 0]    1 elektron
+```
 
-Pri izotopih si predstavljaj dve jedri z enakim številom rdečih kroglic (protonov) in različnim številom sivih kroglic (nevtronov). Ovojnica je pri obeh enaka, zato se kemijsko obnašata enako, le jedro je težje.
+Jedro se spreminja, ovojnica ostaja enaka. Zato se kemijsko vedejo enako.
 
-V simulaciji spodaj (»Atom, ioni in izotopi«) lahko sam dodajaš in odvzemaš delce ter opazuješ, kako se spreminjajo element, naboj in masno število.
+Konfiguracija kot predalčki. Vsak predalček je orbitala, puščica je elektron. Primer dušika ($Z = 7$):
 
-## Drugače: Iz vsakdanjega življenja
+```
+1s [↑↓]   2s [↑↓]   2p [↑ ][↑ ][↑ ]
+```
 
-Predstavljaj si **večnadstropno stavbo** z gledališčem. Atomsko število je kot število vstopnic, ki določa, katera predstava se igra (kateri element je). Nadstropja so lupine: v spodnjih je manj sedežev in so bliže odru (jedru), v višjih jih je več. Gledalci (elektroni) najprej zasedejo najboljše sedeže, torej tiste z najnižjo energijo.
+Predalčkov $2p$ so trije, ker ima $p$ tri orbitale. V vsakem sta lahko največ dve puščici. Dušik ima tri valenčne elektrone v $2p$ in dva v $2s$, skupaj pet.
 
-Izotopi so kot dve skupini enakih gledalcev, od katerih ima ena s seboj težke nahrbtnike (dodatni nevtroni). Oba obiskovalca gresta na isto predstavo in sedeta na enaka mesta, a eden je težji.
-
-Praktičen primer izotopa je **ogljik-14** ($^{14}_{6}\mathrm{C}$). V živem organizmu ga je majhen, stalen delež. Po smrti se ne dopolnjuje več in se počasi razpada, zato iz njegovega deleža arheologi ocenijo starost lesenih ali kostnih najdb.
-
-## Drugače: Korak za korakom s številkami
-
-Recept za elektronsko konfiguracijo, na primeru **fosforja** ($Z = 15$):
-
-1. Število elektronov nevtralnega atoma je $Z$: $15$.
-2. Polni po vrsti in sproti šteji:
-
-| Podlupina | Dodano | Skupaj |
-|---|---|---|
-| $1s$ | $2$ | $2$ |
-| $2s$ | $2$ | $4$ |
-| $2p$ | $6$ | $10$ |
-| $3s$ | $2$ | $12$ |
-| $3p$ | $3$ (le toliko manjka) | $15$ |
-
-3. Konfiguracija: $1s^2\,2s^2\,2p^6\,3s^2\,3p^3$.
-4. Valenčni elektroni so v lupini $n = 3$: $2 + 3 = 5$.
-5. Preveri: skupina 15, kar se ujema ($5$ valenčnih elektronov).
-
-Recept za delce v atomu, na primeru $^{31}_{15}\mathrm{P}$: protonov $15$, elektronov $15$, nevtronov $31 - 15 = 16$.
+Lupine natrija kot obroči okoli jedra: notranji obroč $2$ elektrona, srednji $8$, zunanji $1$. Ta osamljeni zunanji elektron natrij zlahka odda, zato nastane $\mathrm{Na^+}$.
 
 ## Drugače: Bolj natančno
 
-**Zakaj je v lupini največ $2n^2$ elektronov?** Lupina z glavnim kvantnim številom $n$ ima $n$ podlupin: $s$, $p$, $d$, … (za $n = 3$: $s$, $p$, $d$). Podlupine imajo $1, 3, 5, \dots$ orbital, torej skupaj $n^2$ orbital. Ker je v vsaki orbitali največ $2$ elektrona (Paulijevo izključitveno načelo), je v lupini največ $2n^2$ elektronov. Za $n = 3$: $1 + 3 + 5 = 9$ orbital in $18$ elektronov.
+**Zakaj je v lupini največ $2n^2$ elektronov?** Lupina $n$ ima $n$ podlupin ($s$, $p$, $d$, …) z $1, 3, 5, \dots$ orbitalami, skupaj $n^2$ orbital. V vsaki orbitali sta največ $2$ elektrona (Paulijevo izključitveno načelo). Za $n = 3$: $1 + 3 + 5 = 9$ orbital, torej $18$ elektronov.
 
-**Zakaj se $4s$ polni pred $3d$?** Energija podlupine ni odvisna samo od $n$. Elektroni v $4s$ so v povprečju bolj »prodorni« in jih jedro močneje privlači, zato je $4s$ pri nevtralnem atomu kalija in kalcija nekoliko nižje od $3d$. Zato se najprej napolni $4s$.
+**Zakaj $4s$ pred $3d$?** Energija podlupine ni odvisna samo od $n$. Elektron v $4s$ pogosteje zaide blizu jedra kot elektron v $3d$, zato ga jedro močneje privlači. Pri kaliju in kalciju je $4s$ zato nižje od $3d$.
 
-**Pravilo za polnjenje orbital v isti podlupini** (Hundovo pravilo): elektroni najprej zasedejo vsako orbitalo posamično, šele nato se v njih združujejo v pare. Na primer v $2p^3$ je en elektron v vsaki od treh orbital $p$.
+**Hundovo pravilo.** V podlupini z več orbitalami elektroni najprej zasedejo vsako orbitalo posamič, šele nato se združujejo v pare. Zato je pri dušiku v vsaki orbitali $2p$ po en elektron.
 
-**Relativna atomska masa** elementa z izotopi z masami $m_i$ in deleži $w_i$ (kot decimalno število, vsota $=1$):
+**Uteženo povprečje.** Za izotope z masami $m_i$ in deleži $w_i$ (vsota deležev je $1$):
 
 $$A_r = \sum_i w_i\, m_i$$
 
+**Spektralne črte.** Elektron, ki preskoči z višjega energijskega nivoja (lupine ali podlupine) na nižjega, odda svetlobo z energijo, enako razliki energij nivojev. Rumena črta natrija nastane pri preskoku iz $3p$ v $3s$. Ker so te razlike za vsak element drugačne, je spekter elementa enoličen. Po njem astronomi določijo sestavo zvezd in meglic.
+
 ## Preveri se
 
-? Koliko nevtronov ima atom $^{40}_{18}\mathrm{Ar}$?
-- $18$
-- $40$
-+ $22$
-- $58$
-> Število nevtronov je $N = A - Z = 40 - 18 = 22$. Odgovor $18$ je število protonov, $40$ je masno število, $58$ pa dobimo z napačnim seštevanjem.
+? Helij so najprej odkrili v spektru Sonca. Kateri opis ustreza atomu $^{4}_{2}\mathrm{He}$?
+- $4$ protoni, $2$ nevtrona, $4$ elektroni
+~ Število protonov je spodnje število $Z = 2$, ne zgornje.
++ $2$ protona, $2$ nevtrona, $2$ elektrona
+- $2$ protona, $4$ nevtroni, $2$ elektrona
+~ $4$ je masno število, torej protoni in nevtroni skupaj. Nevtronov je $4 - 2 = 2$.
+- $2$ protona, $2$ nevtrona, $0$ elektronov
+~ Tak je ion $\mathrm{He^{2+}}$. Nevtralni atom ima toliko elektronov kot protonov.
+> $Z = 2$ protona, $N = 4 - 2 = 2$ nevtrona, nevtralni atom ima $2$ elektrona.
 
-? Kaj velja za izotopa istega elementa?
-- Imata različno število protonov in enako število nevtronov.
-- Imata enako masno število in različno število protonov.
-+ Imata enako število protonov in različno število nevtronov.
-> Izotopi so atomi istega elementa, torej imajo enako $Z$ (število protonov), razlikujejo pa se po številu nevtronov in zato po masnem številu.
+? Bor ima izotopa $^{10}\mathrm{B}$ in $^{11}\mathrm{B}$, njegova relativna atomska masa je $10{,}8$. Približno kolikšen delež atomov bora je $^{11}\mathrm{B}$?
+- približno $20\,\%$
+~ To je delež lažjega izotopa. Povprečje je bliže $11$, zato prevladuje težji.
+- približno $50\,\%$
+~ Pri enakih deležih bi bilo povprečje $10{,}5$, ne $10{,}8$.
++ približno $80\,\%$
+- skoraj $100\,\%$
+~ Potem bi bila relativna atomska masa skoraj $11{,}0$.
+> $10{,}8$ je $0{,}8$ poti od $10$ do $11$, zato je težjega izotopa okoli $80\,\%$. Preverba: $0{,}2 \cdot 10 + 0{,}8 \cdot 11 = 10{,}8$.
 
-? Katera je pravilna elektronska konfiguracija atoma magnezija ($Z = 12$)?
-- $1s^2\,2s^2\,2p^6\,3s^1\,3p^1$
-- $1s^2\,2s^2\,2p^8\,3s^0$
-+ $1s^2\,2s^2\,2p^6\,3s^2$
-- $1s^2\,2s^2\,2p^4\,3s^2\,3p^2$
-> Magnezij ima $12$ elektronov: $2 + 2 + 6 = 10$ v prvih dveh lupinah, preostala $2$ gresta v $3s$. Podlupina $p$ ne sprejme več kot $6$ elektronov, in $3p$ se ne polni, preden je $3s$ polna.
+? Zakaj se $^{12}_{6}\mathrm{C}$ in $^{14}_{6}\mathrm{C}$ kemijsko vedeta skoraj enako, čeprav ima $^{14}\mathrm{C}$ dva nevtrona več?
+- Ker imata enako masno število.
+~ Nimata: $12$ in $14$. Po masi se razlikujeta.
+- Ker nevtroni nimajo mase.
+~ Nevtron ima približno enako maso kot proton. Nima naboja, maso pa ima.
++ Ker imata oba $6$ protonov in zato $6$ enako razporejenih elektronov, kemijsko vedenje pa določajo elektroni.
+- Ker sta dodatna nevtrona v ovojnici in ne vplivata na jedro.
+~ Nevtroni so v jedru. Ovojnico sestavljajo samo elektroni.
+> Pri reakcijah sodelujejo elektroni. Izotopa imata enak $Z$, zato enako ovojnico in enake kemijske lastnosti.
+
+? Atom ima konfiguracijo $1s^2\,2s^2\,2p^6\,3s^2\,3p^4$. Kateri element je to?
+- ogljik ($Z = 6$)
+~ Sešteti $2 + 4$ da le valenčne elektrone, ne vseh. Šteti moraš vse eksponente.
+- kisik ($Z = 8$)
+~ Kisik ima prav tako $6$ valenčnih elektronov, a v lupini $n = 2$: $1s^2\,2s^2\,2p^4$.
++ žveplo ($Z = 16$)
+- berilij ($Z = 4$)
+~ Zadnji eksponent pove le, koliko elektronov je v $3p$, ne koliko jih ima atom.
+> $2 + 2 + 6 + 2 + 4 = 16$ elektronov; nevtralni atom ima $Z = 16$, to je žveplo.
+
+? Sonda v sončnem vetru ujame delce $^{3}_{2}\mathrm{He^{2+}}$. Koliko nevtronov in koliko elektronov ima tak delec?
+- $1$ nevtron in $2$ elektrona
+~ Naboj ni upoštevan. $2+$ pomeni, da sta oba elektrona odšla.
+- $3$ nevtroni in $0$ elektronov
+~ $3$ je masno število. Nevtronov je $3 - 2 = 1$.
+- $1$ nevtron in $4$ elektroni
+~ Plus pomeni manj elektronov, ne več.
++ $1$ nevtron in $0$ elektronov
+> $N = 3 - 2 = 1$. Nevtralni helij ima $2$ elektrona, naboj $2+$ pomeni dva manj, torej $0$.
