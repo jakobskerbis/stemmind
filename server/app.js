@@ -300,6 +300,7 @@ export function createApp(store, opts = {}) {
       wantThink: againStreak === 1,
       competition: student.settings.track === "COMPETITION",
       lite,
+      free: !!accounts && !accounts.premiumFor(student.id),
       deepModel: MODEL_DEEP,
     });
     const deep = mode === "deep";

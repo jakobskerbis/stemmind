@@ -99,6 +99,18 @@ test("competition track: thinking Haiku by default, Opus only on request", () =>
   assert.equal(u.chooseMode(s.id, { competition: true, wantDeep: true, deepModel: MODEL_DEEP }).mode, "deep");
 });
 
+test("free tier never gets Opus: re-explain and competition use thinking Haiku", () => {
+  const store = openDb(":memory:");
+  const s = store.createStudent("Ana");
+  const u = new Usage(store.db);
+  const r = u.chooseMode(s.id, { wantDeep: true, free: true, deepModel: MODEL_DEEP });
+  assert.equal(r.mode, "think");
+  assert.match(r.note, /brezplačnem/);
+  assert.equal(u.chooseMode(s.id, { competition: true, wantDeep: true, free: true, deepModel: MODEL_DEEP }).mode, "think");
+  assert.equal(u.chooseMode(s.id, { wantThink: true, free: true }).mode, "think");
+  assert.equal(u.chooseMode(s.id, { free: true }).mode, "chat");
+});
+
 test("code hint: data, unknown and hint without the formula or the result", () => {
   let task = null;
   for (let seed = 1; seed < 50 && !task; seed++) {
