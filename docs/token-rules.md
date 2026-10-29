@@ -39,12 +39,15 @@ Read a big file only with `offset`/`limit` or `grep -n`, never twice in one agen
 - Checklist: the remaining numbers in worked examples recomputed (substitutions, rounding, units and significant figures; batch them into one `node -e`); every »+« quiz answer truly correct and every »-« truly wrong; level fits the path (nothing not yet taught); Slovenian terminology; »Podatki« lists all given data.
 - Fix with small `Edit`s. Never rewrite the whole file. Reply: `<id>: N popravkov – <5–10 words each>`, ≤ 5 lines per lesson.
 - For upgrading old lessons to the new format: run the checker first and fix only what it and the checklist flag; keep correct text as it is.
+- Old lessons raised to the new bar (new `:::premisli`, `~` lines, 5th quiz question, faded example) get a second pass too: one reviewer per 3 raised lessons reads only `git diff origin/main -- <files>` and checks quiz keys, `~` lines, premisli answers, new numbers and level. The checker verifies arithmetic only; wrong quiz keys are where the earlier errors were.
 
 ## 4. Orchestrator (the thread itself)
 
 Each tool call resends the thread's whole context, which is large in long-running threads, so fewer calls matter most here.
 - One wake = launch the batch, end the turn. Do not poll; the workflow notifies you.
-- All threads share one 5-hour usage limit. Lesson batches run at fixed times (OŠ/SŠ 10:50 UTC and every 5 h, faks 12:20 UTC and every 5 h); a thread that is not a lesson thread runs at most 2 agents at once and none in the first hour after a batch starts, so the batches never get rate-limited.
+- All threads share j's 5-hour and 7-day usage limits. Lesson batches run at fixed slots: OŠ/SŠ textbook thread 10:50, 15:50, 20:50, 00:50, 05:50 UTC; faks thread 04:20, 13:20, 18:20, 23:20 UTC. A thread that is not a lesson thread runs at most 2 agents at once and none in the first hour after a batch starts.
+- Before launching a batch, call `get_session` (claude-code-remote MCP, no arguments) and read `external_metadata.rate_limit_info`: launch only when `status` is `allowed`. `allowed_warning` with `rateLimitType: seven_day` means the weekly limit is near and every thread would stop until `resetsAt`: do not scale up, shrink or hold the batch and tell the optimizer thread.
+- Report each batch to the optimizer thread: agents per role, wall time, `subagent_tokens` (the Workflow tool's total: input + output over all turns, probably with cache reads; comparable between batches, not exact accounting) and tokens per lesson.
 - Do not read lesson files, memory files or old thread messages to report on a batch; use the agents' short replies.
 - After the batch, one command: `node scripts/check-lesson.js -q $(git diff --name-only origin/main -- content/lessons) && npm test 2>&1 | tail -6`, then one command for `git add/commit/push`.
 - Status: update the checklist; send at most one short reply per batch (≤ 60 words). No replies for routine steps.
