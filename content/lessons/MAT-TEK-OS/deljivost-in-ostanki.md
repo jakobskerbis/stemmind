@@ -9,7 +9,7 @@ Luka v knjigarni kupi $9$ enakih zvezkov. Prodajalka pogleda zaslon in reče: »
 
 Kako je to opazil tako hitro? Znesek v centih je $4735$. Če je $9$ zvezkov enakih, mora biti skupna cena deljiva z $9$. Luka je seštel števke: $4 + 7 + 3 + 5 = 19$. Vsota $19$ ni deljiva z $9$, zato tudi $4735$ ni. Pravilni znesek bi bil na primer $47{,}34$ €, kar je $9$ zvezkov po $5{,}26$ €.
 
-Takšne bližnjice so jedro mnogih tekmovalnih nalog. Ugotoviti moraš, ali je ogromno število deljivo s $3$ ali $11$, katera števka manjka na računu ali s katero števko se konča $7^{2026}$. Nihče od tebe ne pričakuje, da boš to izračunal do konca. Pričakuje se, da boš opazoval **ostanke**.
+Takšne bližnjice so jedro mnogih tekmovalnih nalog. Ugotoviti moraš, ali je ogromno število deljivo s $3$ ali $11$, katera števka manjka na računu ali s katero števko se konča $7^{2026}$. Do konca tega ne izračunaš, opazuješ pa lahko **ostanke**.
 
 ## Razlaga
 
@@ -88,7 +88,7 @@ Ko se pojavi števka $1$, se krog začne znova. Zadnje števke tečejo v krogu d
 
 V simulaciji spodaj, »Ostanki potenc in zadnja števka«, nastavi modul $m = 10$ in osnovo $a = 7$. Opazuj, da se puščice zaprejo v krog štirih ostankov. Nato preizkusi še $a = 4$ in $a = 5$. Pri $4$ je krog dolg samo $2$, pri $5$ pa se zadnja števka sploh ne spremeni.
 
-**Na koncu še zapis.** Matematiki pišejo $a \equiv b \pmod{m}$ in berejo »$a$ je kongruentno $b$ po modulu $m$«. To pomeni le, da dasta $a$ in $b$ pri deljenju z $m$ enak ostanek. Na primer $23 \equiv 3 \pmod{5}$ in $7^5 \equiv 7 \pmod{10}$. Zapis je kratek, vse, kar pomeni, pa si že videl na številski premici in v tabelah.
+**Na koncu še zapis.** Matematiki pišejo $a \equiv b \pmod{m}$ in berejo »$a$ je kongruentno $b$ po modulu $m$«. To pomeni le, da dasta $a$ in $b$ pri deljenju z $m$ enak ostanek. Na primer $23 \equiv 3 \pmod{5}$ in $7^5 \equiv 7 \pmod{10}$.
 
 ## Rešeni primeri
 
@@ -208,7 +208,7 @@ Pri blagajni se ostanki srečujejo vsak dan.
 
 - **Plačilo z bankovci po $10$ €.** Za znesek $87$ € daš $8$ bankovcev, ostanek $7$ € pa v kovancih. Ta ostanek je ravno zadnja števka. Zato je pri deljivosti z $10$, $5$ in $2$ pomembna samo zadnja števka: polni bankovci so že »razdeljeni«.
 - **Jajca po $6$.** Trgovina dobi $500$ jajc in jih pakira po $6$. Ker je $5 + 0 + 0 = 5$ in je $500$ sodo, je ostanek pri $3$ enak $2$, pri $6$ pa $2$ ali $5$. Sodo število ne more dati lihega ostanka $5$, torej ostaneta $2$ jajci. Res: $6 \cdot 83 = 498$.
-- **Kontrola računa.** Ko blagajna sešteje cene, lahko ostanek vsote pri $9$ primerjaš z ostankom, ki ga dobiš iz posameznih cen. Če se ne ujemata, je nekje napaka. Na tej ideji temelji tudi preizkus z devetkami pri pisnem računanju.
+- **Kontrola računa.** Ko blagajna sešteje cene, lahko ostanek vsote pri $9$ primerjaš z ostankom, ki ga dobiš iz posameznih cen. Če se ne ujemata, je nekje napaka.
 
 ## Preveri se
 

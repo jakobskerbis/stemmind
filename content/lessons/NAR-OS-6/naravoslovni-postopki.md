@@ -169,7 +169,7 @@ Babica je omenila, da testo vedno postavi k topli peči. Zala je pomislila: »Mo
 
 Naslednji dan je zamesila dve enaki testi z enako moko, vodo in kvasom. Eno je postavila k peči, drugo na hladen balkon. Edina razlika je bila toplota, zato je bil **poskus pošten**.
 
-Čez eno uro je z ravnilom **izmerila** višino obeh testov in ju **zapisala** v zvezek. Testo ob peči se je dvignilo za več centimetrov, testo na balkonu skoraj nič. Zala je narisala dva stolpca in napisala **sklep**: kvas v toplem dela hitreje. Babičin skrivni sestavin je bil toplota.
+Čez eno uro je z ravnilom **izmerila** višino obeh testov in ju **zapisala** v zvezek. Testo ob peči se je dvignilo za več centimetrov, testo na balkonu skoraj nič. Zala je narisala dva stolpca in napisala **sklep**: kvas v toplem dela hitreje. Babičina skrivna sestavina je bila toplota.
 
 ## Preveri se
 
