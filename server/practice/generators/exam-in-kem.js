@@ -568,7 +568,7 @@ const IUPAC3 = [
 const ISOTYPE = {
   chain: ["chain isomerism", "शृंखला समावयवता", "Chain isomers differ in the carbon skeleton (straight or branched) but have the same functional group.", "शृंखला समावयवियों में कार्बन ढाँचा (सीधा या शाखित) अलग होता है, प्रकार्यात्मक समूह वही।"],
   position: ["position isomerism", "स्थिति समावयवता", "Position isomers have the same skeleton and group, but the group sits at a different position.", "स्थिति समावयवियों में ढाँचा और समूह वही होते हैं, पर समूह का स्थान अलग होता है।"],
-  functional: ["functional group isomerism", "क्रियात्मक समूह समावयवता", "Functional isomers have different functional groups.", "क्रियात्मक समूह समावयवियों में प्रकार्यात्मक समूह अलग होते हैं।"],
+  functional: ["functional group isomerism", "प्रकार्यात्मक समूह समावयवता", "Functional isomers have different functional groups.", "प्रकार्यात्मक समूह समावयवियों में प्रकार्यात्मक समूह अलग होते हैं।"],
   metamer: ["metamerism", "मध्यावयवता", "Metamers have the same functional group but different alkyl groups on either side of it.", "मध्यावयवियों में प्रकार्यात्मक समूह वही होता है, पर उसके दोनों ओर के ऐल्किल समूह अलग होते हैं।"],
 };
 const ISOPAIRS = [
@@ -743,7 +743,7 @@ const CPLX = [
   const inner = `${M}${ligs.map(([l, n]) => `${l === "F" || l === "Cl" ? l : `(${l})`}${n > 1 ? `_${n}` : ""}`).join("")}`;
   const ion = `[${inner}]${q ? `^{${Math.abs(q) > 1 ? Math.abs(q) : ""}${q > 0 ? "+" : "-"}}` : ""}`;
   const comp = `${pre}[${inner}]${post}`;
-  const hyb = geom === "tet" ? "sp^3" : geom === "sq" ? "dsp^2" : spin === "low" ? "d^2sp^3" : "sp^3d^2";
+  const hyb = geom === "tet" ? "sp^3" : geom === "sq" ? "dsp^2" : spin === "low" || d <= 3 ? "d^2sp^3" : "sp^3d^2";
   return { M, Z, base, ligs, q, ox, cn, d, unp, hs, ion, comp, geom, spin, hyb, pre, post };
 });
 const GEOM = { oct: ["octahedral", "अष्टफलकीय"], tet: ["tetrahedral", "चतुष्फलकीय"], sq: ["square planar", "वर्ग समतलीय"] };
@@ -803,7 +803,7 @@ function oxState(f, E, p = 0) {
   const a = atoms(f);
   let s = 0;
   for (const [e, n] of Object.entries(a)) if (e !== E) s += OXFIX[e] * n;
-  return (-s + (E === "O" ? 0 : 2 * p)) / a[E];
+  return (-s - (E === "O" ? 0 : 2 * p)) / a[E];
 }
 const OX1 = [["KMnO_4", "Mn"], ["K_2Cr_2O_7", "Cr"], ["K_2MnO_4", "Mn"], ["MnO_2", "Mn"], ["H_2SO_4", "S"], ["H_3PO_4", "P"], ["HNO_3", "N"], ["HClO_4", "Cl"], ["K_2CrO_4", "Cr"], ["Na_2SO_3", "S"], ["Cr_2O_3", "Cr"], ["V_2O_5", "V"], ["Fe_2O_3", "Fe"]];
 const OX2 = [["H_3PO_2", "P"], ["H_3PO_3", "P"], ["H_4P_2O_7", "P"], ["HClO_2", "Cl"], ["HClO", "Cl"], ["HClO_3", "Cl"], ["H_2S_2O_7", "S"], ["H_2SO_3", "S"], ["HNO_2", "N"], ["H_2SO_4", "S"]];
@@ -1417,7 +1417,7 @@ export const EXAM_IN_KEM = [
         const [f, cat, nc, qc, an, na, qa] = r.pick(IONIC);
         const ans = nc * qc;
         return task({
-          text: L(`How many electrons are transferred in total when one formula unit of $\\mathrm{${f}}$ is formed from its atoms?`, `परमाणुओं से $\\mathrm{${f}}$ की एक सूत्र इकाई बनने में कुल कितने इलेक्ट्रॉन स्थानांतरित होते हैं?`),
+          text: L(`How many electrons are transferred in total when one formula unit of $\\mathrm{${f}}$ is formed from its atoms? (Atomic numbers: ${cat} = ${ZOF[cat]}, ${an} = ${ZOF[an]})`, `परमाणुओं से $\\mathrm{${f}}$ की एक सूत्र इकाई बनने में कुल कितने इलेक्ट्रॉन स्थानांतरित होते हैं? (परमाणु संख्याएँ: ${cat} = ${ZOF[cat]}, ${an} = ${ZOF[an]})`),
           answer: numM(ans, 0, [
             [2 * ans, L("Electrons lost by the metal are the same electrons gained by the non-metal; count them once.", "धातु द्वारा खोए गए इलेक्ट्रॉन ही अधातु ग्रहण करती है; उन्हें एक ही बार गिनिए।")],
             ...(nc > 1 ? [[qc, L(`There are ${nc} ${cat} atoms in one formula unit, and each loses ${qc}.`, `एक सूत्र इकाई में ${nc} ${cat} परमाणु हैं और प्रत्येक ${qc} इलेक्ट्रॉन खोता है।`)]] : []),
@@ -1730,7 +1730,7 @@ export const EXAM_IN_KEM = [
           L("Reversed: with the same 10 electrons, a larger nuclear charge pulls the electrons closer, so the radius decreases as Z increases.", "उलटा क्रम: समान 10 इलेक्ट्रॉनों पर अधिक नाभिकीय आवेश इलेक्ट्रॉनों को पास खींचता है, इसलिए Z बढ़ने पर त्रिज्या घटती है।"),
           (a, b) => L(`${uc(a)} and ${uc(b)} are in the wrong order: compare their nuclear charges.`, `${uc(a)} और ${uc(b)} का क्रम गलत है: इनके नाभिकीय आवेश की तुलना कीजिए।`),
         ),
-        data: { given: ions.map(([s, z]) => `\\mathrm{${s}}: Z = ${z}`), find: ["r_{\\text{ion}}"] },
+        data: false, // Z ionov sodijo v rešitev (niso v besedilu).
         hint: L("Count the electrons in each ion. If they are equal (isoelectronic), compare the nuclear charges.", "प्रत्येक आयन में इलेक्ट्रॉन गिनिए। यदि वे समान हैं (समइलेक्ट्रॉनिक), तो नाभिकीय आवेशों की तुलना कीजिए।"),
         solution: L(
           `Every ion has 10 electrons (isoelectronic): ${ions.map(([s, z]) => `${uc(s)} Z = ${z}`).join(", ")}\nLarger Z → electrons pulled closer → smaller ion.\nOrder: ${sorted.map(uc).join(asc ? " < " : " > ")}`,
@@ -1836,7 +1836,7 @@ export const EXAM_IN_KEM = [
               ...(m.D ? [[oAsM, L("Oxygen forms a double bond and is not counted among the monovalent atoms M.", "ऑक्सीजन द्विआबंध बनाता है और एकसंयोजी परमाणुओं M में नहीं गिना जाता।")]] : []),
               [m.H, L("That is the total number of electron pairs (steric number); subtract the bond pairs.", "यह कुल इलेक्ट्रॉन युग्म (संकरण संख्या) है; आबंधी युग्म घटाइए।")],
             ]),
-            data: { given: [`\\mathrm{${m.f}}`, `V(\\mathrm{${m.c}}) = ${m.V}`], find: ["n_{lp}"] },
+            data: false, // V osrednjega atoma ni v besedilu (učenec ga določi sam).
             hint: hintV,
             formula: "H = \\tfrac{1}{2}(V + M - C + A)",
             solution: steps(m),
@@ -1851,7 +1851,7 @@ export const EXAM_IN_KEM = [
               [mo.nb - mo.na, L("Bond order is half the difference: (Nb − Na)/2.", "आबंध कोटि अंतर का आधा है: (Nb − Na)/2।")],
               [mo.nb / 2, L("Subtract the electrons in antibonding orbitals.", "प्रतिआबंधी कक्षकों के इलेक्ट्रॉन घटाइए।")],
             ]),
-            data: { given: [`N_e = ${ne}`], find: ["\\text{B.O.}"] },
+            data: false, // število elektronov učenec prešteje sam
             hint: L("Count all electrons of the species (adjust for the charge), fill the MO diagram, then use B.O. = ½(Nb − Na).", "स्पीशीज़ के सभी इलेक्ट्रॉन गिनिए (आवेश के अनुसार), MO आरेख भरिए, फिर आबंध कोटि = ½(Nb − Na)।"),
             formula: "\\text{B.O.} = \\tfrac{1}{2}(N_b - N_a)",
             solution: L(
@@ -1919,7 +1919,7 @@ export const EXAM_IN_KEM = [
             [alt.unp, ne <= 14 ? L("For species with up to 14 electrons (B₂, C₂, N₂) the π2p orbitals lie below σ2p.", "14 तक इलेक्ट्रॉन वाली स्पीशीज़ (B₂, C₂, N₂) में π2p कक्षक σ2p से नीचे होते हैं।") : L("For O₂ and heavier species σ2p lies below π2p.", "O₂ और भारी स्पीशीज़ में σ2p, π2p से नीचे होता है।")],
             [mo.unp ? 0 : 2, L("Apply Hund's rule to the two degenerate π orbitals.", "दो समऊर्जीय π कक्षकों पर हुंड का नियम लगाइए।")],
           ]),
-          data: { given: [`N_e = ${ne}`], find: ["n_{\\text{unpaired}}"] },
+          data: false,
           hint: L("Write the MO configuration in the correct energy order and fill degenerate π orbitals singly first (Hund's rule).", "सही ऊर्जा क्रम में MO विन्यास लिखिए और समऊर्जीय π कक्षकों को पहले एक-एक करके भरिए (हुंड का नियम)।"),
           solution: L(
             `Electrons: ${ne} → ${ne <= 14 ? "π2p below σ2p" : "σ2p below π2p"}\n$${mo.cfg}$\nUnpaired electrons: ${mo.unp} → ${mo.unp ? "paramagnetic" : "diamagnetic"}`,
@@ -1945,7 +1945,7 @@ export const EXAM_IN_KEM = [
           kind === 0 ? L("Reversed: a higher bond order means a SHORTER bond.", "उलटा क्रम: अधिक आबंध कोटि का अर्थ छोटा आबंध है।") : L("Reversed: a higher bond order means a STRONGER bond.", "उलटा क्रम: अधिक आबंध कोटि का अर्थ प्रबल आबंध है।"),
           (a, b) => L(`${uc(a)} (B.O. ${en(bo(a))}) and ${uc(b)} (B.O. ${en(bo(b))}) are in the wrong order.`, `${uc(a)} (आबंध कोटि ${en(bo(a))}) और ${uc(b)} (आबंध कोटि ${en(bo(b))}) का क्रम गलत है।`),
         ),
-        data: { given: pool.map((s) => `N_e(\\mathrm{${s}}) = ${ne[s]}`), find: [kind === 0 ? "d" : "\\Delta_{\\text{bond}}H"] },
+        data: false,
         hint: L("Find each bond order from the MO configuration. Higher bond order → shorter and stronger bond.", "MO विन्यास से प्रत्येक की आबंध कोटि ज्ञात कीजिए। अधिक आबंध कोटि → छोटा और प्रबल आबंध।"),
         solution: L(
           `Bond orders: ${pool.map((s) => `${uc(s)} ${en(bo(s))}`).join(", ")}\n${kind === 0 ? "Bond length decreases as bond order increases." : "Bond dissociation enthalpy increases with bond order."}\nOrder: ${sorted.map(uc).join(asc ? " < " : " > ")}`,
@@ -2109,8 +2109,8 @@ export const EXAM_IN_KEM = [
         const M = molar(f);
         return task({
           text: L(
-            `The first member of the ${sEn} homologous series is ${fEn}. What is the molar mass of the ${ORD(n)} member of this series, in g/mol? (C = 12, H = 1, O = 16)`,
-            `${sHi} समजातीय श्रेणी का पहला सदस्य ${fHi} है। इस श्रेणी के ${ORD_HI(n)} सदस्य का मोलर द्रव्यमान (g/mol में) क्या है? (C = 12, H = 1, O = 16)`,
+            `The first member of the ${sEn} homologous series is ${fEn}. What is the molar mass of the ${ORD(n)} member (n = ${n}) of this series, in g/mol? (C = 12, H = 1, O = 16)`,
+            `${sHi} समजातीय श्रेणी का पहला सदस्य ${fHi} है। इस श्रेणी के ${ORD_HI(n)} (n = ${n}) सदस्य का मोलर द्रव्यमान (g/mol में) क्या है? (C = 12, H = 1, O = 16)`,
           ),
           answer: numM(M, 0, [
             ...(k0 > 1 ? [[molar(fn), L(`The first member already has ${k0} carbon atoms, so the ${ORD(n)} member has ${n} + ${k0 - 1} = ${k} carbons.`, `पहले सदस्य में ही ${k0} कार्बन हैं, इसलिए ${ORD_HI(n)} सदस्य में ${n} + ${k0 - 1} = ${k} कार्बन हैं।`)]] : []),
@@ -2427,7 +2427,7 @@ export const EXAM_IN_KEM = [
         if (v === 0) {
           const c = r.pick(CPLX);
           return task({
-            text: L(`How many unpaired electrons are present in the complex ion $\\mathrm{${c.ion}}$ (${GEOM[c.geom][0]})?`, `संकुल आयन $\\mathrm{${c.ion}}$ (${GEOM[c.geom][1]}) में कितने अयुग्मित इलेक्ट्रॉन हैं?`),
+            text: L(`How many unpaired electrons are present in the complex ion $\\mathrm{${c.ion}}$ (${GEOM[c.geom][0]})? (${c.M}: Z = ${c.Z})`, `संकुल आयन $\\mathrm{${c.ion}}$ (${GEOM[c.geom][1]}) में कितने अयुग्मित इलेक्ट्रॉन हैं? (${c.M}: Z = ${c.Z})`),
             answer: numM(c.unp, 0, unpMist(c)),
             data: { given: [`\\mathrm{${c.ion}}`, `Z(\\mathrm{${c.M}}) = ${c.Z}`], find: ["n"] },
             hint: L("Find the oxidation state, then the number of d electrons. Decide whether the ligand is strong-field (pairing) or weak-field.", "ऑक्सीकरण अवस्था, फिर d इलेक्ट्रॉनों की संख्या ज्ञात कीजिए। निर्णय कीजिए कि लिगन्ड प्रबल क्षेत्र (युग्मन) का है या दुर्बल क्षेत्र का।"),
@@ -2474,7 +2474,7 @@ export const EXAM_IN_KEM = [
         const c = r.pick(CPLX.filter((x) => x.unp > 0 || x.hs > 0));
         const mu = Math.sqrt(c.unp * (c.unp + 2));
         return task({
-          text: L(`Calculate the spin-only magnetic moment of $\\mathrm{${c.ion}}$, in BM.${roundToL(2, lang)}`, `$\\mathrm{${c.ion}}$ का केवल-चक्रण चुंबकीय आघूर्ण BM में परिकलित कीजिए।${roundToL(2, lang)}`),
+          text: L(`Calculate the spin-only magnetic moment of $\\mathrm{${c.ion}}$, in BM. (${c.M}: Z = ${c.Z})${roundToL(2, lang)}`, `$\\mathrm{${c.ion}}$ का केवल-चक्रण चुंबकीय आघूर्ण BM में परिकलित कीजिए। (${c.M}: Z = ${c.Z})${roundToL(2, lang)}`),
           answer: numM(mu, 2, [
             ...(c.geom === "oct" ? [[Math.sqrt((c.spin === "low" ? c.hs : LOWN[c.d]) * ((c.spin === "low" ? c.hs : LOWN[c.d]) + 2)), L("The ligand decides the spin state: strong-field ligands (CN⁻, en, NH₃ with Co³⁺) pair the d electrons, weak-field ligands (F⁻, H₂O) do not.", "चक्रण अवस्था लिगन्ड तय करता है: प्रबल क्षेत्र लिगन्ड (CN⁻, en, Co³⁺ के साथ NH₃) d इलेक्ट्रॉनों को युग्मित करते हैं, दुर्बल क्षेत्र लिगन्ड (F⁻, H₂O) नहीं।")]] : []),
             ...(c.geom === "sq" ? [[Math.sqrt(8), L("Square planar d⁸ complexes are diamagnetic (n = 0).", "वर्ग समतलीय d⁸ संकुल प्रतिचुंबकीय होते हैं (n = 0)।")]] : []),
@@ -2505,12 +2505,12 @@ export const EXAM_IN_KEM = [
             [(m / M) * 3 * 143.5, L("Only the Cl⁻ outside the square brackets precipitates.", "केवल बड़े कोष्ठक के बाहर का Cl⁻ अवक्षेपित होता है।")],
             ...(ncl > 1 ? [[(m / M) * 143.5, L(`Each formula unit gives ${ncl} Cl⁻ ions.`, `प्रत्येक सूत्र इकाई ${ncl} Cl⁻ आयन देती है।`)]] : []),
           ]),
-          data: { given: [`m = ${en(m)}\\ \\mathrm{g}`, `\\mathrm{${cf}}`, "M(\\mathrm{AgCl}) = 143.5\\ \\mathrm{g/mol}"], find: ["m(\\mathrm{AgCl})"] },
+          data: { given: [`m = ${en(m)}\\ \\mathrm{g}`, `\\mathrm{${cf}}`, "M(\\mathrm{Ag}) = 108", "M(\\mathrm{Cl}) = 35.5"], find: ["m(\\mathrm{AgCl})"] },
           hint: L("Find the molar mass of the complex, its amount in mol, and multiply by the number of ionisable Cl⁻.", "संकुल का मोलर द्रव्यमान और उसकी मात्रा (mol) ज्ञात कीजिए, फिर आयननीय Cl⁻ की संख्या से गुणा कीजिए।"),
           formula: "m(\\mathrm{AgCl}) = \\dfrac{m}{M} \\cdot n_{\\mathrm{Cl^-}} \\cdot 143.5",
           solution: L(
-            `$M = ${en(M)}\\ \\mathrm{g/mol}$, $n = \\dfrac{${en(m)}}{${en(M)}} = ${en(m / M, 5)}\\ \\mathrm{mol}$\nIonisable Cl⁻: ${ncl} → $n(\\mathrm{AgCl}) = ${en((m / M) * ncl, 5)}\\ \\mathrm{mol}$\n$m(\\mathrm{AgCl}) = ${en((m / M) * ncl, 5)} \\cdot 143.5 \\approx ${en(ans, 2)}\\ \\mathrm{g}$`,
-            `$M = ${en(M)}\\ \\mathrm{g/mol}$, $n = \\dfrac{${en(m)}}{${en(M)}} = ${en(m / M, 5)}\\ \\mathrm{mol}$\nआयननीय Cl⁻: ${ncl} → $n(\\mathrm{AgCl}) = ${en((m / M) * ncl, 5)}\\ \\mathrm{mol}$\n$m(\\mathrm{AgCl}) = ${en((m / M) * ncl, 5)} \\cdot 143.5 \\approx ${en(ans, 2)}\\ \\mathrm{g}$`,
+            `$M = ${en(M)}\\ \\mathrm{g/mol}$, $n = \\dfrac{${en(m)}}{${en(M)}} = ${en(m / M, 5)}\\ \\mathrm{mol}$\nIonisable Cl⁻: ${ncl} → $n(\\mathrm{AgCl}) = ${en((m / M) * ncl, 5)}\\ \\mathrm{mol}$\n$M(\\mathrm{AgCl}) = 108 + 35.5 = 143.5\\ \\mathrm{g/mol}$\n$m(\\mathrm{AgCl}) = ${en((m / M) * ncl, 5)} \\cdot 143.5 \\approx ${en(ans, 2)}\\ \\mathrm{g}$`,
+            `$M = ${en(M)}\\ \\mathrm{g/mol}$, $n = \\dfrac{${en(m)}}{${en(M)}} = ${en(m / M, 5)}\\ \\mathrm{mol}$\nआयननीय Cl⁻: ${ncl} → $n(\\mathrm{AgCl}) = ${en((m / M) * ncl, 5)}\\ \\mathrm{mol}$\n$M(\\mathrm{AgCl}) = 108 + 35.5 = 143.5\\ \\mathrm{g/mol}$\n$m(\\mathrm{AgCl}) = ${en((m / M) * ncl, 5)} \\cdot 143.5 \\approx ${en(ans, 2)}\\ \\mathrm{g}$`,
           ),
         });
       }
@@ -2582,7 +2582,7 @@ export const EXAM_IN_KEM = [
             [-x, L("Check the sign: O is −2 and H, Na, K are +1, so the element here is positive.", "चिह्न जाँचिए: O = −2 और H, Na, K = +1, इसलिए यहाँ तत्व धनात्मक है।")],
             ...extra,
           ]),
-          data: { given: [`\\mathrm{${f}}`, "\\mathrm{O} = -2,\\ \\mathrm{H, Na, K} = +1"], find: [`x(\\mathrm{${E}})`] },
+          data: { given: [`\\mathrm{${f}}`], find: [`x(\\mathrm{${E}})`] },
           hint: L("The sum of all oxidation states in a neutral compound is zero. Use O = −2, H = +1, Na = K = +1.", "उदासीन यौगिक में सभी ऑक्सीकरण अवस्थाओं का योग शून्य होता है। O = −2, H = +1, Na = K = +1 लीजिए।"),
           solution: L(`$${oxLine(f, E)}$\n$x = ${sgn(x)}$`, `$${oxLine(f, E)}$\n$x = ${sgn(x)}$ (ऑक्सीकरण अवस्था)`),
         });
@@ -2709,7 +2709,7 @@ export const EXAM_IN_KEM = [
             [n * (n + 2), L("Take the square root: μ = √(n(n+2)).", "वर्गमूल लीजिए: μ = √(n(n+2))।")],
             [Math.sqrt(d * (d + 2)), L("Use the number of UNPAIRED electrons, not all d electrons.", "अयुग्मित इलेक्ट्रॉनों की संख्या लीजिए, सभी d इलेक्ट्रॉन नहीं।")],
           ]),
-          data: { given: [`Z = ${Z}`, `\\text{${L("charge", "आवेश")}} = ${q}+`], find: ["\\mu"] },
+          data: { given: [`Z = ${Z}`], find: ["\\mu"] },
           hint: L("Write the configuration of the ion, count the unpaired d electrons n, then use μ = √(n(n+2)).", "आयन का विन्यास लिखिए, अयुग्मित d इलेक्ट्रॉन n गिनिए, फिर μ = √(n(n+2)) लीजिए।"),
           formula: "\\mu = \\sqrt{n(n+2)}\\ \\mathrm{BM}",
           solution: L(
@@ -2723,10 +2723,11 @@ export const EXAM_IN_KEM = [
         const x = oxState(f, E, p);
         const naive = E === "O" ? -2 : oxState(f, E, 0);
         const exact = Number.isInteger(x);
+        const avg = !exact || f === "Na_2S_2O_3";
         return task({
           text: L(
-            `What is the ${exact ? "" : "average "}oxidation state of ${E} in $\\mathrm{${f}}$?${exact ? "" : roundToL(2, lang)}`,
-            `$\\mathrm{${f}}$ में ${E} की ${exact ? "" : "औसत "}ऑक्सीकरण अवस्था क्या है?${exact ? "" : roundToL(2, lang)}`,
+            `What is the ${avg ? "average " : ""}oxidation state of ${E} in $\\mathrm{${f}}$?${exact ? "" : roundToL(2, lang)}`,
+            `$\\mathrm{${f}}$ में ${E} की ${avg ? "औसत " : ""}ऑक्सीकरण अवस्था क्या है?${exact ? "" : roundToL(2, lang)}`,
           ),
           answer: numM(x, exact ? 0 : 2, [
             [naive, E === "O" ? L("Oxygen is not −2 here: look at how the O atoms are bonded.", "यहाँ ऑक्सीजन −2 नहीं है: देखिए कि O परमाणु कैसे जुड़े हैं।") : L("Not every O atom is −2: check the structure for –O–O– (peroxide) links.", "हर O परमाणु −2 नहीं है: संरचना में –O–O– (परॉक्साइड) बंध जाँचिए।")],
@@ -2816,7 +2817,7 @@ export const EXAM_IN_KEM = [
             [wrongI, f.includes("[") ? L("The complex ion [Fe(CN)₆]⁴⁻ stays together; CN⁻ is not released.", "संकुल आयन [Fe(CN)₆]⁴⁻ एक साथ रहता है; CN⁻ मुक्त नहीं होता।") : L("Count every ion separately: a subscript 2 or 3 means that many ions.", "हर आयन अलग गिनिए: पादांक 2 या 3 का अर्थ उतने ही आयन।")],
             [1, L("Only non-electrolytes have i = 1; this salt dissociates.", "केवल अविद्युत-अपघट्यों के लिए i = 1; यह लवण वियोजित होता है।")],
           ]),
-          data: { given: [`\\mathrm{${f}}`, "\\alpha = 1"], find: ["i"] },
+          data: { given: [`\\mathrm{${f}}`], find: ["i"] },
           hint: L("Write the dissociation equation and count the ions from one formula unit.", "वियोजन समीकरण लिखिए और एक सूत्र इकाई से बनने वाले आयन गिनिए।"),
           solution: L(`${uc(f)} → ${ions}\n$i = ${i}$`, `${uc(f)} → ${ions}\n$i = ${i}$ (आयनों की संख्या)`),
         });
@@ -2959,8 +2960,8 @@ export const EXAM_IN_KEM = [
         const M = (w * 0.083 * T) / ((piE / 1000) * (V / 1000));
         return task({
           text: L(
-            `${en(w)} g of a protein is dissolved in water to make ${V} mL of solution. At ${T} K its osmotic pressure is ${en(piE)} × 10⁻³ bar. Find the molar mass of the protein in g/mol. (R = 0.083 L bar/(mol K))${roundToL(0, lang)}`,
-            `एक प्रोटीन के ${en(w)} g को जल में घोलकर ${V} mL विलयन बनाया जाता है। ${T} K पर इसका परासरण दाब ${en(piE)} × 10⁻³ bar है। प्रोटीन का मोलर द्रव्यमान g/mol में ज्ञात कीजिए। (R = 0.083 L bar/(mol K))${roundToL(0, lang)}`,
+            `${en(w)} g of a protein is dissolved in water to make ${V} mL of solution. At ${T} K its osmotic pressure is $${en(piE)} \\times 10^{-3}$ bar. Find the molar mass of the protein in g/mol. (R = 0.083 L bar/(mol K))${roundToL(0, lang)}`,
+            `एक प्रोटीन के ${en(w)} g को जल में घोलकर ${V} mL विलयन बनाया जाता है। ${T} K पर इसका परासरण दाब $${en(piE)} \\times 10^{-3}$ bar है। प्रोटीन का मोलर द्रव्यमान g/mol में ज्ञात कीजिए। (R = 0.083 L bar/(mol K))${roundToL(0, lang)}`,
           ),
           answer: numM(M, 0, [
             [M / 1000, L("Convert the volume from mL to L.", "आयतन mL से L में बदलिए।")],
@@ -3025,7 +3026,7 @@ export const EXAM_IN_KEM = [
           ...(nu > 2 ? [[i - 1, L(`One formula unit gives ν = ${nu} ions: divide (i − 1) by ν − 1 = ${nu - 1}.`, `एक सूत्र इकाई से ν = ${nu} आयन बनते हैं: (i − 1) को ν − 1 = ${nu - 1} से भाग दीजिए।`)]] : []),
           [(1.86 * m) / dT, L("i is observed ΔTf divided by the calculated ΔTf (= Kf·m), not the other way round.", "i = प्रेक्षित ΔTf ÷ परिकलित ΔTf (= Kf·m), उलटा नहीं।")],
         ]),
-        data: { given: [`m = ${en(m)}\\ \\mathrm{mol/kg}`, `\\Delta T_f = ${en(dT)}\\ \\mathrm{K}`, `\\nu = ${nu}`, "K_f = 1.86\\ \\mathrm{K\\,kg/mol}"], find: ["\\alpha"] },
+        data: { given: [`m = ${en(m)}\\ \\mathrm{mol/kg}`, `\\Delta T_f = ${en(dT)}\\ \\mathrm{K}`, "K_f = 1.86\\ \\mathrm{K\\,kg/mol}"], find: ["\\alpha"] },
         hint: L("First find i = ΔTf(observed)/(Kf·m); then for ν ions per formula unit, i = 1 + α(ν − 1).", "पहले i = ΔTf(प्रेक्षित)/(Kf·m) ज्ञात कीजिए; फिर प्रति सूत्र इकाई ν आयनों के लिए i = 1 + α(ν − 1)।"),
         formula: "i = \\dfrac{\\Delta T_f}{K_f m},\\quad \\alpha = \\dfrac{i - 1}{\\nu - 1}",
         solution: L(

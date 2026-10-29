@@ -168,7 +168,7 @@ const exiMirrors = {
             [1 / (1 / f + 1 / u), L("From the mirror formula, $1/v = 1/f - 1/u$; you added $1/u$.", "दर्पण सूत्र से $1/v = 1/f - 1/u$; आपने $1/u$ जोड़ दिया।")],
             [mirV(F, u), L("The focal length of a concave mirror is negative.", "अवतल दर्पण की फोकस दूरी ऋणात्मक होती है।")],
           ]),
-          data: { given: [q("u", u, "cm"), q("f", f, "cm")], find: ["v"] },
+          data: { given: [q("|u|", U, "cm"), q("|f|", F, "cm")], find: ["v"] },
           hint: L(...MIRROR_HINT),
           formula: MIRROR_FORMULA,
           solution: L(
@@ -193,7 +193,7 @@ const exiMirrors = {
             [mirV(-F, u), L("The focal length of a convex mirror is positive.", "उत्तल दर्पण की फोकस दूरी धनात्मक होती है।")],
             [1 / (1 / f + 1 / u), L("From the mirror formula, $1/v = 1/f - 1/u$; you added $1/u$.", "दर्पण सूत्र से $1/v = 1/f - 1/u$; आपने $1/u$ जोड़ दिया।")],
           ]),
-          data: { given: [q("u", u, "cm"), q("f", "+" + f, "cm")], find: ["v"] },
+          data: { given: [q("|u|", U, "cm"), q("|f|", F, "cm")], find: ["v"] },
           hint: L(...MIRROR_HINT),
           formula: MIRROR_FORMULA,
           solution: L(
@@ -205,7 +205,7 @@ const exiMirrors = {
       if (vr === 2) {
         const [F, U] = r.pick(MIR_REAL);
         const u = -U;
-        const v = mirV(-F, u);
+        const v = Math.round(mirV(-F, u));
         const V = -v;
         const m = -v / u;
         return task({
@@ -217,7 +217,7 @@ const exiMirrors = {
             [-m, L("A real image is inverted, so $m$ is negative.", "वास्तविक प्रतिबिंब उल्टा होता है, अतः $m$ ऋणात्मक होता है।")],
             [u / v, L("Magnification is $m = -v/u$, not $u/v$.", "आवर्धन $m = -v/u$ होता है, $u/v$ नहीं।")],
           ]),
-          data: { given: [q("u", u, "cm"), q("v", v, "cm")], find: ["m"] },
+          data: { given: [q("|u|", U, "cm"), q("|v|", V, "cm")], find: ["m"] },
           hint: L("Both the object and the real image are in front of the mirror, so u and v are both negative.", "बिंब और वास्तविक प्रतिबिंब दोनों दर्पण के सामने हैं, अतः u और v दोनों ऋणात्मक हैं।"),
           formula: "m = -\\dfrac{v}{u} = \\dfrac{h'}{h}",
           solution: L(
@@ -256,7 +256,7 @@ const exiMirrors = {
             [h / m, L("Use $h' = m h$; you divided by $m$.", "$h' = m h$ लीजिए; आपने $m$ से भाग दे दिया।")],
             [(-mirV(-f, u) / u) * h, L(cvx ? "The focal length of a convex mirror is positive." : "The focal length of a concave mirror is negative.", cvx ? "उत्तल दर्पण की फोकस दूरी धनात्मक होती है।" : "अवतल दर्पण की फोकस दूरी ऋणात्मक होती है।")],
           ]),
-          data: { given: [q("h", h, "cm"), q("u", u, "cm"), q("f", cvx ? "+" + f : f, "cm")], find: ["h'"] },
+          data: { given: [q("h", h, "cm"), q("|u|", U, "cm"), q("|f|", F, "cm")], find: ["h'"] },
           hint: L("First find v from the mirror formula, then the magnification.", "पहले दर्पण सूत्र से v ज्ञात कीजिए, फिर आवर्धन।"),
           formula: [MIRROR_FORMULA, "m = -\\dfrac{v}{u} = \\dfrac{h'}{h}"],
           solution: L(
@@ -280,7 +280,7 @@ const exiMirrors = {
             [-mirV(F, u) / u, L("The focal length of a concave mirror is negative.", "अवतल दर्पण की फोकस दूरी ऋणात्मक होती है।")],
             [u / v, L("Magnification is $m = -v/u$, not $u/v$.", "आवर्धन $m = -v/u$ होता है, $u/v$ नहीं।")],
           ]),
-          data: { given: [q("u", u, "cm"), q("f", f, "cm")], find: ["m"] },
+          data: { given: [q("|u|", U, "cm"), q("|f|", F, "cm")], find: ["m"] },
           hint: L("Find v first; a positive v means the image is behind the mirror.", "पहले v ज्ञात कीजिए; धनात्मक v का अर्थ है कि प्रतिबिंब दर्पण के पीछे है।"),
           formula: [MIRROR_FORMULA, "m = -\\dfrac{v}{u}"],
           solution: L(
@@ -304,7 +304,7 @@ const exiMirrors = {
             `${F} cm फोकस दूरी वाले ${cvx ? "उत्तल" : "अवतल"} दर्पण के सामने ${en(U)} cm पर एक बिंब रखा है। प्रतिबिंब का सही वर्णन कौन-सा है?`
           ),
           answer,
-          data: { given: [q("u", -U, "cm"), q("f", cvx ? "+" + F : -F, "cm"), q("R", cvx ? "+" + 2 * F : -2 * F, "cm")], find: [tx(L, ["image", "प्रतिबिंब"])] },
+          data: { given: [q("|u|", U, "cm"), q("|f|", F, "cm")], find: [tx(L, ["image", "प्रतिबिंब"])] },
           hint: L("Compare the object distance with f and with R = 2f.", "बिंब की दूरी की तुलना f से और R = 2f से कीजिए।"),
           formula: "R = 2f",
           solution: L(
@@ -326,7 +326,7 @@ const exiMirrors = {
           [mirV(-R, u), L("The mirror formula needs the focal length: $f = R/2$.", "दर्पण सूत्र में फोकस दूरी चाहिए: $f = R/2$।")],
           [-v, L("Check the sign: a real image is in front of the mirror.", "चिह्न जाँचिए: वास्तविक प्रतिबिंब दर्पण के सामने बनता है।")],
         ]),
-        data: { given: [q("R", -R, "cm"), q("u", u, "cm")], find: ["v"] },
+        data: { given: [q("|R|", R, "cm"), q("|u|", U, "cm")], find: ["v"] },
         hint: L("First get the focal length from the radius of curvature.", "पहले वक्रता त्रिज्या से फोकस दूरी ज्ञात कीजिए।"),
         formula: ["f = \\dfrac{R}{2}", MIRROR_FORMULA],
         solution: L(
@@ -354,7 +354,7 @@ const exiMirrors = {
           [fOther, L(real ? "A real image is inverted: take $m$ negative." : "A virtual image is erect: take $m$ positive.", real ? "वास्तविक प्रतिबिंब उल्टा होता है: $m$ ऋणात्मक लीजिए।" : "आभासी प्रतिबिंब सीधा होता है: $m$ धनात्मक लीजिए।")],
           [-f, L("The focal length of a concave mirror is negative.", "अवतल दर्पण की फोकस दूरी ऋणात्मक होती है।")],
         ]),
-        data: { given: [q("u", u, "cm"), q("m", m > 0 ? "+" + m : m)], find: ["v", "f"] },
+        data: { given: [q("|u|", U, "cm"), q("|m|", n)], find: ["v", "f"] },
         hint: L("Decide the sign of m from the nature of the image, then get v from $m = -v/u$.", "प्रतिबिंब की प्रकृति से m का चिह्न तय कीजिए, फिर $m = -v/u$ से v निकालिए।"),
         formula: ["m = -\\dfrac{v}{u}", MIRROR_FORMULA],
         solution: L(
@@ -381,8 +381,8 @@ const exiMirrors = {
         hint: L("Write v in terms of u using $m = -v/u$, then put it into the mirror formula.", "$m = -v/u$ से v को u के पदों में लिखिए, फिर दर्पण सूत्र में रखिए।"),
         formula: ["m = -\\dfrac{v}{u}", MIRROR_FORMULA],
         solution: L(
-          `$m = +\\frac{1}{${n}}$ → $v = -\\dfrac{u}{${n}}$\n$\\dfrac{1}{v} + \\dfrac{1}{u} = -\\dfrac{${n}}{u} + \\dfrac{1}{u} = -\\dfrac{${n - 1}}{u} = \\dfrac{1}{f}$\n$u = ${n === 2 ? "-f" : `-${n - 1} f`} = ${n === 2 ? "" : `-${n - 1} \\cdot `}${n === 2 ? -F : F} = ${u}$ cm`,
-          `$m = +\\frac{1}{${n}}$ → $v = -\\dfrac{u}{${n}}$\n$\\dfrac{1}{v} + \\dfrac{1}{u} = -\\dfrac{${n}}{u} + \\dfrac{1}{u} = -\\dfrac{${n - 1}}{u} = \\dfrac{1}{f}$\n$u = ${n === 2 ? "-f" : `-${n - 1} f`} = ${n === 2 ? "" : `-${n - 1} \\cdot `}${n === 2 ? -F : F} = ${u}$ cm`
+          `$m = +\\frac{1}{${n}}$ → $v = -\\dfrac{u}{${n}}$\n$\\dfrac{1}{v} + \\dfrac{1}{u} = -\\dfrac{${n}}{u} + \\dfrac{1}{u} = -\\dfrac{${n - 1}}{u} = \\dfrac{1}{f}$\n$u = ${n === 2 ? "-f" : `-${n - 1} f = -${n - 1} \\cdot ${F}`} = ${u}$ cm`,
+          `$m = +\\frac{1}{${n}}$ → $v = -\\dfrac{u}{${n}}$\n$\\dfrac{1}{v} + \\dfrac{1}{u} = -\\dfrac{${n}}{u} + \\dfrac{1}{u} = -\\dfrac{${n - 1}}{u} = \\dfrac{1}{f}$\n$u = ${n === 2 ? "-f" : `-${n - 1} f = -${n - 1} \\cdot ${F}`} = ${u}$ cm`
         ),
       });
     }
@@ -404,7 +404,7 @@ const exiMirrors = {
           [-h2, L("An image on a screen is real and inverted, so $h'$ is negative.", "परदे पर बना प्रतिबिंब वास्तविक और उल्टा होता है, अतः $h'$ ऋणात्मक है।")],
           [h / m, L("Use $h' = m h$; you divided by $m$.", "$h' = m h$ लीजिए; आपने $m$ से भाग दे दिया।")],
         ]),
-        data: { given: [q("h", h, "cm"), q("u", u, "cm"), q("R", -R, "cm")], find: ["v", "h'"] },
+        data: { given: [q("h", h, "cm"), q("|u|", U, "cm"), q("|R|", R, "cm")], find: ["v", "h'"] },
         hint: L("Three steps: f from R, then v from the mirror formula, then h' from the magnification.", "तीन चरण: R से f, फिर दर्पण सूत्र से v, फिर आवर्धन से h'।"),
         formula: ["f = \\dfrac{R}{2}", MIRROR_FORMULA, "m = -\\dfrac{v}{u} = \\dfrac{h'}{h}"],
         solution: L(
@@ -582,7 +582,7 @@ const exiPower = {
             [(((Pb * hb + Pj * hj) * 30) / 1000) * rate, L(`There are ${nb} lamps, not one.`, `लैंप ${nb} हैं, एक नहीं।`)],
             [cost * 1000, L("1 unit is 1 kWh: convert W·h to kWh.", "1 यूनिट = 1 kWh: W·h को kWh में बदलिए।")],
           ]),
-          data: { given: [`${nb} \\times ${Pb}\\ \\mathrm{W},\\ t = ${hb}\\ \\mathrm{h}`, `${Pj}\\ \\mathrm{W},\\ t = ${en(hj)}\\ \\mathrm{h}`, `30\\ ${tx(L, ["days", "दिन"])}`, `\\text{₹}\\,${en(rate)}\\ /\\ \\mathrm{kWh}`], find: [L("\\text{cost}", "\\text{खर्च}")] },
+          data: { given: [`P = ${nb} \\times ${Pb}\\ \\mathrm{W},\\ t = ${hb}\\ \\mathrm{h}`, `P = ${Pj}\\ \\mathrm{W},\\ t = ${en(hj)}\\ \\mathrm{h}`, `${tx(L, ["time", "समय"])} = 30\\ ${tx(L, ["days", "दिन"])}`, `${tx(L, ["rate", "दर"])} = \\text{₹}\\,${en(rate)}\\ /\\ \\mathrm{kWh}`], find: [L("\\text{cost}", "\\text{खर्च}")] },
           hint: L("Find the energy used in one day in kWh first.", "पहले एक दिन में खर्च ऊर्जा kWh में ज्ञात कीजिए।"),
           formula: ["E = P t", "\\text{cost} = E \\cdot \\text{rate}"],
           solution: L(
@@ -743,7 +743,7 @@ const exiPower = {
         [Pw / 1000, L("The energy came out in kWh, so the power is in kW; convert it to W.", "ऊर्जा kWh में आई, अतः शक्ति kW में है; उसे W में बदलिए।")],
         [Pw * 30, L("Divide by the total time, $30 \\times$ hours per day.", "कुल समय, $30 \\times$ प्रतिदिन घंटे, से भाग दीजिए।")],
       ]),
-      data: { given: [`\\text{₹}\\,${en(bill)}`, `\\text{₹}\\,${rate}\\ /\\ \\mathrm{kWh}`, q("t", `30 \\cdot ${h}`, "h")], find: ["P"] },
+      data: { given: [`${tx(L, ["bill", "बिल"])} = \\text{₹}\\,${en(bill)}`, `${tx(L, ["rate", "दर"])} = \\text{₹}\\,${rate}\\ /\\ \\mathrm{kWh}`, q("t", `30 \\cdot ${h}`, "h")], find: ["P"] },
       hint: L("The bill and the rate give the number of units (kWh).", "बिल और दर से यूनिटों (kWh) की संख्या मिलती है।"),
       formula: ["E = \\dfrac{\\text{bill}}{\\text{rate}}", "P = \\dfrac{E}{t}"],
       solution: L(
@@ -764,7 +764,7 @@ const LEVERS = [
   ["a wheelbarrow", "हाथ-ठेला (व्हीलबैरो)", 2, ["the load in the tray is between the wheel (fulcrum) and the handles (effort)", "ट्रे का भार पहिए (आलंब) और हत्थों (आयास) के बीच है"]],
   ["a nutcracker", "सरौता (नटक्रैकर)", 2, ["the nut (load) is between the hinge (fulcrum) and the handles (effort)", "मेवा (भार) कब्ज़े (आलंब) और हत्थों (आयास) के बीच है"]],
   ["a bottle opener", "बोतल ओपनर", 2, ["the cap edge (load) is between the fulcrum on top of the cap and the hand (effort)", "ढक्कन का किनारा (भार) ढक्कन के ऊपर के आलंब और हाथ (आयास) के बीच है"]],
-  ["a lemon squeezer", "नींबू निचोड़ने का यंत्र", 2, ["the lemon (load) is between the hinge (fulcrum) and the handles (effort)", "नींबू (भार) कब्ज़े (आलंब) और हत्थों (आयास) के बीच है"]],
+  ["a lemon squeezer", "नींबू-निचोड़क", 2, ["the lemon (load) is between the hinge (fulcrum) and the handles (effort)", "नींबू (भार) कब्ज़े (आलंब) और हत्थों (आयास) के बीच है"]],
   ["a pair of fire tongs", "चिमटा", 3, ["the hand (effort) is between the hinge (fulcrum) and the coal held at the tips (load)", "हाथ (आयास) कब्ज़े (आलंब) और सिरों पर पकड़े कोयले (भार) के बीच है"]],
   ["a pair of sugar tongs", "चीनी उठाने की चिमटी", 3, ["the fingers (effort) are between the hinge (fulcrum) and the sugar cube (load)", "उँगलियाँ (आयास) कब्ज़े (आलंब) और चीनी के टुकड़े (भार) के बीच हैं"]],
   ["the human forearm lifting a load", "भार उठाती मानव अग्रबाहु", 3, ["the biceps muscle (effort) pulls between the elbow (fulcrum) and the load in the hand", "द्विशिर पेशी (आयास) कोहनी (आलंब) और हाथ के भार के बीच खींचती है"]],
@@ -838,7 +838,9 @@ const exiMachines = {
         });
       }
       if (vr === 1) {
-        const k = r.int(0, LEVERS.length - 1);
+        // Brez tehtnice (enaki ročici, MA = 1 ne glede na mult).
+        const k0 = r.int(0, LEVERS.length - 2);
+        const k = k0 >= 2 ? k0 + 1 : k0;
         const cls = LEVERS[k][2];
         const base = r.pick([2, 3, 4, 5, 6, 8]);
         const mult = r.pick([2, 3, 4]);
@@ -1274,7 +1276,7 @@ const exiMoments = {
       return task({
         text: L(`A uniform metre rule balances at the ${x0} cm mark when a mass of ${m} g hangs at the ${a} cm mark. Find the mass of the metre rule, in g.${RT(M, 1, lang)}`, `जब ${a} cm चिह्न पर ${m} g का द्रव्यमान लटका हो, तब एक एकसमान मीटर पैमाना ${x0} cm चिह्न पर संतुलित होता है। मीटर पैमाने का द्रव्यमान g में ज्ञात कीजिए।${RT(M, 1, lang)}`),
         answer: numM(M, 1, [[(m * (50 - x0)) / (x0 - a), L("Each weight is multiplied by its own distance from the pivot; you swapped them.", "हर भार को धुरी से उसकी अपनी दूरी से गुणा कीजिए; आपने दूरियाँ बदल दीं।")], [(m * x0) / 50, L("The rule's weight acts at the 50 cm mark; measure both distances from the pivot.", "पैमाने का भार 50 cm चिह्न पर लगता है; दोनों दूरियाँ धुरी से मापिए।")]]),
-        data: { given: [q("x_0", x0, "cm"), q("m", m, "g"), q("x", a, "cm"), q("x_{CG}", 50, "cm")], find: ["M"] },
+        data: { given: [q("x_0", x0, "cm"), q("m", m, "g"), q("x", a, "cm")], find: ["M"] },
         hint: L("The weight of a uniform rule acts at its centre of gravity, the 50 cm mark.", "एकसमान पैमाने का भार उसके गुरुत्व केंद्र, 50 cm चिह्न, पर लगता है।"),
         formula: "m\\,(x_0 - x) = M\\,(50 - x_0)",
         solution: L(
@@ -1314,7 +1316,7 @@ const exiMoments = {
       return task({
         text: L(`A uniform metre rule of mass ${M} g has a ${m} g mass attached at its 0 cm mark. At which mark will the rule balance on a knife edge?${RT(x, 1, lang)}`, `${M} g द्रव्यमान वाले एकसमान मीटर पैमाने के 0 cm चिह्न पर ${m} g का द्रव्यमान बँधा है। पैमाना किस चिह्न पर चाकू की धार पर संतुलित होगा?${RT(x, 1, lang)}`),
         answer: numM(x, 1, [[(50 * m) / (M + m), L("Each mass is multiplied by its own distance from the knife edge; check which side is which.", "हर द्रव्यमान को धार से उसकी अपनी दूरी से गुणा कीजिए; जाँचिए कि कौन किस ओर है।")], [50, L("The extra mass shifts the balance point towards it.", "अतिरिक्त द्रव्यमान संतुलन बिंदु को अपनी ओर खिसका देता है।")], [(50 * M) / m > 100 ? 50 - m / 2 : (50 * M) / m, L("Write the moment equation about the knife edge: $m x = M (50 - x)$.", "धार के परितः आघूर्ण समीकरण लिखिए: $m x = M (50 - x)$।")]]),
-        data: { given: [q("M", M, "g"), q("m", m, "g"), q("x_{CG}", 50, "cm")], find: ["x"] },
+        data: { given: [q("M", M, "g"), q("m", m, "g")], find: ["x"] },
         hint: L("Let the knife edge be at x cm; the extra mass is x cm away on one side, the rule's CG (50 − x) cm on the other.", "मान लीजिए धार x cm पर है; अतिरिक्त द्रव्यमान एक ओर x cm दूर है, पैमाने का गुरुत्व केंद्र दूसरी ओर (50 − x) cm दूर।"),
         formula: "m x = M (50 - x)",
         solution: L(
@@ -1358,10 +1360,12 @@ const METALS = [
   ["brass", "पीतल", 0.38],
   ["lead", "सीसा", 0.13],
 ];
+// Hindijski tvorilnik (ताँबा → ताँबे के, लोहा → लोहे की).
+const oblHi = (s) => s.replace(/ा$/, "े");
 const CALOR_FACTS = [
   {
     q: ["Why does a burn from steam at 100 °C hurt more than one from boiling water at 100 °C?", "100 °C की भाप से जलना 100 °C के उबलते पानी से जलने की तुलना में अधिक कष्टदायक क्यों होता है?"],
-    g: ["L_v = 2260\\ \\mathrm{J\\,g^{-1}}", "L_v = 2260\\ \\mathrm{J\\,g^{-1}}"],
+    g: ["L_v", "L_v"],
     ok: ["Steam gives out its latent heat of vaporisation (2260 J per g) as it condenses on the skin", "भाप त्वचा पर संघनित होते समय वाष्पन की गुप्त ऊष्मा (2260 J प्रति g) छोड़ती है"],
     wrong: [
       [["Steam is at a higher temperature than boiling water", "भाप का ताप उबलते पानी से अधिक होता है"], ["Both are at 100 °C here; the difference is the latent heat.", "यहाँ दोनों 100 °C पर हैं; अंतर गुप्त ऊष्मा का है।"]],
@@ -1372,7 +1376,7 @@ const CALOR_FACTS = [
   },
   {
     q: ["Why does ice at 0 °C cool a drink better than the same mass of water at 0 °C?", "0 °C की बर्फ़ किसी पेय को उतने ही द्रव्यमान के 0 °C के पानी से अधिक ठंडा क्यों करती है?"],
-    g: ["L_f = 336\\ \\mathrm{J\\,g^{-1}}", "L_f = 336\\ \\mathrm{J\\,g^{-1}}"],
+    g: ["L_f", "L_f"],
     ok: ["Ice absorbs 336 J per g of latent heat while melting, before it starts to warm up", "गर्म होने से पहले बर्फ़ पिघलते समय 336 J प्रति g गुप्त ऊष्मा अवशोषित करती है"],
     wrong: [
       [["Ice is at a lower temperature than water at 0 °C", "बर्फ़ का ताप 0 °C के पानी से कम होता है"], ["Both are at 0 °C; the difference is the heat absorbed in melting.", "दोनों 0 °C पर हैं; अंतर पिघलने में अवशोषित ऊष्मा का है।"]],
@@ -1383,7 +1387,7 @@ const CALOR_FACTS = [
   },
   {
     q: ["Farmers flood their fields with water on a frosty night. Why does this protect the crops?", "पाले वाली रात में किसान खेतों में पानी भर देते हैं। इससे फसल की रक्षा क्यों होती है?"],
-    g: ["c_{water} = 4.2\\ \\mathrm{J\\,g^{-1}\\,{}^\\circ C^{-1}}", "c_{water} = 4.2\\ \\mathrm{J\\,g^{-1}\\,{}^\\circ C^{-1}}"],
+    g: ["c_{water}", "c_{water}"],
     ok: ["Water has a high specific heat capacity, so it gives out a lot of heat as it cools and the soil stays warmer", "पानी की विशिष्ट ऊष्मा धारिता अधिक है, इसलिए ठंडा होते समय वह बहुत ऊष्मा देता है और मिट्टी गर्म रहती है"],
     wrong: [
       [["Water has a low specific heat capacity, so it warms the soil quickly", "पानी की विशिष्ट ऊष्मा धारिता कम है, इसलिए वह मिट्टी को जल्दी गर्म करता है"], ["Water's specific heat capacity is high, not low.", "पानी की विशिष्ट ऊष्मा धारिता अधिक है, कम नहीं।"]],
@@ -1436,7 +1440,7 @@ const exiCalorimetry = {
         const m = r.pick([100, 200, 250, 400, 500, 1000]);
         const C = m * c;
         return task({
-          text: L(`Find the heat capacity of a ${m} g ${mEn} block, in J °C⁻¹. (Specific heat capacity of ${mEn}: ${en(c)} J g⁻¹ °C⁻¹)`, `${m} g के ${mHi} के गुटके की ऊष्मा धारिता J °C⁻¹ में ज्ञात कीजिए। (${mHi} की विशिष्ट ऊष्मा धारिता: ${en(c)} J g⁻¹ °C⁻¹)`),
+          text: L(`Find the heat capacity of a ${m} g ${mEn} block, in J °C⁻¹. (Specific heat capacity of ${mEn}: ${en(c)} J g⁻¹ °C⁻¹)`, `${m} g के ${oblHi(mHi)} के गुटके की ऊष्मा धारिता J °C⁻¹ में ज्ञात कीजिए। (${oblHi(mHi)} की विशिष्ट ऊष्मा धारिता: ${en(c)} J g⁻¹ °C⁻¹)`),
           answer: numM(C, 1, [[m / c, L("Heat capacity = mass × specific heat capacity.", "ऊष्मा धारिता = द्रव्यमान × विशिष्ट ऊष्मा धारिता।")], [c, L("That is per gram; the heat capacity is for the whole block.", "यह प्रति ग्राम है; ऊष्मा धारिता पूरे गुटके की होती है।")]]),
           data: { given: [q("m", m, "g"), q("c", c, "J\\,g^{-1}\\,{}^\\circ C^{-1}")], find: ["C"] },
           hint: L("Heat capacity is the heat needed to raise the whole body by 1 °C.", "ऊष्मा धारिता पूरी वस्तु का ताप 1 °C बढ़ाने के लिए आवश्यक ऊष्मा है।"),
@@ -1530,7 +1534,7 @@ const exiCalorimetry = {
         const Tw = r.pick([20, 25, 30]);
         const T = (mm * c * Tm + mw * CW * Tw) / (mm * c + mw * CW);
         return task({
-          text: L(`A ${mm} g ${mEn} ball at ${Tm} °C is dropped into ${mw} g of water at ${Tw} °C. Neglecting heat losses, find the final temperature in °C. (c: ${mEn} ${en(c)}, water 4.2 J g⁻¹ °C⁻¹)${RT(T, 1, lang)}`, `${Tm} °C पर ${mm} g की ${mHi} की गेंद को ${Tw} °C के ${mw} g पानी में डाला जाता है। ऊष्मा हानि नगण्य मानकर अंतिम ताप °C में ज्ञात कीजिए। (c: ${mHi} ${en(c)}, पानी 4.2 J g⁻¹ °C⁻¹)${RT(T, 1, lang)}`),
+          text: L(`A ${mm} g ${mEn} ball at ${Tm} °C is dropped into ${mw} g of water at ${Tw} °C. Neglecting heat losses, find the final temperature in °C. (c: ${mEn} ${en(c)}, water 4.2 J g⁻¹ °C⁻¹)${RT(T, 1, lang)}`, `${Tm} °C पर ${mm} g की ${oblHi(mHi)} की गेंद को ${Tw} °C के ${mw} g पानी में डाला जाता है। ऊष्मा हानि नगण्य मानकर अंतिम ताप °C में ज्ञात कीजिए। (c: ${mHi} ${en(c)}, पानी 4.2 J g⁻¹ °C⁻¹)${RT(T, 1, lang)}`),
           answer: numM(T, 1, [[(mm * Tm + mw * Tw) / (mm + mw), L("The specific heat capacities differ; include c for each body.", "विशिष्ट ऊष्मा धारिताएँ अलग हैं; हर वस्तु के लिए c लीजिए।")], [(Tm + Tw) / 2, L("A simple average ignores the masses and heat capacities.", "साधारण औसत द्रव्यमानों और ऊष्मा धारिताओं को छोड़ देता है।")]]),
           data: { given: [q("m_1", mm, "g"), q("c_1", c, "J\\,g^{-1}\\,{}^\\circ C^{-1}"), q("T_1", Tm, "{}^\\circ C"), q("m_2", mw, "g"), q("T_2", Tw, "{}^\\circ C")], find: ["T"] },
           hint: L("Heat lost by the metal = heat gained by the water.", "धातु द्वारा दी गई ऊष्मा = पानी द्वारा ली गई ऊष्मा।"),
@@ -1566,12 +1570,12 @@ const exiCalorimetry = {
       return task({
         text: L(`An immersion heater of ${P} W warms ${m / 1000} kg of water from ${T1} °C to ${T2} °C. Assuming no heat loss, how long does it take, in s? ${CONST_W[0]}${RT(t, 0, lang)}`, `${P} W का एक निमज्जन हीटर ${m / 1000} kg पानी को ${T1} °C से ${T2} °C तक गर्म करता है। ऊष्मा हानि न मानकर इसमें कितना समय (s में) लगेगा? ${CONST_W[1]}${RT(t, 0, lang)}`),
         answer: numM(t, 0, [[(m / 1000) * CW * (T2 - T1) / P, L("c is given per gram: use the mass in grams.", "c प्रति ग्राम दिया है: द्रव्यमान ग्राम में लीजिए।")], [(m * CW * T2) / P, L("Use the temperature rise, not the final temperature.", "अंतिम ताप नहीं, ताप वृद्धि लीजिए।")]]),
-        data: { given: [q("P", P, "W"), q("m", m, "g"), q("\\Delta T", T2 - T1, "{}^\\circ C"), q("c", 4.2, "J\\,g^{-1}\\,{}^\\circ C^{-1}")], find: ["Q", "t"] },
+        data: { given: [q("P", P, "W"), q("m", m / 1000, "kg"), q("T_1", T1, "{}^\\circ C"), q("T_2", T2, "{}^\\circ C"), q("c", 4.2, "J\\,g^{-1}\\,{}^\\circ C^{-1}")], find: ["Q", "t"] },
         hint: L("Find the heat needed, then use P = Q/t.", "आवश्यक ऊष्मा ज्ञात कीजिए, फिर P = Q/t लीजिए।"),
         formula: ["Q = m c \\Delta T", "t = \\dfrac{Q}{P}"],
         solution: L(
-          `$m = ${m}$ g\n$Q = ${m} \\cdot 4.2 \\cdot ${T2 - T1} = ${en(m * CW * (T2 - T1))}$ J\n$t = \\dfrac{${en(m * CW * (T2 - T1))}}{${P}} ${ev(t, 0)}$ s`,
-          `$m = ${m}$ g\n$Q = ${m} \\cdot 4.2 \\cdot ${T2 - T1} = ${en(m * CW * (T2 - T1))}$ J\n$t = \\dfrac{${en(m * CW * (T2 - T1))}}{${P}} ${ev(t, 0)}$ s`
+          `$m = ${en(m / 1000)}$ kg $= ${m}$ g\n$Q = ${m} \\cdot 4.2 \\cdot ${T2 - T1} = ${en(m * CW * (T2 - T1))}$ J\n$t = \\dfrac{${en(m * CW * (T2 - T1))}}{${P}} ${ev(t, 0)}$ s`,
+          `$m = ${en(m / 1000)}$ kg $= ${m}$ g\n$Q = ${m} \\cdot 4.2 \\cdot ${T2 - T1} = ${en(m * CW * (T2 - T1))}$ J\n$t = \\dfrac{${en(m * CW * (T2 - T1))}}{${P}} ${ev(t, 0)}$ s`
         ),
       });
     }
@@ -1685,7 +1689,7 @@ const AC_FACTS = [
   },
   {
     q: ["What is the average power used by an ideal capacitor (or ideal inductor) over a complete ac cycle?", "एक आदर्श संधारित्र (या आदर्श प्रेरक) द्वारा ac के पूरे चक्र में उपयोग की गई औसत शक्ति कितनी है?"],
-    g: ["\\phi = \\pi/2", "\\phi = \\pi/2"],
+    g: ["\\cos\\phi", "\\cos\\phi"],
     ok: ["Zero, because the phase difference is π/2 and cos φ = 0", "शून्य, क्योंकि कलांतर π/2 है और cos φ = 0"],
     wrong: [
       [["V_rms × I_rms, as in a resistor", "प्रतिरोधक की तरह V_rms × I_rms"], ["$P = V_{rms} I_{rms} \\cos\\phi$; for φ = π/2 the power factor is zero.", "$P = V_{rms} I_{rms} \\cos\\phi$; φ = π/2 के लिए शक्ति गुणांक शून्य है।"]],
@@ -1707,7 +1711,7 @@ const AC_FACTS = [
   },
   {
     q: ["Why does a capacitor block steady dc but allow ac to flow in the circuit?", "संधारित्र स्थिर dc को क्यों रोकता है पर ac को परिपथ में बहने देता है?"],
-    g: ["X_C = \\dfrac{1}{2\\pi f C}", "X_C = \\dfrac{1}{2\\pi f C}"],
+    g: ["X_C", "X_C"],
     ok: ["For dc, f = 0, so the reactance X_C is infinite; for ac it is finite", "dc के लिए f = 0, अतः प्रतिघात X_C अनंत है; ac के लिए यह परिमित है"],
     wrong: [
       [["For dc, X_C is zero", "dc के लिए X_C शून्य है"], ["$X_C = 1/(2\\pi f C)$ grows without limit as f → 0.", "f → 0 होने पर $X_C = 1/(2\\pi f C)$ असीमित रूप से बढ़ता है।"]],
@@ -1858,7 +1862,7 @@ const exiAC = {
         const ImA = (V / XC) * 1000;
         return task({
           text: L(`A ${C} µF capacitor is connected to a ${V} V, 50 Hz ac supply. Find the rms current, in mA.${RT(ImA, 1, lang)}`, `${C} µF का एक संधारित्र ${V} V, 50 Hz ac आपूर्ति से जुड़ा है। rms धारा mA में ज्ञात कीजिए।${RT(ImA, 1, lang)}`),
-          answer: numM(ImA, 1, [[ImA / 1000, L("Convert A to mA.", "A को mA में बदलिए।")], [V * f * C * 1e-6 * 1000, L("$X_C = 1/(2\\pi f C)$; include 2π.", "$X_C = 1/(2\\pi f C)$; 2π शामिल कीजिए।")], [ImA * Math.SQRT2, L("220 V is already an rms value; do not multiply by √2.", "220 V पहले से ही rms मान है; √2 से गुणा मत कीजिए।")]]),
+          answer: numM(ImA, 1, [[ImA / 1000, L("Convert A to mA.", "A को mA में बदलिए।")], [V * f * C * 1e-6 * 1000, L("$X_C = 1/(2\\pi f C)$; include 2π.", "$X_C = 1/(2\\pi f C)$; 2π शामिल कीजिए।")], [ImA * Math.SQRT2, L(`${V} V is already an rms value; do not multiply by √2.`, `${V} V पहले से ही rms मान है; √2 से गुणा मत कीजिए।`)]]),
           data: { given: [q("C", C, "\\mu F"), q("V", V, "V"), q("f", 50, "Hz")], find: ["X_C", "I"] },
           hint: L("Find the capacitive reactance, then I = V/X_C.", "धारितीय प्रतिघात ज्ञात कीजिए, फिर I = V/X_C।"),
           formula: ["X_C = \\dfrac{1}{2\\pi f C}", "I = \\dfrac{V}{X_C}"],
@@ -1987,7 +1991,7 @@ const exiRotation = {
         const R = Rcm / 100;
         const I = kv(k) * M * R * R;
         return task({
-          text: L(`Find the moment of inertia of a ${bEn} of mass ${en(M)} kg and radius ${Rcm} cm, in kg m².${RT(I, 4, lang)}`, `${en(M)} kg द्रव्यमान और ${Rcm} cm त्रिज्या वाले ${bHi} का जड़त्व आघूर्ण kg m² में ज्ञात कीजिए।${RT(I, 4, lang)}`),
+          text: L(`Find the moment of inertia of a ${bEn} of mass ${en(M)} kg and radius ${Rcm} cm, in kg m².${RT(I, 4, lang)}`, `${en(M)} kg द्रव्यमान और ${Rcm} cm त्रिज्या ${bi0 === 1 ? "वाली" : "वाले"} ${bHi.replace("गोला", "गोले").replace("पतला", "पतले")} का जड़त्व आघूर्ण kg m² में ज्ञात कीजिए।${RT(I, 4, lang)}`),
           answer: numM(I, 4, [[k[0] === k[1] ? I / 2 : M * R * R, L(k[0] === k[1] ? "For a ring all the mass is at distance R: $I = MR^2$." : `Use the factor for this body: $I = ${ftex}$.`, k[0] === k[1] ? "वलय में पूरा द्रव्यमान दूरी R पर है: $I = MR^2$।" : `इस वस्तु का गुणक लीजिए: $I = ${ftex}$।`)], [kv(k) * M * Rcm * Rcm, L("Convert cm to m before squaring.", "वर्ग करने से पहले cm को m में बदलिए।")], [kv(k) * M * R, L("The radius must be squared.", "त्रिज्या का वर्ग लेना है।")]]),
           data: { given: [q("M", M, "kg"), q("R", Rcm, "cm")], find: ["I"] },
           hint: L("Recall the standard formula for this body and use R in metres.", "इस वस्तु का मानक सूत्र याद कीजिए और R मीटर में लीजिए।"),
@@ -2125,9 +2129,9 @@ const exiRotation = {
       const g = r.pick([9.8, 10]);
       const a = (g * s) / (1 + kv(kk));
       return task({
-        text: L(`A ${bEn} rolls without slipping down an incline making ${th}° with the horizontal${th === 30 ? "" : ` (take sin ${th}° = ${en(s)})`}. Find its acceleration, in m/s². (g = ${en(g)} m/s²)${RT(a, 2, lang)}`, `एक ${bHi} क्षैतिज से ${th}° पर झुके आनत तल पर बिना फिसले लुढ़कता है${th === 30 ? "" : ` (sin ${th}° = ${en(s)} लीजिए)`}। उसका त्वरण m/s² में ज्ञात कीजिए। (g = ${en(g)} m/s²)${RT(a, 2, lang)}`),
+        text: L(`A ${bEn} rolls without slipping down an incline making ${th}° with the horizontal${th === 30 ? "" : ` (take sin ${th}° = ${en(s)})`}. Find its acceleration, in m/s². (g = ${en(g)} m/s²)${RT(a, 2, lang)}`, `एक ${bHi} क्षैतिज से ${th}° पर झुके आनत तल पर बिना फिसले ${k === 1 ? "लुढ़कती" : "लुढ़कता"} है${th === 30 ? "" : ` (sin ${th}° = ${en(s)} लीजिए)`}। उसका त्वरण m/s² में ज्ञात कीजिए। (g = ${en(g)} m/s²)${RT(a, 2, lang)}`),
         answer: numM(a, 2, [[g * s, L("That is for sliding without friction; rolling also needs rotational energy.", "यह बिना घर्षण फिसलने का है; लुढ़कने में घूर्णी ऊर्जा भी लगती है।")], [(g * s) / (1 + 1 / kv(kk)), L("The denominator is $1 + I/(mR^2)$; you inverted the ratio.", "हर $1 + I/(mR^2)$ है; आपने अनुपात उल्टा कर दिया।")], [(g * s) * kv(kk), L("Use $a = g\\sin\\theta / (1 + I/(mR^2))$.", "$a = g\\sin\\theta / (1 + I/(mR^2))$ लीजिए।")]]),
-        data: { given: [q("\\theta", `${th}^\\circ`), q("\\dfrac{I}{mR^2}", fracTex(kk[0], kk[1])), q("g", g, "m/s^2")], find: ["a"] },
+        data: { given: [q("\\theta", `${th}^\\circ`), q("g", g, "m/s^2")], find: ["a"] },
         hint: L("Find $I/(mR^2)$ for this body first.", "पहले इस वस्तु के लिए $I/(mR^2)$ ज्ञात कीजिए।"),
         formula: "a = \\dfrac{g \\sin\\theta}{1 + \\dfrac{I}{mR^2}}",
         solution: L(
@@ -2143,9 +2147,9 @@ const exiRotation = {
       const g = r.pick([9.8, 10]);
       const v = Math.sqrt((2 * g * h) / (1 + kv(kk)));
       return task({
-        text: L(`${who} releases a ${bEn} from rest at a height of ${en(h)} m on a slope. It rolls down without slipping. Find its speed at the bottom, in m/s. (g = ${en(g)} m/s²)${RT(v, 2, lang)}`, `${who} एक ${bHi} को ढलान पर ${en(h)} m ऊँचाई से विरामावस्था से ${ni % 2 ? "छोड़ती" : "छोड़ता"} है। वह बिना फिसले नीचे लुढ़कता है। तल पर उसकी चाल m/s में ज्ञात कीजिए। (g = ${en(g)} m/s²)${RT(v, 2, lang)}`),
+        text: L(`${who} releases a ${bEn} from rest at a height of ${en(h)} m on a slope. It rolls down without slipping. Find its speed at the bottom, in m/s. (g = ${en(g)} m/s²)${RT(v, 2, lang)}`, `${who} एक ${bHi.replace("खोखला", "खोखले").replace("गोला", "गोले")} को ढलान पर ${en(h)} m ऊँचाई से विरामावस्था से ${ni % 2 ? "छोड़ती" : "छोड़ता"} है। ${k === 1 ? "वह बिना फिसले नीचे लुढ़कती है" : "वह बिना फिसले नीचे लुढ़कता है"}। तल पर उसकी चाल m/s में ज्ञात कीजिए। (g = ${en(g)} m/s²)${RT(v, 2, lang)}`),
         answer: numM(v, 2, [[Math.sqrt(2 * g * h), L("Part of the energy goes into rotation: include $I/(mR^2)$.", "ऊर्जा का कुछ भाग घूर्णन में जाता है: $I/(mR^2)$ शामिल कीजिए।")], [(2 * g * h) / (1 + kv(kk)), L("This is $v^2$; take the square root.", "यह $v^2$ है; वर्गमूल लीजिए।")]]),
-        data: { given: [q("h", h, "m"), q("\\dfrac{I}{mR^2}", fracTex(kk[0], kk[1])), q("g", g, "m/s^2")], find: ["v"] },
+        data: { given: [q("h", h, "m"), q("g", g, "m/s^2")], find: ["v"] },
         hint: L("Energy conservation: mgh = ½mv² + ½Iω², with ω = v/R.", "ऊर्जा संरक्षण: mgh = ½mv² + ½Iω², जहाँ ω = v/R।"),
         formula: "v = \\sqrt{\\dfrac{2gh}{1 + \\dfrac{I}{mR^2}}}",
         solution: L(
@@ -2165,9 +2169,9 @@ const exiRotation = {
         ? [[p / qq, L("That is rotational : translational; the question asks for a fraction of the total.", "यह घूर्णी : स्थानांतरीय अनुपात है; प्रश्न कुल का भाग पूछता है।")], [qq / d, L("That is the translational fraction.", "यह स्थानांतरीय भाग है।")]]
         : [[p / d, L("That is the rotational fraction.", "यह घूर्णी भाग है।")], [0.5, L("The split is equal only for a ring.", "बराबर बँटवारा केवल वलय के लिए होता है।")]]);
       return task({
-        text: L(`A ${bEn} rolls without slipping on a level floor. What fraction of its total kinetic energy is ${askRot ? "rotational" : "translational"}? Give a fraction.`, `एक ${bHi} समतल फ़र्श पर बिना फिसले लुढ़क रहा है। उसकी कुल गतिज ऊर्जा का कितना भाग ${askRot ? "घूर्णी" : "स्थानांतरीय"} है? भिन्न के रूप में दीजिए।`),
+        text: L(`A ${bEn} rolls without slipping on a level floor. What fraction of its total kinetic energy is ${askRot ? "rotational" : "translational"}? Give a fraction.`, `एक ${bHi} समतल फ़र्श पर बिना फिसले ${k === 1 ? "लुढ़क रही" : "लुढ़क रहा"} है। उसकी कुल गतिज ऊर्जा का कितना भाग ${askRot ? "घूर्णी" : "स्थानांतरीय"} है? भिन्न के रूप में दीजिए।`),
         answer: ans,
-        data: { given: [q("\\dfrac{I}{mR^2}", fracTex(p, qq)), "v = \\omega R"], find: [askRot ? "\\dfrac{K_{rot}}{K}" : "\\dfrac{K_{tr}}{K}"] },
+        data: { given: ["v = \\omega R"], find: [askRot ? "\\dfrac{K_{rot}}{K}" : "\\dfrac{K_{tr}}{K}"] },
         hint: L("Write $K_{rot} = \\frac{1}{2}I\\omega^2$ using ω = v/R, and compare with $\\frac{1}{2}mv^2$.", "ω = v/R लेकर $K_{rot} = \\frac{1}{2}I\\omega^2$ लिखिए और $\\frac{1}{2}mv^2$ से तुलना कीजिए।"),
         formula: ["K_{tr} = \\tfrac{1}{2}mv^2", "K_{rot} = \\tfrac{1}{2}I\\omega^2 = \\tfrac{1}{2}mv^2 \\cdot \\dfrac{I}{mR^2}"],
         solution: L(
@@ -2452,7 +2456,7 @@ const exiSemi = {
         ? L(`Two identical silicon diodes (0.7 V drop each) are in series with a ${R} Ω resistor across a ${V} V battery, both forward biased. Find the current, in mA.${RT(I, 2, lang)}`, `दो सर्वसम सिलिकॉन डायोड (प्रत्येक का पात 0.7 V) ${R} Ω प्रतिरोधक के साथ श्रेणी में ${V} V बैटरी से जुड़े हैं, दोनों अग्रदिशिक बायस में। धारा mA में ज्ञात कीजिए।${RT(I, 2, lang)}`)
         : L(`Two identical silicon diodes are in series with a ${R} Ω resistor across a ${V} V battery; the first is forward biased and the second reverse biased. Treating them as ideal in reverse, find the current, in mA.`, `दो सर्वसम सिलिकॉन डायोड ${R} Ω प्रतिरोधक के साथ श्रेणी में ${V} V बैटरी से जुड़े हैं; पहला अग्रदिशिक और दूसरा पश्चदिशिक बायस में है। पश्चदिशा में उन्हें आदर्श मानकर धारा mA में ज्ञात कीजिए।`),
       answer: numM(I, 2, nOn === 0 ? [[((V - 0.7) / R) * 1000, L("Each diode drops 0.7 V: subtract 1.4 V in total.", "प्रत्येक डायोड पर 0.7 V गिरता है: कुल 1.4 V घटाइए।")], [(V / R) * 1000, L("Subtract the diode drops from the battery voltage.", "बैटरी वोल्टता में से डायोड पात घटाइए।")]] : [[((V - 0.7) / R) * 1000, L("A reverse-biased diode in series blocks the current in the whole loop.", "श्रेणी में पश्चदिशिक बायस डायोड पूरे लूप की धारा रोक देता है।")], [(V / R) * 1000, L("In series, one blocking diode stops the current everywhere.", "श्रेणी क्रम में एक अवरोधक डायोड हर जगह धारा रोक देता है।")]]),
-      data: { given: [q("V", V, "V"), q("R", R, "\\Omega"), q("V_D", 0.7, "V")], find: ["I"] },
+      data: { given: [q("V", V, "V"), q("R", R, "\\Omega"), ...(nOn === 0 ? [q("V_D", 0.7, "V")] : [])], find: ["I"] },
       hint: L("In a series loop the same current passes through every element. Check each diode's bias first.", "श्रेणी लूप में हर अवयव से एक ही धारा बहती है। पहले हर डायोड का बायस जाँचिए।"),
       formula: "I = \\dfrac{V - \\sum V_D}{R}",
       solution: nOn === 0
