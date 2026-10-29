@@ -100,6 +100,10 @@ function renderRich(text) {
     .replace(/\\\((.+?)\\\)/g, (_, t) => stash(t, false))
     .replace(/(^|[^\\$])\$([^$\n]+?)\$/g, (_, pre, t) => pre + stash(t, false));
   let html = DOMPurify.sanitize(marked.parse(src, { breaks: true }));
+  // V tabelah so ulomki in potence v polni velikosti (\displaystyle), sicer so premajhni za branje.
+  html = html.replace(/<table[\s\S]*?<\/table>/g, (tbl) =>
+    tbl.replace(/@@MATH(\d+)@@/g, (_, i) => renderMath(math[i].display ? math[i].tex : `\\displaystyle ${math[i].tex}`, math[i].display)),
+  );
   html = html.replace(/@@MATH(\d+)@@/g, (_, i) => renderMath(math[i].tex, math[i].display));
   return html;
 }

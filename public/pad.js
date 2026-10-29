@@ -266,6 +266,7 @@ function createInk(canvas) {
   let lastPen = -Infinity; // čas zadnjega dotika s pisalom (zavračanje dlani)
   let extra = 0; // dodatna višina (»+ prostor«)
   let baseH = 0; // višina okvirja brez dodatnega prostora
+  let canvasExtra = 0; // dodatna višina samega platna, ko okvir ne more zrasti (plošča ob strani)
   // changed: zapis se je spremenil po zadnjem branju; version: številka spremembe (za branje med pisanjem)
   const api = { tool: "pen", changed: false, version: 0 };
   const wrap = canvas.parentElement;
@@ -281,7 +282,7 @@ function createInk(canvas) {
     const base = wrap.clientHeight - 2;
     if (base <= 0) return;
     if (!extra) baseH = wrap.clientHeight;
-    canvas.style.height = base + "px";
+    canvas.style.height = base + canvasExtra + "px";
     const { w, h } = size();
     if (!w) return;
     const dpr = window.devicePixelRatio || 1;
@@ -369,18 +370,25 @@ function createInk(canvas) {
     api.version++;
     if (resetSize) {
       extra = 0;
+      canvasExtra = 0;
       lastPen = -Infinity;
       wrap.style.height = "";
     }
     if (resetSize && canvas.width) api.fit();
     else redraw();
   };
-  // Več prostora: okvir se poveča (plošča se premika kot celota), prejšnje vrstice ostanejo vidne.
+  // Več prostora: na telefonu se poveča okvir (plošča se premika kot celota). Ob strani (računalnik,
+  // tablica ležeče) je okvir že čez vso višino, zato zraste platno in okvir se pomakne na novi prostor.
   api.grow = () => {
+    const before = wrap.clientHeight;
     extra += 160;
-    wrap.style.height = (baseH || wrap.clientHeight) + extra + "px";
+    wrap.style.height = (baseH || before) + extra + "px";
+    if (wrap.clientHeight < before + 80) canvasExtra += 160;
     api.fit();
-    requestAnimationFrame(() => canvas.scrollIntoView({ block: "end", behavior: "smooth" }));
+    requestAnimationFrame(() => {
+      if (canvasExtra) wrap.scrollTo({ top: wrap.scrollHeight, behavior: "smooth" });
+      else canvas.scrollIntoView({ block: "end", behavior: "smooth" });
+    });
   };
 
   // Izvoz za branje: le del s pisavo, črno na belem, največ 800 px → manj žetonov.
