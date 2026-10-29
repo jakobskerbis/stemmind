@@ -209,6 +209,37 @@ test("free tier limits tutor questions; subscription via webhook lifts it", asyn
   }
 });
 
+test("free tier stops at the monthly AI budget (all free students and per student)", async () => {
+  process.env.STEMMIND_FREE_POOL_USD = "0.5";
+  process.env.STEMMIND_FREE_STUDENT_USD = "0";
+  try {
+    await withServer(async ({ client, calls, store }) => {
+      const a = client();
+      await registerVerified(a, calls, "meja@primer.si");
+      const kid = (await a("/api/students", { method: "POST", body: { name: "Tia", birth_year: YEAR - 10, consent: true } })).body;
+      const conv = (await a(`/api/students/${kid.id}/conversations`, { method: "POST" })).body;
+      const ask = (t) => a(`/api/conversations/${conv.id}/messages`, { method: "POST", body: { text: t } });
+      store.db.prepare("INSERT INTO usage (student_id, model, kind, cost_usd) VALUES (?, 'claude-haiku', 'chat', 0.6)").run(kid.id);
+      // Med preizkusom meja brezplačnega paketa ne velja.
+      assert.equal((await ask("prvo")).status, 200);
+      store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z'").run();
+      const pool = await ask("drugo");
+      assert.equal(pool.status, 429);
+      assert.match(pool.body.error, /za vse porabljena/);
+      process.env.STEMMIND_FREE_POOL_USD = "0";
+      process.env.STEMMIND_FREE_STUDENT_USD = "0.5";
+      const per = await ask("tretje");
+      assert.equal(per.status, 429);
+      assert.match(per.body.error, /Ta mesec si porabil/);
+      process.env.STEMMIND_FREE_STUDENT_USD = "0";
+      assert.equal((await ask("četrto")).status, 200);
+    });
+  } finally {
+    delete process.env.STEMMIND_FREE_POOL_USD;
+    delete process.env.STEMMIND_FREE_STUDENT_USD;
+  }
+});
+
 test("checkout carries remaining app trial into Stripe", async () => {
   await withServer(async ({ client, calls }) => {
     const a = client();
