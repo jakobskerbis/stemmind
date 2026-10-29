@@ -33,6 +33,9 @@ function fakeFetch(calls) {
   };
 }
 
+// Uporaba brez računa je v aplikaciji odstranjena; testi starih gostov jo vklopijo v kodi.
+const withGuests = (fn) => withServer(fn, { guest: true });
+
 async function withServer(fn, extra = {}) {
   const store = openDb(":memory:");
   const calls = [];
@@ -519,7 +522,7 @@ test("profile password: each profile has its own, locks other devices and siblin
 });
 
 test("profile password: guests are never locked", async () => {
-  await withServer(async ({ client }) => {
+  await withGuests(async ({ client }) => {
     const g = client();
     assert.equal((await guestStart(g)).status, 201);
     await guestKid(g);
@@ -756,7 +759,7 @@ const guestKid = async (call, name = "Gost") => {
 };
 
 test("guest: use without registration, free tier, no e-mail", async () => {
-  await withServer(async ({ client }) => {
+  await withGuests(async ({ client }) => {
     const a = client();
     assert.equal((await a("/api/account/status")).body.guest_mode, true);
     assert.equal((await a("/api/auth/guest", { method: "POST", body: {} })).status, 400); // brez strinjanja z zasebnostjo
@@ -789,7 +792,7 @@ test("guest: use without registration, free tier, no e-mail", async () => {
 test("guest: clearing cookies or deleting the profile does not give a new free allowance", async () => {
   process.env.EVKLID_FREE_DAILY_QUESTIONS = "2";
   try {
-    await withServer(async ({ client }) => {
+    await withGuests(async ({ client }) => {
       const a = client();
       await guestStart(a);
       const kid = await guestKid(a);
@@ -834,7 +837,7 @@ test("guest: clearing cookies or deleting the profile does not give a new free a
 test("guest: monthly AI spend counts for the whole network, also after deletion", async () => {
   process.env.EVKLID_FREE_STUDENT_USD = "0.5";
   try {
-    await withServer(async ({ client, store }) => {
+    await withGuests(async ({ client, store }) => {
       const a = client();
       await guestStart(a);
       const kid = await guestKid(a);
@@ -856,7 +859,7 @@ test("guest: monthly AI spend counts for the whole network, also after deletion"
 test("guest: limited number of new guests per network per day (deleted guests count too)", async () => {
   process.env.EVKLID_GUEST_PER_DAY = "2";
   try {
-    await withServer(async ({ client }) => {
+    await withGuests(async ({ client }) => {
       const first = client();
       assert.equal((await guestStart(first)).status, 201);
       assert.equal((await first("/api/account", { method: "DELETE", body: {} })).status, 200);
@@ -871,7 +874,7 @@ test("guest: limited number of new guests per network per day (deleted guests co
 });
 
 test("guest: upgrade to an account keeps the profile and progress", async () => {
-  await withServer(async ({ client, calls }) => {
+  await withGuests(async ({ client, calls }) => {
     const a = client();
     await guestStart(a);
     const kid = await guestKid(a, "Nika");
@@ -905,7 +908,7 @@ test("guest: upgrade to an account keeps the profile and progress", async () => 
 });
 
 test("guest: logging into an existing account moves the guest profile when there is room", async () => {
-  await withServer(async ({ client, calls, store }) => {
+  await withGuests(async ({ client, calls, store }) => {
     const owner = client();
     await registerVerified(owner, calls, "lastnik@primer.si");
     const a = client();
@@ -930,7 +933,7 @@ test("guest: logging into an existing account moves the guest profile when there
   });
 });
 
-test("guest: switched off (EVKLID_GUEST=0) stops guests but lets them create an account", async () => {
+test("guest: switched off (default) stops guests but lets them create an account", async () => {
   await withServer(async ({ client, store }) => {
     const a = client();
     const off = await guestStart(a);
@@ -953,12 +956,11 @@ test("guest: switched off (EVKLID_GUEST=0) stops guests but lets them create an 
   }, { guest: false });
 });
 
-test("guest mode is off in production unless EVKLID_GUEST=1", async () => {
+test("guest mode is removed: off everywhere, EVKLID_GUEST cannot turn it on", async () => {
   const { guestModeOn, netKey } = await import("../server/accounts/guest.js");
-  assert.equal(guestModeOn({}), true);
-  assert.equal(guestModeOn({ NODE_ENV: "production" }), false);
-  assert.equal(guestModeOn({ NODE_ENV: "production", EVKLID_GUEST: "1" }), true);
-  assert.equal(guestModeOn({ EVKLID_GUEST: "0" }), false);
+  assert.equal(guestModeOn({}), false);
+  assert.equal(guestModeOn({ NODE_ENV: "production", EVKLID_GUEST: "1" }), false);
+  assert.equal(guestModeOn({ EVKLID_GUEST: "1" }), false);
   assert.equal(netKey("::ffff:10.0.0.7"), "10.0.0.7");
   assert.equal(netKey("2001:db8:1:2:aaaa::1"), netKey("2001:db8:1:2:bbbb:cccc:dddd:eeee"));
 });

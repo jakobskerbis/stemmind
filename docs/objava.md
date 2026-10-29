@@ -19,7 +19,7 @@ Strošek: paket Starter ≈ 7 $/mesec + disk 1 GB ≈ 0,25 $/mesec. Brezplačni 
 
 ## Pred javno objavo (obvezno)
 
-- **Izklopi uporabo brez registracije**: `EVKLID_GUEST=0` (v `render.yaml` je že nastavljeno; preveri v Render → Environment). Gostujoči način je le začasna možnost za razvojno različico. Obstoječi gostje lahko po izklopu samo ustvarijo račun in obdržijo napredek.
+- **Uporaba brez registracije** je odstranjena (2026-10-29), nastavitev `EVKLID_GUEST` ni več potrebna.
 
 ## Po prvem zagonu
 
