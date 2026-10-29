@@ -1,13 +1,18 @@
 // Avatar učenca (j: kovanci iz iger za predmete, kot skini; avatar je edino, kar učenec izbere in vidijo drugi).
 // Samo vnaprej narisani deli (izvirni SVG), brez prostega besedila in nalaganja slik. Brez pravega denarja.
 // Uporabljata ga odjemalec (risanje, trgovina) in strežnik (cene, preverjanje).
+// Predmeti za znanje (značka, efekt, ozadja, kompleti, učni pass) so v public/zbirke.js: ne kupijo se,
+// odklene jih samo obvladana snov.
+import { KNOWLEDGE, DRAW, baseId } from "./zbirke.js";
 
-export const SLOTS = ["body", "eyes", "mouth", "hat", "outfit", "acc", "bg"];
+export const SLOTS = ["body", "eyes", "mouth", "hat", "outfit", "acc", "badge", "bg", "fx"];
 export const COINS_PER_CORRECT = 1;
 export const COINS_PER_DAY = 150;
 
 // Redkost po ceni (barva okvirja v trgovini).
 export const rarity = (price) => (price === 0 ? "free" : price <= 25 ? "common" : price <= 60 ? "rare" : price <= 150 ? "epic" : "legendary");
+// Redkost predmeta: pri predmetih za znanje težavnost snovi, pri ostalih cena.
+export const itemRarity = (x) => x?.rarity || rarity(x?.price ?? 0);
 
 const it = (id, slot, price, sl, en) => ({ id, slot, price, name: { sl, en } });
 export const ITEMS = [
@@ -73,18 +78,29 @@ export const ITEMS = [
   it("bg_stars", "bg", 90, "Zvezdna noč", "Starry night"),
   it("bg_space", "bg", 150, "Vesolje", "Space"),
   it("bg_lava", "bg", 260, "Vulkan", "Volcano"),
+  // značka in efekt (predmeti zanje so samo za znanje, public/zbirke.js)
+  it("badge_none", "badge", 0, "Brez", "None"),
+  it("fx_none", "fx", 0, "Brez", "None"),
+  ...KNOWLEDGE,
 ];
 export const ITEM = Object.fromEntries(ITEMS.map((x) => [x.id, x]));
-export const DEFAULT_AVATAR = { body: "body_blue", eyes: "eyes_dots", mouth: "mouth_smile", hat: "hat_none", outfit: "outfit_none", acc: "acc_none", bg: "bg_sky" };
+// Predmet za id iz inventarja (tudi sezonski »pass_coat~2026-1«).
+export const itemOf = (id) => ITEM[baseId(id)] || null;
+export const DEFAULT_AVATAR = { body: "body_blue", eyes: "eyes_dots", mouth: "mouth_smile", hat: "hat_none", outfit: "outfit_none", acc: "acc_none", badge: "badge_none", bg: "bg_sky", fx: "fx_none" };
 export const itemName = (x, lang) => x.name[lang] || x.name.en;
 
 // Popravi izbiro: vsak del obstaja, je v pravem predalu in ga učenec ima (ali je brezplačen).
-export function cleanAvatar(eq, owned = []) {
+// any = true: samo znani deli, brez preverjanja lastništva (shranjen avatar za prikaz drugim).
+export function cleanAvatar(eq, owned = [], any = false) {
   const have = new Set(owned);
   const out = { ...DEFAULT_AVATAR };
   for (const slot of SLOTS) {
-    const x = ITEM[eq?.[slot]];
-    if (x && x.slot === slot && (x.price === 0 || have.has(x.id))) out[slot] = x.id;
+    const id = String(eq?.[slot] ?? "");
+    const x = itemOf(id);
+    if (!x || x.slot !== slot) continue;
+    // Sezonski predmet samo s sezono, ostali brez pripone.
+    if (x.collection === "pass" ? !/^[a-z_]+~\d{4}-[12]$/.test(id) : id !== x.id) continue;
+    if (any || x.price === 0 || have.has(id)) out[slot] = id;
   }
   return out;
 }
@@ -180,14 +196,14 @@ const OUTFIT = {
 };
 
 let uid = 0;
-// SVG niz avatarja; eq = { body, eyes, mouth, hat, outfit, acc, bg }.
+// SVG niz avatarja; eq = { body, eyes, mouth, hat, outfit, acc, badge, bg, fx }.
 export function avatarSvg(eq, { size = 64, title = "" } = {}) {
   const a = { ...DEFAULT_AVATAR, ...(eq || {}) };
   const u = `av${++uid}`;
   const body = BODY[a.body] ? a.body : "body_blue";
   return `<svg class="avatar-svg" viewBox="0 0 100 100" width="${size}" height="${size}" role="img"${title ? ` aria-label="${title.replace(/"/g, "&quot;")}"` : ` aria-hidden="true"`}>
-${defs(u, body)}${(BG[a.bg] || BG.bg_sky)(u)}${(OUTFIT_BACK[a.outfit] || (() => ""))()}
+${defs(u, body)}${DRAW.bg(a.bg, u) ?? (BG[a.bg] || BG.bg_sky)(u)}${DRAW.fxBack(a.fx)}${(OUTFIT_BACK[a.outfit] || (() => ""))()}
 <path d="${BODY_PATH}" fill="url(#g${u})" stroke="${INK}" stroke-width="3"/>${(BODY_EXTRA[body] || (() => ""))()}
 <path d="M30 40q4-8 12-10" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".35"/>
-${(OUTFIT[a.outfit] || OUTFIT.outfit_none)(u)}${(EYES[a.eyes] || EYES.eyes_dots)()}${(MOUTH[a.mouth] || MOUTH.mouth_smile)()}${(ACC[a.acc] || ACC.acc_none)()}${(HAT[a.hat] || HAT.hat_none)()}</svg>`;
+${DRAW.outfit(a.outfit, u) ?? (OUTFIT[a.outfit] || OUTFIT.outfit_none)(u)}${DRAW.badge(a.badge)}${(EYES[a.eyes] || EYES.eyes_dots)()}${(MOUTH[a.mouth] || MOUTH.mouth_smile)()}${DRAW.acc(a.acc, u) ?? (ACC[a.acc] || ACC.acc_none)()}${(HAT[a.hat] || HAT.hat_none)()}${DRAW.fxFront(a.fx)}</svg>`;
 }

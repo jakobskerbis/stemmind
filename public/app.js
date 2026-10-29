@@ -28,6 +28,7 @@ import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
+import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
 import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml } from "./goal.js";
 
@@ -129,6 +130,10 @@ function showView(name) {
   if (name === "feedback") showFeedback();
   if (name === "games") showGames();
   else leaveGames();
+  if (name === "zbirke") {
+    showZbirke(zbOpen.item, zbOpen.from);
+    zbOpen = {};
+  }
   if (name === "corner") showCorner();
   else closeBoard();
   if (name === "cards") {
@@ -213,10 +218,27 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke"];
+// Zbirke in učni pass: odpre pogled, po želji s predmetom v pogledu »preglej« (from = pogled za Nazaj).
+let zbOpen = {};
+function openZbirke(item = null, from = null) {
+  zbOpen = { item, from };
+  showView("zbirke");
+}
+// Obvestilo o novih predmetih po nalogi ali pogovoru (z gumbom v zbirke).
+function unlockedHtml(ids) {
+  const text = unlockedText(ids);
+  if (!text) return "";
+  return `<button type="button" class="fb mastered pop zb-unlocked" data-zb="${escapeHtml(ids[0])}">${itemThumb(ids[0], 40)}<span>${escapeHtml(text)}</span>${icon("chevron-right")}</button>`;
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-zb]");
+  if (b) openZbirke(b.dataset.zb);
+});
 function renderMe() {
   const s = state.student;
   if (!s) return;
+  meCard($("#me-zbirke"));
   $("#me-avatar").textContent = (s.name || "?").trim().charAt(0).toUpperCase();
   $("#me-name").textContent = s.name;
   $("#me-level").textContent = $("#path-select").selectedOptions[0]?.textContent.replace(t("path.myLevel"), "") || "";
@@ -570,7 +592,7 @@ async function send(text, { deep = false } = {}) {
       // Inštruktor je spremenil urnik: kartica na Učni poti in stran Urnik se osvežita.
       schedule: () => scheduleChanged(),
       proposal: (d) => (proposal = d),
-      mastered: (d) => toast(t("chat.mastered", { topic: d.topic }), "trophy"),
+      mastered: (d) => toast(d.unlocked?.length ? `${t("chat.mastered", { topic: d.topic })} ${unlockedText(d.unlocked)}` : t("chat.mastered", { topic: d.topic }), "trophy"),
       done: (d) => {
         doneData = d;
         pacer.finish(d.text);
@@ -2007,12 +2029,13 @@ async function checkTask(task, ctx, value) {
     if (r.placement) {
       const p = r.placement;
       html += `<div class="card result ${p.passed ? "celebrate" : ""}">${p.passed ? `<div class="result-icon">${icon("award")}</div>` : ""}<h2>${p.passed ? t("placement.passed") : t("placement.notYet")}</h2>
-        <p>${t("placement.score", { correct: p.correct, total: p.total })}${p.passed ? ` +${p.xp.gained} XP` : t("placement.unlocked")}</p>
+        <p>${t("placement.score", { correct: p.correct, total: p.total })}${p.passed ? ` +${p.xp.gained} XP` : t("placement.unlocked")}</p>${r.unlocked ? unlockedHtml(r.unlocked) : ""}
         <button class="primary big" id="fb-back">${t("result.toPath")}</button></div>`;
     } else html += next();
   } else if (r.correct) {
     html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">${r.offline ? t("off.xpLater") : `+${r.xp.gained} XP`}</span></div>
       ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>${t("task.mastered")}</span></div>` : ""}
+      ${r.unlocked ? unlockedHtml(r.unlocked) : ""}
       ${workedBlock(task, r.solution)}
       ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}
       ${r.offline ? "" : tutorRow(task.id)}`;
@@ -2667,7 +2690,7 @@ async function addGraphButton(bubble, text) {
 }
 
 // Za samodejne preizkuse v brskalniku.
-window.stemmind = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay };
+window.stemmind = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay, openZbirke };
 
 initFlashcards({ api, renderRich, escapeHtml, toast, showView, getStudent: () => state.student, onDue: setCardsDue });
 
@@ -2704,6 +2727,7 @@ initFormulaInfo();
   $("#mock-banner").hidden = !cfg.mock;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   initGames({ api, getStudent: () => state.student, refreshXp, currentLang });
+  initZbirke({ api, getStudent: () => state.student, currentLang, showView });
   initCorner({
     api,
     getStudent: () => state.student,
