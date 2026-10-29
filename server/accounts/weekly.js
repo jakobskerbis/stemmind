@@ -73,7 +73,7 @@ ${w.weak.length ? `<p style="margin:10px 0 0">🔎 Še vaditi: ${w.weak.map(esc)
   const html = layout(
     "Tedensko poročilo",
     `<p>Pozdravljeni${parent.name ? `, ${esc(parent.name)}` : ""}! Takole je potekal zadnji teden.</p>${rows.map(block).join("")}${button(appUrl, "Odpri Evklid")}`,
-    `To poročilo prejemate, ker imate račun Evklid. <a href="${esc(unsubscribeUrl)}">Odjava od tedenskih poročil</a>.`,
+    `To poročilo prejemate, ker imate račun pri Evklidu. <a href="${esc(unsubscribeUrl)}">Odjava od tedenskih poročil</a>.`,
   );
   const text = rows
     .map(({ child, week: w }) => `${child.name}: aktivni dnevi ${w.active_days}/7, rešene naloge ${w.solved}, vprašanja ${w.questions}, XP ${w.xp}.${w.weak.length ? ` Še vaditi: ${w.weak.join(", ")}.` : ""} ${tip(w)}`)

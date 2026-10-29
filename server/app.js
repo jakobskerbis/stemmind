@@ -145,7 +145,7 @@ export function createApp(store, opts = {}) {
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
   const pendingSettings = new Map(); // pogovor → predlog spremembe šole/letnika, ki čaka na potrditev
-  // »Vprašaj Evklid« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
+  // »Vprašaj Evklida« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
   const helpTasks = new Map();
   const usage = new Usage(store.db);
   const progress = new Progress(store);
@@ -797,7 +797,7 @@ export function createApp(store, opts = {}) {
       res.status(502).json({ error: "Branje zapisa trenutno ne deluje. Odgovor vpiši s tipkami." });
     }
   });
-  // »Vprašaj Evklid«: odpre pogovor z nalogo in učenčevim odgovorom.
+  // »Vprašaj Evklida«: odpre pogovor z nalogo in učenčevim odgovorom.
   app.post("/api/students/:id/tasks/:taskId/help", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
