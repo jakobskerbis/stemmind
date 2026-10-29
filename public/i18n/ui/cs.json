@@ -570,6 +570,8 @@
   "gc.max": "Max",
   "gc.play": "Přehrát",
   "gc.pause": "Zastavit",
+  "gc.playAll": "Přehrát vše",
+  "gc.pauseAll": "Zastavit vše",
   "gc.tangent": "Tečna",
   "gc.deriv": "Derivace",
   "gc.area": "Plocha pod křivkou (integrál)",

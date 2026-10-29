@@ -555,6 +555,8 @@
   "gc.max": "Lớn nhất",
   "gc.play": "Phát",
   "gc.pause": "Dừng",
+  "gc.playAll": "Phát tất cả",
+  "gc.pauseAll": "Dừng tất cả",
   "gc.tangent": "Tiếp tuyến",
   "gc.deriv": "Đạo hàm",
   "gc.area": "Diện tích dưới đường cong (tích phân)",

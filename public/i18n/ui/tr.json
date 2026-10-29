@@ -560,6 +560,8 @@
   "gc.max": "En çok",
   "gc.play": "Oynat",
   "gc.pause": "Durdur",
+  "gc.playAll": "Tümünü oynat",
+  "gc.pauseAll": "Tümünü durdur",
   "gc.tangent": "Teğet",
   "gc.deriv": "Türev",
   "gc.area": "Eğrinin altındaki alan (integral)",

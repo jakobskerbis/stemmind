@@ -91,6 +91,7 @@ Koda je v `public/graph/` (`math.js` razčlenjevalnik, odvodi in integrali; `mod
 - **Postavitev**: na računalniku seznam izrazov levo (380 px), graf desno. Do 860 px je graf zgoraj, seznam pod njim, tipkovnica čisto spodaj. Gumbi za povečavo so na telefonu v vrsti.
 - **Tipkovnica**: na zaslonu na dotik polja ne odprejo sistemske tipkovnice (`inputmode="none"`), ampak lastno (123, f(x), Σ iz `public/symbols.js`, ABC). Ko je odprta, se skrijejo spodnja vrstica zavihkov, pas testnega načina in gumb nazaj (`body.gc-kp`).
 - **Barve krivulj** so podatkovne barve (`--g-red`, `--g-blue` … v `graph.css`), z različico za temni način. Niso barve gumbov in se ne mešajo z barvo poudarka iz Nastavitve → Videz.
+- **Drsniki**: vsak ima svoj ▶/⏸; premik z roko ustavi predvajanje. Ko sta vsaj dva drsnika, se v orodni vrstici pokaže »Predvajaj vse« / »Ustavi vse« (takrat je »Moji grafi« samo ikona). Med animacijo se vrstica drsnika posodablja na mestu, ne gradi znova, sicer gumbi ne dobijo klika.
 - **Shranjevanje**: zadnji graf se samodejno shrani v brskalnik za vsakega učenca; »Moji grafi« jih hrani na strežniku (z majhno sličico).
 
 ## Računska orodja (znanstveni kalkulator, orodja, PSE, formule)
