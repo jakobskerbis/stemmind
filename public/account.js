@@ -114,6 +114,7 @@ export async function initAccount({ onReady }) {
 
   const q = new URLSearchParams(location.search);
   if (q.get("ref")) store.set("stemmind_ref", q.get("ref"));
+  if (q.get("koda")) store.set("stemmind_koda", q.get("koda"));
   const reset = q.get("reset");
   const verified = q.get("verified");
   const billing = q.get("billing");
@@ -175,6 +176,7 @@ function shell(inner) {
 
 function renderLogin(mode = "login") {
   const ref = store.get("stemmind_ref") || "";
+  const koda = store.get("stemmind_koda") || "";
   shell(`
     <h1>${mode === "login" ? "Prijava" : "Nov račun"}</h1>
     <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za študente fakultet (lasten profil)." : `STEMMind je 7 dni brezplačen, brez kartice. Nato ${eur(999)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
@@ -183,6 +185,7 @@ function renderLogin(mode = "login") {
       <label>E-naslov <input name="email" type="email" required autocomplete="email"></label>
       <label>Geslo <input name="password" type="password" required minlength="8" autocomplete="${mode === "login" ? "current-password" : "new-password"}"></label>
       ${mode === "register" ? `
+        <label>Aktivacijska koda (neobvezno) <input name="promo_code" maxlength="40" autocapitalize="characters" value="${esc(koda)}"></label>
         <label>Koda priporočila (neobvezno) <input name="referral_code" maxlength="12" value="${esc(ref)}"></label>
         <label class="check"><input type="checkbox" name="accept_privacy" required>
           <span>Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu osebnih podatkov</a> in sem polnoleten(a): starš oziroma zakoniti zastopnik ali študent, ki ustvarja lasten profil.</span></label>` : ""}
@@ -204,9 +207,12 @@ function renderLogin(mode = "login") {
       } else {
         const r = await api("/api/auth/register", {
           method: "POST",
-          body: { name: f.name.value, email: f.email.value, password: f.password.value, referral_code: f.referral_code.value, accept_privacy: f.accept_privacy.checked, country: deviceRegion() },
+          body: { name: f.name.value, email: f.email.value, password: f.password.value, referral_code: f.referral_code.value, promo_code: f.promo_code.value, accept_privacy: f.accept_privacy.checked, country: deviceRegion() },
         });
         store.set("stemmind_ref", null);
+        store.set("stemmind_koda", null);
+        if (r.promo_until) toast(`Aktivacijska koda velja ✓ Poln dostop do ${date(r.promo_until)}.`);
+        if (r.promo_error) toast(`Račun je ustvarjen, koda pa ni bila sprejeta: ${r.promo_error}`);
         if (r.dev_verify_url) store.set("stemmind_dev_verify", r.dev_verify_url);
       }
       await continueFlow();
@@ -399,6 +405,11 @@ function planText(acc) {
       <p class="muted">${sub.cancel_at_period_end ? `Naročnina se konča ${date(sub.period_end)}.` : `Naslednje obdobje se začne ${date(sub.period_end)}.`}</p>`;
   }
   if (access.tier === "trial") return `<p><b>Brezplačni preizkus</b> do ${date(access.until)}: vse funkcije za do 2 otroka.</p>`;
+  if (access.tier === "promo") {
+    const trial = Date.parse(parent.trial_ends_at || 0) > Date.now();
+    return `<p><b>Poln dostop z aktivacijsko kodo</b> do ${date(access.until)}.</p>${
+      trial ? `<p class="muted">Do ${date(parent.trial_ends_at)} (preizkus) lahko uporabljata 2 otroka, nato velja koda za ${acc.promo?.seats > 1 ? `${acc.promo.seats} otroke` : "1 otroka"}.</p>` : ""}`;
+  }
   if (access.tier === "bonus") return `<p><b>Brezplačni mesec</b> iz priporočila do ${date(access.until)}.</p>`;
   return `<p><b>Brezplačni paket:</b> vadnica brez omejitev in ${acc.free_daily_questions} vprašanj inštruktorju na dan.</p>`;
 }
@@ -424,6 +435,23 @@ function plansPicker(acc) {
     </form>`;
 }
 
+// Vnos aktivacijske kode; skrbnik vidi še porabo in povezavo za deljenje.
+function promoBox(acc, paid) {
+  const pr = acc.promo || {};
+  const a = pr.admin;
+  const admin = a
+    ? `<div class="promo-admin"><p><b>Aktivacijska koda ${esc(a.code)}:</b> porabljenih ${a.used} od ${a.limit} · vsak dobi ${a.days} dni polnega dostopa.</p>
+        <div class="inline"><input id="promo-url" readonly value="${esc(a.url)}"><button id="promo-copy" type="button">Kopiraj</button></div></div>`
+    : "";
+  if (!pr.available || pr.redeemed || paid) return admin;
+  return `<details${store.get("stemmind_koda") ? " open" : ""}><summary>Imate aktivacijsko kodo?</summary>
+      <form id="promo-form" class="inline form">
+        <input name="code" maxlength="40" required autocapitalize="characters" placeholder="npr. STEMMIND100" value="${esc(store.get("stemmind_koda") || "")}">
+        <button class="primary" type="submit">Aktiviraj</button>
+        <p class="form-error" hidden></p>
+      </form></details>${admin}`;
+}
+
 async function renderAccount() {
   const view = $("#view-account");
   let acc;
@@ -443,6 +471,7 @@ async function renderAccount() {
       ${planText(acc)}
       ${!acc.billing ? `<p class="muted">Plačila še niso nastavljena na strežniku.</p>` : paid ? "" : plansPicker(acc)}
       ${acc.billing && acc.parent.has_customer ? `<button id="portal-btn" type="button">Upravljaj naročnino in račune</button>` : ""}
+      ${promoBox(acc, paid)}
     </div>
 
     <div class="card">
@@ -503,6 +532,29 @@ async function renderAccount() {
     } catch (err) {
       btn.disabled = false;
       showError(e.target, err);
+    }
+  });
+  $("#promo-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = $("button[type=submit]", e.target);
+    btn.disabled = true;
+    try {
+      const r = await api("/api/account/promo", { method: "POST", body: { code: e.target.code.value } });
+      store.set("stemmind_koda", null);
+      toast(`Aktivacijska koda velja ✓ Poln dostop do ${date(r.access.until)}.`);
+      await onReadyCb?.({ keepView: true });
+      renderAccount();
+    } catch (err) {
+      btn.disabled = false;
+      showError(e.target, err);
+    }
+  });
+  $("#promo-copy")?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText($("#promo-url").value);
+      toast("Povezava je kopirana.");
+    } catch {
+      $("#promo-url").select();
     }
   });
   $("#portal-btn")?.addEventListener("click", async () => {
