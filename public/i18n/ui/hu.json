@@ -953,5 +953,20 @@
   "cards.open": "Kártyák megnyitása",
   "cards.own": "saját",
   "cards.keys": "Billentyűk: szóköz = válasz, 1 = még nem tudom, 2 = tudom",
-  "cards.cancel": "Mégse"
+  "cards.cancel": "Mégse",
+  "pretest.title": "Előzetes tudás felmérése",
+  "pretest.intro": "Három rövid feladat, a könnyűtől a nehézig, megmutatja, honnan kezdjük. Ha egy feladatot még nem tudsz, nyomd meg a „Ezt még nem tudom” gombot. Semmi baj, akkor az elejéről kezdjük.",
+  "pretest.lessonIntro": "Mielőtt elkezded: három rövid feladat megmutatja, mit tudsz már erről a témáról. A tutor és a gyakorlás ezután a szintedhez igazodik.",
+  "pretest.start": "Felmérés indítása",
+  "pretest.dontKnow": "Ezt még nem tudom",
+  "pretest.skipped": "Rendben, ezt együtt átvesszük.",
+  "pretest.noted": "Rögzítve.",
+  "pretest.resultTitle": "A szinted ebben a témában: {tier}",
+  "pretest.tierBasic": "alap",
+  "pretest.tierMid": "közép",
+  "pretest.tierHigh": "haladó",
+  "pretest.score": "Helyes feladatok: {correct} / {total}.",
+  "pretest.textBasic": "A témát az elejéről vesszük át, lépésről lépésre. A legjobb, ha a tutorral vagy a leckével kezdesz.",
+  "pretest.textMid": "Az alapokat már tudod. A tutor csak röviden átismétli őket, a feladatok pedig közepesen nehezek lesznek.",
+  "pretest.textHigh": "Remek, mindhárom feladat helyes. Az alapokat csak gyorsan átismételjük, utána nehezebb feladatok jönnek."
 }

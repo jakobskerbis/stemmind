@@ -948,5 +948,20 @@
   "cards.open": "Buka kartu",
   "cards.own": "sendiri",
   "cards.keys": "Tombol: spasi = tampilkan jawaban, 1 = belum tahu, 2 = sudah tahu",
-  "cards.cancel": "Batal"
+  "cards.cancel": "Batal",
+  "pretest.title": "Tes pengetahuan awal",
+  "pretest.intro": "Tiga soal singkat, dari mudah ke sulit, menunjukkan dari mana kita mulai. Kalau belum bisa mengerjakan soalnya, tekan \"Aku belum tahu ini\". Tidak apa-apa, kita mulai dari awal.",
+  "pretest.lessonIntro": "Sebelum mulai: tiga soal singkat menunjukkan apa yang sudah kamu ketahui tentang topik ini. Tutor dan latihan lalu menyesuaikan dengan levelmu.",
+  "pretest.start": "Mulai tes",
+  "pretest.dontKnow": "Aku belum tahu ini",
+  "pretest.skipped": "Oke, kita pelajari bersama.",
+  "pretest.noted": "Dicatat.",
+  "pretest.resultTitle": "Levelmu di topik ini: {tier}",
+  "pretest.tierBasic": "dasar",
+  "pretest.tierMid": "menengah",
+  "pretest.tierHigh": "lanjut",
+  "pretest.score": "Soal benar: {correct} dari {total}.",
+  "pretest.textBasic": "Kita pelajari topik ini dari awal, langkah demi langkah. Sebaiknya mulai dengan tutor atau pelajaran.",
+  "pretest.textMid": "Kamu sudah tahu dasarnya. Tutor hanya akan mengulangnya sebentar, dan soalnya tingkat menengah.",
+  "pretest.textHigh": "Hebat, ketiga soal benar. Dasarnya kita ulang sebentar saja, lalu lanjut ke soal yang lebih sulit."
 }

@@ -953,5 +953,20 @@
   "cards.open": "Open flashcards",
   "cards.own": "own",
   "cards.keys": "Keys: space = show answer, 1 = don't know yet, 2 = I know it",
-  "cards.cancel": "Cancel"
+  "cards.cancel": "Cancel",
+  "pretest.title": "Prior knowledge check",
+  "pretest.intro": "Three short tasks, from easy to hard, show where to start. If you can't do a task yet, press \"I don't know this yet\". No problem, we'll start from the beginning.",
+  "pretest.lessonIntro": "Before you start: three short tasks show what you already know about this topic. The tutor and the practice then adapt to your level.",
+  "pretest.start": "Start the check",
+  "pretest.dontKnow": "I don't know this yet",
+  "pretest.skipped": "OK, we'll work through it together.",
+  "pretest.noted": "Noted.",
+  "pretest.resultTitle": "Your level in this topic: {tier}",
+  "pretest.tierBasic": "basic",
+  "pretest.tierMid": "intermediate",
+  "pretest.tierHigh": "advanced",
+  "pretest.score": "Correct tasks: {correct} of {total}.",
+  "pretest.textBasic": "We'll take the topic from the very beginning, step by step. It's best to start with the tutor or the lesson.",
+  "pretest.textMid": "You already know the basics. The tutor will only recap them briefly, and the tasks will be of medium difficulty.",
+  "pretest.textHigh": "Great, all three tasks are correct. We'll only recap the basics quickly, then harder tasks follow."
 }

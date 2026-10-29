@@ -953,5 +953,20 @@
   "cards.open": "Apri le flashcard",
   "cards.own": "tua",
   "cards.keys": "Tasti: spazio = mostra risposta, 1 = non lo so ancora, 2 = lo so",
-  "cards.cancel": "Annulla"
+  "cards.cancel": "Annulla",
+  "pretest.title": "Test delle conoscenze di base",
+  "pretest.intro": "Tre brevi esercizi, dal più facile al più difficile, mostrano da dove partire. Se un esercizio non lo sai ancora fare, premi «Non lo so ancora». Nessun problema, allora partiamo dall'inizio.",
+  "pretest.lessonIntro": "Prima di iniziare: tre brevi esercizi mostrano cosa sai già di questo argomento. Il tutor e gli esercizi si adattano poi al tuo livello.",
+  "pretest.start": "Inizia il test",
+  "pretest.dontKnow": "Non lo so ancora",
+  "pretest.skipped": "Va bene, lo vediamo insieme.",
+  "pretest.noted": "Annotato.",
+  "pretest.resultTitle": "Il tuo livello in questo argomento: {tier}",
+  "pretest.tierBasic": "base",
+  "pretest.tierMid": "intermedio",
+  "pretest.tierHigh": "avanzato",
+  "pretest.score": "Esercizi corretti: {correct} su {total}.",
+  "pretest.textBasic": "Affronteremo l'argomento dall'inizio, passo dopo passo. È meglio iniziare con il tutor o con la lezione.",
+  "pretest.textMid": "Le basi le conosci già. Il tutor le ripasserà solo brevemente e gli esercizi saranno di media difficoltà.",
+  "pretest.textHigh": "Ottimo, tutti e tre gli esercizi sono corretti. Ripassiamo le basi solo velocemente, poi arrivano esercizi più difficili."
 }

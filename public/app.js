@@ -1058,8 +1058,8 @@ async function goNew({ skipHint = false } = {}) {
     toast(t("path.allDoneToast"), "trophy");
     return;
   }
-  await openTopic(m.newTopic.id);
-  if (m.newTopic.practice) await nextPractice();
+  const pretest = await openTopic(m.newTopic.id);
+  if (m.newTopic.practice && !pretest) await nextPractice();
 }
 
 async function showTestPrep(edit = false) {
@@ -1291,6 +1291,32 @@ async function openTopic(topicId) {
     toast(t("topic.markedKnown"));
     openTopic(tp.id);
   });
+  // Nova tema: najprej kratek test predznanja (tri naloge, od lažje do težje).
+  if (canPractice && hasPractice.status === "new") return startPretest(tp);
+  return false;
+}
+
+// Začetni test predznanja: rezultat določi začetno stopnjo vaj in zahtevnost inštruktorja.
+// Vrne true, če je test prikazan (»Nova snov« takrat ne odpre takoj vaje).
+async function startPretest(tp) {
+  const out = await api(`/api/students/${state.student.id}/pretest`, { method: "POST", body: { topic_id: tp.id } }).catch(() => null);
+  if (!out || out.skip || out.finished || !out.task) return false;
+  renderTask(out.task, { mode: "pretest", index: out.index, total: out.total });
+  return true;
+}
+
+function pretestResultHtml(p) {
+  const name = { osnovna: t("pretest.tierBasic"), srednja: t("pretest.tierMid"), "višja": t("pretest.tierHigh") }[p.tier];
+  return `<div class="card result pretest-result">
+    <div class="result-icon">${icon("target")}</div>
+    <h2>${t("pretest.resultTitle", { tier: name })}</h2>
+    <p>${t("pretest.score", { correct: p.correct, total: p.total })}</p>
+    <p class="muted">${t(p.known >= 3 ? "pretest.textHigh" : p.known === 2 ? "pretest.textMid" : "pretest.textBasic")}</p>
+    <div class="actions">
+      <button class="primary big" id="pt-learn">${icon("message-circle")}${t("topic.learn")}</button>
+      <button class="secondary" id="pt-practice">${icon("pencil")}${t("topic.practice")}</button>
+      <button class="secondary" id="pt-lesson">${icon("book-open")}${t("topic.lesson")}</button>
+    </div></div>`;
 }
 
 async function learnWithTutor(topic, firstMessage = t("topic.startMsg", { name: topic.name })) {
@@ -1482,7 +1508,7 @@ function renderTask(task, ctx) {
   const box = $("#practice");
   // Tekmovalna imena težavnosti (težja, zahtevna, izziv) samo pri slovenskih tekmovanjih, ne pri izpitih.
   const comp = !examMode() && (ctx.mode === "tek" || ctx.mode === "contest" || (ctx.mode === "practice" && isCompTopic(state.topic?.id)));
-  const stars = ctx.mode !== "placement" && task.level ? diffBadge(task.level, comp) : "";
+  const stars = !["placement", "pretest"].includes(ctx.mode) && task.level ? diffBadge(task.level, comp) : "";
   const pts = ctx.mode === "contest" && task.points ? `<span class="pts">${t("task.points", { n: task.points })}</span>` : "";
   const counter = ctx.total ? `<span class="count">${ctx.index} / ${ctx.total}</span>` : "";
   let input;
@@ -1496,11 +1522,13 @@ function renderTask(task, ctx) {
       (task.answerType === "coefficients" ? t("task.phCoef") : task.unit ? t("task.phUnit", { unit: task.unit }) : t("task.phResult"));
     input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn secondary" title="${t("task.writeTitle")}">${icon("pencil")}<span>${t("task.write")}</span></button><button class="primary">${t("task.check")}</button></form>`;
   }
-  const calcBtn = ctx.mode === "contest" || ctx.mode === "placement" ? "" : `<button type="button" class="ghost task-calc icon-only" title="${escapeHtml(t("nav.graph"))}" aria-label="${escapeHtml(t("nav.graph"))}">${icon("calculator")}</button>`;
+  const calcBtn = ["contest", "placement", "pretest"].includes(ctx.mode) ? "" : `<button type="button" class="ghost task-calc icon-only" title="${escapeHtml(t("nav.graph"))}" aria-label="${escapeHtml(t("nav.graph"))}">${icon("calculator")}</button>`;
   const bar = ctx.mode === "contest" ? `<div class="contest-bar"><span id="contest-timer" class="contest-timer" role="timer">${icon("timer")}<b>${leftText(state.contestDeadline)}</b></span><span class="muted">${t("comp.timerNote")}</span></div>` : "";
   const penalty = ctx.mode === "contest" && task.penalty ? `<span class="pts neg">${t("exam.penaltyPts", { n: String(task.penalty).replace("-", "−") })}</span>` : "";
-  const hintLadder = task.hintSteps > 0 && ctx.mode !== "contest" && ctx.mode !== "placement";
-  box.innerHTML = `${bar}<div class="card task">
+  const hintLadder = task.hintSteps > 0 && !["contest", "placement", "pretest"].includes(ctx.mode);
+  const pretestHead =
+    ctx.mode === "pretest" ? `<div class="card pretest-head"><h2 class="with-icon">${icon("target")} ${t("pretest.title")}</h2><p class="muted">${t("pretest.intro")}</p></div>` : "";
+  box.innerHTML = `${bar}${pretestHead}<div class="card task">
     <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${penalty}${counter}${calcBtn}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
@@ -1509,6 +1537,7 @@ function renderTask(task, ctx) {
     ${input}
     ${hintLadder ? `<div id="hint-box" class="hint-box" aria-live="polite"></div><div class="hint-row"><button type="button" class="ghost small" id="hint-btn">${icon("lightbulb")}<span>${t("task.hintBtn")}</span></button></div>` : ""}
     <div id="feedback" class="feedback" aria-live="polite"></div>
+    ${ctx.mode === "pretest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="p-skip">${icon("circle-help")}${t("pretest.dontKnow")}</button></div>` : ""}
     ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${examMode() ? t("exam.finish") : t("comp.finish")}</button></div>` : ""}
   </div>`;
   wireWork(box, task);
@@ -1536,6 +1565,12 @@ function renderTask(task, ctx) {
     const exprs = mayPlot(task.text) ? await plotFromText(task.text) : [];
     // enačba krivulje → graf, sicer računalo
     openCalcOverlay(exprs.length ? { mode: "graph", exprs, backLabel: t("gc.backTask") } : { mode: calcSubject() === "KEM" ? "pse" : calcMode === "graph" ? "sci" : calcMode, backLabel: t("gc.backTask") });
+  });
+  $("#p-skip")?.addEventListener("click", async () => {
+    $("#p-skip").disabled = true;
+    const r = await api(`/api/students/${state.student.id}/tasks/${task.id}/skip`, { method: "POST" }).catch((e) => ({ error: e.message }));
+    if (r.error) return toast(r.error);
+    pretestStep(r, ctx);
   });
   if (ctx.mode === "contest") {
     $("#c-skip").addEventListener("click", async () => {
@@ -1714,6 +1749,7 @@ async function checkTask(task, ctx, value) {
   const next = (label = t("task.next")) => `<div class="actions"><button class="primary big" id="fb-next">${label}${icon("arrow-right")}</button></div>`;
   let html = "";
   if (ctx.mode === "contest" && !r.retry) return contestStep(r, ctx);
+  if (ctx.mode === "pretest" && !r.retry) return pretestStep(r, ctx);
   if (r.retry) {
     html = `<div class="fb info">${escapeHtml(fbText(r))}</div>`;
   } else if (ctx.mode === "placement") {
@@ -1775,6 +1811,25 @@ async function checkTask(task, ctx, value) {
     const n = r.next;
     if (n && !n.finished) renderTask(n.task, { mode: ctx.mode, index: n.index, total: n.total });
   });
+}
+
+// Test predznanja: brez rešitve in namigov, takoj naslednja naloga; na koncu raven in nadaljevanje.
+function pretestStep(r, ctx) {
+  closePad();
+  if (r.pretest) {
+    const tp = state.topic;
+    $("#practice").innerHTML = pretestResultHtml(r.pretest);
+    $("#pt-learn").addEventListener("click", () => learnWithTutor(tp));
+    $("#pt-practice").addEventListener("click", () => nextPractice());
+    $("#pt-lesson").addEventListener("click", () => openLesson(tp.id));
+    $("#practice").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  const n = r.next;
+  if (n && !n.finished) {
+    toast(r.skipped ? t("pretest.skipped") : r.correct ? t("task.correct") : t("pretest.noted"), r.correct ? "circle-check" : "arrow-right");
+    renderTask(n.task, { mode: "pretest", index: n.index, total: n.total });
+  }
 }
 
 // ---------- tekmovanja ----------

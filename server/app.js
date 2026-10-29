@@ -438,9 +438,13 @@ export function createApp(store, opts = {}) {
     const view = lessonView(String(req.query.id || ""));
     if (!view) return res.status(404).json({ error: "Tema ne obstaja." });
     const interactive = !accounts || accounts.premiumFor(s.id);
-    if (interactive) return res.json({ ...view, interactive: true });
+    // Nova tema z nalogami: na začetku lekcije povabilo na test predznanja.
+    const st = progress.state(s.id, view.id);
+    const pretest_due = !!view.practice && st.status === "new" && st.pretest == null;
+    if (interactive) return res.json({ ...view, interactive: true, pretest_due });
     res.json({
       ...view,
+      pretest_due,
       interactive: false,
       locked: { demo: view.demo?.title || null },
       demos: [],
@@ -644,6 +648,12 @@ export function createApp(store, opts = {}) {
     const out = progress.startTest(s.id);
     if (!out) return res.status(400).json({ error: "Najprej nastavi pripravo na test (sklopi z vajami in datum)." });
     res.json(out);
+  });
+  // Začetni test predznanja teme (ob odprtju nove teme).
+  app.post("/api/students/:id/pretest", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    res.json(progress.startPretest(s.id, String(req.body?.topic_id || "")));
   });
   app.post("/api/students/:id/placement", (req, res) => {
     const s = loadStudent(req, res);

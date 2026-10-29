@@ -948,5 +948,20 @@
   "cards.open": "カードを開く",
   "cards.own": "自作",
   "cards.keys": "キー: スペース = 答えを見る、1 = まだ覚えていない、2 = 覚えた",
-  "cards.cancel": "キャンセル"
+  "cards.cancel": "キャンセル",
+  "pretest.title": "予備知識チェック",
+  "pretest.intro": "やさしい問題から難しい問題まで3問で、どこから始めるかを決めます。まだ解けない問題は「まだわからない」を押してね。大丈夫、そのときは最初から始めます。",
+  "pretest.lessonIntro": "始める前に: 3つの短い問題で、このテーマについてすでに知っていることを確かめます。その後、チューターと練習問題があなたのレベルに合わせます。",
+  "pretest.start": "チェックを始める",
+  "pretest.dontKnow": "まだわからない",
+  "pretest.skipped": "わかった、一緒に学ぼう。",
+  "pretest.noted": "記録しました。",
+  "pretest.resultTitle": "このテーマでのあなたのレベル: {tier}",
+  "pretest.tierBasic": "基礎",
+  "pretest.tierMid": "標準",
+  "pretest.tierHigh": "発展",
+  "pretest.score": "正解した問題: {total} 問中 {correct} 問",
+  "pretest.textBasic": "このテーマは最初から一歩ずつ進めます。チューターかレッスンから始めるのがおすすめです。",
+  "pretest.textMid": "基礎はもうわかっています。チューターは基礎を短く復習し、問題は標準レベルになります。",
+  "pretest.textHigh": "すばらしい、3問とも正解です。基礎はさっと復習して、難しめの問題に進みます。"
 }

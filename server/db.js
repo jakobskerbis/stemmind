@@ -163,6 +163,9 @@ export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
   const studentCols = db.prepare("PRAGMA table_info(students)").all().map((c) => c.name);
   // Kdaj je učenec nazadnje spremenil šolo ali letnik (za predlog prehoda na začetku šolskega leta).
   if (!studentCols.includes("level_changed_at")) db.exec("ALTER TABLE students ADD COLUMN level_changed_at TEXT");
+  // Začetni test predznanja teme: koliko stopenj (0–3) je učenec rešil zapored od lažje proti težji.
+  const stateCols = db.prepare("PRAGMA table_info(topic_state)").all().map((c) => c.name);
+  if (!stateCols.includes("pretest")) db.exec("ALTER TABLE topic_state ADD COLUMN pretest INTEGER");
   const convCols = db.prepare("PRAGMA table_info(conversations)").all().map((c) => c.name);
   if (!convCols.includes("path_topic")) db.exec("ALTER TABLE conversations ADD COLUMN path_topic TEXT");
   if (!convCols.includes("deep")) db.exec("ALTER TABLE conversations ADD COLUMN deep INTEGER NOT NULL DEFAULT 0");

@@ -948,5 +948,20 @@
   "cards.open": "打开卡片",
   "cards.own": "自建",
   "cards.keys": "按键：空格 = 显示答案，1 = 还不会，2 = 会了",
-  "cards.cancel": "取消"
+  "cards.cancel": "取消",
+  "pretest.title": "预备知识测试",
+  "pretest.intro": "三道由易到难的短题，帮我们确定从哪里开始。如果还不会某道题，就按“这个我还不会”。没关系，那我们就从头开始。",
+  "pretest.lessonIntro": "开始之前：三道短题会显示你对这个主题已经了解多少。之后辅导老师和练习会按你的水平调整。",
+  "pretest.start": "开始测试",
+  "pretest.dontKnow": "这个我还不会",
+  "pretest.skipped": "好的，我们一起来学。",
+  "pretest.noted": "已记录。",
+  "pretest.resultTitle": "你在这个主题的水平：{tier}",
+  "pretest.tierBasic": "基础",
+  "pretest.tierMid": "中等",
+  "pretest.tierHigh": "进阶",
+  "pretest.score": "答对：{correct} / {total} 题。",
+  "pretest.textBasic": "我们会从头开始，一步一步学这个主题。最好先从辅导老师或课文开始。",
+  "pretest.textMid": "你已经掌握了基础。辅导老师只会简短复习，练习难度为中等。",
+  "pretest.textHigh": "太棒了，三道题全对。基础快速复习一下，然后进入更难的题目。"
 }

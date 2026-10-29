@@ -958,5 +958,20 @@
   "cards.open": "Deschide fișele",
   "cards.own": "proprie",
   "cards.keys": "Taste: spațiu = arată răspunsul, 1 = încă nu știu, 2 = știu",
-  "cards.cancel": "Anulează"
+  "cards.cancel": "Anulează",
+  "pretest.title": "Test de cunoștințe anterioare",
+  "pretest.intro": "Trei sarcini scurte, de la ușor la greu, arată de unde să începem. Dacă nu știi încă o sarcină, apasă „Încă nu știu asta”. Nicio problemă, atunci începem de la zero.",
+  "pretest.lessonIntro": "Înainte să începi: trei sarcini scurte arată ce știi deja despre această temă. Tutorele și exercițiile se adaptează apoi nivelului tău.",
+  "pretest.start": "Începe testul",
+  "pretest.dontKnow": "Încă nu știu asta",
+  "pretest.skipped": "Bine, o să lucrăm asta împreună.",
+  "pretest.noted": "Notat.",
+  "pretest.resultTitle": "Nivelul tău la această temă: {tier}",
+  "pretest.tierBasic": "de bază",
+  "pretest.tierMid": "mediu",
+  "pretest.tierHigh": "avansat",
+  "pretest.score": "Sarcini corecte: {correct} din {total}.",
+  "pretest.textBasic": "Vom lua tema de la început, pas cu pas. Cel mai bine începi cu tutorele sau cu lecția.",
+  "pretest.textMid": "Știi deja noțiunile de bază. Tutorele le va recapitula doar pe scurt, iar sarcinile vor fi de dificultate medie.",
+  "pretest.textHigh": "Excelent, toate cele trei sarcini sunt corecte. Recapitulăm rapid noțiunile de bază, apoi urmează sarcini mai grele."
 }

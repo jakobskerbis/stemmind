@@ -963,5 +963,20 @@
   "cards.open": "Otwórz fiszki",
   "cards.own": "własna",
   "cards.keys": "Klawisze: spacja = pokaż odpowiedź, 1 = jeszcze nie wiem, 2 = wiem",
-  "cards.cancel": "Anuluj"
+  "cards.cancel": "Anuluj",
+  "pretest.title": "Test wiedzy wstępnej",
+  "pretest.intro": "Trzy krótkie zadania, od łatwiejszego do trudniejszego, pokażą, od czego zacząć. Jeśli jeszcze nie umiesz zadania, naciśnij „Jeszcze tego nie umiem”. Nic nie szkodzi, wtedy zaczniemy od początku.",
+  "pretest.lessonIntro": "Zanim zaczniesz: trzy krótkie zadania pokażą, co już wiesz o tym temacie. Korepetytor i ćwiczenia dopasują się potem do twojego poziomu.",
+  "pretest.start": "Rozpocznij test",
+  "pretest.dontKnow": "Jeszcze tego nie umiem",
+  "pretest.skipped": "Dobrze, przerobimy to razem.",
+  "pretest.noted": "Zapisano.",
+  "pretest.resultTitle": "Twój poziom w tym temacie: {tier}",
+  "pretest.tierBasic": "podstawowy",
+  "pretest.tierMid": "średni",
+  "pretest.tierHigh": "zaawansowany",
+  "pretest.score": "Poprawne zadania: {correct} z {total}.",
+  "pretest.textBasic": "Przerobimy temat od początku, krok po kroku. Najlepiej zacznij od korepetytora albo od lekcji.",
+  "pretest.textMid": "Podstawy już znasz. Korepetytor tylko krótko je powtórzy, a zadania będą średnio trudne.",
+  "pretest.textHigh": "Świetnie, wszystkie trzy zadania są poprawne. Podstawy tylko szybko powtórzymy, potem przyjdą trudniejsze zadania."
 }

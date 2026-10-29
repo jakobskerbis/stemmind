@@ -953,5 +953,20 @@
   "cards.open": "Abrir cartões",
   "cards.own": "próprio",
   "cards.keys": "Teclas: espaço = mostrar resposta, 1 = ainda não sei, 2 = sei",
-  "cards.cancel": "Cancelar"
+  "cards.cancel": "Cancelar",
+  "pretest.title": "Teste de conhecimentos prévios",
+  "pretest.intro": "Três tarefas curtas, da mais fácil à mais difícil, mostram por onde começar. Se ainda não souberes fazer uma tarefa, carrega em «Ainda não sei isto». Não faz mal, então começamos do início.",
+  "pretest.lessonIntro": "Antes de começares: três tarefas curtas mostram o que já sabes sobre este tema. O tutor e os exercícios adaptam-se depois ao teu nível.",
+  "pretest.start": "Começar o teste",
+  "pretest.dontKnow": "Ainda não sei isto",
+  "pretest.skipped": "Está bem, vamos ver isso juntos.",
+  "pretest.noted": "Registado.",
+  "pretest.resultTitle": "O teu nível neste tema: {tier}",
+  "pretest.tierBasic": "básico",
+  "pretest.tierMid": "intermédio",
+  "pretest.tierHigh": "avançado",
+  "pretest.score": "Tarefas certas: {correct} de {total}.",
+  "pretest.textBasic": "Vamos ver o tema desde o início, passo a passo. O melhor é começares com o tutor ou com a lição.",
+  "pretest.textMid": "Já sabes o básico. O tutor só o vai rever brevemente e as tarefas serão de dificuldade média.",
+  "pretest.textHigh": "Ótimo, as três tarefas estão certas. Revemos o básico rapidamente e depois vêm tarefas mais difíceis."
 }

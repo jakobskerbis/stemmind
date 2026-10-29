@@ -948,5 +948,20 @@
   "cards.open": "打開卡片",
   "cards.own": "自建",
   "cards.keys": "按鍵：空白鍵 = 顯示答案，1 = 還不會，2 = 會了",
-  "cards.cancel": "取消"
+  "cards.cancel": "取消",
+  "pretest.title": "預備知識測驗",
+  "pretest.intro": "三道由易到難的短題，幫我們決定從哪裡開始。如果還不會某道題，就按「這個我還不會」。沒關係，那我們就從頭開始。",
+  "pretest.lessonIntro": "開始之前：三道短題會顯示你對這個主題已經了解多少。之後家教老師和練習會依你的程度調整。",
+  "pretest.start": "開始測驗",
+  "pretest.dontKnow": "這個我還不會",
+  "pretest.skipped": "好的，我們一起來學。",
+  "pretest.noted": "已記錄。",
+  "pretest.resultTitle": "你在這個主題的程度：{tier}",
+  "pretest.tierBasic": "基礎",
+  "pretest.tierMid": "中等",
+  "pretest.tierHigh": "進階",
+  "pretest.score": "答對：{correct} / {total} 題。",
+  "pretest.textBasic": "我們會從頭開始，一步一步學這個主題。最好先從家教老師或課文開始。",
+  "pretest.textMid": "你已經掌握了基礎。家教老師只會簡短複習，練習難度為中等。",
+  "pretest.textHigh": "太棒了，三道題全對。基礎快速複習一下，然後進入更難的題目。"
 }

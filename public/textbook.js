@@ -454,6 +454,7 @@ async function renderLesson(topicId) {
     ${lesson ? `<a class="tb-pdf" href="/ucbenik/${L.path}/${L.id.split("/")[1]}#natisni" target="_blank" rel="noopener">${ic("download")}PDF lekcije</a>` : ""}
     <p class="muted tb-sel-hint">${ic("message-circle")}Ti kakšen del ni jasen? Označi ga in pritisni »Razloži«.</p>
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
+    ${L.pretest_due ? `<section class="card tb-pretest"><h2>${ic("target")}${esc(t("pretest.title"))}</h2><p>${esc(t("pretest.lessonIntro"))}</p><button type="button" class="primary" id="tb-pretest">${ic("play")}${esc(t("pretest.start"))}</button></section>` : ""}
     ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej tutorju.</p>` : ""}
     ${sectionHtml}${fallback}${checksHtml}
     <section class="card tb-next">
@@ -516,9 +517,9 @@ async function renderLesson(topicId) {
     );
   });
   $("#tb-practice")?.addEventListener("click", async () => {
-    await ctx.openTopic(L.id);
-    ctx.nextPractice();
+    if (!(await ctx.openTopic(L.id))) ctx.nextPractice();
   });
+  $("#tb-pretest")?.addEventListener("click", () => ctx.openTopic(L.id));
   $("#tb-ask").addEventListener("click", () =>
     ctx.learnWithTutor({ id: L.id, name: L.name }, `Prebral sem lekcijo »${L.name}«, pa mi še ni čisto jasno. Mi razložiš na drug način?`),
   );

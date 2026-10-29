@@ -963,5 +963,20 @@
   "cards.open": "Otevřít kartičky",
   "cards.own": "vlastní",
   "cards.keys": "Klávesy: mezerník = ukázat odpověď, 1 = ještě neumím, 2 = umím",
-  "cards.cancel": "Zrušit"
+  "cards.cancel": "Zrušit",
+  "pretest.title": "Test předchozích znalostí",
+  "pretest.intro": "Tři krátké úlohy, od lehčí po těžší, ukážou, kde začít. Pokud úlohu ještě neumíš, stiskni „Tohle ještě neumím“. Nevadí, pak začneme od začátku.",
+  "pretest.lessonIntro": "Než začneš: tři krátké úlohy ukážou, co už o tomto tématu víš. Tutor a cvičení se pak přizpůsobí tvé úrovni.",
+  "pretest.start": "Začít test",
+  "pretest.dontKnow": "Tohle ještě neumím",
+  "pretest.skipped": "Dobře, projdeme to spolu.",
+  "pretest.noted": "Zaznamenáno.",
+  "pretest.resultTitle": "Tvoje úroveň v tomto tématu: {tier}",
+  "pretest.tierBasic": "základní",
+  "pretest.tierMid": "střední",
+  "pretest.tierHigh": "pokročilá",
+  "pretest.score": "Správné úlohy: {correct} z {total}.",
+  "pretest.textBasic": "Téma projdeme od začátku, krok za krokem. Nejlepší je začít s tutorem nebo s lekcí.",
+  "pretest.textMid": "Základy už znáš. Tutor je jen krátce zopakuje a úlohy budou středně náročné.",
+  "pretest.textHigh": "Výborně, všechny tři úlohy jsou správně. Základy jen rychle zopakujeme a pak přijdou náročnější úlohy."
 }

@@ -953,5 +953,20 @@
   "cards.open": "Karteikarten öffnen",
   "cards.own": "eigene",
   "cards.keys": "Tasten: Leertaste = Antwort zeigen, 1 = kann ich noch nicht, 2 = kann ich",
-  "cards.cancel": "Abbrechen"
+  "cards.cancel": "Abbrechen",
+  "pretest.title": "Vorwissenstest",
+  "pretest.intro": "Drei kurze Aufgaben, von leicht bis schwer, zeigen, wo wir anfangen. Wenn du eine Aufgabe noch nicht kannst, drücke „Das kann ich noch nicht“. Kein Problem, dann fangen wir von vorne an.",
+  "pretest.lessonIntro": "Bevor du beginnst: Drei kurze Aufgaben zeigen, was du über dieses Thema schon weißt. Tutor und Übungen passen sich dann deinem Niveau an.",
+  "pretest.start": "Test starten",
+  "pretest.dontKnow": "Das kann ich noch nicht",
+  "pretest.skipped": "Okay, das erarbeiten wir gemeinsam.",
+  "pretest.noted": "Notiert.",
+  "pretest.resultTitle": "Dein Niveau bei diesem Thema: {tier}",
+  "pretest.tierBasic": "Grundstufe",
+  "pretest.tierMid": "Mittelstufe",
+  "pretest.tierHigh": "fortgeschritten",
+  "pretest.score": "Richtige Aufgaben: {correct} von {total}.",
+  "pretest.textBasic": "Wir nehmen das Thema von Anfang an durch, Schritt für Schritt. Am besten beginnst du mit dem Tutor oder der Lektion.",
+  "pretest.textMid": "Die Grundlagen kannst du schon. Der Tutor wiederholt sie nur kurz, die Aufgaben sind mittelschwer.",
+  "pretest.textHigh": "Super, alle drei Aufgaben sind richtig. Die Grundlagen wiederholen wir nur kurz, dann kommen schwierigere Aufgaben."
 }
