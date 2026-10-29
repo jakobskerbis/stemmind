@@ -1308,5 +1308,7 @@
   "tb.steps.all": "Tutto insieme",
   "tb.steps.byStep": "Passo dopo passo",
   "tb.steps.quick": "Verifica rapida",
-  "path.earlyNote": "Il percorso per {grade} è ancora in preparazione, quindi per ora vedi gli argomenti della 6ª classe. I giochi per la tua classe sono in Giochi e il tutor ti spiega tutto al tuo livello."
+  "path.earlyNote": "Il percorso per {grade} è ancora in preparazione, quindi per ora vedi gli argomenti della 6ª classe. I giochi per la tua classe sono in Giochi e il tutor ti spiega tutto al tuo livello.",
+  "games.pathMark": "Sul tuo percorso",
+  "games.pathHint": "I giochi con la bussola sono il tuo percorso per capire: prima quelli tranquilli, poi quelli più veloci. Tutti i giochi sono aperti."
 }

@@ -1308,5 +1308,7 @@
   "tb.steps.all": "Alles auf einmal",
   "tb.steps.byStep": "Schritt für Schritt",
   "tb.steps.quick": "Kurzer Check",
-  "path.earlyNote": "Der Lernpfad für {grade} entsteht noch, deshalb siehst du vorerst den Stoff der 6. Klasse. Spiele für deine Klasse findest du unter Spiele, und der Tutor erklärt dir alles auf deinem Niveau."
+  "path.earlyNote": "Der Lernpfad für {grade} entsteht noch, deshalb siehst du vorerst den Stoff der 6. Klasse. Spiele für deine Klasse findest du unter Spiele, und der Tutor erklärt dir alles auf deinem Niveau.",
+  "games.pathMark": "Auf deinem Weg",
+  "games.pathHint": "Spiele mit Kompass sind dein Weg zum Verstehen: zuerst ruhige, dann schnellere. Alle Spiele sind offen."
 }

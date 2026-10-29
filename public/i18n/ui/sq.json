@@ -1308,5 +1308,7 @@
   "tb.steps.all": "Të gjitha njëherësh",
   "tb.steps.byStep": "Hap pas hapi",
   "tb.steps.quick": "Kontroll i shpejtë",
-  "path.earlyNote": "Rruga e të mësuarit për {grade} është ende në përgatitje, ndaj tani për tani sheh lëndën e klasës 6. Lojërat për klasën tënde janë te Lojërat, dhe tutori të shpjegon gjithçka në nivelin tënd."
+  "path.earlyNote": "Rruga e të mësuarit për {grade} është ende në përgatitje, ndaj tani për tani sheh lëndën e klasës 6. Lojërat për klasën tënde janë te Lojërat, dhe tutori të shpjegon gjithçka në nivelin tënd.",
+  "games.pathMark": "Në rrugën tënde",
+  "games.pathHint": "Lojërat me busull janë rruga jote drejt të kuptuarit: fillimisht të qetat, pastaj më të shpejtat. Të gjitha lojërat janë të hapura."
 }

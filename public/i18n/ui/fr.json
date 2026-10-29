@@ -1308,5 +1308,7 @@
   "tb.steps.all": "Tout d’un coup",
   "tb.steps.byStep": "Pas à pas",
   "tb.steps.quick": "Vérification rapide",
-  "path.earlyNote": "Le parcours pour {grade} est encore en préparation, tu vois donc pour l'instant le programme de 6e année. Les jeux de ta classe sont dans Jeux, et le tuteur t'explique tout à ton niveau."
+  "path.earlyNote": "Le parcours pour {grade} est encore en préparation, tu vois donc pour l'instant le programme de 6e année. Les jeux de ta classe sont dans Jeux, et le tuteur t'explique tout à ton niveau.",
+  "games.pathMark": "Sur ton chemin",
+  "games.pathHint": "Les jeux avec une boussole sont ton chemin vers la compréhension : d'abord les calmes, puis les plus rapides. Tous les jeux sont ouverts."
 }

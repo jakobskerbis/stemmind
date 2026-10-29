@@ -1308,5 +1308,7 @@
   "tb.steps.all": "Yote kwa pamoja",
   "tb.steps.byStep": "Hatua kwa hatua",
   "tb.steps.quick": "Ukaguzi wa haraka",
-  "path.earlyNote": "Njia ya kujifunza ya {grade} bado inaandaliwa, kwa hiyo kwa sasa unaona mada za darasa la 6. Michezo ya darasa lako iko kwenye Michezo, na mwalimu anakueleza kila kitu kwa kiwango chako."
+  "path.earlyNote": "Njia ya kujifunza ya {grade} bado inaandaliwa, kwa hiyo kwa sasa unaona mada za darasa la 6. Michezo ya darasa lako iko kwenye Michezo, na mwalimu anakueleza kila kitu kwa kiwango chako.",
+  "games.pathMark": "Kwenye njia yako",
+  "games.pathHint": "Michezo yenye dira ni njia yako ya kuelewa: kwanza ile tulivu, kisha ya kasi zaidi. Michezo yote iko wazi."
 }

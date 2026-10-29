@@ -1308,5 +1308,7 @@
   "tb.steps.all": "All at once",
   "tb.steps.byStep": "Step by step",
   "tb.steps.quick": "Quick check",
-  "path.earlyNote": "The learning path for {grade} is still being written, so for now you see grade 6 material. Games for your grade are in Games, and the tutor explains everything at your level."
+  "path.earlyNote": "The learning path for {grade} is still being written, so for now you see grade 6 material. Games for your grade are in Games, and the tutor explains everything at your level.",
+  "games.pathMark": "On your path",
+  "games.pathHint": "Games with a compass are your path to understanding: calm ones first, then faster ones. Every game is open."
 }

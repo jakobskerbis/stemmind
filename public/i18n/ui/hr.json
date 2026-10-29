@@ -1314,5 +1314,7 @@
   "tb.steps.all": "Sve odjednom",
   "tb.steps.byStep": "Korak po korak",
   "tb.steps.quick": "Brza provjera",
-  "path.earlyNote": "Put učenja za {grade} još je u izradi, pa zasad vidiš gradivo 6. razreda. Igre za tvoj razred su u Igrama, a instruktor ti sve objašnjava na tvojoj razini."
+  "path.earlyNote": "Put učenja za {grade} još je u izradi, pa zasad vidiš gradivo 6. razreda. Igre za tvoj razred su u Igrama, a instruktor ti sve objašnjava na tvojoj razini.",
+  "games.pathMark": "Na tvom putu",
+  "games.pathHint": "Igre s kompasom tvoj su put do razumijevanja: najprije mirne, zatim brže. Sve su igre otvorene."
 }

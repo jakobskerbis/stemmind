@@ -1308,5 +1308,7 @@
   "tb.steps.all": "Egyszerre minden",
   "tb.steps.byStep": "Lépésről lépésre",
   "tb.steps.quick": "Gyors ellenőrzés",
-  "path.earlyNote": "A(z) {grade} tanulási útja még készül, ezért most a 6. osztály anyagát látod. Az osztályod játékai a Játékok között vannak, a tanító pedig mindent a te szinteden magyaráz el."
+  "path.earlyNote": "A(z) {grade} tanulási útja még készül, ezért most a 6. osztály anyagát látod. Az osztályod játékai a Játékok között vannak, a tanító pedig mindent a te szinteden magyaráz el.",
+  "games.pathMark": "Az utadon",
+  "games.pathHint": "Az iránytűs játékok vezetnek a megértéshez: előbb a nyugodtak, aztán a gyorsabbak. Minden játék nyitva van."
 }

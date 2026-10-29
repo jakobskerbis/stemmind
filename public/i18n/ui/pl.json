@@ -1320,5 +1320,7 @@
   "tb.steps.all": "Wszystko naraz",
   "tb.steps.byStep": "Krok po kroku",
   "tb.steps.quick": "Szybkie sprawdzenie",
-  "path.earlyNote": "Ścieżka nauki dla {grade} jest jeszcze przygotowywana, więc na razie widzisz materiał klasy 6. Gry dla twojej klasy są w Grach, a korepetytor wyjaśni ci wszystko na twoim poziomie."
+  "path.earlyNote": "Ścieżka nauki dla {grade} jest jeszcze przygotowywana, więc na razie widzisz materiał klasy 6. Gry dla twojej klasy są w Grach, a korepetytor wyjaśni ci wszystko na twoim poziomie.",
+  "games.pathMark": "Na twojej ścieżce",
+  "games.pathHint": "Gry z kompasem to twoja ścieżka do zrozumienia: najpierw spokojne, potem szybsze. Wszystkie gry są otwarte."
 }

@@ -1161,6 +1161,8 @@ export default {
   "games.lockPace": "To je hitrejša igra. Odklene se, ko v eni od mirnejših iger o tej snovi zbereš vsaj {n} pravilnih odgovorov in vsaj 80 % pravilnih.",
   "games.lockLearn": "Ta igra se odklene, ko znaš snov »{name}«. Nauči se jo na učni poti ali pokaži znanje v kratkem preizkusu.",
   "games.locked": "Zaklenjeno",
+  "games.pathMark": "Na tvoji poti",
+  "games.pathHint": "Igre s kompasom so tvoja pot do razumevanja: najprej mirne, nato hitrejše. Odprte so vse igre.",
   // kotiček zanimanj (public/corner.js) in vprašalnik ob zagonu
   "nav.corner": "Kotiček",
   "corner.meSub": "Novice o tem, kar te zanima",

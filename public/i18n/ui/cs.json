@@ -1320,5 +1320,7 @@
   "tb.steps.all": "Vše najednou",
   "tb.steps.byStep": "Krok za krokem",
   "tb.steps.quick": "Rychlá kontrola",
-  "path.earlyNote": "Učební cesta pro {grade} se ještě připravuje, proto zatím vidíš učivo 6. třídy. Hry pro tvůj ročník najdeš ve Hrách a lektor ti vše vysvětlí na tvé úrovni."
+  "path.earlyNote": "Učební cesta pro {grade} se ještě připravuje, proto zatím vidíš učivo 6. třídy. Hry pro tvůj ročník najdeš ve Hrách a lektor ti vše vysvětlí na tvé úrovni.",
+  "games.pathMark": "Na tvé cestě",
+  "games.pathHint": "Hry s kompasem jsou tvoje cesta k porozumění: nejdřív klidné, potom rychlejší. Otevřené jsou všechny hry."
 }

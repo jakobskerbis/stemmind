@@ -1308,5 +1308,7 @@
   "tb.steps.all": "Tudo de uma vez",
   "tb.steps.byStep": "Passo a passo",
   "tb.steps.quick": "Verificação rápida",
-  "path.earlyNote": "O percurso de aprendizagem para {grade} ainda está a ser preparado, por isso por agora vês a matéria do 6.º ano. Os jogos do teu ano estão em Jogos e o tutor explica-te tudo ao teu nível."
+  "path.earlyNote": "O percurso de aprendizagem para {grade} ainda está a ser preparado, por isso por agora vês a matéria do 6.º ano. Os jogos do teu ano estão em Jogos e o tutor explica-te tudo ao teu nível.",
+  "games.pathMark": "No teu caminho",
+  "games.pathHint": "Os jogos com bússola são o teu caminho para perceber: primeiro os calmos, depois os mais rápidos. Todos os jogos estão abertos."
 }

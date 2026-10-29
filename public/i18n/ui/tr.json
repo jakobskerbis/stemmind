@@ -1308,5 +1308,7 @@
   "tb.steps.all": "Hepsi bir arada",
   "tb.steps.byStep": "Adım adım",
   "tb.steps.quick": "Hızlı kontrol",
-  "path.earlyNote": "{grade} için öğrenme yolu hâlâ hazırlanıyor, bu yüzden şimdilik 6. sınıf konularını görüyorsun. Sınıfının oyunları Oyunlar bölümünde, öğretmen de her şeyi senin seviyende anlatır."
+  "path.earlyNote": "{grade} için öğrenme yolu hâlâ hazırlanıyor, bu yüzden şimdilik 6. sınıf konularını görüyorsun. Sınıfının oyunları Oyunlar bölümünde, öğretmen de her şeyi senin seviyende anlatır.",
+  "games.pathMark": "Senin yolunda",
+  "games.pathHint": "Pusulalı oyunlar anlamaya giden yolundur: önce sakin olanlar, sonra daha hızlılar. Tüm oyunlar açık."
 }

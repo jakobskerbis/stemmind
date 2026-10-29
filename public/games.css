@@ -59,6 +59,13 @@
 .gm-kind svg.i { width: 16px; height: 16px; }
 .gm-best { position: absolute; top: 8px; right: 8px; display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; border-radius: 99px; background: rgba(0, 0, 0, 0.32); font-size: 0.72rem; font-weight: 800; }
 .gm-best svg.i { width: 12px; height: 12px; color: #fde047; }
+/* Igra na označeni poti: zlat rob in kompas (vse igre so odprte, označene so priporočene). */
+.gm-tile.gm-path { border-color: #facc15; box-shadow: 0 5px 0 var(--gm-ink), 0 0 0 3px var(--gm-ink), 0 10px 18px rgba(20, 33, 61, 0.16); }
+.gm-pathmark { position: absolute; top: 6px; right: 6px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #facc15; color: var(--gm-ink); border: 2px solid var(--gm-ink); }
+.gm-pathmark svg.i { width: 14px; height: 14px; }
+.gm-path .gm-best { top: 36px; }
+.gm-pathhint { display: flex; align-items: center; gap: 8px; margin: 4px 0 12px; font-size: 0.9rem; color: var(--muted, #475569); }
+.gm-pathhint svg.i { flex: none; width: 20px; height: 20px; padding: 3px; border-radius: 50%; background: #facc15; color: var(--gm-ink); border: 2px solid var(--gm-ink); }
 /* Zaklenjena igra: siva, s ključavnico; klik pokaže, kako jo odkleneš. */
 .gm-tile.gm-locked { filter: grayscale(0.85) brightness(0.82); }
 .gm-lock { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(0, 0, 0, 0.5); border: 3px solid var(--gm-ink); }

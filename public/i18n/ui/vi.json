@@ -1302,5 +1302,7 @@
   "tb.steps.all": "Tất cả cùng lúc",
   "tb.steps.byStep": "Từng bước",
   "tb.steps.quick": "Kiểm tra nhanh",
-  "path.earlyNote": "Lộ trình học cho {grade} vẫn đang được soạn, nên hiện tại bạn thấy nội dung lớp 6. Trò chơi cho lớp của bạn nằm trong mục Trò chơi, và gia sư sẽ giải thích mọi thứ theo trình độ của bạn."
+  "path.earlyNote": "Lộ trình học cho {grade} vẫn đang được soạn, nên hiện tại bạn thấy nội dung lớp 6. Trò chơi cho lớp của bạn nằm trong mục Trò chơi, và gia sư sẽ giải thích mọi thứ theo trình độ của bạn.",
+  "games.pathMark": "Trên lộ trình của bạn",
+  "games.pathHint": "Trò chơi có la bàn là lộ trình giúp bạn hiểu bài: trước là trò chậm, sau là trò nhanh hơn. Mọi trò chơi đều mở."
 }

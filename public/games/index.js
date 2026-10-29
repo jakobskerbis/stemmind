@@ -3,7 +3,17 @@
 import { t } from "../i18n.js";
 import { icon } from "../icons.js";
 import { CONCEPTS, AREAS, SUBJECTS, conceptName, areaName, setNumberStyle, makeQuestion, shuffle } from "./topics.js";
-import { gameLock, clearedPace, PACE, CLEAR_CORRECT, CHECK_TASKS, CHECK_PASS } from "./unlock.js";
+import { gameLock as ruleLock, clearedPace, lessonsOf, PACE, CLEAR_CORRECT, CHECK_TASKS, CHECK_PASS, LOCKS_ON } from "./unlock.js";
+// Zapora iger je izklopljena (LOCKS_ON v unlock.js): vse igre so odprte.
+const gameLock = (...a) => (LOCKS_ON ? ruleLock(...a) : null);
+// Označena pot (j 18:04: »samo označene poti, preko katerih lažje pridejo do razumevanja«): igra je
+// na poti, ko učenec snov že zna (pravila iz unlock.js), je snov iz njegovega ali prejšnjega razreda
+// oziroma obvladana na učni poti, in je naslednja po hitrosti: najprej mirna, nato srednja, nato hitra.
+function onPath(e, c) {
+  if (ruleLock(e.id, c, LS) || data.games[gameId(e, c)]?.cleared) return false;
+  if (PACE[e.id] !== clearedPace(c.id, LS) + 1) return false;
+  return c.year >= Math.min(data.year, 13) - 1 || lessonsOf(c.id).some((x) => LS.known.has(x));
+}
 import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
 import { ITEMS, ITEM, SLOTS, DEFAULT_AVATAR, avatarSvg, itemName, rarity } from "../avatar.js";
@@ -104,8 +114,10 @@ function saveFilter() {
 function tile(e, c) {
   const st = data.games[gameId(e, c)];
   const locked = !!gameLock(e.id, c, LS);
-  return `<button type="button" class="gm-tile gm-k-${e.id}${locked ? " gm-locked" : ""}" data-game="${gameId(e, c)}" style="--a:${tileColor(c)};--b:${e.colors[0]}"${locked ? ` aria-label="${esc(`${t("games.locked")}: ${conceptName(c)}, ${kindName(e)}`)}"` : ""}>
+  const path = !locked && onPath(e, c);
+  return `<button type="button" class="gm-tile gm-k-${e.id}${locked ? " gm-locked" : ""}${path ? " gm-path" : ""}" data-game="${gameId(e, c)}" style="--a:${tileColor(c)};--b:${e.colors[0]}"${locked ? ` aria-label="${esc(`${t("games.locked")}: ${conceptName(c)}, ${kindName(e)}`)}"` : path ? ` aria-label="${esc(`${t("games.pathMark")}: ${conceptName(c)}, ${kindName(e)}`)}"` : ""}>
     <span class="gm-kind">${icon(e.icon)}</span>
+    ${path ? `<span class="gm-pathmark" title="${esc(t("games.pathMark"))}">${icon("compass")}</span>` : ""}
     ${st?.best ? `<span class="gm-best">${icon("star")}${st.best}</span>` : ""}
     <span class="gm-glyph">${locked ? `<span class="gm-lock">${icon("lock")}</span>` : esc(GLYPH[c.id] || c.glyph || SUBJ_GLYPH[c.subject] || "∑")}</span>
     <span class="gm-name"><b>${esc(conceptName(c))}</b><small>${esc(kindName(e))}</small></span>
@@ -122,17 +134,20 @@ function renderPortal() {
   const area = filter.area === "you" && !anyForYou ? "all" : filter.area;
   const pick = (c) => (q || c.subject === filter.subject) && (area === "you" ? forYou(c) : area === "all" || c.area === area);
   let total = 0;
+  let paths = 0;
   const sections = AREAS.filter((a) => q || a[3] === filter.subject).map(([id]) => {
     const tiles = [];
     // Sosednji ploščici se razlikujeta po snovi in po vrsti igre (pisana mreža).
     const cs = CONCEPTS.filter((c) => c.area === id && pick(c));
+    const path = [];
     const open = [];
     const shut = [];
     for (let r = 0; r < kinds.length; r++) cs.forEach((c, i) => {
       const e = kinds[(i + r) % kinds.length];
-      if (match(c, e)) (gameLock(e.id, c, LS) ? shut : open).push(tile(e, c));
+      if (match(c, e)) (gameLock(e.id, c, LS) ? shut : onPath(e, c) ? path : open).push(tile(e, c));
     });
-    tiles.push(...open, ...shut); // odklenjene igre najprej
+    tiles.push(...path, ...open, ...shut); // igre na poti najprej
+    paths += path.length;
     total += tiles.length;
     if (!tiles.length) return "";
     return `<section class="gm-sec"><h2><span class="gm-dot" style="background:${areaColor(id)}"></span>${esc(areaName(id))}<span class="gm-count">${tiles.length}</span></h2><div class="gm-grid">${tiles.join("")}</div></section>`;
@@ -153,6 +168,7 @@ function renderPortal() {
       <div class="chip-row gm-kinds" role="group" aria-label="${esc(t("games.kinds"))}">
         ${chip("all", t("games.allKinds"), filter.kind === "all")}${ENGINES.map((e) => chip(e.id, kindName(e), filter.kind === e.id)).join("")}
       </div>
+      ${paths ? `<p class="gm-pathhint">${icon("compass")} ${esc(t("games.pathHint"))}</p>` : ""}
       ${total ? sections : `<p class="muted gm-none">${esc(t("games.none"))}</p>`}
     </div>`;
   root.querySelector(".gm-subjects")?.addEventListener("click", (ev) => {
@@ -217,7 +233,7 @@ function openGame(id) {
       data.concepts[cid] = r.tier;
       LS = lockState();
       // Opravljena igra odklene hitrejše igre te snovi.
-      if (clearedPace(cid, LS) > before && clearedPace(cid, LS) < 3) info.unlocked = t("games.unlockedFaster");
+      if (LOCKS_ON && clearedPace(cid, LS) > before && clearedPace(cid, LS) < 3) info.unlocked = t("games.unlockedFaster");
       if (info.coins) av.coins += info.coins;
       if (info.xp) ctx.refreshXp?.();
       return info;

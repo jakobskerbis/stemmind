@@ -1314,5 +1314,7 @@
   "tb.steps.all": "Tot deodată",
   "tb.steps.byStep": "Pas cu pas",
   "tb.steps.quick": "Verificare rapidă",
-  "path.earlyNote": "Traseul de învățare pentru {grade} este încă în lucru, așa că deocamdată vezi materia clasei a 6-a. Jocurile pentru clasa ta sunt la Jocuri, iar tutorele îți explică totul la nivelul tău."
+  "path.earlyNote": "Traseul de învățare pentru {grade} este încă în lucru, așa că deocamdată vezi materia clasei a 6-a. Jocurile pentru clasa ta sunt la Jocuri, iar tutorele îți explică totul la nivelul tău.",
+  "games.pathMark": "Pe drumul tău",
+  "games.pathHint": "Jocurile cu busolă sunt drumul tău spre înțelegere: întâi cele liniștite, apoi cele mai rapide. Toate jocurile sunt deschise."
 }

@@ -1308,5 +1308,7 @@
   "tb.steps.all": "Todo a la vez",
   "tb.steps.byStep": "Paso a paso",
   "tb.steps.quick": "Comprobación rápida",
-  "path.earlyNote": "La ruta de aprendizaje para {grade} aún se está preparando, así que por ahora ves el temario de 6.º. Los juegos de tu curso están en Juegos y el tutor te lo explica todo a tu nivel."
+  "path.earlyNote": "La ruta de aprendizaje para {grade} aún se está preparando, así que por ahora ves el temario de 6.º. Los juegos de tu curso están en Juegos y el tutor te lo explica todo a tu nivel.",
+  "games.pathMark": "En tu camino",
+  "games.pathHint": "Los juegos con brújula son tu camino para entender: primero los tranquilos, luego los más rápidos. Todos los juegos están abiertos."
 }

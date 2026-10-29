@@ -1302,5 +1302,7 @@
   "tb.steps.all": "Semua sekaligus",
   "tb.steps.byStep": "Langkah demi langkah",
   "tb.steps.quick": "Cek cepat",
-  "path.earlyNote": "Jalur belajar untuk {grade} masih disiapkan, jadi untuk sementara kamu melihat materi kelas 6. Permainan untuk kelasmu ada di Permainan, dan tutor menjelaskan semuanya sesuai tingkatmu."
+  "path.earlyNote": "Jalur belajar untuk {grade} masih disiapkan, jadi untuk sementara kamu melihat materi kelas 6. Permainan untuk kelasmu ada di Permainan, dan tutor menjelaskan semuanya sesuai tingkatmu.",
+  "games.pathMark": "Di jalurmu",
+  "games.pathHint": "Permainan berkompas adalah jalanmu menuju paham: yang tenang dulu, lalu yang lebih cepat. Semua permainan terbuka."
 }
