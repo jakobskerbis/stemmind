@@ -216,7 +216,12 @@ test("tekmovanja: trening brez zaklepanja, poskusno tekmovanje s točkami in ča
   const wrong = a2.type === "number" ? fmt(a2.value + 1000) + (a2.unit ? " " + a2.unit : "") : a2.type === "choice" ? String((a2.index + 1) % a2.options.length) : a2.type === "fraction" ? `${a2.num + 1}/${a2.den}` : a2.values.map((v) => v + 1).join(",");
   r = p.answer(s.id, n.task.id, wrong);
   assert.equal(r.saved, true);
-  assert.equal(p.answer(s.id, n.task.id, "1").error, "Ta naloga je že zaključena.", "en poskus");
+  // En poskus: ponovni odgovor ne šteje znova, vrne shranjeni izid in isto naslednjo nalogo.
+  const again = p.answer(s.id, n.task.id, "1");
+  assert.equal(again.error, undefined);
+  assert.equal(again.closed, true);
+  assert.equal(again.correct, false);
+  assert.equal(again.next.task.id, r.next.task.id);
   n = r.next;
   r = p.skipContestTask(s.id, n.task.id);
   assert.equal(r.skipped, true);
@@ -267,7 +272,8 @@ test("prior-knowledge pretest: three levels, one try, skip = not known, sets lev
   const a2 = p.getTask(r.next.task.id).payload.answer;
   r = p.answer(s.id, r.next.task.id, correctInput(a2.type === "number" ? { ...a2, value: a2.value * 3 + 7 } : { ...a2, index: (a2.index + 1) % 3, num: a2.num + 1, values: (a2.values || []).map((v) => v + 1) }));
   assert.equal(r.correct, false);
-  assert.ok(p.answer(s.id, r.next.task.id - 1, "1").error, "en poskus");
+  const again = p.answer(s.id, r.next.task.id - 1, "1");
+  assert.ok(again.closed && again.correct === false && again.next.task.id === r.next.task.id, "en poskus");
   r = p.skipContestTask(s.id, r.next.task.id);
   assert.equal(r.skipped, true);
   assert.deepEqual({ ...r.pretest, tier: r.pretest.tier }, { correct: 1, total: 3, known: 1, level: 1, tier: "osnovna" });
@@ -285,4 +291,54 @@ test("prior-knowledge pretest: three levels, one try, skip = not known, sets lev
   // Tema, ki se je učenec že uči, testa nima.
   p.nextPractice(s.id, "MAT-OS-8/uporaba-pitagorovega-izreka");
   assert.deepEqual(p.startPretest(s.id, "MAT-OS-8/uporaba-pitagorovega-izreka"), { skip: true });
+});
+
+test("second Preveri on a closed placement task returns the saved verdict, not an error", () => {
+  const { p, s } = setup();
+  const n = p.startPlacement(s.id, "MAT-OS-8", 0);
+  const a = p.getTask(n.task.id).payload.answer;
+  const wrong = a.type === "number" ? fmt(a.value + 1000) + (a.unit ? " " + a.unit : "") : a.type === "choice" ? String((a.index + 1) % a.options.length) : a.type === "fraction" ? `${a.num + 1}/${a.den}` : a.values.map((v) => v + 1).join(",");
+  const first = p.answer(s.id, n.task.id, wrong);
+  assert.equal(first.correct, false);
+  // Učenec popravi odgovor in znova pritisne »Preveri« (ali dvakrat tapne).
+  const second = p.answer(s.id, n.task.id, correctInput(a));
+  assert.equal(second.error, undefined);
+  assert.equal(second.closed, true);
+  assert.equal(second.correct, false, "velja prvi odgovor");
+  assert.equal(second.next.task.id, first.next.task.id, "ista naslednja naloga");
+  assert.equal(p.getTask(n.task.id).attempts, 1, "poskus se ne šteje znova");
+});
+
+test("closed practice task: repeat check shows the saved result without new XP", () => {
+  const { store, p, s } = setup();
+  p.nextPractice(s.id, TOPIC);
+  const { task } = p.nextPractice(s.id, TOPIC);
+  const input = correctInput(p.getTask(task.id).payload.answer);
+  const first = p.answer(s.id, task.id, input);
+  assert.equal(first.correct, true);
+  const xp = store.db.prepare("SELECT COALESCE(SUM(amount), 0) AS x FROM xp_events WHERE student_id = ?").get(s.id).x;
+  const again = p.answer(s.id, task.id, input);
+  assert.equal(again.closed, true);
+  assert.equal(again.correct, true);
+  assert.ok(again.solution);
+  assert.equal(store.db.prepare("SELECT COALESCE(SUM(amount), 0) AS x FROM xp_events WHERE student_id = ?").get(s.id).x, xp, "brez dodatnih XP");
+});
+
+test("international path in the Slovenian UI shows Slovenian topic and unit names", () => {
+  const store = openDb(":memory:");
+  const p = new Progress(store);
+  const sl = store.createStudent("Mojca", { school_system: "NG", curriculum_level: "SS 3", subject: "MAT", language: "sl" });
+  const en = store.createStudent("Ada", { school_system: "NG", curriculum_level: "SS 3", subject: "MAT", language: "en" });
+  const key = "MAT-INT-12";
+  const unitIdx = p.pathView(en.id, key).units.findIndex((u) => u.topics.some((t) => t.name === "Vectors in the plane and in space"));
+  assert.ok(unitIdx >= 0, "tema na mednarodni poti");
+  const slView = p.pathView(sl.id, key);
+  const slTopic = slView.units[unitIdx].topics.find((t) => t.id.endsWith("/vectors-in-the-plane-and-in-space"));
+  assert.equal(slTopic.name, "Vektorji v ravnini in prostoru");
+  assert.equal(slView.units[unitIdx].title, "Vektorji");
+  // Preizkus znanja: naslov nad nalogo je v jeziku vmesnika.
+  const tSl = p.startPlacement(sl.id, key, unitIdx);
+  const tEn = p.startPlacement(en.id, key, unitIdx);
+  assert.ok(!/[A-Z][a-z]+ in the /.test(tSl.task.topicName), tSl.task.topicName);
+  assert.notEqual(tSl.task.topicName, tEn.task.topicName);
 });

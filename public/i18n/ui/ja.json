@@ -134,6 +134,8 @@
   "task.check": "答え合わせ",
   "task.checking": "確認中 …",
   "task.checkError": "答えを確認できませんでした（{msg}）。接続を確認して、もう一度お試しください。",
+  "task.checkFailed": "答えを確認できませんでした：{msg}",
+  "task.alreadyChecked": "この問題の答えはすでに保存されています。最初の答えが有効です。",
   "task.next": "次の問題",
   "task.similar": "似た問題に挑戦",
   "task.correct": "正解",

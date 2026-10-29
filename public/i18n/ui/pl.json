@@ -146,6 +146,8 @@
   "task.check": "Sprawdź",
   "task.checking": "Sprawdzam …",
   "task.checkError": "Nie udało się sprawdzić odpowiedzi ({msg}). Sprawdź połączenie i spróbuj ponownie.",
+  "task.checkFailed": "Nie udało się sprawdzić odpowiedzi: {msg}",
+  "task.alreadyChecked": "Twoja odpowiedź na to zadanie jest już zapisana. Liczy się pierwsza odpowiedź.",
   "task.next": "Następne zadanie",
   "task.similar": "Spróbuj podobnego zadania",
   "task.correct": "Dobrze",

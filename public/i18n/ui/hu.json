@@ -138,6 +138,8 @@
   "task.check": "Ellenőrzés",
   "task.checking": "Ellenőrzöm …",
   "task.checkError": "Nem sikerült ellenőrizni a választ ({msg}). Ellenőrizd a kapcsolatot, és próbáld újra.",
+  "task.checkFailed": "Nem tudtam ellenőrizni a válaszodat: {msg}",
+  "task.alreadyChecked": "A feladatra adott válaszod már el van mentve. Az első válasz számít.",
   "task.next": "Következő feladat",
   "task.similar": "Hasonló feladat",
   "task.correct": "Helyes",

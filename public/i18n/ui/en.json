@@ -138,6 +138,8 @@
   "task.check": "Check",
   "task.checking": "Checking …",
   "task.checkError": "I couldn't check your answer ({msg}). Check your connection and try again.",
+  "task.checkFailed": "I couldn't check your answer: {msg}",
+  "task.alreadyChecked": "Your answer to this task is already saved. Your first answer counts.",
   "task.next": "Next task",
   "task.similar": "Try a similar task",
   "task.correct": "Correct",

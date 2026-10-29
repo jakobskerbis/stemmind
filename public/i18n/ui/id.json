@@ -134,6 +134,8 @@
   "task.check": "Periksa",
   "task.checking": "Memeriksa …",
   "task.checkError": "Jawaban tidak bisa diperiksa ({msg}). Periksa koneksi dan coba lagi.",
+  "task.checkFailed": "Aku tidak bisa memeriksa jawabanmu: {msg}",
+  "task.alreadyChecked": "Jawabanmu untuk soal ini sudah tersimpan. Jawaban pertama yang dihitung.",
   "task.next": "Soal berikutnya",
   "task.similar": "Coba soal serupa",
   "task.correct": "Benar",

@@ -138,6 +138,8 @@
   "task.check": "Prüfen",
   "task.checking": "Wird geprüft …",
   "task.checkError": "Ich konnte die Antwort nicht prüfen ({msg}). Prüfe die Verbindung und versuche es erneut.",
+  "task.checkFailed": "Ich konnte die Antwort nicht prüfen: {msg}",
+  "task.alreadyChecked": "Deine Antwort auf diese Aufgabe ist schon gespeichert. Es zählt die erste Antwort.",
   "task.next": "Nächste Aufgabe",
   "task.similar": "Ähnliche Aufgabe versuchen",
   "task.correct": "Richtig",

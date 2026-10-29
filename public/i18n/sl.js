@@ -252,6 +252,8 @@ export default {
   "pad.fix": "Popravi s tipkami",
   "task.checking": "Preverjam …",
   "task.checkError": "Odgovora nisem mogel preveriti ({msg}). Preveri povezavo in poskusi znova.",
+  "task.checkFailed": "Odgovora nisem mogel preveriti: {msg}",
+  "task.alreadyChecked": "Odgovor na to nalogo je že shranjen. Velja prvi odgovor.",
   "task.next": "Naslednja naloga",
   "task.similar": "Poskusi podobno nalogo",
   "task.correct": "Pravilno",

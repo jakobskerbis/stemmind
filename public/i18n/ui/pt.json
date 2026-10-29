@@ -138,6 +138,8 @@
   "task.check": "Verificar",
   "task.checking": "A verificar …",
   "task.checkError": "Não consegui verificar a resposta ({msg}). Verifica a ligação e tenta outra vez.",
+  "task.checkFailed": "Não consegui verificar a tua resposta: {msg}",
+  "task.alreadyChecked": "A tua resposta a este exercício já está guardada. Conta a primeira resposta.",
   "task.next": "Exercício seguinte",
   "task.similar": "Tentar um parecido",
   "task.correct": "Certo",
