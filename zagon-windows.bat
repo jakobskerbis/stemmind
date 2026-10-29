@@ -1,4 +1,6 @@
 @echo off
+rem STEMMIND-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom
+rem (dolgi ukazi so v eni vrstici z "exit /b", po posodobitvi se datoteka prebere znova).
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
 title STEMMind
@@ -15,6 +17,13 @@ if errorlevel 1 (
   echo Node.js ni namescen. Namesti ga s https://nodejs.org ^(gumb LTS^) in nato znova dvakrat klikni to datoteko.
   pause
   exit /b 1
+)
+
+rem Najprej najnovejsa razlicica z GitHuba; nato to datoteko preberemo znova od zacetka.
+if not "%~1"=="--posodobljeno" (
+  node scripts\posodobitev.js
+  call "%~f0" --posodobljeno
+  exit /b
 )
 
 if not exist .env (
@@ -36,7 +45,5 @@ if "!NEED_INSTALL!"=="1" (
 
 echo.
 echo STEMMind se zaganja. Brskalnik se bo odprl sam.
-echo Za ustavitev zapri to okno.
-start "" cmd /c "timeout /t 3 >nul & start http://localhost:3000"
-call npm start
-pause
+echo Za ustavitev zapri to okno. Nove razlicice se namestijo same vsaki 2 uri.
+node scripts\zaganjalnik.js zagon --odpri & pause & exit /b

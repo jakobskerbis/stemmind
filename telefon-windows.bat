@@ -1,10 +1,13 @@
 @echo off
+rem STEMMIND-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom
+rem (dolgi ukazi so v eni vrstici z "exit /b", po posodobitvi se datoteka prebere znova).
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
 title STEMMind za telefon
 
 rem Odpre STEMMind na telefonu: posodobi aplikacijo, jo zazene z geslom in odpre
-rem brezplacno povezavo prek Cloudflare. Racunalnik mora ostati prizgan.
+rem povezavo (stalno prek ngrok ali zacasno prek Cloudflare). Racunalnik mora ostati prizgan.
+rem Med tekom se aplikacija vsaki 2 uri sama posodobi, povezava ostane ista.
 
 where node >nul 2>nul
 if errorlevel 1 (
@@ -13,21 +16,15 @@ if errorlevel 1 (
   exit /b 1
 )
 
-rem Ustavi STEMMind, ce ze tece, da se zazene z geslom.
-for /f "tokens=5" %%p in ('netstat -ano ^| findstr ":3000 " ^| findstr LISTENING') do taskkill /PID %%p /F >nul 2>nul
-
-echo Prenasam najnovejso razlicico ...
-set "TMP_DIR=%TEMP%\stemmind-posodobitev"
-if exist "%TMP_DIR%" rmdir /s /q "%TMP_DIR%"
-mkdir "%TMP_DIR%"
-curl -L -s -o "%TMP_DIR%\main.zip" https://github.com/jakobskerbis/stemmind/archive/refs/heads/main.zip
-if not errorlevel 1 tar -xf "%TMP_DIR%\main.zip" -C "%TMP_DIR%" >nul 2>nul
-if exist "%TMP_DIR%\stemmind-main\package.json" (
-  robocopy "%TMP_DIR%\stemmind-main" "%~dp0." /E /NFL /NDL /NJH /NJS /XF .env telefon-windows.bat /XD data node_modules .git >nul
-) else (
-  echo Posodobitev ni uspela, nadaljujem s trenutno razlicico.
+if not "%~1"=="--posodobljeno" (
+  rem Ustavi STEMMind, ce ze tece ^(tudi okno zagon-windows.bat^), da se zazene z geslom.
+  powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'node.exe' -and $_.CommandLine -match 'scripts.(zaganjalnik|zagon|telefon)\.js' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>nul
+  for /f "tokens=5" %%p in ('netstat -ano ^| findstr ":3000 " ^| findstr LISTENING') do taskkill /PID %%p /F >nul 2>nul
+  rem Najnovejsa razlicica z GitHuba; nato to datoteko preberemo znova od zacetka.
+  node scripts\posodobitev.js
+  call "%~f0" --posodobljeno
+  exit /b
 )
-rmdir /s /q "%TMP_DIR%" >nul 2>nul
 
 if not exist .env (
   echo.
@@ -45,5 +42,4 @@ if "!NEED_INSTALL!"=="1" (
 )
 
 echo.
-node scripts\telefon.js
-pause
+node scripts\zaganjalnik.js telefon & pause & exit /b
