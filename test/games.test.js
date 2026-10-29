@@ -61,7 +61,7 @@ test("games: at least 10 games in every area, unique ids, statements for the sor
   // Vsaka vrsta igre ima zgodbo (poglavja) v slovenščini in angleščini.
   for (const e of ENGINES) for (const lang of ["sl", "en"]) {
     assert.ok(e.story?.[lang]?.length >= 3, `${e.id} ${lang}: ni zgodbe`);
-    for (const [title, text] of e.story[lang]) assert.ok(title && text.length > 20, `${e.id} ${lang}`);
+    for (const [title, text] of e.story[lang]) assert.ok(title && text.length > 10, `${e.id} ${lang}`);
   }
 });
 

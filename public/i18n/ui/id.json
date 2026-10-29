@@ -1002,7 +1002,6 @@
   "games.back": "Kembali ke permainan",
   "games.score": "Poin",
   "games.lives": "Nyawa",
-  "games.level": "Kesulitan",
   "games.sound": "Suara",
   "games.pause": "Jeda",
   "games.paused": "Dijeda",
@@ -1030,6 +1029,5 @@
   "games.speedSlow": "Lambat",
   "games.speedMid": "Sedang",
   "games.speedFast": "Cepat",
-  "games.chapter": "Bab {n}",
-  "games.next": "Lanjut"
+  "games.chapter": "Bab {n}"
 }

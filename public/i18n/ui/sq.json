@@ -1007,7 +1007,6 @@
   "games.back": "Kthehu te lojërat",
   "games.score": "Pikë",
   "games.lives": "Jetë",
-  "games.level": "Vështirësia",
   "games.sound": "Zëri",
   "games.pause": "Pushim",
   "games.paused": "Në pushim",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "Ngadalë",
   "games.speedMid": "Mesatare",
   "games.speedFast": "Shpejt",
-  "games.chapter": "Kapitulli {n}",
-  "games.next": "Vazhdo"
+  "games.chapter": "Kapitulli {n}"
 }

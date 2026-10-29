@@ -1007,7 +1007,6 @@
   "games.back": "खेलों पर वापस",
   "games.score": "अंक",
   "games.lives": "जीवन",
-  "games.level": "कठिनाई",
   "games.sound": "ध्वनि",
   "games.pause": "विराम",
   "games.paused": "रुका हुआ",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "धीमी",
   "games.speedMid": "मध्यम",
   "games.speedFast": "तेज़",
-  "games.chapter": "अध्याय {n}",
-  "games.next": "आगे"
+  "games.chapter": "अध्याय {n}"
 }

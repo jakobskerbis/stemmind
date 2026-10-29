@@ -77,7 +77,6 @@ body.gm-on .gm-host { flex: 1; min-height: 0; }
 .gm-score svg.i { width: 16px; height: 16px; color: #fde047; }
 .gm-lives { display: inline-flex; gap: 1px; min-height: 14px; }
 .gm-lives svg.i { width: 14px; height: 14px; color: #fecaca; fill: #ef4444; stroke: #fff; }
-.gm-tier { font-size: 0.75rem; letter-spacing: 1px; color: #fde68a; }
 .gm-timer { height: 8px; background: rgba(0, 0, 0, 0.18); border-bottom: 2px solid var(--gm-ink); }
 .gm-timer i { display: block; height: 100%; background: linear-gradient(90deg, #f97316, #facc15); transform-origin: left; }
 .gm-stage { position: relative; flex: 1; min-height: 0; touch-action: none; user-select: none; -webkit-user-select: none; }
@@ -90,16 +89,12 @@ body.gm-on .gm-host { flex: 1; min-height: 0; }
 .gm-card .primary.big:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--gm-ink); }
 /* naslovna kartica s sončnimi žarki */
 .gm-title { position: relative; overflow: hidden; isolation: isolate; }
-.gm-title::before { content: ""; position: absolute; inset: -60%; z-index: -1; opacity: 0.12; background: repeating-conic-gradient(from 0deg, var(--gm-a) 0deg 10deg, transparent 10deg 20deg); animation: gm-spin 40s linear infinite; }
-@keyframes gm-spin { to { transform: rotate(1turn); } }
-.gm-story { margin: 4px 0 10px; }
-.gm-chap { display: inline-block; padding: 3px 12px; border: 2px solid var(--gm-ink); border-radius: 99px; background: #fde047; color: var(--gm-ink); font-family: var(--gm-font); font-size: 0.8rem; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; transform: rotate(-2deg); }
-.gm-story h3 { margin: 10px 0 6px; font-size: 1.35rem; }
-.gm-story p { line-height: 1.5; }
+.gm-title::before { content: ""; position: absolute; inset: -60%; z-index: -1; opacity: 0.07; background: repeating-conic-gradient(from 0deg, var(--gm-a) 0deg 10deg, transparent 10deg 20deg); }
+.gm-story { margin: 6px 0 10px; line-height: 1.45; }
 .gm-how { padding: 8px 10px; border-radius: var(--radius-sm); background: var(--surface-2); font-size: 0.92rem; }
 .gm-pace { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; font-weight: 800; }
 .gm-pace .seg button { min-height: 44px; }
-.gm-chap-end { color: var(--muted); font-weight: 700; }
+
 .gm-card h2 { margin: 6px 0 8px; }
 .gm-card p { margin: 6px 0; }
 .gm-card .primary.big, .gm-card .actions button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
@@ -119,5 +114,5 @@ body.gm-on .gm-host { flex: 1; min-height: 0; }
   .gm-hud { gap: 6px; padding: 6px; }
   .gm-btn { width: 40px; height: 44px; border-radius: 12px; }
 }
-@media (prefers-reduced-motion: reduce) { .gm-tile, .gm-tile:hover { transition: none; transform: none; } .gm-title::before { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .gm-tile, .gm-tile:hover { transition: none; transform: none; } }
 .dark { --gm-ink: #0b0b16; }

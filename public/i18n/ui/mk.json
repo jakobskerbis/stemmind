@@ -1007,7 +1007,6 @@
   "games.back": "Назад кон игрите",
   "games.score": "Поени",
   "games.lives": "Животи",
-  "games.level": "Тежина",
   "games.sound": "Звук",
   "games.pause": "Пауза",
   "games.paused": "Пауза",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "Бавно",
   "games.speedMid": "Средно",
   "games.speedFast": "Брзо",
-  "games.chapter": "Поглавје {n}",
-  "games.next": "Понатаму"
+  "games.chapter": "Поглавје {n}"
 }

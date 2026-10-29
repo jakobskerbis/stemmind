@@ -1002,7 +1002,6 @@
   "games.back": "กลับไปที่เกม",
   "games.score": "คะแนน",
   "games.lives": "ชีวิต",
-  "games.level": "ความยาก",
   "games.sound": "เสียง",
   "games.pause": "หยุดชั่วคราว",
   "games.paused": "หยุดชั่วคราวแล้ว",
@@ -1030,6 +1029,5 @@
   "games.speedSlow": "ช้า",
   "games.speedMid": "ปานกลาง",
   "games.speedFast": "เร็ว",
-  "games.chapter": "บทที่ {n}",
-  "games.next": "ถัดไป"
+  "games.chapter": "บทที่ {n}"
 }

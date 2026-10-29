@@ -1007,7 +1007,6 @@
   "games.back": "Back to games",
   "games.score": "Points",
   "games.lives": "Lives",
-  "games.level": "Difficulty",
   "games.sound": "Sound",
   "games.pause": "Pause",
   "games.paused": "Paused",
@@ -1035,6 +1034,5 @@
   "games.speedSlow": "Slow",
   "games.speedMid": "Medium",
   "games.speedFast": "Fast",
-  "games.chapter": "Chapter {n}",
-  "games.next": "Next"
+  "games.chapter": "Chapter {n}"
 }
