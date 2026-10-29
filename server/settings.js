@@ -106,6 +106,9 @@ export function normalizeSettings(input = {}) {
   if (!goalsFor(out).includes(out.goal)) out.goal = DEFAULT_GOAL;
   if (validDate(input.goal_date)) out.goal_date = input.goal_date;
   if (input.goal_reminder !== undefined) out.goal_reminder = input.goal_reminder === true || input.goal_reminder === 1 || input.goal_reminder === "1" || input.goal_reminder === "true";
+  // Različica vodiča ob prvi uporabi, ki jo je profil že videl (public/app.js TOUR_VERSION); ni nastavitev za inštruktorja.
+  const tv = Number(input.tour_version);
+  if (Number.isInteger(tv) && tv >= 0 && tv <= 99) out.tour_version = tv;
   return out;
 }
 
