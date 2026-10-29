@@ -2,7 +2,8 @@
 // {ime} je spremenljivka; predmet z one/two/few/other so množinske oblike (Intl.PluralRules), število je {n}.
 export default {
   // zgornja vrstica in zavihki
-  "nav.home": "Evklid – na učno pot",
+  "apps.menu": "Vsi deli aplikacije",
+  "apps.zbirke": "Zbirke",
   "nav.path": "Učna pot",
   "nav.textbook": "Učbenik",
   "nav.chat": "Inštruktor",
