@@ -1,6 +1,7 @@
 // Učbenik: kazalo, iskanje in lekcije z interaktivnimi demonstracijami.
 import { mountSim } from "./sim/index.js";
 import { t, locale } from "./i18n.js";
+import { withFormulaSubject } from "./formula-data.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
@@ -383,7 +384,9 @@ async function renderLesson(topicId) {
     return renderHome();
   }
   current = { id: L.id, name: L.name };
-  const R = ctx.renderRich;
+  // Simboli v formulah po predmetu lekcije (FIZ-OS-9 → fizika), ne po predmetu v nastavitvah.
+  const lessonSubject = (/^([A-Z]{3})-/.exec(L.id || "") || [])[1];
+  const R = (text) => withFormulaSubject(lessonSubject, () => ctx.renderRich(text));
   const lesson = L.lesson;
   const sections = lesson?.sections || [];
   // Demonstracijo postavimo za rešene primere (ali za razlago, če primerov ni).

@@ -25,6 +25,9 @@ export const PROFILE_SETTINGS = {
   personality_setting: { desc: "tutor tone / theme of examples, max 200 chars, e.g. 'strog', 'šaljiv, primeri iz nogometa'" },
   language: { desc: "conversation and app language, ISO 639 code (e.g. 'sl', 'en', 'de', 'hr', 'zh-Hant'); the app reloads in it" },
   data_mode: { values: ["auto", "lite", "normal"], desc: "light mode (less data, shorter replies): auto = on slow connection, lite = always, normal = never" },
+  goal: { values: ["sprotno", "test", "npz", "matura", "tekmovanje", "izpit"], desc: "student's goal: sprotno = everyday learning, test = school test, npz (OŠ), matura (SŠ), tekmovanje (competition), izpit (faculty / regional exam)" },
+  goal_date: { desc: "date of the goal 'YYYY-MM-DD', or '' to delete it (daily reminder at 12:00 until then)" },
+  goal_reminder: { values: ["on", "off"], desc: "daily reminder at 12:00 until goal_date" },
   avatar: { object: true, desc: "avatar look (the only thing other students see): object {slot: item id}, slots body, eyes, mouth, hat, outfit, acc, bg; only free items or items the student owns (get_settings lists both); buying with game coins happens only in the games shop" },
   interests: { list: true, values: INTEREST_IDS, desc: `news corner (Kotiček) interests, whole new list (replaces the old one), max 8, ids: ${INTEREST_IDS.join(", ")}` },
   interest_custom: { desc: "own extra topic for the news corner, max 40 chars of keywords, e.g. 'črne luknje' (English keywords find more news); '' clears it" },
@@ -36,7 +39,8 @@ export const PROFILE_SETTINGS = {
 // Nastavitve te naprave (localStorage); strežnik jih ne hrani, odjemalec jih uporabi takoj.
 // ls: ključ v localStorage in preslikava vrednosti; brez ls ima nastavitev svojo kodo v public/chat-settings.js.
 export const DEVICE_SETTINGS = {
-  theme: { values: ["light", "dark", "system"], desc: "light / dark mode, system = follow the device" },
+  style: { values: ["cist", "igriv", "temen"], desc: "visual style: cist = clean (default), igriv = playful/rounded, temen = always dark" },
+  theme: { values: ["light", "dark", "system"], desc: "light / dark mode, system = follow the device (ignored in style temen)" },
   accent: { desc: "accent colour: '#rrggbb', 'random' or 'default' (contrast is fixed automatically)" },
   colors: { values: ["random", "default"], desc: "whole colour palette of the current light/dark mode: random or back to default" },
   color_background: { desc: "background colour '#rrggbb' (current light/dark mode)" },

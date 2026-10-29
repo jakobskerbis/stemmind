@@ -61,6 +61,10 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
 
+// Pisave slogov (docs/oblikovanje.md): Čist = Instrument Sans, Igriv = Nunito, Temen = IBM Plex Sans.
+// Brskalnik prenese le pisavo, ki jo slog res uporablja.
+const FONTS = [["nunito", "nunito"], ["instrument-sans", "instrument-sans"], ["ibm-plex-sans", "ibm-plex-sans"]];
+
 export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
   const app = express();
@@ -113,7 +117,7 @@ export function createApp(store, opts = {}) {
         ["/vendor/katex/", path.join(modules, "katex", "dist")],
         ["/vendor/marked/", path.join(modules, "marked")],
         ["/vendor/dompurify/", path.join(modules, "dompurify", "dist")],
-        ["/vendor/nunito/", path.join(modules, "@fontsource-variable", "nunito")],
+        ...FONTS.map(([dir, pkg]) => [`/vendor/${dir}/`, path.join(modules, "@fontsource-variable", pkg)]),
         ["/practice/", path.join(here, "practice")],
         ["/", publicDir],
       ]),
@@ -126,7 +130,7 @@ export function createApp(store, opts = {}) {
   app.use("/vendor/katex", express.static(path.join(modules, "katex", "dist")));
   app.use("/vendor/marked", express.static(path.join(modules, "marked")));
   app.use("/vendor/dompurify", express.static(path.join(modules, "dompurify", "dist")));
-  app.use("/vendor/nunito", express.static(path.join(modules, "@fontsource-variable", "nunito")));
+  for (const [dir, pkg] of FONTS) app.use(`/vendor/${dir}`, express.static(path.join(modules, "@fontsource-variable", pkg)));
 
   // Učbenik za tiskanje / PDF: brezplačno in brez prijave.
   app.get("/ucbenik/:path{/:topic}", (req, res) => {

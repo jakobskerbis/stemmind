@@ -27,6 +27,8 @@ import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
+import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
+import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml } from "./goal.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -87,12 +89,16 @@ const state = {
 
 // ---------- izris matematike in markdowna ----------
 
-const { renderMath, renderRich } = createRenderer();
+// Klikljive formule (formula-info.js): znani simboli in enote dobijo data-fx; renderMath(…, false) za gumbe.
+const { renderMath, renderRich } = createRenderer({ annotate: (tex) => annotateTex(tex) });
+// Predmet za pomen simbolov: tema naloge (FIZ-OS-9 …), sicer predmet učenca.
+const subjectOfId = (id) => (/^([A-Z]{3})-/.exec(id || "") || [])[1];
+setFormulaSubject(() => subjectOfId(state.topic?.id) || state.student?.settings?.subject || "MAT");
 
 // Sporočilo učenca: besedilo ostane besedilo, le $...$ se izriše kot formula.
 function renderUserText(text) {
   const parts = String(text).split(/(\$[^$\n]+?\$)/g);
-  return parts.map((p, i) => (i % 2 ? renderMath(p.slice(1, -1), false) : escapeHtml(p))).join("");
+  return parts.map((p, i) => (i % 2 ? renderMath(p.slice(1, -1), false, false) : escapeHtml(p))).join("");
 }
 
 // ---------- pogledi ----------
@@ -275,13 +281,29 @@ async function onboard(name = "") {
         <input type="hidden" name="study_program">
         <input type="hidden" name="curriculum_level">
       </fieldset>
+      <fieldset class="goal-field">
+        <legend>${t("goal.title")}</legend>
+        <small class="muted">${t("goal.note")}</small>
+        <div class="goal-box"></div>
+      </fieldset>
       <p class="form-error" hidden></p>
       <button class="primary big" type="submit">${t("common.start")}</button>
     </form>`;
   const f = $("#onboard-form");
   mountLanguageCard(f.querySelector(".onb-lang"), { compact: true });
-  const picker = mountLevelPicker(f.querySelector(".level-picker"), f, { programs, settings: { school_system: defaultSystem } });
-  f.school_system.addEventListener("change", () => picker.setSystem(f.school_system.value));
+  // Cilj in datum: vprašamo samo tokrat (izbira ciljev je odvisna od šole).
+  const goalBox = f.querySelector(".goal-box");
+  const drawGoal = () => {
+    const keep = goalBox.innerHTML ? readGoalFields(goalBox) : {};
+    goalBox.innerHTML = goalFieldsHtml({ ...keep, school_system: f.school_system.value, educational_track: f.educational_track.value }, { idPrefix: "onb-goal" });
+  };
+  drawGoal();
+  wireGoalFields(goalBox);
+  const picker = mountLevelPicker(f.querySelector(".level-picker"), f, { programs, settings: { school_system: defaultSystem }, onChange: drawGoal });
+  f.school_system.addEventListener("change", () => {
+    picker.setSystem(f.school_system.value);
+    drawGoal();
+  });
   showView("onboard");
   document.body.classList.add("onboarding");
   return new Promise((resolve) => {
@@ -303,6 +325,7 @@ async function onboard(name = "") {
         curriculum_level: f.curriculum_level.value,
         language: currentLang(),
         region: currentRegion(),
+        ...readGoalFields(goalBox),
       };
       if (track === "UNIVERZA") settings.subject = programs.find((p) => p.id === settings.study_program)?.mainSubject || "MAT";
       const btn = f.querySelector('button[type="submit"]');
@@ -810,6 +833,16 @@ function fillLevelOptions(track) {
   // Fakulteta in regijski šolski sistemi: brez slovenskih tekmovanj (NPZ, matura, olimpijade).
   $("#track-row").hidden = track === "UNIVERZA" || isRegional($("#settings-form").school_system.value);
   fillSubjectOptions();
+  fillGoalFields();
+}
+// Cilj, datum in opomnik ob 12.00 (cilji so odvisni od šole: NPZ v OŠ, matura v SŠ, izpit na fakulteti).
+function fillGoalFields(fresh = false) {
+  const box = $("#settings-goal");
+  const f = $("#settings-form");
+  if (!box || !state.student) return;
+  const base = fresh || !box.innerHTML ? state.student.settings : { ...state.student.settings, ...readGoalFields(box) };
+  box.innerHTML = goalFieldsHtml({ ...base, educational_track: f.educational_track.value || base.educational_track, school_system: f.school_system.value || base.school_system }, { withReminder: true, idPrefix: "set-goal" });
+  wireGoalFields(box);
 }
 
 // Izbira šole po korakih (OŠ/SŠ/fakulteta → … → letnik).
@@ -832,6 +865,7 @@ async function fillSettingsForm() {
   } else levelPicker.set(s);
   f.querySelector(`input[name=solving_mode][value=${s.solving_mode}]`).checked = true;
   f.manual_weaknesses.value = state.student.manual_weaknesses.join(", ");
+  fillGoalFields(true);
   fillLevelOptions(s.educational_track);
   if (state.pickUniversity) {
     state.pickUniversity = false;
@@ -883,6 +917,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
         solving_mode: f.querySelector("input[name=solving_mode]:checked").value,
         personality_setting: f.personality_setting.value,
         data_mode: f.data_mode.value,
+        ...readGoalFields($("#settings-goal")),
       },
     },
   });
@@ -1018,7 +1053,54 @@ $("#delete-student").addEventListener("click", async () => {
 
 // ---------- napredek ----------
 
+// Cilj: vrstica na Učni poti, značka v zgornji vrstici in opomnik ob 12.00 (public/goal.js).
+function goalLevelText(st) {
+  return [st.educational_track === "UNIVERZA" ? t("lp.uni") : st.educational_track === "SREDNJA_SOLA" ? t("lp.ss") : t("lp.os"), levelLabel(st.curriculum_level)].filter(Boolean).join(" ");
+}
+function renderGoal() {
+  const st = state.student;
+  if (!st) return;
+  const s = st.settings;
+  const line = $("#goal-line");
+  line.hidden = !hasGoal(s);
+  if (hasGoal(s)) line.innerHTML = goalLineHtml(st, goalLevelText(s));
+  const chip = $("#goal-chip");
+  chip.hidden = !hasGoal(s);
+  if (hasGoal(s)) {
+    // V zgornji vrstici le cilj in odštevanje (datum je v vrstici na Učni poti).
+    chip.querySelector("b").textContent = [goalName(s.goal), countdown(s.goal_date)].filter(Boolean).join(" · ");
+    chip.title = t("goal.change");
+  }
+  const rem = $("#goal-reminder");
+  const due = reminderDue(st);
+  rem.hidden = !due;
+  if (due) rem.innerHTML = reminderCardHtml(st);
+}
+document.addEventListener("click", (e) => {
+  if (e.target.closest("[data-goal-edit], #goal-chip")) {
+    showView("settings");
+    setTimeout(() => $("#settings-goal")?.closest("fieldset")?.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
+    return;
+  }
+  if (e.target.closest("[data-goal-start], [data-goal-later]")) {
+    dismissReminder(state.student);
+    $("#goal-reminder").hidden = true;
+    if (e.target.closest("[data-goal-start]")) startSession("daily", { path: state.pathKey });
+  }
+});
+// Opomnik ob 12.00, tudi če je aplikacija ves čas odprta.
+setInterval(() => {
+  if (state.student && currentView === "path" && $("#goal-reminder").hidden && reminderDue(state.student)) renderGoal();
+}, 5 * 60000);
+
 async function loadProgress() {
+  const st = state.student;
+  const pg = $("#prog-goal");
+  pg.hidden = !hasGoal(st.settings);
+  if (hasGoal(st.settings))
+    pg.innerHTML = `<div class="goal-line">${goalLineHtml(st, goalLevelText(st.settings))}</div>${
+      st.settings.goal_reminder && st.settings.goal_date ? `<div class="goal-reminder preview">${reminderCardHtml(st, { preview: true })}</div>` : ""
+    }`;
   const p = await api(`/api/students/${state.student.id}/progress`);
   const weak = $("#weak-list");
   const items = [
@@ -1309,6 +1391,7 @@ async function loadPath(key = state.pathKey) {
   if (prog) {
     $("#path-note").innerHTML = `${t("path.uniNote", { faculty: escapeHtml(prog.facultyName), program: escapeHtml(prog.name), year: escapeHtml(prog.sourceYear || "") })} ${prog.source ? `<a href="${escapeHtml(prog.source)}" target="_blank" rel="noopener">${t("path.uniSource")}</a>.` : ""}`;
   }
+  renderGoal();
   const x = p.xp;
   const done = state.modes?.daily?.done;
   $("#xp-card").innerHTML = `
@@ -1664,7 +1747,7 @@ function renderTask(task, ctx) {
   let input;
   if (task.answerType === "choice") {
     input = `<div class="choices">${task.options
-      .map((o, i) => `<button type="button" class="choice" data-i="${i}">${task.optionsTex ? renderMath(o, false) : escapeHtml(o)}</button>`)
+      .map((o, i) => `<button type="button" class="choice" data-i="${i}">${task.optionsTex ? renderMath(o, false, false) : escapeHtml(o)}</button>`)
       .join("")}</div>`;
   } else {
     const ph =
@@ -1678,7 +1761,7 @@ function renderTask(task, ctx) {
   const hintLadder = task.hintSteps > 0 && !["contest", "placement", "pretest"].includes(ctx.mode);
   const pretestHead =
     ctx.mode === "pretest" ? `<div class="card pretest-head"><h2 class="with-icon">${icon("target")} ${t("pretest.title")}</h2><p class="muted">${t("pretest.intro")}</p></div>` : "";
-  box.innerHTML = `${bar}${pretestHead}<div class="card task">
+  box.innerHTML = `${bar}${pretestHead}<div class="card task${["contest", "placement", "pretest"].includes(ctx.mode) ? " no-fx" : ""}">
     <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${penalty}${counter}${calcBtn}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
@@ -2540,6 +2623,7 @@ const START_VIEW = ["chat", "textbook", "graph"].find((v) => v === new URLSearch
 if (new URLSearchParams(location.search).has("pogled")) history.replaceState(null, "", location.pathname);
 initInstall({ toast, onSheet: (open) => (open ? overlayOpened() : overlayClosed()) });
 initFullscreen();
+initFormulaInfo();
 
 (async () => {
   const cfg = await api("/api/config");

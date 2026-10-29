@@ -1,0 +1,39 @@
+// Cilj učenca (NPZ, matura, tekmovanje, izpit …) in neobvezni datum. Vpraša se enkrat ob novem profilu,
+// spremeni ali izbriše se v Nastavitvah. Brez DOM: uporabljata ga strežnik (prompt, opomnik ob 12.00) in odjemalec.
+
+export const GOALS = ["sprotno", "test", "npz", "matura", "tekmovanje", "izpit"];
+export const DEFAULT_GOAL = "sprotno";
+
+// Cilji, ki imajo smisel za izbrano šolo: OŠ ima NPZ, SŠ maturo, fakulteta izpit; regijski sistemi svoje izpite.
+export function goalsFor(settings = {}) {
+  if (settings.educational_track === "UNIVERZA") return ["sprotno", "izpit"];
+  if (settings.school_system && settings.school_system !== "SI") return ["sprotno", "test", "izpit"];
+  if (settings.educational_track === "SREDNJA_SOLA") return ["sprotno", "test", "matura", "tekmovanje"];
+  return ["sprotno", "test", "npz", "tekmovanje"];
+}
+
+export const validDate = (s) => typeof s === "string" && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(`${s}T00:00:00Z`));
+
+// Dni do datuma (v lokalnem času naprave ali podanem »today« kot YYYY-MM-DD). null = ni datuma.
+export function daysUntil(date, today = null) {
+  if (!validDate(date)) return null;
+  const t0 = today && validDate(today) ? Date.parse(`${today}T00:00:00Z`) : (() => {
+    const d = new Date();
+    return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+  })();
+  return Math.round((Date.parse(`${date}T00:00:00Z`) - t0) / 86400000);
+}
+
+// Slovenski zapis datuma: 1. 6. 2027
+export const fmtDateSl = (s) => (validDate(s) ? s.split("-").map(Number).reverse().join(". ") : "");
+
+const NAMES_SL = { sprotno: "sprotno učenje", test: "test v šoli", npz: "NPZ", matura: "matura", tekmovanje: "tekmovanje", izpit: "izpit" };
+
+// Za sistemski prompt inštruktorja (slovensko, kot ostali prompt).
+export function goalPrompt(settings = {}, today = null) {
+  const g = GOALS.includes(settings.goal) ? settings.goal : DEFAULT_GOAL;
+  if (g === DEFAULT_GOAL && !validDate(settings.goal_date)) return "";
+  const n = daysUntil(settings.goal_date, today);
+  const when = n === null ? "" : n < 0 ? ` (${fmtDateSl(settings.goal_date)}, že mimo)` : ` (${fmtDateSl(settings.goal_date)}, še ${n} dni)`;
+  return `; cilj učenca: ${NAMES_SL[g]}${when}`;
+}

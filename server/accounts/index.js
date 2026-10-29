@@ -8,6 +8,7 @@ import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, month
 import { Stripe, verifyWebhook } from "./stripe.js";
 import { Mailer, verifyEmail, resetEmail, referralRewardEmail } from "./email.js";
 import { buildWeeklyReport, weekKey, isSendTime } from "./weekly.js";
+import { buildGoalReminder, reminderDays, isNoonTime, ljNow } from "./goal-reminder.js";
 import { Devices, deviceLabel, deviceWarnLimit } from "./devices.js";
 import { cleanText } from "../settings.js";
 import { Usage } from "../usage.js";
@@ -759,13 +760,34 @@ export function mountAccounts(app, store, opts = {}) {
     return sent;
   }
 
-  if (opts.scheduler !== false && process.env.STEMMIND_WEEKLY_EMAIL !== "0") {
+  // --- dnevni opomnik do datuma cilja (ob 12.00 v Ljubljani, enkrat na dan za vsakega otroka) ---
+  async function sendGoalRemindersAll(now = new Date()) {
+    const { date } = ljNow(now);
+    const parents = db.prepare("SELECT * FROM parents WHERE email_verified_at IS NOT NULL").all();
+    let sent = 0;
+    for (const p of parents) {
+      for (const child of children(p.id)) {
+        const n = reminderDays(child, date);
+        if (n === null) continue;
+        const period = `${date}:${child.id}`;
+        const claim = db.prepare("INSERT OR IGNORE INTO email_log (parent_id, kind, period) VALUES (?, 'goal', ?)").run(p.id, period);
+        if (!claim.changes) continue;
+        const ok = await sendMail(p.email, buildGoalReminder(child, n, { appUrl: baseUrl(null) + "/" }));
+        if (!ok) db.prepare("UPDATE email_log SET ok = 0 WHERE parent_id = ? AND kind = 'goal' AND period = ?").run(p.id, period);
+        else sent++;
+      }
+    }
+    return sent;
+  }
+
+  if (opts.scheduler !== false) {
     const timer = setInterval(() => {
-      if (isSendTime()) sendWeeklyAll().catch((e) => log.error?.("[stemmind] tedenska poročila:", e.message));
+      if (process.env.STEMMIND_WEEKLY_EMAIL !== "0" && isSendTime()) sendWeeklyAll().catch((e) => log.error?.("[stemmind] tedenska poročila:", e.message));
+      if (process.env.STEMMIND_GOAL_EMAIL !== "0" && isNoonTime()) sendGoalRemindersAll().catch((e) => log.error?.("[stemmind] opomniki cilja:", e.message));
     }, 30 * 60000);
     timer.unref();
   }
 
-  return { sendWeeklyAll, maybeRewardReferral, stripe, mailer, premiumFor };
+  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor };
 }
 
