@@ -113,6 +113,8 @@ Isti zaslon kot grafični kalkulator ima zgoraj preklopnik `.calc-modes`: Znanst
 
 ## Igre
 
+Kako snov vgradimo v igro (učenje je igranje, ne kviz), animacije in kontrole: `docs/igre-smernice.md`.
+
 Razdelek IGRE (`public/games/`, slog `public/games.css`, strežnik `server/games.js`): mreža pisanih kvadratnih ploščic kot na portalih z igrami. Na računalniku zgornji zavihek »Igre«, na telefonu vrstica na strani Jaz (med igro se spodnja vrstica skrije).
 
 - **Igra = vrsta igre × pojem.** Vrste so v `engines.js` (Meteorji, Baloni, Tekač, Sortirnica), pojmi z generatorji nalog v `topics.js` (120 pojmov v 13 področjih, od aritmetike do analize, vektorjev in kompleksnih števil). Nova vrsta igre = nov predmet v `ENGINES` + ključi `games.e.<id>` in `games.e.<id>.how` v vseh jezikih; nov pojem = `def(...)` v `topics.js` in znak v `GLYPH` (`index.js`).
