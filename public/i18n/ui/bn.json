@@ -993,5 +993,6 @@
   "meter.advice": "সীমা ও দামের প্রস্তাব",
   "meter.economy": "দাম {price} € → VAT ও Stripe-এর পরে {net} € · প্রতি শিক্ষার্থী AI {ai} € · থাকে {profit} € ({margin}%)",
   "meter.limitTitle": "প্রতি শিক্ষার্থী মাসিক AI সীমা",
-  "meter.priceTitle": "দাম"
+  "meter.priceTitle": "দাম",
+  "subj.NAR": "বিজ্ঞান"
 }

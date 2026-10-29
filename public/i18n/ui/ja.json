@@ -988,5 +988,6 @@
   "meter.advice": "上限と価格の提案",
   "meter.economy": "価格 {price} € → 付加価値税とStripe後 {net} € · 生徒1人あたりAI {ai} € · 残り {profit} €（{margin}%）",
   "meter.limitTitle": "生徒1人あたりの月間AI上限",
-  "meter.priceTitle": "価格"
+  "meter.priceTitle": "価格",
+  "subj.NAR": "理科"
 }

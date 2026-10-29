@@ -11,6 +11,7 @@ import { DODATNE_MAT_SS34 } from "./generators/dodatne-mat-ss34.js";
 import { DODATNE_OS_FIZ_KEM } from "./generators/dodatne-os-fiz-kem.js";
 import { DODATNE_FIZ_SS } from "./generators/dodatne-fiz-ss.js";
 import { DODATNE_KEM_SS } from "./generators/dodatne-kem-ss.js";
+import { NAR_GENERATORS } from "./generators/nar.js";
 import { TEK_MAT_OS } from "./generators/tek-mat-os.js";
 import { TEK_MAT_SS } from "./generators/tek-mat-ss.js";
 import { TEK_FIZ } from "./generators/tek-fiz.js";
@@ -32,6 +33,8 @@ export const GENERATORS = [
   ...DODATNE_OS_FIZ_KEM,
   ...DODATNE_FIZ_SS,
   ...DODATNE_KEM_SS,
+  // naravoslovje OŠ 6. in 7. razred
+  ...NAR_GENERATORS,
   // Tekmovanja (razdelek »Tekmovanja«): samo težje naloge v slogu tekmovanj.
   ...TEK_MAT_OS,
   ...TEK_MAT_SS,

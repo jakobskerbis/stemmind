@@ -988,5 +988,6 @@
   "meter.advice": "한도와 가격 제안",
   "meter.economy": "가격 {price} € → 부가세와 Stripe 후 {net} € · 학생당 AI {ai} € · 남는 금액 {profit} € ({margin}%)",
   "meter.limitTitle": "학생당 월 AI 한도",
-  "meter.priceTitle": "가격"
+  "meter.priceTitle": "가격",
+  "subj.NAR": "과학"
 }

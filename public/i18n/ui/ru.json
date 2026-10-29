@@ -1003,5 +1003,6 @@
   "meter.advice": "Предложение лимита и цены",
   "meter.economy": "Цена {price} € → после НДС и Stripe {net} € · ИИ на ученика {ai} € · остаётся {profit} € ({margin} %)",
   "meter.limitTitle": "Месячный лимит ИИ на ученика",
-  "meter.priceTitle": "Цена"
+  "meter.priceTitle": "Цена",
+  "subj.NAR": "Естествознание"
 }

@@ -1,6 +1,6 @@
 // Nastavitve učenca (nadzorna plošča) in njihovo preverjanje.
 import { PROGRAMS, UNI_PATHS } from "./university-data.js";
-import { ALL_SUBJECTS, SCHOOL_SUBJECTS } from "./subjects.js";
+import { ALL_SUBJECTS, SCHOOL_SUBJECTS, subjectForLevel } from "./subjects.js";
 import { LANGUAGE_CODES, DEFAULT_LANGUAGE } from "../public/i18n/languages.js";
 import { SYSTEM_IDS, DEFAULT_SYSTEM, isRegional, gradeInfo, defaultGrade, trackForLevel } from "../public/regions.js";
 
@@ -71,6 +71,9 @@ export function normalizeSettings(input = {}) {
     out.study_program = "";
     // Strokovni predmeti fakultet (biologija …) v OŠ/SŠ ne obstajajo.
     if (!SCHOOL_SUBJECTS.includes(out.subject)) out.subject = DEFAULT_SETTINGS.subject;
+    // Predmetnik: v 6. in 7. razredu OŠ naravoslovje namesto fizike in kemije (regijski sistemi imajo svoje).
+    if (!isRegional(out.school_system)) out.subject = subjectForLevel(out.subject, out.educational_track, out.curriculum_level);
+    else if (out.subject === "NAR") out.subject = "FIZ";
   }
   // Regija naprave (ISO 3166, npr. "BR"): inštruktor prilagodi izraze in zapis.
   if (typeof input.region === "string" && /^[A-Z]{2}$/.test(input.region)) out.region = input.region;

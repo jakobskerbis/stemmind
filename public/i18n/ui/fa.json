@@ -993,5 +993,6 @@
   "meter.advice": "پیشنهاد سقف و قیمت",
   "meter.economy": "قیمت {price} € ← پس از مالیات و Stripe {net} € · هوش مصنوعی برای هر دانش‌آموز {ai} € · می‌ماند {profit} € ({margin}٪)",
   "meter.limitTitle": "سقف ماهانه هوش مصنوعی برای هر دانش‌آموز",
-  "meter.priceTitle": "قیمت"
+  "meter.priceTitle": "قیمت",
+  "subj.NAR": "علوم تجربی"
 }

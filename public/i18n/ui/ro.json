@@ -998,5 +998,6 @@
   "meter.advice": "Propunere de limită și preț",
   "meter.economy": "Preț {price} € → după TVA și Stripe {net} € · AI per elev {ai} € · rămân {profit} € ({margin} %)",
   "meter.limitTitle": "Limita lunară AI per elev",
-  "meter.priceTitle": "Preț"
+  "meter.priceTitle": "Preț",
+  "subj.NAR": "Științe ale naturii"
 }

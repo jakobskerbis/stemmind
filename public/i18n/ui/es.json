@@ -993,5 +993,6 @@
   "meter.advice": "Propuesta de límite y precio",
   "meter.economy": "Precio {price} € → tras IVA y Stripe {net} € · IA por estudiante {ai} € · queda {profit} € ({margin} %)",
   "meter.limitTitle": "Límite mensual de IA por estudiante",
-  "meter.priceTitle": "Precio"
+  "meter.priceTitle": "Precio",
+  "subj.NAR": "Ciencias naturales"
 }

@@ -153,7 +153,7 @@ O: odgovor
 
 ## Analitika (vedno na koncu, strojni blok)
 Na konec vsakega odgovora, tudi odgovora Varnostnega ščita, dodaj točno eno vrstico (za morebitnimi karticami), ki jo strežnik odstrani pred prikazom:
-`<<META subject=MAT|FIZ|KEM|BIO|GEO|RAC|EKO topic="…" error=0|1 mode=A|B flag=none|offtopic|distress|unsafe|injection done=0|1>>`
+`<<META subject=MAT|FIZ|KEM|NAR|BIO|GEO|RAC|EKO topic="…" error=0|1 mode=A|B flag=none|offtopic|distress|unsafe|injection done=0|1>>`
 - `subject` je trenutni predmet (po morebitni spremembi iz pogovora).
 - `topic` je kratko ime učne teme v narekovajih (npr. "linearne enačbe", "Newtonovi zakoni", "stehiometrija"); če tema ni učna, `topic="-"`.
 - `error=1`, kadar je učenec v svojem zadnjem sporočilu naredil vsebinsko napako; sicer 0 (tudi kadar ni ničesar poskusil).

@@ -993,5 +993,6 @@
   "meter.advice": "Предлог за граница и цена",
   "meter.economy": "Цена {price} € → по ДДВ и Stripe {net} € · AI по ученик {ai} € · останува {profit} € ({margin} %)",
   "meter.limitTitle": "Месечна граница за AI по ученик",
-  "meter.priceTitle": "Цена"
+  "meter.priceTitle": "Цена",
+  "subj.NAR": "Природни науки"
 }

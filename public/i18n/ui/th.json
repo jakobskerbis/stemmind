@@ -988,5 +988,6 @@
   "meter.advice": "ข้อเสนอขีดจำกัดและราคา",
   "meter.economy": "ราคา {price} € → หลัง VAT และ Stripe {net} € · AI ต่อนักเรียน {ai} € · เหลือ {profit} € ({margin}%)",
   "meter.limitTitle": "ขีดจำกัด AI รายเดือนต่อนักเรียน",
-  "meter.priceTitle": "ราคา"
+  "meter.priceTitle": "ราคา",
+  "subj.NAR": "วิทยาศาสตร์"
 }

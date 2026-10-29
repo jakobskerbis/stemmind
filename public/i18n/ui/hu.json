@@ -993,5 +993,6 @@
   "meter.advice": "Javasolt korlát és ár",
   "meter.economy": "Ár {price} € → áfa és Stripe után {net} € · MI tanulónként {ai} € · marad {profit} € ({margin} %)",
   "meter.limitTitle": "Havi MI-korlát tanulónként",
-  "meter.priceTitle": "Ár"
+  "meter.priceTitle": "Ár",
+  "subj.NAR": "Természettudomány"
 }

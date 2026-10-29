@@ -1003,5 +1003,6 @@
   "meter.advice": "Пропозиція ліміту й ціни",
   "meter.economy": "Ціна {price} € → після ПДВ і Stripe {net} € · ШІ на учня {ai} € · залишається {profit} € ({margin} %)",
   "meter.limitTitle": "Місячний ліміт ШІ на учня",
-  "meter.priceTitle": "Ціна"
+  "meter.priceTitle": "Ціна",
+  "subj.NAR": "Природознавство"
 }

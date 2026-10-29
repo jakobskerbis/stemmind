@@ -1013,5 +1013,6 @@
   "meter.advice": "الحد والسعر المقترحان",
   "meter.economy": "السعر {price} € ← بعد الضريبة وStripe {net} € · الذكاء الاصطناعي لكل طالب {ai} € · يتبقى {profit} € ({margin}٪)",
   "meter.limitTitle": "الحد الشهري للذكاء الاصطناعي لكل طالب",
-  "meter.priceTitle": "السعر"
+  "meter.priceTitle": "السعر",
+  "subj.NAR": "العلوم"
 }

@@ -32,11 +32,16 @@ export const UNI_YEARS = ["1. letnik", "2. letnik", "3. letnik", "4. letnik"];
 export const programYears = (program) => UNI_YEARS.slice(0, program?.years || 3);
 
 // Predmeti aplikacije. Študenti imajo še strokovne predmete svojega programa.
-export const SUBJECT_NAMES = Object.fromEntries(["MAT", "FIZ", "KEM", "BIO", "GEO", "RAC", "EKO"].map((k) => [k, t(`subj.${k}`)]));
+export const SUBJECT_NAMES = Object.fromEntries(["MAT", "FIZ", "KEM", "NAR", "BIO", "GEO", "RAC", "EKO"].map((k) => [k, t(`subj.${k}`)]));
 export const SCHOOL_SUBJECTS = ["MAT", "FIZ", "KEM"];
+// Predmetnik slovenske OŠ: v 6. in 7. razredu matematika in naravoslovje, fizika in kemija od 8. razreda
+// (enako na strežniku, server/subjects.js). Regijski sistemi imajo matematiko, fiziko in kemijo.
+export function schoolSubjectsFor(track, level, regional = false) {
+  return !regional && track === "OSNOVNA_SOLA" && /^[67]\./.test(String(level || "").trim()) ? ["MAT", "NAR"] : SCHOOL_SUBJECTS;
+}
 
-// <option> za izbiro predmeta: OŠ/SŠ tri, študent predmete svojega programa.
-export function subjectOptions(program, selected) {
-  const list = program?.subjects?.length ? program.subjects : SCHOOL_SUBJECTS;
+// <option> za izbiro predmeta: OŠ/SŠ po predmetniku (list), študent predmete svojega programa.
+export function subjectOptions(program, selected, list = SCHOOL_SUBJECTS) {
+  if (program?.subjects?.length) list = program.subjects;
   return list.map((k) => `<option value="${k}" ${k === selected ? "selected" : ""}>${SUBJECT_NAMES[k]}</option>`).join("");
 }

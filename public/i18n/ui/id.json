@@ -988,5 +988,6 @@
   "meter.advice": "Usulan batas dan harga",
   "meter.economy": "Harga {price} € → setelah PPN dan Stripe {net} € · AI per siswa {ai} € · sisa {profit} € ({margin}%)",
   "meter.limitTitle": "Batas AI bulanan per siswa",
-  "meter.priceTitle": "Harga"
+  "meter.priceTitle": "Harga",
+  "subj.NAR": "IPA"
 }

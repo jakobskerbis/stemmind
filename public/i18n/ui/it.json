@@ -993,5 +993,6 @@
   "meter.advice": "Proposta di limite e prezzo",
   "meter.economy": "Prezzo {price} € → dopo IVA e Stripe {net} € · AI per studente {ai} € · resta {profit} € ({margin}%)",
   "meter.limitTitle": "Limite mensile AI per studente",
-  "meter.priceTitle": "Prezzo"
+  "meter.priceTitle": "Prezzo",
+  "subj.NAR": "Scienze"
 }

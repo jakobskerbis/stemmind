@@ -993,5 +993,6 @@
   "meter.advice": "Propozim për kufirin dhe çmimin",
   "meter.economy": "Çmimi {price} € → pas TVSH-së dhe Stripe {net} € · AI për nxënës {ai} € · mbetet {profit} € ({margin} %)",
   "meter.limitTitle": "Kufiri mujor i AI për nxënës",
-  "meter.priceTitle": "Çmimi"
+  "meter.priceTitle": "Çmimi",
+  "subj.NAR": "Shkencat natyrore"
 }

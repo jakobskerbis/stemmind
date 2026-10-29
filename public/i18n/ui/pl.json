@@ -1003,5 +1003,6 @@
   "meter.advice": "Propozycja limitu i ceny",
   "meter.economy": "Cena {price} € → po VAT i Stripe {net} € · AI na ucznia {ai} € · zostaje {profit} € ({margin}%)",
   "meter.limitTitle": "Miesięczny limit AI na ucznia",
-  "meter.priceTitle": "Cena"
+  "meter.priceTitle": "Cena",
+  "subj.NAR": "Przyroda"
 }

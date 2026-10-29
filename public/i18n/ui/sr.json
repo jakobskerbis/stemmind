@@ -998,5 +998,6 @@
   "meter.advice": "Predlog granice i cene",
   "meter.economy": "Cena {price} € → posle PDV-a i Stripea {net} € · AI po učeniku {ai} € · ostaje {profit} € ({margin} %)",
   "meter.limitTitle": "Mesečna granica AI po učeniku",
-  "meter.priceTitle": "Cena"
+  "meter.priceTitle": "Cena",
+  "subj.NAR": "Priroda"
 }

@@ -993,5 +993,6 @@
   "meter.advice": "حد اور قیمت کی تجویز",
   "meter.economy": "قیمت {price} € ← ٹیکس اور Stripe کے بعد {net} € · فی طالب علم اے آئی {ai} € · بچت {profit} € ({margin}٪)",
   "meter.limitTitle": "فی طالب علم ماہانہ اے آئی حد",
-  "meter.priceTitle": "قیمت"
+  "meter.priceTitle": "قیمت",
+  "subj.NAR": "سائنس"
 }

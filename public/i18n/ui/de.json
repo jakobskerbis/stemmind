@@ -993,5 +993,6 @@
   "meter.advice": "Vorschlag für Limit und Preis",
   "meter.economy": "Preis {price} € → nach MwSt. und Stripe {net} € · KI pro Schüler {ai} € · Gewinn {profit} € ({margin} %)",
   "meter.limitTitle": "Monatliches KI-Limit pro Schüler",
-  "meter.priceTitle": "Preis"
+  "meter.priceTitle": "Preis",
+  "subj.NAR": "Naturwissenschaften"
 }

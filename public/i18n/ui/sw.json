@@ -993,5 +993,6 @@
   "meter.advice": "Pendekezo la kikomo na bei",
   "meter.economy": "Bei {price} € → baada ya VAT na Stripe {net} € · AI kwa mwanafunzi {ai} € · inabaki {profit} € ({margin}%)",
   "meter.limitTitle": "Kikomo cha AI cha mwezi kwa mwanafunzi",
-  "meter.priceTitle": "Bei"
+  "meter.priceTitle": "Bei",
+  "subj.NAR": "Sayansi"
 }

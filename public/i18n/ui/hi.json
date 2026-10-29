@@ -993,5 +993,6 @@
   "meter.advice": "सीमा और कीमत का सुझाव",
   "meter.economy": "कीमत {price} € → VAT और Stripe के बाद {net} € · प्रति छात्र AI {ai} € · बचता {profit} € ({margin}%)",
   "meter.limitTitle": "प्रति छात्र मासिक AI सीमा",
-  "meter.priceTitle": "कीमत"
+  "meter.priceTitle": "कीमत",
+  "subj.NAR": "विज्ञान"
 }

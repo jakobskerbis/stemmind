@@ -988,5 +988,6 @@
   "meter.advice": "Đề xuất giới hạn và giá",
   "meter.economy": "Giá {price} € → sau VAT và Stripe {net} € · AI mỗi học sinh {ai} € · còn lại {profit} € ({margin}%)",
   "meter.limitTitle": "Giới hạn AI hằng tháng mỗi học sinh",
-  "meter.priceTitle": "Giá"
+  "meter.priceTitle": "Giá",
+  "subj.NAR": "Khoa học tự nhiên"
 }

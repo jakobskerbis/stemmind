@@ -1003,5 +1003,6 @@
   "meter.advice": "Návrh limitu a ceny",
   "meter.economy": "Cena {price} € → po DPH a Stripe {net} € · AI na žiaka {ai} € · zostane {profit} € ({margin} %)",
   "meter.limitTitle": "Mesačný limit AI na žiaka",
-  "meter.priceTitle": "Cena"
+  "meter.priceTitle": "Cena",
+  "subj.NAR": "Prírodoveda"
 }

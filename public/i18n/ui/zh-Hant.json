@@ -988,5 +988,6 @@
   "meter.advice": "上限與價格建議",
   "meter.economy": "價格 {price} € → 扣除增值稅與 Stripe 後 {net} € · 每位學生 AI {ai} € · 剩餘 {profit} €（{margin}%）",
   "meter.limitTitle": "每位學生的每月 AI 上限",
-  "meter.priceTitle": "價格"
+  "meter.priceTitle": "價格",
+  "subj.NAR": "自然科學"
 }

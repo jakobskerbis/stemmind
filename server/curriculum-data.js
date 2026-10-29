@@ -225,6 +225,71 @@ export const PATHS = {
   },
 
   // ------------------------------------------------------------ OŠ KEMIJA
+  // ------------------------------------------------------------ OŠ NARAVOSLOVJE
+  // Predmetnik OŠ: v 6. in 7. razredu je naravoslovje, fizika in kemija pa od 8. razreda.
+  // Razporeditev po učnem načrtu za naravoslovje (ZRSŠ); OSNUTEK, naj preveri učitelj.
+  // »=> POT/tema«: tema vzame naloge (in lekcijo) iz osnovne teme fizike ali kemije.
+  "NAR-OS-6": {
+    label: "Naravoslovje, 6. razred",
+    units: [
+      ["Raziskovanje v naravoslovju", [
+        "Naravoslovni postopki | opazovanje, merjenje, poskus, zapis in prikaz rezultatov",
+        "Merjenje | dolžina, masa, prostornina, temperatura, enote in pretvarjanje => FIZ-OS-8/fizikalne-kolicine-in-enote",
+        "Mikroskop in celica | delo z mikroskopom, rastlinska celica, celica kot osnovna enota živega",
+      ]],
+      ["Snovi", [
+        "Lastnosti snovi | barva, vonj, trdota, gostota, topnost, prevodnost, prepoznavanje snovi => KEM-OS-8/snovi-in-njihove-lastnosti",
+        "Agregatna stanja | trdno, tekoče, plinasto; taljenje, strjevanje, izparevanje, kondenzacija",
+        "Zmesi in čiste snovi | homogene in heterogene zmesi, raztopine",
+        "Ločevanje zmesi | sejanje, dekantiranje, filtriranje, izparevanje, destilacija, kromatografija",
+      ]],
+      ["Energija", [
+        "Oblike energije | energija in pretvorbe, Sonce kot vir energije, obnovljivi in neobnovljivi viri",
+        "Toplota in temperatura | merjenje temperature, segrevanje in ohlajanje snovi",
+        "Prenos toplote | prevajanje, konvekcija, sevanje; toplotni prevodniki in izolatorji => FIZ-OS-9/prenos-toplote",
+      ]],
+      ["Rastline", [
+        "Zgradba rastline | korenina, steblo, list, cvet in njihove naloge",
+        "Fotosinteza in celično dihanje | kaj rastlina potrebuje za rast, nastanek kisika in hrane",
+        "Prevajanje vode in snovi | vsrkavanje vode, transpiracija, listne reže",
+        "Razmnoževanje rastlin | opraševanje, oploditev, plodovi in semena, nespolno razmnoževanje",
+        "Razvrščanje rastlin | mahovi, praprotnice, semenke; določevalni ključ",
+      ]],
+      ["Organizmi in okolje", [
+        "Raznolikost organizmov | značilnosti živih bitij, kraljestva, glive in mikroorganizmi",
+        "Rastline in okolje | prilagoditve rastlin na okolje, pomen rastlin za druge organizme",
+      ]],
+    ],
+  },
+  "NAR-OS-7": {
+    label: "Naravoslovje, 7. razred",
+    units: [
+      ["Snovi", [
+        "Zgradba snovi | snovi so iz delcev, gibanje delcev, difuzija",
+        "Elementi in spojine | čiste snovi, kemijski simboli pogostih elementov",
+        "Raztopine | topilo, topljenec, topnost, nasičena raztopina, masni delež => KEM-OS-9/raztopine",
+        "Kisle in bazične raztopine | indikatorji, pH lestvica, kisline in baze v vsakdanjem življenju => KEM-OS-8/ph-lestvica",
+        "Fizikalne in kemijske spremembe | gorenje, rjavenje, nastanek novih snovi",
+      ]],
+      ["Živali", [
+        "Zgradba in delovanje živali | celice, tkiva, organi, organski sistemi",
+        "Prehranjevanje in prebava | načini prehranjevanja, prebavila",
+        "Dihanje in krvni obtok | izmenjava plinov, škrge in pljuča, kri",
+        "Gibanje in opora | okostje, mišice, gibanje v vodi, na kopnem in v zraku",
+        "Čutila in živčevje | odziv na dražljaje, čutila",
+        "Razmnoževanje in razvoj | spolno razmnoževanje, razvoj s preobrazbo in brez nje",
+        "Razvrščanje živali | nevretenčarji in vretenčarji, določevalni ključ",
+      ]],
+      ["Ekosistemi", [
+        "Ekosistem | živi in neživi dejavniki, življenjski prostor in združba",
+        "Prehranjevalne verige in spleti | proizvajalci, porabniki, razkrojevalci",
+        "Kroženje snovi in pretok energije | kroženje vode in ogljika, energija v ekosistemu",
+        "Kopenski in vodni ekosistemi | gozd, travnik, ribnik, morje; prilagoditve organizmov",
+        "Človek in okolje | onesnaževanje, varovanje narave in biotske raznovrstnosti",
+      ]],
+    ],
+  },
+
   "KEM-OS-8": {
     label: "Kemija, 8. razred",
     units: [
