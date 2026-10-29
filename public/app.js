@@ -4,6 +4,7 @@ import { icon, hydrateIcons } from "./icons.js";
 import { t, locale, currentLang, currentRegion, regionFor, setLanguage, deviceRegion } from "./i18n.js";
 import { systemForCountry, isRegional, SCHOOL_SYSTEMS } from "./regions.js";
 import { mountLanguageCard } from "./language.js";
+import { dialectsFor } from "./dialects.js";
 
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout } from "./account.js";
@@ -829,6 +830,14 @@ async function fillCourseOptions() {
     (elect.length ? `<optgroup label="${escapeHtml(t("path.electives"))}">${elect.map(opt).join("")}</optgroup>` : "");
 }
 
+// Narečje inštruktorja: možnosti za jezik pogovora; brez možnosti je vrstica skrita.
+function fillDialectOptions(f, s) {
+  const list = dialectsFor(s.language);
+  $("#dialect-row").hidden = !list.length;
+  f.dialect.innerHTML = [`<option value="">${escapeHtml(t("set.dialectStd"))}</option>`, ...list.map((d) => `<option value="${d.id}">${escapeHtml(d.name)}</option>`)].join("");
+  f.dialect.value = list.some((d) => d.id === s.dialect) ? s.dialect : "";
+}
+
 function fillLevelOptions(track) {
   // Fakulteta in regijski šolski sistemi: brez slovenskih tekmovanj (NPZ, matura, olimpijade).
   $("#track-row").hidden = track === "UNIVERZA" || isRegional($("#settings-form").school_system.value);
@@ -856,6 +865,7 @@ async function fillSettingsForm() {
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
   f.data_mode.value = s.data_mode || "auto";
+  fillDialectOptions(f, s);
   f.subject.innerHTML = subjectOptions(null, s.subject, schoolSubjectsFor(s.educational_track, s.curriculum_level, isRegional(s.school_system)));
   f.study_course.innerHTML = "";
   f.school_system.innerHTML = schoolSystemOptions(s.school_system || "SI");
@@ -916,6 +926,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
         curriculum_level: f.curriculum_level.value,
         solving_mode: f.querySelector("input[name=solving_mode]:checked").value,
         personality_setting: f.personality_setting.value,
+        dialect: f.dialect.value,
         data_mode: f.data_mode.value,
         ...readGoalFields($("#settings-goal")),
       },

@@ -16,6 +16,7 @@ import { goalsFor, validDate } from "../public/goal-data.js";
 import { Avatars } from "./avatar.js";
 import { ITEM, ITEMS, SLOTS } from "../public/avatar.js";
 import { INTERESTS, cleanInterests } from "../public/interests.js";
+import { dialectsFor } from "../public/dialects.js";
 
 const PATH_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => PROFILE_SETTINGS[k].confirm);
 const PENDING_MS = 30 * 60 * 1000;
@@ -33,10 +34,10 @@ export const SETTINGS_TOOLS = [
   {
     name: "get_settings",
     description:
-      "Read the student's current app settings (profile and this device). Optionally list allowed values for study_program, study_course or school_system. Financial and personal data are not available.",
+      "Read the student's current app settings (profile and this device). Optionally list allowed values for study_program, study_course, school_system or dialect. Financial and personal data are not available.",
     input_schema: {
       type: "object",
-      properties: { options: { type: "string", enum: ["study_program", "study_course", "school_system"], description: "list allowed values of this setting" } },
+      properties: { options: { type: "string", enum: ["study_program", "study_course", "school_system", "dialect"], description: "list allowed values of this setting" } },
       additionalProperties: false,
     },
   },
@@ -199,6 +200,7 @@ function profileView(student) {
     solving_mode: s.solving_mode,
     personality_setting: s.personality_setting,
     language: s.language,
+    dialect: s.dialect || "",
     data_mode: s.data_mode,
     goal: s.goal,
     goal_date: s.goal_date,
@@ -341,6 +343,16 @@ function validateProfile(changes, student) {
     if (found) patch.language = found;
     else errors.push("language: use an ISO 639 code the app supports, e.g. sl, en, de, hr, it, es, fr, uk, zh");
   }
+  if (changes.dialect !== undefined) {
+    const lang = patch.language ?? cur.language;
+    const raw = norm(changes.dialect);
+    const list = dialectsFor(lang);
+    // Id ali ime (»štajersko«, »Hinglish«); prazno ali »knjižno« = knjižni jezik.
+    const d = list.find((x) => norm(x.id) === raw || norm(x.name) === raw || (raw.length >= 4 && norm(x.name).startsWith(raw)));
+    if (!raw || /^(knjizn|standard|none|default)/.test(raw)) patch.dialect = "";
+    else if (d) patch.dialect = d.id;
+    else errors.push(list.length ? `dialect: for this language use '' or ${list.map((x) => x.id).join(", ")}` : "dialect: this language has no dialect options, only standard ('')");
+  }
   if (changes.weak_points !== undefined) weak = normalizeWeaknessList(changes.weak_points);
   return { patch, errors, weak };
 }
@@ -373,6 +385,7 @@ export function createSettingsTools({ store, studentId, conversationId, device =
     if (input.options === "study_program") out.options = programItems().map((p) => `${p.id}: ${p.label}`);
     if (input.options === "study_course")
       out.options = s.educational_track === "UNIVERZA" ? courseItems(s.study_program, s.curriculum_level).map((c) => c.name) : "only for faculty students";
+    if (input.options === "dialect") out.options = ["'' = standard", ...dialectsFor(s.language).map((d) => `${d.id}: ${d.name}`)];
     if (input.options === "school_system") out.options = SYSTEM_IDS.map((id) => `${id}: ${SCHOOL_SYSTEMS[id].name}`);
     return { content: JSON.stringify(out) };
   }
@@ -530,12 +543,12 @@ export function createSettingsTools({ store, studentId, conversationId, device =
 
 // Sporočila, ki morda prosijo za spremembo nastavitev: odgovora ne vzamemo iz predpomnilnika odgovorov.
 export const looksLikeSettings = (text) =>
-  /nastav|zamenjaj|spremeni|preklopi|vklopi|izklopi|temn|svetl|barv|hitrej|počasnej|jezik|sem (zdaj )?v \d|settings|dark mode|theme|language|urnik|jutri|danes|test|kontroln|kolokvij|izpit|spraševanj|schedule|timetable/i.test(String(text || ""));
+  /nastav|zamenjaj|spremeni|preklopi|vklopi|izklopi|temn|svetl|barv|hitrej|počasnej|jezik|narečj|dialect|sem (zdaj )?v \d|settings|dark mode|theme|language|urnik|jutri|danes|test|kontroln|kolokvij|izpit|spraševanj|schedule|timetable/i.test(String(text || ""));
 
 // ---------------------------------------------------------------------------
 // Preizkusni način (brez ključa): preprosto prepoznavanje najpogostejših prošenj.
 
-const ASK = /zamenjaj|spremeni|nastavi|preklopi|vklopi|izklopi|prestavi|daj\b|hočem|želim|rad bi|sem v|sem zdaj|piši|switch|change|set\b|turn/i;
+const ASK = /zamenjaj|spremeni|nastavi|preklopi|vklopi|izklopi|prestavi|daj\b|hočem|želim|rad bi|sem v|sem zdaj|piši|govori|switch|change|set\b|turn|speak/i;
 
 export function mockToolCall(text, hasPending = false) {
   const t = String(text || "").toLowerCase().trim();
@@ -554,6 +567,8 @@ export function mockToolCall(text, hasPending = false) {
   if (lvl) changes.curriculum_level = `${lvl[1]}. ${lvl[2]}`;
   const subj = [["MAT", /matematik/], ["FIZ", /fizik/], ["KEM", /kemij/], ["NAR", /naravoslov/], ["BIO", /biologij/]].find(([, re]) => re.test(t));
   if (subj && /predmet|preklopi|zamenjaj/.test(t)) changes.subject = subj[0];
+  const dia = t.match(/po (ljubljansk|gorenjsk|dolenjsk|štajersk|prekmursk|korošk|primorsk|pogovorn|knjižn)/);
+  if (dia) changes.dialect = dia[1] === "knjižn" ? "" : dia[1];
   if (/celo rešitev|celotno rešitev|način b/.test(t)) changes.solving_mode = "B";
   else if (/način a|korak za korakom/.test(t)) changes.solving_mode = "A";
   return Object.keys(changes).length ? { name: "change_settings", input: { changes } } : null;
@@ -587,6 +602,7 @@ const MOCK_LABELS = {
   study_program: "program",
   subject: "predmet",
   solving_mode: "način",
+  dialect: "narečje",
 };
 
 // Besedilo odgovora v preizkusnem načinu iz rezultata orodja.

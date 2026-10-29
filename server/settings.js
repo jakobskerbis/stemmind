@@ -3,6 +3,7 @@ import { PROGRAMS, UNI_PATHS } from "./university-data.js";
 import { ALL_SUBJECTS, SCHOOL_SUBJECTS, REGIONAL_SUBJECTS, subjectForLevel } from "./subjects.js";
 import { LANGUAGE_CODES, DEFAULT_LANGUAGE } from "../public/i18n/languages.js";
 import { cleanInterests, NEWS_LEVELS, NEWS_LANGS } from "../public/interests.js";
+import { cleanDialect } from "../public/dialects.js";
 import { SYSTEM_IDS, DEFAULT_SYSTEM, isRegional, gradeInfo, defaultGrade, trackForLevel } from "../public/regions.js";
 import { GOALS, DEFAULT_GOAL, goalsFor, validDate } from "../public/goal-data.js";
 
@@ -34,6 +35,8 @@ export const DEFAULT_SETTINGS = {
   solving_mode: "A",
   personality_setting: "prijazen in spodbuden",
   language: DEFAULT_LANGUAGE,
+  // Narečje inštruktorja / različica jezika (public/dialects.js), "" = knjižni jezik.
+  dialect: "",
   region: "",
   school_system: DEFAULT_SYSTEM,
   data_mode: "auto",
@@ -94,6 +97,8 @@ export function normalizeSettings(input = {}) {
   if (typeof input.region === "string" && /^[A-Z]{2}$/.test(input.region)) out.region = input.region;
   if (input.interests !== undefined) out.interests = cleanInterests(input.interests);
   if (input.interest_custom !== undefined) out.interest_custom = cleanText(input.interest_custom, 40);
+  // Narečje mora pripadati jeziku pogovora (ob menjavi jezika se vrne na knjižni jezik).
+  out.dialect = cleanDialect(input.dialect, out.language);
   if (input.personality_setting !== undefined) {
     out.personality_setting = cleanText(input.personality_setting, 200);
   }
