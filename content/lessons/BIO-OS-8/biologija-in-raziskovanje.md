@@ -7,9 +7,9 @@ avtor: AI
 
 Nika je vratarka v šolski rokometni ekipi. Teden pred turnirjem trener prinese zaboj novih športnih napitkov. Na steklenici piše: »Hitrejša odzivnost že po eni steklenici!« Napitki so dragi, klub bi jih moral kupiti še za vso sezono.
 
-Nika ni prepričana. Ali napitek res pomaga, ali je to le reklama? Mnenja soigralk se razlikujejo, ugibanje pa ne odloči ničesar.
+Nika ni prepričana. Ali napitek res pomaga, ali je to le reklama? Ugibanje tega ne odloči.
 
-Odzivnost je lastnost živega telesa: delujejo jo živčne celice, možgani in mišice. Nikin problem je torej biološki. Rešila ga bo tako, kot ga rešujejo biologi: z vprašanjem, ki ga lahko preveri, in s poštenim poskusom. Ta postopek boš potreboval pri vsaki temi biologije, pa tudi takrat, ko boš presojal reklame in novice.
+Odzivnost je lastnost živega telesa: omogočajo jo živčne celice, možgani in mišice. Nikin problem je torej biološki. Rešila ga bo tako, kot ga rešujejo biologi: z vprašanjem, ki ga lahko preveri, in s poštenim poskusom. Ta postopek ti bo koristil tudi pri presojanju reklam in novic.
 
 ## Razlaga
 
@@ -41,7 +41,7 @@ V poskusu spreminjamo samo en dejavnik, vse drugo ostane enako. Kontrolna skupin
 
 V simulaciji spodaj »Koraki raziskave« uvrsti stavke o fižolu in kvasovkah med vprašanje, domnevo, poskus in sklep. Opazuj, po čem ločiš domnevo od sklepa: domneva napoveduje, sklep pa primerja napoved z izmerjenim.
 
-**Kaj preučuje biologija.** Biologija je veda o živih bitjih (grško *bios* pomeni življenje, *logos* pa veda). Živo bitje je zgrajeno iz celic, se hrani in diha, raste, se razmnožuje in se odziva na dražljaje. Nikin ulov ravnila je odziv na dražljaj. Biologijo delimo na področja: botanika preučuje rastline, zoologija živali, mikrobiologija mikroorganizme, ekologija odnose med živimi bitji in okoljem, fiziologija pa delovanje telesa.
+**Kaj preučuje biologija.** Biologija je veda o živih bitjih (grško *bios* pomeni življenje, *logos* pa veda). Živo bitje je zgrajeno iz celic, se hrani in diha, raste, se razmnožuje in se odziva na dražljaje. Nikin ulov ravnila je odziv na dražljaj. Področja biologije so na primer botanika (rastline), zoologija (živali), mikrobiologija (mikroorganizmi), ekologija (odnosi z okoljem) in fiziologija (delovanje telesa).
 
 **Ravni organizacije živega.** Ko Nika ujame ravnilo, sodeluje marsikaj, od drobnih celic do celega telesa. Živo naravo zato opisujemo v ravneh. Vsaka raven je zgrajena iz ravni pod njo.
 
@@ -57,7 +57,7 @@ V simulaciji spodaj »Koraki raziskave« uvrsti stavke o fižolu in kvasovkah me
 | ekosistem | združba skupaj z neživim okoljem | igrišče s prstjo, vodo in svetlobo |
 | biosfera | vsi ekosistemi na Zemlji | vse živo na planetu |
 
-Višja raven zmore več kot njeni deli posebej. Ena mišična celica ravnila ne ujame. Roka, ki jo vodijo možgani, ga.
+Višja raven zmore več kot njeni deli posebej: ena mišična celica ravnila ne ujame, roka pa ga.
 
 :::premisli
 Je srce tkivo ali organ? Odloči se, preden pogledaš, in povej zakaj.
@@ -65,7 +65,7 @@ Je srce tkivo ali organ? Odloči se, preden pogledaš, in povej zakaj.
 Organ. Srce je zgrajeno iz več vrst tkiva: mišičnega, veznega in živčnega. Skupaj poganjajo kri. Tkivo pa je ena sama vrsta podobnih celic.
 :::
 
-V drugi simulaciji spodaj, »Ravni organizacije živega«, uvrsti srce, želodec, kostno tkivo in druge primere. Bodi pozoren, pri katerih se zmotiš med tkivom in organom.
+V simulaciji spodaj »Ravni organizacije živega« uvrsti srce, želodec in kostno tkivo. Opazuj, kje zamenjaš tkivo in organ.
 
 ## Rešeni primeri
 
@@ -124,8 +124,8 @@ Pošten poskus: spreminja se samo en dejavnik, vse drugo ostane enako. Kontrolna
 1. Kaj se je spremenilo med dnevoma? Kopačke, podlaga in dan.
 2. Več zadetkov bi lahko povzročila suha umetna trava, ne kopačke. Vzrokov ne moremo ločiti, zato to ni dokaz.
 3. Popravek: oba niza strelov na istem igrišču, isti dan, z isto žogo. Spremeni se le obutev. Streli s starimi kopačkami so kontrola.
-4. En strelec en dan ni dovolj. Naj sodeluje več igralcev; polovica naj začne s starimi, polovica z novimi kopačkami, da utrujenost ne vpliva le na eno skupino.
-5. Odgovor: to ni dokaz, ker sta se spremenila dva dejavnika. Pošten poskus spremeni le kopačke.
+4. En strelec en dan ni dovolj. Naj sodeluje več igralcev; polovica naj začne s starimi kopačkami, polovica z novimi, da utrujenost ne zadene le ene skupine.
+5. Odgovor: to ni dokaz, ker sta se spremenila dva dejavnika.
 
 ### Primer 4: zdaj ti
 
@@ -151,7 +151,7 @@ $35{,}1 + 34{,}9 + 35{,}3 = 105{,}3$ in $\dfrac{105{,}3}{3} = 35{,}1$, torej $35
 
 ## Pogoste napake
 
-- **»Kontrolna skupina ne dela ničesar, zato je odveč.«** Brez nje nimaš s čim primerjati. Ne veš, ali bi bil rezultat enak tudi brez dejavnika. Kontrolna skupina je merilo, ob katerem učinek sploh opaziš.
+- **»Kontrolna skupina ne dela ničesar, zato je odveč.«** Brez nje ne veš, ali bi bil rezultat enak tudi brez dejavnika. Šele ob njej učinek sploh opaziš.
 - **Več sprememb hkrati.** Kot Žan zamenjaš kopačke *in* igrišče. Potem ne veš, kateri dejavnik je povzročil razliko. Spremeni le eno stvar.
 - **»Ena meritev je dovolj.«** En skok ali en ulov je lahko slučajno dober ali slab. Meri večkrat in na več osebkih ter primerjaj povprečja.
 - **Tkivo namesto organa.** »Srce je mišično tkivo.« Srce vsebuje mišično tkivo, a tudi vezno in živčno. Več tkiv skupaj je organ.
@@ -171,16 +171,15 @@ $35{,}1 + 34{,}9 + 35{,}3 = 105{,}3$ in $\dfrac{105{,}3}{3} = 35{,}1$, torej $35
 
 **Ravni so kot športna organizacija.** Ena igralka je kot celica. Vse krilne igralke z enako nalogo so kot tkivo. Ekipa, v kateri vratarka, krila in branilke skupaj zmagajo tekmo, je kot organ. Klub z več ekipami je kot organski sistem. Na vsaki stopnji nastane nekaj, česar ena igralka sama ne zmore.
 
-Analogija ima meje: celice v tkivu so si podobnejše kot igralke in nobena celica ne more »prestopiti« v drug organ.
+Analogija ima meje: celice v tkivu so si podobnejše kot igralke.
 
 ## Drugače: Bolj natančno
 
 - **Spremenljivke.** Dejavnik, ki ga v poskusu namenoma spreminjamo (napitek), je *neodvisna spremenljivka*. Kar merimo (centimetri padca ravnila), je *odvisna spremenljivka*. Vse, kar držimo enako (ura, dvorana, ogrevanje), so *stalne spremenljivke*.
-- **Slepi poskus.** Igralke niso vedele, kaj pijejo. Tako njihovo pričakovanje ne vpliva na rezultat. Že občutek »spil sem nekaj posebnega« lahko izboljša dosežek.
-- **Naključna razdelitev.** Osebke v skupini razdelimo naključno, na primer z žrebom. Tako v eni skupini ne pristanejo vsi najboljši.
-- **Ponovljivost.** Sklep velja šele, ko poskus ponovijo tudi drugi in dobijo podoben rezultat. Ena raziskava z desetimi osebki je le začetek.
+- **Slepi poskus.** Igralke niso vedele, kaj pijejo, zato pričakovanje ni vplivalo na rezultat. Že občutek »spil sem nekaj posebnega« lahko izboljša dosežek.
+- **Naključna razdelitev.** Osebke razdelimo v skupini z žrebom, da v eni ne pristanejo vsi najboljši.
+- **Ponovljivost.** Sklep velja šele, ko poskus ponovijo tudi drugi in dobijo podoben rezultat.
 - **Ravni pod celico.** Celica je najmanjša *živa* enota. Sestavljajo jo organeli, ti pa iz molekul in atomov, ki sami niso živi.
-- **Nove lastnosti.** Na vsaki višji ravni se pojavijo lastnosti, ki jih nižje ravni nimajo: srce črpa kri, ena mišična celica pa se le skrči.
 
 ## Preveri se
 
@@ -212,7 +211,7 @@ Analogija ima meje: celice v tkivu so si podobnejše kot igralke in nobena celic
 ~ Če bi obe skupini pili isti napitek, med njima ne bi bilo razlike in učinka ne bi mogli opaziti.
 - Da bi kontrolna skupina dosegla boljše rezultate.
 ~ Kontrolne skupine ne nastavimo tako, da bi zmagala. Z njo le primerjamo.
-> Če bi igralke vedele, da pijejo navadno vodo, bi lahko pričakovanje vplivalo na odziv. Tako se skupini razlikujeta samo v dejavniku, ki ga preverjamo.
+> Če bi igralke vedele, da pijejo navadno vodo, bi pričakovanje lahko vplivalo na odziv.
 
 ? Tina raziskuje, ali glasba poveča število trebušnjakov v eni minuti. Kateri korak je napačen?
 - Vprašanje: »Ali glasba vpliva na število trebušnjakov v eni minuti?«
@@ -227,9 +226,9 @@ Analogija ima meje: celice v tkivu so si podobnejše kot igralke in nobena celic
 ? Na spletu piše: »Kdor nosi zapestnico X, ima boljše ravnotežje.« Kateri načrt to najbolje preveri?
 - Petim ljudem, ki zapestnico že nosijo, postavimo vprašanje, kako se počutijo.
 ~ To so mnenja, ne meritve, in ni kontrolne skupine za primerjavo.
-- Eden učenec stoji na eni nogi z zapestnico, naslednji dan pa brez nje na mehki blazini.
+- En učenec stoji na eni nogi z zapestnico, naslednji dan pa brez nje na mehki blazini.
 ~ En sam osebek ni dovolj, poleg tega se spremenita zapestnica in podlaga.
 + Dvajset učencev z žrebom razdelimo v dve skupini. Ena nosi zapestnico X, druga enako zapestnico brez posebnosti. Vsem merimo čas stoje na eni nogi.
 - Preverimo, koliko ljudi je zapestnico kupilo.
 ~ Prodaja pove, da je reklama uspešna, ne pa, ali zapestnica vpliva na ravnotežje.
-> Načrt ima merljiv rezultat, več osebkov in kontrolno skupino, ki se razlikuje le v zapestnici. Udeleženci ne vedo, katero zapestnico nosijo.
+> Načrt ima merljiv rezultat, več osebkov in kontrolno skupino, ki se razlikuje le v zapestnici.
