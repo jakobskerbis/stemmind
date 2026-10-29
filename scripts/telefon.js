@@ -323,7 +323,8 @@ async function main() {
   if (!url) url = await startTunnel(await ensureCloudflared());
   // Lastna domena teče: stara povezava ngrok naj ostane odprta, strežnik jo preusmeri na domeno
   // (nameščene aplikacije in shranjene povezave tako ne kažejo prazne strani).
-  if (url === pub) {
+  // Le okno, ki je zagnalo strežnik: drugo okno bi z ugašanjem ngrok.exe (startNgrok) prekinilo prvega.
+  if (url === pub && own) {
     const text = readEnv();
     const token = envValue(text, "NGROK_AUTHTOKEN");
     const domain = envValue(text, "NGROK_DOMAIN").replace(/^https?:\/\//, "").replace(/\/.*$/, "");

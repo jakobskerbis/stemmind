@@ -81,15 +81,22 @@ function mountOldLinkRedirect(app, homeCheck) {
     const r = await fetch(`https://${domain}/healthz/stanje`, { signal: AbortSignal.timeout(4000) });
     return (await r.json()).id === INSTANCE;
   });
+  // Odgovor velja 5 minut; potem ga osvežimo v ozadju (zahteva ne čaka do 4 s, sicer bi service
+  // worker po svojem roku 4 s ponudil shranjeno stran namesto preusmeritve). Čaka le prva zahteva.
   let known = { at: 0, ok: false };
-  const homeIsUs = async () => {
+  let pending = null;
+  const refresh = () => (pending ||= check().catch(() => false).then((ok) => {
+    known = { at: Date.now(), ok };
+    pending = null;
+    return ok;
+  }));
+  const homeIsUs = () => {
     if (Date.now() - known.at < 5 * 60 * 1000) return known.ok;
-    known = { at: Date.now(), ok: known.ok };
-    known.ok = await check().catch(() => false);
-    return known.ok;
+    const p = refresh();
+    return known.at ? known.ok : p;
   };
   app.use(async (req, res, next) => {
-    if (!TUNNEL_HOST.test(req.hostname || "") || !(await homeIsUs())) return next();
+    if (!TUNNEL_HOST.test(req.hostname || "") || !req.originalUrl.startsWith("/") || !(await homeIsUs())) return next();
     res.set("Cache-Control", "no-store");
     res.redirect(302, `https://${domain}${req.originalUrl}`);
   });

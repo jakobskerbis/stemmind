@@ -364,3 +364,5 @@ html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important;
 .boot-down .card { max-width: 360px; text-align: center; display: grid; gap: 14px; justify-items: center; }
 .boot-down .card svg { width: 40px; height: 40px; color: var(--muted, #8b949e); }
 .boot-down p { margin: 0; }
+/* prazna aplikacija pod sporočilom: ne sprejme fokusa (Tab) in je bralnik zaslona ne bere */
+body:has(> #boot-down) > :not(#boot-down) { visibility: hidden; }
