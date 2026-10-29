@@ -1524,5 +1524,21 @@
   "guest.delete": "Izbriši profil i sve podatke",
   "guest.deleteConfirm": "Izbrisati profil, napredak i razgovore? To se ne može poništiti.",
   "guest.logoutConfirm": "Bez računa nakon odjave više ne možeš doći do ovog napretka. Radije izradi račun u kartici Račun. Svejedno se odjaviti?",
-  "guest.off": "Korištenje bez računa više nije moguće. Izradi račun da zadržiš svoj napredak."
+  "guest.off": "Korištenje bez računa više nije moguće. Izradi račun da zadržiš svoj napredak.",
+  "games.e.diner": "Zalogajnica",
+  "games.e.diner.how": "Gost naruči zadatak. Dodirni sastojak s točnim odgovorom prije nego što gostu ponestane strpljenja. Tipke 1–4.",
+  "games.e.hills": "Vožnja po brdima",
+  "games.e.hills.how": "Džip vozi sam. Prođi kroz kanistar s točnim odgovorom, a preko netočnih preskoči dodirom. Tipka: razmaknica.",
+  "games.e.pet": "Ljubimac",
+  "games.e.pet.how": "Nahrani Bibija poslasticom s točnim odgovorom: dodirni je ili je povuci do Bibija. Tipke 1–3.",
+  "games.e.catcher": "Hvatač",
+  "games.e.catcher.how": "Pomiči košaru i uhvati voće s točnim odgovorom. Izbjegavaj netočne. Tipke ← →.",
+  "games.e.pairs": "Memorija",
+  "games.e.pairs.how": "Zapamti kartice prije nego što se okrenu, zatim otvori par s točnim odgovorom. Tipke 1–8.",
+  "games.e.slicer": "Rezanje voća",
+  "games.e.slicer.how": "Potezom prsta prereži voće s točnim odgovorom. Ne reži netočne. Tipke 1–4.",
+  "games.e.water": "Kamo teče voda",
+  "games.e.water.how": "Prstom iskopaj put kroz zemlju da voda poteče u korito s točnim odgovorom. Tipke 1–3.",
+  "games.e.mines": "Minolovac",
+  "games.e.mines.how": "Točan odgovor puni detektor koji pokaže minu i sigurno polje. Otvori sva sigurna polja; 🚩 označava minu. Tipke 1–4 i F."
 }

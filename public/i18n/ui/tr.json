@@ -1517,5 +1517,21 @@
   "guest.delete": "Profili ve tüm verileri sil",
   "guest.deleteConfirm": "Profil, ilerleme ve sohbetler silinsin mi? Bu işlem geri alınamaz.",
   "guest.logoutConfirm": "Hesap olmadan, çıkış yaptıktan sonra bu ilerlemeye artık erişemezsin. En iyisi Hesap sekmesinden bir hesap oluştur. Yine de çıkış yapılsın mı?",
-  "guest.off": "Hesapsız kullanım artık mümkün değil. İlerlemeni korumak için bir hesap oluştur."
+  "guest.off": "Hesapsız kullanım artık mümkün değil. İlerlemeni korumak için bir hesap oluştur.",
+  "games.e.diner": "Büfe",
+  "games.e.diner.how": "Bir müşteri görev sipariş eder. Sabrı tükenmeden doğru cevaplı malzemeye dokun. Tuşlar 1–4.",
+  "games.e.hills": "Tepe sürüşü",
+  "games.e.hills.how": "Cip kendi gider. Doğru cevaplı bidondan geç, yanlışların üzerinden dokunarak atla. Tuş: boşluk.",
+  "games.e.pet": "Evcil dost",
+  "games.e.pet.how": "Bibi'yi doğru cevaplı ödülle besle: ona dokun ya da Bibi'ye sürükle. Tuşlar 1–3.",
+  "games.e.catcher": "Yakalayıcı",
+  "games.e.catcher.how": "Sepeti hareket ettir ve doğru cevaplı meyveyi yakala. Yanlışlardan kaç. Tuşlar ← →.",
+  "games.e.pairs": "Hafıza",
+  "games.e.pairs.how": "Kartlar dönmeden önce onları aklında tut, sonra doğru cevaplı çifti aç. Tuşlar 1–8.",
+  "games.e.slicer": "Meyve kesme",
+  "games.e.slicer.how": "Doğru cevaplı meyveyi kesmek için parmağını kaydır. Yanlışları kesme. Tuşlar 1–4.",
+  "games.e.water": "Su nereye akar",
+  "games.e.water.how": "Parmağınla topraktan bir yol kaz ki su doğru cevaplı leğene aksın. Tuşlar 1–3.",
+  "games.e.mines": "Mayın tarlası",
+  "games.e.mines.how": "Doğru cevap dedektörü doldurur; dedektör bir mayın ve güvenli bir kare gösterir. Tüm güvenli kareleri aç; 🚩 mayını işaretler. Tuşlar 1–4 ve F."
 }

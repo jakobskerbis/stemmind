@@ -1510,5 +1510,21 @@
   "guest.delete": "Hapus profil dan semua data",
   "guest.deleteConfirm": "Hapus profil, kemajuan, dan percakapan? Tindakan ini tidak bisa dibatalkan.",
   "guest.logoutConfirm": "Tanpa akun, setelah keluar kamu tidak bisa lagi mengakses kemajuan ini. Sebaiknya buat akun di tab Akun. Tetap keluar?",
-  "guest.off": "Penggunaan tanpa akun sudah tidak tersedia. Buat akun untuk menyimpan kemajuanmu."
+  "guest.off": "Penggunaan tanpa akun sudah tidak tersedia. Buat akun untuk menyimpan kemajuanmu.",
+  "games.e.diner": "Warung",
+  "games.e.diner.how": "Seorang tamu memesan soal. Ketuk bahan dengan jawaban benar sebelum tamu kehilangan kesabaran. Tombol 1–4.",
+  "games.e.hills": "Mengemudi di bukit",
+  "games.e.hills.how": "Jip berjalan sendiri. Lewati jeriken dengan jawaban benar dan ketuk untuk melompati yang salah. Tombol: spasi.",
+  "games.e.pet": "Hewan peliharaan",
+  "games.e.pet.how": "Beri Bibi camilan dengan jawaban benar: ketuk atau seret ke Bibi. Tombol 1–3.",
+  "games.e.catcher": "Penangkap",
+  "games.e.catcher.how": "Geser keranjang dan tangkap buah dengan jawaban benar. Hindari yang salah. Tombol ← →.",
+  "games.e.pairs": "Memori",
+  "games.e.pairs.how": "Ingat kartunya sebelum terbalik, lalu buka pasangan dengan jawaban benar. Tombol 1–8.",
+  "games.e.slicer": "Potong buah",
+  "games.e.slicer.how": "Usap untuk memotong buah dengan jawaban benar. Jangan potong yang salah. Tombol 1–4.",
+  "games.e.water": "Ke mana air mengalir",
+  "games.e.water.how": "Gali jalan di tanah dengan jarimu agar air mengalir ke bak dengan jawaban benar. Tombol 1–3.",
+  "games.e.mines": "Penyapu ranjau",
+  "games.e.mines.how": "Jawaban benar mengisi detektor yang menunjukkan ranjau dan kotak aman. Buka semua kotak aman; 🚩 menandai ranjau. Tombol 1–4 dan F."
 }

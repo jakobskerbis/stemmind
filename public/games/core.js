@@ -97,7 +97,7 @@ export function runGame(host, opts) {
         <button type="button" class="gm-btn gm-pause" aria-label="${esc(t("games.pause"))}">${icon("pause")}</button>
       </div>
       <div class="gm-timer" hidden><i></i></div>
-      <div class="gm-stage"><canvas tabindex="0" aria-label="${esc(opts.title)}"></canvas><div class="gm-overlay"></div></div>
+      <div class="gm-stage"><canvas dir="ltr" tabindex="0" aria-label="${esc(opts.title)}"></canvas><div class="gm-overlay"></div></div>
     </div>`;
   const $ = (s) => host.querySelector(s);
   const canvas = $("canvas"), g = canvas.getContext("2d");
