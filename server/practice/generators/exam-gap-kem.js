@@ -177,7 +177,7 @@ const exgPolymers = {
         const others = POLY.filter((x) => x !== p);
         return baseTask({
           text: L(`Which ${p.two ? "are the monomers" : "is the monomer"} of ${p.n[0]}?`, `${p.n[1]} ${p.two ? "के एकलक कौन-से हैं" : "का एकलक कौन-सा है"}?`),
-          answer: ch(r, L, p.m, others.map((o) => [o.m, [`This is the monomer of ${o.n[0]}.`, `यह ${o.n[1]} का एकलक है।`]])),
+          answer: ch(r, L, p.m, others.map((o) => [o.m, o.two ? [`These are the monomers of ${o.n[0]}.`, `ये ${o.n[1]} के एकलक हैं।`] : [`This is the monomer of ${o.n[0]}.`, `यह ${o.n[1]} का एकलक है।`]])),
           hint: L("Imagine cutting the polymer chain back into the small molecules it was built from.", "कल्पना कीजिए कि बहुलक शृंखला को उन छोटे अणुओं में तोड़ा जाए जिनसे वह बनी है।"),
           solution: L(`${cap(p.n[0])} is ${p.add ? "an addition" : "a condensation"} polymer of ${p.m[0]}.`, `${p.n[1]}, ${p.m[1]} का ${p.add ? "योगज" : "संघनन"} बहुलक है।`),
         });
@@ -481,8 +481,8 @@ const exgIndustrial = {
         const ans = askH ? 3 * VN : 2 * VN;
         return task({
           text: askH
-            ? L(`In the Haber process, $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$. What volume of hydrogen, in L, reacts completely with ${VN} L of nitrogen at the same temperature and pressure?`, `हेबर प्रक्रम में $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$। समान ताप और दाब पर ${VN} L नाइट्रोजन से पूर्णतः अभिक्रिया करने वाली हाइड्रोजन का आयतन L में ज्ञात कीजिए।`)
-            : L(`In the Haber process, $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$. What volume of ammonia, in L, would form if ${VN} L of nitrogen reacted completely (same temperature and pressure)?`, `हेबर प्रक्रम में $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$। यदि ${VN} L नाइट्रोजन पूर्णतः अभिक्रिया करे, तो (समान ताप और दाब पर) कितने L अमोनिया बनेगी?`),
+            ? L(`In the Haber process, $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$. What volume of hydrogen, in L, reacts completely with ${VN} L of nitrogen at the same temperature and pressure?`, `हेबर प्रक्रम की अभिक्रिया $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$ है। समान ताप और दाब पर ${VN} L नाइट्रोजन से पूर्णतः अभिक्रिया करने वाली हाइड्रोजन का आयतन L में ज्ञात कीजिए।`)
+            : L(`In the Haber process, $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$. What volume of ammonia, in L, would form if ${VN} L of nitrogen reacted completely (same temperature and pressure)?`, `हेबर प्रक्रम की अभिक्रिया $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$ है। यदि ${VN} L नाइट्रोजन पूर्णतः अभिक्रिया करे, तो (समान ताप और दाब पर) कितने L अमोनिया बनेगी?`),
           answer: numM(ans, 0, askH ? [[VN / 3, L("Three volumes of H₂ are needed for each volume of N₂.", "N₂ के हर आयतन के लिए H₂ के तीन आयतन चाहिए।")], [2 * VN, L("2 is the coefficient of NH₃; H₂ has coefficient 3.", "2, NH₃ का गुणांक है; H₂ का गुणांक 3 है।")]] : [[3 * VN, L("3 is the coefficient of H₂; NH₃ has coefficient 2.", "3, H₂ का गुणांक है; NH₃ का गुणांक 2 है।")], [VN / 2, L("Each volume of N₂ gives two volumes of NH₃.", "N₂ का हर आयतन NH₃ के दो आयतन देता है।")]]),
           data: { given: [q("V(\\mathrm{N_2})", VN, "L")], find: [askH ? "V(\\mathrm{H_2})" : "V(\\mathrm{NH_3})"] },
           hint: L("For gases at the same temperature and pressure, volumes react in the ratio of the coefficients (Avogadro's law).", "समान ताप और दाब पर गैसों के आयतन गुणांकों के अनुपात में अभिक्रिया करते हैं (आवोगाद्रो नियम)।"),
@@ -494,7 +494,7 @@ const exgIndustrial = {
         const m = r.pick([14, 28, 56, 70, 140, 280]);
         const ans = (m / 28) * 34;
         return task({
-          text: L(`In the Haber process, $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$. What mass of ammonia, in kg, could be made from ${m} kg of nitrogen if all of it reacted? ($M(\\mathrm{N_2}) = 28$ g/mol, $M(\\mathrm{NH_3}) = 17$ g/mol)`, `हेबर प्रक्रम में $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$। यदि ${m} kg नाइट्रोजन पूरी अभिक्रिया करे, तो कितने kg अमोनिया बन सकती है? ($M(\\mathrm{N_2}) = 28$ g/mol, $M(\\mathrm{NH_3}) = 17$ g/mol)`),
+          text: L(`In the Haber process, $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$. What mass of ammonia, in kg, could be made from ${m} kg of nitrogen if all of it reacted? ($M(\\mathrm{N_2}) = 28$ g/mol, $M(\\mathrm{NH_3}) = 17$ g/mol)`, `हेबर प्रक्रम की अभिक्रिया $\\mathrm{N_2 + 3H_2 \\rightleftharpoons 2NH_3}$ है। यदि ${m} kg नाइट्रोजन पूरी अभिक्रिया करे, तो कितने kg अमोनिया बन सकती है? ($M(\\mathrm{N_2}) = 28$ g/mol, $M(\\mathrm{NH_3}) = 17$ g/mol)`),
           answer: numM(ans, 1, [[(m / 28) * 17, L("1 mol of N₂ gives 2 mol of NH₃.", "1 mol N₂ से 2 mol NH₃ बनती है।")], [(m * 17) / 28 / 2, L("Use the mole ratio N₂ : NH₃ = 1 : 2.", "मोल अनुपात N₂ : NH₃ = 1 : 2 लीजिए।")]]),
           data: { given: [q("m(\\mathrm{N_2})", m, "kg"), q("M(\\mathrm{N_2})", 28, "g/mol"), q("M(\\mathrm{NH_3})", 17, "g/mol")], find: ["m(\\mathrm{NH_3})"] },
           hint: L("Convert to moles (kmol), use the equation, convert back to mass.", "मोल (kmol) में बदलिए, समीकरण लगाइए, फिर द्रव्यमान में बदलिए।"),
@@ -810,7 +810,7 @@ const exgEnvironmental = {
         const ok = r.pick(GHG.slice(0, 3));
         return baseTask({
           text: L("Which of the following is a greenhouse gas?", "निम्नलिखित में से कौन-सी ग्रीनहाउस गैस है?"),
-          answer: ch(r, L, ok, NOT_GHG.map((g) => [g, ["This main component of air does not absorb infrared radiation.", "वायु का यह घटक अवरक्त विकिरण अवशोषित नहीं करता।"]])),
+          answer: ch(r, L, ok, NOT_GHG.map((g) => [g, ["N₂, O₂ and Ar, the main gases of dry air, do not absorb infrared radiation.", "शुष्क वायु की मुख्य गैसें N₂, O₂ और Ar अवरक्त विकिरण अवशोषित नहीं करतीं।"]])),
           hint: L("Greenhouse gases absorb the infrared (heat) radiation given out by the Earth.", "ग्रीनहाउस गैसें पृथ्वी से निकले अवरक्त (ऊष्मा) विकिरण को अवशोषित करती हैं।"),
           solution: L(`${ok[0]} absorbs infrared radiation and traps heat. N₂, O₂ and Ar do not.`, `${ok[1]} अवरक्त विकिरण अवशोषित करके ऊष्मा रोकती है। N₂, O₂ और Ar ऐसा नहीं करतीं।`),
         });
@@ -845,7 +845,7 @@ const exgEnvironmental = {
         });
       }
       if (v === 1) {
-        const D1 = r.pick([7.8, 8.2, 8.6, 9.0, 9.2]);
+        const D1 = r.pick([7.8, 8.0, 8.2, 8.6, 9.0]);
         const D2 = r.pick([1.2, 2.4, 3.0, 4.6, 6.4]);
         const V = r.pick([0.3, 0.5, 2, 5]);
         const bod = tidy(D1 - D2);

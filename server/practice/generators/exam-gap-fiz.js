@@ -560,7 +560,7 @@ const exgDensity = {
             `${who} weighs ${W} N and stands on the floor. The total area of contact of both feet with the floor is ${en(A)} m². Find the pressure on the floor in kPa.`,
             `${who} का भार ${W} N है और ${ni % 2 ? "वह फर्श पर खड़ी है" : "वह फर्श पर खड़ा है"}। दोनों पैरों का फर्श से कुल संपर्क क्षेत्रफल ${en(A)} m² है। फर्श पर दाब kPa में ज्ञात कीजिए।`
           ),
-          answer: numM(p, 1, [[(W * A) / 1000, L("Pressure is force divided by area.", "दाब = बल ÷ क्षेत्रफल।")], [p * 1000, L("Convert pascals to kilopascals: 1 kPa = 1000 Pa.", "पास्कल को किलोपास्कल में बदलिए: 1 kPa = 1000 Pa।")]]),
+          answer: numM(p, 2, [[(W * A) / 1000, L("Pressure is force divided by area.", "दाब = बल ÷ क्षेत्रफल।")], [p * 1000, L("Convert pascals to kilopascals: 1 kPa = 1000 Pa.", "पास्कल को किलोपास्कल में बदलिए: 1 kPa = 1000 Pa।")]]),
           data: { given: [q("F", W, "N"), q("A", A, "m^2")], find: ["p"] },
           hint: L("The force on the floor is the weight.", "फर्श पर बल भार के बराबर है।"),
           formula: "p = \\dfrac{F}{A}",
@@ -1124,7 +1124,7 @@ const exgElasticity = {
       const Fn = Y11 * 1e11 * A * 1e-6 * strain;
       return task({
         text: L(`What force, in N, produces a strain of ${en(strain)} in ${an(we)} ${we} wire of cross-sectional area ${en(A)} mm²? Young's modulus of ${we} is $${en(Y11)} \\times 10^{11}$ N/m².`, `${en(A)} mm² अनुप्रस्थ काट क्षेत्रफल वाले ${wh} के तार में ${en(strain)} विकृति उत्पन्न करने के लिए कितना बल (N में) चाहिए? ${wh} का यंग गुणांक $${en(Y11)} \\times 10^{11}$ N/m² है।`),
-        answer: numM(Fn, 0, [[Fn * 1000, L("1 mm² = $10^{-6}$ m², not $10^{-3}$ m².", "1 mm² = $10^{-6}$ m² होता है, $10^{-3}$ m² नहीं।")], [Y11 * 1e11 * A * 1e-6, L("Multiply by the strain too: stress = $Y \\times$ strain.", "विकृति से भी गुणा कीजिए: प्रतिबल = $Y \\times$ विकृति।")]]),
+        answer: numM(Fn, 1, [[Fn * 1000, L("1 mm² = $10^{-6}$ m², not $10^{-3}$ m².", "1 mm² = $10^{-6}$ m² होता है, $10^{-3}$ m² नहीं।")], [Y11 * 1e11 * A * 1e-6, L("Multiply by the strain too: stress = $Y \\times$ strain.", "विकृति से भी गुणा कीजिए: प्रतिबल = $Y \\times$ विकृति।")]]),
         data: { given: [q("\\varepsilon", strain), q("A", A, "mm^2"), q("Y", `${en(Y11)} \\times 10^{11}`, "N/m^2")], find: ["F"] },
         hint: L("First find the stress from $Y$ and the strain.", "पहले $Y$ और विकृति से प्रतिबल ज्ञात कीजिए।"),
         formula: "F = Y A \\varepsilon",
@@ -1325,7 +1325,7 @@ const exgWaveOptics = {
         const nb = b0 * K.f;
         return task({
           text: L(`In a double-slit experiment the fringe width is ${en(b0)} mm. Find the new fringe width in mm if ${K.t[0]}.`, `एक द्वि-झिरी प्रयोग में फ्रिंज चौड़ाई ${en(b0)} mm है। यदि ${K.t[1]}, तो नई फ्रिंज चौड़ाई mm में ज्ञात कीजिए।`),
-          answer: numM(nb, 2, [[b0 / K.f, L("Check whether the change sits in the numerator or the denominator of $\\lambda D/d$.", "जाँचिए कि परिवर्तन $\\lambda D/d$ के अंश में है या हर में।")], [b0, L("This change does alter $\\beta = \\lambda D/d$.", "यह परिवर्तन $\\beta = \\lambda D/d$ को बदलता है।")]]),
+          answer: numM(nb, 3, [[b0 / K.f, L("Check whether the change sits in the numerator or the denominator of $\\lambda D/d$.", "जाँचिए कि परिवर्तन $\\lambda D/d$ के अंश में है या हर में।")], [b0, L("This change does alter $\\beta = \\lambda D/d$.", "यह परिवर्तन $\\beta = \\lambda D/d$ को बदलता है।")]]),
           data: { given: [q("\\beta", b0, "mm")], find: ["\\beta'"] },
           hint: L("Use $\\beta = \\lambda D/d$ and see which factor changes.", "$\\beta = \\lambda D/d$ लीजिए और देखिए कौन-सा गुणक बदलता है।"),
           formula: "\\beta = \\dfrac{\\lambda D}{d}",
