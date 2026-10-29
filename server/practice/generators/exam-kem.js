@@ -211,6 +211,13 @@ export const EXAM_KEM = [
         });
       }
       if (v === 1) {
+        // Izkoristek: A mora biti reaktant in B produkt (ne obratno).
+        const left = eq.split("\\rightarrow")[0].split("+").map((x) => x.trim().replace(/^\d+/, ""));
+        const isR = (x) => left.includes(x[0]);
+        if (!isR(A)) A = sp.find(isR);
+        if (isR(B)) B = sp.find((x) => !isR(x));
+        const ratio = B[1] / A[1];
+        const Ms = `($M$: ${[A, B].map((x) => `$\\mathrm{${x[0]}}$ ${en(x[2])}`).join(", ")} g/mol${L(".)", ")")}`;
         const mA = r.pick([10, 20, 25, 40, 50, 100]), y = r.pick([60, 70, 75, 80, 85, 90]);
         const theo = (mA / A[2]) * ratio * B[2], act = roundHalfUp((theo * y) / 100, 1);
         const pc = (act / theo) * 100;
@@ -960,7 +967,8 @@ export const EXAM_KEM = [
       if (level === 2) {
         const v = r.int(0, 2);
         if (v === 0) {
-          const charge = r.pick([-3, -2, -1, 1, 2, 3]);
+          // Samo ioni, ki jih element res tvori (ne Mg³⁻, Br²⁺ …).
+          const [s, Z, charge] = r.pick([["N", 7, -3], ["O", 8, -2], ["F", 9, -1], ["Na", 11, 1], ["Mg", 12, 2], ["Al", 13, 3], ["P", 15, -3], ["S", 16, -2], ["Cl", 17, -1], ["K", 19, 1], ["Ca", 20, 2], ["Fe", 26, 2], ["Fe", 26, 3], ["Cu", 29, 1], ["Cu", 29, 2], ["Zn", 30, 2], ["Br", 35, -1], ["Ag", 47, 1], ["I", 53, -1]]);
           const sym = charge > 0 ? `${charge === 1 ? "" : charge}+` : `${charge === -1 ? "" : -charge}-`;
           return task({
             text: L(`How many electrons does the ion $\\mathrm{${s}^{${sym}}}$ have? (Atomic number of ${s}: ${Z}.)`, `आयन $\\mathrm{${s}^{${sym}}}$ में कितने इलेक्ट्रॉन हैं? (${s} का परमाणु क्रमांक: ${Z})`),
