@@ -20,7 +20,7 @@ import { ITEMS, SLOTS, DEFAULT_AVATAR, avatarSvg, itemName, itemOf, itemRarity }
 import { seasonOf } from "../zbirke.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-const FILTER_KEY = "kompreno.gamesFilter";
+const FILTER_KEY = "evklid.gamesFilter";
 
 // Velik znak na ploščici.
 const GLYPH = {
@@ -206,7 +206,7 @@ function renderPortal() {
   });
   root.querySelectorAll(".gm-tile").forEach((b) => b.addEventListener("click", () => openGame(b.dataset.game)));
   root.querySelector('[data-act="shop"]').addEventListener("click", () => renderShop("", true));
-  root.querySelector('.gm-top [data-act="zbirke"]')?.addEventListener("click", () => window.kompreno?.openZbirke(null, "games"));
+  root.querySelector('.gm-top [data-act="zbirke"]')?.addEventListener("click", () => window.evklid?.openZbirke(null, "games"));
 }
 
 function openGame(id) {
@@ -254,12 +254,12 @@ function showLock(engine, c, lock) {
     <h2>${icon("lock")} ${esc(`${kindName(engine)}: ${name}`)}</h2>
     <p>${esc(text)}</p>
     <div class="actions">
-      ${lock.topic && window.kompreno?.openTopic ? `<button type="button" class="primary" data-act="topic">${icon("book-open")}${esc(t("games.learnTopic"))}</button>` : ""}
+      ${lock.topic && window.evklid?.openTopic ? `<button type="button" class="primary" data-act="topic">${icon("book-open")}${esc(t("games.learnTopic"))}</button>` : ""}
       ${lock.need === "learn" ? `<button type="button" class="${lock.topic ? "secondary" : "primary"}" data-act="check">${icon("clipboard-check")}${esc(t("games.checkBtn", { n: CHECK_TASKS }))}</button>` : ""}
       ${others.map((e, i) => `<button type="button" class="${i ? "secondary" : "primary"}" data-play="${gameId(e, c)}">${icon(e.icon)}${esc(kindName(e))}</button>`).join("")}
       <button type="button" class="text-btn" data-act="back">${icon("arrow-left")}${esc(t("games.back"))}</button>
     </div></div></div>`;
-  root.querySelector('[data-act="topic"]')?.addEventListener("click", () => window.kompreno.openTopic(lock.topic));
+  root.querySelector('[data-act="topic"]')?.addEventListener("click", () => window.evklid.openTopic(lock.topic));
   root.querySelector('[data-act="check"]')?.addEventListener("click", () => runCheck(engine, c));
   root.querySelector('[data-act="back"]').addEventListener("click", renderPortal);
   root.querySelectorAll("[data-play]").forEach((b) => b.addEventListener("click", () => openGame(b.dataset.play)));
@@ -311,12 +311,12 @@ function runCheck(engine, c) {
     shell(`<p class="gm-check-res">${esc(t(pass ? "games.checkPass" : "games.checkFail", { ok, n: qs.length, need: CHECK_PASS }))}</p>
       <div class="actions">
         ${first ? `<button type="button" class="primary" data-play="${gameId(first, c)}">${icon(first.icon)}${esc(kindName(first))}</button>` : ""}
-        ${!pass && topic && window.kompreno?.openTopic ? `<button type="button" class="primary" data-act="topic">${icon("book-open")}${esc(t("games.learnTopic"))}</button>` : ""}
+        ${!pass && topic && window.evklid?.openTopic ? `<button type="button" class="primary" data-act="topic">${icon("book-open")}${esc(t("games.learnTopic"))}</button>` : ""}
         ${!pass ? `<button type="button" class="secondary" data-act="retry">${icon("rotate-ccw")}${esc(t("games.again"))}</button>` : ""}
         <button type="button" class="text-btn" data-act="back">${icon("arrow-left")}${esc(t("games.back"))}</button>
       </div>`);
     root.querySelector("[data-play]")?.addEventListener("click", (ev) => openGame(ev.currentTarget.dataset.play));
-    root.querySelector('[data-act="topic"]')?.addEventListener("click", () => window.kompreno.openTopic(topic));
+    root.querySelector('[data-act="topic"]')?.addEventListener("click", () => window.evklid.openTopic(topic));
     root.querySelector('[data-act="retry"]')?.addEventListener("click", () => runCheck(engine, c));
     root.querySelector('[data-act="back"]').addEventListener("click", renderPortal);
   };
@@ -404,8 +404,8 @@ function renderShop(msg = "", top = false) {
     }),
   );
   root.querySelector('[data-act="wear"]')?.addEventListener("click", () => save("avatar", { equipped: preview }, ""));
-  root.querySelector('[data-act="how"]')?.addEventListener("click", () => window.kompreno?.openZbirke(pick.id, "games"));
-  root.querySelector('[data-act="zbirke"]')?.addEventListener("click", () => window.kompreno?.openZbirke(null, "games"));
+  root.querySelector('[data-act="how"]')?.addEventListener("click", () => window.evklid?.openZbirke(pick.id, "games"));
+  root.querySelector('[data-act="zbirke"]')?.addEventListener("click", () => window.evklid?.openZbirke(null, "games"));
   root.querySelector('[data-act="buy"]')?.addEventListener("click", async () => {
     if (!s) return;
     try {

@@ -1,4 +1,4 @@
-// Prvi odgovor pri »Vprašaj Kompreno« iz Vadnice brez klica modela.
+// Prvi odgovor pri »Vprašaj Evklid« iz Vadnice brez klica modela.
 // Generator nalog že pozna podatke, iskano količino in namig, zato prvi korak
 // vodenja (Podatki / Iščemo / namig / vprašanje) sestavi koda. Model pride na vrsto,
 // ko učenec odgovori.

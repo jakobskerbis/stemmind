@@ -1,5 +1,5 @@
 // Starševski računi, soglasja, naročnine (Stripe), priporočila in tedenska poročila (Resend).
-// Vklop: KOMPRENO_ACCOUNTS=1. Brez tega aplikacija deluje kot prej (brez prijave).
+// Vklop: EVKLID_ACCOUNTS=1. Brez tega aplikacija deluje kot prej (brez prijave).
 import "../env.js";
 import { BRAND, LEGACY } from "../brand.js";
 import { isLocalRequest } from "../feedback.js";
@@ -18,13 +18,13 @@ import { promoConfig, createPromo } from "./promo.js";
 import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
 
 export const CONSENT_TEXT =
-  "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da Kompreno obdeluje otrokove osebne podatke " +
+  "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da Evklid obdeluje otrokove osebne podatke " +
   "(ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen " +
   "učenja, kot je opisano v Obvestilu o varstvu osebnih podatkov. Soglasje lahko kadar koli prekličem z izbrisom otrokovega profila.";
 
 // Soglasje dijaka, ki je dovolj star za lastno privolitev in ustvarja svoj profil.
 export const SELF_CONSENT_TEXT =
-  "Profil je moj. Prebral(a) sem Obvestilo o varstvu osebnih podatkov in soglašam, da Kompreno obdeluje moje podatke " +
+  "Profil je moj. Prebral(a) sem Obvestilo o varstvu osebnih podatkov in soglašam, da Evklid obdeluje moje podatke " +
   "(ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,7 +42,7 @@ function referralCode() {
 }
 
 export function mountAccounts(app, store, opts = {}) {
-  const enabled = opts.accounts ?? process.env.KOMPRENO_ACCOUNTS === "1";
+  const enabled = opts.accounts ?? process.env.EVKLID_ACCOUNTS === "1";
   if (!enabled) {
     app.get("/api/account/status", (_req, res) => res.json({ enabled: false }));
     return null;
@@ -61,7 +61,7 @@ export function mountAccounts(app, store, opts = {}) {
   const stripe = new Stripe({ secretKey: opts.stripeKey ?? env.STRIPE_SECRET_KEY, fetchFn: opts.fetchFn, kv });
   const mailer = new Mailer({ apiKey: opts.resendKey ?? env.RESEND_API_KEY, fetchFn: opts.fetchFn, log: opts.mailLog });
   const webhookSecret = opts.webhookSecret ?? env.STRIPE_WEBHOOK_SECRET;
-  const adminEmails = (env.KOMPRENO_ADMIN_EMAILS || "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
+  const adminEmails = (env.EVKLID_ADMIN_EMAILS || "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
   const sessions = new Sessions(db);
   const devices = new Devices(db);
   const throttle = new Throttle();
@@ -69,10 +69,10 @@ export function mountAccounts(app, store, opts = {}) {
   const log = opts.log || console;
   const promoCfg = opts.promo ?? promoConfig(env);
   const promo = createPromo(db, promoCfg);
-  if (promoCfg.code) log.info?.(`[kompreno] aktivacijska koda ${promoCfg.code}: porabljenih ${promo.used()}/${promoCfg.limit}, ${promoCfg.days} dni`);
+  if (promoCfg.code) log.info?.(`[evklid] aktivacijska koda ${promoCfg.code}: porabljenih ${promo.used()}/${promoCfg.limit}, ${promoCfg.days} dni`);
   const accessOf = (p) => accessFor(p, Date.now(), promoCfg.seats);
 
-  const baseUrl = (req) => (env.KOMPRENO_BASE_URL || (req ? `${req.protocol}://${req.get("host")}` : `http://localhost:${env.PORT || 3000}`)).replace(/\/$/, "");
+  const baseUrl = (req) => (env.EVKLID_BASE_URL || (req ? `${req.protocol}://${req.get("host")}` : `http://localhost:${env.PORT || 3000}`)).replace(/\/$/, "");
 
   // --- podatki ---
   const getParent = (id) => db.prepare("SELECT * FROM parents WHERE id = ?").get(id);
@@ -149,7 +149,7 @@ export function mountAccounts(app, store, opts = {}) {
       await mailer.send({ to, ...msg });
       return true;
     } catch (err) {
-      log.error?.("[kompreno] pošiljanje e-pošte ni uspelo:", err.message);
+      log.error?.("[evklid] pošiljanje e-pošte ni uspelo:", err.message);
       return false;
     }
   }
@@ -158,7 +158,7 @@ export function mountAccounts(app, store, opts = {}) {
   app.use("/api", (req, _res, next) => {
     const pid = sessions.parentId(readCookie(req));
     req.parent = pid ? getParent(pid) : null;
-    // Skrbnik: e-naslov v KOMPRENO_ADMIN_EMAILS (tudi če je bil dodan po registraciji).
+    // Skrbnik: e-naslov v EVKLID_ADMIN_EMAILS (tudi če je bil dodan po registraciji).
     if (req.parent && adminEmails.includes(String(req.parent.email).toLowerCase())) req.parent.is_admin = 1;
     req.deviceId = devices.identify(req, _res);
     next();
@@ -431,7 +431,7 @@ export function mountAccounts(app, store, opts = {}) {
 
   // Na računalniku, kjer teče strežnik: »ta račun je moj«, da števec porabe vidim tudi na telefonu.
   app.post("/api/usage/claim", (req, res) => {
-    if (!isLocalRequest(req)) return res.status(403).json({ error: "Samo na računalniku, kjer teče Kompreno." });
+    if (!isLocalRequest(req)) return res.status(403).json({ error: "Samo na računalniku, kjer teče Evklid." });
     db.prepare("UPDATE parents SET is_admin = 1 WHERE id = ?").run(req.parent.id);
     res.json({ ok: true });
   });
@@ -475,7 +475,7 @@ export function mountAccounts(app, store, opts = {}) {
         })(),
       })),
     };
-    res.set("Content-Disposition", 'attachment; filename="kompreno-podatki.json"');
+    res.set("Content-Disposition", 'attachment; filename="evklid-podatki.json"');
     res.json(data);
   });
 
@@ -487,7 +487,7 @@ export function mountAccounts(app, store, opts = {}) {
       try {
         await stripe.request("DELETE", `/subscriptions/${p.sub_id}`);
       } catch (err) {
-        log.error?.("[kompreno] preklic naročnine ni uspel:", err.message);
+        log.error?.("[evklid] preklic naročnine ni uspel:", err.message);
         return res.status(502).json({ error: "Naročnine ni bilo mogoče preklicati. Poskusite znova ali jo prekličite v portalu." });
       }
     }
@@ -502,10 +502,10 @@ export function mountAccounts(app, store, opts = {}) {
     const p = token && db.prepare("SELECT id FROM parents WHERE unsubscribe_token = ?").get(token);
     if (p) update(p.id, { weekly_email: 0 });
     res.type("html").send(
-      `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kompreno</title>` +
-        `<body style="font-family:sans-serif;max-width:480px;margin:40px auto;padding:0 16px"><h1>Kompreno</h1><p>${
+      `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Evklid</title>` +
+        `<body style="font-family:sans-serif;max-width:480px;margin:40px auto;padding:0 16px"><h1>Evklid</h1><p>${
           p ? "Tedenskih poročil ne boste več prejemali. Ponovno jih vklopite v zavihku Račun." : "Povezava ni veljavna."
-        }</p><p><a href="/">Odpri Kompreno</a></p></body>`,
+        }</p><p><a href="/">Odpri Evklid</a></p></body>`,
     );
   });
 
@@ -622,7 +622,7 @@ export function mountAccounts(app, store, opts = {}) {
       });
       res.json({ url: session.url });
     } catch (err) {
-      log.error?.("[kompreno] Stripe checkout:", err.message);
+      log.error?.("[evklid] Stripe checkout:", err.message);
       res.status(502).json({ error: "Plačilne strani ni bilo mogoče odpreti. Poskusite znova." });
     }
   });
@@ -636,7 +636,7 @@ export function mountAccounts(app, store, opts = {}) {
       const s = await stripe.request("POST", "/billing_portal/sessions", { customer: p.stripe_customer_id, return_url: `${baseUrl(req)}/?billing=portal`, configuration });
       res.json({ url: s.url });
     } catch (err) {
-      log.error?.("[kompreno] Stripe portal:", err.message);
+      log.error?.("[evklid] Stripe portal:", err.message);
       res.status(502).json({ error: "Portala ni bilo mogoče odpreti. Poskusite znova." });
     }
   });
@@ -671,7 +671,7 @@ export function mountAccounts(app, store, opts = {}) {
     try {
       await syncCustomer(req.parent);
     } catch (err) {
-      log.error?.("[kompreno] Stripe sync:", err.message);
+      log.error?.("[evklid] Stripe sync:", err.message);
     }
     res.json(accountView(req, getParent(req.parent.id)));
   });
@@ -683,11 +683,11 @@ export function mountAccounts(app, store, opts = {}) {
         await stripe.request("POST", `/customers/${p.stripe_customer_id}/balance_transactions`, {
           amount: -monthlyAmount(p.sub_seats || 1, planByKey(p.sub_plan)?.currency || "EUR"),
           currency: (planByKey(p.sub_plan)?.currency || "EUR").toLowerCase(),
-          description: "Kompreno: brezplačni mesec (priporočilo)",
+          description: "Evklid: brezplačni mesec (priporočilo)",
         });
         return "credit";
       } catch (err) {
-        log.error?.("[kompreno] dobropis ni uspel, dodajam dneve:", err.message);
+        log.error?.("[evklid] dobropis ni uspel, dodajam dneve:", err.message);
       }
     }
     const from = Math.max(Date.now(), Date.parse(p.bonus_until || 0) || 0);
@@ -748,7 +748,7 @@ export function mountAccounts(app, store, opts = {}) {
       }
       res.json({ received: true });
     } catch (err) {
-      log.error?.("[kompreno] webhook:", event.type, err.message);
+      log.error?.("[evklid] webhook:", event.type, err.message);
       res.status(500).json({ error: "Napaka pri obdelavi." });
     }
   });
@@ -806,8 +806,8 @@ export function mountAccounts(app, store, opts = {}) {
 
   if (opts.scheduler !== false) {
     const timer = setInterval(() => {
-      if (process.env.KOMPRENO_WEEKLY_EMAIL !== "0" && isSendTime()) sendWeeklyAll().catch((e) => log.error?.("[kompreno] tedenska poročila:", e.message));
-      if (process.env.KOMPRENO_GOAL_EMAIL !== "0" && isNoonTime()) sendGoalRemindersAll().catch((e) => log.error?.("[kompreno] opomniki cilja:", e.message));
+      if (process.env.EVKLID_WEEKLY_EMAIL !== "0" && isSendTime()) sendWeeklyAll().catch((e) => log.error?.("[evklid] tedenska poročila:", e.message));
+      if (process.env.EVKLID_GOAL_EMAIL !== "0" && isNoonTime()) sendGoalRemindersAll().catch((e) => log.error?.("[evklid] opomniki cilja:", e.message));
     }, 30 * 60000);
     timer.unref();
   }

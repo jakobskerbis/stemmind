@@ -1,10 +1,26 @@
 {
   "_opis": "Ime aplikacije na enem mestu. Za novo ime: node scripts/preimenuj.js <Ime> (glej skript). Prejšnja imena (legacy) ostanejo zaradi prenosa nastavitev, baze, piškotkov in bližnjic; test/ime.test.js prepreči, da bi se vrnila v kodo.",
-  "name": "Kompreno",
-  "slug": "kompreno",
-  "env": "KOMPRENO",
-  "wordmark": ["Kompren", "o"],
+  "name": "Evklid",
+  "slug": "evklid",
+  "env": "EVKLID",
+  "wordmark": [
+    "Evkli",
+    "d"
+  ],
   "legacy": [
-    { "name": "STEMMind", "slug": "stemmind", "env": "STEMMIND", "until": "2026-10-29", "match": "stem\\s?minds?" }
+    {
+      "name": "Kompreno",
+      "slug": "kompreno",
+      "env": "KOMPRENO",
+      "until": "2026-10-29",
+      "match": "kompren"
+    },
+    {
+      "name": "STEMMind",
+      "slug": "stemmind",
+      "env": "STEMMIND",
+      "until": "2026-10-29",
+      "match": "stem\\s?minds?"
+    }
   ]
 }

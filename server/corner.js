@@ -138,7 +138,7 @@ export function mix(all) {
   return out;
 }
 
-export function createNews(store, { fetchFn = globalThis.fetch, now = () => Date.now(), offline = process.env.KOMPRENO_NEWS === "0" } = {}) {
+export function createNews(store, { fetchFn = globalThis.fetch, now = () => Date.now(), offline = process.env.EVKLID_NEWS === "0" } = {}) {
   const db = store.db;
   db.exec(`
     CREATE TABLE IF NOT EXISTS news_cache (
@@ -170,7 +170,7 @@ export function createNews(store, { fetchFn = globalThis.fetch, now = () => Date
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), TIMEOUT);
     try {
-      const r = await fetchFn(f.url, { signal: ctl.signal, headers: { "User-Agent": "Kompreno/1.0 (news corner for students)", Accept: "application/rss+xml, application/xml, text/xml" } });
+      const r = await fetchFn(f.url, { signal: ctl.signal, headers: { "User-Agent": "Evklid/1.0 (news corner for students)", Accept: "application/rss+xml, application/xml, text/xml" } });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const text = await r.text();
       if (text.length > MAX_BYTES) throw new Error("too big");
@@ -189,7 +189,7 @@ export function createNews(store, { fetchFn = globalThis.fetch, now = () => Date
         return { items, failed: false };
       })
       .catch((err) => {
-        console.warn(`[kompreno] novice ${f.source} (${f.key}): ${err?.message ?? err}`);
+        console.warn(`[evklid] novice ${f.source} (${f.key}): ${err?.message ?? err}`);
         const entry = { at: cur?.at ?? 0, items: cur?.items || [], failedAt: now() };
         mem.set(f.key, entry);
         return { items: entry.items, failed: true };
@@ -265,7 +265,7 @@ export function mountCorner(app, store, { loadStudent, fetchFn, offline } = {}) 
       const r = await news.forStudent(s);
       res.json({ ...r, pinned: news.pins.list(s.id), interests: s.settings.interests, custom: s.settings.interest_custom || "" });
     } catch (err) {
-      console.error("[kompreno] kotiček:", err);
+      console.error("[evklid] kotiček:", err);
       res.status(500).json({ error: "Novic trenutno ni mogoče naložiti." });
     }
   });

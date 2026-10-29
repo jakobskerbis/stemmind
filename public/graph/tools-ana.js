@@ -50,7 +50,7 @@ export function anaTools(ctx) {
   // ---- analiza ----
   const PARTS = ["deriv", "roots", "int", "lim", "taylor"];
   function calc(el) {
-    const st = remember.get("kompreno.tool.ana", { f: "x^3 - 3x", a: "-3", b: "3", c: "0", side: "both", x0: "0", n: "5", x: "1" });
+    const st = remember.get("evklid.tool.ana", { f: "x^3 - 3x", a: "-3", b: "3", c: "0", side: "both", x0: "0", n: "5", x: "1" });
     el.innerHTML = card(`${field("tl-af", texHtml("f(x) ="), st.f)}<p class="muted tl-note">${esc(t("sc.ana.hint"))}</p>`) +
       `<div class="chip-row tl-sub" role="tablist">${PARTS.map((k) => `<button type="button" role="tab" data-part="${k}">${esc(t(`sc.ana.${k}`))}</button>`).join("")}</div><div class="tl-apar"></div><div class="tl-out" aria-live="polite"></div>`;
     const par = el.querySelector(".tl-apar");
@@ -59,7 +59,7 @@ export function anaTools(ctx) {
     const save = () => {
       st.f = el.querySelector(".tl-af").value;
       par.querySelectorAll("[data-k]").forEach((x) => (st[x.dataset.k] = x.value));
-      remember.set("kompreno.tool.ana", st);
+      remember.set("evklid.tool.ana", st);
     };
     function inputs(k) {
       part = k;
@@ -160,16 +160,16 @@ export function anaTools(ctx) {
     el.querySelector(".tl-af").addEventListener("input", run);
     par.addEventListener("input", run);
     par.addEventListener("change", run);
-    sub(el, "kompreno.tool.anaPart", PARTS, inputs);
+    sub(el, "evklid.tool.anaPart", PARTS, inputs);
   }
   // ---- vektorji ----
   function vec(el) {
-    const st = remember.get("kompreno.tool.vec", { a: "2, 1, 3", b: "1, -1, 2", c: "" });
+    const st = remember.get("evklid.tool.vec", { a: "2, 1, 3", b: "1, -1, 2", c: "" });
     el.innerHTML = card(`<div class="tl-grid2">${field("tl-va", texHtml("\\vec a"), st.a, ' data-k="a"')}${field("tl-va", texHtml("\\vec b"), st.b, ' data-k="b"')}${field("tl-va", `${texHtml("\\vec c")} <small class="muted">${esc(t("sc.vec.optional"))}</small>`, st.c, ' data-k="c"')}</div><p class="muted tl-note">${esc(t("sc.vec.hint"))}</p>`) + `<div class="tl-out" aria-live="polite"></div>`;
     const vt = (v) => `(${v.map((x) => tnum(Math.abs(x) < 1e-12 ? 0 : x)).join(",\\ ")})`;
     const run = () => {
       el.querySelectorAll(".tl-va").forEach((x) => (st[x.dataset.k] = x.value));
-      remember.set("kompreno.tool.vec", st);
+      remember.set("evklid.tool.vec", st);
       const out = el.querySelector(".tl-out");
       const a = V.read(st.a);
       const b = V.read(st.b);
@@ -198,7 +198,7 @@ export function anaTools(ctx) {
 
   // ---- diferencialne enačbe ----
   function ode(el) {
-    const st = remember.get("kompreno.tool.ode", { order: 1, f: "y", x0: "0", y0: "1", yd0: "0", x1: "2", N: "100", method: "rk4" });
+    const st = remember.get("evklid.tool.ode", { order: 1, f: "y", x0: "0", y0: "1", yd0: "0", x1: "2", N: "100", method: "rk4" });
     el.innerHTML = card(`<div class="seg tl-seg"><button type="button" data-o="1">${texHtml("y' = f(x, y)")}</button><button type="button" data-o="2">${texHtml("y'' = f(x, y, y')")}</button></div>
       <div class="tl-ode-f"></div>
       <div class="tl-grid2">${field("tl-on", texHtml("x_0"), st.x0, ' data-k="x0" inputmode="decimal"')}${field("tl-on", texHtml("y(x_0)"), st.y0, ' data-k="y0" inputmode="decimal"')}<span class="tl-yd0">${field("tl-on", texHtml("y'(x_0)"), st.yd0, ' data-k="yd0" inputmode="decimal"')}</span>${field("tl-on", texHtml(`x_{\\text{${t("sc.ode.end")}}}`), st.x1, ' data-k="x1" inputmode="decimal"')}
@@ -215,7 +215,7 @@ export function anaTools(ctx) {
       st.f = el.querySelector(".tl-of").value;
       st.method = el.querySelector(".tl-om").value;
       el.querySelectorAll(".tl-on").forEach((x) => (st[x.dataset.k] = x.value));
-      remember.set("kompreno.tool.ode", st);
+      remember.set("evklid.tool.ode", st);
       const out = el.querySelector(".tl-out");
       let F;
       try {
@@ -272,10 +272,10 @@ export function anaTools(ctx) {
 
   // ---- merske napake ----
   function errTool(el) {
-    const st = remember.get("kompreno.tool.err", { data: "9,78 9,82 9,80 9,85 9,79", f: "2*π*sqrt(l/g)", vals: { l: "1", g: "9,81" }, errs: { l: "0,005", g: "0,02" } });
+    const st = remember.get("evklid.tool.err", { data: "9,78 9,82 9,80 9,85 9,79", f: "2*π*sqrt(l/g)", vals: { l: "1", g: "9,81" }, errs: { l: "0,005", g: "0,02" } });
     el.innerHTML = `<div class="chip-row tl-sub" role="tablist">${["rep", "prop"].map((k) => `<button type="button" role="tab" data-part="${k}">${esc(t(`sc.err.${k}`))}</button>`).join("")}</div><div class="tl-epar"></div>`;
     const box = el.querySelector(".tl-epar");
-    const save = () => remember.set("kompreno.tool.err", st);
+    const save = () => remember.set("evklid.tool.err", st);
     const fixed = (v, d) => (ctx.comma() ? v.toFixed(d).replace(".", "{,}") : v.toFixed(d)).replace("-", "-");
     const result = (x, dx) => {
       const r = roundMeasurement(x, dx);
@@ -346,12 +346,12 @@ export function anaTools(ctx) {
       box.addEventListener("input", run);
       run();
     }
-    sub(el, "kompreno.tool.errPart", ["rep", "prop"], (k) => (k === "rep" ? rep() : prop()));
+    sub(el, "evklid.tool.errPart", ["rep", "prop"], (k) => (k === "rep" ? rep() : prop()));
   }
 
   // ---- 3D graf ----
   function plot3(el) {
-    const st = remember.get("kompreno.tool.p3", { f: "sin(x)*cos(y)", x0: "-3", x1: "3", y0: "-3", y1: "3" });
+    const st = remember.get("evklid.tool.p3", { f: "sin(x)*cos(y)", x0: "-3", x1: "3", y0: "-3", y1: "3" });
     el.innerHTML = card(`${field("tl-pf", texHtml("z = f(x, y) ="), st.f)}<div class="tl-grid2">${["x0", "x1", "y0", "y1"].map((k) => field("tl-pr", texHtml(`${k[0]}_{\\${k[1] === "0" ? "min" : "max"}}`), st[k], ` data-k="${k}" inputmode="decimal"`)).join("")}</div>`) +
       `<div class="card tl-card p3-card"><canvas class="p3" tabindex="0" role="img" aria-label="${esc(t("sc.p3.aria"))}"></canvas><div class="p3-scale" aria-hidden="true"><span class="p3-lo"></span><i></i><span class="p3-hi"></span></div><p class="muted tl-note">${esc(t("sc.p3.hint"))}</p><div class="tl-out" aria-live="polite"></div></div>`;
     const canvas = el.querySelector("canvas");
@@ -360,7 +360,7 @@ export function anaTools(ctx) {
     const run = () => {
       st.f = el.querySelector(".tl-pf").value;
       el.querySelectorAll(".tl-pr").forEach((x) => (st[x.dataset.k] = x.value));
-      remember.set("kompreno.tool.p3", st);
+      remember.set("evklid.tool.p3", st);
       let F;
       try {
         F = fn(st.f);

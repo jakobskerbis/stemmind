@@ -21,7 +21,7 @@ const set = (k, v) => {
 };
 const padPrefs = () => {
   try {
-    return JSON.parse(get("kompreno.pad")) || {};
+    return JSON.parse(get("evklid.pad")) || {};
   } catch {
     return {};
   }
@@ -81,10 +81,10 @@ export function applyDeviceSettings(changes = {}) {
       const p = padPrefs();
       if (key === "writing_pad") p.auto = value === "auto";
       else p.tab = value;
-      set("kompreno.pad", JSON.stringify(p));
+      set("evklid.pad", JSON.stringify(p));
     }
     // Moduli, ki imajo vrednost v pomnilniku (kalkulator, plošča, cel zaslon), se odzovejo na dogodek.
-    window.dispatchEvent(new CustomEvent("kompreno:device-setting", { detail: { key, value } }));
+    window.dispatchEvent(new CustomEvent("evklid:device-setting", { detail: { key, value } }));
   }
 }
 

@@ -19,7 +19,7 @@ const OLD = LEGACY.map((l) => new RegExp(l.match || l.slug, "i"));
 // preimenuje) ter vrstice, označene z »brand:legacy« (seznam prejšnjih imen v theme.js).
 const ALLOW = [/jakobskerbis\/stemmind/gi, /stemmind-(main|sim)\b/gi];
 const SKIP_FILES = new Set(["brand.json", "test/ime.test.js", "scripts/preimenuj.js"]);
-const SKIP_DIRS = new Set([".git", "node_modules", "data", "vendor"]);
+const SKIP_DIRS = new Set([".git", ".claude", "node_modules", "data", "vendor"]);
 const TEXT = /\.(js|cjs|mjs|json|md|html|css|bat|cmd|command|yaml|yml|txt|svg|webmanifest|py|csv)$|^(Dockerfile|\.env\.example|\.gitattributes)$/;
 
 function* walk(dir) {

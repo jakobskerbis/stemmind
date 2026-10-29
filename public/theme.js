@@ -1,5 +1,5 @@
 // Svetli/temni način in lastne barve. Navaden skript v <head>, da se barve nastavijo pred prvim izrisom.
-// Nastavitve so shranjene na tej napravi (localStorage "kompreno.theme"):
+// Nastavitve so shranjene na tej napravi (localStorage "evklid.theme"):
 //   { style: "cist" | "igriv" | "temen", mode: "system" | "light" | "dark", accent: "#rrggbb" | null,
 //     light: { bg, surface, menu, text } | null, dark: { … } | null }
 // Slog (docs/oblikovanje.md): Čist (privzeto, Instrument Sans, umirjen), Igriv (Nunito, zaobljen, topel),
@@ -7,13 +7,13 @@
 // in osnovne barve; lastne barve uporabnika veljajo nad njimi.
 // Iz teh nekaj barv izračunamo vse ostale (robove, sivo besedilo, poudarke …) in pri tem
 // pazimo na kontrast, da je besedilo vedno dobro berljivo.
-// Nastavitve te naprave so v localStorage pod ključi z imenom aplikacije (»kompreno.…« / »kompreno_…«).
+// Nastavitve te naprave so v localStorage pod ključi z imenom aplikacije (»evklid.…« / »evklid_…«).
 // Ključe s prejšnjimi imeni (brand.json → legacy; seznam spodaj posodobi scripts/preimenuj.js) enkrat
 // prenesemo na trenutno ime, da se nič ne izgubi. theme.js se naloži prvi na vsaki strani.
 (function () {
   try {
-    const NOW = "kompreno";
-    const LEGACY = ["stemmind"]; // brand:legacy
+    const NOW = "evklid";
+    const LEGACY = ["kompreno", "stemmind"]; // brand:legacy
     for (const key of Object.keys(localStorage)) {
       const old = LEGACY.find((o) => key.startsWith(o + ".") || key.startsWith(o + "_"));
       if (!old) continue;
@@ -25,7 +25,7 @@
 })();
 
 (function () {
-  const KEY = "kompreno.theme";
+  const KEY = "evklid.theme";
   const STYLES = ["cist", "igriv", "temen"];
   // Osnovne barve slogov. Čist je enak privzetim barvam v style.css (brez izračuna).
   const BASES = {
@@ -135,7 +135,7 @@
   function save(s) {
     try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
     apply(s);
-    window.dispatchEvent(new CustomEvent("kompreno:theme", { detail: s }));
+    window.dispatchEvent(new CustomEvent("evklid:theme", { detail: s }));
   }
   const isDarkMode = (s) => s.style === "temen" || s.mode === "dark" || (s.mode === "system" && mq.matches);
 
@@ -265,11 +265,11 @@
 })();
 
 // Lahki način pred prvim izrisom (da se spletna pisava sploh ne prenese): zadnja izbira na tej
-// napravi ("kompreno.lite" = "1" / "0") ali, če je ni, varčevanje s podatki / počasna povezava.
+// napravi ("evklid.lite" = "1" / "0") ali, če je ni, varčevanje s podatki / počasna povezava.
 (function () {
   let saved = null;
   try {
-    saved = localStorage.getItem("kompreno.lite");
+    saved = localStorage.getItem("evklid.lite");
   } catch {}
   const c = navigator.connection;
   const auto = !!(c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || "")));

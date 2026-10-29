@@ -86,8 +86,8 @@ export const planFor = (seats, interval, currency = "EUR") => plansFor(currency)
 export const monthlyAmount = (seats, currency = "EUR") => planFor(seats >= 2 ? 2 : 1, "month", currency).amount;
 
 export const freeDailyQuestions = () => {
-  const v = Number(process.env.KOMPRENO_FREE_DAILY_QUESTIONS);
-  return Number.isFinite(v) && process.env.KOMPRENO_FREE_DAILY_QUESTIONS ? v : 10;
+  const v = Number(process.env.EVKLID_FREE_DAILY_QUESTIONS);
+  return Number.isFinite(v) && process.env.EVKLID_FREE_DAILY_QUESTIONS ? v : 10;
 };
 
 // Brezplačni paket ne sme stati več, kot določi skrbnik (v dolarjih, kot zaračunava Claude API; 0 = brez omejitve).
@@ -97,8 +97,8 @@ const envUsd = (k, d) => {
   const v = Number(process.env[k]);
   return process.env[k] !== undefined && process.env[k] !== "" && Number.isFinite(v) ? v : d;
 };
-export const freeMonthlyPoolUsd = () => envUsd("KOMPRENO_FREE_POOL_USD", 10);
-export const freeStudentMonthlyUsd = () => envUsd("KOMPRENO_FREE_STUDENT_USD", 0.2);
+export const freeMonthlyPoolUsd = () => envUsd("EVKLID_FREE_POOL_USD", 10);
+export const freeStudentMonthlyUsd = () => envUsd("EVKLID_FREE_STUDENT_USD", 0.2);
 
 const PAID = new Set(["active", "trialing", "past_due"]);
 const later = (iso, now) => iso && Date.parse(iso.replace(" ", "T") + (iso.includes("Z") ? "" : "Z")) > now;

@@ -8,7 +8,7 @@ const PORT = 3998;
 
 (async () => {
   const root = path.join(__dirname, "..");
-  const srv = spawn(process.execPath, ["--disable-warning=ExperimentalWarning", "server/index.js"], { cwd: root, env: { ...process.env, PORT, KOMPRENO_MOCK: "1" }, stdio: "ignore" });
+  const srv = spawn(process.execPath, ["--disable-warning=ExperimentalWarning", "server/index.js"], { cwd: root, env: { ...process.env, PORT, EVKLID_MOCK: "1" }, stdio: "ignore" });
   const base = `http://localhost:${PORT}`;
   for (let i = 0; i < 50; i++) {
     try { if ((await fetch(base + "/style.css")).ok) break; } catch {}

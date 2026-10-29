@@ -870,7 +870,7 @@ export function znanstveni(el) {
     stage: [svg],
     controls: [slider({ label: "mantisa", min: 1, max: 9.9, step: 0.1, value: m, onInput: (v) => ((m = v), draw()) }), slider({ label: "eksponent", min: -10, max: 21, value: e, onInput: (v) => ((e = v), draw()) })],
     out,
-    tryText: "Koliko krat je Zemlja večja od človeka? Odštej eksponenta. Zapiši debelino lasu v obliki a · 10ⁿ.",
+    tryText: "Kolikokrat je Zemlja večja od človeka? Odštej eksponenta. Zapiši debelino lasu v obliki a · 10ⁿ.",
   });
   draw();
 }

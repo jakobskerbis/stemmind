@@ -1,4 +1,4 @@
-// Samodejna posodobitev Kompreno z GitHuba (veja main), brez git in brez dodatnih orodij.
+// Samodejna posodobitev Evklid z GitHuba (veja main), brez git in brez dodatnih orodij.
 // - preveri zadnjo različico (GitHub API), prenese samo, ko je novejša (tar.gz, razpakira Node),
 // - prepiše samo spremenjene datoteke in pobriše tiste, ki jih v main ni več,
 // - .env, data/, node_modules/ in .git/ ostanejo nedotaknjeni,
@@ -16,8 +16,8 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 export const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const REPO = process.env.KOMPRENO_REPO || "jakobskerbis/stemmind";
-export const BRANCH = process.env.KOMPRENO_VEJA || "main";
+export const REPO = process.env.EVKLID_REPO || "jakobskerbis/stemmind";
+export const BRANCH = process.env.EVKLID_VEJA || "main";
 // Zagonske datoteke (.bat, .command) prepišemo le, če so že v »varni« obliki (imajo to oznako):
 // Windows in bash bereta skripto sproti, zato bi prepis stare oblike med tekom zmedel okno.
 export const MARKER = `${BRAND.env}-SAMOPOSODOBITEV`;
@@ -90,7 +90,7 @@ export function untar(buf) {
   return out;
 }
 
-// Iz arhiva GitHub (mapa »kompreno-<sha>/…«) vrne Map(relativna pot -> vsebina) brez .env, data …
+// Iz arhiva GitHub (mapa »evklid-<sha>/…«) vrne Map(relativna pot -> vsebina) brez .env, data …
 export function filesFromTarball(gz) {
   const files = new Map();
   for (const f of untar(zlib.gunzipSync(gz))) {
@@ -187,7 +187,7 @@ function git(root, ...args) {
 
 async function latestSha() {
   const res = await fetch(`https://api.github.com/repos/${REPO}/commits/${BRANCH}`, {
-    headers: { Accept: "application/vnd.github.sha", "User-Agent": "kompreno-posodobitev" },
+    headers: { Accept: "application/vnd.github.sha", "User-Agent": "evklid-posodobitev" },
     signal: AbortSignal.timeout(20000),
   });
   if (!res.ok) throw new Error(`GitHub ni odgovoril (${res.status})`);
@@ -198,7 +198,7 @@ async function latestSha() {
 
 async function download(sha) {
   const res = await fetch(`https://codeload.github.com/${REPO}/tar.gz/${sha}`, {
-    headers: { "User-Agent": "kompreno-posodobitev" },
+    headers: { "User-Agent": "evklid-posodobitev" },
     signal: AbortSignal.timeout(5 * 60 * 1000),
   });
   if (!res.ok) throw new Error(`prenos ni uspel (${res.status})`);
@@ -229,7 +229,7 @@ async function updateTarball(root, say) {
   const state = readState(root);
   const sha = await latestSha();
   if (sha === state.sha || (state.slabe || []).includes(sha)) return { changed: false, sha: state.sha };
-  say("Prenašam novo različico Kompreno ...");
+  say("Prenašam novo različico Evklid ...");
   const files = filesFromTarball(await download(sha));
   if (!files.has("package.json") || !files.has("server/index.js")) throw new Error("prenesena različica ni popolna");
   const plan = planChanges(root, files, state.datoteke || []);
@@ -291,7 +291,7 @@ export async function update({ root = ROOT, say = console.log, install = true } 
 // Zagnano kot program (node scripts/posodobitev.js)? Na Windows so poti lahko različno velike.
 const same = (a, b) => (isWin ? a.toLowerCase() === b.toLowerCase() : a === b);
 if (process.argv[1] && same(path.resolve(process.argv[1]), fileURLToPath(import.meta.url))) {
-  if (process.env.KOMPRENO_POSODOBITEV === "0") process.exit(0);
+  if (process.env.EVKLID_POSODOBITEV === "0") process.exit(0);
   console.log("Preverjam posodobitve ...");
   const r = await update();
   process.exit(r.error ? 1 : 0);

@@ -23,7 +23,7 @@ export function migrateLegacyDb(file) {
   return true;
 }
 
-export function openDb(file = process.env.KOMPRENO_DB || `data/${BRAND.slug}.db`) {
+export function openDb(file = process.env.EVKLID_DB || `data/${BRAND.slug}.db`) {
   if (file !== ":memory:") fs.mkdirSync(path.dirname(file), { recursive: true });
   migrateLegacyDb(file);
   const db = new DatabaseSync(file);

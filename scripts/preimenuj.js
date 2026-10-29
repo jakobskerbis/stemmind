@@ -5,7 +5,8 @@
 //   --suho   samo pokaže, kaj bi se spremenilo
 // Zamenja trenutno ime (brand.json) povsod: vidno besedilo, logotip, nastavitve <ENV>_*, ključe <slug>.*,
 // imena datotek. Trenutno ime doda v brand.json → legacy, da se nastavitve, baza, piškotki in
-// bližnjice prenesejo same (koda za prenos bere legacy). Sklonov (»v Komprenu«, »Komprenóban«) ne zna:
+// bližnjice prenesejo same (koda za prenos bere legacy). Menja samo cele besede: če je ime tudi
+// običajna beseda (Evklid → Evklidov algoritem, id simulacije »evklid«), preglej seznam na koncu. Sklonov (»v Komprenu«, »Komprenóban«) ne zna:
 // na koncu izpiše vse vrstice, kjer je ostal koren starega imena, te popravi ročno v vseh jezikih.
 // Nato: npm test (test/ime.test.js pade, dokler kje ostane staro ime).
 import fs from "node:fs";
@@ -34,7 +35,7 @@ if (slug === cur.slug) throw new Error(`Aplikacija se že imenuje ${cur.name}.`)
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const stem = cur.slug.replace(/[aeiou]$/, ""); // koren za sklone: kompreno → kompren
-const SKIP_DIRS = new Set([".git", "node_modules", "data", "vendor"]);
+const SKIP_DIRS = new Set([".git", ".claude", "node_modules", "data", "vendor"]);
 const SKIP_FILES = new Set(["brand.json", "test/ime.test.js", "scripts/preimenuj.js"]);
 const TEXT = /\.(js|cjs|mjs|json|md|html|css|bat|cmd|command|yaml|yml|txt|svg|webmanifest|py|csv)$|^(Dockerfile|\.env\.example)$/;
 const KEEP = [/jakobskerbis\/stemmind/g, /stemmind-(?:main|sim)\b/g]; // ime repozitorija in j-jeve mape
@@ -52,7 +53,9 @@ function replaceAll(text) {
   const kept = [];
   let s = KEEP.reduce((t, re) => t.replace(re, (m) => `\u0000${kept.push(m) - 1}\u0000`), text);
   s = s.replace(new RegExp(`${esc(cur.wordmark[0])}(<span[^>]*>)${esc(cur.wordmark[1])}(</span>)`, "g"), `${wordmark[0]}$1${wordmark[1]}$2`);
-  s = s.split(cur.env).join(env).split(cur.name).join(name).split(cur.slug).join(slug);
+  // Samo cele besede (ne »Evklidov algoritem«); _ . - : za imenom so dovoljeni (EVKLID_DB, evklid.theme).
+  const word = (w) => new RegExp(`(?<![\\p{L}\\d])${esc(w)}(?![\\p{L}\\d])`, "gu");
+  s = s.replace(word(cur.env), env).replace(word(cur.name), name).replace(word(cur.slug), slug);
   // seznam prejšnjih imen v theme.js (po zamenjavi, da staro ime v njem ostane)
   s = s.replace(/(const LEGACY = )(\[.*?\])(; \/\/ brand:legacy)/, (_m, a, list, b) => `${a}${JSON.stringify([cur.slug, ...JSON.parse(list)]).replace(/,/g, ", ")}${b}`);
   return s.replace(/\u0000(\d+)\u0000/g, (_m, i) => kept[i]);

@@ -1,6 +1,6 @@
 # Predmetniki univerzitetnih programov 1. stopnje (UN)
 
-UL FKKT, UL FS, UL FMF, UM FKKT. Zbrano 27.–28. 10. 2026 iz uradnih strani fakultet. Za podlago univerzitetnih tutorjev v Komprenu.
+UL FKKT, UL FS, UL FMF, UM FKKT. Zbrano 27.–28. 10. 2026 iz uradnih strani fakultet. Za podlago univerzitetnih tutorjev v Evklidu.
 
 Oznake: (z) zimski, (l) letni, (c) celoletni semester; številka je ECTS. Predmeti brez oznake so obvezni. **Krepko** so jedrni predmeti (matematika, fizika, kemija, mehanika, programiranje), ki jih mora tutor pokriti z razlago in vajami.
 

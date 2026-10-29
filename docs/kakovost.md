@@ -1,6 +1,6 @@
 # Quality bar: lessons, tasks, simulations
 
-j (2026-10-29): every lesson, task and simulation in Kompreno must be class-leading, i.e. better than
+j (2026-10-29): every lesson, task and simulation in Evklid must be class-leading, i.e. better than
 Khan Academy (worked examples, hints, mastery), Brilliant (active learning inside the lesson),
 Photomath (step-by-step solutions), PhET (explorable sims with implicit scaffolding) and Desmos
 (direct manipulation). English on purpose: agents read this file (see `docs/token-rules.md`).
@@ -11,7 +11,7 @@ error, not just "wrong" (Hattie & Timperley, ASSISTments misconception feedback)
 (Chi), predict–observe–explain for sims (White & Gunstone, PhET design), multiple representations,
 dual coding, concreteness fading. No "learning styles".
 
-Each item is a check. "MUST" items are tested by a script where noted; reviewers check the rest.
+Each item is a check. Every change is reviewed three times against this bar (`docs/pregled.md`). "MUST" items are tested by a script where noted; reviewers check the rest.
 
 ## 1. Lessons (`content/lessons/**`, format in `content/lessons/README.md`)
 

@@ -25,7 +25,7 @@ export function migrateAccounts(db) {
       stripe_customer_id TEXT,
       sub_id TEXT,
       sub_status TEXT,                        -- active | trialing | past_due | canceled | ...
-      sub_plan TEXT,                          -- npr. kompreno_2_month
+      sub_plan TEXT,                          -- npr. evklid_2_month
       sub_seats INTEGER NOT NULL DEFAULT 0,
       sub_period_end TEXT,
       sub_cancel_at_period_end INTEGER NOT NULL DEFAULT 0,

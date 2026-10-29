@@ -9,7 +9,7 @@ async function withServer(fn) {
   app.use(passwordGate("skrivno geslo"));
   app.get("/", (_req, res) => res.send("DOMOV"));
   app.get("/api/x", (_req, res) => res.json({ ok: true }));
-  app.get("/manifest.webmanifest", (_req, res) => res.json({ name: "Kompreno" }));
+  app.get("/manifest.webmanifest", (_req, res) => res.json({ name: "Evklid" }));
   const server = app.listen(0);
   const base = `http://127.0.0.1:${server.address().port}`;
   try { await fn(base); } finally { server.close(); }
@@ -40,7 +40,7 @@ test("prijava z obrazcem nastavi piškotek, ki odpre aplikacijo", () => withServ
   assert.equal(ok.status, 303);
   assert.equal(ok.headers.get("location"), "/"); // brez preusmeritve na tujo stran
   const c = cookieOf(ok);
-  assert.match(c, /^kompreno_geslo=[a-f0-9]{64}$/);
+  assert.match(c, /^evklid_geslo=[a-f0-9]{64}$/);
   assert.match(ok.headers.get("set-cookie"), /HttpOnly/);
   const r = await fetch(base + "/api/x", { headers: { cookie: c } });
   assert.equal(r.status, 200);

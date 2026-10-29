@@ -13,7 +13,7 @@ import { dialectInfo } from "../public/dialects.js";
 import { SCHOOL_SYSTEMS, isRegional, gradeInfo } from "../public/regions.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const TEMPLATE_PATH = process.env.KOMPRENO_PROMPT_PATH || path.join(here, "..", "prompts", "system_prompt.md");
+const TEMPLATE_PATH = process.env.EVKLID_PROMPT_PATH || path.join(here, "..", "prompts", "system_prompt.md");
 
 // Vrstica, ki loči stalni del prompta (enak za vse učence, predpomnjen pri
 // Claude API) od nastavitev učenca, ki jih vstavi strežnik.

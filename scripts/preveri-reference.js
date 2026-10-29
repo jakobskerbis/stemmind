@@ -8,7 +8,7 @@ import { execFile } from "node:child_process";
 import { allReferenceItems, referenceStats } from "../server/references.js";
 
 const args = process.argv.slice(2);
-const ca = args.includes("--cacert") ? args[args.indexOf("--cacert") + 1] : process.env.KOMPRENO_CACERT;
+const ca = args.includes("--cacert") ? args[args.indexOf("--cacert") + 1] : process.env.EVKLID_CACERT;
 const items = allReferenceItems();
 const where = new Map();
 for (const it of items) where.set(it.url, [...(where.get(it.url) || []), it.where]);
@@ -18,7 +18,7 @@ const check = (u) =>
   new Promise((res) =>
     execFile(
       "curl",
-      ["-sS", "-o", "/dev/null", "-L", "-m", "30", "-A", "Mozilla/5.0 (Kompreno preverjanje povezav)", "-w", "%{http_code}", ...(ca ? ["--cacert", ca] : []), u],
+      ["-sS", "-o", "/dev/null", "-L", "-m", "30", "-A", "Mozilla/5.0 (Evklid preverjanje povezav)", "-w", "%{http_code}", ...(ca ? ["--cacert", ca] : []), u],
       (err, out) => res(out || "000"),
     ),
   );

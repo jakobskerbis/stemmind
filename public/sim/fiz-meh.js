@@ -237,7 +237,7 @@ export function teza(el) {
       slider({ label: "masa", min: 1, max: 100, value: m, unit: "kg", onInput: (v) => ((m = v), draw()) }),
     ],
     out,
-    tryText: "Koliko bi moral imeti mase na Luni, da bi imel enako težo kot 10 kg na Zemlji?",
+    tryText: "Kolikšno maso bi moralo imeti telo na Luni, da bi imelo enako težo kot telo z maso 10 kg na Zemlji?",
   });
   draw();
 }

@@ -149,7 +149,7 @@ test("register, verify, consent and ownership", async () => {
 });
 
 test("free tier limits tutor questions; subscription via webhook lifts it", async () => {
-  process.env.KOMPRENO_FREE_DAILY_QUESTIONS = "2";
+  process.env.EVKLID_FREE_DAILY_QUESTIONS = "2";
   try {
     await withServer(async ({ client, calls, store }) => {
       const a = client();
@@ -169,7 +169,7 @@ test("free tier limits tutor questions; subscription via webhook lifts it", asyn
       const co = await a("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "year" } });
       assert.equal(co.body.url, "https://checkout.stripe.test/cs_1");
       const session = calls.find((c) => c.path === "/v1/checkout/sessions");
-      assert.equal(session.body["line_items[0][price]"], "price_kompreno_1_year");
+      assert.equal(session.body["line_items[0][price]"], "price_evklid_1_year");
       assert.equal(session.body.mode, "subscription");
       assert.equal(session.body["subscription_data[trial_end]"], undefined); // preizkus je že potekel
       assert.equal(calls.filter((c) => c.path === "/v1/prices" && c.method === "POST").length, 4);
@@ -184,7 +184,7 @@ test("free tier limits tutor questions; subscription via webhook lifts it", asyn
             customer,
             status: "active",
             cancel_at_period_end: false,
-            items: { data: [{ price: { id: "price_x", lookup_key: "kompreno_1_year" }, current_period_end: 1893456000 }] },
+            items: { data: [{ price: { id: "price_x", lookup_key: "evklid_1_year" }, current_period_end: 1893456000 }] },
           },
         },
       };
@@ -196,7 +196,7 @@ test("free tier limits tutor questions; subscription via webhook lifts it", asyn
 
       const acc = (await a("/api/account")).body;
       assert.equal(acc.access.tier, "paid");
-      assert.equal(acc.parent.subscription.plan, "kompreno_1_year");
+      assert.equal(acc.parent.subscription.plan, "evklid_1_year");
       assert.equal(acc.parent.subscription.period_end, "2030-01-01T00:00:00.000Z");
       assert.equal((await ask("tretje")).status, 200);
       assert.equal((await a("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month" } })).status, 409);
@@ -205,13 +205,13 @@ test("free tier limits tutor questions; subscription via webhook lifts it", asyn
       assert.equal(portal.body.url, "https://billing.stripe.test/p");
     });
   } finally {
-    delete process.env.KOMPRENO_FREE_DAILY_QUESTIONS;
+    delete process.env.EVKLID_FREE_DAILY_QUESTIONS;
   }
 });
 
 test("free tier stops at the monthly AI budget (all free students and per student)", async () => {
-  process.env.KOMPRENO_FREE_POOL_USD = "0.5";
-  process.env.KOMPRENO_FREE_STUDENT_USD = "0";
+  process.env.EVKLID_FREE_POOL_USD = "0.5";
+  process.env.EVKLID_FREE_STUDENT_USD = "0";
   try {
     await withServer(async ({ client, calls, store }) => {
       const a = client();
@@ -226,17 +226,17 @@ test("free tier stops at the monthly AI budget (all free students and per studen
       const pool = await ask("drugo");
       assert.equal(pool.status, 429);
       assert.match(pool.body.error, /za vse porabljena/);
-      process.env.KOMPRENO_FREE_POOL_USD = "0";
-      process.env.KOMPRENO_FREE_STUDENT_USD = "0.5";
+      process.env.EVKLID_FREE_POOL_USD = "0";
+      process.env.EVKLID_FREE_STUDENT_USD = "0.5";
       const per = await ask("tretje");
       assert.equal(per.status, 429);
       assert.match(per.body.error, /Ta mesec si porabil/);
-      process.env.KOMPRENO_FREE_STUDENT_USD = "0";
+      process.env.EVKLID_FREE_STUDENT_USD = "0";
       assert.equal((await ask("četrto")).status, 200);
     });
   } finally {
-    delete process.env.KOMPRENO_FREE_POOL_USD;
-    delete process.env.KOMPRENO_FREE_STUDENT_USD;
+    delete process.env.EVKLID_FREE_POOL_USD;
+    delete process.env.EVKLID_FREE_STUDENT_USD;
   }
 });
 
@@ -246,7 +246,7 @@ test("checkout carries remaining app trial into Stripe", async () => {
     await registerVerified(a, calls, "dani@primer.si");
     await a("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month" } });
     const session = calls.find((c) => c.path === "/v1/checkout/sessions");
-    assert.equal(session.body["line_items[0][price]"], "price_kompreno_2_month");
+    assert.equal(session.body["line_items[0][price]"], "price_evklid_2_month");
     const days = (Number(session.body["subscription_data[trial_end]"]) * 1000 - Date.now()) / 86400000;
     assert.ok(days > 6.9 && days <= 7, String(days));
   });
@@ -265,7 +265,7 @@ test("referral: both parents get a free month after the first payment", async ()
     const send = (status) => {
       const raw = JSON.stringify({
         type: "customer.subscription.updated",
-        data: { object: { id: "sub_9", customer, status, items: { data: [{ price: { lookup_key: "kompreno_2_month" }, current_period_end: 1893456000 }] } } },
+        data: { object: { id: "sub_9", customer, status, items: { data: [{ price: { lookup_key: "evklid_2_month" }, current_period_end: 1893456000 }] } } },
       });
       return client()("/api/stripe/webhook", { method: "POST", raw, headers: { "stripe-signature": signWebhook(raw, SECRET) } });
     };
@@ -479,7 +479,7 @@ test("leagues with accounts: teacher's classes belong to the account; children j
 test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari znova", async () => {
   const calls = [];
   const kv = new Map();
-  kv.set("stripe_prices", JSON.stringify({ product: "prod_1", prices: { kompreno_1_month: "price_old" }, amounts: { kompreno_1_month: 899 } }));
+  kv.set("stripe_prices", JSON.stringify({ product: "prod_1", prices: { evklid_1_month: "price_old" }, amounts: { evklid_1_month: 899 } }));
   kv.set("stripe_portal_config", "bpc_old");
   const fetchFn = async (url, init) => {
     const u = new URL(url);
@@ -490,10 +490,10 @@ test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari zn
       // Stara cena za 1 otroka (8,99 €), ostale so že prave.
       return ok({
         data: [
-          { id: "price_old", lookup_key: "kompreno_1_month", unit_amount: 899, product: "prod_1" },
-          { id: "price_1y", lookup_key: "kompreno_1_year", unit_amount: 8900, product: "prod_1" },
-          { id: "price_2m", lookup_key: "kompreno_2_month", unit_amount: 1599, product: "prod_1" },
-          { id: "price_2y", lookup_key: "kompreno_2_year", unit_amount: 13900, product: "prod_1" },
+          { id: "price_old", lookup_key: "evklid_1_month", unit_amount: 899, product: "prod_1" },
+          { id: "price_1y", lookup_key: "evklid_1_year", unit_amount: 8900, product: "prod_1" },
+          { id: "price_2m", lookup_key: "evklid_2_month", unit_amount: 1599, product: "prod_1" },
+          { id: "price_2y", lookup_key: "evklid_2_year", unit_amount: 13900, product: "prod_1" },
         ],
       });
     }
@@ -503,14 +503,14 @@ test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari zn
   };
   const stripe = new Stripe({ secretKey: "sk_test_x", fetchFn, kv: { get: (k) => kv.get(k), set: (k, v) => kv.set(k, v) } });
   const r = await stripe.ensurePrices();
-  assert.equal(r.prices.kompreno_1_month, "price_new");
-  assert.equal(r.prices.kompreno_1_year, "price_1y");
+  assert.equal(r.prices.evklid_1_month, "price_new");
+  assert.equal(r.prices.evklid_1_year, "price_1y");
   const created = calls.find((c) => c.path === "/v1/prices" && c.method === "POST");
   assert.equal(created.body.unit_amount, "999");
   assert.equal(created.body.transfer_lookup_key, "true");
   assert.equal(calls.find((c) => c.path === "/v1/prices/price_old").body.active, "false");
   assert.equal(kv.get("stripe_portal_config"), ""); // portal z novimi cenami
-  assert.equal(JSON.parse(kv.get("stripe_prices")).amounts.kompreno_1_month, 999);
+  assert.equal(JSON.parse(kv.get("stripe_prices")).amounts.evklid_1_month, 999);
   // Drugi klic bere iz predpomnilnika.
   const n = calls.length;
   await stripe.ensurePrices();
@@ -519,11 +519,11 @@ test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari zn
 
 
 test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", async () => {
-  const promo = { code: "KOMPRENO100", limit: 2, days: 365, seats: 1 };
+  const promo = { code: "EVKLID100", limit: 2, days: 365, seats: 1 };
   await withServer(async ({ client, calls, store }) => {
     // Ob registraciji (male črke, presledki), dostop po koncu preizkusa ostane.
     const a = client();
-    const reg = await a("/api/auth/register", { method: "POST", body: { email: "a@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT, promo_code: " kompreno100 " } });
+    const reg = await a("/api/auth/register", { method: "POST", body: { email: "a@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT, promo_code: " evklid100 " } });
     assert.equal(reg.status, 201);
     const days = (Date.parse(reg.body.promo_until) - Date.now()) / 86400000;
     assert.ok(days > 364.9 && days <= 365, String(days));
@@ -536,7 +536,7 @@ test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", asyn
     acc = (await a("/api/account")).body;
     assert.deepEqual([acc.access.tier, acc.access.seats], ["promo", 1]);
     // Drugič na istem računu ne gre.
-    assert.equal((await a("/api/account/promo", { method: "POST", body: { code: "KOMPRENO100" } })).status, 400);
+    assert.equal((await a("/api/account/promo", { method: "POST", body: { code: "EVKLID100" } })).status, 400);
 
     // Napačna koda ne ustavi registracije.
     const b = client();
@@ -545,14 +545,14 @@ test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", asyn
     assert.match(regB.body.promo_error, /ni veljavna/);
     assert.equal((await b("/api/account")).body.access.tier, "trial");
     // Pozneje v zavihku Račun.
-    const ok = await b("/api/account/promo", { method: "POST", body: { code: "KOMPRENO100" } });
+    const ok = await b("/api/account/promo", { method: "POST", body: { code: "EVKLID100" } });
     assert.equal(ok.status, 200);
     assert.equal(ok.body.access.tier, "promo");
 
     // Limit 2 je dosežen.
     const c = client();
     await registerVerified(c, calls, "c@kod.si");
-    const full = await c("/api/account/promo", { method: "POST", body: { code: "KOMPRENO100" } });
+    const full = await c("/api/account/promo", { method: "POST", body: { code: "EVKLID100" } });
     assert.equal(full.status, 410);
     assert.match(full.body.error, /Vseh 2 aktivacij/);
     assert.equal(store.db.prepare("SELECT COUNT(*) AS n FROM promo_redemptions").get().n, 2);
@@ -567,19 +567,19 @@ test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", asyn
 });
 
 test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
-  process.env.KOMPRENO_ADMIN_EMAILS = "skrbnik@kod.si";
+  process.env.EVKLID_ADMIN_EMAILS = "skrbnik@kod.si";
   try {
     await withServer(async ({ client }) => {
       const a = client();
       await a("/api/auth/register", { method: "POST", body: { email: "skrbnik@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
       assert.equal((await a("/api/usage", { headers: { "X-Forwarded-For": "1.2.3.4" } })).status, 200);
       const { admin } = (await a("/api/account")).body.promo;
-      assert.equal(admin.code, "KOMPRENO100");
+      assert.equal(admin.code, "EVKLID100");
       assert.deepEqual([admin.used, admin.limit, admin.days], [0, 100, 365]);
-      assert.match(admin.url, /\/\?koda=KOMPRENO100$/);
+      assert.match(admin.url, /\/\?koda=EVKLID100$/);
     });
   } finally {
-    delete process.env.KOMPRENO_ADMIN_EMAILS;
+    delete process.env.EVKLID_ADMIN_EMAILS;
   }
 });
 

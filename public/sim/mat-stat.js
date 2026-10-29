@@ -120,7 +120,7 @@ export function sredina(el, { mode = "sredina" } = {}) {
     stage: [svg],
     controls: [buttons(button("Dodaj podatek", () => { if (data.length < 14) data.push(rint(0, 10)); draw(); }), button("Odstrani podatek", () => { if (data.length > 2) data.pop(); draw(); }), button("Naključni podatki", () => { data = Array.from({ length: rint(5, 11) }, () => rint(1, 9)); draw(); }))],
     out,
-    tryText: "Lahko postaviš pike tako, da je sredina 5, a nobena pika ni na 5?",
+    tryText: "Ali lahko postaviš pike tako, da je sredina 5, a nobena pika ni na 5?",
   });
   draw();
 }

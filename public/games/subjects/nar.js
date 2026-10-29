@@ -485,7 +485,7 @@ defBank("n_energy", "nr_ene", 6, "Energija, svetloba in zvok", "Energy, light an
   [1, "Obnovljiv vir energije?|sonce|premog|nafta|zemeljski plin", "A renewable energy source?|sunlight|coal|oil|natural gas"],
   [1, "Neobnovljiv vir energije?|premog|veter|sonce|tekoča voda", "A non-renewable energy source?|coal|wind|sunlight|running water"],
   [1, "Sončna celica svetlobo pretvarja v?|električno energijo|zvok|kemično energijo|jedrsko energijo", "A solar cell turns light into?|electrical energy|sound|chemical energy|nuclear energy"],
-  [1, "Energija v hrani je?|kemična|jedrska|zvočna|magnetna", "Energy stored in food is?|chemical|nuclear|sound|magnetic"],
+  [1, "Energija v hrani je?|kemijska|jedrska|zvočna|magnetna", "Energy stored in food is?|chemical|nuclear|sound|magnetic"],
   [1, "Vetrnica izkorišča energijo?|vetra|sonca|premoga|nafte", "A wind turbine uses energy from?|wind|sunlight|coal|oil"],
   [1, "Energija gibajočega se telesa?|kinetična|potencialna|kemična|jedrska", "Energy of a moving body?|kinetic|potential|chemical|nuclear"],
   [1, "Zvok nastane, ko telo?|niha|miruje|sveti|se tali", "Sound is made when something?|vibrates|rests|glows|melts"],

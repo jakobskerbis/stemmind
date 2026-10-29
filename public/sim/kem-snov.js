@@ -522,7 +522,7 @@ export function periodni(el, { highlight = "skupine" } = {}) {
     stage: [svg, chart],
     controls: [seg, propSel],
     out,
-    tryText: highlight === "trendi" ? "Kateri element ima največjo elektronegativnost in kateri največji atom? Zakaj imajo žlahtni plini največjo ionizacijsko energijo?" : highlight === "vrste" ? "Kje v periodnem sistemu so polkovine? Kateri nekovini sta pri sobni temperaturi tekoči ali trdni?" : "Klikni 17. skupino. Koliko valenčnih elektronov imajo halogeni elementi?",
+    tryText: highlight === "trendi" ? "Kateri element ima največjo elektronegativnost in kateri največji atom? Zakaj imajo žlahtni plini največjo ionizacijsko energijo?" : highlight === "vrste" ? "Kje v periodnem sistemu so polkovine? Katera nekovina je pri sobni temperaturi tekoča? Naštej nekaj trdnih nekovin." : "Klikni 17. skupino. Koliko valenčnih elektronov imajo halogeni elementi?",
   });
 }
 

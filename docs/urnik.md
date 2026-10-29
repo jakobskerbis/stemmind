@@ -5,7 +5,7 @@ Učenec (Jaz → Urnik, na računalniku zavihek »Urnik«) vpiše svoje ure v te
 ## Vnos
 
 - **Ročno**: Dodaj uro (predmet, dan, šolska ura ali čas, učilnica) in Dodaj test (vrsta, predmet, datum, ura, snov). Šolska ura izpolni čase po običajnem zvoncu (1. ura 8.20–9.05 …), učenec jih lahko popravi.
-- **Fotografija urnika**: model (privzeto `KOMPRENO_MODEL_DEEP`, nastavljivo s `KOMPRENO_SCHEDULE_MODEL`) prebere ure in datume; aplikacija pokaže predogled, učenec odkljuka, kar ni njegovo, in šele nato shrani. Brez API ključa ta del ne deluje (sporočilo).
+- **Fotografija urnika**: model (privzeto `EVKLID_MODEL_DEEP`, nastavljivo s `EVKLID_SCHEDULE_MODEL`) prebere ure in datume; aplikacija pokaže predogled, učenec odkljuka, kar ni njegovo, in šele nato shrani. Brez API ključa ta del ne deluje (sporočilo).
 - **Koledar .ics**: povezava (https ali webcal; samo javni naslovi, največ 3 MB) ali datoteka. Ponavljajoča se srečanja postanejo ure v tednu, posamezni kolokviji/testi/izpiti postanejo datumi, enkratni dogodki (npr. sprejem brucev) odpadejo. Povezan koledar se da osvežiti (gumb »Osveži«); ure, ki jih je učenec ob uvozu odkljukal (druge skupine vaj), se ne vrnejo.
 - **Urnik UL FMF** (za študente): izbira letnika s strani urnik.fmf.uni-lj.si (seznam se prebere s strani, sicer vgrajen seznam); izvoz zajame cel semester z vajami po skupinah in kolokviji. »Moja skupina vaj« v predogledu odkljuka druge skupine.
 - **Inštruktor v klepetu**: orodji `get_schedule` / `change_schedule` (»v petek pišem kontrolno iz ulomkov«). Povzetek (danes, jutri, testi v 30 dneh) je v dinamičnem delu prompta.

@@ -350,7 +350,7 @@ export const MAT_GENERATORS = [
         ].filter(Boolean)),
         hint: s.f
           ? `Med sosednjima enotama je faktor ${s.f}. Koliko korakov je od ${from} do ${to}?`
-          : `Pomisli, koliko ${s.units[0]} je v 1 ${s.units[s.units.length - 1]}.`,
+          : `Pomisli, koliko ${toSmaller ? to : from} je v 1 ${toSmaller ? from : to}.`,
         data: { given: [dat(s.sym, tx(value), from)], find: [`${s.sym}\\ (\\text{v}\\ ${unitTex(to)})`] },
         formula: relation,
         solution: `$${relation}$\n$${qty(tx(value), from)} = ${tx(value)} ${toSmaller ? "\\cdot" : ":"} ${k}\\ ${unitTex(to)} = ${qty(tx(result), to)}$`,
@@ -1589,7 +1589,7 @@ export const MAT_GENERATORS = [
           ]),
           hint: `Najprej reši neenačbo kot enačbo${flip ? " (pazi: deliš z negativnim številom)" : ""}, nato poišči ${word} celo število v rešitvi.`,
           data: false,
-          formula: flip ? "a \\cdot x < b \;\\Rightarrow\; x > \\dfrac{b}{a} \\quad (a < 0)" : "a \\cdot x < b \;\\Rightarrow\; x < \\dfrac{b}{a} \\quad (a > 0)",
+          formula: flip ? "a \\cdot x < b \\;\\Rightarrow\\; x > \\dfrac{b}{a} \\quad (a < 0)" : "a \\cdot x < b \\;\\Rightarrow\\; x < \\dfrac{b}{a} \\quad (a > 0)",
           solution: [
             `$${a}x ${bs} ${ineq} ${c}$`,
             b !== 0 && `$${a}x ${ineq} ${c - b}$`,

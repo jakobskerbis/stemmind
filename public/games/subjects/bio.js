@@ -603,7 +603,7 @@ const DIG1 = [
 const DIG2 = [
   ["Škrob se razgradi do?|Starch is broken down to?", "glukoze|glucose", "aminokislin|amino acids", "glicerola|glycerol", "nukleotidov|nucleotides"],
   ["Beljakovine se razgradijo do?|Proteins are broken down to?", "aminokislin|amino acids", "glukoze|glucose", "maščobnih kislin|fatty acids", "nukleotidov|nucleotides"],
-  ["Iz lipidov pri prebavi nastaneta glicerol in?|Lipid digestion gives glycerol and?", "maščobnih kislin|fatty acids", "aminokislin|amino acids", "glukoze|glucose", "nukleotidov|nucleotides"],
+  ["Iz lipidov pri prebavi nastanejo glicerol in?|Lipid digestion gives glycerol and?", "maščobne kisline|fatty acids", "aminokisline|amino acids", "glukoza|glucose", "nukleotidi|nucleotides"],
   ["Žolč emulgira?|Bile emulsifies?", "maščobe|fats", "beljakovine|proteins", "škrob|starch", "vitamine|vitamins"],
   ["Pepsin deluje v?|Pepsin works in the?", "želodcu|stomach", "ustih|mouth", "tankem črevesu|small intestine", "debelem črevesu|large intestine"],
   ["Želodčni sok je?|Gastric juice is?", "kisel|acidic", "bazičen|basic", "nevtralen|neutral", "brez encimov|enzyme-free"],

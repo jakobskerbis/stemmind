@@ -16,7 +16,7 @@ const KINDS = ["le", "ge", "between", "eq", "inv"];
 /** ctx: { t, icon, num(v), card(html), err(msg), insertBtn(v) } */
 export function probTool(el, ctx) {
   const { t, num, card, err, insertBtn } = ctx;
-  const st = remember.get("kompreno.tool.prob", { d: "normal", p: {}, kind: "between", a: "-1", b: "1", q: "0,95" });
+  const st = remember.get("evklid.tool.prob", { d: "normal", p: {}, kind: "between", a: "-1", b: "1", q: "0,95" });
   el.innerHTML = `<div class="chip-row tl-sub" role="tablist">${Object.keys(DISTS).map((k) => `<button type="button" role="tab" data-d="${k}">${esc(t(`sc.prob.${k}`))}</button>`).join("")}</div>
     <div class="card tl-card"><div class="tl-grid2 tl-pp"></div>
       <label class="tl-field"><span>${esc(t("sc.prob.ask"))}</span><select class="tl-pk"></select></label>
@@ -59,7 +59,7 @@ export function probTool(el, ctx) {
     if (a) st.a = a.value;
     if (b) st.b = b.value;
     if (q) st.q = q.value;
-    remember.set("kompreno.tool.prob", st);
+    remember.set("evklid.tool.prob", st);
     const out = el.querySelector(".tl-out");
     const d = Object.values(par).every(Number.isFinite) ? D.make(par) : null;
     if (!d) return (out.innerHTML = err(t("sc.prob.badParams")));

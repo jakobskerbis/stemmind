@@ -62,7 +62,7 @@ export class Stripe {
     let product = found.data[0]?.product;
     if (!product && currency !== "EUR") product = (await this.ensurePrices("EUR")).product;
     if (!product) {
-      product = (await this.request("POST", "/products", { name: "Kompreno", description: "AI inštruktor za matematiko, fiziko in kemijo" })).id;
+      product = (await this.request("POST", "/products", { name: "Evklid", description: "AI inštruktor za matematiko, fiziko in kemijo" })).id;
     }
     const byKey = {};
     let replaced = false;
@@ -102,7 +102,7 @@ export class Stripe {
     if (cached) return cached;
     const { product, prices } = await this.ensurePrices();
     const conf = await this.request("POST", "/billing_portal/configurations", {
-      business_profile: { headline: "Kompreno – upravljanje naročnine" },
+      business_profile: { headline: "Evklid – upravljanje naročnine" },
       features: {
         customer_update: { enabled: true, allowed_updates: ["email", "address", "name"] },
         invoice_history: { enabled: true },

@@ -70,4 +70,4 @@ Each tool call resends the thread's whole context, which is large in long-runnin
 
 ## 6. App runtime cost (the tutor)
 
-Already done in PR #26 and #47 (see `docs/stroski-ai.md`): Haiku by default, Opus only for »Razloži podrobneje«, static system prompt cached with 1 h TTL, history trimmed, reuse/hint answers without a model. When changing `prompts/system_prompt.md`, keep everything above `<!-- KOMPRENO:NASTAVITVE` byte-identical for all students, or the cache stops working.
+Already done in PR #26 and #47 (see `docs/stroski-ai.md`): Haiku by default, Opus only for »Razloži podrobneje«, static system prompt cached with 1 h TTL, history trimmed, reuse/hint answers without a model. When changing `prompts/system_prompt.md`, keep everything above `<!-- EVKLID:NASTAVITVE` byte-identical for all students, or the cache stops working.

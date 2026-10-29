@@ -173,7 +173,7 @@ export const TEK_KEM = [
       const [sn, sf, tab] = r.pick(SOL);
       const Th = r.pick([60, 80]), Tl = r.pick([20, 40]);
       const Sh = tab[Th], Sl = tab[Tl];
-      const tabTxt = `topnost ${sn} (${FT(sf)}) je pri ${Th} °C ${Sh} g, pri ${Tl} °C pa ${Sl} g na 100 g vode`;
+      const tabTxt = `je topnost ${sn} (${FT(sf)}) pri ${Th} °C ${Sh} g, pri ${Tl} °C pa ${Sl} g na 100 g vode`;
       if (level === 2) {
         const mw = r.int(5, 50) * 10;
         const x = (mw * (Sh - Sl)) / 100;
@@ -335,7 +335,7 @@ export const TEK_KEM = [
         return {
           text: `Koliko gramov ${FT(a)} vsebuje enako skupno število atomov kot ${tx(m)} g ${FT(b)}? ${Mx([a, b])}. ${RND(2)}`,
           answer: num(x, "g", 2),
-          hint: `Ena molekula ${uf(b)} ima ${cb} atomov, ena molekula ${uf(a)} pa ${ca}. Primerjaj množine atomov.`,
+          hint: `Ena molekula ${uf(b)} ima ${cb} ${cb === 2 ? "atoma" : cb <= 4 ? "atome" : "atomov"}, ena molekula ${uf(a)} pa ${ca}. Primerjaj množine atomov.`,
           data: { given: [dat(`m(${ft(b)})`, tx(m), "g"), Md(a), Md(b)], find: [`m(${ft(a)})`] },
           formula: ["n_{atomov} = n \\cdot \\text{št. atomov v molekuli}", "m = n \\cdot M"],
           solution: `Atomov v ${uf(b)}: $${cb} \\cdot \\dfrac{${tx(m)}}{${tx(molar(b), 2)}} = ${tx((m / molar(b)) * cb, 4)}$ mol.\nMolekul ${uf(a)}: $\\dfrac{${tx((m / molar(b)) * cb, 4)}}{${ca}} = ${tx(((m / molar(b)) * cb) / ca, 4)}$ mol, masa $${res(x, 2, "g").replace(/^= /, "= ")}$.`,
