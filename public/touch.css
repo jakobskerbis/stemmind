@@ -2,7 +2,7 @@
    Barve samo iz spremenljivk v style.css. Pravila za široke zaslone (računalnik) so v ui.css. */
 
 /* Ko zgornjih zavihkov ni (spodnja vrstica ali odprta plošča za vnos), sta XP in učenec desno. */
-.xp-badge { margin-left: auto; }
+.xp-badge { margin-inline-start: auto; }
 
 /* Nazaj na »Jaz« s podstrani (Napredek, Lige, Nastavitve, Račun): samo ob spodnji vrstici. */
 .me-back { display: none !important; }
