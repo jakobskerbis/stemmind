@@ -215,7 +215,10 @@ window.addEventListener("popstate", () => {
   }
   if (cornerBack()) return keep();
   if (wasOverlay && currentView === "path") return;
-  if (!$("#tour")?.hidden && $("#tour")) return keep();
+  if ($("#tour") && !$("#tour").hidden) {
+    startTour.end?.(); // Nazaj zapre vodič (kot Esc ali »Preskoči«)
+    return keep();
+  }
   if (currentView === "textbook" && textbookBack()) return keep();
   if (currentView === "games" && gamesBack()) return keep();
   const subMe = ME_VIEWS.includes(currentView) && !["me", "graph"].includes(currentView);
@@ -409,6 +412,7 @@ async function selectStudent(id) {
   state.pathKey = null;
   clearLevelCard();
   state.symbols?.refresh();
+  maybeTour.done = false; // vodič je za vsak profil posebej (settings.tour_version)
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
   refreshProfileButton();
   refreshXp();
@@ -2490,6 +2494,7 @@ const visibleEl = (sel) => [...document.querySelectorAll(sel)].find((el) => el.g
 
 function startTour() {
   const box = $("#tour");
+  if (!box.hidden) return; // že odprt (npr. »Ponovi ogled« med ogledom)
   // Koraki, ki jih na tem zaslonu lahko pokažemo (števec »3 / 12« potem drži).
   const steps = TOUR.filter((s) => !s.sel || visibleEl(s.sel));
   let i = 0;
@@ -2523,6 +2528,7 @@ function startTour() {
   };
   const end = () => {
     box.hidden = true;
+    startTour.end = null;
     document.removeEventListener("keydown", onKey);
     try {
       localStorage.setItem(TOUR_KEY, "done");
@@ -2546,6 +2552,7 @@ function startTour() {
   box.querySelector('[data-tour="back"]').onclick = back;
   box.querySelector('[data-tour="skip"]').onclick = end;
   document.addEventListener("keydown", onKey);
+  startTour.end = end;
   box.hidden = false;
   show();
 }
@@ -2556,7 +2563,7 @@ function maybeTour() {
   // vodič počaka na naslednjo vrnitev na Učno pot (sicer bi kazal na skrite elemente).
   Promise.resolve(state.interestsAsk).then(() =>
     setTimeout(() => {
-      if (currentView === "path") startTour();
+      if (currentView === "path" && (state.student?.settings?.tour_version || 0) < TOUR_VERSION) startTour();
       else maybeTour.done = false;
     }, 400),
   );

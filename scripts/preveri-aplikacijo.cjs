@@ -281,7 +281,36 @@ const currentView = (p) => p.evaluate(() => [...document.querySelectorAll("main.
 
 // ---------- koraki ----------
 
-async function onboard(p, name, levelSteps, { interests = false } = {}) {
+// Vodič ob prvi uporabi: vsak profil ga dobi enkrat (settings.tour_version na strežniku).
+// how: "vse" (vsi koraki z Naprej, enkrat Nazaj), "esc" ali "preskoci". Po zaprtju mora biti v profilu shranjen.
+async function closeTour(p, how, timeout = 5000) {
+  await expectVisible(p, "#tour", "vodič ob prvi uporabi", timeout);
+  if (how === "vse") {
+    for (let i = 0; i < 40 && (await p.locator("#tour").isVisible()); i++) {
+      if (i === 0) await screen(p, "uvodni-ogled");
+      if (i === 2) {
+        const at = await p.locator("#tour .tour-step").innerText();
+        await click(p, '#tour [data-tour="back"]');
+        if ((await p.locator("#tour .tour-step").innerText()) === at) throw new Error("»Nazaj« v vodiču ne gre korak nazaj");
+      }
+      await click(p, '#tour [data-tour="next"]');
+    }
+  } else if (how === "esc") await p.keyboard.press("Escape");
+  else await click(p, '#tour [data-tour="skip"]');
+  await p.locator("#tour").waitFor({ state: "hidden", timeout: 3000 }).catch(() => {
+    throw new Error(`vodič se ni zaprl (${how})`);
+  });
+  await settle(p, 200);
+  const tv = await p.evaluate(async () => {
+    const r = await fetch(`/api/students/${localStorage.getItem("studentId")}`);
+    return r.ok ? (await r.json()).settings?.tour_version || 0 : -1;
+  });
+  if (!(tv >= 1)) throw new Error(`vodič ni shranjen v profilu (tour_version ${tv})`);
+}
+
+// tour: kako zapreti vodič; stran: »drug pogled« = takoj po vprašalniku odpre Učbenik, vodič pa
+// mora počakati na vrnitev na Učno pot (ne sme se odpreti čez drug pogled).
+async function onboard(p, name, levelSteps, { interests = false, tour = "preskoci", away = false } = {}) {
   await expectVisible(p, "#onboard-form", "obrazec za nov profil", 10000);
   await p.fill('#onboard-form input[name="name"]', name);
   for (const val of levelSteps) await click(p, `#onboard-form .lp-opt[data-val="${val}"]`);
@@ -298,19 +327,22 @@ async function onboard(p, name, levelSteps, { interests = false } = {}) {
     await click(p, ".iq-wrap [data-iq=next]");
     await p.fill(".iq-wrap .iq-custom input", "šah");
     await click(p, ".iq-wrap [data-iq=save]", { wait: 300 });
-  } else await click(p, ".iq-wrap [data-iq=skip]", { wait: 300 });
+  } else if (away)
+    await p.evaluate(() => {
+      document.querySelector(".iq-wrap [data-iq=skip]").click();
+      document.querySelector('.topbar .tab[data-view="textbook"]').click();
+    });
+  else await click(p, ".iq-wrap [data-iq=skip]", { wait: 300 });
   await p.locator(".iq-wrap").waitFor({ state: "detached", timeout: 5000 }).catch(() => {
     throw new Error("vprašalnik zanimanj se ni zaprl");
   });
-  // Uvodni ogled (samo ob prvem profilu na napravi): vsi koraki.
-  if (interests) {
-    await expectVisible(p, "#tour", "uvodni ogled", 5000);
-    for (let i = 0; i < 8 && (await p.locator("#tour").isVisible()); i++) {
-      if (i === 0) await screen(p, "uvodni-ogled");
-      await click(p, '#tour [data-tour="next"]');
-    }
-    if (await p.locator("#tour").isVisible()) throw new Error("uvodni ogled se ni zaprl");
+  if (away) {
+    await p.waitForTimeout(1200);
+    if ((await currentView(p)) !== "view-textbook") throw new Error(`po vprašalniku je odprt ${await currentView(p)} namesto Učbenika`);
+    if (await p.locator("#tour").isVisible()) throw new Error("vodič se je odprl čez drug pogled");
+    await tab(p, "path");
   }
+  await closeTour(p, tour);
   await expectVisible(p, "#view-path #xp-card .hero", "učna pot");
   await screen(p, `pot-${name}`);
 }
@@ -408,19 +440,36 @@ async function textbook(p, label) {
     }
     await screen(p, `simulacija-${label}`);
   }
-  // Preveri se (interaktivno).
-  const opt = p.locator(".tb-check .tb-opt").first();
-  if (await opt.count()) {
-    await opt.scrollIntoViewIfNeeded();
-    await opt.click();
-    if (!(await p.locator(".tb-check .tb-why").first().isVisible())) throw new Error("»Preveri se« ne pokaže odziva");
+  // Lekcija po korakih (privzeto): Naprej do konca, enkrat Nazaj; »Preveri se« in »Razloži drugače«
+  // preveri v koraku, kjer sta (skriti koraki so hidden).
+  const shown = (sel) => p.locator(sel).filter({ visible: true }).first();
+  const steps = await p.locator("#tb-step-next").count();
+  let checked = false;
+  let alt = false;
+  for (let i = 0; i < 60; i++) {
+    if (!checked && (await shown(".tb-check .tb-opt").count())) {
+      const opt = shown(".tb-check .tb-opt");
+      await opt.scrollIntoViewIfNeeded();
+      await opt.click();
+      if (!(await shown(".tb-check .tb-why").count())) throw new Error("»Preveri se« ne pokaže odziva");
+      checked = true;
+    }
+    if (!alt && (await shown("#tb-alt-btn").count())) {
+      await shown("#tb-alt-btn").scrollIntoViewIfNeeded();
+      await click(p, "#tb-alt-btn");
+      if (!(await p.locator("#tb-alt-body .explanation").isVisible())) throw new Error("»Razloži drugače« ne pokaže razlage");
+      alt = true;
+    }
+    if (!steps || !(await p.locator("#tb-step-next").isVisible())) break;
+    if (i === 1) {
+      await click(p, "#tb-step-prev", { wait: 50 });
+      if ((await p.locator(".tb-step-count").innerText()).trim().split(" ")[0] !== "1") throw new Error("»Nazaj« v lekciji po korakih ne gre na 1. korak");
+      await click(p, "#tb-step-next", { wait: 50 });
+    }
+    await click(p, "#tb-step-next", { wait: 50 });
+    if (i === 0) await screen(p, `lekcija-korak-${label}`);
   }
-  // Razloži drugače.
-  if (await p.locator("#tb-alt-btn").count()) {
-    await p.locator("#tb-alt-btn").scrollIntoViewIfNeeded();
-    await click(p, "#tb-alt-btn");
-    if (!(await p.locator("#tb-alt-body .explanation").isVisible())) throw new Error("»Razloži drugače« ne pokaže razlage");
-  }
+  if (steps && (await p.locator("#tb-step-next").isVisible())) throw new Error("lekcija po korakih ne pride do konca");
   // Nazaj na seznam in iskanje.
   await p.locator("#tb-back").scrollIntoViewIfNeeded();
   await click(p, "#tb-back");
@@ -625,7 +674,7 @@ async function desktop(browser, app) {
   const p = await newPage(browser, false, "pc", app.base);
   p.db = app.db;
   await p.goto(app.base + "/");
-  await step(p, "uvod-OS", () => onboard(p, "Ana", ["OSNOVNA_SOLA", "8. razred"], { interests: true }));
+  await step(p, "uvod-OS", () => onboard(p, "Ana", ["OSNOVNA_SOLA", "8. razred"], { interests: true, tour: "vse" }));
   await step(p, "naloga", () => practiceTopic(p, app.db));
   await step(p, "dnevni-trening", async () => {
     await click(p, "#xp-card [data-daily]", { wait: 400 });
@@ -665,16 +714,16 @@ async function desktop(browser, app) {
     if (!(await p.locator(".topbar .tabs").isVisible())) throw new Error("po preklicu so zavihki še skriti");
   });
   // Drugi in tretji profil: »Dodaj profil« iz menija profila.
-  for (const [name, levels, lbl] of [
-    ["Bor", ["SREDNJA_SOLA", "2. letnik", "VR"], "SS"],
-    ["Cene", ["UNIVERZA", "UL", "UL-FMF", "UL-FMF-MAT", "1. letnik"], "UNI"],
+  for (const [name, levels, lbl, opts] of [
+    ["Bor", ["SREDNJA_SOLA", "2. letnik", "VR"], "SS", { tour: "esc", away: true }],
+    ["Cene", ["UNIVERZA", "UL", "UL-FMF", "UL-FMF-MAT", "1. letnik"], "UNI", { tour: "preskoci" }],
   ]) {
     await step(p, `nov-profil-${lbl}`, async () => {
       await click(p, "#profile-btn");
       await click(p, '#profile-pop [data-act="add"]', { wait: 300 });
       await p.fill('#new-student-form input[name="name"]', name);
       await click(p, '#new-student-form button[type="submit"]', { wait: 400 });
-      await onboard(p, name, levels);
+      await onboard(p, name, levels, opts);
     });
     await step(p, `pot-${lbl}`, async () => {
       await click(p, "#xp-card .next-row[data-open]", { wait: 300 });
@@ -722,11 +771,6 @@ async function desktop(browser, app) {
 async function phone(browser, app) {
   const p = await newPage(browser, true, "tel", app.base);
   p.db = app.db;
-  await p.addInitScript(() => {
-    try {
-      localStorage.setItem("stemmind.tour", "done");
-    } catch {}
-  });
   await p.goto(app.base + "/");
   await settle(p, 500);
   // Profil iz baze se odpre brez uvoda (prvi profil).
@@ -734,6 +778,14 @@ async function phone(browser, app) {
     await expectVisible(p, "#view-path #xp-card .hero", "učna pot na telefonu", 8000);
     if (!(await p.locator("#tabbar").isVisible())) throw new Error("spodnja vrstica ni vidna");
     await screen(p, "pot");
+  });
+  // Vodič na telefonu: »Ponovi uvodni ogled« v Nastavitvah, vsi koraki (zavihki pod »Jaz« se preskočijo).
+  await step(p, "tel-vodic", async () => {
+    await click(p, '#tabbar .tab[data-view="me"]', { wait: 200 });
+    await click(p, '#view-me [data-go="settings"]', { wait: 300 });
+    await click(p, "#tour-again", { wait: 200 });
+    await closeTour(p, "vse");
+    if ((await currentView(p)) !== "view-path") throw new Error("po vodiču ni odprta Učna pot");
   });
   for (const v of ["textbook", "chat", "competition"]) {
     await step(p, `zavihek-${v}`, async () => {
@@ -796,11 +848,6 @@ async function phone(browser, app) {
 async function accounts(browser, app) {
   const p = await newPage(browser, false, "racun", app.base);
   p.db = app.db;
-  await p.addInitScript(() => {
-    try {
-      localStorage.setItem("stemmind.tour", "done");
-    } catch {}
-  });
   await p.goto(app.base + "/");
   await settle(p, 500);
   const email = "stars@primer.si";
@@ -838,8 +885,9 @@ async function accounts(browser, app) {
     await p.check('#child-form input[name="consent"]');
     await screen(p, "otrok");
     await click(p, '#child-form button[type="submit"]', { wait: 600 });
-    if (await p.locator(".iq-wrap").count()) await click(p, ".iq-wrap .iq button.ghost");
-    if (await p.locator("#tour").isVisible()) await click(p, '#tour [data-tour="skip"]');
+    await expectVisible(p, ".iq-wrap .iq", "vprašalnik zanimanj otroka", 8000);
+    await click(p, ".iq-wrap [data-iq=skip]", { wait: 300 });
+    await closeTour(p, "preskoci");
     await expectVisible(p, "#view-path #xp-card .hero", "učna pot otroka");
     await screen(p, "pot-otroka");
   });
