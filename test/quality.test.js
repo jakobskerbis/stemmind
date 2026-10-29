@@ -41,3 +41,11 @@ test("hint endpoint logic: steps open one by one, mark the task as helped", asyn
   assert.equal(all.steps.length, all.total);
   assert.equal(p.getTask(task.id).hint_used, 1);
 });
+
+test("fraction answers: listed mistakes and reciprocal", () => {
+  const a = { type: "fraction", num: 3, den: 4, mistakes: [{ value: 3 / 7, why: "Imenovalcev ne seštevaj." }] };
+  assert.equal(checkAnswer(a, "3/7").mistake.message, "Imenovalcev ne seštevaj.");
+  assert.equal(checkAnswer(a, "4/3").mistake.code, "chk.reciprocal");
+  assert.equal(checkAnswer(a, "3/4").kind, "correct");
+  assert.equal(checkAnswer(a, "1/2").mistake, undefined);
+});
