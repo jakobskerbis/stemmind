@@ -20,6 +20,14 @@ import { TEK_KEM } from "./generators/tek-kem.js";
 import { EXAM_MAT } from "./generators/exam-mat.js";
 import { EXAM_FIZ } from "./generators/exam-fiz.js";
 import { EXAM_KEM } from "./generators/exam-kem.js";
+import { EXAM_IN_MAT } from "./generators/exam-in-mat.js";
+import { EXAM_IN_FIZ } from "./generators/exam-in-fiz.js";
+import { EXAM_IN_KEM } from "./generators/exam-in-kem.js";
+import { EXAM_IN_BIO } from "./generators/exam-in-bio.js";
+import { EXAM_GAP_MAT } from "./generators/exam-gap-mat.js";
+import { EXAM_GAP_FIZ } from "./generators/exam-gap-fiz.js";
+import { EXAM_GAP_KEM } from "./generators/exam-gap-kem.js";
+import { EXAM_GAP_BIO } from "./generators/exam-gap-bio.js";
 import { baseTopicIds } from "../curriculum.js";
 
 export const GENERATORS = [
@@ -46,6 +54,16 @@ export const GENERATORS = [
   ...EXAM_MAT,
   ...EXAM_FIZ,
   ...EXAM_KEM,
+  // Indija (CBSE, ICSE/ISC, državne šole, JEE, NEET): dvojezične naloge (angleško, hindijsko).
+  ...EXAM_IN_MAT,
+  ...EXAM_IN_FIZ,
+  ...EXAM_IN_KEM,
+  ...EXAM_IN_BIO,
+  // Teme drugih državnih izpitov (množice, razpršenost, tlak, polimeri …).
+  ...EXAM_GAP_MAT,
+  ...EXAM_GAP_FIZ,
+  ...EXAM_GAP_KEM,
+  ...EXAM_GAP_BIO,
 ];
 
 const BY_TOPIC = Object.create(null); // brez prototipa (id teme pride iz zahteve)
@@ -87,15 +105,17 @@ function plainCommas(t) {
 }
 
 // Ustvari nalogo za temo. level: 1 (lažje) – 3 (težje).
-export function generateTask(topicId, level = 1, seed = crypto.randomInt(2 ** 31)) {
+// lang: jezik besedila pri dvojezičnih generatorjih ("hi" = hindijsko, sicer angleško
+// ali slovensko); drugi generatorji ga prezrejo. Isto seme da v vseh jezikih isto nalogo.
+export function generateTask(topicId, level = 1, seed = crypto.randomInt(2 ** 31), lang = "en") {
   const gens = gensFor(topicId);
   if (!gens.length) return null;
   const r = makeRng(seed);
   const [g, genTopic] = r.pick(gens);
   // Nekaj poskusov, če bi generator vrnil neveljavno nalogo.
   for (let i = 0; i < 5; i++) {
-    const t = g.gen(level, r, genTopic);
-    if (t && t.text && t.answer) return plainCommas({ ...t, generator: g.id, topicId, level, seed });
+    const t = g.gen(level, r, genTopic, lang);
+    if (t && t.text && t.answer) return plainCommas({ ...t, generator: g.id, topicId, level, seed, ...(lang === "hi" && g.langs?.includes("hi") ? { textLang: "hi" } : {}) });
   }
   throw new Error(`Generator ${g.id} ni ustvaril naloge.`);
 }
@@ -129,6 +149,7 @@ export function publicTask(task) {
     data: task.data || null,
     formula: task.formula || null,
     topicId: task.topicId || null, // za razlago teme ob seriji nalog
+    textLang: task.textLang || null, // "hi" pri hindijski nalogi (atribut lang v vmesniku)
     hintSteps: hintSteps(task).length, // koliko korakov ima lestev namigov
   };
 }

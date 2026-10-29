@@ -1,5 +1,5 @@
 // Števec porabe AI v zgornji vrstici: vidi ga samo skrbnik (strežnik vrne porabo le na
-// računalniku, kjer teče STEMMind, ali skrbniku z računom). Pokaže porabo vseh profilov
+// računalniku, kjer teče Kompreno, ali skrbniku z računom). Pokaže porabo vseh profilov
 // danes in ta mesec; klik odpre pregled po profilih.
 import { icon } from "./icons.js";
 import { t } from "./i18n.js";

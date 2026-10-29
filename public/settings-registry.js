@@ -10,13 +10,16 @@
 // Opisi (desc) so v angleščini, ker jih bere model (manj žetonov); učencu jih ne kažemo.
 
 import { INTEREST_IDS, NEWS_LEVELS, NEWS_LANGS } from "./interests.js";
+import { DIALECTS } from "./dialects.js";
+
+const DIALECT_LIST = Object.entries(DIALECTS).map(([l, list]) => `${l}: ${list.map((d) => d.id).join(", ")}`).join("; ");
 
 // Profil učenca (shrani se na strežniku, velja na vseh napravah).
 // confirm: sprememba zamenja učno pot, zato jo učenec najprej potrdi (gumb ali »da«).
 export const PROFILE_SETTINGS = {
   school_system: { confirm: true, desc: "country / school system id: SI = Slovenia (default), others are regional curricula (see get_settings)" },
   educational_track: { confirm: true, values: ["OSNOVNA_SOLA", "SREDNJA_SOLA", "UNIVERZA"], desc: "school stage: primary (OŠ), secondary (SŠ) or faculty" },
-  curriculum_level: { confirm: true, desc: "grade or year: OŠ '6. razred'…'9. razred'; SŠ '1. letnik'…'4. letnik', optional maths level ' OR'/' VR' (e.g. '3. letnik VR'); faculty '1. letnik'…; regional systems use their grade names (e.g. 'Class 8')" },
+  curriculum_level: { confirm: true, desc: "grade or year: OŠ '1. razred'…'9. razred'; SŠ '1. letnik'…'4. letnik', optional maths level ' OR'/' VR' (e.g. '3. letnik VR'); faculty '1. letnik'…; regional systems use their grade names (e.g. 'Class 8')" },
   study_program: { confirm: true, desc: "faculty study programme: id or name with faculty, e.g. 'Kemija UL FKKT' (get_settings options=study_program lists them)" },
   study_course: { desc: "faculty only: course of the programme's current year or an elective, by name (get_settings options=study_course)" },
   subject: { values: ["MAT", "FIZ", "KEM", "NAR", "BIO", "GEO", "RAC", "EKO"], desc: "school subject; OŠ 6./7. has MAT and NAR only; at faculty prefer study_course" },
@@ -24,6 +27,7 @@ export const PROFILE_SETTINGS = {
   solving_mode: { values: ["A", "B"], desc: "A = step-by-step guidance, B = full worked solution with explanation (permanent default)" },
   personality_setting: { desc: "tutor tone / theme of examples, max 200 chars, e.g. 'strog', 'šaljiv, primeri iz nogometa'" },
   language: { desc: "conversation and app language, ISO 639 code (e.g. 'sl', 'en', 'de', 'hr', 'zh-Hant'); the app reloads in it" },
+  dialect: { desc: `tutor's dialect or language variant, only for the chat tone (terms, formulas, boxes and tasks stay standard); '' = standard language; must belong to the conversation language: ${DIALECT_LIST}` },
   data_mode: { values: ["auto", "lite", "normal"], desc: "light mode (less data, shorter replies): auto = on slow connection, lite = always, normal = never" },
   goal: { values: ["sprotno", "test", "npz", "matura", "tekmovanje", "izpit"], desc: "student's goal: sprotno = everyday learning, test = school test, npz (OŠ), matura (SŠ), tekmovanje (competition), izpit (faculty / regional exam)" },
   goal_date: { desc: "date of the goal 'YYYY-MM-DD', or '' to delete it (daily reminder at 12:00 until then)" },

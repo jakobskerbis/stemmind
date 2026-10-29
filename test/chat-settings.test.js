@@ -166,3 +166,36 @@ test("tutor can dress the avatar only in free or bought items", async () => {
   assert.equal(g.profile.avatar.hat, "hat_crown");
   assert.ok(g.avatar_items_available.some((x) => x.includes("hat_crown")));
 });
+
+test("tutor dialect: per language, by id or name, reset on language change, in prompt and cache key", async () => {
+  const { buildSystemPrompt } = await import("../server/prompt.js");
+  const { normalizeSettings } = await import("../server/settings.js");
+  const { DIALECTS } = await import("../public/dialects.js");
+  const store = openDb(":memory:");
+  const student = store.createStudent("Ana", { language: "sl" });
+  const t = tools(store, student);
+  let r = await t.call("change_settings", { changes: { dialect: "Štajersko" } });
+  assert.equal(r.status, "applied");
+  assert.equal(store.getStudent(student.id).settings.dialect, "stajersko");
+  r = await t.call("change_settings", { changes: { dialect: "en-GB" } });
+  assert.equal(r.status, "error");
+  r = await t.call("get_settings", { options: "dialect" });
+  assert.ok(r.options.some((o) => o.startsWith("prekmursko")));
+  // Prompt: narečje samo pod črto predpomnjenja, pravilo nad njo je enako za vse.
+  const p = buildSystemPrompt({ settings: store.getStudent(student.id).settings });
+  const [stat, dyn] = p.split("<!-- STEMMIND:NASTAVITVE");
+  assert.ok(!stat.includes("Štajersko –") && dyn.includes("Narečje / različica jezika: Štajersko –"));
+  assert.ok(stat.includes("**Narečje / različica jezika**"));
+  assert.ok(buildSystemPrompt({ settings: normalizeSettings({}) }).includes("Narečje / različica jezika: knjižni jezik"));
+  // Menjava jezika: narečje drugega jezika ne velja več.
+  const updated = store.updateStudent(student.id, { settings: { language: "en" } });
+  assert.equal(updated.settings.dialect, "");
+  assert.equal(normalizeSettings({ language: "en", dialect: "en-GB" }).dialect, "en-GB");
+  assert.equal(normalizeSettings({ language: "en", dialect: "bogus" }).dialect, "");
+  // Ids are unique per language and every entry has a name and a hint.
+  for (const list of Object.values(DIALECTS)) {
+    assert.equal(new Set(list.map((d) => d.id)).size, list.length);
+    for (const d of list) assert.ok(d.name && d.hint.length > 10, d.id);
+  }
+  assert.deepEqual(mockToolCall("govori po prekmursko"), { name: "change_settings", input: { changes: { dialect: "prekmursk" } } });
+});

@@ -256,7 +256,16 @@ Highest learning value per engine, and widest reuse of the 120 concepts:
 - UI strings in `public/i18n/sl.js` + all `public/i18n/ui/*.json`.
 - Screenshot pair (phone + computer) in `/mnt/project-files/stemmind/posnetki-igre/`.
 
-## 11. Unlocking: play only what you can already solve (standing rule)
+## 11. Unlocking: play only what you can already solve (switched off)
+
+**Switched off (j, 2026-10-29 18:04: »Odstrani zaporo iger«).** `LOCKS_ON = false` in
+`public/games/unlock.js`: every game is open to every student. The rules below stay in the code
+so they can be turned back on; new engines still get a PACE value and new concepts a lessons
+mapping.
+Instead the portal marks the path (j: »Naj bodo samo označene poti, preko katerih lažje pridejo do
+razumevanja«): a game whose concept the student knows by the rules below, from their own or the
+previous year (or mastered on the learning path), and whose speed class is the next one after the
+fastest cleared game of that concept, gets a gold border and a compass and is listed first.
 
 j (2026-10-29): »igre naj bodo zaklenjene, dokler nimajo učenci določenega nivoja znanja, da bodo
 sploh sposobni reševati tako hitro kot zahtevajo«. This applies to every existing and future game.

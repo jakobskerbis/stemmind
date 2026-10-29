@@ -27,7 +27,7 @@ const QUESTION_BUCKET = { liked: "praise", stuck: "complaints", where: "complain
 
 // Pogovor z AI samo, kadar je izrecno vklopljen (privzeto vprašanja iz aplikacije, brez stroškov).
 export const feedbackAiOn = () => process.env.STEMMIND_FEEDBACK_AI === "1" && !isMockMode();
-// Kartica »Kako ti je všeč STEMMind?« na Učni poti (za testno različico; za javno objavo nastavi 0).
+// Kartica »Kako ti je všeč Kompreno?« na Učni poti (za testno različico; za javno objavo nastavi 0).
 export const feedbackPromptOn = () => process.env.STEMMIND_FEEDBACK_PROMPT !== "0";
 
 // Zbrana mnenja vidi samo, kdor odpre aplikacijo na računalniku, kjer teče strežnik
@@ -237,7 +237,7 @@ export function summaryMarkdown(entries, now = new Date()) {
 // ---------------------------------------------------------------------------
 // Pogovor z AI (samo s STEMMIND_FEEDBACK_AI=1): Haiku, kratki odgovori, največ 6 vprašanj.
 
-const INTERVIEW_SYSTEM = `Si prijazen anketar za aplikacijo STEMMind (AI inštruktor za matematiko, fiziko in kemijo za osnovno in srednjo šolo ter fakulteto: Učna pot z nalogami, Inštruktor za klepet, Učbenik s simulacijami, Tekmovanja, Lige in točke).
+const INTERVIEW_SYSTEM = `Si prijazen anketar za aplikacijo Kompreno (AI inštruktor za matematiko, fiziko in kemijo za osnovno in srednjo šolo ter fakulteto: Učna pot z nalogami, Inštruktor za klepet, Učbenik s simulacijami, Tekmovanja, Lige in točke).
 S testerjem (pogosto učenec) vodiš kratek pogovor, da izveš, kaj je dobro in kaj ne.
 - Vedno zastavi točno eno kratko vprašanje (največ 25 besed), brez uvoda in brez naštevanja.
 - Pokrij: kaj je uporabljal, kaj mu je bilo všeč, kje se je zataknil ali kaj ni delovalo (na katerem zaslonu), kaj bi spremenil, ali bi aplikacijo uporabljal.
@@ -297,7 +297,7 @@ export function mountFeedback(app, store, { usage, file = null, createFn } = {})
   });
 
   // Samo na računalniku, kjer teče strežnik.
-  const localOnly = (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Mnenja so vidna samo na računalniku, kjer teče STEMMind." }));
+  const localOnly = (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Mnenja so vidna samo na računalniku, kjer teče Kompreno." }));
   app.get("/api/feedback", localOnly, (_req, res) => {
     const list = fb.list();
     res.json({ count: list.length, entries: list, summary: summaryMarkdown(list), file });

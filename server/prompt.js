@@ -7,6 +7,7 @@ import { cleanText } from "./settings.js";
 import { interestById } from "../public/interests.js";
 import { studyProgramPrompt } from "./curriculum.js";
 import { langInfo } from "../public/i18n/languages.js";
+import { dialectInfo } from "../public/dialects.js";
 import { SCHOOL_SYSTEMS, isRegional, gradeInfo } from "../public/regions.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -35,6 +36,7 @@ const PLACEHOLDERS = [
   "student_results",
   "learning_path",
   "language",
+  "dialect",
   "school_system",
   "reply_length",
   "student_schedule",
@@ -54,6 +56,7 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     weaknesses: weaknesses.length ? weaknesses.join(", ") : "(še ni podatkov)",
     student_results: results || "še ni podatkov. Predlagana začetna zahtevnost: osnovna.",
     language: languagePrompt(settings.language, settings.region),
+    dialect: dialectPrompt(settings),
     school_system: schoolSystemPrompt(settings) + goalPrompt(settings),
     reply_length: lite ? "kratka (lahki način)" : "običajna",
     student_schedule: schedule || "(ni podatkov)",
@@ -85,6 +88,12 @@ export function systemBlocks(prompt, { cacheStatic = true, ttl = null } = {}) {
   if (cacheStatic) blocks[0].cache_control = ttl ? { type: "ephemeral", ttl } : { type: "ephemeral" };
   if (dynamicPart) blocks.push({ type: "text", text: dynamicPart });
   return blocks;
+}
+
+// Narečje za prompt: »knjižni jezik« ali »Štajersko – štajersko narečje (…)«.
+export function dialectPrompt(settings) {
+  const d = dialectInfo(settings.dialect, settings.language);
+  return d ? `${d.name} – ${d.hint}` : "knjižni jezik";
 }
 
 // Jezik pogovora za prompt, npr. »slovenščina (sl)« ali »German – Deutsch (de)«.

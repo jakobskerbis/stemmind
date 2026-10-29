@@ -2,7 +2,8 @@
 // Izpiše kratka, popolna navodila (brief) za pisca ali pregledovalca lekcij, pripravljena za
 // kopiranje v nalogo agenta. Orkestrator jih ne sestavlja ročno (docs/token-rules.md §2–4).
 //   node scripts/lesson-brief.js MAT-OS-8/pitagorov-izrek FIZ-OS-8/vzgon      # pisec (2 temi)
-//   node scripts/lesson-brief.js --review MAT-OS-8/pitagorov-izrek [...]     # pregledovalec
+//   node scripts/lesson-brief.js --review MAT-OS-8/pitagorov-izrek [...]     # pregledovalec (2. pregled)
+//   node scripts/lesson-brief.js --read MAT-OS-8/pitagorov-izrek [...]       # bralec »z očmi učenca« (3. pregled)
 // Angleško namenoma: bere ga agent, angleščina porabi manj žetonov. Deluje tudi za UNI-* teme.
 import { execFileSync } from "node:child_process";
 import path from "node:path";
@@ -10,9 +11,10 @@ import { fileURLToPath } from "node:url";
 
 const args = process.argv.slice(2);
 const review = args.includes("--review");
+const read = !review && args.includes("--read"); // tretji pregled (j 2026-10-29: vse pregledano trikrat)
 const ids = args.filter((a) => !a.startsWith("-"));
 if (!ids.length) {
-  console.error("uporaba: node scripts/lesson-brief.js [--review] <id-teme> [...]");
+  console.error("uporaba: node scripts/lesson-brief.js [--review|--read] <id-teme> [...]");
   process.exit(1);
 }
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -76,7 +78,7 @@ const formPlan = (id, i) => {
   return { hook: pick(FORM.hook, 0), path: pick(FORM.path, 1), context: pick(FORM.context, 2), quiz: pick(FORM.quiz, 3), drugace: alts.map((a) => `Drugače: ${a}`) };
 };
 
-const WRITER = `# STEMMind lesson brief: write ${topics.length} lesson${topics.length > 1 ? "s" : ""}
+const WRITER = `# Kompreno lesson brief: write ${topics.length} lesson${topics.length > 1 ? "s" : ""}
 
 Read once: \`content/lessons/README.md\` (format) and \`${exemplar}\` (style). Do not read other lessons or explore the repo: \`previousSummaries\` below is what the student already knows.
 
@@ -109,7 +111,7 @@ Reply ≤ 3 lines per lesson: \`OK <id>, <words> besed\` or what is unresolved. 
 ## Topics
 `;
 
-const REVIEWER = `# STEMMind review brief: ${topics.length} lesson${topics.length > 1 ? "s" : ""} (second, independent pass)
+const REVIEWER = `# Kompreno review brief: ${topics.length} lesson${topics.length > 1 ? "s" : ""} (second, independent pass)
 
 Run first: \`node scripts/check-lesson.js -q ${files}\`. Format, LaTeX and pure-number steps are then already checked (it prints how many steps it recomputed and any mismatch). Read for content only and check:
 1. Remaining numbers: substitutions, rounding, units and significant figures in every worked example (batch them into one \`node -e\`); every \`+\` quiz answer truly correct, every \`-\` truly wrong; every \`~\` names the real error.
@@ -125,8 +127,23 @@ Fix with small \`Edit\`s, never rewrite. Do not read the exemplar or the README.
 ## Lessons
 `;
 
+const READER = `# Kompreno reading brief: ${topics.length} lesson${topics.length > 1 ? "s" : ""} (third pass, a student's eyes)
+
+The checker and a second reviewer have already verified numbers, keys, level and format. You read each lesson once, start to end, as a careful student of the \`level\` below, and fix only what such a student would stumble on:
+1. Clarity: every new term is explained before it is used; one idea per paragraph; a sentence you had to read twice gets rewritten shorter and more concrete.
+2. Thinking: the 2 »premisli« blocks and the faded final step really make you stop and predict or explain; if the answer already stands in the sentence above, change the question, not the answer.
+3. Not monotone (docs/kakovost.md §1b): the opening, the explanation path and the quiz do not feel like the same template as the other lessons in this brief; vary the worst repetition.
+4. Flow: Zakaj → Razlaga → examples → quiz builds up; a jump that needs an unstated step gets one sentence.
+5. Phone: no table wider than 4 columns, long formulas split, nothing conveyed only by colour.
+Small \`Edit\`s only (≤ 8 per lesson), never a rewrite. Keep every number, formula, structure and \`+\`/\`-\` key unchanged; if you believe a number or key is wrong, report it instead of changing it. Then run \`node scripts/check-lesson.js -q ${files}\` once. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 4 lines.
+
+## Lessons
+`;
+
 const compact = (t, i) =>
-  review
+  read
+    ? { id: t.id, file: t.file, level: t.pathLabel, goals: t.goals }
+    : review
     ? { id: t.id, file: t.file, level: t.pathLabel, goals: t.goals, before: t.before }
     : {
         id: t.id,
@@ -143,4 +160,4 @@ const compact = (t, i) =>
         form: formPlan(t.id, i),
       };
 
-process.stdout.write((review ? REVIEWER : WRITER) + topics.map((t, i) => JSON.stringify(compact(t, i), null, 1)).join("\n") + "\n");
+process.stdout.write((read ? READER : review ? REVIEWER : WRITER) + topics.map((t, i) => JSON.stringify(compact(t, i), null, 1)).join("\n") + "\n");

@@ -40,7 +40,7 @@ export function buildGoalReminder(child, n, { appUrl }) {
     html: layout(
       `${goal}: ${left}`,
       `<p>${esc(child.name)} ima cilj <b>${esc(goal)}</b> (${esc(fmtDateSl(s.goal_date))}).</p>
-       <p>Danes 15 minut? Kratek Današnji trening ali ponovitev teme, ki jo predlaga STEMMind, je dovolj.</p>${button(appUrl, "Odpri STEMMind")}`,
+       <p>Danes 15 minut? Kratek Današnji trening ali ponovitev teme, ki jo predlaga Kompreno, je dovolj.</p>${button(appUrl, "Odpri Kompreno")}`,
       "Opomnik izklopite v aplikaciji: Nastavitve → Cilj → Dnevni opomnik ob 12.00.",
     ),
   };

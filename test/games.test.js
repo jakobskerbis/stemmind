@@ -185,3 +185,8 @@ test("avatar: coins from games, buying and wearing items", async () => {
     server.close();
   }
 });
+
+test("games: lock is switched off (j 2026-10-29: »Odstrani zaporo iger«)", async () => {
+  const { LOCKS_ON } = await import("../public/games/unlock.js");
+  assert.equal(LOCKS_ON, false);
+});

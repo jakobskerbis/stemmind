@@ -14,6 +14,8 @@ const REQUIRED = [
 ];
 
 // Vrne { errors, warnings } za vir lekcije. topicId je neobvezen (preveri obstoj teme).
+const STOCK_PHRASES = [/\bV tej lekciji\b/, /\bse bomo naučili\b/, /\bPoglejmo si\b/, /\bKot vemo\b/, /\bKot vidimo\b/];
+
 export function checkLessonSource(src, topicId) {
   const errors = [];
   const warnings = [];
@@ -105,6 +107,9 @@ export function checkLessonSource(src, topicId) {
   if (/\.{3}\s*$/m.test(body.replace(/\$[^$]*\$/g, ""))) warn("vrstica se konča s »...« (nedokončano besedilo?)");
 
   const words = body.replace(/\$[^$]*\$/g, " ").split(/\s+/).filter(Boolean).length;
+  // Šablonski stavki naredijo lekcije enolične (j, 29. 10. 2026: lekcije ne smejo biti monotone).
+  const stock = STOCK_PHRASES.filter((re) => re.test(body)).map((re) => `»${re.source.replace(/\\b|\\s\+/g, " ").trim()}«`);
+  if (stock.length) warn(`šablonski stavek ${stock.join(", ")}: začni s situacijo, vprašanjem ali poskusom`);
   if (words < 800) warn(`lekcija je kratka (${words} besed, cilj 1300–2300)`);
   if (words > 2800) warn(`lekcija je dolga (${words} besed, cilj 1300–2300)`);
   return { errors, warnings, words, examples: ex ? ex.md.split(/^### +/m).length - 1 : 0, questions: qs.length, calcChecked: calc.checked };

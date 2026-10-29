@@ -1,4 +1,4 @@
-// Odpre STEMMind na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
+// Odpre Kompreno na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
 // Stalna povezava (ista ob vsakem zagonu): brezplačen račun ngrok (NGROK_AUTHTOKEN in
 // NGROK_DOMAIN v .env, skript ju vpraša enkrat). Brez tega: začasna povezava Cloudflare.
 // Uporaba: node scripts/zaganjalnik.js telefon  (na Windows dvoklik na telefon-windows.bat)
@@ -67,7 +67,7 @@ async function ensureServer() {
   const s = await serverStatus(port);
   if (s === 401) return false; // že teče z geslom (v drugem oknu)
   if (s) {
-    say("STEMMind že teče brez gesla. Zapri drugo okno STEMMind in znova zaženi to datoteko.");
+    say("Kompreno že teče brez gesla. Zapri drugo okno Kompreno in znova zaženi to datoteko.");
     return stopAll(1);
   }
   log = openLog(root);
@@ -251,7 +251,7 @@ async function main() {
   process.chdir(root);
   await ensurePassword();
   const stable = await ngrokSettings();
-  say("Zaganjam STEMMind ...");
+  say("Zaganjam Kompreno ...");
   const own = await ensureServer();
   say("Odpiram povezavo za telefon ...");
   let url = "";
@@ -272,7 +272,7 @@ async function main() {
   const copied = copyToClipboard(friend);
   say();
   say("==============================================================");
-  say("  STEMMind za telefon:");
+  say("  Kompreno za telefon:");
   say();
   say(`  ${url}`);
   say();

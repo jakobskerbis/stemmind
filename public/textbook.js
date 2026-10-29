@@ -2,6 +2,7 @@
 import { mountSim } from "./sim/index.js";
 import { t, locale } from "./i18n.js";
 import { withFormulaSubject } from "./formula-data.js";
+import { lessonSteps } from "./lesson-steps.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
@@ -417,10 +418,10 @@ async function renderLesson(topicId) {
       </div>`
     : "";
   const SLOT = '<div class="tb-demo-slot"></div>';
+  const sectionCls = (title) => (/povzetek/i.test(title) ? "tb-summary" : /napak/i.test(title) ? "tb-mistakes" : /zakaj/i.test(title) ? "tb-why" : "");
   const sectionHtml = sections
     .map((s, i) => {
-      const cls = /povzetek/i.test(s.title) ? "tb-summary" : /napak/i.test(s.title) ? "tb-mistakes" : /zakaj/i.test(s.title) ? "tb-why" : "";
-      return `<section class="card tb-section ${cls}">${s.title ? `<h2>${esc(s.title)}</h2>` : ""}<div class="explanation">${R(s.md)}</div>${
+      return `<section class="card tb-section ${sectionCls(s.title)}">${s.title ? `<h2>${esc(s.title)}</h2>` : ""}<div class="explanation">${R(s.md)}</div>${
         i === altAt ? altHtml : ""
       }</section>${i === demoAfter ? SLOT : ""}`;
     })
@@ -432,35 +433,59 @@ async function renderLesson(topicId) {
       }</div></section>${SLOT}`
     : "";
 
-  const staticChecks = () => `<section class="card tb-checks"><h2>${ic("circle-help")}Preveri se</h2><ol>${lesson.checks
-    .map((c) => `<li><div class="tb-q">${R(c.q)}</div><ol type="a">${c.options.map((o) => `<li>${R(o)}</li>`).join("")}</ol>
-      <details><summary>Rešitev</summary>${"abcdefgh"[c.correct]}) ${c.why ? R(c.why) : ""}</details></li>`)
-    .join("")}</ol></section>`;
-  const checksHtml = lesson?.checks?.length && !L.interactive
-    ? staticChecks()
-    : lesson?.checks?.length
-    ? `<section class="card tb-checks"><h2>${ic("circle-help")}Preveri se</h2>${lesson.checks
-        .map(
-          (c, qi) => `<div class="tb-check" data-q="${qi}">
+  const staticItem = (c) => `<li><div class="tb-q">${R(c.q)}</div><ol type="a">${c.options.map((o) => `<li>${R(o)}</li>`).join("")}</ol>
+      <details><summary>Rešitev</summary>${"abcdefgh"[c.correct]}) ${c.why ? R(c.why) : ""}</details></li>`;
+  const liveItem = (c, qi) => `<div class="tb-check" data-q="${qi}">
             <div class="tb-q">${R(c.q)}</div>
             <div class="tb-opts">${c.options.map((o, oi) => `<button type="button" class="tb-opt" data-o="${oi}">${R(o)}</button>`).join("")}</div>
             <div class="tb-why" hidden></div>
-          </div>`,
-        )
-        .join("")}</section>`
+          </div>`;
+  // Vprašanja »Preveri se« (vsa ali le nekatera, pri prikazu po korakih).
+  const checksCard = (idx, title = "Preveri se") =>
+    `<section class="card tb-checks"><h2>${ic("circle-help")}${esc(title)}</h2>${
+      L.interactive
+        ? idx.map((qi) => liveItem(lesson.checks[qi], qi)).join("")
+        : `<ol start="${idx[0] + 1}">${idx.map((qi) => staticItem(lesson.checks[qi])).join("")}</ol>`
+    }</section>`;
+  const nChecks = lesson?.checks?.length || 0;
+  const checksHtml = nChecks ? checksCard(lesson.checks.map((_, i) => i)) : "";
+
+  // Po korakih (privzeto): kratke kartice, vmes vprašanje, spodaj Nazaj / Naprej.
+  const stepMode = !!lesson && sections.length > 0 && stepPref();
+  const steps = stepMode ? lessonSteps(sections, nChecks) : [];
+  const stepsHtml = steps
+    .map((st, k) => {
+      const body =
+        st.type === "check"
+          ? checksCard(st.checks, st.final ? "Preveri se" : t("tb.steps.quick"))
+          : `<section class="card tb-section ${sectionCls(st.title)}">${st.title ? `<h2>${esc(st.title)}</h2>` : ""}<div class="explanation">${R(st.md)}</div>${
+              st.last && st.section === altAt ? altHtml : ""
+            }</section>${st.last && st.section === demoAfter ? SLOT : ""}`;
+      return `<div class="tb-step" data-step="${k}"${k ? " hidden" : ""}>${body}</div>`;
+    })
+    .join("");
+  const stepper = stepMode
+    ? `<div class="tb-stepper">
+        <button type="button" class="secondary" id="tb-step-prev">${ic("arrow-left")}${esc(t("tb.steps.prev"))}</button>
+        <span class="tb-step-count" aria-live="polite"></span>
+        <button type="button" class="primary" id="tb-step-next">${esc(t("tb.steps.next"))}${ic("arrow-right")}</button>
+      </div>`
+    : "";
+  const modeBtn = lesson
+    ? `<button type="button" class="ghost tb-mode-btn" id="tb-mode">${ic(stepMode ? "file-text" : "layers")}${esc(t(stepMode ? "tb.steps.all" : "tb.steps.byStep"))}</button>`
     : "";
 
   box.innerHTML = `<div class="tb-lesson-grid${demoHtml ? " has-side" : ""}"><div class="tb-main">
     <button type="button" class="ghost back tb-back" id="tb-back">${ic("arrow-left")}${esc(t("nav.textbook"))}</button>
     <p class="muted tb-crumb">${esc(L.pathLabel)} · ${esc(L.unit)}</p>
     <h1 class="tb-title">${esc(L.name)}</h1>
-    ${lesson ? `<a class="tb-pdf" href="/ucbenik/${L.path}/${L.id.split("/")[1]}#natisni" target="_blank" rel="noopener">${ic("download")}PDF lekcije</a>` : ""}
+    ${lesson ? `<div class="tb-tools"><a class="tb-pdf" href="/ucbenik/${L.path}/${L.id.split("/")[1]}#natisni" target="_blank" rel="noopener">${ic("download")}PDF lekcije</a>${modeBtn}</div>` : ""}
     <p class="muted tb-sel-hint">${ic("message-circle")}Ti kakšen del ni jasen? Označi ga in pritisni »Razloži«.</p>
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
     ${L.pretest_due ? `<section class="card tb-pretest"><h2>${ic("target")}${esc(t("pretest.title"))}</h2><p>${esc(t("pretest.lessonIntro"))}</p><button type="button" class="primary" id="tb-pretest">${ic("play")}${esc(t("pretest.start"))}</button></section>` : ""}
     ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej tutorju.</p>` : ""}
-    ${sectionHtml}${fallback}${checksHtml}
-    <section class="card tb-next">
+    ${stepMode ? `<div class="tb-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${steps.length}"><span></span></div>${stepsHtml}${stepper}` : `${sectionHtml}${fallback}${checksHtml}`}
+    <section class="card tb-next"${stepMode ? " hidden" : ""}>
       <h2>Kaj zdaj?</h2>
       <div class="actions">
         ${L.practice ? `<button type="button" class="primary" id="tb-practice">${ic("pencil")}Vadi naloge</button>` : ""}
@@ -520,6 +545,11 @@ async function renderLesson(topicId) {
       }),
     );
   });
+  $("#tb-mode")?.addEventListener("click", () => {
+    setStepPref(!stepMode);
+    renderLesson(topicId);
+  });
+  if (stepMode) wireSteps(box, L.id, steps.length);
   $("#tb-practice")?.addEventListener("click", async () => {
     if (!(await ctx.openTopic(L.id))) ctx.nextPractice();
   });
@@ -527,6 +557,53 @@ async function renderLesson(topicId) {
   $("#tb-ask").addEventListener("click", () =>
     ctx.learnWithTutor({ id: L.id, name: L.name }, `Prebral sem lekcijo »${L.name}«, pa mi še ni čisto jasno. Mi razložiš na drug način?`),
   );
+}
+
+// ---------- Lekcija po korakih ----------
+const STEP_PREF = "tb-steps";
+function stepPref() {
+  try {
+    return localStorage.getItem(STEP_PREF) !== "0";
+  } catch {
+    return true;
+  }
+}
+function setStepPref(on) {
+  try {
+    localStorage.setItem(STEP_PREF, on ? "1" : "0");
+  } catch {}
+}
+function wireSteps(box, lessonId, n) {
+  const key = `tb-step:${lessonId}`;
+  const all = [...box.querySelectorAll(".tb-step")];
+  const bar = box.querySelector(".tb-progress");
+  const count = box.querySelector(".tb-step-count");
+  const prev = $("#tb-step-prev");
+  const next = $("#tb-step-next");
+  const end = box.querySelector(".tb-next");
+  let cur = 0;
+  const go = (k, scroll) => {
+    cur = Math.max(0, Math.min(n - 1, k));
+    all.forEach((el, i) => (el.hidden = i !== cur));
+    count.textContent = `${cur + 1} / ${n}`;
+    count.setAttribute("aria-label", t("tb.steps.count", { n: cur + 1, m: n }));
+    bar.setAttribute("aria-valuenow", String(cur + 1));
+    bar.firstElementChild.style.width = `${((cur + 1) / n) * 100}%`;
+    prev.disabled = cur === 0;
+    next.hidden = cur === n - 1;
+    end.hidden = cur !== n - 1;
+    try {
+      sessionStorage.setItem(key, String(cur));
+    } catch {}
+    if (scroll && bar.getBoundingClientRect().top < 0) bar.scrollIntoView({ block: "start" });
+  };
+  prev.addEventListener("click", () => go(cur - 1, true));
+  next.addEventListener("click", () => go(cur + 1, true));
+  let saved = 0;
+  try {
+    saved = Number(sessionStorage.getItem(key)) || 0;
+  } catch {}
+  go(saved < n ? saved : 0, false);
 }
 
 // ---------- Referenčni material (fakultetni predmeti) ----------

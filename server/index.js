@@ -10,6 +10,6 @@ const app = createApp(store, { feedbackFile });
 const port = Number(process.env.PORT || 3000);
 
 app.listen(port, () => {
-  console.log(`STEMMind teče na http://localhost:${port}`);
+  console.log(`Kompreno teče na http://localhost:${port}`);
   console.log(isMockMode() ? "Preizkusni način (brez API ključa)." : `Model: ${MODEL}`);
 });

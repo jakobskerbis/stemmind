@@ -87,6 +87,17 @@
 .tb-checks .tb-why { margin-top: 8px; font-weight: 400; }
 .tb-checks .tb-why p { display: inline; }
 .tb-nav { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+/* Lekcija po korakih */
+.tb-mode-btn { margin: 0 0 4px; font-size: 0.9rem; }
+.tb-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; }
+.tb-tools .tb-mode-btn { margin: 0; padding-inline: 4px; }
+.tb-progress { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; margin: 4px 0 12px; scroll-margin-top: 80px; }
+.tb-progress > span { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.2s ease; }
+.tb-stepper { position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 4px 0 12px; padding: 10px 0; background: var(--bg); border-top: 1px solid var(--border); box-shadow: 0 64px 0 0 var(--bg); }
+.tb-stepper button { min-height: 44px; }
+.tb-stepper button[hidden] { display: none; }
+.tb-step-count { color: var(--muted); font-size: 0.9rem; white-space: nowrap; font-variant-numeric: tabular-nums; text-align: center; flex: 1; }
+@media (prefers-reduced-motion: reduce) { .tb-progress > span { transition: none; } }
 
 /* demonstracije */
 .demo-stage { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }

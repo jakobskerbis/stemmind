@@ -165,7 +165,7 @@ test("compression: brotli for static files and API JSON, plain when not accepted
     assert.equal(res.headers.get("content-encoding"), "br");
     const raw = Buffer.from(await res.arrayBuffer());
     // fetch odstisne sam; preverimo, da je vsebina JavaScript.
-    assert.match(raw.toString("utf8").slice(0, 200), /STEMMind|import/);
+    assert.match(raw.toString("utf8").slice(0, 200), /Kompreno|import/);
     const api = await fetch(`${base}/api/paths?subject=MAT&system=IN-CBSE`, { headers: { "Accept-Encoding": "gzip" } });
     assert.equal(api.status, 200);
     const paths = await api.json();

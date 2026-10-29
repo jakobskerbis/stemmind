@@ -23,13 +23,13 @@ function loginPage({ next = "/", error = "" } = {}) {
 <html lang="sl"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STEMMind – prijava</title>
+<title>Kompreno – prijava</title>
 <meta name="theme-color" content="#2563eb">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="STEMMind">
+<meta name="apple-mobile-web-app-title" content="Kompreno">
 <style>
   :root { color-scheme: light dark; }
   body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -47,13 +47,13 @@ function loginPage({ next = "/", error = "" } = {}) {
 </head><body>
 <form class="card" method="post" action="/prijava">
   <img src="/icons/icon-192.png" alt="">
-  <h1>STEMMind</h1>
+  <h1>Kompreno</h1>
   <p>Testna različica. Vpiši geslo za preizkus.</p>
   ${error ? `<p class="err" role="alert">${esc(error)}</p>` : ""}
   <input type="password" name="geslo" placeholder="Geslo" autocomplete="current-password" autofocus required>
   <input type="hidden" name="naprej" value="${esc(next)}">
   <button type="submit">Vstopi</button>
-  <p class="tip">Namig: po prijavi v meniju brskalnika izberi »Dodaj na začetni zaslon«, da bo STEMMind na telefonu kot aplikacija.</p>
+  <p class="tip">Namig: po prijavi v meniju brskalnika izberi »Dodaj na začetni zaslon«, da bo Kompreno na telefonu kot aplikacija.</p>
 </form>
 </body></html>`;
 }

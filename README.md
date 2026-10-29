@@ -1,4 +1,6 @@
-# STEMMind
+# Kompreno
+
+(Prej STEMMind. Notranja imena, kot so spremenljivke `STEMMIND_*`, baza `stemmind.db` in ime repozitorija, ostanejo nespremenjena.)
 
 Osebni AI inštruktor za matematiko, fiziko in kemijo za slovenske učence (OŠ 6.–9. razred) in dijake (SŠ). Teče na Claude API.
 
@@ -30,7 +32,7 @@ npm start                 # http://localhost:3000
 
 Brez ključa se aplikacija zažene v preizkusnem načinu. Teste zaženeš z `npm test`.
 
-Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac.command` (Mac). Skript ob prvem zagonu vpraša za ključ, namesti knjižnice in odpre brskalnik. `ustvari-bliznjico.bat` / `ustvari-bliznjico-mac.command` naredi bližnjico STEMMind na namizju.
+Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac.command` (Mac). Skript ob prvem zagonu vpraša za ključ, namesti knjižnice in odpre brskalnik. `ustvari-bliznjico.bat` / `ustvari-bliznjico-mac.command` naredi bližnjico Kompreno na namizju.
 
 **Na telefonu (testno):** dvakrat klikni `telefon-windows.bat` (ali `node scripts/telefon.js`). Skript posodobi aplikacijo, ob prvem zagonu vpraša za geslo (`STEMMIND_PASSWORD` v `.env`), zažene strežnik in odpre povezavo z interneta. **Stalna povezava** (ista ob vsakem zagonu): ob prvem zagonu prilepi žeton in brezplačni naslov iz računa [ngrok](https://dashboard.ngrok.com/signup); shranita se v `.env` (`NGROK_AUTHTOKEN`, `NGROK_DOMAIN`). Brez tega (Enter) se odpre začasna povezava Cloudflare (`https://…trycloudflare.com`), ki je ob vsakem zagonu nova. Povezava se izpiše v oknu in shrani v `data/telefon-povezava.txt`; povezava za prijatelje z geslom (`…/?geslo=…`) se kopira v odložišče in shrani v `data/povezava-za-prijatelje.txt`. Deluje, dokler je okno odprto in računalnik prižgan. Na telefonu v meniju brskalnika izberi »Dodaj na začetni zaslon« (ikona in `manifest.webmanifest`). Ko je računalnik ugasnjen, se aplikacija na telefonu odpre iz shranjene kopije (vaje brez povezave). `samodejni-zagon-windows.bat` vklopi (ali izklopi) zagon ob prižigu računalnika in po želji prepreči spanje na elektriki.
 
@@ -63,7 +65,7 @@ Brez ukazne vrstice: dvakrat klikni `zagon-windows.bat` (Windows) ali `zagon-mac
 | `STEMMIND_EXPLAIN_MODEL` | `claude-opus-5-5` | Model za skript z razlagami. |
 | `STEMMIND_DB` | `data/stemmind.db` | Pot do baze SQLite. Mora biti na trajnem disku. |
 | `STEMMIND_DEBUG` | `0` | `1` omogoči `/api/students/:id/prompt` (ogled sestavljenega prompta). |
-| `STEMMIND_FEEDBACK_PROMPT` | `1` | Kartica »Kako ti je všeč STEMMind?« na Učni poti in zavihek Mnenje (za testno različico). `0` ju skrije; vprašalnik ostane pod Jaz. |
+| `STEMMIND_FEEDBACK_PROMPT` | `1` | Kartica »Kako ti je všeč Kompreno?« na Učni poti in zavihek Mnenje (za testno različico). `0` ju skrije; vprašalnik ostane pod Jaz. |
 | `STEMMIND_FEEDBACK_AI` | `0` | `1` = pogovor za povratne informacije vodi Haiku (največ 6 vprašanj, ~0,1 ¢ na pogovor). Privzeto pripravljena vprašanja, brez stroškov. |
 | `PORT` | `3000` | Vrata strežnika. |
 
@@ -92,7 +94,7 @@ node scripts/generate-explanations.js --yes      # ustvari razlage za vse teme
 node scripts/generate-explanations.js --yes --path MAT-OS-8 --model claude-haiku-5-5
 ```
 
-Dokler razlag ni, gumb »Uči se s STEMMind« temo razloži v klepetu.
+Dokler razlag ni, gumb »Uči se s Komprenom« temo razloži v klepetu.
 
 ## Učbenik
 
@@ -155,4 +157,5 @@ docs/                      opombe k promptu in seznam za preizkušanje
 - **Zasebnost**: uporabniki so mladoletni. Za otroke, mlajše od 15 let, je v Sloveniji za take storitve potrebno soglasje staršev. Pripravi kratko obvestilo o zasebnosti. Pogovori in fotografije se hranijo v bazi.
 - **Prijava**: zdaj je le skupno geslo in izbira učenca. Za več družin ali razredov dodaj prave račune.
 - **Kakovost**: preden aplikacijo daš učencem, naj učitelj preizkusi naloge iz `docs/preizkus.md`.
+- **Digitalni razred**: `npm run sim` pusti 16 simuliranih učencev (različne starosti, znanje, napačne predstave, tipkarske napake, stiska, jailbreak) do inštruktorja in vsak pogovor oceni; prvi zagon shrani kot referenco in z njo primerjaj vsako spremembo prompta. Glej `sim/README.md`.
 - **Stroški**: v konzoli Anthropic nastavi mesečno omejitev porabe. Fotografije se pošljejo ob vsakem naslednjem odgovoru v istem pogovoru, zato je pri dolgih pogovorih s slikami bolje začeti nov pogovor.

@@ -2,7 +2,8 @@
 // Kratko poročilo o napredku lekcij in vaj (nalog) za j – samo štetje v repozitoriju, brez agentov.
 //   node scripts/napredek.js              # slovensko poročilo (vrstice, ≤ 60 besed)
 //   node scripts/napredek.js --json       # številke za primerjavo med poročili
-//   node scripts/napredek.js --tempo-sola 128 --tempo-faks 192   # predvideni tempo (novih lekcij/dan) po nitih
+//   node scripts/napredek.js --straza     # lahek nadzor (vsakih 30 min): izpiše OK ali vrstice POZOR: …
+//   node scripts/napredek.js --tempo-sola 77 --tempo-faks 115   # predvideni tempo (novih lekcij/dan) po nitih
 // Lekcije šteje po učnih poteh (OŠ+SŠ, tekmovanja, faks – vsaka fakultetna tema enkrat, glej sameTopics),
 // vaje po generatorjih nalog (server/practice). Tempo bere iz git zgodovine trenutne veje.
 import fs from "node:fs";
@@ -15,6 +16,7 @@ import { isCompetitionPath } from "../server/competition.js";
 
 const args = process.argv.slice(2);
 const json = args.includes("--json");
+const straza = args.includes("--straza");
 const UPOCASNITEV_DO = Date.parse("2026-10-29T13:00:00Z"); // upočasnitev se je končala z nakupom paketa Max 20x (j, 29. 10.)
 
 const lessonFile = (id) => path.join(LESSONS_DIR, `${id}.md`);
@@ -65,6 +67,35 @@ for (const [id] of groups.sola) if (!hasGenerator(id)) brezVaj[id.split("-")[0]]
 const brezVajText = Object.entries(brezVaj).map(([k, v]) => `${k} ${v}`).join(", ");
 const total = (k) => stats.sola[k] + stats.tek[k] + stats.faks[k];
 
+// Lahek nadzor (j 2026-10-29 15:49: »optimizator naj optimizira vse niti vsakih 5 min«): namesto dragega polnega
+// kroga vsakih 5 min teče ta skripta vsakih 30 min in opozori le, ko kaj ni v redu: nit za lekcije je izpustila
+// termin (brez nove lekcije v main dlje kot 6,5 h; ena serija na 5-urno okno, serija traja do 80 min), testi na main padejo.
+if (straza) {
+  const git = (...a) => execFileSync("git", a, { encoding: "utf8" }).trim();
+  const lastCommit = (...pathspec) => Number(git("log", "-1", "--format=%ct", "--", ...pathspec) || 0) * 1000;
+  const h = (ms) => (ms / 3600000).toFixed(1);
+  const now = Date.now();
+  const warnings = [];
+  const groups = [
+    ["učbenik (OŠ+SŠ+tekmovanja)", ["content/lessons", ":(exclude)content/lessons/UNI-*"]],
+    ["faks", ["content/lessons/UNI-*"]],
+  ];
+  for (const [name, spec] of groups) {
+    const age = now - lastCommit(...spec);
+    if (age > 6.5 * 3600000) warnings.push(`POZOR: ${name}: zadnja lekcija v main pred ${h(age)} h (termin verjetno izpuščen).`);
+  }
+  try {
+    const out = execFileSync("npm", ["test"], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    const fail = /^# fail (\d+)/m.exec(out);
+    if (fail && Number(fail[1]) > 0) warnings.push(`POZOR: npm test na main: ${fail[1]} testov pade.`);
+  } catch (e) {
+    const fail = /^# fail (\d+)/m.exec(String(e.stdout || ""));
+    warnings.push(`POZOR: npm test na main pade${fail ? ` (${fail[1]} testov)` : ""}.`);
+  }
+  console.log(warnings.length ? warnings.join("\n") : "OK");
+  process.exit(0);
+}
+
 // Tempo iz gita: dodane datoteke lekcij (merge-i ne štejejo dvakrat, ker git log brez -m ne izpiše diff-a merge-a).
 const added = (since) => {
   try {
@@ -82,12 +113,13 @@ const zadnjih24h = added("24 hours ago");
 const ostaneLekcij = total("teme") - total("lekcije");
 const dvigi = total("lekcije") - total("novaRaven"); // stare lekcije, ki jih je treba dvigniti na novo raven
 // Ocena konca po nitih (docs/token-rules.md §4): učbenik (OŠ+SŠ+tekmovanja) in faks. Dvig štejemo kot pol lekcije.
-// Polni tempo od 29. 10. 14:40 UTC: učbenik 8 terminov × 16 novih lekcij, faks 8 × 24 na dan (med upočasnitvijo 6 oz. 4).
-// Ko učbeniška nit konča OŠ+SŠ+tekmovanja, piše faks teme (--deli 2 --del 1), kar oceno za faks skrajša (ni modelirano).
+// Tempo od 29. 10. 18:00 UTC (docs/token-rules.md §4): ena serija na 5-urno okno na nit, 4,8 serije na dan:
+// učbenik 16 novih lekcij na serijo (~77/dan), faks 24 (~115/dan). Ko učbeniška nit konča OŠ+SŠ+tekmovanja,
+// piše faks teme (--deli 2 --del 1): od takrat faks napreduje s seštevkom obeh tempov.
 const num = (flag, dflt) => (args.includes(flag) && Number(args[args.indexOf(flag) + 1]) > 0 ? Number(args[args.indexOf(flag) + 1]) : dflt);
 const TEMPO = {
-  sola: { pocasi: num("--pocasi-sola", 6), polni: num("--tempo-sola", 128) },
-  faks: { pocasi: num("--pocasi-faks", 4), polni: num("--tempo-faks", 192) },
+  sola: { pocasi: num("--pocasi-sola", 6), polni: num("--tempo-sola", 77) },
+  faks: { pocasi: num("--pocasi-faks", 4), polni: num("--tempo-faks", 115) },
 };
 const now = Date.now();
 const DAY = 86400000;
@@ -100,7 +132,11 @@ const ostane = (s) => s.teme - s.lekcije;
 const deloSola = ostane(stats.sola) + ostane(stats.tek) + (stats.sola.lekcije - stats.sola.novaRaven + stats.tek.lekcije - stats.tek.novaRaven) / 2;
 const deloFaks = ostane(stats.faks) + (stats.faks.lekcije - stats.faks.novaRaven) / 2;
 const konecSola = konecZa(deloSola, TEMPO.sola);
-const konecFaks = konecZa(deloFaks, TEMPO.faks);
+const konecFaks = (() => {
+  const doSola = TEMPO.faks.polni * Math.max(0, (konecSola - now) / DAY); // faks sam, dokler učbenik ne konča
+  if (doSola >= deloFaks) return konecZa(deloFaks, TEMPO.faks);
+  return new Date(konecSola.getTime() + ((deloFaks - doSola) / (TEMPO.faks.polni + TEMPO.sola.polni)) * DAY);
+})();
 const datum = (d) => `${d.getUTCDate()}. ${d.getUTCMonth() + 1}.`;
 const frac = (s) => `${s.lekcije}/${s.teme}`;
 
@@ -136,6 +172,6 @@ if (json) {
   console.log(
     now < UPOCASNITEV_DO
       ? `(Predpostavke: do ${datum(new Date(UPOCASNITEV_DO))} ${TEMPO.sola.pocasi} oz. ${TEMPO.faks.pocasi} lekcij/dan, potem ${TEMPO.sola.polni} oz. ${TEMPO.faks.polni}/dan; dvig = pol lekcije.)`
-      : `(Predpostavka: tempo ${TEMPO.sola.polni} novih lekcij/dan za OŠ+SŠ+tekmovanja in ${TEMPO.faks.polni}/dan za faks; dvig = pol lekcije.)`
+      : `(Predpostavka: ${TEMPO.sola.polni} novih lekcij/dan za OŠ+SŠ+tekmovanja in ${TEMPO.faks.polni}/dan za faks, potem obe niti na faksu; dvig = pol lekcije.)`
   );
 }

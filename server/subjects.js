@@ -5,8 +5,8 @@ export const SCHOOL_SUBJECTS = ["MAT", "FIZ", "KEM", "NAR", "BIO"];
 export const EARLY_OS_SUBJECTS = ["MAT", "NAR"];
 export const LATE_SUBJECTS = ["MAT", "FIZ", "KEM", "BIO"];
 export const REGIONAL_SUBJECTS = ["MAT", "FIZ", "KEM"];
-// Slovenski OŠ razred 6 ali 7 (»6. razred«).
-export const isEarlyOs = (track, level) => track === "OSNOVNA_SOLA" && /^[67]\./.test(String(level || "").trim());
+// Slovenski OŠ razred 1 do 7 (»6. razred«): matematika in naravoslovje (1.–5. razred zaenkrat s snovjo 6. razreda).
+export const isEarlyOs = (track, level) => track === "OSNOVNA_SOLA" && /^[1-7]\./.test(String(level || "").trim());
 export function schoolSubjectsFor(track, level) {
   return isEarlyOs(track, level) ? EARLY_OS_SUBJECTS : LATE_SUBJECTS;
 }
