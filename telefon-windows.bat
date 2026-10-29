@@ -7,7 +7,7 @@ title STEMMind za telefon
 
 rem Odpre STEMMind na telefonu: posodobi aplikacijo, jo zazene z geslom in odpre
 rem povezavo (stalno prek ngrok ali zacasno prek Cloudflare). Racunalnik mora ostati prizgan.
-rem Med tekom se aplikacija vsaki 2 uri sama posodobi, povezava ostane ista.
+rem Med tekom se aplikacija sama posodobi (preverja vsakih 15 minut), povezava ostane ista.
 
 where node >nul 2>nul
 if errorlevel 1 (

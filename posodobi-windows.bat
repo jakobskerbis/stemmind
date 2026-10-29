@@ -4,7 +4,7 @@ setlocal
 cd /d "%~dp0"
 title STEMMind - posodobitev
 
-rem STEMMind se posodablja sam (ob zagonu in vsaki 2 uri). Ta datoteka posodobitev sprozi takoj.
+rem STEMMind se posodablja sam (ob zagonu in vsakih 15 minut). Ta datoteka posodobitev sprozi takoj.
 rem Kljuc (.env), podatki (data) in knjiznice (node_modules) ostanejo.
 
 curl -s -o nul -m 2 http://localhost:3000/healthz >nul 2>nul

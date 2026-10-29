@@ -692,25 +692,43 @@ if ("serviceWorker" in navigator && location.protocol !== "file:") {
     .catch(() => null);
 }
 
-// Samodejna posodobitev (docs/posodobitve.md): ko se aplikacija vrne v ospredje po vsaj
-// 3 minutah in strežnik medtem teče z novejšo različico, se stran tiho osveži.
+// Samodejna posodobitev (docs/posodobitve.md): ko strežnik teče z novejšo različico, se stran
+// tiho osveži, a samo, ko to učenca ne zmoti: ob vrnitvi v aplikacijo (vsaj 1 minuto v ozadju)
+// ali po 10 minutah brez dotika, nikoli med tekmovanjem ali z napisanim, a neposlanim besedilom.
 let appVersion = null;
 let hiddenAt = 0;
+let lastInput = Date.now();
+for (const ev of ["pointerdown", "keydown", "input", "wheel", "touchstart"]) {
+  addEventListener(ev, () => (lastInput = Date.now()), { capture: true, passive: true });
+}
 const serverVersion = () =>
   fetch("/healthz/stanje", { cache: "no-store" })
     .then((r) => (r.ok ? r.json() : null))
     .then((s) => s?.razlicica || null)
     .catch(() => null);
+const unsentText = () =>
+  [...document.querySelectorAll("textarea, input[type=text], input[type=search], input:not([type])")].some(
+    (el) => el.offsetParent !== null && !el.readOnly && el.value.trim() && el.value !== el.defaultValue,
+  );
+async function reloadIfNewer() {
+  if (!appVersion || state.contestTimer || unsentText()) return;
+  const v = await serverVersion();
+  if (!v || v === appVersion) return;
+  const reg = await navigator.serviceWorker?.getRegistration?.().catch(() => null);
+  await reg?.update?.().catch(() => null); // nov service worker (nove knjižnice) pred osvežitvijo
+  location.reload();
+}
 serverVersion().then((v) => (appVersion = v));
-document.addEventListener("visibilitychange", async () => {
+document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") {
     hiddenAt = Date.now();
     return;
   }
-  if (!appVersion || !hiddenAt || Date.now() - hiddenAt < 3 * 60 * 1000) return;
-  const v = await serverVersion();
-  if (v && v !== appVersion && document.visibilityState === "visible") location.reload();
+  if (hiddenAt && Date.now() - hiddenAt >= 60 * 1000) reloadIfNewer();
 });
+setInterval(() => {
+  if (document.visibilityState === "visible" && Date.now() - lastInput >= 10 * 60 * 1000) reloadIfNewer();
+}, 5 * 60 * 1000);
 
 // Pasica brez povezave na učni poti in pošiljanje odgovorov, ko se povezava vrne.
 function syncOfflineBanner() {
