@@ -26,6 +26,7 @@ import { initCorner, showCorner, cornerBack, closeBoard, askInterests, maybeAskI
 import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
+import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
 import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml } from "./goal.js";
 
@@ -119,6 +120,7 @@ function showView(name) {
     loadUsage();
   }
   if (name === "progress") loadProgress();
+  if (name === "schedule") showSchedule();
   if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
   if (name === "textbook") showTextbook();
@@ -210,7 +212,7 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule"];
 function renderMe() {
   const s = state.student;
   if (!s) return;
@@ -564,6 +566,8 @@ async function send(text, { deep = false } = {}) {
         if (d.language) newLanguage = d.language;
       },
       device_settings: (d) => applyDeviceSettings(d.changes),
+      // Inštruktor je spremenil urnik: kartica na Učni poti in stran Urnik se osvežita.
+      schedule: () => scheduleChanged(),
       proposal: (d) => (proposal = d),
       mastered: (d) => toast(t("chat.mastered", { topic: d.topic }), "trophy"),
       done: (d) => {
@@ -1374,6 +1378,7 @@ async function loadPath(key = state.pathKey) {
   }
   state.pathKey = p.key;
   showLevelCard();
+  renderScheduleCard($("#schedule-card"));
   syncOfflineBanner();
   // Naloge za vadbo brez povezave (enkrat na dan, v ozadju).
   if (!p.offline) refreshPack(api, state.student.id, p.key).then(syncOfflineBanner);
@@ -1587,10 +1592,11 @@ const SESSIONS = {
   daily: { mode: "daily", icon: "zap", title: t("session.daily"), intro: t("session.dailyIntro"), empty: t("session.dailyEmpty") },
   "unit-practice": { mode: "unit", icon: "puzzle", title: t("session.unit"), intro: t("session.unitIntro") },
   "test-prep": { mode: "test", icon: "clipboard-check", title: t("session.testPrep"), intro: t("session.testPrepIntro") },
+  class: { mode: "class", icon: "calendar-clock", title: t("session.class"), intro: t("session.classIntro"), empty: t("session.classEmpty") },
   tek: { mode: "tek", endpoint: "competition-training", icon: "medal", title: t("session.tek"), intro: t("session.tekIntro") },
   contest: { mode: "contest", icon: "timer", title: t("session.contest"), intro: t("session.contestIntro") },
 };
-const SESSION_DONE = { review: t("sessionDone.review"), daily: t("sessionDone.daily"), unit: t("sessionDone.unit"), test: t("sessionDone.test"), tek: t("sessionDone.tek") };
+const SESSION_DONE = { review: t("sessionDone.review"), daily: t("sessionDone.daily"), unit: t("sessionDone.unit"), test: t("sessionDone.test"), tek: t("sessionDone.tek"), class: t("sessionDone.class") };
 
 async function startSession(kind, body = {}) {
   let cfg = SESSIONS[kind];
@@ -2590,6 +2596,14 @@ async function addGraphButton(bubble, text) {
 window.stemmind = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay };
 
 initFlashcards({ api, renderRich, escapeHtml, toast, showView, getStudent: () => state.student, onDue: setCardsDue });
+
+// Urnik (public/schedule.js): po spremembi se osvežita kartica »Danes imaš …« in Priprava na test.
+function scheduleChanged() {
+  if (currentView === "schedule") showSchedule();
+  renderScheduleCard($("#schedule-card"));
+  refreshModes();
+}
+initSchedule({ api, escapeHtml, toast, showView, startSession, getStudent: () => state.student, onChange: () => (renderScheduleCard($("#schedule-card")), refreshModes()) });
 
 initTextbook({
   api,

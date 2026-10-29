@@ -32,6 +32,8 @@ import { mountGames } from "./games.js";
 import { Avatars, mountAvatar } from "./avatar.js";
 import { mountCorner } from "./corner.js";
 import { mountWebApp } from "./webapp.js";
+import { Schedules, scheduleView, schedulePrompt, syncTestPlan } from "./schedule.js";
+import { mountSchedule } from "./schedule-api.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -143,6 +145,9 @@ export function createApp(store, opts = {}) {
   const helpTasks = new Map();
   const usage = new Usage(store.db);
   const progress = new Progress(store);
+  // Urnik učenca (server/schedule.js): ure, testi; gre v prompt in v Pripravo na test.
+  const schedules = new Schedules(store.db);
+  const scheduleText = (s) => schedulePrompt(scheduleView(schedules.get(s.id), s.settings));
 
   const intParam = (v) => (/^\d+$/.test(v) ? Number(v) : NaN);
   const loadStudent = (req, res) => {
@@ -226,7 +231,7 @@ export function createApp(store, opts = {}) {
     const s = loadStudent(req, res);
     if (!s) return;
     res.type("text/plain").send(
-      buildSystemPrompt({ settings: s.settings, weaknesses: weaknessesForPrompt(store, s), studentName: s.name, results: studentResults(store, s.id).text }),
+      buildSystemPrompt({ settings: s.settings, weaknesses: weaknessesForPrompt(store, s), studentName: s.name, results: studentResults(store, s.id).text, schedule: scheduleText(s) }),
     );
   });
 
@@ -336,6 +341,11 @@ export function createApp(store, opts = {}) {
       device: cleanDevice(req.body?.device),
       pending: pendingSettings,
       send,
+      schedules,
+      onSchedule: () => {
+        const st = store.getStudent(student.id);
+        syncTestPlan(progress, st.id, scheduleView(schedules.get(st.id), st.settings));
+      },
     });
     const onToolUse = settingsTools.onToolUse;
     onToolUse.hasPending = () => pendingSettings.has(conv.id);
@@ -346,6 +356,7 @@ export function createApp(store, opts = {}) {
         settings: tekTopic ? { ...student.settings, track: "COMPETITION" } : student.settings,
         weaknesses: weak,
         results: results.text,
+        schedule: scheduleText(student),
         studentName: student.name,
         learningPath: conv.path_topic
           ? [learningPathPrompt(conv.path_topic), examPrompt(getTopic(conv.path_topic)?.path), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n")
@@ -577,7 +588,10 @@ export function createApp(store, opts = {}) {
   // Načini učenja: nova snov, ponavljanje, priprava na test, dnevni trening.
   app.get("/api/students/:id/modes", (req, res) => {
     const s = loadStudent(req, res);
-    if (s) res.json({ ...progress.modes(s.id, getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings)), cardsDue: store.cards.dueCount(s.id) });
+    if (!s) return;
+    // Priprava na test sledi najbližjemu testu iz urnika (če je učenec ni nastavil sam).
+    syncTestPlan(progress, s.id, scheduleView(schedules.get(s.id), s.settings));
+    res.json({ ...progress.modes(s.id, getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings)), cardsDue: store.cards.dueCount(s.id) });
   });
 
   // --- kartice za ponavljanje ---
@@ -804,6 +818,7 @@ export function createApp(store, opts = {}) {
   mountGames(app, store, { loadStudent, progress, avatars });
   mountAvatar(app, avatars, { loadStudent });
   mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
+  mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup });
 
   // --- poraba AI ---
   // Poraba AI za vse profile: brez računov samo na računalniku, kjer teče strežnik

@@ -27,6 +27,8 @@ const NAMES = [
   "wallet",
   // meni profila (ime zgoraj desno)
   "user-plus", "log-out",
+  // urnik
+  "bell", "calendar-days", "calendar-clock", "link",
   // kotiček zanimanj
   "newspaper", "pin", "pin-off",
   // igre: zaklenjene igre in gradnja
