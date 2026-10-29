@@ -107,9 +107,9 @@
 .demo-val span { font-size: 0.8rem; font-weight: 700; color: var(--muted); }
 .demo-val b { font-size: 1.2rem; font-weight: 900; font-variant-numeric: tabular-nums; white-space: nowrap; }
 @media (max-width: 520px) { .demo-values { grid-template-columns: 1fr 1fr; } }
-.demo-table { border-collapse: collapse; margin: 8px 0; font-variant-numeric: tabular-nums; display: block; max-width: 100%; overflow-x: auto; }
-.demo-table th, .demo-table td { padding: 8px 14px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
-.demo-table th { color: var(--muted); font-weight: 600; }
+/* Osnovni videz tabele je skupen (style.css, »tabele«); tu samo pomik vstran na ozkem zaslonu. */
+.demo-table { display: block; width: max-content; max-width: 100%; overflow-x: auto; }
+.demo-table :is(th, td) { white-space: nowrap; }
 .demo-table.atoms tr.ok td:last-child { color: var(--ok); font-weight: 700; }
 .demo-table.atoms tr.bad td:last-child { color: var(--danger); font-weight: 700; }
 .demo-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; }
