@@ -17,7 +17,7 @@ test("games: every concept gives valid questions on every level, in both number 
           assert.ok(q.w.length >= 3, `premalo napačnih – ${where}`);
           assert.ok(!q.w.includes(q.a), `napačen = pravilen – ${where}`);
           assert.equal(new Set(q.w).size, q.w.length, `podvojen – ${where}`);
-          assert.ok(!/NaN|undefined|Infinity|null|\[object/.test(q.q + q.a + q.w.join()), where);
+          assert.ok(![q.q, q.a, ...q.w].some((x) => /\bNaN\b|undefined|Infinity|\bnull\b|\[object/.test(x)), where);
         }
       }
     }
