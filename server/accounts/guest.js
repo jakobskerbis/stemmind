@@ -1,6 +1,5 @@
 import "../env.js";
-// Uporaba brez registracije (gost). Samo za razvojno različico: ko gre Evklid v javnost,
-// nastavi EVKLID_GUEST=0 (glej docs/objava.md). Privzeto vklopljeno, razen pri NODE_ENV=production.
+// Uporaba brez registracije (gost) je odstranjena (j, 2026-10-29); ta koda ostane za stare goste in teste.
 //
 // Gost je račun brez e-naslova, vezan na piškotek naprave. Ima brezplačni paket; da brisanje piškotkov
 // ali profila ne da nove kvote, se vprašanja na dan in mesečna poraba AI štejejo za vse goste
@@ -9,10 +8,11 @@ import { sha256 } from "./auth.js";
 
 export const GUEST_SESSION_DAYS = 365;
 
-export function guestModeOn(env = process.env) {
-  if (env.EVKLID_GUEST === "1") return true;
-  if (env.EVKLID_GUEST === "0") return false;
-  return env.NODE_ENV !== "production";
+// Uporaba brez računa je odstranjena (j, 2026-10-29: »odstrani guest mode«): v aplikaciji je ni mogoče
+// vklopiti, tudi z EVKLID_GUEST ne. Ostala koda skrbi za stare goste (ustvarijo račun in obdržijo napredek)
+// in za kvote; teste vklopijo z mountAccounts(..., { guest: true }).
+export function guestModeOn() {
+  return false;
 }
 
 // Največ novih gostov z enega omrežja v 24 urah.

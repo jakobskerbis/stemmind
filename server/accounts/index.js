@@ -53,7 +53,7 @@ export function mountAccounts(app, store, opts = {}) {
   const db = store.db;
   migrateAccounts(db);
   const aiUsage = new Usage(db);
-  // Uporaba brez registracije (začasno, samo razvojna različica; EVKLID_GUEST=0 izklopi).
+  // Uporaba brez registracije je odstranjena: vedno izklopljena, vklopijo jo le testi (opts.guest).
   const guestOn = opts.guest ?? guestModeOn(process.env);
   const guests = new GuestQuota(db);
   app.set("trust proxy", 1);

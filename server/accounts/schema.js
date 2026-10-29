@@ -110,7 +110,7 @@ export function migrateAccounts(db) {
   if (!pcols.includes("promo_until")) db.exec("ALTER TABLE parents ADD COLUMN promo_until TEXT");
   // Datum rojstva imetnika računa (preverjanje starosti, glej age.js). Stari računi: NULL = polnoleten.
   if (!pcols.includes("birth_date")) db.exec("ALTER TABLE parents ADD COLUMN birth_date TEXT");
-  // Gost (uporaba brez registracije, EVKLID_GUEST): račun brez e-naslova, vezan na piškotek naprave.
+  // Gost (uporaba brez registracije, odstranjena 2026-10-29; stari gostje ostanejo): račun brez e-naslova, vezan na piškotek naprave.
   // guest_net = zgoščeni IP omrežja, da brisanje piškotkov ne da nove brezplačne kvote.
   if (!pcols.includes("is_guest")) db.exec("ALTER TABLE parents ADD COLUMN is_guest INTEGER NOT NULL DEFAULT 0");
   if (!pcols.includes("guest_net")) db.exec("ALTER TABLE parents ADD COLUMN guest_net TEXT");

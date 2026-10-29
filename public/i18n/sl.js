@@ -1464,7 +1464,6 @@ export default {
   "session.classEmpty": "Pri tem predmetu še ni nalog za ponovitev. Začni z Novo snovjo.",
   "sessionDone.class": "Ponovitev končana",
   // uporaba brez registracije (gost)
-  "guest.startNote": "Napredek je dosegljiv samo na tej napravi. Račun lahko ustvariš kadar koli pozneje in napredek ostane.",
   "guest.privacy": "Obvestilo o varstvu osebnih podatkov",
   "guest.title": "Uporabljaš Evklid brez računa",
   "guest.intro": "Napredek je dosegljiv samo na tej napravi. Ustvari brezplačen račun, da ga ne izgubiš, da se prijaviš tudi na drugi napravi in da dobiš 7 dni polnega dostopa.",
