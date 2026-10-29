@@ -563,7 +563,9 @@ export function createFormulas(root, opts) {
         continue;
       }
       if (!sec) newSec(null);
-      const rows = el.tagName === "TABLE" ? [...el.querySelectorAll("tr")] : [];
+      // renderRich ovije tabelo v .md-table-wrap (pomik vstran); široke tabele ostanejo v njem.
+      const tbl = el.classList.contains("md-table-wrap") ? el.querySelector("table") : el;
+      const rows = tbl?.tagName === "TABLE" ? [...tbl.querySelectorAll("tr")] : [];
       if (rows.length && rows.every((r) => r.children.length === 2)) {
         const list = document.createElement("div");
         list.className = "fm-list";
@@ -576,11 +578,6 @@ export function createFormulas(root, opts) {
           list.append(item);
         }
         sec.append(list);
-      } else if (el.tagName === "TABLE") {
-        const wrap = document.createElement("div");
-        wrap.className = "fm-scroll";
-        wrap.append(el);
-        sec.append(wrap);
       } else sec.append(el);
     }
     return out;

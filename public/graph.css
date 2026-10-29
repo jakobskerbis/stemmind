@@ -393,8 +393,8 @@ body.graph-open { overflow: hidden; }
 /* periodni sistem */
 .pse-wrap { padding: 12px 16px 24px; display: flex; flex-direction: column; gap: 12px; max-width: 1180px; margin: 0 auto; }
 .pse-mm-res { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 1.15rem; overflow-x: auto; }
-.pse-tab { width: 100%; border-collapse: collapse; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
-.pse-tab th, .pse-tab td { padding: 4px 6px; text-align: right; border-bottom: 1px solid var(--border); }
+.pse-tab { width: 100%; font-size: 0.9rem; }
+.pse-tab th, .pse-tab td { padding: 6px 8px; text-align: right; }
 .pse-tab th:first-child, .pse-tab td:first-child { text-align: left; font-weight: 800; }
 .pse-d-top { display: flex; align-items: center; gap: 14px; }
 .pse-big { width: 76px; height: 76px; border-radius: 14px; display: grid; place-items: center; font-size: 1.5rem; flex-shrink: 0; }
@@ -448,9 +448,6 @@ body.graph-open { overflow: hidden; }
 .fm-f { min-width: 0; overflow-x: auto; overflow-y: hidden; line-height: 1.55; padding: 2px 0; }
 .fm-f .katex { white-space: nowrap; }
 .fm-f p { margin: 0; }
-.fm-scroll { overflow-x: auto; }
-.fm-scroll table { border-collapse: collapse; width: 100%; margin: 6px 0; }
-.fm-scroll th, .fm-scroll td { border-bottom: 1px solid var(--border); padding: 6px 8px; text-align: left; vertical-align: top; white-space: nowrap; }
 @media (max-width: 600px) {
   .fm-wrap { padding: 0 12px 20px; }
   .fm-sel .seg { width: 100%; }

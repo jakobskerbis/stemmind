@@ -183,7 +183,8 @@ function shell(title, content) {
   .crumb { color: #667089; margin: 0; font-size: 0.9rem; }
   .lesson h3 { font-size: 1.15rem; margin: 22px 0 6px; border-bottom: 2px solid #dde2ec; padding-bottom: 3px; }
   .lesson h4 { margin: 14px 0 4px; }
-  table { border-collapse: collapse; margin: 8px 0; } th, td { border: 1px solid #ccd3e0; padding: 3px 9px; }
+  table { border-collapse: collapse; margin: 8px 0; font-variant-numeric: tabular-nums; } th, td { border: 1px solid #ccd3e0; padding: 4px 10px; text-align: left; vertical-align: middle; }
+  th { background: #eef2f9; font-weight: 700; } tr { break-inside: avoid; } th[align="center"], td[align="center"] { text-align: center; } th[align="right"], td[align="right"] { text-align: right; }
   pre { background: #f3f5f9; padding: 8px; border-radius: 6px; }
   .demo-note { border: 1px dashed #2f6fed; border-radius: 8px; padding: 6px 10px; color: #2f6fed; font-family: system-ui, sans-serif; font-size: 0.9rem; margin: 10px 0; }
   .alt { border-left: 3px solid #7b61d1; padding-left: 12px; margin: 10px 0; }
