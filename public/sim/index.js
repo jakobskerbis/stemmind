@@ -154,6 +154,17 @@ export async function mountSim(id, el, opts = {}) {
   el.classList.add("demo", `demo-${id}`);
   try {
     fn(el, opts || {});
+    focusableTargets(el);
+    // Ponastavi: simulacijo postavi znova v začetno stanje (ne pri zbirki, ki ima svoje podsimulacije).
+    if (id !== "zbirka" && !opts?.noReset) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "ghost small demo-reset";
+      b.textContent = "↺ Ponastavi";
+      b.setAttribute("aria-label", "Ponastavi simulacijo na začetek");
+      b.addEventListener("click", () => mountSim(id, el, opts));
+      el.append(b);
+    }
   } catch (err) {
     console.error(`Simulacija ${id}:`, err);
     el.replaceChildren();
@@ -161,6 +172,27 @@ export async function mountSim(id, el, opts = {}) {
     return false;
   }
   return true;
+}
+
+// Elementi, ki se jih da klikniti ali vleči (.drag), so dosegljivi s tipko Tab; Enter ali preslednica
+// jih klikne (vlečenje s puščicami doda kit.draggable). Simulacije pogosto rišejo znova, zato opazujemo spremembe.
+function focusableTargets(el) {
+  const mark = () =>
+    el.querySelectorAll(".drag:not([tabindex])").forEach((t) => {
+      t.setAttribute("tabindex", "0");
+      if (!t.getAttribute("role")) t.setAttribute("role", "button");
+      if (!t.getAttribute("aria-label")) t.setAttribute("aria-label", (t.textContent || "").trim() || "Izberi");
+    });
+  mark();
+  if (el.dataset.kbd) return;
+  el.dataset.kbd = "1";
+  new MutationObserver(mark).observe(el, { childList: true, subtree: true });
+  el.addEventListener("keydown", (ev) => {
+    const t = ev.target.closest?.(".drag");
+    if (!t || (ev.key !== "Enter" && ev.key !== " ")) return;
+    ev.preventDefault();
+    t.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
 }
 
 // Zbirka: izbirni seznam več simulacij, npr. za ponavljanje pred maturo.

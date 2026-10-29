@@ -166,7 +166,9 @@ export function animate(el, step, { autoplay = true } = {}) {
     ctl.onchange?.();
   };
   ctl.toggle = () => (ctl.running ? ctl.pause() : ctl.play());
-  if (autoplay) ctl.play();
+  // Učenec, ki ima v sistemu vklopljeno »manj gibanja«, animacijo zažene sam.
+  const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (autoplay && !reduced) ctl.play();
   return ctl;
 }
 
@@ -245,8 +247,9 @@ export function svgPoint(svg, ev) {
 
 // Vlečenje elementa (miška, prst, pisalo). onMove(x, y) v koordinatah SVG.
 // Premike poslušamo na oknu, zato vlečenje deluje tudi, ko simulacija ročico med vlečenjem nariše na novo.
-export function draggable(svg, target, onMove, { onStart, onEnd } = {}) {
+export function draggable(svg, target, onMove, { onStart, onEnd, label = "Vlečna točka: premikaj jo s puščicami" } = {}) {
   target.classList.add("drag");
+  keyboardDrag(svg, target, onMove, { onStart, onEnd, label });
   // Brskalniki ne upoštevajo touch-action na oblikah SVG: brez tega bi prst namesto vlečenja premaknil stran.
   target.addEventListener("touchstart", (e) => e.cancelable && e.preventDefault(), { passive: false });
   target.addEventListener("pointerdown", (ev) => {
@@ -273,6 +276,42 @@ export function draggable(svg, target, onMove, { onStart, onEnd } = {}) {
     window.addEventListener("pointermove", move, { passive: false });
     window.addEventListener("pointerup", up);
     window.addEventListener("pointercancel", up);
+  });
+}
+
+// Tipkovnica: Tab izbere vlečni element, puščice ga premaknejo (Shift = večji korak).
+// Položaj vzamemo iz središča elementa na zaslonu, zato deluje za vse simulacije brez dodatne kode.
+function keyboardDrag(svg, target, onMove, { onStart, onEnd, label }) {
+  if (target.hasAttribute("tabindex")) return;
+  target.setAttribute("tabindex", "0");
+  target.setAttribute("role", "button");
+  if (!target.getAttribute("aria-label")) target.setAttribute("aria-label", label);
+  const DIR = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+  const center = (t) => {
+    const r = t.getBoundingClientRect();
+    return [r.left + r.width / 2, r.top + r.height / 2];
+  };
+  target.addEventListener("keydown", (ev) => {
+    const d = DIR[ev.key];
+    if (!d) return;
+    ev.preventDefault();
+    // Simulacija lahko ob premiku nariše vse na novo: vlečni element poiščemo po zaporedni številki.
+    const idx = [...svg.querySelectorAll(".drag")].indexOf(target);
+    const current = () => (target.isConnected ? target : svg.querySelectorAll(".drag")[idx] || target);
+    const [cx, cy] = center(target);
+    const [x, y] = svgPoint(svg, { clientX: cx, clientY: cy });
+    const vb = svg.viewBox?.baseVal;
+    const step = ((vb && vb.width) || 400) * (ev.shiftKey ? 0.05 : 0.01);
+    onStart?.(x, y);
+    // Pri simulacijah, ki točko zaokrožijo na mrežo, korak povečujemo, dokler se točka ne premakne.
+    for (const k of [1, 2, 4, 8, 16]) {
+      onMove(x + d[0] * step * k, y + d[1] * step * k);
+      const [nx, ny] = center(current());
+      if (Math.hypot(nx - cx, ny - cy) > 1) break;
+    }
+    onEnd?.();
+    const now = current();
+    if (now !== document.activeElement) now.focus?.();
   });
 }
 
