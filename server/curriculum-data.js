@@ -354,6 +354,70 @@ export const PATHS = {
     ],
   },
 
+  // ------------------------------------------------------------ OŠ BIOLOGIJA
+  // Po UN Biologija za OŠ (8. razred 52 ur, 9. razred 64 ur); sklopi A–N.
+  "BIO-OS-8": {
+    label: "Biologija, 8. razred",
+    units: [
+      ["Biologija kot veda", [
+        "Biologija in raziskovanje | kaj preučuje biologija, ravni organizacije od celice do biosfere, raziskovalno vprašanje, poskus in kontrolna skupina",
+      ]],
+      ["Celica in dedovanje", [
+        "Celica pod mikroskopom | mikroskopiranje, deli celice pod svetlobnim mikroskopom, celice človeka, rastlin, gliv in bakterij",
+        "Celični organeli | jedro, celična membrana, kloroplast, mitohondrij, izmenjava snovi skozi membrano, enotna zgradba celic",
+        "DNA in dedna informacija | DNA v jedru, zapis z zaporedjem nukleotidov, enak zapis pri vseh organizmih, geni očeta in matere",
+        "Celična delitev | rast celice, podvojitev DNA, mitoza, razvoj iz oplojene jajčne celice, rast tkiv",
+      ]],
+      ["Zgradba in delovanje človeka", [
+        "Od celice do organizma | specializacija celic, tkiva, organi, organski sistemi, osnovne življenjske funkcije",
+        "Bolezni in zdravje | okužbe z bakterijami, virusi in zajedavci, poškodbe, dedne bolezni, obramba telesa, skrb za zdravje",
+        "Prebavila in prehrana | deli prebavne cevi, prebavni sokovi in encimi, jetra, trebušna slinavka, vsrkavanje, uravnotežena prehrana",
+        "Dihala | pljučno in celično dihanje, vdih in izdih, izmenjava plinov v pljučih, bolezni dihal, kajenje, prva pomoč",
+        "Kri in krvožilje | naloge krvi, krvne celice, žile, srce, telesni in pljučni krvni obtok, limfa, krvne skupine, cepljenje",
+        "Izločala | ledvice, nastanek seča, vzdrževanje notranjega okolja, dializa",
+        "Živčevje in hormoni | živčna celica, osrednje in obkrajno živčevje, refleks, žleze z notranjim izločanjem, hipofiza",
+        "Čutila | oko in vid, napake vida, uho, sluh in ravnotežje, okus in voh",
+        "Okostje in mišice | kosti in sklepi, hrbtenica in drža, vrste mišičnih celic, antagonistične mišice, pomen gibanja",
+        "Koža | zgradba in naloge kože, uravnavanje telesne temperature, čutila v koži, UV-sevanje in opekline",
+        "Razmnoževanje človeka | spolni organi, spolne celice in mejoza, menstrualni ciklus, oploditev, nosečnost, puberteta, spolno prenosljive bolezni",
+      ]],
+    ],
+  },
+  "BIO-OS-9": {
+    label: "Biologija, 9. razred",
+    units: [
+      ["Biologija in raziskovanje", [
+        "Biologija in družba | biologija kot temelj medicine, kmetijstva in biotehnologije, temeljna in uporabna znanost",
+        "Načrtovanje poskusa | raziskovalno vprašanje, spremenljivke in kontrolirani pogoji, ponovljivost, graf, linearna in nelinearna odvisnost",
+      ]],
+      ["Kemija živih sistemov", [
+        "Snovi v živih bitjih | ogljik, elementi C, H, O, N, P, S, voda in soli, ogljikovi hidrati, maščobe, beljakovine, DNA, reakcije v organizmih",
+      ]],
+      ["Dedovanje", [
+        "Kromosomi in geni | kromosom iz DNA in beljakovin, gen kot odsek DNA, podvojevanje DNA, mitoza in mejoza, odkritje zgradbe DNA",
+        "Dedovanje lastnosti | alela, dominantno in recesivno, homozigot in heterozigot, genotip in fenotip, križanje, vpliv okolja",
+        "Dedovanje pri človeku | lastnosti enega in več genov, barvna slepota, hemofilija, rodovnik, kromosomske analize, Downov sindrom",
+      ]],
+      ["Biotehnologija", [
+        "Biotehnologija | kvasovke in mikroorganizmi, gensko spremenjeni organizmi, kloniranje, izvorne celice, etična vprašanja",
+      ]],
+      ["Evolucija", [
+        "Naravni izbor | genetska variabilnost, mutacije, naravni izbor, prilagoditve, odpornost na antibiotike, geografska izolacija",
+        "Zgodovina življenja | starost Zemlje, fosili, nastanek življenja, cianobakterije in kisik, množična izumrtja, izvor človeka",
+      ]],
+      ["Razvrščanje organizmov", [
+        "Sistematika | vrsta, rod, družina, red, razred, deblo, dvodelno latinsko ime, Linné, evolucijsko drevo",
+      ]],
+      ["Biotska pestrost, biomi in biosfera", [
+        "Biotska pestrost | genska, vrstna in ekosistemska pestrost, preproste metode ugotavljanja, biotska pestrost Slovenije",
+        "Ekosistemi in biomi | zgradba in delovanje ekosistema, sukcesija, biomi, biosfera, vpliv organizmov na planet",
+      ]],
+      ["Vpliv človeka na naravo in okolje", [
+        "Človek in okolje | varstvo narave in okolja, ogrožene vrste, onesnaževanje, ozonska luknja, globalno segrevanje, trajnostni razvoj",
+      ]],
+    ],
+  },
+
   // ------------------------------------------------------------ GIMNAZIJA MATEMATIKA
   "MAT-SS-1": {
     label: "Matematika, 1. letnik",
@@ -622,6 +686,129 @@ export const PATHS = {
       ]],
     ],
   },
+  // ------------------------------------------------------------ GIMNAZIJA BIOLOGIJA
+  // Po UN Biologija za gimnazijo: obvezni program 210 ur (70 ur na letnik) po priporočeni vertikali
+  // od celice do biosfere (A, C, D → E, F → F, G), v 4. letniku maturitetni program (L–O) in izbirni sklopi (H–K).
+  // Šola lahko vrstni red sklopov prilagodi.
+  "BIO-SS-1": {
+    label: "Biologija, 1. letnik",
+    units: [
+      ["Življenje na Zemlji", [
+        "Značilnosti življenja | ravni organizacije od molekule do biosfere, enotnost in raznolikost živega, zgradba, delovanje in evolucija",
+        "Raziskovanje v biologiji | raziskovalno vprašanje in hipoteza, poskus s kontrolo, odvisna in neodvisna spremenljivka, prikaz podatkov, modeli",
+      ]],
+      ["Zgradba in delovanje celice", [
+        "Snovi v celici | voda, anorganske snovi, ogljikovi hidrati, lipidi in fosfolipidi, aminokisline in beljakovine, makromolekule iz gradnikov",
+        "Biotska membrana | zgradba membrane, izbirna prepustnost, difuzija, osmoza, aktivni transport, velikost celice",
+        "Prokariontska in evkariontska celica | bakterijska, rastlinska, živalska in glivna celica, organeli in njihove naloge, endosimbioza, virusi",
+        "Encimi in ATP | presnova, encimi, aktivno mesto, model ključ in ključavnica, vpliv temperature in pH, ATP kot prenašalec energije",
+        "Celično dihanje in vrenje | glikoliza, aerobno dihanje v mitohondriju, mlečnokislinsko in alkoholno vrenje, nastanek ATP",
+        "Fotosinteza | fotosintezna barvila, pretvorba svetlobne energije, vezava CO2, kisik iz vode, kloroplast",
+        "Od DNA do beljakovine | zgradba DNA in RNA, podvojevanje DNA, genetski kod, prepis in prevod, uravnavanje izražanja genov",
+        "Celični cikel in mitoza | spremembe kromosomov v celičnem ciklu, faze mitoze, diferenciacija, delitev rakavih celic",
+      ]],
+      ["Geni in dedovanje", [
+        "Geni, aleli in mutacije | gen in alel, homozigot in heterozigot, genske, kromosomske in genomske mutacije, mutageni, genotip, fenotip in okolje",
+        "Mejoza in spolno razmnoževanje | potek mejoze, haploidno in diploidno stanje, prekrižanje, oploditev, primerjava z mitozo, kloniranje",
+        "Mendlovo dedovanje | monohibridno in dihibridno križanje, Punnettov kvadrat, deleži genotipov in fenotipov, nepopolna dominanca",
+        "Genska tehnologija | umetni izbor, genski inženiring, prenos genov, gensko spremenjeni organizmi, koristi in tveganja",
+      ]],
+    ],
+  },
+  "BIO-SS-2": {
+    label: "Biologija, 2. letnik",
+    units: [
+      ["Evolucija", [
+        "Nastanek in razvoj življenja | nastanek Zemlje, kemijska evolucija, prvi organizmi, fotosinteza in kisik, endosimbiontska teorija, prehod na kopno",
+        "Mehanizmi evolucije | variabilnost, mutacije in rekombinacije, naravni izbor deluje na fenotip, genski sklad, migracije, umetni izbor, odpornost",
+        "Nastanek vrst | definicija vrste, reproduktivna izolacija, speciacija, izumrtje, adaptacije",
+        "Dokazi evolucije | fosili, homologija in analogija, konvergenca in divergenca, embriologija, biogeografija, molekulski dokazi, evolucija človeka",
+        "Sistem organizmov | vrsta, dvodelno ime, sistematske kategorije, arheje, bakterije in evkarionti, glavne skupine rastlin in živali",
+      ]],
+      ["Temeljne lastnosti organizmov", [
+        "Življenjski problemi organizmov | ločenost od okolja, energija, notranje okolje, enoceličnost in večceličnost, diferenciacija, negativna povratna zanka",
+      ]],
+      ["Bakterije in glive", [
+        "Bakterije | bakterijska celica, nespolno razmnoževanje, presnovna raznolikost, vezava dušika, pomen v ekosistemih in za človeka, antibiotiki",
+        "Glive | glivna celica, kvasovke, plesni in gobe, razkrojevalci, zajedavci, lišaji in mikoriza, pomen za človeka",
+      ]],
+      ["Rastline", [
+        "Zgradba rastline | rastlinska celica, tkiva, korenina, steblo in list, zgradba in naloge organov",
+        "Prehrana in transport pri rastlinah | fotosinteza in dihanje v rastlini, mineralne snovi, listne reže, transpiracija, prevajanje vode in organskih snovi",
+        "Rast in razmnoževanje rastlin | rastni vršički, sekundarna rast in les, cvet, opraševanje, seme in kalitev, razširjanje semen, vegetativno razmnoževanje",
+        "Odzivi rastlin na okolje | rastlinski hormoni, odzivi na svetlobo in patogene, preživetje neugodnih razmer, odnosi z drugimi organizmi",
+      ]],
+      ["Človek in živali: snovi in energija", [
+        "Prehrana in prebava | potrebne snovi, prebavna cev in žleze, uravnotežena prehrana, motnje hranjenja, prebava pri drugih živalih",
+        "Dihanje | ventilacija, izmenjava plinov z difuzijo, pljučni mehurčki, bolezni dihal, škrge in vzdušnice",
+        "Kri in obtočila | sestava krvi, srce in žile, krvni obtok, bolezni srca in ožilja, transport pri drugih živalih",
+        "Izločala | dušikove spojine, ledvice in nefron, osmoregulacija, amonijak, sečnina in sečna kislina",
+      ]],
+    ],
+  },
+  "BIO-SS-3": {
+    label: "Biologija, 3. letnik",
+    units: [
+      ["Uravnavanje delovanja organizma", [
+        "Hormonski sistem | hormoni in tarčne celice, receptorji, ščitnica, trebušna slinavka in inzulin, endokrine bolezni",
+        "Živčna celica in sinapsa | zgradba nevrona, mirovni potencial, akcijski potencial, mielin, kemična sinapsa, psihoaktivne snovi",
+        "Živčevje in vedenje | osrednje in obkrajno živčevje, hrbtenjača in refleks, deli možganov, živčevje pri živalih, vedenje",
+        "Čutila | dražljaji in receptorji, oko in uho, zaznavanje v možganih, čutila drugih živali, evolucija očesa",
+      ]],
+      ["Zaščita, opora in gibanje", [
+        "Koža in krovne strukture | zgradba in naloge kože, primerjava z drugimi živalmi, škodljivost UV-sevanja",
+        "Opora in gibanje | zunanje, notranje in hidrostatsko ogrodje, kost, hrustanec in kite, skeletna mišica, aktin in miozin",
+        "Imunski sistem | pregrade, nespecifična in specifična obramba, protitelesa, aktivna in pasivna imunizacija, alergije, avtoimunske bolezni, AIDS",
+      ]],
+      ["Razmnoževanje in razvoj", [
+        "Razmnoževanje živali in človeka | nespolno in spolno razmnoževanje, spolni organi, hormonsko uravnavanje, nastanek spolnih celic, oploditev, kontracepcija",
+        "Razvoj živali in človeka | ontogeneza, diferenciacija, razvoj zarodka, ličinke in preobrazba, rast, puberteta in staranje",
+      ]],
+      ["Ekologija", [
+        "Ekologija in ekosistem | populacija, združba, biotop, habitat, ekološka niša, biom, biosfera, ekologija in varstvo okolja",
+        "Ekološki dejavniki in niša | abiotski dejavniki, krivulja strpnosti, generalisti in specialisti, prilagoditve",
+        "Populacije | rodnost, smrtnost, priseljevanje in odseljevanje, gostota, starostna sestava, rast in nihanje populacije",
+        "Odnosi med vrstami | plenilstvo, tekmovanje, zajedavstvo, mutualizem in simbioza, ločevanje niš",
+        "Pretok energije in kroženje snovi | primarna proizvodnja, prehranjevalni splet, trofične ravni, energijska piramida, kroženje ogljika in vode",
+        "Sukcesija in biotska pestrost | razvoj ekosistema, klimaksna združba, genska, vrstna in ekosistemska pestrost, ključne vrste",
+        "Človek in ekosistemi | naravni viri, onesnaževanje, invazivne vrste, izumiranje, rdeči seznam, zavarovana območja, Natura 2000",
+      ]],
+    ],
+  },
+  "BIO-SS-4": {
+    label: "Biologija, 4. letnik (matura)",
+    units: [
+      ["Kako deluje znanost", [
+        "Znanstvena metoda | spreminjanje znanstvenih razlag, recenzija in objava, opazovanje in poskus, kvalitativni in kvantitativni podatki, verodostojnost virov",
+        "Statistika v biologiji | povprečje, standardni odklon, standardna napaka, korelacija, t-test, hi-kvadrat test",
+      ]],
+      ["Biologija celice", [
+        "Beljakovine in celični signali | zgradba in oblika beljakovin, fosforilacija in kinaze, receptorji, G-beljakovina in cAMP, kalcij kot sekundarni prenašalec",
+        "Energetika celice | mitohondrij in kloroplast, prenos elektronov, protonski gradient, ATP-sintaza, absorpcijski spekter, omejujoči dejavniki fotosinteze, C3 in CAM",
+        "Endocitoza in eksocitoza | endomembranski sistem, endoplazemski retikel, Golgijev aparat, lizosomi, vezikli, izločanje",
+        "Molekularna genetika | podvojevalne vilice, tipi RNA, univerzalni genetski kod, mutacije in beljakovine, operon, uravnavanje genov pri evkariontih",
+      ]],
+      ["Fiziologija človeka", [
+        "Mišice med naporom | aktin, miozin, Ca2+ in ATP, anaerobni metabolizem, srčni utrip in dihanje med naporom",
+        "Homeostaza | receptor, center in efektor, negativna povratna zanka, antagonistično uravnavanje, telesna temperatura, voda v telesu",
+        "Imunost in krvne skupine | patogeni, celice imunskega sistema, sistem ABO, kodominanca, Rh, transfuzija in presaditve",
+        "Geni in razvoj človeka | določanje spola, diferenciacija, rak, zarodne celice, kloni, genska diagnostika",
+      ]],
+      ["Ekologija, biotska pestrost in evolucija", [
+        "Nastanek življenja | abiogeni nastanek organskih snovi, poskus Millerja in Ureyja, svet RNA, membrane in prve celice",
+        "Populacijska genetika | Hardy-Weinbergovo ravnovesje, pogostost alelov in genotipov, evolucijski dejavniki, akomodacija in adaptacija",
+        "Speciacija in filogenija | geografska in ekološka izolacija, predoploditvene in poporoditvene pregrade, kladogram, molekulska ura, tri domene",
+        "Evolucija človeka | skupni prednik, hominidi, razvoj možganov, kulturna evolucija, umetni izbor, vpliv sodobnega načina življenja",
+      ]],
+      ["Izbirni sklopi", [
+        "Biotehnologija in mikrobiologija | arheje, bakterije, praživali, virusi, presnova mikroorganizmov, mikroorganizmi v ekosistemu, biotehnološka uporaba",
+        "Biološke osnove zdravega življenja | uravnotežena prehrana, esencialne snovi, vitamini, maščobe in holesterol, telesna dejavnost, zdrav življenjski slog",
+        "Vedenje živali | etologija, refleksi in ustaljeni vzorci vedenja, ključni dražljaji, nagon in motivacija, kineze in taksije, učenje",
+        "Človek in naravni viri | energija in snovi za človeka, gojene rastline in udomačene živali, rastlinske surovine, obnovljivi viri, trajnostna raba",
+      ]],
+    ],
+  },
+
   // ------------------------------------------------------------ TEKMOVANJA
   // Dodatne teme za tekmovanja in olimpijade (Kenguru, Vegovo, Stefanovo,
   // Preglovo priznanje, izbirna tekmovanja za olimpijade). Niso del učnega
