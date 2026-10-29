@@ -88,7 +88,7 @@ export const UNI_GENERATORS = [
           solution: `$F(x) = ${[[a, 3, "x^3"], [b, 2, "x^2"], [c, 1, "x"]]
             .filter(([k]) => k !== 0)
             .map(([k, d, x], i) => `${k < 0 ? "-" : i ? "+" : ""} ${k % d === 0 ? cf(Math.abs(k / d)) : `\\dfrac{${Math.abs(k)}}{${d}}`}${x}`)
-            .join(" ")}$,$F(${q}) - F(${p}) \\approx ${r2(v, 2)}$`,
+            .join(" ")}$, $F(${q}) - F(${p}) \\approx ${r2(v, 2)}$`,
         };
       }
       if (level === 2) {

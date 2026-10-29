@@ -20,7 +20,7 @@ commands below and the checklist of their lens.
   `node scripts/preveri-simulacije.cjs`, `node scripts/check-lesson.js -q <files>`
 
 **Pass 2 – function (reviewer agent 1):** reads the diff and the code paths it touches, and uses the
-feature in the running app (test mode, throwaway `STEMMIND_DB`). Checklist: does every button and
+feature in the running app (test mode, throwaway `KOMPRENO_DB`). Checklist: does every button and
 input do what it says; state refreshes after the action; back/close/Esc work; empty, error, offline
 and slow states; another profile's data never visible; invalid API input returns 4xx not 5xx; no
 regression in the flows next to it; a test exists for each server change.

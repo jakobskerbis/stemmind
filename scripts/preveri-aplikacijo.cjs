@@ -48,15 +48,15 @@ const freePort = () =>
 const servers = [];
 async function startServer(extraEnv = {}) {
   const port = await freePort();
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "stemmind-preveri-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "kompreno-preveri-"));
   const env = {
     ...process.env,
     PORT: String(port),
-    STEMMIND_MOCK: "1",
-    STEMMIND_MOCK_DELAY_MS: "0",
-    STEMMIND_NEWS: "0",
-    STEMMIND_DB: path.join(dir, "t.db"),
-    STEMMIND_PASSWORD: "",
+    KOMPRENO_MOCK: "1",
+    KOMPRENO_MOCK_DELAY_MS: "0",
+    KOMPRENO_NEWS: "0",
+    KOMPRENO_DB: path.join(dir, "t.db"),
+    KOMPRENO_PASSWORD: "",
     ANTHROPIC_API_KEY: "",
     RESEND_API_KEY: "",
     STRIPE_SECRET_KEY: "",
@@ -70,7 +70,7 @@ async function startServer(extraEnv = {}) {
   servers.push({ srv, dir });
   for (let i = 0; i < 100; i++) {
     try {
-      if ((await fetch(base + "/healthz")).ok) return { base, db: env.STEMMIND_DB, log };
+      if ((await fetch(base + "/healthz")).ok) return { base, db: env.KOMPRENO_DB, log };
     } catch {}
     await new Promise((r) => setTimeout(r, 100));
   }
@@ -427,26 +427,29 @@ async function textbook(p, label) {
   await settle(p, 400);
   await expectVisible(p, "#view-textbook .tb-title", "lekcija");
   await screen(p, `lekcija-${label}`);
-  const demo = p.locator(".tb-demo").first();
-  if (await demo.count()) {
-    await demo.scrollIntoViewIfNeeded();
-    await p.waitForTimeout(300);
-    if (!(await p.locator(".tb-demo-mount").first().evaluate((m) => m.children.length))) throw new Error("simulacija se ni naložila");
-    // Prvi drsnik ali gumb simulacije.
-    const ctl = demo.locator("input[type=range], button").first();
-    if (await ctl.count()) {
-      if ((await ctl.getAttribute("type")) === "range") await ctl.fill(String(await ctl.evaluate((x) => x.max)));
-      else await ctl.click();
-    }
-    await screen(p, `simulacija-${label}`);
-  }
   // Lekcija po korakih (privzeto): Naprej do konca, enkrat Nazaj; »Preveri se« in »Razloži drugače«
   // preveri v koraku, kjer sta (skriti koraki so hidden).
   const shown = (sel) => p.locator(sel).filter({ visible: true }).first();
   const steps = await p.locator("#tb-step-next").count();
   let checked = false;
   let alt = false;
+  let sim = false;
   for (let i = 0; i < 60; i++) {
+    // Simulacija: na računalniku ob strani, na telefonu v enem od korakov.
+    if (!sim && (await shown(".tb-demo").count())) {
+      const demo = shown(".tb-demo");
+      await demo.scrollIntoViewIfNeeded();
+      await p.waitForTimeout(300);
+      if (!(await demo.locator(".tb-demo-mount").first().evaluate((m) => m.children.length))) throw new Error("simulacija se ni naložila");
+      // Prvi drsnik ali gumb simulacije.
+      const ctl = demo.locator("input[type=range], button").first();
+      if (await ctl.count()) {
+        if ((await ctl.getAttribute("type")) === "range") await ctl.fill(String(await ctl.evaluate((x) => x.max)));
+        else await ctl.click();
+      }
+      await screen(p, `simulacija-${label}`);
+      sim = true;
+    }
     if (!checked && (await shown(".tb-check .tb-opt").count())) {
       const opt = shown(".tb-check .tb-opt");
       await opt.scrollIntoViewIfNeeded();
@@ -470,6 +473,7 @@ async function textbook(p, label) {
     if (i === 0) await screen(p, `lekcija-korak-${label}`);
   }
   if (steps && (await p.locator("#tb-step-next").isVisible())) throw new Error("lekcija po korakih ne pride do konca");
+  if ((await p.locator(".tb-demo").count()) && !sim) throw new Error("simulacija lekcije ni bila vidna v nobenem koraku");
   // Nazaj na seznam in iskanje.
   await p.locator("#tb-back").scrollIntoViewIfNeeded();
   await click(p, "#tb-back");
@@ -931,12 +935,12 @@ async function accounts(browser, app) {
     if (ONLY !== "telefon") await desktop(browser, app);
     if (ONLY !== "racunalnik") await phone(browser, app);
     if (ACCOUNTS && !ONLY) {
-      const acc = await startServer({ STEMMIND_ACCOUNTS: "1" });
+      const acc = await startServer({ KOMPRENO_ACCOUNTS: "1" });
       await accounts(browser, acc);
-      const bad = acc.log.join("").split("\n").filter((l) => /napaka|Error|TypeError/.test(l) && !/\[stemmind\] 4\d\d /.test(l));
+      const bad = acc.log.join("").split("\n").filter((l) => /napaka|Error|TypeError/.test(l) && !/\[kompreno\] 4\d\d /.test(l));
       bad.forEach((l) => problem("strežnik (računi)", l.slice(0, 200)));
     }
-    const bad = app.log.join("").split("\n").filter((l) => /napaka|Error|TypeError/.test(l) && !/\[stemmind\] 4\d\d /.test(l));
+    const bad = app.log.join("").split("\n").filter((l) => /napaka|Error|TypeError/.test(l) && !/\[kompreno\] 4\d\d /.test(l));
     bad.forEach((l) => problem("strežnik", l.slice(0, 200)));
   } finally {
     await browser.close();

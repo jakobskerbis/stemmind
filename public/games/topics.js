@@ -671,7 +671,7 @@ def("quad_zero", "fn", 10, "Ničle kvadratne funkcije", "Zeros of a quadratic", 
   const a = t === 3 ? R0(-3, 3) : 1;
   // ničla 0 da faktor x (ne »(x)«), ki stoji spredaj
   const fac = [p, q].sort((u, v) => (u === 0 ? -1 : v === 0 ? 1 : 0)).map((z) => (z ? `(${lin(1, -z)})` : "x")).join("");
-  if (t === 1) return mk(`f(x) = ${a === 1 ? "" : a}${fac}: ${w("zeros")}`, set([p, q]), [set([-p, -q]), set([p, -q]), set([p * q])], () => set([R(-8, 8), R(-8, 8)]));
+  if (t === 1) return mk(`f(x) = ${a === 1 ? "" : a === -1 ? "-" : a}${fac}: ${w("zeros")}`, set([p, q]), [set([-p, -q]), set([p, -q]), set([p * q])], () => set([R(-8, 8), R(-8, 8)]));
   return mk(`f(x) = ${poly([a, -a * (p + q), a * p * q])}: ${w("zeros")}`, set([p, q]), [set([-p, -q]), set([p + q, p * q]), set([a, p * q])], () => set([R(-8, 8), R(-8, 8)]));
 });
 def("compose", "fn", 11, "Sestavljanje funkcij", "Composite functions", (t) => {
