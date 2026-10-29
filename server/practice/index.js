@@ -48,7 +48,7 @@ export const GENERATORS = [
   ...EXAM_KEM,
 ];
 
-const BY_TOPIC = {};
+const BY_TOPIC = Object.create(null); // brez prototipa (id teme pride iz zahteve)
 for (const g of GENERATORS) {
   for (const t of g.topics) (BY_TOPIC[t] ||= []).push(g);
 }

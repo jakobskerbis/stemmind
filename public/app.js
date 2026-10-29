@@ -104,6 +104,12 @@ function renderUserText(text) {
 // ---------- pogledi ----------
 
 function showView(name) {
+  // Uvod profila: logotip ali tipka Nazaj ga zapreta (prej so ostali skriti vsi zavihki).
+  // Prvi profil na napravi mora nastati, zato takrat ostanemo na uvodu.
+  if (name !== "onboard" && document.body.classList.contains("onboarding")) {
+    if (!state.student) return;
+    document.body.classList.remove("onboarding");
+  }
   syncHistory(name);
   currentView = name;
   syncCompetitionTab();
@@ -155,7 +161,9 @@ const atTop = () => history.state?.stm !== 1;
 function syncHistory(name) {
   if (fromBack) return;
   if (name === "path") {
-    if (!atTop()) {
+    // Korak nazaj že čaka (history.back je asinhron, history.state se še ni spremenil):
+    // drugi klic bi šel čez prvi zapis aplikacije, npr. ob osvežitvi na podstrani na about:blank.
+    if (!atTop() && !skipPop) {
       skipPop++;
       overlayEntry = false;
       history.back();
@@ -175,7 +183,7 @@ function overlayOpened() {
 }
 // Okno zaprto z gumbom: odvečni zapis odstranimo, da ni treba dvakrat pritisniti Nazaj.
 function overlayClosed() {
-  if (overlayEntry && currentView === "path" && !atTop()) {
+  if (overlayEntry && currentView === "path" && !atTop() && !skipPop) {
     skipPop++;
     history.back();
   }
@@ -184,6 +192,8 @@ function overlayClosed() {
 window.addEventListener("popstate", () => {
   if (skipPop) {
     skipPop--;
+    // Medtem odprt drug pogled (npr. takoj po zagonu) dobi svoj zapis, da Nazaj ne zapre aplikacije.
+    if (!skipPop && currentView !== "path" && atTop()) history.pushState({ stm: 1, v: currentView }, "");
     return;
   }
   const wasOverlay = overlayEntry;
@@ -288,6 +298,7 @@ async function onboard(name = "") {
       </fieldset>
       <p class="form-error" hidden></p>
       <button class="primary big" type="submit">${t("common.start")}</button>
+      ${state.student ? `<button type="button" class="ghost" data-onb-cancel>${t("cards.cancel")}</button>` : ""}
     </form>`;
   const f = $("#onboard-form");
   mountLanguageCard(f.querySelector(".onb-lang"), { compact: true });
@@ -308,6 +319,11 @@ async function onboard(name = "") {
   document.body.classList.add("onboarding");
   return new Promise((resolve) => {
     let busy = false; // ob počasni povezavi večkratni pritisk ne sme ustvariti več učencev
+    // Dodajanje profila iz Nastavitev se da preklicati (brez tega ni bilo poti nazaj).
+    f.querySelector("[data-onb-cancel]")?.addEventListener("click", () => {
+      document.body.classList.remove("onboarding");
+      resolve(null);
+    });
     f.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (busy) return;
@@ -1038,6 +1054,7 @@ function chooseUniversity() {
 $("#new-student-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const s = await onboard(e.target.name.value);
+  if (!s) return showView("settings");
   e.target.reset();
   await loadStudents(s.id);
   showView("path");
@@ -1730,7 +1747,7 @@ async function showSideExplanation(task, ctx) {
       tp.explanation ? renderRich(tp.explanation) : `<p class="muted">${t("topic.noExplanationShort")}</p>`
     }<button type="button" class="secondary small" id="side-lesson">${icon("book-open")}${t("topic.fullLesson")}</button>`;
     side.hidden = false;
-    $("#side-lesson").addEventListener("click", () => openLesson(t.id));
+    $("#side-lesson").addEventListener("click", () => openLesson(tp.id));
   } catch {
     side.hidden = true;
   }
@@ -2431,7 +2448,15 @@ function maybeTour() {
     seen = localStorage.getItem(TOUR_KEY);
   } catch {}
   // Uvodni ogled šele, ko je vprašalnik kotička zaprt.
-  if (!seen) Promise.resolve(state.interestsAsk).then(() => setTimeout(startTour, 400));
+  // Če je učenec medtem odprl drug pogled, ogled počaka na naslednjo vrnitev na Učno pot
+  // (sicer bi kazal na skrite elemente in se odprl čez npr. Račun).
+  if (!seen)
+    Promise.resolve(state.interestsAsk).then(() =>
+      setTimeout(() => {
+        if (currentView === "path") startTour();
+        else maybeTour.done = false;
+      }, 400),
+    );
 }
 $("#tour-again").addEventListener("click", () => {
   showView("path");

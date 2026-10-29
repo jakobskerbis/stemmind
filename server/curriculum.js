@@ -16,8 +16,9 @@ export function slugify(s) {
 }
 
 // Razširjena oblika: vsaka tema dobi stalen id "<pot>/<slug-teme>".
-const BUILT = {};
-const TOPICS = {};
+// Brez prototipa: ključ iz poizvedbe (npr. »toString«, »__proto__«) ne sme najti podedovane lastnosti.
+const BUILT = Object.create(null);
+const TOPICS = Object.create(null);
 for (const [key, p] of Object.entries({ ...PATHS, ...UNI_PATHS })) {
   // OŠ/SŠ: "<predmet>-<OS|SS>-<razred>"; fakultete: podatki so zapisani v poti.
   const [subject, school, grade] = p.school === "UNI" ? [p.subject, "UNI", 0] : key.split("-");
@@ -190,7 +191,7 @@ export function pathLabelFor(key, system = "SI") {
 // ---------- fakultete ----------
 
 export function getProgram(id) {
-  return PROGRAMS[id] || null;
+  return Object.hasOwn(PROGRAMS, String(id)) ? PROGRAMS[id] : null;
 }
 
 function mainSubject(keys) {
@@ -220,7 +221,7 @@ export function listPrograms() {
 
 // Predmeti programa po letnikih: [{ ...pot, year }]; izbirni imajo year: null.
 export function listProgramPaths(programId) {
-  const p = PROGRAMS[programId];
+  const p = getProgram(programId);
   if (!p) return [];
   return [
     ...p.courseKeys.flatMap((keys, yi) => keys.map((k) => ({ ...brief(BUILT[k]), year: yi + 1 }))),

@@ -9,7 +9,7 @@ import { EXAMS, EXAM_IDS, SUBJECT_NAMES_EN } from "./exam-data.js";
 
 export const isExamPath = (key) => {
   const m = /^(MAT|FIZ|KEM)-EX-([A-Z0-9]+)$/.exec(String(key || ""));
-  return !!(m && EXAMS[m[2]]?.subjects[m[1]] && getPath(key));
+  return !!(m && Object.hasOwn(EXAMS, m[2]) && EXAMS[m[2]].subjects[m[1]] && getPath(key));
 };
 export const examOf = (key) => (isExamPath(key) ? String(key).split("-")[2] : null);
 
@@ -25,7 +25,7 @@ export const hasExams = (system) => examsFor(system).own.length > 0;
 // Privzeta pot: izbrani izpit (ali prvi domači) in predmet učenca, če ga izpit ima.
 export function examKeyFor(settings, examId = null) {
   const { own } = examsFor(settings.school_system);
-  const id = EXAMS[examId] ? examId : own[0] || "SAT"; // brez domačih izpitov: SAT (mednarodno najbolj razširjen)
+  const id = examId && Object.hasOwn(EXAMS, examId) ? examId : own[0] || "SAT"; // brez domačih izpitov: SAT (mednarodno najbolj razširjen)
   if (!id) return null;
   const subjects = Object.keys(EXAMS[id].subjects);
   const subject = subjects.includes(settings.subject) ? settings.subject : subjects[0];
