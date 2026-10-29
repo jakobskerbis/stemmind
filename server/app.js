@@ -834,5 +834,12 @@ export function createApp(store, opts = {}) {
     if (s) res.json(usage.studentMonth(s.id));
   });
 
+  // Napačno ali preveliko telo zahteve: kratek odgovor v JSON (odjemalec pokaže sporočilo)
+  // namesto strani z napako in celotnega sklada v dnevniku.
+  app.use((err, _req, res, next) => {
+    if (res.headersSent || !["entity.parse.failed", "entity.too.large"].includes(err?.type)) return next(err);
+    res.status(err.status || 400).json({ error: err.type === "entity.too.large" ? "Zahteva je prevelika." : "Zahteva ni v pravilni obliki." });
+  });
+
   return app;
 }
