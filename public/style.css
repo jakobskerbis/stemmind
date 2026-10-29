@@ -768,6 +768,18 @@ body.pad-open #view-topic { padding-bottom: calc(var(--pad-h, 0px) + 20px); }
 .cards-note ul { margin: 6px 0 4px; padding-left: 20px; }
 .cards-note li p { margin: 0; }
 .cards-note .text-btn { display: inline-flex; align-items: center; gap: 4px; padding: 2px 0; }
+/* Predlog spremembe šole/letnika, ki ga da inštruktor (public/chat-settings.js). */
+.set-proposal { margin-top: 12px; padding: 10px 12px; border-radius: 12px; background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border)); font-size: 0.92rem; }
+.set-proposal .sp-head { display: flex; align-items: center; gap: 6px; color: var(--accent); }
+.set-proposal .sp-head b { color: var(--text); }
+.set-proposal .sp-change { margin: 6px 0 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.set-proposal .sp-arrow { width: 16px; height: 16px; color: var(--muted); }
+[dir="rtl"] .set-proposal .sp-arrow { transform: scaleX(-1); }
+.set-proposal .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.set-proposal .actions button { min-height: 40px; }
+.set-proposal .sp-result { margin: 4px 0 0; display: flex; align-items: center; gap: 6px; color: var(--muted); }
+.set-proposal .sp-result.ok { color: var(--text); font-weight: 600; }
+.set-proposal .sp-result svg { width: 16px; height: 16px; color: var(--accent); }
 /* Okvir »Zapomni si« v odgovorih inštruktorja (Markdown citat) */
 .msg.assistant blockquote { margin: 10px 0; padding: 8px 12px; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; }
 .msg.assistant blockquote p { margin: 0.2em 0; }
