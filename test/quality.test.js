@@ -24,3 +24,20 @@ test("hint ladder: data → formula → first step", () => {
   assert.equal(publicTask(task).hintSteps, 3);
   assert.deepEqual(hintSteps({ hint: "h" }).map((s) => s.kind), ["hint"]);
 });
+
+test("hint endpoint logic: steps open one by one, mark the task as helped", async () => {
+  const { openDb } = await import("../server/db.js");
+  const { Progress } = await import("../server/progress.js");
+  const store = openDb(":memory:");
+  const p = new Progress(store);
+  const s = store.createStudent("Ana");
+  p.nextPractice(s.id, "FIZ-OS-8/gostota"); // rešen zgled
+  const { task } = p.nextPractice(s.id, "FIZ-OS-8/gostota");
+  assert.ok(task.hintSteps >= 2);
+  const h1 = p.hint(s.id, task.id, 1);
+  assert.equal(h1.steps.length, 1);
+  assert.equal(h1.steps[0].kind, "data");
+  const all = p.hint(s.id, task.id, 9);
+  assert.equal(all.steps.length, all.total);
+  assert.equal(p.getTask(task.id).hint_used, 1);
+});
