@@ -145,6 +145,10 @@
   "task.hint": "Dica:",
   "task.retry": "Tentar outra vez",
   "task.askTutor": "Perguntar ao tutor",
+  "task.work": "Passos intermédios",
+  "task.workPh": "Escreve aqui os teus passos, como no caderno …",
+  "task.explain": "Explica-me",
+  "task.reviewTutor": "Rever com o tutor",
   "task.attemptsLeft": {
     "one": "Mais {n} tentativa, depois mostro um exemplo resolvido.",
     "other": "Mais {n} tentativas, depois mostro um exemplo resolvido."

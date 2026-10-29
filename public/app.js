@@ -1416,11 +1416,13 @@ function renderTask(task, ctx) {
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
     ${task.figure ? figureSvg(task.figure) : ""}
+    ${workHtml()}
     ${input}
     ${hintLadder ? `<div id="hint-box" class="hint-box" aria-live="polite"></div><div class="hint-row"><button type="button" class="ghost small" id="hint-btn">${icon("lightbulb")}<span>${t("task.hintBtn")}</span></button></div>` : ""}
     <div id="feedback" class="feedback" aria-live="polite"></div>
     ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${examMode() ? t("exam.finish") : t("comp.finish")}</button></div>` : ""}
   </div>`;
+  wireWork(box, task);
   const submit = (value) => checkTask(task, ctx, value);
   // Lestev namigov: vsak klik odpre en korak več (podatki → formula → prvi korak).
   let hintShown = 0;
@@ -1473,6 +1475,107 @@ function renderTask(task, ctx) {
     if (!document.body.classList.contains("pad-open")) $("#answer").focus();
   } else closePad();
 }
+
+// ---------- vmesni koraki (kot v zvezek) in pomoč inštruktorja pri nalogi ----------
+const WORK_OPEN_KEY = "stemmind.workOpen";
+const workKey = (id) => `stemmind.work.${id}`;
+function lsGet(k) {
+  try {
+    return localStorage.getItem(k);
+  } catch {
+    return null;
+  }
+}
+function lsSet(k, v) {
+  try {
+    if (v) localStorage.setItem(k, v);
+    else localStorage.removeItem(k);
+  } catch {}
+}
+const workOf = (taskId) => (taskId ? lsGet(workKey(taskId)) || "" : "");
+
+function workHtml() {
+  return `<div class="work">
+    <button type="button" class="work-toggle" aria-expanded="false">${icon("notebook-pen")}<span>${t("task.work")}</span>${icon("chevron-down")}</button>
+    <div class="work-body" hidden>
+      <textarea class="work-text" rows="3" spellcheck="false" placeholder="${escapeHtml(t("task.workPh"))}"></textarea>
+      <button type="button" class="ghost small icon-only work-sym" aria-pressed="false" title="${escapeHtml(t("chat.symbols"))}" aria-label="${escapeHtml(t("chat.symbols"))}">${icon("sigma")}</button>
+      <div class="sym-panel work-sym-panel" hidden></div>
+    </div>
+  </div>`;
+}
+
+// Zapis se shrani v napravo (po nalogi) in gre zraven, ko učenec vpraša inštruktorja.
+function wireWork(box, task) {
+  const w = box.querySelector(".work");
+  if (!w) return;
+  const btn = w.querySelector(".work-toggle");
+  const body = w.querySelector(".work-body");
+  const ta = w.querySelector(".work-text");
+  const grow = () => {
+    ta.style.height = "auto";
+    ta.style.height = `${Math.min(ta.scrollHeight + 2, 420)}px`;
+  };
+  const setOpen = (open, remember) => {
+    body.hidden = !open;
+    w.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", String(open));
+    if (remember) lsSet(WORK_OPEN_KEY, open ? "1" : "0");
+    if (open) grow();
+  };
+  ta.value = workOf(task.id);
+  const pref = lsGet(WORK_OPEN_KEY);
+  // Na računalniku je prostor odprt, na telefonu se odpre z dotikom (manj drsenja); izbira se zapomni.
+  setOpen(ta.value ? true : pref ? pref === "1" : matchMedia("(min-width: 900px) and (pointer: fine)").matches, false);
+  btn.addEventListener("click", () => {
+    setOpen(body.hidden, true);
+    if (!body.hidden) ta.focus();
+  });
+  ta.addEventListener("input", () => {
+    lsSet(workKey(task.id), ta.value.trim() ? ta.value : "");
+    grow();
+  });
+  // Na telefonu bi plošča za vnos in sistemska tipkovnica skupaj prekrili vse.
+  ta.addEventListener("focus", () => {
+    if (padIsSheet()) closePad();
+  });
+  const panel = w.querySelector(".work-sym-panel");
+  const symBtn = w.querySelector(".work-sym");
+  const sym = mountSymbols(panel, ta, {
+    settings: () => state.student?.settings,
+    onChange: () => ta.dispatchEvent(new Event("input")),
+  });
+  symBtn.addEventListener("click", () => {
+    const open = sym.toggle();
+    symBtn.setAttribute("aria-pressed", String(open));
+    symBtn.classList.toggle("on", open);
+  });
+}
+
+const tutorRow = (taskId) =>
+  taskId && navigator.onLine !== false
+    ? `<div class="tutor-row" data-task="${taskId}">
+        <button type="button" class="secondary small" data-tutor="explain">${icon("message-circle")}${t("task.explain")}</button>
+        <button type="button" class="secondary small" data-tutor="review">${icon("clipboard-check")}${t("task.reviewTutor")}</button>
+      </div>`
+    : "";
+
+// Odpre Inštruktorja z nalogo, odgovorom in vmesnimi koraki.
+async function askTutorAbout(taskId, kind) {
+  try {
+    const h = await api(`/api/students/${state.student.id}/tasks/${taskId}/help`, { method: "POST", body: { kind, work: workOf(taskId) } });
+    await loadConversations();
+    showView("chat");
+    await openConversation(h.conversation.id);
+    send(h.text);
+  } catch (err) {
+    toast(err.message);
+  }
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".tutor-row [data-tutor]");
+  if (b) askTutorAbout(b.closest(".tutor-row").dataset.task, b.dataset.tutor);
+});
 
 function hintStepHtml(st, n, total) {
   const tex = (x) => renderMath(String(x), false);
@@ -1536,7 +1639,8 @@ async function checkTask(task, ctx, value) {
     html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">${r.offline ? t("off.xpLater") : `+${r.xp.gained} XP`}</span></div>
       ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>${t("task.mastered")}</span></div>` : ""}
       ${workedBlock(task, r.solution)}
-      ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}`;
+      ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}
+      ${r.offline ? "" : tutorRow(task.id)}`;
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next();
     if (!r.offline) refreshXp();
   } else {
@@ -1546,6 +1650,7 @@ async function checkTask(task, ctx, value) {
       ${r.hint ? `<div class="fb hint">${icon("lightbulb")}<div><b>${t("task.hint")}</b> ${renderRich(r.hint)}</div></div>` : ""}`;
     if (r.solution) {
       html += workedBlock(task, r.solution, t("task.example"));
+      if (!r.offline) html += tutorRow(task.id);
       html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" ? t("task.similar") : t("task.next"));
     } else {
       html += `<div class="actions"><button id="fb-retry" class="primary big">${t("task.retry")}</button>
@@ -1569,7 +1674,7 @@ async function checkTask(task, ctx, value) {
     else $("#answer")?.select();
   });
   $("#fb-help")?.addEventListener("click", async () => {
-    const h = await api(`/api/students/${state.student.id}/tasks/${task.id}/help`, { method: "POST" });
+    const h = await api(`/api/students/${state.student.id}/tasks/${task.id}/help`, { method: "POST", body: { work: workOf(task.id) } });
     await loadConversations();
     showView("chat");
     await openConversation(h.conversation.id);
@@ -1812,7 +1917,8 @@ function showContestResult(c, timeUp = false) {
   $("#practice").innerHTML = `<div class="card result ${pct >= 50 ? "celebrate" : ""}">
       <div class="result-icon">${icon("medal")}</div>
       ${timeUp ? `<p class="muted">${t("comp.timeUp")}</p>` : ""}
-      <h2>${t("comp.score", { points: c.points, max: c.maxPoints })}</h2>
+      <h2 class="score-line">${t("comp.score", { points: `<span class="count-up" data-to="${Number(c.points) || 0}">0</span>`, max: c.maxPoints })}</h2>
+      <div class="score-bar" aria-hidden="true"><div style="--pct:${Math.max(0, Math.min(100, pct))}%"></div></div>
       <p>${t("comp.summary", { correct: c.correct, total: c.total, minutes: c.minutes })}${c.xp ? ` · +${c.xp.gained} XP` : ""}</p>
       ${c.scaled ? `<p>${t("exam.scaled", { value: c.scaled.value, min: c.scaled.min, max: c.scaled.max })}</p>` : ""}
       ${c.grade ? `<p>${t("exam.grade", { grade: escapeHtml(c.grade) })}</p>` : ""}
@@ -1824,7 +1930,7 @@ function showContestResult(c, timeUp = false) {
     ${c.items
       .map((it, i) => {
         const st = it.correct ? "ok" : it.yourAnswer == null ? "skip" : "bad";
-        return `<details class="card review-item ${st}">
+        return `<details class="card review-item ${st}" style="--i:${i}">
         <summary><span class="ri-icon">${icon(st === "ok" ? "circle-check" : st === "skip" ? "skip-forward" : "circle-x")}</span>
           <span class="ri-name">${i + 1}. ${escapeHtml(it.topicName)}</span><span class="ri-pts">${it.earned}/${it.points}</span></summary>
         ${
@@ -1832,14 +1938,33 @@ function showContestResult(c, timeUp = false) {
             ? `<div class="task-text">${renderRich(it.task.text)}</div>
           ${it.task.answerType === "choice" ? `<div class="choices static">${it.task.options.map((o, k) => `<div class="choice ${String(k) === String(it.yourAnswer) ? "picked" : ""} ${k === it.task.correctIndex ? "right" : ""}">${it.task.optionsTex ? renderMath(o, false) : escapeHtml(o)}</div>`).join("")}</div>` : ""}
           <p><b>${t("comp.yourAnswer")}</b> ${it.task.optionsTex && it.yourAnswer != null && it.task.answerType === "choice" ? renderMath(yours(it), false) : escapeHtml(yours(it))}</p>
-          ${workedBlock(it.task, it.task.solution)}`
+          ${workedBlock(it.task, it.task.solution)}
+          ${tutorRow(it.taskId)}`
             : `<p class="muted">${t("comp.notReached")}</p>`
         }
       </details>`;
       })
       .join("")}`;
   $("#fb-back").addEventListener("click", () => showView("competition"));
+  countUp($("#practice .count-up"));
   refreshXp();
+}
+
+// Število točk se prešteje od 0 navzgor (brez animacije, če jih učenec ne želi).
+function countUp(el, ms = 900) {
+  if (!el) return;
+  const to = Number(el.dataset.to) || 0;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !to) {
+    el.textContent = String(to);
+    return;
+  }
+  const t0 = performance.now();
+  const step = (now) => {
+    const k = Math.min(1, (now - t0) / ms);
+    el.textContent = String(Math.round(to * (1 - Math.pow(1 - k, 3))));
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
 // ---------- poraba in lestvica ----------

@@ -149,6 +149,10 @@
   "task.hint": "Savjet:",
   "task.retry": "Pokušaj ponovno",
   "task.askTutor": "Pitaj instruktora",
+  "task.work": "Međukoraci",
+  "task.workPh": "Ovdje zapiši međukorake, kao u bilježnicu …",
+  "task.explain": "Objasni mi",
+  "task.reviewTutor": "Provjeri s tutorom",
   "task.attemptsLeft": {
     "one": "Još {n} pokušaj, zatim pokazujem riješeni primjer.",
     "few": "Još {n} pokušaja, zatim pokazujem riješeni primjer.",

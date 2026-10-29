@@ -145,6 +145,10 @@
   "task.hint": "Kidokezo:",
   "task.retry": "Jaribu tena",
   "task.askTutor": "Muulize mwalimu",
+  "task.work": "Hatua za kati",
+  "task.workPh": "Andika hatua zako hapa, kama kwenye daftari …",
+  "task.explain": "Nieleze",
+  "task.reviewTutor": "Kagua na mwalimu",
   "task.attemptsLeft": {
     "one": "Imebaki jaribio {n}, kisha nitaonyesha mfano uliotatuliwa.",
     "other": "Yamebaki majaribio {n}, kisha nitaonyesha mfano uliotatuliwa."

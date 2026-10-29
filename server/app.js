@@ -290,7 +290,7 @@ export function createApp(store, opts = {}) {
       });
       // Prvi korak pri nalogi iz Vadnice sestavi koda (podatki, iskano, namig), brez klica modela.
       const hinted =
-        help && help.text === text && student.settings.solving_mode !== "B" && (student.settings.language || "sl") === "sl"
+        help && !help.kind && help.text === text && student.settings.solving_mode !== "B" && (student.settings.language || "sl") === "sl"
           ? codeHint(help.task.payload, {
               subject: getTopic(help.task.topic_id)?.subject || student.settings.subject,
               topicName: getTopic(help.task.topic_id)?.name,
@@ -646,8 +646,18 @@ export function createApp(store, opts = {}) {
     const t = progress.getTask(intParam(req.params.taskId));
     if (!t || t.student_id !== s.id) return res.status(404).json({ error: "Naloga ne obstaja." });
     const conv = store.createConversation(s.id, { pathTopic: t.topic_id, title: `Naloga: ${getTopic(t.topic_id)?.name ?? "vadnica"}` });
-    const text = `Rešujem nalogo iz Vadnice:\n\n${t.payload.text}\n\n${t.last_answer ? `Moj odgovor je bil: ${t.last_answer}. Ni pravilen.` : "Ne vem, kako začeti."} Mi pomagaš najti, kje se zatakne? Rešitve mi ne povej.`;
-    helpTasks.set(conv.id, { text: text.trim().slice(0, MAX_TEXT), task: t });
+    // kind: brez = pomoč ob napačnem odgovoru; »explain« = razlaga naloge; »review« = pregled rezultata in postopka.
+    const kind = ["explain", "review"].includes(req.body?.kind) ? req.body.kind : null;
+    const work = typeof req.body?.work === "string" ? req.body.work.trim().slice(0, 2000) : "";
+    const workPart = work ? `Moji vmesni koraki:\n${work}\n\n` : "";
+    const answerPart = t.last_answer != null ? `Moj odgovor: ${t.last_answer}${t.solved ? " (aplikacija ga je označila kot pravilnega)" : ""}.\n\n` : "Odgovora še nisem oddal.\n\n";
+    const text =
+      kind === "explain"
+        ? `Rešujem nalogo:\n\n${t.payload.text}\n\n${answerPart}${workPart}Razloži mi, kako se reši ta naloga in zakaj, po korakih.`
+        : kind === "review"
+          ? `Preglej moj rezultat${work ? " in postopek" : ""} pri tej nalogi:\n\n${t.payload.text}\n\n${answerPart}${workPart}Je prav? Če ni, mi pokaži, kje sem se zmotil.`
+          : `Rešujem nalogo iz Vadnice:\n\n${t.payload.text}\n\n${workPart}${t.last_answer ? `Moj odgovor je bil: ${t.last_answer}. Ni pravilen.` : "Ne vem, kako začeti."} Mi pomagaš najti, kje se zatakne? Rešitve mi ne povej.`;
+    helpTasks.set(conv.id, { text: text.trim().slice(0, MAX_TEXT), task: t, kind });
     if (helpTasks.size > 500) helpTasks.delete(helpTasks.keys().next().value);
     res.json({ conversation: conv, text });
   });

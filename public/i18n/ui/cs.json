@@ -153,6 +153,10 @@
   "task.hint": "Nápověda:",
   "task.retry": "Zkusit znovu",
   "task.askTutor": "Zeptat se doučovatele",
+  "task.work": "Mezikroky",
+  "task.workPh": "Sem si zapiš mezikroky, jako do sešitu …",
+  "task.explain": "Vysvětli mi to",
+  "task.reviewTutor": "Zkontroluj s lektorem",
   "task.attemptsLeft": {
     "one": "Ještě {n} pokus, pak ukážu řešený příklad.",
     "few": "Ještě {n} pokusy, pak ukážu řešený příklad.",

@@ -145,6 +145,10 @@
   "task.hint": "Tipp:",
   "task.retry": "Újra",
   "task.askTutor": "Kérdezd az oktatót",
+  "task.work": "Részlépések",
+  "task.workPh": "Írd ide a lépéseidet, mint a füzetbe …",
+  "task.explain": "Magyarázd el",
+  "task.reviewTutor": "Ellenőrzés a tanárral",
   "task.attemptsLeft": {
     "one": "Még {n} próbálkozás, utána megmutatok egy megoldott példát.",
     "other": "Még {n} próbálkozás, utána megmutatok egy megoldott példát."

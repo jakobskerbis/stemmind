@@ -141,6 +141,10 @@
   "task.hint": "Gợi ý:",
   "task.retry": "Thử lại",
   "task.askTutor": "Hỏi gia sư",
+  "task.work": "Các bước giải",
+  "task.workPh": "Viết các bước của em ở đây, như trong vở …",
+  "task.explain": "Giải thích cho mình",
+  "task.reviewTutor": "Kiểm tra với gia sư",
   "task.attemptsLeft": {
     "other": "Còn {n} lần thử, sau đó mình sẽ cho xem ví dụ có lời giải."
   },

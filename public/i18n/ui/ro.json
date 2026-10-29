@@ -149,6 +149,10 @@
   "task.hint": "Indiciu:",
   "task.retry": "Încearcă din nou",
   "task.askTutor": "Întreabă tutorul",
+  "task.work": "Pași intermediari",
+  "task.workPh": "Scrie aici pașii, ca în caiet …",
+  "task.explain": "Explică-mi",
+  "task.reviewTutor": "Verifică cu tutorele",
   "task.attemptsLeft": {
     "one": "Încă {n} încercare, apoi îți arăt un exemplu rezolvat.",
     "few": "Încă {n} încercări, apoi îți arăt un exemplu rezolvat.",

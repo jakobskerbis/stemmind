@@ -145,6 +145,10 @@
   "task.hint": "Indice :",
   "task.retry": "Réessayer",
   "task.askTutor": "Demander au tuteur",
+  "task.work": "Étapes intermédiaires",
+  "task.workPh": "Écris tes étapes ici, comme dans ton cahier …",
+  "task.explain": "Explique-moi",
+  "task.reviewTutor": "Vérifier avec le tuteur",
   "task.attemptsLeft": {
     "one": "Encore {n} essai, puis je montre un exemple résolu.",
     "other": "Encore {n} essais, puis je montre un exemple résolu."

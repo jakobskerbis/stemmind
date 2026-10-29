@@ -141,6 +141,10 @@
   "task.hint": "힌트:",
   "task.retry": "다시 시도",
   "task.askTutor": "튜터에게 묻기",
+  "task.work": "풀이 과정",
+  "task.workPh": "공책처럼 여기에 풀이 과정을 적어 보세요 …",
+  "task.explain": "설명해 줘",
+  "task.reviewTutor": "튜터와 확인하기",
   "task.attemptsLeft": {
     "other": "기회가 {n}번 남았어요. 그다음에는 풀이 예제를 보여 줄게요."
   },

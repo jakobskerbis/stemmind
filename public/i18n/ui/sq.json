@@ -145,6 +145,10 @@
   "task.hint": "Ndihmë:",
   "task.retry": "Provo përsëri",
   "task.askTutor": "Pyet tutorin",
+  "task.work": "Hapat e ndërmjetëm",
+  "task.workPh": "Shkruaj këtu hapat, si në fletore …",
+  "task.explain": "Më shpjego",
+  "task.reviewTutor": "Kontrollo me tutorin",
   "task.attemptsLeft": {
     "one": "Edhe {n} përpjekje, pastaj të tregoj një shembull të zgjidhur.",
     "other": "Edhe {n} përpjekje, pastaj të tregoj një shembull të zgjidhur."

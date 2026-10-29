@@ -141,6 +141,10 @@
   "task.hint": "提示：",
   "task.retry": "再試一次",
   "task.askTutor": "問輔導老師",
+  "task.work": "解題步驟",
+  "task.workPh": "像在筆記本上一樣，在這裡寫下你的步驟 …",
+  "task.explain": "幫我講解",
+  "task.reviewTutor": "和老師一起檢查",
   "task.attemptsLeft": {
     "other": "還有 {n} 次機會，之後我會展示例題解析。"
   },

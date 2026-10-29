@@ -153,6 +153,10 @@
   "task.hint": "Nápoveda:",
   "task.retry": "Skús znova",
   "task.askTutor": "Opýtaj sa tútora",
+  "task.work": "Medzikroky",
+  "task.workPh": "Sem si zapíš medzikroky, ako do zošita …",
+  "task.explain": "Vysvetli mi to",
+  "task.reviewTutor": "Skontroluj s lektorom",
   "task.attemptsLeft": {
     "one": "Ešte {n} pokus, potom ukážem riešený príklad.",
     "few": "Ešte {n} pokusy, potom ukážem riešený príklad.",

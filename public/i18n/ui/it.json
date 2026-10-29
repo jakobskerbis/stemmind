@@ -145,6 +145,10 @@
   "task.hint": "Suggerimento:",
   "task.retry": "Riprova",
   "task.askTutor": "Chiedi al tutor",
+  "task.work": "Passaggi intermedi",
+  "task.workPh": "Scrivi qui i passaggi, come sul quaderno …",
+  "task.explain": "Spiegamelo",
+  "task.reviewTutor": "Controlla con il tutor",
   "task.attemptsLeft": {
     "one": "Ancora {n} tentativo, poi ti mostro un esempio svolto.",
     "other": "Ancora {n} tentativi, poi ti mostro un esempio svolto."

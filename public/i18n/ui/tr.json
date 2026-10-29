@@ -145,6 +145,10 @@
   "task.hint": "İpucu:",
   "task.retry": "Tekrar dene",
   "task.askTutor": "Öğretmene sor",
+  "task.work": "Ara adımlar",
+  "task.workPh": "Ara adımlarını defterdeki gibi buraya yaz …",
+  "task.explain": "Bana açıkla",
+  "task.reviewTutor": "Öğretmenle kontrol et",
   "task.attemptsLeft": {
     "one": "{n} hakkın daha var, sonra çözümlü bir örnek göstereceğim.",
     "other": "{n} hakkın daha var, sonra çözümlü bir örnek göstereceğim."
