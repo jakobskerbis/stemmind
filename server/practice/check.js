@@ -86,7 +86,7 @@ function checkNumber(ans, input) {
   // Brez zahtevanega zaokroževanja: točen rezultat (z drobno toleranco).
   if (d === undefined || d === null) {
     const ok = exacts.some((e) => Math.abs(p.value - e) <= (ans.tolerance ?? 1e-9) * Math.max(1, Math.abs(e)));
-    return ok ? { kind: "correct" } : { kind: "wrong" };
+    return ok ? { kind: "correct" } : { kind: "wrong", ...diagnose(ans, p) };
   }
 
   for (const e of exacts) {
@@ -125,7 +125,51 @@ function checkNumber(ans, input) {
       reveal: fmt(right, d) + (ans.unit ? ` ${ans.unit}` : ""),
     };
   }
-  return { kind: "wrong" };
+  return { kind: "wrong", ...diagnose(ans, p) };
+}
+
+// ---------- prepoznavanje tipičnih napak ----------
+// Napačen številski odgovor primerjamo z napakami, ki jih našteje generator
+// (answer.mistakes: [{ value, why }]), in s splošnimi vzorci: napačen predznak,
+// napačen velikostni red (pretvorba enot), obratna vrednost, faktor 2.
+// Vrne { mistake: { message, code?, params? } } ali {}.
+function near(v, target, p) {
+  const step = 10 ** -Math.max(p.decimals, 0);
+  return Math.abs(v - target) <= Math.max(step * 0.51, 0.005 * Math.abs(target)) + 1e-12;
+}
+const MISTAKE_TEXT = {
+  "chk.sign": "Velikost je prava, predznak pa ne. Preveri, ali je rezultat pozitiven ali negativen.",
+  "chk.magnitudeBig": "Števke so prave, velikostni red pa ne: rezultat je {times}-krat prevelik. Preveri pretvorbo enot in decimalno vejico.",
+  "chk.magnitudeSmall": "Števke so prave, velikostni red pa ne: rezultat je {times}-krat premajhen. Preveri pretvorbo enot in decimalno vejico.",
+  "chk.reciprocal": "Dobil si obratno vrednost. Si morda delil v napačnem vrstnem redu?",
+  "chk.factor2Big": "Rezultat je natanko 2-krat prevelik. Preveri, ali si izpustil ali dodal faktor 2 (npr. ½ v formuli, premer namesto polmera).",
+  "chk.factor2Small": "Rezultat je natanko 2-krat premajhen. Preveri, ali si izpustil ali dodal faktor 2 (npr. ½ v formuli, premer namesto polmera).",
+};
+const mk = (code, params = {}) => ({
+  mistake: { code, params, message: MISTAKE_TEXT[code].replace(/\{(\w+)\}/g, (_, k) => params[k]) },
+});
+export function diagnose(ans, p) {
+  const v = p.value;
+  for (const m of ans.mistakes || []) {
+    if (m && Number.isFinite(m.value) && m.why && near(v, m.value, p)) return { mistake: { message: m.why } };
+  }
+  for (const e of [ans.value, ...(ans.alsoAccept || [])]) {
+    if (!Number.isFinite(e) || e === 0 || v === 0) continue;
+    if (Math.sign(v) !== Math.sign(e) && near(-v, e, p)) return mk("chk.sign");
+    const ratio = v / e;
+    if (ratio > 0) {
+      const k = Math.round(Math.log10(ratio));
+      if (k !== 0 && Math.abs(k) <= 9 && near(v, e * 10 ** k, p)) {
+        return mk(k > 0 ? "chk.magnitudeBig" : "chk.magnitudeSmall", { times: String(10 ** Math.abs(k)) });
+      }
+      if (Math.abs(e) > 1.05 || Math.abs(e) < 0.95) {
+        if (near(v, 1 / e, p) && Math.abs(v - e) > 1e-9) return mk("chk.reciprocal");
+      }
+      if (near(v, 2 * e, p)) return mk("chk.factor2Big");
+      if (near(v, e / 2, p)) return mk("chk.factor2Small");
+    }
+  }
+  return {};
 }
 
 function parseFraction(input) {
@@ -155,7 +199,10 @@ function checkFraction(ans, input) {
 }
 
 function checkChoice(ans, input) {
-  return Number(input) === ans.index ? { kind: "correct" } : { kind: "wrong" };
+  if (Number(input) === ans.index) return { kind: "correct" };
+  // answer.why[i]: zakaj je izbira i napačna (tipična napačna predstava)
+  const why = Array.isArray(ans.why) ? ans.why[Number(input)] : null;
+  return why ? { kind: "wrong", mistake: { message: why } } : { kind: "wrong" };
 }
 
 function checkCoefficients(ans, input) {

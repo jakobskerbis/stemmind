@@ -2,7 +2,7 @@
 // preizkus znanja, razmaknjeno ponavljanje, XP in lestvica.
 import crypto from "node:crypto";
 import { getPath, getTopic } from "./curriculum.js";
-import { generateTask, hasGenerator, publicTask } from "./practice/index.js";
+import { generateTask, hasGenerator, publicTask, hintSteps } from "./practice/index.js";
 import { checkAnswer } from "./practice/check.js";
 import { CONTEST, TRAINING_TASKS, isCompetitionPath } from "./competition.js";
 import { isExamPath, mockPlan, scaledScore, examGrade } from "./exams.js";
@@ -719,6 +719,7 @@ export class Progress {
     if (row.mode === "review" && firstTry) this.advanceReview(studentId, row.topic_id, false);
     this.db.prepare("UPDATE tasks SET hint_used = 1 WHERE id = ?").run(taskId);
     out.hint = task.hint;
+    if (res.mistake) out.mistake = res.mistake;
     if (res.kind !== "rounding") Object.assign(out, { message: "Ni še pravilno. Poglej namig in poskusi znova. Kje si se zataknil?", code: "chk.tryAgain", params: {} });
     out.attemptsLeft = maxAttempts - attempts;
     if (out.attemptsLeft <= 0) {
@@ -728,6 +729,17 @@ export class Progress {
     }
     if (row.session_id && out.attemptsLeft <= 0) out.next = this.sessionNext(row.session_id);
     return out;
+  }
+
+  // Lestev namigov pred odgovorom (practice/index.js hintSteps); uporaba namiga zmanjša XP.
+  hint(studentId, taskId, upTo) {
+    const row = this.getTask(taskId);
+    if (!row || row.student_id !== studentId) return { error: "Naloga ne obstaja." };
+    if (row.mode === "contest" || row.mode === "placement") return { error: "Pri tej nalogi namigov ni." };
+    const steps = hintSteps(row.payload);
+    const n = Math.max(1, Math.min(steps.length, Number(upTo) || 1));
+    if (steps.length) this.db.prepare("UPDATE tasks SET hint_used = 1 WHERE id = ?").run(taskId);
+    return { steps: steps.slice(0, n), total: steps.length };
   }
 
   checkMastery(studentId, topicId) {

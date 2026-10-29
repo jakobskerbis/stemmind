@@ -605,5 +605,16 @@
   "gc.poi.min": "mínimo",
   "gc.poi.yint": "no eixo y",
   "gc.poi.int": "interseção",
-  "gc.poi.slope": "declive"
+  "gc.poi.slope": "declive",
+  "task.hintBtn": "Dica",
+  "task.hintMore": "Outra dica",
+  "task.hintStep": "Dica {n}/{total}:",
+  "task.hintData": "Primeiro escreve o que é dado e o que procuras.",
+  "task.hintFormula": "Precisas desta relação:",
+  "chk.sign": "O valor está certo, mas o sinal não. Verifica se o resultado é positivo ou negativo.",
+  "chk.magnitudeBig": "Os algarismos estão certos, mas a ordem de grandeza não: o resultado é {times} vezes grande demais. Verifica a conversão de unidades e a vírgula decimal.",
+  "chk.magnitudeSmall": "Os algarismos estão certos, mas a ordem de grandeza não: o resultado é {times} vezes pequeno demais. Verifica a conversão de unidades e a vírgula decimal.",
+  "chk.reciprocal": "Obtiveste o inverso. Dividiste pela ordem errada?",
+  "chk.factor2Big": "O resultado é exatamente 2 vezes grande demais. Verifica se omitiste ou acrescentaste um fator 2 (por ex. ½ na fórmula, diâmetro em vez de raio).",
+  "chk.factor2Small": "O resultado é exatamente 2 vezes pequeno demais. Verifica se omitiste ou acrescentaste um fator 2 (por ex. ½ na fórmula, diâmetro em vez de raio)."
 }

@@ -605,5 +605,16 @@
   "gc.poi.min": "Minimum",
   "gc.poi.yint": "auf der y-Achse",
   "gc.poi.int": "Schnittpunkt",
-  "gc.poi.slope": "Steigung"
+  "gc.poi.slope": "Steigung",
+  "task.hintBtn": "Tipp",
+  "task.hintMore": "Noch ein Tipp",
+  "task.hintStep": "Tipp {n}/{total}:",
+  "task.hintData": "Schreib zuerst auf, was gegeben ist und was gesucht wird.",
+  "task.hintFormula": "Diese Beziehung brauchst du:",
+  "chk.sign": "Der Betrag stimmt, das Vorzeichen nicht. Prüfe, ob das Ergebnis positiv oder negativ ist.",
+  "chk.magnitudeBig": "Die Ziffern stimmen, die Größenordnung nicht: Das Ergebnis ist {times}-mal zu groß. Prüfe die Umrechnung der Einheiten und das Komma.",
+  "chk.magnitudeSmall": "Die Ziffern stimmen, die Größenordnung nicht: Das Ergebnis ist {times}-mal zu klein. Prüfe die Umrechnung der Einheiten und das Komma.",
+  "chk.reciprocal": "Du hast den Kehrwert erhalten. Hast du in der falschen Reihenfolge dividiert?",
+  "chk.factor2Big": "Das Ergebnis ist genau 2-mal zu groß. Prüfe, ob du einen Faktor 2 weggelassen oder hinzugefügt hast (z. B. ½ in der Formel, Durchmesser statt Radius).",
+  "chk.factor2Small": "Das Ergebnis ist genau 2-mal zu klein. Prüfe, ob du einen Faktor 2 weggelassen oder hinzugefügt hast (z. B. ½ in der Formel, Durchmesser statt Radius)."
 }

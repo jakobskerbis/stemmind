@@ -605,5 +605,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "në boshtin y",
   "gc.poi.int": "prerje",
-  "gc.poi.slope": "k"
+  "gc.poi.slope": "k",
+  "task.hintBtn": "Ndihmë",
+  "task.hintMore": "Edhe një ndihmë",
+  "task.hintStep": "Ndihma {n}/{total}:",
+  "task.hintData": "Fillimisht shkruaj çfarë është dhënë dhe çfarë kërkon.",
+  "task.hintFormula": "Të duhet kjo lidhje:",
+  "chk.sign": "Madhësia është e saktë, por shenja jo. Kontrollo nëse rezultati është pozitiv apo negativ.",
+  "chk.magnitudeBig": "Shifrat janë të sakta, por rendi i madhësisë jo: rezultati është {times} herë më i madh. Kontrollo kthimin e njësive dhe presjen dhjetore.",
+  "chk.magnitudeSmall": "Shifrat janë të sakta, por rendi i madhësisë jo: rezultati është {times} herë më i vogël. Kontrollo kthimin e njësive dhe presjen dhjetore.",
+  "chk.reciprocal": "Ke marrë vlerën e anasjelltë. Mos ke pjesëtuar në rendin e gabuar?",
+  "chk.factor2Big": "Rezultati është saktësisht 2 herë më i madh. Kontrollo nëse ke lënë jashtë ose ke shtuar një faktor 2 (p.sh. ½ në formulë, diametër në vend të rrezes).",
+  "chk.factor2Small": "Rezultati është saktësisht 2 herë më i vogël. Kontrollo nëse ke lënë jashtë ose ke shtuar një faktor 2 (p.sh. ½ në formulë, diametër në vend të rrezes)."
 }

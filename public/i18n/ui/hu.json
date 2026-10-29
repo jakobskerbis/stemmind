@@ -605,5 +605,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "az y tengelyen",
   "gc.poi.int": "metszéspont",
-  "gc.poi.slope": "m"
+  "gc.poi.slope": "m",
+  "task.hintBtn": "Tipp",
+  "task.hintMore": "Még egy tipp",
+  "task.hintStep": "{n}/{total}. tipp:",
+  "task.hintData": "Először írd le, mi adott és mit keresel.",
+  "task.hintFormula": "Erre az összefüggésre van szükséged:",
+  "chk.sign": "A nagyság jó, az előjel nem. Ellenőrizd, hogy az eredmény pozitív vagy negatív.",
+  "chk.magnitudeBig": "A számjegyek jók, a nagyságrend nem: az eredmény {times}-szer túl nagy. Ellenőrizd a mértékegység-átváltást és a tizedesvesszőt.",
+  "chk.magnitudeSmall": "A számjegyek jók, a nagyságrend nem: az eredmény {times}-szer túl kicsi. Ellenőrizd a mértékegység-átváltást és a tizedesvesszőt.",
+  "chk.reciprocal": "A reciprokot kaptad. Rossz sorrendben osztottál?",
+  "chk.factor2Big": "Az eredmény pontosan 2-szer túl nagy. Ellenőrizd, nem hagytál-e ki vagy adtál-e hozzá egy 2-es szorzót (pl. ½ a képletben, átmérő sugár helyett).",
+  "chk.factor2Small": "Az eredmény pontosan 2-szer túl kicsi. Ellenőrizd, nem hagytál-e ki vagy adtál-e hozzá egy 2-es szorzót (pl. ½ a képletben, átmérő sugár helyett)."
 }

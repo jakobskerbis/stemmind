@@ -610,5 +610,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "na osi y",
   "gc.poi.int": "presjek",
-  "gc.poi.slope": "k"
+  "gc.poi.slope": "k",
+  "task.hintBtn": "Savjet",
+  "task.hintMore": "Još jedan savjet",
+  "task.hintStep": "Savjet {n}/{total}:",
+  "task.hintData": "Prvo zapiši šta je dato i šta tražiš.",
+  "task.hintFormula": "Trebaš ovu vezu:",
+  "chk.sign": "Iznos je tačan, ali predznak nije. Provjeri da li je rezultat pozitivan ili negativan.",
+  "chk.magnitudeBig": "Cifre su tačne, ali red veličine nije: rezultat je {times} puta prevelik. Provjeri pretvaranje jedinica i decimalni zarez.",
+  "chk.magnitudeSmall": "Cifre su tačne, ali red veličine nije: rezultat je {times} puta premalen. Provjeri pretvaranje jedinica i decimalni zarez.",
+  "chk.reciprocal": "Dobio si recipročnu vrijednost. Da li si dijelio obrnutim redom?",
+  "chk.factor2Big": "Rezultat je tačno 2 puta prevelik. Provjeri da li si izostavio ili dodao faktor 2 (npr. ½ u formuli, prečnik umjesto poluprečnika).",
+  "chk.factor2Small": "Rezultat je tačno 2 puta premalen. Provjeri da li si izostavio ili dodao faktor 2 (npr. ½ u formuli, prečnik umjesto poluprečnika)."
 }

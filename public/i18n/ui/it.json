@@ -605,5 +605,16 @@
   "gc.poi.min": "minimo",
   "gc.poi.yint": "sull'asse y",
   "gc.poi.int": "intersezione",
-  "gc.poi.slope": "m"
+  "gc.poi.slope": "m",
+  "task.hintBtn": "Suggerimento",
+  "task.hintMore": "Un altro suggerimento",
+  "task.hintStep": "Suggerimento {n}/{total}:",
+  "task.hintData": "Prima scrivi che cosa è dato e che cosa cerchi.",
+  "task.hintFormula": "Ti serve questa relazione:",
+  "chk.sign": "Il valore assoluto è giusto, il segno no. Controlla se il risultato è positivo o negativo.",
+  "chk.magnitudeBig": "Le cifre sono giuste, l'ordine di grandezza no: il risultato è {times} volte troppo grande. Controlla la conversione delle unità e la virgola.",
+  "chk.magnitudeSmall": "Le cifre sono giuste, l'ordine di grandezza no: il risultato è {times} volte troppo piccolo. Controlla la conversione delle unità e la virgola.",
+  "chk.reciprocal": "Hai ottenuto il reciproco. Hai diviso nell'ordine sbagliato?",
+  "chk.factor2Big": "Il risultato è esattamente 2 volte troppo grande. Controlla se hai omesso o aggiunto un fattore 2 (ad es. ½ nella formula, diametro invece del raggio).",
+  "chk.factor2Small": "Il risultato è esattamente 2 volte troppo piccolo. Controlla se hai omesso o aggiunto un fattore 2 (ad es. ½ nella formula, diametro invece del raggio)."
 }

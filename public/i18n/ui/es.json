@@ -605,5 +605,16 @@
   "gc.poi.min": "mínimo",
   "gc.poi.yint": "en el eje y",
   "gc.poi.int": "intersección",
-  "gc.poi.slope": "pendiente"
+  "gc.poi.slope": "pendiente",
+  "task.hintBtn": "Pista",
+  "task.hintMore": "Otra pista",
+  "task.hintStep": "Pista {n}/{total}:",
+  "task.hintData": "Primero escribe lo que se da y lo que buscas.",
+  "task.hintFormula": "Necesitas esta relación:",
+  "chk.sign": "El valor es correcto, pero el signo no. Comprueba si el resultado es positivo o negativo.",
+  "chk.magnitudeBig": "Las cifras son correctas, pero el orden de magnitud no: el resultado es {times} veces demasiado grande. Revisa la conversión de unidades y la coma decimal.",
+  "chk.magnitudeSmall": "Las cifras son correctas, pero el orden de magnitud no: el resultado es {times} veces demasiado pequeño. Revisa la conversión de unidades y la coma decimal.",
+  "chk.reciprocal": "Obtuviste el inverso. ¿Dividiste en el orden equivocado?",
+  "chk.factor2Big": "El resultado es exactamente 2 veces demasiado grande. Comprueba si omitiste o añadiste un factor 2 (p. ej. ½ en la fórmula, diámetro en vez de radio).",
+  "chk.factor2Small": "El resultado es exactamente 2 veces demasiado pequeño. Comprueba si omitiste o añadiste un factor 2 (p. ej. ½ en la fórmula, diámetro en vez de radio)."
 }

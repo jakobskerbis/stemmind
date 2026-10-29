@@ -600,5 +600,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "di sumbu y",
   "gc.poi.int": "titik potong",
-  "gc.poi.slope": "gradien"
+  "gc.poi.slope": "gradien",
+  "task.hintBtn": "Petunjuk",
+  "task.hintMore": "Petunjuk lain",
+  "task.hintStep": "Petunjuk {n}/{total}:",
+  "task.hintData": "Tulis dulu apa yang diketahui dan apa yang dicari.",
+  "task.hintFormula": "Kamu perlu hubungan ini:",
+  "chk.sign": "Besarnya benar, tetapi tandanya salah. Periksa apakah hasilnya positif atau negatif.",
+  "chk.magnitudeBig": "Angkanya benar, tetapi orde besarnya salah: hasilnya {times} kali terlalu besar. Periksa konversi satuan dan tanda desimal.",
+  "chk.magnitudeSmall": "Angkanya benar, tetapi orde besarnya salah: hasilnya {times} kali terlalu kecil. Periksa konversi satuan dan tanda desimal.",
+  "chk.reciprocal": "Kamu mendapat kebalikannya. Apakah kamu membagi dengan urutan terbalik?",
+  "chk.factor2Big": "Hasilnya tepat 2 kali terlalu besar. Periksa apakah kamu melewatkan atau menambahkan faktor 2 (mis. ½ dalam rumus, diameter bukan jari-jari).",
+  "chk.factor2Small": "Hasilnya tepat 2 kali terlalu kecil. Periksa apakah kamu melewatkan atau menambahkan faktor 2 (mis. ½ dalam rumus, diameter bukan jari-jari)."
 }

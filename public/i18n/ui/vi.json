@@ -600,5 +600,16 @@
   "gc.poi.min": "cực tiểu",
   "gc.poi.yint": "trên trục y",
   "gc.poi.int": "giao điểm",
-  "gc.poi.slope": "hệ số góc"
+  "gc.poi.slope": "hệ số góc",
+  "task.hintBtn": "Gợi ý",
+  "task.hintMore": "Thêm gợi ý",
+  "task.hintStep": "Gợi ý {n}/{total}:",
+  "task.hintData": "Trước tiên hãy ghi ra dữ kiện đã cho và điều cần tìm.",
+  "task.hintFormula": "Em cần hệ thức này:",
+  "chk.sign": "Độ lớn đúng nhưng dấu sai. Hãy kiểm tra kết quả dương hay âm.",
+  "chk.magnitudeBig": "Các chữ số đúng nhưng bậc độ lớn sai: kết quả lớn gấp {times} lần. Hãy kiểm tra việc đổi đơn vị và dấu thập phân.",
+  "chk.magnitudeSmall": "Các chữ số đúng nhưng bậc độ lớn sai: kết quả nhỏ đi {times} lần. Hãy kiểm tra việc đổi đơn vị và dấu thập phân.",
+  "chk.reciprocal": "Em đã ra giá trị nghịch đảo. Có phải em chia sai thứ tự?",
+  "chk.factor2Big": "Kết quả lớn gấp đúng 2 lần. Hãy kiểm tra xem em có bỏ sót hoặc thêm thừa hệ số 2 không (vd. ½ trong công thức, đường kính thay cho bán kính).",
+  "chk.factor2Small": "Kết quả nhỏ đi đúng 2 lần. Hãy kiểm tra xem em có bỏ sót hoặc thêm thừa hệ số 2 không (vd. ½ trong công thức, đường kính thay cho bán kính)."
 }

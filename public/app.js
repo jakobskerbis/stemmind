@@ -1390,16 +1390,37 @@ function renderTask(task, ctx) {
   const calcBtn = ctx.mode === "contest" || ctx.mode === "placement" ? "" : `<button type="button" class="ghost task-calc icon-only" title="${escapeHtml(t("task.calc"))}" aria-label="${escapeHtml(t("task.calc"))}">${icon("chart-spline")}</button>`;
   const bar = ctx.mode === "contest" ? `<div class="contest-bar"><span id="contest-timer" class="contest-timer" role="timer">${icon("timer")}<b>${leftText(state.contestDeadline)}</b></span><span class="muted">${t("comp.timerNote")}</span></div>` : "";
   const penalty = ctx.mode === "contest" && task.penalty ? `<span class="pts neg">${t("exam.penaltyPts", { n: String(task.penalty).replace("-", "−") })}</span>` : "";
+  const hintLadder = task.hintSteps > 0 && ctx.mode !== "contest" && ctx.mode !== "placement";
   box.innerHTML = `${bar}<div class="card task">
     <div class="task-top task-tag"><span class="task-topic">${task.topicName ? escapeHtml(task.topicName) : ""}</span>${stars}${pts}${penalty}${counter}${calcBtn}</div>
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
     ${task.figure ? figureSvg(task.figure) : ""}
     ${input}
+    ${hintLadder ? `<div id="hint-box" class="hint-box" aria-live="polite"></div><div class="hint-row"><button type="button" class="ghost small" id="hint-btn">${icon("lightbulb")}<span>${t("task.hintBtn")}</span></button></div>` : ""}
     <div id="feedback" class="feedback" aria-live="polite"></div>
     ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${examMode() ? t("exam.finish") : t("comp.finish")}</button></div>` : ""}
   </div>`;
   const submit = (value) => checkTask(task, ctx, value);
+  // Lestev namigov: vsak klik odpre en korak več (podatki → formula → prvi korak).
+  let hintShown = 0;
+  $("#hint-btn")?.addEventListener("click", async () => {
+    const btn = $("#hint-btn");
+    btn.disabled = true;
+    try {
+      const r = await api(`/api/students/${state.student.id}/tasks/${task.id}/hint`, { method: "POST", body: { step: hintShown + 1 } });
+      hintShown = r.steps.length;
+      $("#hint-box").innerHTML = r.steps.map((st, i) => hintStepHtml(st, i + 1, r.total)).join("");
+      if (hintShown >= r.total) btn.remove();
+      else {
+        btn.disabled = false;
+        btn.querySelector("span").textContent = t("task.hintMore");
+      }
+    } catch (err) {
+      btn.disabled = false;
+      $("#hint-box").innerHTML = `<div class="fb bad">${escapeHtml(err.message)}</div>`;
+    }
+  });
   box.querySelector(".task-calc")?.addEventListener("click", async () => {
     const exprs = mayPlot(task.text) ? await plotFromText(task.text) : [];
     openGraphOverlay(exprs, t("gc.backTask"));
@@ -1431,6 +1452,22 @@ function renderTask(task, ctx) {
     if (!document.body.classList.contains("pad-open")) $("#answer").focus();
   } else closePad();
 }
+
+function hintStepHtml(st, n, total) {
+  const tex = (x) => renderMath(String(x), false);
+  const head = `<b>${t("task.hintStep", { n, total })}</b> `;
+  if (st.kind === "data") {
+    return `<div class="fb hint">${icon("list-checks")}<div>${head}${t("task.hintData")}<div class="task-data">
+      <div class="data-col"><span class="sol-label">${t("task.given")}</span><div class="data-list">${st.given.map((x) => `<div>${tex(x)}</div>`).join("")}</div></div>
+      ${st.find.length ? `<div class="data-col"><span class="sol-label">${t("task.find")}</span><div class="data-list">${st.find.map((x) => `<div>${tex(`${x} = \\,?`)}</div>`).join("")}</div></div>` : ""}
+    </div></div></div>`;
+  }
+  if (st.kind === "formula") return `<div class="fb hint">${icon("sigma")}<div>${head}${t("task.hintFormula")}<div class="formula-body">${st.formula.map((f) => `<div>${tex(f)}</div>`).join("")}</div></div></div>`;
+  return `<div class="fb hint">${icon("lightbulb")}<div>${head}${renderRich(st.text)}</div></div>`;
+}
+
+// Prepoznana tipična napaka (iz generatorja ali splošni vzorec: predznak, pretvorba enot …).
+const mistakeHtml = (m) => (m ? `<div class="fb info mistake">${icon("search")}<span>${escapeHtml(m.code ? fbText(m) : m.message)}</span></div>` : "");
 
 // Rešitev z izpisanimi podatki iz besedila (Podatki / Iščemo) in formulo, skrito za gumbom.
 function workedBlock(task, solution, label = t("task.solution")) {
@@ -1483,6 +1520,7 @@ async function checkTask(task, ctx, value) {
     if (!r.offline) refreshXp();
   } else {
     html = `<div class="fb bad shake">${icon("circle-x")}<span>${escapeHtml(fbText(r) || t("task.wrong"))}</span></div>
+      ${mistakeHtml(r.mistake)}
       ${r.levelDown ? `<div class="muted">${t("task.easier")}</div>` : ""}
       ${r.hint ? `<div class="fb hint">${icon("lightbulb")}<div><b>${t("task.hint")}</b> ${renderRich(r.hint)}</div></div>` : ""}`;
     if (r.solution) {

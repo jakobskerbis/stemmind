@@ -593,6 +593,14 @@ export function createApp(store, opts = {}) {
     if (out.error) return res.status(400).json(out);
     res.json(out);
   });
+  // Postopni namigi pred odgovorom (podatki → formula → prvi korak).
+  app.post("/api/students/:id/tasks/:taskId/hint", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const out = progress.hint(s.id, intParam(req.params.taskId), req.body?.step);
+    if (out.error) return res.status(400).json(out);
+    res.json(out);
+  });
   // Poskusno tekmovanje: preskoči nalogo (0 točk).
   app.post("/api/students/:id/tasks/:taskId/skip", (req, res) => {
     const s = loadStudent(req, res);

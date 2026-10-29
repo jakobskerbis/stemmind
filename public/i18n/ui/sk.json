@@ -615,5 +615,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "na osi y",
   "gc.poi.int": "priesečník",
-  "gc.poi.slope": "k"
+  "gc.poi.slope": "k",
+  "task.hintBtn": "Nápoveda",
+  "task.hintMore": "Ďalšia nápoveda",
+  "task.hintStep": "Nápoveda {n}/{total}:",
+  "task.hintData": "Najprv si zapíš, čo je dané a čo hľadáš.",
+  "task.hintFormula": "Potrebuješ tento vzťah:",
+  "chk.sign": "Veľkosť je správna, znamienko nie. Skontroluj, či je výsledok kladný alebo záporný.",
+  "chk.magnitudeBig": "Číslice sú správne, rád nie: výsledok je {times}-krát väčší. Skontroluj prevod jednotiek a desatinnú čiarku.",
+  "chk.magnitudeSmall": "Číslice sú správne, rád nie: výsledok je {times}-krát menší. Skontroluj prevod jednotiek a desatinnú čiarku.",
+  "chk.reciprocal": "Vyšla ti prevrátená hodnota. Nedelil si v opačnom poradí?",
+  "chk.factor2Big": "Výsledok je presne 2-krát väčší. Skontroluj, či si nevynechal alebo nepridal faktor 2 (napr. ½ vo vzorci, priemer namiesto polomeru).",
+  "chk.factor2Small": "Výsledok je presne 2-krát menší. Skontroluj, či si nevynechal alebo nepridal faktor 2 (napr. ½ vo vzorci, priemer namiesto polomeru)."
 }

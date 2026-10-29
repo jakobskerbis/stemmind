@@ -5,6 +5,12 @@ import { MAT_GENERATORS } from "./generators/mat.js";
 import { FIZ_GENERATORS } from "./generators/fiz.js";
 import { KEM_GENERATORS } from "./generators/kem.js";
 import { UNI_GENERATORS } from "./generators/uni.js";
+import { DODATNE_MAT_OS } from "./generators/dodatne-mat-os.js";
+import { DODATNE_MAT_SS12 } from "./generators/dodatne-mat-ss12.js";
+import { DODATNE_MAT_SS34 } from "./generators/dodatne-mat-ss34.js";
+import { DODATNE_OS_FIZ_KEM } from "./generators/dodatne-os-fiz-kem.js";
+import { DODATNE_FIZ_SS } from "./generators/dodatne-fiz-ss.js";
+import { DODATNE_KEM_SS } from "./generators/dodatne-kem-ss.js";
 import { TEK_MAT_OS } from "./generators/tek-mat-os.js";
 import { TEK_MAT_SS } from "./generators/tek-mat-ss.js";
 import { TEK_FIZ } from "./generators/tek-fiz.js";
@@ -19,6 +25,13 @@ export const GENERATORS = [
   ...FIZ_GENERATORS,
   ...KEM_GENERATORS,
   ...UNI_GENERATORS,
+  // teme OŠ/SŠ, ki prej niso imele nalog
+  ...DODATNE_MAT_OS,
+  ...DODATNE_MAT_SS12,
+  ...DODATNE_MAT_SS34,
+  ...DODATNE_OS_FIZ_KEM,
+  ...DODATNE_FIZ_SS,
+  ...DODATNE_KEM_SS,
   // Tekmovanja (razdelek »Tekmovanja«): samo težje naloge v slogu tekmovanj.
   ...TEK_MAT_OS,
   ...TEK_MAT_SS,
@@ -63,6 +76,18 @@ export function generateTask(topicId, level = 1, seed = crypto.randomInt(2 ** 31
   throw new Error(`Generator ${g.id} ni ustvaril naloge.`);
 }
 
+// Lestev namigov pred odgovorom: 1) podatki in iskano, 2) formula, 3) prvi korak (namig).
+export function hintSteps(task) {
+  const steps = [];
+  const given = task.data?.given?.filter(Boolean) || [];
+  const find = task.data?.find?.filter(Boolean) || [];
+  if (given.length) steps.push({ kind: "data", given, find });
+  const formula = task.formula ? [].concat(task.formula).filter(Boolean) : [];
+  if (formula.length) steps.push({ kind: "formula", formula });
+  if (task.hint) steps.push({ kind: "hint", text: task.hint });
+  return steps;
+}
+
 // Kar gre k odjemalcu: brez pravilnega odgovora in rešitve.
 export function publicTask(task) {
   const { answer } = task;
@@ -80,5 +105,6 @@ export function publicTask(task) {
     data: task.data || null,
     formula: task.formula || null,
     topicId: task.topicId || null, // za razlago teme ob seriji nalog
+    hintSteps: hintSteps(task).length, // koliko korakov ima lestev namigov
   };
 }

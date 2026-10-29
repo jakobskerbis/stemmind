@@ -605,5 +605,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "y ekseninde",
   "gc.poi.int": "kesişim",
-  "gc.poi.slope": "eğim"
+  "gc.poi.slope": "eğim",
+  "task.hintBtn": "İpucu",
+  "task.hintMore": "Bir ipucu daha",
+  "task.hintStep": "İpucu {n}/{total}:",
+  "task.hintData": "Önce verilenleri ve aradığın şeyi yaz.",
+  "task.hintFormula": "Bu bağıntıya ihtiyacın var:",
+  "chk.sign": "Büyüklük doğru ama işaret yanlış. Sonucun pozitif mi negatif mi olduğunu kontrol et.",
+  "chk.magnitudeBig": "Rakamlar doğru ama büyüklük mertebesi yanlış: sonuç {times} kat fazla büyük. Birim dönüşümünü ve ondalık virgülü kontrol et.",
+  "chk.magnitudeSmall": "Rakamlar doğru ama büyüklük mertebesi yanlış: sonuç {times} kat fazla küçük. Birim dönüşümünü ve ondalık virgülü kontrol et.",
+  "chk.reciprocal": "Ters değeri buldun. Yanlış sırayla mı böldün?",
+  "chk.factor2Big": "Sonuç tam 2 kat fazla büyük. 2 çarpanını atlayıp atlamadığını ya da fazladan ekleyip eklemediğini kontrol et (ör. formüldeki ½, yarıçap yerine çap).",
+  "chk.factor2Small": "Sonuç tam 2 kat fazla küçük. 2 çarpanını atlayıp atlamadığını ya da fazladan ekleyip eklemediğini kontrol et (ör. formüldeki ½, yarıçap yerine çap)."
 }

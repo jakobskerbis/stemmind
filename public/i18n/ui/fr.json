@@ -605,5 +605,16 @@
   "gc.poi.min": "minimum",
   "gc.poi.yint": "sur l'axe y",
   "gc.poi.int": "intersection",
-  "gc.poi.slope": "pente"
+  "gc.poi.slope": "pente",
+  "task.hintBtn": "Indice",
+  "task.hintMore": "Un autre indice",
+  "task.hintStep": "Indice {n}/{total} :",
+  "task.hintData": "Écris d'abord ce qui est donné et ce que tu cherches.",
+  "task.hintFormula": "Tu as besoin de cette relation :",
+  "chk.sign": "La valeur est juste, mais pas le signe. Vérifie si le résultat est positif ou négatif.",
+  "chk.magnitudeBig": "Les chiffres sont justes, mais pas l'ordre de grandeur : le résultat est {times} fois trop grand. Vérifie la conversion des unités et la virgule.",
+  "chk.magnitudeSmall": "Les chiffres sont justes, mais pas l'ordre de grandeur : le résultat est {times} fois trop petit. Vérifie la conversion des unités et la virgule.",
+  "chk.reciprocal": "Tu as obtenu l'inverse. As-tu divisé dans le mauvais ordre ?",
+  "chk.factor2Big": "Le résultat est exactement 2 fois trop grand. Vérifie si tu as oublié ou ajouté un facteur 2 (par ex. ½ dans la formule, diamètre au lieu du rayon).",
+  "chk.factor2Small": "Le résultat est exactement 2 fois trop petit. Vérifie si tu as oublié ou ajouté un facteur 2 (par ex. ½ dans la formule, diamètre au lieu du rayon)."
 }
