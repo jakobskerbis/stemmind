@@ -31,7 +31,7 @@ V simulaciji spodaj (»Prevajanje, konvekcija in sevanje«) izberi prevajanje, p
 
 **Posplošitev 2: konvekcija.** Drugi del koncerta je v dvorani. Ob stenah so radiatorji. Zrak, ki se dotika vročega radiatorja, se segreje (s prevajanjem) in razširi. Ker ima zdaj manjšo gostoto, se dvigne proti stropu. Hladnejši, gostejši zrak se spusti in priteče k radiatorju na njegovo mesto. Tudi ta se segreje in dvigne.
 
-Nastane kroženje zraka po vsej dvorani. Toploto zdaj nosi **snov, ki se premika**. Takemu prenosu rečemo **konvekcija**. Mogoča je le v kapljevinah in plinih, ker se v trdni snovi delci ne morejo premikati na daljše razdalje. Zato je na balkonu dvorane pogosto topleje kot v prvi vrsti.
+Nastane kroženje zraka po vsej dvorani. Toploto zdaj nosi **snov, ki se premika**. Takemu prenosu rečemo **konvekcija**. Zato je na balkonu dvorane pogosto topleje kot v prvi vrsti. Konvekcija je mogoča le v kapljevinah in plinih, ker se v trdni snovi delci ne morejo premikati na daljše razdalje.
 
 :::premisli
 Radiator v glasbeni učilnici je pod oknom, tik nad tlemi. Kaj bi se zgodilo, če bi ga namestili tik pod strop?
@@ -179,7 +179,7 @@ Analogija ima mejo: steklenica se pri podajanju ne zmanjša, energija pa se pri 
 
 ## Preveri se
 
-? Trije dogodki so primeri prevajanja, eden ne. Kateri je vsiljivka?
+? Pri katerem dogodku toplota ne potuje s prevajanjem, ampak s sevanjem?
 - Kovinska žlica v vročem čaju se segreje tudi na ročaju.
 ~ Toplota potuje po žlici od delca do delca, žlica se ne premika. To je prevajanje.
 - Dlan na mrzlem stojalu za note se ohladi.

@@ -5,170 +5,263 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Že znaš, da sta količini **premo sorazmerni**, kadar se z večanjem ene za določeno število krat poveča tudi druga. Če $1\,\text{kg}$ jabolk stane $2\,\text{€}$, potem $3\,\text{kg}$ stanejo $6\,\text{€}$. Znaš tudi računati s sorazmerji in uporabljati enačbo $\dfrac{a}{b} = \dfrac{c}{d}$.
+Trije zidarji pozidajo vrtni zid v $8$ dneh. Šolski hišnik vpraša, koliko časa bi potrebovalo $6$ zidarjev. Žan takoj odgovori: »$16$ dni. Dvakrat več zidarjev, dvakrat več dni. To je premo sorazmerje!«
 
-Včasih pa se zgodi nasprotno: ko ena količina narašča, druga pada. Več ko je delavcev na gradbišču, manj časa potrebujejo za isto delo. Hitreje ko se voziš, prej prispeš. Pri takih nalogah premo sorazmerje ne deluje in bi dobil napačen rezultat. Obratno sorazmerje ti pove, kako pravilno izračunati, koliko časa, koliko delavcev ali kako hitro potrebuješ.
+Je to res? Pomisli, kaj bi rekel mojster na gradbišču. Če na isti zid pošlje več ljudi, se delo konča **prej**, ne kasneje. Žan je uporabil pravilo, ki ga pozna iz premega sorazmerja, a tu ne velja.
+
+Pri premem sorazmerju obe količini rasteta skupaj. V delavnici in na gradbišču pa pogosto srečaš nasprotno zvezo: več delavcev pomeni manj dni, širše deske pomenijo manj desk, daljši kosi letve pomenijo manj kosov. Taki zvezi rečemo **obratno sorazmerje**. Ko jo prepoznaš, Žanovo trditev ovržeš v eni vrstici.
 
 ## Razlaga
 
-**1. Definicija.** Dve količini sta **obratno sorazmerni**, če se ob $k$-kratnem povečanju ene druga $k$-krat **zmanjša** (je $k$-krat manjša). Če se ena količina podvoji, se druga razpolovi. Če se ena potroji, se druga zmanjša na tretjino.
+**Korak 1: ena podvojitev.** Tri zidarje zamenja šest zidarjev. Vsak dela enako hitro, zato vsak opravi pol manj dela kot prej. Zid je zato gotov v pol manj dneh: $8 : 2 = 4$ dni. Število zidarjev se je podvojilo, število dni se je razpolovilo.
 
-**2. Pravilo produkta.** Pri obratnem sorazmerju je **zmnožek** obeh količin vedno enak:
+*Hitri preizkus:* dva mizarja izdelata omaro v $6$ dneh. V koliko dneh jo izdelajo štirje? (Odgovor: v $3$ dneh.)
+
+**Korak 2: ime za to zvezo.** Količini sta **obratno sorazmerni**, če se ob povečanju ene za nekajkrat druga **zmanjša za enakokrat**. Če se ena potroji, je druga trikrat manjša. Če se ena zmanjša na četrtino, je druga štirikrat večja.
+
+:::premisli
+Trije zidarji pozidajo zid v $8$ dneh. Koliko dni bi zidal en sam zidar? Napovej, preden bereš naprej.
+---
+$24$ dni. Zidarjev je trikrat manj, zato traja trikrat dlje: $8 \cdot 3 = 24$.
+:::
+
+**Korak 3: kaj ostane enako.** Zapišimo vse možnosti za isti zid v tabelo in dodajmo stolpec z zmnožkom.
+
+| zidarji $x$ | dnevi $y$ | zmnožek $x \cdot y$ |
+|---|---|---|
+| $1$ | $24$ | $24$ |
+| $2$ | $12$ | $24$ |
+| $3$ | $8$ | $24$ |
+| $4$ | $6$ | $24$ |
+| $6$ | $4$ | $24$ |
+
+Zmnožek je v vsaki vrstici enak. To ni naključje: $24$ je količina dela, izražena v »zidar-dnevih«. Toliko dni bi delal en sam zidar.
+
+Pri obratnem sorazmerju je **zmnožek** stalen:
 
 $$x \cdot y = k$$
 
-Število $k$ imenujemo **konstanta** obratnega sorazmerja. Pri premem sorazmerju je stalen *količnik*, pri obratnem pa stalen *zmnožek*.
+Število $k$ je **koeficient obratnega sorazmerja**. Pri premem sorazmerju je bil stalen količnik $\dfrac{y}{x}$, tu je stalen zmnožek.
 
-**3. Primer iz tabele.** Delo opravi več delavcev:
+*Hitri preizkus:* ali sodi v tabelo par »$5$ zidarjev, $5$ dni«? (Ne, ker je $5 \cdot 5 = 25$, ne $24$.)
 
-| število delavcev | 1 | 2 | 3 | 6 |
-|---|---|---|---|---|
-| število dni | 12 | 6 | 4 | 2 |
-
-Preveri zmnožke: $1 \cdot 12 = 12$, $2 \cdot 6 = 12$, $3 \cdot 4 = 12$, $6 \cdot 2 = 12$. Zmnožek je povsod enak $12$, zato sta količini obratno sorazmerni. Konstanta $12$ pomeni, da bi delo en delavec opravil v $12$ dneh.
-
-**4. Kako računamo.** Če sta pari $(x_1, y_1)$ in $(x_2, y_2)$ obratno sorazmerni, velja:
+**Korak 4: računanje z dvema paroma.** Če poznaš en par $(x_1, y_1)$ in eno količino drugega para, uporabi enakost zmnožkov:
 
 $$x_1 \cdot y_1 = x_2 \cdot y_2$$
 
-Iz te enačbe izračunamo neznanko.
+Za Žanovo nalogo: $3 \cdot 8 = 6 \cdot y$, torej $24 = 6 \cdot y$ in $y = 24 : 6 = 4$ dni. Žan se je zmotil: šest zidarjev potrebuje $4$ dni, ne $16$.
 
-**5. Kako prepoznamo obratno sorazmerje.** Vprašaj se: *ali ob večanju ene količine druga pada in to v enakem razmerju?* Če da, je obratno sorazmerje. Pazi: vsako padanje še ni obratno sorazmerje. Dvakrat več delavcev mora pomeniti natanko dvakrat manj časa.
+*Hitri preizkus:* koliko dni bi potrebovalo $12$ zidarjev? (Odgovor: $24 : 12 = 2$ dni.)
 
-**6. Predpostavka.** Naloge o delavcih in času veljajo pod pogojem, da vsi delajo enako hitro in da se ne ovirajo.
+**Korak 5: tudi z ulomki.** Faktor ni vedno naravno število. Štirje tesarji naredijo ostrešje v $9$ dneh. Če pride $6$ tesarjev, se število poveča za faktor $\dfrac{6}{4} = \dfrac{3}{2}$. Število dni se zato pomnoži z obratno vrednostjo $\dfrac{2}{3}$: $9 \cdot \dfrac{2}{3} = 6$ dni. Preverimo z zmnožkom: $4 \cdot 9 = 36$ in $6 \cdot 6 = 36$.
+
+*Hitri preizkus:* število delavcev pomnožimo s $\dfrac{4}{3}$. S čim se pomnoži število dni? (S $\dfrac{3}{4}$.)
+
+**Korak 6: vsako padanje še ni obratno sorazmerje.** Mizar od deske dolžine $100\,\text{cm}$ odreže kos. Dolžina odrezanega kosa naj bo $x$, dolžina ostanka pa $y$. Ko $x$ raste, $y$ pada.
+
+:::premisli
+Ali sta $x$ in $y$ obratno sorazmerni? Primerjaj $x = 20\,\text{cm}$ in $x = 40\,\text{cm}$.
+---
+Nista. Pri $x = 20$ je $y = 80$, pri $x = 40$ je $y = 60$. Kos se je podvojil, ostanek pa se ni razpolovil. Zmnožka $20 \cdot 80 = 1600$ in $40 \cdot 60 = 2400$ nista enaka. Stalna je vsota $x + y = 100$, ne zmnožek.
+:::
+
+Zato vedno preveri zmnožke, ne le smeri spremembe.
+
+**Korak 7: v simulaciji.** V simulaciji spodaj (Obratno sorazmerje) nastavi »dni za 1 delavca« na $24$. Nato premikaj drsnik »delavci« od $2$ do $6$. Opazuj pobarvani pravokotnik: postaja širši in nižji, njegova ploščina pa ostane $24$. Točke ne ležijo na premici, ampak na krivulji, ki pada in se osi le približuje.
+
+**Pogoj.** Računamo, kot da vsi delajo enako hitro in se ne ovirajo. Pri zelo velikem številu delavcev to ne drži več: $240$ zidarjev ne pozida zida v desetinki dneva, ker ne morejo vsi hkrati do stene.
 
 ## Rešeni primeri
 
-### Primer 1: tabela
+### Primer 1: kosi letve
 
-Ali sta količini v tabeli obratno sorazmerni?
+Mizar razreže letev dolžine $240\,\text{cm}$ na enake kose. Zapisal je, koliko kosov dobi pri različnih dolžinah kosa. Ali sta dolžina kosa in število kosov obratno sorazmerni?
 
-| $x$ | 2 | 4 | 5 | 10 |
-|---|---|---|---|---|
-| $y$ | 20 | 10 | 8 | 4 |
+| dolžina kosa [cm] | število kosov |
+|---|---|
+| $20$ | $12$ |
+| $30$ | $8$ |
+| $40$ | $6$ |
+| $60$ | $4$ |
 
-1. Pri obratnem sorazmerju mora biti zmnožek $x \cdot y$ stalen, zato izračunamo zmnožke.
-2. $2 \cdot 20 = 40$, $4 \cdot 10 = 40$, $5 \cdot 8 = 40$, $10 \cdot 4 = 40$.
-3. Vsi zmnožki so enaki $40$, zato sta količini obratno sorazmerni s konstanto $k = 40$.
+**Podatki:** dolžina letve $240\,\text{cm}$; pari (dolžina kosa, število kosov): $(20\,\text{cm}, 12)$, $(30\,\text{cm}, 8)$, $(40\,\text{cm}, 6)$, $(60\,\text{cm}, 4)$
+**Iščemo:** ali sta količini obratno sorazmerni in koeficient $k$
 
-### Primer 2: delavci in dnevi
+:::formula
+Obratno sorazmerje: zmnožek $x \cdot y = k$ je v vseh parih enak.
+:::
 
-Štirje delavci pobarvajo ograjo v $6$ dneh. V koliko dneh jo pobarva $8$ delavcev, če delajo enako hitro?
+**Rešitev:**
 
-1. **Prepoznava.** Več delavcev pomeni manj dni, zato je obratno sorazmerje.
-2. **Konstanta.** $4 \cdot 6 = 24$. To je "delo, izraženo v delavec-dnevih".
-3. **Enačba.** $8 \cdot y = 24$.
-4. **Račun.** $y = 24 : 8 = 3$.
-5. **Preveri smiselnost.** Delavcev je dvakrat več, dni dvakrat manj ($6 : 2 = 3$). ✓
+1. Izračunamo zmnožke, ker jih obratno sorazmerje zahteva enake: $20 \cdot 12 = 240$, $30 \cdot 8 = 240$, $40 \cdot 6 = 240$, $60 \cdot 4 = 240$.
+2. Vsi zmnožki so enaki $240$, zato je $k = 240$. To je kar dolžina letve v centimetrih.
+3. Odgovor: dolžina kosa in število kosov sta obratno sorazmerni, koeficient je $k = 240$.
 
-Odgovor: $8$ delavcev ograjo pobarva v $3$ dneh.
+### Primer 2: tesarji
 
-### Primer 3: hitrost in čas (težji)
+Šest tesarjev postavi ostrešje v $10$ dneh. V koliko dneh ga postavijo štirje tesarji, če delajo enako hitro?
 
-Avtomobil prevozi razdaljo med dvema krajema s povprečno hitrostjo $60\,\text{km/h}$ v $3\,\text{h}$. Koliko časa bi potreboval pri hitrosti $90\,\text{km/h}$? Koliko časa bi potreboval pri hitrosti $40\,\text{km/h}$?
+**Podatki:** $x_1 = 6$ tesarjev, $y_1 = 10$ dni, $x_2 = 4$ tesarji
+**Iščemo:** število dni $y_2$
 
-1. **Prepoznava.** Pri isti poti večja hitrost pomeni krajši čas, zato je obratno sorazmerje. Zmnožek hitrosti in časa je pot.
-2. **Konstanta.** $60 \cdot 3 = 180$, kar je pot v $\text{km}$.
-3. **Hitrost $90\,\text{km/h}$:** $90 \cdot t = 180$, torej $t = 180 : 90 = 2\,\text{h}$.
-4. **Hitrost $40\,\text{km/h}$:** $40 \cdot t = 180$, torej $t = 180 : 40 = 4{,}5\,\text{h}$.
-5. **Preveri.** Pri večji hitrosti ($90 > 60$) je čas krajši ($2 < 3$). Pri manjši hitrosti ($40 < 60$) je čas daljši ($4{,}5 > 3$). ✓
+:::formula
+$x_1 \cdot y_1 = x_2 \cdot y_2$
+:::
 
-Odgovor: pri $90\,\text{km/h}$ potrebuje $2\,\text{h}$, pri $40\,\text{km/h}$ pa $4{,}5\,\text{h}$ (to je $4\,\text{h}$ in $30\,\text{min}$).
+**Rešitev:**
+
+1. Manj tesarjev pomeni več dni, zato gre za obratno sorazmerje.
+2. Količina dela: $6 \cdot 10 = 60$ tesar-dni.
+3. Enačba za štiri tesarje: $4 \cdot y_2 = 60$.
+4. Delimo s $4$: $y_2 = 60 : 4 = 15$.
+5. Smer preverimo: tesarjev je manj, dni je več. ✓
+6. Odgovor: štirje tesarji postavijo ostrešje v $15$ dneh.
+
+### Primer 3: pomoč sredi dela (težji)
+
+Osem delavcev bi tlakovalo dvorišče v $15$ dneh. Po $5$ dneh dela se jim pridružita še dva enako hitra delavca. Koliko dni skupaj traja tlakovanje?
+
+**Podatki:** $8$ delavcev, $15$ dni za celo delo; po $5$ dneh pridejo še $2$ delavca
+**Iščemo:** skupno število dni
+
+:::formula
+Delo v delavec-dnevih: $k = x \cdot y$; preostanek dela $=$ število delavcev $\cdot$ dnevi
+:::
+
+**Rešitev:**
+
+1. Celo delo je $8 \cdot 15 = 120$ delavec-dni.
+2. V prvih petih dneh opravijo $8 \cdot 5 = 40$ delavec-dni.
+3. Ostane $120 - 40 = 80$ delavec-dni.
+4. Zdaj dela $8 + 2 = 10$ delavcev, zato potrebujejo še $80 : 10 = 8$ dni.
+5. Skupaj: $5 + 8 = 13$ dni.
+6. Odgovor: tlakovanje traja $13$ dni, dva dneva manj kot brez pomoči.
+
+Pazi: z deljenjem $120 : 10 = 12$ bi dobil napačen odgovor, ker bi spregledal, da je prvih pet dni delalo le osem delavcev.
+
+### Primer 4: zdaj ti
+
+Za pod v delavnici potrebujemo $48$ desk širine $15\,\text{cm}$. Koliko enako dolgih desk potrebujemo, če so široke $12\,\text{cm}$?
+
+**Podatki:** $48$ desk, širina $15\,\text{cm}$; nova širina $12\,\text{cm}$, dolžina desk enaka
+**Iščemo:** število desk širine $12\,\text{cm}$
+
+:::formula
+$x_1 \cdot y_1 = x_2 \cdot y_2$ (širina deske $\cdot$ število desk je širina poda)
+:::
+
+**Rešitev:**
+
+1. Ožje deske pomenijo več desk, zato gre za obratno sorazmerje.
+2. Širina poda: $48 \cdot 15 = 720\,\text{cm}$.
+3. Zapiši enačbo za deske širine $12\,\text{cm}$ in jo reši. Nato preveri smer spremembe.
+
+:::premisli
+Koliko desk širine $12\,\text{cm}$ potrebujemo?
+---
+$12 \cdot y = 720$, torej $y = 720 : 12 = 60$ desk. Deske so ožje, zato jih je več. ✓
+:::
 
 ## Pogoste napake
 
-- **Uporaba premega sorazmerja.** Pri $4$ delavcih in $6$ dneh bi napačno računal $8$ delavcev $\Rightarrow$ $12$ dni. Vprašaj se vedno: ali se z večanjem ene količine druga veča ali manjša?
-- **Deljenje namesto množenja pri konstanti.** Pri obratnem sorazmerju je stalen zmnožek, ne količnik. Za $4$ in $6$ je $k = 24$, ne $4 : 6$.
-- **Ne preveriš smiselnosti.** Če je rezultat pri več delavcih daljši čas, si se zmotil.
-- **Misliš, da vsako padanje pomeni obratno sorazmerje.** Če iz tabele zmnožki niso enaki, količini nista obratno sorazmerni.
-- **Pozabiš na enote.** Če je čas v minutah in urah hkrati, najprej pretvori v isto enoto.
+- **Žanova napaka: premo namesto obratno.** Pri $3$ zidarjih in $8$ dneh računa $6$ zidarjev $\Rightarrow$ $16$ dni. To je pravilo premega sorazmerja. Preden računaš, se vprašaj: ali več delavcev pomeni več ali manj časa? Pri obratnem sorazmerju je odgovor »manj«.
+- **Razlika namesto »kolikokrat«.** Nekdo misli: pri $5$ črpalkah traja $12$ minut, pri $10$ črpalkah je črpalk $5$ več, torej $5$ minut manj, $7$ minut. Obratno sorazmerje ne govori o »za koliko«, ampak o »kolikokrat«. Črpalk je dvakrat več, čas je dvakrat krajši: $6$ minut.
+- **Vsako padanje razglasiš za obratno sorazmerje.** Pri deski $100\,\text{cm}$ ostanek pada, ko kos raste, a zmnožek ni stalen. Preveri zmnožke v vsaj dveh parih.
+- **Enačba iz premega sorazmerja.** Zapis $\dfrac{4}{6} = \dfrac{8}{y}$ ustreza prememu sorazmerju in vodi v $y = 12$. Pri obratnem sorazmerju zapiši enakost zmnožkov: $4 \cdot 6 = 8 \cdot y$, torej $y = 3$.
+- **Spregledan že opravljen del.** Pri nalogah, kjer se število delavcev spremeni sredi dela, najprej odštej, kar je že narejeno, kot v primeru 3.
 
 ## Povzetek
 
-- Količini sta obratno sorazmerni, če se ob večanju ene za $k$-krat druga za $k$-krat zmanjša.
-- Pri obratnem sorazmerju je **zmnožek** $x \cdot y$ stalen.
+- Količini sta obratno sorazmerni, če se ob povečanju ene za nekajkrat druga zmanjša za enakokrat.
+- Stalen je **zmnožek**: $x \cdot y = k$; $k$ je koeficient obratnega sorazmerja.
 - Za dva para velja $x_1 \cdot y_1 = x_2 \cdot y_2$.
-- Pri premem sorazmerju je stalen količnik, pri obratnem pa zmnožek.
-- Tipični primeri: število delavcev in čas, hitrost in čas pri isti poti.
-- Vedno preveri smiselnost: ali je smer spremembe pravilna?
+- Če eno količino pomnožimo z ulomkom $\dfrac{p}{q}$, se druga pomnoži z $\dfrac{q}{p}$.
+- Pri premem sorazmerju je stalen količnik, pri obratnem zmnožek. Padanje samo še ni dokaz.
+- Tipični primeri: delavci in dnevi, širina in število desk, dolžina in število kosov.
+- Rezultat preveri s smerjo: več delavcev, manj dni.
 
 ## Drugače: Na sliki
 
-Predstavljaj si pravokotnik s ploščino $24\,\text{cm}^2$. Če je ena stranica $x$ in druga $y$, velja $x \cdot y = 24$.
+Na karirast papir nariši vse pravokotnike, sestavljene iz $24$ kvadratkov:
 
-- $x = 2$, $y = 12$: širok in nizek ali ozek in visok.
-- $x = 4$, $y = 6$.
-- $x = 6$, $y = 4$.
-- $x = 12$, $y = 2$.
+- $1$ krat $24$: zelo dolg in nizek,
+- $2$ krat $12$,
+- $3$ krat $8$,
+- $4$ krat $6$.
 
-Ko eno stranico podaljšaš, se druga skrajša, da ploščina ostane enaka. Ploščina pravokotnika je tukaj stalni zmnožek $k$.
+Širina je število zidarjev, višina število dni. Vsi pravokotniki imajo enako ploščino, $24$ kvadratkov: to je stalni zmnožek $k$. Ko pravokotnik razširiš, se mora znižati, sicer kvadratkov ne bi bilo več $24$.
 
-Če točke $(x, y)$ narišeš v koordinatni sistem, ne ležijo na premici (kot pri premem sorazmerju), ampak na ukrivljeni črti, ki pada: čim večji $x$, tem manjši $y$. Črta se nikoli ne dotakne osi.
-
-## Drugače: Iz vsakdanjega življenja
-
-**Pica.** Pica je razrezana na enake kose in jo razdelimo med prijatelje. Ko je prijateljev več, dobi vsak manjši delež. Če jo razdelijo med $2$, dobi vsak polovico. Med $4$ dobi vsak četrtino. Dvakrat več ljudi pomeni dvakrat manjši kos. Število ljudi in velikost kosa sta obratno sorazmerni količini.
-
-**Zalogi hrane.** Hrana za $10$ dni zadošča $3$ osebam. Če se pridruži več oseb, zadošča manj dni. Za $6$ oseb zadošča $5$ dni, ker je $3 \cdot 10 = 30$ in $6 \cdot 5 = 30$.
-
-**Točenje vode.** Bazen se napolni prej, če odpremo več enakih cevi. Dve cevi ga napolnita v polovici časa, ki ga potrebuje ena.
-
-## Drugače: Korak za korakom s številkami
-
-Recept za vsako nalogo z obratnim sorazmerjem:
-
-1. **Preberi** nalogo in zapiši znani par, npr. $5$ delavcev, $8$ dni.
-2. **Odloči**, ali je obratno sorazmerje: več delavcev, manj dni, torej da.
-3. **Izračunaj konstanto:** $5 \cdot 8 = 40$.
-4. **Zapiši enačbo** za novi podatek, npr. za $10$ delavcev: $10 \cdot y = 40$.
-5. **Reši:** $y = 40 : 10 = 4$ dni.
-6. **Preveri smer:** delavcev je več, dni je manj. ✓
-7. **Zapiši odgovor** z enoto.
-
-Še en primer s tabelo. Zalogi krme zadošča $12$ konjem za $15$ dni. Za koliko dni zadošča $9$ konjem?
-
-| konji | dnevi |
-|---|---|
-| 12 | 15 |
-| 9 | $y$ |
-
-$k = 12 \cdot 15 = 180$. $9 \cdot y = 180$, zato $y = 180 : 9 = 20$ dni. Konjev je manj, zato krma zadošča dlje. ✓
+Zgornja desna oglišča teh pravokotnikov vriši v koordinatni sistem: $(1, 24)$, $(2, 12)$, $(3, 8)$, $(4, 6)$, $(6, 4)$, $(8, 3)$. Ne ležijo na premici, kot pri premem sorazmerju, ampak na krivulji, ki najprej strmo, nato vse bolj položno pada. Osi se nikoli ne dotakne, ker noben zmnožek z ničlo ni $24$.
 
 ## Drugače: Bolj natančno
 
-Primerjajmo obe vrsti sorazmerja:
+Iz $x \cdot y = k$ izrazimo $y$:
 
-| | premo sorazmerje | obratno sorazmerje |
+$$y = \frac{k}{x}$$
+
+Zato $x$ ne sme biti $0$: deliti z nič ne moremo. Tudi $k$ ni $0$.
+
+Zakaj stalni zmnožek pomeni »$n$-krat več, $n$-krat manj«? Naj bo $x_1 \cdot y_1 = k$ in $x_2 = n \cdot x_1$. Potem:
+
+$$y_2 = \frac{k}{n \cdot x_1} = \frac{1}{n} \cdot \frac{k}{x_1} = \frac{y_1}{n}$$
+
+Velja tudi za ulomke. Če $x$ pomnožimo s $\dfrac{3}{2}$, se $y$ pomnoži z $\dfrac{2}{3}$, saj je $\dfrac{3}{2} \cdot \dfrac{2}{3} = 1$ in zmnožek ostane $k$.
+
+Primerjava obeh sorazmerij:
+
+| | premo | obratno |
 |---|---|---|
-| Ob podvojitvi $x$ se $y$ | podvoji | razpolovi |
-| Stalna količina | količnik $\dfrac{y}{x} = k$ | zmnožek $x \cdot y = k$ |
-| Zapis | $y = k \cdot x$ | $y = \dfrac{k}{x}$ |
+| $x$ se podvoji, $y$ se | podvoji | razpolovi |
+| stalno je | $\dfrac{y}{x} = k$ | $x \cdot y = k$ |
+| zapis | $y = k \cdot x$ | $y = \dfrac{k}{x}$ |
+| graf | premica skozi $(0, 0)$ | krivulja, ki pada |
 
-Zakaj iz stalnega zmnožka sledi pravilo o $k$-kratniku? Naj bo $x_1 \cdot y_1 = k$. Če $x$ povečamo $n$-krat, je $x_2 = n \cdot x_1$. Iz $x_2 \cdot y_2 = k$ sledi:
-
-$$y_2 = \frac{k}{x_2} = \frac{k}{n \cdot x_1} = \frac{1}{n} \cdot \frac{k}{x_1} = \frac{y_1}{n}$$
-
-Torej je $y_2$ natanko $n$-krat manjši od $y_1$, kar je definicija obratnega sorazmerja.
-
-Primer: $y = \dfrac{12}{x}$. Za $x = 3$ je $y = 4$, za $x = 6$ je $y = 2$. Ko se $x$ podvoji, se $y$ razpolovi.
+Zveza $x + y = 100$ pri deski je tretja vrsta: stalna je vsota. Ko $x$ raste, $y$ pada vedno za enako število centimetrov, ne pa enakokrat.
 
 ## Preveri se
 
-? Pet črpalk prečrpa vodo iz kleti v $12$ minutah. V koliko minutah jo prečrpa $10$ enakih črpalk?
+? Katera trditev o obratno sorazmernih količinah drži?
+- Njun količnik je vedno enak.
+~ Stalen količnik ima premo sorazmerje. Pri obratnem je stalen zmnožek.
++ Njun zmnožek je vedno enak.
+- Vsaki zvezi, kjer ena količina raste in druga pada, rečemo obratno sorazmerje.
+~ Pri deski $100\,\text{cm}$ ostanek pada, a zmnožek ni stalen. Padati mora enakokrat.
+- Ko se ena podvoji, se druga zmanjša za $2$.
+~ Ne »za $2$«, ampak »na polovico«: obratno sorazmerje govori o kolikokratnikih.
+> Pri obratnem sorazmerju velja $x \cdot y = k$ za vse pare.
+
+? Tina je rešila nalogo: »$4$ zidarji pozidajo zid v $6$ dneh. V koliko dneh ga pozida $8$ zidarjev?« Zapisala je $\dfrac{4}{6} = \dfrac{8}{y}$ in dobila $y = 12$ dni. Kje je napaka?
+- Napaka je v računanju; $y$ bi moral biti $16$.
+~ Račun iz njene enačbe je pravilen. Napačna je že enačba.
++ Uporabila je premo sorazmerje; pravilno je $4 \cdot 6 = 8 \cdot y$, torej $y = 3$.
+- Ni napake: več zidarjev pomeni več dela, zato več dni.
+~ Zid je isti, delo je enako. Več zidarjev ga opravi prej.
+> Več zidarjev pomeni manj dni, zato gre za obratno sorazmerje: $24 = 8 \cdot y$, $y = 3$ dni.
+
+? Mizarstvo A: $3$ mizarji izdelajo kuhinjo v $12$ dneh. Mizarstvo B: $4$ mizarji izdelajo drugo kuhinjo v $10$ dneh. Za katero kuhinjo je bilo treba opraviti več dela (vsi mizarji delajo enako hitro)?
+- Za kuhinjo A, ker je trajala več dni.
+~ Število dni samo ne pove velikosti dela; pomembno je tudi, koliko mizarjev je delalo.
++ Za kuhinjo B, ker je $4 \cdot 10 = 40$ več kot $3 \cdot 12 = 36$ mizar-dni.
+- Za obe enako, ker sta obe delali približno dva tedna.
+~ Delo primerjamo z zmnožkom mizarji $\cdot$ dnevi: $36$ in $40$ nista enaka.
+> Velikost dela je zmnožek števila mizarjev in dni: A $36$, B $40$ mizar-dni.
+
+? Pet enakih črpalk izčrpa vodo iz gradbene jame v $12$ minutah. V koliko minutah jo izčrpa $10$ takih črpalk?
 - $24$ minut
+~ To je premo sorazmerje. Več črpalk mora delati krajši čas.
+- $7$ minut
+~ Črpalk ni »$5$ več«, ampak dvakrat več; čas je dvakrat krajši, ne za $5$ minut krajši.
 + $6$ minut
 - $60$ minut
-- $2$ minuti
-> Več črpalk pomeni krajši čas, zato je obratno sorazmerje. Konstanta: $5 \cdot 12 = 60$. Potem $10 \cdot t = 60$, torej $t = 6$ minut. Odgovor $24$ minut bi dobil s premim sorazmerjem.
+~ $60$ je koeficient $5 \cdot 12$, ki ga moraš še deliti z $10$.
+> $5 \cdot 12 = 60$, nato $10 \cdot t = 60$ in $t = 6$ minut.
 
-? Katera tabela prikazuje obratno sorazmerje?
-- $x$: 1, 2, 3; $y$: 5, 10, 15
-- $x$: 1, 2, 3; $y$: 9, 8, 7
-+ $x$: 1, 2, 4; $y$: 8, 4, 2
-> Pri obratnem sorazmerju je zmnožek stalen: $1 \cdot 8 = 2 \cdot 4 = 4 \cdot 2 = 8$. V prvi tabeli je stalen količnik (premo sorazmerje), v drugi $y$ sicer pada, a zmnožki $9, 16, 21$ niso enaki.
-
-? Avtobus pelje s hitrostjo $50\,\text{km/h}$ in potrebuje $4\,\text{h}$. Koliko časa potrebuje pri hitrosti $80\,\text{km/h}$ na isti poti?
-- $6{,}4\,\text{h}$
-- $2\,\text{h}$
-+ $2{,}5\,\text{h}$
-> Pot je $50 \cdot 4 = 200\,\text{km}$. Pri $80\,\text{km/h}$ je čas $200 : 80 = 2{,}5\,\text{h}$. Odgovor $6{,}4\,\text{h}$ bi dobil s premim sorazmerjem ($4 \cdot 80 : 50$).
+? Šest učencev bi izdelalo kulise za predstavo v $10$ urah. Po $4$ urah se jim pridružijo še trije enako hitri učenci. Koliko ur skupaj traja izdelava?
+- $15$ ur
+~ To je premo sorazmerje ($10 \cdot 9 : 6$). Več učencev pomeni manj ur.
+- $4$ ure
+~ Toliko traja le preostanek. Prištej še prve $4$ ure.
++ $8$ ur
+- Približno $6{,}7$ ure
+~ Tako bi bilo, če bi devet učencev delalo od začetka. Prve $4$ ure jih je delalo šest.
+> Delo: $6 \cdot 10 = 60$. V $4$ urah opravijo $24$, ostane $36$. Devet učencev potrebuje $36 : 9 = 4$ ure. Skupaj $4 + 4 = 8$ ur.

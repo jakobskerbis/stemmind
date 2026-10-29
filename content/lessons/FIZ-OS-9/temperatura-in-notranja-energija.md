@@ -31,7 +31,7 @@ Kad. Delci čaja se res gibljejo hitreje, a v kadi je delcev več stokrat toliko
 
 **3. Kako deluje termometer.** Najbolj znan je tekočinski termometer. V stekleni bučki je obarvan alkohol (v starejših živo srebro), iz nje vodi tanka cevka.
 
-Ko bučko potopiš v toplo vodo, delci vode trkajo ob steklo in prek njega v alkohol. Delci alkohola se začnejo gibati hitreje in se v povprečju razmaknejo. Alkohol se zato **razširi** in stolpec se dvigne po cevki. Ker je cevka tanka, že majhna sprememba prostornine premakne stolpec za opazen kos.
+Ko bučko potopiš v toplo vodo, delci vode trkajo ob steklo, steklo pa energijo preda alkoholu. Delci alkohola se začnejo gibati hitreje in se v povprečju razmaknejo. Alkohol se zato **razširi** in stolpec se dvigne po cevki. Ker je cevka tanka, že majhna sprememba prostornine premakne stolpec za opazen kos.
 
 Termometer vedno pokaže **svojo** temperaturo. Snovi enako pokaže šele takrat, ko sta oba enako topla in se stolpec ustavi. Temu stanju rečemo **toplotno ravnovesje**.
 
@@ -151,7 +151,7 @@ $t = -5\,^\circ\mathrm{C}$. To je pod zmrziščem vode, zato se sneg na vrhu ne 
 
 - **»Bolj vroče telo ima vedno več notranje energije.«** Učenec gleda samo temperaturo. A notranja energija je vsota energij vseh delcev, zato je odvisna tudi od količine snovi. Velika kad mlačne vode ima več notranje energije kot skodelica vrelega čaja. Temperatura pove povprečje na en delec, ne vsote.
 - **Pri pretvorbi v kelvine odštejemo $273$.** Učenec si zapomni le število $273$, ne pa smeri. Ker je absolutna ničla *pod* ničlo Celzija, so kelvini vedno večje število: $T = t + 273$. Preizkus: negativen rezultat v kelvinih je vedno napačen.
-- **Pri Fahrenheitu najprej delimo, šele nato odštejemo.** Tako iz $50\,^\circ\mathrm{F}$ nastane $\dfrac{50}{1{,}8} - 32 \approx -4{,}2\,^\circ\mathrm{C}$, kar je mraz namesto prijetnega jutra. Pravilno: najprej odštej $32$ (premik ničle), nato deli z $1{,}8$ (velikost koraka): $\dfrac{50 - 32}{1{,}8} = 10\,^\circ\mathrm{C}$.
+- **Pri Fahrenheitu najprej delimo, šele nato odštejemo.** Tako iz $50\,^\circ\mathrm{F}$ nastane $\dfrac{50}{1{,}8} - 32 \approx -4{,}2\,^\circ\mathrm{C}$, kar je mraz namesto svežega jutra. Pravilno: najprej odštej $32$ (premik ničle), nato deli z $1{,}8$ (velikost koraka): $\dfrac{50 - 32}{1{,}8} = 10\,^\circ\mathrm{C}$.
 - **Termometer odčitamo takoj.** Termometer pokaže svojo temperaturo, ne temperature snovi. Šele ko se stolpec ustavi, sta oba v toplotnem ravnovesju.
 - **»Pri $0\,^\circ\mathrm{C}$ delci mirujejo.«** Ničla Celzijeve lestvice je le dogovor (zmrzišče vode). Delci se gibljejo tudi pri $-200\,^\circ\mathrm{C}$; najmanjše gibanje imajo šele pri $0\,\mathrm{K}$.
 
@@ -182,7 +182,7 @@ Termometre srečaš povsod, le da jih ne opaziš vedno:
 
 - **Vročinski termometer.** Digitalni pod pazduho piska, ko je dosegel ravnovesje s telesom. Zato ga ne vzameš ven prej.
 - **Infrardeči termometer na čelu.** Izmeri v sekundi, ker se ne rabi segreti: meri nevidno svetlobo, ki jo oddaja koža.
-- **Zunanji termometer v avtu.** Na poti v hribe ob $3\,^\circ\mathrm{C}$ prižge opozorilo za poledico. Ob cesti je lahko še topleje kot na mostu, kjer led nastane prej.
+- **Zunanji termometer v avtu.** Na poti v hribe že ob $3\,^\circ\mathrm{C}$ prižge opozorilo za poledico: zrak je še nad ničlo, cestišče, posebej na mostu, pa je lahko hladnejše in tam led nastane prej.
 - **Termometer v hladilniku** naj kaže okoli $4\,^\circ\mathrm{C}$, v zamrzovalniku okoli $-18\,^\circ\mathrm{C}$.
 
 Na potovanjih pomaga hitro preverjanje v glavi: v ZDA je $32\,^\circ\mathrm{F}$ mraz (zmrzišče), $50\,^\circ\mathrm{F}$ sveže ($10\,^\circ\mathrm{C}$), $68\,^\circ\mathrm{F}$ prijetno ($20\,^\circ\mathrm{C}$), $86\,^\circ\mathrm{F}$ vroče ($30\,^\circ\mathrm{C}$). Vsakih $10\,^\circ\mathrm{C}$ je $18\,^\circ\mathrm{F}$.
