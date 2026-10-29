@@ -506,7 +506,7 @@ export class Leagues {
 }
 
 // HTTP poti. `loadStudent(req, res)` vrne učenca ali odgovori s 404.
-// Pri vklopljenih računih (KOMPRENO_ACCOUNTS=1) so vse poti za prijavo in
+// Pri vklopljenih računih (EVKLID_ACCOUNTS=1) so vse poti za prijavo in
 // preverjanjem lastništva učenca; `req.parent` je prijavljeni račun.
 export function mountLeagues(app, store, { loadStudent }) {
   const leagues = new Leagues(store);

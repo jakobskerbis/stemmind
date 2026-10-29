@@ -1,18 +1,19 @@
 // Shramba (SQLite, vgrajen v Node 22).
 import "./env.js";
+import { BRAND, LEGACY } from "./brand.js";
 import fs from "node:fs";
 import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { DEFAULT_SETTINGS, normalizeSettings, normalizeWeaknessList } from "./settings.js";
 import { Flashcards } from "./flashcards.js";
 
-// Do 29. 10. 2026 se je aplikacija imenovala STEMMind in baza data/stemmind.db. Ob prvem zagonu
-// z novim imenom jo prepišemo v data/kompreno.db (VACUUM INTO zajame tudi neshranjeni WAL).
+// Baza ima ime aplikacije (data/<ime>.db). Ob prvem zagonu po preimenovanju prepišemo najnovejšo
+// bazo s prejšnjim imenom (brand.json → legacy) v novo (VACUUM INTO zajame tudi neshranjeni WAL).
 // Stara datoteka ostane kot varnostna kopija in za morebitno vrnitev na prejšnjo različico.
 export function migrateLegacyDb(file) {
-  if (file === ":memory:" || path.basename(file) !== "kompreno.db" || fs.existsSync(file)) return false;
-  const old = path.join(path.dirname(file), "stemmind.db");
-  if (!fs.existsSync(old)) return false;
+  if (file === ":memory:" || path.basename(file) !== `${BRAND.slug}.db` || fs.existsSync(file)) return false;
+  const old = LEGACY.map((l) => path.join(path.dirname(file), `${l.slug}.db`)).find((f) => fs.existsSync(f));
+  if (!old) return false;
   const src = new DatabaseSync(old);
   try {
     src.exec(`VACUUM INTO '${file.replace(/'/g, "''")}'`);
@@ -22,7 +23,7 @@ export function migrateLegacyDb(file) {
   return true;
 }
 
-export function openDb(file = process.env.KOMPRENO_DB || "data/kompreno.db") {
+export function openDb(file = process.env.EVKLID_DB || `data/${BRAND.slug}.db`) {
   if (file !== ":memory:") fs.mkdirSync(path.dirname(file), { recursive: true });
   migrateLegacyDb(file);
   const db = new DatabaseSync(file);

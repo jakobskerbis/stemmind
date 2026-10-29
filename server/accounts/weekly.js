@@ -72,14 +72,14 @@ ${w.weak.length ? `<p style="margin:10px 0 0">🔎 Še vaditi: ${w.weak.map(esc)
 <p style="margin:10px 0 0;color:#4f6bed">💡 ${esc(tip(w))}</p>`;
   const html = layout(
     "Tedensko poročilo",
-    `<p>Pozdravljeni${parent.name ? `, ${esc(parent.name)}` : ""}! Takole je potekal zadnji teden.</p>${rows.map(block).join("")}${button(appUrl, "Odpri Kompreno")}`,
-    `To poročilo prejemate, ker imate račun Kompreno. <a href="${esc(unsubscribeUrl)}">Odjava od tedenskih poročil</a>.`,
+    `<p>Pozdravljeni${parent.name ? `, ${esc(parent.name)}` : ""}! Takole je potekal zadnji teden.</p>${rows.map(block).join("")}${button(appUrl, "Odpri Evklid")}`,
+    `To poročilo prejemate, ker imate račun pri Evklidu. <a href="${esc(unsubscribeUrl)}">Odjava od tedenskih poročil</a>.`,
   );
   const text = rows
     .map(({ child, week: w }) => `${child.name}: aktivni dnevi ${w.active_days}/7, rešene naloge ${w.solved}, vprašanja ${w.questions}, XP ${w.xp}.${w.weak.length ? ` Še vaditi: ${w.weak.join(", ")}.` : ""} ${tip(w)}`)
     .join("\n") + `\n\nOdjava: ${unsubscribeUrl}`;
   const names = children.map((c) => c.name).join(" in ");
-  return { subject: `Kompreno: tedensko poročilo za ${names}`, html, text, children: rows.map((r) => ({ id: r.child.id, name: r.child.name, ...r.week })) };
+  return { subject: `Evklid: tedensko poročilo za ${names}`, html, text, children: rows.map((r) => ({ id: r.child.id, name: r.child.name, ...r.week })) };
 }
 
 // Oznaka tedna (ISO), da se poročilo pošlje samo enkrat.

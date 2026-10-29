@@ -254,7 +254,7 @@ Highest learning value per engine, and widest reuse of the 120 concepts:
 - Generators: correct value computed in code, tolerance by tier, `why` for 1–3 typical mistakes,
   tested in `test/games.test.js` (40 seeds × 3 tiers, value inside `[min, max]`).
 - UI strings in `public/i18n/sl.js` + all `public/i18n/ui/*.json`.
-- Screenshot pair (phone + computer) in `/mnt/project-files/kompreno/posnetki-igre/`.
+- Screenshot pair (phone + computer) in `/mnt/project-files/evklid/posnetki-igre/`.
 
 ## 11. Unlocking: play only what you can already solve (switched off)
 

@@ -29,7 +29,7 @@ const OUTCOME = {
 let current = null; // id učenca
 let period = "week"; // razredi in prijatelji: ta teden | ta mesec
 try {
-  period = localStorage.getItem("kompreno.boardPeriod") === "month" ? "month" : "week";
+  period = localStorage.getItem("evklid.boardPeriod") === "month" ? "month" : "week";
 } catch {}
 
 // Značka zmage sama (izrez okoli prsi avatarja); klik odpre Zbirke (app.js, [data-zb]).
@@ -141,7 +141,7 @@ export async function loadLeague(studentId) {
     b.addEventListener("click", () => {
       period = b.dataset.period;
       try {
-        localStorage.setItem("kompreno.boardPeriod", period);
+        localStorage.setItem("evklid.boardPeriod", period);
       } catch {}
       loadLeague(studentId);
     }),

@@ -4,7 +4,7 @@ Trenutni prompt je v `prompts/system_prompt.md`.
 
 ## Različica 3 (2026-10-28): širši obseg in predpomnjenje
 
-- **Dva dela, ločena z vrstico `<!-- KOMPRENO:NASTAVITVE … -->`.** Vse nad njo je stalno in enako za vse učence; strežnik (`server/prompt.js`, `systemBlocks`) ga pošlje kot prvi blok `system` z oznako `cache_control`, zato se pri Claude API predpomni in deli med vsemi pogovori. Nastavitve učenca (ime, predmet, šola, raven, program, način, osebnost, šibke točke, učna pot) so v drugem bloku na koncu. Prej so bile nastavitve na vrhu, kar je prekinilo skupni predpomnilnik že v prvi vrstici.
+- **Dva dela, ločena z vrstico `<!-- EVKLID:NASTAVITVE … -->`.** Vse nad njo je stalno in enako za vse učence; strežnik (`server/prompt.js`, `systemBlocks`) ga pošlje kot prvi blok `system` z oznako `cache_control`, zato se pri Claude API predpomni in deli med vsemi pogovori. Nastavitve učenca (ime, predmet, šola, raven, program, način, osebnost, šibke točke, učna pot) so v drugem bloku na koncu. Prej so bile nastavitve na vrhu, kar je prekinilo skupni predpomnilnik že v prvi vrstici.
 - **Šola in raven** zdaj pokrivata OŠ, SŠ in UNIVERZA v enem razdelku; univerza velja za vse fakultete in programe iz nastavitev (ne le FKKT/FS/FMF), z ločenim slogom za matematično-fizikalne in tehniške programe.
 - **Strokovni predmeti** BIO, GEO, RAC in EKO imajo svoja pravila ob MAT/FIZ/KEM.
 - **Tekmovanja** opisujejo razdelek Tekmovanja (trening, poskusno tekmovanje, olimpijade) in kako voditi učenca po nalogi, ki je ni rešil.

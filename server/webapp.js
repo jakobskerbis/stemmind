@@ -1,8 +1,9 @@
-// Kompreno kot aplikacija na telefonu in računalniku (PWA).
+// Evklid kot aplikacija na telefonu in računalniku (PWA).
 // - /manifest.webmanifest: opis aplikacije v jeziku vmesnika (?lang=… ali jezik brskalnika),
 //   z bližnjicami (dolg pritisk na ikono) in posnetki zaslona za okno »Namesti«.
 // - /.well-known/assetlinks.json: povezava z aplikacijo v Google Play (TWA), ko sta v .env
 //   ANDROID_PACKAGE in ANDROID_SHA256 (glej docs/aplikacija.md).
+import { BRAND } from "./brand.js";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -40,8 +41,8 @@ export function manifest(lang = "sl") {
   });
   return {
     id: "/",
-    name: "Kompreno",
-    short_name: "Kompreno",
+    name: BRAND.name,
+    short_name: BRAND.name,
     description: s["inst.desc"],
     lang,
     dir: RTL.has(lang) ? "rtl" : "ltr",
@@ -51,7 +52,7 @@ export function manifest(lang = "sl") {
     background_color: "#ffffff",
     theme_color: "#2563eb",
     categories: ["education"],
-    // Klik na ikono, ko je Kompreno že odprt, ga prikaže (brez drugega okna).
+    // Klik na ikono, ko je Evklid že odprt, ga prikaže (brez drugega okna).
     launch_handler: { client_mode: ["navigate-existing", "auto"] },
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },

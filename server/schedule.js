@@ -389,7 +389,7 @@ export async function scheduleSources({ fetchFn = fetch, settings = null } = {})
 // Fotografija urnika: model prebere ure in teste, učenec jih pred shranjevanjem preveri.
 
 // Natančnost je tu pomembnejša od cene (urnik se prebere enkrat na semester), zato zmogljivejši model.
-const photoModel = () => process.env.KOMPRENO_SCHEDULE_MODEL || MODEL_DEEP;
+const photoModel = () => process.env.EVKLID_SCHEDULE_MODEL || MODEL_DEEP;
 
 export async function readTimetablePhoto({ imageBase64, mediaType = "image/jpeg", today = new Date().toISOString().slice(0, 10) }) {
   const model = photoModel();

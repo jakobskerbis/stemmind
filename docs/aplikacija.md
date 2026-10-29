@@ -1,12 +1,12 @@
-# Kompreno kot aplikacija na telefonu
+# Evklid kot aplikacija na telefonu
 
-Kompreno je spletna aplikacija, ki jo uporabnik namesti na začetni zaslon (PWA). Ne potrebuje
+Evklid je spletna aplikacija, ki jo uporabnik namesti na začetni zaslon (PWA). Ne potrebuje
 trgovine z aplikacijami: dobi svojo ikono, odpre se čez cel zaslon brez vrstice brskalnika in
 deluje tudi brez povezave (shranjene naloge, učbenik, kalkulator).
 
 ## Kako jo uporabnik namesti
 
-Aplikacija to ponudi sama: kartica »Kompreno kot aplikacija« na Učni poti (lahko jo skrije za
+Aplikacija to ponudi sama: kartica »Evklid kot aplikacija« na Učni poti (lahko jo skrije za
 3 tedne), vrstica »Namesti aplikacijo« pod zavihkom Jaz in kartica v Nastavitvah. V že nameščeni
 aplikaciji se ne pokažejo.
 
@@ -15,7 +15,7 @@ aplikaciji se ne pokažejo.
 | Android (Chrome, Edge, Samsung Internet) | Odpre se okno »Namesti« s posnetki zaslona; ena potrditev. |
 | iPhone, iPad (Safari, Chrome) | Trije koraki: Deli → Dodaj na začetni zaslon → Dodaj. Apple drugače ne dovoli. |
 | Odprto v Instagramu, Messengerju … | Navodilo, naj stran najprej odpre v brskalniku. |
-| Računalnik (Chrome, Edge) | Okno »Namesti Kompreno«; aplikacija se odpre v svojem oknu. |
+| Računalnik (Chrome, Edge) | Okno »Namesti Evklid«; aplikacija se odpre v svojem oknu. |
 
 Na iPhonu ima nameščena aplikacija svoje piškotke, zato se mora uporabnik ob prvem odprtju
 morda še enkrat prijaviti (to piše tudi v navodilih).
@@ -39,11 +39,11 @@ tudi, ko je računalnik ugasnjen (npr. Render, glej `docs/objava.md`).
 
 1. **Google Play (priporočeno najprej).** Isto aplikacijo zapakiramo kot »Trusted Web Activity«
    (orodje PWABuilder ali Bubblewrap), brez nove kode. Potrebno: razvijalski račun Google Play
-   (enkratno 25 $), ime paketa (npr. `si.kompreno.app`) in prstni odtis podpisnega ključa. Ta dva
+   (enkratno 25 $), ime paketa (npr. `si.evklid.app`) in prstni odtis podpisnega ključa. Ta dva
    vpišemo v `.env`:
 
    ```
-   ANDROID_PACKAGE=si.kompreno.app
+   ANDROID_PACKAGE=si.evklid.app
    ANDROID_SHA256=AB:CD:…
    ```
 

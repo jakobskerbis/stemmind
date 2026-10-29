@@ -1,10 +1,11 @@
-// Odpre Kompreno na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
+// Odpre Evklid na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
 // Stalna povezava (ista ob vsakem zagonu): brezplačen račun ngrok (NGROK_AUTHTOKEN in
 // NGROK_DOMAIN v .env, skript ju vpraša enkrat). Brez tega: začasna povezava Cloudflare.
 // Uporaba: node scripts/zaganjalnik.js telefon  (na Windows dvoklik na telefon-windows.bat)
 // Računalnik mora biti prižgan, dokler uporabljaš povezavo na telefonu.
 // Aplikacija se sama posodobi z GitHuba (preverja vsakih 15 minut), povezava ostane ista (docs/posodobitve.md).
 import "../server/env.js";
+import { BRAND, LEGACY } from "../server/brand.js";
 import fs from "node:fs";
 import path from "node:path";
 import { spawn, execFileSync } from "node:child_process";
@@ -39,8 +40,13 @@ function readEnv() {
 function envValue(text, key) {
   const m = text.match(new RegExp(`^\\s*${key}\\s*=\\s*([^#\\r\\n]*)`, "m"));
   if (m) return m[1].trim();
-  // Starejša .env ima nastavitve z imenom iz časa STEMMind (STEMMIND_…).
-  return key.startsWith("KOMPRENO_") ? envValue(text, key.replace("KOMPRENO_", "STEMMIND_")) : "";
+  // Starejša .env ima nastavitve s prejšnjim imenom aplikacije (brand.json → legacy).
+  if (!key.startsWith(`${BRAND.env}_`)) return "";
+  for (const l of LEGACY) {
+    const v = envValue(text, `${l.env}_${key.slice(BRAND.env.length + 1)}`);
+    if (v) return v;
+  }
+  return "";
 }
 
 function appendEnv(lines) {
@@ -51,7 +57,7 @@ function appendEnv(lines) {
 
 async function ensurePassword() {
   const text = readEnv();
-  if (envValue(text, "KOMPRENO_PASSWORD")) return;
+  if (envValue(text, "EVKLID_PASSWORD")) return;
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   say("Povezava za telefon bo zaščitena z geslom, da je ne more odpreti kdorkoli.");
   let pw = "";
@@ -60,7 +66,7 @@ async function ensurePassword() {
   }
   rl.close();
   const sep = text && !text.endsWith("\n") ? "\n" : "";
-  fs.writeFileSync(envFile, `${text}${sep}KOMPRENO_PASSWORD=${pw}\n`);
+  fs.writeFileSync(envFile, `${text}${sep}EVKLID_PASSWORD=${pw}\n`);
   say("Geslo je shranjeno v datoteko .env (spremeniš ga lahko tam).");
 }
 
@@ -71,7 +77,7 @@ async function ensureServer() {
   const s = await serverStatus(port);
   if (s === 401) return false; // že teče z geslom (v drugem oknu)
   if (s) {
-    say("Kompreno že teče brez gesla. Zapri drugo okno Kompreno in znova zaženi to datoteko.");
+    say("Evklid že teče brez gesla. Zapri drugo okno Evklida in znova zaženi to datoteko.");
     return stopAll(1);
   }
   log = openLog(root);
@@ -120,7 +126,7 @@ async function ngrokSettings() {
   let token = envValue(text, "NGROK_AUTHTOKEN");
   let domain = envValue(text, "NGROK_DOMAIN").replace(/^https?:\/\//, "").replace(/\/.*$/, "");
   if (token && domain) return { token, domain };
-  if (envValue(text, "KOMPRENO_STALNA_POVEZAVA") === "0") return null;
+  if (envValue(text, "EVKLID_STALNA_POVEZAVA") === "0") return null;
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   const lines = rl[Symbol.asyncIterator]();
   const ask = async (q) => { process.stdout.write(q); const { value, done } = await lines.next(); if (done) throw new Error("ni vnosa"); return value.trim(); };
@@ -256,7 +262,7 @@ async function main() {
   process.chdir(root);
   await ensurePassword();
   const stable = await ngrokSettings();
-  say("Zaganjam Kompreno ...");
+  say("Zaganjam Evklid ...");
   const own = await ensureServer();
   say("Odpiram povezavo za telefon ...");
   let url = "";
@@ -269,7 +275,7 @@ async function main() {
     }
   }
   if (!url) url = await startTunnel(await ensureCloudflared());
-  const pw = envValue(readEnv(), "KOMPRENO_PASSWORD");
+  const pw = envValue(readEnv(), "EVKLID_PASSWORD");
   const friend = `${url}/?geslo=${encodeURIComponent(pw)}`;
   fs.mkdirSync(path.dirname(urlFile), { recursive: true });
   fs.writeFileSync(urlFile, url + "\n");
@@ -277,7 +283,7 @@ async function main() {
   const copied = copyToClipboard(friend);
   say();
   say("==============================================================");
-  say("  Kompreno za telefon:");
+  say("  Evklid za telefon:");
   say();
   say(`  ${url}`);
   say();
@@ -297,7 +303,7 @@ async function main() {
   if (own) {
     autoUpdate({
       root, port, say: logSay(log), server,
-      restartSelf: process.env.KOMPRENO_ZAGANJALNIK ? () => stopAll(RESTART_CODE) : null,
+      restartSelf: process.env.EVKLID_ZAGANJALNIK ? () => stopAll(RESTART_CODE) : null,
     });
   }
 }

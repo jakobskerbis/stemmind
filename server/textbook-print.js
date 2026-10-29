@@ -30,7 +30,7 @@ function lessonHtml(t, lesson, n) {
       const body = `<section>${s.title ? `<h3>${esc(s.title)}</h3>` : ""}${renderMd(s.md)}</section>`;
       const note =
         demo && /rešen/i.test(s.title)
-          ? `<aside class="demo-note">Interaktivni poskus »${esc(demo.title)}« je na voljo v aplikaciji Kompreno.</aside>`
+          ? `<aside class="demo-note">Interaktivni poskus »${esc(demo.title)}« je na voljo v aplikaciji Evklid.</aside>`
           : "";
       return body + note;
     })
@@ -58,7 +58,7 @@ function lessonHtml(t, lesson, n) {
 }
 
 const today = () => new Date().toLocaleDateString("sl-SI", { day: "numeric", month: "long", year: "numeric" });
-const NOTE = `<p class="muted small">Interaktivni poskusi, simulacije, sprotno preverjanje in vaje so na voljo v aplikaciji Kompreno.
+const NOTE = `<p class="muted small">Interaktivni poskusi, simulacije, sprotno preverjanje in vaje so na voljo v aplikaciji Evklid.
         Lekcije z oznako osnutek še pregleduje učitelj.</p>`;
 
 // Celoten učbenik predmeta (npr. MAT-OS): deli so razredi oziroma letniki.
@@ -74,7 +74,7 @@ export function printBook(bookKey) {
   const total = parts.reduce((s, x) => s + x.topics.length, 0);
   const have = parts.reduce((s, x) => s + x.ready.length, 0);
   const cover = `<section class="cover">
-        <p class="brand">Kompren<span>o</span></p>
+        <p class="brand">Evkli<span>d</span></p>
         <h1>${esc(book.subjectName)}</h1>
         <p class="sub">Učbenik za ${esc(book.schoolName)}: razlage, rešeni primeri in vprašanja za preverjanje</p>
         <p class="muted">Izdaja ${esc(today())} · ${have} od ${total} tem${have < total ? " (ostale lekcije so v pripravi)" : ""}</p>
@@ -109,7 +109,7 @@ export function printFormulas(key) {
   const md = formulaSheet(bookKey);
   if (!book || !md) return null;
   const content = `<section class="sheet">
-      <p class="brand small">Kompren<span>o</span></p>
+      <p class="brand small">Evkli<span>d</span></p>
       <h1>${esc(book.subjectName)}: formule in konstante</h1>
       <p class="muted">${esc(book.schoolName.charAt(0).toUpperCase() + book.schoolName.slice(1))} · izdaja ${esc(today())}</p>
       ${renderMd(md)}
@@ -135,7 +135,7 @@ export function printPage(pathKey, topicSlug = null) {
   const toc = topicSlug
     ? ""
     : `<section class="cover">
-        <p class="brand">Kompren<span>o</span></p>
+        <p class="brand">Evkli<span>d</span></p>
         <h1>${esc(p.label)}</h1>
         <p class="sub">Učbenik z razlagami, rešenimi primeri in vprašanji za preverjanje</p>
         <p class="muted">Izdaja ${esc(today())} · ${ready.length} od ${topics.length} tem${ready.length < topics.length ? " (ostale lekcije so v pripravi)" : ""}</p>

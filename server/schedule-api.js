@@ -74,7 +74,7 @@ export function mountSchedule(app, store, { loadStudent, progress, usage, schedu
       const clean = normalizeSchedule({ lessons: out.lessons, events: out.events }, s.settings);
       res.json({ lessons: clean.lessons, events: clean.events });
     } catch (err) {
-      console.error("[kompreno] branje urnika:", err?.message || err);
+      console.error("[evklid] branje urnika:", err?.message || err);
       res.status(502).json({ error: "Branje urnika trenutno ne deluje. Vpiši ga ročno." });
     }
   });

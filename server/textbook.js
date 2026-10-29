@@ -17,7 +17,7 @@ import { SUBJECT_EN } from "./region-curricula.js";
 import { hasEngine } from "../public/sim/index.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const LESSONS_DIR = process.env.KOMPRENO_LESSONS || path.join(here, "..", "content", "lessons");
+export const LESSONS_DIR = process.env.EVKLID_LESSONS || path.join(here, "..", "content", "lessons");
 
 // Lastne interaktivne simulacije (public/sim/). Katera se pokaže pri kateri temi,
 // je zapisano v public/sim/katalog.js; prikažemo samo že narejene.
@@ -290,7 +290,7 @@ function schoolBooks(system = "SI") {
 }
 
 // Formule in konstante predmeta: content/formulas/<učbenik>.md (npr. MAT-OS.md).
-export const FORMULAS_DIR = process.env.KOMPRENO_FORMULAS || path.join(here, "..", "content", "formulas");
+export const FORMULAS_DIR = process.env.EVKLID_FORMULAS || path.join(here, "..", "content", "formulas");
 export function formulaSheet(bookKey) {
   if (!/^[A-Z]+-[A-Z]+$/.test(bookKey || "")) return null;
   try {
