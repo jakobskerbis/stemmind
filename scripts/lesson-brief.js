@@ -135,7 +135,7 @@ The checker and a second reviewer have already verified numbers, keys, level and
 3. Not monotone (docs/kakovost.md §1b): the opening, the explanation path and the quiz do not feel like the same template as the other lessons in this brief; vary the worst repetition.
 4. Flow: Zakaj → Razlaga → examples → quiz builds up; a jump that needs an unstated step gets one sentence.
 5. Phone: no table wider than 4 columns, long formulas split, nothing conveyed only by colour.
-Small \`Edit\`s only (≤ 8 per lesson), never a rewrite. Keep every number, formula, structure and \`+\`/\`-\` key unchanged; if you believe a number or key is wrong, report it instead of changing it. Then run \`node scripts/check-lesson.js -q ${files}\` once. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 4 lines.
+Small \`Edit\`s only (≤ 8 per lesson), never a rewrite. Keep every number, formula, structure and \`+\`/\`-\` key unchanged; if you believe a number or key is wrong, do not change it: add a reply line \`DVOM: <id> line <n>: <why>\` (the orchestrator checks every DVOM line). Then run \`node scripts/check-lesson.js -q ${files}\` once. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 4 lines.
 
 ## Lessons
 `;
