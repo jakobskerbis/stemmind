@@ -70,7 +70,7 @@ Pravila za rešene primere (vsak `### Primer`):
   sam; v PDF-ju je izpisan. Vsebina bloka je navaden Markdown z LaTeX.
 - **Rešitev:** koraki z vmesnimi rezultati in odgovor v stavku.
 
-Obliko preveriš z `node scripts/check-lesson.js content/lessons/<pot>/<slug>.md`
+Obliko preveriš z `node scripts/check-lesson.js -q content/lessons/<pot>/<slug>.md` (`-q` izpiše samo težave). Za varčno pisanje glej `docs/token-rules.md`.
 (brez argumentov preveri vse lekcije). Simulacijo v besedilu omeni kot
 »simulacija spodaj« z njenim naslovom iz public/sim/katalog.js.
 
