@@ -80,6 +80,7 @@
       <button type="button" data-mode="new"><span class="ic"><i data-icon="compass"></i></span><span class="m-name" data-i18n="mode.new">Nova snov</span><span class="m-sub" data-i18n="mode.newSub">Nadaljuj, kjer si ostal</span></button>
       <button type="button" data-mode="review"><span class="ic"><i data-icon="repeat"></i><b class="badge" hidden></b></span><span class="m-name" data-i18n="mode.review">Ponavljanje</span><span class="m-sub" data-i18n="mode.reviewSub">Da znanje ne zbledi</span></button>
       <button type="button" data-mode="test"><span class="ic"><i data-icon="clipboard-check"></i></span><span class="m-name" data-i18n="mode.test">Priprava na test</span><span class="m-sub" data-i18n="mode.testSub">Izberi snov in datum</span></button>
+      <button type="button" data-mode="cards"><span class="ic"><i data-icon="layers"></i><b class="badge" hidden></b></span><span class="m-name" data-i18n="mode.cards">Kartice</span><span class="m-sub" data-i18n="mode.cardsSub">Pomembna dejstva</span></button>
     </nav>
     </div>
     <div id="path-content"></div>
@@ -90,6 +91,9 @@
     <div class="topic-top"><button id="back-to-path" type="button" class="ghost back"><i data-icon="arrow-left"></i><span data-i18n="topic.backPath">Učna pot</span></button><button type="button" class="ghost small calc-open" data-calc="sci" title="Kalkulator" aria-label="Kalkulator" data-i18n-title="nav.graph" data-i18n-aria="nav.graph"><i data-icon="calculator"></i><span data-i18n="nav.graph">Kalkulator</span></button></div>
     <div id="topic-content"></div>
   </main>
+
+  <!-- KARTICE ZA PONAVLJANJE (flashcards.js) -->
+  <main id="view-cards" class="view narrow" hidden></main>
 
   <!-- TEKMOVANJA -->
   <main id="view-competition" class="view narrow" hidden>

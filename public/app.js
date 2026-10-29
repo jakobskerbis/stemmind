@@ -18,6 +18,7 @@ import { renderSuggestion, renderWelcome, stageUp } from "./level-up.js";
 import { offlineApi, refreshPack, syncOffline, packTaskCount, pendingCount } from "./offline.js";
 import { initFeedback, showFeedback } from "./feedback.js";
 import { initInstall, installSheetOpen, closeInstallSheet } from "./install.js";
+import { initFlashcards, showFlashcards, addCardsNote } from "./flashcards.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -132,11 +133,15 @@ function showView(name) {
   if (name === "textbook") showTextbook();
   if (name === "competition") (examMode() ? loadExams() : loadCompetition());
   if (name === "feedback") showFeedback();
+  if (name === "cards") {
+    setActiveMode("cards");
+    showFlashcards();
+  }
   if (name === "graph") showGraph();
   else document.body.classList.remove("gc-kp");
   closeCalcOverlay();
   if (name !== "topic") closePad();
-  if (name !== "topic") setActiveMode(null);
+  if (name !== "topic" && name !== "cards") setActiveMode(null);
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
@@ -504,8 +509,10 @@ async function send(text, { deep = false } = {}) {
     }
 
     let doneData = null;
+    let cardsData = null;
     await readSse(res, {
       delta: (d) => pacer.push(d.text),
+      cards: (d) => (cardsData = d),
       mastered: (d) => toast(t("chat.mastered", { topic: d.topic }), "trophy"),
       done: (d) => {
         doneData = d;
@@ -527,6 +534,7 @@ async function send(text, { deep = false } = {}) {
       bubble.removeAttribute("title");
       if (doneData) addDeepButton(bubble, doneData.deep);
       if (doneData?.text) addGraphButton(bubble, doneData.text);
+      if (cardsData) addCardsNote(bubble, cardsData);
       if (state.pacer === pacer) state.pacer = null;
     });
     await loadConversations();
@@ -997,7 +1005,8 @@ async function refreshModes() {
   const m = await api(`/api/students/${state.student.id}/modes${q}`).catch(() => null);
   if (!m) return null;
   state.modes = m;
-  const badge = $("#modebar .badge");
+  setCardsDue(m.cardsDue);
+  const badge = $('#modebar [data-mode="review"] .badge');
   badge.hidden = !m.reviewBacklog;
   badge.textContent = m.reviewBacklog;
   badge.title = t("mode.reviewBadge", { n: m.reviewBacklog });
@@ -1006,6 +1015,15 @@ async function refreshModes() {
   daily.classList.toggle("done", m.daily.done);
   daily.title = m.daily.done ? t("daily.doneTitle") : m.daily.open ? t("daily.continue") : t("daily.about");
   return m;
+}
+
+// Število kartic za ponavljanje, ki so danes na vrsti (značka na gumbu »Kartice«).
+function setCardsDue(n) {
+  const b = $('#modebar [data-mode="cards"] .badge');
+  if (!b || n === undefined) return;
+  b.hidden = !n;
+  b.textContent = n;
+  b.title = t("cards.dueN", { n });
 }
 
 function setActiveMode(mode) {
@@ -1103,6 +1121,7 @@ document.querySelectorAll("#modebar [data-mode]").forEach((b) =>
     else if (mode === "review") startSession("review");
     else if (mode === "test") showTestPrep();
     else if (mode === "daily") startSession("daily", { path: state.pathKey });
+    else if (mode === "cards") showView("cards");
   }),
 );
 
@@ -2281,6 +2300,8 @@ async function addGraphButton(bubble, text) {
 
 // Za samodejne preizkuse v brskalniku.
 window.stemmind = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay };
+
+initFlashcards({ api, renderRich, escapeHtml, toast, showView, getStudent: () => state.student, onDue: setCardsDue });
 
 initTextbook({
   api,

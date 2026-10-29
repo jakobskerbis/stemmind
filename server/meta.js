@@ -1,7 +1,9 @@
-// Branje in odstranjevanje strojne vrstice <<META ...>> iz odgovorov modela.
+// Branje in odstranjevanje strojnih blokov iz odgovorov modela:
+// vrstice <<META ...>> (analitika) in blokov <<KARTICA V: … O: … >> (kartice za ponavljanje).
 
 const META_RE = /<<META\b([\s\S]*?)>>/g;
-const MARKER = "<<META";
+const CARD_RE = /<<KARTICA\b([\s\S]*?)>>/g;
+const MARKERS = ["<<META", "<<KARTICA"];
 
 import { ALL_SUBJECTS } from "./subjects.js";
 
@@ -40,16 +42,39 @@ export function parseMeta(text) {
   };
 }
 
+// Kartice za ponavljanje iz odgovora: [{ front, back }] (največ `max`, brez praznih in podvojenih).
+// Oznaki V:/O: sta enaki v vseh jezikih; sprejmemo tudi Q:/A: (angleški zapis).
+export function parseCards(text, max = 3) {
+  const out = [];
+  const seen = new Set();
+  for (const m of String(text || "").matchAll(CARD_RE)) {
+    const body = m[1];
+    const q = /(?:^|\n)[ \t]*(?:V|Q)[ \t]*:[ \t]*([\s\S]*?)(?=\n[ \t]*(?:O|A)[ \t]*:)/.exec(body);
+    const a = /\n[ \t]*(?:O|A)[ \t]*:[ \t]*([\s\S]*)$/.exec(body);
+    const front = (q?.[1] || "").trim().slice(0, 300);
+    const back = (a?.[1] || "").trim().slice(0, 600);
+    if (!front || !back) continue;
+    const key = front.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push({ front, back });
+    if (out.length >= max) break;
+  }
+  return out;
+}
+
 export function stripMeta(text) {
   return text
     .replace(META_RE, "")
-    .replace(/<<META\b[\s\S]*$/, "") // nedokončan blok (npr. odrezan odgovor)
+    .replace(CARD_RE, "")
+    .replace(/<<(?:META|KARTICA)\b[\s\S]*$/, "") // nedokončan blok (npr. odrezan odgovor)
+    .replace(/\n{3,}/g, "\n\n")
     .replace(/\s+$/, "");
 }
 
 // Filter za pretakanje: sproti spušča besedilo naprej, a zadrži vse od
-// začetka "<<META" naprej (in morebitno nedokončano predpono na koncu),
-// da učenec META vrstice nikoli ne vidi.
+// začetka prvega strojnega bloka ("<<META" ali "<<KARTICA") naprej (in morebitno
+// nedokončano predpono na koncu), da učenec strojnih blokov nikoli ne vidi.
 export function createStreamFilter() {
   let buffer = "";
   let emitted = 0; // koliko znakov iz buffer je že šlo naprej
@@ -59,7 +84,9 @@ export function createStreamFilter() {
     push(chunk) {
       buffer += chunk;
       if (metaStarted) return "";
-      const idx = buffer.indexOf(MARKER, Math.max(0, emitted - MARKER.length));
+      const from = Math.max(0, emitted - 10);
+      const found = MARKERS.map((mk) => buffer.indexOf(mk, from)).filter((i) => i !== -1);
+      const idx = found.length ? Math.min(...found) : -1;
       let safeEnd;
       if (idx !== -1) {
         metaStarted = true;
@@ -67,8 +94,9 @@ export function createStreamFilter() {
       } else {
         // Zadrži konec, ki bi lahko bil začetek markerja (npr. "<", "<<M").
         safeEnd = buffer.length;
-        for (let k = Math.min(MARKER.length - 1, buffer.length); k > 0; k--) {
-          if (MARKER.startsWith(buffer.slice(-k))) {
+        for (let k = Math.min(9, buffer.length); k > 0; k--) {
+          const tail = buffer.slice(-k);
+          if (MARKERS.some((mk) => mk.length > k && mk.startsWith(tail))) {
             safeEnd = buffer.length - k;
             break;
           }
@@ -81,7 +109,7 @@ export function createStreamFilter() {
       emitted = safeEnd;
       return out;
     },
-    // Na koncu vrne preostanek (brez META) in celotno surovo besedilo.
+    // Na koncu vrne preostanek (brez strojnih blokov) in celotno surovo besedilo.
     end() {
       const rest = stripMeta(buffer.slice(emitted));
       return { rest, raw: buffer };

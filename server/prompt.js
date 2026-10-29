@@ -30,6 +30,7 @@ const PLACEHOLDERS = [
   "solving_mode",
   "personality_setting",
   "weaknesses",
+  "student_results",
   "learning_path",
   "language",
   "school_system",
@@ -38,7 +39,8 @@ const PLACEHOLDERS = [
 
 // settings: normalizirane nastavitve; weaknesses: seznam nizov.
 // lite: lahki način (kratki odgovori za drag ali počasen prenos podatkov).
-export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "", lite = false }, template = loadTemplate()) {
+// results: besedilo iz studentResults() (server/results.js) za zahtevnost primerov in nalog.
+export function buildSystemPrompt({ settings, weaknesses = [], studentName = "", learningPath = "", lite = false, results = "" }, template = loadTemplate()) {
   const values = {
     learning_path: learningPath || "(Prost pogovor: ni izbrane teme učne poti.)",
     ...settings,
@@ -46,6 +48,7 @@ export function buildSystemPrompt({ settings, weaknesses = [], studentName = "",
     student_name: cleanText(studentName, 40) || "(ni podano)",
     personality_setting: settings.personality_setting || "nevtralna",
     weaknesses: weaknesses.length ? weaknesses.join(", ") : "(še ni podatkov)",
+    student_results: results || "še ni podatkov. Predlagana začetna zahtevnost: osnovna.",
     language: languagePrompt(settings.language, settings.region),
     school_system: schoolSystemPrompt(settings),
     reply_length: lite ? "kratka (lahki način)" : "običajna",

@@ -19,6 +19,8 @@ const NAMES = [
   "wrench", "text", "redo-2", "activity", "chart-area", "flower", "infinity", "spline", "circle",
   // namestitev aplikacije
   "share", "square-plus", "smartphone",
+  // kartice za ponavljanje
+  "layers",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

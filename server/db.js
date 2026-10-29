@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { DEFAULT_SETTINGS, normalizeSettings, normalizeWeaknessList } from "./settings.js";
+import { Flashcards } from "./flashcards.js";
 
 export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
   if (file !== ":memory:") fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -134,6 +135,27 @@ export function openDb(file = process.env.STEMMIND_DB || "data/stemmind.db") {
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
       PRIMARY KEY (student_id, topic_id, seed)
     );
+    -- Kartice za ponavljanje (od inštruktorja ali lastne), ponavljanje z razmiki
+    CREATE TABLE IF NOT EXISTS flashcards (
+      id INTEGER PRIMARY KEY,
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      conversation_id INTEGER REFERENCES conversations(id) ON DELETE SET NULL,
+      topic_id TEXT,                             -- tema učne poti (če je pogovor o njej)
+      subject TEXT,
+      topic TEXT,                                -- ime teme iz META
+      front TEXT NOT NULL,                       -- vprašanje
+      back TEXT NOT NULL,                        -- odgovor
+      norm TEXT NOT NULL,                        -- vprašanje za iskanje podvojenih
+      source TEXT NOT NULL DEFAULT 'tutor',      -- tutor | own
+      box INTEGER NOT NULL DEFAULT 0,            -- 0 = novo ali pozabljeno, 1..6 = škatle (1, 3, 7, 16, 35, 90 dni)
+      due TEXT NOT NULL DEFAULT (datetime('now')),
+      reviews INTEGER NOT NULL DEFAULT 0,
+      lapses INTEGER NOT NULL DEFAULT 0,
+      last_review TEXT,
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      UNIQUE (student_id, norm)
+    );
+    CREATE INDEX IF NOT EXISTS idx_cards_due ON flashcards(student_id, due);
     CREATE INDEX IF NOT EXISTS idx_msg_conv ON messages(conversation_id, id);
     CREATE INDEX IF NOT EXISTS idx_events_student ON events(student_id, created_at);
   `);
@@ -185,6 +207,7 @@ const parseStudent = (row) =>
 export class Store {
   constructor(db) {
     this.db = db;
+    this.cards = new Flashcards(db);
   }
 
   // --- učenci ---
