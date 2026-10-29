@@ -8,6 +8,8 @@ import { choices } from "../rng.js";
 import { en, sg, co, sco, par, frac, fracTex, reduce, num, fraction, task, nCr, fact, poly, factor, numM, fractionM, dq, bi, roundToL } from "./exam-util.js";
 
 const T = (slug) => `MAT-EXB/${slug}`;
+const gcd2 = (x, y) => (y ? gcd2(y, x % y) : x);
+const reduced = (t) => t.map((x) => x / gcd2(gcd2(t[0], t[1]), t[2]));
 const TRIPLES = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [6, 8, 10], [7, 24, 25], [9, 12, 15], [20, 21, 29]];
 const LANGS = ["en", "hi"];
 // Zgled vnosa (inputHint) v jeziku naloge.
@@ -506,7 +508,8 @@ export const EXAM_MAT = [
     gen(level, r, _topic, lang) {
       const L = bi(lang);
       const FRAC = L(" Write it as a fraction.", " उत्तर भिन्न के रूप में लिखिए।");
-      const [a0, b0, c] = r.pick(TRIPLES);
+      // Pitagorejska trojica okrajšana (9-12-15 → 3-4-5), da so ulomki v rešitvi taki kot v besedilu.
+      const [a0, b0, c] = reduced(r.pick(TRIPLES));
       const [a, b] = r.next() < 0.5 ? [a0, b0] : [b0, a0];
       const S3 = 0.8660254, S2 = 0.7071068;
       if (level === 1) {
@@ -548,7 +551,7 @@ export const EXAM_MAT = [
         const v = r.int(0, 2);
         if (v === 0) {
           const cs = `$\\cos\\theta = \\sqrt{1 - \\left(${frac(a, c)}\\right)^2} = \\sqrt{${frac(c * c - a * a, c * c)}} = ${frac(b, c)}$`;
-          const tn = `$\\tan\\theta = ${frac(a, c)} : ${frac(b, c)} = ${fracTex(a, b)}$`;
+          const tn = `$\\tan\\theta = ${frac(a, c)} \\div ${frac(b, c)} = ${fracTex(a, b)}$`;
           return task({
             text: L(
               `If $\\sin\\theta = ${fracTex(a, c)}$ and $\\theta$ is acute, what is $\\tan\\theta$?`,
@@ -587,7 +590,7 @@ export const EXAM_MAT = [
             ),
           });
         }
-        const items = [["\\sin 150^\\circ", 0.5, 30], ["\\cos 120^\\circ", -0.5, 60], ["\\tan 135^\\circ", -1, 45], ["\\sin 210^\\circ", -0.5, 30], ["\\cos 240^\\circ", -0.5, 60], ["\\sin 330^\\circ", -0.5, 30], ["\\cos 300^\\circ", 0.5, 60], ["\\tan 225^\\circ", 1, 45], ["\\cos 180^\\circ", -1, 0], ["\\sin 270^\\circ", -1, 90], ["\\tan 315^\\circ", -1, 45], ["\\cos 150^\\circ \\cdot \\cos 30^\\circ", -0.75, 30], ["\\sin^2 120^\\circ", 0.75, 60], ["\\cos 120^\\circ + \\sin 150^\\circ", 0, 60]];
+        const items = [["\\sin 150^\\circ", 0.5, 30], ["\\cos 120^\\circ", -0.5, 60], ["\\tan 135^\\circ", -1, 45], ["\\sin 210^\\circ", -0.5, 30], ["\\cos 240^\\circ", -0.5, 60], ["\\sin 330^\\circ", -0.5, 30], ["\\cos 300^\\circ", 0.5, 60], ["\\tan 225^\\circ", 1, 45], ["\\cos 180^\\circ", -1, 0], ["\\sin 270^\\circ", -1, 90], ["\\tan 315^\\circ", -1, 45], ["\\cos 150^\\circ \\cdot \\cos 30^\\circ", -0.75, 30], ["\\sin^2 120^\\circ", 0.75, 60], ["\\cos 120^\\circ + \\sin 150^\\circ", 0, "60^\\circ,\\ 30"]];
         const [tex, val, ref] = r.pick(items);
         return task({
           text: L(`Find the exact value of $${tex}$. Give it as a decimal.`, `$${tex}$ का यथार्थ मान ज्ञात कीजिए। उत्तर दशमलव में दीजिए।`),
@@ -651,7 +654,7 @@ export const EXAM_MAT = [
       if (v === 2) {
         const l1 = `$2\\tan\\theta = ${fracTex(2 * a, b)}$`;
         const l2 = `$1 - \\tan^2\\theta = 1 - ${frac(a * a, b * b)} = ${fracTex(b * b - a * a, b * b)}$`;
-        const l3 = `$\\tan 2\\theta = ${fracTex(2 * a, b)} : ${fracTex(b * b - a * a, b * b)} = ${fracTex(2 * a * b, b * b - a * a)}$`;
+        const l3 = `$\\tan 2\\theta = ${fracTex(2 * a, b)} \\div ${fracTex(b * b - a * a, b * b)} = ${fracTex(2 * a * b, b * b - a * a)}$`;
         return task({
           text: L(`If $\\tan\\theta = ${fracTex(a, b)}$, what is $\\tan 2\\theta$?`, `यदि $\\tan\\theta = ${fracTex(a, b)}$ है, तो $\\tan 2\\theta$ का मान क्या है?`) + FRAC,
           answer: fractionM(2 * a * b, b * b - a * a, [
@@ -665,11 +668,12 @@ export const EXAM_MAT = [
         });
       }
       if (v === 3) {
-        const [p0, q0, s] = r.pick(TRIPLES.filter((t) => t[2] !== c));
+        // Drug trikotnik (ne podobni), sicer je lahko A + B = 90°.
+        const [p0, q0, s] = reduced(r.pick(TRIPLES.filter((t) => reduced(t)[2] !== c)));
         const [p, q] = r.next() < 0.5 ? [p0, q0] : [q0, p0];
         // sin A = a/c, cos B = q/s; oba kota ostra
         const l1 = `$\\cos A = ${frac(b, c)}$, $\\sin B = ${frac(p, s)}$`;
-        const rest = `$\\sin(A+B) = ${frac(a, c)} \\cdot ${frac(q, s)} + ${frac(b, c)} \\cdot ${frac(p, s)} = ${frac(a * q + b * p, c * s)}$\n$= ${fracTex(a * q + b * p, c * s)}$`;
+        const rest = `$\\sin(A+B) = ${frac(a, c)} \\cdot ${frac(q, s)} + ${frac(b, c)} \\cdot ${frac(p, s)} = ${frac(a * q + b * p, c * s)}$${fracTex(a * q + b * p, c * s) === frac(a * q + b * p, c * s) ? "" : `\n$= ${fracTex(a * q + b * p, c * s)}$`}`;
         return task({
           text: L(
             `$A$ and $B$ are acute angles with $\\sin A = ${fracTex(a, c)}$ and $\\cos B = ${fracTex(q, s)}$. What is $\\sin(A + B)$?`,
@@ -1070,6 +1074,8 @@ export const EXAM_MAT = [
     gen(level, r, _topic, lang) {
       const L = bi(lang);
       const z = (a, b) => `${a} ${b < 0 ? "-" : "+"} ${Math.abs(b) === 1 ? "" : Math.abs(b)}i`;
+      // Imaginarni člen v vmesnem koraku: 1 → i, −1 → (−i), sicer (k)i.
+      const ci = (k) => (k === 1 ? "i" : k === -1 ? "(-i)" : `${par(k)}i`);
       if (level === 1) {
         const [a, b, c] = r.pick(TRIPLES.slice(0, 4));
         const sa = r.pick([1, -1]) * a, sb = r.pick([1, -1]) * b;
@@ -1084,7 +1090,7 @@ export const EXAM_MAT = [
       const a = r.nonZero(-5, 5), b = r.nonZero(-5, 5), c = r.nonZero(-5, 5), d = r.nonZero(-5, 5);
       if (level === 2) {
         const prod = `$(${z(a, b)})(${z(c, d)})$`;
-        const l1 = `$(${z(a, b)})(${z(c, d)}) = ${a * c} + ${par(a * d)}i + ${par(b * c)}i + ${par(b * d)}i^2$`;
+        const l1 = `$(${z(a, b)})(${z(c, d)}) = ${a * c} + ${ci(a * d)} + ${ci(b * c)} + ${ci(b * d)}^2$`;
         const re = `$${a * c} - ${par(b * d)} = ${a * c - b * d}$`;
         return task({
           text: L(`What is the real part of ${prod}?`, `${prod} का वास्तविक भाग क्या है?`),
@@ -1093,7 +1099,7 @@ export const EXAM_MAT = [
           solution: L(`${l1}\nReal part: ${re}`, `${l1}\nवास्तविक भाग: ${re}`),
         });
       }
-      const sq = `$(${z(a, b)})^2 = ${a * a - b * b} + ${par(2 * a * b)}i$`;
+      const sq = `$(${z(a, b)})^2 = ${a * a - b * b} + ${ci(2 * a * b)}$`;
       return task({
         text: L(`What is the imaginary part of $(${z(a, b)})^2$?`, `$(${z(a, b)})^2$ का काल्पनिक भाग क्या है?`),
         answer: num(2 * a * b),

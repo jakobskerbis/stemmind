@@ -44,8 +44,11 @@ export const roundTo = (d) => (d === 0 ? " Round to the nearest whole number." :
 
 // Skupna oblika naloge: angleška naloga, oznaka jezika za izbirne odgovore.
 // Podatki so samo količine z vrednostjo (»x = …«); pojmovno vprašanje brez njih nima podatkov.
+// Ponovljena enaka vrednost v rešitvi (»= 4/5 = 4/5«, »= 98 = 98 m«) se skrči v eno.
+const once = (s) => (typeof s === "string" ? s.replace(/= (-?[^\s$=]+) = \1(?![0-9.])/g, "= $1") : s);
 export const task = (o) => {
   const t = { lang: "en", formula: false, data: false, ...o };
+  t.solution = once(t.solution);
   if (t.data && Array.isArray(t.data.given)) {
     const given = t.data.given.filter((g) => typeof g === "string" && g.includes("="));
     const find = (t.data.find || []).filter((f) => typeof f === "string" && f && !f.includes("="));
