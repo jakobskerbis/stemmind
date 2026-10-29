@@ -38,7 +38,7 @@ V vroči vodi. Delci se pri višji temperaturi gibljejo hitreje, zato se barvilo
 
 Zdaj preberi tabelo še enkrat. Sladkor ni izginil: njegovi delci so se le razpršili med delce vode. Zato ga ne vidiš, okusiš pa ga. Pri vodi in alkoholu so se manjši delci ene snovi umestili v prazen prostor med delci druge. Zato je skupna prostornina manjša, čeprav nobena snov ni izginila.
 
-**Difuzija.** Vonj juhe in barva čaja potujeta sama od sebe. Temu pravimo **difuzija**: samodejno mešanje snovi zaradi gibanja njihovih delcev. Delci se pri tem razširijo iz kraja, kjer jih je veliko, tja, kjer jih je malo. Nihče jih ne potiska. Mešanje z žlico ali prepih difuzijo le pospešita.
+**Difuzija.** Vonj juhe in barva čaja potujeta sama od sebe. Temu pravimo **difuzija**: samodejno mešanje snovi zaradi gibanja njihovih delcev. Delci se pri tem razširijo iz kraja, kjer jih je veliko, tja, kjer jih je malo. Nihče jih ne potiska. Mešanje z žlico ali prepih širjenje snovi le pospešita.
 
 **Delci v treh stanjih.** Kako hitro poteka difuzija, je odvisno tudi od tega, ali je snov trdna, tekoča ali plinasta. V simulaciji spodaj »Delci v trdnem, tekočem in plinastem stanju« preklapljaj med stanji in opazuj, kako daleč narazen so delci in kako se gibljejo. Opis v besedah:
 
@@ -76,7 +76,7 @@ $\Delta V = V_1 + V_2 - V_\text{zmes}$
 
 1. Vsota prostornin: $50 + 50 = 100$, torej $100\,\mathrm{mL}$, če bi se prostornini preprosto sešteli.
 2. Razlika: $\Delta V = 50 + 50 - 96 = 4$, torej $4\,\mathrm{mL}$.
-3. Nobena tekočina ni izhlapela ali izginila, ker je bila posoda ves čas zaprta. Torej so se delci ene snovi umestili v prazen prostor med delci druge.
+3. V nekaj sekundah mešanja ne more izhlapeti $4\,\mathrm{mL}$ tekočine, izginiti pa snov ne more. Torej so se delci ene snovi umestili v prazen prostor med delci druge.
 4. Odgovor: zmes ima $4\,\mathrm{mL}$ manjšo prostornino, kar pomeni, da je med delci prazen prostor.
 
 ### Primer 2: čaj v hladni in vroči vodi
@@ -125,7 +125,7 @@ Da. Delci sladkorja se zaradi difuzije sami razširijo od dna proti vrhu, le da 
 
 - **»Raztopljena snov izgine.«** Ko sladkor ali sol ni več vidna, se zdi, da je ni. Napačno: delci so se le razpršili med delce vode. Preveri s tehtnico: masa raztopine je vsota mas.
 - **»Pri segrevanju se delci povečajo.«** Snov se pri segrevanju res raztegne, zato se zdi, da so zrasli delci. Delci ostanejo enako veliki. Gibljejo se hitreje in se zato malo razmaknejo.
-- **»Med delci vode je zrak.«** Med delci ni nobene snovi, tudi zraka ne. Tam je prazen prostor. Če bi bil vmes zrak, bi bil tudi med delci zraka spet nekaj drugega.
+- **»Med delci vode je zrak.«** Med delci ni nobene snovi, tudi zraka ne. Tam je prazen prostor. Tudi zrak je iz delcev, med katerimi je prazen prostor.
 - **»Difuzija je samo, če mešamo ali piha.«** Mešanje in veter pospešita širjenje, nista pa vzrok zanj. Delci se gibljejo sami, zato se snovi pomešajo tudi v mirnem zraku ali v mirni vodi.
 - **»V trdni snovi delci mirujejo.«** Delci v trdni snovi nihajo na svojem mestu. Ne mirujejo nikoli, le ne potujejo naokoli.
 
@@ -158,7 +158,7 @@ Bila je nedelja in v pečici se je peklo cimetovo pecivo. Iz vroče skorje se je
 
 Ker je bilo v pečici vroče, je delec švignil v zrak z veliko hitrostjo. Ni vedel, kam gre. Letel je naravnost, dokler se ni zaletel v delec zraka. Odbil se je v drugo smer, nato spet v tretjo. Vsakič naključno.
 
-Za njim so iz peciva prihajali še milijoni drugih. Ob pečici jih je bilo veliko, v hodniku skoraj nič. Ker so leteli na vse strani, jih je vedno več prišlo tja, kjer jih prej ni bilo. Nihče jih ni pošiljal v hodnik: tja so prišli zato, ker je bilo tam prostora dovolj.
+Za njim so iz peciva prihajali še milijoni drugih. Ob pečici jih je bilo veliko, v hodniku skoraj nič. Ker so leteli na vse strani, jih je vedno več prišlo tja, kjer jih prej ni bilo. Nihče jih ni pošiljal v hodnik: tja so zašli sami, ker so naključno leteli na vse strani.
 
 Čez nekaj minut je delec priletel v sobo, kjer je brat pisal domačo nalogo. Brat je dvignil glavo in rekel: »Mmm, cimet!«
 
@@ -195,7 +195,7 @@ Tako deluje difuzija. Vsak delec se giblje naključno, a skupaj se razširijo od
 ? Odpreš steklenico kisa in hkrati kaneš kapljico kisa v kozarec mirne vode. Kje se kis prej razširi?
 + Vonj kisa v zraku.
 - Kis v vodi, ker so delci vode bližje in si ga hitreje podajo.
-~ Tesno skupaj so delci v tekočini ovira: nenehno trkajo, zato se vsak premika počasi. V plinu letijo daleč brez trkov.
+~ Tesno skupaj ležeči delci v tekočini so ovira: nenehno trkajo, zato se vsak premika počasi. V plinu letijo daleč brez trkov.
 - Nikjer, ker nihče ne meša in ne piha.
 ~ Mešanje in veter difuzijo le pospešita. Delci se gibljejo sami, zato se kis razširi tudi v mirnem zraku in mirni vodi.
 > V plinu so delci daleč narazen in hitro letijo, zato je difuzija v zraku veliko hitrejša kot v vodi.

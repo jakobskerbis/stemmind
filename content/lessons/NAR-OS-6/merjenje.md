@@ -50,7 +50,7 @@ cm
 mm
 ```
 
-V simulaciji spodaj »Predpone in pretvarjanje enot« izberi skupino *dolžina* in pretvori $1\,\mathrm{km}$ v metre, potem v centimetre. Opazi, za koliko mest se pri vsaki stopnici premakne decimalna vejica.
+Po lestvi navzdol: $1\,\mathrm{km} = 1000\,\mathrm{m} = 100\,000\,\mathrm{cm}$. Pri vsaki stopnici $\cdot 10$ se decimalna vejica premakne za eno mesto v desno, pri stopnici $\cdot 1000$ za tri mesta: $0{,}45\,\mathrm{m} = 4{,}5\,\mathrm{dm} = 45\,\mathrm{cm}$.
 
 **Štiri količine, ki jih največ merimo.**
 
@@ -149,7 +149,7 @@ $9 : 1{,}5 = 6$. Ekipa potrebuje $6$ plastenk. Preizkus: $6 \cdot 1{,}5\,\mathrm
 
 Predpone že poznaš iz denarja. En evro ima $100$ centov. Beseda *cent* pomeni stotino, natanko tako kot *centi* v centimetru.
 
-- $3{,}45\,€$ je $345$ centov, ker je $3$ evrov $300$ centov, zraven pa še $45$ centov.
+- $3{,}45\,€$ je $345$ centov, ker so $3$ evri $300$ centov, zraven pa še $45$ centov.
 - $3{,}45\,\mathrm{m}$ je $345\,\mathrm{cm}$ iz enakega razloga.
 
 Če v trgovini plačaš $2\,€$ in še $50$ centov, ne rečeš, da si plačal $52$. Najprej vse zapišeš v istih enotah: $250$ centov ali $2{,}50\,€$. Pri metrih in centimetrih je enako.
@@ -164,7 +164,7 @@ Enote, ki jih uporabljamo v naravoslovju, sestavljajo **mednarodni sistem enot (
 - Kelvin je osnovna enota za temperaturo. Temperatura v kelvinih je za približno $273$ večja kot v stopinjah Celzija: $0\,{}^\circ\mathrm{C}$ je približno $273\,\mathrm{K}$.
 - Liter ni osnovna enota SI. Je drugo ime za kubični decimeter: kocka z robom $1\,\mathrm{dm}$ ima prostornino $1\,\mathrm{L}$.
 
-**Natančnost zapisa.** Rezultat $3{,}45\,\mathrm{m}$ pove, da je sodnik meril na centimeter natančno. Z ravnilom z milimetrskimi razdelki bi lahko zapisal še eno decimalko, na primer $3{,}452\,\mathrm{m}$. Število decimalk naj se ujema z najmanjšim razdelkom merila.
+**Natančnost zapisa.** Rezultat $3{,}45\,\mathrm{m}$ pove, da je sodnik meril na centimeter natančno. S trakom z milimetrskimi razdelki bi lahko zapisal še eno decimalko, na primer $3{,}452\,\mathrm{m}$. Število decimalk naj se ujema z najmanjšim razdelkom merila.
 
 ## Preveri se
 

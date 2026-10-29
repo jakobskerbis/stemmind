@@ -49,7 +49,7 @@ Bliže $35$, ker lažji izotop »vleče« povprečje k sebi. $36$ bi dobil, če 
 
 jedro ($11\,p^+$) → lupina $n = 1$: $2\,e^-$ → $n = 2$: $8\,e^-$ → $n = 3$: $1\,e^-$
 
-V plamenu toplota dvigne elektron v višjo lupino. Ko se vrne, odda svetlobo, katere barva je določena z razliko energij lupin. Ker ima vsak element drugačne razlike, sveti v svojih barvah.
+V plamenu toplota dvigne elektron na višji energijski nivo. Ko se vrne, odda svetlobo, katere barva je določena z razliko energij obeh nivojev. Ker ima vsak element drugačne razlike, sveti v svojih barvah.
 
 *Preveri:* koliko elektronov ima natrij v tretji lupini? ($1$.)
 
@@ -164,7 +164,7 @@ $1s^2\,2s^2\,2p^6\,3s^2\,3p^6\,4s^1$, vsota $2 + 2 + 6 + 2 + 6 + 1 = 19$. V zuna
 - Izotopi: enak $Z$, različno število nevtronov; kemijsko skoraj enaki, različna masa. Relativna atomska masa je uteženo povprečje izotopov.
 - Lupine $n = 1, 2, 3$ sprejmejo $2n^2$ elektronov; podlupine $s$, $p$, $d$ sprejmejo $2$, $6$, $10$.
 - Vrstni red polnjenja: $1s, 2s, 2p, 3s, 3p, 4s, 3d$. Valenčni elektroni so v zunanji lupini.
-- Prehodi elektronov med lupinami dajo vsakemu elementu svoje barve svetlobe; po njih astronomi prepoznajo elemente v zvezdah.
+- Prehodi elektronov med energijskimi nivoji dajo vsakemu elementu svoje barve svetlobe; po njih astronomi prepoznajo elemente v zvezdah.
 
 ## Drugače: Na sliki
 
@@ -200,7 +200,7 @@ Lupine natrija kot obroči okoli jedra: notranji obroč $2$ elektrona, srednji $
 
 $$A_r = \sum_i w_i\, m_i$$
 
-**Spektralne črte.** Elektron, ki preskoči iz višje lupine v nižjo, odda svetlobo z energijo, enako razliki energij lupin. Ker so te razlike za vsak element drugačne, je spekter elementa enoličen. Po njem astronomi določijo sestavo zvezd in meglic.
+**Spektralne črte.** Elektron, ki preskoči z višjega energijskega nivoja (lupine ali podlupine) na nižjega, odda svetlobo z energijo, enako razliki energij nivojev. Rumena črta natrija nastane pri preskoku iz $3p$ v $3s$. Ker so te razlike za vsak element drugačne, je spekter elementa enoličen. Po njem astronomi določijo sestavo zvezd in meglic.
 
 ## Preveri se
 

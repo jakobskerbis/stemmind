@@ -136,9 +136,9 @@ neznani faktor = zmnožek $:$ znani faktor
 2. Izračunaj sam in naredi preizkus:
 
 :::premisli
-Koliko je $x$?
+Napovej najprej: stane ena struna več ali manj kot $2\,\text{€}$? Zakaj? Nato izračunaj $x$.
 ---
-$x = 10{,}8 : 6 = 1{,}8$, ena struna stane $1{,}80\,\text{€}$. Preizkus: $6 \cdot 1{,}8 = 10{,}8$.
+Manj, ker bi $6$ strun po $2\,\text{€}$ stalo $12\,\text{€}$, kar je več kot $10{,}80\,\text{€}$. Natančno: $x = 10{,}8 : 6 = 1{,}8$, ena struna stane $1{,}80\,\text{€}$. Preizkus: $6 \cdot 1{,}8 = 10{,}8$.
 :::
 
 ## Pogoste napake
@@ -154,7 +154,7 @@ $x = 10{,}8 : 6 = 1{,}8$, ena struna stane $1{,}80\,\text{€}$. Preizkus: $6 \c
 - Enačba ima znak $=$ in neznanko; obe strani imata enako vrednost, kot tehtnica v ravnovesju.
 - Rešitev je število, ki ga vstaviš za neznanko, da enakost drži.
 - Sklepanje: greš nazaj z obratno operacijo. Plus in minus sta obratna, krat in deljeno tudi.
-- Pri $x - a = b$ je $x = b + a$, pri $x : a = b$ je $x = b \cdot a$. Rešitev je tu večja od $b$.
+- Pri $x - a = b$ je $x = b + a$, pri $x : a = b$ je $x = b \cdot a$. Rešitev je tu večja od $b$ (pri deljenju, če je $a$ večji od $1$).
 - Preizkušanje: vstavljaš števila in iz vsakega poskusa razbereš, ali naprej večje ali manjše.
 - Pri dveh operacijah ($2 \cdot x + 3 = 27$) gremo nazaj v obratnem vrstnem redu: najprej $-3$, nato $:2$.
 - Vsako rešitev preveri s preizkusom v prvotni enačbi.

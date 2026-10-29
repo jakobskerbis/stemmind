@@ -31,7 +31,7 @@ Pri Ani se je sladkor v topli vodi raztopil hitreje. Toda topla voda je imela tu
 Le Cene lahko odgovori na vprašanje. Pri njem se kozarca razlikujeta samo v temperaturi vode.
 
 :::premisli
-Dana v hladno vodo vrže kocko sladkorja, v toplo pa enako žličko sladkorja v prahu. Topla voda zmaga. Ali lahko trdi, da je zmagala zaradi temperature?
+Dana v hladno vodo vrže kocko sladkorja, v toplo pa enako količino sladkorja v prahu. Topla voda zmaga. Ali lahko trdi, da je zmagala zaradi temperature?
 ---
 Ne. Sladkor v prahu se raztaplja hitreje kot kocka, tudi v enako topli vodi. Spremenila je dve stvari hkrati, zato ne ve, katera je povzročila razliko.
 :::
@@ -82,7 +82,7 @@ $\bar{t} = \dfrac{t_1 + t_2 + t_3}{3}$
 
 ### Primer 2
 
-Cene izvede pošten poskus s sladkorjem. V vsak kozarec nalije $200\,\mathrm{mL}$ vode in strese eno žličko sladkorja. Oba kozarca meša enako. Voda v prvem ima $20\,{}^\circ\mathrm{C}$, v drugem $50\,{}^\circ\mathrm{C}$. V hladni vodi se sladkor raztopi v $95\,\mathrm{s}$, v topli v $40\,\mathrm{s}$. Kaj je spremenljivka, kaj ostane enako in kakšen je sklep?
+Cene izvede pošten poskus s sladkorjem. V vsak kozarec nalije $200\,\mathrm{mL}$ vode in strese eno žličko sladkorja. Oba kozarca meša enako. Voda v prvem ima $20\,{}^\circ\mathrm{C}$, v drugem $50\,{}^\circ\mathrm{C}$. Njegova domneva: *V topli vodi se sladkor raztopi hitreje.* V hladni vodi se sladkor raztopi v $95\,\mathrm{s}$, v topli v $40\,\mathrm{s}$. Kaj je spremenljivka, kaj ostane enako in kakšen je sklep?
 
 **Podatki:** prostornina vode $200\,\mathrm{mL}$, $1$ žlička sladkorja, enako mešanje; $T_1 = 20\,{}^\circ\mathrm{C}$, $t_1 = 95\,\mathrm{s}$; $T_2 = 50\,{}^\circ\mathrm{C}$, $t_2 = 40\,\mathrm{s}$
 **Iščemo:** spremenljivko, nespremenjene okoliščine, razliko časov, sklep
@@ -197,7 +197,7 @@ Naslednji dan je zamesila dve enaki testi z enako moko, vodo in kvasom. Eno je p
 + Spremenila je dve stvari hkrati: snov krožnika in velikost kocke.
 > V poštenem poskusu sta kocki enako veliki. Razlikuje se le snov krožnika.
 
-? Primerjaj poskusa. Rok v dve enaki posodi da enako vode, eno postavi na sonce, drugo v senco. Sara da v eno posodo $1\,\mathrm{L}$ vode in jo postavi na sonce, v drugo $2\,\mathrm{L}$ in jo postavi v senco. Kateri poskus je pošten?
+? Primerjaj poskusa. Rok v dve enaki posodi da enako vode, eno postavi na sonce, drugo v senco. Sara da v eno posodo $1\,\mathrm{L}$ vode in jo postavi na sonce, v drugo $2\,\mathrm{L}$ in jo postavi v senco. Čez eno uro oba izmerita temperaturo vode. Kateri poskus je pošten?
 - Oba, ker obema posodama izmerita temperaturo.
 ~ Merjenje samo še ne naredi poskusa poštenega. Pomembno je, koliko stvari se spremeni.
 + Samo Rokov, ker se pri njem razlikuje le mesto posode.

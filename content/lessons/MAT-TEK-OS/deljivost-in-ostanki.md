@@ -74,7 +74,7 @@ Vsaka števka torej k ostanku prispeva samo sebe. Ostanek števila pri deljenju 
 Ne. Primer je $12$: deljivo je z $2$ in s $4$, z $8$ pa ne. Števili $2$ in $4$ nista tuji. Vsak večkratnik števila $4$ je že sam po sebi sod, zato pogoj »deljivo z $2$« ne doda ničesar novega.
 :::
 
-**Zadnja števka potence.** Zadnja števka je ostanek pri deljenju z $10$. Po pravilu za produkt je zadnja števka potence odvisna samo od zadnje števke osnove. Poglejmo potence števila $7$:
+**Zadnja števka potence.** Zadnja števka je ostanek pri deljenju z $10$. Po pravilu za produkt je zadnja števka potence odvisna samo od zadnje števke osnove. Potence števila $7$ po vrsti:
 
 | $n$ | $7^n$ | zadnja števka |
 |---|---|---|

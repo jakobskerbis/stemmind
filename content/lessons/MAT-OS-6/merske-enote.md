@@ -168,9 +168,9 @@ $V = 8 \cdot 150\,\text{ml}$, nato $1\,\text{l} = 1000\,\text{ml}$.
 3. Izračunaj sam, nato preveri:
 
 :::premisli
-Koliko litrov je $1200\,\text{ml}$?
+Napovej najprej: bo število litrov večje ali manjše od $1200$ in zakaj? Nato izračunaj, koliko litrov je $1200\,\text{ml}$.
 ---
-$1200 : 1000 = 1{,}2$, torej porabiš $1{,}2\,\text{l}$ vode. Vejica se premakne za tri mesta levo. Smiselno: liter je velika enota, zato je število majhno.
+$1200 : 1000 = 1{,}2$, torej porabiš $1{,}2\,\text{l}$ vode. Vejica se premakne za tri mesta levo. Število je manjše od $1200$, ker je liter večja enota od mililitra.
 :::
 
 ## Pogoste napake

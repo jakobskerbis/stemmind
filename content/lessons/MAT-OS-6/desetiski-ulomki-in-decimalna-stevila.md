@@ -11,7 +11,7 @@ Koliko vode je v vrču? Preštej razdelke: od dna do oznake $1\,\text{l}$ jih je
 
 Če vrča nimaš, si ga nariši: pokončen pravokotnik, ki ga z devetimi vodoravnimi črticami razdeliš na deset enakih delov.
 
-Podobno je s kuhinjsko tehtnico. Kos masla nanjo, preklopi na kilograme, in zaslon pokaže na primer $0{,}25\,\text{kg}$. Recepti, embalaža in tehtnice uporabljajo zapis z vejico. Ko ga razumeš, hitro ugotoviš, ali je moke dovolj in kateri kos sira je večji.
+Podobno je s kuhinjsko tehtnico. Položi nanjo kos masla, preklopi na kilograme in zaslon pokaže na primer $0{,}25\,\text{kg}$. Recepti, embalaža in tehtnice uporabljajo zapis z vejico. Ko ga razumeš, hitro ugotoviš, ali je moke dovolj in kateri kos sira je večji.
 
 ## Razlaga
 
@@ -142,7 +142,7 @@ Oba podatka zapiši enako (z vejico), dopiši ničle in primerjaj po mestih.
 3. Primerjaj sam, nato preveri:
 
 :::premisli
-Katero število je večje, $0{,}06$ ali $0{,}10$? Je kisa dovolj?
+Katero število je večje, $0{,}06$ ali $0{,}10$, in zakaj? Je kisa dovolj?
 ---
 Večje je $0{,}10$: odločijo desetinke, $1 > 0$. Velja $0{,}06 < 0{,}1$, zato kisa ni dovolj. Manjkajo še $4$ stotinke litra, to je $0{,}04\,\text{l}$.
 :::

@@ -22,7 +22,7 @@ Presenečenje: oba sta enako slana. Natrij in sol nista ista snov. Natrij je **e
 - **Element** je čista snov, ki je zgrajena iz ene same vrste atomov. Primeri: aluminij, baker, železo, kisik.
 - **Spojina** je čista snov, zgrajena iz dveh ali več vrst atomov, ki so med seboj trdno povezani. Primeri: voda (iz vodika in kisika), sol (iz natrija in klora), sladkor (iz ogljika, vodika in kisika).
 
-**Zmes in spojina drugo ob drugem.** Slana voda in sol sta si na videz podobni: obe vsebujeta več kot en element. A razlike so velike. V delčni sliki vsak znak pomeni en atom, različni znaki različne vrste atomov (■ baker, ● vodik, ○ kisik, ◆ natrij, ◇ klor):
+**Zmes in spojina drugo ob drugem.** Slana voda in sol imata nekaj skupnega: obe vsebujeta več kot en element. A razlike so velike. V delčni sliki vsak znak pomeni en atom, različni znaki različne vrste atomov (■ baker, ● vodik, ○ kisik, ◆ natrij, ◇ klor):
 
 ```
 element (baker):   ■ ■ ■ ■     vsi atomi enaki
@@ -72,7 +72,7 @@ Druga črka je vedno mala. Zakaj je to tako pomembno, premisli spodaj.
 :::premisli
 Element kobalt ima simbol Co. Kaj bi pomenil zapis CO z dvema velikima črkama?
 ---
-Vsaka velika črka začne nov simbol. CO sta torej dva elementa: C (ogljik) in O (kisik). To je spojina ogljika in kisika, strupen plin, ki nastaja pri slabem gorenju. Z eno samo veliko črko bi zamenjal kovino za plin.
+Vsaka velika črka začne nov simbol. CO sta torej dva elementa: C (ogljik) in O (kisik). To je spojina ogljika in kisika, strupen plin, ki nastaja pri slabem gorenju. Ena napačna velika črka tako iz kovine naredi strupen plin.
 :::
 
 V simulaciji spodaj »Element, spojina ali zmes?« razvrsti snovi iz kuhinje. Pri vsaki se najprej vprašaj: ali so vsi delci enaki? Če so, ali je v delcu ena vrsta atomov ali več? Opazi, da isti elementi (na primer vodik in kisik) nastopajo v elementih, spojinah in zmeseh.
@@ -144,7 +144,7 @@ $\dfrac{1{,}5}{5} = 0{,}3$, to je $30\,\%$. Vsak poje s krožnikom juhe skoraj t
 - **»Natrij in sol sta isto.«** Na deklaracijah se pogosto zamenjata. Natrij je element, sol pa spojina natrija in klora. Masa soli je približno $2{,}5$-krat večja od mase natrija v njej.
 - **»Spojina je le zmes elementov.«** Sol ni natrij in klor, pomešana kot sladkor in mak. V vsakem delcu sta povezana v stalnem razmerju, zato ju ne ločiš s sitom ali izhlapevanjem.
 - **»Spojina ima lastnosti svojih elementov.«** Klor je strupen, sol pa ne. Voda je tekočina, čeprav sta vodik in kisik plina. Spojina je nova snov z novimi lastnostmi.
-- **»Naravno in čisto pomeni čista snov.«** Sveže mleko in izvirska voda sta zdravi in »čisti«, a v kemijskem smislu sta zmesi. Čista snov ima samo eno vrsto delcev.
+- **»Naravno in čisto pomeni čista snov.«** Sveže mleko in izvirska voda sta zdrava in »čista«, a v kemijskem smislu sta zmesi. Čista snov ima samo eno vrsto delcev.
 - **Napačno zapisan simbol.** Natrij ni N (to je dušik), srebro ni S (to je žveplo). Druga črka je vedno mala: Co je kobalt, CO pa spojina ogljika in kisika.
 
 ## Povzetek
@@ -221,7 +221,7 @@ Preprost preizkus: če snov lahko pripraviš »bolj ali manj« (bolj slana juha,
 + $5\,\mathrm{g}$
 - $0{,}8\,\mathrm{g}$
 ~ Delil si z $2{,}5$ namesto množil. Soli je več kot natrija, ker ima sol poleg natrija še klor.
-> Masa soli $\approx 2{,}5 \cdot 2\,\mathrm{g} = 5\,\mathrm{g}$. Toliko je ves priporočeni dnevni vnos soli.
+> Masa soli $\approx 2{,}5 \cdot 2\,\mathrm{g} = 5\,\mathrm{g}$. Toliko je vsa priporočena največja dnevna količina soli.
 
 ? Ko sladkor v ponvi dolgo močno segrevaš, nastane črna snov (ogljik) in iz ponve se dviga vodna para. Kaj to pove o sladkorju?
 - Sladkor je element, ker je bel kristal brez primesi.

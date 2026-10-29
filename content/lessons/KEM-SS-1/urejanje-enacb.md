@@ -48,7 +48,7 @@ Popravek kisika je pokvaril magnezij, zato smo se vrnili k njemu. Tako je pogost
 4. Koeficienti naj bodo najmanjša cela števila.
 5. Na koncu preštej vse atome še enkrat.
 
-V simulaciji spodaj (»Urejanje kemijskih enačb«) izberi reakcijo, v kateri nastane voda, in najprej spremeni samo koeficient pred vodo. Opazi, da se kisik uredi, vodik pa pokvari, in da so molekule ves čas iste, spreminja se le njihovo število.
+V simulaciji spodaj (»Urejanje kemijskih enačb«) izberi reakcijo $\mathrm{H_2 + O_2 \rightarrow H_2O}$ in najprej spremeni samo koeficient pred vodo. Opazi, da se kisik uredi, vodik pa pokvari, in da so molekule ves čas iste, spreminja se le njihovo število.
 
 **5. Vrste reakcij.** Reakcije so si pogosto podobne po obliki. Po tej obliki jih uvrstimo v pet vrst:
 

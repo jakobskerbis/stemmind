@@ -42,7 +42,7 @@ Rob istega lika pa meri $4 + 3 + 4 + 3 = 14\,\text{cm}$. Število $14$ je druga 
 :::premisli
 Zakaj ploščine ne dobimo s seštevanjem $4 + 3$, kot pri obsegu?
 ---
-Vsota $4 + 3$ prešteje samo eno vrsto in en stolpec kvadratkov ($7$). Notranjost ima $3$ cele vrste po $4$ kvadratke, zato je treba množiti: $3 \cdot 4 = 12$.
+Vsota $4 + 3 = 7$ pove le, koliko kvadratkov je v eni vrsti in koliko v enem stolpcu. Notranjost ima $3$ cele vrste po $4$ kvadratke, zato je treba množiti: $3 \cdot 4 = 12$.
 :::
 
 **Razlike na enem mestu.**
@@ -141,9 +141,9 @@ Nad kuhinjskim pultom bodo obložili pas stene, dolg $3\,\text{m}$ in visok $60\
 4. Izračunaj sam, nato preveri:
 
 :::premisli
-Koliko ploščic skupaj?
+Koliko ploščic skupaj? Zakaj enako dobiš, če ploščino pasu deliš s ploščino ene ploščice?
 ---
-$15 \cdot 3 = 45$ ploščic. Enako dobiš s ploščinami: pas meri $300 \cdot 60 = 18000\,\text{cm}^2$, ploščica $20 \cdot 20 = 400\,\text{cm}^2$, in $18000 : 400 = 45$.
+$15 \cdot 3 = 45$ ploščic. Enako dobiš s ploščinami, ker vsaka ploščica pokrije enako velik kos stene: pas meri $300 \cdot 60 = 18000\,\text{cm}^2$, ploščica $20 \cdot 20 = 400\,\text{cm}^2$, in $18000 : 400 = 45$.
 :::
 
 ## Pogoste napake
