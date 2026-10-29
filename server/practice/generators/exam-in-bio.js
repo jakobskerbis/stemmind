@@ -841,7 +841,7 @@ BANK["genetics-and-inheritance"] = {
         ["Polygenic inheritance", "बहुजीनी वंशागति", "trait controlled by three or more genes, e.g. human skin colour", "तीन या अधिक जीनों से नियंत्रित लक्षण, जैसे मानव त्वचा का रंग"],
         ["Linkage", "सहलग्नता", "physical association of genes on one chromosome", "एक गुणसूत्र पर जीनों का भौतिक जुड़ाव"],
         ["Test cross", "परीक्षार्थ संकरण", "crossing a dominant-phenotype organism with the recessive parent", "प्रभावी लक्षणप्ररूप वाले जीव का अप्रभावी जनक से संकरण"],
-        ["Multiple alleles", "बहुविकल्पी युग्मविकल्पी", "more than two alleles of one gene in a population", "समष्टि में एक जीन के दो से अधिक युग्मविकल्पी"],
+        ["Multiple alleles", "बहु-युग्मविकल्पी", "more than two alleles of one gene in a population", "समष्टि में एक जीन के दो से अधिक युग्मविकल्पी"],
         ["Aneuploidy", "असुगुणिता", "gain or loss of one or more chromosomes", "एक या अधिक गुणसूत्रों की वृद्धि या कमी"],
         ["Polyploidy", "बहुगुणिता", "increase in whole sets of chromosomes", "गुणसूत्रों के पूरे समुच्चयों में वृद्धि"],
       ],
@@ -947,7 +947,7 @@ BANK["molecular-basis-of-inheritance"] = {
     ["AUG is a stop codon.", "AUG एक समापन कोडॉन है।", "AUG is the start codon for methionine; UAA, UAG and UGA are stop codons.", "AUG मेथियोनीन का प्रारंभन कोडॉन है; UAA, UAG और UGA समापन कोडॉन हैं।"],
     ["In bacteria, translation starts only after the mRNA leaves the nucleus.", "जीवाणुओं में mRNA के केंद्रक से बाहर आने के बाद ही स्थानांतरण शुरू होता है।", "Bacteria have no nucleus; translation can start before transcription is complete.", "जीवाणुओं में केंद्रक नहीं होता; अनुलेखन पूरा होने से पहले ही स्थानांतरण शुरू हो सकता है।"],
     ["Histones are rich in acidic amino acids.", "हिस्टोन अम्लीय ऐमीनो अम्लों से भरपूर होते हैं।", "Histones are rich in the basic residues lysine and arginine.", "हिस्टोन क्षारीय अवशेषों लाइसीन और आर्जिनीन से भरपूर होते हैं।"],
-    ["Euchromatin is densely packed and transcriptionally inactive.", "सुगुणसूत्री (यूक्रोमैटिन) सघन रूप से पैक और अनुलेखन में निष्क्रिय होता है।", "Euchromatin is loosely packed and active; heterochromatin is dense and inactive.", "यूक्रोमैटिन ढीला और सक्रिय होता है; हेटेरोक्रोमैटिन सघन और निष्क्रिय।"],
+    ["Euchromatin is densely packed and transcriptionally inactive.", "यूक्रोमैटिन सघन रूप से पैक और अनुलेखन में निष्क्रिय होता है।", "Euchromatin is loosely packed and active; heterochromatin is dense and inactive.", "यूक्रोमैटिन ढीला और सक्रिय होता है; हेटेरोक्रोमैटिन सघन और निष्क्रिय।"],
     ["The human genome has about three lakh genes.", "मानव जीनोम में लगभग तीन लाख जीन हैं।", "The total number of human genes is estimated at about 30,000.", "मानव जीनों की कुल संख्या लगभग 30,000 आँकी गई है।"],
     ["Repetitive DNA sequences code for most human proteins.", "पुनरावृत्त DNA अनुक्रम अधिकांश मानव प्रोटीनों का कूटलेखन करते हैं।", "Repetitive sequences are thought to have no direct coding function.", "माना जाता है कि पुनरावृत्त अनुक्रमों का कोई प्रत्यक्ष कूटलेखन कार्य नहीं है।"],
     ["Chargaff's rule A = T and G = C applies to single-stranded DNA as well.", "शार्गाफ़ का नियम A = T और G = C एकरज्जुकी DNA पर भी लागू होता है।", "The rule holds only for double-stranded DNA, where A pairs with T and G with C.", "यह नियम केवल द्विरज्जुकी DNA पर लागू है, जहाँ A, T से और G, C से युग्मित होता है।"],
@@ -1574,7 +1574,7 @@ const CELL_CALC = {
       return task({
         text: L(`How many microtubules in total are seen in a cross-section through ${k === 1 ? "one" : k} ${k === 1 ? name[0].replace(/ia$/, "ium").replace(/la$/, "lum").replace(/oles$/, "ole") : name[0]} (axoneme or cylinder only)?`, `${k === 1 ? `एक ${name[2]}` : `${k} ${name[1]}`} के अनुप्रस्थ काट (केवल अक्षसूत्र या बेलन) में कुल कितनी सूक्ष्मनलिकाएँ दिखेंगी?`),
         answer: numM(ans, 0, mist),
-        data: { given: [`k = ${k}`], find: [`N_{${tx(L("microtubules", "सूक्ष्मनलिकाएँ"))}}`] },
+        data: { given: k > 1 ? [`k = ${k}`] : [], find: [`N_{${tx(L("microtubules", "सूक्ष्मनलिकाएँ"))}}`] },
         hint: L(kind === 2 ? "Recall the cartwheel: how many peripheral fibrils, and how many tubules in each?" : "Recall the 9 + 2 pattern and how many tubules make each peripheral unit.", kind === 2 ? "गाड़ी के पहिये जैसी संरचना याद कीजिए: कितने परिधीय तंतुक और प्रत्येक में कितनी नलिकाएँ?" : "9 + 2 व्यवस्था याद कीजिए और प्रत्येक परिधीय इकाई में कितनी नलिकाएँ हैं।"),
         formula: kind === 2 ? "N = k \\cdot 9 \\cdot 3" : "N = k \\,(9 \\cdot 2 + 2)",
         solution: L(
@@ -1604,9 +1604,9 @@ const CELL_CALC = {
       if (s) mist.unshift([N - c + s, L("Disulfide bridges join cysteine side chains; they are not peptide bonds.", "डाइसल्फ़ाइड सेतु सिस्टीन पार्श्व शृंखलाओं को जोड़ते हैं; वे पेप्टाइड बंध नहीं हैं।")]);
       const list = lens.join(", ");
       return task({
-        text: L(`A protein has ${c} polypeptide chains of ${list} amino acids${s ? `, held together by ${s} disulfide bridge${s > 1 ? "s" : ""}` : ""}. How many peptide bonds does it contain?`, `एक प्रोटीन में ${list} ऐमीनो अम्लों की ${c} पॉलीपेप्टाइड शृंखलाएँ हैं${s ? `, जो ${s} डाइसल्फ़ाइड सेतुओं से जुड़ी हैं` : ""}। इसमें कितने पेप्टाइड बंध हैं?`),
+        text: L(`A protein has ${c} polypeptide chains of ${list} amino acids${s ? `, held together by ${s} disulfide bridge${s > 1 ? "s" : ""}` : ""}. How many peptide bonds does it contain?`, `एक प्रोटीन में ${list} ऐमीनो अम्लों की ${c} पॉलीपेप्टाइड शृंखलाएँ हैं${s ? `, जो ${s} डाइसल्फ़ाइड ${s > 1 ? "सेतुओं" : "सेतु"} से जुड़ी हैं` : ""}। इसमें कितने पेप्टाइड बंध हैं?`),
         answer: numM(N - c, 0, mist),
-        data: { given: [`n = ${list.replace(/, /g, " + ")} = ${N}`, `c = ${c}`, s ? `s = ${s}` : null].filter(Boolean), find: [`N_{${tx(L("peptide", "पेप्टाइड"))}}`] },
+        data: { given: [`n_i = ${list}`, `c = ${c}`, s ? `s = ${s}` : null].filter(Boolean), find: [`N_{${tx(L("peptide", "पेप्टाइड"))}}`] },
         hint: L("Count the bonds inside each chain separately, then add.", "प्रत्येक शृंखला के भीतर के बंध अलग-अलग गिनकर जोड़िए।"),
         formula: "N = n - c",
         solution: L(
@@ -1683,7 +1683,7 @@ const CELL_DIV_CALC = {
       return task({
         text: L(`${m === 1 ? "A cell" : `${m} cells`} undergo${m === 1 ? "es" : ""} ${k} successive mitotic divisions (all daughter cells keep dividing). How many cells are formed?`, `${m === 1 ? "एक कोशिका" : `${m} कोशिकाएँ`} लगातार ${k} समसूत्री विभाजन करती ${m === 1 ? "है" : "हैं"} (सभी संतति कोशिकाएँ विभाजित होती रहती हैं)। कुल कितनी कोशिकाएँ बनेंगी?`),
         answer: numM(ans, 0, [[2 * k * m, L("Each division doubles the number; use a power of 2, not 2 × k.", "प्रत्येक विभाजन संख्या दुगुनी करता है; 2 × k नहीं, 2 की घात लीजिए।")], [m * 2 ** (k - 1), L("After k divisions there are 2ᵏ cells per starting cell.", "k विभाजनों के बाद प्रति आरंभिक कोशिका 2ᵏ कोशिकाएँ होती हैं।")], [m * (k + 1), L("Divisions multiply, they do not add one cell each time.", "विभाजन गुणा करते हैं, हर बार एक कोशिका नहीं जोड़ते।")]]),
-        data: { given: [`N_0 = ${m}`, `k = ${k}`], find: ["N"] },
+        data: { given: [m > 1 ? `N_0 = ${m}` : null, `k = ${k}`].filter(Boolean), find: ["N"] },
         hint: L("One mitosis turns 1 cell into 2. What happens to the count after each round?", "एक समसूत्री विभाजन 1 कोशिका को 2 बनाता है। हर चक्र के बाद संख्या का क्या होता है?"),
         formula: "N = N_0 \\cdot 2^k",
         solution: L(S(`$N = ${m} \\cdot 2^{${k}}$`, `$N = ${m} \\cdot ${2 ** k} = ${ans}$`), S(`$N = ${m} \\cdot 2^{${k}}$`, `$N = ${m} \\cdot ${2 ** k} = ${ans}$`)),
@@ -1698,10 +1698,10 @@ const CELL_DIV_CALC = {
       return task({
         text: L(`${who[0]}. Starting from one cell, how many cells are there after ${time[0]} (all cells keep dividing)?`, `${who[1]}। एक कोशिका से शुरू करके ${time[1]} बाद कितनी कोशिकाएँ होंगी (सभी कोशिकाएँ विभाजित होती रहती हैं)?`),
         answer: numM(ans, 0, [[t, L("That is the number of divisions, not of cells.", "यह विभाजनों की संख्या है, कोशिकाओं की नहीं।")], [2 * t, L("Each cycle doubles the number of cells.", "प्रत्येक चक्र कोशिकाओं की संख्या दुगुनी करता है।")]]),
-        data: { given: [human ? "T = 24\\ \\mathrm{h}" : "T = 90\\ \\mathrm{min}", human ? `t = ${24 * t}\\ \\mathrm{h}` : `t = ${90 * t}\\ \\mathrm{min}`], find: ["N"] },
+        data: { given: [human ? "T = 24\\ \\mathrm{h}" : "T = 90\\ \\mathrm{min}", human ? `t = ${24 * t}\\ \\mathrm{h}` : `t = ${en((90 * t) / 60)}\\ \\mathrm{h}`], find: ["N"] },
         hint: L("First find how many complete cell cycles fit into the time.", "पहले ज्ञात कीजिए कि इस समय में कितने पूरे कोशिका चक्र होंगे।"),
         formula: "N = 2^{t/T}",
-        solution: L(S(`Cycles: $k = ${human ? `${24 * t}/24` : `${90 * t}/90`} = ${t}$`, `$N = 2^{${t}} = ${ans}$`), S(`चक्र: $k = ${human ? `${24 * t}/24` : `${90 * t}/90`} = ${t}$`, `$N = 2^{${t}} = ${ans}$`)),
+        solution: L(S(human ? null : `$t = ${en((90 * t) / 60)}\\ \\mathrm{h} = ${90 * t}\\ \\mathrm{min}$`, `Cycles: $k = ${human ? `${24 * t}/24` : `${90 * t}/90`} = ${t}$`, `$N = 2^{${t}} = ${ans}$`), S(human ? null : `$t = ${en((90 * t) / 60)}\\ \\mathrm{h} = ${90 * t}\\ \\mathrm{min}$`, `चक्र: $k = ${human ? `${24 * t}/24` : `${90 * t}/90`} = ${t}$`, `$N = 2^{${t}} = ${ans}$`)),
       });
     }
     if (level === 1) {
@@ -1799,7 +1799,7 @@ const PLANT_CALC = {
       return task({
         text: L(`How many turns of the Calvin cycle are needed to make ${k === 1 ? "one molecule" : `${k} molecules`} of glucose?`, `ग्लूकोस के ${k === 1 ? "एक अणु" : `${k} अणुओं`} के लिए केल्विन चक्र के कितने आवर्तन आवश्यक हैं?`),
         answer: numM(6 * k, 0, [[k, L("One turn fixes only one CO₂ molecule.", "एक आवर्तन में केवल एक CO₂ अणु स्थिर होता है।")], [3 * k, L("Glucose has six carbons, each coming from one CO₂.", "ग्लूकोस में छह कार्बन हैं, प्रत्येक एक CO₂ से आता है।")], [12 * k, L("Count CO₂ molecules, not NADPH.", "CO₂ अणु गिनिए, NADPH नहीं।")]]),
-        data: { given: [`n(\\mathrm{C_6H_{12}O_6}) = ${k}`], find: [`N_{${tx(L("turns", "आवर्तन"))}}`] },
+        data: { given: k > 1 ? [`n(\\mathrm{C_6H_{12}O_6}) = ${k}`] : [], find: [`N_{${tx(L("turns", "आवर्तन"))}}`] },
         hint: L("How many carbon atoms are in glucose, and how many CO₂ does one turn fix?", "ग्लूकोस में कितने कार्बन परमाणु हैं, और एक आवर्तन में कितनी CO₂ स्थिर होती है?"),
         formula: "N = 6k",
         solution: L(S("One turn fixes one CO₂; one glucose needs 6 CO₂.", `$N = 6 \\cdot ${k} = ${6 * k}$`), S("एक आवर्तन एक CO₂ स्थिर करता है; एक ग्लूकोस को 6 CO₂ चाहिए।", `$N = 6 \\cdot ${k} = ${6 * k}$`)),
@@ -1824,7 +1824,7 @@ const PLANT_CALC = {
       return task({
         text: L(`What is the net gain of ATP when ${k === 1 ? "one glucose molecule is" : `${k} glucose molecules are`} broken down to pyruvic acid by glycolysis?`, `ग्लाइकोलिसिस द्वारा ${k === 1 ? "एक ग्लूकोस अणु" : `${k} ग्लूकोस अणुओं`} के पाइरुविक अम्ल में टूटने पर ATP का शुद्ध लाभ कितना है?`),
         answer: numM(2 * k, 0, [[4 * k, L("Four ATP are formed, but two were used up at the start.", "चार ATP बनते हैं, पर आरंभ में दो खर्च हो चुके हैं।")], [38 * k, L("That is the yield of complete aerobic respiration.", "यह पूर्ण वायवीय श्वसन की उपज है।")]]),
-        data: { given: [`n = ${k}`], find: [`n(\\mathrm{ATP})_{${tx(L("net", "शुद्ध"))}}`] },
+        data: { given: k > 1 ? [`n = ${k}`] : [], find: [`n(\\mathrm{ATP})_{${tx(L("net", "शुद्ध"))}}`] },
         hint: L("Count ATP made by substrate-level phosphorylation and subtract ATP used in the first steps.", "क्रियाधार-स्तरीय फॉस्फोरिलेशन से बने ATP गिनिए और पहले चरणों में खर्च ATP घटाइए।"),
         formula: "n_{\\mathrm{ATP}} = (4 - 2)\\,k",
         solution: L(S("Per glucose: 4 ATP formed − 2 ATP used = 2 ATP.", `$2 \\cdot ${k} = ${2 * k}$`), S("प्रति ग्लूकोस: 4 ATP बने − 2 ATP खर्च = 2 ATP।", `$2 \\cdot ${k} = ${2 * k}$`)),
@@ -1837,7 +1837,7 @@ const PLANT_CALC = {
       return task({
         text: L(`How many ${atp ? "ATP" : "NADPH"} molecules are used in the Calvin cycle to synthesise ${k === 1 ? "one molecule" : `${k} molecules`} of glucose?`, `ग्लूकोस के ${k === 1 ? "एक अणु" : `${k} अणुओं`} के संश्लेषण में केल्विन चक्र ${atp ? "ATP" : "NADPH"} के कितने अणु उपयोग करता है?`),
         answer: numM(ans, 0, atp ? [[3 * k, L("3 ATP is per CO₂; one glucose needs six CO₂.", "3 ATP प्रति CO₂ है; एक ग्लूकोस को छह CO₂ चाहिए।")], [12 * k, L("12 per glucose is the NADPH requirement.", "प्रति ग्लूकोस 12 की आवश्यकता NADPH की है।")]] : [[2 * k, L("2 NADPH is per CO₂; one glucose needs six CO₂.", "2 NADPH प्रति CO₂ है; एक ग्लूकोस को छह CO₂ चाहिए।")], [18 * k, L("18 per glucose is the ATP requirement.", "प्रति ग्लूकोस 18 की आवश्यकता ATP की है।")]]),
-        data: { given: [`n(\\mathrm{C_6H_{12}O_6}) = ${k}`, "3\\,\\mathrm{ATP} + 2\\,\\mathrm{NADPH}\\ /\\ \\mathrm{CO_2}"], find: [`n(\\mathrm{${atp ? "ATP" : "NADPH"}})`] },
+        data: { given: [k > 1 ? `n(\\mathrm{C_6H_{12}O_6}) = ${k}` : null, "3\\,\\mathrm{ATP} + 2\\,\\mathrm{NADPH}\\ /\\ \\mathrm{CO_2}"].filter(Boolean), find: [`n(\\mathrm{${atp ? "ATP" : "NADPH"}})`] },
         hint: L("First find how many CO₂ must be fixed, then use the per-CO₂ requirement.", "पहले ज्ञात कीजिए कि कितनी CO₂ स्थिर करनी है, फिर प्रति CO₂ की आवश्यकता लगाइए।"),
         formula: atp ? "n_{\\mathrm{ATP}} = 3 \\cdot 6k" : "n_{\\mathrm{NADPH}} = 2 \\cdot 6k",
         solution: L(S(`CO₂ to fix: $6 \\cdot ${k} = ${6 * k}$`, `$${atp ? 3 : 2} \\cdot ${6 * k} = ${ans}$`), S(`स्थिर करनी CO₂: $6 \\cdot ${k} = ${6 * k}$`, `$${atp ? 3 : 2} \\cdot ${6 * k} = ${ans}$`)),
@@ -1891,7 +1891,7 @@ const PLANT_CALC = {
       return task({
         text: L(`Yeast ferments glucose to ethanol. How many glucose molecules must it ferment to gain as much ATP as the complete aerobic respiration of ${k === 1 ? "one glucose molecule" : `${k} glucose molecules`} (NCERT balance sheet)?`, `यीस्ट ग्लूकोस का एथेनॉल में किण्वन करता है। ${k === 1 ? "एक ग्लूकोस अणु" : `${k} ग्लूकोस अणुओं`} के पूर्ण वायवीय श्वसन जितना ATP पाने के लिए उसे कितने ग्लूकोस अणुओं का किण्वन करना होगा (NCERT तुलन-पत्र)?`),
         answer: numM(19 * k, 0, [[38 * k, L("That is the ATP count; divide by the ATP gained per fermented glucose.", "यह ATP की संख्या है; प्रति किण्वित ग्लूकोस ATP से भाग दीजिए।")], [18 * k, L("NCERT uses 38 ATP per glucose for aerobic respiration.", "NCERT वायवीय श्वसन के लिए प्रति ग्लूकोस 38 ATP लेता है।")], [9.5 * k, L("Fermentation gives a net 2 ATP per glucose, not 4.", "किण्वन से प्रति ग्लूकोस शुद्ध 2 ATP मिलते हैं, 4 नहीं।")]]),
-        data: { given: [`n = ${k}`, `${tx(L("aerobic", "वायवीय"))}: 38\\ \\mathrm{ATP}`, `${tx(L("fermentation", "किण्वन"))}: 2\\ \\mathrm{ATP}`], find: [`n_{${tx(L("fermented", "किण्वित"))}}`] },
+        data: { given: [k > 1 ? `n = ${k}` : null, `${tx(L("aerobic", "वायवीय"))}: 38\\ \\mathrm{ATP}`, `${tx(L("fermentation", "किण्वन"))}: 2\\ \\mathrm{ATP}`].filter(Boolean), find: [`n_{${tx(L("fermented", "किण्वित"))}}`] },
         hint: L("Find the ATP from aerobic respiration first, then divide by the ATP from one fermented glucose.", "पहले वायवीय श्वसन से ATP ज्ञात कीजिए, फिर एक किण्वित ग्लूकोस के ATP से भाग दीजिए।"),
         formula: "n = \\dfrac{38k}{2}",
         solution: L(S(`Aerobic: $38 \\cdot ${k} = ${38 * k}$ ATP`, `Fermentation: 2 ATP per glucose`, `$n = ${38 * k}/2 = ${19 * k}$`), S(`वायवीय: $38 \\cdot ${k} = ${38 * k}$ ATP`, "किण्वन: प्रति ग्लूकोस 2 ATP", `$n = ${38 * k}/2 = ${19 * k}$`)),
@@ -1922,7 +1922,7 @@ const PLANT_CALC = {
     return task({
       text: L(`In aerobic respiration of ${k === 1 ? "one glucose molecule" : `${k} glucose molecules`}, how many ATP are made in the electron transport system from ${what[0]}? (NADH → 3 ATP, FADH₂ → 2 ATP)`, `${k === 1 ? "एक ग्लूकोस अणु" : `${k} ग्लूकोस अणुओं`} के वायवीय श्वसन में ${what[1]} से इलेक्ट्रॉन परिवहन तंत्र में कितने ATP बनते हैं? (NADH → 3 ATP, FADH₂ → 2 ATP)`),
       answer: numM(ans, 0, mist),
-      data: { given: [`n = ${k}`, "\\mathrm{NADH} \\to 3\\,\\mathrm{ATP}", "\\mathrm{FADH_2} \\to 2\\,\\mathrm{ATP}"], find: [`n(\\mathrm{ATP})`] },
+      data: { given: [k > 1 ? `n = ${k}` : null, "\\mathrm{NADH} \\to 3\\,\\mathrm{ATP}", "\\mathrm{FADH_2} \\to 2\\,\\mathrm{ATP}"].filter(Boolean), find: [`n(\\mathrm{ATP})`] },
       hint: L("Per glucose count NADH: glycolysis 2, link reaction 2, Krebs 6; FADH₂: Krebs 2.", "प्रति ग्लूकोस NADH गिनिए: ग्लाइकोलिसिस 2, संयोजक अभिक्रिया 2, क्रेब्स 6; FADH₂: क्रेब्स 2।"),
       formula: ["n = 10k \\cdot 3", "n = 2k \\cdot 2", "n = (6 \\cdot 3 + 2 \\cdot 2)\\,k"][ask],
       solution: L(
@@ -1996,7 +1996,7 @@ const HUMAN_CALC = {
       return task({
         text: L(`The glomerular filtration rate of a healthy person is ${GFR} mL/min. How many litres of filtrate are formed per day?${roundToL(1, lang)}`, `एक स्वस्थ व्यक्ति की गुच्छीय निस्यंदन दर (GFR) ${GFR} mL/min है। प्रतिदिन कितने लीटर निस्यंद बनता है?${roundToL(1, lang)}`),
         answer: numM(day, 1, [[(GFR * 60) / 1000, L("That is per hour; a day has 24 hours.", "यह प्रति घंटा है; एक दिन में 24 घंटे होते हैं।")], [GFR * 1440, L("Convert mL to litres.", "mL को लीटर में बदलिए।")]]),
-        data: { given: [`GFR = ${GFR}\\ \\mathrm{mL/min}`, "1\\ \\mathrm{day} = 1440\\ \\mathrm{min}"], find: [`V_{${tx(L("day", "दिन"))}}`] },
+        data: { given: [`GFR = ${GFR}\\ \\mathrm{mL/min}`], find: [`V_{${tx(L("day", "दिन"))}}`] },
         hint: L("Convert minutes to a day: 60 min × 24 h.", "मिनट को दिन में बदलिए: 60 मिनट × 24 घंटे।"),
         formula: "V = GFR \\cdot 1440",
         solution: L(S(`$V = ${GFR} \\cdot 1440 = ${GFR * 1440}$ mL`, `$V \\approx ${en(day, 1)}$ L/day`), S(`$V = ${GFR} \\cdot 1440 = ${GFR * 1440}$ mL`, `$V \\approx ${en(day, 1)}$ L/दिन`)),
@@ -2166,7 +2166,7 @@ const REPRO_CALC = {
       const c = r.pick(HUMAN_CELLS);
       const ans = c[2] === 2 ? 46 : 23;
       return task({
-        text: L(`How many chromosomes are present in a human ${c[0]}?`, `एक मानव ${c[1]} में कितने गुणसूत्र होते हैं?`),
+        text: L(`Human somatic cells have 2n = 46 chromosomes. How many chromosomes are present in a human ${c[0]}?`, `मानव कायिक कोशिकाओं में 2n = 46 गुणसूत्र होते हैं। एक मानव ${c[1]} में कितने गुणसूत्र होते हैं?`),
         answer: numM(ans, 0, [[ans === 46 ? 23 : 46, L(ans === 46 ? "This cell has not yet completed meiosis I (or is the product of fertilisation), so it is diploid." : "Meiosis I has already halved the chromosome number in this cell.", ans === 46 ? "इस कोशिका ने अभी अर्धसूत्री विभाजन I पूरा नहीं किया है (या यह निषेचन का उत्पाद है), इसलिए यह द्विगुणित है।" : "इस कोशिका में अर्धसूत्री विभाजन I गुणसूत्र संख्या पहले ही आधी कर चुका है।")], [92, L("DNA doubles before meiosis, but the chromosome number does not.", "अर्धसूत्री विभाजन से पहले DNA दुगुना होता है, गुणसूत्र संख्या नहीं।")]]),
         data: { given: [`2n = 46`], find: [`N_{${tx(L("chromosomes", "गुणसूत्र"))}}`] },
         hint: L("Place the cell before or after meiosis I (or after fertilisation).", "तय कीजिए कि कोशिका अर्धसूत्री विभाजन I से पहले है या बाद में (या निषेचन के बाद)।"),
@@ -2207,9 +2207,10 @@ const REPRO_CALC = {
       const k = r.int(3, 40);
       const ask = r.int(0, 3);
       const what = [["synergids", "सहायक कोशिकाएँ", 2], ["antipodal cells", "प्रतिमुखी कोशिकाएँ", 3], ["nuclei", "केंद्रक", 8], ["cells", "कोशिकाएँ", 7]][ask];
+      const kitne = ask === 2 ? "कितने" : "कितनी";
       const mist = [[[k, "The egg apparatus has two synergids beside the egg.", "अंड उपकरण में अंड के साथ दो सहायक कोशिकाएँ होती हैं।"], [3 * k, "Three cells sit at the chalazal end; synergids are at the micropylar end.", "निभागीय सिरे पर तीन कोशिकाएँ होती हैं; सहायक कोशिकाएँ बीजांडद्वारी सिरे पर।"]], [[2 * k, "There are three antipodal cells at the chalazal end.", "निभागीय सिरे पर तीन प्रतिमुखी कोशिकाएँ होती हैं।"]], [[7 * k, "The central cell has two polar nuclei: 8 nuclei but 7 cells.", "केंद्रीय कोशिका में दो ध्रुवीय केंद्रक हैं: 8 केंद्रक पर 7 कोशिकाएँ।"]], [[8 * k, "The two polar nuclei share one central cell: 7 cells, 8 nuclei.", "दोनों ध्रुवीय केंद्रक एक ही केंद्रीय कोशिका में हैं: 7 कोशिकाएँ, 8 केंद्रक।"], [6 * k, "Count the central cell too.", "केंद्रीय कोशिका भी गिनिए।"]]][ask];
       return task({
-        text: L(`A flower has ${k} ovules, each with a mature typical (7-celled) embryo sac. How many ${what[0]} are there in all these embryo sacs together?`, `एक पुष्प में ${k} बीजांड हैं, प्रत्येक में परिपक्व सामान्य भ्रूणकोष है। इन सब भ्रूणकोषों में कुल कितनी ${what[1]} हैं?`),
+        text: L(`A flower has ${k} ovules, each with a mature typical (7-celled) embryo sac. How many ${what[0]} are there in all these embryo sacs together?`, `एक पुष्प में ${k} बीजांड हैं, प्रत्येक में परिपक्व सामान्य (7-कोशिकीय) भ्रूणकोष है। इन सब भ्रूणकोषों में कुल ${kitne} ${what[1]} हैं?`),
         answer: numM(what[2] * k, 0, mist.map(([x, e, h]) => [x, L(e, h)])),
         data: { given: [`N_{${tx(L("ovules", "बीजांड"))}} = ${k}`], find: [`N_{${tx(L(what[0], what[1]))}}`] },
         hint: L("Draw one embryo sac: egg apparatus, central cell, antipodals.", "एक भ्रूणकोष बनाइए: अंड उपकरण, केंद्रीय कोशिका, प्रतिमुखी कोशिकाएँ।"),
@@ -2467,7 +2468,7 @@ const GENETICS_MENDEL = {
       return task({
         text: L(`A plant has the genotype $${G}$ (genes on different chromosomes). How many ${what[0]}?`, `एक पौधे का जीनप्ररूप $${G}$ है (जीन अलग-अलग गुणसूत्रों पर)। ${what[1]}?`),
         answer: numM(ans, 0, mist),
-        data: { given: [G, `h = ${h}`], find: ["N"] },
+        data: { given: [`G = ${G}`], find: ["N"] },
         hint: L("Only the heterozygous gene pairs create variety; count them first.", "केवल विषमयुग्मजी जीन युग्म विविधता लाते हैं; पहले उन्हें गिनिए।"),
         formula: ["N = 2^h", "N = 3^h", "N = 2^h"][ask],
         solution: L(S(`Heterozygous gene pairs: $h = ${h}$`, `$N = ${ask === 1 ? 3 : 2}^{${h}} = ${ans}$`), S(`विषमयुग्मजी जीन युग्म: $h = ${h}$`, `$N = ${ask === 1 ? 3 : 2}^{${h}} = ${ans}$`)),
@@ -3286,7 +3287,7 @@ const EVOLUTION_HW = {
         return hw({
           text: L(`${HW_INTRO[0]} A recessive trait (aa) appears in ${shown} of the population. What is the frequency of carriers (Aa)?${roundToL(4, lang)}`, `${HW_INTRO[1]} एक अप्रभावी लक्षण (aa) समष्टि के ${shownH} में दिखता है। वाहकों (Aa) की आवृत्ति कितनी है?${roundToL(4, lang)}`),
           answer: numM(het, 4, [[q, L("That is q, the allele frequency, not the carrier frequency.", "यह युग्मविकल्पी आवृत्ति q है, वाहक आवृत्ति नहीं।")], [r2(p * q), L("Carriers can form in two ways: 2pq.", "वाहक दो तरह से बनते हैं: 2pq।")], [r2(2 * q2 * (1 - q2)), L("Take the square root of q² first to get q.", "पहले q² का वर्गमूल लेकर q ज्ञात कीजिए।")]]),
-          data: { given: [`q^2 = ${en(q2)}`], find: ["2pq"] },
+          data: { given: [v === 0 ? `q^2 = ${en(q2 * 100)}\\%` : `q^2 = 1/${en(Math.round(1 / q2))}`], find: ["2pq"] },
           hint: L("The recessive phenotype frequency is q².", "अप्रभावी लक्षणप्ररूप की आवृत्ति q² है।"),
           solution: L(S(`$q = \\sqrt{${en(q2)}} = ${en(q)}$, $p = ${en(p)}$`, `$2pq = 2 \\cdot ${en(p)} \\cdot ${en(q)} = ${en(het)}$`), S(`$q = \\sqrt{${en(q2)}} = ${en(q)}$, $p = ${en(p)}$`, `$2pq = 2 \\cdot ${en(p)} \\cdot ${en(q)} = ${en(het)}$`)),
         });
@@ -3328,7 +3329,7 @@ const EVOLUTION_HW = {
       return hw({
         text: L(`${HW_INTRO[0]} ${en(r2(dom * 100))}% of the individuals show the dominant phenotype. What percentage of the population is heterozygous?${roundToL(0, lang)}`, `${HW_INTRO[1]} ${en(r2(dom * 100))}% जीव प्रभावी लक्षणप्ररूप दिखाते हैं। समष्टि का कितना प्रतिशत विषमयुग्मजी है?${roundToL(0, lang)}`),
         answer: numM(r2(het * 100), 0, [[r2(2 * dom * (1 - dom) * 100), L("The dominant fraction is not p; first find q from q² = 1 − (dominant).", "प्रभावी भाग p नहीं है; पहले q² = 1 − (प्रभावी) से q ज्ञात कीजिए।")], [r2(q * 100), L("That is q × 100, the allele frequency of a.", "यह q × 100 है, a की युग्मविकल्पी आवृत्ति।")], [r2(p * p * 100), L("That is p², the homozygous dominant part.", "यह p² है, समयुग्मजी प्रभावी भाग।")]]),
-        data: { given: [`p^2 + 2pq = ${en(dom)}`], find: ["2pq\\ (\\%)"] },
+        data: { given: [`p^2 + 2pq = ${en(r2(dom * 100))}\\%`], find: ["2pq\\ (\\%)"] },
         hint: L("The recessive phenotype is the rest: q² = 1 − (dominant).", "अप्रभावी लक्षणप्ररूप शेष भाग है: q² = 1 − (प्रभावी)।"),
         solution: L(S(`$q^2 = 1 - ${en(dom)} = ${en(r2(q * q))}$ → $q = ${en(q)}$, $p = ${en(p)}$`, `$2pq = 2 \\cdot ${en(p)} \\cdot ${en(q)} = ${en(het)}$ = ${en(r2(het * 100))}%`), S(`$q^2 = 1 - ${en(dom)} = ${en(r2(q * q))}$ → $q = ${en(q)}$, $p = ${en(p)}$`, `$2pq = 2 \\cdot ${en(p)} \\cdot ${en(q)} = ${en(het)}$ = ${en(r2(het * 100))}%`)),
       });
@@ -3595,7 +3596,7 @@ const ECOLOGY_CALC = {
         answer: numM(ans, fwd && ans < 1 ? 2 : 0, fwd
           ? [[E0 / 10 ** (steps + 1), L("Count the transfers: producers → primary consumers is the first one.", "स्थानांतरण गिनिए: उत्पादक → प्राथमिक उपभोक्ता पहला है।")], [steps > 1 ? E0 / 10 ** (steps - 1) : E0, L(steps > 1 ? "One transfer is missing; count each step between levels." : "Only 10% passes to the next level.", steps > 1 ? "एक स्थानांतरण छूट गया; स्तरों के बीच हर चरण गिनिए।" : "केवल 10% अगले स्तर तक जाता है।")], [E0 * (1 - 0.1 * steps), L("10% passes on at each step; you subtracted 10% instead.", "हर चरण में 10% आगे जाता है; आपने 10% घटा दिया।")]]
           : [[E0 * 10 ** (steps + 1), L("Count the transfers: producers → primary consumers is the first one.", "स्थानांतरण गिनिए: उत्पादक → प्राथमिक उपभोक्ता पहला है।")], [E0 / 10 ** steps, L("Going down the chain, the energy must be larger: multiply by 10 per step.", "शृंखला में नीचे जाने पर ऊर्जा अधिक होनी चाहिए: प्रति चरण 10 से गुणा कीजिए।")], [E0 * 10 * steps, L("Multiply by 10 for each step (10ⁿ), not by 10n.", "प्रत्येक चरण में 10 से गुणा कीजिए (10ⁿ), 10n से नहीं।")]]),
-        data: { given: [fwd ? `E_P = ${E0}\\ ${EUNIT}` : `E_{${steps}} = ${E0}\\ ${EUNIT}`, `n = ${steps}`], find: [fwd ? `E_{${steps}}` : "E_P"] },
+        data: { given: fwd ? [`E_P = ${E0}\\ ${EUNIT}`] : [`E_{${steps}} = ${E0}\\ ${EUNIT}`, `n = ${steps}`], find: [fwd ? `E_{${steps}}` : "E_P"] },
         hint: L("Only about 10% of the energy passes from one trophic level to the next.", "एक पोषी स्तर से अगले तक लगभग 10% ऊर्जा ही जाती है।"),
         formula: fwd ? "E_n = E_P \\cdot 0.1^n" : "E_P = E_n \\cdot 10^n",
         solution: L(S(`Transfers: ${steps}`, fwd ? `$E = ${E0} \\cdot 0.1^{${steps}} = ${en(ans)}$` : `$E_P = ${E0} \\cdot 10^{${steps}} = ${en(ans)}$`), S(`स्थानांतरण: ${steps}`, fwd ? `$E = ${E0} \\cdot 0.1^{${steps}} = ${en(ans)}$` : `$E_P = ${E0} \\cdot 10^{${steps}} = ${en(ans)}$`)),
@@ -3658,7 +3659,7 @@ const ECOLOGY_CALC = {
           text: L(`In a population of ${N} individuals, the per capita birth rate is ${en(b)} and the per capita death rate is ${en(d)} per year. Assuming exponential growth, what is dN/dt (individuals per year) at this moment?`, `${N} जीवों की एक समष्टि में प्रति व्यक्ति जन्म दर ${en(b)} और प्रति व्यक्ति मृत्यु दर ${en(d)} प्रति वर्ष है। चरघातांकी वृद्धि मानते हुए इस क्षण dN/dt (जीव प्रति वर्ष) कितना है?`),
           answer: numM(ans, 0, [[r2((b + d) * N), L("r = b − d: deaths reduce growth.", "r = b − d: मृत्यु वृद्धि घटाती है।")], [r2(b * N), L("Subtract the death rate to get r.", "r के लिए मृत्यु दर घटाइए।")], [rr, L("Multiply r by the population size N.", "r को समष्टि आकार N से गुणा कीजिए।")]]),
           data: { given: [`N = ${N}`, `b = ${en(b)},\\ d = ${en(d)}`], find: ["dN/dt"] },
-          hint: L("The intrinsic rate of natural increase is r = b − d.", "प्राकृतिक वृद्धि की नैज (intrinsic) दर r = b − d है।"),
+          hint: L("The intrinsic rate of natural increase is r = b − d.", "प्राकृतिक वृद्धि की नैज दर r = b − d है।"),
           formula: "\\dfrac{dN}{dt} = rN,\\ r = b - d",
           solution: L(S(`$r = ${en(b)} - ${en(d)} = ${en(rr)}$`, `$dN/dt = ${en(rr)} \\cdot ${N} = ${en(ans)}$`), S(`$r = ${en(b)} - ${en(d)} = ${en(rr)}$`, `$dN/dt = ${en(rr)} \\cdot ${N} = ${en(ans)}$`)),
         });
@@ -3680,7 +3681,7 @@ const ECOLOGY_CALC = {
       const rr = r.pick([0.1, 0.2, 0.25, 0.4, 0.5]);
       const ans = r2((rr * N * (K - N)) / K);
       return task({
-        text: L(`A population grows logistically with r = ${en(rr)} per year and carrying capacity K = ${K}. What is the growth rate dN/dt (individuals per year) when N = ${N}?${roundToL(1, lang)}`, `एक समष्टि r = ${en(rr)} प्रति वर्ष और वहन क्षमता K = ${K} के साथ संभार-तंत्री (logistic) वृद्धि करती है। N = ${N} पर वृद्धि दर dN/dt (जीव प्रति वर्ष) कितनी है?${roundToL(1, lang)}`),
+        text: L(`A population grows logistically with r = ${en(rr)} per year and carrying capacity K = ${K}. What is the growth rate dN/dt (individuals per year) when N = ${N}?${roundToL(1, lang)}`, `एक समष्टि r = ${en(rr)} प्रति वर्ष और वहन क्षमता K = ${K} के साथ संभार-तंत्री वृद्धि करती है। N = ${N} पर वृद्धि दर dN/dt (जीव प्रति वर्ष) कितनी है?${roundToL(1, lang)}`),
         answer: numM(ans, 1, [[r2(rr * N), L("Logistic growth is slowed by the factor (K − N)/K.", "संभार-तंत्री वृद्धि (K − N)/K गुणक से धीमी होती है।")], [r2((rr * N * N) / K), L("The factor is (K − N)/K, not N/K.", "गुणक (K − N)/K है, N/K नहीं।")], [r2(rr * (K - N)), L("Multiply by N as well: rN(K − N)/K.", "N से भी गुणा कीजिए: rN(K − N)/K।")]]),
         data: { given: [`r = ${en(rr)}`, `K = ${K}`, `N = ${N}`], find: ["dN/dt"] },
         hint: L("Use the Verhulst–Pearl logistic equation.", "वर्हुल्स्ट–पर्ल संभार-तंत्री समीकरण लगाइए।"),
@@ -3725,7 +3726,7 @@ const ECOLOGY_CALC = {
     return task({
       text: L(`The GPP of a grassland is ${G} kcal m⁻² yr⁻¹ and the producers use ${pr}% of it in respiration. Assume the ${LEVELS[steps][0]} receive energy from the NPP by the 10 per cent law. How much energy (in kcal m⁻² yr⁻¹) reaches them?`, `एक घास-स्थल की GPP ${G} kcal m⁻² yr⁻¹ है और उत्पादक इसका ${pr}% श्वसन में खर्च करते हैं। मान लीजिए ${LEVELS[steps][1]} को NPP से 10 प्रतिशत नियम के अनुसार ऊर्जा मिलती है। उन तक कितनी ऊर्जा (kcal m⁻² yr⁻¹ में) पहुँचती है?`),
       answer: numM(ans, 0, [[G / 10 ** steps, L("Only the NPP is available to consumers; subtract respiration first.", "उपभोक्ताओं को केवल NPP उपलब्ध है; पहले श्वसन घटाइए।")], [(G * pr) / 100 / 10 ** steps, L(`${pr}% is lost in respiration; ${100 - pr}% remains as NPP.`, `${pr}% श्वसन में खर्च होता है; ${100 - pr}% NPP के रूप में बचता है।`)], [steps === 1 ? NPP / 100 : NPP / 10, L("Count the transfers from producers to this level.", "उत्पादकों से इस स्तर तक के स्थानांतरण गिनिए।")]]),
-      data: { given: [`GPP = ${G}\\ ${EUNIT}`, `R = ${pr}\\%`, `n = ${steps}`], find: [`E_{${steps}}`] },
+      data: { given: [`GPP = ${G}\\ ${EUNIT}`, `R = ${pr}\\%`], find: [`E_{${steps}}`] },
       hint: L("First NPP = GPP − R; then apply 10% per trophic step.", "पहले NPP = GPP − R; फिर प्रति पोषी चरण 10% लगाइए।"),
       formula: "E_n = (GPP - R) \\cdot 0.1^n",
       solution: L(S(`$NPP = ${G} - ${(G * pr) / 100} = ${NPP}$`, `$E = ${NPP} \\cdot 0.1^{${steps}} = ${en(ans)}$`), S(`$NPP = ${G} - ${(G * pr) / 100} = ${NPP}$`, `$E = ${NPP} \\cdot 0.1^{${steps}} = ${en(ans)}$`)),

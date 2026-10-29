@@ -212,7 +212,7 @@ export const EXAM_IN_MAT = [
             [lcm(a, b), L("The LCM is a common multiple; here you need the largest number that divides both.", "LCM एक सार्व गुणज है; यहाँ आपको वह सबसे बड़ी संख्या चाहिए जो दोनों को विभाजित करे।")],
             [ctx === 0 ? h / 100 : a - b, ctx === 0 ? L("The side is asked in cm, not in m.", "भुजा cm में पूछी गई है, m में नहीं।") : L("The difference is not a common divisor in general; find the HCF.", "अंतर सामान्यतः सार्व भाजक नहीं होता; HCF ज्ञात कीजिए।")],
           ]),
-          data: { given: [`a = ${a}`, `b = ${b}`], find: [R`\text{HCF}(a, b)`] },
+          data: { given: ctx === 0 ? [R`l = ${en(a / 100)}\ \mathrm{m}`, R`b = ${en(b / 100)}\ \mathrm{m}`] : [`a = ${a}`, `b = ${b}`], find: [R`\text{HCF}(a, b)`] },
           hint: L("The required number must divide both quantities exactly, and be as large as possible.", "अभीष्ट संख्या दोनों राशियों को पूरा-पूरा विभाजित करे और यथासंभव बड़ी हो।"),
           formula: FHCF(L),
           solution: S(
@@ -263,7 +263,7 @@ export const EXAM_IN_MAT = [
         return taskL(lang, {
           text: less
             ? L(`Find the smallest number which, when divided by ${t[0]}, ${t[1]} and ${t[2]}, leaves remainders ${t[0] - k}, ${t[1] - k} and ${t[2] - k} respectively.`, `वह सबसे छोटी संख्या ज्ञात कीजिए जिसे ${t[0]}, ${t[1]} और ${t[2]} से भाग देने पर क्रमशः ${t[0] - k}, ${t[1] - k} और ${t[2] - k} शेष बचते हैं।`)
-            : L(`Find the smallest number which, when divided by ${t[0]}, ${t[1]} and ${t[2]}, leaves remainder ${k} in each case.`, `वह सबसे छोटी संख्या ज्ञात कीजिए जिसे ${t[0]}, ${t[1]} और ${t[2]} से भाग देने पर प्रत्येक दशा में ${k} शेष बचता है।`),
+            : L(`Find the smallest number greater than ${k} which, when divided by ${t[0]}, ${t[1]} and ${t[2]}, leaves remainder ${k} in each case.`, `${k} से बड़ी वह सबसे छोटी संख्या ज्ञात कीजिए जिसे ${t[0]}, ${t[1]} और ${t[2]} से भाग देने पर प्रत्येक दशा में ${k} शेष बचता है।`),
           answer: numM(ans, null, [
             [less ? l + k : l - k, less ? L(`Each remainder is ${k} less than its divisor, so the number is ${k} less than a common multiple.`, `प्रत्येक शेषफल अपने भाजक से ${k} कम है, अतः संख्या किसी सार्व गुणज से ${k} कम है।`) : L("Add the remainder to the LCM, do not subtract it.", "शेषफल को LCM में जोड़िए, घटाइए नहीं।")],
             [l, L("The LCM itself leaves remainder 0; adjust it for the remainders.", "LCM स्वयं शेषफल 0 छोड़ता है; शेषफलों के अनुसार इसे बदलिए।")],
@@ -510,7 +510,7 @@ export const EXAM_IN_MAT = [
             answer: sum
               ? fractionM(n, d, [[b / a, L("Sum of zeros is −b/a: watch the minus sign.", "शून्यकों का योग −b/a है: ऋण चिह्न पर ध्यान दीजिए।")], [c / a, L("c/a is the product of the zeros, not the sum.", "c/a शून्यकों का गुणनफल है, योग नहीं।")]])
               : fractionM(n, d, [[-c / a, L("Product of zeros is +c/a, with no minus sign.", "शून्यकों का गुणनफल +c/a है, ऋण चिह्न के बिना।")], [-b / a, L("−b/a is the sum of the zeros, not the product.", "−b/a शून्यकों का योग है, गुणनफल नहीं।")]]),
-            data: { given: [`a = ${a}`, `b = ${b}`, `c = ${c}`], find: [sum ? R`\alpha + \beta` : R`\alpha\beta`] },
+            data: { given: [`p(x) = ${tex}`], find: [sum ? R`\alpha + \beta` : R`\alpha\beta`] },
             hint: HINT_REL,
             formula: sum ? R`\alpha + \beta = -\dfrac{b}{a}` : R`\alpha\beta = \dfrac{c}{a}`,
             solution: S(
@@ -529,7 +529,7 @@ export const EXAM_IN_MAT = [
             [-k, L("Check the signs when you move terms across the equals sign.", "पदों को बराबर चिह्न के पार ले जाते समय चिह्नों की जाँच कीजिए।")],
             [-(z + c) / z, L(`Square the zero: p(${z}) contains (${z})², not ${z}.`, `शून्यक का वर्ग कीजिए: p(${z}) में (${z})² आता है, ${z} नहीं।`)],
           ]),
-          data: { given: [`p(${z}) = 0`], find: ["k"] },
+          data: { given: [R`\alpha = ${z}`, R`p(x) = x^2 + kx ${sg(c)}`], find: ["k"] },
           hint: L(`A zero makes the polynomial equal to 0: put x = ${z}.`, `शून्यक पर बहुपद का मान 0 होता है: x = ${z} रखिए।`),
           formula: R`p(\alpha) = 0`,
           solution: S(
@@ -554,7 +554,7 @@ export const EXAM_IN_MAT = [
                 [(b * b + 2 * a * c) / d, L("(α + β)² = α² + β² + 2αβ, so subtract 2αβ, do not add it.", "(α + β)² = α² + β² + 2αβ, अतः 2αβ घटाइए, जोड़िए नहीं।")],
                 [(b * b) / d, L("(α + β)² also contains 2αβ; remove it.", "(α + β)² में 2αβ भी होता है; उसे हटाइए।")],
               ]),
-              data: { given: [R`\alpha + \beta = ${fracTex(-b, a)}`, R`\alpha\beta = ${fracTex(c, a)}`], find: [R`\alpha^2 + \beta^2`] },
+              data: { given: [`p(x) = ${tex}`], find: [R`\alpha^2 + \beta^2`] },
               hint: L("Write α² + β² using α + β and αβ.", "α² + β² को α + β और αβ के पदों में लिखिए।"),
               formula: R`\alpha^2 + \beta^2 = (\alpha + \beta)^2 - 2\alpha\beta`,
               solution: S(
@@ -571,7 +571,7 @@ export const EXAM_IN_MAT = [
               [b / c, L("α + β = −b/a: keep the minus sign.", "α + β = −b/a: ऋण चिह्न बनाए रखिए।")],
               [-c / b, L("You inverted the fraction: it is (α + β)/(αβ).", "आपने भिन्न उलट दी: यह (α + β)/(αβ) है।")],
             ]),
-            data: { given: [R`\alpha + \beta = ${fracTex(-b, a)}`, R`\alpha\beta = ${fracTex(c, a)}`], find: [R`\dfrac{1}{\alpha} + \dfrac{1}{\beta}`] },
+            data: { given: [`p(x) = ${tex}`], find: [R`\dfrac{1}{\alpha} + \dfrac{1}{\beta}`] },
             hint: L("Add the two fractions over a common denominator.", "दोनों भिन्नों को उभयनिष्ठ हर लेकर जोड़िए।"),
             formula: R`\dfrac{1}{\alpha} + \dfrac{1}{\beta} = \dfrac{\alpha + \beta}{\alpha\beta}`,
             solution: S(
@@ -592,7 +592,7 @@ export const EXAM_IN_MAT = [
             [c[1] / A - z[0] - z[1], L("Sum of the zeros of a cubic is −b/a: watch the sign.", "त्रिघात बहुपद के शून्यकों का योग −b/a है: चिह्न पर ध्यान दीजिए।")],
             [-c[1] / A, L("−b/a is the sum of all three zeros; subtract the two known zeros.", "−b/a तीनों शून्यकों का योग है; दोनों ज्ञात शून्यक घटाइए।")],
           ]),
-          data: { given: [`a = ${c[0]}`, `b = ${c[1]}`, R`\alpha = ${z[0]},\ \beta = ${z[1]}`], find: [R`\gamma`] },
+          data: { given: [`p(x) = ${cubic(c)}`, R`\alpha = ${z[0]}`, R`\beta = ${z[1]}`], find: [R`\gamma`] },
           hint: L("For a cubic ax³ + bx² + cx + d, the sum of the three zeros is −b/a.", "त्रिघात बहुपद ax³ + bx² + cx + d के तीनों शून्यकों का योग −b/a होता है।"),
           formula: R`\alpha + \beta + \gamma = -\dfrac{b}{a}`,
           solution: S(
@@ -613,7 +613,7 @@ export const EXAM_IN_MAT = [
             [t * Math.abs(al), L("The product of the zeros is α · tα = tα², not tα.", "शून्यकों का गुणनफल α · tα = tα² है, tα नहीं।")],
             [(t * p * p) / (t + 1), L("First find α from the sum (1 + t)α = −b, then the product.", "पहले योग (1 + t)α = −b से α ज्ञात कीजिए, फिर गुणनफल।")],
           ]),
-          data: { given: [R`\beta = ${t}\alpha`, R`\alpha + \beta = ${-p}`], find: ["k"] },
+          data: { given: [R`\beta = ${t}\alpha`, R`p(x) = x^2 ${sco(p)} + k`], find: ["k"] },
           hint: L(`Call the zeros α and ${t}α and use the sum of the zeros first.`, `शून्यकों को α और ${t}α मानिए और पहले शून्यकों के योग का प्रयोग कीजिए।`),
           formula: R`\alpha + \beta = -\dfrac{b}{a},\quad \alpha\beta = \dfrac{c}{a}`,
           solution: S(
@@ -631,7 +631,7 @@ export const EXAM_IN_MAT = [
             [-m, L("(a − m)² = 0 gives only the positive value; check the sign.", "(a − m)² = 0 से केवल धनात्मक मान मिलता है; चिह्न जाँचिए।")],
             [2 * m, L("Set the product of the zeros equal to 1 and solve the quadratic in a.", "शून्यकों का गुणनफल 1 के बराबर रखिए और a में द्विघात समीकरण हल कीजिए।")],
           ]),
-          data: { given: [R`\alpha \cdot \dfrac{1}{\alpha} = 1`], find: ["a"] },
+          data: { given: [R`p(x) = (a^2 + ${m * m})x^2 + ${b}x + ${2 * m}a`], find: ["a"] },
           hint: L("If the zeros are α and 1/α, what is their product?", "यदि शून्यक α और 1/α हैं, तो उनका गुणनफल क्या है?"),
           formula: R`\alpha\beta = \dfrac{c}{a}`,
           solution: S(
@@ -653,7 +653,7 @@ export const EXAM_IN_MAT = [
             [(s * s) / p, L("α² + β² = (α + β)² − 2αβ: you forgot the −2αβ.", "α² + β² = (α + β)² − 2αβ: आप −2αβ भूल गए।")],
             [(s * s + 2 * p) / p, L("Subtract 2αβ, do not add it.", "2αβ घटाइए, जोड़िए नहीं।")],
           ]),
-          data: { given: [R`\alpha + \beta = ${s}`, R`\alpha\beta = ${p}`], find: [R`\dfrac{\alpha}{\beta} + \dfrac{\beta}{\alpha}`] },
+          data: { given: [`p(x) = ${tex}`], find: [R`\dfrac{\alpha}{\beta} + \dfrac{\beta}{\alpha}`] },
           hint: L("Add the fractions: the numerator is α² + β².", "भिन्नों को जोड़िए: अंश α² + β² बनता है।"),
           formula: R`\dfrac{\alpha}{\beta} + \dfrac{\beta}{\alpha} = \dfrac{(\alpha + \beta)^2 - 2\alpha\beta}{\alpha\beta}`,
           solution: S(
@@ -672,7 +672,7 @@ export const EXAM_IN_MAT = [
           [d * d, L("That is b²; take the positive square root.", "यह b² है; धनात्मक वर्गमूल लीजिए।")],
           [Math.abs(a), L("a comes from the sum of the zeros; b needs one more relation (the product).", "a शून्यकों के योग से मिलता है; b के लिए एक और संबंध (गुणनफल) चाहिए।")],
         ]),
-        data: { given: [`(a - b) + a + (a + b) = ${3 * a}`, `(a - b)a(a + b) = ${-c[3]}`], find: ["b"] },
+        data: { given: [`p(x) = ${cubic(c)}`], find: ["b"] },
         hint: L("Use the sum of the zeros to find a, then the product of the zeros to find b.", "शून्यकों के योग से a ज्ञात कीजिए, फिर शून्यकों के गुणनफल से b।"),
         formula: R`\alpha + \beta + \gamma = -\dfrac{b}{a},\quad \alpha\beta\gamma = -\dfrac{d}{a}`,
         solution: S(
@@ -700,7 +700,7 @@ export const EXAM_IN_MAT = [
             [ev(c, -t), L(`Put x equal to the zero of the divisor: ${divTex(t)} = 0 gives x = ${t}.`, `भाजक के शून्यक को x के स्थान पर रखिए: ${divTex(t)} = 0 से x = ${t} मिलता है।`)],
             [c.reduce((s, k) => s + k, 0), L("p(1) is the sum of the coefficients; substitute the zero of the divisor instead.", "p(1) गुणांकों का योग है; इसके स्थान पर भाजक का शून्यक रखिए।")],
           ]),
-          data: { given: [`p(x) = ${cubic(c)}`, `x = ${t}`], find: [`p(${t})`] },
+          data: { given: [`p(x) = ${cubic(c)}`, `g(x) = ${divTex(t)}`], find: [`p(${t})`] },
           hint: L("The remainder on dividing p(x) by (x − a) is p(a).", "p(x) को (x − a) से भाग देने पर शेषफल p(a) होता है।"),
           formula: L(R`\text{remainder} = p(a)`, R`\text{शेषफल} = p(a)`),
           solution: S(
@@ -738,7 +738,7 @@ export const EXAM_IN_MAT = [
               [kWrong, L(`Use x = ${t}, the value that makes ${divTex(t)} zero.`, `x = ${t} लीजिए, वह मान जिस पर ${divTex(t)} शून्य होता है।`)],
               [-k, L("Check the signs when solving the linear equation in k.", "k के रैखिक समीकरण को हल करते समय चिह्न जाँचिए।")],
             ]),
-            data: { given: [v === 0 ? `p(${t}) = 0` : `p(${t}) = ${R0}`], find: ["k"] },
+            data: { given: [`p(x) = ${ptex.replace(/\s+/g, " ").trim()}`, `g(x) = ${divTex(t)}`, ...(v === 1 ? [`R = ${R0}`] : [])], find: ["k"] },
             hint: v === 0 ? L("Factor theorem: (x − a) is a factor of p(x) exactly when p(a) = 0.", "गुणनखंड प्रमेय: (x − a), p(x) का गुणनखंड है यदि और केवल यदि p(a) = 0 हो।") : L("Remainder theorem: the remainder is p(a).", "शेषफल प्रमेय: शेषफल p(a) होता है।"),
             formula: v === 0 ? R`p(a) = 0` : L(R`p(a) = \text{remainder}`, R`p(a) = \text{शेषफल}`),
             solution: S(
@@ -760,7 +760,7 @@ export const EXAM_IN_MAT = [
             [vn / den, L(`${div} = 0 gives x = ${s}/${q}; check the sign.`, `${div} = 0 से x = ${s}/${q} मिलता है; चिह्न जाँचिए।`)],
             [ev(c, s * q), L(`Solve ${div} = 0 for x: divide by ${q}, do not multiply.`, `${div} = 0 को x के लिए हल कीजिए: ${q} से भाग दीजिए, गुणा नहीं।`)],
           ]),
-          data: { given: [`p(x) = ${cubic(c)}`, `x = ${fracTex(s, q)}`], find: [`p\\left(${fracTex(s, q)}\\right)`] },
+          data: { given: [`p(x) = ${cubic(c)}`, `g(x) = ${div}`], find: [`p\\left(${fracTex(s, q)}\\right)`] },
           hint: L("The remainder on dividing by (ax − b) is p(b/a).", "(ax − b) से भाग देने पर शेषफल p(b/a) होता है।"),
           formula: L(R`\text{remainder} = p\left(\dfrac{b}{a}\right)`, R`\text{शेषफल} = p\left(\dfrac{b}{a}\right)`),
           solution: S(
@@ -784,7 +784,7 @@ export const EXAM_IN_MAT = [
             [wrongA, L(`Substitute x = ${t}, the zero of ${divTex(t)}.`, `x = ${t} रखिए, जो ${divTex(t)} का शून्यक है।`)],
             [-a, L("Collect the a-terms on one side carefully.", "a वाले पदों को सावधानी से एक ओर इकट्ठा कीजिए।")],
           ]),
-          data: { given: [`p(${t}) = q(${t})`], find: ["a"] },
+          data: { given: [`p(x) = ax^3 + ${m}x^2 ${sg(K)}`, `q(x) = 2x^3 - ${s}x + a`, `g(x) = ${divTex(t)}`], find: ["a"] },
           hint: L(`Find both remainders with x = ${t} and set them equal.`, `x = ${t} रखकर दोनों शेषफल ज्ञात कीजिए और उन्हें बराबर रखिए।`),
           formula: R`p(t) = q(t)`,
           solution: S(
@@ -806,7 +806,7 @@ export const EXAM_IN_MAT = [
           [askA ? B : A, L(`You found the other unknown; the question asks for ${askA ? "a" : "b"}.`, `आपने दूसरा अज्ञात ज्ञात किया; प्रश्न ${askA ? "a" : "b"} पूछता है।`)],
           [askA ? -A : -B, L("Check the signs in the two equations.", "दोनों समीकरणों में चिह्नों की जाँच कीजिए।")],
         ]),
-        data: { given: [`p(${t1}) = 0`, `p(${t2}) = ${Rm}`], find: [askA ? "a" : "b"] },
+        data: { given: [`p(x) = x^3 + ax^2 + bx ${sg(c0)}`, `g_1(x) = ${divTex(t1)}`, `g_2(x) = ${divTex(t2)}`, `R = ${Rm}`], find: [askA ? "a" : "b"] },
         hint: L("Factor theorem gives one equation, remainder theorem gives another. Solve the pair.", "गुणनखंड प्रमेय से एक समीकरण और शेषफल प्रमेय से दूसरा समीकरण मिलता है। दोनों को हल कीजिए।"),
         formula: R`p(t_1) = 0,\quad p(t_2) = R`,
         solution: S(
@@ -1112,7 +1112,6 @@ export const EXAM_IN_MAT = [
         return taskL(lang, {
           text: L("The sides of four triangles are given below. Which of them is a right triangle? (Use the converse of Pythagoras theorem.)", "चार त्रिभुजों की भुजाएँ नीचे दी गई हैं। इनमें से कौन-सा समकोण त्रिभुज है? (पाइथागोरस प्रमेय के विलोम का प्रयोग कीजिए।)"),
           answer: choiceWhy(r, opt(right), bad.map((t) => [opt(t), why(t)])),
-          data: { given: [R`a^2 + b^2 = c^2 \Rightarrow 90^\circ`], find: [L(R`\text{right triangle}`, R`\text{समकोण त्रिभुज}`)] },
           hint: L("For each triangle, compare the square of the longest side with the sum of the squares of the other two.", "प्रत्येक त्रिभुज में सबसे लंबी भुजा के वर्ग की तुलना अन्य दो भुजाओं के वर्गों के योग से कीजिए।"),
           formula: R`a^2 + b^2 = c^2`,
           solution: S(
@@ -1305,7 +1304,7 @@ export const EXAM_IN_MAT = [
             [2 * P * rr * h + 2 * P * rr * rr, L("The cone was removed: its curved surface is now inside, and one base is gone.", "शंकु निकाल दिया गया है: उसका वक्र पृष्ठ अब अंदर है, और एक आधार हट गया है।")],
             [2 * P * rr * h + 2 * P * rr * rr + P * rr * l, L("One circular end is cut away by the cavity; count only one base.", "खोखले भाग से एक वृत्ताकार सिरा कट गया है; केवल एक आधार गिनिए।")],
           ]),
-          data: { given: [`h = ${en(h)}\\ \\mathrm{cm}`, `r = ${en(rr)}\\ \\mathrm{cm}`, R`\pi = \dfrac{22}{7}`], find: ["S"] },
+          data: { given: [`h = ${en(h)}\\ \\mathrm{cm}`, `d = ${en(2 * rr)}\\ \\mathrm{cm}`, R`\pi = \dfrac{22}{7}`], find: ["S"] },
           hint: L("Remaining surface = curved surface of the cylinder + one base + curved surface of the cone.", "शेष पृष्ठ = बेलन का वक्र पृष्ठ + एक आधार + शंकु का वक्र पृष्ठ।"),
           formula: R`S = 2\pi r h + \pi r^2 + \pi r l`,
           solution: S(
@@ -1351,7 +1350,7 @@ export const EXAM_IN_MAT = [
             formula: R`n = \dfrac{\pi r^2 h}{\frac{4}{3}\pi \rho^3}`,
             solution: S(
               R`$\rho = \dfrac{${d}}{2} = ${en(d / 2)}\ \text{cm}$`,
-              R`$n = \dfrac{${rc}^2 \times ${hc}}{\frac{4}{3} \times ${en(d / 2)}^3} = \dfrac{${rc * rc * hc}}{${f2((4 / 3) * (d / 2) ** 3)}} = ${n}$`,
+              R`$n = \dfrac{${rc}^2 \times ${hc}}{\frac{4}{3} \times ${en(d / 2)}^3} = \dfrac{3 \times ${rc * rc * hc}}{4 \times ${en((d / 2) ** 3)}} = \dfrac{${3 * rc * rc * hc}}{${en(4 * (d / 2) ** 3)}} = ${n}$`,
             ),
           });
         }
@@ -1392,7 +1391,7 @@ export const EXAM_IN_MAT = [
               R`$r = ${en(d / 200)}\ \text{m}$, $v = ${sp * 1000}\ \text{m/h}$`,
               R`$\text{${L("water per hour", "प्रति घंटा पानी")}} = \pi \times ${en(d / 200)}^2 \times ${sp * 1000} = ${en((d / 200) ** 2 * sp * 1000)}\pi\ \text{m}^3$`,
               R`$\text{${L("tank", "टंकी")}} = \pi \times ${en(Rt)}^2 \times ${en(Ht)} = ${en(Rt * Rt * Ht)}\pi\ \text{m}^3$`,
-              R`$t = \dfrac{${en(Rt * Rt * Ht)}}{${en((d / 200) ** 2 * sp * 1000)}}\ \text{h} = ${en(tm / 60)} \times 60 = ${Math.round(tm)}\ \text{min}$`,
+              R`$t = \dfrac{${en(Rt * Rt * Ht)}}{${en((d / 200) ** 2 * sp * 1000)}}\ \text{h} = \dfrac{${en(Rt * Rt * Ht)} \times 60}{${en((d / 200) ** 2 * sp * 1000)}}\ \text{min} = ${Math.round(tm)}\ \text{min}$`,
             ),
           });
         }
@@ -1525,7 +1524,6 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text,
             answer: choiceWhy(r, correct, wrong),
-            data: { given: [F], find: [L(R`\text{factor}`, R`\text{गुणक}`)] },
             hint: L("Write the formula and see how each length enters it (power of r, power of h).", "सूत्र लिखिए और देखिए कि प्रत्येक लंबाई उसमें किस घात में आती है (r की घात, h की घात)।"),
             formula: F,
             solution: S(
@@ -1542,7 +1540,7 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text: L(`How many litres of milk can a hemispherical bowl of diameter ${en(d)} cm hold?`, `${en(d)} cm व्यास वाले एक अर्धगोलाकार कटोरे में कितने लीटर दूध आ सकता है?`) + PIN + rnd(lit, lang),
             answer: ansN(lit, [[V, L("1 litre = 1000 cm³: convert the volume to litres.", "1 लीटर = 1000 cm³: आयतन को लीटर में बदलिए।")], [(2 / 3) * P * d ** 3 / 1000, L("Use the radius (half the diameter).", "त्रिज्या (व्यास का आधा) लीजिए।")], [(4 / 3) * P * rr ** 3 / 1000, L("A bowl is half a sphere.", "कटोरा आधा गोला है।")]]),
-            data: { given: [`d = ${en(d)}\\ \\mathrm{cm}`, R`1\ \text{L} = 1000\ \text{cm}^3`], find: ["V"] },
+            data: { given: [`d = ${en(d)}\\ \\mathrm{cm}`, R`\pi = \dfrac{22}{7}`], find: ["V"] },
             hint: L("Find the volume of the hemisphere in cm³, then divide by 1000.", "अर्धगोले का आयतन cm³ में ज्ञात कीजिए, फिर 1000 से भाग दीजिए।"),
             formula: R`V = \dfrac{2}{3}\pi r^3`,
             solution: S(
@@ -1632,7 +1630,7 @@ export const EXAM_IN_MAT = [
             [Sfx / f.length, L("Divide by the total frequency Σf, not by the number of classes.", "कुल बारंबारता Σf से भाग दीजिए, वर्गों की संख्या से नहीं।")],
             [Sfl / N, L("Use the class marks (mid-points), not the lower limits.", "वर्ग चिह्न (मध्य-बिंदु) लीजिए, निम्न सीमाएँ नहीं।")],
           ]),
-          data: { given: [R`\Sigma f_i = ${N}`], find: [R`\bar{x}`] },
+          data: { given: [`f_i = ${f.join(", ")}`], find: [R`\bar{x}`] },
           hint: L("Find the class mark x of each class, then the products f·x.", "प्रत्येक वर्ग का वर्ग चिह्न x ज्ञात कीजिए, फिर गुणनफल f·x।"),
           formula: R`\bar{x} = \dfrac{\Sigma f_i x_i}{\Sigma f_i}`,
           solution: S(
@@ -1661,7 +1659,7 @@ export const EXAM_IN_MAT = [
             [a + Sfu / N, L("In the step-deviation method multiply Σfu/Σf by the class size h.", "पग-विचलन विधि में Σfu/Σf को वर्ग माप h से गुणा कीजिए।")],
             [(h * Sfu) / N, L("Add the assumed mean a to h·Σfu/Σf.", "h·Σfu/Σf में कल्पित माध्य a जोड़िए।")],
           ]),
-          data: { given: [`a = ${a}`, `h = ${h}`, R`\Sigma f_i = ${N}`], find: [R`\bar{x}`] },
+          data: { given: [`f_i = ${f.join(", ")}`], find: [R`\bar{x}`] },
           hint: L("Take a class mark in the middle as the assumed mean a and compute u = (x − a)/h.", "बीच के किसी वर्ग चिह्न को कल्पित माध्य a लीजिए और u = (x − a)/h ज्ञात कीजिए।"),
           formula: R`\bar{x} = a + h \cdot \dfrac{\Sigma f_i u_i}{\Sigma f_i},\quad u_i = \dfrac{x_i - a}{h}`,
           solution: S(
@@ -1756,14 +1754,14 @@ export const EXAM_IN_MAT = [
             solution: S(L(`The highest frequency is ${f[pk]}.`, `सबसे बड़ी बारंबारता ${f[pk]} है।`), L(`Modal class: ${lo + pk * h}–${lo + (pk + 1) * h}, lower limit l = ${lo + pk * h}.`, `बहुलक वर्ग: ${lo + pk * h}–${lo + (pk + 1) * h}, निम्न सीमा l = ${lo + pk * h}।`)),
           });
         }
-        const mi = cf.findIndex((c) => c >= N / 2);
+        const mi = cf.findIndex((c) => c > N / 2);
         return taskL(lang, {
           text: L("Find the lower limit of the median class of the following distribution.", "निम्नलिखित बंटन के माध्यक वर्ग की निम्न सीमा ज्ञात कीजिए।") + " " + tab(L, lo, h, f),
           answer: numM(lo + mi * h, null, [[lo + pk * h, L("That is the modal class. The median class contains the (N/2)-th observation.", "यह बहुलक वर्ग है। माध्यक वर्ग में (N/2)-वाँ प्रेक्षण होता है।")], [lo + (mi + 1) * h, L("That is the upper limit of the median class.", "यह माध्यक वर्ग की उपरि सीमा है।")], [N / 2, L("N/2 tells you which class to choose; the answer is that class's lower limit.", "N/2 से पता चलता है कि कौन-सा वर्ग चुनना है; उत्तर उस वर्ग की निम्न सीमा है।")]]),
-          data: { given: [`N = ${N}`], find: ["l"] },
-          hint: L("Make the cumulative frequency column and find the first class whose cumulative frequency reaches N/2.", "संचयी बारंबारता स्तंभ बनाइए और वह पहला वर्ग ढूँढिए जिसकी संचयी बारंबारता N/2 तक पहुँचती है।"),
+          data: { given: [`f_i = ${f.join(", ")}`], find: ["l"] },
+          hint: L("Make the cumulative frequency column and find the first class whose cumulative frequency is greater than N/2.", "संचयी बारंबारता स्तंभ बनाइए और वह पहला वर्ग ढूँढिए जिसकी संचयी बारंबारता N/2 से अधिक है।"),
           formula: R`\dfrac{N}{2}`,
-          solution: S(R`$N = ${N}$, $\dfrac{N}{2} = ${en(N / 2)}$`, L("Cumulative frequencies:", "संचयी बारंबारताएँ:") + ` $${cf.join(", ")}$`, L(`The first cumulative frequency ≥ ${en(N / 2)} is ${cf[mi]}, so the median class is ${lo + mi * h}–${lo + (mi + 1) * h}; l = ${lo + mi * h}.`, `${en(N / 2)} से बड़ी या बराबर पहली संचयी बारंबारता ${cf[mi]} है, अतः माध्यक वर्ग ${lo + mi * h}–${lo + (mi + 1) * h} है; l = ${lo + mi * h}।`)),
+          solution: S(R`$N = ${N}$, $\dfrac{N}{2} = ${en(N / 2)}$`, L("Cumulative frequencies:", "संचयी बारंबारताएँ:") + ` $${cf.join(", ")}$`, L(`The first cumulative frequency greater than ${en(N / 2)} is ${cf[mi]}, so the median class is ${lo + mi * h}–${lo + (mi + 1) * h}; l = ${lo + mi * h}.`, `${en(N / 2)} से बड़ी पहली संचयी बारंबारता ${cf[mi]} है, अतः माध्यक वर्ग ${lo + mi * h}–${lo + (mi + 1) * h} है; l = ${lo + mi * h}।`)),
         });
       }
       if (level === 2) {
@@ -1785,7 +1783,7 @@ export const EXAM_IN_MAT = [
             [l + ((f1 - f2v) / (2 * f1 - f0 - f2v)) * h, L("The numerator is f₁ − f₀, using the class before the modal class.", "अंश f₁ − f₀ है, जिसमें बहुलक वर्ग से पहले वाले वर्ग की बारंबारता लगती है।")],
             [l + ((f1 - f0) / (2 * f1 - f0 + f2v)) * h, L("The denominator is 2f₁ − f₀ − f₂: both neighbouring frequencies are subtracted.", "हर 2f₁ − f₀ − f₂ है: दोनों पड़ोसी बारंबारताएँ घटाई जाती हैं।")],
           ]),
-          data: { given: [`l = ${l}`, `h = ${h}`, `f_1 = ${f1}`, `f_0 = ${f0}`, `f_2 = ${f2v}`], find: [R`M_o`] },
+          data: { given: [`l = ${l}`, `f_1 = ${f1}`, `f_0 = ${f0}`, `f_2 = ${f2v}`], find: [R`M_o`] },
           hint: L("Find the modal class (highest frequency) and the frequencies of the classes just before and after it.", "बहुलक वर्ग (सबसे अधिक बारंबारता) और उसके ठीक पहले व ठीक बाद वाले वर्गों की बारंबारताएँ ज्ञात कीजिए।"),
           formula: R`M_o = l + \dfrac{f_1 - f_0}{2f_1 - f_0 - f_2} \times h`,
           solution: S(
@@ -1811,7 +1809,7 @@ export const EXAM_IN_MAT = [
             [l + ((N - c) / fm) * h, L("Use N/2, not N.", "N/2 लीजिए, N नहीं।")],
             [l + (N / 2 - c) / fm, L("Multiply the fraction by the class size h.", "भिन्न को वर्ग माप h से गुणा कीजिए।")],
           ]),
-          data: { given: [`N = ${N}`, `l = ${l}`, `cf = ${c}`, `f = ${fm}`, `h = ${h}`], find: [R`M_e`] },
+          data: { given: [`f_i = ${f.join(", ")}`], find: [R`M_e`] },
           hint: L("Make the cumulative frequency column and locate the class containing the (N/2)-th observation.", "संचयी बारंबारता स्तंभ बनाइए और (N/2)-वें प्रेक्षण वाला वर्ग ढूँढिए।"),
           formula: R`M_e = l + \dfrac{\frac{N}{2} - cf}{f} \times h`,
           solution: S(
@@ -1842,7 +1840,7 @@ export const EXAM_IN_MAT = [
           [f[jy], L("That is y. Use the median formula, where x sits in the cumulative frequency cf.", "यह y है। माध्यक सूत्र लगाइए, जिसमें x संचयी बारंबारता cf में आता है।")],
           [N / 2 - cOther, L("The (N/2 − cf)/f · h part is not zero here: the median is not the lower limit.", "यहाँ (N/2 − cf)/f · h वाला भाग शून्य नहीं है: माध्यक निम्न सीमा के बराबर नहीं है।")],
         ]),
-        data: { given: [R`M_e = ${f2(med)}`, `N = ${N}`, `h = ${h}`], find: ["x"] },
+        data: { given: [R`M_e = ${f2(med)}`, `N = ${N}`], find: ["x"] },
         hint: L("The median lies in the class that contains it; there cf = (known frequencies before it) + x.", "माध्यक जिस वर्ग में है वही माध्यक वर्ग है; वहाँ cf = (उससे पहले की ज्ञात बारंबारताएँ) + x।"),
         formula: R`M_e = l + \dfrac{\frac{N}{2} - cf}{f} \times h`,
         solution: S(
@@ -1929,7 +1927,7 @@ export const EXAM_IN_MAT = [
         }
         const C = (SP * g) / 200;
         return taskL(lang, {
-          text: L(`A shop in ${c1} sells a ${item} with marked price ₹${M} to a customer in ${c2} (both in ${st}) at a discount of ${d}%. The GST rate is ${g}%. Find the SGST paid by the customer (in ₹).`, `${c1} की एक दुकान ${c2} के एक ग्राहक को (दोनों ${st} में) ₹${M} अंकित मूल्य वाला एक ${item} ${d}% छूट पर बेचती है। GST की दर ${g}% है। ग्राहक द्वारा चुकाया गया SGST (₹ में) ज्ञात कीजिए।`),
+          text: L(`A shop in ${c1} sells a ${item} with marked price ₹${M} to a customer in ${c2} (both in ${st}) at a discount of ${d}%. The GST rate is ${g}%. Find the SGST paid by the customer (in ₹).`, `${c1} की एक दुकान ${c2} के एक ग्राहक को (दोनों ${st} में) एक ${item} ${d}% छूट पर बेचती है, जिसका अंकित मूल्य ₹${M} है। GST की दर ${g}% है। ग्राहक द्वारा चुकाया गया SGST (₹ में) ज्ञात कीजिए।`),
           answer: ansN(C, [[(M * g) / 200, L("Tax is charged on the discounted price.", "कर छूट के बाद वाले मूल्य पर लगता है।")], [(SP * g) / 100, L("SGST is half of the GST for an intra-state sale.", "राज्य के अंदर बिक्री में SGST, GST का आधा होता है।")]]),
           data: { given: [R`M = \text{₹}${M}`, `d = ${d}\\%`, `\\text{GST} = ${g}\\%`], find: [R`\text{SGST}`] },
           hint: L("Find the discounted price, then take half the GST rate on it.", "छूट के बाद मूल्य ज्ञात कीजिए, फिर उस पर GST की आधी दर लगाइए।"),
@@ -2002,7 +2000,7 @@ export const EXAM_IN_MAT = [
       const subI = R`$I = ${P} \times \dfrac{${n} \times ${n + 1}}{24} \times \dfrac{${en(rt)}}{100} = ${f2(I)}$`;
       if (level === 1) {
         return taskL(lang, {
-          text: intro + L(" Find the interest earned at maturity (in ₹).", " परिपक्वता पर मिला ब्याज (₹ में) ज्ञात कीजिए।"),
+          text: intro + L(" Find the interest earned at maturity (in ₹).", " परिपक्वता पर मिला ब्याज (₹ में) ज्ञात कीजिए।") + rnd(I, lang),
           answer: ansN(I, [[(P * n * rt * n) / 1200, L("In an RD each instalment stays for a different time; use the RD formula with n(n+1)/2 months.", "आवर्ती जमा में हर किस्त अलग समय तक रहती है; n(n+1)/2 महीनों वाला सूत्र लगाइए।")], [(P * n * (n + 1) * rt) / 200, L("The equivalent time n(n+1)/2 is in months: divide by 12 to get years.", "समतुल्य समय n(n+1)/2 महीनों में है: वर्ष के लिए 12 से भाग दीजिए।")]]),
           data: { given: [`P = ${P}`, `n = ${n}`, `r = ${en(rt)}\\%`], find: ["I"] },
           hint: L("Use the recurring deposit interest formula of ICSE.", "आवर्ती जमा के ब्याज का सूत्र लगाइए।"),
@@ -2012,7 +2010,7 @@ export const EXAM_IN_MAT = [
       }
       if (level === 2) {
         return taskL(lang, {
-          text: intro + L(" Find the maturity value (in ₹).", " परिपक्वता राशि (₹ में) ज्ञात कीजिए।"),
+          text: intro + L(" Find the maturity value (in ₹).", " परिपक्वता राशि (₹ में) ज्ञात कीजिए।") + rnd(M, lang),
           answer: ansN(M, [[I, L("That is only the interest; add the total amount deposited (P × n).", "यह केवल ब्याज है; कुल जमा राशि (P × n) भी जोड़िए।")], [P * n * (1 + (rt * n) / 1200), L("Each instalment earns interest for a different time; use the RD formula.", "हर किस्त अलग समय तक ब्याज कमाती है; आवर्ती जमा का सूत्र लगाइए।")]]),
           data: { given: [`P = ${P}`, `n = ${n}`, `r = ${en(rt)}\\%`], find: ["MV"] },
           hint: L("Maturity value = total deposited + interest.", "परिपक्वता राशि = कुल जमा + ब्याज।"),
@@ -2102,11 +2100,12 @@ export const EXAM_IN_MAT = [
         const n = r.pick([40, 50, 60, 80, 100, 120, 150, 200, 250]), X = r2(n * MV), D = (n * FV * d) / 100;
         const prem = MV > FV;
         const how = prem ? L(`at a premium of ₹${en(r2(MV - FV))}`, `₹${en(r2(MV - FV))} प्रीमियम पर`) : L(`at a discount of ₹${en(r2(FV - MV))}`, `₹${en(r2(FV - MV))} बट्टे (डिस्काउंट) पर`);
+        const premD = prem ? L(R`\text{premium}`, R`\text{प्रीमियम}`) + ` = ${en(r2(MV - FV))}` : L(R`\text{discount}`, R`\text{बट्टा}`) + ` = ${en(r2(FV - MV))}`;
         if (r.int(0, 1) === 0) {
           return taskL(lang, {
             text: L(`${N} invests ₹${f2(X)} in ₹${FV} shares ${how}, paying a dividend of ${d}%. Find ${N}'s annual income (in ₹).`, `${N} ने ${d}% लाभांश देने वाले ₹${FV} के शेयरों में, ${how}, ₹${f2(X)} का निवेश किया। ${N} की वार्षिक आय (₹ में) ज्ञात कीजिए।`),
             answer: ansN(D, [[(X * d) / 100, L("The dividend rate applies to the face value of the shares, not to the money invested.", "लाभांश की दर शेयरों के अंकित मूल्य पर लगती है, निवेश की गई राशि पर नहीं।")], [(X / (2 * FV - MV)) * FV * d / 100, L(prem ? "A premium adds to the face value: MV = FV + premium." : "A discount is subtracted from the face value: MV = FV − discount.", prem ? "प्रीमियम अंकित मूल्य में जुड़ता है: MV = FV + प्रीमियम।" : "बट्टा अंकित मूल्य से घटता है: MV = FV − बट्टा।")]]),
-            data: { given: [`X = ${f2(X)}`, `FV = ${FV}`, `MV = ${en(MV)}`, `d = ${d}\\%`], find: [L(R`\text{income}`, R`\text{आय}`)] },
+            data: { given: [`X = ${f2(X)}`, `FV = ${FV}`, premD, `d = ${d}\\%`], find: [L(R`\text{income}`, R`\text{आय}`)] },
             hint: L("Find the market value, then the number of shares, then the dividend on their face value.", "बाज़ार मूल्य ज्ञात कीजिए, फिर शेयरों की संख्या, फिर उनके अंकित मूल्य पर लाभांश।"),
             formula: FD,
             solution: S(R`$MV = ${FV} ${prem ? "+" : "-"} ${en(Math.abs(r2(MV - FV)))} = ${en(MV)}$`, R`$n = \dfrac{${f2(X)}}{${en(MV)}} = ${n}$`, R`$\text{${L("income", "आय")}} = ${n} \times ${FV} \times \dfrac{${d}}{100} = \text{₹}\,${f2(D)}$`),
@@ -2116,7 +2115,7 @@ export const EXAM_IN_MAT = [
         return taskL(lang, {
           text: L(`A company pays a dividend of ${d}% on its ₹${FV} shares, which are available ${how}. Find the percentage return on the investment.`, `एक कंपनी अपने ₹${FV} के शेयरों पर ${d}% लाभांश देती है, जो ${how} उपलब्ध हैं। निवेश पर प्रतिशत प्रतिफल (आय) ज्ञात कीजिए।`) + rnd(ret, lang),
           answer: ansN(ret, [[d, L("d% is paid on the face value; the return is measured on the money you pay (market value).", "d% अंकित मूल्य पर मिलता है; प्रतिफल चुकाई गई राशि (बाज़ार मूल्य) पर मापा जाता है।")], [(d * MV) / FV, L("Return = dividend ÷ investment: divide by the market value.", "प्रतिफल = लाभांश ÷ निवेश: बाज़ार मूल्य से भाग दीजिए।")]]),
-          data: { given: [`FV = ${FV}`, `MV = ${en(MV)}`, `d = ${d}\\%`], find: [L(R`\text{return}\ \%`, R`\text{प्रतिफल}\ \%`)] },
+          data: { given: [`FV = ${FV}`, premD, `d = ${d}\\%`], find: [L(R`\text{return}\ \%`, R`\text{प्रतिफल}\ \%`)] },
           hint: L("Work with one share: dividend on it ÷ price paid for it × 100.", "एक शेयर लेकर चलिए: उसका लाभांश ÷ उसके लिए चुकाया मूल्य × 100।"),
           formula: L(R`\text{return}\ \% = \dfrac{FV \times d}{MV}`, R`\text{प्रतिफल}\ \% = \dfrac{FV \times d}{MV}`),
           solution: S(R`$MV = ${en(MV)}$, ${L("dividend per share", "प्रति शेयर लाभांश")} $= \dfrac{${d}}{100} \times ${FV} = ${f2((FV * d) / 100)}$`, R`$\text{${L("return", "प्रतिफल")}} = \dfrac{${f2((FV * d) / 100)}}{${en(MV)}} \times 100 ${eqs(ret)} ${f2(ret)}\%$`),
@@ -2299,7 +2298,6 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text: L(`A fair die is thrown once. Given that it shows ${B[0]}, what is the probability that it shows ${A[0]}?`, `एक न्याय्य पासा एक बार फेंका जाता है। यदि ज्ञात है कि पासे पर ${B[1]} आई है, तो इसकी प्रायिकता क्या है कि उस पर ${A[1]} आई है?`),
             answer: fractionM(AB.length, B[2].length, [[AB.length / 6, L("Given B, the sample space shrinks to the outcomes of B.", "B दिया होने पर प्रतिदर्श समष्टि केवल B के परिणामों तक सिमट जाती है।")], [AB.length / A[2].length, L("That is P(B | A); here B is the condition.", "यह P(B | A) है; यहाँ शर्त B है।")]]),
-            data: { given: [`B = \\{${B[2].join(", ")}\\}`, `A = \\{${A[2].join(", ")}\\}`], find: [R`P(A \mid B)`] },
             hint: HC,
             formula: R`P(A \mid B) = \dfrac{n(A \cap B)}{n(B)}`,
             solution: S(R`$B = \{${B[2].join(", ")}\}$, $A \cap B = \{${AB.join(", ")}\}$`, R`$P(A \mid B) = \dfrac{${AB.length}}{${B[2].length}}${gcd(AB.length, B[2].length) > 1 ? ` = ${fracTex(AB.length, B[2].length)}` : ""}$`, L("(Only the outcomes of B are possible now.)", "(अब केवल B के परिणाम संभव हैं।)")),
@@ -2312,7 +2310,7 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text: L(`A class has ${b} boys and ${g} girls. ${x} of the boys and ${y} of the girls play chess. A student chosen at random plays chess. What is the probability that the student is a ${askG ? "girl" : "boy"}?`, `एक कक्षा में ${b} लड़के और ${g} लड़कियाँ हैं। ${x} लड़के और ${y} लड़कियाँ शतरंज खेलते हैं। यादृच्छया चुना गया एक विद्यार्थी शतरंज खेलता है। इसकी प्रायिकता क्या है कि वह ${askG ? "लड़की" : "लड़का"} है?`),
             answer: fractionM(num, x + y, [[num / oth, L(`That is P(chess | ${askG ? "girl" : "boy"}); the condition here is "plays chess".`, `यह P(शतरंज | ${askG ? "लड़की" : "लड़का"}) है; यहाँ शर्त "शतरंज खेलता है" है।`)], [num / (b + g), L("That is P(both); divide by the number of chess players.", "यह दोनों की संयुक्त प्रायिकता है; शतरंज खेलने वालों की संख्या से भाग दीजिए।")]]),
-            data: { given: [`n(${askG ? "G" : "B"} \\cap C) = ${num}`, `n(C) = ${x + y}`], find: [R`P(${askG ? "G" : "B"} \mid C)`] },
+            data: { given: [R`n(B \cap C) = ${x}`, R`n(G \cap C) = ${y}`], find: [R`P(${askG ? "G" : "B"} \mid C)`] },
             hint: L("The condition is that the student plays chess: count only chess players.", "शर्त यह है कि विद्यार्थी शतरंज खेलता है: केवल शतरंज खेलने वालों को गिनिए।"),
             formula: FC,
             solution: S(R`$n(C) = ${x} + ${y} = ${x + y}$`, R`$P(${askG ? "G" : "B"} \mid C) = \dfrac{${num}}{${x + y}}${gcd(num, x + y) > 1 ? ` = ${fracTex(num, x + y)}` : ""}$`, L("(Only chess players are counted.)", "(केवल शतरंज खेलने वाले गिने गए।)")),
@@ -2355,7 +2353,6 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text: L(`Two fair dice are thrown. Find the probability that ${A[0]}, given that ${B[0]}.`, `दो न्याय्य पासे फेंके जाते हैं। यदि ज्ञात है कि ${B[0]}, तो इसकी प्रायिकता ज्ञात कीजिए कि ${A[0]}।`),
             answer: fractionM(nAB, nB, [[nAB / 36, L("Given B, count only the outcomes of B, not all 36.", "B दिया होने पर केवल B के परिणाम गिनिए, सभी 36 नहीं।")], [nA / 36, L("The condition changes the probability; use only the outcomes where B happens.", "शर्त प्रायिकता बदल देती है; केवल वे परिणाम लीजिए जिनमें B होती है।")]]),
-            data: { given: [`n(S) = 36`, `n(B) = ${nB}`], find: [R`P(A \mid B)`] },
             hint: HC,
             formula: R`P(A \mid B) = \dfrac{n(A \cap B)}{n(B)}`,
             solution: S(L(`Outcomes with the condition: n(B) = ${nB}.`, `शर्त वाले परिणाम: n(B) = ${nB}।`), L(`Among them, A happens in n(A ∩ B) = ${nAB}.`, `इनमें से A, n(A ∩ B) = ${nAB} परिणामों में होती है।`), R`$P(A \mid B) = \dfrac{${nAB}}{${nB}}${gcd(nAB, nB) > 1 ? ` = ${fracTex(nAB, nB)}` : ""}$`),
@@ -2432,7 +2429,6 @@ export const EXAM_IN_MAT = [
         return taskL(lang, {
           text: L(`A family has ${n} children. Assuming a boy and a girl are equally likely, find the probability that ${aTxt}, given that ${bTxt}.`, `एक परिवार में ${n} बच्चे हैं। लड़का और लड़की होना समसंभाव्य मानते हुए, यदि ज्ञात है कि ${bTxt}, तो प्रायिकता ज्ञात कीजिए कि ${aTxt}।`),
           answer: fractionM(nAB, nB, [[ALL.filter(A).length / ALL.length, L("The condition removes some outcomes; do not use all of them.", "शर्त कुछ परिणाम हटा देती है; सभी परिणाम न लें।")], [nAB / 2 ** (n - 1), L("List the outcomes carefully: the condition has a different number of cases.", "परिणामों को ध्यान से सूचीबद्ध कीजिए: शर्त में मामलों की संख्या अलग है।")]]),
-          data: { given: [`n(S) = ${2 ** n}`, `n(B) = ${nB}`], find: [R`P(A \mid B)`] },
           hint: L("Write all outcomes like BG, GB, … and keep only those that satisfy the condition.", "सभी परिणाम (जैसे BG, GB, …) लिखिए और केवल शर्त को संतुष्ट करने वाले रखिए।"),
           formula: R`P(A \mid B) = \dfrac{n(A \cap B)}{n(B)}`,
           solution: S(L("Outcomes satisfying the condition:", "शर्त को संतुष्ट करने वाले परिणाम:") + ` ${ALL.filter(B).map((o) => o.map((x) => (x ? "B" : "G")).join("")).join(", ")}` + L("", " (B = लड़का, G = लड़की)"), L(`n(B) = ${nB}, n(A ∩ B) = ${nAB}`, `n(B) = ${nB}, n(A ∩ B) = ${nAB}`), R`$P(A \mid B) = ${fracTex(nAB, nB)}$`),
@@ -2481,7 +2477,6 @@ export const EXAM_IN_MAT = [
       return taskL(lang, {
         text: L(`A card is drawn at random from a well-shuffled pack of 52 cards. Given that ${B[0]}, find the probability that it is ${A[0]}.`, `52 पत्तों की अच्छी तरह फेंटी गई गड्डी से एक पत्ता यादृच्छया निकाला जाता है। यदि ज्ञात है कि ${B[0]}, तो प्रायिकता ज्ञात कीजिए कि यह ${A[0]} है।`),
         answer: fractionM(nAB, nB, [[nA / 52, L("Use the condition: count only the cards that satisfy it.", "शर्त का प्रयोग कीजिए: केवल उसे संतुष्ट करने वाले पत्ते गिनिए।")], [nAB / 52, L("Divide by the number of cards satisfying the condition, not by 52.", "52 से नहीं, शर्त को संतुष्ट करने वाले पत्तों की संख्या से भाग दीजिए।")]]),
-        data: { given: [`n(B) = ${nB}`, R`n(A \cap B) = ${nAB}`], find: [R`P(A \mid B)`] },
         hint: HC,
         formula: R`P(A \mid B) = \dfrac{n(A \cap B)}{n(B)}`,
         solution: S(L(`Cards satisfying the condition: ${nB}.`, `शर्त को संतुष्ट करने वाले पत्ते: ${nB}।`), L(`Of these, ${nAB} are ${A[0]}.`, `इनमें से ${nAB} पत्ते "${A[0]}" हैं।`), R`$P(A \mid B) = \dfrac{${nAB}}{${nB}}${gcd(nAB, nB) > 1 ? ` = ${fracTex(nAB, nB)}` : ""}$`),
@@ -2511,7 +2506,9 @@ export const EXAM_IN_MAT = [
           ? L(`Bag I contains ${r1} red and ${b1} black balls; bag II contains ${r2} red and ${b2} black balls.`, `थैले I में ${r1} लाल और ${b1} काली गेंदें हैं; थैले II में ${r2} लाल और ${b2} काली गेंदें हैं।`)
           : L(`Box I contains ${r1} good and ${b1} defective bulbs; box II contains ${r2} good and ${b2} defective bulbs.`, `डिब्बे I में ${r1} अच्छे और ${b1} ख़राब बल्ब हैं; डिब्बे II में ${r2} अच्छे और ${b2} ख़राब बल्ब हैं।`);
         const pick2 = ctx === 0 ? pick : pick.replace(/bags/g, "boxes").replace(/bag/g, "box").replace(/थैला/g, "डिब्बा");
-        const item = ctx === 0 ? L("red", "लाल") : L("good", "अच्छा");
+        const item = ctx === 0 ? L("red", "लाल") : L("good", "अच्छी");
+        const [u, w] = ctx === 0 ? ["R", "B"] : ["G", "D"];
+        const cnt = [`${u}_1 = ${r1}`, `${w}_1 = ${b1}`, `${u}_2 = ${r2}`, `${w}_2 = ${b2}`];
         // P(red) = w1·r1/n1 + w2·r2/n2
         const tn = w1n * r1 * w2d * n2 + w2n * r2 * w1d * n1, td = w1d * n1 * w2d * n2;
         const bn = w1n * r1 * w2d * n2;
@@ -2520,7 +2517,7 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text: bags + " " + pick2 + " " + (ctx === 0 ? L("A ball is drawn from it. Find the probability that it is red.", "उसमें से एक गेंद निकाली जाती है। गेंद के लाल होने की प्रायिकता ज्ञात कीजिए।") : L("A bulb is drawn from it. Find the probability that it is good.", "उसमें से एक बल्ब निकाला जाता है। बल्ब के अच्छा होने की प्रायिकता ज्ञात कीजिए।")),
             answer: fractionM(tn, td, [[(r1 + r2) / (n1 + n2), L("You cannot pool the two bags: weight each bag's probability by the chance of choosing it.", "दोनों थैलों को मिलाया नहीं जा सकता: प्रत्येक थैले की प्रायिकता को उसे चुनने की प्रायिकता से गुणा कीजिए।")], [r1 / n1 + r2 / n2, L("Multiply each term by the probability of choosing that bag.", "प्रत्येक पद को उस थैले को चुनने की प्रायिकता से गुणा कीजिए।")]]),
-            data: { given: [`P(E_1) = ${fracTex(w1n, w1d)}`, `P(E_2) = ${fracTex(w2n, w2d)}`, R`P(E \mid E_1) = ${fracTex(r1, n1)}`, R`P(E \mid E_2) = ${fracTex(r2, n2)}`], find: ["P(E)"] },
+            data: { given: cnt, find: ["P(E)"] },
             hint: L("Use the theorem of total probability over the two bags.", "दोनों थैलों पर संपूर्ण प्रायिकता प्रमेय लगाइए।"),
             formula: FT,
             solution: S(L(`E: the item drawn is ${item}. E₁, E₂: bag (box) I or II is chosen.`, `E: निकाली गई वस्तु ${item} है। E₁, E₂: थैला (डिब्बा) I या II चुना गया।`), `$P(E) = ${totalTex}$`),
@@ -2529,7 +2526,7 @@ export const EXAM_IN_MAT = [
         return taskL(lang, {
           text: bags + " " + pick2 + " " + (ctx === 0 ? L("A ball drawn from it is red. Find the probability that it came from bag I.", "उसमें से निकाली गई गेंद लाल है। प्रायिकता ज्ञात कीजिए कि यह थैले I से निकाली गई थी।") : L("A bulb drawn from it is good. Find the probability that it came from box I.", "उसमें से निकाला गया बल्ब अच्छा है। प्रायिकता ज्ञात कीजिए कि यह डिब्बे I से निकाला गया था।")),
           answer: fractionM(bn, tn, [[(w1n * r1) / (w1d * n1), L("That is P(E₁ ∩ E); divide by the total probability P(E).", "यह P(E₁ ∩ E) है; इसे संपूर्ण प्रायिकता P(E) से भाग दीजिए।")], [r1 / (r1 + r2), L("The bags have different sizes and chances; use Bayes' theorem.", "थैलों के आकार और चुनने की प्रायिकताएँ अलग हैं; बेज़-प्रमेय लगाइए।")]]),
-          data: { given: [`P(E_1) = ${fracTex(w1n, w1d)}`, `P(E_2) = ${fracTex(w2n, w2d)}`, R`P(E \mid E_1) = ${fracTex(r1, n1)}`, R`P(E \mid E_2) = ${fracTex(r2, n2)}`], find: [R`P(E_1 \mid E)`] },
+          data: { given: cnt, find: [R`P(E_1 \mid E)`] },
           hint: L("Bayes' theorem: the part of the total probability that comes through bag I.", "बेज़-प्रमेय: संपूर्ण प्रायिकता का वह भाग जो थैले I से आता है।"),
           formula: FB,
           solution: S(L(`E: the item is ${item}.`, `E: वस्तु ${item} है।`), `$P(E) = ${totalTex}$`, R`$P(E_1 \mid E) = \dfrac{${fracTex(w1n, w1d)} \cdot ${fracTex(r1, n1)}}{${fracTex(tn, td)}} = ${fracTex(bn, tn)}$`),
@@ -2578,7 +2575,7 @@ export const EXAM_IN_MAT = [
       return taskL(lang, {
         text: L(`${N} speaks the truth ${tn} out of ${td} times. ${N} throws a die and reports that it shows ${six ? "a six" : "a number greater than 4"}. Find the probability that this is actually true.`, `${N} के सच बोलने की प्रायिकता $${fracTex(tn, td)}$ है। ${N} ने एक पासा फेंककर बताया कि उस पर ${six ? "छह आया" : "4 से बड़ी संख्या आई"} है। प्रायिकता ज्ञात कीजिए कि यह वास्तव में सत्य है।`),
         answer: fractionM(num, tot, [[tn / td, L("The report is not the whole story: the event itself is unlikely, so use Bayes' theorem.", "केवल कथन पर्याप्त नहीं है: घटना स्वयं कम संभावित है, अतः बेज़-प्रमेय लगाइए।")], [en1 / ed1, L("Use the report: combine the chance of the event with the chance of telling the truth.", "कथन का प्रयोग कीजिए: घटना की प्रायिकता को सच बोलने की प्रायिकता से जोड़िए।")]]),
-        data: { given: [`P(T) = ${fracTex(tn, td)}`, `P(E) = ${fracTex(en1, ed1)}`], find: [R`P(E \mid \text{report})`] },
+        data: { given: [`P(T) = ${fracTex(tn, td)}`], find: [R`P(E \mid \text{report})`] },
         hint: L("The report is made either when the event happened and the truth is told, or when it did not happen and a lie is told.", "यह कथन तब मिलता है जब घटना हुई और सच बोला गया, या जब घटना नहीं हुई और झूठ बोला गया।"),
         formula: FB,
         solution: S(
@@ -2654,7 +2651,7 @@ export const EXAM_IN_MAT = [
             [deg, L(`${ITF[fn].name}(${fn} θ) = θ only when θ is in the principal branch ${ITF[fn].rangeD}.`, `${ITF[fn].name}(${fn} θ) = θ केवल तभी, जब θ मुख्य शाखा ${ITF[fn].rangeD} में हो।`)],
             [-ans, L("Check the sign of the value of the inner function first.", "पहले अंदर वाले फलन के मान का चिह्न जाँचिए।")],
           ]),
-          data: { given: [R`\theta = ${piTex(deg)} = ${deg}^\circ`, R`${ITF[fn].tex}x \in ${ITF[fn].range}`], find: [R`\theta_0^\circ`] },
+          data: { given: [R`\theta = ${piTex(deg)}`], find: [R`\theta_0^\circ`] },
           hint: L(`The angle ${deg}° is outside ${ITF[fn].rangeD}. Find the angle in that range with the same ${fn} value.`, `कोण ${deg}° परिसर ${ITF[fn].rangeD} से बाहर है। उस परिसर में समान ${fn} मान वाला कोण ढूँढिए।`),
           formula: R`${ITF[fn].tex}(${ITF[fn].fwd}\,\theta) = \theta \iff \theta \in ${ITF[fn].range}`,
           solution: S(
@@ -2673,7 +2670,6 @@ export const EXAM_IN_MAT = [
       return taskL(lang, {
         text: L(`Find the value of $${ex}$.`, `$${ex}$ का मान ज्ञात कीजिए।`) + rnd(val, lang),
         answer: ansN(val, [[Math.round(f(wrongAng) * 1e10) / 1e10, L("Check the principal value of the inverse function: its range matters.", "प्रतिलोम फलन का मुख्य मान जाँचिए: उसका परिसर महत्वपूर्ण है।")], [Math.round((f(A) + op * f(p0)) * 1e10) / 1e10, L("You cannot split the function over a sum; first find the whole angle.", "फलन को योग पर बाँटा नहीं जा सकता; पहले पूरा कोण ज्ञात कीजिए।")]]),
-        data: { given: [R`${term(fn, th, neg)} = ${p0}^\circ`], find: [R`${"\\" + outer}(${A}^\circ ${op > 0 ? "+" : "-"} ${pm(p0)}^\circ)`] },
         hint: L("First find the principal value of the inverse function, then the angle inside the bracket.", "पहले प्रतिलोम फलन का मुख्य मान ज्ञात कीजिए, फिर कोष्ठक के अंदर का कोण।"),
         formula: R`${ITF[fn].tex}x \in ${ITF[fn].range}`,
         solution: S(
@@ -2691,33 +2687,18 @@ export const EXAM_IN_MAT = [
     gen(level, r, _t, lang) {
       const L = bi(lang);
       if (level === 1) {
-        if (r.int(0, 1) === 0) {
-          const fns = Object.keys(ITF);
-          const fn = r.pick(fns);
-          const others = r.shuffle(fns.filter((x) => x !== fn)).slice(0, 3);
-          return taskL(lang, {
-            text: L(`What is the principal value branch (range) of $${ITF[fn].tex}x$?`, `$${ITF[fn].tex}x$ की मुख्य मान शाखा (परिसर) क्या है?`),
-            answer: choiceWhy(r, `$${ITF[fn].range}$`, others.map((o) => [`$${ITF[o].range}$`, L(`That is the principal value branch of ${ITF[o].name}.`, `यह ${ITF[o].name} की मुख्य मान शाखा है।`)])),
-            data: { given: [R`${ITF[fn].fwd}\ \text{${L("is one-one on this interval", "इस अंतराल पर एकैकी है")}}`], find: [L(R`\text{range}`, R`\text{परिसर}`)] },
-            hint: L(`It is the interval on which ${fn} is one-one and takes every value of its range exactly once.`, `यह वह अंतराल है जिस पर ${fn} एकैकी है और अपने परिसर का हर मान ठीक एक बार लेता है।`),
-            formula: R`${ITF[fn].tex}x \in ${ITF[fn].range}`,
-            solution: S(L(`The principal value branch of ${ITF[fn].name} is`, `${ITF[fn].name} की मुख्य मान शाखा है`) + ` $${ITF[fn].range}$.`),
-          });
-        }
-        const pair = r.int(0, 2);
-        let p, q;
-        do { p = r.int(1, 9); q = r.int(2, 11); } while (p >= q || gcd(p, q) !== 1);
-        const s = r.pick([1, -1]);
-        const x = pair === 2 ? fracTex(s * q, p) : fracTex(s * p, q);
-        const [f1, f2n] = [["sin", "cos"], ["tan", "cot"], ["sec", "cosec"]][pair];
-        const ex = R`${ITF[f1].tex}\left(${x}\right) + ${ITF[f2n].tex}\left(${x}\right)`;
+        // Lastnosti (sin⁻¹x + cos⁻¹x = π/2 …) so izpadle iz racionaliziranega NCERT/CBSE: na L1 samo glavne veje.
+        r.int(0, 1); // ohrani zaporedje naključnih števil
+        const fns = Object.keys(ITF);
+        const fn = r.pick(fns);
+        const others = r.shuffle(fns.filter((x) => x !== fn)).slice(0, 3);
         return taskL(lang, {
-          text: L(`Find the value of $${ex}$ in degrees.`, `$${ex}$ का मान अंशों (डिग्री) में ज्ञात कीजिए।`),
-          answer: numM(90, null, [[180, L("The two principal values are complementary angles, not supplementary.", "दोनों मुख्य मान पूरक कोण हैं, संपूरक नहीं।")], [0, L("The two inverse functions do not cancel; they add up to a fixed angle.", "दोनों प्रतिलोम फलन एक-दूसरे को निरस्त नहीं करते; इनका योग एक निश्चित कोण है।")]]),
-          data: { given: [`x = ${x}`], find: [R`${ITF[f1].tex}x + ${ITF[f2n].tex}x`] },
-          hint: L("You do not need the separate values: use the identity for this pair of inverse functions.", "अलग-अलग मानों की आवश्यकता नहीं: प्रतिलोम फलनों के इस युग्म की सर्वसमिका लगाइए।"),
-          formula: R`${ITF[f1].tex}x + ${ITF[f2n].tex}x = \dfrac{\pi}{2}`,
-          solution: S(L("By the identity", "सर्वसमिका से") + R` $${ITF[f1].tex}x + ${ITF[f2n].tex}x = \dfrac{\pi}{2}$` + L(` (valid for this x):`, ` (इस x के लिए मान्य):`), R`$${ex} = \dfrac{\pi}{2} = 90^\circ$`),
+          text: L(`What is the principal value branch (range) of $${ITF[fn].tex}x$?`, `$${ITF[fn].tex}x$ की मुख्य मान शाखा (परिसर) क्या है?`),
+          answer: choiceWhy(r, `$${ITF[fn].range}$`, others.map((o) => [`$${ITF[o].range}$`, L(`That is the principal value branch of ${ITF[o].name}.`, `यह ${ITF[o].name} की मुख्य मान शाखा है।`)])),
+          data: { given: [R`${ITF[fn].fwd}\ \text{${L("is one-one on this interval", "इस अंतराल पर एकैकी है")}}`], find: [L(R`\text{range}`, R`\text{परिसर}`)] },
+          hint: L(`It is the interval on which ${fn} is one-one and takes every value of its range exactly once.`, `यह वह अंतराल है जिस पर ${fn} एकैकी है और अपने परिसर का हर मान ठीक एक बार लेता है।`),
+          formula: R`${ITF[fn].tex}x \in ${ITF[fn].range}`,
+          solution: S(L(`The principal value branch of ${ITF[fn].name} is`, `${ITF[fn].name} की मुख्य मान शाखा है`) + ` $${ITF[fn].range}$.`),
         });
       }
       const TRI = [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25], [20, 21, 29]];
@@ -2730,7 +2711,7 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text: L(`If $${ITF[f1].tex}x + ${ITF[f1].tex}y = ${piTex(S0)}$, find $${ITF[f2n].tex}x + ${ITF[f2n].tex}y$ in degrees.`, `यदि $${ITF[f1].tex}x + ${ITF[f1].tex}y = ${piTex(S0)}$ है, तो $${ITF[f2n].tex}x + ${ITF[f2n].tex}y$ का मान अंशों (डिग्री) में ज्ञात कीजिए।`),
             answer: numM(180 - S0, null, [[S0, L("The co-function sum is not the same: each pair adds up to 90°.", "सह-फलनों का योग वही नहीं है: प्रत्येक युग्म का योग 90° होता है।")], [90 - S0, L("There are two pairs (for x and for y), so the total is 2 × 90°.", "दो युग्म हैं (x और y के लिए), अतः कुल 2 × 90° है।")]]),
-            data: { given: [R`${ITF[f1].tex}x + ${ITF[f1].tex}y = ${S0}^\circ`], find: [R`${ITF[f2n].tex}x + ${ITF[f2n].tex}y`] },
+            data: { given: [R`${ITF[f1].tex}x + ${ITF[f1].tex}y = ${piTex(S0)}`], find: [R`${ITF[f2n].tex}x + ${ITF[f2n].tex}y`] },
             hint: L(`Use ${ITF[f1].name} x + ${ITF[f2n].name} x = 90° for x and for y.`, `x और y दोनों के लिए ${ITF[f1].name} x + ${ITF[f2n].name} x = 90° लगाइए।`),
             formula: R`${ITF[f1].tex}x + ${ITF[f2n].tex}x = \dfrac{\pi}{2}`,
             solution: S(R`$${ITF[f2n].tex}x + ${ITF[f2n].tex}y = \left(90^\circ - ${ITF[f1].tex}x\right) + \left(90^\circ - ${ITF[f1].tex}y\right)$`, R`$= 180^\circ - ${S0}^\circ = ${180 - S0}^\circ$`),
@@ -2763,7 +2744,7 @@ export const EXAM_IN_MAT = [
         return taskL(lang, {
           text: L(`Solve for x: $${ITF[fa].tex}x - ${ITF[fb].tex}x = ${piTex(D)}$.`, `x के लिए हल कीजिए: $${ITF[fa].tex}x - ${ITF[fb].tex}x = ${piTex(D)}$।`) + rnd(xr, lang),
           answer: ansN(xr, [[ang, L("That is the angle; x is its " + fa + ".", "यह कोण है; x उसका " + fa + " है।")], [Math.round((form === 0 ? Math.sin(((90 - D) * Math.PI) / 360) : Math.cos(((90 - D) * Math.PI) / 360)) * 1e10) / 1e10, L("Add the two equations correctly: 2·(the first inverse) = 90° + the given angle.", "दोनों समीकरणों को ठीक से जोड़िए: 2·(पहला प्रतिलोम) = 90° + दिया कोण।")]]),
-          data: { given: [R`${ITF[fa].tex}x - ${ITF[fb].tex}x = ${D}^\circ`, R`${ITF[fa].tex}x + ${ITF[fb].tex}x = 90^\circ`], find: ["x"] },
+          data: { given: [R`${ITF[fa].tex}x - ${ITF[fb].tex}x = ${piTex(D)}`], find: ["x"] },
           hint: L("Add the identity sin⁻¹x + cos⁻¹x = π/2 to the given equation.", "दिए गए समीकरण में सर्वसमिका sin⁻¹x + cos⁻¹x = π/2 जोड़िए।"),
           formula: R`\sin^{-1}x + \cos^{-1}x = \dfrac{\pi}{2}`,
           solution: S(
@@ -2930,7 +2911,6 @@ export const EXAM_IN_MAT = [
         return taskL(lang, {
           text: L(`Find the value of p so that the lines $${l1}$ and $${l2}$ are at right angles.`, `p का मान ज्ञात कीजिए ताकि रेखाएँ $${l1}$ और $${l2}$ परस्पर लंब हों।`) + fracNote(L),
           answer: fractionM(pn, pd, [[naive, L("First write each line in standard form (x − x₁)/a = …: the coefficients of x, y, z must be +1.", "पहले प्रत्येक रेखा को मानक रूप (x − x₁)/a = … में लिखिए: x, y, z के गुणांक +1 होने चाहिए।")], [half, L("Also divide by the coefficient of x, y or z (e.g. 7y − 14 = 7(y − 2)).", "x, y या z के गुणांक से भी भाग दीजिए (जैसे 7y − 14 = 7(y − 2))।")]]),
-          data: { given: [R`\vec{b}_1 = \left(-${a},\ ${fracTex(kk, m)}p,\ ${c}\right)`, R`\vec{b}_2 = \left(-${fracTex(j, n)}p,\ ${b},\ -${e}\right)`], find: ["p"] },
           hint: L("Rewrite both lines in the standard form (x − x₁)/a = (y − y₁)/b = (z − z₁)/c, read the direction ratios, then use a₁a₂ + b₁b₂ + c₁c₂ = 0.", "दोनों रेखाओं को मानक रूप (x − x₁)/a = (y − y₁)/b = (z − z₁)/c में लिखिए, दिक्-अनुपात पढ़िए, फिर a₁a₂ + b₁b₂ + c₁c₂ = 0 लगाइए।"),
           formula: R`a_1a_2 + b_1b_2 + c_1c_2 = 0`,
           solution: S(
@@ -2954,7 +2934,7 @@ export const EXAM_IN_MAT = [
       return taskL(lang, {
         text: L(R`Find the shortest distance between the lines $\vec{r} = (${vt(a1)}) + \lambda(${vt(b1)})$ and $\vec{r} = (${vt(a2)}) + \mu(${vt(b2)})$.`, R`रेखाओं $\vec{r} = (${vt(a1)}) + \lambda(${vt(b1)})$ और $\vec{r} = (${vt(a2)}) + \mu(${vt(b2)})$ के बीच की न्यूनतम दूरी ज्ञात कीजिए।`) + rnd(dd, lang),
         answer: ansN(dd, [[Math.abs(num), L("Divide by |b₁ × b₂|.", "|b₁ × b₂| से भाग दीजिए।")], [Math.sqrt(a2.reduce((s, x, i) => s + (x - a1[i]) ** 2, 0)), L("That is the distance between the two given points, not between the lines.", "यह दिए गए दो बिंदुओं के बीच की दूरी है, रेखाओं के बीच की नहीं।")]]),
-        data: { given: [R`\vec{a}_2 - \vec{a}_1 = ${vt(a2.map((x, i) => x - a1[i]))}`, R`\vec{b}_1 \times \vec{b}_2 = ${vt(cr)}`], find: ["d"] },
+        data: { given: [R`\vec{a}_1 = ${vt(a1)}`, R`\vec{b}_1 = ${vt(b1)}`, R`\vec{a}_2 = ${vt(a2)}`, R`\vec{b}_2 = ${vt(b2)}`], find: ["d"] },
         hint: L("Find b₁ × b₂ and a₂ − a₁, then project a₂ − a₁ on the common perpendicular.", "b₁ × b₂ और a₂ − a₁ ज्ञात कीजिए, फिर a₂ − a₁ का उभयनिष्ठ लंब पर प्रक्षेप लीजिए।"),
         formula: R`d = \dfrac{\left|(\vec{a}_2 - \vec{a}_1)\cdot(\vec{b}_1 \times \vec{b}_2)\right|}{\left|\vec{b}_1 \times \vec{b}_2\right|}`,
         solution: S(
@@ -3017,7 +2997,7 @@ export const EXAM_IN_MAT = [
             data: { given: [R`${poly([[a, "x"], [b, "y"], [c, "z"]])} = ${d1}`, p2], find: ["d"] },
             hint: L("Write both planes with identical coefficients of x, y, z.", "दोनों समतलों में x, y, z के गुणांक एक जैसे कीजिए।"),
             formula: R`d = \dfrac{|d_1 - d_2|}{\sqrt{a^2 + b^2 + c^2}}`,
-            solution: S(L(`Divide the second equation by ${k}:`, `दूसरे समीकरण को ${k} से भाग दीजिए:`) + R` $${poly([[a, "x"], [b, "y"], [c, "z"]])} = ${f2(d2 / k)}$`, R`$d = \dfrac{|${d1} - ${pm(r2(d2 / k))}|}{${N}} ${eqs(dist)} ${f2(dist)}$`),
+            solution: S(L(`Divide the second equation by ${k}:`, `दूसरे समीकरण को ${k} से भाग दीजिए:`) + R` $${poly([[a, "x"], [b, "y"], [c, "z"]])} = ${fracTex(d2, k)}$`, R`$d = \dfrac{\left|${d1} - \left(${fracTex(d2, k)}\right)\right|}{${N}} = ${fracTex(Math.abs(d1 * k - d2), Math.abs(k) * N)} ${eqs(dist)} ${f2(dist)}$`),
           });
         }
         const d0 = r.nonZero(-20, 20);
@@ -3055,7 +3035,7 @@ export const EXAM_IN_MAT = [
         return taskL(lang, {
           text: L(`Find the angle between the planes $${P1}$ and $${P2}$, in degrees (acute angle).`, `समतलों $${P1}$ और $${P2}$ के बीच का न्यून कोण अंशों में ज्ञात कीजिए।`) + rnd(th, lang),
           answer: ansN(th, [[90 - th, L("The angle between planes is the angle between their normals: use cos, not sin.", "समतलों के बीच का कोण उनके अभिलंबों के बीच का कोण है: cos लीजिए, sin नहीं।")], [dt < 0 ? 180 - th : NaN, L("Take |n₁·n₂| to get the acute angle.", "न्यून कोण के लिए |n₁·n₂| लीजिए।")]]),
-          data: { given: [R`\vec{n}_1 = (${a}, ${b}, ${c})`, R`\vec{n}_2 = (${q2.join(", ")})`], find: [R`\theta`] },
+          data: { given: [P1, P2], find: [R`\theta`] },
           hint: L("Find the angle between the normal vectors.", "अभिलंब सदिशों के बीच का कोण ज्ञात कीजिए।"),
           formula: R`\cos\theta = \dfrac{|\vec{n}_1\cdot\vec{n}_2|}{|\vec{n}_1|\,|\vec{n}_2|}`,
           solution: S(R`$\vec{n}_1\cdot\vec{n}_2 = ${dt}$, $|\vec{n}_1| = ${N}$, $|\vec{n}_2| = ${N2}$`, R`$\cos\theta = \dfrac{${Math.abs(dt)}}{${N * N2}}$`, R`$\theta ${eqs(th)} ${f2(th)}^\circ$`),
@@ -3068,7 +3048,7 @@ export const EXAM_IN_MAT = [
       return taskL(lang, {
         text: L(`Find the angle between the line $${lineTex}$ and the plane $${pl(dpl)}$, in degrees.`, `रेखा $${lineTex}$ और समतल $${pl(dpl)}$ के बीच का कोण अंशों में ज्ञात कीजिए।`) + rnd(ph, lang),
         answer: ansN(ph, [[90 - ph, L("For a line and a plane use sin φ (the normal is perpendicular to the plane).", "रेखा और समतल के लिए sin φ लीजिए (अभिलंब समतल पर लंब है)।")], [dt < 0 ? -ph : NaN, L("Take the modulus |b·n|.", "मापांक |b·n| लीजिए।")]]),
-        data: { given: [R`\vec{b} = (${q2.join(", ")})`, R`\vec{n} = (${a}, ${b}, ${c})`], find: [R`\varphi`] },
+        data: { given: [R`\vec{b} = (${q2.join(", ")})`, pl(dpl)], find: [R`\varphi`] },
         hint: L("The angle between a line and a plane is 90° minus the angle between the line and the normal.", "रेखा और समतल के बीच का कोण = 90° − (रेखा और अभिलंब के बीच का कोण)।"),
         formula: R`\sin\varphi = \dfrac{|\vec{b}\cdot\vec{n}|}{|\vec{b}|\,|\vec{n}|}`,
         solution: S(R`$\vec{b}\cdot\vec{n} = ${dt}$, $|\vec{b}| = ${N2}$, $|\vec{n}| = ${N}$`, R`$\sin\varphi = \dfrac{${Math.abs(dt)}}{${N * N2}}$`, R`$\varphi ${eqs(ph)} ${f2(ph)}^\circ$`),
@@ -3120,7 +3100,7 @@ export const EXAM_IN_MAT = [
         return taskL(lang, {
           text: EV(ex) + fracNote(L),
           answer: fractionM(a, b, [[b / a, L("You inverted the ratio: the coefficient in the numerator goes on top.", "आपने अनुपात उलट दिया: अंश वाला गुणांक ऊपर आता है।")], [1, L("sin(ax)/(bx) → 1 only when a = b; adjust the coefficients.", "sin(ax)/(bx) → 1 केवल तभी जब a = b हो; गुणांकों को समायोजित कीजिए।")]]),
-          data: { given: [`a = ${a}`, `b = ${b}`], find: ["L"] },
+          data: { given: [a !== 1 && `a = ${a}`, b !== 1 && `b = ${b}`].filter(Boolean), find: ["L"] },
           hint: L("Multiply and divide so that each sin or tan is divided by its own angle.", "ऐसे गुणा और भाग कीजिए कि हर sin या tan अपने ही कोण से भाजित हो।"),
           formula: R`\lim_{x \to 0} \dfrac{\sin x}{x} = \lim_{x \to 0} \dfrac{\tan x}{x} = 1`,
           solution: S(L("Rewrite:", "पुनः लिखिए:") + R` $\dfrac{${["\\sin", "\\tan", "\\sin"][kind]} ${cx(a)}}{${cx(a)}} \cdot \dfrac{${cx(b)}}{${["", "\\sin ", "\\tan "][kind]}${cx(b)}} \cdot \dfrac{${a}}{${b}}$`, R`$\lim = 1 \cdot 1 \cdot \dfrac{${a}}{${b}} = ${fracTex(a, b)}$`),
@@ -3149,7 +3129,7 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text: EV(ex) + fracNote(L),
             answer: fractionM(a * a, 2 * b, [[a / (2 * b), L("1 − cos ax = 2 sin²(ax/2): the a gets squared.", "1 − cos ax = 2 sin²(ax/2): a का वर्ग होता है।")], [(a * a) / b, L("Remember the factor 1/2 from 1 − cos θ = 2 sin²(θ/2).", "1 − cos θ = 2 sin²(θ/2) से आने वाला 1/2 याद रखिए।")]]),
-            data: { given: [`a = ${a}`, `b = ${b}`], find: ["L"] },
+            data: { given: [`a = ${a}`, b !== 1 && `b = ${b}`].filter(Boolean), find: ["L"] },
             hint: L("Use 1 − cos θ = 2 sin²(θ/2) and then the standard limit sin t / t → 1.", "1 − cos θ = 2 sin²(θ/2) लगाइए, फिर मानक सीमा sin t / t → 1।"),
             formula: R`1 - \cos\theta = 2\sin^2\dfrac{\theta}{2}`,
             solution: S(R`$\dfrac{2\sin^2 \frac{${a}x}{2}}{${b === 1 ? "" : b}x^2} = \dfrac{2}{${b}} \cdot \left(\dfrac{\sin \frac{${a}x}{2}}{\frac{${a}x}{2}}\right)^2 \cdot \dfrac{${a * a}}{4}$`, R`$\lim = \dfrac{2}{${b}} \cdot 1 \cdot \dfrac{${a * a}}{4} = ${fracTex(a * a, 2 * b)}$`),
@@ -3164,7 +3144,7 @@ export const EXAM_IN_MAT = [
             return taskL(lang, {
               text: L(`If $${ex} = e^k$, find k.`, `यदि $${ex} = e^k$ है, तो k ज्ञात कीजिए।`),
               answer: numM(a * b, null, [[b, L("Write the power as (1/(ax))·(ab): the a also goes into the exponent.", "घात को (1/(ax))·(ab) लिखिए: a भी घातांक में जाता है।")], [a + b, L("The constants multiply in the exponent, they do not add.", "घातांक में अचर गुणा होते हैं, जुड़ते नहीं।")]]),
-              data: { given: [`a = ${a}`, `b = ${b}`], find: ["k"] },
+              data: { given: [a !== 1 && `a = ${a}`, `b = ${b}`].filter(Boolean), find: ["k"] },
               hint: L("Use the standard limit (1 + t)^(1/t) → e as t → 0.", "मानक सीमा (1 + t)^(1/t) → e (t → 0) का प्रयोग कीजिए।"),
               formula: R`\lim_{t \to 0}(1 + t)^{1/t} = e`,
               solution: S(R`$(1 + ${cx(a)})^{\frac{${b}}{x}} = \left[(1 + ${cx(a)})^{\frac{1}{${cx(a)}}}\right]^{${a * b}}$`, R`$\lim = e^{${a * b}} \Rightarrow k = ${a * b}$`),
@@ -3174,7 +3154,7 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text: EV(ex) + fracNote(L),
             answer: fractionM(a, b, [[b / a, L("You inverted the ratio.", "आपने अनुपात उलट दिया।")], [1 / b, L("Make the denominator match the exponent (argument) first: multiply and divide by " + a + ".", "पहले हर को घातांक (तर्क) के समान बनाइए: " + a + " से गुणा और भाग कीजिए।")]]),
-            data: { given: [`a = ${a}`, `b = ${b}`], find: ["L"] },
+            data: { given: [a !== 1 && `a = ${a}`, b !== 1 && `b = ${b}`].filter(Boolean), find: ["L"] },
             hint: kind === 1 ? L("Use (eᵗ − 1)/t → 1 as t → 0.", "(eᵗ − 1)/t → 1 (t → 0) का प्रयोग कीजिए।") : L("Use log(1 + t)/t → 1 as t → 0.", "log(1 + t)/t → 1 (t → 0) का प्रयोग कीजिए।"),
             formula: kind === 1 ? R`\lim_{t \to 0} \dfrac{e^t - 1}{t} = 1` : R`\lim_{t \to 0} \dfrac{\log(1 + t)}{t} = 1`,
             solution: S(L("Multiply and divide by", "गुणा और भाग कीजिए") + ` $${a}$:`, kind === 1 ? R`$\dfrac{e^{${cx(a)}} - 1}{${cx(a)}} \cdot \dfrac{${a}}{${b}} \to 1 \cdot \dfrac{${a}}{${b}} = ${fracTex(a, b)}$` : R`$\dfrac{\log(1 + ${cx(a)})}{${cx(a)}} \cdot \dfrac{${a}}{${b}} \to 1 \cdot \dfrac{${a}}{${b}} = ${fracTex(a, b)}$`),
@@ -3298,7 +3278,7 @@ export const EXAM_IN_MAT = [
               data: { given: [`y(${x0}) = ${y0}`], find: [`y(${x1})`] },
               hint: L("Separate the variables: dy/y = dx/x.", "चरों को पृथक कीजिए: dy/y = dx/x।"),
               formula: R`\int \dfrac{dy}{y} = \int \dfrac{dx}{x}`,
-              solution: S(R`$\log|y| = \log x + \log|C| \Rightarrow y = Cx$`, L(`y(${x0}) = ${y0} gives C = ${f2(y0 / x0)}.`, `y(${x0}) = ${y0} से C = ${f2(y0 / x0)}।`), R`$y(${x1}) = ${f2(y0 / x0)} \times ${x1} ${eqs(val)} ${f2(val)}$`),
+              solution: S(R`$\log|y| = \log x + \log|C| \Rightarrow y = Cx$`, L(`y(${x0}) = ${y0} gives`, `y(${x0}) = ${y0} से`) + R` $C = ${fracTex(y0, x0)}$.`, R`$y(${x1}) = ${fracTex(y0, x0)} \times ${x1} ${eqs(val)} ${f2(val)}$`),
             });
           }
           const k = r.pick([0.5, 1, 2, -1, -0.5]), y0 = r.int(2, 9), x1 = r.pick([1, 2]);
@@ -3306,7 +3286,7 @@ export const EXAM_IN_MAT = [
           return taskL(lang, {
             text: L(R`Solve $\dfrac{dy}{dx} = ${k === 1 ? "" : k === -1 ? "-" : en(k)}y$ with y(0) = ${y0}, and find y(${x1}). (Use $e^{${en(k * x1)}} \approx ${en(ek)}$.)`, R`$\dfrac{dy}{dx} = ${k === 1 ? "" : k === -1 ? "-" : en(k)}y$ को y(0) = ${y0} के साथ हल कीजिए और y(${x1}) ज्ञात कीजिए। ($e^{${en(k * x1)}} \approx ${en(ek)}$ लीजिए।)`) + rnd(val, lang),
             answer: ansN(val, [[y0 + k * x1, L("Separating gives log y = kx + C, so y = y₀eᵏˣ, not y₀ + kx.", "पृथक्करण से log y = kx + C मिलता है, अतः y = y₀eᵏˣ, न कि y₀ + kx।")], [ek, L("Multiply by the initial value y(0).", "प्रारंभिक मान y(0) से गुणा कीजिए।")]]),
-            data: { given: [`y(0) = ${y0}`, `k = ${en(k)}`], find: [`y(${x1})`] },
+            data: { given: [`y(0) = ${y0}`, Math.abs(k) !== 1 && `k = ${en(k)}`].filter(Boolean), find: [`y(${x1})`] },
             hint: L("Separate: dy/y = k dx, integrate, and use y(0).", "पृथक कीजिए: dy/y = k dx, समाकलन कीजिए और y(0) का प्रयोग कीजिए।"),
             formula: R`y = y_0\,e^{kx}`,
             solution: S(R`$\log y = ${en(k)}x + C \Rightarrow y = Ae^{${en(k)}x}$`, L(`y(0) = ${y0} gives A = ${y0}.`, `y(0) = ${y0} से A = ${y0}।`), R`$y(${x1}) = ${y0} \times ${en(ek)} ${eqs(val)} ${f2(val)}$`),
@@ -3360,6 +3340,7 @@ export const EXAM_IN_MAT = [
       }
       const a = r.pick([1, 2, 3, 0.5]), b = r.int(1, 9), y0 = r.int(0, 9);
       const E = Number(Math.exp(-a).toFixed(4));
+      const fa = (v) => (a === 0.5 ? en(v) : fracTex(Math.round(v * a), a));
       const val = b / a + (y0 - b / a) * E;
       return taskL(lang, {
         text: L(R`Solve the linear differential equation $\dfrac{dy}{dx} + ${a === 1 ? "" : en(a)}y = ${b}$ with y(0) = ${y0}, and find y(1). (Use $e^{-${en(a)}} \approx ${en(E)}$.)`, R`रैखिक अवकल समीकरण $\dfrac{dy}{dx} + ${a === 1 ? "" : en(a)}y = ${b}$ को y(0) = ${y0} के साथ हल कीजिए और y(1) ज्ञात कीजिए। ($e^{-${en(a)}} \approx ${en(E)}$ लीजिए।)`) + roundToL(2, lang),
@@ -3369,8 +3350,8 @@ export const EXAM_IN_MAT = [
         formula: R`y \cdot \text{IF} = \int Q \cdot \text{IF}\,dx + C`,
         solution: S(
           R`$\text{IF} = e^{${ax(a)}}$, $ye^{${ax(a)}} = ${a === 1 ? b : R`\dfrac{${b}}{${en(a)}}`}e^{${ax(a)}} + C$`,
-          R`$y = ${f2(b / a)} + Ce^{-${ax(a)}}$, $y(0) = ${y0} \Rightarrow C = ${f2(y0 - b / a)}$`,
-          R`$y(1) = ${f2(b / a)} ${y0 - b / a < 0 ? `- ${f2(b / a - y0)}` : `+ ${f2(y0 - b / a)}`} \times ${en(E)} \approx ${en(val, 2)}$`,
+          R`$y = ${fa(b / a)} + Ce^{-${ax(a)}}$, $y(0) = ${y0} \Rightarrow C = ${fa(y0 - b / a)}$`,
+          R`$y(1) = ${fa(b / a)} ${y0 - b / a < 0 ? `- ${fa(b / a - y0)}` : `+ ${fa(y0 - b / a)}`} \times ${en(E)} \approx ${en(val, 2)}$`,
         ),
       });
     },

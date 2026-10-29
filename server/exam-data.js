@@ -1,5 +1,6 @@
-// Priprave na izpite po državah (podatki). Slovenski izpiti (NPZ, matura) ostanejo v
-// razdelku »Tekmovanja« in pri »Priprava na test«; tu so tuji izpiti.
+// Priprave na izpite po državah (podatki). Izpiti po regijah so v exam-data-si.js (NPZ, matura),
+// exam-data-southasia.js, exam-data-asia.js, exam-data-africa.js in exam-data-west.js; tu so banka,
+// skupni sklopi in Indija. Nov izpit je samo podatek (brez nove kode).
 //
 // BANK: teme z angleškimi izpitnimi nalogami (practice/generators/exam-*.js). Niso učna pot,
 // izpitne teme jih uporabijo kot osnovo.
@@ -125,8 +126,8 @@ export const BANK = {
     "Diversity of living organisms | kingdoms, plant and animal groups, key features",
     "Cell structure and biomolecules | organelles, prokaryotes and eukaryotes, enzymes, biomolecules",
     "Cell cycle and cell division | chromosome number and DNA content, mitosis, meiosis",
-    "Plant physiology | photosynthesis, respiration, transport, plant growth regulators",
-    "Human physiology | digestion, breathing, circulation, excretion, nerves and hormones",
+    "Plant physiology | photosynthesis, respiration, plant growth regulators",
+    "Human physiology | breathing, circulation, excretion, nerves and hormones",
     "Reproduction | gametogenesis, menstrual cycle, reproduction in flowering plants",
     "Genetics and inheritance | Mendelian ratios, incomplete dominance, blood groups, sex-linked traits",
     "Molecular basis of inheritance | Chargaff's rule, DNA length, genetic code, replication, transcription",
@@ -138,6 +139,12 @@ export const BANK = {
     "Plant anatomy and morphology | tissues, root, stem and leaf structure, inflorescence, flower",
     "Microbes in human welfare | microbes in food, industry, sewage treatment, biogas, biocontrol",
     "Animal behaviour and tissues | animal tissues, innate and learned behaviour",
+    // Biologija na ravni 10. razreda (CBSE, ICSE, državni odbori, SEE, O-level …).
+    "Life processes | nutrition, respiration, transport and excretion at Class 10 level",
+    "Control and coordination | reflex arc, brain, plant and animal hormones",
+    "How organisms reproduce | asexual and sexual reproduction, reproductive health",
+    "Heredity and variation | Mendel's monohybrid and dihybrid crosses, sex determination",
+    "Our environment | food chains, trophic levels, ten per cent law, ozone, waste",
   ],
 };
 
