@@ -478,6 +478,7 @@
   "set.dataNormal": "Disattivata",
   "set.dataNote": "Risposte del tutor più brevi, foto più piccole, niente animazioni e nessun font aggiuntivo. Gli esercizi del percorso vengono salvati per esercitarti offline.",
   "off.noConnection": "Nessuna connessione a Internet.",
+  "off.serverDown": "L’app non è raggiungibile in questo momento. Si aprirà da sola appena tornerà disponibile.",
   "off.banner": "Sei offline. Puoi esercitarti con gli esercizi salvati sul dispositivo ({n}).",
   "off.bannerEmpty": "Sei offline. Quando tornerai online, gli esercizi verranno salvati sul dispositivo.",
   "off.pending": "Le risposte date offline aspettano di essere inviate ({n}).",

@@ -478,6 +478,7 @@
   "set.dataNormal": "Ki",
   "set.dataNote": "Rövidebb tutorválaszok, kisebb fotók, animációk és extra betűtípus nélkül. A tanulási út feladatai elmentődnek offline gyakorláshoz.",
   "off.noConnection": "Nincs internetkapcsolat.",
+  "off.serverDown": "Az alkalmazás most nem érhető el. Amint újra elérhető, magától megnyílik.",
   "off.banner": "Offline vagy. Gyakorolhatod az eszközön mentett feladatokat ({n}).",
   "off.bannerEmpty": "Offline vagy. Ha újra lesz kapcsolat, a gyakorló feladatok elmentődnek az eszközre.",
   "off.pending": "Offline megoldott válaszok várnak elküldésre ({n}).",

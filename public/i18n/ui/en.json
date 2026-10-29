@@ -478,6 +478,7 @@
   "set.dataNormal": "Off",
   "set.dataNote": "Shorter tutor replies, smaller photos, no animations and no extra font. Tasks for your learning path are saved so you can practise offline.",
   "off.noConnection": "No internet connection.",
+  "off.serverDown": "The app is not reachable right now. It will open by itself as soon as it is back.",
   "off.banner": "You're offline. You can practise tasks saved on this device ({n}).",
   "off.bannerEmpty": "You're offline. Once you're back online, practice tasks will be saved to this device.",
   "off.pending": "Answers from offline practice are waiting to be sent ({n}).",

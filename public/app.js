@@ -2839,7 +2839,28 @@ initFormulaInfo();
     first = false;
   };
   if (await initAccount({ onReady: start })) await start();
-})();
+})().catch(bootFailed);
+
+// Strežnik ni dosegljiv ob odprtju (računalnik ugasnjen, stara povezava): namesto prazne strani
+// sporočilo; ko je strežnik spet dosegljiv (ali stara povezava preusmeri drugam), se stran odpre.
+function bootFailed() {
+  if (document.getElementById("boot-down")) return;
+  const box = document.createElement("div");
+  box.id = "boot-down";
+  box.className = "boot-down";
+  box.innerHTML = `<div class="card">${icon("wifi-off")}<p>${t("off.serverDown")}</p><button class="primary" type="button">${t("task.retry")}</button></div>`;
+  box.querySelector("button").onclick = () => location.reload();
+  document.body.append(box);
+  const timer = setInterval(async () => {
+    const ok = await fetch("/healthz", { cache: "no-store", redirect: "manual" })
+      .then((r) => r.type === "opaqueredirect" || (r.ok && !r.headers.get("ngrok-error-code")))
+      .catch(() => false);
+    if (ok) {
+      clearInterval(timer);
+      location.reload();
+    }
+  }, 10000);
+}
 
 // Računalnik: če zavihki z napisi ne gredo v zgornjo vrstico (ožje okno ali več zavihkov),
 // jih postopoma stisnemo; zavihek brez napisa ga pokaže ob lebdenju (title).

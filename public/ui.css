@@ -358,3 +358,9 @@ html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important;
   .goal-reminder .actions { flex-wrap: nowrap; }
   .goal-reminder .actions button.ghost { flex: none !important; width: auto !important; }
 }
+
+/* Strežnik ni dosegljiv ob odprtju (public/app.js bootFailed) */
+.boot-down { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 16px; background: var(--bg); }
+.boot-down .card { max-width: 360px; text-align: center; display: grid; gap: 14px; justify-items: center; }
+.boot-down .card svg { width: 40px; height: 40px; color: var(--muted, #8b949e); }
+.boot-down p { margin: 0; }

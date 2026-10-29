@@ -113,3 +113,24 @@ test("strežnik pove različico in zasedenost; service worker dobi različico kn
     server.close();
   }
 });
+
+test("stara povezava (ngrok) preusmeri na lastno domeno, ko ta kaže na ta strežnik", async () => {
+  const http = await import("node:http");
+  const { BRAND } = await import("../server/brand.js");
+  const get = (port, host, p) => new Promise((resolve, reject) => {
+    http.get({ port, path: p, headers: { host } }, (res) => { res.resume(); resolve(res); }).on("error", reject);
+  });
+  for (const [home, expect] of [[true, 302], [false, 200]]) {
+    const app = createApp(openDb(":memory:"), { homeCheck: async () => home });
+    const server = app.listen(0);
+    const port = server.address().port;
+    try {
+      const r = await get(port, "cranium-freehand-jaybird.ngrok-free.dev", "/healthz?x=1");
+      assert.equal(r.statusCode, expect);
+      if (home) assert.equal(r.headers.location, `https://${BRAND.domain}/healthz?x=1`);
+      assert.equal((await get(port, "localhost", "/healthz")).statusCode, 200); // lokalno nikoli
+    } finally {
+      server.close();
+    }
+  }
+});

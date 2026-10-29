@@ -478,6 +478,7 @@
   "set.dataNormal": "Aus",
   "set.dataNote": "Kürzere Antworten des Tutors, kleinere Fotos, keine Animationen und keine Zusatzschrift. Aufgaben deines Lernpfads werden zum Üben ohne Verbindung gespeichert.",
   "off.noConnection": "Keine Internetverbindung.",
+  "off.serverDown": "Die App ist gerade nicht erreichbar. Sobald sie wieder verfügbar ist, öffnet sie sich von selbst.",
   "off.banner": "Du bist offline. Du kannst auf dem Gerät gespeicherte Aufgaben üben ({n}).",
   "off.bannerEmpty": "Du bist offline. Sobald du wieder online bist, werden Übungsaufgaben auf dem Gerät gespeichert.",
   "off.pending": "Offline gelöste Antworten warten auf das Senden ({n}).",

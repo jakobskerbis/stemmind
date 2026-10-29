@@ -483,6 +483,7 @@
   "set.dataNormal": "Isključen",
   "set.dataNote": "Kraći odgovori instruktora, manje fotografije, bez animacija i bez dodatnog fonta. Zadaci za put učenja spremaju se za vježbu bez veze.",
   "off.noConnection": "Nema internetske veze.",
+  "off.serverDown": "Aplikacija trenutačno nije dostupna. Otvorit će se sama kad ponovno bude dostupna.",
   "off.banner": "Nisi povezan. Možeš vježbati zadatke spremljene na uređaju ({n}).",
   "off.bannerEmpty": "Nisi povezan. Kad se ponovno povežeš, zadaci za vježbu spremit će se na uređaj.",
   "off.pending": "Odgovori riješeni bez veze čekaju slanje ({n}).",

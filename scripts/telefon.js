@@ -321,6 +321,18 @@ async function main() {
     }
   }
   if (!url) url = await startTunnel(await ensureCloudflared());
+  // Lastna domena teče: stara povezava ngrok naj ostane odprta, strežnik jo preusmeri na domeno
+  // (nameščene aplikacije in shranjene povezave tako ne kažejo prazne strani).
+  if (url === pub) {
+    const text = readEnv();
+    const token = envValue(text, "NGROK_AUTHTOKEN");
+    const domain = envValue(text, "NGROK_DOMAIN").replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+    if (token && domain) {
+      ensureNgrok().then((bin) => startNgrok(bin, { token, domain }))
+        .then(() => say(`Stara povezava https://${domain} preusmeri na ${pub}.`))
+        .catch(() => {});
+    }
+  }
   const pw = envValue(readEnv(), "EVKLID_PASSWORD");
   const friend = `${url}/?geslo=${encodeURIComponent(pw)}`;
   fs.mkdirSync(path.dirname(urlFile), { recursive: true });

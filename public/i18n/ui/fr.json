@@ -478,6 +478,7 @@
   "set.dataNormal": "Désactivé",
   "set.dataNote": "Réponses du tuteur plus courtes, photos plus petites, pas d'animations ni de police supplémentaire. Les exercices de ton parcours sont enregistrés pour t'entraîner hors connexion.",
   "off.noConnection": "Pas de connexion Internet.",
+  "off.serverDown": "L’application n’est pas joignable pour le moment. Elle s’ouvrira d’elle-même dès qu’elle sera de retour.",
   "off.banner": "Tu es hors connexion. Tu peux t'entraîner avec les exercices enregistrés sur l'appareil ({n}).",
   "off.bannerEmpty": "Tu es hors connexion. Dès que tu seras de nouveau connecté, des exercices seront enregistrés sur l'appareil.",
   "off.pending": "Des réponses faites hors connexion attendent d'être envoyées ({n}).",

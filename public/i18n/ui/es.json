@@ -478,6 +478,7 @@
   "set.dataNormal": "Desactivado",
   "set.dataNote": "Respuestas del tutor más cortas, fotos más pequeñas, sin animaciones y sin fuente adicional. Los ejercicios de tu ruta se guardan para practicar sin conexión.",
   "off.noConnection": "Sin conexión a Internet.",
+  "off.serverDown": "La aplicación no está disponible ahora. Se abrirá sola cuando vuelva a estarlo.",
   "off.banner": "Estás sin conexión. Puedes practicar los ejercicios guardados en el dispositivo ({n}).",
   "off.bannerEmpty": "Estás sin conexión. Cuando vuelvas a conectarte, los ejercicios se guardarán en el dispositivo.",
   "off.pending": "Las respuestas hechas sin conexión esperan para enviarse ({n}).",

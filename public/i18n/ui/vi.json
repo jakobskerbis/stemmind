@@ -473,6 +473,7 @@
   "set.dataNormal": "Tắt",
   "set.dataNote": "Gia sư trả lời ngắn hơn, ảnh nhỏ hơn, không có hiệu ứng và phông chữ bổ sung. Bài tập của lộ trình được lưu để luyện tập khi không có mạng.",
   "off.noConnection": "Không có kết nối Internet.",
+  "off.serverDown": "Hiện không thể truy cập ứng dụng. Ứng dụng sẽ tự mở khi hoạt động trở lại.",
   "off.banner": "Bạn đang ngoại tuyến. Bạn có thể luyện các bài đã lưu trên thiết bị ({n}).",
   "off.bannerEmpty": "Bạn đang ngoại tuyến. Khi có mạng lại, bài luyện tập sẽ được lưu vào thiết bị.",
   "off.pending": "Câu trả lời ngoại tuyến đang chờ gửi ({n}).",

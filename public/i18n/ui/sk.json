@@ -488,6 +488,7 @@
   "set.dataNormal": "Vypnutý",
   "set.dataNote": "Kratšie odpovede tútora, menšie fotky, bez animácií a bez ďalšieho písma. Úlohy zo študijnej cesty sa uložia na precvičovanie bez pripojenia.",
   "off.noConnection": "Žiadne pripojenie na internet.",
+  "off.serverDown": "Aplikácia teraz nie je dostupná. Keď bude znova k dispozícii, otvorí sa sama.",
   "off.banner": "Si offline. Môžeš precvičovať úlohy uložené v zariadení ({n}).",
   "off.bannerEmpty": "Si offline. Keď budeš opäť online, úlohy na precvičovanie sa uložia do zariadenia.",
   "off.pending": "Odpovede z režimu offline čakajú na odoslanie ({n}).",

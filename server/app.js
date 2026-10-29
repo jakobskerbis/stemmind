@@ -38,6 +38,7 @@ import { mountWebApp } from "./webapp.js";
 import { Schedules, scheduleView, schedulePrompt, syncTestPlan } from "./schedule.js";
 import { mountSchedule } from "./schedule-api.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
+import { BRAND } from "./brand.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -69,9 +70,35 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
 // Brskalnik prenese le pisavo, ki jo slog res uporablja.
 const FONTS = [["nunito", "nunito"], ["instrument-sans", "instrument-sans"], ["ibm-plex-sans", "ibm-plex-sans"]];
 
+// Stara povezava (ngrok ali začasni tunel Cloudflare) vodi na lastno domeno (brand.json), ko ta
+// kaže na ta isti strežnik: nameščena aplikacija in shranjene povezave tako ne ostanejo prazne.
+const INSTANCE = crypto.randomUUID();
+const TUNNEL_HOST = /\.(ngrok(-free)?\.(app|dev|io|pizza)|trycloudflare\.com)$/i;
+function mountOldLinkRedirect(app, homeCheck) {
+  const domain = BRAND.domain;
+  if (!domain || process.env[`${BRAND.env}_PREUSMERI`] === "0") return;
+  const check = homeCheck || (async () => {
+    const r = await fetch(`https://${domain}/healthz/stanje`, { signal: AbortSignal.timeout(4000) });
+    return (await r.json()).id === INSTANCE;
+  });
+  let known = { at: 0, ok: false };
+  const homeIsUs = async () => {
+    if (Date.now() - known.at < 5 * 60 * 1000) return known.ok;
+    known = { at: Date.now(), ok: known.ok };
+    known.ok = await check().catch(() => false);
+    return known.ok;
+  };
+  app.use(async (req, res, next) => {
+    if (!TUNNEL_HOST.test(req.hostname || "") || !(await homeIsUs())) return next();
+    res.set("Cache-Control", "no-store");
+    res.redirect(302, `https://${domain}${req.originalUrl}`);
+  });
+}
+
 export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
   const app = express();
+  mountOldLinkRedirect(app, opts.homeCheck);
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
   // Različica in zasedenost: odprte strani se po posodobitvi osvežijo, samodejna posodobitev
   // (scripts/nadzor.js) pa strežnik znova zažene, ko nihče ne čaka na odgovor.
@@ -79,7 +106,7 @@ export function createApp(store, opts = {}) {
   const activity = { active: 0, lastSend: 0 };
   app.get("/healthz/stanje", (_req, res) => {
     res.set("Cache-Control", "no-store");
-    res.json({ razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
+    res.json({ id: INSTANCE, razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
   });
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (EVKLID_ACCOUNTS=1)
   if (process.env.EVKLID_PASSWORD) app.use(passwordGate(process.env.EVKLID_PASSWORD)); // stran za prijavo + piškotek
