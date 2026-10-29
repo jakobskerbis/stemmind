@@ -2,7 +2,8 @@
 // Izpiše kratka, popolna navodila (brief) za pisca ali pregledovalca lekcij, pripravljena za
 // kopiranje v nalogo agenta. Orkestrator jih ne sestavlja ročno (docs/token-rules.md §2–4).
 //   node scripts/lesson-brief.js MAT-OS-8/pitagorov-izrek FIZ-OS-8/vzgon      # pisec (2 temi)
-//   node scripts/lesson-brief.js --review MAT-OS-8/pitagorov-izrek [...]     # pregledovalec
+//   node scripts/lesson-brief.js --review MAT-OS-8/pitagorov-izrek [...]     # pregledovalec (2. pregled)
+//   node scripts/lesson-brief.js --read MAT-OS-8/pitagorov-izrek [...]       # bralec »z očmi učenca« (3. pregled)
 // Angleško namenoma: bere ga agent, angleščina porabi manj žetonov. Deluje tudi za UNI-* teme.
 import { execFileSync } from "node:child_process";
 import path from "node:path";
@@ -10,9 +11,10 @@ import { fileURLToPath } from "node:url";
 
 const args = process.argv.slice(2);
 const review = args.includes("--review");
+const read = !review && args.includes("--read"); // tretji pregled (j 2026-10-29: vse pregledano trikrat)
 const ids = args.filter((a) => !a.startsWith("-"));
 if (!ids.length) {
-  console.error("uporaba: node scripts/lesson-brief.js [--review] <id-teme> [...]");
+  console.error("uporaba: node scripts/lesson-brief.js [--review|--read] <id-teme> [...]");
   process.exit(1);
 }
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -26,6 +28,55 @@ const uni = topics.some((t) => t.id.startsWith("UNI-"));
 const tek = topics.some((t) => /(^|-)TEK(-|$)/.test(t.id.split("/")[0])); // tekmovanja
 const exemplar = topics[0].exemplar;
 const files = topics.map((t) => t.file).join(" ");
+
+// Raznolikost oblike (j 2026-10-29: »Naj se lekcije po obliki ne ponavljajo in naj ne bodo monotone«).
+// Vsaka tema dobi stalen načrt oblike (iz id-ja), sosednji temi v paru pa se vedno razlikujeta.
+// Razdelki (Zakaj, Razlaga, Rešeni primeri …) ostanejo, ker jih aplikacija in checker potrebujeta; spreminja se, kako je lekcija zgrajena.
+const FORM = {
+  hook: [
+    "a short story with a named person and a real problem they must solve",
+    "a puzzle or riddle the student tries before any theory",
+    "a surprising fact or paradox that seems wrong at first",
+    "a small experiment or measurement the student can do at home or in class",
+    "a historical moment: who needed this idea and why (no invented quotes or dates)",
+    "a wrong claim from a classmate that the lesson will settle",
+    "two everyday situations that look different but hide the same idea",
+    "a concrete question with numbers from the student's life (prices, sport, phone, travel)",
+  ],
+  path: [
+    "discovery: let the student notice a pattern in a few cases, then name and state the rule",
+    "worked case first: solve one concrete case, then generalise step by step",
+    "contrast: put the new idea next to a similar old one and build it from the differences",
+    "misconception first: start from the tempting wrong idea and repair it",
+    "build-up: one small block at a time, each tested with a one-line check question",
+    "picture first: explain mostly through a described diagram, table or number line, symbols last",
+  ],
+  context: [
+    "sport and games", "cooking and the kitchen", "travel and maps", "nature and weather", "music and sound",
+    "technology and phones", "shopping and money", "building and crafts", "medicine and the body", "space and astronomy",
+  ],
+  quiz: [
+    "mix: one »which is true«, one numeric, one »spot the mistake in this solution«, one comparison, one real-life case",
+    "mix: one definition-in-context, one ordering/ranking, one »what happens if …«, two numeric",
+    "mix: one »which picture/table fits«, one estimate, one »why« question, one reverse question, one transfer case",
+    "mix: one »odd one out«, one numeric, one cause–effect, one »which step is wrong«, one real-life case",
+  ],
+  alts: [
+    ["Na sliki", "Iz vsakdanjega življenja"],
+    ["Kot zgodba", "Korak za korakom s številkami"],
+    ["Na sliki", "Bolj natančno"],
+    ["Z analogijo", "Iz vsakdanjega življenja"],
+    ["Korak za korakom s številkami", "Kot zgodba"],
+    ["Z analogijo", "Bolj natančno"],
+  ],
+};
+const hash = (str) => [...str].reduce((h, c) => (h * 31 + c.codePointAt(0)) >>> 0, 7);
+const formPlan = (id, i) => {
+  const h = hash(id) + i * 3; // i: položaj v paru → sosednji lekciji nikoli enaki
+  const pick = (arr, salt) => arr[(h + salt) % arr.length];
+  const alts = pick(FORM.alts, 5);
+  return { hook: pick(FORM.hook, 0), path: pick(FORM.path, 1), context: pick(FORM.context, 2), quiz: pick(FORM.quiz, 3), drugace: alts.map((a) => `Drugače: ${a}`) };
+};
 
 const WRITER = `# STEMMind lesson brief: write ${topics.length} lesson${topics.length > 1 ? "s" : ""}
 
@@ -41,6 +92,7 @@ Quality bar (docs/kakovost.md §1, all required):
 - Povzetek: a few bullet lines (the tutor gets it as context).
 - Drugače: at least 2 truly different alternatives (»Na sliki«, »Iz vsakdanjega življenja«, »Korak za korakom s številkami«, »Bolj natančno«).
 - Preveri se: 5 questions (1 recall, 2 understanding, 2 application), ≥ 3 options, exactly one \`+\`, every \`-\` option has its own \`~\` line (why a student picks it), \`>\` explains the right answer.
+- Variety (docs/kakovost.md §1b): follow each topic's \`form\` plan below for the Zakaj opening, the Razlaga path, the main context (Zakaj and at least one example; other examples may use other contexts), the quiz question types and the 2 Drugače titles (add more alternatives only if they add something). Use the exemplar for format only, never copy its structure, openings or phrasing. Vary sentence openings and paragraph lengths; no stock phrases (»V tej lekciji se bomo naučili«, »Poglejmo si«, »Kot vidimo«) and no section that starts the same way as in the other lesson you write.
 - Phone: no information only in colour; formulas fit 360 px or are split. 1300–2300 words, short sentences.
 
 House rules: Slovenian with the terminology of the level; decimal comma \`$3{,}5$\`; all math in LaTeX; the formula of an example only inside \`:::formula\`; header \`stanje: osnutek\` and \`avtor: AI\`; never mention PhET or a model name.${
@@ -66,16 +118,32 @@ Run first: \`node scripts/check-lesson.js -q ${files}\`. Format, LaTeX and pure-
 2. Level fits the path: nothing used that the path has not taught yet; every goal covered.
 3. »Podatki« lists all given data; steps say why; Primer 3 is a transfer case; the faded final step exists.
 4. Pogoste napake are real misconceptions of this topic and match the distractors; the 2 »premisli« ask for a prediction or a »zakaj«.
-5. Slovenian terminology of the level, decimal comma, tables ≤ 4 columns.${uni ? "\n6. University lesson: generic (no faculty or course name), proofs in »Drugače: Bolj natančno«." : ""}${
-  tek ? "\n6. Competition lesson: strategies and typical problem types at competition level (easy ≈ school round, hard ≈ national round), complete solutions, no real past problems, years or results cited." : ""
+5. Slovenian terminology of the level, decimal comma, tables ≤ 4 columns.
+6. Not monotone: the opening, the explanation path and the quiz types are not the same template as the other lesson in this brief; no stock phrases (»V tej lekciji se bomo naučili«, »Poglejmo si«); fix the worst repetition with a small Edit.${uni ? "\n7. University lesson: generic (no faculty or course name), proofs in »Drugače: Bolj natančno«." : ""}${
+  tek ? "\n7. Competition lesson: strategies and typical problem types at competition level (easy ≈ school round, hard ≈ national round), complete solutions, no real past problems, years or results cited." : ""
 }
 Fix with small \`Edit\`s, never rewrite. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 5 lines.
 
 ## Lessons
 `;
 
-const compact = (t) =>
-  review
+const READER = `# STEMMind reading brief: ${topics.length} lesson${topics.length > 1 ? "s" : ""} (third pass, a student's eyes)
+
+The checker and a second reviewer have already verified numbers, keys, level and format. You read each lesson once, start to end, as a careful student of the \`level\` below, and fix only what such a student would stumble on:
+1. Clarity: every new term is explained before it is used; one idea per paragraph; a sentence you had to read twice gets rewritten shorter and more concrete.
+2. Thinking: the 2 »premisli« blocks and the faded final step really make you stop and predict or explain; if the answer already stands in the sentence above, change the question, not the answer.
+3. Not monotone (docs/kakovost.md §1b): the opening, the explanation path and the quiz do not feel like the same template as the other lessons in this brief; vary the worst repetition.
+4. Flow: Zakaj → Razlaga → examples → quiz builds up; a jump that needs an unstated step gets one sentence.
+5. Phone: no table wider than 4 columns, long formulas split, nothing conveyed only by colour.
+Small \`Edit\`s only (≤ 8 per lesson), never a rewrite. Keep every number, formula, structure and \`+\`/\`-\` key unchanged; if you believe a number or key is wrong, report it instead of changing it. Then run \`node scripts/check-lesson.js -q ${files}\` once. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 4 lines.
+
+## Lessons
+`;
+
+const compact = (t, i) =>
+  read
+    ? { id: t.id, file: t.file, level: t.pathLabel, goals: t.goals }
+    : review
     ? { id: t.id, file: t.file, level: t.pathLabel, goals: t.goals, before: t.before }
     : {
         id: t.id,
@@ -89,6 +157,7 @@ const compact = (t) =>
         before: t.before,
         after: t.after,
         previousSummaries: t.previousSummaries,
+        form: formPlan(t.id, i),
       };
 
-process.stdout.write((review ? REVIEWER : WRITER) + topics.map((t) => JSON.stringify(compact(t), null, 1)).join("\n") + "\n");
+process.stdout.write((read ? READER : review ? REVIEWER : WRITER) + topics.map((t, i) => JSON.stringify(compact(t, i), null, 1)).join("\n") + "\n");

@@ -28,6 +28,7 @@ export const RULES = {
   quickReviewTasks: 4, // »najprej 5 minut ponavljanja«
   backlogSuggest: 15, // nad tem predlagamo najprej ponavljanje
   dailyTasks: 10, // ~15 minut
+  classTasks: 5, // ponovitev pred uro iz urnika (~5 minut)
   dailyNewShare: 0.7, // 70 % nove snovi, 30 % ponavljanja (obrne se, ko se ponavljanje nabere)
   unitTasks: 8,
   testTasks: 10,
@@ -400,6 +401,35 @@ export class Progress {
     return this.sessionNext(this.createSession(studentId, "daily", plan, { path: pathKey, nNew, nOld }));
   }
 
+  // Kratka ponovitev pred uro (in utrditev po njej) za predmet iz urnika: teme, ki se jih učenec
+  // trenutno uči, in nazadnje osvojene teme (priklic). Ena seja na pot na dan.
+  startClass(studentId, pathKey) {
+    const open = this.openSession(studentId, "class", (x) => x.params.path === pathKey && x.created_at.slice(0, 10) === today());
+    if (open) return this.sessionNext(open.id);
+    const view = this.pathView(studentId, pathKey);
+    if (!view) return null;
+    const topics = view.units.filter((u) => !u.locked).flatMap((u) => u.topics).filter((t) => t.practice);
+    const ids = new Set(topics.map((t) => t.id));
+    const recent = (status) =>
+      this.db
+        .prepare("SELECT topic_id FROM topic_state WHERE student_id = ? AND topic_id LIKE ? AND status = ? ORDER BY updated_at DESC LIMIT 3")
+        .all(studentId, `${pathKey}/%`, status)
+        .map((r) => r.topic_id)
+        .filter((id) => ids.has(id));
+    const cur = this.currentTopic(studentId, pathKey);
+    const learning = [...new Set([...recent("learning"), cur?.practice ? cur.id : null].filter(Boolean))].slice(0, 2);
+    const mastered = recent("mastered");
+    const N = RULES.classTasks;
+    const plan = [];
+    for (let i = 0; i < N; i++) {
+      const useOld = mastered.length && (!learning.length || i % 2 === 1);
+      if (useOld) plan.push({ topic: mastered[(learning.length ? Math.floor(i / 2) : i) % mastered.length], mode: "review", level: 2 });
+      else if (learning.length) plan.push({ topic: learning[i % learning.length], mode: "practice" });
+    }
+    if (!plan.length) return null;
+    return this.sessionNext(this.createSession(studentId, "class", plan, { path: pathKey }));
+  }
+
   // Vaja posameznega (odklenjenega) sklopa: prepletene naloge iz vseh tem sklopa.
   startUnit(studentId, pathKey, unitIndex) {
     const view = this.pathView(studentId, pathKey);
@@ -562,18 +592,20 @@ export class Progress {
       unitTitles: units.map((i) => path?.units[i]?.title).filter(Boolean),
       date: r.test_date,
       daysLeft,
+      // Test iz urnika (server/schedule.js): priprava mu sledi sama, dokler je učenec ne spremeni.
+      eventId: r.event_id || null,
     };
   }
-  setTestPlan(studentId, pathKey, units, date) {
+  setTestPlan(studentId, pathKey, units, date, eventId = null) {
     const path = getPath(pathKey);
     const clean = [...new Set((units || []).map(Number))].filter((i) => Number.isInteger(i) && path?.units[i]);
     if (!path || !clean.length || !/^\d{4}-\d{2}-\d{2}$/.test(String(date))) return null;
     this.db
       .prepare(
-        `INSERT INTO test_plans (student_id, path_key, units, test_date) VALUES (?, ?, ?, ?)
-         ON CONFLICT(student_id) DO UPDATE SET path_key = excluded.path_key, units = excluded.units, test_date = excluded.test_date, created_at = datetime('now')`,
+        `INSERT INTO test_plans (student_id, path_key, units, test_date, event_id) VALUES (?, ?, ?, ?, ?)
+         ON CONFLICT(student_id) DO UPDATE SET path_key = excluded.path_key, units = excluded.units, test_date = excluded.test_date, event_id = excluded.event_id, created_at = datetime('now')`,
       )
-      .run(studentId, pathKey, JSON.stringify(clean), date);
+      .run(studentId, pathKey, JSON.stringify(clean), date, eventId);
     // Stare nedokončane seje priprave zapremo, nova upošteva nov načrt.
     this.db.prepare("UPDATE sessions SET finished = 1 WHERE student_id = ? AND kind = 'test' AND finished = 0").run(studentId);
     return this.testPlan(studentId);

@@ -10,6 +10,9 @@
 // Opisi (desc) so v angleščini, ker jih bere model (manj žetonov); učencu jih ne kažemo.
 
 import { INTEREST_IDS, NEWS_LEVELS, NEWS_LANGS } from "./interests.js";
+import { DIALECTS } from "./dialects.js";
+
+const DIALECT_LIST = Object.entries(DIALECTS).map(([l, list]) => `${l}: ${list.map((d) => d.id).join(", ")}`).join("; ");
 
 // Profil učenca (shrani se na strežniku, velja na vseh napravah).
 // confirm: sprememba zamenja učno pot, zato jo učenec najprej potrdi (gumb ali »da«).
@@ -24,7 +27,11 @@ export const PROFILE_SETTINGS = {
   solving_mode: { values: ["A", "B"], desc: "A = step-by-step guidance, B = full worked solution with explanation (permanent default)" },
   personality_setting: { desc: "tutor tone / theme of examples, max 200 chars, e.g. 'strog', 'šaljiv, primeri iz nogometa'" },
   language: { desc: "conversation and app language, ISO 639 code (e.g. 'sl', 'en', 'de', 'hr', 'zh-Hant'); the app reloads in it" },
+  dialect: { desc: `tutor's dialect or language variant, only for the chat tone (terms, formulas, boxes and tasks stay standard); '' = standard language; must belong to the conversation language: ${DIALECT_LIST}` },
   data_mode: { values: ["auto", "lite", "normal"], desc: "light mode (less data, shorter replies): auto = on slow connection, lite = always, normal = never" },
+  goal: { values: ["sprotno", "test", "npz", "matura", "tekmovanje", "izpit"], desc: "student's goal: sprotno = everyday learning, test = school test, npz (OŠ), matura (SŠ), tekmovanje (competition), izpit (faculty / regional exam)" },
+  goal_date: { desc: "date of the goal 'YYYY-MM-DD', or '' to delete it (daily reminder at 12:00 until then)" },
+  goal_reminder: { values: ["on", "off"], desc: "daily reminder at 12:00 until goal_date" },
   avatar: { object: true, desc: "avatar look (the only thing other students see): object {slot: item id}, slots body, eyes, mouth, hat, outfit, acc, bg; only free items or items the student owns (get_settings lists both); buying with game coins happens only in the games shop" },
   interests: { list: true, values: INTEREST_IDS, desc: `news corner (Kotiček) interests, whole new list (replaces the old one), max 8, ids: ${INTEREST_IDS.join(", ")}` },
   interest_custom: { desc: "own extra topic for the news corner, max 40 chars of keywords, e.g. 'črne luknje' (English keywords find more news); '' clears it" },
@@ -36,7 +43,8 @@ export const PROFILE_SETTINGS = {
 // Nastavitve te naprave (localStorage); strežnik jih ne hrani, odjemalec jih uporabi takoj.
 // ls: ključ v localStorage in preslikava vrednosti; brez ls ima nastavitev svojo kodo v public/chat-settings.js.
 export const DEVICE_SETTINGS = {
-  theme: { values: ["light", "dark", "system"], desc: "light / dark mode, system = follow the device" },
+  style: { values: ["cist", "igriv", "temen"], desc: "visual style: cist = clean (default), igriv = playful/rounded, temen = always dark" },
+  theme: { values: ["light", "dark", "system"], desc: "light / dark mode, system = follow the device (ignored in style temen)" },
   accent: { desc: "accent colour: '#rrggbb', 'random' or 'default' (contrast is fixed automatically)" },
   colors: { values: ["random", "default"], desc: "whole colour palette of the current light/dark mode: random or back to default" },
   color_background: { desc: "background colour '#rrggbb' (current light/dark mode)" },
@@ -50,9 +58,18 @@ export const DEVICE_SETTINGS = {
   writing_pad_tab: { values: ["keys", "draw"], desc: "pad opens on keypad (keys) or handwriting (draw)" },
   game_sound: { values: ["on", "off"], ls: ["stemmind.gameSound"], desc: "sound in games" },
   game_speed: { values: ["slow", "mid", "fast"], ls: ["stemmind.gamePace"], desc: "game speed" },
+  schedule_reminders: { values: ["on", "off"], ls: ["stemmind.scheduleReminders", { on: "1", off: "0" }], desc: "notification on this device the day before a test from the timetable (the app also shows it in the app)" },
 };
 
-export const ALL_SETTING_KEYS = [...Object.keys(PROFILE_SETTINGS), ...Object.keys(DEVICE_SETTINGS)];
+// Urnik učenca (Jaz → Urnik, server/schedule.js): ure v tednu ter testi in roki. Inštruktor ga bere in
+// ureja z orodjema get_schedule / change_schedule (brez potrditve: to so učenčevi lastni podatki).
+export const EVENT_KINDS = ["test", "kolokvij", "izpit", "ustno", "naloga", "drugo"];
+export const SCHEDULE_SETTINGS = {
+  lessons: { desc: "weekly timetable: day 1-7 (1 = Monday), start and end 'HH:MM' (or school period 0-8 instead), name = subject as the student says it, optional room" },
+  events: { desc: "tests and deadlines: date 'YYYY-MM-DD', optional time 'HH:MM', kind test|kolokvij|izpit|ustno|naloga|drugo, name e.g. 'Kontrolna naloga iz matematike', optional note (material)" },
+};
+
+export const ALL_SETTING_KEYS = [...Object.keys(PROFILE_SETTINGS), ...Object.keys(DEVICE_SETTINGS), ...Object.keys(SCHEDULE_SETTINGS).map((k) => `schedule_${k}`)];
 export const HEX = /^#[0-9a-f]{6}$/i;
 
 // Preveri vrednost nastavitve naprave; vrne normalizirano vrednost ali null.

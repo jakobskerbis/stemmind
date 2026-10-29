@@ -10,10 +10,13 @@ import { PROGRAMS, UNI_PATHS, FACULTIES, UNIVERSITIES } from "./university-data.
 import { normalizeSettings, courseKeysFor, cleanText, normalizeWeaknessList } from "./settings.js";
 import { LANGUAGE_CODES, langInfo } from "../public/i18n/languages.js";
 import { SCHOOL_SYSTEMS, SYSTEM_IDS, isRegional, gradesOf } from "../public/regions.js";
-import { PROFILE_SETTINGS, DEVICE_SETTINGS, deviceValue } from "../public/settings-registry.js";
+import { PROFILE_SETTINGS, DEVICE_SETTINGS, SCHEDULE_SETTINGS, EVENT_KINDS, deviceValue } from "../public/settings-registry.js";
+import { scheduleView } from "./schedule.js";
+import { goalsFor, validDate } from "../public/goal-data.js";
 import { Avatars } from "./avatar.js";
 import { ITEM, ITEMS, SLOTS } from "../public/avatar.js";
 import { INTERESTS, cleanInterests } from "../public/interests.js";
+import { dialectsFor } from "../public/dialects.js";
 
 const PATH_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => PROFILE_SETTINGS[k].confirm);
 const PENDING_MS = 30 * 60 * 1000;
@@ -31,10 +34,10 @@ export const SETTINGS_TOOLS = [
   {
     name: "get_settings",
     description:
-      "Read the student's current app settings (profile and this device). Optionally list allowed values for study_program, study_course or school_system. Financial and personal data are not available.",
+      "Read the student's current app settings (profile and this device). Optionally list allowed values for study_program, study_course, school_system or dialect. Financial and personal data are not available.",
     input_schema: {
       type: "object",
-      properties: { options: { type: "string", enum: ["study_program", "study_course", "school_system"], description: "list allowed values of this setting" } },
+      properties: { options: { type: "string", enum: ["study_program", "study_course", "school_system", "dialect"], description: "list allowed values of this setting" } },
       additionalProperties: false,
     },
   },
@@ -57,6 +60,44 @@ export const SETTINGS_TOOLS = [
         confirmed: { type: "boolean", description: "true only if the student's latest message clearly confirms the proposed learning-path change" },
       },
       required: ["changes"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "get_schedule",
+    description: "Read the student's timetable (weekly lessons) and upcoming tests/deadlines with their ids. The summary for today and tomorrow is already in the settings below.",
+    input_schema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
+    name: "change_schedule",
+    description:
+      "Change the student's own timetable when they ask (e.g. »v torek imam ob 8.00 fiziko«, »v petek pišem test iz matematike«, »izbriši kemijo v sredo«). Adding a test makes the app prepare the student for it (Priprava na test) and remind them the day before. Remove items by id from get_schedule. Never invent lessons or dates: ask if day, time or date is unclear.",
+    input_schema: {
+      type: "object",
+      properties: {
+        add_lessons: {
+          type: "array",
+          description: SCHEDULE_SETTINGS.lessons.desc,
+          items: {
+            type: "object",
+            properties: { day: { type: "integer", minimum: 1, maximum: 7 }, start: { type: "string" }, end: { type: "string" }, period: { type: "integer" }, name: { type: "string" }, room: { type: "string" } },
+            required: ["day", "name"],
+            additionalProperties: false,
+          },
+        },
+        add_events: {
+          type: "array",
+          description: SCHEDULE_SETTINGS.events.desc,
+          items: {
+            type: "object",
+            properties: { date: { type: "string" }, time: { type: "string" }, kind: { type: "string", enum: EVENT_KINDS }, name: { type: "string" }, note: { type: "string" } },
+            required: ["date", "kind", "name"],
+            additionalProperties: false,
+          },
+        },
+        remove_lessons: { type: "array", items: { type: "string" }, description: "lesson ids to remove" },
+        remove_events: { type: "array", items: { type: "string" }, description: "event ids to remove" },
+      },
       additionalProperties: false,
     },
   },
@@ -159,7 +200,11 @@ function profileView(student) {
     solving_mode: s.solving_mode,
     personality_setting: s.personality_setting,
     language: s.language,
+    dialect: s.dialect || "",
     data_mode: s.data_mode,
+    goal: s.goal,
+    goal_date: s.goal_date,
+    goal_reminder: s.goal_reminder ? "on" : "off",
     interests: s.interests ?? [],
     interest_custom: s.interest_custom || "",
     news_level: s.news_level,
@@ -278,12 +323,35 @@ function validateProfile(changes, student) {
     else errors.push(`${key}: allowed ${PROFILE_SETTINGS[key].values.join(", ")}`);
   }
   if (patch.track === "COMPETITION" && (track === "UNIVERZA" || isRegional(system))) errors.push("track: competitions exist only for Slovenian OŠ/SŠ");
+  if (changes.goal !== undefined) {
+    if (goalsFor({ ...cur, educational_track: track, school_system: system }).includes(changes.goal)) patch.goal = changes.goal;
+    else errors.push(`goal: allowed for this school ${goalsFor({ ...cur, educational_track: track, school_system: system }).join(", ")}`);
+  }
+  if (changes.goal_date !== undefined) {
+    const d = String(changes.goal_date).trim();
+    if (d === "" || validDate(d)) patch.goal_date = d;
+    else errors.push("goal_date: use YYYY-MM-DD or '' to delete");
+  }
+  if (changes.goal_reminder !== undefined) {
+    if (["on", "off"].includes(changes.goal_reminder)) patch.goal_reminder = changes.goal_reminder === "on";
+    else errors.push("goal_reminder: on or off");
+  }
   if (changes.personality_setting !== undefined) patch.personality_setting = cleanText(String(changes.personality_setting), 200);
   if (changes.language !== undefined) {
     const code = String(changes.language).trim();
     const found = LANGUAGE_CODES.find((c) => c.toLowerCase() === code.toLowerCase());
     if (found) patch.language = found;
     else errors.push("language: use an ISO 639 code the app supports, e.g. sl, en, de, hr, it, es, fr, uk, zh");
+  }
+  if (changes.dialect !== undefined) {
+    const lang = patch.language ?? cur.language;
+    const raw = norm(changes.dialect);
+    const list = dialectsFor(lang);
+    // Id ali ime (»štajersko«, »Hinglish«); prazno ali »knjižno« = knjižni jezik.
+    const d = list.find((x) => norm(x.id) === raw || norm(x.name) === raw || (raw.length >= 4 && norm(x.name).startsWith(raw)));
+    if (!raw || /^(knjizn|standard|none|default)/.test(raw)) patch.dialect = "";
+    else if (d) patch.dialect = d.id;
+    else errors.push(list.length ? `dialect: for this language use '' or ${list.map((x) => x.id).join(", ")}` : "dialect: this language has no dialect options, only standard ('')");
   }
   if (changes.weak_points !== undefined) weak = normalizeWeaknessList(changes.weak_points);
   return { patch, errors, weak };
@@ -302,7 +370,7 @@ const PROFILE_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => k !== "weak_poi
 // Orodja v enem pogovoru. pending: Map (pogovor → predlog, ki čaka na potrditev).
 // send(event, data): dogodki za odjemalca. Vrne { onToolUse, state }.
 
-export function createSettingsTools({ store, studentId, conversationId, device = {}, pending, send = () => {} }) {
+export function createSettingsTools({ store, studentId, conversationId, device = {}, pending, send = () => {}, schedules = null, onSchedule = () => {} }) {
   const state = { used: false, proposal: null, language: null, student: null };
   const dev = { ...device };
   const avatars = new Avatars(store.db);
@@ -317,6 +385,7 @@ export function createSettingsTools({ store, studentId, conversationId, device =
     if (input.options === "study_program") out.options = programItems().map((p) => `${p.id}: ${p.label}`);
     if (input.options === "study_course")
       out.options = s.educational_track === "UNIVERZA" ? courseItems(s.study_program, s.curriculum_level).map((c) => c.name) : "only for faculty students";
+    if (input.options === "dialect") out.options = ["'' = standard", ...dialectsFor(s.language).map((d) => `${d.id}: ${d.name}`)];
     if (input.options === "school_system") out.options = SYSTEM_IDS.map((id) => `${id}: ${SCHOOL_SYSTEMS[id].name}`);
     return { content: JSON.stringify(out) };
   }
@@ -411,11 +480,58 @@ export function createSettingsTools({ store, studentId, conversationId, device =
     return { content: JSON.stringify(result) };
   }
 
+  // Urnik (server/schedule.js): branje in spremembe brez potrditve.
+  function getSchedule() {
+    if (!schedules) return { content: "timetable not available", isError: true };
+    const student = store.getStudent(studentId);
+    const v = scheduleView(schedules.get(studentId), student.settings);
+    return {
+      content: JSON.stringify({
+        tool: "schedule",
+        today: { date: v.now.date, weekday: v.now.day, time: v.now.time },
+        lessons: v.lessons.map((l) => ({ id: l.id, day: l.day, start: l.start, end: l.end, name: l.name, ...(l.kind ? { kind: l.kind } : {}), ...(l.room ? { room: l.room } : {}) })),
+        upcoming: v.upcoming.map((e) => ({ id: e.id, date: e.date, time: e.time || undefined, kind: e.kind, name: e.name, days_left: e.daysLeft })),
+      }),
+    };
+  }
+  function changeSchedule(input = {}) {
+    if (!schedules) return { content: "timetable not available", isError: true };
+    const student = store.getStudent(studentId);
+    const cur = schedules.get(studentId);
+    const list = (v) => (Array.isArray(v) ? v : []);
+    const rmL = new Set(list(input.remove_lessons).map(String));
+    const rmE = new Set(list(input.remove_events).map(String));
+    const addL = list(input.add_lessons).map((l) => ({ ...l, source: "manual" }));
+    const addE = list(input.add_events).map((e) => ({ ...e, source: "chat" }));
+    const saved = schedules.save(
+      studentId,
+      { lessons: [...cur.lessons.filter((l) => !rmL.has(l.id)), ...addL], events: [...cur.events.filter((e) => !rmE.has(e.id)), ...addE], source: cur.source },
+      student.settings,
+    );
+    const before = new Set([...cur.lessons.map((l) => l.id), ...cur.events.map((e) => e.id)]);
+    const added = { lessons: saved.lessons.filter((l) => !before.has(l.id)), events: saved.events.filter((e) => !before.has(e.id)) };
+    const rejected = addL.length - added.lessons.length + (addE.length - added.events.length);
+    onSchedule(studentId);
+    send("schedule", {});
+    return {
+      content: JSON.stringify({
+        tool: "schedule",
+        status: rejected ? "partly" : "applied",
+        added_lessons: added.lessons.map((l) => `${l.id}: day ${l.day} ${l.start}-${l.end} ${l.name}`),
+        added_events: added.events.map((e) => `${e.id}: ${e.date} ${e.kind} ${e.name}`),
+        removed: cur.lessons.filter((l) => rmL.has(l.id)).length + cur.events.filter((e) => rmE.has(e.id)).length,
+        ...(rejected ? { note: `${rejected} item(s) not saved: need day 1-7 with start time (or period) and name, or a valid date YYYY-MM-DD` } : {}),
+      }),
+    };
+  }
+
   async function onToolUse(name, input) {
     state.used = true;
     try {
       if (name === "get_settings") return getSettings(input);
       if (name === "change_settings") return changeSettings(input);
+      if (name === "get_schedule") return getSchedule();
+      if (name === "change_schedule") return changeSchedule(input);
       return { content: `unknown tool ${name}`, isError: true };
     } catch (err) {
       console.error("[stemmind] orodje nastavitev:", err?.message ?? err);
@@ -427,15 +543,17 @@ export function createSettingsTools({ store, studentId, conversationId, device =
 
 // Sporočila, ki morda prosijo za spremembo nastavitev: odgovora ne vzamemo iz predpomnilnika odgovorov.
 export const looksLikeSettings = (text) =>
-  /nastav|zamenjaj|spremeni|preklopi|vklopi|izklopi|temn|svetl|barv|hitrej|počasnej|jezik|sem (zdaj )?v \d|settings|dark mode|theme|language/i.test(String(text || ""));
+  /nastav|zamenjaj|spremeni|preklopi|vklopi|izklopi|temn|svetl|barv|hitrej|počasnej|jezik|narečj|dialect|sem (zdaj )?v \d|settings|dark mode|theme|language|urnik|jutri|danes|test|kontroln|kolokvij|izpit|spraševanj|schedule|timetable/i.test(String(text || ""));
 
 // ---------------------------------------------------------------------------
 // Preizkusni način (brez ključa): preprosto prepoznavanje najpogostejših prošenj.
 
-const ASK = /zamenjaj|spremeni|nastavi|preklopi|vklopi|izklopi|prestavi|daj\b|hočem|želim|rad bi|sem v|sem zdaj|piši|switch|change|set\b|turn/i;
+const ASK = /zamenjaj|spremeni|nastavi|preklopi|vklopi|izklopi|prestavi|daj\b|hočem|želim|rad bi|sem v|sem zdaj|piši|govori|switch|change|set\b|turn|speak/i;
 
 export function mockToolCall(text, hasPending = false) {
   const t = String(text || "").toLowerCase().trim();
+  const ev = mockEvent(t);
+  if (ev) return { name: "change_schedule", input: { add_events: [ev] } };
   if (hasPending && /^(da|ja|ok|okej|potrdi|potrdim|seveda|yes)\b/.test(t)) return { name: "change_settings", input: { changes: {}, confirmed: true } };
   if (!ASK.test(t)) return null;
   const changes = {};
@@ -449,12 +567,32 @@ export function mockToolCall(text, hasPending = false) {
   if (lvl) changes.curriculum_level = `${lvl[1]}. ${lvl[2]}`;
   const subj = [["MAT", /matematik/], ["FIZ", /fizik/], ["KEM", /kemij/], ["NAR", /naravoslov/], ["BIO", /biologij/]].find(([, re]) => re.test(t));
   if (subj && /predmet|preklopi|zamenjaj/.test(t)) changes.subject = subj[0];
+  const dia = t.match(/po (ljubljansk|gorenjsk|dolenjsk|štajersk|prekmursk|korošk|primorsk|pogovorn|knjižn)/);
+  if (dia) changes.dialect = dia[1] === "knjižn" ? "" : dia[1];
   if (/celo rešitev|celotno rešitev|način b/.test(t)) changes.solving_mode = "B";
   else if (/način a|korak za korakom/.test(t)) changes.solving_mode = "A";
   return Object.keys(changes).length ? { name: "change_settings", input: { changes } } : null;
 }
 
+// »V petek 14. 11. pišem test iz matematike« → dogodek v urniku (preizkusni način).
+function mockEvent(t, now = new Date()) {
+  if (!/(imam|pišem|pisem|bo|dodaj|zapiši|zapisi)/.test(t)) return null;
+  const kind = /kolokvij/.test(t) ? "kolokvij" : /izpit/.test(t) ? "izpit" : /ustno|spraševanj/.test(t) ? "ustno" : /test|kontroln/.test(t) ? "test" : null;
+  const d = t.match(/\b(\d{1,2})\.\s*(\d{1,2})\.(?:\s*(\d{4}))?/);
+  if (!kind || !d) return null;
+  let year = Number(d[3]) || now.getFullYear();
+  const pad = (n) => String(n).padStart(2, "0");
+  let date = `${year}-${pad(d[2])}-${pad(d[1])}`;
+  if (!d[3] && date < now.toISOString().slice(0, 10)) date = `${year + 1}-${pad(d[2])}-${pad(d[1])}`;
+  const subj = [["matematike", /matematik/], ["fizike", /fizik/], ["kemije", /kemij/], ["biologije", /biologij/], ["naravoslovja", /naravoslov/]].find(([, re]) => re.test(t));
+  const names = { test: "Test", kolokvij: "Kolokvij", izpit: "Izpit", ustno: "Ustno spraševanje" };
+  return { date, kind, name: `${names[kind]}${subj ? ` iz ${subj[0]}` : ""}` };
+}
+
 const MOCK_LABELS = {
+  style: "slog",
+  goal: "cilj",
+  goal_date: "datum cilja",
   theme: "videz",
   colors: "barve",
   accent: "poudarek",
@@ -464,6 +602,7 @@ const MOCK_LABELS = {
   study_program: "program",
   subject: "predmet",
   solving_mode: "način",
+  dialect: "narečje",
 };
 
 // Besedilo odgovora v preizkusnem načinu iz rezultata orodja.
@@ -475,6 +614,10 @@ export function mockToolText(resultContent) {
     return "Nastavitve ne morem spremeniti.";
   }
   const fmt = (list) => list.map((c) => `${MOCK_LABELS[c.setting] || c.setting}: ${c.from ? `${c.from} → ` : ""}${Array.isArray(c.to) ? c.to.join(", ") : c.to}`).join(", ");
+  if (r.tool === "schedule") {
+    const added = [...(r.added_lessons || []), ...(r.added_events || [])].map((x) => x.replace(/^\w+: /, ""));
+    return added.length ? `Zapisal sem v urnik: ${added.join(", ")}. ✅` : r.removed ? "Odstranil sem iz urnika. ✅" : "V urniku ni sprememb.";
+  }
   if (r.status === "error") return `Tega ne morem nastaviti (${r.errors.join("; ")}).`;
   const parts = [];
   if (r.applied?.length || r.device?.length) parts.push(`Urejeno: ${fmt([...(r.applied || []), ...(r.device || [])])}. ✅`);

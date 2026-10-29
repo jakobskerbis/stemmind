@@ -34,6 +34,7 @@ export function deviceSnapshot() {
   const T = window.STEMTheme;
   if (T) {
     const s = T.load();
+    out.style = s.style;
     out.theme = s.mode;
     if (s.accent) out.accent = s.accent;
     const pal = s[T.isDarkMode(s) ? "dark" : "light"] || {};
@@ -55,9 +56,10 @@ export function deviceSnapshot() {
 
 export function applyDeviceSettings(changes = {}) {
   const T = window.STEMTheme;
-  const themeKeys = ["theme", "accent", "colors", ...Object.keys(PART)];
+  const themeKeys = ["style", "theme", "accent", "colors", ...Object.keys(PART)];
   if (T && themeKeys.some((k) => changes[k])) {
     const s = T.load();
+    if (changes.style) Object.assign(s, { style: changes.style, accent: null });
     if (changes.theme) s.mode = changes.theme;
     const key = T.isDarkMode(s) ? "dark" : "light";
     if (changes.colors === "default") Object.assign(s, { accent: null, light: null, dark: null });

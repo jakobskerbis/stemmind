@@ -10,7 +10,7 @@ const NAMES = [
   "sparkles", "circle-help", "menu", "chevron-right", "graduation-cap", "play", "rotate-ccw", "award",
   "calendar", "info", "search", "users", "circle-check", "circle-x", "bot", "trending-up", "download", "flask-conical", "monitor-play", "refresh-cw", "medal", "timer", "skip-forward", "flag",
   "sigma", "sun", "moon", "sun-moon", "palette", "dices", "paintbrush", "mic", "square", "circle-arrow-up", "party-popper", "globe", "wifi-off", "cloud-upload", "feather", "message-square-heart",
-  "library", "file-text", "list-checks", "external-link", "notebook-pen",
+  "library", "file-text", "list-checks", "external-link", "notebook-pen", "bell",
   // znanstveni kalkulator in enote
   "calculator", "atom", "ruler", "arrow-left-right",
   // grafični kalkulator
@@ -27,6 +27,8 @@ const NAMES = [
   "wallet",
   // meni profila (ime zgoraj desno)
   "user-plus", "log-out",
+  // urnik
+  "bell", "calendar-days", "calendar-clock", "link",
   // kotiček zanimanj
   "newspaper", "pin", "pin-off",
   // igre: zaklenjene igre in gradnja

@@ -31,6 +31,16 @@ Writers and reviewers: Opus (or Fable), never Sonnet. Checker: `node scripts/che
 12. **Accessibility and phone:** no information only in colour; tables ≤ 4 columns (phone width); formulas short enough to fit 360 px or split over lines; descriptive link text.
 13. **Length** 1300–2300 words (checker warns above 2800). Short sentences. Decimal comma. `avtor: AI`.
 
+## 1b. Variety of form (j, 2026-10-29: »Naj se lekcije po obliki ne ponavljajo in naj ne bodo monotone«)
+
+The sections stay (the app and `check-lesson.js` need them); what varies is how a lesson is built inside them.
+
+- **Form plan.** `node scripts/lesson-brief.js` gives every topic a stable `form` plan picked from its id: the Zakaj opening (story, puzzle, paradox, home experiment, history, a classmate's wrong claim, two situations with one idea, numbers from the student's life), the Razlaga path (discovery, worked case first, contrast with an old idea, misconception first, small blocks with check questions, picture first), a main context (sport, kitchen, travel, nature, music, phones, money, crafts, body, space), a quiz mix (beyond plain multiple choice: spot the mistake, ordering, estimate, odd one out, which table fits, reverse question) and two `## Drugače: …` titles (also »Kot zgodba«, »Z analogijo«). Two lessons written together never get the same plan.
+- **Exemplar = format only.** Never copy its structure, openings or phrasing.
+- **Language.** Vary sentence openings and paragraph length; no stock phrases (»V tej lekciji se bomo naučili«, »Poglejmo si«, »Kot vidimo«); no two sections opening the same way.
+- **Review.** The second pass checks that the plan was followed and removes the worst repetition with a small edit.
+- **Old lessons.** Raises of old lessons apply the plan to Zakaj, Razlaga and the quiz without rewriting correct text wholesale.
+
 ## 2. Tasks (code generators, `server/practice/generators/*.js`)
 
 Generators are code (no API cost); they are written and reviewed by Opus too. Audit:

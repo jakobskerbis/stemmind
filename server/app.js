@@ -32,6 +32,8 @@ import { mountGames } from "./games.js";
 import { Avatars, mountAvatar } from "./avatar.js";
 import { mountCorner } from "./corner.js";
 import { mountWebApp } from "./webapp.js";
+import { Schedules, scheduleView, schedulePrompt, syncTestPlan } from "./schedule.js";
+import { mountSchedule } from "./schedule-api.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -53,11 +55,16 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
   if (settings.language && settings.language !== "sl") parts.push(settings.language);
   if (settings.region && settings.region !== "SI") parts.push(settings.region);
   if (settings.school_system && settings.school_system !== "SI") parts.push(settings.school_system);
+  if (settings.dialect) parts.push(`d:${settings.dialect}`);
   if (lite) parts.push("lite");
   // Zahtevnost po rezultatih učenca (osnovna je privzeta, da shranjeni odgovori ostanejo veljavni).
   if (tier && tier !== "osnovna") parts.push(`zahtevnost:${tier}`);
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
+
+// Pisave slogov (docs/oblikovanje.md): Čist = Instrument Sans, Igriv = Nunito, Temen = IBM Plex Sans.
+// Brskalnik prenese le pisavo, ki jo slog res uporablja.
+const FONTS = [["nunito", "nunito"], ["instrument-sans", "instrument-sans"], ["ibm-plex-sans", "ibm-plex-sans"]];
 
 export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
@@ -111,7 +118,7 @@ export function createApp(store, opts = {}) {
         ["/vendor/katex/", path.join(modules, "katex", "dist")],
         ["/vendor/marked/", path.join(modules, "marked")],
         ["/vendor/dompurify/", path.join(modules, "dompurify", "dist")],
-        ["/vendor/nunito/", path.join(modules, "@fontsource-variable", "nunito")],
+        ...FONTS.map(([dir, pkg]) => [`/vendor/${dir}/`, path.join(modules, "@fontsource-variable", pkg)]),
         ["/practice/", path.join(here, "practice")],
         ["/", publicDir],
       ]),
@@ -124,7 +131,7 @@ export function createApp(store, opts = {}) {
   app.use("/vendor/katex", express.static(path.join(modules, "katex", "dist")));
   app.use("/vendor/marked", express.static(path.join(modules, "marked")));
   app.use("/vendor/dompurify", express.static(path.join(modules, "dompurify", "dist")));
-  app.use("/vendor/nunito", express.static(path.join(modules, "@fontsource-variable", "nunito")));
+  for (const [dir, pkg] of FONTS) app.use(`/vendor/${dir}`, express.static(path.join(modules, "@fontsource-variable", pkg)));
 
   // Učbenik za tiskanje / PDF: brezplačno in brez prijave.
   app.get("/ucbenik/:path{/:topic}", (req, res) => {
@@ -139,6 +146,9 @@ export function createApp(store, opts = {}) {
   const helpTasks = new Map();
   const usage = new Usage(store.db);
   const progress = new Progress(store);
+  // Urnik učenca (server/schedule.js): ure, testi; gre v prompt in v Pripravo na test.
+  const schedules = new Schedules(store.db);
+  const scheduleText = (s) => schedulePrompt(scheduleView(schedules.get(s.id), s.settings));
 
   const intParam = (v) => (/^\d+$/.test(v) ? Number(v) : NaN);
   const loadStudent = (req, res) => {
@@ -222,7 +232,7 @@ export function createApp(store, opts = {}) {
     const s = loadStudent(req, res);
     if (!s) return;
     res.type("text/plain").send(
-      buildSystemPrompt({ settings: s.settings, weaknesses: weaknessesForPrompt(store, s), studentName: s.name, results: studentResults(store, s.id).text }),
+      buildSystemPrompt({ settings: s.settings, weaknesses: weaknessesForPrompt(store, s), studentName: s.name, results: studentResults(store, s.id).text, schedule: scheduleText(s) }),
     );
   });
 
@@ -332,6 +342,11 @@ export function createApp(store, opts = {}) {
       device: cleanDevice(req.body?.device),
       pending: pendingSettings,
       send,
+      schedules,
+      onSchedule: () => {
+        const st = store.getStudent(student.id);
+        syncTestPlan(progress, st.id, scheduleView(schedules.get(st.id), st.settings));
+      },
     });
     const onToolUse = settingsTools.onToolUse;
     onToolUse.hasPending = () => pendingSettings.has(conv.id);
@@ -342,6 +357,7 @@ export function createApp(store, opts = {}) {
         settings: tekTopic ? { ...student.settings, track: "COMPETITION" } : student.settings,
         weaknesses: weak,
         results: results.text,
+        schedule: scheduleText(student),
         studentName: student.name,
         learningPath: conv.path_topic
           ? [learningPathPrompt(conv.path_topic), examPrompt(getTopic(conv.path_topic)?.path), lessonSummaryForPrompt(conv.path_topic)].filter(Boolean).join("\n")
@@ -573,7 +589,10 @@ export function createApp(store, opts = {}) {
   // Načini učenja: nova snov, ponavljanje, priprava na test, dnevni trening.
   app.get("/api/students/:id/modes", (req, res) => {
     const s = loadStudent(req, res);
-    if (s) res.json({ ...progress.modes(s.id, getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings)), cardsDue: store.cards.dueCount(s.id) });
+    if (!s) return;
+    // Priprava na test sledi najbližjemu testu iz urnika (če je učenec ni nastavil sam).
+    syncTestPlan(progress, s.id, scheduleView(schedules.get(s.id), s.settings));
+    res.json({ ...progress.modes(s.id, getPath(String(req.query.path || "")) ? String(req.query.path) : pathKeyFor(s.settings)), cardsDue: store.cards.dueCount(s.id) });
   });
 
   // --- kartice za ponavljanje ---
@@ -800,6 +819,7 @@ export function createApp(store, opts = {}) {
   mountGames(app, store, { loadStudent, progress, avatars });
   mountAvatar(app, avatars, { loadStudent });
   mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
+  mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup });
 
   // --- poraba AI ---
   // Poraba AI za vse profile: brez računov samo na računalniku, kjer teče strežnik
