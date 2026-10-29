@@ -11,6 +11,7 @@ import { initProfileMenu, refreshProfileButton } from "./profile-menu.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
+import { createRenderer, streamSafe } from "./rich.js";
 import { loadPrograms, programsCache, subjectOptions, schoolSubjectsFor, SUBJECT_NAMES } from "./programs.js";
 import { mountLevelPicker, levelLabel, schoolSystemOptions } from "./level-picker.js";
 import { attachMic } from "./speech.js";
@@ -84,35 +85,12 @@ const state = {
 
 // ---------- izris matematike in markdowna ----------
 
-function renderMath(tex, display) {
-  try {
-    return katex.renderToString(tex, { displayMode: display, throwOnError: false, strict: "ignore" });
-  } catch {
-    return tex;
-  }
-}
+const { renderMath, renderRich } = createRenderer();
 
 // Sporočilo učenca: besedilo ostane besedilo, le $...$ se izriše kot formula.
 function renderUserText(text) {
   const parts = String(text).split(/(\$[^$\n]+?\$)/g);
   return parts.map((p, i) => (i % 2 ? renderMath(p.slice(1, -1), false) : escapeHtml(p))).join("");
-}
-
-function renderRich(text) {
-  const math = [];
-  const stash = (tex, display) => `@@MATH${math.push({ tex, display }) - 1}@@`;
-  let src = text
-    .replace(/\$\$([\s\S]+?)\$\$/g, (_, t) => stash(t, true))
-    .replace(/\\\[([\s\S]+?)\\\]/g, (_, t) => stash(t, true))
-    .replace(/\\\((.+?)\\\)/g, (_, t) => stash(t, false))
-    .replace(/(^|[^\\$])\$([^$\n]+?)\$/g, (_, pre, t) => pre + stash(t, false));
-  let html = DOMPurify.sanitize(marked.parse(src, { breaks: true }));
-  // V tabelah so ulomki in potence v polni velikosti (\displaystyle), sicer so premajhni za branje.
-  html = html.replace(/<table[\s\S]*?<\/table>/g, (tbl) =>
-    tbl.replace(/@@MATH(\d+)@@/g, (_, i) => renderMath(math[i].display ? math[i].tex : `\\displaystyle ${math[i].tex}`, math[i].display)),
-  );
-  html = html.replace(/@@MATH(\d+)@@/g, (_, i) => renderMath(math[i].tex, math[i].display));
-  return html;
 }
 
 // ---------- pogledi ----------
@@ -523,7 +501,7 @@ async function send(text, { deep = false } = {}) {
     const box = $("#messages");
     const paint = (shown) => {
       const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
-      bubble.innerHTML = renderRich(closeMarkdown(shown));
+      bubble.innerHTML = renderRich(streamSafe(shown));
       if (atBottom) box.scrollTop = box.scrollHeight;
     };
     // Odgovor se izpisuje z berljivim tempom; dotik sporočila pokaže vse naenkrat.
@@ -1081,14 +1059,6 @@ function toast(msg, ic = null) {
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-}
-// Med postopnim izpisom zapre odprte ** in *, da se ne vidijo surove zvezdice.
-function closeMarkdown(t) {
-  const bold = (t.match(/\*\*/g) || []).length;
-  if (bold % 2) t += "**";
-  const single = (t.replace(/\*\*/g, "").match(/\*/g) || []).length;
-  if (single % 2) t += "*";
-  return t;
 }
 function currentPace() {
   return PACES[localStorageGet("pace")] || PACES[DEFAULT_PACE];
