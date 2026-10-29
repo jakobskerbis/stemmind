@@ -1,7 +1,7 @@
 // Tekmovalne naloge iz fizike (Stefanovo priznanje, fizikalna olimpijada), OŠ in SŠ.
 // Vse količine in odgovori so izračunani v kodi.
 import { NAMES, g } from "../rng.js";
-import { tx, qty, dat, res, num, roundHalfUp } from "./tek-util.js";
+import { tx, qty, dat, res, num, roundHalfUp, withMistakes } from "./tek-util.js";
 
 const OS = (slug) => `FIZ-TEK-OS/${slug}`;
 const SS = (slug) => `FIZ-TEK-SS/${slug}`;
@@ -424,41 +424,209 @@ export const TEK_FIZ = [
     id: "tek-fiz-elektrika-dom",
     topics: [OS("elektricna-energija-in-moc-v-gospodinjstvu")],
     gen(level, r) {
+      const U = 230;
+      const OM = { unitAlternatives: ["ohm", "ohmov", "Ω"] };
+      const EUR = { unitAlternatives: ["eur", "evrov", "€"] };
+      const price = r.pick([0.12, 0.15, 0.16, 0.18, 0.2, 0.22, 0.25]);
+      const ime = r.pick(NAMES);
+      // [imenovalnik, tožilnik, moč v W]
+      const DEV = [["hladilnik", "hladilnik", 150], ["televizor", "televizor", 120], ["računalnik", "računalnik", 300], ["sesalnik", "sesalnik", 1600], ["pralni stroj", "pralni stroj", 2000], ["likalnik", "likalnik", 2200], ["sušilnik las", "sušilnik las", 1800], ["mikrovalovna pečica", "mikrovalovno pečico", 800], ["kuhalnik vode", "kuhalnik vode", 2000], ["električna pečica", "električno pečico", 2500], ["grelnik", "grelnik", 1500], ["klimatska naprava", "klimatsko napravo", 900]];
+      const [dn, dacc, P] = r.pick(DEV);
       if (level === 1) {
-        const items = r.shuffle([["hladilnik", 150, 10], ["televizor", 120, 4], ["računalnik", 300, 5], ["sesalnik", 1600, 0.5], ["pralni stroj", 2000, 1], ["žarnica LED", 9, 6]]).slice(0, 3);
-        const price = r.pick([0.15, 0.18, 0.2, 0.22, 0.25]), days = 30;
-        const kwh = items.reduce((s, [, P, h]) => s + (P * h * days) / 1000, 0);
-        const cost = kwh * price;
+        const v = r.int(0, 4);
+        if (v === 0) {
+          const h = r.pick([0.5, 1, 1.5, 2, 3, 4, 5, 6, 8]);
+          const W = (P * h) / 1000;
+          return {
+            text: `${cap(dn)} z močjo ${P} W deluje $${tx(h)}$ h. Koliko električne energije porabi? Rezultat zapiši v kWh in zaokroži na dve decimalki.`,
+            answer: withMistakes(num(W, "kWh", 2), [[P * h, "Si moč pretvoril v kilovate (1 kW = 1000 W)?"], [P / 1000 / h, "Energija je moč krat čas, ne moč deljeno s časom."]]),
+            hint: "Moč pretvori v kW, čas pusti v urah in ju zmnoži.",
+            data: { given: [dat("P", P, "W"), dat("t", tx(h), "h")], find: ["W"] },
+            formula: "W = P \\cdot t",
+            solution: `$P = ${P}\\ \\mathrm{W} = ${tx(P / 1000)}\\ \\mathrm{kW}$\n$W = ${tx(P / 1000)}\\ \\mathrm{kW} \\cdot ${tx(h)}\\ \\mathrm{h} ${res(W, 2, "kWh")}$`,
+          };
+        }
+        if (v === 1) {
+          const I = P / U;
+          return {
+            text: `Na napisni ploščici naprave (${dn}) piše ${U} V, ${P} W. Kolikšen tok teče skozi napravo med delovanjem? Zaokroži na dve decimalki.`,
+            answer: withMistakes(num(I, "A", 2), [[U / P, "Ulomek si obrnil: tok je moč deljena z napetostjo."], [P * U, "Moči in napetosti ne množimo; $P = U \\cdot I$ razreši na $I$."]]),
+            hint: "Moč je produkt napetosti in toka. Izrazi tok.",
+            data: { given: [dat("U", U, "V"), dat("P", P, "W")], find: ["I"] },
+            formula: "P = U \\cdot I",
+            solution: `$I = \\dfrac{P}{U}$\n$I = \\dfrac{${P}\\ \\mathrm{W}}{${U}\\ \\mathrm{V}} ${res(I, 2, "A")}$`,
+          };
+        }
+        if (v === 2) {
+          const E = r.int(12, 45) * 10;
+          const cost = E * price;
+          return {
+            text: `Gospodinjstvo je v mesecu porabilo ${E} kWh električne energije. Koliko plača, če 1 kWh stane $${tx(price)}$ €? Zaokroži na dve decimalki.`,
+            answer: withMistakes(num(cost, "€", 2, EUR), [[E / price, "Porabo pomnožiš s ceno, ne deliš z njo."]]),
+            hint: "Strošek je porabljena energija krat cena ene kilovatne ure.",
+            data: { given: [dat("W", E, "kWh"), dat("\\text{cena}", tx(price), "€/kWh")], find: ["\\text{strošek}"] },
+            formula: "\\text{strošek} = W \\cdot \\text{cena}",
+            solution: `$\\text{strošek} = ${E}\\ \\mathrm{kWh} \\cdot ${tx(price)}\\ \\mathrm{€/kWh}$\n$\\text{strošek} ${res(cost, 2, "€")}$`,
+          };
+        }
+        if (v === 3) {
+          const E = r.pick([1, 2, 3, 5]);
+          const t = (E * 1000) / P;
+          return {
+            text: `Koliko ur mora delovati ${dn} z močjo ${P} W, da porabi ${E} kWh električne energije? Zaokroži na eno decimalko.`,
+            answer: withMistakes(num(t, "h", 1, { unitAlternatives: ["ur", "ure", "uri"] }), [[(E * P) / 1000, "Čas je energija deljena z močjo, ne produkt."], [P / (E * 1000), "Ulomek si obrnil: $t = W / P$."]]),
+            hint: "Iz $W = P \\cdot t$ izrazi čas; moč zapiši v kW.",
+            data: { given: [dat("P", P, "W"), dat("W", E, "kWh")], find: ["t"] },
+            formula: "t = \\dfrac{W}{P}",
+            solution: `$P = ${tx(P / 1000)}\\ \\mathrm{kW}$\n$t = \\dfrac{${E}\\ \\mathrm{kWh}}{${tx(P / 1000)}\\ \\mathrm{kW}} ${res(t, 1, "h")}$`,
+          };
+        }
+        const I = r.pick([0.5, 1.2, 2.5, 3, 4.5, 6, 7.5, 8, 9.5]);
         return {
-          text: `V mesecu s ${days} dnevi vsak dan ${items.map(([n, P, h]) => `${n} (${P} W) deluje ${tx(h)} h`).join(", ")}. Koliko stane porabljena električna energija, če je cena ${Q(price, "€/kWh")}? Zaokroži na dve decimalki.`,
-          answer: num(cost, "€", 2, { unitAlternatives: ["eur", "evrov", "€"] }),
-          hint: "Energija = moč × čas. Moč pretvori v kW, čas v ure; seštej za vse naprave in pomnoži s ceno.",
-          data: { given: [...items.flatMap(([, P, h], i) => [`P_${i + 1} = ${P}\\ \\mathrm{W}`, `t_${i + 1} = ${tx(h)}\\ \\mathrm{h}`]), dat("\\text{cena}", tx(price), "€/kWh")], find: ["\\text{strošek}"] },
-          formula: ["W = P \\cdot t", "\\text{strošek} = W \\cdot \\text{cena}"],
-          solution: `${items.map(([n, P, h]) => `${n}: $${tx(P / 1000)} \\cdot ${tx(h)} \\cdot ${days} = ${tx((P * h * days) / 1000)}$ kWh`).join("; ")}.\nSkupaj $${tx(kwh)}$ kWh, strošek $${tx(kwh)} \\cdot ${tx(price)} ${res(cost, 2, "€")}$.`,
+          text: `Skozi napravo (${dn}), priključeno na napetost ${U} V, teče tok $${tx(I)}$ A. Kolikšna je njena moč?`,
+          answer: withMistakes(num(U * I, "W"), [[U / I, "Napetost deljena s tokom je upor, ne moč."], [I / U, "Moč je produkt napetosti in toka."]]),
+          hint: "Moč električne naprave je produkt napetosti in toka.",
+          data: { given: [dat("U", U, "V"), dat("I", tx(I), "A")], find: ["P"] },
+          formula: "P = U \\cdot I",
+          solution: `$P = U \\cdot I$\n$P = ${U}\\ \\mathrm{V} \\cdot ${tx(I)}\\ \\mathrm{A} ${res(U * I, null, "W")}$`,
         };
       }
       if (level === 2) {
-        const P = r.pick([40, 60, 75, 100, 1000, 2000]), U = 230;
-        const R = (U * U) / P;
+        const v = r.int(0, 4);
+        if (v === 0) {
+          const min = r.pick([5, 10, 12, 15, 20, 30, 45]), days = r.pick([7, 30, 31, 365]);
+          const W = (P / 1000) * (min / 60) * days, cost = W * price;
+          return {
+            text: `${ime} vsak dan ${min} minut uporablja ${dacc} z močjo ${P} W. Koliko stane električna energija za ${days} dni pri ceni $${tx(price)}$ €/kWh? Zaokroži na dve decimalki.`,
+            answer: withMistakes(num(cost, "€", 2, EUR), [[cost * 60, "Minute si pozabil pretvoriti v ure."], [cost / days, "To je strošek za en dan; pomnoži še s številom dni."]]),
+            hint: "Najprej izračunaj energijo za en dan v kWh (minute → ure, W → kW), nato za vse dni.",
+            data: { given: [dat("P", P, "W"), dat("t_1", min, "min"), dat("N", days, ""), dat("\\text{cena}", tx(price), "€/kWh")], find: ["\\text{strošek}"] },
+            formula: ["W = P \\cdot t", "\\text{strošek} = W \\cdot \\text{cena}"],
+            solution: `En dan: $${tx(P / 1000)}\\ \\mathrm{kW} \\cdot ${tx(min / 60, 4)}\\ \\mathrm{h} ${res((P / 1000) * (min / 60), 4, "kWh")}$\n${days} dni: $W ${res(W, 3, "kWh")}$\nStrošek: $${tx(W, 3)} \\cdot ${tx(price)} ${res(cost, 2, "€")}$`,
+          };
+        }
+        if (v === 1) {
+          const R = (U * U) / P, I = P / U;
+          return {
+            text: `Na napravi (${dn}) piše ${U} V, ${P} W. Kolikšen je upor naprave med delovanjem? Zaokroži na eno decimalko.`,
+            answer: withMistakes(num(R, "Ω", 1, OM), [[U / P, "Napetost si delil z močjo; deliti moraš s tokom."], [P / (U * U), "Ulomek si obrnil: $R = U^2 / P$."]]),
+            hint: "Najprej iz moči in napetosti izračunaj tok, nato upor po Ohmovem zakonu.",
+            data: { given: [dat("U", U, "V"), dat("P", P, "W")], find: ["R"] },
+            formula: ["P = U \\cdot I", "R = \\dfrac{U}{I}"],
+            solution: `$I = \\dfrac{${P}}{${U}} ${res(I, 3, "A")}$\n$R = \\dfrac{U}{I} = \\dfrac{U^2}{P} = \\dfrac{${U}^2}{${P}} ${res(R, 1, "\\Omega")}$`,
+          };
+        }
+        if (v === 2) {
+          const devs = r.shuffle(DEV).slice(0, 3);
+          const sum = devs.reduce((s, d) => s + d[2], 0), I = sum / U;
+          return {
+            text: `V kuhinji so na isti tokokrog z napetostjo ${U} V hkrati priključeni ${devs.map(([n, , p]) => `${n} (${p} W)`).join(", ")}. Kolikšen tok teče skozi varovalko? Zaokroži na eno decimalko.`,
+            answer: withMistakes(num(I, "A", 1), [[devs[0][2] / U, "Upoštevati moraš vse tri naprave, ne le ene."], [(sum / 3) / U, "Moči seštej, ne povpreči."]]),
+            hint: "Naprave so vezane vzporedno: moči se seštejejo. Iz skupne moči izračunaj tok.",
+            data: { given: [dat("U", U, "V"), ...devs.map((d, i) => dat(`P_${i + 1}`, d[2], "W"))], find: ["I"] },
+            formula: ["P = P_1 + P_2 + P_3", "I = \\dfrac{P}{U}"],
+            solution: `$P = ${devs.map((d) => d[2]).join(" + ")} = ${sum}\\ \\mathrm{W}$\n$I = \\dfrac{${sum}}{${U}} ${res(I, 1, "A")}$`,
+          };
+        }
+        if (v === 3) {
+          const [sn, Ps] = r.pick([["televizor", 2], ["računalnik", 4], ["polnilnik", 1.5], ["sprejemnik", 8], ["igralna konzola", 10], ["mikrovalovna pečica", 3]]);
+          const h = r.pick([12, 16, 18, 20, 22]);
+          const W = (Ps * h * 365) / 1000;
+          return {
+            text: `Naprava (${sn}) v stanju pripravljenosti porabi $${tx(Ps)}$ W in je tako ${h} ur na dan. Koliko energije tako porabi v letu (365 dni)? Rezultat zapiši v kWh in zaokroži na eno decimalko.`,
+            answer: withMistakes(num(W, "kWh", 1), [[Ps * h * 365, "Rezultat je v Wh; pretvori v kWh."], [(Ps * h) / 1000, "To je poraba za en dan; pomnoži s 365."]]),
+            hint: "Izračunaj porabo za en dan v Wh, nato za celo leto in pretvori v kWh.",
+            data: { given: [dat("P", tx(Ps), "W"), dat("t_1", h, "h"), dat("N", 365, "")], find: ["W"] },
+            formula: "W = P \\cdot t",
+            solution: `En dan: $${tx(Ps)}\\ \\mathrm{W} \\cdot ${h}\\ \\mathrm{h} = ${tx(Ps * h)}\\ \\mathrm{Wh}$\nLeto: $${tx(Ps * h)} \\cdot 365 = ${tx(Ps * h * 365)}\\ \\mathrm{Wh} ${res(W, 1, "kWh")}$`,
+          };
+        }
+        const Pk = r.pick([1800, 2000, 2200, 2400]), t = r.pick([2, 3, 4, 5]);
+        const c = (Pk / 1000) * (t / 60) * price * 100;
         return {
-          text: `Na grelniku piše ${U} V, ${P} W. Kolikšen je upor grelne žice med delovanjem? Zaokroži na eno decimalko.`,
-          answer: num(R, "Ω", 1, { unitAlternatives: ["ohm", "ohmov", "Ω"] }),
-          hint: "$P = U I$ in $U = R I$, zato $P = \\dfrac{U^2}{R}$.",
-          data: { given: [dat("U", U, "V"), dat("P", P, "W")], find: ["R"] },
-          formula: "R = \\dfrac{U^2}{P}",
-          solution: `$R = \\dfrac{${U}^2}{${P}} ${res(R, 1, "\\Omega")}$.`,
+          text: `Kuhalnik vode z močjo ${Pk} W segreva vodo ${t} minute. Koliko stane eno kuhanje pri ceni $${tx(price)}$ €/kWh? Rezultat zapiši v centih in zaokroži na dve decimalki.`,
+          answer: withMistakes(num(c, "c", 2, { unitAlternatives: ["centov", "cent", "ct"] }), [[c * 60, "Minute pretvori v ure (deli s 60)."], [c / 100, "Rezultat je v evrih; zapiši ga v centih."]]),
+          hint: "Energija v kWh: moč v kW krat čas v urah. Strošek v evrih pretvori v cente.",
+          data: { given: [dat("P", Pk, "W"), dat("t", t, "min"), dat("\\text{cena}", tx(price), "€/kWh")], find: ["\\text{strošek}"] },
+          formula: ["W = P \\cdot t", "\\text{strošek} = W \\cdot \\text{cena}"],
+          solution: `$W = ${tx(Pk / 1000)}\\ \\mathrm{kW} \\cdot \\dfrac{${t}}{60}\\ \\mathrm{h} ${res((Pk / 1000) * (t / 60), 4, "kWh")}$\nStrošek: $${tx((Pk / 1000) * (t / 60), 4)} \\cdot ${tx(price)}\\ € ${res(c / 100, 5, "€")}$\nV centih: $${res(c, 2, "c")}$`,
         };
       }
-      const P = r.pick([1000, 1500, 2000, 2500]), U = 230, U2 = r.int(190, 220);
-      const P2 = P * (U2 / U) ** 2;
+      const v = r.int(0, 5);
+      if (v === 0) {
+        const items = r.shuffle([["hladilnik", 150, 10], ["televizor", 120, 4], ["računalnik", 300, 5], ["sesalnik", 1600, 0.5], ["pralni stroj", 2000, 1], ["žarnica LED", 9, 6], ["likalnik", 2200, 0.5], ["usmerjevalnik", 12, 24]]).slice(0, 3);
+        const days = 30;
+        const kwh = items.reduce((s, [, p, h]) => s + (p * h * days) / 1000, 0);
+        const cost = kwh * price;
+        return {
+          text: `V mesecu s ${days} dnevi vsak dan ${items.map(([n, p, h]) => `${n} (${p} W) deluje ${tx(h)} h`).join(", ")}. Koliko stane porabljena električna energija, če je cena ${Q(price, "€/kWh")}? Zaokroži na dve decimalki.`,
+          answer: withMistakes(num(cost, "€", 2, EUR), [[cost / days, "To je strošek za en dan; mesec ima 30 dni."], [cost * 1000, "Moči pretvori v kW (deli s 1000)."]]),
+          hint: "Energija = moč × čas. Moč pretvori v kW, čas v ure; seštej za vse naprave in pomnoži s ceno.",
+          data: { given: [...items.flatMap(([, p, h], i) => [`P_${i + 1} = ${p}\\ \\mathrm{W}`, `t_${i + 1} = ${tx(h)}\\ \\mathrm{h}`]), dat("\\text{cena}", tx(price), "€/kWh")], find: ["\\text{strošek}"] },
+          formula: ["W = P \\cdot t", "\\text{strošek} = W \\cdot \\text{cena}"],
+          solution: `${items.map(([n, p, h]) => `${cap(n)}: $${tx(p / 1000)} \\cdot ${tx(h)} \\cdot ${days} = ${tx((p * h * days) / 1000)}$ kWh`).join("\n")}\nSkupaj $${tx(kwh)}$ kWh\nStrošek: $${tx(kwh)} \\cdot ${tx(price)} ${res(cost, 2, "€")}$`,
+        };
+      }
+      if (v === 1) {
+        const Pg = r.pick([1000, 1500, 2000, 2500]), U2 = r.int(190, 220);
+        const P2 = Pg * (U2 / U) ** 2;
+        return {
+          text: `Grelnik ima pri napetosti ${U} V moč ${Pg} W. Zvečer napetost v omrežju pade na ${U2} V. Kolikšna je takrat moč grelnika (upor se ne spremeni)? Zaokroži na celo število.`,
+          answer: withMistakes(num(P2, "W", 0), [[(Pg * U2) / U, "Moč ni sorazmerna z napetostjo, ampak s kvadratom napetosti (ker se zmanjša tudi tok)."], [Pg, "Moč grelnika ni stalna; stalen je njegov upor."]]),
+          hint: "Upor je enak, moč je sorazmerna s kvadratom napetosti.",
+          data: { given: [dat("U", U, "V"), dat("P", Pg, "W"), dat("U'", U2, "V")], find: ["P'"] },
+          formula: ["R = \\dfrac{U^2}{P}", "P' = P \\left(\\dfrac{U'}{U}\\right)^2"],
+          solution: `$R = \\dfrac{${U}^2}{${Pg}} ${res((U * U) / Pg, 2, "\\Omega")}$\n$P' = \\dfrac{U'^2}{R} = ${Pg} \\cdot \\left(\\dfrac{${U2}}{${U}}\\right)^2 ${res(P2, 0, "W")}$\nMoč pade za $${tx((1 - P2 / Pg) * 100, 1)}$ %, napetost le za $${tx((1 - U2 / U) * 100, 1)}$ %.`,
+        };
+      }
+      if (v === 2) {
+        const P1 = r.pick([40, 60, 75, 100]), P2 = r.pick([5, 7, 9, 12]), h = r.pick([2, 3, 4, 5, 6]), cost = r.pick([3, 4, 5, 6, 8]);
+        const save = ((P1 - P2) * h * price) / 1000;
+        const days = Math.ceil(cost / save - 1e-9);
+        return {
+          text: `${ime} zamenja navadno žarnico (${P1} W) z LED žarnico (${P2} W), ki enako sveti. Žarnica sveti ${h} h na dan, 1 kWh stane $${tx(price)}$ €, LED žarnica stane ${cost} €. Po koliko dneh se nakup povrne? Zaokroži navzgor na cel dan.`,
+          answer: withMistakes(num(days), [[Math.ceil(cost / ((P1 * h * price) / 1000) - 1e-9), "Prihranek je razlika moči obeh žarnic, ne vsa moč stare žarnice."], [Math.floor(cost / save), "Zaokrožiti moraš navzgor: v zadnjem delnem dnevu se nakup šele povrne."]]),
+          hint: "Najprej izračunaj, koliko energije in denarja prihraniš v enem dnevu (razlika moči), nato deli ceno LED žarnice s tem prihrankom.",
+          data: { given: [dat("P_1", P1, "W"), dat("P_2", P2, "W"), dat("t", h, "h"), dat("\\text{cena}", tx(price), "€/kWh"), dat("C", cost, "€")], find: ["N"] },
+          formula: ["\\Delta W = (P_1 - P_2) \\cdot t", "N = \\dfrac{C}{\\Delta W \\cdot \\text{cena}}"],
+          solution: `Prihranek moči: $${P1} - ${P2} = ${P1 - P2}\\ \\mathrm{W}$\nNa dan: $${tx((P1 - P2) / 1000)}\\ \\mathrm{kW} \\cdot ${h}\\ \\mathrm{h} = ${tx(((P1 - P2) * h) / 1000)}\\ \\mathrm{kWh}$, kar je $${tx(save, 4)}$ €\n$N = \\dfrac{${cost}}{${tx(save, 4)}} ${res(cost / save, 1)}$, zato $N = ${days}$ dni.`,
+        };
+      }
+      if (v === 3) {
+        const Pr = r.pick([150, 200, 250, 300, 400]), h0 = r.int(2, 9), days = 30;
+        const C = roundHalfUp((Pr / 1000) * h0 * days * price, 2);
+        const h = C / price / (Pr / 1000) / days;
+        return {
+          text: `Računalnik z močjo ${Pr} W je bil v mesecu s ${days} dnevi vsak dan prižgan enako dolgo. Zanj je ${ime} plačal${g(ime, "", "a")} $${tx(C)}$ € pri ceni $${tx(price)}$ €/kWh. Koliko ur na dan je bil prižgan? Zaokroži na eno decimalko.`,
+          answer: withMistakes(num(h, "h", 1, { unitAlternatives: ["ur", "ure", "uri"] }), [[h * days, "To je čas za cel mesec; deli ga s številom dni."], [h / 1000, "Moč pretvori v kW, preden računaš čas."]]),
+          hint: "Iz zneska in cene izračunaj porabljeno energijo, nato čas delovanja v mesecu in na dan.",
+          data: { given: [dat("P", Pr, "W"), dat("N", days, ""), dat("C", tx(C), "€"), dat("\\text{cena}", tx(price), "€/kWh")], find: ["t_1"] },
+          formula: ["W = \\dfrac{C}{\\text{cena}}", "t = \\dfrac{W}{P}"],
+          solution: `$W = \\dfrac{${tx(C)}}{${tx(price)}} ${res(C / price, 3, "kWh")}$\nV mesecu: $t = \\dfrac{${tx(C / price, 3)}}{${tx(Pr / 1000)}} ${res(C / price / (Pr / 1000), 2, "h")}$\nNa dan: $t_1 = \\dfrac{${tx(C / price / (Pr / 1000), 2)}}{${days}} ${res(h, 1, "h")}$`,
+        };
+      }
+      if (v === 4) {
+        const Imax = r.pick([10, 13, 16, 20, 25]), Pg = r.pick([800, 1200, 1500, 1800, 2000, 2200]);
+        const exact = (Imax * U) / Pg;
+        const n = Math.floor(exact + 1e-9);
+        return {
+          text: `Varovalka v tokokrogu z napetostjo ${U} V pregori, ko tok preseže ${Imax} A. Največ koliko grelnikov z močjo ${Pg} W lahko hkrati priključimo na ta tokokrog?`,
+          answer: withMistakes(num(n), [[Math.ceil(exact - 1e-9), "Zaokrožil si navzgor – z enim grelnikom več bi tok presegel mejo varovalke."], [Math.floor(Pg / U), "Izračunal si tok skozi en grelnik; koliko takih tokov gre skozi varovalko?"]]),
+          hint: "Izračunaj največjo moč, ki jo varovalka še dopušča, ali tok skozi en grelnik.",
+          data: { given: [dat("U", U, "V"), dat("I_{max}", Imax, "A"), dat("P_1", Pg, "W")], find: ["N"] },
+          formula: ["P_{max} = U \\cdot I_{max}", "N \\le \\dfrac{P_{max}}{P_1}"],
+          solution: `$P_{max} = ${U} \\cdot ${Imax} = ${U * Imax}\\ \\mathrm{W}$\n$\\dfrac{${U * Imax}}{${Pg}} ${res(exact, 2)}$\nCelo število grelnikov: $N = ${n}$`,
+        };
+      }
+      const Pk = r.pick([1500, 1800, 2000, 2200, 2400]), V = r.pick([0.5, 1, 1.5, 1.7]), T1 = r.pick([10, 12, 15, 18, 20]), eta = r.pick([80, 85, 90, 95]);
+      const Qw = V * 4200 * (100 - T1), tmin = Qw / ((eta / 100) * Pk) / 60;
       return {
-        text: `Grelnik ima pri napetosti ${U} V moč ${P} W. Zvečer napetost v omrežju pade na ${U2} V. Kolikšna je takrat moč grelnika (upor se ne spremeni)? Zaokroži na celo število.`,
-        answer: num(P2, "W", 0),
-        hint: "Upor je enak, moč je sorazmerna s kvadratom napetosti.",
-        data: { given: [dat("U", U, "V"), dat("P", P, "W"), dat("U'", U2, "V")], find: ["P'"] },
-        formula: ["R = \\dfrac{U^2}{P}", "P' = P \\left(\\dfrac{U'}{U}\\right)^2"],
-        solution: `$P' = ${P} \\cdot \\left(\\dfrac{${U2}}{${U}}\\right)^2 ${res(P2, 0, "W")}$ (moč pade za ${tx((1 - P2 / P) * 100, 1)} %, napetost le za ${tx((1 - U2 / U) * 100, 1)} %).`,
+        text: `Kuhalnik vode z močjo ${Pk} W segreje $${tx(V)}$ l vode od ${T1} °C do vrelišča (100 °C). V vodo gre ${eta} % električne energije. Koliko minut traja segrevanje? Specifična toplota vode je 4200 J/(kg K). Zaokroži na eno decimalko.`,
+        answer: withMistakes(num(tmin, "min", 1), [[tmin * (eta / 100), "Izkoristek zmanjša koristno moč, zato je čas daljši, ne krajši."], [(Qw / Pk / 60) * (eta / 100) ** 2, "Z izkoristkom deliš, ne množiš."], [tmin * 60, "Rezultat je v sekundah; pretvori ga v minute."]]),
+        hint: "Najprej izračunaj toploto za segretje vode, nato koristno moč kuhalnika ($\\eta P$).",
+        data: { given: [dat("P", Pk, "W"), dat("m", tx(V), "kg"), dat("T_1", T1, "°C"), dat("T_2", 100, "°C"), dat("\\eta", eta, "\\%"), "c = 4200\\ \\mathrm{J/(kg\\,K)}"], find: ["t"] },
+        formula: ["Q = m c \\Delta T", "\\eta P t = Q"],
+        solution: `$Q = ${tx(V)} \\cdot 4200 \\cdot ${100 - T1} = ${tx(Qw)}\\ \\mathrm{J}$\nKoristna moč: $${tx(eta / 100)} \\cdot ${Pk} = ${tx((eta / 100) * Pk)}\\ \\mathrm{W}$\n$t = \\dfrac{${tx(Qw)}}{${tx((eta / 100) * Pk)}} ${res(Qw / ((eta / 100) * Pk), 0, "s")} ${res(tmin, 1, "min")}$`,
       };
     },
   },
@@ -928,41 +1096,212 @@ export const TEK_FIZ = [
     id: "tek-fiz-optika-ss",
     topics: [SS("geometrijska-optika")],
     gen(level, r) {
-      const mats = [["vode", 1.33, "vodo"], ["stekla", 1.5, "steklom"], ["diamanta", 2.42, "diamantom"], ["etanola", 1.36, "etanolom"], ["kremena", 1.46, "kremenom"]];
-      const [mn, n, mInst] = r.pick(mats);
+      // [rodilnik, n, tožilnik, mestnik]
+      const mats = [["vode", 1.33, "vodo", "vodi"], ["stekla", 1.5, "steklo", "steklu"], ["diamanta", 2.42, "diamant", "diamantu"], ["etanola", 1.36, "etanol", "etanolu"], ["kremena", 1.46, "kremen", "kremenu"], ["flintovega stekla", 1.62, "flintovo steklo", "flintovem steklu"], ["glicerola", 1.47, "glicerol", "glicerolu"]];
+      const [mn, n, mAcc, mLoc] = r.pick(mats);
+      const toDeg = (x) => (x * 180) / Math.PI;
+      const DEG = { unitAlternatives: ["stopinj", "°"] };
       if (level === 1) {
-        const a = r.int(10, 80);
-        const b = (Math.asin(Math.sin(deg(a)) / n) * 180) / Math.PI;
+        const v = r.int(0, 4);
+        if (v === 0) {
+          const a = r.int(10, 80);
+          const b = toDeg(Math.asin(Math.sin(deg(a)) / n));
+          return {
+            text: `Žarek pade iz zraka na gladko ploskev ${mn} (lomni količnik $${tx(n)}$) pod vpadnim kotom ${a}°. Kolikšen je lomni kot? Zaokroži na eno decimalko.`,
+            answer: withMistakes(num(b, "°", 1, DEG), [[a / n, "Lomni zakon velja za sinuse kotov, ne za kote same."], [90 - b, "To je kot med žarkom in ploskvijo; kote merimo od vpadne pravokotnice."]]),
+            hint: "Lomni zakon: $\\sin\\alpha = n \\sin\\beta$.",
+            data: { given: [`\\alpha = ${a}^\\circ`, `n = ${tx(n)}`], find: ["\\beta"] },
+            formula: "\\sin\\alpha = n \\sin\\beta",
+            solution: `$\\sin\\beta = \\dfrac{\\sin ${a}^\\circ}{${tx(n)}} = \\dfrac{${tx(Math.sin(deg(a)), 4)}}{${tx(n)}} = ${tx(Math.sin(deg(a)) / n, 4)}$\n$\\beta ${res(b, 1, "^\\circ")}$`,
+          };
+        }
+        if (v === 1) {
+          const vv = 300000 / n;
+          return {
+            text: `Kolikšna je hitrost svetlobe v ${mLoc} (lomni količnik $${tx(n)}$)? Hitrost svetlobe v vakuumu je 300 000 km/s. Rezultat zapiši v km/s in zaokroži na celo število.`,
+            answer: withMistakes(num(vv, "km/s", 0), [[300000 * n, "V snovi je svetloba počasnejša: s lomnim količnikom deliš."]]),
+            hint: "Lomni količnik pove, kolikokrat je svetloba v snovi počasnejša kot v vakuumu.",
+            data: { given: ["c = 300\\,000\\ \\mathrm{km/s}", `n = ${tx(n)}`], find: ["v"] },
+            formula: "n = \\dfrac{c}{v}",
+            solution: `$v = \\dfrac{c}{n}$\n$v = \\dfrac{300\\,000\\ \\mathrm{km/s}}{${tx(n)}} ${res(vv, 0, "km/s")}$`,
+          };
+        }
+        if (v === 2) {
+          const a = r.int(25, 75);
+          const b = Math.round(toDeg(Math.asin(Math.sin(deg(a)) / n)) * 10) / 10;
+          const nn = Math.sin(deg(a)) / Math.sin(deg(b));
+          return {
+            text: `Pri poskusu žarek pade iz zraka v neznano prozorno snov pod vpadnim kotom ${a}°, lomni kot pa izmerimo $${tx(b)}$°. Kolikšen je lomni količnik snovi? Zaokroži na dve decimalki.`,
+            answer: withMistakes(num(nn, null, 2), [[1 / nn, "Ulomek si obrnil: v optično gostejši snovi je lomni kot manjši, zato je $n > 1$."], [a / b, "Lomni količnik je razmerje sinusov, ne kotov."]]),
+            hint: "Iz lomnega zakona izrazi $n$.",
+            data: { given: [`\\alpha = ${a}^\\circ`, `\\beta = ${tx(b)}^\\circ`], find: ["n"] },
+            formula: "n = \\dfrac{\\sin\\alpha}{\\sin\\beta}",
+            solution: `$n = \\dfrac{\\sin ${a}^\\circ}{\\sin ${tx(b)}^\\circ} = \\dfrac{${tx(Math.sin(deg(a)), 4)}}{${tx(Math.sin(deg(b)), 4)}}$\n$n ${res(nn, 2)}$`,
+          };
+        }
+        if (v === 3) {
+          const f = r.pick([10, 12.5, 20, 25, 40, 50, 80]);
+          const D = 100 / f;
+          return {
+            text: `Zbiralna leča ima goriščno razdaljo $${tx(f)}$ cm. Kolikšna je njena lomnost (optična jakost) v dioptrijah? Zaokroži na dve decimalki.`,
+            answer: withMistakes(num(D, "dpt", 2, { unitAlternatives: ["D", "m^-1", "1/m", "dioptrij"] }), [[1 / f, "Goriščno razdaljo najprej pretvori v metre."], [f / 100, "Lomnost je obratna vrednost goriščne razdalje."]]),
+            hint: "Lomnost je obratna vrednost goriščne razdalje v metrih.",
+            data: { given: [dat("f", tx(f), "cm")], find: ["j"] },
+            formula: "j = \\dfrac{1}{f}",
+            solution: `$f = ${tx(f)}\\ \\mathrm{cm} = ${tx(f / 100)}\\ \\mathrm{m}$\n$j = \\dfrac{1}{${tx(f / 100)}\\ \\mathrm{m}} ${res(D, 2, "dpt")}$`,
+          };
+        }
+        const lam = r.pick([405, 450, 532, 589, 633, 650]);
+        const l2 = lam / n;
         return {
-          text: `Žarek pade iz zraka na gladino ${mn} (lomni količnik ${tx(n)}) pod vpadnim kotom ${a}°. Kolikšen je lomni kot? Zaokroži na eno decimalko.`,
-          answer: num(b, "°", 1, { unitAlternatives: ["stopinj"] }),
-          hint: "Lomni zakon: $\\sin\\alpha = n \\sin\\beta$.",
-          data: { given: [`\\alpha = ${a}^\\circ`, `n = ${tx(n)}`], find: ["\\beta"] },
-          formula: "\\sin\\alpha = n \\sin\\beta",
-          solution: `$\\sin\\beta = \\dfrac{\\sin ${a}^\\circ}{${tx(n)}} = ${tx(Math.sin(deg(a)) / n, 4)}$, $\\beta ${res(b, 1, "^\\circ")}$.`,
+          text: `Laserska svetloba z valovno dolžino ${lam} nm (v zraku) vstopi v ${mAcc} z lomnim količnikom $${tx(n)}$. Kolikšna je valovna dolžina svetlobe v tej snovi? Zaokroži na celo število nanometrov.`,
+          answer: withMistakes(num(l2, "nm", 0), [[lam * n, "V snovi se valovna dolžina skrajša, ker se zmanjša hitrost, frekvenca pa ostane enaka."], [lam, "Frekvenca se ne spremeni, valovna dolžina pa se."]]),
+          hint: "Frekvenca svetlobe ostane enaka, hitrost se zmanjša $n$-krat.",
+          data: { given: [dat("\\lambda_0", lam, "nm"), `n = ${tx(n)}`], find: ["\\lambda"] },
+          formula: "\\lambda = \\dfrac{\\lambda_0}{n}",
+          solution: `Ker je $\\nu$ stalna in $v = c/n$, je $\\lambda = \\lambda_0 / n$.\n$\\lambda = \\dfrac{${lam}\\ \\mathrm{nm}}{${tx(n)}} ${res(l2, 0, "nm")}$`,
         };
       }
       if (level === 2) {
-        const c = (Math.asin(1 / n) * 180) / Math.PI;
+        const v = r.int(0, 4);
+        if (v === 0) {
+          const pairs = [["stekla", 1.5, "vode", 1.33], ["diamanta", 2.42, "vode", 1.33], ["flintovega stekla", 1.62, "stekla", 1.5], ["diamanta", 2.42, "stekla", 1.5], ["kremena", 1.46, "vode", 1.33], ["stekla", 1.5, "etanola", 1.36], ["flintovega stekla", 1.62, "vode", 1.33]];
+          const [a1, n1, a2, n2] = r.pick(pairs);
+          const c = toDeg(Math.asin(n2 / n1));
+          return {
+            text: `Svetloba potuje po plasti ${a1} (lomni količnik $${tx(n1)}$), ki meji na plast ${a2} (lomni količnik $${tx(n2)}$). Kolikšen je mejni kot za popolni odboj na tej meji? Zaokroži na eno decimalko.`,
+            answer: withMistakes(num(c, "°", 1, DEG), [[toDeg(Math.asin(1 / n1)), "To je mejni kot proti zraku; tu na drugi strani ni zrak."], [90 - c, "Kot meriš od vpadne pravokotnice, ne od mejne ploskve."]]),
+            hint: "Pri mejnem kotu je lomni kot v drugi snovi $90^\\circ$; uporabi lomni zakon $n_1 \\sin\\alpha = n_2 \\sin\\beta$.",
+            data: { given: [`n_1 = ${tx(n1)}`, `n_2 = ${tx(n2)}`], find: ["\\alpha_m"] },
+            formula: "n_1 \\sin\\alpha_m = n_2 \\sin 90^\\circ",
+            solution: `$\\sin\\alpha_m = \\dfrac{n_2}{n_1} = \\dfrac{${tx(n2)}}{${tx(n1)}} = ${tx(n2 / n1, 4)}$\n$\\alpha_m ${res(c, 1, "^\\circ")}$`,
+          };
+        }
+        if (v === 1) {
+          const f = r.pick([5, 8, 10, 12, 15, 20]), a = f + r.pick([2, 4, 5, 6, 10, 15, 20]), y = r.pick([1, 1.5, 2, 3, 4, 5]);
+          const b = (a * f) / (a - f), y2 = (y * b) / a;
+          return {
+            text: `Predmet, visok $${tx(y)}$ cm, stoji ${a} cm pred zbiralno lečo z goriščno razdaljo ${f} cm. Kako visoka je ostra slika na zaslonu? Zaokroži na dve decimalki.`,
+            answer: withMistakes(num(y2, "cm", 2), [[(y * a) / b, "Povečava je $b/a$ (slika proti predmetu), ne $a/b$."], [b, "To je razdalja slike od leče; iščemo velikost slike."]]),
+            hint: "Najprej z enačbo leče izračunaj oddaljenost slike $b$, nato povečavo $b/a$.",
+            data: { given: [dat("y", tx(y), "cm"), dat("a", a, "cm"), dat("f", f, "cm")], find: ["y'"] },
+            formula: ["\\dfrac{1}{f} = \\dfrac{1}{a} + \\dfrac{1}{b}", "\\dfrac{y'}{y} = \\dfrac{b}{a}"],
+            solution: `$b = \\dfrac{a f}{a - f} = \\dfrac{${a} \\cdot ${f}}{${a - f}} ${res(b, 2, "cm")}$\n$y' = y \\cdot \\dfrac{b}{a} = ${tx(y)} \\cdot \\dfrac{${tx(b, 2)}}{${a}} ${res(y2, 2, "cm")}$`,
+          };
+        }
+        if (v === 2) {
+          const pairs = [["vode", 1.33, "steklo", 1.5], ["etanola", 1.36, "steklo", 1.5], ["vode", 1.33, "diamant", 2.42], ["stekla", 1.5, "diamant", 2.42], ["vode", 1.33, "flintovo steklo", 1.62]];
+          const [a1, n1, a2, n2] = r.pick(pairs);
+          const al = r.int(15, 75);
+          const b = toDeg(Math.asin((n1 * Math.sin(deg(al))) / n2));
+          return {
+            text: `Žarek prehaja iz ${a1} (lomni količnik $${tx(n1)}$) v ${a2} (lomni količnik $${tx(n2)}$); vpadni kot je ${al}°. Kolikšen je lomni kot? Zaokroži na eno decimalko.`,
+            answer: withMistakes(num(b, "°", 1, DEG), [[toDeg(Math.asin(Math.sin(deg(al)) / n2)), "Žarek ne prihaja iz zraka: upoštevaj tudi $n_1$."], [(al * n1) / n2, "Lomni zakon velja za sinuse kotov, ne za kote."]]),
+            hint: "Uporabi splošni lomni zakon z obema lomnima količnikoma.",
+            data: { given: [`n_1 = ${tx(n1)}`, `n_2 = ${tx(n2)}`, `\\alpha = ${al}^\\circ`], find: ["\\beta"] },
+            formula: "n_1 \\sin\\alpha = n_2 \\sin\\beta",
+            solution: `$\\sin\\beta = \\dfrac{n_1 \\sin\\alpha}{n_2} = \\dfrac{${tx(n1)} \\cdot ${tx(Math.sin(deg(al)), 4)}}{${tx(n2)}} = ${tx((n1 * Math.sin(deg(al))) / n2, 4)}$\n$\\beta ${res(b, 1, "^\\circ")}$`,
+          };
+        }
+        if (v === 3) {
+          const R = r.pick([20, 30, 40, 50, 60]), a = R / 2 + r.pick([5, 10, 15, 20, 30]);
+          const f = R / 2, b = (a * f) / (a - f);
+          return {
+            text: `Vbočeno zrcalo ima krivinski polmer ${R} cm. Predmet postavimo ${a} cm pred zrcalo. Kako daleč od zrcala nastane slika? Zaokroži na eno decimalko.`,
+            answer: withMistakes(num(b, "cm", 1), [[(a * R) / (a - R), "Goriščna razdalja je polovica krivinskega polmera."], [1 / (1 / f + 1 / a), "Enačba je $1/f = 1/a + 1/b$; $1/b$ dobiš z odštevanjem."]]),
+            hint: "Goriščna razdalja zrcala je polovica krivinskega polmera; nato uporabi enačbo zrcala.",
+            data: { given: [dat("R", R, "cm"), dat("a", a, "cm")], find: ["b"] },
+            formula: ["f = \\dfrac{R}{2}", "\\dfrac{1}{f} = \\dfrac{1}{a} + \\dfrac{1}{b}"],
+            solution: `$f = \\dfrac{${R}}{2} = ${f}\\ \\mathrm{cm}$\n$\\dfrac{1}{b} = \\dfrac{1}{${f}} - \\dfrac{1}{${a}}$\n$b = \\dfrac{a f}{a - f} = \\dfrac{${a} \\cdot ${f}}{${a - f}} ${res(b, 1, "cm")}$`,
+          };
+        }
+        const d = r.pick([2, 4, 5, 8, 10, 12, 20]);
+        const t = (d * 1e-3 * n) / 3e8 / 1e-12;
         return {
-          text: `Kolikšen je mejni kot za popolni odboj na meji med ${mInst} (lomni količnik ${tx(n)}) in zrakom? Zaokroži na eno decimalko.`,
-          answer: num(c, "°", 1, { unitAlternatives: ["stopinj"] }),
-          hint: "Pri mejnem kotu je lomni kot v zraku $90^\\circ$.",
-          data: { given: [`n = ${tx(n)}`], find: ["\\alpha_m"] },
-          formula: "\\sin\\alpha_m = \\dfrac{1}{n}",
-          solution: `$\\sin\\alpha_m = \\dfrac{1}{${tx(n)}} = ${tx(1 / n, 4)}$, $\\alpha_m ${res(c, 1, "^\\circ")}$.`,
+          text: `Koliko časa potrebuje svetloba, da pravokotno preide ploščo iz ${mn}, debelo ${d} mm (lomni količnik $${tx(n)}$)? Hitrost svetlobe v vakuumu je $3 \\cdot 10^8$ m/s. Rezultat zapiši v pikosekundah (1 ps = $10^{-12}$ s) in zaokroži na eno decimalko.`,
+          answer: withMistakes(num(t, "ps", 1), [[t / n, "V snovi je svetloba počasnejša: upoštevaj lomni količnik."], [t / (n * n), "Hitrost v snovi je $c/n$, zato je čas $n$-krat daljši, ne krajši."]]),
+          hint: "Najprej izračunaj hitrost svetlobe v snovi, nato čas $t = d / v$.",
+          data: { given: [dat("d", d, "mm"), `n = ${tx(n)}`, "c = 3 \\cdot 10^8\\ \\mathrm{m/s}"], find: ["t"] },
+          formula: ["v = \\dfrac{c}{n}", "t = \\dfrac{d}{v}"],
+          solution: `$v = \\dfrac{3 \\cdot 10^8}{${tx(n)}} ${res(3e8 / n / 1e8, 3, "")} \\cdot 10^8\\ \\mathrm{m/s}$\n$t = \\dfrac{${tx(d / 1000)}\\ \\mathrm{m}}{${tx(3 / n, 3)} \\cdot 10^8\\ \\mathrm{m/s}} ${res(t, 1, "ps")}$`,
         };
       }
-      const h = r.dec(0.5, 5, 1);
-      const nn = r.pick([1.33, 1.36]);
-      const hp = h / nn;
+      const v = r.int(0, 4);
+      if (v === 0) {
+        const kind = r.int(0, 2);
+        const nn = r.pick([1.33, 1.36]);
+        const liq = nn === 1.33 ? "vode (lomni količnik 1,33)" : "tekočine z lomnim količnikom 1,36";
+        if (kind === 1) {
+          const hp = r.dec(0.6, 3.5, 2);
+          const h = hp * nn;
+          return {
+            text: `Opazovalec gleda navpično navzdol v bazen, poln ${liq}. Dno se mu zdi globoko ${Q(hp, "m")}. Kako globok je bazen v resnici? Zaokroži na dve decimalki.`,
+            answer: withMistakes(num(h, "m", 2), [[hp / nn, "Dno se zdi plitvejše, kot je; prava globina je večja od navidezne."], [hp + hp / nn, "Navidezna globina je $h/n$; ni treba seštevati."]]),
+            hint: "Za majhne kote (pogled navpično) velja $h' = h/n$. Izrazi pravo globino.",
+            data: { given: [dat("h'", tx(hp), "m"), `n = ${tx(nn)}`], find: ["h"] },
+            formula: ["\\tan\\alpha \\approx \\sin\\alpha", "h' = \\dfrac{h}{n}"],
+            solution: `Za majhne kote je $\\dfrac{h'}{h} = \\dfrac{\\tan\\beta}{\\tan\\alpha} \\approx \\dfrac{\\sin\\beta}{\\sin\\alpha} = \\dfrac{1}{n}$\n$h = n h' = ${tx(nn)} \\cdot ${tx(hp)} ${res(h, 2, "m")}$`,
+          };
+        }
+        const h = r.dec(0.5, 5, 1);
+        const hp = h / nn;
+        const ask = kind === 0 ? hp : h - hp;
+        return {
+          text: `Bazen je globok ${Q(h, "m")} in poln ${liq}. ${kind === 0 ? "Kako globok se zdi opazovalcu, ki gleda navpično navzdol?" : "Za koliko se opazovalcu, ki gleda navpično navzdol, zdi plitvejši, kot je v resnici?"} Zaokroži na dve decimalki.`,
+          answer: withMistakes(num(ask, "m", 2), [[h * nn, "Dno se zdi bližje, ne dlje: deli z lomnim količnikom."], kind === 0 ? [h - hp, "Izračunal si razliko globin; iščemo navidezno globino."] : [hp, "To je navidezna globina; iščemo razliko med pravo in navidezno."]]),
+          hint: "Za majhne kote je $\\tan \\approx \\sin$, zato je navidezna globina $h' = h/n$.",
+          data: { given: [dat("h", tx(h), "m"), `n = ${tx(nn)}`], find: [kind === 0 ? "h'" : "\\Delta h"] },
+          formula: kind === 0 ? "h' = \\dfrac{h}{n}" : ["h' = \\dfrac{h}{n}", "\\Delta h = h - h'"],
+          solution: `Za majhne kote je $\\dfrac{h'}{h} \\approx \\dfrac{\\sin\\beta}{\\sin\\alpha} = \\dfrac{1}{n}$\n$h' = \\dfrac{${tx(h)}}{${tx(nn)}} ${res(hp, 3, "m")}$${kind === 2 ? `\n$\\Delta h = ${tx(h)} - ${tx(hp, 3)} ${res(h - hp, 2, "m")}$` : ""}`,
+        };
+      }
+      if (v === 1) {
+        const h = r.dec(0.8, 3, 1), nn = r.pick([1.33, 1.36]);
+        const am = Math.asin(1 / nn), R = h * Math.tan(am);
+        return {
+          text: `Na dnu bazena, globokega ${Q(h, "m")}, je majhna svetilka. Bazen je poln tekočine z lomnim količnikom $${tx(nn)}$. Iz zraka vidimo na gladini svetel krog, zunaj njega pa svetloba ne izstopi. Kolikšen je polmer kroga? Zaokroži na dve decimalki.`,
+          answer: withMistakes(num(R, "m", 2), [[h * Math.sin(am), "Polmer je $h \\tan\\alpha_m$, ne $h \\sin\\alpha_m$ (nariši pravokotni trikotnik)."], [h / Math.tan(am), "Tangens je razmerje polmera proti globini, ne obratno."], [2 * R, "To je premer kroga."]]),
+          hint: "Zunaj kroga se žarki popolnoma odbijejo. Izračunaj mejni kot, nato iz pravokotnega trikotnika polmer.",
+          data: { given: [dat("h", tx(h), "m"), `n = ${tx(nn)}`], find: ["R"] },
+          formula: ["\\sin\\alpha_m = \\dfrac{1}{n}", "R = h \\tan\\alpha_m"],
+          solution: `$\\sin\\alpha_m = \\dfrac{1}{${tx(nn)}} = ${tx(1 / nn, 4)}$, $\\alpha_m ${res(toDeg(am), 2, "^\\circ")}$\n$R = h \\tan\\alpha_m = ${tx(h)} \\cdot ${tx(Math.tan(am), 4)} ${res(R, 2, "m")}$`,
+        };
+      }
+      if (v === 2) {
+        const L = r.pick([60, 80, 90, 100, 120, 150]), k = r.pick([2, 3, 4, 5]);
+        const a = L / (k + 1), b = (k * L) / (k + 1), f = (a * b) / L;
+        return {
+          text: `Zaslon je od predmeta oddaljen ${L} cm. Med njiju postavimo zbiralno lečo tako, da na zaslonu nastane ostra ${k}-krat povečana slika. Kolikšna je goriščna razdalja leče? Zaokroži na eno decimalko.`,
+          answer: withMistakes(num(f, "cm", 1), [[a, "To je oddaljenost predmeta od leče, ne goriščna razdalja."], [L / k, "Povečava je razmerje $b/a$, vsota $a + b$ pa je razdalja do zaslona."], [L / 4, "$f = L/4$ velja le, ko je slika enako velika kot predmet."]]),
+          hint: "Velja $a + b = L$ in $b = k a$. Iz tega izračunaj $a$ in $b$, nato uporabi enačbo leče.",
+          data: { given: [dat("L", L, "cm"), `k = ${k}`], find: ["f"] },
+          formula: ["a + b = L", "\\dfrac{b}{a} = k", "\\dfrac{1}{f} = \\dfrac{1}{a} + \\dfrac{1}{b}"],
+          solution: `$a + ${k}a = ${L}$, torej $a = \\dfrac{${L}}{${k + 1}} ${res(a, 2, "cm")}$\n$b = ${k} a ${res(b, 2, "cm")}$\n$f = \\dfrac{a b}{a + b} = \\dfrac{${tx(a, 2)} \\cdot ${tx(b, 2)}}{${L}} ${res(f, 1, "cm")}$`,
+        };
+      }
+      if (v === 3) {
+        const d = r.pick([5, 8, 10, 12, 15, 20]), al = r.pick([30, 40, 45, 50, 60]), np = r.pick([1.5, 1.52, 1.62]);
+        const be = Math.asin(Math.sin(deg(al)) / np);
+        const s = (d * Math.sin(deg(al) - be)) / Math.cos(be);
+        const x = d * (Math.tan(deg(al)) - Math.tan(be));
+        return {
+          text: `Žarek pade iz zraka pod vpadnim kotom ${al}° na planparalelno stekleno ploščo, debelo ${d} mm (lomni količnik $${tx(np)}$). Za koliko je izstopni žarek vzporedno premaknjen glede na vpadnega (pravokotna razdalja med njima)? Zaokroži na dve decimalki.`,
+          answer: withMistakes(num(s, "mm", 2), [[x, "To je premik vzdolž ploskve plošče; pravokotna razdalja med žarkoma je $x \\cos\\alpha$."], [d * Math.sin(deg(al) - be), "Pot žarka v plošči je $d / \\cos\\beta$, ne $d$."]]),
+          hint: "Izračunaj lomni kot in pot žarka v plošči $d/\\cos\\beta$; premik je ta pot krat $\\sin(\\alpha - \\beta)$.",
+          data: { given: [dat("d", d, "mm"), `\\alpha = ${al}^\\circ`, `n = ${tx(np)}`], find: ["s"] },
+          formula: ["\\sin\\alpha = n \\sin\\beta", "s = \\dfrac{d \\sin(\\alpha - \\beta)}{\\cos\\beta}"],
+          solution: `$\\sin\\beta = \\dfrac{\\sin ${al}^\\circ}{${tx(np)}} = ${tx(Math.sin(deg(al)) / np, 4)}$, $\\beta ${res(toDeg(be), 2, "^\\circ")}$\nPot v plošči: $\\dfrac{${d}}{\\cos\\beta} ${res(d / Math.cos(be), 3, "mm")}$\n$s = ${tx(d / Math.cos(be), 3)} \\cdot \\sin(${al}^\\circ - ${tx(toDeg(be), 2)}^\\circ) ${res(s, 2, "mm")}$`,
+        };
+      }
+      const phi = r.pick([30, 45, 60]), np = r.pick([1.5, 1.52, 1.62, 1.33, 1.46]);
+      const dmin = 2 * toDeg(Math.asin(np * Math.sin(deg(phi / 2)))) - phi;
       return {
-        text: `Bazen je globok ${Q(h, "m")} in poln ${nn === 1.33 ? "vode (lomni količnik 1,33)" : "tekočine z lomnim količnikom 1,36"}. Kako globok se zdi opazovalcu, ki gleda navpično navzdol? Zaokroži na dve decimalki.`,
-        answer: num(hp, "m", 2),
-        hint: "Za majhne kote je $\\tan \\approx \\sin$, zato je navidezna globina $h' = h/n$.",
-        data: { given: [dat("h", tx(h), "m"), `n = ${tx(nn)}`], find: ["h'"] },
-        formula: "h' = \\dfrac{h}{n}",
-        solution: `$h' = \\dfrac{${tx(h)}}{${tx(nn)}} ${res(hp, 2, "m")}$.`,
+        text: `Prizma z lomnim kotom ${phi}° je iz snovi z lomnim količnikom $${tx(np)}$. Žarek gre skozi prizmo simetrično (pri najmanjšem odklonu). Kolikšen je najmanjši kot odklona? Zaokroži na eno decimalko.`,
+        answer: withMistakes(num(dmin, "°", 1, DEG), [[(np - 1) * phi, "Približek $(n-1)\\varphi$ velja le za tanke prizme; tu računaj natančno."], [toDeg(Math.asin(np * Math.sin(deg(phi / 2)))), "To je vpadni kot; odklon je $2\\alpha - \\varphi$."]]),
+        hint: "Pri simetričnem prehodu je lomni kot v prizmi $\\varphi/2$. Izračunaj vpadni kot, nato odklon $\\delta = 2\\alpha - \\varphi$.",
+        data: { given: [`\\varphi = ${phi}^\\circ`, `n = ${tx(np)}`], find: ["\\delta_{min}"] },
+        formula: ["\\sin\\alpha = n \\sin\\dfrac{\\varphi}{2}", "\\delta_{min} = 2\\alpha - \\varphi"],
+        solution: `Lomni kot v prizmi: $\\beta = ${phi / 2}^\\circ$\n$\\sin\\alpha = ${tx(np)} \\cdot \\sin ${phi / 2}^\\circ = ${tx(np * Math.sin(deg(phi / 2)), 4)}$, $\\alpha ${res(toDeg(Math.asin(np * Math.sin(deg(phi / 2)))), 2, "^\\circ")}$\n$\\delta_{min} = 2\\alpha - ${phi}^\\circ ${res(dmin, 1, "^\\circ")}$`,
       };
     },
   },
@@ -970,24 +1309,116 @@ export const TEK_FIZ = [
     id: "tek-fiz-dimenzije",
     topics: [SS("ocenjevanje-in-dimenzijska-analiza")],
     gen(level, r) {
-      const probs = [
-        { what: "nihajni čas $t_0$ nitnega nihala", form: "t_0 = C\\, m^a\\, l^b\\, g^c", vars: ["a", "b", "c"], ans: [0, 0.5, -0.5], units: "$[m] = \\mathrm{kg}$, $[l] = \\mathrm{m}$, $[g] = \\mathrm{m/s^2}$" },
-        { what: "nihajni čas $t_0$ uteži na vzmeti", form: "t_0 = C\\, m^a\\, k^b", vars: ["a", "b"], ans: [0.5, -0.5], units: "$[m] = \\mathrm{kg}$, $[k] = \\mathrm{N/m} = \\mathrm{kg/s^2}$" },
-        { f: true, what: "hitrost $c$ valovanja na struni", form: "c = C\\, F^a\\, \\mu^b", vars: ["a", "b"], ans: [0.5, -0.5], units: "$[F] = \\mathrm{kg\\,m/s^2}$, $[\\mu] = \\mathrm{kg/m}$" },
-        { f: true, what: "hitrost $v$ telesa, ki pade z višine $h$", form: "v = C\\, h^a\\, g^b\\, m^c", vars: ["a", "b", "c"], ans: [0.5, 0.5, 0], units: "$[h] = \\mathrm{m}$, $[g] = \\mathrm{m/s^2}$, $[m] = \\mathrm{kg}$" },
-        { f: true, what: "sila upora $F$ pri hitrem gibanju skozi zrak", form: "F = C\\, \\rho^a\\, v^b\\, S^c", vars: ["a", "b", "c"], ans: [1, 2, 1], units: "$[\\rho] = \\mathrm{kg/m^3}$, $[v] = \\mathrm{m/s}$, $[S] = \\mathrm{m^2}$" },
-        { what: "obhodni čas $T$ planeta", form: "T = C\\, r^a\\, (GM)^b", vars: ["a", "b"], ans: [1.5, -0.5], units: "$[r] = \\mathrm{m}$, $[GM] = \\mathrm{m^3/s^2}$" },
+      // Enote kot eksponenti [kg, m, s].
+      const U = {
+        m: ["m", "\\mathrm{kg}", [1, 0, 0]], l: ["l", "\\mathrm{m}", [0, 1, 0]], g: ["g", "\\mathrm{m/s^2}", [0, 1, -2]], k: ["k", "\\mathrm{kg/s^2}", [1, 0, -2]],
+        F: ["F", "\\mathrm{kg\\,m/s^2}", [1, 1, -2]], mu: ["\\mu", "\\mathrm{kg/m}", [1, -1, 0]], rho: ["\\rho", "\\mathrm{kg/m^3}", [1, -3, 0]], v: ["v", "\\mathrm{m/s}", [0, 1, -1]],
+        S: ["S", "\\mathrm{m^2}", [0, 2, 0]], GM: ["GM", "\\mathrm{m^3/s^2}", [0, 3, -2]], h: ["h", "\\mathrm{m}", [0, 1, 0]], r: ["r", "\\mathrm{m}", [0, 1, 0]],
+        p: ["p", "\\mathrm{kg/(m\\,s^2)}", [1, -1, -2]], sig: ["\\sigma", "\\mathrm{kg/s^2}", [1, 0, -2]], eta: ["\\eta", "\\mathrm{kg/(m\\,s)}", [1, -1, -1]], E: ["E", "\\mathrm{kg\\,m^2/s^2}", [1, 2, -2]],
+        t: ["t", "\\mathrm{s}", [0, 0, 1]], lam: ["\\lambda", "\\mathrm{m}", [0, 1, 0]],
+      };
+      // [opis, simbol iskane količine, enota iskane količine, spremenljivke, odvisen/odvisna]
+      const two = [
+        ["nihajni čas $t_0$ uteži na vzmeti", "t_0", [0, 0, 1], ["m", "k"], "odvisen"],
+        ["hitrost $c$ valovanja na napeti struni", "c", [0, 1, -1], ["F", "mu"], "odvisna"],
+        ["hitrost $c$ zvoka v plinu", "c", [0, 1, -1], ["p", "rho"], "odvisna"],
+        ["hitrost $c$ valov na globoki vodi", "c", [0, 1, -1], ["g", "lam"], "odvisna"],
+        ["kinetična energija $W$ telesa", "W", [1, 2, -2], ["m", "v"], "odvisna"],
+        ["obhodni čas $T$ planeta okoli Sonca", "T", [0, 0, 1], ["r", "GM"], "odvisen"],
+        ["čas $t$ prostega pada z višine $h$", "t", [0, 0, 1], ["h", "g"], "odvisen"],
+        ["tlak $p$ curka, ki se ustavi na steni", "p", [1, -1, -2], ["rho", "v"], "odvisen"],
       ];
-      const pool = level === 1 ? probs.slice(0, 3) : level === 2 ? probs.slice(1, 5) : probs.slice(3);
-      const p = r.pick(pool);
-      const i = r.int(0, p.vars.length - 1);
+      const three = [
+        ["nihajni čas $t_0$ nitnega nihala", "t_0", [0, 0, 1], ["m", "l", "g"], "odvisen"],
+        ["hitrost $v$ telesa, ki pade z višine $h$", "v", [0, 1, -1], ["h", "g", "m"], "odvisna"],
+        ["sila zračnega upora $F$ pri hitrem gibanju", "F", [1, 1, -2], ["rho", "v", "S"], "odvisna"],
+        ["frekvenca $\\nu$ nihanja kapljice", "\\nu", [0, 0, -1], ["sig", "rho", "r"], "odvisna"],
+        ["sila upora $F$ na kroglico v medu", "F", [1, 1, -2], ["eta", "r", "v"], "odvisna"],
+        ["centripetalna sila $F$ pri kroženju", "F", [1, 1, -2], ["m", "v", "r"], "odvisna"],
+        ["hidrostatični tlak $p$ v globini $h$", "p", [1, -1, -2], ["rho", "g", "h"], "odvisen"],
+        ["polmer $R$ udarnega vala eksplozije ob času $t$", "R", [0, 1, 0], ["E", "rho", "t"], "odvisen"],
+      ];
+      // Reši sistem za eksponente (Gauss) – rezultat zaokrožen na 0,1.
+      const solve = (target, vars) => {
+        const A = [0, 1, 2].map((row) => [...vars.map((q) => U[q][2][row]), target[row]]);
+        const n = vars.length, rows = [];
+        for (let c = 0, rr = 0; c < n; c++) {
+          let p = A.findIndex((row, i) => i >= rr && Math.abs(row[c]) > 1e-9);
+          if (p < 0) continue;
+          [A[rr], A[p]] = [A[p], A[rr]];
+          for (let i = 0; i < 3; i++) if (i !== rr) { const f = A[i][c] / A[rr][c]; A[i] = A[i].map((x, j) => x - f * A[rr][j]); }
+          rows.push([rr, c]);
+          rr++;
+        }
+        const x = Array(n).fill(0);
+        for (const [rr, c] of rows) x[c] = Math.round((A[rr][n] / A[rr][c]) * 10) / 10;
+        return x;
+      };
+      const unitsTxt = (vars) => vars.map((q) => `$[${U[q][0]}] = ${U[q][1]}$`).join(", ");
+      // Enota iz eksponentov: [1, -1, -2] → \mathrm{kg/(m\,s^2)}.
+      const dimTex = (dim) => {
+        const part = (sgn) => ["kg", "m", "s"].map((un, i) => (sgn * dim[i] > 0 ? (sgn * dim[i] === 1 ? un : `${un}^${sgn * dim[i]}`) : "")).filter(Boolean);
+        const up = part(1), dn = part(-1);
+        const top = up.join("\\,") || "1";
+        return `\\mathrm{${dn.length ? `${top}/${dn.length > 1 ? `(${dn.join("\\,")})` : dn[0]}` : top}}`;
+      };
+      const expTxt = (vars, names) => vars.map((q, i) => `${U[q][0] === "GM" ? "(GM)" : U[q][0]}^{${names[i]}}`).join("\\, ");
+      if (level <= 2) {
+        const [what, sym, dim, vars, odv] = r.pick(level === 1 ? two : three);
+        const names = ["a", "b", "c"].slice(0, vars.length);
+        const x = solve(dim, vars);
+        const i = r.int(0, vars.length - 1);
+        const eqs = ["kg", "m", "s"].map((un, row) => `${un}: $${vars.map((q, j) => `${U[q][2][row]}${names[j]}`).filter((s) => !s.startsWith("0")).join(" + ").replace(/\b1([a-c])/g, "$1").replace(/\+ -/g, "- ") || "0"} = ${dim[row]}$`);
+        return {
+          text: `Fizik predvideva, da je ${what} ${odv} le od naštetih količin: $${sym} = C\\, ${expTxt(vars, names)}$, kjer je $C$ brezdimenzijska konstanta. Enote: $[${sym}] = ${dimTex(dim)}$, ${unitsTxt(vars)}. Kolikšen je eksponent $${names[i]}$? (Decimalna števila zapiši z vejico, npr. −0,5.)`,
+          answer: withMistakes(num(x[i], null, 1), [[-x[i], "Preveri predznak: količina v imenovalcu enote ima negativen eksponent."], [x[i] === 0 ? 1 : 2 * x[i], x[i] === 0 ? "Če se kilogrami drugje ne morejo okrajšati, mora biti ta eksponent 0." : "Ali si pri sekundah pravilno upošteval kvadrat ($\\mathrm{s^2}$) v enoti?"], ...x.map((xx, j) => [xx, `To je eksponent $${names[j]}$, ne $${names[i]}$.`])]),
+          hint: "Zapiši enote obeh strani in izenači eksponente kilogramov, metrov in sekund. Dobiš sistem enačb.",
+          data: { given: [`[${sym}] = ${dimTex(dim)}`, ...vars.map((q) => `[${U[q][0]}] = ${U[q][1]}`)], find: [names[i]] },
+          formula: "[\\text{leva stran}] = [\\text{desna stran}] \\text{ za kg, m in s posebej}",
+          solution: `Izenačimo eksponente osnovnih enot:\n${eqs.join("\n")}\nRešitev: ${names.map((v2, k) => `$${v2} = ${tx(x[k])}$`).join(", ")}\nIskani eksponent: $${names[i]} = ${tx(x[i])}$`,
+        };
+      }
+      // Raven 3: iz dimenzijske analize sklepamo, kako se količina spremeni (prenos na nov primer).
+      const cases = [
+        () => {
+          const l1 = r.pick([0.5, 0.8, 1, 1.2, 2]), t1 = roundHalfUp(2 * Math.PI * Math.sqrt(l1 / G), 2), l2 = r.pick([0.25, 0.4, 1.5, 3, 4.5, 6]);
+          return { text: `Nihalo z dolžino ${Q(l1, "m")} ima nihajni čas ${Q(t1, "s")}. Iz dimenzijske analize vemo, da je $t_0 \\propto \\sqrt{l/g}$. Kolikšen je nihajni čas nihala z dolžino ${Q(l2, "m")} na istem kraju? Zaokroži na dve decimalki.`, x1: l1, x2: l2, y1: t1, e: 0.5, unit: "s", d: 2, given: [dat("l_1", tx(l1), "m"), dat("t_1", tx(t1), "s"), dat("l_2", tx(l2), "m")], find: "t_2", f: "t_2 = t_1 \\left(\\dfrac{l_2}{l_1}\\right)^{1/2}", lin: "Nihajni čas ni sorazmeren z dolžino, ampak s korenom dolžine." };
+        },
+        () => {
+          const a = r.pick([0.39, 0.72, 1.52, 5.2, 9.5, 19.2]);
+          return { text: `Zemlja kroži okoli Sonca na razdalji 1 AU z obhodnim časom 1 leto. Dimenzijska analiza da $T \\propto r^{3/2} (GM)^{-1/2}$. Kolikšen je obhodni čas planeta na razdalji $${tx(a)}$ AU? Rezultat zapiši v letih in zaokroži na dve decimalki.`, x1: 1, x2: a, y1: 1, e: 1.5, unit: "let", d: 2, given: [dat("r_1", 1, "AU"), dat("T_1", 1, "\\text{leto}"), dat("r_2", tx(a), "AU")], find: "T_2", f: "T_2 = T_1 \\left(\\dfrac{r_2}{r_1}\\right)^{3/2}", lin: "Obhodni čas ni sorazmeren z razdaljo; eksponent je 3/2." };
+        },
+        () => {
+          const v1 = r.pick([10, 15, 20, 25]), F1 = r.pick([40, 60, 80, 120, 150]), v2 = r.pick([30, 35, 40, 50]);
+          return { text: `Pri hitrem gibanju skozi zrak je sila upora $F = C \\rho v^2 S$. Kolesar pri hitrosti ${v1} km/h čuti silo upora ${F1} N. Kolikšna je sila upora pri hitrosti ${v2} km/h (enaka drža)? Zaokroži na celo število.`, x1: v1, x2: v2, y1: F1, e: 2, unit: "N", d: 0, given: [dat("v_1", v1, "km/h"), dat("F_1", F1, "N"), dat("v_2", v2, "km/h")], find: "F_2", f: "F_2 = F_1 \\left(\\dfrac{v_2}{v_1}\\right)^{2}", lin: "Sila upora ni sorazmerna s hitrostjo, ampak s kvadratom hitrosti." };
+        },
+        () => {
+          const t1 = r.pick([0.01, 0.02, 0.025]), R1 = r.pick([100, 120, 140, 150]), t2 = r.pick([0.05, 0.08, 0.1, 0.16]);
+          return { text: `Polmer udarnega vala eksplozije raste kot $R = C\\, E^{1/5} \\rho^{-1/5} t^{2/5}$. Ob času ${Q(t1, "s")} je polmer ${Q(R1, "m")}. Kolikšen je ob času ${Q(t2, "s")}? Zaokroži na celo število.`, x1: t1, x2: t2, y1: R1, e: 0.4, unit: "m", d: 0, given: [dat("t_1", tx(t1), "s"), dat("R_1", R1, "m"), dat("t_2", tx(t2), "s")], find: "R_2", f: "R_2 = R_1 \\left(\\dfrac{t_2}{t_1}\\right)^{2/5}", lin: "Polmer ni sorazmeren s časom; eksponent je 2/5." };
+        },
+        () => {
+          const m1 = r.pick([0.1, 0.2, 0.25, 0.5]), T1 = r.pick([0.4, 0.5, 0.6, 0.8]), m2 = r.pick([0.4, 0.8, 1, 1.5, 2]);
+          return { text: `Utež z maso ${Q(m1, "kg")} na vzmeti niha z nihajnim časom ${Q(T1, "s")}. Dimenzijska analiza da $t_0 \\propto \\sqrt{m/k}$. Kolikšen je nihajni čas uteži z maso ${Q(m2, "kg")} na isti vzmeti? Zaokroži na dve decimalki.`, x1: m1, x2: m2, y1: T1, e: 0.5, unit: "s", d: 2, given: [dat("m_1", tx(m1), "kg"), dat("t_1", tx(T1), "s"), dat("m_2", tx(m2), "kg")], find: "t_2", f: "t_2 = t_1 \\left(\\dfrac{m_2}{m_1}\\right)^{1/2}", lin: "Nihajni čas ni sorazmeren z maso, ampak s korenom mase." };
+        },
+        () => {
+          const F1 = r.pick([20, 40, 50, 80]), c1 = r.pick([100, 120, 150, 200]), F2 = r.pick([45, 90, 160, 200, 320]);
+          return { text: `Hitrost valovanja na struni je $c = C \\sqrt{F/\\mu}$. Pri sili napetosti ${F1} N je hitrost ${c1} m/s. Kolikšna je hitrost na isti struni pri sili ${F2} N? Zaokroži na celo število.`, x1: F1, x2: F2, y1: c1, e: 0.5, unit: "m/s", d: 0, given: [dat("F_1", F1, "N"), dat("c_1", c1, "m/s"), dat("F_2", F2, "N")], find: "c_2", f: "c_2 = c_1 \\left(\\dfrac{F_2}{F_1}\\right)^{1/2}", lin: "Hitrost ni sorazmerna s silo, ampak s korenom sile." };
+        },
+        () => {
+          const r1 = r.pick([1, 1.5, 2, 3]), f1 = r.pick([50, 80, 100, 120]), r2 = r.pick([0.5, 2.5, 4, 5, 6]);
+          return { text: `Kapljica s polmerom ${Q(r1, "mm")} niha s frekvenco ${f1} Hz. Dimenzijska analiza da $\\nu = C \\sqrt{\\sigma/(\\rho r^3)}$. S kolikšno frekvenco niha kapljica iste tekočine s polmerom ${Q(r2, "mm")}? Zaokroži na eno decimalko.`, x1: r1, x2: r2, y1: f1, e: -1.5, unit: "Hz", d: 1, given: [dat("r_1", tx(r1), "mm"), dat("\\nu_1", f1, "Hz"), dat("r_2", tx(r2), "mm")], find: "\\nu_2", f: "\\nu_2 = \\nu_1 \\left(\\dfrac{r_2}{r_1}\\right)^{-3/2}", lin: "Večja kapljica niha počasneje; eksponent polmera je −3/2." };
+        },
+      ];
+      const c = r.pick(cases)();
+      if (Math.abs(c.x2 - c.x1) < 1e-9) return null;
+      const k = c.x2 / c.x1, y2 = c.y1 * k ** c.e;
       return {
-        text: `Fizik predvideva, da je ${p.what} ${p.f ? "odvisna" : "odvisen"} le od naštetih količin: $${p.form}$, kjer je $C$ brezdimenzijska konstanta. Enote: ${p.units}. Kolikšen je eksponent $${p.vars[i]}$? (Decimalna števila zapiši z vejico, npr. −0,5.)`,
-        answer: num(p.ans[i], null, 1),
-        hint: "Zapiši enote obeh strani in izenači eksponente kilogramov, metrov in sekund. Dobiš sistem enačb.",
-        data: false,
-        formula: "[\\text{leva stran}] = [\\text{desna stran}] \\text{ za kg, m in s posebej}",
-        solution: `Z izenačitvijo eksponentov osnovnih enot dobimo ${p.vars.map((v, k) => `$${v} = ${tx(p.ans[k])}$`).join(", ")}.\nIskani eksponent: $${p.vars[i]} = ${tx(p.ans[i])}$.`,
+        text: c.text,
+        answer: withMistakes(num(y2, c.unit, c.d, c.unit === "let" ? { unitAlternatives: ["leta", "leti", "leto", "a"] } : {}), [[c.y1 * k, c.lin], [c.y1 * k ** -c.e, "Eksponent ima napačen predznak: preveri, ali količina z večjim vzrokom raste ali pada."], Math.abs(c.e) < 1 ? [c.y1 * k ** (2 * c.e), `Pozabil si na koren: eksponent je ${tx(c.e)}, ne ${tx(2 * c.e)}.`] : [NaN, ""]]),
+        hint: "Ostale količine so enake, zato se pri razmerju okrajšajo. Izračunaj razmerje vzrokov in ga potenciraj z eksponentom.",
+        data: { given: c.given, find: [c.find] },
+        formula: c.f,
+        solution: `Razmerje: $\\dfrac{${c.given[2].split(" = ")[1]}}{${c.given[0].split(" = ")[1]}} ${res(k, 4)}$\nFaktor: $${tx(k, 4)}^{${tx(c.e)}} ${res(k ** c.e, 4)}$\n$${c.find} = ${tx(c.y1)} \\cdot ${tx(k ** c.e, 4)} ${res(y2, c.d, c.unit === "let" ? "\\text{let}" : c.unit)}$`,
       };
     },
   },

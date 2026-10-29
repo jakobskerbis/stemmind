@@ -2,7 +2,7 @@
 // Vse naloge so ustvarjene s kodo; pravilen odgovor je izračunan (kjer gre, s preštevanjem vseh možnosti).
 import { NAMES, g, nOf, verbOf } from "../rng.js";
 import {
-  tx, res, num, sci, par, binom, fact, modpow, divisors, factorize, factorTex, gcd, ORD, cap, DAYS, choiceAns,
+  tx, res, num, sci, par, binom, fact, modpow, divisors, factorize, factorTex, gcd, ORD, cap, DAYS, choiceAns, withMistakes, choiceWhy, dat,
 } from "./tek-util.js";
 
 const T = (slug) => `MAT-TEK-OS/${slug}`;
@@ -515,90 +515,211 @@ export const TEK_MAT_OS = [
     id: "tek-prestevanje",
     topics: [T("prestevanje-moznosti")],
     gen(level, r) {
+      const ime = r.pick(NAMES);
       if (level === 1) {
-        const conds = [
-          ["so soda", (n) => n % 2 === 0],
-          ["so liha", (n) => n % 2 === 1],
-          ["so deljiva s 5", (n) => n % 5 === 0],
-          ["so večja od 500", (n) => n > 500],
-          ["nimajo števke 0", (n) => !String(n).includes("0")],
-        ];
-        const [desc, f] = r.pick(conds);
-        let c = 0;
-        for (let n = 100; n <= 999; n++) if (new Set(String(n)).size === 3 && f(n)) c++;
+        const v = r.int(0, 5);
+        if (v === 0) {
+          const conds = [
+            ["so soda", (n) => n % 2 === 0, "zadnjo"],
+            ["so liha", (n) => n % 2 === 1, "zadnjo"],
+            ["so deljiva s 5", (n) => n % 5 === 0, "zadnjo"],
+            ["so večja od 500", (n) => n > 500, "prvo"],
+            ["nimajo števke 0", (n) => !String(n).includes("0"), "vsako"],
+            ["se začnejo s števko 7", (n) => String(n)[0] === "7", "prvo"],
+            ["so manjša od 400", (n) => n < 400, "prvo"],
+          ];
+          const [desc, f, kje] = r.pick(conds);
+          let c = 0, z = 0;
+          for (let n = 100; n <= 999; n++) if (new Set(String(n)).size === 3 && f(n)) c++;
+          // napaka: ničla na prvem mestu dovoljena
+          for (let n = 0; n <= 999; n++) if (new Set(String(n).padStart(3, "0")).size === 3 && f(n)) z++;
+          return {
+            text: `Koliko je trimestnih števil s tremi različnimi števkami, ki ${desc}?`,
+            answer: withMistakes(num(c), [[z, "Ali si izločil števila z ničlo na prvem mestu?"], [9 * 9 * 8, "To so vsa trimestna števila z različnimi števkami; upoštevaj še pogoj."]]),
+            hint: `Najprej izberi ${kje} števko (tisto z omejitvijo), nato ostale. Pazi na ničlo na prvem mestu.`,
+            data: false,
+            formula: "\\text{pravilo produkta}",
+            solution: `Najprej določimo ${kje} števko, ker ima omejitev; nato preostali mesti (prva ni 0, števke so različne).\nKjer je potrebno, ločimo primere (npr. ali je zadnja števka 0).\nSkupaj: $${c}$.`,
+          };
+        }
+        if (v === 1) {
+          const a = r.int(3, 8), b = r.int(2, 6), k = r.int(2, 5);
+          return {
+            text: `${ime} ima ${a} majic, ${b} hlač in ${k} pare superg. Na koliko načinov se lahko obleče (ena majica, ene hlače, en par superg)?`,
+            answer: withMistakes(num(a * b * k), [[a + b + k, "Izbire so neodvisne: število možnosti zmnožiš, ne sešteješ."], [a * b, "Upoštevaj tudi superge."]]),
+            hint: "Za vsako majico lahko izbereš katerekoli hlače in katerekoli superge.",
+            data: { given: [`a = ${a}`, `b = ${b}`, `c = ${k}`], find: ["N"] },
+            formula: "N = a \\cdot b \\cdot c",
+            solution: `Pravilo produkta: $N = a \\cdot b \\cdot c$\n$N = ${a} \\cdot ${b} \\cdot ${k} = ${a * b * k}$`,
+          };
+        }
+        if (v === 2) {
+          const n = r.int(5, 14);
+          return {
+            text: `Na srečanju je ${n} učencev. Vsak se z vsakim natanko enkrat rokuje. Koliko je vseh rokovanj?`,
+            answer: withMistakes(num((n * (n - 1)) / 2), [[n * (n - 1), "Vsako rokovanje si štel dvakrat (A z B in B z A)."], [n * n, "Sam s seboj se nihče ne rokuje, vsako rokovanje pa šteješ enkrat."]]),
+            hint: "Vsak se rokuje z vsemi drugimi; ko to sešteješ za vse, je vsako rokovanje šteto dvakrat.",
+            data: { given: [`n = ${n}`], find: ["N"] },
+            formula: "N = \\dfrac{n(n-1)}{2}",
+            solution: `Vsak od ${n} se rokuje z ${n - 1} drugimi: $${n} \\cdot ${n - 1} = ${n * (n - 1)}$\nVsako rokovanje je šteto dvakrat: $N = ${n * (n - 1)} : 2 = ${(n * (n - 1)) / 2}$`,
+          };
+        }
+        if (v === 3) {
+          const n = r.int(5, 12);
+          return {
+            text: `Na tekmi teče ${n} tekačev. Na koliko načinov so lahko podeljene zlata, srebrna in bronasta medalja (vsak tekač dobi največ eno)?`,
+            answer: withMistakes(num(n * (n - 1) * (n - 2)), [[n ** 3, "Isti tekač ne more dobiti dveh medalj."], [(n * (n - 1) * (n - 2)) / 6, "Vrstni red je pomemben: zlato in srebro nista isto."]]),
+            hint: "Kdo lahko dobi zlato? Koliko jih ostane za srebro, in koliko za bron?",
+            data: { given: [`n = ${n}`], find: ["N"] },
+            formula: "N = n(n-1)(n-2)",
+            solution: `Zlato: ${n} možnosti, srebro: ${n - 1}, bron: ${n - 2}\n$N = ${n} \\cdot ${n - 1} \\cdot ${n - 2} = ${n * (n - 1) * (n - 2)}$`,
+          };
+        }
+        if (v === 4) {
+          const L = r.int(3, 5), k = r.pick([4, 5, 6, 10]);
+          return {
+            text: `Ključavnica s kodo ima ${L} kolesca, na vsakem je ${k} različnih števk. Koliko različnih kod lahko nastavimo (števke se lahko ponavljajo)?`,
+            answer: withMistakes(num(k ** L), [[k * L, "Možnosti na kolescih se zmnožijo, ne seštejejo."], [L ** k, "Osnova je število števk na kolescu, eksponent pa število kolesc."]]),
+            hint: "Vsako kolesce nastaviš neodvisno od drugih.",
+            data: { given: [`n = ${L}`, `k = ${k}`], find: ["N"] },
+            formula: "N = k^n",
+            solution: `Vsako od ${L} kolesc ima ${k} možnosti.\n$N = ${k}^{${L}} = ${k ** L}$`,
+          };
+        }
+        const p = r.int(2, 5), q = r.int(3, 7), s = r.int(2, 5);
         return {
-          text: `Koliko je trimestnih števil s tremi različnimi števkami, ki ${desc}?`,
-          answer: num(c),
-          hint: "Najprej izberi števko z omejitvijo (zadnjo pri sodih/lihih ali deljivih s 5, prvo pri »večja od 500«), nato ostale. Pazi na ničlo na prvem mestu.",
-          data: false,
-          formula: "\\text{pravilo produkta}",
-          solution: `Preštejemo po pravilu produkta: najprej mesto z omejitvijo, nato ostali mesti (prva števka ne sme biti 0, števke so različne). Kjer je potrebno, ločimo primere (npr. ali je zadnja števka 0).\nSkupaj: $${c}$.`,
+          text: `V restavraciji imajo ${p} predjedi, ${q} glavnih jedi in ${s} sladic. ${ime} izbere eno predjed, eno glavno jed in eno sladico. Koliko različnih kosil lahko sestavi?`,
+          answer: withMistakes(num(p * q * s), [[p + q + s, "Izbire so neodvisne: število možnosti zmnožiš, ne sešteješ."], [q * s, "Upoštevaj tudi predjed."]]),
+          hint: "Za vsako predjed lahko izbere katerokoli glavno jed in katerokoli sladico.",
+          data: { given: [`a = ${p}`, `b = ${q}`, `c = ${s}`], find: ["N"] },
+          formula: "N = a \\cdot b \\cdot c",
+          solution: `Pravilo produkta: $N = a \\cdot b \\cdot c$\n$N = ${p} \\cdot ${q} \\cdot ${s} = ${p * q * s}$`,
         };
       }
       if (level === 2) {
-        const N = r.int(100, 999);
-        const [a, b] = r.pick([[2, 3], [3, 5], [2, 5], [4, 6], [3, 7], [6, 9], [4, 10]]);
-        const not = r.next() < 0.5;
-        let c = 0;
-        for (let n = 1; n <= N; n++) {
-          const d = n % a === 0 || n % b === 0;
-          if (not ? !d : d) c++;
+        const v = r.int(0, 3);
+        if (v === 0) {
+          const N = r.int(100, 999);
+          const [a, b] = r.pick([[2, 3], [3, 5], [2, 5], [4, 6], [3, 7], [6, 9], [4, 10], [5, 7], [6, 8]]);
+          const not = r.next() < 0.5;
+          const L = (a * b) / gcd(a, b);
+          const A = Math.floor(N / a), B = Math.floor(N / b), AB = Math.floor(N / L);
+          const c = not ? N - (A + B - AB) : A + B - AB;
+          const wrongAB = Math.floor(N / (a * b));
+          return {
+            text: `Koliko števil od 1 do ${N} ${not ? `ni deljivih ne s ${a} ne s ${b}` : `je deljivih s ${a} ali s ${b}`}?`,
+            answer: withMistakes(num(c), [[not ? N - A - B : A + B, "Števila, deljiva z obema, si štel dvakrat."], [not ? N - (A + B - wrongAB) : A + B - wrongAB, `Deljiva z ${a} in ${b} so deljiva z njunim najmanjšim skupnim večkratnikom ${L}, ne nujno s ${a * b}.`], [not ? A + B - AB : N - (A + B - AB), not ? "To so števila, ki SO deljiva z vsaj enim; odštej jih od vseh." : "To so števila, ki niso deljiva z nobenim."]]),
+            hint: `Preštej deljive s ${a}, deljive s ${b}, in pazi, da tistih, ki so deljiva z obema (z $v(${a}, ${b})$), ne šteješ dvakrat.`,
+            data: { given: [`N = ${N}`, `a = ${a}`, `b = ${b}`], find: ["\\text{število števil}"] },
+            formula: "|A \\cup B| = |A| + |B| - |A \\cap B|",
+            solution: `Deljivih s ${a}: $\\lfloor ${N}/${a} \\rfloor = ${A}$, s ${b}: $${B}$\nZ obema (z $v(${a}, ${b}) = ${L}$): $${AB}$\nDeljivih s ${a} ali ${b}: $${A} + ${B} - ${AB} = ${A + B - AB}$${not ? `\nNi deljivih z nobenim: $${N} - ${A + B - AB} = ${c}$` : ""}`,
+          };
         }
-        const L = (a * b) / gcd(a, b);
-        const A = Math.floor(N / a), B = Math.floor(N / b), AB = Math.floor(N / L);
+        if (v === 1) {
+          const n = r.int(5, 15);
+          return {
+            text: `Koliko diagonal ima konveksni ${n}-kotnik?`,
+            answer: withMistakes(num((n * (n - 3)) / 2), [[n * (n - 3), "Vsako diagonalo si štel dvakrat (z obeh krajišč)."], [(n * (n - 1)) / 2, "Med vsemi daljicami med oglišči so tudi stranice; odštej jih."]]),
+            hint: "Iz enega oglišča gre diagonala do vseh oglišč razen sebe in obeh sosedov.",
+            data: { given: [`n = ${n}`], find: ["d"] },
+            formula: "d = \\dfrac{n(n-3)}{2}",
+            solution: `Iz vsakega oglišča: $${n} - 3 = ${n - 3}$ diagonal\nVseh krajišč: $${n} \\cdot ${n - 3} = ${n * (n - 3)}$\nVsaka diagonala šteta dvakrat: $d = ${(n * (n - 3)) / 2}$`,
+          };
+        }
+        if (v === 2) {
+          const f = r.int(4, 9), m = r.int(4, 9), kf = r.int(1, 3), km = r.int(1, 3);
+          const val = binom(f, kf) * binom(m, km);
+          return {
+            text: `V razredu je ${f} deklet in ${m} fantov. Za šolski kviz izberejo ekipo, v kateri so ${kf} ${kf === 1 ? "dekle" : kf === 2 ? "dekleti" : "dekleta"} in ${nOf(km, "fant", "fanta", "fantje", "fantov")}. Koliko različnih ekip lahko sestavijo?`,
+            answer: withMistakes(num(val), [[binom(f, kf) + binom(m, km), "Izbiri sta neodvisni: možnosti zmnožiš."], [binom(f + m, kf + km), "Ta izbira ne upošteva, koliko je deklet in koliko fantov."], [(fact(f) / fact(f - kf)) * (fact(m) / fact(m - km)), "V ekipi vrstni red ni pomemben."]]),
+            hint: "Posebej izberi dekleta in posebej fante, nato možnosti zmnožiš.",
+            data: { given: [`d = ${f}`, `f = ${m}`, `k_d = ${kf}`, `k_f = ${km}`], find: ["N"] },
+            formula: "N = \\binom{d}{k_d} \\binom{f}{k_f}",
+            solution: `Dekleta: $\\binom{${f}}{${kf}} = ${binom(f, kf)}$\nFantje: $\\binom{${m}}{${km}} = ${binom(m, km)}$\n$N = ${binom(f, kf)} \\cdot ${binom(m, km)} = ${val}$`,
+          };
+        }
+        const a = r.int(2, 5), b = r.int(2, 5);
         return {
-          text: `Koliko števil od 1 do ${N} ${not ? `ni deljivih ne s ${a} ne s ${b}` : `je deljivih s ${a} ali s ${b}`}?`,
-          answer: num(c),
-          hint: `Preštej deljive s ${a}, deljive s ${b}, in pazi, da tistih, ki so deljiva z obema (z $v(${a}, ${b})$), ne šteješ dvakrat.`,
-          data: { given: [`N = ${N}`, `a = ${a}`, `b = ${b}`], find: ["\\text{število števil}"] },
-          formula: "|A \\cup B| = |A| + |B| - |A \\cap B|",
-          solution: `Deljivih s ${a}: $\\lfloor ${N}/${a} \\rfloor = ${A}$, s ${b}: $${B}$, z obema (z $v(${a}, ${b}) = ${L}$): $${AB}$.\nDeljivih s ${a} ali ${b}: $${A} + ${B} - ${AB} = ${A + B - AB}$.${not ? `\nNi deljivih z nobenim: $${N} - ${A + B - AB} = ${c}$.` : ""}`,
+          text: `Iz kraja A v kraj B vodi ${a} različnih poti, iz B v C pa ${b}. ${ime} gre iz A v C (prek B) in nazaj, vendar se nobene poti ne sme dvakrat. Na koliko načinov lahko opravi pot tja in nazaj?`,
+          answer: withMistakes(num(a * b * (a - 1) * (b - 1)), [[(a * b) ** 2, "Nazaj ne sme po isti poti: na vsakem odseku ostane ena možnost manj."], [a * b, "To je le pot tja; dodaj še pot nazaj."]]),
+          hint: "Pot tja: koliko možnosti? Pri poti nazaj je na vsakem odseku ena pot že porabljena.",
+          data: { given: [`a = ${a}`, `b = ${b}`], find: ["N"] },
+          formula: "N = a \\cdot b \\cdot (b-1)(a-1)",
+          solution: `Tja: $${a} \\cdot ${b} = ${a * b}$ možnosti\nNazaj: $${b - 1} \\cdot ${a - 1} = ${(a - 1) * (b - 1)}$ možnosti\n$N = ${a * b} \\cdot ${(a - 1) * (b - 1)} = ${a * b * (a - 1) * (b - 1)}$`,
         };
       }
-      const v = r.pick(["vsaj", "narascajoce", "palindrom"]);
+      const v = r.pick(["vsaj", "narascajoce", "palindrom", "besede", "mreza"]);
       if (v === "vsaj") {
-        const d = r.int(1, 9);
-        let c = 0;
-        for (let n = 1000; n <= 9999; n++) if (String(n).includes(String(d))) c++;
+        const d = r.int(0, 9), len = r.pick([3, 4]);
+        const tot = 9 * 10 ** (len - 1), bez = (d === 0 ? 9 : 8) * 9 ** (len - 1);
         return {
-          text: `Koliko štirimestnih števil vsebuje vsaj eno števko ${d}?`,
-          answer: num(c),
-          hint: `Lažje je prešteti nasprotno: koliko štirimestnih števil sploh nima števke ${d}?`,
+          text: `Koliko ${len === 3 ? "trimestnih" : "štirimestnih"} števil vsebuje vsaj eno števko ${d}?`,
+          answer: withMistakes(num(tot - bez), [[bez, `To so števila BREZ števke ${d}; odštej jih od vseh.`], [tot - 9 ** len, "Prva števka ne sme biti 0, zato ima manj možnosti."], [len * 10 ** (len - 1), `Števila z več števkami ${d} si štel večkrat.`]]),
+          hint: `Lažje je prešteti nasprotno: koliko ${len === 3 ? "trimestnih" : "štirimestnih"} števil sploh nima števke ${d}?`,
           data: { given: [`d = ${d}`], find: ["\\text{število števil}"] },
           formula: "\\text{iskano} = \\text{vsa} - \\text{brez števke } d",
-          solution: `Vseh štirimestnih je 9000. Brez števke ${d}: prva števka ima 8 možnosti (ne 0 in ne ${d}), ostale tri po 9: $8 \\cdot 9^3 = ${8 * 729}$.\nZ vsaj eno ${d}: $9000 - ${8 * 729} = ${c}$.`,
+          solution: `Vseh ${len === 3 ? "trimestnih" : "štirimestnih"}: $9 \\cdot 10^{${len - 1}} = ${tot}$\nBrez števke ${d}: prva števka ima ${d === 0 ? 9 : 8} možnosti, ostale po 9: $${d === 0 ? 9 : 8} \\cdot 9^{${len - 1}} = ${bez}$\nZ vsaj eno ${d}: $${tot} - ${bez} = ${tot - bez}$`,
         };
       }
       if (v === "narascajoce") {
-        const len = r.pick([3, 4, 5]);
+        const len = r.pick([3, 4, 5, 6]), dec = r.next() < 0.5;
+        const c = dec ? binom(10, len) : binom(9, len);
+        const word = ["", "", "", "trimestnih", "štirimestnih", "petmestnih", "šestmestnih"][len];
+        return {
+          text: `Koliko je ${word} števil, pri katerih je vsaka števka ${dec ? "manjša" : "večja"} od prejšnje (npr. ${dec ? ["", "", "", "830", "9520", "86410", "975310"][len] : ["", "", "", "258", "1479", "13568", "234789"][len]})?`,
+          answer: withMistakes(num(c), [[dec ? binom(9, len) : binom(10, len), dec ? "Pri padajočih števkah je lahko 0 zadnja števka." : "Ničla ne more biti nikjer: na prvem mestu ni dovoljena, za njo pa bi morale priti manjše števke."], [c * fact(len), "Ko izbereš števke, je vrstni red že določen."]]),
+          hint: dec ? "Izberi množico števk (tudi 0 je dovoljena); padajoči vrstni red je en sam." : "Ničla ne more biti nikjer. Ko izbereš množico števk, je vrstni red določen.",
+          data: false,
+          formula: `\\binom{${dec ? 10 : 9}}{k}`,
+          solution: `Števke so različne in izbrane iz ${dec ? "$\\{0, 1, \\ldots, 9\\}$" : "$\\{1, \\ldots, 9\\}$"}.\nVsaka izbira ${len} števk da natanko eno tako število.\nŠtevil je $\\binom{${dec ? 10 : 9}}{${len}} = ${c}$`,
+        };
+      }
+      if (v === "palindrom") {
+        const len = r.pick([4, 5, 6]);
+        const div = r.pick([1, 2, 3, 5, 9]);
         let c = 0;
         for (let n = 10 ** (len - 1); n < 10 ** len; n++) {
           const s = String(n);
-          if ([...s].every((ch, i) => i === 0 || ch > s[i - 1])) c++;
+          if (s === [...s].reverse().join("") && n % div === 0) c++;
         }
+        const all = 9 * 10 ** (Math.ceil(len / 2) - 1);
+        const word = len === 4 ? "štirimestnih" : len === 5 ? "petmestnih" : "šestmestnih";
         return {
-          text: `Koliko je ${len === 3 ? "trimestnih" : len === 4 ? "štirimestnih" : "petmestnih"} števil, pri katerih je vsaka števka večja od prejšnje (npr. ${len === 3 ? "258" : len === 4 ? "1479" : "13568"})?`,
-          answer: num(c),
-          hint: "Ničla ne more biti nikjer (prva je ne sme biti, za prvo pa so vse večje). Ko izbereš množico števk, je vrstni red določen.",
+          text: `Palindrom je število, ki se z leve in desne bere enako (npr. 12321). Koliko je ${word} palindromov${div > 1 ? `, ki so deljivi z ${div}` : ""}?`,
+          answer: withMistakes(num(c), [[div > 1 ? Math.round(all / div) : 10 ** Math.ceil(len / 2), div > 1 ? "Deljivost ni enakomerno razporejena; preštej natančno po pogoju za deljivost." : "Prva števka ne sme biti 0."], [div > 1 ? all : 9 * 10 ** (len - 1), div > 1 ? "Upoštevaj še pogoj deljivosti." : "Palindrom določa le prva polovica števk."]]),
+          hint: `Palindrom je določen s prvo polovico števk.${div === 2 || div === 5 ? " Zadnja števka je enaka prvi." : div > 1 ? ` Za deljivost s ${div} poglej vsoto števk.` : ""}`,
           data: false,
-          formula: "\\binom{9}{k}",
-          solution: `Števke so izbrane iz $\\{1, \\ldots, 9\\}$ in so različne; vsaka izbira ${len} števk da natanko eno tako število (uredimo jih naraščajoče).\nŠtevil je $\\binom{9}{${len}} = ${c}$.`,
+          formula: false,
+          solution: `Palindrom določa prvih ${Math.ceil(len / 2)} števk: prva od 1 do 9, ostale od 0 do 9, skupaj $${all}$ palindromov.${div > 1 ? `\n${div === 2 ? "Prva (in zadnja) števka mora biti soda: 2, 4, 6 ali 8." : div === 5 ? "Prva (in zadnja) števka mora biti 5." : `Vsota števk mora biti deljiva z ${div}.`}` : ""}\nSkupaj: $${c}$`,
         };
       }
-      const len = r.pick([4, 5, 6]);
-      const div = r.pick([1, 3, 9, 11]);
-      let c = 0;
-      for (let n = 10 ** (len - 1); n < 10 ** len; n++) {
-        const s = String(n);
-        if (s === [...s].reverse().join("") && n % div === 0) c++;
+      if (v === "besede") {
+        const w = r.pick(["ANANAS", "BANANA", "KOKOS", "PAPRIKA", "KAKAV", "MATEMATIKA", "TABELA", "LOPATA", "KOLOKVIJ", "BARABA"]);
+        const cnt = {};
+        for (const ch of w) cnt[ch] = (cnt[ch] || 0) + 1;
+        const reps = Object.entries(cnt).filter(([, k]) => k > 1);
+        const val = fact(w.length) / reps.reduce((p, [, k]) => p * fact(k), 1);
+        return {
+          text: `Koliko različnih »besed« (tudi nesmiselnih) dobimo, če premešamo vse črke besede ${w} (${w.length} črk)?`,
+          answer: withMistakes(num(val), [[fact(w.length), "Zamenjava dveh enakih črk ne da nove besede: deli s permutacijami ponovljenih črk."], [fact(w.length) / reps.reduce((p, [, k]) => p * k, 1), "Deliti moraš s fakultetami števila ponovitev ($k!$), ne s $k$."]]),
+          hint: "Če bi bile vse črke različne, bi bilo besed $n!$. Koliko teh je enakih zaradi ponovljenih črk?",
+          data: { given: [`n = ${w.length}`], find: ["N"] },
+          formula: "N = \\dfrac{n!}{k_1!\\, k_2! \\cdots}",
+          solution: `Črk je ${w.length}: $${w.length}! = ${fact(w.length)}$\nPonovljene črke: ${reps.map(([ch, k]) => `${ch} ${k}-krat`).join(", ")}\n$N = \\dfrac{${w.length}!}{${reps.map(([, k]) => `${k}!`).join(" \\cdot ")}} = ${val}$`,
+        };
       }
+      const a = r.int(3, 6), b = r.int(2, 5), via = r.next() < 0.5;
+      const px = r.int(1, a - 1), py = r.int(1, b - 1);
+      const val = via ? binom(px + py, px) * binom(a - px + b - py, a - px) : binom(a + b, a);
       return {
-        text: `Palindrom je število, ki se z leve in desne bere enako (npr. 12321). Koliko je ${len === 4 ? "štirimestnih" : len === 5 ? "petmestnih" : "šestmestnih"} palindromov${div > 1 ? `, ki so deljivi z ${div}` : ""}?`,
-        answer: num(c),
-        hint: `Palindrom je določen s prvo polovico števk.${div === 11 && len % 2 === 0 ? " Pri sodem številu mest je vsak palindrom deljiv z 11." : div > 1 ? ` Za deljivost s ${div} poglej vsoto števk.` : ""}`,
-        data: false,
-        formula: false,
-        solution: `Palindrom določa prva polovica števk (prva števka od 1 do 9, ostale od 0 do 9).${div > 1 ? ` Med njimi preštejemo tiste, deljive z ${div}.` : ""} Skupaj: $${c}$.`,
+        text: `Mreža ulic je pravokotna. ${ime} gre od vogala $(0, 0)$ do vogala $(${a}, ${b})$ in se premika le po ${a + b} odsekih na desno ali navzgor${via ? `, spotoma pa se mora ustaviti pri pekarni na vogalu $(${px}, ${py})$` : ""}. Koliko različnih najkrajših poti ima?`,
+        answer: withMistakes(num(val), [[a * b, "Pot je zaporedje premikov D in G; šteješ razporeditve teh premikov."], [via ? binom(a + b, a) : fact(a + b), via ? "Šteti moraš le poti skozi pekarno." : "Premiki v isto smer so med seboj enaki; deli z $a!\\,b!$."], [via ? binom(px + py, px) + binom(a - px + b - py, a - px) : 2 ** (a + b), via ? "Poti do pekarne in od nje zmnožiš, ne sešteješ." : `Ne smeš izbrati poljubnih smeri: desno mora iti natanko ${a}-krat.`]]),
+        hint: via ? "Pot razdeli na dva dela: do pekarne in od pekarne naprej. Vsak del je izbira premikov D in G." : `Vsaka pot ima ${a} premikov desno in ${b} navzgor. Na koliko načinov razporediš te premike?`,
+        data: { given: [`a = ${a}`, `b = ${b}`, ...(via ? [`P = (${px}, ${py})`] : [])], find: ["N"] },
+        formula: via ? "N = \\binom{x+y}{x} \\binom{(a-x)+(b-y)}{a-x}" : "N = \\binom{a+b}{a}",
+        solution: via
+          ? `Do pekarne: $\\binom{${px + py}}{${px}} = ${binom(px + py, px)}$\nOd pekarne: $\\binom{${a - px + b - py}}{${a - px}} = ${binom(a - px + b - py, a - px)}$\n$N = ${binom(px + py, px)} \\cdot ${binom(a - px + b - py, a - px)} = ${val}$`
+          : `Pot je zaporedje ${a + b} premikov, od tega ${a} desno.\nIzberemo, kateri so desno: $\\binom{${a + b}}{${a}}$\n$N = ${val}$`,
       };
     },
   },
@@ -1040,48 +1161,157 @@ export const TEK_MAT_OS = [
     id: "tek-fermi",
     topics: [T("ocenjevanje-in-fermijeve-naloge")],
     gen(level, r) {
-      const items = [
-        () => {
-          const b = r.pick([60, 70, 80]), y = r.pick([10, 15, 50, 80]);
-          return { text: `Srce utripne približno ${b}-krat na minuto. Približno kolikokrat utripne v ${y} letih?`, value: b * 60 * 24 * 365 * y, calc: `${b} \\cdot 60 \\cdot 24 \\cdot 365 \\cdot ${y}`, given: [`f = ${b}\\ \\mathrm{/min}`, `t = ${y}\\ \\text{let}`] };
-        },
-        () => {
-          const km = r.pick([5, 10, 42, 100]), step = r.pick([50, 70, 80]);
-          return { text: `Dolžina tvojega koraka je približno ${step} cm. Približno koliko korakov narediš na poti, dolgi ${km} km?`, value: (km * 100000) / step, calc: `\\dfrac{${km} \\cdot 100\\,000}{${step}}`, given: [`s = ${km}\\ \\mathrm{km}`, `d = ${step}\\ \\mathrm{cm}`] };
-        },
-        () => {
-          const V = r.pick([1, 10, 200]), drop = 0.05;
-          return { text: `Kapljica vode ima prostornino približno $0{,}05\\ \\mathrm{ml}$. Približno koliko kapljic je v ${V} ${V === 1 ? "litru" : "litrih"} vode?`, value: (V * 1000) / drop, calc: `\\dfrac{${V} \\cdot 1000}{0{,}05}`, given: [`V = ${V}\\ \\mathrm{l}`, `V_k = 0{,}05\\ \\mathrm{ml}`] };
-        },
-        () => {
-          const kg = r.pick([1, 5, 25]), mg = r.pick([20, 25]);
-          return { text: `Zrno riža tehta približno ${mg} mg. Približno koliko zrn je v vreči z ${kg} kg riža?`, value: (kg * 1e6) / mg, calc: `\\dfrac{${kg} \\cdot 1\\,000\\,000}{${mg}}`, given: [`m = ${kg}\\ \\mathrm{kg}`, `m_z = ${mg}\\ \\mathrm{mg}`] };
-        },
-        () => {
-          const y = r.pick([1, 12, 100]);
-          return { text: `Približno koliko sekund je v ${y} ${y === 1 ? "letu" : "letih"}?`, value: y * 365 * 24 * 3600, calc: `${y} \\cdot 365 \\cdot 24 \\cdot 3600`, given: [`t = ${y}\\ \\text{let}`] };
-        },
-      ];
-      for (let tries = 0; tries < 20; tries++) {
+      const ime = r.pick(NAMES);
+      const Q = (x, u) => `$${tx(x)}\\ \\mathrm{${u}}$`;
+      if (level === 1) {
+        // En korak (deljenje ali množenje) s pretvorbo enot; odgovor na celo število.
+        const items = [
+          () => {
+            const km = r.pick([2, 3, 5, 10, 21]), step = r.pick([50, 60, 70, 75, 80]);
+            const v = (km * 100000) / step;
+            return { text: `${ime} ima korak dolg približno ${step} cm. Približno koliko korakov naredi na poti, dolgi ${km} km?`, v, w: [[(km * 1000) / step, "Kilometre pretvori v centimetre: 1 km = 100 000 cm."]], given: [dat("s", km, "km"), dat("d", step, "cm")], find: "N", f: "N = \\dfrac{s}{d}", sol: [`$s = ${km}\\ \\mathrm{km} = ${km * 100000}\\ \\mathrm{cm}$`, `$N = \\dfrac{${km * 100000}}{${step}} ${res(v, 0)}$`], hint: "Razdaljo in dolžino koraka zapiši v isti enoti in ju deli." };
+          },
+          () => {
+            const V = r.pick([0.5, 1, 2, 5]), drop = r.pick([0.04, 0.05]);
+            const v = (V * 1000) / drop;
+            return { text: `Kapljica vode ima prostornino približno ${Q(drop, "ml")}. Približno koliko kapljic je v $${tx(V)}$ l vode?`, v, w: [[V / drop, "Litre pretvori v mililitre: 1 l = 1000 ml."]], given: [dat("V", tx(V), "l"), dat("V_k", tx(drop), "ml")], find: "N", f: "N = \\dfrac{V}{V_k}", sol: [`$V = ${tx(V)}\\ \\mathrm{l} = ${V * 1000}\\ \\mathrm{ml}$`, `$N = \\dfrac{${V * 1000}}{${tx(drop)}} ${res(v, 0)}$`], hint: "Prostornino zapiši v mililitrih in jo deli s prostornino kapljice." };
+          },
+          () => {
+            const kg = r.pick([0.5, 1, 2, 5]), mg = r.pick([20, 25, 40]);
+            const v = (kg * 1e6) / mg;
+            return { text: `Zrno riža tehta približno ${mg} mg. Približno koliko zrn je v vrečki s $${tx(kg)}$ kg riža?`, v, w: [[(kg * 1000) / mg, "1 kg = 1 000 000 mg (1 kg = 1000 g, 1 g = 1000 mg)."]], given: [dat("m", tx(kg), "kg"), dat("m_z", mg, "mg")], find: "N", f: "N = \\dfrac{m}{m_z}", sol: [`$m = ${tx(kg)}\\ \\mathrm{kg} = ${kg * 1e6}\\ \\mathrm{mg}$`, `$N = \\dfrac{${kg * 1e6}}{${mg}} ${res(v, 0)}$`], hint: "Maso vrečke pretvori v miligrame in deli z maso zrna." };
+          },
+          () => {
+            const d = r.pick([1, 2, 3, 7]);
+            const v = d * 24 * 3600;
+            return { text: `Približno koliko sekund je v ${d} ${d === 1 ? "dnevu" : "dneh"}?`, v, w: [[d * 24 * 60, "To so minute; vsaka minuta ima še 60 sekund."]], given: [`t = ${d}\\ \\text{dni}`], find: "N", f: "1\\ \\text{dan} = 24 \\cdot 60 \\cdot 60\\ \\mathrm{s}", sol: [`En dan: $24 \\cdot 3600 = 86\\,400\\ \\mathrm{s}$`, `$N = ${d} \\cdot 86\\,400 = ${v}$`], hint: "En dan ima 24 ur, ura 60 minut, minuta 60 sekund." };
+          },
+          () => {
+            const b = r.pick([60, 65, 70, 75, 80]), h = r.pick([1, 2, 8, 24]);
+            const v = b * 60 * h;
+            return { text: `Srce utripne približno ${b}-krat na minuto. Približno kolikokrat utripne v ${h} ${h === 1 ? "uri" : h === 2 ? "urah" : "urah"}?`, v, w: [[b * h, "Ure najprej pretvori v minute."]], given: [`f = ${b}\\ \\mathrm{/min}`, dat("t", h, "h")], find: "N", f: "N = f \\cdot t", sol: [`$t = ${h}\\ \\mathrm{h} = ${h * 60}\\ \\mathrm{min}$`, `$N = ${b} \\cdot ${h * 60} = ${v}$`], hint: "Čas zapiši v minutah in ga pomnoži s številom utripov na minuto." };
+          },
+          () => {
+            const D = r.pick([2, 3, 4, 5]), t = r.pick([0.08, 0.1, 0.12]);
+            const v = (D * 10) / t;
+            return { text: `List papirja je debel približno ${Q(t, "mm")}. Približno koliko listov je v kupu papirja, visokem ${D} cm?`, v, w: [[D / t, "Centimetre pretvori v milimetre."]], given: [dat("h", D, "cm"), dat("d", tx(t), "mm")], find: "N", f: "N = \\dfrac{h}{d}", sol: [`$h = ${D}\\ \\mathrm{cm} = ${D * 10}\\ \\mathrm{mm}$`, `$N = \\dfrac{${D * 10}}{${tx(t)}} ${res(v, 0)}$`], hint: "Višino kupa zapiši v milimetrih in deli z debelino lista." };
+          },
+          () => {
+            const b = r.pick([12, 15, 16, 18]), h = r.pick([1, 8, 24]);
+            const v = b * 60 * h;
+            return { text: `Človek v mirovanju vdihne približno ${b}-krat na minuto. Približno kolikokrat vdihne v ${h} ${h === 1 ? "uri" : "urah"}?`, v, w: [[b * h, "Ure najprej pretvori v minute."]], given: [`f = ${b}\\ \\mathrm{/min}`, dat("t", h, "h")], find: "N", f: "N = f \\cdot t", sol: [`$t = ${h}\\ \\mathrm{h} = ${h * 60}\\ \\mathrm{min}$`, `$N = ${b} \\cdot ${h * 60} = ${v}$`], hint: "Čas zapiši v minutah in ga pomnoži s številom vdihov na minuto." };
+          },
+        ];
         const it = r.pick(items)();
-        const lg = Math.log10(it.value);
-        const k = Math.round(lg);
-        if (Math.abs(lg - k) > 0.38 || k < 2) continue;
-        const shift = level === 1 ? 0 : r.int(0, 1);
-        const options = [k - 2 + shift, k - 1 + shift, k + shift, k + 1 + shift].map((e) => `10^{${e}}`);
-        const correct = `10^{${k}}`;
-        const opts = choiceAns(r, correct, options);
         return {
-          text: `${it.text} Izberi red velikosti, ki je najbližji.`,
-          answer: opts,
-          options_tex: true,
-          hint: "Zaokroži vmesne številke na lepa števila (npr. 365 ≈ 400, 24 ≈ 25) in štej potence števila 10.",
-          data: { given: it.given, find: ["\\text{red velikosti}"] },
-          formula: "\\text{red velikosti} = 10^{k}, \\; k \\approx \\log_{10}(\\text{rezultat})",
-          solution: `$${it.calc} \\approx ${sci(it.value)}$, kar je najbližje $${correct}$.`,
+          text: `${it.text} Zaokroži na celo število.`,
+          answer: withMistakes(num(it.v, null, 0), it.w),
+          hint: it.hint,
+          data: { given: it.given, find: [it.find] },
+          formula: it.f,
+          solution: it.sol.join("\n"),
         };
       }
-      return null;
+      // Ocene z več faktorji: red velikosti.
+      const chains = [
+        () => { const b = r.pick([60, 70, 80]), y = r.pick([10, 15, 50, 80]); return { text: `Srce utripne približno ${b}-krat na minuto. Približno kolikokrat utripne v ${y} letih?`, value: b * 60 * 24 * 365 * y, calc: `${b} \\cdot 60 \\cdot 24 \\cdot 365 \\cdot ${y}`, given: [`f = ${b}\\ \\mathrm{/min}`, `t = ${y}\\ \\text{let}`] }; },
+        () => { const km = r.pick([42, 100, 500]), step = r.pick([50, 70, 80]); return { text: `Dolžina koraka je približno ${step} cm. Približno koliko korakov narediš na poti, dolgi ${km} km?`, value: (km * 100000) / step, calc: `\\dfrac{${km} \\cdot 100\\,000}{${step}}`, given: [dat("s", km, "km"), dat("d", step, "cm")] }; },
+        () => { const V = r.pick([25, 50, 200]); return { text: `Kapljica vode ima prostornino približno $0{,}05\\ \\mathrm{ml}$. Približno koliko kapljic je v bazenu s ${V} $\\mathrm{m^3}$ vode?`, value: (V * 1e6) / 0.05, calc: `\\dfrac{${V} \\cdot 10^6}{0{,}05}`, given: [dat("V", V, "m³"), "V_k = 0{,}05\\ \\mathrm{ml}"] }; },
+        () => { const y = r.pick([1, 12, 100]); return { text: `Približno koliko sekund je v ${y} ${y === 1 ? "letu" : "letih"}?`, value: y * 365 * 24 * 3600, calc: `${y} \\cdot 365 \\cdot 24 \\cdot 3600`, given: [`t = ${y}\\ \\text{let}`] }; },
+        () => { const n = r.pick([150, 200, 250]), S = r.pick([500, 600, 700]); return { text: `Na $1\\ \\mathrm{cm^2}$ lasišča raste približno ${n} las, lasišče pa meri približno ${S} $\\mathrm{cm^2}$. Približno koliko las ima človek?`, value: n * S, calc: `${n} \\cdot ${S}`, given: [`n = ${n}\\ \\mathrm{/cm^2}`, dat("S", S, "cm²")] }; },
+        () => { const L = r.pick([10, 12, 15]), W = r.pick([8, 10]), H = r.pick([3, 4]); return { text: `Učilnica je dolga ${L} m, široka ${W} m in visoka ${H} m. Žoga za tenis ima prostornino približno $150\\ \\mathrm{cm^3}$. Približno koliko žog bi napolnilo učilnico?`, value: (L * W * H * 1e6) / 150, calc: `\\dfrac{${L} \\cdot ${W} \\cdot ${H} \\cdot 10^6}{150}`, given: [dat("a", L, "m"), dat("b", W, "m"), dat("c", H, "m"), "V_z = 150\\ \\mathrm{cm^3}"] }; },
+        () => { const y = r.pick([30, 50, 80]), l = r.pick([1.5, 2, 3]); return { text: `Človek popije približno $${tx(l)}$ l tekočine na dan. Približno koliko litrov popije v ${y} letih?`, value: l * 365 * y, calc: `${tx(l)} \\cdot 365 \\cdot ${y}`, given: [dat("V_1", tx(l), "l"), `t = ${y}\\ \\text{let}`] }; },
+      ];
+      if (level === 2) {
+        for (let tries = 0; tries < 20; tries++) {
+          const it = r.pick(chains)();
+          const lg = Math.log10(it.value), k = Math.round(lg);
+          if (Math.abs(lg - k) > 0.38 || k < 2) continue;
+          const asNum = r.next() < 0.5;
+          const common = {
+            hint: "Zaokroži vmesne številke na lepa števila (npr. 365 ≈ 400, 24 ≈ 25) in štej potence števila 10.",
+            data: { given: it.given, find: [asNum ? "k" : "\\text{red velikosti}"] },
+            formula: "\\text{red velikosti} = 10^{k}, \\; k \\approx \\log_{10}(\\text{rezultat})",
+            solution: `Zmnožimo oceno: $${it.calc}$\n$\\approx ${sci(it.value)}$\nNajbližja potenca: $10^{${k}}$`,
+          };
+          if (asNum) {
+            return {
+              text: `${it.text} Rezultat zapiši kot $10^k$ (red velikosti) in vpiši celo število $k$.`,
+              answer: withMistakes(num(k), [[k - 1, "Si morda izpustil kakšen faktor ali pretvorbo enot?"], [k + 1, "Si morda kakšno pretvorbo enot naredil dvakrat?"]]),
+              ...common,
+            };
+          }
+          const opts = [k - 2, k - 1, k + 1, k + 2].map((e) => [`10^{${e}}`, e < k ? `Premajhno za ${nOf(k - e, "red", "reda", "rede", "redov")} velikosti: si izpustil kakšen faktor ali pretvorbo?` : `Preveliko za ${nOf(e - k, "red", "reda", "rede", "redov")} velikosti: si kakšen faktor upošteval dvakrat?`]);
+          const pick = r.shuffle(opts).slice(0, 3);
+          return {
+            text: `${it.text} Izberi red velikosti, ki je najbližji.`,
+            answer: choiceWhy(r, `10^{${k}}`, pick),
+            options_tex: true,
+            ...common,
+          };
+        }
+        return null;
+      }
+      // Raven 3: večstopenjska Fermijeva ocena z danimi predpostavkami.
+      const v = r.int(0, 4);
+      if (v === 0) {
+        const N = r.pick([280, 300, 600, 2100]) * 1000, p = r.pick([2.5, 3]), k = r.pick([20, 25, 50]), dan = r.pick([3, 4]);
+        const hh = N / p, piano = hh / k, tun = piano / (dan * 250);
+        return {
+          text: `Ocena: koliko uglaševalcev klavirjev dela v mestu z $${tx(N)}$ prebivalci? Predpostavi: gospodinjstvo ima $${tx(p)}$ člana, klavir ima eno od ${k} gospodinjstev, vsak klavir uglasijo enkrat na leto, uglaševalec uglasi ${dan} klavirje na dan in dela 250 dni na leto. Zaokroži na celo število.`,
+          answer: withMistakes(num(tun, null, 0), [[N / k / (dan * 250), "Klavir ima gospodinjstvo, ne vsak prebivalec: najprej izračunaj število gospodinjstev."], [hh / k / dan, "Uglaševalec dela 250 dni na leto; upoštevaj vse delovne dni."]]),
+          hint: "Pojdi po verigi: prebivalci → gospodinjstva → klavirji → uglasitve na leto → uglaševalci.",
+          data: { given: [`N = ${tx(N)}`, `p = ${tx(p)}`, `k = ${k}`, `n_d = ${dan}`, "D = 250"], find: ["\\text{število uglaševalcev}"] },
+          formula: "\\text{uglaševalci} = \\dfrac{N / p / k}{n_d \\cdot D}",
+          solution: `Gospodinjstva: $${tx(N)} : ${tx(p)} ${res(hh, 0)}$\nKlavirji: $${tx(hh, 0)} : ${k} ${res(piano, 0)}$\nEn uglaševalec na leto: $${dan} \\cdot 250 = ${dan * 250}$ klavirjev\nUglaševalcev: $${tx(piano, 0)} : ${dan * 250} ${res(tun, 0)}$`,
+        };
+      }
+      if (v === 1) {
+        const N = r.pick([20, 25, 30]) * 1000, t = r.pick([5, 6, 8, 10]), q = r.pick([8, 10, 12]);
+        const V = (N * t * q) / 1000;
+        return {
+          text: `Ocena: koliko kubičnih metrov vode na dan porabijo za tuširanje prebivalci mesta s $${tx(N)}$ prebivalci? Predpostavi, da se vsak tušira enkrat na dan ${t} minut, pretok prhe pa je ${q} litrov na minuto. Zaokroži na celo število.`,
+          answer: withMistakes(num(V, "m³", 0, { unitAlternatives: ["m3", "m^3"] }), [[N * t * q, "Rezultat je v litrih; 1 m³ = 1000 l."], [(N * q) / 1000, "Upoštevaj, koliko minut traja tuširanje."]]),
+          hint: "Izračunaj porabo enega človeka, pomnoži s številom prebivalcev in litre pretvori v m³.",
+          data: { given: [`N = ${tx(N)}`, dat("t", t, "min"), `q = ${q}\\ \\mathrm{l/min}`], find: ["V"] },
+          formula: ["V = N \\cdot t \\cdot q", "1\\ \\mathrm{m^3} = 1000\\ \\mathrm{l}"],
+          solution: `En človek: $${t} \\cdot ${q} = ${t * q}\\ \\mathrm{l}$\nVsi: $${tx(N)} \\cdot ${t * q} = ${tx(N * t * q)}\\ \\mathrm{l}$\n$V ${res(V, 0, "m³")}$`,
+        };
+      }
+      if (v === 2) {
+        const n = r.pick([300, 450, 600, 800]), l = r.pick([4, 5, 6, 8]), d = r.pick([180, 190]), per = r.pick([8000, 10000]);
+        const sheets = n * l * d, trees = sheets / per;
+        return {
+          text: `Šola ima ${n} učencev, vsak porabi povprečno ${l} listov papirja na šolski dan, pouk traja ${d} dni na leto. Iz enega drevesa izdelajo približno $${tx(per)}$ listov. Približno koliko dreves porabi šola v letu? Zaokroži na eno decimalko.`,
+          answer: withMistakes(num(trees, null, 1), [[(n * l) / per, "To je poraba za en dan; pomnoži še s številom šolskih dni."], [sheets / per / n, "To je na enega učenca; iščemo za celo šolo."]]),
+          hint: "Najprej izračunaj, koliko listov porabi šola v letu, nato to deli s številom listov iz enega drevesa.",
+          data: { given: [`n = ${n}`, `l = ${l}`, `d = ${d}`, `L = ${tx(per)}`], find: ["\\text{število dreves}"] },
+          formula: "\\text{drevesa} = \\dfrac{n \\cdot l \\cdot d}{L}",
+          solution: `Na dan: $${n} \\cdot ${l} = ${n * l}$ listov\nNa leto: $${n * l} \\cdot ${d} = ${tx(sheets)}$ listov\nDreves: $${tx(sheets)} : ${tx(per)} ${res(trees, 1)}$`,
+        };
+      }
+      if (v === 3) {
+        const cars = r.pick([1.1, 1.2, 1.3]), km = r.pick([10000, 12000, 15000]), c = r.pick([5, 6, 7, 8]);
+        const L = (cars * km * c) / 100; // v milijonih litrov
+        return {
+          text: `V Sloveniji je približno $${tx(cars)}$ milijona osebnih avtomobilov. Vsak na leto prevozi približno $${tx(km)}$ km in porabi ${c} l goriva na 100 km. Približno koliko milijonov litrov goriva porabijo v letu? Zaokroži na celo število.`,
+          answer: withMistakes(num(L, null, 0), [[cars * km * c, "Poraba je na 100 km: deli s 100."], [(cars * c) / 100, "Upoštevaj, koliko kilometrov prevozi vsak avto."]]),
+          hint: "Izračunaj porabo enega avtomobila na leto (poraba velja za 100 km), nato pomnoži s številom avtomobilov.",
+          data: { given: [`N = ${tx(cars)}\\ \\text{milijona}`, dat("s", tx(km), "km"), `q = ${c}\\ \\mathrm{l/100\\,km}`], find: ["V"] },
+          formula: "V = N \\cdot \\dfrac{s}{100} \\cdot q",
+          solution: `En avto: $\\dfrac{${tx(km)}}{100} \\cdot ${c} = ${(km / 100) * c}\\ \\mathrm{l}$ na leto\nVsi: $${tx(cars)} \\text{ milijona} \\cdot ${(km / 100) * c} ${res(L, 0)}$ milijonov litrov`,
+        };
+      }
+      const M = r.pick([1, 2, 5, 10]), s = r.pick([1, 2]), h = r.pick([8, 10, 12]);
+      const days = (M * 1e6 * s) / 3600 / h;
+      return {
+        text: `${ime} želi na glas prešteti do ${M} ${M === 1 ? "milijona" : "milijonov"}. Za vsako število porabi povprečno ${s} s in šteje ${h} ur na dan. Približno koliko dni bo štel${g(ime, "", "a")}? Zaokroži na celo število.`,
+        answer: withMistakes(num(days, null, 0), [[(M * 1e6 * s) / 3600, "To so ure; deli še z urami štetja na dan."], [(M * 1e6 * s) / 3600 / 24, `${ime} ne šteje 24 ur na dan.`]]),
+        hint: "Izračunaj skupni čas v sekundah, ga pretvori v ure in deli s številom ur štetja na dan.",
+        data: { given: [`N = ${M}\\ \\text{milijon}`, dat("t_1", s, "s"), dat("t_d", h, "h")], find: ["\\text{število dni}"] },
+        formula: "\\text{dni} = \\dfrac{N \\cdot t_1}{3600 \\cdot t_d}",
+        solution: `Skupni čas: $${tx(M * 1e6)} \\cdot ${s} = ${tx(M * 1e6 * s)}\\ \\mathrm{s}$\nV urah: $${tx(M * 1e6 * s)} : 3600 ${res((M * 1e6 * s) / 3600, 1, "h")}$\nDni: $${tx((M * 1e6 * s) / 3600, 1)} : ${h} ${res(days, 0)}$`,
+      };
     },
   },
 ];
