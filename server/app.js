@@ -53,6 +53,7 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
   if (settings.language && settings.language !== "sl") parts.push(settings.language);
   if (settings.region && settings.region !== "SI") parts.push(settings.region);
   if (settings.school_system && settings.school_system !== "SI") parts.push(settings.school_system);
+  if (settings.dialect) parts.push(`d:${settings.dialect}`);
   if (lite) parts.push("lite");
   // Zahtevnost po rezultatih učenca (osnovna je privzeta, da shranjeni odgovori ostanejo veljavni).
   if (tier && tier !== "osnovna") parts.push(`zahtevnost:${tier}`);
