@@ -590,5 +590,18 @@ test("preverjanje starosti: premlad otrok dobi povezavo za starše, dijak ima sa
     assert.match(consent.text, /^Profil je moj/);
     const sibling = await teen("/api/students", { method: "POST", body: { name: "Brat", birth_year: YEAR - 8, consent: true } });
     assert.equal(sibling.status, 403);
+
+    // Polnoleten dijak (npr. 18 let, SŠ) izbere »Zame«: lastno soglasje, letnica iz datuma rojstva.
+    const adult = client();
+    await registerVerified(adult, calls, "maturant@primer.si", { birth_date: ymd(18) });
+    const mine = await adult("/api/students", { method: "POST", body: { name: "Tina", birth_year: YEAR - 9, self: true, consent: true } });
+    assert.equal(mine.status, 201);
+    assert.equal(mine.body.birth_year, Number(ymd(18).slice(0, 4)));
+    assert.match(store.db.prepare("SELECT text FROM consents WHERE student_id = ?").get(mine.body.id).text, /^Profil je moj/);
+    // Star račun brez datuma rojstva: »Zame« samo, če je letnica dovolj stara.
+    store.db.prepare("UPDATE parents SET birth_date = NULL WHERE email = 'maturant@primer.si'").run();
+    const tooYoung = await adult("/api/students", { method: "POST", body: { name: "Mlajši", birth_year: YEAR - 15, self: true, consent: true } });
+    assert.equal(tooYoung.status, 403);
+    assert.equal(tooYoung.body.self_too_young, true);
   });
 });
