@@ -11,7 +11,7 @@ import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
 import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths } from "./curriculum.js";
-import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor } from "./textbook.js";
+import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor, formulaSheet } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
 import { programReferences, referencesFor, themesFor } from "./references.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
@@ -439,6 +439,13 @@ export function createApp(store, opts = {}) {
     const p = key.startsWith("UNI-") ? getPath(key) : null;
     if (!p) return res.status(404).json({ error: "Predmet ne obstaja." });
     res.json({ key, label: p.label, themes: themesFor(key), items: referencesFor(key) });
+  });
+  // Formule in konstante predmeta (za orodja ob kalkulatorju), npr. ?book=KEM-OS
+  app.get("/api/formulas", (req, res) => {
+    const key = String(req.query.book || "");
+    const md = /^[A-Z]{3}-(OS|SS)$/.test(key) ? formulaSheet(key) : null;
+    if (!md) return res.status(404).json({ error: "Zbirke formul ni." });
+    res.set("Cache-Control", "public, max-age=3600").json({ key, md });
   });
   app.get("/api/textbook/search", (req, res) => {
     const subject = /^[A-Z]{2,6}$/.test(req.query.subject || "") ? req.query.subject : undefined;

@@ -127,6 +127,7 @@ function showView(name) {
   if (name === "feedback") showFeedback();
   if (name === "graph") showGraph();
   else document.body.classList.remove("gc-kp");
+  closeCalcOverlay();
   if (name !== "topic") closePad();
   if (name !== "topic") setActiveMode(null);
   window.scrollTo(0, 0);
@@ -1402,7 +1403,7 @@ function renderTask(task, ctx) {
       (task.answerType === "coefficients" ? t("task.phCoef") : task.unit ? t("task.phUnit", { unit: task.unit }) : t("task.phResult"));
     input = `<form class="answer-row"><input id="answer" autocomplete="off" inputmode="${task.answerType === "number" && !task.unit ? "decimal" : "text"}" placeholder="${escapeHtml(ph)}"><button type="button" class="pad-open-btn secondary" title="${t("task.writeTitle")}">${icon("pencil")}<span>${t("task.write")}</span></button><button class="primary">${t("task.check")}</button></form>`;
   }
-  const calcBtn = ctx.mode === "contest" || ctx.mode === "placement" ? "" : `<button type="button" class="ghost task-calc icon-only" title="${escapeHtml(t("task.calc"))}" aria-label="${escapeHtml(t("task.calc"))}">${icon("chart-spline")}</button>`;
+  const calcBtn = ctx.mode === "contest" || ctx.mode === "placement" ? "" : `<button type="button" class="ghost task-calc icon-only" title="${escapeHtml(t("nav.graph"))}" aria-label="${escapeHtml(t("nav.graph"))}">${icon("calculator")}</button>`;
   const bar = ctx.mode === "contest" ? `<div class="contest-bar"><span id="contest-timer" class="contest-timer" role="timer">${icon("timer")}<b>${leftText(state.contestDeadline)}</b></span><span class="muted">${t("comp.timerNote")}</span></div>` : "";
   const penalty = ctx.mode === "contest" && task.penalty ? `<span class="pts neg">${t("exam.penaltyPts", { n: String(task.penalty).replace("-", "−") })}</span>` : "";
   const hintLadder = task.hintSteps > 0 && ctx.mode !== "contest" && ctx.mode !== "placement";
@@ -1438,7 +1439,8 @@ function renderTask(task, ctx) {
   });
   box.querySelector(".task-calc")?.addEventListener("click", async () => {
     const exprs = mayPlot(task.text) ? await plotFromText(task.text) : [];
-    openGraphOverlay(exprs, t("gc.backTask"));
+    // enačba krivulje → graf, sicer računalo
+    openCalcOverlay(exprs.length ? { mode: "graph", exprs, backLabel: t("gc.backTask") } : { mode: calcSubject() === "KEM" ? "pse" : calcMode === "graph" ? "sci" : calcMode, backLabel: t("gc.backTask") });
   });
   if (ctx.mode === "contest") {
     $("#c-skip").addEventListener("click", async () => {
@@ -1918,17 +1920,28 @@ $("#tour-again").addEventListener("click", () => {
   setTimeout(startTour, 500);
 });
 
-// ---------- grafični kalkulator (public/graph/) ----------
-// Naloži se šele ob prvem odprtju. En kalkulator: v zavihku ali čez cel zaslon iz naloge / inštruktorja.
+// ---------- kalkulatorji (public/graph/): znanstveni, grafični, pretvornik enot ----------
+// Naložijo se šele ob prvem odprtju. Vsako orodje obstaja enkrat: v zavihku Kalkulator ali
+// čez cel zaslon (iz Učne poti, vadnice, naloge in Inštruktorja), z gumbom nazaj.
 
-let calcP = null;
-let calcStudent = null;
+const CALC_MODES = ["sci", "graph", "tools", "pse", "formulas"];
+let calcMode = "sci";
+try {
+  if (CALC_MODES.includes(localStorage.getItem("stemmind.calcMode"))) calcMode = localStorage.getItem("stemmind.calcMode");
+} catch {}
+const calcTools = {};
+let calcP = null; // grafični kalkulator
+function calcOverlayOpen() {
+  return !$("#graph-overlay").hidden;
+}
+function calcSlot() {
+  return calcOverlayOpen() ? $("#graph-overlay-body") : $("#graph-slot");
+}
+
 function graphCalc() {
   calcP ||= import("./graph/calc.js").then(({ createCalculator }) => {
     const host = document.createElement("div");
     host.id = "graph-host";
-    $("#graph-slot").append(host);
-    calcStudent = state.student?.id;
     return createCalculator(host, {
       t,
       icon,
@@ -1938,7 +1951,7 @@ function graphCalc() {
       storageKey: () => `stemmind.graph.${state.student?.id ?? 0}`,
       studentId: () => state.student?.id,
       askTutor: (text) => {
-        closeGraphOverlay();
+        closeCalcOverlay();
         showView("chat");
         const box = $("#input");
         box.value = text;
@@ -1950,39 +1963,98 @@ function graphCalc() {
   });
   return calcP;
 }
-async function showGraph() {
-  const calc = await graphCalc();
-  if (calcStudent !== state.student?.id) {
-    calcStudent = state.student?.id;
-    calc.reload();
-  }
-  if (calc.root.parentElement !== $("#graph-slot")) $("#graph-slot").append(calc.root);
-  calc.resize();
+// predmet, ki ga učenec trenutno dela (tema v vadnici, sicer nastavitev)
+function calcSubject() {
+  const id = !$("#view-topic").hidden ? state.topic?.id : null;
+  return (id && /^[A-Z]+/.exec(id)?.[0]) || state.student?.settings?.subject || "MAT";
 }
-/** Odpre kalkulator čez cel zaslon z izrazi (npr. iz naloge) in gumbom nazaj. */
-async function openGraphOverlay(exprs = [], backLabel = t("nav.back")) {
-  const calc = await graphCalc();
-  if (calcStudent !== state.student?.id) {
-    calcStudent = state.student?.id;
-    calc.reload();
+function formulaBook() {
+  const s = calcSubject();
+  const subj = ["MAT", "FIZ", "KEM"].includes(s) ? s : "MAT";
+  return `${subj}-${state.student?.settings?.educational_track === "OSNOVNA_SOLA" ? "OS" : "SS"}`;
+}
+async function insertIntoCalc(text) {
+  const tool = await setCalcMode("sci");
+  tool.insert(text);
+}
+function calcTool(mode) {
+  if (mode === "graph") return graphCalc();
+  calcTools[mode] ||= (mode === "sci" ? import("./graph/sci.js") : import("./graph/tools.js")).then((m) => {
+    const host = document.createElement("div");
+    const base = { t, icon, locale, onInsert: insertIntoCalc };
+    if (mode === "sci") return m.createScientific(host, { ...base, storageKey: () => `stemmind.sci.${state.student?.id ?? 0}` });
+    if (mode === "tools") return m.createTools(host, base);
+    if (mode === "pse") return m.createPse(host, { ...base, lang: currentLang });
+    return m.createFormulas(host, { ...base, api, renderRich, bookKey: formulaBook });
+  });
+  return calcTools[mode];
+}
+/** Pokaže izbrano orodje v zavihku ali v prekrivnem oknu. */
+async function setCalcMode(mode) {
+  if (!CALC_MODES.includes(mode)) mode = "sci";
+  calcMode = mode;
+  try {
+    localStorage.setItem("stemmind.calcMode", mode);
+  } catch {}
+  document.querySelectorAll(".calc-modes [data-calc-mode]").forEach((b) => {
+    b.classList.toggle("active", b.dataset.calcMode === mode);
+    b.setAttribute("aria-selected", String(b.dataset.calcMode === mode));
+  });
+  if (mode !== "graph") document.body.classList.remove("gc-kp");
+  const tool = await calcTool(mode);
+  if (calcMode !== mode) return; // medtem izbran drug način
+  // zgodovina in grafi so po učencih: ob menjavi učenca naložimo njegove
+  if (tool._student !== state.student?.id) {
+    if (tool._student !== undefined) tool.reload?.();
+    tool._student = state.student?.id;
   }
+  if (mode === "formulas") tool.reload();
+  const slot = calcSlot();
+  if (tool.root.parentElement !== slot) slot.replaceChildren(tool.root);
+  tool.resize?.();
+  return tool;
+}
+document.querySelectorAll(".calc-modes").forEach((seg) =>
+  seg.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-calc-mode]");
+    if (b) setCalcMode(b.dataset.calcMode);
+  }),
+);
+function showGraph() {
+  return setCalcMode(calcMode);
+}
+/** Odpre kalkulator čez cel zaslon. mode: "sci" | "graph" | "units"; exprs: izrazi za graf. */
+async function openCalcOverlay({ mode = calcMode, exprs = [], backLabel = t("nav.back") } = {}) {
   $("#graph-close-label").textContent = backLabel;
-  $("#graph-overlay-body").append(calc.root);
+  $("#graph-close").setAttribute("aria-label", backLabel);
   $("#graph-overlay").hidden = false;
   document.body.classList.add("graph-open");
-  calc.resize();
-  if (exprs.length) calc.show(exprs);
+  const tool = await setCalcMode(mode);
+  if (mode === "graph" && exprs.length) tool.show(exprs);
+  return tool;
 }
-function closeGraphOverlay() {
-  if ($("#graph-overlay").hidden) return;
+// združljivost: grafični kalkulator z izrazi (inštruktor, preizkusi)
+const openGraphOverlay = (exprs = [], backLabel = t("nav.back")) => openCalcOverlay({ mode: "graph", exprs, backLabel });
+function closeCalcOverlay() {
+  if (!calcOverlayOpen()) return;
   $("#graph-overlay").hidden = true;
-  document.body.classList.remove("graph-open");
-  calcP?.then((calc) => $("#graph-slot").append(calc.root));
+  document.body.classList.remove("graph-open", "gc-kp");
+  $("#graph-overlay-body").replaceChildren();
+  if (!$("#view-graph").hidden) setCalcMode(calcMode);
 }
-$("#graph-close").addEventListener("click", closeGraphOverlay);
+$("#graph-close").addEventListener("click", closeCalcOverlay);
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !$("#graph-overlay").hidden && !document.querySelector(".gc-pop:not([hidden])")) closeGraphOverlay();
+  if (e.key === "Escape" && calcOverlayOpen() && !document.querySelector(".gc-pop:not([hidden])")) closeCalcOverlay();
 });
+// gumbi »Kalkulator« v Učni poti, vadnici in Inštruktorju
+document.querySelectorAll(".calc-open").forEach((b) =>
+  b.addEventListener("click", () => {
+    const view = document.querySelector("main.view:not([hidden])")?.id;
+    const back = view === "view-chat" ? t("nav.chat") : view === "view-path" ? t("nav.path") : t("nav.back");
+    // pri kemiji najprej periodni sistem, sicer zadnje uporabljeno orodje (privzeto znanstveni)
+    openCalcOverlay({ mode: calcSubject() === "KEM" ? "pse" : calcMode, backLabel: back });
+  }),
+);
 // Enačbe v besedilu (LaTeX) → izrazi za kalkulator. Hiter pregled brez nalaganja modula.
 const mayPlot = (text) => /\$[^$]*(?:[xy]\s*(?:=|<|>|\\le|\\ge)|=[^$]*\bx\b)/.test(String(text || "")) && /x/.test(String(text || ""));
 async function plotFromText(text) {
@@ -2006,7 +2078,7 @@ async function addGraphButton(bubble, text) {
 }
 
 // Za samodejne preizkuse v brskalniku.
-window.stemmind = { openTopic, showView, openLesson, openGraphOverlay };
+window.stemmind = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay };
 
 initTextbook({
   api,

@@ -86,3 +86,14 @@ Koda je v `public/graph/` (`math.js` razčlenjevalnik, odvodi in integrali; `mod
 - **Tipkovnica**: na zaslonu na dotik polja ne odprejo sistemske tipkovnice (`inputmode="none"`), ampak lastno (123, f(x), Σ iz `public/symbols.js`, ABC). Ko je odprta, se skrijejo spodnja vrstica zavihkov, pas testnega načina in gumb nazaj (`body.gc-kp`).
 - **Barve krivulj** so podatkovne barve (`--g-red`, `--g-blue` … v `graph.css`), z različico za temni način. Niso barve gumbov in se ne mešajo z barvo poudarka iz Nastavitve → Videz.
 - **Shranjevanje**: zadnji graf se samodejno shrani v brskalnik za vsakega učenca; »Moji grafi« jih hrani na strežniku (z majhno sličico).
+
+## Računska orodja (znanstveni kalkulator, orodja, PSE, formule)
+
+Isti zaslon kot grafični kalkulator ima zgoraj preklopnik `.calc-modes`: Znanstveni | Grafični | Orodja | PSE | Formule. Koda: `public/graph/scicore.js` (računanje, ulomki, oblike zapisa, konstante, enote), `sci.js` (znanstveni kalkulator in pretvornik enot), `toolscore.js` (statistika, kompleksna števila, polinomi, matrike, številski sistemi, molska masa), `tools.js` (Orodja, PSE, Formule), `pse-data.js` (118 elementov). Zbirke formul so v `content/formulas/*.md`, strežnik jih da prek `/api/formulas?book=KEM-OS`. Vse teče v brskalniku, brez API.
+
+- **Kje se odpre**: zavihek »Kalkulator«; gumb s kalkulatorjem v Učni poti (ob naslovu), na zaslonu teme (ob »Nazaj«), pod nalogo in v glavi Inštruktorja. Od tam se odpre kot prekrivni zaslon in ne zapusti strani; Esc ali puščica nazaj ga zapre.
+- **Privzeti način**: zadnji uporabljeni (`stemmind.calcMode`). Pri kemiji (predmet teme ali profila KEM) se odpre PSE. Če naloga vsebuje funkcijo za risanje, se odpre Grafični z vpisanimi izrazi. Formule pokažejo zbirko za predmet in stopnjo (OŠ/SŠ) učenca.
+- **Znanstveni**: na računalniku zgodovina levo, tipkovnica desno (360–460 px); do 860 px zgodovina zgoraj, tipkovnica spodaj (funkcijske tipke 38 px, številke 46 px). Rezultat je točen, kadar se da (ulomek, koren, večkratnik π), in decimalen. Dotik izraza v zgodovini ga vrne v vnos, dotik rezultata ga vstavi.
+- **Vstavljanje**: vsako orodje ima »V kalkulator«, ki preklopi na Znanstveni in vstavi vrednost (npr. molska masa iz PSE).
+- **PSE**: 18 stolpcev, na telefonu se pomika vodoravno. Barve skupin so podatkovne barve z besedilno legendo (nikoli samo barva). Lantanoidi in aktinoidi so v ločenih vrsticah spodaj.
+- **Telefon**: preklopnik nima ikon pod 480 px in se stisne do 360 px; vrstice čipov (izbira orodja) se pomikajo vodoravno.
