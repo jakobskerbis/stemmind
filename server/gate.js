@@ -9,7 +9,7 @@ const COOKIE = "stemmind_geslo";
 const YEAR = 365 * 24 * 3600;
 // Brez gesla: zdravje strežnika, ikone in opis spletne aplikacije (telefon jih
 // prebere za bližnjico na začetnem zaslonu, preden je uporabnik prijavljen).
-const PUBLIC = [/^\/healthz$/, /^\/manifest\.webmanifest$/, /^\/icons\/[\w.-]+\.png$/, /^\/favicon\.ico$/];
+const PUBLIC = [/^\/healthz$/, /^\/manifest\.webmanifest$/, /^\/icons\/[\w.-]+\.png$/, /^\/favicon\.ico$/, /^\/\.well-known\/assetlinks\.json$/];
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 

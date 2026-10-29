@@ -105,7 +105,10 @@ const P = {"map":"<path d=\"M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1
   "flower":"<circle cx=\"12\" cy=\"12\" r=\"3\" /><path d=\"M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5\" /><path d=\"M12 7.5V9\" /><path d=\"M7.5 12H9\" /><path d=\"M16.5 12H15\" /><path d=\"M12 16.5V15\" /><path d=\"m8 8 1.88 1.88\" /><path d=\"M14.12 9.88 16 8\" /><path d=\"m8 16 1.88-1.88\" /><path d=\"M14.12 14.12 16 16\" />",
   "infinity":"<path d=\"M6 16c5 0 7-8 12-8a4 4 0 0 1 0 8c-5 0-7-8-12-8a4 4 0 1 0 0 8\" />",
   "spline":"<circle cx=\"19\" cy=\"5\" r=\"2\" /><circle cx=\"5\" cy=\"19\" r=\"2\" /><path d=\"M5 17A12 12 0 0 1 17 5\" />",
-  "circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" />"};
+  "circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" />",
+  "share":"<path d=\"M12 2v13\" /><path d=\"m16 6-4-4-4 4\" /><path d=\"M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8\" />",
+  "square-plus":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" /><path d=\"M8 12h8\" /><path d=\"M12 8v8\" />",
+  "smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\" /><path d=\"M12 18h.01\" />"};
 
 export function icon(name, cls = "") {
   const body = P[name] || "";

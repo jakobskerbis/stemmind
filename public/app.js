@@ -7,7 +7,7 @@ import { mountLanguageCard } from "./language.js";
 
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild } from "./account.js";
-import { initTextbook, showTextbook, openLesson } from "./textbook.js";
+import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
 import { loadPrograms, programsCache, subjectOptions, SUBJECT_NAMES } from "./programs.js";
@@ -17,6 +17,7 @@ import { mountSymbols } from "./symbols.js";
 import { renderSuggestion, renderWelcome, stageUp } from "./level-up.js";
 import { offlineApi, refreshPack, syncOffline, packTaskCount, pendingCount } from "./offline.js";
 import { initFeedback, showFeedback } from "./feedback.js";
+import { initInstall, installSheetOpen, closeInstallSheet } from "./install.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -111,6 +112,8 @@ function renderRich(text) {
 // ---------- pogledi ----------
 
 function showView(name) {
+  syncHistory(name);
+  currentView = name;
   syncCompetitionTab();
   if (name === "path" || name === "competition") setBack(name);
   if (name !== "topic") stopContestTimer();
@@ -137,6 +140,73 @@ function showView(name) {
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
+
+// Tipka Nazaj (Android, aplikacija na začetnem zaslonu, brskalnik): brez tega bi tipka Nazaj
+// v nameščeni aplikaciji takoj zaprla STEMMind. Zgodovina ima dve ravni: Učna pot (0) in
+// trenutni pogled (1). Nazaj najprej zapre odprto okno (kalkulator, navodila) ali lekcijo,
+// s podstrani »Jaz« (Nastavitve, Napredek …) vodi na »Jaz«, sicer na Učno pot.
+let currentView = "path";
+let fromBack = false;
+let skipPop = 0;
+let overlayEntry = false; // zapis v zgodovini samo za okno, odprto na Učni poti
+const atTop = () => history.state?.stm !== 1;
+function syncHistory(name) {
+  if (fromBack) return;
+  if (name === "path") {
+    if (!atTop()) {
+      skipPop++;
+      overlayEntry = false;
+      history.back();
+    }
+    return;
+  }
+  const entry = { stm: 1, v: name };
+  if (atTop()) history.pushState(entry, "");
+  else history.replaceState(entry, "");
+}
+// Okno se je odprlo: na Učni poti dodamo zapis, da ga tipka Nazaj zapre namesto aplikacije.
+function overlayOpened() {
+  if (currentView === "path" && atTop()) {
+    history.pushState({ stm: 1, v: "path" }, "");
+    overlayEntry = true;
+  }
+}
+// Okno zaprto z gumbom: odvečni zapis odstranimo, da ni treba dvakrat pritisniti Nazaj.
+function overlayClosed() {
+  if (overlayEntry && currentView === "path" && !atTop()) {
+    skipPop++;
+    history.back();
+  }
+  overlayEntry = false;
+}
+window.addEventListener("popstate", () => {
+  if (skipPop) {
+    skipPop--;
+    return;
+  }
+  const wasOverlay = overlayEntry;
+  overlayEntry = false;
+  const keep = () => currentView !== "path" && history.pushState({ stm: 1, v: currentView }, "");
+  if (installSheetOpen()) {
+    closeInstallSheet({ fromBack: true });
+    return keep();
+  }
+  if (calcOverlayOpen()) {
+    closeCalcOverlay({ fromBack: true });
+    return keep();
+  }
+  if (wasOverlay && currentView === "path") return;
+  if (!$("#tour")?.hidden && $("#tour")) return keep();
+  if (currentView === "textbook" && textbookBack()) return keep();
+  const subMe = ME_VIEWS.includes(currentView) && !["me", "graph"].includes(currentView);
+  if (subMe && $("#tabbar").offsetParent) return showView("me"); // telefon: nazaj na »Jaz«
+  fromBack = true;
+  try {
+    showView("path");
+  } finally {
+    fromBack = false;
+  }
+});
 
 const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph"];
 function renderMe() {
@@ -2031,6 +2101,7 @@ function showGraph() {
 async function openCalcOverlay({ mode = calcMode, exprs = [], backLabel = t("nav.back") } = {}) {
   $("#graph-close-label").textContent = backLabel;
   $("#graph-close").setAttribute("aria-label", backLabel);
+  if ($("#graph-overlay").hidden) overlayOpened();
   $("#graph-overlay").hidden = false;
   document.body.classList.add("graph-open");
   const tool = await setCalcMode(mode);
@@ -2039,14 +2110,15 @@ async function openCalcOverlay({ mode = calcMode, exprs = [], backLabel = t("nav
 }
 // združljivost: grafični kalkulator z izrazi (inštruktor, preizkusi)
 const openGraphOverlay = (exprs = [], backLabel = t("nav.back")) => openCalcOverlay({ mode: "graph", exprs, backLabel });
-function closeCalcOverlay() {
+function closeCalcOverlay({ fromBack = false } = {}) {
   if (!calcOverlayOpen()) return;
+  if (!fromBack) overlayClosed();
   $("#graph-overlay").hidden = true;
   document.body.classList.remove("graph-open", "gc-kp");
   $("#graph-overlay-body").replaceChildren();
   if (!$("#view-graph").hidden) setCalcMode(calcMode);
 }
-$("#graph-close").addEventListener("click", closeCalcOverlay);
+$("#graph-close").addEventListener("click", () => closeCalcOverlay());
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && calcOverlayOpen() && !document.querySelector(".gc-pop:not([hidden])")) closeCalcOverlay();
 });
@@ -2097,14 +2169,22 @@ initTextbook({
 
 // ---------- zagon ----------
 
+// Bližnjica z ikone aplikacije (dolg pritisk na ikono): /?pogled=chat odpre Inštruktorja.
+const START_VIEW = ["chat", "textbook", "graph"].find((v) => v === new URLSearchParams(location.search).get("pogled"));
+if (new URLSearchParams(location.search).has("pogled")) history.replaceState(null, "", location.pathname);
+initInstall({ toast, onSheet: (open) => (open ? overlayOpened() : overlayClosed()) });
+
 (async () => {
   const cfg = await api("/api/config");
   $("#mock-banner").hidden = !cfg.mock;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   // Starševski računi (account.js): prijava, potrditev, prvi otrok.
+  let first = true;
   const start = async (o) => {
     await loadStudents();
     if (!o?.keepView) showView("path");
+    if (first && START_VIEW && !o?.keepView) showView(START_VIEW);
+    first = false;
   };
   if (await initAccount({ onReady: start })) await start();
 })();
