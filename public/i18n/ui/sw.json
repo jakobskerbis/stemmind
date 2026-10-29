@@ -1517,5 +1517,21 @@
   "guest.delete": "Futa wasifu na data yote",
   "guest.deleteConfirm": "Futa wasifu, maendeleo na mazungumzo? Hili haliwezi kutenduliwa.",
   "guest.logoutConfirm": "Bila akaunti, baada ya kuondoka hutaweza tena kufikia maendeleo haya. Afadhali ufungue akaunti kwenye kichupo cha Akaunti. Bado unataka kuondoka?",
-  "guest.off": "Kutumia bila akaunti hakuwezekani tena. Fungua akaunti ili uhifadhi maendeleo yako."
+  "guest.off": "Kutumia bila akaunti hakuwezekani tena. Fungua akaunti ili uhifadhi maendeleo yako.",
+  "games.e.diner": "Mgahawa",
+  "games.e.diner.how": "Mgeni anaagiza swali. Gusa kiungo chenye jibu sahihi kabla mgeni hajachoka kusubiri. Vitufe 1–4.",
+  "games.e.hills": "Safari ya vilima",
+  "games.e.hills.how": "Jipu inaenda yenyewe. Pita kwenye dumu la mafuta lenye jibu sahihi na gusa ili kuruka yale yasiyo sahihi. Kitufe: nafasi.",
+  "games.e.pet": "Kipenzi",
+  "games.e.pet.how": "Mlishe Bibi kitafunio chenye jibu sahihi: kiguse au kikokote hadi kwa Bibi. Vitufe 1–3.",
+  "games.e.catcher": "Mdakaji",
+  "games.e.catcher.how": "Sogeza kikapu na udake tunda lenye jibu sahihi. Epuka yasiyo sahihi. Vitufe ← →.",
+  "games.e.pairs": "Kumbukumbu",
+  "games.e.pairs.how": "Kumbuka kadi kabla hazijapinduka, kisha fungua jozi yenye jibu sahihi. Vitufe 1–8.",
+  "games.e.slicer": "Kukata matunda",
+  "games.e.slicer.how": "Telezesha kidole kukata tunda lenye jibu sahihi. Usikate yasiyo sahihi. Vitufe 1–4.",
+  "games.e.water": "Maji yanaenda wapi",
+  "games.e.water.how": "Chimba njia kwenye udongo kwa kidole ili maji yatiririke kwenye beseni lenye jibu sahihi. Vitufe 1–3.",
+  "games.e.mines": "Kitegua mabomu",
+  "games.e.mines.how": "Jibu sahihi linajaza kigunduzi, kinachoonyesha bomu na kisanduku salama. Fungua visanduku vyote salama; 🚩 inaashiria bomu. Vitufe 1–4 na F."
 }

@@ -1517,5 +1517,21 @@
   "guest.delete": "Supprimer le profil et toutes les données",
   "guest.deleteConfirm": "Supprimer le profil, la progression et les conversations ? Cette action est irréversible.",
   "guest.logoutConfirm": "Sans compte, tu ne pourras plus accéder à cette progression après la déconnexion. Crée plutôt un compte dans l’onglet Compte. Te déconnecter quand même ?",
-  "guest.off": "L’utilisation sans compte n’est plus possible. Crée un compte pour garder ta progression."
+  "guest.off": "L’utilisation sans compte n’est plus possible. Crée un compte pour garder ta progression.",
+  "games.e.diner": "Snack",
+  "games.e.diner.how": "Un client commande une tâche. Touche l'ingrédient avec la bonne réponse avant qu'il perde patience. Touches 1–4.",
+  "games.e.hills": "Route des collines",
+  "games.e.hills.how": "La jeep roule seule. Passe sur le bidon avec la bonne réponse et touche l'écran pour sauter les mauvais. Touche : espace.",
+  "games.e.pet": "Petit compagnon",
+  "games.e.pet.how": "Donne à Bibi la friandise avec la bonne réponse : touche-la ou fais-la glisser vers Bibi. Touches 1–3.",
+  "games.e.catcher": "Attrape-fruits",
+  "games.e.catcher.how": "Déplace le panier et attrape le fruit avec la bonne réponse. Évite les mauvais. Touches ← →.",
+  "games.e.pairs": "Mémory",
+  "games.e.pairs.how": "Mémorise les cartes avant qu'elles se retournent, puis retourne la paire avec la bonne réponse. Touches 1–8.",
+  "games.e.slicer": "Tranche les fruits",
+  "games.e.slicer.how": "Glisse le doigt pour trancher le fruit avec la bonne réponse. Ne tranche pas les mauvais. Touches 1–4.",
+  "games.e.water": "Où coule l'eau",
+  "games.e.water.how": "Creuse un chemin dans la terre avec ton doigt pour que l'eau coule dans le bac avec la bonne réponse. Touches 1–3.",
+  "games.e.mines": "Démineur",
+  "games.e.mines.how": "Une bonne réponse charge le détecteur, qui montre une mine et une case sûre. Ouvre toutes les cases sûres ; 🚩 marque une mine. Touches 1–4 et F."
 }

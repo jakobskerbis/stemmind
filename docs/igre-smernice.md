@@ -277,7 +277,8 @@ results in `game_scores.cleared` and passed checks in `game_unlocks`.
    count), or when the concept is first taught in an earlier school year than the student's, or
    when the student passes the short check in the games (5 untimed questions, 4 right).
 2. **Then speed, step by step.** Every engine has a speed class: 1 calm (maze, castle, bubbles,
-   cannon, marble, orb), 2 medium, 3 fast (runner, heli, moles, jumper). Calm games open as soon
+   cannon, marble, orb), 2 medium, 3 fast (runner, heli, moles, jumper, slicer). `fun.js` (2026-10-29): pet, pairs, water,
+   mines are calm; diner, hills, catcher medium. Calm games open as soon
    as the topic is known. Medium games open after one calm game on that topic with at least 8
    right and at least 80 % right; fast games after one such medium game.
 3. **A locked tile explains itself.** It is grey with a lock and stays clickable: the card says

@@ -1517,5 +1517,21 @@
   "guest.delete": "Elimina il profilo e tutti i dati",
   "guest.deleteConfirm": "Eliminare profilo, progressi e conversazioni? L’operazione non può essere annullata.",
   "guest.logoutConfirm": "Senza account, dopo l’uscita non potrai più accedere a questi progressi. Meglio creare un account nella scheda Account. Vuoi uscire comunque?",
-  "guest.off": "Non è più possibile usare Evklid senza account. Crea un account per conservare i tuoi progressi."
+  "guest.off": "Non è più possibile usare Evklid senza account. Crea un account per conservare i tuoi progressi.",
+  "games.e.diner": "Tavola calda",
+  "games.e.diner.how": "Un cliente ordina un compito. Tocca l'ingrediente con la risposta giusta prima che il cliente perda la pazienza. Tasti 1–4.",
+  "games.e.hills": "Corsa in collina",
+  "games.e.hills.how": "La jeep va da sola. Passa sulla tanica con la risposta giusta e tocca per saltare quelle sbagliate. Tasto: spazio.",
+  "games.e.pet": "Cucciolo",
+  "games.e.pet.how": "Dai a Bibi il dolcetto con la risposta giusta: toccalo o trascinalo da Bibi. Tasti 1–3.",
+  "games.e.catcher": "Acchiappa",
+  "games.e.catcher.how": "Muovi il cestino e prendi il frutto con la risposta giusta. Evita quelli sbagliati. Tasti ← →.",
+  "games.e.pairs": "Memory",
+  "games.e.pairs.how": "Ricorda le carte prima che si girino, poi scopri la coppia con la risposta giusta. Tasti 1–8.",
+  "games.e.slicer": "Taglia la frutta",
+  "games.e.slicer.how": "Scorri per tagliare il frutto con la risposta giusta. Non tagliare quelli sbagliati. Tasti 1–4.",
+  "games.e.water": "Dove scorre l'acqua",
+  "games.e.water.how": "Scava col dito una strada nella terra perché l'acqua arrivi nella vasca con la risposta giusta. Tasti 1–3.",
+  "games.e.mines": "Campo minato",
+  "games.e.mines.how": "Una risposta giusta carica il rilevatore, che mostra una mina e una casella sicura. Apri tutte le caselle sicure; 🚩 segna una mina. Tasti 1–4 e F."
 }
