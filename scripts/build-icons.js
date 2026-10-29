@@ -21,6 +21,8 @@ const NAMES = [
   "share", "square-plus", "smartphone",
   // kartice za ponavljanje
   "layers",
+  // igre
+  "gamepad-2", "volume-2", "volume-x", "heart",
   // števec porabe AI (samo skrbnik)
   "wallet",
 ];
