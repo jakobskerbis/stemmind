@@ -202,7 +202,7 @@ export const EXAM_KEM = [
         const limitingN = nN <= nH / 3;
         const nNH3 = limitingN ? 2 * nN : (2 * nH) / 3;
         return task({
-          text: L(`In the reaction $\\mathrm{N_2 + 3H_2 \\rightarrow 2NH_3}$, ${en(nN)} mol of $\\mathrm{N_2}$ reacts with ${en(nH)} mol of $\\mathrm{H_2}$. What is the maximum amount of $\\mathrm{NH_3}$ formed, in mol?`, `अभिक्रिया $\\mathrm{N_2 + 3H_2 \\rightarrow 2NH_3}$ में ${en(nN)} mol $\\mathrm{N_2}$, ${en(nH)} mol $\\mathrm{H_2}$ से अभिक्रिया करता है। $\\mathrm{NH_3}$ की अधिकतम कितनी मात्रा (mol में) बनती है?`) + roundToL(2, lang),
+          text: L(`In the reaction $\\mathrm{N_2 + 3H_2 \\rightarrow 2NH_3}$, ${en(nN)} mol of $\\mathrm{N_2}$ reacts with ${en(nH)} mol of $\\mathrm{H_2}$. What is the maximum amount of $\\mathrm{NH_3}$ formed, in mol?`, `${en(nN)} mol $\\mathrm{N_2}$ और ${en(nH)} mol $\\mathrm{H_2}$ के बीच अभिक्रिया $\\mathrm{N_2 + 3H_2 \\rightarrow 2NH_3}$ होती है। $\\mathrm{NH_3}$ की अधिकतम कितनी मात्रा (mol में) बनती है?`) + roundToL(2, lang),
           answer: numM(nNH3, 2, [[limitingN ? (2 * nH) / 3 : 2 * nN, L("That uses the excess reactant; the limiting reactant decides the yield.", "यह आधिक्य अभिकर्मक से निकला है; उत्पाद की मात्रा सीमांत अभिकर्मक तय करता है।")], [nN + nH, L("Use the mole ratios; amounts do not simply add.", "मोल अनुपात का प्रयोग कीजिए; मात्राएँ सीधे नहीं जुड़तीं।")]]),
           data: { given: [dq("n(\\mathrm{N_2})", nN, "mol"), dq("n(\\mathrm{H_2})", nH, "mol")], find: ["n(\\mathrm{NH_3})"] },
           hint: L("Find the limiting reactant: compare $n(\\mathrm{N_2})$ with $n(\\mathrm{H_2})/3$.", "सीमांत अभिकर्मक ज्ञात कीजिए: $n(\\mathrm{N_2})$ की तुलना $n(\\mathrm{H_2})/3$ से कीजिए।"),
@@ -708,7 +708,7 @@ export const EXAM_KEM = [
             text: L(`A first-order reaction has a half-life of ${t} min. Starting at ${en(c0)} mol/L, what is the concentration after ${t * k} min, in mol/L?`, `एक प्रथम कोटि अभिक्रिया की अर्धायु ${t} min है। प्रारंभिक सांद्रता ${en(c0)} mol/L हो, तो ${t * k} min बाद सांद्रता mol/L में कितनी होगी?`) + roundToL(3, lang),
             answer: numM(c0 / 2 ** k, 3, [[c0 / (2 * k), L("Halve once per half-life: divide by $2^n$, not by $2n$.", "प्रत्येक अर्धायु में सांद्रता एक बार आधी होती है: $2^n$ से भाग दीजिए, $2n$ से नहीं।")], [c0 - c0 / 2 ** k, L("That is how much reacted, not how much is left.", "यह अभिक्रिया कर चुकी मात्रा है, शेष मात्रा नहीं।")]]),
             data: { given: [dq("t_{1/2}", t, "min"), `c_0 = ${en(c0)}\\ \\mathrm{mol/L}`, dq("t", t * k, "min")], find: ["c"] },
-            hint: L("Count half-lives; each one halves the concentration.", "अर्धायु गिनिए; प्रत्येक अर्धायु में सांद्रता आधी हो जाती है।"),
+            hint: L("Count half-lives; each one halves the concentration.", "अर्धायुओं की संख्या गिनिए; प्रत्येक अर्धायु में सांद्रता आधी हो जाती है।"),
             formula: "c = c_0 \\left(\\tfrac12\\right)^{t/t_{1/2}}",
             solution: `$n = ${t * k}/${t} = ${k}$ ${L("half-lives", "अर्धायु")}\n$c = ${en(c0)}/2^{${k}} = ${en(c0 / 2 ** k, 3)}\\ \\text{mol/L}$`,
           });

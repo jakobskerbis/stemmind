@@ -323,7 +323,7 @@ export const EXAM_FIZ = [
           ),
           answer: numM(P / eta, 1, [[P, L("That is the useful (mechanical) power; divide by the efficiency.", "यह उपयोगी (यांत्रिक) शक्ति है; इसे दक्षता से भाग दीजिए।")], [P * eta, L("Divide by the efficiency: the input is larger than the output.", "दक्षता से भाग दीजिए: निवेशी शक्ति निर्गत शक्ति से अधिक होती है।")]]),
           data: { given: [dq("m", m, "kg"), dq("h", h, "m"), dq("t", t, "s"), `\\eta = ${en(eta * 100)}\\%`, dq("g", 10, "m/s^2")], find: ["P_{in}"] },
-          hint: L("Find the useful power $mgh/t$, then the input power from the efficiency.", "पहले उपयोगी शक्ति $mgh/t$ ज्ञात कीजिए, फिर दक्षता से निवेशी शक्ति।"),
+          hint: L("Find the useful power $mgh/t$, then the input power from the efficiency.", "पहले उपयोगी शक्ति $mgh/t$ ज्ञात कीजिए, फिर दक्षता से निवेशी शक्ति ज्ञात कीजिए।"),
           formula: ["P = \\dfrac{mgh}{t}", "\\eta = \\dfrac{P}{P_{in}}"],
           solution: `$W = ${m} \\cdot 10 \\cdot ${h} = ${m * G * h}\\ \\text{J}$\n$P = ${m * G * h} / ${t} \\approx ${en(P, 2)}\\ \\text{W}$\n$P_{in} = P / ${en(eta)} \\approx ${en(P / eta, 1)}\\ \\text{W}$`,
         });
@@ -486,7 +486,7 @@ export const EXAM_FIZ = [
             ),
             answer: numM(g, 2, [[9.8 / k, L("Gravity falls off as $1/r^2$, not $1/r$.", "गुरुत्व $1/r^2$ के अनुसार घटता है, न कि $1/r$ के अनुसार।")], [9.8 / ((k - 1) * (k - 1)), L("Distance is measured from the Earth's centre, not from the surface.", "दूरी पृथ्वी के केंद्र से मापी जाती है, सतह से नहीं।")]]),
             data: { given: [dq("g_0", 9.8, "m/s^2"), `r = ${en(k)} R`], find: ["g"] },
-            hint: L("Gravity falls off as the inverse square of the distance from the centre.", "गुरुत्व केंद्र से दूरी के वर्ग के व्युत्क्रमानुपाती घटता है।"),
+            hint: L("Gravity falls off as the inverse square of the distance from the centre.", "गुरुत्व, केंद्र से दूरी के वर्ग के व्युत्क्रम के अनुपात में घटता है।"),
             formula: "g(r) = g_0 \\left(\\dfrac{R}{r}\\right)^2",
             solution: `$\\left(\\dfrac{R}{r}\\right)^2 = \\dfrac{1}{${en(k * k)}}$\n$g = 9.8 / ${en(k * k)} \\approx ${en(g, 2)}\\ \\text{m/s}^2$`,
           });
@@ -540,7 +540,7 @@ export const EXAM_FIZ = [
         const R = r.pick([0.4, 0.9, 1.6, 2.5, 3.6, 4.9]), m = r.pick([0.2, 0.5, 1]);
         const vt = Math.sqrt(G * R), vb = Math.sqrt(5 * G * R), Tb = 6 * m * G;
         const ask = r.int(0, 1);
-        const setupHi = `डोरी से बँधी ${en(m)} kg की एक गेंद ${en(R)} m त्रिज्या के ऊर्ध्वाधर वृत्त में घूमती है। उसकी चाल उतनी ही न्यूनतम है जितनी शीर्ष पर डोरी को तना रखने के लिए आवश्यक है।`;
+        const setupHi = `डोरी से बँधी ${en(m)} kg की एक गेंद ${en(R)} m त्रिज्या के ऊर्ध्वाधर वृत्त में घूमती है। उसकी चाल वह न्यूनतम चाल है जो शीर्ष पर डोरी को तनी रखने के लिए आवश्यक है।`;
         return task({
           text: ask === 0
             ? L(
@@ -552,7 +552,7 @@ export const EXAM_FIZ = [
               `${setupHi} निम्नतम बिंदु पर डोरी में तनाव न्यूटन में ज्ञात कीजिए।${gtxt}`,
             ),
           answer: ask === 0
-            ? numM(vb, 2, [[vt, L("That is the speed at the top; the ball gains energy falling $2r$.", "यह शीर्ष पर चाल है; $2r$ नीचे आने में गेंद ऊर्जा प्राप्त करती है।")], [Math.sqrt(3 * G * R), L("The ball falls $2r$ (a diameter), not $r$.", "गेंद $2r$ (एक व्यास) नीचे आती है, न कि $r$।")]])
+            ? numM(vb, 2, [[vt, L("That is the speed at the top; the ball gains energy falling $2r$.", "यह शीर्ष पर चाल है; $2r$ नीचे आने में गेंद गतिज ऊर्जा प्राप्त करती है।")], [Math.sqrt(3 * G * R), L("The ball falls $2r$ (a diameter), not $r$.", "गेंद $2r$ (एक व्यास) नीचे आती है, न कि $r$।")]])
             : numM(Tb, null, [[m * G, L("At the bottom the tension must also provide the centripetal force.", "निम्नतम बिंदु पर तनाव को अभिकेंद्र बल भी देना होता है।")], [5 * m * G, L("Tension = $mg + mv^2/r$: add the weight.", "तनाव = $mg + mv^2/r$: भार भी जोड़िए।")]]),
           data: { given: [dq("m", m, "kg"), dq("r", R, "m"), dq("g", 10, "m/s^2")], find: [ask === 0 ? "v_b" : "T_b"] },
           hint: L("At the top gravity alone gives the centripetal force. Then use energy conservation down to the bottom (drop $2r$).", "शीर्ष पर केवल गुरुत्व अभिकेंद्र बल देता है। फिर निम्नतम बिंदु तक ऊर्जा संरक्षण लगाइए (ऊँचाई में कमी $2r$)।"),
@@ -875,7 +875,7 @@ export const EXAM_FIZ = [
         return task({
           text: L(
             `A gas at ${p1} kPa occupies ${V1} L at ${T1} K. It is changed to ${V2} L at ${T2} K. What is its new pressure, in kPa?${roundToL(1, lang)}`,
-            `${p1} kPa दाब और ${T1} K ताप पर एक गैस का आयतन ${V1} L है। उसे बदलकर ${T2} K ताप पर ${V2} L आयतन कर दिया जाता है। गैस का नया दाब kPa में ज्ञात कीजिए।${roundToL(1, lang)}`,
+            `${p1} kPa दाब और ${T1} K ताप पर एक गैस का आयतन ${V1} L है। फिर उसका ताप ${T2} K और आयतन ${V2} L कर दिया जाता है। गैस का नया दाब kPa में ज्ञात कीजिए।${roundToL(1, lang)}`,
           ),
           answer: num(p2, 1),
           hint: L("Combined gas law: $\\dfrac{p_1V_1}{T_1} = \\dfrac{p_2V_2}{T_2}$.", "संयुक्त गैस नियम: $\\dfrac{p_1V_1}{T_1} = \\dfrac{p_2V_2}{T_2}$।"),
@@ -1131,7 +1131,7 @@ export const EXAM_FIZ = [
           return task({
             text: L(
               `A ${h} cm tall object stands ${u} cm in front of a converging lens of focal length ${f} cm. How tall is the real image, in cm?${roundToL(2, lang)}`,
-              `${h} cm ऊँचा एक बिंब ${f} cm फोकस दूरी वाले अभिसारी लेंस के सामने ${u} cm की दूरी पर खड़ा है। वास्तविक प्रतिबिंब की ऊँचाई cm में ज्ञात कीजिए।${roundToL(2, lang)}`,
+              `${h} cm ऊँचा एक बिंब ${f} cm फोकस दूरी वाले अभिसारी लेंस के सामने ${u} cm की दूरी पर रखा है। वास्तविक प्रतिबिंब की ऊँचाई cm में ज्ञात कीजिए।${roundToL(2, lang)}`,
             ),
             answer: numM(hi, 2, [[(h * u) / vv, L("Magnification is $v/u$, not $u/v$.", "आवर्धन $v/u$ है, न कि $u/v$।")], [vv, L("That is the image distance; you need the image height.", "यह प्रतिबिंब की दूरी है; आपको प्रतिबिंब की ऊँचाई चाहिए।")]]),
             data: { given: [dq("h", h, "cm"), dq("u", u, "cm"), dq("f", f, "cm")], find: ["h'"] },
