@@ -540,11 +540,11 @@ export const EXAMS = {
       BIO: {
         units: [
           ["Biology (Science paper)", [
-            `Life processes | nutrition, respiration, transport, excretion => ${Bi("human-physiology")}, ${Bi("plant-physiology")}`,
-            `Control and coordination | nervous system, hormones, plant hormones => ${Bi("human-physiology")}`,
-            `How do organisms reproduce? | sexual and asexual reproduction => ${Bi("reproduction")}`,
-            `Heredity | Mendel's experiments, sex determination => ${Bi("genetics-and-inheritance")}`,
-            `Our environment | food chains, ten per cent law => ${Bi("ecology-and-environment")}`,
+            `Life processes | nutrition, respiration, transport, excretion => ${Bi("life-processes")}`,
+            `Control and coordination | nervous system, hormones, plant hormones => ${Bi("control-and-coordination")}`,
+            `How do organisms reproduce? | sexual and asexual reproduction => ${Bi("how-organisms-reproduce")}`,
+            `Heredity | Mendel's experiments, sex determination => ${Bi("heredity-and-variation")}`,
+            `Our environment | food chains, ten per cent law => ${Bi("our-environment")}`,
           ]],
         ],
         mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(4, "choice", 2, 1)] },
@@ -719,17 +719,17 @@ export const EXAMS = {
         units: [
           ["Cells and genetics", [
             `Cell cycle and cell division | mitosis, meiosis => ${Bi("cell-cycle-and-cell-division")}`,
-            `Genetics | Mendel's laws, sex-linked inheritance => ${Bi("genetics-and-inheritance")}`,
+            `Genetics | Mendel's laws, sex-linked inheritance => ${Bi("heredity-and-variation")}`,
           ], 25],
           ["Plant physiology", [
-            `Absorption, transpiration and photosynthesis | osmosis, transpiration, photosynthesis => ${Bi("plant-physiology")}`,
+            `Absorption, transpiration and photosynthesis | osmosis, transpiration, photosynthesis => ${Bi("life-processes")}`,
           ], 20],
           ["Human anatomy and physiology", [
-            `Circulatory, excretory, nervous and endocrine systems | heart, kidney, neurons, hormones => ${Bi("human-physiology")}`,
-            `Reproductive system | gametes, menstrual cycle => ${Bi("reproduction")}`,
+            `Circulatory, excretory, nervous and endocrine systems | heart, kidney, neurons, hormones => ${Bi("life-processes")}, ${Bi("control-and-coordination")}`,
+            `Reproductive system | gametes, menstrual cycle => ${Bi("how-organisms-reproduce")}`,
           ], 40],
-          ["Evolution, population and environment", [
-            `Human evolution and population | evidence of evolution, population growth => ${Bi("evolution")}, ${Bi("ecology-and-environment")}`,
+          ["Population and pollution", [
+            `Population and pollution | population growth, air and water pollution => ${Bi("our-environment")}`,
           ], 15],
         ],
         mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(5, "choice", 2, 1), group(3, "choice", 3, 2)] },
@@ -871,10 +871,10 @@ export const EXAMS = {
       BIO: {
         units: [
           ["Biology", [
-            `Life processes | nutrition, respiration, transport, excretion => ${Bi("human-physiology")}, ${Bi("plant-physiology")}`,
-            `Reproduction | sexual and asexual reproduction => ${Bi("reproduction")}`,
-            `Heredity | Mendel's experiments => ${Bi("genetics-and-inheritance")}`,
-            `Our environment | food chains, energy flow => ${Bi("ecology-and-environment")}`,
+            `Life processes | nutrition, respiration, transport, excretion => ${Bi("life-processes")}`,
+            `Reproduction | sexual and asexual reproduction => ${Bi("how-organisms-reproduce")}`,
+            `Heredity | Mendel's experiments => ${Bi("heredity-and-variation")}`,
+            `Our environment | food chains, energy flow => ${Bi("our-environment")}`,
           ]],
         ],
         mock: { minutes: 30, groups: [group(10, "choice", 1, 1), group(4, "choice", 2, 1)] },

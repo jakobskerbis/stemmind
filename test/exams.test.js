@@ -44,7 +44,7 @@ test("exams: every exam subject is a hidden path whose topics all have tasks", (
 });
 
 test("exams: own exams per school system and default key", () => {
-  assert.deepEqual(examsFor("US").own, ["SAT"]);
+  assert.deepEqual(examsFor("US").own, ["SAT", "ACT", "AP"]);
   assert.ok(examsFor("IN-CBSE").own.includes("JEEM") && examsFor("IN-CBSE").own.includes("NEET"));
   assert.deepEqual(examsFor("CN").own, ["GAOKAO", "ZHONGKAO"]);
   assert.equal(examKeyFor({ school_system: "US", subject: "FIZ" }), "MAT-EX-SAT");
@@ -163,7 +163,7 @@ test("API: exams view for a US and an Indian student", async () => {
     assert.equal(v.key, "MAT-EX-SAT");
     assert.equal(v.defaultExam, "SAT");
     assert.ok(v.units.length && v.about);
-    assert.deepEqual(v.exams.own.map((e) => e.id), ["SAT"]);
+    assert.deepEqual(v.exams.own.map((e) => e.id), ["SAT", "ACT", "AP"]);
     const inS = (await call("/api/students", { method: "POST", body: { name: "Priya", settings: { school_system: "IN-CBSE", curriculum_level: "Class 12", subject: "KEM" } } })).body;
     const j = (await call(`/api/students/${inS.id}/exams?exam=JEEM`)).body;
     assert.equal(j.key, "KEM-EX-JEEM");
@@ -181,7 +181,7 @@ test("exams: second batch (UK, DE, AT, CH, FR, BR, West Africa, Kenya, South Afr
   assert.deepEqual(examsFor("GB").own, ["GCSE", "ALEVEL"]);
   assert.deepEqual(examsFor("DE").own, ["ABITUR"]);
   assert.deepEqual(examsFor("AT").own, ["MATURAAT"]);
-  assert.deepEqual(examsFor("NG").own, ["WASSCE", "JAMB"]);
+  assert.deepEqual(examsFor("NG").own, ["WASSCE", "JAMB", "NECO", "BECENG"]);
   assert.deepEqual(examsFor("FR-AF").own, ["BAC"]);
   assert.equal(examKeyFor({ school_system: "AT", subject: "FIZ" }), "MAT-EX-MATURAAT", "AT: samo matematika");
   assert.equal(examKeyFor({ school_system: "KE", subject: "KEM" }), "KEM-EX-KCSE");
