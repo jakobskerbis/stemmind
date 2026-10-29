@@ -7,7 +7,7 @@ import { mountLanguageCard } from "./language.js";
 
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild } from "./account.js";
-import { initTextbook, showTextbook, openLesson } from "./textbook.js";
+import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
 import { loadPrograms, programsCache, subjectOptions, SUBJECT_NAMES } from "./programs.js";
@@ -17,6 +17,7 @@ import { mountSymbols } from "./symbols.js";
 import { renderSuggestion, renderWelcome, stageUp } from "./level-up.js";
 import { offlineApi, refreshPack, syncOffline, packTaskCount, pendingCount } from "./offline.js";
 import { initFeedback, showFeedback } from "./feedback.js";
+import { initInstall, installSheetOpen, closeInstallSheet } from "./install.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -111,6 +112,8 @@ function renderRich(text) {
 // ---------- pogledi ----------
 
 function showView(name) {
+  syncHistory(name);
+  currentView = name;
   syncCompetitionTab();
   if (name === "path" || name === "competition") setBack(name);
   if (name !== "topic") stopContestTimer();
@@ -137,6 +140,73 @@ function showView(name) {
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".tab, .brand").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
+
+// Tipka Nazaj (Android, aplikacija na začetnem zaslonu, brskalnik): brez tega bi tipka Nazaj
+// v nameščeni aplikaciji takoj zaprla STEMMind. Zgodovina ima dve ravni: Učna pot (0) in
+// trenutni pogled (1). Nazaj najprej zapre odprto okno (kalkulator, navodila) ali lekcijo,
+// s podstrani »Jaz« (Nastavitve, Napredek …) vodi na »Jaz«, sicer na Učno pot.
+let currentView = "path";
+let fromBack = false;
+let skipPop = 0;
+let overlayEntry = false; // zapis v zgodovini samo za okno, odprto na Učni poti
+const atTop = () => history.state?.stm !== 1;
+function syncHistory(name) {
+  if (fromBack) return;
+  if (name === "path") {
+    if (!atTop()) {
+      skipPop++;
+      overlayEntry = false;
+      history.back();
+    }
+    return;
+  }
+  const entry = { stm: 1, v: name };
+  if (atTop()) history.pushState(entry, "");
+  else history.replaceState(entry, "");
+}
+// Okno se je odprlo: na Učni poti dodamo zapis, da ga tipka Nazaj zapre namesto aplikacije.
+function overlayOpened() {
+  if (currentView === "path" && atTop()) {
+    history.pushState({ stm: 1, v: "path" }, "");
+    overlayEntry = true;
+  }
+}
+// Okno zaprto z gumbom: odvečni zapis odstranimo, da ni treba dvakrat pritisniti Nazaj.
+function overlayClosed() {
+  if (overlayEntry && currentView === "path" && !atTop()) {
+    skipPop++;
+    history.back();
+  }
+  overlayEntry = false;
+}
+window.addEventListener("popstate", () => {
+  if (skipPop) {
+    skipPop--;
+    return;
+  }
+  const wasOverlay = overlayEntry;
+  overlayEntry = false;
+  const keep = () => currentView !== "path" && history.pushState({ stm: 1, v: currentView }, "");
+  if (installSheetOpen()) {
+    closeInstallSheet({ fromBack: true });
+    return keep();
+  }
+  if (calcOverlayOpen()) {
+    closeCalcOverlay({ fromBack: true });
+    return keep();
+  }
+  if (wasOverlay && currentView === "path") return;
+  if (!$("#tour")?.hidden && $("#tour")) return keep();
+  if (currentView === "textbook" && textbookBack()) return keep();
+  const subMe = ME_VIEWS.includes(currentView) && !["me", "graph"].includes(currentView);
+  if (subMe && $("#tabbar").offsetParent) return showView("me"); // telefon: nazaj na »Jaz«
+  fromBack = true;
+  try {
+    showView("path");
+  } finally {
+    fromBack = false;
+  }
+});
 
 const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph"];
 function renderMe() {
@@ -1416,11 +1486,13 @@ function renderTask(task, ctx) {
     ${ctx.total ? `<div class="progress" aria-hidden="true"><div style="width:${Math.round(((ctx.index - 1) / ctx.total) * 100)}%"></div></div>` : ""}
     <div class="task-text">${renderRich(task.text)}</div>
     ${task.figure ? figureSvg(task.figure) : ""}
+    ${workHtml()}
     ${input}
     ${hintLadder ? `<div id="hint-box" class="hint-box" aria-live="polite"></div><div class="hint-row"><button type="button" class="ghost small" id="hint-btn">${icon("lightbulb")}<span>${t("task.hintBtn")}</span></button></div>` : ""}
     <div id="feedback" class="feedback" aria-live="polite"></div>
     ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${examMode() ? t("exam.finish") : t("comp.finish")}</button></div>` : ""}
   </div>`;
+  wireWork(box, task);
   const submit = (value) => checkTask(task, ctx, value);
   // Lestev namigov: vsak klik odpre en korak več (podatki → formula → prvi korak).
   let hintShown = 0;
@@ -1473,6 +1545,107 @@ function renderTask(task, ctx) {
     if (!document.body.classList.contains("pad-open")) $("#answer").focus();
   } else closePad();
 }
+
+// ---------- vmesni koraki (kot v zvezek) in pomoč inštruktorja pri nalogi ----------
+const WORK_OPEN_KEY = "stemmind.workOpen";
+const workKey = (id) => `stemmind.work.${id}`;
+function lsGet(k) {
+  try {
+    return localStorage.getItem(k);
+  } catch {
+    return null;
+  }
+}
+function lsSet(k, v) {
+  try {
+    if (v) localStorage.setItem(k, v);
+    else localStorage.removeItem(k);
+  } catch {}
+}
+const workOf = (taskId) => (taskId ? lsGet(workKey(taskId)) || "" : "");
+
+function workHtml() {
+  return `<div class="work">
+    <button type="button" class="work-toggle" aria-expanded="false">${icon("notebook-pen")}<span>${t("task.work")}</span>${icon("chevron-down")}</button>
+    <div class="work-body" hidden>
+      <textarea class="work-text" rows="3" spellcheck="false" placeholder="${escapeHtml(t("task.workPh"))}"></textarea>
+      <button type="button" class="ghost small icon-only work-sym" aria-pressed="false" title="${escapeHtml(t("chat.symbols"))}" aria-label="${escapeHtml(t("chat.symbols"))}">${icon("sigma")}</button>
+      <div class="sym-panel work-sym-panel" hidden></div>
+    </div>
+  </div>`;
+}
+
+// Zapis se shrani v napravo (po nalogi) in gre zraven, ko učenec vpraša inštruktorja.
+function wireWork(box, task) {
+  const w = box.querySelector(".work");
+  if (!w) return;
+  const btn = w.querySelector(".work-toggle");
+  const body = w.querySelector(".work-body");
+  const ta = w.querySelector(".work-text");
+  const grow = () => {
+    ta.style.height = "auto";
+    ta.style.height = `${Math.min(ta.scrollHeight + 2, 420)}px`;
+  };
+  const setOpen = (open, remember) => {
+    body.hidden = !open;
+    w.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", String(open));
+    if (remember) lsSet(WORK_OPEN_KEY, open ? "1" : "0");
+    if (open) grow();
+  };
+  ta.value = workOf(task.id);
+  const pref = lsGet(WORK_OPEN_KEY);
+  // Na računalniku je prostor odprt, na telefonu se odpre z dotikom (manj drsenja); izbira se zapomni.
+  setOpen(ta.value ? true : pref ? pref === "1" : matchMedia("(min-width: 900px) and (pointer: fine)").matches, false);
+  btn.addEventListener("click", () => {
+    setOpen(body.hidden, true);
+    if (!body.hidden) ta.focus();
+  });
+  ta.addEventListener("input", () => {
+    lsSet(workKey(task.id), ta.value.trim() ? ta.value : "");
+    grow();
+  });
+  // Na telefonu bi plošča za vnos in sistemska tipkovnica skupaj prekrili vse.
+  ta.addEventListener("focus", () => {
+    if (padIsSheet()) closePad();
+  });
+  const panel = w.querySelector(".work-sym-panel");
+  const symBtn = w.querySelector(".work-sym");
+  const sym = mountSymbols(panel, ta, {
+    settings: () => state.student?.settings,
+    onChange: () => ta.dispatchEvent(new Event("input")),
+  });
+  symBtn.addEventListener("click", () => {
+    const open = sym.toggle();
+    symBtn.setAttribute("aria-pressed", String(open));
+    symBtn.classList.toggle("on", open);
+  });
+}
+
+const tutorRow = (taskId) =>
+  taskId && navigator.onLine !== false
+    ? `<div class="tutor-row" data-task="${taskId}">
+        <button type="button" class="secondary small" data-tutor="explain">${icon("message-circle")}${t("task.explain")}</button>
+        <button type="button" class="secondary small" data-tutor="review">${icon("clipboard-check")}${t("task.reviewTutor")}</button>
+      </div>`
+    : "";
+
+// Odpre Inštruktorja z nalogo, odgovorom in vmesnimi koraki.
+async function askTutorAbout(taskId, kind) {
+  try {
+    const h = await api(`/api/students/${state.student.id}/tasks/${taskId}/help`, { method: "POST", body: { kind, work: workOf(taskId) } });
+    await loadConversations();
+    showView("chat");
+    await openConversation(h.conversation.id);
+    send(h.text);
+  } catch (err) {
+    toast(err.message);
+  }
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".tutor-row [data-tutor]");
+  if (b) askTutorAbout(b.closest(".tutor-row").dataset.task, b.dataset.tutor);
+});
 
 function hintStepHtml(st, n, total) {
   const tex = (x) => renderMath(String(x), false);
@@ -1536,7 +1709,8 @@ async function checkTask(task, ctx, value) {
     html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">${r.offline ? t("off.xpLater") : `+${r.xp.gained} XP`}</span></div>
       ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>${t("task.mastered")}</span></div>` : ""}
       ${workedBlock(task, r.solution)}
-      ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}`;
+      ${r.selfExplain ? `<div class="fb info">${icon("circle-help")}<span>${escapeHtml(r.selfExplain)}</span></div>` : ""}
+      ${r.offline ? "" : tutorRow(task.id)}`;
     html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next();
     if (!r.offline) refreshXp();
   } else {
@@ -1546,6 +1720,7 @@ async function checkTask(task, ctx, value) {
       ${r.hint ? `<div class="fb hint">${icon("lightbulb")}<div><b>${t("task.hint")}</b> ${renderRich(r.hint)}</div></div>` : ""}`;
     if (r.solution) {
       html += workedBlock(task, r.solution, t("task.example"));
+      if (!r.offline) html += tutorRow(task.id);
       html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" ? t("task.similar") : t("task.next"));
     } else {
       html += `<div class="actions"><button id="fb-retry" class="primary big">${t("task.retry")}</button>
@@ -1569,7 +1744,7 @@ async function checkTask(task, ctx, value) {
     else $("#answer")?.select();
   });
   $("#fb-help")?.addEventListener("click", async () => {
-    const h = await api(`/api/students/${state.student.id}/tasks/${task.id}/help`, { method: "POST" });
+    const h = await api(`/api/students/${state.student.id}/tasks/${task.id}/help`, { method: "POST", body: { work: workOf(task.id) } });
     await loadConversations();
     showView("chat");
     await openConversation(h.conversation.id);
@@ -1812,7 +1987,8 @@ function showContestResult(c, timeUp = false) {
   $("#practice").innerHTML = `<div class="card result ${pct >= 50 ? "celebrate" : ""}">
       <div class="result-icon">${icon("medal")}</div>
       ${timeUp ? `<p class="muted">${t("comp.timeUp")}</p>` : ""}
-      <h2>${t("comp.score", { points: c.points, max: c.maxPoints })}</h2>
+      <h2 class="score-line">${t("comp.score", { points: `<span class="count-up" data-to="${Number(c.points) || 0}">0</span>`, max: c.maxPoints })}</h2>
+      <div class="score-bar" aria-hidden="true"><div style="--pct:${Math.max(0, Math.min(100, pct))}%"></div></div>
       <p>${t("comp.summary", { correct: c.correct, total: c.total, minutes: c.minutes })}${c.xp ? ` · +${c.xp.gained} XP` : ""}</p>
       ${c.scaled ? `<p>${t("exam.scaled", { value: c.scaled.value, min: c.scaled.min, max: c.scaled.max })}</p>` : ""}
       ${c.grade ? `<p>${t("exam.grade", { grade: escapeHtml(c.grade) })}</p>` : ""}
@@ -1824,7 +2000,7 @@ function showContestResult(c, timeUp = false) {
     ${c.items
       .map((it, i) => {
         const st = it.correct ? "ok" : it.yourAnswer == null ? "skip" : "bad";
-        return `<details class="card review-item ${st}">
+        return `<details class="card review-item ${st}" style="--i:${i}">
         <summary><span class="ri-icon">${icon(st === "ok" ? "circle-check" : st === "skip" ? "skip-forward" : "circle-x")}</span>
           <span class="ri-name">${i + 1}. ${escapeHtml(it.topicName)}</span><span class="ri-pts">${it.earned}/${it.points}</span></summary>
         ${
@@ -1832,14 +2008,33 @@ function showContestResult(c, timeUp = false) {
             ? `<div class="task-text">${renderRich(it.task.text)}</div>
           ${it.task.answerType === "choice" ? `<div class="choices static">${it.task.options.map((o, k) => `<div class="choice ${String(k) === String(it.yourAnswer) ? "picked" : ""} ${k === it.task.correctIndex ? "right" : ""}">${it.task.optionsTex ? renderMath(o, false) : escapeHtml(o)}</div>`).join("")}</div>` : ""}
           <p><b>${t("comp.yourAnswer")}</b> ${it.task.optionsTex && it.yourAnswer != null && it.task.answerType === "choice" ? renderMath(yours(it), false) : escapeHtml(yours(it))}</p>
-          ${workedBlock(it.task, it.task.solution)}`
+          ${workedBlock(it.task, it.task.solution)}
+          ${tutorRow(it.taskId)}`
             : `<p class="muted">${t("comp.notReached")}</p>`
         }
       </details>`;
       })
       .join("")}`;
   $("#fb-back").addEventListener("click", () => showView("competition"));
+  countUp($("#practice .count-up"));
   refreshXp();
+}
+
+// Število točk se prešteje od 0 navzgor (brez animacije, če jih učenec ne želi).
+function countUp(el, ms = 900) {
+  if (!el) return;
+  const to = Number(el.dataset.to) || 0;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !to) {
+    el.textContent = String(to);
+    return;
+  }
+  const t0 = performance.now();
+  const step = (now) => {
+    const k = Math.min(1, (now - t0) / ms);
+    el.textContent = String(Math.round(to * (1 - Math.pow(1 - k, 3))));
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
 // ---------- poraba in lestvica ----------
@@ -2032,6 +2227,7 @@ function showGraph() {
 async function openCalcOverlay({ mode = calcMode, exprs = [], backLabel = t("nav.back") } = {}) {
   $("#graph-close-label").textContent = backLabel;
   $("#graph-close").setAttribute("aria-label", backLabel);
+  if ($("#graph-overlay").hidden) overlayOpened();
   $("#graph-overlay").hidden = false;
   document.body.classList.add("graph-open");
   const tool = await setCalcMode(mode);
@@ -2040,14 +2236,15 @@ async function openCalcOverlay({ mode = calcMode, exprs = [], backLabel = t("nav
 }
 // združljivost: grafični kalkulator z izrazi (inštruktor, preizkusi)
 const openGraphOverlay = (exprs = [], backLabel = t("nav.back")) => openCalcOverlay({ mode: "graph", exprs, backLabel });
-function closeCalcOverlay() {
+function closeCalcOverlay({ fromBack = false } = {}) {
   if (!calcOverlayOpen()) return;
+  if (!fromBack) overlayClosed();
   $("#graph-overlay").hidden = true;
   document.body.classList.remove("graph-open", "gc-kp");
   $("#graph-overlay-body").replaceChildren();
   if (!$("#view-graph").hidden) setCalcMode(calcMode);
 }
-$("#graph-close").addEventListener("click", closeCalcOverlay);
+$("#graph-close").addEventListener("click", () => closeCalcOverlay());
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && calcOverlayOpen() && !document.querySelector(".gc-pop:not([hidden])")) closeCalcOverlay();
 });
@@ -2098,34 +2295,46 @@ initTextbook({
 
 // ---------- zagon ----------
 
+// Bližnjica z ikone aplikacije (dolg pritisk na ikono): /?pogled=chat odpre Inštruktorja.
+const START_VIEW = ["chat", "textbook", "graph"].find((v) => v === new URLSearchParams(location.search).get("pogled"));
+if (new URLSearchParams(location.search).has("pogled")) history.replaceState(null, "", location.pathname);
+initInstall({ toast, onSheet: (open) => (open ? overlayOpened() : overlayClosed()) });
+
 (async () => {
   const cfg = await api("/api/config");
   $("#mock-banner").hidden = !cfg.mock;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   // Starševski računi (account.js): prijava, potrditev, prvi otrok.
+  let first = true;
   const start = async (o) => {
     await loadStudents();
     if (!o?.keepView) showView("path");
+    if (first && START_VIEW && !o?.keepView) showView(START_VIEW);
+    first = false;
   };
   if (await initAccount({ onReady: start })) await start();
 })();
 
 // Računalnik: če zavihki z napisi ne gredo v zgornjo vrstico (ožje okno ali več zavihkov),
-// jih najprej stisnemo, nato pokažemo samo ikone; izbrani zavihek obdrži napis, ostali ga pokažejo ob lebdenju (title).
+// jih postopoma stisnemo; zavihek brez napisa ga pokaže ob lebdenju (title).
 {
   const bar = document.querySelector(".topbar");
   const tabs = bar?.querySelector(".tabs");
   if (bar && tabs) {
-    tabs.querySelectorAll(".tab").forEach((t) => (t.title ||= t.textContent.trim()));
-    // Najprej poskusimo z ožjimi zavihki, šele nato samo ikone.
+    // Koraki, dokler zavihki ne gredo v vrstico: ožji zavihki, brez napisa »STEMMind« ob logotipu,
+    // manj pogosti zavihki samo z ikono, na koncu vsi samo z ikono (izbrani obdrži napis).
+    const STEPS = ["tabs-tight", "tabs-nobrand", "tabs-minor", "tabs-compact"];
     const over = () => tabs.scrollWidth > tabs.clientWidth + 1;
     const fit = () => {
-      bar.classList.remove("tabs-tight", "tabs-compact");
-      if (over()) bar.classList.add("tabs-tight");
-      if (over()) bar.classList.add("tabs-compact");
+      tabs.querySelectorAll(".tab").forEach((t) => (t.title = t.textContent.trim()));
+      bar.classList.remove(...STEPS);
+      for (const step of STEPS) {
+        if (!over()) break;
+        bar.classList.add(step);
+      }
     };
     new ResizeObserver(fit).observe(tabs);
-    new MutationObserver(fit).observe(tabs, { subtree: true, attributes: true, attributeFilter: ["hidden", "class"] });
+    new MutationObserver(fit).observe(tabs, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["hidden", "class"] });
     document.fonts?.ready.then(fit);
   }
 }

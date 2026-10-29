@@ -35,6 +35,10 @@ Pisava je Nunito. Naslovi so debeli (800), gumbi 700–800.
 - **Izmerjene vrednosti v simulacijah**: `values([["čas t", "3,16 s"], …])` iz `public/sim/kit.js` (kartice, na telefonu dve v vrsti). Tabela `.demo-table` samo za prave tabele z več vrsticami.
 - **Tabela v besedilu** (Markdown iz inštruktorja, razlag, nalog in lekcij): sama dobi robove, sivo glavo in razmik; na ozkem zaslonu se pomika vstran (`ui.css`, »tabela v besedilu«). Ne dodajaj ji svojih slogov.
 - **Kartica**: `.card`; poudarjena kartica z modrim prelivom: `.hero`.
+- **Vmesni koraki** (`.work`, `style.css`): zvezek pod besedilom naloge, s črtami in tipkovnico Σ; shrani se za vsako nalogo posebej in gre tutorju zraven. Na računalniku je odprt sam, na telefonu ob kliku.
+- **Formula** (`.formula-body`): razkrita formula je vedno v svojem okvirju z modrim robom levo, nikoli prosto v besedilu.
+- **Vrstica s tutorjem** (`.tutor-row`): »Razloži mi« in »Preglej s tutorjem« pod vsako rešitvijo (Vadnica, pregled tekmovanja). Na telefonu gumba čez celo širino.
+- **Animacije**: samo `transform` in `opacity`, kratke (do ~0,6 s), zamik po kartici z `--i`; ob »manj gibanja« jih ni (`style.css` jih izklopi globalno, `countUp` takoj pokaže število).
 
 Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `--accent-soft` ozadje).
 

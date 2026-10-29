@@ -3,6 +3,7 @@
 import katex from "katex";
 import { parseLesson, expandFormulaBlocks } from "./textbook.js";
 import { getTopic } from "./curriculum.js";
+import { checkArithmetic } from "./lesson-math.js";
 
 const REQUIRED = [
   [/^zakaj/i, "Zakaj se tega učimo"],
@@ -94,11 +95,17 @@ export function checkLessonSource(src, topicId) {
       err(`formula se ne izriše: $${tex.slice(0, 60)}$ (${String(e.message).split("\n")[0].slice(0, 80)})`);
     }
   }
+  // Računi: čisto številske korake preračuna sam (docs/kakovost.md §1.1); razlika nad 2 % je napaka, manjša opozorilo.
+  const calc = checkArithmetic(body);
+  const fmOffset = src.split("\n").length - body.split("\n").length; // vrstice glave
+  for (const m of calc.mismatches) {
+    (m.rel > 0.02 ? err : warn)(`vrstica ${m.line + fmOffset}: račun se ne ujema: $${m.tex}$ (${m.left} ≠ ${m.right})`);
+  }
   if (/\bPhET\b/.test(body)) err("v besedilu ne omenjaj PhET; napiši »interaktivna simulacija spodaj«");
   if (/\.{3}\s*$/m.test(body.replace(/\$[^$]*\$/g, ""))) warn("vrstica se konča s »...« (nedokončano besedilo?)");
 
   const words = body.replace(/\$[^$]*\$/g, " ").split(/\s+/).filter(Boolean).length;
   if (words < 800) warn(`lekcija je kratka (${words} besed, cilj 1300–2300)`);
   if (words > 2800) warn(`lekcija je dolga (${words} besed, cilj 1300–2300)`);
-  return { errors, warnings, words, examples: ex ? ex.md.split(/^### +/m).length - 1 : 0, questions: qs.length };
+  return { errors, warnings, words, examples: ex ? ex.md.split(/^### +/m).length - 1 : 0, questions: qs.length, calcChecked: calc.checked };
 }

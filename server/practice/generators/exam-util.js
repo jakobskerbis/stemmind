@@ -2,6 +2,10 @@
 // Naloge so v angleščini (decimalna pika), ker so izpiti mednarodni; inštruktor jih
 // razloži v jeziku učenca.
 import { roundHalfUp, gcd } from "../check.js";
+import { withMistakes, choiceWhy } from "./tek-util.js";
+
+// Tipične napake (answer.mistakes) in izbira z razlago: isti pomožni funkciji kot pri tekmovanjih.
+export { withMistakes, choiceWhy };
 
 // Število z decimalno piko: en(2.5) → "2.5", en(2.456, 2) → "2.46".
 export const en = (x, d = null) => (d === null ? String(Number(Number(x).toFixed(10))) : roundHalfUp(x, d).toFixed(d));
@@ -28,6 +32,8 @@ export const fracTex = (n, d) => {
 
 // Odgovor s številom; d = število decimalk (zaokroževanje), brez d točen rezultat.
 export const num = (value, d = null, extra = {}) => ({ type: "number", value, dot: true, ...(d === null ? {} : { decimals: d }), ...extra });
+// Številski odgovor s tipičnimi napakami: numM(12.5, 1, [[25, "Forgot the ½?"], …]).
+export const numM = (value, d, list) => withMistakes(num(value, d), list);
 export const fraction = (n, d) => {
   const [a, b] = reduce(n, d);
   return { type: "fraction", num: a, den: b };
@@ -60,3 +66,12 @@ export function poly(terms) {
 }
 // Faktor (x - p): pri p = 0 samo x.
 export const factor = (p, v = "x") => (p === 0 ? v : `(${v} ${sg(-p)})`);
+// Ulomek s tipičnimi napakami (vrednosti kot decimalna števila).
+export function fractionM(n, d, list) {
+  const a = fraction(n, d);
+  const m = withMistakes({ value: n / d }, list).mistakes;
+  if (m) a.mistakes = m;
+  return a;
+}
+// Vrstica podatka v angleški nalogi: dq("m", 2.5, "kg") → "m = 2.5\ \mathrm{kg}" (število zapisano kot v besedilu).
+export const dq = (sym, v, u = "") => `${sym} = ${typeof v === "number" ? en(v) : v}${u ? `\\ \\mathrm{${u}}` : ""}`;

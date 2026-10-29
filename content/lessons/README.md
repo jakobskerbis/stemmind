@@ -84,7 +84,7 @@ Pravila za rešene primere (vsak `### Primer`):
   sam; v PDF-ju je izpisan. Vsebina bloka je navaden Markdown z LaTeX.
 - **Rešitev:** koraki z vmesnimi rezultati in odgovor v stavku.
 
-Obliko preveriš z `node scripts/check-lesson.js -q content/lessons/<pot>/<slug>.md` (`-q` izpiše samo težave). Za varčno pisanje glej `docs/token-rules.md`.
+Obliko preveriš z `node scripts/check-lesson.js -q content/lessons/<pot>/<slug>.md` (`-q` izpiše samo težave). Preverjevalnik tudi sam preračuna čisto številske korake v formulah (`$37 \cdot 7 = 259$`) in javi napako, če se ne ujemajo; pretvorb enot in razdelkov »Pogoste napake« / »Preveri se« ne preverja. Navodila za pisca ali pregledovalca izpiše `node scripts/lesson-brief.js [--review] <id-teme> [...]`. Za varčno pisanje glej `docs/token-rules.md`.
 (brez argumentov preveri vse lekcije). Simulacijo v besedilu omeni kot
 »simulacija spodaj« z njenim naslovom iz public/sim/katalog.js.
 

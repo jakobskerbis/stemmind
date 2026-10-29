@@ -250,7 +250,7 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .icon-btn:hover { background: var(--surface-2); color: var(--accent); }
 .icon-btn svg.i { width: 22px; height: 22px; }
 button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shadow: none; }
-.hint { font-size: 0.8rem; color: var(--muted); margin: 6px auto 0; max-width: 900px; padding-left: 8px; }
+.composer > .hint { font-size: 0.8rem; color: var(--muted); margin: 6px auto 0; max-width: 900px; padding-left: 8px; }
 
 /* Inštruktor: mikrofon (glasovni vnos) in napredna tipkovnica s simboli */
 button.icon-btn { border: 0; background: none; padding: 0; min-height: 0; box-shadow: none; flex: none; }
@@ -418,7 +418,43 @@ button.sym-key:active { background: var(--accent-soft); }
 .formula summary { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none; padding: 6px 12px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--surface); font-weight: 700; font-size: 0.92rem; user-select: none; }
 .formula summary::-webkit-details-marker { display: none; }
 .formula[open] summary { border-color: var(--accent); color: var(--accent); }
-.formula-body { padding: 8px 2px 0; font-size: 1.05rem; display: flex; flex-direction: column; gap: 4px; }
+/* Formula v svojem okvirju (rešen zgled, namig), ne prosto med besedilom. */
+.formula-body {
+  margin: 8px 0 2px; padding: 12px 16px; font-size: 1.12rem; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  background: var(--surface); border: 1.5px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--radius-sm);
+  overflow-x: auto;
+}
+.formula[open] .formula-body { animation: fade-up 0.25s ease both; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.formula + .sol-label, .task-data + .sol-label { margin-top: 12px; }
+
+/* Vmesni koraki pri nalogi (kot v zvezek) */
+.work { margin-top: 14px; }
+.work-toggle {
+  display: inline-flex; align-items: center; gap: 8px; border: 1.5px dashed var(--border) !important; background: none !important;
+  color: var(--muted); font-weight: 800; padding: 8px 12px !important; border-radius: var(--radius-sm); min-height: 44px;
+}
+.work-toggle:hover { color: var(--text); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)) !important; }
+.work-toggle > svg.i:last-child { width: 16px; height: 16px; transition: transform 0.2s; }
+.work.open .work-toggle { color: var(--accent); border-style: solid !important; border-color: color-mix(in srgb, var(--accent) 45%, var(--border)) !important; }
+.work.open .work-toggle > svg.i:last-child { transform: rotate(180deg); }
+.work-body { position: relative; margin-top: 8px; }
+.work-text {
+  display: block; width: 100%; min-height: 96px; resize: vertical; padding: 8px 48px 8px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  font: inherit; font-size: 1.05rem; line-height: 32px; color: var(--text);
+  background: repeating-linear-gradient(to bottom, transparent 0 31px, color-mix(in srgb, var(--border) 85%, transparent) 31px 32px), var(--bg);
+  background-attachment: local; background-position: 0 8px;
+}
+.work-text:focus { outline: none; border-color: var(--accent); }
+.work-sym { position: absolute; top: 6px; right: 6px; min-height: 36px !important; }
+.work-sym.on { color: var(--accent); background: var(--accent-soft); }
+.work-sym-panel { margin: 8px 0 0; max-width: none; }
+
+/* Razloži / Preglej s tutorjem pod rešeno nalogo */
+.tutor-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+.tutor-row button { display: inline-flex; align-items: center; gap: 6px; }
+.tutor-row button svg.i { color: var(--accent); }
+@media (max-width: 760px) { .tutor-row button { flex: 1 1 auto; justify-content: center; } }
 .example { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
 .example .solution { margin-top: 14px; }
 .example .fb.hint { margin-top: 10px; }
@@ -475,9 +511,12 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
-/* Zavihki ne gredo v vrstico (app.js): najprej ožji (.tabs-tight), nato samo ikone (.tabs-compact), izbrani z napisom. */
+/* Zavihki ne gredo v vrstico (app.js), po korakih: ožji (.tabs-tight), brez imena ob logotipu (.tabs-nobrand),
+   manj pogosti samo z ikono (.tabs-minor), vsi samo z ikono (.tabs-compact); izbrani vedno z napisom. */
 .topbar.tabs-tight .tabs { gap: 2px; }
 .topbar.tabs-tight .tab { padding: 9px 9px; gap: 6px; }
+.topbar.tabs-nobrand .brand-name { display: none; }
+.topbar.tabs-minor .tab:not(.active):not([data-view="path"], [data-view="textbook"], [data-view="chat"], [data-view="competition"]) span { display: none; }
 .topbar.tabs-compact .tab { padding: 9px 11px; }
 .topbar.tabs-compact .tab:not(.active) span { display: none; }
 
@@ -525,7 +564,7 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
   .msg { max-width: 100%; }
   .msg.assistant { margin-left: 40px; }
   .chat-head { padding: 8px 12px; }
-  .hint { display: none; }
+  .composer > .hint { display: none; }
   .composer { padding: 8px 10px 10px; }
   button.send span { display: none; }
   button.send { padding: 8px 12px; }

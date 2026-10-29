@@ -149,6 +149,15 @@ function wireSelectionAsk() {
 const esc = (s) => ctx.escapeHtml(String(s ?? ""));
 
 // Odpre učbenik (kazalo ali zadnjo odprto lekcijo).
+// Tipka Nazaj (telefon): iz odprte lekcije nazaj na seznam lekcij. Vrne true, če je bila lekcija odprta.
+export function textbookBack() {
+  if (!tb.topicId || $("#view-textbook")?.hidden) return false;
+  tb.topicId = null;
+  renderHome();
+  window.scrollTo(0, 0);
+  return true;
+}
+
 export async function showTextbook() {
   const box = $("#view-textbook");
   if (!box) return;

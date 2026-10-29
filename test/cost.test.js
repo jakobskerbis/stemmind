@@ -135,6 +135,23 @@ test("Vadnica help: first reply comes from code, the next one from the model", a
   });
 });
 
+test("task help: explain and review send the answer and the student's steps to the model", async () => {
+  await withServer(async ({ call, seen, store }) => {
+    const s = (await call("/api/students", { method: "POST", body: { name: "Lea", settings: { subject: "FIZ", curriculum_level: "8" } } })).body;
+    const payload = { text: "Kolesar vozi s hitrostjo 4 m/s. Koliko poti prevozi v 30 s?", answer: { type: "number", value: 120, unit: "m" }, data: { given: ["v = 4"], find: ["s"] }, formula: "s = v t" };
+    const taskId = store.db
+      .prepare("INSERT INTO tasks (student_id, topic_id, level, payload, last_answer) VALUES (?, ?, 1, ?, ?)")
+      .run(s.id, "FIZ-OS-8/fizikalne-kolicine-in-enote", JSON.stringify(payload), "100 m").lastInsertRowid;
+    for (const kind of ["explain", "review"]) {
+      const h = (await call(`/api/students/${s.id}/tasks/${taskId}/help`, { method: "POST", body: { kind, work: "s = v · t\ns = 4 · 25" } })).body;
+      assert.match(h.text, /Moj odgovor: 100 m/);
+      assert.match(h.text, /s = 4 · 25/);
+      await call(`/api/conversations/${h.conversation.id}/messages`, { method: "POST", body: { text: h.text } });
+    }
+    assert.equal(seen.length, 2, "razlaga in pregled gresta k modelu, ne h kodi");
+  });
+});
+
 test("path topic start is reused across students; deep goes to Opus with a short history", async () => {
   await withServer(async ({ call, seen }) => {
     const topic = "MAT-OS-6/deljivost";

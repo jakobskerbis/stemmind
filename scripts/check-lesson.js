@@ -20,6 +20,7 @@ if (!files.length) {
   }
 }
 let bad = 0;
+let calcChecked = 0; // številskih korakov, ki jih je preračunal server/lesson-math.js
 for (const file of files) {
   const abs = path.resolve(file);
   const id = `${path.basename(path.dirname(abs))}/${path.basename(abs, ".md")}`;
@@ -34,10 +35,11 @@ for (const file of files) {
   const r = checkLessonSource(src, id);
   const fail = r.errors.length || (strict && r.warnings.length);
   if (fail) bad++;
+  calcChecked += r.calcChecked;
   if (quiet && !r.errors.length && !r.warnings.length) continue;
-  console.log(`${fail ? "NAPAKA" : "OK"} ${id} (${r.words} besed, ${r.examples} primerov, ${r.questions} vprašanj)`);
+  console.log(`${fail ? "NAPAKA" : "OK"} ${id} (${r.words} besed, ${r.examples} primerov, ${r.questions} vprašanj, ${r.calcChecked} računov preverjenih)`);
   for (const e of r.errors) console.log(`  napaka: ${e}`);
   for (const w of r.warnings) console.log(`  opozorilo: ${w}`);
 }
-console.log(`${files.length - bad}/${files.length} lekcij v redu.`);
+console.log(`${files.length - bad}/${files.length} lekcij v redu; ${calcChecked} številskih korakov preračunanih.`);
 process.exit(bad ? 1 : 0);
