@@ -78,8 +78,10 @@ export function itemThumb(id, size = 72, eq = DEFAULT_AVATAR) {
 }
 
 // Pogoj za predmet, kot ga vidi učenec.
+const num = (n) => Number(n || 0).toLocaleString(lang());
 function condition(x, id) {
   if (x.collection === "pass") return t("zb.needPass", { tier: x.tier });
+  if (x.need?.xp) return `${t("zb.needXp", { xp: num(x.need.xp) })} ${t("zb.potNow", { xp: num(data?.xp) })}.`;
   if (x.set) return t("zb.needSet", { count: x.need.own, name: itemName(COLLECTIONS.find((c) => c.id === x.collection), lang()) });
   if (x.need?.tek) return t("zb.needTek");
   const h = data?.hints?.[baseId(id)];
@@ -98,10 +100,21 @@ function card(id) {
   const on = equipped()[x.slot] === id;
   const shown = data.showcase.includes(id);
   return `<button type="button" class="zb-card gm-r-${x.rarity}${own ? "" : " zb-locked"}${on ? " on" : ""}" data-zbopen="${esc(id)}">
-    <span class="zb-thumb">${itemThumb(id, 72, own ? equipped() : DEFAULT_AVATAR)}${own ? "" : `<span class="zb-lock">${icon("lock")}</span>`}${shown ? `<span class="zb-star" title="${esc(t("zb.showcase"))}">${icon("star")}</span>` : ""}</span>
+    <span class="zb-thumb">${itemThumb(id, 72, DEFAULT_AVATAR)}${own ? "" : `<span class="zb-lock">${icon("lock")}</span>`}${shown ? `<span class="zb-star" title="${esc(t("zb.showcase"))}">${icon("star")}</span>` : ""}</span>
     <b>${esc(itemName(x, lang()))}</b>
-    <small>${own ? esc(on ? t("games.wearing") : t(`games.rarity.${x.rarity}`)) : esc(x.collection === "pass" ? t("zb.needPassShort", { tier: x.tier }) : t("zb.locked"))}</small>
+    <small>${own ? esc(on ? t("games.wearing") : t(`games.rarity.${x.rarity}`)) : esc(x.collection === "pass" ? t("zb.needPassShort", { tier: x.tier }) : x.need?.xp ? `${num(x.need.xp)} XP` : t("zb.locked"))}</small>
   </button>`;
+}
+
+// Pot znanja: koliko XP imaš in koliko manjka do naslednjega predmeta.
+function potLine() {
+  const next = KNOWLEDGE.filter((x) => x.collection === "pot" && x.need.xp > data.xp).sort((a, b) => a.need.xp - b.need.xp)[0];
+  const pct = next ? Math.min(100, Math.round((data.xp / next.need.xp) * 100)) : 100;
+  return `<div class="card zb-pot">
+    <p><b>${esc(t("zb.potNow", { xp: num(data.xp) }))}</b>${next ? ` · ${esc(t("zb.potNext", { name: itemName(next, lang()), xp: num(next.need.xp - data.xp) }))}` : ""}</p>
+    <div class="zb-bar"><span style="width:${pct}%"></span></div>
+    <p class="muted small">${esc(t("zb.potHint"))}</p>
+  </div>`;
 }
 
 function passCard() {
@@ -138,7 +151,7 @@ function inspect(id) {
   const on = equipped()[x.slot] === id;
   const shown = data.showcase.includes(id);
   const v = variantOf(id);
-  const where = row?.topic ? t("zb.fromTopic", { topic: `${row.topic.name} (${row.topic.path})` }) : row?.source === "pass" ? t("zb.fromPass", { season: seasonLabel(v) }) : row?.source === "set" ? t("zb.fromSet") : "";
+  const where = row?.topic ? t("zb.fromTopic", { topic: `${row.topic.name} (${row.topic.path})` }) : row?.source === "pass" ? t("zb.fromPass", { season: seasonLabel(v) }) : row?.source === "set" ? t("zb.fromSet") : row?.source === "xp" ? t("zb.fromXp", { xp: num(x.need?.xp) }) : "";
   return `<div class="zb-inspect card" role="dialog" tabindex="-1" aria-modal="false" aria-label="${esc(itemName(x, lang()))}">
     <button type="button" class="ghost zb-x" data-act="close" aria-label="${esc(t("nav.back"))}">${icon("x")}</button>
     <div class="zb-big">${x.sym ? itemThumb(id, 120) : avatarSvg({ ...equipped(), [x.slot]: id }, { size: 170, title: itemName(x, lang()) })}</div>
@@ -146,6 +159,7 @@ function inspect(id) {
       <h2>${esc(itemName(x, lang()))}${v ? ` <small class="muted">${esc(seasonLabel(v))}</small>` : ""}</h2>
       <p><span class="gm-rtag gm-r-${x.rarity}">${esc(t(`games.rarity.${x.rarity}`))}</span> ${x.set ? `<span class="gm-rtag">${esc(t("zb.set"))}</span>` : ""}</p>
       ${own ? `<p>${icon("calendar")}<span>${esc(t("zb.got", { date: fmtDate(row?.at) }))}</span></p>${where ? `<p>${icon("book-open")}<span>${esc(where)}</span></p>` : ""}` : `<p class="zb-need">${icon("lock")}<span>${esc(condition(x, id))}</span></p>`}
+      ${x.about ? `<p class="muted small">${icon("info")}<span>${esc(x.about[lang()] || x.about.en)}</span></p>` : ""}
       ${msg ? `<p class="gm-shop-msg" role="status">${esc(msg)}</p>` : ""}
       ${own ? `<div class="actions">
         <button type="button" class="primary" data-act="wear">${esc(on ? t("zb.takeOff") : t("games.wear"))}</button>
@@ -191,9 +205,14 @@ function render(focus = null) {
     <p class="zb-intro">${esc(t("zb.intro"))} <span class="muted">${esc(t("zb.rules"))}</span></p>
     ${passCard()}
     <div class="chip-row zb-tabs" role="tablist">${tabs.map((x) => `<button type="button" role="tab" aria-selected="${tab === x.id}" class="${tab === x.id ? "active" : ""}" data-tab="${x.id}">${icon(x.ic)}${esc(x.label)}${x.of ? ` <small>${x.n}/${x.of}</small>` : ""}</button>`).join("")}</div>
+    ${tab === "pot" ? potLine() : ""}
     <div class="zb-grid">${tabItems().map(card).join("")}</div>
     ${earlier.length ? `<h3 class="zb-sub">${esc(t("zb.earlier"))}</h3><div class="zb-grid">${earlier.map(card).join("")}</div>` : ""}
     ${open ? inspect(open) : ""}`;
+  // Izbran zavihek naj bo viden (vrstica zavihkov se na ozkem zaslonu drsi vodoravno).
+  const tabRow = root.querySelector(".zb-tabs");
+  const act = tabRow?.querySelector(".active");
+  if (tabRow && act && act.offsetLeft + act.offsetWidth > tabRow.scrollLeft + tabRow.clientWidth) tabRow.scrollLeft = act.offsetLeft - tabRow.offsetLeft - 16;
   // Trak passa: trenutna stopnja na sredini.
   const track = root.querySelector(".zb-track");
   const now = track?.querySelector(".now") || track?.querySelector(".got:last-of-type");
