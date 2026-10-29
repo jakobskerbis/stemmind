@@ -84,6 +84,8 @@ function condition(x, id) {
   if (x.need?.xp) return `${t("zb.needXp", { xp: num(x.need.xp) })} ${t("zb.potNow", { xp: num(data?.xp) })}.`;
   if (x.set) return t("zb.needSet", { count: x.need.own, name: itemName(COLLECTIONS.find((c) => c.id === x.collection), lang()) });
   if (x.need?.tek) return t("zb.needTek");
+  if (x.need?.games) return t("zb.needGames", { n: num(x.need.games), now: num(data?.games?.correct || 0) });
+  if (x.need?.cleared) return t("zb.needCleared", { n: x.need.cleared, now: data?.games?.cleared || 0 });
   if (x.need?.league) return `${t(`zb.need.${x.need.league}`)} ${t("zb.leagueMin", { n: AWARD_MIN })}`;
   const h = data?.hints?.[baseId(id)];
   return h ? t("zb.needTopic", { topic: h.name, path: h.path }) : "";
@@ -152,7 +154,7 @@ function inspect(id) {
   const on = isWorn(equipped(), id);
   const shown = data.showcase.includes(id);
   const v = variantOf(id);
-  const where = row?.topic ? t("zb.fromTopic", { topic: `${row.topic.name} (${row.topic.path})` }) : row?.source === "pass" ? t("zb.fromPass", { season: seasonLabel(v) }) : row?.source === "set" ? t("zb.fromSet") : row?.source === "xp" ? t("zb.fromXp", { xp: num(x.need?.xp) }) : row?.source === "league" ? t("zb.fromLeague") : "";
+  const where = row?.topic ? t("zb.fromTopic", { topic: `${row.topic.name} (${row.topic.path})` }) : row?.source === "pass" ? t("zb.fromPass", { season: seasonLabel(v) }) : row?.source === "set" ? t("zb.fromSet") : row?.source === "xp" ? t("zb.fromXp", { xp: num(x.need?.xp) }) : row?.source === "league" ? t("zb.fromLeague") : row?.source === "games" ? t("zb.fromGames") : "";
   return `<div class="zb-inspect card" role="dialog" tabindex="-1" aria-modal="false" aria-label="${esc(itemName(x, lang()))}">
     <button type="button" class="ghost zb-x" data-act="close" aria-label="${esc(t("nav.back"))}">${icon("x")}</button>
     <div class="zb-big">${x.sym ? itemThumb(id, 120) : avatarSvg(wear(equipped(), id), { size: 170, title: itemName(x, lang()) })}</div>
@@ -206,7 +208,7 @@ function render(focus = null) {
     <p class="zb-intro">${esc(t("zb.intro"))} <span class="muted">${esc(t("zb.rules"))}</span></p>
     ${passCard()}
     <div class="chip-row zb-tabs" role="tablist">${tabs.map((x) => `<button type="button" role="tab" aria-selected="${tab === x.id}" class="${tab === x.id ? "active" : ""}" data-tab="${x.id}">${icon(x.ic)}${esc(x.label)}${x.of ? ` <small>${x.n}/${x.of}</small>` : ""}</button>`).join("")}</div>
-    ${tab === "pot" ? potLine() : tab === "lige" ? `<p class="muted zb-pot">${esc(t("zb.ligeHint"))}</p>` : ""}
+    ${tab === "pot" ? potLine() : tab === "lige" ? `<p class="muted zb-pot">${esc(t("zb.ligeHint"))}</p>` : tab === "igre" ? `<p class="muted zb-pot">${esc(t("zb.igreHint"))}</p>` : ""}
     <div class="zb-grid">${tabItems().map(card).join("")}</div>
     ${earlier.length ? `<h3 class="zb-sub">${esc(t("zb.earlier"))}</h3><div class="zb-grid">${earlier.map(card).join("")}</div>` : ""}
     ${open ? inspect(open) : ""}`;

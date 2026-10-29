@@ -830,7 +830,7 @@ export function createApp(store, opts = {}) {
   const avatars = new Avatars(store.db);
   mountLeagues(app, store, { loadStudent });
   mountGraphs(app, store, { loadStudent });
-  mountGames(app, store, { loadStudent, progress, avatars });
+  mountGames(app, store, { loadStudent, progress, avatars, knowledge });
   mountAvatar(app, avatars, { loadStudent });
   mountKnowledge(app, knowledge, { loadStudent, avatars });
   mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });

@@ -18,6 +18,7 @@ import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
 import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
 import { seasonOf } from "../zbirke.js";
+import { unlockedText } from "../zbirke-view.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const FILTER_KEY = "kompreno.gamesFilter";
@@ -238,6 +239,12 @@ function openGame(id) {
       // Opravljena igra odklene hitrejše igre te snovi.
       if (LOCKS_ON && clearedPace(cid, LS) > before && clearedPace(cid, LS) < 3) info.unlocked = t("games.unlockedFaster");
       if (info.coins) av.coins += info.coins;
+      // Nov lik ali predmet iz iger (Zbirke); skupaj z morebitnim odklepom hitrejše igre.
+      const got = unlockedText(info.zbirke);
+      if (got) {
+        info.unlocked = info.unlocked ? `${info.unlocked} ${got}` : got;
+        av.owned = [...new Set([...av.owned, ...info.zbirke])];
+      }
       if (info.xp) ctx.refreshXp?.();
       return info;
     },
@@ -362,7 +369,7 @@ function renderShop(msg = "", top = false) {
   const thumbBase = { ...DEFAULT_AVATAR, body: av.equipped.body };
   const card = (x) => {
     const on = isOn(x);
-    const state = on ? t("games.wearing") : has(x) ? (x.price ? t("games.owned") : x.earn ? t(`games.rarity.${x.rarity}`) : t("games.rarity.free")) : x.earn ? `${icon("lock")} ${esc(t("zb.byKnowledge"))}` : `${icon("coins")} ${x.price}`;
+    const state = on ? t("games.wearing") : has(x) ? (x.price ? t("games.owned") : x.earn ? t(`games.rarity.${x.rarity}`) : t("games.rarity.free")) : x.earn ? `${icon("lock")} ${esc(t(x.collection === "igre" ? "zb.byGames" : "zb.byKnowledge"))}` : `${icon("coins")} ${x.price}`;
     // Izbran tuj predmet: gumb za nakup kar na kartici (na telefonu je predogled zgoraj izven zaslona).
     return `<div class="gm-item gm-r-${itemRarity(x)}${on ? " on" : ""}${shop.pick === x.id ? " sel" : ""}${x.earn && !has(x) ? " gm-earn" : ""}">
       <button type="button" class="gm-item-btn" data-item="${x.id}" aria-pressed="${on}">${avatarSvg(wear(thumbBase, x.id), { size: 72 })}
@@ -382,7 +389,7 @@ function renderShop(msg = "", top = false) {
     </div>
     <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${esc(t(`games.slot.${x}`))}${isMulti(x) && worn(av.equipped, x).length ? ` <small>${worn(av.equipped, x).length}/${MULTI_MAX}</small>` : ""}</button>`).join("")}</div>
     ${isMulti(shop.slot) ? `<p class="muted gm-earn-hint">${icon("layers")}<span>${esc(t("games.multiHint", { n: MULTI_MAX }))}</span></p>` : ""}
-    ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon("award")}<span>${esc(t("zb.shopHint"))} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
+    ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon(shop.slot === "kind" ? "gamepad-2" : "award")}<span>${esc(t(shop.slot === "kind" ? "zb.shopHintKind" : "zb.shopHint"))} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
     <div class="gm-items">${slotItems(shop.slot, owned).map(card).join("")}</div>
   </div>`;
   const s = ctx.getStudent();

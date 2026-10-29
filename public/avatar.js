@@ -5,7 +5,7 @@
 // odklene jih samo obvladana snov.
 import { KNOWLEDGE, DRAW, baseId } from "./zbirke.js";
 
-export const SLOTS = ["body", "eyes", "mouth", "hat", "outfit", "acc", "badge", "bg", "fx"];
+export const SLOTS = ["kind", "body", "eyes", "mouth", "hat", "outfit", "acc", "badge", "bg", "fx"];
 export const COINS_PER_CORRECT = 1;
 export const COINS_PER_DAY = 150;
 
@@ -16,6 +16,8 @@ export const itemRarity = (x) => x?.rarity || rarity(x?.price ?? 0);
 
 const it = (id, slot, price, sl, en) => ({ id, slot, price, name: { sl, en } });
 export const ITEMS = [
+  // lik (ostali liki se odklenejo z igranjem iger, public/zbirke.js)
+  it("kind_blob", "kind", 0, "Klasičen", "Classic"),
   // telo
   it("body_blue", "body", 0, "Modra", "Blue"),
   it("body_green", "body", 0, "Zelena", "Green"),
@@ -90,14 +92,14 @@ export const itemOf = (id) => ITEM[baseId(id)] || null;
 // mestu (npr. dvoje očal) se izključujeta: novi zamenja starega. Ostali predali imajo en predmet.
 export const MULTI = ["hat", "outfit", "acc", "badge", "fx"];
 export const MULTI_MAX = 6;
-const SPOT = { hat_phones: "ears", hat_flower: "flower", pot_laurel: "wreath", outfit_bow: "neck", outfit_scarf: "neck", acc_blush: "cheeks", pot_pregl: "hand", pass_pencil: "pencil" };
+const SPOT = { hat_phones: "ears", hat_flower: "flower", pot_laurel: "wreath", outfit_bow: "neck", outfit_scarf: "neck", acc_blush: "cheeks", pot_pregl: "hand", pass_pencil: "pencil", acc_joystick: "controller" };
 const SPOT_MAIN = { hat: "head", outfit: "body", acc: "eyes" };
 // Vrstni red risanja (spodaj → zgoraj); značke in efekti po vrsti oblačenja.
-const SPOT_ORDER = { hat: ["wreath", "head", "ears", "flower"], outfit: ["body", "neck"], acc: ["cheeks", "eyes", "hand", "pencil"] };
+const SPOT_ORDER = { hat: ["wreath", "head", "ears", "flower"], outfit: ["body", "neck"], acc: ["cheeks", "eyes", "hand", "pencil", "controller"] };
 export const spotOf = (x) => SPOT[x.id] || SPOT_MAIN[x.slot] || x.id;
 export const isMulti = (slot) => MULTI.includes(slot);
 
-export const DEFAULT_AVATAR = { body: "body_blue", eyes: "eyes_dots", mouth: "mouth_smile", hat: [], outfit: [], acc: [], badge: [], bg: "bg_sky", fx: [] };
+export const DEFAULT_AVATAR = { kind: "kind_blob", body: "body_blue", eyes: "eyes_dots", mouth: "mouth_smile", hat: [], outfit: [], acc: [], badge: [], bg: "bg_sky", fx: [] };
 export const itemName = (x, lang) => x.name[lang] || x.name.en;
 const isNone = (id) => /_none$/.test(id);
 
@@ -280,8 +282,8 @@ export function avatarSvg(eq, { size = 64, title = "" } = {}) {
   const outfit = W("outfit");
   const each = (list, f) => list.map(f).join("");
   return `<svg class="avatar-svg" viewBox="0 0 100 100" width="${size}" height="${size}" role="img"${title ? ` aria-label="${title.replace(/"/g, "&quot;")}"` : ` aria-hidden="true"`}>
-${defs(u, body)}${DRAW.bg(a.bg, u) ?? (BG[a.bg] || BG.bg_sky)(u)}${each(fx, (id) => DRAW.fxBack(id, u))}${each(outfit, (id) => (OUTFIT_BACK[id] || (() => ""))())}
-<path d="${BODY_PATH}" fill="url(#g${u})" stroke="${INK}" stroke-width="3"/>${(BODY_EXTRA[body] || (() => ""))()}
+${defs(u, body)}${DRAW.bg(a.bg, u) ?? (BG[a.bg] || BG.bg_sky)(u)}${each(fx, (id) => DRAW.fxBack(id, u))}${each(outfit, (id) => (OUTFIT_BACK[id] || (() => ""))())}${DRAW.kindBack(a.kind, u)}
+<path d="${BODY_PATH}" fill="url(#g${u})" stroke="${INK}" stroke-width="3"/>${(BODY_EXTRA[body] || (() => ""))()}${DRAW.kindFront(a.kind, u)}
 <path d="M30 40q4-8 12-10" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".35"/>
 ${each(outfit, (id) => DRAW.outfit(id, u) ?? (OUTFIT[id] || OUTFIT.outfit_none)(u))}${badges(W("badge"))}${(EYES[a.eyes] || EYES.eyes_dots)()}${(MOUTH[a.mouth] || MOUTH.mouth_smile)()}${each(W("acc"), (id) => DRAW.acc(id, u) ?? (ACC[id] || ACC.acc_none)())}${each(W("hat"), (id) => DRAW.hat(id) ?? (HAT[id] || HAT.hat_none)())}${each(fx, (id) => DRAW.fxFront(id))}</svg>`;
 }
