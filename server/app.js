@@ -30,6 +30,7 @@ import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from ".
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { Avatars, mountAvatar } from "./avatar.js";
+import { Knowledge, mountKnowledge } from "./zbirke.js";
 import { mountCorner } from "./corner.js";
 import { mountWebApp } from "./webapp.js";
 import { Schedules, scheduleView, schedulePrompt, syncTestPlan } from "./schedule.js";
@@ -146,6 +147,7 @@ export function createApp(store, opts = {}) {
   const helpTasks = new Map();
   const usage = new Usage(store.db);
   const progress = new Progress(store);
+  const knowledge = new Knowledge(store.db); // zbirke znanja in učni pass (server/zbirke.js)
   // Urnik učenca (server/schedule.js): ure, testi; gre v prompt in v Pripravo na test.
   const schedules = new Schedules(store.db);
   const scheduleText = (s) => schedulePrompt(scheduleView(schedules.get(s.id), s.settings));
@@ -437,7 +439,7 @@ export function createApp(store, opts = {}) {
       if (meta) {
         store.addEvent({ student_id: student.id, conversation_id: conv.id, message_id: assistantId, ...meta });
         if (meta.done && conv.path_topic && progress.markMastered(student.id, conv.path_topic, "chat")) {
-          send("mastered", { topic: getTopic(conv.path_topic)?.name });
+          send("mastered", { topic: getTopic(conv.path_topic)?.name, unlocked: knowledge.sync(student.id) });
         }
       } else {
         console.warn(`[stemmind] odgovor brez META (pogovor ${conv.id})`);
@@ -744,6 +746,11 @@ export function createApp(store, opts = {}) {
     if (!s) return;
     const out = progress.answer(s.id, intParam(req.params.taskId), req.body?.answer);
     if (out.error) return res.status(400).json(out);
+    // Nova obvladana tema ali stopnja učnega passa odklene predmete v zbirkah.
+    if (out.xp?.gained > 0 || out.placement?.passed || out.mastered) {
+      const unlocked = knowledge.sync(s.id);
+      if (unlocked.length) out.unlocked = unlocked;
+    }
     res.json(out);
   });
   // Postopni namigi pred odgovorom (podatki → formula → prvi korak).
@@ -818,6 +825,7 @@ export function createApp(store, opts = {}) {
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress, avatars });
   mountAvatar(app, avatars, { loadStudent });
+  mountKnowledge(app, knowledge, { loadStudent, avatars });
   mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
   mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup });
 
