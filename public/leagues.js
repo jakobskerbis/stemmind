@@ -1,6 +1,8 @@
 // Pogled »Lige«: tedenska liga, vzdevek, razredi in skupine prijateljev.
 import { icon } from "./icons.js";
-import { avatarSvg } from "./avatar.js";
+import { avatarSvg, itemOf, itemName } from "./avatar.js";
+import { DRAW } from "./zbirke.js";
+import { t, currentLang } from "./i18n.js";
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const api = async (url, opts = {}) => {
@@ -23,6 +25,14 @@ const OUTCOME = {
 };
 
 let current = null; // id učenca
+let period = "week"; // razredi in prijatelji: ta teden | ta mesec
+try {
+  period = localStorage.getItem("kompreno.boardPeriod") === "month" ? "month" : "week";
+} catch {}
+
+// Značka zmage sama (izrez okoli prsi avatarja).
+const badgeSvg = (id, size = 34) => `<svg class="lg-badge" viewBox="48 64 32 32" width="${size}" height="${size}" aria-hidden="true">${DRAW.badge(id)}</svg>`;
+const badgeName = (id) => (itemOf(id) ? itemName(itemOf(id), currentLang?.() || "sl") : id);
 
 function timeLeft(iso) {
   const ms = new Date(iso) - Date.now();
@@ -36,10 +46,25 @@ function boardHtml(rows, zones = false) {
   return `<ol class="leaderboard league-board">${rows
     .map(
       (r) => `<li class="${r.me ? "me" : ""} ${zones ? `zone-${r.zone}` : ""}">
-        <span class="who"><span class="rank">${r.rank}</span>${avatarSvg(r.avatar, { size: 30 })}${esc(r.nickname)}${r.me ? ` <span class="you">ti</span>` : ""}</span>
+        <span class="who"><span class="rank">${r.rank}</span>${avatarSvg(r.avatar, { size: 44 })}<span class="nick-name">${esc(r.nickname)}</span>${r.me ? ` <span class="you">ti</span>` : ""}</span>
         <b>${r.xp} <span class="xp-unit">XP</span></b>${zones && r.zone !== "stay" ? `<span class="zone-mark" title="${r.zone === "up" ? "napreduje" : "izpade"}">${icon(r.zone === "up" ? "arrow-right" : "arrow-left")}</span>` : ""}</li>`,
     )
     .join("")}</ol>`;
+}
+
+// Razredi in prijatelji: razvrstitev po tednu ali mesecu.
+const byPeriod = (rows) =>
+  period === "week" ? rows : [...rows].sort((a, b) => b.month - a.month).map((r, i) => ({ ...r, rank: i + 1, xp: r.month }));
+
+function monthCard(M) {
+  if (!M) return "";
+  const me = M.me ? `<div class="lg-me-row">${boardHtml([M.me])}</div>` : "";
+  return `<div class="card">
+      <h2 class="h-icon">${icon("calendar-days")} ${esc(t("lg.month"))}</h2>
+      <p class="muted league-rule">${esc(t("lg.monthIntro", { n: M.awardMin }))} · ${icon("calendar")} ${esc(t("lg.ends"))} ${timeLeft(M.endsAt)}</p>
+      ${M.board.length ? boardHtml(M.board) : `<div class="league-empty">${icon("target")}<p>${esc(t("lg.monthEmpty"))}</p></div>`}
+      ${me}
+    </div>`;
 }
 
 export async function loadLeague(studentId) {
@@ -58,22 +83,31 @@ export async function loadLeague(studentId) {
     ? `<p class="muted league-rule"><span class="dot up"></span>Najboljših ${L.promoteCount} napreduje${L.demoteCount ? ` · <span class="dot down"></span>zadnjih ${L.demoteCount} izpade` : ""} · ${icon("calendar")} konec ${timeLeft(L.endsAt)}</p>
        ${boardHtml(L.board, true)}`
     : `<div class="league-empty">${icon("target")}<p>Reši nalogo in zberi prve XP ta teden. Potem se uvrstiš v skupino do 30 učencev s podobnim znanjem.</p></div>`;
+  const award = L.lastWeek?.award;
+  const wins = (L.awards || []).length
+    ? `<div class="lg-wins"><span>${esc(t("lg.awards"))}</span>${L.awards.map((id) => `<button type="button" class="lg-win" data-zb="${esc(id)}" title="${esc(badgeName(id))}" aria-label="${esc(badgeName(id))}">${badgeSvg(id, 30)}</button>`).join("")}</div>`
+    : "";
 
   root.innerHTML = `
     <div class="card league-hero tier-${L.tier}">
-      ${tierBadge(L.tier, "big")}
+      <div class="lg-hero-av">${avatarSvg(L.avatar, { size: 84, title: L.nickname })}${tierBadge(L.tier, "big lg-tier")}</div>
       <div>
         <h2>${esc(L.tierName)} liga</h2>
         <div class="nick">${icon("user")} <b>${esc(L.nickname)}</b> <button type="button" id="nick-change" class="ghost small">${icon("pencil")}<span>Zamenjaj</span></button></div>
         ${L.lastWeek ? `<div class="last">${OUTCOME[L.lastWeek.outcome]} (${L.lastWeek.rank}. mesto)</div>` : ""}
+        ${award ? `<button type="button" class="lg-award" data-zb="${esc(award)}">${badgeSvg(award, 36)}<span>${esc(t("lg.award", { name: badgeName(award) }))}</span>${icon("chevron-right")}</button>` : ""}
+        ${wins}
       </div>
     </div>
     <div id="nick-picker" class="card" hidden></div>
     <div class="card">
       <h2 class="h-icon">${icon("trophy")} Tedenska liga</h2>
       ${league}
+      <p class="muted small lg-win-rule">${icon("medal")} ${esc(t("lg.weekWin"))}</p>
       <div class="tier-row">${L.tiers.map((t, i) => `<span class="${i === L.tier ? "cur" : i < L.tier ? "done" : ""}" title="${esc(t)}">${tierBadge(i)}<span>${esc(t)}</span></span>`).join("")}</div>
     </div>
+    ${monthCard(data.month)}
+    ${data.classes.length ? `<div class="chip-row lg-period" role="group">${["week", "month"].map((k) => `<button type="button" class="${period === k ? "active" : ""}" data-period="${k}" aria-pressed="${period === k}">${esc(t(k === "week" ? "lg.thisWeek" : "lg.thisMonth"))}</button>`).join("")}</div>` : ""}
     ${data.classes
       .map(
         (c) => `<div class="card">
@@ -81,8 +115,8 @@ export async function loadLeague(studentId) {
             <h2 class="h-icon">${icon(c.kind === "class" ? "graduation-cap" : "users")} ${esc(c.name)}</h2>
             <span class="code-chip" title="${c.kind === "friends" ? "Deli kodo s prijatelji" : "Koda razreda"}">${esc(c.code)}</span>
           </div>
-          <p class="muted">Lestvica tega tedna${c.kind === "friends" ? ". Kodo deli s prijatelji." : ""}</p>
-          ${boardHtml(c.board)}
+          <p class="muted">${period === "week" ? "Lestvica tega tedna" : esc(t("lg.classMonth"))}${c.kind === "friends" ? ". Kodo deli s prijatelji." : ""}</p>
+          ${boardHtml(byPeriod(c.board))}
           <button type="button" class="ghost small" data-leave="${c.id}">${icon("x")}<span>Zapusti</span></button>
         </div>`,
       )
@@ -102,6 +136,16 @@ export async function loadLeague(studentId) {
     </div>`;
 
   $("#nick-change").addEventListener("click", showNickPicker);
+  // [data-zb] odpre zbirke prek skupnega poslušalca v app.js (tu bi se odprlo dvakrat).
+  root.querySelectorAll("[data-period]").forEach((b) =>
+    b.addEventListener("click", () => {
+      period = b.dataset.period;
+      try {
+        localStorage.setItem("kompreno.boardPeriod", period);
+      } catch {}
+      loadLeague(studentId);
+    }),
+  );
   $("#join-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     try {

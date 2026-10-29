@@ -14,7 +14,7 @@ import { PROFILE_SETTINGS, DEVICE_SETTINGS, SCHEDULE_SETTINGS, EVENT_KINDS, devi
 import { scheduleView } from "./schedule.js";
 import { goalsFor, validDate } from "../public/goal-data.js";
 import { Avatars } from "./avatar.js";
-import { ITEMS, SLOTS, MULTI_MAX, isMulti, itemOf } from "../public/avatar.js";
+import { ITEMS, SLOTS, MULTI_MAX, isMulti, itemOf, wear } from "../public/avatar.js";
 import { INTERESTS, cleanInterests } from "../public/interests.js";
 import { dialectsFor } from "../public/dialects.js";
 
@@ -380,7 +380,11 @@ export function createSettingsTools({ store, studentId, conversationId, device =
     const out = { profile: profileView(student), device: dev, note: "Device settings not listed are at their defaults." };
     const owned = new Set(avatars.owned(studentId));
     out.profile.avatar = avatars.view(studentId).equipped;
-    out.avatar_items_available = ITEMS.filter((x) => x.price === 0 || owned.has(x.id)).map((x) => `${x.slot}: ${x.id} (${x.name.en})`);
+    // Brezplačni in svoji deli; sezonski predmeti s svojo sezono (npr. pass_coat~2026-1).
+    out.avatar_items_available = [
+      ...ITEMS.filter((x) => x.price === 0 || owned.has(x.id)).map((x) => [x, x.id]),
+      ...[...owned].filter((id) => id.includes("~") && itemOf(id)).map((id) => [itemOf(id), id]),
+    ].map(([x, id]) => `${x.slot}: ${id} (${x.name.en})`);
     const s = student.settings;
     if (input.options === "study_program") out.options = programItems().map((p) => `${p.id}: ${p.label}`);
     if (input.options === "study_course")
@@ -473,7 +477,10 @@ export function createSettingsTools({ store, studentId, conversationId, device =
       if (applyPatch.language && langInfo(applyPatch.language).code !== "sl") result.note = (result.note ? result.note + " " : "") + "Reply in the new language from now on.";
     }
     if (avatarChange) {
-      const to = avatars.equip(studentId, { ...avatars.view(studentId).equipped, ...avatarChange });
+      // En id v predalu z več predmeti se doda k ostalim (wear), seznam zamenja cel predal.
+      let eq = avatars.view(studentId).equipped;
+      for (const [slot, v] of Object.entries(avatarChange)) eq = isMulti(slot) && !Array.isArray(v) ? wear(eq, String(v)) : { ...eq, [slot]: v };
+      const to = avatars.equip(studentId, eq);
       result.applied.push({ setting: "avatar", to });
       send("avatar", { avatar: to });
     }

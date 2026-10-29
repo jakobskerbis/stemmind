@@ -65,3 +65,27 @@
 .row input:focus { border-color: var(--accent); outline: none; }
 .row button, button.ghost.small, button.secondary { display: inline-flex; align-items: center; gap: 6px; }
 .nick-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+
+/* Avatar je predstavnik učenca: večji ob rezultatu, velik v glavi lige; značke zmag (public/zbirke.js, zbirka »lige«). */
+.league-board li { padding: 6px 10px; }
+.league-board li .who { display: flex; align-items: center; }
+.league-board li .who .avatar-svg { border-radius: 12px; border: 2px solid color-mix(in srgb, var(--text) 18%, transparent); }
+.league-board li .nick-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.league-board li.me .avatar-svg { border-color: var(--accent); }
+.lg-hero-av { position: relative; flex: none; }
+.lg-hero-av .avatar-svg { display: block; border-radius: 20px; border: 3px solid rgba(255, 255, 255, 0.85); box-shadow: 0 6px 18px rgba(15, 23, 42, 0.25); }
+.lg-hero-av .tier-badge.lg-tier { position: absolute; right: -10px; bottom: -8px; width: 38px; height: 38px; background: var(--tier); border: 3px solid #fff; }
+.lg-hero-av .tier-badge.lg-tier svg.i { width: 20px; height: 20px; }
+.lg-award { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; padding: 6px 12px 6px 6px; border: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.22); color: inherit; font: inherit; font-weight: 700; cursor: pointer; text-align: left; }
+.lg-award .lg-badge { flex: none; background: #fff; border-radius: 50%; }
+.lg-wins { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; font-size: 0.85rem; font-weight: 700; }
+.lg-win { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.9); cursor: pointer; }
+.lg-win:focus-visible, .lg-award:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.lg-win-rule { display: flex; align-items: center; gap: 6px; margin: 10px 0 0; }
+.lg-win-rule svg.i { width: 16px; height: 16px; flex: none; }
+.lg-me-row { margin-top: 6px; border-top: 2px dashed var(--border); padding-top: 6px; }
+.lg-period { margin: 4px 0 10px; }
+@media (max-width: 560px) {
+  .league-hero { flex-direction: column; text-align: center; }
+  .league-hero .nick, .lg-wins { justify-content: center; }
+}

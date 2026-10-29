@@ -23,15 +23,18 @@ test("zbirke: every item draws, every condition topic exists at the item's level
     if (x.need?.t) assert.equal(topicTier(getPath(getTopic(x.need.t[0]).path)), RARITY_TIER[x.rarity], `${x.id}: zgled`);
   }
   // Za znanje snovi je legendaren en sam predmet; ostali epski, legendarni in mitični so na Poti znanja (XP).
-  assert.deepEqual(KNOWLEDGE.filter((x) => x.rarity === "legendary" && !x.need?.xp).map((x) => x.id), ["fx_doppler"]);
+  assert.deepEqual(KNOWLEDGE.filter((x) => x.rarity === "legendary" && !x.need?.xp && !x.need?.league).map((x) => x.id), ["fx_doppler"]);
   const pot = KNOWLEDGE.filter((x) => x.collection === "pot");
   assert.ok(pot.length >= 12 && pot.every((x) => x.need.xp > 0 && ["epic", "legendary", "mythic"].includes(x.rarity)));
   for (let i = 1; i < pot.length; i++) {
     assert.ok(pot[i].need.xp > pot[i - 1].need.xp, pot[i].id);
     assert.ok(RARITY_TIER[pot[i].rarity] >= RARITY_TIER[pot[i - 1].rarity], pot[i].id);
   }
-  assert.ok(KNOWLEDGE.filter((x) => x.rarity === "mythic").every((x) => x.collection === "pot"));
-  for (const c of COLLECTIONS.filter((c) => c.id !== "pot")) {
+  assert.ok(KNOWLEDGE.filter((x) => x.rarity === "mythic").every((x) => ["pot", "lige"].includes(x.collection)));
+  // Zmage na lestvicah: samo značke, ena za vsako ligo, nobena se ne kupi.
+  const lige = KNOWLEDGE.filter((x) => x.collection === "lige");
+  assert.ok(lige.length === 10 && lige.every((x) => x.slot === "badge" && x.need.league && x.earn && !x.price));
+  for (const c of COLLECTIONS.filter((c) => !["pot", "lige"].includes(c.id))) {
     const n = KNOWLEDGE.filter((x) => x.collection === c.id && !x.set).length;
     const set = KNOWLEDGE.find((x) => x.collection === c.id && x.set);
     assert.ok(set && set.need.own < n, c.id);

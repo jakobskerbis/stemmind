@@ -274,7 +274,8 @@ export function avatarSvg(eq, { size = 64, title = "" } = {}) {
   const a = { ...DEFAULT_AVATAR, ...(eq || {}) };
   const u = `av${++uid}`;
   const body = BODY[a.body] ? a.body : "body_blue";
-  const W = (slot) => byOrder(slot, worn(a, slot).filter((id) => itemOf(id)));
+  // Največ MULTI_MAX (predogled novega predmeta v polnem predalu jih ima lahko 7: BADGE_AT jih ne pozna).
+  const W = (slot) => byOrder(slot, worn(a, slot).filter((id) => itemOf(id)).slice(-MULTI_MAX));
   const fx = W("fx");
   const outfit = W("outfit");
   const each = (list, f) => list.map(f).join("");
