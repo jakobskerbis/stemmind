@@ -529,38 +529,151 @@ export function createPse(root, opts) {
  */
 export function createFormulas(root, opts) {
   const { t } = opts;
-  const BOOKS = ["MAT-OS", "MAT-SS", "MAT-UNI", "FIZ-OS", "FIZ-SS", "FIZ-UNI", "KEM-OS", "KEM-SS", "KEM-UNI"];
+  const SUBJ = ["MAT", "FIZ", "KEM"];
+  const LVL = { OS: "lp.os", SS: "lp.ss", UNI: "lp.uni" };
+  const BOOKS = SUBJ.flatMap((s) => Object.keys(LVL).map((l) => `${s}-${l}`));
   let book = null;
   const cache = {};
   root.classList.add("fm");
-  root.innerHTML = `<div class="fm-wrap"><div class="chip-row fm-pick" role="tablist">${BOOKS.map((b) => {
-    const [s, l] = b.split("-");
-    return `<button type="button" role="tab" data-book="${b}">${esc(t(`subj.${s}`))} · ${esc(t(l === "OS" ? "lp.os" : l === "SS" ? "lp.ss" : "lp.uni"))}</button>`;
-  }).join("")}</div><div class="card fm-body textbook-md"></div></div>`;
+  const seg = (cls, label, items) =>
+    `<div class="seg ${cls}" role="tablist" aria-label="${esc(label)}">${items.map(([k, txt]) => `<button type="button" role="tab" data-k="${k}">${esc(txt)}</button>`).join("")}</div>`;
+  root.innerHTML = `<div class="fm-wrap"><div class="fm-bar"><div class="fm-sel">${seg("fm-subj", t("set.subject"), SUBJ.map((s) => [s, t(`subj.${s}`)]))}${seg("fm-lvl", t("set.school"), Object.entries(LVL).map(([l, key]) => [l, t(key)]))}</div></div><div class="chip-row fm-toc" hidden></div><div class="fm-body textbook-md"></div></div>`;
   const body = root.querySelector(".fm-body");
+  const toc = root.querySelector(".fm-toc");
+
+  // Markdown zbirke razdelimo na kartice po naslovih; dvostolpčne tabele postanejo vrstice »ime + formula«,
+  // da se na telefonu ime postavi nad formulo in se formula ne lomi sredi izraza.
+  function layout(html) {
+    const src = document.createElement("div");
+    src.innerHTML = html;
+    const out = document.createElement("div");
+    let sec = null;
+    const newSec = (h) => {
+      sec = document.createElement("section");
+      sec.className = "card fm-sec";
+      if (h) {
+        sec.id = `fm-${book}-${out.children.length}`;
+        sec.append(h);
+      }
+      out.append(sec);
+    };
+    for (const el of [...src.children]) {
+      if (el.tagName === "H2") {
+        newSec(el);
+        continue;
+      }
+      if (!sec) newSec(null);
+      const rows = el.tagName === "TABLE" ? [...el.querySelectorAll("tr")] : [];
+      if (rows.length && rows.every((r) => r.children.length === 2)) {
+        const list = document.createElement("div");
+        list.className = "fm-list";
+        for (const r of rows) {
+          const [a, b] = r.children;
+          if (!a.textContent.trim() && !b.textContent.trim()) continue;
+          const item = document.createElement("div");
+          item.className = r.parentElement.tagName === "THEAD" ? "fm-item fm-head" : "fm-item";
+          item.innerHTML = `<div class="fm-name">${a.innerHTML}</div><div class="fm-f">${b.innerHTML}</div>`;
+          list.append(item);
+        }
+        sec.append(list);
+      } else if (el.tagName === "TABLE") {
+        const wrap = document.createElement("div");
+        wrap.className = "fm-scroll";
+        wrap.append(el);
+        sec.append(wrap);
+      } else sec.append(el);
+    }
+    return out;
+  }
+
+  function markActive() {
+    const [s, l] = book.split("-");
+    for (const [sel, key] of [[".fm-subj", s], [".fm-lvl", l]]) {
+      root.querySelectorAll(`${sel} [data-k]`).forEach((x) => {
+        x.classList.toggle("active", x.dataset.k === key);
+        x.setAttribute("aria-selected", String(x.dataset.k === key));
+      });
+    }
+  }
+
   async function show(b) {
     book = BOOKS.includes(b) ? b : "MAT-OS";
-    root.querySelectorAll(".fm-pick [data-book]").forEach((x) => {
-      x.classList.toggle("active", x.dataset.book === book);
-      x.setAttribute("aria-selected", String(x.dataset.book === book));
-    });
-    if (!cache[book]) {
+    markActive();
+    if (!(book in cache)) {
       body.innerHTML = `<p class="muted">${esc(t("common.loading"))}</p>`;
+      toc.hidden = true;
       try {
         cache[book] = (await opts.api(`/api/formulas?book=${book}`)).md;
       } catch {
         cache[book] = null;
       }
     }
-    body.innerHTML = cache[book] ? opts.renderRich(cache[book]) : `<p class="muted">${esc(t("sc.formNone"))}</p>`;
+    if (!cache[book]) {
+      body.innerHTML = `<div class="card"><p class="muted">${esc(t("sc.formNone"))}</p></div>`;
+      toc.hidden = true;
+      return;
+    }
+    body.replaceChildren(...layout(opts.renderRich(cache[book])).children);
+    const secs = [...body.querySelectorAll(".fm-sec[id]")];
+    toc.innerHTML = secs.map((x) => `<button type="button" data-sec="${x.id}">${esc(x.querySelector("h2").textContent)}</button>`).join("");
+    toc.hidden = secs.length < 2;
+    root.scrollTop = 0;
+    fit();
+    spy();
   }
-  root.querySelector(".fm-pick").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-book]");
-    if (b) show(b.dataset.book);
+
+  // formula, širša od zaslona, se pomanjša (največ na 78 %); šele potem se pomika vodoravno
+  function fit() {
+    for (const k of body.querySelectorAll(".fm-f .katex")) {
+      k.style.fontSize = "";
+      const cw = k.closest(".fm-f").clientWidth;
+      const w = k.getBoundingClientRect().width;
+      if (!cw || w <= cw) continue;
+      const fs = parseFloat(getComputedStyle(k).fontSize);
+      k.style.fontSize = `${Math.max(fs * 0.78, (fs * cw * 0.98) / w).toFixed(2)}px`;
+    }
+  }
+  let fitTimer = 0;
+  window.addEventListener("resize", () => {
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fit, 150);
+  });
+
+  // čip poglavja, ki je trenutno na vrhu, je označen
+  function spy() {
+    if (toc.hidden) return;
+    const top = toc.getBoundingClientRect().bottom + 8;
+    let cur = null;
+    for (const x of body.querySelectorAll(".fm-sec[id]")) if (x.getBoundingClientRect().top <= top + 1) cur = x.id;
+    cur ??= body.querySelector(".fm-sec[id]")?.id;
+    toc.querySelectorAll("[data-sec]").forEach((c) => {
+      const on = c.dataset.sec === cur;
+      // samo vodoravno pomikanje kazala (scrollIntoView bi prekinil gladko pomikanje strani)
+      if (on && !c.classList.contains("active")) {
+        const l = c.offsetLeft - toc.offsetLeft;
+        if (l < toc.scrollLeft || l + c.offsetWidth > toc.scrollLeft + toc.clientWidth) toc.scrollLeft = l - 16;
+      }
+      c.classList.toggle("active", on);
+    });
+  }
+  root.addEventListener("scroll", spy, { passive: true });
+
+  root.querySelector(".fm-sel").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-k]");
+    if (!b) return;
+    const [s, l] = book.split("-");
+    show(b.closest(".fm-subj") ? `${b.dataset.k}-${l}` : `${s}-${b.dataset.k}`);
+  });
+  toc.addEventListener("click", (e) => {
+    const c = e.target.closest("[data-sec]");
+    const sec = c && body.querySelector(`#${c.dataset.sec}`);
+    if (!sec) return;
+    // kazalo je prilepljeno na vrh pomičnega okna, zato ciljamo tik podenj
+    root.scrollTo({ top: root.scrollTop + sec.getBoundingClientRect().top - root.getBoundingClientRect().top - toc.offsetHeight - 8, behavior: "smooth" });
   });
   return {
     root,
-    resize() {},
+    resize: fit,
     reload() {
       show(opts.bookKey?.() || book);
     },
