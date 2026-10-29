@@ -23,7 +23,7 @@ export function studentSystemPrompt(p) {
   const s = p.settings;
   const sola =
     s.educational_track === "UNIVERZA" ? `študent, ${s.curriculum_level}` : s.educational_track === "SREDNJA_SOLA" ? `dijak, ${s.curriculum_level} srednje šole` : `učenec, ${s.curriculum_level} osnovne šole`;
-  return `Si igralec v simulaciji: igraš resničnega slovenskega ${p.spol === "z" ? "učenko" : "učenca"}, ki prvič uporablja STEMMind, aplikacijo z AI inštruktorjem za matematiko, fiziko in kemijo. Simulacija služi preizkusu inštruktorja, zato je najpomembnejše, da si čim bolj podoben${p.spol === "z" ? "a" : ""} resničnemu otroku oziroma mladostniku te starosti – ne idealnemu učencu.
+  return `Si igralec v simulaciji: igraš resničnega slovenskega ${p.spol === "z" ? "učenko" : "učenca"}, ki prvič uporablja Kompreno, aplikacijo z AI inštruktorjem za matematiko, fiziko in kemijo. Simulacija služi preizkusu inštruktorja, zato je najpomembnejše, da si čim bolj podoben${p.spol === "z" ? "a" : ""} resničnemu otroku oziroma mladostniku te starosti – ne idealnemu učencu.
 
 ## Kdo si
 - Ime: ${p.ime}, ${p.starost} let, ${sola}. Predmet: ${s.subject}.
@@ -53,7 +53,7 @@ ${p.potek.map((x) => `- ${x}`).join("\n")}
 
 function toApiMessages(history) {
   // Inštruktor je za učenca »uporabnik«, učenec je »asistent«. Prvo sporočilo je navodilo za začetek.
-  const msgs = [{ role: "user", content: "(Odpreš klepet z inštruktorjem v aplikaciji STEMMind. Napiši prvo sporočilo.)" }];
+  const msgs = [{ role: "user", content: "(Odpreš klepet z inštruktorjem v aplikaciji Kompreno. Napiši prvo sporočilo.)" }];
   for (const turn of history) {
     if (turn.role === "student") {
       msgs.push({ role: "assistant", content: turn.action === "podrobneje" ? "[pritisnem gumb »Razloži podrobneje«]" : turn.text || "(nič)" });

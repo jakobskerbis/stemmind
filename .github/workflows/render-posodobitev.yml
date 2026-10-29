@@ -1,6 +1,6 @@
-# Render: nova različica STEMMind vsaki 2 uri (ne ob vsaki spremembi, da se strežnik
+# Render: nova različica Kompreno vsaki 2 uri (ne ob vsaki spremembi, da se strežnik
 # s trajnim diskom ne zaganja ves dan). Deluje, ko je v GitHubu nastavljena skrivnost
-# RENDER_DEPLOY_HOOK (Render > stemmind > Settings > Deploy Hook). Navodila: docs/posodobitve.md
+# RENDER_DEPLOY_HOOK (Render > kompreno > Settings > Deploy Hook). Navodila: docs/posodobitve.md
 name: Render vsaki 2 uri
 on:
   schedule:

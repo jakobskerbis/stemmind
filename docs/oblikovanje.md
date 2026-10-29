@@ -1,4 +1,4 @@
-# Oblikovanje STEMMind
+# Oblikovanje Kompreno
 
 Skupna pravila videza, da je aplikacija povsod enaka. Nove dele sestavi iz gradnikov spodaj, ne iz novih različic istega.
 

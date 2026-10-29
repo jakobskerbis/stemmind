@@ -16,13 +16,13 @@ import { promoConfig, createPromo } from "./promo.js";
 import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
 
 export const CONSENT_TEXT =
-  "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da STEMMind obdeluje otrokove osebne podatke " +
+  "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da Kompreno obdeluje otrokove osebne podatke " +
   "(ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen " +
   "učenja, kot je opisano v Obvestilu o varstvu osebnih podatkov. Soglasje lahko kadar koli prekličem z izbrisom otrokovega profila.";
 
 // Soglasje dijaka, ki je dovolj star za lastno privolitev in ustvarja svoj profil.
 export const SELF_CONSENT_TEXT =
-  "Profil je moj. Prebral(a) sem Obvestilo o varstvu osebnih podatkov in soglašam, da STEMMind obdeluje moje podatke " +
+  "Profil je moj. Prebral(a) sem Obvestilo o varstvu osebnih podatkov in soglašam, da Kompreno obdeluje moje podatke " +
   "(ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -407,7 +407,7 @@ export function mountAccounts(app, store, opts = {}) {
 
   // Na računalniku, kjer teče strežnik: »ta račun je moj«, da števec porabe vidim tudi na telefonu.
   app.post("/api/usage/claim", (req, res) => {
-    if (!isLocalRequest(req)) return res.status(403).json({ error: "Samo na računalniku, kjer teče STEMMind." });
+    if (!isLocalRequest(req)) return res.status(403).json({ error: "Samo na računalniku, kjer teče Kompreno." });
     db.prepare("UPDATE parents SET is_admin = 1 WHERE id = ?").run(req.parent.id);
     res.json({ ok: true });
   });
@@ -478,10 +478,10 @@ export function mountAccounts(app, store, opts = {}) {
     const p = token && db.prepare("SELECT id FROM parents WHERE unsubscribe_token = ?").get(token);
     if (p) update(p.id, { weekly_email: 0 });
     res.type("html").send(
-      `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STEMMind</title>` +
-        `<body style="font-family:sans-serif;max-width:480px;margin:40px auto;padding:0 16px"><h1>STEMMind</h1><p>${
+      `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kompreno</title>` +
+        `<body style="font-family:sans-serif;max-width:480px;margin:40px auto;padding:0 16px"><h1>Kompreno</h1><p>${
           p ? "Tedenskih poročil ne boste več prejemali. Ponovno jih vklopite v zavihku Račun." : "Povezava ni veljavna."
-        }</p><p><a href="/">Odpri STEMMind</a></p></body>`,
+        }</p><p><a href="/">Odpri Kompreno</a></p></body>`,
     );
   });
 
@@ -659,7 +659,7 @@ export function mountAccounts(app, store, opts = {}) {
         await stripe.request("POST", `/customers/${p.stripe_customer_id}/balance_transactions`, {
           amount: -monthlyAmount(p.sub_seats || 1, planByKey(p.sub_plan)?.currency || "EUR"),
           currency: (planByKey(p.sub_plan)?.currency || "EUR").toLowerCase(),
-          description: "STEMMind: brezplačni mesec (priporočilo)",
+          description: "Kompreno: brezplačni mesec (priporočilo)",
         });
         return "credit";
       } catch (err) {

@@ -4,7 +4,7 @@ Testerji v aplikaciji povedo, kaj je dobro in kaj ne. Iz tega nastane seznam spr
 
 ## Kje testerji povedo mnenje
 
-- **Učna pot**: kartica »Kako ti je všeč STEMMind?« z gumbom »Povej mnenje« (izgine, ko tester pošlje mnenje ali jo zapre).
+- **Učna pot**: kartica »Kako ti je všeč Kompreno?« z gumbom »Povej mnenje« (izgine, ko tester pošlje mnenje ali jo zapre).
 - **Računalnik**: zavihek »Mnenje« v zgornji vrstici. **Telefon**: Jaz → Povratne informacije.
 
 Dve možnosti, tester izbere:
@@ -19,7 +19,7 @@ Vse je v jeziku, ki ga ima tester izbranega.
 - tabela `feedback` v bazi in
 - **`data/povratne-informacije.json`** (cela kopija, ob vsakem novem mnenju).
 
-Na računalniku, kjer teče STEMMind (`http://localhost:3000`), je pod vprašalnikom še razdelek **Zbrana mnenja**: povzetek in gumba »Prenesi povzetek« (.md) in »Prenesi vsa mnenja« (.json). Prek povezave za telefon (Cloudflare) in na Renderju tega razdelka ni, zato testerji ne vidijo mnenj drugih.
+Na računalniku, kjer teče Kompreno (`http://localhost:3000`), je pod vprašalnikom še razdelek **Zbrana mnenja**: povzetek in gumba »Prenesi povzetek« (.md) in »Prenesi vsa mnenja« (.json). Prek povezave za telefon (Cloudflare) in na Renderju tega razdelka ni, zato testerji ne vidijo mnenj drugih.
 
 Povzetek brez aplikacije: `node scripts/povzetek-povratnih.js` zapiše `data/povratne-informacije-povzetek.md`.
 

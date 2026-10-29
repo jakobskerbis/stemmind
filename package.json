@@ -2,7 +2,7 @@
   "name": "stemmind",
   "version": "0.1.0",
   "private": true,
-  "description": "STEMMind – AI inštruktor za matematiko, fiziko in kemijo",
+  "description": "Kompreno – AI inštruktor za matematiko, fiziko in kemijo",
   "type": "module",
   "engines": {
     "node": ">=22.5"

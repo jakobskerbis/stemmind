@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Digitalni razred: simulirani učenci se pogovarjajo z inštruktorjem STEMMind,
+// Digitalni razred: simulirani učenci se pogovarjajo z inštruktorjem Kompreno,
 // ocenjevalec oceni vsak pogovor, na koncu nastane poročilo.
 //
 //   node sim/run.js                       vsi učenci, lokalni inštruktor (ista koda in prompt)
@@ -20,7 +20,7 @@ import { hasCredentials, setEngine, defaultEngine } from "./llm.js";
 import { hasClaude } from "./cli.js";
 import { summarize, compare, markdownReport, transcriptMarkdown, htmlReport } from "./report.js";
 
-const HELP = `Digitalni razred – simulacija prvih uporabnikov inštruktorja STEMMind
+const HELP = `Digitalni razred – simulacija prvih uporabnikov inštruktorja Kompreno
 
 Možnosti:
   --ucenci <id,id|all>       katere učence (privzeto all; glej --seznam)
