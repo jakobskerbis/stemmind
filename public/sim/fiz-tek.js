@@ -315,6 +315,6 @@ export function dimenzije(el) {
   layout(el, {
     controls: [select({ label: "količina", options: Object.entries(DIM).map(([key, v]) => [key, v[0]]), value: k, onChange: (v) => ((k = v), relabel(), info()) }), ...sls],
     out,
-    tryText: "Ugotovi, kako je nihajni čas nihala odvisen od dolžine in g. Zakaj eksponent mase mora biti 0?",
+    tryText: "Ugotovi, kako je nihajni čas nihala odvisen od dolžine in g. Zakaj mora biti eksponent mase 0?",
   });
 }
