@@ -7,7 +7,7 @@ avtor: AI
 
 Telefon določi tvoj položaj iz signalov satelitov GPS. Signal potuje s hitrostjo svetlobe, $3{,}00\cdot10^{8}\,\mathrm{m/s}$. Če ura na satelitu zgreši za eno milijoninko sekunde, je položaj napačen za $3{,}00\cdot10^{8}\,\mathrm{m/s} \cdot 10^{-6}\,\mathrm{s} = 300\,\mathrm{m}$. Zemljevid bi te postavil nekaj ulic stran.
 
-Zato sateliti nosijo **atomske ure**. Sekunda je danes definirana z atomom cezija: v eni sekundi naredi sevanje, ki ga oddaja cezij, natanko $9\,192\,631\,770$ nihajev. Vsak atom cezija na svetu niha s točno to frekvenco.
+Zato sateliti nosijo **atomske ure**. Sekunda je danes definirana z atomom cezija: v eni sekundi naredi sevanje, ki ga oddaja cezij, natanko $9\,192\,631\,770$ nihajev. Vsak atom cezija na svetu seva s točno to frekvenco.
 
 Zakaj so vsi atomi enaki do zadnje števke? In zakaj ulična svetilka z natrijem skozi spektroskop, pripet na kamero telefona, pokaže skoraj samo eno rumeno črto pri $589\,\mathrm{nm}$, svetilka telefona pa celo mavrico? Odgovor je v zgradbi atoma.
 
@@ -36,7 +36,7 @@ Zdaj lahko pravilo poimenujemo. Dovoljene energije elektrona v atomu so **energi
 
 $$h\nu = E_z - E_k$$
 
-Ker so nivoji za vse atome istega elementa enaki, so enake tudi črte. Zato vsi atomi cezija nihajo z isto frekvenco.
+Ker so nivoji za vse atome istega elementa enaki, so enake tudi črte. Zato vsi atomi cezija sevajo z isto frekvenco.
 
 :::premisli
 Napovej: ali ima lahko kakšna črta vodika, ki konča na $n = 2$, energijo večjo od $3{,}40\,\mathrm{eV}$?

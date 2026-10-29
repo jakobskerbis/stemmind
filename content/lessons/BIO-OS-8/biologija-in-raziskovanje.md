@@ -217,7 +217,7 @@ Analogija ima meje: celice v tkivu so si podobnejše kot igralke.
 - Vprašanje: »Ali glasba vpliva na število trebušnjakov v eni minuti?«
 ~ Vprašanje sprašuje po vplivu enega dejavnika na nekaj merljivega. To je dobro vprašanje.
 - Domneva: »Z glasbo bodo učenci naredili več trebušnjakov.«
-~ Domneva je napoved. Sme se izkazati za napačno; zato je še ne smemo imeti za napako.
+~ Domneva je napoved, ki se sme izkazati za napačno. Zapisana je pravilno.
 + Poskus: prva skupina dela trebušnjake z glasbo zjutraj, druga brez glasbe po tekmi.
 - Sklep: Tina primerja povprečji obeh skupin z domnevo.
 ~ Primerjava povprečij z domnevo je pravilen sklep.

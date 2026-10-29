@@ -173,7 +173,7 @@ Različni toni: $7 \cdot 6 \cdot 5 \cdot 4 = 840$. Melodij s ponovljenim tonom j
 
 - **Vrstni red tam, kjer ga ni.** Pri žiriji treh enakopravnih članov nekateri računajo $9 \cdot 8 \cdot 7 = 504$. Tako vsako žirijo šteješ šestkrat. Vprašaj se: ali bi zamenjava dveh izbranih dala nov izid? Če ne, deli s $k!$.
 - **Deljenje s $k$ namesto s $k!$.** Pri treh pesmih od osmih nekdo računa $336 : 3 = 112$. Toda ista trojica ima $3 \cdot 2 \cdot 1 = 6$ vrstnih redov, ne $3$. Pravilno je $56$.
-- **»Najprej izberem enega, nato poljubna dva.«** Za žirijo z vsaj enim učiteljem nekdo izbere učitelja ($4$ načini) in nato poljubna dva od ostalih osmih ($28$ načinov), torej $4 \cdot 28 = 112$. Žirijo z dvema učiteljema tako šteje dvakrat, ker je vsak od njiju lahko »prvi«. Uporabi dopolnilo.
+- **»Najprej izberem enega, nato poljubna dva.«** Za žirijo z vsaj enim učiteljem nekdo izbere učitelja ($4$ načini) in nato poljubna dva od ostalih osmih ($28$ načinov), torej $4 \cdot 28 = 112$. Žirijo z dvema učiteljema tako šteje dvakrat, ker je vsak od njiju lahko »prvi«, žirijo s tremi učitelji pa trikrat. Uporabi dopolnilo.
 - **Napačno dopolnilo.** Nasprotje od »vsaj en učitelj« ni »natanko en učitelj«, ampak »nobenega učitelja«. Preden odšteješ, zapiši nasprotno trditev v celem stavku.
 - **Fakulteta kot vsota.** $5!$ ni $5 + 4 + 3 + 2 + 1 = 15$, ampak $5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 120$.
 
@@ -200,7 +200,7 @@ Vsak selfie skupine treh ljudi lahko »razstaviš« na $3! = 6$ fotografij na st
 
 - **Pica:** v picerijah izbiraš $3$ dodatke izmed $8$. Šunka, gobe, olive so ista pica kot olive, šunka, gobe. Pic je $\dfrac{8 \cdot 7 \cdot 6}{3 \cdot 2 \cdot 1} = 56$.
 - **Liga:** v ligi s $6$ ekipami vsaka igra z vsako enkrat. Tekem je $\dfrac{6 \cdot 5}{2} = 15$, ker je tekma A proti B ista kot B proti A.
-- **Razpored za tablo:** šest dijakov se dogovori, kdo bo od ponedeljka do petka brisal tablo, vsak dan drug. Dnevi so različni, zato je vrstni red pomemben: $6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 = 720$ razporedov.
+- **Razpored za tablo:** šest učencev se dogovori, kdo bo od ponedeljka do petka brisal tablo, vsak dan drug. Dnevi so različni, zato je vrstni red pomemben: $6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 = 720$ razporedov.
 - **Geslo:** štirimestna PIN-koda z vsaj eno ničlo: vseh kod je $10\,000$, kod brez ničle $9 \cdot 9 \cdot 9 \cdot 9 = 6561$, kod z ničlo pa $10\,000 - 6561 = 3439$.
 
 ## Preveri se

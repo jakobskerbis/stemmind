@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Poskus za na mizo: vzemi tri kocke Lego za spodnje nadstropje stolpa (rdečo, modro, rumeno) in dve za zgornje (belo, črno). Stolpec ima natanko dve kocki, eno spodaj in eno zgoraj. Koliko različnih stolpcev sestaviš?
+Poskus za na mizo: vzemi tri kocke Lego za spodnje nadstropje stolpca (rdečo, modro, rumeno) in dve za zgornje (belo, črno). Stolpec ima natanko dve kocki, eno spodaj in eno zgoraj. Koliko različnih stolpcev sestaviš?
 
 Sestavljaj jih enega za drugim in jih postavi v vrsto. Ko misliš, da si končal, preveri, ali se kateri ponovi in ali je kateri manjkal. Če si delal po vrsti, imaš šest stolpcev.
 
@@ -187,11 +187,11 @@ Naslednji dan sosed Bor ponudi še tri strehe iz slame. Ana zdaj pri polici ne i
 ? Koda ima $4$ števke od $1$ do $9$, ki se smejo ponavljati. Približno koliko kod je?
 - okoli $36$
 ~ To je $9 + 9 + 9 + 9$. Števke se ne seštevajo: vsaka nova števka pomnoži število kod z $9$.
-- okoli $650$
-~ To je približno $9 \cdot 9 \cdot 9$, kar velja za trimestne kode. Štirimestna doda še en faktor $9$.
+- okoli $730$
+~ To je $9 \cdot 9 \cdot 9 = 729$, kar velja za trimestne kode. Štirimestna doda še en faktor $9$.
 + okoli $6500$
-- okoli $65\,000$
-~ To bi veljalo za kode s petimi števkami. Pri štirih so štirje faktorji $9$.
+- okoli $60\,000$
+~ To bi veljalo za kode s petimi števkami ($9^5 = 59\,049$). Pri štirih so štirje faktorji $9$.
 > $9 \cdot 9 \cdot 9 \cdot 9 = 6561$, kar je približno $6500$.
 
 ? Tri deske v vrsti barvaš s $4$ barvami, sosednji deski morata biti različni. Zakaj je barvanj $4 \cdot 3 \cdot 3$ in ne $4 \cdot 3 \cdot 2$?

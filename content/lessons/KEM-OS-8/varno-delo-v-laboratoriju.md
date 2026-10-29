@@ -34,7 +34,7 @@ Iz te ene etikete že veš, kaj se lahko zgodi in kako se zaščitiš. Takim zna
 | lobanja s prekrižanima kostema | akutno strupeno | metanol | ne vdihuj, ne zaužij |
 | klicaj | zdravju škodljivo, dražilno | razredčen amonijak | ne vohaj, umij roke |
 | obris človeka z zvezdo na prsih | dolgoročno nevarno za zdravje | bencin | čim manj stika in hlapov |
-| suho drevo in mrtva riba | nevarno za okolje | motorno olje | nikoli v odtok |
+| suho drevo in mrtva riba | nevarno za okolje | modra galica (bakrov sulfat) | nikoli v odtok |
 
 Ena snov ima lahko več znakov. Bencin jih ima štiri: plamen, klicaj, obris človeka in drevo z ribo.
 
@@ -62,7 +62,7 @@ Na koncu si zapomni še, kje so gasilni aparat, prha za oči in izhod.
 :::premisli
 Pravilo 6 pravi »najprej voda, nato kislina«. Na koncu je v čaši enaka mešanica ne glede na vrstni red. Zakaj torej vrstni red ni vseeno?
 ---
-Ker se pri mešanju koncentrirane kisline z vodo sprosti veliko toplote. Če nekaj vode zliješ v kislino, se ta malo vode takoj segreje do vrenja in brizgne iz čaše, s seboj pa odnese kapljice kisline. Če kislino dolivaš v veliko vode, se toplota razporedi po vsej vodi in mešanica se le ogreje.
+Ker se pri mešanju koncentrirane kisline z vodo sprosti veliko toplote. Če malo vode zliješ v kislino, se ta voda takoj segreje do vrenja in brizgne iz čaše, s seboj pa odnese kapljice kisline. Če kislino dolivaš v veliko vode, se toplota razporedi po vsej vodi in mešanica se le ogreje.
 :::
 
 V simulaciji spodaj »Varnostni znaki v laboratoriju« klikaj po rombih in beri, kaj pomenijo. Nato v načinu »preizkusi se« poišči znake na embalaži bencina. Opazi, da pravilen odgovor zahteva več kot en znak.

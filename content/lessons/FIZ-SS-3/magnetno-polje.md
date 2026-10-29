@@ -29,7 +29,7 @@ Igla se zasuka na drugo stran. Smer polja je vezana na smer toka: obrnjen tok da
 
 - **Smer** $\vec B$ je smer, v katero kaže severni pol kompasove igle v tej točki.
 - **Velikost** $B$ pove, kako močno polje deluje na magnete in tokove. Natančno jo bomo vezali na silo v lekciji Magnetna sila.
-- **Enota** je **tesla**, $\mathrm{T}$. En tesla je zelo močno polje, zato pogosto pišemo $\mathrm{mT}$ (militesla) in $\mu\mathrm{T}$ (mikrotesla).
+- **Enota** je **tesla**, $\mathrm{T}$. Ena tesla je zelo močno polje, zato pogosto pišemo $\mathrm{mT}$ (militesla) in $\mu\mathrm{T}$ (mikrotesla).
 
 | Izvor | Približna gostota $B$ |
 |---|---|
@@ -180,11 +180,11 @@ $r = 0{,}04\,\mathrm{m} = 4\,\mathrm{cm}$. Bližje od $4\,\mathrm{cm}$ polje ži
 
 Pomlad 1820, Kopenhagen. Profesor Hans Christian Ørsted predava o elektriki. Na mizi ima baterijo, žico in, po naključju ali namenoma, kompas. Ko sklene krog, se igla kompasa zgane. Po izročilu nihče od poslušalcev ni bil posebej navdušen, Ørsted pa je mesece ponavljal poskus.
 
-Ugotovil je tri stvari. Igla se odziva le, ko teče tok. Obrne se, ko obrne tok. In ne kaže proti žici, ampak vstran, kot da jo nekaj vrti okoli žice.
+Ugotovil je tri stvari. Igla se odziva le, ko teče tok. Obrne se, ko se obrne tok. In ne kaže proti žici, ampak vstran, kot da jo nekaj vrti okoli žice.
 
 Novica je v nekaj tednih prišla do Pariza. André-Marie Ampère je pokazal, da se dve žici s tokom privlačita ali odbijata, in da je zvita žica, tuljava, kot magnet. Elektrika in magnetizem, dotlej dve ločeni poglavji, sta postala eno.
 
-Danes isto zgodbo ponovi vsaka blagajna: tuljava, gumb, sunek toka. Nalepka »izve« za polje, čeprav je nihče ne dotakne.
+Danes isto zgodbo ponovi vsaka blagajna: tuljava, gumb, sunek toka. Nalepka »izve« za polje, čeprav se je nihče ne dotakne.
 
 ## Drugače: Korak za korakom s številkami
 

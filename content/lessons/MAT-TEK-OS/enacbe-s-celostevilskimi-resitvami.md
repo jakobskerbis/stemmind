@@ -204,7 +204,7 @@ Zmnožek dveh celih števil je $4$: možnosti so $1 \cdot 4$, $2 \cdot 2$, $4 \c
 ~ Dodatnih $15$ € omogoči še eno menjavo $5$ avtobusnih za $3$ vlakovne vozovnice.
 + Poveča se za $1$.
 - Podvoji se.
-~ $46$ ni dvakrat $31$, in število rešitev raste z znesekom le počasi, za eno na vsakih $15$ €.
+~ $46$ ni dvakrat $31$, in število rešitev raste z zneskom le počasi, za eno na vsakih $15$ €.
 - Poveča se za $15$.
 ~ $15$ je znesek enega paketa, ne število novih rešitev. En paket prinese eno novo rešitev.
 > Rešitve so $(12, 2)$, $(7, 5)$, $(2, 8)$: tri namesto dveh.

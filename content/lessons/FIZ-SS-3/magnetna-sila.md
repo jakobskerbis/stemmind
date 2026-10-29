@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Metalec kladiva vleče žico ves čas proti sebi, s silo več tisoč newtonov. Kladivo pa se mu ne približa, ampak kroži vse hitreje okoli njega. Sila, ki kaže proti središču, ne vleče kladiva »noter«, ampak mu le ukrivlja pot.
+Metalec kladiva vleče žico ves čas proti sebi, s silo več tisoč newtonov. Kladivo pa se mu ne približa, ampak kroži okoli njega. Sila, ki kaže proti središču, ne vleče kladiva »noter«, ampak mu le ukrivlja pot.
 
 Magnet zna nekaj še bolj nenavadnega. Bakrene žice ne pritegne. Ko pa po žici steče tok, jo magnet potisne, in to ne proti sebi ali stran od sebe, ampak **vstran**, pravokotno na svoje polje. Elektron, ki prileti v magnetno polje, čuti silo, a se mu hitrost niti malo ne poveča. Le zavije.
 
@@ -36,7 +36,7 @@ $$F = I\, l\, B\, \sin\alpha$$
 :::premisli
 Žico v avtomobilčku obrnemo, da leži vzdolž silnic. Tok in polje ostaneta enaka. Kaj napoveš za silo in zakaj?
 ---
-Sila je nič. Pri $\alpha = 0^\circ$ je $\sin\alpha = 0$: magnetna sila deluje le na tisti del gibanja nabojev, ki je pravokoten na polje.
+Sila je nič. Pri $\alpha = 0^\circ$ je $\sin\alpha = 0$: šteje le del žice, ki je pravokoten na polje, takega dela pa ni.
 :::
 
 **3. Smer sile.** Sila je pravokotna na žico in na polje hkrati. Smer najdeš s **pravilom desne roke**: iztegnjeni prsti desne roke kažejo v smeri polja $\vec B$, palec v smeri toka, sila pa kaže iz dlani, kot bi z dlanjo potisnil.
@@ -203,13 +203,15 @@ neodvisen od hitrosti. Hitrejši delec opiše večji krog v enakem času. To izk
 ~ Pri $v = 0$ je $F = e v B \sin\alpha = 0$. Mirujočega naboja magnetno polje ne potiska.
 > $F = e v B \sin\alpha$ in sila je pravokotna na $\vec v$, zato ne opravlja dela: hitrost ostane enaka, spremeni se le smer.
 
-? Ista žica z istim tokom je v istem polju pod tremi koti glede na polje: $0^\circ$, $30^\circ$ in $90^\circ$. Razvrsti sile od najmanjše do največje.
-- Pri vseh treh kotih je sila enaka.
-~ Pozabil si na kot. Sila je $F = I l B \sin\alpha$.
-+ $0^\circ$, $30^\circ$, $90^\circ$
-- $90^\circ$, $30^\circ$, $0^\circ$
-~ Morda misliš, da je sila največja, ko žica leži vzdolž polja. Takrat je nič.
-> $\sin 0^\circ = 0$, $\sin 30^\circ = 0{,}5$, $\sin 90^\circ = 1$, zato $0 < 0{,}5\, I l B < I l B$.
+? Polje kaže od leve proti desni, tok v navpični žici pa teče navzdol. V katero smer kaže sila na žico?
+- V desno, v smeri polja.
+~ Magnetna sila ni vzdolž polja, ampak pravokotno nanj.
+- V zaslon, stran od tebe.
+~ Tako bi bilo pri toku navzgor. Ko se tok obrne, se obrne tudi sila.
+- Navzdol, v smeri toka.
+~ Sila je pravokotna tudi na žico; vzdolž žice je ne potiska.
++ Iz zaslona, proti tebi.
+> Prsti v desno (polje), palec navzdol (tok): dlan gleda proti tebi, zato sila kaže iz zaslona, pravokotno na polje in na žico.
 
 ? Proton kroži v magnetnem polju. Kaj se zgodi s polmerom kroga, če gostoto polja podvojimo, hitrost pa ostane enaka?
 - Podvoji se, ker močnejša sila delec potisne dlje.

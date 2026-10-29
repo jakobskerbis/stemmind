@@ -7,9 +7,9 @@ avtor: AI
 
 »S to pijačo boš skočila pet centimetrov višje,« je Niki rekla soigralka. Nika trenira odbojko in trener ji je naročil, da mora pri bloku skočiti višje. Pijača je draga: steklenica stane toliko kot polovica njene tedenske žepnine.
 
-Naslednji dan Nika pred treningom spije pijačo. Obuje tudi nove copate in se ogreva dvakrat dlje kot običajno. Ob steni skoči enkrat, in oznaka je res $4\,\text{cm}$ višje kot prejšnji teden. »Pijača deluje!«
+Naslednji dan Nika pred treningom spije pijačo. Obuje tudi nove copate in se ogreva dvakrat dlje kot običajno. Ob steni skoči enkrat in oznaka je res $4\,\text{cm}$ višje kot prejšnji teden. »Pijača deluje!«
 
-Ali naj Nika odslej kupuje pijačo? Še ne ve. Na podobna vprašanja odgovarjajo znanstveniki vsak dan: ali zdravilo pomaga, ali gnojilo poveča pridelek, ali vadba izboljša vzdržljivost. Odgovor dobijo z dobro načrtovanim poskusom. Kako se ga lotiti, je vsebina te teme.
+Ali naj Nika odslej kupuje pijačo? Še ne ve. Na podobna vprašanja odgovarjajo znanstveniki vsak dan: ali zdravilo pomaga, ali gnojilo poveča pridelek, ali vadba izboljša vzdržljivost. Odgovor dobijo z dobro načrtovanim poskusom. Kakšen bi moral biti Nikin?
 
 ## Razlaga
 
@@ -123,7 +123,7 @@ Odvisnost je linearna, če se pri enakih korakih neodvisne spremenljivke odvisna
 1. Izračunamo spremembe v vsaki minuti: $160 - 130 = 30$, $130 - 115 = 15$, $115 - 107 = 8$, $107 - 103 = 4$.
 2. Spremembe niso enake, ampak se manjšajo. Odvisnost je nelinearna: utrip pada najprej hitro, nato vedno počasneje.
 3. Sošolčeva napoved: $160 - 6 \cdot 30 = -20$. Negativnega utripa ni, zato napoved ne more biti pravilna.
-4. Odgovor: odvisnost je nelinearna. Sošolec je napako naredil, ker je nelinearno odvisnost obravnaval kot linearno; utrip se bo približal vrednosti v mirovanju.
+4. Odgovor: odvisnost je nelinearna. Sošolec se moti, ker je nelinearno odvisnost obravnaval kot linearno; utrip se bo približal vrednosti v mirovanju.
 
 ### Primer 4: zdaj ti
 
@@ -152,7 +152,7 @@ $15\,\text{g/min} \cdot 50\,\text{min} = 750\,\text{g}$, kar je približno tri �
 
 - **Več sprememb hkrati.** »Spremenim vse, kar bi lahko pomagalo, pa bo rezultat hitreje boljši.« Res je morda boljši, a ne veš, zakaj. Spreminjaj eno stvar, vse drugo naj ostane enako.
 - **Ena meritev zadošča.** Vsaka meritev malo niha. En sam rezultat je lahko naključje. Ponovi meritev večkrat in izračunaj povprečje.
-- **Zamenjava spremenljivk.** Neodvisna je tista, ki jo *ti* izbereš, odvisna tista, ki jo *izmeriš*. Na grafu gre neodvisna na vodoravno os. Če zamenjaš osi, graf bere drugače.
+- **Zamenjava spremenljivk.** Neodvisna je tista, ki jo *ti* izbereš, odvisna tista, ki jo *izmeriš*. Na grafu gre neodvisna na vodoravno os. Če osi zamenjaš, graf napačno pokaže, kaj je od česa odvisno.
 - **Vsaka odvisnost je linearna.** Če prva dva koraka prineseta enako spremembo, to še ne pomeni, da se bo tako nadaljevalo. Izračunaj spremembe na vseh korakih in preveri, ali so enake.
 - **»Poskus ni uspel, ker ni potrdil napovedi.«** Tudi rezultat »pijača ne pomaga« je odgovor na vprašanje. Poskus je neuspešen le, če je slabo načrtovan.
 

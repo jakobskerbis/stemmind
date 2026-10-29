@@ -50,9 +50,12 @@ Pomaga tudi zapis z mestnimi vrednostmi: celoten kriptogram postane ena enačba 
 
 **4. Zaporedja s stalno razliko.** Na planinski postaji izmerijo zjutraj prvega dne $12\,\mathrm{cm}$ snega, nato vsak dan zapade še $3\,\mathrm{cm}$ in nič se ne stali.
 
-| dan $n$ | $1$ | $2$ | $3$ | $4$ |
-|---|---|---|---|---|
-| sneg [cm] | $12$ | $15$ | $18$ | $21$ |
+| dan $n$ | sneg [cm] | dodajanj |
+|---|---|---|
+| $1$ | $12$ | $0$ |
+| $2$ | $15$ | $1$ |
+| $3$ | $18$ | $2$ |
+| $4$ | $21$ | $3$ |
 
 Do $n$-tega dne se je zgodilo $n - 1$ dodajanj po $3\,\mathrm{cm}$, zato je $n$-ti člen $12 + 3(n - 1)$. Pozor: dodajanj je $n - 1$, ne $n$, saj prvi dan še ni bilo nobenega.
 

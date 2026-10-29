@@ -18,7 +18,7 @@ Začnimo s poskusom, ki ga lahko narediš doma. V tri enake lončke nalijemo des
 :::premisli
 Napovej, preden pogledaš tabelo: ali bo slana voda zavrela pri isti temperaturi kot destilirana?
 ---
-Ne bo. Slana voda zavre pri malo višji temperaturi, in med vretjem se ji temperatura počasi zvišuje, ker vode zmanjkuje, soli pa ne. Destilirana voda vre ves čas pri isti temperaturi.
+Ne bo. Slana voda zavre pri malo višji temperaturi in med vretjem se ji temperatura počasi zvišuje, ker vode zmanjkuje, soli pa ne. Destilirana voda vre ves čas pri isti temperaturi.
 :::
 
 Tabela kaže, kaj opazimo pri normalnem zračnem tlaku:
@@ -27,11 +27,11 @@ Tabela kaže, kaj opazimo pri normalnem zračnem tlaku:
 |---|---|---|
 | destilirana voda | ves čas $100\,°\mathrm{C}$ | nič |
 | slana voda | malo nad $100\,°\mathrm{C}$, počasi narašča | bela sol |
-| mineralna voda | skoraj $100\,°\mathrm{C}$, rahlo narašča | tanka bela obloga |
+| mineralna voda | le za drobec nad $100\,°\mathrm{C}$ | tanka bela obloga |
 
 Podobno je pri taljenju. Led se tali pri $0\,°\mathrm{C}$ in temperatura ostane $0\,°\mathrm{C}$, dokler se ves ne stali. Maslo in čokolada pa se mehčata postopoma, v širšem razponu temperatur, in nimata enega samega tališča.
 
-**Vzorec.** Destilirana voda in led imata natanko določeno temperaturo vretja ali taljenja, ki se med spremembo ne spreminja. Slana voda, mineralna voda, maslo in čokolada je nimajo. Razlika je v tem, koliko snovi je v lončku.
+**Vzorec.** Destilirana voda in led imata natanko določeno temperaturo vretja ali taljenja, ki se med spremembo ne spreminja. Slana voda, mineralna voda, maslo in čokolada je nimajo. Razlika je v tem, koliko različnih snovi je v lončku.
 
 **Pravilo.** **Čista snov** je sestavljena iz ene same snovi. Ima stalne lastnosti: določeno **tališče** (temperaturo, pri kateri se tali), določeno **vrelišče** (temperaturo, pri kateri vre), gostoto, barvo. Primeri: destilirana voda, sladkor, baker. Čiste snovi so lahko **elementi** (iz ene vrste atomov, na primer baker) ali **spojine** (iz več vrst atomov, ki so trdno povezani, na primer voda in sladkor).
 
@@ -44,7 +44,7 @@ Zmesi delimo na dve vrsti:
 
 Lastnosti snovi, ki jih opazimo ali izmerimo, ne da bi snov spremenili v drugo snov, so na primer agregatno stanje, barva, vonj, tališče, vrelišče, gostota, topnost v vodi, magnetnost.
 
-V simulaciji spodaj »Čiste snovi in zmesi« vidiš snovi kot slike delcev. Razvrsti nekaj slik in opazi: pri čisti snovi so vsi delci enaki, pri zmesi sta vsaj dve vrsti različnih delcev.
+Simulacija »Čiste snovi in zmesi« spodaj nariše snovi kot slike delcev. Ko razvrščaš slike, opazi: pri čisti snovi so vsi delci enaki, pri zmesi sta vsaj dve vrsti različnih delcev.
 
 **Ločevanje zmesi.** Ker sestavine v zmesi ohranijo svoje lastnosti, jih lahko spet ločimo. Pravilo je eno samo: **izkoristimo lastnost, v kateri se sestavini razlikujeta.**
 
@@ -84,7 +84,7 @@ Ena snov → čista snov. Več snovi, povsod enako → homogena zmes. Več snovi
 
 1. Sladkor in destilirana voda sta vsak iz ene snovi, zato sta čisti snovi.
 2. Kis je voda z raztopljeno ocetno kislino. Povsod je enak, zato je homogena zmes (raztopina).
-3. V solatnem prelivu olje plava kot kapljice na kisu, vidiš dve plasti. To je heterogena zmes.
+3. V solatnem prelivu se olje in kis ne mešata: ko preliv postoji, vidiš dve plasti. To je heterogena zmes.
 4. V soku s koščki vidiš koščke sadja, zato je heterogena zmes.
 5. Odgovor: čisti snovi sta sladkor in destilirana voda; kis je homogena zmes; solatni preliv in sok s koščki sta heterogeni zmesi.
 
@@ -155,8 +155,8 @@ V eni plastenki: $300\,\mathrm{mg/L} \cdot 1{,}5\,\mathrm{L} = 450\,\mathrm{mg}$
 Večina napak pri tej temi izvira iz tega, da besedo »čist« uporabljamo v vsakdanjem govoru drugače kot v kemiji.
 
 - **»100-odstotni sok je čista snov.«** Napis pomeni, da proizvajalec ni dodal vode ali sladkorja. Sok je še vedno zmes vode, sladkorjev, kislin in barvil. Čista snov je samo tista iz ene same snovi.
-- **»Če je tekočina prozorna in enotna, je čista snov.«** Slana voda, kis in mineralna voda so prozorne, pa so homogene zmesi. Odloči meritev: ima snov stalno vrelišče in ali po izparevanju kaj ostane?
-- **»Sol se v vodi raztopi, torej je ni več.«** Voda je še vedno slana, in po izparevanju sol spet vidiš. Pri raztapljanju se masa ohrani.
+- **»Če je tekočina prozorna in enotna, je čista snov.«** Slana voda, kis in mineralna voda so prozorne, pa so homogene zmesi. Odloči meritev: ali ima snov stalno vrelišče in ali po izparevanju kaj ostane?
+- **»Sol se v vodi raztopi, torej je ni več.«** Voda je še vedno slana in po izparevanju sol spet vidiš. Pri raztapljanju se masa ohrani.
 - **»Sol iz vode odstraniš s filtrom.«** Raztopljeni delci gredo skozi filter. Filter loči le neraztopljene delce; za sol potrebuješ izparevanje ali destilacijo.
 - **»Slana voda vre pri $100\,°\mathrm{C}$ kot vsaka voda.«** Stalno vrelišče ima samo čista snov. Slana voda vre pri višji temperaturi, ki med vretjem še raste.
 
@@ -184,7 +184,7 @@ Zakaj je magnet prvi? Opilki se v vodi ne raztopijo, zato bi pri filtriranju ost
 
 Brodolomka Ana pristane na samotnem otoku. Okrog nje je cel ocean vode, pa vendar je žejna: morske vode ne sme piti, ker je v njej preveč soli.
 
-Najprej poskusi vodo precediti skozi majico. Voda je čista na pogled, okus pa je še vedno slan. Ana spozna, da je sol raztopljena in gre skozi tkanino tako kot voda.
+Najprej poskusi vodo precediti skozi majico. Voda je na pogled bistra, okus pa je še vedno slan. Ana spozna, da je sol raztopljena in gre skozi tkanino tako kot voda.
 
 Potem se spomni pouka kemije: voda in sol imata zelo različni vrelišči. V pesek izkoplje jamo, vanjo nalije morsko vodo, na sredino postavi lonček in jamo pokrije s plastično folijo, na katero položi kamen, da se folija upogne nad lončkom. Sonce greje vodo, voda izpareva, para pa se na hladnejši foliji utekočini in kaplja v lonček. Sol ostane v jami.
 

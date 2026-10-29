@@ -61,7 +61,7 @@ Temeljno: hoteli so razumeti, kako bakterija preživi. Koristilo je skoraj dvajs
 
 Takih zgodb je veliko. Uporabna znanost skoraj vedno stoji na odkritjih temeljne. Ko se odkritje zgodi, nihče ne ve, kje bo uporabno, in pot do izdelka traja leta.
 
-**Biologija in družba.** Biologija ponudi znanje, odločitve pa sprejme družba. Katera cepiva so obvezna, kaj smemo prinesti čez mejo, kako zaščitimo medveda: o tem odločajo zakoni, ki jih piše vlada na podlagi strokovnih mnenj. Zato je dobro, da biologijo razume vsak državljan, ne le znanstvenik.
+**Biologija in družba.** Biologija ponudi znanje, odločitve pa sprejme družba. Katera cepiva so obvezna, kaj smemo prinesti čez mejo, kako zaščitimo medveda: o tem odločajo zakoni in predpisi, ki jih na podlagi strokovnih mnenj sprejmeta državni zbor in vlada. Zato je dobro, da biologijo razume vsak državljan, ne le znanstvenik.
 
 V simulaciji spodaj »Kje uporabljamo biologijo« razvrsti primere na področja. Poskusi s primerom kvasovk pri peki kruha in opazi: isto znanje o mikroorganizmih srečaš v kuhinji, v bolnišnici in v čistilni napravi.
 
@@ -85,7 +85,7 @@ $\text{zadnji dan} = \text{dan prihoda} - 10\ \text{dni}$
 **Rešitev:**
 
 1. Od dneva prihoda odštejemo 10 dni, ker mora telo imeti čas, da izdela zaščito: $24 - 10 = 14$.
-2. Ostanemo v istem mesecu, zato mesca ni treba menjati.
+2. Ostanemo v istem mesecu, zato meseca ni treba menjati.
 3. Odgovor: Maja se mora cepiti najpozneje 14. julija.
 
 ### Primer 2: od odkritja do zdravila
