@@ -636,7 +636,7 @@ export const DODATNE_MAT_SS12 = [
           hint: "Oba intervala nariši na številsko premico in odčitaj zahtevano množico. Pazi, ali krajišča spadajo zraven.",
           data: { given: [`A = ${A}`, `B = ${B}`], find: [`\\text{število celih števil v } ${R[4]}`] },
           formula: ["[a, b] = \\{x;\\ a \\le x \\le b\\}", "(a, b) = \\{x;\\ a < x < b\\}"],
-          solution: [`$${R[4]} = ${ivTex(R[0], R[1], R[2], R[3])}$`, `Cela števila: $${ints.join(", ")}$`, `Teh je $${cnt}$.`],
+          solution: [`$${R[4]} = ${ivTex(R[0], R[1], R[2], R[3])}$`, ints.length ? `Cela števila: $${ints.join(", ")}$` : "V tej množici ni celih števil.", `Teh je $${cnt}$.`],
         });
       }
       const t = r.int(0, 2);
@@ -2268,7 +2268,7 @@ export const DODATNE_MAT_SS12 = [
         const im = (p - s) * b;
         return T({
           text: `Dano je število $z = ${zt(a, b)}$. Izračunaj ${askRe ? "realni" : "imaginarni"} del števila $w = ${E}$.`,
-          answer: num(askRe ? re : im, null, null, askRe ? [[(p - s) * a, "Konjugirano število ima enak realni del: \\bar{z} = a − bi."]] : [[(p + s) * b, "Konjugirano število ima nasproten imaginarni del: \\bar{z} = a − bi."], [(p - s) * b * -1, "Pazi na predznak imaginarnega dela."]]),
+          answer: num(askRe ? re : im, null, null, askRe ? [[(p - s) * a, "Konjugirano število ima enak realni del: $\\bar{z} = a - bi$."]] : [[(p + s) * b, "Konjugirano število ima nasproten imaginarni del: $\\bar{z} = a - bi$."], [(p - s) * b * -1, "Pazi na predznak imaginarnega dela."]]),
           hint: "Konjugirano število $\\bar{z}$ dobiš tako, da imaginarnemu delu spremeniš predznak.",
           data: { given: [`z = ${zt(a, b)}`, `w = ${E}`], find: [askRe ? "\\operatorname{Re}(w)" : "\\operatorname{Im}(w)"] },
           formula: "z = a + bi \\;\\Rightarrow\\; \\bar{z} = a - bi",
@@ -2697,7 +2697,7 @@ export const DODATNE_MAT_SS12 = [
       const cnt = Math.floor(hi) - lo + 1;
       return T({
         text: `Koliko celih števil reši neenačbo $${P} \\le 0$?`,
-        answer: num(cnt, null, null, [[Math.ceil(hi) - lo + 1, `Ničla ${tx(hi)} ni celo število – zaokroži navznoter.`], [cnt - 2, "Pri ≤ sta celoštevilski krajišči rešitvi."]]),
+        answer: num(cnt, null, null, [[Math.ceil(hi) - lo + 1, `Ničla ${tx(hi).replace("{,}", ",")} ni celo število – zaokroži navznoter.`], [cnt - 2, "Pri ≤ sta celoštevilski krajišči rešitvi."]]),
         hint: "Poišči ničli z obrazcem; parabola je odprta navzgor, zato so rešitve med ničlama.",
         data: { given: [`f(x) = ${P}`], find: ["\\text{število celih rešitev}"] },
         formula: "x_{1,2} = \\dfrac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
@@ -3055,7 +3055,7 @@ export const DODATNE_MAT_SS12 = [
         const who = r.pick(NAMES);
         return T({
           text: `${who} je ${g(who, "vložil", "vložila")} $${G0}\\ \\text{€}$ po $${tx(p)}\\ \\%$ letnih obrestih z obrestnim obrestovanjem. Po koliko letih bo na računu $${tx(G)}\\ \\text{€}$? Zaokroži na eno decimalko.`,
-          answer: num(tt, "let", 1, [[((f - 1) * 100) / p, "To bi veljalo pri navadnem obrestovanju; pri obrestnem obrestih rastejo tudi obresti."], [Math.log(f) / Math.log(p), `Osnova je obrestovalni faktor 1 + p/100 = ${tx(1 + p / 100).replace("{,}", ",")}.`]], { unitAlternatives: ["leta", "leti", "leto", "l"] }),
+          answer: num(tt, "let", 1, [[((f - 1) * 100) / p, "To bi veljalo pri navadnem obrestovanju; pri obrestnem obrestovanju se obrestujejo tudi obresti."], [Math.log(f) / Math.log(p), `Osnova je obrestovalni faktor 1 + p/100 = ${tx(1 + p / 100).replace("{,}", ",")}.`]], { unitAlternatives: ["leta", "leti", "leto", "l"] }),
           hint: "Zapiši $G = G_0 \\cdot r^n$ z $r = 1 + \\dfrac{p}{100}$ in enačbo logaritmiraj.",
           data: { given: [`G_0 = ${G0}\\ \\text{€}`, `p = ${tx(p)}\\ \\%`, `G = ${tx(G)}\\ \\text{€}`], find: ["n"] },
           formula: ["G = G_0 \\cdot \\left(1 + \\dfrac{p}{100}\\right)^n", "n = \\dfrac{\\log \\frac{G}{G_0}}{\\log \\left(1 + \\frac{p}{100}\\right)}"],

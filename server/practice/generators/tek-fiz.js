@@ -1414,7 +1414,7 @@ export const TEK_FIZ = [
       const k = c.x2 / c.x1, y2 = c.y1 * k ** c.e;
       return {
         text: c.text,
-        answer: withMistakes(num(y2, c.unit, c.d, c.unit === "let" ? { unitAlternatives: ["leta", "leti", "leto", "a"] } : {}), [[c.y1 * k, c.lin], [c.y1 * k ** -c.e, "Eksponent ima napačen predznak: preveri, ali količina z večjim vzrokom raste ali pada."], Math.abs(c.e) < 1 ? [c.y1 * k ** (2 * c.e), `Pozabil si na koren: eksponent je ${tx(c.e)}, ne ${tx(2 * c.e)}.`] : [NaN, ""]]),
+        answer: withMistakes(num(y2, c.unit, c.d, c.unit === "let" ? { unitAlternatives: ["leta", "leti", "leto", "a"] } : {}), [[c.y1 * k, c.lin], [c.y1 * k ** -c.e, "Eksponent ima napačen predznak: preveri, ali količina z večjim vzrokom raste ali pada."], Math.abs(c.e) < 1 ? [c.y1 * k ** (2 * c.e), `Pozabil si na koren: eksponent je $${tx(c.e)}$, ne $${tx(2 * c.e)}$.`] : [NaN, ""]]),
         hint: "Ostale količine so enake, zato se pri razmerju okrajšajo. Izračunaj razmerje vzrokov in ga potenciraj z eksponentom.",
         data: { given: c.given, find: [c.find] },
         formula: c.f,

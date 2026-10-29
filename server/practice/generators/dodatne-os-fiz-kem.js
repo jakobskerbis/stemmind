@@ -58,6 +58,8 @@ const EL20 = [
 const VAL = { H: 1, C: 4, N: 5, O: 6, S: 6, F: 7, Cl: 7, P: 5 };
 // Razporeditev elektronov po lupinah (šolski model 2, 8, 8, 2 do Z = 20).
 const shells = (Z) => [Math.min(Z, 2), Math.min(Math.max(Z - 2, 0), 8), Math.min(Math.max(Z - 10, 0), 8), Math.max(Z - 18, 0)].filter((x) => x > 0);
+// »ima 1 zunanji elektron / 2 zunanja elektrona / 3 zunanje elektrone / 5 zunanjih elektronov«
+const zunanji = (k) => `${k} ${k === 1 ? "zunanji elektron" : k === 2 ? "zunanja elektrona" : k <= 4 ? "zunanje elektrone" : "zunanjih elektronov"}`;
 // Sestava formule z oklepaji: parseFormula("Ca(OH)2") → { Ca: 1, O: 2, H: 2 }.
 function parseFormula(f) {
   const stack = [{}];
@@ -1754,7 +1756,7 @@ export const DODATNE_OS_FIZ_KEM = [
           { q: "Severni pol igle kompasa kaže proti geografskemu severu. Kakšen magnetni pol je torej blizu geografskega severnega pola?", ok: "južni magnetni pol", wrong: [["severni magnetni pol", "Severni pol igle privlači raznoimenski, torej južni pol."], ["tam ni magnetnega pola", "Zemlja deluje kot velik magnet; blizu geografskih polov sta magnetna pola."], ["oba pola hkrati", "Vsak pol magneta je na svojem koncu."]] },
           { q: "Zakaj kompas v bližini železne omare kaže napačno smer?", ok: "ker železo spremeni magnetno polje v okolici", wrong: [["ker omara oddaja elektriko", "Omara ni vir toka; vpliva kot feromagnetna snov."], ["ker se kompas pokvari", "Ko ga odmaknemo, spet kaže pravilno."], ["ker železo zakrije pogled na nebo", "Kompas ne potrebuje pogleda na nebo."]] },
           { q: "Kako bi izdelal preprost kompas?", ok: "namagneteno šivanko položiš na plutovinast ploščat zamašek, ki plava na vodi", wrong: [["bakreno žico položiš na vodo", "Baker ni magneten in se ne obrne proti severu."], ["navadno, nenamagneteno šivanko obesiš na nit", "Šivanko je treba najprej namagnetiti."], ["magnet prilepiš na mizo", "Igla se mora prosto vrteti."]] },
-          { q: "Kaj nas na Zemlji ščiti pred nabitimi delci s Sonca (Sončevim vetrom)?", ok: "Zemljino magnetno polje", wrong: [["Lunina gravitacija", "Luna nas pred Sončevim vetrom ne ščiti."], ["oblaki", "Oblaki ne odklanjajo nabitih delcev iz vesolja."], ["Zemljina vrtenje samo po sebi", "Ščiti nas magnetno polje, ki odklanja nabite delce."]] },
+          { q: "Kaj nas na Zemlji ščiti pred nabitimi delci s Sonca (Sončevim vetrom)?", ok: "Zemljino magnetno polje", wrong: [["Lunina gravitacija", "Luna nas pred Sončevim vetrom ne ščiti."], ["oblaki", "Oblaki ne odklanjajo nabitih delcev iz vesolja."], ["Zemljino vrtenje samo po sebi", "Ščiti nas magnetno polje, ki odklanja nabite delce."]] },
           { q: "Kaj je polarni sij?", ok: "svetlikanje ozračja, ko nabiti delci s Sonca ob polih zadenejo pline v ozračju", wrong: [["odboj Sončeve svetlobe od ledu", "Polarni sij nastane visoko v ozračju, ne na tleh."], ["svetloba iz notranjosti Zemlje", "Vir so nabiti delci s Sonca."], ["mavrica ob polih", "Mavrica nastane z lomom v kapljicah, polarni sij pa v ozračju zaradi delcev."]] },
         ]);
         return concept(r, {
@@ -2205,7 +2207,7 @@ export const DODATNE_OS_FIZ_KEM = [
       return concept(r, {
         q: `Kateri element ima enako število zunanjih elektronov kot ${EL20[Za - 1][1]} ($\\mathrm{${a}}$, $Z = ${Za}$) in ima zato podobne kemijske lastnosti?`,
         ok: `${EL20[Zb - 1][1]} (${b}, Z = ${Zb})`,
-        wrong: others.map((z) => [`${EL20[z - 1][1]} (${EL20[z - 1][0]}, Z = ${z})`, `Ta element ima ${shells(z).at(-1)} zunanjih elektronov, ${EL20[Za - 1][1]} pa ${v}.`]),
+        wrong: others.map((z) => [`${EL20[z - 1][1]} (${EL20[z - 1][0]}, Z = ${z})`, `Ta element ima ${zunanji(shells(z).at(-1))}, ${EL20[Za - 1][1]} pa ${v}.`]),
         hint: "Napiši razporeditev elektronov za vse elemente in primerjaj zunanje lupine.",
         given: [`Z(\\mathrm{${a}}) = ${Za}`],
         find: [T("element z enakim številom zunanjih elektronov")],

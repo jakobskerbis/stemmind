@@ -107,6 +107,12 @@ function renderUserText(text) {
 // ---------- pogledi ----------
 
 function showView(name) {
+  // Uvod profila: logotip ali tipka Nazaj ga zapreta (prej so ostali skriti vsi zavihki).
+  // Prvi profil na napravi mora nastati, zato takrat ostanemo na uvodu.
+  if (name !== "onboard" && document.body.classList.contains("onboarding")) {
+    if (!state.student) return;
+    document.body.classList.remove("onboarding");
+  }
   syncHistory(name);
   currentView = name;
   syncCompetitionTab();
@@ -162,7 +168,9 @@ const atTop = () => history.state?.stm !== 1;
 function syncHistory(name) {
   if (fromBack) return;
   if (name === "path") {
-    if (!atTop()) {
+    // Korak nazaj že čaka (history.back je asinhron, history.state se še ni spremenil):
+    // drugi klic bi šel čez prvi zapis aplikacije, npr. ob osvežitvi na podstrani na about:blank.
+    if (!atTop() && !skipPop) {
       skipPop++;
       overlayEntry = false;
       history.back();
@@ -182,7 +190,7 @@ function overlayOpened() {
 }
 // Okno zaprto z gumbom: odvečni zapis odstranimo, da ni treba dvakrat pritisniti Nazaj.
 function overlayClosed() {
-  if (overlayEntry && currentView === "path" && !atTop()) {
+  if (overlayEntry && currentView === "path" && !atTop() && !skipPop) {
     skipPop++;
     history.back();
   }
@@ -191,6 +199,8 @@ function overlayClosed() {
 window.addEventListener("popstate", () => {
   if (skipPop) {
     skipPop--;
+    // Medtem odprt drug pogled (npr. takoj po zagonu) dobi svoj zapis, da Nazaj ne zapre aplikacije.
+    if (!skipPop && currentView !== "path" && atTop()) history.pushState({ stm: 1, v: currentView }, "");
     return;
   }
   const wasOverlay = overlayEntry;
@@ -206,7 +216,10 @@ window.addEventListener("popstate", () => {
   }
   if (cornerBack()) return keep();
   if (wasOverlay && currentView === "path") return;
-  if (!$("#tour")?.hidden && $("#tour")) return keep();
+  if ($("#tour") && !$("#tour").hidden) {
+    startTour.end?.(); // Nazaj zapre vodič (kot Esc ali »Preskoči«)
+    return keep();
+  }
   if (currentView === "textbook" && textbookBack()) return keep();
   if (currentView === "games" && gamesBack()) return keep();
   const subMe = ME_VIEWS.includes(currentView) && !["me", "graph"].includes(currentView);
@@ -312,6 +325,7 @@ async function onboard(name = "") {
       </fieldset>
       <p class="form-error" hidden></p>
       <button class="primary big" type="submit">${t("common.start")}</button>
+      ${state.student ? `<button type="button" class="ghost" data-onb-cancel>${t("cards.cancel")}</button>` : ""}
     </form>`;
   const f = $("#onboard-form");
   mountLanguageCard(f.querySelector(".onb-lang"), { compact: true });
@@ -332,6 +346,11 @@ async function onboard(name = "") {
   document.body.classList.add("onboarding");
   return new Promise((resolve) => {
     let busy = false; // ob počasni povezavi večkratni pritisk ne sme ustvariti več učencev
+    // Dodajanje profila iz Nastavitev se da preklicati (brez tega ni bilo poti nazaj).
+    f.querySelector("[data-onb-cancel]")?.addEventListener("click", () => {
+      document.body.classList.remove("onboarding");
+      resolve(null);
+    });
     f.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (busy) return;
@@ -394,6 +413,7 @@ async function selectStudent(id) {
   state.pathKey = null;
   clearLevelCard();
   state.symbols?.refresh();
+  maybeTour.done = false; // vodič je za vsak profil posebej (settings.tour_version)
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
   refreshProfileButton();
   refreshXp();
@@ -497,11 +517,19 @@ async function openConversation(id) {
   box.scrollTop = box.scrollHeight;
 }
 
-$("#toggle-sidebar").addEventListener("click", () => $(".sidebar").classList.toggle("open"));
-$("#conversation-list").addEventListener("click", () => $(".sidebar").classList.remove("open"));
+// Telefon: seznam pogovorov se odpre čez klepet; gumb ostane viden in ga zapre (tudi Esc).
+const setSidebar = (open) => {
+  $(".sidebar").classList.toggle("open", open);
+  $("#toggle-sidebar").setAttribute("aria-expanded", String(open));
+};
+$("#toggle-sidebar").addEventListener("click", () => setSidebar(!$(".sidebar").classList.contains("open")));
+$("#conversation-list").addEventListener("click", () => setSidebar(false));
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && $(".sidebar").classList.contains("open")) setSidebar(false);
+});
 
 $("#new-chat").addEventListener("click", () => {
-  $(".sidebar").classList.remove("open");
+  setSidebar(false);
   state.conversationId = null;
   renderConversationList();
   renderEmptyChat();
@@ -1072,6 +1100,7 @@ function chooseUniversity() {
 $("#new-student-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const s = await onboard(e.target.name.value);
+  if (!s) return showView("settings");
   e.target.reset();
   await loadStudents(s.id);
   showView("path");
@@ -1770,7 +1799,7 @@ async function showSideExplanation(task, ctx) {
       tp.explanation ? renderRich(tp.explanation) : `<p class="muted">${t("topic.noExplanationShort")}</p>`
     }<button type="button" class="secondary small" id="side-lesson">${icon("book-open")}${t("topic.fullLesson")}</button>`;
     side.hidden = false;
-    $("#side-lesson").addEventListener("click", () => openLesson(t.id));
+    $("#side-lesson").addEventListener("click", () => openLesson(tp.id));
   } catch {
     side.hidden = true;
   }
@@ -2005,7 +2034,13 @@ function hintStepHtml(st, n, total) {
 }
 
 // Prepoznana tipična napaka (iz generatorja ali splošni vzorec: predznak, pretvorba enot …).
-const mistakeHtml = (m) => (m ? `<div class="fb info mistake">${icon("search")}<span>${escapeHtml(m.code ? fbText(m) : m.message)}</span></div>` : "");
+// Razlage generatorjev imajo pogosto formule ($\frac{1}{5}$): te izrišemo, preostalo besedilo ubežimo.
+const inlineMath = (s) =>
+  String(s ?? "")
+    .split(/(\$[^$\n]+\$)/)
+    .map((p) => (/^\$[^$\n]+\$$/.test(p) ? renderMath(p.slice(1, -1), false, false) : escapeHtml(p)))
+    .join("");
+const mistakeHtml = (m) => (m ? `<div class="fb info mistake">${icon("search")}<span>${m.code ? escapeHtml(fbText(m)) : inlineMath(m.message)}</span></div>` : "");
 
 // Rešitev z izpisanimi podatki iz besedila (Podatki / Iščemo) in formulo, skrito za gumbom.
 function workedBlock(task, solution, label = t("task.solution")) {
@@ -2492,6 +2527,7 @@ const visibleEl = (sel) => [...document.querySelectorAll(sel)].find((el) => el.g
 
 function startTour() {
   const box = $("#tour");
+  if (!box.hidden) return; // že odprt (npr. »Ponovi ogled« med ogledom)
   // Koraki, ki jih na tem zaslonu lahko pokažemo (števec »3 / 12« potem drži).
   const steps = TOUR.filter((s) => !s.sel || visibleEl(s.sel));
   let i = 0;
@@ -2525,6 +2561,7 @@ function startTour() {
   };
   const end = () => {
     box.hidden = true;
+    startTour.end = null;
     document.removeEventListener("keydown", onKey);
     try {
       localStorage.setItem(TOUR_KEY, "done");
@@ -2548,14 +2585,21 @@ function startTour() {
   box.querySelector('[data-tour="back"]').onclick = back;
   box.querySelector('[data-tour="skip"]').onclick = end;
   document.addEventListener("keydown", onKey);
+  startTour.end = end;
   box.hidden = false;
   show();
 }
 // Vsak profil vidi vodič enkrat, ob prvi uporabi (tudi star profil, ki je videl le kratek ogled).
 function maybeTour() {
   if ((state.student?.settings?.tour_version || 0) >= TOUR_VERSION) return;
-  // Vodič šele, ko je vprašalnik kotička zaprt.
-  Promise.resolve(state.interestsAsk).then(() => setTimeout(startTour, 400));
+  // Vodič šele, ko je vprašalnik kotička zaprt. Če je učenec medtem odprl drug pogled,
+  // vodič počaka na naslednjo vrnitev na Učno pot (sicer bi kazal na skrite elemente).
+  Promise.resolve(state.interestsAsk).then(() =>
+    setTimeout(() => {
+      if (currentView === "path" && (state.student?.settings?.tour_version || 0) < TOUR_VERSION) startTour();
+      else maybeTour.done = false;
+    }, 400),
+  );
 }
 $("#tour-again").addEventListener("click", () => {
   showView("path");

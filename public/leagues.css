@@ -47,9 +47,12 @@
 .zone-down .zone-mark { color: var(--danger); transform: rotate(-90deg); }
 
 .tier-row { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 14px; font-size: 0.85rem; color: var(--muted); }
-.tier-row > span { display: inline-flex; align-items: center; gap: 6px; opacity: 0.55; }
-.tier-row > span.done { opacity: 0.8; }
-.tier-row > span.cur { opacity: 1; color: var(--text); font-weight: 800; }
+/* Prihodnje lige so bledejše samo z znakom; ime ostane v --muted, da je berljivo (prej 2,4 : 1). */
+.tier-row > span { display: inline-flex; align-items: center; gap: 6px; }
+.tier-row > span > .tier-badge { opacity: 0.55; }
+.tier-row > span.done > .tier-badge { opacity: 0.8; }
+.tier-row > span.cur { color: var(--text); font-weight: 800; }
+.tier-row > span.cur > .tier-badge { opacity: 1; }
 
 .league-empty { display: flex; gap: 12px; align-items: center; background: var(--accent-soft); border-radius: var(--radius-sm); padding: 12px 14px; }
 .league-empty svg.i { color: var(--accent); width: 28px; height: 28px; flex: none; }

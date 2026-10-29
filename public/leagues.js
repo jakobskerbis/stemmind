@@ -12,16 +12,18 @@ const api = async (url, opts = {}) => {
     body: opts.body ? JSON.stringify(opts.body) : undefined,
   });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error || `Napaka ${res.status}`);
+  if (!res.ok) throw new Error(data.error || t("lg.error", { status: res.status }));
   return data;
 };
 
 // Barve lig (Bronasta … Diamantna) so v leagues.css kot .tier-0 … .tier-6.
 const tierBadge = (i, cls = "") => `<span class="tier-badge tier-${i} ${cls}">${icon(i >= 6 ? "trophy" : "award")}</span>`;
+// Imena lig (strežnik jih pošlje v slovenščini) iz prevodov; neznana stopnja ostane z imenom s strežnika.
+const tierName = (i, fallback) => (Number.isInteger(i) && i >= 0 && i <= 6 ? t(`lg.tier${i}`) : fallback);
 const OUTCOME = {
-  up: "Prejšnji teden si napredoval v višjo ligo. Bravo!",
-  down: "Prejšnji teden si izpadel v nižjo ligo. Ta teden gre lahko nazaj gor.",
-  stay: "Prejšnji teden si ostal v isti ligi.",
+  up: "lg.up",
+  down: "lg.down",
+  stay: "lg.stay",
 };
 
 let current = null; // id učenca
@@ -30,24 +32,24 @@ try {
   period = localStorage.getItem("kompreno.boardPeriod") === "month" ? "month" : "week";
 } catch {}
 
-// Značka zmage sama (izrez okoli prsi avatarja).
+// Značka zmage sama (izrez okoli prsi avatarja); klik odpre Zbirke (app.js, [data-zb]).
 const badgeSvg = (id, size = 34) => `<svg class="lg-badge" viewBox="48 64 32 32" width="${size}" height="${size}" aria-hidden="true">${DRAW.badge(id)}</svg>`;
-const badgeName = (id) => (itemOf(id) ? itemName(itemOf(id), currentLang?.() || "sl") : id);
+const badgeName = (id) => (itemOf(id) ? itemName(itemOf(id), currentLang()) : id);
 
 function timeLeft(iso) {
   const ms = new Date(iso) - Date.now();
   const d = Math.floor(ms / 86400000);
   const h = Math.floor((ms % 86400000) / 3600000);
-  return d > 0 ? `še ${d} d ${h} h` : `še ${h} h`;
+  return d > 0 ? t("lg.leftDays", { d, h }) : t("lg.leftHours", { h });
 }
 
 function boardHtml(rows, zones = false) {
-  if (!rows.length) return `<p class="muted">Še nihče.</p>`;
+  if (!rows.length) return `<p class="muted">${esc(t("lg.nobody"))}</p>`;
   return `<ol class="leaderboard league-board">${rows
     .map(
       (r) => `<li class="${r.me ? "me" : ""} ${zones ? `zone-${r.zone}` : ""}">
-        <span class="who"><span class="rank">${r.rank}</span>${avatarSvg(r.avatar, { size: 44 })}<span class="nick-name">${esc(r.nickname)}</span>${r.me ? ` <span class="you">ti</span>` : ""}</span>
-        <b>${r.xp} <span class="xp-unit">XP</span></b>${zones && r.zone !== "stay" ? `<span class="zone-mark" title="${r.zone === "up" ? "napreduje" : "izpade"}">${icon(r.zone === "up" ? "arrow-right" : "arrow-left")}</span>` : ""}</li>`,
+        <span class="who"><span class="rank">${r.rank}</span>${avatarSvg(r.avatar, { size: 44 })}<span class="nick-name">${esc(r.nickname)}</span>${r.me ? ` <span class="you">${esc(t("lg.you"))}</span>` : ""}</span>
+        <b>${r.xp} <span class="xp-unit">XP</span></b>${zones && r.zone !== "stay" ? `<span class="zone-mark" title="${esc(t(r.zone === "up" ? "lg.zoneUp" : "lg.zoneDown"))}">${icon(r.zone === "up" ? "arrow-right" : "arrow-left")}</span>` : ""}</li>`,
     )
     .join("")}</ol>`;
 }
@@ -58,12 +60,11 @@ const byPeriod = (rows) =>
 
 function monthCard(M) {
   if (!M) return "";
-  const me = M.me ? `<div class="lg-me-row">${boardHtml([M.me])}</div>` : "";
   return `<div class="card">
       <h2 class="h-icon">${icon("calendar-days")} ${esc(t("lg.month"))}</h2>
-      <p class="muted league-rule">${esc(t("lg.monthIntro", { n: M.awardMin }))} · ${icon("calendar")} ${esc(t("lg.ends"))} ${timeLeft(M.endsAt)}</p>
+      <p class="muted league-rule">${esc(t("lg.monthIntro", { n: M.awardMin }))} · ${icon("calendar")} ${esc(t("lg.ends", { time: timeLeft(M.endsAt) }))}</p>
       ${M.board.length ? boardHtml(M.board) : `<div class="league-empty">${icon("target")}<p>${esc(t("lg.monthEmpty"))}</p></div>`}
-      ${me}
+      ${M.me ? `<div class="lg-me-row">${boardHtml([M.me])}</div>` : ""}
     </div>`;
 }
 
@@ -80,9 +81,9 @@ export async function loadLeague(studentId) {
   if (current !== studentId) return;
   const L = data.league;
   const league = L.joined
-    ? `<p class="muted league-rule"><span class="dot up"></span>Najboljših ${L.promoteCount} napreduje${L.demoteCount ? ` · <span class="dot down"></span>zadnjih ${L.demoteCount} izpade` : ""} · ${icon("calendar")} konec ${timeLeft(L.endsAt)}</p>
+    ? `<p class="muted league-rule"><span class="dot up"></span>${esc(t("lg.promote", { count: L.promoteCount }))}${L.demoteCount ? ` · <span class="dot down"></span>${esc(t("lg.demote", { count: L.demoteCount }))}` : ""} · ${icon("calendar")} ${esc(t("lg.ends", { time: timeLeft(L.endsAt) }))}</p>
        ${boardHtml(L.board, true)}`
-    : `<div class="league-empty">${icon("target")}<p>Reši nalogo in zberi prve XP ta teden. Potem se uvrstiš v skupino do 30 učencev s podobnim znanjem.</p></div>`;
+    : `<div class="league-empty">${icon("target")}<p>${esc(t("lg.empty"))}</p></div>`;
   const award = L.lastWeek?.award;
   const wins = (L.awards || []).length
     ? `<div class="lg-wins"><span>${esc(t("lg.awards"))}</span>${L.awards.map((id) => `<button type="button" class="lg-win" data-zb="${esc(id)}" title="${esc(badgeName(id))}" aria-label="${esc(badgeName(id))}">${badgeSvg(id, 30)}</button>`).join("")}</div>`
@@ -92,19 +93,19 @@ export async function loadLeague(studentId) {
     <div class="card league-hero tier-${L.tier}">
       <div class="lg-hero-av">${avatarSvg(L.avatar, { size: 84, title: L.nickname })}${tierBadge(L.tier, "big lg-tier")}</div>
       <div>
-        <h2>${esc(L.tierName)} liga</h2>
-        <div class="nick">${icon("user")} <b>${esc(L.nickname)}</b> <button type="button" id="nick-change" class="ghost small">${icon("pencil")}<span>Zamenjaj</span></button></div>
-        ${L.lastWeek ? `<div class="last">${OUTCOME[L.lastWeek.outcome]} (${L.lastWeek.rank}. mesto)</div>` : ""}
+        <h2>${esc(t("lg.leagueName", { tier: tierName(L.tier, L.tierName) }))}</h2>
+        <div class="nick">${icon("user")} <b>${esc(L.nickname)}</b> <button type="button" id="nick-change" class="ghost small">${icon("pencil")}<span>${esc(t("lg.change"))}</span></button></div>
+        ${L.lastWeek ? `<div class="last">${esc(t(OUTCOME[L.lastWeek.outcome]))} (${esc(t("lg.place", { rank: L.lastWeek.rank }))})</div>` : ""}
         ${award ? `<button type="button" class="lg-award" data-zb="${esc(award)}">${badgeSvg(award, 36)}<span>${esc(t("lg.award", { name: badgeName(award) }))}</span>${icon("chevron-right")}</button>` : ""}
         ${wins}
       </div>
     </div>
     <div id="nick-picker" class="card" hidden></div>
     <div class="card">
-      <h2 class="h-icon">${icon("trophy")} Tedenska liga</h2>
+      <h2 class="h-icon">${icon("trophy")} ${esc(t("lg.weekly"))}</h2>
       ${league}
       <p class="muted small lg-win-rule">${icon("medal")} ${esc(t("lg.weekWin"))}</p>
-      <div class="tier-row">${L.tiers.map((t, i) => `<span class="${i === L.tier ? "cur" : i < L.tier ? "done" : ""}" title="${esc(t)}">${tierBadge(i)}<span>${esc(t)}</span></span>`).join("")}</div>
+      <div class="tier-row">${L.tiers.map((n, i) => `<span class="${i === L.tier ? "cur" : i < L.tier ? "done" : ""}" title="${esc(tierName(i, n))}">${tierBadge(i)}<span>${esc(tierName(i, n))}</span></span>`).join("")}</div>
     </div>
     ${monthCard(data.month)}
     ${data.classes.length ? `<div class="chip-row lg-period" role="group">${["week", "month"].map((k) => `<button type="button" class="${period === k ? "active" : ""}" data-period="${k}" aria-pressed="${period === k}">${esc(t(k === "week" ? "lg.thisWeek" : "lg.thisMonth"))}</button>`).join("")}</div>` : ""}
@@ -113,30 +114,29 @@ export async function loadLeague(studentId) {
         (c) => `<div class="card">
           <div class="group-head">
             <h2 class="h-icon">${icon(c.kind === "class" ? "graduation-cap" : "users")} ${esc(c.name)}</h2>
-            <span class="code-chip" title="${c.kind === "friends" ? "Deli kodo s prijatelji" : "Koda razreda"}">${esc(c.code)}</span>
+            <span class="code-chip" title="${esc(t(c.kind === "friends" ? "lg.shareCode" : "lg.classCode"))}">${esc(c.code)}</span>
           </div>
-          <p class="muted">${period === "week" ? "Lestvica tega tedna" : esc(t("lg.classMonth"))}${c.kind === "friends" ? ". Kodo deli s prijatelji." : ""}</p>
+          <p class="muted">${esc(t(period === "month" ? "lg.classMonth" : c.kind === "friends" ? "lg.boardFriends" : "lg.board"))}</p>
           ${boardHtml(byPeriod(c.board))}
-          <button type="button" class="ghost small" data-leave="${c.id}">${icon("x")}<span>Zapusti</span></button>
+          <button type="button" class="ghost small" data-leave="${c.id}">${icon("x")}<span>${esc(t("lg.leave"))}</span></button>
         </div>`,
       )
       .join("")}
     <div class="card form">
-      <h2 class="h-icon">${icon("users")} Razred ali prijatelji</h2>
-      <p class="muted">Vpiši kodo, ki ti jo je dal učitelj ali prijatelj. Drugi vidijo samo tvoj vzdevek.</p>
+      <h2 class="h-icon">${icon("users")} ${esc(t("lg.groups"))}</h2>
+      <p class="muted">${esc(t("lg.joinText"))}</p>
       <form id="join-form" class="row">
-        <input id="join-code" placeholder="npr. KXT-4P9" maxlength="9" autocomplete="off" autocapitalize="characters" required>
-        <button class="primary" type="submit">Pridruži se</button>
+        <input id="join-code" placeholder="${esc(t("lg.codePh"))}" aria-label="${esc(t("lg.classCode"))}" maxlength="9" autocomplete="off" autocapitalize="characters" required>
+        <button class="primary" type="submit">${esc(t("lg.join"))}</button>
       </form>
       <form id="friends-form" class="row">
-        <input id="friends-name" placeholder="Ime skupine prijateljev" maxlength="40">
-        <button type="submit" class="secondary">${icon("plus")}<span>Ustvari skupino</span></button>
+        <input id="friends-name" placeholder="${esc(t("lg.groupPh"))}" aria-label="${esc(t("lg.groupPh"))}" maxlength="40">
+        <button type="submit" class="secondary">${icon("plus")}<span>${esc(t("lg.create"))}</span></button>
       </form>
-      <p class="muted">Si učitelj? <a href="ucitelj.html" target="_blank">Ustvari razred in dobi kodo.</a></p>
+      <p class="muted">${esc(t("lg.teacher"))} <a href="ucitelj.html" target="_blank">${esc(t("lg.teacherLink"))}</a></p>
     </div>`;
 
   $("#nick-change").addEventListener("click", showNickPicker);
-  // [data-zb] odpre zbirke prek skupnega poslušalca v app.js (tu bi se odprlo dvakrat).
   root.querySelectorAll("[data-period]").forEach((b) =>
     b.addEventListener("click", () => {
       period = b.dataset.period;
@@ -150,7 +150,7 @@ export async function loadLeague(studentId) {
     e.preventDefault();
     try {
       const r = await api(`/api/students/${studentId}/classes`, { method: "POST", body: { code: $("#join-code").value } });
-      toast(r.already ? `Že si v skupini »${r.class.name}«.` : `Pridružil si se skupini »${r.class.name}«.`);
+      toast(t(r.already ? "lg.already" : "lg.joined", { name: r.class.name }));
       loadLeague(studentId);
     } catch (err) {
       toast(err.message);
@@ -160,7 +160,7 @@ export async function loadLeague(studentId) {
     e.preventDefault();
     try {
       const r = await api(`/api/students/${studentId}/friend-groups`, { method: "POST", body: { name: $("#friends-name").value } });
-      toast(`Skupina je ustvarjena. Koda za prijatelje: ${r.code}`);
+      toast(t("lg.created", { code: r.code }));
       loadLeague(studentId);
     } catch (err) {
       toast(err.message);
@@ -168,7 +168,7 @@ export async function loadLeague(studentId) {
   });
   root.querySelectorAll("[data-leave]").forEach((b) =>
     b.addEventListener("click", async () => {
-      if (!confirm("Res želiš zapustiti to skupino?")) return;
+      if (!confirm(t("lg.leaveConfirm"))) return;
       await api(`/api/students/${studentId}/classes/${b.dataset.leave}`, { method: "DELETE" });
       loadLeague(studentId);
     }),
@@ -179,10 +179,10 @@ async function showNickPicker() {
   const box = $("#nick-picker");
   const opts = await api(`/api/students/${current}/nickname-options`);
   box.hidden = false;
-  box.innerHTML = `<h2>Izberi vzdevek</h2>
-    <p class="muted">Zaradi varnosti vzdevka ne moreš vpisati sam, zato drugi nikoli ne vidijo tvojega imena.</p>
+  box.innerHTML = `<h2>${esc(t("lg.pickNick"))}</h2>
+    <p class="muted">${esc(t("lg.nickWhy"))}</p>
     <div class="nick-list">${opts.map((o) => `<button type="button" class="secondary small" data-nick="${esc(o)}">${esc(o)}</button>`).join("")}</div>
-    <button type="button" id="nick-more" class="ghost small">${icon("refresh-cw")}<span>Drugi predlogi</span></button>`;
+    <button type="button" id="nick-more" class="ghost small">${icon("refresh-cw")}<span>${esc(t("lg.moreNicks"))}</span></button>`;
   box.querySelectorAll("[data-nick]").forEach((b) =>
     b.addEventListener("click", async () => {
       await api(`/api/students/${current}/nickname`, { method: "PUT", body: { nickname: b.dataset.nick } });
@@ -193,10 +193,10 @@ async function showNickPicker() {
 }
 
 function toast(msg) {
-  const t = $("#toast");
-  if (!t) return alert(msg);
-  t.textContent = msg;
-  t.hidden = false;
+  const el = $("#toast");
+  if (!el) return alert(msg);
+  el.textContent = msg;
+  el.hidden = false;
   clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => (t.hidden = true), 4000);
+  toast.timer = setTimeout(() => (el.hidden = true), 4000);
 }

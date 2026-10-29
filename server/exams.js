@@ -20,7 +20,7 @@ export function taskLanguage(code) {
 
 export const isExamPath = (key) => {
   const m = /^(MAT|FIZ|KEM|BIO)-EX-([A-Z0-9]+)$/.exec(String(key || ""));
-  return !!(m && EXAMS[m[2]]?.subjects[m[1]] && getPath(key));
+  return !!(m && Object.hasOwn(EXAMS, m[2]) && EXAMS[m[2]].subjects[m[1]] && getPath(key));
 };
 export const examOf = (key) => (isExamPath(key) ? String(key).split("-")[2] : null);
 
@@ -51,7 +51,7 @@ export function examKeyFor(settings, examId = null) {
   const fits = (x) =>
     level && EXAMS[x].forLevel && level >= EXAMS[x].forLevel[0] && level <= EXAMS[x].forLevel[1] && (!EXAMS[x].track || EXAMS[x].track === settings.educational_track);
   const forGrade = own.filter(fits).sort((a, b) => !!EXAMS[b].board - !!EXAMS[a].board);
-  const id = EXAMS[examId] ? examId : forGrade[0] || own[0] || "SAT"; // brez domačih izpitov: SAT (mednarodno najbolj razširjen)
+  const id = examId && Object.hasOwn(EXAMS, examId) ? examId : forGrade[0] || own[0] || "SAT"; // brez domačih izpitov: SAT (mednarodno najbolj razširjen)
   if (!id) return null;
   const subjects = Object.keys(EXAMS[id].subjects);
   const subject = subjects.includes(settings.subject) ? settings.subject : subjects[0];

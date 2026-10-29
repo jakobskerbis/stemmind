@@ -11,7 +11,7 @@ error, not just "wrong" (Hattie & Timperley, ASSISTments misconception feedback)
 (Chi), predict–observe–explain for sims (White & Gunstone, PhET design), multiple representations,
 dual coding, concreteness fading. No "learning styles".
 
-Each item is a check. "MUST" items are tested by a script where noted; reviewers check the rest.
+Each item is a check. Every change is reviewed three times against this bar (`docs/pregled.md`). "MUST" items are tested by a script where noted; reviewers check the rest.
 
 ## 1. Lessons (`content/lessons/**`, format in `content/lessons/README.md`)
 
