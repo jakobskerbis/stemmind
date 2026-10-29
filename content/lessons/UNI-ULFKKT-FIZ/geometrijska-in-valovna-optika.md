@@ -20,6 +20,12 @@ $$n = \frac{c_0}{c} \ge 1.$$
 
 Za zrak je $n \approx 1{,}00$, za vodo $1{,}33$, za navadno steklo okoli $1{,}5$. Pri prehodu v drugo snov se frekvenca ne spremeni, valovna dolžina pa je v snovi $\lambda = \lambda_0/n$.
 
+:::premisli
+Rdeča svetloba z valovno dolžino $650\,\mathrm{nm}$ preide iz zraka v vodo. Ali je v vodi še vedno rdeča?
+---
+Da. Barvo določa frekvenca, ta pa se pri prehodu ne spremeni. Valovna dolžina se v vodi sicer skrajša na $650/1{,}33 \approx 489\,\mathrm{nm}$, a to ni »modra« svetloba, saj ima nespremenjeno frekvenco rdeče.
+:::
+
 **2. Odbojni in lomni zakon.** Kote merimo od **vpadne pravokotnice** (normale na mejno ploskev). Pri odboju je odbojni kot enak vpadnemu. Pri lomu velja **lomni zakon** (Snellov zakon):
 
 $$n_1\sin\alpha = n_2\sin\beta.$$
@@ -60,6 +66,12 @@ Na zaslonu na razdalji $L \gg d$ so proge enakomerno razmaknjene za $\Delta y = 
 
 **10. Uklon.** Valovanje se za oviro ali odprtino ukloni, torej zaide tudi v geometrijsko senco. Pri reži s širino $D$ so temne proge pri $D\sin\theta = m\lambda$ ($m = \pm1, \pm2, \dots$); osrednja svetla proga ima kotno polširino $\sin\theta \approx \lambda/D$. Pri okrogli odprtini s premerom $D$ je prvi temni kolobar pri $\sin\theta \approx 1{,}22\,\lambda/D$. Ta kot je **mejna ločljivost**: dveh točk, ki ju vidimo pod manjšim kotom, z napravo ne moremo ločiti.
 
+:::premisli
+Ali loči mikroskop drobnejše podrobnosti z modro ali z rdečo svetlobo? Zakaj?
+---
+Z modro. Mejni kot je sorazmeren z $\lambda/D$, zato krajša valovna dolžina pomeni manjši mejni kot in ločitev bližjih točk. Iz istega razloga elektronski mikroskop z mnogo krajšo valovno dolžino loči še veliko drobnejše podrobnosti.
+:::
+
 ## Rešeni primeri
 
 ### Primer 1 (lažji)
@@ -75,9 +87,9 @@ $n_1\sin\alpha = n_2\sin\beta$, $\sin\alpha_m = n_\mathrm{zrak}/n_\mathrm{voda}$
 
 **Rešitev:**
 
-1. $\sin\beta = 1{,}00 \cdot \sin 40^\circ/1{,}33 = 0{,}643/1{,}33 \approx 0{,}483$.
+1. Iz lomnega zakona: $\sin\beta = 1{,}00 \cdot \sin 40^\circ/1{,}33 = 0{,}643/1{,}33 \approx 0{,}483$.
 2. $\beta = \arcsin 0{,}483 \approx 28{,}9^\circ$. Kot je manjši od vpadnega, ker se žarek lomi k pravokotnici.
-3. Mejni kot: $\sin\alpha_m = 1{,}00/1{,}33 \approx 0{,}752$, torej $\alpha_m \approx 48{,}8^\circ$.
+3. Mejni kot: $\sin\alpha_m = 1{,}00/1{,}33 \approx 0{,}752$, torej $\alpha_m \approx 48{,}8^\circ$; pri tem vpadnem kotu je lomni kot $90^\circ$, $\sin 90^\circ = 1$.
 4. Odgovor: žarek se v vodi lomi pod kotom približno $28{,}9^\circ$; pri prehodu iz vode v zrak pride do totalnega odboja pri vpadnih kotih nad približno $48{,}8^\circ$.
 
 ### Primer 2
@@ -93,9 +105,9 @@ $\dfrac{1}{a} + \dfrac{1}{b} = \dfrac{1}{f}$, $M = -\dfrac{b}{a}$, $y' = My$
 
 **Rešitev:**
 
-1. Prva lega: $1/b = 1/10 - 1/15 = 1/30\,\mathrm{cm^{-1}}$, torej $b = 30\,\mathrm{cm}$.
-2. $M = -30/15 = -2{,}0$, $y' = -2{,}0 \cdot 2{,}0\,\mathrm{cm} = -4{,}0\,\mathrm{cm}$. Slika je realna, obrnjena in dvakrat povečana.
-3. Druga lega: $1/b = 1/10 - 1/6{,}0 = -1/15\,\mathrm{cm^{-1}}$, torej $b = -15\,\mathrm{cm}$.
+1. Prva lega, iz enačbe leče: $1/b = 1/10 - 1/15 = 1/30\,\mathrm{cm^{-1}}$, torej $b = 30\,\mathrm{cm}$; slika je za lečo, ker je predmet dlje od gorišča.
+2. $M = -30/15 = -2{,}0$, $y' = -2{,}0 \cdot 2{,}0\,\mathrm{cm} = -4{,}0\,\mathrm{cm}$. Slika je realna, obrnjena (negativna povečava) in dvakrat povečana.
+3. Druga lega: $1/b = 1/10 - 1/6{,}0 = -1/15\,\mathrm{cm^{-1}}$, torej $b = -15\,\mathrm{cm}$; $b$ je negativen, ker je predmet znotraj goriščne razdalje.
 4. $M = -(-15)/6{,}0 = 2{,}5$, $y' = 5{,}0\,\mathrm{cm}$. Slika je navidezna, pokončna, $2{,}5$-krat povečana in leži $15\,\mathrm{cm}$ pred lečo, na strani predmeta. Tako deluje lupa.
 5. Odgovor: v prvem primeru nastane realna obrnjena slika $30\,\mathrm{cm}$ za lečo, visoka $4{,}0\,\mathrm{cm}$; v drugem navidezna pokončna slika $15\,\mathrm{cm}$ pred lečo, visoka $5{,}0\,\mathrm{cm}$.
 
@@ -112,12 +124,35 @@ $d\sin\theta_m = m\lambda$, $y_m = L\tan\theta_m$, $m_{\max} \le d/\lambda$
 
 **Rešitev:**
 
-1. Konstanta mrežice: $d = 1\,\mathrm{mm}/600 \approx 1{,}667 \cdot 10^{-6}\,\mathrm{m}$.
+1. Konstanta mrežice: $d = 1\,\mathrm{mm}/600 \approx 1{,}667 \cdot 10^{-6}\,\mathrm{m}$, ker je na milimetru $600$ enako razmaknjenih rež.
 2. Prvi red: $\sin\theta_1 = 5{,}32 \cdot 10^{-7}/1{,}667 \cdot 10^{-6} = 0{,}319$, $\theta_1 \approx 18{,}6^\circ$.
-3. Drugi red: $\sin\theta_2 = 0{,}638$, $\theta_2 \approx 39{,}7^\circ$.
+3. Drugi red: $\sin\theta_2 = 0{,}638$, $\theta_2 \approx 39{,}7^\circ$; sinus je dvakrat večji, ker je $m = 2$, kot sam pa ni dvakrat večji.
 4. Odmika: $y_1 = 1{,}00\,\mathrm{m} \cdot \tan 18{,}6^\circ \approx 0{,}337\,\mathrm{m}$, $y_2 = 1{,}00\,\mathrm{m} \cdot \tan 39{,}7^\circ \approx 0{,}829\,\mathrm{m}$. Ker kot ni majhen, približka $y = m\lambda L/d$ tu ne smemo uporabiti.
 5. Največji red: $d/\lambda = 1{,}667 \cdot 10^{-6}/5{,}32 \cdot 10^{-7} \approx 3{,}13$, torej $m_{\max} = 3$ (kot $\theta_3 \approx 73{,}3^\circ$).
 6. Odgovor: ojačitvi prvega in drugega reda sta pod kotoma približno $18{,}6^\circ$ in $39{,}7^\circ$, na zaslonu $33{,}7\,\mathrm{cm}$ in $82{,}9\,\mathrm{cm}$ od osrednje pege; na vsako stran opazimo največ tri rede (na dovolj velikem zaslonu).
+
+### Primer 4 – zdaj ti
+
+Zenica očesa ima pri dnevni svetlobi premer $3{,}0\,\mathrm{mm}$. Oko je najbolj občutljivo za svetlobo z valovno dolžino $550\,\mathrm{nm}$. Kolikšna je uklonska mejna ločljivost očesa in s kolikšne največje razdalje še ločimo dve točki, ki sta $1{,}0\,\mathrm{mm}$ narazen?
+
+**Podatki:** $D = 3{,}0\,\mathrm{mm} = 3{,}0 \cdot 10^{-3}\,\mathrm{m}$, $\lambda = 550\,\mathrm{nm} = 5{,}50 \cdot 10^{-7}\,\mathrm{m}$, razmik točk $s = 1{,}0\,\mathrm{mm} = 1{,}0 \cdot 10^{-3}\,\mathrm{m}$
+**Iščemo:** mejni kot $\theta$, največjo razdaljo $L$
+
+:::formula
+$\sin\theta \approx 1{,}22\,\lambda/D$, pri majhnih kotih $s \approx L\theta$
+:::
+
+**Rešitev:**
+
+1. Mejni kot: $\theta \approx 1{,}22 \cdot 5{,}50 \cdot 10^{-7}/3{,}0 \cdot 10^{-3} \approx 2{,}24 \cdot 10^{-4}\,\mathrm{rad}$, ker uklon na okrogli odprtini zenice razmaže vsako točko v kolobarček.
+2. Kot je tako majhen, da je $\sin\theta \approx \tan\theta \approx \theta$ v radianih, zato velja $s \approx L\theta$.
+3. Izračunaj sam največjo razdaljo $L$.
+
+:::premisli
+S kolikšne razdalje še ločiš točki, ki sta $1{,}0\,\mathrm{mm}$ narazen?
+---
+$L = s/\theta = 1{,}0 \cdot 10^{-3}/2{,}24 \cdot 10^{-4}\,\mathrm{m} \approx 4{,}5\,\mathrm{m}$. Z večje razdalje se kolobarčka točk prekrivata in vidimo eno samo točko. V resnici je oko zaradi napak leče in gostote čepkov nekoliko slabše.
+:::
 
 ## Pogoste napake
 
@@ -197,24 +232,40 @@ Pri mrežici z $N$ režami je jakost $j \propto \sin^2(N\delta/2)/\sin^2(\delta/
 
 ? Kolikšen je mejni kot za totalni odboj pri prehodu svetlobe iz stekla z lomnim količnikom $1{,}50$ v zrak?
 - $48{,}6^\circ$
+~ To je $\arcsin 0{,}75$, mejni kot za vodo z $n \approx 1{,}33$; vzel si lomni količnik vode namesto stekla.
 + $41{,}8^\circ$
 - $56{,}3^\circ$
+~ To je $\arctan 1{,}50$; pri mejnem kotu velja $\sin\alpha_m = n_2/n_1$, ne tangens.
 > $\sin\alpha_m = 1{,}00/1{,}50 = 0{,}667$, torej $\alpha_m \approx 41{,}8^\circ$.
 
 ? Predmet je $40\,\mathrm{cm}$ pred zbiralno lečo z goriščno razdaljo $20\,\mathrm{cm}$. Kakšna je slika?
 + Realna, obrnjena, enako velika, $40\,\mathrm{cm}$ za lečo.
 - Navidezna, pokončna, dvakrat povečana, $20\,\mathrm{cm}$ pred lečo.
+~ Navidezna slika nastane le, ko je predmet znotraj goriščne razdalje ($a < f$); tu je $a = 2f$.
 - Realna, obrnjena, dvakrat pomanjšana, $20\,\mathrm{cm}$ za lečo.
+~ Misliš, da slika nastane v gorišču; tam nastane le slika zelo oddaljenega predmeta. Enačba leče da $b = 40\,\mathrm{cm}$.
 > $1/b = 1/20 - 1/40 = 1/40$, torej $b = 40\,\mathrm{cm}$ in $M = -40/40 = -1$.
 
 ? Pri poskusu z dvema režama razdaljo med režama podvojimo. Kaj se zgodi z razmikom med svetlimi progami na zaslonu?
 - Podvoji se.
+~ Zamenjal si sorazmernost: pri večjem razmiku rež je ista razlika poti $\lambda$ dosežena že pri manjšem kotu, zato so proge bliže.
 - Ostane enak.
+~ Razlika poti $d\sin\theta$ je odvisna od razmika rež, zato se spremenijo tudi koti ojačitev.
 + Razpolovi se.
 > $\Delta y = \lambda L/d$ je obratno sorazmeren z $d$.
 
 ? Kolikšna je lomnost zbiralne leče z goriščno razdaljo $25\,\mathrm{cm}$?
 - $0{,}04\,\mathrm{dpt}$
+~ To je $1/25$ s centimetri; dioptrija je $\mathrm{m^{-1}}$, zato mora biti $f$ v metrih.
 - $25\,\mathrm{dpt}$
+~ Lomnost ni goriščna razdalja, temveč njena obratna vrednost v metrih.
 + $4\,\mathrm{dpt}$
 > Lomnost je $1/f$ z $f$ v metrih: $1/0{,}25\,\mathrm{m} = 4\,\mathrm{m^{-1}} = 4\,\mathrm{dpt}$.
+
+? Pri katerem prehodu svetlobe je mogoč totalni odboj?
+- Iz zraka v steklo
+~ Pri prehodu v optično gostejšo snov se žarek lomi k pravokotnici, zato je lomni kot vedno manjši od $90^\circ$ in lomljeni žarek vedno obstaja.
++ Iz vode v zrak
+- Pri vsakem prehodu, če je vpadni kot dovolj velik
+~ Misliš, da dovolj velik vpadni kot vedno zadošča; mejni kot obstaja le, če je $n_2/n_1 < 1$; pri prehodu v gostejšo snov enačba $\sin\alpha_m = n_2/n_1$ nima rešitve.
+> Totalni odboj je mogoč le pri prehodu iz optično gostejše v redkejšo snov, tu pri vpadnih kotih nad $48{,}8^\circ$.
