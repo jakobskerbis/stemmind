@@ -1,4 +1,4 @@
-# Objava Evklid na spletu (Render)
+# Objava Evklida na spletu (Render)
 
 Aplikacija je pripravljena za Render. Datoteka `render.yaml` vse nastavi sama: strežnik v Frankfurtu, Node 22 in trajni disk za bazo učencev (podatki ostanejo ob vsaki posodobitvi).
 

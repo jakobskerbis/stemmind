@@ -1,4 +1,4 @@
-// Samodejna posodobitev Evklid z GitHuba (veja main), brez git in brez dodatnih orodij.
+// Samodejna posodobitev Evklida z GitHuba (veja main), brez git in brez dodatnih orodij.
 // - preveri zadnjo različico (GitHub API), prenese samo, ko je novejša (tar.gz, razpakira Node),
 // - prepiše samo spremenjene datoteke in pobriše tiste, ki jih v main ni več,
 // - .env, data/, node_modules/ in .git/ ostanejo nedotaknjeni,
@@ -229,7 +229,7 @@ async function updateTarball(root, say) {
   const state = readState(root);
   const sha = await latestSha();
   if (sha === state.sha || (state.slabe || []).includes(sha)) return { changed: false, sha: state.sha };
-  say("Prenašam novo različico Evklid ...");
+  say("Prenašam novo različico Evklida ...");
   const files = filesFromTarball(await download(sha));
   if (!files.has("package.json") || !files.has("server/index.js")) throw new Error("prenesena različica ni popolna");
   const plan = planChanges(root, files, state.datoteke || []);

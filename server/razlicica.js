@@ -1,4 +1,4 @@
-// Katera različica Evklid teče (za samodejno osvežitev odprtih strani po posodobitvi).
+// Katera različica Evklida teče (za samodejno osvežitev odprtih strani po posodobitvi).
 // Render: RENDER_GIT_COMMIT; računalnik: data/posodobitev.json (scripts/posodobitev.js) ali .git.
 import "./env.js";
 import fs from "node:fs";

@@ -77,7 +77,7 @@ async function ensureServer() {
   const s = await serverStatus(port);
   if (s === 401) return false; // že teče z geslom (v drugem oknu)
   if (s) {
-    say("Evklid že teče brez gesla. Zapri drugo okno Evklid in znova zaženi to datoteko.");
+    say("Evklid že teče brez gesla. Zapri drugo okno Evklida in znova zaženi to datoteko.");
     return stopAll(1);
   }
   log = openLog(root);

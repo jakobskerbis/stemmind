@@ -788,7 +788,7 @@
   "inst.inApp": "Ez az oldal egy másik alkalmazásban van megnyitva. Nyisd meg a böngészőben (⋯ vagy ⋮ menü → „Megnyitás böngészőben”), és ott add hozzá a kezdőképernyőhöz.",
   "inst.and1": "Koppints a böngésző ⋮ menüjére (három pont jobbra fent).",
   "inst.and2": "Válaszd az „Alkalmazás telepítése” vagy a „Hozzáadás a kezdőképernyőhöz” lehetőséget, és erősítsd meg.",
-  "inst.desk1": "A böngésző menüjében válaszd a „Evklid telepítése” lehetőséget (Safariban: Fájl → Hozzáadás a Dockhoz).",
+  "inst.desk1": "A böngésző menüjében válaszd az „Evklid telepítése” lehetőséget (Safariban: Fájl → Hozzáadás a Dockhoz).",
   "inst.done": "Az Evklid telepítve. A kezdőképernyőn találod.",
   "inst.desc": "Korrepetálás matematikából, fizikából és kémiából",
   "sc.tool.prob": "Valószínűség",
