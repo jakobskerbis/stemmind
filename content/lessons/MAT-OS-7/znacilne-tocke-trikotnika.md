@@ -121,7 +121,7 @@ Pri pravokotnem trikotniku je $V$ v oglišču pravega kota, $O$ na razpolovišč
 - **Zamenjava višine in težiščnice.** Obe potegnemo iz oglišča na nasprotno stranico, zato sta si na skici podobni. Pravilno: višina je na stranico **pravokotna**, težiščnica pa gre do **sredine** stranice. Sovpadata le v enakokrakem trikotniku (za osnovnico) in v enakostraničnem trikotniku.
 - **Zamenjava simetrale stranice in simetrale kota.** Obe sta »simetrali«, zato ju učenci pogosto pomešajo. Pravilno: simetrale **stranic** dajo središče **očrtane** krožnice (enaka razdalja do oglišč), simetrale **kotov** pa središče **včrtane** krožnice (enaka razdalja do stranic). Pomni: stranice – očrtana, koti – včrtana.
 - **Napačen polmer včrtane krožnice.** Nekateri šestilo nastavijo od $S$ do oglišča, ker se jim zdi, da mora krožnica »doseči« oglišča. Takšna krožnica gre čez stranice. Pravilno: iz $S$ nariši pravokotnico na stranico; razdalja od $S$ do vznožja pravokotnice je polmer $r$.
-- **Težišče na polovici težiščnice.** Ker težiščnica gre do sredine stranice, se zdi, da je tudi težišče »na sredini«. Pravilno: od oglišča do težišča sta **dve tretjini** težiščnice. Pri $t_a = 9\,\text{cm}$ je $|AT| = 6\,\text{cm}$, ne $4{,}5\,\text{cm}$.
+- **Težišče na polovici težiščnice.** Ker gre težiščnica do sredine stranice, se zdi, da je tudi težišče »na sredini«. Pravilno: od oglišča do težišča sta **dve tretjini** težiščnice. Pri $t_a = 9\,\text{cm}$ je $|AT| = 6\,\text{cm}$, ne $4{,}5\,\text{cm}$.
 - **Višine pri topokotnem trikotniku »ne obstajajo«.** Ko višina ne pade na stranico, jo učenci izpustijo. Pravilno: stranico podaljšaj in nanjo nariši pravokotnico iz oglišča. Za višinsko točko podaljšaj tudi višine; sekajo se zunaj trikotnika.
 
 ## Povzetek

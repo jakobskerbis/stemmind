@@ -25,7 +25,7 @@ $$\log_a 1 = 0, \qquad \log_a a = 1, \qquad \log_a a^x = x, \qquad a^{\log_a b} 
 
 Zadnji dve zvezi povesta, da potenciranje z osnovo $a$ in logaritmiranje z osnovo $a$ »izničita« drugo drugo.
 
-**4. Posebni osnovi.** Logaritem z osnovo $10$ imenujemo **desetiški logaritem** in ga pišemo brez osnove: $\log b = \log_{10} b$. Velja $\log 1000 = 3$, $\log 1 = 0$, $\log 0{,}01 = -2$. Logaritem z osnovo $\mathrm{e} \approx 2{,}718$ je **naravni logaritem**, pišemo $\ln b = \log_{\mathrm{e}} b$. Žepno računalo ima tipki »log« in »ln« le za ti dve osnovi.
+**4. Posebni osnovi.** Logaritem z osnovo $10$ imenujemo **desetiški logaritem** in ga pišemo brez osnove: $\log b = \log_{10} b$. Velja $\log 1000 = 3$, $\log 1 = 0$, $\log 0{,}01 = -2$. Logaritem z osnovo $\mathrm{e} \approx 2{,}718$ je **naravni logaritem**, pišemo $\ln b = \log_{\mathrm{e}} b$. Za ti dve osnovi ima vsako žepno računalo tipki »log« in »ln«.
 
 **5. Pravila za računanje.** Za $a > 0$, $a \ne 1$, $x, y > 0$ in realno število $n$ velja:
 
@@ -84,7 +84,7 @@ $\log_a x + \log_a y = \log_a (xy)$, $\;\log_a x - \log_a y = \log_a \dfrac{x}{y
 
 **Rešitev:**
 
-1. a) Posamezna logaritma nista »lepa« števili, vsota pa je: $\log_6 9 + \log_6 4 = \log_6 (9 \cdot 4) = \log_6 36$.
+1. a) Posamezna logaritma nista »lepi« števili, vsota pa je: $\log_6 9 + \log_6 4 = \log_6 (9 \cdot 4) = \log_6 36$.
 2. Ker je $6^2 = 36$, je $\log_6 36 = 2$.
 3. b) Najprej koeficient $2$ prenesemo v eksponent: $2\log_3 6 = \log_3 6^2 = \log_3 36$.
 4. Nato uporabimo pravilo za razliko: $\log_3 36 - \log_3 4 = \log_3 \dfrac{36}{4} = \log_3 9 = 2$.
@@ -138,7 +138,7 @@ Nariši tabelo potenc števila $2$ in jo beri v obe smeri:
 |---|---|---|---|---|---|---|---|---|
 | potenca $2^x$ | $\frac{1}{4}$ | $\frac{1}{2}$ | $1$ | $2$ | $4$ | $8$ | $16$ | $32$ |
 
-Če bereš od zgoraj navzdol, potenciraš. Če bereš od spodaj navzgor, logaritmiraš: pod $16$ piše $4$, nad njim eksponent $4$, zato je $\log_2 16 = 4$. Število $5$ v spodnji vrstici manjka, leži med $4$ in $8$, zato je $\log_2 5$ med $2$ in $3$.
+Če bereš od zgoraj navzdol, potenciraš. Če bereš od spodaj navzgor, logaritmiraš: nad $16$ piše eksponent $4$, zato je $\log_2 16 = 4$. Število $5$ v spodnji vrstici manjka, leži med $4$ in $8$, zato je $\log_2 5$ med $2$ in $3$.
 
 Enako lahko narediš na grafu funkcije $y = 2^x$: namesto da od osi $x$ greš navpično do krivulje, greš z osi $y$ (pri višini $5$) vodoravno do krivulje in nato navpično navzdol na os $x$. Prebrana abscisa, približno $2{,}32$, je $\log_2 5$. Če graf prezrcališ čez simetralo lihih kvadrantov $y = x$, dobiš krivuljo, s katere logaritme bereš kar navpično. To pokaže interaktivna simulacija spodaj (»Logaritem kot obratna funkcija«).
 
@@ -160,7 +160,7 @@ Logaritme uporabljamo povsod, kjer se količine razlikujejo za veliko velikostni
 
 **Izračunaj $\log_3 20$ z računalom.**
 
-1. Računalo ima le »log« in »ln«, zato uporabimo prehod na novo osnovo: $\log_3 20 = \dfrac{\log 20}{\log 3}$.
+1. Če ima računalo le »log« in »ln«, uporabimo prehod na novo osnovo: $\log_3 20 = \dfrac{\log 20}{\log 3}$.
 2. $\log 20 \approx 1{,}30103$ in $\log 3 \approx 0{,}47712$.
 3. Delimo: $\dfrac{1{,}30103}{0{,}47712} \approx 2{,}7268$.
 4. Preverimo smiselnost: $3^2 = 9 < 20 < 27 = 3^3$, zato mora biti rezultat med $2$ in $3$.
@@ -172,7 +172,7 @@ Logaritme uporabljamo povsod, kjer se količine razlikujejo za veliko velikostni
 
 **Dokaz pravila za potenco.** Naj bo $u = \log_a x$, torej $x = a^u$. Potem je $x^n = \left(a^u\right)^n = a^{nu}$, zato je $\log_a x^n = nu = n\log_a x$. Pravilo za kvocient dobimo iz pravil za produkt in potenco: $\log_a \dfrac{x}{y} = \log_a \left(x \cdot y^{-1}\right) = \log_a x - \log_a y$.
 
-**Posledice prehoda na novo osnovo.** Če v formuli vzamemo $c = b$, dobimo $\log_a b = \dfrac{1}{\log_b a}$. Prav tako velja $\log_{a^k} b = \dfrac{1}{k}\log_a b$, na primer $\log_4 8 = \dfrac{1}{2}\log_2 8 = \dfrac{3}{2}$, kar se ujema s Primerom 1. Ker so vsi logaritmi istega števila sorazmerni ($\log_a b = \dfrac{1}{\log_c a} \cdot \log_c b$), je na računalu dovolj ena sama osnova.
+**Posledice prehoda na novo osnovo.** Če v formuli vzamemo $c = b$ (za $b \ne 1$), dobimo $\log_a b = \dfrac{1}{\log_b a}$. Prav tako velja $\log_{a^k} b = \dfrac{1}{k}\log_a b$, na primer $\log_4 8 = \dfrac{1}{2}\log_2 8 = \dfrac{3}{2}$, kar se ujema s Primerom 1. Ker so logaritmi z osnovo $a$ sorazmerni logaritmom z osnovo $c$ ($\log_a b = \dfrac{1}{\log_c a} \cdot \log_c b$ za vsak $b > 0$), je na računalu dovolj ena sama osnova.
 
 ## Preveri se
 

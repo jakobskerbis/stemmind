@@ -44,9 +44,9 @@ Pri nalogah, kjer iz mase iščeš število delcev, najprej izračunaš $n$, nat
 
 ### Primer 1: iz mase v množino
 
-Kolikšna je množina $36\,\text{g}$ vode $\mathrm{H_2O}$?
+Kolikšna je množina $36\,\text{g}$ vode $\mathrm{H_2O}$? Uporabi $M(\mathrm{H}) = 1\,\dfrac{\text{g}}{\text{mol}}$ in $M(\mathrm{O}) = 16\,\dfrac{\text{g}}{\text{mol}}$.
 
-**Podatki:** $m = 36\,\text{g}$, formula $\mathrm{H_2O}$, $M(\mathrm{H}) = 1\,\dfrac{\text{g}}{\text{mol}}$, $M(\mathrm{O}) = 16\,\dfrac{\text{g}}{\text{mol}}$ (iz preglednice podatkov za vaje)
+**Podatki:** $m = 36\,\text{g}$, formula $\mathrm{H_2O}$, $M(\mathrm{H}) = 1\,\dfrac{\text{g}}{\text{mol}}$, $M(\mathrm{O}) = 16\,\dfrac{\text{g}}{\text{mol}}$
 **Iščemo:** množino snovi $n$
 
 :::formula
@@ -63,9 +63,9 @@ $n = \dfrac{m}{M}$
 
 ### Primer 2: iz množine v maso
 
-Kolikšna je masa $0{,}5\,\text{mol}$ ogljikovega dioksida $\mathrm{CO_2}$?
+Kolikšna je masa $0{,}5\,\text{mol}$ ogljikovega dioksida $\mathrm{CO_2}$? Uporabi $M(\mathrm{C}) = 12\,\dfrac{\text{g}}{\text{mol}}$ in $M(\mathrm{O}) = 16\,\dfrac{\text{g}}{\text{mol}}$.
 
-**Podatki:** $n = 0{,}5\,\text{mol}$, formula $\mathrm{CO_2}$, $M(\mathrm{C}) = 12\,\dfrac{\text{g}}{\text{mol}}$, $M(\mathrm{O}) = 16\,\dfrac{\text{g}}{\text{mol}}$ (iz preglednice podatkov za vaje)
+**Podatki:** $n = 0{,}5\,\text{mol}$, formula $\mathrm{CO_2}$, $M(\mathrm{C}) = 12\,\dfrac{\text{g}}{\text{mol}}$, $M(\mathrm{O}) = 16\,\dfrac{\text{g}}{\text{mol}}$
 **Iščemo:** maso $m$
 
 :::formula
@@ -82,7 +82,7 @@ $m = n \cdot M$
 
 ### Primer 3: iz mase v število delcev
 
-Koliko molekul vode in koliko atomov vodika je v $9\,\text{g}$ vode $\mathrm{H_2O}$?
+Koliko molekul vode in koliko atomov vodika je v $9\,\text{g}$ vode $\mathrm{H_2O}$? Uporabi $M(\mathrm{H_2O}) = 18\,\dfrac{\text{g}}{\text{mol}}$ (iz primera 1) in $N_A = 6{,}02 \cdot 10^{23}\,\frac{1}{\text{mol}}$.
 
 **Podatki:** $m = 9\,\text{g}$, formula $\mathrm{H_2O}$ (2 atoma vodika v molekuli), $M(\mathrm{H_2O}) = 18\,\dfrac{\text{g}}{\text{mol}}$ (iz primera 1), $N_A = 6{,}02 \cdot 10^{23}\,\frac{1}{\text{mol}}$
 **Iščemo:** število molekul vode $N(\mathrm{H_2O})$ in število atomov vodika $N(\mathrm{H})$
@@ -111,7 +111,7 @@ $n = \dfrac{m}{M}$, nato $N = n \cdot N_A$; atomov vodika je $2$-krat več kot m
 ## Povzetek
 
 - Množina snovi $n$ se meri v molih. En mol vsebuje $N_A = 6{,}02 \cdot 10^{23}$ delcev.
-- Molska masa $M$ ($\dfrac{\text{g}}{\text{mol}}$) je številsko enaka relativni masi, pri spojinah jo dobimo s seštevanjem mas atomov z upoštevanjem indeksov.
+- Molska masa $M$ ($\dfrac{\text{g}}{\text{mol}}$) je številsko enaka relativni atomski oziroma molekulski masi, pri spojinah jo dobimo s seštevanjem mas atomov z upoštevanjem indeksov.
 - $n = \dfrac{m}{M}$, $m = n \cdot M$, $N = n \cdot N_A$.
 - Od mase do števila delcev greš prek množine: $m \to n \to N$.
 - Pri vsaki nalogi najprej zapiši formulo snovi in izračunaj molsko maso.
@@ -156,9 +156,9 @@ Preverjanje: $117$ je dvakrat $58{,}5$, zato sta dva mola, delcev pa dvakrat $N_
 
 ## Drugače: Bolj natančno
 
-Mol je bil dolgo definiran kot množina snovi, ki vsebuje toliko delcev, kot je atomov v $12\,\text{g}$ izotopa ogljik-12. Poskusi so pokazali, da je to približno $6{,}02 \cdot 10^{23}$ atomov. Od leta 2019 je mol definiran neposredno s tem številom: en mol vsebuje natanko $6{,}02214076 \cdot 10^{23}$ delcev. Zaokroženo vrednost $N_A = 6{,}02 \cdot 10^{23}\,\frac{1}{\text{mol}}$ imenujemo Avogadrova konstanta.
+Mol je bil dolgo definiran kot množina snovi, ki vsebuje toliko delcev, kot je atomov v $12\,\text{g}$ izotopa ogljik-12. Poskusi so pokazali, da je to približno $6{,}02 \cdot 10^{23}$ atomov. Od leta 2019 je mol definiran neposredno s tem številom: en mol vsebuje natanko $6{,}02214076 \cdot 10^{23}$ delcev. Avogadrova konstanta je zato natanko $N_A = 6{,}02214076 \cdot 10^{23}\,\frac{1}{\text{mol}}$, pri računih pa uporabljamo zaokroženo vrednost $6{,}02 \cdot 10^{23}\,\frac{1}{\text{mol}}$.
 
-Zakaj je molska masa številsko enaka relativni atomski masi? Atom ogljika-12 ima relativno atomsko maso $12$. Če vzamemo $N_A$ takih atomov, imajo skupaj maso $12\,\text{g}$. Torej je
+Zakaj je molska masa številsko enaka relativni atomski masi? Atom ogljika-12 ima relativno atomsko maso $12$. Če vzamemo $N_A$ takih atomov, imajo skupaj maso $12\,\text{g}$ (po definiciji iz leta 2019 to ne velja več povsem točno, a zelo natančno). Torej je
 
 $$M(\mathrm{C}) = 12\,\frac{\text{g}}{\text{mol}}.$$
 

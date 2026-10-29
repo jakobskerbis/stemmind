@@ -64,7 +64,7 @@ Na primer $\sin 30^\circ = \cos 60^\circ$.
 
 Pravokotni trikotnik ima kateti $a = 5\,\text{cm}$ in $b = 12\,\text{cm}$. Izračunaj hipotenuzo, vrednosti $\sin \alpha$, $\cos \alpha$ in $\tan \alpha$ ter kot $\alpha$ na stotinko stopinje natančno.
 
-**Podatki:** $a = 5\,\text{cm}$, $b = 12\,\text{cm}$, $\gamma = 90^\circ$
+**Podatki:** $a = 5\,\text{cm}$, $b = 12\,\text{cm}$, $\gamma = 90^\circ$; kot zaokrožimo na stotinko stopinje
 **Iščemo:** hipotenuzo $c$, $\sin \alpha$, $\cos \alpha$, $\tan \alpha$ in kot $\alpha$
 
 :::formula
@@ -103,7 +103,7 @@ $a = c \cdot \sin \alpha$, $\;b = c \cdot \cos \alpha$, $\;\beta = 90^\circ - \a
 
 Z ravnega terena opazujemo vrh navpičnega stolpa pod kotom $30^\circ$ glede na vodoravnico. Ko se stolpu po ravnem približamo za $20\,\text{m}$, vidimo vrh pod kotom $45^\circ$. Kako visok je stolp? Višino oči zanemari, rezultat zapiši natančno in na centimeter natančno.
 
-**Podatki:** prvi kot $\alpha_1 = 30^\circ$, drugi kot $\alpha_2 = 45^\circ$, premik $20\,\text{m}$ proti stolpu, teren je raven, višino oči zanemarimo
+**Podatki:** prvi kot $\alpha_1 = 30^\circ$, drugi kot $\alpha_2 = 45^\circ$, premik $20\,\text{m}$ proti stolpu, teren je raven, višino oči zanemarimo; rezultat natančno in na centimeter natančno
 **Iščemo:** višino stolpa $h$
 
 :::formula

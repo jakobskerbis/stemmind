@@ -30,11 +30,11 @@ Moč $1\,\mathrm{W}$ pomeni, da v eni sekundi opravimo $1\,\mathrm{J}$ dela. Upo
 
 **4. Moč in energija.** Delo je enako spremembi energije, zato lahko moč zapišemo tudi kot $P = \dfrac{\Delta W}{t}$. Moč torej pove tudi, koliko energije se v eni sekundi pretvori ali prenese.
 
-**5. Izkoristek.** Naprava vedno dobi več energije (ali dela), kot je koristno uporabi, ker se del energije izgubi, npr. kot toplota zaradi trenja. **Izkoristek** $\eta$ (grška črka eta) je razmerje med koristnim in dovedenim:
+**5. Izkoristek.** Naprava vedno dobi več energije (ali dela), kot jo koristno uporabi, ker se del energije izgubi, npr. kot toplota zaradi trenja. **Izkoristek** $\eta$ (grška črka eta) je razmerje med koristnim in dovedenim:
 
 $$\eta = \frac{A_\text{koristno}}{A_\text{dovedeno}}$$
 
-Izražamo ga kot decimalno število ali v odstotkih. Izkoristek je vedno manjši od $1$ (manjši od $100\,\%$), ker se energija nikoli ne ustvari iz nič. Enake zveze veljajo tudi za moči: $\eta = \dfrac{P_\text{koristna}}{P_\text{dovedena}}$.
+Izražamo ga kot decimalno število ali v odstotkih. Izkoristek je vedno manjši od $1$ (manjši od $100\,\%$), ker se del energije vedno izgubi, energija pa ne nastane iz nič. Enake zveze veljajo tudi za moči: $\eta = \dfrac{P_\text{koristna}}{P_\text{dovedena}}$.
 
 ## Rešeni primeri
 
@@ -55,6 +55,7 @@ $P = \dfrac{A}{t}$
 2. Vstavimo: $P = \dfrac{2000\,\mathrm{J}}{5\,\mathrm{s}}$.
 3. Izračunamo: $P = 400\,\mathrm{W}$.
 4. Smiselnost: v vsaki sekundi dvigalo opravi $400\,\mathrm{J}$ dela, in $400 \cdot 5 = 2000$. ✓
+5. Odgovor: moč dvigala je $400\,\mathrm{W}$.
 
 ### Primer 2: delo iz moči in časa
 
@@ -74,6 +75,7 @@ Iz $P = \dfrac{A}{t}$ sledi $A = P \cdot t$ (čas v sekundah)
 3. Vstavimo: $A = 1500\,\mathrm{W} \cdot 120\,\mathrm{s} = 180\,000\,\mathrm{J}$.
 4. Zapišemo lahko tudi $A = 180\,\mathrm{kJ}$.
 5. Smiselnost: v vsaki sekundi $1500\,\mathrm{J}$, v $120$ sekundah $120$-krat toliko. ✓
+6. Odgovor: grelnik v $2\,\text{min}$ porabi $180\,000\,\mathrm{J}$ ($180\,\mathrm{kJ}$) energije.
 
 ### Primer 3: moč pri dvigovanju in izkoristek
 
@@ -89,16 +91,17 @@ $F = m \cdot g$, $A = F \cdot h$, $P_\text{koristna} = \dfrac{A}{t}$, $\eta = \d
 **Rešitev:**
 
 1. **Sila.** Breme dvigamo enakomerno, zato je potrebna sila enaka teži: $F = m \cdot g = 50\,\text{kg} \cdot 10\,\dfrac{\mathrm{N}}{\mathrm{kg}} = 500\,\mathrm{N}$.
-2. **Koristno delo.** $A = F \cdot s = 500\,\mathrm{N} \cdot 12\,\mathrm{m} = 6000\,\mathrm{J}$.
+2. **Koristno delo.** $A = F \cdot h = 500\,\mathrm{N} \cdot 12\,\mathrm{m} = 6000\,\mathrm{J}$.
 3. **Koristna moč.** $P_\text{koristna} = \dfrac{A}{t} = \dfrac{6000\,\mathrm{J}}{10\,\mathrm{s}} = 600\,\mathrm{W}$.
 4. **Izkoristek.** $\eta = \dfrac{P_\text{koristna}}{P_\text{dovedena}} = \dfrac{600\,\mathrm{W}}{1000\,\mathrm{W}} = 0{,}6 = 60\,\%$.
 5. **Smiselnost.** Izkoristek je manjši od $100\,\%$, kar mora veljati. Preostalih $400\,\mathrm{W}$ se izgubi, večinoma kot toplota.
+6. Odgovor: koristna moč motorja je $600\,\mathrm{W}$, izkoristek pa $60\,\%$.
 
 ## Pogoste napake
 
 - **Čas ni v sekundah.** Če je čas podan v minutah ali urah, ga pred računom pretvori v sekunde, sicer rezultat ni v vatih. ($1\,\text{min} = 60\,\mathrm{s}$, $1\,\text{h} = 3600\,\mathrm{s}$.)
 - **Zamenjava moči in dela.** Delo merimo v $\mathrm{J}$, moč v $\mathrm{W}$. Moč je delo na enoto časa, ne delo samo.
-- **Obrnjeno razmerje pri izkoristku.** Koristno delimo z dovedenim, ne obratno. Če dobiš izkoristek nad $100\,\%$, si zamenjal(a) števca in imenovalca.
+- **Obrnjeno razmerje pri izkoristku.** Koristno delimo z dovedenim, ne obratno. Če dobiš izkoristek nad $100\,\%$, si zamenjal(a) števec in imenovalec.
 - **Pozabljena pretvorba enot.** $1\,\mathrm{kW}$ je $1000\,\mathrm{W}$, ne $100\,\mathrm{W}$.
 - **Mešanje dovedenega in koristnega.** Pri izkoristku je v imenovalcu vedno tisto, kar smo napravi dali, ne tisto, kar smo dobili.
 
@@ -112,7 +115,7 @@ $F = m \cdot g$, $A = F \cdot h$, $P_\text{koristna} = \dfrac{A}{t}$, $\eta = \d
 
 ## Drugače: Na sliki
 
-Predstavljaj si dve osebi, ki prenašata opeke iz kupa na vozilo. Obe preneseta $100$ opek, ki zahtevajo enako delo $A$. Prva oseba to opravi v $10$ minutah, druga v $5$ minutah. Delo je enako, druga oseba pa ima **dvakrat večjo moč**, ker delo opravi v pol krajšem času.
+Predstavljaj si dve osebi, ki prenašata opeke iz kupa na vozilo. Obe preneseta $100$ opek in pri tem opravita enako delo $A$. Prva oseba to opravi v $10$ minutah, druga v $5$ minutah. Delo je enako, druga oseba pa ima **dvakrat večjo moč**, ker delo opravi v polovičnem času.
 
 Če narišeš graf dela v odvisnosti od časa, je graf v enem primeru strmejša premica, v drugem položnejša. **Strmina premice je moč**: bolj strma kot je premica, več dela se opravi v sekundi.
 
@@ -122,7 +125,7 @@ Izkoristek si predstavljaj kot škatlo: v njo vstopi $100$ enot energije, ven pr
 
 Žarnica z napisom $60\,\mathrm{W}$ v vsaki sekundi pretvori $60\,\mathrm{J}$ električne energije v svetlobo in toploto. Žarnica z napisom $10\,\mathrm{W}$ porabi le $10\,\mathrm{J}$ v sekundi. Pri enakem času gorenja prva porabi šestkrat več energije, zato je električni račun višji.
 
-Pri izkoristku je dober primer klasična žarnica z žarilno nitko: večino električne energije spremeni v toploto, le majhen del v svetlobo, zato je njen izkoristek za svetlobo nizek. Sodobne LED žarnice za enako svetlobo porabijo bistveno manj energije. Zato je pri njih za enako osvetlitev potrebna manjša moč.
+Pri izkoristku je dober primer klasična žarnica z žarilno nitko: večino električne energije spremeni v toploto, le majhen del v svetlobo, zato je njen izkoristek za svetlobo nizek. Sodobne LED žarnice imajo veliko večji izkoristek, zato za enako svetlobo porabijo bistveno manj energije in potrebujejo manjšo moč.
 
 Tudi telo ima moč: ko hitro tečeš po stopnicah, opraviš enako delo kot pri počasni hoji, a v krajšem času, zato je tvoja moč večja in se hitreje utrudiš.
 

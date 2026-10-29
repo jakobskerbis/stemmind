@@ -128,7 +128,7 @@ V interaktivni simulaciji »Masni delež raztopine« opazuj:
 
 Premisli še tretji primer: če del raztopine odliješ, barva ostane enaka. Masa topljenca v kozarcu se zmanjša, njegov delež pa ne.
 
-Zadnja točka je pomembna: koncentracija ni isto kot količina topljenca. Pove le, koliko ga je v določenem delu raztopine.
+Ta primer je pomemben: masni delež (koncentracija) ni isto kot količina topljenca. Pove le, koliko ga je v določenem delu raztopine.
 
 ## Drugače: Iz vsakdanjega življenja
 
@@ -184,7 +184,7 @@ Iz tega se vidi, zakaj sta $w$ in $\gamma$ različni količini. Povezuje ju gost
 - $0{,}03\,\text{g/L}$
 + $30\,\text{g/L}$
 - $4800\,\text{g/L}$
-> Prostornina je $400\,\text{mL} = 0{,}4\,\text{L}$, zato je $\gamma = \dfrac{12\,\text{g}}{0{,}4\,\text{L}} = 30\,\text{g/L}$. Odgovor $0{,}03$ dobiš, če deliš z $400$ namesto z $0{,}4$, $4800$ pa, če množiš namesto deliš.
+> Prostornina je $400\,\text{mL} = 0{,}4\,\text{L}$, zato je $\gamma = \dfrac{12\,\text{g}}{0{,}4\,\text{L}} = 30\,\text{g/L}$. Odgovor $0{,}03$ dobiš, če deliš z $400$ namesto z $0{,}4$, $4800$ pa, če $12$ pomnožiš s $400$ namesto deliš.
 
 ? Koliko gramov topljenca je v $250\,\text{g}$ raztopine z masnim deležem $8\,\%$?
 - $8\,\text{g}$

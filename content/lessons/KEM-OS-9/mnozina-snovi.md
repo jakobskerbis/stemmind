@@ -99,7 +99,7 @@ $m = n \cdot M$, nato $N = n \cdot N_A$
 1. **Molska masa.** $M(\mathrm{NaCl}) = 23 + 35{,}5 = 58{,}5\,\mathrm{g/mol}$.
 2. **Masa.** Iščemo $m$, zato enačbo preoblikujemo: $m = n \cdot M$.
 3. Vstavimo: $m = 0{,}20\,\mathrm{mol} \cdot 58{,}5\,\mathrm{g/mol} = 11{,}7\,\mathrm{g}$.
-4. **Število delcev.** $N = n \cdot 6{,}02 \cdot 10^{23} = 0{,}20 \cdot 6{,}02 \cdot 10^{23} = 1{,}204 \cdot 10^{23}$.
+4. **Število delcev.** $N = n \cdot N_A = 0{,}20\,\mathrm{mol} \cdot 6{,}02 \cdot 10^{23}\,\mathrm{mol^{-1}} = 1{,}204 \cdot 10^{23}$.
 5. **Odgovor.** Odtehtati moramo $11{,}7\,\mathrm{g}$ soli, to je približno $1{,}2 \cdot 10^{23}$ formulskih enot.
 6. Smiselnost: $0{,}20\,\mathrm{mol}$ je petina mola, zato je masa petina od $58{,}5\,\mathrm{g}$, to je $11{,}7\,\mathrm{g}$. ✓
 
@@ -118,7 +118,7 @@ $m = n \cdot M$, nato $N = n \cdot N_A$
 - Molska masa $M$ je masa $1\,\mathrm{mol}$ snovi, enota $\mathrm{g/mol}$. Številčno je enaka relativni atomski oziroma molekulski masi.
 - Molsko maso spojine dobimo s seštevanjem molskih mas atomov z upoštevanjem indeksov.
 - $n = \dfrac{m}{M}$, $m = n \cdot M$, $M = \dfrac{m}{n}$.
-- Število delcev: $N = n \cdot 6{,}02 \cdot 10^{23}$.
+- Število delcev: $N = n \cdot N_A$, kjer je $N_A = 6{,}02 \cdot 10^{23}\,\mathrm{mol^{-1}}$.
 
 ## Drugače: Na sliki
 

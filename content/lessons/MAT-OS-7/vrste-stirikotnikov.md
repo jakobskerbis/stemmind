@@ -191,7 +191,7 @@ Recept za prepoznavanje štirikotnika iz podatkov. Vzemimo štirikotnik, ki ima 
 + $85^\circ$
 - $275^\circ$
 - $5^\circ$
-> $\delta = 360^\circ - 90^\circ - 85^\circ - 100^\circ = 85^\circ$. Odgovor $5^\circ$ dobiš, če vzameš vsoto kotov $180^\circ$ namesto $360^\circ$.
+> $\delta = 360^\circ - 90^\circ - 85^\circ - 100^\circ = 85^\circ$. Odgovor $275^\circ$ je le vsota danih treh kotov, ne manjkajoči kot.
 
 ? Katera trditev je pravilna?
 - Vsak romb je kvadrat.

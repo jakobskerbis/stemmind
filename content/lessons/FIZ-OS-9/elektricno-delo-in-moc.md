@@ -64,6 +64,7 @@ $P = U \cdot I$
 1. Poznamo napetost in tok, iščemo moč, zato uporabimo $P = U \cdot I$.
 2. Vstavimo: $P = 230\,\mathrm{V} \cdot 0{,}1\,\mathrm{A} = 23\,\mathrm{W}$.
 3. Preverimo smiselnost: $23\,\mathrm{W}$ je moč varčne svetilke, kar je realno.
+4. Odgovor: moč žarnice je $23\,\mathrm{W}$.
 
 ### Primer 2: delo in poraba v kWh
 
@@ -82,6 +83,7 @@ $A = P \cdot t$ (moč v $\mathrm{kW}$ in čas v $\mathrm{h}$ dasta delo v $\math
 2. $A = P \cdot t = 2\,\mathrm{kW} \cdot 3\,\mathrm{h} = 6\,\mathrm{kWh}$.
 3. Strošek: $6\,\mathrm{kWh} \cdot 0{,}20\,\dfrac{\text{€}}{\mathrm{kWh}} = 1{,}20\,\text{€}$.
 4. Za primerjavo v joulih: $6 \cdot 3\,600\,000\,\mathrm{J} = 21\,600\,000\,\mathrm{J}$. Vidiš, da je $\mathrm{kWh}$ veliko bolj priročna enota.
+5. Odgovor: grelnik opravi $6\,\mathrm{kWh}$ električnega dela, kar stane $1{,}20\,\text{€}$.
 
 ### Primer 3: tok iz moči in poraba v več dneh
 
@@ -108,6 +110,8 @@ a) Iz $P = U \cdot I$ sledi $I = \dfrac{P}{U}$. b) $A = P \cdot t$ (moč v $\mat
 3. $A = P \cdot t = 1{,}5\,\mathrm{kW} \cdot 20\,\mathrm{h} = 30\,\mathrm{kWh}$.
 4. Pri ceni $0{,}20\,\text{€}/\mathrm{kWh}$ je strošek $30 \cdot 0{,}20 = 6{,}00\,\text{€}$.
 
+**Odgovor:** a) skozi kuhalnik teče približno $6{,}5\,\mathrm{A}$; b) v $30$ dneh porabi $30\,\mathrm{kWh}$, kar stane $6{,}00\,\text{€}$.
+
 ## Pogoste napake
 
 - **Zamenjava moči in dela.** Moč ($\mathrm{W}$) pove, kako hitro se energija pretvarja, delo ($\mathrm{J}$ ali $\mathrm{kWh}$) pa koliko je je skupaj. Kilovatna ura je enota za **delo**, ne za moč.
@@ -126,7 +130,7 @@ a) Iz $P = U \cdot I$ sledi $I = \dfrac{P}{U}$. b) $A = P \cdot t$ (moč v $\mat
 
 ## Drugače: Na sliki
 
-Predstavljaj si vodo, ki teče po cevi. Napetost je kot višinska razlika (kako visoko je vodnjak), tok je kot količina vode, ki steče v vsaki sekundi. Če je višinska razlika velika in teče veliko vode, je moč vodnega toka velika.
+Predstavljaj si vodo, ki teče po cevi. Napetost je kot višinska razlika (kako visoko je zbiralnik vode), tok je kot količina vode, ki steče v vsaki sekundi. Če je višinska razlika velika in teče veliko vode, je moč vodnega toka velika.
 
 Enako je pri elektriki: večja napetost $U$ in večji tok $I$ pomenita večjo moč $P = U \cdot I$.
 
@@ -141,7 +145,7 @@ Primerjajmo dva aparata, ki oba delujeta $1\,\mathrm{h}$:
 - LED žarnica $10\,\mathrm{W} = 0{,}01\,\mathrm{kW}$: $A = 0{,}01\,\mathrm{kWh}$,
 - sušilnik las $2000\,\mathrm{W} = 2\,\mathrm{kW}$: $A = 2\,\mathrm{kWh}$.
 
-Sušilnik v eni uri porabi $200$-krat več energije kot žarnica. Zato je za nizek račun pomembnejše, kako **dolgo** in **kako močni** aparati delujejo, ne le, koliko jih imaš. Aparat z veliko močjo, ki deluje le nekaj minut (sušilnik las), lahko porabi manj kot šibak aparat, ki deluje ves dan (npr. televizor v pripravljenosti).
+Sušilnik v eni uri porabi $200$-krat več energije kot žarnica. Zato je za nizek račun pomembnejše, kako **dolgo** in **kako močni** aparati delujejo, ne le, koliko jih imaš. Aparat z veliko močjo, ki deluje le nekaj minut (sušilnik las), lahko porabi manj kot šibak aparat, ki deluje ves dan (npr. LED žarnica z $10\,\mathrm{W}$, ki v $24\,\mathrm{h}$ porabi $0{,}24\,\mathrm{kWh}$, sušilnik z $2\,\mathrm{kW}$ pa v $5\,\text{min}$ le približno $0{,}17\,\mathrm{kWh}$).
 
 ## Drugače: Korak za korakom s številkami
 
@@ -153,7 +157,7 @@ Recept za nalogo o porabi energije:
 4. Izračunaj $A = P \cdot t$.
 5. Pomnoži s ceno.
 
-Primer: televizor $120\,\mathrm{W}$ gleda družina $4\,\mathrm{h}$ na dan, cena $0{,}20\,\text{€}/\mathrm{kWh}$.
+Primer: družina gleda televizor z močjo $120\,\mathrm{W}$ po $4\,\mathrm{h}$ na dan. Koliko stane to v $30$ dneh pri ceni $0{,}20\,\text{€}/\mathrm{kWh}$?
 
 | Korak | Račun | Rezultat |
 |---|---|---|

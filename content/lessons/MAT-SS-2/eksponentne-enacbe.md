@@ -13,7 +13,7 @@ Enačbam, v katerih neznanka nastopa v eksponentu, pravimo **eksponentne enačbe
 
 **1. Kaj je eksponentna enačba.** Eksponentna enačba je enačba, v kateri je neznanka v eksponentu potence. Primeri: $2^x = 32$, $\;3^{2x-1} = \dfrac{1}{27}$, $\;4^x - 3 \cdot 2^x - 4 = 0$. Enačba $x^2 = 9$ ni eksponentna, ker je neznanka v osnovi.
 
-**2. Ključna lastnost.** Naj bo $a > 0$ in $a \ne 1$. Eksponentna funkcija $f(x) = a^x$ je za $a > 1$ naraščajoča, za $0 < a < 1$ pa padajoča. Zato vsako vrednost zavzame **natanko enkrat**. Iz tega sledi pravilo, na katerem temelji vse reševanje:
+**2. Ključna lastnost.** Naj bo $a > 0$ in $a \ne 1$. Eksponentna funkcija $f(x) = a^x$ je za $a > 1$ naraščajoča, za $0 < a < 1$ pa padajoča. Zato vsako svojo vrednost zavzame **natanko enkrat**. Iz tega sledi pravilo, na katerem temelji vse reševanje:
 
 $$a^{u} = a^{v} \iff u = v \qquad (a > 0,\ a \ne 1).$$
 
