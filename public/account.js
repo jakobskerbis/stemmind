@@ -2,7 +2,7 @@ import { icon } from "./icons.js";
 import { loadPrograms, programsCache } from "./programs.js";
 import { mountLevelPicker, schoolSystemOptions } from "./level-picker.js";
 import { systemForCountry } from "./regions.js";
-import { currentLang, currentRegion, deviceRegion } from "./i18n.js";
+import { currentLang, currentRegion, deviceRegion, t } from "./i18n.js";
 import { openProfileMenu } from "./profile-menu.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku KOMPRENO_ACCOUNTS=1.
@@ -111,6 +111,7 @@ export async function initAccount({ onReady }) {
   if (!enabled) return true;
   $("#account-tab").hidden = false;
   watchTakenProfiles();
+  watchGuestTrigger();
   $("#account-tab").addEventListener("click", renderAccount);
 
   const q = new URLSearchParams(location.search);
@@ -145,9 +146,38 @@ export async function initAccount({ onReady }) {
   return ready;
 }
 
+// Skrit vhod za goste (j, 2026-10-29): dotik logotipa zgoraj levo na prijavni strani.
+// Gumba ni; deluje samo, ko je na strežniku vklopljen gostujoči način (KOMPRENO_GUEST).
+let guestStarting = false;
+function watchGuestTrigger() {
+  document.addEventListener(
+    "click",
+    async (e) => {
+      if (!e.target.closest(".brand") || !document.body.classList.contains("auth-mode")) return;
+      // Na zaslonih prijave logotip ne odpira učne poti (ta brez profila ne deluje).
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if (!status?.guest_mode || status.logged_in || !$("#auth-form") || guestStarting) return;
+      guestStarting = true;
+      try {
+        await api("/api/auth/guest", { method: "POST", body: { accept_privacy: true, country: deviceRegion() } });
+        toast(t("guest.startNote"));
+        await continueFlow();
+      } catch (err) {
+        toast(err.message);
+      } finally {
+        guestStarting = false;
+      }
+    },
+    true,
+  );
+}
+
 async function route() {
   if (!status.logged_in) return renderLogin(route.firstMode || "login"), false;
-  if (!status.parent.verified) return renderVerify(), false;
+  // Uporaba brez računa je izklopljena: gost lahko samo ustvari račun in obdrži napredek.
+  if (status.parent.guest && !status.guest_mode) return renderGuestOff(), false;
+  if (!status.parent.verified && !status.parent.guest) return renderVerify(), false;
   if (!status.children) return renderAddChild(), false;
   authMode(false);
   adjustAppForAccounts();
@@ -539,16 +569,138 @@ function promoBox(acc, paid) {
       </form></details>${admin}`;
 }
 
+// ---------- uporaba brez računa (gost) ----------
+
+function upgradeForm() {
+  return `
+    <form id="upgrade-form" class="form">
+      <label>${esc(t("guest.name"))} <input name="name" maxlength="60" autocomplete="name"></label>
+      <label>${esc(t("guest.email"))} <input name="email" type="email" required autocomplete="email"></label>
+      <label>${esc(t("guest.password"))} <input name="password" type="password" required minlength="8" autocomplete="new-password"></label>
+      <label>${esc(t("guest.birth"))} <input name="birth_date" type="date" required min="1900-01-01" max="${new Date().toISOString().slice(0, 10)}" autocomplete="bday"></label>
+      <label class="check"><input type="checkbox" name="accept_privacy" required>
+        <span>${esc(t("guest.accept"))} <a href="/zasebnost.html" target="_blank">${esc(t("guest.privacy"))}</a></span></label>
+      <p class="form-error" hidden></p>
+      <button class="primary" type="submit">${esc(t("guest.upgradeBtn"))}</button>
+    </form>`;
+}
+
+function guestLoginForm() {
+  return `
+    <details class="guest-login"><summary>${esc(t("guest.haveAccount"))}</summary>
+      <form id="guest-login-form" class="form">
+        <p class="muted">${esc(t("guest.loginNote"))}</p>
+        <label>${esc(t("guest.email"))} <input name="email" type="email" required autocomplete="email"></label>
+        <label>${esc(t("guest.loginPassword"))} <input name="password" type="password" required autocomplete="current-password"></label>
+        <p class="form-error" hidden></p>
+        <button type="submit">${esc(t("guest.loginBtn"))}</button>
+      </form>
+    </details>`;
+}
+
+function bindGuestForms(after) {
+  $("#upgrade-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const btn = $("button[type=submit]", f);
+    btn.disabled = true;
+    try {
+      const r = await api("/api/auth/upgrade", {
+        method: "POST",
+        body: { name: f.name.value, email: f.email.value, password: f.password.value, birth_date: f.birth_date.value, accept_privacy: f.accept_privacy.checked, country: deviceRegion() },
+      });
+      if (r.dev_verify_url) store.set("kompreno_dev_verify", r.dev_verify_url);
+      toast(t("guest.created"));
+      await after();
+    } catch (err) {
+      btn.disabled = false;
+      showError(f, err);
+      if (err.data?.under_age) {
+        errorBox(f).append(" ", t("guest.parentHint"), " ", Object.assign(document.createElement("a"), { href: "/starsi.html", target: "_blank", textContent: t("guest.parentLink") }));
+      }
+      if (err.data?.exists) {
+        const login = $("#guest-login-form");
+        login.closest("details").open = true;
+        login.email.value = f.email.value;
+        login.password.focus();
+      }
+    }
+  });
+  $("#guest-login-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const btn = $("button[type=submit]", f);
+    btn.disabled = true;
+    try {
+      await api("/api/auth/login", { method: "POST", body: { email: f.email.value, password: f.password.value } });
+      store.set("studentId", null);
+      toast(t("guest.moved"));
+      setTimeout(() => location.replace("/"), 1200);
+    } catch (err) {
+      btn.disabled = false;
+      showError(f, err);
+    }
+  });
+}
+
+// Zavihek Račun za gosta: ustvari račun (isti profil in napredek) ali se prijavi v obstoječega.
+function renderGuestAccount(view, acc) {
+  view.innerHTML = `
+    <button type="button" class="ghost back me-back">${icon("arrow-left")}Jaz</button>
+    <h1>${esc(t("guest.title"))}</h1>
+    <div class="card">
+      <p>${esc(t("guest.intro"))}</p>
+      <p class="muted">${esc(t("guest.limits", { n: acc.free_daily_questions }))}</p>
+    </div>
+    <div class="card">
+      <h2>${esc(t("guest.upgradeTitle"))}</h2>
+      ${upgradeForm()}
+      ${guestLoginForm()}
+    </div>
+    <div class="card">
+      <p class="muted"><a href="/zasebnost.html" target="_blank">${esc(t("guest.privacy"))}</a></p>
+      <button id="delete-account" class="danger" type="button">${esc(t("guest.delete"))}</button>
+    </div>`;
+  bindGuestForms(async () => {
+    status = await api("/api/account/status");
+    if (await route()) await onReadyCb?.({ keepView: true });
+  });
+  $("#delete-account").addEventListener("click", async () => {
+    if (!confirm(t("guest.deleteConfirm"))) return;
+    try {
+      await api("/api/account", { method: "DELETE", body: {} });
+      store.set("studentId", null);
+      location.replace("/");
+    } catch (err) {
+      toast(err.message);
+    }
+  });
+}
+
+// Uporaba brez računa je bila izklopljena: gost ustvari račun ali se prijavi, napredek ostane.
+function renderGuestOff() {
+  shell(`
+    <h1>${esc(t("guest.upgradeTitle"))}</h1>
+    <p class="muted">${esc(t("guest.off"))}</p>
+    <div class="card">${upgradeForm()}${guestLoginForm()}</div>`);
+  bindGuestForms(continueFlow);
+}
+
 async function renderAccount() {
   const view = $("#view-account");
   let acc;
   try {
     acc = await api("/api/account");
   } catch (err) {
+    if (err.data?.guest_off) {
+      status = await api("/api/account/status");
+      return route();
+    }
     if (err.status === 401) return logout();
     view.innerHTML = `<p class="form-error">${esc(err.message)}</p>`;
     return;
   }
+  if (acc.parent.guest) return renderGuestAccount(view, acc);
   const paid = acc.access.tier === "paid";
   view.innerHTML = `
     <button type="button" class="ghost back me-back">${icon("arrow-left")}Jaz</button>
@@ -694,6 +846,7 @@ async function renderAccount() {
 }
 
 export async function logout() {
+  if (status?.parent?.guest && !confirm(t("guest.logoutConfirm"))) return;
   await api("/api/auth/logout", { method: "POST" }).catch(() => {});
   store.set("studentId", null);
   location.href = "/";

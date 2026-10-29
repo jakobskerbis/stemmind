@@ -1457,5 +1457,31 @@
   "tour.end": "就這些",
   "tour.endText": "你隨時可以在設定中重新觀看導覽（「重新播放入門導覽」）。如果找不到什麼，就問問輔導老師。",
   "games.pathMark": "在你的路線上",
-  "games.pathHint": "有指南針的遊戲是你理解的路線：先玩慢的，再玩快的。所有遊戲都開放。"
+  "games.pathHint": "有指南針的遊戲是你理解的路線：先玩慢的，再玩快的。所有遊戲都開放。",
+  "guest.startNote": "進度只能在這台裝置上存取。你之後隨時可以建立帳戶，進度會保留。",
+  "guest.privacy": "隱私權聲明",
+  "guest.title": "你正在沒有帳戶的情況下使用 Kompreno",
+  "guest.intro": "進度只能在這台裝置上存取。建立免費帳戶，就不會遺失進度，也能在其他裝置上登入，並獲得 7 天完整使用權限。",
+  "guest.limits": {
+    "other": "沒有帳戶時使用免費方案：每天可向輔導老師提問 {n} 次，由在此網路中沒有帳戶的所有 Kompreno 使用者共用。"
+  },
+  "guest.upgradeTitle": "建立帳戶，保留進度",
+  "guest.name": "你的名字（選填）",
+  "guest.email": "電子郵件",
+  "guest.password": "密碼（至少 8 個字元）",
+  "guest.loginPassword": "密碼",
+  "guest.birth": "出生日期",
+  "guest.accept": "我是為自己建立帳戶，或以家長或法定代理人身分建立，並已閱讀以下聲明：",
+  "guest.upgradeBtn": "建立帳戶",
+  "guest.created": "帳戶已建立 ✓ 請再驗證你的電子郵件。",
+  "guest.parentHint": "家長建立自己的帳戶後，請一起在這台裝置上用該帳戶登入，進度就會轉移過去。",
+  "guest.parentLink": "家長專區",
+  "guest.haveAccount": "已經有帳戶了？",
+  "guest.loginBtn": "登入並轉移進度",
+  "guest.loginNote": "如果方案中還有名額，我們會把無帳戶的個人檔案轉移到你的帳戶。",
+  "guest.moved": "進度已轉移到你的帳戶 ✓",
+  "guest.delete": "刪除個人檔案和所有資料",
+  "guest.deleteConfirm": "要刪除個人檔案、進度和對話嗎？此操作無法復原。",
+  "guest.logoutConfirm": "沒有帳戶的話，登出後就無法再存取這些進度。建議先在「帳戶」分頁建立帳戶。仍要登出嗎？",
+  "guest.off": "已無法在沒有帳戶的情況下使用。請建立帳戶以保留你的進度。"
 }

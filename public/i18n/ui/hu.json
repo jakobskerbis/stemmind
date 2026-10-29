@@ -1463,5 +1463,32 @@
   "tour.end": "Ennyi volt",
   "tour.endText": "A bemutatót bármikor megismételheted a Beállításokban („Bemutató újra”). Ha valamit nem találsz, kérdezd az oktatót.",
   "games.pathMark": "Az utadon",
-  "games.pathHint": "Az iránytűs játékok vezetnek a megértéshez: előbb a nyugodtak, aztán a gyorsabbak. Minden játék nyitva van."
+  "games.pathHint": "Az iránytűs játékok vezetnek a megértéshez: előbb a nyugodtak, aztán a gyorsabbak. Minden játék nyitva van.",
+  "guest.startNote": "A haladásod csak ezen az eszközön érhető el. Fiókot később bármikor létrehozhatsz, és a haladásod megmarad.",
+  "guest.privacy": "Adatvédelmi tájékoztató",
+  "guest.title": "Fiók nélkül használod a Kompreno alkalmazást",
+  "guest.intro": "A haladásod csak ezen az eszközön érhető el. Hozz létre ingyenes fiókot, hogy ne veszítsd el, más eszközön is be tudj jelentkezni, és 7 napig teljes hozzáférést kapj.",
+  "guest.limits": {
+    "one": "Fiók nélkül az ingyenes csomagot használod: naponta {n} kérdés az oktatónak, közösen mindenkinek, aki ezen a hálózaton fiók nélkül használja a Kompreno alkalmazást.",
+    "other": "Fiók nélkül az ingyenes csomagot használod: naponta {n} kérdés az oktatónak, közösen mindenkinek, aki ezen a hálózaton fiók nélkül használja a Kompreno alkalmazást."
+  },
+  "guest.upgradeTitle": "Hozz létre fiókot, és tartsd meg a haladásodat",
+  "guest.name": "A neved (nem kötelező)",
+  "guest.email": "E-mail-cím",
+  "guest.password": "Jelszó (legalább 8 karakter)",
+  "guest.loginPassword": "Jelszó",
+  "guest.birth": "Születési dátum",
+  "guest.accept": "A fiókot magamnak, illetve szülőként vagy törvényes képviselőként hozom létre, és elolvastam a következő tájékoztatót:",
+  "guest.upgradeBtn": "Fiók létrehozása",
+  "guest.created": "A fiók létrejött ✓ Már csak erősítsd meg az e-mail-címedet.",
+  "guest.parentHint": "Ha a szülőd létrehozta a saját fiókját, jelentkezzetek be vele együtt ezen az eszközön, és a haladás átkerül.",
+  "guest.parentLink": "Oldal szülőknek",
+  "guest.haveAccount": "Van már fiókod?",
+  "guest.loginBtn": "Bejelentkezés és a haladás átvitele",
+  "guest.loginNote": "A fiók nélküli profilt áthelyezzük a fiókodba, ha a csomagban van még hely.",
+  "guest.moved": "A haladásod átkerült a fiókodba ✓",
+  "guest.delete": "Profil és minden adat törlése",
+  "guest.deleteConfirm": "Törlöd a profilt, a haladást és a beszélgetéseket? Ez nem vonható vissza.",
+  "guest.logoutConfirm": "Fiók nélkül kijelentkezés után már nem férsz hozzá ehhez a haladáshoz. Inkább hozz létre fiókot a Fiók lapon. Mégis kijelentkezel?",
+  "guest.off": "Fiók nélkül már nem lehet használni a Kompreno alkalmazást. Hozz létre fiókot, hogy megtartsd a haladásodat."
 }

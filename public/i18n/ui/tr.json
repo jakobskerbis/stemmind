@@ -1463,5 +1463,32 @@
   "tour.end": "Hepsi bu kadar",
   "tour.endText": "Turu istediğin zaman Ayarlar'dan (“Tanıtım turunu yeniden başlat”) tekrarlayabilirsin. Bir şey bulamazsan özel öğretmenine sor.",
   "games.pathMark": "Senin yolunda",
-  "games.pathHint": "Pusulalı oyunlar anlamaya giden yolundur: önce sakin olanlar, sonra daha hızlılar. Tüm oyunlar açık."
+  "games.pathHint": "Pusulalı oyunlar anlamaya giden yolundur: önce sakin olanlar, sonra daha hızlılar. Tüm oyunlar açık.",
+  "guest.startNote": "İlerlemene yalnızca bu cihazdan erişebilirsin. Daha sonra istediğin zaman hesap oluşturabilirsin; ilerlemen korunur.",
+  "guest.privacy": "Gizlilik bildirimi",
+  "guest.title": "Kompreno'yu hesapsız kullanıyorsun",
+  "guest.intro": "İlerlemene yalnızca bu cihazdan erişebilirsin. Kaybetmemek, başka cihazlarda da giriş yapabilmek ve 7 gün tam erişim kazanmak için ücretsiz bir hesap oluştur.",
+  "guest.limits": {
+    "one": "Hesapsız ücretsiz paketi kullanıyorsun: özel öğretmene günde {n} soru; bu ağda Kompreno'yu hesapsız kullanan herkes için ortak.",
+    "other": "Hesapsız ücretsiz paketi kullanıyorsun: özel öğretmene günde {n} soru; bu ağda Kompreno'yu hesapsız kullanan herkes için ortak."
+  },
+  "guest.upgradeTitle": "Hesap oluştur ve ilerlemeni koru",
+  "guest.name": "Adın (isteğe bağlı)",
+  "guest.email": "E-posta",
+  "guest.password": "Şifre (en az 8 karakter)",
+  "guest.loginPassword": "Şifre",
+  "guest.birth": "Doğum tarihi",
+  "guest.accept": "Hesabı kendim için ya da ebeveyn veya yasal temsilci olarak oluşturuyorum ve şu bildirimi okudum:",
+  "guest.upgradeBtn": "Hesap oluştur",
+  "guest.created": "Hesap oluşturuldu ✓ Şimdi e-posta adresini doğrula.",
+  "guest.parentHint": "Ebeveynin kendi hesabını oluşturduğunda, bu cihazda o hesapla birlikte giriş yapın; ilerleme aktarılır.",
+  "guest.parentLink": "Ebeveyn sayfası",
+  "guest.haveAccount": "Zaten hesabın var mı?",
+  "guest.loginBtn": "Giriş yap ve ilerlemeyi aktar",
+  "guest.loginNote": "Pakette hâlâ yer varsa hesapsız profili hesabına aktarırız.",
+  "guest.moved": "İlerlemen hesabına aktarıldı ✓",
+  "guest.delete": "Profili ve tüm verileri sil",
+  "guest.deleteConfirm": "Profil, ilerleme ve sohbetler silinsin mi? Bu işlem geri alınamaz.",
+  "guest.logoutConfirm": "Hesap olmadan, çıkış yaptıktan sonra bu ilerlemeye artık erişemezsin. En iyisi Hesap sekmesinden bir hesap oluştur. Yine de çıkış yapılsın mı?",
+  "guest.off": "Hesapsız kullanım artık mümkün değil. İlerlemeni korumak için bir hesap oluştur."
 }

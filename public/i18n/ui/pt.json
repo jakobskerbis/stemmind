@@ -1463,5 +1463,32 @@
   "tour.end": "É tudo!",
   "tour.endText": "Podes repetir a visita quando quiseres nas Definições («Repetir a visita inicial»). Se não encontrares alguma coisa, pergunta ao tutor.",
   "games.pathMark": "No teu caminho",
-  "games.pathHint": "Os jogos com bússola são o teu caminho para perceber: primeiro os calmos, depois os mais rápidos. Todos os jogos estão abertos."
+  "games.pathHint": "Os jogos com bússola são o teu caminho para perceber: primeiro os calmos, depois os mais rápidos. Todos os jogos estão abertos.",
+  "guest.startNote": "O teu progresso só está acessível neste dispositivo. Podes criar uma conta a qualquer momento e o progresso mantém-se.",
+  "guest.privacy": "Aviso de privacidade",
+  "guest.title": "Estás a usar o Kompreno sem conta",
+  "guest.intro": "O teu progresso só está acessível neste dispositivo. Cria uma conta gratuita para não o perderes, para poderes entrar também noutros dispositivos e para teres 7 dias de acesso completo.",
+  "guest.limits": {
+    "one": "Sem conta tens o plano gratuito: {n} pergunta ao tutor por dia, partilhada por todos os que usam o Kompreno sem conta nesta rede.",
+    "other": "Sem conta tens o plano gratuito: {n} perguntas ao tutor por dia, partilhadas por todos os que usam o Kompreno sem conta nesta rede."
+  },
+  "guest.upgradeTitle": "Cria uma conta e mantém o teu progresso",
+  "guest.name": "O teu nome (opcional)",
+  "guest.email": "E-mail",
+  "guest.password": "Palavra-passe (pelo menos 8 caracteres)",
+  "guest.loginPassword": "Palavra-passe",
+  "guest.birth": "Data de nascimento",
+  "guest.accept": "Estou a criar a conta para mim ou como pai, mãe ou representante legal e li o seguinte aviso:",
+  "guest.upgradeBtn": "Criar conta",
+  "guest.created": "Conta criada ✓ Agora confirma o teu e-mail.",
+  "guest.parentHint": "Quando o teu pai ou a tua mãe criar a sua própria conta, entrem juntos com ela neste dispositivo e o progresso será transferido.",
+  "guest.parentLink": "Página para pais",
+  "guest.haveAccount": "Já tens conta?",
+  "guest.loginBtn": "Entrar e transferir o progresso",
+  "guest.loginNote": "Transferimos o perfil sem conta para a tua conta, se ainda houver lugar no plano.",
+  "guest.moved": "O progresso foi transferido para a tua conta ✓",
+  "guest.delete": "Apagar o perfil e todos os dados",
+  "guest.deleteConfirm": "Apagar o perfil, o progresso e as conversas? Isto não pode ser anulado.",
+  "guest.logoutConfirm": "Sem conta, depois de terminares sessão já não terás acesso a este progresso. É melhor criares uma conta no separador Conta. Terminar sessão mesmo assim?",
+  "guest.off": "Já não é possível usar o Kompreno sem conta. Cria uma conta para manteres o teu progresso."
 }
