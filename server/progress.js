@@ -901,20 +901,29 @@ export class Progress {
     return { gained, items: [...(prev?.items || []), ...all.map(([amount, reason]) => ({ amount, reason }))], ...this.xpSummary(studentId) };
   }
 
-  // Koliko zaporednih dni do včeraj je učenec zbiral XP.
+  // Koliko zaporednih dni do včeraj je učenec zbiral XP. Današnji dan ga še ne prekine (milostni dan),
+  // en zamujen dan na teden pa ga tudi ne (samodejna zamrznitev, kot pri Duolingu); zamrznjen dan ne šteje.
   dayStreak(studentId) {
     const days = this.db
       .prepare("SELECT DISTINCT date(created_at) AS d FROM xp_events WHERE student_id = ? ORDER BY d DESC LIMIT 400")
       .all(studentId)
       .map((r) => r.d);
     const set = new Set(days);
-    let streak = 0;
     const d = new Date();
-    if (set.has(today())) streak = 1;
+    const dayAt = (i) => new Date(d.getTime() - i * 86400000).toISOString().slice(0, 10);
+    let streak = set.has(today()) ? 1 : 0;
+    let frozen = -Infinity; // zadnji zamrznjen dan (dni nazaj)
     for (let i = 1; i < 400; i++) {
-      const day = new Date(d.getTime() - i * 86400000).toISOString().slice(0, 10);
-      if (!set.has(day)) break;
-      streak += 1;
+      if (set.has(dayAt(i))) {
+        streak += 1;
+        continue;
+      }
+      // Zamrznitev: samo en manjkajoč dan med aktivnima (ali pred današnjim) in največ enkrat na 7 dni.
+      if (set.has(dayAt(i + 1)) && i - frozen >= 7) {
+        frozen = i;
+        continue;
+      }
+      break;
     }
     return streak;
   }

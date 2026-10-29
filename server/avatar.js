@@ -1,8 +1,10 @@
 // Kovanci in avatar: pravilni odgovori v igrah prinesejo kovance, z njimi učenec kupuje dele avatarja
 // (public/avatar.js). Brez pravega denarja. Avatar je edino, kar učenec izbere in vidijo drugi (lige, razred).
 import { ITEM, SLOTS, DEFAULT_AVATAR, COINS_PER_CORRECT, COINS_PER_DAY, cleanAvatar } from "../public/avatar.js";
+import { ensureKnowledgeTables } from "./zbirke.js";
 
 export function ensureAvatarTables(db) {
+  ensureKnowledgeTables(db); // predmeti za znanje (server/zbirke.js) so tudi del inventarja
   db.exec(`
     CREATE TABLE IF NOT EXISTS coin_events (
       id INTEGER PRIMARY KEY,
@@ -29,7 +31,7 @@ export function ensureAvatarTables(db) {
 export function publicAvatar(json) {
   if (!json) return null;
   try {
-    return cleanAvatar(JSON.parse(json), Object.keys(ITEM));
+    return cleanAvatar(JSON.parse(json), [], true);
   } catch {
     return null;
   }
@@ -46,8 +48,12 @@ export class Avatars {
   earnedToday(id) {
     return this.db.prepare("SELECT COALESCE(SUM(amount),0) AS s FROM coin_events WHERE student_id = ? AND amount > 0 AND date(created_at) = date('now')").get(id).s;
   }
+  // Kupljeni deli in predmeti za znanje (brez odvzetih).
   owned(id) {
-    return this.db.prepare("SELECT item FROM avatar_items WHERE student_id = ?").all(id).map((r) => r.item);
+    return this.db
+      .prepare("SELECT item FROM avatar_items WHERE student_id = ? UNION SELECT item FROM knowledge_items WHERE student_id = ? AND revoked_at IS NULL")
+      .all(id, id)
+      .map((r) => r.item);
   }
   // Izbrani deli; brez shranjenega avatarja null (drugi vidijo privzetega).
   equipped(id) {
@@ -69,6 +75,7 @@ export class Avatars {
   buy(id, itemId) {
     const x = ITEM[itemId];
     if (!x) return { error: "unknown" };
+    if (x.earn) return { error: "earn" }; // predmeti za znanje niso naprodaj
     if (x.price === 0 || this.owned(id).includes(x.id)) return { ok: true };
     this.db.exec("BEGIN IMMEDIATE");
     try {
@@ -107,7 +114,7 @@ export function mountAvatar(app, avatars, { loadStudent }) {
     const s = loadStudent(req, res);
     if (!s) return;
     const r = avatars.buy(s.id, String(req.body?.item || ""));
-    if (r.error) return res.status(400).json({ error: r.error === "coins" ? "Premalo kovancev." : "Neznan predmet." });
+    if (r.error) return res.status(400).json({ error: r.error === "coins" ? "Premalo kovancev." : r.error === "earn" ? "Ta predmet se odklene samo z znanjem." : "Neznan predmet." });
     res.json(avatars.view(s.id));
   });
   app.post("/api/students/:id/avatar", (req, res) => {

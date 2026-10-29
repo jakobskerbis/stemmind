@@ -86,6 +86,16 @@ export const freeDailyQuestions = () => {
   return Number.isFinite(v) && process.env.STEMMIND_FREE_DAILY_QUESTIONS ? v : 10;
 };
 
+// Brezplačni paket ne sme stati več, kot določi skrbnik (v dolarjih, kot zaračunava Claude API; 0 = brez omejitve).
+// Skupaj za vse brezplačne učence na mesec (10 $ ≈ 8,7 €) in na enega brezplačnega učenca na mesec.
+// 10 vprašanj na dan s Haikujem je največ ~0,14 $ na mesec, zato meja na učenca ujame le izjeme (veliko fotografij).
+const envUsd = (k, d) => {
+  const v = Number(process.env[k]);
+  return process.env[k] !== undefined && process.env[k] !== "" && Number.isFinite(v) ? v : d;
+};
+export const freeMonthlyPoolUsd = () => envUsd("STEMMIND_FREE_POOL_USD", 10);
+export const freeStudentMonthlyUsd = () => envUsd("STEMMIND_FREE_STUDENT_USD", 0.2);
+
 const PAID = new Set(["active", "trialing", "past_due"]);
 const later = (iso, now) => iso && Date.parse(iso.replace(" ", "T") + (iso.includes("Z") ? "" : "Z")) > now;
 

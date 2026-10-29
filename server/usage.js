@@ -29,6 +29,8 @@ export const EUR_PER_USD = () => num("STEMMIND_EUR_PER_USD", 0.87);
 // Opombe, ko je zmogljivejši model nadomeščen s hitrejšim (pokažejo se nad odgovorom).
 export const NOTES = {
   dailyDeep: (n) => `*(Danes si že ${n}× uporabil podrobno razlago z zmogljivejšim modelom. To razlago pripravi hitrejši model, ki dobro premisli. Jutri je zmogljivejši spet na voljo.)*\n\n`,
+  // Brezplačni paket: nikoli Opus, da brezplačni učenci ne porabijo plačanega dobroimetja.
+  free: "*(V brezplačnem paketu podrobno razlago pripravi hitrejši model, ki dobro premisli.)*\n\n",
   softBudget: "*(Ta mesec si že veliko uporabljal podrobne razlage. Do konca meseca jih pripravi hitrejši model, ki dobro premisli.)*\n\n",
 };
 
@@ -73,8 +75,10 @@ export class Usage {
   // Izbere način klica za sporočilo. Vrne { mode, note }: note je opomba za učenca,
   // kadar je zmogljivejši model zaradi omejitve nadomeščen.
   // wantThink: prva ponovna razlaga (Haiku z več razmisleka); wantDeep: ponovna prošnja zapored (Opus).
-  chooseMode(studentId, { wantDeep = false, wantThink = false, competition = false, lite = false, deepModel = "claude-opus" } = {}) {
+  // free: brezplačni paket (brez naročnine, preizkusa ali kode) nikoli ne dobi zmogljivejšega modela.
+  chooseMode(studentId, { wantDeep = false, wantThink = false, competition = false, lite = false, free = false, deepModel = "claude-opus" } = {}) {
     if (competition && !wantDeep && !LIMITS.competitionDeep()) return { mode: "think", note: null };
+    if (free && (wantDeep || competition)) return { mode: "think", note: wantDeep ? NOTES.free : null };
     if (wantDeep || competition) {
       const daily = LIMITS.dailyDeep();
       if (daily && this.deepToday(studentId, deepModel) >= daily) return { mode: "think", note: NOTES.dailyDeep(daily) };

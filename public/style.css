@@ -587,6 +587,9 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
 .tour-card h2 { margin: 4px 0 6px; font-size: 1.2rem; }
 .tour-card p { margin: 0; color: var(--muted); font-weight: 600; }
 .tour-actions { display: flex; justify-content: space-between; margin-top: 16px; }
+.tour-nav { display: flex; gap: 8px; }
+.tour-nav [hidden] { display: none; }
+.tour-card.center { top: 50% !important; bottom: auto !important; transform: translate(-50%, -50%); left: 50%; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

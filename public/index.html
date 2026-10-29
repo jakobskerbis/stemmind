@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="feedback.css">
   <link rel="stylesheet" href="graph.css">
   <link rel="stylesheet" href="games.css">
+  <link rel="stylesheet" href="zbirke.css">
   <link rel="stylesheet" href="schedule.css">
   <link rel="stylesheet" href="corner.css">
   <link rel="stylesheet" href="touch.css">
@@ -122,6 +123,14 @@
   <main id="view-games" class="view games-view" hidden>
     <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
     <div id="games-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
+  </main>
+
+  <!-- ZBIRKE IN UČNI PASS (zbirke-view.js) -->
+  <main id="view-zbirke" class="view narrow" hidden>
+    <button type="button" class="ghost back me-back"><i data-icon="arrow-left"></i><span data-i18n="nav.me">Jaz</span></button>
+    <button type="button" class="ghost back zb-back" hidden><i data-icon="arrow-left"></i><span data-i18n="games.back">Nazaj na igre</span></button>
+    <h1 class="with-icon"><i data-icon="award"></i> <span data-i18n="zb.title">Zbirke in učni pass</span></h1>
+    <div id="zbirke-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
   </main>
 
   <!-- KOTIČEK ZANIMANJ (corner.js): novice o izbranih temah, pripete novice, oglasna deska -->
@@ -326,6 +335,7 @@
       <div class="card"><span class="stat-ic xp"><i data-icon="star"></i></span><b id="me-xp">0</b><span>XP</span></div>
       <div class="card"><span class="stat-ic streak"><i data-icon="flame"></i></span><b id="me-streak">0</b><span data-i18n="me.streak">dni zapored</span></div>
     </div>
+    <button type="button" class="card list-row zb-me-card" id="me-zbirke" data-go="zbirke" hidden></button>
     <div class="card list-card">
       <button type="button" class="list-row" data-go="schedule"><span class="ic"><i data-icon="calendar-days"></i></span><span class="lr-text"><b data-i18n="sch.title">Urnik</b><small data-i18n="sch.meSub">Ure v tednu in datumi testov</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="games"><span class="ic"><i data-icon="gamepad-2"></i></span><span class="lr-text"><b data-i18n="nav.games">Igre</b><small data-i18n="games.meSub">Matematika skozi igro</small></span><i data-icon="chevron-right"></i></button>
@@ -383,7 +393,7 @@
       <div class="tour-step"></div>
       <h2 id="tour-title"></h2>
       <p class="tour-text"></p>
-      <div class="tour-actions"><button type="button" class="ghost" data-tour="skip" data-i18n="tour.skip">Preskoči</button><button type="button" class="primary" data-tour="next" data-i18n="tour.next">Naprej</button></div>
+      <div class="tour-actions"><button type="button" class="ghost" data-tour="skip" data-i18n="tour.skip">Preskoči</button><span class="tour-nav"><button type="button" class="secondary" data-tour="back" data-i18n="tb.steps.prev" hidden>Nazaj</button><button type="button" class="primary" data-tour="next" data-i18n="tour.next">Naprej</button></span></div>
     </div>
   </div>
 
