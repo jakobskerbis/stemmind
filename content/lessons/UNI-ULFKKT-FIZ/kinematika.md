@@ -5,11 +5,17 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Kinematika opiše gibanje, ne da bi spraševala po njegovem vzroku: kje je telo, kako hitro se giblje in kako se mu hitrost spreminja. V gimnaziji si gibanje obravnaval večinoma v eni razsežnosti in s formulami za posebne primere. Na fakulteti gibanje opišemo **vektorsko** in z **odvodi**: lega je funkcija časa $\vec{r}(t)$, hitrost je njen odvod, pospešek pa odvod hitrosti. Z enim samim zapisom tako zajamemo premo gibanje, poševni met in kroženje.
+Nejc kupuje rabljen avto. Prodajalec hvali, da pospeši od $0$ do $100\,\mathrm{km/h}$ v $8{,}0\,\mathrm{s}$, Nejca pa zanima nekaj drugega: ali mu bo kratek pospeševalni pas pred avtocesto dovolj, da se varno vključi. Potrebuje torej pot, ne čas, in prav to iz podatka o pospešku izračuna kinematika.
 
-Kinematika je jezik, v katerem boš pozneje zapisoval Newtonove zakone, nihanje, vrtenje in tok tekočin. Uporabljaš jo pri sledenju celicam pod mikroskopom, pri gibanju delcev v centrifugi ali kromatografski koloni, pri balistiki, robotiki in prometu.
+Kinematika opiše gibanje, ne da bi spraševala po vzroku: kje je telo, kako hitro se giblje in kako se mu hitrost spreminja. Na fakulteti to zapišemo **vektorsko** in z **odvodi**: lega je funkcija časa $\vec{r}(t)$, hitrost njen odvod, pospešek odvod hitrosti. En zapis zajame vožnjo po premici, poševni met in kroženje rotorja centrifuge; v istem jeziku boš pozneje pisal Newtonove zakone, nihanje in tok tekočin ter sledil celicam pod mikroskopom.
 
 ## Razlaga
+
+### En primer najprej
+
+Nejčev avto stoji, nato $8{,}0\,\mathrm{s}$ enakomerno pospešuje. Graf hitrosti v odvisnosti od časa je premica: njen naklon je pospešek, ploščina trikotnika pod njo pa prevožena pot. V tej sliki so že vsi pojmi kinematike; spodaj jih posplošimo na vektorje, krivo gibanje in kroženje.
+
+### Lega, hitrost in pospešek kot vektorji
 
 **1. Lega, premik in pot.** Lego točkastega telesa opišemo s krajevnim vektorjem $\vec{r}(t) = x(t)\,\vec{i} + y(t)\,\vec{j} + z(t)\,\vec{k}$ glede na izbrano izhodišče. **Premik** v časovnem intervalu je $\Delta\vec{r} = \vec{r}(t_2) - \vec{r}(t_1)$, **pot** $s$ pa dolžina krivulje, ki jo telo opiše. Premik je vektor, pot je skalar in je vedno vsaj tolikšna kot $|\Delta\vec{r}|$.
 
@@ -25,11 +31,19 @@ $$\vec{a} = \frac{\mathrm{d}\vec{v}}{\mathrm{d}t} = \frac{\mathrm{d}^2\vec{r}}{\
 
 Pospešek ni nič, kadar se spreminja velikost **ali** smer hitrosti. Zato ima pospešek tudi telo, ki enakomerno kroži.
 
+:::premisli
+Avto vozi po krožnem priključku avtoceste, merilnik ves čas kaže $60\,\mathrm{km/h}$. Ali avto pospešuje?
+---
+Da. Velikost hitrosti je stalna, smer pa se ves čas spreminja, zato je $\mathrm{d}\vec{v}/\mathrm{d}t \neq 0$. Pospešek kaže proti središču priključka; potnik ga čuti kot potisk proti zunanji strani.
+:::
+
 **4. Obratna pot: integriranje.** Če poznamo pospešek, hitrost in lego dobimo z integriranjem:
 
 $$\vec{v}(t) = \vec{v}_0 + \int_0^t \vec{a}\,\mathrm{d}t', \qquad \vec{r}(t) = \vec{r}_0 + \int_0^t \vec{v}\,\mathrm{d}t'.$$
 
 Začetna lega $\vec{r}_0$ in začetna hitrost $\vec{v}_0$ sta integracijski konstanti. Brez njih gibanje ni določeno.
+
+### Premo in krivo gibanje
 
 **5. Premo gibanje.** Pri premem gibanju zadošča ena koordinata $x(t)$.
 
@@ -39,6 +53,12 @@ Začetna lega $\vec{r}_0$ in začetna hitrost $\vec{v}_0$ sta integracijski kons
 $$v = v_0 + at, \qquad x = x_0 + v_0 t + \tfrac{1}{2}at^2, \qquad v^2 = v_0^2 + 2a(x - x_0).$$
 
 Tretjo enačbo dobimo, če iz prvih dveh izločimo čas. Prosti pad je poseben primer z $a = g \approx 9{,}81\,\mathrm{m/s^2}$ navzdol. V grafu $v(t)$ je pospešek naklon, ploščina pod krivuljo pa premik.
+
+:::premisli
+Avto z istimi zavorami enkrat zavira s $50\,\mathrm{km/h}$, drugič s $100\,\mathrm{km/h}$. Kolikokrat daljša je zavorna pot v drugem primeru in zakaj?
+---
+Štirikrat. Iz $v^2 = v_0^2 + 2a(x - x_0)$ pri končni hitrosti nič sledi $\Delta x = v_0^2/(2|a|)$: pot je sorazmerna s kvadratom začetne hitrosti, ker avto pri dvakratni hitrosti zavira dvakrat toliko časa in pri tem vozi v povprečju dvakrat hitreje.
+:::
 
 **6. Krivo gibanje v ravnini.** Ker je enačba $\vec{a} = \mathrm{d}\vec{v}/\mathrm{d}t$ vektorska, velja po komponentah. Pri stalnem pospešku je vsaka komponenta posebej enakomerno pospešeno gibanje. Pospešek pri krivem gibanju pogosto razstavimo na:
 
@@ -57,6 +77,8 @@ Vodoravno je gibanje enakomerno, navpično enakomerno pospešeno. Če iz $x(t)$ 
 $$t_{\text{let}} = \frac{2v_0\sin\alpha}{g}, \qquad h_{\max} = \frac{v_0^2\sin^2\alpha}{2g}, \qquad D = \frac{v_0^2\sin 2\alpha}{g}.$$
 
 Domet je največji pri $\alpha = 45^\circ$, koti $\alpha$ in $90^\circ - \alpha$ pa dasta enak domet. V najvišji točki je $v_y = 0$, hitrost pa ni nič: ostane $v_x$.
+
+### Kroženje in relativno gibanje
 
 **8. Kroženje.** Pri gibanju po krožnici s polmerom $r$ lego opišemo s kotom $\varphi(t)$. Vpeljemo:
 
@@ -79,7 +101,7 @@ Hitrosti se seštevajo vektorsko. Čoln, ki pluje s hitrostjo $3{,}0\,\mathrm{m/
 
 ### Primer 1 (lažji)
 
-Avtomobil iz mirovanja enakomerno pospešuje in v $8{,}0\,\mathrm{s}$ doseže hitrost $100\,\mathrm{km/h}$. Kolikšen je njegov pospešek in kolikšno pot pri tem prevozi?
+Nejčev izbrani avtomobil iz mirovanja enakomerno pospešuje in v $8{,}0\,\mathrm{s}$ doseže hitrost $100\,\mathrm{km/h}$. Kolikšen je njegov pospešek in kolikšno pot pri tem prevozi?
 
 **Podatki:** $v_0 = 0$, $v = 100\,\mathrm{km/h}$, $t = 8{,}0\,\mathrm{s}$
 **Iščemo:** pospešek $a$ in pot $s$
@@ -90,9 +112,9 @@ $v = v_0 + at$, $s = v_0 t + \tfrac{1}{2}at^2$
 
 **Rešitev:**
 
-1. Pretvorimo hitrost: $v = 100\,\mathrm{km/h} = 100/3{,}6\,\mathrm{m/s} \approx 27{,}8\,\mathrm{m/s}$.
-2. Pospešek: $a = (v - v_0)/t = 27{,}8\,\mathrm{m/s} / 8{,}0\,\mathrm{s} \approx 3{,}47\,\mathrm{m/s^2}$.
-3. Pot: $s = \tfrac{1}{2}at^2 = \tfrac{1}{2} \cdot 3{,}47\,\mathrm{m/s^2} \cdot (8{,}0\,\mathrm{s})^2 \approx 111\,\mathrm{m}$.
+1. Hitrost pretvorimo v $\mathrm{m/s}$, ker je čas v sekundah: $v = 100\,\mathrm{km/h} = 100/3{,}6\,\mathrm{m/s} \approx 27{,}8\,\mathrm{m/s}$.
+2. Pospešek je stalen, zato iz $v = v_0 + at$ sledi $a = (v - v_0)/t = 27{,}8\,\mathrm{m/s} / 8{,}0\,\mathrm{s} \approx 3{,}47\,\mathrm{m/s^2}$.
+3. Ker je $v_0 = 0$, ostane le člen s pospeškom: $s = \tfrac{1}{2}at^2 = \tfrac{1}{2} \cdot 3{,}47\,\mathrm{m/s^2} \cdot (8{,}0\,\mathrm{s})^2 \approx 111\,\mathrm{m}$.
 4. Preizkus s povprečno hitrostjo: $s = \tfrac{v_0 + v}{2}\,t = 13{,}9\,\mathrm{m/s} \cdot 8{,}0\,\mathrm{s} \approx 111\,\mathrm{m}$.
 5. Odgovor: pospešek je približno $3{,}47\,\mathrm{m/s^2}$, avtomobil pa prevozi približno $111\,\mathrm{m}$.
 
@@ -109,7 +131,7 @@ $v_x = v_0\cos\alpha$, $v_{0y} = v_0\sin\alpha$; $t_{\text{let}} = \dfrac{2v_{0y
 
 **Rešitev:**
 
-1. Komponenti začetne hitrosti: $v_x = 20 \cdot \cos 35^\circ\,\mathrm{m/s} \approx 16{,}4\,\mathrm{m/s}$, $v_{0y} = 20 \cdot \sin 35^\circ\,\mathrm{m/s} \approx 11{,}5\,\mathrm{m/s}$.
+1. Komponenti gibanja sta neodvisni, zato začetno hitrost razstavimo: $v_x = 20 \cdot \cos 35^\circ\,\mathrm{m/s} \approx 16{,}4\,\mathrm{m/s}$, $v_{0y} = 20 \cdot \sin 35^\circ\,\mathrm{m/s} \approx 11{,}5\,\mathrm{m/s}$.
 2. Žoga pristane, ko je spet $y = 0$: $v_{0y}t - \tfrac{1}{2}gt^2 = 0$, torej $t_{\text{let}} = 2v_{0y}/g = 2 \cdot 11{,}47 / 9{,}81\,\mathrm{s} \approx 2{,}34\,\mathrm{s}$.
 3. V najvišji točki je $v_y = 0$: $h_{\max} = v_{0y}^2/(2g) = 11{,}47^2 / (2 \cdot 9{,}81)\,\mathrm{m} \approx 6{,}71\,\mathrm{m}$.
 4. Vodoravno je gibanje enakomerno: $D = v_x t_{\text{let}} = 16{,}38\,\mathrm{m/s} \cdot 2{,}339\,\mathrm{s} \approx 38{,}3\,\mathrm{m}$.
@@ -129,13 +151,36 @@ $\alpha = \dfrac{\omega - \omega_0}{t}$, $a_t = \alpha r$, $a_r = \omega^2 r$, $
 
 **Rešitev:**
 
-1. Kotni pospešek: $\alpha = 20\,\mathrm{s^{-1}} / 4{,}0\,\mathrm{s} = 5{,}0\,\mathrm{s^{-2}}$.
+1. Kotni pospešek je stalen, zato $\alpha = 20\,\mathrm{s^{-1}} / 4{,}0\,\mathrm{s} = 5{,}0\,\mathrm{s^{-2}}$.
 2. Tangentni pospešek: $a_t = \alpha r = 5{,}0\,\mathrm{s^{-2}} \cdot 0{,}30\,\mathrm{m} = 1{,}5\,\mathrm{m/s^2}$. Ves čas pospeševanja je enak.
 3. Radialni pospešek na koncu: $a_r = \omega^2 r = (20\,\mathrm{s^{-1}})^2 \cdot 0{,}30\,\mathrm{m} = 120\,\mathrm{m/s^2}$.
 4. Celotni pospešek: $a = \sqrt{1{,}5^2 + 120^2}\,\mathrm{m/s^2} \approx 120\,\mathrm{m/s^2}$; radialni del močno prevlada.
-5. Zasučni kot: $\varphi = \tfrac{1}{2} \cdot 5{,}0\,\mathrm{s^{-2}} \cdot (4{,}0\,\mathrm{s})^2 = 40\,\mathrm{rad}$.
+5. Zasučni kot (enačba kot pri premem gibanju, le s kotnimi količinami): $\varphi = \tfrac{1}{2} \cdot 5{,}0\,\mathrm{s^{-2}} \cdot (4{,}0\,\mathrm{s})^2 = 40\,\mathrm{rad}$.
 6. Število obratov: $N = 40 / (2\pi) \approx 6{,}4$.
 7. Odgovor: ob koncu je $a_t = 1{,}5\,\mathrm{m/s^2}$, $a_r = 120\,\mathrm{m/s^2}$ in $a \approx 120\,\mathrm{m/s^2}$ (približno $12\,g$); rotor pri pospeševanju naredi približno $6{,}4$ obrata.
+
+### Primer 4 – zdaj ti
+
+Dostavni dron s paketom iz spletne trgovine leti vodoravno s hitrostjo $10\,\mathrm{m/s}$ na višini $20\,\mathrm{m}$ nad dvoriščem. Koliko metrov pred ciljem (vodoravno) mora spustiti paket, da pade točno na cilj? S kolikšno hitrostjo paket zadene tla? Zračni upor zanemari, $g = 9{,}81\,\mathrm{m/s^2}$.
+
+**Podatki:** $v_x = 10\,\mathrm{m/s}$, $v_{0y} = 0$, $h = 20\,\mathrm{m}$, $g = 9{,}81\,\mathrm{m/s^2}$
+**Iščemo:** vodoravno razdaljo $D$, hitrost ob pristanku $v$
+
+:::formula
+$h = \tfrac{1}{2}gt^2$, $D = v_x t$, $v_y = gt$, $v = \sqrt{v_x^2 + v_y^2}$
+:::
+
+**Rešitev:**
+
+1. Paket ima ob spustu hitrost drona, zato je $v_x = 10\,\mathrm{m/s}$ in $v_{0y} = 0$; vodoravno se giblje enakomerno, navpično prosto pada.
+2. Čas padca določa le navpično gibanje: $t = \sqrt{2h/g} = \sqrt{2 \cdot 20/9{,}81}\,\mathrm{s} \approx 2{,}02\,\mathrm{s}$.
+3. Izračunaj $D$ in $v$ sam, nato preveri:
+
+:::premisli
+Kolikšna sta $D$ in hitrost paketa ob pristanku?
+---
+$D = 10\,\mathrm{m/s} \cdot 2{,}02\,\mathrm{s} \approx 20{,}2\,\mathrm{m}$. Navpična hitrost je $v_y = 9{,}81 \cdot 2{,}02\,\mathrm{m/s} \approx 19{,}8\,\mathrm{m/s}$, zato $v = \sqrt{10^2 + 19{,}8^2}\,\mathrm{m/s} \approx 22{,}2\,\mathrm{m/s}$.
+:::
 
 ## Pogoste napake
 
@@ -218,24 +263,40 @@ Ker je $|\vec{e}_t| = 1$, je $\mathrm{d}\vec{e}_t/\mathrm{d}t$ pravokoten na $\v
 
 ? Telo se giblje po premici z $x(t) = 2{,}0\,\mathrm{m/s^3} \cdot t^3$. Kolikšen je pospešek ob $t = 1{,}0\,\mathrm{s}$?
 - $6{,}0\,\mathrm{m/s^2}$
+~ To je vrednost hitrosti $\dot{x}$ ob $t = 1{,}0\,\mathrm{s}$; za pospešek moraš odvajati še enkrat.
 + $12\,\mathrm{m/s^2}$
 - $2{,}0\,\mathrm{m/s^2}$
+~ To je le koeficient pred $t^3$; pospešek dobiš šele z dvakratnim odvajanjem lege.
 > $v = \dot{x} = 6{,}0\,\mathrm{m/s^3} \cdot t^2$, $a = \dot{v} = 12\,\mathrm{m/s^3} \cdot t$, kar je ob $t = 1{,}0\,\mathrm{s}$ enako $12\,\mathrm{m/s^2}$. $6{,}0\,\mathrm{m/s^2}$ je vrednost hitrosti (v $\mathrm{m/s}$), ne pospeška.
 
 ? Kakšna je hitrost žoge v najvišji točki poševnega meta z $v_0$ pod kotom $\alpha$?
 - Nič.
+~ Nič je le navpična komponenta; vodoravna komponenta se med letom ne spremeni, ker vodoravno ni pospeška.
 - $v_0\sin\alpha$
+~ To je začetna navpična komponenta, ki se do vrha zmanjša ravno na nič.
 + $v_0\cos\alpha$
 > V najvišji točki je navpična komponenta nič, vodoravna pa je ves čas enaka $v_0\cos\alpha$.
 
 ? Pri katerem paru kotov ima poševni met z vodoravnih tal enak domet (brez upora)?
 + $30^\circ$ in $60^\circ$
 - $30^\circ$ in $45^\circ$
+~ Pri $45^\circ$ je domet največji in ga noben drug kot ne doseže; $\sin 60^\circ \neq \sin 90^\circ$.
 - $20^\circ$ in $40^\circ$
+~ Drugi kot ni dvakratnik prvega, ampak dopolnilo do $90^\circ$; $\sin 40^\circ \neq \sin 80^\circ$.
 > $D \propto \sin 2\alpha$ in $\sin 60^\circ = \sin 120^\circ$. Kota, ki se seštejeta v $90^\circ$, dasta enak domet.
 
 ? Točka na obodu kolesa s polmerom $0{,}50\,\mathrm{m}$ enakomerno kroži s $2{,}0$ obrata na sekundo. Kolikšen je njen radialni pospešek?
 - $6{,}3\,\mathrm{m/s^2}$
+~ To je obodna hitrost $v = \omega r$ v $\mathrm{m/s}$; radialni pospešek je $\omega^2 r$.
 - $2{,}0\,\mathrm{m/s^2}$
+~ To je frekvenca v obratih na sekundo; najprej izračunaj $\omega = 2\pi\nu$.
 + $79\,\mathrm{m/s^2}$
 > $\omega = 2\pi \cdot 2{,}0\,\mathrm{s^{-1}} \approx 12{,}6\,\mathrm{s^{-1}}$, $a_r = \omega^2 r \approx 158 \cdot 0{,}50\,\mathrm{m/s^2} \approx 79\,\mathrm{m/s^2}$. $6{,}3\,\mathrm{m/s^2}$ je napačno, ker je to obodna hitrost $v = \omega r$ v $\mathrm{m/s}$.
+
+? Kupec gre od vhoda trgovine po vseh hodnikih do blagajne. Dve od naštetih količin njegovega gibanja sta vektorja, ena je skalar. Katera je izjema?
+- Premik.
+~ Premik je razlika krajevnih vektorjev $\vec{r}(t_2) - \vec{r}(t_1)$ in ima smer: od vhoda proti blagajni.
++ Pot.
+- Pospešek.
+~ Pospešek je odvod vektorja hitrosti in ima smer, npr. pri zavijanju okoli police kaže proti središču zavoja.
+> Pot je dolžina krivulje, ki jo kupec prehodi, in nima smeri; zato je vedno vsaj tolikšna kot velikost premika.

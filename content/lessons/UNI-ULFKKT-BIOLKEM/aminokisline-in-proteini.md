@@ -5,25 +5,28 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Jajčni beljak je prozoren in tekoč. Ko ga segreješ ali vanj kapneš kis, postane bel in čvrst. Kemijska sestava se pri tem skoraj ne spremeni. Spremeni pa se oblika proteinskih verig: razvijejo se in sprimejo.
+Veslačica Maja si po treningu speče jajčne beljake. Prozorna tekočina v ponvi postane bela in čvrsta. Enako se zgodi beljaku v kozarcu, v katerega je trener za šalo kapnil kis. Kemijska sestava se pri tem skoraj ne spremeni: proteinske verige se le razvijejo in sprimejo. Maja bi rada vedela, kaj je verige prej držalo zvite in zakaj jih kis razvije.
 
-Proteini so verige aminokislin. Kako se veriga zvije, je odvisno od nabojev in vezi med aminokislinami. Naboj aminokislin je odvisen od pH. Zato moraš znati iz pH napovedati naboj. Le tako razumeš, zakaj encim deluje le v ozkem območju pH, kako ločimo proteine z elektroforezo in zakaj ena zamenjana aminokislina povzroči srpastocelično anemijo.
+Odgovor so naboji aminokislin, ki so odvisni od pH. Kdor zna iz pH napovedati naboj, razume tudi, zakaj encim deluje le v ozkem območju pH, kako ločimo proteine z elektroforezo in zakaj ena zamenjana aminokislina povzroči srpastocelično anemijo.
 
 ## Razlaga
 
-**1. Zgradba aminokisline.** Na osrednji ogljik $\mathrm{C_\alpha}$ so vezani štirje deli: amino skupina $-\mathrm{NH_2}$, karboksilna skupina $-\mathrm{COOH}$, vodik in **stranska veriga** $R$. V proteinih je 20 standardnih aminokislin, ki se razlikujejo le po $R$. Razen glicina ($R = \mathrm{H}$) imajo vse kiralen $\mathrm{C_\alpha}$; v proteinih so vse v obliki L.
+### Ena aminokislina, dvajset različic
 
-Po stranski verigi jih razvrstimo v skupine: nepolarne (Gly, Ala, Val, Leu, Ile, Met, Phe, Trp, Pro), polarne nenabite (Ser, Thr, Asn, Gln, Cys, Tyr), kisle (Asp, Glu) in bazične (Lys, Arg, His).
+Na osrednji ogljik $\mathrm{C_\alpha}$ so vezani štirje deli: amino skupina $-\mathrm{NH_2}$, karboksilna skupina $-\mathrm{COOH}$, vodik in **stranska veriga** $R$. V proteinih je 20 standardnih aminokislin, ki se razlikujejo le po $R$. Razen glicina ($R = \mathrm{H}$) imajo vse kiralen $\mathrm{C_\alpha}$; v proteinih so vse v obliki L.
 
-**2. Ionizacija in Henderson-Hasselbalchova enačba.** Kislina $\mathrm{HA}$ odda proton in nastane konjugirana baza $\mathrm{A^-}$. Razmerje obeh oblik pri danem pH pove **Henderson-Hasselbalchova enačba**:
+Po stranski verigi jih razvrstimo v štiri skupine:
 
-$$\mathrm{pH} = \mathrm{p}K_\mathrm{a} + \log\frac{[\mathrm{A^-}]}{[\mathrm{HA}]}$$
+| skupina | aminokisline |
+|---|---|
+| nepolarne | Gly, Ala, Val, Leu, Ile, Met, Phe, Trp, Pro |
+| polarne nenabite | Ser, Thr, Asn, Gln, Cys, Tyr |
+| kisle | Asp, Glu |
+| bazične | Lys, Arg, His |
 
-Pri $\mathrm{pH} = \mathrm{p}K_\mathrm{a}$ sta obliki v razmerju $1:1$. Vsaka enota pH nad $\mathrm{p}K_\mathrm{a}$ pomeni desetkrat več deprotonirane oblike. Preprosto pravilo: pri pH pod $\mathrm{p}K_\mathrm{a}$ skupina večinoma *nosi* proton, nad njim ga je *oddala*.
+### Naboj na številski premici pH
 
-**3. Ion dvojček.** Karboksilna skupina na $\mathrm{C_\alpha}$ ima $\mathrm{p}K_\mathrm{a} \approx 2$, amino skupina $\mathrm{p}K_\mathrm{a} \approx 9$ do $10$. Pri $\mathrm{pH}\ 7$ je zato $-\mathrm{COOH}$ oddala proton ($-\mathrm{COO^-}$), $-\mathrm{NH_2}$ pa ga je sprejela ($-\mathrm{NH_3^+}$). Molekula ima oba naboja, skupni naboj pa je nič. Taki obliki rečemo **ion dvojček**.
-
-Glicin ($\mathrm{p}K_1 = 2{,}34$, $\mathrm{p}K_2 = 9{,}60$) na številski premici pH:
+Najprej slika. Glicin ($\mathrm{p}K_1 = 2{,}34$, $\mathrm{p}K_2 = 9{,}60$) na številski premici pH:
 
 ```
 pH:   0 ------ 2,34 ------------ 9,60 ------ 14
@@ -31,9 +34,19 @@ oblika:  H3N+–COOH | H3N+–COO– | H2N–COO–
 naboj:      +1     |     0     |    –1
 ```
 
-Pri vsakem $\mathrm{p}K$ je povprečni naboj natanko na sredi med sosednjima oblikama, npr. $+0{,}5$ pri $\mathrm{pH} = 2{,}34$.
+Vsak $\mathrm{p}K$ je meja na premici. Levo od nje (pH pod $\mathrm{p}K_\mathrm{a}$) skupina večinoma *nosi* proton, desno ga je *oddala*. Pri vsakem $\mathrm{p}K$ je povprečni naboj natanko na sredi med sosednjima oblikama, npr. $+0{,}5$ pri $\mathrm{pH} = 2{,}34$.
 
-**4. Izoelektrična točka.** **Izoelektrična točka** $\mathrm{pI}$ je pH, pri katerem je povprečni skupni naboj molekule nič. Leži na sredi med obema $\mathrm{p}K$, ki obdajata nevtralno obliko:
+Karboksilna skupina na $\mathrm{C_\alpha}$ ima $\mathrm{p}K_\mathrm{a} \approx 2$, amino skupina $\mathrm{p}K_\mathrm{a} \approx 9$ do $10$. Pri $\mathrm{pH}\ 7$, v srednjem polju premice, je zato $-\mathrm{COOH}$ oddala proton ($-\mathrm{COO^-}$), $-\mathrm{NH_2}$ pa ga je sprejela ($-\mathrm{NH_3^+}$). Molekula ima oba naboja, skupni naboj pa je nič. Taki obliki rečemo **ion dvojček**.
+
+### Kako ostra je meja: Henderson-Hasselbalchova enačba
+
+Kislina $\mathrm{HA}$ odda proton in nastane konjugirana baza $\mathrm{A^-}$. Pri $\mathrm{pH} = \mathrm{p}K_\mathrm{a}$ sta obliki v razmerju $1:1$. Vsaka enota pH nad $\mathrm{p}K_\mathrm{a}$ pomeni desetkrat več deprotonirane oblike. Natančno razmerje pri danem pH pove **Henderson-Hasselbalchova enačba**:
+
+$$\mathrm{pH} = \mathrm{p}K_\mathrm{a} + \log\frac{[\mathrm{A^-}]}{[\mathrm{HA}]}$$
+
+### Izoelektrična točka
+
+**Izoelektrična točka** $\mathrm{pI}$ je pH, pri katerem je povprečni skupni naboj molekule nič. Na premici je to sredina polja z nabojem $0$, torej med obema $\mathrm{p}K$, ki obdajata nevtralno obliko:
 
 $$\mathrm{pI} = \frac{\mathrm{p}K_\text{pred} + \mathrm{p}K_\text{za}}{2}$$
 
@@ -45,9 +58,11 @@ Aspartat ima v stranski verigi še eno karboksilno skupino ($\mathrm{p}K_R = 3{,
 Nižji. Dodatna kisla skupina pri $\mathrm{pH}$ nad $3{,}65$ prinese še en negativni naboj. Nevtralna oblika zato obstaja le pri nizkem pH, med $\mathrm{p}K_1$ in $\mathrm{p}K_R$, in $\mathrm{pI}$ leži okoli $2{,}8$.
 :::
 
-**5. Peptidna vez.** Karboksilna skupina ene aminokisline in amino skupina druge se povežeta z odcepom vode. Nastane **peptidna vez** $-\mathrm{CO-NH}-$. Veriga ima smer: začne se s prosto amino skupino (**N-konec**) in konča s prosto karboksilno skupino (**C-konec**). Peptidna vez ima delni značaj dvojne vezi, zato je skupina $\mathrm{C_\alpha{-}CO{-}NH{-}C_\alpha}$ ravninska in skoraj vedno v obliki trans. Vrtenje je mogoče le okoli vezi na $\mathrm{C_\alpha}$; kota vrtenja imenujemo $\varphi$ in $\psi$.
+### Peptidna vez
 
-**6. Štiri ravni zgradbe.**
+Karboksilna skupina ene aminokisline in amino skupina druge se povežeta z odcepom vode. Nastane **peptidna vez** $-\mathrm{CO-NH}-$. Veriga ima smer: začne se s prosto amino skupino (**N-konec**) in konča s prosto karboksilno skupino (**C-konec**). Peptidna vez ima delni značaj dvojne vezi, zato je skupina $\mathrm{C_\alpha{-}CO{-}NH{-}C_\alpha}$ ravninska in skoraj vedno v obliki trans. Vrtenje je mogoče le okoli vezi na $\mathrm{C_\alpha}$; kota vrtenja imenujemo $\varphi$ in $\psi$.
+
+### Štiri ravni zgradbe
 
 | raven | kaj opisuje | kaj jo drži |
 |---|---|---|
@@ -58,7 +73,9 @@ Nižji. Dodatna kisla skupina pri $\mathrm{pH}$ nad $3{,}65$ prinese še en nega
 
 V **α-vijačnici** tvori $\mathrm{C{=}O}$ aminokisline $n$ vodikovo vez z $\mathrm{N{-}H}$ aminokisline $n+4$. En zavoj obsega $3{,}6$ aminokisline in je visok $0{,}54\,\mathrm{nm}$; na aminokislino pride $0{,}15\,\mathrm{nm}$ dolžine. Stranske verige štrlijo navzven. V **β-ploskvi** ležijo iztegnjeni odseki verige drug ob drugem (vzporedno ali protivzporedno), vodikove vezi pa so med sosednjimi odseki.
 
-**7. Hidrofobni učinek.** V vodi se nepolarne stranske verige zberejo v notranjosti proteina, polarne in nabite pa ostanejo na površini. To je glavna gonilna sila zvijanja v terciarno zgradbo. Ionske vezi (npr. Lys$^+$ z Asp$^-$) in disulfidni mostički med dvema Cys obliko dodatno utrdijo.
+### Hidrofobni učinek
+
+V vodi se nepolarne stranske verige zberejo v notranjosti proteina, polarne in nabite pa ostanejo na površini. To je glavna gonilna sila zvijanja v terciarno zgradbo. Ionske vezi (npr. Lys$^+$ z Asp$^-$) in disulfidni mostički med dvema Cys obliko dodatno utrdijo.
 
 :::premisli
 Zakaj ekstremen pH (npr. kis v beljaku) proteine denaturira, čeprav peptidnih vezi ne pretrga?
@@ -66,7 +83,9 @@ Zakaj ekstremen pH (npr. kis v beljaku) proteine denaturira, čeprav peptidnih v
 Ker spremeni naboje stranskih verig. Pri nizkem pH Asp in Glu sprejmeta proton in izgubita negativni naboj. Ionske vezi z Lys in Arg razpadejo, enako nabite skupine se odbijajo in veriga se razvije. Primarna zgradba ostane, terciarna se podre.
 :::
 
-**8. Denaturacija in zvijanje.** **Denaturacija** je izguba sekundarne, terciarne in kvartarne zgradbe brez pretrganja peptidnih vezi. Povzročijo jo toplota, ekstremen pH, sečnina ali detergenti. Ker zaporedje ostane, se nekateri proteini po odstranitvi denaturanta sami spet pravilno zvijejo. Iz tega sklepamo, da primarna zgradba določa prostorsko obliko.
+### Denaturacija in zvijanje
+
+**Denaturacija** je izguba sekundarne, terciarne in kvartarne zgradbe brez pretrganja peptidnih vezi. Povzročijo jo toplota, ekstremen pH, sečnina ali detergenti. Ker zaporedje ostane, se nekateri proteini po odstranitvi denaturanta sami spet pravilno zvijejo. Iz tega sklepamo, da primarna zgradba določa prostorsko obliko.
 
 ## Rešeni primeri
 
@@ -89,7 +108,7 @@ $\mathrm{pI} = \dfrac{\mathrm{p}K_1 + \mathrm{p}K_2}{2}$
 
 ### Primer 2: delež protonirane oblike histidina
 
-Imidazolna skupina v stranski verigi histidina ima $\mathrm{p}K_R = 6{,}0$. Kolikšen delež teh skupin je protoniran (pozitivno nabit) pri $\mathrm{pH} = 7{,}0$?
+Mišice šprinterjev vsebujejo veliko karnozina, dipeptida s histidinom, ki med sprintom lovi protone. Imidazolna skupina v stranski verigi prostega histidina ima $\mathrm{p}K_R = 6{,}0$. Kolikšen delež teh skupin je protoniran (pozitivno nabit) pri $\mathrm{pH} = 7{,}0$?
 
 **Podatki:** $\mathrm{p}K_R = 6{,}0$, $\mathrm{pH} = 7{,}0$
 **Iščemo:** delež protonirane oblike $\mathrm{HA}$

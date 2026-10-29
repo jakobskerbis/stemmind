@@ -5,11 +5,13 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Tekočine (kapljevine in plini) so povsod: kri v žilah, voda v vodovodu, zrak okoli letalskega krila, reakcijska zmes v ceveh kemijskega obrata, sok v ksilemu rastline. Ker tekočina nima stalne oblike, je ne opisujemo s silami na posamezna telesa, ampak s **tlakom**, **gostoto** in **hitrostjo toka** v vsaki točki.
+Na počitnicah se potopiš $15\,\mathrm{m}$ globoko: kolikokrat večji tlak pritiska na bobniče kot na plaži? Skoraj dvainpolkrat, kot pokaže Primer 1. Astronavti vadijo vesoljske sprehode v $12\,\mathrm{m}$ globokem bazenu, kjer jih vzgon drži v lebdenju kot v breztežnosti. Ko na vrtni cevi s palcem pokriješ del odprtine, curek brizgne dlje. Ker tekočina nima stalne oblike, jo opišemo s **tlakom**, **gostoto** in **hitrostjo toka** v vsaki točki.
 
-V tej lekciji najprej obravnavamo tekočino v mirovanju (**hidrostatika**: tlak z globino, Pascalov zakon, vzgon), nato pa tok **idealne tekočine** z dvema osnovnima enačbama. **Kontinuitetna enačba** izraža ohranitev mase, **Bernoullijeva enačba** pa ohranitev energije. Z njima razložimo, zakaj voda iz zožene šobe brizga hitreje, kako deluje merilnik pretoka, zakaj streha med viharjem odleti in kako hitro izteka voda iz rezervoarja.
+Najprej mirujoča tekočina (**hidrostatika**: tlak z globino, Pascalov zakon, vzgon), nato tok **idealne tekočine**: **kontinuitetna enačba** izraža ohranitev mase, **Bernoullijeva enačba** ohranitev energije. Z njima izračunaš tlak v vodovodu v drugem nadstropju, pretok v cevi kemijskega obrata in hitrost iztekanja iz rezervoarja, tudi na Marsu.
 
 ## Razlaga
+
+### Tekočina v mirovanju
 
 **1. Tlak in gostota.** Tlak je sila na enoto ploščine, ki deluje pravokotno na ploskev: $p = F/S$. Enota je pascal, $1\,\mathrm{Pa} = 1\,\mathrm{N/m^2}$; pogosto uporabljamo tudi $1\,\mathrm{bar} = 10^5\,\mathrm{Pa}$, normalni zračni tlak je $p_0 \approx 1{,}013 \cdot 10^5\,\mathrm{Pa}$. Gostota je $\rho = m/V$, za vodo $\rho \approx 1000\,\mathrm{kg/m^3}$, za zrak pri sobnih pogojih okoli $1{,}2\,\mathrm{kg/m^3}$. Kapljevine so skoraj nestisljive, zato je njihova gostota praktično stalna.
 
@@ -19,13 +21,25 @@ $$p(h) = p_0 + \rho g h,$$
 
 kjer je $h$ globina pod gladino, na kateri je tlak $p_0$. Tlak je odvisen le od globine, ne od oblike posode (hidrostatski paradoks). Razliko $p - p_0$ imenujemo nadtlak; manometri običajno kažejo nadtlak, barometri pa absolutni tlak.
 
+*Hiter preizkus:* je tlak na dnu ozke, $10\,\mathrm{m}$ visoke cevi z vodo manjši kot na dnu $10\,\mathrm{m}$ globokega jezera? *(Ne, enak je: šteje le globina.)*
+
 **3. Pascalov zakon.** Tlak, ki ga od zunaj povečamo na zaprto tekočino, se prenese nespremenjen na vse dele tekočine in na stene posode. Na tem temeljijo hidravlične stiskalnice in zavore: pri ploščinah batov $S_1$ in $S_2$ je $F_2 = F_1 S_2/S_1$.
+
+*Hiter preizkus:* veliki bat ima $50$-krat večjo ploščino od malega, na mali pritisneš s $100\,\mathrm{N}$. Kolikšna je sila velikega bata? *($5000\,\mathrm{N}$.)*
 
 **4. Vzgon (Arhimedov zakon).** Na telo, potopljeno v tekočino, deluje navzgor sila, enaka teži izpodrinjene tekočine:
 
 $$F_{vz} = \rho_{\text{tek}}\,g\,V_{\text{pot}}.$$
 
 Vzgon nastane, ker je tlak na spodnjo ploskev telesa večji kot na zgornjo. Telo plava, če je njegova povprečna gostota manjša od gostote tekočine; takrat je potopljeni delež prostornine enak $\rho_{\text{telo}}/\rho_{\text{tek}}$.
+
+:::premisli
+Železna in lesena kocka enake prostornine sta v vodi popolnoma potopljeni (leseno držiš pod gladino). Na katero deluje večji vzgon?
+---
+Na obe enak. Vzgon je teža izpodrinjene vode, ta pa je odvisna le od potopljene prostornine in gostote vode, ne od snovi kocke. Železna potone, ker je njena teža večja od vzgona.
+:::
+
+### Tekočina v toku
 
 **5. Opis toka.** Pri **stacionarnem toku** se hitrost v vsaki točki s časom ne spreminja. Črte, ki so v vsaki točki tangentne na hitrost, so **tokovnice**; snop tokovnic tvori **tokovno cev**. **Idealna tekočina** je nestisljiva in brez notranjega trenja (neviskozna). Ta model dobro opiše vodo in zrak pri zmernih hitrostih, kadar nas ne zanimajo izgube ob stenah.
 
@@ -34,6 +48,12 @@ Vzgon nastane, ker je tlak na spodnjo ploskev telesa večji kot na zgornjo. Telo
 $$\rho_1 S_1 v_1 = \rho_2 S_2 v_2, \qquad \text{za nestisljivo tekočino } S_1v_1 = S_2v_2.$$
 
 Kjer se cev zoži, se tok pospeši. Pri okroglem preseku je $S = \pi d^2/4$, zato je hitrost obratno sorazmerna s **kvadratom** premera. Če se cev razveja, je pretok v glavni cevi enak vsoti pretokov v vejah.
+
+:::premisli
+V ožjem delu vodoravne cevi voda teče hitreje. Napovej: je tlak tam večji ali manjši kot v širšem delu? Zakaj?
+---
+Manjši. Voda se pri vstopu v zožitev pospeši, za pospešek pa mora nanjo delovati rezultanta tlačnih sil v smeri toka. Tlak za njo (v širšem delu) mora biti torej večji od tlaka pred njo (v ožjem delu). Bernoullijeva enačba to pove kvantitativno.
+:::
 
 **7. Bernoullijeva enačba.** Za stacionaren tok idealne tekočine vzdolž tokovnice velja
 
@@ -46,6 +66,8 @@ kjer je $z$ višina nad izbrano ravnino. Členi imajo enoto tlaka in pomenijo en
 - **Torricellijev izrek:** voda izteka iz odprtine na globini $h$ pod gladino velikega odprtega rezervoarja s hitrostjo $v = \sqrt{2gh}$, enako kot pri prostem padu z višine $h$ (tlak je na gladini in v curku enak $p_0$, gladina se skoraj ne premika).
 - **Venturijev merilnik:** v vodoravni zoženi cevi izmerimo razliko tlakov $\Delta p = p_1 - p_2 = \tfrac{1}{2}\rho(v_2^2 - v_1^2)$ in s kontinuitetno enačbo izračunamo pretok.
 - **Dinamični vzgon:** nad ukrivljenim krilom se zrak giblje hitreje kot pod njim, zato je tlak zgoraj manjši.
+
+*Hiter preizkus:* s kolikšno hitrostjo izteka voda iz odprtine $20\,\mathrm{m}$ pod gladino? *(Okoli $19{,}8\,\mathrm{m/s}$, kot kamen po padcu z $20\,\mathrm{m}$.)*
 
 **9. Postopek reševanja.** (1) Izberi dve točki na isti tokovnici, kjer poznaš čim več količin. (2) Iz kontinuitetne enačbe poveži hitrosti. (3) Zapiši Bernoullijevo enačbo med točkama. (4) Reši za neznanko in preveri, ali je tlak smiseln (absolutni tlak ne more biti negativen).
 
@@ -64,8 +86,8 @@ $p = p_0 + \rho g h$
 
 **Rešitev:**
 
-1. Nadtlak: $\rho g h = 1025\,\mathrm{kg/m^3} \cdot 9{,}81\,\mathrm{m/s^2} \cdot 15\,\mathrm{m} \approx 1{,}508 \cdot 10^5\,\mathrm{Pa}$.
-2. Absolutni tlak: $p = 1{,}013 \cdot 10^5\,\mathrm{Pa} + 1{,}508 \cdot 10^5\,\mathrm{Pa} \approx 2{,}52 \cdot 10^5\,\mathrm{Pa}$.
+1. Nadtlak nastane zaradi teže vode nad potapljačem: $\rho g h = 1025\,\mathrm{kg/m^3} \cdot 9{,}81\,\mathrm{m/s^2} \cdot 15\,\mathrm{m} \approx 1{,}508 \cdot 10^5\,\mathrm{Pa}$.
+2. Na gladino pritiska še zrak, zato mu nadtlak prištejemo: $p = 1{,}013 \cdot 10^5\,\mathrm{Pa} + 1{,}508 \cdot 10^5\,\mathrm{Pa} \approx 2{,}52 \cdot 10^5\,\mathrm{Pa}$.
 3. Odgovor: nadtlak je približno $1{,}51 \cdot 10^5\,\mathrm{Pa}$ (okoli $1{,}5\,\mathrm{bar}$), absolutni tlak pa približno $2{,}52 \cdot 10^5\,\mathrm{Pa}$, kar je dva in pol krat več kot na gladini.
 
 ### Primer 2
@@ -81,7 +103,7 @@ $\Phi_V = S_1v_1$, $S = \dfrac{\pi d^2}{4}$, $S_1v_1 = S_2v_2 \Rightarrow v_2 = 
 
 **Rešitev:**
 
-1. Presek cevi: $S_1 = \pi (0{,}020\,\mathrm{m})^2/4 \approx 3{,}14 \cdot 10^{-4}\,\mathrm{m^2}$.
+1. Presek cevi (premer v metrih, da dobimo $\mathrm{m^2}$): $S_1 = \pi (0{,}020\,\mathrm{m})^2/4 \approx 3{,}14 \cdot 10^{-4}\,\mathrm{m^2}$.
 2. Pretok: $\Phi_V = 3{,}14 \cdot 10^{-4}\,\mathrm{m^2} \cdot 1{,}5\,\mathrm{m/s} \approx 4{,}71 \cdot 10^{-4}\,\mathrm{m^3/s} = 0{,}471\,\mathrm{L/s}$.
 3. Razmerje premerov je $2$, razmerje presekov $4$, zato $v_2 = 4 \cdot 1{,}5\,\mathrm{m/s} = 6{,}0\,\mathrm{m/s}$.
 4. Odgovor: pretok je približno $0{,}47\,\mathrm{L/s}$, voda pa iz šobe izteka s hitrostjo $6{,}0\,\mathrm{m/s}$.
@@ -99,21 +121,44 @@ $v_2 = v_1\left(\dfrac{d_1}{d_2}\right)^2$; $p_1 + \tfrac{1}{2}\rho v_1^2 + \rho
 
 **Rešitev:**
 
-1. Kontinuiteta: $v_2 = 0{,}80\,\mathrm{m/s} \cdot (3{,}0/1{,}5)^2 = 3{,}2\,\mathrm{m/s}$.
+1. Kontinuiteta (presek je štirikrat manjši, pretok pa enak): $v_2 = 0{,}80\,\mathrm{m/s} \cdot (3{,}0/1{,}5)^2 = 3{,}2\,\mathrm{m/s}$.
 2. Iz Bernoullijeve enačbe: $p_2 = p_1 + \tfrac{1}{2}\rho(v_1^2 - v_2^2) - \rho g(z_2 - z_1)$.
-3. Kinetični člen: $\tfrac{1}{2} \cdot 1000 \cdot (0{,}64 - 10{,}24)\,\mathrm{Pa} = -4800\,\mathrm{Pa}$.
-4. Višinski člen: $1000 \cdot 9{,}81 \cdot 6{,}0\,\mathrm{Pa} = 58\,860\,\mathrm{Pa}$.
+3. Kinetični člen je negativen, ker voda zgoraj teče hitreje: $\tfrac{1}{2} \cdot 1000 \cdot (0{,}64 - 10{,}24)\,\mathrm{Pa} = -4800\,\mathrm{Pa}$.
+4. Višinski člen (delo za dvig vode za $6{,}0\,\mathrm{m}$ na enoto prostornine): $1000 \cdot 9{,}81 \cdot 6{,}0\,\mathrm{Pa} = 58\,860\,\mathrm{Pa}$.
 5. $p_2 = 300\,000\,\mathrm{Pa} - 4800\,\mathrm{Pa} - 58\,860\,\mathrm{Pa} \approx 2{,}36 \cdot 10^5\,\mathrm{Pa}$.
 6. Odgovor: v zgornji cevi voda teče s hitrostjo $3{,}2\,\mathrm{m/s}$ pri tlaku približno $2{,}36 \cdot 10^5\,\mathrm{Pa}$; tlak se zmanjša predvsem zaradi višinske razlike, manj zaradi večje hitrosti.
 
+### Primer 4 – zdaj ti
+
+V rastlinjaku marsovske baze stoji velik odprt rezervoar za zalivanje. Na dnu, $1{,}8\,\mathrm{m}$ pod gladino, je majhna odprtina s premerom $1{,}0\,\mathrm{cm}$. Težni pospešek na Marsu je $3{,}71\,\mathrm{m/s^2}$, zrak v bazi ima povsod enak tlak. S kolikšno hitrostjo in s kolikšnim pretokom izteka voda?
+
+**Podatki:** $h = 1{,}8\,\mathrm{m}$, $d = 1{,}0\,\mathrm{cm} = 0{,}010\,\mathrm{m}$, $g_M = 3{,}71\,\mathrm{m/s^2}$, rezervoar je velik in odprt, tlak zraka nad gladino in ob curku je enak
+**Iščemo:** hitrost iztekanja $v$ in prostorninski pretok $\Phi_V$
+
+:::formula
+$v = \sqrt{2g_Mh}$, $S = \dfrac{\pi d^2}{4}$, $\Phi_V = Sv$
+:::
+
+**Rešitev:**
+
+1. Velja Torricellijev izrek, ker se zračni tlak na gladini in v curku pokrajša, gladina velikega rezervoarja pa se skoraj ne premika.
+2. Hitrost: $v = \sqrt{2 \cdot 3{,}71\,\mathrm{m/s^2} \cdot 1{,}8\,\mathrm{m}} \approx 3{,}65\,\mathrm{m/s}$.
+3. Presek odprtine (premer v metrih): $S = \pi(0{,}010\,\mathrm{m})^2/4 \approx 7{,}85 \cdot 10^{-5}\,\mathrm{m^2}$.
+4. Pretok izračunaj sam, nato preveri:
+
+:::premisli
+Kolikšen je pretok v litrih na sekundo? Kolikokrat hitreje bi ista voda iztekala na Zemlji?
+---
+$\Phi_V = 7{,}85 \cdot 10^{-5}\,\mathrm{m^2} \cdot 3{,}65\,\mathrm{m/s} \approx 2{,}87 \cdot 10^{-4}\,\mathrm{m^3/s} \approx 0{,}29\,\mathrm{L/s}$. Ker je $v \propto \sqrt{g}$, bi bila hitrost na Zemlji $\sqrt{9{,}81/3{,}71} \approx 1{,}63$-krat večja, okoli $5{,}9\,\mathrm{m/s}$.
+:::
+
 ## Pogoste napake
 
-- **Hitrost sorazmerna s premerom.** Pri zožitvi na polovico premera se presek zmanjša na četrtino, hitrost pa se **početveri**, ne podvoji.
+- **Hitrost sorazmerna s premerom.** Pri zožitvi na polovico premera se presek zmanjša na četrtino, hitrost pa se **početveri**, ne podvoji. Premere pred računanjem ploščin pretvori v metre ($1\,\mathrm{cm^2} = 10^{-4}\,\mathrm{m^2}$).
 - **Mešanje absolutnega tlaka in nadtlaka.** V Bernoullijevi enačbi sme biti na obeh straneh le ena vrsta tlaka. Pri odprtih posodah in curkih v zrak je tlak na prostih površinah $p_0$ in se pokrajša.
 - **Večja hitrost, večji tlak.** Pogosta intuicija je napačna: v ožjem delu vodoravne cevi je hitrost večja, tlak pa **manjši**. Curek iz šobe je hiter, ker ga poganja razlika tlakov.
 - **Bernoulli za viskozen tok v dolgi cevi.** V tankih ceveh (kapilare, injekcijske igle) in pri zelo viskoznih tekočinah prevladajo izgube zaradi notranjega trenja; idealni model tam ne zadošča.
 - **Vzgon odvisen od gostote telesa.** Vzgon je odvisen od gostote **tekočine** in potopljene prostornine, ne od snovi telesa. Železna in lesena kocka enake prostornine, obe popolnoma potopljeni, imata enak vzgon.
-- **Centimetri v SI.** Premere pretvori v metre, preden računaš ploščine ($1\,\mathrm{cm^2} = 10^{-4}\,\mathrm{m^2}$).
 
 ## Povzetek
 
@@ -182,24 +227,40 @@ Za stalno $\rho$ integracija da $p = p_0 + \rho g h$. Za idealni plin pri stalni
 
 ? Kolikšen je nadtlak v vodi ($\rho = 1000\,\mathrm{kg/m^3}$) na globini $10\,\mathrm{m}$ ($g = 9{,}81\,\mathrm{m/s^2}$)?
 - $9{,}81\,\mathrm{kPa}$
+~ Za faktor $10$ premalo: to je nadtlak na globini $1\,\mathrm{m}$. Preveri, ali si globino res vstavil v metrih.
 + $98{,}1\,\mathrm{kPa}$
 - $199\,\mathrm{kPa}$
+~ To je absolutni tlak: nadtlaku si prištel še zračni tlak $p_0$, vprašanje pa sprašuje le po $\rho g h$.
 > $\rho g h = 1000 \cdot 9{,}81 \cdot 10\,\mathrm{Pa} = 98{,}1\,\mathrm{kPa}$. $199\,\mathrm{kPa}$ je absolutni tlak (nadtlak, prištet zračnemu tlaku), ne nadtlak.
 
 ? Cev se zoži na polovico premera. Kako se spremeni hitrost idealne tekočine?
 - Podvoji se.
+~ Hitrost si povezal s premerom namesto s ploščino preseka; ta pade na četrtino, ker je $S \propto d^2$.
 + Poveča se za faktor $4$.
 - Zmanjša se na polovico.
+~ Ožja cev toka ne zavira: skozi manjši presek mora v sekundi steči enaka prostornina, zato se tok pospeši.
 > Iz $S_1v_1 = S_2v_2$ in $S \propto d^2$ sledi $v_2/v_1 = (d_1/d_2)^2 = 4$.
 
 ? Lesena kocka z gostoto $600\,\mathrm{kg/m^3}$ plava na vodi ($1000\,\mathrm{kg/m^3}$). Kolikšen delež njene prostornine je pod gladino?
 - $40\,\%$
+~ To je delež nad gladino, $1 - 0{,}60$; vprašanje sprašuje po potopljenem delu.
 - $100\,\%$
+~ Popolnoma potopljena bi bila le kocka, gostejša od vode; les je redkejši, zato plava in del gleda iz vode.
 + $60\,\%$
 > V ravnovesju je vzgon enak teži: $\rho_v g V_{\text{pot}} = \rho_l g V$, torej $V_{\text{pot}}/V = 600/1000 = 0{,}60$. $40\,\%$ je delež nad gladino.
 
 ? S kolikšno hitrostjo izteka voda iz majhne odprtine $5{,}0\,\mathrm{m}$ pod gladino velikega odprtega rezervoarja ($g = 9{,}81\,\mathrm{m/s^2}$)?
 - $49\,\mathrm{m/s}$
+~ Izračunal si $gh \approx 49\,\mathrm{m^2/s^2}$ in pozabil faktor $2$ ter koren; enota tega rezultata ni $\mathrm{m/s}$.
 + $9{,}9\,\mathrm{m/s}$
 - $7{,}0\,\mathrm{m/s}$
+~ Izpustil si faktor $2$ pod korenom: $\sqrt{gh} \approx 7{,}0\,\mathrm{m/s}$. Hitrost je enaka kot pri prostem padu, $v^2 = 2gh$.
 > Po Torricelliju je $v = \sqrt{2gh} = \sqrt{2 \cdot 9{,}81 \cdot 5{,}0}\,\mathrm{m/s} \approx 9{,}9\,\mathrm{m/s}$. $7{,}0\,\mathrm{m/s}$ dobiš, če izpustiš faktor $2$ pod korenom.
+
+? Vodoravna cev je široka, nato ozka, nato spet enako široka. Kateri opis se ujema s tokom idealne tekočine (široko – ozko – široko)?
+- Hitrost: majhna – velika – majhna; tlak: majhen – velik – majhen.
+~ To je intuicija »hitreje pomeni večji tlak«. Tekočino v zožitev pospeši prav razlika tlakov, zato je tlak tam manjši.
+- Hitrost: velika – majhna – velika; tlak: velik – majhen – velik.
+~ Ožji del ni »zamašek«, ki tok upočasni: po kontinuitetni enačbi je hitrost tam večja, ker je presek manjši.
++ Hitrost: majhna – velika – majhna; tlak: velik – majhen – velik.
+> Iz $S_1v_1 = S_2v_2$ je hitrost v ozkem delu največja, iz Bernoullijeve enačbe na isti višini pa je tam tlak najmanjši. Ko se cev razširi, se hitrost in tlak vrneta na začetni vrednosti.

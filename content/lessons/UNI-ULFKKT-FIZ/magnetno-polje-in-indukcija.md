@@ -5,11 +5,11 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Magnetno polje in električni tok sta tesno povezana: tok ustvarja magnetno polje, magnetno polje deluje na gibajoče se naboje, spreminjajoče se magnetno polje pa v vodniku inducira napetost. Na teh treh pojavih temelji večina elektrotehnike: elektromotor, generator v elektrarni, transformator, indukcijska kuhalna plošča, brezžično polnjenje telefona.
+Sošolec trdi: »Če v tuljavo vtaknem močan magnet in ga pustim v njej, bo svetleča dioda, priključena na konca tuljave, svetila, dokler je magnet notri.« Poskus ga ovrže: dioda utripne le za hip, ko se magnet giblje (ob potiskanju noter ali vlečenju ven, odvisno od tega, kako je dioda obrnjena). Na istem pojavu deluje detektor kovin, s katerim mojster pred vrtanjem poišče armaturo in kable v steni. Tok ustvarja magnetno polje, magnetno polje deluje na gibajoče se naboje, **spreminjajoče se** magnetno polje pa v vodniku inducira napetost. Na teh treh pojavih temelji večina elektrotehnike: elektromotor, generator v elektrarni, transformator, indukcijska kuhalna plošča, brezžično polnjenje telefona.
 
 V naravoslovju in medicini so magnetna polja merilno orodje. **Masni spektrometer** loči ione po masi, ker jih magnetno polje ukrivi različno močno. **Jedrska magnetna resonanca** (NMR) v kemiji in **magnetnoresonančno slikanje** (MRI) v medicini uporabljata močna polja tuljav s superprevodnimi navitji. Ptice selivke in nekatere bakterije se orientirajo po zemeljskem magnetnem polju.
 
-V tej lekciji spoznaš:
+Pot do tja vodi čez tri korake:
 
 - **Lorentzovo silo** na gibajoč se naboj in silo na vodnik s tokom,
 - **Amperov zakon**, s katerim izračunamo polje ravnega vodnika in tuljave,
@@ -30,6 +30,12 @@ Sila je pravokotna na hitrost in na polje; smer dobimo s pravilom desne roke (za
 $$r = \frac{mv}{|q|B}, \qquad \omega = \frac{|q|B}{m}.$$
 
 Krožna frekvenca (**ciklotronska frekvenca**) ni odvisna od hitrosti. Na tem delujeta ciklotron in masni spektrometer: ioni z enako energijo in nabojem, a različno maso, opišejo krožnice z različnim polmerom.
+
+:::premisli
+Proton in elektron z enako hitrostjo priletita pravokotno v isto homogeno polje. Kateri opiše manjšo krožnico in v katero smer krožita?
+---
+Elektron. Naboja sta po velikosti enaka, elektron pa ima okoli $1836$-krat manjšo maso, zato je po $r = mv/(|q|B)$ tudi njegov polmer toliko manjši. Krožita v nasprotnih smereh, ker imata naboja nasproten predznak.
+:::
 
 **4. Sila na vodnik s tokom.** Tok so gibajoči se naboji, zato na raven vodnik z dolžino $l$ in tokom $I$ v polju $\vec{B}$ deluje sila
 
@@ -59,7 +65,26 @@ $$\Phi_m = BS\cos\theta = \vec{B} \cdot \vec{S},$$
 
 kjer je $\theta$ kot med poljem in normalo na ploskev. Enota je **weber**, $1\,\mathrm{Wb} = 1\,\mathrm{V\,s}$.
 
-**8. Indukcijski zakon.** Ko se magnetni pretok skozi zanko spreminja, se v zanki **inducira napetost**:
+### Odkrij vzorec: kdaj se inducira napetost?
+
+Na tuljavo priključimo občutljiv voltmeter in poskusimo nekaj stvari:
+
+| Poskus | Voltmeter |
+|---|---|
+| Magnet miruje zunaj ali v tuljavi | $0$ |
+| Magnet potiskamo v tuljavo | odklon |
+| Magnet vlečemo ven | odklon v nasprotno smer |
+| Magnet potisnemo hitreje | večji odklon |
+| Tuljavo zavrtimo ob mirujočem magnetu | odklon |
+| V sosednji tuljavi tok vklopimo ali izklopimo | kratek odklon |
+
+:::premisli
+Kaj imajo skupnega vsi poskusi, pri katerih se voltmeter odkloni? Zakaj velik mirujoč magnet ne da nič?
+---
+V vseh se s časom **spreminja** magnetni pretok skozi tuljavo: zaradi spremembe polja, lege ali kota. Mirujoč magnet da stalen pretok, zato napetosti ni, ne glede na to, kako močan je. Hitrejša sprememba da večjo napetost, obratna sprememba nasprotno.
+:::
+
+**8. Indukcijski zakon.** Vzorec iz tabele zapišemo kot zakon. Ko se magnetni pretok skozi zanko spreminja, se v zanki **inducira napetost**:
 
 $$U_i = -N\,\frac{\mathrm{d}\Phi_m}{\mathrm{d}t}$$
 
@@ -90,10 +115,10 @@ $B = \dfrac{\mu_0I_1}{2\pi r}$, $F = I_2lB$
 
 **Rešitev:**
 
-1. $B = 4\pi \cdot 10^{-7} \cdot 10/(2\pi \cdot 0{,}020)\,\mathrm{T} = 2 \cdot 10^{-7} \cdot 10/0{,}020\,\mathrm{T} = 1{,}0 \cdot 10^{-4}\,\mathrm{T}$.
+1. Vodnik je dolg in raven, zato velja $B = \mu_0I_1/(2\pi r)$ iz Amperovega zakona: $B = 4\pi \cdot 10^{-7} \cdot 10/(2\pi \cdot 0{,}020)\,\mathrm{T} = 2 \cdot 10^{-7} \cdot 10/0{,}020\,\mathrm{T} = 1{,}0 \cdot 10^{-4}\,\mathrm{T}$.
 2. To je $100\,\mu\mathrm{T}$, dvakrat več od zemeljskega polja; zato vodniki s tokom motijo kompas.
 3. Polje je pravokotno na drugi vodnik, zato $F = I_2lB = 5{,}0 \cdot 1{,}0 \cdot 1{,}0 \cdot 10^{-4}\,\mathrm{N} = 5{,}0 \cdot 10^{-4}\,\mathrm{N}$.
-4. Odgovor: polje na razdalji $2{,}0\,\mathrm{cm}$ je $1{,}0 \cdot 10^{-4}\,\mathrm{T}$; vodnika se privlačita, sila na meter drugega vodnika je $0{,}50\,\mathrm{mN}$.
+4. Odgovor: polje na razdalji $2{,}0\,\mathrm{cm}$ je $1{,}0 \cdot 10^{-4}\,\mathrm{T}$; vodnika se privlačita, ker sta tokova istosmerna, sila na meter drugega vodnika je $0{,}50\,\mathrm{mN}$.
 
 ### Primer 2
 
@@ -109,8 +134,8 @@ $e_0U = \tfrac{1}{2}mv^2$, $r = \dfrac{mv}{e_0B} = \dfrac{1}{B}\sqrt{\dfrac{2mU}
 **Rešitev:**
 
 1. $m_{12} = 12 \cdot 1{,}66 \cdot 10^{-27}\,\mathrm{kg} \approx 1{,}99 \cdot 10^{-26}\,\mathrm{kg}$.
-2. $v_{12} = \sqrt{2e_0U/m_{12}} = \sqrt{2 \cdot 1{,}602 \cdot 10^{-19} \cdot 2000/1{,}99 \cdot 10^{-26}}\,\mathrm{m/s} \approx 1{,}79 \cdot 10^5\,\mathrm{m/s}$.
-3. $r_{12} = m_{12}v_{12}/(e_0B) = 1{,}99 \cdot 10^{-26} \cdot 1{,}79 \cdot 10^5/(1{,}602 \cdot 10^{-19} \cdot 0{,}20)\,\mathrm{m} \approx 0{,}1115\,\mathrm{m}$ (natančneje $0{,}11152\,\mathrm{m}$).
+2. Delo električnega polja $e_0U$ se pretvori v kinetično energijo, zato $v_{12} = \sqrt{2e_0U/m_{12}} = \sqrt{2 \cdot 1{,}602 \cdot 10^{-19} \cdot 2000/1{,}99 \cdot 10^{-26}}\,\mathrm{m/s} \approx 1{,}79 \cdot 10^5\,\mathrm{m/s}$.
+3. Lorentzova sila opravlja vlogo centripetalne sile: $r_{12} = m_{12}v_{12}/(e_0B) = 1{,}99 \cdot 10^{-26} \cdot 1{,}79 \cdot 10^5/(1{,}602 \cdot 10^{-19} \cdot 0{,}20)\,\mathrm{m} \approx 0{,}1115\,\mathrm{m}$ (natančneje $0{,}11152\,\mathrm{m}$).
 4. Ker je $r \propto \sqrt{m}$: $r_{13} = r_{12}\sqrt{13/12} \approx 0{,}11608\,\mathrm{m}$.
 5. Ioni zadenejo detektor po polovici kroga, torej na razdalji premera od vstopa: $\Delta x = 2(0{,}11608 - 0{,}11152)\,\mathrm{m} \approx 9{,}1\,\mathrm{mm}$.
 6. Odgovor: ion $\mathrm{^{12}C^+}$ ima hitrost okoli $1{,}8 \cdot 10^5\,\mathrm{m/s}$ in kroži s polmerom $11{,}2\,\mathrm{cm}$, ion $\mathrm{^{13}C^+}$ s polmerom $11{,}6\,\mathrm{cm}$; izotopa zadeneta detektor približno $9\,\mathrm{mm}$ narazen.
@@ -128,18 +153,40 @@ $U_i = Blv$, $I = U_i/R$, $F = IlB$, $P = Fv = I^2R$
 
 **Rešitev:**
 
-1. Inducirana napetost: $U_i = 0{,}40\,\mathrm{T} \cdot 0{,}50\,\mathrm{m} \cdot 2{,}0\,\mathrm{m/s} = 0{,}40\,\mathrm{V}$.
+1. Palica, hitrost in polje so medsebojno pravokotni, zato velja $U_i = Blv$: $U_i = 0{,}40\,\mathrm{T} \cdot 0{,}50\,\mathrm{m} \cdot 2{,}0\,\mathrm{m/s} = 0{,}40\,\mathrm{V}$.
 2. Tok: $I = 0{,}40\,\mathrm{V}/0{,}80\,\Omega = 0{,}50\,\mathrm{A}$.
 3. Na palico s tokom deluje magnetna sila $F_m = IlB = 0{,}50 \cdot 0{,}50 \cdot 0{,}40\,\mathrm{N} = 0{,}10\,\mathrm{N}$. Po Lenzovem pravilu nasprotuje gibanju (zavira palico).
 4. Za stalno hitrost mora biti vlečna sila enako velika: $F = 0{,}10\,\mathrm{N}$.
 5. Moč vlečenja: $P = Fv = 0{,}10\,\mathrm{N} \cdot 2{,}0\,\mathrm{m/s} = 0{,}20\,\mathrm{W}$. Preizkus: $I^2R = 0{,}25 \cdot 0{,}80\,\mathrm{W} = 0{,}20\,\mathrm{W}$ ✓.
 6. Odgovor: inducira se napetost $0{,}40\,\mathrm{V}$, teče tok $0{,}50\,\mathrm{A}$, palico vlečemo s silo $0{,}10\,\mathrm{N}$ in z močjo $0{,}20\,\mathrm{W}$, ki se v celoti pretvori v toploto na uporu.
 
+### Primer 4 – zdaj ti
+
+V delavnici na plastično cev navijemo tuljavo z $800$ ovoji na dolžini $10\,\mathrm{cm}$; presek tuljave je $2{,}0\,\mathrm{cm^2}$. Po njej teče tok $0{,}50\,\mathrm{A}$. Stikalo tok prekine v $2{,}0\,\mathrm{ms}$. Kolikšno je polje v tuljavi, kolikšen pretok skozi en ovoj in kolikšna povprečna napetost se pri izklopu inducira v tuljavi?
+
+**Podatki:** $N = 800$, $l = 10\,\mathrm{cm} = 0{,}10\,\mathrm{m}$, $S = 2{,}0\,\mathrm{cm^2} = 2{,}0 \cdot 10^{-4}\,\mathrm{m^2}$, $I = 0{,}50\,\mathrm{A}$, $\Delta t = 2{,}0\,\mathrm{ms}$, jedro je iz plastike, $\mu_0 = 4\pi \cdot 10^{-7}\,\mathrm{V\,s/(A\,m)}$
+**Iščemo:** gostoto polja $B$, pretok $\Phi_m$ skozi en ovoj, povprečno inducirano napetost $|U_i|$
+
+:::formula
+$B = \dfrac{\mu_0NI}{l}$, $\Phi_m = BS$, $|U_i| = N\dfrac{\Delta\Phi_m}{\Delta t}$
+:::
+
+**Rešitev:**
+
+1. Tuljava je mnogo daljša od premera, zato je polje v notranjosti homogeno: $B = 4\pi \cdot 10^{-7} \cdot 800 \cdot 0{,}50/0{,}10\,\mathrm{T} \approx 5{,}03 \cdot 10^{-3}\,\mathrm{T}$.
+2. Polje je vzporedno z osjo, torej z normalo na ovoj ($\cos\theta = 1$): $\Phi_m = 5{,}03 \cdot 10^{-3} \cdot 2{,}0 \cdot 10^{-4}\,\mathrm{Wb} \approx 1{,}01 \cdot 10^{-6}\,\mathrm{Wb}$.
+3. Pri izklopu pretok pade na nič. Napetost in njeno smer določi sam, nato preveri:
+
+:::premisli
+Kolikšna je povprečna inducirana napetost? V katero smer teče inducirani tok glede na prvotni tok?
+---
+$|U_i| = 800 \cdot 1{,}01 \cdot 10^{-6}\,\mathrm{Wb}/(2{,}0 \cdot 10^{-3}\,\mathrm{s}) \approx 0{,}40\,\mathrm{V}$. Po Lenzovem pravilu inducirani tok nasprotuje zmanjšanju pretoka, zato teče v isti smeri kot prvotni tok in ga skuša ohraniti. Enako da $L\,\Delta I/\Delta t$ z $L = \mu_0N^2S/l$.
+:::
+
 ## Pogoste napake
 
-- **Lorentzova sila v smeri polja.** Sila je pravokotna na $\vec{B}$ in na $\vec{v}$, ne vzporedna s poljem. Pri gibanju vzdolž silnic je sila nič.
+- **Lorentzova sila v smeri polja.** Sila je pravokotna na $\vec{B}$ in na $\vec{v}$, ne vzporedna s poljem. Pri gibanju vzdolž silnic je sila nič. Za elektron je smer sile nasprotna od tiste, ki jo da pravilo desne roke za $\vec{v} \times \vec{B}$.
 - **Magnetna sila opravlja delo.** Lorentzova sila je pravokotna na hitrost, zato ne spremeni kinetične energije delca. Ione pospeši električno polje, magnetno jih le ukrivi.
-- **Napačen predznak naboja.** Za elektron je smer sile nasprotna od tiste, ki jo da pravilo desne roke za $\vec{v} \times \vec{B}$.
 - **Polje vodnika z $1/r^2$.** Polje dolgega ravnega vodnika pada z $1/r$, ne z $1/r^2$.
 - **Napetost se inducira zaradi polja.** Napetost povzroči **sprememba** pretoka, ne pretok sam. Mirujoča zanka v stalnem polju nima inducirane napetosti, ne glede na velikost polja.
 - **Pozabljeno število ovojev.** Pri tuljavi pomnoži spremembo pretoka skozi en ovoj z $N$.
@@ -220,23 +267,39 @@ Za središče krožne zanke so vsi prispevki vzporedni in $r = R$, zato je $B = 
 ? Elektron se giblje vzporedno s silnicami homogenega magnetnega polja. Kolikšna magnetna sila deluje nanj?
 + Nič.
 - Največja možna, $e_0vB$.
+~ Zamenjal si vzporedno in pravokotno: največja je sila pri gibanju pravokotno na silnice, ko je $\sin\theta = 1$.
 - Polovica največje, $e_0vB/2$.
+~ Polovico bi dobil pri kotu $30^\circ$; pri gibanju vzdolž silnic je $\sin 0^\circ = 0$.
 > $F = |q|vB\sin\theta$, pri $\theta = 0$ je $\sin\theta = 0$.
 
 ? Gostota polja na razdalji $r$ od dolgega ravnega vodnika je $B$. Kolikšna je na razdalji $2r$?
 - $B/4$
+~ Uporabil si padanje z $1/r^2$, ki velja za točkast naboj; polje dolgega ravnega vodnika pada z $1/r$.
 + $B/2$
 - $2B$
+~ Polje z razdaljo ne narašča: dlje od vodnika so silnice redkejše, ker se isti »tok« silnic razporedi po daljši krožnici.
 > $B = \mu_0I/(2\pi r)$ pada z $1/r$.
 
 ? Dolga tuljava ima $500$ ovojev na dolžini $25\,\mathrm{cm}$, po njej teče tok $2{,}0\,\mathrm{A}$. Kolikšna je gostota polja v notranjosti?
 - $0{,}50\,\mathrm{mT}$
+~ Rezultat je za faktor $10$ premajhen: zmotil si se v potenci, preveri $\mu_0 = 4\pi \cdot 10^{-7}\,\mathrm{V\,s/(A\,m)}$.
 + $5{,}0\,\mathrm{mT}$
 - $2{,}5\,\mathrm{mT}$
+~ Primešal si faktor $\tfrac{1}{2}$ iz formule za krožno zanko $\mu_0I/(2R)$; v $B = \mu_0NI/l$ ga ni.
 > $B = \mu_0NI/l = 4\pi \cdot 10^{-7} \cdot 500 \cdot 2{,}0/0{,}25\,\mathrm{T} \approx 5{,}0 \cdot 10^{-3}\,\mathrm{T}$.
 
 ? Transformator ima na primarni strani $1000$ ovojev in napetost $230\,\mathrm{V}$, na sekundarni $50$ ovojev. Kolikšna je sekundarna napetost?
 - $4600\,\mathrm{V}$
+~ Obrnil si razmerje: sekundar z manj ovoji napetost zniža, ne zviša.
 + $11{,}5\,\mathrm{V}$
 - $230\,\mathrm{V}$
+~ Transformator napetosti ne prenese nespremenjene: v vsakem ovoju se inducira enaka napetost, zato je skupna sorazmerna s številom ovojev.
 > $U_2 = U_1N_2/N_1 = 230 \cdot 50/1000\,\mathrm{V} = 11{,}5\,\mathrm{V}$. $4600\,\mathrm{V}$ dobiš z obrnjenim razmerjem.
+
+? Sošolka pri palici na tirnicah (Primer 3) zapiše: »Inducirani tok ustvari magnetno silo v smeri gibanja, zato se palica, ko jo enkrat sunemo, giblje sama in na uporu greje.« Kje je napaka?
+- Napaka je le v velikosti sile; smer je pravilna.
+~ Smer je ravno bistvo napake: sila v smeri gibanja bi palico pospeševala brez vloženega dela.
++ Po Lenzovem pravilu sila nasprotuje gibanju; brez vlečenja se palica ustavi.
+- Napake ni, saj magnetna sila ne opravlja dela.
+~ Lorentzova sila na posamezen naboj res ne opravlja dela, sila $IlB$ na palico pa jo zavira in pretvarja njeno kinetično energijo v toploto.
+> Če bi sila pomagala gibanju, bi palica dobivala kinetično energijo in hkrati grela upor brez vloženega dela, kar krši ohranitev energije. Zato inducirani tok vedno nasprotuje spremembi, ki ga povzroča.

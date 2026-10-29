@@ -5,36 +5,46 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Če v epruveto z encimom dodajaš vedno več substrata, reakcija sprva teče hitreje. Pri neki točki pa dodatni substrat skoraj nič več ne pomaga. Zakaj se hitrost ustavi, čeprav substrata ni zmanjkalo?
+Na cestninski postaji s štirimi kabinami ob redkem prometu dvakrat več avtov pomeni dvakrat več prehodov na uro. V poletni koloni so vse kabine ves čas zasedene in daljša kolona ne pospeši ničesar. Encim v epruveti se vede enako: z več substrata reakcija sprva teče hitreje, nato se hitrost ustali, čeprav substrata ni zmanjkalo.
 
-Odgovor je v tem, da ima encim omejeno število aktivnih mest. Encimska kinetika to opiše z eno samo enačbo, Michaelis-Mentenovo. Iz nje razbereš, kako hitro encim dela in kako močno veže substrat. Pove tudi, kako zdravila (inhibitorji) encim upočasnijo. Statini na primer zavirajo encim v sintezi holesterola, aspirin pa encim ciklooksigenazo.
+Skupna ideja je omejeno število »kabin«, pri encimu aktivnih mest. Michaelis-Mentenova enačba iz tega pove, kako hitro encim dela, kako močno veže substrat in kako ga zdravila zavirajo, npr. statini encim v sintezi holesterola, aspirin pa ciklooksigenazo.
 
 ## Razlaga
 
-**1. Začetna hitrost.** Encim $E$ veže substrat $S$ v kompleks $ES$, ta pa razpade v produkt $P$ in prost encim:
+### Kaj merimo
+
+Encim $E$ veže substrat $S$ v kompleks $ES$, ta pa razpade v produkt $P$ in prost encim:
 
 $$E + S \rightleftharpoons ES \rightarrow E + P$$
 
 Merimo **začetno hitrost** $v_0$. To je hitrost nastajanja produkta takoj po začetku, ko je porabljenega še zelo malo substrata in produkta skoraj ni. Tako vemo, da je $[S]$ enaka koncentraciji, ki smo jo dodali.
 
-**2. Nasičenje.** Pri majhni $[S]$ je večina encima prosta, zato dvojna količina substrata da skoraj dvojno hitrost. Pri veliki $[S]$ so skoraj vsa aktivna mesta zasedena. Encim je **nasičen** in dela z **največjo hitrostjo** $V_\mathrm{max}$. Kot blagajne v trgovini: ko so vse zasedene, več kupcev v vrsti ne pospeši plačevanja.
+### En encim, štiri meritve
 
-**3. Michaelis-Mentenova enačba.** Hiperbolo $v_0([S])$ opiše:
+Encimu z največjo hitrostjo $V_\mathrm{max} = 120\,\mu\mathrm{mol/min}$ dajemo vedno več substrata:
 
-$$v_0 = \frac{V_\mathrm{max}\,[S]}{K_\mathrm{M} + [S]}$$
-
-**Michaelisova konstanta** $K_\mathrm{M}$ je koncentracija substrata, pri kateri je $v_0 = \tfrac{1}{2}V_\mathrm{max}$. Ima enoto koncentracije (npr. mM). Manjša $K_\mathrm{M}$ pomeni, da encim doseže polovico največje hitrosti že pri nizki $[S]$.
-
-Primer za encim z $V_\mathrm{max} = 120\,\mu\mathrm{mol/min}$ in $K_\mathrm{M} = 2\,\mathrm{mM}$:
-
-| $[S]$ [mM] | $[S]/K_\mathrm{M}$ | $v_0$ [µmol/min] | delež $V_\mathrm{max}$ |
+| $[S]$ [mM] | $[S]/(2\,\mathrm{mM})$ | $v_0$ [µmol/min] | delež $V_\mathrm{max}$ |
 |---|---|---|---|
 | 0,5 | 0,25 | 24 | 20 % |
 | 2 | 1 | 60 | 50 % |
 | 6 | 3 | 90 | 75 % |
 | 18 | 9 | 108 | 90 % |
 
-Od $50\,\%$ do $90\,\%$ hitrosti potrebuješ devetkrat več substrata. Hiperbola se zelo počasi približuje $V_\mathrm{max}$.
+Iz tabele preberemo tri stvari:
+
+1. Pri $[S] = 2\,\mathrm{mM}$ encim dela s polovično hitrostjo. To koncentracijo imenujemo $K_\mathrm{M}$; tu je $K_\mathrm{M} = 2\,\mathrm{mM}$.
+2. Od $50\,\%$ do $90\,\%$ hitrosti potrebuješ devetkrat več substrata. Krivulja se zelo počasi približuje $V_\mathrm{max}$.
+3. Delež $V_\mathrm{max}$ je odvisen le od razmerja $[S]/K_\mathrm{M}$ (drugi stolpec): pri razmerju $1$ je delež $50\,\%$, pri $3$ je $75\,\%$, pri $9$ je $90\,\%$.
+
+### Posplošitev: nasičenje in Michaelis-Mentenova enačba
+
+Pri majhni $[S]$ je večina encima prosta, zato dvojna količina substrata da skoraj dvojno hitrost. Pri veliki $[S]$ so skoraj vsa aktivna mesta zasedena. Encim je **nasičen** in dela z **največjo hitrostjo** $V_\mathrm{max}$, tako kot cestninska postaja, ko so vse kabine zasedene.
+
+Vse tri ugotovitve iz tabele zajame ena hiperbola $v_0([S])$:
+
+$$v_0 = \frac{V_\mathrm{max}\,[S]}{K_\mathrm{M} + [S]}$$
+
+**Michaelisova konstanta** $K_\mathrm{M}$ je koncentracija substrata, pri kateri je $v_0 = \tfrac{1}{2}V_\mathrm{max}$. Ima enoto koncentracije (npr. mM). Manjša $K_\mathrm{M}$ pomeni, da encim doseže polovico največje hitrosti že pri nizki $[S]$.
 
 :::premisli
 Kolikšen delež $V_\mathrm{max}$ doseže encim pri $[S] = 99\,K_\mathrm{M}$? Napovej, preden izračunaš.
@@ -42,17 +52,25 @@ Kolikšen delež $V_\mathrm{max}$ doseže encim pri $[S] = 99\,K_\mathrm{M}$? Na
 $99\,\%$: $\dfrac{99\,K_\mathrm{M}}{K_\mathrm{M} + 99\,K_\mathrm{M}} = \dfrac{99}{100}$. Do $V_\mathrm{max}$ encim pri končni $[S]$ nikoli ne pride, le približuje se ji.
 :::
 
-**4. Dva skrajna primera.** Pri $[S] \ll K_\mathrm{M}$ v imenovalcu ostane le $K_\mathrm{M}$: $v_0 \approx \dfrac{V_\mathrm{max}}{K_\mathrm{M}}[S]$. Hitrost je premo sorazmerna z $[S]$ (reakcija prvega reda). Pri $[S] \gg K_\mathrm{M}$ je $v_0 \approx V_\mathrm{max}$, neodvisno od $[S]$ (ničti red).
+### Dva skrajna primera
 
-**5. Katalitska konstanta.** $V_\mathrm{max}$ je odvisna od količine encima: $V_\mathrm{max} = k_\mathrm{cat}[E]_\mathrm{t}$, kjer je $[E]_\mathrm{t}$ skupna koncentracija encima. **Katalitska konstanta** ali **obratno število** $k_\mathrm{cat}$ pove, koliko molekul substrata eno aktivno mesto v sekundi pretvori v produkt. Količnik $k_\mathrm{cat}/K_\mathrm{M}$ je **katalitska učinkovitost**: z njo primerjamo, kateri substrat encim pretvarja raje.
+Pri $[S] \ll K_\mathrm{M}$ v imenovalcu ostane le $K_\mathrm{M}$: $v_0 \approx \dfrac{V_\mathrm{max}}{K_\mathrm{M}}[S]$. Hitrost je premo sorazmerna z $[S]$ (reakcija prvega reda). Pri $[S] \gg K_\mathrm{M}$ je $v_0 \approx V_\mathrm{max}$, neodvisno od $[S]$ (ničti red).
 
-**6. Dvojni recipročni diagram.** Iz hiperbole je težko natančno odčitati $V_\mathrm{max}$. Zato enačbo obrnemo (Lineweaver-Burkova oblika):
+### Katalitska konstanta
+
+$V_\mathrm{max}$ je odvisna od količine encima: $V_\mathrm{max} = k_\mathrm{cat}[E]_\mathrm{t}$, kjer je $[E]_\mathrm{t}$ skupna koncentracija encima. **Katalitska konstanta** ali **obratno število** $k_\mathrm{cat}$ pove, koliko molekul substrata eno aktivno mesto v sekundi pretvori v produkt. Količnik $k_\mathrm{cat}/K_\mathrm{M}$ je **katalitska učinkovitost**: z njo primerjamo, kateri substrat encim pretvarja raje.
+
+### Dvojni recipročni diagram
+
+Iz hiperbole je težko natančno odčitati $V_\mathrm{max}$. Zato enačbo obrnemo (Lineweaver-Burkova oblika):
 
 $$\frac{1}{v_0} = \frac{K_\mathrm{M}}{V_\mathrm{max}}\cdot\frac{1}{[S]} + \frac{1}{V_\mathrm{max}}$$
 
 Na osi $x$ je $1/[S]$, na osi $y$ je $1/v_0$. Točke ležijo na premici. Odsek na osi $y$ je $1/V_\mathrm{max}$, naklon je $K_\mathrm{M}/V_\mathrm{max}$, presečišče z osjo $x$ pa je pri $-1/K_\mathrm{M}$.
 
-**7. Reverzibilna inhibicija.** **Inhibitor** $I$ je molekula, ki zmanjša hitrost encimske reakcije. Reverzibilni inhibitor se veže nekovalentno in lahko odstopi. Kako močno se veže, pove **inhibicijska konstanta** $K_\mathrm{i}$ (manjša $K_\mathrm{i}$ pomeni močnejšo vezavo). Vpliv zapišemo s faktorjem
+### Reverzibilna inhibicija
+
+**Inhibitor** $I$ je molekula, ki zmanjša hitrost encimske reakcije. Reverzibilni inhibitor se veže nekovalentno in lahko odstopi. Kako močno se veže, pove **inhibicijska konstanta** $K_\mathrm{i}$ (manjša $K_\mathrm{i}$ pomeni močnejšo vezavo). Vpliv zapišemo s faktorjem
 
 $$\alpha = 1 + \frac{[I]}{K_\mathrm{i}}$$
 
@@ -74,7 +92,9 @@ Zakaj lahko učinek kompetitivnega inhibitorja premagamo z zelo veliko $[S]$, ne
 Kompetitivni inhibitor in substrat tekmujeta za isto aktivno mesto. Pri zelo veliki $[S]$ substrat izpodrine inhibitor, zato encim spet doseže $V_\mathrm{max}$. Nekompetitivni inhibitor se veže drugje in deaktivira tudi kompleks $ES$. Del encima je zato vedno izklopljen, ne glede na $[S]$, in $V_\mathrm{max}$ ostane nižja.
 :::
 
-**8. Ireverzibilna inhibicija.** Nekateri inhibitorji se na encim vežejo kovalentno in ga trajno uničijo. Tako deluje aspirin, ki acetilira serin v aktivnem mestu ciklooksigenaze. Takšnega inhibitorja z več substrata ne izpodrinemo.
+### Ireverzibilna inhibicija
+
+Nekateri inhibitorji se na encim vežejo kovalentno in ga trajno uničijo. Tako deluje aspirin, ki acetilira serin v aktivnem mestu ciklooksigenaze. Takšnega inhibitorja z več substrata ne izpodrinemo.
 
 ## Rešeni primeri
 
@@ -99,7 +119,7 @@ $v_0 = \dfrac{V_\mathrm{max}\,[S]}{K_\mathrm{M} + [S]}$
 
 ### Primer 2: $K_\mathrm{M}$ in $V_\mathrm{max}$ iz meritev
 
-Pri $[S] = 1\,\mathrm{mM}$ izmerimo $v_0 = 50\,\mu\mathrm{M/s}$, pri $[S] = 4\,\mathrm{mM}$ pa $v_0 = 80\,\mu\mathrm{M/s}$. Z dvojnim recipročnim diagramom določi $V_\mathrm{max}$ in $K_\mathrm{M}$.
+Ana je na poletni šoli v Piranu dobila encim iz morskih bakterij in prenosni spektrofotometer. Pri $[S] = 1\,\mathrm{mM}$ izmeri $v_0 = 50\,\mu\mathrm{M/s}$, pri $[S] = 4\,\mathrm{mM}$ pa $v_0 = 80\,\mu\mathrm{M/s}$. Z dvojnim recipročnim diagramom določi $V_\mathrm{max}$ in $K_\mathrm{M}$.
 
 **Podatki:** $[S]_1 = 1\,\mathrm{mM}$, $v_1 = 50\,\mu\mathrm{M/s}$; $[S]_2 = 4\,\mathrm{mM}$, $v_2 = 80\,\mu\mathrm{M/s}$
 **Iščemo:** $V_\mathrm{max}$ in $K_\mathrm{M}$
