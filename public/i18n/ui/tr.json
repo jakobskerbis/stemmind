@@ -469,6 +469,8 @@
   "exam.startMock": "Deneme sınavını başlat",
   "exam.historyEmpty": "Deneme sınavlarının sonuçları burada görünecek.",
   "exam.topicsNote": "Bir konu seç ve sadece onu çalış. Sınav soruları İngilizce; öğretmen onları sana kendi dilinde açıklar.",
+  "exam.topicsPick": "Bir konu seç ve yalnızca onu çalış.",
+  "exam.national": "Ulusal sınavlar (NPZ, Matura)",
   "exam.finish": "Sınavı bitir",
   "exam.confirmFinish": "Sınavı şimdi bitirmek istiyor musun? Boş sorular puan getirmez.",
   "exam.scaled": "Sınav ölçeğinde puan: yaklaşık <b>{value}</b> ({min}–{max})",

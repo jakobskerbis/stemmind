@@ -469,6 +469,8 @@
   "exam.startMock": "Anza mtihani wa majaribio",
   "exam.historyEmpty": "Matokeo ya mitihani yako ya majaribio yataonekana hapa.",
   "exam.topicsNote": "Chagua mada moja na ufanye mazoezi yake tu. Maswali ya mtihani ni kwa Kiingereza; mwalimu anayaeleza kwa lugha yako.",
+  "exam.topicsPick": "Chagua mada moja na ufanye mazoezi ya hiyo tu.",
+  "exam.national": "Mitihani ya kitaifa (NPZ, Matura)",
   "exam.finish": "Maliza mtihani",
   "exam.confirmFinish": "Umalize mtihani sasa? Maswali yasiyojibiwa hayapati alama.",
   "exam.scaled": "Alama kwenye kipimo cha mtihani: takriban <b>{value}</b> ({min}–{max})",

@@ -464,6 +464,8 @@
   "exam.startMock": "模擬試験を始める",
   "exam.historyEmpty": "模擬試験の結果はここに表示されます。",
   "exam.topicsNote": "テーマを1つ選んで、それだけを練習しよう。試験問題は英語です。チューターがあなたの言語で説明します。",
+  "exam.topicsPick": "トピックを1つ選んで、それだけを練習しよう。",
+  "exam.national": "全国試験（NPZ・マトゥーラ）",
   "exam.finish": "試験を終える",
   "exam.confirmFinish": "今すぐ試験を終えますか?無回答の問題は得点になりません。",
   "exam.scaled": "試験スケールでの得点:約<b>{value}</b>({min}–{max})",

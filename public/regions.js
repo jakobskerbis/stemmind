@@ -46,6 +46,19 @@ export const SCHOOL_SYSTEMS = {
     exams: "ICSE (Class 10) and ISC (Class 12) exams; JEE and NEET entrance exams",
     help: "CHILDLINE 1098, Tele-MANAS 14416, emergency 112",
   },
+  "IN-STATE": {
+    name: "India – State board",
+    country: "IN",
+    yearStart: 4,
+    syllabus: "IN",
+    stages: [
+      ["Middle school", g("Class ", 6, 8, 6)],
+      ["Secondary (Class 9–10)", g("Class ", 9, 10, 9)],
+      ["Higher secondary (Class 11–12)", g("Class ", 11, 12, 11)],
+    ],
+    exams: "State board Class 10 (SSC/SSLC) and Class 12 (HSC/PUC) exams; JEE and NEET entrance exams",
+    help: "CHILDLINE 1098, Tele-MANAS 14416, emergency 112",
+  },
   PK: {
     name: "Pakistan",
     country: "PK",
@@ -315,6 +328,32 @@ export const SCHOOL_SYSTEMS = {
     ],
     exams: "中考 (zhongkao) after Grade 9 and 高考 (gaokao) after Grade 12",
     help: "youth helpline 12355, police 110, ambulance 120",
+  },
+  KR: {
+    name: "South Korea – 중학교 / 고등학교",
+    country: "KR",
+    yearStart: 3,
+    syllabus: "INT",
+    stages: [
+      ["초등학교 (elementary)", [["Elementary 6 (초6)", 6]]],
+      ["중학교 (middle school)", [["Middle 1 (중1)", 7], ["Middle 2 (중2)", 8], ["Middle 3 (중3)", 9]]],
+      ["고등학교 (high school)", [["High 1 (고1)", 10], ["High 2 (고2)", 11], ["High 3 (고3)", 12]]],
+    ],
+    exams: "대학수학능력시험 (CSAT, Suneung) in November of High 3",
+    help: "youth counselling 1388, suicide prevention 109, police 112, fire and ambulance 119",
+  },
+  JP: {
+    name: "Japan – 中学校 / 高等学校",
+    country: "JP",
+    yearStart: 4,
+    syllabus: "INT",
+    stages: [
+      ["小学校 (elementary)", [["Elementary 6 (小6)", 6]]],
+      ["中学校 (junior high)", [["Junior high 1 (中1)", 7], ["Junior high 2 (中2)", 8], ["Junior high 3 (中3)", 9]]],
+      ["高等学校 (senior high)", [["Senior high 1 (高1)", 10], ["Senior high 2 (高2)", 11], ["Senior high 3 (高3)", 12]]],
+    ],
+    exams: "大学入学共通テスト (Common Test) in January of Senior high 3; EJU for international students",
+    help: "24-hour Children's SOS Dial 0120-0-78310, Childline 0120-99-7777, police 110, fire and ambulance 119",
   },
   GB: {
     name: "United Kingdom – England, Wales, NI",

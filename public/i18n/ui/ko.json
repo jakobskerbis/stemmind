@@ -464,6 +464,8 @@
   "exam.startMock": "모의고사 시작",
   "exam.historyEmpty": "모의고사 결과가 여기에 표시돼.",
   "exam.topicsNote": "주제 하나를 골라 그것만 연습해. 시험 문제는 영어로 되어 있고, 튜터가 네 언어로 설명해 줘.",
+  "exam.topicsPick": "주제 하나를 골라 그것만 연습해 보세요.",
+  "exam.national": "국가 시험 (NPZ, 마투라)",
   "exam.finish": "시험 끝내기",
   "exam.confirmFinish": "지금 시험을 끝낼까? 답하지 않은 문제는 점수가 없어.",
   "exam.scaled": "시험 척도 점수: 약 <b>{value}</b> ({min}–{max})",

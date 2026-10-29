@@ -7,6 +7,7 @@ import { checkAnswer } from "./practice/check.js";
 import { CONTEST, TRAINING_TASKS, isCompetitionPath } from "./competition.js";
 import { isExamPath, mockPlan, scaledScore, examGrade } from "./exams.js";
 import { toChoice } from "./practice/choice.js";
+import { taskLanguage, localName } from "./exams.js";
 
 // Tekmovalni trening in poskusno tekmovanje veljata tudi za priprave na izpite.
 const isPrepPath = (key) => isCompetitionPath(key) || isExamPath(key);
@@ -60,6 +61,12 @@ export class Progress {
   constructor(store) {
     this.store = store;
     this.db = store.db;
+  }
+
+  // Jezik nalog pri dvojezičnih generatorjih (indijski izpiti): hindijsko za hindijščino in
+  // jezike, ki v vmesniku padejo nazaj nanjo (bhodžpuri, maratščina …), sicer angleško.
+  taskLang(studentId) {
+    return taskLanguage(this.store.getStudent?.(studentId)?.settings?.language);
   }
 
   // ---------- stanje teme ----------
@@ -182,7 +189,7 @@ export class Progress {
     if (!hasGenerator(topicId)) return null;
     const s = this.state(studentId, topicId);
     if (!s.seen_example) {
-      const ex = generateTask(topicId, 1);
+      const ex = generateTask(topicId, 1, undefined, this.taskLang(studentId));
       s.seen_example = 1;
       if (s.status === "new") s.status = "learning";
       this.saveState(s);
@@ -199,7 +206,7 @@ export class Progress {
     if (pending) {
       return { task: { id: pending.id, mode: "practice", ...publicTask(JSON.parse(pending.payload)) }, state: { level: s.level, streak: s.streak }, resumed: true };
     }
-    const task = generateTask(topicId, s.level);
+    const task = generateTask(topicId, s.level, undefined, this.taskLang(studentId));
     const id = this.saveTask(studentId, task, "practice");
     return { task: { id, mode: "practice", ...publicTask(task) }, state: { level: s.level, streak: s.streak } };
   }
@@ -244,7 +251,7 @@ export class Progress {
         this.saveState(st);
       }
       const level = item.level ?? st.level;
-      let task = generateTask(item.topic, level);
+      let task = generateTask(item.topic, level, undefined, this.taskLang(sess.student_id));
       // Izpitni format: izbirna vprašanja (A–D) namesto vpisa števila.
       if (item.format === "choice") task = toChoice(task, task.seed, item.options || 4);
       const id = this.saveTask(sess.student_id, task, item.mode, sessionId);
@@ -269,7 +276,7 @@ export class Progress {
       kind,
       index: done + 1,
       total,
-      task: { id: open.id, mode: open.mode, topicName: getTopic(open.topic_id)?.name, ...publicTask(payload) },
+      task: { id: open.id, mode: open.mode, topicName: localName(getTopic(open.topic_id)?.name, payload.textLang), ...publicTask(payload) },
     };
     if (sess?.kind === "contest") {
       next.deadline = sess.params.deadline;
@@ -508,7 +515,7 @@ export class Progress {
       const correct = !!t?.first_try_correct;
       const answered = t?.last_answer != null;
       return {
-        topicName: getTopic(p.topic)?.name || "",
+        topicName: localName(getTopic(p.topic)?.name || "", payload?.textLang),
         level: p.level,
         points: pts,
         // Negativne točke (JEE, NEET) samo za napačen odgovor, ne za izpuščeno vprašanje.
@@ -666,7 +673,7 @@ export class Progress {
       info[t.id] = { id: t.id, name: topic.name, goals: topic.goals, unit: topic.unit, path: pathKey, subject: topic.subject, pathLabel: path.label };
       tasks[t.id] = Array.from({ length: perTopic }, (_, i) => {
         const level = Math.max(1, Math.min(3, t.level + (i % 3 === 2 ? 1 : 0)));
-        const task = generateTask(t.id, level);
+        const task = generateTask(t.id, level, undefined, this.taskLang(studentId));
         return { level, seed: task.seed, task: publicTask(task), answer: task.answer, solution: task.solution, hint: task.hint };
       });
     }
@@ -683,7 +690,7 @@ export class Progress {
       const seed = Number(r?.seed);
       if (!getTopic(r?.topic_id) || !hasGenerator(r.topic_id) || ![1, 2, 3].includes(level) || !Number.isInteger(seed) || seed < 0 || seed >= 2 ** 31) continue;
       if (!seen.run(studentId, r.topic_id, seed).changes) continue;
-      const task = generateTask(r.topic_id, level, seed);
+      const task = generateTask(r.topic_id, level, seed, this.taskLang(studentId));
       const id = this.saveTask(studentId, task, "practice");
       const out = this.answer(studentId, id, String(r.answer ?? "").slice(0, 200));
       synced += 1;

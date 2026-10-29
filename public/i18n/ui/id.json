@@ -464,6 +464,8 @@
   "exam.startMock": "Mulai ujian latihan",
   "exam.historyEmpty": "Hasil ujian latihanmu akan muncul di sini.",
   "exam.topicsNote": "Pilih satu topik dan latih itu saja. Soal ujian berbahasa Inggris; tutor menjelaskannya dalam bahasamu.",
+  "exam.topicsPick": "Pilih satu topik dan latih topik itu saja.",
+  "exam.national": "Ujian nasional (NPZ, Matura)",
   "exam.finish": "Selesaikan ujian",
   "exam.confirmFinish": "Selesaikan ujian sekarang? Soal yang tidak dijawab tidak mendapat poin.",
   "exam.scaled": "Skor pada skala ujian: sekitar <b>{value}</b> ({min}–{max})",

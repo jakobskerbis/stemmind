@@ -469,6 +469,8 @@
   "exam.startMock": "Commencer l'examen blanc",
   "exam.historyEmpty": "Les résultats de tes examens blancs s'afficheront ici.",
   "exam.topicsNote": "Choisis un thème et entraîne-toi uniquement dessus. Les questions d'examen sont en anglais ; le tuteur te les explique dans ta langue.",
+  "exam.topicsPick": "Choisis un thème et entraîne-toi seulement sur celui-ci.",
+  "exam.national": "Examens nationaux (NPZ, Matura)",
   "exam.finish": "Terminer l'examen",
   "exam.confirmFinish": "Terminer l'examen maintenant ? Les questions sans réponse ne rapportent aucun point.",
   "exam.scaled": "Score sur l'échelle de l'examen : environ <b>{value}</b> ({min}–{max})",
