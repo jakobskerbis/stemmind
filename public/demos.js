@@ -198,6 +198,7 @@ function pitagora(el) {
       h("label", { class: "demo-check" }, chk, " pokaži enotske kvadratke"),
     ),
     out,
+    h("p", { class: "demo-try" }, "Poskusi: napovej, kolikšna je hipotenuza pri katetah 6 in 8, nato preveri. Ali obstaja trikotnik s katetama 1 in 1, kjer je hipotenuza celo število? Zakaj ne?"),
   );
   draw();
 }
@@ -331,6 +332,7 @@ function ohm(el) {
       slider({ label: "upor R", min: 5, max: 100, step: 5, value: R, unit: "Ω", digits: 0, onInput: (v) => ((R = v), draw()) }),
     ),
     out,
+    h("p", { class: "demo-try" }, "Poskusi: pri 6 V nastavi upor 20 Ω in si zapomni tok. Napovej, kolikšen bo tok pri 40 Ω, nato preveri. Kako se ob tem nagne premica na grafu?"),
   );
   draw();
 }
@@ -514,6 +516,7 @@ function plini(el) {
       slider({ label: "množina n", min: 0.2, max: 3, step: 0.1, value: n, unit: "mol", digits: 1, onInput: (v) => ((n = v), sync()) }),
     ),
     out,
+    h("p", { class: "demo-try" }, "Poskusi: napovej, kaj se zgodi s tlakom, če prostornino zmanjšaš na polovico pri isti temperaturi. Preveri. Kaj pa, če hkrati podvojiš temperaturo?"),
   );
   sync();
   draw();
@@ -598,6 +601,7 @@ function enacbe(el) {
     box,
     h("div", { class: "demo-stage" }, mols),
     out,
+    h("p", { class: "demo-try" }, "Poskusi: preden urediš enačbo, preštej atome vsakega elementa na levi in desni. Zakaj ne smeš spremeniti indeksa (npr. H₂O v H₂O₂), ampak le koeficient?"),
   );
   draw();
 }
@@ -644,7 +648,7 @@ function ph(el) {
   };
   const sl = slider({ label: "pH", min: 0, max: 14, step: 0.1, value: pH, digits: 1, onInput: (v) => ((pH = v), draw()) });
   const chips = h("div", { class: "demo-chips" }, SUBSTANCES.map(([name, v]) => h("button", { type: "button", class: "chip-btn", onclick: () => sl.set(v) }, h("i", { style: `background:${phColor(v)}` }), name)));
-  el.append(h("div", { class: "demo-stage" }, svg), controls(sl), chips, out);
+  el.append(h("div", { class: "demo-stage" }, svg), controls(sl), chips, out, h("p", { class: "demo-try" }, "Poskusi: razvrsti kis, mleko in milnico od najbolj kisle do najbolj bazične, nato preveri. Kolikokrat več ionov H⁺ ima raztopina s pH 3 kot raztopina s pH 5?"));
   draw();
 }
 
