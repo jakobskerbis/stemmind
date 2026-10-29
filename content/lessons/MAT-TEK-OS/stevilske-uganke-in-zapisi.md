@@ -124,7 +124,7 @@ $\overline{xy} = 10x + y$, $\overline{xyz} = 100x + 10y + z$; vsota dveh dvomest
 1. Vsota dveh dvomestnih števil je največ $99 + 98 = 197$. Trimestna vsota se zato začne z $1$: $\mathrm{D} = 1$.
 2. Leva stran z mestnimi vrednostmi: $(10\mathrm{L} + \mathrm{E}) + (10\mathrm{E} + \mathrm{L}) = 11\mathrm{L} + 11\mathrm{E}$.
 3. Desna stran: $\overline{1\mathrm{L}1} = 100 + 10\mathrm{L} + 1 = 101 + 10\mathrm{L}$.
-4. Izenačimo in odštejemo $10\mathrm{L}$: $\mathrm{L} + 11\mathrm{E} = 101$.
+4. Izenačimo obe strani in odštejemo $10\mathrm{L}$. Ostane: vsota $\mathrm{L} + 11\mathrm{E}$ mora biti $101$.
 5. Ker je $\mathrm{L}$ števka (največ $9$), mora biti $11\mathrm{E}$ vsaj $92$. Edina možnost je $\mathrm{E} = 9$, saj je $11 \cdot 9 = 99$, $11 \cdot 8 = 88$ pa premalo.
 6. Torej $\mathrm{L} = 101 - 99 = 2$.
 7. Preverimo: $29 + 92 = 121$, števke $2$, $9$, $1$ so različne.
@@ -228,8 +228,8 @@ Zaporedje s stalno razliko $d$ in prvim členom $a_1$ ima $n$-ti člen $a_n = a_
 > Natančno: $9 + 180 + 2700 + 4 = 2893$. Ker je $900$ od $1000$ števil trimestnih, je rezultat blizu $3 \cdot 1000$.
 
 ? Zakaj je razlika $\overline{ab} - \overline{ba}$ vedno deljiva z $9$?
-- Ker je vsota števk obeh števil enaka.
-~ Enaka vsota števk res pove, da dasta števili enak ostanek pri $9$, a to je že posledica mestnih vrednosti. Neposreden razlog je izračun $(10a + b) - (10b + a)$.
+- Ker je tudi vsota $\overline{ab} + \overline{ba}$ vedno deljiva z $9$.
+~ Ne drži: $31 + 13 = 44$ ni deljivo z $9$. Vsota je $11(a + b)$, deljiva z $11$; z $9$ je deljiva razlika.
 + Ker je $(10a + b) - (10b + a) = 9a - 9b = 9(a - b)$.
 - Ker sta obe števili deljivi z $9$.
 ~ Število $31$ ni deljivo z $9$, pa je $31 - 13 = 18$ vseeno deljivo. Deljiva je le razlika.
