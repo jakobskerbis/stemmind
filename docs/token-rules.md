@@ -45,7 +45,8 @@ Read a big file only with `offset`/`limit` or `grep -n`, never twice in one agen
 
 ## 3b. Reader agents (third pass, j 2026-10-29: everything in the app is reviewed three times)
 
-- Every new lesson gets a third pass after the reviewer: an Opus »student's eyes« reader, prompt = `node scripts/lesson-brief.js --read <ids>`, **3 lessons per reader**, default effort, small `Edit`s only (clarity, premisli and faded step that really make the student think, not monotone per `docs/kakovost.md` §1b, flow, phone). It never changes numbers or quiz keys; it reports doubts instead.
+- Every new lesson gets a third pass after the reviewer: an Opus »student's eyes« reader, prompt = `node scripts/lesson-brief.js --read <ids>`, **2–3 lessons per reader** (one reader per writer pair, or buffered across pairs, as long as there is no barrier), default effort, small `Edit`s only (clarity, premisli and faded step that really make the student think, not monotone per `docs/kakovost.md` §1b, flow, phone). It never changes numbers or quiz keys; it reports doubts instead.
+- Readers report doubts about numbers or quiz keys as `DVOM:` lines instead of editing. Before the commit the orchestrator checks each one (one `node -e`, or the two lines around it) and fixes or dismisses it.
 - Raised old lessons already have three passes (original writer, raise writer, diff-only reviewer): no extra agent.
 - Run it as the third stage of the same pipeline (writer → reviewer → reader per pair), not as a barrier, so readers start while other pairs are still being written. Cost ≈ +1 agent per 3 lessons.
 - Code PRs follow `docs/pregled.md` (pass 1 `npm test` + UI smoke test, passes 2 and 3 by reviewer agents).

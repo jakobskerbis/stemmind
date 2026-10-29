@@ -25,6 +25,18 @@ export function ensureAvatarTables(db) {
       equipped TEXT NOT NULL
     );
   `);
+  refundBodyColours(db);
+}
+
+// Barve telesa so od 29. 10. 2026 brezplačne (j): kdor jih je kupil, dobi kovance nazaj, enkrat na nakup.
+function refundBodyColours(db) {
+  db.exec(`
+    INSERT INTO coin_events (student_id, amount, reason)
+    SELECT p.student_id, -SUM(p.amount), 'vračilo: ' || p.reason FROM coin_events p
+    WHERE p.reason LIKE 'avatar: body\\_%' ESCAPE '\\' AND p.amount < 0
+      AND NOT EXISTS (SELECT 1 FROM coin_events r WHERE r.student_id = p.student_id AND r.reason = 'vračilo: ' || p.reason)
+    GROUP BY p.student_id, p.reason;
+  `);
 }
 
 // Shranjen avatar za prikaz drugim (lige, razred); samo znani deli.
@@ -46,7 +58,7 @@ export class Avatars {
     return this.db.prepare("SELECT COALESCE(SUM(amount),0) AS s FROM coin_events WHERE student_id = ?").get(id).s;
   }
   earnedToday(id) {
-    return this.db.prepare("SELECT COALESCE(SUM(amount),0) AS s FROM coin_events WHERE student_id = ? AND amount > 0 AND date(created_at) = date('now')").get(id).s;
+    return this.db.prepare("SELECT COALESCE(SUM(amount),0) AS s FROM coin_events WHERE student_id = ? AND amount > 0 AND reason NOT LIKE 'vračilo:%' AND date(created_at) = date('now')").get(id).s;
   }
   // Kupljeni deli in predmeti za znanje (brez odvzetih).
   owned(id) {
