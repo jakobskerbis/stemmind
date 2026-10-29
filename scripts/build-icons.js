@@ -17,6 +17,8 @@ const NAMES = [
   "chart-spline", "square-function", "zoom-in", "zoom-out", "house", "maximize", "maximize-2", "minimize-2", "image-down", "save",
   "folder-open", "ellipsis-vertical", "pause", "table", "sliders-horizontal", "copy", "chevron-down", "delete", "corner-down-left",
   "wrench", "text", "redo-2", "activity", "chart-area", "flower", "infinity", "spline", "circle",
+  // namestitev aplikacije
+  "share", "square-plus", "smartphone",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

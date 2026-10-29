@@ -24,6 +24,7 @@ import { examInfo, examKeyFor, isExamPath, examOf, examPrompt } from "./exams.js
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
 import { mountGraphs } from "./graphs.js";
+import { mountWebApp } from "./webapp.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -54,6 +55,7 @@ export function createApp(store, opts = {}) {
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
   if (process.env.STEMMIND_PASSWORD) app.use(passwordGate(process.env.STEMMIND_PASSWORD)); // stran za prijavo + piškotek
+  mountWebApp(app); // manifest v jeziku vmesnika, povezava za Google Play
   app.use(express.json({ limit: "10mb" }));
   // Neuspele klice API zapišemo v dnevnik, da je napako na telefonu mogoče poiskati.
   app.use("/api", (req, res, next) => {

@@ -1,0 +1,55 @@
+# STEMMind kot aplikacija na telefonu
+
+STEMMind je spletna aplikacija, ki jo uporabnik namesti na začetni zaslon (PWA). Ne potrebuje
+trgovine z aplikacijami: dobi svojo ikono, odpre se čez cel zaslon brez vrstice brskalnika in
+deluje tudi brez povezave (shranjene naloge, učbenik, kalkulator).
+
+## Kako jo uporabnik namesti
+
+Aplikacija to ponudi sama: kartica »STEMMind kot aplikacija« na Učni poti (lahko jo skrije za
+3 tedne), vrstica »Namesti aplikacijo« pod zavihkom Jaz in kartica v Nastavitvah. V že nameščeni
+aplikaciji se ne pokažejo.
+
+| Naprava | Kaj se zgodi ob dotiku |
+|---|---|
+| Android (Chrome, Edge, Samsung Internet) | Odpre se okno »Namesti« s posnetki zaslona; ena potrditev. |
+| iPhone, iPad (Safari, Chrome) | Trije koraki: Deli → Dodaj na začetni zaslon → Dodaj. Apple drugače ne dovoli. |
+| Odprto v Instagramu, Messengerju … | Navodilo, naj stran najprej odpre v brskalniku. |
+| Računalnik (Chrome, Edge) | Okno »Namesti STEMMind«; aplikacija se odpre v svojem oknu. |
+
+Na iPhonu ima nameščena aplikacija svoje piškotke, zato se mora uporabnik ob prvem odprtju
+morda še enkrat prijaviti (to piše tudi v navodilih).
+
+## Kaj še zna
+
+- Dolg pritisk na ikono (Android, računalnik): bližnjice Učna pot, Inštruktor, Učbenik, Kalkulator
+  (`/?pogled=chat` …).
+- Tipka Nazaj na Androidu ne zapre aplikacije: najprej zapre kalkulator ali navodila, iz lekcije
+  gre na seznam lekcij, iz Nastavitev na Jaz, sicer na Učno pot.
+- Opis aplikacije (`/manifest.webmanifest`) je v jeziku vmesnika (`server/webapp.js`).
+- Posnetki zaslona za okno »Namesti« so v `public/icons/screen-*.png`; ob večji spremembi videza
+  jih je dobro posneti znova (telefon 390 × 844 pri 2×, računalnik 1440 × 900).
+
+Namestitev deluje samo na naslovu `https://…` (ngrok, Cloudflare, Render) ali `http://localhost`.
+
+## Pozneje: v trgovini Google Play in App Store
+
+Ni nujno, a nekateri starši aplikacijo iščejo v trgovini. Oboje zahteva stalni naslov, ki deluje
+tudi, ko je računalnik ugasnjen (npr. Render, glej `docs/objava.md`).
+
+1. **Google Play (priporočeno najprej).** Isto aplikacijo zapakiramo kot »Trusted Web Activity«
+   (orodje PWABuilder ali Bubblewrap), brez nove kode. Potrebno: razvijalski račun Google Play
+   (enkratno 25 $), ime paketa (npr. `si.stemmind.app`) in prstni odtis podpisnega ključa. Ta dva
+   vpišemo v `.env`:
+
+   ```
+   ANDROID_PACKAGE=si.stemmind.app
+   ANDROID_SHA256=AB:CD:…
+   ```
+
+   Strežnik ju objavi na `/.well-known/assetlinks.json`, da Android aplikacijo odpre brez vrstice
+   brskalnika. Posodobitve gredo samodejno s strežnika, nove različice v trgovino niso potrebne.
+2. **App Store.** Ovoj s Capacitorjem. Potrebno: Apple Developer (99 $ na leto) in Mac za
+   gradnjo. Apple zavrne aplikacije, ki so samo spletna stran v okvirju, zato bi prej dodali
+   kaj, kar zna samo telefon (npr. obvestila za ponavljanje). Do takrat je na iPhonu najboljša pot
+   »Dodaj na začetni zaslon«.
