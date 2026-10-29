@@ -56,19 +56,12 @@ Pravokotnik ima stranici $a = 12\,\text{cm}$ in $b = 5\,\text{cm}$. Kako dolga j
 Enakokraki trikotnik ima osnovnico $a = 16\,\text{cm}$ in krak $b = 10\,\text{cm}$. Izračunaj višino na osnovnico in ploščino trikotnika.
 
 1. Višina razpolovi osnovnico, zato je ena kateta $\dfrac{a}{2} = 8\,\text{cm}$. Hipotenuza je krak $10\,\text{cm}$.
-2. Iščemo kateto, zato odštevamo: $v^2 = 10^2 - 8^2 = 100 - 36 = 64$.
-3. Korenimo: $v = \sqrt{64} = 8\,\text{cm}$.
-4. Ploščina: $S = \dfrac{a \cdot v}{2} = \dfrac{16 \cdot 8}{2} = 64\,\text{cm}^2$.
-5. Preverimo: $8^2 + 8^2 = 128 \ne 100$ bi bila napaka, pravilno je $6^2 + 8^2 = 100$, kjer je $6$ druga kateta, če bi bila $a/2 = 6$. V našem primeru je $a/2 = 8$ in $v^2 + 8^2$ mora biti $100$: $v^2 = 36$. Računajmo zato še enkrat natančno: $10^2 - 8^2 = 100 - 64 = 36$.
+2. Iščemo kateto, zato odštevamo: $v^2 = 10^2 - 8^2 = 100 - 64 = 36$.
+3. Korenimo: $v = \sqrt{36} = 6\,\text{cm}$.
+4. Ploščina: $S = \dfrac{a \cdot v}{2} = \dfrac{16 \cdot 6}{2} = 48\,\text{cm}^2$.
+5. Preverimo: $6^2 + 8^2 = 36 + 64 = 100 = 10^2$. ✓ Višina je krajša od kraka, kot mora biti, saj je kateta vedno krajša od hipotenuze.
 
-Popravek zgornjega računa: $8^2 = 64$, ne $36$. Pravilno je:
-
-- $v^2 = 10^2 - 8^2 = 100 - 64 = 36$,
-- $v = \sqrt{36} = 6\,\text{cm}$,
-- $S = \dfrac{16 \cdot 6}{2} = 48\,\text{cm}^2$,
-- preverba: $6^2 + 8^2 = 36 + 64 = 100 = 10^2$. ✓
-
-Opazi, da je prvi poskus pokazal pomembno navado: vedno preveri z vstavitvijo v $a^2 + b^2 = c^2$.
+Navada, ki te reši pred napakami: rezultat vedno preveri z vstavitvijo v $a^2 + b^2 = c^2$.
 
 ### Primer 3 (težji): besedilna naloga
 

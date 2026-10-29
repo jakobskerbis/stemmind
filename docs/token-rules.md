@@ -25,7 +25,7 @@ Read a big file only with `offset`/`limit` or `grep -n`, never twice in one agen
 
 ## 2. Lesson writer agents
 
-- The orchestrator runs `node scripts/lesson-topic.js <id> [<id> ...]` once for the whole batch and pastes each topic's JSON into the agent prompt. Agents do not explore the repo or rerun it.
+- The orchestrator runs `node scripts/lesson-brief.js <id> <id>` once per writer agent and pastes the output as the whole prompt: it already holds the rules of §2 and `docs/kakovost.md` §1 and the topic JSON (`previousSummaries`, goals, demos). `node scripts/lesson-brief.js --review <ids>` does the same for reviewers. Do not write briefs by hand and do not add the README or exemplar text to the prompt. Agents do not explore the repo or rerun the scripts.
 - Give each writer **2 related topics** (same path, adjacent in the learning path). The fixed cost of an agent (system prompt, tools, reading the format and exemplar) is then paid once for two lessons. Do not go above 3.
 - Read at most: `content/lessons/README.md` (format) and `exemplar` (style, `content/lessons/FIZ-OS-9/upor-in-ohmov-zakon.md`). Use `previousSummaries` for what the student already knows; open a sibling lesson only if a summary is missing and it is truly needed.
 - Keep the writing brief in the workflow script short (aim ≤ 400 words): level, j's rules (Podatki/Iščemo in every worked example, formula only in `:::formula`, Slovenian terms, decimal comma, »avtor: AI«, no »PhET«), the topic JSON. Do not paste README or the exemplar into the prompt as well as letting the agent read it.
@@ -35,8 +35,8 @@ Read a big file only with `offset`/`limit` or `grep -n`, never twice in one agen
 ## 3. Reviewer agents (second Opus, keep it)
 
 - Give each reviewer **2–3 lessons** and only: the file paths, the topic level (path label + goals), and the checklist below. No exemplar, no README.
-- Run `node scripts/check-lesson.js -q <files>` first; the format is then already checked, so the reviewer reads for content only.
-- Checklist: every number in worked examples recomputed (batch them into one `node -e`); every »+« quiz answer truly correct and every »-« truly wrong; level fits the path (nothing not yet taught); Slovenian terminology; »Podatki« lists all given data; units and significant figures.
+- Run `node scripts/check-lesson.js -q <files>` first; the format, LaTeX and every pure-number step (`$37 \cdot 7 = 259$`) are then already checked (the checker prints how many steps it recomputed and fails on a mismatch), so the reviewer reads for content only.
+- Checklist: the remaining numbers in worked examples recomputed (substitutions, rounding, units and significant figures; batch them into one `node -e`); every »+« quiz answer truly correct and every »-« truly wrong; level fits the path (nothing not yet taught); Slovenian terminology; »Podatki« lists all given data.
 - Fix with small `Edit`s. Never rewrite the whole file. Reply: `<id>: N popravkov – <5–10 words each>`, ≤ 5 lines per lesson.
 - For upgrading old lessons to the new format: run the checker first and fix only what it and the checklist flag; keep correct text as it is.
 
@@ -44,6 +44,7 @@ Read a big file only with `offset`/`limit` or `grep -n`, never twice in one agen
 
 Each tool call resends the thread's whole context, which is large in long-running threads, so fewer calls matter most here.
 - One wake = launch the batch, end the turn. Do not poll; the workflow notifies you.
+- All threads share one 5-hour usage limit. Lesson batches run at fixed times (OŠ/SŠ 10:50 UTC and every 5 h, faks 12:20 UTC and every 5 h); a thread that is not a lesson thread runs at most 2 agents at once and none in the first hour after a batch starts, so the batches never get rate-limited.
 - Do not read lesson files, memory files or old thread messages to report on a batch; use the agents' short replies.
 - After the batch, one command: `node scripts/check-lesson.js -q $(git diff --name-only origin/main -- content/lessons) && npm test 2>&1 | tail -6`, then one command for `git add/commit/push`.
 - Status: update the checklist; send at most one short reply per batch (≤ 60 words). No replies for routine steps.
