@@ -29,7 +29,7 @@ export const EXAM_MAT = [
         return task({
           text: L(`What is the larger solution of $${eq}$?`, `$${eq}$ का बड़ा हल क्या है?`),
           answer: num(Math.max(p, q)),
-          hint: L("Find two numbers whose product is the constant term and whose sum is the opposite of the x-coefficient.", "ऐसी दो संख्याएँ ज्ञात कीजिए जिनका गुणनफल अचर पद के बराबर हो और योग x के गुणांक का ऋणात्मक हो।"),
+          hint: L("Find two numbers whose product is the constant term and whose sum is the opposite of the x-coefficient.", "ऐसी दो संख्याएँ ज्ञात कीजिए जिनका गुणनफल अचर पद के बराबर हो और योग $x$ के गुणांक के बराबर परंतु विपरीत चिह्न वाला हो।"),
           solution: L(
             `$${eq}$\n$${factor(p)}${factor(q)} = 0$\n$x = ${p}$ or $x = ${q}$, so the larger solution is $${Math.max(p, q)}$.`,
             `$${eq}$\n$${factor(p)}${factor(q)} = 0$\n$x = ${p}$ या $x = ${q}$, अतः बड़ा हल $${Math.max(p, q)}$ है।`
@@ -593,7 +593,7 @@ export const EXAM_MAT = [
           text: L(`Find the exact value of $${tex}$. Give it as a decimal.`, `$${tex}$ का यथार्थ मान ज्ञात कीजिए। उत्तर दशमलव में दीजिए।`),
           answer: numM(val, null, [
             [-val, L("Check the sign in that quadrant (All–Sin–Tan–Cos).", "उस चतुर्थांश में चिह्न जाँचिए (All–Sin–Tan–Cos)।")],
-            [Math.abs(val) === 0.5 ? S3 * Math.sign(val) : NaN, L("Use the reference angle with the same function (sine stays sine).", "संदर्भ कोण के साथ वही फलन लीजिए (sin, sin ही रहता है)।")],
+            [Math.abs(val) === 0.5 ? S3 * Math.sign(val) : NaN, L("Use the reference angle with the same function (sine stays sine).", "संदर्भ कोण के साथ वही फलन लीजिए (sin, sin ही रहता है और cos, cos ही)।")],
           ]),
           hint: L(
             "Write the angle as $180^\\circ \\pm \\alpha$ or $360^\\circ - \\alpha$, use the reference angle $\\alpha$, then decide the sign from the quadrant.",
@@ -799,7 +799,7 @@ export const EXAM_MAT = [
       return task({
         text: L(
           `A group has ${boys} boys and ${girls} girls. In how many ways can a team of ${k} be chosen if it must include at least one girl?`,
-          `एक समूह में ${boys} लड़के और ${girls} लड़कियाँ हैं। ${k} सदस्यों की एक टीम कितने प्रकार से चुनी जा सकती है, यदि टीम में कम से कम एक लड़की होनी चाहिए?`
+          `एक समूह में ${boys} लड़के और ${girls} लड़कियाँ हैं। ${k} सदस्यों की एक टीम कितने प्रकार से चुनी जा सकती है, यदि टीम में कम से कम एक लड़की का होना आवश्यक है?`
         ),
         answer: num(v),
         hint: L("Count all teams and subtract the teams with no girls.", "सभी संभव टीमें गिनिए और उनमें से वे टीमें घटाइए जिनमें कोई लड़की नहीं है।"),
@@ -848,16 +848,16 @@ export const EXAM_MAT = [
         });
       }
       const k = r.int(1, 4), s = r.pick([1, -1]);
-      const ext = s > 0 ? L("minimum", "निम्निष्ठ") : L("maximum", "उच्चिष्ठ");
+      const ext = s > 0 ? L("minimum", "निम्नतम") : L("maximum", "उच्चतम");
       const ff = `$f(x) = ${poly([[1, "x^3"], [-3 * k * k, "x"], [c, ""]])}$`;
       const l1 = `$f'(x) = 3x^2 - ${3 * k * k} = 0 \\Rightarrow x = \\pm ${k}$`;
       return task({
-        text: L(`The function ${ff} has a local ${ext}. At what value of $x$?`, `फलन ${ff} का एक स्थानीय ${ext} है। यह $x$ के किस मान पर है?`),
+        text: L(`The function ${ff} has a local ${ext}. At what value of $x$?`, `फलन ${ff} का $x$ के किस मान पर स्थानीय ${ext} है?`),
         answer: num(s * k),
         hint: L("Solve $f'(x) = 0$ and check the sign of $f''(x)$.", "$f'(x) = 0$ को हल कीजिए और $f''(x)$ का चिह्न जाँचिए।"),
         solution: L(
           `${l1}\n$f''(x) = 6x$: $f''(${k}) > 0$ (minimum), $f''(${-k}) < 0$ (maximum).\nSo the local ${ext} is at $x = ${s * k}$.`,
-          `${l1}\n$f''(x) = 6x$: $f''(${k}) > 0$ (निम्निष्ठ), $f''(${-k}) < 0$ (उच्चिष्ठ)।\nअतः स्थानीय ${ext} $x = ${s * k}$ पर है।`
+          `${l1}\n$f''(x) = 6x$: $f''(${k}) > 0$ (निम्नतम), $f''(${-k}) < 0$ (उच्चतम)।\nअतः स्थानीय ${ext} $x = ${s * k}$ पर है।`
         ),
       });
     },
@@ -1178,8 +1178,8 @@ export const EXAM_MAT = [
         return task({
           text: DET(`$\\begin{pmatrix} ${A.map((row) => row.join(" & ")).join(" \\\\ ")} \\end{pmatrix}$`),
           answer: num(det),
-          hint: L("Expand along the first row (or use Sarrus' rule).", "पहली पंक्ति के अनुदिश प्रसार कीजिए (या सारस नियम का प्रयोग कीजिए)।"),
-          solution: L(`Expanding along the first row:\n${ex}`, `पहली पंक्ति के अनुदिश प्रसार करने पर:\n${ex}`),
+          hint: L("Expand along the first row (or use Sarrus' rule).", "पहली पंक्ति के अनुदिश प्रसरण कीजिए (या सारस नियम का प्रयोग कीजिए)।"),
+          solution: L(`Expanding along the first row:\n${ex}`, `पहली पंक्ति के अनुदिश प्रसरण करने पर:\n${ex}`),
         });
       }
       // ak = bc: b = a·m, k = c·m.
@@ -1188,7 +1188,7 @@ export const EXAM_MAT = [
       const M = `$\\begin{pmatrix} ${a} & ${b} \\\\ ${c} & k \\end{pmatrix}$`;
       const sol = `$${a}k - ${par(b)} \\cdot ${par(c)} = 0 \\Rightarrow k = ${k}$`;
       return task({
-        text: L(`For which value of $k$ is the matrix ${M} singular (not invertible)?`, `$k$ के किस मान के लिए आव्यूह ${M} अव्युत्क्रमणीय (singular) है?`),
+        text: L(`For which value of $k$ is the matrix ${M} singular (not invertible)?`, `$k$ के किस मान के लिए आव्यूह ${M} अव्युत्क्रमणीय है?`),
         answer: num(k),
         hint: L("A matrix is singular when its determinant is 0.", "जिस आव्यूह का सारणिक 0 हो, वह अव्युत्क्रमणीय होता है।"),
         solution: L(sol, `सारणिक शून्य होना चाहिए: ${sol}`),
