@@ -565,6 +565,8 @@
   "gc.max": "Max.",
   "gc.play": "Lejátszás",
   "gc.pause": "Megállítás",
+  "gc.playAll": "Összes lejátszása",
+  "gc.pauseAll": "Összes megállítása",
   "gc.tangent": "Érintő",
   "gc.deriv": "Derivált",
   "gc.area": "Görbe alatti terület (integrál)",

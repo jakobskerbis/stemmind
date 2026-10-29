@@ -565,6 +565,8 @@
   "gc.max": "Maks",
   "gc.play": "Luaj",
   "gc.pause": "Ndalo",
+  "gc.playAll": "Luaj të gjitha",
+  "gc.pauseAll": "Ndalo të gjitha",
   "gc.tangent": "Tangjentja",
   "gc.deriv": "Derivati",
   "gc.area": "Sipërfaqja nën kurbë (integrali)",

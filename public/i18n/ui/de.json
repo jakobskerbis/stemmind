@@ -565,6 +565,8 @@
   "gc.max": "Max",
   "gc.play": "Abspielen",
   "gc.pause": "Anhalten",
+  "gc.playAll": "Alle abspielen",
+  "gc.pauseAll": "Alle anhalten",
   "gc.tangent": "Tangente",
   "gc.deriv": "Ableitung",
   "gc.area": "Fläche unter der Kurve (Integral)",

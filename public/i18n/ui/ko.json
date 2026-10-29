@@ -560,6 +560,8 @@
   "gc.max": "최대",
   "gc.play": "재생",
   "gc.pause": "정지",
+  "gc.playAll": "모두 재생",
+  "gc.pauseAll": "모두 정지",
   "gc.tangent": "접선",
   "gc.deriv": "도함수",
   "gc.area": "곡선 아래 넓이 (적분)",

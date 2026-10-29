@@ -1,13 +1,15 @@
 // Odpre STEMMind na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
 // Stalna povezava (ista ob vsakem zagonu): brezplačen račun ngrok (NGROK_AUTHTOKEN in
 // NGROK_DOMAIN v .env, skript ju vpraša enkrat). Brez tega: začasna povezava Cloudflare.
-// Uporaba: node scripts/telefon.js  (na Windows dvoklik na telefon-windows.bat)
+// Uporaba: node scripts/zaganjalnik.js telefon  (na Windows dvoklik na telefon-windows.bat)
 // Računalnik mora biti prižgan, dokler uporabljaš povezavo na telefonu.
+// Vsake 2 uri se aplikacija sama posodobi z GitHuba, povezava ostane ista (docs/posodobitve.md).
 import fs from "node:fs";
 import path from "node:path";
 import { spawn, execFileSync } from "node:child_process";
 import readline from "node:readline/promises";
 import { fileURLToPath } from "node:url";
+import { superviseServer, autoUpdate, openLog, logSay, serverStatus, RESTART_CODE } from "./nadzor.js";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const envFile = path.join(root, ".env");
@@ -16,13 +18,14 @@ const local = `http://localhost:${port}`;
 const toolsDir = path.join(root, "data", "orodja");
 const urlFile = path.join(root, "data", "telefon-povezava.txt");
 const friendFile = path.join(root, "data", "povezava-za-prijatelje.txt");
-const logFile = path.join(root, "data", "dnevnik.txt"); // izpis strežnika, za iskanje napak
 const isWin = process.platform === "win32";
 
 const say = (s = "") => console.log(s);
 const children = [];
+let stopping = false;
 function stopAll(code = 0) {
   stopping = true;
+  server?.stop();
   for (const c of children) try { c.kill(); } catch {}
   process.exit(code);
 }
@@ -57,52 +60,19 @@ async function ensurePassword() {
   say("Geslo je shranjeno v datoteko .env (spremeniš ga lahko tam).");
 }
 
-async function status() {
-  try {
-    const r = await fetch(local, { signal: AbortSignal.timeout(2000) });
-    return r.status;
-  } catch { return 0; }
-}
-
-let stopping = false;
+let server = null; // nadzor strežnika (scripts/nadzor.js), da ga lahko posodobitev znova zažene
 let log = null;
 
-function spawnServer() {
-  const server = spawn(process.execPath,
-    ["--env-file-if-exists=.env", "--disable-warning=ExperimentalWarning", "server/index.js"],
-    { cwd: root, stdio: ["ignore", "pipe", "pipe"] });
-  for (const stream of [server.stdout, server.stderr]) {
-    stream.on("data", (d) => { process.stdout.write(d); log?.write(`${new Date().toISOString().slice(11, 19)} ${d}`); });
-  }
-  children.push(server);
-  // Če se strežnik ustavi (npr. posodobitev ga je zaprla), ga zaženemo znova,
-  // da povezava za telefon ostane ista.
-  server.on("exit", async (code) => {
-    if (stopping) return;
-    say(`Strežnik se je ustavil (koda ${code}). Znova ga zaganjam čez 3 sekunde ...`);
-    await new Promise((r) => setTimeout(r, 3000));
-    if (stopping) return;
-    while (await status()) await new Promise((r) => setTimeout(r, 2000)); // počakaj, da se vrata sprostijo
-    spawnServer();
-  });
-  return server;
-}
-
 async function ensureServer() {
-  const s = await status();
-  if (s === 401) return; // že teče, z geslom
+  const s = await serverStatus(port);
+  if (s === 401) return false; // že teče z geslom (v drugem oknu)
   if (s) {
     say("STEMMind že teče brez gesla. Zapri drugo okno STEMMind in znova zaženi to datoteko.");
     return stopAll(1);
   }
-  fs.mkdirSync(path.dirname(logFile), { recursive: true });
-  log = fs.createWriteStream(logFile, { flags: "a" });
-  log.write(`\n=== zagon ${new Date().toISOString()} ===\n`);
-  spawnServer();
-  for (let i = 0; i < 60; i++) {
-    if (await status()) return;
-    await new Promise((r) => setTimeout(r, 500));
-  }
+  log = openLog(root);
+  server = superviseServer({ root, port, say, log });
+  if (await server.start()) return true;
   say("Strežnik se ni zagnal.");
   stopAll(1);
 }
@@ -282,7 +252,7 @@ async function main() {
   await ensurePassword();
   const stable = await ngrokSettings();
   say("Zaganjam STEMMind ...");
-  await ensureServer();
+  const own = await ensureServer();
   say("Odpiram povezavo za telefon ...");
   let url = "";
   if (stable) {
@@ -319,6 +289,12 @@ async function main() {
     ? "  To je STALNA povezava: ob vsakem zagonu je enaka."
     : "  To je začasna povezava: ob vsakem zagonu je nova.");
   say("==============================================================");
+  if (own) {
+    autoUpdate({
+      root, port, say: logSay(log), server,
+      restartSelf: process.env.STEMMIND_ZAGANJALNIK ? () => stopAll(RESTART_CODE) : null,
+    });
+  }
 }
 
 main().catch((e) => { say(`Napaka: ${e.message}`); stopAll(1); });

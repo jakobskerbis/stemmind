@@ -565,6 +565,8 @@
   "gc.max": "زیادہ سے زیادہ",
   "gc.play": "چلاؤ",
   "gc.pause": "روکو",
+  "gc.playAll": "سب چلاؤ",
+  "gc.pauseAll": "سب روکو",
   "gc.tangent": "مماس",
   "gc.deriv": "مشتق",
   "gc.area": "منحنی کے نیچے رقبہ (تکمل)",

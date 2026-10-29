@@ -565,6 +565,8 @@
   "gc.max": "بیشینه",
   "gc.play": "پخش",
   "gc.pause": "توقف",
+  "gc.playAll": "پخش همه",
+  "gc.pauseAll": "توقف همه",
   "gc.tangent": "مماس",
   "gc.deriv": "مشتق",
   "gc.area": "مساحت زیر منحنی (انتگرال)",

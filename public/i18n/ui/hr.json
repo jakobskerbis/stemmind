@@ -570,6 +570,8 @@
   "gc.max": "Najviše",
   "gc.play": "Pokreni",
   "gc.pause": "Zaustavi",
+  "gc.playAll": "Pokreni sve",
+  "gc.pauseAll": "Zaustavi sve",
   "gc.tangent": "Tangenta",
   "gc.deriv": "Derivacija",
   "gc.area": "Površina ispod krivulje (integral)",

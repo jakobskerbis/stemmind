@@ -575,6 +575,8 @@
   "gc.max": "Maks",
   "gc.play": "Odtwórz",
   "gc.pause": "Zatrzymaj",
+  "gc.playAll": "Odtwórz wszystkie",
+  "gc.pauseAll": "Zatrzymaj wszystkie",
   "gc.tangent": "Styczna",
   "gc.deriv": "Pochodna",
   "gc.area": "Pole pod krzywą (całka)",

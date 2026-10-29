@@ -570,6 +570,8 @@
   "gc.max": "Max",
   "gc.play": "Pornește",
   "gc.pause": "Oprește",
+  "gc.playAll": "Pornește toate",
+  "gc.pauseAll": "Oprește toate",
   "gc.tangent": "Tangenta",
   "gc.deriv": "Derivata",
   "gc.area": "Aria de sub curbă (integrala)",

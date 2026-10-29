@@ -708,6 +708,26 @@ if ("serviceWorker" in navigator && location.protocol !== "file:") {
     .catch(() => null);
 }
 
+// Samodejna posodobitev (docs/posodobitve.md): ko se aplikacija vrne v ospredje po vsaj
+// 3 minutah in strežnik medtem teče z novejšo različico, se stran tiho osveži.
+let appVersion = null;
+let hiddenAt = 0;
+const serverVersion = () =>
+  fetch("/healthz/stanje", { cache: "no-store" })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((s) => s?.razlicica || null)
+    .catch(() => null);
+serverVersion().then((v) => (appVersion = v));
+document.addEventListener("visibilitychange", async () => {
+  if (document.visibilityState === "hidden") {
+    hiddenAt = Date.now();
+    return;
+  }
+  if (!appVersion || !hiddenAt || Date.now() - hiddenAt < 3 * 60 * 1000) return;
+  const v = await serverVersion();
+  if (v && v !== appVersion && document.visibilityState === "visible") location.reload();
+});
+
 // Pasica brez povezave na učni poti in pošiljanje odgovorov, ko se povezava vrne.
 function syncOfflineBanner() {
   const box = $("#offline-banner");

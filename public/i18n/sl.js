@@ -628,6 +628,8 @@ export default {
   "gc.max": "Največ",
   "gc.play": "Predvajaj",
   "gc.pause": "Ustavi",
+  "gc.playAll": "Predvajaj vse",
+  "gc.pauseAll": "Ustavi vse",
   "gc.tangent": "Tangenta",
   "gc.deriv": "Odvod",
   "gc.area": "Ploščina pod krivuljo (integral)",

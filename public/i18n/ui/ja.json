@@ -560,6 +560,8 @@
   "gc.max": "最大",
   "gc.play": "再生",
   "gc.pause": "停止",
+  "gc.playAll": "すべて再生",
+  "gc.pauseAll": "すべて停止",
   "gc.tangent": "接線",
   "gc.deriv": "導関数",
   "gc.area": "曲線の下の面積（積分）",

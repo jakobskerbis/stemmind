@@ -565,6 +565,8 @@
   "gc.max": "Máx.",
   "gc.play": "Reproducir",
   "gc.pause": "Pausar",
+  "gc.playAll": "Reproducir todos",
+  "gc.pauseAll": "Pausar todos",
   "gc.tangent": "Tangente",
   "gc.deriv": "Derivada",
   "gc.area": "Área bajo la curva (integral)",
