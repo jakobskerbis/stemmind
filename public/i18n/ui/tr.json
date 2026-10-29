@@ -335,7 +335,7 @@
   "onb.namePh": "ör. Elif",
   "onb.finish": "Okul ve sınıf seçimini tamamla.",
   "lp.os": "Ortaokul",
-  "lp.osSub": "6–9. sınıflar",
+  "lp.osSub": "1–9. sınıflar",
   "lp.ss": "Lise",
   "lp.ssSub": "1–4. yıllar",
   "lp.uni": "Üniversite",
@@ -1307,5 +1307,6 @@
   "tb.steps.count": "Adım {n} / {m}",
   "tb.steps.all": "Hepsi bir arada",
   "tb.steps.byStep": "Adım adım",
-  "tb.steps.quick": "Hızlı kontrol"
+  "tb.steps.quick": "Hızlı kontrol",
+  "path.earlyNote": "{grade} için öğrenme yolu hâlâ hazırlanıyor, bu yüzden şimdilik 6. sınıf konularını görüyorsun. Sınıfının oyunları Oyunlar bölümünde, öğretmen de her şeyi senin seviyende anlatır."
 }

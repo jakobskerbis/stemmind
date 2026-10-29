@@ -345,7 +345,7 @@
   "onb.namePh": "např. Honza",
   "onb.finish": "Dokonči výběr školy a ročníku.",
   "lp.os": "Základní škola",
-  "lp.osSub": "6.–9. třída",
+  "lp.osSub": "1.–9. třída",
   "lp.ss": "Střední škola",
   "lp.ssSub": "1.–4. ročník",
   "lp.uni": "Vysoká škola",
@@ -1319,5 +1319,6 @@
   "tb.steps.count": "Krok {n} z {m}",
   "tb.steps.all": "Vše najednou",
   "tb.steps.byStep": "Krok za krokem",
-  "tb.steps.quick": "Rychlá kontrola"
+  "tb.steps.quick": "Rychlá kontrola",
+  "path.earlyNote": "Učební cesta pro {grade} se ještě připravuje, proto zatím vidíš učivo 6. třídy. Hry pro tvůj ročník najdeš ve Hrách a lektor ti vše vysvětlí na tvé úrovni."
 }

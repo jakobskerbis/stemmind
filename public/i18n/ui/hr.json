@@ -340,7 +340,7 @@
   "onb.namePh": "npr. Luka",
   "onb.finish": "Dovrši odabir škole i razreda.",
   "lp.os": "Osnovna škola",
-  "lp.osSub": "6.–9. razred",
+  "lp.osSub": "1.–9. razred",
   "lp.ss": "Srednja škola",
   "lp.ssSub": "1.–4. razred",
   "lp.uni": "Fakultet",
@@ -1313,5 +1313,6 @@
   "tb.steps.count": "Korak {n} od {m}",
   "tb.steps.all": "Sve odjednom",
   "tb.steps.byStep": "Korak po korak",
-  "tb.steps.quick": "Brza provjera"
+  "tb.steps.quick": "Brza provjera",
+  "path.earlyNote": "Put učenja za {grade} još je u izradi, pa zasad vidiš gradivo 6. razreda. Igre za tvoj razred su u Igrama, a instruktor ti sve objašnjava na tvojoj razini."
 }

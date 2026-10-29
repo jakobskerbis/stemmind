@@ -340,7 +340,7 @@
   "onb.namePh": "de ex. Andrei",
   "onb.finish": "Termină alegerea școlii și a clasei.",
   "lp.os": "Școala generală",
-  "lp.osSub": "clasele 6–9",
+  "lp.osSub": "clasele 1–9",
   "lp.ss": "Liceu",
   "lp.ssSub": "anii 1–4",
   "lp.uni": "Universitate",
@@ -1313,5 +1313,6 @@
   "tb.steps.count": "Pasul {n} din {m}",
   "tb.steps.all": "Tot deodată",
   "tb.steps.byStep": "Pas cu pas",
-  "tb.steps.quick": "Verificare rapidă"
+  "tb.steps.quick": "Verificare rapidă",
+  "path.earlyNote": "Traseul de învățare pentru {grade} este încă în lucru, așa că deocamdată vezi materia clasei a 6-a. Jocurile pentru clasa ta sunt la Jocuri, iar tutorele îți explică totul la nivelul tău."
 }

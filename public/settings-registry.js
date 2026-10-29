@@ -19,7 +19,7 @@ const DIALECT_LIST = Object.entries(DIALECTS).map(([l, list]) => `${l}: ${list.m
 export const PROFILE_SETTINGS = {
   school_system: { confirm: true, desc: "country / school system id: SI = Slovenia (default), others are regional curricula (see get_settings)" },
   educational_track: { confirm: true, values: ["OSNOVNA_SOLA", "SREDNJA_SOLA", "UNIVERZA"], desc: "school stage: primary (OŠ), secondary (SŠ) or faculty" },
-  curriculum_level: { confirm: true, desc: "grade or year: OŠ '6. razred'…'9. razred'; SŠ '1. letnik'…'4. letnik', optional maths level ' OR'/' VR' (e.g. '3. letnik VR'); faculty '1. letnik'…; regional systems use their grade names (e.g. 'Class 8')" },
+  curriculum_level: { confirm: true, desc: "grade or year: OŠ '1. razred'…'9. razred'; SŠ '1. letnik'…'4. letnik', optional maths level ' OR'/' VR' (e.g. '3. letnik VR'); faculty '1. letnik'…; regional systems use their grade names (e.g. 'Class 8')" },
   study_program: { confirm: true, desc: "faculty study programme: id or name with faculty, e.g. 'Kemija UL FKKT' (get_settings options=study_program lists them)" },
   study_course: { desc: "faculty only: course of the programme's current year or an elective, by name (get_settings options=study_course)" },
   subject: { values: ["MAT", "FIZ", "KEM", "NAR", "BIO", "GEO", "RAC", "EKO"], desc: "school subject; OŠ 6./7. has MAT and NAR only; at faculty prefer study_course" },

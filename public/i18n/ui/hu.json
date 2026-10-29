@@ -335,7 +335,7 @@
   "onb.namePh": "pl. Bence",
   "onb.finish": "Fejezd be az iskola és az évfolyam kiválasztását.",
   "lp.os": "Általános iskola",
-  "lp.osSub": "6–9. osztály",
+  "lp.osSub": "1–9. osztály",
   "lp.ss": "Középiskola",
   "lp.ssSub": "1–4. évfolyam",
   "lp.uni": "Egyetem",
@@ -1307,5 +1307,6 @@
   "tb.steps.count": "{n}. lépés / {m}",
   "tb.steps.all": "Egyszerre minden",
   "tb.steps.byStep": "Lépésről lépésre",
-  "tb.steps.quick": "Gyors ellenőrzés"
+  "tb.steps.quick": "Gyors ellenőrzés",
+  "path.earlyNote": "A(z) {grade} tanulási útja még készül, ezért most a 6. osztály anyagát látod. Az osztályod játékai a Játékok között vannak, a tanító pedig mindent a te szinteden magyaráz el."
 }

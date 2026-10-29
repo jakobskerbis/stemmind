@@ -335,7 +335,7 @@
   "onb.namePh": "e.g. Alex",
   "onb.finish": "Finish choosing your school and year.",
   "lp.os": "Primary school",
-  "lp.osSub": "grades 6–9",
+  "lp.osSub": "grades 1–9",
   "lp.ss": "Secondary school",
   "lp.ssSub": "years 1–4",
   "lp.uni": "University",
@@ -1307,5 +1307,6 @@
   "tb.steps.count": "Step {n} of {m}",
   "tb.steps.all": "All at once",
   "tb.steps.byStep": "Step by step",
-  "tb.steps.quick": "Quick check"
+  "tb.steps.quick": "Quick check",
+  "path.earlyNote": "The learning path for {grade} is still being written, so for now you see grade 6 material. Games for your grade are in Games, and the tutor explains everything at your level."
 }
