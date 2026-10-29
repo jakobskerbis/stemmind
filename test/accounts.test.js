@@ -310,7 +310,9 @@ test("weekly report, export and account deletion", async () => {
     assert.equal(consent.under_15, 1);
     assert.equal(consent.parent_email, "gal@primer.si");
 
-    const exp = await a("/api/account/export");
+    assert.equal((await a("/api/account/export")).status, 404);
+    assert.equal((await a("/api/account/export", { method: "POST", body: { password: "narobe123" } })).status, 401);
+    const exp = await a("/api/account/export", { method: "POST", body: { password: "geslo1234" } });
     assert.equal(exp.body.children[0].name, "Zala");
     assert.equal(exp.body.parent.password_hash, undefined);
 
@@ -473,6 +475,12 @@ test("profile password: each profile has its own, locks other devices and siblin
     assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 423);
     assert.equal((await tablet(`/api/conversations/${conv.id}`)).status, 423);
     assert.equal((await tablet(`/api/students/${ana.id}/claim`, { method: "POST" })).status, 423);
+    // Express ujema poti brez ozira na velike črke in dekodira parametre: tudi tako ostane profil zaklenjen.
+    const enc = String(ana.id).replace(/\d/g, (d) => `%3${d}`);
+    assert.equal((await tablet(`/api/STUDENTS/${ana.id}/xp`)).status, 423);
+    assert.equal((await tablet(`/api/Conversations/${conv.id}`)).status, 423);
+    assert.equal((await tablet(`/api/students/${enc}/xp`)).status, 404);
+    assert.equal((await tablet(`/api/students/0x${ana.id.toString(16)}`)).status, 404);
 
     // Pozabljeno geslo: lastnik ga ponastavi z geslom računa; nato je profil zaklenjen povsod.
     const reset = (auth, password) => tablet("/api/account/profile-password", { method: "POST", body: { student_id: ana.id, auth, password } });
@@ -493,6 +501,9 @@ test("profile password: each profile has its own, locks other devices and siblin
     const other = client();
     await registerVerified(other, calls, "tuj@primer.si");
     assert.equal((await other(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "tretja-ana" } })).status, 404);
+    assert.equal((await other(`/api/students/${enc}/unlock`, { method: "POST", body: { password: "x1234", set: true } })).status, 404);
+    assert.equal((await other(`/api/students/${enc}`)).status, 404);
+    assert.equal((await other(`/api/Students/${ana.id}`)).status, 404);
     assert.equal((await other("/api/account/profile-password", { method: "POST", body: { student_id: ana.id, auth: "geslo1234", password: "x1234" } })).status, 404);
 
     // Odjava zaklene profile na tej napravi; »odjavi druge naprave« zaklene profile drugod.

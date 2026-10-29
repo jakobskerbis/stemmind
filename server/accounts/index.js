@@ -187,11 +187,15 @@ export function mountAccounts(app, store, opts = {}) {
     if (p.is_guest && /^\/billing\//.test(req.path)) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
     if (p.is_guest && !guestOn) return res.status(401).json({ error: "Uporaba brez računa ni več mogoča. Ustvari račun, da obdržiš napredek.", login: true, guest_off: true });
     // Porabo AI vidi samo skrbnik ali kdor aplikacijo odpre na računalniku, kjer teče strežnik.
-    if (/^\/usage(\/|$)/.test(req.path) && !p.is_admin && !isLocalRequest(req)) return res.status(403).json({ error: "Samo za skrbnika." });
+    if (/^\/usage(\/|$)/i.test(req.path) && !p.is_admin && !isLocalRequest(req)) return res.status(403).json({ error: "Samo za skrbnika." });
 
+    // Express poti ujema brez ozira na velike črke in parametre dekodira (%31 = 1, Number(" 1") = 1),
+    // zato je id učenca ali pogovora v poti samo iz števk, sicer bi šel mimo preverjanja lastništva in zaklepa.
+    const seg = /^\/(students|conversations)\/([^/]+)/i.exec(req.path);
+    if (seg && !/^\d+$/.test(seg[2])) return res.status(404).json({ error: "Ne obstaja." });
     let studentId = null;
-    const s = /^\/students\/(\d+)(\/|$)/.exec(req.path);
-    const c = /^\/conversations\/(\d+)(\/|$)/.exec(req.path);
+    const s = /^\/students\/(\d+)(\/|$)/i.exec(req.path);
+    const c = /^\/conversations\/(\d+)(\/|$)/i.exec(req.path);
     if (s) studentId = Number(s[1]);
     if (c) {
       studentId = store.getConversation(Number(c[1]))?.student_id ?? null;
@@ -234,7 +238,7 @@ export function mountAccounts(app, store, opts = {}) {
     }
 
     // Brezplačni paket: omejeno število vprašanj inštruktorju na dan.
-    if (c && req.method === "POST" && /\/messages$/.test(req.path) && !premiumFor(studentId)) {
+    if (c && req.method === "POST" && /\/messages$/i.test(req.path) && !premiumFor(studentId)) {
       const limit = freeDailyQuestions();
       if (questionsToday(studentId) >= limit) {
         return res.status(429).json({
@@ -245,7 +249,7 @@ export function mountAccounts(app, store, opts = {}) {
       }
     }
     // Mesečna meja porabe brezplačnega paketa velja za vse klice AI (inštruktor, branje zapisa, fotografija urnika).
-    if (studentId !== null && req.method === "POST" && /(\/messages|\/tasks\/\d+\/read|\/schedule\/photo)$/.test(req.path) && !premiumFor(studentId)) {
+    if (studentId !== null && req.method === "POST" && /(\/messages|\/tasks\/\d+\/read|\/schedule\/photo)$/i.test(req.path) && !premiumFor(studentId)) {
       const blocked = freeBudgetReason(studentId);
       if (blocked) return res.status(429).json({ error: blocked, limit: true, upgrade: true });
     }
@@ -567,8 +571,16 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   // Izvoz vseh podatkov (GDPR čl. 15 in 20).
-  app.get("/api/account/export", (req, res) => {
+  // Prenos vseh podatkov: s seje računa, ki si jo delijo profili na napravi, zato z geslom računa
+  // (sicer bi brat prebral pogovore zaklenjenega sestrinega profila). Gost gesla nima.
+  app.post("/api/account/export", json, (req, res) => {
     const p = req.parent;
+    const key = `export${p.id}|${req.ip}`;
+    if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
+    if (!p.is_guest && !verifyPassword(String(req.body?.password || ""), p.password_hash)) {
+      throttle.fail(key);
+      return res.status(401).json({ error: "Napačno geslo." });
+    }
     const parent = { ...p };
     for (const k of ["password_hash", "verify_token_hash", "reset_token_hash", "reset_expires_at", "unsubscribe_token"]) delete parent[k];
     const q = (sql, ...a) => db.prepare(sql).all(...a);

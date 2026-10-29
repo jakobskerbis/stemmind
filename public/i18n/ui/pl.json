@@ -24,7 +24,7 @@
   "lock.repeat": "Powtórz hasło",
   "lock.open": "Otwórz profil",
   "lock.save": "Zapisz hasło",
-  "lock.hint": "Co najmniej 4 znaki. Wpisujesz je, gdy otwierasz profil na nowym urządzeniu lub po innym profilu.",
+  "lock.hint": "Co najmniej 4 znaki. Jest potrzebne na nowym urządzeniu, po wylogowaniu i po otwarciu innego profilu na urządzeniu.",
   "lock.mismatch": "Hasła nie są takie same.",
   "lock.short": "Hasło musi mieć co najmniej 4 znaki.",
   "lock.wrong": "Błędne hasło.",

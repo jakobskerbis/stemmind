@@ -24,7 +24,7 @@
   "lock.repeat": "Şifreyi tekrarla",
   "lock.open": "Profili aç",
   "lock.save": "Şifreyi kaydet",
-  "lock.hint": "En az 4 karakter. Profili yeni bir cihazda ya da başka bir profilden sonra açarken girersin.",
+  "lock.hint": "En az 4 karakter. Yeni bir cihazda, çıkış yaptıktan sonra ve cihazda başka bir profil açıldıktan sonra gerekir.",
   "lock.mismatch": "Şifreler eşleşmiyor.",
   "lock.short": "Şifre en az 4 karakter olmalıdır.",
   "lock.wrong": "Yanlış şifre.",

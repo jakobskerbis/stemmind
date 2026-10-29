@@ -24,7 +24,7 @@
   "lock.repeat": "Zopakuj heslo",
   "lock.open": "Otevřít profil",
   "lock.save": "Uložit heslo",
-  "lock.hint": "Alespoň 4 znaky. Zadáš ho, když profil otevřeš na novém zařízení nebo po jiném profilu.",
+  "lock.hint": "Alespoň 4 znaky. Je potřeba na novém zařízení, po odhlášení a poté, co byl na zařízení otevřen jiný profil.",
   "lock.mismatch": "Hesla se neshodují.",
   "lock.short": "Heslo musí mít alespoň 4 znaky.",
   "lock.wrong": "Špatné heslo.",

@@ -127,6 +127,9 @@ export function openProfileLock(student, students = []) {
     <button type="button" class="ghost" id="lock-logout">${esc(t("pm.logout"))}</button>
   </div>`;
   document.body.appendChild(box);
+  // Aplikacija za zaslonom ni dosegljiva s tipko Tab ali bralnikom zaslona, dokler je profil zaklenjen.
+  const behind = [...document.body.children].filter((el) => el !== box);
+  behind.forEach((el) => (el.inert = true));
   const f = $("#lock-form", box);
   f.password.focus();
   const fail = (form, msg) => {
@@ -141,6 +144,7 @@ export function openProfileLock(student, students = []) {
   };
   return new Promise((resolve) => {
     const done = (id) => {
+      behind.forEach((el) => (el.inert = false));
       box.remove();
       resolve(id);
     };
@@ -869,7 +873,7 @@ async function renderAccount() {
       <h2>Podatki in zasebnost</h2>
       <p class="muted"><a href="/zasebnost.html" target="_blank">Obvestilo o varstvu osebnih podatkov</a></p>
       <div class="form-actions">
-        <a href="/api/account/export" download>Prenesi vse moje podatke</a>
+        <button id="export-btn" type="button">Prenesi vse moje podatke</button>
         <button id="logout-btn" type="button">Odjava</button>
         <button id="logout-others" type="button">Odjavi vse druge naprave</button>
       </div>
@@ -964,6 +968,22 @@ async function renderAccount() {
   $("#logout-others").addEventListener("click", async () => {
     await api("/api/account/logout-others", { method: "POST" });
     toast("Vse druge naprave so odjavljene.");
+  });
+  $("#export-btn").addEventListener("click", async () => {
+    const password = prompt("Za prenos vseh podatkov (tudi pogovorov vseh profilov) vpišite geslo računa.");
+    if (!password) return;
+    try {
+      const data = await api("/api/account/export", { method: "POST", body: { password } });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+      a.download = "evklid-podatki.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    } catch (err) {
+      toast(err.message);
+    }
   });
   $("#delete-account").addEventListener("click", async () => {
     const password = prompt("Za izbris računa, vseh otrokovih profilov in pogovorov vpišite geslo. Tega ni mogoče razveljaviti.");

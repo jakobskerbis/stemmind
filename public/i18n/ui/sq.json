@@ -24,7 +24,7 @@
   "lock.repeat": "Përsërit fjalëkalimin",
   "lock.open": "Hap profilin",
   "lock.save": "Ruaj fjalëkalimin",
-  "lock.hint": "Të paktën 4 karaktere. E shkruan kur e hap profilin në një pajisje të re ose pas një profili tjetër.",
+  "lock.hint": "Të paktën 4 karaktere. Kërkohet në një pajisje të re, pas daljes dhe pasi në pajisje është hapur një profil tjetër.",
   "lock.mismatch": "Fjalëkalimet nuk përputhen.",
   "lock.short": "Fjalëkalimi duhet të ketë të paktën 4 karaktere.",
   "lock.wrong": "Fjalëkalim i gabuar.",

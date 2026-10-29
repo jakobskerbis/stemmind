@@ -24,7 +24,7 @@
   "lock.repeat": "Repetă parola",
   "lock.open": "Deschide profilul",
   "lock.save": "Salvează parola",
-  "lock.hint": "Cel puțin 4 caractere. O introduci când deschizi profilul pe un dispozitiv nou sau după alt profil.",
+  "lock.hint": "Cel puțin 4 caractere. Este cerută pe un dispozitiv nou, după deconectare și după deschiderea altui profil pe dispozitiv.",
   "lock.mismatch": "Parolele nu se potrivesc.",
   "lock.short": "Parola trebuie să aibă cel puțin 4 caractere.",
   "lock.wrong": "Parolă greșită.",

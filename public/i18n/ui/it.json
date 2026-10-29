@@ -24,7 +24,7 @@
   "lock.repeat": "Ripeti la password",
   "lock.open": "Apri profilo",
   "lock.save": "Salva password",
-  "lock.hint": "Almeno 4 caratteri. La inserisci quando apri il profilo su un nuovo dispositivo o dopo un altro profilo.",
+  "lock.hint": "Almeno 4 caratteri. Viene chiesta su un nuovo dispositivo, dopo la disconnessione e dopo l’apertura di un altro profilo sul dispositivo.",
   "lock.mismatch": "Le password non coincidono.",
   "lock.short": "La password deve avere almeno 4 caratteri.",
   "lock.wrong": "Password errata.",

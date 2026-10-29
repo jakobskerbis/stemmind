@@ -24,7 +24,7 @@
   "lock.repeat": "Repete a palavra-passe",
   "lock.open": "Abrir perfil",
   "lock.save": "Guardar palavra-passe",
-  "lock.hint": "Pelo menos 4 caracteres. Escreve-la ao abrir o perfil num dispositivo novo ou depois de outro perfil.",
+  "lock.hint": "Pelo menos 4 caracteres. É pedida num dispositivo novo, depois de terminar sessão e depois de abrir outro perfil no dispositivo.",
   "lock.mismatch": "As palavras-passe não coincidem.",
   "lock.short": "A palavra-passe deve ter pelo menos 4 caracteres.",
   "lock.wrong": "Palavra-passe errada.",
