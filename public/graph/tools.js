@@ -4,39 +4,24 @@
 import { createUnits } from "./sci.js";
 import { formatNumber } from "./scicore.js";
 import { readList, stats, evalComplex, polyRoots, readMatrix, M, convertBase, molarMass, readNumber } from "./toolscore.js";
-import { ELEMENTS, CATEGORIES, MASSES, shells } from "./pse-data.js";
+import { ELEMENTS, CATEGORIES, MASSES, shells, EXTRA } from "./pse-data.js";
 
-const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-const texHtml = (s, display = false) => {
-  try {
-    return window.katex.renderToString(s, { throwOnError: false, displayMode: display, strict: "ignore" });
-  } catch {
-    return esc(s);
-  }
-};
-const usesComma = (locale) => {
-  try {
-    return (1.5).toLocaleString(locale || "sl").includes(",");
-  } catch {
-    return true;
-  }
-};
-const remember = {
-  get(k, d) {
-    try {
-      return JSON.parse(localStorage.getItem(k) || "null") ?? d;
-    } catch {
-      return d;
-    }
-  },
-  set(k, v) {
-    try {
-      localStorage.setItem(k, JSON.stringify(v));
-    } catch {}
-  },
-};
+import { esc, texHtml, usesComma, remember } from "./tools-kit.js";
+import { chemTools } from "./tools-chem.js";
+import { probTool } from "./tools-prob.js";
+import { anaTools } from "./tools-ana.js";
 
-const TOOLS = ["units", "stats", "eq", "complex", "matrix", "base"];
+const TOOLS = ["units", "eq", "calc", "stats", "prob", "vec", "matrix", "plot3", "ode", "err", "complex", "base", "rxn", "conc", "solub"];
+// vrstni red čipov po predmetu: najprej orodja, ki jih predmet največ rabi
+const ORDER = {
+  KEM: ["rxn", "conc", "solub", "units", "err", "stats", "eq"],
+  FIZ: ["units", "err", "eq", "vec", "calc", "ode", "stats"],
+  MAT: ["eq", "calc", "stats", "prob", "vec", "matrix", "plot3", "ode", "complex", "base"],
+};
+const toolOrder = (subj) => {
+  const first = ORDER[subj] || ORDER.MAT;
+  return [...first, ...TOOLS.filter((k) => !first.includes(k))];
+};
 
 /**
  * Zbirka orodij z izbiro zgoraj.
@@ -48,11 +33,12 @@ export function createTools(root, opts) {
   // v orodjih dovolj 8 veljavnih mest (5,0990195 namesto 5,09901951359)
   const num = (v, mode = "auto") => formatNumber(Number.isFinite(v) ? Number(v.toPrecision(8)) : v, { mode, comma: comma() });
   const insText = (v) => formatNumber(v, { comma: comma() }).text.replace(" · 10^", "E").replace("−", "-");
-  let tool = TOOLS.includes(remember.get("stemmind.tool")) ? remember.get("stemmind.tool") : "units";
+  const subj = () => opts.subject?.() || "MAT";
+  let tool = TOOLS.includes(remember.get("stemmind.tool")) ? remember.get("stemmind.tool") : toolOrder(subj())[0];
   const views = {};
 
   root.classList.add("tl");
-  root.innerHTML = `<div class="tl-top"><div class="chip-row tl-pick" role="tablist" aria-label="${esc(t("sc.toolsMode"))}">${TOOLS.map(
+  root.innerHTML = `<div class="tl-top"><div class="chip-row tl-pick" role="tablist" aria-label="${esc(t("sc.toolsMode"))}">${toolOrder(subj()).map(
     (k) => `<button type="button" role="tab" data-tool="${k}">${esc(t(`sc.tool.${k}`))}</button>`,
   ).join("")}</div></div><div class="tl-body"></div>`;
   const body = root.querySelector(".tl-body");
@@ -312,7 +298,19 @@ export function createTools(root, opts) {
     run();
   }
 
+  const ctx = { t, icon, num, card, err, insertBtn, comma };
+  const chem = chemTools(ctx);
+  const ana = anaTools(ctx);
   const BUILD = {
+    rxn: chem.rxn,
+    conc: chem.conc,
+    solub: chem.solub,
+    prob: (el) => probTool(el, ctx),
+    calc: ana.calc,
+    vec: ana.vec,
+    ode: ana.ode,
+    err: ana.err,
+    plot3: ana.plot3,
     units: (el) => createUnits(el, { t, icon, locale: opts.locale, onInsert: opts.onInsert }),
     stats: stats_,
     eq: eq_,
@@ -330,9 +328,10 @@ export function createTools(root, opts) {
     if (!views[k]) {
       views[k] = document.createElement("div");
       views[k].className = `tl-view tl-${k}`;
-      BUILD[k](views[k]);
+      views[k]._api = BUILD[k](views[k]);
     }
     body.replaceChildren(views[k]);
+    views[k]._api?.resize?.();
   }
   root.querySelector(".tl-pick").addEventListener("click", (e) => {
     const b = e.target.closest("[data-tool]");
@@ -342,8 +341,22 @@ export function createTools(root, opts) {
     const b = e.target.closest(".tl-ins");
     if (b) opts.onInsert?.(b.dataset.v);
   });
+  let lastSubj = subj();
   show(tool);
-  return { root, resize() {}, reload() {}, show };
+  return {
+    root,
+    resize() {
+      views[tool]?._api?.resize?.();
+    },
+    reload() {
+      // ob drugem predmetu preuredimo čipe (kemija: najprej enačbe reakcij)
+      if (subj() === lastSubj) return;
+      lastSubj = subj();
+      const pick = root.querySelector(".tl-pick");
+      for (const k of toolOrder(lastSubj)) pick.append(pick.querySelector(`[data-tool="${k}"]`));
+    },
+    show,
+  };
 }
 
 /**
@@ -358,7 +371,9 @@ export function createPse(root, opts) {
   let sel = ELEMENTS[remember.get("stemmind.pse.sel", 6) - 1] || ELEMENTS[5];
 
   root.classList.add("pse");
+  let show = ["ar", "en", "ox"].includes(remember.get("stemmind.pse.show")) ? remember.get("stemmind.pse.show") : "ar";
   root.innerHTML = `<div class="pse-wrap">
+      <div class="pse-bar"><span class="muted">${esc(t("sc.pse.show"))}</span><div class="seg pse-show" role="group" aria-label="${esc(t("sc.pse.show"))}">${["ar", "en", "ox"].map((k) => `<button type="button" data-show="${k}" aria-pressed="false">${esc(t(`sc.pse.show.${k}`))}</button>`).join("")}</div></div>
       <div class="pse-scroll"><div class="pse-grid" role="group" aria-label="${esc(t("sc.pseTitle"))}"></div></div>
       <div class="pse-legend">${CATEGORIES.map((c) => `<span class="pse-lg cat-${c}"><i></i>${esc(t(`sc.cat.${c}`))}</span>`).join("")}</div>
       <div class="pse-cards">
@@ -366,6 +381,11 @@ export function createPse(root, opts) {
         <div class="card pse-mm">
           <label class="tl-field"><span>${esc(t("sc.molar"))}</span><input class="pse-f" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${esc(t("sc.formulaPh"))}" value="${esc(remember.get("stemmind.pse.f", "H2SO4"))}"></label>
           <div class="pse-mm-out" aria-live="polite"></div>
+        </div>
+        <div class="card pse-bond">
+          <div class="tl-h">${esc(t("sc.bond.title"))}</div>
+          <div class="tl-pair"><label class="tl-field"><span>${esc(t("sc.bond.a"))}</span><input class="pse-b1" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(remember.get("stemmind.pse.bond", ["Na", "Cl"])[0])}"></label><label class="tl-field"><span>${esc(t("sc.bond.b"))}</span><input class="pse-b2" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(remember.get("stemmind.pse.bond", ["Na", "Cl"])[1])}"></label></div>
+          <div class="pse-bond-out" aria-live="polite"></div>
         </div>
       </div>
     </div>`;
@@ -380,15 +400,31 @@ export function createPse(root, opts) {
       row = e.z < 89 ? 9 : 10;
       col = 3 + (e.z - (e.z < 89 ? 57 : 89));
     }
-    cells.push(`<button type="button" class="pse-el cat-${e.cat}" style="grid-row:${row};grid-column:${col}" data-z="${e.z}" aria-label="${e.z} ${esc(nm(e))}"><small>${e.z}</small><b>${e.sym}</b><span>${esc(arText(e))}</span></button>`);
+    cells.push(`<button type="button" class="pse-el cat-${e.cat}" style="grid-row:${row};grid-column:${col}" data-z="${e.z}" aria-label="${e.z} ${esc(nm(e))}"><small>${e.z}</small><b>${e.sym}</b><span class="pse-v"></span></button>`);
   }
   cells.push(`<div class="pse-ph cat-lanthanide" style="grid-row:6;grid-column:3" aria-hidden="true">57–71</div><div class="pse-ph cat-actinide" style="grid-row:7;grid-column:3" aria-hidden="true">89–103</div>`);
   $(".pse-grid").innerHTML = cells.join("");
   // številke skupin nad mrežo
   $(".pse-scroll").insertAdjacentHTML("afterbegin", `<div class="pse-groups" aria-hidden="true">${Array.from({ length: 18 }, (_, i) => `<span>${i + 1}</span>`).join("")}</div>`);
 
+  const enText = (x) => (x.en == null ? "—" : dec(x.en, 2));
+  const oxText = (x) => (x.ox.length ? x.ox.map((o) => o.replace("-", "−")).join(", ") : "—");
+  function cellValues() {
+    root.querySelectorAll(".pse-show [data-show]").forEach((b) => {
+      b.classList.toggle("active", b.dataset.show === show);
+      b.setAttribute("aria-pressed", String(b.dataset.show === show));
+    });
+    root.querySelectorAll(".pse-el").forEach((b) => {
+      const e = ELEMENTS[Number(b.dataset.z) - 1];
+      const x = EXTRA[e.z - 1];
+      b.querySelector(".pse-v").textContent = show === "en" ? enText(x) : show === "ox" ? (x.ox.length ? x.ox.slice(0, 2).map((o) => o.replace("-", "−")).join(" ") : "—") : arText(e);
+    });
+  }
+  const confTex = (c) => c.replace(/^\[(\w+)\]\s*/, "[\\mathrm{$1}]\\,").replace(/(\d)([spdf])(\d+)/g, "$1\\mathrm{$2}^{$3}\\,");
+  const tempText = (v) => (v == null ? "—" : `${dec(v, Math.abs(v) >= 100 ? 0 : 1)} °C`);
   function detail() {
     const e = sel;
+    const x = EXTRA[e.z - 1];
     root.querySelectorAll(".pse-el").forEach((b) => b.classList.toggle("sel", Number(b.dataset.z) === e.z));
     const sh = shells(e.z);
     const M = e.ar ?? e.a;
@@ -403,7 +439,13 @@ export function createPse(root, opts) {
         ${row("sc.pse.a", `${texHtml(`A = ${e.a}`)} <small class="muted">${esc(t(e.ar == null ? "sc.pse.aStable" : "sc.pse.aCommon"))}</small>`)}
         ${row("sc.pse.particles", texHtml(`p^+ = ${e.z},\\ n^0 = ${e.a - e.z},\\ e^- = ${e.z}`))}
         ${row("sc.pse.place", `${esc(t("sc.pse.group"))} ${e.f ? "3 (f)" : e.group} · ${esc(t("sc.pse.period"))} ${e.period}`)}
+        ${row("sc.pse.conf", `${texHtml(confTex(x.conf))}${x.predicted ? ` <small class="muted">${esc(t("sc.pse.predicted"))}</small>` : ""}`)}
         ${sh ? row("sc.pse.shells", sh.join(", ")) : ""}
+        ${row("sc.pse.en", x.en == null ? "—" : texHtml(`\\chi = ${enText(x).replace(",", "{,}")}`))}
+        ${row("sc.pse.ox", esc(oxText(x)))}
+        ${x.state ? row("sc.pse.state", esc(t(`sc.pse.state.${x.state}`))) : ""}
+        ${x.mp != null || x.bp != null ? row("sc.pse.mpbp", `${esc(tempText(x.mp))} · ${esc(tempText(x.bp))}`) : ""}
+        ${x.rho != null ? row("sc.pse.rho", x.state === "g" ? texHtml(`\\rho = ${dec(x.rho * 1000, 3).replace(",", "{,}")}\\ \\mathrm{g/L}`) : texHtml(`\\rho = ${dec(x.rho, 2).replace(",", "{,}")}\\ \\mathrm{g/cm^3}`)) : ""}
         ${row("sc.molar", texHtml(`M = ${(e.ar == null ? String(e.a) : arText(e)).replace(",", "{,}")}\\ \\mathrm{g/mol}`))}
       </dl>
       <div class="actions pse-act">
@@ -445,9 +487,39 @@ export function createPse(root, opts) {
     // na telefonu so podrobnosti pod mrežo
     if (matchMedia("(max-width: 860px)").matches) $(".pse-detail").scrollIntoView({ block: "nearest", behavior: "smooth" });
   });
+  function bond() {
+    const a = $(".pse-b1").value.trim();
+    const b = $(".pse-b2").value.trim();
+    remember.set("stemmind.pse.bond", [a, b]);
+    const out = $(".pse-bond-out");
+    if (!a || !b) return (out.innerHTML = "");
+    const ea = ELEMENTS.find((e) => e.sym === a);
+    const eb = ELEMENTS.find((e) => e.sym === b);
+    const bad = !ea ? a : !eb ? b : null;
+    if (bad) return (out.innerHTML = `<p class="tl-err">${icon("info")}<span>${esc(t("sc.badElement", { sym: bad }))}</span></p>`);
+    const xa = EXTRA[ea.z - 1].en;
+    const xb = EXTRA[eb.z - 1].en;
+    if (xa == null || xb == null) return (out.innerHTML = `<p class="tl-err">${icon("info")}<span>${esc(t("sc.bond.noEn", { sym: xa == null ? a : b }))}</span></p>`);
+    const d = Math.abs(xa - xb);
+    const metal = (e) => !["nonmetal", "halogen", "noble", "metalloid"].includes(e.cat);
+    const kind = metal(ea) && metal(eb) ? "metal" : d < 0.4 ? "nonpolar" : d <= 1.7 ? "polar" : "ionic";
+    out.innerHTML = `<div class="tl-row"><span class="tl-v">${texHtml(`\\Delta\\chi = |${dec(xa, 2).replace(",", "{,}")} - ${dec(xb, 2).replace(",", "{,}")}| = ${dec(d, 2).replace(",", "{,}")}`)}</span></div>
+      <p class="pse-bond-kind"><b>${esc(t(`sc.bond.${kind}`))}</b></p><p class="muted tl-note">${esc(t(kind === "metal" ? "sc.bond.metalNote" : "sc.bond.note"))}</p>`;
+  }
+  root.querySelector(".pse-show").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-show]");
+    if (!b) return;
+    show = b.dataset.show;
+    remember.set("stemmind.pse.show", show);
+    cellValues();
+  });
   $(".pse-f").addEventListener("input", molar);
+  $(".pse-b1").addEventListener("input", bond);
+  $(".pse-b2").addEventListener("input", bond);
+  cellValues();
   detail();
   molar();
+  bond();
   return { root, resize() {}, reload() {} };
 }
 
@@ -457,13 +529,13 @@ export function createPse(root, opts) {
  */
 export function createFormulas(root, opts) {
   const { t } = opts;
-  const BOOKS = ["MAT-OS", "MAT-SS", "FIZ-OS", "FIZ-SS", "KEM-OS", "KEM-SS"];
+  const BOOKS = ["MAT-OS", "MAT-SS", "MAT-UNI", "FIZ-OS", "FIZ-SS", "FIZ-UNI", "KEM-OS", "KEM-SS", "KEM-UNI"];
   let book = null;
   const cache = {};
   root.classList.add("fm");
   root.innerHTML = `<div class="fm-wrap"><div class="chip-row fm-pick" role="tablist">${BOOKS.map((b) => {
     const [s, l] = b.split("-");
-    return `<button type="button" role="tab" data-book="${b}">${esc(t(`subj.${s}`))} · ${esc(t(l === "OS" ? "lp.os" : "lp.ss"))}</button>`;
+    return `<button type="button" role="tab" data-book="${b}">${esc(t(`subj.${s}`))} · ${esc(t(l === "OS" ? "lp.os" : l === "SS" ? "lp.ss" : "lp.uni"))}</button>`;
   }).join("")}</div><div class="card fm-body textbook-md"></div></div>`;
   const body = root.querySelector(".fm-body");
   async function show(b) {

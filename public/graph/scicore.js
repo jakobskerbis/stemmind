@@ -135,13 +135,15 @@ export function formatNumber(v, { mode = "auto", comma = true } = {}) {
   if (Number.isNaN(v)) return { text: "—", tex: "\\text{—}", nan: true };
   if (!Number.isFinite(v)) return { text: v > 0 ? "∞" : "−∞", tex: v > 0 ? "\\infty" : "-\\infty" };
   const dec = (s) => (comma ? s.replace(".", ",") : s);
+  // v TeX-u mora biti decimalna vejica v {,}, sicer KaTeX za njo doda presledek
+  const texDec = (s) => (comma ? s.replace(".", "{,}") : s);
   const sci = (digits) => {
     const [m, e] = v.toExponential(digits).split("e");
     const mm = mode === "auto" ? String(Number(m)) : m;
     const n = Number(e);
-    return { text: `${dec(mm)} · 10^${n}`.replace(/^-/, "−"), tex: `${dec(mm).replace(/^-/, "-")}\\cdot 10^{${n}}` };
+    return { text: `${dec(mm)} · 10^${n}`.replace(/^-/, "−"), tex: `${texDec(mm)}\\cdot 10^{${n}}` };
   };
-  const plain = (s) => ({ text: dec(s).replace(/^-/, "−"), tex: dec(s) });
+  const plain = (s) => ({ text: dec(s).replace(/^-/, "−"), tex: texDec(s) });
   if (Object.is(v, -0)) v = 0;
   const a = Math.abs(v);
   let m;

@@ -381,6 +381,8 @@ body.graph-open { overflow: hidden; }
 .tl-mx textarea { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .tl-ops { flex-wrap: wrap; }
 .tl-mx-res { overflow-x: auto; }
+/* dolga enačba reakcije se na telefonu prelomi pri + in → (inline KaTeX) */
+.tl-rx-eq { text-align: center; font-size: 1.2em; line-height: 2; padding: 4px 0; }
 .tl-seg { align-self: flex-start; }
 
 /* periodni sistem */
@@ -458,3 +460,60 @@ body.graph-open { overflow: hidden; }
   .calc-modes > button { font-size: 0.78rem; padding: 6px 5px !important; letter-spacing: -0.01em; }
 }
 .tl-seg > button { min-width: 0; white-space: normal; line-height: 1.2; border-radius: 16px !important; }
+
+/* ---------- kemija in verjetnost (tools-chem.js, tools-prob.js) ---------- */
+.tl-sub { flex-wrap: wrap; }
+.tl-grid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.tl-inline2 { display: flex; gap: 6px; }
+.tl-inline2 input { flex: 1; min-width: 0; }
+.tl-inline2 select { flex: 0 0 72px; width: 72px !important; }
+.tl-tag { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 800; background: color-mix(in srgb, var(--accent) 14%, var(--surface)); color: var(--accent); vertical-align: middle; }
+.tl-tag.muted { background: var(--surface-2); color: var(--muted); }
+.tl-rx { display: flex; flex-direction: column; gap: 6px; }
+.tl-rx-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px 130px; gap: 8px; align-items: center; }
+.tl-rx-sp { display: flex; flex-direction: column; gap: 2px; overflow-x: auto; }
+.tl-rx-sp small { font-size: 0.78rem; }
+.tl-rx-tab td:first-child { white-space: nowrap; }
+.tl-ph-kind { margin: 4px 0 0; }
+.pse-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pse-bar .seg { width: auto; }
+.pse-bond-kind { margin: 4px 0 0; font-size: 1.05rem; }
+.pse-cards .pse-bond { grid-column: 2; }
+/* tabela topnosti: barva + črka (T, M, N, –) */
+.sol-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.sol-tab { border-collapse: separate; border-spacing: 3px; min-width: 520px; }
+.sol-tab th { font-weight: 700; padding: 2px 4px; white-space: nowrap; font-size: 0.85rem; }
+.sol-tab thead th { text-align: center; }
+.sol-tab tbody th { text-align: left; position: sticky; left: 0; z-index: 1; background: var(--surface); }
+.sol-tab td { padding: 0; }
+.sol-c { display: inline-grid; place-items: center; width: 100%; min-width: 40px; min-height: 36px; border-radius: 8px; font-weight: 800; border: 1.5px solid transparent; color: var(--text); font-style: normal; }
+.sol-t { background: color-mix(in srgb, var(--g-green) 22%, var(--surface)); }
+.sol-m { background: color-mix(in srgb, var(--g-orange) 24%, var(--surface)); }
+.sol-n { background: color-mix(in srgb, var(--g-red) 22%, var(--surface)); }
+.sol-x { background: var(--surface-2); color: var(--muted); }
+button.sol-c:hover, button.sol-c:focus-visible, .sol-c.sel { border-color: var(--accent); outline: none; }
+.sol-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.85rem; }
+.sol-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sol-legend .sol-c { width: 28px; min-width: 28px; min-height: 24px; font-size: 0.8rem; }
+/* graf porazdelitve */
+.pr-svg { width: 100%; height: auto; max-height: 220px; display: block; }
+.pr-ax { stroke: var(--muted); stroke-width: 1; }
+.pr-line { fill: none; stroke: var(--g-blue); stroke-width: 2; }
+.pr-area { fill: color-mix(in srgb, var(--g-blue) 30%, transparent); }
+.pr-on { fill: var(--g-blue); }
+.pr-off { fill: color-mix(in srgb, var(--g-blue) 22%, var(--surface)); }
+.pr-t { font-size: 10px; fill: var(--muted); text-anchor: middle; }
+@media (max-width: 860px) {
+  .pse-cards .pse-bond { grid-column: auto; }
+}
+@media (max-width: 520px) {
+  .tl-rx-row { grid-template-columns: 1fr 1fr; }
+  .tl-rx-sp { grid-column: 1 / -1; }
+}
+/* 3D graf (plot3d.js) */
+.p3-card { gap: 8px; }
+.p3 { width: 100%; height: min(62vh, 460px); min-height: 280px; display: block; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; border-radius: 10px; background: var(--surface); }
+.p3:active { cursor: grabbing; }
+.p3:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.p3-scale { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.p3-scale i { flex: 1; height: 10px; border-radius: 5px; background: linear-gradient(90deg, hsl(230 70% 38%), hsl(140 70% 49%), hsl(50 70% 60%)); }

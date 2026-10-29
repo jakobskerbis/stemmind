@@ -445,7 +445,7 @@ export function createApp(store, opts = {}) {
   // Formule in konstante predmeta (za orodja ob kalkulatorju), npr. ?book=KEM-OS
   app.get("/api/formulas", (req, res) => {
     const key = String(req.query.book || "");
-    const md = /^[A-Z]{3}-(OS|SS)$/.test(key) ? formulaSheet(key) : null;
+    const md = /^[A-Z]{3}-(OS|SS|UNI)$/.test(key) ? formulaSheet(key) : null;
     if (!md) return res.status(404).json({ error: "Zbirke formul ni." });
     res.set("Cache-Control", "public, max-age=3600").json({ key, md });
   });
