@@ -126,8 +126,8 @@ test("regional prices: local currency per country, Slovenia stays in euros", () 
   assert.equal(inr.find((p) => p.seats === 1 && p.interval === "month").amount, 39900);
   assert.equal(plansFor("VND")[0].amount, 129000, "VND nima decimalk");
   assert.equal(plansFor("EUR").find((p) => p.seats === 1 && p.interval === "month").amount, 999);
-  assert.equal(planByKey("stemmind_2_year_ngn").currency, "NGN");
-  assert.equal(planByKey("stemmind_1_month").currency, "EUR");
+  assert.equal(planByKey("kompreno_2_year_ngn").currency, "NGN");
+  assert.equal(planByKey("kompreno_1_month").currency, "EUR");
   for (const [cur, v] of Object.entries(REGIONAL_PRICES)) {
     const [m1, y1, m2, y2] = v.prices;
     assert.ok(y1 < m1 * 10 && m2 < m1 * 2 && y2 < y1 * 2 && y2 < m2 * 10, cur);

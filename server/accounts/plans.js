@@ -1,4 +1,5 @@
 // Paketi, cene in pravica do polnega dostopa.
+import "../env.js";
 
 export const TRIAL_DAYS = 7;
 export const REFERRAL_DAYS = 30;
@@ -13,10 +14,10 @@ export const PRIVACY_VERSION = "2026-10-29";
 // 7,8 €; AI stane 1–2 € na dejavnega učenca → 6–7 € na mesec za nas (≈ 75 %).
 // Šolsko leto: 89 € = 7,42 € na mesec (26 % ceneje), plačilo vnaprej, manj odpovedi.
 export const PLANS = [
-  { key: "stemmind_1_month", seats: 1, interval: "month", amount: 999, label: "1 otrok, mesečno" },
-  { key: "stemmind_1_year", seats: 1, interval: "year", amount: 8900, label: "1 otrok, šolsko leto" },
-  { key: "stemmind_2_month", seats: 2, interval: "month", amount: 1599, label: "2 otroka, mesečno" },
-  { key: "stemmind_2_year", seats: 2, interval: "year", amount: 13900, label: "2 otroka, šolsko leto" },
+  { key: "kompreno_1_month", seats: 1, interval: "month", amount: 999, label: "1 otrok, mesečno" },
+  { key: "kompreno_1_year", seats: 1, interval: "year", amount: 8900, label: "1 otrok, šolsko leto" },
+  { key: "kompreno_2_month", seats: 2, interval: "month", amount: 1599, label: "2 otroka, mesečno" },
+  { key: "kompreno_2_year", seats: 2, interval: "year", amount: 13900, label: "2 otroka, šolsko leto" },
 ];
 
 // ---------- regijske cene (potrdil j, 2026-10-28) ----------
@@ -67,7 +68,7 @@ export function plansFor(currency = "EUR") {
   const r = REGIONAL_PRICES[currency];
   if (!r) return PLANS.map((p) => ({ ...p, currency: "EUR" }));
   return SHAPE.map(([seats, interval, label], i) => ({
-    key: `stemmind_${seats}_${interval}_${currency.toLowerCase()}`,
+    key: `kompreno_${seats}_${interval}_${currency.toLowerCase()}`,
     seats,
     interval,
     amount: minorUnits(currency, r.prices[i]),
@@ -77,13 +78,15 @@ export function plansFor(currency = "EUR") {
 }
 export const ALL_PLANS = [...PLANS.map((p) => ({ ...p, currency: "EUR" })), ...Object.keys(REGIONAL_PRICES).flatMap(plansFor)];
 
-export const planByKey = (key) => ALL_PLANS.find((p) => p.key === key) || null;
+// Cene, ustvarjene pred preimenovanjem (STEMMind), imajo v Stripu lookup_key »stemmind_…«.
+const currentKey = (key) => String(key ?? "").replace(/^stemmind_/, "kompreno_");
+export const planByKey = (key) => ALL_PLANS.find((p) => p.key === currentKey(key)) || null;
 export const planFor = (seats, interval, currency = "EUR") => plansFor(currency).find((p) => p.seats === seats && p.interval === interval) || null;
 export const monthlyAmount = (seats, currency = "EUR") => planFor(seats >= 2 ? 2 : 1, "month", currency).amount;
 
 export const freeDailyQuestions = () => {
-  const v = Number(process.env.STEMMIND_FREE_DAILY_QUESTIONS);
-  return Number.isFinite(v) && process.env.STEMMIND_FREE_DAILY_QUESTIONS ? v : 10;
+  const v = Number(process.env.KOMPRENO_FREE_DAILY_QUESTIONS);
+  return Number.isFinite(v) && process.env.KOMPRENO_FREE_DAILY_QUESTIONS ? v : 10;
 };
 
 // Brezplačni paket ne sme stati več, kot določi skrbnik (v dolarjih, kot zaračunava Claude API; 0 = brez omejitve).
@@ -93,8 +96,8 @@ const envUsd = (k, d) => {
   const v = Number(process.env[k]);
   return process.env[k] !== undefined && process.env[k] !== "" && Number.isFinite(v) ? v : d;
 };
-export const freeMonthlyPoolUsd = () => envUsd("STEMMIND_FREE_POOL_USD", 10);
-export const freeStudentMonthlyUsd = () => envUsd("STEMMIND_FREE_STUDENT_USD", 0.2);
+export const freeMonthlyPoolUsd = () => envUsd("KOMPRENO_FREE_POOL_USD", 10);
+export const freeStudentMonthlyUsd = () => envUsd("KOMPRENO_FREE_STUDENT_USD", 0.2);
 
 const PAID = new Set(["active", "trialing", "past_due"]);
 const later = (iso, now) => iso && Date.parse(iso.replace(" ", "T") + (iso.includes("Z") ? "" : "Z")) > now;

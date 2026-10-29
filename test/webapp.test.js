@@ -56,11 +56,11 @@ test("manifest in povezava za Google Play sta dostopna brez gesla", () =>
       assert.equal((await r.json()).lang, "de");
       const a = await fetch(base + "/.well-known/assetlinks.json");
       assert.equal(a.status, 404); // brez ANDROID_PACKAGE / ANDROID_SHA256
-      process.env.ANDROID_PACKAGE = "si.stemmind.app";
+      process.env.ANDROID_PACKAGE = "si.kompreno.app";
       process.env.ANDROID_SHA256 = "AA:BB, CC:DD";
       try {
         const b = await (await fetch(base + "/.well-known/assetlinks.json")).json();
-        assert.equal(b[0].target.package_name, "si.stemmind.app");
+        assert.equal(b[0].target.package_name, "si.kompreno.app");
         assert.deepEqual(b[0].target.sha256_cert_fingerprints, ["AA:BB", "CC:DD"]);
       } finally {
         delete process.env.ANDROID_PACKAGE;

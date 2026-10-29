@@ -1,17 +1,20 @@
-// Zbirke znanja in učni pass (j, 29. 10. 2026: dokument »Kozmetika in personalizacija v STEMMind igrah«).
+// Zbirke znanja in učni pass (j, 29. 10. 2026: dokument »Kozmetika in personalizacija v igrah Kompreno«).
 // Predmeti se odklenejo samo z znanjem (obvladana tema), nikoli s kovanci ali denarjem; brez naključja.
 // Redkost pomeni težavnost snovi: navadno (osnove OŠ), redko (8.–9. razred, NPZ), epsko (SŠ, matura),
 // legendarno (tekmovalna raven, potrjeno v pogovoru z inštruktorjem). Pravila so podatki: nov predmet je
 // nova vrstica tukaj (in risba spodaj), ne nova koda. Uporabljata ga odjemalec (risanje, pogoji) in strežnik
 // (odklepanje v server/zbirke.js).
+// Pot znanja (j, 29. 10. 2026 18:14): epski, legendarni in mitični predmeti za skupne XP, ki jih učenec
+// zbere z učenjem, kot je bilo do zdaj urejeno; več XP pomeni več vloženega časa.
 
-export const RARITY_TIER = { common: 1, rare: 2, epic: 3, legendary: 4 };
-export const RARITY_BY_TIER = ["common", "common", "rare", "epic", "legendary"];
+export const RARITY_TIER = { common: 1, rare: 2, epic: 3, legendary: 4, mythic: 5 };
+export const RARITY_BY_TIER = ["common", "common", "rare", "epic", "legendary", "mythic"];
 
 export const COLLECTIONS = [
   { id: "pse", subject: "KEM", slot: "badge", icon: "atom", name: { sl: "Periodni sistem", en: "Periodic table" } },
   { id: "fiz", subject: "FIZ", slot: "fx", icon: "zap", name: { sl: "Fizikalni efekti", en: "Physics effects" } },
   { id: "krivulje", subject: "MAT", slot: "bg", icon: "chart-spline", name: { sl: "Matematične krivulje", en: "Maths curves" } },
+  { id: "pot", subject: null, slot: null, icon: "trophy", name: { sl: "Pot znanja", en: "Path of knowledge" } },
 ];
 
 // Učni pass: dve sezoni na šolsko leto, 30 stopenj, XP samo iz učenja (nalog, obvladanih tem, treningov).
@@ -50,6 +53,16 @@ function seasonHue(key) {
 const k = (id, sym, z, cat, rarity, sl, en, t, kw) => ({ id, collection: "pse", slot: "badge", sym, z, cat, rarity, name: { sl, en }, need: { t, kw } });
 const f = (id, rarity, sl, en, t, kw) => ({ id, collection: "fiz", slot: "fx", rarity, name: { sl, en }, need: { t, kw } });
 const m = (id, rarity, sl, en, t, kw) => ({ id, collection: "krivulje", slot: "bg", rarity, name: { sl, en }, need: { t, kw } });
+
+// Kdo je bil znanstvenik za predmetom (ena vrstica v pogledu »preglej«).
+const ABOUT = {
+  pot_vega: { sl: "Jurij Vega (1754–1802), slovenski matematik in topniški častnik, avtor slavnih logaritemskih tablic.", en: "Jurij Vega (1754–1802), Slovenian mathematician and artillery officer, author of famous logarithm tables." },
+  pot_stefan: { sl: "Jožef Stefan (1835–1893), slovenski fizik: zakon sevanja j = σT⁴.", en: "Jožef Stefan (1835–1893), Slovenian physicist: radiation law j = σT⁴." },
+  pot_radium: { sl: "Marie Curie je odkrila radij in polonij ter dobila dve Nobelovi nagradi.", en: "Marie Curie discovered radium and polonium and won two Nobel Prizes." },
+  pot_pregl: { sl: "Friderik Pregl (1869–1930), slovenski kemik, Nobelova nagrada 1923 za mikroanalizo.", en: "Fritz Pregl (1869–1930), Slovenian chemist, Nobel Prize 1923 for microanalysis." },
+  pot_noether: { sl: "Emmy Noether (1882–1935) je pokazala, da iz vsake simetrije v naravi sledi en ohranitveni zakon.", en: "Emmy Noether (1882–1935) showed that every symmetry in nature gives a conservation law." },
+  pot_tesla: { sl: "Nikola Tesla (1856–1943), izumitelj izmeničnega toka in indukcijskega motorja.", en: "Nikola Tesla (1856–1943), inventor of alternating-current systems and the induction motor." },
+};
 
 export const KNOWLEDGE = [
   // Periodni sistem (značke elementov)
@@ -101,6 +114,23 @@ export const KNOWLEDGE = [
   { id: "outfit_pse", collection: "pse", slot: "outfit", rarity: "epic", set: true, name: { sl: "Halja s periodnim sistemom", en: "Periodic-table lab coat" }, need: { own: 10 } },
   { id: "acc_spectro", collection: "fiz", slot: "acc", rarity: "epic", set: true, name: { sl: "Spektroskopska očala", en: "Spectroscope goggles" }, need: { own: 8 } },
   { id: "outfit_euler", collection: "krivulje", slot: "outfit", rarity: "epic", set: true, name: { sl: "Eulerjev pulover", en: "Euler sweater" }, need: { own: 9 } },
+  // Pot znanja: skupni XP (vse, kar učenec zbere z učenjem); epsko → legendarno → mitično
+  ...[
+    ["pot_hourglass", "fx", "epic", 2000, "Peščena ura", "Hourglass"],
+    ["pot_owl", "hat", "epic", 4000, "Sova modrosti", "Owl of wisdom"],
+    ["pot_vega", "outfit", "epic", 6000, "Vegova uniforma", "Vega's uniform"],
+    ["pot_library", "bg", "epic", 8000, "Knjižnica", "Library"],
+    ["pot_dividers", "badge", "epic", 10000, "Šestilo", "Compasses"],
+    ["pot_stefan", "outfit", "legendary", 15000, "Stefanov frak", "Stefan's tailcoat"],
+    ["pot_radium", "fx", "legendary", 20000, "Sij radija", "Radium glow"],
+    ["pot_laurel", "hat", "legendary", 30000, "Lovorov venec", "Laurel wreath"],
+    ["pot_observatory", "bg", "legendary", 40000, "Observatorij", "Observatory"],
+    ["pot_pregl", "acc", "legendary", 50000, "Preglova lupa", "Pregl's magnifier"],
+    ["pot_noether", "bg", "mythic", 60000, "Simetrija Emmy Noether", "Emmy Noether's symmetry"],
+    ["pot_aurora", "fx", "mythic", 80000, "Polarni sij", "Aurora"],
+    ["pot_tesla", "outfit", "mythic", 100000, "Teslov plašč", "Tesla's coat"],
+    ["pot_infinity", "badge", "mythic", 120000, "Neskončnost", "Infinity"],
+  ].map(([id, slot, rarity, xp, sl, en]) => ({ id, collection: "pot", slot, rarity, name: { sl, en }, need: { xp }, ...(ABOUT[id] ? { about: ABOUT[id] } : {}) })),
   // Učni pass (sezonski; barva in letnica sezone)
   { id: "pass_board", collection: "pass", slot: "bg", rarity: "common", tier: 5, name: { sl: "Šolska tabla", en: "Chalkboard" } },
   { id: "pass_badge", collection: "pass", slot: "badge", rarity: "common", tier: 10, name: { sl: "Značka sezone", en: "Season badge" } },
@@ -136,6 +166,8 @@ export function elementTile(x, { x0 = 56, y0 = 73, s = 20 } = {}) {
 }
 
 const BADGE = {
+  pot_dividers: () => `<g transform="translate(64 81)"><circle r="12" fill="#ede9fe" stroke="${INK}" stroke-width="1.8"/><path d="M-6 6a9 9 0 0 1 12 0" stroke="#a855f7" stroke-width="2" fill="none"/><path d="M0-8L-6 7M0-8L6 7" stroke="#334155" stroke-width="2.6" stroke-linecap="round"/><circle cy="-8" r="2.4" fill="#a855f7" stroke="${INK}" stroke-width="1"/><path d="M6 7l1 3" stroke="#334155" stroke-width="1.6"/></g>`,
+  pot_infinity: () => `<g transform="translate(64 82)"><circle r="11" fill="#fff1f2" stroke="#e11d48" stroke-width="1.8"/><circle r="8.6" fill="none" stroke="#fda4af" stroke-width=".8"/><path d="M0 0c-2-3-7-3-7 0s5 3 7 0 7-3 7 0-5 3-7 0z" fill="none" stroke="#be123c" stroke-width="2.2"/><circle cx="-7" cy="-8" r="1" fill="#fde047"/><circle cx="8" cy="7" r="1" fill="#fde047"/></g>`,
   pass_badge: (v) => {
     const h = seasonHue(v);
     return `<g transform="translate(64 83)"><circle r="9" fill="hsl(${h} 85% 60%)" stroke="${INK}" stroke-width="1.6"/><circle r="6.4" fill="none" stroke="#fff" stroke-width="1" opacity=".8"/><text y="1.8" font-size="5" font-weight="700" text-anchor="middle" font-family="system-ui,sans-serif" fill="${INK}">${seasonLabel(v || "2026-1").split(" ")[1]}</text></g>`;
@@ -146,6 +178,17 @@ const BADGE = {
 
 // Sledi: back = za telesom, front = pred njim.
 const FX = {
+  pot_hourglass: {
+    front: () => `<g transform="translate(86 24)"><path d="M-7-11h14M-7 11h14" stroke="#92400e" stroke-width="2.4" stroke-linecap="round"/><path d="M-5.5-10q0 7 5.5 10q-5.5 3-5.5 10h11q0-7-5.5-10q5.5-3 5.5-10z" fill="#e0f2fe" fill-opacity=".8" stroke="${INK}" stroke-width="1.4"/><path d="M-3.5-6h7l-3.5 5zM-4 9q4-4 8 0z" fill="#f59e0b"/><path d="M0 0v6" stroke="#f59e0b" stroke-width="1" stroke-dasharray="1 1"/></g>`,
+  },
+  pot_radium: {
+    back: (v, u) => `<defs><radialGradient id="rad${u}"><stop offset=".45" stop-color="#bef264" stop-opacity=".9"/><stop offset="1" stop-color="#4ade80" stop-opacity="0"/></radialGradient></defs><ellipse cx="50" cy="60" rx="48" ry="44" fill="url(#rad${u})"/>`,
+    front: () => [[12, 30], [88, 40], [16, 80], [84, 86], [50, 8]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2" fill="#d9f99d" stroke="#65a30d" stroke-width=".8"/>`).join(""),
+  },
+  pot_aurora: {
+    back: () => `<path d="M0 30q25-22 50-8t50-10v18q-25 14-50 6T0 44z" fill="#34d399" opacity=".55"/><path d="M0 18q25-14 50-2t50-12v12q-25 12-50 2T0 30z" fill="#a78bfa" opacity=".5"/><path d="M0 40q30-12 55-2t45-6v8q-25 10-50 2T0 48z" fill="#22d3ee" opacity=".45"/>`,
+    front: () => [[10, 12], [92, 10], [70, 4]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.4" fill="#f8fafc"/>`).join(""),
+  },
   fx_refraction: {
     back: () => `<path d="M2 40L30 56" stroke="#fff" stroke-width="3" opacity=".9"/><path d="M30 56l-12 6 6-14z" fill="#e0f2fe" stroke="#64748b" stroke-width="1"/>${["#ef4444", "#f59e0b", "#facc15", "#22c55e", "#3b82f6", "#8b5cf6"].map((c, i) => `<path d="M24 56L${100} ${60 + i * 6}" stroke="${c}" stroke-width="2.4" opacity=".75"/>`).join("")}`,
   },
@@ -194,6 +237,9 @@ const FX = {
 };
 
 const BG = {
+  pot_library: () => `<rect width="100" height="100" fill="#78350f"/>${[8, 38, 68].map((y) => `<rect x="0" y="${y + 24}" width="100" height="4" fill="#451a03"/>${Array.from({ length: 12 }, (_, i) => `<rect x="${2 + i * 8.2}" y="${y + 4 + (i % 3) * 2}" width="7" height="${20 - (i % 3) * 2}" fill="${["#dc2626", "#2563eb", "#16a34a", "#ca8a04", "#7c3aed", "#0891b2"][(i + y) % 6]}" stroke="#1c1917" stroke-width=".5"/>`).join("")}`).join("")}`,
+  pot_observatory: () => `<rect width="100" height="100" fill="#0f172a"/><g fill="#e2e8f0">${[[8, 10], [22, 30], [40, 8], [60, 20], [78, 6], [92, 26], [70, 40], [12, 50]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.1"/>`).join("")}</g><circle cx="84" cy="16" r="6" fill="#fef9c3"/><path d="M0 100V86h100v14z" fill="#1e293b"/><path d="M91 77l8-8" stroke="#94a3b8" stroke-width="3"/><path d="M80 86a10 10 0 0 1 20 0z" fill="#cbd5e1" stroke="#475569" stroke-width="1"/><path d="M90 76v10" stroke="#475569" stroke-width="1.2"/>`,
+  pot_noether: (v, u) => `<defs><radialGradient id="nb${u}"><stop offset="0" stop-color="#4c1d95"/><stop offset="1" stop-color="#1e1b4b"/></radialGradient></defs><rect width="100" height="100" fill="url(#nb${u})"/><g transform="translate(50 54)" fill="none">${Array.from({ length: 12 }, (_, i) => `<ellipse rx="44" ry="12" transform="rotate(${i * 15})" stroke="${i % 2 ? "#fbbf24" : "#c084fc"}" stroke-width=".8" opacity=".7"/>`).join("")}<circle r="20" stroke="#fde68a" stroke-width="1"/><circle r="46" stroke="#a78bfa" stroke-width=".8"/></g>`,
   bg_symmetry: () => `<rect width="100" height="100" fill="#fdf2f8"/><path d="M50 0V100" stroke="#f9a8d4" stroke-width="1" stroke-dasharray="3 2"/><g fill="#f472b6" opacity=".55"><path d="M50 10q-20 2-30 18q14 2 30-6z"/><path d="M50 10q20 2 30 18q-14 2-30-6z"/><circle cx="20" cy="70" r="7"/><circle cx="80" cy="70" r="7"/></g>`,
   bg_cube: () => `<rect width="100" height="100" fill="#eff6ff"/>${[[16, 18], [84, 22], [14, 78], [86, 80]].map(([x, y]) => `<g transform="translate(${x} ${y})"><path d="M0-9l9 5v10l-9 5-9-5V-4z" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1"/><path d="M0 1l9-5M0 1l-9-5M0 1v10" stroke="#1d4ed8" stroke-width="1" fill="none"/></g>`).join("")}`,
   bg_fractions: () => `<rect width="100" height="100" fill="#fff7ed"/>${[[18, 20, 4], [82, 20, 3], [16, 82, 8], [84, 82, 6]].map(([x, y, n]) => `<g transform="translate(${x} ${y})"><circle r="11" fill="#fdba74" stroke="#c2410c" stroke-width="1"/>${Array.from({ length: n }, (_, i) => `<path d="M0 0L${11 * Math.cos((2 * Math.PI * i) / n)} ${11 * Math.sin((2 * Math.PI * i) / n)}" stroke="#c2410c" stroke-width="1"/>`).join("")}<path d="M0 0L11 0A11 11 0 0 1 ${(11 * Math.cos((2 * Math.PI) / n)).toFixed(2)} ${(11 * Math.sin((2 * Math.PI) / n)).toFixed(2)}z" fill="#fb923c"/></g>`).join("")}`,
@@ -244,6 +290,9 @@ const BG = {
 };
 
 const OUTFIT = {
+  pot_vega: (u) => `<g clip-path="url(#c${u})"><path d="M0 72h100v32H0z" fill="#1e3a8a" stroke="${INK}" stroke-width="2"/><path d="M50 72v30" stroke="#172554" stroke-width="2"/>${[78, 85, 92].map((y) => `<circle cx="45" cy="${y}" r="1.6" fill="#facc15"/><circle cx="55" cy="${y}" r="1.6" fill="#facc15"/>`).join("")}</g><path d="M20 74h12l-2 4H22zM68 74h12l-2 4H70z" fill="#facc15" stroke="${INK}" stroke-width="1.2"/>`,
+  pot_stefan: (u) => `<g clip-path="url(#c${u})"><path d="M0 72h100v32H0z" fill="#111827" stroke="${INK}" stroke-width="2"/><path d="M40 72h20l-4 30h-12z" fill="#f8fafc"/></g><path d="M50 76l-7-4v8zM50 76l7-4v8z" fill="#111827" stroke="${INK}" stroke-width="1.2"/><path d="M66 84l4-6 4 6M64 90h12" stroke="#fbbf24" stroke-width="1.6" fill="none" stroke-linecap="round"/>`,
+  pot_tesla: (u) => `<g clip-path="url(#c${u})"><path d="M0 72h100v32H0z" fill="#312e81" stroke="${INK}" stroke-width="2"/><path d="M50 72v30" stroke="#1e1b4b" stroke-width="2.5"/></g><path d="M24 76l6 5-4 2 7 6M76 76l-6 5 4 2-7 6" stroke="#67e8f9" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M8 60l6 4-3 2 6 4M92 60l-6 4 3 2-6 4" stroke="#a5f3fc" stroke-width="1.6" fill="none"/>`,
   outfit_pse: (u) => `<g clip-path="url(#c${u})"><path d="M0 74h100v30H0z" fill="#f8fafc" stroke="${INK}" stroke-width="2"/>${Array.from({ length: 12 }, (_, i) => `<rect x="${22 + (i % 6) * 9.5}" y="${78 + Math.floor(i / 6) * 8}" width="8" height="7" rx="1" fill="${["#bbf7d0", "#fecaca", "#fde68a", "#ddd6fe", "#a5f3fc", "#fed7aa"][i % 6]}" stroke="#64748b" stroke-width=".6"/>`).join("")}</g>`,
   outfit_euler: (u) => `<g clip-path="url(#c${u})"><path d="M0 74q50 8 100 0v30H0z" fill="#1e3a8a" stroke="${INK}" stroke-width="2"/><path d="M0 92h100" stroke="#facc15" stroke-width="1.6" stroke-dasharray="4 3"/></g><text x="50" y="87" font-size="7" text-anchor="middle" font-family="Georgia,serif" font-style="italic" fill="#fde68a">e^iπ+1=0</text>`,
   pass_coat: (u, v) => {
@@ -253,19 +302,26 @@ const OUTFIT = {
 };
 
 const ACC = {
+  pot_pregl: () => `<circle cx="60" cy="52" r="10" fill="#e0f2fe" fill-opacity=".35" stroke="#a16207" stroke-width="3"/><path d="M67 59l12 12" stroke="#78350f" stroke-width="4.5" stroke-linecap="round"/><path d="M55 47q3-3 7-2" stroke="#fff" stroke-width="1.6" fill="none"/>`,
   acc_spectro: (v, u) => `<path d="M22 50h56" stroke="#334155" stroke-width="4"/><rect x="29" y="43" width="19" height="15" rx="7" fill="url(#spc${u})" stroke="${INK}" stroke-width="2.5"/><rect x="52" y="43" width="19" height="15" rx="7" fill="url(#spc${u})" stroke="${INK}" stroke-width="2.5"/><defs><linearGradient id="spc${u}" x1="0" x2="1"><stop offset="0" stop-color="#f87171"/><stop offset=".33" stop-color="#facc15"/><stop offset=".66" stop-color="#4ade80"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>`,
   pass_pencil: (v) => `<g transform="rotate(-30 74 36)"><rect x="66" y="32" width="24" height="6" rx="1" fill="hsl(${seasonHue(v)} 85% 58%)" stroke="${INK}" stroke-width="1.4"/><path d="M90 32l6 3-6 3z" fill="#fde68a" stroke="${INK}" stroke-width="1.2"/><rect x="62" y="32" width="5" height="6" fill="#f472b6" stroke="${INK}" stroke-width="1.2"/></g>`,
 };
 
+const HAT = {
+  pot_owl: () => `<g transform="translate(50 18)"><ellipse rx="12" ry="11" fill="#a16207" stroke="${INK}" stroke-width="2"/><path d="M-10-8l-3-6 6 3M10-8l3-6-6 3" fill="#a16207" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/><circle cx="-5" cy="-2" r="4.2" fill="#fef3c7" stroke="${INK}" stroke-width="1.2"/><circle cx="5" cy="-2" r="4.2" fill="#fef3c7" stroke="${INK}" stroke-width="1.2"/><circle cx="-5" cy="-2" r="1.8" fill="${INK}"/><circle cx="5" cy="-2" r="1.8" fill="${INK}"/><path d="M-1.5 2l1.5 3 1.5-3z" fill="#f59e0b"/><path d="M-6 6q6 4 12 0" stroke="#fde68a" stroke-width="1.2" fill="none"/></g>`,
+  pot_laurel: () => `<g fill="#65a30d" stroke="#365314" stroke-width=".8">${Array.from({ length: 7 }, (_, i) => { const a = Math.PI * (0.95 + i * 0.09); return `<ellipse cx="${(50 + 30 * Math.cos(a)).toFixed(1)}" cy="${(40 + 18 * Math.sin(a)).toFixed(1)}" rx="5" ry="2.4" transform="rotate(${((a * 180) / Math.PI + 70).toFixed(0)} ${(50 + 30 * Math.cos(a)).toFixed(1)} ${(40 + 18 * Math.sin(a)).toFixed(1)})"/><ellipse cx="${(50 - 30 * Math.cos(a)).toFixed(1)}" cy="${(40 + 18 * Math.sin(a)).toFixed(1)}" rx="5" ry="2.4" transform="rotate(${(110 - (a * 180) / Math.PI).toFixed(0)} ${(50 - 30 * Math.cos(a)).toFixed(1)} ${(40 + 18 * Math.sin(a)).toFixed(1)})"/>`; }).join("")}</g><circle cx="50" cy="23" r="2.4" fill="#facc15" stroke="${INK}" stroke-width=".8"/>`,
+};
+
 // Deli za public/avatar.js: (u, variant) => SVG
 export const DRAW = {
+  hat: (id) => HAT[baseId(id)]?.() ?? null,
   badge: (id) => {
     const x = KITEM[baseId(id)];
     if (!x) return "";
     if (x.sym) return elementTile(x);
     return BADGE[x.id]?.(variantOf(id)) || "";
   },
-  fxBack: (id) => FX[baseId(id)]?.back?.(variantOf(id)) || "",
+  fxBack: (id, u) => FX[baseId(id)]?.back?.(variantOf(id), u) || "",
   fxFront: (id) => FX[baseId(id)]?.front?.(variantOf(id)) || "",
   bg: (id, u) => BG[baseId(id)]?.(variantOf(id), u) ?? null,
   outfit: (id, u) => OUTFIT[baseId(id)]?.(u, variantOf(id)) ?? null,

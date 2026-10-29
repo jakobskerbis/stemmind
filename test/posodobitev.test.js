@@ -8,7 +8,7 @@ import { filesFromTarball, planChanges, applyChanges, rollback, readState, needs
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 
-const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), "stemmind-pos-"));
+const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), "kompreno-pos-"));
 const put = (root, rel, text, mode) => {
   fs.mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
   fs.writeFileSync(path.join(root, rel), text);
@@ -17,18 +17,18 @@ const put = (root, rel, text, mode) => {
 const read = (root, rel) => fs.readFileSync(path.join(root, rel), "utf8");
 const long = `content/${"zelo-dolgo-ime-mape-".repeat(4)}/${"lekcija-".repeat(10)}.md`;
 
-// Arhiv kot ga vrne GitHub: vse v mapi stemmind-<sha>/, format pax.
+// Arhiv kot ga vrne GitHub: vse v mapi kompreno-<sha>/, format pax.
 function tarball(files) {
   const dir = tmp();
-  const top = path.join(dir, "stemmind-abc123");
+  const top = path.join(dir, "kompreno-abc123");
   for (const [rel, text, mode] of files) put(top, rel, text, mode);
   const out = path.join(dir, "a.tar.gz");
-  execFileSync("tar", ["--format=pax", "-czf", out, "-C", dir, "stemmind-abc123"]);
+  execFileSync("tar", ["--format=pax", "-czf", out, "-C", dir, "kompreno-abc123"]);
   return fs.readFileSync(out);
 }
 
 const NEW = [
-  ["package.json", '{"name":"stemmind"}'],
+  ["package.json", '{"name":"kompreno"}'],
   ["server/index.js", "// nova"],
   ["public/app.js", "// nova app"],
   [long, "# dolga pot"],
@@ -36,14 +36,14 @@ const NEW = [
   ["telefon-windows.bat", `rem ${MARKER}\r\nnova`],
   ["zagon-mac.command", "#!/bin/bash\n# nova", 0o755],
   [".env", "ANTHROPIC_API_KEY=iz-arhiva"],
-  ["data/stemmind.db", "iz-arhiva"],
+  ["data/kompreno.db", "iz-arhiva"],
 ];
 
 test("arhiv: dolge poti, brez .env in data/, izvedljive datoteke", () => {
   const files = filesFromTarball(tarball(NEW));
   assert.ok(files.has(long));
   assert.equal(String(files.get("server/index.js")), "// nova");
-  assert.ok(!files.has(".env") && !files.has("data/stemmind.db"));
+  assert.ok(!files.has(".env") && !files.has("data/kompreno.db"));
   assert.equal(files.get("zagon-mac.command").executable, true);
   assert.ok(!files.get("server/index.js").executable);
 });
@@ -51,8 +51,8 @@ test("arhiv: dolge poti, brez .env in data/, izvedljive datoteke", () => {
 test("posodobitev prepiše samo spremenjeno, ohrani .env in podatke, zna nazaj", () => {
   const root = tmp();
   put(root, ".env", "ANTHROPIC_API_KEY=moj");
-  put(root, "data/stemmind.db", "moji podatki");
-  put(root, "package.json", '{"name":"stemmind"}'); // enaka
+  put(root, "data/kompreno.db", "moji podatki");
+  put(root, "package.json", '{"name":"kompreno"}'); // enaka
   put(root, "server/index.js", "// stara");
   put(root, "server/staro.js", "// iz prejšnje posodobitve, v main je ni več");
   put(root, "moja-datoteka.txt", "uporabnikova");
@@ -73,7 +73,7 @@ test("posodobitev prepiše samo spremenjeno, ohrani .env in podatke, zna nazaj",
   assert.equal(read(root, long), "# dolga pot");
   assert.ok(!fs.existsSync(path.join(root, "server/staro.js")));
   assert.equal(read(root, ".env"), "ANTHROPIC_API_KEY=moj");
-  assert.equal(read(root, "data/stemmind.db"), "moji podatki");
+  assert.equal(read(root, "data/kompreno.db"), "moji podatki");
   assert.equal(read(root, "moja-datoteka.txt"), "uporabnikova");
   assert.equal(read(root, "telefon-windows.bat"), "stara brez oznake");
   if (process.platform !== "win32") assert.ok(fs.statSync(path.join(root, "zagon-mac.command")).mode & 0o100);
@@ -108,7 +108,7 @@ test("strežnik pove različico in zasedenost; service worker dobi različico kn
     assert.equal((await (await fetch(`${base}/healthz/stanje`)).json()).aktivni, 0);
     const sw = await fetch(`${base}/sw.js`);
     assert.match(sw.headers.get("content-type"), /javascript/);
-    assert.match(await sw.text(), /const VERSION = "stemmind-v1-[0-9a-f]{8}";/);
+    assert.match(await sw.text(), /const VERSION = "kompreno-v1-[0-9a-f]{8}";/);
   } finally {
     server.close();
   }

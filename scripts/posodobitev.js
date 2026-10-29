@@ -7,6 +7,7 @@
 // Če je mapa klon z git (razvijalci), naredi `git merge --ff-only origin/main`.
 // Uporaba: node scripts/posodobitev.js   (izhodna koda 0 = ni novega ali posodobljeno, 1 = napaka)
 // Navodila: docs/posodobitve.md
+import "../server/env.js";
 import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
@@ -14,11 +15,13 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 export const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const REPO = process.env.STEMMIND_REPO || "jakobskerbis/stemmind";
-export const BRANCH = process.env.STEMMIND_VEJA || "main";
+export const REPO = process.env.KOMPRENO_REPO || "jakobskerbis/stemmind";
+export const BRANCH = process.env.KOMPRENO_VEJA || "main";
 // Zagonske datoteke (.bat, .command) prepišemo le, če so že v »varni« obliki (imajo to oznako):
 // Windows in bash bereta skripto sproti, zato bi prepis stare oblike med tekom zmedel okno.
-export const MARKER = "STEMMIND-SAMOPOSODOBITEV";
+export const MARKER = "KOMPRENO-SAMOPOSODOBITEV";
+// Enaka oznaka iz časa, ko se je aplikacija imenovala STEMMind (enako dolga, zato je prepis med tekom varen).
+export const LEGACY_MARKER = "STEMMIND-SAMOPOSODOBITEV";
 const KEEP_TOP = new Set([".env", "data", "node_modules", ".git"]);
 const LAUNCHER = /^[^/]+\.(bat|cmd|command)$/i;
 const isWin = process.platform === "win32";
@@ -86,7 +89,7 @@ export function untar(buf) {
   return out;
 }
 
-// Iz arhiva GitHub (mapa »stemmind-<sha>/…«) vrne Map(relativna pot -> vsebina) brez .env, data …
+// Iz arhiva GitHub (mapa »kompreno-<sha>/…«) vrne Map(relativna pot -> vsebina) brez .env, data …
 export function filesFromTarball(gz) {
   const files = new Map();
   for (const f of untar(zlib.gunzipSync(gz))) {
@@ -107,7 +110,7 @@ export function planChanges(root, files, previousList = []) {
     let old = null;
     try { old = fs.readFileSync(file); } catch {}
     if (old && old.equals(data)) continue;
-    if (old && LAUNCHER.test(rel) && !old.includes(MARKER)) { skipped.push(rel); continue; }
+    if (old && LAUNCHER.test(rel) && !old.includes(MARKER) && !old.includes(LEGACY_MARKER)) { skipped.push(rel); continue; }
     write.push(rel);
   }
   const remove = previousList.filter((rel) => !files.has(rel) && !KEEP_TOP.has(rel.split("/")[0]) && fs.existsSync(path.join(root, rel)));
@@ -174,7 +177,7 @@ export function needsRestart(changed) {
   return changed.some((f) => !/^(docs|test|\.github)\//.test(f) && !/^[^/]+\.md$/.test(f) && !LAUNCHER.test(f));
 }
 export function supervisorChanged(changed) {
-  return changed.some((f) => /^scripts\/(posodobitev|nadzor|zagon|zaganjalnik|telefon)\.js$/.test(f));
+  return changed.some((f) => /^scripts\/(posodobitev|nadzor|zagon|zaganjalnik|telefon|bliznjice)\.js$/.test(f));
 }
 
 function git(root, ...args) {
@@ -183,7 +186,7 @@ function git(root, ...args) {
 
 async function latestSha() {
   const res = await fetch(`https://api.github.com/repos/${REPO}/commits/${BRANCH}`, {
-    headers: { Accept: "application/vnd.github.sha", "User-Agent": "stemmind-posodobitev" },
+    headers: { Accept: "application/vnd.github.sha", "User-Agent": "kompreno-posodobitev" },
     signal: AbortSignal.timeout(20000),
   });
   if (!res.ok) throw new Error(`GitHub ni odgovoril (${res.status})`);
@@ -194,7 +197,7 @@ async function latestSha() {
 
 async function download(sha) {
   const res = await fetch(`https://codeload.github.com/${REPO}/tar.gz/${sha}`, {
-    headers: { "User-Agent": "stemmind-posodobitev" },
+    headers: { "User-Agent": "kompreno-posodobitev" },
     signal: AbortSignal.timeout(5 * 60 * 1000),
   });
   if (!res.ok) throw new Error(`prenos ni uspel (${res.status})`);
@@ -243,7 +246,9 @@ async function updateTarball(root, say) {
 // Namesti knjižnice, če se je package.json spremenil (ista oznaka kot v zagonskih datotekah).
 export function installIfNeeded(root = ROOT, say = console.log) {
   const pkg = path.join(root, "package.json");
-  const mark = path.join(root, "node_modules", ".stemmind-package.json");
+  const mark = path.join(root, "node_modules", ".kompreno-package.json");
+  const legacyMark = path.join(root, "node_modules", ".stemmind-package.json"); // ime iz časa STEMMind
+  try { if (!fs.existsSync(mark)) fs.renameSync(legacyMark, mark); } catch {}
   try { if (fs.readFileSync(pkg).equals(fs.readFileSync(mark))) return true; } catch {}
   say("Nameščam knjižnice za novo različico ...");
   const r = spawnSync(isWin ? "npm.cmd" : "npm", ["install", "--omit=dev", "--no-audit", "--no-fund"],
@@ -284,7 +289,7 @@ export async function update({ root = ROOT, say = console.log, install = true } 
 // Zagnano kot program (node scripts/posodobitev.js)? Na Windows so poti lahko različno velike.
 const same = (a, b) => (isWin ? a.toLowerCase() === b.toLowerCase() : a === b);
 if (process.argv[1] && same(path.resolve(process.argv[1]), fileURLToPath(import.meta.url))) {
-  if (process.env.STEMMIND_POSODOBITEV === "0") process.exit(0);
+  if (process.env.KOMPRENO_POSODOBITEV === "0") process.exit(0);
   console.log("Preverjam posodobitve ...");
   const r = await update();
   process.exit(r.error ? 1 : 0);

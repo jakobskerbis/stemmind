@@ -4,6 +4,7 @@
 // Uporaba: »Danes imaš …« na Učni poti, kratka ponovitev pred uro in po njej, Priprava na test se
 // nastavi sama iz najbližjega testa, opomnik dan prej, inštruktor ve, kaj ima učenec ta teden.
 // Urnik je zaseben: vidi ga samo učenec (in starš na njegovi napravi), nikoli lige ali učitelj.
+import "./env.js";
 import crypto from "node:crypto";
 import dns from "node:dns/promises";
 import net from "node:net";
@@ -388,7 +389,7 @@ export async function scheduleSources({ fetchFn = fetch, settings = null } = {})
 // Fotografija urnika: model prebere ure in teste, učenec jih pred shranjevanjem preveri.
 
 // Natančnost je tu pomembnejša od cene (urnik se prebere enkrat na semester), zato zmogljivejši model.
-const photoModel = () => process.env.STEMMIND_SCHEDULE_MODEL || MODEL_DEEP;
+const photoModel = () => process.env.KOMPRENO_SCHEDULE_MODEL || MODEL_DEEP;
 
 export async function readTimetablePhoto({ imageBase64, mediaType = "image/jpeg", today = new Date().toISOString().slice(0, 10) }) {
   const model = photoModel();

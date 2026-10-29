@@ -10,7 +10,7 @@ Testerji v aplikaciji povedo, kaj je dobro in kaj ne. Iz tega nastane seznam spr
 Dve možnosti, tester izbere:
 
 1. **Vprašalnik**: ocena 1–5 (obrazki) za Učno pot in naloge, Inštruktorja, Učbenik in simulacije, Tekmovanja, Videz, Hitrost, Točke in lige; trije odgovori s svojimi besedami (kaj je všeč, kaj moti ali ne dela, kaj bi dodal); ali bi priporočil prijatelju.
-2. **Pogovor z inštruktorjem**: 5–6 kratkih vprašanj v klepetu (kaj si uporabljal, kaj je všeč, kje si se zataknil, na katerem zaslonu, kaj bi spremenil, ali bi uporabljal za šolo). Vprašanja so pripravljena v aplikaciji in ne stanejo nič. Z `STEMMIND_FEEDBACK_AI=1` (in API ključem) pogovor vodi Haiku, ki pri nejasnem odgovoru še enkrat vpraša po podrobnostih; največ 6 vprašanj, okoli 0,1 centa na pogovor.
+2. **Pogovor z inštruktorjem**: 5–6 kratkih vprašanj v klepetu (kaj si uporabljal, kaj je všeč, kje si se zataknil, na katerem zaslonu, kaj bi spremenil, ali bi uporabljal za šolo). Vprašanja so pripravljena v aplikaciji in ne stanejo nič. Z `KOMPRENO_FEEDBACK_AI=1` (in API ključem) pogovor vodi Haiku, ki pri nejasnem odgovoru še enkrat vpraša po podrobnostih; največ 6 vprašanj, okoli 0,1 centa na pogovor.
 
 Vse je v jeziku, ki ga ima tester izbranega.
 

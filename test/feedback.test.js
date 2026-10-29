@@ -8,7 +8,7 @@ import { createApp } from "../server/app.js";
 import { normalizeFeedback, summarize, summaryMarkdown, areasOf } from "../server/feedback.js";
 
 async function withServer(fn, opts = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "stemmind-fb-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "kompreno-fb-"));
   const file = path.join(dir, "povratne-informacije.json");
   const store = openDb(":memory:");
   const app = createApp(store, { feedbackFile: file, ...opts });
@@ -66,17 +66,17 @@ test("feedback interview: answers with question keys are stored; AI interview is
     assert.equal(e.interview[1].k, "stuck");
     assert.equal(e.interview[2].k, undefined, "neznan ključ vprašanja se zavrže");
     const ai = await call(`/api/students/${s.id}/feedback/interview`, { method: "POST", body: { answers: interview } });
-    assert.equal(ai.status, 409, "brez STEMMIND_FEEDBACK_AI=1 ni klica API");
+    assert.equal(ai.status, 409, "brez KOMPRENO_FEEDBACK_AI=1 ni klica API");
     const cfg = (await call("/api/config")).body;
     assert.deepEqual(cfg.feedback, { prompt: true, ai: false, admin: true });
   });
 });
 
 test("AI interview uses the cheap model with a few turns and logs the cost", async () => {
-  const old = { ai: process.env.STEMMIND_FEEDBACK_AI, key: process.env.ANTHROPIC_API_KEY, mock: process.env.STEMMIND_MOCK };
-  process.env.STEMMIND_FEEDBACK_AI = "1";
+  const old = { ai: process.env.KOMPRENO_FEEDBACK_AI, key: process.env.ANTHROPIC_API_KEY, mock: process.env.KOMPRENO_MOCK };
+  process.env.KOMPRENO_FEEDBACK_AI = "1";
   process.env.ANTHROPIC_API_KEY = "test";
-  delete process.env.STEMMIND_MOCK;
+  delete process.env.KOMPRENO_MOCK;
   const calls = [];
   const feedbackCreateFn = async (p) => {
     calls.push(p);
@@ -102,7 +102,7 @@ test("AI interview uses the cheap model with a few turns and logs the cost", asy
       { feedbackCreateFn },
     );
   } finally {
-    for (const [k, v] of [["STEMMIND_FEEDBACK_AI", old.ai], ["ANTHROPIC_API_KEY", old.key], ["STEMMIND_MOCK", old.mock]]) {
+    for (const [k, v] of [["KOMPRENO_FEEDBACK_AI", old.ai], ["ANTHROPIC_API_KEY", old.key], ["KOMPRENO_MOCK", old.mock]]) {
       if (v === undefined) delete process.env[k];
       else process.env[k] = v;
     }

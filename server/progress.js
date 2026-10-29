@@ -1,7 +1,8 @@
 // Napredovanje: prilagodljiva težavnost, obvladanje tem, odklepanje sklopov,
 // preizkus znanja, razmaknjeno ponavljanje, XP in lestvica.
 import crypto from "node:crypto";
-import { getPath, getTopic } from "./curriculum.js";
+import { getPath, getTopic, localTopic, localUnitTitle } from "./curriculum.js";
+import { uiLanguage } from "../public/i18n/languages.js";
 import { generateTask, hasGenerator, publicTask, hintSteps } from "./practice/index.js";
 import { checkAnswer } from "./practice/check.js";
 import { CONTEST, TRAINING_TASKS, isCompetitionPath } from "./competition.js";
@@ -11,6 +12,8 @@ import { taskLanguage, localName } from "./exams.js";
 
 // Tekmovalni trening in poskusno tekmovanje veljata tudi za priprave na izpite.
 const isPrepPath = (key) => isCompetitionPath(key) || isExamPath(key);
+
+const pretestTier = (known) => (known >= 3 ? "višja" : known === 2 ? "srednja" : "osnovna");
 
 // Naloge z enim poskusom in brez namigov (preizkusi, tekmovanja, test predznanja).
 const ONE_SHOT = ["placement", "contest", "pretest"];
@@ -68,6 +71,10 @@ export class Progress {
   taskLang(studentId) {
     return taskLanguage(this.store.getStudent?.(studentId)?.settings?.language);
   }
+  // Jezik vmesnika (za imena tem mednarodne poti v slovenskem vmesniku).
+  uiLang(studentId) {
+    return uiLanguage(this.store.getStudent?.(studentId)?.settings?.language);
+  }
 
   // ---------- stanje teme ----------
   state(studentId, topicId) {
@@ -123,8 +130,10 @@ export class Progress {
         .map((s) => [s.topic_id, s]),
     );
     const now = nowSql();
+    const ui = this.uiLang(studentId);
     const units = path.units.map((u) => {
-      const topics = u.topics.map((t) => {
+      const topics = u.topics.map((t0) => {
+        const t = localTopic(t0, ui);
         const s = states[t.id] || {};
         return {
           id: t.id,
@@ -140,7 +149,7 @@ export class Progress {
       const gated = topics.filter((t) => t.practice);
       const relevant = gated.length ? gated : topics;
       return {
-        title: u.title,
+        title: localUnitTitle(u, ui),
         topics,
         hasPractice: gated.length > 0,
         started: topics.some((t) => t.status !== "new"),
@@ -276,7 +285,7 @@ export class Progress {
       kind,
       index: done + 1,
       total,
-      task: { id: open.id, mode: open.mode, topicName: localName(getTopic(open.topic_id)?.name, payload.textLang), ...publicTask(payload) },
+      task: { id: open.id, mode: open.mode, topicName: localName(localTopic(getTopic(open.topic_id), this.uiLang(open.student_id))?.name, payload.textLang), ...publicTask(payload) },
     };
     if (sess?.kind === "contest") {
       next.deadline = sess.params.deadline;
@@ -331,7 +340,8 @@ export class Progress {
     return this.sessionNext(this.createSession(studentId, "pretest", plan, { topic: topicId }));
   }
 
-  finishPretest(studentId, sessionId) {
+  // Izid testa predznanja brez sprememb (tudi za ponovni »Preveri« po koncu testa).
+  pretestScore(studentId, sessionId) {
     const all = this.db.prepare("SELECT level, first_try_correct, topic_id FROM tasks WHERE session_id = ? ORDER BY level, id").all(sessionId);
     const correct = all.filter((t) => t.first_try_correct).length;
     let known = 0; // stopnje, rešene zapored od najlažje
@@ -339,7 +349,12 @@ export class Progress {
       if (!t.first_try_correct) break;
       known = t.level;
     }
-    const topicId = all[0]?.topic_id;
+    const level = this.state(studentId, all[0]?.topic_id).level;
+    return { correct, total: all.length, known, level, tier: pretestTier(known), topicId: all[0]?.topic_id };
+  }
+
+  finishPretest(studentId, sessionId) {
+    const { correct, total, known, topicId } = this.pretestScore(studentId, sessionId);
     const s = this.state(studentId, topicId);
     if (s.status !== "mastered") {
       s.status = "learning";
@@ -348,8 +363,7 @@ export class Progress {
       this.saveState(s);
     }
     this.db.prepare("UPDATE topic_state SET pretest = ? WHERE student_id = ? AND topic_id = ?").run(known, studentId, topicId);
-    const tier = known >= 3 ? "višja" : known === 2 ? "srednja" : "osnovna";
-    return { correct, total: all.length, known, level: s.level, tier };
+    return { correct, total, known, level: s.level, tier: pretestTier(known) };
   }
 
   // Test predznanja: »Tega še ne znam« – naloga šteje kot nerešena, naprej na naslednjo.
@@ -705,7 +719,7 @@ export class Progress {
     if (!row || row.student_id !== studentId) return { error: "Naloga ne obstaja." };
     const oneShot = ONE_SHOT.includes(row.mode);
     const maxAttempts = oneShot ? 1 : RULES.maxAttempts;
-    if (row.solved || row.attempts >= maxAttempts) return { error: "Ta naloga je že zaključena." };
+    if (row.solved || row.attempts >= maxAttempts) return this.closedAnswer(studentId, row);
     if (row.mode === "contest") {
       const sess = this.getSession(row.session_id);
       if (!sess || sess.finished) return { error: "To tekmovanje je že končano." };
@@ -824,6 +838,22 @@ export class Progress {
     return out;
   }
 
+  // Ponovni »Preveri« pri že zaključeni nalogi (dvojni dotik, popravljen odgovor po edinem
+  // poskusu, izgubljen odziv prek tunela): vrnemo shranjeni izid in naslednjo nalogo namesto
+  // napake. Nič se ne šteje znova (brez XP, poskusov in sprememb stanja teme).
+  closedAnswer(studentId, row) {
+    const out = { closed: true, kind: row.solved ? "correct" : "wrong", correct: !!row.solved };
+    if (row.mode === "contest") out.saved = true;
+    if (!ONE_SHOT.includes(row.mode)) out.solution = row.payload.solution;
+    if (row.session_id) {
+      out.next = this.sessionNext(row.session_id);
+      if (out.next.contest) out.contest = out.next.contest;
+      if (out.next.finished && row.mode === "placement") out.placement = { ...this.placementScore(row.session_id), xp: null };
+      if (out.next.finished && row.mode === "pretest") out.pretest = this.pretestScore(studentId, row.session_id);
+    }
+    return out;
+  }
+
   // Lestev namigov pred odgovorom (practice/index.js hintSteps); uporaba namiga zmanjša XP.
   hint(studentId, taskId, upTo) {
     const row = this.getTask(taskId);
@@ -861,10 +891,15 @@ export class Progress {
     this.saveState(s);
   }
 
+  placementScore(sessionId) {
+    const all = this.db.prepare("SELECT first_try_correct FROM tasks WHERE session_id = ?").all(sessionId);
+    const correct = all.filter((t) => t.first_try_correct).length;
+    return { passed: correct / all.length >= RULES.placementPass, correct, total: all.length };
+  }
+
   finishPlacement(studentId, sessionId) {
     const all = this.db.prepare("SELECT * FROM tasks WHERE session_id = ?").all(sessionId);
-    const correct = all.filter((t) => t.first_try_correct).length;
-    const passed = correct / all.length >= RULES.placementPass;
+    const { passed, correct } = this.placementScore(sessionId);
     const topics = [...new Set(all.map((t) => t.topic_id))];
     let xp = null;
     if (passed) {

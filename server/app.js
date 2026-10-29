@@ -1,4 +1,5 @@
 // HTTP strežnik Kompreno: API + statični vmesnik.
+import "./env.js";
 import express from "express";
 import fs from "node:fs";
 import path from "node:path";
@@ -13,7 +14,8 @@ import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
-import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths } from "./curriculum.js";
+import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths, localTopic } from "./curriculum.js";
+import { uiLanguage } from "../public/i18n/languages.js";
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor, formulaSheet } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
 import { programReferences, referencesFor, themesFor } from "./references.js";
@@ -41,7 +43,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_IMAGE_B64 = 7 * 1024 * 1024; // ~5 MB slike
 const MAX_TEXT = 6000;
-const ANSWER_CACHE = process.env.STEMMIND_ANSWER_CACHE !== "0";
+const ANSWER_CACHE = process.env.KOMPRENO_ANSWER_CACHE !== "0";
 
 // Ključ za ponovno uporabo odgovora: isto prvo vprašanje pri istih nastavitvah.
 // mode: način klica (chat/lite/think/deep); pathTopic: tema učne poti (npr. »Začniva s temo …«).
@@ -79,8 +81,8 @@ export function createApp(store, opts = {}) {
     res.set("Cache-Control", "no-store");
     res.json({ razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
   });
-  const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (STEMMIND_ACCOUNTS=1)
-  if (process.env.STEMMIND_PASSWORD) app.use(passwordGate(process.env.STEMMIND_PASSWORD)); // stran za prijavo + piškotek
+  const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (KOMPRENO_ACCOUNTS=1)
+  if (process.env.KOMPRENO_PASSWORD) app.use(passwordGate(process.env.KOMPRENO_PASSWORD)); // stran za prijavo + piškotek
   mountWebApp(app); // manifest v jeziku vmesnika, povezava za Google Play
   app.use("/api", (req, res, next) => {
     activity.active++;
@@ -99,7 +101,7 @@ export function createApp(store, opts = {}) {
   // Neuspele klice API zapišemo v dnevnik, da je napako na telefonu mogoče poiskati.
   app.use("/api", (req, res, next) => {
     res.on("finish", () => {
-      if (res.statusCode >= 400) console.warn(`[stemmind] ${res.statusCode} ${req.method} ${req.originalUrl}`);
+      if (res.statusCode >= 400) console.warn(`[kompreno] ${res.statusCode} ${req.method} ${req.originalUrl}`);
     });
     next();
   });
@@ -107,13 +109,13 @@ export function createApp(store, opts = {}) {
   const modules = path.join(here, "..", "node_modules");
   const publicDir = path.join(here, "..", "public");
   // Service worker z različico knjižnic v imenu predpomnilnika (glej server/razlicica.js).
-  const swSource = fs.readFileSync(path.join(publicDir, "sw.js"), "utf8").replace('"stemmind-v1"', `"stemmind-v1-${vendorVersion()}"`);
+  const swSource = fs.readFileSync(path.join(publicDir, "sw.js"), "utf8").replace('"kompreno-v1"', `"kompreno-v1-${vendorVersion()}"`);
   app.get("/sw.js", (_req, res) => {
     res.set("Cache-Control", "no-cache");
     res.type("text/javascript").send(swSource);
   });
   // Lahki način: stisnjene datoteke in JSON (brotli/gzip) za počasne in drage mobilne povezave.
-  if (process.env.STEMMIND_COMPRESS !== "0") {
+  if (process.env.KOMPRENO_COMPRESS !== "0") {
     app.use(
       compressedStatic([
         ["/vendor/katex/", path.join(modules, "katex", "dist")],
@@ -230,7 +232,7 @@ export function createApp(store, opts = {}) {
 
   // Ogled sestavljenega prompta, samo za razvoj.
   app.get("/api/students/:id/prompt", (req, res) => {
-    if (process.env.STEMMIND_DEBUG !== "1") return res.status(404).end();
+    if (process.env.KOMPRENO_DEBUG !== "1") return res.status(404).end();
     const s = loadStudent(req, res);
     if (!s) return;
     res.type("text/plain").send(
@@ -443,7 +445,7 @@ export function createApp(store, opts = {}) {
           send("mastered", { topic: getTopic(conv.path_topic)?.name, unlocked: knowledge.sync(student.id) });
         }
       } else {
-        console.warn(`[stemmind] odgovor brez META (pogovor ${conv.id})`);
+        console.warn(`[kompreno] odgovor brez META (pogovor ${conv.id})`);
       }
       finished = true;
       send("done", {
@@ -463,7 +465,7 @@ export function createApp(store, opts = {}) {
       store.db.prepare("DELETE FROM messages WHERE id = ?").run(userMsgId);
       if (again) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(conv.deep || 0, conv.id);
       if (!controller.signal.aborted) {
-        console.error("[stemmind] napaka pri klicu modela:", err?.status ?? "", err?.message ?? err);
+        console.error("[kompreno] napaka pri klicu modela:", err?.status ?? "", err?.message ?? err);
         send("error", { error: ERROR_TEXT });
       }
       res.end();
@@ -494,7 +496,8 @@ export function createApp(store, opts = {}) {
     const t = getTopic(req.query.id);
     if (!t) return res.status(404).json({ error: "Tema ne obstaja." });
     // lang: jezik vmesnika (indijski izpiti imajo imena tem tudi v hindijščini).
-    const topic = localizeExamTopic({ ...t, pathLabel: getPath(t.path).label }, taskLanguage(String(req.query.lang || "")));
+    const lang = String(req.query.lang || "");
+    const topic = localizeExamTopic({ ...localTopic(t, uiLanguage(lang)), pathLabel: getPath(t.path).label }, taskLanguage(lang));
     res.json({ ...topic, explanation: explanationFor(t.id) || lessonExplanation(t.id) });
   });
   // --- učbenik ---
@@ -790,7 +793,7 @@ export function createApp(store, opts = {}) {
       if (out.usage) usage.log(s.id, out.model, out.usage, "ocr");
       res.json({ text: out.text, message: out.text ? null : "Zapisa nisem uspel prebrati. Poskusi pisati večje ali uporabi tipke." });
     } catch (err) {
-      console.error("[stemmind] branje rokopisa:", err?.message || err);
+      console.error("[kompreno] branje rokopisa:", err?.message || err);
       res.status(502).json({ error: "Branje zapisa trenutno ne deluje. Odgovor vpiši s tipkami." });
     }
   });

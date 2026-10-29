@@ -39,11 +39,11 @@ tudi, ko je računalnik ugasnjen (npr. Render, glej `docs/objava.md`).
 
 1. **Google Play (priporočeno najprej).** Isto aplikacijo zapakiramo kot »Trusted Web Activity«
    (orodje PWABuilder ali Bubblewrap), brez nove kode. Potrebno: razvijalski račun Google Play
-   (enkratno 25 $), ime paketa (npr. `si.stemmind.app`) in prstni odtis podpisnega ključa. Ta dva
+   (enkratno 25 $), ime paketa (npr. `si.kompreno.app`) in prstni odtis podpisnega ključa. Ta dva
    vpišemo v `.env`:
 
    ```
-   ANDROID_PACKAGE=si.stemmind.app
+   ANDROID_PACKAGE=si.kompreno.app
    ANDROID_SHA256=AB:CD:…
    ```
 

@@ -45,9 +45,9 @@
 .zb-card small { font-size: 0.76rem; font-weight: 700; color: var(--muted); }
 .zb-thumb { position: relative; display: block; }
 .zb-thumb .avatar-svg, .zb-thumb .zb-tile { display: block; border-radius: 12px; }
-.zb-locked .zb-thumb .avatar-svg, .zb-locked .zb-thumb .zb-tile { filter: grayscale(1) contrast(0.8); opacity: 0.45; }
+.zb-locked .zb-thumb .avatar-svg, .zb-locked .zb-thumb .zb-tile { filter: grayscale(0.85); opacity: 0.62; }
 .zb-lock, .zb-star { position: absolute; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; }
-.zb-lock { right: -4px; bottom: -4px; background: var(--surface); border: 2px solid var(--border); color: var(--muted); }
+.zb-lock { left: -4px; top: -4px; background: var(--surface); border: 2px solid var(--border); color: var(--muted); }
 .zb-star { right: -4px; top: -4px; background: #f59e0b; color: #fff; }
 .zb-lock svg.i, .zb-star svg.i { width: 13px; height: 13px; }
 
@@ -105,3 +105,9 @@
   #zbirke-content:has(> .zb-inspect) { padding-bottom: 380px; }
   .zb-inspect { bottom: calc(76px + env(safe-area-inset-bottom)); max-height: calc(100dvh - 160px); overflow-y: auto; }
 }
+
+/* Pot znanja in mitična redkost (najvišja, za največ XP) */
+.zb-pot { margin-bottom: 12px; }
+.zb-pot p { margin: 0 0 6px; }
+.gm-r-mythic { border-color: #e11d48; background-image: linear-gradient(160deg, rgba(244, 63, 94, 0.2), rgba(168, 85, 247, 0.16) 45%, transparent 75%); }
+.gm-rtag.gm-r-mythic { color: #be123c; }

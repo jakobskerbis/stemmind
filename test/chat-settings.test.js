@@ -183,7 +183,7 @@ test("tutor dialect: per language, by id or name, reset on language change, in p
   assert.ok(r.options.some((o) => o.startsWith("prekmursko")));
   // Prompt: narečje samo pod črto predpomnjenja, pravilo nad njo je enako za vse.
   const p = buildSystemPrompt({ settings: store.getStudent(student.id).settings });
-  const [stat, dyn] = p.split("<!-- STEMMIND:NASTAVITVE");
+  const [stat, dyn] = p.split("<!-- KOMPRENO:NASTAVITVE");
   assert.ok(!stat.includes("Štajersko –") && dyn.includes("Narečje / različica jezika: Štajersko –"));
   assert.ok(stat.includes("**Narečje / različica jezika**"));
   assert.ok(buildSystemPrompt({ settings: normalizeSettings({}) }).includes("Narečje / različica jezika: knjižni jezik"));

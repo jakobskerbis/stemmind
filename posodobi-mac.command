@@ -1,5 +1,5 @@
 #!/bin/bash
-# STEMMIND-SAMOPOSODOBITEV: vse je v funkciji main, zato je prepis med tekom varen.
+# KOMPRENO-SAMOPOSODOBITEV: vse je v funkciji main, zato je prepis med tekom varen.
 # Kompreno se posodablja sam (ob zagonu in vsakih 15 minut). Ta datoteka posodobitev sproži takoj.
 # Ključ (.env), podatki (data) in knjižnice (node_modules) ostanejo.
 main() {

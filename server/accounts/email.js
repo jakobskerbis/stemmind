@@ -15,7 +15,7 @@ export class Mailer {
   }
   async send({ to, subject, html, text }) {
     if (!this.key) {
-      this.log(`[stemmind] E-pošta (Resend ni nastavljen) za ${to}: ${subject}\n${text || ""}`);
+      this.log(`[kompreno] E-pošta (Resend ni nastavljen) za ${to}: ${subject}\n${text || ""}`);
       return { id: null, dev: true };
     }
     const res = await this.fetch("https://api.resend.com/emails", {

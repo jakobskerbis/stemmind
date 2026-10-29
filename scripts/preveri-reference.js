@@ -3,11 +3,12 @@
 //   node scripts/preveri-reference.js --cacert pot/do/bundle.pem
 // Uporablja curl (vzporedno po 6). Nekateri strežniki (npr. fmf.uni-lj.si) ne pošljejo
 // vmesnega certifikata; tedaj ga dodaj v --cacert (nikoli ne izklapljaj preverjanja TLS).
+import "../server/env.js";
 import { execFile } from "node:child_process";
 import { allReferenceItems, referenceStats } from "../server/references.js";
 
 const args = process.argv.slice(2);
-const ca = args.includes("--cacert") ? args[args.indexOf("--cacert") + 1] : process.env.STEMMIND_CACERT;
+const ca = args.includes("--cacert") ? args[args.indexOf("--cacert") + 1] : process.env.KOMPRENO_CACERT;
 const items = allReferenceItems();
 const where = new Map();
 for (const it of items) where.set(it.url, [...(where.get(it.url) || []), it.where]);

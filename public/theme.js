@@ -1,5 +1,5 @@
 // Svetli/temni način in lastne barve. Navaden skript v <head>, da se barve nastavijo pred prvim izrisom.
-// Nastavitve so shranjene na tej napravi (localStorage "stemmind.theme"):
+// Nastavitve so shranjene na tej napravi (localStorage "kompreno.theme"):
 //   { style: "cist" | "igriv" | "temen", mode: "system" | "light" | "dark", accent: "#rrggbb" | null,
 //     light: { bg, surface, menu, text } | null, dark: { … } | null }
 // Slog (docs/oblikovanje.md): Čist (privzeto, Instrument Sans, umirjen), Igriv (Nunito, zaobljen, topel),
@@ -7,8 +7,23 @@
 // in osnovne barve; lastne barve uporabnika veljajo nad njimi.
 // Iz teh nekaj barv izračunamo vse ostale (robove, sivo besedilo, poudarke …) in pri tem
 // pazimo na kontrast, da je besedilo vedno dobro berljivo.
+// Aplikacija se je do 29. 10. 2026 imenovala STEMMind: nastavitve te naprave so bile shranjene pod
+// ključi »stemmind.…« / »stemmind_…«. Enkrat jih prenesemo na »kompreno…«, da se nič ne izgubi.
+// (theme.js se naloži prvi na vsaki strani, zato to teče pred vsem drugim.)
 (function () {
-  const KEY = "stemmind.theme";
+  try {
+    const OLD = "stemmind";
+    for (const key of Object.keys(localStorage)) {
+      if (!key.startsWith(OLD + ".") && !key.startsWith(OLD + "_")) continue;
+      const next = "kompreno" + key.slice(OLD.length);
+      if (localStorage.getItem(next) === null) localStorage.setItem(next, localStorage.getItem(key));
+      localStorage.removeItem(key);
+    }
+  } catch {}
+})();
+
+(function () {
+  const KEY = "kompreno.theme";
   const STYLES = ["cist", "igriv", "temen"];
   // Osnovne barve slogov. Čist je enak privzetim barvam v style.css (brez izračuna).
   const BASES = {
@@ -118,7 +133,7 @@
   function save(s) {
     try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
     apply(s);
-    window.dispatchEvent(new CustomEvent("stemmind:theme", { detail: s }));
+    window.dispatchEvent(new CustomEvent("kompreno:theme", { detail: s }));
   }
   const isDarkMode = (s) => s.style === "temen" || s.mode === "dark" || (s.mode === "system" && mq.matches);
 
@@ -248,11 +263,11 @@
 })();
 
 // Lahki način pred prvim izrisom (da se spletna pisava sploh ne prenese): zadnja izbira na tej
-// napravi ("stemmind.lite" = "1" / "0") ali, če je ni, varčevanje s podatki / počasna povezava.
+// napravi ("kompreno.lite" = "1" / "0") ali, če je ni, varčevanje s podatki / počasna povezava.
 (function () {
   let saved = null;
   try {
-    saved = localStorage.getItem("stemmind.lite");
+    saved = localStorage.getItem("kompreno.lite");
   } catch {}
   const c = navigator.connection;
   const auto = !!(c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || "")));

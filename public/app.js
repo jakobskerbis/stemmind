@@ -71,7 +71,8 @@ const api = async (url, opts = {}) => {
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || t("common.error", { status: res.status }));
+    // status: strežnik je odgovoril (napaka ni v povezavi).
+    throw Object.assign(new Error(err.error || t("common.error", { status: res.status })), { status: res.status });
   }
   return res.json();
 };
@@ -754,7 +755,7 @@ function liteActive() {
 function applyLite() {
   const on = liteActive();
   document.documentElement.classList.toggle("lite", on);
-  localStorageSet("stemmind.lite", on ? "1" : "0"); // za theme.js ob naslednjem odprtju
+  localStorageSet("kompreno.lite", on ? "1" : "0"); // za theme.js ob naslednjem odprtju
 }
 navigator.connection?.addEventListener?.("change", applyLite);
 
@@ -1039,7 +1040,7 @@ async function confirmChatProposal(settings) {
 }
 
 // Nastavitve naprave, ki jih je spremenil inštruktor: posodobi odprte izbire.
-window.addEventListener("stemmind:device-setting", (e) => {
+window.addEventListener("kompreno:device-setting", (e) => {
   const { key, value } = e.detail || {};
   if (key === "reply_speed" && PACES[value]) $("#pace-select").value = value;
   if (key === "calculator" && CALC_MODES.includes(value)) calcMode = value;
@@ -1322,7 +1323,7 @@ function setActiveMode(mode) {
   document.querySelectorAll("#modebar [data-mode]").forEach((b) => b.classList.toggle("active", b.dataset.mode === mode));
 }
 
-const REVIEW_HINT_KEY = "stemmind.reviewHint";
+const REVIEW_HINT_KEY = "kompreno.reviewHint";
 async function goNew({ skipHint = false } = {}) {
   const m = (await refreshModes()) || state.modes;
   setActiveMode("new");
@@ -1842,7 +1843,24 @@ function renderTask(task, ctx) {
     ${ctx.mode === "contest" ? `<div class="contest-actions"><button type="button" class="secondary small" id="c-skip">${icon("skip-forward")}${t("comp.skip")}</button><button type="button" class="text-btn" id="c-finish">${icon("flag")}${examMode() ? t("exam.finish") : t("comp.finish")}</button></div>` : ""}
   </div>`;
   wireWork(box, task);
-  const submit = (value) => checkTask(task, ctx, value);
+  // En »Preveri« naenkrat; po končnem izidu (edini poskus, rešeno, rešen zgled) se odgovor ne pošilja več.
+  // Elemente ujamemo zdaj: po odgovoru lahko #practice že prikazuje naslednjo nalogo.
+  const card = box.querySelector(".card.task");
+  const sendBtns = [...card.querySelectorAll(".answer-row button.primary, .choice")];
+  let checking = false;
+  let finished = false;
+  const submit = async (value) => {
+    if (checking || finished) return;
+    checking = true;
+    sendBtns.forEach((b) => (b.disabled = true));
+    try {
+      finished = await checkTask(task, ctx, value);
+    } finally {
+      checking = false;
+    }
+    if (finished) card.querySelectorAll(".answer-row input, .answer-row button, .choice").forEach((el) => (el.disabled = true));
+    else sendBtns.forEach((b) => (b.disabled = false));
+  };
   // Lestev namigov: vsak klik odpre en korak več (podatki → formula → prvi korak).
   let hintShown = 0;
   $("#hint-btn")?.addEventListener("click", async () => {
@@ -1902,8 +1920,8 @@ function renderTask(task, ctx) {
 }
 
 // ---------- vmesni koraki (kot v zvezek) in pomoč inštruktorja pri nalogi ----------
-const WORK_OPEN_KEY = "stemmind.workOpen";
-const workKey = (id) => `stemmind.work.${id}`;
+const WORK_OPEN_KEY = "kompreno.workOpen";
+const workKey = (id) => `kompreno.work.${id}`;
 function lsGet(k) {
   try {
     return localStorage.getItem(k);
@@ -2049,24 +2067,37 @@ async function checkTask(task, ctx, value) {
     fb.innerHTML = `<div class="fb info">${t("task.checking")}</div>`;
     r = await api(`/api/students/${state.student.id}/tasks/${task.id}/answer`, { method: "POST", body: { answer: value } });
   } catch (err) {
-    // Napaka pri povezavi: učenec jo vidi, namesto da se ne zgodi nič.
-    fb.innerHTML = `<div class="fb bad">${icon("circle-x")}<span>${t("task.checkError", { msg: escapeHtml(err.message) })}</span></div>`;
-    return;
+    // Učenec napako vidi, namesto da se ne zgodi nič. Z »Preveri povezavo« samo, ko strežnik ni odgovoril.
+    const msg = escapeHtml(err.message);
+    fb.innerHTML = `<div class="fb bad">${icon("circle-x")}<span>${err.status ? t("task.checkFailed", { msg }) : t("task.checkError", { msg })}</span></div>`;
+    return false;
   }
   const next = (label = t("task.next")) => `<div class="actions"><button class="primary big" id="fb-next">${label}${icon("arrow-right")}</button></div>`;
+  // Naloga je bila že preverjena (npr. drugi dotik na »Preveri«): pokažemo shranjeni izid, ne napake.
+  const closedNote = r.closed ? `<div class="fb info">${icon("info")}<span>${t("task.alreadyChecked")}</span></div>` : "";
   let html = "";
-  if (ctx.mode === "contest" && !r.retry) return contestStep(r, ctx);
-  if (ctx.mode === "pretest" && !r.retry) return pretestStep(r, ctx);
+  if (ctx.mode === "contest" && !r.retry) {
+    contestStep(r, ctx);
+    return true;
+  }
+  if (ctx.mode === "pretest" && !r.retry) {
+    pretestStep(r, ctx);
+    return true;
+  }
   if (r.retry) {
     html = `<div class="fb info">${escapeHtml(fbText(r))}</div>`;
   } else if (ctx.mode === "placement") {
-    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? t("task.correct") : t("task.wrong")}</span></div>${r.message ? `<div class="fb info">${icon("info")}<span>${escapeHtml(fbText(r))}</span></div>` : ""}`;
+    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? t("task.correct") : t("task.wrong")}</span></div>${closedNote}${r.message ? `<div class="fb info">${icon("info")}<span>${escapeHtml(fbText(r))}</span></div>` : ""}`;
     if (r.placement) {
       const p = r.placement;
       html += `<div class="card result ${p.passed ? "celebrate" : ""}">${p.passed ? `<div class="result-icon">${icon("award")}</div>` : ""}<h2>${p.passed ? t("placement.passed") : t("placement.notYet")}</h2>
-        <p>${t("placement.score", { correct: p.correct, total: p.total })}${p.passed ? ` +${p.xp.gained} XP` : t("placement.unlocked")}</p>${r.unlocked ? unlockedHtml(r.unlocked) : ""}
+        <p>${t("placement.score", { correct: p.correct, total: p.total })}${p.passed ? (p.xp ? ` +${p.xp.gained} XP` : "") : t("placement.unlocked")}</p>${r.unlocked ? unlockedHtml(r.unlocked) : ""}
         <button class="primary big" id="fb-back">${t("result.toPath")}</button></div>`;
     } else html += next();
+  } else if (r.closed) {
+    html = `<div class="fb ${r.correct ? "ok" : "bad"}">${icon(r.correct ? "circle-check" : "circle-x")}<span>${r.correct ? t("task.correct") : t("task.wrong")}</span></div>${closedNote}
+      ${r.solution ? workedBlock(task, r.solution, r.correct ? t("task.solution") : t("task.example")) : ""}`;
+    html += ctx.mode !== "practice" && r.next?.finished ? sessionDoneCard(ctx.mode, r.next) : next(ctx.mode === "practice" && !r.correct ? t("task.similar") : t("task.next"));
   } else if (r.correct) {
     html = `<div class="fb ok pop">${icon("circle-check")}<span><b>${t("task.correctBang")}</b>${r.levelUp ? t("task.harder") : ""}</span><span class="xp-gain">${r.offline ? t("off.xpLater") : `+${r.xp.gained} XP`}</span></div>
       ${r.mastered ? `<div class="fb mastered pop">${icon("trophy")}<span>${t("task.mastered")}</span></div>` : ""}
@@ -2106,6 +2137,7 @@ async function checkTask(task, ctx, value) {
     if (padClosedForFeedback) openPad();
     else $("#answer")?.select();
   });
+  const done = !r.retry && (r.closed || r.correct || !!r.solution || ctx.mode === "placement");
   $("#fb-help")?.addEventListener("click", async () => {
     const h = await api(`/api/students/${state.student.id}/tasks/${task.id}/help`, { method: "POST", body: { work: workOf(task.id) } });
     await loadConversations();
@@ -2119,6 +2151,7 @@ async function checkTask(task, ctx, value) {
     const n = r.next;
     if (n && !n.finished) renderTask(n.task, { mode: ctx.mode, index: n.index, total: n.total });
   });
+  return done;
 }
 
 // Test predznanja: brez rešitve in namigov, takoj naslednja naloga; na koncu raven in nadaljevanje.
@@ -2489,7 +2522,7 @@ const TOUR = [
   { sel: "#profile-btn", title: "tour.profile", text: "tour.profileText" },
   { title: "tour.end", text: "tour.endText" },
 ];
-const TOUR_KEY = "stemmind.tour";
+const TOUR_KEY = "kompreno.tour";
 const visibleEl = (sel) => [...document.querySelectorAll(sel)].find((el) => el.getClientRects().length && !el.closest("[hidden]"));
 
 function startTour() {
@@ -2580,7 +2613,7 @@ $("#tour-again").addEventListener("click", () => {
 const CALC_MODES = ["sci", "graph", "tools", "pse", "formulas"];
 let calcMode = "sci";
 try {
-  if (CALC_MODES.includes(localStorage.getItem("stemmind.calcMode"))) calcMode = localStorage.getItem("stemmind.calcMode");
+  if (CALC_MODES.includes(localStorage.getItem("kompreno.calcMode"))) calcMode = localStorage.getItem("kompreno.calcMode");
 } catch {}
 const calcTools = {};
 let calcP = null; // grafični kalkulator
@@ -2601,7 +2634,7 @@ function graphCalc() {
       locale,
       api,
       toast: (m) => toast(m, "check"),
-      storageKey: () => `stemmind.graph.${state.student?.id ?? 0}`,
+      storageKey: () => `kompreno.graph.${state.student?.id ?? 0}`,
       studentId: () => state.student?.id,
       askTutor: (text) => {
         closeCalcOverlay();
@@ -2636,7 +2669,7 @@ function calcTool(mode) {
   calcTools[mode] ||= (mode === "sci" ? import("./graph/sci.js") : import("./graph/tools.js")).then((m) => {
     const host = document.createElement("div");
     const base = { t, icon, locale, onInsert: insertIntoCalc };
-    if (mode === "sci") return m.createScientific(host, { ...base, storageKey: () => `stemmind.sci.${state.student?.id ?? 0}` });
+    if (mode === "sci") return m.createScientific(host, { ...base, storageKey: () => `kompreno.sci.${state.student?.id ?? 0}` });
     if (mode === "tools") return m.createTools(host, { ...base, subject: calcSubject });
     if (mode === "pse") return m.createPse(host, { ...base, lang: currentLang });
     return m.createFormulas(host, { ...base, api, renderRich, bookKey: formulaBook });
@@ -2648,7 +2681,7 @@ async function setCalcMode(mode) {
   if (!CALC_MODES.includes(mode)) mode = "sci";
   calcMode = mode;
   try {
-    localStorage.setItem("stemmind.calcMode", mode);
+    localStorage.setItem("kompreno.calcMode", mode);
   } catch {}
   document.querySelectorAll(".calc-modes [data-calc-mode]").forEach((b) => {
     b.classList.toggle("active", b.dataset.calcMode === mode);
@@ -2734,7 +2767,7 @@ async function addGraphButton(bubble, text) {
 }
 
 // Za samodejne preizkuse v brskalniku.
-window.stemmind = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay, openZbirke };
+window.kompreno = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay, openZbirke };
 
 initFlashcards({ api, renderRich, escapeHtml, toast, showView, getStudent: () => state.student, onDue: setCardsDue });
 
