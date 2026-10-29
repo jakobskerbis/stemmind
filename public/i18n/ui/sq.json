@@ -469,6 +469,8 @@
   "exam.startMock": "Fillo provimin prove",
   "exam.historyEmpty": "Këtu do të shfaqen rezultatet e provimeve të tua prove.",
   "exam.topicsNote": "Zgjidh një temë dhe ushtrohu vetëm me të. Pyetjet e provimit janë në anglisht; tutori t'i shpjegon në gjuhën tënde.",
+  "exam.topicsPick": "Zgjidh një temë dhe ushtro vetëm atë.",
+  "exam.national": "Provimet kombëtare (NPZ, Matura)",
   "exam.finish": "Përfundo provimin",
   "exam.confirmFinish": "Ta përfundosh provimin tani? Pyetjet pa përgjigje nuk sjellin pikë.",
   "exam.scaled": "Rezultati në shkallën e provimit: rreth <b>{value}</b> ({min}–{max})",

@@ -469,6 +469,8 @@
   "exam.startMock": "Próbavizsga indítása",
   "exam.historyEmpty": "A próbavizsgáid eredményei itt jelennek meg.",
   "exam.topicsNote": "Válassz egy témát, és csak azt gyakorold. A vizsgafeladatok angolul vannak; a tanár a saját nyelveden magyarázza el őket.",
+  "exam.topicsPick": "Válassz egy témát, és csak azt gyakorold.",
+  "exam.national": "Országos vizsgák (NPZ, érettségi)",
   "exam.finish": "Vizsga befejezése",
   "exam.confirmFinish": "Befejezed most a vizsgát? A megválaszolatlan kérdések nem érnek pontot.",
   "exam.scaled": "Eredmény a vizsga skáláján: kb. <b>{value}</b> ({min}–{max})",

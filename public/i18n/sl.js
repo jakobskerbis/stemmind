@@ -712,6 +712,8 @@ export default {
   "exam.startMock": "Začni poskusni izpit",
   "exam.historyEmpty": "Rezultati tvojih poskusnih izpitov se bodo pokazali tukaj.",
   "exam.topicsNote": "Izberi temo in vadi samo njo. Izpitne naloge so v angleščini, inštruktor ti jih razloži v tvojem jeziku.",
+  "exam.topicsPick": "Izberi temo in vadi samo njo.",
+  "exam.national": "NPZ in matura",
   "exam.finish": "Končaj izpit",
   "exam.confirmFinish": "Res končaš izpit? Vprašanja brez odgovora ne prinesejo točk.",
   "exam.scaled": "Ocena na lestvici izpita: približno <b>{value}</b> ({min}–{max})",
