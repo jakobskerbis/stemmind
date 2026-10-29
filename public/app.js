@@ -6,7 +6,8 @@ import { systemForCountry, isRegional, SCHOOL_SYSTEMS } from "./regions.js";
 import { mountLanguageCard } from "./language.js";
 
 hydrateIcons();
-import { initAccount, accountsOn, openAddChild } from "./account.js";
+import { initAccount, accountsOn, openAddChild, logout } from "./account.js";
+import { initProfileMenu, refreshProfileButton } from "./profile-menu.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
@@ -362,9 +363,24 @@ async function selectStudent(id) {
   clearLevelCard();
   state.symbols?.refresh();
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
+  refreshProfileButton();
   refreshXp();
 }
 $("#student-select").addEventListener("change", (e) => selectStudent(e.target.value));
+
+// Klik na ime zgoraj desno: meni profila (menjava, nov profil, nastavitve, račun, odjava).
+initProfileMenu({
+  getState: () => state,
+  showView,
+  escapeHtml,
+  accountsOn,
+  logout,
+  describe: (s) => {
+    const st = s.settings || {};
+    const program = isUni(st) ? programsCache().find((p) => p.id === st.study_program)?.label : null;
+    return [program || SUBJECT_NAMES[st.subject], levelLabel(st.curriculum_level)].filter(Boolean).join(" · ");
+  },
+});
 
 // ---------- pogovori ----------
 
@@ -835,6 +851,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
   syncCompetitionTab();
   applyLite();
   $("#student-select").options[$("#student-select").selectedIndex].textContent = updated.name;
+  refreshProfileButton();
   renderState(null);
   state.symbols?.refresh();
   if (levelChanged(before, updated.settings)) state.pathKey = null;
