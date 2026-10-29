@@ -115,6 +115,7 @@ export class Usage {
   }
   summary() {
     const month = "u.created_at >= date('now','start of month')";
+    const today = "date(u.created_at) = date('now')";
     const rows = this.db
       .prepare(
         `SELECT s.id, s.name, COUNT(CASE WHEN u.kind NOT IN ('reuse','hint') THEN 1 END) AS calls,
@@ -122,7 +123,10 @@ export class Usage {
                 COUNT(CASE WHEN u.model LIKE '%opus%' OR u.model LIKE '%sonnet%' OR u.model LIKE '%fable%' THEN 1 END) AS deep_calls,
                 COALESCE(SUM(u.input_tokens),0) AS input_tokens,
                 COALESCE(SUM(u.output_tokens),0) AS output_tokens, COALESCE(SUM(u.cache_read_tokens),0) AS cache_read_tokens,
-                COALESCE(SUM(u.cost_usd),0) AS cost_usd
+                COALESCE(SUM(u.cost_usd),0) AS cost_usd,
+                COUNT(CASE WHEN ${today} AND u.kind NOT IN ('reuse','hint') THEN 1 END) AS today_calls,
+                COUNT(CASE WHEN ${today} AND u.kind IN ('reuse','hint') THEN 1 END) AS today_saved,
+                COALESCE(SUM(CASE WHEN ${today} THEN u.cost_usd END),0) AS today_usd
          FROM students s LEFT JOIN usage u ON u.student_id = s.id AND ${month}
          GROUP BY s.id ORDER BY cost_usd DESC`,
       )
@@ -143,7 +147,13 @@ export class Usage {
     const calls = byModel.filter((m) => m.kind !== "reuse" && m.kind !== "hint").reduce((a, m) => a + m.calls, 0);
     const saved = byModel.filter((m) => m.kind === "reuse" || m.kind === "hint").reduce((a, m) => a + m.calls, 0);
     const r4 = (x) => Math.round(x * 10000) / 10000;
+    const todayUsd = rows.reduce((a, r) => a + r.today_usd, 0);
     return {
+      today_usd: todayUsd,
+      today_eur: r4(todayUsd * eur),
+      today_calls: rows.reduce((a, r) => a + r.today_calls, 0),
+      today_saved: rows.reduce((a, r) => a + r.today_saved, 0),
+      month_calls: calls,
       month_usd: total,
       month_eur: r4(total * eur),
       eur_per_usd: eur,
@@ -160,7 +170,13 @@ export class Usage {
         daily_deep: LIMITS.dailyDeep() || null,
       },
       by_model: byModel.map((m) => ({ ...m, cost_eur: r4(m.cost_usd * eur) })),
-      students: rows.map((r) => ({ ...r, cost_eur: r4(r.cost_usd * eur) })),
+      students: rows.map((r) => ({
+        ...r,
+        cost_eur: r4(r.cost_usd * eur),
+        today_eur: r4(r.today_usd * eur),
+        // Kako blizu mesečne meje je učenec (100 = inštruktor počaka do naslednjega meseca).
+        limit_pct: LIMITS.studentMonthlyUsd() ? Math.round((100 * r.cost_usd) / LIMITS.studentMonthlyUsd()) : null,
+      })),
     };
   }
   // Za starše: poraba otroka ta mesec kot delež mesečne omejitve (brez zneskov).

@@ -19,6 +19,8 @@ import { offlineApi, refreshPack, syncOffline, packTaskCount, pendingCount } fro
 import { initFeedback, showFeedback } from "./feedback.js";
 import { initInstall, installSheetOpen, closeInstallSheet } from "./install.js";
 import { initFlashcards, showFlashcards, addCardsNote } from "./flashcards.js";
+import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
+import { initFullscreen } from "./fullscreen.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -125,6 +127,7 @@ function showView(name) {
   document.querySelectorAll(".view").forEach((v) => (v.hidden = v.id !== `view-${name}`));
   if (name === "settings") {
     fillSettingsForm();
+    $("#settings-account").hidden = $("#account-tab").hidden;
     loadUsage();
   }
   if (name === "progress") loadProgress();
@@ -228,9 +231,21 @@ function renderMe() {
 document.addEventListener("click", (e) => {
   if (e.target.closest(".me-back")) showView("me");
 });
-document.querySelectorAll("#view-me [data-go]").forEach((b) =>
+document.querySelectorAll("#view-me [data-go], #settings-account [data-go]").forEach((b) =>
   b.addEventListener("click", () => (b.dataset.go === "account" ? $("#account-tab").click() : showView(b.dataset.go))),
 );
+// Klik na kartico s profilom: Nastavitve, na mestu šole in letnika (pod njimi je povezava na Račun).
+$("#me-head")?.addEventListener("click", () => {
+  showView("settings");
+  const el = $("#settings-form .level-field") || $("#settings-form");
+  requestAnimationFrame(() => {
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const card = $("#settings-form");
+    card?.classList.remove("flash-target");
+    void card?.offsetWidth;
+    card?.classList.add("flash-target");
+  });
+});
 
 // ---------- učenci ----------
 
@@ -536,6 +551,7 @@ async function send(text, { deep = false } = {}) {
       if (doneData?.text) addGraphButton(bubble, doneData.text);
       if (cardsData) addCardsNote(bubble, cardsData);
       if (state.pacer === pacer) state.pacer = null;
+      refreshUsageMeter();
     });
     await loadConversations();
   } catch (err) {
@@ -2115,7 +2131,12 @@ function countUp(el, ms = 900) {
 // ---------- poraba in lestvica ----------
 
 async function loadUsage() {
-  const u = await api("/api/usage");
+  // Poraba je samo za skrbnika: strežnik drugim vrne 403, kartica ostane skrita.
+  const card = $("#usage")?.closest(".card");
+  const res = await fetch("/api/usage").catch(() => null);
+  if (card) card.hidden = !res?.ok;
+  if (!res?.ok) return;
+  const u = await res.json();
   const eur = (x) => (x || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 3 });
   const L = u.limits || {};
   $("#usage").innerHTML = `<p>${t("usage.total", { usd: u.month_usd.toFixed(2) })}${t("usage.eur", { eur: eur(u.month_eur) })}${u.budget_usd ? t("usage.budget", { budget: u.budget_usd }) : ""}${
@@ -2376,6 +2397,7 @@ initTextbook({
 const START_VIEW = ["chat", "textbook", "graph"].find((v) => v === new URLSearchParams(location.search).get("pogled"));
 if (new URLSearchParams(location.search).has("pogled")) history.replaceState(null, "", location.pathname);
 initInstall({ toast, onSheet: (open) => (open ? overlayOpened() : overlayClosed()) });
+initFullscreen();
 
 (async () => {
   const cfg = await api("/api/config");
@@ -2385,6 +2407,8 @@ initInstall({ toast, onSheet: (open) => (open ? overlayOpened() : overlayClosed(
   let first = true;
   const start = async (o) => {
     await loadStudents();
+    if (first) initUsageMeter({ escapeHtml, showView, toast });
+    else refreshUsageMeter();
     if (!o?.keepView) showView("path");
     if (first && START_VIEW && !o?.keepView) showView(START_VIEW);
     first = false;
