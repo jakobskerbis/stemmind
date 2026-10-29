@@ -662,6 +662,9 @@ test("guest: use without registration, free tier, no e-mail", async () => {
     const a = client();
     assert.equal((await a("/api/account/status")).body.guest_mode, true);
     assert.equal((await a("/api/auth/guest", { method: "POST", body: {} })).status, 400); // brez strinjanja z zasebnostjo
+    // Naprava, zavrnjena pri registraciji zaradi starosti, tudi brez računa ne more naprej.
+    const young = await client()("/api/auth/guest", { method: "POST", body: { accept_privacy: true }, headers: { cookie: "kompreno_age=1" } });
+    assert.equal(young.status, 403);
     const g = await guestStart(a);
     assert.equal(g.status, 201);
     assert.equal(g.body.parent.guest, true);
@@ -707,6 +710,14 @@ test("guest: clearing cookies or deleting the profile does not give a new free a
       const convB = (await b(`/api/students/${kidB.id}/conversations`, { method: "POST" })).body;
       assert.equal((await ask(b, convB, "1")).status, 429);
 
+      // Izbris pogovora kvote ne povrne.
+      assert.equal((await a(`/api/conversations/${conv.id}`, { method: "DELETE" })).status, 200);
+      const conv2 = (await a(`/api/students/${kid.id}/conversations`, { method: "POST" })).body;
+      assert.equal((await ask(a, conv2, "4")).status, 429);
+      // Nadgradnja brez potrditve e-naslova kvote ne povrne.
+      const up = await b("/api/auth/upgrade", { method: "POST", body: { email: "lazni@primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
+      assert.equal(up.status, 200);
+      assert.equal((await ask(b, convB, "x")).status, 429);
       // Tudi izbris profila ali vseh podatkov kvote ne povrne.
       assert.equal((await a(`/api/students/${kid.id}`, { method: "DELETE" })).status, 200);
       assert.equal((await a("/api/account", { method: "DELETE", body: {} })).status, 200);
@@ -744,11 +755,13 @@ test("guest: monthly AI spend counts for the whole network, also after deletion"
   }
 });
 
-test("guest: limited number of new guests per network per day", async () => {
+test("guest: limited number of new guests per network per day (deleted guests count too)", async () => {
   process.env.KOMPRENO_GUEST_PER_DAY = "2";
   try {
     await withServer(async ({ client }) => {
-      assert.equal((await guestStart(client())).status, 201);
+      const first = client();
+      assert.equal((await guestStart(first)).status, 201);
+      assert.equal((await first("/api/account", { method: "DELETE", body: {} })).status, 200);
       assert.equal((await guestStart(client())).status, 201);
       const third = await guestStart(client());
       assert.equal(third.status, 429);
@@ -774,11 +787,13 @@ test("guest: upgrade to an account keeps the profile and progress", async () => 
     const kids = (await a("/api/students")).body;
     assert.deepEqual(kids.map((k) => k.id), [kid.id]);
     assert.equal((await a(`/api/conversations/${conv.id}`)).status, 200);
-    const acc = (await a("/api/account")).body;
-    assert.equal(acc.access.tier, "trial");
+    // Do potrditve e-naslova ostane brezplačni paket (ni preizkusa, ni aktivacijske kode).
+    assert.equal((await a("/api/account")).body.access.tier, "free");
+    assert.equal((await a("/api/account/promo", { method: "POST", body: { code: "KOMPRENO100" } })).status, 403);
     assert.equal((await a("/api/auth/upgrade", { method: "POST", body: { email: "x@primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } })).status, 400);
-    // E-naslov potrdi kot pri registraciji; prijava z geslom deluje.
+    // E-naslov potrdi kot pri registraciji: šele nato 7-dnevni preizkus; prijava z geslom deluje.
     await a(verifyLink(calls));
+    assert.equal((await a("/api/account")).body.access.tier, "trial");
     const b = client();
     assert.equal((await b("/api/auth/login", { method: "POST", body: { email: "nika@primer.si", password: "geslo1234" } })).status, 200);
     assert.equal((await b("/api/students")).body.length, 1);
@@ -792,7 +807,7 @@ test("guest: upgrade to an account keeps the profile and progress", async () => 
 });
 
 test("guest: logging into an existing account moves the guest profile when there is room", async () => {
-  await withServer(async ({ client, calls }) => {
+  await withServer(async ({ client, calls, store }) => {
     const owner = client();
     await registerVerified(owner, calls, "lastnik@primer.si");
     const a = client();
@@ -802,6 +817,18 @@ test("guest: logging into an existing account moves the guest profile when there
     assert.equal(r.status, 200);
     assert.equal(r.body.guest_moved, 1);
     assert.deepEqual((await owner("/api/students")).body.map((k) => k.id), [kid.id]);
+    // Ni prostora v paketu (preizkus je potekel: 1 profil): prijava ne uspe, profil gosta ostane.
+    store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z' WHERE email = 'lastnik@primer.si'").run();
+    const b = client();
+    await guestStart(b);
+    await guestKid(b, "Ana");
+    const full = await b("/api/auth/login", { method: "POST", body: { email: "lastnik@primer.si", password: "geslo1234" } });
+    assert.equal(full.status, 409);
+    assert.equal(full.body.guest_conflict, true);
+    assert.equal((await b("/api/students")).body.length, 1);
+    // Gost ne more do plačil ali aktivacijske kode.
+    assert.equal((await b("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "month" } })).status, 403);
+    assert.equal((await b("/api/account/promo", { method: "POST", body: { code: "KOMPRENO100" } })).status, 403);
   });
 });
 

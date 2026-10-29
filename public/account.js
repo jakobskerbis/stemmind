@@ -153,10 +153,11 @@ function watchGuestTrigger() {
   document.addEventListener(
     "click",
     async (e) => {
-      if (!e.target.closest(".brand") || !status?.guest_mode || status.logged_in || !$("#auth-form")) return;
+      if (!e.target.closest(".brand") || !document.body.classList.contains("auth-mode")) return;
+      // Na zaslonih prijave logotip ne odpira učne poti (ta brez profila ne deluje).
       e.preventDefault();
       e.stopImmediatePropagation();
-      if (guestStarting) return;
+      if (!status?.guest_mode || status.logged_in || !$("#auth-form") || guestStarting) return;
       guestStarting = true;
       try {
         await api("/api/auth/guest", { method: "POST", body: { accept_privacy: true, country: deviceRegion() } });
@@ -571,14 +572,12 @@ function promoBox(acc, paid) {
 // ---------- uporaba brez računa (gost) ----------
 
 function upgradeForm() {
-  const koda = store.get("kompreno_koda") || "";
   return `
     <form id="upgrade-form" class="form">
       <label>${esc(t("guest.name"))} <input name="name" maxlength="60" autocomplete="name"></label>
       <label>${esc(t("guest.email"))} <input name="email" type="email" required autocomplete="email"></label>
       <label>${esc(t("guest.password"))} <input name="password" type="password" required minlength="8" autocomplete="new-password"></label>
       <label>${esc(t("guest.birth"))} <input name="birth_date" type="date" required min="1900-01-01" max="${new Date().toISOString().slice(0, 10)}" autocomplete="bday"></label>
-      <label>${esc(t("guest.promo"))} <input name="promo_code" maxlength="40" autocapitalize="characters" value="${esc(koda)}"></label>
       <label class="check"><input type="checkbox" name="accept_privacy" required>
         <span>${esc(t("guest.accept"))} <a href="/zasebnost.html" target="_blank">${esc(t("guest.privacy"))}</a></span></label>
       <p class="form-error" hidden></p>
@@ -592,7 +591,7 @@ function guestLoginForm() {
       <form id="guest-login-form" class="form">
         <p class="muted">${esc(t("guest.loginNote"))}</p>
         <label>${esc(t("guest.email"))} <input name="email" type="email" required autocomplete="email"></label>
-        <label>${esc(t("guest.password"))} <input name="password" type="password" required autocomplete="current-password"></label>
+        <label>${esc(t("guest.loginPassword"))} <input name="password" type="password" required autocomplete="current-password"></label>
         <p class="form-error" hidden></p>
         <button type="submit">${esc(t("guest.loginBtn"))}</button>
       </form>
@@ -608,27 +607,37 @@ function bindGuestForms(after) {
     try {
       const r = await api("/api/auth/upgrade", {
         method: "POST",
-        body: { name: f.name.value, email: f.email.value, password: f.password.value, birth_date: f.birth_date.value, promo_code: f.promo_code.value, accept_privacy: f.accept_privacy.checked, country: deviceRegion() },
+        body: { name: f.name.value, email: f.email.value, password: f.password.value, birth_date: f.birth_date.value, accept_privacy: f.accept_privacy.checked, country: deviceRegion() },
       });
-      store.set("kompreno_koda", null);
       if (r.dev_verify_url) store.set("kompreno_dev_verify", r.dev_verify_url);
-      toast(r.promo_error ? `${t("guest.created")} ${r.promo_error}` : t("guest.created"));
+      toast(t("guest.created"));
       await after();
     } catch (err) {
       btn.disabled = false;
-      if (err.data?.under_age) err.message = `${err.message} ${t("guest.parentHint")}`;
       showError(f, err);
+      if (err.data?.under_age) {
+        errorBox(f).append(" ", t("guest.parentHint"), " ", Object.assign(document.createElement("a"), { href: "/starsi.html", target: "_blank", textContent: t("guest.parentLink") }));
+      }
+      if (err.data?.exists) {
+        const login = $("#guest-login-form");
+        login.closest("details").open = true;
+        login.email.value = f.email.value;
+        login.password.focus();
+      }
     }
   });
   $("#guest-login-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const f = e.target;
+    const btn = $("button[type=submit]", f);
+    btn.disabled = true;
     try {
-      const r = await api("/api/auth/login", { method: "POST", body: { email: f.email.value, password: f.password.value } });
+      await api("/api/auth/login", { method: "POST", body: { email: f.email.value, password: f.password.value } });
       store.set("studentId", null);
-      toast(r.guest_left ? t("guest.notMoved") : t("guest.moved"));
-      setTimeout(() => location.reload(), 1200);
+      toast(t("guest.moved"));
+      setTimeout(() => location.replace("/"), 1200);
     } catch (err) {
+      btn.disabled = false;
       showError(f, err);
     }
   });
@@ -661,7 +670,7 @@ function renderGuestAccount(view, acc) {
     try {
       await api("/api/account", { method: "DELETE", body: {} });
       store.set("studentId", null);
-      location.reload();
+      location.replace("/");
     } catch (err) {
       toast(err.message);
     }
@@ -683,6 +692,10 @@ async function renderAccount() {
   try {
     acc = await api("/api/account");
   } catch (err) {
+    if (err.data?.guest_off) {
+      status = await api("/api/account/status");
+      return route();
+    }
     if (err.status === 401) return logout();
     view.innerHTML = `<p class="form-error">${esc(err.message)}</p>`;
     return;
@@ -833,7 +846,7 @@ async function renderAccount() {
 }
 
 export async function logout() {
-  if (status?.parent?.guest && status.guest_mode && !confirm(t("guest.logoutConfirm"))) return;
+  if (status?.parent?.guest && !confirm(t("guest.logoutConfirm"))) return;
   await api("/api/auth/logout", { method: "POST" }).catch(() => {});
   store.set("studentId", null);
   location.href = "/";

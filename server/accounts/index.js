@@ -155,6 +155,7 @@ export function mountAccounts(app, store, opts = {}) {
   }
 
   async function sendMail(to, msg) {
+    if (/@gost\.invalid$/i.test(String(to))) return false; // gost nima e-naslova
     try {
       await mailer.send({ to, ...msg });
       return true;
@@ -179,6 +180,7 @@ export function mountAccounts(app, store, opts = {}) {
     if (PUBLIC.some((re) => re.test(req.path))) return next();
     const p = req.parent;
     if (!p) return res.status(401).json({ error: "Prijavi se.", login: true });
+    if (p.is_guest && /^\/billing\//.test(req.path)) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
     if (p.is_guest && !guestOn) return res.status(401).json({ error: "Uporaba brez računa ni več mogoča. Ustvari račun, da obdržiš napredek.", login: true, guest_off: true });
     // Porabo AI vidi samo skrbnik ali kdor aplikacijo odpre na računalniku, kjer teče strežnik.
     if (/^\/usage(\/|$)/.test(req.path) && !p.is_admin && !isLocalRequest(req)) return res.status(403).json({ error: "Samo za skrbnika." });
@@ -201,6 +203,8 @@ export function mountAccounts(app, store, opts = {}) {
       if (own && req.method === "DELETE") {
         devices.logChange(p.id, "deleted", studentId);
         guests.snapshot(studentId);
+      } else if (c && req.method === "DELETE" && /^\/conversations\/\d+\/?$/.test(req.path)) {
+        guests.snapshotConversation(Number(c[1]), studentId);
       } else {
         const takeover = req.method === "POST" && req.path === `/students/${studentId}/claim`;
         const r = devices.use(studentId, req.deviceId, deviceLabel(req.get("user-agent")), { takeover });
@@ -269,7 +273,7 @@ export function mountAccounts(app, store, opts = {}) {
     const { email, password } = v;
 
     const refCode = String(req.body?.referral_code || "").trim().toUpperCase();
-    const referrer = refCode ? db.prepare("SELECT id FROM parents WHERE referral_code = ?").get(refCode) : null;
+    const referrer = refCode ? db.prepare("SELECT id FROM parents WHERE referral_code = ? AND is_guest = 0").get(refCode) : null;
     const token = randomToken();
     let code = referralCode();
     while (db.prepare("SELECT 1 FROM parents WHERE referral_code = ?").get(code)) code = referralCode();
@@ -306,9 +310,12 @@ export function mountAccounts(app, store, opts = {}) {
     if (!guestOn) return res.status(404).json({ error: "Uporaba brez računa ni vklopljena." });
     if (req.parent) return res.json({ parent: publicParent(req.parent) });
     if (req.body?.accept_privacy !== true) return res.status(400).json({ error: "Potrebno je strinjanje z obvestilom o varstvu podatkov." });
+    // Naprava, ki je bila zavrnjena pri registraciji zaradi starosti, tudi brez računa ne more naprej.
+    if (readCookie(req, AGE_COOKIE) === "1" || readCookie(req, LEGACY_AGE_COOKIE) === "1") {
+      return res.status(403).json({ error: "Za mlajše učence račun ustvari starš. Pokaži mu povezavo za starše.", under_age: true });
+    }
     const net = guestNet(req);
-    const recent = db.prepare("SELECT COUNT(*) AS n FROM parents WHERE is_guest = 1 AND guest_net = ? AND created_at >= datetime('now','-1 day')").get(net).n;
-    if (recent >= guestPerDay()) {
+    if (guests.createdToday(net) >= guestPerDay()) {
       return res.status(429).json({ error: "S tega omrežja je danes nastalo že preveč profilov brez računa. Ustvari račun ali poskusi jutri.", guest_limit: true });
     }
     let code = referralCode();
@@ -320,13 +327,15 @@ export function mountAccounts(app, store, opts = {}) {
       )
       .run(`gost-${randomToken(12)}@gost.invalid`, hashPassword(randomToken()), PRIVACY_VERSION, randomToken(18), code, net);
     const id = Number(r.lastInsertRowid);
+    guests.logCreated(net);
     const country = String(req.headers["cf-ipcountry"] || req.body?.country || "").toUpperCase();
     if (/^[A-Z]{2}$/.test(country)) db.prepare("UPDATE parents SET country = ? WHERE id = ?").run(country, id);
     setSessionCookie(req, res, sessions.create(id, GUEST_SESSION_DAYS));
     res.status(201).json({ parent: publicParent(getParent(id)) });
   });
 
-  // Gost ustvari račun: isti profili in napredek, dobi e-naslov, geslo in 7-dnevni preizkus.
+  // Gost ustvari račun: isti profili in napredek, dobi e-naslov in geslo. Do potrditve e-naslova
+  // ostane v kvoti omrežja (guest_net); 7-dnevni preizkus dobi šele ob potrditvi (/api/auth/verify).
   app.post("/api/auth/upgrade", json, async (req, res) => {
     const p = req.parent;
     if (!p) return res.status(401).json({ error: "Prijavi se.", login: true });
@@ -337,32 +346,29 @@ export function mountAccounts(app, store, opts = {}) {
     const isAdmin = adminEmails.includes(v.email) ? 1 : 0;
     db.prepare(
       `UPDATE parents SET email = ?, password_hash = ?, name = ?, is_admin = ?, verify_token_hash = ?, privacy_version = ?,
-         privacy_accepted_at = datetime('now'), trial_ends_at = ?, birth_date = ?, weekly_email = 1, is_guest = 0, guest_net = NULL WHERE id = ?`,
-    ).run(v.email, hashPassword(v.password), cleanText(req.body?.name, 60), isAdmin, sha256(token), PRIVACY_VERSION, isoIn(TRIAL_DAYS), v.birthIso, p.id);
+         privacy_accepted_at = datetime('now'), birth_date = ?, weekly_email = 1, is_guest = 0 WHERE id = ?`,
+    ).run(v.email, hashPassword(v.password), cleanText(req.body?.name, 60), isAdmin, sha256(token), PRIVACY_VERSION, v.birthIso, p.id);
     db.prepare("UPDATE consents SET parent_email = ? WHERE parent_id = ?").run(v.email, p.id);
     if (isAdmin) db.prepare("UPDATE students SET parent_id = ? WHERE parent_id IS NULL").run(p.id);
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(v.email, verifyEmail(url));
-    const promoRaw = String(req.body?.promo_code || "").trim();
-    const promoResult = promoRaw ? promo.redeem(getParent(p.id), promoRaw) : null;
     sessions.destroyAll(p.id);
     setSessionCookie(req, res, sessions.create(p.id));
-    res.json({
-      parent: publicParent(getParent(p.id)),
-      ...(promoResult?.ok ? { promo_until: promoResult.until } : promoResult ? { promo_error: promoResult.error } : {}),
-      ...(mailer.enabled ? {} : { dev_verify_url: url }),
-    });
+    res.json({ parent: publicParent(getParent(p.id)), ...(mailer.enabled ? {} : { dev_verify_url: url }) });
   });
 
   // Gost se prijavi v obstoječi račun: njegove profile prenesemo, če je v paketu prostor.
+  const canAdopt = (guest, p) => {
+    const n = childIds(guest.id).length;
+    const room = Math.min(MAX_CHILDREN, accessOf(p).seats || 1) - childIds(p.id).length;
+    return !n || (n <= room && !(isMinor(p) && childIds(p.id).length));
+  };
   function adoptGuest(guest, p) {
     const ids = childIds(guest.id);
-    const room = Math.min(MAX_CHILDREN, accessOf(p).seats || 1) - childIds(p.id).length;
-    if (ids.length && (ids.length > room || (isMinor(p) && childIds(p.id).length))) return { moved: 0, left: ids.length };
     db.prepare("UPDATE students SET parent_id = ? WHERE parent_id = ?").run(p.id, guest.id);
     db.prepare("UPDATE consents SET parent_id = ?, parent_email = ? WHERE parent_id = ?").run(p.id, p.email, guest.id);
     db.prepare("DELETE FROM parents WHERE id = ?").run(guest.id);
-    return { moved: ids.length, left: 0 };
+    return { moved: ids.length };
   }
 
   app.get("/api/auth/verify", (req, res) => {
@@ -370,6 +376,9 @@ export function mountAccounts(app, store, opts = {}) {
     const p = token && db.prepare("SELECT id FROM parents WHERE verify_token_hash = ?").get(sha256(token));
     if (!p) return res.redirect("/?verified=0");
     update(p.id, { email_verified_at: new Date().toISOString(), verify_token_hash: null });
+    // Nekdanji gost: s potrditvijo zapusti kvoto omrežja in dobi 7-dnevni preizkus.
+    const full = getParent(p.id);
+    if (full.guest_net && !full.is_guest) update(p.id, { guest_net: null, trial_ends_at: full.trial_ends_at || isoIn(TRIAL_DAYS) });
     res.redirect("/?verified=1");
   });
 
@@ -394,10 +403,15 @@ export function mountAccounts(app, store, opts = {}) {
       throttle.fail(key);
       return res.status(401).json({ error: "Napačen e-naslov ali geslo." });
     }
+    const fromGuest = req.parent?.is_guest && req.parent.id !== p.id ? req.parent : null;
+    // Profila brez računa ne zavržemo potiho: brez prostora v paketu prijava ne uspe.
+    if (fromGuest && !canAdopt(fromGuest, p)) {
+      return res.status(409).json({ error: "Profila brez računa ni mogoče prenesti, ker v paketu tega računa ni prostora. Ustvari nov račun ali najprej izbriši podatke brez računa.", guest_conflict: true });
+    }
     throttle.reset(key);
-    const guest = req.parent?.is_guest && req.parent.id !== p.id ? adoptGuest(req.parent, p) : null;
+    const guest = fromGuest ? adoptGuest(fromGuest, p) : null;
     setSessionCookie(req, res, sessions.create(p.id));
-    res.json({ parent: publicParent(p), ...(guest ? { guest_moved: guest.moved, guest_left: guest.left } : {}) });
+    res.json({ parent: publicParent(p), ...(guest ? { guest_moved: guest.moved } : {}) });
   });
 
   app.post("/api/auth/logout", (req, res) => {
@@ -507,6 +521,8 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   app.post("/api/account/promo", json, (req, res) => {
+    if (req.parent.is_guest) return res.status(403).json({ error: "Najprej ustvari račun." });
+    if (req.parent.guest_net && !req.parent.email_verified_at) return res.status(403).json({ error: "Najprej potrdi e-naslov." });
     const key = `promo|${req.parent.id}`;
     if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
     const r = promo.redeem(req.parent, req.body?.code);
@@ -571,7 +587,6 @@ export function mountAccounts(app, store, opts = {}) {
   app.delete("/api/account", json, async (req, res) => {
     const p = req.parent;
     if (!p.is_guest && !verifyPassword(String(req.body?.password || ""), p.password_hash)) return res.status(401).json({ error: "Napačno geslo." });
-    if (p.is_guest) guests.snapshotParent(p.id);
     if (stripe.enabled && p.sub_id && PAID.has(p.sub_status)) {
       try {
         await stripe.request("DELETE", `/subscriptions/${p.sub_id}`);
@@ -580,6 +595,7 @@ export function mountAccounts(app, store, opts = {}) {
         return res.status(502).json({ error: "Naročnine ni bilo mogoče preklicati. Poskusite znova ali jo prekličite v portalu." });
       }
     }
+    guests.snapshotParent(p.id); // poraba gosta ostane šteta za omrežje
     db.prepare("DELETE FROM students WHERE parent_id = ?").run(p.id);
     db.prepare("DELETE FROM parents WHERE id = ?").run(p.id);
     clearSessionCookie(res);

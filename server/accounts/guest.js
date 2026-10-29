@@ -37,6 +37,9 @@ export function netKey(ip = "") {
 
 export const guestNet = (req) => sha256(`kompreno-guest-net|${netKey(req.ip || req.socket?.remoteAddress)}`);
 
+// Gost ali nekdanji gost, ki še ni potrdil e-naslova: šteje se v kvoto omrežja.
+const ON_NET = "(p.is_guest = 1 OR (p.guest_net IS NOT NULL AND p.email_verified_at IS NULL))";
+
 export class GuestQuota {
   constructor(db) {
     this.db = db;
@@ -49,20 +52,33 @@ export class GuestQuota {
       usd REAL NOT NULL DEFAULT 0,
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
-    CREATE INDEX IF NOT EXISTS idx_guest_spent ON guest_spent(net, day);`);
+    CREATE INDEX IF NOT EXISTS idx_guest_spent ON guest_spent(net, day);
+    CREATE TABLE IF NOT EXISTS guest_created (
+      net TEXT NOT NULL,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_guest_created ON guest_created(net, created_at);`);
   }
 
   // Omrežje gostujočega učenca ali null, če učenec ni gost.
   netOf(studentId) {
     return (
       this.db
-        .prepare("SELECT p.guest_net AS net FROM students s JOIN parents p ON p.id = s.parent_id WHERE s.id = ? AND p.is_guest = 1")
+        .prepare(`SELECT p.guest_net AS net FROM students s JOIN parents p ON p.id = s.parent_id WHERE s.id = ? AND ${ON_NET}`)
         .get(studentId)?.net || null
     );
   }
 
   idsOnNet(net) {
-    return this.db.prepare("SELECT s.id FROM students s JOIN parents p ON p.id = s.parent_id WHERE p.is_guest = 1 AND p.guest_net = ?").all(net).map((r) => r.id);
+    return this.db.prepare(`SELECT s.id FROM students s JOIN parents p ON p.id = s.parent_id WHERE ${ON_NET} AND p.guest_net = ?`).all(net).map((r) => r.id);
+  }
+
+  // Novi gostje z omrežja v zadnjih 24 urah (tudi že izbrisani ali nadgrajeni).
+  createdToday(net) {
+    return this.db.prepare("SELECT COUNT(*) AS n FROM guest_created WHERE net = ? AND created_at >= datetime('now','-1 day')").get(net).n;
+  }
+  logCreated(net) {
+    this.db.prepare("INSERT INTO guest_created (net) VALUES (?)").run(net);
   }
 
   questionsToday(ids, net) {
@@ -99,6 +115,16 @@ export class GuestQuota {
     if (q || usd) this.db.prepare("INSERT INTO guest_spent (net, day, questions, usd) VALUES (?, date('now'), ?, ?)").run(net, q, usd);
   }
 
+  // Pred izbrisom pogovora: današnja vprašanja v njem ostanejo šteta.
+  snapshotConversation(conversationId, studentId) {
+    const net = this.netOf(studentId);
+    if (!net) return;
+    const q = this.db
+      .prepare("SELECT COUNT(*) AS n FROM messages WHERE conversation_id = ? AND role = 'user' AND date(created_at) = date('now')")
+      .get(conversationId).n;
+    if (q) this.db.prepare("INSERT INTO guest_spent (net, day, questions, usd) VALUES (?, date('now'), ?, 0)").run(net, q);
+  }
+
   snapshotParent(parentId) {
     for (const r of this.db.prepare("SELECT id FROM students WHERE parent_id = ?").all(parentId)) this.snapshot(r.id);
   }
@@ -117,6 +143,7 @@ export class GuestQuota {
       this.db.prepare("DELETE FROM parents WHERE id = ?").run(id);
     }
     this.db.prepare("DELETE FROM guest_spent WHERE day < date('now','start of month','-1 month')").run();
+    this.db.prepare("DELETE FROM guest_created WHERE created_at < datetime('now','-2 day')").run();
     return stale.length;
   }
 }
