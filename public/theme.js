@@ -14,12 +14,15 @@
   try {
     const NOW = "evklid";
     const LEGACY = ["kompreno", "stemmind"]; // brand:legacy
-    for (const key of Object.keys(localStorage)) {
-      const old = LEGACY.find((o) => key.startsWith(o + ".") || key.startsWith(o + "_"));
-      if (!old) continue;
-      const next = NOW + key.slice(old.length);
-      if (localStorage.getItem(next) === null) localStorage.setItem(next, localStorage.getItem(key));
-      localStorage.removeItem(key);
+    // Po vrsti od najnovejšega imena: če ključ obstaja pod dvema prejšnjima imenoma, obvelja novejši.
+    const keys = Object.keys(localStorage);
+    for (const old of LEGACY) {
+      for (const key of keys) {
+        if (!key.startsWith(old + ".") && !key.startsWith(old + "_")) continue;
+        const next = NOW + key.slice(old.length);
+        if (localStorage.getItem(next) === null) localStorage.setItem(next, localStorage.getItem(key));
+        localStorage.removeItem(key);
+      }
     }
   } catch {}
 })();
