@@ -67,7 +67,7 @@ function decimalsWord(d) {
 
 function checkNumber(ans, input) {
   const p = parseNumberWithUnit(input, { dot: !!ans.dot });
-  if (!p) return { kind: "format", code: "chk.number", message: "Vpiši število (decimalno vejico lahko zapišeš z vejico)." };
+  if (!p) return { kind: "format", code: "chk.number", message: "Vpiši število (za decimalno ločilo lahko uporabiš vejico ali piko)." };
 
   // Enota
   if (ans.unit) {

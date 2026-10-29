@@ -209,7 +209,7 @@ async function renderHome() {
   if (tb.myPath === null) tb.myPath = (await ctx.api(`/api/students/${student.id}/path`).catch(() => null))?.key || "";
   // Privzeto: učbenik predmeta in ravni, ki ju učenec ima v učni poti.
   if (!tb.subject) tb.subject = program ? "PROG" : (tb.myPath || student?.settings?.subject || "MAT").split("-")[0];
-  const subjects = [...new Map(tb.books.map((b) => [b.subject, b.subject === "PROG" ? "Moj študij" : b.subjectName])).entries()];
+  const subjects = [...new Map(tb.books.map((b) => [b.subject, b.subject === "PROG" ? t("tbk.myStudy") : b.subjectName])).entries()];
   if (!subjects.some(([k]) => k === tb.subject)) tb.subject = subjects[0]?.[0];
   const books = tb.books.filter((b) => b.subject === tb.subject);
   if (!books.some((b) => b.key === tb.book)) {
@@ -217,30 +217,30 @@ async function renderHome() {
     tb.book = (books.find((b) => mine[0] === b.subject && mine[1] === b.school) || books[0])?.key || null;
   }
   const book = books.find((b) => b.key === tb.book);
-  const SHORT = { OS: "Osnovna šola", SS: "Srednja šola", TEK: "Tekmovanja" };
+  const SHORT = { OS: t("lp.os"), SS: t("lp.ss"), TEK: t("nav.competition") };
   const levelName = (b) => SHORT[b.school] || b.schoolName.charAt(0).toUpperCase() + b.schoolName.slice(1);
   box.innerHTML = `
     <div class="tb-head">
-      <h1>${ic("book-open")}Učbenik</h1>
-      <p class="muted">${tb.browse ? "Za vsak predmet svoj učbenik: razlage" : "Razlage"} vseh tem, rešeni primeri in poskusi, ki jih lahko premikaš sam.</p>
+      <h1>${ic("book-open")}${esc(t("nav.textbook"))}</h1>
+      <p class="muted">${esc(t(tb.browse ? "tbk.introBrowse" : "tbk.intro"))}</p>
       <div class="tb-search">
-        <input id="tb-q" type="search" placeholder="Išči pojem, zakon ali poskus …" value="${esc(tb.query)}" aria-label="Išči po učbeniku" autocomplete="off">
+        <input id="tb-q" type="search" placeholder="${esc(t("tbk.searchPh"))}" value="${esc(tb.query)}" aria-label="${esc(t("tbk.searchAria"))}" autocomplete="off">
       </div>
-      ${tb.browse ? "" : `<button type="button" class="text-btn tb-browse" id="tb-browse">${ic("library")}Drugi učbeniki</button>`}
+      ${tb.browse ? "" : `<button type="button" class="text-btn tb-browse" id="tb-browse">${ic("library")}${esc(t("tbk.browse"))}</button>`}
       <div class="tb-filters"${tb.browse ? "" : " hidden"}>
-        <div class="seg" role="tablist" aria-label="Predmet">${subjects
+        <div class="seg" role="tablist" aria-label="${esc(t("set.subject"))}">${subjects
           .map(([k, v]) => `<button type="button" role="tab" data-subj="${esc(k)}" class="${k === tb.subject ? "active" : ""}" aria-selected="${k === tb.subject}">${esc(v)}</button>`)
           .join("")}</div>
-        ${books.length > 1 ? `<div class="seg" role="tablist" aria-label="Raven">${books
+        ${books.length > 1 ? `<div class="seg" role="tablist" aria-label="${esc(t("tbk.level"))}">${books
           .map((b) => `<button type="button" role="tab" data-book="${esc(b.key)}" class="${b.key === tb.book ? "active" : ""}" aria-selected="${b.key === tb.book}">${esc(levelName(b))}</button>`)
           .join("")}</div>` : ""}
       </div>
       ${book ? `<div class="tb-book card">
-        <div><p class="eyebrow">Učbenik</p><h2>${esc(book.subjectName)} · ${esc(book.schoolName)}</h2>
-        <p class="muted">${book.lessons} od ${book.topics} lekcij${book.lessons < book.topics ? ", ostale nastajajo" : ""}</p></div>
+        <div><p class="eyebrow">${esc(t("nav.textbook"))}</p><h2>${esc(book.subjectName)} · ${esc(book.schoolName)}</h2>
+        <p class="muted">${esc(t(book.lessons < book.topics ? "tbk.countMore" : "tbk.count", { done: book.lessons, total: book.topics }))}</p></div>
         <div class="tb-book-actions">
-          <a class="btn-primary tb-book-pdf" href="/ucbenik/${esc(book.key)}#natisni" target="_blank" rel="noopener">${ic("download")}Celoten učbenik (PDF)</a>
-          ${book.formulas ? `<a class="btn-secondary tb-book-pdf" href="/ucbenik/${esc(book.key)}/formule#natisni" target="_blank" rel="noopener">${ic("sigma")}Formule in konstante (PDF)</a>` : ""}
+          <a class="btn-primary tb-book-pdf" href="/ucbenik/${esc(book.key)}#natisni" target="_blank" rel="noopener">${ic("download")}${esc(t("tbk.pdfAll"))}</a>
+          ${book.formulas ? `<a class="btn-secondary tb-book-pdf" href="/ucbenik/${esc(book.key)}/formule#natisni" target="_blank" rel="noopener">${ic("sigma")}${esc(t("tbk.pdfFormulas"))}</a>` : ""}
         </div>
         ${book.subject === "PROG" ? `<div class="seg tb-mode" role="tablist" aria-label="${esc(t("refs.title"))}">
           <button type="button" role="tab" data-mode="lessons" class="${tb.mode !== "refs" ? "active" : ""}" aria-selected="${tb.mode !== "refs"}">${ic("book-open")}${esc(t("refs.tabLessons"))}</button>
@@ -297,7 +297,7 @@ async function renderBody() {
   if (tb.query.length >= 2) {
     const hits = await ctx.api(`/api/textbook/search?q=${encodeURIComponent(tb.query)}&system=${encodeURIComponent(tb.system || "SI")}`);
     body.innerHTML = hits.length
-      ? `<p class="muted">Zadetki za »${esc(tb.query)}«</p><ul class="tb-list">${hits
+      ? `<p class="muted">${esc(t("tbk.hits", { q: tb.query }))}</p><ul class="tb-list">${hits
           .map(
             (h) => `<li><button type="button" class="tb-topic" data-lesson="${esc(h.id)}">
               <span class="tb-name">${esc(h.name)}</span>
@@ -306,11 +306,11 @@ async function renderBody() {
             </button></li>`,
           )
           .join("")}</ul>`
-      : `<div class="card"><p>Ni zadetkov za »${esc(tb.query)}«. Poskusi z drugo besedo ali vprašaj tutorja.</p></div>`;
+      : `<div class="card"><p>${esc(t("tbk.noHits", { q: tb.query }))}</p></div>`;
     return;
   }
   if (!tb.book) {
-    body.innerHTML = `<div class="card"><p>Za ta predmet še ni učbenika.</p></div>`;
+    body.innerHTML = `<div class="card"><p>${esc(t("tbk.noBook"))}</p></div>`;
     return;
   }
   const book = await ctx.api(`/api/textbook/toc?book=${encodeURIComponent(tb.book)}&system=${encodeURIComponent(tb.system || "SI")}`);
@@ -319,12 +319,12 @@ async function renderBody() {
         <h2><span class="tb-num">${i + 1}</span>${esc(u.title)}</h2>
         <ul class="tb-list">${u.topics
           .map(
-            (t) => `<li><button type="button" class="tb-topic ${t.lesson ? "" : "pending"}" data-lesson="${esc(t.id)}">
-              <span class="tb-name">${esc(t.name)}</span>
+            (tp) => `<li><button type="button" class="tb-topic ${tp.lesson ? "" : "pending"}" data-lesson="${esc(tp.id)}">
+              <span class="tb-name">${esc(tp.name)}</span>
               <span class="tb-badges">
-                ${t.lesson ? `<span class="tb-badge">lekcija</span>` : ""}
-                ${t.demo ? `<span class="tb-badge demo">poskus</span>` : ""}
-                ${t.practice ? `<span class="tb-badge vaje">vaje</span>` : ""}
+                ${tp.lesson ? `<span class="tb-badge">${esc(t("tbk.lesson"))}</span>` : ""}
+                ${tp.demo ? `<span class="tb-badge demo">${esc(t("tbk.demo"))}</span>` : ""}
+                ${tp.practice ? `<span class="tb-badge vaje">${esc(t("tbk.practice"))}</span>` : ""}
               </span>
             </button></li>`,
           )
@@ -336,15 +336,15 @@ async function renderBody() {
   const mineGroup = groups.find((g) => g.parts.some((p) => p.key === tb.myPath))?.name;
   const shown = tb.group === "ALL" ? book.parts : groups.find((g) => g.name === tb.group)?.parts || book.parts;
   const chip = (key, label) =>
-    `<button type="button" data-group="${esc(key)}" class="${key === tb.group ? "active" : ""}" aria-pressed="${key === tb.group}">${esc(label)}${key === mineGroup ? ` <span class="tb-mine">tvoj</span>` : ""}</button>`;
-  body.innerHTML = `${groups.length > 1 ? `<nav class="tb-jump chip-row" aria-label="${book.subject === "PROG" || book.school === "SS" ? "Letnik" : "Razred"}">${groups
+    `<button type="button" data-group="${esc(key)}" class="${key === tb.group ? "active" : ""}" aria-pressed="${key === tb.group}">${esc(label)}${key === mineGroup ? ` <span class="tb-mine">${esc(t("tbk.mine"))}</span>` : ""}</button>`;
+  body.innerHTML = `${groups.length > 1 ? `<nav class="tb-jump chip-row" aria-label="${esc(t(book.subject === "PROG" || book.school === "SS" ? "tbk.year" : "tbk.grade"))}">${groups
       .map((g) => chip(g.name, g.name))
-      .join("")}${chip("ALL", "Vse")}</nav>` : ""}
+      .join("")}${chip("ALL", t("refs.all"))}</nav>` : ""}
     ${shown
       .map(
         (p) => `<section class="tb-part" id="tb-part-${esc(p.key)}">
         <div class="tb-part-head"><h2>${esc(p.label)}</h2>
-          <a class="tb-pdf" href="/ucbenik/${esc(p.key)}#natisni" target="_blank" rel="noopener">${ic("download")}PDF tega dela</a></div>
+          <a class="tb-pdf" href="/ucbenik/${esc(p.key)}#natisni" target="_blank" rel="noopener">${ic("download")}${esc(t("tbk.pdfPart"))}</a></div>
         ${p.units.map(unitHtml).join("")}
       </section>`,
       )
@@ -476,7 +476,7 @@ async function renderLesson(topicId) {
     : "";
 
   box.innerHTML = `<div class="tb-lesson-grid${demoHtml ? " has-side" : ""}"><div class="tb-main">
-    <button type="button" class="ghost back tb-back" id="tb-back">${ic("arrow-left")}Učbenik</button>
+    <button type="button" class="ghost back tb-back" id="tb-back">${ic("arrow-left")}${esc(t("nav.textbook"))}</button>
     <p class="muted tb-crumb">${esc(L.pathLabel)} · ${esc(L.unit)}</p>
     <h1 class="tb-title">${esc(L.name)}</h1>
     ${lesson ? `<div class="tb-tools"><a class="tb-pdf" href="/ucbenik/${L.path}/${L.id.split("/")[1]}#natisni" target="_blank" rel="noopener">${ic("download")}PDF lekcije</a>${modeBtn}</div>` : ""}
@@ -509,7 +509,8 @@ async function renderLesson(topicId) {
     const d = demos[Number(m.dataset.sim)];
     mountSim(d.id, m, d.opts);
   });
-  $("#tb-upgrade")?.addEventListener("click", () => ctx.showView("account"));
+  // Zavihek Račun se izriše ob kliku nanj (account.js); sam showView bi pokazal prazen pogled.
+  $("#tb-upgrade")?.addEventListener("click", () => document.querySelector("#account-tab")?.click());
   // Razloži drugače
   const altBody = $("#tb-alt-body");
   const showAlt = (i) => {

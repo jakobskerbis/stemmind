@@ -31,7 +31,7 @@ const COMPAT = {
   "ustvari-bliznjico-mac.command": [/Desktop\/STEMMind/],
   "test/ime.test.js": [/.*/],
 };
-const SKIP_DIRS = new Set([".git", "node_modules", "data", "vendor"]);
+const SKIP_DIRS = new Set([".git", ".claude", "node_modules", "data", "vendor"]);
 const TEXT = /\.(js|cjs|mjs|json|md|html|css|bat|cmd|command|yaml|yml|txt|example|svg|webmanifest|py|csv)$|^(Dockerfile|\.env\.example|\.gitattributes)$/;
 
 function* walk(dir) {

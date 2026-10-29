@@ -207,7 +207,7 @@ export const SETS = {
   },
   "b8-gibala": {
     q: "Kaj od naštetega je to?",
-    cats: [["kost", "kost"], ["skl", "sklep ali vez"], ["mis", "mišica"]],
+    cats: [["kost", "kost"], ["skl", "sklep, vez ali kita"], ["mis", "mišica"]],
     items: [
       ["stegnenica", "kost", "Najdaljša kost v telesu."],
       ["koleno", "skl", "Koleno je gibljiv sklep med stegnenico in golenico."],
@@ -320,7 +320,7 @@ export const SETS = {
       ["alel, ki se izrazi le, če sta oba enaka (aa)", "rec", "Recesivna lastnost se pokaže le pri osebku aa."],
       ["osebek AA ali aa", "homo", "Homozigot ima dva enaka alela."],
       ["osebek Aa", "hetero", "Heterozigot ima dva različna alela."],
-      ["okrogla semena pri grahu Rr", "dom", "Pri Rr se izrazi dominantni alel R (okrogla semena)."],
+      ["alel R, zaradi katerega ima tudi grah Rr okrogla semena", "dom", "Pri Rr se izrazi dominantni alel R (okrogla semena)."],
       ["črna morska prašička imata belega mladiča; alel za belo dlako je …", "rec", "Starša sta skrita nosilca (Bb), beli mladič je bb."],
       ["grah z rumenimi semeni, ki ima tudi alel za zelena", "hetero", "Rumena barva se izrazi, alel za zeleno je skrit: Yy."],
     ],
@@ -364,7 +364,7 @@ export const SETS = {
       ["po zdravljenju z antibiotikom preživijo le odporne bakterije", "izbor", "Odporne bakterije preživijo in se razmnožijo, zato se jih poveča."],
       ["zaradi napake pri podvojevanju DNA nastane nov alel", "mut", "Mutacija je naključna sprememba DNA, vir novih lastnosti."],
       ["ščinkavci na različnih otokih Galapagov imajo različne kljune", "izol", "Ločene populacije so se prilagodile različni hrani na otokih."],
-      ["temni vešči na sajastih deblih ptice manj ulovijo", "izbor", "Bolje prikriti preživijo in imajo več potomcev."],
+      ["temne vešče na sajastih deblih ptice ulovijo redkeje", "izbor", "Bolje prikriti preživijo in imajo več potomcev."],
       ["žuželke postanejo odporne na insekticid", "izbor", "Insekticid izloči neodporne, odporne se namnožijo."],
       ["populacijo razdeli nova reka, skupini se ne parita več", "izol", "Geografska izolacija je pogosto začetek nastanka novih vrst."],
       ["pri enem mladiču se pojavi nenavadna barva dlake", "mut", "Nova lastnost se pojavi naključno, ne zato, ker bi jo žival potrebovala."],
@@ -392,8 +392,8 @@ export const SETS = {
     cats: [["vrsta", "vrsta"], ["rod", "rod"], ["druz", "družina"], ["razred", "razred ali višje"]],
     items: [
       ["Ursus arctos (rjavi medved)", "vrsta", "Dvodelno ime: rod (Ursus) in vrstni pridevek (arctos)."],
-      ["Ursus (medvedi)", "rod", "Rod združuje sorodne vrste: rjavi, beli, črni medved."],
-      ["medvedovke (Ursidae)", "druz", "Družina združuje sorodne rodove."],
+      ["Ursus (medved)", "rod", "Rod združuje sorodne vrste: rjavi, beli, črni medved."],
+      ["medvedi (Ursidae)", "druz", "Družina združuje sorodne rodove."],
       ["sesalci", "razred", "Sesalci so razred vretenčarjev."],
       ["Felis silvestris (divja mačka)", "vrsta", "Prvo ime je rod, drugo vrsta."],
       ["mačke (Felidae)", "druz", "V družino mačk sodijo ris, lev, divja mačka."],
@@ -1031,7 +1031,7 @@ export const SETS = {
     q: "Kateri ekološki pojem je to?",
     cats: [["pop", "populacija"], ["zdr", "življenjska združba"], ["biotop", "biotop"], ["nisa", "ekološka niša"]],
     items: [
-      ["vsi navadni ostrižni v Blejskem jezeru", "pop", "Osebki ene vrste na istem območju."],
+      ["vsi ostriži v Blejskem jezeru", "pop", "Osebki ene vrste na istem območju."],
       ["vse rastline, živali, glive in bakterije v jezeru", "zdr", "Biocenoza: vse populacije skupaj."],
       ["voda, dno, temperatura in kisik v jezeru", "biotop", "Neživi del ekosistema."],
       ["ostriž je plenilec malih rib v obrežnem pasu, aktiven podnevi", "nisa", "Niša je »poklic« vrste: kje, kdaj in kako živi."],
@@ -1088,7 +1088,7 @@ export const SETS = {
     hint: "Energija teče od proizvajalcev prek potrošnikov; razkrojevalci predelajo odmrlo snov. Na vsaki ravni se večina energije izgubi.",
   },
   "s3-sukcesija": {
-    q: "V kateri stopnji sukcesije opuščenega travnika smo?",
+    q: "V kateri stopnji sukcesije smo?",
     cats: [["zac", "začetna"], ["vmes", "vmesna"], ["klim", "klimaksna"]],
     items: [
       ["enoletni pleveli in trave", "zac", "Prve naselijo hitro rastoče vrste."],
@@ -1253,7 +1253,7 @@ export const SETS = {
       ["celice z enakim genomom postanejo nevroni ali mišične celice", "dif", "Različni geni so vklopljeni."],
       ["celice zgodnjega zarodka, ki lahko postanejo katerakoli celica", "mat", "Pluripotentne celice."],
       ["celica se deli brez nadzora zaradi mutacij v regulatornih genih", "rak", "Motnja uravnavanja celičnega cikla."],
-      ["enojajčna dvojčka", "mat", "Naravni kloni: zarodek se razdeli na dve skupini celic."],
+      ["zgodnji zarodek se razdeli in nastaneta enojajčna dvojčka", "mat", "Celice zgodnjega zarodka lahko postanejo katerakoli celica, zato vsaka polovica zraste v celega človeka."],
       ["izražanje genov se v razvoju spreminja po časovnem načrtu", "dif", "Uravnavanje genov vodi razvoj."],
     ],
     try: "Zakaj imata enojajčna dvojčka enako DNA, a ne povsem enakih prstnih odtisov?",

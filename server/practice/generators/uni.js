@@ -24,6 +24,8 @@ const term = (c, v, first = false) => {
   const a = Math.abs(c);
   return `${sign} ${a === 1 && v ? "" : a}${v}`.trim() + " ";
 };
+// Koeficient pred spremenljivko: 1 → "", -1 → "-" (ne »1\sin x« ali »-1e^x«).
+const cf = (c) => (c === 1 ? "" : c === -1 ? "-" : tx(c));
 const poly = (cs, vars) => cs.map((c, i) => term(c, vars[i], cs.slice(0, i).every((x) => x === 0))).join("").trim() || "0";
 const decWord = (d) => (d === 0 ? "na celo število" : d === 1 ? "na eno decimalko" : d === 2 ? "na dve decimalki" : `na ${d} decimalke`);
 const MU = ["umol/L", "µmol/L", "μmol/L", "umol/l", "µmol/l", "μmol/l"];
@@ -49,10 +51,10 @@ export const UNI_GENERATORS = [
         const a = r.nonZero(-3, 3), k = r.pick([0.5, 1, 1.5, 2, -1]), b = r.nonZero(-4, 4);
         const v = a * k * Math.exp(k) + b;
         return {
-          text: `Izračunaj odvod funkcije $f(x) = ${a}\\,e^{${tx(k)}x} ${b < 0 ? "-" : "+"} ${Math.abs(b)}\\ln x$ v točki $x = 1$. Zaokroži ${decWord(3)}.`,
+          text: `Izračunaj odvod funkcije $f(x) = ${cf(a)}\\,e^{${cf(k)}x} ${b < 0 ? "-" : "+"} ${cf(Math.abs(b))}\\ln x$ v točki $x = 1$. Zaokroži ${decWord(3)}.`,
           answer: num(v, null, 3),
           hint: "$(e^{kx})' = k e^{kx}$ in $(\\ln x)' = \\dfrac{1}{x}$.",
-          solution: `$f'(x) = ${tx(a * k)}\\,e^{${tx(k)}x} ${b < 0 ? "-" : "+"} \\dfrac{${Math.abs(b)}}{x}$, $f'(1) \\approx ${r2(v, 3)}$`,
+          solution: `$f'(x) = ${cf(a * k)}\\,e^{${cf(k)}x} ${b < 0 ? "-" : "+"} \\dfrac{${Math.abs(b)}}{x}$, $f'(1) \\approx ${r2(v, 3)}$`,
         };
       }
       let a, b, c, d;
@@ -83,14 +85,17 @@ export const UNI_GENERATORS = [
           text: `Izračunaj $\\displaystyle\\int_{${p}}^{${q}} \\left(${poly([a, b, c], ["x^2", "x", ""])}\\right)dx$. Zaokroži ${decWord(2)}.`,
           answer: num(v, null, 2),
           hint: "Poišči nedoločeni integral $F$ in uporabi $\\int_p^q f\\,dx = F(q) - F(p)$.",
-          solution: `$F(x) = ${tx(a / 3, 3)}x^3 + ${tx(b / 2)}x^2 + ${c}x$, $F(${q}) - F(${p}) \\approx ${r2(v, 2)}$`,
+          solution: `$F(x) = ${[[a, 3, "x^3"], [b, 2, "x^2"], [c, 1, "x"]]
+            .filter(([k]) => k !== 0)
+            .map(([k, d, x], i) => `${k < 0 ? "-" : i ? "+" : ""} ${k % d === 0 ? cf(Math.abs(k / d)) : `\\dfrac{${Math.abs(k)}}{${d}}`}${x}`)
+            .join(" ")}$, $F(${q}) - F(${p}) \\approx ${r2(v, 2)}$`,
         };
       }
       if (level === 2) {
         const a = r.int(1, 5), k = r.pick([0.5, 1, 2, -1, -0.5]), T = r.int(1, 3);
         const v = (a / k) * (Math.exp(k * T) - 1);
         return {
-          text: `Izračunaj $\\displaystyle\\int_{0}^{${T}} ${a}\\,e^{${tx(k)}x}\\,dx$. Zaokroži ${decWord(3)}.`,
+          text: `Izračunaj $\\displaystyle\\int_{0}^{${T}} ${cf(a)}\\,e^{${cf(k)}x}\\,dx$. Zaokroži ${decWord(3)}.`,
           answer: num(v, null, 3),
           hint: "$\\int e^{kx}dx = \\dfrac{1}{k}e^{kx} + C$.",
           solution: `$\\dfrac{${a}}{${tx(k)}}\\left(e^{${tx(k * T)}} - 1\\right) \\approx ${r2(v, 3)}$`,
@@ -101,10 +106,10 @@ export const UNI_GENERATORS = [
       const b = r.int(1, 3);
       const w = v + (b * Math.PI ** 2) / 8; // + ∫_0^{π/2} b x dx
       return {
-        text: `Izračunaj $\\displaystyle\\int_{0}^{\\pi/2} \\left(${a}\\sin x + ${b}x\\right)dx$. Zaokroži ${decWord(3)}.`,
+        text: `Izračunaj $\\displaystyle\\int_{0}^{\\pi/2} \\left(${cf(a)}\\sin x + ${cf(b)}x\\right)dx$. Zaokroži ${decWord(3)}.`,
         answer: num(w, null, 3),
         hint: "Integriraj vsak člen posebej: $\\int \\sin x\\,dx = -\\cos x$, $\\int x\\,dx = \\dfrac{x^2}{2}$.",
-        solution: `$${a}\\left[-\\cos x\\right]_0^{\\pi/2} + ${b}\\left[\\dfrac{x^2}{2}\\right]_0^{\\pi/2} = ${a} + \\dfrac{${b}\\pi^2}{8} \\approx ${r2(w, 3)}$`,
+        solution: `$${cf(a)}\\left[-\\cos x\\right]_0^{\\pi/2} + ${cf(b)}\\left[\\dfrac{x^2}{2}\\right]_0^{\\pi/2} = ${a} + \\dfrac{${b}\\pi^2}{8} \\approx ${r2(w, 3)}$`,
       };
     },
   },
@@ -338,7 +343,7 @@ export const UNI_GENERATORS = [
         text: `Dana je $f(x, y) = ${poly([a, b, c], ["x^2y", "xy^3", "x"])}$. Izračunaj $\\dfrac{\\partial f}{\\partial ${byX ? "x" : "y"}}(${x0}, ${y0})$.`,
         answer: num(v, null, 0),
         hint: `Pri odvajanju po $${byX ? "x" : "y"}$ je $${byX ? "y" : "x"}$ konstanta.`,
-        solution: byX ? `$f_x = ${2 * a}xy + ${b}y^3 + ${c}$, vrednost $${v}$` : `$f_y = ${a}x^2 + ${3 * b}xy^2$, vrednost $${v}$`,
+        solution: byX ? `$f_x = ${poly([2 * a, b, c], ["xy", "y^3", ""])}$, vrednost $${v}$` : `$f_y = ${poly([a, 3 * b], ["x^2", "xy^2"])}$, vrednost $${v}$`,
       };
     },
   },
@@ -1436,7 +1441,7 @@ export const UNI_GENERATORS = [
         let v = 1;
         for (let i = 0; i < k; i++) v *= n - i;
         return {
-          text: `Na koliko načinov lahko iz $${n}$ kandidatov izberemo predsednika, podpredsednika${k > 2 ? ", tajnika" : ""}${k > 3 ? " in blagajnika" : ""} (vsak opravlja eno funkcijo)?`,
+          text: `Na koliko načinov lahko iz $${n}$ kandidatov izberemo predsednika${k === 2 ? " in podpredsednika" : k === 3 ? ", podpredsednika in tajnika" : ", podpredsednika, tajnika in blagajnika"} (vsak opravlja eno funkcijo)?`,
           answer: num(v, null, 0),
           hint: "Vrstni red (funkcija) je pomemben: variacije brez ponavljanja $\\dfrac{n!}{(n-k)!}$.",
           solution: `$${Array.from({ length: k }, (_, i) => n - i).join("\\cdot ")} = ${v}$`,
@@ -1528,7 +1533,7 @@ export const UNI_GENERATORS = [
       if (level <= 2) {
         const A = A0 * 2 ** (-tt / T);
         return {
-          text: `Vzorec izotopa $${iso}$ (razpolovni čas $${tx(T)}$ ${unit}) ima aktivnost $${A0}\\ \\mathrm{MBq}$. Kolikšna je njegova aktivnost po $${tx(tt)}$ ${unit}? Zaokroži ${decWord(2)}.`,
+          text: `Vzorec izotopa $${iso}$ (razpolovni čas $${tx(T)}$ ${unit}) ima aktivnost $${A0}\\ \\mathrm{MBq}$. Kolikšna je njegova aktivnost po $${tx(tt)}$ ${unit === "let" ? "letih" : unit === "dni" ? "dneh" : "urah"}? Zaokroži ${decWord(2)}.`,
           answer: num(A, "MBq", 2),
           hint: "$A(t) = A_0\\,2^{-t/t_{1/2}} = A_0 e^{-\\lambda t}$, $\\lambda = \\ln 2 / t_{1/2}$.",
           solution: `$A = ${A0}\\cdot 2^{-${tx(tt)}/${tx(T)}} \\approx ${r2(A, 2)}\\ \\mathrm{MBq}$`,
