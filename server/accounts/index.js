@@ -1213,7 +1213,6 @@ export function mountAccounts(app, store, opts = {}) {
     applySubscription,
     syncCustomer,
     hasSchoolChild: (parentId) => childIds(parentId).some((id) => schools.hasLicence(id)),
-    mailEnabled: () => mailer.enabled, // e-pošta se res pošlje (Resend nastavljen)
   });
   gifts = mountGifts(app, { db, stripe, json, log, getParent, ensureCustomer, baseUrl, isMinor, recordConsent: billing.recordConsent, paidActive });
 

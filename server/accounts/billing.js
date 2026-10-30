@@ -12,7 +12,7 @@ import { PASSES, passByDays, passForDaysLeft, paidActive, planFor, planByKey, is
 import { Schedules, nowParts, cleanDate, TEST_KINDS } from "../schedule.js";
 import { cleanText } from "../settings.js";
 import { ljNow } from "./goal-reminder.js";
-import { promoEndingEmail, renewalEmail, schoolPriceEndEmail } from "./email.js";
+import { promoEndingEmail, renewalEmail, schoolSubEndEmail } from "./email.js";
 import { audit } from "../dnevnik-dostopov.js";
 import { CREDIT_PACKS, packById, customPack, CUSTOM_MIN_CENTS, creditUsdFor, conversationsFor } from "../placila/krediti.js";
 
@@ -156,7 +156,7 @@ export function nextTest(schedules, studentId, now = new Date()) {
 }
 
 export function mountBilling(app, ctx) {
-  const { credits = null, db, store, stripe, log, json, getParent, update, childIds, ownerOf, ensureCustomer, accessOf, baseUrl, sendMail, currencyOf, isMinor, applySubscription, syncCustomer, promo, kv, offersFor = () => ({ show: true, prices: true }), hasSchoolChild = () => false, mailEnabled = () => false } = ctx;
+  const { credits = null, db, store, stripe, log, json, getParent, update, childIds, ownerOf, ensureCustomer, accessOf, baseUrl, sendMail, currencyOf, isMinor, applySubscription, syncCustomer, promo, kv, offersFor = () => ({ show: true, prices: true }), hasSchoolChild = () => false } = ctx;
   migrateBilling(db);
   const passes = new Passes(db);
   const schedules = new Schedules(db);
@@ -632,47 +632,38 @@ export function mountBilling(app, ctx) {
       if (plan?.interval !== "year" || !paidActive(p, now.getTime())) continue;
       out.renewal += await remind(p, "renewal", p.sub_period_end.slice(0, 10), renewalEmail(fmtDate(p.sub_period_end), fmtMoney(plan.amount, plan.currency || "EUR"), appUrl));
     }
-    await schoolPriceEnd(now, out, appUrl);
+    await schoolSubEnd(now, out, appUrl);
     return out;
   }
 
-  // Osebno ob šolski licenci po izteku licence (j 2026-10-30: »ob podaljšanju 9,99 €/89 €«).
-  // Ko noben otrok nima več šolske licence, starš dobi obvestilo. Najmanj 30 dni po uspešno poslanem
-  // obvestilu se cena v Stripu zamenja z redno ceno za 1 otroka (brez sorazmernega obračuna), zato
-  // velja od naslednjega podaljšanja. Brez poslanega obvestila se cena ne spremeni.
-  // Če licenca medtem spet velja, se odštevanje ponastavi.
-  async function schoolPriceEnd(now, out, appUrl) {
-    out.school_notice = 0;
-    out.school_switched = 0;
-    for (const p of db.prepare("SELECT * FROM parents WHERE sub_id IS NOT NULL AND sub_cancel_at_period_end = 0").all()) {
+  // Osebno ob šolski licenci po izteku licence (j 2026-10-30: »naj se naročnina ob poteku šolske licence
+  // ne avtomatsko obnovi«). Ko noben otrok nima več šolske licence, naročnina ob koncu plačanega obdobja
+  // poteče (cancel_at_period_end v Stripu) in starš dobi obvestilo. Če licenca do takrat spet velja,
+  // se podaljšanje vrne (samo, če ga je ustavil Evklid, ne starš).
+  async function schoolSubEnd(now, out, appUrl) {
+    out.school_ended = 0;
+    out.school_resumed = 0;
+    if (!stripe.enabled) return;
+    for (const p of db.prepare("SELECT * FROM parents WHERE sub_id IS NOT NULL").all()) {
       if (!isSchoolPlan(p.sub_plan) || !paidActive(p, now.getTime())) continue;
-      const key = `school_price_end:${p.id}`;
-      const since = kv.get(key) || "";
-      if (hasSchoolChild(p.id)) {
-        if (since) kv.set(key, "");
-        continue;
-      }
-      if (since === "switched") continue;
-      const regular = planFor(1, planByKey(p.sub_plan).interval, "EUR");
-      if (!since) {
-        if (!mailEnabled()) continue; // brez prave e-pošte ni obvestila in zato tudi ne spremembe cene
-        const from = fmtDate(iso(now.getTime() + 30 * 86400000));
-        const sent = await remind(p, "school_price_end", ljNow(now).date, schoolPriceEndEmail(from, fmtMoney(regular.amount, "EUR"), regular.interval, appUrl));
-        if (sent) kv.set(key, iso(now.getTime()));
-        out.school_notice += sent;
-        continue;
-      }
-      if (!stripe.enabled || now.getTime() < Date.parse(since) + 30 * 86400000) continue;
+      const key = `school_sub_end:${p.id}`;
+      const ours = kv.get(key) === "cancelled";
+      const covered = hasSchoolChild(p.id);
+      if (covered === !ours) continue; // licenca velja in nismo ustavili, ali ne velja in je že ustavljeno
+      if (!covered && p.sub_cancel_at_period_end) continue; // starš je že sam preklical
       try {
-        const sub = await stripe.request("GET", `/subscriptions/${p.sub_id}`);
-        const item = sub.items?.data?.[0];
-        if (!item) continue;
-        const { prices } = await stripe.ensurePrices("EUR");
-        await stripe.request("POST", `/subscriptions/${p.sub_id}`, { items: [{ id: item.id, price: prices[regular.key] }], proration_behavior: "none" });
-        kv.set(key, "switched");
-        out.school_switched++;
+        await stripe.request("POST", `/subscriptions/${p.sub_id}`, { cancel_at_period_end: covered ? "false" : "true" });
+        db.prepare("UPDATE parents SET sub_cancel_at_period_end = ? WHERE id = ?").run(covered ? 0 : 1, p.id);
+        kv.set(key, covered ? "" : "cancelled");
+        if (covered) {
+          out.school_resumed++;
+          continue;
+        }
+        out.school_ended++;
+        const regular = planFor(1, "month", "EUR");
+        await remind(p, "school_sub_end", (p.sub_period_end || "").slice(0, 10), schoolSubEndEmail(p.sub_period_end ? fmtDate(p.sub_period_end) : "", fmtMoney(regular.amount, "EUR"), appUrl));
       } catch (err) {
-        log.error?.("[evklid] redna cena po šolski licenci:", p.id, err.message);
+        log.error?.("[evklid] konec naročnine po šolski licenci:", p.id, err.message);
       }
     }
   }
