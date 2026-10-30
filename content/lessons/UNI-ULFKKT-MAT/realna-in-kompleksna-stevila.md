@@ -226,3 +226,22 @@ kjer smo prepoznali Taylorjevi vrsti kosinusa in sinusa. Iz $e^{z + w} = e^z e^w
 - $2$
 + $4$
 > Enačba $z^n = w$ z $w \neq 0$ ima $n$ različnih rešitev; tu so to $2$, $2i$, $-2$ in $-2i$.
+
+:::simboli
+z | kompleksno število | z = a + bi | |
+a | realni del števila z | a = \operatorname{Re} z | |
+b | imaginarni del števila z | b = \operatorname{Im} z | | realno število, brez i
+i | imaginarna enota | i^2 = -1 | |
+c | realni del drugega števila c + di | | |
+d | imaginarni del drugega števila c + di | | | pri deljenju c + di ≠ 0
+r | absolutna vrednost (modul) števila z | r = \sqrt{a^2 + b^2} | | razdalja od izhodišča, r = |z|
+\varphi | argument števila z | \cos\varphi = \frac{a}{r} | | kot s pozitivnim delom realne osi
+e | Eulerjevo število | | | e ≈ 2,718
+r_1, r_2 | absolutni vrednosti obeh faktorjev | | |
+\varphi_1, \varphi_2 | argumenta obeh faktorjev | | | pri množenju se seštejeta
+n | stopnja potence oziroma korena | | | naravno število
+w_k | k-ti izmed n-tih korenov števila z | w_k = \sqrt[n]{r}\, e^{i\frac{\varphi + 2k\pi}{n}} | | ležijo na krožnici s polmerom ⁿ√r
+k | zaporedna številka korena | | | k = 0, 1, …, n − 1
+w | kompleksno število (delitelj) | | | w ≠ 0
+\bar w | konjugirano število k w | \bar w = c - di | | za w = c + di; imaginarnemu delu spremenimo predznak
+:::

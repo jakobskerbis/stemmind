@@ -207,3 +207,14 @@ Pozneje boš sisteme z več neznankami reševal po enakem načelu: neznanke post
 + $(3, 2)$
 - $(6, 0)$
 > Pri $y$ že imamo $+3y$ in $-3y$. Seštejemo: $6x = 18$, $x = 3$. Iz prve: $6 + 3y = 12$, $y = 2$. Preizkus druge: $12 - 6 = 6$ velja.
+
+:::simboli
+x, y | neznanki | | |
+a_1, b_1, a_2, b_2 | koeficienti pri neznankah | | |
+c_1, c_2 | desni strani enačb | | |
+D | determinanta sistema | D = a_1b_2 - a_2b_1 | | D ≠ 0: sistem ima natanko eno rešitev
+D_x | determinanta za x | D_x = c_1b_2 - c_2b_1 | | x = Dₓ / D
+D_y | determinanta za y | D_y = a_1c_2 - a_2c_1 | | y = D_y / D
+a | cena kilograma jabolk | | € | v ax + by = c koeficient pri x
+b | cena kilograma hrušk | | € | v ax + by = c koeficient pri y
+:::

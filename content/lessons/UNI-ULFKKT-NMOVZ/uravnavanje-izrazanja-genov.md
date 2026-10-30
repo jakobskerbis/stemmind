@@ -234,3 +234,8 @@ Razlika med skrajnima stanjema je $50\,000$-kratna. Represor je stikalo »vklop/
 - Gen za EPO je del operona, ki ga kisik izklopi.
 ~ Človeški geni niso organizirani v operone; uravnavajo jih transkripcijski dejavniki.
 > HIF je transkripcijski dejavnik, ki se ob pomanjkanju kisika ne razgradi in poveča prepis gena za EPO.
+
+:::simboli
+n | število aminokislin v beljakovini | n = \dfrac{\text{dolžina} - 3}{3} | – | dolžina mRNA v nukleotidih, brez stop kodona
+k | dolžina zaporedja (število nukleotidov) | | – | naključno zaporedje ima verjetnost 1/4ᵏ
+:::

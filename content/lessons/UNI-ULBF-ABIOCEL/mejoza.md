@@ -219,3 +219,8 @@ Na koncu imaš štiri škatle, v vsaki po 23 rokavic, iz vsakega para ena. Noben
 ~ Toliko ima celica v profazi I. Mejoza I je to količino že razdelila na dve celici.
 + $10\,\mathrm{pg}$
 > Faza S: $10 \to 20\,\mathrm{pg}$; mejoza I: $20 \to 10\,\mathrm{pg}$. Celica v profazi II ima $10\,\mathrm{pg}$ ($2C$), čeprav je haploidna.
+
+:::simboli
+n | število kromosomov v haploidni garnituri | | – | diploidna celica ima 2n kromosomov
+C | količina DNA ene haploidne garniture | | pg | z eno kromatido na kromosom
+:::

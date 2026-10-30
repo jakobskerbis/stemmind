@@ -262,3 +262,14 @@ in z logaritmiranjem $\mathrm{pI} = \tfrac{1}{2}(\mathrm{p}K_1 + \mathrm{p}K_2)$
 - Ostane na mestu, ker je nevtralen.
 ~ Nevtralen je le pri $\mathrm{pH} = \mathrm{pI} = 5{,}0$, ne pri $8{,}0$.
 > Pri $\mathrm{pH} > \mathrm{pI}$ prevladajo deprotonirane, negativne skupine, zato protein potuje k pozitivni elektrodi, anodi.
+
+:::simboli
+\mathrm{pH} | pH raztopine | \mathrm{pH} = \mathrm{p}K_\mathrm{a} + \log\frac{[\mathrm{A^-}]}{[\mathrm{HA}]} | – | Henderson-Hasselbalchova enačba
+\mathrm{pI} | izoelektrična točka | \mathrm{pI} = \frac{\mathrm{p}K_\text{pred} + \mathrm{p}K_\text{za}}{2} | – | pH, pri katerem je povprečni naboj nič
+K_\mathrm{a} | konstanta kisline | | mol/L | pKₐ = −log Kₐ
+K | konstanta kisline skupine | | mol/L | vsak pK je meja na premici pH
+K_\text{pred} | konstanta skupine tik pod nevtralno obliko | | mol/L
+K_\text{za} | konstanta skupine tik nad nevtralno obliko | | mol/L
+K_1 | konstanta karboksilne skupine | | mol/L | glicin: pK₁ = 2,34
+K_2 | konstanta amino skupine | | mol/L | glicin: pK₂ = 9,60
+:::

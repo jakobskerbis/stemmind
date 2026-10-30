@@ -269,3 +269,26 @@ reaktant, pri katerem je dosežen minimum, pa je omejujoči. Teoretični izkoris
 - Zmanjša se, ker presežek aluminija moti reakcijo.
 ~ Presežek reaktanta produkta ne zmanjša; neporabljenega aluminija le ostane več.
 > Za $\mathrm{Fe_2O_3}$ je $n/\nu = 0{,}3131\,\mathrm{mol}$, za $40{,}0\,\mathrm{g}$ Al pa $0{,}7413\,\mathrm{mol}$. Omejujoči ostane $\mathrm{Fe_2O_3}$, zato teoretično še vedno nastane $34{,}97\,\mathrm{g}$ železa.
+
+:::simboli
+N | število delcev | N = n\,N_\mathrm{A} | – | N(X): število atomov X v formuli
+n | množina snovi | n = \frac{m}{M} | mol
+N_\mathrm{A} | Avogadrova konstanta | | mol^{-1} | 6,022 · 10²³ mol⁻¹
+m | masa snovi | m = n\,M | g
+M | molska masa | M = \frac{m}{n} | g/mol
+w | masni delež elementa v spojini | w(\mathrm{X}) = \frac{N(\mathrm{X})\,A_\mathrm{r}(\mathrm{X})}{M_\mathrm{r}(\text{spojine})} | –
+A_\mathrm{r} | relativna atomska masa | | –
+M_\mathrm{r} | relativna molekulska masa | | – | številsko enaka molski masi v g/mol
+\nu_\mathrm{A}, \nu_\mathrm{B} | stehiometrična koeficienta snovi A in B | | –
+\nu | stehiometrični koeficient snovi | | – | najmanjše razmerje n/ν ima omejujoči reaktant
+\eta | izkoristek reakcije | \eta = \frac{m_\text{dejanska}}{m_\text{teoretična}} \cdot 100\,\% | \%
+m_\text{dejanska} | dejansko dobljena masa produkta | | g
+m_\text{teoretična} | teoretična masa produkta | | g | izračunana iz omejujočega reaktanta
+\nu_i | stehiometrično število snovi i | | – | produkti pozitivni, reaktanti negativni
+n_i | množina snovi i med reakcijo | n_i = n_{i,0} + \nu_i\,\xi | mol
+n_{i,0} | začetna množina snovi i | | mol
+\xi | reakcijski obseg | | mol | enak za vse snovi v reakciji
+\xi_\text{max} | največji reakcijski obseg | \xi_\text{max} = \min_{i\ \text{reaktanti}} \frac{n_{i,0}}{\lvert\nu_i\rvert} | mol | določa ga omejujoči reaktant
+i | oznaka snovi v reakciji | |
+k | razmerje molekulske in empirične formule | k = M(\text{spojine})/M(\text{empirične formule}) | – | celo število
+:::

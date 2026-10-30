@@ -236,3 +236,24 @@ V vrtu po dolgem dežju dva dni ne moreš kopati, potem je prst ravno prav vlaž
 - $-980\,\mathrm{kPa}$
 ~ To bi bil stolpec $10\,000\,\mathrm{cm}$, torej pF $4$.
 > $h = 10^3\,\mathrm{cm} = 10\,\mathrm{m}$ vodnega stolpca, $\Psi = -\rho g h = -1000 \cdot 9{,}81 \cdot 10\,\mathrm{Pa} \approx -98\,\mathrm{kPa}$, kar je med PK in TV.
+
+:::simboli
+\Psi | vodni potencial | \Psi = \Psi_m + \Psi_o + \Psi_g | kPa | voda teče k nižjemu (bolj negativnemu)
+\Psi_m | matrični potencial | | kPa | privlak delcev in kapilarnost; pri PK okrog −33 kPa
+\Psi_o | osmotski potencial | \Psi_o = -i\,c\,R\,T | kPa | zaradi raztopljenih soli
+\Psi_g | gravitacijski potencial | | kPa | zaradi višine
+\mathrm{RDV} | rastlinam dostopna voda | \mathrm{RDV} = (\theta_{PK} - \theta_{TV}) \cdot z | mm | 1 mm vode je 1 L na m²
+\theta | volumski delež vode v tleh | \theta = w \cdot \dfrac{\rho_v}{\rho_{\text{voda}}} | –
+\theta_{PK} | volumski delež vode pri poljski kapaciteti | | –
+\theta_{TV} | volumski delež vode pri točki venenja | | –
+\theta_{\text{zdaj}} | trenutni volumski delež vode | | –
+z | debelina plasti tal | | mm
+w | masni delež vode v tleh | | –
+\rho_v | volumska gostota tal | | g/cm^3 | masa suhih tal na prostornino s porami
+\rho_{\text{voda}} | gostota vode | | g/cm^3 | 1 g/cm³
+t | čas, za katerega zadošča zaloga vode | t = \dfrac{\mathrm{RDV}}{\text{poraba}} | dan
+i | število ionov iz ene formulske enote | | – | NaCl: i = 2
+c | množinska koncentracija soli | | mol/m^3 | 1 mol/L = 1000 mol/m³
+R | splošna plinska konstanta | | J/(mol K) | 8,314 J/(mol K)
+T | absolutna temperatura | | K
+:::

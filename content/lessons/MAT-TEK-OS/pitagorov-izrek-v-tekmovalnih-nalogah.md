@@ -223,3 +223,17 @@ Zvečer na karirast papir nariše trikotnik s katetama $3$ in $4$ kvadratke in n
 ~ Višina $12$ je prava, a pozabil si deliti z $2$.
 + $60\,\text{cm}^2$
 > Polovica osnovnice $5$, višina $\sqrt{169 - 25} = 12$, ploščina $\dfrac{10 \cdot 12}{2} = 60\,\text{cm}^2$.
+
+:::simboli
+a, b | kateti pravokotnega trikotnika | | | pri pravokotniku ali škatli stranici (robova) osnovne ploskve
+c | hipotenuza | c^2 = a^2 + b^2 | | pri škatli tretji rob (višina)
+d | diagonala (ravna razdalja v mreži) | d = \sqrt{\Delta x^2 + \Delta y^2} | |
+x | vodoravna lega v mreži (v kvadratkih) | | |
+y | navpična lega v mreži (v kvadratkih) | | |
+p_a, p_b | ploščini kvadratov nad katetama | | |
+p_c | ploščina kvadrata nad hipotenuzo | p_c = p_a + p_b | |
+p | ploščina trikotnika | p = \frac{a \cdot b}{2} | |
+D | telesna diagonala škatle | D^2 = d^2 + c^2 | |
+A, B | začetna in končna točka poti | | |
+B' | zrcalna slika točke B čez rob pulta | | | razdalja AB′ je dolžina najkrajše poti
+:::

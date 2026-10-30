@@ -242,3 +242,7 @@ Rešitev je $x = 7$. Števila $8$ ni treba preizkusiti: dalo bi $24$, kar je že
 - $8{,}60\,\text{€}$
 ~ To je $43 : 5$, kot da vpisnine ni. Najprej odštej $8$, nato deli s $5$.
 > $5 \cdot x = 43 - 8 = 35$, $x = 35 : 5 = 7$. Preizkus: $5 \cdot 7 + 8 = 43$.
+
+:::simboli
+x | neznanka | | | število, ki ga iščemo
+:::

@@ -40,6 +40,7 @@ export const PROFILE_SETTINGS = {
   news_level: { values: NEWS_LEVELS, desc: "news corner depth: simple = written for kids and teens, all = also research news, auto = by school stage" },
   news_lang: { values: NEWS_LANGS, desc: "news corner: all = also English sources, mine = only news in the app language (fewer)" },
   game_childhood: { list: true, values: GENRE_IDS, desc: `kinds of games the student played as a child (games questionnaire); the games section shows Evklid's own learning games in these styles; whole new list, ids: ${GENRE_IDS.join(", ")}` },
+  game_titles: { list: true, desc: "student's own titles of childhood games typed in the games questionnaire (max 5 × 40 chars, whole new list); Evklid maps them to similar game kinds or to wishes for new games" },
   weak_points: { list: true, desc: "student's own list of weak points (whole new list, replaces the old one), e.g. ['ulomki', 'pretvarjanje enot']" },
 };
 
@@ -62,6 +63,7 @@ export const DEVICE_SETTINGS = {
   writing_pad_tab: { values: ["keys", "draw"], desc: "pad opens on keypad (keys) or handwriting (draw)" },
   game_sound: { values: ["on", "off"], ls: ["evklid.gameSound"], desc: "sound in games" },
   game_speed: { values: ["slow", "mid", "fast"], ls: ["evklid.gamePace"], desc: "game speed" },
+  windows: { values: ["on", "off"], ls: ["evklid.windows", { on: "1", off: "0" }], desc: "movable windows: drag top tabs onto the page to open them as windows, tutor chat bubble outside the chat (on by default)" },
   schedule_reminders: { values: ["on", "off"], ls: ["evklid.scheduleReminders", { on: "1", off: "0" }], desc: "notification on this device the day before a test from the timetable (the app also shows it in the app)" },
 };
 

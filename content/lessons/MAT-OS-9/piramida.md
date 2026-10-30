@@ -26,13 +26,13 @@ Višina stranske ploskve je vedno večja od višine piramide.
 
 **5. Površina.** Površina je vsota osnovne ploskve in plašča:
 
-$$P = O + pl$$
+$$P = O + \mathrm{pl}$$
 
 Plašč je vsota ploščin stranskih trikotnikov. Za pokončno piramido z osnovnim robom $a$ in $n$ stranskimi ploskvami je
 
-$$pl = n \cdot \frac{a \cdot v_s}{2}$$
+$$\mathrm{pl} = n \cdot \frac{a \cdot v_s}{2}$$
 
-Pri kvadratni piramidi je $n = 4$, zato $pl = 4 \cdot \dfrac{a \cdot v_s}{2} = 2 a v_s$.
+Pri kvadratni piramidi je $n = 4$, zato $\mathrm{pl} = 4 \cdot \dfrac{a \cdot v_s}{2} = 2 a v_s$.
 
 **6. Prostornina.** Prostornina piramide je tretjina prostornine prizme z isto osnovno ploskvijo in višino:
 
@@ -51,8 +51,8 @@ Kvadratna pokončna piramida ima osnovni rob $a = 6\,\text{cm}$ in višino $v = 
 1. **Osnovna ploskev:** $O = a^2 = 6^2 = 36\,\text{cm}^2$.
 2. **Prostornina:** $V = \dfrac{O \cdot v}{3} = \dfrac{36 \cdot 4}{3} = \dfrac{144}{3} = 48\,\text{cm}^3$.
 3. **Za plašč potrebujemo $v_s$**, ki ga nimamo podanega. Uporabimo Pitagorov izrek v trikotniku s stranicama $v = 4$ in $\dfrac{a}{2} = 3$: $v_s^2 = 4^2 + 3^2 = 16 + 9 = 25$, torej $v_s = 5\,\text{cm}$.
-4. **Plašč:** $pl = 4 \cdot \dfrac{6 \cdot 5}{2} = 4 \cdot 15 = 60\,\text{cm}^2$.
-5. **Površina:** $P = O + pl = 36 + 60 = 96\,\text{cm}^2$.
+4. **Plašč:** $\mathrm{pl} = 4 \cdot \dfrac{6 \cdot 5}{2} = 4 \cdot 15 = 60\,\text{cm}^2$.
+5. **Površina:** $P = O + \mathrm{pl} = 36 + 60 = 96\,\text{cm}^2$.
 6. **Smiselnost:** $v_s = 5 > v = 4$, kar mora veljati.
 
 ### Primer 2: iskanje višine iz stranske višine
@@ -73,7 +73,7 @@ Kvadratna pokončna piramida ima osnovni rob $a = 8\,\text{cm}$ in prostornino $
 1. **Osnovna ploskev:** $O = 8^2 = 64\,\text{cm}^2$.
 2. **Višina iz prostornine.** Formulo $V = \dfrac{O \cdot v}{3}$ obrnemo: $v = \dfrac{3V}{O} = \dfrac{3 \cdot 64}{64} = 3\,\text{cm}$.
 3. **Višina stranske ploskve.** Polovica osnovnega roba je $\dfrac{a}{2} = 4\,\text{cm}$. Potem je $v_s^2 = 3^2 + 4^2 = 9 + 16 = 25$, zato $v_s = 5\,\text{cm}$.
-4. **Plašč:** $pl = 4 \cdot \dfrac{8 \cdot 5}{2} = 4 \cdot 20 = 80\,\text{cm}^2$.
+4. **Plašč:** $\mathrm{pl} = 4 \cdot \dfrac{8 \cdot 5}{2} = 4 \cdot 20 = 80\,\text{cm}^2$.
 5. **Površina:** $P = 64 + 80 = 144\,\text{cm}^2$.
 6. **Preverimo prostornino:** $\dfrac{64 \cdot 3}{3} = 64$. Ujema se s podatkom.
 
@@ -82,14 +82,14 @@ Kvadratna pokončna piramida ima osnovni rob $a = 8\,\text{cm}$ in prostornino $
 - **Pozabljena tretjina.** Prostornina piramide je $\dfrac{O \cdot v}{3}$, ne $O \cdot v$. Če dobiš prostornino prizme, si pozabil deliti s 3.
 - **Zamenjava višin.** Za prostornino potrebuješ višino piramide $v$, za plašč pa višino stranske ploskve $v_s$. Ne uporabi ju narobe.
 - **Cela osnovna stranica v Pitagorovem izreku.** V trikotniku $v$, $\dfrac{a}{2}$, $v_s$ nastopa **polovica** osnovnega roba, ne cel rob $a$.
-- **Plašč s površino.** Plašč nima osnovne ploskve. Površina je $P = O + pl$.
+- **Plašč s površino.** Plašč nima osnovne ploskve. Površina je $P = O + \mathrm{pl}$.
 - **Pozabljeno deljenje z 2 pri trikotniku.** Ploščina enega stranskega trikotnika je $\dfrac{a \cdot v_s}{2}$.
 
 ## Povzetek
 
 - Piramida ima osnovno ploskev in stranske ploskve (trikotnike), ki se stikajo v vrhu. Vse stranske ploskve skupaj so plašč.
 - Višina piramide $v$ je pravokotna na osnovno ploskev, višina stranske ploskve $v_s$ pa je višina stranskega trikotnika.
-- Površina: $P = O + pl$, pri pokončni piramidi $pl = n \cdot \dfrac{a \cdot v_s}{2}$.
+- Površina: $P = O + \mathrm{pl}$, pri pokončni piramidi $\mathrm{pl} = n \cdot \dfrac{a \cdot v_s}{2}$.
 - Prostornina: $V = \dfrac{O \cdot v}{3}$.
 - Pri kvadratni pokončni piramidi velja $v_s^2 = v^2 + \left(\dfrac{a}{2}\right)^2$.
 
@@ -109,7 +109,7 @@ Streha na vrtni uti ima obliko kvadratne piramide z osnovnim robom $a = 6\,\text
 
 Kritina pokrije samo poševne ploskve, torej plašč. Najprej poiščemo višino stranske ploskve (to je dolžina, ki jo meriš po strehi od roba do vrha): $v_s = \sqrt{4^2 + 3^2} = 5\,\text{m}$.
 
-Plašč: $pl = 4 \cdot \dfrac{6 \cdot 5}{2} = 60\,\text{m}^2$.
+Plašč: $\mathrm{pl} = 4 \cdot \dfrac{6 \cdot 5}{2} = 60\,\text{m}^2$.
 
 Strop pod streho (osnovna ploskev) pri tem ne šteje, saj ga kritina ne prekriva. Zato je za strehe pomemben plašč, ne površina.
 
@@ -123,7 +123,7 @@ Recept za nalogo z (kvadratno) pokončno piramido:
    - iščem $v_s$: $v_s = \sqrt{v^2 + (a/2)^2}$ (plus),
    - iščem $v$: $v = \sqrt{v_s^2 - (a/2)^2}$ (minus).
 4. Prostornina: $V = \dfrac{O \cdot v}{3}$.
-5. Plašč: $pl = 4 \cdot \dfrac{a \cdot v_s}{2}$. Površina: $P = O + pl$.
+5. Plašč: $\mathrm{pl} = 4 \cdot \dfrac{a \cdot v_s}{2}$. Površina: $P = O + \mathrm{pl}$.
 
 Primer s tabelo, $a = 6\,\text{cm}$, $v = 4\,\text{cm}$:
 
@@ -131,7 +131,7 @@ Primer s tabelo, $a = 6\,\text{cm}$, $v = 4\,\text{cm}$:
 |---|---|---|
 | $O$ | $6^2$ | $36\,\text{cm}^2$ |
 | $v_s$ | $\sqrt{16 + 9}$ | $5\,\text{cm}$ |
-| $pl$ | $4 \cdot 6 \cdot 5 / 2$ | $60\,\text{cm}^2$ |
+| $\mathrm{pl}$ | $4 \cdot 6 \cdot 5 / 2$ | $60\,\text{cm}^2$ |
 | $P$ | $36 + 60$ | $96\,\text{cm}^2$ |
 | $V$ | $36 \cdot 4 / 3$ | $48\,\text{cm}^3$ |
 
@@ -173,3 +173,14 @@ Ujema se. To je preverjanje za poseben primer. Splošno velja, da je prostornina
 + $40\,\text{cm}^2$
 - $56\,\text{cm}^2$
 > Plašč so štirje trikotniki: $4 \cdot \dfrac{4 \cdot 5}{2} = 40\,\text{cm}^2$. Odgovor $80$ pozabi deliti z 2, $20$ je en sam trikotnik, $56$ pa je površina ($16 + 40$), ne plašč.
+
+:::simboli
+P | površina piramide | P = O + \mathrm{pl} | |
+O | ploščina osnovne ploskve | | |
+\mathrm{pl} | ploščina plašča | \mathrm{pl} = n \cdot \frac{a \cdot v_s}{2} | | velja za pokončno piramido s pravilno osnovno ploskvijo
+n | število stranskih ploskev | | | pri kvadratni piramidi n = 4
+a | osnovni rob | | |
+v_s | višina stranske ploskve | v_s^2 = v^2 + \left(\frac{a}{2}\right)^2 | | vedno večja od višine piramide
+V | prostornina piramide | V = \frac{O \cdot v}{3} | |
+v | višina piramide | | | razdalja od vrha do osnovne ploskve
+:::

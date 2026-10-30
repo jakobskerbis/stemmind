@@ -208,3 +208,21 @@ Napetosti v zaporedni veji: $U_1 = 0{,}03 \cdot 100 = 3\,\text{V}$, $U_2 = 0{,}0
 + $200\,\text{W}$
 - $50\,\text{W}$
 > $P = \dfrac{U^2}{R} = \dfrac{100^2}{50} = \dfrac{10\,000}{50} = 200\,\text{W}$. Odgovor $2\,\text{W}$ dobiš, če izračunaš samo tok ($I = U/R = 2\,\text{A}$) in ga zamenjaš z močjo, $5000\,\text{W}$ pa, če napetost pomnožiš z uporom ($100 \cdot 50$).
+
+:::simboli
+I_{\text{vtekajoči}} | tok, ki vteka v razcepišče | | A | vsota vtekajočih je enaka vsoti iztekajočih
+I_{\text{iztekajoči}} | tok, ki izteka iz razcepišča | | A
+U_{\text{vira}} | napetost vira | | V | zaporedno se razdeli na porabnike
+U | napetost | U = I \cdot R | V
+I | (skupni) električni tok | I = \dfrac{U}{R} | A
+R | (nadomestni) upor | R = R_1 + R_2 | Ω | zaporedna vezava
+P | električna moč | P = U \cdot I | W | tudi P = I²R = U²/R
+U_1, U_2 | napetost na posameznem uporniku | | V
+I_1, I_2, I_3 | tok skozi posamezni upornik | | A
+R_1, R_2, R_3 | upor posameznega upornika | | Ω
+I_k | tok skozi k-to vejo | I_k = \dfrac{U}{R_k} | A
+R_k | upor k-te veje | | Ω
+R_{23} | nadomestni upor vzporedno vezanih R₂ in R₃ | R_{23} = \dfrac{R_2 R_3}{R_2 + R_3} | Ω
+U_{23} | napetost na vzporednem delu | | V
+P_1 | moč na uporniku R₁ | | W
+:::

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { getTopic, getPath } from "../server/curriculum.js";
-import { KNOWLEDGE, COLLECTIONS, PASS, PASS_REWARDS, RARITY_TIER, seasonOf, seasonLabel, topicTier } from "../public/zbirke.js";
+import { KNOWLEDGE, COLLECTIONS, PASS, PASS_REWARDS, RARITY_TIER, DRAW, seasonOf, seasonLabel, topicTier } from "../public/zbirke.js";
 import { avatarSvg, cleanAvatar, SLOTS, ITEMS, itemRarity } from "../public/avatar.js";
 import SL from "../public/i18n/sl.js";
 import { publicAvatar } from "../server/avatar.js";
@@ -45,7 +45,15 @@ test("zbirke: every item draws, every condition topic exists at the item's level
     const l = igre.filter((x) => x.need[key]);
     for (let i = 1; i < l.length; i++) assert.ok(l[i].need[key] > l[i - 1].need[key] && RARITY_TIER[l[i].rarity] >= RARITY_TIER[l[i - 1].rarity], l[i].id);
   }
-  for (const c of COLLECTIONS.filter((c) => !["pot", "lige", "igre"].includes(c.id))) {
+  // Smešni liki: samo za XP, naraščajoče, nikoli kozmični ali večni; vsak ima risbo.
+  const smesni = KNOWLEDGE.filter((x) => x.collection === "smesni");
+  assert.ok(smesni.length >= 8 && smesni.filter((x) => x.slot === "kind").length >= 4 && smesni.every((x) => x.need.xp > 0 && x.earn && !x.price && RARITY_TIER[x.rarity] <= RARITY_TIER.legendary));
+  for (let i = 1; i < smesni.length; i++) assert.ok(smesni[i].need.xp > smesni[i - 1].need.xp && RARITY_TIER[smesni[i].rarity] >= RARITY_TIER[smesni[i - 1].rarity], smesni[i].id);
+  for (const x of smesni) {
+    const svg = x.slot === "kind" ? DRAW.kindBack(x.id, "t") + DRAW.kindFront(x.id, "t") : x.slot === "fx" ? DRAW.fxFront(x.id) : x.slot === "badge" ? DRAW.badge(x.id) : DRAW[x.slot](x.id, "t");
+    assert.ok(svg && svg.length > 80, x.id);
+  }
+  for (const c of COLLECTIONS.filter((c) => !["pot", "lige", "igre", "smesni"].includes(c.id))) {
     const n = KNOWLEDGE.filter((x) => x.collection === c.id && !x.set).length;
     const set = KNOWLEDGE.find((x) => x.collection === c.id && x.set);
     assert.ok(set && set.need.own < n, c.id);

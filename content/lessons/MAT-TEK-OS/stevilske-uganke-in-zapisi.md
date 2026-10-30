@@ -257,3 +257,17 @@ Zaporedje s stalno razliko $d$ in prvim členom $a_1$ ima $n$-ti člen $a_n = a_
 - $\mathrm{A} = 3$, $\mathrm{B} = 9$
 ~ $3 + 3 + 3 = 9$ je enomestno, $\overline{\mathrm{BA}}$ pa je dvomestno število.
 > Z mestnimi vrednostmi: $3\mathrm{A} = 10\mathrm{B} + \mathrm{A}$, torej $2\mathrm{A} = 10\mathrm{B}$ in $\mathrm{A} = 5\mathrm{B}$. Edina števka je $\mathrm{A} = 5$ pri $\mathrm{B} = 1$: $5 + 5 + 5 = 15$.
+
+:::simboli
+a | števka desetic (v trimestnem številu stotic) | | | od 1 do 9
+b | števka enic (v trimestnem številu desetic) | | | od 0 do 9
+c | števka enic trimestnega števila | | | od 0 do 9
+a_0 | števka enic | | |
+a_1 | števka desetic | | | drugje: prvi člen aritmetičnega zaporedja
+a_k | števka na najvišjem mestu | | | njeno mesto ima vrednost 10ᵏ
+k | mesto najvišje števke | | | drugje: dolžina ponavljajočega se vzorca
+n | zaporedna številka člena (dneva) | | |
+x | števka desetic (v trimestnem številu stotic) | | |
+y | števka enic (v trimestnem številu desetic) | | |
+z | števka enic trimestnega števila | | |
+:::

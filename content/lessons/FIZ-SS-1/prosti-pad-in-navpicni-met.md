@@ -206,3 +206,15 @@ $$h = \frac{g}{2}\cdot\frac{v^2}{g^2} = \frac{v^2}{2g} \quad\Rightarrow\quad v^2
 + $20{,}4\,\text{m}$
 - $2{,}04\,\text{m}$
 > Uporabimo $h_\text{max} = \dfrac{v_0^2}{2g} = \dfrac{400}{19{,}62} \approx 20{,}4\,\text{m}$. Če pozabiš faktor $2$ v imenovalcu, dobiš $40{,}8\,\text{m}$, vrednost $2{,}04$ pa je čas vzpona v sekundah, ne višina.
+
+:::simboli
+g | težni pospešek | | m/s^2 | približno 9,81 m/s²
+v | hitrost | v = v_0 - g\,t | m/s | pri prostem padu v = g t
+v_0 | začetna hitrost | | m/s | pri prostem padu v₀ = 0
+t | čas | | s
+h | višina padca | h = \dfrac{g t^2}{2} | m | velja tudi v² = 2 g h
+y | višina (lega na navpični osi) | y = v_0\,t - \frac{g\,t^2}{2} | m | pri metu os y kaže navzgor
+y_0 | začetna višina | | m
+t_{\text{vrh}} | čas vzpona do vrha | t_\text{vrh} = \dfrac{v_0}{g} | s | celoten let traja 2 t_vrh
+h_{\text{max}} | največja višina | h_\text{max} = \dfrac{v_0^2}{2g} | m
+:::

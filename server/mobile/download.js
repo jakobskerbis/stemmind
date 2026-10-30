@@ -10,8 +10,10 @@ import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import express from "express";
 import { BRAND } from "../brand.js";
+import { apkVersion } from "./apk-info.js";
 import { uiText, manifestLang } from "../webapp.js";
 import { RTL } from "../../public/i18n/languages.js";
+import { appLinkUrl } from "./app-link.js";
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const httpsUrl = (u) => (/^https:\/\/[^\s"'<>]+$/.test(String(u || "")) ? u : null);
@@ -76,7 +78,8 @@ export async function fetchApk(url, file, fetchImpl = fetch) {
           yield chunk;
         }
       },
-      fs.createWriteStream(tmp),
+      // Datoteko odpremo takoj: lenobno odpiranje bi jo lahko ustvarilo šele po brisanju ob napaki.
+      fs.createWriteStream(tmp, { fd: fs.openSync(tmp, "w") }),
     );
     if (!head.equals(ZIP)) stop("To ni datoteka APK.");
     fs.renameSync(tmp, file);
@@ -93,13 +96,27 @@ export function mountDownload(app, opts = {}) {
   const dataDir = path.dirname(env.EVKLID_DB || `data/${BRAND.slug}.db`);
   const apkFile = opts.apkFile || path.resolve(env.EVKLID_ANDROID_APK_FILE || path.join(dataDir, apkName));
 
-  // Kje je aplikacija za posamezno napravo (gumb »Namesti aplikacijo« v spletni aplikaciji).
-  const links = () => ({
-    apk: httpsUrl(env.EVKLID_ANDROID_APK_URL) || (fs.existsSync(apkFile) ? `/prenesi/${apkName}` : null),
-    play: httpsUrl(env.EVKLID_PLAY_URL),
-    appStore: httpsUrl(env.EVKLID_APP_STORE_URL),
-    testflight: httpsUrl(env.EVKLID_TESTFLIGHT_URL),
-  });
+  // Različica naloženega APK (versionCode iz manifesta); aplikacija jo primerja s svojo in ponudi posodobitev.
+  let versionCache = { mtime: 0, version: null };
+  const fileVersion = (st) => {
+    if (!st) return null;
+    if (versionCache.mtime !== st.mtimeMs) versionCache = { mtime: st.mtimeMs, version: apkVersion(apkFile) };
+    return versionCache.version;
+  };
+
+  // Kje je aplikacija za posamezno napravo (gumb »Namesti aplikacijo« v spletni aplikaciji in
+  // preverjanje posodobitev v aplikaciji). apkVersion samo za APK na tem strežniku.
+  const links = () => {
+    const url = httpsUrl(env.EVKLID_ANDROID_APK_URL);
+    const st = url ? null : fs.statSync(apkFile, { throwIfNoEntry: false });
+    return {
+      apk: url || (st ? `/prenesi/${apkName}` : null),
+      apkVersion: fileVersion(st),
+      play: httpsUrl(env.EVKLID_PLAY_URL),
+      appStore: httpsUrl(env.EVKLID_APP_STORE_URL),
+      testflight: httpsUrl(env.EVKLID_TESTFLIGHT_URL),
+    };
+  };
   app.get("/api/app-links", (_req, res) => res.set("Cache-Control", "no-cache").json(links()));
 
   const admin = (req, res) => {
@@ -109,7 +126,7 @@ export function mountDownload(app, opts = {}) {
   };
   const apkStatus = () => {
     const st = fs.statSync(apkFile, { throwIfNoEntry: false });
-    return { file: st ? { bytes: st.size, at: st.mtime.toISOString() } : null, url: httpsUrl(env.EVKLID_ANDROID_APK_URL) };
+    return { file: st ? { bytes: st.size, at: st.mtime.toISOString(), version: fileVersion(st) } : null, url: httpsUrl(env.EVKLID_ANDROID_APK_URL) };
   };
   app.get("/api/admin/apk", (req, res) => {
     if (admin(req, res)) res.json(apkStatus());
@@ -147,12 +164,23 @@ export function mountDownload(app, opts = {}) {
       ${play ? btn(play, t("dl.play")) : ""}
       ${apk ? `${btn(apk, t("dl.apk"), !play)}<p class="muted">${t("dl.apkSteps")}</p>` : play ? "" : `<p class="muted">${t("dl.soon")}</p>`}
     </section>`;
+    // Prijavljen v tem brskalniku na telefonu: enkratna povezava, ki odpre aplikacijo prijavljeno (app-link.js).
+    // ?app=1: stran je odprla aplikacija (gumb na zaslonu za prijavo), zato je ta del na vrhu.
+    let appLink = "";
+    if (opts.appLinks && /Android|iPhone|iPad|Macintosh.*Mobile/.test(ua)) {
+      const token = opts.appLinks.create(req);
+      if (token) {
+        const href = appLinkUrl(token, { android: first === "android", fallback: `https://${BRAND.domain}/prenesi` });
+        appLink = `<section id="app"><h2>${t("dl.linkTitle")}</h2><p class="muted">${t("dl.linkText")}</p>${btn(href, t("dl.linkBtn"))}</section>`;
+      } else if (req.query.app) appLink = `<section id="app"><p style="margin:0">${t("dl.linkSignedOut")}</p></section>`;
+    }
     const ios = `<section><h2>${t("dl.ios")}</h2>
       ${appStore ? btn(appStore, t("dl.appStore")) : ""}
       ${!appStore && testflight ? `${btn(testflight, t("dl.testflight"))}<p class="muted">${t("dl.testflightSteps")}</p>` : ""}
       ${!appStore ? `<p class="muted">${t("dl.iosWeb")}</p>${btn("/", t("dl.openWeb"), false)}` : ""}
     </section>`;
-    res.set("Cache-Control", "no-cache").type("html").send(`<!doctype html>
+    // Enkratna povezava ne sme ostati v predpomnilniku.
+    res.set("Cache-Control", appLink ? "no-store" : "no-cache").type("html").send(`<!doctype html>
 <html lang="${esc(lang)}" dir="${RTL.has(lang) ? "rtl" : "ltr"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(BRAND.name)} · ${t("dl.title")}</title><link rel="icon" href="/icons/icon-192.png">
 <style>
@@ -168,8 +196,10 @@ section{background:var(--surface);border:1px solid var(--border);border-radius:1
 .muted{color:var(--muted);font-size:14px;margin:8px 0 0}
 </style></head><body><main>
 <header><img src="/icons/icon-192.png" alt=""><div><h1>${esc(BRAND.name)}</h1><div class="muted">${t("dl.title")}</div></div></header>
+${req.query.app ? appLink : ""}
 <p>${t("dl.intro")}</p>
 ${first === "ios" ? ios + android : android + ios}
+${req.query.app ? "" : appLink}
 </main></body></html>`);
   });
 }

@@ -247,3 +247,12 @@ To je $3 \cdot 180^\circ - (\alpha + \beta + \gamma) = 540^\circ - 180^\circ = 3
 - $125^\circ$
 ~ To je $(360^\circ - 110^\circ) : 2$. V trikotniku je vsota $180^\circ$, ne $360^\circ$.
 > Kota ob osnovnici skupaj merita $180^\circ - 110^\circ = 70^\circ$, vsak torej $70^\circ : 2 = 35^\circ$.
+
+:::simboli
+\alpha | notranji kot pri oglišču A | | ° | α + α' = 180°
+\beta | notranji kot pri oglišču B | | °
+\gamma | notranji kot pri oglišču C | \gamma = 180^\circ - \alpha - \beta | °
+\alpha' | zunanji kot pri oglišču A | \alpha' = 180^\circ - \alpha | ° | enak tudi β + γ
+\beta' | zunanji kot pri oglišču B | | °
+\gamma' | zunanji kot pri oglišču C | \gamma' = \alpha + \beta | ° | vsota vseh zunanjih kotov je 360°
+:::

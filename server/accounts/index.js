@@ -92,9 +92,14 @@ export function mountAccounts(app, store, opts = {}) {
   const forgotThrottle = new Throttle(5, 3600000); // pošiljanje povezav za novo geslo: 5 na uro
   const devLinks = (req) => !mailer.enabled && (isLocalRequest(req) || gateNeeded(env));
   const locks = new ProfileLocks(db);
+  // Geslo profila ločuje profile na istem računu (brat ne odpre sestrinega). Račun z enim profilom ga ne
+  // potrebuje, prijava v račun zadošča (j, 2026-10-30: »nočem, da se ta zaslon prikazuje«).
+  const profileLockOn = (p) => !p.is_guest && childIds(p.id).length > 1;
+  const profileLocked = (p, studentId, deviceId) => profileLockOn(p) && locks.locked(studentId, deviceId);
   const accountLocks = new AccountLocks(db);
-  // Zaklep računa: dejanja lastnika zahtevajo geslo računa (EVKLID_ACCOUNT_LOCK=0 izklopi).
-  const accountLockOn = opts.accountLock ?? env.EVKLID_ACCOUNT_LOCK !== "0";
+  // Zaklep računa: dejanja lastnika zahtevajo geslo računa. Privzeto izklopljen (j, 2026-10-30: geslo samo
+  // enkrat); EVKLID_ACCOUNT_LOCK=1 ga vklopi. Izvoz in izbris računa geslo zahtevata vedno.
+  const accountLockOn = opts.accountLock ?? env.EVKLID_ACCOUNT_LOCK === "1";
   const accountThrottle = new Throttle(10);
   // Račun brez gesla (prijava z Apple) ali gost: zaklepa ni, ker ni gesla za odklep.
   const lockable = (p) => accountLockOn && !p.is_guest && !String(p.password_hash || "").startsWith("none$");
@@ -324,7 +329,7 @@ export function mountAccounts(app, store, opts = {}) {
 
     // Geslo profila: odklep je mogoč brez odklepa; profil z geslom je sicer odprt samo na napravi, kjer je bil odklenjen.
     if (s && req.method === "POST" && req.path === `/students/${studentId}/unlock`) return next();
-    if (studentId !== null && !p.is_guest && locks.locked(studentId, req.deviceId)) {
+    if (studentId !== null && profileLocked(p, studentId, req.deviceId)) {
       return res.status(423).json({
         error: "Profil je zaklenjen. Vpiši geslo profila.",
         locked: true,
@@ -595,7 +600,8 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   app.post("/api/auth/logout", (req, res) => {
-    if (req.parent) locks.lockDevice(childIds(req.parent.id), req.deviceId);
+    // Profili na napravi ostanejo odklenjeni (geslo samo enkrat, j 2026-10-30); brez seje niso dostopni,
+    // ob ponovni prijavi z geslom računa pa jih ni treba odklepati znova.
     if (req.parent) accountLocks.lock(req.parent.id, req.deviceId);
     if (req.parent) audit(db, { req, parentId: req.parent.id, action: "logout" });
     sessions.destroy(readCookie(req));
@@ -896,6 +902,7 @@ export function mountAccounts(app, store, opts = {}) {
     res.json(
       children(p.id).map((c) => {
         if (p.is_guest) return c;
+        if (!profileLockOn(p)) return c;
         if (locks.locked(c.id, req.deviceId)) return { id: c.id, name: c.name, locked: true };
         return { ...c, needs_password: !locks.hasPassword(c.id) };
       }),
@@ -913,7 +920,7 @@ export function mountAccounts(app, store, opts = {}) {
       const bad = checkProfilePassword(pw);
       if (bad) return res.status(400).json({ error: bad });
       await locks.setPassword(id, pw);
-      locks.unlock(id, req.deviceId, childIds(p.id));
+      locks.unlock(id, req.deviceId);
       audit(db, { req, parentId: p.id, action: "profile_password_set", target: `student:${id}` });
       return res.json({ ok: true });
     }
@@ -926,7 +933,7 @@ export function mountAccounts(app, store, opts = {}) {
       return res.status(401).json({ error: "Napačno geslo profila." });
     }
     profileThrottle.reset(key);
-    locks.unlock(id, req.deviceId, childIds(p.id));
+    locks.unlock(id, req.deviceId);
     res.json({ ok: true });
   });
 
@@ -1012,6 +1019,16 @@ export function mountAccounts(app, store, opts = {}) {
       const bad = checkProfilePassword(profilePw);
       if (bad) return res.status(400).json({ error: bad, profile_password: true });
     }
+    // Drugi profil na računu: odslej velja geslo profila, zato ga dobijo tudi obstoječi profili brez gesla
+    // (sicer bi ga nastavil, kdor jih prvi odpre). { other_passwords: { "<id>": "geslo" } }
+    const others = {};
+    for (const id of childIds(p.id)) {
+      const pw = req.body?.other_passwords?.[id];
+      if (pw == null || pw === "" || locks.hasPassword(id)) continue;
+      const bad = checkProfilePassword(pw);
+      if (bad) return res.status(400).json({ error: bad, profile_password: true });
+      others[id] = pw;
+    }
     const under15 = now - year <= 15; // previdno: v letu 15. rojstnega dne še štejemo kot mlajšega od 15
     const s = store.createStudent(name, req.body?.settings);
     db.prepare("UPDATE students SET parent_id = ?, birth_year = ? WHERE id = ?").run(p.id, year, s.id);
@@ -1028,7 +1045,11 @@ export function mountAccounts(app, store, opts = {}) {
     devices.use(s.id, req.deviceId, deviceLabel(req.get("user-agent")));
     if (profilePw) {
       await locks.setPassword(s.id, profilePw);
-      locks.unlock(s.id, req.deviceId, childIds(p.id));
+      locks.unlock(s.id, req.deviceId);
+    }
+    for (const [id, pw] of Object.entries(others)) {
+      await locks.setPassword(Number(id), pw);
+      locks.unlock(Number(id), req.deviceId);
     }
     res.status(201).json({ ...store.getStudent(s.id), birth_year: year });
   });
@@ -1336,10 +1357,16 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   // --- tedensko poročilo ---
+  // Profili »Zame« (učenec 15+ sam): poročilo ga nagovori neposredno, brez nasvetov za starše.
+  // Po prvem stavku (»Profil je moj.«), da stara soglasja ostanejo prepoznana tudi po preimenovanju aplikacije v besedilu.
+  const selfPrefix = SELF_CONSENT_TEXT.slice(0, SELF_CONSENT_TEXT.indexOf(".") + 1);
+  const selfIds = (parentId) =>
+    db.prepare("SELECT student_id FROM consents WHERE parent_id = ? AND substr(text, 1, ?) = ?").all(parentId, selfPrefix.length, selfPrefix).map((r) => r.student_id);
   const reportFor = (p, req) =>
     buildWeeklyReport(db, p, children(p.id), {
       appUrl: baseUrl(req) + "/",
       unsubscribeUrl: `${baseUrl(req)}/api/account/unsubscribe?token=${p.unsubscribe_token}`,
+      selfIds: selfIds(p.id),
     });
 
   app.get("/api/account/weekly-report/preview", (req, res) => res.type("html").send(reportFor(req.parent, req).html));
@@ -1358,9 +1385,13 @@ export function mountAccounts(app, store, opts = {}) {
     let sent = 0;
     for (const p of parents) {
       if (!childIds(p.id).length) continue;
+      // Že poslano ta teden: poročila ne sestavljamo znova (urnik teče vsakih 30 minut).
+      if (db.prepare("SELECT 1 FROM email_log WHERE parent_id = ? AND kind = 'weekly' AND period = ?").get(p.id, period)) continue;
+      const report = reportFor(p, null);
+      if (report.quiet) continue; // dva tedna brez vaje: ne pošiljamo praznih poročil
       const claim = db.prepare("INSERT OR IGNORE INTO email_log (parent_id, kind, period) VALUES (?, 'weekly', ?)").run(p.id, period);
       if (!claim.changes) continue;
-      const ok = await sendMail(p.email, reportFor(p, null));
+      const ok = await sendMail(p.email, report);
       if (!ok) db.prepare("UPDATE email_log SET ok = 0 WHERE parent_id = ? AND kind = 'weekly' AND period = ?").run(p.id, period);
       else sent++;
     }
@@ -1402,7 +1433,7 @@ export function mountAccounts(app, store, opts = {}) {
   }
 
   // Za mobilno aplikacijo (server/mobile): prijava z Apple, nakupi v trgovinah, obvestila.
-  const mobile = { db, sessions, getParent, parentByEmail, publicParent, accountView, createParent, checkAge, childIds, children, accessOf, signupThrottle, addReauth: (fn) => reauthHooks.push(fn) };
+  const mobile = { db, sessions, locks, accountLocks, devices, accountOpen: (p, deviceId) => !lockable(p) || (!!deviceId && accountLocks.isUnlocked(p.id, deviceId)), getParent, parentByEmail, publicParent, accountView, createParent, checkAge, childIds, children, accessOf, signupThrottle, addReauth: (fn) => reauthHooks.push(fn) };
   return { credits, shareWeightFor, ownerOf, freeOver, sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, offersFor, rightsFor, lessonInteractive, ladderFor, schools, guests, billing, mobile };
 }
 

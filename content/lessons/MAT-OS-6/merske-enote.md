@@ -260,3 +260,10 @@ Z enotami je natanko tako. Manjša enota je kot krajša nota: potrebuješ jih ve
 - $162\,000\,\text{min}$
 ~ Pomnožil si s $60$. Iz sekund v minute gremo v večjo enoto, zato delimo.
 > Iz $\text{s}$ v $\text{min}$ gremo navzgor, zato delimo s $60$: $2700 : 60 = 45$. Album traja $45$ minut.
+
+:::simboli
+n | število pesmi | n = t_{\text{koncert}} : t_{\text{pesem}} | – | celo število; ostanek časa ne zadošča za pesem
+t_{\text{koncert}} | čas koncerta | | s | oba časa najprej pretvorimo v sekunde
+t_{\text{pesem}} | trajanje ene pesmi s premorom | | s
+V | skupna prostornina | V = 8 \cdot 150\,\text{ml} | l | 1 l = 1000 ml
+:::

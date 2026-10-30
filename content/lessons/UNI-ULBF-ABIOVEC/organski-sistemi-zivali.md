@@ -200,3 +200,25 @@ Ledvica pa je kot pospravljanje pred selitvijo. Ne iščeš posebej vsakega smet
 - $49\,\mathrm{L}$
 ~ $4900\,\mathrm{mL}$ je $4{,}9\,\mathrm{L}$; deliti je treba s $1000$, ne s $100$.
 > $70 \cdot 70\,\mathrm{mL} = 4900\,\mathrm{mL} = 4{,}9\,\mathrm{L}$ na minuto. Ta pretok je blizu tistega iz primera 1.
+
+:::simboli
+t | čas enega obhoda krvi | t = \dfrac{V}{Q} | min | pri filtraciji: čas zbiranja filtrata
+V | prostornina krvi v telesu | | L
+Q | pretok krvi (minutni volumen srca) | | L/min
+Q_\mathrm{f} | hitrost glomerulne filtracije | | mL/min | okoli 125 mL/min
+V_\mathrm{f} | prostornina filtrata (primarnega seča) | V_\mathrm{f} = Q_\mathrm{f} \cdot t | L
+V_\mathrm{seč} | prostornina izločenega seča | | L
+n | kolikokrat se plazma precedi | n = \dfrac{V_\mathrm{f}}{V_\mathrm{plazma}} | –
+V_\mathrm{plazma} | prostornina krvne plazme | | L
+J | difuzijski tok plina skozi pregrado | J = k \cdot \dfrac{A \cdot \Delta p}{d} | | Fickov zakon
+k | difuzijska konstanta | | | pri razmerju se pokrajša
+A | površina pregrade | | m^2
+\Delta p | razlika parcialnih tlakov kisika | | kPa | med zrakom v mešičkih in krvjo
+\Delta p_1 | razlika parcialnih tlakov na morski gladini | | kPa
+\Delta p_2 | razlika parcialnih tlakov v baznem taboru | | kPa
+d | debelina pregrade | | µm
+d_1 | debelina pregrade brez edema | | µm
+d_2 | debelina pregrade z edemom | | µm | d₂ = 2 d₁
+J_1 | difuzijski tok na morski gladini | | |
+J_2 | difuzijski tok v baznem taboru z edemom | | |
+:::

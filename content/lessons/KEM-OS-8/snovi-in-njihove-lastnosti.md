@@ -233,3 +233,13 @@ Ana je naredila destilacijo: v lončku ima pitno vodo. Ko voda v jami izpari do 
 ~ Niti sol niti poper nista magnetna.
 + Zmes raztopim v vodi, precedim skozi filter in filtrat izparim.
 > Sol se raztopi, poper ne: poper ostane na filtru, sol pa dobiš nazaj, ko voda izpari.
+
+:::simboli
+m_1 | masa soli iz prve prostornine | | g
+m_2 | masa soli iz druge prostornine | m_2 = m_1 \cdot \dfrac{V_2}{V_1} | g
+V_1 | prostornina izparjene morske vode | | L | V₁ in V₂ v isti enoti: 250 mL = 0,25 L
+V_2 | prostornina morske vode, ki jo izparimo | | L
+m_{\text{soli}} | masa soli v zmesi | m_\text{soli} = m_\text{zmesi} - m_\text{peska} | g
+m_{\text{zmesi}} | masa zmesi soli in peska | | g
+m_{\text{peska}} | masa peska | | g | po filtriranju in sušenju
+:::

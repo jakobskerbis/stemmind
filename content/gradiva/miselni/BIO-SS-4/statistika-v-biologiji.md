@@ -1,0 +1,30 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Povprečje
+  - ravnovesna točka pik na premici
+  - $\bar{x} = \frac{\sum x_i}{n}$
+- Standardni odklon
+  - tipična razdalja od povprečja
+  - $s = \sqrt{\frac{\sum (x_i - \bar{x})^2}{n - 1}}$
+  - enota kot podatki
+- Standardna napaka
+  - natančnost povprečja, $SE = \frac{s}{\sqrt{n}}$
+  - štirikrat več meritev: pol manjša
+  - napaka: več meritev zmanjša $s$
+- t-test
+  - primerja povprečji dveh skupin
+  - ničelna hipoteza: razlike ni, je naključna
+  - stopinje prostosti $n_1 + n_2 - 2$
+  - $t$ večji od kritičnega: razlika značilna
+- Korelacija
+  - razsevni diagram, $r$ med $-1$ in $1$
+  - povezanost, ne vzrok
+- Hi-kvadrat test
+  - štetja po kategorijah, $\chi^2 = \sum \frac{(O - E)^2}{E}$
+  - stopinje prostosti $k - 1$
+  - $p = 0{,}05$, ena stopinja: meja $3{,}84$
+- Izbira testa
+  - meritve ali štetja?
+  - dve skupini meritev: t-test

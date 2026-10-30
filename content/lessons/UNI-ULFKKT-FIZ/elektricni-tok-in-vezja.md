@@ -298,3 +298,30 @@ Isti rezultat dobiš tudi s Kirchhoffovima zakonoma; poenostavljanje je le hitre
 - Smer toka v tej veji je treba obrniti in ves račun ponoviti.
 ~ Ponavljanje ni potrebno: rešitev je že pravilna, le predznak beremo kot smer. Spreminjanje smeri sredi računa samo zameša predznake.
 > Predznak toka je glede na izbrano smer. Tako je v Primeru 2 desni vir tok prejemal: močnejši vir je šibkejšega polnil.
+
+:::simboli
+I | električni tok | I = \frac{\mathrm{d}Q}{\mathrm{d}t} | A
+I_1, I_2, I_3 | tokovi v vejah vezja | | A | v zgledu velja I₁ + I₂ = I₃
+Q | električni naboj | | C | na kondenzatorju Q = CU
+t | čas | | s
+n | število nosilcev naboja na enoto prostornine | | m^{-3}
+e_0 | osnovni naboj | | C | 1,602 · 10⁻¹⁹ C
+v | hitrost potovanja nosilcev naboja | v = \frac{I}{n e_0 S} | m/s | zelo majhna, reda mm/s
+S | presek vodnika | | m^2
+U | električna napetost | U = RI | V
+U_1, U_2 | gonilni napetosti virov v vezju | | V
+U_C | napetost na kondenzatorju | U_C = \frac{Q}{C} | V | pri polnjenju $U_C = U_g(1 - e^{-t/\tau})$
+U_0 | začetna napetost na kondenzatorju | | V | pri praznjenju
+R | električni upor | R = \frac{U}{I} | Ω | žica: R = ζ l/S
+R_1, R_2, R_3 | upori v vejah vezja | | Ω
+\Omega | ohm, enota za upor | | | 1 Ω = 1 V/A
+\zeta | specifični upor snovi | | Ω m | baker: 1,7 · 10⁻⁸ Ω m
+l | dolžina žice | | m
+P | električna moč | P = UI = I^2R = \frac{U^2}{R} | W
+U_g | gonilna napetost vira | | V
+R_n | notranji upor vira | | Ω
+C | kapaciteta kondenzatorja | C = \frac{Q}{U} | F
+e | osnova naravnega logaritma | | – | e ≈ 2,718
+\tau | časovna konstanta RC vezja | \tau = RC | s | po 5τ je kondenzator skoraj poln
+W | energija v kondenzatorju | W = \tfrac{1}{2}CU^2 | J
+:::

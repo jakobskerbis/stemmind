@@ -169,3 +169,9 @@ Povezava z relativno frekvenco: če poskus ponovimo $n$-krat in se dogodek zgodi
 - Večja od $\dfrac{1}{2}$, ker je kovanec očitno nagnjen h grbu.
 + Enaka $\dfrac{1}{2}$
 > Pri poštenem kovancu so meti med seboj neodvisni, zato je verjetnost grba pri vsakem metu $\dfrac{1}{2}$, ne glede na prejšnje izide.
+
+:::simboli
+P | verjetnost dogodka | P(A) = \frac{\lvert A \rvert}{\lvert \Omega \rvert} | | vedno med 0 in 1
+A | dogodek | | | moč množice A je število ugodnih izidov
+\Omega | množica vseh izidov poskusa | | | moč množice Ω je število vseh možnih izidov
+:::

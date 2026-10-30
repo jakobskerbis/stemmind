@@ -177,3 +177,14 @@ Krogla je dvakrat tolikšna: $V = \dfrac{4\pi r^3}{3}$.
 + $90\pi\,\text{cm}^2$
 - $100\pi\,\text{cm}^2$
 > Stranica je $s = \sqrt{25 + 144} = 13\,\text{cm}$. Potem $P = \pi r^2 + \pi r s = 25\pi + 65\pi = 90\pi$. Odgovor $85\pi$ uporabi $v$ namesto $s$, $65\pi$ je samo plašč, $100\pi$ pa je prostornina.
+
+:::simboli
+P | površina telesa | | | vsota ploščin vseh mejnih ploskev
+S | ploščina osnovne ploskve | | |
+S_p | ploščina plašča | | | pri pokončni prizmi S_p = o · v
+V | prostornina telesa | | |
+v | višina telesa | | |
+r | polmer (osnovne ploskve ali krogle) | | |
+s | stranica stožca | s = \sqrt{r^2 + v^2} | |
+V_{\text{polkrogle}} | prostornina polkrogle | V_{\text{polkrogle}} = \frac{2\pi r^3}{3} | | valj minus stožec z višino r
+:::

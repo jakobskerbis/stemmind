@@ -210,3 +210,17 @@ Pri $1000$ številih zadošča $10$ vprašanj, pri milijardi pa le $30$. To je z
 - samo $x = -2$
 - enačba nima rešitve
 > Pogoj je $x > 3$. Združimo: $x(x - 3) = 10$, $x^2 - 3x - 10 = 0$, $(x - 5)(x + 2) = 0$. Pogoju ustreza le $x = 5$; preizkus: $\log 5 + \log 2 = \log 10 = 1$.
+
+:::simboli
+f | logaritemska funkcija | f(x) = \log_a x | |
+x | spremenljivka (neznanka) | | | x > 0
+a | osnova logaritma | | | a > 0, a ≠ 1
+g | premaknjena logaritemska funkcija | g(x) = \log_a (x - p) + q | |
+p | premik grafa v smeri osi x | | | asimptota je x = p
+q | premik grafa v smeri osi y | | |
+D_g | definicijsko območje funkcije g | D_g = (p, \infty) | |
+A, B, C | izrazi z neznanko pod logaritmom | | | morajo biti pozitivni
+c | vrednost logaritma | | | logₐ A = c pomeni A = aᶜ
+n | eksponent | | |
+t | nova neznanka | t = \log x | |
+:::

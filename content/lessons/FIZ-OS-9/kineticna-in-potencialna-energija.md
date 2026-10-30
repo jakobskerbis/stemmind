@@ -190,3 +190,16 @@ Vsota $W_p + W_k$ je na koncu enaka vsoti na začetku.
 + Vsa začetna potencialna energija se je pretvorila v kinetično.
 - Kinetična energija je enaka nič.
 > Zaradi ohranitve mehanske energije se brez trenja in upora vsa potencialna energija z vrha pretvori v kinetično. Tik pred tlemi je višina skoraj nič, zato je $W_p$ skoraj nič, žogica pa je najhitrejša.
+
+:::simboli
+W_k | kinetična energija | W_k = \dfrac{m v^2}{2} | J
+W_p | potencialna energija | W_p = m g h | J | merjena od izbrane ničelne višine
+m | masa | | kg
+v | hitrost | | m/s | pri padu z višine h: v = √(2gh)
+g | težni pospešek | | N/kg | približno 10 N/kg
+h | višina | | m
+h_1, h_2 | začetna in končna višina | | m
+A | delo | A = F \cdot s | J
+a | pospešek | | m/s^2
+t | čas | | s
+:::

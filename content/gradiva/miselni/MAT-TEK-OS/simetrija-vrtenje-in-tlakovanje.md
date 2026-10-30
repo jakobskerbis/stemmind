@@ -1,0 +1,27 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Zrcaljenje čez os
+  - os je simetrala daljice $PP'$
+  - orientacija se obrne
+- Os simetrije
+  - kvadrat $4$, pravokotnik $2$, paralelogram $0$
+  - napaka: diagonala pravokotnika ni os
+- Vrtenje
+  - $|OP'| = |OP|$, orientacija ostane
+  - najmanjši kot $\dfrac{360^\circ}{k}$
+  - zasuk za $180^\circ$ je središčna simetrija
+- Dvakratno zrcaljenje
+  - osi pod kotom $\beta$ dasta zasuk $2\beta$
+  - pravilni $n$-kotnik: $n$ osi, kot $\dfrac{360^\circ}{n}$
+- Tlakovanje
+  - koti v oglišču dajo $360^\circ$
+  - pravilni: trikotnik, kvadrat, šestkotnik
+  - vsak trikotnik in štirikotnik tlakuje
+- Štetje kosov
+  - lik brez osi da dva kosa
+  - $4$ kvadratki: $5$ likov, $7$ kosov brez zrcaljenja
+- Šahovsko barvanje
+  - domina pokrije eno črno in eno belo
+  - napaka: ujemanje ploščine ne zadostuje

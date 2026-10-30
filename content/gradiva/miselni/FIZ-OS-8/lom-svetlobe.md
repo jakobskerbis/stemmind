@@ -1,0 +1,28 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Lom na meji
+  - sprememba smeri med dvema prozornima snovema
+  - del svetlobe se tudi odbije
+- Vpadni in lomni kot
+  - merimo od vpadne pravokotnice
+  - pravokotni žarek se ne lomi
+- Optično gostejša snov
+  - lom proti pravokotnici, $\beta < \alpha$
+  - zrak, voda, steklo: vse bolj optično goste
+  - napaka: olje je lažje, a optično gostejše
+- Optično redkejša snov
+  - lom stran od pravokotnice, $\beta > \alpha$
+  - kovanec v skodelici se zdi višje
+- Zbiralna leča
+  - na sredini debelejša
+  - vzporedne žarke zbere v gorišču $F$
+  - goriščna razdalja $f$
+- Slike zbiralne leče
+  - bliže od $f$: lupa, pokončna, povečana
+  - dlje od $2f$: obrnjena, pomanjšana
+  - na $2f$: enako velika, na $2f$
+- Razpršilna leča
+  - na sredini tanjša, žarke razprši
+  - slika navidezna, pokončna, pomanjšana

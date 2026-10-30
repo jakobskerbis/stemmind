@@ -237,3 +237,20 @@ Model velja za haploidne organizme (bakterije) z ločenimi generacijami in brez 
 - Herbicid je v rastlinah povzročil mutacije za odpornost.
 ~ Mutacije nastajajo naključno, ne zato, ker bi jih rastlina potrebovala.
 > Isti mehanizem kot pri MRSA v slačilnici: isti dejavnik izbora vsako leto poveča delež odpornih.
+
+:::simboli
+p_t | delež odpornih po t generacijah | | – |
+q_t | delež občutljivih po t generacijah | q_t = 1 - p_t | – |
+p_0 | začetni delež odpornih | | – |
+q_0 | začetni delež občutljivih | q_0 = 1 - p_0 | – |
+w_R | relativni fitnes odpornih | | – | najbolj uspešni imajo 1
+w_S | relativni fitnes občutljivih | | – |
+t | število generacij | | – | pri molekulski uri čas razcepa v milijonih let
+N_\text{odp} | število preživelih odpornih celic | | – |
+N_\text{obč} | število preživelih občutljivih celic | | – |
+p | delež odpornih v tej generaciji | | – |
+p' | delež odpornih v naslednji generaciji | p' = \dfrac{p \cdot w_R}{p \cdot w_R + (1 - p) \cdot w_S} | – |
+t_\text{ref} | znani čas razcepa za referenčni par | | milijon let |
+d | genetska razdalja med vrstama | | – | število razlik v zaporedju
+d_\text{ref} | genetska razdalja referenčnega para | | – |
+:::

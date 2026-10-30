@@ -217,3 +217,15 @@ Od tod je $p = -\dfrac{b}{2a}$ in $q = c - \dfrac{b^2}{4a}$, kar se ujema s $q =
 - eno
 - dve
 > $a = 4 > 0$ in $q = 3 > 0$: parabola je odprta navzgor, njeno teme $(-1, 3)$ leži nad osjo $x$, zato osi ne seka.
+
+:::simboli
+f | kvadratna funkcija | f(x) = ax^2 + bx + c | |
+x | neodvisna spremenljivka | | |
+a | vodilni koeficient | | | a ≠ 0; pri a > 0 je parabola odprta navzgor
+b | linearni koeficient | | |
+c | prosti člen | | | presečišče z osjo y je (0, c)
+p | abscisa temena | p = -\frac{b}{2a} | | simetrijska os je x = p
+q | ordinata temena | q = f(p) | |
+T | teme parabole | | |
+x_1, x_2 | ničli funkcije | | |
+:::

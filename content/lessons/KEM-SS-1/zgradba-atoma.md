@@ -253,3 +253,17 @@ $$A_r = \sum_i w_i\, m_i$$
 ~ Plus pomeni manj elektronov, ne več.
 + $1$ nevtron in $0$ elektronov
 > $N = 3 - 2 = 1$. Nevtralni helij ima $2$ elektrona, naboj $2+$ pomeni dva manj, torej $0$.
+
+:::simboli
+s | podlupina s | | | ena orbitala, največ 2 elektrona
+p | podlupina p | | | tri orbitale, največ 6 elektronov; p⁺ je proton
+d | podlupina d | | | pet orbital, največ 10 elektronov
+A | masno število | A = Z + N | – | število protonov in nevtronov skupaj
+Z | vrstno (atomsko) število | | – | število protonov
+N | število nevtronov | N = A - Z | –
+A_r | relativna atomska masa elementa | A_r = \sum_i w_i\, m_i | – | za dva izotopa: w₁ · A₁ + w₂ · A₂
+i | zaporedna številka izotopa | | – |
+w_i, w_1, w_2 | delež izotopa v naravni zmesi | | – | vsota vseh deležev je 1
+m_i | relativna masa izotopa | | – | približno enaka masnemu številu
+A_1, A_2 | masni števili obeh izotopov | | – |
+:::

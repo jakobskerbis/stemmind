@@ -34,7 +34,7 @@ const NAMES = [
   // igre: zaklenjene igre in gradnja
   "unlock", "castle",
   // igre v slogu mobilnih iger (public/games/fun.js)
-  "chef-hat", "car", "paw-print", "shopping-basket", "grid-2x2", "cherry", "droplet", "bomb", "blocks", "gem", "spade", "joystick",
+  "chef-hat", "car", "paw-print", "shopping-basket", "grid-2x2", "cherry", "droplet", "bomb", "blocks", "gem", "spade", "joystick", "venetian-mask",
   // skeniranje nalog (public/scan/)
   "scan-line", "scan-text", "badge-check", "image",
   // kovanci (igre, zbirke)

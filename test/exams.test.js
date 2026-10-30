@@ -111,6 +111,12 @@ test("check: English decimals with a dot are not read as thousands", () => {
   assert.equal(parseNumberWithUnit("1.000").value, 1000);
   assert.equal(checkAnswer({ type: "number", value: 0.12, decimals: 3, dot: true }, "0.120").kind, "correct");
   assert.equal(checkAnswer({ type: "number", value: 0.12, decimals: 3, dot: true }, "0,120").kind, "correct");
+  // Štiri decimalke niso skupina tisočic in zadnja števka ni enota (prej: 1,148 z enoto »4«).
+  assert.deepEqual(parseNumberWithUnit("1.1484", { dot: true }), { value: 1.1484, decimals: 4, unit: "" });
+  assert.deepEqual(parseNumberWithUnit("1.1484"), { value: 1.1484, decimals: 4, unit: "" });
+  assert.equal(parseNumberWithUnit("12 345 m").value, 12345);
+  assert.equal(checkAnswer({ type: "number", value: 1.1484, decimals: 4, dot: true }, "1.1484").kind, "correct");
+  assert.equal(checkAnswer({ type: "number", value: 0.0359, decimals: 4, dot: true }, "0.0359").kind, "correct");
 });
 
 test("exam mock: JEE negative marking, SAT scaled score, XP", () => {

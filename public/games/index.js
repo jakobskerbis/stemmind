@@ -16,11 +16,12 @@ function onPath(e, c) {
 }
 import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
-import { GENRES, childhoodEngines } from "./childhood.js";
+import { GENRES, childhoodEngines, matchTitle, cleanTitles, MAX_TITLES } from "./childhood.js";
 import { WISHES } from "./wishes.js";
 import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isNew, isNewDate, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
 import { seasonOf } from "../zbirke.js";
 import { unlockedText } from "../zbirke-view.js";
+import { pageSlice, pageNums } from "./pages.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const FILTER_KEY = "evklid.gamesFilter";
@@ -69,6 +70,7 @@ let filter = { subject: "MAT", area: "you", kind: "all", q: "" };
 const SUBJ_GLYPH = { MAT: "∑", FIZ: "⚛", KEM: "⚗", BIO: "❀", NAR: "☼", GEO: "⛰", RAC: "01", EKO: "€" };
 let game = null; // odprta igra
 let trOpen = false;
+let page = 0; // stran mreže iger (pages.js); ob vsaki spremembi izbire ali iskanja spet prva
 let trends = null; // glasovi tedna (samo skrbnik ali računalnik s strežnikom, server/games.js)
 let root = null;
 
@@ -136,6 +138,11 @@ const kidList = () => ctx.getStudent()?.settings?.game_childhood ?? null;
 // Glasovi tedna za j-jev pregled (j 2026-10-30: »vsak teden seznam glasov, meni v pregled«).
 const sorted = (o) => Object.entries(o || {}).sort((a, b) => b[1] - a[1]);
 const wishName = (id) => t(`games.w.${id}`);
+// Lastni naslov v pregledu: »fortnite (?)«, »minecraft → Gradnja mesta«.
+const titleLabel = (x) => {
+  const m = matchTitle(x);
+  return m.genre ? `${x} → ${t(`games.g.${m.genre}`)}` : m.wish ? `${x} → ${wishName(m.wish)}` : `${x} (?)`;
+};
 function trendsText() {
   const tr = trends;
   const line = (list, name) => list.map(([id, n]) => `${name(id)} ${n}`).join(", ") || "—";
@@ -144,6 +151,8 @@ function trendsText() {
     `${t("games.trNow")}: ${line(sorted(tr.wishes?.[tr.week]), wishName)}`,
     `${t("games.trRatings")}: ${line(Object.entries(tr.ratings || {}).map(([id, r]) => [id, `👍${r.up} 👎${r.down}`]), (id) => t(`games.e.${id}`))}`,
     `${t("games.trKid")}: ${line(sorted(tr.childhood), (id) => t(`games.g.${id}`))}`,
+    // prosto besedilo otrok gre v kopijo (in v oblak) le, če ga je napisalo vsaj 2 učenca
+    `${t("games.trTitles")}: ${line(sorted(tr.titles).filter(([, n]) => n >= 2), titleLabel)}`,
     // za izenačenje (docs/igre-tedensko.md: več glasov skupaj) in igranost
     `${t("games.trAll")}: ${line(sorted(tr.allWishes), wishName)}`,
     `${t("games.trPlays")}: ${line(sorted(tr.plays), (id) => t(`games.e.${id}`))}`,
@@ -159,10 +168,25 @@ function trendsCard() {
       <h3>${esc(t("games.trNow"))}</h3>${rows(sorted(tr.wishes?.[tr.week]), wishName)}
       <h3>${esc(t("games.trRatings"))}</h3>${rows(Object.entries(tr.ratings || {}).map(([id, r]) => [id, `👍 ${r.up} · 👎 ${r.down}`]), (id) => t(`games.e.${id}`))}
       <h3>${esc(t("games.trKid"))}</h3>${rows(sorted(tr.childhood), (id) => t(`games.g.${id}`))}
+      <h3>${esc(t("games.trTitles"))}</h3>${rows(sorted(tr.titles), titleLabel)}
       <h3>${esc(t("games.trAll"))}</h3>${rows(sorted(tr.allWishes), wishName)}
       <h3>${esc(t("games.trPlays"))}</h3>${rows(sorted(tr.plays), (id) => t(`games.e.${id}`))}
       <button type="button" class="secondary" data-act="trcopy">${icon("clipboard-check")}${esc(t("games.trCopy"))}</button>`;
   return `<details class="card gm-trends"${trOpen ? " open" : ""}><summary>📋 ${esc(t("games.trTitle"))}</summary><p class="muted small">${esc(t("games.trOnly"))}</p>${body}</details>`;
+}
+
+// Številke strani: 1 … 4 5 [6] 7 8 … 275, puščici za prejšnjo in naslednjo.
+function pager(pages) {
+  if (pages < 2) return "";
+  // na ozkem zaslonu le en sosed na vsako stran, da gumbi ostanejo v eni vrstici
+  const nums = pageNums(page, pages, matchMedia("(max-width: 420px)").matches ? 1 : 2);
+  const btn = (n) => `<button type="button" data-page="${n}"${n === page ? ` class="active" aria-current="page"` : ""} aria-label="${esc(t("games.page", { n: n + 1 }))}">${n + 1}</button>`;
+  const parts = nums.map((n, i) => (i && n - nums[i - 1] > 1 ? `<span class="gm-gap" aria-hidden="true">…</span>` : "") + btn(n));
+  return `<nav class="gm-pager" aria-label="${esc(t("games.pages"))}">
+    <button type="button" data-page="${page - 1}"${page ? "" : " disabled"} aria-label="${esc(t("games.prevPage"))}">${icon("arrow-left")}</button>
+    ${parts.join("")}
+    <button type="button" data-page="${page + 1}"${page < pages - 1 ? "" : " disabled"} aria-label="${esc(t("games.nextPage"))}">${icon("arrow-right")}</button>
+  </nav>`;
 }
 
 function renderPortal() {
@@ -179,8 +203,8 @@ function renderPortal() {
   const pick = (c) => (q || c.subject === filter.subject) && (area === "you" ? forYou(c) : area === "all" || c.area === area);
   let total = 0;
   let paths = 0;
-  const sections = AREAS.filter((a) => q || a[3] === filter.subject).map(([id]) => {
-    const tiles = [];
+  // Najprej le seznam iger (brez HTML), nato HTML samo za igre na trenutni strani.
+  const groups = AREAS.filter((a) => q || a[3] === filter.subject).map(([id]) => {
     // Sosednji ploščici se razlikujeta po snovi in po vrsti igre (pisana mreža).
     const cs = CONCEPTS.filter((c) => c.area === id && pick(c));
     const path = [];
@@ -188,17 +212,20 @@ function renderPortal() {
     const shut = [];
     for (let r = 0; r < kinds.length; r++) cs.forEach((c, i) => {
       const e = kinds[(i + r) % kinds.length];
-      if (match(c, e)) (gameLock(e.id, c, LS) ? shut : onPath(e, c) ? path : open).push(tile(e, c));
+      if (match(c, e)) (gameLock(e.id, c, LS) ? shut : onPath(e, c) ? path : open).push([e, c]);
     });
-    tiles.push(...path, ...open, ...shut); // igre na poti najprej
     paths += path.length;
-    total += tiles.length;
-    if (!tiles.length) return "";
-    return `<section class="gm-sec"><h2><span class="gm-dot" style="background:${areaColor(id)}"></span>${esc(areaName(id))}<span class="gm-count">${tiles.length}</span></h2><div class="gm-grid">${tiles.join("")}</div></section>`;
-  }).join("");
+    const games = [...path, ...open, ...shut]; // igre na poti najprej
+    total += games.length;
+    return { id, games };
+  }).filter((x) => x.games.length);
+  const sl = pageSlice(groups, page);
+  page = sl.page;
+  const pages = sl.pages;
+  const sections = sl.parts.map(({ id, games, all }) => `<section class="gm-sec"><h2><span class="gm-dot" style="background:${areaColor(id)}"></span>${esc(areaName(id))}<span class="gm-count">${all}</span></h2><div class="gm-grid">${games.map(([e, c]) => tile(e, c)).join("")}</div></section>`).join("");
   // Tvoje igre iz otroštva: vsaka izbrana vrsta igre z dvema snovma, ki ju zdaj izbereš (predmet, področje).
   let kidSec = "";
-  if (kidEngines.length && filter.kind === "all" && !q) {
+  if (kidEngines.length && filter.kind === "all" && !q && !page) {
     const pool = CONCEPTS.filter((c) => pick(c));
     const tiles = pool.length ? kidEngines.flatMap((id, i) => [0, 1].map((j) => [ENGINES.find((e) => e.id === id), pool[(i * 7 + j * 3) % pool.length]])).filter(([e, c], k, all) => e && all.findIndex(([e2, c2]) => e2 === e && c2 === c) === k).slice(0, 12) : [];
     if (tiles.length) kidSec = `<section class="gm-sec gm-kidsec"><h2><span class="gm-kid-ic" aria-hidden="true">🕹️</span>${esc(t("games.kidTitle"))}<span class="gm-count">${tiles.length}</span><button type="button" class="ghost gm-kidedit" data-act="kid">${icon("pencil")}${esc(t("games.kidEdit"))}</button></h2><div class="gm-grid">${tiles.map(([e, c]) => tile(e, c)).join("")}</div></section>`;
@@ -226,12 +253,14 @@ function renderPortal() {
       ${q ? "" : trendsCard()}${kidAsk}${ctx.getStudent() && !q ? `<button type="button" class="ghost gm-kidlink gm-wishlink" data-act="wish">🗳️ ${esc(data.wish ? t("games.wishMine", { g: t(`games.w.${data.wish}`) }) : t("games.wishAsk"))}</button>` : ""}${kid && !kidEngines.length ? `<button type="button" class="ghost gm-kidlink" data-act="kid">🕹️ ${esc(t("games.kidLink"))}</button>` : ""}
       ${paths ? `<p class="gm-pathhint">${icon("compass")} ${esc(t("games.pathHint"))}</p>` : ""}
       ${kidSec}${total ? sections : `<p class="muted gm-none">${esc(t("games.none"))}</p>`}
+      ${pager(pages)}
     </div>`;
   root.querySelector(".gm-subjects")?.addEventListener("click", (ev) => {
     const b = ev.target.closest("button[data-val]");
     if (!b) return;
     filter.subject = b.dataset.val;
     if (!["you", "all"].includes(filter.area)) filter.area = "you";
+    page = 0;
     saveFilter();
     renderPortal();
   });
@@ -239,6 +268,7 @@ function renderPortal() {
     const b = ev.target.closest("button[data-val]");
     if (!b) return;
     filter.area = b.dataset.val;
+    page = 0;
     saveFilter();
     renderPortal();
   });
@@ -246,12 +276,14 @@ function renderPortal() {
     const b = ev.target.closest("button[data-val]");
     if (!b) return;
     filter.kind = b.dataset.val;
+    page = 0;
     saveFilter();
     renderPortal();
   });
   const input = root.querySelector(".gm-search input");
   input.addEventListener("input", () => {
     filter.q = input.value;
+    page = 0;
     const pos = input.selectionStart;
     renderPortal();
     const i2 = root.querySelector(".gm-search input");
@@ -259,6 +291,16 @@ function renderPortal() {
     i2.setSelectionRange(pos, pos);
   });
   root.querySelectorAll(".gm-tile").forEach((b) => b.addEventListener("click", () => openGame(b.dataset.game)));
+  root.querySelector(".gm-pager")?.addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-page]");
+    if (!b || b.disabled) return;
+    page = +b.dataset.page;
+    renderPortal();
+    // na vrh mreže (pod iskanjem in izbiro), fokus na prvo igro nove strani (tipkovnica, bralnik zaslona)
+    const first = root.querySelector(".gm-kidsec, .gm-sec, .gm-none");
+    first?.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    root.querySelector(".gm-sec .gm-tile")?.focus({ preventScroll: true });
+  });
   root.querySelector('[data-act="shop"]').addEventListener("click", () => renderShop("", true));
   root.querySelector('[data-act="wish"]')?.addEventListener("click", askWish);
   root.querySelector(".gm-trends")?.addEventListener("toggle", (e) => (trOpen = e.target.open));
@@ -274,16 +316,18 @@ function renderPortal() {
 }
 
 // Shrani izbiro v profil (velja na vseh napravah; inštruktor jo lahko spremeni iz klepeta).
-async function saveChildhood(list) {
+async function saveChildhood(list, titles) {
   const s = ctx.getStudent();
   if (!s) return false;
   try {
-    const updated = await ctx.api(`/api/students/${s.id}`, { method: "PUT", body: { settings: { game_childhood: list } } });
+    const settings = titles ? { game_childhood: list, game_titles: titles } : { game_childhood: list };
+    const updated = await ctx.api(`/api/students/${s.id}`, { method: "PUT", body: { settings } });
     ctx.setStudent?.(updated);
   } catch (err) {
     ctx.toast?.(err.message, null);
     return false;
   }
+  page = 0; // razdelek »Igre iz tvojega otroštva« je na prvi strani
   if (!game) renderPortal();
   return true;
 }
@@ -292,13 +336,25 @@ async function saveChildhood(list) {
 function askChildhood() {
   if (!ctx.getStudent() || document.querySelector(".gm-kidq")) return;
   const pick = new Set(kidList() || []);
+  let titles = cleanTitles(ctx.getStudent()?.settings?.game_titles);
   const back = document.activeElement;
+  const genreName = (id) => t(`games.g.${id}`);
+  // Lastni naslov: kam ga Evklid poveže (obstoječa vrsta igre, želja za novo igro ali v pregled j-ju).
+  const titleNote = (title) => {
+    const m = matchTitle(title);
+    return m.genre ? `→ ${genreName(m.genre)}` : m.wish ? t("games.kidOwnWish", { g: t(`games.w.${m.wish}`) }) : t("games.kidOwnNew");
+  };
+  const ownList = () =>
+    titles.map((x, i) => `<li><span><b>${esc(x)}</b><small>${esc(titleNote(x))}</small></span><button type="button" class="ghost" data-rm="${i}" aria-label="${esc(`${t("games.kidOwnRemove")}: ${x}`)}">${icon("x")}</button></li>`).join("");
   const dlg = document.createElement("div");
   dlg.className = "iq-wrap";
   dlg.innerHTML = `<div class="iq card gm-kidq" role="dialog" aria-modal="true" aria-labelledby="kid-title">
     <h2 id="kid-title">🕹️ ${esc(t("games.kidQ"))}</h2>
     <p class="muted">${esc(t("games.kidQSub"))}</p>
     <div class="iq-grid">${GENRES.map((g) => `<button type="button" class="iq-opt${pick.has(g.id) ? " on" : ""}" data-g="${g.id}" aria-pressed="${pick.has(g.id)}"><span class="iq-emoji" aria-hidden="true">${g.emoji}</span><span>${esc(t(`games.g.${g.id}`))}<small class="gm-kidto">${icon("arrow-right", "i-dir")}${esc(g.engines.map((id) => t(`games.e.${id}`)).join(", "))}</small></span></button>`).join("")}</div>
+    <div class="gm-own"><label for="kid-own"><b>✍️ ${esc(t("games.kidOwn"))}</b></label>
+      <div class="gm-own-row"><input id="kid-own" type="text" maxlength="40" autocomplete="off" placeholder="${esc(t("games.kidOwnPh"))}"><button type="button" class="secondary" data-k="add">${icon("plus")}${esc(t("games.kidOwnAdd"))}</button></div>
+      <ul class="gm-own-list" aria-live="polite">${ownList()}</ul></div>
     <div class="iq-actions"><button type="button" class="ghost" data-k="close">${esc(t("games.kidLater"))}</button><button type="button" class="primary" data-k="save">${icon("check")}${esc(t("common.save"))}</button></div>
   </div>`;
   document.body.appendChild(dlg);
@@ -307,10 +363,59 @@ function askChildhood() {
     dlg.remove();
     (back?.isConnected ? back : root?.querySelector('[data-act="kid"]'))?.focus?.({ preventScroll: true });
   };
+  const input = dlg.querySelector("#kid-own");
+  const addBtn = dlg.querySelector('[data-k="add"]');
+  const drawOwn = () => {
+    dlg.querySelector(".gm-own-list").innerHTML = ownList();
+    addBtn.disabled = input.disabled = titles.length >= MAX_TITLES;
+  };
+  const setPick = (id, on) => {
+    on ? pick.add(id) : pick.delete(id);
+    const b = dlg.querySelector(`[data-g="${id}"]`);
+    b?.classList.toggle("on", on);
+    b?.setAttribute("aria-pressed", String(on));
+  };
+  // Dodan naslov z znano zvrstjo takoj označi to zvrst (igra pride v zbirko); zvrst, ki jo je označil
+  // samo naslov, se ob odstranitvi naslova spet odznači.
+  const auto = new Set();
+  const addTitle = () => {
+    const next = cleanTitles([...titles, input.value]);
+    if (next.length === titles.length) return void (input.value = ""); // že na seznamu
+    titles = next;
+    const m = matchTitle(titles.at(-1));
+    if (m.genre && !pick.has(m.genre)) {
+      setPick(m.genre, true);
+      auto.add(m.genre);
+    }
+    input.value = "";
+    drawOwn();
+    // pri polnem seznamu je polje onemogočeno: fokus na zadnji gumb »Odstrani«, da ne uide iz okna
+    (input.disabled ? dlg.querySelector(".gm-own-list li:last-child button") : input)?.focus();
+  };
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.isComposing) {
+      e.preventDefault();
+      addTitle();
+    }
+  });
+  drawOwn();
   dlg.addEventListener("click", async (ev) => {
+    if (ev.target.closest('[data-k="add"]')) return addTitle();
+    const rm = ev.target.closest("[data-rm]");
+    if (rm) {
+      const [gone] = titles.splice(Number(rm.dataset.rm), 1);
+      const g = matchTitle(gone).genre;
+      if (auto.has(g) && !titles.some((x) => matchTitle(x).genre === g)) {
+        setPick(g, false);
+        auto.delete(g);
+      }
+      drawOwn();
+      return input.focus();
+    }
     const opt = ev.target.closest("[data-g]");
     if (opt) {
       const id = opt.dataset.g;
+      auto.delete(id); // ročna izbira velja
       pick.has(id) ? pick.delete(id) : pick.add(id);
       opt.classList.toggle("on", pick.has(id));
       opt.setAttribute("aria-pressed", String(pick.has(id)));
@@ -320,8 +425,9 @@ function askChildhood() {
     const save = ev.target.closest('[data-k="save"]');
     if (!save) return;
     save.disabled = true;
+    if (input.value.trim()) addTitle(); // napisan, a ne dodan naslov ne izgine
     const list = GENRES.map((g) => g.id).filter((id) => pick.has(id));
-    if (!(await saveChildhood(list))) {
+    if (!(await saveChildhood(list, titles))) {
       save.disabled = false;
       return;
     }
@@ -338,7 +444,7 @@ function askChildhood() {
       close();
     } else if (e.key === "Tab") {
       // fokus ostane v oknu (aria-modal)
-      const f = [...dlg.querySelectorAll("button:not(:disabled)")];
+      const f = [...dlg.querySelectorAll("button:not(:disabled), input:not(:disabled)")];
       const i = f.indexOf(document.activeElement);
       if (e.shiftKey ? i <= 0 : i === f.length - 1) {
         e.preventDefault();
@@ -621,7 +727,7 @@ function renderShop(msg = "", top = false) {
     ${freshRow}
     <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${fresh.some((i) => i.slot === x) ? `<span class="gm-new-dot" aria-hidden="true"></span>` : ""}${esc(t(`games.slot.${x}`))}${isMulti(x) && worn(av.equipped, x).length ? ` <small>${worn(av.equipped, x).length}/${MULTI_MAX}</small>` : ""}</button>`).join("")}</div>
     ${isMulti(shop.slot) ? `<p class="muted gm-earn-hint">${icon("layers")}<span>${esc(t("games.multiHint", { n: MULTI_MAX }))}</span></p>` : ""}
-    ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon(shop.slot === "kind" ? "gamepad-2" : "award")}<span>${esc(t(shop.slot === "kind" ? "zb.shopHintKind" : "zb.shopHint"))} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
+    ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon(shop.slot === "kind" ? "gamepad-2" : "award")}<span>${esc(t(shop.slot === "kind" ? "zb.shopHintKind" : "zb.shopHint"))}${shop.slot === "kind" ? ` ${esc(t("zb.shopHintKindXp"))}` : ""} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
     <div class="gm-items">${slotItems(shop.slot, owned).map(card).join("")}</div>
     ${wishBox}
   </div>`;

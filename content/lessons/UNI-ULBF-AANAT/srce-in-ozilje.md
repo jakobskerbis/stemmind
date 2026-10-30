@@ -227,3 +227,13 @@ Harveyjev račun s sodobnimi števili:
 - nadlahtno arterijo
 ~ Nadlahtna arterija je na nadlakti in se razdeli že v komolčni jami.
 > Koželjnična arterija (*a. radialis*) poteka na palčevi, lateralni strani podlakti in je pri zapestju tik pod kožo.
+
+:::simboli
+V_m | minutni volumen srca | V_m = V_u \cdot f | L/min | prostornina krvi, ki jo srce prečrpa v minuti
+V_u | utripni volumen | | mL | prostornina krvi, iztisnjena v enem utripu
+f | srčna frekvenca | | 1/min | v mirovanju okoli 70 utripov na minuto
+V | prečrpana prostornina krvi | V = V_m \cdot t | L
+t | čas | | h
+n | število obtokov celotne krvi | n = \dfrac{V}{V_k} | –
+V_k | prostornina vse krvi v telesu | | L | pri odraslem okoli 5 L
+:::

@@ -261,3 +261,11 @@ Samonezdružljivost češnje je gametofitska. Odloča alel gena $S$ v pelodnem z
 - Na laske je padlo preveč peloda, zato so se zasnove oplodile večkrat in propadle.
 ~ V zasnovo navadno vstopi ena sama pelodna cev. Obilica peloda je pri vetrocvetkah običajna, ker se ga večina izgubi.
 > Vsak lasek je vrat pestiča enega cveta. Lasek brez peloda pomeni neoplojeno zasnovo in zato manjkajoče zrno.
+
+:::simboli
+n | število kromosomov v haploidni garnituri | | – | diploidne celice imajo 2n, endosperm 3n
+t | čas od opraševanja do vstopa v semensko zasnovo | t = t_\mathrm{k} + \dfrac{s}{v} | h
+t_\mathrm{k} | čas kalitve pelodnega zrna | | h
+s | pot pelodne cevi do plodnice | | cm
+v | hitrost rasti pelodne cevi | | cm/h
+:::

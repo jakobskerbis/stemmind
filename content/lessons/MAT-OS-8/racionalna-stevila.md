@@ -184,3 +184,10 @@ Enako velja za deljenje. Primer: $\left(-\frac{1}{2}\right)\cdot\left(-\frac{4}{
 - $-10$
 + $14$
 > Najprej množimo: $3\cdot(-4) = -12$. Nato odštejemo: $2 - (-12) = 2 + 12 = 14$. Če bi najprej odštel, bi dobil $(2-3)\cdot(-4) = 4$, kar je napačen vrstni red.
+
+:::simboli
+a | števec ulomka | | | celo število
+b | imenovalec ulomka | | | b ≠ 0; v a/c + b/c števec
+c | števec drugega ulomka | | | v a/c + b/c skupni imenovalec; pri deljenju c ≠ 0
+d | imenovalec drugega ulomka | | | d ≠ 0
+:::

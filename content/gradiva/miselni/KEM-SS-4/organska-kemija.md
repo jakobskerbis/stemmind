@@ -1,0 +1,28 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Zgradba določa lastnosti
+  - ogljik tvori štiri kovalentne vezi
+  - napaka: formula sama ne pove vsega
+- Izomeri
+  - enaka molekulska formula, različna zgradba
+  - etanol in metoksimetan, $\mathrm{C_2H_6O}$
+- Ogljikovodiki
+  - alkani $\mathrm{C_nH_{2n+2}}$, nasičeni
+  - alkeni $\mathrm{C_nH_{2n}}$, alkini $\mathrm{C_nH_{2n-2}}$
+  - homologna vrsta: vrelišče raste z verigo
+- Funkcionalne skupine
+  - $-\mathrm{OH}$ alkohol, $-\mathrm{COOH}$ kislina
+  - $\mathrm{C{=}O}$ keton, $-\mathrm{COO}-$ ester
+  - $-\mathrm{OH}$ prinese vodikove vezi, višje vrelišče
+- Poimenovanje
+  - najprej najdaljša veriga
+  - 2-metilbutan, ne 2-etilpropan
+- Vrste reakcij
+  - adicija: alken razbarva bromovico
+  - substitucija: alkan, šele na svetlobi
+  - estrenje: kislina in alkohol, ravnotežje
+- Računi
+  - formula iz masnih deležev v $100\,\mathrm{g}$
+  - gorenje: $n(\mathrm{CO_2})$ = število C krat $n(\text{gorivo})$

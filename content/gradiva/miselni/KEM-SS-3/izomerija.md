@@ -1,0 +1,26 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Izomeri
+  - enaka molekulska formula, različna zgradba
+  - butan in 2-metilpropan, $\mathrm{C_4H_{10}}$
+  - napaka: butan in buten nista izomera
+  - strukturni (povezave) in stereo (prostor)
+- Verižna izomerija
+  - drugačen ogljikov skelet
+  - bolj razvejan, nižje vrelišče
+- Položajna izomerija
+  - ista veriga, vez drugje
+  - but-1-en in but-2-en
+- Funkcionalna izomerija
+  - druga skupina spojin
+  - etanol in dimetil eter, $\mathrm{C_2H_6O}$
+- Cis in trans
+  - dvojna vez se ne vrti
+  - vsak C dvojne vezi nosi dve različni skupini
+  - but-1-en nima cis/trans
+- Optična izomerija
+  - kiralni C s štirimi različnimi skupinami
+  - enantiomera sta zrcalni sliki
+  - enako vrelišče, drugačen zasuk svetlobe

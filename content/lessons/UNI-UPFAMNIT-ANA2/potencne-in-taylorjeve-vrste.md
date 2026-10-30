@@ -232,3 +232,17 @@ Kratek čas po injekciji koncentracija zdravila pada skoraj premočrtno: $c \app
 - Točna, ker je $kt$ majhen.
 ~ Majhen $kt$ pomeni majhno, ne ničelno napako: $100 \cdot \frac{0{,}1^{2}}{2} = 0{,}5$.
 > Točno je $100\,e^{-0{,}1} \approx 90{,}48\,\mathrm{mg/L}$; linearna ocena je za približno $0{,}48\,\mathrm{mg/L}$ prenizka.
+
+:::simboli
+R | konvergenčni polmer | R = \lim\limits_{n\to\infty}\left\lvert \dfrac{a_n}{a_{n+1}} \right\rvert | | krajišči preverimo posebej
+a_n, a_{n+1} | koeficienti potenčne vrste
+a | središče potenčne vrste
+n | zaporedna številka člena (stopnja)
+x | spremenljivka vrste
+f | funkcija (vsota vrste) | f(x) = \sum a_n (x-a)^{n}
+T_n | Taylorjev polinom stopnje n
+\xi | vmesna točka med a in x
+q | količnik geometrijske vrste | | | vrsta konvergira za −1 < q < 1
+e | Eulerjevo število | | | e ≈ 2,718
+\varphi | kot dviga roke | | rad
+:::

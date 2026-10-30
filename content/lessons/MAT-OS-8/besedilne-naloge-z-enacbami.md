@@ -263,3 +263,12 @@ Pri eni neznanki potrebuješ toliko pogojev, da lahko zapišeš eno enačbo. Če
 ~ V enačbo si zapisal le dve stranici ($x + 2x = 36$) ali pa navedel dolžino. Obseg je vsota vseh štirih stranic.
 + $6\,\text{cm}$
 > Širina $x$, dolžina $2x$: $2 \cdot 2x + 2x = 36$, $6x = 36$, $x = 6$. Širina je $6\,\text{cm}$, dolžina $12\,\text{cm}$.
+
+:::simboli
+x | neznanka | | | število, ki ga iščemo
+y | očetova starost (neznanka) | | | sin je star y/3
+o | obseg pravokotnika | o = 2a + 2b |
+a | dolžina pravokotnika | | | za 7 cm daljša od širine
+b | širina pravokotnika | |
+t | število let (»čez t let«) | | | vsak je čez t let starejši za t
+:::

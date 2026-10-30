@@ -225,3 +225,16 @@ po binomskem izreku. Element zunaj vseh množic prispeva $0$. Torej desna stran 
 - $21$
 ~ To je $40 - 28 + 9$: presek si prištel še enkrat, čeprav je že upoštevan.
 > $|A \cup B| = 22 + 15 - 9 = 28$, torej ne počne ničesar $40 - 28 = 12$ članov.
+
+:::simboli
+n | število vseh predmetov | | | tudi število oklepajev v (a + b)ⁿ
+k | število izbranih predmetov | | | 0 ≤ k ≤ n
+m | število možnosti prve izbire | | | v dokazu: v koliko množicah leži element
+a, b | člena binoma
+A, B, C | končne množice (dogodki, ki jih štejemo)
+A_i | i-ta množica v načelu vključitev in izključitev
+\bar{A}, \bar{B} | komplementa množic A in B | \lvert \bar{A} \cap \bar{B} \rvert = N - \lvert A \cup B \rvert
+N | število vseh elementov (vseh možnosti)
+I | neprazna podmnožica indeksov {1, …, n}
+i, j | indeksa množic
+:::

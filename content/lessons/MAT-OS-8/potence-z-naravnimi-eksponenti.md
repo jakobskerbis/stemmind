@@ -210,3 +210,8 @@ Pogoj $a \neq 0$ je potreben, ker z ničlo ne smemo deliti. Pogoj $m > n$ je pot
 + $7^5$
 - $1^5$
 > Pri deljenju potenc z enako osnovo osnovo prepišemo, eksponenta pa odštejemo: $9 - 4 = 5$. Seštevanje eksponentov ($7^{13}$) velja pri množenju, osnove pa pri deljenju ne delimo.
+
+:::simboli
+a | osnova potence | |
+n, m | eksponenta (naravni števili) | | | koliko faktorjev a je v produktu; pri deljenju m > n
+:::

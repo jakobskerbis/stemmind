@@ -216,3 +216,14 @@ In za ulov in ponovni ulov:
 - $5\,\mathrm{kJ}$
 ~ Naredil si stopnico preveč: od ravni 1 do ravni 4 so tri stopnice, ne štiri.
 > $50\,000 \cdot 0{,}1 \cdot 0{,}1 \cdot 0{,}1 = 50\,\mathrm{kJ}$.
+
+:::simboli
+N | velikost populacije (število osebkov) | N = \dfrac{M \cdot C}{R} | – | pri metodi ulova in ponovnega ulova
+t | čas | | leto
+r | notranja stopnja rasti | | 1/leto
+K | nosilna kapaciteta okolja | | – | največja trajno vzdržna velikost populacije
+A | površina območja | | km^2
+M | število označenih osebkov v prvem ulovu | | –
+C | število osebkov v drugem ulovu | | –
+R | število označenih osebkov v drugem ulovu | | –
+:::

@@ -244,3 +244,14 @@ Meja primerjave: tlak v celici je okrog desetkrat večji kot v žogi.
 - $1{,}0\,\mathrm{MPa}$
 ~ To je vsota absolutnih vrednosti. V ravnovesju mora veljati $\Psi_\mathrm{s} + \Psi_\mathrm{p} = -0{,}4\,\mathrm{MPa}$.
 > V ravnovesju $-0{,}6 + \Psi_\mathrm{p} = -0{,}4$, zato $\Psi_\mathrm{p} = 0{,}2\,\mathrm{MPa}$.
+
+:::simboli
+\Psi | vodni potencial | \Psi = \Psi_\mathrm{s} + \Psi_\mathrm{p} | MPa | čista voda ima Ψ = 0; voda teče k nižjemu
+\Psi_\mathrm{s} | osmotski potencial | \Psi_\mathrm{s} = -c R T | MPa | vedno negativen
+\Psi_\mathrm{p} | tlačni potencial (turgor) | | MPa | v živi celici pozitiven ali nič
+c | koncentracija raztopljenih snovi | | mol/m^3 | 1 mol/L = 1000 mol/m³
+R | splošna plinska konstanta | | J/(mol K) | 8,314 J/(mol K)
+T | absolutna temperatura | | K
+\Psi_\mathrm{celica} | vodni potencial celice | | MPa
+\Psi_\mathrm{zunaj} | vodni potencial okolice celice | | MPa | v ravnovesju enak potencialu celice
+:::

@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Samo C in H
+  - sveča: rosa (H) in saja (C)
+  - metan, propan, butan v kuhinji
+- Alkani
+  - samo enojne vezi, nasičeni
+  - $\mathrm{C}_n\mathrm{H}_{2n+2}$, končnica -an
+- Alkeni in alkini
+  - nenasičeni: večkratna vez
+  - dvojna vez: $\mathrm{C}_n\mathrm{H}_{2n}$, -en
+  - trojna vez: $\mathrm{C}_n\mathrm{H}_{2n-2}$, -in
+  - napaka: zamenjava -en in -in
+- Areni
+  - benzen $\mathrm{C_6H_6}$, delokalizirani elektroni
+  - cikloheksan ni aren
+- Korenska imena
+  - met-, et-, prop-, but-, pent-
+  - heks-, hept-, okt-, non-, dek-
+- Poimenovanje
+  - najdaljša veriga z večkratno vezjo
+  - čim manjše številke: pent-2-en
+  - napaka: »2-etilpropan« je 2-metilbutan

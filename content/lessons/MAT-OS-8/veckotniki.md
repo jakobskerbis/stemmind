@@ -265,3 +265,11 @@ Formula za vsoto notranjih kotov velja tudi za nekonveksne večkotnike, le pahlj
 ~ To je število diagonal iz enega oglišča, ne vseh.
 + $14$
 > $D_7 = \dfrac{7 \cdot 4}{2} = 14$.
+
+:::simboli
+n | število oglišč (in stranic) večkotnika | | | n ≥ 3
+S_n | vsota notranjih kotov n-kotnika | S_n = (n - 2) \cdot 180^\circ | °
+D_n | število diagonal n-kotnika | D_n = \frac{n(n - 3)}{2} |
+\alpha | notranji kot pravilnega n-kotnika | \alpha = \frac{(n - 2) \cdot 180^\circ}{n} | ° | α + α' = 180°
+\alpha' | zunanji kot pravilnega n-kotnika | \alpha' = \dfrac{360^\circ}{n} | °
+:::

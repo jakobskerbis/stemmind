@@ -217,3 +217,17 @@ Minimizacijo prevedemo v $\max(-c^\top x)$. Omejitve $\ge$ in enačbe zahtevajo 
 ~ Pri enakem dobičku je pica slabša, saj porabi dvakrat več pečice kot pita.
 + $6$ €
 > Pri dobičku $p$ je $(5, 0)$ optimalno, ko je nivojnica vsaj tako strma kot rob pečice: $\frac{p}{3} \ge 2$, torej $p \ge 6$. Pri $p = 6$: $(5, 0)$ in $(4, 2)$ dasta oba $30$ €.
+
+:::simboli
+z | vrednost ciljne funkcije (dobiček) | z = 5x + 3y | | iščemo maksimum
+x | število pladnjev pice | | | v splošnem zapisu vektor spremenljivk; pri prehrani porcije kosmičev
+y | število pladnjev pite | | | v dualu vektor dualnih spremenljivk; pri prehrani porcije jogurta
+s_1 | dopolnilna spremenljivka (neporabljena moka) | s_1 = 6 - x - y | | s₁ ≥ 0
+s_2 | dopolnilna spremenljivka (neizkoriščen čas pečice) | s_2 = 10 - 2x - y | | s₂ ≥ 0
+u | cena kilograma moke (dualna spremenljivka)
+v | cena ure pečice (dualna spremenljivka)
+w | vrednost dualne ciljne funkcije | w = 6u + 10v | | z ≤ w, v optimumu z = w
+c | koeficienti ciljne funkcije (vektor) | | | pri prehrani cena obrokov c = 0,5x + y
+A | matrika koeficientov omejitev
+b | vektor desnih strani omejitev
+:::

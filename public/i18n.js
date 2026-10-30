@@ -2,7 +2,7 @@
 // Izbrani jezik je shranjen na napravi in v profilu učenca (inštruktor odgovarja v njem).
 // Modul počaka na prevode (top-level await), zato lahko ostali moduli t() kličejo že ob nalaganju.
 import SL from "./i18n/sl.js";
-import { DEFAULT_LANGUAGE, LANGUAGES, isLanguage, langInfo, uiChain, UI_LANGUAGES, detectLanguage } from "./i18n/languages.js";
+import { DEFAULT_LANGUAGE, LANGUAGES, isLanguage, langInfo, uiChain, UI_LANGUAGES, detectLanguage, homeLanguage } from "./i18n/languages.js";
 
 const KEY = "evklid.lang";
 let lang = DEFAULT_LANGUAGE;
@@ -62,7 +62,11 @@ async function load(code) {
 // Ob prvem zagonu jezik in regija naprave (npr. sl-SI → slovenščina, pt-BR → portugalščina za Brazilijo),
 // sicer najbližji jezik ali narečje, brez ujemanja angleščina. Izbira v Nastavitvah ima prednost.
 const detected = detectLanguage(typeof navigator === "undefined" ? [] : navigator.languages?.length ? navigator.languages : [navigator.language]);
-await load(stored() || detected.code);
+let timeZone = "";
+try {
+  timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+} catch {}
+await load(stored() || homeLanguage(detected.code, timeZone));
 
 export const currentLang = () => lang;
 // Regija (ISO 3166, npr. "BR") velja, ko je izbrani jezik tisti, ki ga je zaznala naprava.

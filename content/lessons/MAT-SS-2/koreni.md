@@ -201,3 +201,10 @@ Poglej list papirja A4. Njegovi stranici sta dolgi $297\,\text{mm}$ in $210\,\te
 + $-3$
 - Realnega števila ni.
 > Kubični koren je definiran tudi za negativna števila, ker je $(-3)^3 = -27$.
+
+:::simboli
+a | korenjenec | | | a ≥ 0 pri kvadratnem korenu
+b | korenjenec (faktor pod korenom) | | | b > 0 pri deljenju
+x | realno število | | | koren iz x² je absolutna vrednost x
+p, q | koeficienta pred istim korenom | | |
+:::

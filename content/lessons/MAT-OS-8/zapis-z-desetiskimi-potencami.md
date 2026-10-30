@@ -168,3 +168,8 @@ Pri tem smo uporabili $10^{-4} = 0{,}1 \cdot 10^{-3}$, saj je $10^{-3} \cdot 10^
 - $7{,}5 \cdot 10^{-2}$
 + $1{,}2 \cdot 10^{5}$
 > Najprej primerjamo eksponente: $5$ je največji, zato je največje število $1{,}2 \cdot 10^5 = 120\,000$. Število $9 \cdot 10^3 = 9000$ je manjše, čeprav ima večji $a$.
+
+:::simboli
+a | število pred desetiško potenco | | | 1 ≤ a < 10
+n | eksponent desetiške potence | | | celo število; negativen pri številih, manjših od 1
+:::

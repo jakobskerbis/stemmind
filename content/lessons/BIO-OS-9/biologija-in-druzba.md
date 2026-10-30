@@ -225,3 +225,8 @@ Biologija ni le predmet v urniku; srečaš jo od jutra do večera.
 - $150\,\text{km}$
 ~ Pri pretvorbi si delil s $10\,000$ namesto s $100\,000$.
 > $6 \cdot 250\,000 = 1\,500\,000\,\text{cm} = 15\,\text{km}$.
+
+:::simboli
+t | čas do prihoda komarja | t = \dfrac{\text{razdalja}}{\text{širjenje na leto}} | leto
+n | število delitev bakterij | | – | iz ene bakterije nastane 2^n bakterij
+:::

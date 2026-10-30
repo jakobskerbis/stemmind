@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import SL from "../public/i18n/sl.js";
-import { LANGUAGES, LANGUAGE_CODES, UI_LANGUAGES, RTL, uiChain, uiLanguage, langInfo, detectLanguage } from "../public/i18n/languages.js";
+import { LANGUAGES, LANGUAGE_CODES, UI_LANGUAGES, RTL, uiChain, uiLanguage, langInfo, detectLanguage, homeLanguage } from "../public/i18n/languages.js";
 import { buildSystemPrompt, systemBlocks, languagePrompt } from "../server/prompt.js";
 import { normalizeSettings } from "../server/settings.js";
 
@@ -85,6 +85,33 @@ test("first start picks the device language and region, the nearest variant, els
   assert.equal(d("xx-YY", "fr-CA").code, "fr");
   assert.deepEqual(d("qq"), { code: "en", region: "" });
   assert.deepEqual(d(), { code: "en", region: "" });
+});
+
+test("English device in Slovenia starts in Slovenian, other languages stay", () => {
+  assert.equal(homeLanguage("en", "Europe/Ljubljana"), "sl");
+  assert.equal(homeLanguage("de", "Europe/Ljubljana"), "de");
+  assert.equal(homeLanguage("en", "Europe/London"), "en");
+  assert.equal(homeLanguage("en", ""), "en");
+});
+
+test("device language also works without Intl.Locale (phone app on Hermes)", () => {
+  const saved = Intl.Locale;
+  try {
+    delete Intl.Locale;
+    const d = (...tags) => detectLanguage(tags);
+    assert.deepEqual(d("sl-SI", "en"), { code: "sl", region: "SI" });
+    assert.deepEqual(d("sl_SI"), { code: "sl", region: "SI" });
+    assert.deepEqual(d("de-AT"), { code: "de", region: "AT" });
+    assert.equal(d("zh-TW").code, "zh-Hant");
+    assert.equal(d("zh-CN").code, "zh");
+    assert.equal(d("sr-Latn-RS").code, "sr-Latn");
+    assert.equal(d("ar-EG").code, "arz");
+    assert.equal(d("no").code, "nb");
+    assert.equal(d("xx-YY", "fr-CA").code, "fr");
+    assert.deepEqual(d("qq"), { code: "en", region: "" });
+  } finally {
+    Intl.Locale = saved;
+  }
 });
 
 test("region reaches the tutor prompt and is validated", () => {

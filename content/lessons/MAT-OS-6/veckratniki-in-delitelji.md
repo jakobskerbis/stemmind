@@ -224,3 +224,12 @@ Izračunajmo še $2 \cdot 3^2 + 4^2 - 10$. Najprej potenci: $3^2 = 9$ in $4^2 = 
 + $24$
 - $216$
 > Potenca se računa pred množenjem: $2^3 = 8$, nato $3 \cdot 8 = 24$. Odgovor $18$ dobiš, če eksponent obravnavaš kot faktor ($3 \cdot 2 \cdot 3$), odgovor $216$ pa, če najprej pomnožiš $3 \cdot 2 = 6$ in šele nato potenciraš ($6^3$).
+
+:::simboli
+V | množica večkratnikov števila | | | V₆ so večkratniki števila 6
+D | množica deliteljev števila | | | D₁₂ so delitelji števila 12
+a | število, ki ga delimo | a = b \cdot n | | večkratnik števila b; v aⁿ osnova potence
+b | delitelj števila a | | | a : b se izide brez ostanka
+c | drugi faktor para | | | v a = b · c sta b in c delitelja a
+n | naravno število (faktor) | | | v aⁿ in 10ⁿ eksponent: število faktorjev
+:::

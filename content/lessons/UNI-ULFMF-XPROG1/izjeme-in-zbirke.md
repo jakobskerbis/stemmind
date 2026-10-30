@@ -335,3 +335,9 @@ Pri seznamu iščeš po številki predala, pri slovarju po nalepki. Vstavljanje 
 - `ArrayList<Integer>` s številkami, ker so številke števila.
 ~ Telefonske številke niso števila za računanje (presledki, vodilna ničla), pa tudi ime manjka.
 > Slovar najde vrednost po ključu v povprečju v konstantnem času, ne glede na število prijateljev.
+
+:::simboli
+i | indeks elementa v seznamu | | | šteje od 0
+k | ključ v slovarju (mapi)
+T | tip (razred) izjeme | | | catch ujame tudi podrazrede
+:::

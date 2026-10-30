@@ -342,3 +342,7 @@ Rekurzija je kot veriga posvetov: vsak zdravnik vpraša kolega o nekoliko lažje
 - $12{,}5$
 ~ Osnovni primer `kofein(0)` vrne $400$ brez razpolavljanja; tu je en razpolovni čas preveč.
 > $400 \to 200 \to 100 \to 50 \to 25$: $\frac{400}{2^4} = 25\,\text{mg}$.
+
+:::simboli
+n | število razpolovnih časov (delitev) | n = \frac{\text{čas}}{\text{čas ene delitve}} | – | celice(n) = 2 · celice(n − 1)
+:::

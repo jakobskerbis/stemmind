@@ -259,3 +259,21 @@ Stolpec pri pH $6$ do $7$ je najbolj »poln«. Zato se v vrtnarstvu in kmetijstv
 - kuhinjska sol
 ~ Natrij zasede izmenjalna mesta in kvari strukturo, KIK in dušika pa ne doda.
 > Organska snov ima na kilogram največjo KIK in vsebuje organsko vezan dušik, ki ga mikroorganizmi sproščajo.
+
+:::simboli
+\mathrm{pH} | pH tal (kislost) | \mathrm{pH} = -\log [\mathrm{H^+}] | – | manjši pH pomeni bolj kisla tla
+\mathrm{KIK} | kationska izmenjalna kapaciteta | \mathrm{KIK} \approx w_\mathrm{g}\,\mathrm{KIK_g} + w_\mathrm{OS}\,\mathrm{KIK_{OS}} | cmol(+)/kg | vsota vseh izmenljivih kationov
+w_\mathrm{g} | masni delež gline | | –
+w_\mathrm{OS} | masni delež organske snovi | w_\mathrm{OS} \approx 1{,}724 \cdot w_{C_\mathrm{org}} | –
+w_{C_\mathrm{org}} | masni delež organskega ogljika | | –
+w | masni delež primešane organske snovi | | – | KIK = (1 − w) KIK_reg + w KIK_OS
+V | bazična nasičenost | V = \dfrac{\text{bazični kationi}}{\mathrm{KIK}} \cdot 100\,\% | \% | nad 50 % evtrična, pod 50 % distrična tla
+n | množina naboja izmenljivih kationov | | cmol(+)/kg | n(+), na kilogram tal
+n_\mathrm{Ca} | množina izmenljivega kalcija | n_\mathrm{Ca} = \dfrac{n(+)}{2} | cmol/kg | Ca²⁺ nosi dva naboja
+m_\mathrm{Ca} | masa izmenljivega kalcija na kilogram tal | m_\mathrm{Ca} = n_\mathrm{Ca} \cdot M | g/kg | pomnoži z m_tal za maso na hektar
+M | molska masa kalcija | | g/mol | 40,08 g/mol
+m_\mathrm{tal} | masa tal | m_\mathrm{tal} = A \cdot h \cdot \rho | kg
+A | površina | | m^2 | 1 ha = 10 000 m²
+h | globina plasti tal | | m
+\rho | gostota tal | | kg/m^3 | 1,3 g/cm³ = 1300 kg/m³
+:::
