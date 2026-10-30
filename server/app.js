@@ -16,6 +16,7 @@ import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
 import { mountGradiva } from "./gradiva.js";
 import { mountSchools } from "./schools.js";
+import { visitCounter, mountPilot } from "./pilot.js";
 import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths, localTopic } from "./curriculum.js";
 import { uiLanguage } from "../public/i18n/languages.js";
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor, formulaSheet } from "./textbook.js";
@@ -120,7 +121,7 @@ export function createApp(store, opts = {}) {
   const activity = { active: 0, lastSend: 0 };
   app.get("/healthz/stanje", (_req, res) => {
     res.set("Cache-Control", "no-store");
-    res.json({ id: INSTANCE, razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
+    res.json({ id: INSTANCE, razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null, gorMs: Math.round(process.uptime() * 1000) });
   });
   app.use(mobileClient); // mobilna aplikacija: seja v glavi namesto piškotka (server/mobile)
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (EVKLID_ACCOUNTS=1)
@@ -157,6 +158,8 @@ export function createApp(store, opts = {}) {
     res.set("Cache-Control", "no-cache");
     res.type("text/javascript").send(swSource);
   });
+  // Merjenje v pilotu: števec ogledov strani za starše (pred statičnimi datotekami, glej pilot.js).
+  app.use(visitCounter(store.db));
   // Lahki način: stisnjene datoteke in JSON (brotli/gzip) za počasne in drage mobilne povezave.
   if (process.env.EVKLID_COMPRESS !== "0") {
     app.use(
@@ -268,7 +271,7 @@ export function createApp(store, opts = {}) {
   app.get("/api/students/:id/level-up", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
-    res.json({ suggestion: levelUpSuggestion(s), next: nextLevel(s.settings), premium: !accounts || accounts.premiumFor(s.id) });
+    res.json({ suggestion: levelUpSuggestion(s), next: nextLevel(s.settings), premium: !accounts || accounts.premiumFor(s.id), offers: accounts ? accounts.offersFor(s.id) : null });
   });
   app.delete("/api/students/:id", (req, res) => {
     const s = loadStudent(req, res);
@@ -635,6 +638,8 @@ export function createApp(store, opts = {}) {
       ...view,
       pretest_due,
       interactive: false,
+      // Pravila ponudb (server/placila/ponudbe.js): gumb »Poglej pakete« le, ko ponudba s ceno sme biti prikazana.
+      offers: accounts.offersFor(s.id),
       locked: { demo: view.demo?.title || null },
       demos: [],
       demo: null,
@@ -937,10 +942,11 @@ export function createApp(store, opts = {}) {
   const avatars = new Avatars(store.db);
   const leagues = mountLeagues(app, store, { loadStudent });
   mountSchools(app, store, { loadStudent, leagues, accounts: !!accounts }); // šole, učitelji, licence, razredne naloge
+  mountPilot(app, store, { accounts: !!accounts, isLocalRequest }); // merjenje v pilotu (skrbnik)
   mountGradiva(app, store, { loadStudent, accounts }); // povzetek na eni strani, zvočni povzetek, delovni listi
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress, avatars, knowledge });
-  mountAvatar(app, avatars, { loadStudent });
+  mountAvatar(app, avatars, { loadStudent, trendsFile: opts.trendsFile ?? null });
   mountKnowledge(app, knowledge, { loadStudent, avatars });
   mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
   mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup, modelCapFor: (id) => accounts?.modelCapFor?.(id) ?? null });

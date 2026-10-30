@@ -1,26 +1,49 @@
-# Render: nova različica Evklida vsaki 2 uri (ne ob vsaki spremembi, da se strežnik
-# s trajnim diskom ne zaganja ves dan). Deluje, ko je v GitHubu nastavljena skrivnost
-# RENDER_DEPLOY_HOOK (Render > evklid > Settings > Deploy Hook). Navodila: docs/posodobitve.md
-name: Render vsaki 2 uri
+# Render: nova različica Evklida, ko nihče ne uporablja aplikacije (preverba vsakih 15 minut).
+# Pravila v scripts/render-objava.js: miren strežnik → objava v ~15 min; med uporabo največ 3 ure
+# čakanja; med objavama vsaj 1 ura (ponovni zagon s trajnim diskom pomeni ~1 minuto izpada).
+# Deluje, ko je v GitHubu nastavljena skrivnost RENDER_DEPLOY_HOOK (Render > evklid > Settings > Deploy Hook).
+# Ročni zagon (Actions > Render > Run workflow) objavi takoj. Navodila: docs/posodobitve.md
+name: Render
 on:
   schedule:
-    - cron: "7 */2 * * *"
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: render-objava
+  cancel-in-progress: false
 jobs:
   objavi:
     runs-on: ubuntu-latest
     steps:
-      - name: Objavi, če je v main kaj novega
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts/render-objava.js
+            server/brand.js
+            brand.json
+            package.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Zadnja sprožena objava (da neuspele objave ne ponavlja vsakih 15 minut).
+      - uses: actions/cache/restore@v4
+        with:
+          path: .render-objava.json
+          key: render-objava-${{ github.run_id }}
+          restore-keys: render-objava-
+      - name: Objavi, če je čas
+        id: objava
         env:
           HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-        run: |
-          if [ -z "$HOOK" ]; then echo "RENDER_DEPLOY_HOOK ni nastavljen, preskočeno."; exit 0; fi
-          # 2 uri in 15 minut: GitHub zamakne zagon po urniku, raje enkrat preveč kot premalo.
-          since=$(date -u -d '135 minutes ago' +%Y-%m-%dT%H:%M:%SZ)
-          n=$(curl -fsS -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/$REPO/commits?sha=main&since=$since&per_page=1" | jq length)
-          if [ "$n" = "0" ] && [ "${{ github.event_name }}" = "schedule" ]; then echo "Ni novih sprememb."; exit 0; fi
-          curl -fsS -X POST "$HOOK" >/dev/null && echo "Objava sprožena."
+          ROCNO: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+        run: node scripts/render-objava.js
+      - uses: actions/cache/save@v4
+        if: steps.objava.outputs.sprozeno == '1'
+        with:
+          path: .render-objava.json
+          key: render-objava-${{ github.run_id }}

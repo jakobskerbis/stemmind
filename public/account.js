@@ -658,7 +658,7 @@ function plansPicker(acc) {
       ${acc.prices_draft ? `<p class="muted">Cene v lokalni valuti so predlog (razvojna različica).</p>` : ""}
       ${acc.parent.minor
         ? `<p class="muted">${esc(t("pay.minorNote"))}</p>
-           <button class="primary" type="button" id="plan-link">${esc(t("pay.askParent"))}</button><div id="plan-link-out"></div>`
+           <button class="secondary" type="button" id="plan-link">${esc(t("pay.askParent"))}</button><div id="plan-link-out"></div>`
         : `${consentFields()}
            <button class="primary" type="submit">${esc(t("pay.continue"))}</button>`}
       ${acc.parent.minor ? "" : `<p class="muted">Plačilo poteka varno prek Stripe. Naročnino lahko kadar koli prekličete.${
@@ -718,8 +718,52 @@ function adminCodes(acc) {
     </div>`;
 }
 
+// Skrbnik: merjenje v pilotu (server/pilot.js): vprašanja na dan, strošek AI na učenca, obiski strani za starše.
+let pilotSeq = 0; // hitre spremembe filtrov: prikaže se samo zadnji odgovor
+async function loadPilot(days = 30, school = "", focusId = "") {
+  const seq = ++pilotSeq;
+  const out = $("#pilot-out");
+  if (!out) return;
+  let r;
+  try {
+    r = await api(`/api/admin/pilot?days=${days}${school ? `&school=${school}` : ""}`);
+    if (seq !== pilotSeq) return;
+  } catch (err) {
+    out.innerHTML = `<p class="muted">${esc(err.message)}</p>`;
+    return;
+  }
+  const loc = currentRegion() ? `${currentLang()}-${currentRegion()}` : currentLang();
+  const nf = (x, d = 2) => Number(x).toLocaleString(loc, { maximumFractionDigits: d });
+  const eur = (x, d = 2) => Number(x).toLocaleString(loc, { style: "currency", currency: "EUR", minimumFractionDigits: d, maximumFractionDigits: d });
+  const day = (s) => new Date(`${s}T12:00:00`).toLocaleDateString(loc, { weekday: "short", day: "numeric", month: "numeric" });
+  const T = r.totals;
+  const rate = r.rows.length ? T.aiEur / Math.max(T.aiUsd, 1e-9) : 0;
+  out.innerHTML = `
+    <div class="pilot-filters">
+      <label>${esc(t("pilot.period"))} <select id="pilot-days">${[7, 30, 90].map((d) => `<option value="${d}" ${d === r.days ? "selected" : ""}>${esc(t("pilot.days", { n: d }))}</option>`).join("")}</select></label>
+      ${r.schools.length ? `<label>${esc(t("pilot.school"))} <select id="pilot-school"><option value="">${esc(t("pilot.allSchools"))}</option>${r.schools.map((s) => `<option value="${s.id}" ${s.id === r.schoolId ? "selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label>` : ""}
+    </div>
+    <ul class="pilot-sum">
+      <li><b>${nf(T.questionsPerDay, 1)}</b> ${esc(t("pilot.qPerDay"))}</li>
+      <li><b>${nf(T.questionsPerAskerDay, 1)}</b> ${esc(t("pilot.qPerStudent"))}</li>
+      <li><b>${eur(T.aiEurPerStudentMonth, 3)}</b> ${esc(t("pilot.aiPerStudent", { n: T.aiUsers }))}</li>
+      <li><b>${eur(T.aiEur)}</b> ${esc(t("pilot.aiTotal"))}</li>
+      <li><b>${nf(T.visits.starsi)}</b> ${esc(t("pilot.visitsParents", { n: T.visits.starsi }))} · <b>${nf(T.visits.placaj)}</b> ${esc(t("pilot.visitsPay", { n: T.visits.placaj }))}</li>
+    </ul>
+    ${r.students != null ? `<p class="muted">${esc(t("pilot.schoolStudents", { n: r.students }))}</p>` : ""}
+    <div class="pilot-scroll"><table class="table pilot-table"><thead><tr><th scope="col">${esc(t("pilot.day"))}</th><th scope="col">${esc(t("pilot.questions"))}</th><th scope="col">${esc(t("pilot.askers"))}</th><th scope="col">${esc(t("pilot.ai"))}</th><th scope="col">${esc(t("pilot.parents"))}</th></tr></thead>
+      <tbody>${[...r.rows].reverse().map((d) => `<tr><td>${esc(day(d.day))}</td><td>${nf(d.questions)}</td><td>${nf(d.askers)}</td><td>${eur(d.aiUsd * rate, 3)}</td><td>${nf(d.visits.starsi + d.visits.placaj)}</td></tr>`).join("")}</tbody></table></div>
+    <p class="muted small">${esc(t("pilot.note"))}</p>`;
+  // Kartica se izriše znova: fokus ostane na izbiri, ki jo je uporabnik spremenil (tipkovnica).
+  if (focusId) setTimeout(() => $(`#${focusId}`)?.focus());
+  const reload = (e) => loadPilot($("#pilot-days").value, $("#pilot-school")?.value || "", e.target.id);
+  $("#pilot-days").addEventListener("change", reload);
+  $("#pilot-school")?.addEventListener("change", reload);
+}
+
 function bindAdminCodes(acc) {
   if (!acc.promo?.codes) return;
+  loadPilot();
   $("#code-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const f = e.target;
@@ -902,6 +946,7 @@ async function renderAccount() {
       ${promoBox(acc, paid)}
     </div>
     ${acc.promo?.codes ? adminCodes(acc) : ""}
+    ${acc.promo?.codes ? `<div class="card" id="pilot-card"><h2>${esc(t("pilot.title"))}</h2><div id="pilot-out"><p class="muted">${esc(t("common.loading"))}</p></div></div>` : ""}
 
     <div class="card">
       <h2>Otroci</h2>

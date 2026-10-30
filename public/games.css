@@ -214,7 +214,7 @@ body.gm-on .gm-host { flex: 1; min-height: 0; }
 @keyframes gm-pulse { 50% { filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.75)); } }
 .gm-r-rare, .zb-card.gm-r-rare { border-color: #3b82f6; background-image: linear-gradient(160deg, rgba(59, 130, 246, 0.13), transparent 55%); }
 .gm-r-epic, .zb-card.gm-r-epic { border-color: #a855f7; background-image: linear-gradient(160deg, rgba(168, 85, 247, 0.18), transparent 60%); }
-:is(.gm-item, .zb-card):is(.gm-r-legendary, .gm-r-mythic, .gm-r-cosmic, .gm-r-eternal) {
+:is(.gm-item, .zb-card, .gm-fresh-item):is(.gm-r-legendary, .gm-r-mythic, .gm-r-cosmic, .gm-r-eternal) {
   position: relative;
   border-color: transparent;
   background: var(--gm-tint) padding-box, linear-gradient(var(--surface, #fff), var(--surface, #fff)) padding-box, var(--gm-edge) border-box;
@@ -240,16 +240,29 @@ body.gm-on .gm-host { flex: 1; min-height: 0; }
   --gm-tint: radial-gradient(circle at 50% 0, rgba(253, 224, 71, 0.4), transparent 60%), linear-gradient(160deg, rgba(244, 114, 182, 0.16), rgba(34, 211, 238, 0.16));
   --gm-glow: rgba(250, 204, 21, 0.55);
 }
-:is(.gm-item, .zb-card).gm-r-cosmic { animation: gm-spin 6s linear infinite; }
-:is(.gm-item, .zb-card).gm-r-eternal { border-width: 4px; animation: gm-spin 3.5s linear infinite, gm-pulse 2.4s ease-in-out infinite; }
-:is(.gm-item, .zb-card):is(.gm-r-cosmic, .gm-r-eternal)::after {
+:is(.gm-item, .zb-card, .gm-fresh-item).gm-r-cosmic { animation: gm-spin 6s linear infinite; }
+:is(.gm-item, .zb-card, .gm-fresh-item).gm-r-eternal { border-width: 4px; animation: gm-spin 3.5s linear infinite, gm-pulse 2.4s ease-in-out infinite; }
+:is(.gm-item, .zb-card, .gm-fresh-item):is(.gm-r-cosmic, .gm-r-eternal)::after {
   content: "✦"; position: absolute; top: -9px; right: -9px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
   font-size: 0.8rem; font-weight: 900; color: #fff; background: linear-gradient(135deg, #6366f1, #22d3ee); border: 2px solid var(--surface, #fff); pointer-events: none;
 }
-:is(.gm-item, .zb-card).gm-r-eternal::after { content: "∞"; font-size: 0.95rem; color: #1f2937; background: conic-gradient(#f87171, #fbbf24, #4ade80, #22d3ee, #818cf8, #f472b6, #f87171); }
+:is(.gm-item, .zb-card, .gm-fresh-item).gm-r-eternal::after { content: "∞"; font-size: 0.95rem; color: #1f2937; background: conic-gradient(#f87171, #fbbf24, #4ade80, #22d3ee, #818cf8, #f472b6, #f87171); }
 @media (prefers-reduced-motion: reduce) {
-  :is(.gm-item, .zb-card):is(.gm-r-cosmic, .gm-r-eternal) { animation: none; }
+  :is(.gm-item, .zb-card, .gm-fresh-item):is(.gm-r-cosmic, .gm-r-eternal) { animation: none; }
 }
+/* Oznaka »Novo« (tedenske posodobitve; isNew/isNewDate v public/avatar.js). Tudi za nove vrste iger. */
+.gm-item, .zb-card, .gm-fresh-item { position: relative; }
+.gm-new { position: absolute; top: -8px; left: -8px; z-index: 1; padding: 1px 7px; border-radius: 99px; font-size: 0.72rem; font-weight: 900; letter-spacing: 0.02em; color: #fff; background: #16a34a; border: 2px solid var(--surface, #fff); pointer-events: none; }
+.gm-new-dot { display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; background: #16a34a; vertical-align: middle; }
+.gm-fresh { margin: 12px 0 0; padding: 12px 14px; }
+.gm-fresh h2, .gm-wish h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 1.05rem; }
+.gm-fresh-row { display: flex; gap: 10px; overflow-x: auto; padding: 12px 12px 6px 4px; }
+.gm-fresh-item { flex: none; display: flex; flex-direction: column; align-items: center; gap: 3px; width: 84px; padding: 6px 4px; border-radius: 14px; border: 3px solid #cbd5e1; background: var(--surface, #fff); color: inherit; font: inherit; font-size: 0.74rem; font-weight: 700; line-height: 1.15; text-align: center; cursor: pointer; }
+.gm-fresh-item .avatar-svg { border-radius: 10px; }
+.gm-wish { margin-top: 16px; padding: 12px 14px; }
+.gm-wish p { margin: 0 0 8px; }
+.gm-wish-form { display: flex; gap: 8px; flex-wrap: wrap; }
+.gm-wish-form input { flex: 1 1 220px; min-height: 44px; }
 .gm-rtag { padding: 1px 8px; border-radius: 99px; border: 2px solid; font-size: 0.8rem; font-weight: 800; }
 .gm-rtag.gm-r-common, .gm-rtag.gm-r-free { border-color: #94a3b8; }
 .gm-rtag.gm-r-rare { color: color-mix(in srgb, #2563eb 60%, var(--text, #111)); }
