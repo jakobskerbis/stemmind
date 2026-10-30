@@ -255,7 +255,7 @@ function askChildhood() {
   dlg.innerHTML = `<div class="iq card gm-kidq" role="dialog" aria-modal="true" aria-labelledby="kid-title">
     <h2 id="kid-title">🕹️ ${esc(t("games.kidQ"))}</h2>
     <p class="muted">${esc(t("games.kidQSub"))}</p>
-    <div class="iq-grid">${GENRES.map((g) => `<button type="button" class="iq-opt${pick.has(g.id) ? " on" : ""}" data-g="${g.id}" aria-pressed="${pick.has(g.id)}"><span class="iq-emoji" aria-hidden="true">${g.emoji}</span><span>${esc(t(`games.g.${g.id}`))}<small class="gm-kidto">${icon("arrow-right")}${esc(g.engines.map((id) => t(`games.e.${id}`)).join(", "))}</small></span></button>`).join("")}</div>
+    <div class="iq-grid">${GENRES.map((g) => `<button type="button" class="iq-opt${pick.has(g.id) ? " on" : ""}" data-g="${g.id}" aria-pressed="${pick.has(g.id)}"><span class="iq-emoji" aria-hidden="true">${g.emoji}</span><span>${esc(t(`games.g.${g.id}`))}<small class="gm-kidto">${icon("arrow-right", "i-dir")}${esc(g.engines.map((id) => t(`games.e.${id}`)).join(", "))}</small></span></button>`).join("")}</div>
     <div class="iq-actions"><button type="button" class="ghost" data-k="close">${esc(t("games.kidLater"))}</button><button type="button" class="primary" data-k="save">${icon("check")}${esc(t("common.save"))}</button></div>
   </div>`;
   document.body.appendChild(dlg);

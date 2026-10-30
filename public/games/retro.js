@@ -50,7 +50,7 @@ export const blocks = {
   create(G) {
     const LANES = 4, CW = 3;
     let ROWS = 11; // na visokem zaslonu (telefon) več vrst
-    let lanes = [], piece = null, cell = 20, gap = 8, x0 = 0, fy0 = 0, fy1 = 0, signH = 48, flash = 0, flashY = 0, sparks = [];
+    let lanes = [], piece = null, cell = 20, gap = 8, x0 = 0, fy0 = 0, fy1 = 0, signH = 48, flash = 0, flashY = 0, sparks = [], missed = false;
     const laneX = (i) => x0 + i * (CW * cell + gap);
     const floorY = (i) => fy1 - lanes[i].length * cell;
     const laneAt = (x) => clamp(Math.floor((x - x0 + gap / 2) / (CW * cell + gap)), 0, LANES - 1);
@@ -81,7 +81,8 @@ export const blocks = {
         if (lanes.every((l) => !l.length)) G.float(G.W / 2, fy1 - 2 * cell, "✨", "#fde047", 34);
         G.answer(true, cx, cy);
       } else {
-        // napačna steza: blok posivi in obleži
+        // napačna steza: blok posivi in obleži, napis pravilne steze pozeleni
+        missed = true;
         for (let k = 0; k < h; k++) lanes[p.lane].push(Array(CW).fill(RUBBLE));
         G.answer(false, cx, cy);
         if (lanes[p.lane].length > cap()) {
@@ -111,9 +112,11 @@ export const blocks = {
         piece = null;
         sparks = [];
         flash = 0;
+        missed = false;
       },
       question() {
         if (!lanes.length) fill();
+        missed = false;
         let cells = SHAPES[Math.floor(Math.random() * SHAPES.length)];
         for (let r = Math.floor(Math.random() * 4); r > 0; r--) cells = rot(cells);
         piece = { cells, lane: Math.floor(Math.random() * LANES), color: BLOCK_COLORS[Math.floor(Math.random() * BLOCK_COLORS.length)], y: 0, fast: false };
@@ -128,7 +131,7 @@ export const blocks = {
           s.y += s.vy * dt;
           s.life -= dt;
         }
-        sparks = sparks.filter((s) => s.life > 0);
+        if (sparks.length) sparks = sparks.filter((s) => s.life > 0);
         if (!piece || G.waiting) return;
         piece.x += (pieceX(piece.lane) - piece.x) * Math.min(1, dt * 16);
         // celo polje v ~9 s (hitreje z G.speed), s tipko ↓ ali dvojnim tapom 8× hitreje
@@ -144,7 +147,8 @@ export const blocks = {
           return G.sound("pop");
         }
         const lane = laneAt(p.x);
-        if (lane === piece.lane && p.y > piece.y) piece.fast = true;
+        // tap v isto stezo (kjerkoli razen na blok) ga spusti hitreje, tap v drugo ga premakne
+        if (lane === piece.lane) piece.fast = true;
         else go(lane);
       },
       key(k, down) {
@@ -170,12 +174,12 @@ export const blocks = {
           g.fillRect(x, fy0, w, fy1 - fy0);
           g.strokeStyle = "rgba(255,255,255,0.08)";
           g.lineWidth = 1;
+          g.beginPath();
           for (let r = 1; r < ROWS; r++) {
-            g.beginPath();
             g.moveTo(x, fy0 + r * cell);
             g.lineTo(x + w, fy0 + r * cell);
-            g.stroke();
           }
+          g.stroke();
           g.strokeStyle = INK;
           g.lineWidth = 3;
           g.strokeRect(x, fy0, w, fy1 - fy0);
@@ -183,7 +187,7 @@ export const blocks = {
           // napis steze z odgovorom in številko tipke
           const on = piece && piece.lane === i && !G.waiting;
           G.rr(x - 2, 6, w + 4, signH, 10);
-          g.fillStyle = on ? "#fde047" : "#e0f2fe";
+          g.fillStyle = missed && G.isRight(G.opts[i]) ? "#86efac" : on ? "#fde047" : "#e0f2fe";
           g.fill();
           g.lineWidth = 3;
           g.strokeStyle = INK;
@@ -282,7 +286,7 @@ export const match = {
   colors: ["#7e22ce", "#e879f9"],
   options: 4,
   create(G) {
-    let cols = 6, rows = 7, grid = [], size = 40, bx = 0, by = 0, legendH = 50, hint = null;
+    let cols = 6, rows = 7, grid = [], size = 40, bx = 0, by = 0, legendH = 50, hint = null, missed = false;
     const at = (c, r) => grid[c]?.[r];
     const cellOf = (p) => {
       const c = Math.floor((p.x - bx) / size), r = Math.floor((p.y - by) / size);
@@ -329,6 +333,7 @@ export const match = {
       const cy = by + (gr.reduce((s, [, r]) => s + r, 0) / gr.length + 0.5) * size;
       if (!G.isRight(G.opts[k])) {
         for (const [c, r] of gr) at(c, r).crack = 1;
+        missed = true; // legenda pravilnega odgovora pozeleni
         return G.answer(false, cx, cy);
       }
       G.burst(cx, cy, GEM[k][0], Math.min(30, 8 + gr.length * 3));
@@ -362,12 +367,14 @@ export const match = {
       reset() {
         fill();
         hint = null;
+        missed = false;
       },
       question() {
         if (!grid.length) fill();
         for (const col of grid) for (const x of col) x.crack = 0;
         ensure();
         hint = null;
+        missed = false;
       },
       update(dt) {
         for (const col of grid) for (const x of col) {
@@ -406,11 +413,12 @@ export const match = {
         const lw = (G.W - 16) / 4;
         for (let i = 0; i < 4; i++) {
           const x = 8 + i * lw;
+          const good = missed && G.isRight(G.opts[i]);
           G.rr(x + 3, 6, lw - 6, legendH, 12);
-          g.fillStyle = "#fff";
+          g.fillStyle = good ? "#bbf7d0" : "#fff";
           g.fill();
-          g.lineWidth = 3;
-          g.strokeStyle = GEM[i][0];
+          g.lineWidth = good ? 5 : 3;
+          g.strokeStyle = good ? "#16a34a" : GEM[i][0];
           g.stroke();
           const r = Math.min(13, legendH * 0.22);
           gem(g, x + 6 + r + 4, 6 + legendH / 2, r, i);
@@ -478,8 +486,8 @@ function card(G, g, c, w, h, face_up) {
   G.rr(-w / 2, -h / 2, w, h, 10);
   g.fillStyle = face_up ? (c.bad ? "#cbd5e1" : "#fffbeb") : "#1d4ed8";
   g.fill();
-  g.lineWidth = 3;
-  g.strokeStyle = c.sel ? "#facc15" : INK;
+  g.lineWidth = c.good ? 5 : 3;
+  g.strokeStyle = c.good ? "#16a34a" : c.sel ? "#facc15" : INK;
   g.stroke();
   if (face_up) {
     const [s, col] = SUITS[c.suit];
@@ -509,13 +517,18 @@ export const cards = {
   options: 4,
   timer: 20,
   create(G) {
-    let hand = [], cw = 80, ch = 112, mine = 0, theirs = 0, mood = 0, drag = null, rivalCard = null;
+    let hand = [], cw = 80, ch = 112, mine = 0, theirs = 0, mood = 0, drag = null, rivalCard = null, grd = null, grdKey = [];
     const slot = (i) => ({ x: G.W / 2 + (i - (hand.length - 1) / 2) * (cw + 10), y: G.H - ch / 2 - 12 });
     const pileY = () => G.H * 0.47;
     // vlečena karta se vrne v roko (odgovor s tipko, potekel čas, nova delitev)
     const drop = () => {
       if (drag) drag.sel = false;
       drag = null;
+    };
+    // po napaki ali poteku časa se pravilna karta dvigne z zelenim robom
+    const reveal = () => {
+      const r = hand.find((c) => !c.played && G.isRight(c.txt));
+      if (r) Object.assign(r, { good: true, ty: r.ty - ch * 0.18 });
     };
     const play = (i) => {
       const c = hand[i];
@@ -530,14 +543,17 @@ export const cards = {
       c.bad = !ok;
       mood = ok ? -1 : 1;
       if (ok) mine++;
-      else theirs++;
+      else {
+        theirs++;
+        reveal();
+      }
       G.answer(ok, c.tx, c.ty, ok ? { delay: 0.8 } : {});
     };
     return {
       resize() {
         cw = Math.min((G.W - 50) / 4, 120, ((G.H * 0.3) / 1.4) | 0);
         ch = cw * 1.4;
-        hand.forEach((c, i) => Object.assign(c, c.played ? { tx: G.W / 2 + 14, ty: pileY() + 6 } : { tx: slot(i).x, ty: slot(i).y }));
+        hand.forEach((c, i) => Object.assign(c, c.played ? { tx: G.W / 2 + 14, ty: pileY() + 6 } : { tx: slot(i).x, ty: slot(i).y - (c.good ? ch * 0.18 : 0) }));
         if (rivalCard) Object.assign(rivalCard, { tx: G.W / 2 - 14, ty: pileY() - 6 });
       },
       reset() {
@@ -558,19 +574,19 @@ export const cards = {
         mood = 1;
         drop();
         hand.forEach((c) => (c.sel = false));
+        reveal();
       },
       update(dt) {
         const ease = Math.min(1, dt * 10);
-        for (const c of [...hand, rivalCard].filter(Boolean)) {
-          if (c.delay > 0) {
-            c.delay -= dt;
-            continue;
-          }
-          if (c === drag) continue;
+        const move = (c) => {
+          if (c.delay > 0) return void (c.delay -= dt);
+          if (c === drag) return;
           c.x += (c.tx - c.x) * ease;
           c.y += (c.ty - c.y) * ease;
           c.rot += ((c.trot ?? 0) - c.rot) * ease;
-        }
+        };
+        for (const c of hand) move(c);
+        if (rivalCard) move(rivalCard);
       },
       pointer(type, p) {
         if (G.waiting) return drop();
@@ -600,9 +616,13 @@ export const cards = {
       },
       draw(g) {
         const [felt, edge] = chap(G, [["#15803d", "#78350f"], ["#0f766e", "#57534e"], ["#166534", "#451a03"], ["#1e3a8a", "#312e81"]]);
-        const grd = g.createRadialGradient(G.W / 2, G.H / 2, 20, G.W / 2, G.H / 2, Math.max(G.W, G.H) * 0.7);
-        grd.addColorStop(0, felt);
-        grd.addColorStop(1, "#052e16");
+        // preliv mize le ob novem poglavju ali velikosti (ne v vsaki sličici)
+        if (grdKey[0] !== felt || grdKey[1] !== G.W || grdKey[2] !== G.H) {
+          grdKey = [felt, G.W, G.H];
+          grd = g.createRadialGradient(G.W / 2, G.H / 2, 20, G.W / 2, G.H / 2, Math.max(G.W, G.H) * 0.7);
+          grd.addColorStop(0, felt);
+          grd.addColorStop(1, "#052e16");
+        }
         g.fillStyle = edge;
         g.fillRect(-20, -20, G.W + 40, G.H + 40);
         G.rr(8, 8, G.W - 16, G.H - 16, 26);

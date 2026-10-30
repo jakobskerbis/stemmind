@@ -444,7 +444,8 @@ export function runGame(host, opts) {
 
   function start() {
     sensorsOn();
-    Object.assign(G, { chapter: 1, speed: PACES[getPace()], time: 0, tier: opts.tier || 1, score: 0, lives: 3, correct: 0, wrong: 0, streak: 0, badStreak: 0, mistakes: [], fx: [], over: false, paused: false, waiting: false, q: null });
+    // opts: []: napisi pred prvo nalogo ne kažejo odgovorov prejšnje igre
+    Object.assign(G, { chapter: 1, speed: PACES[getPace()], time: 0, tier: opts.tier || 1, score: 0, lives: 3, correct: 0, wrong: 0, streak: 0, badStreak: 0, mistakes: [], fx: [], over: false, paused: false, waiting: false, q: null, opts: [] });
     showFb("", "");
     overlay.hidden = true;
     eng.reset?.();
