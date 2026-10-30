@@ -77,6 +77,13 @@
   <div id="mock-banner" class="banner" hidden>
     <i data-icon="info"></i><span><b data-i18n="mock.title">Preizkusni način.</b> <span class="long" data-i18n="mock.text">Brez API ključa inštruktor vrača pripravljene odgovore.</span></span>
   </div>
+  <div id="test-notice" class="banner test-notice" role="region" aria-label="Testna verzija" data-i18n-aria="beta.title" hidden>
+    <i data-icon="info"></i>
+    <span class="tn-text"><b data-i18n="beta.title">Testna verzija.</b> <span class="long" data-i18n="beta.text">Evklid in inštruktor sta še v testni verziji, zato nekaj stvari še ne dela.</span></span>
+    <button type="button" class="ghost small tn-more" aria-expanded="false" aria-controls="test-notice-list" data-i18n="beta.more">Kaj še ne dela</button>
+    <button type="button" class="icon-btn tn-close" aria-label="Zapri obvestilo" title="Zapri obvestilo" data-i18n-aria="beta.close" data-i18n-title="beta.close"><i data-icon="x"></i></button>
+    <ul id="test-notice-list" class="tn-list" hidden></ul>
+  </div>
 
   <!-- PRIJAVA STARŠEV IN RAČUN (account.js) -->
   <main id="view-auth" class="view narrow" hidden></main>
