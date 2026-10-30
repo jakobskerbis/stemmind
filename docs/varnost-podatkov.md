@@ -12,7 +12,7 @@ odgovor, ki je zakrožil): [krizni-nacrt.md](krizni-nacrt.md).
 | Gesla računov in profilov | scrypt (N = 2^17, r = 8, p = 1); stari zapisi se ob prijavi tiho zamenjajo | `server/accounts/auth.js` |
 | Seje | v bazi le zgoščena vrednost žetona; piškotek HttpOnly, SameSite=Lax, Secure prek https | `server/accounts/auth.js` |
 | Ugibanje gesel | omejitve: e-naslov + IP (10 / 15 min), e-naslov (30 / uro), IP (100 / 15 min), profil in račun (30 / uro), izbris računa | `server/accounts/index.js` |
-| Brskalnik | varnostne glave (helmet): CSP brez vrinjenih skript, HSTS, nosniff, COOP, Permissions-Policy (le kamera in mikrofon), API brez predpomnjenja | `server/app.js` |
+| Brskalnik | varnostne glave (helmet): CSP brez vrinjenih skript, HSTS, nosniff, COOP, Permissions-Policy (kamera, mikrofon in senzorji le za Evklid; lokacija, plačila in USB izklopljeni), API brez predpomnjenja | `server/app.js` |
 | Fotografije, ki niso učno gradivo | inštruktor jih zavrne (`flag=photo`), strežnik sliko takoj izbriše; skeniranje jih zavrne | `prompts/system_prompt.md`, `server/scan.js` |
 | Dnevniki strežnika | brez e-naslovov, besedil pogovorov, žetonov in teles zahtev | |
 | Odvisnosti | Dependabot (npm tedensko, GitHub Actions mesečno) | `.github/dependabot.yml` |
@@ -56,7 +56,7 @@ Vse vrednosti so v `server/zasebnost.js` (`RETENTION`); čiščenje teče ob zag
 | Dnevnik e-pošte (preprečuje dvojna sporočila) | 1 leto |
 | Dnevnik obvestil na telefon | 90 dni |
 | Dnevnik dostopov | 1 leto |
-| Račun brez potrjenega e-naslova, brez profilov s podatki, plačil in seje | 30 dni |
+| Račun brez potrjenega e-naslova, brez profilov, plačil in seje | 30 dni |
 | Gostje brez seje | 30 dni (`server/accounts/guest.js`) |
 | Pogovori, napredek | dokler jih uporabnik ne izbriše ali izbriše računa |
 

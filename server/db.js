@@ -372,7 +372,7 @@ export class Store {
       .prepare(
         `SELECT e.flag, e.created_at, e.conversation_id, c.title
          FROM events e JOIN conversations c ON c.id = e.conversation_id
-         WHERE e.student_id = ? AND e.flag != 'none'
+         WHERE e.student_id = ? AND e.flag NOT IN ('none', 'photo') -- zavrnjena fotografija ni opozorilo za starše
          ORDER BY e.id DESC LIMIT ?`,
       )
       .all(studentId, limit)

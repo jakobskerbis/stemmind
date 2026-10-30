@@ -45,7 +45,10 @@ export class ProfileLocks {
     const row = this.db.prepare("SELECT hash FROM profile_passwords WHERE student_id = ?").get(studentId);
     const ok = await verifyPassword(typeof pw === "string" ? pw : "", row?.hash);
     if (!row || typeof pw !== "string" || !ok) return false;
-    if (needsRehash(row.hash)) this.db.prepare("UPDATE profile_passwords SET hash = ? WHERE student_id = ? AND hash = ?").run(await hashPassword(pw), studentId, row.hash);
+    const rehashed = needsRehash(row.hash) ? await hashPassword(pw).catch(() => null) : null; // ob polni vrsti naslednjič
+    // Med čakanjem na scrypt je lahko bilo nastavljeno novo geslo (zaklene vse naprave): staro ne odklene več.
+    if (this.db.prepare("SELECT hash FROM profile_passwords WHERE student_id = ?").get(studentId)?.hash !== row.hash) return false;
+    if (rehashed) this.db.prepare("UPDATE profile_passwords SET hash = ? WHERE student_id = ? AND hash = ?").run(rehashed, studentId, row.hash);
     return true;
   }
   // Novo geslo zaklene profil na vseh napravah.

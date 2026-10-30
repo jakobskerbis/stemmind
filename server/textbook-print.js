@@ -211,7 +211,7 @@ export function shell(title, content, css = "") {
 ${css}
 </style></head>
 <body>
-<div class="bar"><span>${esc(title)}</span><button type="button" id="natisni">Shrani kot PDF</button></div>
+<div class="bar"><span>${esc(title)}</span><button type="button">Shrani kot PDF</button></div>
 <main>${content}</main>
 <script src="/ucbenik-tisk.js"></script>
 </body></html>`;

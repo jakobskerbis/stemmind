@@ -11,9 +11,11 @@ import { DatabaseSync } from "node:sqlite";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { seal, unseal, blindIndex, newKey, UNREADABLE, isEncrypted } from "../server/crypto-polje.js";
-import { migrateEncryption, encryptionStats, runRetention, imageGoneText } from "../server/zasebnost.js";
-import { hashPassword, verifyPassword, needsRehash } from "../server/accounts/auth.js";
+import { migrateEncryption, encryptionSteps, encryptionStats, runRetention, imageGoneText } from "../server/zasebnost.js";
+import { hashPassword, verifyPassword, needsRehash, SCRYPT_QUEUE_MAX } from "../server/accounts/auth.js";
 import { windowHistory } from "../server/usage.js";
+import { GuestQuota } from "../server/accounts/guest.js";
+import { audit } from "../server/dnevnik-dostopov.js";
 
 const ADULT = "1985-04-12";
 const SECRET_TEXT = "Moja skrivna domača naloga 4711";
@@ -359,6 +361,7 @@ test("fotografija, ki ni učno gradivo: slika se ne shrani", async () => {
       assert.ok(!/META/.test(asst.display_text));
       // Staršem se ne prikaže kot opozorilo, kartic ni.
       assert.equal(store.db.prepare("SELECT flag FROM events").get().flag, "photo");
+      assert.equal(store.flagEvents(student.id).length, 0); // ne pride niti v odgovor API za starše
       assert.equal(store.cards.count(student.id), 0);
     },
     { reply },
@@ -370,5 +373,98 @@ test("fotografija, ki ni učno gradivo: slika se ne shrani", async () => {
     await call(`/api/students/${student.id}/unlock`, { method: "POST", body: { password: "1234" } });
     const convId = await chat(call, student.id, { text: "", image: PHOTO });
     assert.equal(store.listMessages(convId)[0].api_content[0].type, "image");
+  });
+});
+
+// --- popravki pregleda 2 (funkcija in varnost) ---
+test("gesla: vrsta za scrypt je omejena, polna vrsta vrne 503 (ne čakanja brez meje)", async () => {
+  const stored = await hashPassword("geslo1234");
+  const extra = 5;
+  const all = await Promise.allSettled(Array.from({ length: SCRYPT_QUEUE_MAX + extra }, () => verifyPassword("geslo1234", stored)));
+  assert.equal(all.filter((r) => r.status === "fulfilled" && r.value === true).length, SCRYPT_QUEUE_MAX);
+  const busy = all.filter((r) => r.status === "rejected");
+  assert.equal(busy.length, extra);
+  assert.ok(busy.every((r) => r.reason.code === "SCRYPT_BUSY"));
+  assert.equal(await verifyPassword("geslo1234", stored), true); // vrsta se sprazni
+  await withServer(async ({ client }) => {
+    const call = client();
+    const res = await Promise.all(
+      Array.from({ length: 40 }, (_, i) => call("/api/auth/login", { method: "POST", body: { email: `naval${i}@primer.si`, password: "napacno123" } })),
+    );
+    assert.ok(res.every((r) => r.status === 401 || r.status === 503), res.map((r) => r.status).join(","));
+    const full = res.filter((r) => r.status === 503);
+    assert.ok(full.length > 0);
+    for (const r of full) {
+      assert.match(r.body.error, /preobremenjen/);
+      assert.equal(r.headers.get("retry-after"), "5");
+    }
+  });
+});
+
+test("prijava: geslo, zamenjano med preverjanjem, ne odpre seje", async () => {
+  await withServer(async ({ client, calls, store }) => {
+    const call = client();
+    await parentWithChild(call, calls);
+    const login = call("/api/auth/login", { method: "POST", body: { email: "ana@primer.si", password: "geslo1234" } });
+    // Ponastavitev med čakanjem na scrypt (enako stori /api/auth/reset).
+    setImmediate(() => store.db.prepare("UPDATE parents SET password_hash = 'scrypt2$16384$8$1$AAAA$AAAA'").run());
+    assert.equal((await login).status, 401);
+  });
+});
+
+test("izvoz želja za kozmetiko: šifrirano besedilo gre ven odšifrirano", async () => {
+  await withKey(newKey(), async () => {
+    const store = openDb(":memory:");
+    const server = createApp(store, { scheduler: false }).listen(0);
+    const base = `http://127.0.0.1:${server.address().port}`;
+    const post = (p, body) => fetch(base + p, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    try {
+      const s = await (await post("/api/students", { name: "Ana Novak" })).json();
+      await post(`/api/students/${s.id}/feedback`, { kind: "cosmetics", ideas: "zmajevo jajce", lang: "sl" });
+      assert.ok(isEncrypted(store.db.prepare("SELECT ideas FROM feedback").get().ideas));
+      const out = await (await fetch(base + "/api/kozmetika/export")).json();
+      assert.deepEqual(out.wishes.map((w) => w.text), ["zmajevo jajce"]);
+    } finally {
+      server.close();
+    }
+  });
+});
+
+test("roki hrambe: nepotrjen račun s profilom ostane; selitev velikih vrstic po delih", async () => {
+  await withServer(async ({ store }) => {
+    const db = store.db;
+    const ins = db.prepare("INSERT INTO parents (email, password_hash, privacy_version, unsubscribe_token, referral_code, created_at) VALUES (?, 'x', 'v', ?, ?, datetime('now','-40 days'))");
+    // Gost, ki je kasneje dobil račun (brez potrditve): profil brez pogovorov (npr. samo grafi ali igre) ostane.
+    const kept = Number(ins.run("gost-prej@x.si", "u3", "R3").lastInsertRowid);
+    const kid = store.createStudent("Lan");
+    db.prepare("UPDATE students SET parent_id = ? WHERE id = ?").run(kept, kid.id);
+    assert.equal(runRetention(db, { log: {} }).unverified, 0);
+    assert.ok(db.prepare("SELECT 1 FROM students WHERE id = ?").get(kid.id));
+    // Sporočila s fotografijami: paket se konča po ~8 MB, vse vrstice so na koncu šifrirane.
+    const c = store.createConversation(kid.id);
+    const big = "a".repeat(3 * 1024 * 1024);
+    for (let i = 0; i < 4; i++) store.addMessage(c.id, "user", [{ type: "text", text: big }], `velika ${i}`);
+    await withKey(newKey(), () => {
+      const steps = [...encryptionSteps(db)].filter((x) => x.table === "messages");
+      assert.ok(steps.length >= 2, `paketov: ${steps.length}`);
+      assert.equal(steps.at(-1).changed, 4);
+      assert.ok(db.prepare("SELECT api_content FROM messages").all().every((r) => isEncrypted(r.api_content)));
+      assert.equal(store.listMessages(c.id)[3].display_text, "velika 3");
+    });
+  });
+});
+
+test("dnevnik dostopov: izbrisan gost ne ostane povezan z vrsticami (id se lahko ponovno uporabi)", async () => {
+  await withServer(async ({ store }) => {
+    const db = store.db;
+    const id = Number(
+      db
+        .prepare("INSERT INTO parents (email, password_hash, privacy_version, unsubscribe_token, referral_code, is_guest, created_at) VALUES ('gost-x@gost.invalid', 'x', 'v', 'u9', 'R9', 1, datetime('now','-40 days'))")
+        .run().lastInsertRowid,
+    );
+    audit(db, { parentId: id, action: "export" });
+    assert.equal(new GuestQuota(db).cleanup(), 1);
+    assert.equal(db.prepare("SELECT COUNT(*) AS n FROM audit_log WHERE parent_id = ?").get(id).n, 0);
+    assert.equal(db.prepare("SELECT COUNT(*) AS n FROM audit_log WHERE action = 'export' AND parent_id IS NULL").get().n, 1);
   });
 });

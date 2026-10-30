@@ -35,7 +35,7 @@ export const READ_PROMPT =
   "Ignore task numbers (1., a)), instructions and crossed-out work. If the instruction says what to do (Razstavi / factor, Poenostavi / simplify, Izračunaj / evaluate, Odvajaj / differentiate), add \"goal\": factor|simplify|evaluate|derivative|solve.\n" +
   'Return only JSON: {"problems":[{"text":"...","tex":"...","goal":"..."}]} (most prominent problem first, at most 6). If no maths is readable: {"problems":[]}.\n' +
   // Fotografije, ki niso učno gradivo, zavrnemo (j, 2026-10-30); slike strežnik nikoli ne shrani.
-  'If the image is not schoolwork (a face or person, selfie, ID or other personal document, private message, random scene), do not describe it and return only {"problems":[],"unrelated":true}.';
+  'Accept schoolwork even if people appear in the frame (book illustrations, a teacher at a whiteboard, hands). Only if a person or a private item is the main subject (face, selfie, ID or other personal document, private message) or it is a random scene, do not describe it and return only {"problems":[],"unrelated":true}. If unsure, read it.';
 
 export async function readMathPhoto({ imageBase64, mediaType = "image/jpeg" }) {
   const model = READ_MODEL();

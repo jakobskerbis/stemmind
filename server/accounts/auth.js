@@ -12,13 +12,34 @@ const COST = () => (process.env.NODE_TEST_CONTEXT ? { N: 2 ** 14, r: 8, p: 1 } :
 const KEY_LEN = 64;
 const maxmem = ({ N, r }) => 128 * N * r + 32 * 1024 * 1024;
 
+// Vrsta je omejena: ob navalu (npr. 1000 hkratnih prijav, ki vse preidejo omejitev poskusov, preden se
+// prva konča) bi čakanje raslo brez meje. Polna vrsta vrne napako SCRYPT_BUSY, ki jo app.js pretvori v 503.
+export const SCRYPT_QUEUE_MAX = 8;
 let running = Promise.resolve();
+let waiting = 0;
 function scrypt(password, salt, len, opts) {
+  if (waiting >= SCRYPT_QUEUE_MAX) {
+    const e = new Error("Strežnik je trenutno preobremenjen. Poskusite čez nekaj sekund.");
+    e.code = "SCRYPT_BUSY";
+    e.status = 503;
+    return Promise.reject(e);
+  }
+  waiting++;
+  // Števec se zmanjša ob koncu izračuna (sinhrono z rezultatom), tudi ob napaki.
   const job = running.then(
     () =>
-      new Promise((resolve, reject) =>
-        crypto.scrypt(String(password), salt, len, { ...opts, maxmem: maxmem(opts) }, (err, key) => (err ? reject(err) : resolve(key))),
-      ),
+      new Promise((resolve, reject) => {
+        try {
+          crypto.scrypt(String(password), salt, len, { ...opts, maxmem: maxmem(opts) }, (err, key) => {
+            waiting--;
+            if (err) reject(err);
+            else resolve(key);
+          });
+        } catch (e) {
+          waiting--;
+          reject(e);
+        }
+      }),
   );
   running = job.catch(() => {});
   return job;

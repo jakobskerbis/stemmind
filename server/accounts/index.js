@@ -485,6 +485,7 @@ export function mountAccounts(app, store, opts = {}) {
     db.prepare("UPDATE students SET parent_id = ? WHERE parent_id = ?").run(p.id, guest.id);
     db.prepare("UPDATE consents SET parent_id = ?, parent_email = ? WHERE parent_id = ?").run(p.id, p.email, guest.id);
     db.prepare("DELETE FROM parents WHERE id = ?").run(guest.id);
+    detachAudit(db, guest.id);
     return { moved: ids.length };
   }
 
@@ -523,7 +524,13 @@ export function mountAccounts(app, store, opts = {}) {
     const p = parentByEmail(email);
     const password = String(req.body?.password || "");
     // Brez računa enako dolgo računamo, da čas odgovora ne izda, ali e-naslov obstaja.
-    if (!(p ? await verifyPassword(password, p.password_hash) : await fakeVerify())) {
+    const ok = p ? await verifyPassword(password, p.password_hash) : await fakeVerify();
+    // Močnejši zapis gesla; ob polni vrsti (SCRYPT_BUSY) prijava vseeno uspe, zamenjamo naslednjič.
+    const rehashed = ok && needsRehash(p.password_hash) ? await hashPassword(password).catch(() => null) : null;
+    // Med čakanjem na scrypt se je geslo lahko zamenjalo (ponastavitev odjavi vse seje) ali je bil račun izbrisan:
+    // takrat staro geslo ne sme odpreti nove seje.
+    const same = ok && db.prepare("SELECT password_hash FROM parents WHERE id = ?").get(p.id)?.password_hash === p.password_hash;
+    if (!same) {
       throttle.fail(key);
       emailThrottle.fail(email);
       ipThrottle.fail(req.ip);
@@ -536,7 +543,7 @@ export function mountAccounts(app, store, opts = {}) {
       return res.status(409).json({ error: "Profila brez računa ni mogoče prenesti, ker v paketu tega računa ni prostora. Ustvari nov račun ali najprej izbriši podatke brez računa.", guest_conflict: true });
     }
     throttle.reset(key);
-    if (needsRehash(p.password_hash)) update(p.id, { password_hash: await hashPassword(password) }); // močnejši zapis gesla
+    if (rehashed) db.prepare("UPDATE parents SET password_hash = ? WHERE id = ? AND password_hash = ?").run(rehashed, p.id, p.password_hash);
     audit(db, { req, parentId: p.id, action: "login" });
     const guest = fromGuest ? adoptGuest(fromGuest, p) : null;
     setSessionCookie(req, res, sessions.create(p.id));

@@ -27,7 +27,7 @@ export const RETENTION = {
   emailLogDays: 365,
   // Dnevnik obvestil na telefon (enako): 90 dni.
   pushLogDays: 90,
-  // Račun, ki e-naslova ni potrdil v toliko dneh in nima profilov s podatki, plačil ali seje, se izbriše.
+  // Račun, ki e-naslova ni potrdil v toliko dneh in nima profilov, plačil ali seje, se izbriše.
   unverifiedDays: 30,
   // Potekle seje in odklepi profilov se izbrišejo takoj (niso več veljavni).
 };
@@ -47,6 +47,7 @@ export function withoutImages(content, text) {
 // --- šifriranje obstoječih vrstic ---
 // Zašifrira nešifrirane vrstice in znova zašifrira tiste s starim ključem. Idempotentno, ena transakcija na paket.
 // Neberljive vrstice (neznan ključ) pusti pri miru. Vrne { [tabela]: število spremenjenih }.
+const BATCH_BYTES = 8 * 1024 * 1024;
 export function* encryptionSteps(db, batch = 200) {
   const cur = currentKeyId();
   if (!cur) return;
@@ -56,7 +57,10 @@ export function* encryptionSteps(db, batch = 200) {
     const cols = t.cols.filter((c) => hasCol(db, t.table, c));
     const need = cols.map((c) => `(${c} IS NOT NULL AND ${c} NOT LIKE '${fresh}')`);
     if (t.norm) need.push(`norm NOT LIKE 'h1:${cur}:%'`);
-    const pick = db.prepare(`SELECT rowid AS rid, ${cols.join(", ")}${t.norm ? ", norm" : ""} FROM ${t.table} WHERE rowid > ? AND (${need.join(" OR ")}) ORDER BY rowid LIMIT ?`);
+    // Najprej samo rowid, vrstice nato ena po ena: sporočila s fotografijo imajo do 7 MB, 200 naenkrat bi na
+    // strežniku s 512 MB pomnilnika lahko sprožilo OOM. Paket se konča tudi po ~8 MB besedila (zanka dogodkov).
+    const pick = db.prepare(`SELECT rowid AS rid FROM ${t.table} WHERE rowid > ? AND (${need.join(" OR ")}) ORDER BY rowid LIMIT ?`);
+    const one = db.prepare(`SELECT ${cols.join(", ")}${t.norm ? ", norm" : ""} FROM ${t.table} WHERE rowid = ?`);
     const upd = db.prepare(`UPDATE ${t.table} SET ${cols.map((c) => `${c} = ?`).join(", ")}${t.norm ? ", norm = ?" : ""} WHERE rowid = ?`);
     let last = 0;
     let changed = 0;
@@ -65,8 +69,12 @@ export function* encryptionSteps(db, batch = 200) {
       if (!rows.length) break;
       db.exec("BEGIN IMMEDIATE");
       try {
-        for (const r of rows) {
-          last = r.rid;
+        let bytes = 0;
+        for (const { rid } of rows) {
+          if (bytes > BATCH_BYTES) break;
+          last = rid;
+          const r = { rid, ...one.get(rid) };
+          for (const c of cols) bytes += r[c]?.length || 0;
           const plain = cols.map((c) => (r[c] === null ? null : unseal(r[c], null)));
           if (plain.some((v, i) => v === null && r[cols[i]] !== null)) continue; // neberljivo: pusti
           const vals = plain.map((v) => (v === null ? null : seal(v)));
@@ -126,9 +134,13 @@ export function runRetention(db, { now = Date.now(), log = console } = {}) {
   const n = RETENTION.imageDays();
   // Fotografije: sporočila s sliko, starejša od n dni (has_image = 2 pomeni, da je slika že odstranjena).
   if (hasTable(db, "messages")) {
-    const rows = db.prepare("SELECT id, api_content FROM messages WHERE has_image = 1 AND created_at < datetime(?, 'unixepoch', ?)").all(Math.floor(now / 1000), `-${n} days`);
+    // Samo id-ji, vsebina nato ena po ena (fotografija ima lahko do 7 MB; ob prvem čiščenju jih je veliko).
+    const ids = db.prepare("SELECT id FROM messages WHERE has_image = 1 AND created_at < datetime(?, 'unixepoch', ?)").all(Math.floor(now / 1000), `-${n} days`);
+    const one = db.prepare("SELECT api_content FROM messages WHERE id = ?");
     const upd = db.prepare("UPDATE messages SET api_content = ?, has_image = 2 WHERE id = ?");
-    for (const r of rows) {
+    for (const { id } of ids) {
+      const r = { id, api_content: one.get(id)?.api_content };
+      if (r.api_content === undefined) continue;
       const plain = unseal(r.api_content, null);
       if (plain === null) continue; // neberljivo (manjka ključ): pusti
       let content;
@@ -159,22 +171,20 @@ export function runRetention(db, { now = Date.now(), log = console } = {}) {
   return out;
 }
 
-// Nepotrjeni računi: samo brez profilov s podatki, brez plačil ali kode, brez veljavne seje in ne gostje
-// (goste čisti server/accounts/guest.js). Previdno: ob dvomu račun ostane.
+// Nepotrjeni računi: samo brez profilov (profil brez potrditve ustvari le gost, ki je kasneje dobil račun;
+// njegovi podatki so lahko v katerikoli tabeli: grafi, igre, urnik …), brez plačil ali kode, brez veljavne seje
+// in ne gostje (goste čisti server/accounts/guest.js). Previdno: ob dvomu račun ostane.
 function deleteStaleUnverified(db, { nowIso, before }) {
   if (!hasTable(db, "parents") || !hasCol(db, "students", "parent_id")) return 0;
   const cols = db.prepare("PRAGMA table_info(parents)").all().map((c) => c.name);
   const paid = ["stripe_customer_id", "sub_id", "sub_status", "promo_until", "bonus_until"].filter((c) => cols.includes(c)).map((c) => `p.${c} IS NULL`);
-  const data = ["conversations", "tasks", "topic_state", "xp_events", "flashcards"]
-    .filter((t) => hasTable(db, t))
-    .map((t) => `EXISTS (SELECT 1 FROM ${t} x WHERE x.student_id = s.id)`);
   const ids = db
     .prepare(
       `SELECT p.id FROM parents p
        WHERE p.is_guest = 0 AND p.email_verified_at IS NULL AND p.created_at < ?
          ${paid.map((c) => `AND ${c}`).join(" ")}
          AND NOT EXISTS (SELECT 1 FROM parent_sessions ps WHERE ps.parent_id = p.id AND ps.expires_at > ?)
-         ${data.length ? `AND NOT EXISTS (SELECT 1 FROM students s WHERE s.parent_id = p.id AND (${data.join(" OR ")}))` : ""}`,
+         AND NOT EXISTS (SELECT 1 FROM students s WHERE s.parent_id = p.id)`,
     )
     .all(before, nowIso)
     .map((r) => r.id);
