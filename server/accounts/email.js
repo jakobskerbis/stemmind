@@ -16,7 +16,9 @@ export class Mailer {
   }
   async send({ to, subject, html, text }) {
     if (!this.key) {
-      this.log(`[evklid] E-pošta (Resend ni nastavljen) za ${to}: ${subject}\n${text || ""}`);
+      // Na javnem strežniku brez e-naslova in vsebine (povezave za novo geslo so kot geslo); lokalno cela vsebina.
+      const prod = process.env.NODE_ENV === "production" || /^https:/i.test(process.env.EVKLID_BASE_URL || "");
+      this.log(prod ? `[evklid] E-pošta ni poslana (Resend ni nastavljen): ${subject}` : `[evklid] E-pošta (Resend ni nastavljen) za ${to}: ${subject}\n${text || ""}`);
       return { id: null, dev: true };
     }
     const res = await this.fetch("https://api.resend.com/emails", {

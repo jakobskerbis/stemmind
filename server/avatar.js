@@ -5,6 +5,7 @@ import fs from "node:fs";
 import crypto from "node:crypto";
 import { ensureKnowledgeTables } from "./zbirke.js";
 import { isLocalRequest, purgeOldWishes } from "./feedback.js";
+import { unseal } from "./crypto-polje.js";
 
 export function ensureAvatarTables(db) {
   ensureKnowledgeTables(db); // predmeti za znanje (server/zbirke.js) so tudi del inventarja
@@ -160,9 +161,11 @@ export function mountAvatar(app, avatars, { loadStudent, trendsFile = null }) {
     if (!exportAllowed(req)) return res.status(404).json({ error: "Ne obstaja." });
     purgeOldWishes(avatars.db);
     const wishes = avatars.db
-      .prepare("SELECT ideas, lang, date(created_at) AS day FROM feedback WHERE kind = 'cosmetics' AND ideas != '' ORDER BY id DESC LIMIT 500")
+      .prepare("SELECT ideas, lang, date(created_at) AS day FROM feedback WHERE kind = 'cosmetics' AND ideas IS NOT NULL AND ideas != '' ORDER BY id DESC LIMIT 500")
       .all()
-      .map((r) => ({ text: r.ideas, lang: r.lang || null, day: r.day }));
+      // ideas je šifrirano (server/crypto-polje.js); prazna želja je zašifrirana kot neprazen niz.
+      .map((r) => ({ text: unseal(r.ideas, ""), lang: r.lang || null, day: r.day }))
+      .filter((w) => w.text);
     res.json({ at: new Date().toISOString(), trends: avatars.trends(), wishes });
   });
   // Kopija v data/kozmetika-trendi.json (ob zagonu in vsakih 6 h), da jo tedenska posodobitev prebere brez baze.

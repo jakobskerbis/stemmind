@@ -10,7 +10,7 @@ import { ALL_SUBJECTS } from "./subjects.js";
 const VALID = {
   subject: ALL_SUBJECTS,
   mode: ["A", "B"],
-  flag: ["none", "offtopic", "distress", "unsafe", "injection"],
+  flag: ["none", "offtopic", "distress", "unsafe", "injection", "photo"], // photo: fotografija ni učno gradivo
 };
 
 function parseAttrs(body) {

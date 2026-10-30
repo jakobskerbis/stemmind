@@ -41,6 +41,8 @@ Strošek: paket Starter ≈ 7 $/mesec + disk 1 GB ≈ 0,25 $/mesec. Brezplačni 
 
 Vse lahko spremeniš v Render → Environment.
 
+**Šifriranje podatkov:** nastavi tudi `EVKLID_DATA_KEY` (navodila v [varnost-podatkov.md](varnost-podatkov.md)).
+
 ## Varnostna kopija
 
 Render → Disks naredi dnevni posnetek diska samodejno (hrani se 7 dni).

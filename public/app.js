@@ -1277,7 +1277,7 @@ async function loadProgress() {
     : `<tr><td colspan="4" class="muted">${t("common.noData")}</td></tr>`;
 
   const FLAG_NAMES = { distress: t("flag.distress"), unsafe: t("flag.unsafe"), injection: t("flag.injection"), offtopic: t("flag.offtopic") };
-  const flags = p.flags.filter((f) => f.flag !== "offtopic");
+  const flags = p.flags.filter((f) => f.flag !== "offtopic" && f.flag !== "photo"); // zavrnjena fotografija ni opozorilo za starše
   $("#flags-card").hidden = !flags.length;
   refreshXp();
   $("#flag-list").innerHTML = flags
