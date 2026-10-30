@@ -405,24 +405,24 @@ function renderLogin(mode = "login") {
   shell(`
     <h1>${mode === "login" ? "Prijava" : "Nov račun"}</h1>
     <p class="muted">${mode === "login" ? "Za starše (otrokov profil) in za dijake ter študente (lasten profil)." : `Evklid je 7 dni brezplačen, brez kartice. Nato ${eur(999)} na mesec ali brezplačni paket z omejenim številom vprašanj.`}</p>
-    ${invited ? `<p class="card">Ustvarite svoj račun starša. Nato dodate otrokov profil (<b>${esc(invited)}</b>) in s tem date soglasje.</p>` : ""}
+    ${invited ? `<p class="card">Ustvari svoj račun starša. Nato dodaš otrokov profil (<b>${esc(invited)}</b>) in s tem daš soglasje.</p>` : ""}
     <form id="auth-form" class="card form">
-      ${mode === "register" ? `<label>Vaše ime (neobvezno) <input name="name" maxlength="60" autocomplete="name"></label>` : ""}
+      ${mode === "register" ? `<label>Tvoje ime (neobvezno) <input name="name" maxlength="60" autocomplete="name"></label>` : ""}
       <label>E-naslov <input name="email" type="email" required autocomplete="email"></label>
       <label>Geslo <input name="password" type="password" required minlength="8" autocomplete="${mode === "login" ? "current-password" : "new-password"}"></label>
       ${mode === "register" ? `
-        <label>Vaš datum rojstva <input name="birth_date" type="date" required min="1900-01-01" max="${new Date().toISOString().slice(0, 10)}" autocomplete="bday"></label>
+        <label>Tvoj datum rojstva <input name="birth_date" type="date" required min="1900-01-01" max="${new Date().toISOString().slice(0, 10)}" autocomplete="bday"></label>
         <label>Aktivacijska koda (neobvezno) <input name="promo_code" maxlength="40" autocapitalize="characters" value="${esc(koda)}"></label>
         <label>Koda priporočila (neobvezno) <input name="referral_code" maxlength="12" value="${esc(ref)}"></label>
         <label class="check"><input type="checkbox" name="accept_privacy" required>
-          <span>Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu osebnih podatkov</a>. Račun ustvarjam kot starš oziroma zakoniti zastopnik ali zase (dijak ali študent).</span></label>` : ""}
+          <span>Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu osebnih podatkov</a>. Račun ustvarjam zase (dijak ali študent) ali kot starš ali zakoniti zastopnik.</span></label>` : ""}
       <p class="form-error" hidden></p>
       <button class="primary" type="submit">${mode === "login" ? "Prijava" : "Ustvari račun"}</button>
     </form>
     <p class="auth-links">
       ${mode === "login"
-        ? `Še nimate računa? <a href="#" data-go="register">Registracija</a> · <a href="#" data-go="forgot">Pozabljeno geslo</a>`
-        : `Že imate račun? <a href="#" data-go="login">Prijava</a>`}
+        ? `Še nimaš računa? <a href="#" data-go="register">Registracija</a> · <a href="#" data-go="forgot">Pozabljeno geslo</a>`
+        : `Že imaš račun? <a href="#" data-go="login">Prijava</a>`}
     </p>`);
   bindLinks();
   $("#auth-form").addEventListener("submit", async (e) => {
@@ -521,7 +521,7 @@ function renderForgot() {
     e.preventDefault();
     try {
       const r = await api("/api/auth/forgot", { method: "POST", body: { email: e.target.email.value } });
-      e.target.outerHTML = `<div class="card"><p>Če račun s tem e-naslovom obstaja, smo vam poslali povezavo za novo geslo.</p>${
+      e.target.outerHTML = `<div class="card"><p>Če račun s tem e-naslovom obstaja, smo ti poslali povezavo za novo geslo.</p>${
         r.dev_reset_url ? `<p class="muted">Razvojni način (e-pošta ni nastavljena): <a href="${esc(r.dev_reset_url)}">nastavi geslo</a></p>` : ""
       }</div>`;
     } catch (err) {
@@ -553,12 +553,12 @@ function renderReset(token) {
 function renderVerify() {
   const dev = store.get("evklid_dev_verify");
   shell(`
-    <h1>Potrdite e-naslov</h1>
+    <h1>Potrdi e-naslov</h1>
     <div class="card">
-      <p>Na <b>${esc(status.parent.email)}</b> smo poslali povezavo. Kliknite jo, nato se vrnite sem.</p>
-      <p class="muted">S potrditvijo tudi izjavite, da ste starš ali zakoniti zastopnik otroka. To zahteva zakon o varstvu podatkov za otroke, mlajše od 15 let.</p>
+      <p>Na <b>${esc(status.parent.email)}</b> smo poslali povezavo. Klikni jo, nato se vrni sem.</p>
+      <p class="muted">S potrditvijo tudi izjaviš, da si starš ali zakoniti zastopnik otroka. To zahteva zakon o varstvu podatkov za otroke, mlajše od 15 let.</p>
       ${dev && !status.email ? `<p class="muted">Razvojni način (e-pošta ni nastavljena): <a href="${esc(dev)}">potrdi e-naslov</a></p>` : ""}
-      ${!dev && !status.email ? `<p class="warn">E-pošta na strežniku še ni nastavljena, zato povezava ni prišla. Na računalniku, kjer teče Evklid, se prijavite v ta račun in kliknite »Pošlji znova«.</p>` : ""}
+      ${!dev && !status.email ? `<p class="warn">Pošiljanje e-pošte še ni nastavljeno, zato povezava ni prišla. Na računalniku, kjer teče Evklid, se prijavi v ta račun in klikni »Pošlji znova«.</p>` : ""}
       <div class="form-actions">
         <button class="primary" id="verify-done" type="button">Sem potrdil(a)</button>
         <button id="verify-resend" type="button">Pošlji znova</button>
@@ -607,7 +607,7 @@ function childForm(consentText, programs = [], password = true, others = []) {
         <input type="hidden" name="curriculum_level">
       </fieldset>
       <label class="year-field"${self ? " hidden" : ""}>Letnica rojstva
-        <select name="birth_year"${self ? "" : " required"}><option value="">Izberite …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
+        <select name="birth_year"${self ? "" : " required"}><option value="">Izberi …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
       </label>
       ${status?.parent?.guest || !password ? "" : `<label>${esc(t("lock.password"))} <input type="password" name="profile_password" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="new-password" required></label>
       ${others.map((o) => `<label>${esc(t("lock.passwordFor", { name: o.name }))} <input type="password" name="other_pw_${o.id}" data-other="${o.id}" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="new-password" required></label>`).join("")}
@@ -653,7 +653,7 @@ function bindChildForm(after) {
   f.school_system.addEventListener("change", () => picker.setSystem(f.school_system.value));
   f.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (!picker.complete()) return showError(f, new Error("Izberite šolo in letnik do konca."));
+    if (!picker.complete()) return showError(f, new Error("Izberi šolo in letnik do konca."));
     const profilePw = f.profile_password?.value;
     if (f.profile_password && profilePw.length < PROFILE_PW_MIN) return showError(f, new Error(t("lock.short")));
     const otherPasswords = {};
@@ -678,7 +678,7 @@ function bindChildForm(after) {
 async function renderAddChild() {
   const [acc, programs] = await Promise.all([api("/api/account"), loadPrograms(api)]);
   shell(`
-    <h1>Ustvarite profil</h1>
+    <h1>Ustvari profil</h1>
     <p class="muted">Vsak učenec, dijak ali študent ima svoj profil z učno potjo in napredkom. Za otroke, mlajše od 15 let, je potrebno soglasje starša.</p>
     ${childForm(acc.consent_text, programs, acc.children?.length > 0)}
     <p class="auth-links"><a href="#" id="add-child-logout">Odjava</a></p>`);
@@ -691,7 +691,7 @@ async function renderAddChild() {
 const STATUS_TEXT = {
   active: "aktivna",
   trialing: "brezplačni preizkus",
-  past_due: "plačilo ni uspelo – posodobite kartico",
+  past_due: "plačilo ni uspelo – posodobi kartico",
   canceled: "preklicana",
   unpaid: "neplačana",
   incomplete: "nedokončana",
@@ -704,8 +704,8 @@ const STATUS_TEXT = {
 function aiPill(a) {
   if (!a || a.percent == null) return "";
   if (a.hard_reached) return `<span class="pill warn" title="Inštruktor bo spet na voljo 1. v mesecu. Vadnica deluje naprej.">inštruktor ta mesec porabljen</span>`;
-  const extra = a.soft_reached ? " · podrobne razlage pripravlja hitrejši model" : "";
-  return `<span class="pill" title="Delež mesečne omejitve za AI inštruktorja">AI ta mesec ${a.percent} %${extra}</span>`;
+  const extra = a.soft_reached ? " · razlage so do konca meseca manj podrobne" : "";
+  return `<span class="pill" title="Delež mesečne omejitve za inštruktorja AI">inštruktor ta mesec ${a.percent} %${extra}</span>`;
 }
 
 function planText(acc) {
@@ -753,7 +753,7 @@ function plansPicker(acc) {
            <button class="secondary" type="button" id="plan-link">${esc(t("pay.askParent"))}</button><div id="plan-link-out"></div>`
         : `${consentFields()}
            <button class="primary" type="submit">${esc(t("pay.continue"))}</button>`}
-      ${acc.parent.minor ? "" : `<p class="muted">Plačilo poteka varno prek Stripe. Naročnino lahko kadar koli prekličete.${
+      ${acc.parent.minor ? "" : `<p class="muted">Plačilo poteka varno prek Stripe. Naročnino lahko kadar koli prekličeš.${
         acc.access.tier === "trial" ? " Preostanek preizkusa se ohrani: prvo plačilo bo šele po njegovem koncu." : ""
       }</p>`}
       </div>
@@ -1162,7 +1162,7 @@ export async function renderAccount() {
     <div class="card">
       <h2>Naročnina</h2>
       ${planText(acc)}
-      ${!acc.billing ? `<p class="muted">Plačila še niso nastavljena na strežniku.</p>` : paid ? "" : plansPicker(acc)}
+      ${!acc.billing ? `<p class="muted">Plačila trenutno niso na voljo.</p>` : paid ? "" : plansPicker(acc)}
       ${acc.billing && acc.parent.has_customer ? `<button id="portal-btn" type="button">Upravljaj naročnino in račune</button>` : ""}
       ${promoBox(acc, paid)}
     </div>
@@ -1188,22 +1188,22 @@ export async function renderAccount() {
         </form></details>` : ""}
       ${acc.children
         .filter((c) => c.devices.length > acc.device_warn_limit)
-        .map((c) => `<p class="warn">${icon("info")} Profil <b>${esc(c.name)}</b> je bil v zadnjih 30 dneh odprt na ${c.devices.length} različnih napravah (${c.devices.map((d) => esc(d.label)).join(", ")}). Če to niste bili vi, kliknite »Odjavi vse druge naprave« in spremenite geslo.</p>`)
+        .map((c) => `<p class="warn">${icon("info")} Profil <b>${esc(c.name)}</b> je bil v zadnjih 30 dneh odprt na ${c.devices.length} različnih napravah (${c.devices.map((d) => esc(d.label)).join(", ")}). Če teh naprav ne poznaš, klikni »Odjavi vse druge naprave« in spremeni geslo.</p>`)
         .join("")}
       ${acc.swap_blocked_until
-        ? `<p class="muted">Profil lahko zamenjate enkrat na 30 dni. Nov profil boste lahko dodali ${date(acc.swap_blocked_until)}.</p>`
+        ? `<p class="muted">Profil lahko zamenjaš enkrat na 30 dni. Nov profil lahko dodaš ${date(acc.swap_blocked_until)}.</p>`
         : acc.children.length < acc.max_children
           ? `<details><summary>Dodaj profil</summary>${childForm(acc.consent_text, await loadPrograms(api), acc.children.length > 0, acc.children.filter((c) => !c.has_password))}</details>`
-          : `<p class="muted">Vaš paket ima ${acc.max_children === 1 ? "1 profil" : `${acc.max_children} profila`}.${acc.max_children === 1 ? " Za drugega otroka izberite paket za 2 otroka." : ""}</p>`}
-      <p class="muted">Vsak profil je lahko hkrati odprt samo na eni napravi. Profil zamenjate (izbrišete v zavihku Nastavitve in dodate novega) največ enkrat na 30 dni.</p>
+          : `<p class="muted">Tvoj paket ima ${acc.max_children === 1 ? "1 profil" : `${acc.max_children} profila`}.${acc.max_children === 1 ? " Za drugega otroka izberi paket za 2 otroka." : ""}</p>`}
+      <p class="muted">Vsak profil je lahko hkrati odprt samo na eni napravi. Profil zamenjaš (izbrišeš v zavihku Nastavitve in dodaš novega) največ enkrat na 30 dni.</p>
     </div>
     <div id="credit-card"></div>
 
     <div class="card">
       <h2>${icon("award")} Povabi prijatelje</h2>
-      <p>Ko se družina, ki jo povabite, naroči in prvič plača, <b>oboji dobite en mesec brezplačno</b>.</p>
+      <p>Ko se družina, ki jo povabiš, naroči in prvič plača, <b>obe družini dobita en mesec brezplačno</b>.</p>
       <div class="inline"><input id="ref-url" readonly value="${esc(acc.referral.url)}"><button id="ref-copy" type="button">Kopiraj</button></div>
-      <p class="muted">Vaša koda: <b>${esc(acc.referral.code)}</b>${acc.referral.rewards ? ` · prisluženi meseci: ${acc.referral.rewards}` : ""}</p>
+      <p class="muted">Tvoja koda: <b>${esc(acc.referral.code)}</b>${acc.referral.rewards ? ` · prisluženi meseci: ${acc.referral.rewards}` : ""}</p>
     </div>
 
     <div class="card">
@@ -1362,7 +1362,7 @@ export async function renderAccount() {
     toast("Vse druge naprave so odjavljene.");
   });
   $("#export-btn").addEventListener("click", async () => {
-    const password = prompt("Za prenos vseh podatkov (tudi pogovorov vseh profilov) vpišite geslo računa.");
+    const password = prompt("Za prenos vseh podatkov (tudi pogovorov vseh profilov) vpiši geslo računa.");
     if (!password) return;
     try {
       const data = await api("/api/account/export", { method: "POST", body: { password } });
@@ -1378,7 +1378,7 @@ export async function renderAccount() {
     }
   });
   $("#delete-account").addEventListener("click", async () => {
-    const password = prompt("Za izbris računa, vseh otrokovih profilov in pogovorov vpišite geslo. Tega ni mogoče razveljaviti.");
+    const password = prompt("Za izbris računa, vseh otrokovih profilov in pogovorov vpiši geslo. Tega ni mogoče razveljaviti.");
     if (!password) return;
     try {
       await api("/api/account", { method: "DELETE", body: { password } });

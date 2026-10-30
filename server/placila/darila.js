@@ -124,7 +124,7 @@ export function mountGifts(app, ctx) {
     if (paidActive(parent))
       return {
         error:
-          "Že imate naročnino, zato darilo ni potrebno. Prihranite ga za nekoga drugega.",
+          "Naročnino že imaš, zato darilo ni potrebno. Prihrani ga za nekoga drugega.",
       };
     const from = Math.max(
       Date.now(),
@@ -176,7 +176,7 @@ export function mountGifts(app, ctx) {
     if (req.body?.adult !== true || req.body?.withdrawal !== true)
       return res
         .status(400)
-        .json({ error: "Pred plačilom potrdite obe izjavi.", consent: true });
+        .json({ error: "Pred plačilom sta potrebni obe potrditvi.", consent: true });
     const open = db
       .prepare(
         "SELECT COUNT(*) AS n FROM gifts WHERE buyer_id = ? AND status = 'pending' AND created_at > datetime('now', '-1 day')",
@@ -246,7 +246,7 @@ export function mountGifts(app, ctx) {
         });
     const sid = String(req.body?.session_id || "");
     if (!/^cs_[\w]+$/.test(sid))
-      return res.status(400).json({ error: "Neznana seja plačila." });
+      return res.status(400).json({ error: "Plačila ni mogoče najti." });
     try {
       const session = await stripe.request("GET", `/checkout/sessions/${sid}`);
       if (

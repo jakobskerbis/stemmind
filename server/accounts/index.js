@@ -392,12 +392,12 @@ export function mountAccounts(app, store, opts = {}) {
   function checkSignup(req, res) {
     const email = String(req.body?.email || "").trim().toLowerCase();
     const password = String(req.body?.password || "");
-    if (!EMAIL_RE.test(email) || email.length > 200) return res.status(400).json({ error: "Vpišite veljaven e-naslov." }), null;
+    if (!EMAIL_RE.test(email) || email.length > 200) return res.status(400).json({ error: "Vpiši veljaven e-naslov." }), null;
     if (password.length < 8) return res.status(400).json({ error: "Geslo mora imeti vsaj 8 znakov." }), null;
-    if (req.body?.accept_privacy !== true) return res.status(400).json({ error: "Potrebno je strinjanje z obvestilom o varstvu podatkov." }), null;
+    if (req.body?.accept_privacy !== true) return res.status(400).json({ error: "Označi, da si prebral(a) obvestilo o varstvu podatkov." }), null;
     const birthIso = checkAge(req, res);
     if (!birthIso) return null;
-    if (parentByEmail(email)) return res.status(409).json({ error: "Ta e-naslov je že registriran. Prijavite se.", exists: true }), null;
+    if (parentByEmail(email)) return res.status(409).json({ error: "Ta e-naslov je že registriran. Prijavi se.", exists: true }), null;
     return { email, password, birthIso };
   }
 
@@ -406,7 +406,7 @@ export function mountAccounts(app, store, opts = {}) {
   function checkAge(req, res) {
     const birth = parseBirthDate(req.body?.birth_date);
     const age = birth ? ageOn(birth) : null;
-    if (age === null || age < 0 || age > 120) return res.status(400).json({ error: "Vpišite datum rojstva.", birth_date: true }), null;
+    if (age === null || age < 0 || age > 120) return res.status(400).json({ error: "Vpiši datum rojstva.", birth_date: true }), null;
     const cf = String(req.headers["cf-ipcountry"] || "").toUpperCase();
     const minAge = minAgeOf(cf, req.body?.country);
     const blockedBefore = readCookie(req, AGE_COOKIE) === "1" || LEGACY_AGE_COOKIES.some((c) => readCookie(req, c) === "1");
@@ -445,7 +445,7 @@ export function mountAccounts(app, store, opts = {}) {
   app.post("/api/auth/register", json, async (req, res) => {
     // Ključ je omrežje (IPv6: /64), sicer bi en priključek z menjavo naslovov v svojem /64 ustvaril neomejeno računov.
     const signupKey = netKey(req.ip);
-    if (!isLocalRequest(req) && signupThrottle.blocked(signupKey)) return res.status(429).json({ error: "Z tega omrežja je danes ustvarjenih že preveč računov. Poskusite jutri." });
+    if (!isLocalRequest(req) && signupThrottle.blocked(signupKey)) return res.status(429).json({ error: "S tega omrežja je danes ustvarjenih že preveč računov. Poskusi jutri." });
     const v = checkSignup(req, res);
     if (!v) return;
     signupThrottle.fail(signupKey);
@@ -474,7 +474,7 @@ export function mountAccounts(app, store, opts = {}) {
   app.post("/api/auth/guest", json, (req, res) => {
     if (!guestOn) return res.status(404).json({ error: "Uporaba brez računa ni vklopljena." });
     if (req.parent) return res.json({ parent: publicParent(req.parent) });
-    if (req.body?.accept_privacy !== true) return res.status(400).json({ error: "Potrebno je strinjanje z obvestilom o varstvu podatkov." });
+    if (req.body?.accept_privacy !== true) return res.status(400).json({ error: "Označi, da si prebral(a) obvestilo o varstvu podatkov." });
     // Naprava, ki je bila zavrnjena pri registraciji zaradi starosti, tudi brez računa ne more naprej.
     if (readCookie(req, AGE_COOKIE) === "1" || LEGACY_AGE_COOKIES.some((c) => readCookie(req, c) === "1")) {
       return res.status(403).json({ error: "Za mlajše učence račun ustvari starš. Pokaži mu povezavo za starše.", under_age: true });
@@ -568,7 +568,7 @@ export function mountAccounts(app, store, opts = {}) {
   app.post("/api/auth/login", json, async (req, res) => {
     const email = String(req.body?.email || "").trim().toLowerCase();
     const key = `${email}|${req.ip}`;
-    if (throttle.blocked(key) || emailThrottle.blocked(email) || ipThrottle.blocked(req.ip)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
+    if (throttle.blocked(key) || emailThrottle.blocked(email) || ipThrottle.blocked(req.ip)) return res.status(429).json({ error: "Preveč poskusov. Poskusi čez 15 minut." });
     const p = parentByEmail(email);
     const password = String(req.body?.password || "");
     // Brez računa enako dolgo računamo, da čas odgovora ne izda, ali e-naslov obstaja.
@@ -613,7 +613,7 @@ export function mountAccounts(app, store, opts = {}) {
 
   app.post("/api/auth/forgot", json, async (req, res) => {
     const email = String(req.body?.email || "").trim().toLowerCase();
-    if (forgotThrottle.blocked(email) || forgotThrottle.blocked(req.ip)) return res.status(429).json({ error: "Preveč zahtev. Poskusite čez eno uro." });
+    if (forgotThrottle.blocked(email) || forgotThrottle.blocked(req.ip)) return res.status(429).json({ error: "Preveč poskusov. Poskusi čez eno uro." });
     forgotThrottle.fail(email);
     forgotThrottle.fail(req.ip);
     const p = parentByEmail(email);
@@ -634,10 +634,10 @@ export function mountAccounts(app, store, opts = {}) {
     const password = String(req.body?.password || "");
     if (password.length < 8) return res.status(400).json({ error: "Geslo mora imeti vsaj 8 znakov." });
     const p = token && db.prepare("SELECT * FROM parents WHERE reset_token_hash = ?").get(sha256(token));
-    if (!p || Date.parse(p.reset_expires_at) < Date.now()) return res.status(400).json({ error: "Povezava je potekla. Zahtevajte novo." });
+    if (!p || Date.parse(p.reset_expires_at) < Date.now()) return res.status(400).json({ error: "Povezava je potekla. Zahtevaj novo." });
     const hash = await hashPassword(password);
     // Povezava velja enkrat: ob hkratnih zahtevah z istim žetonom uspe le prva.
-    if (!db.prepare("SELECT 1 FROM parents WHERE id = ? AND reset_token_hash = ?").get(p.id, p.reset_token_hash)) return res.status(400).json({ error: "Povezava je potekla. Zahtevajte novo." });
+    if (!db.prepare("SELECT 1 FROM parents WHERE id = ? AND reset_token_hash = ?").get(p.id, p.reset_token_hash)) return res.status(400).json({ error: "Povezava je potekla. Zahtevaj novo." });
     update(p.id, {
       password_hash: hash,
       reset_token_hash: null,
@@ -673,7 +673,7 @@ export function mountAccounts(app, store, opts = {}) {
     const p = req.parent;
     if (!lockable(p)) return res.json({ ok: true });
     const key = `${p.id}|${req.ip}`;
-    if (accountThrottle.blocked(key)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusite čez 15 minut." });
+    if (accountThrottle.blocked(key)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusi čez 15 minut." });
     const ok = await verifyPassword(String(req.body?.password || ""), p.password_hash);
     if (!ok) {
       accountThrottle.fail(key);
@@ -763,7 +763,7 @@ export function mountAccounts(app, store, opts = {}) {
     if (req.parent.is_guest) return res.status(403).json({ error: "Najprej ustvari račun." });
     if (req.parent.guest_net && !req.parent.email_verified_at) return res.status(403).json({ error: "Najprej potrdi e-naslov." });
     const key = `promo|${req.parent.id}`;
-    if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
+    if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusi čez 15 minut." });
     // Darilna koda (DAR-XXXX-XXXX) ima svoja pravila (server/placila/darila.js).
     const r = gifts?.isGift(req.body?.code) ? gifts.redeem(req.parent, req.body?.code) : promo.redeem(req.parent, req.body?.code);
     if (r.error) {
@@ -796,7 +796,7 @@ export function mountAccounts(app, store, opts = {}) {
   app.post("/api/account/export", json, async (req, res) => {
     const p = req.parent;
     const key = `export${p.id}|${req.ip}`;
-    if (throttle.blocked(key) || acrossThrottle.blocked(`acct${p.id}`)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
+    if (throttle.blocked(key) || acrossThrottle.blocked(`acct${p.id}`)) return res.status(429).json({ error: "Preveč poskusov. Poskusi čez 15 minut." });
     if (!p.is_guest && !(await verifyPassword(String(req.body?.password || ""), p.password_hash))) {
       throttle.fail(key);
       acrossThrottle.fail(`acct${p.id}`);
@@ -857,7 +857,7 @@ export function mountAccounts(app, store, opts = {}) {
       return false;
     };
     const delKey = `delete${p.id}`;
-    if (acrossThrottle.blocked(delKey)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez eno uro." });
+    if (acrossThrottle.blocked(delKey)) return res.status(429).json({ error: "Preveč poskusov. Poskusi čez eno uro." });
     if (!p.is_guest && !(await verifyPassword(String(req.body?.password || ""), p.password_hash)) && !(await reauth())) {
       acrossThrottle.fail(delKey);
       audit(db, { req, parentId: p.id, action: "account_delete", ok: false });
@@ -869,7 +869,7 @@ export function mountAccounts(app, store, opts = {}) {
         await stripe.request("DELETE", `/subscriptions/${p.sub_id}`);
       } catch (err) {
         log.error?.("[evklid] preklic naročnine ni uspel:", err.message);
-        return res.status(502).json({ error: "Naročnine ni bilo mogoče preklicati. Poskusite znova ali jo prekličite v portalu." });
+        return res.status(502).json({ error: "Naročnine ni bilo mogoče preklicati. Poskusi znova ali jo prekliči z gumbom »Upravljaj naročnino in račune«." });
       }
     }
     guests.snapshotParent(p.id); // poraba gosta ostane šteta za omrežje
@@ -975,24 +975,24 @@ export function mountAccounts(app, store, opts = {}) {
 
   app.post("/api/students", json, async (req, res) => {
     const p = req.parent;
-    if (!p.email_verified_at && !p.is_guest) return res.status(403).json({ error: "Najprej potrdite e-naslov (povezava je v e-pošti).", verify: true });
+    if (!p.email_verified_at && !p.is_guest) return res.status(403).json({ error: "Najprej potrdi e-naslov (povezava je v e-pošti).", verify: true });
     // Število profilov = paket (preizkus: 2, brezplačno: 1). Menjava profila največ enkrat na 30 dni.
     const seats = Math.min(MAX_CHILDREN, accessOf(p).seats || 1);
     if (childIds(p.id).length >= seats) {
       return res.status(400).json({
-        error: seats === 1 ? "Vaš paket ima 1 profil. Za drugega otroka izberite paket za 2 otroka v zavihku Račun." : `Vaš paket ima ${seats} profila.`,
+        error: seats === 1 ? "Tvoj paket ima 1 profil. Za drugega otroka izberi paket za 2 otroka v zavihku Račun." : `Tvoj paket ima ${seats} profila.`,
         seats: true,
       });
     }
     const blocked = devices.swapBlockedUntil(p.id);
     if (blocked) {
       return res.status(400).json({
-        error: `Profil lahko zamenjate največ enkrat na 30 dni. Nov profil boste lahko dodali ${new Date(blocked).toLocaleDateString("sl-SI")}.`,
+        error: `Profil lahko zamenjaš največ enkrat na 30 dni. Nov profil lahko dodaš ${new Date(blocked).toLocaleDateString("sl-SI")}.`,
         swap: true,
       });
     }
     const name = cleanText(req.body?.name, 40);
-    if (!name) return res.status(400).json({ error: "Vpišite ime ali vzdevek otroka." });
+    if (!name) return res.status(400).json({ error: "Vpiši ime ali vzdevek otroka." });
     const minor = isMinor(p);
     // Mladoletni imetnik (dijak, ki je račun ustvaril sam) ima samo svoj profil; za otroke soglaša starš.
     if (minor && childIds(p.id).length) {
@@ -1011,7 +1011,7 @@ export function mountAccounts(app, store, opts = {}) {
       }
     }
     // Tudi odrasli študenti fakultet ustvarijo svoj profil, zato ni zgornje starostne meje za otroke.
-    if (!Number.isInteger(year) || year < now - 90 || year > now - 5) return res.status(400).json({ error: "Vpišite letnico rojstva." });
+    if (!Number.isInteger(year) || year < now - 90 || year > now - 5) return res.status(400).json({ error: "Vpiši letnico rojstva." });
     if (req.body?.consent !== true) return res.status(400).json({ error: self ? "Označi soglasje za obdelavo podatkov." : "Za otrokov profil je potrebno soglasje starša.", consent: true });
     // Geslo profila (neobvezno v API; brez njega ga aplikacija zahteva ob prvem odprtju profila).
     const profilePw = req.body?.profile_password;
@@ -1079,10 +1079,10 @@ export function mountAccounts(app, store, opts = {}) {
     if (school && !childIds(p.id).some((id) => schools.hasLicence(id))) {
       return res.status(403).json({ error: "Ta cena velja samo za učence s šolsko licenco." });
     }
-    if (PAID.has(p.sub_status)) return res.status(409).json({ error: "Naročnino že imate. Paket spremenite v portalu.", portal: true });
+    if (PAID.has(p.sub_status)) return res.status(409).json({ error: "Naročnino že imaš. Paket spremeniš z gumbom »Upravljaj naročnino in račune«.", portal: true });
     // Naročnino sklene polnoletna oseba; mladoletni imetnik pošlje staršu povezavo za plačilo.
     if (isMinor(p)) return res.status(403).json({ error: "Naročnino plača starš. Pošlji mu povezavo za plačilo.", pay_link: true });
-    if (req.body?.adult !== true || req.body?.withdrawal !== true) return res.status(400).json({ error: "Pred plačilom potrdite obe izjavi.", consent: true });
+    if (req.body?.adult !== true || req.body?.withdrawal !== true) return res.status(400).json({ error: "Pred plačilom sta potrebni obe potrditvi.", consent: true });
     try {
       const customer = await ensureCustomer(p);
       const { prices } = school ? await stripe.ensureSchoolPrices() : await stripe.ensurePrices(currency);
@@ -1112,21 +1112,21 @@ export function mountAccounts(app, store, opts = {}) {
       res.json({ url: session.url });
     } catch (err) {
       log.error?.("[evklid] Stripe checkout:", err.message);
-      res.status(502).json({ error: "Plačilne strani ni bilo mogoče odpreti. Poskusite znova." });
+      res.status(502).json({ error: "Plačilne strani ni bilo mogoče odpreti. Poskusi znova." });
     }
   });
 
   app.post("/api/billing/portal", async (req, res) => {
     if (needStripe(res)) return;
     const p = req.parent;
-    if (!p.stripe_customer_id) return res.status(400).json({ error: "Naročnine še nimate." });
+    if (!p.stripe_customer_id) return res.status(400).json({ error: "Naročnine še nimaš." });
     try {
       const configuration = await stripe.ensurePortalConfig();
       const s = await stripe.request("POST", "/billing_portal/sessions", { customer: p.stripe_customer_id, return_url: `${baseUrl(req)}/?billing=portal`, configuration });
       res.json({ url: s.url });
     } catch (err) {
       log.error?.("[evklid] Stripe portal:", err.message);
-      res.status(502).json({ error: "Portala ni bilo mogoče odpreti. Poskusite znova." });
+      res.status(502).json({ error: "Strani za upravljanje naročnine ni bilo mogoče odpreti. Poskusi znova." });
     }
   });
 
@@ -1374,7 +1374,7 @@ export function mountAccounts(app, store, opts = {}) {
   app.post("/api/account/weekly-report/send", async (req, res) => {
     const p = req.parent;
     if (p.is_guest) return res.status(400).json({ error: "Najprej ustvari račun." });
-    if (!childIds(p.id).length) return res.status(400).json({ error: "Najprej dodajte otroka." });
+    if (!childIds(p.id).length) return res.status(400).json({ error: "Najprej dodaj profil." });
     const ok = await sendMail(p.email, reportFor(p, req));
     res.status(ok ? 200 : 502).json(ok ? { ok: true, dev: !mailer.enabled } : { error: "Pošiljanje ni uspelo." });
   });
