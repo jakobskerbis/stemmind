@@ -1,15 +1,17 @@
 // Klikljive formule: kartica ob kliku na simbol ali enoto (slovar in označevanje sta v formula-data.js).
 import { t, currentLang } from "./i18n.js";
-import { lookupSymbol, lookupUnit, SYMBOLS, GREEK, SUBJECT_TABLES } from "./formula-data.js";
+import { lookupSymbol, lookupUnit, symbolsIn, SYMBOLS, GREEK, SUBJECT_TABLES } from "./formula-data.js";
 
 export { annotateTex, setFormulaSubject, withFormulaSubject } from "./formula-data.js";
 
 // ---------- kartica ----------
 const en = () => currentLang() !== "sl";
-const nameOf = (e) => (en() ? e.en : e.n);
-const noteOf = (e) => (en() ? e.noteEn : e.note) || "";
+// Oznake lekcije (:::simboli) so samo v slovenščini, kot lekcija.
+const nameOf = (e) => (en() && e.en ? e.en : e.n);
+const noteOf = (e) => (en() && !e.local ? e.noteEn : e.note) || "";
 const descOf = (u) => (en() ? u.de : u.d) || "";
 const symTex = (key) => {
+  if (key[0] === "Δ") return `\\Delta ${symTex(key.slice(1))}`;
   const [b, s] = key.split("_");
   const base = Object.entries(GREEK).find(([, v]) => v === b)?.[0];
   const bt = base ? `\\${base}` : b;
@@ -37,19 +39,48 @@ function cardFor(code) {
   if (!e) return null;
   const delta = kind === "d";
   const name = delta ? t("fx.change", { what: nameOf(e) }) : nameOf(e);
-  const u = e.u ? lookupUnit(e.u) : null;
-  const symbol = (delta ? "\\Delta " : "") + symTex(key);
+  const symbol = (delta ? "\\Delta " : "") + (e.tex || symTex(key));
+  const relation = e.r && !delta ? e.r : "";
   return {
     label: `${delta ? "Δ" : ""}${key.replace("_", " ")} — ${name}`,
     html: `<div class="fx-title">${tex(symbol)}<b>${esc(name)}</b></div>
-      ${e.r && !delta ? `<div class="fx-line"><span class="fx-k">${t("fx.formula")}</span>${tex(e.r)}</div>` : ""}
-      ${u ? `<div class="fx-line"><span class="fx-k">${t("fx.unit")}</span>${tex(unitTex(u.key))}${nameOf(u) !== u.key ? `<span class="fx-un">(${esc(nameOf(u))})</span>` : ""}</div>
-        ${u.c ? `<div class="fx-line fx-sub">${tex(u.c)}${descOf(u) ? ` <span>${esc(descOf(u))}</span>` : ""}</div>` : descOf(u) ? `<div class="fx-line fx-sub"><span>${esc(descOf(u))}</span></div>` : ""}` : !noteOf(e) ? `<div class="fx-line fx-sub"><span>${t("fx.noUnit")}</span></div>` : ""}
+      ${relation ? `<div class="fx-line"><span class="fx-k">${t("fx.formula")}</span>${tex(`\\displaystyle ${relation}`)}</div>${partsHtml(relation, subject, key, tex, esc)}` : ""}
+      ${unitHtml(e, tex, esc)}
       ${noteOf(e) ? `<div class="fx-note">${esc(noteOf(e))}</div>` : ""}`,
   };
 }
+
+// Enota na kartici: iz slovarja enot (ime in sestava), prosta enota lekcije (TeX) ali »nima enote«.
+function unitHtml(e, tex, esc) {
+  const noUnit = `<div class="fx-line fx-sub"><span>${t("fx.noUnit")}</span></div>`;
+  if (e.local) {
+    if (!e.u) return "";
+    if (/^(–|-|—|1|brez)$/.test(e.u)) return noUnit;
+  } else if (!e.u) return noteOf(e) ? "" : noUnit;
+  const u = lookupUnit(normUnitKey(e.u));
+  if (!u) return `<div class="fx-line"><span class="fx-k">${t("fx.unit")}</span>${tex(`\\mathrm{${e.u}}`)}</div>`;
+  return `<div class="fx-line"><span class="fx-k">${t("fx.unit")}</span>${tex(unitTex(u.key))}${nameOf(u) !== u.key ? `<span class="fx-un">(${esc(nameOf(u))})</span>` : ""}</div>
+    ${u.c ? `<div class="fx-line fx-sub">${tex(u.c)}${descOf(u) ? ` <span>${esc(descOf(u))}</span>` : ""}</div>` : descOf(u) ? `<div class="fx-line fx-sub"><span>${esc(descOf(u))}</span></div>` : ""}`;
+}
+const normUnitKey = (s) => s.replace(/\\mathrm\s*\{([^{}]*)\}/g, "$1").replace(/\\[,;: ]|~/g, " ").replace(/\\Omega\s*/g, "Ω").replace(/\\mu\s*/g, "μ")
+  .replace(/\^\{(-?\d)\}/g, "^$1").replace(/[{}]/g, "").replace(/\s+/g, " ").trim();
+
+// Sestavni deli zveze (ρ = m/V → m masa, V prostornina), vsak z enoto, če jo ima.
+function partsHtml(relation, subject, self, tex, esc) {
+  const parts = symbolsIn(relation, subject).filter(([k, , d]) => k !== self || d);
+  if (!parts.length) return "";
+  const rows = parts.map(([k, subj, d]) => {
+    const p = lookupSymbol(k, subj, relation) || lookupSymbolAny(k, subj);
+    if (!p) return "";
+    const nm = d ? t("fx.change", { what: nameOf(p) }) : nameOf(p);
+    const unit = p.u && !/^(–|-|—|1|brez)$/.test(p.u) ? (lookupUnit(normUnitKey(p.u))?.key ? unitTex(lookupUnit(normUnitKey(p.u)).key) : `\\mathrm{${p.u}}`) : "";
+    return `<li>${tex((d ? "\\Delta " : "") + (p.tex || symTex(k)))}<span>${esc(nm)}${unit ? ` <span class="fx-un">[${tex(unit)}]</span>` : ""}</span></li>`;
+  }).join("");
+  return rows ? `<div class="fx-parts"><span class="fx-k">${t("fx.parts")}</span><ul>${rows}</ul></div>` : "";
+}
 // Kartica brez celotne formule: vzemi prvo različico (tudi s ctx).
 function lookupSymbolAny(key, subject) {
+  if (subject?.[0] === "@") return lookupSymbol(key, subject);
   for (const tb of SUBJECT_TABLES[subject] || ["MAT"]) {
     const v = SYMBOLS[tb][key];
     if (v) return Array.isArray(v) ? v[v.length - 1] : v;

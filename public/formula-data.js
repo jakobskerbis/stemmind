@@ -216,6 +216,7 @@ const PREFIX = {
 const PREFIX_BASES = ["m", "g", "s", "A", "V", "W", "J", "N", "Pa", "L", "l", "Hz", "eV", "C", "Ω", "F", "mol"];
 
 const GREEK = {
+  varepsilon: "ε", epsilon: "ε", kappa: "κ", chi: "χ", psi: "ψ", xi: "ξ", zeta: "ζ", Gamma: "Γ", Lambda: "Λ", Theta: "Θ", Psi: "Ψ",
   alpha: "α", beta: "β", gamma: "γ", delta: "δ", eta: "η", lambda: "λ", mu: "μ", nu: "ν", omega: "ω", pi: "π", rho: "ρ",
   varphi: "φ", phi: "φ", Phi: "Φ", sigma: "σ", tau: "τ", theta: "θ", vartheta: "θ", varrho: "ρ", Omega: "Ω", Delta: "Δ",
 };
@@ -235,9 +236,10 @@ export function setFormulaSubject(fn) {
   subjectFn = typeof fn === "function" ? fn : () => fn;
 }
 // Začasno drug predmet (lekcija v učbeniku iz druge poti), med sinhronim izrisom.
-export function withFormulaSubject(subject, fn) {
+// glossary: oznake lekcije iz bloka :::simboli (parseSymbolsBlock); imajo prednost pred slovarjem.
+export function withFormulaSubject(subject, fn, glossary = null) {
   const prev = override;
-  override = subject || null;
+  override = glossary?.length ? registerGlossary(subject, glossary) : subject || null;
   try {
     return fn();
   } finally {
@@ -253,6 +255,8 @@ function pick(entry, tex) {
 }
 
 export function lookupSymbol(key, subject, tex = "") {
+  if (subject === "@*") return { n: key }; // vse oznake (preverjevalnik lekcij)
+  if (subject?.[0] === "@") return LOCAL[subject.slice(1)]?.table[key] || null;
   const tables = SUBJECT_TABLES[subject] || ["MAT"];
   for (const tb of tables) {
     const e = pick(SYMBOLS[tb][key], tex);
@@ -273,11 +277,103 @@ export function lookupUnit(key) {
   return null;
 }
 
-// Simbol v formuli: ključ "F_rez", "x_1,2", "ΔT" … Vrne ključ ali null.
+// Simbol v formuli: [ključ, predmet ali @lekcija] ali null. Ključ "F_rez", "x_1,2", "ΔH" …
 // v_1, m_2, v_{povp} … brez lastnega vnosa = pomen osnovnega simbola.
+// Vrstni red: oznaka lekcije s celim indeksom, slovar s celim indeksom, oznaka lekcije brez indeksa, slovar.
 function symbolKey(base, sub, subject, tex) {
-  if (sub && lookupSymbol(`${base}_${sub}`, subject, tex)) return `${base}_${sub}`;
-  return lookupSymbol(base, subject, tex) ? base : null;
+  const local = subject?.[0] === "@" ? subject : null;
+  const dict = local ? LOCAL[local.slice(1)]?.subject : subject;
+  const full = sub ? `${base}_${sub}` : null;
+  if (full && local && lookupSymbol(full, local)) return [full, local];
+  if (full && lookupSymbol(full, dict, tex)) return [full, dict];
+  if (local && lookupSymbol(base, local)) return [base, local];
+  return lookupSymbol(base, dict, tex) ? [base, dict] : null;
+}
+
+// ---------- oznake lekcije (:::simboli) ----------
+// Vsaka lekcija lahko našteje svoje oznake; tako je T v T = I/I_0 »prepustnost«, ne temperatura.
+//   :::simboli
+//   T | prepustnost (transmitanca) | T = \frac{I}{I_0} | – | število med 0 in 1
+//   I, I_0 | jakost prepuščene in vpadne svetlobe | | | v poljubnih enotah detektorja
+//   \varepsilon | molarni absorpcijski koeficient | | L\,mol^{-1}\,cm^{-1}
+//   :::
+// Polja: oznake (TeX, več z vejico) | ime | zveza v TeX (neobvezno) | enota (TeX ali ključ iz UNITS;
+// »–« = nima enote; prazno = ne izpiši) | opomba (neobvezno).
+const LOCAL = []; // id -> { subject, table: { ključ: vnos } }
+const localIds = new Map();
+export const SYMBOLS_BLOCK_RE = /^[ \t]*:::[ \t]*simboli[ \t]*\n([\s\S]*?)\n[ \t]*:::[ \t]*$/gm;
+
+// Ključ oznake iz TeX: "I_0", "I_{0}" → "I_0"; "\\varepsilon" → "ε"; "\\Delta H" → "ΔH"; "\\mathrm{pH}" → "pH".
+export function symbolKeyOf(tex) {
+  let s = String(tex).trim();
+  const raw = /^\\(?:mathrm|text|textrm)\s*\{([^{}]+)\}$/.exec(s);
+  if (raw) return raw[1].replace(/\s+/g, "");
+  let delta = "";
+  const d = /^\\Delta\s*/.exec(s);
+  if (d && s.length > d[0].length) { delta = "Δ"; s = s.slice(d[0].length); }
+  const m = /^(\\([a-zA-Z]+)|[A-Za-z])\s*(?:_\s*(\{.*\}|\\?[A-Za-z0-9]+))?$/.exec(s);
+  if (!m) return null;
+  const base = m[2] ? GREEK[m[2]] : m[1];
+  if (!base) return null;
+  const sub = m[3] ? normSub(m[3]) : "";
+  return `${delta}${base}${sub ? `_${sub}` : ""}`;
+}
+
+// »I, I_0, x_{1,2}« → ["I", "I_0", "x_{1,2}"] (vejice v {…} ne ločijo).
+function splitTop(s) {
+  const out = [];
+  let depth = 0;
+  let cur = "";
+  for (const ch of s) {
+    if (ch === "{") depth++;
+    else if (ch === "}") depth--;
+    if (ch === "," && depth === 0) { out.push(cur.trim()); cur = ""; } else cur += ch;
+  }
+  out.push(cur.trim());
+  return out.filter(Boolean);
+}
+
+// Besedilo bloka → [{ keys, tex, n, r, u, note }] in napake (za preverjevalnik).
+export function parseSymbolsBlock(body) {
+  const list = [];
+  const errors = [];
+  for (const raw of String(body).split("\n")) {
+    const line = raw.trim();
+    if (!line) continue;
+    const f = line.split("|").map((x) => x.trim());
+    const texs = splitTop((f[0] || "").replace(/^\$|\$$/g, ""));
+    const keys = texs.map(symbolKeyOf);
+    if (!texs.length || keys.some((k) => !k)) { errors.push(`oznake ne razberem: »${f[0]}«`); continue; }
+    if (!f[1]) { errors.push(`oznaka »${f[0]}« nima imena`); continue; }
+    const strip = (x) => (x || "").replace(/^\$|\$$/g, "").trim();
+    list.push({ keys, tex: texs, n: f[1], r: strip(f[2]), u: strip(f[3]), note: f.slice(4).join(" | ").trim() });
+  }
+  return { list, errors };
+}
+
+function registerGlossary(subject, glossary) {
+  const sig = `${subject}|${JSON.stringify(glossary)}`;
+  if (localIds.has(sig)) return `@${localIds.get(sig)}`;
+  const table = {};
+  for (const g of glossary) g.keys.forEach((k, i) => { table[k] = { ...g, tex: g.tex?.[i] || null, local: true }; });
+  const id = LOCAL.push({ subject: subject || "MAT", table }) - 1;
+  localIds.set(sig, id);
+  return `@${id}`;
+}
+
+// Vse oznake v izrazu (za »sestavne dele« na kartici): [[ključ, predmet], …] brez ponovitev.
+export function symbolsIn(tex, subject) {
+  const out = [];
+  const seen = new Set();
+  const re = /\\htmlData\{fx=([^}]*)\}/g;
+  for (const m of annotateTex(tex, subject).matchAll(re)) {
+    const code = decodeURIComponent(m[1].replace(/\./g, "%"));
+    const [kind, subj, key] = code.split(":");
+    if (kind === "u" || seen.has(subj + key)) continue;
+    seen.add(subj + key);
+    out.push([key, subj, kind === "d"]);
+  }
+  return out;
 }
 
 // Pred izrisom: ovije znane simbole in enote v \htmlData{fx=…}{…}.
@@ -308,19 +404,20 @@ export function annotateTex(tex, subject = override || subjectFn()) {
   };
   // Enota šele za številom ali presledkom za številom (9,81\,m/s²), sicer je besedilo ali kemijska formula.
   const afterNumber = () => /(\d\}?|\\[,;: ]|~|\[)\s*$/.test(out);
-  const wrap = (data, body) => `\\htmlData{fx=${encodeURIComponent(data).replace(/%/g, ".")}}{${body}}`;
+  const wrap = (data, body) => `\\htmlData{fx=${encodeURIComponent(data).replace(/\./g, "%2E").replace(/%/g, ".")}}{${body}}`;
   // Simbol od i (vključno s predpono, npr. \Delta) do j (konec osnovnega znaka); indeks vedno prepišemo nespremenjen.
   const symbol = (base, from, j, delta) => {
     const sub = readSub(j);
-    const key = symbolKey(base, sub ? normSub(sub.raw) : "", subject, tex);
+    const hit = symbolKey(base, sub ? normSub(sub.raw) : "", subject, tex);
     const end = sub ? sub.end : j;
-    if (!key) { out += tex.slice(from, end); return end; }
+    if (!hit) { out += tex.slice(from, end); return end; }
+    const [key, subj] = hit;
     const withSub = key.includes("_") || (sub && /^\d$/.test(normSub(sub.raw)));
     const bodyEnd = withSub ? end : j;
     // Za golim _ ali ^ (\log_a, \int_a^b, e^x) ali ukazom brez oklepajev (\vec F, \bar v) mora biti
     // oznaka v zavitih oklepajih, sicer jo KaTeX vzame za argument brez njenih argumentov (rdeč surov LaTeX).
     const bare = /(?:[_^]|\\[a-zA-Z]+|\\[dt]?frac\s*\w)\s*$/.test(out);
-    const marked = wrap(`${delta ? "d" : "s"}:${subject}:${key}`, tex.slice(from, bodyEnd).trimEnd());
+    const marked = wrap(`${delta ? "d" : "s"}:${subj}:${key}`, tex.slice(from, bodyEnd).trimEnd());
     out += (bare ? `{${marked}}` : marked) + tex.slice(from, bodyEnd).match(/\s*$/)[0];
     out += tex.slice(bodyEnd, end);
     return end;
@@ -339,12 +436,17 @@ export function annotateTex(tex, subject = override || subjectFn()) {
         if (UNIT_CMDS.has(name) && tex[j] === "{") {
           const u = lookupUnit(normUnit(tex.slice(j + 1, end - 1)));
           if (u && afterNumber()) { out += wrap(`u:${u.key}`, whole); i = end; continue; }
+          // Veččrkovna oznaka lekcije (\mathrm{pH}, \mathrm{Re}) ni enota, če ne stoji za številom.
+          const own = subject?.[0] === "@" && subject !== "@*" && !/\d\}?\s*(\\[,;: ]|~)?\s*$/.test(out) && normSub(tex.slice(j + 1, end - 1));
+          if (own && lookupSymbol(own, subject)) { out += wrap(`s:${subject}:${own}`, whole); i = end; continue; }
         }
         out += whole;
         i = end;
         continue;
       }
       const g = GREEK[name];
+      // ΔH, ΔG … kot lastna oznaka lekcije; sicer Δx = »sprememba« osnovne količine.
+      if (g === "Δ" && /^[A-Za-z]/.test(tex.slice(j)) && subject?.[0] === "@" && lookupSymbol(`Δ${tex[j]}`, subject)) { i = symbol(`Δ${tex[j]}`, i, j + 1, false); continue; }
       if (g === "Δ" && /^[A-Za-z]/.test(tex.slice(j)) && symbolKey(tex[j], "", subject, tex)) { i = symbol(tex[j], i, j + 1, true); continue; }
       if (g === "Ω" && afterNumber()) { out += wrap("u:Ω", tex.slice(i, j).trimEnd()) + " "; i = j; continue; }
       if (g && g !== "Δ") { i = symbol(g, i, j, false); continue; }

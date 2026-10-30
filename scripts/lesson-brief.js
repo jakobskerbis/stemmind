@@ -96,6 +96,7 @@ Quality bar (docs/kakovost.md §1, all required):
 - Preveri se: 5 questions (1 recall, 2 understanding, 2 application), ≥ 3 options, exactly one \`+\`, every \`-\` option has its own \`~\` line (why a student picks it), \`>\` explains the right answer.
 - Variety (docs/kakovost.md §1b): follow each topic's \`form\` plan below for the Zakaj opening, the Razlaga path, the main context (Zakaj and at least one example; other examples may use other contexts), the quiz question types and the 2 Drugače titles (add more alternatives only if they add something). Use the exemplar for format only, never copy its structure, openings or phrasing. Vary sentence openings and paragraph lengths; no stock phrases (»V tej lekciji se bomo naučili«, »Poglejmo si«, »Kot vidimo«) and no section that starts the same way as in the other lesson you write.
 - Phone: no information only in colour; formulas fit 360 px or are split. 1300–2300 words, short sentences.
+- Tappable formulas: end the file with one \`:::simboli\` block, one line per symbol of every \`$$…$$\` and \`:::formula\` formula: \`<TeX symbol> | <Slovenian name as in the lesson> | <defining relation in TeX or empty> | <unit in TeX, e.g. kg/m^3, mol/L, L\\,mol^{-1}\\,cm^{-1}; – if dimensionless; empty for pure maths> | <optional note ≤ 12 words>\`. Meaning as used in THIS lesson (T in $T = I/I_0$ is »prepustnost«, not temperature). The checker lists symbols still missing.
 
 House rules: Slovenian with the terminology of the level; decimal comma \`$3{,}5$\`; all math in LaTeX; the formula of an example only inside \`:::formula\`; header \`stanje: osnutek\` and \`avtor: AI\`; never mention PhET or a model name.${
   uni
@@ -123,8 +124,9 @@ Run first: \`node scripts/check-lesson.js -q ${files}\` and \`node scripts/check
 4. Pogoste napake are real misconceptions of this topic and match the distractors; the 2 »premisli« ask for a prediction or a »zakaj«.
 5. Slovenian terminology of the level, decimal comma, tables ≤ 4 columns.
 6. Not monotone: the opening, the explanation path and the quiz types are not the same template as the other lesson in this brief; no stock phrases (»V tej lekciji se bomo naučili«, »Poglejmo si«); fix the worst repetition with a small Edit.
-7. Mind map \`${maps}\`: every branch matches the lesson and adds nothing new; the lesson's main idea is a branch; maths renders.${uni ? "\n8. University lesson: generic (no faculty or course name), proofs in »Drugače: Bolj natančno«." : ""}${
-  tek ? "\n8. Competition lesson: strategies and typical problem types at competition level (easy ≈ school round, hard ≈ national round), complete solutions, no real past problems, years or results cited." : ""
+7. \`:::simboli\`: every name, relation and unit matches its meaning in this lesson and the level (the card a student sees when tapping the symbol).
+8. Mind map \`${maps}\`: every branch matches the lesson and adds nothing new; the lesson's main idea is a branch; maths renders.${uni ? "\n9. University lesson: generic (no faculty or course name), proofs in »Drugače: Bolj natančno«." : ""}${
+  tek ? "\n9. Competition lesson: strategies and typical problem types at competition level (easy ≈ school round, hard ≈ national round), complete solutions, no real past problems, years or results cited." : ""
 }
 Fix with small \`Edit\`s, never rewrite. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 5 lines.
 

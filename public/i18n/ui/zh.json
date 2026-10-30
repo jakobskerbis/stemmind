@@ -1443,6 +1443,7 @@
   "fx.noUnit": "没有单位。",
   "fx.change": "变化量:{what}",
   "fx.close": "关闭",
+  "fx.parts": "其中",
   "ap.style": "风格",
   "ap.styleCist": "简洁",
   "ap.styleCistText": "安静清晰",

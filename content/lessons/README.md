@@ -67,7 +67,34 @@ Razdelki, ki se začnejo z »Drugače:«, se pokažejo pod gumbom »Razloži dru
 - napačen odgovor
 ~ Razlaga za to napačno možnost.
 > Pojasnilo, ki se pokaže po pravilnem odgovoru.
+
+:::simboli
+s | pot | s = v \cdot t | m
+v | hitrost | v = \frac{s}{t} | m/s
+t | čas | | s
+:::
 ```
+
+## Oznake (`:::simboli`) – klikljive formule
+
+V aplikaciji je vsaka oznaka v formuli klikljiva: kartica pokaže ime, zvezo,
+iz česa je sestavljena (pri $\rho = \frac{m}{V}$: $m$ masa, $V$ prostornina) in enoto.
+Pomen oznake je odvisen od lekcije ($T$ je lahko temperatura, nihajni čas ali
+prepustnost), zato ga lekcija zapiše sama v bloku `:::simboli` na koncu datoteke.
+Blok se ne izpiše; brez njega aplikacija ugiba iz splošnega slovarja
+(`public/formula-data.js`).
+
+Ena vrstica na oznako, polja ločena z `|`:
+
+1. oznaka v TeX (`I_0`, `\varepsilon`, `\Delta H`, `\mathrm{pH}`); več oznak z istim pomenom loči z vejico (`x_1, x_2`);
+2. ime, kot ga uporablja lekcija (`prepustnost (transmitanca)`);
+3. zveza v TeX, s katero jo izračunamo (`T = \frac{I}{I_0}`), ali prazno;
+4. enota v TeX (`kg/m^3`, `mol/L`, `L\,mol^{-1}\,cm^{-1}`); `–`, če nima enote; prazno pri čisti matematiki;
+5. neobvezna kratka opomba (`število med 0 in 1`).
+
+Preverjevalnik opozori na oznake iz izpostavljenih formul (`$$…$$` in `:::formula`),
+ki v bloku manjkajo. Pomoč za obstoječe lekcije: `node scripts/simboli.js <lekcija>`
+izpiše formule, manjkajoče oznake, slovarski pomen in stavke, kjer se pojavijo.
 
 Merila kakovosti (vrhunska raven) za lekcije, naloge in simulacije so v
 `docs/kakovost.md`; pisec in pregledovalec jih preverita pri vsaki lekciji.
