@@ -438,7 +438,7 @@ export function createApp(store, opts = {}) {
     }
     if (!text && !image) return res.status(400).json({ error: "Sporočilo je prazno." });
     // Stikalo za nujne primere (docs/krizni-nacrt.md): klepet izklopljen, Vadnica in lekcije delujejo.
-    if (chatOff()) return res.status(503).json({ error: "Klepet z inštruktorjem je začasno izklopljen. Ostali deli aplikacije delujejo.", chat_off: true });
+    if (chatOff()) return res.status(503).json({ error: "Klepet z inštruktorjem je začasno izklopljen. Vaje, lekcije in igre delujejo.", chat_off: true });
     if (busy.has(conv.id)) return res.status(409).json({ error: "Počakaj, da Evklid odgovori." });
     const blocked = usage.blockReason(student.id);
     if (blocked) return res.status(429).json({ error: blocked, limit: true });
@@ -1009,7 +1009,7 @@ export function createApp(store, opts = {}) {
     try {
       const a = t.payload.answer || {};
       const out = await readFn({ imageBase64: m[2], mediaType: m[1], answerType: a.type, unit: a.unit || null });
-      if (out.mock) return res.json({ text: null, message: "Branje rokopisa deluje, ko je nastavljen API ključ. Do takrat odgovor vpiši s tipkami." });
+      if (out.mock) return res.json({ text: null, message: "Branje rokopisa trenutno ne deluje. Odgovor vpiši s tipkami." });
       if (out.usage) usage.log(s.id, out.model, out.usage, "ocr");
       res.json({ text: out.text, message: out.text ? null : "Zapisa nisem uspel prebrati. Poskusi pisati večje ali uporabi tipke." });
     } catch (err) {

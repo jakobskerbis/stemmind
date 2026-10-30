@@ -80,14 +80,14 @@ export function createPromo(db, cfg) {
   // node:sqlite je sinhron, zato sta štetje in vpis skupaj atomarna (ni tekme za zadnje mesto).
   function redeem(parent, raw) {
     const code = String(raw || "").trim().toUpperCase();
-    if (!code) return { error: "Vpišite aktivacijsko kodo." };
+    if (!code) return { error: "Vpiši aktivacijsko kodo." };
     const row = CODE_RE.test(code) ? get(code) : null;
     if (!row || !row.active || (row.valid_until && row.valid_until < today())) return { error: "Ta aktivacijska koda ni veljavna." };
     if (db.prepare("SELECT 1 FROM promo_redemptions WHERE parent_id = ?").get(parent.id)) {
-      return { error: "Aktivacijsko kodo ste na tem računu že uporabili." };
+      return { error: "Na tem računu je bila aktivacijska koda že uporabljena." };
     }
     if (["active", "trialing", "past_due"].includes(parent.sub_status)) {
-      return { error: "Že imate naročnino, zato koda ni potrebna. Prihranite jo za prijatelja." };
+      return { error: "Naročnino že imaš, zato koda ni potrebna. Prihrani jo za prijatelja." };
     }
     if (usedOf(code) >= row.max_uses) return { error: `Vseh ${row.max_uses} aktivacij te kode je že porabljenih.`, exhausted: true };
     const until = isoIn(row.days);

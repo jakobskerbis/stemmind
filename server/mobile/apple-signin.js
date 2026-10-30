@@ -72,7 +72,7 @@ export function mountAppleSignIn(app, ctx, opts = {}) {
       // Nov račun: ista pravila kot registracija (strinjanje, starost, omejitev novih računov na omrežje).
       if (req.body?.accept_privacy !== true) return res.status(400).json({ error: "Za nov račun potrebujemo še datum rojstva in strinjanje z obvestilom o zasebnosti.", need_signup: true });
       const key = netKey(req.ip);
-      if (!isLocalRequest(req) && signupThrottle.blocked(key)) return res.status(429).json({ error: "Z tega omrežja je danes ustvarjenih že preveč računov. Poskusite jutri." });
+      if (!isLocalRequest(req) && signupThrottle.blocked(key)) return res.status(429).json({ error: "S tega omrežja je danes ustvarjenih že preveč računov. Poskusi jutri." });
       const birthIso = checkAge(req, res);
       if (!birthIso) return;
       signupThrottle.fail(key);
