@@ -45,13 +45,31 @@
   //   icons: datoteka ikon obdobja public/eras/<slog>/<icons>.json (scripts/ikone-obdobij.js: map ime ikone → ikona
   //     obdobja in svg); naloži se samo v tem slogu, public/icons.js z njo zamenja ikone vmesnika
   //   Ime v izbiri sloga: ap.style<Slog> in ap.style<Slog>Text (prva črka velika), npr. ap.styleRenesansa.
+  //   chat (neobvezno; ui.css → »Klepet obdobja«): videz klepeta, vsak ključ postane atribut na <html>, ki ga ui.css
+  //     pozna po imenu (drug slog lahko vzame isto ali doda svojo vrednost): tutor → data-tutor-surface (npr. »papirus«:
+  //     mehurček inštruktorja na light/dark.paper), user → data-user-shape (»ostrakon«), frame → data-chat-frame
+  //     (»stebri«: stebri ob pozdravu praznega klepeta iz arch), composer → data-composer (»vosek«: polje v okvirju
+  //     light/dark.wood). Barve paper in wood preveri check() (besedilo 7:1 tudi na vlaknih, okvir 3:1).
+  //   arch (neobvezno; ui.css → »Arhitektura«): steber kot nosilni del okvirja (seznam pogovorov, rob klepeta, stranski
+  //     stolpec Učne poti, kapitel na okencih). Deli so notranjost SVG ([širina, višina, oznake]; S = barva črte,
+  //     F = polnilo): cap (kapitel), shaft (ploščica debla, ponavlja se navpično), base (baza), top (zatrep nad
+  //     pozdravom, raztegne se po širini). theme.js jih obarva za ozadje (--arch-*) in za meni (--arch-*-m).
   const ERAS = {
     antik: {
-      light: { bg: "#f5f0e8", surface: "#fffcf7", menu: "#efe2d2", text: "#241c15", accent: "#973f1c", bar: "#f6ece0", banner: "#f6e2d1" },
-      dark: { bg: "#16110d", surface: "#211a14", menu: "#2b1a12", text: "#f2e8da", accent: "#e08a52", bar: "#1d1712", banner: "#3a2418" },
+      light: { bg: "#f5f0e8", surface: "#fffcf7", menu: "#efe2d2", text: "#241c15", accent: "#973f1c", bar: "#f6ece0", banner: "#f6e2d1", paper: "#f4e6cb", wood: "#8a5b36" },
+      // Temno: črnofiguralna keramika (temna glazura, terakota v robovih in figurah).
+      dark: { bg: "#16110d", surface: "#211a14", menu: "#2b1a12", text: "#f2e8da", accent: "#e08a52", bar: "#1d1712", banner: "#3a2418", paper: "#22150d", wood: "#a8764c" },
       font: ["EB Garamond Variable", "eb-garamond"], hero: 6, band: ["meander", 8, 8], edge: 1, glyph: "ikona",
       motifs: ["dorski-steber", "amfora", "sova", "konstrukcija", "jonski-steber", "lovor", "valj-krogla", "pitagora"],
       facts: ["greek", 11], icons: "ikone",
+      chat: { tutor: "papirus", user: "ostrakon", frame: "stebri", composer: "vosek" },
+      // Vitek jonski steber (20 px): abak in voluti, kanelure, atiška baza; zatrep s timpanonom nad pozdravom (v timpanonu ikona inštruktorja).
+      arch: {
+        cap: [20, 13, '<path fill="F" d="M1 1h18v2.2H1z"/><path fill="F" d="M2.4 3.2h15.2c.6 1.5-.2 3.3-1.9 3.6-1.6.3-2.7-.8-2.6-2H6.9c.1 1.2-1 2.3-2.6 2-1.7-.3-2.5-2.1-1.9-3.6z"/><circle cx="4.4" cy="4.9" r=".75" fill="S" stroke="none"/><circle cx="15.6" cy="4.9" r=".75" fill="S" stroke="none"/><path d="M7 6.3c1.8 1.4 4.2 1.4 6 0"/><path fill="F" d="M4.5 9.5h11v1.8h-11z"/><path d="M5 11.3V13M15 11.3V13"/>'],
+        shaft: [20, 8, '<path fill="F" stroke="none" d="M5 0h10v8H5z"/><path d="M5 0v8M15 0v8"/><path stroke-opacity=".5" d="M7.5 0v8M10 0v8M12.5 0v8"/>'],
+        base: [20, 10, '<path d="M5 0v1.2M15 0v1.2"/><rect fill="F" x="4" y="1.2" width="12" height="2.4" rx="1.2"/><path d="M4.8 3.6c.8.7.8 1.3 0 2h10.4c-.8-.7-.8-1.3 0-2"/><rect fill="F" x="3" y="5.6" width="14" height="2.2" rx="1.1"/><path fill="F" d="M1.5 7.8h17v1.9h-17z"/>'],
+        top: [300, 40, '<path fill="F" d="M6 31 150 2.5 294 31z"/><path stroke-opacity=".55" d="M26 28.6 150 5.3 274 28.6z"/><path fill="F" d="M1 31h298v3.2H1z"/><path fill="F" d="M5 34.2h290v5H5z"/><path stroke-opacity=".55" d="M5 36.7h290"/>'],
+      },
     },
     renesansa: {
       light: { bg: "#f3ead8", surface: "#fffaf0", menu: "#ead8bd", text: "#2b1d12", accent: "#9b2335", band: "#a8834a", bar: "#f4e8d2", banner: "#efe0c4" },
@@ -95,6 +113,8 @@
   // Tapeta v ozadju je v barvi besedila (ui.css: --wall-c 6 %, na telefonu 7 %, en sloj, črte se ne prekrivajo);
   // kontrast besedila se preverja tudi na podlagi z najmočnejšim deležem.
   const MOTIF = 0.07;
+  // Vlakna papirusa (ui.css → »Klepet obdobja«: črte v --paper-fibre); kontrast besedila se preveri tudi na njih.
+  const PAPER = 0.1;
   const BASE = BASES.cist;
   const baseOf = (s) => BASES[s && STYLES.includes(s.style) ? s.style : "cist"];
   // Najmanjši kontrast (WCAG): navadno besedilo 7 (AAA), sivo besedilo in poudarki 4.5 (AA).
@@ -217,11 +237,15 @@
     const ownWin = hexToRgb(pal.surface) || hexToRgb(pal.menu);
     const chrome = era && !ownWin ? [base.bar, base.banner].filter((x) => hexToRgb(x)) : [];
     // Izbrano pisavo spoštujemo, dokler je berljiva (4.5); samodejno izbrana mora doseči 7.
-    const textOn = [bg, surface, ...chrome];
+    // Klepet obdobja (ERAS[…].chat): papirus pod odgovori inštruktorja in les okvirja polja za pisanje.
+    const paper = era && era.chat && !ownWin && hexToRgb(base.paper) ? base.paper : null;
+    const textOn = [bg, surface, ...chrome, ...(paper ? [paper] : [])];
     const text = hexToRgb(pal.text) ? readable(textOn, pal.text, MIN.muted) : readable(textOn, base.text);
     // Zgodovinski slogi: podlaga pod motivi (ozadje in kartice z MOTIF deleža besedila) mora biti prav tako berljiva.
     const motifBg = era ? [mix(bg, text, MOTIF), mix(surface, text, MOTIF)] : [];
-    const onBg = [surface, bg, ...chrome, ...motifBg];
+    // Papir: vlakna (PAPER deleža lesa) in temnejši papir za kodo in glavo tabele (+6 % besedila).
+    const paperBg = paper ? [paper, mix(paper, base.wood || text, PAPER), mix(paper, text, 0.06)] : [];
+    const onBg = [surface, bg, ...chrome, ...motifBg, ...paperBg];
     const accent = fit(s.accent || base.accent, onBg, MIN.accent);
     const [ah, as] = toHsl(accent);
     const heroA = fit(accent, ["#ffffff"], MIN.onAccent, -1);
@@ -253,6 +277,9 @@
     }
     // Pas ob robovih okvirja: barva pasu obdobja (z lastnim poudarkom poudarek), dovolj izrazita na meniju in glavi.
     if (era) vars["--edge-c"] = fit(base.band && !s.accent ? base.band : accent, [menu, vars["--bar"] || surface], 3);
+    if (paper) Object.assign(vars, { "--paper": paper, "--paper-2": paperBg[2], "--paper-fibre": paperBg[1] });
+    // Les (okvir voščene tablice, zvitka papirusa): kot rob vnosnega polja vsaj 3:1 na vrstici in oknu.
+    if (era && era.chat) vars["--wood"] = fit(hexToRgb(base.wood) && !ownWin ? base.wood : accent, [vars["--bar"] || surface, surface], 3);
     // Meniji: lastna podlaga, besedilo in poudarek se prilagodita njej. V zgodovinskem slogu je na seznamu
     // pogovorov tudi tapeta (menuMotif), zato mora besedilo doseči 7 tudi tam.
     let menuMotif = [];
@@ -280,11 +307,28 @@
       });
       if (era) vars["--menu-accent-text"] = onColor(vars["--menu-accent"]);
     }
-    return { vars, dark, menu, text, bg, surface, accent, motifBg, chrome, menuMotif, era: !!era };
+    // Stebri (ERAS[…].arch): deli kot SVG v barvi pasu, malo potopljeni v podlago (okras, ne vsebina).
+    if (era && era.arch) {
+      const edge = vars["--edge-c"];
+      const paint = (on, suffix) => {
+        const S = mix(on, edge, dark ? 0.7 : 0.62), F = mix(on, dark ? text : "#ffffff", dark ? 0.05 : 0.55);
+        for (const k of ["cap", "shaft", "base", "top"]) if (era.arch[k] && (k !== "top" || !suffix)) vars[`--arch-${k}${suffix}`] = archUrl(era.arch[k], S, F);
+      };
+      paint(bg, "");
+      paint(vars["--menu"] || menu, "-m");
+    }
+    return { vars, dark, menu, text, bg, surface, accent, motifBg, chrome, menuMotif, paperBg, era: !!era };
   }
 
-  const ALL_VARS = ["--bg", "--surface", "--text", "--muted", "--surface-2", "--border", "--accent", "--accent-2", "--accent-grad", "--accent-soft", "--accent-text", "--hero-a", "--hero-b", "--user-bubble", "--user-text", "--menu", "--menu-text", "--menu-muted", "--menu-2", "--menu-border", "--menu-accent", "--menu-accent-soft", "--menu-accent-text", "--band-c", "--edge-c", "--bar", "--banner"];
+  // Del stebra kot slika: preserveAspectRatio="none" in črta, ki se ne razteguje (zatrep se raztegne po širini).
+  function archUrl([w, h, body], S, F) {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" fill="none" stroke="${S}" stroke-width="1" stroke-linejoin="round"><style>*{vector-effect:non-scaling-stroke}</style>${body.replace(/"S"/g, `"${S}"`).replace(/"F"/g, `"${F}"`)}</svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  }
+  const ARCH_VARS = ["cap", "shaft", "base", "top"].flatMap((k) => [`--arch-${k}`, `--arch-${k}-m`]);
+  const ALL_VARS = [...ARCH_VARS, "--paper", "--paper-2", "--paper-fibre", "--wood", "--bg", "--surface", "--text", "--muted", "--surface-2", "--border", "--accent", "--accent-2", "--accent-grad", "--accent-soft", "--accent-text", "--hero-a", "--hero-b", "--user-bubble", "--user-text", "--menu", "--menu-text", "--menu-muted", "--menu-2", "--menu-border", "--menu-accent", "--menu-accent-soft", "--menu-accent-text", "--band-c", "--edge-c", "--bar", "--banner"];
   const ERA_VARS = ["--era-font", "--band", "--band-w", "--band-h", "--edge-w", "--edge-h", "--glyph", "--tapeta"];
+  const CHAT_ATTRS = { tutor: "data-tutor-surface", user: "data-user-shape", frame: "data-chat-frame", composer: "data-composer", arch: "data-arch" };
   const eraUrl = (id, f) => `url("/eras/${id}/${f}.svg")`;
   // Pisava sloga (/vendor/<paket>/index.css) se doda le enkrat; brskalnik prenese datoteke šele, ko jih rabi.
   function loadFont(pkg) {
@@ -309,6 +353,11 @@
     const era = ERAS[id];
     const prev = root.dataset.era || "";
     for (const v of ERA_VARS) root.style.removeProperty(v);
+    // Klepet obdobja in stebri: atributi, po katerih ui.css izbere videz (brez njih ostane klepet kot v Čistem).
+    for (const [k, attr] of Object.entries(CHAT_ATTRS)) {
+      const v = k === "arch" ? era && era.arch && id : era && era.chat && era.chat[k];
+      if (v) root.setAttribute(attr, v); else root.removeAttribute(attr);
+    }
     if (era) {
       root.dataset.era = id;
       iconSet(id);
@@ -393,6 +442,9 @@
     if (v["--menu"]) pairs.push([v["--menu-text"], v["--menu"], MIN.text], [v["--menu-accent"], v["--menu"], MIN.accent]);
     // Zgodovinski slogi: okvir (glave, vrstica za pisanje, obvestila), žetoni v barvi poudarka in tapeta na meniju.
     for (const b of c.chrome || []) pairs.push([v["--text"], b, MIN.text], [v["--muted"], b, MIN.muted], [v["--accent"], b, MIN.accent]);
+    // Papirus pod odgovori (tudi vlakna in koda/glava tabele) in les okvirja polja za pisanje.
+    for (const p of c.paperBg || []) pairs.push([v["--text"], p, MIN.text], [v["--muted"], p, MIN.muted], [v["--accent"], p, MIN.accent]);
+    if (v["--wood"]) pairs.push([v["--wood"], v["--bar"] || c.surface, 3], [v["--wood"], c.surface, 3]);
     if (c.era) {
       pairs.push([v["--accent"], v["--accent-soft"], MIN.accent], [v["--text"], v["--accent-soft"], MIN.text]);
       if (v["--menu"]) {
@@ -404,7 +456,7 @@
     return pairs.every(([a, b, m]) => contrast(a, b) >= m - 0.01);
   }
 
-  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, ERAS, baseOf, MIN, MOTIF, readable, loadFont, iconSet };
+  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, ERAS, baseOf, MIN, MOTIF, PAPER, readable, loadFont, iconSet };
   apply();
   mq.addEventListener?.("change", () => apply());
 })();

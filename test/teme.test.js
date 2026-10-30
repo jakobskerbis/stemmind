@@ -161,3 +161,36 @@ test("every history style supplies period icons: each mapped icon exists in icon
   }
   assert.ok(validPathData("M3 3a1 1 0 01 2 2z") && !validPathData("M3 3L4") && !validPathData("L3 3"), "preverjanje poti");
 });
+
+// Klepet obdobja (ERAS[…].chat) in stebri (ERAS[…].arch): vsaka vrednost ima svoj videz v ui.css, papir in les
+// sta berljiva (check() v svetlem in temnem načinu, tudi z lastnimi barvami), deli stebrov so preprost SVG.
+test("every history chat look and column set is styled in ui.css, readable and simple SVG", () => {
+  const css = fs.readFileSync(path.join(PUB, "ui.css"), "utf8");
+  const attrs = { tutor: "data-tutor-surface", user: "data-user-shape", frame: "data-chat-frame", composer: "data-composer" };
+  assert.ok(Object.values(T.ERAS).some((e) => e.chat && e.arch), "vsaj en slog s klepetom obdobja in stebri");
+  for (const [id, e] of Object.entries(T.ERAS)) {
+    for (const [k, v] of Object.entries(e.chat || {})) {
+      assert.ok(attrs[k], `${id}: neznan ključ chat.${k}`);
+      assert.ok(css.includes(`[${attrs[k]}="${v}"]`), `${id}: ui.css nima videza ${attrs[k]}="${v}"`);
+    }
+    for (const mode of ["light", "dark"]) {
+      const c = T.compute({ style: id, mode, accent: null, light: null, dark: null });
+      if (e.chat) {
+        assert.equal(c.vars["--paper"], e[mode].paper, `${id} ${mode}: papir naj bo berljiv brez popravka`);
+        assert.equal(c.vars["--wood"], e[mode].wood, `${id} ${mode}: les naj ima 3:1 brez popravka`);
+        assert.equal(c.paperBg.length, 3, `${id} ${mode}: preverjanje papirja (list, vlakna, koda)`);
+        assert.ok(T.check(c), `${id} ${mode}: kontrast na papirju`);
+        const own = T.compute({ style: id, mode, accent: "#1d7a3a", light: null, dark: null });
+        assert.ok(T.check(own), `${id} ${mode}: lastni poudarek na papirju`);
+      }
+      if (e.arch) for (const k of ["cap", "shaft", "base"]) assert.match(c.vars[`--arch-${k}`] + c.vars[`--arch-${k}-m`], /^url\("data:image\/svg\+xml,.*url\("data:image\/svg\+xml,/, `${id} ${mode}: --arch-${k}`);
+    }
+    for (const [k, part] of Object.entries(e.arch || {})) {
+      assert.ok(["cap", "shaft", "base", "top"].includes(k), `${id}: neznan del arch.${k}`);
+      const [w, h, body] = part;
+      assert.ok(w > 0 && h > 0 && w <= 400 && h <= 60 && body.length < 1200, `${id}: arch.${k} mere`);
+      assert.ok(!/<(?!\/?(path|rect|circle|ellipse|line|polyline|polygon)\b)/.test(body) && !/\son\w+=|href|url\(/i.test(body), `${id}: arch.${k} samo osnovne oblike`);
+    }
+  }
+  assert.ok(T.PAPER > 0 && T.PAPER <= 0.15, "PAPER (vlakna papirusa)");
+});

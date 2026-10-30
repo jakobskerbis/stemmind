@@ -389,6 +389,166 @@ html.lite[data-era] .chat-view .sidebar::before { display: none; }
   :root[data-era] .chat-view .sidebar { border-inline-end: 1px solid; }
 }
 
+/* ---------- Klepet obdobja (ERAS[…].chat; docs/oblikovanje.md → »Klepet obdobja«) ----------
+   theme.js nastavi atribute iz ERAS[slog].chat: data-tutor-surface (mehurček inštruktorja), data-user-shape (mehurček
+   učenca), data-chat-frame (okvir pozdrava v praznem klepetu), data-composer (polje za pisanje). Vsaka vrednost je
+   samostojen videz, ki ga lahko vzame tudi drug slog. Barve so spremenljivke iz theme.js (--paper, --paper-2,
+   --paper-fibre, --wood), kontrast preveri check(). Samo na zaslonu brez forced-colors: tisk in visok kontrast
+   dobita navaden klepet; lahki način brez stebrov. */
+.empty-hall { display: contents; }
+@media screen and (forced-colors: none) {
+  /* Papirus: list s tankimi vlakni (vodoravna in navpična plast), zgoraj in spodaj zvit rob, pod zgornjim dvojna
+     črta. Besedilo ostane --font (7:1 tudi na vlaknih), pisava obdobja samo za naslove v odgovoru. Temno:
+     črnofiguralna keramika (temna glazura, robovi v terakoti). */
+  :root[data-tutor-surface="papirus"] { --roll-c: var(--wood); --rule-c: color-mix(in srgb, var(--wood) 45%, var(--paper)); }
+  :root.dark[data-tutor-surface="papirus"] { --roll-c: var(--accent); --rule-c: color-mix(in srgb, var(--accent) 55%, var(--paper)); }
+  :root[data-tutor-surface="papirus"] .msg.assistant {
+    --surface: var(--paper); --surface-2: var(--paper-2); --border: color-mix(in srgb, var(--roll-c) 28%, var(--paper));
+    padding: 26px 18px 20px; border-radius: 5px; border-color: var(--border);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--roll-c) 62%, var(--paper)), color-mix(in srgb, var(--roll-c) 22%, var(--paper)) 45%, color-mix(in srgb, var(--roll-c) 46%, var(--paper))) top / 100% 8px no-repeat,
+      linear-gradient(0deg, color-mix(in srgb, var(--roll-c) 62%, var(--paper)), color-mix(in srgb, var(--roll-c) 22%, var(--paper)) 45%, color-mix(in srgb, var(--roll-c) 46%, var(--paper))) bottom / 100% 8px no-repeat,
+      linear-gradient(var(--rule-c), var(--rule-c)) left 10px top 12px / calc(100% - 20px) 1px no-repeat,
+      linear-gradient(var(--rule-c), var(--rule-c)) left 10px top 15px / calc(100% - 20px) 1px no-repeat,
+      repeating-linear-gradient(0deg, transparent 0 3px, color-mix(in srgb, var(--paper-fibre) 55%, transparent) 3px 4px, transparent 4px 9px, color-mix(in srgb, var(--paper-fibre) 35%, transparent) 9px 10px, transparent 10px 17px, color-mix(in srgb, var(--paper-fibre) 50%, transparent) 17px 18px, transparent 18px 22px),
+      repeating-linear-gradient(90deg, transparent 0 40px, color-mix(in srgb, var(--paper-fibre) 30%, transparent) 40px 58px, transparent 58px 97px, color-mix(in srgb, var(--paper-fibre) 20%, transparent) 97px 109px),
+      var(--paper);
+  }
+  :root[data-tutor-surface="papirus"] .msg.assistant :is(h1, h2, h3, h4, h5, h6) { font-family: var(--font-head); font-weight: 650; letter-spacing: 0; line-height: 1.3; margin: 0.7em 0 0.3em; }
+  :root[data-tutor-surface="papirus"] .msg.assistant :is(h1, h2) { font-size: 1.2em; }
+  :root[data-tutor-surface="papirus"] .msg.assistant :is(h3, h4, h5, h6) { font-size: 1.08em; }
+  :root[data-tutor-surface="papirus"] .msg.assistant pre { border: 1px solid var(--border); }
+  :root[data-tutor-surface="papirus"] .msg.assistant blockquote { background: var(--paper-2); }
+  /* Pika »piše …« postane trstično pero (poševna črta s konico); utripa kot prej, brez gibanja ob reduced-motion. */
+  :root[data-tutor-surface="papirus"] .msg.assistant.typing > :last-child:not(ul, ol)::after,
+  :root[data-tutor-surface="papirus"] .msg.assistant.typing > :is(ul, ol):last-child > li:last-child::after {
+    width: 3px; height: 1.05em; margin-inline-start: 7px; vertical-align: -0.2em; border-radius: 1px;
+    clip-path: polygon(0 0, 100% 0, 100% 74%, 50% 100%, 0 74%); transform: skewX(-20deg);
+  }
+  :root[dir="rtl"][data-tutor-surface="papirus"] .msg.assistant.typing > :last-child:not(ul, ol)::after,
+  :root[dir="rtl"][data-tutor-surface="papirus"] .msg.assistant.typing > :is(ul, ol):last-child > li:last-child::after { transform: skewX(20deg); }
+
+  /* Ostrakon: črepinja iz žgane gline v barvi poudarka (besedilo --user-text iz theme.js), nepravilni a zaobljeni
+     vogali (logične lastnosti, v RTL zrcaljeni), rahel svetel rob zgoraj in temnejši spodaj. */
+  :root[data-user-shape="ostrakon"] .msg.user {
+    border-start-start-radius: 22px 15px; border-start-end-radius: 13px 19px; border-end-end-radius: 5px 7px; border-end-start-radius: 17px 24px;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 16%, transparent), inset 0 -2px 0 color-mix(in srgb, #000 16%, transparent);
+  }
+
+  /* Stebri ob pozdravu: zatrep (arch.top) nad »Živjo, Ana!«, ob straneh vitka jonska stebra (kapitel, deblo, baza).
+     Predlogi so marmornate ploščice, ob lebdenju in fokusu z meandrom spodaj. */
+  :root[data-chat-frame="stebri"]:not(.lite) .empty-hall {
+    --hall-pad: 36px; --hall-top: 40px; position: relative; display: flex; flex-direction: column; align-items: center; width: 100%;
+    padding: calc(var(--hall-top) + 4px) var(--hall-pad) 0;
+  }
+  :root[data-chat-frame="stebri"]:not(.lite) .empty-hall::before,
+  :root[data-chat-frame="stebri"]:not(.lite) .empty-hall::after { content: ""; position: absolute; inset-inline: 0; pointer-events: none; }
+  :root[data-chat-frame="stebri"]:not(.lite) .empty-hall::before { top: 0; height: var(--hall-top); background: var(--arch-top) center / 100% 100% no-repeat; }
+  :root[data-chat-frame="stebri"]:not(.lite) .empty-hall::after {
+    top: var(--hall-top); bottom: 0;
+    background:
+      var(--arch-cap) left 6px top / 20px 13px no-repeat, var(--arch-cap) right 6px top / 20px 13px no-repeat,
+      var(--arch-base) left 6px bottom / 20px 10px no-repeat, var(--arch-base) right 6px bottom / 20px 10px no-repeat,
+      var(--arch-shaft) left 6px top / 20px 8px repeat-y, var(--arch-shaft) right 6px top / 20px 8px repeat-y;
+  }
+  /* Ikona inštruktorja kot okrogel ščit v timpanonu (nad vencem zatrepa). */
+  :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > .tutor-avatar.big {
+    position: absolute; top: 7px; left: 50%; transform: translateX(-50%); width: 26px; height: 26px; border-radius: 50%; box-shadow: none;
+  }
+  :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > .tutor-avatar.big svg.i { width: 16px; height: 16px; }
+  :root[data-chat-frame="stebri"]:not(.lite) .empty-hall > p.big { margin-top: 6px; }
+  :root[data-chat-frame="stebri"]:not(.lite) .empty-hall .ideas { padding-bottom: 6px; }
+  @media (max-width: 760px) { :root[data-chat-frame="stebri"]:not(.lite) .empty-hall { --hall-pad: 30px; } }
+  :root[data-chat-frame="stebri"] .idea {
+    position: relative; border-width: 1px; border-radius: 5px;
+    box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--text) 6%, transparent);
+    background:
+      radial-gradient(ellipse 60% 140% at 12% 0%, color-mix(in srgb, var(--text) 4%, transparent), transparent 70%),
+      radial-gradient(ellipse 40% 120% at 85% 100%, color-mix(in srgb, var(--text) 3%, transparent), transparent 70%),
+      var(--surface);
+  }
+  :root[data-chat-frame="stebri"] .idea::after {
+    content: ""; position: absolute; inset-inline: 14px; bottom: 3px; height: 6px; opacity: 0; transition: opacity 0.15s; background: var(--edge-c, var(--band-c));
+    -webkit-mask: var(--band) repeat-x left center / 6px 6px; mask: var(--band) repeat-x left center / 6px 6px;
+  }
+  :root[data-chat-frame="stebri"] .idea:is(:hover, :focus-visible)::after { opacity: 1; }
+  :root[data-chat-frame="stebri"] .idea:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); }
+
+  /* Voščena tablica: polje ostane čisto (--surface), okvir iz lesa (--wood, 3:1) z notranjo svetlejšo letvico. */
+  :root[data-composer="vosek"] .composer-row {
+    border: 3px solid var(--wood); border-radius: 9px;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--wood) 30%, var(--surface));
+  }
+  :root[data-composer="vosek"] .composer-row:focus-within {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, var(--surface)), 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+}
+
+/* ---------- Arhitektura (ERAS[…].arch; theme.js nastavi data-arch in --arch-*) ----------
+   Okvir kot stavba (j, 2026-10-30: »naj zgleda, kot da stebri podpirajo menije«): zgornja vrstica je preklada
+   (venec, friz s pasom obdobja, arhitrav z dvema letvama), na računalniku jo nosita stebra ob robovih klepeta (ob
+   seznamu pogovorov in na koncu klepeta) in steber ob stranskem stolpcu Učne poti; vrstica za pisanje in spodnja
+   vrstica na telefonu sta stilobat (stopnici nad pasom); okenca in spustni seznami imajo kapitela na zgornjih
+   vogalih. Deli so slike iz theme.js v barvi pasu (--arch-* na ozadju, --arch-*-m na meniju), nikoli čez besedilo ali
+   gumbe (vsak steber ima svoj odmik). Na telefonu brez stebrov; lahki način, tisk in forced-colors brez arhitekture. */
+@media screen and (forced-colors: none) {
+  :root[data-arch]:not(.lite) { --arch-line: color-mix(in srgb, var(--edge-c) 70%, var(--surface)); }
+  :root[data-arch]:not(.lite) :is(.topbar, .tabbar, .composer) { background-repeat: no-repeat; background-size: 100% 1px; }
+  :root[data-arch]:not(.lite) .topbar {
+    padding-bottom: calc(10px + 9px + var(--edge-h, var(--band-h)));
+    background-image: linear-gradient(var(--arch-line), var(--arch-line)), linear-gradient(var(--arch-line), var(--arch-line)), linear-gradient(var(--arch-line), var(--arch-line));
+    background-position: left bottom 0, left bottom 3px, left bottom calc(8px + var(--edge-h, var(--band-h)));
+  }
+  :root[data-arch]:not(.lite) .topbar::after { bottom: 6px; }
+  :root[data-arch]:not(.lite) :is(.tabbar, .composer) {
+    background-image: linear-gradient(var(--arch-line), var(--arch-line)), linear-gradient(var(--arch-line), var(--arch-line));
+    background-position: left top, left top 3px;
+  }
+  :root[data-arch]:not(.lite) .tabbar { padding-top: calc(12px + var(--edge-h, var(--band-h))); }
+  :root[data-arch]:not(.lite) .tabbar::after { top: 6px; }
+  :root[data-arch]:not(.lite) .composer { padding-top: calc(17px + var(--edge-h, var(--band-h))); }
+  :root[data-arch]:not(.lite) .composer::after { top: 6px; }
+  @media (max-width: 760px) {
+    :root[data-arch]:not(.lite) .topbar { padding-bottom: calc(8px + 9px + var(--edge-h, var(--band-h))); }
+    :root[data-arch]:not(.lite) .composer { padding-top: calc(13px + var(--edge-h, var(--band-h))); }
+  }
+  /* Kapitela na zgornjih vogalih okenc in spustnih seznamov (pod 3 px črto v barvi pasu). */
+  :root[data-arch]:not(.lite) :is(.quick-pop, .profile-pop, .usage-pop, .dd-list) {
+    background-image: var(--arch-cap-m), var(--arch-cap-m); background-repeat: no-repeat; background-size: 20px 13px;
+    background-position: left 3px top, right 3px top;
+  }
+  /* Stebri ob klepetu (samo v glavnem oknu, ne v premičnem/pripetem oknu): steber v seznamu pogovorov ob robu
+     (namesto navpičnega pasu) in steber na koncu klepeta; kapitela sta tik pod preklado. */
+  @media (min-width: 761px) {
+    :root[data-arch]:not(.lite) body:not(.docked) > .chat-view .sidebar {
+      padding-inline-end: 32px;
+      background-image: var(--arch-cap-m), var(--arch-base-m), var(--arch-shaft-m); background-repeat: no-repeat, no-repeat, repeat-y;
+      background-size: 20px 13px, 20px 10px, 20px 8px; background-position: right 2px top, right 2px bottom, right 2px top;
+    }
+    :root[data-arch]:not(.lite) body:not(.docked) > .chat-view .sidebar::after { display: none; }
+    :root[data-arch]:not(.lite) body:not(.docked) > .chat-view .sidebar::before { inset-inline-end: 24px; }
+  }
+  @media (min-width: 1000px) {
+    :root[data-arch]:not(.lite) body:not(.docked) > .chat-view > .chat {
+      padding-inline-end: 24px;
+      background: var(--arch-cap) right 2px top / 20px 13px no-repeat, var(--arch-base) right 2px bottom / 20px 10px no-repeat, var(--arch-shaft) right 2px top / 20px 8px repeat-y;
+    }
+    :root[dir="rtl"][data-arch]:not(.lite) body:not(.docked) > .chat-view > .chat { background-position: left 2px top, left 2px bottom, left 2px top; }
+  }
+  @media (min-width: 761px) {
+    :root[dir="rtl"][data-arch]:not(.lite) body:not(.docked) > .chat-view .sidebar { background-position: left 2px top, left 2px bottom, left 2px top; }
+  }
+  /* Učna pot na širokem zaslonu: steber ob stranskem stolpcu (v presledku med stolpcema). */
+  @media (min-width: 1200px), (min-width: 1000px) and (hover: none) and (pointer: coarse) {
+    :root[data-arch]:not(.lite) #view-path > .path-side {
+      margin-inline-end: -26px; padding-inline-end: 32px;
+      background: var(--arch-cap) right 2px top / 20px 13px no-repeat, var(--arch-base) right 2px bottom / 20px 10px no-repeat, var(--arch-shaft) right 2px top / 20px 8px repeat-y;
+    }
+    :root[dir="rtl"][data-arch]:not(.lite) #view-path > .path-side { background-position: left 2px top, left 2px bottom, left 2px top; }
+  }
+}
+
 /* Čist in Temen: brez prelivov in senc pod logotipom in kartico Današnji trening. */
 :root:not([data-style="igriv"]) .logo { box-shadow: none; }
 :root:not([data-style="igriv"]) h1, :root:not([data-style="igriv"]) h2 { font-weight: 700; }

@@ -551,11 +551,12 @@ function renderConversationList() {
 function renderEmptyChat() {
   $("#chat-title").textContent = t("chat.new");
   const ideas = [t("chat.idea1"), t("chat.idea2"), t("chat.idea3")];
-  $("#messages").innerHTML = `<div class="empty">
+  // .empty-hall: okvir pozdrava (v slogu z ERAS[…].chat.frame stebri in zatrep, ui.css → »Klepet obdobja«).
+  $("#messages").innerHTML = `<div class="empty"><div class="empty-hall">
     <div class="tutor-avatar big" aria-hidden="true">${icon("sparkles")}</div>
     <p class="big">${t("chat.hello", { name: escapeHtml(state.student.name) })}</p>
     <p>${t("chat.intro")}</p>
-    <div class="ideas">${ideas.map((t) => `<button type="button" class="idea" data-idea="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("")}</div>
+    <div class="ideas">${ideas.map((t) => `<button type="button" class="idea" data-idea="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("")}</div></div>
     ${greekFactHtml("gr-chat")}</div>`;
   wireGreekFacts($("#messages"));
   $("#messages").querySelectorAll("[data-idea]").forEach((b) =>
