@@ -194,7 +194,7 @@ export function refresh() {
     if (!card.hidden) {
       // Na Učni poti majhna vrstica (ne odrine vaj navzdol); dotik kjer koli odpre namestitev.
       card.className = "card list-card install-mini";
-      card.innerHTML = `<button type="button" class="list-row inst-go"><span class="ic">${icon(p.mobile ? "smartphone" : "download")}</span><span class="lr-text"><b>${esc(t("inst.title"))}</b><small>${esc(nativeApp(p) ? t("inst.textNative") : p.mobile ? t("inst.meSub") : t("inst.textDesk"))}</small></span>${icon("chevron-right")}</button>
+      card.innerHTML = `<button type="button" class="list-row inst-go"><span class="ic">${icon(p.mobile ? "smartphone" : "download")}</span><span class="lr-text"><b>${esc(t("inst.title"))}</b><small>${esc(p.mobile ? t("inst.meSub") : t("inst.textDesk"))}</small></span>${icon("chevron-right")}</button>
         <button type="button" class="ghost icon-only fb-card-x" aria-label="${esc(t("inst.dismiss"))}" title="${esc(t("inst.dismiss"))}">${icon("x")}</button>`;
       card.querySelector(".inst-go").onclick = install;
       card.querySelector(".fb-card-x").onclick = () => {

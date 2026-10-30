@@ -33,37 +33,57 @@ export async function fetchApk(url, file, fetchImpl = fetch) {
       return { error: "Povezava ni veljavna." };
     }
     if (p.protocol !== "https:" || !APK_HOSTS.test(p.hostname)) return { error: "Povezava mora biti do expo.dev ali GitHub (https)." };
-    const r = await fetchImpl(p.href, { redirect: "manual" });
+    let r;
+    try {
+      // Časovna omejitev, da obstal prenos ne zaklene nalaganja za vedno (busy v mountDownload).
+      r = await fetchImpl(p.href, { redirect: "manual", signal: AbortSignal.timeout(10 * 60e3) });
+    } catch {
+      return { error: "Prenos ni uspel." };
+    }
     const loc = r.status >= 300 && r.status < 400 ? r.headers.get("location") : null;
-    if (loc) u = new URL(loc, p).href;
+    if (loc || !r.ok) r.body?.cancel().catch(() => {});
+    if (loc) u = URL.canParse(loc, p) ? new URL(loc, p).href : "";
     else if (!r.ok) return { error: `Prenos ni uspel (${r.status}).` };
     else res = r;
   }
-  if (!res?.body) return { error: "Preveč preusmeritev." };
-  if (Number(res.headers.get("content-length")) > MAX_APK) return { error: "Datoteka je prevelika." };
+  if (!res) return { error: "Preveč preusmeritev." };
+  if (!res.body) return { error: "To ni datoteka APK." };
+  if (Number(res.headers.get("content-length")) > MAX_APK) {
+    res.body.cancel().catch(() => {});
+    return { error: "Datoteka je prevelika." };
+  }
   const tmp = `${file}.${process.pid}.tmp`;
   fs.mkdirSync(path.dirname(file), { recursive: true });
   let bytes = 0;
   let head = Buffer.alloc(0);
+  let why = ""; // naše sporočilo; napake omrežja (»terminated«, časovna omejitev) skrbnik vidi kot »Prenos ni uspel.«
+  const ZIP = Buffer.from([0x50, 0x4b, 0x03, 0x04]);
+  const stop = (msg) => {
+    why = msg;
+    throw new Error(msg);
+  };
   try {
     await pipeline(
       Readable.fromWeb(res.body),
       async function* (src) {
         for await (const chunk of src) {
           bytes += chunk.length;
-          if (bytes > MAX_APK) throw new Error("Datoteka je prevelika.");
-          if (head.length < 4) head = Buffer.concat([head, chunk]).subarray(0, 4);
+          if (bytes > MAX_APK) stop("Datoteka je prevelika.");
+          if (head.length < 4) {
+            head = Buffer.concat([head, chunk]).subarray(0, 4);
+            if (head.length === 4 && !head.equals(ZIP)) stop("To ni datoteka APK."); // ne prenašamo naprej strani HTML
+          }
           yield chunk;
         }
       },
       fs.createWriteStream(tmp),
     );
-    if (!head.equals(Buffer.from([0x50, 0x4b, 0x03, 0x04]))) throw new Error("To ni datoteka APK.");
+    if (!head.equals(ZIP)) stop("To ni datoteka APK.");
     fs.renameSync(tmp, file);
     return { bytes };
-  } catch (e) {
+  } catch {
     fs.rmSync(tmp, { force: true });
-    return { error: e.message || "Prenos ni uspel." };
+    return { error: why || "Prenos ni uspel." };
   }
 }
 

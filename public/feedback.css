@@ -79,7 +79,7 @@
 .is-head h2 { flex: 1; margin: 0; font-size: 1.15rem; }
 .is-steps { list-style: none; counter-reset: st; margin: 16px 0 8px; padding: 0; display: grid; gap: 12px; }
 .is-steps li { counter-increment: st; display: grid; grid-template-columns: 28px 40px 1fr; align-items: center; gap: 10px; line-height: 1.35; }
-.is-steps li::before { content: counter(st); display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 800; }
+.is-steps li::before { content: counter(st); display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--accent-text); font-weight: 800; }
 .is-ic { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); }
 .is-ic svg.i { width: 22px; height: 22px; }
 .is-note { margin: 8px 0 0; font-size: 0.92rem; }

@@ -730,7 +730,7 @@ function adminCodes(acc) {
 function apkText(r) {
   if (r.url) return t("admin.apkLink");
   if (!r.file) return t("admin.apkNone");
-  return t("admin.apkHave", { date: date(r.file.at), mb: (r.file.bytes / 1048576).toFixed(1) });
+  return t("admin.apkHave", { date: date(r.file.at), mb: (r.file.bytes / 1048576).toLocaleString(currentLang(), { minimumFractionDigits: 1, maximumFractionDigits: 1 }) });
 }
 async function loadApk() {
   const out = $("#apk-status");

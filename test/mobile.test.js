@@ -367,13 +367,21 @@ test("admin APK upload: only admins, only known hosts, only ZIP files", async ()
     if (url === "https://storage.googleapis.com/eas/x.apk") return new Response(zip, { status: 200 });
     if (url === "https://expo.dev/evil") return new Response(null, { status: 302, headers: { location: "http://127.0.0.1:3000/x" } });
     if (url === "https://github.com/not-zip") return new Response("<html>", { status: 200 });
+    if (url === "https://github.com/bad-location") return new Response(null, { status: 302, headers: { location: "https://[" } });
+    if (url === "https://github.com/down") throw new TypeError("fetch failed");
+    if (url === "https://github.com/cut")
+      return new Response(new ReadableStream({ start: (c) => (c.enqueue(new Uint8Array(zip)), c.error(new TypeError("terminated"))) }), { status: 200 });
     return new Response(null, { status: 404 });
   };
   try {
     assert.match((await fetchApk("https://example.com/x.apk", file, fake)).error, /expo\.dev/);
     assert.match((await fetchApk("https://expo.dev/evil", file, fake)).error, /expo\.dev/);
     assert.match((await fetchApk("https://github.com/not-zip", file, fake)).error, /APK/);
-    assert.equal(fs.existsSync(file), false);
+    // napake omrežja in slaba preusmeritev: sporočilo za skrbnika, brez izjeme in brez začasne datoteke
+    assert.equal((await fetchApk("https://github.com/bad-location", file, fake)).error, "Povezava ni veljavna.");
+    assert.equal((await fetchApk("https://github.com/down", file, fake)).error, "Prenos ni uspel.");
+    assert.equal((await fetchApk("https://github.com/cut", file, fake)).error, "Prenos ni uspel.");
+    assert.deepEqual(fs.readdirSync(dir), []);
     assert.equal((await fetchApk("https://expo.dev/artifacts/eas/abc.apk", file, fake)).bytes, zip.length);
     assert.deepEqual(fs.readFileSync(file), zip);
     assert.deepEqual(fs.readdirSync(dir), ["evklid.apk"]); // brez ostankov začasnih datotek
