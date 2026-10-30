@@ -378,7 +378,7 @@ body.onboarding .test-notice .tn-report, body.auth-mode .test-notice .tn-report 
 }
 .msg.assistant::after {
   content: "S"; position: absolute; inset-inline-start: -44px; bottom: 0; width: 34px; height: 34px; display: grid; place-items: center;
-  color: #fff; font-weight: 900; font-size: 0.95rem;
+  color: #fff; font-weight: 900; font-size: 0.95rem; line-height: 1; text-box: trim-both cap alphabetic; /* črka na optični sredini */
 }
 /* Zgodovinski slogi: namesto črke ikona inštruktorja obdobja (icons.js → --tutor-ic, maska iz ikone »sparkles«). */
 html[data-tutor-ic] .msg.assistant::after {
@@ -392,7 +392,9 @@ html[data-tutor-ic] .msg.assistant::after {
 .msg .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
 .msg .photo-note { display: flex; align-items: center; gap: 6px; font-size: 0.85em; opacity: 0.9; margin-bottom: 4px; }
 .msg.error { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
-.typing::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-inline-start: 4px; border-radius: 50%; background: var(--accent); animation: blink 1s ease-in-out infinite; }
+/* Pika »piše …« na koncu zadnjega odstavka; ::before in ::after mehurčka sta avatar inštruktorja in ju ne smemo zadeti
+   (prej je .typing::after avatarju dodal zamik 4 px, utripanje in modro ozadje, zato je bil znak izven sredine). */
+.msg.assistant.typing > :last-child::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-inline-start: 4px; border-radius: 50%; background: var(--accent); animation: blink 1s ease-in-out infinite; }
 @keyframes blink { 50% { opacity: 0.2; } }
 .deep-btn { display: inline-flex !important; margin-top: 10px; font-size: 0.85rem; min-height: 34px !important; padding: 4px 12px !important; color: var(--muted) !important; }
 /* Pod odgovorom: koda sporočila (za preverjanje posnetkov zaslona) in »Prijavi napako« (server/reports.js) */
