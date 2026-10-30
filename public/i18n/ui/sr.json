@@ -1264,9 +1264,16 @@
   "games.buy": "Купи за {n}",
   "games.needMore": "Треба ти још {n}",
   "games.bought": "Купљено и обучено!",
-  "games.multiHint": "Iz ove fioke možeš da nosiš do {n} predmeta odjednom. Predmet na istom mestu (npr. druge naočare) zameni prethodni, ponovni dodir ga skida.",
-  "games.slotFull": "Iz ove fioke već nosiš {n} predmeta. Skini jedan da obučeš novi.",
-  "games.boughtFull": "Kupljeno! Iz ove fioke već nosiš {n} predmeta: skini jedan da obučeš novi.",
+  "games.multiHint": "Из ове фиоке можеш да носиш до {n} предмета одједном. Предмет на истом месту (нпр. друге наочаре) замени претходни, поновни додир га скида.",
+  "games.slotFull": "Из ове фиоке већ носиш {n} предмета. Скини један да обучеш нови.",
+  "games.new": "Ново",
+  "games.newWeek": "Ново ове недеље",
+  "games.wishTitle": "Шта желиш у продавници?",
+  "games.wishHint": "Сваке недеље додајемо нове предмете. Напиши какву капу, лик, позадину или значку желиш. Немој да пишеш своје име ни друге личне податке.",
+  "games.wishPlaceholder": "На пример: гусарска капа, лик сове са наочарима …",
+  "games.wishSend": "Пошаљи жељу",
+  "games.wishThanks": "Хвала! Твоју ћемо жељу узети у обзир при следећем ажурирању.",
+  "games.boughtFull": "Купљено! Из ове фиоке већ носиш {n} предмета: скини један да обучеш нови.",
   "games.slot.kind": "Лик",
   "games.slot.body": "Боја",
   "games.slot.eyes": "Очи",
@@ -2354,5 +2361,47 @@
   "gr.weakSheet": "Радни лист из слабих тема",
   "gr.pastTitle": "Претходни испити са решењима",
   "gr.pastText": "Званичне испите и упутства за оцењивање објављује Државни испитни центар (RIC), који има сва права на њих, па их овде не копирамо. Пробни испит изнад садржи наше задатке у истом облику и са истим временом.",
-  "gr.pastOpen": "Отвори испите на ric.si"
+  "gr.pastOpen": "Отвори испите на ric.si",
+  "pilot.title": "Мерење у пилоту",
+  "pilot.period": "Период",
+  "pilot.days": "последњих {n} дана",
+  "pilot.school": "Школа",
+  "pilot.allSchools": "сви ученици",
+  "pilot.qPerDay": "питања инструктору дневно",
+  "pilot.qPerStudent": "питања по ученику дневно (кад нешто пита)",
+  "pilot.aiPerStudent": {
+    "one": "трошак AI по ученику месечно ({n} ученик са AI)",
+    "few": "трошак AI по ученику месечно ({n} ученика са AI)",
+    "other": "трошак AI по ученику месечно ({n} ученика са AI)"
+  },
+  "pilot.aiTotal": "трошак AI у периоду",
+  "pilot.visitsParents": {
+    "one": "преглед странице за родитеље",
+    "other": "прегледа странице за родитеље"
+  },
+  "pilot.visitsPay": {
+    "one": "преглед странице за плаћање",
+    "other": "прегледа странице за плаћање"
+  },
+  "pilot.schoolStudents": {
+    "one": "Школа има {n} ученика у одељењима.",
+    "few": "Школа има {n} ученика у одељењима.",
+    "other": "Школа има {n} ученика у одељењима."
+  },
+  "pilot.day": "Дан",
+  "pilot.questions": "Питања",
+  "pilot.askers": "Ученици",
+  "pilot.ai": "AI",
+  "pilot.parents": "Родитељи",
+  "pilot.note": "Прегледи страница броје се без колачића и без IP адреса, само као број по дану. Ботови и прегледи линкова се не броје.",
+  "gr.video": "Кратак видео",
+  "gr.poskus": "Оглед код куће",
+  "gr.projekt": "Пројекат",
+  "gr.lockedAny": "Овај материјал је део пакета.",
+  "gr.play": "Пусти",
+  "gr.pause": "Пауза",
+  "gr.again": "Испочетка",
+  "gr.close": "Затвори",
+  "gr.voice": "Читај наглас",
+  "gr.videoDraft": "Нацрт: наставник још прегледа овај видео."
 }

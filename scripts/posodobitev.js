@@ -16,7 +16,9 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 export const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const REPO = process.env.EVKLID_REPO || "jakobskerbis/stemmind";
+// Repozitorij: brand.json → repo; dokler j repozitorija na GitHubu ne preimenuje, deluje še prejšnje ime (legacy).
+export const REPOS = [...new Set([process.env.EVKLID_REPO, BRAND.repo, ...LEGACY.map((l) => l.repo)].filter(Boolean))];
+export let REPO = REPOS[0];
 export const BRANCH = process.env.EVKLID_VEJA || "main";
 // Zagonske datoteke (.bat, .command) prepišemo le, če so že v »varni« obliki (imajo to oznako):
 // Windows in bash bereta skripto sproti, zato bi prepis stare oblike med tekom zmedel okno.
@@ -186,10 +188,14 @@ function git(root, ...args) {
 }
 
 async function latestSha() {
-  const res = await fetch(`https://api.github.com/repos/${REPO}/commits/${BRANCH}`, {
-    headers: { Accept: "application/vnd.github.sha", "User-Agent": "evklid-posodobitev" },
-    signal: AbortSignal.timeout(20000),
-  });
+  let res;
+  for (const repo of REPOS) {
+    res = await fetch(`https://api.github.com/repos/${repo}/commits/${BRANCH}`, {
+      headers: { Accept: "application/vnd.github.sha", "User-Agent": "evklid-posodobitev" },
+      signal: AbortSignal.timeout(20000),
+    });
+    if (res.status !== 404) { REPO = repo; break; }
+  }
   if (!res.ok) throw new Error(`GitHub ni odgovoril (${res.status})`);
   const sha = (await res.text()).trim();
   if (!/^[0-9a-f]{40}$/.test(sha)) throw new Error("GitHub je vrnil neznan odgovor");

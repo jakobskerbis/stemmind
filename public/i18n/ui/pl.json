@@ -1272,6 +1272,13 @@
   "games.bought": "Kupione i założone!",
   "games.multiHint": "Z tej szuflady możesz nosić do {n} rzeczy naraz. Rzecz w tym samym miejscu (np. drugie okulary) zastępuje poprzednią, ponowne dotknięcie ją zdejmuje.",
   "games.slotFull": "Z tej szuflady nosisz już {n} rzeczy. Zdejmij jedną, aby założyć nową.",
+  "games.new": "Nowe",
+  "games.newWeek": "Nowości tygodnia",
+  "games.wishTitle": "Co chcesz mieć w sklepie?",
+  "games.wishHint": "Co tydzień dodajemy nowe rzeczy. Napisz, jaki kapelusz, jaką postać, jakie tło albo jaką odznakę chcesz mieć. Nie pisz swojego imienia ani innych danych osobowych.",
+  "games.wishPlaceholder": "Na przykład: kapelusz pirata, postać sowy w okularach …",
+  "games.wishSend": "Wyślij życzenie",
+  "games.wishThanks": "Dziękujemy! Weźmiemy twoje życzenie pod uwagę przy następnej aktualizacji.",
   "games.boughtFull": "Kupione! Z tej szuflady nosisz już {n} rzeczy: zdejmij jedną, aby założyć nową.",
   "games.slot.kind": "Postać",
   "games.slot.body": "Kolor",
@@ -2374,5 +2381,53 @@
   "gr.weakSheet": "Karta pracy ze słabych tematów",
   "gr.pastTitle": "Dawne arkusze z rozwiązaniami",
   "gr.pastText": "Oficjalne arkusze i zasady oceniania publikuje Państwowe Centrum Egzaminacyjne (RIC), które ma do nich wszystkie prawa, dlatego ich tu nie kopiujemy. Egzamin próbny powyżej zawiera nasze zadania w tej samej formie i z tym samym czasem.",
-  "gr.pastOpen": "Otwórz arkusze na ric.si"
+  "gr.pastOpen": "Otwórz arkusze na ric.si",
+  "pilot.title": "Pomiar w pilotażu",
+  "pilot.period": "Okres",
+  "pilot.days": "ostatnie {n} dni",
+  "pilot.school": "Szkoła",
+  "pilot.allSchools": "wszyscy uczniowie",
+  "pilot.qPerDay": "pytań do korepetytora dziennie",
+  "pilot.qPerStudent": "pytań na ucznia dziennie (w dni, gdy pyta)",
+  "pilot.aiPerStudent": {
+    "one": "koszt AI na ucznia miesięcznie ({n} uczeń z AI)",
+    "few": "koszt AI na ucznia miesięcznie ({n} uczniów z AI)",
+    "many": "koszt AI na ucznia miesięcznie ({n} uczniów z AI)",
+    "other": "koszt AI na ucznia miesięcznie ({n} ucznia z AI)"
+  },
+  "pilot.aiTotal": "koszt AI w okresie",
+  "pilot.visitsParents": {
+    "one": "wyświetlenie strony dla rodziców",
+    "few": "wyświetlenia strony dla rodziców",
+    "many": "wyświetleń strony dla rodziców",
+    "other": "wyświetlenia strony dla rodziców"
+  },
+  "pilot.visitsPay": {
+    "one": "wyświetlenie strony płatności",
+    "few": "wyświetlenia strony płatności",
+    "many": "wyświetleń strony płatności",
+    "other": "wyświetlenia strony płatności"
+  },
+  "pilot.schoolStudents": {
+    "one": "Szkoła ma w klasach {n} ucznia.",
+    "few": "Szkoła ma w klasach {n} uczniów.",
+    "many": "Szkoła ma w klasach {n} uczniów.",
+    "other": "Szkoła ma w klasach {n} ucznia."
+  },
+  "pilot.day": "Dzień",
+  "pilot.questions": "Pytania",
+  "pilot.askers": "Uczniowie",
+  "pilot.ai": "AI",
+  "pilot.parents": "Rodzice",
+  "pilot.note": "Wyświetlenia stron są liczone bez plików cookie i bez adresów IP, tylko jako liczba na dzień. Boty i podglądy linków nie są liczone.",
+  "gr.video": "Krótki film",
+  "gr.poskus": "Doświadczenie w domu",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Ten materiał jest w pakiecie.",
+  "gr.play": "Odtwórz",
+  "gr.pause": "Pauza",
+  "gr.again": "Od początku",
+  "gr.close": "Zamknij",
+  "gr.voice": "Czytaj na głos",
+  "gr.videoDraft": "Wersja robocza: nauczyciel jeszcze sprawdza ten film."
 }
