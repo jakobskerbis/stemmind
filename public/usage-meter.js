@@ -82,6 +82,27 @@ function adviceHtml(a) {
   </section>`;
 }
 
+// Mesečni proračun API (server/proracun.js): poraba, raven modelov, znesek in dodani kredit.
+const LEVEL_KEY = { "-1": "meter.levelStop", 0: "meter.levelSave", 1: "meter.levelNormal", 2: "meter.levelMore", 3: "meter.levelMax" };
+const usd = (x) => (x || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function budgetHtml(b) {
+  if (!b) return "";
+  const on = b.total > 0;
+  const pct = on ? Math.round((100 * b.spent) / b.total) : 0;
+  const level = on ? LEVEL_KEY[b.level] || "meter.levelNormal" : "meter.levelOff";
+  const cls = b.level <= 0 ? "act" : b.level >= 2 ? "ok" : "";
+  return `<section class="um-advice um-budget">
+    <h3>${icon("activity")} ${t("meter.budget")}</h3>
+    ${on ? `<p>${t("meter.budgetSpent", { spent: usd(b.spent), total: usd(b.total), pct })}${limitBar(pct)}</p>` : ""}
+    <div class="um-tip ${cls}"><p>${t(level)}</p></div>
+    ${b.credit_out ? `<div class="um-tip act"><p>${t("meter.creditOut")}</p></div>` : ""}
+    ${on && b.projected != null ? `<p class="muted">${t("meter.budgetForecast", { usd: usd(b.projected) })}</p>` : ""}
+    <form class="um-budget-form" data-act="base"><label>${t("meter.budgetBase")} <input type="number" name="v" min="0" step="1" inputmode="decimal" value="${b.base || ""}"></label><button type="submit" class="secondary">${t("meter.save")}</button></form>
+    <form class="um-budget-form" data-act="add"><label>${t("meter.budgetAdd")} <input type="number" name="v" min="1" step="1" inputmode="decimal"></label><button type="submit" class="secondary">${t("meter.add")}</button></form>
+    <small class="muted">${t("meter.budgetHint", { reserve: b.reserve_pct })}</small>
+  </section>`;
+}
+
 function togglePop() {
   const pop = $("#usage-pop");
   if (!pop.hidden) return (pop.hidden = true);
@@ -115,6 +136,7 @@ function renderPop() {
         ? `<table class="table um-table"><thead><tr><th>${t("meter.profile")}</th><th>${t("meter.today")}</th><th>${t("meter.month")}</th><th>${t("meter.repliesCol")}</th></tr></thead><tbody>${rows}</tbody></table>`
         : `<p class="muted">${t("meter.none")}</p>`
     }
+    ${budgetHtml(u.budget)}
     ${u.can_claim ? `<div class="um-claim"><button type="button" class="secondary" data-act="claim">${icon("smartphone")} ${t("meter.claim")}</button><small class="muted">${t("meter.claimHint")}</small></div>` : ""}
     ${adviceHtml(u.advice)}
     <button type="button" class="text-btn" data-act="more">${t("meter.more")} ${icon("chevron-right")}</button>`;
@@ -124,6 +146,19 @@ function renderPop() {
     D.showView("settings");
     setTimeout(() => $("#usage")?.closest(".card")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   });
+  pop.querySelectorAll(".um-budget-form").forEach((f) =>
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const v = Number(f.v.value);
+      if (!Number.isFinite(v) || f.v.value === "") return;
+      const body = f.dataset.act === "base" ? { base_usd: v } : { add_usd: v };
+      const res = await fetch("/api/usage/budget", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).catch(() => null);
+      if (res?.ok) {
+        D.toast(t("meter.budgetSaved"), "check");
+        refreshUsageMeter();
+      } else D.toast(t("meter.claimFail"));
+    }),
+  );
   pop.querySelector('[data-act="claim"]')?.addEventListener("click", async () => {
     const res = await fetch("/api/usage/claim", { method: "POST" }).catch(() => null);
     if (res?.ok) {

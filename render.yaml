@@ -41,7 +41,7 @@ services:
       - key: EVKLID_STUDENT_MONTHLY_USD
         value: "1.5"
       - key: EVKLID_MONTHLY_BUDGET_USD
-        value: "50"
+        value: "200"
       - key: STRIPE_SECRET_KEY
         sync: false
       - key: STRIPE_WEBHOOK_SECRET

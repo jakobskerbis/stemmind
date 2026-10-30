@@ -27,6 +27,8 @@ import { gateNeeded } from "../gate.js";
 import { rights as rightsOf, lessonInteractive as lessonOpen } from "../placila/pravice.js";
 import { createSchoolSource } from "../placila/sola-vir.js";
 import { offerPolicy } from "../placila/ponudbe.js";
+import { Credits } from "../placila/krediti.js";
+import { SHARE } from "../proracun.js";
 import { Schedules, nowParts } from "../schedule.js";
 
 export const CONSENT_TEXT =
@@ -167,6 +169,24 @@ export function mountAccounts(app, store, opts = {}) {
     const r = rightsFor(studentId);
     return r.personal || r.school;
   }
+
+  // Utež profila pri delitvi mesečnega proračuna AI (server/proracun.js): plačljiva naročnina po mesečni
+  // ceni na otroka v €, preizkus/koda/bonus/paket kot mesečna naročnina za enega otroka, šola in brezplačni po SHARE.
+  function shareWeightFor(studentId) {
+    const r = rightsFor(studentId);
+    const standard = monthlyAmount(1) / 100;
+    if (r.personal) {
+      if (r.personalTier !== "paid") return standard;
+      const p = getParent(ownerOf(studentId));
+      const plan = p?.sub_plan && planByKey(p.sub_plan);
+      if (!plan || plan.currency && plan.currency !== "EUR") return standard;
+      return plan.amount / 100 / (plan.interval === "year" ? 12 : 1) / Math.max(1, plan.seats || 1);
+    }
+    return r.school ? SHARE.school() : SHARE.free();
+  }
+  // Dokupljena poraba AI, vezana na račun (server/placila/krediti.js).
+  const credits = new Credits(db);
+  aiUsage.configure({ weightOf: shareWeightFor, ownerOf, credits });
 
   // Interaktivni del lekcije: Osebno za vse teme, šolska licenca za svoje predmete in razrede.
   const lessonInteractive = (studentId, topicId) => lessonOpen(rightsFor(studentId), topicId);
@@ -334,7 +354,8 @@ export function mountAccounts(app, store, opts = {}) {
       }
     }
     // Mesečna meja porabe brezplačnega paketa velja za vse klice AI (inštruktor, branje zapisa, fotografija urnika).
-    if (studentId !== null && req.method === "POST" && /(\/messages|\/tasks\/\d+\/read|\/schedule\/photo)$/i.test(req.path) && !premiumFor(studentId)) {
+    // Z dokupljenim kreditom ta meja ne velja (poraba gre iz kredita, server/usage.js chargeCredit).
+    if (studentId !== null && req.method === "POST" && /(\/messages|\/tasks\/\d+\/read|\/schedule\/photo)$/i.test(req.path) && !premiumFor(studentId) && !(credits.balance(ownerOf(studentId)) > 0)) {
       const blocked = freeBudgetReason(studentId);
       if (blocked) return res.status(429).json({ error: blocked, limit: true, upgrade: !!guests.netOf(studentId) || upsell(studentId) });
     }
@@ -1102,6 +1123,7 @@ export function mountAccounts(app, store, opts = {}) {
   }
 
   billing = mountBilling(app, {
+    credits,
     db,
     offersFor,
     store,
@@ -1147,6 +1169,10 @@ export function mountAccounts(app, store, opts = {}) {
           billing.completePassSession(obj);
           break;
         }
+        if (obj.metadata?.kind === "credit") {
+          billing.completeCreditSession(obj);
+          break;
+        }
         if (obj.metadata?.pay_link && obj.subscription && stripe.enabled) {
           await billing.completeSubSession(obj);
           break;
@@ -1178,11 +1204,14 @@ export function mountAccounts(app, store, opts = {}) {
       }
       // Vračilo ali spor pri paketu pred testom: paket se takoj konča.
       case "charge.refunded": {
+        // Vračilo dokupa: kredit se odvzame (porabljeni del ostane porabljen).
+        if (obj.amount_refunded > 0 && credits.refund(obj.payment_intent)) break;
         const pass = billing.passes.byPayment(obj.payment_intent);
         if (pass && obj.amount_refunded > 0) billing.passes.end(pass.id, "refunded"); // tudi delno vračilo ob odstopu
         break;
       }
       case "charge.dispute.created": {
+        if (credits.refund(obj.payment_intent)) break;
         const pass = billing.passes.byPayment(obj.payment_intent);
         if (pass) {
           billing.passes.end(pass.id, "disputed");
@@ -1298,6 +1327,6 @@ export function mountAccounts(app, store, opts = {}) {
 
   // Za mobilno aplikacijo (server/mobile): prijava z Apple, nakupi v trgovinah, obvestila.
   const mobile = { db, sessions, getParent, parentByEmail, publicParent, accountView, createParent, checkAge, childIds, children, accessOf, signupThrottle, addReauth: (fn) => reauthHooks.push(fn) };
-  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, offersFor, rightsFor, lessonInteractive, ladderFor, schools, guests, billing, mobile };
+  return { credits, shareWeightFor, ownerOf, sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, offersFor, rightsFor, lessonInteractive, ladderFor, schools, guests, billing, mobile };
 }
 

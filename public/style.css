@@ -962,6 +962,9 @@ body.onboarding .tabs, body.onboarding .tabbar, body.onboarding #modebar, body.o
 .um-tip.act { border-inline-start-color: #eab308; }
 .um-tip p { margin: 4px 0 0; }
 .um-claim { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; }
+.um-budget-form { display: flex; gap: 8px; align-items: flex-end; margin: 6px 0; flex-wrap: wrap; }
+.um-budget-form label { display: flex; flex-direction: column; gap: 2px; font-size: 0.85rem; flex: 1 1 160px; }
+.um-budget-form input { width: 100%; }
 @media (max-width: 760px) {
   .usage-pop { top: 56px; right: 16px; }
   .stat.usage-meter { font-size: 0.85rem; }
