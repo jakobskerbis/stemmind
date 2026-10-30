@@ -104,6 +104,7 @@ test("stre탑nik pove razli훾ico in zasedenost; service worker dobi razli훾ico kn
     const s = await (await fetch(`${base}/healthz/stanje`)).json();
     assert.equal(typeof s.razlicica, "string");
     assert.equal(s.aktivni, 0);
+    assert.ok(s.gorMs >= 0);
     await fetch(`${base}/api/config`);
     assert.equal((await (await fetch(`${base}/healthz/stanje`)).json()).aktivni, 0);
     const sw = await fetch(`${base}/sw.js`);
@@ -133,4 +134,29 @@ test("stara povezava (ngrok) preusmeri na lastno domeno, ko ta ka탑e na ta stre�
       server.close();
     }
   }
+});
+
+test("Render: objava, ko je stre탑nik miren, med uporabo najve훾 3 ure 훾akanja, neuspele ne ponavlja", async () => {
+  const { decide, pendingSince } = await import("../scripts/render-objava.js");
+  const sha = "abcdef1234567890";
+  const ura = 3600000;
+  const miren = { razlicica: "111111111111", aktivni: 0, mirujeMs: null, gorMs: 2 * ura };
+  assert.equal(decide({ stanje: { ...miren, razlicica: sha.slice(0, 12) }, mainSha: sha, cakaMin: 500 }).objavi, false);
+  assert.equal(decide({ stanje: miren, mainSha: sha, cakaMin: 5 }).objavi, true);
+  const zaseden = { ...miren, mirujeMs: 60000 };
+  assert.equal(decide({ stanje: zaseden, mainSha: sha, cakaMin: 60 }).objavi, false);
+  assert.equal(decide({ stanje: { ...miren, aktivni: 1 }, mainSha: sha, cakaMin: 60 }).objavi, false);
+  assert.equal(decide({ stanje: zaseden, mainSha: sha, cakaMin: 181 }).objavi, true);
+  assert.equal(decide({ stanje: { ...miren, gorMs: 20 * 60000 }, mainSha: sha, cakaMin: 30 }).objavi, false);
+  assert.equal(decide({ stanje: zaseden, mainSha: sha, cakaMin: 1, rocno: true }).objavi, true);
+  assert.equal(decide({ stanje: null, mainSha: sha, cakaMin: 10 }).objavi, false);
+  assert.equal(decide({ stanje: null, mainSha: sha, cakaMin: 61 }).objavi, true);
+  const now = Date.now();
+  assert.equal(decide({ stanje: miren, mainSha: sha, cakaMin: 200, zadnja: { sha, at: now - ura }, now }).objavi, false);
+  assert.equal(decide({ stanje: miren, mainSha: sha, cakaMin: 200, zadnja: { sha, at: now - 4 * ura }, now }).objavi, true);
+  assert.equal(decide({ stanje: miren, mainSha: sha, cakaMin: 5, zadnja: { sha: "drugi", at: now }, now }).objavi, true);
+  const c = (date, parents = 1) => ({ commit: { committer: { date } }, parents: Array(parents).fill({}) });
+  assert.equal(pendingSince([c("2026-10-30T01:00:00Z"), c("2026-10-30T08:00:00Z", 2), c("2026-10-30T09:00:00Z", 2)]), Date.parse("2026-10-30T08:00:00Z"));
+  assert.equal(pendingSince([c("2026-10-30T01:00:00Z"), c("2026-10-30T07:00:00Z")]), Date.parse("2026-10-30T07:00:00Z"));
+  assert.equal(pendingSince([]), null);
 });

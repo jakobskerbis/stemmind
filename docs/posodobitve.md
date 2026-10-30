@@ -28,12 +28,22 @@ Evklid teče, se posodobi v pol minute; sicer se posodobi in zažene.
 posodobi sam. Za zagon ob prižigu računalnika enkrat zaženi `samodejni-zagon-windows.bat`;
 Windows Task Scheduler ni potreben.
 
-## Render (ko bo aplikacija na spletu)
+## Render (evklid.app, od 30. 10. 2026)
 
-Render novo različico objavi vsaki 2 uri (tam ponovni zagon s trajnim diskom pomeni kratek izpad), če je v `main` kaj novega
-(`.github/workflows/render-posodobitev.yml`; v `render.yaml` je `autoDeploy: false`, da se
-strežnik ne zaganja ob vsaki spremembi). Enkratna nastavitev: v Renderju odpri storitev
-evklid > Settings > Deploy Hook in povezavo kopiraj v GitHub > Settings > Secrets and
+GitHub vsakih 15 minut preveri, ali je v `main` kaj novega (`.github/workflows/render-posodobitev.yml`,
+pravila v `scripts/render-objava.js`; v `render.yaml` je `autoDeploy: false`). Ponovni zagon s trajnim
+diskom pomeni približno minuto izpada, zato:
+
+| Stanje | Kdaj se objavi |
+|---|---|
+| Nihče ne uporablja Evklida (10 minut nihče nič ne pošlje, nihče ne čaka na odgovor) | v ~15 minutah |
+| Nekdo se ravno uči | počaka na miren trenutek, najdlje 3 ure od združitve spremembe |
+| Zadnja objava pred manj kot 1 uro | počaka (razen po 3 urah čakanja) |
+| Ista različica je bila že sprožena, a ne teče (objava ni uspela) | ne ponavlja 3 ure |
+| Ročno: GitHub → Actions → Render → Run workflow | takoj |
+
+Strežnik pove svojo različico in zasedenost na `/healthz/stanje`. Enkratna nastavitev: v Renderju
+odpri storitev evklid > Settings > Deploy Hook in povezavo kopiraj v GitHub > Settings > Secrets and
 variables > Actions kot skrivnost `RENDER_DEPLOY_HOOK`.
 
 ## Nastavitve v `.env`
