@@ -320,6 +320,70 @@ html.lite[data-era] .view::before { display: none; }
   :root[data-era] .view::before { display: none; }
 }
 
+/* Okvir (zgodovinski slogi; j, 2026-10-30: »spremeni označene površine v skladu s temo«): zgornja in spodnja vrstica,
+   seznam pogovorov, spustni meniji in okenca imajo barvo obdobja (--menu-* iz ERAS[…].menu, menuAccent), glave
+   zaslonov in vrstica za pisanje --bar, obvestila --banner. Vse barve izračuna in preveri theme.js (besedilo 7:1,
+   sivo in poudarek 4,5:1, tudi na tapeti seznama pogovorov in na žetonih), zato veljajo tudi lastne barve.
+   Pas obdobja (--band, isti kot na kartici dejstev) teče ob spodnjem robu zgornje vrstice, ob robu seznama pogovorov
+   in ob zgornjem robu vrstice za pisanje in spodnje vrstice; okenca imajo zgoraj črto v barvi pasu. Polje za pisanje
+   ostane čisto (--surface). */
+:root[data-era] { --accent-text-base: var(--accent-text); }
+:root[data-era] :is(.topbar, .tabbar, .sidebar, .dd-list, .quick-pop, .profile-pop, .usage-pop) {
+  --surface: var(--menu, var(--surface-base)); --text: var(--menu-text, var(--text-base)); --muted: var(--menu-muted, var(--muted-base));
+  --surface-2: var(--menu-2, var(--surface-2-base)); --border: var(--menu-border, var(--border-base));
+  --accent: var(--menu-accent, var(--accent-base)); --accent-soft: var(--menu-accent-soft, var(--accent-soft-base));
+  --accent-text: var(--menu-accent-text, var(--accent-text-base));
+  color: var(--text);
+}
+:root[data-era] :is(.topbar, .tabbar, .composer)::after, :root[data-era] .chat-view .sidebar::after {
+  content: ""; position: absolute; inset-inline: 0; height: var(--edge-h, var(--band-h)); pointer-events: none; background: var(--edge-c, var(--band-c));
+  -webkit-mask: var(--band) repeat-x left center / var(--edge-w, var(--band-w)) var(--edge-h, var(--band-h)); mask: var(--band) repeat-x left center / var(--edge-w, var(--band-w)) var(--edge-h, var(--band-h));
+}
+:root[data-era] .topbar { border-bottom: 0; padding-bottom: calc(10px + var(--edge-h, var(--band-h))); }
+:root[data-era] .topbar::after { bottom: 3px; }
+:root[data-era] .tabbar { border-top: 0; padding-top: calc(6px + var(--edge-h, var(--band-h))); }
+:root[data-era] .tabbar::after { top: 2px; }
+@media (max-width: 760px), (max-width: 1240px) and (hover: none) and (pointer: coarse) { :root[data-era] .topbar { padding-bottom: calc(8px + var(--edge-h, var(--band-h))); } }
+:root[data-era] :is(.quick-pop, .profile-pop, .usage-pop, .dd-list, .overlay-card, .iq.card) { border-top: 3px solid var(--edge-c, var(--band-c)); }
+/* Žetoni (XP, niz dni, stanje pogovora) v odtenku poudarka. */
+:root[data-era] .stat { background: var(--accent-soft); }
+:root[data-era] .chip { background: var(--accent-soft); color: var(--accent); }
+/* Obvestila: ton obdobja (pergament, zlato, žafran …) namesto rumene, ikona v poudarku. */
+:root[data-era] .banner { background: var(--banner, var(--surface)); color: var(--text); border-bottom: 1px solid color-mix(in srgb, var(--edge-c, var(--band-c)) 55%, transparent); }
+:root[data-era] .banner > svg.i { flex: none; color: var(--accent); }
+:root[data-era] .offline-banner { border: 1px solid var(--border); }
+/* Glava klepeta in vrstica za pisanje. */
+:root[data-era] .chat-head { background: var(--bar, var(--surface)); }
+:root[data-era] .composer { position: relative; border-top: 0; padding-top: calc(12px + var(--edge-h, var(--band-h))); background: var(--bar, var(--surface)); }
+:root[data-era] .composer::after { top: 2px; }
+:root[data-era] .composer-row { background: var(--surface); }
+@media (max-width: 760px) { :root[data-era] .composer { padding-top: calc(8px + var(--edge-h, var(--band-h))); } }
+/* Seznam pogovorov: tapeta (gostejša, v barvi besedila menija) in navpičen pas ob robu. Drsi samo seznam, zato
+   tapeta in pas ostaneta na mestu. Na telefonu je odprt seznam absoluten (style.css: .sidebar.open). */
+:root[data-era] .chat-view .sidebar {
+  flex-direction: column; overflow: hidden; isolation: isolate; border-inline-end: 0; padding-inline-end: calc(14px + var(--edge-h, var(--band-h)));
+  --wall-m: color-mix(in srgb, var(--text) 6%, transparent);
+}
+@media (min-width: 761px) { :root[data-era] .chat-view .sidebar { display: flex; position: relative; } }
+:root[data-era] .chat-view .sidebar.open { display: flex; }
+:root[data-era] .chat-view .sidebar > .primary { flex: none; }
+:root[data-era] .chat-view .sidebar > #conversation-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+:root[data-era] .chat-view .sidebar::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--wall-m);
+  -webkit-mask: var(--tapeta) repeat left top / 240px 240px; mask: var(--tapeta) repeat left top / 240px 240px;
+}
+/* Pas je vodoraven vzorec, zasukan za 90° ob končni rob (v RTL levo). */
+:root[data-era] .chat-view .sidebar::after { inset-inline: auto; top: 0; left: calc(100% - 2px); width: 200vh; transform-origin: 0 0; transform: rotate(90deg); }
+:root[data-era][dir="rtl"] .chat-view .sidebar::after { left: calc(var(--edge-h, var(--band-h)) + 2px); }
+html.lite[data-era] .chat-view .sidebar::before { display: none; }
+@media (prefers-reduced-transparency: reduce) { :root[data-era] .chat-view .sidebar::before { display: none; } }
+@media (forced-colors: active), print {
+  :root[data-era] :is(.topbar, .tabbar, .composer)::after, :root[data-era] .chat-view .sidebar::before, :root[data-era] .chat-view .sidebar::after { display: none; }
+  :root[data-era] .topbar { border-bottom: 1px solid; }
+  :root[data-era] :is(.tabbar, .composer) { border-top: 1px solid; }
+  :root[data-era] .chat-view .sidebar { border-inline-end: 1px solid; }
+}
+
 /* Čist in Temen: brez prelivov in senc pod logotipom in kartico Današnji trening. */
 :root:not([data-style="igriv"]) .logo { box-shadow: none; }
 :root:not([data-style="igriv"]) h1, :root:not([data-style="igriv"]) h2 { font-weight: 700; }

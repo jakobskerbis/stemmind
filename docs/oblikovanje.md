@@ -39,7 +39,7 @@ Lastne barve: uporabnik v Nastavitve → Videz izbere poudarek in barve ozadja, 
 
 - nikoli ne piši barve besedila ali ozadja neposredno, vedno spremenljivko;
 - belo besedilo samo na prelivu `--hero-a` → `--hero-b`, besedilo na `--accent` je `--accent-text`;
-- meniji (`.topbar`, `.modebar`, `.sidebar`, `.dd-list`) imajo lahko svojo barvo; znotraj njih `--surface`, `--text` … že pomenijo barve menija.
+- meniji (`.topbar`, `.tabbar`, `.sidebar`, `.dd-list`; v zgodovinskih slogih še okenca `.quick-pop`, `.profile-pop`, `.usage-pop`) imajo lahko svojo barvo; znotraj njih `--surface`, `--text` … že pomenijo barve menija.
 
 Pisava je spremenljivka `--font` (po slogu), naslovi v zgodovinskih slogih `--font-head` (pisava sloga iz `ERAS`, nato Georgia in serif: za pisave, ki jih pisava sloga nima, npr. japonščino, brskalnik vzame sistemsko; v lahkem načinu Georgia). Naslovi so debeli (700, v slogu Igriv 800), gumbi 700–800.
 
@@ -62,17 +62,25 @@ Neobvezni slogi, vsak s pridihom enega obdobja. Pravila (j: »ne vsiljivo«, »s
   - **en sloj** za vsebino vsakega zaslona (`.view::before`, `position: fixed`, `z-index: -1`, `pointer-events: none`, maska `var(--tapeta)` ponovljena v 300 px, na telefonu ≤ 700 px v 210 px) v barvi besedila (`--wall-c`: 6 %, na telefonu 7 %). Kartice ostanejo polne (`--surface`), zato se tapeta vidi v ozadju, presledkih med karticami, ob glavi zaslona in v klepetu; nikoli na gumbih ali čez besedilo v karticah. Nepremičen sloj se ob drsenju ne riše znova;
   - **kontrast**: `theme.js` preveri besedilo (7:1), sivo besedilo in poudarek (4,5:1) tudi na podlagi s tapeto (`MOTIF` = 7 %); test `test/teme.test.js` preveri, da `MOTIF` pokrije vsak `--wall-c` iz `ui.css` in da je vsaka `tapeta.svg` enaka sestavljeni. Če tapeto okrepiš, zvišaj `MOTIF`;
   - brez tapete v lahkem načinu, ob `prefers-reduced-transparency`, `forced-colors` in pri tiskanju; brez JS. Risbe so simetrične ali smiselne tudi zrcaljene (RTL). Brez verskih simbolov.
+- **okvir v barvah obdobja** (j, 2026-10-30: »spremeni označene površine v skladu s temo«; `ui.css` → »Okvir«): vse površine okvirja pripadajo obdobju, vsebina (kartice, polje za pisanje) ostane mirna in čista:
+  - **meniji** (zgornja vrstica, spodnja vrstica na telefonu, seznam pogovorov, spustni seznami, okenca profila in »Nadaljuj z učenjem«) v barvi `ERAS[…].light/dark.menu` (Antični marmor s terakoto, Renesansa temnejši pergament / usnje, Hiša modrosti globok lapis z zlatom, Indija indigo z žafranom), poudarek na njih `menuAccent` (neobvezno). `theme.js` iz tega izračuna `--menu-*` (tudi `--menu-accent-text`), zato lastne barve menijev in poudarka še vedno veljajo; temen meni v svetlem načinu dobi besedilo iz temne različice sloga;
+  - **glave zaslonov in vrstica za pisanje** (`.chat-head`, `.composer`) v `bar`; polje za pisanje ostane `--surface`; **obvestila** (`.banner`: Preizkusni način, Testna verzija, brez povezave) v `banner` namesto rumene, ikona v `--accent`, spodaj tanka črta v barvi pasu;
+  - **žetoni** (XP, niz dni, stanje pogovora) na `--accent-soft`; v zgodovinskem slogu `theme.js` to podlago po potrebi posvetli, da sta poudarek (4,5:1) in besedilo (7:1) na njej berljiva;
+  - **pas obdobja** (isti `band` kot na kartici dejstev, povečan za `edge`, npr. 1.25; barva `--edge-c` = barva pasu z vsaj 3:1 na meniju in glavi) ob spodnjem robu zgornje vrstice, zgornjem robu spodnje vrstice in vrstice za pisanje ter navpično ob robu seznama pogovorov (v RTL levo); okenca imajo zgoraj 3 px črto v tej barvi;
+  - **tapeta tudi na seznamu pogovorov** (gostejša ploščica 240 px, `--wall-m` 6 % barve besedila menija; drsi samo seznam, tapeta in pas ostaneta);
+  - **kontrast**: `check()` preveri besedilo, sivo in poudarek na `bar`, `banner`, meniju s tapeto in na `--accent-soft`/`--menu-accent-soft`, za svetli in temni način in z lastnimi barvami (test);
+  - lahki način in `prefers-reduced-transparency`: brez tapete na seznamu, pasovi ostanejo; `forced-colors` in tisk: brez pasov in tapete, namesto pasu navadna črta. Čist, Igriv in Temen so nespremenjeni.
 
 ### Kako dodati novo zgodovinsko temo
 
 1. **Vsebina**: ime sloga (`id` z malimi črkami brez šumnikov, npr. `maji`), 6 dejstev o matematikih obdobja (letnice »pr. n. št./n. št.«, legende označene z »po izročilu«, decimalna vejica; številke preveri z `node -e`).
-2. **`public/theme.js` → `ERAS`**: dodaj vnos z `light` in `dark` (bg, surface, menu, text, accent, neobvezno `band`), `font`, `hero`, `band`, `glyph`, `motifs`, `facts: ["era.<id>", 6]`. Barve izberi tako, da jih `theme.js` ne popravi (test).
+2. **`public/theme.js` → `ERAS`**: dodaj vnos z `light` in `dark` (bg, surface, text, accent, neobvezno `band`; okvir: `menu` v barvi obdobja, ne enak `surface`, neobvezno `menuAccent`, `bar` za glave in vrstico za pisanje, `banner` za obvestila), `font`, `hero`, `band`, `edge` (povečava pasu ob robovih okvirja, 1–1.5; vzorec z ostrimi robovi naj ostane 1), `glyph`, `motifs`, `facts: ["era.<id>", 6]`. Barve izberi tako, da jih `theme.js` ne popravi (test preveri poudarek in poudarek menija).
 3. **Pisava** (samo če je potrebna nova): `npm i @fontsource-variable/<paket>` (z latin-ext; strežnik jo streže sam). Sicer uporabi obstoječo (EB Garamond, El Messiri, Eczar).
 4. **Risbe**: `public/eras/<id>/`: pas (`<ime>.svg`, polna oblika, viewBox širina × višina iz `band`), `ikona.svg` (debele črte, `stroke-width` ≈ 4,5, berljiva pri 15 px) in 6–8 motivov (črte `stroke-width` ≈ 1,4, `fill="none"`, viewBox 0 0 64 64, brez besedila, skript in povezav). Nato `node scripts/tapeta.js <id>` sestavi `tapeta.svg` (tapeto ozadja; ročno je ne riši, test preveri, da je sveža).
 5. **Besedila** v `public/i18n/sl.js` in vseh 32 `public/i18n/ui/*.json` (prevedeno, imena v obliki jezika): `ap.style<Id>`, `ap.style<Id>Text`, `era.<id>.title`, `era.<id>.f1` … `f6`.
 6. **`public/settings-registry.js`**: `style.values` in opis (`<id> = …`), da ga lahko izbere inštruktor.
 7. **Ta dokument**: vrstica v tabeli slogov zgoraj.
-8. **Preveri**: `npm test` (`test/teme.test.js`: kontrast, datoteke, ključi, nastavitev), posnetki Učne poti (računalnik svetlo in temno, telefon) in izbire sloga na telefonu; nič ne sme biti odrezano, vsiljivo ali slabo berljivo.
+8. **Preveri**: `npm test` (`test/teme.test.js`: kontrast tudi okvirja, datoteke, ključi, nastavitev), posnetki Učne poti (računalnik svetlo in temno, telefon s spodnjo vrstico), Inštruktorja na računalniku (zgornja vrstica, obvestilo, glava, seznam pogovorov, vrstica za pisanje) in izbire sloga na telefonu; nič ne sme biti odrezano, vsiljivo ali slabo berljivo.
 
 ## Gradniki (`public/ui.css`)
 

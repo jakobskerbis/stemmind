@@ -39,13 +39,26 @@ test("every history style passes the contrast check in light and dark mode, also
       assert.ok(T.check(c), `${id} ${mode}: premajhen kontrast`);
       // Osnovne barve so že dovolj kontrastne (theme.js jih ne sme opazno popraviti).
       assert.equal(c.vars["--accent"], T.ERAS[id][mode].accent, `${id} ${mode}: poudarek ni dovolj kontrasten`);
+      // Okvir v barvah obdobja (ui.css → »Okvir«): meniji, glave in vrstica za pisanje, obvestila, pas ob robovih.
+      const e = T.ERAS[id][mode];
+      for (const k of ["menu", "bar", "banner"]) assert.match(e[k] || "", /^#[0-9a-f]{6}$/, `${id} ${mode}: ERAS.${k}`);
+      assert.notEqual(e.menu, e.surface, `${id} ${mode}: meni naj ima barvo obdobja`);
+      for (const k of ["--menu", "--menu-text", "--menu-accent", "--menu-accent-text", "--bar", "--banner", "--edge-c"]) assert.ok(c.vars[k], `${id} ${mode}: ${k}`);
+      assert.equal(c.vars["--menu-accent"], e.menuAccent || e.accent, `${id} ${mode}: poudarek menija ni dovolj kontrasten`);
+      assert.ok(c.menuMotif.length === 1 && c.chrome.length === 2, `${id} ${mode}: preverjanje okvirja`);
+      // Lastne barve: poudarek in meni uporabnika veljata, kontrast ostane preverjen.
+      for (const own of [{ accent: "#1d7a3a" }, { [mode]: { menu: mode === "dark" ? "#3a3f52" : "#20304a" } }, { [mode]: { surface: mode === "dark" ? "#1a1a1a" : "#ffffff" } }]) {
+        const o = T.compute({ style: id, mode, accent: null, light: null, dark: null, ...own });
+        assert.ok(T.check(o), `${id} ${mode} ${JSON.stringify(own)}: premajhen kontrast`);
+      }
     }
   }
 });
 
 test("the contrast check covers the wallpaper opacity in ui.css and every wallpaper tile is up to date", async () => {
   const css = fs.readFileSync(path.join(PUB, "ui.css"), "utf8");
-  const pcts = [...css.matchAll(/--wall-c: color-mix\(in srgb, var\(--text\) ([\d.]+)%/g)].map((m) => Number(m[1]) / 100);
+  const pcts = [...css.matchAll(/--wall-[cm]: color-mix\(in srgb, var\(--text\) ([\d.]+)%/g)].map((m) => Number(m[1]) / 100);
+  assert.match(css, /--wall-m: color-mix/, "--wall-m (tapeta na seznamu pogovorov) v ui.css");
   assert.ok(pcts.length && pcts.every((p) => p > 0), "--wall-c v ui.css");
   assert.ok(T.MOTIF >= Math.max(...pcts), `MOTIF ${T.MOTIF} < ${Math.max(...pcts)}`);
   assert.match(css, /mask: var\(--tapeta\) repeat/);
