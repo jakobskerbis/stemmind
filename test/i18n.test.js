@@ -87,6 +87,26 @@ test("first start picks the device language and region, the nearest variant, els
   assert.deepEqual(d(), { code: "en", region: "" });
 });
 
+test("device language also works without Intl.Locale (phone app on Hermes)", () => {
+  const saved = Intl.Locale;
+  try {
+    delete Intl.Locale;
+    const d = (...tags) => detectLanguage(tags);
+    assert.deepEqual(d("sl-SI", "en"), { code: "sl", region: "SI" });
+    assert.deepEqual(d("sl_SI"), { code: "sl", region: "SI" });
+    assert.deepEqual(d("de-AT"), { code: "de", region: "AT" });
+    assert.equal(d("zh-TW").code, "zh-Hant");
+    assert.equal(d("zh-CN").code, "zh");
+    assert.equal(d("sr-Latn-RS").code, "sr-Latn");
+    assert.equal(d("ar-EG").code, "arz");
+    assert.equal(d("no").code, "nb");
+    assert.equal(d("xx-YY", "fr-CA").code, "fr");
+    assert.deepEqual(d("qq"), { code: "en", region: "" });
+  } finally {
+    Intl.Locale = saved;
+  }
+});
+
 test("region reaches the tutor prompt and is validated", () => {
   assert.equal(normalizeSettings({ region: "BR" }).region, "BR");
   assert.equal(normalizeSettings({ region: "brazil" }).region, "");

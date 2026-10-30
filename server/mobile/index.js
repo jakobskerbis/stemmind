@@ -6,6 +6,7 @@ import { mountAppleSignIn } from "./apple-signin.js";
 import { mountStoreBilling } from "./store-billing.js";
 import { mountPush } from "./push.js";
 import { mountDownload } from "./download.js";
+import { createAppLinks, mountAppLink } from "./app-link.js";
 
 const TOKEN = /^[A-Za-z0-9_-]{20,200}$/;
 
@@ -37,9 +38,12 @@ export function mobileClient(req, res, next) {
 
 // Klic za createApp: po mountAccounts (potrebuje račune), pred skupnim geslom.
 export function mountMobile(app, accounts, opts = {}) {
-  mountDownload(app, opts);
-  if (!accounts?.mobile) return null; // brez računov (EVKLID_ACCOUNTS) aplikacija za trgovine ne deluje
-  const ctx = accounts.mobile;
+  const ctx = accounts?.mobile;
+  // Gumb »Odpri Evklid in ostani prijavljen« na /prenesi (server/mobile/app-link.js).
+  const appLinks = ctx ? createAppLinks(ctx) : null;
+  mountDownload(app, { ...opts, appLinks });
+  if (!ctx) return null; // brez računov (EVKLID_ACCOUNTS) aplikacija za trgovine ne deluje
+  mountAppLink(app, ctx, appLinks);
   mountAppleSignIn(app, ctx, opts);
   const billing = mountStoreBilling(app, ctx, opts);
   const push = mountPush(app, ctx, { ...opts, scheduler: opts.scheduler });

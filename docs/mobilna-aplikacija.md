@@ -20,6 +20,10 @@ in isti račun kot splet, napredek je skupen.
 - **Opomniki**: dnevni opomnik ob izbrani uri (deluje brez povezave, odpade, ko je cilj dosežen) in
   potisna obvestila strežnika (npr. »Matura: še 3 dnevi«).
 - **Prijava** z e-naslovom ali **Prijava z Apple**, profili z gesli, izbris računa v aplikaciji.
+- **Prijava iz brskalnika**: kdor je na telefonu prijavljen v brskalniku, na /prenesi tapne »Odpri Evklid in
+  ostani prijavljen« in aplikacija se odpre prijavljena, s profilom iz brskalnika (enkratna povezava
+  `evklid://prijava?t=…`, 15 minut, `server/mobile/app-link.js`). Zaslon za prijavo v aplikaciji ima gumb,
+  ki to stran odpre.
 - **Naročnina**: v trgovinah nakup v aplikaciji (Apple In-App Purchase, Google Play Billing), v APK za
   neposredni prenos plačilo na spletu (Stripe).
 - Svetla in temna tema, 33 jezikov vmesnika (isti prevodi kot splet), iPad, dostopnost (VoiceOver,
