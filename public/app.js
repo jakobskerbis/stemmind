@@ -416,7 +416,8 @@ async function selectStudent(id) {
   if (target && accountsOn() && (target.locked || target.needs_password)) return loadStudents(await openProfileLock(target, state.students));
   if (target?.locked) {
     const open = state.students.find((s) => !s.locked);
-    if (!open) return;
+    // Vsi profili zaklenjeni: brez strežnika ni kaj odpreti; ob zagonu bootFailed pokaže »ni dosegljiva« in počaka.
+    if (!open) throw new Error(t("lock.offline"));
     $("#student-select").value = open.id;
     return selectStudent(open.id);
   }
