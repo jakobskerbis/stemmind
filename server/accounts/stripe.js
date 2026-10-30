@@ -1,6 +1,6 @@
 // Tanek odjemalec za Stripe REST API (brez dodatne knjižnice) in preverjanje webhookov.
 import crypto from "node:crypto";
-import { plansFor } from "./plans.js";
+import { plansFor, SCHOOL_PLANS } from "./plans.js";
 
 const API = "https://api.stripe.com/v1";
 
@@ -48,9 +48,10 @@ export class Stripe {
   // EUR: cene iz PLANS; regijske valute (INR, NGN …) imajo svoje cene istega izdelka.
   // Če se znesek spremeni, ustvari novo ceno (lookup_key se prenese nanjo)
   // in staro arhivira; obstoječe naročnine ostanejo pri stari ceni.
-  async ensurePrices(currency = "EUR") {
-    const cacheKey = currency === "EUR" ? "stripe_prices" : `stripe_prices_${currency}`;
-    const plans = plansFor(currency);
+  // extra: { plans, cacheKey } za cene zunaj portala (Osebno ob šolski licenci), na istem izdelku.
+  async ensurePrices(currency = "EUR", extra = null) {
+    const cacheKey = extra?.cacheKey || (currency === "EUR" ? "stripe_prices" : `stripe_prices_${currency}`);
+    const plans = extra?.plans || plansFor(currency);
     const amounts = Object.fromEntries(plans.map((p) => [p.key, p.amount]));
     const cached = this.kv?.get(cacheKey);
     if (cached) {
@@ -60,7 +61,7 @@ export class Stripe {
     const found = await this.request("GET", "/prices", { lookup_keys: plans.map((p) => p.key), active: "true", limit: 10 });
     const existing = Object.fromEntries(found.data.map((p) => [p.lookup_key, p]));
     let product = found.data[0]?.product;
-    if (!product && currency !== "EUR") product = (await this.ensurePrices("EUR")).product;
+    if (!product && (currency !== "EUR" || extra)) product = (await this.ensurePrices("EUR")).product;
     if (!product) {
       product = (await this.request("POST", "/products", { name: "Evklid", description: "AI inštruktor za matematiko, fiziko in kemijo" })).id;
     }
@@ -92,8 +93,13 @@ export class Stripe {
     const result = { product, prices: byKey, amounts };
     this.kv?.set(cacheKey, JSON.stringify(result));
     // Portal za stranke našteva cene (EUR) za preklop paketa: z novimi cenami se ustvari znova.
-    if (replaced && currency === "EUR") this.kv?.set("stripe_portal_config", "");
+    if (replaced && currency === "EUR" && !extra) this.kv?.set("stripe_portal_config", "");
     return result;
+  }
+
+  // Cene Osebno ob šolski licenci (niso v portalu za preklop paketa).
+  ensureSchoolPrices() {
+    return this.ensurePrices("EUR", { plans: SCHOOL_PLANS, cacheKey: "stripe_prices_sola" });
   }
 
   // Nastavitve portala za stranke: preklop paketa, odpoved, kartica, računi.
