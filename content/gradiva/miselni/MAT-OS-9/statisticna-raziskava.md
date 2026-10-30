@@ -1,0 +1,28 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Koraki raziskave
+  - vprašanje, zbiranje, urejanje, prikaz, sklep
+  - zbiranje: merjenje, opazovanje, anketa
+- Frekvenčna tabela
+  - frekvenca $f$: kolikokrat se podatek pojavi
+  - relativna frekvenca $f_r = \dfrac{f}{n}$
+- Prikazi
+  - stolpčni: primerjava frekvenc
+  - krožni: kot $= f_r \cdot 360°$
+  - črtni: spreminjanje s časom
+- Povprečje
+  - $\bar{x} = \dfrac{\text{vsota}}{n}$
+  - pri tabeli podatek krat frekvenca
+  - suhi dnevi ($0\,\mathrm{mm}$) štejejo v $n$
+- Mediana
+  - srednji podatek urejenih podatkov
+  - sodo število: sredina obeh srednjih
+  - napaka: pozabiš urediti po velikosti
+- Modus
+  - najpogostejši podatek, ne njegova frekvenca
+  - deluje tudi za smer vetra
+- Izbira srednje vrednosti
+  - izstopajoč podatek premakne povprečje
+  - takrat raje mediana

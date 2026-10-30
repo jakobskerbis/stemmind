@@ -1,0 +1,27 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Množina snovi
+  - $n = \dfrac{m}{M}$, enota mol
+  - koeficienti so razmerje množin, ne mas
+- Kemijske vezi
+  - ionska: prehod elektronov, kovina in nekovina
+  - kovalentna: skupni elektronski pari nekovin
+  - polarna vez pri različni elektronegativnosti
+- Kisline in baze
+  - kislina odda proton, baza ga sprejme
+  - $\mathrm{pH} = -\log c(\mathrm{H_3O^+})$
+  - ena enota pH je desetkratna razlika
+- Kemijsko ravnotežje
+  - obe reakciji tečeta enako hitro
+  - Le Chatelier: premik proti izničenju spremembe
+  - kapniki: $\mathrm{CO_2}$ uide, izloči se $\mathrm{CaCO_3}$
+- Redoks reakcije
+  - oksidacija: oddaja elektronov, število naraste
+  - oksidant se reducira, reducent oksidira
+  - napaka: vezava kisika ni redukcija
+- Kisli dež
+  - čista deževnica ima pH $5{,}6$ zaradi $\mathrm{CO_2}$
+  - $\mathrm{SO_2}$ in dušikovi oksidi ga zakisajo
+  - apnenec kislino nevtralizira

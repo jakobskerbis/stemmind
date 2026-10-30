@@ -1,0 +1,29 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Branje naloge
+  - podatki z enotami, skica, kaj iščemo
+  - poišči znak sklopa
+- Odstotki
+  - $-20\,\%$: krat $0{,}8$; $+20\,\%$: krat $1{,}2$
+  - $300 \cdot 0{,}8 \cdot 1{,}2 = 288\,€$
+  - obratno: $0{,}75 \cdot x = 60$
+- Linearna funkcija
+  - $c = 15x + 20$
+  - znana cena: reši enačbo
+- Pitagorov izrek
+  - $c^2 = a^2 + b^2$
+  - za kateto odštevaš
+- Telesa
+  - $V = \pi r^2 v$, v formulo polmer
+  - piramida, stožec: tretjina prizme, valja
+- Pretvorbe enot
+  - $1\,\mathrm{m^2} = 10\,000\,\mathrm{cm^2}$
+  - $1\,\mathrm{m^3} = 1000\,\mathrm{L}$
+- Zaokroževanje
+  - kose zaokrožiš navzgor
+  - zaokrožiš šele na koncu
+- Podatki in verjetnost
+  - $P(A) = \dfrac{\text{ugodni}}{\text{vsi}}$
+  - relativna frekvenca oceni verjetnost

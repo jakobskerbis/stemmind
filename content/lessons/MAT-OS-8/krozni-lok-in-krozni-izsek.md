@@ -5,170 +5,251 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Iz prejšnjih tem že znaš izračunati obseg kroga $o = 2\pi r$ in ploščino kroga $S = \pi r^2$. Znaš tudi, da ima polni kot $360^\circ$.
+Na telefonu imaš aplikacijo, ki pokaže, kje je Mednarodna vesoljska postaja (ISS). Postaja kroži okoli Zemlje približno $400\,\text{km}$ nad površjem in en obhod naredi v $90$ minutah. Zvečer jo $15$ minut opazuješ, kako drsi čez nebo. Koliko kilometrov je v tem času preletela?
 
-Kaj pa, če te zanima samo del kroga? Kos pice, vejica na urnem kazalcu, ki prepotuje del kroga, ali pot tekača na ovinku stadiona so deli kroga. Pri vsakem od njih nas zanima, kako dolg je rob ali kako velika je ploha. Za to potrebuješ **dolžino krožnega loka** in **ploščino krožnega izseka**. Pomagal ti bo preprost miselni vzorec: del kroga je v istem razmerju s celim krogom kot njegov središčni kot s polnim kotom.
+Cel krog bi znal izračunati: to je obseg. Postaja pa je v četrt ure preletela le **del** kroga. Tak del krožnice se imenuje **krožni lok**. Ko boš znal izračunati lok, boš vprašanje rešil v Primeru 3. Po isti poti izračunaš tudi ploščino dela kroga: kos torte, pahljačo ali ploskev, ki jo prebriše brisalec na avtu.
 
 ## Razlaga
 
-**1. Pojmi.** Naj bo dan krog s središčem $S$ in polmerom $r$. Dve točki $A$ in $B$ na krožnici razdelita krožnico na dva **krožna loka**. Kot $\alpha$ med polmeroma $SA$ in $SB$ je **središčni kot** tega loka.
+**Najprej nekaj primerov.** Vzemimo krog s polmerom $r = 6\,\text{cm}$. Njegov obseg je $o = 2\pi \cdot 6\,\text{cm} = 12\pi\,\text{cm}$, ploščina pa $p = \pi \cdot 6^2\,\text{cm}^2 = 36\pi\,\text{cm}^2$. Krog razrežemo kot torto, z ravnimi rezi iz središča. Vsak kos ima ukrivljen rob in ploskev.
 
-**Krožni izsek** je del krožne ploskve, ki ga omejujeta dva polmera in krožni lok med njima.
+| kot kosa | del kroga | dolžina roba | ploščina kosa |
+|---|---|---|---|
+| $180^\circ$ | $\frac{1}{2}$ | $6\pi\,\text{cm}$ | $18\pi\,\text{cm}^2$ |
+| $90^\circ$ | $\frac{1}{4}$ | $3\pi\,\text{cm}$ | $9\pi\,\text{cm}^2$ |
+| $60^\circ$ | $\frac{1}{6}$ | $2\pi\,\text{cm}$ | $6\pi\,\text{cm}^2$ |
+| $30^\circ$ | $\frac{1}{12}$ | $\pi\,\text{cm}$ | $3\pi\,\text{cm}^2$ |
 
-**2. Ideja: delež kroga.** Središčni kot $\alpha$ je del polnega kota $360^\circ$. Ta delež je
+Opazuj drugi stolpec. Kot $90^\circ$ je četrtina polnega kota $360^\circ$, in kos je četrtina torte. Njegov rob je četrtina obsega, njegova ploščina četrtina ploščine kroga. Enako velja v vsaki vrstici: kolikšen del polnega kota zajame kos, tolikšen del obsega in ploščine dobi.
 
-$$\frac{\alpha}{360^\circ}$$
+:::premisli
+Kako dolg bi bil rob in kolikšna ploščina kosa s kotom $120^\circ$ iz iste torte? Napovej iz tabele.
+---
+Kot $120^\circ$ je tretjina od $360^\circ$. Rob je tretjina obsega, $\dfrac{12\pi}{3} = 4\pi\,\text{cm}$, ploščina pa $\dfrac{36\pi}{3} = 12\pi\,\text{cm}^2$. To je natanko dvakrat toliko kot pri $60^\circ$, ker je kot dvakrat večji.
+:::
 
-Na primer: kot $90^\circ$ je $\dfrac{90}{360} = \dfrac{1}{4}$ polnega kota, zato lok dolži četrtino obsega, izsek pa je četrtina kroga.
+**Imena.** Točki $A$ in $B$ na krožnici jo razdelita na dva **krožna loka**. Kot $\alpha$ med polmeroma $SA$ in $SB$, ki ima vrh v središču $S$, je **središčni kot** loka. Del kroga, ki ga omejujeta polmera in lok med njima, je **krožni izsek**. Pri torti je rob kosa lok, kos sam pa izsek.
 
-**3. Dolžina krožnega loka.** Dolžina loka je ustrezen delež obsega:
+**Pravilo.** Kar smo opazili v tabeli, zapišemo s simboli. Delež kroga je $\dfrac{\alpha}{360^\circ}$. Dolžina loka $l$ je ta delež obsega:
 
 $$l = \frac{\alpha}{360^\circ} \cdot 2\pi r$$
 
-**4. Ploščina krožnega izseka.** Ploščina izseka je ustrezen delež ploščine kroga:
+Ploščina izseka $p_i$ je ta delež ploščine kroga:
 
-$$S_i = \frac{\alpha}{360^\circ} \cdot \pi r^2$$
+$$p_i = \frac{\alpha}{360^\circ} \cdot \pi r^2$$
 
-**5. Kako računamo.**
+Lok merimo v dolžinskih enotah ($\text{cm}$, $\text{km}$), izsek v kvadratnih ($\text{cm}^2$, $\text{m}^2$).
 
-- Najprej zapiši delež $\dfrac{\alpha}{360^\circ}$ in ga po možnosti okrajšaj.
-- Nato izračunaj obseg ali ploščino celega kroga.
-- Na koncu ju pomnoži z deležem.
-- Dolžino loka podamo v enotah dolžine ($\text{cm}$, $\text{m}$), ploščino izseka v enotah ploščine ($\text{cm}^2$, $\text{m}^2$).
+**Postopek.** Zapiši delež in ga okrajšaj. Izračunaj obseg ali ploščino celega kroga. Pomnoži. Če iščeš kot, zapiši enačbo in jo reši kot vsako linearno enačbo.
 
-**6. Iskanje kota ali polmera.** Formule lahko obrneš. Če poznaš dolžino loka in polmer, je $\alpha = \dfrac{l \cdot 360^\circ}{2\pi r}$.
+**Polmer in kot.** V simulaciji spodaj (Krožni lok in izsek) nastavi središčni kot na $90^\circ$ in polmer na $5\,\text{cm}$. Nato polmer povečaj na $10\,\text{cm}$. Opazuj, kolikokrat se podaljša lok in kolikokrat zraste ploščina izseka.
 
-**7. Povezava med obema formulama.** Ker je $l = \dfrac{\alpha}{360^\circ} \cdot 2\pi r$, velja tudi $S_i = \dfrac{l \cdot r}{2}$. To je uporabno, kadar poznaš $l$ in $r$, kota pa ne.
+:::premisli
+Kot ostane enak, polmer podvojimo. Zakaj se lok podaljša le dvakrat, ploščina izseka pa zraste štirikrat?
+---
+Lok je del obsega $2\pi r$, kjer je $r$ en sam faktor: dvakrat večji $r$ da dvakrat daljši lok. Ploščina je del $\pi r^2 = \pi \cdot r \cdot r$, kjer se podvojita oba faktorja: $2 \cdot 2 = 4$. Pri $90^\circ$ in $r = 5\,\text{cm}$ je izsek $\dfrac{25\pi}{4}\,\text{cm}^2 \approx 19{,}6\,\text{cm}^2$, pri $r = 10\,\text{cm}$ pa $25\pi\,\text{cm}^2 \approx 78{,}5\,\text{cm}^2$.
+:::
 
 ## Rešeni primeri
 
-### Primer 1: dolžina loka
+### Primer 1 (lažji): lok na plakatu
 
-Krog ima polmer $r = 6\,\text{cm}$. Kolikšna je dolžina loka s središčnim kotom $60^\circ$? Rezultat zapiši s točnostjo $\pi$ in nato zaokroži na eno decimalko.
+Na plakatu astronomskega krožka je tirnica planeta narisana kot krog s polmerom $6\,\text{cm}$. Planet je na sliki prepotoval središčni kot $60^\circ$. Kako dolg je narisani lok? Rezultat zapiši s $\pi$ in ga nato zaokroži na eno decimalko.
 
-1. Delež kroga: $\dfrac{60^\circ}{360^\circ} = \dfrac{1}{6}$. To pomeni, da je lok šestina krožnice.
-2. Obseg celega kroga: $o = 2\pi r = 2\pi \cdot 6 = 12\pi\,\text{cm}$.
-3. Dolžina loka: $l = \dfrac{1}{6} \cdot 12\pi = 2\pi\,\text{cm}$.
-4. Približno: $2 \cdot 3{,}14 = 6{,}28$, torej $l \approx 6{,}3\,\text{cm}$.
-5. Preverimo smiselnost: lok je krajši od celega obsega ($12\pi \approx 37{,}7\,\text{cm}$), kar mora držati. ✓
+**Podatki:** $r = 6\,\text{cm}$, $\alpha = 60^\circ$, $\pi \approx 3{,}14$
+**Iščemo:** dolžino loka $l$
 
-### Primer 2: ploščina izseka
+:::formula
+$l = \dfrac{\alpha}{360^\circ} \cdot 2\pi r$
+:::
 
-Krog ima polmer $r = 10\,\text{cm}$. Kolikšna je ploščina izseka s središčnim kotom $90^\circ$?
+**Rešitev:**
 
-1. Delež: $\dfrac{90^\circ}{360^\circ} = \dfrac{1}{4}$.
-2. Ploščina celega kroga: $S = \pi r^2 = \pi \cdot 10^2 = 100\pi\,\text{cm}^2$. Pozor: kvadriramo samo polmer.
-3. Ploščina izseka: $S_i = \dfrac{1}{4} \cdot 100\pi = 25\pi\,\text{cm}^2$.
-4. Približno: $25 \cdot 3{,}14 = 78{,}5\,\text{cm}^2$.
-5. Preverimo: četrtina kroga mora imeti četrtino ploščine. ✓
+1. Delež kroga: $\dfrac{60^\circ}{360^\circ} = \dfrac{1}{6}$, ker gre $60^\circ$ v polni kot šestkrat.
+2. Obseg celega kroga: $o = 2\pi \cdot 6\,\text{cm} = 12\pi\,\text{cm}$.
+3. Dolžina loka: $l = \dfrac{1}{6} \cdot 12\pi\,\text{cm} = 2\pi\,\text{cm}$.
+4. Približek: $2 \cdot 3{,}14 = 6{,}28$, torej $l \approx 6{,}3\,\text{cm}$.
+5. Smiselnost: lok je krajši od celega obsega, $12\pi\,\text{cm} \approx 37{,}7\,\text{cm}$, kot mora biti.
+6. Odgovor: narisani lok je dolg $2\pi\,\text{cm}$, približno $6{,}3\,\text{cm}$.
 
-### Primer 3: obratna naloga
+### Primer 2: sončni panel kot pahljača
 
-Lok dolžine $l = 15{,}7\,\text{cm}$ pripada krogu s polmerom $r = 10\,\text{cm}$. Izračunaj središčni kot in ploščino izseka. Uporabi $\pi \approx 3{,}14$.
+Pristajalni modul na Marsu razpre sončni panel kot pahljačo. Razprt panel je krožni izsek s polmerom $1{,}2\,\text{m}$ in središčnim kotom $150^\circ$. Kolikšna je njegova ploščina?
 
-1. **Obseg kroga:** $o = 2 \cdot 3{,}14 \cdot 10 = 62{,}8\,\text{cm}$.
-2. **Delež:** lok je del obsega, torej $\dfrac{15{,}7}{62{,}8} = \dfrac{1}{4}$, saj je $4 \cdot 15{,}7 = 62{,}8$.
-3. **Kot:** $\alpha = \dfrac{1}{4} \cdot 360^\circ = 90^\circ$.
-4. **Ploščina izseka:** izsek je četrtina kroga, ki ima ploščino $3{,}14 \cdot 10^2 = 314\,\text{cm}^2$. Zato $S_i = \dfrac{314}{4} = 78{,}5\,\text{cm}^2$.
-5. **Preverimo z drugo formulo:** $S_i = \dfrac{l \cdot r}{2} = \dfrac{15{,}7 \cdot 10}{2} = \dfrac{157}{2} = 78{,}5\,\text{cm}^2$. ✓
+**Podatki:** $r = 1{,}2\,\text{m}$, $\alpha = 150^\circ$, $\pi \approx 3{,}14$
+**Iščemo:** ploščino izseka $p_i$
+
+:::formula
+$p_i = \dfrac{\alpha}{360^\circ} \cdot \pi r^2$
+:::
+
+**Rešitev:**
+
+1. Delež: $\dfrac{150}{360} = \dfrac{5}{12}$, ker števec in imenovalec delimo s $30$.
+2. Ploščina celega kroga: $p = \pi \cdot (1{,}2\,\text{m})^2 = 1{,}44\pi\,\text{m}^2$. Kvadriramo le polmer, ne $\pi$.
+3. Ploščina izseka: $p_i = \dfrac{5}{12} \cdot 1{,}44\pi\,\text{m}^2 = 0{,}6\pi\,\text{m}^2$, ker je $1{,}44 : 12 = 0{,}12$ in $5 \cdot 0{,}12 = 0{,}6$.
+4. Približek: $0{,}6 \cdot 3{,}14 = 1{,}884$, torej $p_i \approx 1{,}88\,\text{m}^2$.
+5. Odgovor: razprt panel ima ploščino približno $1{,}88\,\text{m}^2$.
+
+### Primer 3 (težji): pot vesoljske postaje
+
+Vrnimo se k vprašanju z začetka. Postaja ISS kroži $400\,\text{km}$ nad površjem Zemlje, polmer Zemlje je približno $6400\,\text{km}$. En obhod traja $90$ minut. Kolikšno pot naredi postaja v $15$ minutah?
+
+**Podatki:** višina $h = 400\,\text{km}$, polmer Zemlje $R = 6400\,\text{km}$, čas obhoda $90\,\text{min}$, čas opazovanja $15\,\text{min}$, $\pi \approx 3{,}14$
+**Iščemo:** dolžino loka $l$, ki ga postaja preleti
+
+:::formula
+$r = R + h$
+
+$\alpha = \dfrac{15\,\text{min}}{90\,\text{min}} \cdot 360^\circ$
+
+$l = \dfrac{\alpha}{360^\circ} \cdot 2\pi r$
+:::
+
+**Rešitev:**
+
+1. Polmer tirnice merimo od središča Zemlje, ne od površja: $r = 6400\,\text{km} + 400\,\text{km} = 6800\,\text{km}$.
+2. V $15$ minutah postaja naredi $\dfrac{15}{90} = \dfrac{1}{6}$ obhoda, zato je središčni kot $\dfrac{1}{6} \cdot 360^\circ = 60^\circ$.
+3. Obseg tirnice: $o = 2 \cdot 3{,}14 \cdot 6800\,\text{km} = 42\,704\,\text{km}$.
+4. Lok je šestina obsega: $l = 42\,704\,\text{km} : 6 \approx 7117\,\text{km}$.
+5. Odgovor: v $15$ minutah postaja preleti približno $7100\,\text{km}$. To je skoraj $8\,\text{km}$ v vsaki sekundi.
+
+### Primer 4 – zdaj ti: kot iz dolžine loka
+
+Lok dolžine $15{,}7\,\text{cm}$ pripada krogu s polmerom $10\,\text{cm}$. Izračunaj središčni kot in ploščino izseka.
+
+**Podatki:** $l = 15{,}7\,\text{cm}$, $r = 10\,\text{cm}$, $\pi \approx 3{,}14$
+**Iščemo:** središčni kot $\alpha$ in ploščino izseka $p_i$
+
+:::formula
+$l = \dfrac{\alpha}{360^\circ} \cdot 2\pi r$
+
+$p_i = \dfrac{\alpha}{360^\circ} \cdot \pi r^2$
+:::
+
+**Rešitev:**
+
+1. Obseg kroga: $o = 2 \cdot 3{,}14 \cdot 10\,\text{cm} = 62{,}8\,\text{cm}$.
+2. Delež: lok je del obsega, $\dfrac{15{,}7}{62{,}8} = \dfrac{1}{4}$, saj je $4 \cdot 15{,}7 = 62{,}8$.
+3. Zdaj ti: iz deleža izračunaj kot $\alpha$, nato še ploščino izseka.
+
+:::premisli
+Kolikšna sta $\alpha$ in $p_i$?
+---
+$\alpha = \dfrac{1}{4} \cdot 360^\circ = 90^\circ$. Ploščina kroga je $3{,}14 \cdot 10^2\,\text{cm}^2 = 314\,\text{cm}^2$, izsek je njena četrtina: $p_i = 314\,\text{cm}^2 : 4 = 78{,}5\,\text{cm}^2$.
+:::
 
 ## Pogoste napake
 
-- **Pozabljeno deljenje s $360^\circ$.** Dolžina loka ni $\alpha \cdot 2\pi r$. Vedno najprej določi delež $\dfrac{\alpha}{360^\circ}$.
-- **Zamenjava obsega in ploščine.** Za lok uporabljaš $2\pi r$, za izsek $\pi r^2$. Če dobiš ploščino v $\text{cm}$ ali dolžino v $\text{cm}^2$, si se zmotil.
-- **Kvadriranje $2r$ ali $\pi r$.** V $\pi r^2$ kvadriraš samo $r$, ne $\pi r$. Torej $\pi \cdot 10^2 = 100\pi$, ne $(10\pi)^2$.
-- **Premer namesto polmera.** Če je podan premer $d$, je $r = d : 2$.
-- **Enote.** Ploščina izseka je v kvadratnih enotah, na primer $\text{cm}^2$.
+- **Brez deljenja s $360^\circ$.** Učenec računa $l = 60 \cdot 2\pi r$, ker misli, da kot pove, »kolikokrat« vzamemo obseg. Tako dobi lok, daljši od cele krožnice, kar ni mogoče. Kot pove le, kolikšen del polnega kota zajame izsek: najprej vedno delež $\dfrac{\alpha}{360^\circ}$.
+- **Zamenjana obseg in ploščina.** Za lok vzame $\pi r^2$, za izsek $2\pi r$. Lok je črta, izsek ploskev, zato lok pripada obsegu, izsek ploščini. Preveri enoto: lok v $\text{cm}$, izsek v $\text{cm}^2$.
+- **Premer namesto polmera.** Če naloga da premer $d$ in ga učenec vstavi kot $r$, dobi dvakrat daljši lok in štirikrat večji izsek. Najprej izračunaj $r = d : 2$.
+- **»Dvakrat večji polmer, dvakrat večji izsek.«** V ploščini je polmer kvadriran, zato pri istem kotu dvakrat večji polmer da štirikrat večji izsek. Le lok se podaljša dvakrat.
+- **Polni kot $180^\circ$.** Kdor deli s $180^\circ$, dobi dvakrat predolg lok, pri iskanju kota pa polovico pravega kota. $180^\circ$ je iztegnjeni kot, pol kroga; polni kot meri $360^\circ$.
 
 ## Povzetek
 
-- Središčni kot $\alpha$ določa, kolikšen del kroga je lok oziroma izsek: delež je $\dfrac{\alpha}{360^\circ}$.
-- Dolžina loka: $l = \dfrac{\alpha}{360^\circ} \cdot 2\pi r$.
-- Ploščina izseka: $S_i = \dfrac{\alpha}{360^\circ} \cdot \pi r^2$.
-- Če poznaš $l$ in $r$: $S_i = \dfrac{l \cdot r}{2}$.
-- Rezultat mora biti manjši od obsega oziroma ploščine celega kroga, če je $\alpha < 360^\circ$.
-
-## Drugače: Na sliki
-
-Predstavljaj si krog, razrezan na enake izseke kot pica.
-
-- Če ga razrežeš na $4$ enake dele, ima vsak središčni kot $360^\circ : 4 = 90^\circ$.
-- Pri $8$ delih ima vsak $360^\circ : 8 = 45^\circ$.
-
-Vsak kos ima **svoj lok** (skorjo) in **svojo ploščino** (sir). Če imaš $8$ kosov, je lok enega kosa osmina obsega, njegova ploščina pa osmina ploščine pice.
-
-Ko povečuješ kot, se izsek »odpira«, njegov lok in ploščina pa rasteta natanko sorazmerno. Dvakrat večji kot pomeni dvakrat daljši lok in dvakrat večjo ploščino. Pri polnem kotu $360^\circ$ dobiš cel obseg in celo ploščino kroga.
-
-## Drugače: Iz vsakdanjega življenja
-
-**Urni kazalci.** Minutni kazalec je dolg $10\,\text{cm}$. V $15$ minutah opravi četrtino kroga, torej kot $90^\circ$. Konica kazalca prepotuje lok:
-
-$$l = \frac{1}{4} \cdot 2\pi \cdot 10 = 5\pi \approx 15{,}7\,\text{cm}$$
-
-Del številčnice, ki ga je kazalec v tem času prebrisal, je izsek s ploščino $\dfrac{1}{4} \cdot \pi \cdot 10^2 = 25\pi \approx 78{,}5\,\text{cm}^2$.
-
-**Brisalec avtomobila.** Brisalec, ki se zavrti za določen kot, pobriše izsek stekla. Daljši kot pomeni večjo pobrisano ploščino, daljši brisalec (večji $r$) pa še veliko več, ker je v formuli $r^2$.
-
-**Pica.** Izrežeš kos s kotom $45^\circ$ iz pice s polmerom $15\,\text{cm}$. Ploščina kosa je $\dfrac{1}{8} \cdot \pi \cdot 15^2 = \dfrac{225\pi}{8}\,\text{cm}^2 \approx 88{,}4\,\text{cm}^2$.
+- Krožni lok je del krožnice; krožni izsek je del kroga med dvema polmeroma in lokom.
+- Središčni kot $\alpha$ ima vrh v središču kroga; delež kroga je $\dfrac{\alpha}{360^\circ}$.
+- Dolžina loka: $l = \dfrac{\alpha}{360^\circ} \cdot 2\pi r$, v dolžinskih enotah.
+- Ploščina izseka: $p_i = \dfrac{\alpha}{360^\circ} \cdot \pi r^2$, v kvadratnih enotah.
+- Pri istem kotu da dvakrat večji polmer dvakrat daljši lok in štirikrat večji izsek.
+- Če poznaš lok ali izsek, dobiš kot iz deleža ali z enačbo.
 
 ## Drugače: Korak za korakom s številkami
 
-Primer: $r = 12\,\text{cm}$, $\alpha = 150^\circ$. Izračunaj dolžino loka in ploščino izseka.
+Naloga: $r = 12\,\text{cm}$, $\alpha = 150^\circ$. Izračunaj dolžino loka in ploščino izseka.
 
 | Korak | Kaj naredimo | Rezultat |
 |---|---|---|
-| 1 | Zapišemo delež | $\dfrac{150}{360}$ |
-| 2 | Okrajšamo (delimo s $30$) | $\dfrac{5}{12}$ |
+| 1 | Zapišemo delež | $\frac{150}{360}$ |
+| 2 | Okrajšamo (delimo s $30$) | $\frac{5}{12}$ |
 | 3 | Obseg kroga | $2\pi \cdot 12 = 24\pi$ |
-| 4 | Dolžina loka | $\dfrac{5}{12} \cdot 24\pi = 10\pi\,\text{cm}$ |
+| 4 | Dolžina loka | $\frac{5}{12} \cdot 24\pi = 10\pi\,\text{cm}$ |
 | 5 | Ploščina kroga | $\pi \cdot 12^2 = 144\pi$ |
-| 6 | Ploščina izseka | $\dfrac{5}{12} \cdot 144\pi = 60\pi\,\text{cm}^2$ |
-| 7 | Približek ($\pi \approx 3{,}14$) | $l \approx 31{,}4\,\text{cm}$, $S_i \approx 188{,}4\,\text{cm}^2$ |
+| 6 | Ploščina izseka | $\frac{5}{12} \cdot 144\pi = 60\pi\,\text{cm}^2$ |
+| 7 | Približek ($\pi \approx 3{,}14$) | $l \approx 31{,}4\,\text{cm}$, $p_i \approx 188{,}4\,\text{cm}^2$ |
 
-Preverimo: $\dfrac{l \cdot r}{2} = \dfrac{10\pi \cdot 12}{2} = 60\pi$. ✓
+Nasvet: delež okrajšaj, preden množiš. Račun je krajši in manj je možnosti za napako. Pri koraku 4 na primer najprej deliš $24 : 12 = 2$ in šele nato množiš $2 \cdot 5 = 10$.
 
-Nasvet: pri računanju delež okrajšaj, preden množiš. Račun je krajši in manj je možnosti za napako.
+## Drugače: Kot zgodba
+
+Nika vsak večer ob isti uri poišče Luno. Luna kroži okoli Zemlje po skoraj krožni tirnici s polmerom približno $384\,000\,\text{km}$ in en obhod naredi v približno $27$ dneh. Nika si tirnico predstavlja kot ogromno uro z enim samim kazalcem, ki sega od Zemlje do Lune.
+
+Prvi večer si zapomni, kam kaže kazalec. Po $9$ dneh se je zavrtel za $\dfrac{9}{27} = \dfrac{1}{3}$ kroga, torej za $120^\circ$. »Luna je opravila tretjino poti okoli Zemlje,« pomisli Nika. »Njen lok je torej tretjina obsega tirnice.«
+
+Izračuna: $\dfrac{1}{3} \cdot 2 \cdot 3{,}14 \cdot 384\,000\,\text{km} = 803\,840\,\text{km}$, okroglo $800\,000\,\text{km}$.
+
+Potem opazi še nekaj. Kazalec je med potjo prebrisal kos ravnine med Zemljo in Luno, podoben kosu torte. Tudi ta izsek je tretjina celega kroga, ker ima isti središčni kot. Isti delež velja za lok in za izsek. To je vsa skrivnost obeh formul.
 
 ## Drugače: Bolj natančno
 
-Zakaj je delež $\dfrac{\alpha}{360^\circ}$ pravi? Dolžina loka je **premo sorazmerna** s središčnim kotom: če kot podvojimo, se podvoji tudi lok. Če kot potrojimo, se potroji tudi lok. Za polni kot $360^\circ$ je lok cela krožnica z dolžino $2\pi r$.
-
-Zato lahko zapišemo sorazmerje:
+Zakaj je delež $\dfrac{\alpha}{360^\circ}$ pravi? Dolžina loka je **premo sorazmerna** s središčnim kotom: če kot podvojimo, se podvoji tudi lok, če ga potrojimo, se potroji. Za polni kot $360^\circ$ je lok cela krožnica z dolžino $2\pi r$. Zato velja sorazmerje
 
 $$l : 2\pi r = \alpha : 360^\circ$$
 
-Od tod dobimo $l = \dfrac{\alpha}{360^\circ} \cdot 2\pi r$.
+in od tod $l = \dfrac{\alpha}{360^\circ} \cdot 2\pi r$.
 
-Enako velja za ploščino izseka: ta je prav tako premo sorazmerna s kotom, polni kot pa da cel krog:
+Enako velja za ploščino izseka, ki je prav tako premo sorazmerna s kotom; polni kot da cel krog:
 
-$$S_i : \pi r^2 = \alpha : 360^\circ$$
+$$p_i : \pi r^2 = \alpha : 360^\circ$$
 
-Od tod $S_i = \dfrac{\alpha}{360^\circ} \cdot \pi r^2$.
+Od tod $p_i = \dfrac{\alpha}{360^\circ} \cdot \pi r^2$.
 
-Povezava $S_i = \dfrac{l \cdot r}{2}$ sledi iz računa:
+Obe formuli povezuje zveza $p_i = \dfrac{l \cdot r}{2}$:
 
-$$S_i = \frac{\alpha}{360^\circ} \cdot \pi r^2 = \left(\frac{\alpha}{360^\circ} \cdot 2\pi r\right) \cdot \frac{r}{2} = l \cdot \frac{r}{2}$$
+$$p_i = \frac{\alpha}{360^\circ} \cdot \pi r^2 = \left(\frac{\alpha}{360^\circ} \cdot 2\pi r\right) \cdot \frac{r}{2} = l \cdot \frac{r}{2}$$
 
-Ta zveza je podobna formuli za ploščino trikotnika »osnovnica krat višina deljeno z $2$«: lok je tu osnovnica, polmer pa višina.
+Spominja na ploščino trikotnika »osnovnica krat višina, deljeno z $2$«: lok je osnovnica, polmer višina. Zveza je uporabna, kadar poznaš $l$ in $r$, kota pa ne.
 
 ## Preveri se
 
-? Kolikšna je dolžina loka s središčnim kotom $90^\circ$ v krogu s polmerom $8\,\text{cm}$?
-- $2\pi\,\text{cm}$
-+ $4\pi\,\text{cm}$
-- $16\pi\,\text{cm}$
-- $16\pi\,\text{cm}^2$
-> Delež je $\dfrac{90}{360} = \dfrac{1}{4}$, obseg je $2\pi \cdot 8 = 16\pi$, lok pa $\dfrac{1}{4} \cdot 16\pi = 4\pi\,\text{cm}$. Odgovor $16\pi\,\text{cm}$ je obseg celega kroga, $2\pi$ dobiš, če četrtino vzameš od $8\pi$ (pozabiš faktor $2$), $16\pi\,\text{cm}^2$ pa je ploščina četrtine kroga in ni dolžina.
+? Katera vrstica velja za izsek s kotom $90^\circ$ v krogu s polmerom $6\,\text{cm}$?
+- lok $9\pi\,\text{cm}$, izsek $3\pi\,\text{cm}^2$
+~ Števili sta zamenjani: $9\pi$ je četrtina ploščine $36\pi$, $3\pi$ pa četrtina obsega $12\pi$. Lok pripada obsegu.
++ lok $3\pi\,\text{cm}$, izsek $9\pi\,\text{cm}^2$
+- lok $12\pi\,\text{cm}$, izsek $36\pi\,\text{cm}^2$
+~ To sta obseg in ploščina celega kroga. Manjka množenje z deležem $\dfrac{90}{360} = \dfrac{1}{4}$.
+- lok $6\pi\,\text{cm}$, izsek $18\pi\,\text{cm}^2$
+~ To je polovica kroga. Kot $90^\circ$ je četrtina polnega kota, ne polovica.
+> Delež je $\dfrac{1}{4}$. Lok: $\dfrac{1}{4} \cdot 12\pi = 3\pi\,\text{cm}$, izsek: $\dfrac{1}{4} \cdot 36\pi = 9\pi\,\text{cm}^2$.
 
-? Kolikšna je ploščina krožnega izseka s kotom $60^\circ$ v krogu s polmerom $6\,\text{cm}$?
-- $2\pi\,\text{cm}^2$
-+ $6\pi\,\text{cm}^2$
-- $12\pi\,\text{cm}^2$
-- $36\pi\,\text{cm}^2$
-> Delež je $\dfrac{60}{360} = \dfrac{1}{6}$, ploščina kroga je $\pi \cdot 6^2 = 36\pi$, izsek pa $\dfrac{1}{6} \cdot 36\pi = 6\pi\,\text{cm}^2$. Odgovor $2\pi$ je dolžina loka, ne ploščina, $36\pi$ pa ploščina celega kroga.
+? Krog ima ploščino $200\,\text{cm}^2$. Oceni ploščino izseka s kotom $89^\circ$.
++ približno $50\,\text{cm}^2$
+- približno $89\,\text{cm}^2$
+~ Število stopinj ni število kvadratnih centimetrov. Kot pove le, kolikšen del kroga je izsek.
+- približno $100\,\text{cm}^2$
+~ Polovico kroga zajame kot $180^\circ$. Kot $89^\circ$ je skoraj pravi kot, torej skoraj četrtina.
+- približno $25\,\text{cm}^2$
+~ To bi bila osmina kroga, kot $45^\circ$. Kot $89^\circ$ je skoraj dvakrat večji.
+> $89^\circ$ je skoraj $90^\circ$, torej skoraj četrtina polnega kota. Četrtina od $200\,\text{cm}^2$ je $50\,\text{cm}^2$; izsek je malo manjši, približno $49{,}4\,\text{cm}^2$.
 
-? Dolžina loka je $l = 6\pi\,\text{cm}$, polmer pa $r = 9\,\text{cm}$. Kolikšna je ploščina izseka?
-- $54\pi\,\text{cm}^2$
-- $6\pi\,\text{cm}^2$
-+ $27\pi\,\text{cm}^2$
-> Uporabimo $S_i = \dfrac{l \cdot r}{2} = \dfrac{6\pi \cdot 9}{2} = 27\pi\,\text{cm}^2$. Odgovor $54\pi$ pozabi deliti z $2$.
+? Kot izseka ostane enak, polmer pa podvojimo. Zakaj se ploščina izseka poveča štirikrat?
+- Ker se podvojita kot in polmer.
+~ Kot ostane enak, spremeni se le polmer. Delež kroga je zato enak kot prej.
++ Ker je v ploščini $r^2 = r \cdot r$: podvojita se oba faktorja, $2 \cdot 2 = 4$.
+- Ker se podvoji lok, ploščina pa je vedno dvakratnik loka.
+~ Lok in ploščina imata različni enoti, zato ploščina ni »dvakratnik loka«. Štirikratnik pride iz kvadrata polmera.
+- Ne poveča se štirikrat, ampak dvakrat, tako kot lok.
+~ Dvakrat se podaljša le lok, ker je $r$ v $2\pi r$ en sam faktor. V $\pi r^2$ sta faktorja dva.
+> $p_i = \dfrac{\alpha}{360^\circ} \cdot \pi r^2$. Delež ostane enak, namesto $r \cdot r$ pa dobimo $2r \cdot 2r = 4 \cdot r \cdot r$.
+
+? Lok kroga s polmerom $9\,\text{cm}$ je dolg $6\pi\,\text{cm}$. Kolikšen je središčni kot?
++ $120^\circ$
+- $60^\circ$
+~ Tako dobiš, če za polni kot vzameš $180^\circ$. Polni kot meri $360^\circ$.
+- $240^\circ$
+~ Tako dobiš z obsegom $9\pi\,\text{cm}$, kot da bi bil $9\,\text{cm}$ premer. To je polmer, obseg je $18\pi\,\text{cm}$.
+- $40^\circ$
+~ To je $360^\circ : 9$. Polmer ne pove, na koliko delov je krog razrezan; delež dobiš iz loka in obsega.
+> Obseg je $2\pi \cdot 9 = 18\pi\,\text{cm}$. Delež: $\dfrac{6\pi}{18\pi} = \dfrac{1}{3}$, zato je $\alpha = \dfrac{1}{3} \cdot 360^\circ = 120^\circ$.
+
+? Minutni kazalec stenske ure je dolg $12\,\text{cm}$. Kolikšno pot naredi njegova konica v $20$ minutah? ($\pi \approx 3{,}14$)
+- približno $4{,}2\,\text{cm}$
+~ $20$ minut ni $20^\circ$. V $60$ minutah kazalec opravi $360^\circ$, v $20$ minutah tretjino, $120^\circ$.
++ približno $25{,}1\,\text{cm}$
+- približno $75{,}4\,\text{cm}$
+~ To je cel obseg $24\pi\,\text{cm}$. Konica v $20$ minutah opravi le tretjino kroga.
+- približno $150{,}7\,\text{cm}$
+~ To je $\dfrac{1}{3} \cdot \pi \cdot 12^2 = 48\pi$, ploščina izseka v $\text{cm}^2$. Pot konice je lok.
+> $20$ minut je tretjina ure, kot je $120^\circ$. $l = \dfrac{1}{3} \cdot 2\pi \cdot 12\,\text{cm} = 8\pi\,\text{cm} \approx 25{,}1\,\text{cm}$.

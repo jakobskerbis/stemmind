@@ -5,121 +5,172 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Že od nižjih razredov poznaš naravna števila ($1, 2, 3, \dots$) in število $0$. Z njimi štejemo in računamo, vendar se hitro pokaže, da ne zadoščajo. Kako zapišeš temperaturo $5$ stopinj pod ničlo? Kako zapišeš dolg $20$ evrov ali globino potapljača pod morsko gladino? Za take primere potrebujemo **cela števila**.
+Sošolec Žan je bil s stricem na gradbišču stanovanjske hiše. Na načrtu je videl oznake višin: tla pritličja $0\,\text{m}$, klet $-3\,\text{m}$, garaža $-6\,\text{m}$, streha $9\,\text{m}$. V šoli trdi: »Garaža je višje od kleti, saj je $6$ več kot $3$.«
 
-V 8. razredu cela števila vključimo v širši sklop racionalnih števil. Če dobro razumeš številsko premico, nasprotna števila in absolutno vrednost, boš zlahka računal z negativnimi števili, reševal enačbe in kasneje risal grafe v koordinatnem sistemu.
+Ima Žan prav? Gradbinci, zidarji in mizarji morajo števila pod ničlo brati brez napake, sicer bi stopnice iz kleti vodile v napačno smer. Do konca lekcije boš Žanovo trditev presodil sam.
 
 ## Razlaga
 
-**1. Cela števila.** Množico celih števil sestavljajo naravna števila, število $0$ in nasprotna števila naravnih števil:
+Snov sestavljamo po kosih. Za vsakim kosom je kratek preizkus, odgovor je v oklepaju.
 
-$$\mathbb{Z} = \{\dots, -3, -2, -1, 0, 1, 2, 3, \dots\}$$
+**1. Cela števila.** Na gradbišču merijo višino od tal pritličja. Kar je nad njimi, ima pozitivno oznako, kar je pod njimi, negativno. Tla pritličja imajo oznako $0$.
 
-Števila večja od $0$ so **pozitivna**, števila manjša od $0$ so **negativna**. Število $0$ ni ne pozitivno ne negativno.
+Naravna števila $1, 2, 3, \dots$, število $0$ in negativna števila $-1, -2, -3, \dots$ skupaj sestavljajo **cela števila**:
 
-**2. Številska premica.** Narišemo premico, na njej izberemo točko za $0$ in enotsko razdaljo. Pozitivna števila nanesemo na desno, negativna na levo od ničle. Razmik med sosednjima celima številoma je povsod enak.
+$$\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}$$
 
-- Večje število leži bolj **desno**.
-- Manjše število leži bolj **levo**.
+Števila, večja od $0$, so **pozitivna**, manjša od $0$ pa **negativna**. Število $0$ ni ne pozitivno ne negativno.
 
-Zato je $-2 > -5$, saj je $-2$ na številski premici desno od $-5$. Vsako negativno število je manjše od vsakega pozitivnega in od $0$.
+*Preizkus:* Je $-3$ celo število? *(Da, negativno celo število.)*
 
-**3. Nasprotno število.** Nasprotno število števila $a$ zapišemo $-a$. Na številski premici ležita $a$ in $-a$ na **enaki razdalji od ničle**, vendar na nasprotnih straneh.
+**2. Številska premica.** Na premici izberemo točko za $0$ in dolžino enega koraka, **enoto**. Pozitivna števila nanašamo desno od $0$, negativna levo. Korak med sosednjima številoma je povsod enak.
+
+```
+ -6  -5  -4  -3  -2  -1   0   1   2   3
+  |---|---|---|---|---|---|---|---|---|
+```
+
+Gradbeni načrt je ista premica, le postavljena pokonci: desno pomeni gor, levo pomeni dol. Od dveh števil je **večje tisto, ki leži bolj desno**. Zato je $-2 > -5$.
+
+*Preizkus:* Katero število je večje, $-1$ ali $-4$? *($-1$, ker leži bolj desno.)*
+
+:::premisli
+Garaža je na $-6\,\text{m}$, klet na $-3\,\text{m}$. Kaj leži višje? Napovej, nato poišči obe števili na premici zgoraj.
+---
+Klet. Število $-3$ leži desno od $-6$, torej $-3 > -6$. Žan se moti: garaža je $3\,\text{m}$ pod kletjo.
+:::
+
+**3. Nasprotna števila.** Prvo nadstropje je $3\,\text{m}$ nad pritličjem, klet $3\,\text{m}$ pod njim. Števili $3$ in $-3$ sta **nasprotni števili**: ležita na enaki razdalji od $0$, a na nasprotnih straneh. Nasprotno število števila $a$ zapišemo $-a$.
 
 - Nasprotno število od $7$ je $-7$.
-- Nasprotno število od $-4$ je $4$, saj velja $-(-4) = 4$.
+- Nasprotno število od $-4$ je $4$, saj je $-(-4) = 4$.
 - Nasprotno število od $0$ je $0$.
 
-Vsota števila in njegovega nasprotnega je vedno $0$: $a + (-a) = 0$.
+Število in njegovo nasprotno število imata vsoto $0$: $a + (-a) = 0$.
 
-**4. Absolutna vrednost.** Absolutna vrednost števila $a$, zapisana $|a|$, je **razdalja števila $a$ od ničle** na številski premici. Razdalja ni nikoli negativna, zato je $|a| \ge 0$.
+*Preizkus:* Katero število je nasprotno številu $-9$? *($9$.)*
 
-$$|a| = \begin{cases} a, & a \ge 0 \\ -a, & a < 0 \end{cases}$$
+**4. Absolutna vrednost.** Delavec nese vedro iz kleti na $-3\,\text{m}$ do pritličja in ga dvigne za $3\,\text{m}$. Iz prvega nadstropja na $3\,\text{m}$ ga do pritličja spusti prav tako za $3\,\text{m}$. Razdalja od ničle je obakrat $3$.
 
-Primeri: $|5| = 5$, $|-5| = 5$, $|0| = 0$.
+**Absolutna vrednost** števila $a$, zapisana $|a|$, je razdalja števila $a$ od $0$ na številski premici. Razdalja ni nikoli negativna, zato je $|a| \ge 0$.
 
-Nasprotni števili imata enako absolutno vrednost: $|a| = |-a|$.
+Primeri: $|5| = 5$, $|-5| = 5$, $|0| = 0$. Nasprotni števili imata enako absolutno vrednost: $|a| = |-a|$.
 
-**5. Primerjanje celih števil.**
+*Preizkus:* Koliko je $|-6|$? *($6$.)*
 
-- Pozitivno število je večje od negativnega.
-- Od dveh pozitivnih števil je večje tisto z večjo absolutno vrednostjo.
-- Od dveh negativnih števil je večje tisto z **manjšo** absolutno vrednostjo (je bližje ničli).
+V simulaciji spodaj (»Cela števila na številski premici«) vklopi »pokaži nasprotno število in absolutno vrednost«. Drsnik »prvo število« premakni s $4$ na $-4$. Opazuj: točka preskoči na drugo stran ničle, absolutna vrednost pa ostane $4$.
+
+**5. Primerjanje.** Tri pravila povzemajo vse, kar smo videli na premici:
+
+| Števili | Večje je | Primer |
+|---|---|---|
+| različnih predznakov | pozitivno | $2 > -8$ |
+| obe pozitivni | tisto z večjo $\lvert a \rvert$ | $7 > 3$ |
+| obe negativni | tisto z **manjšo** $\lvert a \rvert$ | $-3 > -7$ |
+
+:::premisli
+Zakaj je od dveh negativnih števil večje tisto z manjšo absolutno vrednostjo?
+---
+Manjša absolutna vrednost pomeni, da je število bliže ničli. Negativno število, ki je bliže ničli, leži bolj desno, torej je večje. Klet na $-3\,\text{m}$ je zato višje kot garaža na $-6\,\text{m}$.
+:::
+
+*Preizkus:* Je $0 > -100$? *(Da, vsako negativno število je manjše od $0$.)*
 
 ## Rešeni primeri
 
-### Primer 1: številska premica in primerjanje
+### Primer 1 (lažji): razvrščanje
 
-Razvrsti števila $3, -6, 0, -1, 5$ od najmanjšega do največjega.
+Razvrsti števila $3$, $-6$, $0$, $-1$, $5$ od najmanjšega do največjega.
 
-1. Negativna števila so manjša od $0$ in od pozitivnih. To sta $-6$ in $-1$.
-2. Med negativnima je večje tisto, ki je bližje ničli. $|-1| = 1$ je manj kot $|-6| = 6$, zato je $-6 < -1$.
+**Podatki:** števila $3$, $-6$, $0$, $-1$, $5$
+**Iščemo:** vrstni red od najmanjšega do največjega
+
+:::formula
+Manjše število leži bolj levo. Pri negativnih številih: večja $|a|$ pomeni manjše število.
+:::
+
+**Rešitev:**
+
+1. Negativni števili $-6$ in $-1$ sta manjši od $0$ in od pozitivnih, zato prideta na začetek.
+2. Ker je $|-6| = 6$ več kot $|-1| = 1$, leži $-6$ bolj levo: $-6 < -1$.
 3. Pozitivni števili: $3 < 5$.
 4. Združimo: $-6 < -1 < 0 < 3 < 5$.
-5. Preverimo: na številski premici gre vrstni red od leve proti desni. ✓
+5. Odgovor: vrstni red je $-6$, $-1$, $0$, $3$, $5$.
 
 ### Primer 2: nasprotno število in absolutna vrednost
 
 Določi nasprotno število in absolutno vrednost za števili $-9$ in $12$.
 
-1. Za $-9$: nasprotno število je $-(-9) = 9$ (zamenjamo predznak). Absolutna vrednost je razdalja od ničle: $|-9| = 9$.
-2. Za $12$: nasprotno število je $-12$. Absolutna vrednost je $|12| = 12$.
-3. Opazimo: $|-9| = |9| = 9$ in $|12| = |-12| = 12$. Nasprotni števili imata res enako absolutno vrednost. ✓
+**Podatki:** števili $-9$ in $12$
+**Iščemo:** nasprotni števili in absolutni vrednosti
 
-### Primer 3: besedilna naloga
+:::formula
+Nasprotno število od $a$ je $-a$. Absolutna vrednost $|a|$ je razdalja od $0$.
+:::
 
-Zjutraj je bila temperatura $-4\,^\circ\text{C}$, opoldne $3\,^\circ\text{C}$, zvečer pa $-7\,^\circ\text{C}$. (a) Kdaj je bilo najhladneje? (b) Za koliko stopinj se je temperatura od jutra do opoldneva dvignila?
+**Rešitev:**
 
-1. **(a)** Primerjamo $-4$, $3$ in $-7$. Negativni sta $-4$ in $-7$. Ker je $|-7| = 7 > 4 = |-4|$, je $-7 < -4$. Najmanjše število je $-7$, zato je bilo najhladneje zvečer.
-2. **(b)** Razliko izračunamo kot razdaljo na številski premici. Od $-4$ do $0$ je $4$ enote, od $0$ do $3$ so še $3$ enote.
-3. Skupaj: $4 + 3 = 7$. Temperatura se je dvignila za $7\,^\circ\text{C}$.
-4. Preverimo: $-4 + 7 = 3$. ✓
+1. Za $-9$: nasprotno število je $-(-9) = 9$, ker se prestavimo na drugo stran ničle. Razdalja od ničle je $|-9| = 9$.
+2. Za $12$: nasprotno število je $-12$, absolutna vrednost pa $|12| = 12$.
+3. Preverimo: $|-9| = |9|$ in $|12| = |-12|$. Nasprotni števili imata res enako absolutno vrednost.
+4. Odgovor: $-9$ ima nasprotno število $9$ in absolutno vrednost $9$; $12$ ima nasprotno število $-12$ in absolutno vrednost $12$.
+
+### Primer 3 (težji): dvigalo na gradbišču
+
+Gradbeno dvigalo vozi material od garaže na višini $-6\,\text{m}$ do strehe na višini $9\,\text{m}$. Koliko metrov prevozi v eno smer?
+
+**Podatki:** garaža $-6\,\text{m}$, streha $9\,\text{m}$, tla pritličja $0\,\text{m}$
+**Iščemo:** razdaljo med višinama v metrih
+
+:::formula
+Števili na nasprotnih straneh ničle: razdalja $= |a| + |b|$
+:::
+
+**Rešitev:**
+
+1. Garaža je pod ničlo, streha nad njo, zato dvigalo pelje mimo pritličja. Pot razdelimo na dva dela.
+2. Od garaže do pritličja: $|-6| = 6$, torej $6\,\text{m}$.
+3. Od pritličja do strehe: $|9| = 9$, torej $9\,\text{m}$.
+4. Delni poti seštej sam, nato preveri:
+
+:::premisli
+Koliko metrov prevozi dvigalo od garaže do strehe?
+---
+$6 + 9 = 15$, torej $15\,\text{m}$. Preveriš lahko s štetjem korakov po $1\,\text{m}$ na premici: od $-6$ do $9$ jih je $15$.
+:::
 
 ## Pogoste napake
 
-- **»$-7$ je večje od $-4$, ker je $7 > 4$.«** Pri negativnih številih je ravno obratno. Večje je tisto, ki je bolj desno, torej $-4 > -7$.
-- **Absolutna vrednost ni »odstranitev minusa« pri vsakem številu.** $|-5| = 5$, vendar $|5| = 5$ in $|0| = 0$. Pomni: gre za razdaljo od ničle.
-- **Nasprotno število ni vedno negativno.** Nasprotno število od $-3$ je $3$, pozitivno.
-- **Napačen zapis $-(-4) = -4$.** Pravilno je $-(-4) = 4$.
-- **Pozabljena ničla.** Ničla je celo število in je nasprotna sama sebi.
+- **»$-6$ je več kot $-3$, ker je $6 > 3$.«** To je Žanova napaka: primerja le števki in pozabi na predznak. Pri negativnih številih je večje tisto, ki je bliže ničli. Pomagaj si s premico: $-3$ leži desno od $-6$, torej $-3 > -6$.
+- **»$|5| = -5$, absolutna vrednost zamenja predznak.«** Tu je absolutna vrednost zamenjana z nasprotnim številom. Absolutna vrednost je razdalja, ta pa ni nikoli negativna: $|5| = 5$.
+- **»Nasprotno od $-3$ je $-3$, saj je nasprotno število negativno.«** Nasprotno število leži na drugi strani ničle. Nasprotno od $-3$ je zato pozitivno: $-(-3) = 3$.
+- **»$0$ je pozitivno, ker nima minusa.«** Ničla ločuje pozitivna in negativna števila in ni ne eno ne drugo. Je pa celo število in je nasprotna sama sebi.
+- **»Od $-6\,\text{m}$ do $9\,\text{m}$ je $9 - 6 = 3\,\text{m}$.«** Ko sta števili na nasprotnih straneh ničle, pot vodi čez ničlo. Absolutni vrednosti seštejemo: $6 + 9 = 15$.
 
 ## Povzetek
 
-- Cela števila: $\dots, -2, -1, 0, 1, 2, \dots$ (oznaka $\mathbb{Z}$).
-- Na številski premici je večje število vedno bolj desno.
-- Nasprotni števili $a$ in $-a$ ležita simetrično glede na $0$ in imata vsoto $0$.
-- Absolutna vrednost $|a|$ je razdalja števila od ničle in ni nikoli negativna.
-- Med dvema negativnima številoma je večje tisto z manjšo absolutno vrednostjo.
+- Cela števila $\mathbb{Z}$: naravna števila, $0$ in negativna števila $\dots, -2, -1$.
+- Na številski premici je večje število vedno bolj desno; $0$ ni ne pozitivno ne negativno.
+- Nasprotni števili $a$ in $-a$ sta enako daleč od $0$ na nasprotnih straneh; $a + (-a) = 0$ in $-(-a) = a$.
+- Absolutna vrednost $|a|$ je razdalja od $0$ in ni nikoli negativna; $|a| = |-a|$.
+- Od dveh negativnih števil je večje tisto z manjšo absolutno vrednostjo.
+- Razdalja med številoma na nasprotnih straneh ničle je vsota njunih absolutnih vrednosti.
 
 ## Drugače: Na sliki
 
-Predstavljaj si vodoravno ravnilo, ki se razteza v obe smeri. Na sredini je oznaka $0$ kot ogledalo. Število $4$ leži štiri korake desno od ogledala, njegovo nasprotno število $-4$ pa štiri korake levo.
+Prerez hiše, kot ga kaže gradbeni načrt (desno so višine v metrih):
 
 ```
- -5  -4  -3  -2  -1   0   1   2   3   4   5
-  |---|---|---|---|---|---|---|---|---|---|
+  streha        ----  +9
+  1. nadstropje ----  +3
+  pritličje     ====   0
+  klet          ----  -3
+  garaža        ----  -6
 ```
 
-Absolutna vrednost je dolžina poti od ničle do števila, ne glede na smer. Od $0$ do $-4$ je $4$ korakov, od $0$ do $4$ tudi $4$ korake, zato $|-4| = |4| = 4$. V simulaciji premikaj točko po številski premici in opazuj, kako se spreminjata število in njegova razdalja od ničle.
-
-## Drugače: Iz vsakdanjega življenja
-
-**Dvigalo v stolpnici s kletjo.** Pritličje je nadstropje $0$, višja nadstropja so pozitivna, kleti negativne. Nadstropje $-2$ je dve nadstropji pod pritličjem. Nasprotno število od $3$ je $-3$: tretje nadstropje navzgor in tretja klet navzdol sta enako daleč od pritličja. To je absolutna vrednost: pot, ki jo prevozi dvigalo, ne glede na smer.
-
-**Bančni račun.** Stanje $-30\,\text{€}$ pomeni dolg. Dolg $30\,\text{€}$ je »manj« kot dolg $10\,\text{€}$, torej $-30 < -10$, čeprav je $30$ večje od $10$. Absolutna vrednost $|-30| = 30$ pove, koliko evrov je v igri, ne glede na to, ali jih imaš ali dolguješ.
-
-## Drugače: Korak za korakom s številkami
-
-Primerjaj $-8$ in $-3$ po postopku:
-
-| Korak | Kaj naredimo | Rezultat |
-|---|---|---|
-| 1 | Ali sta števili različnih predznakov? | Ne, obe sta negativni |
-| 2 | Izračunamo absolutni vrednosti | $\lvert -8\rvert = 8$, $\lvert -3\rvert = 3$ |
-| 3 | Pri negativnih velja obrat: večja absolutna vrednost pomeni manjše število | $8 > 3$, zato $-8 < -3$ |
-| 4 | Preverimo na premici | $-8$ je bolj levo kot $-3$ ✓ |
-
-Za iskanje razdalje med dvema številoma na premici uporabi: večje število minus manjše. Razdalja med $-8$ in $-3$ je $-3 - (-8) = 5$. Prešteješ lahko tudi korake: $-8, -7, -6, -5, -4, -3$ je $5$ korakov.
+- Višje pomeni večje število. Garaža je najnižje, zato je $-6$ najmanjše od teh števil.
+- Prvo nadstropje ($+3$) in klet ($-3$) sta zrcalni sliki čez črto pritličja: to sta nasprotni števili.
+- Absolutna vrednost je višina, ki jo prehodiš po stopnicah od pritličja do izbrane ravni, ne glede na smer. Do kleti in do prvega nadstropja je enako daleč: $|-3| = |3| = 3$.
 
 ## Drugače: Bolj natančno
 
@@ -127,7 +178,7 @@ Absolutno vrednost definiramo po primerih:
 
 $$|a| = \begin{cases} a, & a \ge 0 \\ -a, & a < 0 \end{cases}$$
 
-Ta definicija je skladna z razdaljo od ničle. Če je $a < 0$, je $-a > 0$, torej je $|a|$ res nenegativna. Na primer $a = -6$: $|-6| = -(-6) = 6$.
+Definicija se ujema z razdaljo od ničle. Če je $a < 0$, je $-a > 0$, zato je $|a|$ res nenegativna. Na primer $a = -6$: $|-6| = -(-6) = 6$.
 
 Iz definicije sledi: $|a| \ge 0$ za vsak $a$, $|a| = 0$ natanko tedaj, ko je $a = 0$, in $|a| = |-a|$.
 
@@ -135,21 +186,48 @@ Iz definicije sledi: $|a| \ge 0$ za vsak $a$, $|a| = 0$ natanko tedaj, ko je $a 
 
 ## Preveri se
 
-? Katera trditev o številih $-9$ in $-2$ je pravilna?
-- $-9 > -2$, ker je $9 > 2$
-+ $-9 < -2$, ker je $-9$ bolj levo na številski premici
-- $-9 = -2$, ker sta obe negativni
-> Večje število je vedno bolj desno. $-9$ je levo od $-2$, zato je $-9 < -2$. Napaka je v primerjanju samo števk, ne upoštevaš pa predznaka.
+? Katera trditev je pravilna?
+- Število $0$ je pozitivno.
+~ $0$ ni ne pozitivno ne negativno; ločuje obe strani premice.
+- Nasprotno število je vedno negativno.
+~ Nasprotno od $-3$ je $3$, ki je pozitivno.
++ Absolutna vrednost števila ni nikoli negativna.
+- $|-3| = -3$
+~ Absolutna vrednost je razdalja od ničle, zato je $|-3| = 3$.
+> $|a|$ je razdalja od $0$, razdalja pa ne more biti negativna.
 
 ? Koliko je $|-11| + |4|$?
 - $-7$
+~ To dobiš, če izračunaš $-11 + 4$ in absolutno vrednost izpustiš.
 - $7$
+~ To je $11 - 4$. Obe absolutni vrednosti sta pozitivni, zato ju sešteješ.
 + $15$
 - $-15$
-> Absolutni vrednosti sta $|-11| = 11$ in $|4| = 4$, vsota je $11 + 4 = 15$. Odgovor $7$ dobiš, če števila seštevaš kar s predznaki ($11 - 4$).
+~ Absolutni vrednosti sta pozitivni, zato njuna vsota ne more biti negativna.
+> $|-11| = 11$ in $|4| = 4$, vsota je $11 + 4 = 15$.
 
-? Katero število je nasprotno številu $-6$?
-- $-6$
-- $\frac{1}{6}$
-+ $6$
-> Nasprotno število ima enako absolutno vrednost, a nasprotni predznak: $-(-6) = 6$. Število $\frac{1}{6}$ je obratna vrednost, ne nasprotno število.
+? Miha razvrsti števila $-2$, $5$, $-8$, $0$ od najmanjšega do največjega: $-2 < -8 < 0 < 5$, »ker je $2 < 8$«. Kaj je narobe?
++ Negativni števili sta zamenjani: pravilno je $-8 < -2$.
+- Število $0$ bi moralo biti na začetku.
+~ $0$ je večje od vsakega negativnega števila, zato stoji za $-8$ in $-2$.
+- Število $5$ bi moralo biti pred $0$.
+~ $5$ je pozitivno, zato je večje od $0$ in stoji na koncu.
+- Nič, rešitev je pravilna.
+~ Miha je primerjal le števki. Pri negativnih je večje tisto število, ki je bliže ničli.
+> $-8$ leži levo od $-2$. Pravilno: $-8 < -2 < 0 < 5$.
+
+? Primerjaj števili $-15$ in $-9$ ter njuni absolutni vrednosti. Kaj velja?
+- $-15 > -9$ in $|-15| > |-9|$
+~ Večja absolutna vrednost pri negativnem številu pomeni, da leži dlje levo, torej je manjše.
++ $-15 < -9$ in $|-15| > |-9|$
+- $-15 < -9$ in $|-15| < |-9|$
+~ Prvi del je pravilen, a $|-15| = 15$ je več kot $|-9| = 9$.
+> $-15$ je dlje od ničle kot $-9$: ima večjo absolutno vrednost in leži bolj levo, zato je manjše.
+
+? Gradbinci postavijo zunanje stopnišče od dna jaška na višini $-4\,\text{m}$ do terase na višini $7\,\text{m}$. Kolikšno višino premaga stopnišče?
+- $3\,\text{m}$
+~ To je $7 - 4$. Višini sta na nasprotnih straneh ničle, zato absolutni vrednosti sešteješ.
++ $11\,\text{m}$
+- $-11\,\text{m}$
+~ Višinska razlika kot razdalja ni nikoli negativna.
+> Do pritličja je $|-4| = 4\,\text{m}$, naprej še $|7| = 7\,\text{m}$; skupaj $4 + 7 = 11\,\text{m}$.

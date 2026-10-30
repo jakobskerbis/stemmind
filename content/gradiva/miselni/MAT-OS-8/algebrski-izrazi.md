@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Spremenljivka
+  - črka namesto poljubnega števila
+  - točke košarkarja: $2d + 3t + p$
+- Dogovori o zapisu
+  - $3 \cdot x = 3x$, $1 \cdot x = x$
+  - $x \cdot x = x^2$, $a : 4 = \frac{a}{4}$
+- Besede v izraz
+  - »$7$, zmanjšano za $x$« je $7 - x$
+  - napaka: obrnjen vrstni red pri odštevanju
+- Vrednost izraza
+  - vstavi števila, upoštevaj vrstni red operacij
+  - negativno število v oklepaj: $(-2)^2 = 4$
+- Člen in koeficient
+  - pri $-5xy$: koeficient $-5$, črkovni del $xy$
+  - $-y$ ima koeficient $-1$
+- Podobni členi
+  - enak črkovni del: $3x$ in $-7x$
+  - $x$ in $x^2$ nista podobna
+- Poenostavljanje
+  - seštej koeficiente: $3x + 5x = 8x$
+  - napaka: $3x + 2y = 5xy$

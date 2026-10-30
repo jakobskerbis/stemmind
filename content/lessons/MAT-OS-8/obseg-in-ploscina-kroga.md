@@ -5,159 +5,236 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Iz prejšnjih razredov že znaš izračunati obseg in ploščino pravokotnika in kvadrata ter veš, kaj je krog, središče in polmer. Znaš tudi kvadrirati število ($r^2 = r \cdot r$).
+Pri teku na $400\,\text{m}$ tekači ne startajo v vrsti. Kdor teče v zunanji progi, stoji na startu več metrov pred sosedom v notranji. Videti je nepošteno, pa ni: zunanja proga v zavojih poteka po večjem krogu, zato bi bila brez zamika daljša.
 
-Krog je povsod okoli nas: kolesa, kovanci, pice, krožniki, okrogle mize, cevi. Če hočeš vedeti, koliko traku potrebuješ za obrobo okroglega zapestja ali koliko barve za okroglo ploskev, moraš znati izračunati **obseg** in **ploščino kroga**. Pri tem se prvič srečaš s posebnim številom $\pi$, ki se pojavi pri vseh krogih.
+Presenečenje pride pri vprašanju, za koliko. Zavoja steze skupaj tvorita en krog, sosednja proga pa je od njegovega središča oddaljena le $1{,}22\,\text{m}$ več. Bi bila razlika na stadionu z velikimi zavoji večja kot na stadionu z majhnimi? Večina ljudi reče da. V resnici je dodatna pot vedno približno $7{,}7\,\text{m}$, ne glede na velikost zavoja.
+
+Kako je to mogoče, boš izračunal sam. Za to potrebuješ obseg kroga in posebno število $\pi$. Ob tem spoznaš še ploščino kroga, ki jo rabiš pri vsem okroglem: tarčah, igriščih, kolesih in žogah.
 
 ## Razlaga
 
-**1. Poimenovanja.**
+**Meritev na treningu.** Učenci so z merilnim trakom ovili tri okrogle športne predmete in tako izmerili njihov **obseg** $o$, to je dolžino krožnice, ki omejuje krog. Izmerili so še **premer** $d$, daljico skozi središče od roba do roba. Nato so obseg delili s premerom.
 
-- **Središče** $S$ je točka, od katere so vse točke na krožnici enako oddaljene.
-- **Polmer** $r$ je razdalja od središča do krožnice.
-- **Premer** $d$ je daljica skozi središče, ki povezuje dve točki na krožnici. Velja $d = 2r$.
-- **Krožnica** je množica točk, ki so od središča oddaljene za $r$. **Krog** je krožnica skupaj z vsemi točkami v njeni notranjosti.
-- **Obseg kroga** $o$ je dolžina krožnice.
+| Predmet | premer $d$ | obseg $o$ | $o : d$ |
+|---|---|---|---|
+| hokejski plošček | $7{,}6\,\text{cm}$ | $23{,}9\,\text{cm}$ | $3{,}145$ |
+| frizbi | $27\,\text{cm}$ | $84{,}8\,\text{cm}$ | $3{,}141$ |
+| košarkarski obroč | $45\,\text{cm}$ | $141{,}4\,\text{cm}$ | $3{,}142$ |
 
-**2. Število $\pi$.** Če izmeriš obseg in premer poljubnega kroga (kolesa, kozarca, kovanca) in obseg deliš s premerom, dobiš vedno približno enako število:
+Predmeti so zelo različno veliki. Količnik $o : d$ pa je skoraj enak, majhne razlike so posledica merjenja.
 
-$$\frac{o}{d} \approx 3{,}14$$
+:::premisli
+Sredinski krog na nogometnem igrišču ima premer $18{,}3\,\text{m}$. Napovej: bo količnik $o : d$ zanj večji, manjši ali enak kot pri ploščku?
+---
+Enak, približno $3{,}14$. Vsak krog je le povečava ali pomanjšava drugega. Kolikokrat večji je premer, tolikokrat večji je tudi obseg, zato se količnik ne spremeni.
+:::
 
-To število imenujemo **$\pi$** (pi). Velja $\pi = 3{,}14159\ldots$ Ima neskončno mnogo decimalk, ki se ne ponavljajo, zato ga ne moremo zapisati natančno z decimalnim številom ali ulomkom. Pri računanju uporabljamo približek $3{,}14$, ali pa pustimo $\pi$ v rezultatu (to je natančen odgovor).
+**Število $\pi$.** Ta stalni količnik imenujemo $\pi$ (beri »pi«):
 
-**3. Obseg kroga.** Ker je $\dfrac{o}{d} = \pi$, je $o = \pi \cdot d$. Ker je $d = 2r$:
+$$\pi = \frac{o}{d} = 3{,}14159\ldots$$
+
+Decimalk ima neskončno in se ne ponavljajo. Zato $\pi$ ni ulomek in ga z decimalnim številom ne moremo zapisati natančno. Pri računanju vzamemo približek $\pi \approx 3{,}14$ ali pa $\pi$ pustimo v rezultatu.
+
+**Obseg.** Iz $\dfrac{o}{d} = \pi$ sledi $o = \pi d$. **Polmer** $r$ je razdalja od središča do krožnice, premer je dvakratni polmer: $d = 2r$. Zato je
 
 $$o = \pi d = 2\pi r$$
 
-**4. Ploščina kroga.** Ploščina kroga s polmerom $r$ je:
+Obseg je dolžina, zato ga merimo v $\text{cm}$, $\text{m}$ in drugih dolžinskih enotah.
+
+**Ploščina: iz izsekov v pravokotnik.** Krog razrežemo kot torto na enake **izseke**. Polovico jih obrnemo s konico navzgor, polovico s konico navzdol in jih zložimo izmenično drugega ob drugega. V simulaciji spodaj (Ploščina kroga iz izsekov) povečuj število izsekov. Opazuj, kako se valoviti robovi zravnajo in lik vse bolj spominja na pravokotnik.
+
+Pri zelo veliko izsekih ima ta »pravokotnik«:
+
+- višino $r$, ker je stranica vsakega izseka polmer,
+- osnovnico $\pi r$, to je polovico obsega, $\dfrac{2\pi r}{2}$.
+
+:::premisli
+Zakaj je osnovnica le polovica obsega in ne cel obseg?
+---
+Loki vseh izsekov skupaj tvorijo obseg kroga. Polovica izsekov ima lok spodaj, polovica zgoraj, zato na vsaki dolgi stranici leži le polovica obsega, $\pi r$.
+:::
+
+Ploščina pravokotnika je osnovnica krat višina, torej $\pi r \cdot r$. Ploščina kroga je
 
 $$p = \pi r^2$$
 
-Pozor: najprej kvadriramo polmer, šele nato množimo s $\pi$.
+Najprej kvadriramo polmer, šele nato množimo s $\pi$. Ploščino merimo v kvadratnih enotah, na primer $\text{cm}^2$ ali $\text{m}^2$.
 
-**5. Kako izbrati obrazec.**
+**Kateri obrazec?** Za dolžino (obod, trak, pot enega obrata kolesa) vzameš obseg, za površino (koliko pokrije, koliko barve) ploščino. Če poznaš obseg ali ploščino, polmer dobiš z obratno računsko operacijo:
 
-- Iščeš dolžino (obod, ograja, trak, pot enega obrata): **obseg**, enota je $\text{cm}$, $\text{m}$ ...
-- Iščeš površino (koliko prekrije, koliko barve): **ploščina**, enota je $\text{cm}^2$, $\text{m}^2$ ...
-
-**6. Obrnjene naloge.** Če poznaš obseg ali ploščino, lahko izračunaš polmer:
-
-$$r = \frac{o}{2\pi}, \qquad r = \sqrt{\frac{p}{\pi}}$$
+$$r = \frac{o}{2\pi} \qquad r = \sqrt{\frac{p}{\pi}}$$
 
 ## Rešeni primeri
 
-### Primer 1: obseg in ploščina iz polmera
+### Primer 1 (lažji): sredinski krog na košarkarskem igrišču
 
-Krog ima polmer $r = 5\,\text{cm}$. Izračunaj obseg in ploščino (uporabi $\pi \approx 3{,}14$).
+Sredinski krog na košarkarskem igrišču ima polmer $1{,}8\,\text{m}$. Kolikšna sta njegov obseg in ploščina? Uporabi $\pi \approx 3{,}14$ in zaokroži na dve decimalki.
 
-1. **Obseg:** $o = 2\pi r$, ker poznamo polmer.
-2. $o = 2 \cdot 3{,}14 \cdot 5 = 31{,}4\,\text{cm}$.
-3. **Ploščina:** $p = \pi r^2$. Najprej kvadriramo: $r^2 = 5^2 = 25$.
-4. $p = 3{,}14 \cdot 25 = 78{,}5\,\text{cm}^2$.
-5. Preverimo smiselnost: krog s polmerom $5\,\text{cm}$ je manjši od kvadrata s stranico $10\,\text{cm}$ (ploščina $100\,\text{cm}^2$) in večji od kvadrata s stranico $5\,\text{cm}$ ($25\,\text{cm}^2$). Število $78{,}5$ leži vmes. ✓
+**Podatki:** $r = 1{,}8\,\text{m}$, $\pi \approx 3{,}14$
+**Iščemo:** obseg $o$ in ploščino $p$
 
-### Primer 2: iz premera
+:::formula
+$o = 2\pi r$, $\quad p = \pi r^2$
+:::
 
-Okrogla miza ima premer $d = 1{,}2\,\text{m}$. Kolikšna je ploščina mize? Rezultat zaokroži na dve decimalki ($\pi \approx 3{,}14$).
+**Rešitev:**
 
-1. Obrazec za ploščino zahteva polmer. Iz premera: $r = d : 2 = 1{,}2 : 2 = 0{,}6\,\text{m}$.
-2. Kvadriramo: $r^2 = 0{,}6^2 = 0{,}36$.
-3. $p = 3{,}14 \cdot 0{,}36 = 1{,}1304\,\text{m}^2$.
-4. Zaokrožimo: $p \approx 1{,}13\,\text{m}^2$.
+1. Obseg: $o = 2 \cdot 3{,}14 \cdot 1{,}8 = 11{,}304\,\text{m}$, kar je zaokroženo $11{,}30\,\text{m}$.
+2. Za ploščino najprej kvadriramo polmer: $1{,}8^2 = 3{,}24$.
+3. $p = 3{,}14 \cdot 3{,}24 = 10{,}1736\,\text{m}^2$, zaokroženo $10{,}17\,\text{m}^2$.
+4. Smiselnost: kvadrat, ki krog objame, ima stranico $3{,}6\,\text{m}$ in ploščino $3{,}6^2 = 12{,}96\,\text{m}^2$. Krog je nekoliko manjši, kot mora biti.
+5. Odgovor: obseg kroga je približno $11{,}30\,\text{m}$, ploščina približno $10{,}17\,\text{m}^2$.
 
-### Primer 3: obrnjena naloga
+### Primer 2: lokostrelska tarča
 
-Obseg kroga je $62{,}8\,\text{cm}$. Kolikšna je ploščina kroga? ($\pi \approx 3{,}14$)
+Lokostrelska tarča za tekme na $70\,\text{m}$ ima premer $122\,\text{cm}$. Koliko kvadratnih metrov papirja potrebujejo za eno tarčo? Uporabi $\pi \approx 3{,}14$ in zaokroži na dve decimalki.
 
-1. Za ploščino potrebujemo polmer, zato ga najprej izračunamo iz obsega: $o = 2\pi r$, torej $r = \dfrac{o}{2\pi}$.
-2. $r = \dfrac{62{,}8}{2 \cdot 3{,}14} = \dfrac{62{,}8}{6{,}28} = 10\,\text{cm}$.
-3. Ploščina: $p = \pi r^2 = 3{,}14 \cdot 10^2 = 3{,}14 \cdot 100 = 314\,\text{cm}^2$.
-4. Preverimo: obseg z $r = 10$: $2 \cdot 3{,}14 \cdot 10 = 62{,}8$. ✓
+**Podatki:** $d = 122\,\text{cm}$, $\pi \approx 3{,}14$
+**Iščemo:** ploščino $p$ v $\text{m}^2$
+
+:::formula
+$r = \dfrac{d}{2}$, $\quad p = \pi r^2$
+:::
+
+**Rešitev:**
+
+1. Obrazec potrebuje polmer, zato premer razpolovimo: $r = 122 : 2 = 61\,\text{cm}$.
+2. Kvadriramo: $61^2 = 3721$.
+3. $p = 3{,}14 \cdot 3721 = 11683{,}94\,\text{cm}^2$.
+4. En kvadratni meter ima $10\,000\,\text{cm}^2$, zato delimo z $10\,000$ in dobimo približno $1{,}17\,\text{m}^2$.
+5. Odgovor: za eno tarčo potrebujejo približno $1{,}17\,\text{m}^2$ papirja. Kdor bi namesto polmera vstavil premer, bi dobil štirikrat preveč.
+
+### Primer 3 (težji): zamik na atletski stezi
+
+Zavoja atletske steze skupaj tvorita krog. Tekač v prvi progi teče po krožnici s polmerom $36{,}5\,\text{m}$, tekač v drugi progi pa po krožnici, ki je od središča $1{,}22\,\text{m}$ dlje. Koliko daljšo pot ima v zavojih tekač v drugi progi? Uporabi $\pi \approx 3{,}14$.
+
+**Podatki:** $r_1 = 36{,}5\,\text{m}$, širina proge $1{,}22\,\text{m}$, $\pi \approx 3{,}14$
+**Iščemo:** razliko poti $o_2 - o_1$
+
+:::formula
+$o = 2\pi r$
+:::
+
+**Rešitev:**
+
+1. Polmer druge proge: $r_2 = 36{,}5 + 1{,}22 = 37{,}72\,\text{m}$.
+2. Pot v prvi progi: $o_1 = 2 \cdot 3{,}14 \cdot 36{,}5 = 229{,}22\,\text{m}$.
+3. Pot v drugi progi: $o_2 = 2 \cdot 3{,}14 \cdot 37{,}72 = 236{,}8816\,\text{m}$.
+4. Razlika: $236{,}8816 - 229{,}22 = 7{,}6616$, torej približno $7{,}66\,\text{m}$.
+5. Zakaj velikost zavoja ni pomembna: izpostavimo $2\pi$, $o_2 - o_1 = 2\pi r_2 - 2\pi r_1 = 2\pi(r_2 - r_1)$. Ostane le širina proge: $2 \cdot 3{,}14 \cdot 1{,}22 = 7{,}6616$.
+6. Odgovor: tekač v drugi progi ima v zavojih približno $7{,}66\,\text{m}$ daljšo pot, zato starta pred sosedom. Pri večjem ali manjšem zavoju bi bila razlika enaka.
+
+### Primer 4: zdaj ti
+
+Trener z vrvjo, dolgo $25{,}12\,\text{m}$, na travi označi krožno igrišče za ogrevalno igro. Kolikšna je ploščina igrišča? Uporabi $\pi \approx 3{,}14$.
+
+**Podatki:** $o = 25{,}12\,\text{m}$, $\pi \approx 3{,}14$
+**Iščemo:** ploščino $p$
+
+:::formula
+$r = \dfrac{o}{2\pi}$, $\quad p = \pi r^2$
+:::
+
+**Rešitev:**
+
+1. Vrv leži po robu igrišča, zato je njena dolžina obseg.
+2. Za ploščino potrebujemo polmer, zato ga izrazimo iz obsega: $r = \dfrac{25{,}12}{2 \cdot 3{,}14} = \dfrac{25{,}12}{6{,}28}$.
+3. Zdaj ti: izračunaj $r$, nato še ploščino $p$.
+
+:::premisli
+Koliko sta $r$ in $p$?
+---
+$r = 4\,\text{m}$, ker je $6{,}28 \cdot 4 = 25{,}12$. Ploščina: $p = 3{,}14 \cdot 4^2 = 3{,}14 \cdot 16 = 50{,}24\,\text{m}^2$.
+:::
 
 ## Pogoste napake
 
-- **Premer namesto polmera v $\pi r^2$.** Če je podan premer $d$, ga moraš najprej razpoloviti. Če vstaviš $d$ namesto $r$, dobiš štirikrat preveliko ploščino.
-- **$\pi r^2$ ni $(\pi r)^2$ in ni $\pi \cdot 2r$.** Kvadrira se samo polmer.
-- **Zamenjava obrazcev.** $2\pi r$ je dolžina (obseg), $\pi r^2$ je ploščina. Če dobiš $\text{cm}^2$ pri obsegu, si uporabil napačen obrazec.
-- **Napačna enota.** Obseg v $\text{cm}$, ploščina v $\text{cm}^2$.
-- **$\pi = 3$ ali $\pi = \frac{22}{7}$ kot natančna vrednost.** To sta samo približka. Natančne vrednosti $\pi$ ne moremo zapisati kot ulomek ali končno decimalko.
-- **Zaokrožanje $\pi$ med računom na eno decimalko**, kar povzroči velike napake v rezultatu.
+- **Premer namesto polmera.** »Tarča ima premer $122\,\text{cm}$, torej $p = 3{,}14 \cdot 122^2$.« Obrazec $\pi r^2$ zahteva polmer. Premer je dvakrat daljši, njegov kvadrat pa štirikrat večji, zato je ploščina štirikrat prevelika. Popravek: pri vsaki nalogi najprej zapiši $r$.
+- **Zamenjana obrazca.** »Za obseg vzamem $\pi r^2$.« Obseg je dolžina, $\pi r^2$ pa da kvadratne enote. Popravek: preveri enoto, $\text{m}$ pri obsegu in $\text{m}^2$ pri ploščini.
+- **Kvadriranje na napačnem mestu.** »$\pi r^2$ je isto kot $(\pi r)^2$« ali »$r^2 = 2r$«. Kvadrira se samo polmer, $r^2 = r \cdot r$: pri $r = 3$ je $r^2 = 9$, ne $6$. Popravek: najprej izračunaj $r^2$, šele nato množi s $\pi$.
+- **»Dvakrat večji polmer, dvakrat večja ploščina.«** To velja za obseg, ne za ploščino: pri polmeru $2r$ je ploščina $\pi (2r)^2 = 4\pi r^2$. Popravek: ko se polmer spremeni, izračunaj obe ploščini in ju primerjaj.
+- **»$\pi$ je točno $3{,}14$« ali »točno $\frac{22}{7}$«.** Oboje sta le približka, zato rezultat s $3{,}14$ ni povsem natančen. Popravek: v odgovoru piši $\approx$ ali pusti $\pi$ v rezultatu, na primer $p = 16\pi\,\text{m}^2$.
 
 ## Povzetek
 
-- Polmer $r$, premer $d = 2r$.
-- Razmerje $\dfrac{o}{d}$ je pri vseh krogih enako in ga imenujemo $\pi \approx 3{,}14$.
-- Obseg kroga: $o = 2\pi r = \pi d$.
-- Ploščina kroga: $p = \pi r^2$.
-- Če poznaš obseg ali ploščino, polmer dobiš z $r = \dfrac{o}{2\pi}$ oziroma $r = \sqrt{\dfrac{p}{\pi}}$.
-- Obseg merimo v dolžinskih enotah, ploščino v kvadratnih.
+- Število $\pi$ je količnik obsega in premera, enak za vse kroge: $\pi \approx 3{,}14$.
+- Premer je dvakratni polmer: $d = 2r$.
+- Obseg kroga: $o = \pi d = 2\pi r$ (dolžinska enota).
+- Ploščina kroga: $p = \pi r^2$ (kvadratna enota); izseki se zložijo v pravokotnik $\pi r$ krat $r$.
+- Polmer iz obsega: $r = \dfrac{o}{2\pi}$; iz ploščine: $r = \sqrt{\dfrac{p}{\pi}}$.
+- Dvakrat večji polmer: obseg je dvakrat, ploščina štirikrat večja.
+- Če polmer povečamo za $a$, se obseg poveča za $2\pi a$, ne glede na velikost kroga.
 
-## Drugače: Na sliki
+## Drugače: Z analogijo
 
-Predstavljaj si kolo, ki se zakotali po tleh za en polni obrat. Pot, ki jo prevozi, je natanko enaka obsegu kolesa. Če premer kolesa položiš ob to pot, ga lahko nanjo naneseš nekaj več kot trikrat: trikrat gre cel, ostane še majhen košček (približno $0{,}14$ premera). To je $\pi \approx 3{,}14$.
+Predstavljaj si lokostrelsko tarčo, navito iz zelo tankega traku, kot je navit zvitek lepilnega traku. Prerežemo jo z ravnim rezom od roba do središča in vse obroče zravnamo na mizi, vsakega v ravno progo.
 
-Za ploščino si predstavljaj, da krog razrežeš na veliko tankih izsekov (kot kos pice) in jih zložiš izmenično druge ob druge. Dobiš skoraj pravokotnik z višino približno $r$ in osnovnico približno polovico obsega, to je $\pi r$. Njegova ploščina je $\pi r \cdot r = \pi r^2$. Več ko je izsekov, bolj je lik podoben pravokotniku.
+Proga iz središča je skoraj nič dolga. Proga z zunanjega roba je dolga toliko kot obseg, $2\pi r$. Vmesne proge so vse daljše, enakomerno od najkrajše do najdaljše. Zložene druga nad drugo tvorijo trikotnik z osnovnico $2\pi r$ in višino $r$.
 
-Še ena slikovna primerjava: kvadrat s stranico $r$ ima ploščino $r^2$. Krog s polmerom $r$ ima ploščino malo več kot trikrat toliko ($\pi r^2$), torej se vanj ne ujemajo niti štirje taki kvadrati, ujamejo pa se skoraj trije.
+Ploščino trikotnika že poznaš, polovica osnovnice krat višina:
 
-## Drugače: Iz vsakdanjega življenja
+$$p = \frac{2\pi r \cdot r}{2} = \pi r^2$$
 
-**Pica.** Pica s premerom $30\,\text{cm}$ ima polmer $15\,\text{cm}$ in ploščino $3{,}14 \cdot 15^2 = 3{,}14 \cdot 225 = 706{,}5\,\text{cm}^2$. Pica s premerom $40\,\text{cm}$ ima polmer $20\,\text{cm}$ in ploščino $3{,}14 \cdot 400 = 1256\,\text{cm}^2$. Premer je večji le za tretjino, ploščina pa skoraj za $80\,\%$. Zato je večja pica pogosto bolj ugodna, kot se zdi.
+Dobili smo isto kot z izseki, le po drugi poti.
 
-**Kolo.** Kolo s premerom $60\,\text{cm}$ ima obseg $3{,}14 \cdot 60 = 188{,}4\,\text{cm}$. Pri enem obratu kolesa se kolo premakne za približno $1{,}88\,\text{m}$. Za $1\,\text{km}$ ($100\,000\,\text{cm}$) potrebuje okoli $531$ obratov, saj je $100\,000 : 188{,}4 \approx 530{,}8$.
-
-**Krožni vrt.** Za ograjo okrog okroglega vrta potrebuješ obseg (dolžino), za travo ali semena pa ploščino.
-
-## Drugače: Korak za korakom s številkami
-
-Recept za vsako nalogo s krogom:
-
-1. Preberi, kaj je podano: polmer, premer, obseg ali ploščina?
-2. Če je podan premer, izračunaj polmer: $r = d : 2$.
-3. Ugotovi, ali iščeš dolžino (obseg) ali površino (ploščino).
-4. Vstavi v obrazec.
-
-Primer s tabelo (uporabi $\pi \approx 3{,}14$):
-
-| $r$ | $d$ | $o = 2\pi r$ | $p = \pi r^2$ |
-|---|---|---|---|
-| $1\,\text{cm}$ | $2\,\text{cm}$ | $6{,}28\,\text{cm}$ | $3{,}14\,\text{cm}^2$ |
-| $2\,\text{cm}$ | $4\,\text{cm}$ | $12{,}56\,\text{cm}$ | $12{,}56\,\text{cm}^2$ |
-| $3\,\text{cm}$ | $6\,\text{cm}$ | $18{,}84\,\text{cm}$ | $28{,}26\,\text{cm}^2$ |
-| $10\,\text{cm}$ | $20\,\text{cm}$ | $62{,}8\,\text{cm}$ | $314\,\text{cm}^2$ |
-
-Opazi: ko se polmer podvoji (z $1$ na $2$), se obseg podvoji ($6{,}28 \to 12{,}56$), ploščina pa početveri ($3{,}14 \to 12{,}56$). Ko se polmer potroji (z $1$ na $3$), se obseg potroji, ploščina pa pomnoži z $9$ ($3{,}14 \cdot 9 = 28{,}26$).
+Za samo število $\pi$ pomaga primerjava z menjalnico, v kateri tečaj nikoli ne niha. Iz premera v obseg vedno »zamenjaš« z istim faktorjem, tako kot metre v centimetre vedno s $100$. Faktor za kroge je $\pi$.
 
 ## Drugače: Bolj natančno
 
-**Zakaj je $o = \pi d$ za vsak krog?** Vsi krogi so med seboj podobni: vsak je povečava ali pomanjšava drugega. Če polmer povečamo $k$-krat, se vse dolžine povečajo $k$-krat, tudi obseg. Zato je razmerje $\dfrac{o}{d}$ pri vseh krogih enako. To stalno razmerje poimenujemo $\pi$. Dokazati, da je $\pi$ iracionalno število (ni ulomek), presega osnovnošolsko matematiko.
+**Zakaj je $\dfrac{o}{d}$ enak za vse kroge?** Vsaka dva kroga sta podobna: enega dobimo iz drugega s povečavo. Če polmer povečamo $k$-krat, se vse dolžine na sliki povečajo $k$-krat, tudi obseg. Količnik $\dfrac{k \cdot o}{k \cdot d}$ je zato enak $\dfrac{o}{d}$.
 
-**Izpeljava ploščine.** Krog razrežemo na $2n$ enakih izsekov in jih zložimo izmenično v obliko, podobno pravokotniku. Njegova višina je približno $r$, osnovnica pa polovica obsega:
+**Koliko je $\pi$ natančno?** Grški matematik Arhimed je v krog včrtal in krogu očrtal pravilni $96$-kotnik in izračunal njuna obsega. Tako je dokazal, da je $\pi$ med $3\frac{10}{71}$ in $3\frac{1}{7}$. Ulomek $\frac{22}{7}$ je torej nekoliko prevelik približek. Da $\pi$ ni ulomek, je leta 1761 dokazal Johann Heinrich Lambert; tak dokaz presega osnovno šolo.
 
-$$\frac{o}{2} = \frac{2\pi r}{2} = \pi r$$
-
-Ploščina je približno $\pi r \cdot r = \pi r^2$. Ko je izsekov več, je ujemanje boljše, in natančna ploščina kroga je $p = \pi r^2$. (Strogi dokaz s tem postopkom sodi v višje razrede.)
-
-**Povezava med obrazcema.** Če si ploščino predstavljaš kot vsoto tankih obročev, ima vsak obroč ploščino približno »obseg krat debelina«. Seštevanje obsegov $2\pi x$ po $x$ od $0$ do $r$ vodi do $\pi r^2$. To je ozadje, ki ga boš spoznal(a) pozneje.
+**Kako natančna je izpeljava z izseki?** Pri končnem številu izsekov lik ni pravi pravokotnik, ker so robovi iz lokov. Bolj ko so izseki ozki, bolj se loki zravnajo, in ploščina se vse bolj približuje $\pi r \cdot r$. Natančna ploščina kroga je meja tega približevanja, $p = \pi r^2$. Strogo to dokažemo v srednji šoli.
 
 ## Preveri se
 
-? Krog ima premer $d = 10\,\text{cm}$. Kolikšna je njegova ploščina? (Uporabi $\pi \approx 3{,}14$.)
+? Športni pedagog izmeri obod okroglega koša za žoge in ga deli s premerom koša. Kaj dobi?
++ Število $\pi$, približno $3{,}14$.
+- Polmer koša.
+~ Polmer dobiš, če premer deliš z $2$. Obseg, deljen s premerom, je nekaj drugega.
+- Ploščino dna koša.
+~ Ploščina je $\pi r^2$ in ima kvadratne enote. Količnik dveh dolžin pa je število brez enote.
+- Število, ki je pri večjem košu večje.
+~ Pri večjem košu sta večja oba, obseg in premer, njun količnik pa ostane enak.
+> Količnik obsega in premera je pri vsakem krogu enak. Tako je definirano število $\pi$.
+
+? Razvrsti kroge po ploščini od najmanjše do največje. A: $r = 3\,\text{cm}$, B: $d = 5\,\text{cm}$, C: $o = 12{,}56\,\text{cm}$. Uporabi $\pi \approx 3{,}14$.
++ C, B, A
+- A, B, C
+~ Primerjal si podana števila $3$, $5$ in $12{,}56$, a ta pomenijo različne količine. Iz vsakega najprej izračunaj polmer.
+- C, A, B
+~ Pri B si premer $5\,\text{cm}$ vzel kot polmer. Polmer je $2{,}5\,\text{cm}$.
+- B, A, C
+~ Pri C si obseg delil le s $\pi$ in dobil $r = 4\,\text{cm}$. Pravilno je $r = \dfrac{o}{2\pi} = 2\,\text{cm}$.
+> Polmeri so A $3\,\text{cm}$, B $2{,}5\,\text{cm}$, C $2\,\text{cm}$. Ploščine: C $12{,}56\,\text{cm}^2$, B $19{,}625\,\text{cm}^2$, A $28{,}26\,\text{cm}^2$.
+
+? Kaj se zgodi z obsegom in ploščino kroga, če polmer podvojimo?
+- Oba se podvojita.
+~ Obseg res, ploščina pa ne: v $\pi r^2$ je polmer na kvadrat, zato je $\pi(2r)^2 = 4\pi r^2$.
++ Obseg se podvoji, ploščina se početveri.
+- Obseg se početveri, ploščina se podvoji.
+~ Zamenjal si obrazca. Obseg $2\pi r$ raste kot polmer, ploščina $\pi r^2$ pa kot kvadrat polmera.
+- Oba se početverita.
+~ Kvadrat je le v obrazcu za ploščino. V $2\pi r$ je dvojka faktor, ne potenca.
+> Nov obseg je $2\pi \cdot 2r = 2 \cdot (2\pi r)$, nova ploščina pa $\pi (2r)^2 = 4 \cdot \pi r^2$.
+
+? Kolo pri kolesu ima premer $60\,\text{cm}$. Kolikšno pot prevozi v $10$ obratih? Uporabi $\pi \approx 3{,}14$.
++ $18{,}84\,\text{m}$
+- $37{,}68\,\text{m}$
+~ V $2\pi r$ si vstavil premer namesto polmera. Pri premeru velja $o = \pi d$.
+- $1{,}884\,\text{m}$
+~ To je pot enega obrata. V desetih obratih kolo prevozi desetkrat toliko.
+- $282{,}6\,\text{m}$
+~ Računal si s ploščino $\pi r^2$. Pot enega obrata je obseg, ne ploščina.
+> En obrat: $o = 3{,}14 \cdot 60 = 188{,}4\,\text{cm}$. Deset obratov: $1884\,\text{cm}$, kar je $18{,}84\,\text{m}$.
+
+? Krog ima premer $10\,\text{cm}$. Kolikšna je njegova ploščina? Uporabi $\pi \approx 3{,}14$.
 - $314\,\text{cm}^2$
+~ Namesto polmera si vstavil premer, zato je ploščina štirikrat prevelika.
 + $78{,}5\,\text{cm}^2$
 - $31{,}4\,\text{cm}^2$
+~ To je obseg, $\pi d$, in ima dolžinsko enoto. Ploščina je $\pi r^2$.
 - $62{,}8\,\text{cm}^2$
-> Premer je $10\,\text{cm}$, zato je polmer $r = 5\,\text{cm}$. Ploščina je $3{,}14 \cdot 5^2 = 3{,}14 \cdot 25 = 78{,}5\,\text{cm}^2$. Odgovor $314$ dobiš, če namesto polmera vstaviš premer, $31{,}4$ je obseg, $62{,}8$ pa obseg kroga s polmerom $10\,\text{cm}$.
-
-? Kolikšen je obseg kroga s polmerom $r = 3\,\text{cm}$? (Uporabi $\pi \approx 3{,}14$.)
-- $28{,}26\,\text{cm}$
-- $9{,}42\,\text{cm}$
-+ $18{,}84\,\text{cm}$
-> Obseg je $o = 2\pi r = 2 \cdot 3{,}14 \cdot 3 = 18{,}84\,\text{cm}$. Odgovor $28{,}26$ je ploščina ($\pi r^2$), $9{,}42$ pa dobiš, če pozabiš faktor $2$.
-
-? Polmer kroga se podvoji. Kaj se zgodi s ploščino kroga?
-- Podvoji se.
-- Poveča se za $\pi$.
-+ Početveri se.
-- Ostane enaka.
-> Ploščina je $\pi r^2$. Če je nov polmer $2r$, je nova ploščina $\pi (2r)^2 = 4\pi r^2$, torej štirikrat večja. Obseg bi se podvojil, ploščina pa se poveča s kvadratom.
+~ To je $2\pi$ krat premer, obseg z napačnim polmerom. Ploščina potrebuje $r^2$.
+> Polmer je $5\,\text{cm}$, zato je $p = 3{,}14 \cdot 5^2 = 3{,}14 \cdot 25 = 78{,}5\,\text{cm}^2$.

@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Stranica iz ploščine
+  - $16$ kvadratkov da stranico $4$
+  - število, ki krat samo sebe da ploščino
+- Kvadratni koren
+  - $\sqrt{a} = b$, ker je $b^2 = a$
+  - $\sqrt{16} = 4$, ne $\pm 4$
+  - $\sqrt{-9}$ ne obstaja
+- Popolni kvadrati
+  - $1, 4, 9, \dots, 225$
+  - nikoli se ne končajo na $2$, $3$, $7$, $8$
+- Decimalna števila
+  - $\sqrt{0{,}49} = 0{,}7$
+  - napaka: $0{,}07$, ker je $0{,}07^2 = 0{,}0049$
+- Ocena brez računala
+  - $n^2 < a < (n+1)^2$, torej $n < \sqrt{a} < n+1$
+  - $7{,}1^2 = 50{,}41$, zato $\sqrt{50} \approx 7{,}1$
+- Delno korenjenje
+  - $\sqrt{a \cdot b} = \sqrt{a} \cdot \sqrt{b}$
+  - izlušči največji kvadrat: $\sqrt{72} = 6\sqrt{2}$
+- Vsota ni produkt
+  - $\sqrt{9 + 16} = 5$, ne $3 + 4$
