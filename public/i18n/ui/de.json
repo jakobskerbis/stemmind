@@ -2126,5 +2126,18 @@
   "scan.s.numeric": "Es gibt keine rationalen Nullstellen, deshalb bestimmen wir die Nullstellen numerisch (mit dem Bisektionsverfahren).",
   "scan.w.numeric": "Bisektionsverfahren: Ein Intervall, auf dem das Polynom das Vorzeichen wechselt, halbieren wir so lange, bis es klein genug ist. Die Nullstellen siehst du auch im Graphen.",
   "scan.sideL": "L",
-  "scan.sideR": "R"
+  "scan.sideR": "R",
+  "gr.povzetek": "Zusammenfassung auf einer Seite",
+  "gr.zvok": "Zusammenfassung anhören",
+  "gr.zvokStop": "Vorlesen beenden",
+  "gr.delovni": "Arbeitsblatt mit Lösungen",
+  "gr.noVoice": "Dieses Gerät hat keine slowenische Stimme zum Vorlesen. Versuche den Edge-Browser oder füge in den Geräteeinstellungen eine slowenische Stimme hinzu.",
+  "gr.noSpeech": "Dieser Browser kann nicht vorlesen.",
+  "gr.popup": "Der Browser hat das neue Fenster blockiert. Erlaube Pop-ups für diese Seite und versuche es erneut.",
+  "gr.locked": "Arbeitsblätter für zu Hause sind im Paket enthalten.",
+  "gr.noWeak": "Du hast noch keine schwachen Themen. Löse zuerst einige Aufgaben im Übungsbereich.",
+  "gr.weakSheet": "Arbeitsblatt aus schwachen Themen",
+  "gr.pastTitle": "Frühere Prüfungen mit Lösungen",
+  "gr.pastText": "Die offiziellen Prüfungsbögen und Bewertungsanleitungen veröffentlicht das Staatliche Prüfungszentrum (RIC), das alle Rechte daran hält; deshalb kopieren wir sie hier nicht. Die Probeprüfung oben enthält unsere eigenen Aufgaben im gleichen Format und mit gleicher Zeit.",
+  "gr.pastOpen": "Prüfungsbögen auf ric.si öffnen"
 }

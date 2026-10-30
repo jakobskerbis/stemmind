@@ -2126,5 +2126,18 @@
   "scan.s.numeric": "Il n'y a pas de racine rationnelle, on cherche donc les racines numériquement (par dichotomie).",
   "scan.w.numeric": "Dichotomie : on coupe en deux un intervalle sur lequel le polynôme change de signe, jusqu'à ce qu'il soit assez petit. Tu vois aussi les racines sur le graphique.",
   "scan.sideL": "G",
-  "scan.sideR": "D"
+  "scan.sideR": "D",
+  "gr.povzetek": "Résumé sur une page",
+  "gr.zvok": "Écouter le résumé",
+  "gr.zvokStop": "Arrêter la lecture",
+  "gr.delovni": "Fiche d'exercices avec corrigés",
+  "gr.noVoice": "Cet appareil n'a pas de voix slovène pour la lecture à voix haute. Essaie le navigateur Edge ou ajoute une voix slovène dans les réglages de l'appareil.",
+  "gr.noSpeech": "Ce navigateur ne sait pas lire à voix haute.",
+  "gr.popup": "Le navigateur a bloqué la nouvelle fenêtre. Autorise les fenêtres pop-up pour ce site et réessaie.",
+  "gr.locked": "Les fiches pour la maison font partie de l'abonnement.",
+  "gr.noWeak": "Tu n'as pas encore de points faibles. Résous d'abord quelques exercices dans Entraînement.",
+  "gr.weakSheet": "Fiche d'exercices sur mes points faibles",
+  "gr.pastTitle": "Anciens sujets avec corrigés",
+  "gr.pastText": "Les sujets officiels et les barèmes sont publiés par le Centre national des examens (RIC), qui en détient tous les droits ; nous ne les copions donc pas ici. L'examen blanc ci-dessus utilise nos propres exercices, au même format et avec la même durée.",
+  "gr.pastOpen": "Ouvrir les sujets sur ric.si"
 }

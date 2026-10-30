@@ -2158,5 +2158,18 @@
   "scan.s.numeric": "Racionálne korene neexistujú, preto korene hľadáme numericky (metódou polenia intervalu).",
   "scan.w.numeric": "Polenie intervalu: interval, na ktorom mnohočlen mení znamienko, delíme na polovicu, kým nie je dosť malý. Korene vidíš aj v grafe.",
   "scan.sideL": "L",
-  "scan.sideR": "P"
+  "scan.sideR": "P",
+  "gr.povzetek": "Zhrnutie na jednej strane",
+  "gr.zvok": "Vypočuť zhrnutie",
+  "gr.zvokStop": "Zastaviť čítanie",
+  "gr.delovni": "Pracovný list s riešeniami",
+  "gr.noVoice": "Toto zariadenie nemá slovinský hlas na čítanie nahlas. Skús prehliadač Edge alebo pridaj slovinský hlas v nastaveniach zariadenia.",
+  "gr.noSpeech": "Tento prehliadač nevie čítať nahlas.",
+  "gr.popup": "Prehliadač zablokoval nové okno. Povoľ vyskakovacie okná pre túto stránku a skús to znova.",
+  "gr.locked": "Pracovné listy na doma sú súčasťou balíka.",
+  "gr.noWeak": "Zatiaľ nemáš slabé témy. Najprv vyrieš niekoľko úloh v Precvičovaní.",
+  "gr.weakSheet": "Pracovný list zo slabých tém",
+  "gr.pastTitle": "Minulé testy s riešeniami",
+  "gr.pastText": "Oficiálne testy a pokyny na hodnotenie zverejňuje Štátne skúšobné centrum (RIC), ktoré má k nim všetky práva, preto ich tu nekopírujeme. Skúšobný test vyššie obsahuje naše úlohy v rovnakej podobe a s rovnakým časom.",
+  "gr.pastOpen": "Otvoriť testy na ric.si"
 }

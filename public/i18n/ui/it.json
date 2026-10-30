@@ -2126,5 +2126,18 @@
   "scan.s.numeric": "Non ci sono radici razionali, quindi cerchiamo le radici numericamente (con il metodo di bisezione).",
   "scan.w.numeric": "Bisezione: dimezziamo un intervallo in cui il polinomio cambia segno finché non è abbastanza piccolo. Le radici si vedono anche nel grafico.",
   "scan.sideL": "S",
-  "scan.sideR": "D"
+  "scan.sideR": "D",
+  "gr.povzetek": "Riassunto in una pagina",
+  "gr.zvok": "Ascolta il riassunto",
+  "gr.zvokStop": "Ferma la lettura",
+  "gr.delovni": "Scheda di esercizi con soluzioni",
+  "gr.noVoice": "Questo dispositivo non ha una voce slovena per la lettura ad alta voce. Prova il browser Edge o aggiungi una voce slovena nelle impostazioni del dispositivo.",
+  "gr.noSpeech": "Questo browser non sa leggere ad alta voce.",
+  "gr.popup": "Il browser ha bloccato la nuova finestra. Consenti i pop-up per questo sito e riprova.",
+  "gr.locked": "Le schede per casa sono incluse nel pacchetto.",
+  "gr.noWeak": "Non hai ancora argomenti deboli. Risolvi prima qualche esercizio in Esercitazione.",
+  "gr.weakSheet": "Scheda dagli argomenti deboli",
+  "gr.pastTitle": "Prove passate con soluzioni",
+  "gr.pastText": "Le prove ufficiali e le griglie di valutazione sono pubblicate dal Centro nazionale per gli esami (RIC), che ne detiene tutti i diritti, quindi qui non le copiamo. La simulazione qui sopra usa nostri esercizi con lo stesso formato e la stessa durata.",
+  "gr.pastOpen": "Apri le prove su ric.si"
 }

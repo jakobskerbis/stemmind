@@ -2126,5 +2126,18 @@
   "scan.s.numeric": "There are no rational roots, so we find the roots numerically (by bisection).",
   "scan.w.numeric": "Bisection: we keep halving an interval on which the polynomial changes sign until it is small enough. You can also see the roots on the graph.",
   "scan.sideL": "LHS",
-  "scan.sideR": "RHS"
+  "scan.sideR": "RHS",
+  "gr.povzetek": "One-page summary",
+  "gr.zvok": "Listen to summary",
+  "gr.zvokStop": "Stop reading",
+  "gr.delovni": "Worksheet with solutions",
+  "gr.noVoice": "This device has no Slovenian voice for reading aloud. Try the Edge browser or add a Slovenian voice in your device settings.",
+  "gr.noSpeech": "This browser cannot read aloud.",
+  "gr.popup": "The browser blocked the new window. Allow pop-ups for this site and try again.",
+  "gr.locked": "Home worksheets are part of the plan.",
+  "gr.noWeak": "You have no weak topics yet. Solve some tasks in Practice first.",
+  "gr.weakSheet": "Worksheet from weak topics",
+  "gr.pastTitle": "Past papers with solutions",
+  "gr.pastText": "Official papers and marking guides are published by the National Examinations Centre (RIC), which holds all rights to them, so we do not copy them here. The mock exam above uses our own tasks in the same format and time.",
+  "gr.pastOpen": "Open papers on ric.si"
 }

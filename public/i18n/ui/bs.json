@@ -2142,5 +2142,18 @@
   "scan.s.numeric": "Racionalnih nula nema, zato nule tražimo numerički (metodom polovljenja intervala).",
   "scan.w.numeric": "Polovljenje intervala: interval na kojem polinom mijenja znak dijelimo na pola dok ne bude dovoljno mali. Nule vidiš i na grafiku.",
   "scan.sideL": "L",
-  "scan.sideR": "D"
+  "scan.sideR": "D",
+  "gr.povzetek": "Sažetak na jednoj stranici",
+  "gr.zvok": "Poslušaj sažetak",
+  "gr.zvokStop": "Zaustavi čitanje",
+  "gr.delovni": "Radni list s rješenjima",
+  "gr.noVoice": "Ovaj uređaj nema slovenski glas za čitanje naglas. Pokušaj u pregledniku Edge ili dodaj slovenski glas u postavkama uređaja.",
+  "gr.noSpeech": "Ovaj preglednik ne može čitati naglas.",
+  "gr.popup": "Preglednik je blokirao novi prozor. Dozvoli iskačuće prozore za ovu stranicu i pokušaj ponovo.",
+  "gr.locked": "Radni listovi za kuću su dio paketa.",
+  "gr.noWeak": "Još nemaš slabih tema. Prvo riješi nekoliko zadataka u Vježbanju.",
+  "gr.weakSheet": "Radni list iz slabih tema",
+  "gr.pastTitle": "Prošli ispiti s rješenjima",
+  "gr.pastText": "Zvanične ispite i upute za ocjenjivanje objavljuje Državni ispitni centar (RIC), koji ima sva prava na njih, pa ih ovdje ne kopiramo. Probni ispit iznad sadrži naše zadatke u istom obliku i s istim vremenom.",
+  "gr.pastOpen": "Otvori ispite na ric.si"
 }

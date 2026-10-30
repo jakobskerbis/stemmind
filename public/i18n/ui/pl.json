@@ -2158,5 +2158,18 @@
   "scan.s.numeric": "Nie ma pierwiastków wymiernych, więc pierwiastki szukamy numerycznie (metodą bisekcji).",
   "scan.w.numeric": "Bisekcja: przedział, na którym wielomian zmienia znak, dzielimy na pół, aż będzie dość mały. Pierwiastki widzisz też na wykresie.",
   "scan.sideL": "L",
-  "scan.sideR": "P"
+  "scan.sideR": "P",
+  "gr.povzetek": "Podsumowanie na jednej stronie",
+  "gr.zvok": "Posłuchaj podsumowania",
+  "gr.zvokStop": "Zatrzymaj czytanie",
+  "gr.delovni": "Karta pracy z rozwiązaniami",
+  "gr.noVoice": "To urządzenie nie ma słoweńskiego głosu do czytania na głos. Spróbuj w przeglądarce Edge albo dodaj słoweński głos w ustawieniach urządzenia.",
+  "gr.noSpeech": "Ta przeglądarka nie umie czytać na głos.",
+  "gr.popup": "Przeglądarka zablokowała nowe okno. Zezwól na wyskakujące okna dla tej strony i spróbuj ponownie.",
+  "gr.locked": "Karty pracy do domu są w pakiecie.",
+  "gr.noWeak": "Nie masz jeszcze słabych tematów. Najpierw rozwiąż kilka zadań w Ćwiczeniach.",
+  "gr.weakSheet": "Karta pracy ze słabych tematów",
+  "gr.pastTitle": "Dawne arkusze z rozwiązaniami",
+  "gr.pastText": "Oficjalne arkusze i zasady oceniania publikuje Państwowe Centrum Egzaminacyjne (RIC), które ma do nich wszystkie prawa, dlatego ich tu nie kopiujemy. Egzamin próbny powyżej zawiera nasze zadania w tej samej formie i z tym samym czasem.",
+  "gr.pastOpen": "Otwórz arkusze na ric.si"
 }

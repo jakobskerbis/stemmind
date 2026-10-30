@@ -2147,4 +2147,18 @@ export default {
   "admin.events": "Zadnji plačilni dogodki",
   "admin.noEvents": "Ni še plačilnih dogodkov.",
   "admin.eventError": "napaka",
+  // gradiva ob lekciji (server/gradiva.js)
+  "gr.povzetek": "Povzetek na eni strani",
+  "gr.zvok": "Poslušaj povzetek",
+  "gr.zvokStop": "Ustavi branje",
+  "gr.delovni": "Delovni list z rešitvami",
+  "gr.noVoice": "Ta naprava nima slovenskega glasu za branje. Poskusi v brskalniku Edge ali dodaj slovenski glas v nastavitvah naprave.",
+  "gr.noSpeech": "Ta brskalnik ne zna brati na glas.",
+  "gr.popup": "Brskalnik je zaprl novo okno. Dovoli pojavna okna za to stran in poskusi znova.",
+  "gr.locked": "Delovni listi za doma so v paketu.",
+  "gr.noWeak": "Še nimaš šibkih tem. Najprej reši nekaj nalog v Vadnici.",
+  "gr.weakSheet": "Delovni list iz šibkih tem",
+  "gr.pastTitle": "Pretekle pole z rešitvami",
+  "gr.pastText": "Uradne pole in navodila za ocenjevanje objavlja Državni izpitni center (RIC), ki ima nanje vse pravice, zato jih tukaj ne kopiramo. Poskusni izpit zgoraj ima naše naloge v enaki obliki in z enakim časom.",
+  "gr.pastOpen": "Odpri pole na ric.si",
 };

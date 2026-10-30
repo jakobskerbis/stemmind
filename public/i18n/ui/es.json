@@ -2126,5 +2126,18 @@
   "scan.s.numeric": "No hay raíces racionales, así que buscamos las raíces numéricamente (por bisección).",
   "scan.w.numeric": "Bisección: partimos por la mitad un intervalo en el que el polinomio cambia de signo hasta que sea lo bastante pequeño. Las raíces también se ven en la gráfica.",
   "scan.sideL": "I",
-  "scan.sideR": "D"
+  "scan.sideR": "D",
+  "gr.povzetek": "Resumen en una página",
+  "gr.zvok": "Escuchar el resumen",
+  "gr.zvokStop": "Detener la lectura",
+  "gr.delovni": "Hoja de trabajo con soluciones",
+  "gr.noVoice": "Este dispositivo no tiene voz en esloveno para leer en voz alta. Prueba el navegador Edge o añade una voz eslovena en los ajustes del dispositivo.",
+  "gr.noSpeech": "Este navegador no puede leer en voz alta.",
+  "gr.popup": "El navegador bloqueó la nueva ventana. Permite las ventanas emergentes para este sitio e inténtalo de nuevo.",
+  "gr.locked": "Las hojas de trabajo para casa están incluidas en el plan.",
+  "gr.noWeak": "Aún no tienes temas débiles. Resuelve primero algunas tareas en Práctica.",
+  "gr.weakSheet": "Hoja de trabajo de temas débiles",
+  "gr.pastTitle": "Exámenes anteriores con soluciones",
+  "gr.pastText": "Los exámenes oficiales y las guías de corrección los publica el Centro Nacional de Exámenes (RIC), que tiene todos los derechos, por eso no los copiamos aquí. El examen de prueba de arriba usa nuestras propias tareas con el mismo formato y tiempo.",
+  "gr.pastOpen": "Abrir exámenes en ric.si"
 }

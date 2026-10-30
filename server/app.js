@@ -14,6 +14,7 @@ import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
+import { mountGradiva } from "./gradiva.js";
 import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths, localTopic } from "./curriculum.js";
 import { uiLanguage } from "../public/i18n/languages.js";
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor, formulaSheet } from "./textbook.js";
@@ -928,6 +929,7 @@ export function createApp(store, opts = {}) {
   // --- tedenske lige, razredi in skupine prijateljev ---
   const avatars = new Avatars(store.db);
   mountLeagues(app, store, { loadStudent });
+  mountGradiva(app, store, { loadStudent, accounts }); // povzetek na eni strani, zvočni povzetek, delovni listi
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress, avatars, knowledge });
   mountAvatar(app, avatars, { loadStudent });

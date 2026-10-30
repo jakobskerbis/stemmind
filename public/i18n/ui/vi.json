@@ -2110,5 +2110,18 @@
   "scan.s.numeric": "Không có nghiệm hữu tỉ, nên ta tìm nghiệm bằng phương pháp số (phương pháp chia đôi).",
   "scan.w.numeric": "Chia đôi: ta chia đôi khoảng mà trên đó đa thức đổi dấu cho đến khi đủ nhỏ. Bạn cũng có thể thấy các nghiệm trên đồ thị.",
   "scan.sideL": "VT",
-  "scan.sideR": "VP"
+  "scan.sideR": "VP",
+  "gr.povzetek": "Tóm tắt một trang",
+  "gr.zvok": "Nghe tóm tắt",
+  "gr.zvokStop": "Dừng đọc",
+  "gr.delovni": "Phiếu bài tập có lời giải",
+  "gr.noVoice": "Thiết bị này không có giọng tiếng Slovenia để đọc to. Hãy thử trình duyệt Edge hoặc thêm giọng tiếng Slovenia trong cài đặt thiết bị.",
+  "gr.noSpeech": "Trình duyệt này không đọc to được.",
+  "gr.popup": "Trình duyệt đã chặn cửa sổ mới. Hãy cho phép cửa sổ bật lên cho trang này và thử lại.",
+  "gr.locked": "Phiếu bài tập ở nhà nằm trong gói.",
+  "gr.noWeak": "Bạn chưa có chủ đề yếu nào. Hãy giải vài bài trong phần Luyện tập trước.",
+  "gr.weakSheet": "Phiếu bài tập từ chủ đề yếu",
+  "gr.pastTitle": "Đề thi cũ có lời giải",
+  "gr.pastText": "Đề thi chính thức và hướng dẫn chấm do Trung tâm Khảo thí Quốc gia (RIC) công bố và giữ mọi quyền, nên chúng tôi không sao chép ở đây. Bài thi thử ở trên dùng bài tập của chúng tôi với cùng định dạng và thời gian.",
+  "gr.pastOpen": "Mở đề thi trên ric.si"
 }

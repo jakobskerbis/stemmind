@@ -2126,5 +2126,18 @@
   "scan.s.numeric": "Hakuna mizizi ya namba wiano, kwa hiyo tunatafuta mizizi kwa njia ya kihesabu (kwa kugawanya nusu).",
   "scan.w.numeric": "Kugawanya nusu: muda ambao polinomia hubadilisha alama tunaugawa nusu mara kwa mara hadi uwe mdogo vya kutosha. Mizizi unaiona pia kwenye grafu.",
   "scan.sideL": "Kushoto",
-  "scan.sideR": "Kulia"
+  "scan.sideR": "Kulia",
+  "gr.povzetek": "Muhtasari wa ukurasa mmoja",
+  "gr.zvok": "Sikiliza muhtasari",
+  "gr.zvokStop": "Acha kusoma",
+  "gr.delovni": "Karatasi ya mazoezi yenye majibu",
+  "gr.noVoice": "Kifaa hiki hakina sauti ya Kislovenia ya kusoma kwa sauti. Jaribu kivinjari cha Edge au ongeza sauti ya Kislovenia kwenye mipangilio ya kifaa.",
+  "gr.noSpeech": "Kivinjari hiki hakiwezi kusoma kwa sauti.",
+  "gr.popup": "Kivinjari kimezuia dirisha jipya. Ruhusu madirisha ibukizi kwa tovuti hii kisha ujaribu tena.",
+  "gr.locked": "Karatasi za mazoezi ya nyumbani ni sehemu ya kifurushi.",
+  "gr.noWeak": "Bado huna mada dhaifu. Kwanza tatua maswali kadhaa kwenye Mazoezi.",
+  "gr.weakSheet": "Karatasi ya mazoezi kutoka mada dhaifu",
+  "gr.pastTitle": "Mitihani iliyopita yenye majibu",
+  "gr.pastText": "Mitihani rasmi na miongozo ya usahihishaji huchapishwa na Kituo cha Taifa cha Mitihani (RIC), chenye haki zote, kwa hiyo hatuinakili hapa. Mtihani wa majaribio hapo juu una maswali yetu wenyewe kwa muundo na muda uleule.",
+  "gr.pastOpen": "Fungua mitihani kwenye ric.si"
 }

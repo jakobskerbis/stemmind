@@ -2126,5 +2126,18 @@
   "scan.s.numeric": "Rasyonel kök yok, bu yüzden kökleri sayısal olarak (ikiye bölme yöntemiyle) buluyoruz.",
   "scan.w.numeric": "İkiye bölme: polinomun işaret değiştirdiği aralığı, yeterince küçülene kadar ikiye bölüyoruz. Kökleri grafikte de görebilirsin.",
   "scan.sideL": "Sol",
-  "scan.sideR": "Sağ"
+  "scan.sideR": "Sağ",
+  "gr.povzetek": "Tek sayfada özet",
+  "gr.zvok": "Özeti dinle",
+  "gr.zvokStop": "Okumayı durdur",
+  "gr.delovni": "Çözümlü çalışma kâğıdı",
+  "gr.noVoice": "Bu cihazda sesli okuma için Slovence ses yok. Edge tarayıcısını dene veya cihaz ayarlarından Slovence bir ses ekle.",
+  "gr.noSpeech": "Bu tarayıcı sesli okuyamıyor.",
+  "gr.popup": "Tarayıcı yeni pencereyi engelledi. Bu site için açılır pencerelere izin ver ve tekrar dene.",
+  "gr.locked": "Evde çalışma kâğıtları pakete dahildir.",
+  "gr.noWeak": "Henüz zayıf konun yok. Önce Alıştırma bölümünde birkaç soru çöz.",
+  "gr.weakSheet": "Zayıf konulardan çalışma kâğıdı",
+  "gr.pastTitle": "Çözümlü geçmiş sınavlar",
+  "gr.pastText": "Resmî sınav kâğıtlarını ve puanlama kılavuzlarını tüm haklarına sahip olan Ulusal Sınav Merkezi (RIC) yayımlar; bu yüzden burada kopyalamıyoruz. Yukarıdaki deneme sınavı aynı biçimde ve aynı sürede kendi sorularımızı kullanır.",
+  "gr.pastOpen": "Sınavları ric.si'de aç"
 }

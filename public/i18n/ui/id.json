@@ -2110,5 +2110,18 @@
   "scan.s.numeric": "Tidak ada akar rasional, jadi akar-akarnya kita cari secara numerik (dengan metode bagi dua).",
   "scan.w.numeric": "Metode bagi dua: interval tempat polinom berganti tanda kita bagi dua terus sampai cukup kecil. Akar-akarnya juga terlihat pada grafik.",
   "scan.sideL": "Kiri",
-  "scan.sideR": "Kanan"
+  "scan.sideR": "Kanan",
+  "gr.povzetek": "Ringkasan satu halaman",
+  "gr.zvok": "Dengarkan ringkasan",
+  "gr.zvokStop": "Hentikan pembacaan",
+  "gr.delovni": "Lembar kerja dengan pembahasan",
+  "gr.noVoice": "Perangkat ini tidak punya suara bahasa Slovenia untuk membaca keras. Coba peramban Edge atau tambahkan suara bahasa Slovenia di pengaturan perangkat.",
+  "gr.noSpeech": "Peramban ini tidak bisa membaca keras.",
+  "gr.popup": "Peramban memblokir jendela baru. Izinkan pop-up untuk situs ini lalu coba lagi.",
+  "gr.locked": "Lembar kerja untuk di rumah termasuk dalam paket.",
+  "gr.noWeak": "Kamu belum punya topik lemah. Kerjakan dulu beberapa soal di Latihan.",
+  "gr.weakSheet": "Lembar kerja dari topik lemah",
+  "gr.pastTitle": "Soal ujian lalu dengan pembahasan",
+  "gr.pastText": "Soal resmi dan pedoman penilaian diterbitkan oleh Pusat Ujian Nasional (RIC), yang memegang semua haknya, jadi kami tidak menyalinnya di sini. Ujian percobaan di atas memakai soal kami sendiri dengan format dan waktu yang sama.",
+  "gr.pastOpen": "Buka soal di ric.si"
 }

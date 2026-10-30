@@ -2142,5 +2142,18 @@
   "scan.s.numeric": "Nu există rădăcini raționale, așa că găsim rădăcinile numeric (prin metoda bisecției).",
   "scan.w.numeric": "Bisecția: înjumătățim un interval pe care polinomul își schimbă semnul până devine destul de mic. Rădăcinile le vezi și pe grafic.",
   "scan.sideL": "S",
-  "scan.sideR": "D"
+  "scan.sideR": "D",
+  "gr.povzetek": "Rezumat pe o pagină",
+  "gr.zvok": "Ascultă rezumatul",
+  "gr.zvokStop": "Oprește citirea",
+  "gr.delovni": "Fișă de lucru cu soluții",
+  "gr.noVoice": "Acest dispozitiv nu are o voce slovenă pentru citire cu voce tare. Încearcă browserul Edge sau adaugă o voce slovenă în setările dispozitivului.",
+  "gr.noSpeech": "Acest browser nu poate citi cu voce tare.",
+  "gr.popup": "Browserul a blocat fereastra nouă. Permite ferestrele pop-up pentru acest site și încearcă din nou.",
+  "gr.locked": "Fișele pentru acasă fac parte din pachet.",
+  "gr.noWeak": "Încă nu ai teme slabe. Rezolvă mai întâi câteva sarcini la Exersare.",
+  "gr.weakSheet": "Fișă din temele slabe",
+  "gr.pastTitle": "Subiecte anterioare cu soluții",
+  "gr.pastText": "Subiectele oficiale și baremele sunt publicate de Centrul Național de Examene (RIC), care deține toate drepturile, de aceea nu le copiem aici. Examenul de probă de mai sus folosește sarcinile noastre, în același format și cu același timp.",
+  "gr.pastOpen": "Deschide subiectele pe ric.si"
 }

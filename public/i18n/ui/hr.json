@@ -2142,5 +2142,18 @@
   "scan.s.numeric": "Racionalnih nultočaka nema, zato nultočke tražimo numerički (metodom bisekcije).",
   "scan.w.numeric": "Bisekcija: interval na kojem polinom mijenja predznak raspolavljamo dok ne bude dovoljno malen. Nultočke vidiš i na grafu.",
   "scan.sideL": "L",
-  "scan.sideR": "D"
+  "scan.sideR": "D",
+  "gr.povzetek": "Sažetak na jednoj stranici",
+  "gr.zvok": "Poslušaj sažetak",
+  "gr.zvokStop": "Zaustavi čitanje",
+  "gr.delovni": "Radni list s rješenjima",
+  "gr.noVoice": "Ovaj uređaj nema slovenski glas za čitanje naglas. Pokušaj u pregledniku Edge ili dodaj slovenski glas u postavkama uređaja.",
+  "gr.noSpeech": "Ovaj preglednik ne zna čitati naglas.",
+  "gr.popup": "Preglednik je blokirao novi prozor. Dopusti skočne prozore za ovu stranicu i pokušaj ponovno.",
+  "gr.locked": "Radni listovi za kod kuće dio su paketa.",
+  "gr.noWeak": "Još nemaš slabih tema. Najprije riješi nekoliko zadataka u Vježbanju.",
+  "gr.weakSheet": "Radni list iz slabih tema",
+  "gr.pastTitle": "Prošli ispiti s rješenjima",
+  "gr.pastText": "Službene ispite i upute za ocjenjivanje objavljuje Državni ispitni centar (RIC), koji ima sva prava na njih, pa ih ovdje ne kopiramo. Probni ispit iznad sadrži naše zadatke u istom obliku i s istim vremenom.",
+  "gr.pastOpen": "Otvori ispite na ric.si"
 }

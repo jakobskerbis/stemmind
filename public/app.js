@@ -10,6 +10,7 @@ hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock } from "./account.js";
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
+import { openPrintable } from "./gradiva.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
@@ -1239,6 +1240,12 @@ async function loadProgress() {
     ...p.weak.map((w) => `<li class="auto" title="${t("prog.errRate", { n: Math.round(w.rate * 100) })}">${escapeHtml(w.topic)} (${w.subject ?? "?"})</li>`),
   ];
   weak.innerHTML = items.length ? items.join("") : `<li>${t("common.noData")}</li>`;
+  // Delovni list za doma iz šibkih tem (iz nalog v Vadnici; strežnik pove, če je zaklenjen).
+  const sheetBtn = $("#weak-sheet");
+  $("#weak-sheet-msg").hidden = true;
+  api(`/api/students/${state.student.id}/gradiva/sibke`)
+    .then((w) => (sheetBtn.hidden = !w.topics.length || w.locked))
+    .catch(() => (sheetBtn.hidden = true));
 
   // 30 stolpcev, en na dan (dnevi brez aktivnosti so prazni).
   const byDay = Object.fromEntries(p.activity.map((a) => [a.day, a]));
@@ -2469,6 +2476,7 @@ async function loadExams(key = state.examKey, exam = null) {
       ${c.subjects.length > 1 ? seg(c.subjects.map((x) => [x.key, SUBJECT_NAMES[x.subject] || x.name]), c.key, "data-exam-subject") : ""}
     </div>
     <details class="card exam-about"><summary>${icon("info")}<span><b>${escapeHtml(c.full)}</b> · ${escapeHtml(c.country)}</span></summary><p lang="${c.lang || "en"}">${escapeHtml(c.about)}</p></details>
+    ${c.official ? `<section class="card exam-official"><h2>${icon("file-text")}${t("gr.pastTitle")}</h2><p class="muted">${t("gr.pastText", { src: escapeHtml(c.official.source) })}</p><a class="btn-secondary" href="${escapeHtml(c.official.url)}" target="_blank" rel="noopener">${icon("external-link")}${t("gr.pastOpen")}</a></section>` : ""}
     <div class="card xp-card comp-hero">
       <div class="hero">
         <div class="hero-icon">${icon("target")}</div>
@@ -2506,6 +2514,15 @@ async function loadExams(key = state.examKey, exam = null) {
       )
       .join("")}`;
 }
+
+$("#weak-sheet")?.addEventListener("click", () => {
+  const msg = $("#weak-sheet-msg");
+  msg.hidden = true;
+  openPrintable(`/api/students/${state.student.id}/gradiva/delovni-list?sibke=1`, (m) => {
+    msg.textContent = m;
+    msg.hidden = false;
+  });
+});
 
 // Slovenija: preklop med tekmovanji ter NPZ in maturo (drugje je zavihek samo »Izpiti«).
 function prepSwitch(cur) {

@@ -2158,5 +2158,18 @@
   "scan.s.numeric": "Racionální kořeny neexistují, proto kořeny hledáme numericky (metodou půlení intervalu).",
   "scan.w.numeric": "Půlení intervalu: interval, na kterém mnohočlen mění znaménko, půlíme, dokud není dost malý. Kořeny vidíš i v grafu.",
   "scan.sideL": "L",
-  "scan.sideR": "P"
+  "scan.sideR": "P",
+  "gr.povzetek": "Shrnutí na jedné stránce",
+  "gr.zvok": "Poslechnout shrnutí",
+  "gr.zvokStop": "Zastavit čtení",
+  "gr.delovni": "Pracovní list s řešením",
+  "gr.noVoice": "Toto zařízení nemá slovinský hlas pro čtení nahlas. Zkus prohlížeč Edge nebo přidej slovinský hlas v nastavení zařízení.",
+  "gr.noSpeech": "Tento prohlížeč neumí číst nahlas.",
+  "gr.popup": "Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro tuto stránku a zkus to znovu.",
+  "gr.locked": "Pracovní listy na doma jsou součástí balíčku.",
+  "gr.noWeak": "Zatím nemáš slabá témata. Nejprve vyřeš několik úloh v Procvičování.",
+  "gr.weakSheet": "Pracovní list ze slabých témat",
+  "gr.pastTitle": "Minulé testy s řešením",
+  "gr.pastText": "Oficiální testy a pokyny k hodnocení zveřejňuje Státní zkušební centrum (RIC), které k nim má všechna práva, proto je zde nekopírujeme. Zkušební test výše obsahuje naše úlohy ve stejné podobě a se stejným časem.",
+  "gr.pastOpen": "Otevřít testy na ric.si"
 }
