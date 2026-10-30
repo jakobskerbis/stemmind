@@ -648,6 +648,10 @@ export function initOkna(opts) {
   const tabs = $(".topbar .tabs");
   makeRowSortable(tabs, "tabs", { item: ".tab", out: tabOut });
   makeRowSortable($("#tabbar"), "tabbar", { item: ".tab" });
+  // Spodnji list stoji nad spodnjo vrstico zavihkov, da navigacija ostane uporabna (okna.css, --tabbar-h).
+  const tabbar = $("#tabbar");
+  if (tabbar && "ResizeObserver" in window)
+    new ResizeObserver(() => document.documentElement.style.setProperty("--tabbar-h", `${tabbar.offsetParent ? tabbar.offsetHeight : 0}px`)).observe(tabbar);
   makeRowSortable($("#modebar"), "modebar", { item: "button" });
   document.querySelectorAll(".calc-modes").forEach((row) => makeRowSortable(row, "calc-modes", { item: "button" }));
   mountSetting(document.getElementById("okna-card"));

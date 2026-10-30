@@ -384,6 +384,8 @@ body:has(> #boot-down) > :not(#boot-down) { visibility: hidden; }
 .razpri-body { overflow-y: auto; overscroll-behavior: contain; padding: 12px 16px 16px; line-height: 1.55; overflow-wrap: anywhere; }
 .razpri-body > :first-child { margin-top: 0; }
 .razpri-body > :last-child { margin-bottom: 0; }
+/* Polje v oknu nima svojega okvirja: fokus pokaže okvir kartice. */
+.razpri:focus-within { border-color: var(--accent); box-shadow: var(--shadow-lg), 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent); }
 .razpri-area {
   flex: 1; min-height: 120px; width: 100%; resize: none; border: 0; outline: none; padding: 12px 16px 16px;
   background: var(--surface); color: var(--text); font: inherit; line-height: 1.5;

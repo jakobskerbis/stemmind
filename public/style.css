@@ -661,6 +661,21 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
 .topbar.tabs-minor .tab:not(.active):not([data-view="path"], [data-view="textbook"], [data-view="chat"], [data-view="competition"]) span { display: none; }
 .topbar.tabs-compact .tab { padding: 9px 11px; }
 .topbar.tabs-compact .tab:not(.active) span { display: none; }
+/* Računalnik: vrstica zavihkov nikoli ne gre pod števce in profil (desno). Če zavihki tudi samo z ikonami
+   ne gredo v vrstico, se vrstica pomika vodoravno (kolesce, sled, Shift+kolesce; app.js), rob, za katerim je še
+   kaj, pa zbledi (fade-start/fade-end nastavi app.js). Maska šteje le prosojnost, zato »black«. Odmik 4 px:
+   obroč fokusa (outline-offset) ni odrezan. Števci in profil so pred zavihki (z-index), tudi pred zavihkom s
+   piko (.tab.floating je position: relative) in pred .stat.xp. */
+@media (min-width: 761px) {
+  .topbar .tabs { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain; padding: 4px; margin: -4px; }
+  .topbar .tabs::-webkit-scrollbar { display: none; }
+  .topbar .tabs.fade-end { mask-image: linear-gradient(to right, black calc(100% - 48px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 48px), transparent); }
+  .topbar .tabs.fade-start { mask-image: linear-gradient(to left, black calc(100% - 48px), transparent); -webkit-mask-image: linear-gradient(to left, black calc(100% - 48px), transparent); }
+  .topbar .tabs.fade-start.fade-end { mask-image: linear-gradient(to right, transparent, black 48px, black calc(100% - 48px), transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 48px, black calc(100% - 48px), transparent); }
+  html[dir="rtl"] .topbar .tabs.fade-end { mask-image: linear-gradient(to left, black calc(100% - 48px), transparent); -webkit-mask-image: linear-gradient(to left, black calc(100% - 48px), transparent); }
+  html[dir="rtl"] .topbar .tabs.fade-start:not(.fade-end) { mask-image: linear-gradient(to right, black calc(100% - 48px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 48px), transparent); }
+  .topbar .xp-badge, .topbar .student-picker { position: relative; z-index: 1; flex: none; }
+}
 
 /* ---------- ožji računalniki in tablice: zavihki samo z ikonami ---------- */
 @media (min-width: 761px) and (max-width: 1240px) {

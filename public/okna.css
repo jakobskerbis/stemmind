@@ -103,14 +103,34 @@ body.docked > main.view { container: okno / inline-size; min-width: 0; }
   .msg { max-width: 100%; }
   .composer > .hint { display: none; }
   button.send span { display: none; }
+  /* Kot na telefonu (style.css, ui.css do 760 px): naslov dobi prostor, en čip, daljši vnos čez celo vrstico. */
+  .chat-head h1 { flex: 1; min-width: 0; }
+  .chips .chip:nth-child(n+2) { display: none; }
+  .msg.assistant { margin-inline-start: 40px; }
+  .composer { padding: 8px 10px 10px; }
+  .ai-note { margin-top: 4px; font-size: 0.7rem; }
+  .composer-row.multi { flex-wrap: wrap; row-gap: 2px; }
+  .composer-row.multi #input { order: -1; flex: 1 1 100%; padding-inline: 10px; }
+  .composer-row.multi .mic-btn { margin-inline-start: auto; }
+}
+/* Glavni pogled ob pripetem oknu je sam vsebnik, zato pravila @container zgoraj ne zadenejo njega samega
+   (le vsebino v njem). Pripeto okno vzame pol zaslona: Učna pot in Napredek v enem stolpcu do širine 2 × 999 px,
+   klepet brez stranskega seznama do 2 × 640 px. */
+@media (max-width: 1998px) {
+  body.docked > #view-path, body.docked > #view-progress { display: block; max-width: none; }
+}
+@media (max-width: 1280px) {
+  body.docked > .chat-view { grid-template-columns: minmax(0, 1fr); position: relative; }
 }
 
 /* ---------- spodnji list (telefon, tablica na dotik) ---------- */
 .okno-sheet {
-  left: 0; right: 0; bottom: 0; top: auto; z-index: 45;
-  height: min(var(--sheet-h, 60dvh), 100dvh);
+  left: 0; right: 0; bottom: var(--tabbar-h, 0px); top: auto; z-index: 45;
+  height: min(var(--sheet-h, 60dvh), 100dvh - var(--tabbar-h, 0px));
   border-radius: var(--radius) var(--radius) 0 0; border-block-end: 0;
-  padding-bottom: env(safe-area-inset-bottom);
+  /* Stoji nad spodnjo vrstico zavihkov (--tabbar-h, okna.js), ki ima svoj odmik za varno območje;
+     brez nje (npr. odprta plošča za vnos) list sega do roba zaslona. */
+  padding-bottom: max(0px, env(safe-area-inset-bottom) - var(--tabbar-h, 0px));
   box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
 }
 .okno-sheet:not(.moving) { transition: height 0.15s ease-out; }
@@ -131,17 +151,19 @@ body.docked > main.view { container: okno / inline-size; min-width: 0; }
 .cb-main:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 3px; }
 .chat-bubble.dragging .cb-main { transform: scale(1.08); cursor: grabbing; }
 .cb-badge {
-  position: absolute; top: -4px; inset-inline-end: -4px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px;
-  background: var(--danger); color: #fff; font-size: 0.75rem; line-height: 22px; text-align: center; border: 2px solid var(--bg);
+  position: absolute; top: -4px; right: -4px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px;
+  background: var(--danger); color: var(--surface); font-size: 0.75rem; line-height: 22px; text-align: center; border: 2px solid var(--bg);
 }
 .cb-badge[hidden] { display: none; }
+.chat-bubble[data-side="left"] .cb-badge { right: auto; left: -4px; }
 /* × na mehurčku: ob lebdenju (miška) ali po dolgem pritisku (dotik). Ciljna površina 40 px. */
 .cb-x {
-  position: absolute; top: -14px; inset-inline-start: -14px; width: 40px; height: 40px; padding: 0; border: 0; background: transparent;
+  position: absolute; top: -14px; left: -14px; width: 40px; height: 40px; padding: 0; border: 0; background: transparent;
   display: none; place-items: center; cursor: pointer; color: var(--text);
 }
 .cb-x svg { width: 22px; height: 22px; padding: 3px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-lg); }
-.chat-bubble[data-side="left"] .cb-x { inset-inline-start: auto; inset-inline-end: -14px; }
+/* data-side je fizična stran zaslona (tudi v RTL): × je vedno na strani proti sredini zaslona. */
+.chat-bubble[data-side="left"] .cb-x { left: auto; right: -14px; }
 @media (hover: hover) { .chat-bubble:hover .cb-x, .chat-bubble:focus-within .cb-x { display: grid; } }
 .chat-bubble.show-x .cb-x { display: grid; }
 .chat-bubble.dragging .cb-x { display: none; }
@@ -167,7 +189,7 @@ body.docked > main.view { container: okno / inline-size; min-width: 0; }
   background: color-mix(in srgb, var(--text) 70%, transparent); color: var(--bg); transition: transform 0.15s, background 0.15s;
 }
 .cb-drop svg { width: 28px; height: 28px; }
-.cb-drop.hot { transform: translateX(-50%) scale(1.2); background: var(--danger); color: #fff; }
+.cb-drop.hot { transform: translateX(-50%) scale(1.2); background: var(--danger); color: var(--surface); }
 .cb-drop[hidden] { display: none; }
 
 /* ---------- preurejanje vrstic (vrstice.js) ---------- */
@@ -179,6 +201,8 @@ body.vr-busy, body.vr-busy * { cursor: grabbing !important; user-select: none !i
   position: fixed; z-index: 70; pointer-events: none; margin: 0 !important; opacity: 0.95;
   background: var(--surface) !important; border-radius: var(--radius-sm); box-shadow: var(--shadow-lg); transform: rotate(-1.5deg);
 }
+/* Kopija zavihka, ki je v vrstici samo ikona: napis se pokaže (pravila .tabs-minor veljajo le v .topbar), zato širina po vsebini. */
+.vr-ghost.tab { width: max-content !important; white-space: nowrap; }
 /* Zavihek pod vrstico: kmalu okno. */
 .vr-ghost.vr-out { outline: 2px solid var(--accent); outline-offset: 2px; transform: none; }
 .vr-mark { position: fixed; z-index: 70; pointer-events: none; border-radius: 2px; background: var(--accent); }
@@ -190,4 +214,4 @@ body.vr-busy, body.vr-busy * { cursor: grabbing !important; user-select: none !i
 }
 
 /* ---------- nastavitev ---------- */
-.okna-card .okna-reset { margin-top: 14px; margin-inline-start: 34px; }
+.okna-card .okna-reset { margin-top: 14px; margin-inline-start: 34px; min-height: 40px !important; }

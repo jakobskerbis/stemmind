@@ -3389,7 +3389,26 @@ async function bootFailed(err) {
         if (!over()) break;
         bar.classList.add(step);
       }
+      if (over()) tabs.querySelector(".tab.active")?.scrollIntoView({ block: "nearest", inline: "nearest" });
+      fade();
     };
+    // Vrstica, ki ne gre na zaslon, se pomika; rob, za katerim je še kaj, zbledi (style.css). V RTL je scrollLeft ≤ 0.
+    const fade = () => {
+      const max = tabs.scrollWidth - tabs.clientWidth;
+      const at = Math.abs(tabs.scrollLeft);
+      tabs.classList.toggle("fade-start", max > 1 && at > 1);
+      tabs.classList.toggle("fade-end", max > 1 && at < max - 1);
+    };
+    tabs.addEventListener("scroll", fade, { passive: true });
+    tabs.addEventListener(
+      "wheel",
+      (e) => {
+        if (!over() || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        e.preventDefault();
+        tabs.scrollLeft += document.documentElement.dir === "rtl" ? -e.deltaY : e.deltaY;
+      },
+      { passive: false },
+    );
     new ResizeObserver(fit).observe(tabs);
     new MutationObserver(fit).observe(tabs, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["hidden", "class"] });
     document.fonts?.ready.then(fit);
