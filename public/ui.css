@@ -299,6 +299,8 @@ html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important;
 :where(:root[data-era]) :is(h1, .unit-title h2),
 :root[data-era] .brand-name { font-family: var(--font-head); font-weight: 650; letter-spacing: 0; font-size-adjust: ex-height 0.46; }
 :root[data-era] .brand-name { font-size: 1.32rem; font-weight: 700; }
+/* Naslov pogovora ima overflow: hidden; serifna pisava obdobja ima višje črke, zato višja vrstica (j: odrezan napis). */
+:root[data-era] .chat-head h1 { line-height: 1.45; padding-block: 2px; }
 /* Lahki način: brez spletne pisave tudi za naslove. */
 html.lite[data-era] { --font-head: Georgia, "Times New Roman", serif; }
 
