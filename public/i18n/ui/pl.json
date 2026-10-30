@@ -2320,5 +2320,33 @@
   "tc.deleteClass": "Usuń klasę",
   "tc.deleteClassConfirm": "Klasa zostanie usunięta dla wszystkich uczniów. Ich postępy zostaną zachowane. Kontynuować?",
   "tc.free": "Konto nauczyciela, klasy, zadania, eksport i przeniesienie klasy do innej szkoły są zawsze bezpłatne.",
-  "tc.offersOff": "Nie pokazuj uczniom tej klasy ofert płatnych pakietów"
+  "tc.offersOff": "Nie pokazuj uczniom tej klasy ofert płatnych pakietów",
+  "pilot.title": "Pomiar w pilotażu",
+  "pilot.period": "Okres",
+  "pilot.days": "ostatnie {n} dni",
+  "pilot.school": "Szkoła",
+  "pilot.allSchools": "wszyscy uczniowie",
+  "pilot.qPerDay": "pytań do korepetytora dziennie",
+  "pilot.qPerStudent": "pytań na ucznia dziennie (w dni, gdy pyta)",
+  "pilot.aiPerStudent": {
+    "one": "koszt AI na ucznia miesięcznie ({n} uczeń z AI)",
+    "few": "koszt AI na ucznia miesięcznie ({n} uczniów z AI)",
+    "many": "koszt AI na ucznia miesięcznie ({n} uczniów z AI)",
+    "other": "koszt AI na ucznia miesięcznie ({n} ucznia z AI)"
+  },
+  "pilot.aiTotal": "koszt AI w okresie",
+  "pilot.visitsParents": "wyświetleń strony dla rodziców",
+  "pilot.visitsPay": "wyświetleń strony płatności",
+  "pilot.schoolStudents": {
+    "one": "Szkoła ma w klasach {n} ucznia.",
+    "few": "Szkoła ma w klasach {n} uczniów.",
+    "many": "Szkoła ma w klasach {n} uczniów.",
+    "other": "Szkoła ma w klasach {n} ucznia."
+  },
+  "pilot.day": "Dzień",
+  "pilot.questions": "Pytania",
+  "pilot.askers": "Uczniowie",
+  "pilot.ai": "AI",
+  "pilot.parents": "Rodzice",
+  "pilot.note": "Wyświetlenia stron są liczone bez plików cookie i bez adresów IP, tylko jako liczba na dzień. Boty i podglądy linków nie są liczone."
 }

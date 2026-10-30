@@ -2260,5 +2260,27 @@
   "tc.deleteClass": "クラスを削除",
   "tc.deleteClassConfirm": "クラスはすべての生徒について削除されます。生徒の進み具合は残ります。続けますか？",
   "tc.free": "教員アカウント、クラス、課題、エクスポート、クラスの別の学校への移動は、いつでも無料です。",
-  "tc.offersOff": "このクラスの生徒に有料プランの案内を表示しない"
+  "tc.offersOff": "このクラスの生徒に有料プランの案内を表示しない",
+  "pilot.title": "パイロット計測",
+  "pilot.period": "期間",
+  "pilot.days": "過去 {n} 日間",
+  "pilot.school": "学校",
+  "pilot.allSchools": "全生徒",
+  "pilot.qPerDay": "1 日あたりのチューターへの質問数",
+  "pilot.qPerStudent": "生徒 1 人・1 日あたりの質問数（質問した日のみ）",
+  "pilot.aiPerStudent": {
+    "other": "生徒 1 人・1 か月あたりの AI コスト（AI 利用生徒 {n} 人）"
+  },
+  "pilot.aiTotal": "期間中の AI コスト",
+  "pilot.visitsParents": "保護者向けページの閲覧数",
+  "pilot.visitsPay": "支払いページの閲覧数",
+  "pilot.schoolStudents": {
+    "other": "この学校のクラスには生徒が {n} 人います。"
+  },
+  "pilot.day": "日付",
+  "pilot.questions": "質問",
+  "pilot.askers": "生徒",
+  "pilot.ai": "AI",
+  "pilot.parents": "保護者",
+  "pilot.note": "ページ閲覧数は Cookie も IP アドレスも使わず、1 日ごとの件数だけを数えます。ボットやリンクのプレビューは数えません。"
 }

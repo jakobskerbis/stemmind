@@ -2280,5 +2280,29 @@
   "tc.deleteClass": "Delete class",
   "tc.deleteClassConfirm": "The class will be deleted for all students. Their progress stays. Continue?",
   "tc.free": "The teacher account, classes, assignments, export and moving a class to another school are always free.",
-  "tc.offersOff": "Don't show paid plan offers to students in this class"
+  "tc.offersOff": "Don't show paid plan offers to students in this class",
+  "pilot.title": "Pilot measurement",
+  "pilot.period": "Period",
+  "pilot.days": "last {n} days",
+  "pilot.school": "School",
+  "pilot.allSchools": "all students",
+  "pilot.qPerDay": "questions to the tutor per day",
+  "pilot.qPerStudent": "questions per student per day (on days they ask)",
+  "pilot.aiPerStudent": {
+    "one": "AI cost per student per month ({n} student using AI)",
+    "other": "AI cost per student per month ({n} students using AI)"
+  },
+  "pilot.aiTotal": "AI cost in the period",
+  "pilot.visitsParents": "views of the parents page",
+  "pilot.visitsPay": "views of the payment page",
+  "pilot.schoolStudents": {
+    "one": "The school has {n} student in classes.",
+    "other": "The school has {n} students in classes."
+  },
+  "pilot.day": "Day",
+  "pilot.questions": "Questions",
+  "pilot.askers": "Students",
+  "pilot.ai": "AI",
+  "pilot.parents": "Parents",
+  "pilot.note": "Page views are counted without cookies and without IP addresses, only as a daily total. Bots and link previews are not counted."
 }

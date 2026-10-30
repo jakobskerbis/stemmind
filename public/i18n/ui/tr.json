@@ -2280,5 +2280,29 @@
   "tc.deleteClass": "Sınıfı sil",
   "tc.deleteClassConfirm": "Sınıf tüm öğrenciler için silinecek. Öğrencilerin ilerlemesi korunur. Devam edilsin mi?",
   "tc.free": "Öğretmen hesabı, sınıflar, ödevler, dışa aktarma ve bir sınıfı başka bir okula taşıma her zaman ücretsizdir.",
-  "tc.offersOff": "Bu sınıftaki öğrencilere ücretli paket teklifleri gösterme"
+  "tc.offersOff": "Bu sınıftaki öğrencilere ücretli paket teklifleri gösterme",
+  "pilot.title": "Pilot ölçümü",
+  "pilot.period": "Dönem",
+  "pilot.days": "son {n} gün",
+  "pilot.school": "Okul",
+  "pilot.allSchools": "tüm öğrenciler",
+  "pilot.qPerDay": "günlük özel öğretmene soru",
+  "pilot.qPerStudent": "öğrenci başına günlük soru (soru sorduğu günlerde)",
+  "pilot.aiPerStudent": {
+    "one": "öğrenci başına aylık YZ maliyeti (YZ kullanan {n} öğrenci)",
+    "other": "öğrenci başına aylık YZ maliyeti (YZ kullanan {n} öğrenci)"
+  },
+  "pilot.aiTotal": "dönemdeki YZ maliyeti",
+  "pilot.visitsParents": "veli sayfası görüntülenmesi",
+  "pilot.visitsPay": "ödeme sayfası görüntülenmesi",
+  "pilot.schoolStudents": {
+    "one": "Okulun sınıflarında {n} öğrenci var.",
+    "other": "Okulun sınıflarında {n} öğrenci var."
+  },
+  "pilot.day": "Gün",
+  "pilot.questions": "Sorular",
+  "pilot.askers": "Öğrenciler",
+  "pilot.ai": "YZ",
+  "pilot.parents": "Veliler",
+  "pilot.note": "Sayfa görüntülenmeleri çerez ve IP adresi olmadan, yalnızca günlük sayı olarak sayılır. Botlar ve bağlantı önizlemeleri sayılmaz."
 }

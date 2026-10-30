@@ -2280,5 +2280,29 @@
   "tc.deleteClass": "Elimina classe",
   "tc.deleteClassConfirm": "La classe verrà eliminata per tutti gli studenti. I loro progressi restano. Continuo?",
   "tc.free": "L’account insegnante, le classi, i compiti, l’esportazione e il trasferimento di una classe a un’altra scuola sono sempre gratuiti.",
-  "tc.offersOff": "Non mostrare offerte di piani a pagamento agli studenti di questa classe"
+  "tc.offersOff": "Non mostrare offerte di piani a pagamento agli studenti di questa classe",
+  "pilot.title": "Misurazione del pilota",
+  "pilot.period": "Periodo",
+  "pilot.days": "ultimi {n} giorni",
+  "pilot.school": "Scuola",
+  "pilot.allSchools": "tutti gli studenti",
+  "pilot.qPerDay": "domande al tutor al giorno",
+  "pilot.qPerStudent": "domande per studente al giorno (nei giorni in cui chiede)",
+  "pilot.aiPerStudent": {
+    "one": "costo IA per studente al mese ({n} studente con IA)",
+    "other": "costo IA per studente al mese ({n} studenti con IA)"
+  },
+  "pilot.aiTotal": "costo IA nel periodo",
+  "pilot.visitsParents": "visite alla pagina per i genitori",
+  "pilot.visitsPay": "visite alla pagina di pagamento",
+  "pilot.schoolStudents": {
+    "one": "La scuola ha {n} studente nelle classi.",
+    "other": "La scuola ha {n} studenti nelle classi."
+  },
+  "pilot.day": "Giorno",
+  "pilot.questions": "Domande",
+  "pilot.askers": "Studenti",
+  "pilot.ai": "IA",
+  "pilot.parents": "Genitori",
+  "pilot.note": "Le visite alle pagine sono contate senza cookie e senza indirizzi IP, solo come numero al giorno. Bot e anteprime dei link non vengono contati."
 }

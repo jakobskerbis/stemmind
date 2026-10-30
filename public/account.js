@@ -718,8 +718,47 @@ function adminCodes(acc) {
     </div>`;
 }
 
+// Skrbnik: merjenje v pilotu (server/pilot.js): vprašanja na dan, strošek AI na učenca, obiski strani za starše.
+async function loadPilot(days = 30, school = "") {
+  const out = $("#pilot-out");
+  if (!out) return;
+  let r;
+  try {
+    r = await api(`/api/admin/pilot?days=${days}${school ? `&school=${school}` : ""}`);
+  } catch (err) {
+    out.innerHTML = `<p class="muted">${esc(err.message)}</p>`;
+    return;
+  }
+  const loc = currentRegion() ? `${currentLang()}-${currentRegion()}` : currentLang();
+  const nf = (x, d = 2) => Number(x).toLocaleString(loc, { maximumFractionDigits: d });
+  const eur = (x, d = 2) => Number(x).toLocaleString(loc, { style: "currency", currency: "EUR", maximumFractionDigits: d });
+  const day = (s) => new Date(`${s}T12:00:00`).toLocaleDateString(loc, { weekday: "short", day: "numeric", month: "numeric" });
+  const T = r.totals;
+  const rate = r.rows.length ? T.aiEur / Math.max(T.aiUsd, 1e-9) : 0;
+  out.innerHTML = `
+    <div class="pilot-filters">
+      <label>${esc(t("pilot.period"))} <select id="pilot-days">${[7, 30, 90].map((d) => `<option value="${d}" ${d === r.days ? "selected" : ""}>${esc(t("pilot.days", { n: d }))}</option>`).join("")}</select></label>
+      ${r.schools.length ? `<label>${esc(t("pilot.school"))} <select id="pilot-school"><option value="">${esc(t("pilot.allSchools"))}</option>${r.schools.map((s) => `<option value="${s.id}" ${s.id === r.schoolId ? "selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label>` : ""}
+    </div>
+    <ul class="pilot-sum">
+      <li><b>${nf(T.questionsPerDay, 1)}</b> ${esc(t("pilot.qPerDay"))}</li>
+      <li><b>${nf(T.questionsPerAskerDay, 1)}</b> ${esc(t("pilot.qPerStudent"))}</li>
+      <li><b>${eur(T.aiEurPerStudentMonth, 3)}</b> ${esc(t("pilot.aiPerStudent", { n: T.aiUsers }))}</li>
+      <li><b>${eur(T.aiEur)}</b> ${esc(t("pilot.aiTotal"))}</li>
+      <li><b>${T.visits.starsi}</b> ${esc(t("pilot.visitsParents"))} · <b>${T.visits.placaj}</b> ${esc(t("pilot.visitsPay"))}</li>
+    </ul>
+    ${r.students != null ? `<p class="muted">${esc(t("pilot.schoolStudents", { n: r.students }))}</p>` : ""}
+    <div class="pilot-scroll"><table class="table pilot-table"><thead><tr><th scope="col">${esc(t("pilot.day"))}</th><th scope="col">${esc(t("pilot.questions"))}</th><th scope="col">${esc(t("pilot.askers"))}</th><th scope="col">${esc(t("pilot.ai"))}</th><th scope="col">${esc(t("pilot.parents"))}</th></tr></thead>
+      <tbody>${[...r.rows].reverse().map((d) => `<tr><td>${esc(day(d.day))}</td><td>${d.questions}</td><td>${d.askers}</td><td>${eur(d.aiUsd * rate, 3)}</td><td>${d.visits.starsi + d.visits.placaj}</td></tr>`).join("")}</tbody></table></div>
+    <p class="muted small">${esc(t("pilot.note"))}</p>`;
+  const reload = () => loadPilot($("#pilot-days").value, $("#pilot-school")?.value || "");
+  $("#pilot-days").addEventListener("change", reload);
+  $("#pilot-school")?.addEventListener("change", reload);
+}
+
 function bindAdminCodes(acc) {
   if (!acc.promo?.codes) return;
+  loadPilot();
   $("#code-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const f = e.target;
@@ -902,6 +941,7 @@ async function renderAccount() {
       ${promoBox(acc, paid)}
     </div>
     ${acc.promo?.codes ? adminCodes(acc) : ""}
+    ${acc.promo?.codes ? `<div class="card" id="pilot-card"><h2>${esc(t("pilot.title"))}</h2><div id="pilot-out"><p class="muted">${esc(t("common.loading"))}</p></div></div>` : ""}
 
     <div class="card">
       <h2>Otroci</h2>

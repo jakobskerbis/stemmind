@@ -2260,5 +2260,27 @@
   "tc.deleteClass": "刪除班級",
   "tc.deleteClassConfirm": "將為所有學生刪除這個班級。學生的進度會保留。要繼續嗎？",
   "tc.free": "教師帳號、班級、作業、匯出，以及將班級轉到其他學校，一律免費。",
-  "tc.offersOff": "不向本班學生顯示付費方案優惠"
+  "tc.offersOff": "不向本班學生顯示付費方案優惠",
+  "pilot.title": "試辦數據",
+  "pilot.period": "期間",
+  "pilot.days": "最近 {n} 天",
+  "pilot.school": "學校",
+  "pilot.allSchools": "所有學生",
+  "pilot.qPerDay": "每天向輔導老師提問數",
+  "pilot.qPerStudent": "每位學生每天提問數（僅計提問當天）",
+  "pilot.aiPerStudent": {
+    "other": "每位學生每月 AI 成本（{n} 名學生使用 AI）"
+  },
+  "pilot.aiTotal": "期間內 AI 成本",
+  "pilot.visitsParents": "家長頁面瀏覽次數",
+  "pilot.visitsPay": "付款頁面瀏覽次數",
+  "pilot.schoolStudents": {
+    "other": "該校班級中共有 {n} 名學生。"
+  },
+  "pilot.day": "日期",
+  "pilot.questions": "提問",
+  "pilot.askers": "學生",
+  "pilot.ai": "AI",
+  "pilot.parents": "家長",
+  "pilot.note": "頁面瀏覽次數的統計不使用 Cookie，也不記錄 IP 位址，只記錄每天的次數。機器人和連結預覽不計入。"
 }

@@ -2280,5 +2280,29 @@
   "tc.deleteClass": "Fshi klasën",
   "tc.deleteClassConfirm": "Klasa do të fshihet për të gjithë nxënësit. Përparimi i tyre mbetet. Të vazhdoj?",
   "tc.free": "Llogaria e mësuesit, klasat, detyrat, eksporti dhe zhvendosja e klasës në një shkollë tjetër janë gjithmonë falas.",
-  "tc.offersOff": "Mos u shfaq nxënësve të kësaj klase oferta për paketa me pagesë"
+  "tc.offersOff": "Mos u shfaq nxënësve të kësaj klase oferta për paketa me pagesë",
+  "pilot.title": "Matja në pilot",
+  "pilot.period": "Periudha",
+  "pilot.days": "{n} ditët e fundit",
+  "pilot.school": "Shkolla",
+  "pilot.allSchools": "të gjithë nxënësit",
+  "pilot.qPerDay": "pyetje për tutorin në ditë",
+  "pilot.qPerStudent": "pyetje për nxënës në ditë (në ditët kur pyet)",
+  "pilot.aiPerStudent": {
+    "one": "kosto e IA-së për nxënës në muaj ({n} nxënës me IA)",
+    "other": "kosto e IA-së për nxënës në muaj ({n} nxënës me IA)"
+  },
+  "pilot.aiTotal": "kosto e IA-së në periudhë",
+  "pilot.visitsParents": "shikime të faqes për prindërit",
+  "pilot.visitsPay": "shikime të faqes së pagesës",
+  "pilot.schoolStudents": {
+    "one": "Shkolla ka {n} nxënës në klasa.",
+    "other": "Shkolla ka {n} nxënës në klasa."
+  },
+  "pilot.day": "Dita",
+  "pilot.questions": "Pyetje",
+  "pilot.askers": "Nxënës",
+  "pilot.ai": "IA",
+  "pilot.parents": "Prindër",
+  "pilot.note": "Shikimet e faqeve numërohen pa cookies dhe pa adresa IP, vetëm si numër në ditë. Robotët dhe parapamjet e lidhjeve nuk numërohen."
 }

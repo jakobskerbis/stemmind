@@ -2260,5 +2260,27 @@
   "tc.deleteClass": "Xóa lớp",
   "tc.deleteClassConfirm": "Lớp sẽ bị xóa với tất cả học sinh. Tiến độ của các em vẫn được giữ. Tiếp tục?",
   "tc.free": "Tài khoản giáo viên, lớp học, bài tập, xuất dữ liệu và chuyển lớp sang trường khác luôn miễn phí.",
-  "tc.offersOff": "Không hiển thị ưu đãi gói trả phí cho học sinh lớp này"
+  "tc.offersOff": "Không hiển thị ưu đãi gói trả phí cho học sinh lớp này",
+  "pilot.title": "Đo lường thí điểm",
+  "pilot.period": "Khoảng thời gian",
+  "pilot.days": "{n} ngày qua",
+  "pilot.school": "Trường",
+  "pilot.allSchools": "tất cả học sinh",
+  "pilot.qPerDay": "câu hỏi cho gia sư mỗi ngày",
+  "pilot.qPerStudent": "câu hỏi mỗi học sinh mỗi ngày (vào ngày có hỏi)",
+  "pilot.aiPerStudent": {
+    "other": "chi phí AI mỗi học sinh mỗi tháng ({n} học sinh dùng AI)"
+  },
+  "pilot.aiTotal": "chi phí AI trong khoảng thời gian",
+  "pilot.visitsParents": "lượt xem trang dành cho phụ huynh",
+  "pilot.visitsPay": "lượt xem trang thanh toán",
+  "pilot.schoolStudents": {
+    "other": "Trường có {n} học sinh trong các lớp."
+  },
+  "pilot.day": "Ngày",
+  "pilot.questions": "Câu hỏi",
+  "pilot.askers": "Học sinh",
+  "pilot.ai": "AI",
+  "pilot.parents": "Phụ huynh",
+  "pilot.note": "Lượt xem trang được đếm không dùng cookie và không lưu địa chỉ IP, chỉ là số lượng mỗi ngày. Bot và bản xem trước liên kết không được tính."
 }

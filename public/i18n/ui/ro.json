@@ -2300,5 +2300,31 @@
   "tc.deleteClass": "Șterge clasa",
   "tc.deleteClassConfirm": "Clasa va fi ștearsă pentru toți elevii. Progresul lor rămâne. Continuați?",
   "tc.free": "Contul de profesor, clasele, temele, exportul și mutarea unei clase la altă școală sunt întotdeauna gratuite.",
-  "tc.offersOff": "Nu afișa oferte de pachete plătite elevilor din această clasă"
+  "tc.offersOff": "Nu afișa oferte de pachete plătite elevilor din această clasă",
+  "pilot.title": "Măsurători în pilot",
+  "pilot.period": "Perioadă",
+  "pilot.days": "ultimele {n} zile",
+  "pilot.school": "Școală",
+  "pilot.allSchools": "toți elevii",
+  "pilot.qPerDay": "întrebări către tutor pe zi",
+  "pilot.qPerStudent": "întrebări per elev pe zi (în zilele în care întreabă)",
+  "pilot.aiPerStudent": {
+    "one": "cost AI per elev pe lună ({n} elev cu AI)",
+    "few": "cost AI per elev pe lună ({n} elevi cu AI)",
+    "other": "cost AI per elev pe lună ({n} de elevi cu AI)"
+  },
+  "pilot.aiTotal": "cost AI în perioadă",
+  "pilot.visitsParents": "vizualizări ale paginii pentru părinți",
+  "pilot.visitsPay": "vizualizări ale paginii de plată",
+  "pilot.schoolStudents": {
+    "one": "Școala are {n} elev în clase.",
+    "few": "Școala are {n} elevi în clase.",
+    "other": "Școala are {n} de elevi în clase."
+  },
+  "pilot.day": "Zi",
+  "pilot.questions": "Întrebări",
+  "pilot.askers": "Elevi",
+  "pilot.ai": "AI",
+  "pilot.parents": "Părinți",
+  "pilot.note": "Vizualizările paginilor se numără fără cookie-uri și fără adrese IP, doar ca număr pe zi. Roboții și previzualizările de linkuri nu se numără."
 }

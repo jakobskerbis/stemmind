@@ -72,3 +72,12 @@ details .card { margin-top: 8px; }
 .code-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .code-actions button { min-height: 40px; }
 .event-list code { overflow-wrap: anywhere; }
+
+/* Skrbnik: merjenje v pilotu */
+.pilot-filters { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 10px; }
+.pilot-filters label { display: flex; align-items: center; gap: 6px; font-weight: 700; }
+.pilot-filters select { min-height: 40px; }
+.pilot-sum { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 4px; }
+.pilot-table th, .pilot-table td { padding: 4px 8px; text-align: end; white-space: nowrap; }
+.pilot-table th:first-child, .pilot-table td:first-child { text-align: start; }
+.pilot-scroll { overflow-x: auto; max-width: 100%; position: relative; }

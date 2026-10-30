@@ -2280,5 +2280,29 @@
   "tc.deleteClass": "Eliminar clase",
   "tc.deleteClassConfirm": "La clase se eliminará para todos los alumnos. Su progreso se conserva. ¿Continuar?",
   "tc.free": "La cuenta de docente, las clases, las tareas, la exportación y el traslado de una clase a otro centro son siempre gratuitos.",
-  "tc.offersOff": "No mostrar ofertas de planes de pago al alumnado de esta clase"
+  "tc.offersOff": "No mostrar ofertas de planes de pago al alumnado de esta clase",
+  "pilot.title": "Medición del piloto",
+  "pilot.period": "Periodo",
+  "pilot.days": "últimos {n} días",
+  "pilot.school": "Centro",
+  "pilot.allSchools": "todos los alumnos",
+  "pilot.qPerDay": "preguntas al tutor por día",
+  "pilot.qPerStudent": "preguntas por alumno y día (los días en que pregunta)",
+  "pilot.aiPerStudent": {
+    "one": "coste de IA por alumno al mes ({n} alumno con IA)",
+    "other": "coste de IA por alumno al mes ({n} alumnos con IA)"
+  },
+  "pilot.aiTotal": "coste de IA en el periodo",
+  "pilot.visitsParents": "visitas a la página para familias",
+  "pilot.visitsPay": "visitas a la página de pago",
+  "pilot.schoolStudents": {
+    "one": "El centro tiene {n} alumno en clases.",
+    "other": "El centro tiene {n} alumnos en clases."
+  },
+  "pilot.day": "Día",
+  "pilot.questions": "Preguntas",
+  "pilot.askers": "Alumnos",
+  "pilot.ai": "IA",
+  "pilot.parents": "Familias",
+  "pilot.note": "Las visitas se cuentan sin cookies y sin direcciones IP, solo como número por día. No se cuentan los bots ni las vistas previas de enlaces."
 }

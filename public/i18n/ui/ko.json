@@ -2260,5 +2260,27 @@
   "tc.deleteClass": "반 삭제",
   "tc.deleteClassConfirm": "모든 학생에게서 반이 삭제됩니다. 학생들의 진도는 그대로 남습니다. 계속하시겠습니까?",
   "tc.free": "교사 계정, 반, 과제, 내보내기, 반을 다른 학교로 옮기는 기능은 언제나 무료입니다.",
-  "tc.offersOff": "이 반 학생에게 유료 요금제 안내를 표시하지 않음"
+  "tc.offersOff": "이 반 학생에게 유료 요금제 안내를 표시하지 않음",
+  "pilot.title": "시범 운영 측정",
+  "pilot.period": "기간",
+  "pilot.days": "최근 {n}일",
+  "pilot.school": "학교",
+  "pilot.allSchools": "전체 학생",
+  "pilot.qPerDay": "하루 튜터 질문 수",
+  "pilot.qPerStudent": "학생 1명당 하루 질문 수(질문한 날 기준)",
+  "pilot.aiPerStudent": {
+    "other": "학생 1명당 월 AI 비용(AI 사용 학생 {n}명)"
+  },
+  "pilot.aiTotal": "기간 내 AI 비용",
+  "pilot.visitsParents": "학부모 페이지 조회 수",
+  "pilot.visitsPay": "결제 페이지 조회 수",
+  "pilot.schoolStudents": {
+    "other": "이 학교의 반에는 학생 {n}명이 있습니다."
+  },
+  "pilot.day": "날짜",
+  "pilot.questions": "질문",
+  "pilot.askers": "학생",
+  "pilot.ai": "AI",
+  "pilot.parents": "학부모",
+  "pilot.note": "페이지 조회는 쿠키와 IP 주소 없이 하루 단위 횟수로만 집계합니다. 봇과 링크 미리보기는 집계하지 않습니다."
 }

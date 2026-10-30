@@ -2260,5 +2260,27 @@
   "tc.deleteClass": "删除班级",
   "tc.deleteClassConfirm": "将为所有学生删除该班级。学生的进度会保留。是否继续？",
   "tc.free": "教师账号、班级、作业、导出以及将班级转到其他学校，始终免费。",
-  "tc.offersOff": "不向本班学生显示付费套餐优惠"
+  "tc.offersOff": "不向本班学生显示付费套餐优惠",
+  "pilot.title": "试点数据",
+  "pilot.period": "时间段",
+  "pilot.days": "最近 {n} 天",
+  "pilot.school": "学校",
+  "pilot.allSchools": "所有学生",
+  "pilot.qPerDay": "每天向辅导老师提问数",
+  "pilot.qPerStudent": "每名学生每天提问数（仅计提问当天）",
+  "pilot.aiPerStudent": {
+    "other": "每名学生每月 AI 成本（{n} 名学生使用 AI）"
+  },
+  "pilot.aiTotal": "时间段内 AI 成本",
+  "pilot.visitsParents": "家长页面浏览量",
+  "pilot.visitsPay": "付款页面浏览量",
+  "pilot.schoolStudents": {
+    "other": "该校班级中共有 {n} 名学生。"
+  },
+  "pilot.day": "日期",
+  "pilot.questions": "提问",
+  "pilot.askers": "学生",
+  "pilot.ai": "AI",
+  "pilot.parents": "家长",
+  "pilot.note": "页面浏览量的统计不使用 Cookie，也不记录 IP 地址，只记录每天的次数。机器人和链接预览不计入。"
 }

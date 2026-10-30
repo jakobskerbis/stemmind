@@ -2280,5 +2280,29 @@
   "tc.deleteClass": "Futa darasa",
   "tc.deleteClassConfirm": "Darasa litafutwa kwa wanafunzi wote. Maendeleo yao yanabaki. Niendelee?",
   "tc.free": "Akaunti ya mwalimu, madarasa, kazi, kuhamisha data na kuhamishia darasa shule nyingine ni bure kila wakati.",
-  "tc.offersOff": "Usiwaonyeshe wanafunzi wa darasa hili matoleo ya vifurushi vya kulipia"
+  "tc.offersOff": "Usiwaonyeshe wanafunzi wa darasa hili matoleo ya vifurushi vya kulipia",
+  "pilot.title": "Upimaji wa majaribio",
+  "pilot.period": "Kipindi",
+  "pilot.days": "siku {n} zilizopita",
+  "pilot.school": "Shule",
+  "pilot.allSchools": "wanafunzi wote",
+  "pilot.qPerDay": "maswali kwa Mwalimu wa programu kwa siku",
+  "pilot.qPerStudent": "maswali kwa kila mwanafunzi kwa siku (siku anazouliza)",
+  "pilot.aiPerStudent": {
+    "one": "gharama ya AI kwa mwanafunzi kwa mwezi (mwanafunzi {n} anayetumia AI)",
+    "other": "gharama ya AI kwa mwanafunzi kwa mwezi (wanafunzi {n} wanaotumia AI)"
+  },
+  "pilot.aiTotal": "gharama ya AI katika kipindi",
+  "pilot.visitsParents": "mara ukurasa wa wazazi ulitazamwa",
+  "pilot.visitsPay": "mara ukurasa wa malipo ulitazamwa",
+  "pilot.schoolStudents": {
+    "one": "Shule ina mwanafunzi {n} katika madarasa.",
+    "other": "Shule ina wanafunzi {n} katika madarasa."
+  },
+  "pilot.day": "Siku",
+  "pilot.questions": "Maswali",
+  "pilot.askers": "Wanafunzi",
+  "pilot.ai": "AI",
+  "pilot.parents": "Wazazi",
+  "pilot.note": "Kutazamwa kwa kurasa kunahesabiwa bila vidakuzi na bila anwani za IP, kama idadi kwa siku tu. Roboti na muhtasari wa viungo hazihesabiwi."
 }

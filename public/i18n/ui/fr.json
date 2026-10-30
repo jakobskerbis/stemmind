@@ -2280,5 +2280,29 @@
   "tc.deleteClass": "Supprimer la classe",
   "tc.deleteClassConfirm": "La classe sera supprimée pour tous les élèves. Leur progression est conservée. Continuer ?",
   "tc.free": "Le compte enseignant, les classes, les devoirs, l’export et le transfert d’une classe vers un autre établissement sont toujours gratuits.",
-  "tc.offersOff": "Ne pas montrer d'offres payantes aux élèves de cette classe"
+  "tc.offersOff": "Ne pas montrer d'offres payantes aux élèves de cette classe",
+  "pilot.title": "Mesures du pilote",
+  "pilot.period": "Période",
+  "pilot.days": "{n} derniers jours",
+  "pilot.school": "Établissement",
+  "pilot.allSchools": "tous les élèves",
+  "pilot.qPerDay": "questions au tuteur par jour",
+  "pilot.qPerStudent": "questions par élève et par jour (les jours où il en pose)",
+  "pilot.aiPerStudent": {
+    "one": "coût de l’IA par élève et par mois ({n} élève utilisant l’IA)",
+    "other": "coût de l’IA par élève et par mois ({n} élèves utilisant l’IA)"
+  },
+  "pilot.aiTotal": "coût de l’IA sur la période",
+  "pilot.visitsParents": "vues de la page pour les parents",
+  "pilot.visitsPay": "vues de la page de paiement",
+  "pilot.schoolStudents": {
+    "one": "L’établissement compte {n} élève dans des classes.",
+    "other": "L’établissement compte {n} élèves dans des classes."
+  },
+  "pilot.day": "Jour",
+  "pilot.questions": "Questions",
+  "pilot.askers": "Élèves",
+  "pilot.ai": "IA",
+  "pilot.parents": "Parents",
+  "pilot.note": "Les vues de pages sont comptées sans cookies ni adresses IP, uniquement en nombre par jour. Les robots et les aperçus de liens ne sont pas comptés."
 }

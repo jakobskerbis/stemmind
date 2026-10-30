@@ -2320,5 +2320,33 @@
   "tc.deleteClass": "Smazat třídu",
   "tc.deleteClassConfirm": "Třída bude smazána pro všechny žáky. Jejich pokrok zůstane. Pokračovat?",
   "tc.free": "Učitelský účet, třídy, úkoly, export a přesun třídy na jinou školu jsou vždy zdarma.",
-  "tc.offersOff": "Nezobrazovat žákům této třídy nabídky placených balíčků"
+  "tc.offersOff": "Nezobrazovat žákům této třídy nabídky placených balíčků",
+  "pilot.title": "Měření v pilotu",
+  "pilot.period": "Období",
+  "pilot.days": "posledních {n} dní",
+  "pilot.school": "Škola",
+  "pilot.allSchools": "všichni žáci",
+  "pilot.qPerDay": "dotazů na doučovatele za den",
+  "pilot.qPerStudent": "dotazů na žáka za den (ve dnech, kdy se ptá)",
+  "pilot.aiPerStudent": {
+    "one": "náklady na AI na žáka za měsíc ({n} žák s AI)",
+    "few": "náklady na AI na žáka za měsíc ({n} žáci s AI)",
+    "many": "náklady na AI na žáka za měsíc ({n} žáka s AI)",
+    "other": "náklady na AI na žáka za měsíc ({n} žáků s AI)"
+  },
+  "pilot.aiTotal": "náklady na AI za období",
+  "pilot.visitsParents": "zobrazení stránky pro rodiče",
+  "pilot.visitsPay": "zobrazení platební stránky",
+  "pilot.schoolStudents": {
+    "one": "Škola má ve třídách {n} žáka.",
+    "few": "Škola má ve třídách {n} žáky.",
+    "many": "Škola má ve třídách {n} žáka.",
+    "other": "Škola má ve třídách {n} žáků."
+  },
+  "pilot.day": "Den",
+  "pilot.questions": "Dotazy",
+  "pilot.askers": "Žáci",
+  "pilot.ai": "AI",
+  "pilot.parents": "Rodiče",
+  "pilot.note": "Zobrazení stránek se počítají bez cookies a bez IP adres, jen jako počet za den. Roboti a náhledy odkazů se nepočítají."
 }

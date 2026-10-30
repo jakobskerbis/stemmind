@@ -2300,5 +2300,31 @@
   "tc.deleteClass": "Izbriši razred",
   "tc.deleteClassConfirm": "Razred će biti izbrisan za sve učenike. Njihov napredak ostaje. Nastaviti?",
   "tc.free": "Nastavnički račun, razredi, zadaće, izvoz i prijenos razreda u drugu školu uvijek su besplatni.",
-  "tc.offersOff": "Ne prikazuj ponude plaćenih paketa učenicima ovog razreda"
+  "tc.offersOff": "Ne prikazuj ponude plaćenih paketa učenicima ovog razreda",
+  "pilot.title": "Mjerenje u pilotu",
+  "pilot.period": "Period",
+  "pilot.days": "posljednjih {n} dana",
+  "pilot.school": "Škola",
+  "pilot.allSchools": "svi učenici",
+  "pilot.qPerDay": "pitanja instruktoru dnevno",
+  "pilot.qPerStudent": "pitanja po učeniku dnevno (kad nešto pita)",
+  "pilot.aiPerStudent": {
+    "one": "trošak AI-ja po učeniku mjesečno ({n} učenik s AI-jem)",
+    "few": "trošak AI-ja po učeniku mjesečno ({n} učenika s AI-jem)",
+    "other": "trošak AI-ja po učeniku mjesečno ({n} učenika s AI-jem)"
+  },
+  "pilot.aiTotal": "trošak AI-ja u periodu",
+  "pilot.visitsParents": "pregleda stranice za roditelje",
+  "pilot.visitsPay": "pregleda stranice za plaćanje",
+  "pilot.schoolStudents": {
+    "one": "Škola ima {n} učenika u razredima.",
+    "few": "Škola ima {n} učenika u razredima.",
+    "other": "Škola ima {n} učenika u razredima."
+  },
+  "pilot.day": "Dan",
+  "pilot.questions": "Pitanja",
+  "pilot.askers": "Učenici",
+  "pilot.ai": "AI",
+  "pilot.parents": "Roditelji",
+  "pilot.note": "Pregledi stranica broje se bez kolačića i bez IP adresa, samo kao broj po danu. Roboti i pregledi linkova se ne broje."
 }
