@@ -246,3 +246,11 @@ Med vsemi zgornjimi mejami navzgor omejenega zaporedja obstaja najmanjša, **nat
 ~ Kvadrati niso nujno vedno večji: $a_2 = 1$ je manjši od $a_1 = 4$.
 + Ni monotono.
 > Do $a_3$ pada, od $a_3$ naprej narašča, zato ni ne naraščajoče ne padajoče.
+
+:::simboli
+a_n | n-ti člen zaporedja | | |
+a_{n+1} | člen, ki sledi členu a_n | | | aₙ₊₁ − aₙ > 0: zaporedje narašča
+n | indeks (mesto člena) | | | naravno število
+L | limita zaporedja | \lim_{n \to \infty} a_n = L | |
+\varepsilon | polmer okolice limite | | | ε > 0, poljubno majhen
+:::

@@ -249,3 +249,12 @@ Za tuljavo postopek ponovi v treh korakih:
 ~ Pomnožil si z dolžino, kot da daljša tuljava da močnejše polje. Šteje $\dfrac{N}{l}$, zato z $l$ deliš.
 + $5{,}0\,\mathrm{mT}$
 > $B = \dfrac{4\pi\cdot10^{-7} \cdot 500 \cdot 2}{0{,}25}\,\mathrm{T} \approx 5{,}0\cdot10^{-3}\,\mathrm{T} = 5{,}0\,\mathrm{mT}$.
+
+:::simboli
+B | gostota magnetnega polja | B = \dfrac{\mu_0\, I}{2\pi\, r} | T | v tuljavi B = μ₀ N I / l
+\mu_0 | indukcijska konstanta | | V\,s/(A\,m) | 4π · 10⁻⁷ V s/(A m)
+I | električni tok | I = \dfrac{2\pi\, r\, B}{\mu_0} | A
+r | razdalja od žice | r = \dfrac{\mu_0\, I}{2\pi\, B} | m
+N | število ovojev tuljave | | –
+l | dolžina tuljave | | m
+:::

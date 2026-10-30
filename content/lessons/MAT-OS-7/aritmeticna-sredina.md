@@ -250,3 +250,10 @@ Iz tega sledi nekaj pravil:
 - Ne da se izračunati, ker ne poznamo točk prvih dveh testov.
 ~ Posameznih točk ne potrebuješ: iz povprečja dobiš vsoto, $70 \cdot 2 = 140$.
 > Vsota prvih dveh testov je $70 \cdot 2 = 140$; nova vsota $140 + 85 = 225$; $225 : 3 = 75$.
+
+:::simboli
+\bar{x} | aritmetična sredina (povprečje) | \bar{x} = \frac{x_1 + x_2 + \dots + x_n}{n}
+x_1, x_2, x_n | podatki | | | x₁ je prvi, xₙ zadnji podatek
+n | število podatkov | | | vsota podatkov = x̄ · n
+\bar{x}_{\text{nova}} | nova aritmetična sredina | \bar{x}_\text{nova} = \dfrac{\text{nova vsota}}{n} |
+:::

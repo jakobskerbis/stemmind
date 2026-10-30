@@ -246,3 +246,8 @@ Vsak selfie skupine treh ljudi lahko »razstaviš« na $3! = 6$ fotografij na st
 - $32$
 ~ To so vsi ritmi. Odšteti moraš tiste z manj kot dvema B.
 > Vseh ritmov je $2^5 = 32$. Brez B je $1$, z enim B $5$. Ostane $32 - 1 - 5 = 26$.
+
+:::simboli
+n | število vseh elementov | | |
+k | število izbranih elementov | | | k ≤ n
+:::

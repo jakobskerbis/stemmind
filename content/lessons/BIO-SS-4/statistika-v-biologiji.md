@@ -23,7 +23,7 @@ Najprej slike, simboli šele na koncu.
 
 V simulaciji spodaj »Sredine in razpršenost podatkov« eno piko potegni daleč stran od drugih. Opazi, da se standardni odklon poveča bolj kot povprečje.
 
-**3. Kako zanesljivo je povprečje.** Če bi Lara meritev ponovila z drugimi desetimi sošolci, bi dobila malo drugačno povprečje. Za koliko se povprečje tipično premakne od vzorca do vzorca, pove **standardna napaka** $SE$. Odvisna je od razpršenosti in od števila meritev $n$: več meritev, manjša napaka. Ne pada pa sorazmerno z $n$, ampak počasneje, s korenom $\sqrt{n}$.
+**3. Kako zanesljivo je povprečje.** Če bi Lara meritev ponovila z drugimi desetimi sošolci, bi dobila malo drugačno povprečje. Za koliko se povprečje tipično premakne od vzorca do vzorca, pove **standardna napaka** $\mathrm{SE}$. Odvisna je od razpršenosti in od števila meritev $n$: več meritev, manjša napaka. Ne pada pa sorazmerno z $n$, ampak počasneje, s korenom $\sqrt{n}$.
 
 Na stolpčnem diagramu povprečje nariše stolpec, standardno napako pa navpična črtica na vrhu, **stolpec napak**. Če se črtici dveh stolpcev močno prekrivata, razlika verjetno ni prava. O mejnih primerih odloči test.
 
@@ -63,18 +63,18 @@ Stopinje prostosti so število kategorij manj ena, $k - 1$. Kritične vrednosti 
 
 | Podatki | Uporabi |
 |---|---|
-| ena skupina meritev | povprečje, $s$, $SE$ |
+| ena skupina meritev | povprečje, $s$, $\mathrm{SE}$ |
 | dve skupini meritev | t-test |
 | štetja po kategorijah | hi-kvadrat test |
 | dve meritvi na vsakem osebku | korelacija |
 
 V simulaciji spodaj »Izbira statističnega testa« razvrsti primere. Pri vsakem se najprej vprašaj: so to meritve ali štetja?
 
-**8. Formule na enem mestu.** $SE_r$ je standardna napaka razlike med povprečjema; $r$ tu pomeni razliko, ne korelacije.
+**8. Formule na enem mestu.** $\mathrm{SE}_r$ je standardna napaka razlike med povprečjema; $r$ tu pomeni razliko, ne korelacije.
 
-$$\bar{x} = \frac{\sum x_i}{n} \qquad s = \sqrt{\frac{\sum (x_i - \bar{x})^2}{n - 1}} \qquad SE = \frac{s}{\sqrt{n}}$$
+$$\bar{x} = \frac{\sum x_i}{n} \qquad s = \sqrt{\frac{\sum (x_i - \bar{x})^2}{n - 1}} \qquad \mathrm{SE} = \frac{s}{\sqrt{n}}$$
 
-$$SE_r = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}} \qquad t = \frac{\bar{x}_1 - \bar{x}_2}{SE_r}$$
+$$\mathrm{SE}_r = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}} \qquad t = \frac{\bar{x}_1 - \bar{x}_2}{\mathrm{SE}_r}$$
 
 $$\chi^2 = \sum \frac{(O - E)^2}{E}$$
 
@@ -85,10 +85,10 @@ $$\chi^2 = \sum \frac{(O - E)^2}{E}$$
 Lara izmeri utrip petim sošolcem po hitri skladbi: $72$, $80$, $76$, $84$ in $78$ udarcev na minuto. Izračunaj povprečje, standardni odklon in standardno napako.
 
 **Podatki:** $x = 72, 80, 76, 84, 78\,\text{/min}$, $n = 5$
-**Iščemo:** $\bar{x}$, $s$ in $SE$
+**Iščemo:** $\bar{x}$, $s$ in $\mathrm{SE}$
 
 :::formula
-$\bar{x} = \dfrac{\sum x_i}{n}$, $\quad s = \sqrt{\dfrac{\sum (x_i - \bar{x})^2}{n - 1}}$, $\quad SE = \dfrac{s}{\sqrt{n}}$
+$\bar{x} = \dfrac{\sum x_i}{n}$, $\quad s = \sqrt{\dfrac{\sum (x_i - \bar{x})^2}{n - 1}}$, $\quad \mathrm{SE} = \dfrac{s}{\sqrt{n}}$
 :::
 
 **Rešitev:**
@@ -97,7 +97,7 @@ $\bar{x} = \dfrac{\sum x_i}{n}$, $\quad s = \sqrt{\dfrac{\sum (x_i - \bar{x})^2}
 2. Povprečje: $\bar{x} = \dfrac{390}{5} = 78\,\text{/min}$.
 3. Odmiki od povprečja so $-6$, $2$, $-2$, $6$ in $0$. Kvadriramo jih, da se pozitivni in negativni ne odštejejo: $36 + 4 + 4 + 36 + 0 = 80$.
 4. Delimo z $n - 1 = 4$: $\dfrac{80}{4} = 20$, nato korenimo: $s = \sqrt{20} \approx 4{,}47\,\text{/min}$.
-5. $SE = \dfrac{4{,}47}{\sqrt{5}} \approx 2{,}0\,\text{/min}$.
+5. $\mathrm{SE} = \dfrac{4{,}47}{\sqrt{5}} \approx 2{,}0\,\text{/min}$.
 6. Odgovor: povprečni utrip je $78\,\text{/min}$, posamezniki od njega tipično odstopajo za $4{,}5\,\text{/min}$, povprečje samo pa je negotovo za približno $2\,\text{/min}$.
 
 ### Primer 2: t-test za Larino raziskavo
@@ -108,14 +108,14 @@ Skupina s počasno glasbo ($n_2 = 10$) ima povprečni utrip $75\,\text{/min}$ in
 **Iščemo:** $t$ in odločitev o ničelni hipotezi
 
 :::formula
-$SE_r = \sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}$, $\quad t = \dfrac{\bar{x}_1 - \bar{x}_2}{SE_r}$
+$\mathrm{SE}_r = \sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}$, $\quad t = \dfrac{\bar{x}_1 - \bar{x}_2}{\mathrm{SE}_r}$
 :::
 
 **Rešitev:**
 
 1. Ničelna hipoteza: glasba ne vpliva na utrip.
 2. $\dfrac{s_1^2}{n_1} = \dfrac{36}{10} = 3{,}6$ in $\dfrac{s_2^2}{n_2} = \dfrac{25}{10} = 2{,}5$.
-3. $SE_r = \sqrt{3{,}6 + 2{,}5} = \sqrt{6{,}1} \approx 2{,}47\,\text{/min}$.
+3. $\mathrm{SE}_r = \sqrt{3{,}6 + 2{,}5} = \sqrt{6{,}1} \approx 2{,}47\,\text{/min}$.
 4. $t = \dfrac{82 - 75}{2{,}47} \approx 2{,}83$. Povprečji sta torej skoraj tri standardne napake narazen.
 5. Stopinje prostosti: $10 + 10 - 2 = 18$, kritična vrednost je $2{,}10$.
 6. Ker je $2{,}83 > 2{,}10$, ničelno hipotezo zavrnemo.
@@ -170,7 +170,7 @@ $\chi^2 = 3{,}2 + 0{,}2 + 1{,}8 = 5{,}2$. Stopinji prostosti sta $3 - 1 = 2$. Ke
 
 Pri statistiki se redko zmotimo v računu. Pogosteje izberemo napačno mero ali napačno razložimo rezultat.
 
-- **Zamenjava $s$ in $SE$.** Kdor misli, da več meritev zmanjša standardni odklon, pozablja, da ljudje ostanejo enako različni. Z večjim $n$ se zmanjša standardna napaka, $s$ pa ostane približno enak. Popravek: $s$ opisuje posameznike, $SE$ povprečje.
+- **Zamenjava $s$ in $\mathrm{SE}$.** Kdor misli, da več meritev zmanjša standardni odklon, pozablja, da ljudje ostanejo enako različni. Z večjim $n$ se zmanjša standardna napaka, $s$ pa ostane približno enak. Popravek: $s$ opisuje posameznike, $\mathrm{SE}$ povprečje.
 - **Korelacija kot vzrok.** Visok $r$ med dvema količinama ne pove, katera vpliva na katero, niti ali ju obe povzroča tretja. Popravek: vzrok pokaže poskus s kontrolno skupino.
 - **Stopinje prostosti enake številu kategorij.** Pri hi-kvadrat testu z dvema kategorijama nekateri vzamejo $2$ stopinji in napačno kritično vrednost $5{,}99$. Popravek: stopinje prostosti so $k - 1$.
 - **»t je manjši od kritične vrednosti, torej razlike ni.«** Test le pove, da dokazov za razliko ni dovolj. Popravek: reci »ničelne hipoteze ne zavrnemo«; morda bi več meritev razliko pokazalo.
@@ -179,7 +179,7 @@ Pri statistiki se redko zmotimo v računu. Pogosteje izberemo napačno mero ali 
 ## Povzetek
 
 - Povprečje $\bar{x}$ opiše sredino, standardni odklon $s$ tipično razdaljo podatkov od povprečja.
-- Standardna napaka $SE = \dfrac{s}{\sqrt{n}}$ pove, kako natančno poznamo povprečje; z večjim $n$ se zmanjša.
+- Standardna napaka $\mathrm{SE} = \dfrac{s}{\sqrt{n}}$ pove, kako natančno poznamo povprečje; z večjim $n$ se zmanjša.
 - t-test primerja povprečji dveh skupin meritev; stopinje prostosti $n_1 + n_2 - 2$.
 - Hi-kvadrat test primerja opažena in pričakovana štetja po kategorijah; $\chi^2 = \sum \dfrac{(O - E)^2}{E}$, stopinje prostosti $k - 1$.
 - Če je testna vrednost večja od kritične pri $p = 0{,}05$, ničelno hipotezo zavrnemo in je razlika statistično značilna.
@@ -220,7 +220,7 @@ Hi-kvadrat srečaš pri metu kovanca. V $100$ metih pričakuješ $50$ grbov. Če
 + $2\,\text{/min}$
 - $72\,\text{/min}$
 ~ To je $12 \cdot 6$. Standardni odklon deliš s $\sqrt{n}$, ne množiš.
-> $SE = \dfrac{s}{\sqrt{n}} = \dfrac{12}{\sqrt{36}} = \dfrac{12}{6} = 2\,\text{/min}$.
+> $\mathrm{SE} = \dfrac{s}{\sqrt{n}} = \dfrac{12}{\sqrt{36}} = \dfrac{12}{6} = 2\,\text{/min}$.
 
 ? Lara poveča število merjencev v skupini z $10$ na $40$. Kaj se zgodi?
 - Standardni odklon se razpolovi.
@@ -230,7 +230,7 @@ Hi-kvadrat srečaš pri metu kovanca. V $100$ metih pričakuješ $50$ grbov. Če
 + Standardna napaka se približno razpolovi, standardni odklon ostane približno enak.
 - Oba ostaneta enaka.
 ~ Standardni odklon res ostane približno enak, standardna napaka pa se zmanjša, ker je povprečje več meritev natančnejše.
-> $SE = \dfrac{s}{\sqrt{n}}$: štirikrat večji $n$ pomeni dvakrat manjšo $SE$.
+> $\mathrm{SE} = \dfrac{s}{\sqrt{n}}$: štirikrat večji $n$ pomeni dvakrat manjšo $\mathrm{SE}$.
 
 ? Pri križanju pričakujemo razmerje $3 : 1$. Od $100$ potomcev je $70$ in $30$. Rešitev: (1) $E = 75$ in $25$. (2) $\chi^2 = \dfrac{25}{75} + \dfrac{25}{25} \approx 1{,}33$. (3) Kategoriji sta dve, zato sta stopinji prostosti $2$ in kritična vrednost $5{,}99$. (4) Ker je $1{,}33$ manjši od kritične vrednosti, ničelne hipoteze ne zavrnemo. Kateri korak je napačen?
 - Korak (1)
@@ -251,3 +251,20 @@ Hi-kvadrat srečaš pri metu kovanca. V $100$ metih pričakuješ $50$ grbov. Če
 - Ker $r$ ni $1$, povezave sploh ni.
 ~ Povezave ni pri $r$ blizu $0$. Vrednost $0{,}45$ pomeni zmerno pozitivno povezanost.
 > Korelacija meri povezanost. Da vaja izboljša ocene, bi pokazal šele poskus z naključno razporeditvijo v skupine.
+
+:::simboli
+x | posamezna meritev (npr. srčni utrip) |  | /min
+\bar{x} | povprečje meritev | \bar{x} = \frac{\sum x_i}{n} | /min
+n | število meritev (velikost vzorca) | | –
+s | standardni odklon | s = \sqrt{\dfrac{\sum (x_i - \bar{x})^2}{n - 1}} | /min | tipična razdalja meritve od povprečja
+s_1, s_2 | standardna odklona obeh skupin | | /min
+n_1, n_2 | števili meritev v obeh skupinah | | –
+\bar{x}_1, \bar{x}_2 | povprečji obeh skupin | | /min
+\mathrm{SE} | standardna napaka | \mathrm{SE} = \dfrac{s}{\sqrt{n}} | /min | koliko se povprečje tipično premakne od vzorca do vzorca
+\mathrm{SE}_r | standardna napaka razlike | \mathrm{SE}_r = \sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}} | /min | r pomeni razliko, ne korelacije
+t | testna statistika t | t = \dfrac{\bar{x}_1 - \bar{x}_2}{\mathrm{SE}_r} | – | koliko standardnih napak sta povprečji narazen
+E | pričakovano število v kategoriji | E = \text{delež} \cdot \text{skupno število} | – | napove ga ničelna hipoteza
+O | opaženo število v kategoriji | | –
+\chi | hi-kvadrat (testna statistika χ²) | \chi^2 = \sum \dfrac{(O - E)^2}{E} | – | večja odstopanja dajo večji χ²
+k | število kategorij | | – | stopinje prostosti so k − 1
+:::

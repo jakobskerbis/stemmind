@@ -252,3 +252,12 @@ $$n = \frac{m}{M}: \quad \frac{\mathrm{g}}{\mathrm{g/mol}} = \mathrm{mol}, \qqua
 ~ To je število molekul v $1\,\mathrm{mol}$. Pozabil si pomnožiti z množino $n = 2\,\mathrm{mol}$.
 + $1{,}2044 \cdot 10^{24}$
 > $N = n \cdot N_A = 2 \cdot 6{,}022 \cdot 10^{23} = 12{,}044 \cdot 10^{23} = 1{,}2044 \cdot 10^{24}$.
+
+:::simboli
+n | množina snovi | n = \frac{m}{M} | mol | tudi n = N : N_A
+m | masa vzorca | m = n \cdot M | g
+M | molska masa | M = \frac{m}{n} | g/mol | številsko enaka vsoti A_r atomov v formuli
+N | število delcev | N = n \cdot N_A | – | molekul, atomov ali formulskih enot
+N_A | Avogadrova konstanta | | mol^{-1} | N_A = 6,022 · 10²³ mol⁻¹
+A_r | relativna atomska masa | | – | iz periodnega sistema
+:::

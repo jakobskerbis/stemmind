@@ -235,3 +235,22 @@ Namesto štirih množenj matrik $2 \times 2$ smo potenco izračunali na števili
 - $3\vec{v}$
 + $9\vec{v}$
 > $A^2\vec{v} = A(3\vec{v}) = 3A\vec{v} = 9\vec{v}$.
+
+:::simboli
+A | kvadratna matrika reda n | |
+\vec{v} | lastni vektor matrike A | | | neničelni vektor z A v = λ v
+\lambda | lastna vrednost matrike A | | | ničla karakterističnega polinoma
+I | enotska matrika | |
+p_A | karakteristični polinom matrike A | p_A(\lambda) = \det(A - \lambda I) |
+a, b, c, d | elementi matrike A reda 2 | | | c je drugje tudi poljuben neničelni faktor
+P | matrika z lastnimi vektorji v stolpcih | P = \begin{pmatrix} \vec{v}_1 & \vec{v}_2 & \cdots & \vec{v}_n \end{pmatrix} | | obrnljiva
+D | diagonalna matrika lastnih vrednosti | D = P^{-1}AP | | vrstni red kot stolpci v P
+\vec{v}_1, \vec{v}_2, \vec{v}_n | lastni vektorji matrike | |
+\lambda_1, \lambda_2, \lambda_n | lastne vrednosti matrike | | | v istem vrstnem redu kot lastni vektorji
+M | prehodna matrika (deleži iz koraka v korak) | \vec{x}_{k+1} = M\vec{x}_k | | diagonalizacija: M = PDP⁻¹
+\vec{x}_k | vektor deležev po k korakih | \vec{x}_k = M^k\vec{x}_0 |
+\vec{x}_0 | začetni vektor deležev | |
+k | število korakov | |
+c_1, c_2 | koeficienta razvoja x₀ po lastnih vektorjih | |
+E_\lambda | lastni podprostor za lastno vrednost λ | E_\lambda = \ker(A - \lambda I) |
+:::

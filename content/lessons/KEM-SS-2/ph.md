@@ -245,3 +245,18 @@ Ko pomnožimo z $-1$, dobimo $\mathrm{pH} + \mathrm{pOH} = 14$. V čisti vodi st
 - $10^{-12}\,\text{mol/L}$
 ~ To bi bila $[\mathrm{OH^-}]$. Pri kislini $\mathrm{pH} = 2$ pomeni neposredno $[\mathrm{H_3O^+}] = 10^{-2}\,\text{mol/L}$.
 > Obratni račun: $[\mathrm{H_3O^+}] = 10^{-\mathrm{pH}} = 10^{-2}\,\text{mol/L}$. Ker je $\mathrm{HCl}$ močna kislina, je $c(\mathrm{HCl}) \approx 0{,}010\,\text{mol/L}$.
+
+:::simboli
+\mathrm{pH} | pH vrednost | \mathrm{pH} = -\log\,[\mathrm{H_3O^+}] | – | pri 25 °C velja pH + pOH = 14
+\mathrm{pOH} | pOH vrednost | \mathrm{pOH} = -\log[\mathrm{OH^-}] | –
+K_w | ionski produkt vode | K_w = [\mathrm{H_3O^+}] \cdot [\mathrm{OH^-}] | – | pri 25 °C 10⁻¹⁴; odvisen od temperature
+c | množinska koncentracija kisline ali baze | | mol/L | oglati oklepaji [ ] pomenijo koncentracijo iona
+n | množina snovi | n = c \cdot V | mol
+V | prostornina raztopine | | L
+m | masa raztopljene snovi | m = n \cdot M | g
+M | molska masa | | g/mol
+c_1 | koncentracija pred redčenjem | | mol/L
+c_2 | koncentracija po redčenju | c_2 = \dfrac{c_1 \cdot V_1}{V_2} | mol/L
+V_1 | prostornina raztopine pred redčenjem | | L | V₁ in V₂ v isti enoti
+V_2 | prostornina raztopine po redčenju | | L
+:::

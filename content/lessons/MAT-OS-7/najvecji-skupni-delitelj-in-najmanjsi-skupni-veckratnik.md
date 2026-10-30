@@ -243,3 +243,10 @@ Iz tega sledi uporaben trik: če poznaš $D$, lahko dobiš $v = \dfrac{a \cdot b
 - $108$
 ~ To je $v(36, 54)$. Šopkov ne more biti več kot tulipanov; deliš na enake dele, zato iščeš $D$.
 > $36=2^2\cdot 3^2$, $54=2\cdot 3^3$, $D(36, 54)=2\cdot 3^2=18$. V vsakem šopku sta $2$ tulipana in $3$ narcise.
+
+:::simboli
+D | največji skupni delitelj | | | D(a, b); D(a) je množica deliteljev števila a
+v | najmanjši skupni večkratnik | | | D(a, b) · v(a, b) = a · b
+a, b | naravni števili | |
+d | delitelj števila | | | a deljeno z d se izide brez ostanka
+:::

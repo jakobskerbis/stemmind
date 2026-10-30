@@ -255,3 +255,14 @@ Za $n = 4$: $5^2 = 16 + 9 = 25$. Ker je $2n + 1$ vedno liho število, je $n^2$ v
 - približno $4000\,\text{cm}^2$
 ~ $20 \cdot 20 = 400$, ne $4000$: ena ničla preveč.
 > $19$ je malo manj kot $20$, zato je $19^2$ malo manj kot $20^2 = 400$. Natančno: $19^2 = 361\,\text{cm}^2$.
+
+:::simboli
+a | število, ki ga kvadriramo | | | a² = a · a; v p = a² stranica kvadrata
+b | imenovalec ulomka | | | b ≠ 0
+n | naravno število | | | (n + 1)² = n² + 2n + 1
+p | ploščina kvadrata | p = a^2 |
+a_1 | stranica malega pekača | |
+a_2 | stranica večjega pekača | |
+p_1 | ploščina dna malega pekača | p_1 = a_1^2 |
+p_2 | ploščina dna večjega pekača | p_2 = a_2^2 | | razmerje ploščin p₂ : p₁
+:::

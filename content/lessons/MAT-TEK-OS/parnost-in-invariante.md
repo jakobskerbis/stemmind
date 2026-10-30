@@ -230,3 +230,7 @@ Sorodno orodje je **monovarianta**: količina, ki se pri vsakem koraku samo pove
 ~ Pri koraku se vsota zmanjša za sodo število $2b$, zato se parnost ohrani. Začetna vsota $21$ je liha.
 + Je liho.
 > Vsota $1 + 2 + 3 + 4 + 5 + 6 = 21$ je liha. Ker sta $a + b$ in $a - b$ iste parnosti, se parnost vsote ohrani, zato je zadnje število liho.
+
+:::simboli
+a, b | števili na tabli, ki ju zamenjamo | | | a + b in a − b imata enako parnost
+:::

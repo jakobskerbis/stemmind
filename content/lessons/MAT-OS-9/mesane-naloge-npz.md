@@ -225,3 +225,15 @@ Pri prevzemu primerjaj rezultat s skico: lestev ne more segati višje, kot je do
 - $0{,}96$
 ~ To je verjetnost, da je vijak dober, torej nasprotni dogodek.
 > Zvitih je $2 + 0 + 3 + 1 + 4 = 10$ od $250$ vijakov. Relativna frekvenca $\dfrac{10}{250} = 0{,}04$ je ocena za verjetnost.
+
+:::simboli
+c | hipotenuza (dolžina lestve) | | | drugje c = 15x + 20 cena najema v €
+a | kateta (razdalja lestve od zidu) | | | pri S = a · b dolžina pravokotnika
+b | kateta (višina, do katere sega lestev) | b = \sqrt{c^2 - a^2} | | pri S = a · b širina pravokotnika
+S | ploščina pravokotne ploskve | S = a \cdot b | |
+r | polmer stebra | r = \frac{d}{2} | |
+d | premer stebra | | |
+V | prostornina valja (stebra) | V = \pi r^2 v | | enoti obeh dolžin najprej poenoti
+v | višina stebra | | |
+x | število dni najema | | |
+:::

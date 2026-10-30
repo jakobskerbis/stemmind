@@ -154,14 +154,14 @@ Trgovina ima urejen cenik iz razlage ($2$, $5$, $8$, $12$, $16$, $23$, $38$, $56
 **Iščemo:** število primerjav za $x = 38$ in največje število primerjav pri $n = 1000$
 
 :::formula
-$s = (lo + hi)$ celoštevilsko deljeno z $2$; največ $\lceil \log_2(n+1) \rceil$ primerjav
+$s = (\mathrm{lo} + \mathrm{hi})$ celoštevilsko deljeno z $2$; največ $\lceil \log_2(n+1) \rceil$ primerjav
 :::
 
 **Rešitev:**
 
-1. $lo = 0$, $hi = 7$, sredina $s = 3$, cena $12$. Ker je $12 < 38$, iščemo desno: $lo = 4$.
-2. $lo = 4$, $hi = 7$, sredina $s = 5$ ($11$ deljeno z $2$ je $5$, ostanek zavržemo), cena $23 < 38$: $lo = 6$.
-3. $lo = 6$, $hi = 7$, sredina $s = 6$, cena $38$. Našli smo ga.
+1. $\mathrm{lo} = 0$, $\mathrm{hi} = 7$, sredina $s = 3$, cena $12$. Ker je $12 < 38$, iščemo desno: $\mathrm{lo} = 4$.
+2. $\mathrm{lo} = 4$, $\mathrm{hi} = 7$, sredina $s = 5$ ($11$ deljeno z $2$ je $5$, ostanek zavržemo), cena $23 < 38$: $\mathrm{lo} = 6$.
+3. $\mathrm{lo} = 6$, $\mathrm{hi} = 7$, sredina $s = 6$, cena $38$. Našli smo ga.
 4. Za $1000$ izdelkov del, kjer iščemo, razpolavljamo: $1000, 500, 250, 125, 62, 31, 15, 7, 3, 1$. To je $10$ primerjav, kar se ujema z $\lceil \log_2 1001 \rceil = 10$, ker je $2^{10} = 1024 \geq 1001$.
 5. Odgovor: izdelek za $38$ € najdemo v $3$ primerjavah; pri $1000$ izdelkih jih potrebujemo največ $10$.
 
@@ -256,13 +256,13 @@ Manj potez ne gre: preden se največji disk premakne, mora vseh $n - 1$ manjših
 ~ Prevajalnik ne ve, kdaj bi bilo prav nehati; osnovni primer mora zapisati programer.
 > Osnovni primer je edino mesto, kjer se klici začnejo vračati. Brez njega jih nastaja vedno več.
 
-? V ceniku $2, 5, 8, 12, 16, 23, 38, 56$ (indeksi $0$ do $7$) študent dvojiško išče $38$. Korak 1: $lo = 0$, $hi = 7$, $s = 3$, cena $12$. Korak 2: ker je $12 < 38$, nastavi $hi = 2$. Korak 3: išče med indeksoma $0$ in $2$ in javi, da $38$ ni v ceniku. Kateri korak je napačen?
+? V ceniku $2, 5, 8, 12, 16, 23, 38, 56$ (indeksi $0$ do $7$) študent dvojiško išče $38$. Korak 1: $\mathrm{lo} = 0$, $\mathrm{hi} = 7$, $s = 3$, cena $12$. Korak 2: ker je $12 < 38$, nastavi $\mathrm{hi} = 2$. Korak 3: išče med indeksoma $0$ in $2$ in javi, da $38$ ni v ceniku. Kateri korak je napačen?
 - Korak 1
 ~ Sredina med $0$ in $7$ je pri celoštevilskem deljenju res indeks $3$.
 + Korak 2
 - Korak 3
 ~ Korak 3 je le posledica: v delu od $0$ do $2$ cene $38$ res ni. Napaka je nastala prej.
-> Ker je $12 < 38$, je iskana cena **desno** od sredine, torej $lo = 4$. Študent je zavrgel napačno polovico.
+> Ker je $12 < 38$, je iskana cena **desno** od sredine, torej $\mathrm{lo} = 4$. Študent je zavrgel napačno polovico.
 
 ? Prodajalec ima tiskan cenik s $1000$ artikli, urejenimi po ceni. Kateri način iskanja artikla z dano ceno potrebuje v najslabšem primeru najmanj pogledov?
 - Pregleduje od prve vrstice naprej.
@@ -271,3 +271,12 @@ Manj potez ne gre: preden se največji disk premakne, mora vseh $n - 1$ manjših
 ~ Naključno odpiranje ne izloči nobene polovice, zato nima zagotovljene meje.
 + Pogleda sredino, nato sredino tiste polovice, kjer mora biti artikel, in tako naprej.
 > Vsak pogled razpolovi del cenika, zato zadošča največ $10$ pogledov, ker je $2^{10} = 1024 \geq 1001$.
+
+:::simboli
+n | število diskov | | – | pri dvojiškem iskanju število elementov tabele
+P | število potez za stolp z n diski | P(n) = 2P(n-1) + 1 | – | P(n) = 2ⁿ − 1
+s | indeks sredine dela tabele | s = \left\lfloor \frac{\mathrm{lo} + \mathrm{hi}}{2} \right\rfloor | – | vsoto celoštevilsko delimo z 2
+\mathrm{lo} | spodnja meja (indeks) dela tabele | | –
+\mathrm{hi} | zgornja meja (indeks) dela tabele | | –
+k | število primerjav | | – | najmanjši k z 2ᵏ ≥ n + 1
+:::

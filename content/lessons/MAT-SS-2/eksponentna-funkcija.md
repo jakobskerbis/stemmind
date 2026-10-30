@@ -207,3 +207,14 @@ Za $a > 1$ in pozitiven eksponent je $a^{x_2 - x_1} > 1$ (za racionalni eksponen
 - $y = -2$
 - $x = 2$
 > Premik za $2$ v desno asimptote ne spremeni, premik za $1$ navzdol pa jo premakne iz $y = 0$ v $y = -1$.
+
+:::simboli
+f | eksponentna funkcija | f(x) = a^x | |
+x | neodvisna spremenljivka (eksponent) | | |
+a | osnova | | | a > 0, a ≠ 1
+x_1, x_2 | dve vrednosti spremenljivke | | | x₁ < x₂
+n | eksponent | | |
+y | vrednost funkcije | y = a^{x-p} + q | |
+p | premik grafa v smeri osi x | | | pri p > 0 v desno
+q | premik grafa v smeri osi y | | | asimptota postane y = q
+:::

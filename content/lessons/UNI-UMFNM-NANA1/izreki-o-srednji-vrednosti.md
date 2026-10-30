@@ -254,3 +254,25 @@ Za $x\,e^x$ sta neničelna le člena s $k = 0, 1$: $(x e^x)^{(n)} = x e^x + n e^
 ~ Povprečje ne pomeni stalne hitrosti; vmes je lahko vozil hitreje in počasneje.
 + V vsaj enem trenutku je vozil natanko $120\,\mathrm{km/h}$.
 > Povprečna hitrost je $\frac{30\,\mathrm{km}}{0{,}25\,\mathrm{h}} = 120\,\mathrm{km/h}$; ker je lega odvedljiva funkcija časa, po Lagrangeu obstaja trenutek s to hitrostjo.
+
+:::simboli
+f | funkcija, zvezna na [a, b], odvedljiva na (a, b)
+f' | odvod funkcije f
+a, b | krajišči intervala
+\xi | vmesna točka na (a, b) | | | točk ξ je lahko več
+x | neodvisna spremenljivka | | | dx = Δx je njen prirastek
+g | pomožna funkcija v dokazu | g(x) = f(x) - f(a) - k\,(x-a) | | pri Cauchyjevem izreku druga funkcija
+g' | odvod funkcije g
+k | naklon sekante skozi krajišči | k = \frac{f(b)-f(a)}{b-a} | | v Leibnizovi formuli indeks vsote
+n | red odvoda
+V | prostornina krogle | V(r) = \frac{4}{3}\pi r^3 | km^3
+V' | odvod prostornine po polmeru | V'(r) = 4\pi r^2 | km^2 | enak površini krogle
+r | polmer Lune | | km | dr = 2 km je negotovost
+v | hitrost rakete | | m/s | v (uv)' = u'v + uv' druga funkcija
+v' | pospešek rakete | v' = s'' | m/s^2
+s'' | drugi odvod poti (pospešek) | | m/s^2
+T | čas pospeševanja | | s
+u | funkcija v pravilu za odvod produkta
+u' | odvod funkcije u
+e | Eulerjevo število | | | e ≈ 2,718
+:::

@@ -15,6 +15,7 @@ import { simsForTopic } from "../public/sim/katalog.js";
 import { SCHOOL_SYSTEMS, isRegional } from "../public/regions.js";
 import { SUBJECT_EN } from "./region-curricula.js";
 import { hasEngine } from "../public/sim/index.js";
+import { SYMBOLS_BLOCK_RE, parseSymbolsBlock } from "../public/formula-data.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const LESSONS_DIR = process.env.EVKLID_LESSONS || path.join(here, "..", "content", "lessons");
@@ -51,6 +52,12 @@ export function parseLesson(src) {
     }
     body = body.slice(fm[0].length);
   }
+  // Oznake lekcije (:::simboli, kjerkoli v datoteki): za klikljive formule, ne izpišejo se.
+  const symbols = [];
+  body = body.replace(SYMBOLS_BLOCK_RE, (_, block) => {
+    symbols.push(...parseSymbolsBlock(block).list);
+    return "";
+  });
   const sections = [];
   const alternatives = [];
   let checks = [];
@@ -65,7 +72,7 @@ export function parseLesson(src) {
     else if (CHECKS.test(title)) checks = parseChecks(md);
     else sections.push({ title, md });
   }
-  return { meta, sections, alternatives, checks };
+  return { meta, sections, alternatives, checks, symbols };
 }
 
 function parseChecks(md) {
@@ -99,7 +106,7 @@ function parseChecks(md) {
 // v PDF-ju je izpisan kot okvir »Formula«, tutor ga dobi kot navadno besedilo.
 const FORMULA_RE = /^[ \t]*:::[ \t]*formula[ \t]*\n([\s\S]*?)\n[ \t]*:::[ \t]*$/gm;
 export function expandFormulaBlocks(md, mode = "html") {
-  return expandThinkBlocks(md, mode).replace(FORMULA_RE, (_, body) => {
+  return expandThinkBlocks(md, mode).replace(SYMBOLS_BLOCK_RE, "").replace(FORMULA_RE, (_, body) => {
     const inner = body.trim();
     if (mode === "plain") return inner;
     if (mode === "print") return `<div class="formula"><p class="formula-label">Formula</p>\n\n${inner}\n\n</div>`;
@@ -206,6 +213,7 @@ export function lessonView(topicId) {
           sections: withFormulas(lesson.sections, "html"),
           alternatives: withFormulas(lesson.alternatives, "html"),
           checks: lesson.checks,
+          symbols: lesson.symbols,
         }
       : null,
     // Če lekcije še ni, pokažemo vsaj kratko razlago teme (če obstaja).

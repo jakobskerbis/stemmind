@@ -167,3 +167,10 @@ Formula za površino ne sledi enako preprosto. V osnovni šoli jo sprejmemo kot 
 + $8$-krat
 - $6$-krat
 > Prostornina je sorazmerna s $r^3$. Ko polmer podvojimo, dobimo $(2r)^3 = 8r^3$, torej se prostornina poveča $8$-krat. Štirikratno povečanje velja za površino.
+
+:::simboli
+P | površina krogle | P = 4\pi r^2 | |
+r | polmer krogle | | |
+V | prostornina krogle | V = \frac{4}{3}\pi r^3 | |
+V_{\text{polkrogle}} | prostornina polkrogle | V_{\text{polkrogle}} = \frac{2}{3}\pi r^3 | | valj minus stožec z isto osnovno ploskvijo in višino r
+:::

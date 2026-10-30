@@ -246,3 +246,12 @@ Pri tem velja predpostavka, da se snov ne tali in ne izhlapeva (ne spremeni agre
 ~ Hitrost ohlajanja ne pove, koliko toplote telo odda. Manj snovi pomeni manj oddane toplote.
 + Lonec odda desetkrat več toplote kot skodelica.
 > $\Delta T$ in $c$ sta enaka, masa lonca pa je desetkrat večja, zato odda desetkrat več toplote ($504\,000\,\text{J}$ proti $50\,400\,\text{J}$).
+
+:::simboli
+Q | toplota | Q = m \cdot c \cdot \Delta T | J
+m | masa | m = \frac{Q}{c \cdot \Delta T} | kg
+c | specifična toplota | c = \dfrac{Q}{m \cdot \Delta T} | J/(kg\cdot{}^\circ C) | voda 4200 J/(kg·°C)
+T | temperatura | | ^\circ C
+T_{\text{zač}} | začetna temperatura | | ^\circ C
+T_{\text{konč}} | končna temperatura | T_{\text{konč}} = T_{\text{zač}} + \Delta T | ^\circ C
+:::

@@ -181,3 +181,13 @@ Formula $A = F \cdot s$ velja samo, če je sila stalna in kaže v smeri gibanja.
 - $0\,\mathrm{J}$, ker se ne utrudi
 - Veliko, ker se trudi
 > Delo je $A = F \cdot s$. Ker se omara ne premakne, je $s = 0$ in zato $A = 0$, ne glede na to, kako se učenec trudi.
+
+:::simboli
+A | delo | A = F \cdot s | J | pri dvigovanju A = F_g · h
+F | sila v smeri gibanja | F = \dfrac{A}{s} | N
+s | pot | | m
+F_g | teža | F_g = m \cdot g | N
+h | višina dviga | | m
+m | masa | | kg
+g | težni pospešek | | N/kg | približno 10 N/kg
+:::

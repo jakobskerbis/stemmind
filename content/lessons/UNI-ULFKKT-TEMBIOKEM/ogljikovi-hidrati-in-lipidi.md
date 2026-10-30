@@ -229,3 +229,15 @@ Glukozni obroč si predstavljaj kot šestkotno ploščico, ki leži na mizi (Haw
 ~ Micele tvorijo molekule z enim repom (milo). Dva repa sta preširoka za kroglo, zato nastane dvosloj.
 + Tvori dvosloj z repi v notranjosti in glavami proti vodi na obeh straneh.
 > Tako so nepolarni repi skriti pred vodo (hidrofobni učinek); dvosloj se zapre v mehurček (liposom). Tako je zgrajena celična membrana.
+
+:::simboli
+M | molska masa | M = \frac{m}{n} | g/mol
+n | množina snovi | n = \frac{m}{M} | mol | v (CH₂O)ₙ število ponovitev enote
+m | masa | | g
+\alpha | specifična optična rotacija | | ° | [α]_α čistega α-anomera, [α]_β čistega β-anomera; α označuje tudi anomer
+\beta | β-anomer (OH na C1 nad ravnino obroča)
+x_\alpha | delež α-anomera v ravnovesni zmesi | x_\alpha = 1 - x_\beta | –
+x_\beta | delež β-anomera v ravnovesni zmesi | x_\beta = 1 - x_\alpha | –
+E | sproščena energija | E = m \cdot e | kJ
+e | energijska vrednost na gram snovi | e = \frac{E}{m} | kJ/g | maščoba okoli 37 kJ/g, ogljikovi hidrati okoli 17 kJ/g
+:::

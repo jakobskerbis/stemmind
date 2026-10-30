@@ -190,3 +190,9 @@ Vrednost $g = 9{,}81\,\dfrac{\text{N}}{\text{kg}}$ je povprečna vrednost za Zem
 + Masa ostane enaka, teža se zmanjša.
 - Masa in teža ostaneta enaki.
 > Masa pove količino snovi in je povsod enaka. Teža je sila, ki je odvisna od gravitacijskega pospeška, ta pa je na Luni manjši, zato je tudi teža manjša.
+
+:::simboli
+F_g | teža (sila teže) | F_g = m \cdot g | N
+m | masa | m = \dfrac{F_g}{g} | kg | je povsod enaka, teža ne
+g | gravitacijski pospešek | | N/kg | na Zemlji 9,81 N/kg, na Luni okoli šestkrat manj
+:::

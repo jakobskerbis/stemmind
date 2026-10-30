@@ -284,3 +284,31 @@ kar je okoli $10\,\%$ manj.
 - ogljikov dioksid < dušik < helij
 ~ Večje molekule ne zavzamejo več prostora v plinu, ker je med molekulami večinoma prazen prostor; v vsakem balonu je enako molekul.
 > Pri enakih $p$, $V$ in $T$ je v vseh balonih enaka množina plina, $n = pV/(RT)$. Masa $m = nM$ zato raste z molsko maso: $\mathrm{He}$ ($4\,\mathrm{g/mol}$) < $\mathrm{N_2}$ ($28\,\mathrm{g/mol}$) < $\mathrm{CO_2}$ ($44\,\mathrm{g/mol}$).
+
+:::simboli
+p | tlak plina | p = \frac{nRT}{V} | Pa | 1 bar = 10⁵ Pa
+V | prostornina plina | | m^3 | 1 L = 10⁻³ m³
+n | množina plina | n = \frac{pV}{RT} | mol
+R | splošna plinska konstanta | | J/(mol K) | 8,314 J/(mol K)
+T | absolutna temperatura | T = t + 273{,}15\,\mathrm{K} | K
+t | temperatura v stopinjah Celzija | | °C
+p_1 | tlak v začetnem stanju | | Pa
+V_1 | prostornina v začetnem stanju | | m^3
+T_1 | temperatura v začetnem stanju | | K
+p_2 | tlak v končnem stanju | | Pa
+V_2 | prostornina v končnem stanju | | m^3
+T_2 | temperatura v končnem stanju | | K
+M | molska masa plina | M = \frac{m}{n} | g/mol | iz gostote plina: M = ρRT/p
+\rho | gostota plina | \rho = \frac{m}{V} | g/L | idealni plin: ρ = pM/(RT); 1 g/L = 1 kg/m³
+m | masa plina | m = nM | g | v kinetični teoriji masa ene molekule
+p_i | parcialni tlak komponente i | p_i = x_i\,p | Pa
+n_i | množina komponente i | n_i = \frac{m_i}{M_i} | mol
+m_i | masa komponente i | | g
+M_i | molska masa komponente i | | g/mol
+x_i | množinski delež komponente i | x_i = \frac{n_i}{n} | – | vsota deležev je 1
+i | oznaka komponente zmesi | | | teče po vseh plinih v zmesi
+N | število molekul | | –
+v | hitrost molekule | | m/s | ⟨v²⟩ je povprečje kvadrata hitrosti
+a | van der Waalsova konstanta privlaka | | Pa\,m^6/mol^2 | za CO₂ približno 0,364
+b | van der Waalsova konstanta lastne prostornine | | m^3/mol | za CO₂ približno 4,27 · 10⁻⁵
+:::

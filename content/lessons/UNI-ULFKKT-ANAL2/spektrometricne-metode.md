@@ -229,3 +229,20 @@ Pri AAS je absorpcijska črta široka le okoli $0{,}005\,\mathrm{nm}$, pas monok
 - Uporabim daljšo kiveto, da bo meritev natančnejša.
 ~ Daljša kiveta absorbanco še poveča. Pri premočnem vzorcu potrebuješ krajšo kiveto ali razredčitev.
 > Z razredčitvijo spraviš $A$ v linearno območje; koncentracijo v izvirnem vzorcu dobiš z množenjem s faktorjem razredčitve.
+
+:::simboli
+T | prepustnost (transmitanca) | T = \frac{I}{I_0} | – | število med 0 in 1; v odstotkih %T
+I | jakost svetlobe za vzorcem | | | v poljubnih enotah detektorja, enakih kot I₀
+I_0 | jakost svetlobe pred vzorcem (vpadna jakost) | | | v poljubnih enotah detektorja
+A | absorbanca | A = -\log_{10} T = \varepsilon\, b\, c | – | linearna približno do A ≈ 1
+\varepsilon | molarni absorpcijski koeficient | \varepsilon = \frac{A}{b\, c} | L\,mol^{-1}\,cm^{-1} | lastnost snovi pri izbrani valovni dolžini
+b | dolžina poti skozi vzorec (debelina kivete) | | cm | običajno 1,00 cm
+c | množinska koncentracija | c = \frac{A}{\varepsilon\, b} | mol/L
+\gamma | masna koncentracija | \gamma = c \cdot M | g/L | v vodah pogosto v mg/L
+\gamma_0 | masna koncentracija v prvotnem vzorcu | \gamma_0 = f \cdot \gamma | mg/L
+M | molska masa | | g/mol
+k | naklon umeritvene premice | k = \frac{A}{\gamma} | L/mg | odčitamo ga iz standardov
+f | faktor razredčitve | f = \frac{V_2}{V_1} | – | kolikokrat smo vzorec razredčili
+V_1 | prostornina odpipetiranega vzorca | | mL
+V_2 | prostornina bučke po razredčenju | | mL
+:::

@@ -257,3 +257,12 @@ Za konec preveri smiselnost: prostornina ima vedno kubično enoto, površina pa 
 - $25\,\text{l}$
 + $2{,}5\,\text{l}$
 > $1\,\text{l} = 1\,\text{dm}^3 = 1000\,\text{cm}^3$, zato je $2500\,\text{cm}^3 = 2{,}5\,\text{dm}^3 = 2{,}5\,\text{l}$.
+
+:::simboli
+a | dolžina kvadra (rob kocke) | | | pri kocki so vsi robovi enaki: a = b = c
+b | širina kvadra | |
+c | višina kvadra | |
+h | višina vode v akvariju | | | manjša od višine akvarija c
+P | površina telesa | P = 2 \cdot (a \cdot b + a \cdot c + b \cdot c) | | kocka: P = 6 · a²
+V | prostornina telesa | V = a \cdot b \cdot c | | kocka: V = a³
+:::

@@ -253,3 +253,9 @@ Na koncu je dedku narisala črtni diagram. Na njem je bil padec v sredo viden na
 ~ Smeri neba ne moremo urediti od najmanjše do največje, zato mediana nima pomena.
 + Modus: najpogosteje je pihal zahodnik.
 > Za podatke, ki niso števila, je smiseln le modus, podatek z največjo frekvenco: zahod ($16$-krat).
+
+:::simboli
+\bar{x} | aritmetična sredina (povprečje) | \bar{x} = \frac{\text{vsota podatkov}}{n}
+n | število vseh podatkov | | |
+f | frekvenca (kolikokrat se podatek pojavi) | | | f/n je relativna frekvenca
+:::

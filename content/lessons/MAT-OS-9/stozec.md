@@ -169,3 +169,11 @@ Središčni kot izseka je $\alpha = 360^\circ \cdot \dfrac{r}{s}$. Pri $r = 3\,\
 - krogla
 - kocka
 > Kateta, okoli katere vrtimo, je višina, druga kateta opiše osnovno ploskev, hipotenuza pa plašč. Valj dobimo z vrtenjem pravokotnika, kroglo z vrtenjem polkroga.
+
+:::simboli
+s | stranica stožca | s = \sqrt{r^2 + v^2} | | hipotenuza trikotnika z v in r
+r | polmer osnovne ploskve | | |
+v | višina stožca | | |
+V | prostornina stožca | V = \frac{\pi r^2 \cdot v}{3} | |
+P | površina stožca | P = \pi r^2 + \pi r s | | osnovna ploskev in plašč
+:::

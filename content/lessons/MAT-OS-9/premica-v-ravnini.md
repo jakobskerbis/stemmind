@@ -153,3 +153,13 @@ $$k = \frac{y_2 - y_1}{x_2 - x_1}.$$
 + $y = 3x + 2$
 - $y = -3x + 8$
 > Vzporedna premica ima $k = 3$. Iz $5 = 3 \cdot 1 + n$ dobimo $n = 2$. Odgovor $y = 3x + 5$ za $n$ vzame kar koordinato $y$ točke.
+
+:::simboli
+y | odvisna spremenljivka (ordinata točke) | y = kx + n | |
+x | neodvisna spremenljivka (abscisa točke) | | |
+k | smerni koeficient premice | k = \frac{y_2 - y_1}{x_2 - x_1} | | pove, kako strma je premica
+n | začetna vrednost (presečišče z osjo y) | | |
+k_1, k_2 | smerna koeficienta dveh premic | | | enaka pri vzporednih premicah
+x_1, x_2 | abscisi dveh točk na premici | | | x₂ ≠ x₁
+y_1, y_2 | ordinati dveh točk na premici | | |
+:::

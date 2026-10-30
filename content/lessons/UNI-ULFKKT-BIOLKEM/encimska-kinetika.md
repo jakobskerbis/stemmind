@@ -277,3 +277,19 @@ z $\alpha = 1 + [I]/K_\mathrm{i}$ in $\alpha' = 1 + [I]/K_\mathrm{i}'$. Posebni 
 - $2{,}4\,\mathrm{mM}$
 ~ To je $[I] \cdot \alpha$. $K_\mathrm{i}$ dobiš z deljenjem: $K_\mathrm{i} = \dfrac{[I]}{\alpha - 1}$.
 > $\alpha = \dfrac{100}{25} = 4$, torej $\dfrac{[I]}{K_\mathrm{i}} = 3$ in $K_\mathrm{i} = \dfrac{0{,}6\,\mathrm{mM}}{3} = 0{,}2\,\mathrm{mM}$.
+
+:::simboli
+E | encim | | | [E]_t: skupna koncentracija encima
+S | substrat | | | [S]: koncentracija substrata
+P | produkt | | |
+v_0 | začetna hitrost reakcije | v_0 = \frac{V_\mathrm{max}\,[S]}{K_\mathrm{M} + [S]} | µmol/min | Michaelis-Mentenova enačba
+V_\mathrm{max} | največja hitrost reakcije | | µmol/min | pri nasičenju encima s substratom
+K_\mathrm{M} | Michaelisova konstanta | K_\mathrm{M} = \frac{k_{-1} + k_2}{k_1} | mM | [S], pri kateri je v₀ = V_max/2
+I | inhibitor | | | [I]: koncentracija inhibitorja
+K_\mathrm{i} | inhibicijska konstanta | | mM | manjša K_i pomeni močnejšo vezavo
+\alpha | faktor inhibicije | \alpha = 1 + \frac{[I]}{K_\mathrm{i}} | – | za vezavo inhibitorja na prost encim
+\alpha' | faktor inhibicije za vezavo na ES | \alpha' = 1 + \frac{[I]}{K_\mathrm{i}'} | – | pri akompetitivni in mešani inhibiciji
+k_1 | konstanta hitrosti nastanka ES | | 1/(mM s)
+k_{-1} | konstanta hitrosti razpada ES nazaj v E in S | | 1/s
+k_2 | konstanta hitrosti nastanka produkta | | 1/s | k_cat = k₂
+:::

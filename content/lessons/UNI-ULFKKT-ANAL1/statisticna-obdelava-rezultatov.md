@@ -244,3 +244,19 @@ Pri poročilu vsi trije zapišejo le toliko števk, kolikor jih znajo upravičit
 - $1{,}550\,\mathrm{m}$
 ~ Dodana ničla bi pomenila, da poznamo milimetre, česar ne vemo.
 > $1{,}25 + 0{,}3 = 1{,}55$, rezultat zaokrožimo na eno decimalno mesto (kot $0{,}3$): $1{,}6\,\mathrm{m}$.
+
+:::simboli
+x | izmerjena vrednost | | mm
+\bar{x} | povprečje meritev (aritmetična sredina) | \bar x = \dfrac{\sum x_i}{n} | mm
+x_i | i-ta meritev | | mm
+i | zaporedna številka meritve | | – | od 1 do n
+n | število meritev | | –
+s | standardni odklon vzorca | s = \sqrt{\dfrac{\sum (x_i - \bar x)^2}{n-1}} | mm | raztros meritev okoli povprečja
+\mu | prava vrednost | \mu = \bar x \pm \dfrac{t \cdot s}{\sqrt{n}} | mm | interval zaupanja, navadno 95 %
+t | Studentov faktor | | – | odvisen od n in izbrane verjetnosti
+\rho | gostota opeke | \rho = \dfrac{m}{a \cdot b \cdot c} | kg/m^3
+m | masa opeke | | kg
+a | dolžina opeke | | m
+b | širina opeke | | m
+c | višina opeke | | m
+:::

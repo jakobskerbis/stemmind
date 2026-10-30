@@ -230,3 +230,12 @@ Prav to je ideja dokaza Riemannovega izreka.
 ~ Razmerje predznakov ne vpliva; odloča, ali konvergira vsota absolutnih vrednosti.
 + Ne, ker vrsta konvergira absolutno.
 > $\sum |a_n| = \sum \frac{10}{2^n} = 10$ konvergira, zato ima vsaka preureditev isto vsoto (Dirichlet).
+
+:::simboli
+n | zaporedna številka člena
+a_n, a_{n+1} | n-ti (in naslednji) člen vrste
+S | vsota vrste
+S_n | n-ta delna vsota | S_n = a_1 + a_2 + \dots + a_n | | napako ocenimo z razliko S − Sₙ
+p | eksponent v vrsti 1/nᵖ | | | konvergira za p > 1
+q | limita kvocienta (korena) členov | q = \lim\limits_{n\to\infty} \dfrac{\lvert a_{n+1} \rvert}{\lvert a_n \rvert} | | q < 1 konvergira, q > 1 divergira
+:::

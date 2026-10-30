@@ -260,3 +260,14 @@ Zakaj kalcij ostane pri $+2$, mangan pa ne? Poglej zaporedne ionizacijske energi
 - $3{,}31 \cdot 10^{-19}\,\mathrm{J}$
 ~ To je energija enega fotona. Za kJ/mol pomnoži z $N_\mathrm{A}$.
 > $\Delta_\mathrm{o} = \dfrac{0{,}1196\,\mathrm{J\,m/mol}}{6{,}00 \cdot 10^{-7}\,\mathrm{m}} \approx 199\,400\,\mathrm{J/mol} \approx 199\,\mathrm{kJ/mol}$. Vsrkana je oranžna, raztopina je modra.
+
+:::simboli
+d | orbitale d | | | prehodni elementi polnijo orbitale (n − 1)d
+E_\text{foton} | energija fotona | E_\text{foton} = \dfrac{hc}{\lambda} | J
+h | Planckova konstanta | | J s | 6,626 · 10⁻³⁴ J s
+c | hitrost svetlobe | | m/s | 2,998 · 10⁸ m/s
+\lambda | valovna dolžina vsrkane svetlobe | | nm | v formulo vstavi v metrih
+N_\mathrm{A} | Avogadrova konstanta | | 1/mol | 6,022 · 10²³ mol⁻¹
+E | standardni elektrodni potencial | E^\circ_\text{celice} = E^\circ_\text{oksidant} - E^\circ_\text{reducent} | V | reakcija poteče, če je E°celice > 0
+\Delta_\mathrm{o} | razcep ligandnega polja (oktaedrični) | \Delta_\mathrm{o} = N_\mathrm{A} \cdot E_\text{foton} | kJ/mol | energija prehoda elektrona iz t₂g v e_g
+:::

@@ -396,9 +396,10 @@ async function renderLesson(topicId) {
     return renderHome();
   }
   current = { id: L.id, name: L.name };
-  // Simboli v formulah po predmetu lekcije (FIZ-OS-9 → fizika), ne po predmetu v nastavitvah.
-  const lessonSubject = (/^([A-Z]{3})-/.exec(L.id || "") || [])[1];
-  const R = (text) => withFormulaSubject(lessonSubject, () => ctx.renderRich(text));
+  // Simboli v formulah po predmetu lekcije (FIZ-OS-9 → fizika, fakultetna tema → njen predmet), ne po
+  // predmetu v nastavitvah. Oznake lekcije (:::simboli) imajo prednost: T v T = I/I₀ je prepustnost.
+  const lessonSubject = L.subject || (/^([A-Z]{3})-/.exec(L.id || "") || [])[1];
+  const R = (text) => withFormulaSubject(lessonSubject, () => ctx.renderRich(text), L.lesson?.symbols);
   const lesson = L.lesson;
   const sections = lesson?.sections || [];
   // Demonstracijo postavimo za rešene primere (ali za razlago, če primerov ni).

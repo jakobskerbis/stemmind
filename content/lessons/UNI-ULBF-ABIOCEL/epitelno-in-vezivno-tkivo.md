@@ -206,3 +206,14 @@ Podobno pri kolagenu: v vijačnem delu verige z $1014$ aminokislinami je vsaka t
 ~ Hondrociti so žive celice, ki vzdržujejo matriks.
 + Ker hrustanec nima žil: nove celice ne pridejo do poškodbe, hranila pa le s počasno difuzijo.
 > Brez žil ni dotoka celic in hranil, kot ga ima kost. Zato se poškodba sklepnega hrustanca le slabo popravi.
+
+:::simboli
+m | masa kosti | | g
+w_\mathrm{org} | masni delež organskega dela kosti | | – | v odstotkih
+m_\mathrm{org} | masa organskega dela kosti | m_\mathrm{org} = w_\mathrm{org} \cdot m | g
+m_\mathrm{kol} | masa kolagena | m_\mathrm{kol} = 0{,}90 \cdot m_\mathrm{org} | g | kolagen je 90 % organskega dela
+m_\mathrm{Ca} | masa kalcija v okostju | | g | pri odraslem okoli 1000 g
+m_\mathrm{dan} | masa kalcija, prenovljena v enem dnevu | m_\mathrm{dan} = \dfrac{0{,}10 \cdot m_\mathrm{Ca}}{365} | mg
+c | masna koncentracija kalcija v mleku | | mg/mL | 120 mg na 100 mL
+V | prostornina mleka | V = \dfrac{m_\mathrm{dan}}{c} | mL
+:::

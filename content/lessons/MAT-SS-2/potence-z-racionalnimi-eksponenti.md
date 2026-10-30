@@ -197,3 +197,11 @@ Vsi trije grafi gredo skozi točki $(0, 0)$ in $(1, 1)$, ker je $1^r = 1$ za vsa
 - $\sqrt[8]{a^2}$
 + $\sqrt[4]{a^3}$
 > $a^{\frac{1}{2}} \cdot a^{\frac{1}{4}} = a^{\frac{2}{4} + \frac{1}{4}} = a^{\frac{3}{4}} = \sqrt[4]{a^3}$. Pri množenju potenc z isto osnovo eksponente seštejemo.
+
+:::simboli
+a | osnova potence | | | a > 0 pri racionalnih eksponentih
+b | osnova druge potence | | |
+m | števec eksponenta (potenca pod korenom) | | | v pravilih celo število
+n | imenovalec eksponenta (korenski eksponent) | | | v pravilih celo število
+r, s | racionalna eksponenta | | |
+:::

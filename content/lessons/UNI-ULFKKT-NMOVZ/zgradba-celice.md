@@ -246,3 +246,16 @@ Sledi te zgodbe nosiš še danes: mitohondriji v tvojih celicah imajo dvojno mem
 - Ker antibiotik ne more skozi nobeno membrano.
 ~ Če ne bi mogel skozi membrano, ne bi dosegel niti bakterijskih ribosomov.
 > Razlika 70S/80S je tarča mnogih antibiotikov. Mitohondriji imajo ribosome 70S, zato so pri velikih odmerkih lahko prizadeti tudi oni.
+
+:::simboli
+S | površina celice | S = 4\pi r^2 | µm^2 | za kroglo
+V | prostornina celice | V = \frac{4}{3}\pi r^3 | µm^3 | za kroglo
+r | polmer celice | | µm |
+N | število celic oziroma membran v vrsti | N = \dfrac{L}{d} | – | obe dolžini v isti enoti
+L | dolžina zaslona | | cm |
+d | velikost ene celice (dolžina ali premer) | | µm | v primeru s steklom debelina membrane, 7,5 nm
+S_\mathrm{zun} | zunanja površina celice (kocke) | S_\mathrm{zun} = 6 a^2 | µm^2 |
+a | rob kockaste celice | | µm |
+S_\mathrm{skupaj} | skupna površina vseh membran v celici | S_\mathrm{skupaj} = \dfrac{S_\mathrm{zun}}{0{,}02} | µm^2 | celična membrana je le 2 % vseh membran
+D | debelina zaščitnega stekla | | mm |
+:::

@@ -224,3 +224,15 @@ Pri vseh treh je integral le stroj, ki sešteje neskončno tankih kosov. Razliku
 ~ Pod korenom mora biti odvod. Dolžino določa naklon, ne višina.
 + $\int_a^b \sqrt{1 + f'(x)^2}\,dx$
 > Dolžina letve je dolžina loka. Vsak kratek košček je hipotenuza trikotnika s katetama $dx$ in $f'(x)\,dx$.
+
+:::simboli
+A | ploščina lika | A = \int_a^b \big(f(x) - g(x)\big)\,dx | | pod osjo x integriramo absolutno vrednost f
+a, b | meji integracije (krajišči intervala)
+f | funkcija (zgornja krivulja) | | | pri vrtenini funkcija, ki jo vrtimo
+g | funkcija (spodnja krivulja) | | | graf f leži nad grafom g
+f' | odvod funkcije f | | | določa naklon krivulje
+x | neodvisna spremenljivka
+d | oznaka diferenciala (dx) v integralu
+V | prostornina vrtenine okoli osi x | V = \pi \int_a^b f(x)^2\,dx
+L | dolžina loka krivulje | L = \int_a^b \sqrt{1 + f'(x)^2}\,dx
+:::

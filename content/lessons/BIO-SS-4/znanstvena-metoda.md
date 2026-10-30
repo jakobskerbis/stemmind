@@ -234,3 +234,10 @@ Meja primerjave: posodobitev izda podjetje, ko se tako odloči, znanstveno razla
 ~ Odstotek je kvantitativen podatek. Težava ni vrsta podatka, ampak to, da ga nihče ni preveril.
 + Avtor ima od trditve korist, raziskava pa ni objavljena z recenzijo in metodami.
 > Verodostojen vir navede metode in podatke, je recenziran, avtor pa nima koristi od sklepa. Tu ni nič od tega.
+
+:::simboli
+x | posamezna meritev
+\bar{x} | povprečje meritev | \bar{x} = \dfrac{x_1 + x_2 + \dots + x_n}{n}
+x_1, x_2, x_n | prva, druga in zadnja meritev | | 
+n | število meritev | | –
+:::

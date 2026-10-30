@@ -15,7 +15,7 @@ Odgovor ni odvisen od barve ali trdote. Odvisen je od tega, **kako so atomi v sn
 
 **1. Mamljiva, a napačna slika.** Veliko učencev si predstavlja, da so vse snovi zgrajene iz molekul: majhnih skupin atomov, povezanih s palčkami. Za sladkor to drži. Za sol in aluminij ne. Če bi bila sol iz drobnih molekul, bi se obnašala kot sladkor. Sladkor pa se stali in porjavi že pri slabih $200\,°\mathrm{C}$, sol se tali šele pri $801\,°\mathrm{C}$.
 
-Atome v snovi drži skupaj **kemijska vez**: električni privlak med jedri in elektroni sosednjih atomov. Poznamo tri glavne vrste. Katera nastane, je odvisno od tega, ali so atomi kovine ali nekovine, in od razlike elektronegativnosti $\Delta EN$. **Elektronegativnost** ($EN$) pove, kako močno atom v vezi privlači elektrone k sebi.
+Atome v snovi drži skupaj **kemijska vez**: električni privlak med jedri in elektroni sosednjih atomov. Poznamo tri glavne vrste. Katera nastane, je odvisno od tega, ali so atomi kovine ali nekovine, in od razlike elektronegativnosti $\Delta\mathrm{EN}$. **Elektronegativnost** ($\mathrm{EN}$) pove, kako močno atom v vezi privlači elektrone k sebi.
 
 **2. Ionska vez: kovina in nekovina.** Natrij ima en valenčni elektron, klor sedem. Natrij elektron odda in postane kation $\mathrm{Na^+}$. Klor ga sprejme in postane anion $\mathrm{Cl^-}$. Oba imata zdaj v zunanji lupini $8$ elektronov, tako kot žlahtni plini. Takšni zunanji lupini rečemo **oktet**; je posebej stabilna.
 
@@ -58,7 +58,7 @@ Prosti elektroni prevajajo tok in toploto. Plasti kationov lahko drsijo druga ob
 
 **5. Polarnost vezi.** Pri $\mathrm{Cl_2}$ je skupni par točno na sredini. Med različnima nekovinama ni: bolj elektronegativni atom ga potegne k sebi in dobi **delni negativni naboj** $\delta^-$, drugi pa **delni pozitivni naboj** $\delta^+$. Taka vez je **polarna**. Za vodikov klorid zapišemo $\overset{\delta+}{\mathrm{H}}{-}\overset{\delta-}{\mathrm{Cl}}$.
 
-Kako polarna je vez, pove $\Delta EN$. Predstavljaj si cesto s kilometrskimi kamni:
+Kako polarna je vez, pove $\Delta\mathrm{EN}$. Predstavljaj si cesto s kilometrskimi kamni:
 
 ```
 ΔEN: 0 —— 0,4 ——————— 1,7 ——————— 3,3
@@ -66,7 +66,7 @@ Kako polarna je vez, pove $\Delta EN$. Predstavljaj si cesto s kilometrskimi kam
              kovalentna
 ```
 
-Meji $0{,}4$ in $1{,}7$ sta dogovorjeni, prehod je zvezen. Ionska vez je skrajno polarna vez: par je tako močno na eni strani, da elektron preide k drugemu atomu. V simulaciji spodaj »Polarnost vezi in elektronegativnost« izberi vodik in mu zapored dodaj fluor, klor, brom in jod. Opazuj, kako se $\Delta EN$ manjša in se par pomika proti sredini. Pri $\mathrm{HF}$ ($\Delta EN \approx 1{,}8$) simulacija pokaže ionsko vez, čeprav je $\mathrm{HF}$ molekula s polarno kovalentno vezjo: meja $1{,}7$ je le dogovor.
+Meji $0{,}4$ in $1{,}7$ sta dogovorjeni, prehod je zvezen. Ionska vez je skrajno polarna vez: par je tako močno na eni strani, da elektron preide k drugemu atomu. V simulaciji spodaj »Polarnost vezi in elektronegativnost« izberi vodik in mu zapored dodaj fluor, klor, brom in jod. Opazuj, kako se $\Delta\mathrm{EN}$ manjša in se par pomika proti sredini. Pri $\mathrm{HF}$ ($\Delta\mathrm{EN} \approx 1{,}8$) simulacija pokaže ionsko vez, čeprav je $\mathrm{HF}$ molekula s polarno kovalentno vezjo: meja $1{,}7$ je le dogovor.
 
 **6. Polarnost molekule.** Molekula je **polarna** (je **dipol**), če ima en konec delno negativen, drugega delno pozitiven. Pri vodi je kisik $\delta^-$, oba vodika $\delta^+$. Molekula je zalomljena, oba vodika sta na isti strani. Zato je ena stran molekule negativna, druga pozitivna in voda je polarna.
 
@@ -80,18 +80,18 @@ Ni. Oba kisika vlečeta elektrone enako močno, a v nasprotnih smereh, kot dva e
 
 ### Primer 1 (lažji): kalcijev klorid
 
-Kalcij je v 2. skupini ($EN = 1{,}0$), klor v 17. skupini ($EN = 3{,}2$). Kakšna vez nastane med njima, kateri ioni nastanejo in kakšna je formula spojine?
+Kalcij je v 2. skupini ($\mathrm{EN} = 1{,}0$), klor v 17. skupini ($\mathrm{EN} = 3{,}2$). Kakšna vez nastane med njima, kateri ioni nastanejo in kakšna je formula spojine?
 
-**Podatki:** $\mathrm{Ca}$: $2$ valenčna elektrona, $EN = 1{,}0$; $\mathrm{Cl}$: $7$ valenčnih elektronov, $EN = 3{,}2$
+**Podatki:** $\mathrm{Ca}$: $2$ valenčna elektrona, $\mathrm{EN} = 1{,}0$; $\mathrm{Cl}$: $7$ valenčnih elektronov, $\mathrm{EN} = 3{,}2$
 **Iščemo:** vrsto vezi, iona in formulo
 
 :::formula
-$\Delta EN = |EN_1 - EN_2|$; vsota nabojev v formuli $= 0$
+$\Delta\mathrm{EN} = |\mathrm{EN}_1 - \mathrm{EN}_2|$; vsota nabojev v formuli $= 0$
 :::
 
 **Rešitev:**
 
-1. $\Delta EN = |1{,}0 - 3{,}2| = 2{,}2$. To je nad $1{,}7$, kalcij je kovina, klor nekovina, zato je vez ionska.
+1. $\Delta\mathrm{EN} = |1{,}0 - 3{,}2| = 2{,}2$. To je nad $1{,}7$, kalcij je kovina, klor nekovina, zato je vez ionska.
 2. Kalcij odda oba valenčna elektrona. Tako se zunanja lupina izprazni, nova zunanja lupina pa že ima oktet: nastane $\mathrm{Ca^{2+}}$.
 3. Klor sprejme en elektron do okteta: nastane $\mathrm{Cl^-}$.
 4. Spojina je nenabita. En $\mathrm{Ca^{2+}}$ potrebuje dva $\mathrm{Cl^-}$: $2 + 2 \cdot (-1) = 0$.
@@ -99,13 +99,13 @@ $\Delta EN = |EN_1 - EN_2|$; vsota nabojev v formuli $= 0$
 
 ### Primer 2: dušik in amoniak
 
-Dušik je v 15. skupini ($EN = 3{,}0$), vodik ima en valenčni elektron ($EN = 2{,}2$). Koliko skupnih parov je v molekuli $\mathrm{N_2}$? Kakšne so vezi v amoniaku $\mathrm{NH_3}$ in kateri atom ima $\delta^-$?
+Dušik je v 15. skupini ($\mathrm{EN} = 3{,}0$), vodik ima en valenčni elektron ($\mathrm{EN} = 2{,}2$). Koliko skupnih parov je v molekuli $\mathrm{N_2}$? Kakšne so vezi v amoniaku $\mathrm{NH_3}$ in kateri atom ima $\delta^-$?
 
-**Podatki:** $\mathrm{N}$: $5$ valenčnih elektronov, $EN = 3{,}0$; $\mathrm{H}$: $1$ valenčni elektron, $EN = 2{,}2$
+**Podatki:** $\mathrm{N}$: $5$ valenčnih elektronov, $\mathrm{EN} = 3{,}0$; $\mathrm{H}$: $1$ valenčni elektron, $\mathrm{EN} = 2{,}2$
 **Iščemo:** število vezi v $\mathrm{N_2}$, polarnost vezi $\mathrm{N{-}H}$
 
 :::formula
-število vezi $=$ manjkajoči elektroni do okteta; $\Delta EN = |EN_1 - EN_2|$
+število vezi $=$ manjkajoči elektroni do okteta; $\Delta\mathrm{EN} = |\mathrm{EN}_1 - \mathrm{EN}_2|$
 :::
 
 **Rešitev:**
@@ -113,7 +113,7 @@ Dušik je v 15. skupini ($EN = 3{,}0$), vodik ima en valenčni elektron ($EN = 2
 1. Dušiku do okteta manjkajo $8 - 5 = 3$ elektroni, zato tvori tri vezi.
 2. V $\mathrm{N_2}$ si atoma delita tri pare: trojna vez $\mathrm{N{\equiv}N}$.
 3. V $\mathrm{NH_3}$ tvori dušik po eno vez s tremi vodiki, ker ima vsak vodik le en elektron za deljenje.
-4. $\Delta EN = 3{,}0 - 2{,}2 = 0{,}8$. To je med $0{,}4$ in $1{,}7$, zato so vezi polarne kovalentne.
+4. $\Delta\mathrm{EN} = 3{,}0 - 2{,}2 = 0{,}8$. To je med $0{,}4$ in $1{,}7$, zato so vezi polarne kovalentne.
 5. Dušik je bolj elektronegativen, zato par potegne k sebi.
 6. Odgovor: v $\mathrm{N_2}$ so trije skupni pari; vezi $\mathrm{N{-}H}$ so polarne, dušik ima $\delta^-$, vodiki $\delta^+$.
 
@@ -121,7 +121,7 @@ Dušik je v 15. skupini ($EN = 3{,}0$), vodik ima en valenčni elektron ($EN = 2
 
 Vrnimo se na Velebit. Tina ima aluminijasto folijo (samo atomi $\mathrm{Al}$), kristal soli $\mathrm{NaCl}$ in sladkor (molekule iz $\mathrm{C}$, $\mathrm{H}$ in $\mathrm{O}$). Kaj naj uporabi za stik? Bi ji pomagalo, če bi sol raztopila v vodi iz čutare?
 
-**Podatki:** $EN(\mathrm{Na}) = 0{,}9$, $EN(\mathrm{Cl}) = 3{,}2$, $EN(\mathrm{C}) = 2{,}6$, $EN(\mathrm{O}) = 3{,}4$, $EN(\mathrm{H}) = 2{,}2$; aluminij je kovina
+**Podatki:** $\mathrm{EN}(\mathrm{Na}) = 0{,}9$, $\mathrm{EN}(\mathrm{Cl}) = 3{,}2$, $\mathrm{EN}(\mathrm{C}) = 2{,}6$, $\mathrm{EN}(\mathrm{O}) = 3{,}4$, $\mathrm{EN}(\mathrm{H}) = 2{,}2$; aluminij je kovina
 **Iščemo:** vrsto vezi v vsaki snovi in katera prevaja tok
 
 :::formula
@@ -131,8 +131,8 @@ Tok prevaja snov, v kateri se **premikajo nabiti delci** (prosti elektroni ali i
 **Rešitev:**
 
 1. Aluminij: same kovine, zato kovinska vez. Ima prosti elektronski oblak.
-2. Sol: $\Delta EN = 3{,}2 - 0{,}9 = 2{,}3$, ionska vez. Ioni so v trdnem kristalu pritrjeni.
-3. Sladkor: same nekovine. Za vez $\mathrm{C{-}O}$ je $\Delta EN = 3{,}4 - 2{,}6 = 0{,}8$, za $\mathrm{O{-}H}$ je $3{,}4 - 2{,}2 = 1{,}2$. Vezi so kovalentne, molekule nenabite.
+2. Sol: $\Delta\mathrm{EN} = 3{,}2 - 0{,}9 = 2{,}3$, ionska vez. Ioni so v trdnem kristalu pritrjeni.
+3. Sladkor: same nekovine. Za vez $\mathrm{C{-}O}$ je $\Delta\mathrm{EN} = 3{,}4 - 2{,}6 = 0{,}8$, za $\mathrm{O{-}H}$ je $3{,}4 - 2{,}2 = 1{,}2$. Vezi so kovalentne, molekule nenabite.
 4. Gibljive nabite delce ima le aluminij: elektrone.
 5. Raztopljena sol bi prevajala, ker bi se ioni gibali. A prevaja slabše od kovine, raztopine pa v ohišju svetilke tudi ne more zadržati.
 6. Odgovor: Tina naj zvije aluminijasto folijo in z njo premosti stik. Kristal soli in sladkor ne prevajata.
@@ -141,16 +141,16 @@ Tok prevaja snov, v kateri se **premikajo nabiti delci** (prosti elektroni ali i
 
 Molekula $\mathrm{CCl_4}$ ima ogljik v sredini in štiri atome klora enakomerno razporejene okoli njega, kot oglišča piramide s štirimi enakimi ploskvami. Je molekula polarna?
 
-**Podatki:** $EN(\mathrm{C}) = 2{,}6$, $EN(\mathrm{Cl}) = 3{,}2$; oblika je simetrična
+**Podatki:** $\mathrm{EN}(\mathrm{C}) = 2{,}6$, $\mathrm{EN}(\mathrm{Cl}) = 3{,}2$; oblika je simetrična
 **Iščemo:** polarnost vezi in polarnost molekule
 
 :::formula
-$\Delta EN = |EN_1 - EN_2|$; molekula je polarna, če ima polarne vezi **in** je nesimetrična.
+$\Delta\mathrm{EN} = |\mathrm{EN}_1 - \mathrm{EN}_2|$; molekula je polarna, če ima polarne vezi **in** je nesimetrična.
 :::
 
 **Rešitev:**
 
-1. $\Delta EN = 3{,}2 - 2{,}6 = 0{,}6$, zato so vezi $\mathrm{C{-}Cl}$ polarne; klor ima $\delta^-$.
+1. $\Delta\mathrm{EN} = 3{,}2 - 2{,}6 = 0{,}6$, zato so vezi $\mathrm{C{-}Cl}$ polarne; klor ima $\delta^-$.
 2. Zdaj ti: ali se učinki štirih vezi seštejejo ali izničijo? Sklepaj o molekuli.
 
 :::premisli
@@ -164,7 +164,7 @@ Ni. Štirje atomi klora vlečejo enako močno v štiri simetrične smeri, zato s
 - **»Sol je iz molekul NaCl.«** Formula nas zavede, ker je zapisana kot formula vode. Ionski kristal je mreža ionov, vsak ion ima več sosedov. Formula pove le razmerje ionov.
 - **»Polarne vezi pomenijo polarno molekulo.«** Ta sklep spregleda obliko. Pri $\mathrm{CO_2}$ in $\mathrm{CCl_4}$ se učinki vezi izničijo. Vedno preveri še simetrijo.
 - **»Razliko elektronegativnosti dobim s seštevanjem.«** Vsota pove, koliko elektrone privlačita skupaj, ne kdo vleče močneje. Pri $\mathrm{NaCl}$ ($0{,}9$ in $3{,}2$) dobiš $4{,}1$ namesto $2{,}3$. Odštej in vzemi absolutno vrednost.
-- **»Če je $\Delta EN = 0$, je vez kovalentna.«** Pri kovini, na primer natriju, je tudi $\Delta EN = 0$, vez pa je kovinska. Najprej preveri, ali gre za kovine ali nekovine.
+- **»Če je $\Delta\mathrm{EN} = 0$, je vez kovalentna.«** Pri kovini, na primer natriju, je tudi $\Delta\mathrm{EN} = 0$, vez pa je kovinska. Najprej preveri, ali gre za kovine ali nekovine.
 - **»V kovini tok prevajajo ioni.«** Kationi kovine ostanejo na svojih mestih. Premikajo se prosti elektroni iz oblaka.
 
 ## Povzetek
@@ -172,7 +172,7 @@ Ni. Štirje atomi klora vlečejo enako močno v štiri simetrične smeri, zato s
 - Ionska vez: kovina odda elektrone, nekovina jih sprejme; nastane kristal kationov in anionov. Visoko tališče, krhkost, trdna ne prevaja, raztopljena ali talina prevaja.
 - Kovalentna vez: atoma nekovin si delita elektronski par. Atom tvori toliko vezi, kolikor elektronov mu manjka do okteta. Nastanejo molekule.
 - Kovinska vez: kationi kovine v oblaku prosto gibljivih elektronov. Prevaja tok, kovina je kovna.
-- $\Delta EN = |EN_1 - EN_2|$: do približno $0{,}4$ nepolarna, do $1{,}7$ polarna kovalentna, nad tem ionska. Meje so dogovorjene.
+- $\Delta\mathrm{EN} = |\mathrm{EN}_1 - \mathrm{EN}_2|$: do približno $0{,}4$ nepolarna, do $1{,}7$ polarna kovalentna, nad tem ionska. Meje so dogovorjene.
 - Molekula je polarna, če ima polarne vezi in je nesimetrična ($\mathrm{H_2O}$ da, $\mathrm{CO_2}$ in $\mathrm{CCl_4}$ ne).
 
 ## Drugače: Kot zgodba
@@ -187,13 +187,13 @@ Skupina kovinskih atomov v koči pa vse zaloge zloži v skupno shrambo, iz kater
 
 ## Drugače: Korak za korakom s številkami
 
-Postopek za katerikoli par atomov, na primeru kalija ($EN = 0{,}8$), broma ($EN = 3{,}0$) in vodika ($EN = 2{,}2$):
+Postopek za katerikoli par atomov, na primeru kalija ($\mathrm{EN} = 0{,}8$), broma ($\mathrm{EN} = 3{,}0$) in vodika ($\mathrm{EN} = 2{,}2$):
 
 1. **Kovina ali nekovina?** Kalij je kovina, brom in vodik nekovini.
 2. **Samo kovine** ($\mathrm{K}$ s $\mathrm{K}$): kovinska vez, računati ni treba.
-3. **Kovina in nekovina** ($\mathrm{KBr}$): $\Delta EN = 3{,}0 - 0{,}8 = 2{,}2$, nad $1{,}7$, ionska vez.
-4. **Nekovini** ($\mathrm{HBr}$): $\Delta EN = 3{,}0 - 2{,}2 = 0{,}8$, polarna kovalentna; $\delta^-$ ima brom.
-5. **Enaki nekovini** ($\mathrm{Br_2}$): $\Delta EN = 3{,}0 - 3{,}0 = 0$, nepolarna kovalentna.
+3. **Kovina in nekovina** ($\mathrm{KBr}$): $\Delta\mathrm{EN} = 3{,}0 - 0{,}8 = 2{,}2$, nad $1{,}7$, ionska vez.
+4. **Nekovini** ($\mathrm{HBr}$): $\Delta\mathrm{EN} = 3{,}0 - 2{,}2 = 0{,}8$, polarna kovalentna; $\delta^-$ ima brom.
+5. **Enaki nekovini** ($\mathrm{Br_2}$): $\Delta\mathrm{EN} = 3{,}0 - 3{,}0 = 0$, nepolarna kovalentna.
 6. **Molekula?** Pri molekulah z več vezmi preveri še obliko: simetrična oblika izniči polarnost.
 
 ## Preveri se
@@ -208,13 +208,13 @@ Postopek za katerikoli par atomov, na primeru kalija ($EN = 0{,}8$), broma ($EN 
 + $\mathrm{CO_2}$
 > Ogljik in kisik sta nekovini, zato si delita elektronske pare: kovalentna vez. Ostale tri snovi so ionske.
 
-? Magnezij ima $EN = 1{,}3$, kisik $EN = 3{,}4$. Koliko je $\Delta EN$ in kakšna je vez?
+? Magnezij ima $\mathrm{EN} = 1{,}3$, kisik $\mathrm{EN} = 3{,}4$. Koliko je $\Delta\mathrm{EN}$ in kakšna je vez?
 - $4{,}7$, ionska
 ~ Vrednosti si seštel. Razlika elektronegativnosti je razlika: $3{,}4 - 1{,}3$.
 + $2{,}1$, ionska
 - $2{,}1$, polarna kovalentna
 ~ Razlika je pravilna, a $2{,}1$ je nad mejo $1{,}7$. Pri tolikšni razliki elektron praktično preide.
-> $\Delta EN = |1{,}3 - 3{,}4| = 2{,}1 > 1{,}7$, zato je vez ionska: nastaneta $\mathrm{Mg^{2+}}$ in $\mathrm{O^{2-}}$.
+> $\Delta\mathrm{EN} = |1{,}3 - 3{,}4| = 2{,}1 > 1{,}7$, zato je vez ionska: nastaneta $\mathrm{Mg^{2+}}$ in $\mathrm{O^{2-}}$.
 
 ? Zakaj bakrena žica prevaja tok, trdna kuhinjska sol pa ne?
 - Ker sol nima nabitih delcev.
@@ -224,7 +224,7 @@ Postopek za katerikoli par atomov, na primeru kalija ($EN = 0{,}8$), broma ($EN 
 + Ker ima baker prosto gibljive elektrone, ioni v trdni soli pa se ne morejo premikati.
 > Za tok so potrebni nabiti delci, ki se gibljejo. V kovini so to elektroni iz elektronskega oblaka; v soli se ioni gibljejo šele v raztopini ali talini.
 
-? Luka sklepa o $\mathrm{CO_2}$: (1) $\Delta EN = 3{,}4 - 2{,}6 = 0{,}8$. (2) Vezi $\mathrm{C{=}O}$ so polarne. (3) Ker so vezi polarne, je polarna tudi molekula. Kateri korak je napačen?
+? Luka sklepa o $\mathrm{CO_2}$: (1) $\Delta\mathrm{EN} = 3{,}4 - 2{,}6 = 0{,}8$. (2) Vezi $\mathrm{C{=}O}$ so polarne. (3) Ker so vezi polarne, je polarna tudi molekula. Kateri korak je napačen?
 - Korak 1
 ~ Račun je pravilen: $3{,}4 - 2{,}6 = 0{,}8$.
 - Korak 2
@@ -239,3 +239,8 @@ Postopek za katerikoli par atomov, na primeru kalija ($EN = 0{,}8$), broma ($EN 
 - Ker je sol iz molekul, ki se ob udarcu ločijo.
 ~ V soli ni molekul $\mathrm{NaCl}$, ampak mreža ionov.
 > Kovinska vez ne veže kationov na točno določene sosede, zato je kovina kovna. V ionskem kristalu premik za eno mesto postavi $\mathrm{Na^+}$ ob $\mathrm{Na^+}$ in $\mathrm{Cl^-}$ ob $\mathrm{Cl^-}$; odboj kristal razkolje.
+
+:::simboli
+\Delta\mathrm{EN} | razlika elektronegativnosti | \Delta\mathrm{EN} = \lvert \mathrm{EN}_1 - \mathrm{EN}_2 \rvert | – | do 0,4 nepolarna, do 1,7 polarna kovalentna, nad tem ionska
+\mathrm{EN} | elektronegativnost | | – | po Paulingovi lestvici; največja pri fluoru (≈ 4,0)
+:::

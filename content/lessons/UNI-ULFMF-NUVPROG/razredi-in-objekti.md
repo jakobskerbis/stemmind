@@ -347,3 +347,10 @@ class Kosarica:
 - Python javi napako, ker `x` ni definiran.
 ~ Prirejanje `x = ...` lokalno spremenljivko ustvari, zato napake ni; samo atribut se ne spremeni.
 > Atribut spremeniš le s `self.x = self.x + dx`. Brez `self.` se rezultat shrani v lokalno spremenljivko.
+
+:::simboli
+x, y | koordinati točke | | | razdalja od izhodišča je √(x² + y²)
+S | ploščina pravokotnika | S = a \cdot b
+o | obseg pravokotnika | o = 2(a + b)
+a, b | stranici pravokotnika
+:::

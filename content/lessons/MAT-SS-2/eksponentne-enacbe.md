@@ -206,3 +206,14 @@ Opazi, da je kvadratna enačba za $t$ le vmesni korak. Dokler ne izračunaš $x$
 - $x = 2$ ali $x = 0$
 - enačba nima rešitve
 > Z $t = 2^x > 0$ dobimo $t^2 - 3t - 4 = 0$, torej $t = 4$ ali $t = -1$. Vrednost $t = -1$ zavržemo, iz $2^x = 4$ pa sledi $x = 2$.
+
+:::simboli
+a | osnova potence | | | a > 0, a ≠ 1; v obrazcu za t₁,₂ vodilni koeficient
+u, v | eksponenta na obeh straneh enačbe | | |
+x | neznanka | | |
+m, n | eksponenta v pravilih za potence | | |
+t | nova neznanka | t = a^x | | t > 0, ker je aˣ > 0
+t_{1,2} | rešitvi kvadratne enačbe za t | t_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} | | negativno rešitev zavržemo
+b | linearni koeficient kvadratne enačbe za t | | | drugje tudi druga osnova potence
+c | prosti člen kvadratne enačbe za t | | |
+:::

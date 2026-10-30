@@ -210,3 +210,16 @@ $$x_1 x_2 = \frac{(-b)^2 - D}{4a^2} = \frac{b^2 - b^2 + 4ac}{4a^2} = \frac{c}{a}
 - $x^2 - 3x - 10 = 0$
 - $x^2 + 3x + 10 = 0$
 > Vsota rešitev je $-3$, produkt $-10$, zato $x^2 - (-3)x + (-10) = x^2 + 3x - 10 = 0$.
+
+:::simboli
+a | vodilni koeficient (pri x²) | | | a ≠ 0
+b | linearni koeficient (pri x) | | |
+c | prosti člen | | |
+x | neznanka | | |
+D | diskriminanta | D = b^2 - 4ac | | D > 0: dve realni rešitvi · D = 0: ena · D < 0: kompleksni
+x_{1,2} | rešitvi kvadratne enačbe | x_{1,2} = \frac{-b \pm \sqrt{D}}{2a} | |
+x_1, x_2 | prva in druga rešitev | | | x₁ + x₂ = −b/a, x₁ · x₂ = c/a
+i | imaginarna enota | i^2 = -1 | |
+y | neznanka nove enačbe | | |
+y_1, y_2 | rešitvi nove enačbe | | |
+:::

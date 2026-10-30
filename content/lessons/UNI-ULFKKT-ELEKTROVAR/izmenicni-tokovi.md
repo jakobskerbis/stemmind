@@ -220,3 +220,25 @@ Efektivna vrednost je koren povprečja kvadrata: $U = \sqrt{\dfrac{1}{T}\display
 ~ Kondenzator izmenjuje le jalovo energijo z motorji. Delovne energije ne shranjuje.
 + Jalovo moč motorjem dajejo kondenzatorji, zato iz omrežja teče manjši tok.
 > Kondenzator ima jalovo moč nasprotnega predznaka kot tuljava. Skupni $Q$ pade, $\cos\varphi$ se približa $1$, tok v dovodu se zmanjša, $P$ pa ostane enaka.
+
+:::simboli
+Z | impedanca | Z = \sqrt{R^2 + X^2} | Ω | skupni »upor« vezja; I = U/Z
+R | upornost | | Ω
+X | reaktanca | X = X_L - X_C | Ω
+X_L | induktivna reaktanca tuljave | X_L = 2\pi f L | Ω | raste s frekvenco
+X_C | kapacitivna reaktanca kondenzatorja | X_C = \dfrac{1}{\omega C} | Ω | pada s frekvenco
+L | induktivnost | | H
+C | kapacitivnost | | F
+j | imaginarna enota | | | j² = −1
+\omega | krožna frekvenca | \omega = 2\pi f | 1/s | pri 50 Hz okoli 314 s⁻¹
+f | frekvenca | | Hz
+t | čas | | s
+p | trenutna moč | p = u \cdot i | W | del periode je negativna
+U | efektivna napetost | U = \dfrac{U_\mathrm{m}}{\sqrt{2}} | V
+I | efektivni tok | I = \dfrac{U}{Z} | A
+\varphi | fazni kot med napetostjo in tokom | \cos\varphi = \dfrac{R}{Z} | ° | cos φ je faktor moči
+P | delovna moč | P = UI\cos\varphi | W
+Q | jalova moč | Q = UI\sin\varphi | var
+S | navidezna moč | S = UI | VA | S² = P² + Q²
+Q_C | jalova moč kondenzatorja | Q_C = \dfrac{U^2}{X_C} = \omega C U^2 | var
+:::

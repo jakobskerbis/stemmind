@@ -230,3 +230,9 @@ Preprost preizkus: če snov lahko pripraviš »bolj ali manj« (bolj slana juha,
 ~ V zmesi bi bil ogljik črn že prej in bi ga lahko ločil. Sladkor je bel, ker je nova snov z novimi lastnostmi.
 + Sladkor je spojina: pri segrevanju se je razstavil na snovi iz ogljika, vodika in kisika.
 > Ker je iz sladkorja nastalo več različnih snovi in se je pri tem spremenil, je sladkor spojina. Razstavila ga je kemijska reakcija.
+
+:::simboli
+m_\text{sol} | masa soli v jušni kocki | m_\text{sol} = 2{,}5 \cdot m_\text{natrij} | g
+m_\text{natrij} | masa natrija v jušni kocki | | g | podatek z embalaže
+m_\text{sol na osebo} | masa soli na eno osebo | | g | sol ene kocke, deljena s 3
+:::

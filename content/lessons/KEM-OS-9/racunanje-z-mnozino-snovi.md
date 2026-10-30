@@ -185,3 +185,11 @@ Enako velja za vse druge atome: kolikorkrat je atom težji od ogljikovega, tolik
 - $6{,}02 \cdot 10^{23}$
 + $1{,}204 \cdot 10^{24}$
 > $N = n \cdot N_A = 2 \cdot 6{,}02 \cdot 10^{23} = 12{,}04 \cdot 10^{23} = 1{,}204 \cdot 10^{24}$. Odgovor $6{,}02 \cdot 10^{23}$ ustreza enemu molu, $3{,}01 \cdot 10^{23}$ pa bi dobili z deljenjem z $2$.
+
+:::simboli
+n | množina snovi | n = \frac{m}{M} | mol
+m | masa vzorca | m = n \cdot M | g
+M | molska masa | | g/mol | koliko gramov tehta en mol snovi
+N | število delcev | N = n \cdot N_A | – | molekul ali atomov
+N_A | Avogadrova konstanta | | mol^{-1} | N_A = 6,02 · 10²³ mol⁻¹
+:::

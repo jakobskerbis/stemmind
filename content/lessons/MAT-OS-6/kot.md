@@ -225,3 +225,9 @@ Besede iz vsakdanjega govora, na primer »pravi kot« ali »polni obrat«, imajo
 + $250^\circ$
 - $290^\circ$
 > Izbočeni kot je dopolnilo do polnega kota: $360^\circ - 110^\circ = 250^\circ$. Rezultat $70^\circ$ dobiš, če od iztegnjenega kota odšteješ $110^\circ$, $290^\circ$ pa, če odšteješ $70^\circ$ od $360^\circ$.
+
+:::simboli
+\alpha | kot | | ° | ostri do 90°, topi med 90° in 180°
+V | vrh kota | | | v zapisu ∠AVB je vrh srednja črka
+A, B, C | točke na krakih kotov | | | ∠AVB in ∠BVC imata skupni krak VB
+:::

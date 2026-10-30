@@ -212,3 +212,10 @@ Recept za prepoznavanje štirikotnika iz podatkov. Vzemimo štirikotnik, ki ima 
 - $20^\circ$
 + $110^\circ$
 > Kota ob istem kraku $AD$ skupaj merita $180^\circ$: $\delta = 180^\circ - 70^\circ = 110^\circ$.
+
+:::simboli
+\alpha | notranji kot pri oglišču A | | ° | vsota vseh štirih notranjih kotov je 360°
+\beta | notranji kot pri oglišču B | | °
+\gamma | notranji kot pri oglišču C | | °
+\delta | notranji kot pri oglišču D | | °
+:::

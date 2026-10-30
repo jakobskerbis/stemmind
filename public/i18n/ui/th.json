@@ -1447,6 +1447,7 @@
   "fx.noUnit": "ไม่มีหน่วย",
   "fx.change": "การเปลี่ยนแปลงของ: {what}",
   "fx.close": "ปิด",
+  "fx.parts": "โดยที่",
   "ap.style": "สไตล์",
   "ap.styleCist": "เรียบง่าย",
   "ap.styleCistText": "สงบและชัดเจน",

@@ -270,3 +270,8 @@ Postopek je podoben uglaševanju kitare: naenkrat zavrtiš le en vijak in poslu�
 ~ Nepolarno topilo ne stabilizira ionov, zato ionizacija skoraj ne poteče.
 + 2-bromo-2-metilpropan v mešanici vode in etanola
 > Terciarni substrat, dobra izstopajoča skupina in polarno protično topilo: vse pospešuje nastanek karbokationa.
+
+:::simboli
+v | hitrost reakcije | v = k\,[\mathrm{RX}]\,[\mathrm{Nu}] | mol/(L s) | velja za SN2; pri SN1 in E1 v = k[RX]
+k | konstanta hitrosti | | | pri SN2 v L/(mol s), pri SN1 v 1/s
+:::

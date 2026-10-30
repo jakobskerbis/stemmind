@@ -275,3 +275,7 @@ Ogljik si predstavljaj kot kuharja s štirimi rokami. Z vsako roko nekaj drži: 
 ~ Veriga je prava, številčenje pa ne: z drugega konca dobi metil številko 2.
 + 2-metilbutan
 > Najdaljša veriga gre skozi etilno skupino in ima 4 atome C (butan). Na njej ostane ena skupina $-\mathrm{CH_3}$ na mestu 2: 2-metilbutan.
+
+:::simboli
+n | število atomov ogljika v molekuli | | – | alkani CₙH₂ₙ₊₂, alkeni CₙH₂ₙ, alkini CₙH₂ₙ₋₂
+:::

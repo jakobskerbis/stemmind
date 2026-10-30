@@ -207,3 +207,17 @@ Danes ista ideja teče v tvojem telefonu: atomske ure v satelitih štejejo nihaj
 - Samo $3\,\mathrm{eV}$ in $6\,\mathrm{eV}$.
 ~ Pozabil si neposredni skok z $-1\,\mathrm{eV}$ na $-10\,\mathrm{eV}$, ki da $9\,\mathrm{eV}$.
 > Razlike: $-1 - (-4) = 3\,\mathrm{eV}$, $-4 - (-10) = 6\,\mathrm{eV}$, $-1 - (-10) = 9\,\mathrm{eV}$. Vsak par nivojev da svojo črto.
+
+:::simboli
+E_n | energija n-tega nivoja vodika | E_n = -\frac{13{,}6\,\mathrm{eV}}{n^2} | eV
+n | zaporedna številka energijskega nivoja | | – | n = 1, 2, 3, …
+h | Planckova konstanta | | J\,s | v računih hc ≈ 1240 eV nm
+\nu | frekvenca izsevanega fotona | | Hz
+E_z | začetni (višji) energijski nivo | | eV | pri absorpciji je to končni nivo
+E_k | končni (nižji) energijski nivo | | eV | ne kinetična energija
+W_f | energija fotona | W_f = \dfrac{hc}{\lambda} | eV
+\lambda | valovna dolžina svetlobe | \lambda = \dfrac{hc}{W_f} | nm
+c | hitrost svetlobe | | m/s | 3,00 · 10⁸ m/s
+\Delta E | razlika energijskih nivojev | \Delta E = W_f = \dfrac{hc}{\lambda} | eV
+E_1, E_2 | energiji prvega in drugega nivoja | | eV | E₁ = −13,6 eV, E₂ = −3,40 eV
+:::

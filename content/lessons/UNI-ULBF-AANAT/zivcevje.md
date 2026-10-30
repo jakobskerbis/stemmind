@@ -230,3 +230,11 @@ Meje analogije: signal v živcu potuje le $1$ do $120\,\mathrm{m/s}$, hrbtenjač
 - mediani živec v dlani
 ~ Mediani živec oživčuje predvsem palec, kazalec in sredinec ter poteka po sprednji strani komolca, ne v žlebu za notranjim izrastkom.
 > Komolčni živec poteka tik pod kožo za notranjim izrastkom nadlahtnice in oživčuje mezinec ter del prstanca. Udarec ga razdraži, zato signal po njem steče v OŽ.
+
+:::simboli
+t | čas potovanja živčnega signala | t = \dfrac{s_1}{v} + \dfrac{s_2}{v} | s | zamudo v sinapsah zanemarimo
+s_1 | pot signala po hrbtenjači | | m
+s_2 | pot signala po živcu do mišic | | m
+v | hitrost prevajanja signala | | m/s
+t_{16} | trajanje ene šestnajstinke | t_{16} = \dfrac{60\,\mathrm{s}}{120} \cdot \dfrac14 | s | pri tempu 120 dob na minuto
+:::

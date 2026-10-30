@@ -250,3 +250,21 @@ Nad $\mathbb{R}$ mora $m_A$ še razpasti na linearne faktorje: rotacija za $90^\
 ~ Koeficientov ne kubiramo; potenco znižujemo korak za korakom z $A^2 = 5A - 6I$.
 + $19A - 30I$
 > $A^3 = 5A^2 - 6A = 5(5A - 6I) - 6A = 19A - 30I$.
+
+:::simboli
+A | kvadratna matrika
+\lambda | spremenljivka polinoma (lastna vrednost) | | | ničle karakterističnega polinoma so lastne vrednosti
+p_A | karakteristični polinom matrike A | p_A(\lambda) = \det(\lambda I - A)
+I | identična (enotska) matrika
+n | velikost matrike (stopnja polinoma)
+c_0, c_k | koeficienti karakterističnega polinoma | | | p_A(λ) = λⁿ + cₙ₋₁λⁿ⁻¹ + … + c₀
+B, C | matriki iz primera
+B_0, B_1, B_k, B_{k-1}, B_{n-1} | matrični koeficienti adjungiranke adj(λI − A) | | | v dokazu Cayley-Hamiltonovega izreka
+M | matrika iz primera
+p_M | karakteristični polinom matrike M
+m | minimalni polinom | | | deli p in ima iste ničle
+p | karakteristični polinom
+D | matrika, katere diagonalizabilnost preverjamo
+p_D | karakteristični polinom matrike D | p_D(\lambda) = \lambda^2 - (\operatorname{sl} D)\lambda + \det D
+m_D | minimalni polinom matrike D
+:::

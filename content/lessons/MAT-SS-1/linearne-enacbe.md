@@ -168,3 +168,9 @@ Splošno: enačbo $ax = b$ rešujemo takole.
 + $a = 2$
 - $a = -2$
 > Enačbo preoblikujemo: $ax - 2x = 6$, torej $(a-2)x = 6$. Za $a = 2$ dobimo $0 \cdot x = 6$, kar nikoli ne velja. Za vsak drug $a$ je rešitev $x = \dfrac{6}{a-2}$.
+
+:::simboli
+x | neznanka | | |
+a | koeficient pri neznanki | | | pri a ≠ 0 je rešitev x = b/a
+b | znano število na desni strani | | |
+:::

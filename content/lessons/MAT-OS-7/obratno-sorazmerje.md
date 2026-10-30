@@ -265,3 +265,12 @@ Zveza $x + y = 100$ pri deski je tretja vrsta: stalna je vsota. Ko $x$ raste, $y
 - Približno $6{,}7$ ure
 ~ Tako bi bilo, če bi devet učencev delalo od začetka. Prve $4$ ure jih je delalo šest.
 > Delo: $6 \cdot 10 = 60$. V $4$ urah opravijo $24$, ostane $36$. Devet učencev potrebuje $36 : 9 = 4$ ure. Skupaj $4 + 4 = 8$ ur.
+
+:::simboli
+x | prva količina, na primer število zidarjev | |
+y | druga količina, na primer število dni | y = \frac{k}{x} |
+k | koeficient obratnega sorazmerja | k = x \cdot y | | stalni zmnožek količin
+x_1, y_1 | prvi par vrednosti | |
+x_2, y_2 | drugi par vrednosti | | | x₁ · y₁ = x₂ · y₂
+n | kolikokrat se poveča prva količina | | | če je x₂ = n · x₁, je y₂ = y₁ : n
+:::

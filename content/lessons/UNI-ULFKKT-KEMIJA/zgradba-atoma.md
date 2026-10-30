@@ -233,3 +233,22 @@ kar za $Z = 1$ da $-2{,}179 \cdot 10^{-18}\,\mathrm{J}/n^2$. Pri vodiku je energ
 - $2$
 + $3$
 > Po Hundovem pravilu trije elektroni $2p$ zasedejo vsak svojo orbitalo z vzporednimi spini, zato so vsi trije nesparjeni.
+
+:::simboli
+E_n | energija elektrona na n-tem nivoju | E_n = -\frac{2{,}179 \cdot 10^{-18}\,\mathrm{J}}{n^2} | J | za vodikov atom
+n | glavno kvantno število | | – | n = 1, 2, 3, …
+l | stransko (orbitalno) kvantno število | | – | l = 0, …, n − 1
+m_l | magnetno kvantno število | | – | m_l = −l, …, +l
+s | podlupina s | | | l = 0, ena orbitala
+p | podlupina p | | | l = 1, tri orbitale
+d | podlupina d | | | l = 2, pet orbital
+f | podlupina f | | | l = 3, sedem orbital
+\hat H | Hamiltonov operator (operator energije) | | J | v Schrödingerjevi enačbi Ĥψ = Eψ
+\hbar | reducirana Planckova konstanta | \hbar = \frac{h}{2\pi} | J s
+h | Planckova konstanta | | J s | 6,626 · 10⁻³⁴ J s
+m_e | masa elektrona | | kg | 9,109 · 10⁻³¹ kg
+Z | vrstno število (število protonov) | | –
+e | osnovni naboj | | C | 1,602 · 10⁻¹⁹ C
+\varepsilon_0 | influenčna konstanta | | F/m | 8,854 · 10⁻¹² F/m
+r | razdalja elektrona od jedra | | m
+:::

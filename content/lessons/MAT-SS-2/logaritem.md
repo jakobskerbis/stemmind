@@ -203,3 +203,13 @@ Logaritme uporabljamo povsod, kjer se količine razlikujejo za veliko velikostni
 - $-6$
 - $10$
 > $\log 1000 = 3$ in $\log 0{,}01 = -2$, vsota je $1$. Isto dobiš kot $\log (1000 \cdot 0{,}01) = \log 10 = 1$.
+
+:::simboli
+a | osnova logaritma | | | a > 0, a ≠ 1
+b | logaritmand | | | b > 0
+x | logaritem števila b (eksponent) | x = \log_a b | | v pravilih poljubno pozitivno število
+y | pozitivno število | | |
+c | nova osnova | | | c > 0, c ≠ 1
+n | realno število (eksponent) | | |
+m | eksponent v potenci | | |
+:::

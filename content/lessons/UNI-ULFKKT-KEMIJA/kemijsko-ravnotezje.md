@@ -319,3 +319,23 @@ $$\ln\frac{K_2}{K_1} = -\frac{\Delta_\mathrm{r}H^\circ}{R}\left(\frac{1}{T_2} - 
 - vstavila bi morala začetne koncentracije
 ~ V $K$ gredo prav ravnotežne koncentracije; začetne bi vstavila v $Q$.
 > Pravilno je $K_c = 0{,}0120^2/0{,}0400 = 3{,}6 \cdot 10^{-3}$ (Primer 1). Brez kvadrata dobi vrednost, ki je več kot osemdesetkrat prevelika.
+
+:::simboli
+a, b | stehiometrična koeficienta reaktantov A in B | | –
+c, d | stehiometrična koeficienta produktov C in D | | – | c je drugje tudi množinska koncentracija
+K_c | konstanta ravnotežja s koncentracijami | K_c = \frac{[\mathrm{C}]^c\,[\mathrm{D}]^d}{[\mathrm{A}]^a\,[\mathrm{B}]^b} | | odvisna le od temperature
+K_p | konstanta ravnotežja s parcialnimi tlaki | K_p = K_c\,(RT)^{\Delta n} | | tlaki v barih
+K | konstanta ravnotežja (termodinamična) | \Delta_\mathrm{r}G^\circ = -RT\ln K | – | z aktivnostmi je brez enote
+K_1 | konstanta ravnotežja pri temperaturi T₁ | | –
+K_2 | konstanta ravnotežja pri temperaturi T₂ | | –
+Q | kvocient reakcije | | – | enaka oblika kot K, a s trenutnimi koncentracijami
+R | splošna plinska konstanta | | J/(mol K) | s tlaki v barih 0,083 14 L bar/(mol K)
+T | absolutna temperatura | | K
+T_1, T_2 | temperaturi, pri katerih primerjamo konstanti | | K
+\Delta n | razlika množin plinastih produktov in reaktantov | \Delta n = (c + d) - (a + b) | – | šteje le plinaste snovi
+\Delta_\mathrm{r} | sprememba pri reakciji (reakcijska količina) | | | ΔᵣG: reakcijska Gibbsova energija, ΔᵣH°: reakcijska entalpija
+G | Gibbsova energija | | kJ/mol | ΔᵣG: reakcijska Gibbsova energija; spontano, ko je negativna
+H | entalpija | | kJ/mol | ΔᵣH°: standardna reakcijska entalpija
+x | sprememba koncentracije v tabeli ravnotežja | | mol/L | neznanka, pomnožena s koeficientom snovi
+p | parcialni tlak plina | p = cRT | bar
+:::

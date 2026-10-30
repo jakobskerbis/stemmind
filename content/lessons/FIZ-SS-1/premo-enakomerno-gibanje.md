@@ -206,3 +206,14 @@ Ploščina pod $v(t)$: če je $v$ stalna, je lik med grafom, osjo $t$ in navpič
 + $24\,\mathrm{m}$, pomeni prepotovano pot.
 - $24\,\mathrm{m}$, pomeni čas gibanja.
 > Pod grafom je pravokotnik s stranicama $3\,\mathrm{m/s}$ in $8\,\mathrm{s}$, torej ploščina $3 \cdot 8 = 24\,\mathrm{m}$. To je prepotovana pot, saj je $s = v t$.
+
+:::simboli
+v | hitrost | v = \dfrac{\Delta s}{\Delta t} | m/s
+s | lega (pot od izhodišča) | s = s_0 + v\,t | m
+s_0 | začetna lega | | m | pogosto vzamemo s₀ = 0
+t | čas | | s
+s_1, s_2 | legi ob časih t₁ in t₂ | | m
+t_1, t_2 | časa dveh opazovanj | | s
+s_K | lega kolesarja | | m
+s_P | lega pešca | | m
+:::
