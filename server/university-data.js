@@ -20,6 +20,7 @@
 // naslovov ne spreminjaj brez generatorjev.
 
 import { EXTRA_FACULTIES } from "./university-extra.js";
+import { COURSE_EXTENSIONS } from "./university-razsiritve.js";
 
 // ============================================================ vsebine (sklopi)
 
@@ -1342,6 +1343,29 @@ for (const fac of EXTRA_FACULTIES) {
 }
 
 const courseKey = (fac, code) => `UNI-${fac.replace("-", "")}-${code}`;
+
+// Razširitve po učnih načrtih: teme v obstoječi sklop (po naslovu) ali nov sklop na konec.
+// Bloki so skupni več predmetom, zato predmet dobi svojo kopijo sklopov.
+for (const [key, extra] of Object.entries(COURSE_EXTENSIONS)) {
+  const [fac, code] = Object.keys(COURSES).flatMap((f) => Object.keys(COURSES[f]).map((c) => [f, c])).find(([f, c]) => courseKey(f, c) === key) || [];
+  if (!fac) throw new Error(`university-razsiritve: neznan predmet ${key}`);
+  const course = COURSES[fac][code];
+  const units = course[2].map(([title, topics]) => [title, [...topics]]);
+  // Neobvezno: { after: "naslov teme" } vstavi teme za to temo, { before: "naslov sklopa" } nov sklop pred ta sklop.
+  for (const [title, topics, { after, before } = {}] of extra) {
+    const unit = units.find(([t]) => t === title);
+    if (unit) {
+      const at = after ? unit[1].findIndex((t) => t.split(" | ")[0] === after) : -1;
+      if (after && at < 0) throw new Error(`university-razsiritve: ${key} nima teme ${after}`);
+      unit[1].splice(at < 0 ? unit[1].length : at + 1, 0, ...topics);
+    } else {
+      const at = before ? units.findIndex(([t]) => t === before) : -1;
+      if (before && at < 0) throw new Error(`university-razsiritve: ${key} nima sklopa ${before}`);
+      units.splice(at < 0 ? units.length : at, 0, [title, [...topics]]);
+    }
+  }
+  COURSES[fac][code] = [course[0], course[1], units];
+}
 
 // Poti za curriculum.js: ena pot na predmet fakultete.
 export const UNI_PATHS = {};
