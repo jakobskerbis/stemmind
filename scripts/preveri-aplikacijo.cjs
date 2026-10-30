@@ -645,6 +645,14 @@ async function games(p, label) {
   await tab(p, "games");
   await expectVisible(p, "#games-content .gm-portal", "igre");
   await screen(p, `igre-${label}`);
+  // strani mreže (60 iger na stran): druga stran ima igre, nato nazaj na prvo
+  if (await p.locator("#games-content .gm-pager").count()) {
+    await click(p, '#games-content .gm-pager [data-page="1"]', { wait: 300 });
+    const cur = await p.locator("#games-content .gm-pager [aria-current]").textContent();
+    if (cur.trim() !== "2") throw new Error(`strani iger: po kliku na 2 je izbrana stran ${cur}`);
+    if (!(await p.locator("#games-content .gm-sec .gm-tile").count())) throw new Error("strani iger: druga stran je prazna");
+    await click(p, '#games-content .gm-pager [data-page="0"]', { wait: 300 });
+  }
   const tile = p.locator("#games-content .gm-tile:not(.gm-locked)").first();
   if (!(await tile.count())) throw new Error("ni odklenjene igre");
   await tile.click();

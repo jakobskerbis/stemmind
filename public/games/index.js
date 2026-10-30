@@ -21,6 +21,7 @@ import { WISHES } from "./wishes.js";
 import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isNew, isNewDate, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
 import { seasonOf } from "../zbirke.js";
 import { unlockedText } from "../zbirke-view.js";
+import { pageSlice, pageNums } from "./pages.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const FILTER_KEY = "evklid.gamesFilter";
@@ -69,10 +70,7 @@ let filter = { subject: "MAT", area: "you", kind: "all", q: "" };
 const SUBJ_GLYPH = { MAT: "∑", FIZ: "⚛", KEM: "⚗", BIO: "❀", NAR: "☼", GEO: "⛰", RAC: "01", EKO: "€" };
 let game = null; // odprta igra
 let trOpen = false;
-// Mreža iger po straneh (j 2026-10-30: »prikaži največ 50 iger naenkrat zaradi laga«, »lahko je tudi več«):
-// 60 se lepo razdeli v vrstice po 2–6. Stran se ob vsaki spremembi izbire ali iskanja vrne na prvo.
-const PER_PAGE = 60;
-let page = 0;
+let page = 0; // stran mreže iger (pages.js); ob vsaki spremembi izbire ali iskanja spet prva
 let trends = null; // glasovi tedna (samo skrbnik ali računalnik s strežnikom, server/games.js)
 let root = null;
 
@@ -180,7 +178,8 @@ function trendsCard() {
 // Številke strani: 1 … 4 5 [6] 7 8 … 275, puščici za prejšnjo in naslednjo.
 function pager(pages) {
   if (pages < 2) return "";
-  const nums = [...new Set([0, page - 2, page - 1, page, page + 1, page + 2, pages - 1])].filter((n) => n >= 0 && n < pages).sort((a, b) => a - b);
+  // na ozkem zaslonu le en sosed na vsako stran, da gumbi ostanejo v eni vrstici
+  const nums = pageNums(page, pages, matchMedia("(max-width: 420px)").matches ? 1 : 2);
   const btn = (n) => `<button type="button" data-page="${n}"${n === page ? ` class="active" aria-current="page"` : ""} aria-label="${esc(t("games.page", { n: n + 1 }))}">${n + 1}</button>`;
   const parts = nums.map((n, i) => (i && n - nums[i - 1] > 1 ? `<span class="gm-gap" aria-hidden="true">…</span>` : "") + btn(n));
   return `<nav class="gm-pager" aria-label="${esc(t("games.pages"))}">
@@ -220,20 +219,10 @@ function renderPortal() {
     total += games.length;
     return { id, games };
   }).filter((x) => x.games.length);
-  const pages = Math.max(1, Math.ceil(total / PER_PAGE));
-  page = Math.min(page, pages - 1);
-  let from = page * PER_PAGE, left = PER_PAGE;
-  const sections = groups.map(({ id, games }) => {
-    if (from >= games.length) {
-      from -= games.length;
-      return "";
-    }
-    if (left <= 0) return "";
-    const shown = games.slice(from, from + left);
-    from = 0;
-    left -= shown.length;
-    return `<section class="gm-sec"><h2><span class="gm-dot" style="background:${areaColor(id)}"></span>${esc(areaName(id))}<span class="gm-count">${games.length}</span></h2><div class="gm-grid">${shown.map(([e, c]) => tile(e, c)).join("")}</div></section>`;
-  }).join("");
+  const sl = pageSlice(groups, page);
+  page = sl.page;
+  const pages = sl.pages;
+  const sections = sl.parts.map(({ id, games, all }) => `<section class="gm-sec"><h2><span class="gm-dot" style="background:${areaColor(id)}"></span>${esc(areaName(id))}<span class="gm-count">${all}</span></h2><div class="gm-grid">${games.map(([e, c]) => tile(e, c)).join("")}</div></section>`).join("");
   // Tvoje igre iz otroštva: vsaka izbrana vrsta igre z dvema snovma, ki ju zdaj izbereš (predmet, področje).
   let kidSec = "";
   if (kidEngines.length && filter.kind === "all" && !q && !page) {
@@ -307,10 +296,10 @@ function renderPortal() {
     if (!b || b.disabled) return;
     page = +b.dataset.page;
     renderPortal();
-    // na vrh mreže (pod iskanjem in izbiro), fokus na novo stran za tipkovnico in bralnik zaslona
+    // na vrh mreže (pod iskanjem in izbiro), fokus na prvo igro nove strani (tipkovnica, bralnik zaslona)
     const first = root.querySelector(".gm-kidsec, .gm-sec, .gm-none");
     first?.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-    root.querySelector(".gm-pager [aria-current]")?.focus({ preventScroll: true });
+    root.querySelector(".gm-sec .gm-tile")?.focus({ preventScroll: true });
   });
   root.querySelector('[data-act="shop"]').addEventListener("click", () => renderShop("", true));
   root.querySelector('[data-act="wish"]')?.addEventListener("click", askWish);
@@ -338,6 +327,7 @@ async function saveChildhood(list, titles) {
     ctx.toast?.(err.message, null);
     return false;
   }
+  page = 0; // razdelek »Igre iz tvojega otroštva« je na prvi strani
   if (!game) renderPortal();
   return true;
 }

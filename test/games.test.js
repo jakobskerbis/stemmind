@@ -321,3 +321,36 @@ test("games: »Kdo je slepar?« – one impostor with a wrong answer, the crew i
     if (!ok) assert.ok(o.delay >= 3 && o.note.includes(`"n":${crew.findIndex((m) => m.imp) + 1}`), o.note);
   }
 });
+
+test("games: grid pages of 60 across area sections (j: »največ 50 iger naenkrat zaradi laga«)", async () => {
+  const { pageSlice, pageNums, PER_PAGE } = await import("../public/games/pages.js");
+  const g = (id, n) => ({ id, games: Array.from({ length: n }, (_, i) => `${id}${i}`) });
+  const flat = (r) => r.parts.flatMap((p) => p.games);
+  // 50 + 70: druga stran začne z 11. igro drugega področja
+  let r = pageSlice([g("a", 50), g("b", 70)], 1, 60);
+  assert.deepEqual([r.page, r.pages, r.total], [1, 2, 120]);
+  assert.deepEqual(r.parts.map((p) => [p.id, p.games.length, p.all]), [["b", 60, 70]]);
+  assert.equal(flat(r)[0], "b10");
+  // meja točno na koncu področja: brez praznih razdelkov
+  r = pageSlice([g("a", 60), g("b", 60)], 0, 60);
+  assert.deepEqual(r.parts.map((p) => p.id), ["a"]);
+  r = pageSlice([g("a", 60), g("b", 60)], 1, 60);
+  assert.deepEqual(r.parts.map((p) => p.id), ["b"]);
+  // stran, ki je po ožji izbiri ni več → zadnja; prazna izbira → ena prazna stran
+  r = pageSlice([g("a", 70)], 9, 60);
+  assert.deepEqual([r.page, flat(r).length], [1, 10]);
+  r = pageSlice([], 3);
+  assert.deepEqual([r.page, r.pages, r.parts.length], [0, 1, 0]);
+  // vse igre natanko enkrat, nobena stran nima več kot PER_PAGE
+  const groups = [g("a", 7), g("b", 130), g("c", 1), g("d", 61)];
+  const all = [];
+  for (let p = 0; p < pageSlice(groups, 0).pages; p++) {
+    const s = flat(pageSlice(groups, p));
+    assert.ok(s.length <= PER_PAGE && s.length > 0);
+    all.push(...s);
+  }
+  assert.deepEqual(all, groups.flatMap((x) => x.games));
+  assert.deepEqual(pageNums(5, 111), [0, 3, 4, 5, 6, 7, 110]);
+  assert.deepEqual(pageNums(0, 111, 1), [0, 1, 110]);
+  assert.deepEqual(pageNums(0, 1), [0]);
+});
