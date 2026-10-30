@@ -46,6 +46,7 @@
       <button class="tab" data-view="scan"><i data-icon="scan-line"></i><span data-i18n="scan.nav">Skeniraj</span></button>
       <button class="tab" data-view="graph"><i data-icon="calculator"></i><span data-i18n="nav.graph">Kalkulator</span></button>
       <button class="tab" data-view="competition" id="competition-tab"><i data-icon="medal"></i><span data-i18n="nav.competition">Tekmovanja</span></button>
+      <button class="tab" data-view="exams" id="exams-tab" hidden><i data-icon="clipboard-check"></i><span data-i18n="nav.examsSi">NPZ in matura</span></button>
       <button class="tab" data-view="games"><i data-icon="gamepad-2"></i><span data-i18n="nav.games">Igre</span></button>
       <button class="tab" data-view="schedule"><i data-icon="calendar-days"></i><span data-i18n="sch.title">Urnik</span></button>
       <button class="tab" data-view="corner"><i data-icon="newspaper"></i><span data-i18n="nav.corner">Kotiček</span></button>
@@ -122,6 +123,11 @@
   <!-- TEKMOVANJA -->
   <main id="view-competition" class="view narrow" hidden>
     <div id="competition-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
+  </main>
+
+  <!-- NPZ IN MATURA (slovenska OŠ in SŠ: pripravljenost, trening, poskusni izpit, pretekle pole) -->
+  <main id="view-exams" class="view narrow" hidden>
+    <div id="exams-content"><p class="muted" data-i18n="common.loading">Nalagam …</p></div>
   </main>
 
   <!-- IGRE (games/index.js) -->
@@ -364,6 +370,8 @@
     </div>
     <button type="button" class="card list-row zb-me-card" id="me-zbirke" data-go="zbirke" hidden></button>
     <div class="card list-card">
+      <button type="button" class="list-row" data-go="exams" id="me-exams" hidden><span class="ic"><i data-icon="clipboard-check"></i></span><span class="lr-text"><b data-i18n="nav.examsSi">NPZ in matura</b><small data-i18n="exam.meSub">Pripravljenost, poskusni izpit in pretekle pole</small></span><i data-icon="chevron-right"></i></button>
+      <button type="button" class="list-row" data-go="competition" id="me-competition" hidden><span class="ic"><i data-icon="medal"></i></span><span class="lr-text"><b data-i18n="nav.competition">Tekmovanja</b><small data-i18n="comp.meSub">Tekmovalni trening in poskusno tekmovanje</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="scan"><span class="ic"><i data-icon="scan-line"></i></span><span class="lr-text"><b data-i18n="scan.title">Skeniraj nalogo</b><small data-i18n="scan.meSub">Fotografiraj nalogo in poglej rešitev po korakih</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="schedule"><span class="ic"><i data-icon="calendar-days"></i></span><span class="lr-text"><b data-i18n="sch.title">Urnik</b><small data-i18n="sch.meSub">Ure v tednu in datumi testov</small></span><i data-icon="chevron-right"></i></button>
       <button type="button" class="list-row" data-go="games"><span class="ic"><i data-icon="gamepad-2"></i></span><span class="lr-text"><b data-i18n="nav.games">Igre</b><small data-i18n="games.meSub">Matematika skozi igro</small></span><i data-icon="chevron-right"></i></button>
