@@ -44,8 +44,8 @@ export function parseNumberWithUnit(input, { dot = false } = {}) {
   const m = s.match(/^([+-]?\s*(?:\d{1,3}(?:[ .]\d{3}(?!\d))+|\d+)?(?:[.,]\d+)?)\s*(.*)$/);
   if (!m || !/\d/.test(m[1])) return null;
   let num = m[1].replace(/\s/g, "");
-  // "1.200" s piko kot ločilom tisočic (natanko 3 števke po piki in brez vejice)
-  if (!dot && /^\d{1,3}(\.\d{3})+$/.test(num) && !num.includes(",")) num = num.replace(/\./g, "");
+  // "1.200", "-1.200" in "1.200,5" s piko kot ločilom tisočic (natanko 3 števke po vsaki piki)
+  if (!dot && /^[+-]?\d{1,3}(\.\d{3})+(,\d+)?$/.test(num)) num = num.replace(/\./g, "");
   num = num.replace(",", ".");
   const value = Number(num);
   if (!Number.isFinite(value)) return null;
