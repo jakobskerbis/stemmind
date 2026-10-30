@@ -2293,8 +2293,12 @@
     "other": "فی طالب علم ماہانہ AI لاگت (AI استعمال کرنے والے {n} طلبہ)"
   },
   "pilot.aiTotal": "مدت میں AI لاگت",
-  "pilot.visitsParents": "والدین کے صفحے کے ویوز",
-  "pilot.visitsPay": "ادائیگی کے صفحے کے ویوز",
+  "pilot.visitsParents": {
+    "other": "والدین کے صفحے کے ویوز"
+  },
+  "pilot.visitsPay": {
+    "other": "ادائیگی کے صفحے کے ویوز"
+  },
   "pilot.schoolStudents": {
     "one": "اسکول کی کلاسوں میں {n} طالب علم ہے۔",
     "other": "اسکول کی کلاسوں میں {n} طلبہ ہیں۔"

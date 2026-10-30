@@ -2272,8 +2272,12 @@
     "other": "학생 1명당 월 AI 비용(AI 사용 학생 {n}명)"
   },
   "pilot.aiTotal": "기간 내 AI 비용",
-  "pilot.visitsParents": "학부모 페이지 조회 수",
-  "pilot.visitsPay": "결제 페이지 조회 수",
+  "pilot.visitsParents": {
+    "other": "학부모 페이지 조회 수"
+  },
+  "pilot.visitsPay": {
+    "other": "결제 페이지 조회 수"
+  },
   "pilot.schoolStudents": {
     "other": "이 학교의 반에는 학생 {n}명이 있습니다."
   },

@@ -24,12 +24,16 @@ const isoDay = (d) => new Date(d).toISOString().slice(0, 10);
 export function visitCounter(db) {
   migratePilot(db);
   const inc = db.prepare("INSERT INTO page_visits (day, page, n) VALUES (?, ?, 1) ON CONFLICT(day, page) DO UPDATE SET n = n + 1");
-  return (req, _res, next) => {
+  return (req, res, next) => {
     const page = req.method === "GET" ? COUNTED[req.path] : null;
-    if (page && !BOT.test(req.get("user-agent") || "") && req.get("purpose") !== "prefetch" && req.get("sec-purpose") !== "prefetch") {
-      try {
-        inc.run(isoDay(Date.now()), page);
-      } catch {}
+    if (page && !BOT.test(req.get("user-agent") || "") && !/prefetch|prerender/i.test(`${req.get("purpose") || ""} ${req.get("sec-purpose") || ""}`)) {
+      // Šteje samo ogled, ki je stran res dobil (200 ali 304), ne 404 (npr. /sole, ko strani še ni).
+      res.on("finish", () => {
+        if (res.statusCode >= 400) return;
+        try {
+          inc.run(isoDay(Date.now()), page);
+        } catch {}
+      });
     }
     next();
   };
@@ -54,7 +58,7 @@ export function pilotReport(db, { days = 30, schoolId = null, now = Date.now() }
     .all(from, to, ...args);
   const cost = db
     .prepare(
-      `SELECT substr(created_at, 1, 10) AS day, SUM(cost_usd) AS usd, COUNT(DISTINCT student_id) AS students
+      `SELECT substr(created_at, 1, 10) AS day, SUM(cost_usd) AS usd, SUM(CASE WHEN student_id IS NOT NULL THEN cost_usd ELSE 0 END) AS studentUsd
        FROM usage WHERE created_at >= ? AND created_at < date(?, '+1 day') ${inIds} GROUP BY day`,
     )
     .all(from, to, ...args);
@@ -72,9 +76,16 @@ export function pilotReport(db, { days = 30, schoolId = null, now = Date.now() }
     byDay.set(day, { day, questions: 0, askers: 0, aiUsd: 0, visits: { starsi: 0, placaj: 0, sole: 0 } });
   }
   for (const r of q) if (byDay.has(r.day)) Object.assign(byDay.get(r.day), { questions: r.questions, askers: r.students });
-  for (const r of cost) if (byDay.has(r.day)) byDay.get(r.day).aiUsd = r.usd || 0;
+  let studentUsd = 0; // brez stroškov, ki niso vezani na učenca (npr. povzetek mnenj, izbrisani profili)
+  for (const r of cost) {
+    if (!byDay.has(r.day)) continue;
+    byDay.get(r.day).aiUsd = r.usd || 0;
+    studentUsd += r.studentUsd || 0;
+  }
   for (const r of visits) if (byDay.has(r.day)) byDay.get(r.day).visits[r.page] = (byDay.get(r.day).visits[r.page] || 0) + r.n;
   const rows = [...byDay.values()];
+  const firstUse = rows.findIndex((r) => r.aiUsd > 0);
+  const activeDays = firstUse < 0 ? n : n - firstUse;
   const sum = (f) => rows.reduce((a, r) => a + f(r), 0);
   const questions = sum((r) => r.questions);
   const askerDays = sum((r) => r.askers);
@@ -97,7 +108,8 @@ export function pilotReport(db, { days = 30, schoolId = null, now = Date.now() }
       aiEur: round(aiUsd * EUR_PER_USD(), 4),
       aiUsers: users,
       // Strošek AI na učenca, ki je AI uporabil, preračunan na 30 dni.
-      aiEurPerStudentMonth: users ? round(((aiUsd * EUR_PER_USD()) / users) * (30 / n), 3) : 0,
+      // Dnevi od prve porabe v obdobju (pilot, mlajši od izbranega obdobja, ne zniža ocene).
+      aiEurPerStudentMonth: users ? round(((studentUsd * EUR_PER_USD()) / users) * (30 / activeDays), 3) : 0,
       visits: {
         starsi: sum((r) => r.visits.starsi),
         placaj: sum((r) => r.visits.placaj),

@@ -2293,8 +2293,14 @@
     "other": "AI cost per student per month ({n} students using AI)"
   },
   "pilot.aiTotal": "AI cost in the period",
-  "pilot.visitsParents": "views of the parents page",
-  "pilot.visitsPay": "views of the payment page",
+  "pilot.visitsParents": {
+    "one": "view of the parents page",
+    "other": "views of the parents page"
+  },
+  "pilot.visitsPay": {
+    "one": "view of the payment page",
+    "other": "views of the payment page"
+  },
   "pilot.schoolStudents": {
     "one": "The school has {n} student in classes.",
     "other": "The school has {n} students in classes."

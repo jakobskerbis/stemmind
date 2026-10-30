@@ -2272,8 +2272,12 @@
     "other": "生徒 1 人・1 か月あたりの AI コスト（AI 利用生徒 {n} 人）"
   },
   "pilot.aiTotal": "期間中の AI コスト",
-  "pilot.visitsParents": "保護者向けページの閲覧数",
-  "pilot.visitsPay": "支払いページの閲覧数",
+  "pilot.visitsParents": {
+    "other": "保護者向けページの閲覧数"
+  },
+  "pilot.visitsPay": {
+    "other": "支払いページの閲覧数"
+  },
   "pilot.schoolStudents": {
     "other": "この学校のクラスには生徒が {n} 人います。"
   },

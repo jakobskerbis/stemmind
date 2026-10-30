@@ -2335,8 +2335,18 @@
     "other": "koszt AI na ucznia miesięcznie ({n} ucznia z AI)"
   },
   "pilot.aiTotal": "koszt AI w okresie",
-  "pilot.visitsParents": "wyświetleń strony dla rodziców",
-  "pilot.visitsPay": "wyświetleń strony płatności",
+  "pilot.visitsParents": {
+    "one": "wyświetlenie strony dla rodziców",
+    "few": "wyświetlenia strony dla rodziców",
+    "many": "wyświetleń strony dla rodziców",
+    "other": "wyświetlenia strony dla rodziców"
+  },
+  "pilot.visitsPay": {
+    "one": "wyświetlenie strony płatności",
+    "few": "wyświetlenia strony płatności",
+    "many": "wyświetleń strony płatności",
+    "other": "wyświetlenia strony płatności"
+  },
   "pilot.schoolStudents": {
     "one": "Szkoła ma w klasach {n} ucznia.",
     "few": "Szkoła ma w klasach {n} uczniów.",

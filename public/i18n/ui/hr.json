@@ -2314,8 +2314,14 @@
     "other": "trošak AI-ja po učeniku mjesečno ({n} učenika s AI-jem)"
   },
   "pilot.aiTotal": "trošak AI-ja u razdoblju",
-  "pilot.visitsParents": "pregleda stranice za roditelje",
-  "pilot.visitsPay": "pregleda stranice za plaćanje",
+  "pilot.visitsParents": {
+    "one": "pregled stranice za roditelje",
+    "other": "pregleda stranice za roditelje"
+  },
+  "pilot.visitsPay": {
+    "one": "pregled stranice za plaćanje",
+    "other": "pregleda stranice za plaćanje"
+  },
   "pilot.schoolStudents": {
     "one": "Škola ima {n} učenika u razredima.",
     "few": "Škola ima {n} učenika u razredima.",

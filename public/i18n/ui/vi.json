@@ -2272,8 +2272,12 @@
     "other": "chi phí AI mỗi học sinh mỗi tháng ({n} học sinh dùng AI)"
   },
   "pilot.aiTotal": "chi phí AI trong khoảng thời gian",
-  "pilot.visitsParents": "lượt xem trang dành cho phụ huynh",
-  "pilot.visitsPay": "lượt xem trang thanh toán",
+  "pilot.visitsParents": {
+    "other": "lượt xem trang dành cho phụ huynh"
+  },
+  "pilot.visitsPay": {
+    "other": "lượt xem trang thanh toán"
+  },
   "pilot.schoolStudents": {
     "other": "Trường có {n} học sinh trong các lớp."
   },

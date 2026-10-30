@@ -2272,8 +2272,12 @@
     "other": "每名学生每月 AI 成本（{n} 名学生使用 AI）"
   },
   "pilot.aiTotal": "时间段内 AI 成本",
-  "pilot.visitsParents": "家长页面浏览量",
-  "pilot.visitsPay": "付款页面浏览量",
+  "pilot.visitsParents": {
+    "other": "家长页面浏览量"
+  },
+  "pilot.visitsPay": {
+    "other": "付款页面浏览量"
+  },
   "pilot.schoolStudents": {
     "other": "该校班级中共有 {n} 名学生。"
   },

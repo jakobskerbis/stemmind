@@ -2293,8 +2293,14 @@
     "other": "kosto e IA-së për nxënës në muaj ({n} nxënës me IA)"
   },
   "pilot.aiTotal": "kosto e IA-së në periudhë",
-  "pilot.visitsParents": "shikime të faqes për prindërit",
-  "pilot.visitsPay": "shikime të faqes së pagesës",
+  "pilot.visitsParents": {
+    "one": "shikim i faqes për prindërit",
+    "other": "shikime të faqes për prindërit"
+  },
+  "pilot.visitsPay": {
+    "one": "shikim i faqes së pagesës",
+    "other": "shikime të faqes së pagesës"
+  },
   "pilot.schoolStudents": {
     "one": "Shkolla ka {n} nxënës në klasa.",
     "other": "Shkolla ka {n} nxënës në klasa."

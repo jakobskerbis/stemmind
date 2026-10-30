@@ -2293,8 +2293,12 @@
     "other": "प्रति छात्र मासिक AI लागत (AI इस्तेमाल करने वाले {n} छात्र)"
   },
   "pilot.aiTotal": "अवधि में AI लागत",
-  "pilot.visitsParents": "अभिभावक पेज के व्यू",
-  "pilot.visitsPay": "भुगतान पेज के व्यू",
+  "pilot.visitsParents": {
+    "other": "अभिभावक पेज के व्यू"
+  },
+  "pilot.visitsPay": {
+    "other": "भुगतान पेज के व्यू"
+  },
   "pilot.schoolStudents": {
     "one": "स्कूल की कक्षाओं में {n} छात्र है।",
     "other": "स्कूल की कक्षाओं में {n} छात्र हैं।"

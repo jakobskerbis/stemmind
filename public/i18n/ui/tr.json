@@ -2293,8 +2293,12 @@
     "other": "öğrenci başına aylık YZ maliyeti (YZ kullanan {n} öğrenci)"
   },
   "pilot.aiTotal": "dönemdeki YZ maliyeti",
-  "pilot.visitsParents": "veli sayfası görüntülenmesi",
-  "pilot.visitsPay": "ödeme sayfası görüntülenmesi",
+  "pilot.visitsParents": {
+    "other": "veli sayfası görüntülenmesi"
+  },
+  "pilot.visitsPay": {
+    "other": "ödeme sayfası görüntülenmesi"
+  },
   "pilot.schoolStudents": {
     "one": "Okulun sınıflarında {n} öğrenci var.",
     "other": "Okulun sınıflarında {n} öğrenci var."

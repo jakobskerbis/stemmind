@@ -2293,8 +2293,14 @@
     "other": "costo IA per studente al mese ({n} studenti con IA)"
   },
   "pilot.aiTotal": "costo IA nel periodo",
-  "pilot.visitsParents": "visite alla pagina per i genitori",
-  "pilot.visitsPay": "visite alla pagina di pagamento",
+  "pilot.visitsParents": {
+    "one": "visita alla pagina per i genitori",
+    "other": "visite alla pagina per i genitori"
+  },
+  "pilot.visitsPay": {
+    "one": "visita alla pagina di pagamento",
+    "other": "visite alla pagina di pagamento"
+  },
   "pilot.schoolStudents": {
     "one": "La scuola ha {n} studente nelle classi.",
     "other": "La scuola ha {n} studenti nelle classi."

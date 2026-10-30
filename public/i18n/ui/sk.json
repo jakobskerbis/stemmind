@@ -2335,8 +2335,16 @@
     "other": "náklady na AI na žiaka za mesiac ({n} žiakov s AI)"
   },
   "pilot.aiTotal": "náklady na AI za obdobie",
-  "pilot.visitsParents": "zobrazení stránky pre rodičov",
-  "pilot.visitsPay": "zobrazení platobnej stránky",
+  "pilot.visitsParents": {
+    "one": "zobrazenie stránky pre rodičov",
+    "few": "zobrazenia stránky pre rodičov",
+    "other": "zobrazení stránky pre rodičov"
+  },
+  "pilot.visitsPay": {
+    "one": "zobrazenie platobnej stránky",
+    "few": "zobrazenia platobnej stránky",
+    "other": "zobrazení platobnej stránky"
+  },
   "pilot.schoolStudents": {
     "one": "Škola má v triedach {n} žiaka.",
     "few": "Škola má v triedach {n} žiakov.",

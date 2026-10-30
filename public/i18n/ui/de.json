@@ -2293,8 +2293,14 @@
     "other": "KI-Kosten pro Schüler und Monat ({n} Schüler mit KI)"
   },
   "pilot.aiTotal": "KI-Kosten im Zeitraum",
-  "pilot.visitsParents": "Aufrufe der Elternseite",
-  "pilot.visitsPay": "Aufrufe der Zahlungsseite",
+  "pilot.visitsParents": {
+    "one": "Aufruf der Elternseite",
+    "other": "Aufrufe der Elternseite"
+  },
+  "pilot.visitsPay": {
+    "one": "Aufruf der Zahlungsseite",
+    "other": "Aufrufe der Zahlungsseite"
+  },
   "pilot.schoolStudents": {
     "one": "Die Schule hat {n} Schüler in Klassen.",
     "other": "Die Schule hat {n} Schüler in Klassen."

@@ -2293,8 +2293,12 @@
     "other": "gharama ya AI kwa mwanafunzi kwa mwezi (wanafunzi {n} wanaotumia AI)"
   },
   "pilot.aiTotal": "gharama ya AI katika kipindi",
-  "pilot.visitsParents": "mara ukurasa wa wazazi ulitazamwa",
-  "pilot.visitsPay": "mara ukurasa wa malipo ulitazamwa",
+  "pilot.visitsParents": {
+    "other": "mara ukurasa wa wazazi ulitazamwa"
+  },
+  "pilot.visitsPay": {
+    "other": "mara ukurasa wa malipo ulitazamwa"
+  },
   "pilot.schoolStudents": {
     "one": "Shule ina mwanafunzi {n} katika madarasa.",
     "other": "Shule ina wanafunzi {n} katika madarasa."

@@ -719,19 +719,22 @@ function adminCodes(acc) {
 }
 
 // Skrbnik: merjenje v pilotu (server/pilot.js): vprašanja na dan, strošek AI na učenca, obiski strani za starše.
-async function loadPilot(days = 30, school = "") {
+let pilotSeq = 0; // hitre spremembe filtrov: prikaže se samo zadnji odgovor
+async function loadPilot(days = 30, school = "", focusId = "") {
+  const seq = ++pilotSeq;
   const out = $("#pilot-out");
   if (!out) return;
   let r;
   try {
     r = await api(`/api/admin/pilot?days=${days}${school ? `&school=${school}` : ""}`);
+    if (seq !== pilotSeq) return;
   } catch (err) {
     out.innerHTML = `<p class="muted">${esc(err.message)}</p>`;
     return;
   }
   const loc = currentRegion() ? `${currentLang()}-${currentRegion()}` : currentLang();
   const nf = (x, d = 2) => Number(x).toLocaleString(loc, { maximumFractionDigits: d });
-  const eur = (x, d = 2) => Number(x).toLocaleString(loc, { style: "currency", currency: "EUR", maximumFractionDigits: d });
+  const eur = (x, d = 2) => Number(x).toLocaleString(loc, { style: "currency", currency: "EUR", minimumFractionDigits: d, maximumFractionDigits: d });
   const day = (s) => new Date(`${s}T12:00:00`).toLocaleDateString(loc, { weekday: "short", day: "numeric", month: "numeric" });
   const T = r.totals;
   const rate = r.rows.length ? T.aiEur / Math.max(T.aiUsd, 1e-9) : 0;
@@ -745,13 +748,15 @@ async function loadPilot(days = 30, school = "") {
       <li><b>${nf(T.questionsPerAskerDay, 1)}</b> ${esc(t("pilot.qPerStudent"))}</li>
       <li><b>${eur(T.aiEurPerStudentMonth, 3)}</b> ${esc(t("pilot.aiPerStudent", { n: T.aiUsers }))}</li>
       <li><b>${eur(T.aiEur)}</b> ${esc(t("pilot.aiTotal"))}</li>
-      <li><b>${T.visits.starsi}</b> ${esc(t("pilot.visitsParents"))} · <b>${T.visits.placaj}</b> ${esc(t("pilot.visitsPay"))}</li>
+      <li><b>${nf(T.visits.starsi)}</b> ${esc(t("pilot.visitsParents", { n: T.visits.starsi }))} · <b>${nf(T.visits.placaj)}</b> ${esc(t("pilot.visitsPay", { n: T.visits.placaj }))}</li>
     </ul>
     ${r.students != null ? `<p class="muted">${esc(t("pilot.schoolStudents", { n: r.students }))}</p>` : ""}
     <div class="pilot-scroll"><table class="table pilot-table"><thead><tr><th scope="col">${esc(t("pilot.day"))}</th><th scope="col">${esc(t("pilot.questions"))}</th><th scope="col">${esc(t("pilot.askers"))}</th><th scope="col">${esc(t("pilot.ai"))}</th><th scope="col">${esc(t("pilot.parents"))}</th></tr></thead>
-      <tbody>${[...r.rows].reverse().map((d) => `<tr><td>${esc(day(d.day))}</td><td>${d.questions}</td><td>${d.askers}</td><td>${eur(d.aiUsd * rate, 3)}</td><td>${d.visits.starsi + d.visits.placaj}</td></tr>`).join("")}</tbody></table></div>
+      <tbody>${[...r.rows].reverse().map((d) => `<tr><td>${esc(day(d.day))}</td><td>${nf(d.questions)}</td><td>${nf(d.askers)}</td><td>${eur(d.aiUsd * rate, 3)}</td><td>${nf(d.visits.starsi + d.visits.placaj)}</td></tr>`).join("")}</tbody></table></div>
     <p class="muted small">${esc(t("pilot.note"))}</p>`;
-  const reload = () => loadPilot($("#pilot-days").value, $("#pilot-school")?.value || "");
+  // Kartica se izriše znova: fokus ostane na izbiri, ki jo je uporabnik spremenil (tipkovnica).
+  if (focusId) setTimeout(() => $(`#${focusId}`)?.focus());
+  const reload = (e) => loadPilot($("#pilot-days").value, $("#pilot-school")?.value || "", e.target.id);
   $("#pilot-days").addEventListener("change", reload);
   $("#pilot-school")?.addEventListener("change", reload);
 }

@@ -2293,8 +2293,12 @@
     "other": "MI-költség diákonként havonta ({n} MI-t használó diák)"
   },
   "pilot.aiTotal": "MI-költség az időszakban",
-  "pilot.visitsParents": "a szülőknek szóló oldal megtekintései",
-  "pilot.visitsPay": "a fizetési oldal megtekintései",
+  "pilot.visitsParents": {
+    "other": "a szülőknek szóló oldal megtekintései"
+  },
+  "pilot.visitsPay": {
+    "other": "a fizetési oldal megtekintései"
+  },
   "pilot.schoolStudents": {
     "one": "Az iskola osztályaiban {n} diák van.",
     "other": "Az iskola osztályaiban {n} diák van."

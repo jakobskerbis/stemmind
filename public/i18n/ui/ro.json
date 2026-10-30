@@ -2314,8 +2314,16 @@
     "other": "cost AI per elev pe lună ({n} de elevi cu AI)"
   },
   "pilot.aiTotal": "cost AI în perioadă",
-  "pilot.visitsParents": "vizualizări ale paginii pentru părinți",
-  "pilot.visitsPay": "vizualizări ale paginii de plată",
+  "pilot.visitsParents": {
+    "one": "vizualizare a paginii pentru părinți",
+    "few": "vizualizări ale paginii pentru părinți",
+    "other": "de vizualizări ale paginii pentru părinți"
+  },
+  "pilot.visitsPay": {
+    "one": "vizualizare a paginii de plată",
+    "few": "vizualizări ale paginii de plată",
+    "other": "de vizualizări ale paginii de plată"
+  },
   "pilot.schoolStudents": {
     "one": "Școala are {n} elev în clase.",
     "few": "Școala are {n} elevi în clase.",
