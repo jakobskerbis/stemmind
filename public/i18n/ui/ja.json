@@ -2273,5 +2273,15 @@
   "gr.weakSheet": "苦手なトピックのワークシート",
   "gr.pastTitle": "解答付きの過去問",
   "gr.pastText": "公式の試験問題と採点基準は、すべての権利を持つ国立試験センター（RIC）が公開しているため、ここでは複製しません。上の模擬試験は同じ形式・同じ時間で作成した独自の問題です。",
-  "gr.pastOpen": "ric.si で問題を開く"
+  "gr.pastOpen": "ric.si で問題を開く",
+  "gr.video": "短い動画",
+  "gr.poskus": "家でできる実験",
+  "gr.projekt": "プロジェクト",
+  "gr.lockedAny": "この教材はプランに含まれています。",
+  "gr.play": "再生",
+  "gr.pause": "一時停止",
+  "gr.again": "最初から",
+  "gr.close": "閉じる",
+  "gr.voice": "読み上げ",
+  "gr.videoDraft": "下書き：先生がまだこの動画を確認しています。"
 }

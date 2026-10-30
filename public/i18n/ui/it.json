@@ -2293,5 +2293,15 @@
   "gr.weakSheet": "Scheda dagli argomenti deboli",
   "gr.pastTitle": "Prove passate con soluzioni",
   "gr.pastText": "Le prove ufficiali e le griglie di valutazione sono pubblicate dal Centro nazionale per gli esami (RIC), che ne detiene tutti i diritti, quindi qui non le copiamo. La simulazione qui sopra usa nostri esercizi con lo stesso formato e la stessa durata.",
-  "gr.pastOpen": "Apri le prove su ric.si"
+  "gr.pastOpen": "Apri le prove su ric.si",
+  "gr.video": "Video breve",
+  "gr.poskus": "Esperimento a casa",
+  "gr.projekt": "Progetto",
+  "gr.lockedAny": "Questo materiale è incluso nel pacchetto.",
+  "gr.play": "Riproduci",
+  "gr.pause": "Pausa",
+  "gr.again": "Ricomincia",
+  "gr.close": "Chiudi",
+  "gr.voice": "Leggi ad alta voce",
+  "gr.videoDraft": "Bozza: un insegnante sta ancora rivedendo questo video."
 }

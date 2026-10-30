@@ -5,7 +5,7 @@ import { icon } from "./icons.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-const LABEL = { povzetek: "gr.povzetek", zvok: "gr.zvok", "delovni-list": "gr.delovni" };
+const LABEL = { povzetek: "gr.povzetek", zvok: "gr.zvok", "delovni-list": "gr.delovni", video: "gr.video", poskus: "gr.poskus", projekt: "gr.projekt" };
 
 // Gumbi za temo; prazno, če tema nima gradiv. Zaklenjena gradiva ne pokažemo (ponudbe so drugje).
 export async function gradivaHtml(studentId, topicId) {
@@ -133,8 +133,132 @@ export function wireGradiva(root, studentId) {
     btn.addEventListener("click", () => {
       say(root, "");
       if (btn.dataset.gradivo === "zvok") return listen(btn, studentId, root);
+      if (btn.dataset.gradivo === "video") return openVideo(studentId, btn.dataset.topic, (m) => say(root, m));
+      if (btn.dataset.gradivo === "poskus" || btn.dataset.gradivo === "projekt")
+        return openPrintable(`/api/students/${studentId}/gradiva/stran?vrsta=${btn.dataset.gradivo}&topic=${encodeURIComponent(btn.dataset.topic)}`, (m) => say(root, m));
       if (btn.dataset.gradivo === "delovni-list")
         return openPrintable(`/api/students/${studentId}/gradiva/delovni-list?topic=${encodeURIComponent(btn.dataset.topic)}`, (m) => say(root, m));
     });
   });
+}
+
+// --- kratek video iz simulacije ---
+// Scenarij (server/gradiva-vsebina.js) ima prizore ob času t: podnapis, ki ga glas prebere, in dejanja
+// v simulaciji (nastavi drsnik, klikni gumb). Ko je branje vklopljeno, čas čaka, da glas konča stavek.
+const mmss = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
+
+function applyAction(simEl, a) {
+  const field = [...simEl.querySelectorAll("input[aria-label], select[aria-label]")].find((x) => x.getAttribute("aria-label") === a.target);
+  if (a.do === "set" && field) {
+    field.value = String(a.value).replace(",", ".");
+    field.dispatchEvent(new Event(field.tagName === "SELECT" ? "change" : "input", { bubbles: true }));
+    return true;
+  }
+  if (a.do === "click") {
+    const b = [...simEl.querySelectorAll("button, [role=button]")].find((x) => (x.getAttribute("aria-label") || x.textContent).trim() === a.target);
+    if (b) return b.click(), true;
+  }
+  console.warn(`Video: v simulaciji ni »${a.target}«.`);
+  return false;
+}
+
+export async function openVideo(studentId, topicId, onError) {
+  stop();
+  let v;
+  try {
+    const r = await fetch(`/api/students/${studentId}/gradiva/video?topic=${encodeURIComponent(topicId)}`);
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) return onError(d.code && t(d.code) !== d.code ? t(d.code) : d.error || t("common.error", { status: r.status }));
+    v = d;
+  } catch {
+    return onError(t("off.noConnection"));
+  }
+  const { mountSim } = await import("./sim/index.js");
+  const dlg = document.createElement("dialog");
+  dlg.className = "gr-video";
+  dlg.setAttribute("aria-label", v.title);
+  dlg.innerHTML = `<div class="gr-video-head"><h2>${esc(v.title)}</h2>
+      <button type="button" class="ghost gr-video-close" aria-label="${esc(t("gr.close"))}">${icon("x")}</button></div>
+    <div class="gr-video-sim"></div>
+    <div class="gr-video-foot"><div class="gr-video-cap" aria-live="polite"></div>
+    <div class="gr-video-bar">
+      <button type="button" class="primary gr-video-play">${icon("play")}<span>${esc(t("gr.play"))}</span></button>
+      <button type="button" class="secondary gr-video-again" aria-label="${esc(t("gr.again"))}">${icon("rotate-ccw")}</button>
+      <progress max="${v.duration}" value="0"></progress><span class="gr-video-time">0:00 / ${mmss(v.duration)}</span>
+      <label class="gr-video-voice"><input type="checkbox" checked> ${esc(t("gr.voice"))}</label>
+    </div>
+    ${v.draft ? `<p class="muted gr-video-draft">${esc(t("gr.videoDraft"))}</p>` : ""}</div>`;
+  document.body.append(dlg);
+  const $ = (sel) => dlg.querySelector(sel);
+  const simEl = $(".gr-video-sim");
+  const voiceBox = $(".gr-video-voice input");
+  let voice = null;
+  voiceReady().then((x) => {
+    voice = x;
+    if (!x) (voiceBox.checked = false), (voiceBox.disabled = true), $(".gr-video-voice").setAttribute("title", t("gr.noVoice"));
+  });
+  let time = 0, next = 0, playing = false, last = 0, talking = false, raf = 0, run = 0;
+
+  const scene = (i) => {
+    const sc = v.scenes[i];
+    $(".gr-video-cap").innerHTML = sc.html;
+    sc.actions.forEach((a) => applyAction(simEl, a));
+    if (voice && voiceBox.checked && window.speechSynthesis) {
+      const id = run;
+      const u = new SpeechSynthesisUtterance(sc.speak);
+      u.voice = voice;
+      u.lang = voice.lang;
+      u.rate = 0.95;
+      talking = true;
+      u.onend = u.onerror = () => id === run && (talking = false);
+      window.speechSynthesis.speak(u);
+    }
+  };
+  const setPlay = (on) => {
+    playing = on;
+    $(".gr-video-play").innerHTML = `${icon(on ? "pause" : "play")}<span>${esc(t(on ? "gr.pause" : "gr.play"))}</span>`;
+    if (!window.speechSynthesis) return;
+    if (on) window.speechSynthesis.resume();
+    else window.speechSynthesis.pause();
+  };
+  const tick = (now) => {
+    raf = requestAnimationFrame(tick);
+    const dt = Math.min(0.25, (now - last) / 1000);
+    last = now;
+    if (!playing) return;
+    const due = next < v.scenes.length ? v.scenes[next].t : v.duration;
+    // Med branjem čas ne preskoči v naslednji prizor (ali na konec).
+    if (talking && time + dt >= due) return;
+    time = Math.min(v.duration, time + dt);
+    while (next < v.scenes.length && v.scenes[next].t <= time) scene(next++);
+    $("progress").value = time;
+    $(".gr-video-time").textContent = `${mmss(time)} / ${mmss(v.duration)}`;
+    if (time >= v.duration) setPlay(false);
+  };
+  const restart = async () => {
+    run++;
+    window.speechSynthesis?.cancel();
+    talking = false;
+    time = 0;
+    next = 0;
+    await mountSim(v.sim, simEl, { ...v.opts, noReset: true });
+    $(".gr-video-cap").textContent = "";
+    $("progress").value = 0;
+    setPlay(true);
+  };
+  const close = () => {
+    run++;
+    cancelAnimationFrame(raf);
+    window.speechSynthesis?.cancel();
+    dlg.remove();
+  };
+  $(".gr-video-close").addEventListener("click", () => dlg.close());
+  dlg.addEventListener("close", close);
+  $(".gr-video-play").addEventListener("click", () => (time >= v.duration ? restart() : setPlay(!playing)));
+  $(".gr-video-again").addEventListener("click", restart);
+  voiceBox.addEventListener("change", () => !voiceBox.checked && window.speechSynthesis?.cancel());
+  dlg.showModal();
+  last = performance.now();
+  raf = requestAnimationFrame(tick);
+  await restart();
 }

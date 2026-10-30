@@ -2293,5 +2293,15 @@
   "gr.weakSheet": "Zayıf konulardan çalışma kâğıdı",
   "gr.pastTitle": "Çözümlü geçmiş sınavlar",
   "gr.pastText": "Resmî sınav kâğıtlarını ve puanlama kılavuzlarını tüm haklarına sahip olan Ulusal Sınav Merkezi (RIC) yayımlar; bu yüzden burada kopyalamıyoruz. Yukarıdaki deneme sınavı aynı biçimde ve aynı sürede kendi sorularımızı kullanır.",
-  "gr.pastOpen": "Sınavları ric.si'de aç"
+  "gr.pastOpen": "Sınavları ric.si'de aç",
+  "gr.video": "Kısa video",
+  "gr.poskus": "Evde deney",
+  "gr.projekt": "Proje",
+  "gr.lockedAny": "Bu materyal pakete dahildir.",
+  "gr.play": "Oynat",
+  "gr.pause": "Duraklat",
+  "gr.again": "Baştan başla",
+  "gr.close": "Kapat",
+  "gr.voice": "Sesli oku",
+  "gr.videoDraft": "Taslak: bir öğretmen bu videoyu hâlâ inceliyor."
 }

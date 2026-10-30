@@ -2273,5 +2273,15 @@
   "gr.weakSheet": "薄弱主题练习单",
   "gr.pastTitle": "往年试卷及答案",
   "gr.pastText": "官方试卷和评分标准由拥有全部权利的国家考试中心（RIC）发布，因此我们不在这里复制。上面的模拟考试使用我们自己的题目，形式和时间相同。",
-  "gr.pastOpen": "在 ric.si 打开试卷"
+  "gr.pastOpen": "在 ric.si 打开试卷",
+  "gr.video": "短视频",
+  "gr.poskus": "家庭实验",
+  "gr.projekt": "项目",
+  "gr.lockedAny": "此资料包含在套餐中。",
+  "gr.play": "播放",
+  "gr.pause": "暂停",
+  "gr.again": "从头开始",
+  "gr.close": "关闭",
+  "gr.voice": "朗读",
+  "gr.videoDraft": "草稿：老师仍在审核此视频。"
 }

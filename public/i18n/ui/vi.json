@@ -2273,5 +2273,15 @@
   "gr.weakSheet": "Phiếu bài tập từ chủ đề yếu",
   "gr.pastTitle": "Đề thi cũ có lời giải",
   "gr.pastText": "Đề thi chính thức và hướng dẫn chấm do Trung tâm Khảo thí Quốc gia (RIC) công bố và giữ mọi quyền, nên chúng tôi không sao chép ở đây. Bài thi thử ở trên dùng bài tập của chúng tôi với cùng định dạng và thời gian.",
-  "gr.pastOpen": "Mở đề thi trên ric.si"
+  "gr.pastOpen": "Mở đề thi trên ric.si",
+  "gr.video": "Video ngắn",
+  "gr.poskus": "Thí nghiệm tại nhà",
+  "gr.projekt": "Dự án",
+  "gr.lockedAny": "Tài liệu này nằm trong gói.",
+  "gr.play": "Phát",
+  "gr.pause": "Tạm dừng",
+  "gr.again": "Bắt đầu lại",
+  "gr.close": "Đóng",
+  "gr.voice": "Đọc to",
+  "gr.videoDraft": "Bản nháp: giáo viên vẫn đang xem lại video này."
 }

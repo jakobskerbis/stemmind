@@ -2333,5 +2333,15 @@
   "gr.weakSheet": "Pracovní list ze slabých témat",
   "gr.pastTitle": "Minulé testy s řešením",
   "gr.pastText": "Oficiální testy a pokyny k hodnocení zveřejňuje Státní zkušební centrum (RIC), které k nim má všechna práva, proto je zde nekopírujeme. Zkušební test výše obsahuje naše úlohy ve stejné podobě a se stejným časem.",
-  "gr.pastOpen": "Otevřít testy na ric.si"
+  "gr.pastOpen": "Otevřít testy na ric.si",
+  "gr.video": "Krátké video",
+  "gr.poskus": "Pokus doma",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Tento materiál je součástí balíčku.",
+  "gr.play": "Přehrát",
+  "gr.pause": "Pozastavit",
+  "gr.again": "Znovu od začátku",
+  "gr.close": "Zavřít",
+  "gr.voice": "Číst nahlas",
+  "gr.videoDraft": "Koncept: učitel toto video ještě kontroluje."
 }

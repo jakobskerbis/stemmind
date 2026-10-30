@@ -2293,5 +2293,15 @@
   "gr.weakSheet": "Worksheet from weak topics",
   "gr.pastTitle": "Past papers with solutions",
   "gr.pastText": "Official papers and marking guides are published by the National Examinations Centre (RIC), which holds all rights to them, so we do not copy them here. The mock exam above uses our own tasks in the same format and time.",
-  "gr.pastOpen": "Open papers on ric.si"
+  "gr.pastOpen": "Open papers on ric.si",
+  "gr.video": "Short video",
+  "gr.poskus": "Home experiment",
+  "gr.projekt": "Project",
+  "gr.lockedAny": "This material is part of the plan.",
+  "gr.play": "Play",
+  "gr.pause": "Pause",
+  "gr.again": "Start again",
+  "gr.close": "Close",
+  "gr.voice": "Read aloud",
+  "gr.videoDraft": "Draft: a teacher is still reviewing this video."
 }

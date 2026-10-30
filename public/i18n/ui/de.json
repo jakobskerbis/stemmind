@@ -2293,5 +2293,15 @@
   "gr.weakSheet": "Arbeitsblatt aus schwachen Themen",
   "gr.pastTitle": "Frühere Prüfungen mit Lösungen",
   "gr.pastText": "Die offiziellen Prüfungsbögen und Bewertungsanleitungen veröffentlicht das Staatliche Prüfungszentrum (RIC), das alle Rechte daran hält; deshalb kopieren wir sie hier nicht. Die Probeprüfung oben enthält unsere eigenen Aufgaben im gleichen Format und mit gleicher Zeit.",
-  "gr.pastOpen": "Prüfungsbögen auf ric.si öffnen"
+  "gr.pastOpen": "Prüfungsbögen auf ric.si öffnen",
+  "gr.video": "Kurzes Video",
+  "gr.poskus": "Experiment für zu Hause",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Dieses Material ist im Paket enthalten.",
+  "gr.play": "Abspielen",
+  "gr.pause": "Pause",
+  "gr.again": "Von vorn",
+  "gr.close": "Schließen",
+  "gr.voice": "Vorlesen",
+  "gr.videoDraft": "Entwurf: Eine Lehrkraft prüft dieses Video noch."
 }

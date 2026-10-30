@@ -2313,5 +2313,15 @@
   "gr.weakSheet": "Radni list iz slabih tema",
   "gr.pastTitle": "Prošli ispiti s rješenjima",
   "gr.pastText": "Službene ispite i upute za ocjenjivanje objavljuje Državni ispitni centar (RIC), koji ima sva prava na njih, pa ih ovdje ne kopiramo. Probni ispit iznad sadrži naše zadatke u istom obliku i s istim vremenom.",
-  "gr.pastOpen": "Otvori ispite na ric.si"
+  "gr.pastOpen": "Otvori ispite na ric.si",
+  "gr.video": "Kratki video",
+  "gr.poskus": "Pokus kod kuće",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Ovo je gradivo dio paketa.",
+  "gr.play": "Pokreni",
+  "gr.pause": "Pauza",
+  "gr.again": "Ispočetka",
+  "gr.close": "Zatvori",
+  "gr.voice": "Čitaj naglas",
+  "gr.videoDraft": "Nacrt: učitelj još pregledava ovaj video."
 }

@@ -2273,5 +2273,15 @@
   "gr.weakSheet": "弱點主題練習單",
   "gr.pastTitle": "歷屆試題及解答",
   "gr.pastText": "官方試題與評分標準由擁有全部權利的國家考試中心（RIC）公布，因此我們不在這裡複製。上方的模擬考使用我們自己的題目，形式與時間相同。",
-  "gr.pastOpen": "在 ric.si 開啟試題"
+  "gr.pastOpen": "在 ric.si 開啟試題",
+  "gr.video": "短影片",
+  "gr.poskus": "居家實驗",
+  "gr.projekt": "專題",
+  "gr.lockedAny": "此教材包含在方案中。",
+  "gr.play": "播放",
+  "gr.pause": "暫停",
+  "gr.again": "從頭開始",
+  "gr.close": "關閉",
+  "gr.voice": "朗讀",
+  "gr.videoDraft": "草稿：老師仍在審閱此影片。"
 }

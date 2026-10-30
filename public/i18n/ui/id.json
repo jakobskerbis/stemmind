@@ -2273,5 +2273,15 @@
   "gr.weakSheet": "Lembar kerja dari topik lemah",
   "gr.pastTitle": "Soal ujian lalu dengan pembahasan",
   "gr.pastText": "Soal resmi dan pedoman penilaian diterbitkan oleh Pusat Ujian Nasional (RIC), yang memegang semua haknya, jadi kami tidak menyalinnya di sini. Ujian percobaan di atas memakai soal kami sendiri dengan format dan waktu yang sama.",
-  "gr.pastOpen": "Buka soal di ric.si"
+  "gr.pastOpen": "Buka soal di ric.si",
+  "gr.video": "Video singkat",
+  "gr.poskus": "Percobaan di rumah",
+  "gr.projekt": "Proyek",
+  "gr.lockedAny": "Materi ini termasuk dalam paket.",
+  "gr.play": "Putar",
+  "gr.pause": "Jeda",
+  "gr.again": "Ulang dari awal",
+  "gr.close": "Tutup",
+  "gr.voice": "Bacakan",
+  "gr.videoDraft": "Draf: guru masih meninjau video ini."
 }

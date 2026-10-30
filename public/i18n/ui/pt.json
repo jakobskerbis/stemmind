@@ -2297,5 +2297,15 @@
   "gr.weakSheet": "Ficha dos temas fracos",
   "gr.pastTitle": "Exames anteriores com soluções",
   "gr.pastText": "Os exames oficiais e os critérios de correção são publicados pelo Centro Nacional de Exames (RIC), que detém todos os direitos, por isso não os copiamos aqui. O exame de treino acima usa tarefas nossas no mesmo formato e com o mesmo tempo.",
-  "gr.pastOpen": "Abrir exames em ric.si"
+  "gr.pastOpen": "Abrir exames em ric.si",
+  "gr.video": "Vídeo curto",
+  "gr.poskus": "Experiência em casa",
+  "gr.projekt": "Projeto",
+  "gr.lockedAny": "Este material faz parte do plano.",
+  "gr.play": "Reproduzir",
+  "gr.pause": "Pausa",
+  "gr.again": "Recomeçar",
+  "gr.close": "Fechar",
+  "gr.voice": "Ler em voz alta",
+  "gr.videoDraft": "Rascunho: um professor ainda está a rever este vídeo."
 }

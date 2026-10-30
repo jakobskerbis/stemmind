@@ -2293,5 +2293,15 @@
   "gr.weakSheet": "Hoja de trabajo de temas débiles",
   "gr.pastTitle": "Exámenes anteriores con soluciones",
   "gr.pastText": "Los exámenes oficiales y las guías de corrección los publica el Centro Nacional de Exámenes (RIC), que tiene todos los derechos, por eso no los copiamos aquí. El examen de prueba de arriba usa nuestras propias tareas con el mismo formato y tiempo.",
-  "gr.pastOpen": "Abrir exámenes en ric.si"
+  "gr.pastOpen": "Abrir exámenes en ric.si",
+  "gr.video": "Vídeo corto",
+  "gr.poskus": "Experimento en casa",
+  "gr.projekt": "Proyecto",
+  "gr.lockedAny": "Este material está incluido en el plan.",
+  "gr.play": "Reproducir",
+  "gr.pause": "Pausa",
+  "gr.again": "Empezar de nuevo",
+  "gr.close": "Cerrar",
+  "gr.voice": "Leer en voz alta",
+  "gr.videoDraft": "Borrador: un docente aún revisa este vídeo."
 }

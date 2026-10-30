@@ -2313,5 +2313,15 @@
   "gr.weakSheet": "Fișă din temele slabe",
   "gr.pastTitle": "Subiecte anterioare cu soluții",
   "gr.pastText": "Subiectele oficiale și baremele sunt publicate de Centrul Național de Examene (RIC), care deține toate drepturile, de aceea nu le copiem aici. Examenul de probă de mai sus folosește sarcinile noastre, în același format și cu același timp.",
-  "gr.pastOpen": "Deschide subiectele pe ric.si"
+  "gr.pastOpen": "Deschide subiectele pe ric.si",
+  "gr.video": "Videoclip scurt",
+  "gr.poskus": "Experiment acasă",
+  "gr.projekt": "Proiect",
+  "gr.lockedAny": "Acest material face parte din pachet.",
+  "gr.play": "Redă",
+  "gr.pause": "Pauză",
+  "gr.again": "De la început",
+  "gr.close": "Închide",
+  "gr.voice": "Citește cu voce tare",
+  "gr.videoDraft": "Ciornă: un profesor încă verifică acest videoclip."
 }

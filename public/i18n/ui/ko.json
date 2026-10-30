@@ -2273,5 +2273,15 @@
   "gr.weakSheet": "약한 주제 학습지",
   "gr.pastTitle": "풀이가 있는 기출 문제",
   "gr.pastText": "공식 시험지와 채점 기준은 모든 권리를 가진 국가시험센터(RIC)가 공개하므로 여기에 복사하지 않습니다. 위의 모의시험은 같은 형식과 시간으로 만든 자체 문제입니다.",
-  "gr.pastOpen": "ric.si에서 시험지 열기"
+  "gr.pastOpen": "ric.si에서 시험지 열기",
+  "gr.video": "짧은 영상",
+  "gr.poskus": "집에서 하는 실험",
+  "gr.projekt": "프로젝트",
+  "gr.lockedAny": "이 자료는 요금제에 포함되어 있습니다.",
+  "gr.play": "재생",
+  "gr.pause": "일시 정지",
+  "gr.again": "처음부터",
+  "gr.close": "닫기",
+  "gr.voice": "소리 내어 읽기",
+  "gr.videoDraft": "초안: 선생님이 아직 이 영상을 검토 중입니다."
 }

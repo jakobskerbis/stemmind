@@ -2293,5 +2293,15 @@
   "gr.weakSheet": "Fiche d'exercices sur mes points faibles",
   "gr.pastTitle": "Anciens sujets avec corrigés",
   "gr.pastText": "Les sujets officiels et les barèmes sont publiés par le Centre national des examens (RIC), qui en détient tous les droits ; nous ne les copions donc pas ici. L'examen blanc ci-dessus utilise nos propres exercices, au même format et avec la même durée.",
-  "gr.pastOpen": "Ouvrir les sujets sur ric.si"
+  "gr.pastOpen": "Ouvrir les sujets sur ric.si",
+  "gr.video": "Courte vidéo",
+  "gr.poskus": "Expérience à la maison",
+  "gr.projekt": "Projet",
+  "gr.lockedAny": "Ce contenu fait partie de l'abonnement.",
+  "gr.play": "Lire",
+  "gr.pause": "Pause",
+  "gr.again": "Recommencer",
+  "gr.close": "Fermer",
+  "gr.voice": "Lire à voix haute",
+  "gr.videoDraft": "Brouillon : un enseignant vérifie encore cette vidéo."
 }

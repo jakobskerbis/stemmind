@@ -2293,5 +2293,15 @@
   "gr.weakSheet": "Feladatlap a gyenge témákból",
   "gr.pastTitle": "Korábbi feladatlapok megoldásokkal",
   "gr.pastText": "A hivatalos feladatlapokat és javítási útmutatókat az Állami Vizsgaközpont (RIC) teszi közzé, minden jog az övé, ezért itt nem másoljuk őket. A fenti próbavizsga saját feladatainkat tartalmazza, azonos formában és időtartammal.",
-  "gr.pastOpen": "Feladatlapok megnyitása a ric.si oldalon"
+  "gr.pastOpen": "Feladatlapok megnyitása a ric.si oldalon",
+  "gr.video": "Rövid videó",
+  "gr.poskus": "Otthoni kísérlet",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Ez az anyag a csomag része.",
+  "gr.play": "Lejátszás",
+  "gr.pause": "Szünet",
+  "gr.again": "Újrakezdés",
+  "gr.close": "Bezárás",
+  "gr.voice": "Felolvasás",
+  "gr.videoDraft": "Vázlat: egy tanár még ellenőrzi ezt a videót."
 }
