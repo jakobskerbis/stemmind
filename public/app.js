@@ -40,9 +40,12 @@ const $ = (sel) => document.querySelector(sel);
 const fromPack = (url, opts) => (state.student ? offlineApi(state.student.id, url, opts) : undefined);
 // Računalnik z Evklidom je ugasnjen ali okno ni odprto: ngrok ali Cloudflare vrneta
 // svojo napako. Takrat delamo kot brez povezave (vaje iz shranjenega paketa).
+// Napaka v JSON pride od našega strežnika (npr. 502, ko branje rokopisa ne uspe):
+// strežnik dela, zato pokažemo njegovo sporočilo, ne »Ni povezave«.
 function serverDown(res) {
   const code = res.headers.get("ngrok-error-code");
-  const down = !!(code && code !== "ERR_NGROK_6024") || [502, 504, 530].includes(res.status);
+  const ours = /json/i.test(res.headers.get("content-type") || "");
+  const down = !!(code && code !== "ERR_NGROK_6024") || (!ours && [502, 504, 530].includes(res.status));
   if (down !== serverIsDown) {
     serverIsDown = !!down;
     setTimeout(() => syncOfflineBanner(), 0);

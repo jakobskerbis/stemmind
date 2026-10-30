@@ -56,7 +56,9 @@ self.addEventListener("message", (e) => {
 // ERR_NGROK_6024 je samo opozorilna stran ngrok ob prvem obisku, ta ni izpad.
 function tunnelDown(res) {
   const code = res.headers.get("ngrok-error-code");
-  return (code && code !== "ERR_NGROK_6024") || [502, 504, 530].includes(res.status);
+  // JSON z napako je odgovor našega strežnika (deluje), ne napaka tunela.
+  const ours = /json/i.test(res.headers.get("content-type") || "");
+  return (code && code !== "ERR_NGROK_6024") || (!ours && [502, 504, 530].includes(res.status));
 }
 
 function withTimeout(promise, ms) {
