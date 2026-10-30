@@ -191,6 +191,7 @@ export async function openLesson(topicId) {
 }
 
 async function renderHome() {
+  stopReading();
   current = null;
   const box = $("#view-textbook");
   const student = ctx.getStudent();

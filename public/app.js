@@ -10,7 +10,7 @@ hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock } from "./account.js";
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
-import { openPrintable } from "./gradiva.js";
+import { openPrintable, stopReading } from "./gradiva.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
@@ -117,6 +117,7 @@ function showView(name) {
     if (!state.student) return;
     document.body.classList.remove("onboarding");
   }
+  if (name !== "textbook") stopReading(); // branje povzetka na glas ne teče naprej brez gumba za ustavitev
   syncHistory(name);
   currentView = name;
   syncCompetitionTab();
@@ -2476,7 +2477,6 @@ async function loadExams(key = state.examKey, exam = null) {
       ${c.subjects.length > 1 ? seg(c.subjects.map((x) => [x.key, SUBJECT_NAMES[x.subject] || x.name]), c.key, "data-exam-subject") : ""}
     </div>
     <details class="card exam-about"><summary>${icon("info")}<span><b>${escapeHtml(c.full)}</b> · ${escapeHtml(c.country)}</span></summary><p lang="${c.lang || "en"}">${escapeHtml(c.about)}</p></details>
-    ${c.official ? `<section class="card exam-official"><h2>${icon("file-text")}${t("gr.pastTitle")}</h2><p class="muted">${t("gr.pastText", { src: escapeHtml(c.official.source) })}</p><a class="btn-secondary" href="${escapeHtml(c.official.url)}" target="_blank" rel="noopener">${icon("external-link")}${t("gr.pastOpen")}</a></section>` : ""}
     <div class="card xp-card comp-hero">
       <div class="hero">
         <div class="hero-icon">${icon("target")}</div>
@@ -2497,6 +2497,7 @@ async function loadExams(key = state.examKey, exam = null) {
       <span class="field-label">${t("comp.lastResults")}</span>
       ${hist}
     </section>
+    ${c.official ? `<section class="card exam-official"><h2>${icon("file-text")}${t("gr.pastTitle")}</h2><p class="muted">${t("gr.pastText", { src: escapeHtml(c.official.source) })}</p><a class="btn-secondary" href="${escapeHtml(c.official.url)}" target="_blank" rel="noopener">${icon("external-link")}${t("gr.pastOpen")}</a></section>` : ""}
     <h2 class="comp-topics-title">${t("comp.topics")}</h2>
     <p class="muted small-note">${c.tasksLang === "en" && currentLang() !== "en" ? t("exam.topicsNote") : t("exam.topicsPick")}</p>
     ${c.units

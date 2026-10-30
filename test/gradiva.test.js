@@ -20,7 +20,18 @@ test("formulas are read aloud in Slovenian", () => {
   assert.equal(speakTex("x^2 + 3x - 4 = 0"), "x na kvadrat plus 3 x minus 4 je enako 0");
   assert.equal(speakTex("\\sqrt{16} = 4"), "koren iz 16 je enako 4");
   assert.equal(speakTex("I(U)"), "I od U");
+  assert.equal(speakTex("V = \\dfrac{4}{3}\\pi r^3"), "V je enako štiri tretjine pi r na kub");
+  assert.equal(speakTex("\\frac{1}{2}"), "ena polovica");
+  assert.equal(speakTex("A_r(\\mathrm{C})"), "A r C");
+  assert.equal(speakTex("5\\ \\mathrm{C}"), "5 kulonov");
   assert.equal(speakMarkdown("- **Ohmov zakon:** $U = R \\cdot I$"), "Ohmov zakon: U je enako R krat I.");
+});
+
+test("speech: HTML from lessons and comparison signs outside math are not mangled", () => {
+  assert.equal(
+    speakMarkdown("## Naslov\n> citat\nAbsolutni sklic (<code>&#36;F&#36;1</code>) ostane; while (b > 0) teče."),
+    "Naslov.\ncitat.\nAbsolutni sklic ($F$1) ostane; while (b > 0) teče.",
+  );
 });
 
 test("z/s before numbers and letters follows Slovenian spelling", () => {
@@ -91,6 +102,11 @@ test("HTTP: list, audio, worksheet, weak topics", async () => {
     r = await get(`/api/students/${s.id}/gradiva/delovni-list?topic=${OHM}&seme=7&n=3`);
     assert.equal(r.status, 200);
     assert.match(await r.text(), /koda lista 7/);
+    // n ni celo število: list ima toliko nalog, kot je celi del (ne eno več).
+    r = await get(`/api/students/${s.id}/gradiva/delovni-list?topic=${OHM}&seme=7&n=3.7`);
+    assert.match(await r.text(), / 3 naloge /);
+    r = await get(`/api/students/${s.id}/gradiva/delovni-list?topic=${OHM}&n=abc&seme=-1`);
+    assert.equal(r.status, 200);
     r = await get(`/api/students/${s.id}/gradiva/delovni-list?sibke=1`);
     assert.equal(r.status, 404);
     assert.equal((await r.json()).code, "gr.noWeak");

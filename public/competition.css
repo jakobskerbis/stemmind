@@ -73,6 +73,9 @@
 .exam-about summary::-webkit-details-marker { display: none; }
 .exam-about summary svg.i { flex: none; margin-top: 2px; color: var(--accent); }
 .exam-about p { margin: 10px 0 0; color: var(--muted); line-height: 1.5; }
+.exam-official h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; }
+.exam-official h2 svg.i { flex: none; color: var(--accent); }
+.exam-official p { margin: 0 0 12px; line-height: 1.5; }
 .exam-other { max-width: 360px; }
 .exam-other select { width: 100%; }
 .task-top:has(.pts.neg) .task-topic { flex-basis: 100%; }

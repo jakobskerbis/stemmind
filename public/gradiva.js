@@ -23,7 +23,7 @@ export async function gradivaHtml(studentId, topicId) {
     .map((x) =>
       x.url
         ? `<a class="tb-pdf" href="${esc(x.url)}" target="_blank" rel="noopener">${icon(x.icon)}${esc(t(LABEL[x.vrsta]))}</a>`
-        : `<button type="button" class="tb-pdf tb-gr-btn" data-gradivo="${esc(x.vrsta)}" data-topic="${esc(topicId)}">${icon(x.icon)}<span>${esc(t(LABEL[x.vrsta]))}</span></button>`,
+        : `<button type="button" class="tb-pdf tb-gr-btn" data-gradivo="${esc(x.vrsta)}" data-topic="${esc(topicId)}"${x.vrsta === "zvok" ? ' aria-pressed="false"' : ""}>${icon(x.icon)}<span>${esc(t(LABEL[x.vrsta]))}</span></button>`,
     )
     .join("")}<p class="muted tb-gr-msg" role="status" hidden></p>`;
 }
@@ -51,6 +51,7 @@ export async function openPrintable(url, onError) {
     w.close();
     return onError(t("off.noConnection"));
   }
+  if (w.closed) return; // uporabnik je okno zaprl, preden je stran prišla
   if (!r.ok) {
     const e = await r.json().catch(() => ({}));
     w.close();
@@ -64,6 +65,7 @@ export async function openPrintable(url, onError) {
 
 // --- branje na glas ---
 let speaking = null; // gumb, ki trenutno bere
+let run = 0; // vsak stop() ali nov začetek poveča; star klik ali onend po čakanju ne naredi nič
 
 function slVoice() {
   const voices = window.speechSynthesis?.getVoices() || [];
@@ -80,6 +82,7 @@ function voiceReady() {
 }
 
 function stop() {
+  run++;
   window.speechSynthesis?.cancel();
   if (speaking) {
     speaking.querySelector("span").textContent = t("gr.zvok");
@@ -91,8 +94,12 @@ function stop() {
 async function listen(btn, studentId, root) {
   if (speaking === btn) return stop();
   stop();
+  const my = run;
+  // Med čakanjem na glas ali strežnik je lahko uporabnik kliknil znova ali zamenjal lekcijo.
+  const stale = () => my !== run || !btn.isConnected;
   if (!window.speechSynthesis) return say(root, t("gr.noSpeech"));
   const voice = await voiceReady();
+  if (stale()) return;
   if (!voice) return say(root, t("gr.noVoice"));
   let a;
   try {
@@ -100,8 +107,9 @@ async function listen(btn, studentId, root) {
     if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || "");
     a = await r.json();
   } catch (e) {
-    return say(root, e.message || t("off.noConnection"));
+    return stale() ? undefined : say(root, e.message || t("off.noConnection"));
   }
+  if (stale()) return;
   say(root, "");
   speaking = btn;
   btn.querySelector("span").textContent = t("gr.zvokStop");
@@ -112,7 +120,7 @@ async function listen(btn, studentId, root) {
     u.voice = voice;
     u.lang = voice.lang;
     u.rate = 0.95;
-    if (i === a.parts.length - 1) u.onend = () => speaking === btn && stop();
+    if (i === a.parts.length - 1) u.onend = () => my === run && stop();
     window.speechSynthesis.speak(u);
   });
 }

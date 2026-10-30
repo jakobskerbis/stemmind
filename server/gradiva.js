@@ -173,7 +173,9 @@ const comma = (s) => String(s).replace(".", ",");
 function formatNumber(a) {
   const v = Number(a.value);
   const d = Number.isInteger(a.decimals) ? a.decimals : Number.isInteger(v) ? 0 : Math.abs(v) >= 100 ? 1 : Math.abs(v) >= 1 ? 2 : 3;
-  return comma(d >= 0 ? v.toFixed(d) : v);
+  // Brez predpisanih decimalk ničel na koncu ne pišemo (12,6 V kot v rešitvi, ne 12,60 V).
+  const out = d >= 0 ? v.toFixed(d) : String(v);
+  return comma(Number.isInteger(a.decimals) ? out : out.replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, ""));
 }
 const LETTERS = "abcdefghij";
 export function answerHtml(task) {
@@ -200,7 +202,12 @@ export function worksheetTasks(topicIds, perTopic = 4, seed = 1) {
     for (let i = 0; i < perTopic; i++) {
       const level = Math.min(3, 1 + Math.floor((i * 3) / Math.max(1, perTopic)));
       for (let k = 0; k < 6; k++) {
-        const t = generateTask(id, level, (seed * 7919 + ti * 131 + i * 17 + k * 100003) % 2 ** 31, "sl");
+        let t;
+        try {
+          t = generateTask(id, level, (seed * 7919 + ti * 131 + i * 17 + k * 100003) % 2 ** 31, "sl");
+        } catch {
+          continue; // generator brez naloge za to seme: poskusimo drugo, list ostane cel
+        }
         if (!t) break;
         if (t.figure || tasks.some((x) => x.text === t.text)) continue;
         tasks.push(t);
@@ -226,6 +233,8 @@ const WORKSHEET_CSS = `
   .ws .key .ans { font-weight: 700; }
   .ws .key p { margin: 2px 0; }
 `;
+// 1 naloga, 2 nalogi, 3 in 4 naloge, 5 nalog (tudi 101, 102 … po zadnjih dveh števkah).
+const nalog = (n) => `${n} ${["nalog", "naloga", "nalogi", "naloge", "naloge"][n % 100] || "nalog"}`;
 const STARS = ["", "★", "★★", "★★★"];
 
 export function worksheetPage({ topicIds, perTopic = 4, seed = 1, title = null, solutions = true }) {
@@ -257,7 +266,7 @@ export function worksheetPage({ topicIds, perTopic = 4, seed = 1, title = null, 
   const content = `<section class="ws">
     <p class="brand small">Evkli<span>d</span></p>
     <h1>${esc(name)}</h1>
-    <p class="muted">${esc(sub)} · ${tasks.length} nalog · ${esc(today())} · koda lista ${seed}</p>
+    <p class="muted">${esc(sub)} · ${nalog(tasks.length)} · ${esc(today())} · koda lista ${seed}</p>
     <div class="who"><span>Ime in priimek:</span><span>Razred:</span><span>Datum:</span></div>
     <p class="muted small">Pri vsaki računski nalogi zapiši podatke, kaj iščeš, račun z enotami in odgovor. Zvezdice kažejo težavnost.</p>
     <ol class="tasks">${list}</ol>
@@ -348,7 +357,7 @@ export function mountGradiva(app, store, { loadStudent, accounts }) {
       if (!t) return;
       ids = [t.id];
     }
-    const perTopic = Math.min(10, Math.max(2, Number(req.query.n) || (weak ? 4 : 6)));
+    const perTopic = Math.min(10, Math.max(2, Math.trunc(Number(req.query.n)) || (weak ? 4 : 6)));
     const html = worksheetPage({ topicIds: ids, perTopic, seed: seedOf(req.query.seme), title: weak ? "Vaja iz šibkih tem" : null });
     if (!html) return res.status(404).json({ error: "Za to temo nalog za tisk še ni." });
     res.set("Cache-Control", "no-store").type("html").send(html);

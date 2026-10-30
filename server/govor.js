@@ -47,6 +47,7 @@ const GREEK = {
   eta: "eta", theta: "theta", varphi: "fi", phi: "fi", lambda: "lambda", mu: "mi", nu: "ni", pi: "pi", rho: "ro",
   sigma: "sigma", Sigma: "vsota", tau: "tau", omega: "omega", Omega: "ohm",
   fnod: "od", // I(U) → »I od U« (glej speakTex)
+  absv: "absolutna vrednost", // |x| (glej speakTex)
 };
 
 // Predlog z/s: s pred nezvenečimi soglasniki (p, f, t, s, š, c, č, k, h), sicer z (SP 2001).
@@ -126,6 +127,14 @@ function group(s, i) {
   return [s.slice(i + 1), s.length];
 }
 
+// Ulomki z besedo: ena polovica, dve tretjini, tri četrtine, pet šestin.
+const NUM = ["", "ena", "dve", "tri", "štiri", "pet", "šest", "sedem", "osem", "devet"];
+const DEN = { 2: "polovic", 3: "tretjin", 4: "četrtin", 5: "petin", 6: "šestin", 7: "sedmin", 8: "osmin", 9: "devetin", 10: "desetin" };
+function fractionWords(n, d) {
+  const end = n === 1 ? "a" : n === 2 ? "i" : n <= 4 ? "e" : "";
+  return `${NUM[n]} ${DEN[d]}${end}`;
+}
+
 const POWERS = { 2: "na kvadrat", 3: "na kub" };
 
 /** LaTeX izraz (brez $) → slovensko branje. */
@@ -135,6 +144,8 @@ export function speakTex(tex) {
   s = s.replace(/\\(?:left|right|displaystyle|,|;|:|!|quad|qquad)(?![a-zA-Z])/g, " ").replace(/\\ /g, " ");
   // zapis decimalke {,}
   s = s.replace(/\{,\}/g, ",");
+  // absolutna vrednost: |x| → »absolutna vrednost x« (sicer bi se brala kot x)
+  s = s.replace(/\|([^|]+)\|/g, " \\absv $1 ");
   // funkcija ene spremenljivke: I(U) → I od U
   s = s.replace(/([a-zA-Z])\(([a-zA-Z])\)/g, "$1 \\fnod $2");
   // stopinje: 20^{\circ}\mathrm{C} → 20 °C
@@ -155,7 +166,14 @@ function expr(s) {
     if ((m = /^\\(?:d|t)?frac/.exec(rest))) {
       const [a, j] = group(s, i + m[0].length);
       const [b, k] = group(s, j);
-      const sb = expr(b);
+      // Preprost ulomek: \frac{4}{3} → »štiri tretjine«.
+      if (/^[1-9]$/.test(a.trim()) && /^(?:[2-9]|10)$/.test(b.trim())) {
+        push(fractionWords(+a.trim(), +b.trim()));
+        i = k;
+        lastNumber = null;
+        continue;
+      }
+      const sb = expr(b).trim().replace(/^(?:(tretji|\d+\.) )?koren iz/, (_, n) => `${n === "tretji" ? "tretjim " : n ? `${n} ` : ""}korenom iz`); // »deljeno s korenom iz b«
       push(`${expr(a)} deljeno ${zs(sb)} ${sb}`);
       i = k;
       lastNumber = null;
@@ -169,7 +187,9 @@ function expr(s) {
     }
     if ((m = /^\\(?:mathrm|text|textrm|mathit|operatorname|mathbf|boldsymbol|vec|overline|bar)/.exec(rest))) {
       const [a, j] = group(s, i + m[0].length);
-      const unit = compoundUnit(a.replace(/\\Omega/g, "Ω").replace(/\\%/g, "%").replace(/\^\{?(\d)\}?/, "^$1"), lastNumber);
+      const sym = a.replace(/\\Omega/g, "Ω").replace(/\\%/g, "%").replace(/\^\{?(\d)\}?/, "^$1");
+      // Brez števila pred njim je en sam velik znak simbol (kemijski element C, O, H), ne enota.
+      const unit = lastNumber == null && /^[A-Z]$/.test(sym.trim()) ? null : compoundUnit(sym, lastNumber);
       push(unit && /^(?:mathrm|text)/.test(m[0].slice(1)) ? unit : expr(a));
       i = j;
       lastNumber = null;
@@ -236,7 +256,11 @@ export function speakMarkdown(md) {
     .replace(/\$([^$\n]+?)\$/g, (_, t) => speakTex(t))
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
-    .replace(/[*_`#>|]/g, "")
+    .replace(/<\/?[a-z][^>\n]*>/gi, "") // HTML v lekcijah (npr. <code>)
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&nbsp;/g, " ")
+    .replace(/^[ \t]*(?:#+|>)[ \t]*/gm, "") // naslovi in citati samo na začetku vrstice; »a > b« ostane
+    .replace(/[*_`|]/g, "")
     .replace(/^\s*[-+]\s+/gm, "")
     .replace(/^\s*\d+\.\s+/gm, "")
     .replace(/[ \t]+/g, " ")

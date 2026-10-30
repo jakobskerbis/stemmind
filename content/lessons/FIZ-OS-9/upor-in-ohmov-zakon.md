@@ -130,7 +130,7 @@ $R \approx 4{,}2\,\Omega$ (natančneje $4{,}166\ldots\,\Omega$, zaokroženo na e
 
 - **Miliampere v formulo.** Če vstaviš $250$ namesto $0{,}25\,\text{A}$, dobiš upor, ki je $1000$-krat premajhen. Vedno najprej pretvori v A, V in $\Omega$.
 - **Napačna oblika zakona.** $I = R \cdot U$ ne velja. Pomagaj si s trikotnikom: $U$ zgoraj, $R$ in $I$ spodaj. Pokrij neznanko in preberi, kaj ostane.
-- **"Tok se porabi."** Tok skozi upornik ni manjši na izhodu kot na vhodu. V zaporednem krogu je tok povsod enak. Upornik zmanjša tok v *celotnem* krogu.
+- **»Tok se porabi.«** Tok skozi upornik ni manjši na izhodu kot na vhodu. V zaporednem krogu je tok povsod enak. Upornik zmanjša tok v *celotnem* krogu.
 - **Upor je odvisen od napetosti.** Pri navadnem uporniku ne: če povečaš napetost, se poveča tok, upor ostane enak.
 
 ## Povzetek
@@ -139,7 +139,7 @@ $R \approx 4{,}2\,\Omega$ (natančneje $4{,}166\ldots\,\Omega$, zaokroženo na e
 - Ohmov zakon: $I = \dfrac{U}{R}$, oziroma $U = R \cdot I$ in $R = \dfrac{U}{I}$.
 - Pri stalnem uporu je tok premo sorazmeren z napetostjo; graf $I(U)$ je premica skozi izhodišče.
 - Pri isti napetosti večji upor pomeni manjši tok.
-- Pred računanjem pretvori mA v A, kV v V, k$\Omega$ v $\Omega$.
+- Pred računanjem pretvori $\mathrm{mA}$ v $\mathrm{A}$, $\mathrm{kV}$ v $\mathrm{V}$, $\mathrm{k\Omega}$ v $\Omega$.
 
 ## Drugače: Iz vsakdanjega življenja (voda v ceveh)
 
