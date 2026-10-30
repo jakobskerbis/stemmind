@@ -299,13 +299,20 @@
       <button id="tour-again" type="button" class="secondary"><i data-icon="circle-help"></i><span data-i18n="set.tourAgain">Ponovi uvodni ogled</span></button>
     </div>
 
-    <div class="card form">
-      <h2 data-i18n="set.newStudent">Nov učenec</h2>
+    <div class="card" id="new-student-card">
+      <h2 data-i18n="set.newStudent">Dodaj profil</h2>
+      <p class="muted" data-i18n="set.newStudentText">Nov profil za drugega učenca: vsak ima svojo učno pot, napredek in pogovore.</p>
       <form id="new-student-form" class="inline">
         <input name="name" maxlength="40" placeholder="Ime" required data-i18n-ph="set.namePh">
         <button type="submit" data-i18n="common.add">Dodaj</button>
       </form>
-      <button id="delete-student" class="danger" type="button" data-i18n="set.deleteStudent">Izbriši tega učenca in vse njegove pogovore</button>
+    </div>
+
+    <div class="card">
+      <h2 data-i18n="set.deleteTitle">Izbriši profil</h2>
+      <!-- Besedilo z imenom profila nastavi fillSettingsForm (app.js). -->
+      <p class="muted" id="delete-student-text"></p>
+      <button id="delete-student" class="danger" type="button"></button>
     </div>
   </main>
 

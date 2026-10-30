@@ -957,11 +957,19 @@ function fillGoalFields(fresh = false) {
 // Izbira šole po korakih (OŠ/SŠ/fakulteta → … → letnik).
 let levelPicker = null;
 
+// Kartica »Izbriši profil« nosi ime trenutnega profila (tudi po preimenovanju v Nastavitvah).
+function fillDeleteCard() {
+  const name = state.student.name;
+  $("#delete-student-text").textContent = t("set.deleteText", { name });
+  $("#delete-student").textContent = t("set.deleteStudent", { name });
+}
+
 async function fillSettingsForm() {
   const f = $("#settings-form");
   const s = state.student.settings;
   fillCornerSummary();
   f.name.value = state.student.name;
+  fillDeleteCard();
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
   f.data_mode.value = s.data_mode || "auto";
@@ -1041,6 +1049,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
   syncCompetitionTab();
   applyLite();
   $("#student-select").options[$("#student-select").selectedIndex].textContent = updated.name;
+  fillDeleteCard();
   refreshProfileButton();
   renderState(null);
   state.symbols?.refresh();

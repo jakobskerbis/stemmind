@@ -301,12 +301,8 @@ async function continueFlow() {
 
 // Učenca dodaja starš s soglasjem v zavihku Račun (porabo AI skrije strežnik vsem razen skrbniku).
 function adjustAppForAccounts() {
-  const form = $("#new-student-form");
-  if (form) {
-    form.hidden = true;
-    const h = form.closest(".card")?.querySelector("h2");
-    if (h) h.textContent = "Profil otroka";
-  }
+  const card = $("#new-student-card");
+  if (card) card.hidden = true;
 }
 
 // Ko starš izbriše zadnjega otroka.
