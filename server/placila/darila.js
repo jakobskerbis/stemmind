@@ -185,7 +185,7 @@ export function mountGifts(app, ctx) {
     if (open >= 5)
       return res
         .status(429)
-        .json({ error: "Preveč odprtih nakupov. Poskusite jutri." });
+        .json({ error: "Preveč odprtih nakupov. Poskusi jutri." });
     try {
       const customer = await ensureCustomer(p);
       const id = Number(
@@ -231,7 +231,7 @@ export function mountGifts(app, ctx) {
       res
         .status(502)
         .json({
-          error: "Plačilne strani ni bilo mogoče odpreti. Poskusite znova.",
+          error: "Plačilne strani ni bilo mogoče odpreti. Poskusi znova.",
         });
     }
   });
@@ -265,7 +265,7 @@ export function mountGifts(app, ctx) {
       res
         .status(502)
         .json({
-          error: "Plačila ni bilo mogoče preveriti. Osvežite stran čez minuto.",
+          error: "Plačila ni bilo mogoče preveriti. Osveži stran čez minuto.",
         });
     }
   });
