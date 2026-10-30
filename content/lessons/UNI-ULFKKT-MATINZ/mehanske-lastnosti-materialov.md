@@ -36,9 +36,9 @@ Ne. Podaljšek v prožnem območju določa $E$, ta pa je pri obeh približno $21
 
 **Posplošitev: krivulja $\sigma$–$\varepsilon$.** Vse te točke ležijo na eni krivulji: najprej strma premica (naklon $E$), nato tečenje, utrjevanje (napetost spet raste, ker se dislokacije ovirajo) do $R_m$ in padec po nastanku vratu do loma. Krhek material, npr. siva litina, se zlomi že na koncu premice, skoraj brez trajne deformacije.
 
-**Trdota.** Natezni preizkus uniči epruveto, zato v praksi pogosto merimo **trdoto**, odpornost proti vtiskovanju. Pri **Vickersovi** metodi vtisnemo diamantno piramido s silo $F$ in izmerimo diagonali vtiska. Pri **Brinellovi** vtisnemo kroglico iz trdine, pri **Rockwellovi** merimo globino vtiska. Večji vtisk pomeni mehkejši material. Za jekla velja približno $R_m \approx 3{,}3 \cdot HV$ (v $\mathrm{MPa}$), zato trdota hitro oceni trdnost brez razreza dela.
+**Trdota.** Natezni preizkus uniči epruveto, zato v praksi pogosto merimo **trdoto**, odpornost proti vtiskovanju. Pri **Vickersovi** metodi vtisnemo diamantno piramido s silo $F$ in izmerimo diagonali vtiska. Pri **Brinellovi** vtisnemo kroglico iz trdine, pri **Rockwellovi** merimo globino vtiska. Večji vtisk pomeni mehkejši material. Za jekla velja približno $R_m \approx 3{,}3 \cdot \mathrm{HV}$ (v $\mathrm{MPa}$), zato trdota hitro oceni trdnost brez razreza dela.
 
-**Žilavost.** **Udarna žilavost** pove, koliko energije material porabi, ko ga zlomi udarec. Pri **Charpyjevem** preizkusu nihalo z višine $h_1$ zlomi epruveto z zarezo V in se dvigne le do $h_2$. Porabljena energija je $KV = m g (h_1 - h_2)$ v joulih. Jekla s prostorsko centrirano kubično mrežo (ferit) imajo **prehodno temperaturo**: nad njo se lomijo žilavo z veliko energije, pod njo krhko z malo. Kovine s ploskovno centrirano mrežo (avstenitno nerjavno jeklo, aluminij, baker) tega prehoda nimajo. To je razložilo ladje Liberty.
+**Žilavost.** **Udarna žilavost** pove, koliko energije material porabi, ko ga zlomi udarec. Pri **Charpyjevem** preizkusu nihalo z višine $h_1$ zlomi epruveto z zarezo V in se dvigne le do $h_2$. Porabljena energija je $\mathrm{KV} = m g (h_1 - h_2)$ v joulih. Jekla s prostorsko centrirano kubično mrežo (ferit) imajo **prehodno temperaturo**: nad njo se lomijo žilavo z veliko energije, pod njo krhko z malo. Kovine s ploskovno centrirano mrežo (avstenitno nerjavno jeklo, aluminij, baker) tega prehoda nimajo. To je razložilo ladje Liberty.
 
 :::premisli
 Pri kaljenju jeklo hitro ohladimo in nastane **martenzit**, mreža, prenasičena z ogljikom in močno napeta. Kako se spremenita trdota in žilavost in zakaj jeklo nato popuščamo (ponovno segrejemo na zmerno temperaturo)?
@@ -53,17 +53,17 @@ Trdota močno naraste, žilavost pa pade, ker je martenzit napet in krhek. S pop
 Na vzorcu jekla s silo $294{,}2\,\mathrm{N}$ (HV30) izmerimo diagonali vtiska $0{,}510\,\mathrm{mm}$ in $0{,}530\,\mathrm{mm}$. Kolikšna je trdota?
 
 **Podatki:** $F = 294{,}2\,\mathrm{N}$, $d_1 = 0{,}510\,\mathrm{mm}$, $d_2 = 0{,}530\,\mathrm{mm}$
-**Iščemo:** trdoto $HV$
+**Iščemo:** trdoto $\mathrm{HV}$
 
 :::formula
-$HV = 0{,}1891\,\dfrac{F}{d^2}$, $F$ v N, $d = \dfrac{d_1 + d_2}{2}$ v mm
+$\mathrm{HV} = 0{,}1891\,\dfrac{F}{d^2}$, $F$ v N, $d = \dfrac{d_1 + d_2}{2}$ v mm
 :::
 
 **Rešitev:**
 
 1. Povprečna diagonala: $d = \dfrac{0{,}510 + 0{,}530}{2} = 0{,}520\,\mathrm{mm}$; povprečimo, ker vtisk ni nikoli popolnoma kvadraten.
 2. $d^2 = 0{,}520^2 = 0{,}2704\,\mathrm{mm^2}$.
-3. $HV = 0{,}1891 \cdot \dfrac{294{,}2}{0{,}2704} \approx 206$.
+3. $\mathrm{HV} = 0{,}1891 \cdot \dfrac{294{,}2}{0{,}2704} \approx 206$.
 4. Odgovor: trdota je približno $206\,\mathrm{HV30}$.
 
 ### Primer 2: katera palica je cenejša na enoto nosilnosti
@@ -89,17 +89,17 @@ $F = R_e \cdot S$, $S = \dfrac{\pi d^2}{4}$; cena na kN $= \dfrac{\text{cena}}{F
 
 Za zunanji žerjav, ki bo delal pozimi do $-20\,^\circ\mathrm{C}$, potrebujemo $2400\,\mathrm{kg}$ pločevine. Ponudnik A prodaja S355JR po $1{,}10$ €/kg, ponudnik B S355J2 po $1{,}18$ €/kg. Charpyjevo nihalo z maso $20{,}0\,\mathrm{kg}$ spustimo z višine $1{,}50\,\mathrm{m}$. Epruveta iz ponudbe A, ohlajena na $-20\,^\circ\mathrm{C}$, ga po lomu pusti dvigniti do $1{,}38\,\mathrm{m}$. Zahteva je vsaj $27\,\mathrm{J}$. Katero ponudbo izberemo in koliko več plačamo?
 
-**Podatki:** $m_{\text{pl}} = 2400\,\mathrm{kg}$, $1{,}10$ €/kg in $1{,}18$ €/kg, $m = 20{,}0\,\mathrm{kg}$, $h_1 = 1{,}50\,\mathrm{m}$, $h_2 = 1{,}38\,\mathrm{m}$, $g = 9{,}81\,\mathrm{m/s^2}$, zahteva $KV \ge 27\,\mathrm{J}$ pri $-20\,^\circ\mathrm{C}$
-**Iščemo:** $KV$ jekla A pri $-20\,^\circ\mathrm{C}$, izbiro in razliko v ceni
+**Podatki:** $m_{\text{pl}} = 2400\,\mathrm{kg}$, $1{,}10$ €/kg in $1{,}18$ €/kg, $m = 20{,}0\,\mathrm{kg}$, $h_1 = 1{,}50\,\mathrm{m}$, $h_2 = 1{,}38\,\mathrm{m}$, $g = 9{,}81\,\mathrm{m/s^2}$, zahteva $\mathrm{KV} \ge 27\,\mathrm{J}$ pri $-20\,^\circ\mathrm{C}$
+**Iščemo:** $\mathrm{KV}$ jekla A pri $-20\,^\circ\mathrm{C}$, izbiro in razliko v ceni
 
 :::formula
-$KV = m g (h_1 - h_2)$; razlika v ceni $= m_{\text{pl}} \cdot \Delta(\text{cena na kg})$
+$\mathrm{KV} = m g (h_1 - h_2)$; razlika v ceni $= m_{\text{pl}} \cdot \Delta(\text{cena na kg})$
 :::
 
 **Rešitev:**
 
 1. Višinska razlika: $h_1 - h_2 = 1{,}50 - 1{,}38 = 0{,}12\,\mathrm{m}$.
-2. $KV = 20{,}0 \cdot 9{,}81 \cdot 0{,}12\,\mathrm{J} \approx 23{,}5\,\mathrm{J}$, kar je manj od $27\,\mathrm{J}$: jeklo A je pri tej temperaturi pod prehodno temperaturo in se lomi krhko.
+2. $\mathrm{KV} = 20{,}0 \cdot 9{,}81 \cdot 0{,}12\,\mathrm{J} \approx 23{,}5\,\mathrm{J}$, kar je manj od $27\,\mathrm{J}$: jeklo A je pri tej temperaturi pod prehodno temperaturo in se lomi krhko.
 3. Jeklo B ima oznako J2, ki zagotavlja $27\,\mathrm{J}$ prav pri $-20\,^\circ\mathrm{C}$.
 4. Razlika v ceni: $2400 \cdot (1{,}18 - 1{,}10) = 192$ €.
 5. Odgovor: izberemo ponudbo B; zanesljivost pozimi stane $192$ € več, kar je malo v primerjavi s posledicami krhkega loma.
@@ -133,15 +133,15 @@ $A = \dfrac{12{,}0}{80{,}0} \cdot 100\,\% = 15{,}0\,\%$ in $Z = (1 - 0{,}64) \cd
 - **Premer namesto polmera.** $S = \pi d^2$ da štirikrat prevelik presek in štirikrat premajhno napetost. Pravilno je $S = \pi d^2/4$.
 - **»Trdnejše jeklo je tudi bolj togo.«** Toplotna obdelava in legiranje spremenijo $R_e$ in $R_m$, modul $E$ pa ostane okoli $210\,\mathrm{GPa}$. Togost povečaš z večjim presekom, ne z boljšim jeklom.
 - **»Trdo pomeni žilavo.«** Kaljen martenzit je zelo trd, a krhek. Trdota in žilavost se pogosto izključujeta; kompromis dosežemo s popuščanjem.
-- **Žilavost brez temperature.** $KV = 100\,\mathrm{J}$ pri sobni temperaturi ne pove nič o zimi. Feritna jekla imajo prehodno temperaturo, zato je na atestu podatek vedno vezan na temperaturo.
+- **Žilavost brez temperature.** $\mathrm{KV} = 100\,\mathrm{J}$ pri sobni temperaturi ne pove nič o zimi. Feritna jekla imajo prehodno temperaturo, zato je na atestu podatek vedno vezan na temperaturo.
 
 ## Povzetek
 
 - Natezni preizkus: $\sigma = F/S_0$, $\varepsilon = \Delta L/L_0$; prožno območje $\sigma = E\,\varepsilon$, za jekla $E \approx 210\,\mathrm{GPa}$.
 - Meja tečenja $R_e$ (ali $R_{p0,2}$) je začetek trajne deformacije, natezna trdnost $R_m = F_{\max}/S_0$; dimenzioniramo po $R_e$.
 - Duktilnost: raztezek po pretrgu $A$ in kontrakcija $Z$.
-- Trdota (Vickers, Brinell, Rockwell) je odpornost proti vtiskovanju; za jekla $R_m \approx 3{,}3 \cdot HV$.
-- Udarna žilavost (Charpy) $KV = m g (h_1 - h_2)$; feritna jekla imajo prehodno temperaturo žilavo–krhko, avstenitna in druge kovine s ploskovno centrirano mrežo je nimajo.
+- Trdota (Vickers, Brinell, Rockwell) je odpornost proti vtiskovanju; za jekla $R_m \approx 3{,}3 \cdot \mathrm{HV}$.
+- Udarna žilavost (Charpy) $\mathrm{KV} = m g (h_1 - h_2)$; feritna jekla imajo prehodno temperaturo žilavo–krhko, avstenitna in druge kovine s ploskovno centrirano mrežo je nimajo.
 - Kaljenje poveča trdoto in zmanjša žilavost, popuščanje del žilavosti vrne.
 
 ## Drugače: Z analogijo
@@ -158,9 +158,9 @@ Predstavljaj si tri stvari iz trgovine: gumico, žvečilni gumi in prepečenec.
 
 **Inženirska in prava napetost.** Inženirska napetost deli s $S_0$, prava s trenutnim presekom: $\sigma_{\text{p}} = F/S$. Ker se ob nastanku vratu presek hitro manjša, inženirska krivulja po $R_m$ pade, prava pa raste vse do loma. Pri enakomerni deformaciji (stalna prostornina) velja $\sigma_{\text{p}} = \sigma(1 + \varepsilon)$.
 
-**Energija.** Ploščina pod krivuljo $\sigma$–$\varepsilon$ je delo na enoto prostornine, ki ga material sprejme do loma, v $\mathrm{J/m^3}$. Material z veliko $R_m$ in veliko $A$ ima veliko ploščino in je žilav. Charpyjev $KV$ to meri pri udarcu in z zarezo, kar je strožje.
+**Energija.** Ploščina pod krivuljo $\sigma$–$\varepsilon$ je delo na enoto prostornine, ki ga material sprejme do loma, v $\mathrm{J/m^3}$. Material z veliko $R_m$ in veliko $A$ ima veliko ploščino in je žilav. Charpyjev $\mathrm{KV}$ to meri pri udarcu in z zarezo, kar je strožje.
 
-**Formula za Vickers.** Piramida ima kot med ploskvama $136^\circ$. Trdota je sila na ploščino vtiska: $HV = \dfrac{2F\sin 68^\circ}{d^2}$ v $\mathrm{kgf/mm^2}$. Ko silo vstavimo v newtonih, pomnožimo z $1/9{,}807 \approx 0{,}102$, zato je konstanta $2 \cdot \sin 68^\circ \cdot 0{,}102 \approx 0{,}1891$.
+**Formula za Vickers.** Piramida ima kot med ploskvama $136^\circ$. Trdota je sila na ploščino vtiska: $\mathrm{HV} = \dfrac{2F\sin 68^\circ}{d^2}$ v $\mathrm{kgf/mm^2}$. Ko silo vstavimo v newtonih, pomnožimo z $1/9{,}807 \approx 0{,}102$, zato je konstanta $2 \cdot \sin 68^\circ \cdot 0{,}102 \approx 0{,}1891$.
 
 **Prehodna temperatura.** V prostorsko centrirani kubični mreži je gibanje vijačnih dislokacij močno odvisno od temperature. Pri nizki temperaturi meja tečenja naraste nad napetost, ki je potrebna za cepilni lom po kristalnih ravninah, in material poči brez plastične deformacije. V ploskovno centrirani kubični mreži je dovolj lahko drsnih sistemov pri vseh temperaturah, zato krhkega prehoda ni. Prehodno temperaturo znižamo z drobnozrnatim jeklom in manj ogljika.
 
@@ -207,3 +207,24 @@ Predstavljaj si tri stvari iz trgovine: gumico, žvečilni gumi in prepečenec.
 - Vseeno je, ker stopnišče ni obremenjeno z udarci.
 ~ Krhek lom sproži že razpoka ali zareza ob zvaru, ne le udarec; tako so pokale tudi ladje Liberty.
 > Žilavost mora biti zagotovljena pri najnižji temperaturi, pri kateri del dela; oznaka J2 to zagotavlja pri $-20\,^\circ\mathrm{C}$.
+
+:::simboli
+\mathrm{HV} | trdota po Vickersu | \mathrm{HV} = 0{,}1891\,\dfrac{F}{d^2} | – | F v N, d v mm; za jekla natezna trdnost ≈ 3,3 · HV
+F | sila | | N | pri meji tečenja F = Rₑ · S
+d | povprečna diagonala vtiska | d = \dfrac{d_1 + d_2}{2} | mm | v S = πd²/4 premer palice
+d_1, d_2 | izmerjeni diagonali vtiska | | mm
+R_e | meja tečenja | | MPa |
+S | ploščina prečnega prereza | S = \dfrac{\pi d^2}{4} | mm^2 |
+\mathrm{KV} | udarna žilavost (porabljena energija po Charpyju) | \mathrm{KV} = m g (h_1 - h_2) | J |
+m | masa nihala | | kg |
+g | težni pospešek | | m/s^2 | 9,81 m/s²
+h_1 | začetna višina nihala | | m |
+h_2 | višina, do katere se nihalo dvigne po lomu | | m |
+m_{\text{pl}} | masa pločevine | | kg |
+A | raztezek po pretrgu | A = \dfrac{L_u - L_0}{L_0} \cdot 100\,\% | \% |
+L_u | merilna dolžina po pretrgu | | mm |
+L_0 | začetna merilna dolžina | | mm |
+Z | kontrakcija (zoženje preseka) | Z = \left(1 - \dfrac{d_u^2}{d_0^2}\right) \cdot 100\,\% | \% |
+d_u | premer v vratu po pretrgu | | mm |
+d_0 | začetni premer epruvete | | mm |
+:::

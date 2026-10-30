@@ -224,3 +224,21 @@ Za $f(x) = e^x$ sta to ravno $\operatorname{ch} x$ in $\operatorname{sh} x$.
 - $f^{-1}(x) = \ln\frac{x - 1}{2}$ za $x > 1$
 - $f^{-1}(x) = \frac{1}{e^{2x} + 1}$
 > Iz $y = e^{2x} + 1$ sledi $e^{2x} = y - 1$ in $x = \frac{1}{2}\ln(y - 1)$. Recipročna vrednost $\frac{1}{f(x)}$ ni inverz.
+
+:::simboli
+f | funkcija | |
+x | neodvisna spremenljivka (argument) | |
+y | vrednost funkcije | y = f(x) |
+D_f | definicijsko območje funkcije f | |
+Z_f | zaloga vrednosti funkcije f | |
+D_{f^{-1}} | definicijsko območje inverzne funkcije | D_{f^{-1}} = Z_f |
+Z_{f^{-1}} | zaloga vrednosti inverzne funkcije | Z_{f^{-1}} = D_f |
+a | osnova logaritma | | | a > 0, a ≠ 1; pri premikih grafa premik v desno
+e | Eulerjevo število | | | e ≈ 2,718; osnova naravnega logaritma
+u | eksponent pri osnovi e | u = \ln v |
+v | pozitivna vrednost potence e^u | | | v > 0
+c | množinska koncentracija reaktanta | c = c_0 e^{-kt} | mol/L | pri raztegih grafa faktor c
+c_0 | začetna koncentracija reaktanta | | mol/L
+k | konstanta hitrosti reakcije | | min^{-1} | pri grafih faktor stiskanja; k ∈ ℤ pri periodah
+t | čas | t = \frac{1}{k} \ln \frac{c_0}{c} | min
+:::

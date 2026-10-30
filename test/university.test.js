@@ -5,6 +5,7 @@ import { createApp } from "../server/app.js";
 import { Progress } from "../server/progress.js";
 import { getPath, getTopic, listPaths, listPrograms, listProgramPaths, pathKeyFor, studyProgramPrompt, topicOrder, uniTopicIds } from "../server/curriculum.js";
 import { PROGRAMS, UNI_PATHS } from "../server/university-data.js";
+import { COURSE_EXTENSIONS } from "../server/university-razsiritve.js";
 import { normalizeSettings } from "../server/settings.js";
 import { buildSystemPrompt } from "../server/prompt.js";
 import { GENERATORS, generateTask, hasGenerator } from "../server/practice/index.js";
@@ -171,4 +172,16 @@ test("EMŠ programmes (medicine, pharmacy) are labelled and described as single-
   assert.equal(listed.find((p) => p.id === "UL-FRI-RI").degree, "UN");
   const s = studyProgramPrompt({ educational_track: "UNIVERZA", study_program: "UL-MF-MED", curriculum_level: "1. letnik" });
   assert.match(s, /enoviti magistrski študijski program Medicina; predmeti 1\. letnika: /);
+});
+
+test("syllabus extensions add topics without duplicates and keep the shared blocks unchanged", () => {
+  for (const [key, extra] of Object.entries(COURSE_EXTENSIONS)) {
+    const titles = UNI_PATHS[key].units.flatMap(([, topics]) => topics.map((t) => t.split(" | ")[0]));
+    assert.equal(new Set(titles).size, titles.length, `${key}: podvojena tema`);
+    for (const [, topics] of extra) for (const t of topics) assert.ok(titles.includes(t.split(" | ")[0]), `${key}: manjka ${t}`);
+  }
+  // Razširitev dobi le razširjeni predmet: skupni bloki (npr. »Zgradba snovi«) ostanejo pri drugih predmetih enaki.
+  assert.ok(UNI_PATHS["UNI-ULFKKT-SPLKEM"].units.length > 4);
+  const others = Object.entries(UNI_PATHS).filter(([k, p]) => !COURSE_EXTENSIONS[k] && p.units.some(([u]) => u === "Zgradba snovi"));
+  for (const [k, p] of others) assert.ok(!p.units.flatMap(([, t]) => t).some((t) => t.startsWith("Teorija molekulskih orbital |")), `${k}: razširitev je ušla v skupni blok`);
 });

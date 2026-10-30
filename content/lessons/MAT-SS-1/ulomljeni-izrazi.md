@@ -224,3 +224,13 @@ Vrstica pri $x = 3$ pokaže, zakaj so pogoji pomembni: okrajšani izraz ima vred
 - $\dfrac{x+2}{x+1}$
 - $\dfrac{(x+1)(x+2)}{x}$
 > Razstavimo: $\dfrac{x+1}{x-2} \cdot \dfrac{(x-2)(x+2)}{x(x+1)}$. Okrajšamo $x+1$ in $x-2$, ostane $\dfrac{x+2}{x}$. Pogoji so $x \neq 2$, $x \neq 0$ in $x \neq -1$.
+
+:::simboli
+A, B, C, D | algebrski izrazi v števcih in imenovalcih | | | imenovalci morajo biti različni od 0
+x | spremenljivka | | |
+a, b, c | števila ali izrazi v obrazcih | | |
+v | povprečna hitrost | v = \frac{2 v_1 v_2}{v_1 + v_2} | km/h |
+s | razdalja v eno smer | | km |
+v_1 | hitrost tja | | km/h |
+v_2 | hitrost nazaj | | km/h |
+:::

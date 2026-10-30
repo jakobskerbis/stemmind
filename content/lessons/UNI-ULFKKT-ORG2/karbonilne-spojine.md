@@ -225,3 +225,11 @@ Aldolna reakcija pa je kot duet, v katerem isto skladbo pojeta dva pevca z razli
 ~ To je masa aldola (adicija ohrani maso); pri kondenzaciji izstopi voda.
 + $7{,}01\,\text{g}$
 > $n(\text{etanal}) = 0{,}200\,\text{mol}$, $n(\text{but-2-enal}) = 0{,}100\,\text{mol}$, $m = 0{,}100 \cdot 70{,}09 \approx 7{,}01\,\text{g}$.
+
+:::simboli
+x | delež hidrata v ravnotežju | x = \dfrac{K_\text{hidr}}{1 + K_\text{hidr}} | – |
+K_\text{hidr} | ravnotežna konstanta hidratacije | | – | voda je vključena v K
+n | množina snovi | n = \dfrac{m}{M} | mol |
+m | masa | m = n \cdot M | g |
+M | molska masa | | g/mol |
+:::

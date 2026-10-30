@@ -8,7 +8,9 @@ import { mountLanguageCard } from "./language.js";
 import { dialectsFor } from "./dialects.js";
 
 hydrateIcons();
-import { initAccount, accountsOn, openAddChild, logout, openProfileLock } from "./account.js";
+import { initAccount, accountsOn, openAddChild, logout, openProfileLock, renderAccount } from "./account.js";
+import { showFull, closeFull, fullOpen } from "./razpri.js";
+import { initOkna, isFloating, openWindow, closeWindow, focusWindow, refreshBubble, chatReply, restoreWindows, windowsOn, tabHint, floatingViews } from "./okna.js";
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
 import { openPrintable, stopReading } from "./gradiva.js";
@@ -125,7 +127,19 @@ function showView(name) {
     if (!state.student) return;
     document.body.classList.remove("onboarding");
   }
-  if (name !== "textbook") stopReading(); // branje povzetka na glas ne teče naprej brez gumba za ustavitev
+  // Pogled v premičnem oknu (public/okna.js): okno pride v ospredje in se osveži, glavni pogled ostane.
+  // Tipka Nazaj (na Učno pot) pa okno vrne v glavni del.
+  if (isFloating(name)) {
+    if (!fromBack) {
+      focusWindow(name);
+      initView(name);
+      return;
+    }
+    closeWindow(name, { keep: true });
+  }
+  closeFull(); // okno s celim besedilom (public/razpri.js) pripada prejšnjemu pogledu
+  const away = (v) => name !== v && !isFloating(v); // pogled ni ne glavni ne v oknu
+  if (away("textbook")) stopReading(); // branje povzetka na glas ne teče naprej brez gumba za ustavitev
   syncHistory(name);
   currentView = name;
   syncCompetitionTab();
@@ -134,8 +148,23 @@ function showView(name) {
   document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("active", t.dataset.view === name));
   // Na telefonu so Napredek, Lige, Nastavitve in Račun pod zavihkom »Jaz«.
   if (meView(name)) $('#tabbar [data-view="me"]').classList.add("active");
+  document.querySelectorAll(".view").forEach((v) => {
+    if (!v.classList.contains("in-okno")) v.hidden = v.id !== `view-${name}`;
+  });
+  initView(name);
+  if (away("scan")) leaveScan();
+  if (away("games")) leaveGames();
+  if (away("corner")) closeBoard();
+  if (away("graph")) document.body.classList.remove("gc-kp");
+  closeCalcOverlay();
+  if (name !== "topic") closePad();
+  if (name !== "topic" && name !== "cards") setActiveMode(null);
+  refreshBubble();
+  window.scrollTo(0, 0);
+}
+// Priprava pogleda ob prikazu (glavni del ali premično okno); ne spremeni trenutnega pogleda in zgodovine.
+function initView(name) {
   if (name === "me") renderMe();
-  document.querySelectorAll(".view").forEach((v) => (v.hidden = v.id !== `view-${name}`));
   if (name === "settings") {
     fillSettingsForm();
     $("#settings-account").hidden = $("#account-tab").hidden;
@@ -144,7 +173,6 @@ function showView(name) {
   if (name === "progress") loadProgress();
   if (name === "schedule") showSchedule();
   if (name === "scan") showScan();
-  else leaveScan();
   if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
   if (name === "textbook") showTextbook();
@@ -152,25 +180,19 @@ function showView(name) {
   if (name === "exams") loadExams();
   if (name === "feedback") showFeedback();
   if (name === "games") showGames();
-  else leaveGames();
   if (name === "zbirke") {
     showZbirke(zbOpen.item, zbOpen.from);
     zbOpen = {};
   }
   if (name === "corner") showCorner();
-  else closeBoard();
   if (name === "cards") {
     setActiveMode("cards");
     showFlashcards();
   }
   if (name === "graph") showGraph();
-  else document.body.classList.remove("gc-kp");
-  closeCalcOverlay();
-  if (name !== "topic") closePad();
-  if (name !== "topic" && name !== "cards") setActiveMode(null);
-  window.scrollTo(0, 0);
 }
-document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
+// Zavihek pogleda v premičnem oknu okno le prinese v ospredje (branje, vnos in drsenje v njem ostanejo).
+document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => (isFloating(t.dataset.view) ? focusWindow(t.dataset.view) : showView(t.dataset.view))));
 
 // Tipka Nazaj (Android, aplikacija na začetnem zaslonu, brskalnik): brez tega bi tipka Nazaj
 // v nameščeni aplikaciji takoj zaprla Evklid. Zgodovina ima dve ravni: Učna pot (0) in
@@ -427,7 +449,7 @@ async function onboard(name = "") {
 async function selectStudent(id) {
   const target = state.students.find((s) => s.id === Number(id));
   // Vsak profil ima svoje geslo (z računi): zaklenjen profil najprej odklenemo, profil brez gesla ga dobi.
-  // Uporabnik lahko namesto tega izbere drug profil; seznam se nato naloži znova (odklep zaklene druge profile).
+  // Uporabnik lahko namesto tega izbere drug profil; seznam se nato naloži znova (stanje zaklepa profilov se je lahko spremenilo).
   // Brez povezave s strežnikom (shranjena kopija) računi niso vklopljeni: odpremo profil za vadbo brez gesla,
   // zaklenjenega pa ne (zanj ni shranjenih nastavitev).
   if (target && accountsOn() && (target.locked || target.needs_password)) return loadStudents(await openProfileLock(target, state.students));
@@ -447,6 +469,7 @@ async function selectStudent(id) {
   }
   syncCompetitionTab();
   applyLite();
+  refreshBubble(); // premična okna zavihkov, ki jih ta profil nima (NPZ in matura, Tekmovanja), se zaprejo
   localStorageSet("studentId", state.student.id);
   sendOffline();
   state.conversationId = null;
@@ -467,6 +490,8 @@ async function selectStudent(id) {
   state.examKey = state.compKey = null;
   if (!$("#view-exams").hidden) showView(siExams() ? "exams" : "path");
   if (!$("#view-competition").hidden) showView(isUni(state.student.settings) ? "path" : "competition");
+  // Drugi pogledi v premičnih oknih pokažejo podatke novega profila (zgornji so se že osvežili).
+  for (const v of floatingViews()) if (!["settings", "progress", "league", "scan", "path", "exams", "competition"].includes(v)) v === "account" ? renderAccount() : initView(v);
   refreshProfileButton();
   refreshXp();
   // Vprašalnik kotička zanimanj: profil, ki ga še ni izpolnil, ga dobi ob zagonu (enkrat).
@@ -498,6 +523,7 @@ initProfileMenu({
 async function loadConversations() {
   state.conversations = await api(`/api/students/${state.student.id}/conversations`);
   renderConversationList();
+  refreshBubble();
 }
 
 function renderConversationList() {
@@ -574,6 +600,7 @@ async function openConversation(id) {
   renderState(conv.state);
   renderConversationList();
   box.scrollTop = box.scrollHeight;
+  refreshBubble();
 }
 
 // Telefon: seznam pogovorov se odpre čez klepet; gumb ostane viden in ga zapre (tudi Esc).
@@ -593,6 +620,7 @@ $("#new-chat").addEventListener("click", () => {
   renderConversationList();
   renderEmptyChat();
   $("#input").focus();
+  refreshBubble();
 });
 
 // ---------- sporočila ----------
@@ -683,6 +711,8 @@ async function send(text, { deep = false } = {}) {
         if (d.language) newLanguage = d.language;
       },
       device_settings: (d) => applyDeviceSettings(d.changes),
+      // »Odpri kalkulator«, »pokaži periodni sistem« … (server/chat-settings.js): okno ob klepetu.
+      open_window: (d) => openFromTutor(d),
       // Inštruktor je spremenil urnik: kartica na Učni poti in stran Urnik se osvežita.
       schedule: () => scheduleChanged(),
       proposal: (d) => (proposal = d),
@@ -690,6 +720,7 @@ async function send(text, { deep = false } = {}) {
       done: (d) => {
         doneData = d;
         pacer.finish(d.text);
+        chatReply(d.text); // mehurček, če klepet ni na zaslonu (public/okna.js)
         if (d.state) renderState(d.state);
         if (d.title) $("#chat-title").textContent = d.title;
       },
@@ -711,6 +742,7 @@ async function send(text, { deep = false } = {}) {
       if (cardsData) addCardsNote(bubble, cardsData);
       if (doneData?.id) addMsgFoot(bubble, doneData);
       if (proposal) addProposal(bubble, proposal, { onConfirm: confirmChatProposal });
+      checkReplyFits(bubble, doneData?.id);
       if (state.pacer === pacer) state.pacer = null;
       // Nov jezik: vmesnik se naloži znova v njem (ko je odgovor izpisan).
       if (newLanguage && newLanguage !== currentLang()) setTimeout(() => setLanguage(newLanguage), 1200);
@@ -736,6 +768,18 @@ async function send(text, { deep = false } = {}) {
   }
 }
 
+// Odgovor inštruktorja ne gre v vidni del klepeta (telefon z odprto tipkovnico ali ploščo): pokažemo ga v oknu.
+function checkReplyFits(bubble, id) {
+  const box = $("#messages");
+  if (!bubble?.isConnected || !box.offsetParent || !matchMedia("(hover: none) and (pointer: coarse)").matches) return;
+  const typing = document.activeElement?.matches?.("textarea, input:not([type=checkbox]):not([type=radio])");
+  if (!typing && !document.body.classList.contains("pad-open")) return;
+  if (bubble.offsetHeight <= box.clientHeight * 1.1) return;
+  const copy = bubble.cloneNode(true);
+  copy.querySelectorAll("button, .msg-foot, .graph-btn").forEach((b) => b.remove());
+  showFull({ kind: "reply", sig: String(id || bubble.textContent.length), title: t("nav.chat"), html: copy.innerHTML });
+}
+
 async function readSse(res, handlers) {
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
@@ -756,11 +800,52 @@ async function readSse(res, handlers) {
 }
 
 const input = $("#input");
-function autoGrow() {
+// Polje raste z besedilom do 40 % vidne višine (tudi z odprto tipkovnico), nato drsi; nobena vrstica ni odrezana.
+// Če besedilo ne gre več v polje, se samodejno pokaže v večjem oknu (public/razpri.js). Zadnja sporočila
+// ostanejo vidna nad poljem.
+function autoGrow(stick) {
+  const box = $("#messages");
+  const atBottom = typeof stick === "boolean" ? stick : box.scrollHeight - box.scrollTop - box.clientHeight < 80;
+  const max = Math.max(80, Math.round((window.visualViewport?.height || window.innerHeight) * 0.4));
+  input.style.maxHeight = `${max}px`;
   input.style.height = "auto";
-  input.style.height = Math.min(input.scrollHeight, 200) + "px";
+  const h = input.scrollHeight;
+  input.style.height = `${Math.min(h, max)}px`;
+  input.style.overflowY = h > max ? "auto" : "hidden";
+  // Telefon: daljše besedilo dobi celo širino vrstice, gumbi gredo pod polje (nazaj šele, ko je polje prazno).
+  const row = input.closest(".composer-row");
+  const multi = h > 60 || (row.classList.contains("multi") && !!input.value);
+  if (multi !== row.classList.contains("multi")) {
+    row.classList.toggle("multi", multi);
+    return autoGrow(atBottom); // širina polja se je spremenila: višino izmerimo znova
+  }
+  if (atBottom) box.scrollTop = box.scrollHeight;
+  if (h > max + 2 && input.value.trim() && input.offsetParent) showFull({ kind: "composer", title: t("full.message"), field: input });
+  else if (fullOpen("composer") && (h <= max || !input.value.trim())) closeFull();
 }
 input.addEventListener("input", autoGrow);
+// Besedilo, vpisano iz kode (predlogi, kalkulator, kotiček, vrnjeno po napaki), tudi poveča polje.
+{
+  const desc = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value");
+  Object.defineProperty(input, "value", {
+    configurable: true,
+    get() {
+      return desc.get.call(this);
+    },
+    set(v) {
+      desc.set.call(this, v);
+      requestAnimationFrame(autoGrow);
+    },
+  });
+  let raf = 0;
+  const later = () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => input.offsetParent && autoGrow());
+  };
+  window.visualViewport?.addEventListener("resize", later);
+  window.addEventListener("resize", later);
+  input.addEventListener("focus", later);
+}
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
@@ -2754,6 +2839,7 @@ function startContestTimer(sessionId, deadline) {
   };
   tick();
   state.contestTimer = setInterval(tick, 1000);
+  refreshBubble();
 }
 function leftText(deadline) {
   const s = Math.max(0, Math.ceil(((deadline || 0) - Date.now()) / 1000));
@@ -3112,7 +3198,13 @@ document.addEventListener("keydown", (e) => {
 // gumbi »Kalkulator« v Učni poti, vadnici in Inštruktorju
 document.querySelectorAll(".calc-open").forEach((b) =>
   b.addEventListener("click", () => {
-    const view = document.querySelector("main.view:not([hidden])")?.id;
+    // Kalkulator je že v premičnem oknu: okno pride v ospredje (pri kemiji s periodnim sistemom).
+    if (isFloating("graph")) {
+      focusWindow("graph");
+      if (calcSubject() === "KEM") setCalcMode("pse");
+      return;
+    }
+    const view = document.querySelector("main.view:not([hidden]):not(.in-okno)")?.id;
     const back = view === "view-chat" ? t("nav.chat") : view === "view-path" ? t("nav.path") : t("nav.back");
     // pri kemiji najprej periodni sistem, sicer zadnje uporabljeno orodje (privzeto znanstveni)
     openCalcOverlay({ mode: calcSubject() === "KEM" ? "pse" : calcMode, backLabel: back });
@@ -3141,7 +3233,80 @@ async function addGraphButton(bubble, text) {
 }
 
 // Za samodejne preizkuse v brskalniku.
-window.evklid = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay, openZbirke };
+window.evklid = { openTopic, showView, openLesson, openGraphOverlay, openCalcOverlay, openZbirke, openWindow, closeWindow, openFromTutor };
+
+// ---------- besedilo naloge vedno vidno (telefon s ploščo za vnos) ----------
+// Plošča pomakne nalogo nad sebe (pad.js); če je besedilo naloge višje od prostora nad ploščo,
+// se samodejno pokaže v oknu (public/razpri.js), enkrat za nalogo.
+function checkTaskFits() {
+  if (!document.body.classList.contains("pad-open")) {
+    if (fullOpen("task")) closeFull();
+    return;
+  }
+  const text = [...document.querySelectorAll("#view-topic .task .task-text")].filter((x) => x.offsetParent).at(-1);
+  if (!text) return;
+  const pad = document.getElementById("pad");
+  const r = pad && !pad.hidden ? pad.getBoundingClientRect() : null;
+  const vh = window.visualViewport?.height || window.innerHeight;
+  const bottom = r && r.top > vh * 0.3 ? r.top : vh; // plošča spodaj (telefon pokončno) ali ob strani
+  const top = Math.max(0, $(".topbar")?.offsetParent ? $(".topbar").getBoundingClientRect().bottom : 0);
+  if (text.offsetHeight <= bottom - top - 24) return;
+  showFull({ kind: "task", sig: text.textContent.trim().slice(0, 120), title: t("full.task"), html: text.innerHTML });
+}
+{
+  let timer = 0;
+  const later = () => {
+    clearTimeout(timer);
+    timer = setTimeout(checkTaskFits, 350); // po premiku naloge nad ploščo
+  };
+  let wasOpen = false;
+  new MutationObserver(() => {
+    const open = document.body.classList.contains("pad-open");
+    if (open !== wasOpen) later();
+    wasOpen = open;
+  }).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  window.visualViewport?.addEventListener("resize", later);
+}
+
+// ---------- premična okna in mehurček inštruktorja (public/okna.js) ----------
+
+// Ukaz inštruktorju »odpri kalkulator«: okno ob klepetu (telefon: spodnji list), kalkulator v pravem načinu.
+async function openFromTutor({ view, mode } = {}) {
+  if (!document.getElementById(`view-${view}`)) return;
+  const calc = () => view === "graph" && mode && setCalcMode(mode);
+  if (currentView === view) return calc();
+  if (!windowsOn() || !openWindow(view, { side: "right" })) {
+    if (view === "graph") return openCalcOverlay({ mode: mode || calcMode, backLabel: t("nav.chat") });
+    return showView(view);
+  }
+  calc();
+}
+initOkna({
+  showView,
+  initView: (name) => (name === "account" ? renderAccount() : initView(name)),
+  leaveView: (name) => {
+    if (name === "textbook") stopReading();
+    if (name === "scan") leaveScan();
+    if (name === "games") leaveGames();
+    if (name === "corner") closeBoard();
+    if (name === "graph") document.body.classList.remove("gc-kp");
+  },
+  // Pogled iz glavnega dela je šel v okno: glavni del pokaže prvi prosti zavihek.
+  leaveMain: (name) =>
+    showView(["path", "textbook", "chat", "graph", "progress", "schedule", "settings"].find((v) => v !== name && !isFloating(v)) || "me"),
+  mainView: () => currentView,
+  onResize: (name) => name === "graph" && calcTool(calcMode).then((tool) => tool.resize?.()),
+  chatInfo: () => {
+    const n = document.querySelectorAll("#messages .msg").length;
+    const body = document.body.classList;
+    return {
+      key: state.conversationId && n ? `${state.conversationId}:${n}` : null,
+      visible: currentView === "chat" || isFloating("chat"),
+      blocked: !state.student || body.contains("onboarding") || body.contains("auth-mode") || !!state.contestTimer || !$("#chat-off").hidden,
+    };
+  },
+  toast: (m) => toast(m, "check"),
+});
 
 initFlashcards({ api, renderRich, escapeHtml, toast, showView, getStudent: () => state.student, onDue: setCardsDue });
 
@@ -3218,6 +3383,7 @@ initFormulaInfo();
     else refreshUsageMeter();
     if (!o?.keepView) showView("path");
     if (first && START_VIEW && !o?.keepView) showView(START_VIEW);
+    if (first) restoreWindows();
     first = false;
   };
   if (await initAccount({ onReady: start })) await start();
@@ -3262,13 +3428,32 @@ async function bootFailed(err) {
     const STEPS = ["tabs-tight", "tabs-nobrand", "tabs-minor", "tabs-compact"];
     const over = () => tabs.scrollWidth > tabs.clientWidth + 1;
     const fit = () => {
-      tabs.querySelectorAll(".tab").forEach((t) => (t.title = t.textContent.trim()));
+      tabs.querySelectorAll(".tab").forEach((tab) => (tab.title = [tab.textContent.trim(), tabHint(tab)].filter(Boolean).join(" · ")));
       bar.classList.remove(...STEPS);
       for (const step of STEPS) {
         if (!over()) break;
         bar.classList.add(step);
       }
+      if (over()) tabs.querySelector(".tab.active")?.scrollIntoView({ block: "nearest", inline: "nearest" });
+      fade();
     };
+    // Vrstica, ki ne gre na zaslon, se pomika; rob, za katerim je še kaj, zbledi (style.css). V RTL je scrollLeft ≤ 0.
+    const fade = () => {
+      const max = tabs.scrollWidth - tabs.clientWidth;
+      const at = Math.abs(tabs.scrollLeft);
+      tabs.classList.toggle("fade-start", max > 1 && at > 1);
+      tabs.classList.toggle("fade-end", max > 1 && at < max - 1);
+    };
+    tabs.addEventListener("scroll", fade, { passive: true });
+    tabs.addEventListener(
+      "wheel",
+      (e) => {
+        if (!over() || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        e.preventDefault();
+        tabs.scrollLeft += document.documentElement.dir === "rtl" ? -e.deltaY : e.deltaY;
+      },
+      { passive: false },
+    );
     new ResizeObserver(fit).observe(tabs);
     new MutationObserver(fit).observe(tabs, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["hidden", "class"] });
     document.fonts?.ready.then(fit);

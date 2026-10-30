@@ -1,0 +1,23 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Vpadna pravokotnica
+  - pravokotna na zrcalo v točki vpada
+  - kota merimo od nje, ne od zrcala
+- Odbojni zakon
+  - $\beta = \alpha$
+  - žarka in pravokotnica ležijo v isti ravnini
+  - pravokotni žarek se odbije nazaj vase
+- Zrcalni in razpršeni odboj
+  - gladka ploskev odbija urejeno, nastane slika
+  - hrapava ploskev odbija na vse strani
+- Slika v ravnem zrcalu
+  - navidezna, enako velika, pokončna
+  - levo in desno sta zamenjani
+- Razdalja do slike
+  - slika je enako daleč za zrcalom
+  - $d = 2 \cdot a$, npr. $1{,}5\,\text{m}$ da $3\,\text{m}$
+- Najnižje zrcalo
+  - polovica višine telesa, $z = \dfrac{h}{2}$
+  - razdalja do zrcala ne vpliva

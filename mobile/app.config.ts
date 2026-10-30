@@ -12,6 +12,7 @@ import brand from "../brand.json";
 const LOCALES = ["sl", ...fs.readdirSync(path.join(__dirname, "../public/i18n/ui")).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5))];
 const channel = process.env.EXPO_PUBLIC_CHANNEL === "direct" ? "direct" : "store";
 const id = brand.app.bundle_id;
+const EAS_PROJECT = process.env.EAS_PROJECT_ID || brand.app.eas_project_id;
 // Besedila dovoljenj (slovensko; angleško in druge jezike sistema v locales/).
 const CAMERA = `${brand.name} uporabi kamero, da poslikaš nalogo in jo inštruktor razloži po korakih.`;
 const PHOTOS = `${brand.name} odpre fotografijo naloge, ki jo izbereš, da jo inštruktor razloži.`;
@@ -47,7 +48,8 @@ const config: ExpoConfig = {
       backgroundImage: "./assets/android-icon-background.png",
       monochromeImage: "./assets/android-icon-monochrome.png",
     },
-    permissions: ["android.permission.CAMERA", "android.permission.POST_NOTIFICATIONS", "android.permission.VIBRATE"],
+    // Namestitev novega APK iz aplikacije (src/lib/updates.ts) samo v APK s strani /prenesi; Google Play tega dovoljenja ne dovoli.
+    permissions: ["android.permission.CAMERA", "android.permission.POST_NOTIFICATIONS", "android.permission.VIBRATE", ...(channel === "direct" ? ["android.permission.REQUEST_INSTALL_PACKAGES"] : [])],
     blockedPermissions: ["android.permission.RECORD_AUDIO", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"],
     predictiveBackGestureEnabled: true,
   },
@@ -65,11 +67,15 @@ const config: ExpoConfig = {
     "expo-iap", // nakupi v aplikaciji; APK za neposredni prenos jih ne kliče (glej src/lib/billing.ts)
   ],
   experiments: { typedRoutes: true },
+  // Posodobitve JavaScripta z EAS Update (src/lib/updates.ts). Različica izvajalnika je prstni odtis domorodne
+  // kode: posodobitev dobijo samo gradnje z enako domorodno kodo, za novo domorodno kodo je potreben nov APK.
+  runtimeVersion: { policy: "fingerprint" },
+  updates: EAS_PROJECT ? { url: `https://u.expo.dev/${EAS_PROJECT}`, checkAutomatically: "ON_LOAD", fallbackToCacheTimeout: 0 } : { enabled: false },
   extra: {
     channel,
     apiUrl: process.env.EXPO_PUBLIC_API_URL || `https://${brand.domain}`,
     // Id projekta EAS (expo.dev): v brand.json app.eas_project_id ali v spremenljivki EAS_PROJECT_ID.
-    eas: (process.env.EAS_PROJECT_ID || brand.app.eas_project_id) ? { projectId: process.env.EAS_PROJECT_ID || brand.app.eas_project_id } : undefined,
+    eas: EAS_PROJECT ? { projectId: EAS_PROJECT } : undefined,
   },
 };
 

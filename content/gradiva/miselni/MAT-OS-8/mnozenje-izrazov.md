@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Enočlenik krat vsota
+  - $a(b + c) = ab + ac$
+  - $4(x + 35) = 4x + 140$
+  - napaka: pomnožen le prvi člen
+- Množenje enočlenikov
+  - koeficienti posebej, spremenljivke posebej
+  - $3x \cdot 2x = 6x^2$
+- Vsak z vsakim
+  - $(a + b)(c + d) = ac + ad + bc + bd$
+  - dva dvočlenika dajo štiri produkte
+- Slika s pravokotnikom
+  - štirje deli so štirje produkti
+  - napaka: $(x + 3)^2 = x^2 + 9$
+- Predznaki
+  - predznak gre s členom: $x - 3 = x + (-3)$
+  - minus pred oklepajem: $-(m - n) = -m + n$
+- Podobni členi
+  - združi: $10x + 20x = 30x$
+  - $x^2$ in $x$ nista podobna
+- Preizkus
+  - vstavi število, npr. $x = 1$, na obe strani

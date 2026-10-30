@@ -1,0 +1,22 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Cela števila
+  - $\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}$
+  - $0$ ni ne pozitivno ne negativno
+- Številska premica
+  - pozitivna desno, negativna levo od $0$
+  - gradbeni načrt: premica postavljena pokonci
+- Nasprotna števila
+  - enako daleč od $0$, na nasprotnih straneh
+  - $-(-4) = 4$, $a + (-a) = 0$
+- Absolutna vrednost
+  - razdalja od $0$: $|-5| = |5| = 5$
+  - napaka: $|5| = -5$
+- Primerjanje
+  - večje leži bolj desno
+  - negativni: večje ima manjšo $|a|$, $-3 > -6$
+- Razdalja čez ničlo
+  - seštej absolutni vrednosti
+  - od $-6\,\text{m}$ do $9\,\text{m}$ je $15\,\text{m}$

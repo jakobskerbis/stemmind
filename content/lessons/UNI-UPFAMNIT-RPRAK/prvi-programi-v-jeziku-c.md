@@ -300,3 +300,8 @@ Enako sledenje uporabi pri funkciji: zapiši vrednost vsakega parametra ob klicu
 ~ Funkcija tipa `void` ne vrača vrednosti; `return 0` tu ne bi pomagal.
 + Ker funkcija dobi kopijo vrednosti `domaci` in poveča le kopijo.
 > Argumenti se v C podajo po vrednosti. Popravek: `int tocka(int r) { return r + 1; }` in `domaci = tocka(domaci);`.
+
+:::simboli
+i | številka stopnje | | – | stopnja i prinese 10 · i točk
+n | število tekem | | –
+:::

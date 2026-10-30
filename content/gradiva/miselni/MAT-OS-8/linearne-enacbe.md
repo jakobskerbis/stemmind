@@ -1,0 +1,26 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Mamljiva bližnjica
+  - napaka: iz $3x + 6 = 30$ dobiš $x + 6 = 10$
+  - deli celo stran, ne enega člena
+- Enačba kot tehtnica
+  - na obeh straneh naredi isto
+  - ne množi in ne deli z $0$
+- Linearna enačba
+  - $x$ le v prvi potenci
+  - rešitev da resnično enakost
+- Formalni postopek
+  - odpravi oklepaje, združi podobne člene
+  - $x$ na eno stran, števila na drugo
+  - deli s koeficientom pri $x$
+- Prenos čez enačaj
+  - $x + 4 = 9$, torej $x = 9 - 4$
+  - pri $-x = 12$ je $x = -12$
+- Preizkus
+  - vstavi v prvotno enačbo
+  - levo in desno stran izračunaj posebej
+- Ko x izgine
+  - $5 = 5$: neskončno mnogo rešitev
+  - $3 = 7$: ni rešitve

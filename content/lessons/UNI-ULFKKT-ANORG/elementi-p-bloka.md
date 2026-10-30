@@ -237,3 +237,15 @@ Kako določiš oksidacijsko število elementa p-bloka v spojini:
 ~ Klor je oksidant: elektrone sprejme, ne odda. Oksidira se jodid.
 + Klor oksidira jodid v jod, $E^\circ_\text{celice} = 0{,}82\,\mathrm{V}$.
 > $\mathrm{Cl_2 + 2\,I^- \rightarrow 2\,Cl^- + I_2}$, $E^\circ_\text{celice} = 1{,}36\,\mathrm{V} - 0{,}54\,\mathrm{V} = 0{,}82\,\mathrm{V} > 0$, zato reakcija poteče.
+
+:::simboli
+E | standardni elektrodni potencial | E^\circ_\text{celice} = E^\circ_\text{katoda} - E^\circ_\text{anoda} | V | reakcija poteče, če je E°celice > 0
+\Delta G | standardna sprememba proste entalpije | \Delta G^\circ = -zFE^\circ_\text{celice} | kJ/mol | negativna: reakcija poteče sama
+z | število prenesenih elektronov | | –
+F | Faradayeva konstanta | | C/mol | 96 485 C/mol
+m | masa snovi | m(\mathrm{H_2SO_4}) = w \cdot m_\text{raztopine} | kg
+w | masni delež | | –
+m_\text{raztopine} | masa raztopine | | kg
+n | množina snovi | n = \dfrac{m}{M} | mol | v ns, np: glavno kvantno število
+M | molska masa | | g/mol
+:::

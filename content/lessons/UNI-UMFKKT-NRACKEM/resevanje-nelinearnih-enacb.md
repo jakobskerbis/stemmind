@@ -279,3 +279,22 @@ za neki $\xi_n$ med $x_n$ in $r$. Zato obstaja okolica ničle, v kateri metoda k
 ~ To bi bilo tabeliranje s korakom $0{,}001$. Bisekcija vsakič prepolovi interval, zato raste eksponentno $2^n$.
 + $10$
 > $2^n \ge \frac{1}{0{,}001} = 1000$. Ker je $2^9 = 512$ premalo in $2^{10} = 1024$ dovolj, je $n = 10$.
+
+:::simboli
+c | koncentracija zdravila v krvi | | mg/L | v zgledu $c(t) = 10\,t\,e^{-t/2}$; deluje pri $c \ge 2\,\mathrm{mg/L}$
+t | čas od zaužitja | | h
+e | Eulerjevo število | | | e ≈ 2,718
+f | funkcija, katere ničlo iščemo | | | v zgledu f(t) = c(t) − 2
+f' | odvod funkcije f
+f'' | drugi odvod funkcije f
+x_n | n-ti približek ničle
+x_{n+1} | naslednji približek (Newtonova metoda) | x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+t_n | n-ti približek časa | | h
+t_{n+1} | naslednji približek časa | t_{n+1} = t_n - \frac{f(t_n)}{f'(t_n)} | h
+r | ničla (točna rešitev enačbe) | | | napaka približka je razdalja med xₙ in r
+\xi_n | vmesna točka med xₙ in r
+a, b | krajišči intervala z ničlo | | | f(a) in f(b) imata različna predznaka
+m | sredina intervala (bisekcija) | m = \frac{a+b}{2}
+n | število korakov (zaporedna številka približka)
+\varepsilon | toleranca (dovoljena napaka) | | | ustavitveni pogoj
+:::

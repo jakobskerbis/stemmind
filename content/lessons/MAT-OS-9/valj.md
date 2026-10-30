@@ -164,3 +164,11 @@ Na koncu preveri, ali so enote pravilne in ali je rezultat smiseln.
 - $15\pi\,\text{cm}^3$
 + $45\pi\,\text{cm}^3$
 > Stranica, okoli katere vrtimo, je višina: $v = 5\,\text{cm}$. Druga stranica je polmer: $r = 3\,\text{cm}$. Torej $V = \pi \cdot 3^2 \cdot 5 = 45\pi\,\text{cm}^3$. Odgovor $75\pi$ dobiš, če zamenjaš vlogi stranic.
+
+:::simboli
+S_{pl} | ploščina plašča | S_{pl} = 2\pi r \cdot v | | razviti plašč je pravokotnik
+r | polmer osnovne ploskve | | |
+v | višina valja | | | razdalja med osnovnima ploskvama
+P | površina valja | P = 2\pi r^2 + 2\pi r v | |
+V | prostornina valja | V = \pi r^2 \cdot v | |
+:::

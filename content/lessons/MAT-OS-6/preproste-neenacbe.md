@@ -247,3 +247,7 @@ Tabela potrdi: rešitve so $\{1, 2, 3, 4\}$. Preizkus vedno naredi pri meji: pri
 - $210$
 ~ Odštel si $60$ od $270$. Ker se kilometri množijo z urami, mejo dobiš z deljenjem.
 > Neenačba je $60 \cdot x \ge 270$, meja $270 : 60 = 4{,}5$. Prvo naravno število nad mejo je $5$: $60 \cdot 5 = 300 \ge 270$.
+
+:::simboli
+x | neznanka | | | neenačbo običajno reši več števil
+:::

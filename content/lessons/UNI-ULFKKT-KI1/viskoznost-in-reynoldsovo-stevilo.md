@@ -288,3 +288,22 @@ To bo izhodišče za tlačne izgube v ceveh.
 - Turbulenten, ker je hitrost $1\,\mathrm{m/s}$ velika.
 ~ O vrsti toka ne odloča hitrost sama. Izračunaj Re.
 > $\mathrm{Re} = \dfrac{1{,}0 \cdot 0{,}10}{1{,}0 \cdot 10^{-4}} = 1000 < 2100$, tok je laminaren.
+
+:::simboli
+\tau | strižna napetost | \tau = \mu \frac{\mathrm{d}v}{\mathrm{d}y} | Pa
+\mu | dinamična viskoznost | | Pa s | voda pri 20 °C približno 1,0 mPa s
+\nu | kinematična viskoznost | \nu = \frac{\mu}{\rho} | m^2/s
+\rho | gostota tekočine | | kg/m^3
+v | povprečna hitrost toka v cevi | v = \frac{Q}{A} | m/s | v τ = μ dv/dy hitrost plasti tekočine
+y | prečna razdalja, pravokotno na smer toka | | m
+\mathrm{Re} | Reynoldsovo število | \mathrm{Re} = \frac{\rho\, v\, D}{\mu} | – | v cevi laminarno pod 2100, turbulentno nad 4000
+D | notranji premer cevi | | m
+r | oddaljenost od osi cevi | | m
+R | polmer cevi | | m
+v_\mathrm{max} | največja hitrost (v osi cevi) | | m/s | pri laminarnem toku v_max = 2 v̄
+\bar v | povprečna hitrost po preseku | \bar v = \frac{v_\mathrm{max}}{2} | m/s | velja za laminarni tok
+\Delta p | tlačni padec na dolžini cevi | \Delta p = \frac{32\, \mu\, L\, \bar v}{D^2} | Pa | Hagen-Poiseuillov zakon, laminarni tok
+L | dolžina cevi | | m
+Q | prostorninski pretok | Q = v\,A | m^3/s | okrogla cev: Q = v πD²/4
+A | ploščina preseka cevi | A = \frac{\pi D^2}{4} | m^2
+:::

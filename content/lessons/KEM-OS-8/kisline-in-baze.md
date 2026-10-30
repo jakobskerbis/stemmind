@@ -258,3 +258,7 @@ Indikatorji so organske snovi, katerih molekule imajo v kislem in bazičnem okol
 - Raztopina je kisla.
 + Raztopina ni bazična.
 > Fenolftalein se obarva roza samo v bazičnem. Brezbarven je v kislem in v nevtralnem, zato iz rezultata ne moremo reči, ali je raztopina kisla ali nevtralna.
+
+:::simboli
+\mathrm{pH} | pH vrednost (merilo kislosti raztopine) | | – | pod 7 kislo, 7 nevtralno, nad 7 bazično
+:::

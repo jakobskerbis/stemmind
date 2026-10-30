@@ -21,9 +21,9 @@ Potrebuješ Lewisove formule, elektronegativnost in osnovno predstavo o atomskih
 
 Kadar atom tvori drugačno število vezi, nosi **formalni naboj**
 
-$$FN = V - N - \tfrac{1}{2}B,$$
+$$\mathrm{FN} = V - N - \tfrac{1}{2}B,$$
 
-kjer je $V$ število valenčnih elektronov prostega atoma, $N$ število nevezanih elektronov in $B$ število elektronov v vezeh tega atoma. Kisik z eno vezjo in tremi nevezanimi pari ima $FN = 6 - 6 - 1 = -1$, dušik s štirimi vezmi (kot v amonijevem ionu) $FN = 5 - 0 - 4 = +1$. Vsota formalnih nabojev je enaka naboju delca.
+kjer je $V$ število valenčnih elektronov prostega atoma, $N$ število nevezanih elektronov in $B$ število elektronov v vezeh tega atoma. Kisik z eno vezjo in tremi nevezanimi pari ima $\mathrm{FN} = 6 - 6 - 1 = -1$, dušik s štirimi vezmi (kot v amonijevem ionu) $\mathrm{FN} = 5 - 0 - 4 = +1$. Vsota formalnih nabojev je enaka naboju delca.
 
 **2. Hibridizacija.** Ogljik v metanu tvori štiri enakovredne vezi pod koti $109{,}5^\circ$, čeprav ima na voljo eno orbitalo $2s$ in tri orbitale $2p$ različnih oblik. Model **hibridizacije** to pojasni: atomske orbitale istega atoma se kombinirajo v nove, enakovredne **hibridne orbitale**, usmerjene čim dlje druga od druge.
 
@@ -97,7 +97,7 @@ Aldehidi, ketoni, kisline, estri in amidi vsebujejo **karbonilno skupino** $\mat
 
 **7. Stopnja nenasičenosti.** Iz molekulske formule $\mathrm{C}_c\mathrm{H}_h\mathrm{N}_n\mathrm{O}_o\mathrm{X}_x$ izračunamo število obročev in vezi $\pi$:
 
-$$SN = \frac{2c + 2 + n - h - x}{2}.$$
+$$\mathrm{SN} = \frac{2c + 2 + n - h - x}{2}.$$
 
 Kisik na rezultat ne vpliva. Vsak obroč ali vez $\pi$ prispeva $1$, trojna vez $2$, benzenov obroč $4$ (obroč in tri vezi $\pi$).
 
@@ -121,7 +121,7 @@ Sterična številka $4 \to sp^3$ ($109{,}5^\circ$), $3 \to sp^2$ ($120^\circ$), 
 3. C3 je vezan na C2 in tri H: $sp^3$, koti približno $109{,}5^\circ$.
 4. Vezi: $\mathrm{C1{=}C2}$ da $1\sigma + 1\pi$, $\mathrm{C2{-}C3}$ da $1\sigma$, šest vezi $\mathrm{C{-}H}$ da $6\sigma$.
 5. Skupaj: $1 + 1 + 6 = 8$ vezi $\sigma$ in $1$ vez $\pi$.
-6. Preizkus s stopnjo nenasičenosti: $SN = \frac{2 \cdot 3 + 2 - 6}{2} = 1$, kar ustreza eni vezi $\pi$.
+6. Preizkus s stopnjo nenasičenosti: $\mathrm{SN} = \frac{2 \cdot 3 + 2 - 6}{2} = 1$, kar ustreza eni vezi $\pi$.
 7. Odgovor: C1 in C2 sta $sp^2$ (kota okoli $120^\circ$), C3 je $sp^3$ (okoli $109{,}5^\circ$); propen ima $8$ vezi $\sigma$ in $1$ vez $\pi$.
 
 ### Primer 2
@@ -132,13 +132,13 @@ Nariši resonančni strukturi etanoatnega (acetatnega) iona $\mathrm{CH_3COO^-}$
 **Iščemo:** resonančni strukturi, formalne naboje kisikov in razlago dolžin vezi
 
 :::formula
-$FN = V - N - \tfrac{1}{2}B$. Resonančne strukture se razlikujejo le v legi elektronov $\pi$ in nevezanih parov.
+$\mathrm{FN} = V - N - \tfrac{1}{2}B$. Resonančne strukture se razlikujejo le v legi elektronov $\pi$ in nevezanih parov.
 :::
 
 **Rešitev:**
 
-1. Struktura I: $\mathrm{CH_3{-}C({=}O){-}O^-}$. Dvojno vezani kisik ima dva nevezana para: $FN = 6 - 4 - \frac{1}{2} \cdot 4 = 0$. Enojno vezani kisik ima tri nevezane pare: $FN = 6 - 6 - \frac{1}{2} \cdot 2 = -1$.
-2. Karboksilni ogljik ima štiri vezi brez nevezanih parov: $FN = 4 - 0 - 4 = 0$. Vsota nabojev je $-1$, kar se ujema z nabojem iona.
+1. Struktura I: $\mathrm{CH_3{-}C({=}O){-}O^-}$. Dvojno vezani kisik ima dva nevezana para: $\mathrm{FN} = 6 - 4 - \frac{1}{2} \cdot 4 = 0$. Enojno vezani kisik ima tri nevezane pare: $\mathrm{FN} = 6 - 6 - \frac{1}{2} \cdot 2 = -1$.
+2. Karboksilni ogljik ima štiri vezi brez nevezanih parov: $\mathrm{FN} = 4 - 0 - 4 = 0$. Vsota nabojev je $-1$, kar se ujema z nabojem iona.
 3. Struktura II nastane, ko nevezani par negativnega kisika tvori vez $\pi$ s C, vez $\pi$ druge skupine $\mathrm{C{=}O}$ pa preide na drugi kisik kot nevezani par. Kisika zamenjata vlogi: $\mathrm{CH_3{-}C(O^-){=}O}$.
 4. Strukturi sta **enakovredni** (enako število vezi, polni okteti, en negativni naboj na kisiku), zato prispevata enako.
 5. Hibrid: vsaka vez $\mathrm{C{-}O}$ je »vez in pol« (red vezi $1{,}5$), na vsakem kisiku je naboj $-\frac{1}{2}$. Karboksilni ogljik je $sp^2$, skupina $\mathrm{COO^-}$ je ravninska.
@@ -153,7 +153,7 @@ Paracetamol ima zgradbo $\mathrm{HO{-}C_6H_4{-}NH{-}CO{-}CH_3}$ (skupini $\mathr
 **Iščemo:** funkcionalne skupine, hibridizacijo atomov C in N, število vezi $\pi$ in preizkus s stopnjo nenasičenosti
 
 :::formula
-$SN = \frac{2c + 2 + n - h - x}{2}$ (število obročev + vezi $\pi$). Sterična številka določa hibridizacijo; resonanca lahko spremeni hibridizacijo atoma z nevezanim parom.
+$\mathrm{SN} = \frac{2c + 2 + n - h - x}{2}$ (število obročev + vezi $\pi$). Sterična številka določa hibridizacijo; resonanca lahko spremeni hibridizacijo atoma z nevezanim parom.
 :::
 
 **Rešitev:**
@@ -162,8 +162,8 @@ $SN = \frac{2c + 2 + n - h - x}{2}$ (število obročev + vezi $\pi$). Sterična 
 2. Šest ogljikov obroča je $sp^2$ (vsak ima tri sosede), karbonilni ogljik je $sp^2$, metilni ogljik je $sp^3$. Skupaj $7$ ogljikov $sp^2$ in $1$ ogljik $sp^3$.
 3. Dušik ima tri sosede in en nevezani par, zato bi po sterični številki pričakovali $sp^3$. Ker pa je nevezani par v resonanci s karbonilno skupino ($\mathrm{{-}NH{-}C({=}O){-}} \leftrightarrow \mathrm{{-}NH^+{=}C({-}O^-){-}}$), je dušik ravninski in ga opišemo kot $sp^2$; njegov par je v orbitali $p$.
 4. Vezi $\pi$: tri v obroču (ena Kekuléjeva struktura) in ena v $\mathrm{C{=}O}$, skupaj $4$. Obroč je $1$.
-5. Stopnja nenasičenosti: $SN = \frac{2 \cdot 8 + 2 + 1 - 9}{2} = \frac{10}{2} = 5 = 4 + 1$. Ujema se.
-6. Odgovor: paracetamol ima fenolno skupino, aromatski obroč in amidno skupino; $7$ ogljikov je $sp^2$, metilni ogljik je $sp^3$, amidni dušik je zaradi resonance $sp^2$; molekula ima $4$ vezi $\pi$ in en obroč ($SN = 5$).
+5. Stopnja nenasičenosti: $\mathrm{SN} = \frac{2 \cdot 8 + 2 + 1 - 9}{2} = \frac{10}{2} = 5 = 4 + 1$. Ujema se.
+6. Odgovor: paracetamol ima fenolno skupino, aromatski obroč in amidno skupino; $7$ ogljikov je $sp^2$, metilni ogljik je $sp^3$, amidni dušik je zaradi resonance $sp^2$; molekula ima $4$ vezi $\pi$ in en obroč ($\mathrm{SN} = 5$).
 
 ## Pogoste napake
 
@@ -173,16 +173,16 @@ $SN = \frac{2c + 2 + n - h - x}{2}$ (število obročev + vezi $\pi$). Sterična 
 - **Resonanca kot ravnotežje.** Resonančne strukture niso molekule, ki bi se hitro pretvarjale druga v drugo. Puščica $\leftrightarrow$ ne pomeni ravnotežja (to je $\rightleftharpoons$). Obstaja ena sama struktura, hibrid.
 - **Premikanje atomov pri resonanci.** Če premaknemo vodik ali spremenimo povezanost, dobimo drug izomer (tavtomer), ne resonančne strukture.
 - **Zamenjava funkcionalnih skupin.** $\mathrm{R{-}CO{-}R'}$ je keton, $\mathrm{R{-}CHO}$ aldehid, $\mathrm{R{-}COO{-}R'}$ ester, $\mathrm{R{-}O{-}R'}$ eter. Fenol ni alkohol, ker je skupina $\mathrm{OH}$ vezana na aromatski ogljik in je bistveno bolj kisla.
-- **Stopnja nenasičenosti s kisikom.** Kisik v formuli ne spremeni $SN$; dušik ga poveča za $\frac{1}{2}$, halogen pa zmanjša kot vodik.
+- **Stopnja nenasičenosti s kisikom.** Kisik v formuli ne spremeni $\mathrm{SN}$; dušik ga poveča za $\frac{1}{2}$, halogen pa zmanjša kot vodik.
 
 ## Povzetek
 
-- Ogljik tvori štiri vezi; formalni naboj $FN = V - N - \frac{1}{2}B$.
+- Ogljik tvori štiri vezi; formalni naboj $\mathrm{FN} = V - N - \frac{1}{2}B$.
 - Sterična številka $4, 3, 2$ ustreza hibridizaciji $sp^3, sp^2, sp$ s koti $109{,}5^\circ, 120^\circ, 180^\circ$.
 - Enojna vez je $\sigma$, dvojna $\sigma + \pi$, trojna $\sigma + 2\pi$; večkratne vezi so krajše in močnejše, okoli dvojne vezi ni prostega vrtenja.
 - Resonančne strukture se razlikujejo le v legi elektronov $\pi$ in nevezanih parov; prava molekula je hibrid z delokaliziranimi elektroni in nižjo energijo (benzen, karboksilat, amid).
 - Funkcionalne skupine določajo razred in reaktivnost; karbonilne spojine ločimo po skupinah na karbonilnem ogljiku.
-- Stopnja nenasičenosti $SN = \frac{2c + 2 + n - h - x}{2}$ = obroči + vezi $\pi$.
+- Stopnja nenasičenosti $\mathrm{SN} = \frac{2c + 2 + n - h - x}{2}$ = obroči + vezi $\pi$.
 
 ## Drugače: Na sliki
 
@@ -209,7 +209,7 @@ $SN = \frac{2c + 2 + n - h - x}{2}$ (število obročev + vezi $\pi$). Sterična 
 Analiziraj akrilonitril $\mathrm{CH_2{=}CH{-}C{\equiv}N}$ (surovina za umetna vlakna).
 
 1. **Formula:** $\mathrm{C_3H_3N}$.
-2. **Stopnja nenasičenosti:** $SN = \frac{2 \cdot 3 + 2 + 1 - 3}{2} = \frac{6}{2} = 3$. Obroča ni, torej so $3$ vezi $\pi$.
+2. **Stopnja nenasičenosti:** $\mathrm{SN} = \frac{2 \cdot 3 + 2 + 1 - 3}{2} = \frac{6}{2} = 3$. Obroča ni, torej so $3$ vezi $\pi$.
 3. **Vezi po vrsti:** $\mathrm{C1{=}C2}$: $1\sigma + 1\pi$; $\mathrm{C2{-}C3}$: $1\sigma$; $\mathrm{C3{\equiv}N}$: $1\sigma + 2\pi$; trije $\mathrm{C{-}H}$: $3\sigma$.
 4. **Seštejemo:** $\sigma$: $1 + 1 + 1 + 3 = 6$; $\pi$: $1 + 2 = 3$ (ujema se s korakom 2).
 5. **Hibridizacija:** C1 in C2 imata po tri sosede: $sp^2$. C3 ima dva soseda: $sp$. N ima enega soseda in en nevezani par (sterična številka $2$): $sp$.
@@ -255,3 +255,19 @@ Za $\lambda = 3, 2, 1$ dobimo $\theta = 109{,}47^\circ, 120^\circ, 180^\circ$.
 + Vse vezi $\mathrm{C{-}C}$ so enako dolge, elektroni $\pi$ so delokalizirani po obroču.
 - Ogljikovi atomi v benzenu so hibridizirani $sp^3$.
 > Benzen je resonančni hibrid; vse vezi so dolge $139\,\mathrm{pm}$, ogljiki so $sp^2$, molekula je ravninska. Kekuléjevi strukturi nista dejanski molekuli.
+
+:::simboli
+\mathrm{FN} | formalni naboj | \mathrm{FN} = V - N - \tfrac{1}{2}B | – |
+V | število valenčnih elektronov prostega atoma | | – |
+N | število nevezanih elektronov atoma | | – |
+B | število elektronov v vezeh atoma | | – |
+\mathrm{SN} | stopnja nenasičenosti | \mathrm{SN} = \frac{2c + 2 + n - h - x}{2} | – | število obročev + vezi π
+c | število ogljikovih atomov | | – |
+n | število dušikovih atomov | | – |
+h | število vodikovih atomov | | – |
+x | število halogenih atomov | | – |
+\lambda | razmerje deleža p in s v hibridu sp^λ | | – | λ = 3, 2, 1 za sp³, sp², sp
+\theta | kot med hibridnima orbitalama | \cos\theta = -\frac{1}{\lambda} | ° | 109,5°, 120°, 180°
+s, p | atomski orbitali s in p | | |
+\sigma | vez σ (prekrivanje vzdolž osi) | | |
+:::

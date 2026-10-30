@@ -269,3 +269,16 @@ Radian je naravna enota: na krožnici s polmerom $r$ je dolžina loka pri sredi�
 - Na negativnem poltraku osi $x$.
 ~ To bi veljalo, če bi bil $1\,\text{rad}$ pravi kot. Pravi kot je $\frac{\pi}{2} \approx 1{,}57\,\text{rad}$.
 > $2\,\text{rad} = 2 \cdot \frac{180^\circ}{\pi} \approx 114{,}6^\circ$, kar je med $90^\circ$ in $180^\circ$.
+
+:::simboli
+\alpha | kot | | | v stopinjah ali radianih
+x | abscisa točke T na enotski krožnici | x = \cos\alpha | | na krožnici s polmerom r: x = r cos φ
+y | ordinata točke T na enotski krožnici | y = \sin\alpha | | na krožnici s polmerom r: y = r sin φ
+k | poljubno celo število | | |
+\alpha_{\text{rad}} | kot α v radianih | \alpha_{\text{rad}} = \alpha^\circ \cdot \frac{\pi}{180^\circ} | rad |
+\beta | kot, podan v radianih | \beta^\circ = \beta_{\text{rad}} \cdot \frac{180^\circ}{\pi} | | β° je isti kot v stopinjah
+r | polmer panoramskega kolesa | | m |
+\varphi | kot zasuka sedeža | | rad |
+h | višina sedeža | h = h_0 + y | m |
+h_0 | višina osi kolesa | | m |
+:::

@@ -243,3 +243,16 @@ Meniskus v merilnem valju je videti kot plitva skodelica. Oznaka mora ležati ta
 ~ Pesek odstraniš, topna nečistoča pa pri izparevanju do suhega ostane med kristali, kot v solinah.
 + Raztopiš v čim manj vroče vode, vroče filtriraš, filtrat počasi ohladiš in kristale odnučaš.
 > Vroča filtracija odstrani pesek, ohlajanje izloči modro galico, topna nečistoča pa ostane v matičnici.
+
+:::simboli
+\Delta m | negotovost tehtanja (zadnja decimalka tehtnice) | | g |
+m | stehtana masa | m = m_2 - m_1 | g | pri umerjanju pipete masa odpipetirane vode
+m_2 | masa posode z vodo | | g |
+m_1 | masa prazne posode | | g |
+V | prostornina | V = \dfrac{m}{\rho} | mL |
+\rho | gostota vode | | g/mL | 0,9982 g/mL pri 20 °C
+m_\mathrm{v} | masa vode za raztapljanje | | g | pri 80 °C se v 100 g vode raztopi 169 g KNO₃
+m_\mathrm{kristalov} | masa izločenih kristalov | | g |
+h | višina padavin | h = \dfrac{V}{A} | mm |
+A | ploščina odprtine dežemera | | cm^2 |
+:::

@@ -252,3 +252,9 @@ To je natanko pravilo za deljenje. Zahteva $c\ne 0$, saj drugače obratna vredno
 ~ To je porabljeno gorivo, $\frac{3}{4}\cdot\frac{4}{5}$. Vprašanje sprašuje, koliko ostane.
 + $\frac{1}{5}$
 > Porabljeno: $\frac{3}{4}\cdot\frac{4}{5}=\frac{3}{5}$. Ostane $\frac{4}{5}-\frac{3}{5}=\frac{1}{5}$ rezervoarja.
+
+:::simboli
+a, c | števca ulomkov | | | pri deljenju c ≠ 0
+b, d | imenovalca ulomkov | | | b ≠ 0, d ≠ 0
+x | količnik ulomkov a/b in c/d | x=\frac{a}{b}\cdot\frac{d}{c} | | število, za katero je x · c/d = a/b
+:::

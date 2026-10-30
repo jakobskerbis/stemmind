@@ -38,7 +38,7 @@ Atom z nizko ionizacijsko energijo (kovina) odda elektrone, atom z visoko elektr
 
 Atoma si delita elektronski par. **Lewisova struktura** prikaže vezne in nevezne (proste) elektronske pare. Postopek: (1) preštej valenčne elektrone (pri ionih prištej ali odštej naboj), (2) poveži atome z enojnimi vezmi, (3) dopolni oktete zunanjih atomov, (4) ostanek postavi na osrednji atom, (5) po potrebi tvori dvojne ali trojne vezi. **Formalni naboj** atoma je
 
-$$FN = (\text{valenčni } e^-) - (\text{nevezni } e^-) - \tfrac{1}{2}(\text{vezni } e^-);$$
+$$\mathrm{FN} = (\text{valenčni } e^-) - (\text{nevezni } e^-) - \tfrac{1}{2}(\text{vezni } e^-);$$
 
 najboljša struktura ima formalne naboje čim bližje nič. **Red vezi** (enojna, dvojna, trojna) je povezan z dolžino in energijo vezi: za ogljik je $\mathrm{C{-}C}$ dolga približno $154\,\mathrm{pm}$ ($347\,\mathrm{kJ/mol}$), $\mathrm{C{=}C}$ $134\,\mathrm{pm}$ ($614\,\mathrm{kJ/mol}$), $\mathrm{C{\equiv}C}$ $120\,\mathrm{pm}$ ($839\,\mathrm{kJ/mol}$).
 
@@ -301,3 +301,16 @@ Za $\mathrm{N_2}$ je red $3$, za $\mathrm{O_2}$ pa $2$, pri čemer ima $\mathrm{
 - Pretrgajo se ionske vezi med ioni $\mathrm{H^+}$ in $\mathrm{OH^-}$.
 ~ Voda je iz molekul s kovalentnimi vezmi, ne ionska snov; ionov je v čisti vodi zanemarljivo malo.
 > Pri vrenju se premagajo medmolekulske sile (pri vodi predvsem vodikove vezi); kovalentne vezi v molekulah ostanejo, zato je para še vedno $\mathrm{H_2O}$.
+
+:::simboli
+\mathrm{FN} | formalni naboj atoma | \mathrm{FN} = (\text{valenčni } e^-) - (\text{nevezni } e^-) - \tfrac{1}{2}(\text{vezni } e^-) | – | najboljša struktura ima naboje čim bližje nič
+e | elektron | | | v Paulingovi oceni je e osnova naravnega logaritma
+n_{\text{vezni}} | število elektronov v veznih orbitalah | | –
+n_{\text{protivezni}} | število elektronov v protiveznih orbitalah | | –
+\chi | elektronegativnost | | –
+\Delta\chi | razlika elektronegativnosti vezanih atomov | \Delta\chi = \chi_{\text{večja}} - \chi_{\text{manjša}} | – | pod 0,4 nepolarna, nad 1,7 ionska vez
+\chi_{\text{večja}} | večja elektronegativnost vezanih atomov | | –
+\chi_{\text{manjša}} | manjša elektronegativnost vezanih atomov | | –
+s | orbitala tipa s | | | v oznakah hibridizacije sp, sp², sp³
+p | orbitala tipa p | | | eksponent pove število vključenih orbital p
+:::

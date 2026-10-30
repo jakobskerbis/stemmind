@@ -1,0 +1,23 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Število pi
+  - $\pi = \frac{o}{d} \approx 3{,}14$
+  - enako za vse kroge
+- Polmer in premer
+  - $d = 2r$
+  - napaka: premer v $\pi r^2$
+- Obseg kroga
+  - $o = 2\pi r = \pi d$
+  - dolžinska enota, npr. $\text{m}$
+- Ploščina kroga
+  - $p = \pi r^2$
+  - izseki v pravokotnik $\pi r$ krat $r$
+  - kvadratna enota, npr. $\text{m}^2$
+- Obrnjena naloga
+  - iz obsega: $r = \frac{o}{2\pi}$
+  - iz ploščine: $r = \sqrt{\frac{p}{\pi}}$
+- Povečan polmer
+  - $2r$: obseg dvakrat, ploščina štirikrat
+  - $r + a$: obseg večji za $2\pi a$

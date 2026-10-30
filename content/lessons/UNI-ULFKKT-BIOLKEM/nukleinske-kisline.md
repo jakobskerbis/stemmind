@@ -298,3 +298,16 @@ Kako dolga je DNA? Vzemimo kromosom *E. coli* z $4{,}6 \cdot 10^6$ baznimi pari.
 - 5'-CUAAG-3'
 ~ Uracil je v RNA, ne v DNA; poleg tega veriga ni obrnjena.
 > Pod GATTC dobimo 3'-CTAAG-5'; ko jo obrnemo, je 5'-GAATC-3'.
+
+:::simboli
+G | gvanin | | | %G: delež gvanina med bazami
+C | citozin | | | %C: delež citozina; %C = %G
+A | adenin | | | %A: delež adenina; %A = %T
+T | timin | | | %T: delež timina
+n_{AT} | število baznih parov A–T | | – | vsak par ima 2 vodikovi vezi
+n_{GC} | število baznih parov G–C | | – | vsak par ima 3 vodikove vezi
+t | čas podvajanja DNA | t = \dfrac{N/2}{v} | s
+N | dolžina genoma | | bp | v baznih parih
+v | hitrost ene replikacijske vilice | | bp/s
+n | najmanjše število izvorov podvajanja | n = \dfrac{N}{2 \cdot v \cdot t} | – | vsak izvor ima dve vilici
+:::

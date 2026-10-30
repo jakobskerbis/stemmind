@@ -226,3 +226,20 @@ Prave pločevinke so pogosto višje, ker sta dno in pokrov debelejša in dražja
 - lokalni minimum
 - prevoj
 > Stacionarna točka z negativnim drugim odvodom je lokalni maksimum: graf je tam konkaven.
+
+:::simboli
+f | funkcija, zvezna na [a, b] in odvedljiva na (a, b) | | |
+f' | odvod funkcije f | | | f′ > 0: f narašča; f′ < 0: f pada
+f'' | drugi odvod funkcije f | | | f″ > 0: konveksna; f″ < 0: konkavna
+\xi | vmesna točka | | | leži med a in b (pri ostanku med a in x)
+a | levo krajišče intervala | | | pri Taylorjevem polinomu središče razvoja
+b | desno krajišče intervala | | |
+x | neodvisna spremenljivka | | |
+g | funkcija v imenovalcu (L'Hospitalovo pravilo) | | | g'(x) ≠ 0
+T_n | Taylorjev polinom stopnje n | T_n(x) = \sum_{k=0}^{n} \dfrac{f^{(k)}(a)}{k!} (x - a)^k | |
+n | stopnja Taylorjevega polinoma | | |
+e | Eulerjevo število | | | e ≈ 2,718
+R_n | ostanek Taylorjeve formule | R_n(x) = \frac{f^{(n+1)}(\xi)}{(n + 1)!}(x - a)^{n+1} | | f(x) = Tₙ(x) + Rₙ(x)
+x_0 | stacionarna točka (kandidat za ekstrem) | f'(x_0) = 0 | | f″(x₀) < 0: maksimum, f″(x₀) > 0: minimum
+k | zaporedna številka člena (red odvoda) | | |
+:::

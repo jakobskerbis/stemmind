@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Skupno delo
+  - hitrost dela $\dfrac{1}{t}$
+  - $\dfrac{1}{t} = \dfrac{1}{t_1} + \dfrac{1}{t_2}$
+  - napaka: povprečje časov, $6$ in $12$ ni $9$
+- Povprečna hitrost
+  - celotna pot deljeno s celotnim časom
+  - enaki poti: $\dfrac{2v_1v_2}{v_1 + v_2}$
+  - $60$ in $40\,\mathrm{km/h}$ da $48$, ne $50$
+- Srečevanje
+  - nasproti: hitrost približevanja $v_1 + v_2$
+  - čas $t = \dfrac{d}{v_1 + v_2}$
+- Dohitevanje
+  - razmik se manjša za $v_1 - v_2$
+  - upoštevaj zamik štarta
+- Mešanice
+  - seštevaj kilograme snovi, ne odstotkov
+  - delež je snov deljeno s celoto
+  - dodajanje poveča tudi imenovalec
+- Preizkus smisla
+  - skupni čas krajši od najkrajšega
+  - mešanica med obema odstotkoma

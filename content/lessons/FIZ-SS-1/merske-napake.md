@@ -230,3 +230,22 @@ Absolutna napaka je v obeh primerih enaka, relativna pa zelo različna. Zato je 
 - $0{,}02\,\%$
 ~ $\dfrac{5}{250} = 0{,}02$ je delež. V odstotkih je to $2\,\%$.
 > $\delta = \dfrac{5\,\text{ml}}{250\,\text{ml}} = 0{,}02 = 2\,\%$.
+
+:::simboli
+\delta | relativna napaka | \delta = \frac{\Delta x}{\bar{x}} | – | pogosto v odstotkih
+x | izmerjena količina
+\bar{x} | povprečje meritev | \bar{x} = \frac{\sum x_i}{n}
+\Delta x | absolutna napaka | | | največje odstopanje od povprečja
+T | izmerjena telesna temperatura | | ^\circ C
+\Delta T | absolutna napaka temperature | | ^\circ C | pri eni meritvi najmanjši razdelek
+h | telesna višina | | cm | rezultat zapišemo kot h = (h̄ ± Δh)
+\bar{h} | povprečje meritev višine | \bar{h} = \dfrac{h_1 + h_2 + \dots + h_5}{5} | cm
+h_1, h_2, h_5 | posamezne meritve višine | | cm
+\Delta h | absolutna napaka višine | | cm | največje odstopanje od $\bar{h}$
+V | odmerjena prostornina | V = \dfrac{\Delta V}{\delta} | ml
+\Delta V | absolutna napaka prostornine | | ml | najmanjši razdelek brizge
+f | srčni utrip na minuto | f = 4N | /min
+\Delta f | absolutna napaka utripa | \Delta f = 4\,\Delta N | /min
+N | število udarcev v 15 s | | –
+\Delta N | absolutna napaka štetja | | – | en udarec
+:::

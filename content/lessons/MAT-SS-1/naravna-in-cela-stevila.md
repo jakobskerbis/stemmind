@@ -206,3 +206,14 @@ Najmanjši skupni večkratnik dobimo iz zveze $v = \dfrac{a \cdot b}{D}$. Delimo
 - $66$
 - $2\,160$
 > Iz zveze $D(a, b) \cdot v(a, b) = a \cdot b$ sledi $v(a, b) = \dfrac{360}{6} = 60$. Rezultat $2\,160$ dobiš, če produkt pomnožiš z $D$ namesto da bi ga z njim delil. Primer takšnih števil sta $a = 12$ in $b = 30$.
+
+:::simboli
+a | deljenec (celo število) | a = q \cdot b + r | |
+b | delitelj (naravno število) | | |
+q | količnik | | |
+r | ostanek | | | 0 ≤ r < b
+D | največji skupni delitelj | | | D(a, b) · v(a, b) = a · b
+v | najmanjši skupni večkratnik | | |
+n | iskano število | n = q \cdot d + 3 | | pri deljenju s 4, 5 in 6 da ostanek 3
+d | delitelj (4, 5 ali 6) | | |
+:::

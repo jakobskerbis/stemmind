@@ -187,3 +187,20 @@ Izkoristek je razmerje dveh količin z isto enoto, zato nima enote. Ker je koris
 - $25\,\%$
 - $200\,\mathrm{J}$
 > $\eta = \dfrac{A_\text{koristno}}{A_\text{dovedeno}} = \dfrac{600}{800} = 0{,}75 = 75\,\%$. Izkoristek $133\,\%$ nastane, če razmerje obrneš, kar je nemogoče, saj mora biti izkoristek manjši od $100\,\%$.
+
+:::simboli
+P | moč | P = \dfrac{A}{t} | W | pri stalni hitrosti P = F · v
+A | opravljeno delo | A = P \cdot t | J
+t | čas | | s
+\eta | izkoristek | \eta = \dfrac{A_\text{koristno}}{A_\text{dovedeno}} | – | vedno manjši od 1 (100 %)
+A_{\text{koristno}} | koristno delo | | J
+A_{\text{dovedeno}} | dovedeno delo | | J
+P_{\text{koristna}} | koristna moč | P_\text{koristna} = \dfrac{A}{t} | W
+P_{\text{dovedena}} | dovedena moč | | W
+F | sila v smeri gibanja | | N | pri dvigovanju bremena F = m · g (teža)
+s | pot | | m
+v | hitrost | v = \dfrac{s}{t} | m/s
+m | masa | | kg
+g | težni pospešek | | N/kg | približno 10 N/kg
+h | višina dviga | | m
+:::

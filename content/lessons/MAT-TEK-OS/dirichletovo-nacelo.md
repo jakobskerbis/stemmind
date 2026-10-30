@@ -217,3 +217,8 @@ V vseh primerih se vprašaš isto: kaj so predali, koliko jih je in koliko je pr
 - Pet trikotnikov, za vsako točko enega.
 ~ Predalov je toliko kot točk, zato načelo ne pove ničesar. Predalov mora biti manj kot predmetov.
 > Daljice med razpolovišči stranic razdelijo trikotnik na $4$ trikotnike s stranico $1\,\text{cm}$. Pet točk v $4$ predalih: dve sta v istem malem trikotniku, zato sta oddaljeni največ $1\,\text{cm}$.
+
+:::simboli
+n | število predalov | | |
+k | največje število predmetov v predalu | | | pri več kot k · n predmetih ima nek predal vsaj k + 1
+:::

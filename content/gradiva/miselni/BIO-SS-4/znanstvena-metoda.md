@@ -1,0 +1,30 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Opazovanje
+  - ničesar ne spreminjamo, le beležimo
+  - pokaže povezanost, ne vzroka
+  - napaka: anketa »dokaže« vzrok
+- Poskus
+  - neodvisna spremenljivka: kar spreminjamo
+  - odvisna spremenljivka: kar merimo
+  - kontrolna skupina, naključna razporeditev
+- Vrste podatkov
+  - kvalitativni: opis, kategorija
+  - kvantitativni: izmerjeno ali prešteto, povprečje ima smisel
+  - »A54« je ime, ne količina
+- Hipoteza in teorija
+  - hipoteza: preverljiva domneva
+  - poskus jo podpre ali ovrže
+  - teorija: razlaga z veliko dokazi
+- Spreminjanje razlag
+  - novi dokazi, ki jih drugi potrdijo
+  - primer: *Helicobacter pylori* in razjeda
+- Recenzija
+  - neodvisni strokovnjaki pred objavo
+  - ne zagotovi resnice; utrdi jo ponovljivost
+- Verodostojnost vira
+  - avtor, recenzija, metode in podatki
+  - korist avtorja, izvirnik ali povzetek
+  - napaka: veliko ogledov = res

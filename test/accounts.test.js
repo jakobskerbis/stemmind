@@ -300,7 +300,8 @@ test("weekly report, export and account deletion", async () => {
 
     const preview = await a("/api/account/weekly-report/preview");
     assert.match(preview.body, /Zala/);
-    assert.match(preview.body, /<b>40<\/b>/);
+    assert.match(preview.body, /Naslednji koraki/);
+    assert.match(preview.body, /1 dan vaje/);
     const sent = await a("/api/account/weekly-report/send", { method: "POST" });
     assert.equal(sent.status, 200);
     const mail = calls.filter((c) => c.host === "api.resend.com").at(-1);
@@ -342,8 +343,52 @@ test("weekly scheduler sends once per week", async () => {
   ).run();
   const s = store.createStudent("Ivo");
   store.db.prepare("UPDATE students SET parent_id = 1 WHERE id = ?").run(s.id);
+  // Dva tedna brez vaje: poročila ne pošljemo.
+  assert.equal(await api.sendWeeklyAll(), 0);
+  store.db.prepare("INSERT INTO xp_events (student_id, amount, reason) VALUES (?, 10, 'test')").run(s.id);
   assert.equal(await api.sendWeeklyAll(), 1);
   assert.equal(await api.sendWeeklyAll(), 0);
+});
+
+test("weekly report: what was learned, weak spots, next steps, Slovenian plurals", async () => {
+  const { buildWeeklyReport, plural, headline, isQuiet } = await import("../server/accounts/weekly.js");
+  const store = openDb(":memory:");
+  const s = store.createStudent("Zala", { educational_track: "OSNOVNA_SOLA", curriculum_level: "6. razred", subject: "MAT" });
+  const db = store.db;
+  const topic = "MAT-OS-6/zapis-in-urejanje-velikih-stevil";
+  const task = db.prepare("INSERT INTO tasks (student_id, topic_id, level, payload, attempts, solved, first_try_correct) VALUES (?, ?, 1, '{}', 1, 1, ?)");
+  for (const ok of [0, 0, 1, 0]) task.run(s.id, topic, ok);
+  db.prepare("INSERT INTO topic_state (student_id, topic_id, status, mastered_at) VALUES (?, ?, 'mastered', datetime('now'))").run(s.id, "MAT-OS-6/ulomki");
+  const r = buildWeeklyReport(db, { name: "" }, [store.getStudent(s.id)], { appUrl: "https://x/", unsubscribeUrl: "https://x/u" });
+  const w = r.children[0];
+  assert.equal(w.solved, 4);
+  assert.equal(w.accuracy, 25);
+  assert.match(w.weak[0].name, /velikih števil/);
+  assert.match(r.html, /Snov tega tedna/);
+  assert.match(r.html, /Matematika/);
+  assert.match(r.html, /Še vaditi/);
+  assert.match(r.html, /Za pogovor doma/);
+  assert.match(r.subject, /^Zala ta teden: 1 dan vaje/);
+  assert.equal(r.quiet, false);
+  // Profil »Zame«: brez nasvetov za starše.
+  const me = buildWeeklyReport(db, { name: "" }, [store.getStudent(s.id)], { appUrl: "https://x/", unsubscribeUrl: "https://x/u", selfIds: [s.id] });
+  assert.doesNotMatch(me.html, /Za pogovor doma/);
+  assert.match(me.html, /Živjo, Zala/);
+  assert.deepEqual([1, 2, 3, 5, 101, 102, 111].map((n) => plural(n, ["naloga", "nalogi", "naloge", "nalog"])), [
+    "1 naloga", "2 nalogi", "3 naloge", "5 nalog", "101 naloga", "102 nalogi", "111 nalog",
+  ]);
+  assert.equal(headline({ active_days: 0 }), "Ta teden ni bilo vaje.");
+  assert.equal(isQuiet({ active_days: 0, prev_active_days: 1 }), false);
+  // Graf po dnevih: vsota stolpcev = rešene naloge + vprašanja, višine v celicah (Outlook), največji dan = 64 px.
+  assert.equal(w.strip.length, 7);
+  assert.equal(w.strip.reduce((n, d) => n + d.tasks, 0), w.solved);
+  const { barsHtml } = await import("../server/accounts/weekly.js");
+  const bars = barsHtml([{ label: "po", active: true, tasks: 6, asked: 2 }, { label: "to", active: true, tasks: 0, asked: 0 }, { label: "sr", active: false, tasks: 0, asked: 0 }]);
+  assert.match(bars, /height="16" bgcolor="#b4c0f8"/);
+  assert.match(bars, /height="48" bgcolor="#4f6bed"/);
+  assert.match(bars, />8</);
+  assert.match(bars, /✓/); // dejaven dan brez nalog
+  assert.doesNotMatch(bars, /<div style="height/);
 });
 
 test("helpers: webhook signature, form encoding, access, week key", () => {
@@ -442,7 +487,7 @@ test("anti-sharing: a profile is open on one device at a time", async () => {
   });
 });
 
-test("profile password: each profile has its own, locks other devices and siblings, owner can reset", async () => {
+test("profile password: each profile has its own, once per device, locks other devices, owner can reset", async () => {
   await withServer(async ({ client, calls }) => {
     const phone = client();
     await registerVerified(phone, calls, "mia@primer.si");
@@ -463,23 +508,20 @@ test("profile password: each profile has its own, locks other devices and siblin
     assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "bor-1", set: true } })).status, 200);
     assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "drugo", set: true } })).status, 401);
 
-    // Odklep Bora zaklene Ano na tej napravi (brat ne odpre sestrinega profila).
-    const locked = await phone(`/api/students/${ana.id}/xp`);
-    assert.equal(locked.status, 423);
-    assert.equal(locked.body.locked, true);
-    assert.equal(locked.body.name, "Ana");
-    list = (await phone("/api/students")).body;
-    assert.deepEqual(Object.keys(list.find((s) => s.id === ana.id)).sort(), ["id", "locked", "name"]);
-    assert.equal((await phone(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "narobe" } })).status, 401);
-    assert.equal((await phone(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "ana-1" } })).status, 200);
+    // Geslo samo enkrat na napravo (j, 2026-10-30): odklep Bora ne zaklene Ane, menjava profila brez gesla.
     assert.equal((await phone(`/api/students/${ana.id}/xp`)).status, 200);
     const conv = (await phone(`/api/students/${ana.id}/conversations`, { method: "POST" })).body;
-    assert.equal((await phone(`/api/students/${bor.id}/xp`)).status, 423);
+    assert.equal((await phone(`/api/students/${bor.id}/xp`)).status, 200);
 
     // Druga naprava: prijava v račun ne odpre profila; tudi pogovora ne.
     const tablet = client();
     assert.equal((await tablet("/api/auth/login", { method: "POST", body: { email: "mia@primer.si", password: "geslo1234" } })).status, 200);
-    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 423);
+    const locked = await tablet(`/api/students/${ana.id}/xp`);
+    assert.equal(locked.status, 423);
+    assert.equal(locked.body.locked, true);
+    assert.equal(locked.body.name, "Ana");
+    list = (await tablet("/api/students")).body;
+    assert.deepEqual(Object.keys(list.find((s) => s.id === ana.id)).sort(), ["id", "locked", "name"]);
     assert.equal((await tablet(`/api/conversations/${conv.id}`)).status, 423);
     assert.equal((await tablet(`/api/students/${ana.id}/claim`, { method: "POST" })).status, 423);
     // Express ujema poti brez ozira na velike črke in dekodira parametre: tudi tako ostane profil zaklenjen.
@@ -513,11 +555,14 @@ test("profile password: each profile has its own, locks other devices and siblin
     assert.equal((await other(`/api/Students/${ana.id}`)).status, 404);
     assert.equal((await other("/api/account/profile-password", { method: "POST", body: { student_id: ana.id, auth: "geslo1234", password: "x1234" } })).status, 404);
 
-    // Odjava zaklene profile na tej napravi; »odjavi druge naprave« zaklene profile drugod.
-    await tablet("/api/auth/logout", { method: "POST" });
-    assert.equal((await tablet("/api/auth/login", { method: "POST", body: { email: "mia@primer.si", password: "geslo1234" } })).status, 200);
-    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 423);
+    // Geslo samo enkrat: po odjavi in ponovni prijavi z geslom računa profil ne zahteva gesla znova
+    // (kdor pozna geslo računa, lahko geslo profila tako ali tako ponastavi). Brez seje pa nič ni dostopno.
     assert.equal((await tablet(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "tretja-ana" } })).status, 200);
+    await tablet("/api/auth/logout", { method: "POST" });
+    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 401);
+    assert.equal((await tablet("/api/auth/login", { method: "POST", body: { email: "mia@primer.si", password: "geslo1234" } })).status, 200);
+    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 200);
+    // »Odjavi vse druge naprave« pa profile drugod zaklene.
     await phone("/api/account/logout-others", { method: "POST" });
     assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "bor-1" } })).status, 200);
     await phone("/api/account/logout-others", { method: "POST" });
@@ -846,6 +891,8 @@ test("preverjanje starosti: premlad otrok dobi povezavo za starše, dijak ima sa
     assert.equal(mine.status, 201);
     assert.equal(mine.body.birth_year, Number(ymd(18).slice(0, 4)));
     assert.match(store.db.prepare("SELECT text FROM consents WHERE student_id = ?").get(mine.body.id).text, /^Profil je moj/);
+    // Tedensko poročilo za »Zame« nagovori dijaka samega.
+    assert.match((await adult("/api/account/weekly-report/preview")).body, /Živjo, Tina/);
     // Star račun brez datuma rojstva: »Zame« samo, če je letnica dovolj stara.
     store.db.prepare("UPDATE parents SET birth_date = NULL WHERE email = 'maturant@primer.si'").run();
     const tooYoung = await adult("/api/students", { method: "POST", body: { name: "Mlajši", birth_year: YEAR - 15, self: true, consent: true } });
@@ -1129,15 +1176,17 @@ test("account lock: owner actions need the account password on this device", asy
     assert.equal((await b("/api/auth/login", { method: "POST", body: { email: "lastnik@primer.si", password: "geslo1234" } })).status, 200);
     assert.equal((await b("/api/account")).status, 200);
     assert.equal((await a("/api/account")).status, 403);
-  });
+  }, { accountLock: true });
 });
 
-test("account lock: off with accountLock: false", async () => {
+test("account lock: off by default (password only once, j 2026-10-30)", async () => {
   await withServer(async ({ client, calls }) => {
     const a = client();
     await registerVerified(a, calls, "brez@primer.si");
     await a("/api/account/lock", { method: "POST" });
     assert.equal((await a("/api/account")).status, 200);
     assert.equal((await a("/api/account/status")).body.account_lock, false);
-  }, { accountLock: false });
+    // Izvoz podatkov še vedno zahteva geslo računa.
+    assert.equal((await a("/api/account/export", { method: "POST", body: { password: "narobe12" } })).status, 401);
+  });
 });

@@ -254,3 +254,103 @@ test("games: ratings, weekly vote and the anonymous trends summary", async () =>
     server.close();
   }
 });
+
+test("games: own childhood game titles map to genres or wishes", async () => {
+  const { matchTitle, cleanTitles, GENRE_IDS } = await import("../public/games/childhood.js");
+  const { WISH_IDS } = await import("../public/games/wishes.js");
+  assert.deepEqual(matchTitle("Tetris"), { genre: "blocks" });
+  assert.deepEqual(matchTitle("Minecraft"), { wish: "city" }); // ne »mines«
+  assert.deepEqual(matchTitle("2048"), { wish: "merge" });
+  assert.deepEqual(matchTitle("majnkraft"), { wish: "city" }); // slovenski zapis
+  assert.deepEqual(matchTitle("Križci krožci"), { wish: "connect" });
+  assert.deepEqual(matchTitle("nekaj čisto novega"), {});
+  // pogoste besede in daljša imena ne smejo zadeti napačne zvrsti
+  for (const [x, g] of [["Mario Kart", "racing"], ["Sonic Dash", "run"], ["Puzzle Bobble", "bubbles"], ["Jezni ptiči", "sling"], ["Angry Bird", "sling"], ["Vojna zvezd", "space"], ["Krtek", "moles"], ["tetirs", "blocks"], ["Talking Angela", "pet"], ["Worms", "sling"], ["Chrome dino", "run"], ["Royal Match", "match"]]) assert.deepEqual(matchTitle(x), { genre: g }, x);
+  for (const x of ["Skače", "Pikaču", "Igra lovcev", "Navodila", "Pouk", "Premier league", "Swordigo", "Cookie Clicker", "Ninjago", "Darth Vader", "Papagaj", "Svetovna vojna", "Dinozavri"]) assert.deepEqual(matchTitle(x), {}, x);
+  for (const x of ["Pac-Man", "Candy Crush", "Pou", "Uno", "Flappy Bird", "Plants vs Zombies", "Wordle"]) {
+    const m = matchTitle(x);
+    assert.ok(GENRE_IDS.includes(m.genre) || WISH_IDS.includes(m.wish), x);
+  }
+  assert.deepEqual(cleanTitles(["  Tetris ", "tetris", "<b>x</b>", "a".repeat(60), "1", "2", "3"]), ["Tetris", "b x /b", "a".repeat(40), "1", "2"]);
+  const store = openDb(":memory:");
+  const s = store.createStudent("Ana", {});
+  assert.deepEqual(s.settings.game_titles, []);
+  assert.deepEqual(store.updateStudent(s.id, { settings: { game_titles: ["Fortnite", "fortnite"] } }).settings.game_titles, ["Fortnite"]);
+});
+
+test("games: »Kdo je slepar?« – one impostor with a wrong answer, the crew is right, voting finds it", async () => {
+  const { impostor, deal } = await import("../public/games/deduction.js");
+  const { matchTitle } = await import("../public/games/childhood.js");
+  const sl = (await import("../public/i18n/sl.js")).default;
+  assert.ok(ENGINES.includes(impostor));
+  for (const k of ["games.e.impostor", "games.e.impostor.how", "games.e.impostor.was", impostor.prompt]) assert.ok(sl[k], k);
+  for (const x of ["Among Us", "amongus", "Mafija", "Town of Salem"]) assert.deepEqual(matchTitle(x), { genre: "impostor" }, x);
+  for (const x of ["Jezus", "Suspenz"]) assert.deepEqual(matchTitle(x), {}, x);
+  const cids = CONCEPTS.map((c) => c.id).filter((_, i) => i % 25 === 0);
+  for (const cid of cids) for (const tier of [1, 3]) {
+    const q = makeQuestion(cid, tier), n = tier >= 2 ? 4 : 3;
+    const tasks = deal(q, () => makeQuestion(cid, tier), n);
+    assert.equal(tasks.length, n, cid);
+    const bad = tasks.filter((m) => m.imp);
+    assert.equal(bad.length, 1, cid);
+    assert.equal(bad[0].q, q.q);
+    assert.notEqual(bad[0].claim, q.a, cid);
+    assert.ok(q.w.includes(bad[0].claim), cid);
+    assert.ok(tasks.filter((m) => m.q === q.q).length === 1 || new Set(tasks.map((m) => m.q)).size === 1, cid); // sleparjeva naloga samo enkrat
+    assert.equal(bad[0].truth, q.a);
+    // naloga z izbiro (»Katero število je največje?«) pokaže svoje možnosti; sleparjeve vsebujejo napačni in pravilni odgovor
+    if (bad[0].pick) assert.ok(bad[0].pick.includes(q.a) && bad[0].pick.includes(bad[0].claim), cid);
+  }
+  // glas: pravilno samo za sleparja, en glas na rundo, tipke le 1–n
+  const cid = cids[0];
+  for (let round = 0; round < 12; round++) {
+    const got = [];
+    const G = { W: 400, H: 600, tier: 1, waiting: false, reduced: true, t: (k, v) => `${k} ${JSON.stringify(v)}`, ask: () => makeQuestion(cid, 1), answer: (ok, x, y, o) => got.push([ok, o]) };
+    const e = impostor.create(G);
+    e.reset();
+    G.q = makeQuestion(cid, 1);
+    e.question(G.q);
+    const pick = round % 3;
+    assert.ok(e.key(String(pick + 1), true));
+    assert.equal(e.key(String(pick + 1), true), true);
+    assert.equal(got.length, 1);
+    assert.equal(e.key("4", true), false);
+    const [ok, o] = got[0], crew = e.peek();
+    assert.equal(ok, crew[pick].imp === true);
+    // napačen glas: razlaga pove, kateri robotek je bil slepar, in pusti čas za branje
+    if (!ok) assert.ok(o.delay >= 3 && o.note.includes(`"n":${crew.findIndex((m) => m.imp) + 1}`), o.note);
+  }
+});
+
+test("games: grid pages of 60 across area sections (j: »največ 50 iger naenkrat zaradi laga«)", async () => {
+  const { pageSlice, pageNums, PER_PAGE } = await import("../public/games/pages.js");
+  const g = (id, n) => ({ id, games: Array.from({ length: n }, (_, i) => `${id}${i}`) });
+  const flat = (r) => r.parts.flatMap((p) => p.games);
+  // 50 + 70: druga stran začne z 11. igro drugega področja
+  let r = pageSlice([g("a", 50), g("b", 70)], 1, 60);
+  assert.deepEqual([r.page, r.pages, r.total], [1, 2, 120]);
+  assert.deepEqual(r.parts.map((p) => [p.id, p.games.length, p.all]), [["b", 60, 70]]);
+  assert.equal(flat(r)[0], "b10");
+  // meja točno na koncu področja: brez praznih razdelkov
+  r = pageSlice([g("a", 60), g("b", 60)], 0, 60);
+  assert.deepEqual(r.parts.map((p) => p.id), ["a"]);
+  r = pageSlice([g("a", 60), g("b", 60)], 1, 60);
+  assert.deepEqual(r.parts.map((p) => p.id), ["b"]);
+  // stran, ki je po ožji izbiri ni več → zadnja; prazna izbira → ena prazna stran
+  r = pageSlice([g("a", 70)], 9, 60);
+  assert.deepEqual([r.page, flat(r).length], [1, 10]);
+  r = pageSlice([], 3);
+  assert.deepEqual([r.page, r.pages, r.parts.length], [0, 1, 0]);
+  // vse igre natanko enkrat, nobena stran nima več kot PER_PAGE
+  const groups = [g("a", 7), g("b", 130), g("c", 1), g("d", 61)];
+  const all = [];
+  for (let p = 0; p < pageSlice(groups, 0).pages; p++) {
+    const s = flat(pageSlice(groups, p));
+    assert.ok(s.length <= PER_PAGE && s.length > 0);
+    all.push(...s);
+  }
+  assert.deepEqual(all, groups.flatMap((x) => x.games));
+  assert.deepEqual(pageNums(5, 111), [0, 3, 4, 5, 6, 7, 110]);
+  assert.deepEqual(pageNums(0, 111, 1), [0, 1, 110]);
+  assert.deepEqual(pageNums(0, 1), [0]);
+});

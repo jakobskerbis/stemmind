@@ -256,3 +256,18 @@ Za sekundarno zgradbo nariši med zvezdo in ovali vijugast kambij, ki se razšir
 - Korenine so se spremenile v založne.
 ~ Metamorfoza ne nastane čez noč, založne korenine pa vodo prevajajo.
 > Laski rastejo le tik za vršički in so krhki. Dokler ne zrastejo novi, sadika sprejme premalo vode.
+
+:::simboli
+A | površina plašča valja | A = \pi \cdot d \cdot l | mm^2
+d | premer korenine | | mm | pri korenčku: premer jedra
+l | dolžina odseka korenine | | mm
+k | povečanje površine zaradi koreninskih laskov | k = \dfrac{A_\mathrm{K} + n \cdot A_\mathrm{L}}{A_\mathrm{K}} | –
+A_\mathrm{K} | površina korenine brez laskov | | mm^2
+A_\mathrm{L} | površina enega koreninskega laska | | mm^2
+n | število koreninskih laskov | | –
+w | povprečna širina obroča | w = \dfrac{r - r_0}{N} | cm
+r | polmer pese | r = \dfrac{D}{2} | cm
+r_0 | polmer osrednjega polja | | cm
+N | število obročev | | –
+D | premer korena (pese, korenčka) | | cm
+:::

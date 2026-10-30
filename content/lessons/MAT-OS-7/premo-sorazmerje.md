@@ -234,3 +234,9 @@ Obe poti dasta $12\,\text{€}$. Preizkus smiselnosti: $8$ je več kot $5$, zato
 ~ Za $160\,\text{km}$ več si prištel eno uro. V $1$ uri vlak prevozi $80\,\text{km}$, zato $160\,\text{km}$ traja $2$ uri.
 + $5\,\text{h}$
 > V $1$ uri vlak prevozi $240 : 3 = 80\,\text{km}$. Za $400\,\text{km}$ potrebuje $400 : 80 = 5$ ur.
+
+:::simboli
+x | prva količina, na primer razdalja na zemljevidu | |
+y | druga količina, na primer razdalja v naravi | y = k \cdot x |
+k | koeficient sorazmernosti | k = \dfrac{y}{x} | | koliko je y, ko je x = 1
+:::

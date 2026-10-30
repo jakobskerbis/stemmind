@@ -263,3 +263,9 @@ V ulomku $\dfrac{a}{b}$ je imenovalec $b$ naravno število, števec $a$ pa narav
 - $3\dfrac{1}{4}$
 - $1\dfrac{3}{4}$
 > Delimo: $11 : 4 = 2$, ostanek $3$, zato je $\dfrac{11}{4} = 2\dfrac{3}{4}$. Preverimo: $2 \cdot 4 + 3 = 11$.
+
+:::simboli
+a | števec | | | koliko delov vzamemo
+b | imenovalec | | | na koliko enakih delov razdelimo celoto; b ≠ 0
+k | znana vrednost dela celote | | | a/b celote je k; celota je b · (k : a)
+:::

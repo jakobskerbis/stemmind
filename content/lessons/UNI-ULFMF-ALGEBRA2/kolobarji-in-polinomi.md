@@ -237,3 +237,15 @@ Rezultat se ujema s Primerom 2. Isti postopek deluje v $\mathbb{Z}_p$, le vsak v
 - $5$
 ~ $5 \cdot 5 = 25 \equiv 4 \pmod 7$, ne $1$.
 > $5 \cdot 3 = 15 = 2 \cdot 7 + 1$, torej $5 \cdot 3 \equiv 1 \pmod 7$.
+
+:::simboli
+f | deljenec (polinom, ki ga delimo) | f = q\,g + r
+g | delitelj (polinom, s katerim delimo) | | | g ≠ 0
+q | kvocient | | | enolično določen
+r | ostanek pri deljenju | r = f - q\,g | | deg r < deg g
+q_1, q_2 | kvocienta v korakih Evklidovega algoritma
+r_1, r_2 | ostanka v korakih Evklidovega algoritma | | | zadnji neničelni ostanek je gcd
+a, b | elementa kolobarja | | | pri x − a število, v katerem računamo f(a)
+n | modul (število ostankov v ℤₙ)
+x | spremenljivka polinoma
+:::

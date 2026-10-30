@@ -283,3 +283,40 @@ Kolikšen je vztrajnostni moment palice z maso $1{,}2\,\mathrm{kg}$ in dolžino 
 ~ To je vrtilna količina $J\omega$ (v $\mathrm{kg\,m^2/s}$), ne navor. Navor je sprememba vrtilne količine na enoto časa.
 + $1{,}6 \cdot 10^{-3}\,\mathrm{N\,m}$
 > $\alpha = \omega/t = 400\,\mathrm{s^{-1}}/0{,}50\,\mathrm{s} = 800\,\mathrm{s^{-2}}$, zato $M = J\alpha = 2{,}0 \cdot 10^{-6}\,\mathrm{kg\,m^2} \cdot 800\,\mathrm{s^{-2}} = 1{,}6 \cdot 10^{-3}\,\mathrm{N\,m}$.
+
+:::simboli
+\vec{M} | vektor navora | \vec{M} = \vec{r} \times \vec{F} | N\,m
+M | navor | M = rF\sin\varphi = r_\perp F | N\,m
+\vec{r} | krajevni vektor prijemališča sile | | m | merjen od osi
+r | razdalja prijemališča sile od osi | | m
+r_\perp | ročica | r_\perp = r\sin\varphi | m
+\vec{F} | vektor sile | | N
+F | sila | | N
+\varphi | kot med krajevnim vektorjem in silo | | rad | tudi kot zasuka pri vrtenju
+J | vztrajnostni moment | J = \sum_i m_ir_i^2 | kg\,m^2 | odvisen od razporeditve mase in osi
+J_{ms} | vztrajnostni moment glede na os skozi masno središče | | kg\,m^2
+J_1, J_2 | vztrajnostna momenta pred spremembo in po njej | | kg\,m^2
+J_p | vztrajnostni moment ploščadi | J_p = \tfrac{1}{2}m_pR^2 | kg\,m^2
+J_t | vztrajnostni moment telefona | | kg\,m^2
+i | zaporedna številka delca telesa | | –
+m_i | masa i-tega delca | | kg
+r_i | razdalja i-tega delca od osi | | m
+m | masa telesa (uteži) | | kg
+m_p | masa ploščadi | | kg
+M_k | masa koluta | | kg
+\alpha | kotni pospešek | \alpha = \frac{\mathrm{d}\omega}{\mathrm{d}t} | s^{-2}
+\omega | kotna hitrost | \omega = \frac{\mathrm{d}\varphi}{\mathrm{d}t} | s^{-1} | enakomerno vrtenje: ω = 2πν
+\omega_1, \omega_2 | kotna hitrost pred spremembo in po njej | | s^{-1} | brez zunanjih navorov J₁ω₁ = J₂ω₂
+\nu | frekvenca vrtenja (obrati na sekundo) | | s^{-1}
+W_k | kinetična energija | W_k = \tfrac{1}{2}mv_{ms}^2 + \tfrac{1}{2}J_{ms}\omega^2 | J
+v_{ms} | hitrost masnega središča | | m/s | kotaljenje brez zdrsa: v_ms = ωR
+v | hitrost | | m/s
+R | polmer koluta ali valja | | m
+\vec{\Gamma} | vektor vrtilne količine | \vec{\Gamma} = \vec{r} \times m\vec{v} | kg\,m^2/s
+\Gamma | vrtilna količina | \Gamma = J\omega | kg\,m^2/s | ohranja se brez zunanjih navorov
+t | čas | | s
+F_v | sila vrvice | | N
+a | pospešek uteži | | m/s^2 | vrvica ne zdrsne: a = αR
+g | težni pospešek | | m/s^2 | 9,81 m/s²
+h | višina padca uteži | | m
+:::

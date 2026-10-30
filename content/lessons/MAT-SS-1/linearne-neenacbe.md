@@ -169,3 +169,7 @@ Samo števila, manjša od $-3$, ustrezajo, kar se ujema z rešitvijo. Če bi zna
 - $(-\infty, 5]$
 + $(-\infty, 5)$
 > Odštejemo $7$: $-x > -5$. Delimo z $-1$ in obrnemo znak: $x < 5$. Znak je strog, zato je $5$ izključen. Odgovor $(5, \infty)$ je posledica pozabljene obrnitve znaka.
+
+:::simboli
+x | neznanka (število škatel) | | |
+:::

@@ -227,3 +227,9 @@ Zakaj pri kislini velja »najprej voda«: pri mešanju koncentrirane žveplove k
 ~ Tako dobiš, če deliš z $9$. Vseh delov je $1 + 9 = 10$.
 + $20\,\mathrm{mL}$
 > Vseh delov je $10$, en del je $\dfrac{200\,\mathrm{mL}}{10} = 20\,\mathrm{mL}$. Kisline je $1$ del, torej $20\,\mathrm{mL}$, vode $180\,\mathrm{mL}$.
+
+:::simboli
+V_{\text{največ}} | največja prostornina tekočine v epruveti | V_\text{največ} = \dfrac{V_\text{epruvete}}{3} | mL | pri segrevanju napolni epruveto največ do tretjine
+V_{\text{epruvete}} | prostornina epruvete | | mL
+V | prostornina razredčene kisline | | mL | vsota vseh delov kisline in vode
+:::

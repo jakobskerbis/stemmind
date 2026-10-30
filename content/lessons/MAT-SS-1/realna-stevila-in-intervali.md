@@ -241,3 +241,11 @@ Po zgornjem pravilu to pomeni $|a + b| \le |a| + |b|$. Enakost velja natanko tak
 - $(-\infty, -1) \cup (3, \infty)$
 - $(-2, 2)$
 > Razdalja števila $x$ od $1$ mora biti manjša od $2$, torej $1 - 2 < x < 1 + 2$, kar da $(-1, 3)$. Zaprti interval bi dopuščal tudi krajišči, ki imata razdaljo natanko $2$. Interval $(-\infty, -1) \cup (3, \infty)$ bi pripadal pogoju $|x - 1| > 2$.
+
+:::simboli
+x | realno število | | |
+A, B | intervala (množici realnih števil) | | | drugje točki na številski premici
+a, b | abscisi točk A in B | | | razdalja med točkama je absolutna vrednost b − a
+c | število, od katerega merimo razdaljo | | |
+r | razdalja od števila c | | | r > 0
+:::

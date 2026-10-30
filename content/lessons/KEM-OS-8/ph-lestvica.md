@@ -195,3 +195,8 @@ Opomba: v 8. razredu logaritma formalno ne računamo; pomembna je ideja, da en k
 - Raztopina je nevtralna.
 + Raztopina je bazična.
 > Modra in vijolična barva na skali univerzalnega indikatorja pomenita bazično območje, torej $\mathrm{pH} > 7$.
+
+:::simboli
+\mathrm{pH} | pH vrednost (merilo kislosti raztopine) | \mathrm{pH} = -\log\, c(\mathrm{H_3O^+}) | – | pod 7 kislo, 7 nevtralno, nad 7 bazično
+c | množinska koncentracija oksonijevih ionov | | mol/L | c(H₃O⁺); v čisti vodi 10⁻⁷ mol/L
+:::

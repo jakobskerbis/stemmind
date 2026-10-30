@@ -1,0 +1,26 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Zgradba nevrona
+  - dendriti sprejemajo, akson odvaja
+  - aksonski končiči oddajo signal naprej
+- Mirovni potencial
+  - okoli $-70\,\mathrm{mV}$, notranjost negativna
+  - črpalka $\mathrm{Na^+}$/$\mathrm{K^+}$ porablja ATP
+- Akcijski potencial
+  - prag okoli $-55\,\mathrm{mV}$
+  - $\mathrm{Na^+}$ noter, nato $\mathrm{K^+}$ ven
+  - vse ali nič, moč je frekvenca
+- Mielin
+  - Schwannove celice, Ranvierjevi zažemki
+  - skokovito prevajanje, do $120\,\mathrm{m/s}$
+  - $t = s/v$
+- Kemična sinapsa
+  - $\mathrm{Ca^{2+}}$ sproži izlitje prenašalca
+  - receptorji na naslednji celici, ena smer
+  - zamuda okoli $0{,}5\,\mathrm{ms}$
+- Psihoaktivne snovi
+  - kofein zasede receptorje za adenozin
+  - kokain zavre privzem dopamina
+  - toleranca: manj receptorjev

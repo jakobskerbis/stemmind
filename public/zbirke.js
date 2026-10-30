@@ -17,6 +17,7 @@ export const COLLECTIONS = [
   { id: "pot", subject: null, slot: null, icon: "trophy", name: { sl: "Pot znanja", en: "Path of knowledge" } },
   { id: "lige", subject: null, slot: "badge", icon: "medal", name: { sl: "Zmage na lestvicah", en: "Leaderboard wins" } },
   { id: "igre", subject: null, slot: null, icon: "gamepad-2", name: { sl: "Liki iz iger", en: "Game characters" } },
+  { id: "smesni", subject: null, slot: null, icon: "party-popper", name: { sl: "Smešni liki", en: "Silly characters" } },
 ];
 
 // Zmaga na lestvici šteje, ko je na njej vsaj toliko učencev z XP (server/leagues.js).
@@ -141,6 +142,29 @@ export const KNOWLEDGE = [
     ["pot_comet", "fx", "cosmic", 200000, "Komet", "Comet"],
     ["pot_starcrown", "hat", "eternal", 300000, "Zvezdna krona", "Crown of stars"],
   ].map(([id, slot, rarity, xp, sl, en]) => ({ id, collection: "pot", slot, rarity, name: { sl, en }, need: { xp }, ...(ABOUT[id] ? { about: ABOUT[id] } : {}) })),
+  // Smešni liki (j, 30. 10. 2026: »italian brainrot« predmeti in liki za XP, samo primerni). Naše risbe in
+  // imena po znanih nesmiselnih likih (žival + predmet), brez njihovih pesmi; izpuščeni so tisti s kletvicami
+  // ali nasiljem. Edini liki (kind), ki se odklenejo z XP; nikoli kozmični ali večni.
+  ...[
+    ["meme_pica", "badge", "common", 300, "Pi-ca", "Pi-zza"],
+    ["meme_limone", "acc", "common", 400, "Limonini Očalini", "Lemonini Glassini"],
+    ["meme_gelato", "hat", "common", 600, "Sladoledina Kapelina", "Gelatina Hattina"],
+    ["meme_spageti", "hat", "common", 800, "Špagetini Klobučini", "Spaghettini Hattini"],
+    ["meme_tung", "kind", "rare", 1000, "Tung Tung Tung Hlodek", "Tung Tung Tung Loggy"],
+    ["meme_skampi", "kind", "rare", 1200, "Škampini Mačkini", "Shrimpini Kittini"],
+    ["meme_tungfx", "fx", "rare", 1500, "Tung! Tung! Tung!", "Tung! Tung! Tung!"],
+    ["meme_testenine", "fx", "rare", 1800, "Leteče testenine", "Flying pasta"],
+    ["meme_kavicina", "kind", "epic", 2500, "Balerina Kavičina", "Ballerina Coffeeina"],
+    ["meme_kokos", "kind", "epic", 3200, "Kapibarini Kokosini", "Capybarini Coconutini"],
+    ["meme_bananini", "kind", "epic", 4000, "Opičini Bananini", "Monkeyini Bananini"],
+    ["meme_frigo", "kind", "epic", 5500, "Hladilnikini Kamelini", "Fridgini Camelini"],
+    ["meme_saturnita", "bg", "epic", 7000, "Saturnita Kravita", "Saturnita Cowita"],
+    ["meme_luna", "bg", "epic", 9000, "Luna Mocarelina", "Luna Mozzarellina"],
+    ["meme_slonini", "kind", "legendary", 12000, "Kaktusini Slonini", "Cactusini Elephantini"],
+    ["meme_cajnik", "kind", "legendary", 16000, "Čaj Čaj Čajnikini", "Tea Tea Teapotini"],
+    ["meme_smrekini", "kind", "legendary", 20000, "Brr Brr Smrekini", "Brr Brr Spruceini"],
+    ["meme_lubenica", "kind", "legendary", 26000, "Lubenicini Krokodilini", "Watermelonini Crocodilini"],
+  ].map(([id, slot, rarity, xp, sl, en]) => ({ id, collection: "smesni", slot, rarity, name: { sl, en }, need: { xp } })),
   // Zmage na lestvicah (server/leagues.js): 1. mesto v tedenski skupini po ligi, stopničke, mesečni prvak.
   ...[
     ["Bronasti", "Bronze", "rare"],
@@ -214,6 +238,8 @@ const medal = (ribbon, face, inner) =>
   `<g transform="translate(64 82)"><path d="M-7-14l4 9h6l4-9z" fill="${ribbon}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/><path d="M-2-14l2 5 2-5" stroke="#fff" stroke-width="1.2" fill="none" opacity=".7"/><circle r="9.5" fill="${face}" stroke="${INK}" stroke-width="1.8"/><circle r="7" fill="none" stroke="#fff" stroke-width=".9" opacity=".7"/>${inner}</g>`;
 const ONE = `<text y="3.6" font-size="10" font-weight="800" text-anchor="middle" font-family="system-ui,sans-serif" fill="${INK}">1</text>`;
 const BADGE = {
+  meme_pica: () =>
+    `<g transform="translate(64 83)"><path d="M-11-8L11-8 0 13z" fill="#fde68a" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/><path d="M-12-8q12-6 24 0" stroke="#b45309" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="-5" cy="-3" r="2" fill="#ef4444"/><circle cx="1" cy="6" r="1.6" fill="#ef4444"/><text x="3" y="0" font-size="9" font-weight="800" text-anchor="middle" font-family="Georgia,serif" fill="${INK}">π</text></g>`,
   ...Object.fromEntries(LEAGUE_COLORS.map((c, i) => [`win_week_${i}`, () => medal(c, c, ONE)])),
   win_week_podium: () =>
     `<g transform="translate(64 83)"><rect x="-11" y="-2" width="7" height="9" fill="#cbd5e1" stroke="${INK}" stroke-width="1.4"/><rect x="-3.5" y="-7" width="7" height="14" fill="#facc15" stroke="${INK}" stroke-width="1.4"/><rect x="4" y="0" width="7" height="7" fill="#d97706" stroke="${INK}" stroke-width="1.4"/><path d="M0-14l1.6 3.3 3.6.4-2.7 2.4.8 3.5-3.3-1.9-3.3 1.9.8-3.5-2.7-2.4 3.6-.4z" fill="#fde047" stroke="${INK}" stroke-width=".9" stroke-linejoin="round"/></g>`,
@@ -234,6 +260,16 @@ const star = (x, y, r, c) => `<path transform="translate(${x} ${y}) scale(${r / 
 
 // Sledi: back = za telesom, front = pred njim.
 const FX = {
+  meme_testenine: {
+    front: () =>
+      [[14, 24, -20], [86, 30, 25], [12, 76, 12]].map(([x, y, r]) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M0 0l-7-5v10zM0 0l7-5v10z" fill="#fde68a" stroke="#b45309" stroke-width="1.2" stroke-linejoin="round"/><circle r="1.8" fill="#f59e0b"/></g>`).join("") +
+      `<g transform="translate(86 74) rotate(-35)"><path d="M-7-2.5h12l2 5H-5z" fill="#fde68a" stroke="#b45309" stroke-width="1.2" stroke-linejoin="round"/><path d="M-3-2.5l2 5M1-2.5l2 5" stroke="#eab308" stroke-width="1"/></g><path d="M20 8q3-4 6 0t6 0 6 0" stroke="#eab308" stroke-width="2.4" fill="none" stroke-linecap="round"/><g stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" opacity=".7"><path d="M4 20h4M92 38h4M4 84h4"/></g>`,
+  },
+  meme_tungfx: {
+    front: () =>
+      [[16, 22, -14, 8], [82, 16, 12, 7], [86, 74, -8, 6]].map(([x, y, r, s]) => `<text transform="translate(${x} ${y}) rotate(${r})" font-size="${s}" font-weight="900" text-anchor="middle" font-family="system-ui,sans-serif" fill="#f59e0b" stroke="${INK}" stroke-width=".7" paint-order="stroke">TUNG!</text>`).join("") +
+      `<g fill="none" stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round" opacity=".8"><path d="M6 40q-3 6 0 12M10 37q-4 9 0 18M94 40q3 6 0 12M90 37q4 9 0 18"/></g>`,
+  },
   pot_comet: {
     back: (v, u) =>
       `<defs><linearGradient id="cmt${u}" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset=".35" stop-color="#7dd3fc" stop-opacity=".9"/><stop offset="1" stop-color="#e0f2fe" stop-opacity="0"/></linearGradient></defs><path d="M82 28L24 -6h26L90 20z" fill="url(#cmt${u})"/><path d="M80 30L34 18l2-6 46 12z" fill="url(#cmt${u})" opacity=".7"/>`,
@@ -307,6 +343,10 @@ const FX = {
 const INVADER = ["00100100", "00011000", "00111100", "01011010", "11111111", "10100101"];
 const pixels = (rows, x0, y0, s, c) => rows.flatMap((r, y) => [...r].map((b, x) => (b === "1" ? `<rect x="${x0 + x * s}" y="${y0 + y * s}" width="${s}" height="${s}"/>` : ""))).join("").replace(/^/, `<g fill="${c}">`) + "</g>";
 const BG = {
+  meme_luna: () =>
+    `<rect width="100" height="100" fill="#0f172a"/><g fill="#e2e8f0">${[[10, 10], [30, 22], [46, 6], [8, 46], [92, 52], [60, 14], [24, 60]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.2"/>`).join("")}</g><g transform="translate(79 22)"><circle r="14" fill="#fde68a" stroke="#d97706" stroke-width="3.2"/><circle r="10.5" fill="none" stroke="#fbbf24" stroke-width="1" opacity=".7"/><g fill="#ef4444" stroke="#b91c1c" stroke-width=".8"><circle cx="-5" cy="-4" r="3"/><circle cx="5" cy="-1" r="2.6"/><circle cx="-2" cy="6" r="2.4"/></g><path d="M4 6q4-3 6 0-3 3-6 0z" fill="#16a34a"/></g><path d="M0 88q25-7 50 0t50 0V100H0z" fill="#475569"/><g fill="#334155"><ellipse cx="20" cy="94" rx="5" ry="1.6"/><ellipse cx="78" cy="95" rx="6" ry="1.8"/></g>`,
+  meme_saturnita: () =>
+    `<rect width="100" height="100" fill="#1e3a8a"/><path d="M0 74Q50 40 100 62" stroke="#fff" stroke-opacity=".13" stroke-width="18" fill="none"/><g fill="#fef9c3">${[[60, 8], [84, 22], [92, 46], [8, 58], [14, 90], [88, 90], [70, 34]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.3"/>`).join("")}</g><g transform="translate(21 22) rotate(-16) scale(.9)"><path d="M-21 0a21 5.5 0 0 1 42 0" fill="none" stroke="#fcd34d" stroke-width="3"/><circle r="12" fill="#fff" stroke="${INK}" stroke-width="1.6"/><path d="M-8-6q4-4 7 0-2 5-7 2z" fill="${INK}"/><ellipse cx="5" cy="3" rx="4" ry="3" fill="${INK}"/><ellipse cx="-4" cy="7" rx="2.4" ry="1.8" fill="${INK}"/><path d="M-6-10q-5-4-2-9M6-10q5-4 2-9" stroke="#fef3c7" stroke-width="2.4" fill="none" stroke-linecap="round"/><ellipse cx="0" cy="8.5" rx="4" ry="2.2" fill="#fbcfe8" stroke="${INK}" stroke-width="1"/><path d="M-21 0a21 5.5 0 0 0 42 0" fill="none" stroke="#f59e0b" stroke-width="3"/></g>`,
   pot_blackhole: (v, u) =>
     `<defs><linearGradient id="bhd${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c3aed"/><stop offset=".5" stop-color="#fde047"/><stop offset="1" stop-color="#f97316"/></linearGradient><radialGradient id="bhg${u}"><stop offset=".5" stop-color="#fb923c" stop-opacity=".55"/><stop offset="1" stop-color="#fb923c" stop-opacity="0"/></radialGradient></defs><rect width="100" height="100" fill="#05030f"/><g fill="#e2e8f0">${[[8, 10], [36, 6], [58, 16], [6, 44], [94, 50], [10, 80], [90, 88], [40, 30]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1"/>`).join("")}</g><circle cx="76" cy="24" r="20" fill="url(#bhg${u})"/><ellipse cx="76" cy="24" rx="24" ry="6" fill="none" stroke="url(#bhd${u})" stroke-width="3.5" transform="rotate(-16 76 24)"/><circle cx="76" cy="24" r="9" fill="#000" stroke="#fdba74" stroke-width="1.4"/><path d="M53 31q23-6 46-14" stroke="url(#bhd${u})" stroke-width="3.5" fill="none" opacity=".95" transform="rotate(-2 76 24)"/>`,
   bg_arcade: () =>
@@ -376,6 +416,8 @@ const OUTFIT = {
 };
 
 const ACC = {
+  meme_limone: () =>
+    `<path d="M31 50H20M69 50h11M49 52h2" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/>${[40, 60].map((x) => `<g transform="translate(${x} 52)"><circle r="9" fill="#fef9c3" fill-opacity=".6" stroke="#facc15" stroke-width="2.6"/><circle r="6.6" fill="none" stroke="#fff" stroke-width="1"/><g stroke="#fde047" stroke-width="1.1">${[0, 60, 120].map((a) => `<path d="M0-6.2V6.2" transform="rotate(${a})"/>`).join("")}</g></g>`).join("")}`,
   acc_joystick: () =>
     `<g transform="translate(74 82) rotate(-14)"><rect x="-14" y="-7.5" width="28" height="15" rx="7.5" fill="#334155" stroke="${INK}" stroke-width="2"/><path d="M-8.5-3v6M-11.5 0h6" stroke="#f8fafc" stroke-width="2.2" stroke-linecap="round"/><circle cx="5" cy="-2" r="2" fill="#ef4444"/><circle cx="9.5" cy="1.5" r="2" fill="#22c55e"/></g>`,
   pot_pregl: () => `<circle cx="60" cy="52" r="10" fill="#e0f2fe" fill-opacity=".35" stroke="#a16207" stroke-width="3"/><path d="M67 59l12 12" stroke="#78350f" stroke-width="4.5" stroke-linecap="round"/><path d="M55 47q3-3 7-2" stroke="#fff" stroke-width="1.6" fill="none"/>`,
@@ -384,6 +426,10 @@ const ACC = {
 };
 
 const HAT = {
+  meme_spageti: () =>
+    `<path d="M58 20L68 5" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"/><path d="M65 4l2.4-2M68 5.5l2.6-1.8M69.5 7.5l3-1" stroke="#94a3b8" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="50" cy="26" rx="24" ry="5" fill="#f8fafc" stroke="${INK}" stroke-width="2"/><path d="M32 25q2-13 18-14t18 14z" fill="#fde68a" stroke="${INK}" stroke-width="1.8" stroke-linejoin="round"/><path d="M36 21q4-4 8 0t8 0 8 0M39 16q4-4 8 0t8 0" stroke="#eab308" stroke-width="1.3" fill="none"/><path d="M41 14q9-7 18 0-3 4-9 3-6 1-9-3z" fill="#ef4444"/><circle cx="50" cy="9.5" r="4.5" fill="#92400e" stroke="${INK}" stroke-width="1.5"/><circle cx="48.6" cy="8.2" r="1.2" fill="#fff" opacity=".5"/>`,
+  meme_gelato: () =>
+    `<path d="M37 22L50 2 63 22z" fill="#f59e0b" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M43 22l9-14M57 22l-9-14M41 17h18M46 10h8" stroke="#b45309" stroke-width="1.1"/><path d="M33 26q0-11 17-11t17 11q-3 3-6 0-2 5-6 1-3 4-6 0-3 4-6 0-3 3-6-1-2 3-4 0z" fill="#f9a8d4" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><g stroke-width="1.6" stroke-linecap="round"><path d="M41 20l2-1" stroke="#22c55e"/><path d="M50 18l2 1" stroke="#3b82f6"/><path d="M58 21l2-1" stroke="#facc15"/><path d="M45 23l1 1.5" stroke="#fff"/></g>`,
   pot_starcrown: () =>
     `<ellipse cx="50" cy="13" rx="34" ry="13" fill="#fde047" opacity=".28"/><ellipse cx="50" cy="17" rx="27" ry="7" fill="none" stroke="#fef08a" stroke-width="9" opacity=".55"/><ellipse cx="50" cy="17" rx="27" ry="7" fill="none" stroke="#f59e0b" stroke-width="3.2"/>${[[23, 17, 7, "#7dd3fc"], [35, 10, 8.5, "#facc15"], [50, 7, 11, "#fde047"], [65, 10, 8.5, "#facc15"], [77, 17, 7, "#f9a8d4"]].map(([x, y, r, c]) => star(x, y, r, c)).join("")}<path d="M50 1l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#fff"/>`,
   hat_pixel: () => `<path d="M30 34V16h5v6h5V12h6v10h8V12h6v10h5v-6h5v18z" fill="#facc15" stroke="${INK}" stroke-width="2" stroke-linejoin="miter"/><g fill="#ef4444"><rect x="36" y="26" width="4" height="4"/><rect x="60" y="26" width="4" height="4"/></g><rect x="48" y="25" width="4" height="5" fill="#3b82f6"/>`,
@@ -392,9 +438,66 @@ const HAT = {
 };
 
 // Liki (predal »kind«): back = za telesom (ušesa, rogovi, krila), front = na telesu (gobček, trebuh, brki).
-// Barva telesa (url(#g…)) ostane učenčeva izbira, lik doda obliko.
+// Barva telesa (url(#g…)) ostane učenčeva izbira, lik doda obliko (izjema: Hlodek, Hladilnikini, Lubenicini).
 const F = (u) => `url(#g${u})`;
+// Obris telesa (uporablja ga tudi public/avatar.js). Liki, ki prekrijejo barvo telesa, obris narišejo znova.
+export const BODY_PATH = "M50 24c19 0 31 13 31 34v24c0 8-6 12-14 12H33c-8 0-14-4-14-12V58c0-21 12-34 31-34z";
+const OUTLINE = `<path d="${BODY_PATH}" fill="none" stroke="${INK}" stroke-width="3"/>`;
 const KIND = {
+  meme_skampi: {
+    back: (u) =>
+      `<path d="M44 26Q36 6 20 4M56 26Q64 6 80 4" stroke="#f97316" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M27 40L28 18 44 30z" fill="${F(u)}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M73 40L72 18 56 30z" fill="${F(u)}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M78 70q9 0 11 7l7-4-1 10 1 10-7-4q-2 7-11 7z" fill="#fb923c" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M89 77v12" stroke="#fed7aa" stroke-width="1.4"/>`,
+    front: (u) =>
+      `<g clip-path="url(#c${u})" fill="none" stroke="#fb923c" stroke-width="3.2" opacity=".75"><path d="M16 76q34 8 68 0M16 86q34 8 68 0"/></g><path d="M47 60h6l-3 3z" fill="#fb7185" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/><g stroke="${INK}" stroke-width="1.3" stroke-linecap="round"><path d="M22 59l12 2M22 66l12-2M78 59l-12 2M78 66l-12-2"/></g>`,
+  },
+  meme_kokos: {
+    back: (u) => `<circle cx="26" cy="36" r="5.5" fill="${F(u)}" stroke="${INK}" stroke-width="2.2"/><circle cx="74" cy="36" r="5.5" fill="${F(u)}" stroke="${INK}" stroke-width="2.2"/>`,
+    front: () =>
+      `<rect x="37" y="55" width="26" height="16" rx="8" fill="#7c4a1e" opacity=".22"/><ellipse cx="45" cy="59.5" rx="1.6" ry="1.1" fill="${INK}"/><ellipse cx="55" cy="59.5" rx="1.6" ry="1.1" fill="${INK}"/><path d="M58 18l8-14h6" stroke="#f472b6" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 31q0-17 20-17t20 17z" fill="#7c4a1e" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M31 30.5h38" stroke="#fef3c7" stroke-width="3" stroke-linecap="round"/><g stroke="#a16207" stroke-width="1" stroke-linecap="round"><path d="M38 22l2-2M46 18l2-2M56 20l2-2M62 25l2-2M42 27l2-2"/></g><g transform="translate(38 16) rotate(-20)"><path d="M0 0v-9" stroke="${INK}" stroke-width="1.2"/><path d="M-8-8q8-8 16 0z" fill="#22d3ee" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/></g>`,
+  },
+  meme_frigo: {
+    back: () => `<path d="M24 44Q22 8 38 8Q48 8 50 26Q52 6 64 6Q80 8 76 44z" fill="#d6a86b" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 66Q10 58 11 38" fill="none" stroke="${INK}" stroke-width="10" stroke-linecap="round"/><path d="M24 66Q10 58 11 38" fill="none" stroke="#d6a86b" stroke-width="6" stroke-linecap="round"/><ellipse cx="8" cy="33" rx="7.5" ry="5" fill="#d6a86b" stroke="${INK}" stroke-width="2"/><path d="M11 28l2-4 2 4" fill="#d6a86b" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/><circle cx="9" cy="31.5" r="1.2" fill="${INK}"/><path d="M2 35.5h2" stroke="${INK}" stroke-width="1.2" stroke-linecap="round"/><g stroke="#b45309" stroke-width="4" stroke-linecap="round"><path d="M30 92v6M42 92v6M58 92v6M70 92v6"/></g>`,
+    front: (u) =>
+      `<g clip-path="url(#c${u})"><rect width="100" height="100" fill="#f1f5f9"/><rect y="70" width="100" height="2.5" fill="#94a3b8"/><path d="M26 36q4-6 10-7" stroke="#cbd5e1" stroke-width="3" fill="none" stroke-linecap="round"/></g>${OUTLINE}<rect x="72" y="75" width="3.5" height="13" rx="1.75" fill="#e2e8f0" stroke="${INK}" stroke-width="1.4"/><circle cx="31" cy="80" r="3" fill="#ef4444" stroke="${INK}" stroke-width="1"/><rect x="38" y="81" width="8" height="7" rx="1.2" fill="#facc15" stroke="${INK}" stroke-width="1"/><text x="42" y="87" font-size="6" font-weight="800" text-anchor="middle" font-family="Georgia,serif" fill="${INK}">π</text>`,
+  },
+  meme_cajnik: {
+    back: (u) =>
+      `<path d="M22 68Q8 64 6 46l6-2q2 10 12 13z" fill="${F(u)}" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"/><path d="M79 52q15 0 15 14t-15 14" fill="none" stroke="${INK}" stroke-width="7.5"/><path d="M79 52q15 0 15 14t-15 14" fill="none" stroke="${F(u)}" stroke-width="3.5"/><path d="M8 40q-3-4 0-8t0-8M15 38q-3-4 0-8" stroke="#cbd5e1" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+    front: (u) =>
+      `<g clip-path="url(#c${u})"><path d="M14 82h72" stroke="#fff" stroke-width="3" opacity=".55"/><g fill="#fff" opacity=".6">${[26, 38, 50, 62, 74].map((x) => `<circle cx="${x}" cy="88" r="1.8"/>`).join("")}</g></g><ellipse cx="50" cy="27" rx="16" ry="4.2" fill="${F(u)}" stroke="${INK}" stroke-width="2"/><circle cx="50" cy="21.5" r="3.6" fill="${F(u)}" stroke="${INK}" stroke-width="2"/>`,
+  },
+  meme_lubenica: {
+    back: () =>
+      `<path d="M78 80q16 0 20-12 2 10-4 16 4 2 4 6-10 4-20-2z" fill="#16a34a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M32 32l2-8 6 4 3-8 7 6 7-6 3 8 6-4 2 8z" fill="#16a34a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`,
+    front: (u) =>
+      `<g clip-path="url(#c${u})"><rect width="100" height="100" fill="#f87171"/><path d="${BODY_PATH}" fill="none" stroke="#bbf7d0" stroke-width="16"/><path d="${BODY_PATH}" fill="none" stroke="#16a34a" stroke-width="9"/></g>${OUTLINE}${[[38, 72], [50, 78], [62, 72], [44, 86], [57, 87], [36, 40], [64, 40]].map(([x, y]) => `<path transform="translate(${x} ${y})" d="M0-2.4q1.8 1.8 0 4-1.8-2.2 0-4z" fill="${INK}"/>`).join("")}<g fill="#16a34a" stroke="${INK}" stroke-width="1.8"><ellipse cx="34" cy="94" rx="9" ry="4"/><ellipse cx="66" cy="94" rx="9" ry="4"/></g><path d="M28 96v-2M32 97v-2M62 97v-2M66 97v-2M70 96v-2" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>`,
+  },
+  // Smešni liki: Hlodek, Hladilnikini in Lubenicini prekrijejo barvo telesa, ostali jo obdržijo.
+  meme_tung: {
+    front: (u) =>
+      `<g clip-path="url(#c${u})"><rect width="100" height="100" fill="#c68a4e"/><g stroke="#7c4a1e" stroke-width="1.6" fill="none" opacity=".45"><path d="M27 40q-3 25 0 56M38 32q-2 30 0 64M62 32q2 30 0 64M73 40q3 25 0 56"/></g></g>${OUTLINE}<ellipse cx="50" cy="31" rx="17" ry="5.5" fill="#ecc994" stroke="${INK}" stroke-width="1.8"/><ellipse cx="50" cy="31" rx="11" ry="3.4" fill="none" stroke="#a16207" stroke-width="1.1"/><ellipse cx="50" cy="31" rx="5" ry="1.5" fill="none" stroke="#a16207" stroke-width="1.1"/><g transform="rotate(12 86 72)"><rect x="84" y="48" width="4" height="40" rx="2" fill="#ecc994" stroke="${INK}" stroke-width="1.5"/><ellipse cx="86" cy="47" rx="6" ry="5" fill="#fef3c7" stroke="${INK}" stroke-width="1.6"/></g><circle cx="85" cy="74" r="4.2" fill="#c68a4e" stroke="${INK}" stroke-width="1.6"/>`,
+  },
+  meme_kavicina: {
+    front: () =>
+      `<path d="M66 14q9 0 8 7t-9 6" fill="none" stroke="${INK}" stroke-width="2.6"/><path d="M33 8h34l-4 21H37z" fill="#fff" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M36 20h28" stroke="#93c5fd" stroke-width="2.4"/><ellipse cx="50" cy="8" rx="17" ry="4" fill="#d6a46b" stroke="${INK}" stroke-width="1.6"/><path d="M50 10.6l-3.2-2.6a1.7 1.7 0 0 1 3.2-1.2 1.7 1.7 0 0 1 3.2 1.2z" fill="#fef3c7"/><ellipse cx="50" cy="30" rx="21" ry="3.4" fill="#f1f5f9" stroke="${INK}" stroke-width="1.8"/><path d="M14 80q36-10 72 0l-4 8${"q-4-4-8 0".repeat(8)}z" fill="#f9a8d4" stroke="${INK}" stroke-width="1.8" stroke-linejoin="round"/><path d="M22 84q28-6 56 0" stroke="#fff" stroke-width="1.4" fill="none" opacity=".7"/>`,
+  },
+  meme_bananini: {
+    back: () =>
+      `<path d="M48 25q-1-9 4-13l4 2q-4 4-3 11z" fill="#a16207" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/><circle cx="19" cy="52" r="8" fill="#a16207" stroke="${INK}" stroke-width="2.2"/><circle cx="81" cy="52" r="8" fill="#a16207" stroke="${INK}" stroke-width="2.2"/><circle cx="19" cy="52" r="4" fill="#fde3c4"/><circle cx="81" cy="52" r="4" fill="#fde3c4"/>`,
+    front: () =>
+      `<path d="M50 44c-6-6-18-4-18 6 0 6 4 9 6 10-1 4 2 10 12 10s13-6 12-10c2-1 6-4 6-10 0-10-12-12-18-6z" fill="#fde3c4" opacity=".95"/><g fill="#fde047" stroke="#a16207" stroke-width="2" stroke-linejoin="round"><path d="M21 96q-15-18-9-38 13 8 21 32z"/><path d="M79 96q15-18 9-38-13 8-21 32z"/><path d="M29 96q-2-17 21-28 23 11 21 28z"/></g><g fill="none" stroke="#fef9c3" stroke-width="1.6" stroke-linecap="round"><path d="M19 88q-4-10-3-20M81 88q4-10 3-20M42 92q2-10 8-15"/></g><g fill="#78350f"><circle cx="12" cy="58.5" r="1.8"/><circle cx="88" cy="58.5" r="1.8"/><circle cx="50" cy="68.5" r="1.8"/></g>`,
+  },
+  meme_slonini: {
+    back: (u) =>
+      `<path d="M24 44Q4 40 4 58t17 18q3-12 6-16z" fill="${F(u)}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M76 44q20-4 20 14T79 76q-3-12-6-16z" fill="${F(u)}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 50q-10 0-10 8t9 10M80 50q10 0 10 8t-9 10" fill="none" stroke="#fda4af" stroke-width="3" opacity=".7"/>`,
+    front: (u) =>
+      `<g clip-path="url(#c${u})"><g stroke="#14532d" stroke-width="1.6" fill="none" opacity=".3"><path d="M34 30q-5 32 0 66M66 30q5 32 0 66"/></g><g stroke="#f8fafc" stroke-width="1.2" fill="none" stroke-linecap="round">${[[30, 40], [70, 40], [26, 64], [74, 64], [32, 82], [68, 82], [42, 34], [58, 34], [50, 88]].map(([x, y]) => `<path d="M${x - 1.6} ${y + 1.6}l1.6-3.2 1.6 3.2"/>`).join("")}</g></g><path d="M50 57q-1 14 10 18 9 2 10-6 0-4-4-4 0 5-5 4-7-2-7-12z" fill="${F(u)}" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><g transform="translate(50 25)"><g fill="#f472b6" stroke="${INK}" stroke-width=".8">${[0, 72, 144, 216, 288].map((a) => `<circle cy="-3.6" r="3" transform="rotate(${a})"/>`).join("")}</g><circle r="2" fill="#fde047"/></g><g fill="#a16207" stroke="${INK}" stroke-width="1.2"><rect x="28" y="92" width="16" height="4" rx="2"/><rect x="56" y="92" width="16" height="4" rx="2"/></g><path d="M31 92q5-5 10 0M59 92q5-5 10 0" stroke="#78350f" stroke-width="2" fill="none"/>`,
+  },
+  meme_smrekini: {
+    back: () => `<path d="M50 1L32 20h7L27 33h46L61 20h7z" fill="#15803d" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M50 6l-5 6M50 6l5 6M42 24l-4 5M58 24l4 5" stroke="#86efac" stroke-width="1.3" fill="none" opacity=".7"/>`,
+    front: (u) =>
+      `<g clip-path="url(#c${u})" fill="#dcfce7" opacity=".45">${[[28, 72], [70, 66], [40, 86], [64, 88]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="4" ry="2" transform="rotate(-30 ${x} ${y})"/>`).join("")}</g><path d="M50 56.5l13 2.5-13 2.5z" fill="#fb923c" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/><g fill="#d6a86b" stroke="${INK}" stroke-width="2"><ellipse cx="33" cy="94" rx="14" ry="5"/><ellipse cx="67" cy="94" rx="14" ry="5"/></g><path d="M24 92v3M29 91v4M71 91v4M76 92v3" stroke="${INK}" stroke-width="1.2"/><path d="M12 48q-3 3 0 6t0 6M88 48q3 3 0 6t0 6" stroke="${INK}" stroke-width="1.5" fill="none" opacity=".6"/>`,
+  },
   kind_cat: {
     back: (u) => `<path d="M24 44L26 12 46 27z" fill="${F(u)}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M76 44L74 12 54 27z" fill="${F(u)}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M29 33l1-14 10 8zM71 33l-1-14-10 8z" fill="#fda4af"/>`,
     front: () => `<path d="M47 60h6l-3 3z" fill="#fb7185" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/><g stroke="${INK}" stroke-width="1.3" stroke-linecap="round"><path d="M22 59l12 2M22 66l12-2M78 59l-12 2M78 66l-12-2"/></g>`,

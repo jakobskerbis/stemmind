@@ -182,3 +182,12 @@ $$P(A \mid B) = \frac{|A \cdot B|}{|B|} = \frac{|A \cdot B|/n}{|B|/n} = \frac{P(
 - $\dfrac{1}{2}$
 + $\dfrac{7}{8}$
 > Nasprotni dogodek je, da cifra ne pade nikoli, torej trikrat pade grb: $\left(\dfrac{1}{2}\right)^3 = \dfrac{1}{8}$. Zato je $P = 1 - \dfrac{1}{8} = \dfrac{7}{8}$.
+
+:::simboli
+P | verjetnost dogodka | P(A) = \frac{m}{n} | | vedno med 0 in 1
+A, B | dogodka | | | v primeru s stroji: izdelek je s stroja A oz. B
+\overline{A} | nasprotni dogodek dogodka A | | | zgodi se, kadar se A ne zgodi
+m | število izidov, ugodnih za dogodek A | | |
+n | število vseh enako verjetnih izidov | | |
+N | dogodek, da je izdelek pokvarjen | | |
+:::

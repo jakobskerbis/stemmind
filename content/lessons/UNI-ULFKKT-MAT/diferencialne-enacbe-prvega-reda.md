@@ -243,3 +243,31 @@ Ker se po Picardovem izreku rešitvi ne moreta sekati (v presečišču bi imel z
 - $y' = y^2$
 - $y' = y\,(1 - y)$
 > $y' = x + y$ zapišemo kot $y' - y = x$, kar je linearna enačba; desne strani ne moremo zapisati kot produkt funkcije $x$ in funkcije $y$. Enačba $y' = xy$ je linearna in ločljiva, ostali dve sta ločljivi, a nelinearni.
+
+:::simboli
+y | iskana funkcija (rešitev enačbe) | |
+y' | odvod iskane funkcije | |
+x | neodvisna spremenljivka | |
+f | desna stran enačbe y' = f(x, y) | | | pri ločljivi enačbi faktor, odvisen le od x
+g | faktor, odvisen le od y | | | ločljiva enačba y' = f(x) g(y)
+x_0 | začetna vrednost neodvisne spremenljivke | | | začetni pogoj y(x₀) = y₀
+y_0 | vrednost rešitve pri x₀ | |
+d | oznaka diferenciala | | | dy/dx je odvod y po x
+p | koeficient pri y v linearni enačbi | |
+q | desna stran linearne enačbe | | | pri q ≡ 0 je enačba homogena
+P | primitivna funkcija koeficienta p | P(x) = \int p(x)\, dx |
+\mu | integrirajoči množitelj | \mu = e^{P(x)} |
+e | Eulerjevo število | | | e ≈ 2,718
+C | integracijska konstanta | | | določimo jo iz začetnega pogoja
+N | velikost populacije | | | eksponentna rast: $N(t) = N_0 e^{kt}$
+N_0 | začetna velikost populacije | |
+t | čas | |
+k | konstanta rasti oziroma hitrosti | | | k > 0 rast, k < 0 upadanje; v kinetiki s⁻¹
+r | stopnja rasti v logističnem modelu | |
+K | nosilnost okolja | | | drugje tudi poljubna konstanta v rešitvi
+c | množinska koncentracija reaktanta | c(t) = c_0 e^{-kt} | mol/L | kinetika prvega reda
+c_0 | začetna koncentracija | | mol/L
+t_{1/2} | razpolovni čas | t_{1/2} = \frac{\ln 2}{k} | | ni odvisen od začetne količine
+m | masa soli v posodi | | kg
+m' | hitrost spreminjanja mase soli | | kg/min | dotok soli minus odtok soli
+:::

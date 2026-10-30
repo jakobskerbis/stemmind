@@ -12,6 +12,7 @@ import { BUNDLE_ID, STORE_PRODUCTS, appleState } from "../server/mobile/store-bi
 import { googleSubscriptionState } from "../server/mobile/google-play.js";
 import { goalPushText } from "../server/mobile/push.js";
 import { fetchApk } from "../server/mobile/download.js";
+import { apkVersion, manifestVersion } from "../server/mobile/apk-info.js";
 import os from "node:os";
 import path from "node:path";
 
@@ -113,6 +114,29 @@ test("app session travels in headers, never as cookies", async () => {
     // Odjava počisti sejo.
     await c("/api/auth/logout", { body: {} });
     assert.equal(c.session(), null);
+  });
+});
+
+test("profile open on another device: app gets 409 taken, claim with app headers takes it over", async () => {
+  await withServer(async ({ appClient, adult }) => {
+    const a = appClient();
+    await adult(a);
+    const created = await a("/api/students", { body: { name: "Ana", self: true, consent: true } });
+    assert.equal(created.status, 201, JSON.stringify(created.body));
+    const id = created.body.id;
+    assert.equal((await a(`/api/students/${id}`)).status, 200);
+    // Isti račun na drugi napravi (aplikacija pošlje POST /claim s telesom {}, kot src/lib/api.ts).
+    const b = appClient();
+    assert.equal((await b("/api/auth/login", { body: { email: "starsh@primer.si", password: "geslo12345" } })).status, 200);
+    const taken = await b(`/api/students/${id}`);
+    assert.equal(taken.status, 409);
+    assert.equal(taken.body.taken, true);
+    assert.equal(taken.body.student_id, id);
+    const claim = await b(`/api/students/${id}/claim`, { body: {} });
+    assert.equal(claim.status, 200, JSON.stringify(claim.body));
+    assert.equal((await b(`/api/students/${id}`)).status, 200);
+    // Prva naprava ga zdaj nima več.
+    assert.equal((await a(`/api/students/${id}`)).status, 409);
   });
 });
 
@@ -344,6 +368,140 @@ test("download page offers the APK when it exists and works without login", asyn
   );
 });
 
+// Iz brskalnika v aplikacijo brez ponovne prijave (server/mobile/app-link.js).
+test("app link: signed-in phone browser opens the app signed in, with its open profile, once", async () => {
+  await withServer(async ({ base, store, appClient }) => {
+    const ANDROID = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/130 Mobile Safari/537.36";
+    // Brskalnik s piškotki.
+    const jar = new Map();
+    const web = async (path, { body, ua = ANDROID } = {}) => {
+      const res = await fetch(base + path, {
+        method: body ? "POST" : "GET",
+        headers: { "content-type": "application/json", "user-agent": ua, cookie: [...jar].map(([k, v]) => `${k}=${v}`).join("; ") },
+        body: body ? JSON.stringify(body) : undefined,
+        redirect: "manual",
+      });
+      for (const c of res.headers.getSetCookie()) {
+        const [kv] = c.split(";");
+        const i = kv.indexOf("=");
+        if (/Max-Age=0/.test(c)) jar.delete(kv.slice(0, i));
+        else jar.set(kv.slice(0, i), kv.slice(i + 1));
+      }
+      const type = res.headers.get("content-type") || "";
+      return { status: res.status, headers: res.headers, body: type.includes("json") ? await res.json() : await res.text() };
+    };
+    const token = (html) => /intent:\/\/prijava\?t=([A-Za-z0-9_-]+)#Intent;scheme=evklid;package=[^;]+;S\.browser_fallback_url=[^;]+;end/.exec(html)?.[1];
+
+    // Brez prijave: ni povezave; stran, ki jo odpre aplikacija, pove, naj se prijavi v aplikaciji.
+    assert.equal(token((await web("/prenesi")).body), undefined);
+    assert.match((await web("/prenesi?app=1&lang=sl")).body, /Ta brskalnik ni prijavljen/);
+
+    const reg = await web("/api/auth/register", { body: { email: "brskalnik@primer.si", password: "geslo12345", accept_privacy: true, birth_date: ADULT } });
+    assert.equal(reg.status, 201, JSON.stringify(reg.body));
+    store.db.prepare("UPDATE parents SET email_verified_at = datetime('now') WHERE email = ?").run("brskalnik@primer.si");
+    const ana = await web("/api/students", { body: { name: "Ana", self: true, consent: true } });
+    assert.equal(ana.status, 201, JSON.stringify(ana.body));
+    // En profil brez gesla profila: povezava v aplikacijo ga vseeno odpre na telefonu.
+    const t0 = token((await web("/prenesi?app=1")).body);
+    assert.equal((await appClient()("/api/auth/app-link", { body: { token: t0 } })).body.student_id, ana.body.id, "en profil: telefon ga prevzame");
+    assert.equal((await web(`/api/students/${ana.body.id}/unlock`, { body: { password: "ana1", set: true } })).status, 200);
+    // Drugi profil na računu: šele z njim velja geslo profila (račun z enim profilom ga ne potrebuje).
+    const bor = await web("/api/students", { body: { name: "Bor", birth_year: new Date().getFullYear() - 10, consent: true } });
+    assert.equal(bor.status, 201, JSON.stringify(bor.body));
+
+    // Računalnik: aplikacije ni, gumba tudi ne.
+    assert.equal(token((await web("/prenesi", { ua: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130" })).body), undefined);
+    // iPhone: povezava evklid://
+    assert.match((await web("/prenesi", { ua: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)" })).body, /href="evklid:\/\/prijava\?t=[A-Za-z0-9_-]{20,}"/);
+
+    const page = await web("/prenesi?app=1");
+    assert.equal(page.headers.get("cache-control"), "no-store");
+    const t = token(page.body);
+    assert.ok(t, "povezava v aplikacijo");
+    assert.ok(page.body.indexOf('id="app"') < page.body.indexOf("<h2>Android"), "?app=1: povezava na vrhu");
+
+    // Samo aplikacija lahko zamenja žeton.
+    const plain = await fetch(`${base}/api/auth/app-link`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ token: t }) });
+    assert.equal(plain.status, 400);
+
+    // Najprej vpraša, za kateri račun je povezava; žeton ostane neporabljen.
+    const phone = appClient();
+    const peek = await phone("/api/auth/app-link/check", { body: { token: t } });
+    assert.equal(peek.status, 200);
+    assert.equal(peek.body.email, "brskalnik@primer.si");
+    assert.equal(phone.session(), null, "preverjanje še ne prijavi");
+    assert.equal((await phone("/api/auth/app-link/check", { body: { token: "x".repeat(40) } })).status, 400);
+    const r = await phone("/api/auth/app-link", { body: { token: t } });
+    assert.equal(r.status, 200, JSON.stringify(r.body));
+    assert.equal(r.body.parent.email, "brskalnik@primer.si");
+    assert.equal(r.body.student_id, ana.body.id);
+    assert.ok(phone.session(), "seja za aplikacijo");
+    const list = await phone("/api/students");
+    assert.ok(!list.body.find((s) => s.id === ana.body.id).locked, "profil odprt brez gesla");
+    assert.equal((await phone(`/api/students/${ana.body.id}`)).status, 200);
+    // Za primerjavo: navadna prijava na drugem telefonu najde profil zaklenjen.
+    const other = appClient();
+    assert.equal((await other("/api/auth/login", { body: { email: "brskalnik@primer.si", password: "geslo12345" } })).status, 200);
+    assert.equal((await other(`/api/students/${ana.body.id}`)).status, 423);
+
+    // Enkrat.
+    assert.equal((await appClient()("/api/auth/app-link", { body: { token: t } })).status, 400);
+    // Potekla povezava (brskalnik je še prijavljen).
+    const t3 = token((await web("/prenesi")).body);
+    store.db.prepare("UPDATE app_links SET expires_at = ? WHERE used_at IS NULL").run(Date.now() - 1000);
+    assert.equal((await appClient()("/api/auth/app-link", { body: { token: t3 } })).body.expired, true);
+    // Odjava v brskalniku razveljavi neporabljeno povezavo.
+    const t2 = token((await web("/prenesi")).body);
+    await web("/api/auth/logout", { body: {} });
+    const late = await appClient()("/api/auth/app-link", { body: { token: t2 } });
+    assert.equal(late.status, 400);
+    assert.equal(late.body.expired, true);
+  });
+});
+
+// j 2026-10-30: »nočem, da se ta zaslon prikazuje« – račun z enim profilom gesla profila ne vidi.
+test("profile password only when the account has more than one profile", async () => {
+  await withServer(async ({ appClient, adult }) => {
+    const c = appClient();
+    await adult(c, "en@primer.si");
+    const ana = await c("/api/students", { body: { name: "Ana", self: true, consent: true } });
+    assert.equal(ana.status, 201);
+    // Brez gesla profila: nova naprava po prijavi v račun odpre profil takoj.
+    const ipad = appClient();
+    assert.equal((await ipad("/api/auth/login", { body: { email: "en@primer.si", password: "geslo12345" } })).status, 200);
+    const list = await ipad("/api/students");
+    assert.deepEqual([list.body[0].locked, list.body[0].needs_password], [undefined, undefined]);
+    assert.equal((await ipad(`/api/students/${ana.body.id}/claim`, { body: {} })).status, 200, "prevzem, ne geslo");
+    assert.equal((await ipad(`/api/students/${ana.body.id}`)).status, 200);
+    // Z geslom, nastavljenim prej (stari računi), prav tako.
+    assert.equal((await ipad(`/api/students/${ana.body.id}/unlock`, { body: { password: "ana1", set: true } })).status, 200);
+    const ipad2 = appClient();
+    assert.equal((await ipad2("/api/auth/login", { body: { email: "en@primer.si", password: "geslo12345" } })).status, 200);
+    assert.ok(!(await ipad2("/api/students")).body[0].locked);
+    assert.notEqual((await ipad2(`/api/students/${ana.body.id}`)).status, 423, "ni zaklenjen (409 = odprt na drugi napravi)");
+  });
+});
+
+test("second profile: existing profiles without a password get theirs in the same step", async () => {
+  await withServer(async ({ appClient, adult }) => {
+    const c = appClient();
+    await adult(c, "dva@primer.si");
+    const ana = (await c("/api/students", { body: { name: "Ana", birth_year: new Date().getFullYear() - 12, consent: true } })).body;
+    const year = new Date().getFullYear() - 10;
+    // Prekratko geslo za obstoječi profil: nič se ne ustvari.
+    const bad = await c("/api/students", { body: { name: "Bor", birth_year: year, consent: true, profile_password: "bor1", other_passwords: { [ana.id]: "a" } } });
+    assert.equal(bad.status, 400);
+    assert.equal((await c("/api/students")).body.length, 1);
+    const bor = await c("/api/students", { body: { name: "Bor", birth_year: year, consent: true, profile_password: "bor1", other_passwords: { [ana.id]: "ana1" } } });
+    assert.equal(bor.status, 201, JSON.stringify(bor.body));
+    // Na tej napravi oba odprta; na novi napravi oba zaklenjena, nobeden »brez gesla«.
+    assert.deepEqual((await c("/api/students")).body.map((s) => !!(s.locked || s.needs_password)), [false, false]);
+    const other = appClient();
+    assert.equal((await other("/api/auth/login", { body: { email: "dva@primer.si", password: "geslo12345" } })).status, 200);
+    assert.deepEqual((await other("/api/students")).body.map((s) => [!!s.locked, !!s.needs_password]), [[true, false], [true, false]]);
+  });
+});
+
 // Gumb »Namesti aplikacijo« v spletni aplikaciji vpraša, kje je prava aplikacija za telefon.
 test("app links: APK and TestFlight for the install button", async () => {
   await withServer(
@@ -358,6 +516,24 @@ test("app links: APK and TestFlight for the install button", async () => {
 });
 
 // Skrbnik naloži APK s povezave iz expo.dev; strežnik sledi preusmeritvam samo na znane strežnike.
+// Prava gradnja 4 (1.0.0): AndroidManifest.xml iz APK z expo.dev, zapakiran v majhen ZIP.
+const MINI_APK = fileURLToPath(new URL("./fixtures/mini.apk", import.meta.url));
+
+test("APK version: versionCode and versionName from the binary manifest", () => {
+  assert.deepEqual(apkVersion(MINI_APK), { versionCode: 4, versionName: "1.0.0" });
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "apkv-"));
+  try {
+    const junk = path.join(dir, "x.apk");
+    fs.writeFileSync(junk, Buffer.concat([Buffer.from([0x50, 0x4b, 0x03, 0x04]), Buffer.alloc(100, 7)]));
+    assert.equal(apkVersion(junk), null);
+    assert.equal(apkVersion(path.join(dir, "missing.apk")), null);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+  assert.equal(manifestVersion(Buffer.alloc(4)), null);
+  assert.equal(manifestVersion(Buffer.from([3, 0, 8, 0, 0xff, 0xff, 0xff, 0x7f])), null); // pokvarjena dolžina
+});
+
 test("admin APK upload: only admins, only known hosts, only ZIP files", async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "apk-"));
   const file = path.join(dir, "evklid.apk");
@@ -401,6 +577,11 @@ test("admin APK upload: only admins, only known hosts, only ZIP files", async ()
         assert.equal(r.body.file.bytes, zip.length);
         assert.equal((await c("/api/admin/apk", { body: { url: "https://example.com/x.apk" } })).status, 400);
         assert.equal((await c("/api/app-links")).body.apk, "/prenesi/evklid.apk");
+        assert.equal((await c("/api/app-links")).body.apkVersion, null); // lažni APK nima manifesta
+        // pravi manifest: aplikacija primerja versionCode s svojo gradnjo
+        fs.copyFileSync(MINI_APK, path.join(dir, "server.apk"));
+        assert.deepEqual((await c("/api/app-links")).body.apkVersion, { versionCode: 4, versionName: "1.0.0" });
+        assert.equal((await c("/api/admin/apk")).body.file.version.versionCode, 4);
       },
       { apkFile: path.join(dir, "server.apk"), fetch: fake },
     );

@@ -194,3 +194,11 @@ Opomba: pri ionskih spojinah, kot je $\mathrm{NaCl}$, ne govorimo o molekulah, a
 + $117\,\mathrm{g}$
 - $60{,}5\,\mathrm{g}$
 > $m = n \cdot M = 2\,\mathrm{mol} \cdot 58{,}5\,\mathrm{g/mol} = 117\,\mathrm{g}$. Odgovor $29{,}25$ dobiš z deljenjem, $58{,}5$ je masa samo $1\,\mathrm{mol}$, $60{,}5$ pa je napačno seštevanje.
+
+:::simboli
+n | množina snovi | n = \frac{m}{M} | mol
+m | masa vzorca | m = n \cdot M | g
+M | molska masa | M = \frac{m}{n} | g/mol | masa enega mola snovi
+N | število delcev | N = n \cdot N_A | – | molekul, atomov ali formulskih enot
+N_A | Avogadrova konstanta | | mol^{-1} | N_A = 6,02 · 10²³ mol⁻¹
+:::

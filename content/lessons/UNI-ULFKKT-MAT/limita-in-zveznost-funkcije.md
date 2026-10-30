@@ -228,3 +228,17 @@ Za vsako (še tako ozko) toleranco $\varepsilon$ okoli $L$ obstaja okolica točk
 - $1$
 + $2$
 > Za $x \neq 1$ je $f(x) = x + 1$, zato je $\lim_{x \to 1} f(x) = 2$. Nezveznost je odpravljiva.
+
+:::simboli
+f | funkcija | |
+x | neodvisna spremenljivka | |
+a | točka, ki se ji x približuje | | | pri intervalu [a, b] levo krajišče
+L | limita funkcije v točki a | \lim_{x \to a} f(x) = L |
+e | Eulerjevo število | | | e ≈ 2,718
+\varepsilon | dovoljeno odstopanje od limite L | | | poljubno majhno pozitivno število
+\delta | polmer okolice točke a | | | odvisen od izbranega ε
+u | pomožna spremenljivka | | | u → 0
+b | desno krajišče intervala [a, b] | |
+c | ničla funkcije na intervalu (a, b) | | | obstaja po Bolzanovem izreku
+m | razpolovišče intervala | m = \frac{a + b}{2} | | metoda bisekcije
+:::

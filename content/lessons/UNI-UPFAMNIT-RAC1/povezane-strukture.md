@@ -228,3 +228,8 @@ Nariši pomnilnik kot dolg trak predalčkov z naslovi.
 - Drevo
 ~ Drevo opisuje hierarhijo (koren, otroci), ne vrstnega reda prihodov.
 > Prvi, ki pride, je prvi postrežen: FIFO, torej vrsta.
+
+:::simboli
+i | indeks elementa v tabeli | | – | šteje od 0
+n | število elementov | | –
+:::

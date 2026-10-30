@@ -207,3 +207,15 @@ Tako deluje difuzija. Vsak delec se giblje naključno, a skupaj se razširijo od
 - V mrazu delci mirujejo, zato vonj potuje le, ko odpremo vrata.
 ~ Delci se gibljejo pri vsaki temperaturi. V mrazu so počasnejši, zato difuzija traja dlje, a ne preneha.
 > To je difuzija: delci vonja se razširijo od čebule po vsem hladilniku. Pokrita posoda to prepreči.
+
+:::simboli
+\Delta V | zmanjšanje prostornine ob mešanju | \Delta V = V_1 + V_2 - V_\text{zmes} | mL | delci ene snovi zapolnijo prostore med drugimi
+V_1 | prostornina vode | | mL
+V_2 | prostornina alkohola | | mL
+V_\text{zmes} | prostornina zmesi | | mL
+t_\text{hladna} | čas difuzije v hladni vodi | | min
+t_\text{vroča} | čas difuzije v vroči vodi | | min
+m | masa čaja s sladkorjem | m = m_\text{čaj} + m_\text{sladkor} | g | masa se pri raztapljanju ohrani
+m_\text{čaj} | masa čaja | | g
+m_\text{sladkor} | masa sladkorja | | g
+:::

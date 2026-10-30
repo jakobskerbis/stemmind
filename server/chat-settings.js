@@ -16,8 +16,12 @@ import { goalsFor, validDate } from "../public/goal-data.js";
 import { Avatars } from "./avatar.js";
 import { ITEMS, SLOTS, MULTI_MAX, isMulti, itemOf, wear } from "../public/avatar.js";
 import { INTERESTS, cleanInterests } from "../public/interests.js";
-import { GENRE_IDS, cleanChildhood } from "../public/games/childhood.js";
+import { GENRE_IDS, cleanChildhood, cleanTitles } from "../public/games/childhood.js";
 import { dialectsFor } from "../public/dialects.js";
+
+// Deli aplikacije, ki jih inštruktor odpre v premičnem oknu (public/okna.js), in načini kalkulatorja.
+export const WINDOW_VIEWS = ["graph", "textbook", "path", "scan", "schedule", "corner", "progress", "games", "competition", "exams", "league", "settings"];
+export const CALC_MODES = ["sci", "graph", "tools", "pse", "formulas"];
 
 const PATH_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => PROFILE_SETTINGS[k].confirm);
 const PENDING_MS = 30 * 60 * 1000;
@@ -99,6 +103,20 @@ export const SETTINGS_TOOLS = [
         remove_lessons: { type: "array", items: { type: "string" }, description: "lesson ids to remove" },
         remove_events: { type: "array", items: { type: "string" }, description: "event ids to remove" },
       },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "open_window",
+    description:
+      "Open a part of the app beside the chat as a movable window (a bottom sheet on phones) when the student asks, e.g. »odpri kalkulator«, »pokaži periodni sistem«, »odpri učbenik«. Then reply with one short sentence (e.g. »Odprl sem kalkulator.«).",
+    input_schema: {
+      type: "object",
+      properties: {
+        view: { type: "string", enum: WINDOW_VIEWS, description: "graph = calculator; path = learning path; corner = news corner" },
+        calc_mode: { type: "string", enum: CALC_MODES, description: "only for view graph: sci = scientific, graph = graphing, tools = unit converter and tools, pse = periodic table, formulas" },
+      },
+      required: ["view"],
       additionalProperties: false,
     },
   },
@@ -212,6 +230,7 @@ function profileView(student) {
     news_level: s.news_level,
     news_lang: s.news_lang,
     game_childhood: s.game_childhood ?? [],
+    game_titles: s.game_titles ?? [],
     weak_points: student.manual_weaknesses || [],
   };
 }
@@ -325,6 +344,7 @@ function validateProfile(changes, student) {
     if (bad.length) errors.push(`game_childhood: unknown ${bad.join(", ")}; allowed ${GENRE_IDS.join(", ")}`);
     else patch.game_childhood = cleanChildhood(raw);
   }
+  if (changes.game_titles !== undefined) patch.game_titles = cleanTitles(Array.isArray(changes.game_titles) ? changes.game_titles : String(changes.game_titles ?? "").split(","));
   if (changes.interest_custom !== undefined) patch.interest_custom = cleanText(String(changes.interest_custom ?? ""), 40);
   for (const key of ["track", "solving_mode", "data_mode", "news_level", "news_lang"]) {
     if (changes[key] === undefined) continue;
@@ -437,7 +457,7 @@ export function createSettingsTools({ store, studentId, conversationId, device =
           for (const id of Array.isArray(v) ? v : [v]) {
             const x = itemOf(String(id));
             if (!x || x.slot !== slot) errors.push(`avatar: ${id} is not a ${slot} item`);
-            else if (x.price !== 0 && !owned.has(id)) errors.push(x.earn ? `avatar: ${id} is locked (unlocked only by ${x.collection === "igre" ? "playing games" : "learning"}, see Zbirke)` : `avatar: ${id} not owned yet (bought with game coins in the games shop)`);
+            else if (x.price !== 0 && !owned.has(id)) errors.push(x.earn ? `avatar: ${id} is locked (unlocked only by ${x.collection === "igre" ? "playing games" : x.collection === "smesni" ? `collecting ${x.need.xp} XP (learning and games)` : "learning"}, see Zbirke)` : `avatar: ${id} not owned yet (bought with game coins in the games shop)`);
           }
         }
         avatarChange = a;
@@ -551,6 +571,14 @@ export function createSettingsTools({ store, studentId, conversationId, device =
     };
   }
 
+  // Odpre del aplikacije v oknu ob klepetu (odjemalec: dogodek open_window).
+  function openWindow(input = {}) {
+    if (!WINDOW_VIEWS.includes(input.view)) return { content: `unknown view; use one of ${WINDOW_VIEWS.join(", ")}`, isError: true };
+    const mode = input.view === "graph" && CALC_MODES.includes(input.calc_mode) ? input.calc_mode : undefined;
+    send("open_window", { view: input.view, ...(mode ? { mode } : {}) });
+    return { content: JSON.stringify({ status: "opened", view: input.view, ...(mode ? { calc_mode: mode } : {}) }) };
+  }
+
   async function onToolUse(name, input) {
     state.used = true;
     try {
@@ -558,6 +586,7 @@ export function createSettingsTools({ store, studentId, conversationId, device =
       if (name === "change_settings") return changeSettings(input);
       if (name === "get_schedule") return getSchedule();
       if (name === "change_schedule") return changeSchedule(input);
+      if (name === "open_window") return openWindow(input);
       return { content: `unknown tool ${name}`, isError: true };
     } catch (err) {
       console.error("[evklid] orodje nastavitev:", err?.message ?? err);
@@ -570,6 +599,36 @@ export function createSettingsTools({ store, studentId, conversationId, device =
 // Sporočila, ki morda prosijo za spremembo nastavitev: odgovora ne vzamemo iz predpomnilnika odgovorov.
 export const looksLikeSettings = (text) =>
   /nastav|zamenjaj|spremeni|preklopi|vklopi|izklopi|temn|svetl|barv|hitrej|počasnej|jezik|narečj|dialect|sem (zdaj )?v \d|settings|dark mode|theme|language|urnik|jutri|danes|test|kontroln|kolokvij|izpit|spraševanj|schedule|timetable/i.test(String(text || ""));
+
+// ---------------------------------------------------------------------------
+// »Odpri kalkulator«, »pokaži periodni sistem«, »open textbook«: okno odpremo brez klica modela.
+// Samo kratek ukaz brez vprašanja (»kako odprem kalkulator?« gre k modelu).
+
+const WINDOW_TARGETS = [
+  // [regex, view, calc mode, sl, en]
+  [/^(periodn\w* sistem\w*( elementov)?|pse|periodic table)$/, "graph", "pse", "periodni sistem", "the periodic table"],
+  [/^(grafičn\w* kalkulator\w*|graphing calculator)$/, "graph", "graph", "grafični kalkulator", "the graphing calculator"],
+  [/^(znanstven\w* kalkulator\w*|scientific calculator)$/, "graph", "sci", "znanstveni kalkulator", "the scientific calculator"],
+  // Samo množina ali zbirka: »pokaži formulo« (za to nalogo) je vprašanje za inštruktorja.
+  [/^(formule( iz \w+)?|zbirk\w* formul|formulas|formula sheet)$/, "graph", "formulas", "formule", "the formulas"],
+  [/^(pretvornik\w*( enot)?|orodja|unit converter)$/, "graph", "tools", "pretvornik enot", "the unit converter"],
+  [/^(kalkulator\w*|računal\w*|calculator)$/, "graph", null, "kalkulator", "the calculator"],
+  [/^(učbenik\w*|textbook)$/, "textbook", null, "učbenik", "the textbook"],
+  [/^(urnik\w*|timetable|schedule)$/, "schedule", null, "urnik", "the timetable"],
+];
+
+export function openWindowIntent(text) {
+  const raw = String(text || "").toLowerCase().trim();
+  if (raw.length > 60 || raw.includes("?")) return null;
+  const m = /^(?:prosim,?\s+|please,?\s+|lahko\s+)?(odpri|pokaži|pokazi|daj|open|show)\s+(?:mi\s+|me\s+)?(?:the\s+|a\s+)?(.+?)(?:,?\s+(?:prosim|please))?[\s.!]*$/.exec(raw);
+  if (!m) return null;
+  const en = /^(open|show)$/.test(m[1]);
+  const what = m[2].trim();
+  const hit = WINDOW_TARGETS.find(([re]) => re.test(what));
+  if (!hit) return null;
+  const [, view, mode, sl, eng] = hit;
+  return { view, ...(mode ? { mode } : {}), text: en ? `I opened ${eng}.` : `Odprl sem ${sl}.` };
+}
 
 // ---------------------------------------------------------------------------
 // Preizkusni način (brez ključa): preprosto prepoznavanje najpogostejših prošenj.
@@ -630,6 +689,7 @@ const MOCK_LABELS = {
   solving_mode: "način",
   dialect: "narečje",
   game_childhood: "igre iz otroštva",
+  game_titles: "lastni naslovi iger",
 };
 
 // Besedilo odgovora v preizkusnem načinu iz rezultata orodja.

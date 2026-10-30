@@ -273,3 +273,16 @@ pri čemer smo uporabili $v = s/t$ za enakomerno gibanje.
 - Delo in moč sta pri obeh enaka.
 ~ Delo je res enako, moč pa ne: prvo opravi isto delo v pol krajšem času.
 > Pri enaki sili in enaki poti je delo enako. Ker prvo dvigalo to delo opravi v pol krajšem času, je njegova moč $P = A/t$ dvakrat večja.
+
+:::simboli
+A | delo | A = F \cdot s \cdot \cos\alpha | J | sila v smeri gibanja: A = F · s
+F | sila | | N | pri enakomernem dviganju F = m g
+s | pot | | m
+\alpha | kot med silo in smerjo gibanja | | ^\circ
+P | moč | P = \dfrac{A}{t} | W | pri stalni hitrosti P = F · v
+t | čas | | s
+v | hitrost | | m/s
+m | masa | | kg
+g | težni pospešek | | m/s^2 | približno 10 m/s²
+F_{\text{upor}} | sila upora | | N | pri stalni hitrosti enaka pogonski sili
+:::

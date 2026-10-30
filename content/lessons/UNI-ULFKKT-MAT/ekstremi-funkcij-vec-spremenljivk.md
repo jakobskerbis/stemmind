@@ -227,3 +227,29 @@ Za $n = 2$ je simetrična matrika $\begin{bmatrix} A & B \\ B & C \end{bmatrix}$
 - $4$
 - $1$
 > Lagrange: $1 = 2\lambda x$, $1 = 2\lambda y$, torej $x = y$; iz $2x^2 = 2$ sledi $x = \pm 1$. V $(1, 1)$ je največja vrednost $2$, v $(-1, -1)$ najmanjša $-2$.
+
+:::simboli
+f | funkcija dveh ali več spremenljivk | |
+x, y | neodvisni spremenljivki | | | pri škatli dolžina in širina
+z | višina škatle (tretja spremenljivka) | |
+x_0, y_0 | koordinati točke T₀ | |
+T | stacionarna točka | | | tam je gradient enak nič
+f_x | parcialni odvod funkcije f po x | |
+f_y | parcialni odvod funkcije f po y | |
+H | Hessejeva matrika | H = \begin{bmatrix} f_{xx} & f_{xy} \\ f_{xy} & f_{yy} \end{bmatrix} | | simetrična, ker je f_xy = f_yx
+f_{xx} | drugi parcialni odvod po x | |
+f_{yy} | drugi parcialni odvod po y | |
+f_{xy}, f_{yx} | mešana druga parcialna odvoda | | | enaka po Schwarzovem izreku
+h, k | prirastka spremenljivk x in y | | | v f(a + h) je h vektor prirastkov
+A | vrednost f_xx v stacionarni točki | A = f_{xx}(T_0) |
+B | vrednost f_xy v stacionarni točki | B = f_{xy}(T_0) |
+C | vrednost f_yy v stacionarni točki | C = f_{yy}(T_0) |
+D | determinanta Hessejeve matrike | D = f_{xx} f_{yy} - f_{xy}^2 | | D > 0 in A > 0: minimum; D < 0: sedlo
+L | Lagrangeova funkcija | L(x, y, \lambda) = f(x, y) - \lambda\, g(x, y) |
+\lambda | Lagrangeov multiplikator | |
+g | funkcija vezi | | | pogoj g(x, y) = 0
+g_x, g_y | parcialna odvoda funkcije vezi | |
+a | notranja točka lokalnega ekstrema v ℝⁿ | |
+o | mali o (Landauova oznaka) | | | o(‖h‖²) gre proti nič hitreje kot ‖h‖²
+S | površina škatle brez pokrova | S = xy + 2xz + 2yz |
+:::

@@ -254,3 +254,18 @@ Preverimo obe metodi na majhni mreži, kjer lahko vse naštejemo: $3$ koraki des
 ~ $2^6$ šteje vsa zaporedja šestih korakov, tudi tista s $5$ koraki proti vzhodu. Najkrajša pot ima natanko $3$ in $3$.
 + $20$
 > Izmed $6$ korakov izberemo $3$ za sever: $\binom{6}{3} = 20$.
+
+:::simboli
+a | število stolpcev kvadratkov v mreži | | | navpičnih črt je a + 1
+b | število vrstic kvadratkov v mreži | | | vodoravnih črt je b + 1
+N | število pravokotnikov v mreži | N = \binom{a+1}{2} \cdot \binom{b+1}{2} | | pri poteh: število najkrajših poti
+m | število korakov desno | | |
+n | število korakov gor | | |
+N_{A \to X} | število najkrajših poti od A do X | | | X je zaprto križišče
+N_{X \to B} | število najkrajših poti od X do B | | |
+N_{A \to L} | število najkrajših poti od A do L | | | L je lekarna na poti
+N_{L \to B} | število najkrajših poti od L do B | | |
+T | število vseh trikotnikov | T = \binom{p}{2} \cdot q | |
+p | število črt skozi vrh | | |
+q | število vzporednih črt | | |
+:::

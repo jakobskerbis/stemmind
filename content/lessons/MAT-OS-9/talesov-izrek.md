@@ -158,3 +158,10 @@ Dokažimo, da iz $AB \parallel CD$ sledi $SA : SC = SB : SD$ (uporabimo plošči
 + Ko sta daljici $AB$ in $CD$ vzporedni.
 - Ko je $SA = SB$.
 > Izrek velja samo, če sta premici, ki sekata kraka kota, vzporedni. Pravokotnost krakov ali enakost $SA$ in $SB$ ni pogoj.
+
+:::simboli
+S | vrh kota | | |
+A, C | točki na prvem kraku | | | A je bližje vrhu
+B, D | točki na drugem kraku | | | B je bližje vrhu; AB ∥ CD
+h | višina drevesa | | |
+:::

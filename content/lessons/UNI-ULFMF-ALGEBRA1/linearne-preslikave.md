@@ -268,3 +268,23 @@ Torej $\dim \operatorname{im} L = n - k$. Posledica za $L\colon U \to U$: $L$ je
 - $(2, 4)$
 ~ Zamenjal si vrstni red: prva koordinata spada k $b_1$. Preveri: $2b_1 + 4b_2 = (6, -2)$.
 > Rešimo $a(1, 1) + b(1, -1) = (6, 2)$: $a + b = 6$, $a - b = 2$, torej $a = 4$, $b = 2$. Preizkus: $4b_1 + 2b_2 = (6, 2)$.
+
+:::simboli
+L | linearna preslikava | L(u + v) = L(u) + L(v) | | L: U → V
+u, v | vektorja prostora U
+\lambda | skalar (realno število)
+\alpha | koordinata vektorja u v bazi B | u = \alpha_1 u_1 + \ldots + \alpha_n u_n | | α₁, …, αₙ
+u_1, u_n, u_j | bazni vektorji prostora U
+U | vektorski prostor (domena preslikave L)
+B | baza prostora U | B = \{u_1, \ldots, u_n\} | | pri menjavi baze stara (standardna) baza
+C | baza prostora V | C = \{v_1, \ldots, v_m\}
+A | matrika preslikave L glede na bazi B in C | [L(u)]_C = A\,[u]_B
+P | prehodna matrika iz baze B' v bazo B | [u]_B = P\,[u]_{B'} | | v stolpcih novi bazni vektorji, zapisani v stari bazi
+B' | nova baza | B' = \{b_1, b_2\}
+A' | matrika preslikave v novi bazi B' | A' = P^{-1} A P
+b_1, b_2 | vektorja nove baze B'
+j | indeks stolpca matrike
+e_j | j-ti vektor standardne baze
+D | odvajanje polinomov | D(p) = p'
+p | polinom stopnje največ 2
+:::

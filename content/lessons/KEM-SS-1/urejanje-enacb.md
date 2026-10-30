@@ -228,3 +228,10 @@ Rezultat: $\mathrm{4\,Fe + 3\,O_2 \rightarrow 2\,Fe_2O_3}$. Vrsta: spajanje.
 - $36$
 ~ Indeks $2$ v $\mathrm{H_2O}$ velja samo za vodik. V vsaki molekuli vode je en atom kisika.
 > Desno: $8 \cdot 2 + 10 = 26$ atomov kisika. Levo: $13 \cdot 2 = 26$. Enačba je urejena.
+
+:::simboli
+n | množina snovi | n = \dfrac{m}{M} | mol
+m | masa snovi | | g
+M | molska masa | | g/mol
+\nu | stehiometrijski koeficient | | – | število pred formulo v urejeni enačbi
+:::

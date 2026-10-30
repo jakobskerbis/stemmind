@@ -1,9 +1,9 @@
 // Besedila vmesnika: isti slovarji kot spletna aplikacija (public/i18n/sl.js in ui/<jezik>.json), da je
 // vsak prevod en sam. Jezik je jezik profila (settings.language), sicer jezik telefona.
-import { getLocales } from "expo-localization";
+import { getCalendars, getLocales } from "expo-localization";
 import { useSyncExternalStore } from "react";
 import SL from "../../../public/i18n/sl.js";
-import { uiChain, uiLanguage, detectLanguage, RTL } from "../../../public/i18n/languages.js";
+import { uiChain, uiLanguage, detectLanguage, homeLanguage, RTL } from "../../../public/i18n/languages.js";
 
 type Dict = Record<string, string | Record<string, string>>;
 
@@ -43,7 +43,15 @@ const LOADERS: Record<string, () => Dict> = {
   sw: () => require("../../../public/i18n/ui/sw.json"),
 };
 
-const deviceLanguage = () => detectLanguage(getLocales().map((l) => l.languageTag)).code as string;
+// Telefon v angleščini v Sloveniji dobi slovenščino (homeLanguage, enako kot splet).
+function deviceLanguage(): string {
+  const code = detectLanguage(getLocales().map((l) => l.languageTag)).code as string;
+  try {
+    return homeLanguage(code, getCalendars()[0]?.timeZone || "");
+  } catch {
+    return code;
+  }
+}
 
 let lang = deviceLanguage();
 let dicts: Dict[] = [];

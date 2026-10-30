@@ -1,13 +1,13 @@
 // Prijava: e-naslov in geslo ali »Prijava z Apple« (iPhone, iPad). Nov račun z Apple potrebuje še
 // datum rojstva in strinjanje (ista pravila starosti kot registracija, server/accounts/age.js).
 import React, { useEffect, useState } from "react";
-import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
+import { KeyboardAvoidingView, Linking, Platform, Text, View } from "react-native";
 import { Link, router } from "expo-router";
 import * as AppleAuthentication from "expo-apple-authentication";
 import * as Crypto from "expo-crypto";
-import { api, ApiError, randomString } from "@/lib/api";
+import { api, ApiError, randomString, webUrl } from "@/lib/api";
 import { useSession } from "@/lib/session";
-import { t } from "@/lib/i18n";
+import { currentLanguage, t } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
 import { Banner, Body, Button, Card, Field, Screen, Title } from "@/components/ui";
 import { BirthDateField, Check, PrivacyLink, birthIso, type Birth } from "@/components/forms";
@@ -115,6 +115,12 @@ export default function SignIn() {
           <Text style={{ color: th.text, fontSize: 32, fontWeight: "800" }}>{brand.name}</Text>
           <Body muted center>{t("mob.tagline")}</Body>
         </View>
+        {/* Prijavljen v brskalniku (npr. aplikacijo je prenesel s spletne strani): stran /prenesi tam
+            odpre aplikacijo že prijavljeno (prijava.tsx), brez vpisa gesla. */}
+        <Card style={{ alignItems: "center" }}>
+          <Body>{t("mob.fromWeb")}</Body>
+          <Button title={t("mob.fromWebBtn")} kind="secondary" onPress={() => Linking.openURL(webUrl(`/prenesi?app=1&lang=${encodeURIComponent(currentLanguage())}`)).catch(() => {})} style={{ alignSelf: "stretch" }} />
+        </Card>
         {appleOk ? (
           <>
             <AppleAuthentication.AppleAuthenticationButton

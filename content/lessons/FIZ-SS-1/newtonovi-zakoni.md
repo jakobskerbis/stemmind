@@ -192,3 +192,20 @@ Pojemek je $4\,\mathrm{m/s^2}$ (negativen pospešek pomeni zaviranje), zavorna p
 - Kaže nasprotno od gibanja.
 + Enaka je nič.
 > Hitrost je stalna, zato je pospešek nič. Po drugem zakonu je tudi rezultanta nič. Za enakomerno gibanje sila ni potrebna.
+
+:::simboli
+F_{\mathrm{r}} | rezultanta sil | F_\mathrm{r} = m\,a | N | F_r = 0: telo miruje ali se giblje premo enakomerno
+m | masa | | kg
+a | pospešek | a = \dfrac{F_\mathrm{r}}{m} | m/s^2
+v | hitrost | | m/s
+v_0 | začetna hitrost | | m/s
+F | sila (potisna ali vlečna) | | N
+F_{\mathrm{tr}} | sila trenja | F_\mathrm{tr} = k_\mathrm{tr}\,F_\mathrm{p} | N
+\vec F_{12} | sila prvega telesa na drugo | \vec F_{21} = -\vec F_{12} | N | tretji Newtonov zakon
+\vec F_{21} | sila drugega telesa na prvo | | N
+F_{\mathrm{p}} | sila podlage | | N | to kaže tehtnica
+F_{\mathrm{g}} | teža | F_\mathrm{g} = m\,g | N
+g | težni pospešek | | m/s^2 | približno 9,8 m/s²
+s | pot | s = \dfrac{1}{2}a t^2 | m | velja pri v₀ = 0
+t | čas | | s
+:::
