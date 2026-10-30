@@ -90,6 +90,19 @@ export const ITEMS = [
   ...KNOWLEDGE,
 ];
 export const ITEM = Object.fromEntries(ITEMS.map((x) => [x.id, x]));
+
+// Tedenske posodobitve (j, 30. 10. 2026; docs/kozmetika-posodobitve.md): dan, ko je predmet prišel v
+// aplikacijo. Teden dni ga trgovina in Zbirke kažejo z oznako »Novo«. Nov predmet = vrstica tukaj.
+export const ADDED = {
+  ...Object.fromEntries(["hat_flame", "bg_nebula", "outfit_starcape", "pot_blackhole", "pot_comet", "pot_starcrown", "kind_phoenix", "kind_whale"].map((id) => [id, "2026-10-30"])),
+};
+export const NEW_DAYS = 7;
+// Splošno: datum »YYYY-MM-DD« je mlajši od NEW_DAYS dni (tudi za nove vrste iger, oznaka .gm-new v games.css).
+export function isNewDate(d, now = Date.now()) {
+  const age = now - Date.parse(`${d}T00:00:00Z`);
+  return !!d && age >= 0 && age < NEW_DAYS * 864e5;
+}
+export const isNew = (id, now = Date.now()) => isNewDate(ADDED[baseId(id)], now);
 // Predmet za id iz inventarja (tudi sezonski »pass_coat~2026-1«).
 export const itemOf = (id) => ITEM[baseId(id)] || null;
 // Predali, v katerih nosiš več predmetov hkrati (seznam id-jev, največ MULTI_MAX). Predmeta na istem

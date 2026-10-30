@@ -2,7 +2,7 @@
 // znanja z vnaprej vidnimi pogoji in pogled »preglej« (katera snov in kdaj je prinesla predmet).
 import { t } from "./i18n.js";
 import { icon } from "./icons.js";
-import { avatarSvg, itemName, itemOf, DEFAULT_AVATAR, isWorn, wear, takeOff, slotFull, MULTI_MAX } from "./avatar.js";
+import { avatarSvg, itemName, itemOf, DEFAULT_AVATAR, isNew, isWorn, wear, takeOff, slotFull, MULTI_MAX } from "./avatar.js";
 import { COLLECTIONS, KNOWLEDGE, PASS_REWARDS, AWARD_MIN, baseId, variantOf, seasonLabel, elementTile } from "./zbirke.js";
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -104,7 +104,7 @@ function card(id) {
   const shown = data.showcase.includes(id);
   return `<button type="button" class="zb-card gm-r-${x.rarity}${own ? "" : " zb-locked"}${on ? " on" : ""}" data-zbopen="${esc(id)}">
     <span class="zb-thumb">${itemThumb(id, 72, DEFAULT_AVATAR)}${own ? "" : `<span class="zb-lock">${icon("lock")}</span>`}${shown ? `<span class="zb-star" title="${esc(t("zb.showcase"))}">${icon("star")}</span>` : ""}</span>
-    <b>${esc(itemName(x, lang()))}</b>
+    ${isNew(id) ? `<span class="gm-new">${esc(t("games.new"))}</span>` : ""}<b>${esc(itemName(x, lang()))}</b>
     <small>${own ? esc(on ? t("games.wearing") : t(`games.rarity.${x.rarity}`)) : esc(x.collection === "pass" ? t("zb.needPassShort", { tier: x.tier }) : x.need?.xp ? `${num(x.need.xp)} XP` : x.need?.games ? `${num(Math.min(data?.games?.correct || 0, x.need.games))}/${num(x.need.games)}` : x.need?.cleared ? `${Math.min(data?.games?.cleared || 0, x.need.cleared)}/${x.need.cleared}` : t("zb.locked"))}</small>
   </button>`;
 }

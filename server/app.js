@@ -942,7 +942,7 @@ export function createApp(store, opts = {}) {
   mountGradiva(app, store, { loadStudent, accounts }); // povzetek na eni strani, zvočni povzetek, delovni listi
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress, avatars, knowledge });
-  mountAvatar(app, avatars, { loadStudent });
+  mountAvatar(app, avatars, { loadStudent, trendsFile: opts.trendsFile ?? null });
   mountKnowledge(app, knowledge, { loadStudent, avatars });
   mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
   mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup, modelCapFor: (id) => accounts?.modelCapFor?.(id) ?? null });
