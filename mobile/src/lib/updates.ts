@@ -40,28 +40,34 @@ async function jsUpdateReady(): Promise<boolean> {
 }
 
 // Prenos APK v predpomnilnik in sistemska namestitev. Napredek 0–100.
-async function installApk(url: string, onProgress: (pct: number) => void) {
+async function installApk(url: string, onProgress: (pct: number) => void, started: (dl: FileSystem.DownloadResumable) => void) {
   const file = `${FileSystem.cacheDirectory}posodobitev.apk`;
   await FileSystem.deleteAsync(file, { idempotent: true });
   const dl = FileSystem.createDownloadResumable(url, file, {}, (p) => {
     if (p.totalBytesExpectedToWrite > 0) onProgress(Math.min(100, Math.round((100 * p.totalBytesWritten) / p.totalBytesExpectedToWrite)));
   });
+  started(dl);
   const r = await dl.downloadAsync();
   if (!r || r.status !== 200) throw new Error(`download ${r?.status}`);
   const data = await FileSystem.getContentUriAsync(r.uri);
   await IntentLauncher.startActivityAsync("android.intent.action.VIEW", { data, type: APK_MIME, flags: FLAG_GRANT_READ_URI_PERMISSION });
 }
 
-// Vrne napredek prenosa APK (0–100) ali null, ko se nič ne prenaša.
-export function useAppUpdates(active: boolean): number | null {
+// Vrne napredek prenosa APK (0–100) ali null, ko se nič ne prenaša, in preklic prenosa (gumb nazaj).
+export function useAppUpdates(active: boolean): [number | null, () => void] {
   const [progress, setProgress] = useState<number | null>(null);
   const last = useRef(0);
+  const download = useRef<FileSystem.DownloadResumable | null>(null);
+  const cancelled = useRef(false);
   const asked = useRef(false); // vprašamo največ enkrat na zagon
 
   const check = useCallback(async () => {
     if (asked.current || Date.now() - last.current < RECHECK) return;
     last.current = Date.now();
-    const apk = await newerApk().catch(() => null);
+    const apk = await newerApk().catch(() => {
+      last.current = 0; // brez povezave: poskusimo znova ob naslednji vrnitvi v aplikacijo
+      return null;
+    });
     if (apk) {
       asked.current = true;
       Alert.alert(t("mob.updateTitle"), t("mob.updateApk"), [
@@ -70,9 +76,15 @@ export function useAppUpdates(active: boolean): number | null {
           text: t("mob.updateNow"),
           onPress: () => {
             setProgress(0);
-            installApk(apk, setProgress)
-              .catch(() => Linking.openURL(webUrl("/prenesi")).catch(() => {})) // stran za ročni prenos
-              .finally(() => setProgress(null));
+            cancelled.current = false;
+            installApk(apk, setProgress, (dl) => (download.current = dl))
+              .catch(() => {
+                if (!cancelled.current) Linking.openURL(webUrl("/prenesi")).catch(() => {}); // stran za ročni prenos
+              })
+              .finally(() => {
+                download.current = null;
+                setProgress(null);
+              });
           },
         },
       ]);
@@ -94,5 +106,11 @@ export function useAppUpdates(active: boolean): number | null {
     return () => sub.remove();
   }, [active, check]);
 
-  return progress;
+  const cancel = useCallback(() => {
+    if (!download.current) return;
+    cancelled.current = true;
+    download.current.cancelAsync().catch(() => {});
+  }, []);
+
+  return [progress, cancel];
 }

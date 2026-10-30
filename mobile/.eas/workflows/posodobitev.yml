@@ -20,6 +20,8 @@ jobs:
   objavi:
     name: Objava na kanal direct
     type: update
+    # Isto okolje spremenljivk EAS kot gradnja "direct" (distribution internal → preview), sicer se prstni odtis razlikuje.
+    environment: preview
     env:
       EXPO_PUBLIC_CHANNEL: direct
     params:

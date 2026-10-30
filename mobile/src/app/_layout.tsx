@@ -19,7 +19,7 @@ function Root() {
   const th = useTheme();
   useLanguage();
   // Nova različica: ob prijavi (in po nekaj urah v ozadju) ponudi posodobitev na en klik (src/lib/updates.ts).
-  const updating = useAppUpdates(ready && signedIn);
+  const [updating, cancelUpdate] = useAppUpdates(ready && signedIn);
 
   useEffect(() => {
     if (ready) SplashScreen.hideAsync().catch(() => {});
@@ -59,8 +59,8 @@ function Root() {
           <Stack.Screen name="delete-account" options={{ title: t("mob.deleteAccount"), presentation: "modal" }} />
         </Stack.Protected>
       </Stack>
-      {/* Prenos novega APK; gumb nazaj ga ne zapre, ker prenosa ni mogoče preklicati. */}
-      <Modal transparent visible={updating !== null} animationType="fade" statusBarTranslucent onRequestClose={() => {}}>
+      {/* Prenos novega APK; gumb nazaj prekliče prenos. */}
+      <Modal transparent visible={updating !== null} animationType="fade" statusBarTranslucent onRequestClose={cancelUpdate}>
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(0,0,0,0.4)", padding: 24 }}>
           <View style={{ backgroundColor: th.surface, borderColor: th.border, borderWidth: 1, borderRadius: 16, padding: 24, alignItems: "center", gap: 12, minWidth: 240 }}>
             <ActivityIndicator color={th.accent} />
