@@ -1,4 +1,4 @@
-// Univerzitetni študijski programi (1. stopnja): seznam s strežnika in izbirnik.
+// Univerzitetni študijski programi (1. stopnja in enoviti magistrski): seznam s strežnika in izbirnik.
 import { t } from "./i18n.js";
 let cache = null;
 

@@ -4266,6 +4266,806 @@
     ],
     "UNI-ULFGG-VBETON": [
       "fiz-jeklo-les-beton"
+    ],
+    "UNI-ULFRI-FIZ": [
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULFRI-RACTEH": [
+      "fiz-moderna-fizika",
+      "fiz-kvantna-mehanika",
+      "fiz-fizika-trdne-snovi"
+    ],
+    "UNI-ULFE-MEHTD": [
+      "fiz-splosna-mehanika",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-ULFE-OE1": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-ULFE-ATOPT": [
+      "fiz-optika-fotonika",
+      "fiz-moderna-fizika"
+    ],
+    "UNI-ULFE-OE2": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-ULFE-MERITVE": [
+      "fiz-merilna-tehnika",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-ULFE-ELSTROJ": [
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-ULFE-MERINST": [
+      "fiz-merilna-tehnika",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-ULFE-POLPREL": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-fizika-trdne-snovi"
+    ],
+    "UNI-ULFE-AVS": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-ULFE-ENOK": [
+      "fiz-obnovljivi-viri-energija",
+      "fiz-elektricni-stroji-energetika",
+      "geo-varstvo-okolja-monitoring"
+    ],
+    "UNI-ULFE-ANSIS": [
+      "fiz-regulacija-mehatronika",
+      "mat-diferencialne-enacbe"
+    ],
+    "UNI-ULFE-GRADSV": [
+      "fiz-regulacija-mehatronika",
+      "fiz-merilna-tehnika"
+    ],
+    "UNI-ULFE-OSNROB": [
+      "fiz-regulacija-mehatronika",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-ULFE-ELAVT": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-ULFE-IKRS": [
+      "fiz-regulacija-mehatronika",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-ULFE-EKS": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-merilna-tehnika"
+    ],
+    "UNI-ULFE-OPTOEL": [
+      "fiz-optika-fotonika",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-ULFE-LINEV": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-elektrotehnika-vezja"
+    ],
+    "UNI-ULFE-ANEV": [
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-ULFE-EEOMR": [
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-ULFE-MODES": [
+      "fiz-elektricni-stroji-energetika",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-ULFE-OSNMEH": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-ULFE-REGTEH": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-ULFE-EESIS": [
+      "fiz-elektricni-stroji-energetika",
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-ULFE-ENELEK": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-ULFE-VNTEH": [
+      "fiz-elektricni-stroji-energetika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-ULFE-ELDIN": [
+      "fiz-elektrodinamika"
+    ],
+    "UNI-ULFE-DIGKOM": [
+      "fiz-elektronika-pretvorniki",
+      "rac-omrezja"
+    ],
+    "UNI-ULFE-TOMM": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-ULFE-SSTEH": [
+      "fiz-akustika-hrup",
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULFE-AKUST": [
+      "fiz-akustika-hrup",
+      "fiz-nihanje-valovanje"
+    ],
+    "UNI-ULFE-RTVS": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-nihanje-valovanje"
+    ],
+    "UNI-UMFERI-FIZ1": [
+      "fiz-splosna-mehanika",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-UMFERI-OE1": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UMFERI-ETM": [
+      "fiz-materiali",
+      "fiz-fizika-trdne-snovi"
+    ],
+    "UNI-UMFERI-OE2": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UMFERI-MET": [
+      "fiz-merilna-tehnika",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-UMFERI-FIZV": [
+      "fiz-nihanje-valovanje",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-UMFERI-FIZS": [
+      "fiz-moderna-fizika",
+      "fiz-fizika-trdne-snovi"
+    ],
+    "UNI-UMFERI-OEL": [
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFERI-EEP": [
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFERI-REG1": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-TS": [
+      "fiz-regulacija-mehatronika",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-UMFERI-SENZ": [
+      "fiz-merilna-tehnika",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-MID": [
+      "fiz-regulacija-mehatronika",
+      "mat-modeliranje"
+    ],
+    "UNI-UMFERI-REG2": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-IE": [
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFERI-GSV": [
+      "fiz-regulacija-mehatronika",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-UMFERI-OR": [
+      "fiz-regulacija-mehatronika",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-UMFERI-UAV": [
+      "fiz-elektrotehnika-vezja"
+    ],
+    "UNI-UMFERI-RNV": [
+      "fiz-elektronika-pretvorniki",
+      "rac-grafika-cad"
+    ],
+    "UNI-UMFERI-MEL": [
+      "fiz-merilna-tehnika"
+    ],
+    "UNI-UMFERI-EV": [
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFERI-ASAV": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFERI-AAV": [
+      "fiz-akustika-hrup"
+    ],
+    "UNI-UMFERI-NVE": [
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFERI-ELDIN": [
+      "fiz-analiticna-mehanika",
+      "fiz-matematicna-fizika-sistemi",
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFERI-MIV": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-EP": [
+      "fiz-elektricni-stroji-energetika",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-ENE": [
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFERI-EEO": [
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFERI-KRS": [
+      "fiz-regulacija-mehatronika",
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFERI-RMN": [
+      "fiz-elektricni-stroji-energetika",
+      "mat-numericne-metode"
+    ],
+    "UNI-UMFERI-PEEG": [
+      "fiz-obnovljivi-viri-energija",
+      "fiz-jedrska-fizika-energetika"
+    ],
+    "UNI-UMFERI-PREE": [
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFERI-MVEM": [
+      "fiz-regulacija-mehatronika",
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFERI-SERVO1": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-NTV": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UMFERI-EMV": [
+      "fiz-elektrodinamika",
+      "fiz-nihanje-valovanje"
+    ],
+    "UNI-UMFERI-KS": [
+      "fiz-elektronika-pretvorniki",
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-AVS": [
+      "fiz-akustika-hrup",
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-ODS": [
+      "fiz-elektrodinamika",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFERI-OPK": [
+      "fiz-optika-fotonika"
+    ],
+    "UNI-UMFERI-MATER1": [
+      "fiz-materiali",
+      "kem-trdnine-kristali",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-UMFERI-MATER2": [
+      "fiz-materiali",
+      "kem-kovine-korozija",
+      "fiz-trdnost"
+    ],
+    "UNI-UMFERI-MMH": [
+      "fiz-statika",
+      "fiz-dinamika-togih-teles",
+      "fiz-trdnost"
+    ],
+    "UNI-UMFERI-TD": [
+      "fiz-strojni-elementi-konstruiranje",
+      "rac-grafika-cad"
+    ],
+    "UNI-UMFERI-SMEH": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-OEM": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UMFERI-VZS": [
+      "fiz-nihanje-valovanje",
+      "fiz-moderna-fizika"
+    ],
+    "UNI-UMFERI-EMH": [
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFERI-REGM": [
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-STREL": [
+      "fiz-strojni-elementi-konstruiranje",
+      "fiz-trdnost"
+    ],
+    "UNI-UMFERI-KT": [
+      "fiz-regulacija-mehatronika",
+      "fiz-hidravlicni-pogoni"
+    ],
+    "UNI-UMFERI-PG": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFERI-HIP": [
+      "fiz-hidravlicni-pogoni"
+    ],
+    "UNI-UMFERI-ROBZ": [
+      "fiz-regulacija-mehatronika",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFERI-OVE": [
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-ULMF-MEDBIOFIZ": [
+      "fiz-biofizika-medicina",
+      "fiz-splosna-mehanika",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULMF-RADIOL": [
+      "fiz-biofizika-medicina",
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-PREDKLIN": [
+      "fiz-materiali",
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-IZBBIOFIZ": [
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-ULVF-SLIKDIAG": [
+      "fiz-biofizika-medicina",
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULVF-BIOFIZDIAG": [
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-ULFGG-GUVODGR": [
+      "fiz-mehanika-konstrukcij",
+      "fiz-jeklo-les-beton"
+    ],
+    "UNI-ULFGG-GSTATDIN": [
+      "fiz-statika",
+      "fiz-dinamika-togih-teles",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-ULFGG-GSTAVB1": [
+      "fiz-energetika-stavb-okolje",
+      "fiz-prenos-toplote"
+    ],
+    "UNI-ULFGG-GTEHNOL": [
+      "fiz-izdelovalne-tehnologije",
+      "kem-keramika-kompoziti-gradiva",
+      "eko-management-organizacija"
+    ],
+    "UNI-ULFGG-GTRDNOST": [
+      "fiz-trdnost",
+      "fiz-mehanika-kontinuov"
+    ],
+    "UNI-ULFGG-GSTATLIN": [
+      "fiz-mehanika-konstrukcij",
+      "fiz-statika"
+    ],
+    "UNI-ULFGG-GSTAVB2": [
+      "fiz-energetika-stavb-okolje",
+      "fiz-prenos-toplote"
+    ],
+    "UNI-ULFGG-GBETON": [
+      "fiz-jeklo-les-beton",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-ULFGG-GINZHID": [
+      "fiz-hidravlika-vodni-tokovi",
+      "geo-hidrologija-vodni-viri"
+    ],
+    "UNI-ULFGG-GJEKL1": [
+      "fiz-jeklo-les-beton",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-ULFGG-GPLOSK": [
+      "fiz-mehanika-konstrukcij",
+      "fiz-mehanika-kontinuov",
+      "mat-numericne-metode"
+    ],
+    "UNI-ULFGG-GMASIV": [
+      "fiz-jeklo-les-beton",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-ULFGG-GLESKON": [
+      "fiz-jeklo-les-beton",
+      "fiz-lesarstvo"
+    ],
+    "UNI-ULFGG-GNACSTAV": [
+      "fiz-energetika-stavb-okolje",
+      "rac-grafika-cad"
+    ],
+    "UNI-ULFGG-GBIOKLIM": [
+      "fiz-energetika-stavb-okolje",
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-ULFGG-GPRENOVA": [
+      "fiz-energetika-stavb-okolje",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-ULFGG-GFIZGEO": [
+      "fiz-splosna-mehanika",
+      "fiz-merjenje-napake",
+      "fiz-nihanje-valovanje"
+    ],
+    "UNI-ULFGG-GGRINFRA": [
+      "fiz-mehanika-konstrukcij",
+      "geo-inzenirska-geologija-geotehnika"
+    ],
+    "UNI-UMFS-MEH1": [
+      "fiz-statika",
+      "fiz-splosna-mehanika"
+    ],
+    "UNI-UMFS-MEH2": [
+      "fiz-trdnost",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFS-MEH3": [
+      "fiz-dinamika-togih-teles",
+      "fiz-analiticna-mehanika",
+      "fiz-nihanje-valovanje"
+    ],
+    "UNI-UMFS-MAT1": [
+      "fiz-materiali",
+      "kem-kovine-korozija"
+    ],
+    "UNI-UMFS-MAT2": [
+      "fiz-materiali",
+      "kem-kovine-korozija",
+      "kem-polimeri",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-UMFS-TKF": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UMFS-VZS": [
+      "fiz-nihanje-valovanje",
+      "fiz-optika-fotonika",
+      "fiz-moderna-fizika"
+    ],
+    "UNI-UMFS-TD": [
+      "fiz-strojni-elementi-konstruiranje",
+      "rac-grafika-cad"
+    ],
+    "UNI-UMFS-TERMO": [
+      "fiz-termodinamika-inzenirska",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-UMFS-PT1": [
+      "fiz-izdelovalne-tehnologije",
+      "fiz-materiali"
+    ],
+    "UNI-UMFS-MT": [
+      "fiz-mehanika-tekocin",
+      "fiz-hidravlika-vodni-tokovi"
+    ],
+    "UNI-UMFS-SE": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFS-PT2": [
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFS-PRT": [
+      "fiz-prenos-toplote",
+      "fiz-termodinamika-inzenirska"
+    ],
+    "UNI-UMFS-ET": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFS-MK": [
+      "fiz-merilna-tehnika",
+      "mat-statistika"
+    ],
+    "UNI-UMFS-OPOS": [
+      "fiz-procesna-tehnika",
+      "kem-kemijsko-inzenirstvo-osnove",
+      "geo-varstvo-okolja-monitoring"
+    ],
+    "UNI-UMFS-ESN": [
+      "fiz-turbinski-stroji-hidroenergija",
+      "fiz-termodinamika-inzenirska",
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-UMFS-OK": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFS-TK": [
+      "fiz-regulacija-mehatronika",
+      "mat-diferencialne-enacbe"
+    ],
+    "UNI-UMFS-PS": [
+      "fiz-prenos-snovi-separacije",
+      "kem-transportni-pojavi"
+    ],
+    "UNI-UMFS-EM": [
+      "fiz-merilna-tehnika",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-UMFS-TPN": [
+      "fiz-termodinamika-inzenirska",
+      "fiz-prenos-toplote",
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFS-MNZ1": [
+      "fiz-termodinamika-inzenirska",
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFS-POT": [
+      "fiz-procesna-tehnika",
+      "kem-obdelava-voda-odpadki",
+      "geo-odpadki-odpadne-vode-tehnologije"
+    ],
+    "UNI-UMFS-HS1": [
+      "fiz-turbinski-stroji-hidroenergija",
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-UMFS-MKON": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFS-SK": [
+      "fiz-mehanika-konstrukcij",
+      "fiz-jeklo-les-beton",
+      "fiz-trdnost"
+    ],
+    "UNI-UMFS-SM": [
+      "fiz-izdelovalne-tehnologije",
+      "fiz-materiali"
+    ],
+    "UNI-UMFS-OPR": [
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFS-OPS": [
+      "fiz-izdelovalne-tehnologije",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFS-RIP": [
+      "fiz-izdelovalne-tehnologije",
+      "rac-grafika-cad"
+    ],
+    "UNI-UMFS-MSOS": [
+      "fiz-regulacija-mehatronika",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFS-MS": [
+      "fiz-izdelovalne-tehnologije",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFS-KU": [
+      "fiz-energetika-stavb-okolje",
+      "fiz-termodinamika-inzenirska"
+    ],
+    "UNI-UMFS-EPV": [
+      "fiz-termodinamika-inzenirska",
+      "geo-varstvo-okolja-monitoring"
+    ],
+    "UNI-UMFS-SRE": [
+      "fiz-obnovljivi-viri-energija",
+      "fiz-energetika-stavb-okolje"
+    ],
+    "UNI-UMFS-OVE": [
+      "fiz-obnovljivi-viri-energija"
+    ],
+    "UNI-UMFS-TRS": [
+      "fiz-turbinski-stroji-hidroenergija",
+      "fiz-termodinamika-inzenirska"
+    ],
+    "UNI-UMFS-HT": [
+      "fiz-termodinamika-inzenirska",
+      "fiz-energetika-stavb-okolje"
+    ],
+    "UNI-UMFS-HP": [
+      "fiz-hidravlicni-pogoni",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFS-KM": [
+      "fiz-materiali"
+    ],
+    "UNI-UMFS-DN": [
+      "fiz-strojni-elementi-konstruiranje",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFS-ZG": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFS-DSN": [
+      "fiz-strojni-elementi-konstruiranje",
+      "fiz-trdnost"
+    ],
+    "UNI-UMFS-PG": [
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFS-VKS": [
+      "fiz-jeklo-les-beton",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFS-VOZ": [
+      "fiz-dinamika-togih-teles",
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFS-PO": [
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFS-ROBZ": [
+      "fiz-regulacija-mehatronika",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFS-VZD": [
+      "fiz-strojni-elementi-konstruiranje",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFS-KT": [
+      "fiz-regulacija-mehatronika",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-UMFS-MEHM": [
+      "fiz-statika",
+      "fiz-trdnost",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-UMFS-OE": [
+      "fiz-elektrotehnika-vezja",
+      "fiz-elektrika-magnetizem"
+    ],
+    "UNI-UMFS-MEL": [
+      "fiz-merilna-tehnika",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-UMFS-SMEH": [
+      "fiz-regulacija-mehatronika",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFS-REG": [
+      "fiz-regulacija-mehatronika",
+      "mat-diferencialne-enacbe"
+    ],
+    "UNI-UMFS-ELM": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-elektrotehnika-vezja"
+    ],
+    "UNI-UMFS-SEN": [
+      "fiz-merilna-tehnika",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-UMFS-IE": [
+      "fiz-elektronika-pretvorniki",
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFS-OR": [
+      "fiz-regulacija-mehatronika",
+      "mat-linearna-algebra"
+    ],
+    "UNI-UMFS-EEP": [
+      "fiz-elektricni-stroji-energetika"
+    ],
+    "UNI-UMFS-VPS": [
+      "fiz-regulacija-mehatronika",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-UMFGPA-FIZ": [
+      "fiz-splosna-fizika-uvod",
+      "fiz-splosna-mehanika",
+      "fiz-toplota-temperatura"
+    ],
+    "UNI-UMFGPA-GM1": [
+      "fiz-statika",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFGPA-GM2": [
+      "fiz-trdnost",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFGPA-STAV1": [
+      "fiz-energetika-stavb-okolje",
+      "fiz-jeklo-les-beton"
+    ],
+    "UNI-UMFGPA-GF": [
+      "fiz-energetika-stavb-okolje",
+      "fiz-prenos-toplote",
+      "fiz-akustika-hrup"
+    ],
+    "UNI-UMFGPA-MTH": [
+      "fiz-hidravlika-vodni-tokovi",
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-UMFGPA-PGP1": [
+      "fiz-mehanika-konstrukcij",
+      "geo-gis-kartografija-geodezija"
+    ],
+    "UNI-UMFGPA-PGP2": [
+      "fiz-mehanika-konstrukcij",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-UMFGPA-GM3": [
+      "fiz-mehanika-konstrukcij",
+      "fiz-statika"
+    ],
+    "UNI-UMFGPA-OPK": [
+      "fiz-mehanika-konstrukcij",
+      "fiz-jeklo-les-beton"
+    ],
+    "UNI-UMFGPA-LK": [
+      "fiz-jeklo-les-beton",
+      "fiz-mehanika-konstrukcij",
+      "fiz-lesarstvo"
+    ],
+    "UNI-UMFGPA-TGPM": [
+      "fiz-izdelovalne-tehnologije",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFGPA-BK": [
+      "fiz-jeklo-les-beton",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFGPA-JK": [
+      "fiz-jeklo-les-beton",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFGPA-STAV2": [
+      "fiz-energetika-stavb-okolje"
+    ],
+    "UNI-UMFGPA-VGD": [
+      "fiz-varnost-delovno-okolje",
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-UMFGPA-OVS": [
+      "fiz-jeklo-les-beton",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-UMFGPA-MCZ": [
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFGPA-GVP": [
+      "fiz-izdelovalne-tehnologije",
+      "kem-keramika-kompoziti-gradiva"
+    ],
+    "UNI-UMFGPA-CKMP": [
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFGPA-MZ": [
+      "fiz-jeklo-les-beton",
+      "fiz-mehanika-konstrukcij",
+      "fiz-potresno-inzenirstvo"
+    ],
+    "UNI-UMFGPA-JZ": [
+      "fiz-jeklo-les-beton",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFGPA-HI": [
+      "fiz-energetika-stavb-okolje"
+    ],
+    "UNI-UMMF-BIOFIZ": [
+      "fiz-biofizika-medicina",
+      "fiz-splosna-fizika-uvod"
+    ],
+    "UNI-UMMF-RADIO": [
+      "fiz-biofizika-medicina",
+      "bio-anatomija-histologija"
+    ],
+    "UNI-UMMF-IVBIOFIZ": [
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-UMMF-MEDTEH": [
+      "fiz-merilna-tehnika",
+      "fiz-biofizika-medicina"
+    ],
+    "UNI-ULFFA-PINDF": [
+      "fiz-procesna-tehnika",
+      "eko-management-organizacija"
     ]
   },
   "courseItems": {

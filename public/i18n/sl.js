@@ -83,6 +83,7 @@ export default {
   "path.year": "{n}. letnik",
   "path.electives": "Izbirni predmeti",
   "path.uniNote": "{faculty}, {program} (UN, 1. stopnja). Predmeti in teme sledijo javnemu predmetniku ({year}); jeziki, praksa in zaključno delo niso zajeti.",
+  "path.emsNote": "{faculty}, {program} (enoviti magistrski študij). Predmeti in teme sledijo javnemu predmetniku ({year}); zajeti so le prvi letniki, brez jezikov in prakse.",
   "path.uniSource": "Uradni predmetnik",
   "path.curriculumNote": "Učne vsebine (teme, naloge, učbenik) so za zdaj po slovenskem učnem načrtu in v slovenščini. Inštruktor ti jih razloži v tvojem jeziku.",
   "mode.new": "Nova snov",
@@ -548,7 +549,7 @@ export default {
   "lp.ss": "Srednja šola",
   "lp.ssSub": "1.–4. letnik",
   "lp.uni": "Fakulteta",
-  "lp.uniLevel": "1. stopnja",
+  "lp.uniLevel": "1. stopnja, enoviti magistrski",
   "lp.or": "Osnovna raven",
   "lp.orSub": "matura iz matematike na osnovni ravni",
   "lp.vr": "Višja raven",
@@ -562,6 +563,7 @@ export default {
   "lp.qFaculty": "Katera fakulteta?",
   "lp.qProgram": "Kateri študijski program?",
   "lp.uniSub": "univerzitetni, 1. stopnja",
+  "lp.emsSub": "enoviti magistrski (prvi letniki)",
 
   // uvodni ogled
   "tour.skip": "Preskoči",

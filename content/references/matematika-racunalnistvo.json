@@ -4695,6 +4695,747 @@
     ],
     "UNI-ULFGG-VOPRAZ": [
       "mat-optimizacija-or"
+    ],
+    "UNI-ULFRI-P1": [
+      "rac-java-oop",
+      "rac-algoritmi-ps"
+    ],
+    "UNI-ULFRI-OMA": [
+      "mat-analiza-1",
+      "mat-predznanje-funkcije",
+      "mat-analiza-vec-spremenljivk",
+      "mat-diferencialne-enacbe"
+    ],
+    "UNI-ULFRI-DS": [
+      "mat-logika-mnozice",
+      "mat-diskretna-kombinatorika",
+      "mat-teorija-stevil",
+      "mat-teorija-grafov"
+    ],
+    "UNI-ULFRI-ODV": [
+      "rac-digitalna-vezja-krmiljenje",
+      "rac-arhitektura"
+    ],
+    "UNI-ULFRI-P2": [
+      "rac-c",
+      "rac-algoritmi-ps"
+    ],
+    "UNI-ULFRI-LA": [
+      "mat-linearna-algebra"
+    ],
+    "UNI-ULFRI-ARS": [
+      "rac-arhitektura"
+    ],
+    "UNI-ULFRI-RK": [
+      "rac-omrezja"
+    ],
+    "UNI-ULFRI-OIS": [
+      "rac-informatika-pisarna",
+      "eko-management-organizacija"
+    ],
+    "UNI-ULFRI-APS1": [
+      "rac-algoritmi-ps"
+    ],
+    "UNI-ULFRI-OPB": [
+      "rac-podatkovne-baze"
+    ],
+    "UNI-ULFRI-VS": [
+      "mat-verjetnost",
+      "mat-statistika"
+    ],
+    "UNI-ULFRI-ORS": [
+      "rac-arhitektura",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-ULFRI-IRZ": [
+      "rac-teorija-racunanja"
+    ],
+    "UNI-ULFRI-TIS": [
+      "mat-kripto-kodiranje",
+      "mat-fourier-transformacije"
+    ],
+    "UNI-ULFRI-APS2": [
+      "rac-algoritmi-ps"
+    ],
+    "UNI-ULFRI-OS": [
+      "rac-operacijski-sistemi",
+      "rac-linux-orodja"
+    ],
+    "UNI-ULFRI-OUI": [
+      "rac-umetna-inteligenca",
+      "rac-strojno-ucenje"
+    ],
+    "UNI-ULFRI-TPO": [
+      "rac-programsko-inzenirstvo"
+    ],
+    "UNI-ULFRI-MATMOD": [
+      "mat-modeliranje",
+      "mat-numericne-metode",
+      "mat-numericna-linearna-algebra"
+    ],
+    "UNI-ULFRI-PPJ": [
+      "rac-paradigme-jeziki",
+      "mat-logika-mnozice"
+    ],
+    "UNI-ULFRI-SPLPROG": [
+      "rac-ui-splet"
+    ],
+    "UNI-ULFRI-PREV": [
+      "rac-teorija-racunanja",
+      "rac-paradigme-jeziki"
+    ],
+    "UNI-ULFRI-INTSIS": [
+      "rac-strojno-ucenje",
+      "rac-umetna-inteligenca",
+      "rac-nlp"
+    ],
+    "UNI-ULFRI-RGTI": [
+      "rac-grafika-cad",
+      "rac-igre-ar"
+    ],
+    "UNI-ULFRI-UOZP": [
+      "rac-podatkovna-analiza",
+      "rac-strojno-ucenje",
+      "eko-management-organizacija"
+    ],
+    "UNI-ULFRI-PORSIS": [
+      "rac-vzporedno-racunanje",
+      "rac-omrezja"
+    ],
+    "UNI-ULFE-MAT1": [
+      "mat-analiza-1",
+      "mat-predznanje-funkcije"
+    ],
+    "UNI-ULFE-OSNPROG": [
+      "rac-algoritmi-ps",
+      "rac-python"
+    ],
+    "UNI-ULFE-MAT2": [
+      "mat-linearna-algebra",
+      "mat-analiza-vec-spremenljivk"
+    ],
+    "UNI-ULFE-PROGMK": [
+      "rac-c",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-ULFE-DIGSTR": [
+      "rac-digitalna-vezja-krmiljenje",
+      "rac-arhitektura"
+    ],
+    "UNI-ULFE-KOMSIS": [
+      "rac-omrezja",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-ULFE-MAT3": [
+      "mat-diferencialne-enacbe",
+      "mat-vektorska-analiza",
+      "mat-fourier-transformacije"
+    ],
+    "UNI-ULFE-MAT4": [
+      "mat-verjetnost",
+      "mat-statistika"
+    ],
+    "UNI-ULFE-DES": [
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-ULFE-INFSIS": [
+      "rac-podatkovne-baze",
+      "rac-informatika-pisarna"
+    ],
+    "UNI-ULFE-SIGNALI": [
+      "mat-fourier-transformacije",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-ULFE-RACSIM": [
+      "rac-znanstveno-racunanje",
+      "mat-modeliranje"
+    ],
+    "UNI-ULFE-SIGSIS": [
+      "mat-fourier-transformacije",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-ULFE-DSS": [
+      "mat-fourier-transformacije",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-ULFE-GST": [
+      "rac-strojno-ucenje",
+      "rac-nlp",
+      "fiz-akustika-hrup"
+    ],
+    "UNI-ULFE-TIIK": [
+      "mat-kripto-kodiranje",
+      "mat-verjetnost"
+    ],
+    "UNI-ULFE-INTSIS": [
+      "rac-strojno-ucenje",
+      "rac-umetna-inteligenca"
+    ],
+    "UNI-ULFE-ZSS": [
+      "mat-fourier-transformacije",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-ULFE-DOS": [
+      "mat-fourier-transformacije",
+      "fiz-elektronika-pretvorniki"
+    ],
+    "UNI-ULFE-KOMPROT": [
+      "rac-omrezja"
+    ],
+    "UNI-ULFE-NUMMET": [
+      "mat-numericne-metode"
+    ],
+    "UNI-ULFE-UVMMS": [
+      "rac-grafika-cad",
+      "fiz-akustika-hrup"
+    ],
+    "UNI-ULFE-PROG1": [
+      "rac-java-oop",
+      "rac-algoritmi-ps"
+    ],
+    "UNI-ULFE-OMA": [
+      "mat-analiza-1",
+      "mat-predznanje-funkcije",
+      "mat-analiza-vec-spremenljivk",
+      "mat-diferencialne-enacbe"
+    ],
+    "UNI-ULFE-LA": [
+      "mat-linearna-algebra"
+    ],
+    "UNI-ULFE-PROG2": [
+      "rac-c",
+      "rac-algoritmi-ps"
+    ],
+    "UNI-ULFE-MMVSEB": [
+      "rac-grafika-cad",
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULFE-INTERSIS": [
+      "rac-omrezja",
+      "rac-ui-splet"
+    ],
+    "UNI-ULFE-SPLPROG": [
+      "rac-ui-splet"
+    ],
+    "UNI-ULFE-OSNOBL": [
+      "rac-grafika-cad",
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULFE-OUI": [
+      "rac-umetna-inteligenca",
+      "rac-strojno-ucenje"
+    ],
+    "UNI-ULFE-MMSIS": [
+      "rac-grafika-cad",
+      "rac-igre-ar",
+      "rac-strojno-ucenje"
+    ],
+    "UNI-ULFE-RGTI": [
+      "rac-grafika-cad",
+      "rac-igre-ar"
+    ],
+    "UNI-ULFE-VKZV": [
+      "mat-kripto-kodiranje",
+      "rac-omrezja"
+    ],
+    "UNI-ULFE-MONTAZA": [
+      "rac-grafika-cad",
+      "fiz-barve-tisk-fotografija"
+    ],
+    "UNI-ULFE-MIS": [
+      "rac-omrezja",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-ULFE-TNUV": [
+      "rac-ui-splet",
+      "rac-igre-ar"
+    ],
+    "UNI-ULFE-UMZAZ": [
+      "rac-strojno-ucenje",
+      "rac-umetna-inteligenca"
+    ],
+    "UNI-UMFERI-ORS": [
+      "rac-arhitektura",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-UMFERI-PROG1": [
+      "rac-c",
+      "rac-paradigme-jeziki"
+    ],
+    "UNI-UMFERI-UPO": [
+      "rac-informatika-pisarna",
+      "rac-grafika-cad"
+    ],
+    "UNI-UMFERI-OSS": [
+      "rac-ui-splet",
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-DS": [
+      "mat-logika-mnozice",
+      "mat-diskretna-kombinatorika",
+      "mat-teorija-grafov",
+      "mat-teorija-stevil"
+    ],
+    "UNI-UMFERI-PROG2": [
+      "rac-java-oop",
+      "rac-c"
+    ],
+    "UNI-UMFERI-APS": [
+      "rac-algoritmi-ps"
+    ],
+    "UNI-UMFERI-ARA": [
+      "rac-algoritmi-ps",
+      "mat-kripto-kodiranje"
+    ],
+    "UNI-UMFERI-PB1": [
+      "rac-podatkovne-baze"
+    ],
+    "UNI-UMFERI-MA": [
+      "mat-analiza-1",
+      "mat-vrste-funkcijska-zaporedja"
+    ],
+    "UNI-UMFERI-RA": [
+      "rac-arhitektura"
+    ],
+    "UNI-UMFERI-OS": [
+      "rac-operacijski-sistemi",
+      "rac-linux-orodja"
+    ],
+    "UNI-UMFERI-MUR": [
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-RPO": [
+      "rac-programsko-inzenirstvo"
+    ],
+    "UNI-UMFERI-LA": [
+      "mat-linearna-algebra"
+    ],
+    "UNI-UMFERI-ICR": [
+      "rac-ui-splet"
+    ],
+    "UNI-UMFERI-UI": [
+      "rac-umetna-inteligenca",
+      "rac-strojno-ucenje"
+    ],
+    "UNI-UMFERI-PPJ": [
+      "rac-teorija-racunanja",
+      "rac-paradigme-jeziki"
+    ],
+    "UNI-UMFERI-RG": [
+      "rac-grafika-cad"
+    ],
+    "UNI-UMFERI-VGS": [
+      "rac-digitalna-vezja-krmiljenje",
+      "rac-c"
+    ],
+    "UNI-UMFERI-VERJ": [
+      "mat-verjetnost"
+    ],
+    "UNI-UMFERI-PPR": [
+      "rac-vzporedno-racunanje"
+    ],
+    "UNI-UMFERI-PE1": [
+      "rac-c",
+      "rac-python"
+    ],
+    "UNI-UMFERI-ANA1": [
+      "mat-analiza-1",
+      "mat-predznanje-funkcije"
+    ],
+    "UNI-UMFERI-DE": [
+      "mat-diferencialne-enacbe",
+      "mat-vrste-funkcijska-zaporedja",
+      "mat-fourier-transformacije",
+      "mat-analiza-vec-spremenljivk"
+    ],
+    "UNI-UMFERI-PE2": [
+      "rac-c",
+      "rac-java-oop"
+    ],
+    "UNI-UMFERI-DT": [
+      "rac-digitalna-vezja-krmiljenje",
+      "rac-arhitektura"
+    ],
+    "UNI-UMFERI-SIG": [
+      "mat-fourier-transformacije",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-UMFERI-MK": [
+      "rac-digitalna-vezja-krmiljenje",
+      "rac-c"
+    ],
+    "UNI-UMFERI-DSS": [
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-UMFERI-MRA": [
+      "rac-arhitektura",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-UMFERI-OPI": [
+      "rac-programsko-inzenirstvo"
+    ],
+    "UNI-UMFERI-KA": [
+      "rac-omrezja",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-DSK": [
+      "rac-digitalna-vezja-krmiljenje",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFERI-UVT": [
+      "rac-omrezja",
+      "fiz-nihanje-valovanje"
+    ],
+    "UNI-UMFERI-OSPO": [
+      "rac-arhitektura",
+      "rac-operacijski-sistemi"
+    ],
+    "UNI-UMFERI-PTK": [
+      "rac-python",
+      "rac-c"
+    ],
+    "UNI-UMFERI-OPJ": [
+      "rac-java-oop"
+    ],
+    "UNI-UMFERI-DOS": [
+      "mat-fourier-transformacije"
+    ],
+    "UNI-UMFERI-UPDL": [
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-UMFERI-OKO": [
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-OTAS": [
+      "rac-ui-splet",
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-ALGT": [
+      "rac-algoritmi-ps",
+      "mat-teorija-grafov"
+    ],
+    "UNI-UMFERI-PKO": [
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-ONTS": [
+      "rac-omrezja",
+      "rac-programsko-inzenirstvo"
+    ],
+    "UNI-UMFERI-IOT": [
+      "rac-omrezja",
+      "rac-digitalna-vezja-krmiljenje"
+    ],
+    "UNI-UMFERI-KOND": [
+      "rac-omrezja",
+      "rac-linux-orodja"
+    ],
+    "UNI-UMFERI-FMBO": [
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-MOBI": [
+      "rac-ui-splet",
+      "rac-igre-ar"
+    ],
+    "UNI-UMFERI-FMPI": [
+      "rac-teorija-racunanja",
+      "mat-logika-mnozice"
+    ],
+    "UNI-UMFERI-MM": [
+      "rac-grafika-cad",
+      "rac-igre-ar"
+    ],
+    "UNI-UMFERI-NKP": [
+      "rac-omrezja",
+      "rac-teorija-racunanja"
+    ],
+    "UNI-UMFERI-ISTK": [
+      "rac-ui-splet",
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-MAM": [
+      "mat-analiza-1",
+      "mat-analiza-vec-spremenljivk"
+    ],
+    "UNI-UMFERI-LAM": [
+      "mat-linearna-algebra"
+    ],
+    "UNI-UMFERI-RPR": [
+      "rac-znanstveno-racunanje",
+      "mat-numericne-metode"
+    ],
+    "UNI-UMFERI-VA": [
+      "mat-vektorska-analiza",
+      "mat-kompleksna-analiza",
+      "mat-linearna-algebra"
+    ],
+    "UNI-UMFERI-DIFA": [
+      "mat-diferencialne-enacbe",
+      "mat-fourier-transformacije",
+      "mat-pde-matematicna-fizika"
+    ],
+    "UNI-UMFERI-RPP": [
+      "rac-python",
+      "rac-algoritmi-ps"
+    ],
+    "UNI-UMFERI-OIS": [
+      "rac-programsko-inzenirstvo",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFERI-MPP": [
+      "rac-programsko-inzenirstvo",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFERI-STAT": [
+      "mat-statistika",
+      "mat-verjetnost"
+    ],
+    "UNI-UMFERI-OST": [
+      "rac-ui-splet"
+    ],
+    "UNI-UMFERI-RIS": [
+      "rac-programsko-inzenirstvo"
+    ],
+    "UNI-UMFERI-OORS": [
+      "rac-ui-splet"
+    ],
+    "UNI-UMFERI-ISSU": [
+      "rac-strojno-ucenje",
+      "rac-umetna-inteligenca"
+    ],
+    "UNI-UMFERI-PB2": [
+      "rac-podatkovne-baze"
+    ],
+    "UNI-UMFERI-AISV": [
+      "rac-programsko-inzenirstvo"
+    ],
+    "UNI-UMFERI-OIV": [
+      "rac-omrezja",
+      "mat-kripto-kodiranje"
+    ],
+    "UNI-UMFERI-MOS": [
+      "rac-umetna-inteligenca",
+      "mat-optimizacija-or"
+    ],
+    "UNI-UMFERI-RVIR": [
+      "rac-ui-splet",
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-IUP": [
+      "rac-podatkovna-analiza",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFERI-TIDS": [
+      "rac-programsko-inzenirstvo",
+      "rac-ui-splet"
+    ],
+    "UNI-UMFERI-PSSV": [
+      "rac-ui-splet"
+    ],
+    "UNI-UMFERI-AVP": [
+      "rac-podatkovna-analiza",
+      "rac-vzporedno-racunanje"
+    ],
+    "UNI-UMFERI-ZK": [
+      "rac-programsko-inzenirstvo"
+    ],
+    "UNI-UMFERI-DF": [
+      "rac-operacijski-sistemi",
+      "rac-omrezja"
+    ],
+    "UNI-UMFERI-KV": [
+      "rac-omrezja"
+    ],
+    "UNI-ULMF-RAZMED2": [
+      "mat-statistika",
+      "mat-verjetnost",
+      "mat-regresija-anova-prostorska"
+    ],
+    "UNI-ULMF-RAZDM2": [
+      "mat-statistika",
+      "mat-verjetnost"
+    ],
+    "UNI-ULVF-BIOSTAT": [
+      "mat-statistika",
+      "mat-verjetnost"
+    ],
+    "UNI-ULVF-VETINF": [
+      "rac-informatika-pisarna",
+      "rac-podatkovne-baze"
+    ],
+    "UNI-ULFGG-GINZKOM": [
+      "rac-grafika-cad",
+      "mat-geometrija"
+    ],
+    "UNI-ULFGG-GRACINF": [
+      "rac-informatika-pisarna",
+      "rac-operacijski-sistemi",
+      "rac-python"
+    ],
+    "UNI-ULFGG-GPROMET": [
+      "mat-modeliranje",
+      "geo-gis-kartografija-geodezija"
+    ],
+    "UNI-ULFGG-GDIGNAC": [
+      "rac-grafika-cad",
+      "mat-geometrija"
+    ],
+    "UNI-ULFGG-GPROGORO": [
+      "rac-informatika-pisarna",
+      "rac-gis"
+    ],
+    "UNI-ULFGG-GGEORAC": [
+      "mat-geometrija",
+      "mat-predznanje-funkcije",
+      "geo-gis-kartografija-geodezija"
+    ],
+    "UNI-ULFGG-GSTATGEO": [
+      "mat-statistika",
+      "mat-verjetnost"
+    ],
+    "UNI-ULFGG-GIZRAV1": [
+      "mat-statistika",
+      "mat-linearna-algebra",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-ULFGG-GIZRAV2": [
+      "mat-statistika",
+      "mat-linearna-algebra"
+    ],
+    "UNI-ULFGG-GOBDPOD": [
+      "rac-python",
+      "rac-podatkovne-baze",
+      "rac-podatkovna-analiza"
+    ],
+    "UNI-ULFGG-GPROGR": [
+      "rac-python",
+      "rac-algoritmi-ps"
+    ],
+    "UNI-UMFS-MA": [
+      "mat-analiza-1",
+      "mat-matematika-za-inzenirje",
+      "mat-predznanje-funkcije"
+    ],
+    "UNI-UMFS-LA": [
+      "mat-linearna-algebra",
+      "mat-matematika-za-inzenirje"
+    ],
+    "UNI-UMFS-II": [
+      "rac-python",
+      "rac-znanstveno-racunanje",
+      "rac-informatika-pisarna"
+    ],
+    "UNI-UMFS-IO1": [
+      "rac-grafika-cad",
+      "fiz-merilna-tehnika"
+    ],
+    "UNI-UMFS-VA": [
+      "mat-analiza-vec-spremenljivk",
+      "mat-vektorska-analiza",
+      "mat-matematika-za-inzenirje"
+    ],
+    "UNI-UMFS-DA": [
+      "mat-diferencialne-enacbe",
+      "mat-matematika-za-inzenirje"
+    ],
+    "UNI-UMFS-IO2": [
+      "rac-znanstveno-racunanje",
+      "rac-grafika-cad",
+      "fiz-mehanika-tekocin"
+    ],
+    "UNI-UMFS-FMTS": [
+      "mat-modeliranje",
+      "fiz-matematicna-fizika-sistemi"
+    ],
+    "UNI-UMFS-IRS": [
+      "rac-znanstveno-racunanje",
+      "fiz-trdnost",
+      "mat-numericne-metode"
+    ],
+    "UNI-UMFS-RPK": [
+      "rac-grafika-cad",
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFS-RSEP": [
+      "rac-znanstveno-racunanje",
+      "fiz-mehanika-tekocin",
+      "fiz-prenos-toplote"
+    ],
+    "UNI-UMFS-VMI": [
+      "rac-grafika-cad",
+      "rac-igre-ar"
+    ],
+    "UNI-UMFS-PE1": [
+      "rac-c",
+      "rac-python",
+      "rac-algoritmi-ps"
+    ],
+    "UNI-UMFS-RP": [
+      "rac-linux-orodja",
+      "rac-informatika-pisarna",
+      "rac-znanstveno-racunanje"
+    ],
+    "UNI-UMFS-MIK": [
+      "rac-digitalna-vezja-krmiljenje",
+      "rac-arhitektura",
+      "rac-c"
+    ],
+    "UNI-UMFS-KAV": [
+      "rac-omrezja",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFS-DSK": [
+      "rac-digitalna-vezja-krmiljenje",
+      "fiz-regulacija-mehatronika"
+    ],
+    "UNI-UMFS-ALG": [
+      "mat-linearna-algebra",
+      "mat-matematika-za-inzenirje"
+    ],
+    "UNI-UMFS-ODM": [
+      "mat-optimizacija-or",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFGPA-MAT1": [
+      "mat-analiza-1",
+      "mat-linearna-algebra",
+      "mat-matematika-za-inzenirje"
+    ],
+    "UNI-UMFGPA-MAT2": [
+      "mat-analiza-vec-spremenljivk",
+      "mat-diferencialne-enacbe",
+      "mat-matematika-za-inzenirje"
+    ],
+    "UNI-UMFGPA-RI": [
+      "rac-informatika-pisarna",
+      "rac-python",
+      "rac-grafika-cad"
+    ],
+    "UNI-UMFGPA-GMCAD": [
+      "rac-grafika-cad",
+      "mat-geometrija"
+    ],
+    "UNI-UMMF-METRAZ": [
+      "mat-statistika",
+      "bio-raziskovalne-metode-bioetika"
+    ],
+    "UNI-UMMF-MEDINF": [
+      "rac-informatika-pisarna",
+      "rac-podatkovna-analiza",
+      "mat-statistika"
+    ],
+    "UNI-UMMF-UPSTAT": [
+      "mat-statistika",
+      "mat-regresija-anova-prostorska"
+    ],
+    "UNI-ULFFA-PMAT": [
+      "mat-analiza-1",
+      "mat-diferencialne-enacbe",
+      "mat-statistika"
+    ],
+    "UNI-ULFFA-PFINF": [
+      "rac-informatika-pisarna",
+      "rac-podatkovne-baze",
+      "mat-statistika"
     ]
   },
   "courseItems": {
