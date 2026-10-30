@@ -1,10 +1,10 @@
 // Svetli/temni način in lastne barve. Navaden skript v <head>, da se barve nastavijo pred prvim izrisom.
 // Nastavitve so shranjene na tej napravi (localStorage "evklid.theme"):
-//   { style: "cist" | "igriv" | "temen" | "antik", mode: "system" | "light" | "dark", accent: "#rrggbb" | null,
+//   { style: "cist" | "igriv" | "temen" | ključ iz ERAS (zgodovinski slogi), mode: "system" | "light" | "dark", accent: "#rrggbb" | null,
 //     light: { bg, surface, menu, text } | null, dark: { … } | null }
 // Slog (docs/oblikovanje.md): Čist (privzeto, Instrument Sans, umirjen), Igriv (Nunito, zaobljen, topel),
-// Temen (IBM Plex Sans, vedno temen, metin poudarek), Antični (marmor in terakota, naslovi v EB Garamond;
-// temni način kot črnofiguralna keramika). Slog nastavi data-style na <html> (pisava, oblike)
+// Temen (IBM Plex Sans, vedno temen, metin poudarek) in zgodovinski slogi iz tabele ERAS spodaj (Antični,
+// Renesansa, Hiša modrosti, Indija …). Slog nastavi data-style na <html> (pisava, oblike)
 // in osnovne barve; lastne barve uporabnika veljajo nad njimi.
 // Iz teh nekaj barv izračunamo vse ostale (robove, sivo besedilo, poudarke …) in pri tem
 // pazimo na kontrast, da je besedilo vedno dobro berljivo.
@@ -30,7 +30,46 @@
 
 (function () {
   const KEY = "evklid.theme";
-  const STYLES = ["cist", "igriv", "temen", "antik"];
+  // Zgodovinski slogi: VSE o slogu na enem mestu (docs/oblikovanje.md → »Kako dodati novo zgodovinsko temo«).
+  //   light/dark: osnovne barve (bg, surface, menu, text, accent; band = barva pasu na kartici dejstev, neobvezno)
+  //   font: [ime pisave, paket @fontsource-variable/<paket>] samo za h1 in naslove sklopov (besedilo ostane --font)
+  //   hero: zasuk odtenka preliva logotipa in kartice Današnji trening (drugi slogi 28°)
+  //   band: [datoteka, širina, višina] vzorca v pasu na vrhu kartice dejstev (public/eras/<slog>/<datoteka>.svg)
+  //   glyph: majhna ikona ob naslovu kartice dejstev; motifs: 6–8 risb (črte, viewBox 0 0 64 64) za ozadja
+  //     zaslonov, skritih ob robovih (ui.css → »Motivi«); vse datoteke so v public/eras/<slog>/
+  //   facts: [predpona ključev i18n, število]: <predpona>.title in <predpona>.f1 … .fN
+  //   Ime v izbiri sloga: ap.style<Slog> in ap.style<Slog>Text (prva črka velika), npr. ap.styleRenesansa.
+  const ERAS = {
+    antik: {
+      light: { bg: "#f5f0e8", surface: "#fffcf7", menu: "#fffcf7", text: "#241c15", accent: "#a8461f" },
+      dark: { bg: "#16110d", surface: "#211a14", menu: "#211a14", text: "#f2e8da", accent: "#e08a52" },
+      font: ["EB Garamond Variable", "eb-garamond"], hero: 6, band: ["meander", 8, 8], glyph: "ikona",
+      motifs: ["dorski-steber", "amfora", "sova", "konstrukcija", "jonski-steber", "lovor", "valj-krogla", "pitagora"],
+      facts: ["greek", 11],
+    },
+    renesansa: {
+      light: { bg: "#f3ead8", surface: "#fffaf0", menu: "#fffaf0", text: "#2b1d12", accent: "#9b2335", band: "#a8834a" },
+      dark: { bg: "#19130c", surface: "#241b12", menu: "#241b12", text: "#f3e7d3", accent: "#ec8f8a", band: "#b8955a" },
+      font: ["EB Garamond Variable", "eb-garamond"], hero: 14, band: ["prepletanje", 16, 8], glyph: "ikona",
+      motifs: ["sestilo", "armila", "vitruvij", "spirala", "kodeks", "perspektiva", "daljnogled", "poliedr"],
+      facts: ["era.renesansa", 6],
+    },
+    bagdad: {
+      light: { bg: "#edf2f0", surface: "#fbfdfc", menu: "#fbfdfc", text: "#10272b", accent: "#0f5f68", band: "#b88a2e" },
+      dark: { bg: "#0b1c22", surface: "#11272e", menu: "#11272e", text: "#e9f1ef", accent: "#e2b24f", band: "#c99a3c" },
+      font: ["El Messiri Variable", "el-messiri"], hero: 22, band: ["zvezde", 12, 10], glyph: "ikona",
+      motifs: ["astrolab", "zvezda", "ozvezdje", "lok", "rozeta", "kvadrant", "rokopis", "abak"],
+      facts: ["era.bagdad", 6],
+    },
+    indija: {
+      light: { bg: "#fbf1e1", surface: "#fffbf4", menu: "#fffbf4", text: "#231a2c", accent: "#33408f", band: "#d9822b" },
+      dark: { bg: "#13122a", surface: "#1c1a3a", menu: "#1c1a3a", text: "#f3edf7", accent: "#f2a64a", band: "#d98a35" },
+      font: ["Eczar Variable", "eczar"], hero: 14, band: ["lotosi", 12, 10], glyph: "ikona",
+      motifs: ["lotos", "sunja", "kolo", "steber", "stopnice", "palmov-list", "pav", "rangoli"],
+      facts: ["era.indija", 6],
+    },
+  };
+  const STYLES = ["cist", "igriv", "temen", ...Object.keys(ERAS)];
   // Osnovne barve slogov. Čist je enak privzetim barvam v style.css (brez izračuna).
   const BASES = {
     cist: {
@@ -45,11 +84,10 @@
       light: { bg: "#0d1117", surface: "#151b23", menu: "#151b23", text: "#e6eaf0", accent: "#4cd3a4" },
       dark: { bg: "#0d1117", surface: "#151b23", menu: "#151b23", text: "#e6eaf0", accent: "#4cd3a4" },
     },
-    antik: {
-      light: { bg: "#f5f0e8", surface: "#fffcf7", menu: "#fffcf7", text: "#241c15", accent: "#a8461f" },
-      dark: { bg: "#16110d", surface: "#211a14", menu: "#211a14", text: "#f2e8da", accent: "#e08a52" },
-    },
   };
+  for (const [k, e] of Object.entries(ERAS)) BASES[k] = { light: e.light, dark: e.dark };
+  // Motivi v ozadju so v barvi besedila s tem deležem (ui.css: 6 %); kontrast se preverja tudi na njih.
+  const MOTIF = 0.07;
   const BASE = BASES.cist;
   const baseOf = (s) => BASES[s && STYLES.includes(s.style) ? s.style : "cist"];
   // Najmanjši kontrast (WCAG): navadno besedilo 7 (AAA), sivo besedilo in poudarki 4.5 (AA).
@@ -159,19 +197,23 @@
     const bg = pick("bg"), surface = pick("surface");
     const menu = hexToRgb(pal.menu) ? pal.menu : hexToRgb(pal.surface) ? surface : base.menu;
     const dark = lum(bg) < 0.18;
+    const era = ERAS[s.style];
     // Izbrano pisavo spoštujemo, dokler je berljiva (4.5); samodejno izbrana mora doseči 7.
     const text = hexToRgb(pal.text) ? readable([bg, surface], pal.text, MIN.muted) : readable([bg, surface], base.text);
-    const accent = fit(s.accent || base.accent, [surface, bg], MIN.accent);
+    // Zgodovinski slogi: podlaga pod motivi (ozadje in kartice z MOTIF deleža besedila) mora biti prav tako berljiva.
+    const motifBg = era ? [mix(bg, text, MOTIF), mix(surface, text, MOTIF)] : [];
+    const onBg = [surface, bg, ...motifBg];
+    const accent = fit(s.accent || base.accent, onBg, MIN.accent);
     const [ah, as] = toHsl(accent);
     const heroA = fit(accent, ["#ffffff"], MIN.onAccent, -1);
-    // Antični: preliv ostane v odtenku terakote (brez dodatne barve), drugi slogi zasukajo odtenek za 28°.
-    const heroB = fit(hsl(ah + (s.style === "antik" ? 6 : 28), Math.max(as, 60), toHsl(heroA)[2] + 6), ["#ffffff"], MIN.onAccent, -1);
+    // Zgodovinski slogi zasukajo odtenek preliva za svoj »hero« (Antični 6°: ostane v terakoti), drugi za 28°.
+    const heroB = fit(hsl(ah + (era ? era.hero : 28), Math.max(as, 60), toHsl(heroA)[2] + 6), ["#ffffff"], MIN.onAccent, -1);
     const accentText = onColor(accent);
     const vars = {
       "--bg": bg,
       "--surface": surface,
       "--text": text,
-      "--muted": mutedOf(text, [surface, bg]),
+      "--muted": mutedOf(text, onBg),
       "--surface-2": mix(mix(surface, text, dark ? 0.08 : 0.05), accent, dark ? 0.06 : 0.07),
       "--border": mix(surface, text, dark ? 0.16 : 0.12),
       "--accent": accent,
@@ -184,6 +226,8 @@
       "--user-bubble": accent,
       "--user-text": accentText,
     };
+    // Pas na kartici dejstev v barvi obdobja (zlato, žafran …), malo potopljen v okno, da ne vpije.
+    if (era && base.band && !s.accent) vars["--band-c"] = mix(surface, base.band, 0.75);
     // Meniji: lastna podlaga, besedilo in poudarek se prilagodita njej.
     if (menu.toLowerCase() !== surface.toLowerCase()) {
       const mText = readable([menu], text, contrast(text, menu) >= MIN.muted ? MIN.muted : MIN.text);
@@ -198,14 +242,41 @@
         "--menu-accent-soft": mix(menu, mAccent, lum(menu) < 0.18 ? 0.24 : 0.14),
       });
     }
-    return { vars, dark, menu, text, bg, surface, accent };
+    return { vars, dark, menu, text, bg, surface, accent, motifBg };
   }
 
-  const ALL_VARS = ["--bg", "--surface", "--text", "--muted", "--surface-2", "--border", "--accent", "--accent-2", "--accent-grad", "--accent-soft", "--accent-text", "--hero-a", "--hero-b", "--user-bubble", "--user-text", "--menu", "--menu-text", "--menu-muted", "--menu-2", "--menu-border", "--menu-accent", "--menu-accent-soft"];
+  const ALL_VARS = ["--bg", "--surface", "--text", "--muted", "--surface-2", "--border", "--accent", "--accent-2", "--accent-grad", "--accent-soft", "--accent-text", "--hero-a", "--hero-b", "--user-bubble", "--user-text", "--menu", "--menu-text", "--menu-muted", "--menu-2", "--menu-border", "--menu-accent", "--menu-accent-soft", "--band-c"];
+  const ERA_VARS = ["--era-font", "--band", "--band-w", "--band-h", "--glyph", ...[1, 2, 3, 4, 5, 6, 7, 8].map((i) => `--m${i}`)];
+  const eraUrl = (id, f) => `url("/eras/${id}/${f}.svg")`;
+  // Pisava sloga (/vendor/<paket>/index.css) se doda le enkrat; brskalnik prenese datoteke šele, ko jih rabi.
+  function loadFont(pkg) {
+    if (!pkg || document.querySelector(`link[data-font="${pkg}"]`)) return;
+    const l = document.createElement("link");
+    l.rel = "stylesheet";
+    l.href = `vendor/${pkg}/index.css`;
+    l.dataset.font = pkg;
+    document.head.appendChild(l);
+  }
+  function applyEra(root, id) {
+    const era = ERAS[id];
+    for (const v of ERA_VARS) root.style.removeProperty(v);
+    if (!era) return root.removeAttribute("data-era");
+    root.dataset.era = id;
+    loadFont(era.font[1]);
+    const m = era.motifs;
+    root.style.setProperty("--era-font", `"${era.font[0]}"`);
+    root.style.setProperty("--band", eraUrl(id, era.band[0]));
+    root.style.setProperty("--band-w", era.band[1] + "px");
+    root.style.setProperty("--band-h", era.band[2] + "px");
+    root.style.setProperty("--glyph", eraUrl(id, era.glyph));
+    // Osem mest za motive (ui.css); krajši seznam se ponovi.
+    for (let i = 0; i < 8; i++) root.style.setProperty(`--m${i + 1}`, eraUrl(id, m[i % m.length]));
+  }
 
   function apply(s = load()) {
     const root = document.documentElement;
     root.dataset.style = STYLES.includes(s.style) ? s.style : "cist";
+    applyEra(root, s.style);
     const c = compute(s);
     for (const v of ALL_VARS) root.style.removeProperty(v);
     const dark = c ? c.dark : isDarkMode(s);
@@ -262,13 +333,14 @@
     const pairs = [
       [v["--text"], c.bg, MIN.text], [v["--text"], c.surface, MIN.text],
       [v["--muted"], c.surface, MIN.muted], [v["--accent"], c.surface, MIN.accent], [v["--accent"], c.bg, MIN.accent],
-      [v["--accent-text"], v["--accent"], MIN.onAccent], ["#ffffff", v["--hero-a"], MIN.onAccent], ["#ffffff", v["--hero-b"], 3],
+      [v["--accent-text"], v["--accent"], MIN.onAccent],
+      ...(c.motifBg || []).flatMap((m) => [[v["--text"], m, MIN.text], [v["--muted"], m, MIN.muted], [v["--accent"], m, MIN.accent]]), ["#ffffff", v["--hero-a"], MIN.onAccent], ["#ffffff", v["--hero-b"], 3],
     ];
     if (v["--menu"]) pairs.push([v["--menu-text"], v["--menu"], MIN.text], [v["--menu-accent"], v["--menu"], MIN.accent]);
     return pairs.every(([a, b, m]) => contrast(a, b) >= m - 0.01);
   }
 
-  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, baseOf, MIN, readable };
+  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, ERAS, baseOf, MIN, readable, loadFont };
   apply();
   mq.addEventListener?.("change", () => apply());
 })();

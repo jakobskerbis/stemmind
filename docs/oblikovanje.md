@@ -19,16 +19,19 @@ Vse barve so spremenljivke v `public/style.css` (`:root`, temni način pod njim)
 
 ## Slogi (Nastavitve → Videz → Slog)
 
-Trije slogi iz osnutka »Evklid UI« (2026-10-29) in Antični (2026-10-30). `theme.js` nastavi `data-style` na `<html>` in osnovne barve sloga; lastne barve uporabnika veljajo nad njimi.
+Trije slogi iz osnutka »Evklid UI« (2026-10-29) in zgodovinski slogi (Antični, Renesansa, Hiša modrosti, Indija; 2026-10-30, en nov na teden). `theme.js` nastavi `data-style` na `<html>` in osnovne barve sloga; lastne barve uporabnika veljajo nad njimi.
 
 | Slog | Pisava | Oblike | Barve |
 |---|---|---|---|
 | **Čist** (privzeti) | Instrument Sans | robovi 14/10 px, brez senc pod gumbi, ravne kartice | ozadje #F6F7F9, okna bela, poudarek #2353D1; temni način #0D1117 / #6E9BFF |
 | **Igriv** | Nunito | robovi 22/14 px, pritisnjeni gumbi (`--press: 3px`) | toplo ozadje #FFF6EA, vijolični poudarek #6A3BD6 |
 | **Temen** | IBM Plex Sans | robovi 10/7 px | vedno temen: #0D1117, metin poudarek #4CD3A4 (izbira Svetlo/Temno se skrije) |
-| **Antični** | besedilo Instrument Sans, glavni naslovi (h1, naslovi sklopov, ime ob logotipu) EB Garamond | robovi 16/11 px; nevsiljivo (j, 2026-10-30): enobarvno ozadje, preliv logotipa in kartice Današnji trening ostane v odtenku terakote | topel marmor #F5F0E8, okna #FFFCF7, terakota #A8461F; temni način kot črnofiguralna keramika #16110D / #211A14, poudarek #E08A52 |
+| **Antični** | besedilo Instrument Sans, glavni naslovi (h1, naslovi sklopov, ime ob logotipu) EB Garamond | robovi 16/11 px; preliv logotipa in kartice Današnji trening ostane v odtenku terakote; meander; motivi: stebra, amfora, sova, lovor, konstrukcija, valj in krogla, Pitagorov izrek | topel marmor #F5F0E8, okna #FFFCF7, terakota #A8461F; temni način kot črnofiguralna keramika #16110D / #211A14, poudarek #E08A52 |
+| **Renesansa** | naslovi EB Garamond | prepleten pas; motivi: sestilo, armilarna sfera, Vitruvij, zlata spirala, kodeks s peresom, perspektiva, daljnogled, polieder | pergament #F3EAD8, okna #FFFAF0, karminasto rdeča #9B2335, pas v starem zlatu; temno #19130C / #241B12, poudarek #EC8F8A |
+| **Hiša modrosti** (`bagdad`) | naslovi El Messiri (latinica, cirilica, arabščina) | pas osemkrakih zvezd; motivi: astrolab, zvezda, ozvezdje, šilasti lok, rozeta, kvadrant, rokopis, abak (brez verskih simbolov) | svetlo: modrozeleno #EDF2F0, poudarek temna modrozelena #0F5F68, pas zlat; temno: lapis #0B1C22 / #11272E, zlati poudarek #E2B24F |
+| **Indija** | naslovi Eczar (latinica, devanagari, grščina) | pas lotosov; motivi: lotos, šunja (ničla), kolo iz Konarka, steber, stopniščni vodnjak, palmov list, pavje pero, rangoli | svetlo: žafranasta smetana #FBF1E1, indigo #33408F, pas žafranast; temno: indigo #13122A / #1C1A3A, žafranast poudarek #F2A64A |
 
-Pravila za Čist veljajo v `style.css` (`:root`), Igriv, Temen in Antični v `ui.css` (»Slogi«). Pisave so v `node_modules/@fontsource-variable/*` in se prenesejo le, ko jih slog uporablja; v lahkem načinu ostane sistemska pisava. Inštruktor slog spremeni z nastavitvijo naprave `style`.
+Pravila za Čist veljajo v `style.css` (`:root`), Igriv, Temen in zgodovinski slogi v `ui.css` (»Slogi«, `:root[data-era]`). Pisave so v `node_modules/@fontsource-variable/*` (strežnik streže vsak tak paket iz `package.json` pod `/vendor/<ime>/`) in se prenesejo le, ko jih slog uporablja; v lahkem načinu ostane sistemska pisava. Inštruktor slog spremeni z nastavitvijo naprave `style`.
 
 Temni način je razred `.dark` na `<html>`, ne `@media (prefers-color-scheme)`: pravila za temni način piši kot `.dark .moj-razred { … }`. Razred nastavi `public/theme.js` (Nastavitve → Videz: Svetlo / Temno / Samodejno).
 
@@ -38,15 +41,35 @@ Lastne barve: uporabnik v Nastavitve → Videz izbere poudarek in barve ozadja, 
 - belo besedilo samo na prelivu `--hero-a` → `--hero-b`, besedilo na `--accent` je `--accent-text`;
 - meniji (`.topbar`, `.modebar`, `.sidebar`, `.dd-list`) imajo lahko svojo barvo; znotraj njih `--surface`, `--text` … že pomenijo barve menija.
 
-Pisava je spremenljivka `--font` (po slogu), naslovi v slogu Antični `--font-head` (EB Garamond s cirilico in grščino; za arabščino, hindijščino, japonščino … brskalnik vzame sistemsko pisavo, v lahkem načinu Georgia). Naslovi so debeli (700, v slogu Igriv 800), gumbi 700–800.
+Pisava je spremenljivka `--font` (po slogu), naslovi v zgodovinskih slogih `--font-head` (pisava sloga iz `ERAS`, nato Georgia in serif: za pisave, ki jih pisava sloga nima, npr. japonščino, brskalnik vzame sistemsko; v lahkem načinu Georgia). Naslovi so debeli (700, v slogu Igriv 800), gumbi 700–800.
 
 ## Pridih stare Grčije (vsi slogi)
 
 Ime Evklid je po grškem matematiku, zato je v vmesniku nekaj tihih grških drobnarij (j, 2026-10-30). Nikoli na račun berljivosti, temnega načina, lastnih barv, telefona ali RTL.
 
 - **Logotip**: ikona `elementi` (`public/icons.js`, lastna ikona v `scripts/build-icons.js` → `CUSTOM`): Evklidovi Elementi, I. knjiga, 1. trditev (dva kroga in enakostranični trikotnik nad njunima središčema), `currentColor`. Favicon in ikone za namestitev ostanejo.
-- **Meander** (grški ključ): maska SVG v `--meander`, višina `--meander-h` (8 px), barva `--meander-c` (mešanica poudarka in roba), zato sledi temnemu načinu in lastnim barvam. Samo na vrhu kartice Grški matematiki, torej največ en pas na zaslon (j: »naj ne bo vsiljivo«). Ne dodajaj ga drugam.
-- **Grški matematiki** (`public/greek.js`, `.gr-fact`): kompaktna kartica (naslov in gumb v eni vrsti, brez ikone) z enim od 11 kratkih zgodovinskih dejstev (`greek.f1` … `greek.f11`) v praznem klepetu z Inštruktorjem in na dnu Učne poti; naključno, gumb ↻ pokaže drugo. Legende so označene (»po izročilu«, »naj bi«). Novo dejstvo: preveri letnice in vire, dodaj ključ v vseh 33 jezikih in v `FACTS`.
+- **Meander** (grški ključ, `public/eras/antik/meander.svg`): maska v `--band`, velikost `--band-w` × `--band-h` (8 px), barva `--band-c` (mešanica poudarka in roba), zato sledi temnemu načinu in lastnim barvam. Samo na vrhu kartice dejstev, torej največ en pas na zaslon (j: »naj ne bo vsiljivo«). Ne dodajaj ga drugam. Zgodovinski slog ga zamenja s svojim pasom.
+- **Grški matematiki** (`public/greek.js`, `.gr-fact`): kompaktna kartica (majhna ikona obdobja `--glyph` in naslov ter gumb v eni vrsti) z enim od 11 kratkih zgodovinskih dejstev (`greek.f1` … `greek.f11`) v praznem klepetu z Inštruktorjem in na dnu Učne poti; naključno, gumb ↻ pokaže drugo. Legende so označene (»po izročilu«, »naj bi«). Novo dejstvo: preveri letnice in vire, dodaj ključ v vseh 33 jezikih in povečaj število v `ERAS[…].facts` (za grška dejstva `GREEK` v `greek.js`). V zgodovinskem slogu kartica pokaže dejstva tega obdobja, v Čist/Igriv/Temen grška.
+
+## Zgodovinski slogi (j, 2026-10-30)
+
+Neobvezni slogi, vsak s pridihom enega obdobja. Pravila (j: »ne vsiljivo«, »simboli v ozadju ne smejo motiti branja«):
+
+- enobarvno ozadje, en poudarek; pisava sloga samo za h1, naslove sklopov in ime ob logotipu, besedilo ostane v `--font`;
+- svetla in temna različica; `theme.js` preveri kontrast (besedilo 7:1, sivo in poudarek 4.5:1) tudi na ozadju pod motivi (`MOTIF`), test `test/teme.test.js` to preveri za vsak slog;
+- en pas vzorca, samo na kartici dejstev; majhna ikona obdobja pred naslovom kartice;
+- **motivi**: 6–8 preprostih črtnih risb iz obdobja (`public/eras/<slog>/*.svg`, viewBox 64 × 64, črte brez polnila, < 30 KB na slog), v barvi besedila s 6 % prekrivnostjo, kot en sloj za vsakim zaslonom (`.view::before`, `z-index: -1`, pod karticami). Vsak zaslon ima svoj par ob robovih okna (Učna pot m1/m2, Inštruktor m3/m4, Učbenik m5/m6, Nastavitve in Jaz m7/m8 …), da jih učenec odkriva sčasoma; na telefonu en manjši motiv. Brez motivov v lahkem načinu, ob `prefers-reduced-transparency`, `forced-colors` in pri tiskanju. Risbe so simetrične ali smiselne tudi zrcaljene (RTL zamenja levo in desno stran). Brez verskih simbolov.
+
+### Kako dodati novo zgodovinsko temo
+
+1. **Vsebina**: ime sloga (`id` z malimi črkami brez šumnikov, npr. `maji`), 6 dejstev o matematikih obdobja (letnice »pr. n. št./n. št.«, legende označene z »po izročilu«, decimalna vejica; številke preveri z `node -e`).
+2. **`public/theme.js` → `ERAS`**: dodaj vnos z `light` in `dark` (bg, surface, menu, text, accent, neobvezno `band`), `font`, `hero`, `band`, `glyph`, `motifs`, `facts: ["era.<id>", 6]`. Barve izberi tako, da jih `theme.js` ne popravi (test).
+3. **Pisava** (samo če je potrebna nova): `npm i @fontsource-variable/<paket>` (z latin-ext; strežnik jo streže sam). Sicer uporabi obstoječo (EB Garamond, El Messiri, Eczar).
+4. **Risbe**: `public/eras/<id>/`: pas (`<ime>.svg`, polna oblika, viewBox širina × višina iz `band`), `ikona.svg` (debele črte, `stroke-width` ≈ 4,5, berljiva pri 15 px) in 6–8 motivov (črte `stroke-width` ≈ 1,4, `fill="none"`, brez besedila, skript in povezav).
+5. **Besedila** v `public/i18n/sl.js` in vseh 32 `public/i18n/ui/*.json` (prevedeno, imena v obliki jezika): `ap.style<Id>`, `ap.style<Id>Text`, `era.<id>.title`, `era.<id>.f1` … `f6`.
+6. **`public/settings-registry.js`**: `style.values` in opis (`<id> = …`), da ga lahko izbere inštruktor.
+7. **Ta dokument**: vrstica v tabeli slogov zgoraj.
+8. **Preveri**: `npm test` (`test/teme.test.js`: kontrast, datoteke, ključi, nastavitev), posnetki Učne poti (računalnik svetlo in temno, telefon) in izbire sloga na telefonu; nič ne sme biti odrezano, vsiljivo ali slabo berljivo.
 
 ## Gradniki (`public/ui.css`)
 
