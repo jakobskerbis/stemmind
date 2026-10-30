@@ -108,7 +108,8 @@ function parseNpz(html) {
 }
 
 const ORDER = { paper: 0, paper1: 1, paper2: 2, scoring: 3 };
-const TERM_ORDER = { zimski: 0, spomladanski: 1, redni: 1, jesenski: 2, naknadni: 2 };
+// Kot na ric.si: zimski rok leta L (februar L+1) je za jesenskim rokom istega leta (koda pole P253 = 2025, 3. rok).
+const TERM_ORDER = { spomladanski: 1, redni: 1, jesenski: 2, naknadni: 2, zimski: 3 };
 
 async function ok(url) {
   for (let i = 0; i < 3; i++) {

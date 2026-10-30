@@ -88,6 +88,13 @@ test("si exams: past papers catalogue only links to ric.si and keeps only the st
     for (const x of e.structure) assert.deepEqual(Object.keys(x).sort(), ["format", "n", "points", "topicId"], e.id);
     assert.ok(e.ours === null || typeof e.ours === "object", e.id);
   }
+  // Vrstni red kot na ric.si: novejša leta prej, v letu spomladanski → jesenski → zimski (februar naslednjega leta).
+  const TERM = { redni: 0, spomladanski: 0, naknadni: 1, jesenski: 1, zimski: 2 };
+  for (let i = 1; i < PAPERS_SI.length; i++) {
+    const [a, b] = [PAPERS_SI[i - 1], PAPERS_SI[i]];
+    if (a.exam !== b.exam || a.subject !== b.subject || a.level !== b.level) continue;
+    assert.ok(a.year > b.year || (a.year === b.year && TERM[a.term] <= TERM[b.term]), `${a.id} pred ${b.id}`);
+  }
   // Vsak izpit in predmet razdelka ima vsaj nekaj pol; matematika na maturi po ravneh.
   for (const k of ["NPZ6-MAT", "NPZ9-MAT", "NPZ9-FIZ", "NPZ9-KEM", "NPZ9-BIO", "MATURA-MAT-OR", "MATURA-MAT-VR", "MATURA-FIZ", "MATURA-KEM", "MATURA-BIO", "POKLICNA-MAT"])
     assert.ok(PAPERS_SI.some((e) => [e.exam, e.subject, e.level].filter(Boolean).join("-") === k), k);

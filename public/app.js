@@ -460,6 +460,10 @@ async function selectStudent(id) {
   state.symbols?.refresh();
   maybeTour.done = false; // vodič je za vsak profil posebej (settings.tour_version)
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
+  // Tekmovanja, Izpiti ter NPZ in matura: izbira in rezultati prejšnjega profila ne ostanejo na zaslonu.
+  state.examKey = state.compKey = null;
+  if (!$("#view-exams").hidden) showView(siExams() ? "exams" : "path");
+  if (!$("#view-competition").hidden) showView(isUni(state.student.settings) ? "path" : "competition");
   refreshProfileButton();
   refreshXp();
   // Vprašalnik kotička zanimanj: profil, ki ga še ni izpolnil, ga dobi ob zagonu (enkrat).
