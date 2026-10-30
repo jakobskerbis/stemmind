@@ -2435,5 +2435,17 @@
   "gr.again": "من البداية",
   "gr.close": "إغلاق",
   "gr.voice": "القراءة بصوت عالٍ",
-  "gr.videoDraft": "مسودة: ما زال معلّم يراجع هذا الفيديو."
+  "gr.videoDraft": "مسودة: ما زال معلّم يراجع هذا الفيديو.",
+  "sim.layers": "الإظهار على الرسم البياني",
+  "sim.layers.show": "إظهار:",
+  "sim.layer.grid": "الشبكة",
+  "sim.layer.marks": "العلامات",
+  "sim.layer.fit": "{name}: خط مستقيم",
+  "sim.color.accent": "أزرق",
+  "sim.color.a": "برتقالي",
+  "sim.color.b": "فيروزي",
+  "sim.color.c": "بنفسجي",
+  "sim.color.ok": "أخضر",
+  "sim.color.danger": "أحمر",
+  "sim.color.muted": "رمادي"
 }

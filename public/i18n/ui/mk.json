@@ -2343,5 +2343,17 @@
   "gr.again": "Одново",
   "gr.close": "Затвори",
   "gr.voice": "Читај на глас",
-  "gr.videoDraft": "Нацрт: наставник сè уште го прегледува ова видео."
+  "gr.videoDraft": "Нацрт: наставник сè уште го прегледува ова видео.",
+  "sim.layers": "Прикажи на графикот",
+  "sim.layers.show": "Прикажи:",
+  "sim.layer.grid": "Мрежа",
+  "sim.layer.marks": "Ознаки",
+  "sim.layer.fit": "{name}: права",
+  "sim.color.accent": "Сина",
+  "sim.color.a": "Портокалова",
+  "sim.color.b": "Тиркизна",
+  "sim.color.c": "Виолетова",
+  "sim.color.ok": "Зелена",
+  "sim.color.danger": "Црвена",
+  "sim.color.muted": "Сива"
 }

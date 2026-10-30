@@ -2343,5 +2343,17 @@
   "gr.again": "Recommencer",
   "gr.close": "Fermer",
   "gr.voice": "Lire à voix haute",
-  "gr.videoDraft": "Brouillon : un enseignant vérifie encore cette vidéo."
+  "gr.videoDraft": "Brouillon : un enseignant vérifie encore cette vidéo.",
+  "sim.layers": "Afficher sur le graphique",
+  "sim.layers.show": "Afficher :",
+  "sim.layer.grid": "Grille",
+  "sim.layer.marks": "Repères",
+  "sim.layer.fit": "{name} : droite",
+  "sim.color.accent": "Bleu",
+  "sim.color.a": "Orange",
+  "sim.color.b": "Turquoise",
+  "sim.color.c": "Violet",
+  "sim.color.ok": "Vert",
+  "sim.color.danger": "Rouge",
+  "sim.color.muted": "Gris"
 }

@@ -2347,5 +2347,17 @@
   "gr.again": "Recomeçar",
   "gr.close": "Fechar",
   "gr.voice": "Ler em voz alta",
-  "gr.videoDraft": "Rascunho: um professor ainda está a rever este vídeo."
+  "gr.videoDraft": "Rascunho: um professor ainda está a rever este vídeo.",
+  "sim.layers": "Mostrar no gráfico",
+  "sim.layers.show": "Mostrar:",
+  "sim.layer.grid": "Grelha",
+  "sim.layer.marks": "Marcas",
+  "sim.layer.fit": "{name}: reta",
+  "sim.color.accent": "Azul",
+  "sim.color.a": "Laranja",
+  "sim.color.b": "Turquesa",
+  "sim.color.c": "Roxo",
+  "sim.color.ok": "Verde",
+  "sim.color.danger": "Vermelho",
+  "sim.color.muted": "Cinzento"
 }

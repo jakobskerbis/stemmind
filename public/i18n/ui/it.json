@@ -2343,5 +2343,17 @@
   "gr.again": "Ricomincia",
   "gr.close": "Chiudi",
   "gr.voice": "Leggi ad alta voce",
-  "gr.videoDraft": "Bozza: un insegnante sta ancora rivedendo questo video."
+  "gr.videoDraft": "Bozza: un insegnante sta ancora rivedendo questo video.",
+  "sim.layers": "Mostra nel grafico",
+  "sim.layers.show": "Mostra:",
+  "sim.layer.grid": "Griglia",
+  "sim.layer.marks": "Indicatori",
+  "sim.layer.fit": "{name}: retta",
+  "sim.color.accent": "Blu",
+  "sim.color.a": "Arancione",
+  "sim.color.b": "Turchese",
+  "sim.color.c": "Viola",
+  "sim.color.ok": "Verde",
+  "sim.color.danger": "Rosso",
+  "sim.color.muted": "Grigio"
 }

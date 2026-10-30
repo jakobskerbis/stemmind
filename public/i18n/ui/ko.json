@@ -2319,5 +2319,17 @@
   "gr.again": "처음부터",
   "gr.close": "닫기",
   "gr.voice": "소리 내어 읽기",
-  "gr.videoDraft": "초안: 선생님이 아직 이 영상을 검토 중입니다."
+  "gr.videoDraft": "초안: 선생님이 아직 이 영상을 검토 중입니다.",
+  "sim.layers": "그래프에 표시",
+  "sim.layers.show": "표시:",
+  "sim.layer.grid": "격자",
+  "sim.layer.marks": "표시선",
+  "sim.layer.fit": "{name}: 직선",
+  "sim.color.accent": "파랑",
+  "sim.color.a": "주황",
+  "sim.color.b": "청록",
+  "sim.color.c": "보라",
+  "sim.color.ok": "초록",
+  "sim.color.danger": "빨강",
+  "sim.color.muted": "회색"
 }

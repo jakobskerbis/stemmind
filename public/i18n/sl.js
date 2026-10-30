@@ -2343,4 +2343,17 @@ export default {
   "gr.close": "Zapri",
   "gr.voice": "Beri na glas",
   "gr.videoDraft": "Osnutek: video še pregleduje učitelj.",
+  // simulacije: prikaz na grafu (public/sim/prikaz.js)
+  "sim.layers": "Prikaži na grafu",
+  "sim.layers.show": "Prikaži:",
+  "sim.layer.grid": "Mreža",
+  "sim.layer.marks": "Oznake",
+  "sim.layer.fit": "{name}: premica",
+  "sim.color.accent": "Modra",
+  "sim.color.a": "Oranžna",
+  "sim.color.b": "Turkizna",
+  "sim.color.c": "Vijolična",
+  "sim.color.ok": "Zelena",
+  "sim.color.danger": "Rdeča",
+  "sim.color.muted": "Siva",
 };

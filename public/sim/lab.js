@@ -1,6 +1,11 @@
 // Gradniki virtualnega laboratorija: zaslon merilnika, tabela meritev, graf, vprašanje o sklepu, dnevnik dogodkov.
 // Modeli so v lab-model.js; tu je samo prikaz. Besedila so slovenska kot v ostalih simulacijah učbenika.
 import { h, s, fmt, svgBox, axes, tex } from "./kit.js";
+import SL from "../i18n/sl.js";
+
+// Prevodi: public/i18n.js naložimo šele v brskalniku (preizkusi v Node uvozijo ta modul brez njega); do tedaj slovensko.
+let t = (k, v = {}) => String(SL[k] ?? k).replace(/\{(\w+)\}/g, (_, n) => v[n] ?? "");
+if (typeof document !== "undefined") import("../i18n.js").then((m) => (t = m.t)).catch(() => {});
 
 // Ura, ki teče v realnem času in se ustavi, ko simulacije ni več na strani.
 // Ne uporablja requestAnimationFrame, ker meritve tečejo tudi pri »manj gibanja« (ni animacije, le odčitki).
@@ -61,18 +66,25 @@ export function dataGraph({ W = 340, H = 220, x, y, xLabel, yLabel, xStep, yStep
   const svg = svgBox(W, H, "lab-graph");
   svg.setAttribute("aria-label", title || "Graf meritev");
   const wrap = h("figure", { class: "lab-graph-wrap" }, svg);
-  const legend = h("figcaption", { class: "lab-legend" });
+  // Legenda je hkrati vklop in izklop: vsaka vrsta meritev, njena premica in mreža (public/sim/prikaz.js za ostale grafe).
+  const legend = h("figcaption", { class: "lab-legend", role: "group" });
   wrap.append(legend);
-  let A = null;
+  let A = null, last = [];
+  const off = new Set();
   wrap.setAxes = (ax) => Object.assign(opts, ax);
   const opts = { x, y };
+  const chip = (key, sym, text) =>
+    h("button", { type: "button", class: "lab-leg layer-chip", "aria-pressed": String(!off.has(key)), onclick: () => (off.has(key) ? off.delete(key) : off.add(key), wrap.draw(last)) }, sym, text);
   wrap.draw = (series = []) => {
+    last = series;
     svg.replaceChildren();
-    A = axes(svg, { W, H, x: opts.x, y: opts.y, pad: 38, padT: 14, padR: 14, origin, xLabel, yLabel, xStep: opts.xStep ?? xStep, yStep: opts.yStep ?? yStep });
+    A = axes(svg, { W, H, x: opts.x, y: opts.y, pad: 38, padT: 14, padR: 14, origin, xLabel, yLabel, xStep: opts.xStep ?? xStep, yStep: opts.yStep ?? yStep, grid: !off.has("grid") });
     const inside = ([px, py]) => px >= A.x0 && px <= A.x1 && py >= A.y0 && py <= A.y1;
     legend.replaceChildren();
-    for (const S of series) {
-      if (S.line) {
+    legend.setAttribute("aria-label", t("sim.layers"));
+    series.forEach((S, i) => {
+      const id = S.id ?? S.label ?? i;
+      if (S.line && !off.has(`fit:${id}`)) {
         const n = 40, pts = [];
         for (let i = 0; i <= n; i++) {
           const xx = A.x0 + ((A.x1 - A.x0) * i) / n, yy = S.line(xx);
@@ -80,15 +92,19 @@ export function dataGraph({ W = 340, H = 220, x, y, xLabel, yLabel, xStep, yStep
         }
         if (pts.length > 1) s("polyline", { points: pts.join(" "), class: `lab-fit stroke-${S.cls}` }, svg);
       }
-      for (const p of S.pts) {
-        if (!inside(p)) continue;
-        const cx = A.X(p[0]), cy = A.Y(p[1]);
-        if (S.shape === "^") s("path", { d: `M${cx},${cy - 6} L${cx + 5.5},${cy + 4} L${cx - 5.5},${cy + 4} Z`, class: `lab-pt fill-${S.cls}` }, svg);
-        else s("circle", { cx, cy, r: 4.5, class: `lab-pt fill-${S.cls}` }, svg);
-      }
+      if (!off.has(`pt:${id}`))
+        for (const p of S.pts) {
+          if (!inside(p)) continue;
+          const cx = A.X(p[0]), cy = A.Y(p[1]);
+          if (S.shape === "^") s("path", { d: `M${cx},${cy - 6} L${cx + 5.5},${cy + 4} L${cx - 5.5},${cy + 4} Z`, class: `lab-pt fill-${S.cls}` }, svg);
+          else s("circle", { cx, cy, r: 4.5, class: `lab-pt fill-${S.cls}` }, svg);
+        }
       const clipped = S.pts.filter((p) => !inside(p)).length;
-      if (S.label) legend.append(h("span", { class: "lab-leg" }, h("i", { class: `lab-sym ${S.shape === "^" ? "tri" : "dot"} bg-${S.cls}`, "aria-hidden": "true" }), S.label + (clipped ? ` (${clipped} izven grafa)` : "")));
-    }
+      if (!S.label) return;
+      legend.append(chip(`pt:${id}`, h("i", { class: `lab-sym ${S.shape === "^" ? "tri" : "dot"} bg-${S.cls}`, "aria-hidden": "true" }), S.label + (clipped ? ` (${clipped} izven grafa)` : "")));
+      if (S.line) legend.append(chip(`fit:${id}`, h("i", { class: `lab-sym line bg-${S.cls}`, "aria-hidden": "true" }), t("sim.layer.fit", { name: S.label })));
+    });
+    if (legend.children.length) legend.append(chip("grid", h("i", { class: "layer-sw sw-grid", "aria-hidden": "true" }), t("sim.layer.grid")));
   };
   wrap.draw();
   return wrap;

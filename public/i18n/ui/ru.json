@@ -2391,5 +2391,17 @@
   "gr.again": "Сначала",
   "gr.close": "Закрыть",
   "gr.voice": "Читать вслух",
-  "gr.videoDraft": "Черновик: учитель ещё проверяет это видео."
+  "gr.videoDraft": "Черновик: учитель ещё проверяет это видео.",
+  "sim.layers": "Показать на графике",
+  "sim.layers.show": "Показать:",
+  "sim.layer.grid": "Сетка",
+  "sim.layer.marks": "Отметки",
+  "sim.layer.fit": "{name}: прямая",
+  "sim.color.accent": "Синий",
+  "sim.color.a": "Оранжевый",
+  "sim.color.b": "Бирюзовый",
+  "sim.color.c": "Фиолетовый",
+  "sim.color.ok": "Зелёный",
+  "sim.color.danger": "Красный",
+  "sim.color.muted": "Серый"
 }

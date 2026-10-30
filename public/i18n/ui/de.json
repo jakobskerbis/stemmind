@@ -2343,5 +2343,17 @@
   "gr.again": "Von vorn",
   "gr.close": "Schließen",
   "gr.voice": "Vorlesen",
-  "gr.videoDraft": "Entwurf: Eine Lehrkraft prüft dieses Video noch."
+  "gr.videoDraft": "Entwurf: Eine Lehrkraft prüft dieses Video noch.",
+  "sim.layers": "Im Diagramm anzeigen",
+  "sim.layers.show": "Anzeigen:",
+  "sim.layer.grid": "Gitter",
+  "sim.layer.marks": "Markierungen",
+  "sim.layer.fit": "{name}: Gerade",
+  "sim.color.accent": "Blau",
+  "sim.color.a": "Orange",
+  "sim.color.b": "Türkis",
+  "sim.color.c": "Violett",
+  "sim.color.ok": "Grün",
+  "sim.color.danger": "Rot",
+  "sim.color.muted": "Grau"
 }

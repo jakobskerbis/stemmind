@@ -1,6 +1,6 @@
 // Simulacije: grafi funkcij (s prednastavitvami), limita, odvod, integral, zaporedja, vrste, obresti,
 // kompleksna števila in gibanje (srečanje).
-import { h, s, svgBox, slider, select, segmented, toggle, button, buttons, readout, layout, tex, texBlock, fmt, tfmt, clamp, label, axes, fnPath, arrow, animate, playButton, draggable, handle, deg, rad } from "./kit.js";
+import { h, s, svgBox, slider, select, segmented, toggle, button, buttons, readout, layout, tex, texBlock, fmt, tfmt, clamp, label, axes, fnPath, arrow, animate, playButton, draggable, handle, deg, rad, axisMark, spanMark, axisSlider } from "./kit.js";
 
 const PI = Math.PI;
 const T = (x, d = 2) => tfmt(x, d);
@@ -161,6 +161,7 @@ const PRESETS = {
   koreni: {
     params: [["n", 2, 5, 1, 2]],
     f: (x, P) => (x < 0 && P.n % 2 === 0 ? NaN : Math.sign(x) * Math.abs(x) ** (1 / P.n)),
+    gName: "y = xⁿ",
     g: (x, P) => (P.n % 2 === 0 && x < 0 ? NaN : x ** P.n),
     win: [-4, 4, -4, 4],
     tex: (P) => `f(x) = \\sqrt[${P.n}]{x}`,
@@ -185,6 +186,7 @@ const PRESETS = {
   "eksponentna-enacba": {
     params: [["a", 0.5, 4, 0.1, 2], ["b", 0.2, 10, 0.1, 5]],
     f: (x, P) => P.a ** x,
+    gName: "y = b",
     g: (x, P) => P.b,
     tex: (P) => `${T(P.a, 1)}^x = ${T(P.b, 1)}`,
     win: [-4, 4, -1, 11],
@@ -203,6 +205,7 @@ const PRESETS = {
   logaritem: {
     params: [["a", 0.3, 4, 0.1, 2], ["x (preizkus)", 0.1, 8, 0.1, 4]],
     f: (x, P) => (x > 0 ? Math.log(x) / Math.log(P.a) : NaN),
+    gName: "y = aˣ",
     g: (x, P) => P.a ** x,
     win: [-3, 8, -3, 8],
     tex: (P) => `f(x) = \\log_{${T(P.a, 1)}} x`,
@@ -238,6 +241,7 @@ const PRESETS = {
     params: [["A", 0.5, 3, 0.5, 1], ["b", 0.5, 3, 0.5, 1], ["c", -PI, PI, PI / 12, 0], ["d", -2, 2, 0.5, 0]],
     fmtParam: { c: (v) => piTicks(v) || `${fmt(v / PI, 2)}π` },
     f: (x, P) => P.A * Math.sin(P.b * (x - P.c)) + P.d,
+    gName: "y = sin x",
     g: (x) => Math.sin(x),
     win: [-2 * PI, 2 * PI, -4, 4],
     xStep: PI / 2,
@@ -353,9 +357,9 @@ export function graf(el, { preset = "kvadratna" } = {}) {
     const [x0, x1, y0, y1] = C.win || [-6, 6, -6, 6];
     const A = axes(svg, { W: 340, H: 340, x: [x0, x1], y: [y0, y1], xStep: C.xStep, xFmt: C.xFmt });
     const f = (x) => C.f(x, P);
-    if (C.g) s("path", { d: fnPath((x) => C.g(x, P), A), class: "graph-line stroke-b thin-line" }, svg);
+    if (C.g) s("path", { d: fnPath((x) => C.g(x, P), A), class: "graph-line stroke-b thin-line", "data-name": C.gName }, svg);
     C.marks?.(A, P, svg, f);
-    s("path", { d: fnPath(f, A, { n: 500 }), class: "graph-line" }, svg);
+    s("path", { d: fnPath(f, A, { n: 500 }), class: "graph-line", "data-name": "f(x)" }, svg);
     C.marks && svg.querySelectorAll(".pt").forEach((p) => svg.append(p));
     eq.innerHTML = tex(C.tex(P));
     out.innerHTML = C.info(P, f);
@@ -389,7 +393,7 @@ export function odvod(el, { mode = "tangenta" } = {}) {
       // obarvaj naraščanje / padanje
       const n = 300;
       let seg = "", up = null;
-      const flush = () => seg && s("path", { d: seg, class: `graph-line ${up ? "stroke-ok" : "stroke-danger"}` }, svg);
+      const flush = () => seg && s("path", { d: seg, class: `graph-line ${up ? "stroke-ok" : "stroke-danger"}`, "data-name": up ? "f narašča" : "f pada" }, svg);
       for (let i = 0; i <= n; i++) {
         const x = a + ((b - a) * i) / n, y = F.f(x);
         if (!Number.isFinite(y)) continue;
@@ -403,16 +407,20 @@ export function odvod(el, { mode = "tangenta" } = {}) {
         const kind = F.d(z - 0.01) > 0 && F.d(z + 0.01) < 0 ? "max" : F.d(z - 0.01) < 0 && F.d(z + 0.01) > 0 ? "min" : "";
         dot(svg, A, z, F.f(z), "c", kind === "max" ? "maks." : kind === "min" ? "min." : "");
       });
-    } else s("path", { d: fnPath(F.f, A), class: "graph-line" }, svg);
+    } else s("path", { d: fnPath(F.f, A), class: "graph-line", "data-name": "f(x)" }, svg);
     const y0v = F.f(x0), k = F.d(x0);
+    // drsnika na grafu: x₀ (vijolično) in h (oranžno), vlečeš lahko tudi oznaki
+    xs.align(A);
+    axisMark(svg, A, x0, `x₀ = ${fmt(x0)}`, "c", { y: y0v, sl: xs, key: "x0" });
+    if (mode === "tangenta") spanMark(svg, A, x0, x0 + hh, `h = ${fmt(hh)}`, "a", { sl: hs, key: "h", y2: F.f(x0 + hh) });
     if (Number.isFinite(y0v)) {
       // tangenta
-      s("line", { x1: A.X(a), y1: A.Y(y0v + k * (a - x0)), x2: A.X(b), y2: A.Y(y0v + k * (b - x0)), class: "graph-line stroke-c thin-line" }, svg);
+      s("line", { x1: A.X(a), y1: A.Y(y0v + k * (a - x0)), x2: A.X(b), y2: A.Y(y0v + k * (b - x0)), class: "graph-line stroke-c thin-line", "data-name": "Tangenta" }, svg);
       if (mode === "tangenta") {
         const x1 = x0 + hh, y1 = F.f(x1);
         if (Number.isFinite(y1)) {
           const ks = (y1 - y0v) / hh;
-          s("line", { x1: A.X(a), y1: A.Y(y0v + ks * (a - x0)), x2: A.X(b), y2: A.Y(y0v + ks * (b - x0)), class: "graph-line stroke-a thin-line" }, svg);
+          s("line", { x1: A.X(a), y1: A.Y(y0v + ks * (a - x0)), x2: A.X(b), y2: A.Y(y0v + ks * (b - x0)), class: "graph-line stroke-a thin-line", "data-name": "Sekanta" }, svg);
           s("path", { d: `M${A.X(x0)},${A.Y(y0v)} H${A.X(x1)} V${A.Y(y1)}`, class: "slope-tri" }, svg);
           dot(svg, A, x1, y1, "a", "");
         }
@@ -433,7 +441,7 @@ export function odvod(el, { mode = "tangenta" } = {}) {
       const fin = ys.filter(Number.isFinite);
       const m = Math.max(1, ...fin.map(Math.abs));
       const A2 = axes(svg2, { W: 340, H: 170, x: [a, b], y: [-Math.min(m, 8), Math.min(m, 8)], yLabel: "f'", xStep: F.pi ? PI / 2 : undefined, xFmt: F.pi ? piTicks : undefined });
-      s("path", { d: fnPath(F.d, A2), class: "graph-line stroke-b" }, svg2);
+      s("path", { d: fnPath(F.d, A2), class: "graph-line stroke-b", "data-name": "f′(x)" }, svg2);
       dot(svg2, A2, x0, k, "c", "");
     }
     svg2.style.display = showD ? "" : "none";
@@ -445,13 +453,13 @@ export function odvod(el, { mode = "tangenta" } = {}) {
          <p>V x₀ = ${fmt(x0)}: ${tex(`f'(x_0) = ${T(k, 3)}`)}, funkcija tam ${Math.abs(k) < 0.05 ? "ima (skoraj) vodoravno tangento" : k > 0 ? "narašča" : "pada"}.</p>`) +
       `<p class="muted">${tex(DFUN[key].dtex)} (spodnji graf). Povleci točko na grafu.</p>`;
   };
-  const xs = slider({ label: "x₀", min: -6, max: 6, step: 0.05, value: x0, onInput: (v) => ((x0 = v), draw()) });
+  const xs = axisSlider(slider({ label: "x₀", min: -6, max: 6, step: 0.05, value: x0, cls: "c", onInput: (v) => ((x0 = v), draw()) }), svg);
+  const hs = slider({ label: "h", min: 0.01, max: 2, step: 0.01, value: hh, cls: "a", onInput: (v) => ((hh = v), draw()) });
   layout(el, {
-    stage: [svg, svg2],
+    stage: [svg, xs, svg2],
     controls: [
       select({ label: "funkcija", options: Object.entries(DFUN).filter(([k]) => mode === "tangenta" || k !== "ln").map(([k, v]) => [k, v.name]), value: key, onChange: (v) => ((key = v), draw()) }),
-      xs,
-      ...(mode === "tangenta" ? [slider({ label: "h", min: 0.01, max: 2, step: 0.01, value: hh, onInput: (v) => ((hh = v), draw()) }), toggle("pokaži graf odvoda", showD, (v) => ((showD = v), draw()))] : []),
+      ...(mode === "tangenta" ? [hs, toggle("pokaži graf odvoda", showD, (v) => ((showD = v), draw()))] : []),
     ],
     out,
     tryText: mode === "tangenta" ? "Zmanjšuj h proti 0 in opazuj naklon sekante. Kateri vrednosti se približuje?" : "Poišči točke, kjer je f'(x) = 0. Ali je vsaka taka točka ekstrem? (Namig: x³.)",
@@ -479,20 +487,25 @@ export function integral(el, { mode = "doloceni" } = {}) {
       const A = axes(svg, { W: 340, H: 300, x: [x0, x1], y: [y0, y1] });
       const lo = clamp(Math.min(a, b), x0, x1), hi = clamp(Math.max(a, b), x0, x1), w = (hi - lo) / n;
       let sum = 0;
+      const nm = rule === "trapez" ? "Trapezi" : "Pravokotniki";
       for (let i = 0; i < n; i++) {
         const u = lo + i * w;
         if (rule === "trapez") {
           const fa = Fn.f(u), fb = Fn.f(u + w);
           sum += ((fa + fb) / 2) * w;
-          s("polygon", { points: `${A.X(u)},${A.Y(0)} ${A.X(u)},${A.Y(fa)} ${A.X(u + w)},${A.Y(fb)} ${A.X(u + w)},${A.Y(0)}`, class: `rect-sum ${fa + fb < 0 ? "neg" : ""}` }, svg);
+          s("polygon", { points: `${A.X(u)},${A.Y(0)} ${A.X(u)},${A.Y(fa)} ${A.X(u + w)},${A.Y(fb)} ${A.X(u + w)},${A.Y(0)}`, class: `rect-sum ${fa + fb < 0 ? "neg" : ""}`, "data-name": fa + fb < 0 ? `${nm} pod osjo` : nm }, svg);
         } else {
           const xm = rule === "levo" ? u : rule === "desno" ? u + w : u + w / 2, fm = Fn.f(xm);
           sum += fm * w;
-          s("rect", { x: A.X(u), y: A.Y(Math.max(0, fm)), width: A.X(u + w) - A.X(u), height: Math.abs(A.Y(fm) - A.Y(0)), class: `rect-sum ${fm < 0 ? "neg" : ""}` }, svg);
+          s("rect", { x: A.X(u), y: A.Y(Math.max(0, fm)), width: A.X(u + w) - A.X(u), height: Math.abs(A.Y(fm) - A.Y(0)), class: `rect-sum ${fm < 0 ? "neg" : ""}`, "data-name": fm < 0 ? `${nm} pod osjo` : nm }, svg);
         }
       }
-      s("path", { d: fnPath(Fn.f, A), class: "graph-line" }, svg);
-      [lo, hi].forEach((v) => s("line", { x1: A.X(v), y1: A.T, x2: A.X(v), y2: A.B, class: "guide" }, svg));
+      s("path", { d: fnPath(Fn.f, A), class: "graph-line", "data-name": "f(x)" }, svg);
+      // meji a in b sta na osi označeni v barvi svojih drsnikov; oznaki se da vleči
+      sa.align(A);
+      sb.align(A);
+      axisMark(svg, A, clamp(a, x0, x1), `a = ${fmt(a, 1)}`, "a", { y: Fn.f(clamp(a, x0, x1)), sl: sa, key: "a" });
+      axisMark(svg, A, clamp(b, x0, x1), `b = ${fmt(b, 1)}`, "c", { y: Fn.f(clamp(b, x0, x1)), sl: sb, key: "b", lblDy: Math.abs(A.X(a) - A.X(b)) < 56 ? 14 : 0 });
       const exact = Fn.F(hi) - Fn.F(lo);
       out.innerHTML = texBlock(`\\int_{${T(lo)}}^{${T(hi)}} ${Fn.name.replace("√x", "\\sqrt{x}").replace(",", "{,}").replace("³", "^3").replace("²", "^2")}\\,dx = \\Big[${Fn.Ftex}\\Big]_{${T(lo)}}^{${T(hi)}} = ${T(exact, 4)}`) +
         `<p>Vsota ${n} ${rule === "trapez" ? "trapezov" : "pravokotnikov"}: <b>${fmt(sum, 4)}</b>, napaka ${fmt(Math.abs(sum - exact), 4)}. Več ko je delov, manjša je napaka: določeni integral je limita teh vsot.</p>
@@ -507,24 +520,24 @@ export function integral(el, { mode = "doloceni" } = {}) {
         const dx = L, dy = -k * L * ((A.Y(0) - A.Y(1)) / (A.X(1) - A.X(0)));
         s("line", { x1: A.X(x) - dx, y1: A.Y(y) - dy, x2: A.X(x) + dx, y2: A.Y(y) + dy, class: "field" }, svg);
       }
-      for (let c2 = -3; c2 <= 3; c2++) if (c2 !== C) s("path", { d: fnPath((x) => Fn.F(x) + c2, A), class: "graph-line stroke-muted thin-line", opacity: 0.35 }, svg);
-      s("path", { d: fnPath((x) => Fn.F(x) + C, A), class: "graph-line stroke-c" }, svg);
-      s("path", { d: fnPath(Fn.f, A), class: "graph-line stroke-b thin-line" }, svg);
+      for (let c2 = -3; c2 <= 3; c2++) if (c2 !== C) s("path", { d: fnPath((x) => Fn.F(x) + c2, A), class: "graph-line stroke-muted thin-line", opacity: 0.35, "data-name": "Druge primitivne" }, svg);
+      s("path", { d: fnPath((x) => Fn.F(x) + C, A), class: "graph-line stroke-c", "data-name": "F(x) + C" }, svg);
+      s("path", { d: fnPath(Fn.f, A), class: "graph-line stroke-b thin-line", "data-name": "f(x)" }, svg);
       out.innerHTML = texBlock(`\\int ${Fn.name.replace("√x", "\\sqrt{x}").replace(",", "{,}").replace("³", "^3").replace("²", "^2")}\\,dx = ${Fn.Ftex} + C,\\quad C = ${C}`) +
         `<p><span class="dot dot-c"></span> Primitivna funkcija F ima v vsaki točki naklon enak vrednosti <span class="dot dot-b"></span> f(x). Kratke črtice kažejo ta naklon (polje smeri).</p>
          <p class="muted">Konstanta C premakne graf F navzgor ali navzdol: vse te funkcije imajo isti odvod, zato je nedoločeni integral cela družina funkcij.</p>`;
     }
   };
   const ctl = [select({ label: "funkcija", options: Object.entries(IFUN).map(([k, v]) => [k, v.name]), value: key, onChange: (v) => ((key = v), draw()) })];
+  const sa = axisSlider(slider({ label: "a", min: -2, max: 6, step: 0.1, value: a, cls: "a", onInput: (v) => ((a = v), draw()) }), svg);
+  const sb = axisSlider(slider({ label: "b", min: -2, max: 6, step: 0.1, value: b, cls: "c", onInput: (v) => ((b = v), draw()) }), svg);
   if (mode === "doloceni")
     ctl.push(
-      slider({ label: "a", min: -2, max: 6, step: 0.1, value: a, onInput: (v) => ((a = v), draw()) }),
-      slider({ label: "b", min: -2, max: 6, step: 0.1, value: b, onInput: (v) => ((b = v), draw()) }),
       slider({ label: "število delov", min: 1, max: 60, value: n, onInput: (v) => ((n = v), draw()) }),
       segmented({ options: [["levo", "levo"], ["desno", "desno"], ["sredina", "sredina"], ["trapez", "trapezi"]], value: rule, onChange: (v) => ((rule = v), draw()) }),
     );
   else ctl.push(slider({ label: "C", min: -3, max: 3, value: C, onInput: (v) => ((C = v), draw()) }));
-  layout(el, { stage: [svg], controls: ctl, out, tryText: mode === "doloceni" ? "Pri katerem pravilu je napaka najmanjša pri istem številu delov?" : "Zakaj ima vsaka funkcija neskončno primitivnih funkcij?" });
+  layout(el, { stage: mode === "doloceni" ? [svg, sa, sb] : [svg], controls: ctl, out, tryText: mode === "doloceni" ? "Pri katerem pravilu je napaka najmanjša pri istem številu delov?" : "Zakaj ima vsaka funkcija neskončno primitivnih funkcij?" });
   draw();
 }
 

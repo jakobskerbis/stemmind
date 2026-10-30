@@ -2319,5 +2319,17 @@
   "gr.again": "Bắt đầu lại",
   "gr.close": "Đóng",
   "gr.voice": "Đọc to",
-  "gr.videoDraft": "Bản nháp: giáo viên vẫn đang xem lại video này."
+  "gr.videoDraft": "Bản nháp: giáo viên vẫn đang xem lại video này.",
+  "sim.layers": "Hiện trên đồ thị",
+  "sim.layers.show": "Hiện:",
+  "sim.layer.grid": "Lưới",
+  "sim.layer.marks": "Điểm đánh dấu",
+  "sim.layer.fit": "{name}: đường thẳng",
+  "sim.color.accent": "Xanh dương",
+  "sim.color.a": "Cam",
+  "sim.color.b": "Xanh ngọc",
+  "sim.color.c": "Tím",
+  "sim.color.ok": "Xanh lá",
+  "sim.color.danger": "Đỏ",
+  "sim.color.muted": "Xám"
 }

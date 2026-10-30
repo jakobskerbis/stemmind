@@ -2341,5 +2341,17 @@
   "gr.again": "Anza upya",
   "gr.close": "Funga",
   "gr.voice": "Soma kwa sauti",
-  "gr.videoDraft": "Rasimu: mwalimu bado anakagua video hii."
+  "gr.videoDraft": "Rasimu: mwalimu bado anakagua video hii.",
+  "sim.layers": "Onyesha kwenye grafu",
+  "sim.layers.show": "Onyesha:",
+  "sim.layer.grid": "Gridi",
+  "sim.layer.marks": "Alama",
+  "sim.layer.fit": "{name}: mstari",
+  "sim.color.accent": "Bluu",
+  "sim.color.a": "Rangi ya chungwa",
+  "sim.color.b": "Feruzi",
+  "sim.color.c": "Zambarau",
+  "sim.color.ok": "Kijani",
+  "sim.color.danger": "Nyekundu",
+  "sim.color.muted": "Kijivu"
 }

@@ -2367,5 +2367,17 @@
   "gr.again": "De la început",
   "gr.close": "Închide",
   "gr.voice": "Citește cu voce tare",
-  "gr.videoDraft": "Ciornă: un profesor încă verifică acest videoclip."
+  "gr.videoDraft": "Ciornă: un profesor încă verifică acest videoclip.",
+  "sim.layers": "Afișează pe grafic",
+  "sim.layers.show": "Afișează:",
+  "sim.layer.grid": "Grilă",
+  "sim.layer.marks": "Marcaje",
+  "sim.layer.fit": "{name}: dreaptă",
+  "sim.color.accent": "Albastru",
+  "sim.color.a": "Portocaliu",
+  "sim.color.b": "Turcoaz",
+  "sim.color.c": "Violet",
+  "sim.color.ok": "Verde",
+  "sim.color.danger": "Roșu",
+  "sim.color.muted": "Gri"
 }

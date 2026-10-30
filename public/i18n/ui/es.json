@@ -2343,5 +2343,17 @@
   "gr.again": "Empezar de nuevo",
   "gr.close": "Cerrar",
   "gr.voice": "Leer en voz alta",
-  "gr.videoDraft": "Borrador: un docente aún revisa este vídeo."
+  "gr.videoDraft": "Borrador: un docente aún revisa este vídeo.",
+  "sim.layers": "Mostrar en la gráfica",
+  "sim.layers.show": "Mostrar:",
+  "sim.layer.grid": "Cuadrícula",
+  "sim.layer.marks": "Marcas",
+  "sim.layer.fit": "{name}: recta",
+  "sim.color.accent": "Azul",
+  "sim.color.a": "Naranja",
+  "sim.color.b": "Turquesa",
+  "sim.color.c": "Violeta",
+  "sim.color.ok": "Verde",
+  "sim.color.danger": "Rojo",
+  "sim.color.muted": "Gris"
 }

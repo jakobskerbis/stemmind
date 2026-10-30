@@ -2341,5 +2341,17 @@
   "gr.again": "Újrakezdés",
   "gr.close": "Bezárás",
   "gr.voice": "Felolvasás",
-  "gr.videoDraft": "Vázlat: egy tanár még ellenőrzi ezt a videót."
+  "gr.videoDraft": "Vázlat: egy tanár még ellenőrzi ezt a videót.",
+  "sim.layers": "Megjelenítés a grafikonon",
+  "sim.layers.show": "Megjelenítés:",
+  "sim.layer.grid": "Rács",
+  "sim.layer.marks": "Jelölések",
+  "sim.layer.fit": "{name}: egyenes",
+  "sim.color.accent": "Kék",
+  "sim.color.a": "Narancs",
+  "sim.color.b": "Türkiz",
+  "sim.color.c": "Lila",
+  "sim.color.ok": "Zöld",
+  "sim.color.danger": "Piros",
+  "sim.color.muted": "Szürke"
 }

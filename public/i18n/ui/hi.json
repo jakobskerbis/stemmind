@@ -2341,5 +2341,17 @@
   "gr.again": "शुरू से",
   "gr.close": "बंद करें",
   "gr.voice": "ज़ोर से पढ़ें",
-  "gr.videoDraft": "मसौदा: शिक्षक अभी इस वीडियो की जाँच कर रहे हैं।"
+  "gr.videoDraft": "मसौदा: शिक्षक अभी इस वीडियो की जाँच कर रहे हैं।",
+  "sim.layers": "ग्राफ़ पर दिखाएँ",
+  "sim.layers.show": "दिखाएँ:",
+  "sim.layer.grid": "ग्रिड",
+  "sim.layer.marks": "निशान",
+  "sim.layer.fit": "{name}: सरल रेखा",
+  "sim.color.accent": "नीला",
+  "sim.color.a": "नारंगी",
+  "sim.color.b": "फ़िरोज़ी",
+  "sim.color.c": "बैंगनी",
+  "sim.color.ok": "हरा",
+  "sim.color.danger": "लाल",
+  "sim.color.muted": "धूसर"
 }

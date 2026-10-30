@@ -2365,5 +2365,17 @@
   "gr.again": "Испочетка",
   "gr.close": "Затвори",
   "gr.voice": "Читај наглас",
-  "gr.videoDraft": "Нацрт: наставник још прегледа овај видео."
+  "gr.videoDraft": "Нацрт: наставник још прегледа овај видео.",
+  "sim.layers": "Прикажи на графику",
+  "sim.layers.show": "Прикажи:",
+  "sim.layer.grid": "Мрежа",
+  "sim.layer.marks": "Ознаке",
+  "sim.layer.fit": "{name}: права",
+  "sim.color.accent": "Плава",
+  "sim.color.a": "Наранџаста",
+  "sim.color.b": "Тиркизна",
+  "sim.color.c": "Љубичаста",
+  "sim.color.ok": "Зелена",
+  "sim.color.danger": "Црвена",
+  "sim.color.muted": "Сива"
 }

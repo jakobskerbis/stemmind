@@ -2341,5 +2341,17 @@
   "gr.again": "شروع سے",
   "gr.close": "بند کریں",
   "gr.voice": "بلند آواز سے پڑھیں",
-  "gr.videoDraft": "مسودہ: استاد ابھی اس ویڈیو کا جائزہ لے رہا ہے۔"
+  "gr.videoDraft": "مسودہ: استاد ابھی اس ویڈیو کا جائزہ لے رہا ہے۔",
+  "sim.layers": "گراف پر دکھائیں",
+  "sim.layers.show": "دکھائیں:",
+  "sim.layer.grid": "گرڈ",
+  "sim.layer.marks": "نشانات",
+  "sim.layer.fit": "{name}: سیدھی لکیر",
+  "sim.color.accent": "نیلا",
+  "sim.color.a": "نارنجی",
+  "sim.color.b": "فیروزی",
+  "sim.color.c": "جامنی",
+  "sim.color.ok": "سبز",
+  "sim.color.danger": "سرخ",
+  "sim.color.muted": "سرمئی"
 }

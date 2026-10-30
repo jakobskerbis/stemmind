@@ -62,7 +62,8 @@ export const label = (parent, x, y, t, cls = "lbl", anchor = "middle") =>
   s("text", { x, y, class: cls, "text-anchor": anchor, "dominant-baseline": "middle" }, parent, t);
 
 // Drsnik z oznako in prikazano vrednostjo.
-export function slider({ label: lab, min, max, step = 1, value, unit = "", digits, onInput, format }) {
+// cls (a, b, c, accent …): barvni krog ob oznaki, ko ima drsnik oznako na grafu iste barve (axisMark, spanMark).
+export function slider({ label: lab, min, max, step = 1, value, unit = "", digits, onInput, format, cls }) {
   const d = digits ?? (String(step).split(".")[1]?.length || 0);
   const out = h("output");
   const input = h("input", { type: "range", min, max, step, value, "aria-label": lab });
@@ -72,7 +73,8 @@ export function slider({ label: lab, min, max, step = 1, value, unit = "", digit
     onInput?.(Number(input.value));
   });
   show();
-  const wrap = h("label", { class: "demo-slider" }, h("span", { class: "demo-slider-label" }, lab), input, out);
+  const name = h("span", { class: "demo-slider-label" }, cls ? h("i", { class: `dot dot-${cls}`, "aria-hidden": "true" }) : null, lab);
+  const wrap = h("label", { class: "demo-slider" }, name, input, out);
   wrap.set = (v, silent) => {
     input.value = v;
     show();
@@ -215,7 +217,95 @@ export function axes(svg, { W, H, x: [x0, x1], y: [y0, y1], pad = 28, padR = 10,
   s("line", { x1: ay, y1: B, x2: ay, y2: T, class: "axis", "marker-end": arrowHead(svg) }, g);
   if (xLabel) s("text", { x: R - 2, y: ax - 8, class: "axis-label", "text-anchor": "end" }, g, xLabel);
   if (yLabel) s("text", { x: ay + 7, y: T + 10, class: "axis-label" }, g, yLabel);
-  return { X, Y, inv, g, L, R, T, B, x0, x1, y0, y1 };
+  return { X, Y, inv, g, L, R, T, B, x0, x1, y0, y1, ax, ay };
+}
+
+// ---- Drsnik ↔ oznaka na grafu (docs/kakovost.md §3): vrednost drsnika, ki je lega ali interval na osi x,
+// je na osi označena s simbolom in vrednostjo v barvi drsnika; oznako lahko vlečeš in premakne drsnik.
+// Vrednost iz lege na zaslonu: zaokroži na korak drsnika in omeji na njegov obseg.
+export function snapTo(sl, v) {
+  const inp = sl.input, st = Number(inp.step) || 1, lo = Number(inp.min), hi = Number(inp.max);
+  const r = lo + Math.round((clamp(v, lo, hi) - lo) / st) * st;
+  return Number(clamp(r, lo, hi).toFixed(10));
+}
+// Vleči oznako (miška, prst, puščice): toValue(px) → vrednost; drsnik se premakne in sproži en izris.
+function linkDrag(svg, g, sl, toValue, label) {
+  draggable(svg, g, (px) => {
+    const v = snapTo(sl, toValue(px));
+    if (v !== sl.get()) sl.set(v);
+  }, { label });
+}
+// Navpična oznaka na osi x pri x: kljukica, napis »x₀ = 1« in (če je y) črtkana črta do točke (x, y).
+// sl: drsnik, ki ga oznaka premika (vlečenje). key: povezava za preverjanje poravnave (data-for).
+export function axisMark(svg, A, x, text, cls = "c", { y, sl, key, parent, lblDy = 0 } = {}) {
+  if (!(x >= A.x0 - 1e-9 && x <= A.x1 + 1e-9)) return null;
+  const P = parent || svg, px = A.X(x), ay = A.ax;
+  const g = s("g", { class: `amark amark-${cls}`, "data-for": key || null }, P);
+  if (Number.isFinite(y) && y >= A.y0 && y <= A.y1) s("line", { x1: px, y1: A.Y(y), x2: px, y2: ay, class: "amark-drop" }, g);
+  s("rect", { x: px - 18, y: ay - 18, width: 36, height: 36, class: "hit" }, g);
+  s("line", { x1: px, y1: ay - 8, x2: px, y2: ay + 8, class: "amark-tick" }, g);
+  const ty = Math.min(ay + 27 + lblDy, Number(svg.getAttribute("viewBox")?.split(" ")[3] || 1e9) - 3);
+  const anchor = px < A.L + 30 ? "start" : px > A.R - 30 ? "end" : "middle";
+  s("text", { x: px, y: ty, class: "amark-lbl", "text-anchor": anchor }, g, text);
+  if (sl) linkDrag(svg, g, sl, (qx) => A.inv(qx, 0)[0], `${text}: premikaj s puščicami`);
+  if (sl && key) sl.dataset.for = key;
+  return g;
+}
+// Interval na osi x od x1 do x2 (npr. h od x₀ do x₀ + h): kotirna črta pod številkami osi (če ni prostora, nad osjo)
+// z napisom; dolžina je interval v enotah osi. Z drsnikom sl se da vleči konec x2 (vrednost = x2 − x1).
+// y2: črtkana črta od točke (x2, y2) do osi.
+export function spanMark(svg, A, x1, x2, text, cls = "a", { sl, key, parent, y2 } = {}) {
+  const P = parent || svg, below = A.ax + 54 <= Number(svg.getAttribute("viewBox")?.split(" ")[3] || 0);
+  const y = below ? A.ax + 38 : A.ax - 14, ty = below ? y + 15 : y - 8;
+  const a = A.X(Math.max(A.x0, Math.min(x1, x2))), b = A.X(Math.min(A.x1, Math.max(x1, x2)));
+  if (!(b > a - 0.5)) return null;
+  const g = s("g", { class: `amark amark-${cls}`, "data-for": key || null }, P);
+  if (Number.isFinite(y2) && y2 >= A.y0 && y2 <= A.y1 && x2 <= A.x1) s("line", { x1: A.X(x2), y1: A.Y(y2), x2: A.X(x2), y2: y, class: "amark-drop" }, g);
+  if (below) s("path", { d: `M${a},${A.ax + 8} V${y} M${b},${A.ax} V${y}`, class: "amark-ext" }, g);
+  s("path", { d: `M${a},${y - 5} V${y + 5} M${a},${y} H${b} M${b},${y - 5} V${y + 5}`, class: "amark-span" }, g);
+  s("text", { x: (a + b) / 2, y: ty, class: "amark-lbl", "text-anchor": "middle" }, g, text);
+  if (sl) {
+    const end = s("g", { class: "amark-end", "data-for": key || null }, g);
+    s("rect", { x: A.X(x2) - 18, y: y - 18, width: 36, height: 36, class: "hit" }, end);
+    s("circle", { cx: A.X(x2), cy: y, r: 5, class: "amark-knob" }, end);
+    linkDrag(svg, end, sl, (qx) => A.inv(qx, 0)[0] - x1, `${text}: premikaj konec s puščicami`);
+  }
+  return g;
+}
+// Drsnik, poravnan z osjo x pod grafom: tirnica se razteza točno čez interval osi, ki ga drsnik predstavlja,
+// zato je ročica pri vsaki vrednosti navpično pod oznako (en korak drsnika = isti premik na osi).
+// Po vsakem izrisu pokliči sl.align(A); meje drsnika so večkratniki koraka znotraj okna osi.
+export function axisSlider(sl, svg) {
+  sl.classList.add("axis-slider");
+  let A = null;
+  const place = () => {
+    const m = A && svg.isConnected && svg.getScreenCTM();
+    if (!m || !sl.isConnected) return;
+    const inp = sl.input, lo = Number(inp.min), hi = Number(inp.max);
+    const thumb = parseFloat(getComputedStyle(inp).getPropertyValue("--thumb")) || 22;
+    const left = m.e + m.a * A.X(lo), right = m.e + m.a * A.X(hi);
+    const box = sl.getBoundingClientRect();
+    sl.style.setProperty("--ax-l", `${(left - box.left - thumb / 2).toFixed(2)}px`);
+    sl.style.setProperty("--ax-w", `${(right - left + thumb).toFixed(2)}px`);
+  };
+  sl.align = (a) => {
+    A = a;
+    const inp = sl.input, st = Number(inp.step) || 1;
+    const lo = Number((Math.ceil(a.x0 / st - 1e-9) * st).toFixed(10)), hi = Number((Math.floor(a.x1 / st + 1e-9) * st).toFixed(10));
+    if (Number(inp.min) !== lo || Number(inp.max) !== hi) {
+      const v = sl.get();
+      inp.min = lo;
+      inp.max = hi;
+      if (v !== clamp(v, lo, hi)) sl.set(clamp(v, lo, hi), true);
+    }
+    place();
+  };
+  if (typeof ResizeObserver !== "undefined") {
+    const ro = new ResizeObserver(() => place());
+    ro.observe(svg);
+    ro.observe(sl);
+  }
+  return sl;
 }
 
 // Pot grafa funkcije f na intervalu (prekine pri skokih in neskončnostih).
