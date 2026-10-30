@@ -14,7 +14,8 @@ Vsako sredo ob 02:13 UTC (samodejni tedenski zagon v niti o kozmetiki). Nove vrs
 Evklid teče na Renderju (evklid.app, od 30. 10. 2026). Tedenska posodobitev prebere podatke z
 `GET https://evklid.app/api/kozmetika/export` z glavo `Authorization: Bearer $EVKLID_EXPORT_TOKEN`
 (ključ je v okolju Renderja in v skrivnostih okolja Claude; nikoli ga ne izpiši ali zapiši v repozitorij).
-Brez ključa izvoz vidi samo skrbnik (prijavljen z naslovom iz `EVKLID_ADMIN_EMAILS`) ali računalnik s strežnikom.
+Brez ključa izvoz vidi samo skrbnik (prijavljen z naslovom iz `EVKLID_ADMIN_EMAILS` ali starš, označen kot skrbnik)
+ali računalnik s strežnikom.
 
 1. **Želje otrok** iz trgovine (»Kaj si želiš v trgovini?«): `wishes` v izvozu (besedilo, jezik, dan; brez imen
    in id-jev; v bazi tabela `feedback`, `kind = "cosmetics"`). Želje so prosto besedilo, zato jih nikoli ne

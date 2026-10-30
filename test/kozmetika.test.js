@@ -1,4 +1,8 @@
 import test from "node:test";
+import { spawn } from "node:child_process";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import assert from "node:assert/strict";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
@@ -95,3 +99,35 @@ test("želje za trgovino se po 90 dneh izbrišejo, ostala mnenja ostanejo", () =
   assert.equal(purgeOldWishes(store.db), 1);
   assert.deepEqual(store.db.prepare("SELECT ideas FROM feedback ORDER BY id").all().map((r) => r.ideas), ["nova želja", "staro mnenje"]);
 });
+
+// Na Renderju je vsak klic oddaljen (X-Forwarded-For): brez pravega ključa 404, tudi z geslom in računi.
+for (const extra of [{ EVKLID_ACCOUNTS: "1" }, { EVKLID_PASSWORD: "geslo-za-test" }]) {
+  test(`izvoz od zunaj: samo s ključem (${Object.keys(extra)[0]})`, async () => {
+    const token = "k".repeat(40);
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "evklid-izvoz-"));
+    const port = 39000 + Math.floor(Math.random() * 900);
+    const srv = spawn(process.execPath, ["--disable-warning=ExperimentalWarning", "server/index.js"], {
+      env: { ...process.env, PORT: String(port), EVKLID_MOCK: "1", EVKLID_NEWS: "0", EVKLID_DB: path.join(dir, "t.db"), EVKLID_PASSWORD: "", EVKLID_ACCOUNTS: "0", ANTHROPIC_API_KEY: "", EVKLID_EXPORT_TOKEN: token, ...extra },
+      stdio: "ignore",
+    });
+    try {
+      const url = `http://127.0.0.1:${port}/api/kozmetika/export`;
+      const get = (auth) => fetch(url, { headers: { "X-Forwarded-For": "1.2.3.4", ...(auth ? { Authorization: auth } : {}) } }).then((r) => r.status);
+      for (let i = 0; i < 50; i++) {
+        try {
+          await fetch(`http://127.0.0.1:${port}/healthz`);
+          break;
+        } catch {
+          await new Promise((r) => setTimeout(r, 100));
+        }
+      }
+      assert.equal(await get(), 404);
+      assert.equal(await get(`Bearer ${"x".repeat(40)}`), 404);
+      assert.equal(await fetch(`${url}?token=${token}`, { headers: { "X-Forwarded-For": "1.2.3.4" } }).then((r) => r.status), 404);
+      assert.equal(await get(`Bearer ${token}`), 200);
+    } finally {
+      srv.kill();
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  });
+}
