@@ -414,7 +414,7 @@ test("Osebno ob šolski licenci po izteku licence: naročnina se ne podaljša, o
   const run = () => api.billing.billingDaily(new Date(), { force: true });
   const posts = (pid) => stripe.calls.filter((c) => c.path === `/v1/subscriptions/sub_${pid}` && c.method === "POST").map((c) => c.body.cancel_at_period_end);
   const flag = (pid) => db.prepare("SELECT sub_cancel_at_period_end AS c FROM parents WHERE id = ?").get(pid).c;
-  const mails = () => stripe.calls.filter((c) => c.host === "api.resend.com" && /šolska licenca/i.test(c.body.subject));
+  const mails = () => stripe.calls.filter((c) => c.host === "api.resend.com" && /šolski licenci/i.test(c.body.subject));
 
   licensed.add(s.kid);
   assert.equal((await run()).school_ended, 0, "licenca velja: nič");
@@ -424,7 +424,7 @@ test("Osebno ob šolski licenci po izteku licence: naročnina se ne podaljša, o
   assert.deepEqual(posts(s.pid), ["true"]);
   assert.equal(flag(s.pid), 1);
   assert.equal(mails().length, 1);
-  assert.match(mails()[0].body.text, /ne bo podaljšala/);
+  assert.match(mails()[0].body.text, /ne bo samodejno podaljšala/);
   assert.equal((await run()).school_ended, 0, "samo enkrat");
   assert.equal(mails().length, 1);
   assert.deepEqual(posts(r.pid), [], "redne naročnine se ne dotakne");
@@ -440,4 +440,11 @@ test("Osebno ob šolski licenci po izteku licence: naročnina se ne podaljša, o
   licensed.add(s.kid);
   await run();
   assert.deepEqual(posts(s.pid), ["true", "false"]);
+  // Stara oznaka po koncu naročnine ne sme preskočiti nove naročnine po šolski ceni.
+  const n = add("nova@p.si", SCHOOL_PLANS[0].key);
+  await run();
+  assert.deepEqual(posts(n.pid), ["true"]);
+  db.prepare("UPDATE parents SET sub_id = ?, sub_cancel_at_period_end = 0 WHERE id = ?").run(`sub_${n.pid}b`, n.pid);
+  await run();
+  assert.deepEqual(stripe.calls.filter((c) => c.path === `/v1/subscriptions/sub_${n.pid}b` && c.method === "POST").map((c) => c.body.cancel_at_period_end), ["true"]);
 });

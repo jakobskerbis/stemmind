@@ -626,13 +626,14 @@ export function mountBilling(app, ctx) {
       if (paidActive(p, now.getTime())) continue;
       out.promo_end += await remind(p, "promo_end", p.promo_until.slice(0, 10), promoEndingEmail(fmtDate(p.promo_until), appUrl));
     }
+    // Pred opomnikom o obnovitvi: ta isti dan ne sme reči »se bo obnovila«, če jo tu ustavimo.
+    await schoolSubEnd(now, out, appUrl);
     const in30 = iso(now.getTime() + 30 * 86400000);
     for (const p of db.prepare("SELECT * FROM parents WHERE sub_period_end > ? AND sub_period_end <= ? AND sub_cancel_at_period_end = 0").all(nowIso, in30)) {
       const plan = planByKey(p.sub_plan);
       if (plan?.interval !== "year" || !paidActive(p, now.getTime())) continue;
       out.renewal += await remind(p, "renewal", p.sub_period_end.slice(0, 10), renewalEmail(fmtDate(p.sub_period_end), fmtMoney(plan.amount, plan.currency || "EUR"), appUrl));
     }
-    await schoolSubEnd(now, out, appUrl);
     return out;
   }
 
@@ -645,16 +646,18 @@ export function mountBilling(app, ctx) {
     out.school_resumed = 0;
     if (!stripe.enabled) return;
     for (const p of db.prepare("SELECT * FROM parents WHERE sub_id IS NOT NULL").all()) {
-      if (!isSchoolPlan(p.sub_plan) || !paidActive(p, now.getTime())) continue;
+      if ((p.sub_provider || "stripe") !== "stripe" || !isSchoolPlan(p.sub_plan) || !paidActive(p, now.getTime())) continue;
       const key = `school_sub_end:${p.id}`;
-      const ours = kv.get(key) === "cancelled";
-      const covered = hasSchoolChild(p.id);
-      if (covered === !ours) continue; // licenca velja in nismo ustavili, ali ne velja in je že ustavljeno
-      if (!covered && p.sub_cancel_at_period_end) continue; // starš je že sam preklical
       try {
+        // Oznaka velja samo za to naročnino (sub_id) in samo, dokler je preklic še v veljavi: stara oznaka
+        // po koncu naročnine ne sme vplivati na novo, preklic, ki ga je starš umaknil, pa ni več »naš«.
+        const ours = kv.get(key) === p.sub_id && !!p.sub_cancel_at_period_end;
+        const covered = hasSchoolChild(p.id);
+        if (covered === !ours) continue; // licenca velja in nismo ustavili, ali ne velja in je že ustavljeno
+        if (!covered && p.sub_cancel_at_period_end) continue; // starš je že sam preklical
         await stripe.request("POST", `/subscriptions/${p.sub_id}`, { cancel_at_period_end: covered ? "false" : "true" });
         db.prepare("UPDATE parents SET sub_cancel_at_period_end = ? WHERE id = ?").run(covered ? 0 : 1, p.id);
-        kv.set(key, covered ? "" : "cancelled");
+        kv.set(key, covered ? "" : p.sub_id);
         if (covered) {
           out.school_resumed++;
           continue;
