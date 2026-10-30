@@ -1589,7 +1589,7 @@
   "pay.shareText": "A mund ta paguash Evklid për mua, të lutem? Ja lidhja:",
   "pay.minorNote": "Vetëm një i rritur mund të paguajë. Dërgoju lidhjen prindërve ose kujdestarit, që të paguajnë në vendin tënd.",
   "pass.title": "Përgatitu për testin",
-  "pass.text": "Testi «{name}» është {date}. Deri atëherë, paketa para testit të hap të gjithë Evklid: tutorin, ushtrimet dhe testet provë.",
+  "pass.text": "Testi «{name}» ({date}) po afron. Paketa para testit të hap të gjithë Evklid për ditët që zgjedh: tutorin, ushtrimet dhe testet provë.",
   "pass.days": {
     "one": "{n} ditë",
     "other": "{n} ditë"
@@ -1604,17 +1604,20 @@
   "payp.intro": "{name} ju kërkon të paguani mësimin në Evklid.",
   "payp.introNoName": "Ju kërkohet të paguani mësimin në Evklid.",
   "payp.whatLink": "Çfarë është Evklid?",
-  "payp.sub": "Abonim: {label}",
+  "payp.sub": {
+    "one": "Abonim për {n} fëmijë",
+    "other": "Abonim për {n} fëmijë"
+  },
   "payp.perMonth": "në muaj",
   "payp.perYear": "për vit shkollor",
-  "payp.subNote": "Abonimin mund ta anuloni në çdo kohë te skeda Llogaria.",
+  "payp.subNote": "Abonimin mund ta anulojë në çdo kohë mbajtësi i llogarisë në Evklid, te skeda Llogaria.",
   "payp.pass": {
     "one": "Paketë para testit për {n} ditë",
     "other": "Paketë para testit për {n} ditë"
   },
   "payp.passTest": "Për testin «{name}» ({date})",
   "payp.passNote": "Pagesë e njëhershme, pa abonim. Paketa mbaron vetë.",
-  "payp.email": "Adresa juaj e email-it (për faturën)",
+  "payp.email": "Adresa juaj e email-it (aty dërgojmë konfirmimin e pagesës)",
   "payp.emailMissing": "Shkruani një adresë të vlefshme email-i.",
   "payp.pay": "Paguaj",
   "payp.secure": "Pagesa kryhet në mënyrë të sigurt përmes Stripe. Evklid nuk i sheh të dhënat e kartës suaj.",
@@ -1646,5 +1649,12 @@
   "admin.copyLink": "Kopjo lidhjen",
   "admin.events": "Ngjarjet e fundit të pagesave",
   "admin.noEvents": "Ende nuk ka ngjarje pagesash.",
-  "admin.eventError": "gabim"
+  "admin.eventError": "gabim",
+  "payp.passWhat": {
+    "one": "Hap të gjithë Evklid (tutori, ushtrime, teste provë) për {n} ditë nga pagesa.",
+    "other": "Hap të gjithë Evklid (tutori, ushtrime, teste provë) për {n} ditë nga pagesa."
+  },
+  "payp.consentMissing": "Para pagesës shënoni të dyja konfirmimet.",
+  "pass.until": "deri më {date}",
+  "pay.linkLabel": "Lidhja e pagesës"
 }

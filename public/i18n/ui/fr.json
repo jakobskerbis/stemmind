@@ -1575,7 +1575,7 @@
   "rep.thanks": "Merci ! Nous allons vérifier la réponse.",
   "rep.done": "Signalé",
   "rep.pick": "Choisis ce qui ne va pas.",
-  "pay.adult": "Je suis majeur(e) et je paie pour mon propre profil ou en tant que parent ou tuteur légal.",
+  "pay.adult": "Je suis une personne majeure et je paie pour mon propre profil ou en tant que parent ou tuteur légal.",
   "pay.withdrawal": "Je veux que l’accès commence immédiatement. Je sais que je peux me rétracter du contrat dans un délai de 14 jours et que, dans ce cas, je serai remboursé(e) de la part proportionnelle du paiement.",
   "pay.consentMissing": "Coche les deux cases avant de payer.",
   "pay.continue": "Continuer vers le paiement",
@@ -1589,7 +1589,7 @@
   "pay.shareText": "Tu peux me payer Evklid, s’il te plaît ? Voici le lien :",
   "pay.minorNote": "Seul un adulte peut payer. Envoie le lien à tes parents ou à ton tuteur pour qu’ils paient à ta place.",
   "pass.title": "Prépare-toi pour ton contrôle",
-  "pass.text": "Ton contrôle « {name} » a lieu le {date}. D’ici là, le pack révisions te débloque tout Evklid : le tuteur, les exercices et les tests d’entraînement.",
+  "pass.text": "Ton contrôle « {name} » ({date}) approche. Le pack révisions te débloque tout Evklid pour les jours choisis : le tuteur, les exercices et les tests d’entraînement.",
   "pass.days": {
     "one": "{n} jour",
     "other": "{n} jours"
@@ -1604,17 +1604,20 @@
   "payp.intro": "{name} vous demande de payer son apprentissage avec Evklid.",
   "payp.introNoName": "On vous demande de payer un apprentissage avec Evklid.",
   "payp.whatLink": "Qu’est-ce qu’Evklid ?",
-  "payp.sub": "Abonnement : {label}",
+  "payp.sub": {
+    "one": "Abonnement pour {n} enfant",
+    "other": "Abonnement pour {n} enfants"
+  },
   "payp.perMonth": "par mois",
   "payp.perYear": "par année scolaire",
-  "payp.subNote": "Vous pouvez résilier l’abonnement à tout moment dans l’onglet Compte.",
+  "payp.subNote": "Le titulaire du compte Evklid peut résilier l’abonnement à tout moment dans l’onglet Compte.",
   "payp.pass": {
     "one": "Pack révisions de {n} jour",
     "other": "Pack révisions de {n} jours"
   },
   "payp.passTest": "Pour le contrôle « {name} » ({date})",
   "payp.passNote": "Paiement unique, sans abonnement. Le pack s’arrête tout seul.",
-  "payp.email": "Votre adresse e-mail (pour la facture)",
+  "payp.email": "Votre adresse e-mail (nous y enverrons la confirmation de paiement)",
   "payp.emailMissing": "Saisissez une adresse e-mail valide.",
   "payp.pay": "Payer",
   "payp.secure": "Le paiement est traité de façon sécurisée par Stripe. Evklid ne voit pas les données de votre carte.",
@@ -1646,5 +1649,12 @@
   "admin.copyLink": "Copier le lien",
   "admin.events": "Derniers événements de paiement",
   "admin.noEvents": "Aucun événement de paiement pour l’instant.",
-  "admin.eventError": "erreur"
+  "admin.eventError": "erreur",
+  "payp.passWhat": {
+    "one": "Débloque tout Evklid (tuteur, exercices, tests d’entraînement) pendant {n} jour à partir du paiement.",
+    "other": "Débloque tout Evklid (tuteur, exercices, tests d’entraînement) pendant {n} jours à partir du paiement."
+  },
+  "payp.consentMissing": "Cochez les deux cases avant de payer.",
+  "pass.until": "jusqu’au {date}",
+  "pay.linkLabel": "Lien de paiement"
 }

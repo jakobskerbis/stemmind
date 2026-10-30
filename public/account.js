@@ -647,19 +647,19 @@ function plansPicker(acc) {
       <span><b>${money(p.amount, cur)}</b> / ${interval === "year" ? "šolsko leto" : "mesec"}<br>${perMonth}</span></label>`;
   };
   return `
-    <form id="plan-form" class="plans">
+    <form id="plan-form" class="plans" novalidate>
       <div class="plan-row"><div class="plan-head">1 otrok</div>${cell(1, "month")}${cell(1, "year")}</div>
       <div class="plan-row"><div class="plan-head">2 otroka</div>${cell(2, "month")}${cell(2, "year")}</div>
-      <p class="form-error" hidden></p>
+      <p class="form-error" role="alert" hidden></p>
       ${acc.prices_draft ? `<p class="muted">Cene v lokalni valuti so predlog (razvojna različica).</p>` : ""}
       ${acc.parent.minor
         ? `<p class="muted">${esc(t("pay.minorNote"))}</p>
            <button class="primary" type="button" id="plan-link">${esc(t("pay.askParent"))}</button><div id="plan-link-out"></div>`
         : `${consentFields()}
            <button class="primary" type="submit">${esc(t("pay.continue"))}</button>`}
-      <p class="muted">Plačilo poteka varno prek Stripe. Naročnino lahko kadar koli prekličete.${
+      ${acc.parent.minor ? "" : `<p class="muted">Plačilo poteka varno prek Stripe. Naročnino lahko kadar koli prekličete.${
         acc.access.tier === "trial" ? " Preostanek preizkusa se ohrani: prvo plačilo bo šele po njegovem koncu." : ""
-      }</p>
+      }</p>`}
     </form>`;
 }
 
@@ -697,7 +697,7 @@ function adminCodes(acc) {
     <div class="card admin-codes">
       <h2>${esc(t("admin.codes"))}</h2>
       <ul class="code-list">${rows}</ul>
-      <details><summary>${esc(t("admin.create"))}</summary>
+      <details class="code-new"><summary>${esc(t("admin.create"))}</summary>
         <form id="code-form" class="form" novalidate>
           <label>${esc(t("admin.code"))} <input name="code" required maxlength="30" autocapitalize="characters" pattern="[A-Za-z0-9-]{4,30}"></label>
           <label>${esc(t("admin.days"))} <input name="days" type="number" min="1" max="730" value="30" required></label>
@@ -960,7 +960,7 @@ async function renderAccount() {
     const btn = $("button[type=submit]", e.target);
     btn.disabled = true;
     try {
-      if (!consentsOk(e.target)) throw new Error(t("pay.consentMissing"));
+      if (!consentsOk(e.target)) throw new Error(t("payp.consentMissing"));
       const r = await api("/api/billing/checkout", { method: "POST", body: { seats: Number(seats), interval, ...consentBody() } });
       location.href = r.url;
     } catch (err) {

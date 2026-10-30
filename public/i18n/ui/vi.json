@@ -1581,7 +1581,7 @@
   "pay.shareText": "Bố mẹ thanh toán Evklid giúp con được không ạ? Đây là liên kết:",
   "pay.minorNote": "Chỉ người lớn mới có thể thanh toán. Hãy gửi liên kết cho bố mẹ hoặc người giám hộ để họ thanh toán thay em.",
   "pass.title": "Chuẩn bị cho bài kiểm tra",
-  "pass.text": "Bài kiểm tra “{name}” diễn ra vào {date}. Từ nay đến lúc đó, gói ôn thi mở khóa toàn bộ Evklid cho em: gia sư, bài luyện tập và bài kiểm tra thử.",
+  "pass.text": "Bài kiểm tra “{name}” ({date}) sắp đến. Gói ôn thi mở khóa toàn bộ Evklid cho em trong số ngày em chọn: gia sư, bài luyện tập và bài kiểm tra thử.",
   "pass.days": {
     "other": "{n} ngày"
   },
@@ -1595,16 +1595,18 @@
   "payp.intro": "{name} nhờ Quý phụ huynh thanh toán việc học trên Evklid.",
   "payp.introNoName": "Quý phụ huynh được nhờ thanh toán việc học trên Evklid.",
   "payp.whatLink": "Evklid là gì?",
-  "payp.sub": "Gói đăng ký: {label}",
+  "payp.sub": {
+    "other": "Gói đăng ký cho {n} con"
+  },
   "payp.perMonth": "mỗi tháng",
   "payp.perYear": "mỗi năm học",
-  "payp.subNote": "Quý phụ huynh có thể hủy gói đăng ký bất cứ lúc nào trong thẻ Tài khoản.",
+  "payp.subNote": "Chủ tài khoản có thể hủy gói đăng ký bất cứ lúc nào trong Evklid, tại thẻ Tài khoản.",
   "payp.pass": {
     "other": "Gói ôn thi {n} ngày"
   },
   "payp.passTest": "Cho bài kiểm tra “{name}” ({date})",
   "payp.passNote": "Thanh toán một lần, không phải gói đăng ký. Gói tự hết hạn.",
-  "payp.email": "Email của Quý phụ huynh (để nhận hóa đơn)",
+  "payp.email": "Email của Quý phụ huynh (chúng tôi sẽ gửi xác nhận thanh toán đến đây)",
   "payp.emailMissing": "Vui lòng nhập địa chỉ email hợp lệ.",
   "payp.pay": "Thanh toán",
   "payp.secure": "Thanh toán được xử lý an toàn qua Stripe. Evklid không nhìn thấy thông tin thẻ của Quý phụ huynh.",
@@ -1636,5 +1638,11 @@
   "admin.copyLink": "Sao chép liên kết",
   "admin.events": "Sự kiện thanh toán gần đây",
   "admin.noEvents": "Chưa có sự kiện thanh toán nào.",
-  "admin.eventError": "lỗi"
+  "admin.eventError": "lỗi",
+  "payp.passWhat": {
+    "other": "Mở khóa toàn bộ Evklid (gia sư, bài luyện tập, bài kiểm tra thử) trong {n} ngày kể từ khi thanh toán."
+  },
+  "payp.consentMissing": "Vui lòng đánh dấu cả hai ô xác nhận trước khi thanh toán.",
+  "pass.until": "đến {date}",
+  "pay.linkLabel": "Liên kết thanh toán"
 }

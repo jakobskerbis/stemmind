@@ -1581,7 +1581,7 @@
   "pay.shareText": "Evklid の支払いをお願いできる？リンクはこちら：",
   "pay.minorNote": "支払いができるのは大人だけです。リンクを親や保護者に送って、代わりに支払ってもらいましょう。",
   "pass.title": "テストに備えよう",
-  "pass.text": "テスト「{name}」は{date}です。それまで、テスト前パックで Evklid のすべてが使えます：チューター、練習問題、小テスト。",
+  "pass.text": "テスト「{name}」（{date}）が近づいています。テスト前パックで、選んだ日数のあいだ Evklid のすべてが使えます：チューター、練習問題、小テスト。",
   "pass.days": {
     "other": "{n}日間"
   },
@@ -1595,16 +1595,18 @@
   "payp.intro": "{name}さんから、Evklid での学習費用のお支払いを依頼されています。",
   "payp.introNoName": "Evklid での学習費用のお支払いを依頼されています。",
   "payp.whatLink": "Evklid とは？",
-  "payp.sub": "サブスクリプション：{label}",
+  "payp.sub": {
+    "other": "お子さま{n}人分のサブスクリプション"
+  },
   "payp.perMonth": "毎月",
   "payp.perYear": "1学年ごと",
-  "payp.subNote": "サブスクリプションは「アカウント」タブからいつでも解約できます。",
+  "payp.subNote": "サブスクリプションは、アカウントの所有者が Evklid の「アカウント」タブからいつでも解約できます。",
   "payp.pass": {
     "other": "{n}日間のテスト前パック"
   },
   "payp.passTest": "テスト「{name}」用（{date}）",
   "payp.passNote": "1回だけのお支払いで、サブスクリプションではありません。パックは自動的に終了します。",
-  "payp.email": "メールアドレス（請求書の送付用）",
+  "payp.email": "メールアドレス（お支払いの確認メールをお送りします）",
   "payp.emailMissing": "有効なメールアドレスを入力してください。",
   "payp.pay": "支払う",
   "payp.secure": "お支払いは Stripe を通じて安全に処理されます。Evklid がカード情報を見ることはありません。",
@@ -1636,5 +1638,11 @@
   "admin.copyLink": "リンクをコピー",
   "admin.events": "最近の支払いイベント",
   "admin.noEvents": "支払いイベントはまだありません。",
-  "admin.eventError": "エラー"
+  "admin.eventError": "エラー",
+  "payp.passWhat": {
+    "other": "お支払いから{n}日間、Evklid のすべて（チューター、練習問題、小テスト）が使えます。"
+  },
+  "payp.consentMissing": "お支払いの前に、両方の確認項目にチェックを入れてください。",
+  "pass.until": "{date}まで",
+  "pay.linkLabel": "支払いリンク"
 }

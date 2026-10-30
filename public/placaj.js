@@ -27,7 +27,8 @@ async function api(path, body) {
 }
 
 function shell(inner) {
-  root.innerHTML = `<p><a href="/">← Evklid</a></p><h1>${esc(t("payp.title"))}</h1>${inner}`;
+  const back = document.documentElement.dir === "rtl" ? "→" : "←";
+  root.innerHTML = `<p><a href="/">${back} Evklid</a></p><h1>${esc(t("payp.title"))}</h1>${inner}`;
 }
 
 function showPaid(v) {
@@ -37,7 +38,7 @@ function showPaid(v) {
 function summary(v) {
   const p = v.plan;
   if (v.kind === "sub") {
-    return `<div class="pay-sum"><b>${esc(t("payp.sub", { label: p.label }))}</b>
+    return `<div class="pay-sum"><b>${esc(t("payp.sub", { n: p.seats || 1 }))}</b>
       <span class="pay-price">${esc(money(p.amount, p.currency))}</span>
       <span class="muted">${esc(t(p.interval === "year" ? "payp.perYear" : "payp.perMonth"))}</span>
       <p class="muted">${esc(t("payp.subNote"))}</p></div>`;
@@ -45,6 +46,7 @@ function summary(v) {
   return `<div class="pay-sum"><b>${esc(t("payp.pass", { n: p.days }))}</b>
     <span class="pay-price">${esc(money(p.amount, p.currency))}</span>
     ${v.test?.name ? `<span>${esc(t("payp.passTest", { name: v.test.name, date: fmtDay(v.test.date) }))}</span>` : ""}
+    <span>${esc(t("payp.passWhat", { n: p.days }))}</span>
     <p class="muted">${esc(t("payp.passNote"))}</p></div>`;
 }
 
@@ -73,8 +75,12 @@ function render(v) {
       err.textContent = x.message;
       err.hidden = false;
     };
-    if (!f.email.checkValidity()) return fail(new Error(t("payp.emailMissing")));
-    if (!consentsOk(f)) return fail(new Error(t("pay.consentMissing")));
+    f.email.removeAttribute("aria-invalid");
+    if (!f.email.checkValidity()) {
+      f.email.setAttribute("aria-invalid", "true");
+      return fail(new Error(t("payp.emailMissing")));
+    }
+    if (!consentsOk(f)) return fail(new Error(t("payp.consentMissing")));
     const btn = f.querySelector("button[type=submit]");
     btn.disabled = true;
     try {

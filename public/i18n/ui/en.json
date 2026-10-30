@@ -1589,7 +1589,7 @@
   "pay.shareText": "Could you please pay for Evklid for me? Here's the link:",
   "pay.minorNote": "Only an adult can pay. Send the link to your parents or guardian so they can pay for you.",
   "pass.title": "Get ready for your test",
-  "pass.text": "Your test “{name}” is on {date}. Until then, the pre-test pack unlocks all of Evklid for you: the tutor, practice and quizzes.",
+  "pass.text": "Your test “{name}” ({date}) is coming up. The pre-test pack unlocks all of Evklid for you for the days you choose: the tutor, practice and quizzes.",
   "pass.days": {
     "one": "{n} day",
     "other": "{n} days"
@@ -1604,17 +1604,20 @@
   "payp.intro": "{name} is asking you to pay for their learning with Evklid.",
   "payp.introNoName": "You've been asked to pay for learning with Evklid.",
   "payp.whatLink": "What is Evklid?",
-  "payp.sub": "Subscription: {label}",
+  "payp.sub": {
+    "one": "Subscription for {n} child",
+    "other": "Subscription for {n} children"
+  },
   "payp.perMonth": "per month",
   "payp.perYear": "per school year",
-  "payp.subNote": "You can cancel the subscription at any time in the Account tab.",
+  "payp.subNote": "The account holder can cancel the subscription at any time in Evklid, in the Account tab.",
   "payp.pass": {
     "one": "Pre-test pack for {n} day",
     "other": "Pre-test pack for {n} days"
   },
   "payp.passTest": "For the test “{name}” ({date})",
   "payp.passNote": "One-time payment, no subscription. The pack ends on its own.",
-  "payp.email": "Your email address (for the invoice)",
+  "payp.email": "Your email address (we'll send the payment confirmation there)",
   "payp.emailMissing": "Please enter a valid email address.",
   "payp.pay": "Pay",
   "payp.secure": "Payment is processed securely by Stripe. Evklid never sees your card details.",
@@ -1646,5 +1649,12 @@
   "admin.copyLink": "Copy link",
   "admin.events": "Recent payment events",
   "admin.noEvents": "No payment events yet.",
-  "admin.eventError": "error"
+  "admin.eventError": "error",
+  "payp.passWhat": {
+    "one": "Unlocks all of Evklid (tutor, practice, quizzes) for {n} day from payment.",
+    "other": "Unlocks all of Evklid (tutor, practice, quizzes) for {n} days from payment."
+  },
+  "payp.consentMissing": "Please tick both boxes before paying.",
+  "pass.until": "until {date}",
+  "pay.linkLabel": "Payment link"
 }

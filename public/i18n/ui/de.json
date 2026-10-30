@@ -1589,7 +1589,7 @@
   "pay.shareText": "Kannst du bitte Evklid für mich bezahlen? Hier ist der Link:",
   "pay.minorNote": "Bezahlen kann nur eine erwachsene Person. Schick den Link an deine Eltern oder eine erziehungsberechtigte Person, damit sie für dich bezahlen.",
   "pass.title": "Bereite dich auf den Test vor",
-  "pass.text": "Der Test „{name}“ ist am {date}. Das Vorbereitungspaket schaltet dir bis dahin ganz Evklid frei: Tutor, Übungen und Probetests.",
+  "pass.text": "Der Test „{name}“ ({date}) steht bald an. Das Vorbereitungspaket schaltet dir für die gewählten Tage ganz Evklid frei: Tutor, Übungen und Probetests.",
   "pass.days": {
     "one": "{n} Tag",
     "other": "{n} Tage"
@@ -1604,17 +1604,20 @@
   "payp.intro": "{name} bittet Sie, das Lernen mit Evklid zu bezahlen.",
   "payp.introNoName": "Sie werden gebeten, das Lernen mit Evklid zu bezahlen.",
   "payp.whatLink": "Was ist Evklid?",
-  "payp.sub": "Abo: {label}",
+  "payp.sub": {
+    "one": "Abo für {n} Kind",
+    "other": "Abo für {n} Kinder"
+  },
   "payp.perMonth": "pro Monat",
   "payp.perYear": "pro Schuljahr",
-  "payp.subNote": "Sie können das Abo jederzeit im Bereich „Konto“ kündigen.",
+  "payp.subNote": "Wer das Konto in Evklid führt, kann das Abo jederzeit im Bereich „Konto“ kündigen.",
   "payp.pass": {
     "one": "Vorbereitungspaket für {n} Tag",
     "other": "Vorbereitungspaket für {n} Tage"
   },
   "payp.passTest": "Für den Test „{name}“ ({date})",
   "payp.passNote": "Einmalige Zahlung, kein Abo. Das Paket endet von selbst.",
-  "payp.email": "Ihre E-Mail-Adresse (für die Rechnung)",
+  "payp.email": "Ihre E-Mail-Adresse (dorthin senden wir die Zahlungsbestätigung)",
   "payp.emailMissing": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
   "payp.pay": "Bezahlen",
   "payp.secure": "Die Zahlung läuft sicher über Stripe. Evklid sieht Ihre Kartendaten nicht.",
@@ -1646,5 +1649,12 @@
   "admin.copyLink": "Link kopieren",
   "admin.events": "Letzte Zahlungsereignisse",
   "admin.noEvents": "Noch keine Zahlungsereignisse.",
-  "admin.eventError": "Fehler"
+  "admin.eventError": "Fehler",
+  "payp.passWhat": {
+    "one": "Schaltet ganz Evklid (Tutor, Übungen, Probetests) für {n} Tag ab der Zahlung frei.",
+    "other": "Schaltet ganz Evklid (Tutor, Übungen, Probetests) für {n} Tage ab der Zahlung frei."
+  },
+  "payp.consentMissing": "Bitte setzen Sie vor dem Bezahlen beide Häkchen.",
+  "pass.until": "bis {date}",
+  "pay.linkLabel": "Zahlungslink"
 }

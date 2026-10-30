@@ -1589,7 +1589,7 @@
   "pay.shareText": "Tafadhali, unaweza kunilipia Evklid? Hiki hapa kiungo:",
   "pay.minorNote": "Ni mtu mzima pekee anayeweza kulipa. Watumie wazazi au mlezi wako kiungo ili walipe kwa niaba yako.",
   "pass.title": "Jiandae kwa mtihani",
-  "pass.text": "Mtihani “{name}” ni {date}. Hadi wakati huo, kifurushi cha kabla ya mtihani kinakufungulia Evklid yote: mwalimu, mazoezi na majaribio.",
+  "pass.text": "Mtihani “{name}” ({date}) unakaribia. Kifurushi cha kabla ya mtihani kinakufungulia Evklid yote kwa siku utakazochagua: mwalimu, mazoezi na majaribio.",
   "pass.days": {
     "one": "siku {n}",
     "other": "siku {n}"
@@ -1604,17 +1604,20 @@
   "payp.intro": "{name} anakuomba ulipie masomo yake kwenye Evklid.",
   "payp.introNoName": "Unaombwa kulipia masomo kwenye Evklid.",
   "payp.whatLink": "Evklid ni nini?",
-  "payp.sub": "Usajili: {label}",
+  "payp.sub": {
+    "one": "Usajili kwa mtoto {n}",
+    "other": "Usajili kwa watoto {n}"
+  },
   "payp.perMonth": "kwa mwezi",
   "payp.perYear": "kwa mwaka wa shule",
-  "payp.subNote": "Unaweza kughairi usajili wakati wowote kwenye kichupo cha Akaunti.",
+  "payp.subNote": "Mwenye akaunti anaweza kughairi usajili wakati wowote ndani ya Evklid, kwenye kichupo cha Akaunti.",
   "payp.pass": {
     "one": "Kifurushi cha kabla ya mtihani cha siku {n}",
     "other": "Kifurushi cha kabla ya mtihani cha siku {n}"
   },
   "payp.passTest": "Kwa mtihani “{name}” ({date})",
   "payp.passNote": "Malipo ya mara moja, bila usajili. Kifurushi kinaisha chenyewe.",
-  "payp.email": "Barua pepe yako (kwa ankara)",
+  "payp.email": "Barua pepe yako (tutatuma uthibitisho wa malipo huko)",
   "payp.emailMissing": "Andika barua pepe sahihi.",
   "payp.pay": "Lipa",
   "payp.secure": "Malipo yanafanyika kwa usalama kupitia Stripe. Evklid haioni taarifa za kadi yako.",
@@ -1646,5 +1649,12 @@
   "admin.copyLink": "Nakili kiungo",
   "admin.events": "Matukio ya hivi karibuni ya malipo",
   "admin.noEvents": "Bado hakuna matukio ya malipo.",
-  "admin.eventError": "hitilafu"
+  "admin.eventError": "hitilafu",
+  "payp.passWhat": {
+    "one": "Inafungua Evklid yote (mwalimu, mazoezi, majaribio) kwa siku {n} tangu malipo.",
+    "other": "Inafungua Evklid yote (mwalimu, mazoezi, majaribio) kwa siku {n} tangu malipo."
+  },
+  "payp.consentMissing": "Tafadhali weka alama kwenye uthibitisho wote mawili kabla ya kulipa.",
+  "pass.until": "hadi {date}",
+  "pay.linkLabel": "Kiungo cha malipo"
 }

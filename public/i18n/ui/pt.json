@@ -1589,7 +1589,7 @@
   "pay.shareText": "Podes pagar-me o Evklid, por favor? Aqui está a ligação:",
   "pay.minorNote": "Só um adulto pode pagar. Envia a ligação aos teus pais ou ao teu tutor para pagarem por ti.",
   "pass.title": "Prepara-te para o teste",
-  "pass.text": "O teste «{name}» é a {date}. Até lá, o pacote de preparação desbloqueia-te todo o Evklid: o tutor, os exercícios e os testes de treino.",
+  "pass.text": "O teste «{name}» ({date}) está a aproximar-se. O pacote de preparação desbloqueia-te todo o Evklid durante os dias que escolheres: o tutor, os exercícios e os testes de treino.",
   "pass.days": {
     "one": "{n} dia",
     "other": "{n} dias"
@@ -1604,17 +1604,20 @@
   "payp.intro": "{name} pede-lhe que pague a sua aprendizagem com o Evklid.",
   "payp.introNoName": "Pedem-lhe que pague a aprendizagem com o Evklid.",
   "payp.whatLink": "O que é o Evklid?",
-  "payp.sub": "Subscrição: {label}",
+  "payp.sub": {
+    "one": "Subscrição para {n} filho",
+    "other": "Subscrição para {n} filhos"
+  },
   "payp.perMonth": "por mês",
   "payp.perYear": "por ano letivo",
-  "payp.subNote": "Pode cancelar a subscrição a qualquer momento no separador Conta.",
+  "payp.subNote": "O titular da conta Evklid pode cancelar a subscrição a qualquer momento no separador Conta.",
   "payp.pass": {
     "one": "Pacote de preparação de {n} dia",
     "other": "Pacote de preparação de {n} dias"
   },
   "payp.passTest": "Para o teste «{name}» ({date})",
   "payp.passNote": "Pagamento único, sem subscrição. O pacote termina sozinho.",
-  "payp.email": "O seu e-mail (para a fatura)",
+  "payp.email": "O seu e-mail (enviaremos para lá o comprovativo de pagamento)",
   "payp.emailMissing": "Introduza um e-mail válido.",
   "payp.pay": "Pagar",
   "payp.secure": "O pagamento é feito em segurança através da Stripe. O Evklid não vê os dados do seu cartão.",
@@ -1646,5 +1649,12 @@
   "admin.copyLink": "Copiar ligação",
   "admin.events": "Últimos eventos de pagamento",
   "admin.noEvents": "Ainda não há eventos de pagamento.",
-  "admin.eventError": "erro"
+  "admin.eventError": "erro",
+  "payp.passWhat": {
+    "one": "Desbloqueia todo o Evklid (tutor, exercícios, testes de treino) durante {n} dia a partir do pagamento.",
+    "other": "Desbloqueia todo o Evklid (tutor, exercícios, testes de treino) durante {n} dias a partir do pagamento."
+  },
+  "payp.consentMissing": "Marque as duas caixas antes de pagar.",
+  "pass.until": "até {date}",
+  "pay.linkLabel": "Ligação de pagamento"
 }

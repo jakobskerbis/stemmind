@@ -1589,7 +1589,7 @@
   "pay.shareText": "Kifizetnéd nekem az Evklidet? Itt a link:",
   "pay.minorNote": "Csak felnőtt fizethet. Küldd el a linket a szüleidnek vagy a gondviselődnek, hogy ők fizessenek helyetted.",
   "pass.title": "Készülj fel a dolgozatra",
-  "pass.text": "A dolgozatod („{name}”) időpontja: {date}. Addig a felkészülési csomag a teljes Evklidet megnyitja neked: az oktatót, a gyakorlást és a próbateszteket.",
+  "pass.text": "Közeleg a dolgozatod: „{name}” ({date}). A felkészülési csomag a választott napokra megnyitja neked a teljes Evklidet: az oktatót, a gyakorlást és a próbateszteket.",
   "pass.days": {
     "one": "{n} nap",
     "other": "{n} nap"
@@ -1604,17 +1604,20 @@
   "payp.intro": "{name} arra kéri Önt, hogy fizesse ki a tanulását az Evklidben.",
   "payp.introNoName": "Arra kérik Önt, hogy fizesse ki a tanulást az Evklidben.",
   "payp.whatLink": "Mi az Evklid?",
-  "payp.sub": "Előfizetés: {label}",
+  "payp.sub": {
+    "one": "Előfizetés {n} gyerekre",
+    "other": "Előfizetés {n} gyerekre"
+  },
   "payp.perMonth": "havonta",
   "payp.perYear": "tanévenként",
-  "payp.subNote": "Az előfizetést bármikor lemondhatja a Fiók lapon.",
+  "payp.subNote": "Az előfizetést a fiók tulajdonosa bármikor lemondhatja az Evklidben, a Fiók lapon.",
   "payp.pass": {
     "one": "Felkészülési csomag {n} napra",
     "other": "Felkészülési csomag {n} napra"
   },
   "payp.passTest": "Dolgozat: „{name}” ({date})",
   "payp.passNote": "Egyszeri fizetés, előfizetés nélkül. A csomag magától lejár.",
-  "payp.email": "Az Ön e-mail-címe (a számlához)",
+  "payp.email": "Az Ön e-mail-címe (erre küldjük a fizetési visszaigazolást)",
   "payp.emailMissing": "Adjon meg egy érvényes e-mail-címet.",
   "payp.pay": "Fizetés",
   "payp.secure": "A fizetés biztonságosan, a Stripe szolgáltatáson keresztül történik. A kártyaadatait az Evklid nem látja.",
@@ -1646,5 +1649,12 @@
   "admin.copyLink": "Link másolása",
   "admin.events": "Legutóbbi fizetési események",
   "admin.noEvents": "Még nincsenek fizetési események.",
-  "admin.eventError": "hiba"
+  "admin.eventError": "hiba",
+  "payp.passWhat": {
+    "one": "A fizetéstől számítva {n} napra megnyitja a teljes Evklidet (oktató, gyakorlás, próbatesztek).",
+    "other": "A fizetéstől számítva {n} napra megnyitja a teljes Evklidet (oktató, gyakorlás, próbatesztek)."
+  },
+  "payp.consentMissing": "Fizetés előtt jelölje be mindkét megerősítést.",
+  "pass.until": "eddig: {date}",
+  "pay.linkLabel": "Fizetési link"
 }

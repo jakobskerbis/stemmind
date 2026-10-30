@@ -9,6 +9,8 @@ import { accountsOn } from "./account.js";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const money = (cents, currency) => (cents / 100).toLocaleString(locale(), { style: "currency", currency });
 const fmtDay = (s) => new Date(`${s}T12:00:00`).toLocaleDateString(locale(), { weekday: "short", day: "numeric", month: "numeric" });
+// Zadnji dan paketa, če ga plačaš danes.
+const fmtShort = (days) => new Date(Date.now() + days * 86400000).toLocaleDateString(locale(), { day: "numeric", month: "numeric" });
 const fmtIso = (iso) => new Date(iso).toLocaleDateString(locale(), { day: "numeric", month: "numeric", year: "numeric" });
 
 export async function renderPassOffer(el, { api, studentId, toast }) {
@@ -34,7 +36,7 @@ export async function renderPassOffer(el, { api, studentId, toast }) {
   const options = d.passes
     .map(
       (p) => `<label class="plan"><input type="radio" name="days" value="${p.days}" ${p.days === o.suggested ? "checked" : ""}>
-        <span><b>${esc(t("pass.days", { n: p.days }))}</b> · ${esc(money(p.amount, p.currency))}${p.days === o.suggested ? `<br><span class="muted">${esc(t("pass.suggested"))}</span>` : ""}</span></label>`,
+        <span><b>${esc(t("pass.days", { n: p.days }))}</b> · ${esc(money(p.amount, p.currency))}<br><span class="muted">${esc(t("pass.until", { date: fmtShort(p.days) }))}</span>${p.days === o.suggested ? `<br><span class="muted">${esc(t("pass.suggested"))}</span>` : ""}</span></label>`,
     )
     .join("");
   el.innerHTML = `
@@ -47,12 +49,12 @@ export async function renderPassOffer(el, { api, studentId, toast }) {
         <button type="button" class="primary" data-pass-link>${esc(t("pay.askParent"))}</button>
         ${o.pay_link ? "" : `<button type="button" class="secondary" data-pass-now aria-expanded="false">${esc(t("pay.payNow"))}</button>`}
       </div>
+      <div class="pass-link-out"></div>
       <div class="pass-pay" hidden>
         ${consentFields()}
         <button type="submit" class="primary">${esc(t("pay.continue"))}</button>
       </div>
       <p class="form-error" role="alert" hidden></p>
-      <div class="pass-link-out"></div>
     </form>`;
   hydrateIcons?.(el);
   const form = el.querySelector("form");
@@ -67,9 +69,15 @@ export async function renderPassOffer(el, { api, studentId, toast }) {
     e.target.disabled = true;
     try {
       const r = await api("/api/billing/pay-link", { method: "POST", body: { kind: "pass", ...body() } });
+      // Ena pot naenkrat: povezava za starše skrije plačilo v aplikaciji.
+      const pay = form.querySelector(".pass-pay");
+      pay.hidden = true;
+      form.querySelector("[data-pass-now]")?.setAttribute("aria-expanded", "false");
       const out = form.querySelector(".pass-link-out");
       out.innerHTML = linkBox(r.url);
       bindLinkBox(out, r.url, toast);
+      out.scrollIntoView?.({ block: "nearest" });
+      out.querySelector("input")?.focus();
     } catch (x) {
       fail(x);
     } finally {
@@ -79,6 +87,7 @@ export async function renderPassOffer(el, { api, studentId, toast }) {
   form.querySelector("[data-pass-now]")?.addEventListener("click", (e) => {
     const box = form.querySelector(".pass-pay");
     box.hidden = !box.hidden;
+    if (!box.hidden) form.querySelector(".pass-link-out").innerHTML = "";
     e.target.setAttribute("aria-expanded", String(!box.hidden));
   });
   form.addEventListener("submit", async (e) => {

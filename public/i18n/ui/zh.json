@@ -1581,7 +1581,7 @@
   "pay.shareText": "可以帮我付一下 Evklid 的费用吗？链接在这里：",
   "pay.minorNote": "只有成年人才能付款。把链接发给家长或监护人，让他们替你付款。",
   "pass.title": "为考试做准备",
-  "pass.text": "“{name}”考试在{date}。在那之前，考前套餐为你解锁 Evklid 的全部功能：辅导老师、练习和小测验。",
+  "pass.text": "“{name}”考试（{date}）快到了。考前套餐会在你选择的天数内为你解锁 Evklid 的全部功能：辅导老师、练习和小测验。",
   "pass.days": {
     "other": "{n} 天"
   },
@@ -1595,16 +1595,18 @@
   "payp.intro": "{name}请您为其在 Evklid 上的学习付款。",
   "payp.introNoName": "有人请您为 Evklid 上的学习付款。",
   "payp.whatLink": "Evklid 是什么？",
-  "payp.sub": "订阅：{label}",
+  "payp.sub": {
+    "other": "{n} 个孩子的订阅"
+  },
   "payp.perMonth": "每月",
   "payp.perYear": "每学年",
-  "payp.subNote": "您可以随时在“账户”标签页中取消订阅。",
+  "payp.subNote": "账户持有人可随时在 Evklid 的“账户”标签页中取消订阅。",
   "payp.pass": {
     "other": "{n} 天考前套餐"
   },
   "payp.passTest": "用于“{name}”考试（{date}）",
   "payp.passNote": "一次性付款，不是订阅。套餐到期自动结束。",
-  "payp.email": "您的电子邮箱（用于接收发票）",
+  "payp.email": "您的电子邮箱（我们会将付款确认发送到此邮箱）",
   "payp.emailMissing": "请输入有效的电子邮箱。",
   "payp.pay": "付款",
   "payp.secure": "付款通过 Stripe 安全处理。Evklid 看不到您的银行卡信息。",
@@ -1636,5 +1638,11 @@
   "admin.copyLink": "复制链接",
   "admin.events": "最近的付款事件",
   "admin.noEvents": "暂无付款事件。",
-  "admin.eventError": "错误"
+  "admin.eventError": "错误",
+  "payp.passWhat": {
+    "other": "自付款起 {n} 天内解锁 Evklid 的全部功能（辅导老师、练习、小测验）。"
+  },
+  "payp.consentMissing": "请您在付款前勾选两项确认。",
+  "pass.until": "至{date}",
+  "pay.linkLabel": "付款链接"
 }

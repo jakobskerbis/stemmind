@@ -1581,7 +1581,7 @@
   "pay.shareText": "可以幫我付一下 Evklid 的費用嗎？連結在這裡：",
   "pay.minorNote": "只有成年人才能付款。把連結傳給家長或監護人，請他們替你付款。",
   "pass.title": "為考試做準備",
-  "pass.text": "「{name}」考試在{date}。在那之前，考前方案為你解鎖 Evklid 的全部功能：輔導老師、練習和小測驗。",
+  "pass.text": "「{name}」考試（{date}）快到了。考前方案會在你選擇的天數內為你解鎖 Evklid 的全部功能：輔導老師、練習和小測驗。",
   "pass.days": {
     "other": "{n} 天"
   },
@@ -1595,16 +1595,18 @@
   "payp.intro": "{name}請您為其在 Evklid 上的學習付款。",
   "payp.introNoName": "有人請您為 Evklid 上的學習付款。",
   "payp.whatLink": "Evklid 是什麼？",
-  "payp.sub": "訂閱：{label}",
+  "payp.sub": {
+    "other": "{n} 個孩子的訂閱"
+  },
   "payp.perMonth": "每月",
   "payp.perYear": "每學年",
-  "payp.subNote": "您可以隨時在「帳戶」分頁中取消訂閱。",
+  "payp.subNote": "帳戶持有人可隨時在 Evklid 的「帳戶」分頁中取消訂閱。",
   "payp.pass": {
     "other": "{n} 天考前方案"
   },
   "payp.passTest": "用於「{name}」考試（{date}）",
   "payp.passNote": "一次性付款，不是訂閱。方案到期自動結束。",
-  "payp.email": "您的電子郵件（用於接收發票）",
+  "payp.email": "您的電子郵件（我們會將付款確認寄到這個信箱）",
   "payp.emailMissing": "請輸入有效的電子郵件地址。",
   "payp.pay": "付款",
   "payp.secure": "付款透過 Stripe 安全處理。Evklid 看不到您的卡片資料。",
@@ -1636,5 +1638,11 @@
   "admin.copyLink": "複製連結",
   "admin.events": "最近的付款事件",
   "admin.noEvents": "尚無付款事件。",
-  "admin.eventError": "錯誤"
+  "admin.eventError": "錯誤",
+  "payp.passWhat": {
+    "other": "自付款起 {n} 天內解鎖 Evklid 的全部功能（輔導老師、練習、小測驗）。"
+  },
+  "payp.consentMissing": "請您在付款前勾選兩項確認。",
+  "pass.until": "至{date}",
+  "pay.linkLabel": "付款連結"
 }

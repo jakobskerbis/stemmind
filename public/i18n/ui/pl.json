@@ -1591,7 +1591,7 @@
   "rep.thanks": "Dziękujemy! Sprawdzimy odpowiedź.",
   "rep.done": "Zgłoszono",
   "rep.pick": "Wybierz, co jest nie tak.",
-  "pay.adult": "Jestem pełnoletni(-a) i płacę za własny profil albo jako rodzic lub opiekun prawny.",
+  "pay.adult": "Jestem osobą pełnoletnią i płacę za własny profil albo jako rodzic lub opiekun prawny.",
   "pay.withdrawal": "Chcę, aby korzystanie rozpoczęło się od razu. Wiem, że mogę odstąpić od umowy w ciągu 14 dni i że w takim przypadku otrzymam zwrot proporcjonalnej części płatności.",
   "pay.consentMissing": "Przed płatnością zaznacz oba potwierdzenia.",
   "pay.continue": "Przejdź do płatności",
@@ -1605,7 +1605,7 @@
   "pay.shareText": "Możesz mi, proszę, opłacić Evklid? Oto link:",
   "pay.minorNote": "Zapłacić może tylko osoba dorosła. Wyślij link rodzicom lub opiekunowi, żeby zapłacili za ciebie.",
   "pass.title": "Przygotuj się do sprawdzianu",
-  "pass.text": "Sprawdzian „{name}” jest {date}. Do tego czasu pakiet przed sprawdzianem odblokuje ci cały Evklid: korepetytora, ćwiczenia i testy próbne.",
+  "pass.text": "Zbliża się sprawdzian „{name}” ({date}). Pakiet przed sprawdzianem odblokuje ci cały Evklid na wybrane dni: korepetytora, ćwiczenia i testy próbne.",
   "pass.days": {
     "one": "{n} dzień",
     "few": "{n} dni",
@@ -1622,10 +1622,15 @@
   "payp.intro": "{name} prosi o opłacenie nauki w Evklidzie.",
   "payp.introNoName": "Prośba o opłacenie nauki w Evklidzie.",
   "payp.whatLink": "Czym jest Evklid?",
-  "payp.sub": "Subskrypcja: {label}",
+  "payp.sub": {
+    "one": "Subskrypcja dla {n} dziecka",
+    "few": "Subskrypcja dla {n} dzieci",
+    "many": "Subskrypcja dla {n} dzieci",
+    "other": "Subskrypcja dla {n} dziecka"
+  },
   "payp.perMonth": "miesięcznie",
   "payp.perYear": "za rok szkolny",
-  "payp.subNote": "Subskrypcję można anulować w dowolnym momencie w zakładce Konto.",
+  "payp.subNote": "Właściciel konta może w dowolnym momencie anulować subskrypcję w Evklidzie, w zakładce Konto.",
   "payp.pass": {
     "one": "Pakiet przed sprawdzianem na {n} dzień",
     "few": "Pakiet przed sprawdzianem na {n} dni",
@@ -1634,7 +1639,7 @@
   },
   "payp.passTest": "Na sprawdzian „{name}” ({date})",
   "payp.passNote": "Jednorazowa płatność, bez subskrypcji. Pakiet sam wygaśnie.",
-  "payp.email": "Adres e-mail (do faktury)",
+  "payp.email": "Adres e-mail (wyślemy na niego potwierdzenie płatności)",
   "payp.emailMissing": "Proszę podać prawidłowy adres e-mail.",
   "payp.pay": "Zapłać",
   "payp.secure": "Płatność odbywa się bezpiecznie przez Stripe. Evklid nie widzi danych karty.",
@@ -1666,5 +1671,14 @@
   "admin.copyLink": "Kopiuj link",
   "admin.events": "Ostatnie zdarzenia płatności",
   "admin.noEvents": "Nie ma jeszcze zdarzeń płatności.",
-  "admin.eventError": "błąd"
+  "admin.eventError": "błąd",
+  "payp.passWhat": {
+    "one": "Odblokowuje cały Evklid (korepetytor, ćwiczenia, testy próbne) na {n} dzień od płatności.",
+    "few": "Odblokowuje cały Evklid (korepetytor, ćwiczenia, testy próbne) na {n} dni od płatności.",
+    "many": "Odblokowuje cały Evklid (korepetytor, ćwiczenia, testy próbne) na {n} dni od płatności.",
+    "other": "Odblokowuje cały Evklid (korepetytor, ćwiczenia, testy próbne) na {n} dnia od płatności."
+  },
+  "payp.consentMissing": "Przed płatnością prosimy zaznaczyć oba potwierdzenia.",
+  "pass.until": "do {date}",
+  "pay.linkLabel": "Link do płatności"
 }

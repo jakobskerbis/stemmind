@@ -1591,7 +1591,7 @@
   "rep.thanks": "Děkujeme! Odpověď prověříme.",
   "rep.done": "Nahlášeno",
   "rep.pick": "Vyber, co je špatně.",
-  "pay.adult": "Jsem plnoletý(á) a platím za svůj profil nebo jako rodič či jiný zákonný zástupce.",
+  "pay.adult": "Jsem plnoletá osoba a platím za svůj profil nebo jako rodič či jiný zákonný zástupce.",
   "pay.withdrawal": "Chci, aby používání začalo hned. Vím, že mohu od smlouvy odstoupit do 14 dnů a že v takovém případě dostanu zpět poměrnou část platby.",
   "pay.consentMissing": "Před platbou zaškrtni obě potvrzení.",
   "pay.continue": "Pokračovat k platbě",
@@ -1605,7 +1605,7 @@
   "pay.shareText": "Můžeš mi prosím zaplatit Evklid? Tady je odkaz:",
   "pay.minorNote": "Zaplatit může jen dospělý. Pošli odkaz rodičům nebo opatrovníkovi, ať zaplatí za tebe.",
   "pass.title": "Připrav se na test",
-  "pass.text": "Test „{name}“ je {date}. Balíček před testem ti do té doby odemkne celý Evklid: doučovatele, cvičení a testy nanečisto.",
+  "pass.text": "Blíží se test „{name}“ ({date}). Balíček před testem ti na zvolené dny odemkne celý Evklid: doučovatele, cvičení a testy nanečisto.",
   "pass.days": {
     "one": "{n} den",
     "few": "{n} dny",
@@ -1622,10 +1622,15 @@
   "payp.intro": "{name} vás prosí o zaplacení učení v Evklidu.",
   "payp.introNoName": "Prosí vás o zaplacení učení v Evklidu.",
   "payp.whatLink": "Co je Evklid?",
-  "payp.sub": "Předplatné: {label}",
+  "payp.sub": {
+    "one": "Předplatné pro {n} dítě",
+    "few": "Předplatné pro {n} děti",
+    "many": "Předplatné pro {n} dítěte",
+    "other": "Předplatné pro {n} dětí"
+  },
   "payp.perMonth": "měsíčně",
   "payp.perYear": "za školní rok",
-  "payp.subNote": "Předplatné můžete kdykoli zrušit na kartě Účet.",
+  "payp.subNote": "Předplatné může kdykoli zrušit držitel účtu v Evklidu na kartě Účet.",
   "payp.pass": {
     "one": "Balíček před testem na {n} den",
     "few": "Balíček před testem na {n} dny",
@@ -1634,7 +1639,7 @@
   },
   "payp.passTest": "Na test „{name}“ ({date})",
   "payp.passNote": "Jednorázová platba, žádné předplatné. Balíček sám vyprší.",
-  "payp.email": "Váš e-mail (pro fakturu)",
+  "payp.email": "Váš e-mail (pošleme na něj potvrzení o platbě)",
   "payp.emailMissing": "Zadejte platný e-mail.",
   "payp.pay": "Zaplatit",
   "payp.secure": "Platba probíhá bezpečně přes Stripe. Evklid údaje o vaší kartě nevidí.",
@@ -1666,5 +1671,14 @@
   "admin.copyLink": "Kopírovat odkaz",
   "admin.events": "Poslední platební události",
   "admin.noEvents": "Zatím žádné platební události.",
-  "admin.eventError": "chyba"
+  "admin.eventError": "chyba",
+  "payp.passWhat": {
+    "one": "Odemkne celý Evklid (doučovatel, cvičení, testy nanečisto) na {n} den od zaplacení.",
+    "few": "Odemkne celý Evklid (doučovatel, cvičení, testy nanečisto) na {n} dny od zaplacení.",
+    "many": "Odemkne celý Evklid (doučovatel, cvičení, testy nanečisto) na {n} dne od zaplacení.",
+    "other": "Odemkne celý Evklid (doučovatel, cvičení, testy nanečisto) na {n} dní od zaplacení."
+  },
+  "payp.consentMissing": "Před platbou zaškrtněte obě potvrzení.",
+  "pass.until": "do {date}",
+  "pay.linkLabel": "Odkaz k platbě"
 }

@@ -1583,7 +1583,7 @@
   "rep.thanks": "Hvala! Provjerit ćemo odgovor.",
   "rep.done": "Prijavljeno",
   "rep.pick": "Odaberi šta nije u redu.",
-  "pay.adult": "Punoljetan/na sam i plaćam za svoj profil ili kao roditelj odnosno staratelj.",
+  "pay.adult": "Punoljetna sam osoba i plaćam za svoj profil ili kao roditelj odnosno staratelj.",
   "pay.withdrawal": "Želim da korištenje počne odmah. Znam da u roku od 14 dana mogu odustati od ugovora i da ću u tom slučaju dobiti povrat srazmjernog dijela uplate.",
   "pay.consentMissing": "Prije plaćanja označi obje potvrde.",
   "pay.continue": "Nastavi na plaćanje",
@@ -1597,7 +1597,7 @@
   "pay.shareText": "Možeš li mi, molim te, platiti Evklid? Evo linka:",
   "pay.minorNote": "Platiti može samo odrasla osoba. Pošalji link roditeljima ili staratelju da plate umjesto tebe.",
   "pass.title": "Pripremi se za ispit",
-  "pass.text": "Ispit „{name}“ je {date}. Paket pred ispit ti do tada otključava cijeli Evklid: instruktora, vježbe i probne testove.",
+  "pass.text": "Bliži se ispit „{name}“ ({date}). Paket pred ispit ti za odabrane dane otključava cijeli Evklid: instruktora, vježbe i probne testove.",
   "pass.days": {
     "one": "{n} dan",
     "few": "{n} dana",
@@ -1613,10 +1613,14 @@
   "payp.intro": "{name} vas moli da platite učenje u Evklidu.",
   "payp.introNoName": "Mole vas da platite učenje u Evklidu.",
   "payp.whatLink": "Šta je Evklid?",
-  "payp.sub": "Pretplata: {label}",
+  "payp.sub": {
+    "one": "Pretplata za {n} dijete",
+    "few": "Pretplata za {n} djeteta",
+    "other": "Pretplata za {n} djece"
+  },
   "payp.perMonth": "mjesečno",
   "payp.perYear": "za školsku godinu",
-  "payp.subNote": "Pretplatu možete otkazati bilo kada na kartici Račun.",
+  "payp.subNote": "Pretplatu bilo kada može otkazati vlasnik računa u Evklidu, na kartici Račun.",
   "payp.pass": {
     "one": "Paket pred ispit za {n} dan",
     "few": "Paket pred ispit za {n} dana",
@@ -1624,7 +1628,7 @@
   },
   "payp.passTest": "Za ispit „{name}“ ({date})",
   "payp.passNote": "Jednokratna uplata, bez pretplate. Paket sam ističe.",
-  "payp.email": "Vaša e-mail adresa (za račun)",
+  "payp.email": "Vaša e-mail adresa (na nju šaljemo potvrdu o uplati)",
   "payp.emailMissing": "Upišite ispravnu e-mail adresu.",
   "payp.pay": "Plati",
   "payp.secure": "Plaćanje se obavlja sigurno putem servisa Stripe. Evklid ne vidi podatke o vašoj kartici.",
@@ -1656,5 +1660,13 @@
   "admin.copyLink": "Kopiraj link",
   "admin.events": "Posljednji događaji plaćanja",
   "admin.noEvents": "Još nema događaja plaćanja.",
-  "admin.eventError": "greška"
+  "admin.eventError": "greška",
+  "payp.passWhat": {
+    "one": "Otključava cijeli Evklid (instruktor, vježbe, probni testovi) na {n} dan od uplate.",
+    "few": "Otključava cijeli Evklid (instruktor, vježbe, probni testovi) na {n} dana od uplate.",
+    "other": "Otključava cijeli Evklid (instruktor, vježbe, probni testovi) na {n} dana od uplate."
+  },
+  "payp.consentMissing": "Prije plaćanja označite obje potvrde.",
+  "pass.until": "do {date}",
+  "pay.linkLabel": "Link za plaćanje"
 }

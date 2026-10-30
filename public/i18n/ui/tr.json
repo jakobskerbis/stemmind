@@ -1589,7 +1589,7 @@
   "pay.shareText": "Evklid'i benim için öder misin lütfen? Bağlantı burada:",
   "pay.minorNote": "Yalnızca bir yetişkin ödeme yapabilir. Bağlantıyı ailene ya da vasine gönder, senin yerine onlar ödesin.",
   "pass.title": "Sınavına hazırlan",
-  "pass.text": "“{name}” sınavın {date} tarihinde. O zamana kadar sınav öncesi paket Evklid'in tamamını senin için açar: özel öğretmen, alıştırmalar ve deneme testleri.",
+  "pass.text": "“{name}” sınavın ({date}) yaklaşıyor. Sınav öncesi paket, seçtiğin günler boyunca Evklid'in tamamını senin için açar: özel öğretmen, alıştırmalar ve deneme testleri.",
   "pass.days": {
     "one": "{n} gün",
     "other": "{n} gün"
@@ -1604,17 +1604,20 @@
   "payp.intro": "{name}, Evklid'deki öğrenimi için ödeme yapmanızı rica ediyor.",
   "payp.introNoName": "Evklid'deki öğrenim için ödeme yapmanız rica ediliyor.",
   "payp.whatLink": "Evklid nedir?",
-  "payp.sub": "Abonelik: {label}",
+  "payp.sub": {
+    "one": "{n} çocuk için abonelik",
+    "other": "{n} çocuk için abonelik"
+  },
   "payp.perMonth": "aylık",
   "payp.perYear": "öğretim yılı başına",
-  "payp.subNote": "Aboneliği istediğiniz zaman Hesap sekmesinden iptal edebilirsiniz.",
+  "payp.subNote": "Hesap sahibi aboneliği istediği zaman Evklid'de Hesap sekmesinden iptal edebilir.",
   "payp.pass": {
     "one": "{n} günlük sınav öncesi paket",
     "other": "{n} günlük sınav öncesi paket"
   },
   "payp.passTest": "“{name}” sınavı için ({date})",
   "payp.passNote": "Tek seferlik ödeme, abonelik yok. Paket kendiliğinden sona erer.",
-  "payp.email": "E-posta adresiniz (fatura için)",
+  "payp.email": "E-posta adresiniz (ödeme onayını buraya göndeririz)",
   "payp.emailMissing": "Geçerli bir e-posta adresi girin.",
   "payp.pay": "Öde",
   "payp.secure": "Ödeme Stripe üzerinden güvenle yapılır. Evklid kart bilgilerinizi görmez.",
@@ -1646,5 +1649,12 @@
   "admin.copyLink": "Bağlantıyı kopyala",
   "admin.events": "Son ödeme olayları",
   "admin.noEvents": "Henüz ödeme olayı yok.",
-  "admin.eventError": "hata"
+  "admin.eventError": "hata",
+  "payp.passWhat": {
+    "one": "Ödemeden itibaren {n} gün boyunca Evklid'in tamamını açar (özel öğretmen, alıştırmalar, deneme testleri).",
+    "other": "Ödemeden itibaren {n} gün boyunca Evklid'in tamamını açar (özel öğretmen, alıştırmalar, deneme testleri)."
+  },
+  "payp.consentMissing": "Ödemeden önce iki onay kutusunu da işaretleyin.",
+  "pass.until": "{date} tarihine kadar",
+  "pay.linkLabel": "Ödeme bağlantısı"
 }

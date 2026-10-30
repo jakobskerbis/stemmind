@@ -1581,7 +1581,7 @@
   "pay.shareText": "Bisa tolong bayarkan Evklid untukku? Ini tautannya:",
   "pay.minorNote": "Hanya orang dewasa yang bisa membayar. Kirim tautan ke orang tua atau walimu agar mereka membayar untukmu.",
   "pass.title": "Bersiaplah untuk ujian",
-  "pass.text": "Ujian “{name}” jatuh pada {date}. Sampai saat itu, paket persiapan ujian membuka seluruh Evklid untukmu: tutor, latihan, dan kuis.",
+  "pass.text": "Ujian “{name}” ({date}) sudah dekat. Paket persiapan ujian membuka seluruh Evklid untukmu selama hari yang kamu pilih: tutor, latihan, dan kuis.",
   "pass.days": {
     "other": "{n} hari"
   },
@@ -1595,16 +1595,18 @@
   "payp.intro": "{name} meminta Anda membayar biaya belajarnya di Evklid.",
   "payp.introNoName": "Anda diminta membayar biaya belajar di Evklid.",
   "payp.whatLink": "Apa itu Evklid?",
-  "payp.sub": "Langganan: {label}",
+  "payp.sub": {
+    "other": "Langganan untuk {n} anak"
+  },
   "payp.perMonth": "per bulan",
   "payp.perYear": "per tahun ajaran",
-  "payp.subNote": "Anda dapat membatalkan langganan kapan saja di tab Akun.",
+  "payp.subNote": "Pemilik akun dapat membatalkan langganan kapan saja di Evklid, pada tab Akun.",
   "payp.pass": {
     "other": "Paket persiapan ujian {n} hari"
   },
   "payp.passTest": "Untuk ujian “{name}” ({date})",
   "payp.passNote": "Bayar sekali, tanpa langganan. Paket berakhir dengan sendirinya.",
-  "payp.email": "Alamat email Anda (untuk faktur)",
+  "payp.email": "Alamat email Anda (kami kirim bukti pembayaran ke sana)",
   "payp.emailMissing": "Masukkan alamat email yang valid.",
   "payp.pay": "Bayar",
   "payp.secure": "Pembayaran diproses dengan aman melalui Stripe. Evklid tidak melihat data kartu Anda.",
@@ -1636,5 +1638,11 @@
   "admin.copyLink": "Salin tautan",
   "admin.events": "Peristiwa pembayaran terbaru",
   "admin.noEvents": "Belum ada peristiwa pembayaran.",
-  "admin.eventError": "galat"
+  "admin.eventError": "galat",
+  "payp.passWhat": {
+    "other": "Membuka seluruh Evklid (tutor, latihan, kuis) selama {n} hari sejak pembayaran."
+  },
+  "payp.consentMissing": "Silakan centang kedua konfirmasi sebelum membayar.",
+  "pass.until": "sampai {date}",
+  "pay.linkLabel": "Tautan pembayaran"
 }
