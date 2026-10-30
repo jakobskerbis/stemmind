@@ -1236,6 +1236,8 @@
   "games.rarity.epic": "มหากาพย์",
   "games.rarity.legendary": "ตำนาน",
   "games.rarity.mythic": "ตำนานเทพ",
+  "games.rarity.cosmic": "จักรวาล",
+  "games.rarity.eternal": "นิรันดร์",
   "zb.needXp": "สะสม {xp} XP ด้วยการเรียน",
   "zb.fromXp": "เส้นทางแห่งความรู้: {xp} XP",
   "zb.need.week": "คว้าอันดับ 1 ในกลุ่มรายสัปดาห์ของคุณในลีกนี้",

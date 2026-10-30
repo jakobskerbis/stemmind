@@ -1242,6 +1242,8 @@
   "games.rarity.epic": "Epik",
   "games.rarity.legendary": "Efsanevi",
   "games.rarity.mythic": "Mitik",
+  "games.rarity.cosmic": "Kozmik",
+  "games.rarity.eternal": "Ebedi",
   "zb.needXp": "Öğrenerek {xp} XP topla.",
   "zb.fromXp": "Bilgi yolu: {xp} XP",
   "zb.need.week": "Bu ligde haftalık grubunda 1. ol.",

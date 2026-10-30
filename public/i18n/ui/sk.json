@@ -1254,6 +1254,8 @@
   "games.rarity.epic": "Epický",
   "games.rarity.legendary": "Legendárny",
   "games.rarity.mythic": "Mýtický",
+  "games.rarity.cosmic": "Kozmický",
+  "games.rarity.eternal": "Večný",
   "zb.needXp": "Nazbieraj {xp} XP učením.",
   "zb.fromXp": "Cesta poznania: {xp} XP",
   "zb.need.week": "Vybojuj 1. miesto vo svojej týždennej skupine v tejto lige.",

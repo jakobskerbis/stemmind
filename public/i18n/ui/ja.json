@@ -1236,6 +1236,8 @@
   "games.rarity.epic": "エピック",
   "games.rarity.legendary": "レジェンド",
   "games.rarity.mythic": "神話級",
+  "games.rarity.cosmic": "宇宙級",
+  "games.rarity.eternal": "永遠級",
   "zb.needXp": "学習で {xp} XP を集めよう。",
   "zb.fromXp": "知識の道: {xp} XP",
   "zb.need.week": "このリーグの週間グループで1位になろう。",

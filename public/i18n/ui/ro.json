@@ -1248,6 +1248,8 @@
   "games.rarity.epic": "Epic",
   "games.rarity.legendary": "Legendar",
   "games.rarity.mythic": "Mitic",
+  "games.rarity.cosmic": "Cosmic",
+  "games.rarity.eternal": "Etern",
   "zb.needXp": "Strânge {xp} XP învățând.",
   "zb.fromXp": "Calea cunoașterii: {xp} XP",
   "zb.need.week": "Ocupă locul 1 în grupa ta săptămânală din această ligă.",

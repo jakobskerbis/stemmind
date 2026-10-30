@@ -1236,6 +1236,8 @@
   "games.rarity.epic": "Epik",
   "games.rarity.legendary": "Legendaris",
   "games.rarity.mythic": "Mitis",
+  "games.rarity.cosmic": "Kosmis",
+  "games.rarity.eternal": "Abadi",
   "zb.needXp": "Kumpulkan {xp} XP dengan belajar.",
   "zb.fromXp": "Jalan pengetahuan: {xp} XP",
   "zb.need.week": "Raih peringkat 1 di grup mingguanmu di liga ini.",

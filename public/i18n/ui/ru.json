@@ -1254,6 +1254,8 @@
   "games.rarity.epic": "Эпический",
   "games.rarity.legendary": "Легендарный",
   "games.rarity.mythic": "Мифический",
+  "games.rarity.cosmic": "Космический",
+  "games.rarity.eternal": "Вечный",
   "zb.needXp": "Собери {xp} XP, занимаясь.",
   "zb.fromXp": "Путь знаний: {xp} XP",
   "zb.need.week": "Займи 1-е место в своей недельной группе в этой лиге.",

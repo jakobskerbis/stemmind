@@ -1242,6 +1242,8 @@
   "games.rarity.epic": "Epik",
   "games.rarity.legendary": "Legjendar",
   "games.rarity.mythic": "Mitik",
+  "games.rarity.cosmic": "Kozmik",
+  "games.rarity.eternal": "I përjetshëm",
   "zb.needXp": "Mblidh {xp} XP duke mësuar.",
   "zb.fromXp": "Rruga e dijes: {xp} XP",
   "zb.need.week": "Zër vendin e 1-rë në grupin tënd javor në këtë ligë.",
