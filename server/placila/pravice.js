@@ -28,8 +28,12 @@ export const personalDailyQuestions = () =>
 const later = (iso, now) => {
   if (!iso) return false;
   const v = String(iso);
-  if (/^\d{4}-\d\d-\d\d$/.test(v)) return Date.parse(`${v}T23:59:59.999Z`) > now;
-  return Date.parse(v.replace(" ", "T") + (/Z|[+-]\d\d:?\d\d$/.test(v) ? "" : "Z")) > now;
+  if (/^\d{4}-\d\d-\d\d$/.test(v))
+    return Date.parse(`${v}T23:59:59.999Z`) > now;
+  return (
+    Date.parse(v.replace(" ", "T") + (/Z|[+-]\d\d:?\d\d$/.test(v) ? "" : "Z")) >
+    now
+  );
 };
 
 // Ali licenca še velja: rok ni potekel in šola ni porabila mesečne meje AI (0 ali prazno = brez meje).
@@ -42,7 +46,8 @@ export function schoolValid(s, now = Date.now()) {
 // Seznam iz licence: tabela, besedilo JSON ali »MAT, FIZ«; napačna oblika ne sme podreti zahteve.
 const list = (v) => {
   if (v == null || v === "") return null;
-  if (Array.isArray(v)) return v.map((x) => String(x).trim().toUpperCase().replace(/Š/g, "S"));
+  if (Array.isArray(v))
+    return v.map((x) => String(x).trim().toUpperCase().replace(/Š/g, "S"));
   if (typeof v === "string" && v.trim().startsWith("[")) {
     try {
       return list(JSON.parse(v));
@@ -61,10 +66,17 @@ export function schoolCovers(s, topicId) {
   if (!t) return false;
   const [subject, school, grade] = String(t.path).split("-");
   if (school !== "OS" && school !== "SS") return false;
+  // Stopnja šole (OS/SS) iz server/schools.js: razred »1« OŠ ni 1. letnik SŠ.
+  if (s.stage && String(s.stage).toUpperCase() !== school) return false;
   const subjects = list(s.subjects);
   const grades = list(s.grades);
   if (subjects?.length && !subjects.includes(subject)) return false;
-  if (grades?.length && !grades.includes(`${school}-${grade}`) && !grades.includes(String(Number(grade)))) return false;
+  if (
+    grades?.length &&
+    !grades.includes(`${school}-${grade}`) &&
+    !grades.includes(String(Number(grade)))
+  )
+    return false;
   return true;
 }
 

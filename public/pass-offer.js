@@ -1,6 +1,8 @@
 // Kartica »Pripravi se na test« v Urniku: paket pred testom (enkratno plačilo, 7/14/30 dni polnega dostopa).
 // Strežnik (server/accounts/billing.js) ponudi paket samo učencu brez aktivne naročnine in samo,
-// ko je v urniku test v naslednjih 30 dneh. Mladoletni imetnik računa lahko samo prosi starše za plačilo.
+// ko je v urniku test v naslednjih 30 dneh. Pravila ponudb (server/placila/ponudbe.js): ne med poukom,
+// ne, če jih je učitelj izklopil; pod 15 let brez cene, le povezava s podatki za starše (parent_info).
+// Gumba »Prosi starše za plačilo« kartica ne ponuja sama: učenec ga odpre v »Kako lahko plača starš?«.
 import { t, locale } from "./i18n.js";
 import { icon, hydrateIcons } from "./icons.js";
 import { consentFields, consentsOk, consentBody, linkBox, bindLinkBox } from "./pay-ui.js";
@@ -33,6 +35,16 @@ export async function renderPassOffer(el, { api, studentId, toast }) {
     el.innerHTML = "";
     return;
   }
+  if (o.parent_info) {
+    el.innerHTML = `
+      <div class="card pass-card">
+        <h3>${icon("clipboard-check")} ${esc(t("pass.title"))}</h3>
+        <p>${esc(t("pass.parentInfo", { name: o.test.name, date: fmtDay(o.test.date) }))}</p>
+        <p><a href="/starsi.html" target="_blank" rel="noopener">${esc(t("pass.parentInfoLink"))}</a></p>
+      </div>`;
+    hydrateIcons?.(el);
+    return;
+  }
   const options = d.passes
     .map(
       (p) => `<label class="plan"><input type="radio" name="days" value="${p.days}" ${p.days === o.suggested ? "checked" : ""}>
@@ -45,10 +57,11 @@ export async function renderPassOffer(el, { api, studentId, toast }) {
       <p>${esc(t("pass.text", { name: o.test.name, date: fmtDay(o.test.date) }))}</p>
       <fieldset class="pass-options"><legend class="sr-only">${esc(t("pass.title"))}</legend>${options}</fieldset>
       <p class="muted">${esc(t("pass.note"))}</p>
-      <div class="form-actions">
-        <button type="button" class="primary" data-pass-link>${esc(t("pay.askParent"))}</button>
-        ${o.pay_link ? "" : `<button type="button" class="secondary" data-pass-now aria-expanded="false">${esc(t("pay.payNow"))}</button>`}
-      </div>
+      ${o.pay_link ? "" : `<div class="form-actions"><button type="button" class="primary" data-pass-now aria-expanded="false">${esc(t("pay.payNow"))}</button></div>`}
+      <details class="pass-parent">
+        <summary>${esc(t("pay.parentOptions"))}</summary>
+        <button type="button" class="secondary" data-pass-link>${esc(t("pay.askParent"))}</button>
+      </details>
       <div class="pass-link-out"></div>
       <div class="pass-pay" hidden>
         ${consentFields()}

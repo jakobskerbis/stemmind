@@ -22,6 +22,8 @@ import { ProfileLocks, checkProfilePassword } from "./profile-lock.js";
 import { gateNeeded } from "../gate.js";
 import { rights as rightsOf, lessonInteractive as lessonOpen } from "../placila/pravice.js";
 import { createSchoolSource } from "../placila/sola-vir.js";
+import { offerPolicy } from "../placila/ponudbe.js";
+import { Schedules, nowParts } from "../schedule.js";
 
 export const CONSENT_TEXT =
   "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da Evklid obdeluje otrokove osebne podatke " +
@@ -185,20 +187,34 @@ export function mountAccounts(app, store, opts = {}) {
     const net = guests.netOf(studentId);
     return net ? { ids: guests.idsOnNet(net), net } : { ids: [studentId], net: null };
   };
+  // Pravila ponudb (server/placila/ponudbe.js): ne med poukom, ne, če jih je učitelj izklopil, pod 15 let brez cene.
+  // Starost: ob letu rojstva vzamemo mlajšo možnost (rojen 2011 je leta 2026 »14«), neznana velja kot pod 15.
+  const schedules = new Schedules(db);
+  function offersFor(studentId, now = new Date()) {
+    const year = birthYear(studentId);
+    const age = year ? Number(nowParts(now).date.slice(0, 4)) - year - 1 : null;
+    return offerPolicy({ age, membership: schools.membership(studentId), lessons: schedules.get(studentId).lessons, now: nowParts(now) });
+  }
+  // Ali sme sporočilo o porabljenih vprašanjih predlagati nakup: le ponudba s ceno in ne učencu iz šole
+  // (ta izve za Osebno v zavihku Račun, ne ob vsaki omejitvi).
+  const upsell = (studentId) => {
+    const o = offersFor(studentId);
+    return o.show && o.prices && !schools.membership(studentId)?.inSchool;
+  };
   const moreHint = (studentId) =>
-    guests.netOf(studentId) ? "Za več vprašanj ustvari račun v zavihku Račun." : "Za neomejena vprašanja naj starš izbere naročnino v zavihku Račun.";
+    guests.netOf(studentId) ? "Za več vprašanj ustvari račun v zavihku Račun." : upsell(studentId) ? "Za več vprašanj naj starš izbere naročnino v zavihku Račun." : "";
 
   function freeBudgetReason(studentId) {
     const rows = monthUsdByStudent();
     const per = freeStudentMonthlyUsd();
     const scope = quotaScope(studentId);
     if (per && guests.monthUsd(scope.ids, scope.net) >= per) {
-      return `Ta mesec si porabil brezplačna vprašanja za inštruktorja. Vadnica in lekcije delujejo naprej neomejeno. ${moreHint(studentId)}`;
+      return `Ta mesec si porabil brezplačna vprašanja za inštruktorja. Vadnica in lekcije delujejo naprej neomejeno. ${moreHint(studentId)}`.trim();
     }
     const pool = freeMonthlyPoolUsd();
     const gone = db.prepare("SELECT COALESCE(SUM(usd),0) AS usd FROM guest_spent WHERE day >= date('now','start of month')").get().usd;
     if (pool && rows.filter((r) => !premiumFor(r.id)).reduce((t, r) => t + r.usd, gone) >= pool) {
-      return `Brezplačna vprašanja za inštruktorja so ta mesec za vse porabljena. Vadnica in lekcije delujejo naprej neomejeno. ${moreHint(studentId)}`;
+      return `Brezplačna vprašanja za inštruktorja so ta mesec za vse porabljena. Vadnica in lekcije delujejo naprej neomejeno. ${moreHint(studentId)}`.trim();
     }
     return null;
   }
@@ -294,9 +310,9 @@ export function mountAccounts(app, store, opts = {}) {
         const limit = freeDailyQuestions();
         if (questionsToday(studentId) >= limit) {
           return res.status(429).json({
-            error: `Danes si porabil vseh ${limit} brezplačnih vprašanj za inštruktorja. Vadnica deluje naprej neomejeno. ${moreHint(studentId)}`,
+            error: `Danes si porabil vseh ${limit} brezplačnih vprašanj za inštruktorja. Vadnica deluje naprej neomejeno. ${moreHint(studentId)}`.trim(),
             limit: true,
-            upgrade: true,
+            upgrade: !!guests.netOf(studentId) || upsell(studentId),
           });
         }
       } else if (r.dailyQuestions && questionsToday(studentId) >= r.dailyQuestions) {
@@ -309,7 +325,7 @@ export function mountAccounts(app, store, opts = {}) {
     // Mesečna meja porabe brezplačnega paketa velja za vse klice AI (inštruktor, branje zapisa, fotografija urnika).
     if (studentId !== null && req.method === "POST" && /(\/messages|\/tasks\/\d+\/read|\/schedule\/photo)$/i.test(req.path) && !premiumFor(studentId)) {
       const blocked = freeBudgetReason(studentId);
-      if (blocked) return res.status(429).json({ error: blocked, limit: true, upgrade: true });
+      if (blocked) return res.status(429).json({ error: blocked, limit: true, upgrade: !!guests.netOf(studentId) || upsell(studentId) });
     }
     next();
   });
@@ -1026,6 +1042,7 @@ export function mountAccounts(app, store, opts = {}) {
 
   billing = mountBilling(app, {
     db,
+    offersFor,
     store,
     stripe,
     log,

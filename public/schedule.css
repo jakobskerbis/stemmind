@@ -79,6 +79,8 @@ button.sch-lesson { justify-content: flex-start; }
 .pass-options .plan input { margin-top: 4px; }
 .pass-card .form-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .pass-card .form-actions button { min-height: 44px; }
+.pass-parent summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--muted); }
+.pass-parent button { min-height: 44px; margin-top: 4px; }
 .pass-card label.check { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9rem; }
 .pass-card label.check input { margin-top: 4px; flex: none; width: 18px; height: 18px; }
 .pass-pay { display: flex; flex-direction: column; gap: 8px; }
