@@ -110,14 +110,14 @@ function card(id) {
   </button>`;
 }
 
-// Pot znanja: koliko XP imaš in koliko manjka do naslednjega predmeta.
-function potLine() {
-  const next = KNOWLEDGE.filter((x) => x.collection === "pot" && x.need.xp > data.xp).sort((a, b) => a.need.xp - b.need.xp)[0];
+// Pot znanja in Smešni liki: koliko XP imaš in koliko manjka do naslednjega predmeta te zbirke.
+function potLine(coll = "pot") {
+  const next = KNOWLEDGE.filter((x) => x.collection === coll && x.need.xp > data.xp).sort((a, b) => a.need.xp - b.need.xp)[0];
   const pct = next ? Math.min(100, Math.round((data.xp / next.need.xp) * 100)) : 100;
   return `<div class="card zb-pot">
     <p><b>${esc(t("zb.potNow", { xp: num(data.xp) }))}</b>${next ? ` · ${esc(t("zb.potNext", { name: itemName(next, lang()), xp: num(next.need.xp - data.xp) }))}` : ""}</p>
     <div class="zb-bar"><span style="width:${pct}%"></span></div>
-    <p class="muted small">${esc(t("zb.potHint"))}</p>
+    <p class="muted small">${esc(t(coll === "smesni" ? "zb.smesniHint" : "zb.potHint"))}</p>
   </div>`;
 }
 
@@ -209,7 +209,7 @@ function render(focus = null) {
     <p class="zb-intro">${esc(t("zb.intro"))} <span class="muted">${esc(t("zb.rules"))}</span></p>
     ${passCard()}
     <div class="chip-row zb-tabs" role="tablist">${tabs.map((x) => `<button type="button" role="tab" aria-selected="${tab === x.id}" class="${tab === x.id ? "active" : ""}" data-tab="${x.id}">${icon(x.ic)}${esc(x.label)}${x.of ? ` <small>${x.n}/${x.of}</small>` : ""}</button>`).join("")}</div>
-    ${tab === "pot" ? potLine() : tab === "lige" ? `<p class="muted zb-pot">${esc(t("zb.ligeHint"))}</p>` : tab === "igre" ? `<p class="muted zb-pot">${esc(t("zb.igreHint"))}</p>` : ""}
+    ${tab === "pot" || tab === "smesni" ? potLine(tab) : tab === "lige" ? `<p class="muted zb-pot">${esc(t("zb.ligeHint"))}</p>` : tab === "igre" ? `<p class="muted zb-pot">${esc(t("zb.igreHint"))}</p>` : ""}
     <div class="zb-grid">${tabItems().map(card).join("")}</div>
     ${earlier.length ? `<h3 class="zb-sub">${esc(t("zb.earlier"))}</h3><div class="zb-grid">${earlier.map(card).join("")}</div>` : ""}
     ${open ? inspect(open) : ""}`;

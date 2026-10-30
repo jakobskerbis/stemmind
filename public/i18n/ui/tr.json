@@ -1441,6 +1441,7 @@
   "zb.needCleared": "Toplam {n} farklı oyunu başarıyla bitir: her birinde en az 8 doğru cevap ve en az %80 doğru yap. Şu ana kadar: {now}.",
   "zb.fromGames": "Oyun oynayarak açıldı",
   "zb.igreHint": "Bu karakterlerin ve eşyaların kilidini yalnızca Oyunlar bölümünde oynayarak açabilirsin. Karakter, Renk çekmecesinde seçtiğin rengi alır. Bunları satın alamazsın.",
+  "zb.smesniHint": "Bu komik karakterlerin ve eşyaların kilidini öğrenme ve oyunlardan kazandığın XP ile açarsın. Hepsi özgün ve herkese uygun. Satın alamazsın.",
   "zb.how": "Nasıl alırım?",
   "zb.shopHint": "Rozetler, efektler ve bazı arka planlar satın alınamaz: bunları Koleksiyonlar'da bilginle açarsın.",
   "fx.formula": "Formül",

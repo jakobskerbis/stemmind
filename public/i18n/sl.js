@@ -1551,6 +1551,7 @@ export default {
   "zb.needCleared": "Uspešno končaj različne igre, skupaj {n}: v vsaki zberi vsaj 8 pravilnih odgovorov in vsaj 80 % pravilnih. Doslej imaš {now}.",
   "zb.fromGames": "Odklenjeno z igranjem iger",
   "zb.igreHint": "Te like in predmete odkleneš samo z igranjem iger v Igrah. Lik dobi barvo, ki jo izbereš v predalu Barva. Kupiti jih ne moreš.",
+  "zb.smesniHint": "Smešne like in predmete odkleneš z XP, ki ga dobiš z učenjem in igrami. Vsi so izvirni in primerni za vse. Kupiti jih ne moreš.",
   "zb.how": "Kako ga dobim?",
   "zb.shopHint": "Značke, efekti in nekatera ozadja se ne kupijo: odkleneš jih z znanjem v Zbirkah.",
   "games.unlockedFaster": "Odklenjene so hitrejše igre o tej snovi!",

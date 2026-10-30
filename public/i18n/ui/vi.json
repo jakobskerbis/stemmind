@@ -1435,6 +1435,7 @@
   "zb.needCleared": "Hoàn thành tốt tổng cộng {n} trò chơi khác nhau: trong mỗi trò, đạt ít nhất 8 câu trả lời đúng và đúng ít nhất 80%. Đến giờ em có {now}.",
   "zb.fromGames": "Mở khóa nhờ chơi trò chơi",
   "zb.igreHint": "Em chỉ có thể mở khóa các nhân vật và vật phẩm này bằng cách chơi trong mục Trò chơi. Nhân vật sẽ mang màu em chọn trong ngăn Màu. Em không thể mua chúng.",
+  "zb.smesniHint": "Bạn mở khóa các nhân vật và vật phẩm vui nhộn này bằng XP từ việc học và chơi game. Tất cả đều là bản gốc và phù hợp với mọi người. Không thể mua chúng.",
   "zb.how": "Làm sao để có?",
   "zb.shopHint": "Huy hiệu, hiệu ứng và một số hình nền không thể mua: em mở khóa chúng bằng kiến thức trong Bộ sưu tập.",
   "fx.formula": "Công thức",

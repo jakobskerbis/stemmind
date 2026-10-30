@@ -1441,6 +1441,7 @@
   "zb.needCleared": "Fejezz be sikeresen összesen {n} különböző játékot: mindegyikben legyen legalább 8 helyes válaszod és legalább 80 % helyes. Eddig: {now}.",
   "zb.fromGames": "Játékkal feloldva",
   "zb.igreHint": "Ezeket a figurákat és tárgyakat csak a Játékok részben játszva oldhatod fel. A figura azt a színt kapja, amelyet a Szín fiókban választasz. Nem tudod megvenni őket.",
+  "zb.smesniHint": "Ezeket a vicces figurákat és tárgyakat tanulással és játékkal szerzett XP-vel nyithatod meg. Mind eredeti és mindenkinek való. Megvenni nem lehet őket.",
   "zb.how": "Hogyan szerezhetem meg?",
   "zb.shopHint": "A jelvényeket, effekteket és néhány hátteret nem lehet megvenni: tudással nyitod meg őket a Gyűjteményekben.",
   "fx.formula": "Képlet",

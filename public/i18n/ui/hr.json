@@ -1450,6 +1450,7 @@
   "zb.needCleared": "Uspješno završi različite igre, ukupno {n}: u svakoj skupi barem 8 točnih odgovora i barem 80 % točnih. Dosad imaš: {now}.",
   "zb.fromGames": "Otključano igranjem igara",
   "zb.igreHint": "Ove likove i predmete otključavaš samo igranjem igara u Igrama. Lik dobiva boju koju odabereš u ladici Boja. Ne možeš ih kupiti.",
+  "zb.smesniHint": "Ove smiješne likove i predmete otključavaš XP-om koji dobiješ učenjem i igrama. Svi su originalni i primjereni za sve. Ne možeš ih kupiti.",
   "zb.how": "Kako ga dobiti?",
   "zb.shopHint": "Značke, efekti i neke pozadine ne kupuju se: otključavaš ih znanjem u Zbirkama.",
   "fx.formula": "Izračun",

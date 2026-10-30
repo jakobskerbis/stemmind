@@ -1459,6 +1459,7 @@
   "zb.needCleared": "Úspešne dokonči rôzne hry, spolu {n}: v každej získaj aspoň 8 správnych odpovedí a aspoň 80 % správne. Zatiaľ máš: {now}.",
   "zb.fromGames": "Odomknuté hraním hier",
   "zb.igreHint": "Tieto postavy a predmety odomkneš len hraním hier v sekcii Hry. Postava dostane farbu, ktorú si vyberieš v zásuvke Farba. Kúpiť si ich nemôžeš.",
+  "zb.smesniHint": "Tieto vtipné postavičky a predmety odomkneš za XP z učenia a hier. Všetky sú pôvodné a vhodné pre každého. Kúpiť sa nedajú.",
   "zb.how": "Ako ho získam?",
   "zb.shopHint": "Odznaky, efekty a niektoré pozadia sa nedajú kúpiť: odomkneš ich vedomosťami v Zbierkach.",
   "fx.formula": "Výpočet",

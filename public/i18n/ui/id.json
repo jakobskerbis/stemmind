@@ -1435,6 +1435,7 @@
   "zb.needCleared": "Selesaikan dengan berhasil total {n} permainan berbeda: di tiap permainan, kumpulkan minimal 8 jawaban benar dan minimal 80% benar. Sejauh ini: {now}.",
   "zb.fromGames": "Terbuka dengan bermain",
   "zb.igreHint": "Karakter dan barang ini hanya bisa kamu buka dengan bermain di Permainan. Karakter mendapat warna yang kamu pilih di laci Warna. Kamu tidak bisa membelinya.",
+  "zb.smesniHint": "Kamu membuka karakter dan barang lucu ini dengan XP dari belajar dan bermain. Semuanya orisinal dan cocok untuk semua. Kamu tidak bisa membelinya.",
   "zb.how": "Bagaimana cara mendapatkannya?",
   "zb.shopHint": "Lencana, efek, dan beberapa latar tidak bisa dibeli: kamu membukanya dengan pengetahuan di Koleksi.",
   "fx.formula": "Rumus",

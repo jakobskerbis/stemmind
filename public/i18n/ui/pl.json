@@ -1459,6 +1459,7 @@
   "zb.needCleared": "Ukończ pomyślnie różne gry, łącznie {n}: w każdej zdobądź co najmniej 8 poprawnych odpowiedzi i co najmniej 80 % poprawnych. Do tej pory: {now}.",
   "zb.fromGames": "Odblokowane w grach",
   "zb.igreHint": "Te postacie i przedmioty odblokujesz tylko, grając w sekcji Gry. Postać dostaje kolor, który wybierzesz w szufladzie Kolor. Nie możesz ich kupić.",
+  "zb.smesniHint": "Te zabawne postacie i przedmioty odblokowujesz za XP zdobyte w nauce i grach. Wszystkie są oryginalne i odpowiednie dla każdego. Nie da się ich kupić.",
   "zb.how": "Jak to zdobyć?",
   "zb.shopHint": "Odznak, efektów i niektórych teł nie da się kupić: odblokowujesz je wiedzą w Kolekcjach.",
   "fx.formula": "Wzór",
