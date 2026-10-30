@@ -5,15 +5,15 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Na kalkulatorju vtipkaš $3{,}5 \cdot 4$ in dobiš $14$. Kalkulator pa si ne zapomni, da je $3{,}5$ cena kave in $4$ število kav. Ko izračunaš še napitnino, moraš vse vtipkati znova.
+Sošolec Žan je prepričan: »Računalnik je samo hiter kalkulator. Če napišem `"4" + "2"`, dobim `6`.« Python mu vrne `'42'`.
 
-Program si vrednosti zapomni pod imeni. Napišeš `cena = 3.5` in `kolicina = 4`, nato `cena * kolicina`. Če se cena spremeni, popraviš eno vrstico.
-
-Računalnik pa mora vedeti tudi, **kakšne vrste** je podatek. Ali je `"4"` število štiri ali znak na zaslonu? Od tega je odvisno, kaj pomeni `+`: seštevanje ali lepljenje besedila. Ta lekcija razloži spremenljivke, štiri osnovne vrste podatkov in pretvarjanje med njimi. Primeri so v jeziku Python; ideje veljajo tudi v drugih jezikih.
+Žan se ni zatipkal. Računalniku je dal dva kosa besedila, ne dve števili, in `+` je besedili zlepil. Enako se godi v vsaki aplikaciji na telefonu: kar natipkaš v polje »Število kav«, pride v program kot besedilo, iz katerega mora program šele narediti število. Zato vsak program za vsak podatek hrani dvoje: **ime**, pod katerim ga najde, in **tip**, ki pove, kaj z njim sme početi. Na koncu boš Žanu znal natančno pokazati, kje se je zmotil. Primeri so v Pythonu; ideje veljajo tudi v drugih jezikih.
 
 ## Razlaga
 
-**1. Spremenljivka.** Spremenljivka je **ime**, ki kaže na neko **vrednost** v pomnilniku. Ustvarimo jo s **prirejanjem**:
+### Blok 1: ime in vrednost
+
+Spremenljivka je **ime**, ki kaže na neko **vrednost** v pomnilniku. Ustvarimo jo s **prirejanjem**:
 
 ```python
 starost = 19
@@ -31,7 +31,11 @@ starost  ──►  [ 20 ]
 
 Ime se začne s črko ali podčrtajem, vsebuje črke, števke in `_`, brez presledkov. Velike in male črke se razlikujejo: `Starost` in `starost` sta dve različni imeni. Dobra imena povedo, kaj hranijo: `cena`, ne `x7`.
 
-**2. Podatkovni tip.** Vsaka vrednost ima **tip**, ki pove, kaj vrednost je in kaj lahko z njo delamo. Tip izveš s funkcijo `type`. V interaktivni lupini Python (vrstice z `>>>`) vtipkaš izraz in takoj vidiš rezultat:
+*Preveri v eni vrstici:* sta `baterija` in `Baterija` isto ime? (Ne, velike in male črke se razlikujejo.)
+
+### Blok 2: vsaka vrednost ima tip
+
+Vsaka vrednost ima **tip**, ki pove, kaj vrednost je in kaj lahko z njo delamo. Tip izveš s funkcijo `type`. V interaktivni lupini Python (vrstice z `>>>`) vtipkaš izraz in takoj vidiš rezultat:
 
 ```python
 >>> type(19)
@@ -53,7 +57,11 @@ Ime se začne s črko ali podčrtajem, vsebuje črke, števke in `_`, brez presl
 | `str` | nizi (besedilo) | `"19"`, `'Ana'`, `""` | v narekovajih |
 | `bool` | logične vrednosti | `True`, `False` | z veliko začetnico |
 
-**3. Števila.** Cela števila so tipa `int`, števila z decimalno piko pa tipa `float`. Pri `+`, `-` in `*` dveh celih števil dobiš celo število. Če je v računu vsaj en `float`, je rezultat `float`.
+*Preveri v eni vrstici:* kakšen tip ima `"True"`? (`str`, ker je v narekovajih.)
+
+### Blok 3: števila
+
+Cela števila so tipa `int`, števila z decimalno piko pa tipa `float`. Pri `+`, `-` in `*` dveh celih števil dobiš celo število. Če je v računu vsaj en `float`, je rezultat `float`.
 
 Deljenje z `/` vedno vrne `float`, tudi kadar se deli brez ostanka:
 
@@ -72,7 +80,9 @@ Kakšen tip ima rezultat `4 * 2.5`? In rezultat `8 / 4`? Napovej, preden pogleda
 Oba sta `float`: `4 * 2.5` je `10.0`, ker je en operand `float`, `8 / 4` pa je `2.0`, ker deljenje z `/` vedno vrne `float`.
 :::
 
-**4. Nizi.** **Niz** (angl. *string*, tip `str`) je zaporedje znakov med narekovaji: `"Ljubljana"`, `'a'`, `"19"`, ali prazen niz `""`. Enojni in dvojni narekovaji pomenijo isto.
+### Blok 4: nizi
+
+**Niz** (angl. *string*, tip `str`) je zaporedje znakov med narekovaji: `"Ljubljana"`, `'a'`, `"19"`, ali prazen niz `""`. Enojni in dvojni narekovaji pomenijo isto.
 
 Pri nizih ima `+` drug pomen: **stakne** (zlepi) dva niza. Znak `*` z nizom in celim številom niz ponovi:
 
@@ -87,7 +97,11 @@ Pri nizih ima `+` drug pomen: **stakne** (zlepi) dva niza. Znak `*` z nizom in c
 
 Funkcija `len` vrne dolžino niza: `len("Ana")` je `3`.
 
-**5. Logične vrednosti.** Tip `bool` ima le dve vrednosti: `True` (resnično) in `False` (neresnično). Dobimo jih največkrat iz **primerjav**:
+*Preveri v eni vrstici:* kaj vrne `"ha" * 2 + "!"`? (`'haha!'`.)
+
+### Blok 5: logične vrednosti
+
+Tip `bool` ima le dve vrednosti: `True` (resnično) in `False` (neresnično). Dobimo jih največkrat iz **primerjav**:
 
 ```python
 >>> starost = 19
@@ -99,7 +113,11 @@ False
 
 Dvojni `==` sprašuje »ali sta enaka?«, enojni `=` pa prireja. Logične vrednosti boš potreboval pri pogojnih stavkih in zankah.
 
-**6. Pretvorbe.** Tip lahko pretvoriš s funkcijo, ki se imenuje kot ciljni tip:
+*Preveri v eni vrstici:* kaj vrne `len("Ana") == 3`? (`True`.)
+
+### Blok 6: pretvorbe
+
+Tip lahko pretvoriš s funkcijo, ki se imenuje kot ciljni tip:
 
 | Klic | Rezultat | Kaj se zgodi |
 |---|---|---|
@@ -110,7 +128,7 @@ Dvojni `==` sprašuje »ali sta enaka?«, enojni `=` pa prireja. Logične vredno
 
 Pretvorba deluje le, če ima niz pravo obliko. `int("3.5")` in `float("3,5")` javita napako `ValueError`.
 
-Kasneje boš podatke bral s tipkovnice. Python jih vedno prebere kot niz, zato jih boš moral pretvoriti v število, preden z njimi računaš.
+Ko boš podatke bral s tipkovnice, jih Python vedno prebere kot niz, zato jih boš moral pretvoriti v število, preden z njimi računaš.
 
 Tudi v `bool` lahko pretvoriš. Število $0$ in prazen niz `""` postaneta `False`, vse drugo postane `True`.
 
@@ -171,7 +189,7 @@ Kava stane $3{,}5$ €, naročimo $4$ kave. Program naj izračuna znesek in ga z
 
 ### Primer 3 (težji): podatki iz obrazca
 
-Spletni obrazec vrne podatke kot niza: `starost = "23"` in `visina = "1.75"` (v metrih). Izračunaj starost čez $5$ let in višino v celih centimetrih (tip `int`).
+Obrazec za registracijo v aplikaciji na telefonu vrne podatke kot niza: `starost = "23"` in `visina = "1.75"` (v metrih). Izračunaj starost čez $5$ let in višino v celih centimetrih (tip `int`).
 
 **Podatki:** `starost = "23"` (niz), `visina = "1.75"` (niz, v metrih), čez $5$ let, $1\,\mathrm{m} = 100\,\mathrm{cm}$
 **Iščemo:** starost čez $5$ let (število) in višino v centimetrih kot `int`
@@ -191,7 +209,7 @@ Spletni obrazec vrne podatke kot niza: `starost = "23"` in `visina = "1.75"` (v 
 
 ### Primer 4: zdaj ti
 
-Senzor pošlje temperaturo kot niz `t = "21.5"`. Ogrevanje jo dvigne za $3$ stopinje. Sestavi niz z novo temperaturo in enoto, na primer `"... °C"`.
+Pametni termostat pošlje aplikaciji na telefonu temperaturo kot niz `t = "21.5"`. Ogrevanje jo dvigne za $3$ stopinje. Sestavi niz z novo temperaturo in enoto, na primer `"... °C"`.
 
 **Podatki:** `t = "21.5"` (niz), dvig za $3$ stopinje
 **Iščemo:** niz z novo temperaturo in enoto `°C`
@@ -213,10 +231,10 @@ Kakšna je nova temperatura in kakšen niz dobiš?
 
 ## Pogoste napake
 
-- **Niz in število sta isto.** Študent misli, da je `"5"` enako kot `5`, saj je na zaslonu videti enako. Toda `"5" + 3` javi `TypeError`, `"5" + "3"` pa je `"53"`, ne `8`. Narekovaji pomenijo besedilo. Preden računaš s podatkom, preveri tip s `type` in ga po potrebi pretvori z `int` ali `float`.
+- **Niz in število sta isto.** Na zaslonu sta `"5"` in `5` videti enaka. Toda `"5" + 3` javi `TypeError`, `"5" + "3"` pa je `"53"`, ne `8`. Narekovaji pomenijo besedilo. Preden računaš s podatkom, preveri tip s `type` in ga po potrebi pretvori z `int` ali `float`.
 - **Decimalna vejica v kodi.** Iz matematike si navajen $3{,}5$. Python pa `x = 3,5` ne razume kot eno število, ampak kot par dveh števil, `3` in `5`. V kodi vedno piši decimalno piko: `3.5`.
-- **`int` zaokroži.** Študent pričakuje, da je `int(3.9)` enako `4`. V resnici `int` decimalke odreže in vrne `3`. Za zaokroževanje obstaja ločena funkcija `round`.
-- **Deljenje celih števil da celo število.** Ker je $6 : 2 = 3$, študent pričakuje `3`. Python vrne `3.0`, tip `float`, ker `/` vedno vrne decimalno število.
+- **`int` zaokroži.** Marsikdo pričakuje, da je `int(3.9)` enako `4`. V resnici `int` decimalke odreže in vrne `3`. Za zaokroževanje obstaja ločena funkcija `round`.
+- **Deljenje celih števil da celo število.** Ker je $6 : 2 = 3$, se zdi, da bo rezultat `3`. Python vrne `3.0`, tip `float`, ker `/` vedno vrne decimalno število.
 - **`=` je enačba.** Kdor bere `x = x + 1` kot enačbo, reče, da nima rešitve. V programu je to ukaz: izračunaj desno stran in jo shrani v `x`. Za vprašanje »ali sta enaka?« uporabi `==`.
 
 ## Povzetek

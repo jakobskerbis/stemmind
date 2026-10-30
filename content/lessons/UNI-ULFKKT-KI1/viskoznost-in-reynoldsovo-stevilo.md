@@ -5,13 +5,15 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Odpri pipo čisto malo. Curek je gladek in prozoren, kot steklena palica. Odpri jo bolj in curek postane razmršen, šumi in se peni. Voda je ista, cev je ista, spremenila se je le hitrost. Med pa iz kozarca teče gladko tudi takrat, ko ga zlivaš hitro.
+Medicinska sestra mora z vso silo pritiskati na bat brizge, ko skozi tanko iglo vbrizga gosto zdravilo. Zdravnik pa s stetoskopom na prsih slabokrvnega bolnika sliši šum, ki ga pri zdravem človeku ni: redkejša kri v aorti teče hitreje in se vrtinči. V prvem prizoru se boriš z notranjim trenjem, v drugem nastajajo vrtinci. Za obema stoji isto vprašanje: koliko tekočino zavira trenje in koliko jo nosi njena vztrajnost?
 
-Bernoullijeva enačba teh razlik ne pozna: v njej tekočina nima notranjega trenja. V realnih ceveh, črpalkah in reaktorjih pa je trenje ključno. Od njega je odvisno, kolikšen tlak izgubimo v cevovodu, kako dobro se snovi mešajo in kako hitro se prenaša toplota. Zato moraš za vsak tok najprej vedeti dve stvari: kako »gosta« je tekočina (**viskoznost**) in ali teče urejeno ali vrtinčasto (**Reynoldsovo število**).
+Bernoullijeva enačba trenja ne pozna. V ceveh, črpalkah, reaktorjih in žilah pa so od njega odvisne tlačne izgube, mešanje snovi in prenos toplote. Za vsak tok zato najprej potrebuješ dve številki: kako »gosta« je tekočina (**viskoznost**) in ali teče urejeno ali vrtinčasto (**Reynoldsovo število**).
 
 ## Razlaga
 
-**1. Viskoznost kot notranje trenje.** Predstavljaj si tanko plast tekočine med dvema vzporednima ploščama. Spodnja plošča miruje, zgornjo vlečemo s stalno hitrostjo. Tekočina se drži obeh plošč: ob spodnji miruje, ob zgornji se giblje z njo. Vmes se plasti tekočine drsajo druga ob drugi, vsaka nekoliko hitreje od tiste pod njo.
+### Slika 1: plasti med ploščama
+
+**Viskoznost kot notranje trenje.** Vzemi tanko plast tekočine med dvema vzporednima ploščama. Spodnja plošča miruje, zgornjo vlečemo s stalno hitrostjo. Tekočina se drži obeh plošč: ob spodnji miruje, ob zgornji se giblje z njo. Vmes se plasti tekočine drsajo druga ob drugi, vsaka nekoliko hitreje od tiste pod njo.
 
 Diagram v besedah (prerez, hitrost plasti je dolžina puščice):
 
@@ -25,13 +27,15 @@ spodnja plošča  ==========   0
 
 Za vlečenje potrebujemo silo. Sila na enoto ploskve je **strižna napetost** $\tau$ (v Pa). Spremembi hitrosti s prečno razdaljo $\dfrac{\mathrm{d}v}{\mathrm{d}y}$ rečemo **strižna hitrost** (v $\mathrm{s^{-1}}$).
 
-**2. Newtonov zakon viskoznosti.** Pri vodi, zraku in večini preprostih tekočin je strižna napetost sorazmerna s strižno hitrostjo:
+**Newtonov zakon viskoznosti.** Pri vodi, zraku in večini preprostih tekočin je strižna napetost sorazmerna s strižno hitrostjo:
 
 $$\tau = \mu \frac{\mathrm{d}v}{\mathrm{d}y}$$
 
 Sorazmernostni koeficient $\mu$ je **dinamična viskoznost**. Enota je $\mathrm{Pa \cdot s}$. Starejša enota je centipoise: $1\,\mathrm{cP} = 1\,\mathrm{mPa \cdot s} = 10^{-3}\,\mathrm{Pa \cdot s}$. Tekočine, za katere velja ta zakon, so **newtonske**.
 
-**3. Kinematična viskoznost.** Pogosto nastopa razmerje viskoznosti in gostote:
+### Tabela: kako »gosta« je tekočina
+
+**Kinematična viskoznost.** V računih tokov pogosto nastopa razmerje viskoznosti in gostote:
 
 $$\nu = \frac{\mu}{\rho}$$
 
@@ -46,7 +50,7 @@ To je **kinematična viskoznost**, enota $\mathrm{m^2/s}$. Pove, kako hitro se �
 
 Zrak ima okoli 55-krat manjšo dinamično viskoznost kot voda, a 15-krat večjo kinematično. Razlog je zelo majhna gostota zraka.
 
-**4. Viskoznost in temperatura.** Pri kapljevinah viskoznost s temperaturo močno pada: molekule se lažje odtrgajo od sosed. Pri plinih je obratno: viskoznost s temperaturo raste, ker hitrejše molekule med plastmi prenesejo več gibalne količine.
+**Viskoznost in temperatura.** Pri kapljevinah viskoznost s temperaturo močno pada: molekule se lažje odtrgajo od sosed. Pri plinih je obratno: viskoznost s temperaturo raste, ker hitrejše molekule med plastmi prenesejo več gibalne količine.
 
 :::premisli
 Motorno olje in zrak segrejemo z $20\,^\circ\mathrm{C}$ na $80\,^\circ\mathrm{C}$. Kako se spremeni viskoznost vsake snovi? Napovej, preden pogledaš.
@@ -54,15 +58,27 @@ Motorno olje in zrak segrejemo z $20\,^\circ\mathrm{C}$ na $80\,^\circ\mathrm{C}
 Olju viskoznost močno pade (večkrat), ker se molekule kapljevine lažje premikajo druga mimo druge. Zraku viskoznost naraste (za okoli $15\,\%$), ker je pri plinu viskoznost posledica prenosa gibalne količine med trki, ta pa s hitrostjo molekul raste.
 :::
 
-**5. Reynoldsov poskus.** Osborne Reynolds je v stekleno cev z vodo vbrizgal tanko nit barvila. Pri majhni hitrosti je nit ostala ravna in ostra do konca cevi. Tak tok je **laminaren**: plasti tečejo vzporedno, brez mešanja. Pri veliki hitrosti se je nit po kratki razdalji raztrgala in barvilo je obarvalo ves presek. Tak tok je **turbulenten**: se hitrost na vsakem mestu nenehno spreminja po smeri in velikosti, nastajajo vrtinci.
+### Slika 2: nit barvila v cevi
 
-**6. Reynoldsovo število.** Reynolds je ugotovil, da o vrsti toka ne odloča hitrost sama, ampak kombinacija štirih količin:
+```
+majhna hitrost:  ═══════════════════════   nit ostane ravna
+velika hitrost:  ═════~~≈≈≋≋▒▒▒▒▒▒▒▒▒▒▒▒   nit se raztrga, barvilo zapolni presek
+```
+
+**Reynoldsov poskus.** Osborne Reynolds je v stekleno cev z vodo vbrizgal tanko nit barvila. Pri majhni hitrosti je nit ostala ravna in ostra do konca cevi. Tak tok je **laminaren**: plasti tečejo vzporedno, brez mešanja. Pri veliki hitrosti se je nit po kratki razdalji raztrgala in barvilo je obarvalo ves presek. Tak tok je **turbulenten**: hitrost se na vsakem mestu nenehno spreminja po smeri in velikosti, nastajajo vrtinci.
+
+**Reynoldsovo število.** Reynolds je ugotovil, da o vrsti toka ne odloča hitrost sama, ampak kombinacija štirih količin:
 
 $$\mathrm{Re} = \frac{\rho\, v\, D}{\mu} = \frac{v\, D}{\nu}$$
 
 Tu je $v$ povprečna hitrost (prostorninski pretok, deljen s presekom), $D$ notranji premer cevi. Re je **brezdimenzijsko**: enote se pokrajšajo. Pomeni razmerje med vztrajnostnimi silami (ki motnje ojačajo) in viskoznimi silami (ki jih dušijo).
 
-Za tok v ravni okrogli cevi velja:
+Za tok v ravni okrogli cevi Re razdeli številsko premico na tri območja:
+
+```
+   laminarno       prehodno (nestabilno)      turbulentno
+0 ─────────────── 2100 ─────────────── 4000 ──────────────► Re
+```
 
 - $\mathrm{Re} < 2100$: laminarni tok,
 - $2100 < \mathrm{Re} < 4000$: prehodno območje (tok je nestabilen),
@@ -70,7 +86,18 @@ Za tok v ravni okrogli cevi velja:
 
 Meja $2100$ je dogovorna; nekateri viri navajajo $2300$. V zelo gladkih cevih brez motenj se laminarni tok lahko ohrani tudi do precej večjih Re.
 
-**7. Profil hitrosti.** Ob steni je hitrost vedno nič. V laminarnem toku je profil parabola, največja hitrost na osi je dvakrat večja od povprečne. V turbulentnem toku vrtinci premešajo tekočino, zato je profil sredi cevi skoraj raven, povprečna hitrost je približno $0{,}8$ največje.
+### Slika 3: profil hitrosti v preseku
+
+```
+  laminarno         turbulentno
+ |->               |------>
+ |------>          |-------->
+ |---------->      |-------->
+ |------>          |-------->
+ |->               |------>
+```
+
+**Profil hitrosti.** Ob steni je hitrost vedno nič. V laminarnem toku je profil parabola, največja hitrost na osi je dvakrat večja od povprečne. V turbulentnem toku vrtinci premešajo tekočino, zato je profil sredi cevi skoraj raven, povprečna hitrost je približno $0{,}8$ največje.
 
 :::premisli
 Skozi cev teče stalen prostorninski pretok. Cev zamenjamo s cevjo z dvakrat večjim premerom. Ali se Re poveča, zmanjša ali ostane enak?
@@ -140,7 +167,7 @@ $v = \dfrac{\mathrm{Re}\, \mu}{\rho\, D}$, nato $Q = v \cdot \dfrac{\pi D^2}{4}$
 
 ### Primer 4: zdaj ti
 
-Zrak s kinematično viskoznostjo $1{,}5 \cdot 10^{-5}\,\mathrm{m^2/s}$ teče s povprečno hitrostjo $3{,}0\,\mathrm{m/s}$ po prezračevalnem kanalu okroglega preseka s premerom $20\,\mathrm{cm}$. Kakšen je tok?
+Zrak s kinematično viskoznostjo $1{,}5 \cdot 10^{-5}\,\mathrm{m^2/s}$ teče s povprečno hitrostjo $3{,}0\,\mathrm{m/s}$ po prezračevalnem kanalu bolnišnične operacijske dvorane, okroglega preseka s premerom $20\,\mathrm{cm}$. Kakšen je tok?
 
 **Podatki:** $\nu = 1{,}5 \cdot 10^{-5}\,\mathrm{m^2/s}$, $v = 3{,}0\,\mathrm{m/s}$, $D = 20\,\mathrm{cm}$
 **Iščemo:** $\mathrm{Re}$ in vrsto toka
