@@ -104,6 +104,7 @@
 .er-name b { overflow-wrap: anywhere; }
 .er-name small { color: var(--muted); }
 .er-weak button { flex: none; }
+.er-weak button.small { min-height: 40px !important; } /* dotik: najmanj 40 px (button.small je sicer 38 px) */
 
 /* Pretekle pole (izbira po korakih kot pri ravni izobrazbe, povezave na ric.si) */
 .exam-papers { margin-top: 12px; }

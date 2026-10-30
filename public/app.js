@@ -2526,7 +2526,7 @@ async function loadExams(key = state.examKey, exam = null) {
   try {
     c = await api(`/api/students/${state.student.id}/exams${q}`);
   } catch (err) {
-    box.innerHTML = `<p class="muted">${t("comp.loadError", { msg: escapeHtml(err.message) })}</p>`;
+    box.innerHTML = `<p class="muted">${t("exam.loadError", { msg: escapeHtml(err.message) })}</p>`;
     return;
   }
   // Slovenski izpit zunaj šole učenca (npr. ostanek izbire po menjavi OŠ → SŠ): privzeti izpit šole.
@@ -2613,7 +2613,7 @@ async function showPapers(c) {
   try {
     papers = await loadPapers(api);
   } catch (err) {
-    if (slot.isConnected) slot.innerHTML = `<p class="muted">${t("comp.loadError", { msg: escapeHtml(err.message) })}</p>`;
+    if (slot.isConnected) slot.innerHTML = `<p class="muted">${t("pp.loadError", { msg: escapeHtml(err.message) })}</p>`;
     return;
   }
   if (!slot.isConnected) return;
