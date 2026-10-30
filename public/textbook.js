@@ -66,7 +66,15 @@ const MAX_QUOTE = 800;
 function selectionText(sel) {
   const parts = [];
   for (let i = 0; i < sel.rangeCount; i++) {
-    const frag = sel.getRangeAt(i).cloneContents();
+    // Izbor, ki se začne ali konča sredi formule, razširimo na celo formulo; sicer
+    // kopija vsebuje le del izrisa brez LaTeX-a (npr. »x+2)(« namesto (x+2)(x-3)).
+    const range = sel.getRangeAt(i).cloneRange();
+    const katexOf = (n) => (n?.nodeType === 1 ? n : n?.parentElement)?.closest(".katex-display, .katex");
+    const ks = katexOf(range.startContainer);
+    const ke = katexOf(range.endContainer);
+    if (ks) range.setStartBefore(ks);
+    if (ke) range.setEndAfter(ke);
+    const frag = range.cloneContents();
     frag.querySelectorAll(".katex").forEach((k) => {
       const tex = k.querySelector('annotation[encoding="application/x-tex"]')?.textContent;
       if (tex) k.replaceWith(document.createTextNode(` $${tex.trim()}$ `));
