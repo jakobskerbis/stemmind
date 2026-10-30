@@ -1642,7 +1642,7 @@ async function loadPath(key = state.pathKey) {
   if (!prog && isRegional(sys)) $("#path-note").textContent = t("path.regionNote", { system: SCHOOL_SYSTEMS[sys].name });
   $("#lang-note").hidden = currentLang() === "sl" || isRegional(sys);
   if (prog) {
-    $("#path-note").innerHTML = `${t("path.uniNote", { faculty: escapeHtml(prog.facultyName), program: escapeHtml(prog.name), year: escapeHtml(prog.sourceYear || "") })} ${prog.source ? `<a href="${escapeHtml(prog.source)}" target="_blank" rel="noopener">${t("path.uniSource")}</a>.` : ""}`;
+    $("#path-note").innerHTML = `${t(prog.degree === "EMŠ" ? "path.emsNote" : "path.uniNote", { faculty: escapeHtml(prog.facultyName), program: escapeHtml(prog.name), year: escapeHtml(prog.sourceYear || "") })} ${prog.source ? `<a href="${escapeHtml(prog.source)}" target="_blank" rel="noopener">${t("path.uniSource")}</a>.` : ""}`;
   }
   renderGoal();
   const x = p.xp;

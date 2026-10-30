@@ -8,7 +8,7 @@
 // - dnevna opravila: usklajevanje naročnin s Stripom, opomnik pred koncem kode in pred letno obnovitvijo.
 import express from "express";
 import { randomToken, sha256, Throttle } from "./auth.js";
-import { PASSES, passByDays, passForDaysLeft, paidActive, planFor, planByKey, isPremiumChild, GRACE_DAYS, currencyDecimals } from "./plans.js";
+import { PASSES, passByDays, passForDaysLeft, paidActive, planFor, planByKey, isPremiumChild, GRACE_DAYS, currencyDecimals, schoolPlanFor } from "./plans.js";
 import { Schedules, nowParts, cleanDate, TEST_KINDS } from "../schedule.js";
 import { cleanText } from "../settings.js";
 import { ljNow } from "./goal-reminder.js";
@@ -156,7 +156,7 @@ export function nextTest(schedules, studentId, now = new Date()) {
 }
 
 export function mountBilling(app, ctx) {
-  const { credits = null, db, store, stripe, log, json, getParent, update, childIds, ownerOf, ensureCustomer, accessOf, baseUrl, sendMail, currencyOf, isMinor, applySubscription, syncCustomer, promo, kv, offersFor = () => ({ show: true, prices: true }) } = ctx;
+  const { credits = null, db, store, stripe, log, json, getParent, update, childIds, ownerOf, ensureCustomer, accessOf, baseUrl, sendMail, currencyOf, isMinor, applySubscription, syncCustomer, promo, kv, offersFor = () => ({ show: true, prices: true }), hasSchoolChild = () => false } = ctx;
   migrateBilling(db);
   const passes = new Passes(db);
   const schedules = new Schedules(db);
@@ -414,8 +414,10 @@ export function mountBilling(app, ctx) {
     let row;
     if (kind === "sub") {
       if (paidActive(p)) return res.status(409).json({ error: "Naročnino že imate." });
-      const plan = planFor(Number(req.body?.seats), req.body?.interval, currencyOf(req, p));
+      const school = req.body?.school === true;
+      const plan = school ? schoolPlanFor(req.body?.interval) : planFor(Number(req.body?.seats), req.body?.interval, currencyOf(req, p));
       if (!plan) return res.status(400).json({ error: "Neznan paket." });
+      if (school && !hasSchoolChild(p.id)) return res.status(403).json({ error: "Ta cena velja samo za učence s šolsko licenco." });
       row = { plan_key: plan.key, student_id: null, days: null, test_date: null, test_name: "" };
     } else {
       const c = checkPass(req, p, req.body);
@@ -499,7 +501,9 @@ export function mountBilling(app, ctx) {
       if (l.kind === "sub") {
         if (paidActive(parent)) return res.status(409).json({ error: "To je že plačano. Hvala!", paid: true });
         const plan = planByKey(l.plan_key);
-        const { prices } = await stripe.ensurePrices(plan.currency || "EUR");
+        // Povezava je lahko stara: šolska cena le, če ima otrok šolsko licenco še ob plačilu.
+        if (plan.school && !hasSchoolChild(parent.id)) return res.status(403).json({ error: "Ta cena velja samo za učence s šolsko licenco. Prosite za novo povezavo." });
+        const { prices } = plan.school ? await stripe.ensureSchoolPrices() : await stripe.ensurePrices(plan.currency || "EUR");
         const trialEnd = Math.max(Date.parse(parent.trial_ends_at || 0) || 0, Date.parse(parent.promo_until || 0) || 0);
         const subscription_data = { metadata: { parent_id: parent.id } };
         if (trialEnd - Date.now() > 49 * 3600000) subscription_data.trial_end = Math.floor(trialEnd / 1000);
@@ -631,5 +635,5 @@ export function mountBilling(app, ctx) {
     return out;
   }
 
-  return { passes, passPremium, completePassSession, completeCreditSession, completeSubSession, billingDaily };
+  return { passes, passPremium, completePassSession, completeCreditSession, completeSubSession, billingDaily, recordConsent };
 }

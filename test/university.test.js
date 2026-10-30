@@ -96,9 +96,20 @@ test("university generators: every task checks against its own answer", () => {
   assert.ok(n > 1000);
   // Velik del fakultetnih tem MAT/FIZ/KEM ima generator.
   // (velja za matematiko, fiziko in kemijo; strokovni predmeti, npr. biologija, so zaenkrat brez računskih nalog)
-  const topics = Object.keys(UNI_PATHS).filter((k) => ["MAT", "FIZ", "KEM"].includes(UNI_PATHS[k].subject)).flatMap((k) => topicOrder(k));
-  const withGen = topics.filter((t) => hasGenerator(t.id)).length;
-  assert.ok(withGen / topics.length > 0.28, `${withGen}/${topics.length} tem z generatorjem`);
+  // Tehniški in medicinski programi (dodani 30. 10. 2026) imajo zelo specializirane teme
+  // (elektrotehnika, strojništvo, medicina), ki generatorjev še nimajo; zanje velja nižji delež.
+  const LATER_FAC = new Set(["UL-FRI", "UL-FE", "UM-FERI", "UL-MF", "UL-VF", "UM-FS", "UM-FGPA", "UM-MF"]);
+  const LATER_PROG = new Set(["UL-FGG-GR", "UL-FGG-GIG", "UL-FFA-FAR"]);
+  const later = (id, p) => LATER_FAC.has(p.faculty) || LATER_PROG.has(id);
+  const keysOf = (pick) => [...new Set(Object.entries(PROGRAMS).filter(([id, p]) => pick(id, p)).flatMap(([, p]) => [...p.courseKeys.flat(), ...p.electiveKeys]))];
+  const share = (keys) => {
+    const topics = keys.filter((k) => ["MAT", "FIZ", "KEM"].includes(UNI_PATHS[k].subject)).flatMap((k) => topicOrder(k));
+    return [topics.filter((t) => hasGenerator(t.id)).length, topics.length];
+  };
+  const [withGen, all] = share(keysOf((id, p) => !later(id, p)));
+  assert.ok(withGen / all > 0.28, `${withGen}/${all} tem z generatorjem`);
+  const [withGenLater, allLater] = share(keysOf(later));
+  assert.ok(withGenLater / allLater > 0.14, `${withGenLater}/${allLater} tem tehniških in medicinskih programov z generatorjem`);
   // Teme po naslovu: isti naslov v več predmetih deli generator.
   assert.ok(uniTopicIds("Kisline in baze").length >= 2);
 });
@@ -145,4 +156,19 @@ test("API: programmes list, programme paths and a university student profile", a
   } finally {
     server.close();
   }
+});
+
+test("EMŠ programmes (medicine, pharmacy) are labelled and described as single-cycle master's", () => {
+  for (const id of ["UL-MF-MED", "UL-MF-DM", "UM-MF-SM", "UL-VF-VET", "UL-FFA-FAR"]) {
+    assert.ok(PROGRAMS[id], id);
+    assert.match(PROGRAMS[id].label, /\(EMŠ\)$/, id);
+    assert.ok(PROGRAMS[id].years.length <= 4, id);
+  }
+  assert.match(PROGRAMS["UL-FRI-RI"].label, /\(UN\)$/);
+  // Izbirnik in opomba na učni poti izbereta besedilo po vrsti študija.
+  const listed = listPrograms();
+  assert.equal(listed.find((p) => p.id === "UL-MF-MED").degree, "EMŠ");
+  assert.equal(listed.find((p) => p.id === "UL-FRI-RI").degree, "UN");
+  const s = studyProgramPrompt({ educational_track: "UNIVERZA", study_program: "UL-MF-MED", curriculum_level: "1. letnik" });
+  assert.match(s, /enoviti magistrski študijski program Medicina; predmeti 1\. letnika: /);
 });

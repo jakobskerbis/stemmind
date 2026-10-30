@@ -101,12 +101,12 @@ function linearna(el) {
   s("line", { x1: X(0), y1: W - 4, x2: X(0), y2: 4, class: "axis", "marker-end": "url(#lin-arr)" }, svg);
   s("text", { x: W - 10, y: Y(0) - 8, class: "axis-label" }, svg).textContent = "x";
   s("text", { x: X(0) + 8, y: 14, class: "axis-label" }, svg).textContent = "y";
-  const tri = s("path", { class: "slope-tri" }, svg);
+  const tri = s("path", { class: "slope-tri", "data-name": "k in n" }, svg);
   const triK = s("text", { class: "slope-label" }, svg);
   const tri1 = s("text", { class: "slope-label" }, svg);
-  const line = s("line", { class: "graph-line" }, svg);
+  const line = s("line", { class: "graph-line", "data-name": "Premica" }, svg);
   const pn = s("circle", { r: 6, class: "pt pt-n" }, svg);
-  const p0 = s("circle", { r: 6, class: "pt pt-zero" }, svg);
+  const p0 = s("circle", { r: 6, class: "pt pt-zero", "data-name": "Ničla" }, svg);
 
   const out = readout();
   let k = 1, n = 1;

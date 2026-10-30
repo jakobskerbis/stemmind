@@ -108,6 +108,7 @@ export function migrateAccounts(db) {
   if (!pcols.includes("country")) db.exec("ALTER TABLE parents ADD COLUMN country TEXT");
   // Poln dostop iz aktivacijske kode (glej promo.js).
   if (!pcols.includes("promo_until")) db.exec("ALTER TABLE parents ADD COLUMN promo_until TEXT");
+  if (!pcols.includes("gift_until")) db.exec("ALTER TABLE parents ADD COLUMN gift_until TEXT"); // darilna koda (server/placila/darila.js)
   // Datum rojstva imetnika računa (preverjanje starosti, glej age.js). Stari računi: NULL = polnoleten.
   if (!pcols.includes("birth_date")) db.exec("ALTER TABLE parents ADD COLUMN birth_date TEXT");
   // Gost (uporaba brez registracije, odstranjena 2026-10-29; stari gostje ostanejo): račun brez e-naslova, vezan na piškotek naprave.

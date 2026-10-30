@@ -178,6 +178,11 @@ export async function mountSim(id, el, opts = {}) {
       b.addEventListener("click", () => mountSim(id, el, opts));
       el.append(b);
     }
+    // Prikaz na grafu: gumbi za vklop in izklop krivulj, točk, oznak in mreže (public/sim/prikaz.js).
+    if (id !== "zbirka")
+      Promise.all([import("./prikaz.js"), import("../i18n.js")])
+        .then(([m, i18n]) => m.layerToggles(el, i18n.t))
+        .catch((err) => console.error("Prikaz na grafu:", err));
   } catch (err) {
     console.error(`Simulacija ${id}:`, err);
     el.replaceChildren();

@@ -10,7 +10,7 @@ import { audit, detachAudit } from "../dnevnik-dostopov.js";
 import { openMessage } from "../db.js";
 import { openReport } from "../reports.js";
 import { unseal } from "../crypto-polje.js";
-import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, paidActive, isPremiumChild, isoIn, freeDailyQuestions, freeMonthlyPoolUsd, freeStudentMonthlyUsd, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION, GRACE_DAYS } from "./plans.js";
+import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, paidActive, isPremiumChild, isoIn, SCHOOL_PLANS, schoolPlanFor, isSchoolPlan, GIFT, freeDailyQuestions, freeMonthlyPoolUsd, freeStudentMonthlyUsd, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION, GRACE_DAYS } from "./plans.js";
 import { Stripe, verifyWebhook } from "./stripe.js";
 import { Mailer, verifyEmail, resetEmail, referralRewardEmail, paymentFailedEmail } from "./email.js";
 import { mountBilling, migrateBilling, publicPass, ADULT_TEXT, WITHDRAWAL_TEXT } from "./billing.js";
@@ -22,6 +22,7 @@ import { Usage } from "../usage.js";
 import { promoConfig, createPromo } from "./promo.js";
 import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
 import { guestModeOn, guestNet, guestPerDay, GuestQuota, GUEST_SESSION_DAYS, netKey } from "./guest.js";
+import { AccountLocks, ownerOnly } from "./account-lock.js";
 import { ProfileLocks, checkProfilePassword } from "./profile-lock.js";
 import { gateNeeded } from "../gate.js";
 import { rights as rightsOf, lessonInteractive as lessonOpen } from "../placila/pravice.js";
@@ -29,6 +30,7 @@ import { createSchoolSource } from "../placila/sola-vir.js";
 import { offerPolicy } from "../placila/ponudbe.js";
 import { Credits } from "../placila/krediti.js";
 import { SHARE } from "../proracun.js";
+import { mountGifts } from "../placila/darila.js";
 import { Schedules, nowParts } from "../schedule.js";
 
 export const CONSENT_TEXT =
@@ -90,6 +92,12 @@ export function mountAccounts(app, store, opts = {}) {
   const forgotThrottle = new Throttle(5, 3600000); // pošiljanje povezav za novo geslo: 5 na uro
   const devLinks = (req) => !mailer.enabled && (isLocalRequest(req) || gateNeeded(env));
   const locks = new ProfileLocks(db);
+  const accountLocks = new AccountLocks(db);
+  // Zaklep računa: dejanja lastnika zahtevajo geslo računa (EVKLID_ACCOUNT_LOCK=0 izklopi).
+  const accountLockOn = opts.accountLock ?? env.EVKLID_ACCOUNT_LOCK !== "0";
+  const accountThrottle = new Throttle(10);
+  // Račun brez gesla (prijava z Apple) ali gost: zaklepa ni, ker ni gesla za odklep.
+  const lockable = (p) => accountLockOn && !p.is_guest && !String(p.password_hash || "").startsWith("none$");
   const reauthHooks = []; // potrditev izbrisa računa brez gesla (prijava z Apple)
   const profileThrottle = new Throttle(10);
   // Poskusi ugibanja z več naslovov IP: e-naslov 30 napačnih na uro, en naslov IP 100 na 15 minut,
@@ -105,6 +113,7 @@ export function mountAccounts(app, store, opts = {}) {
   // Število profilov pri aktivacijski kodi je lastnost kode, ki jo je račun porabil.
   const accessOf = (p) => accessFor(p, Date.now(), p.promo_until ? promo.termsOf(p.id).seats : promoCfg.seats);
   let billing = null; // paketi pred testom, povezave za starše (mountBilling spodaj)
+  let gifts = null; // darilne kode (mountGifts spodaj)
 
   const baseUrl = (req) => (env.EVKLID_BASE_URL || (req ? `${req.protocol}://${req.get("host")}` : `http://localhost:${env.PORT || 3000}`)).replace(/\/$/, "");
 
@@ -154,8 +163,14 @@ export function mountAccounts(app, store, opts = {}) {
   function personalOf(studentId) {
     const parentId = ownerOf(studentId);
     if (!parentId) return { tier: "legacy", until: null }; // stari podatki brez starša
-    const access = accessOf(getParent(parentId));
-    if (isPremiumChild(access, childIds(parentId), studentId)) return { tier: access.tier, until: access.until };
+    const parent = getParent(parentId);
+    const access = accessOf(parent);
+    // Osebno ob šolski licenci: mesto dobi najprej otrok s šolsko licenco (sicer najstarejši profil).
+    if (access.tier === "paid" && isSchoolPlan(parent.sub_plan)) {
+      const ids = childIds(parentId);
+      const order = [...ids.filter((id) => schools.hasLicence(id)), ...ids.filter((id) => !schools.hasLicence(id))];
+      if (order.slice(0, access.seats).includes(studentId)) return { tier: access.tier, until: access.until };
+    } else if (isPremiumChild(access, childIds(parentId), studentId)) return { tier: access.tier, until: access.until };
     if (billing?.passPremium(studentId)) return { tier: "pass", until: billing.passes.activeFor(studentId)?.ends_at || null };
     return null;
   }
@@ -283,6 +298,9 @@ export function mountAccounts(app, store, opts = {}) {
     if (PUBLIC.some((re) => re.test(req.path))) return next();
     const p = req.parent;
     if (!p) return res.status(401).json({ error: "Prijavi se.", login: true });
+    if (lockable(p) && ownerOnly(req.path, req.method) && !accountLocks.touch(p.id, req.deviceId)) {
+      return res.status(403).json({ error: "Za to vpiši geslo računa.", account_locked: true });
+    }
     if (p.is_guest && /^\/billing\//.test(req.path)) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
     if (p.is_guest && !guestOn) return res.status(401).json({ error: "Uporaba brez računa ni več mogoča. Ustvari račun, da obdržiš napredek.", login: true, guest_off: true });
     // Porabo AI vidi samo skrbnik ali kdor aplikacijo odpre na računalniku, kjer teče strežnik.
@@ -437,6 +455,7 @@ export function mountAccounts(app, store, opts = {}) {
     // Aktivacijska koda ob registraciji; napačna koda registracije ne ustavi.
     const promoRaw = String(req.body?.promo_code || "").trim();
     const promoResult = promoRaw ? promo.redeem(getParent(id), promoRaw) : null;
+    accountLocks.unlock(id, req.deviceId);
     setSessionCookie(req, res, sessions.create(id));
     res.status(201).json({
       parent: publicParent(getParent(id)),
@@ -493,6 +512,7 @@ export function mountAccounts(app, store, opts = {}) {
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(v.email, verifyEmail(url));
     sessions.destroyAll(p.id);
+    accountLocks.unlock(p.id, req.deviceId);
     setSessionCookie(req, res, sessions.create(p.id));
     res.json({ parent: publicParent(getParent(p.id)), ...(devLinks(req) ? { dev_verify_url: url } : {}) });
   });
@@ -569,12 +589,14 @@ export function mountAccounts(app, store, opts = {}) {
     if (rehashed) db.prepare("UPDATE parents SET password_hash = ? WHERE id = ? AND password_hash = ?").run(rehashed, p.id, p.password_hash);
     audit(db, { req, parentId: p.id, action: "login" });
     const guest = fromGuest ? adoptGuest(fromGuest, p) : null;
+    accountLocks.unlock(p.id, req.deviceId);
     setSessionCookie(req, res, sessions.create(p.id));
     res.json({ parent: publicParent(p), ...(guest ? { guest_moved: guest.moved } : {}) });
   });
 
   app.post("/api/auth/logout", (req, res) => {
     if (req.parent) locks.lockDevice(childIds(req.parent.id), req.deviceId);
+    if (req.parent) accountLocks.lock(req.parent.id, req.deviceId);
     if (req.parent) audit(db, { req, parentId: req.parent.id, action: "logout" });
     sessions.destroy(readCookie(req));
     clearSessionCookie(req, res);
@@ -616,8 +638,10 @@ export function mountAccounts(app, store, opts = {}) {
       reset_expires_at: null,
       email_verified_at: p.email_verified_at || new Date().toISOString(),
     });
+    accountLocks.lockAll(p.id);
     sessions.destroyAll(p.id); // vse seje (tudi napadalčeve) so po novem geslu neveljavne
     audit(db, { req, parentId: p.id, action: "password_reset" });
+    accountLocks.unlock(p.id, req.deviceId);
     setSessionCookie(req, res, sessions.create(p.id));
     res.json({ ok: true });
   });
@@ -633,7 +657,32 @@ export function mountAccounts(app, store, opts = {}) {
       children: p ? childIds(p.id).length : 0,
       billing: stripe.enabled,
       email: mailer.enabled,
+      account_lock: p ? lockable(p) : false,
+      account_unlocked: p ? !lockable(p) || accountLocks.isUnlocked(p.id, req.deviceId) : false,
     });
+  });
+
+  // Odklep računa na tej napravi z geslom računa (zavihek Račun, nov ali izbrisan profil).
+  app.post("/api/account/unlock", json, async (req, res) => {
+    const p = req.parent;
+    if (!lockable(p)) return res.json({ ok: true });
+    const key = `${p.id}|${req.ip}`;
+    if (accountThrottle.blocked(key)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusite čez 15 minut." });
+    const ok = await verifyPassword(String(req.body?.password || ""), p.password_hash);
+    if (!ok) {
+      accountThrottle.fail(key);
+      audit(db, { req, parentId: p.id, action: "account_unlock", ok: false });
+      return res.status(401).json({ error: "Napačno geslo." });
+    }
+    accountThrottle.reset(key);
+    accountLocks.unlock(p.id, req.deviceId);
+    res.json({ ok: true });
+  });
+
+  // Zaklep takoj (ob odhodu iz zavihka Račun).
+  app.post("/api/account/lock", (req, res) => {
+    accountLocks.lock(req.parent.id, req.deviceId);
+    res.json({ ok: true });
   });
 
   // Država za ceno: Cloudflare (CF-IPCountry, npr. tunel ali gostovanje za Cloudflare), sicer
@@ -654,6 +703,10 @@ export function mountAccounts(app, store, opts = {}) {
       parent: publicParent(p),
       access,
       free_daily_questions: freeDailyQuestions(),
+      // Osebno ob šolski licenci: ponudi se, ko ima vsaj en otrok šolsko licenco (samo v evrih).
+      school_plans: childIds(p.id).some((id) => schools.hasLicence(id)) && currencyOf(req, p) === "EUR" ? SCHOOL_PLANS : [],
+      gifts: gifts ? gifts.listFor(p.id) : [],
+      gift_price: GIFT.amount,
       children: children(p.id).map((c) => ({
         id: c.id,
         name: c.name,
@@ -705,12 +758,14 @@ export function mountAccounts(app, store, opts = {}) {
     if (req.parent.guest_net && !req.parent.email_verified_at) return res.status(403).json({ error: "Najprej potrdi e-naslov." });
     const key = `promo|${req.parent.id}`;
     if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
-    const r = promo.redeem(req.parent, req.body?.code);
+    // Darilna koda (DAR-XXXX-XXXX) ima svoja pravila (server/placila/darila.js).
+    const r = gifts?.isGift(req.body?.code) ? gifts.redeem(req.parent, req.body?.code) : promo.redeem(req.parent, req.body?.code);
     if (r.error) {
       throttle.fail(key);
       return res.status(r.exhausted ? 410 : 400).json({ error: r.error });
     }
-    res.json(accountView(req, getParent(req.parent.id)));
+    // Darilo med preizkusom ali kodo začne teči pozneje, zato je datum v odgovoru (access je lahko še trial).
+    res.json({ ...accountView(req, getParent(req.parent.id)), ...(r.gift ? { gift_until: r.until } : {}) });
   });
 
   // Na računalniku, kjer teče strežnik: »ta račun je moj«, da števec porabe vidim tudi na telefonu.
@@ -906,6 +961,8 @@ export function mountAccounts(app, store, opts = {}) {
     sessions.destroyOthers(req.parent.id, readCookie(req));
     devices.releaseOthers(childIds(req.parent.id), req.deviceId);
     locks.lockOtherDevices(childIds(req.parent.id), req.deviceId);
+    accountLocks.lockAll(req.parent.id);
+    accountLocks.unlock(req.parent.id, req.deviceId);
     res.json({ ok: true });
   });
 
@@ -994,18 +1051,26 @@ export function mountAccounts(app, store, opts = {}) {
     if (needStripe(res)) return;
     const p = req.parent;
     const currency = currencyOf(req, p);
-    const plan = planFor(Number(req.body?.seats), req.body?.interval, currency);
+    const school = req.body?.school === true;
+    const plan = school ? schoolPlanFor(req.body?.interval) : planFor(Number(req.body?.seats), req.body?.interval, currency);
     if (!plan) return res.status(400).json({ error: "Neznan paket." });
+    if (school && currency !== "EUR") return res.status(400).json({ error: "Šolska cena je samo v evrih." });
+    if (school && !childIds(p.id).some((id) => schools.hasLicence(id))) {
+      return res.status(403).json({ error: "Ta cena velja samo za učence s šolsko licenco." });
+    }
     if (PAID.has(p.sub_status)) return res.status(409).json({ error: "Naročnino že imate. Paket spremenite v portalu.", portal: true });
     // Naročnino sklene polnoletna oseba; mladoletni imetnik pošlje staršu povezavo za plačilo.
     if (isMinor(p)) return res.status(403).json({ error: "Naročnino plača starš. Pošlji mu povezavo za plačilo.", pay_link: true });
     if (req.body?.adult !== true || req.body?.withdrawal !== true) return res.status(400).json({ error: "Pred plačilom potrdite obe izjavi.", consent: true });
     try {
       const customer = await ensureCustomer(p);
-      const { prices } = await stripe.ensurePrices(currency);
+      const { prices } = school ? await stripe.ensureSchoolPrices() : await stripe.ensurePrices(currency);
       const base = baseUrl(req);
-      // Preostanek 7-dnevnega preizkusa ali aktivacijske kode se prenese v Stripe (če sta še vsaj 2 dni).
-      const trialEnd = Math.max(Date.parse(p.trial_ends_at || 0) || 0, Date.parse(p.promo_until || 0) || 0);
+      // Preostanek preizkusa, aktivacijske ali darilne kode se prenese v Stripe (če sta še vsaj 2 dni; Stripe dovoli največ 730 dni).
+      const trialEnd = Math.min(
+        Date.now() + 729 * 86400000,
+        Math.max(Date.parse(p.trial_ends_at || 0) || 0, Date.parse(p.promo_until || 0) || 0, Date.parse(p.gift_until || 0) || 0),
+      );
       const subscription_data = { metadata: { parent_id: p.id } };
       if (trialEnd - Date.now() > 49 * 3600000) subscription_data.trial_end = Math.floor(trialEnd / 1000);
       const session = await stripe.request("POST", "/checkout/sessions", {
@@ -1016,7 +1081,8 @@ export function mountAccounts(app, store, opts = {}) {
         success_url: `${base}/?billing=success&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${base}/?billing=cancel`,
         locale: currency === "EUR" ? "sl" : "auto",
-        allow_promotion_codes: "true",
+        // Šolska cena je že znižana: brez dodatnih kod za popust.
+        ...(school ? {} : { allow_promotion_codes: "true" }),
         subscription_data,
         metadata: { parent_id: p.id },
       });
@@ -1146,7 +1212,9 @@ export function mountAccounts(app, store, opts = {}) {
     isMinor,
     applySubscription,
     syncCustomer,
+    hasSchoolChild: (parentId) => childIds(parentId).some((id) => schools.hasLicence(id)),
   });
+  gifts = mountGifts(app, { db, stripe, json, log, getParent, ensureCustomer, baseUrl, isMinor, recordConsent: billing.recordConsent, paidActive });
 
   // Naročnina iz dogodka: sveže stanje iz Stripa (dogodki lahko pridejo v napačnem vrstnem redu).
   async function freshSubscription(obj) {
@@ -1173,6 +1241,10 @@ export function mountAccounts(app, store, opts = {}) {
         }
         if (obj.metadata?.kind === "credit") {
           billing.completeCreditSession(obj);
+          break;
+        }
+        if (obj.metadata?.kind === "gift") {
+          gifts.complete(obj);
           break;
         }
         if (obj.metadata?.pay_link && obj.subscription && stripe.enabled) {
@@ -1210,10 +1282,12 @@ export function mountAccounts(app, store, opts = {}) {
         if (obj.amount_refunded > 0 && credits.refund(obj.payment_intent)) break;
         const pass = billing.passes.byPayment(obj.payment_intent);
         if (pass && obj.amount_refunded > 0) billing.passes.end(pass.id, "refunded"); // tudi delno vračilo ob odstopu
+        if (obj.amount_refunded > 0) gifts.end(obj.payment_intent, "refunded"); // darilna koda: tudi delno vračilo
         break;
       }
       case "charge.dispute.created": {
         if (credits.refund(obj.payment_intent)) break;
+        if (gifts.end(obj.payment_intent, "disputed")) break;
         const pass = billing.passes.byPayment(obj.payment_intent);
         if (pass) {
           billing.passes.end(pass.id, "disputed");

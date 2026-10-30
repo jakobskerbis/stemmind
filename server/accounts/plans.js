@@ -77,11 +77,25 @@ export function plansFor(currency = "EUR") {
     currency,
   }));
 }
-export const ALL_PLANS = [...PLANS.map((p) => ({ ...p, currency: "EUR" })), ...Object.keys(REGIONAL_PRICES).flatMap(plansFor)];
+// ---------- Evklid Osebno za učence s šolsko licenco (j 2026-10-30, načrt »Šolska licenca in Osebno«) ----------
+// 5,99 € na mesec ali 49 € na šolsko leto za en profil z veljavno šolsko licenco (šola že plača šolske
+// predmete, Osebno doda vse ostalo). Samo v evrih. Ni v portalu za preklop paketa (glej stripe.js), da
+// redne naročnine ne morejo preiti na nižjo ceno. Ob izteku licence naročnina teče naprej po tej ceni.
+export const SCHOOL_PLANS = [
+  { key: `${BRAND.slug}_sola_month`, seats: 1, interval: "month", amount: 599, label: "Osebno ob šolski licenci, mesečno", school: true, currency: "EUR" },
+  { key: `${BRAND.slug}_sola_year`, seats: 1, interval: "year", amount: 4900, label: "Osebno ob šolski licenci, šolsko leto", school: true, currency: "EUR" },
+];
+export const schoolPlanFor = (interval) => SCHOOL_PLANS.find((p) => p.interval === interval) || null;
+
+// Darilna koda: eno leto Osebno za en profil, enkratno plačilo 49 € (server/placila/darila.js).
+export const GIFT = { amount: 4900, days: 365, currency: "EUR", label: "Darilna koda: 1 leto Osebno" };
+
+export const ALL_PLANS = [...PLANS.map((p) => ({ ...p, currency: "EUR" })), ...SCHOOL_PLANS, ...Object.keys(REGIONAL_PRICES).flatMap(plansFor)];
 
 // Cene, ustvarjene pod prejšnjim imenom aplikacije (brand.json → legacy), imajo v Stripu lookup_key »<staro>_…«.
 const currentKey = (key) => LEGACY.reduce((k, l) => (k.startsWith(`${l.slug}_`) ? `${BRAND.slug}_${k.slice(l.slug.length + 1)}` : k), String(key ?? ""));
 export const planByKey = (key) => ALL_PLANS.find((p) => p.key === currentKey(key)) || null;
+export const isSchoolPlan = (key) => !!planByKey(key)?.school;
 export const planFor = (seats, interval, currency = "EUR") => plansFor(currency).find((p) => p.seats === seats && p.interval === interval) || null;
 export const monthlyAmount = (seats, currency = "EUR") => planFor(seats >= 2 ? 2 : 1, "month", currency).amount;
 
@@ -126,7 +140,8 @@ export function paidActive(parent, now = Date.now()) {
   return later(new Date(Date.parse(parent.past_due_since) + GRACE_DAYS * 86400000).toISOString(), now);
 }
 
-// Kaj starš trenutno ima: paid (naročnina), trial (preizkus), bonus (mesec iz priporočila) ali free.
+// Kaj starš trenutno ima: paid (naročnina), promo (koda), trial (preizkus), gift (darilna koda),
+// bonus (mesec iz priporočila) ali free.
 export function accessFor(parent, now = Date.now(), promoSeats = 1) {
   if (paidActive(parent, now)) {
     return { tier: "paid", seats: parent.sub_seats || 1, until: parent.sub_period_end };
@@ -137,6 +152,8 @@ export function accessFor(parent, now = Date.now(), promoSeats = 1) {
     return { tier: "promo", seats, until: parent.promo_until };
   }
   if (later(parent.trial_ends_at, now)) return { tier: "trial", seats: 2, until: parent.trial_ends_at };
+  // Darilna koda (server/placila/darila.js): eno leto za en profil.
+  if (later(parent.gift_until, now)) return { tier: "gift", seats: 1, until: parent.gift_until };
   if (later(parent.bonus_until, now)) return { tier: "bonus", seats: 1, until: parent.bonus_until };
   return { tier: "free", seats: 0, until: null };
 }

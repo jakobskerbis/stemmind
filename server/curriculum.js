@@ -220,6 +220,8 @@ export function listPrograms() {
     source: p.source,
     sourceYear: p.sourceYear,
     years: p.years.length,
+    // »UN« (univerzitetni 1. stopnje) ali »EMŠ« (enoviti magistrski).
+    degree: p.degree || "UN",
     // Predmeti aplikacije, ki jih program ima (za izbirnik predmeta).
     subjects: ALL_SUBJECTS.filter((s) => [...p.courseKeys.flat(), ...p.electiveKeys].some((k) => UNI_PATHS[k].subject === s)),
     // Glavni predmet programa (največ obveznih predmetov), npr. BIO pri biologiji.
@@ -323,5 +325,6 @@ export function studyProgramPrompt(settings) {
   if (!p) return "(program ni izbran)";
   const year = Number((String(settings.curriculum_level || "").match(/([1-4])/) || [])[1]) || 1;
   const names = (p.courseKeys[year - 1] || []).map((k) => BUILT[k].label.replace(/ \(.*\)$/, ""));
-  return `${FACULTIES[p.faculty]}, univerzitetni študijski program 1. stopnje ${p.name}` + (names.length ? `; predmeti ${year}. letnika: ${names.join(", ")}` : "");
+  const kind = p.degree === "EMŠ" ? "enoviti magistrski študijski program" : "univerzitetni študijski program 1. stopnje";
+  return `${FACULTIES[p.faculty]}, ${kind} ${p.name}` + (names.length ? `; predmeti ${year}. letnika: ${names.join(", ")}` : "");
 }

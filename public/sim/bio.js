@@ -247,8 +247,8 @@ export function populacija(el) {
     }
     const top = Math.max(K * 1.2, Math.min(5000, Math.max(...N)));
     const A = axes(svg, { W: 340, H: 240, x: [0, T], y: [0, top], pad: 40, xLabel: "čas (leta)", yLabel: "N" });
-    if (lim) s("line", { x1: A.X(0), y1: A.Y(K), x2: A.X(T), y2: A.Y(K), class: "guide" }, svg), label(svg, A.X(T) - 4, A.Y(K) - 8, "K", "lbl small", "end");
-    s("path", { d: N.map((v, i) => `${i ? "L" : "M"}${A.X(i)},${A.Y(Math.min(v, top))}`).join(""), class: "graph-line stroke-a" }, svg);
+    if (lim) s("line", { x1: A.X(0), y1: A.Y(K), x2: A.X(T), y2: A.Y(K), class: "guide", "data-name": "Nosilna zmogljivost" }, svg), label(svg, A.X(T) - 4, A.Y(K) - 8, "K", "lbl small", "end");
+    s("path", { d: N.map((v, i) => `${i ? "L" : "M"}${A.X(i)},${A.Y(Math.min(v, top))}`).join(""), class: "graph-line stroke-a", "data-name": "Velikost populacije" }, svg);
     out.innerHTML = `<p>Prirast na osebek r = rodnost − smrtnost = ${fmt(r, 2)} na leto.</p>
       <p>Po ${T} letih: N ≈ ${fmt(N[T], 0)} osebkov.</p>
       <p class="muted">${lim ? "Z omejenimi viri rast upočasni tekmovanje znotraj vrste: krivulja je v obliki črke S in se ustali pri nosilni zmogljivosti K." : "Brez omejitev je rast eksponentna (krivulja J): vsako leto se populacija poveča za isti delež."}</p>`;
@@ -290,8 +290,8 @@ export function encim(el, { mode = "temp" } = {}) {
     if (mode === "substrat") {
       const A = axes(svg, { W: 340, H: 240, x: [0, 10], y: [0, 1.1], pad: 34, xLabel: "[substrat]", yLabel: "hitrost" });
       const v = (x) => x / (1.5 + x);
-      s("path", { d: Array.from({ length: 101 }, (_, i) => `${i ? "L" : "M"}${A.X(i / 10)},${A.Y(v(i / 10))}`).join(""), class: "graph-line stroke-a" }, svg);
-      s("circle", { cx: A.X(S), cy: A.Y(v(S)), r: 7, class: "pt fill-accent" }, svg);
+      s("path", { d: Array.from({ length: 101 }, (_, i) => `${i ? "L" : "M"}${A.X(i / 10)},${A.Y(v(i / 10))}`).join(""), class: "graph-line stroke-a", "data-name": "Hitrost reakcije" }, svg);
+      s("circle", { cx: A.X(S), cy: A.Y(v(S)), r: 7, class: "pt fill-accent", "data-name": "Izbrana točka" }, svg);
       out.innerHTML = `<p>Hitrost reakcije: ${pct(v(S))} največje.</p><p class="muted">${v(S) > 0.8 ? "Skoraj vsa aktivna mesta so zasedena (nasičenje): več substrata reakcije skoraj ne pospeši, več encima pa bi jo." : "Prostih aktivnih mest je še veliko: več substrata pomeni več trkov in hitrejšo reakcijo."}</p>`;
       return;
     }
@@ -299,9 +299,9 @@ export function encim(el, { mode = "temp" } = {}) {
     const A = axes(svg, { W: 340, H: 240, x: byT ? [0, 100] : [0, 14], y: [0, 1.1], pad: 34, xLabel: byT ? "T (°C)" : "pH", yLabel: "aktivnost" });
     const f = (x) => (byT ? enzymeActivity(e, x, d.pH) : enzymeActivity(e, d.T, x));
     const xs = Array.from({ length: 141 }, (_, i) => (byT ? (i * 100) / 140 : (i * 14) / 140));
-    s("path", { d: xs.map((x, i) => `${i ? "L" : "M"}${A.X(x)},${A.Y(f(x))}`).join(""), class: "graph-line stroke-a" }, svg);
+    s("path", { d: xs.map((x, i) => `${i ? "L" : "M"}${A.X(x)},${A.Y(f(x))}`).join(""), class: "graph-line stroke-a", "data-name": "Aktivnost encima" }, svg);
     const x = byT ? T : pH, a = f(x);
-    s("circle", { cx: A.X(x), cy: A.Y(a), r: 7, class: "pt fill-accent" }, svg);
+    s("circle", { cx: A.X(x), cy: A.Y(a), r: 7, class: "pt fill-accent", "data-name": "Izbrana točka" }, svg);
     const why = byT
       ? T > d.T + 3
         ? "Nad optimalno temperaturo se encim denaturira: aktivno mesto spremeni obliko, substrat se ne prilega več (ključ in ključavnica). Sprememba je navadno trajna."

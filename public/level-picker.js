@@ -84,7 +84,7 @@ function steps(v, programs) {
     }
     if (v.faculty) {
       const progs = programs.filter((p) => p.faculty === v.faculty);
-      out.push(["program", t("lp.qProgram"), progs.map((p) => [p.id, p.name, t("lp.uniSub")]), progs.find((p) => p.id === v.program)?.name]);
+      out.push(["program", t("lp.qProgram"), progs.map((p) => [p.id, p.name, t(p.degree === "EMŠ" ? "lp.emsSub" : "lp.uniSub")]), progs.find((p) => p.id === v.program)?.name]);
     }
     if (v.program) {
       const p = programs.find((x) => x.id === v.program);

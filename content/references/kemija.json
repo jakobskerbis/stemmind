@@ -3696,6 +3696,148 @@
     "UNI-ULFGG-VGRADIVA": [
       "kem-keramika-kompoziti-gradiva",
       "kem-kovine-korozija"
+    ],
+    "UNI-ULMF-TEMBIOKEM": [
+      "kem-biokemija",
+      "kem-struktura-biomolekul",
+      "kem-encimi"
+    ],
+    "UNI-ULMF-MEDBIOKEM": [
+      "kem-biokemija",
+      "kem-klinicna-biokemija-analitika",
+      "bio-biokemija"
+    ],
+    "UNI-ULMF-KLINBIOKEM": [
+      "kem-klinicna-biokemija-analitika",
+      "bio-hematologija-koza-laboratorij"
+    ],
+    "UNI-ULMF-BIOKGENDM": [
+      "kem-biokemija",
+      "bio-genetika",
+      "bio-molekularna-biologija"
+    ],
+    "UNI-ULMF-DENTMAT": [
+      "kem-keramika-kompoziti-gradiva",
+      "fiz-materiali",
+      "kem-polimeri"
+    ],
+    "UNI-ULMF-IZBBIOKEM": [
+      "kem-biokemija",
+      "kem-encimi"
+    ],
+    "UNI-ULMF-IZBBIOGEN": [
+      "kem-biokemija",
+      "bio-genetika"
+    ],
+    "UNI-ULVF-BIOKEM1": [
+      "kem-biokemija",
+      "kem-struktura-biomolekul",
+      "kem-encimi"
+    ],
+    "UNI-ULVF-BIOKEM2": [
+      "kem-biokemija",
+      "bio-biokemija"
+    ],
+    "UNI-ULFGG-GGRADIVA": [
+      "kem-keramika-kompoziti-gradiva",
+      "fiz-materiali",
+      "kem-kovine-korozija"
+    ],
+    "UNI-UMFS-OPG": [
+      "kem-polimeri",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFGPA-UMGI": [
+      "kem-keramika-kompoziti-gradiva",
+      "fiz-materiali"
+    ],
+    "UNI-UMFGPA-MGI": [
+      "kem-keramika-kompoziti-gradiva",
+      "fiz-jeklo-les-beton"
+    ],
+    "UNI-UMMF-KEM": [
+      "kem-splosna-kemija",
+      "kem-organska-kemija"
+    ],
+    "UNI-UMMF-BIOKEM": [
+      "kem-biokemija",
+      "bio-biokemija",
+      "kem-klinicna-biokemija-analitika"
+    ],
+    "UNI-UMMF-KLINBK": [
+      "kem-klinicna-biokemija-analitika",
+      "bio-hematologija-koza-laboratorij"
+    ],
+    "UNI-UMMF-IVBIOKEM": [
+      "kem-biokemija",
+      "kem-klinicna-biokemija-analitika"
+    ],
+    "UNI-ULFFA-PSAK": [
+      "kem-splosna-kemija",
+      "kem-anorganska-kemija",
+      "kem-raztopine-ravnotezja"
+    ],
+    "UNI-ULFFA-PFK1": [
+      "kem-organska-kemija",
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULFFA-PFT1": [
+      "kem-koloidi-povrsine",
+      "fiz-procesna-tehnika",
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULFFA-POK": [
+      "kem-organska-kemija",
+      "kem-organska-sinteza-heterocikli"
+    ],
+    "UNI-ULFFA-PFIZF": [
+      "kem-koloidi-povrsine",
+      "kem-fizikalna-kemija",
+      "kem-polimeri"
+    ],
+    "UNI-ULFFA-PFBK": [
+      "kem-biokemija",
+      "kem-encimi",
+      "bio-biokemija"
+    ],
+    "UNI-ULFFA-PFK2": [
+      "kem-organska-kemija",
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULFFA-PFK3": [
+      "kem-organska-kemija",
+      "kem-organska-sinteza-heterocikli",
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULFFA-PIFA": [
+      "kem-instrumentalna-analiza",
+      "kem-spektroskopija",
+      "kem-analizna-kemija"
+    ],
+    "UNI-ULFFA-PFT2": [
+      "kem-nanomateriali-karakterizacija",
+      "kem-polimeri",
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULFFA-PSTAB": [
+      "kem-kinetika-kataliza",
+      "kem-organska-kemija"
+    ],
+    "UNI-ULFFA-PANZ": [
+      "kem-analizna-kemija",
+      "kem-instrumentalna-analiza"
+    ],
+    "UNI-ULFFA-PKLKEM": [
+      "kem-klinicna-biokemija-analitika",
+      "bio-hematologija-koza-laboratorij"
+    ],
+    "UNI-ULFFA-PNSU": [
+      "kem-organska-sinteza-heterocikli",
+      "rac-bioinformatika"
+    ],
+    "UNI-ULFFA-PKAKOV": [
+      "kem-analizna-kemija",
+      "eko-management-organizacija"
     ]
   },
   "courseItems": {
