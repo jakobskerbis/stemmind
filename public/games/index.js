@@ -340,16 +340,22 @@ function askChildhood() {
     b?.classList.toggle("on", on);
     b?.setAttribute("aria-pressed", String(on));
   };
-  // Dodan naslov z znano zvrstjo takoj označi to zvrst (igra pride v zbirko).
+  // Dodan naslov z znano zvrstjo takoj označi to zvrst (igra pride v zbirko); zvrst, ki jo je označil
+  // samo naslov, se ob odstranitvi naslova spet odznači.
+  const auto = new Set();
   const addTitle = () => {
     const next = cleanTitles([...titles, input.value]);
-    if (next.length === titles.length) return;
+    if (next.length === titles.length) return void (input.value = ""); // že na seznamu
     titles = next;
     const m = matchTitle(titles.at(-1));
-    if (m.genre) setPick(m.genre, true);
+    if (m.genre && !pick.has(m.genre)) {
+      setPick(m.genre, true);
+      auto.add(m.genre);
+    }
     input.value = "";
     drawOwn();
-    input.focus();
+    // pri polnem seznamu je polje onemogočeno: fokus na zadnji gumb »Odstrani«, da ne uide iz okna
+    (input.disabled ? dlg.querySelector(".gm-own-list li:last-child button") : input)?.focus();
   };
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.isComposing) {
@@ -362,13 +368,19 @@ function askChildhood() {
     if (ev.target.closest('[data-k="add"]')) return addTitle();
     const rm = ev.target.closest("[data-rm]");
     if (rm) {
-      titles.splice(Number(rm.dataset.rm), 1);
+      const [gone] = titles.splice(Number(rm.dataset.rm), 1);
+      const g = matchTitle(gone).genre;
+      if (auto.has(g) && !titles.some((x) => matchTitle(x).genre === g)) {
+        setPick(g, false);
+        auto.delete(g);
+      }
       drawOwn();
       return input.focus();
     }
     const opt = ev.target.closest("[data-g]");
     if (opt) {
       const id = opt.dataset.g;
+      auto.delete(id); // ročna izbira velja
       pick.has(id) ? pick.delete(id) : pick.add(id);
       opt.classList.toggle("on", pick.has(id));
       opt.setAttribute("aria-pressed", String(pick.has(id)));

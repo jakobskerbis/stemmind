@@ -1717,7 +1717,7 @@
   "games.kidQ": "Que jogos te divertiam na infância?",
   "games.kidQSub": "Escolhe quantos géneros quiseres. O Evklid transforma cada um num jogo educativo próprio, com personagens e animação próprias, e junta-o à tua coleção. O questionário é opcional.",
   "games.kidAdded": "Os jogos da tua infância já estão na tua coleção (tipos de jogo: {n}).",
-  "games.kidOwn": "Escreve o teu próprio jogo",
+  "games.kidOwn": "O teu jogo não está na lista? Escreve o nome dele",
   "games.kidOwnPh": "Nome de um jogo que não está na lista",
   "games.kidOwnAdd": "Adicionar",
   "games.kidOwnWish": "Novo jogo na lista de desejos: {g}",

@@ -1709,7 +1709,7 @@
   "games.kidQ": "Permainan apa yang kamu sukai waktu kecil?",
   "games.kidQSub": "Pilih genre sebanyak yang kamu mau. Evklid mengubah masing-masing menjadi permainan belajarnya sendiri dengan tokoh dan animasi sendiri, lalu menambahkannya ke koleksimu. Kuesioner ini tidak wajib.",
   "games.kidAdded": "Permainan masa kecil sudah ada di koleksimu ({n} jenis permainan).",
-  "games.kidOwn": "Tulis permainanmu sendiri",
+  "games.kidOwn": "Permainanmu tidak ada di daftar? Tulis namanya",
   "games.kidOwnPh": "Nama permainan yang tidak ada di daftar",
   "games.kidOwnAdd": "Tambah",
   "games.kidOwnWish": "Permainan baru di daftar keinginan: {g}",

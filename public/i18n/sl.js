@@ -1364,7 +1364,7 @@ export default {
   "games.kidQ": "Katere igre so te zabavale v otroštvu?",
   "games.kidQSub": "Izberi poljubno število zvrsti. Evklid vsako spremeni v svojo učno igro z lastnimi liki in animacijo ter jo doda v tvojo zbirko. Vprašalnik ni obvezen.",
   "games.kidAdded": "Igre iz otroštva so v tvoji zbirki (vrste iger: {n}).",
-  "games.kidOwn": "Napiši svojo igro",
+  "games.kidOwn": "Igre ni na seznamu? Napiši njeno ime",
   "games.kidOwnPh": "Ime igre, ki je ni na seznamu",
   "games.kidOwnAdd": "Dodaj",
   "games.kidOwnWish": "Nova igra na seznamu želja: {g}",

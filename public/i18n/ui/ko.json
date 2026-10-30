@@ -1709,7 +1709,7 @@
   "games.kidQ": "어릴 때 어떤 게임이 재미있었나요?",
   "games.kidQSub": "장르를 원하는 만큼 골라요. Evklid가 각각을 고유한 캐릭터와 애니메이션이 있는 학습 게임으로 만들어 컬렉션에 추가해요. 설문은 선택 사항이에요.",
   "games.kidAdded": "어린 시절 게임이 컬렉션에 추가됐어요(게임 종류 {n}개).",
-  "games.kidOwn": "직접 게임 쓰기",
+  "games.kidOwn": "목록에 없는 게임이 있나요? 이름을 적어 주세요",
   "games.kidOwnPh": "목록에 없는 게임 이름",
   "games.kidOwnAdd": "추가",
   "games.kidOwnWish": "위시리스트에 새 게임: {g}",

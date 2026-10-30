@@ -1728,7 +1728,7 @@
   "games.kidQ": "Koje su te igre zabavljale u djetinjstvu?",
   "games.kidQSub": "Odaberi koliko god žanrova želiš. Evklid svaki pretvara u svoju igru za učenje s vlastitim likovima i animacijom te je dodaje u tvoju zbirku. Upitnik nije obvezan.",
   "games.kidAdded": "Igre iz djetinjstva su u tvojoj zbirci (vrste igara: {n}).",
-  "games.kidOwn": "Napiši svoju igru",
+  "games.kidOwn": "Tvoje igre nema na popisu? Napiši njezino ime",
   "games.kidOwnPh": "Naziv igre koje nema na popisu",
   "games.kidOwnAdd": "Dodaj",
   "games.kidOwnWish": "Nova igra na popisu želja: {g}",

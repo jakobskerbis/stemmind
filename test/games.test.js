@@ -261,10 +261,12 @@ test("games: own childhood game titles map to genres or wishes", async () => {
   assert.deepEqual(matchTitle("Tetris"), { genre: "blocks" });
   assert.deepEqual(matchTitle("Minecraft"), { wish: "city" }); // ne »mines«
   assert.deepEqual(matchTitle("2048"), { wish: "merge" });
+  assert.deepEqual(matchTitle("majnkraft"), { wish: "city" }); // slovenski zapis
+  assert.deepEqual(matchTitle("Križci krožci"), { wish: "connect" });
   assert.deepEqual(matchTitle("nekaj čisto novega"), {});
   // pogoste besede in daljša imena ne smejo zadeti napačne zvrsti
-  for (const [x, g] of [["Mario Kart", "racing"], ["Sonic Dash", "run"], ["Puzzle Bobble", "bubbles"], ["Jezni ptiči", "sling"], ["Angry Bird", "sling"], ["Vojna zvezd", "space"], ["Krtek", "moles"]]) assert.deepEqual(matchTitle(x), { genre: g }, x);
-  for (const x of ["Skače", "Pikaču", "Igra lovcev", "Navodila", "Pouk", "Premier league", "Swordigo"]) assert.deepEqual(matchTitle(x), {}, x);
+  for (const [x, g] of [["Mario Kart", "racing"], ["Sonic Dash", "run"], ["Puzzle Bobble", "bubbles"], ["Jezni ptiči", "sling"], ["Angry Bird", "sling"], ["Vojna zvezd", "space"], ["Krtek", "moles"], ["tetirs", "blocks"], ["Talking Angela", "pet"], ["Worms", "sling"], ["Chrome dino", "run"], ["Royal Match", "match"]]) assert.deepEqual(matchTitle(x), { genre: g }, x);
+  for (const x of ["Skače", "Pikaču", "Igra lovcev", "Navodila", "Pouk", "Premier league", "Swordigo", "Cookie Clicker", "Ninjago", "Darth Vader", "Papagaj", "Svetovna vojna", "Dinozavri"]) assert.deepEqual(matchTitle(x), {}, x);
   for (const x of ["Pac-Man", "Candy Crush", "Pou", "Uno", "Flappy Bird", "Plants vs Zombies", "Wordle"]) {
     const m = matchTitle(x);
     assert.ok(GENRE_IDS.includes(m.genre) || WISH_IDS.includes(m.wish), x);

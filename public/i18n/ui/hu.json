@@ -1717,7 +1717,7 @@
   "games.kidQ": "Milyen játékokkal szerettél játszani gyerekkorodban?",
   "games.kidQSub": "Válassz ki annyi műfajt, amennyit szeretnél. Evklid mindegyikből saját tanulójátékot készít saját szereplőkkel és animációval, és hozzáadja a gyűjteményedhez. A kérdőív nem kötelező.",
   "games.kidAdded": "A gyerekkori játékaid bekerültek a gyűjteményedbe (játéktípusok: {n}).",
-  "games.kidOwn": "Írd be a saját játékodat",
+  "games.kidOwn": "Nincs a listán a játékod? Írd be a nevét",
   "games.kidOwnPh": "Egy játék neve, amely nincs a listán",
   "games.kidOwnAdd": "Hozzáadás",
   "games.kidOwnWish": "Új játék a kívánságlistán: {g}",

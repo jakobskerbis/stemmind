@@ -1717,7 +1717,7 @@
   "games.kidQ": "Which games did you enjoy as a child?",
   "games.kidQSub": "Pick as many genres as you like. Evklid turns each one into its own learning game with its own characters and animation and adds it to your collection. The questionnaire is optional.",
   "games.kidAdded": "Your childhood games are now in your collection (game types: {n}).",
-  "games.kidOwn": "Write your own game",
+  "games.kidOwn": "Game not on the list? Type its name",
   "games.kidOwnPh": "Name of a game that isn't on the list",
   "games.kidOwnAdd": "Add",
   "games.kidOwnWish": "New game on the wish list: {g}",

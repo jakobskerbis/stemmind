@@ -1739,7 +1739,7 @@
   "games.kidQ": "Aké hry ťa v detstve bavili?",
   "games.kidQSub": "Vyber ľubovoľný počet žánrov. Evklid z každého urobí vlastnú náučnú hru s vlastnými postavami a animáciou a pridá ju do tvojej zbierky. Dotazník je nepovinný.",
   "games.kidAdded": "Hry z detstva sú v tvojej zbierke (druhy hier: {n}).",
-  "games.kidOwn": "Napíš vlastnú hru",
+  "games.kidOwn": "Tvoja hra nie je v zozname? Napíš jej názov",
   "games.kidOwnPh": "Názov hry, ktorá nie je v zozname",
   "games.kidOwnAdd": "Pridať",
   "games.kidOwnWish": "Nová hra v zozname želaní: {g}",
