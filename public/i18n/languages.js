@@ -371,25 +371,38 @@ const BY_REGION = {
 // Jezik in regija iz nastavitev naprave (navigator.languages), npr. ["de-AT", "en"] → de, AT.
 // Prvi znani jezik zmaga; regija lahko izbere narečje ali pisavo (zh-TW → zh-Hant, ar-EG → arz).
 // Brez ujemanja angleščina.
+// Oznaka jezika → { language, script, region }. Brez Intl.Locale (Hermes v aplikaciji za telefon)
+// jo razčlenimo sami, sicer bi vsak telefon dobil angleščino.
+function parseTag(tag) {
+  try {
+    const loc = new Intl.Locale(tag);
+    let script = loc.script;
+    try {
+      script = script || loc.maximize().script;
+    } catch {}
+    return { language: loc.language, script, region: loc.region };
+  } catch {}
+  const parts = tag.replace(/_/g, "-").split("-");
+  if (!/^[a-z]{2,8}$/i.test(parts[0])) return null;
+  const rest = parts.slice(1);
+  const s = rest.find((p) => /^[a-z]{4}$/i.test(p));
+  const region = rest.find((p) => /^([a-z]{2}|\d{3})$/i.test(p))?.toUpperCase();
+  const language = parts[0].toLowerCase();
+  const script = s ? s[0].toUpperCase() + s.slice(1).toLowerCase() : language === "zh" && /^(TW|HK|MO)$/.test(region || "") ? "Hant" : undefined;
+  return { language, script, region };
+}
+
 export function detectLanguage(tags = []) {
   const byLower = new Map(LANGUAGE_CODES.map((c) => [c.toLowerCase(), c]));
   for (const tag of tags) {
     if (typeof tag !== "string" || !tag) continue;
-    let loc;
-    try {
-      loc = new Intl.Locale(tag);
-    } catch {
-      continue;
-    }
+    const loc = parseTag(tag);
+    if (!loc) continue;
     const region = /^[A-Z]{2}$/.test(loc.region || "") ? loc.region : "";
     const exact = byLower.get(tag.toLowerCase());
     if (exact) return { code: exact, region };
     const base = ALIASES[loc.language] || loc.language;
-    let script = loc.script;
-    try {
-      script = script || new Intl.Locale(tag).maximize().script;
-    } catch {}
-    const code = BY_SCRIPT[`${base}-${script}`] || BY_REGION[base]?.[region] || base;
+    const code = BY_SCRIPT[`${base}-${loc.script}`] || BY_REGION[base]?.[region] || base;
     if (BY_CODE.has(code)) return { code, region };
   }
   return { code: "en", region: "" };

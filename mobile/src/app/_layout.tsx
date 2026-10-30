@@ -63,20 +63,25 @@ function Root() {
   }, [signedIn, student]);
 
   if (!ready) return null;
+  // Kam gre zaščiten zaslon, ki ga ni mogoče odpreti. Brez tega Expo Router izbere prvi prosti zaslon
+  // po abecedi: ob prvem zagonu se je odprlo »Pozabljeno geslo« namesto prijave.
+  const home = !signedIn ? "/sign-in" : !student ? "/profiles" : "/";
   const header = { headerTintColor: th.accent, headerStyle: { backgroundColor: th.bg }, headerTitleStyle: { color: th.text }, contentStyle: { backgroundColor: th.bg }, headerBackButtonDisplayMode: "minimal" as const };
   return (
     <>
       <StatusBar style="auto" />
       <Stack key={epoch} screenOptions={header}>
-        <Stack.Protected guard={!signedIn}>
+        {/* Povezava iz brskalnika (evklid://prijava?t=…): prijava brez gesla, src/app/prijava.tsx */}
+        <Stack.Screen name="prijava" options={{ headerShown: false }} />
+        <Stack.Protected guard={!signedIn} redirectTo={home}>
           <Stack.Screen name="sign-in" options={{ headerShown: false }} />
           <Stack.Screen name="register" options={{ title: t("mob.register") }} />
           <Stack.Screen name="forgot" options={{ title: t("mob.forgot"), presentation: "modal" }} />
         </Stack.Protected>
-        <Stack.Protected guard={signedIn && !student}>
+        <Stack.Protected guard={signedIn && !student} redirectTo={home}>
           <Stack.Screen name="profiles" options={{ title: t("mob.profiles"), headerLargeTitle: true }} />
         </Stack.Protected>
-        <Stack.Protected guard={signedIn && !!student}>
+        <Stack.Protected guard={signedIn && !!student} redirectTo={home}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="topic/[id]" options={{ title: "" }} />
           <Stack.Screen name="practice" options={{ title: t("mob.practice") }} />
