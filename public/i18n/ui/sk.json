@@ -1578,7 +1578,7 @@
   "games.e.mines": "Mínolovka",
   "games.e.mines.how": "Správna odpoveď nabije detektor, ktorý ukáže mínu a bezpečné pole. Odkry všetky bezpečné polia; 🚩 označí mínu. Klávesy 1–4 a F.",
   "chat.aiNote": "Evklid sa môže mýliť. Dôležité výsledky si over.",
-  "chat.off": "Chat s lektorom je dočasne vypnutý. Precvičovanie a učebnica naďalej fungujú.",
+  "chat.off": "Chat s tútorom je dočasne vypnutý. Zvyšok aplikácie naďalej funguje.",
   "rep.btn": "Nahlásiť chybu",
   "rep.code": "Kód správy",
   "rep.ask": "Čo je zle?",
@@ -1588,7 +1588,7 @@
   "rep.notePh": "Čo by tam malo byť? (nepovinné)",
   "rep.send": "Odoslať hlásenie",
   "rep.cancel": "Zrušiť",
-  "rep.thanks": "Ďakujeme! Odpoveď preveríme a opravíme.",
+  "rep.thanks": "Ďakujeme! Odpoveď preveríme.",
   "rep.done": "Nahlásené",
   "rep.pick": "Vyber, čo je zle."
 }

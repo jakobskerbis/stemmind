@@ -1562,7 +1562,7 @@
   "games.e.mines": "Minesweeper",
   "games.e.mines.how": "A right answer charges the detector, which shows a mine and a safe square. Open all safe squares; 🚩 marks a mine. Keys 1–4 and F.",
   "chat.aiNote": "Evklid can make mistakes. Check important results.",
-  "chat.off": "Chat with the tutor is switched off for now. Practice and the textbook still work.",
+  "chat.off": "Chat with the tutor is switched off for now. The rest of the app still works.",
   "rep.btn": "Report a mistake",
   "rep.code": "Message code",
   "rep.ask": "What is wrong?",
@@ -1572,7 +1572,7 @@
   "rep.notePh": "What should it say? (optional)",
   "rep.send": "Send report",
   "rep.cancel": "Cancel",
-  "rep.thanks": "Thank you! We will check and fix the answer.",
+  "rep.thanks": "Thank you! We will check the answer.",
   "rep.done": "Reported",
   "rep.pick": "Choose what is wrong."
 }

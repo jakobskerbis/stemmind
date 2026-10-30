@@ -1562,7 +1562,7 @@
   "games.e.mines": "Minat",
   "games.e.mines.how": "Përgjigjja e saktë mbush detektorin, që tregon një minë dhe një kuti të sigurt. Hap të gjitha kutitë e sigurta; 🚩 shënon minën. Tastet 1–4 dhe F.",
   "chat.aiNote": "Evklid mund të gabojë. Kontrollo rezultatet e rëndësishme.",
-  "chat.off": "Biseda me tutorin është çaktivizuar përkohësisht. Ushtrimet dhe libri vazhdojnë të funksionojnë.",
+  "chat.off": "Biseda me tutorin është çaktivizuar përkohësisht. Pjesa tjetër e aplikacionit vazhdon të funksionojë.",
   "rep.btn": "Raporto një gabim",
   "rep.code": "Kodi i mesazhit",
   "rep.ask": "Çfarë nuk shkon?",
@@ -1572,7 +1572,7 @@
   "rep.notePh": "Çfarë duhet të shkruante? (jo e detyrueshme)",
   "rep.send": "Dërgo raportin",
   "rep.cancel": "Anulo",
-  "rep.thanks": "Faleminderit! Do ta kontrollojmë dhe korrigjojmë përgjigjen.",
+  "rep.thanks": "Faleminderit! Do ta kontrollojmë përgjigjen.",
   "rep.done": "U raportua",
   "rep.pick": "Zgjidh çfarë nuk shkon."
 }

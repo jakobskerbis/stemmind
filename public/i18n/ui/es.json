@@ -1562,7 +1562,7 @@
   "games.e.mines": "Buscaminas",
   "games.e.mines.how": "Una respuesta correcta carga el detector, que muestra una mina y una casilla segura. Abre todas las casillas seguras; 🚩 marca una mina. Teclas 1–4 y F.",
   "chat.aiNote": "Evklid puede equivocarse. Comprueba los resultados importantes.",
-  "chat.off": "El chat con el tutor está desactivado por ahora. La práctica y el libro siguen funcionando.",
+  "chat.off": "El chat con el tutor está desactivado por ahora. El resto de la aplicación sigue funcionando.",
   "rep.btn": "Informar de un error",
   "rep.code": "Código del mensaje",
   "rep.ask": "¿Qué está mal?",
@@ -1572,7 +1572,7 @@
   "rep.notePh": "¿Qué debería decir? (opcional)",
   "rep.send": "Enviar informe",
   "rep.cancel": "Cancelar",
-  "rep.thanks": "¡Gracias! Revisaremos y corregiremos la respuesta.",
+  "rep.thanks": "¡Gracias! Revisaremos la respuesta.",
   "rep.done": "Informado",
   "rep.pick": "Elige qué está mal."
 }

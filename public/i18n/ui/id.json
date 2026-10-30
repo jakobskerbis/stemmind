@@ -1554,7 +1554,7 @@
   "games.e.mines": "Penyapu ranjau",
   "games.e.mines.how": "Jawaban benar mengisi detektor yang menunjukkan ranjau dan kotak aman. Buka semua kotak aman; 🚩 menandai ranjau. Tombol 1–4 dan F.",
   "chat.aiNote": "Evklid bisa salah. Periksa hasil yang penting.",
-  "chat.off": "Obrolan dengan tutor dimatikan sementara. Latihan dan buku pelajaran tetap berjalan.",
+  "chat.off": "Obrolan dengan tutor dimatikan sementara. Bagian lain aplikasi tetap berjalan.",
   "rep.btn": "Laporkan kesalahan",
   "rep.code": "Kode pesan",
   "rep.ask": "Apa yang salah?",
@@ -1564,7 +1564,7 @@
   "rep.notePh": "Seharusnya tertulis apa? (opsional)",
   "rep.send": "Kirim laporan",
   "rep.cancel": "Batal",
-  "rep.thanks": "Terima kasih! Kami akan memeriksa dan memperbaiki jawabannya.",
+  "rep.thanks": "Terima kasih! Kami akan memeriksa jawabannya.",
   "rep.done": "Dilaporkan",
   "rep.pick": "Pilih apa yang salah."
 }

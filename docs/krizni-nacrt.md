@@ -6,6 +6,13 @@ Dogodek javi v projektni niti »Pripravi krizni načrt za neljube dogodke«. Jav
 
 ## Orodja v aplikaciji
 
+- **Trojno preverjanje shranjenih odgovorov** (j, 2026-10-30: »lahko se shranjuje, ampak naj bo dovoljkrat
+  pregledano za popolno točnost«, `server/verify.js`). Odgovor, ki bi ga dobili drugi učenci (`answer_cache`),
+  in kartice za ponavljanje so vidni šele, ko jih preverijo (1) koda, ki znova izračuna vsak račun v `$…$`,
+  ter (2) in (3) dva neodvisna AI pregleda z različnima modeloma (privzeto Sonnet in Opus, `EVKLID_VERIFY_MODELS`).
+  Če kdorkoli najde napako ali dvomi, se odgovor ne shrani. Strošek je omejen z `EVKLID_VERIFY_DAILY_USD`
+  (privzeto 1 $ na dan); nad tem se nič novega ne shrani. Stari, nepreverjeni shranjeni odgovori so skriti.
+
 - **Prijavi napako** pod vsakim odgovorom inštruktorja: učenec izbere razlog (napačen odgovor, neprimerna
   vsebina, drugo) in po želji napiše, kaj bi moralo pisati. Prijava se shrani v tabelo `message_reports`
   in odgovor se takoj izbriše iz predpomnilnika (`answer_cache`), da ga ne dobi noben drug učenec.

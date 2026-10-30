@@ -1562,7 +1562,7 @@
   "games.e.mines": "Caça-minas",
   "games.e.mines.how": "Uma resposta certa carrega o detetor, que mostra uma mina e um quadrado seguro. Abre todos os quadrados seguros; 🚩 marca uma mina. Teclas 1–4 e F.",
   "chat.aiNote": "O Evklid pode errar. Verifica os resultados importantes.",
-  "chat.off": "O chat com o tutor está desligado por agora. A prática e o manual continuam a funcionar.",
+  "chat.off": "O chat com o tutor está desligado por agora. O resto da aplicação continua a funcionar.",
   "rep.btn": "Reportar um erro",
   "rep.code": "Código da mensagem",
   "rep.ask": "O que está errado?",
@@ -1572,7 +1572,7 @@
   "rep.notePh": "O que deveria dizer? (opcional)",
   "rep.send": "Enviar relatório",
   "rep.cancel": "Cancelar",
-  "rep.thanks": "Obrigado! Vamos verificar e corrigir a resposta.",
+  "rep.thanks": "Obrigado! Vamos verificar a resposta.",
   "rep.done": "Reportado",
   "rep.pick": "Escolhe o que está errado."
 }

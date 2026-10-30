@@ -1562,7 +1562,7 @@
   "games.e.mines": "Kitegua mabomu",
   "games.e.mines.how": "Jibu sahihi linajaza kigunduzi, kinachoonyesha bomu na kisanduku salama. Fungua visanduku vyote salama; 🚩 inaashiria bomu. Vitufe 1–4 na F.",
   "chat.aiNote": "Evklid anaweza kukosea. Hakiki matokeo muhimu.",
-  "chat.off": "Mazungumzo na mkufunzi yamezimwa kwa muda. Mazoezi na kitabu cha kiada bado vinafanya kazi.",
+  "chat.off": "Mazungumzo na mwalimu yamezimwa kwa muda. Sehemu nyingine za programu bado zinafanya kazi.",
   "rep.btn": "Ripoti kosa",
   "rep.code": "Msimbo wa ujumbe",
   "rep.ask": "Nini kimekosewa?",
@@ -1572,7 +1572,7 @@
   "rep.notePh": "Ilipaswa kuandikwa nini? (si lazima)",
   "rep.send": "Tuma ripoti",
   "rep.cancel": "Ghairi",
-  "rep.thanks": "Asante! Tutakagua na kurekebisha jibu.",
+  "rep.thanks": "Asante! Tutakagua jibu.",
   "rep.done": "Imeripotiwa",
   "rep.pick": "Chagua kilichokosewa."
 }

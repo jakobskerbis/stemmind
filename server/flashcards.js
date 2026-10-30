@@ -46,19 +46,20 @@ export class Flashcards {
   }
 
   // Doda kartice; podvojene (isto vprašanje pri istem učencu) preskoči. Vrne dodane kartice.
-  add(studentId, cards, { conversationId = null, topicId = null, subject = null, topic = null, source = "tutor" } = {}) {
+  // verified = false: kartica iz odgovora inštruktorja čaka na trojno preverjanje (server/verify.js) in je do takrat skrita.
+  add(studentId, cards, { conversationId = null, topicId = null, subject = null, topic = null, source = "tutor", verified = true } = {}) {
     const added = [];
     if (this.count(studentId) >= MAX_CARDS) return added;
     const ins = this.db.prepare(
-      `INSERT OR IGNORE INTO flashcards (student_id, conversation_id, topic_id, subject, topic, front, back, norm, source)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT OR IGNORE INTO flashcards (student_id, conversation_id, topic_id, subject, topic, front, back, norm, source, verified)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     );
     for (const c of cards.slice(0, source === "tutor" ? MAX_PER_REPLY : 1)) {
       const front = clean(c.front, FRONT_MAX);
       const back = clean(c.back, BACK_MAX);
       const norm = normCard(front);
       if (!norm || !back) continue;
-      const r = ins.run(studentId, conversationId, topicId, subject, topic ? String(topic).slice(0, 80) : null, front, back, norm, source);
+      const r = ins.run(studentId, conversationId, topicId, subject, topic ? String(topic).slice(0, 80) : null, front, back, norm, source, verified ? 1 : 0);
       if (r.changes) added.push(this.get(studentId, Number(r.lastInsertRowid)));
     }
     return added;
@@ -77,21 +78,21 @@ export class Flashcards {
   }
 
   dueCount(studentId) {
-    return this.db.prepare("SELECT COUNT(*) AS n FROM flashcards WHERE student_id = ? AND due <= datetime('now')").get(studentId).n;
+    return this.db.prepare("SELECT COUNT(*) AS n FROM flashcards WHERE student_id = ? AND verified = 1 AND due <= datetime('now')").get(studentId).n;
   }
 
   // Vse kartice: najprej tiste na vrsti (najstarejše najprej), nato po času nastanka.
   list(studentId) {
     const rows = this.db
       .prepare(
-        `SELECT *, due <= datetime('now') AS is_due FROM flashcards WHERE student_id = ?
+        `SELECT *, due <= datetime('now') AS is_due FROM flashcards WHERE student_id = ? AND verified = 1
          ORDER BY is_due DESC, CASE WHEN due <= datetime('now') THEN due END, id DESC LIMIT ?`,
       )
       .all(studentId, MAX_CARDS)
       .map(view);
     // Kdaj je na vrsti naslednja kartica (za besedilo »naslednja jutri«).
     const next = this.db
-      .prepare("SELECT MIN(due) AS d FROM flashcards WHERE student_id = ? AND due > datetime('now')")
+      .prepare("SELECT MIN(due) AS d FROM flashcards WHERE student_id = ? AND verified = 1 AND due > datetime('now')")
       .get(studentId).d;
     return { cards: rows, total: rows.length, due: rows.filter((c) => c.is_due).length, next_due: next || null };
   }
@@ -129,6 +130,12 @@ export class Flashcards {
       return { error: "duplicate" };
     }
     return this.get(studentId, id);
+  }
+
+  // Po preverjanju: pravilne kartice postanejo vidne, druge se izbrišejo.
+  settle(ids, ok) {
+    const st = this.db.prepare(ok ? "UPDATE flashcards SET verified = 1 WHERE id = ?" : "DELETE FROM flashcards WHERE id = ? AND verified = 0");
+    for (const id of ids) st.run(id);
   }
 
   remove(studentId, id) {

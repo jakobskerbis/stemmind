@@ -407,7 +407,7 @@ export default {
   "chat.deeper": "Razloži podrobneje",
   "chat.deeperMsg": "Tega ne razumem dobro. Razloži podrobneje, korak za korakom.",
   "chat.aiNote": "Evklid se lahko zmoti. Pomembne rezultate preveri.",
-  "chat.off": "Klepet z inštruktorjem je začasno izklopljen. Vadnica in učbenik delujeta.",
+  "chat.off": "Klepet z inštruktorjem je začasno izklopljen. Ostali deli aplikacije delujejo.",
   // prijava napake pod odgovorom inštruktorja (server/reports.js, docs/krizni-nacrt.md)
   "rep.btn": "Prijavi napako",
   "rep.code": "Koda sporočila",
@@ -418,7 +418,7 @@ export default {
   "rep.notePh": "Kaj bi moralo pisati? (ni obvezno)",
   "rep.send": "Pošlji prijavo",
   "rep.cancel": "Prekliči",
-  "rep.thanks": "Hvala! Odgovor bomo preverili in popravili.",
+  "rep.thanks": "Hvala! Odgovor bomo preverili.",
   "rep.done": "Prijavljeno",
   "rep.pick": "Izberi, kaj je narobe.",
   "chatMode.A": "Vodenje",

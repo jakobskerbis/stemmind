@@ -1570,7 +1570,7 @@
   "games.e.mines": "Minolovac",
   "games.e.mines.how": "Točan odgovor puni detektor koji pokaže minu i sigurno polje. Otvori sva sigurna polja; 🚩 označava minu. Tipke 1–4 i F.",
   "chat.aiNote": "Evklid može pogriješiti. Provjeri važne rezultate.",
-  "chat.off": "Razgovor s instruktorom privremeno je isključen. Vježbe i udžbenik i dalje rade.",
+  "chat.off": "Razgovor s instruktorom privremeno je isključen. Ostatak aplikacije i dalje radi.",
   "rep.btn": "Prijavi pogrešku",
   "rep.code": "Kôd poruke",
   "rep.ask": "Što nije u redu?",
@@ -1580,7 +1580,7 @@
   "rep.notePh": "Što bi trebalo pisati? (nije obavezno)",
   "rep.send": "Pošalji prijavu",
   "rep.cancel": "Odustani",
-  "rep.thanks": "Hvala! Provjerit ćemo i ispraviti odgovor.",
+  "rep.thanks": "Hvala! Provjerit ćemo odgovor.",
   "rep.done": "Prijavljeno",
   "rep.pick": "Odaberi što nije u redu."
 }

@@ -1578,7 +1578,7 @@
   "games.e.mines": "Hledání min",
   "games.e.mines.how": "Správná odpověď nabije detektor, který ukáže minu a bezpečné pole. Odkryj všechna bezpečná pole; 🚩 označí minu. Klávesy 1–4 a F.",
   "chat.aiNote": "Evklid se může mýlit. Důležité výsledky si ověř.",
-  "chat.off": "Chat s lektorem je dočasně vypnutý. Procvičování a učebnice dál fungují.",
+  "chat.off": "Chat s doučovatelem je dočasně vypnutý. Zbytek aplikace dál funguje.",
   "rep.btn": "Nahlásit chybu",
   "rep.code": "Kód zprávy",
   "rep.ask": "Co je špatně?",
@@ -1588,7 +1588,7 @@
   "rep.notePh": "Co by tam mělo být? (nepovinné)",
   "rep.send": "Odeslat hlášení",
   "rep.cancel": "Zrušit",
-  "rep.thanks": "Děkujeme! Odpověď prověříme a opravíme.",
+  "rep.thanks": "Děkujeme! Odpověď prověříme.",
   "rep.done": "Nahlášeno",
   "rep.pick": "Vyber, co je špatně."
 }

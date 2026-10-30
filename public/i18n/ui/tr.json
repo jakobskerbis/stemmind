@@ -1562,7 +1562,7 @@
   "games.e.mines": "Mayın tarlası",
   "games.e.mines.how": "Doğru cevap dedektörü doldurur; dedektör bir mayın ve güvenli bir kare gösterir. Tüm güvenli kareleri aç; 🚩 mayını işaretler. Tuşlar 1–4 ve F.",
   "chat.aiNote": "Evklid hata yapabilir. Önemli sonuçları kontrol et.",
-  "chat.off": "Öğretmenle sohbet şimdilik kapalı. Alıştırmalar ve ders kitabı çalışmaya devam ediyor.",
+  "chat.off": "Özel öğretmenle sohbet şimdilik kapalı. Uygulamanın geri kalanı çalışmaya devam ediyor.",
   "rep.btn": "Hata bildir",
   "rep.code": "Mesaj kodu",
   "rep.ask": "Sorun ne?",
@@ -1572,7 +1572,7 @@
   "rep.notePh": "Ne yazmalıydı? (isteğe bağlı)",
   "rep.send": "Bildirimi gönder",
   "rep.cancel": "İptal",
-  "rep.thanks": "Teşekkürler! Cevabı kontrol edip düzelteceğiz.",
+  "rep.thanks": "Teşekkürler! Cevabı kontrol edeceğiz.",
   "rep.done": "Bildirildi",
   "rep.pick": "Sorunun ne olduğunu seç."
 }

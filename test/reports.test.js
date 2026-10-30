@@ -4,7 +4,8 @@ import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { messageCode, parseMessageCode } from "../server/reports.js";
 
-const REPLY = 'Ana, $7 \\cdot 8 = 54$.\n<<META subject=MAT topic="poštevanka" error=0 mode=A flag=none done=0>>';
+// Napaka, ki je koda ne ujame (račun ni zapisan v $…$); ujela bi jo AI pregleda.
+const REPLY = 'Ana, 7 krat 8 je 54.\n<<META subject=MAT topic="poštevanka" error=0 mode=A flag=none done=0>>';
 
 async function withServer(fn) {
   const store = openDb(":memory:");
@@ -69,6 +70,12 @@ test("report a wrong answer: stored, removed from the answer cache, once per mes
     assert.equal((await call(`/api/conversations/${c.id}`)).body.messages.find((m) => m.id === done.id).reported, true);
     // seznam prijav je viden na računalniku, kjer teče strežnik
     assert.equal((await call("/api/reports")).body.reports[0].code, done.code);
+    // izbris pogovora: prijava ostane, vprašanje in opomba učenca pa ne
+    await call(`/api/conversations/${c.id}`, { method: "DELETE" });
+    const kept = store.db.prepare("SELECT * FROM message_reports").get();
+    assert.equal(kept.question, null);
+    assert.equal(kept.note, null);
+    assert.match(kept.answer, /54/);
     // izbris profila izbriše tudi njegove prijave
     await call(`/api/students/${s.id}`, { method: "DELETE" });
     assert.equal(store.db.prepare("SELECT COUNT(*) AS n FROM message_reports").get().n, 0);

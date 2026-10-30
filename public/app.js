@@ -565,7 +565,8 @@ function addMessage(role, text, hasImage = false, info = null) {
   const box = $("#messages");
   box.querySelector(".empty")?.remove();
   const el = document.createElement("div");
-  el.className = `msg ${role}`;
+  // Napaka (npr. izklopljen klepet) je brez »Razloži podrobneje« in brez prijave.
+  el.className = `msg ${role}${info?.error ? " error" : ""}`;
   if (role === "user") {
     el.innerHTML = renderUserText(text);
     if (hasImage) {
@@ -589,6 +590,7 @@ async function send(text, { deep = false } = {}) {
   if (state.sending) return;
   const image = state.image;
   if (!text && !image) return;
+  let userEl = null;
   state.sending = true;
   $("#send").disabled = true;
   state.pacer?.skip();
@@ -598,7 +600,7 @@ async function send(text, { deep = false } = {}) {
       const conv = await api(`/api/students/${state.student.id}/conversations`, { method: "POST" });
       state.conversationId = conv.id;
     }
-    addMessage("user", text, !!image);
+    userEl = addMessage("user", text, !!image);
     $("#input").value = "";
     autoGrow();
     clearImage();
@@ -626,8 +628,8 @@ async function send(text, { deep = false } = {}) {
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       bubble.remove();
-      if (err.chat_off) $("#chat-off").hidden = false;
-      throw new Error(err.chat_off ? t("chat.off") : err.error || t("common.error", { status: res.status }));
+      if (err.chat_off) throw Object.assign(new Error(t("chat.off")), { chatOff: true });
+      throw new Error(err.error || t("common.error", { status: res.status }));
     }
 
     let doneData = null;
@@ -678,7 +680,14 @@ async function send(text, { deep = false } = {}) {
     });
     await loadConversations();
   } catch (err) {
-    addMessage("assistant", err.message).classList.add("error");
+    // Izklopljen klepet: samo obvestilo nad poljem, vprašanje ostane v polju.
+    if (err.chatOff) {
+      userEl?.remove();
+      $("#chat-off").hidden = false;
+      $("#input").value = text;
+      return;
+    }
+    addMessage("assistant", err.message, false, { error: true });
     $("#input").value = text;
   } finally {
     state.sending = false;
@@ -1236,7 +1245,6 @@ async function loadProgress() {
     .join("");
 }
 
-// Gumb »Razloži podrobneje« uporabi zmogljivejši (dražji) model samo na zahtevo.
 // Pod odgovorom inštruktorja: koda sporočila (z njo najdemo sporočilo s posnetka zaslona,
 // scripts/najdi-sporocilo.js) in »Prijavi napako« (server/reports.js, docs/krizni-nacrt.md).
 function addMsgFoot(el, { id, code, reported }) {
@@ -1336,6 +1344,7 @@ function openReport(el, foot, btn, id, done) {
   box.querySelector(".rep-reasons button").focus();
 }
 
+// Gumb »Razloži podrobneje« uporabi zmogljivejši (dražji) model samo na zahtevo.
 function addDeepButton(el, wasDeep) {
   // Ponovna razlaga je vedno na voljo (tudi po ponovni razlagi); strežnik izbere najcenejši model.
   if (el.classList.contains("error") || el.querySelector(".deep-btn")) return;

@@ -1562,7 +1562,7 @@
   "games.e.mines": "Aknakereső",
   "games.e.mines.how": "A jó válasz feltölti a detektort, amely megmutat egy aknát és egy biztonságos mezőt. Nyisd fel az összes biztonságos mezőt; 🚩 jelöli az aknát. Billentyűk: 1–4 és F.",
   "chat.aiNote": "Evklid tévedhet. A fontos eredményeket ellenőrizd.",
-  "chat.off": "A csevegés az oktatóval átmenetileg ki van kapcsolva. A gyakorlás és a tankönyv továbbra is működik.",
+  "chat.off": "A csevegés az oktatóval átmenetileg ki van kapcsolva. Az alkalmazás többi része továbbra is működik.",
   "rep.btn": "Hiba jelentése",
   "rep.code": "Üzenetkód",
   "rep.ask": "Mi a hiba?",
@@ -1572,7 +1572,7 @@
   "rep.notePh": "Minek kellene ott állnia? (nem kötelező)",
   "rep.send": "Jelentés küldése",
   "rep.cancel": "Mégse",
-  "rep.thanks": "Köszönjük! Ellenőrizzük és kijavítjuk a választ.",
+  "rep.thanks": "Köszönjük! Ellenőrizzük a választ.",
   "rep.done": "Jelentve",
   "rep.pick": "Válaszd ki, mi a hiba."
 }

@@ -1562,7 +1562,7 @@
   "games.e.mines": "Campo minato",
   "games.e.mines.how": "Una risposta giusta carica il rilevatore, che mostra una mina e una casella sicura. Apri tutte le caselle sicure; 🚩 segna una mina. Tasti 1–4 e F.",
   "chat.aiNote": "Evklid può sbagliare. Controlla i risultati importanti.",
-  "chat.off": "La chat con il tutor è disattivata per ora. Esercizi e libro funzionano ancora.",
+  "chat.off": "La chat con il tutor è disattivata per ora. Il resto dell'app funziona ancora.",
   "rep.btn": "Segnala un errore",
   "rep.code": "Codice del messaggio",
   "rep.ask": "Che cosa non va?",
@@ -1572,7 +1572,7 @@
   "rep.notePh": "Che cosa dovrebbe dire? (facoltativo)",
   "rep.send": "Invia segnalazione",
   "rep.cancel": "Annulla",
-  "rep.thanks": "Grazie! Controlleremo e correggeremo la risposta.",
+  "rep.thanks": "Grazie! Controlleremo la risposta.",
   "rep.done": "Segnalato",
   "rep.pick": "Scegli che cosa non va."
 }
