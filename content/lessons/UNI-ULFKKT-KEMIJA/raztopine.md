@@ -5,11 +5,11 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Večina kemijskih reakcij v laboratoriju, v industriji in v živih organizmih poteka v **raztopinah**. Fiziološka raztopina za infuzijo, gojišče za bakterije, reagent za titracijo, škropivo za vinograd, zdravilo v sirupu: povsod moramo vedeti, **koliko** snovi je raztopljene, in znati raztopino pripraviti ali razredčiti na želeno koncentracijo. Napaka za faktor deset pri pripravi raztopine je v laboratoriju in v lekarni lahko usodna.
+Maja teče na smučeh in si pred tekmo meša napitek. Na vrečki piše, naj prašek raztopi v vodi do $500\,\mathrm{mL}$ pijače, ona pa ga strese v poln $500\,\mathrm{mL}$ bidon vode, zato je pijača redkejša, kot bi morala biti. Naslednjič po nasvetu sotekmovalca strese v bidon dve vrečki »za več energije« in sredi proge jo zvijejo krči v trebuhu. Prekoncentrirana pijača namreč z osmozo vleče vodo iz telesa v črevo, namesto da bi jo telo dobilo. Obe napaki izvirata iz vsebine te lekcije: koliko topljenca je v koliko **raztopine** in kako število raztopljenih delcev premika vodo. V laboratoriju in lekarni je napaka za faktor deset lahko usodna.
 
 Raztopine imajo tudi lastnosti, ki jih čisto topilo nima: zmrzujejo pri nižji temperaturi, vrejo pri višji, imajo nižji parni tlak in povzročajo osmozo. Te **koligativne lastnosti** so odvisne le od števila raztopljenih delcev, ne od njihove vrste. Zato posipamo ceste s soljo, zato morajo biti infuzijske raztopine izotonične s krvjo in zato lahko iz znižanja tališča določimo molsko maso neznane snovi.
 
-V tej lekciji se naučiš:
+Znal boš:
 
 - izražati sestavo raztopine z različnimi koncentracijami in jih pretvarjati,
 - pripraviti raztopino iz trdne snovi in z redčenjem,
@@ -21,13 +21,17 @@ V tej lekciji se naučiš:
 
 **2. Načini izražanja sestave.**
 
-- **Množinska koncentracija** (molarnost): $c = \dfrac{n(\text{topljenca})}{V(\text{raztopine})}$, enota $\mathrm{mol/L}$ (oznaka $\mathrm{M}$). Odvisna je od temperature, ker se prostornina s temperaturo spreminja.
-- **Masna koncentracija:** $\gamma = \dfrac{m(\text{topljenca})}{V(\text{raztopine})}$, enota $\mathrm{g/L}$.
-- **Masni delež:** $w = \dfrac{m(\text{topljenca})}{m(\text{raztopine})}$, brez enote, pogosto v $\%$.
-- **Molalnost:** $b = \dfrac{n(\text{topljenca})}{m(\text{topila})}$, enota $\mathrm{mol/kg}$. Ni odvisna od temperature, zato jo uporabljamo pri koligativnih lastnostih.
-- **Množinski delež:** $x_i = \dfrac{n_i}{n_{\text{skupna}}}$, vsota vseh deležev je $1$.
+Vsaka koncentracija je ulomek »koliko topljenca / na koliko česa«. Razlikujejo se v imenovalcu, zato ga v preglednici beri najprej:
 
-Pozor na imenovalce: pri $c$ in $\gamma$ je to prostornina **raztopine**, pri $w$ masa **raztopine**, pri $b$ pa masa **topila**.
+| Količina | Formula | Imenovalec | Enota |
+|---|---|---|---|
+| **množinska koncentracija** (molarnost) | $c = n(\text{topljenca})/V$ | prostornina **raztopine** | $\mathrm{mol/L}$ (oznaka $\mathrm{M}$) |
+| **masna koncentracija** | $\gamma = m(\text{topljenca})/V$ | prostornina **raztopine** | $\mathrm{g/L}$ |
+| **masni delež** | $w = m(\text{topljenca})/m$ | masa **raztopine** | brez, pogosto v $\%$ |
+| **molalnost** | $b = n(\text{topljenca})/m(\text{topila})$ | masa **topila** | $\mathrm{mol/kg}$ |
+| **množinski delež** | $x_i = n_i/n_{\text{skupna}}$ | skupna množina | brez; vsota vseh deležev je $1$ |
+
+Količini s prostornino v imenovalcu ($c$, $\gamma$) sta odvisni od temperature, ker se prostornina s temperaturo spreminja. Molalnost ni, zato jo uporabljamo pri koligativnih lastnostih.
 
 **3. Pretvarjanje.** Most med maso in prostornino raztopine je **gostota** $\rho = m(\text{raztopine})/V(\text{raztopine})$. Iz masnega deleža izračunamo množinsko koncentracijo z
 
@@ -43,7 +47,22 @@ $$c_1 V_1 = c_2 V_2.$$
 
 Tu je $c_1$ koncentracija založne raztopine, $V_1$ prostornina, ki jo odpipetiramo, $c_2$ in $V_2$ pa koncentracija in **končna** prostornina razredčene raztopine. Pri mešanju dveh raztopin istega topljenca velja $c_1V_1 + c_2V_2 = c\,(V_1 + V_2)$, če so prostornine aditivne (približno pri razredčenih vodnih raztopinah). Pri redčenju koncentriranih kislin vedno **kislino vlivamo v vodo**, ne obratno, ker se sprošča veliko toplote.
 
-**6. Koligativne lastnosti.** Raztopljeni delci (molekule ali ioni) zmanjšajo »delež« topila v raztopini. Posledice:
+:::premisli
+Koncentrat športnega napitka razredčiš na dva načina: (a) $50\,\mathrm{mL}$ koncentrata dopolniš z vodo do $500\,\mathrm{mL}$, (b) $50\,\mathrm{mL}$ koncentrata dodaš $500\,\mathrm{mL}$ vode. Kolikokrat se koncentracija zmanjša v vsakem primeru?
+---
+(a) Desetkrat, ker je končna prostornina $500\,\mathrm{mL}$, desetkrat več od $50\,\mathrm{mL}$. (b) Približno enajstkrat, ker je končna prostornina okoli $550\,\mathrm{mL}$ (če sta prostornini aditivni). V $c_1V_1 = c_2V_2$ je $V_2$ vedno končna prostornina.
+:::
+
+**6. Koligativne lastnosti.** Najprej pogled na termometer. Raztopine z enako molalnostjo $b = 0{,}500\,\mathrm{mol/kg}$ zmrznejo pri različnih temperaturah, odvisno od tega, na koliko delcev razpade topljenec:
+
+| Raztopina | Delci na formulsko enoto | Zmrzne pri |
+|---|---|---|
+| čista voda | – | $0{,}00\,^\circ\mathrm{C}$ |
+| glukoza | $1$ | $-0{,}93\,^\circ\mathrm{C}$ |
+| $\mathrm{NaCl}$ | $2$ (idealno) | okoli $-1{,}86\,^\circ\mathrm{C}$ |
+| $\mathrm{CaCl_2}$ | $3$ (idealno) | okoli $-2{,}79\,^\circ\mathrm{C}$ |
+
+Dvakrat več delcev, dvakrat večje znižanje. Vrsta delcev ni pomembna, šteje le njihovo število: raztopljeni delci (molekule ali ioni) zmanjšajo »delež« topila v raztopini. Posledice:
 
 - **Znižanje parnega tlaka** (Raoultov zakon): $p = x_{\text{topila}}\,p^*$, kjer je $p^*$ parni tlak čistega topila.
 - **Zvišanje vrelišča:** $\Delta T_v = i\,K_e\,b$, za vodo je ebulioskopska konstanta $K_e = 0{,}512\,\mathrm{K\,kg/mol}$.
@@ -51,6 +70,12 @@ Tu je $c_1$ koncentracija založne raztopine, $V_1$ prostornina, ki jo odpipetir
 - **Osmozni tlak:** $\Pi = i\,c\,RT$ (van 't Hoffova enačba).
 
 **Van 't Hoffov faktor** $i$ pove, na koliko delcev razpade formulska enota: za neelektrolite (glukoza, saharoza, sečnina) je $i = 1$, za $\mathrm{NaCl}$ idealno $2$, za $\mathrm{CaCl_2}$ idealno $3$. V resnici je zaradi privlaka med ioni nekoliko manjši od idealnega.
+
+:::premisli
+Katera raztopina ima nižje tališče: sečnina ($M = 60\,\mathrm{g/mol}$) ali saharoza ($M = 342\,\mathrm{g/mol}$), obe z molalnostjo $0{,}10\,\mathrm{mol/kg}$?
+---
+Tališči sta enaki. Obe snovi sta neelektrolita ($i = 1$), zato je v kilogramu vode pri obeh enako število delcev. Velikost in masa molekule pri koligativnih lastnostih nista pomembni; saharoze je sicer po masi več kot petkrat več.
+:::
 
 **Osmoza** je prehajanje topila skozi polprepustno membrano iz razredčene v koncentriranejšo raztopino. Osmozni tlak je tlak, ki ga moramo pritisniti na raztopino, da osmozo ustavimo. Raztopini z enakim osmoznim tlakom sta **izotonični**.
 
@@ -69,7 +94,7 @@ $n = c\,V$, $m = n\,M$
 
 **Rešitev:**
 
-1. $V = 250\,\mathrm{mL} = 0{,}250\,\mathrm{L}$.
+1. Prostornino pretvorimo v litre, ker je $c$ podana v $\mathrm{mol/L}$: $V = 250\,\mathrm{mL} = 0{,}250\,\mathrm{L}$.
 2. $n = 0{,}200\,\mathrm{mol/L} \cdot 0{,}250\,\mathrm{L} = 0{,}0500\,\mathrm{mol}$.
 3. $m = 0{,}0500\,\mathrm{mol} \cdot 58{,}44\,\mathrm{g/mol} \approx 2{,}92\,\mathrm{g}$.
 4. Postopek: natehtamo $2{,}92\,\mathrm{g}$ $\mathrm{NaCl}$, raztopimo v okoli $150\,\mathrm{mL}$ vode, prenesemo v merilno bučko za $250\,\mathrm{mL}$ in dopolnimo do oznake.
@@ -88,10 +113,10 @@ $c = \dfrac{w\,\rho}{M}$, $c_1V_1 = c_2V_2$
 
 **Rešitev:**
 
-1. Osnova $1\,\mathrm{L}$ koncentrirane kisline: masa $1000\,\mathrm{mL} \cdot 1{,}18\,\mathrm{g/mL} = 1180\,\mathrm{g}$.
+1. Za osnovo vzamemo $1\,\mathrm{L}$ koncentrirane kisline, ker iščemo množino na liter: masa $1000\,\mathrm{mL} \cdot 1{,}18\,\mathrm{g/mL} = 1180\,\mathrm{g}$.
 2. Masa $\mathrm{HCl}$: $0{,}37 \cdot 1180\,\mathrm{g} \approx 437\,\mathrm{g}$; množina $437 / 36{,}46\,\mathrm{mol} \approx 11{,}97\,\mathrm{mol}$.
 3. Torej $c_1 \approx 12{,}0\,\mathrm{mol/L}$.
-4. Redčenje: $V_1 = \dfrac{c_2V_2}{c_1} = \dfrac{0{,}100\,\mathrm{mol/L} \cdot 500\,\mathrm{mL}}{11{,}97\,\mathrm{mol/L}} \approx 4{,}18\,\mathrm{mL}$.
+4. Redčenje (množina $\mathrm{HCl}$ se ohrani, dodamo le vodo): $V_1 = \dfrac{c_2V_2}{c_1} = \dfrac{0{,}100\,\mathrm{mol/L} \cdot 500\,\mathrm{mL}}{11{,}97\,\mathrm{mol/L}} \approx 4{,}18\,\mathrm{mL}$.
 5. Postopek: v merilno bučko za $500\,\mathrm{mL}$ nalijemo nekaj vode, dodamo $4{,}18\,\mathrm{mL}$ koncentrirane kisline in dopolnimo z vodo do oznake.
 6. Odgovor: koncentrirana kislina ima koncentracijo približno $12{,}0\,\mathrm{mol/L}$; za pripravo potrebujemo približno $4{,}18\,\mathrm{mL}$ te kisline.
 
@@ -109,11 +134,34 @@ $\Delta T_t = K_k\,b$, $b = \dfrac{n}{m(\text{topila})}$, $M = \dfrac{m}{n}$, $\
 **Rešitev:**
 
 1. Znižanje tališča: $\Delta T_t = 0{,}00 - (-0{,}930) = 0{,}930\,\mathrm{K}$.
-2. Molalnost: $b = \dfrac{0{,}930\,\mathrm{K}}{1{,}86\,\mathrm{K\,kg/mol}} = 0{,}500\,\mathrm{mol/kg}$.
+2. Molalnost (za neelektrolit je $i = 1$): $b = \dfrac{0{,}930\,\mathrm{K}}{1{,}86\,\mathrm{K\,kg/mol}} = 0{,}500\,\mathrm{mol/kg}$.
 3. Množina topljenca: $n = 0{,}500\,\mathrm{mol/kg} \cdot 0{,}0500\,\mathrm{kg} = 0{,}0250\,\mathrm{mol}$.
 4. Molska masa: $M = \dfrac{2{,}50\,\mathrm{g}}{0{,}0250\,\mathrm{mol}} = 100\,\mathrm{g/mol}$.
 5. Zvišanje vrelišča: $\Delta T_v = 0{,}512 \cdot 0{,}500\,\mathrm{K} = 0{,}256\,\mathrm{K}$, torej $t_v \approx 100{,}26\,^\circ\mathrm{C}$.
 6. Odgovor: molska masa snovi je $100\,\mathrm{g/mol}$, raztopina vre pri približno $100{,}26\,^\circ\mathrm{C}$. Znižanje tališča je več kot trikrat večje od zvišanja vrelišča, zato je krioskopija natančnejša metoda.
+
+### Primer 4 – zdaj ti
+
+Maja si za tekmo pripravlja napitek samo iz glukoze in vode. Koliko glukoze naj raztopi v vodi do $1{,}00\,\mathrm{L}$ napitka, da bo njegov osmozni tlak pri telesni temperaturi ($310\,\mathrm{K}$) enak kot v krvni plazmi, okoli $7{,}9 \cdot 10^5\,\mathrm{Pa}$? $M(\text{glukoze}) = 180{,}16\,\mathrm{g/mol}$.
+
+**Podatki:** $V = 1{,}00\,\mathrm{L}$, $\Pi = 7{,}9 \cdot 10^5\,\mathrm{Pa}$, $T = 310\,\mathrm{K}$, $M = 180{,}16\,\mathrm{g/mol}$, $R = 8{,}314\,\mathrm{J/(mol\,K)}$, glukoza je neelektrolit
+**Iščemo:** maso glukoze $m$
+
+:::formula
+$\Pi = i\,c\,RT \Rightarrow c = \dfrac{\Pi}{iRT}$, $m = c\,V\,M$
+:::
+
+**Rešitev:**
+
+1. Glukoza v vodi ne razpade na ione, zato je $i = 1$.
+2. $c = \dfrac{7{,}9 \cdot 10^5\,\mathrm{Pa}}{1 \cdot 8{,}314\,\mathrm{J/(mol\,K)} \cdot 310\,\mathrm{K}} \approx 307\,\mathrm{mol/m^3}$; enota je $\mathrm{mol/m^3}$, ker smo vstavili paskale.
+3. Pretvori koncentracijo v $\mathrm{mol/L}$ in izračunaj maso glukoze sam.
+
+:::premisli
+Koliko glukoze potrebuje Maja za $1{,}00\,\mathrm{L}$ napitka?
+---
+$307\,\mathrm{mol/m^3} = 0{,}307\,\mathrm{mol/L}$, ker je v kubičnem metru $1000\,\mathrm{L}$. Za $1{,}00\,\mathrm{L}$ je $n = 0{,}307\,\mathrm{mol}$ in $m = 0{,}307\,\mathrm{mol} \cdot 180{,}16\,\mathrm{g/mol} \approx 55{,}3\,\mathrm{g}$ glukoze. Pravi izotonični napitki vsebujejo tudi soli, zato imajo glukoze manj.
+:::
 
 ## Pogoste napake
 
@@ -195,24 +243,40 @@ Za vodo ($T_t^* = 273{,}15\,\mathrm{K}$, $M_1 = 0{,}018\,02\,\mathrm{kg/mol}$, $
 
 ? V $250\,\mathrm{mL}$ raztopine je raztopljenih $0{,}50\,\mathrm{mol}$ snovi. Kolikšna je množinska koncentracija?
 - $0{,}125\,\mathrm{mol/L}$
+~ Pomnožil si $0{,}50 \cdot 0{,}250$ namesto delil; koncentracija je množina na liter raztopine.
 - $0{,}50\,\mathrm{mol/L}$
+~ Pozabil si deliti s prostornino: $0{,}50\,\mathrm{mol}$ je le v četrt litra, zato jih je v litru štirikrat več.
 + $2{,}0\,\mathrm{mol/L}$
 > $c = n/V = 0{,}50\,\mathrm{mol} / 0{,}250\,\mathrm{L} = 2{,}0\,\mathrm{mol/L}$. Odgovor $0{,}125$ dobiš, če množiš namesto deliš.
 
 ? $10\,\mathrm{mL}$ raztopine s koncentracijo $1{,}0\,\mathrm{mol/L}$ razredčimo z vodo na končno prostornino $100\,\mathrm{mL}$. Kolikšna je nova koncentracija?
 + $0{,}10\,\mathrm{mol/L}$
 - $0{,}090\,\mathrm{mol/L}$
+~ Tako računaš, če $100\,\mathrm{mL}$ vode dodaš; v nalogi je $100\,\mathrm{mL}$ že končna prostornina.
 - $10\,\mathrm{mol/L}$
+~ Pri redčenju koncentracija ne more narasti; zamenjal si $V_1$ in $V_2$.
 > $c_2 = c_1V_1/V_2 = 1{,}0 \cdot 10 / 100\,\mathrm{mol/L} = 0{,}10\,\mathrm{mol/L}$. $0{,}090$ bi dobil, če bi dodal $100\,\mathrm{mL}$ vode (končna prostornina $110\,\mathrm{mL}$).
 
 ? Katera vodna raztopina z molalnostjo $0{,}10\,\mathrm{mol/kg}$ ima najnižje tališče?
 - glukoza
+~ Glukoza je neelektrolit ($i = 1$) in da najmanj delcev, zato tališče zniža najmanj.
 - $\mathrm{NaCl}$
+~ $\mathrm{NaCl}$ razpade na dva iona, $\mathrm{CaCl_2}$ pa na tri, zato ta tališče zniža še bolj.
 + $\mathrm{CaCl_2}$
 > Znižanje tališča je sorazmerno z $i\,b$: glukoza $i = 1$, $\mathrm{NaCl}$ $i \approx 2$, $\mathrm{CaCl_2}$ $i \approx 3$. Največ delcev da $\mathrm{CaCl_2}$.
 
 ? Kaj je molalnost?
 - množina topljenca na liter raztopine
+~ To je množinska koncentracija (molarnost); molalnost se nanaša na maso topila, ne na prostornino raztopine.
 + množina topljenca na kilogram topila
 - masa topljenca na kilogram raztopine
+~ To je masni delež v $\mathrm{g/kg}$; molalnost šteje mole topljenca na kilogram topila.
 > Molalnost je $b = n(\text{topljenca})/m(\text{topila})$ v $\mathrm{mol/kg}$; množina na liter raztopine je množinska koncentracija.
+
+? Nik pripravlja $500\,\mathrm{mL}$ raztopine $\mathrm{NaCl}$ s koncentracijo $0{,}154\,\mathrm{mol/L}$ za izpiranje odrgnin po nogometni tekmi. Njegovi koraki: (1) $V = 0{,}500\,\mathrm{L}$; (2) $n = 0{,}154 \cdot 0{,}500\,\mathrm{mol} = 0{,}0770\,\mathrm{mol}$; (3) $m = 0{,}0770 \cdot 58{,}44\,\mathrm{g} \approx 4{,}50\,\mathrm{g}$; (4) $4{,}50\,\mathrm{g}$ soli raztopi v $500\,\mathrm{mL}$ vode. Kateri korak je napačen?
++ korak 4
+- korak 2
+~ Korak 2 je pravilen: množina je koncentracija krat prostornina raztopine, $0{,}154 \cdot 0{,}500 = 0{,}0770$.
+- korak 3
+~ Korak 3 je pravilen: masa je množina krat molska masa, $0{,}0770 \cdot 58{,}44 \approx 4{,}50$.
+> Sol je treba raztopiti v manj vode in nato **dopolniti do** $500\,\mathrm{mL}$ v merilni bučki. Če jo stresemo v $500\,\mathrm{mL}$ vode, prostornina raztopine ni natanko $500\,\mathrm{mL}$ in koncentracija ni $0{,}154\,\mathrm{mol/L}$.
