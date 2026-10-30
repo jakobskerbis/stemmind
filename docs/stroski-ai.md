@@ -29,6 +29,10 @@ En odgovor Haikuja stane okoli 0,0004 €, en odgovor Opusa okoli 0,07 €, tore
 - **Pregled**: Nastavitve → Poraba AI kaže strošek v €, povprečje na učenca, na odgovor, oceno za mesec, število odgovorov brez AI in porabo po modelih. Starš v zavihku Račun vidi delež mesečne omejitve za vsakega otroka (brez zneskov).
 - **Nastavitve iz klepeta** (j, 2026-10-29): orodji `get_settings` in `change_settings` (server/chat-settings.js, seznam nastavitev v public/settings-registry.js) sta stalni in pred sistemskim promptom, zato sta v istem predpomnjenem začetku (~1500 žetonov, pri Haiku branje iz predpomnilnika ~0,00002 $ na sporočilo). Drugi klic modela samo, ko učenec res spremeni nastavitev. Finančnih in osebnih podatkov orodji ne poznata.
 
+## Sprotno preverjanje odgovorov (j, 2026-10-30)
+
+j: »Kako vemo, da Haiku najprej ne da napačnega rezultata?« Koda (`server/live-check.js`) preveri vsak odgovor brez stroška: pred klicem reševalnik (`public/scan/solvecore.js`) reši enačbo, sistem, odvod ali račun z vsaj dvema operacijama iz učenčevega sporočila, model pa dobi preverjen rezultat v skriti opombi (~80 žetonov vhoda, samo v tisti potezi; predpomnjen začetek ostane enak); po odgovoru koda preračuna vsak račun in končne vrednosti neznank. Model se pokliče le ob najdeni napaki (en kratek »Popravek:« istega modela, vrsta `popravek`, ~0,001 $ pri Haikuju) in za pregled s Sonnetom, kjer koda ni preverila ničesar, tveganje pa je večje (tekmovanja, fakulteta, »Razloži podrobneje«): samo Haikujevi odgovori, ne v lahkem načinu, ne v brezplačnem paketu, ne v varčnem načinu proračuna (raven ≤ 0), največ `EVKLID_LIVE_CHECK_DAILY_USD` (1 $) na dan, vrsta `preverjanje` (~0,005–0,02 $ na pregled, Sonnet razmišlja) šteje v mesečni proračun. `EVKLID_LIVE_CHECK=0` vse izklopi.
+
 ## Števec porabe za skrbnika (2026-10-29)
 
 - V zgornji vrstici je števec porabe AI (€ danes) za vse profile. Vidi ga samo skrbnik: na računalniku, kjer teče Evklid, ali račun z e-naslovom v `EVKLID_ADMIN_EMAILS`. Na računalniku lahko v števcu z gumbom »Pokaži števec tudi na mojem telefonu« svoj račun označiš kot skrbniški.
