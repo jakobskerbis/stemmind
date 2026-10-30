@@ -9,7 +9,7 @@ services:
     buildCommand: npm ci --omit=dev
     startCommand: npm start
     healthCheckPath: /healthz
-    autoDeploy: false          # nova različica vsaki 2 uri: .github/workflows/render-posodobitev.yml
+    autoDeploy: false          # objava v mirnem trenutku: .github/workflows/render-posodobitev.yml
     disk:
       name: evklid-data
       mountPath: /var/data     # baza učencev ostane ob vsaki posodobitvi
