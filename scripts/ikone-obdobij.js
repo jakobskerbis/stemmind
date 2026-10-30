@@ -201,7 +201,8 @@ function tabele() {
       koledar: [calFrame(mk.star4), ["calendar", "calendar-days", "calendar-clock"]],
       arkade: [p("M3.5 20v-4.5a1.5 1.5 0 0 1 3 0V20M10.5 20v-8.5a1.5 1.5 0 0 1 3 0V20M17.5 20V6.5a1.5 1.5 0 0 1 3 0V20") + p("M2 20h20"), ["chart-column"]],
       vzhod: [lucide("sunrise"), ["trending-up"]],
-      krmilo: [lucide("ship-wheel"), ["settings"]],
+      // zobnik urnega mehanizma; ne krmilo (spominja na ☸)
+      zobnik: [star(12, 12, 12, [10, 8]) + c(12, 12, 5) + c(12, 12, 1.5), ["settings"]],
       kameja: [ell(12, 12, 8, 10) + c(12, 9.5, 3) + p("M7 18.5c.8-3 2.6-4.5 5-4.5s4.2 1.5 5 4.5"), ["user"]],
       zvezda: [star(12, 12, 4, [10, 2.6, 6, 2.6]), ["star"]],
       bakla: [torch, ["flame"]],
@@ -291,7 +292,8 @@ function tabele() {
       zid: [lucide("brick-wall"), ["blocks"]],
     },
     indija: {
-      lotos: [p("M12 19c-3-3-3.8-8.5 0-14 3.8 5.5 3 11 0 14z") + p("M12 19C7.5 19.3 4 17 2.5 12c4-.3 7.5 2 9.5 7") + p("M12 19c4.5.3 8-2 9.5-7-4-.3-7.5 2-9.5 7") + p("M7 21.5h10"), ["sparkles", "message-circle", "bot"]],
+      // inštruktor: šunja (ničla iz indijske matematike) z žarki; lotos ostane le v vzorcih, ne kot glavna ikona
+      sunja: [c(12, 12, 6) + c(12, 12, 1.6) + p("M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"), ["sparkles", "message-circle", "bot"]],
       zemljevid: [scrollMap((x, y) => mk.lotus(x, y)), ["map"]],
       "palmovi-listi": [rect(2, 4, 20, 4, 2) + rect(2, 10, 20, 4, 2) + rect(2, 16, 20, 4, 2) + p("M7 2.5v19", thin), ["book-open"]],
       knjiznica: [lucide("library-big"), ["library"]],
