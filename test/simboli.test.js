@@ -71,3 +71,20 @@ test("preverjevalnik: manjkajoče oznake izpostavljenih formul, neizrisljiva eno
   assert.ok(warn.some((w) => /2 oznak.*b, c/.test(w)), warn.join("; "));
   assert.ok(err.some((e) => /enota/.test(e)), err.join("; "));
 });
+
+test("oznake ne pokvarijo razmikov, opisa stolpcev in nezaprtih ukazov", () => {
+  assert.equal(symbolKeyOf("\\hat\\theta"), "hat(θ)");
+  const { list } = parseSymbolsBlock("m | masa | | kg\nc | hitrost | | m/s\n\\mathrm{pH} | pH | | –");
+  const opt = { throwOnError: true, trust: true, strict: "ignore" };
+  for (const g of [null, list]) {
+    withFormulaSubject("FIZ", () => {
+      for (const tex of ["a \\\\[2mm] b = m c", "\\begin{array}{c|c} m & c \\end{array}", "x_\\mathrm{pH}"]) {
+        const out = annotateTex(tex);
+        assert.doesNotThrow(() => katex.renderToString(out, opt), out);
+        assert.ok(!/\[2\\htmlData|\{\\htmlData\{fx=[^}]*\}\{c\}\|/.test(out), out);
+      }
+      assert.doesNotThrow(() => annotateTex("5\\,\\mathrm{"));
+      assert.doesNotThrow(() => annotateTex("5\\,\\mathrm{}"));
+    }, g);
+  }
+});

@@ -131,7 +131,10 @@ function open(el) {
   const w = Math.min(340, window.innerWidth - 24);
   pop.style.width = `${w}px`;
   const left = Math.max(12, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 12));
-  const below = r.bottom + 8 + pop.offsetHeight < window.innerHeight || r.top < pop.offsetHeight + 16;
+  // Spodnji meni na telefonu (#tabbar) prekrije dno zaslona: kartica naj se konča nad njim.
+  const bar = document.getElementById("tabbar");
+  const barTop = bar && getComputedStyle(bar).display !== "none" ? Math.min(window.innerHeight, bar.getBoundingClientRect().top) : window.innerHeight;
+  const below = r.bottom + 8 + pop.offsetHeight < barTop || r.top < pop.offsetHeight + 16;
   pop.style.left = `${left + window.scrollX}px`;
   pop.style.top = `${(below ? r.bottom + 8 : r.top - pop.offsetHeight - 8) + window.scrollY}px`;
 }
