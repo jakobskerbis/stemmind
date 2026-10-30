@@ -191,7 +191,7 @@ export default function Chat() {
             <Text style={{ color: th.muted, fontSize: 15 }}>{t("chat.intro")}</Text>
           </Card>
         }
-        renderItem={({ item }) => <Bubble m={item} />}
+        renderItem={({ item }) => <Bubble m={item} conv={id} />}
         ListFooterComponent={
           <View style={{ gap: 10 }}>
             {notes.map((n) => (
@@ -257,13 +257,44 @@ export default function Chat() {
   );
 }
 
-function Bubble({ m }: { m: Msg }) {
+// »Prijavi napako« pod odgovorom (kot na spletu, server/reports.js). Trgovini zahtevata, da uporabnik
+// neprimerno vsebino AI prijavi v aplikaciji (Google Play: AI-generated content, Apple 1.2).
+function ReportButton({ conv, mid }: { conv: string; mid: number }) {
+  const th = useTheme();
+  const [done, setDone] = useState(false);
+  const report = (reason: string) =>
+    api(`/api/conversations/${conv}/messages/${mid}/report`, { body: { reason } })
+      .then(() => {
+        setDone(true);
+        Alert.alert(t("rep.thanks"));
+      })
+      .catch((err) => Alert.alert((err as Error).message));
+  const ask = () => {
+    const reasons: [string, string][] = [["wrong", t("rep.wrong")], ["unsafe", t("rep.unsafe")], ["other", t("rep.other")]];
+    if (Platform.OS === "ios") {
+      ActionSheetIOS.showActionSheetWithOptions({ title: t("rep.ask"), options: [...reasons.map((r) => r[1]), t("rep.cancel")], cancelButtonIndex: 3 }, (i) => {
+        if (i < 3) report(reasons[i][0]);
+      });
+    } else {
+      // Android pokaže največ tri gumbe: prekličeš z dotikom ob oknu ali gumbom nazaj.
+      Alert.alert(t("rep.ask"), undefined, reasons.map(([reason, text]) => ({ text, onPress: () => report(reason) })), { cancelable: true });
+    }
+  };
+  return (
+    <Pressable onPress={ask} disabled={done} accessibilityRole="button" hitSlop={8} style={{ alignSelf: "flex-start", flexDirection: "row", alignItems: "center", gap: 6, minHeight: 32, marginTop: 6 }}>
+      <Icon name={{ ios: done ? "checkmark" : "flag", android: done ? "check" : "flag" }} size={14} color={th.muted} />
+      <Text style={{ color: th.muted, fontSize: 13 }}>{done ? t("rep.done") : t("rep.btn")}</Text>
+    </Pressable>
+  );
+}
+
+function Bubble({ m, conv }: { m: Msg; conv: string }) {
   const th = useTheme();
   if (m.role === "user") {
     return (
       <View style={{ alignSelf: "flex-end", maxWidth: "85%", gap: 6, alignItems: "flex-end" }}>
         {m.photo ? <Image source={{ uri: m.photo }} style={{ width: 180, height: 180, borderRadius: 12 }} resizeMode="cover" /> : null}
-        <View style={{ backgroundColor: th.accent, borderRadius: 18, borderBottomRightRadius: 6, paddingHorizontal: 14, paddingVertical: 10 }}>
+        <View style={{ backgroundColor: th.accent, borderRadius: 18, borderBottomEndRadius: 6, paddingHorizontal: 14, paddingVertical: 10 }}>
           <Text style={{ color: th.accentText, fontSize: 16, lineHeight: 22 }} selectable>
             {m.has_image && !m.photo ? "📷 " : ""}
             {m.text}
@@ -275,6 +306,7 @@ function Bubble({ m }: { m: Msg }) {
   return (
     <View style={{ alignSelf: "stretch", backgroundColor: m.error ? th.dangerSoft : th.surface, borderRadius: radius.card, borderWidth: 1, borderColor: m.error ? th.danger : th.border, padding: 14 }}>
       {m.text ? <RichText text={m.text} ai streaming={m.streaming} size={16} /> : <Text style={{ color: th.muted, fontSize: 22 }}>…</Text>}
+      {typeof m.id === "number" && !m.streaming && !m.error ? <ReportButton conv={conv} mid={m.id} /> : null}
     </View>
   );
 }

@@ -1,6 +1,6 @@
 // Gradniki zaslonov (po docs/oblikovanje.md: kartice, gumbi, seznami, opozorila), z barvami iz useTheme().
 import React from "react";
-import { ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, type TextInputProps, type ViewStyle, type StyleProp, type ScrollViewProps } from "react-native";
+import { ActivityIndicator, I18nManager, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, type TextInputProps, type ViewStyle, type StyleProp, type ScrollViewProps } from "react-native";
 import { SymbolView, type AndroidSymbol } from "expo-symbols";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { SFSymbol } from "sf-symbols-typescript";
@@ -9,9 +9,13 @@ import { tap } from "@/lib/haptics";
 
 export type IconName = { ios: SFSymbol; android: AndroidSymbol };
 
+// Puščice »naprej« se v jezikih od desne proti levi (arabščina, perzijščina, urdujščina) obrnejo.
+const DIRECTIONAL = new Set(["chevron.right", "arrow.right"]);
+
 export function Icon({ name, size = 22, color }: { name: IconName; size?: number; color?: string }) {
   const th = useTheme();
-  return <SymbolView name={name} size={size} tintColor={color || th.text} />;
+  const flip = I18nManager.isRTL && DIRECTIONAL.has(name.ios as string);
+  return <SymbolView name={name} size={size} tintColor={color || th.text} style={flip ? { transform: [{ scaleX: -1 }] } : undefined} />;
 }
 
 export function Screen({ children, refreshControl, style, contentContainerStyle, ...rest }: ScrollViewProps & { children: React.ReactNode }) {
@@ -68,7 +72,7 @@ type ButtonProps = { title: string; onPress?: () => void; kind?: "primary" | "se
 export function Button({ title, onPress, kind = "primary", icon, loading, disabled, style }: ButtonProps) {
   const th = useTheme();
   const bg = kind === "primary" ? th.accent : kind === "danger" ? th.danger : "transparent";
-  const fg = kind === "primary" ? th.accentText : kind === "danger" ? "#FFFFFF" : th.accent;
+  const fg = kind === "primary" ? th.accentText : kind === "danger" ? th.dangerText : th.accent;
   return (
     <Pressable
       accessibilityRole="button"
@@ -187,7 +191,7 @@ export function Chip({ label, active, onPress }: { label: string; active?: boole
       accessibilityRole="button"
       accessibilityState={{ selected: !!active }}
       onPress={onPress}
-      style={{ paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.pill, backgroundColor: active ? th.accent : th.surface, borderWidth: 1, borderColor: active ? th.accent : th.border }}
+      style={{ minHeight: 44, justifyContent: "center", paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.pill, backgroundColor: active ? th.accent : th.surface, borderWidth: 1, borderColor: active ? th.accent : th.border }}
     >
       <Text style={{ color: active ? th.accentText : th.text, fontWeight: "600" }}>{label}</Text>
     </Pressable>

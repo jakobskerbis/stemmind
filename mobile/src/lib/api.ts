@@ -6,6 +6,7 @@ import * as Crypto from "expo-crypto";
 import { Platform } from "react-native";
 import { fetch } from "expo/fetch";
 import brand from "../../../brand.json";
+import { t } from "./i18n";
 
 export const API_URL: string = (Constants.expoConfig?.extra?.apiUrl as string) || `https://${brand.domain}`;
 export const CHANNEL: "store" | "direct" = Constants.expoConfig?.extra?.channel === "direct" ? "direct" : "store";
@@ -21,7 +22,7 @@ export class ApiError extends Error {
   status: number;
   body: any;
   constructor(status: number, body: any, message?: string) {
-    super(message || body?.error || `Napaka ${status}`);
+    super(message || body?.error || t("common.error", { status }));
     this.status = status;
     this.body = body || {};
   }
@@ -88,7 +89,7 @@ export async function request(path: string, opts: Opts = {}) {
     })) as unknown as Response;
   } catch (err: any) {
     if (err?.name === "AbortError") throw err;
-    throw new ApiError(0, { offline: true }, "Ni povezave z internetom.");
+    throw new ApiError(0, { offline: true }, t("off.noConnection"));
   }
   const s = res.headers.get("x-app-session");
   if (s !== null) await setSession(s && s !== "-" ? s : null);

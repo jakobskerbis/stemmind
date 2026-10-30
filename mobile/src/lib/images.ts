@@ -14,8 +14,8 @@ export async function preparePhoto(uri: string, width?: number): Promise<Photo> 
 
 // Vrne null, če uporabnik prekliče ali ne dovoli dostopa.
 export async function pickPhoto(source: "camera" | "library"): Promise<Photo | null> {
-  const perm = source === "camera" ? await ImagePicker.requestCameraPermissionsAsync() : await ImagePicker.requestMediaLibraryPermissionsAsync();
-  if (!perm.granted) return null;
+  // Galerija: sistemski izbirnik (iOS PHPicker, Android Photo Picker) ne potrebuje dovoljenja za vse fotografije.
+  if (source === "camera" && !(await ImagePicker.requestCameraPermissionsAsync()).granted) return null;
   const opts: ImagePicker.ImagePickerOptions = { mediaTypes: ["images"], quality: 1, allowsEditing: true };
   const res = source === "camera" ? await ImagePicker.launchCameraAsync(opts) : await ImagePicker.launchImageLibraryAsync(opts);
   const a = res.canceled ? null : res.assets[0];

@@ -59,6 +59,11 @@ export default function Me() {
     }
   };
   const level: Level = { educational_track: s.educational_track || "OSNOVNA_SOLA", curriculum_level: s.curriculum_level || "", subject: s.subject || "MAT" };
+  // Raven in predmet v jeziku vmesnika (shranjena vrednost je slovenska, npr. »7. razred«, predmet je koda).
+  const grade = /^(\d+)\. (razred|letnik)$/.exec(s.curriculum_level || "");
+  const levelLabel = grade ? t(grade[2] === "letnik" ? "mob.yearN" : "mob.gradeN", { n: grade[1] }) : s.curriculum_level;
+  const subjectKey = `subj.${s.subject}`;
+  const subjectLabel = s.subject ? (t(subjectKey) === subjectKey ? s.subject : t(subjectKey)) : "";
   const waiting = pendingCount(student.id);
   const sub = parent?.subscription;
 
@@ -74,7 +79,7 @@ export default function Me() {
             <Button title={t("mob.done")} kind="secondary" onPress={() => setEditLevel(false)} />
           </>
         ) : (
-          <Row title={[s.curriculum_level, s.subject].filter(Boolean).join(" · ") || t("mob.chooseLevel")} subtitle={t("mob.changeLevel")} icon={{ ios: "graduationcap", android: "school" }} onPress={() => setEditLevel(true)} />
+          <Row title={[levelLabel, subjectLabel].filter(Boolean).join(" · ") || t("mob.chooseLevel")} subtitle={t("mob.changeLevel")} icon={{ ios: "graduationcap", android: "school" }} onPress={() => setEditLevel(true)} />
         )}
         <Text style={{ color: th.muted, fontSize: 14, fontWeight: "600" }}>{t("mob.dailyGoal")}</Text>
         <View style={{ flexDirection: "row", gap: 8, flexWrap: "wrap" }}>

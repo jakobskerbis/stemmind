@@ -207,6 +207,36 @@ test("Google Play purchase is read from Google, billing retry keeps access as pa
   });
 });
 
+// Nadgradnja v Google Play (1 → 2 otroka) da nov žeton z linkedPurchaseToken: nova naročnina zamenja
+// staro, obvestilo o izteku stare je pozneje ne povozi.
+test("Google Play upgrade replaces the linked subscription and the old one's expiry does not cancel it", async () => {
+  await withServer(async ({ appClient, adult, store, play, base }) => {
+    const c = appClient();
+    const p = await adult(c);
+    const token = (await c("/api/billing/store")).body.account_token;
+    const sub = (productId, state, extra = {}) => ({
+      subscriptionState: state,
+      externalAccountIdentifiers: { obfuscatedExternalAccountId: token },
+      lineItems: [{ productId, expiryTime: new Date(Date.now() + 30 * 86400000).toISOString(), autoRenewingPlan: { autoRenewEnabled: true } }],
+      ...extra,
+    });
+    play.subs.set("tok-stari-1234567890", sub("evklid.month.1", "SUBSCRIPTION_STATE_ACTIVE"));
+    assert.equal((await c("/api/billing/google", { body: { purchase_token: "tok-stari-1234567890" } })).status, 200);
+    play.subs.set("tok-novi-12345678901", sub("evklid.month.2", "SUBSCRIPTION_STATE_ACTIVE", { linkedPurchaseToken: "tok-stari-1234567890" }));
+    const r = await c("/api/billing/google", { body: { purchase_token: "tok-novi-12345678901" } });
+    assert.equal(r.status, 200, JSON.stringify(r.body));
+    assert.equal(r.body.conflict, null);
+    assert.equal(r.body.account.access.seats, 2);
+    // RTDN za stari žeton (potekel) ne prekliče nove naročnine.
+    play.subs.set("tok-stari-1234567890", sub("evklid.month.1", "SUBSCRIPTION_STATE_EXPIRED"));
+    const msg = { message: { data: Buffer.from(JSON.stringify({ packageName: BUNDLE_ID, subscriptionNotification: { purchaseToken: "tok-stari-1234567890", notificationType: 13 } })).toString("base64") } };
+    const res = await fetch(`${base}/webhooks/google-play?token=skrivnost-rtdn`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(msg) });
+    assert.equal(res.status, 204);
+    const row = store.db.prepare("SELECT sub_id, sub_status, sub_seats FROM parents WHERE id = ?").get(p.id);
+    assert.deepEqual({ ...row }, { sub_id: "google:tok-novi-12345678901", sub_status: "active", sub_seats: 2 });
+  });
+});
+
 test("state mapping: Apple grace/retry and Google canceled-but-paid", () => {
   const past = Date.now() - 1000;
   assert.equal(appleState({ productId: "x", expiresDate: past }).status, "expired");
@@ -223,6 +253,8 @@ test("Sign in with Apple: new account needs age and consent, then logs in by App
     const c = appClient();
     const token = identityToken({ sub: "apple.001", email: "relay@privaterelay.appleid.com", email_verified: "true" }, NONCE);
     assert.equal((await c("/api/auth/apple", { body: { identity_token: token, nonce: "napacen-niz-1234567890" } })).status, 401);
+    // Napačna oblika polj: 400, ne 500.
+    assert.equal((await c("/api/auth/apple", { body: { identity_token: token, nonce: { toString: 1 } } })).status, 400);
     const first = await c("/api/auth/apple", { body: { identity_token: token, nonce: NONCE } });
     assert.equal(first.status, 400);
     assert.equal(first.body.need_signup, true);

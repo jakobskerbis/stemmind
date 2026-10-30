@@ -91,10 +91,11 @@ export default function Path() {
           {u.topics.map((tp) => (
             <Pressable
               key={tp.id}
-              onPress={() => router.push({ pathname: "/topic/[id]", params: { id: tp.id } })}
+              // Brez povezave se lekcija ne naloži: tema odpre kar vaje iz paketa (lib/offline.ts).
+              onPress={() => (offline && tp.practice ? router.push({ pathname: "/practice", params: { mode: "topic", topic: tp.id } }) : router.push({ pathname: "/topic/[id]", params: { id: tp.id } }))}
               accessibilityRole="button"
               accessibilityLabel={`${tp.name}, ${t(`mob.status.${tp.status}`)}`}
-              style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 9, opacity: pressed ? 0.6 : 1 })}
+              style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 9, minHeight: 44, opacity: pressed ? 0.6 : 1 })}
             >
               <StatusDot status={tp.status} due={tp.due} />
               <View style={{ flex: 1 }}>

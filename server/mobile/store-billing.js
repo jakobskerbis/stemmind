@@ -9,6 +9,8 @@ import { BRAND } from "../brand.js";
 import { verifyAppleJws, AppleSignatureError } from "./apple-crypto.js";
 import { GooglePlay, googleSubscriptionState, loadServiceAccount } from "./google-play.js";
 
+// Besedilo iz zahteve; drugačna vrednost (predmet, število) šteje kot prazna, da ni napake 500.
+const text = (v) => (typeof v === "string" ? v : "");
 const PAID = new Set(["active", "trialing", "past_due"]);
 const APP = BRAND.app || {};
 export const BUNDLE_ID = process.env.EVKLID_APPLE_BUNDLE_ID || APP.bundle_id;
@@ -87,7 +89,8 @@ export function mountStoreBilling(app, ctx, opts = {}) {
 
   // Zapiše stanje naročnine iz trgovine in posodobi naročnino starša.
   // Vrne { ok } ali { conflict } (naročnina pripada drugemu računu ali starš že plačuje prek Stripa).
-  function apply(provider, originalId, state, parentId) {
+  // replaces: prejšnji žeton Google ob nadgradnji ali menjavi paketa (linkedPurchaseToken); ta naročnina ni »druga«.
+  function apply(provider, originalId, state, parentId, replaces = null) {
     const product = productById(state.productId);
     if (!product) return { error: "Neznan izdelek." };
     const existing = row(provider, originalId);
@@ -103,7 +106,8 @@ export function mountStoreBilling(app, ctx, opts = {}) {
     const p = getParent(pid);
     if (!p) return { ok: true, unlinked: true };
     const subId = `${provider}:${originalId}`;
-    const paidElsewhere = p.sub_id && p.sub_id !== subId && PAID.has(p.sub_status) && (!p.sub_period_end || Date.parse(p.sub_period_end) > Date.now());
+    const replaced = replaces && p.sub_id === `${provider}:${replaces}`;
+    const paidElsewhere = p.sub_id && p.sub_id !== subId && !replaced && PAID.has(p.sub_status) && (!p.sub_period_end || Date.parse(p.sub_period_end) > Date.now());
     // Starš že ima drugo plačano naročnino (Stripe ali druga trgovina): te ne povozimo, nakup samo zapišemo.
     if (paidElsewhere) return { ok: true, conflict: p.sub_provider && p.sub_provider !== "stripe" ? "other_store" : "stripe" };
     if (state.status === "pending") return { ok: true };
@@ -152,7 +156,7 @@ export function mountStoreBilling(app, ctx, opts = {}) {
     const p = req.parent;
     if (p.is_guest) return res.status(403).json({ error: "Najprej ustvari račun." });
     if (!play.enabled) return res.status(503).json({ error: "Plačila prek Google Play še niso nastavljena." });
-    const token = String(req.body?.purchase_token || "");
+    const token = text(req.body?.purchase_token);
     if (!/^[A-Za-z0-9._:-]{10,4096}$/.test(token)) return res.status(400).json({ error: "Napačen žeton nakupa." });
     let sub;
     try {
@@ -165,7 +169,7 @@ export function mountStoreBilling(app, ctx, opts = {}) {
     const state = googleSubscriptionState(sub);
     if (state.accountToken && state.accountToken.toLowerCase() !== accountToken(p)) return res.status(409).json({ error: "Ta nakup pripada drugemu računu Evklid.", other_account: true });
     if (state.linkedToken) db.prepare("UPDATE store_subscriptions SET status = 'replaced' WHERE provider = 'google' AND original_id = ?").run(state.linkedToken);
-    const out = apply("google", token, state, p.id);
+    const out = apply("google", token, state, p.id, state.linkedToken);
     if (out.error) return res.status(400).json({ error: out.error });
     if (out.conflict === "other_account") return res.status(409).json({ error: "Ta nakup pripada drugemu računu Evklid.", other_account: true });
     res.json({ ok: true, conflict: out.conflict || null, account: accountView(req, getParent(p.id)) });
@@ -198,7 +202,7 @@ export function mountStoreBilling(app, ctx, opts = {}) {
   // https://evklid.app/webhooks/google-play?token=<EVKLID_GOOGLE_RTDN_TOKEN>
   app.post("/webhooks/google-play", json, async (req, res) => {
     const secret = env.EVKLID_GOOGLE_RTDN_TOKEN;
-    const given = String(req.query.token || "");
+    const given = text(req.query.token);
     if (!secret || given.length !== secret.length || !crypto.timingSafeEqual(Buffer.from(given), Buffer.from(secret))) return res.status(403).end();
     let msg;
     try {
@@ -214,7 +218,7 @@ export function mountStoreBilling(app, ctx, opts = {}) {
         const state = googleSubscriptionState(sub);
         if (msg.voidedPurchaseNotification) state.status = "expired"; // vračilo
         if (state.linkedToken) db.prepare("UPDATE store_subscriptions SET status = 'replaced' WHERE provider = 'google' AND original_id = ?").run(state.linkedToken);
-        apply("google", token, state, parentByToken(state.accountToken)?.id || null);
+        apply("google", token, state, parentByToken(state.accountToken)?.id || null, state.linkedToken);
       }
       res.status(204).end();
     } catch (err) {

@@ -1,9 +1,10 @@
 // Stanje prijave: račun (starš ali dijak sam), profili in izbrani profil.
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import Storage from "expo-sqlite/kv-store";
 import { api, ApiError, clearSession, hasSession, loadSession, onSessionChange } from "./api";
 import { setLanguage } from "./i18n";
 import { key } from "./keys";
+import { cancelReminders, unregisterPush } from "./notifications";
 
 export type Parent = {
   id: number;
@@ -38,6 +39,7 @@ type Ctx = {
 
 const SessionCtx = createContext<Ctx | null>(null);
 const STUDENT_KEY = key("student");
+const CACHE_KEY = key("account"); // zadnji znani račun in profili za zagon brez povezave
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
@@ -45,6 +47,18 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   const [parent, setParent] = useState<Parent | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
   const [studentId, setStudentId] = useState<number | null>(null);
+  const loaded = useRef(false);
+
+  const apply = useCallback(async (p: Parent | null, list: Student[]) => {
+    loaded.current = true;
+    setParent(p);
+    setStudents(list);
+    // Profil brez gesla se ne odpre sam: ob prvem odprtju ga je treba nastaviti (kot na spletu).
+    const open = (s: Student) => !s.locked && !s.needs_password;
+    const saved = Number(await Storage.getItem(STUDENT_KEY)) || null;
+    const pick = list.find((s) => s.id === saved && open(s)) || (list.length === 1 && open(list[0]) ? list[0] : null);
+    setStudentId(pick?.id ?? null);
+  }, []);
 
   const refresh = useCallback(async () => {
     if (!hasSession()) {
@@ -54,16 +68,18 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     }
     try {
       const [status, list] = await Promise.all([api("/api/account/status"), api<Student[]>("/api/students")]);
-      setParent(status.parent);
-      setStudents(list);
-      const saved = Number(await Storage.getItem(STUDENT_KEY)) || null;
-      const pick = list.find((s) => s.id === saved && !s.locked) || (list.length === 1 && !list[0].locked ? list[0] : null);
-      setStudentId(pick?.id ?? null);
+      await Storage.setItem(CACHE_KEY, JSON.stringify({ parent: status.parent, students: list })).catch(() => {});
+      await apply(status.parent, list);
     } catch (err) {
-      // Brez povezave ostane zadnje znano stanje (vaje brez povezave delujejo iz paketa).
       if (!(err instanceof ApiError) || !err.offline) throw err;
+      // Brez povezave ostane zadnje znano stanje; ob zagonu brez povezave ga preberemo s telefona,
+      // da učna pot in vaje brez povezave delujejo (sicer bi se odprl prazen zaslon s profili).
+      if (loaded.current) return;
+      const cached = await Storage.getItem(CACHE_KEY).catch(() => null);
+      const c = cached ? (JSON.parse(cached) as { parent: Parent | null; students: Student[] }) : null;
+      if (c) await apply(c.parent, c.students || []);
     }
-  }, []);
+  }, [apply]);
 
   useEffect(() => {
     (async () => {
@@ -75,9 +91,13 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     return onSessionChange(() => {
       setSignedIn(hasSession());
       if (!hasSession()) {
+        // Odjava, izbris računa ali potekla seja: proč s podatki računa na telefonu.
+        loaded.current = false;
         setParent(null);
         setStudents([]);
         setStudentId(null);
+        Storage.removeItem(CACHE_KEY).catch(() => {});
+        cancelReminders();
       }
     });
   }, [refresh]);
@@ -92,6 +112,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
+    await unregisterPush();
     await api("/api/auth/logout", { body: {} }).catch(() => {});
     await clearSession();
     await Storage.removeItem(STUDENT_KEY);
@@ -113,8 +134,11 @@ export function useSession() {
 }
 
 // Izbrani profil (zasloni pod zavihki ga vedno imajo).
+// Ob odjavi ali menjavi profila zaslon do zaprtja še vidi zadnji profil (namesto napake).
 export function useStudent() {
   const { student } = useSession();
-  if (!student) throw new Error("ni izbranega profila");
-  return student;
+  const last = useRef(student);
+  if (student) last.current = student;
+  if (!last.current) throw new Error("ni izbranega profila");
+  return last.current;
 }

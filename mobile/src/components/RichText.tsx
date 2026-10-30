@@ -3,7 +3,7 @@
 // html: že pripravljen HTML (npr. slika k nalogi). Ko se besedilo spreminja (odgovor inštruktorja
 // prihaja sproti), WebView ostane naložen in se zamenja le vsebina, brez utripanja.
 import React, { memo, useEffect, useMemo, useRef, useState } from "react";
-import { Text, View } from "react-native";
+import { Text, useWindowDimensions, View } from "react-native";
 import { WebView } from "react-native-webview";
 import * as WebBrowser from "expo-web-browser";
 import { docHtml, isPlain, MEASURE_JS, toHtml } from "@/lib/rich";
@@ -15,6 +15,8 @@ const replaceJs = (body: string) => `(function(){var c=document.getElementById('
 
 function RichTextImpl({ text, html: rawHtml, ai = false, streaming = false, size = 17, center = false, minHeight = 0 }: Props) {
   const th = useTheme();
+  // Velikost pisave v WebView sledi nastavitvi telefona (Dynamic Type, Android »Velikost pisave«), kot pri Text.
+  const { fontScale } = useWindowDimensions();
   const plain = !rawHtml && isPlain(text);
   const body = useMemo(() => (plain ? "" : (rawHtml ?? toHtml(text, { ai, streaming }))), [plain, rawHtml, text, ai, streaming]);
   const [height, setHeight] = useState(minHeight || size * 1.6);
@@ -25,8 +27,8 @@ function RichTextImpl({ text, html: rawHtml, ai = false, streaming = false, size
   // Dokument se zgradi znova samo ob menjavi teme ali velikosti; vsebina se nato zamenja na mestu.
   const doc = useMemo(() => {
     loaded.current = false;
-    return docHtml(latest.current, th, { size, center });
-  }, [th, size, center]);
+    return docHtml(latest.current, th, { size: Math.round(size * fontScale), center });
+  }, [th, size, center, fontScale]);
 
   useEffect(() => {
     if (loaded.current) ref.current?.injectJavaScript(replaceJs(body));

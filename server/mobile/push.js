@@ -4,6 +4,9 @@
 import express from "express";
 import { ljNow, reminderDays } from "../accounts/goal-reminder.js";
 
+// Besedilo iz zahteve; drugačna vrednost (predmet, število) šteje kot prazna, da ni napake 500.
+const text = (v) => (typeof v === "string" ? v : "");
+
 const EXPO_PUSH = "https://exp.host/--/api/v2/push/send";
 const TOKEN_RE = /^Expo(nent)?PushToken\[[A-Za-z0-9_-]{10,200}\]$/;
 const NAMES = { sprotno: "Sprotno učenje", test: "Test v šoli", npz: "NPZ", matura: "Matura", tekmovanje: "Tekmovanje", izpit: "Izpit" };
@@ -45,7 +48,7 @@ export function mountPush(app, ctx, opts = {}) {
   const json = express.json({ limit: "8kb" });
 
   app.post("/api/push/register", json, (req, res) => {
-    const token = String(req.body?.token || "");
+    const token = text(req.body?.token);
     if (!TOKEN_RE.test(token)) return res.status(400).json({ error: "Napačen žeton obvestil." });
     const platform = ["ios", "android"].includes(req.body?.platform) ? req.body.platform : "";
     // Žeton pripada napravi: ob prijavi z drugim računom gre k novemu računu.
@@ -56,7 +59,7 @@ export function mountPush(app, ctx, opts = {}) {
     res.json({ ok: true });
   });
   app.post("/api/push/unregister", json, (req, res) => {
-    db.prepare("DELETE FROM push_tokens WHERE token = ? AND parent_id = ?").run(String(req.body?.token || ""), req.parent.id);
+    db.prepare("DELETE FROM push_tokens WHERE token = ? AND parent_id = ?").run(text(req.body?.token), req.parent.id);
     res.json({ ok: true });
   });
 

@@ -81,7 +81,7 @@ export default function Textbook() {
             <Card key={u.title + i}>
               <Text style={{ color: th.text, fontSize: 18, fontWeight: "700" }}>{u.title}</Text>
               {u.topics.map((tp) => (
-                <Pressable key={tp.id} onPress={() => open(tp.id)} accessibilityRole="button" style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 9, opacity: pressed ? 0.6 : 1 })}>
+                <Pressable key={tp.id} onPress={() => open(tp.id)} accessibilityRole="button" style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 9, minHeight: 44, opacity: pressed ? 0.6 : 1 })}>
                   <Icon name={tp.lesson === false ? { ios: "doc", android: "description" } : { ios: "book.pages", android: "auto_stories" }} size={20} color={tp.lesson === false ? th.muted : th.accent} />
                   <Text style={{ flex: 1, color: th.text, fontSize: 16 }}>{tp.name}</Text>
                   <Icon name={{ ios: "chevron.right", android: "chevron_right" }} size={13} color={th.muted} />

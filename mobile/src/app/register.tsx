@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import { api, ApiError, webUrl } from "@/lib/api";
+import { usesStoreBilling } from "@/lib/billing";
 import { useSession } from "@/lib/session";
 import { t } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
@@ -45,12 +46,14 @@ export default function Register() {
         <Field label={t("mob.email")} value={email} onChangeText={setEmail} autoCapitalize="none" autoComplete="email" keyboardType="email-address" textContentType="username" />
         <Field label={t("mob.newPassword")} value={password} onChangeText={setPassword} secureTextEntry autoComplete="new-password" textContentType="newPassword" error={password && password.length < 8 ? t("mob.passwordShort") : null} />
         <BirthDateField value={birth} onChange={setBirth} />
-        <Field label={t("mob.promoCode")} value={code} onChangeText={setCode} autoCapitalize="characters" placeholder="" />
+        {/* Aktivacijska koda odklene plačljive funkcije mimo nakupa v aplikaciji: v trgovinah ni dovoljena (Apple 3.1.1). */}
+        {!usesStoreBilling ? <Field label={t("mob.promoCode")} value={code} onChangeText={setCode} autoCapitalize="characters" placeholder="" /> : null}
         <Check checked={agree} onChange={setAgree}>
           {t("mob.agree")} <PrivacyLink />
         </Check>
         {error ? <Banner text={error} tone="danger" /> : null}
-        {underAge ? <Button title={t("mob.parentsPage")} kind="secondary" onPress={() => WebBrowser.openBrowserAsync(webUrl("/starsi.html"))} /> : null}
+        {/* starsi.html kaže spletne cene; različica iz trgovine nanje ne sme voditi (Apple 3.1.1, Google Play) */}
+        {underAge && !usesStoreBilling ? <Button title={t("mob.parentsPage")} kind="secondary" onPress={() => WebBrowser.openBrowserAsync(webUrl("/starsi.html"))} /> : null}
         <Button title={t("mob.register")} onPress={submit} loading={busy} disabled={!email || password.length < 8 || !birthIso(birth) || !agree} />
       </Screen>
     </KeyboardAvoidingView>

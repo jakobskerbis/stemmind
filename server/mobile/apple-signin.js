@@ -11,6 +11,8 @@ import { isLocalRequest } from "../feedback.js";
 import { verifyAppleIdentityToken, appleClientSecret, AppleSignatureError } from "./apple-crypto.js";
 import { BUNDLE_ID } from "./store-billing.js";
 
+// Besedilo iz zahteve; drugačna vrednost (predmet, število) šteje kot prazna, da ni napake 500.
+const text = (v) => (typeof v === "string" ? v : "");
 const sha256hex = (s) => crypto.createHash("sha256").update(String(s)).digest("hex");
 
 export function migrateAppleSignIn(db) {
@@ -45,7 +47,7 @@ export function mountAppleSignIn(app, ctx, opts = {}) {
     verifyAppleIdentityToken(token, { audiences, nonce: rawNonce ? sha256hex(rawNonce) : null, fetchFn, keys: opts.appleKeys || null });
 
   app.post("/api/auth/apple", json, async (req, res) => {
-    const rawNonce = String(req.body?.nonce || "");
+    const rawNonce = text(req.body?.nonce);
     if (rawNonce.length < 16) return res.status(400).json({ error: "Manjka enkratni niz." });
     let who;
     try {
@@ -88,7 +90,7 @@ export function mountAppleSignIn(app, ctx, opts = {}) {
   // Applove žetone (če je nastavljen ključ .p8), kot to zahteva App Store (smernica 5.1.1(v)).
   const revoke = revokeConfig(env);
   ctx.addReauth(async (req, p) => {
-    const nonce = String(req.body?.apple_nonce || "");
+    const nonce = text(req.body?.apple_nonce);
     if (!p.apple_sub || !req.body?.apple_identity_token || nonce.length < 16) return false;
     try {
       const who = await verify(req.body.apple_identity_token, nonce);
@@ -96,7 +98,7 @@ export function mountAppleSignIn(app, ctx, opts = {}) {
     } catch {
       return false;
     }
-    const code = String(req.body?.apple_authorization_code || "");
+    const code = text(req.body?.apple_authorization_code);
     if (revoke && code) revokeAppleTokens(code, revoke, fetchFn).catch((e) => log.error?.("[evklid] preklic žetona Apple:", e.message));
     return true;
   });

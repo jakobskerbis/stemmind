@@ -78,7 +78,7 @@ export default function Subscription() {
     <Screen>
       <Stack.Screen options={{ title: t("mob.subscription") }} />
       <Card tone={paid ? "ok" : "accent"}>
-        <Title size={20}>{paid ? t("mob.subActive") : access.tier === "trial" ? t("mob.trialUntil", { date: new Date(access.until || "").toLocaleDateString() }) : t("mob.subFree")}</Title>
+        <Title size={20}>{paid ? t("mob.subActive") : access.tier === "trial" && access.until ? t("mob.trialUntil", { date: new Date(access.until || "").toLocaleDateString() }) : t("mob.subFree")}</Title>
         {paid && access.until ? <Body muted>{t("mob.renews", { date: new Date(access.until).toLocaleDateString() })}</Body> : null}
         {!paid ? (
           <View style={{ gap: 8 }}>
@@ -129,8 +129,8 @@ export default function Subscription() {
 
       {usesStoreBilling ? <Button title={t("mob.restore")} kind="ghost" loading={restoring} onPress={restore} /> : null}
       <View style={{ flexDirection: "row", justifyContent: "center", gap: 16 }}>
-        <Text style={{ color: th.accent }} onPress={() => WebBrowser.openBrowserAsync(webUrl("/zasebnost.html"))} accessibilityRole="link">{t("mob.privacy")}</Text>
-        {Platform.OS === "ios" ? <Text style={{ color: th.accent }} onPress={() => WebBrowser.openBrowserAsync(EULA)} accessibilityRole="link">{t("mob.terms")}</Text> : null}
+        <Text style={{ color: th.accent, paddingVertical: 12 }} onPress={() => WebBrowser.openBrowserAsync(webUrl("/zasebnost.html"))} accessibilityRole="link">{t("mob.privacy")}</Text>
+        {Platform.OS === "ios" ? <Text style={{ color: th.accent, paddingVertical: 12 }} onPress={() => WebBrowser.openBrowserAsync(EULA)} accessibilityRole="link">{t("mob.terms")}</Text> : null}
       </View>
     </Screen>
   );

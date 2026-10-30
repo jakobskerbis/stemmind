@@ -24,6 +24,7 @@ type Task = {
   answerType: "number" | "fraction" | "choice" | "coefficients";
   unit?: string | null;
   options?: string[] | null;
+  optionsTex?: boolean; // možnosti so formule brez $ (kot renderMath na spletu)
   coefficientCount?: number | null;
   data?: { given?: string[]; find?: string[] } | null;
   hintSteps?: number;
@@ -239,7 +240,8 @@ export default function Practice() {
       {offline ? <Banner text={t("mob.offlinePractice")} tone="gold" icon={{ ios: "wifi.slash", android: "wifi_off" }} /> : null}
       {progress ? (
         <View style={{ gap: 6 }}>
-          <Text style={{ color: th.muted, fontWeight: "600" }}>{t("tb.steps.count", { n: progress.index, m: progress.total })}</Text>
+          {/* Naloga v seriji kot na spletu (»3 / 12«); »Korak« velja za korake lekcije, ne za naloge. */}
+          <Text style={{ color: th.muted, fontWeight: "600" }}>{`${progress.index} / ${progress.total}`}</Text>
           <ProgressBar value={(progress.index - 1) / Math.max(1, progress.total)} />
         </View>
       ) : null}
@@ -320,7 +322,7 @@ function AnswerInput({ task, value, onChange, onSubmit, inputRef }: { task: Task
                 <Text style={{ color: on ? th.accentText : th.text, fontWeight: "800" }}>{String.fromCharCode(65 + i)}</Text>
               </View>
               <View style={{ flex: 1 }} pointerEvents="none">
-                <RichText text={o} size={16} />
+                <RichText text={task.optionsTex ? `$${o}$` : o} size={16} />
               </View>
             </Pressable>
           );

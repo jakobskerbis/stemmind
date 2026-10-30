@@ -63,6 +63,8 @@ export default function Tutor() {
               onLongPress={() => remove(c)}
               accessibilityRole="button"
               accessibilityHint={t("chat.delete")}
+              accessibilityActions={[{ name: "delete", label: t("chat.delete") }]}
+              onAccessibilityAction={(e) => e.nativeEvent.actionName === "delete" && remove(c)}
               style={({ pressed }) => ({ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 12, borderTopWidth: i ? 1 : 0, borderColor: th.border, opacity: pressed ? 0.6 : 1 })}
             >
               <Icon name={{ ios: "bubble.left", android: "chat_bubble_outline" }} size={20} color={th.accent} />

@@ -15,6 +15,7 @@ const light = {
   ok: "#15803D",
   okSoft: "#E7F6EC",
   danger: "#C62828",
+  dangerText: "#FFFFFF", // besedilo na gumbu »danger« (kontrast AA tudi v temnem načinu)
   dangerSoft: "#FDECEC",
   gold: "#B7791F",
   goldSoft: "#FFF6E0",
@@ -36,6 +37,7 @@ const dark: typeof light = {
   ok: "#4ADE80",
   okSoft: "#12301E",
   danger: "#F87171",
+  dangerText: "#0D1117",
   dangerSoft: "#3A1717",
   gold: "#F6C453",
   goldSoft: "#3A2E10",

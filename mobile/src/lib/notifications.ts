@@ -11,6 +11,7 @@ import { key } from "./keys";
 
 const KEY = key("reminder"); // "HH:MM" ali "" (izklopljeno)
 const CHANNEL = "opomniki";
+const PUSH_KEY = key("pushToken"); // žeton Expo, prijavljen na strežniku (za odjavo)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({ shouldShowBanner: true, shouldShowList: true, shouldPlaySound: false, shouldSetBadge: false }),
@@ -35,10 +36,20 @@ export async function registerPush() {
     if (!Device.isDevice || !projectId) return;
     const { data } = await Notifications.getExpoPushTokenAsync({ projectId });
     await api("/api/push/register", { body: { token: data, platform: Platform.OS } });
+    Storage.setItemSync(PUSH_KEY, data);
   } catch {
     // brez obvestil strežnika aplikacija deluje naprej
   }
 }
+
+// Ob odjavi: strežnik ne pošilja več obvestil računa na ta telefon, lokalni opomniki odpadejo
+// (ob naslednji prijavi jih učna pot znova nastavi ob shranjeni uri).
+export async function unregisterPush() {
+  const token = Storage.getItemSync(PUSH_KEY);
+  if (token) await api("/api/push/unregister", { body: { token } }).catch(() => {});
+  Storage.removeItemSync(PUSH_KEY);
+}
+export const cancelReminders = () => Notifications.cancelAllScheduledNotificationsAsync().catch(() => {});
 
 // Naslednjih 7 dni ob izbrani uri; danes ne, če je cilj že dosežen ali je ura mimo.
 export async function scheduleReminders(time = reminderTime(), doneToday = false) {
