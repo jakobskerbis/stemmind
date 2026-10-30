@@ -18,7 +18,9 @@ Brez ključa izvoz vidi samo skrbnik (prijavljen z naslovom iz `EVKLID_ADMIN_EMA
 
 1. **Želje otrok** iz trgovine (»Kaj si želiš v trgovini?«): `wishes` v izvozu (besedilo, jezik, dan; brez imen
    in id-jev; v bazi tabela `feedback`, `kind = "cosmetics"`). Želje so prosto besedilo, zato jih nikoli ne
-   objavi in ne prepisuj v repozitorij; v poročilu j-ju jih povzemi (npr. »3 otroci želijo pirate«).
+   objavi in ne prepisuj v repozitorij; v poročilu j-ju jih povzemi (npr. »3 otroci želijo pirate«). Strežnik
+   jih izbriše po 90 dneh (`WISH_DAYS`, server/feedback.js; navedeno v public/zasebnost.html). Brez ključa izvoz
+   vrne 404, odgovor ima `Cache-Control: no-store`.
 2. **Kaj otroci nosijo in kupujejo**: `trends` v izvozu (prijavljen skrbnik jih vidi tudi na `GET /api/avatar/trends`).
    Samo števila: pod 3 učenci skupaj nič, predmetov z manj kot 3 učenci ni v seštevku.
 3. Splošne povratne informacije (docs/povratne-informacije.md), kadar se dotikajo avatarja, lig ali Zbirk.

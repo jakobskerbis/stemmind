@@ -41,6 +41,13 @@ export function isLocalRequest(req) {
   return ip === "127.0.0.1" || ip === "::1" || ip === "::ffff:127.0.0.1";
 }
 
+// Želje za trgovino so prosto besedilo otrok: hranimo jih največ WISH_DAYS dni (docs/kozmetika-posodobitve.md).
+export const WISH_DAYS = 90;
+export function purgeOldWishes(db) {
+  ensureFeedbackTable(db);
+  return Number(db.prepare(`DELETE FROM feedback WHERE kind = 'cosmetics' AND created_at < datetime('now', '-${WISH_DAYS} days')`).run().changes);
+}
+
 export function ensureFeedbackTable(db) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS feedback (
@@ -270,6 +277,7 @@ export async function nextInterviewQuestion({ answers, lang = "sl", createFn }) 
 
 export function mountFeedback(app, store, { usage, file = null, createFn } = {}) {
   const fb = new FeedbackStore(store.db, file);
+  if (purgeOldWishes(store.db)) fb.writeFile();
 
   // Mnenje je vezano na profil (pri starševskih računih to preveri prijava za /api/students/:id).
   const student = (req, res) => {
@@ -288,7 +296,10 @@ export function mountFeedback(app, store, { usage, file = null, createFn } = {})
     if (entry.kind === "cosmetics" && fb.db.prepare("SELECT COUNT(*) AS n FROM feedback WHERE student_id = ? AND kind = 'cosmetics' AND date(created_at) = date('now')").get(s.id).n >= 5)
       return res.status(429).json({ error: "Za danes je želja dovolj. Hvala!" });
     // Želje za trgovino brez imena (otrok piše prosto besedilo; povzetek pokaže samo #id).
-    if (entry.kind === "cosmetics") entry.name = null;
+    if (entry.kind === "cosmetics") {
+      entry.name = null;
+      if (purgeOldWishes(fb.db)) fb.writeFile();
+    }
     else if (!entry.name) entry.name = s.name;
     res.status(201).json({ id: fb.add(s.id, entry) });
   });

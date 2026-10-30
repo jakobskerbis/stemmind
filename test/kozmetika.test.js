@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
-import { summaryMarkdown, normalizeFeedback } from "../server/feedback.js";
+import { summaryMarkdown, normalizeFeedback, purgeOldWishes } from "../server/feedback.js";
 import { Avatars, exportTokenOk } from "../server/avatar.js";
 import { ADDED, ITEM, isNew, isNewDate } from "../public/avatar.js";
 
@@ -83,4 +83,15 @@ test("izvoz za tedensko posodobitev: ključ v stalnem času, želje brez imen", 
   } finally {
     server.close();
   }
+});
+
+test("želje za trgovino se po 90 dneh izbrišejo, ostala mnenja ostanejo", () => {
+  const store = openDb(":memory:");
+  purgeOldWishes(store.db);
+  const ins = store.db.prepare("INSERT INTO feedback (kind, ideas, created_at) VALUES (?, ?, datetime('now', ?))");
+  ins.run("cosmetics", "stara želja", "-91 days");
+  ins.run("cosmetics", "nova želja", "-89 days");
+  ins.run("form", "staro mnenje", "-200 days");
+  assert.equal(purgeOldWishes(store.db), 1);
+  assert.deepEqual(store.db.prepare("SELECT ideas FROM feedback ORDER BY id").all().map((r) => r.ideas), ["nova želja", "staro mnenje"]);
 });

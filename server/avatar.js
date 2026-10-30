@@ -4,7 +4,7 @@ import { ITEM, SLOTS, DEFAULT_AVATAR, COINS_PER_CORRECT, COINS_PER_DAY, cleanAva
 import fs from "node:fs";
 import crypto from "node:crypto";
 import { ensureKnowledgeTables } from "./zbirke.js";
-import { isLocalRequest, ensureFeedbackTable } from "./feedback.js";
+import { isLocalRequest, purgeOldWishes } from "./feedback.js";
 
 export function ensureAvatarTables(db) {
   ensureKnowledgeTables(db); // predmeti za znanje (server/zbirke.js) so tudi del inventarja
@@ -155,8 +155,10 @@ export function mountAvatar(app, avatars, { loadStudent, trendsFile = null }) {
   // otrok brez imen in id-jev (samo besedilo, jezik, dan). Pot je mimo gesla in prijave (gate.js,
   // accounts), zato jo varuje ključ ali skrbnik.
   app.get("/api/kozmetika/export", (req, res) => {
-    if (!exportAllowed(req)) return denied(res);
-    ensureFeedbackTable(avatars.db);
+    res.set("Cache-Control", "no-store");
+    // Brez ključa 404 (kot da poti ni), ključ samo v glavi Authorization.
+    if (!exportAllowed(req)) return res.status(404).json({ error: "Ne obstaja." });
+    purgeOldWishes(avatars.db);
     const wishes = avatars.db
       .prepare("SELECT ideas, lang, date(created_at) AS day FROM feedback WHERE kind = 'cosmetics' AND ideas != '' ORDER BY id DESC LIMIT 500")
       .all()
