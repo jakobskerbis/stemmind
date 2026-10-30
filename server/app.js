@@ -32,6 +32,7 @@ import { mountAccounts } from "./accounts/index.js";
 import { passwordGate, gateNeeded } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
+import { PAPERS_SI, PAPERS_SOURCE } from "./exam-papers-si.js";
 import { examInfo, examKeyFor, isExamPath, examOf, examPrompt, taskLanguage, localizeExamView, localizeExamTopic } from "./exams.js";
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
@@ -893,7 +894,13 @@ export function createApp(store, opts = {}) {
       defaultExam: examOf(defaultKey),
       history: progress.contestHistory(s.id, key),
       openContest: progress.openContest(s.id, key),
+      readiness: progress.examReadiness(s.id, key),
     });
+  });
+  // Pretekle pole NPZ in mature: samo povezave na ric.si (server/exam-papers-si.js), brez besedila pol.
+  app.get("/api/exam-papers", (_req, res) => {
+    res.set("Cache-Control", "public, max-age=3600");
+    res.json({ source: PAPERS_SOURCE, papers: PAPERS_SI });
   });
   app.post("/api/students/:id/competition-training", (req, res) => {
     const s = loadStudent(req, res);
