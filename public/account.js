@@ -664,7 +664,7 @@ function promoBox(acc, paid) {
   if (!pr.available || pr.redeemed || paid) return admin;
   return `<details${store.get("evklid_koda") ? " open" : ""}><summary>Imate aktivacijsko kodo?</summary>
       <form id="promo-form" class="inline form">
-        <input name="code" maxlength="40" required autocapitalize="characters" placeholder="npr. EVKLID100" value="${esc(store.get("evklid_koda") || "")}">
+        <input name="code" maxlength="40" required autocapitalize="characters" placeholder="npr. EVKLID3X" value="${esc(store.get("evklid_koda") || "")}">
         <button class="primary" type="submit">Aktiviraj</button>
         <p class="form-error" hidden></p>
       </form></details>${admin}`;
