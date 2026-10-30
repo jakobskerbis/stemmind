@@ -247,7 +247,7 @@ P | matrika z lastnimi vektorji v stolpcih | P = \begin{pmatrix} \vec{v}_1 & \ve
 D | diagonalna matrika lastnih vrednosti | D = P^{-1}AP | | vrstni red kot stolpci v P
 \vec{v}_1, \vec{v}_2, \vec{v}_n | lastni vektorji matrike | |
 \lambda_1, \lambda_2, \lambda_n | lastne vrednosti matrike | | | v istem vrstnem redu kot lastni vektorji
-M | prehodna matrika med oblikama A in B | M = PDP^{-1} |
+M | prehodna matrika (deleži iz koraka v korak) | \vec{x}_{k+1} = M\vec{x}_k | | diagonalizacija: M = PDP⁻¹
 \vec{x}_k | vektor deležev po k korakih | \vec{x}_k = M^k\vec{x}_0 |
 \vec{x}_0 | začetni vektor deležev | |
 k | število korakov | |

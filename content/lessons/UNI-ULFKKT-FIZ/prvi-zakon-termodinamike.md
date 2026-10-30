@@ -283,10 +283,11 @@ S $T = pV/(nR)$ dobimo $pV^\kappa = \text{konst.}$ Naklon adiabate je $\frac{\ma
 > $A' = p\Delta V = 2{,}0 \cdot 10^5\,\mathrm{Pa} \cdot 3{,}0 \cdot 10^{-3}\,\mathrm{m^3} = 600\,\mathrm{J}$. $6{,}0 \cdot 10^5\,\mathrm{J}$ dobiš, če litrov ne pretvoriš v kubične metre.
 
 :::simboli
-W_n | notranja energija | W_n = nC_VT | J | do aditivne konstante
+W_n | notranja energija | W_n = nC_VT | J | idealni plin, do aditivne konstante
 \Delta W_n | sprememba notranje energije | \Delta W_n = Q + A | J | idealni plin: ΔW_n = nC_V ΔT
-Q | toplota, ki jo plin prejme | \Delta W_n = Q + A | J | negativna, kadar plin toploto odda
-A | delo, ki ga plin prejme | A = -\int_{V_1}^{V_2} p\,\mathrm{d}V | J | pri razširjanju negativno; delo plina A' = −A
+Q | toplota, ki jo plin prejme | Q = \Delta W_n - A | J | negativna, kadar plin toploto odda
+A | delo, ki ga plin prejme | A = -\int_{V_1}^{V_2} p\,\mathrm{d}V | J | pri razširjanju negativno
+A' | delo, ki ga plin odda (delo plina) | A' = -A | J
 n | množina plina | | mol
 C_V | molska toplotna kapaciteta pri stalni prostornini | | J/(mol K)
 C_p | molska toplotna kapaciteta pri stalnem tlaku | C_p = C_V + R | J/(mol K)
@@ -296,6 +297,6 @@ p_1, p_2 | začetni in končni tlak | | Pa
 V | prostornina plina | | m^3
 V_1, V_2 | začetna in končna prostornina | | m^3
 T | absolutna temperatura | | K
-T_1, T_2 | začetna in končna temperatura | T_2 = T_1\left(\frac{V_1}{V_2}\right)^{\kappa - 1} | K | zveza velja pri adiabatni spremembi
+T_1, T_2 | začetna in končna temperatura | | K | adiabatno: T₂ = T₁(V₁/V₂)^(κ−1)
 \kappa | adiabatni eksponent | \kappa = \frac{C_p}{C_V} | – | enoatomni 5/3, dvoatomni 1,40
 :::

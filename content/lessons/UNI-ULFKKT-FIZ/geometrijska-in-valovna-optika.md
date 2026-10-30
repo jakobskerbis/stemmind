@@ -299,10 +299,12 @@ a | razdalja predmeta od leče | | m
 b | razdalja slike od leče | | m | b < 0: navidezna slika
 f | goriščna razdalja leče | | m | razpršilna leča: f < 0
 M | povečava slike | M = \frac{y'}{y} = -\frac{b}{a} | – | negativna: slika je obrnjena
-y | velikost predmeta | | m | y' je velikost slike
+y | velikost predmeta | | m
+y' | velikost slike | y' = My | m | negativna: slika je obrnjena
 m | red ojačitve (interferenčni red) | | – | m = 0, ±1, ±2, …
 m_{\max} | največji red ojačitve | m_{\max} \le \frac{d}{\lambda} | –
 \lambda | valovna dolžina svetlobe | \lambda = \frac{\lambda_0}{n} | m | v snovi krajša kot v praznem prostoru
+\lambda_0 | valovna dolžina svetlobe v praznem prostoru | | m
 d | razdalja med režama (konstanta mrežice) | | m
 \theta | kot uklona (smer proti progi) | | °
 \theta_m | kot ojačitve m-tega reda | d\sin\theta_m = m\lambda | °
@@ -312,7 +314,7 @@ t | čas potovanja svetlobe | | s
 x | mesto, kjer žarek prečka mejo | | m
 h_1 | višina točke A nad mejo | | m
 h_2 | globina točke B pod mejo | | m
-D | širina reže ali premer odprtine | | m | v Fermatovi izpeljavi vodoravna razdalja med A in B
+D | vodoravna razdalja med točkama A in B | | m | pri uklonu širina reže ali premer odprtine
 j | jakost svetlobe | | W/m^2
 j_1 | jakost svetlobe iz ene reže | | W/m^2
 s | razdalja med točkama, ki ju ločimo | s \approx L\theta | m

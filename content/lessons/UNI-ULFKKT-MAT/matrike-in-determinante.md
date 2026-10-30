@@ -241,7 +241,9 @@ i | indeks vrstice | |
 j | indeks stolpca | |
 k | indeks seštevanja pri množenju matrik | | | teče od 1 do n
 n | število stolpcev (red kvadratne matrike) | |
-a, b, c, d | elementi matrike reda 2 | |
+a | element matrike A | | | brez indeksov: element matrike reda 2
+b | element matrike B | | | brez indeksov: element matrike reda 2
+c, d | elementa matrike reda 2 | |
 \lambda | število, s katerim množimo matriko | |
 \vec{x} | vektor neznank sistema | \vec{x} = A^{-1}\vec{b} |
 \vec{b} | vektor desnih strani sistema | |

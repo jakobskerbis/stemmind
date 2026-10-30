@@ -307,7 +307,9 @@ c_{\text{kisline}} | koncentracija močne kisline | | mol/L
 c_{\text{baze}} | koncentracija močne baze | | mol/L
 z | število ionov OH⁻ na formulsko enoto baze | | – | za Ba(OH)₂ je z = 2
 K_a | konstanta kislosti | K_a = \frac{[\mathrm{H_3O^+}][\mathrm{A^-}]}{[\mathrm{HA}]} | – | pKₐ = −log Kₐ; večji pKₐ pomeni šibkejšo kislino
-K_b | konstanta bazičnosti | K_b = \frac{K_w}{K_a} | – | pKb = −log Kb; pKₐ + pKb = 14,00
+K_b | konstanta bazičnosti | K_b = \frac{K_w}{K_a} | – | za konjugirani par kislina–baza
+\mathrm{p}K_a | negativni desetiški logaritem konstante kislosti | \mathrm{p}K_a = -\log K_a | – | večji pKₐ pomeni šibkejšo kislino
+\mathrm{p}K_b | negativni desetiški logaritem konstante bazičnosti | \mathrm{p}K_b = -\log K_b | – | pKₐ + pK_b = 14,00 pri 25 °C
 \mathrm{pH} | pH raztopine | \mathrm{pH} = -\log[\mathrm{H_3O^+}] | – | 7 nevtralno pri 25 °C
 \mathrm{pOH} | pOH raztopine | \mathrm{pOH} = -\log[\mathrm{OH^-}] | – | pH + pOH = 14,00 pri 25 °C
 x | ravnotežna koncentracija ionov H₃O⁺ in A⁻ | | mol/L

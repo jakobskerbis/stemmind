@@ -298,8 +298,8 @@ T_1 | temperatura v začetnem stanju | | K
 p_2 | tlak v končnem stanju | | Pa
 V_2 | prostornina v končnem stanju | | m^3
 T_2 | temperatura v končnem stanju | | K
-M | molska masa plina | M = \frac{\rho RT}{p} | g/mol
-\rho | gostota plina | \rho = \frac{pM}{RT} | g/L | 1 g/L = 1 kg/m³
+M | molska masa plina | M = \frac{m}{n} | g/mol | iz gostote plina: M = ρRT/p
+\rho | gostota plina | \rho = \frac{m}{V} | g/L | idealni plin: ρ = pM/(RT); 1 g/L = 1 kg/m³
 m | masa plina | m = nM | g | v kinetični teoriji masa ene molekule
 p_i | parcialni tlak komponente i | p_i = x_i\,p | Pa
 n_i | množina komponente i | n_i = \frac{m_i}{M_i} | mol

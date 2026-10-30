@@ -299,7 +299,7 @@ function symbolKey(base, sub, subject, tex) {
 //   :::
 // Polja: oznake (TeX, več z vejico) | ime | zveza v TeX (neobvezno) | enota (TeX ali ključ iz UNITS;
 // »–« = nima enote; prazno = ne izpiši) | opomba (neobvezno).
-const DECOR = { bar: "bar", overline: "bar", hat: "hat", vec: "vec", tilde: "tilde", dot: "dot" };
+const DECOR = { ddot: "ddot", bar: "bar", overline: "bar", hat: "hat", vec: "vec", tilde: "tilde", dot: "dot" };
 const LOCAL = []; // id -> { subject, table: { ključ: vnos } }
 const localIds = new Map();
 export const SYMBOLS_BLOCK_RE = /^[ \t]*:::[ \t]*simboli[ \t]*\n([\s\S]*?)\n[ \t]*:::[ \t]*$/gm;
@@ -307,7 +307,7 @@ export const SYMBOLS_BLOCK_RE = /^[ \t]*:::[ \t]*simboli[ \t]*\n([\s\S]*?)\n[ \t
 // Ključ oznake iz TeX: "I_0", "I_{0}" → "I_0"; "\\varepsilon" → "ε"; "\\Delta H" → "ΔH"; "\\mathrm{pH}" → "pH".
 export function symbolKeyOf(tex) {
   let s = String(tex).trim();
-  const dec = /^\\(bar|overline|hat|vec|tilde|dot)\s*(\{[^{}]*\}|[A-Za-z])\s*(?:_\s*(\{.*\}|\\?[A-Za-z0-9]+|[+-]))?$/.exec(s); // \bar{x}, \vec F_1
+  const dec = /^\\(ddot|bar|overline|hat|vec|tilde|dot)\s*(\{[^{}]*\}|[A-Za-z])\s*(?:_\s*(\{.*\}|\\?[A-Za-z0-9]+|[+-]))?$/.exec(s); // \bar{x}, \vec F_1
   if (dec) {
     const inner = symbolKeyOf(dec[2].replace(/^\{|\}$/g, ""));
     return inner && !inner.includes("_") ? `${DECOR[dec[1]]}(${inner})${dec[3] ? `_${normSub(dec[3])}` : ""}` : null;
@@ -506,6 +506,8 @@ export function annotateTex(tex, subject = override || subjectFn()) {
       if (g === "Δ" && /^[A-Za-z]/.test(tex.slice(j)) && subject?.[0] === "@" && (subject === "@*" ? lookupSymbol(`Δ${tex[j]}`, subject) : Object.keys(LOCAL[subject.slice(1)]?.table || {}).some((k) => k.startsWith(`Δ${tex[j]}`)))) { i = symbol(`Δ${tex[j]}`, i, j + 1, false); continue; }
       const dg = g === "Δ" && subject?.[0] === "@" && /^\\([a-zA-Z]+)\s*/.exec(tex.slice(j));
       if (dg && GREEK[dg[1]] && lookupSymbol(`Δ${GREEK[dg[1]]}`, subject)) { i = symbol(`Δ${GREEK[dg[1]]}`, i, j + dg[0].length, false); continue; }
+      // Gola Δ (razlika poti Δ = mλ) kot oznaka lekcije.
+      if (g === "Δ" && subject?.[0] === "@" && subject !== "@*" && !/^[A-Za-z_\\{]/.test(tex.slice(j)) && lookupSymbol("Δ", subject)) { i = symbol("Δ", i, j, false); continue; }
       if (g === "Δ" && /^\s*_/.test(tex.slice(j)) && subject?.[0] === "@") { i = symbol("Δ", i, j, false); continue; }
       const dRaw = g === "Δ" && subject?.[0] === "@" && subject !== "@*" && /^\\(?:mathrm|text)\s*\{([^{}]+)\}/.exec(tex.slice(j));
       if (dRaw && lookupSymbol(`Δ${normSub(dRaw[1])}`, subject)) {

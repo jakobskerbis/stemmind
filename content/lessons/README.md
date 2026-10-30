@@ -92,6 +92,8 @@ Ena vrstica na oznako, polja ločena z `|`:
 4. enota v TeX (`kg/m^3`, `mol/L`, `L\,mol^{-1}\,cm^{-1}`); `–`, če nima enote; prazno pri čisti matematiki;
 5. neobvezna kratka opomba (`število med 0 in 1`).
 
+Formula v imenu ali opombi je med `$…$` (`največje odstopanje od $\bar{h}$`), sicer se izpiše surov TeX.
+
 Preverjevalnik opozori na oznake iz izpostavljenih formul (`$$…$$` in `:::formula`),
 ki v bloku manjkajo. Pomoč za obstoječe lekcije: `node scripts/simboli.js <lekcija>`
 izpiše formule, manjkajoče oznake, slovarski pomen in stavke, kjer se pojavijo.

@@ -240,9 +240,9 @@ p_\mathrm{n} | nadtlak (hidrostatični tlak) | p_\mathrm{n} = p - p_0 = \rho g h
 g | težni pospešek | | m/s^2 | 9,81 m/s²
 h | globina pod gladino | | m
 F | sila tekočine na ploskev | F = \rho g h_\mathrm{T} A | N | pri žogi rezultanta F = F_vz − mg
-h_\mathrm{T} | globina težišča ploskve | h_\mathrm{T} = h_1 + \frac{a}{2} | m
+h_\mathrm{T} | globina težišča ploskve | | m | navpičen pravokotnik: h_T = h₁ + a/2
 h_1 | globina zgornjega roba ploskve | | m
-A | ploščina ploskve | A = a b | m^2
+A | ploščina ploskve | | m^2 | pravokotnik: A = ab
 a | rob kocke oziroma višina pravokotne ploskve | | m
 b | širina pravokotne ploskve | | m
 F_\mathrm{vz} | sila vzgona | F_\mathrm{vz} = \rho g V | N | Arhimedov zakon

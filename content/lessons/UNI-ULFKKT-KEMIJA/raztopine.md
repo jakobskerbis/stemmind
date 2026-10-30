@@ -282,8 +282,9 @@ Za vodo ($T_t^* = 273{,}15\,\mathrm{K}$, $M_1 = 0{,}018\,02\,\mathrm{kg/mol}$, $
 > Sol je treba raztopiti v manj vode in nato **dopolniti do** $500\,\mathrm{mL}$ v merilni bučki. Če jo stresemo v $500\,\mathrm{mL}$ vode, prostornina raztopine ni natanko $500\,\mathrm{mL}$ in koncentracija ni $0{,}154\,\mathrm{mol/L}$.
 
 :::simboli
-c | množinska koncentracija (molarnost) | c = \frac{w\,\rho}{M} | mol/L | n(topljenca) na prostornino raztopine
-w | masni delež topljenca | w = \frac{m(\text{topljenca})}{m} | – | pogosto v %
+c | množinska koncentracija (molarnost) | c = \frac{n}{V} | mol/L | iz masnega deleža: c = wρ/M
+w | masni delež topljenca | w = \frac{m(\text{topljenca})}{m(\text{raztopine})} | – | pogosto v %
+\Pi | osmozni tlak | \Pi = i\,c\,RT | Pa | s Π v Pa dobimo c v mol/m³
 \rho | gostota raztopine | | g/mL | v c = wρ/M vstavi g/L
 M | molska masa topljenca | M = \frac{m}{n} | g/mol
 c_1 | koncentracija založne raztopine | | mol/L
@@ -296,6 +297,7 @@ m | masa topljenca | m = n\,M | g | v izrazu za b: m(topila) v kg
 b | molalnost | b = \frac{n}{m(\text{topila})} | mol/kg
 \Delta T_t | znižanje tališča (zmrzišča) | \Delta T_t = K_k\,b | K | pri elektrolitih še faktor i
 \Delta T_v | zvišanje vrelišča | \Delta T_v = K_e\,b | K | pri elektrolitih še faktor i
+\Delta T | sprememba tališča ali vrelišča raztopine | | K
 K_k | krioskopska konstanta topila | | K\,kg/mol | za vodo 1,86 K kg/mol
 K_e | ebulioskopska konstanta topila | | K\,kg/mol | za vodo 0,512 K kg/mol
 i | van 't Hoffov faktor | | – | število delcev, na katere razpade formulska enota

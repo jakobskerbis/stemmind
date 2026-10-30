@@ -283,9 +283,9 @@ Na mokri cesti je $k_l$ lahko le okoli $0{,}4$; ker je $v_{\max} \propto \sqrt{k
 
 :::simboli
 \vec{F} | vektor sile | \sum \vec{F} = m\vec{a} | N | vsota vseh zunanjih sil
-F | velikost sile | F = G\frac{m_1 m_2}{r^2} | N | v primeru s klancem vlečna sila
+F | velikost sile | | N | gravitacijska: F = G m₁m₂/r²; v zgledu vlečna sila
 F_x | komponenta sile v smeri x | | N
-F_N | pravokotna sila podlage | F_N = mg | N | na klancu F_N = mg cos α
+F_N | pravokotna sila podlage | | N | na vodoravni podlagi mg, na klancu mg cos α
 F_{tr} | sila trenja (kinetično trenje) | F_{tr} = k_t F_N | N
 F_l | sila lepenja | | N | največ k_l F_N
 F_{l,\max} | največja sila lepenja | F_{l,\max} = k_l F_N | N

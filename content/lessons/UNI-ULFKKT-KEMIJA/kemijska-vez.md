@@ -307,7 +307,8 @@ Za $\mathrm{N_2}$ je red $3$, za $\mathrm{O_2}$ pa $2$, pri čemer ima $\mathrm{
 e | elektron | | | v Paulingovi oceni je e osnova naravnega logaritma
 n_{\text{vezni}} | število elektronov v veznih orbitalah | | –
 n_{\text{protivezni}} | število elektronov v protiveznih orbitalah | | –
-\chi | elektronegativnost | | – | Δχ: razlika elektronegativnosti vezanih atomov
+\chi | elektronegativnost | | –
+\Delta\chi | razlika elektronegativnosti vezanih atomov | \Delta\chi = \chi_{\text{večja}} - \chi_{\text{manjša}} | – | pod 0,4 nepolarna, nad 1,7 ionska vez
 \chi_{\text{večja}} | večja elektronegativnost vezanih atomov | | –
 \chi_{\text{manjša}} | manjša elektronegativnost vezanih atomov | | –
 s | orbitala tipa s | | | v oznakah hibridizacije sp, sp², sp³

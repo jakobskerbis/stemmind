@@ -307,7 +307,8 @@ I_k | k-ta ionizacijska energija | | kJ/mol
 I_{k+1} | (k + 1)-ta ionizacijska energija | | kJ/mol
 k | zaporedna številka odstranjenega elektrona | | – | velik skok za Iₖ: k valenčnih elektronov
 E | energija za odstranitev treh elektronov | E = I_1 + I_2 + I_3 | kJ/mol
-\chi | elektronegativnost | | – | Δχ: razlika elektronegativnosti vezanih atomov
+\chi | elektronegativnost | | –
+\Delta\chi | razlika elektronegativnosti vezanih atomov | \Delta\chi = \lvert\chi_\mathrm{A} - \chi_\mathrm{B}\rvert | – | večja Δχ pomeni bolj ionsko vez
 \chi_\mathrm{A}, \chi_\mathrm{B} | elektronegativnosti vezanih atomov A in B | | –
 D | disociacijska energija vezi | | eV | npr. D(A−B) za vez med A in B
 :::

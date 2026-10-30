@@ -313,7 +313,7 @@ v | hitrost delca | | m/s | pri drsečem vodniku hitrost vodnika
 \vec{B} | vektor gostote magnetnega polja | | T
 B | gostota magnetnega polja | | T
 \theta | kot med hitrostjo (tokom) in poljem | | ° | pri pretoku kot med poljem in normalo
-r | polmer krožnice ali razdalja od vodnika | r = \frac{mv}{\lvert q\rvert B} | m
+r | polmer tira delca ali razdalja od vodnika | | m | polmer tira naboja: r = mv/(qB) za q > 0
 r_{12}, r_{13} | polmera tirov ionov ogljika-12 in ogljika-13 | | m
 m | masa delca | | kg
 \omega | kotna hitrost kroženja delca | \omega = \frac{\lvert q\rvert B}{m} | s^{-1} | pri generatorju kotna hitrost tuljave
@@ -328,6 +328,7 @@ N | število ovojev tuljave | | –
 \vec{S} | vektor ploskve (pravokoten na ploskev) | | m^2 | velikost je površina ploskve
 S | površina ploskve (ovoja) | | m^2
 U_i | inducirana napetost | U_i = -N\,\frac{\mathrm{d}\Phi_m}{\mathrm{d}t} | V | premikajoči vodnik: U_i = Blv
+\Delta\Phi_m | sprememba magnetnega pretoka | | Wb | v času Δt; povprečna inducirana napetost N ΔΦ_m/Δt
 t | čas | | s
 e_0 | osnovni naboj | | C | 1,602 · 10⁻¹⁹ C
 U | pospeševalna napetost | | V

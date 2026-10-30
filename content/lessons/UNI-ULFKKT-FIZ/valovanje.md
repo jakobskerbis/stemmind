@@ -295,18 +295,21 @@ k | valovno število | k = \frac{2\pi}{\lambda} | m^{-1}
 c | hitrost valovanja | c = \frac{\omega}{k} = \lambda\nu | m/s | zvok v zraku okoli 340 m/s
 \lambda | valovna dolžina | \lambda = \frac{c}{\nu} | m
 \nu | frekvenca | | Hz | pri Dopplerju frekvenca izvira
-\nu_n | n-ta lastna frekvenca | \nu_n = n\,\frac{c}{2l} | Hz | struna ali na obeh koncih odprta piščal
+\nu_n | n-ta lastna frekvenca | \nu_n = n\,\frac{c}{2l} | Hz | struna ali odprta piščal; na enem koncu zaprta: (2n − 1)c/(4l)
 \nu_1 | osnovna lastna frekvenca | | Hz
 \nu_\mathrm{p}, \nu_\mathrm{o} | slišana frekvenca pri približevanju in oddaljevanju | | Hz
+\nu' | frekvenca, ki jo sliši opazovalec | \nu' = \nu\,\frac{c + v_o}{c - v_i} | Hz | Dopplerjev pojav
 n | zaporedna številka lastnega nihanja | | – | n = 1, 2, 3, …
 l | dolžina strune ali piščali | | m
 F | sila v struni | | N
 \mu | dolžinska gostota strune | \mu = \frac{m}{l} | kg/m
+m | masa strune | | kg
 \kappa | razmerje specifičnih toplot (adiabatni eksponent) | | – | zrak: 1,4
 R | splošna plinska konstanta | | J/(mol K) | 8,314 J/(mol K)
 T | absolutna temperatura | | K
 M | molska masa | | kg/mol | zrak: 0,029 kg/mol
-j | gostota energijskega toka (jakost) | j = \frac{P}{4\pi r^2} | W/m^2 | za točkast izvir
+j | gostota energijskega toka (jakost) | j = \frac{P}{S} | W/m^2 | točkast izvir: j = P/(4πr²)
+S | ploskev, pravokotna na smer širjenja | | m^2
 j_0 | prag slišnosti | | W/m^2 | 10⁻¹² W/m²
 P | moč izvira | | W
 r | razdalja od izvira | | m

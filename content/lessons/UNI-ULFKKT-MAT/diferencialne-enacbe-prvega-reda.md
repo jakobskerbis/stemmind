@@ -259,7 +259,7 @@ P | primitivna funkcija koeficienta p | P(x) = \int p(x)\, dx |
 \mu | integrirajoči množitelj | \mu = e^{P(x)} |
 e | Eulerjevo število | | | e ≈ 2,718
 C | integracijska konstanta | | | določimo jo iz začetnega pogoja
-N | velikost populacije | N(t) = N_0\, e^{kt} |
+N | velikost populacije | | | eksponentna rast: N(t) = N₀e^{kt}
 N_0 | začetna velikost populacije | |
 t | čas | |
 k | konstanta rasti oziroma hitrosti | | | k > 0 rast, k < 0 upadanje; v kinetiki s⁻¹

@@ -325,5 +325,5 @@ m | masa izločene snovi | m = \frac{I\,t\,M}{z\,F} | g
 I | električni tok | | A
 t | čas elektrolize | | s
 M | molska masa izločene snovi | | g/mol
-n | množina elektronov | n(\mathrm{e^-}) = \frac{Q}{F} | mol
+n | množina elektronov | n(\mathrm{e^-}) = \frac{I\,t}{F} | mol
 :::

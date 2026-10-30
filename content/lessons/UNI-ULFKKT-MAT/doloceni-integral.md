@@ -250,6 +250,7 @@ n | število podintervalov | | | v ∫xⁿ dx eksponent potence, n ≠ −1
 i | zaporedna številka podintervala | | | i = 1, …, n
 \xi_i | izbrana točka v i-tem podintervalu | |
 \Delta x_i | dolžina i-tega podintervala | \Delta x_i = x_i - x_{i-1} |
+\Delta x | dolžina podintervala pri enakomerni delitvi | \Delta x = \frac{b - a}{n} |
 \xi | točka iz izreka o povprečni vrednosti | | | ξ leži na [a, b]
 F | primitivna funkcija funkcije f | F' = f |
 F' | odvod primitivne funkcije | F' = f |
@@ -261,5 +262,5 @@ g | spodnja funkcija (spodnji graf) | |
 V | prostornina vrtenine | V = \pi \int_a^b f(x)^2\, dx |
 A | ploščina prereza vrtenine | A(x) = \pi f(x)^2 |
 \bar A | povprečna ploščina prereza | \bar A = \frac{1}{b - a} \int_a^b A(x)\, dx |
-\bar c | povprečna koncentracija zdravila v krvi | \bar c = \frac{1}{6} \int_0^6 (6t - t^2)\, dt | mg/L
+\bar c | povprečna koncentracija zdravila v krvi | \bar c = \frac{1}{b - a} \int_a^b c(t)\, dt | mg/L | v zgledu na intervalu od 0 do 6 h
 :::

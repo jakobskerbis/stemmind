@@ -301,8 +301,8 @@ Isti rezultat dobiš tudi s Kirchhoffovima zakonoma; poenostavljanje je le hitre
 
 :::simboli
 I | električni tok | I = \frac{\mathrm{d}Q}{\mathrm{d}t} | A
-I_1, I_2, I_3 | tokovi v vejah vezja | I_1 + I_2 = I_3 | A
-Q | električni naboj | Q = CU | C | na kondenzatorju
+I_1, I_2, I_3 | tokovi v vejah vezja | | A | v zgledu velja I₁ + I₂ = I₃
+Q | električni naboj | | C | na kondenzatorju Q = CU
 t | čas | | s
 n | število nosilcev naboja na enoto prostornine | | m^{-3}
 e_0 | osnovni naboj | | C | 1,602 · 10⁻¹⁹ C
@@ -310,9 +310,9 @@ v | hitrost potovanja nosilcev naboja | v = \frac{I}{n e_0 S} | m/s | zelo majhn
 S | presek vodnika | | m^2
 U | električna napetost | U = RI | V
 U_1, U_2 | gonilni napetosti virov v vezju | | V
-U_C | napetost na kondenzatorju | U_C(t) = U_g\left(1 - e^{-t/\tau}\right) | V | pri polnjenju
+U_C | napetost na kondenzatorju | U_C = \frac{Q}{C} | V | pri polnjenju U_C = U_g(1 − e^{−t/τ})
 U_0 | začetna napetost na kondenzatorju | | V | pri praznjenju
-R | električni upor | R = \zeta\,\frac{l}{S} | Ω
+R | električni upor | R = \frac{U}{I} | Ω | žica: R = ζ l/S
 R_1, R_2, R_3 | upori v vejah vezja | | Ω
 \Omega | ohm, enota za upor | | | 1 Ω = 1 V/A
 \zeta | specifični upor snovi | | Ω m | baker: 1,7 · 10⁻⁸ Ω m

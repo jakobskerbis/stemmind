@@ -136,6 +136,7 @@ export function checkSymbols(body, err, warn) {
           err(`:::simboli: ${what} »${tex.slice(0, 40)}« se ne izriše (${String(e.message).split("\n")[0].slice(0, 60)})`);
         }
       }
+      if (/\\[a-zA-Z]|[_^]\{/.test(`${g.n} ${g.note}`.replace(/\$[^$]*\$/g, ""))) warn(`:::simboli: ime ali opomba pri »${g.tex.join(", ")}« ima TeX brez $…$ (na kartici bi se izpisal surov)`);
       g.keys.forEach((k) => keys.add(k));
     }
   }

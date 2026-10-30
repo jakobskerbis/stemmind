@@ -298,13 +298,14 @@ kar se tu dobro ujema z vrednostjo iz tvorbenih entalpij ($-393{,}5 + 2 \cdot (-
 
 :::simboli
 \Delta U | sprememba notranje energije | \Delta U = q + w | kJ | pri stalni prostornini ΔU = q_V
-q | toplota | q = m\,c_p\,\Delta T | J | prejeta toplota je pozitivna
+q | toplota | | J | prejeta pozitivna; pri segrevanju q = m c_p ΔT
 w | delo | | J | pri razpenjanju w = −p ΔV
 \Delta H | reakcijska entalpija | \Delta H = q_p | kJ/mol | negativna: eksotermna reakcija
 q_p | toplota pri stalnem tlaku | | J
 \Delta_\mathrm{r} | sprememba pri reakciji (reakcijska količina) | | | ΔᵣH°: standardna reakcijska entalpija
 \Delta_\mathrm{f} | sprememba pri nastanku spojine iz elementov | | | ΔfH°: standardna tvorbena entalpija
-H | entalpija | H = U + pV | kJ/mol | ΔᵣH°: reakcijska, Δf H°: standardna tvorbena entalpija
+H | entalpija | H = U + pV | J | ΔᵣH°: reakcijska, ΔfH°: standardna tvorbena entalpija (kJ/mol)
+U | notranja energija | | J | funkcija stanja
 \Delta H_\text{celotna} | entalpija celotne reakcije | \Delta H_\text{celotna} = \Delta H_1 + \Delta H_2 + \dots | kJ/mol | Hessov zakon
 \Delta H_1, \Delta H_2 | entalpiji posameznih stopenj | | kJ/mol
 \nu | stehiometrični koeficient snovi | | –

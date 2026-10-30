@@ -266,7 +266,8 @@ Za stalno $\rho$ integracija da $p = p_0 + \rho g h$. Za idealni plin pri stalni
 > Iz $S_1v_1 = S_2v_2$ je hitrost v ozkem delu največja, iz Bernoullijeve enačbe na isti višini pa je tam tlak najmanjši. Ko se cev razširi, se hitrost in tlak vrneta na začetni vrednosti.
 
 :::simboli
-p | tlak | p = p_0 + \rho g h | Pa | v Bernoullijevi enačbi tlak v tekočini
+p | tlak | p = \frac{F}{S} | Pa | v mirujoči tekočini p = p₀ + ρgh
+F | sila, pravokotna na ploskev | | N
 p_0 | tlak na gladini (zračni tlak) | | Pa | normalni zračni tlak 1,013 · 10⁵ Pa
 p_1, p_2 | tlak v prerezih 1 in 2 | | Pa
 h | globina pod gladino | | m
@@ -277,7 +278,7 @@ g | težni pospešek | | m/s^2 | 9,81 m/s²
 g_M | težni pospešek na Marsu | | m/s^2 | 3,71 m/s²
 F_{vz} | sila vzgona | F_{vz} = \rho_{\text{tek}}\,g\,V_{\text{pot}} | N
 V_{\text{pot}} | prostornina potopljenega dela telesa | | m^3
-S | ploščina preseka cevi | S = \frac{\pi d^2}{4} | m^2
+S | ploščina preseka cevi | | m^2 | okrogla cev: S = πd²/4
 S_1, S_2 | ploščini presekov 1 in 2 | | m^2
 v | hitrost tekočine | | m/s
 v_1, v_2 | hitrost tekočine v prerezih 1 in 2 | S_1v_1 = S_2v_2 | m/s

@@ -306,11 +306,11 @@ c | hitrost svetlobe | | m/s | 3,00 · 10⁸ m/s
 \lambda_0 | mejna valovna dolžina | \lambda_0 = \frac{hc}{A_i} | m
 p | gibalna količina | p = \frac{h}{\lambda} | kg\,m/s
 W_{k,\max} | največja kinetična energija izbitih elektronov | W_{k,\max} = h\nu - A_i | J
-W_k | kinetična energija delca | W_k = e_0U | J | pri pospeševanju elektrona z napetostjo U
+W_k | kinetična energija delca | W_k = \frac{m v^2}{2} | J | elektron, pospešen z napetostjo U: W_k = e₀U
 A_i | izstopno delo | | J | običajno v eV
 m | masa delca | | kg | v Rydbergovi formuli kvantno število višjega nivoja
 m_e | masa elektrona | | kg | 9,11 · 10⁻³¹ kg
-v | hitrost delca | v = \sqrt{\frac{2W_k}{m_e}} | m/s
+v | hitrost delca | v = \sqrt{\frac{2W_k}{m}} | m/s
 e_0 | osnovni naboj | | C | 1,602 · 10⁻¹⁹ C
 U | pospeševalna napetost | | V
 U_z | zaporna napetost | e_0U_z = W_{k,\max} | V

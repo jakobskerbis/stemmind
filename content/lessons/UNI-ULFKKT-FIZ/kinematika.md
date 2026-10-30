@@ -315,7 +315,8 @@ v_{0y} | navpična komponenta začetne hitrosti | v_{0y} = v_0\sin\alpha | m/s
 \vec{a} | vektor pospeška | \vec{a} = \frac{\mathrm{d}\vec{v}}{\mathrm{d}t} | m/s^2
 a | pospešek pri premem gibanju | | m/s^2
 a_t | tangentni pospešek | a_t = \frac{\mathrm{d}v}{\mathrm{d}t} | m/s^2 | spreminja velikost hitrosti
-a_r | radialni pospešek | a_r = \omega^2 r | m/s^2 | splošno v²/R, R je polmer ukrivljenosti
+a_r | radialni pospešek | a_r = \frac{v^2}{R} | m/s^2 | pri kroženju a_r = ω² r
+R | krivinski polmer tira | | m
 t | čas | | s
 t_{\text{let}} | čas leta | t_{\text{let}} = \frac{2v_0\sin\alpha}{g} | s
 x, y, z | koordinate lege telesa | | m
@@ -329,6 +330,7 @@ h_{\max} | največja višina meta | h_{\max} = \frac{v_0^2\sin^2\alpha}{2g} | m
 D | domet | D = v_x\,t_{\text{let}} | m | največji pri 45°
 \vec{u} | hitrost sistema S' glede na sistem S | | m/s
 \vec{e}_t | enotski tangentni vektor | \vec{e}_t = \frac{\vec{v}}{v} | – | kaže v smeri hitrosti
+\vec{e}_n | enotski normalni vektor | | – | kaže proti središču ukrivljenosti
 s | pot | | m | dolžina krivulje, ne velikost premika
 \varphi | kot zasuka pri kroženju | | rad
 \omega | kotna hitrost | \omega = \frac{\mathrm{d}\varphi}{\mathrm{d}t} | s^{-1}

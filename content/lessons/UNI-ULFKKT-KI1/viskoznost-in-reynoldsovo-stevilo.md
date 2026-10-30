@@ -304,6 +304,6 @@ v_\mathrm{max} | največja hitrost (v osi cevi) | | m/s | pri laminarnem toku v_
 \bar v | povprečna hitrost po preseku | \bar v = \frac{v_\mathrm{max}}{2} | m/s | velja za laminarni tok
 \Delta p | tlačni padec na dolžini cevi | \Delta p = \frac{32\, \mu\, L\, \bar v}{D^2} | Pa | Hagen-Poiseuillov zakon, laminarni tok
 L | dolžina cevi | | m
-Q | prostorninski pretok | Q = v \cdot \frac{\pi D^2}{4} | m^3/s
+Q | prostorninski pretok | Q = v\,A | m^3/s | okrogla cev: Q = v πD²/4
 A | ploščina preseka cevi | A = \frac{\pi D^2}{4} | m^2
 :::

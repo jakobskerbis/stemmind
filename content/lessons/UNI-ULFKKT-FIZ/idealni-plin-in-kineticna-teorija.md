@@ -295,7 +295,7 @@ p_0 | normalni zračni tlak | | Pa | 1,013 · 10⁵ Pa
 p_z | zunanji (zračni) tlak | | Pa | nadtlak je p − p_z
 V | prostornina plina | | m^3
 V_0 | prostornina plina pri normalnih pogojih | V_0 = \frac{nRT_0}{p_0} | m^3
-n | množina snovi | n = \frac{pV}{RT} | mol
+n | množina snovi | n = \frac{N}{N_A} | mol | iz plinske enačbe n = pV/(RT)
 N | število molekul | N = nN_A | –
 N_A | Avogadrova konstanta | | mol^{-1} | 6,022 · 10²³ mol⁻¹
 R | splošna plinska konstanta | | J/(mol K) | 8,314 J/(mol K)
@@ -317,8 +317,9 @@ C_V | molska toplotna kapaciteta pri stalni prostornini | C_V = \tfrac{f}{2}R | 
 C_p | molska toplotna kapaciteta pri stalnem tlaku | C_p = C_V + R | J/(mol K)
 Q_V | toplota pri stalni prostornini | Q_V = nC_V\Delta T | J
 Q_p | toplota pri stalnem tlaku | Q_p = nC_p\Delta T | J
-A | delo plina pri stalnem tlaku | A' = p\Delta V = nR\Delta T | J
+A' | delo plina pri stalnem tlaku | A' = p\Delta V = nR\Delta T | J
 F | sila molekul na steno | | N
+\Delta t | čas, v katerem štejemo trke s steno | | s
 S | ploščina stene | | m^2
 f | Maxwellova porazdelitev hitrosti | | s/m | tudi število prostostnih stopenj v C_V = (f/2)R
 e | osnova naravnega logaritma | | – | e ≈ 2,718

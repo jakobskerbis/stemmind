@@ -305,18 +305,18 @@ m | masa telesa (uteži) | | kg
 m_p | masa ploščadi | | kg
 M_k | masa koluta | | kg
 \alpha | kotni pospešek | \alpha = \frac{\mathrm{d}\omega}{\mathrm{d}t} | s^{-2}
-\omega | kotna hitrost | \omega = 2\pi\nu | s^{-1}
-\omega_1, \omega_2 | kotna hitrost pred spremembo in po njej | J_1\omega_1 = J_2\omega_2 | s^{-1}
+\omega | kotna hitrost | \omega = \frac{\mathrm{d}\varphi}{\mathrm{d}t} | s^{-1} | enakomerno vrtenje: ω = 2πν
+\omega_1, \omega_2 | kotna hitrost pred spremembo in po njej | | s^{-1} | brez zunanjih navorov J₁ω₁ = J₂ω₂
 \nu | frekvenca vrtenja (obrati na sekundo) | | s^{-1}
 W_k | kinetična energija | W_k = \tfrac{1}{2}mv_{ms}^2 + \tfrac{1}{2}J_{ms}\omega^2 | J
-v_{ms} | hitrost masnega središča | v_{ms} = \omega R | m/s | pri kotaljenju brez zdrsa
+v_{ms} | hitrost masnega središča | | m/s | kotaljenje brez zdrsa: v_ms = ωR
 v | hitrost | | m/s
 R | polmer koluta ali valja | | m
 \vec{\Gamma} | vektor vrtilne količine | \vec{\Gamma} = \vec{r} \times m\vec{v} | kg\,m^2/s
 \Gamma | vrtilna količina | \Gamma = J\omega | kg\,m^2/s | ohranja se brez zunanjih navorov
 t | čas | | s
 F_v | sila vrvice | | N
-a | pospešek uteži | a = \alpha R | m/s^2
+a | pospešek uteži | | m/s^2 | vrvica ne zdrsne: a = αR
 g | težni pospešek | | m/s^2 | 9,81 m/s²
 h | višina padca uteži | | m
 :::

@@ -19,6 +19,12 @@ const symTex = (key) => {
 };
 const unitTex = (key) => `\\mathrm{${key.replace(/Ω/g, "\\Omega ").replace(/μ/g, "\\mu ").replace(/%/g, "\\%").replace(/ /g, "\\,")}}`;
 
+// Ime in opomba oznake: besedilo, $…$ v njem je formula (»največje odstopanje od $\bar{h}$«).
+function richText(text, tex, esc) {
+  return String(text).split(/\$([^$]+)\$/).map((part, i) => (i % 2 ? tex(part) : esc(part))).join("");
+}
+const plainText = (text) => String(text).replace(/\$([^$]+)\$/g, "$1");
+
 function cardFor(code) {
   const [kind, ...rest] = code.split(":");
   const k = window.katex;
@@ -42,11 +48,11 @@ function cardFor(code) {
   const symbol = (delta ? "\\Delta " : "") + (e.tex || symTex(key));
   const relation = e.r && !delta ? e.r : "";
   return {
-    label: `${delta ? "Δ" : ""}${key.replace("_", " ")} — ${name}`,
-    html: `<div class="fx-title">${tex(symbol)}<b>${esc(name)}</b></div>
+    label: `${delta ? "Δ" : ""}${key.replace("_", " ")} — ${plainText(name)}`,
+    html: `<div class="fx-title">${tex(symbol)}<b>${richText(name, tex, esc)}</b></div>
       ${relation ? `<div class="fx-line"><span class="fx-k">${t("fx.formula")}</span>${tex(`\\displaystyle ${relation}`)}</div>${partsHtml(relation, subject, key, tex, esc)}` : ""}
       ${unitHtml(e, tex, esc)}
-      ${noteOf(e) ? `<div class="fx-note">${esc(noteOf(e))}</div>` : ""}`,
+      ${noteOf(e) ? `<div class="fx-note">${richText(noteOf(e), tex, esc)}</div>` : ""}`,
   };
 }
 
@@ -74,7 +80,7 @@ function partsHtml(relation, subject, self, tex, esc) {
     if (!p) return "";
     const nm = d ? t("fx.change", { what: nameOf(p) }) : nameOf(p);
     const unit = p.u && !/^(–|-|—|1|brez)$/.test(p.u) ? (lookupUnit(normUnitKey(p.u))?.key ? unitTex(lookupUnit(normUnitKey(p.u)).key) : `\\mathrm{${p.u.replace(/ +/g, "\\,")}}`) : "";
-    return `<li>${tex((d ? "\\Delta " : "") + (p.tex || symTex(k)))}<span>${esc(nm)}${unit ? ` <span class="fx-un">[${tex(unit)}]</span>` : ""}</span></li>`;
+    return `<li>${tex((d ? "\\Delta " : "") + (p.tex || symTex(k)))}<span>${richText(nm, tex, esc)}${unit ? ` <span class="fx-un">[${tex(unit)}]</span>` : ""}</span></li>`;
   }).join("");
   return rows ? `<div class="fx-parts"><span class="fx-k">${t("fx.parts")}</span><ul>${rows}</ul></div>` : "";
 }

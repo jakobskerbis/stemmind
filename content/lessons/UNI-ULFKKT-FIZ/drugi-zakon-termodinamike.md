@@ -288,7 +288,8 @@ za izoliran sistem ($\delta Q = 0$) pa $\Delta S \ge 0$.
 :::simboli
 \eta | izkoristek toplotnega stroja | \eta = \frac{A'}{Q_1} = 1 - \frac{Q_2}{Q_1} | – | vedno manjši od 1
 \eta_C | Carnotov izkoristek | \eta_C = 1 - \frac{T_2}{T_1} | – | največji možni izkoristek med rezervoarjema
-A | delo, ki ga stroj odda v enem ciklu | A' = Q_1 - Q_2 | J | brez črtice: dovedeno delo hladilnika
+A' | delo, ki ga stroj odda v enem ciklu | A' = Q_1 - Q_2 | J
+A | delo, dovedeno hladilniku v enem ciklu | A = Q_1 - Q_2 | J | pri hladilniku in toplotni črpalki
 Q_1 | toplota, prejeta iz toplega rezervoarja | | J | v enem ciklu
 Q_2 | toplota, oddana hladnemu rezervoarju | | J | v enem ciklu
 Q_{\text{rev}} | toplota, izmenjana pri povratni spremembi | | J
@@ -298,7 +299,8 @@ T_2 | temperatura hladnega rezervoarja | | K | v primerih tudi začetna oziroma 
 T | absolutna temperatura | | K | pri Clausiusovi neenakosti temperatura rezervoarja
 T_0 | temperatura tališča ledu | | K | 273,15 K
 T_k | končna (skupna) temperatura po mešanju | | K
-S | entropija | \Delta S = \int_1^2\frac{\delta Q_{\text{rev}}}{T} | J/K | funkcija stanja
+S | entropija | | J/K | funkcija stanja
+\Delta S | sprememba entropije | \Delta S = \int_1^2\frac{\delta Q_{\text{rev}}}{T} | J/K | ΔS = S₂ − S₁
 \Delta S_{\text{izol}} | sprememba entropije izoliranega sistema | | J/K | nikoli negativna
 \Delta S_1 | sprememba entropije pri taljenju ledu | \Delta S_1 = \frac{m q_t}{T_0} | J/K
 \Delta S_2 | sprememba entropije pri segrevanju vode | \Delta S_2 = m c \ln\frac{T_2}{T_0} | J/K
