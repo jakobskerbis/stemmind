@@ -380,3 +380,71 @@ test("darilna koda: izbris prejemnika ne sprosti kode, vračilo enega od dveh da
     assert.equal(store.db.prepare("SELECT sub_status FROM parents WHERE id = ?").get(parent.id).sub_status, "active");
   });
 });
+
+test("Osebno ob šolski licenci po izteku licence: naročnina se ne podaljša, obvestilo; ob vrnjeni licenci spet teče", async () => {
+  const { mountAccounts } = await import("../server/accounts/index.js");
+  const express = (await import("express")).default;
+  const store = openDb(":memory:");
+  const stripe = fakeStripe();
+  const licensed = new Set();
+  const api = mountAccounts(express(), store, {
+    accounts: true,
+    scheduler: false,
+    stripeKey: "sk_test_x",
+    resendKey: "re_x",
+    fetchFn: stripe.fetchFn,
+    log: { error() {} },
+    schoolSource: {
+      access: (db, id) => (licensed.has(id) ? { schoolId: 1, licenceId: 1, schoolName: "OŠ", plan: "class", subjects: null, grades: null, validUntil: null, aiCapUsdMonth: 0 } : null),
+      students: () => [...licensed],
+      membership: () => null,
+    },
+  });
+  const db = store.db;
+  const add = (email, plan) => {
+    db.prepare("INSERT INTO parents (email, password_hash, privacy_version, unsubscribe_token, referral_code, email_verified_at) VALUES (?, 'x', 'v', 't', ?, '2026-01-01')").run(email, email);
+    const pid = db.prepare("SELECT id FROM parents WHERE email = ?").get(email).id;
+    const end = new Date(Date.now() + 100 * 86400000).toISOString();
+    db.prepare("UPDATE parents SET sub_status = 'active', sub_plan = ?, sub_seats = 1, sub_period_end = ?, sub_id = ?, trial_ends_at = '2020-01-01T00:00:00Z' WHERE id = ?").run(plan, end, "sub_" + pid, pid);
+    const kid = db.prepare("INSERT INTO students (name, settings, parent_id) VALUES ('Ana', '{}', ?)").run(pid).lastInsertRowid;
+    return { pid, kid };
+  };
+  const s = add("sola@p.si", SCHOOL_PLANS[0].key);
+  const r = add("redna@p.si", PLANS[0].key); // redna naročnina: nikoli
+  const run = () => api.billing.billingDaily(new Date(), { force: true });
+  const posts = (pid) => stripe.calls.filter((c) => c.path === `/v1/subscriptions/sub_${pid}` && c.method === "POST").map((c) => c.body.cancel_at_period_end);
+  const flag = (pid) => db.prepare("SELECT sub_cancel_at_period_end AS c FROM parents WHERE id = ?").get(pid).c;
+  const mails = () => stripe.calls.filter((c) => c.host === "api.resend.com" && /šolski licenci/i.test(c.body.subject));
+
+  licensed.add(s.kid);
+  assert.equal((await run()).school_ended, 0, "licenca velja: nič");
+  licensed.delete(s.kid);
+  const out = await run();
+  assert.equal(out.school_ended, 1);
+  assert.deepEqual(posts(s.pid), ["true"]);
+  assert.equal(flag(s.pid), 1);
+  assert.equal(mails().length, 1);
+  assert.match(mails()[0].body.text, /ne bo samodejno podaljšala/);
+  assert.equal((await run()).school_ended, 0, "samo enkrat");
+  assert.equal(mails().length, 1);
+  assert.deepEqual(posts(r.pid), [], "redne naročnine se ne dotakne");
+  // Licenca spet velja pred koncem obdobja: podaljšanje se vrne.
+  licensed.add(s.kid);
+  assert.equal((await run()).school_resumed, 1);
+  assert.deepEqual(posts(s.pid), ["true", "false"]);
+  assert.equal(flag(s.pid), 0);
+  // Starš je sam preklical: Evklid podaljšanja ne vrne in ga ne ustavlja znova.
+  db.prepare("UPDATE parents SET sub_cancel_at_period_end = 1 WHERE id = ?").run(s.pid);
+  licensed.delete(s.kid);
+  await run();
+  licensed.add(s.kid);
+  await run();
+  assert.deepEqual(posts(s.pid), ["true", "false"]);
+  // Stara oznaka po koncu naročnine ne sme preskočiti nove naročnine po šolski ceni.
+  const n = add("nova@p.si", SCHOOL_PLANS[0].key);
+  await run();
+  assert.deepEqual(posts(n.pid), ["true"]);
+  db.prepare("UPDATE parents SET sub_id = ?, sub_cancel_at_period_end = 0 WHERE id = ?").run(`sub_${n.pid}b`, n.pid);
+  await run();
+  assert.deepEqual(stripe.calls.filter((c) => c.path === `/v1/subscriptions/sub_${n.pid}b` && c.method === "POST").map((c) => c.body.cancel_at_period_end), ["true"]);
+});
