@@ -4,7 +4,7 @@ import { gradeInfo } from "../public/regions.js";
 import { baseTopicIds } from "./curriculum.js";
 import { isCleared, PACE } from "../public/games/unlock.js";
 import { WISH_IDS, weekKey } from "../public/games/wishes.js";
-import { GENRE_IDS } from "../public/games/childhood.js";
+import { GENRE_IDS, cleanTitles } from "../public/games/childhood.js";
 import { isLocalRequest } from "./feedback.js";
 
 const GAME_ID = /^[a-z]{2,20}:[a-z0-9_]{2,30}$/;
@@ -166,7 +166,8 @@ export function mountGames(app, store, { loadStudent, progress, avatars, knowled
   });
 }
 
-// Samo števila, brez imen, besedil in id-jev; dokler prispeva manj kot MIN_STUDENTS učencev, nič
+// Samo števila, brez imen učencev in id-jev (edino besedilo so lastni naslovi iger, največ 5 × 40 znakov,
+// brez povezave z učencem); dokler prispeva manj kot MIN_STUDENTS učencev, nič
 // (iz majhnih števil bi se dalo sklepati, kdo je kaj izbral).
 export const MIN_STUDENTS = 3;
 export function gameTrends(db, now = new Date()) {
@@ -187,14 +188,17 @@ export function gameTrends(db, now = new Date()) {
     if (wishes[r.week]) wishes[r.week][r.genre] = (wishes[r.week][r.genre] || 0) + 1;
   }
   const childhood = {};
+  const titles = {}; // lastni naslovi iger (malimi črkami → število učencev); samo za j-jev pregled
   for (const r of db.prepare("SELECT id, settings FROM students").all()) {
-    let list = [];
+    let st = {};
     try {
-      list = JSON.parse(r.settings || "{}").game_childhood || [];
+      st = JSON.parse(r.settings || "{}") || {};
     } catch {}
-    const ok = Array.isArray(list) ? list.filter((g) => GENRE_IDS.includes(g)) : [];
-    if (ok.length) contributors.add(r.id);
+    const ok = Array.isArray(st.game_childhood) ? st.game_childhood.filter((g) => GENRE_IDS.includes(g)) : [];
+    const own = cleanTitles(st.game_titles);
+    if (ok.length || own.length) contributors.add(r.id);
     for (const g of ok) childhood[g] = (childhood[g] || 0) + 1;
+    for (const x of own) titles[x.toLowerCase()] = (titles[x.toLowerCase()] || 0) + 1;
   }
   // Igranost v zadnjih 7 dneh: koliko različnih učencev je igralo vrsto igre. Igranje ni mnenje,
   // zato ne šteje k MIN_STUDENTS (sicer bi trije igralci razkrili glas edinega glasovalca).
@@ -204,5 +208,5 @@ export function gameTrends(db, now = new Date()) {
   }
   const base = { week, lastWeek: last, minStudents: MIN_STUDENTS, students: contributors.size };
   if (contributors.size < MIN_STUDENTS) return { ...base, enough: false };
-  return { ...base, enough: true, ratings, wishes, allWishes, childhood, plays };
+  return { ...base, enough: true, ratings, wishes, allWishes, childhood, titles, plays };
 }

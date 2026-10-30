@@ -21,8 +21,11 @@ največ glasov in par načinov, kako bi to integrirali«. Zato:
   srede; seznam zvrsti je `public/games/wishes.js` (`WISHES`).
 - **👍/👎 po koncu igre**: ocena vrste igre (`game_ratings`).
 - **Vprašalnik o igrah iz otroštva** (`public/games/childhood.js`) in igranost v zadnjih 7 dneh.
-- Povzetek: `GET /api/games/trends` (`server/games.js`, `gameTrends`) in plošča v Igrah: samo
-  števila, brez imen in besedil, prazen pri manj kot 3 učencih.
+- **Lastni naslovi iger** iz vprašalnika (`game_titles`, največ 5 × 40 znakov): `matchTitle` jih
+  poveže z zvrstjo (doda jo v izbiro), z željo iz `WISHES` ali z »?« (Evklid te igre še ne pozna:
+  kandidat za novo zvrst v `WISHES`).
+- Povzetek: `GET /api/games/trends` (`server/games.js`, `gameTrends`) in plošča v Igrah: števila,
+  brez imen učencev (edino besedilo so lastni naslovi s svojo povezavo), prazen pri manj kot 3 učencih.
 
 ## Izbira zvrsti (predlog za j-ja)
 1. Največ glasov pravkar končanega tedna; izenačeno → več glasov skupaj.
@@ -36,6 +39,7 @@ največ glasov in par načinov, kako bi to integrirali«. Zato:
   `PACE` v `unlock.js`, vzorec ploščice `.gm-k-<id>` v `games.css`, ikona (`scripts/build-icons.js`
   NAMES + ročni vnos v `public/icons.js`), ključa `games.e.<id>` in `.how` v vseh 33 jezikih.
 - Zvrst prestavi iz `WISHES` (`wishes.js`) v `GENRES` (`childhood.js`, ključ `games.g.<id>`); ključ
-  `games.w.<id>` lahko ostane. Seznam želja dopolni z novo zvrstjo, da jih ostane vsaj 12.
+  `games.w.<id>` lahko ostane; ključne besede lahko ostanejo v `WISH_HINTS` (`matchTitle` jih potem
+  šteje kot zvrst). Seznam želja dopolni z novo zvrstjo, da jih ostane vsaj 12.
 - Trojni pregled (`docs/pregled.md`), PR, združitev, kratko sporočilo j-ju v niti IGRE (slovensko,
   kaj je novo in zakaj ta zvrst).

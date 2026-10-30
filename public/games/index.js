@@ -16,7 +16,7 @@ function onPath(e, c) {
 }
 import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
-import { GENRES, childhoodEngines } from "./childhood.js";
+import { GENRES, childhoodEngines, matchTitle, cleanTitles, MAX_TITLES } from "./childhood.js";
 import { WISHES } from "./wishes.js";
 import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isNew, isNewDate, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
 import { seasonOf } from "../zbirke.js";
@@ -136,6 +136,11 @@ const kidList = () => ctx.getStudent()?.settings?.game_childhood ?? null;
 // Glasovi tedna za j-jev pregled (j 2026-10-30: »vsak teden seznam glasov, meni v pregled«).
 const sorted = (o) => Object.entries(o || {}).sort((a, b) => b[1] - a[1]);
 const wishName = (id) => t(`games.w.${id}`);
+// Lastni naslov v pregledu: »fortnite (?)«, »minecraft → Gradnja mesta«.
+const titleLabel = (x) => {
+  const m = matchTitle(x);
+  return m.genre ? `${x} → ${t(`games.g.${m.genre}`)}` : m.wish ? `${x} → ${wishName(m.wish)}` : `${x} (?)`;
+};
 function trendsText() {
   const tr = trends;
   const line = (list, name) => list.map(([id, n]) => `${name(id)} ${n}`).join(", ") || "—";
@@ -144,6 +149,8 @@ function trendsText() {
     `${t("games.trNow")}: ${line(sorted(tr.wishes?.[tr.week]), wishName)}`,
     `${t("games.trRatings")}: ${line(Object.entries(tr.ratings || {}).map(([id, r]) => [id, `👍${r.up} 👎${r.down}`]), (id) => t(`games.e.${id}`))}`,
     `${t("games.trKid")}: ${line(sorted(tr.childhood), (id) => t(`games.g.${id}`))}`,
+    // prosto besedilo otrok gre v kopijo (in v oblak) le, če ga je napisalo vsaj 2 učenca
+    `${t("games.trTitles")}: ${line(sorted(tr.titles).filter(([, n]) => n >= 2), titleLabel)}`,
     // za izenačenje (docs/igre-tedensko.md: več glasov skupaj) in igranost
     `${t("games.trAll")}: ${line(sorted(tr.allWishes), wishName)}`,
     `${t("games.trPlays")}: ${line(sorted(tr.plays), (id) => t(`games.e.${id}`))}`,
@@ -159,6 +166,7 @@ function trendsCard() {
       <h3>${esc(t("games.trNow"))}</h3>${rows(sorted(tr.wishes?.[tr.week]), wishName)}
       <h3>${esc(t("games.trRatings"))}</h3>${rows(Object.entries(tr.ratings || {}).map(([id, r]) => [id, `👍 ${r.up} · 👎 ${r.down}`]), (id) => t(`games.e.${id}`))}
       <h3>${esc(t("games.trKid"))}</h3>${rows(sorted(tr.childhood), (id) => t(`games.g.${id}`))}
+      <h3>${esc(t("games.trTitles"))}</h3>${rows(sorted(tr.titles), titleLabel)}
       <h3>${esc(t("games.trAll"))}</h3>${rows(sorted(tr.allWishes), wishName)}
       <h3>${esc(t("games.trPlays"))}</h3>${rows(sorted(tr.plays), (id) => t(`games.e.${id}`))}
       <button type="button" class="secondary" data-act="trcopy">${icon("clipboard-check")}${esc(t("games.trCopy"))}</button>`;
@@ -274,11 +282,12 @@ function renderPortal() {
 }
 
 // Shrani izbiro v profil (velja na vseh napravah; inštruktor jo lahko spremeni iz klepeta).
-async function saveChildhood(list) {
+async function saveChildhood(list, titles) {
   const s = ctx.getStudent();
   if (!s) return false;
   try {
-    const updated = await ctx.api(`/api/students/${s.id}`, { method: "PUT", body: { settings: { game_childhood: list } } });
+    const settings = titles ? { game_childhood: list, game_titles: titles } : { game_childhood: list };
+    const updated = await ctx.api(`/api/students/${s.id}`, { method: "PUT", body: { settings } });
     ctx.setStudent?.(updated);
   } catch (err) {
     ctx.toast?.(err.message, null);
@@ -292,13 +301,25 @@ async function saveChildhood(list) {
 function askChildhood() {
   if (!ctx.getStudent() || document.querySelector(".gm-kidq")) return;
   const pick = new Set(kidList() || []);
+  let titles = cleanTitles(ctx.getStudent()?.settings?.game_titles);
   const back = document.activeElement;
+  const genreName = (id) => t(`games.g.${id}`);
+  // Lastni naslov: kam ga Evklid poveže (obstoječa vrsta igre, želja za novo igro ali v pregled j-ju).
+  const titleNote = (title) => {
+    const m = matchTitle(title);
+    return m.genre ? `→ ${genreName(m.genre)}` : m.wish ? t("games.kidOwnWish", { g: t(`games.w.${m.wish}`) }) : t("games.kidOwnNew");
+  };
+  const ownList = () =>
+    titles.map((x, i) => `<li><span><b>${esc(x)}</b><small>${esc(titleNote(x))}</small></span><button type="button" class="ghost" data-rm="${i}" aria-label="${esc(`${t("games.kidOwnRemove")}: ${x}`)}">${icon("x")}</button></li>`).join("");
   const dlg = document.createElement("div");
   dlg.className = "iq-wrap";
   dlg.innerHTML = `<div class="iq card gm-kidq" role="dialog" aria-modal="true" aria-labelledby="kid-title">
     <h2 id="kid-title">🕹️ ${esc(t("games.kidQ"))}</h2>
     <p class="muted">${esc(t("games.kidQSub"))}</p>
     <div class="iq-grid">${GENRES.map((g) => `<button type="button" class="iq-opt${pick.has(g.id) ? " on" : ""}" data-g="${g.id}" aria-pressed="${pick.has(g.id)}"><span class="iq-emoji" aria-hidden="true">${g.emoji}</span><span>${esc(t(`games.g.${g.id}`))}<small class="gm-kidto">${icon("arrow-right", "i-dir")}${esc(g.engines.map((id) => t(`games.e.${id}`)).join(", "))}</small></span></button>`).join("")}</div>
+    <div class="gm-own"><label for="kid-own"><b>✍️ ${esc(t("games.kidOwn"))}</b></label>
+      <div class="gm-own-row"><input id="kid-own" type="text" maxlength="40" autocomplete="off" placeholder="${esc(t("games.kidOwnPh"))}"><button type="button" class="secondary" data-k="add">${icon("plus")}${esc(t("games.kidOwnAdd"))}</button></div>
+      <ul class="gm-own-list" aria-live="polite">${ownList()}</ul></div>
     <div class="iq-actions"><button type="button" class="ghost" data-k="close">${esc(t("games.kidLater"))}</button><button type="button" class="primary" data-k="save">${icon("check")}${esc(t("common.save"))}</button></div>
   </div>`;
   document.body.appendChild(dlg);
@@ -307,7 +328,44 @@ function askChildhood() {
     dlg.remove();
     (back?.isConnected ? back : root?.querySelector('[data-act="kid"]'))?.focus?.({ preventScroll: true });
   };
+  const input = dlg.querySelector("#kid-own");
+  const addBtn = dlg.querySelector('[data-k="add"]');
+  const drawOwn = () => {
+    dlg.querySelector(".gm-own-list").innerHTML = ownList();
+    addBtn.disabled = input.disabled = titles.length >= MAX_TITLES;
+  };
+  const setPick = (id, on) => {
+    on ? pick.add(id) : pick.delete(id);
+    const b = dlg.querySelector(`[data-g="${id}"]`);
+    b?.classList.toggle("on", on);
+    b?.setAttribute("aria-pressed", String(on));
+  };
+  // Dodan naslov z znano zvrstjo takoj označi to zvrst (igra pride v zbirko).
+  const addTitle = () => {
+    const next = cleanTitles([...titles, input.value]);
+    if (next.length === titles.length) return;
+    titles = next;
+    const m = matchTitle(titles.at(-1));
+    if (m.genre) setPick(m.genre, true);
+    input.value = "";
+    drawOwn();
+    input.focus();
+  };
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.isComposing) {
+      e.preventDefault();
+      addTitle();
+    }
+  });
+  drawOwn();
   dlg.addEventListener("click", async (ev) => {
+    if (ev.target.closest('[data-k="add"]')) return addTitle();
+    const rm = ev.target.closest("[data-rm]");
+    if (rm) {
+      titles.splice(Number(rm.dataset.rm), 1);
+      drawOwn();
+      return input.focus();
+    }
     const opt = ev.target.closest("[data-g]");
     if (opt) {
       const id = opt.dataset.g;
@@ -320,8 +378,9 @@ function askChildhood() {
     const save = ev.target.closest('[data-k="save"]');
     if (!save) return;
     save.disabled = true;
+    if (input.value.trim()) addTitle(); // napisan, a ne dodan naslov ne izgine
     const list = GENRES.map((g) => g.id).filter((id) => pick.has(id));
-    if (!(await saveChildhood(list))) {
+    if (!(await saveChildhood(list, titles))) {
       save.disabled = false;
       return;
     }
@@ -338,7 +397,7 @@ function askChildhood() {
       close();
     } else if (e.key === "Tab") {
       // fokus ostane v oknu (aria-modal)
-      const f = [...dlg.querySelectorAll("button:not(:disabled)")];
+      const f = [...dlg.querySelectorAll("button:not(:disabled), input:not(:disabled)")];
       const i = f.indexOf(document.activeElement);
       if (e.shiftKey ? i <= 0 : i === f.length - 1) {
         e.preventDefault();
