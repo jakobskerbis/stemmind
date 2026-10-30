@@ -9,7 +9,7 @@ import { dialectsFor } from "./dialects.js";
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock, renderAccount } from "./account.js";
 import { showFull, closeFull, fullOpen } from "./razpri.js";
-import { initOkna, isFloating, openWindow, closeWindow, focusWindow, refreshBubble, chatReply, restoreWindows, windowsOn, tabHint } from "./okna.js";
+import { initOkna, isFloating, openWindow, closeWindow, focusWindow, refreshBubble, chatReply, restoreWindows, windowsOn, tabHint, floatingViews } from "./okna.js";
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
 import { openPrintable, stopReading } from "./gradiva.js";
@@ -189,7 +189,8 @@ function initView(name) {
   }
   if (name === "graph") showGraph();
 }
-document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => showView(t.dataset.view)));
+// Zavihek pogleda v premičnem oknu okno le prinese v ospredje (branje, vnos in drsenje v njem ostanejo).
+document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => (isFloating(t.dataset.view) ? focusWindow(t.dataset.view) : showView(t.dataset.view))));
 
 // Tipka Nazaj (Android, aplikacija na začetnem zaslonu, brskalnik): brez tega bi tipka Nazaj
 // v nameščeni aplikaciji takoj zaprla Evklid. Zgodovina ima dve ravni: Učna pot (0) in
@@ -466,6 +467,7 @@ async function selectStudent(id) {
   }
   syncCompetitionTab();
   applyLite();
+  refreshBubble(); // premična okna zavihkov, ki jih ta profil nima (NPZ in matura, Tekmovanja), se zaprejo
   localStorageSet("studentId", state.student.id);
   sendOffline();
   state.conversationId = null;
@@ -486,6 +488,8 @@ async function selectStudent(id) {
   state.examKey = state.compKey = null;
   if (!$("#view-exams").hidden) showView(siExams() ? "exams" : "path");
   if (!$("#view-competition").hidden) showView(isUni(state.student.settings) ? "path" : "competition");
+  // Drugi pogledi v premičnih oknih pokažejo podatke novega profila (zgornji so se že osvežili).
+  for (const v of floatingViews()) if (!["settings", "progress", "league", "scan", "path", "exams", "competition"].includes(v)) v === "account" ? renderAccount() : initView(v);
   refreshProfileButton();
   refreshXp();
   // Vprašalnik kotička zanimanj: profil, ki ga še ni izpolnil, ga dobi ob zagonu (enkrat).

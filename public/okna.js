@@ -100,6 +100,7 @@ function place(win, g) {
   win.el.classList.toggle("snapped", !!g.snap);
   win.el.classList.toggle("okno-narrow", g.w < 640);
   syncDock();
+  if (bubble && !bubble.hidden) placeBubble(); // mehurček se umakne z okna
 }
 // Pripeto okno (polovica zaslona) odmakne glavni pogled, da ga ne prekrije (kot na skici: učbenik levo, kalkulator desno).
 function syncDock() {
@@ -148,7 +149,12 @@ export function focusWindow(name) {
   if (!w) return false;
   if (!w.el.classList.contains("front")) document.querySelectorAll(".okno.front").forEach((o) => o.classList.remove("front"));
   w.el.classList.add("front");
+  // Okna ostanejo v pasu 40 + n (pod pojavnimi okni, kalkulatorjem čez cel zaslon in obvestili).
   w.el.style.zIndex = String(++z);
+  [...wins.values()]
+    .sort((a, b) => (a.el.style.zIndex | 0) - (b.el.style.zIndex | 0))
+    .forEach((o, i) => (o.el.style.zIndex = String(40 + i)));
+  z = 40 + wins.size;
   return true;
 }
 
@@ -172,6 +178,7 @@ export function openWindow(name, opts = {}) {
   el.dataset.view = name;
   el.setAttribute("role", "dialog");
   el.setAttribute("aria-label", title);
+  el.tabIndex = -1; // Esc zapre okno tudi po kliku na naslovno vrstico
   el.innerHTML = `${sheet ? `<div class="okno-grip" aria-hidden="true"><span></span></div>` : ""}
     <header class="okno-head">
       <span class="okno-ic">${tab?.querySelector("svg")?.outerHTML || ""}</span>
@@ -201,14 +208,21 @@ export function openWindow(name, opts = {}) {
     else if (opts.x !== undefined) {
       const w = g.snap ? g.free?.w || defaultGeo().w : g.w;
       const h = g.snap ? g.free?.h || defaultGeo().h : g.h;
-      g = { x: opts.x - Math.min(140, w / 2), y: opts.y - 18, w, h, snap: null };
+      // Okno gre do spodnjega roba (ročaj za velikost ostane na zaslonu); če ni prostora, se dvigne.
+      const a = area();
+      const y = opts.y - 18;
+      const fit = Math.max(MIN_H, Math.min(h, a.bottom - y));
+      g = { x: opts.x - Math.min(140, w / 2), y: Math.max(a.top, Math.min(y, a.bottom - fit)), w, h: fit, snap: null };
     }
     place(win, g);
     wireWindow(win);
   }
   el.querySelector(".okno-x").addEventListener("click", () => closeWindow(name));
   el.querySelector(".okno-max").addEventListener("click", () => dockWindow(name));
-  el.addEventListener("pointerdown", () => focusWindow(name), true);
+  el.addEventListener("pointerdown", (e) => {
+    focusWindow(name);
+    if (e.target.closest(".okno-head, .okno-grip") && !el.contains(document.activeElement)) el.focus({ preventScroll: true });
+  }, true);
   el.addEventListener("keydown", (e) => {
     if (e.key !== "Escape" || e.defaultPrevented) return;
     const a = document.activeElement;
@@ -355,6 +369,7 @@ function wireSheet(win) {
         if (h < window.innerHeight * 0.25) return closeWindow(name);
         if (h > window.innerHeight * 0.9) el.style.setProperty("--sheet-h", `${window.innerHeight}px`);
         ctx.onResize?.(name);
+        if (bubble && !bubble.hidden) placeBubble();
       };
       handle.addEventListener("pointermove", move);
       handle.addEventListener("pointerup", up);
@@ -475,14 +490,36 @@ function overDrop(ev) {
   const r = drop.getBoundingClientRect();
   return Math.hypot(ev.clientX - (r.left + r.width / 2), ev.clientY - (r.top + r.height / 2)) < 64;
 }
+// Mehurček ne prekrije okna (npr. tipk kalkulatorja spodaj desno): najbližje prosto mesto ob robu,
+// najprej na izbrani strani, nato na drugi.
 function placeBubble() {
   const size = 56;
-  const side = bstate.side === "left" ? "left" : "right";
-  const y = Math.round((bstate.y ?? 0.72) * window.innerHeight - size / 2);
   const a = area();
-  bubble.dataset.side = side;
-  bubble.style.left = `${side === "left" ? 12 : window.innerWidth - size - 12}px`;
-  bubble.style.top = `${Math.min(Math.max(y, a.top + 8), a.bottom - size - 8)}px`;
+  const pref = bstate.side === "left" ? "left" : "right";
+  const lo = a.top + 8;
+  const hi = Math.max(lo, a.bottom - size - 8);
+  const y0 = Math.min(Math.max(Math.round((bstate.y ?? 0.72) * window.innerHeight - size / 2), lo), hi);
+  const xOf = (side) => (side === "left" ? 12 : window.innerWidth - size - 12);
+  const rects = [...wins.values()].map((w) => w.el.getBoundingClientRect());
+  const free = (x, y) => !rects.some((r) => x < r.right + 4 && x + size > r.left - 4 && y < r.bottom + 4 && y + size > r.top - 4);
+  let spot = null;
+  for (const side of [pref, pref === "left" ? "right" : "left"]) {
+    const x = xOf(side);
+    for (let d = 0; d <= hi - lo && !spot; d += 16) {
+      if (y0 - d >= lo && free(x, y0 - d)) spot = { side, y: y0 - d };
+      else if (y0 + d <= hi && free(x, y0 + d)) spot = { side, y: y0 + d };
+    }
+    if (spot) break;
+  }
+  // Ni prostega mesta: mehurček ne gre na tipke kalkulatorja, raje na drugo okno.
+  if (!spot) {
+    const calc = wins.get("graph")?.el.getBoundingClientRect();
+    const onCalc = (side) => calc && xOf(side) < calc.right && xOf(side) + size > calc.left && y0 < calc.bottom && y0 + size > calc.top;
+    spot = { side: onCalc(pref) ? (pref === "left" ? "right" : "left") : pref, y: y0 };
+  }
+  bubble.dataset.side = spot.side;
+  bubble.style.left = `${xOf(spot.side)}px`;
+  bubble.style.top = `${spot.y}px`;
 }
 function hidePreview() {
   clearTimeout(previewTimer);
@@ -504,6 +541,8 @@ function openChat() {
 /** Pokaže ali skrije mehurček glede na stanje klepeta (kliče app.js ob spremembi pogleda in pogovora). */
 export function refreshBubble() {
   if (!ctx) return;
+  // Zavihek je za ta profil skrit (npr. NPZ in matura po menjavi profila): njegovo okno se zapre.
+  for (const name of [...wins.keys()]) if (!canFloat(name)) closeWindow(name);
   const info = ctx.chatInfo();
   const show = windowsOn() && !!info.key && !info.visible && !info.blocked && bstate.dismissed !== info.key;
   if (!show && !bubble) return;
@@ -571,6 +610,7 @@ function setOn(on) {
     layout.open = keep; // ob ponovnem vklopu se okna vrnejo
     saveLayout();
   }
+  else restoreWindows(); // okna, ki so bila odprta ob izklopu
   const box = document.getElementById("okna-toggle");
   if (box) box.checked = on;
   refreshBubble();

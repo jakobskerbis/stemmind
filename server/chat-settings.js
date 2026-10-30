@@ -607,7 +607,8 @@ const WINDOW_TARGETS = [
   [/^(periodn\w* sistem\w*( elementov)?|pse|periodic table)$/, "graph", "pse", "periodni sistem", "the periodic table"],
   [/^(grafičn\w* kalkulator\w*|graphing calculator)$/, "graph", "graph", "grafični kalkulator", "the graphing calculator"],
   [/^(znanstven\w* kalkulator\w*|scientific calculator)$/, "graph", "sci", "znanstveni kalkulator", "the scientific calculator"],
-  [/^(formul\w*( iz \w+)?|formulas?|formula sheet)$/, "graph", "formulas", "formule", "the formulas"],
+  // Samo množina ali zbirka: »pokaži formulo« (za to nalogo) je vprašanje za inštruktorja.
+  [/^(formule( iz \w+)?|zbirk\w* formul|formulas|formula sheet)$/, "graph", "formulas", "formule", "the formulas"],
   [/^(pretvornik\w*( enot)?|orodja|unit converter)$/, "graph", "tools", "pretvornik enot", "the unit converter"],
   [/^(kalkulator\w*|računal\w*|calculator)$/, "graph", null, "kalkulator", "the calculator"],
   [/^(učbenik\w*|textbook)$/, "textbook", null, "učbenik", "the textbook"],

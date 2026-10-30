@@ -22,6 +22,11 @@ test("open-window intent: short commands only, right view and calculator mode", 
   assert.equal(openWindowIntent("Odpri oklepaje v izrazu 3(x+2)"), null);
   assert.equal(openWindowIntent("Izračunaj s kalkulatorjem 2+2"), null);
   assert.equal(openWindowIntent(""), null);
+  assert.equal(openWindowIntent("odpri lekcijo o ulomkih"), null);
+  assert.equal(openWindowIntent("kako odprem oklepaj"), null);
+  assert.equal(openWindowIntent("pokaži formulo"), null);
+  assert.equal(openWindowIntent("show the formula"), null);
+  assert.equal(openWindowIntent("pokaži formule").mode, "formulas");
 });
 
 test("open_window tool: valid views only, sends the client event", async () => {
