@@ -42,7 +42,7 @@ export function randomNickname() {
 export const isValidNickname = (s) => typeof s === "string" && NICK_RE.test(s);
 
 export function normalizeCode(input) {
-  const c = String(input ?? "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const c = (typeof input === "string" || typeof input === "number" ? String(input) : "").toUpperCase().replace(/[^A-Z0-9]/g, "");
   return c.length === 6 ? c : null;
 }
 export const formatCode = (c) => `${c.slice(0, 3)}-${c.slice(3)}`;
