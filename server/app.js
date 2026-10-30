@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
 import { createStreamFilter, parseMeta, parseCards, stripMeta } from "./meta.js";
 import { studentResults } from "./results.js";
-import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, MODEL_MID, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
+import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, MODEL_MID, REFUSAL_TEXT, errorText } from "./claude.js";
 import { Usage, LIMITS, windowHistory, recentHistory } from "./usage.js";
 import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
@@ -565,7 +565,7 @@ export function createApp(store, opts = {}) {
       if (again) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(conv.deep || 0, conv.id);
       if (!controller.signal.aborted) {
         console.error("[evklid] napaka pri klicu modela:", err?.status ?? "", err?.message ?? err);
-        send("error", { error: ERROR_TEXT });
+        send("error", { error: errorText(err) });
       }
       res.end();
     } finally {
@@ -893,7 +893,7 @@ export function createApp(store, opts = {}) {
       res.json({ text: out.text, message: out.text ? null : "Zapisa nisem uspel prebrati. Poskusi pisati večje ali uporabi tipke." });
     } catch (err) {
       console.error("[evklid] branje rokopisa:", err?.message || err);
-      res.status(502).json({ error: "Branje zapisa trenutno ne deluje. Odgovor vpiši s tipkami." });
+      res.status(502).json({ error: errorText(err, "Branje zapisa trenutno ne deluje. Odgovor vpiši s tipkami.") });
     }
   });
   // »Vprašaj Evklida«: odpre pogovor z nalogo in učenčevim odgovorom.
