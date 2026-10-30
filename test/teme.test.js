@@ -95,3 +95,69 @@ test("every history style has its font, motif files, fact texts, picker names an
   }
   assert.deepEqual(DEVICE_SETTINGS.style.values, [...T.STYLES]);
 });
+
+// Veljavni podatki poti SVG: ukazi s pravim številom števil (zastavici loka sta 0 ali 1, lahko brez presledka).
+function validPathData(d) {
+  const ARGS = { m: 2, l: 2, h: 1, v: 1, c: 6, s: 4, q: 4, t: 2, a: 7, z: 0 };
+  const num = /[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?/iy;
+  let i = 0, cmd = null, first = true;
+  const skip = () => { while (i < d.length && /[\s,]/.test(d[i])) i++; };
+  for (skip(); i < d.length; skip()) {
+    if (/[a-z]/i.test(d[i])) {
+      cmd = d[i++];
+      if (!(cmd.toLowerCase() in ARGS) || (first && cmd.toLowerCase() !== "m")) return false;
+      first = false;
+      if (cmd.toLowerCase() === "z") continue;
+    } else if (!cmd || cmd.toLowerCase() === "z") return false;
+    const k = cmd.toLowerCase();
+    for (let a = 0; a < ARGS[k]; a++) {
+      skip();
+      if (k === "a" && (a === 3 || a === 4)) {
+        if (!/[01]/.test(d[i])) return false;
+        i++;
+        continue;
+      }
+      num.lastIndex = i;
+      const m = num.exec(d);
+      if (!m) return false;
+      i = num.lastIndex;
+    }
+  }
+  return !first;
+}
+
+test("every history style supplies period icons: each mapped icon exists in icons.js and is valid, small SVG", async () => {
+  const { ZNAKI, sestavi } = await import("../scripts/ikone-obdobij.js");
+  const src = fs.readFileSync(path.join(PUB, "icons.js"), "utf8");
+  const base = new Set([...src.matchAll(/[{\s]"([a-z0-9-]+)":"/g)].map((m) => m[1]));
+  assert.ok(base.has("map") && base.has("sparkles"), "imena ikon iz icons.js");
+  for (const z of ZNAKI) assert.ok(base.has(z), `ZNAKI: ${z} ni v icons.js`);
+  const lucide = fs.existsSync(path.join(PUB, "..", "node_modules", "lucide-static"));
+  for (const [id, e] of Object.entries(T.ERAS)) {
+    assert.ok(e.icons, `${id}: ERAS.${id}.icons (ikone obdobja)`);
+    const file = path.join(PUB, "eras", id, `${e.icons}.json`);
+    const raw = fs.readFileSync(file, "utf8");
+    assert.ok(raw.length < 40000, `${id}: ikone ${raw.length} B`);
+    if (lucide) assert.equal(raw, sestavi(id), `${id}: node scripts/ikone-obdobij.js`);
+    const { map, svg } = JSON.parse(raw);
+    // Vsaka ikona vmesnika ima odločitev: ikona obdobja v vsakem slogu ali navaden znak (ZNAKI, docs/oblikovanje.md).
+    for (const name of base) assert.ok(ZNAKI.includes(name) !== Boolean(map[name]), `${id}: ${name} naj bo ${ZNAKI.includes(name) ? "brez ikone obdobja (ZNAKI)" : "v map"}`);
+    for (const [name, def] of Object.entries(map)) {
+      assert.ok(base.has(name), `${id}: ${name} ni ikona v icons.js`);
+      assert.ok(svg[def], `${id}: ${name} → ${def} manjka v svg`);
+    }
+    for (const [def, body] of Object.entries(svg)) {
+      assert.ok(Object.values(map).includes(def), `${id}: ${def} ni uporabljena`);
+      const tags = [...body.matchAll(/<(\/?)([a-z]+)\b([^>]*)>/g)];
+      assert.ok(tags.length, `${id}/${def}: prazna`);
+      for (const [, close, tag, attrs] of tags) {
+        if (close) continue;
+        assert.ok(["path", "circle", "rect", "ellipse", "line", "polyline", "polygon"].includes(tag), `${id}/${def}: <${tag}>`);
+        assert.doesNotMatch(attrs, /\bon[a-z]+=|href|url\(|style=/i, `${id}/${def}`);
+        for (const [, d] of attrs.matchAll(/\bd="([^"]*)"/g)) assert.ok(validPathData(d), `${id}/${def}: neveljavna pot ${d}`);
+        for (const [, k, v] of attrs.matchAll(/\b(cx|cy|r|rx|ry|x|y|width|height|x1|y1|x2|y2)="([^"]*)"/g)) assert.ok(Number.isFinite(+v) && +v >= -1 && +v <= 25, `${id}/${def}: ${k}="${v}"`);
+      }
+    }
+  }
+  assert.ok(validPathData("M3 3a1 1 0 01 2 2z") && !validPathData("M3 3L4") && !validPathData("L3 3"), "preverjanje poti");
+});

@@ -42,6 +42,8 @@
   //   glyph: majhna ikona ob naslovu kartice dejstev; motifs: 6–8 risb (črte, viewBox 0 0 64 64), iz katerih
   //     scripts/tapeta.js sestavi tapeta.svg za ozadje zaslonov (ui.css → »Tapeta«); vse datoteke so v public/eras/<slog>/
   //   facts: [predpona ključev i18n, število]: <predpona>.title in <predpona>.f1 … .fN
+  //   icons: datoteka ikon obdobja public/eras/<slog>/<icons>.json (scripts/ikone-obdobij.js: map ime ikone → ikona
+  //     obdobja in svg); naloži se samo v tem slogu, public/icons.js z njo zamenja ikone vmesnika
   //   Ime v izbiri sloga: ap.style<Slog> in ap.style<Slog>Text (prva črka velika), npr. ap.styleRenesansa.
   const ERAS = {
     antik: {
@@ -49,28 +51,28 @@
       dark: { bg: "#16110d", surface: "#211a14", menu: "#2b1a12", text: "#f2e8da", accent: "#e08a52", bar: "#1d1712", banner: "#3a2418" },
       font: ["EB Garamond Variable", "eb-garamond"], hero: 6, band: ["meander", 8, 8], edge: 1, glyph: "ikona",
       motifs: ["dorski-steber", "amfora", "sova", "konstrukcija", "jonski-steber", "lovor", "valj-krogla", "pitagora"],
-      facts: ["greek", 11],
+      facts: ["greek", 11], icons: "ikone",
     },
     renesansa: {
       light: { bg: "#f3ead8", surface: "#fffaf0", menu: "#ead8bd", text: "#2b1d12", accent: "#9b2335", band: "#a8834a", bar: "#f4e8d2", banner: "#efe0c4" },
       dark: { bg: "#19130c", surface: "#241b12", menu: "#301b16", text: "#f3e7d3", accent: "#ec8f8a", band: "#b8955a", bar: "#1f170f", banner: "#3a2c18" },
       font: ["EB Garamond Variable", "eb-garamond"], hero: 14, band: ["prepletanje", 16, 8], edge: 1.25, glyph: "ikona",
       motifs: ["sestilo", "armila", "vitruvij", "spirala", "kodeks", "perspektiva", "daljnogled", "poliedr"],
-      facts: ["era.renesansa", 6],
+      facts: ["era.renesansa", 6], icons: "ikone",
     },
     bagdad: {
       light: { bg: "#edf2f0", surface: "#fbfdfc", menu: "#123a43", menuAccent: "#e2b24f", text: "#10272b", accent: "#0f5f68", band: "#b88a2e", bar: "#e4efeb", banner: "#f6edcf" },
       dark: { bg: "#0b1c22", surface: "#11272e", menu: "#0a2e3b", text: "#e9f1ef", accent: "#e2b24f", band: "#c99a3c", bar: "#0e2228", banner: "#2e2a16" },
       font: ["El Messiri Variable", "el-messiri"], hero: 22, band: ["zvezde", 12, 10], edge: 1.2, glyph: "ikona",
       motifs: ["astrolab", "zvezda", "ozvezdje", "lok", "rozeta", "kvadrant", "rokopis", "abak"],
-      facts: ["era.bagdad", 6],
+      facts: ["era.bagdad", 6], icons: "ikone",
     },
     indija: {
       light: { bg: "#fbf1e1", surface: "#fffbf4", menu: "#262d6b", menuAccent: "#f2a64a", text: "#231a2c", accent: "#33408f", band: "#d9822b", bar: "#f9ecd6", banner: "#fbe3c0" },
       dark: { bg: "#13122a", surface: "#1c1a3a", menu: "#221d50", text: "#f3edf7", accent: "#f2a64a", band: "#d98a35", bar: "#171531", banner: "#3a2a16" },
       font: ["Eczar Variable", "eczar"], hero: 14, band: ["lotosi", 12, 10], edge: 1.5, glyph: "ikona",
       motifs: ["lotos", "sunja", "kolo", "steber", "stopnice", "palmov-list", "pav", "rangoli"],
-      facts: ["era.indija", 6],
+      facts: ["era.indija", 6], icons: "ikone",
     },
   };
   const STYLES = ["cist", "igriv", "temen", ...Object.keys(ERAS)];
@@ -293,21 +295,36 @@
     l.dataset.font = pkg;
     document.head.appendChild(l);
   }
+  // Ikone obdobja (icons.js): ena zahteva na slog, začne se že ob prvem izrisu v <head>.
+  const iconSets = {};
+  function iconSet(id) {
+    const era = ERAS[id];
+    if (!era || !era.icons || typeof fetch !== "function") return Promise.resolve(null);
+    return (iconSets[id] ||= fetch(`/eras/${id}/${era.icons}.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .catch(() => null)
+      .then((j) => (j && j.map && j.svg ? j : (delete iconSets[id], null))));
+  }
   function applyEra(root, id) {
     const era = ERAS[id];
+    const prev = root.dataset.era || "";
     for (const v of ERA_VARS) root.style.removeProperty(v);
-    if (!era) return root.removeAttribute("data-era");
-    root.dataset.era = id;
-    loadFont(era.font[1]);
-    root.style.setProperty("--era-font", `"${era.font[0]}"`);
-    root.style.setProperty("--band", eraUrl(id, era.band[0]));
-    root.style.setProperty("--band-w", era.band[1] + "px");
-    root.style.setProperty("--band-h", era.band[2] + "px");
-    // Pas ob robovih okvirja je lahko malo večji (edge; meander ostane 8 px, da so črte ostre).
-    root.style.setProperty("--edge-w", era.band[1] * (era.edge || 1) + "px");
-    root.style.setProperty("--edge-h", era.band[2] * (era.edge || 1) + "px");
-    root.style.setProperty("--glyph", eraUrl(id, era.glyph));
-    root.style.setProperty("--tapeta", eraUrl(id, "tapeta"));
+    if (era) {
+      root.dataset.era = id;
+      iconSet(id);
+      loadFont(era.font[1]);
+      root.style.setProperty("--era-font", `"${era.font[0]}"`);
+      root.style.setProperty("--band", eraUrl(id, era.band[0]));
+      root.style.setProperty("--band-w", era.band[1] + "px");
+      root.style.setProperty("--band-h", era.band[2] + "px");
+      // Pas ob robovih okvirja je lahko malo večji (edge; meander ostane 8 px, da so črte ostre).
+      root.style.setProperty("--edge-w", era.band[1] * (era.edge || 1) + "px");
+      root.style.setProperty("--edge-h", era.band[2] * (era.edge || 1) + "px");
+      root.style.setProperty("--glyph", eraUrl(id, era.glyph));
+      root.style.setProperty("--tapeta", eraUrl(id, "tapeta"));
+    } else root.removeAttribute("data-era");
+    // Menjava sloga brez ponovnega nalaganja: icons.js zamenja ikone.
+    if (prev !== (era ? id : "")) window.dispatchEvent(new CustomEvent("evklid:era", { detail: era ? id : "" }));
   }
 
   function apply(s = load()) {
@@ -387,7 +404,7 @@
     return pairs.every(([a, b, m]) => contrast(a, b) >= m - 0.01);
   }
 
-  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, ERAS, baseOf, MIN, MOTIF, readable, loadFont };
+  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, ERAS, baseOf, MIN, MOTIF, readable, loadFont, iconSet };
   apply();
   mq.addEventListener?.("change", () => apply());
 })();

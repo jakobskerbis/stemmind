@@ -1,0 +1,371 @@
+// Ikone zgodovinskih slogov: za vsak slog (public/theme.js → ERAS) sestavi public/eras/<id>/ikone.json
+// { map: { ime ikone v aplikaciji: ime ikone obdobja }, svg: { ime ikone obdobja: vsebina <svg> } }.
+// Ista mreža in črta kot public/icons.js (viewBox 24 × 24, currentColor, stroke-width 2, zaobljeni konci).
+// Del risb je iz paketa lucide-static (ISC, predmeti, ki sodijo v obdobje: amfora, šahovske figure, peščena ura …),
+// ostale so lastne in sestavljene iz skupnih delov spodaj (pisalna podlaga sloga, lovor, zvezda, kolajna …).
+// public/icons.js jih naloži šele, ko je slog izbran, in ob menjavi sloga zamenja že izrisane ikone.
+// Navadni znaki vmesnika (puščice, ×, kljukica, plus, iskanje …) ostanejo enaki: seznam ZNAKI spodaj in docs/oblikovanje.md.
+//   node scripts/ikone-obdobij.js            sestavi ikone vseh slogov
+//   node scripts/ikone-obdobij.js --check    ali so datoteke enake sestavljenim (test/teme.test.js)
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
+const PUB = path.join(ROOT, "public");
+
+// Znaki vmesnika, ki jih slogi ne spreminjajo (gumb mora biti takoj jasen).
+export const ZNAKI = [
+  "check", "x", "plus", "arrow-left", "arrow-right", "arrow-left-right", "chevron-right", "chevron-down", "menu", "ellipsis-vertical",
+  "search", "external-link", "play", "pause", "skip-forward", "eye", "trash-2", "delete", "undo-2", "redo-2", "rotate-ccw", "refresh-cw",
+  "zoom-in", "zoom-out", "maximize", "maximize-2", "minimize-2", "copy", "corner-down-left", "circle", "square", "square-plus",
+  "circle-check", "circle-x", "circle-arrow-up", "info", "circle-help", "lock", "unlock", "pin", "pin-off", "link", "log-out",
+  "download", "cloud-upload", "save", "image-down", "folder-open", "share", "wifi-off", "volume-2", "volume-x", "sliders-horizontal",
+  "camera", "keyboard", "mic", "eraser", "text", "image", "smartphone", "monitor-play", "sun", "moon", "sun-moon", "user-plus", "users",
+  "badge-check", "zap", "heart", "bell", "wallet", "coins", "gem", "spade", "bomb",
+  // grafični kalkulator (orodja in vrste funkcij)
+  "house", "table", "wrench", "activity", "chart-area", "chart-spline", "flower", "infinity", "spline", "square-function",
+  // logotip
+  "elementi",
+];
+
+const n = (v) => +v.toFixed(2);
+const p = (d, a = "") => `<path d="${d}"${a} />`;
+const c = (x, y, r, a = "") => `<circle cx="${x}" cy="${y}" r="${r}"${a} />`;
+const rect = (x, y, w, h, rx = 0, a = "") => `<rect x="${x}" y="${y}" width="${w}" height="${h}"${rx ? ` rx="${rx}"` : ""}${a} />`;
+const ell = (x, y, rx, ry, a = "") => `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}"${a} />`;
+const thin = ' stroke-width="1.5"';
+const dot = (x, y, r = 1) => c(x, y, r, ' fill="currentColor" stroke="none"');
+
+function lucide(name) {
+  const svg = fs.readFileSync(path.join(ROOT, "node_modules", "lucide-static", "icons", `${name}.svg`), "utf8");
+  return svg.slice(svg.indexOf(">", svg.indexOf("<svg")) + 1, svg.lastIndexOf("</svg>")).replace(/\s*\n\s*/g, "").trim();
+}
+
+// Zvezda: polmeri si sledijo po vrsti (npr. [10, 4] = ostra zvezda, [10, 3, 6, 3] = vetrovnica z dolgimi in kratkimi kraki).
+function star(cx, cy, k, radii, rot = -90) {
+  const m = k * radii.length;
+  const pts = Array.from({ length: m }, (_, i) => {
+    const a = ((rot + (i * 360) / m) * Math.PI) / 180;
+    const r = radii[i % radii.length];
+    return `${n(cx + r * Math.cos(a))} ${n(cy + r * Math.sin(a))}`;
+  });
+  return p(`M${pts.join("L")}Z`);
+}
+// Osemkraka zvezda iz dveh kvadratov (islamska geometrija).
+const khatim = (cx, cy, r) => {
+  const a = n(r * Math.SQRT1_2);
+  return p(`M${n(cx - a)} ${n(cy - a)}h${n(2 * a)}v${n(2 * a)}h${n(-2 * a)}z`) + p(`M${cx} ${n(cy - r)}L${n(cx + r)} ${cy}L${cx} ${n(cy + r)}L${n(cx - r)} ${cy}z`);
+};
+// List (lečasta oblika) od točke (x, y) v smeri a (stopinje), dolžina l, širina w.
+function leafD(x, y, a, l, w) {
+  const r = (a * Math.PI) / 180, ux = Math.cos(r), uy = Math.sin(r);
+  const ex = x + ux * l, ey = y + uy * l, mx = x + (ux * l) / 2, my = y + (uy * l) / 2;
+  return `M${n(x)} ${n(y)}Q${n(mx - uy * w)} ${n(my + ux * w)} ${n(ex)} ${n(ey)}Q${n(mx + uy * w)} ${n(my - ux * w)} ${n(x)} ${n(y)}Z`;
+}
+// Cvet iz k listov okrog središča.
+const petals = (cx, cy, k, r0, r1, w, rot = -90) =>
+  p(Array.from({ length: k }, (_, i) => { const a = rot + (i * 360) / k, t = (a * Math.PI) / 180; return leafD(cx + r0 * Math.cos(t), cy + r0 * Math.sin(t), a, r1 - r0, w); }).join(""));
+
+// Lovorov venec: dve veji (kvadratni Bézier), na vsaki listi navzven.
+function laurel(ribbon) {
+  const P0 = [10.5, 21], C = [3, 17], P2 = [5.5, 4.5];
+  const at = (t) => [0, 1].map((i) => (1 - t) ** 2 * P0[i] + 2 * (1 - t) * t * C[i] + t * t * P2[i]);
+  const tan = (t) => [0, 1].map((i) => 2 * (1 - t) * (C[i] - P0[i]) + 2 * t * (P2[i] - C[i]));
+  let d = `M${P0[0]} ${P0[1]}Q${C[0]} ${C[1]} ${P2[0]} ${P2[1]}`;
+  for (const t of [0.3, 0.55, 0.8]) {
+    const [x, y] = at(t), [tx, ty] = tan(t);
+    const a = (Math.atan2(ty, tx) * 180) / Math.PI;
+    d += leafD(x, y, a - 50, 4, 1.3) + leafD(x, y, a + 35, 3.4, 1.1);
+  }
+  const [tx, ty] = tan(1);
+  d += leafD(P2[0], P2[1], (Math.atan2(ty, tx) * 180) / Math.PI, 3.2, 1.1);
+  const mirror = d.replace(/([MQ ]|Z)?(-?[\d.]+) (-?[\d.]+)/g, (m, cmd = "", x, y) => `${cmd}${n(24 - x)} ${y}`);
+  return p(d) + p(mirror) + (ribbon ? p("M10.5 21l-2 1.5M13.5 21l2 1.5M10.5 21h3") : "");
+}
+const ribbonMedal = (inner) => p("M8 2.5l2.6 6.4M16 2.5l-2.6 6.4") + c(12, 15, 6.5) + inner(12, 15);
+
+// Drobni znaki znotraj okvirjev.
+const mk = {
+  check: (x, y) => p(`M${x - 3.5} ${y}l2.5 2.5 4.5-5`),
+  heart: (x, y) => p(`M${x} ${y + 3}L${n(x - 3.3)} ${y - 0.3}A2 2 0 0 1 ${x} ${y - 2.6}A2 2 0 0 1 ${n(x + 3.3)} ${y - 0.3}Z`),
+  lines: (x, y, h = 3) => p(`M${x - 4} ${y - h}h8M${x - 4} ${y}h8M${x - 4} ${y + h}h5`),
+  cols: (x, y, h = 3) => p(`M${x - 4.5} ${y - h}h3.5M${x - 4.5} ${y}h3.5M${x - 4.5} ${y + h}h3.5M${x + 1} ${y - h}h3.5M${x + 1} ${y}h3.5M${x + 1} ${y + h}h3.5`),
+  sigma: (x, y) => p(`M${x + 3} ${y - 3}V${y - 4}H${x - 3}l3 4-3 4h6v-1`),
+  meander: (x, y) => p(`M${x - 3} ${y + 2.5}v-5h6v3.5h-3v-1.5`),
+  star4: (x, y, r = 3.2) => star(x, y, 4, [r, r * 0.3]),
+  star8: (x, y, r = 3.2) => star(x, y, 8, [r, r * 0.5]),
+  lotus: (x, y) => p(`M${x} ${y + 2.5}c-1.5-1.3-1.6-3.6 0-5.5 1.6 1.9 1.5 4.2 0 5.5zM${x} ${y + 2.5}c-2.2.1-3.6-1-4-3 1.9-.1 3.3.9 4 3zM${x} ${y + 2.5}c2.2.1 3.6-1 4-3-1.9-.1-3.3.9-4 3z`),
+  sun: (x, y) => c(x, y, 1.5) + p(`M${x} ${y - 4}v1M${x} ${y + 4}v-1M${x - 4} ${y}h1M${x + 4} ${y}h-1M${x - 2.8} ${y - 2.8}l.7.7M${x + 2.8} ${y + 2.8}l-.7-.7M${x - 2.8} ${y + 2.8}l.7-.7M${x + 2.8} ${y - 2.8}l-.7.7`, thin),
+  moon: (x, y) => p(`M${x + 1} ${y - 3}a3 3 0 1 0 0 6 2.4 2.4 0 0 1 0-6z`),
+  owlEyes: (x, y) => c(x - 1.6, y - 0.5, 1.3) + c(x + 1.6, y - 0.5, 1.3) + p(`M${x - 0.6} ${y + 1.5}l.6 .9.6-.9`),
+};
+
+// Pisalne podlage slogov in njihova sredina (naloge, mnenje, besedilo, Σ).
+const SURF = {
+  antik: [rect(4, 4, 16, 17, 2) + p("M9.5 4a2.5 2.5 0 0 1 5 0"), 12, 12.5], // voščena tablica z ročajem
+  renesansa: [p("M19 17V5a2 2 0 0 0-2-2H4") + p("M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"), 12.5, 10], // pergament
+  bagdad: [p("M5 21V10.5C5 7 8 4.5 12 3c4 1.5 7 4 7 7.5V21z"), 12, 14], // list s šilastim lokom
+  indija: [rect(4, 7, 16, 14, 2) + p("M10 7V3h4v4") + c(12, 5, 0.4), 12, 14], // takhti (lesena šolska tablica z ročajem) // palmov list z luknjo za vrvico
+};
+const onSurf = (s, mark) => SURF[s][0] + mark(SURF[s][1], SURF[s][2]);
+
+// Skupne risbe.
+const scrollMap = (marker) => rect(2.5, 3, 3, 18, 1.5) + rect(18.5, 3, 3, 18, 1.5) + p("M5.5 5h13M5.5 19h13") + p("M8 16.5c3 0 2.5-4.5 5-5", ' stroke-dasharray="0 2.6"') + marker(15, 9);
+const scanFrame = p("M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2");
+const eye = p("M6.5 12s2-3.5 5.5-3.5 5.5 3.5 5.5 3.5-2 3.5-5.5 3.5S6.5 12 6.5 12z") + c(12, 12, 1.5);
+const calFrame = (mark) => p("M8 2v4M16 2v4") + rect(3, 4, 18, 18, 2) + p("M3 10h18") + mark(12, 16);
+const chest = rect(3, 10, 18, 10, 1) + p("M3 10V8a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v2") + rect(10.5, 9, 3, 4, 0.5);
+const globe = c(12, 9.5, 6) + ell(12, 9.5, 2.5, 6) + p("M6 9.5h12") + p("M18.4 4a8.5 8.5 0 0 1-12 12") + p("M12 18v3M8.5 21h7");
+const armillary = c(12, 10.5, 7.5) + ell(12, 10.5, 7.5, 2.5) + ell(12, 10.5, 7.5, 2.5, ' transform="rotate(-50 12 10.5)"') + p("M12 18v3M9 21h6");
+const atoms = c(12, 12, 2.5) + c(6.5, 8, 2) + c(17.5, 8, 2) + c(7.5, 17.5, 2) + c(16.5, 17.5, 2);
+const torch = p("M10 22h4l1-9H9z") + p("M8 13h8") + p("M12 2c2 2.5 3.5 4.3 3.5 6.3a3.5 3.5 0 0 1-7 0C8.5 6.3 10 4.5 12 2z");
+const arrow = p("M2 12h14") + p("M16 8.5l5 3.5-5 3.5z") + p("M2 9.5L4.5 12 2 14.5M5.5 9.5L8 12l-2.5 2.5", thin);
+const stylus = p("M5 19L16.5 7.5") + p("M16.5 7.5l2-4 2 2-4 2") + p("M5 19l-1.5 1.5");
+const arrowTarget = c(10, 14, 7) + c(10, 14, 3) + p("M10 14l9.5-9.5") + p("M16.5 4.5V7.5h3");
+const cards = rect(4, 6, 11, 15, 1.5, ' transform="rotate(-12 9.5 13.5)"') + rect(9, 4, 11, 15, 1.5) + mk.star4(14.5, 11.5, 3);
+const setSquare = p("M4 20V4l16 16z") + p("M8 16v-3.5l3.5 3.5z") + p("M4 8h2M4 12h2M8 20v-2M12 20v-2");
+const tablets = rect(7, 3, 13, 15, 1.5) + p("M4 7v12.5A1.5 1.5 0 0 0 5.5 21H16") + p("M10 7.5h7M10 10.5h7M10 13.5h4");
+const wheel = (k, arrowhead) => (arrowhead ? p("M21 12a9 9 0 1 1-2.64-6.36L21 8.5") + p("M21 3.5v5h-5") : c(12, 12, 9)) + c(12, 12, 2) +
+  p(Array.from({ length: k }, (_, i) => { const t = (i * 2 * Math.PI) / k + (arrowhead ? Math.PI / 4 : 0), r = arrowhead ? 6 : 9; return `M${n(12 + 2 * Math.cos(t))} ${n(12 + 2 * Math.sin(t))}L${n(12 + r * Math.cos(t))} ${n(12 + r * Math.sin(t))}`; }).join(""));
+const clepsydra = p("M4.5 3h15l-2.5 6h-10z") + p("M12 11.5v.5M12 14.5v.5") + p("M5.5 17.5h13l-1.5 3.5h-10z") + p("M7 19.5h10", thin);
+const alembic = c(7.5, 16, 5) + p("M6 11.2V8h3v3.2") + p("M5 8a2.5 2.5 0 0 1 5 0z") + p("M10 6.5l7 8") + c(18.5, 18, 3) + p("M17 14.5h3");
+const stepsChart = p("M3 20h4v-5h5v-5h5V5h4") + p("M3 20h18");
+
+// Risbe po slogih: ime ikone obdobja → [svg, imena ikon v aplikaciji]. Sestavijo se šele ob klicu (lucide-static je le za razvoj).
+let S;
+function tabele() {
+  if (S) return S;
+  S = {
+    antik: {
+      sova: [p("M5 3.5l3.5 3h7l3.5-3V13a7 7 0 0 1-14 0z") + c(9.5, 10, 2.2) + c(14.5, 10, 2.2) + p("M11 13.5l1 1.5 1-1.5") + p("M4 21.5h16"), ["sparkles", "message-circle", "bot"]],
+      zemljevid: [scrollMap((x, y) => p(`M${x - 1.6} ${y - 1.6}l3.2 3.2M${x + 1.6} ${y - 1.6}l-3.2 3.2`)), ["map"]],
+      zvitek: [lucide("scroll"), ["book-open"]],
+      oko: [scanFrame + eye, ["scan-line", "scan-text"]],
+      abak: [rect(3, 4, 18, 16, 2) + p("M3 9h18M3 15h18") + c(7, 9, 1.6) + c(11, 9, 1.6) + c(17, 9, 1.6) + c(9, 15, 1.6) + c(15, 15, 1.6), ["calculator"]],
+      lovor: [laurel(false), ["medal"]],
+      kolajna: [ribbonMedal(mk.meander), ["award"]],
+      amfora: [lucide("amphora"), ["trophy", "droplet"]],
+      kocka: [lucide("dice-5"), ["gamepad-2", "joystick", "dices"]],
+      koledar: [calFrame(mk.sun), ["calendar", "calendar-days", "calendar-clock"]],
+      stebri: [p("M5 20v-5M3.5 15h3M3.5 20h3") + p("M12 20v-9M10.5 11h3M10.5 20h3") + p("M19 20V6M17.5 6h3M17.5 20h3") + p("M2 22h20"), ["chart-column"]],
+      poganjek: [lucide("sprout"), ["trending-up"]],
+      zobnik: [star(12, 12, 12, [10, 7.5]) + c(12, 12, 2.5) + p("M12 5v4.5M12 14.5V19M5 12h4.5M14.5 12H19"), ["settings"]],
+      doprsje: [c(12, 6.5, 3.5) + p("M6 16.5c0-3.5 2.7-5.5 6-5.5s6 2 6 5.5z") + p("M9 16.5l-1 4.5h8l-1-4.5"), ["user"]],
+      zvezda: [star(12, 12, 8, [10, 4]), ["star"]],
+      bakla: [torch, ["flame"]],
+      oljenka: [p("M3 15C3 12.5 6 11.5 11 11.5h7.5L21 10l-1 3.5c-1 3-5 4-9 4-5 0-8-.8-8-2.5z") + p("M20.5 7.5c-1.2-1.2-1-3 0-4.5 1.3 1.5 1.5 3.2 0 4.5z") + p("M3.5 14a2 2 0 0 1 0-3"), ["lightbulb"]],
+      lok: [lucide("bow-arrow"), ["target"]],
+      zastava: [lucide("flag-triangle-right"), ["flag"]],
+      sigma: [p("M5 21V8l7-5 7 5v13z") + mk.sigma(12, 14), ["sigma"]],
+      puscica: [arrow, ["send"]],
+      vetrovnica: [c(12, 12, 9.5) + star(12, 12, 4, [7.5, 2]), ["compass"]],
+      kolo: [wheel(4, true), ["repeat"]],
+      naloge: [onSurf("antik", mk.check), ["clipboard-check", "list-checks"]],
+      mnenje: [onSurf("antik", mk.heart), ["message-square-heart"]],
+      besedilo: [onSurf("antik", mk.lines), ["file-text"]],
+      stela: [p("M5 21V8l7-5 7 5v13z") + p("M3.5 21h17") + mk.lines(12, 14), ["newspaper"]],
+      pisalo: [stylus, ["pencil", "notebook-pen", "feather"]],
+      labirint: [p("M4 4h16v16H4V8h12v8H8v-4h4"), ["puzzle"]],
+      akademija: [lucide("landmark"), ["graduation-cap", "castle"]],
+      skrinja: [chest, ["gift"]],
+      posoda: [lucide("flask-round"), ["flask-conical"]],
+      atomi: [atoms, ["atom"]],
+      globus: [globe, ["globe"]],
+      klepsidra: [clepsydra, ["timer"]],
+      mozaik: [rect(3, 3, 18, 18, 2) + p("M3 10h7v11M10 3v7h11M14 10v11M14 15h7") + rect(5.5, 5.5, 2, 2, 0, thin), ["palette", "paintbrush", "grid-2x2"]],
+      maske: [lucide("drama"), ["party-popper"]],
+      knjiznica: [rect(3, 3, 18, 18, 1) + p("M3 12h18M9 3v18M15 3v18") + c(6, 7.5, 1.4) + c(12, 7.5, 1.4) + c(18, 7.5, 1.4) + c(6, 16.5, 1.4) + c(12, 16.5, 1.4) + c(18, 16.5, 1.4), ["library"]],
+      sestilo: [lucide("drafting-compass"), ["ruler"]],
+      tablice: [tablets, ["layers"]],
+      lonec: [lucide("cooking-pot"), ["chef-hat"]],
+      ladjica: [lucide("sailboat"), ["car"]],
+      zelva: [lucide("turtle"), ["paw-print"]],
+      kovanci: [lucide("coins"), ["shopping-basket"]],
+      grozdje: [lucide("grape"), ["cherry"]],
+      zid: [lucide("brick-wall"), ["blocks"]],
+    },
+    renesansa: {
+      pero: [p("M4 21l1.5-5h6l1.5 5z") + p("M6.5 16v-1.5h4V16") + p("M9 14.5C10 8 14 4 21 3c-1 7-5 10.5-12 11.5") + p("M9 14.5l7-7"), ["sparkles", "message-circle", "bot"]],
+      portolan: [scrollMap((x, y) => mk.star4(x, y, 2.6)), ["map"]],
+      kodeks: [rect(5, 3, 14, 18, 1.5) + p("M8 3v18") + p("M13.5 8l2.5 4-2.5 4-2.5-4z") + p("M19 10.5h1.5v3H19"), ["book-open"]],
+      oko: [scanFrame + eye, ["scan-line", "scan-text"]],
+      abak: [rect(3, 3, 18, 18, 2) + p("M8 3v18M12 3v18M16 3v18") + p("M3 9h18", thin) + c(8, 6, 1.5) + c(12, 13, 1.5) + c(16, 6, 1.5) + c(8, 16, 1.5) + c(16, 14, 1.5), ["calculator"]],
+      lovor: [laurel(true), ["medal"]],
+      kolajna: [ribbonMedal(mk.star4), ["award"]],
+      krona: [lucide("crown"), ["trophy"]],
+      skakac: [lucide("chess-knight"), ["gamepad-2", "joystick"]],
+      kocke: [lucide("dice-3"), ["dices"]],
+      koledar: [calFrame(mk.star4), ["calendar", "calendar-days", "calendar-clock"]],
+      arkade: [p("M3.5 20v-4.5a1.5 1.5 0 0 1 3 0V20M10.5 20v-8.5a1.5 1.5 0 0 1 3 0V20M17.5 20V6.5a1.5 1.5 0 0 1 3 0V20") + p("M2 20h20"), ["chart-column"]],
+      vzhod: [lucide("sunrise"), ["trending-up"]],
+      krmilo: [lucide("ship-wheel"), ["settings"]],
+      kameja: [ell(12, 12, 8, 10) + c(12, 9.5, 3) + p("M7 18.5c.8-3 2.6-4.5 5-4.5s4.2 1.5 5 4.5"), ["user"]],
+      zvezda: [star(12, 12, 4, [10, 2.6, 6, 2.6]), ["star"]],
+      bakla: [torch, ["flame"]],
+      sveca: [rect(9, 10, 6, 10, 1) + p("M12 2.5c1.5 2 2.5 3.2 2.5 4.5a2.5 2.5 0 0 1-5 0c0-1.3 1-2.5 2.5-4.5z") + p("M6 21h12"), ["lightbulb"]],
+      tarca: [arrowTarget, ["target"]],
+      prapor: [p("M5 3h14M7 3v14l5-3 5 3V3") + p("M5 3v-.5M19 3v-.5"), ["flag"]],
+      sigma: [onSurf("renesansa", mk.sigma), ["sigma"]],
+      pismo: [rect(2, 5, 20, 14, 2) + p("M2 7l10 6 10-6") + c(12, 14, 2.5), ["send"]],
+      vetrovnica: [c(12, 12, 10) + star(12, 12, 4, [8, 2, 4.5, 2]), ["compass"]],
+      orbita: [lucide("orbit"), ["repeat"]],
+      naloge: [onSurf("renesansa", mk.check), ["clipboard-check", "list-checks"]],
+      mnenje: [onSurf("renesansa", mk.heart), ["message-square-heart"]],
+      besedilo: [lucide("scroll-text"), ["file-text"]],
+      letak: [rect(4, 3, 16, 18, 1) + p("M7 7h10") + mk.cols(12, 14), ["newspaper"]],
+      "gosje-pero": [p("M5 19C6 11 12 5 21 3c-2 9-8 15-16 16z") + p("M5 19L14 10") + p("M3 21l2-2"), ["pencil", "notebook-pen", "feather"]],
+      "magicni-kvadrat": [lucide("grid-3x3"), ["puzzle", "grid-2x2"]],
+      univerza: [lucide("school"), ["graduation-cap"]],
+      skrinja: [chest, ["gift"]],
+      bucka: [lucide("flask-round"), ["flask-conical"]],
+      armila: [armillary, ["atom"]],
+      globus: [globe, ["globe"]],
+      "pescena-ura": [lucide("hourglass"), ["timer"]],
+      paleta: [lucide("palette"), ["palette", "paintbrush"]],
+      maske: [lucide("drama"), ["party-popper"]],
+      knjiznica: [lucide("library-big"), ["library"]],
+      kotnik: [setSquare, ["ruler"]],
+      karte: [cards, ["layers"]],
+      grad: [lucide("castle"), ["castle"]],
+      lonec: [lucide("cooking-pot"), ["chef-hat"]],
+      ladja: [lucide("ship"), ["car"]],
+      pes: [lucide("dog"), ["paw-print"]],
+      tehtnica: [lucide("scale"), ["shopping-basket"]],
+      jabolko: [lucide("apple"), ["cherry"]],
+      kaplje: [lucide("droplets"), ["droplet"]],
+      zid: [lucide("brick-wall"), ["blocks"]],
+    },
+    bagdad: {
+      astrolab: [c(12, 13.5, 7.5) + c(12, 13.5, 3.5) + p("M6.7 18.8L17.3 8.2") + p("M12 6V4.2") + c(12, 3, 1.2), ["sparkles", "message-circle", "bot"]],
+      zemljevid: [scrollMap((x, y) => mk.star8(x, y, 2.6)), ["map"]],
+      rokopis: [rect(3, 4, 14, 16, 1.5) + p("M17 6l4 3v6l-4 3") + mk.star8(10, 12, 3.2), ["book-open"]],
+      oko: [scanFrame + eye, ["scan-line", "scan-text"]],
+      plosca: [rect(3, 4, 18, 16, 2) + p("M7.5 9.5L9 8v8") + p("M12.5 10a2 2 0 1 1 3.3 1.5L12.5 16h4"), ["calculator"]],
+      kolajna: [ribbonMedal(mk.star8), ["medal"]],
+      rozeta: [khatim(12, 9.5, 7.5) + c(12, 9.5, 2.5) + p("M9.5 16.5l-1.5 5 3-1.2M14.5 16.5l1.5 5-3-1.2"), ["award"]],
+      krona: [lucide("crown"), ["trophy"]],
+      trdnjava: [lucide("chess-rook"), ["gamepad-2", "joystick"]],
+      kocke: [lucide("dice-6"), ["dices"]],
+      koledar: [calFrame(mk.star8), ["calendar", "calendar-days", "calendar-clock"]],
+      loki: [p("M3.5 20v-4.5q0-1.5 1.5-2.5 1.5 1 1.5 2.5V20M10.5 20v-8.5q0-1.5 1.5-2.5 1.5 1 1.5 2.5V20M17.5 20V7.5q0-1.5 1.5-2.5 1.5 1 1.5 2.5V20") + p("M2 20h20"), ["chart-column"]],
+      vzhod: [lucide("sunrise"), ["trending-up"]],
+      zobnik: [star(12, 12, 8, [10, 7.5], -67.5) + c(12, 12, 3), ["settings"]],
+      portret: [p("M5 21V10.5C5 7 8 4.5 12 3c4 1.5 7 4 7 7.5V21z") + c(12, 10.5, 2.8) + p("M7.5 21c0-3 2-5 4.5-5s4.5 2 4.5 5"), ["user"]],
+      zvezda: [khatim(12, 12, 9.5), ["star"]],
+      ogenj: [lucide("flame-kindling"), ["flame"]],
+      svetilka: [p("M2 15c1-2 3-3 6-3h7c2 0 3.5-1 5-3l-.5 3.5c-.8 3-3.5 5-7 5H7c-3 0-5-1-5-2.5z") + p("M9.5 12a2.5 2 0 0 1 5 0") + p("M9 17.5l-1 3h8l-1-3") + p("M21 6.5c-1-1-.9-2.5 0-3.5 1 1 1.1 2.5 0 3.5z"), ["lightbulb"]],
+      tarca: [arrowTarget, ["target"]],
+      zastava: [p("M5 22V3") + p("M5 4h14l-3.5 4.5L19 13H5"), ["flag"]],
+      sigma: [onSurf("bagdad", mk.sigma), ["sigma"]],
+      golob: [lucide("bird"), ["send"]],
+      vetrovnica: [c(12, 12, 10) + star(12, 12, 8, [8, 2.5]), ["compass"]],
+      "pescena-ura": [lucide("hourglass"), ["repeat", "timer"]],
+      naloge: [onSurf("bagdad", mk.check), ["clipboard-check", "list-checks"]],
+      mnenje: [onSurf("bagdad", mk.heart), ["message-square-heart"]],
+      besedilo: [onSurf("bagdad", (x, y) => mk.lines(x, y + 0.5)), ["file-text"]],
+      stran: [rect(4, 3, 16, 18, 1.5) + p("M7 8.5c2 0 3.5-1 5-2.8 1.5 1.8 3 2.8 5 2.8") + mk.cols(12, 15), ["newspaper"]],
+      trstika: [p("M5 19L17 7") + p("M17 7l3.5-3.5M5 19l-2 2.5 3-1z") + p("M14.5 9.5l1.5 1.5"), ["pencil", "notebook-pen", "feather"]],
+      girih: [star(12, 12, 8, [10, 5.5], -67.5) + star(12, 12, 8, [4, 4], -67.5), ["puzzle"]],
+      vrata: [p("M4 21V7h3v2h3V7h4v2h3V7h3v14z") + p("M9.5 21v-4c0-1.5 1-2.5 2.5-3.5 1.5 1 2.5 2 2.5 3.5v4"), ["graduation-cap", "castle"]],
+      skrinja: [chest, ["gift"]],
+      alembik: [alembic, ["flask-conical"]],
+      armila: [armillary, ["atom"]],
+      globus: [globe, ["globe"]],
+      ploscica: [rect(3, 3, 18, 18, 2) + mk.star8(12, 12, 6), ["palette", "paintbrush", "grid-2x2"]],
+      utrinek: [star(12, 12, 8, [9, 3.5]) + dot(4, 4) + dot(20, 4) + dot(20, 20) + dot(4, 20), ["party-popper"]],
+      knjiznica: [lucide("library-big"), ["library"]],
+      kvadrant: [p("M4 20V4a16 16 0 0 1 16 16z") + p("M4 8.5a11.5 11.5 0 0 1 11.5 11.5", thin) + p("M4 20l9-9") + c(13.5, 10.5, 1), ["ruler"]],
+      karte: [cards, ["layers"]],
+      lonec: [lucide("cooking-pot"), ["chef-hat"]],
+      ladjica: [lucide("sailboat"), ["car"]],
+      macka: [lucide("cat"), ["paw-print"]],
+      tehtnica: [lucide("scale"), ["shopping-basket"]],
+      granatno: [c(12, 14, 7.5) + p("M9.5 7L9 3.5l3 2 3-2-.5 3.5"), ["cherry"]],
+      vodnjak: [p("M3 15h18c-.5 3-4 5-9 5s-8.5-2-9-5z") + p("M12 15V7") + p("M12 7c-2-2-4.5-2-6 0M12 7c2-2 4.5-2 6 0") + p("M9 20l-.5 2h7l-.5-2"), ["droplet"]],
+      zid: [lucide("brick-wall"), ["blocks"]],
+    },
+    indija: {
+      lotos: [p("M12 19c-3-3-3.8-8.5 0-14 3.8 5.5 3 11 0 14z") + p("M12 19C7.5 19.3 4 17 2.5 12c4-.3 7.5 2 9.5 7") + p("M12 19c4.5.3 8-2 9.5-7-4-.3-7.5 2-9.5 7") + p("M7 21.5h10"), ["sparkles", "message-circle", "bot"]],
+      zemljevid: [scrollMap((x, y) => mk.lotus(x, y)), ["map"]],
+      "palmovi-listi": [rect(2, 4, 20, 4, 2) + rect(2, 10, 20, 4, 2) + rect(2, 16, 20, 4, 2) + p("M7 2.5v19", thin), ["book-open", "library", "layers"]],
+      oko: [scanFrame + eye, ["scan-line", "scan-text"]],
+      nicla: [rect(3, 4, 18, 16, 2) + p("M7.5 9.5L9 8v8") + ell(15, 12, 2.5, 4), ["calculator"]],
+      kolajna: [ribbonMedal(mk.lotus), ["medal"]],
+      rozeta: [petals(12, 9.5, 8, 2.2, 8, 1.9) + c(12, 9.5, 2.2) + p("M9.5 16.5l-1.5 5 3-1.2M14.5 16.5l1.5 5-3-1.2"), ["award"]],
+      dragulj: [lucide("gem"), ["trophy"]],
+      kmet: [lucide("chess-pawn"), ["gamepad-2", "joystick"]],
+      pasa: [rect(2, 8, 20, 8, 2) + dot(6.5, 12, 1.2) + dot(11, 10.5, 1.2) + dot(13, 13.5, 1.2) + dot(17.5, 10.5, 1.2) + dot(17.5, 13.5, 1.2), ["dices"]],
+      koledar: [calFrame(mk.lotus), ["calendar", "calendar-days", "calendar-clock"]],
+      stopnice: [stepsChart, ["chart-column"]],
+      poganjek: [lucide("sprout"), ["trending-up"]],
+      kolo: [wheel(8, false), ["settings"]],
+      portret: [p("M5 21v-9c0-2 1.5-3.5 3-3.5 0-2.5 2-4.5 4-4.5s4 2 4 4.5c1.5 0 3 1.5 3 3.5v9z") + c(12, 11.5, 2.6) + p("M7.5 21c0-3 2-5 4.5-5s4.5 2 4.5 5"), ["user"]],
+      zvezda: [star(12, 12, 10, [10, 5.5]), ["star"]],
+      ogenj: [lucide("flame-kindling"), ["flame"]],
+      dija: [p("M3 13h18c-1 4.5-5 7-9 7s-8-2.5-9-7z") + p("M12 3c2 2.8 3 4.3 3 6a3 3 0 0 1-6 0c0-1.7 1-3.2 3-6z"), ["lightbulb"]],
+      lok: [lucide("bow-arrow"), ["target"]],
+      zastava: [lucide("flag-triangle-right"), ["flag"]],
+      sigma: [onSurf("indija", mk.sigma), ["sigma"]],
+      puscica: [arrow, ["send"]],
+      roza: [c(12, 12, 10) + petals(12, 12, 8, 1.5, 8, 1.6), ["compass"]],
+      orbita: [lucide("orbit"), ["repeat"]],
+      naloge: [onSurf("indija", mk.check), ["clipboard-check", "list-checks"]],
+      mnenje: [onSurf("indija", mk.heart), ["message-square-heart"]],
+      besedilo: [onSurf("indija", mk.lines), ["file-text"]],
+      edikt: [onSurf("indija", mk.cols), ["newspaper"]],
+      pisalo: [stylus, ["pencil", "notebook-pen", "feather"]],
+      "magicni-kvadrat": [lucide("grid-3x3"), ["puzzle"]],
+      paviljon: [p("M5 11a7 6 0 0 1 14 0z") + p("M12 5V3") + p("M4 11h16") + p("M6 11v9M18 11v9M12 14v6") + p("M3 20.5h18"), ["graduation-cap", "castle"]],
+      skrinja: [chest, ["gift"]],
+      alembik: [alembic, ["flask-conical"]],
+      atomi: [atoms, ["atom"]],
+      globus: [globe, ["globe"]],
+      klepsidra: [clepsydra, ["timer"]],
+      rangoli: [p("M12 2l10 10-10 10L2 12z") + p("M12 7l5 5-5 5-5-5z") + dot(12, 12, 1.2), ["palette", "paintbrush", "grid-2x2"]],
+      utrinek: [petals(12, 12, 8, 3, 10, 1.6) + dot(4, 4) + dot(20, 4) + dot(20, 20) + dot(4, 20), ["party-popper"]],
+      kotnik: [setSquare, ["ruler"]],
+      lonec: [lucide("cooking-pot"), ["chef-hat"]],
+      ladja: [lucide("ship"), ["car"]],
+      ptica: [lucide("bird"), ["paw-print"]],
+      kovanci: [lucide("coins"), ["shopping-basket"]],
+      mango: [p("M7 20c-3-3-3.5-9 1-13 3.5-3 9-3 11 1 2 4-1 9-5 11-2.5 1.2-5 2.5-7 1z") + p("M15 5c0-1.5 1-2.5 2-3"), ["cherry"]],
+      vrc: [c(12, 15, 6) + p("M9.5 9.5V6h5v3.5") + p("M8.5 4h7"), ["droplet"]],
+      zid: [lucide("brick-wall"), ["blocks"]],
+    },
+  };
+  return S;
+}
+
+export function sestavi(id) {
+  const set = tabele()[id];
+  if (!set) throw new Error(`ni ikon za slog ${id}`);
+  const out = { map: {}, svg: {} };
+  for (const [name, [svg, uses]] of Object.entries(set)) {
+    out.svg[name] = svg;
+    for (const u of uses) {
+      if (out.map[u]) throw new Error(`${id}: ${u} dvakrat (${out.map[u]}, ${name})`);
+      out.map[u] = name;
+    }
+  }
+  out.map = Object.fromEntries(Object.entries(out.map).sort(([a], [b]) => a.localeCompare(b)));
+  return JSON.stringify(out) + "\n";
+}
+
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isMain) {
+  const check = process.argv.includes("--check");
+  let bad = 0;
+  for (const id of Object.keys(tabele())) {
+    const file = path.join(PUB, "eras", id, "ikone.json");
+    const json = sestavi(id);
+    if (check) {
+      const same = fs.existsSync(file) && fs.readFileSync(file, "utf8") === json;
+      if (!same) bad++, console.log(`${id}: ikone.json ni enaka sestavljeni (node scripts/ikone-obdobij.js)`);
+    } else {
+      fs.writeFileSync(file, json);
+      console.log(`${id}: ${Object.keys(JSON.parse(json).map).length} ikon, ${json.length} B`);
+    }
+  }
+  process.exit(bad ? 1 : 0);
+}

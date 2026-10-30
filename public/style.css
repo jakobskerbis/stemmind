@@ -380,6 +380,10 @@ body.onboarding .test-notice .tn-report, body.auth-mode .test-notice .tn-report 
   content: "S"; position: absolute; inset-inline-start: -44px; bottom: 0; width: 34px; height: 34px; display: grid; place-items: center;
   color: #fff; font-weight: 900; font-size: 0.95rem;
 }
+/* Zgodovinski slogi: namesto črke ikona inštruktorja obdobja (icons.js → --tutor-ic, maska iz ikone »sparkles«). */
+html[data-tutor-ic] .msg.assistant::after {
+  content: ""; background: #fff; -webkit-mask: var(--tutor-ic) center / 20px 20px no-repeat; mask: var(--tutor-ic) center / 20px 20px no-repeat;
+}
 .msg.assistant p { margin: 0.45em 0; }
 .msg.assistant > :first-child { margin-top: 0; }
 .msg.assistant > :last-child { margin-bottom: 0; }
