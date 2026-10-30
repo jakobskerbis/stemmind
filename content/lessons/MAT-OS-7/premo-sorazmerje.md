@@ -6,165 +6,231 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Iz prejšnjih razredov že znaš množiti in deliti, računati z ulomki in decimalnimi števili ter brati podatke iz tabele. Znaš tudi narisati točke v koordinatnem sistemu.
+Prvi prizor: na planinskem zemljevidu piše, da $1\,\text{cm}$ pomeni $2\,\text{km}$ v naravi. Pot do koče je na zemljevidu dolga $3\,\text{cm}$, torej $6\,\text{km}$. Pot do jezera je dolga $6\,\text{cm}$, torej $12\,\text{km}$.
 
-V vsakdanjem življenju se pogosto srečaš z odvisnostjo, kjer se ob večanju ene količine veča tudi druga: več kilogramov jabolk pomeni višji znesek na blagajni, več ur hoje pomeni daljšo pot, več sestavin pomeni več porcij. Kadar se količini spreminjata na poseben, »pošten« način, rečemo, da sta **premo sorazmerni**. Takrat lahko iz ene znane vrednosti izračunamo drugo, ne da bi karkoli tehtali ali merili. Za to se naučiš tri orodja: **tabelo**, **graf** in **sklepni račun**.
+Drugi prizor: na bencinski črpalki stane liter goriva $1{,}60\,\text{€}$. Za $20$ litrov plačaš $32\,\text{€}$, za $40$ litrov pa $64\,\text{€}$.
+
+Prizora sta si na videz daleč narazen: eden govori o centimetrih in kilometrih, drugi o litrih in evrih. A v obeh velja isto pravilo. Kolikokrat daljša je črta na zemljevidu, tolikokrat daljša je pot. Kolikokrat več litrov natočiš, tolikokrat več plačaš. Takšni zvezi rečemo **premo sorazmerje**.
+
+Ko jo prepoznaš, iz enega znanega para izračunaš vse druge: razdaljo do vsakega kraja, ceno vsakega tankanja, čas vsake vožnje. Za to imaš tri orodja: **tabelo**, **graf** in **sklepni račun**.
 
 ## Razlaga
 
-**1. Kaj je premo sorazmerje.** Količini sta premo sorazmerni, če se ob podvojitvi prve podvoji tudi druga, ob potrojitvi prve se potroji tudi druga, ob polovici prve se razpolovi tudi druga. Skratka: če prvo količino pomnožimo z nekim številom, se z istim številom pomnoži tudi druga.
+**Najprej past.** Veliko učencev misli: »Če ena količina raste, ko raste druga, sta premo sorazmerni.« Poglej taksi. Vožnja stane $3\,\text{€}$ ob vstopu in še $1\,\text{€}$ za vsak kilometer. Za $5\,\text{km}$ plačaš $8\,\text{€}$, za $10\,\text{km}$ pa $13\,\text{€}$. Cena raste s potjo, toda pot se je podvojila, cena pa ne. To ni premo sorazmerje.
 
-**2. Količnik je stalen.** Pri premem sorazmerju je količnik ustreznih vrednosti vedno enak:
+:::premisli
+Avtobus ima vozovnico za $1{,}50\,\text{€}$ na postajo, brez vstopnine. Napovej: ali za $10$ postaj plačaš dvakrat toliko kot za $5$? V čem se razlikuje od taksija?
+---
+Da: $5$ postaj stane $7{,}50\,\text{€}$, $10$ postaj $15\,\text{€}$. Pri avtobusu ni začetnega zneska, zato $0$ postaj stane $0\,\text{€}$ in cena se res podvoji. Pri taksiju podvojitev prepreči vstopnina $3\,\text{€}$.
+:::
 
-$$\frac{y}{x} = k \quad \text{oziroma} \quad y = k \cdot x$$
+**Pravilo.** Dve količini sta **premo sorazmerni**, če velja: kolikokrat povečamo (ali zmanjšamo) eno, tolikokrat se poveča (ali zmanjša) druga. Rast sama ni dovolj. Rasti morata v istem razmerju.
 
-Število $k$ imenujemo **koeficient sorazmernosti**. Pove, koliko je $y$, kadar je $x = 1$ (npr. cena za $1\,\text{kg}$).
+**Tabela.** Pare vrednosti zapišemo v tabelo. Za zemljevid, kjer $1\,\text{cm}$ pomeni $2\,\text{km}$:
 
-**3. Tabela.** Vrednosti zapišemo v tabelo. Primer: $1\,\text{kg}$ jabolk stane $1{,}20\,\text{€}$.
+| na zemljevidu $x$ (cm) | $1$ | $2$ | $3$ |
+|---|---|---|---|
+| v naravi $y$ (km) | $2$ | $4$ | $6$ |
 
-| $x$ (masa v $\text{kg}$) | 1 | 2 | 3 | 5 |
-|---|---|---|---|---|
-| $y$ (cena v €) | 1,20 | 2,40 | 3,60 | 6,00 |
+V vsakem stolpcu delimo spodnje število z zgornjim: $2 : 1 = 2$, $4 : 2 = 2$, $6 : 3 = 2$. Količnik je vedno enak. To je vrednost razmerja $y : x$, ki jo že poznaš. Pri premem sorazmerju jo imenujemo **koeficient sorazmernosti** in označimo s $k$. Pove, koliko je $y$, ko je $x = 1$. Velja zveza $y = k \cdot x$.
 
-Ali je to premo sorazmerje? Preverimo količnike: $\frac{1{,}20}{1} = 1{,}2$, $\frac{2{,}40}{2} = 1{,}2$, $\frac{3{,}60}{3} = 1{,}2$, $\frac{6}{5} = 1{,}2$. Vsi so enaki, zato je $k = 1{,}2$.
+Test za vsako tabelo: izračunaj $y : x$ v vseh stolpcih. Če so vsi količniki enaki, je zveza premo sorazmerna.
 
-**4. Graf.** Točke $(x, y)$ narišemo v koordinatni sistem. Pri premem sorazmerju ležijo vse točke na **premici, ki poteka skozi izhodišče** $(0, 0)$. To je logično: če kupiš $0\,\text{kg}$, plačaš $0\,\text{€}$. Večji kot je $k$, bolj strma je premica.
+**Graf.** Vsak stolpec tabele je ena točka v koordinatnem sistemu: na vodoravni osi $x$, na navpični $y$. Točke $(1, 2)$, $(2, 4)$, $(3, 6)$ ležijo na isti premici. Z ravnilom jo podaljšaj navzdol in zadela bo točko $(0, 0)$, **izhodišče**.
 
-**5. Sklepni račun.** Postopek v treh korakih:
+:::premisli
+Zakaj mora graf vsakega premega sorazmerja iti skozi izhodišče? Odgovori na primeru zemljevida.
+---
+Črta dolžine $0\,\text{cm}$ na zemljevidu pomeni $0\,\text{km}$ v naravi. Na splošno: iz $y = k \cdot x$ pri $x = 0$ dobimo $y = 0$. Taksijev graf zato ne gre skozi izhodišče, ker že pri $0\,\text{km}$ plačaš $3\,\text{€}$.
+:::
 
-1. Iz podatka za več enot sklepamo na **eno enoto** (delimo).
-2. Iz ene enote sklepamo na **želeno število enot** (množimo).
-3. Zapišemo odgovor z enoto.
+Večji kot je $k$, strmejša je premica. Na zemljevidu, kjer $1\,\text{cm}$ pomeni $5\,\text{km}$, se premica dviga hitreje kot pri $2\,\text{km}$.
 
-**6. Kdaj ni premo sorazmerje.** Če se ob podvojitvi ene količine druga ne podvoji, sorazmerje ni premo. Primer: starost otroka in njegova višina. Pri $2$ letih ni dvakrat tako visok kot pri $1$ letu. Prav tako ni premo sorazmerje, če graf ne gre skozi izhodišče (npr. taksi s fiksno osnovno ceno).
+V simulaciji spodaj »Premo sorazmerje« premakni drsnik za kilograme s $2$ na $4$. Opazuj, da se cena podvoji in da točka ostane na isti premici skozi izhodišče. Nato spremeni ceno za $1\,\text{kg}$ in poglej, kako se premica nagne.
+
+**Sklepni račun.** Ko poznaš en par, gre račun v dveh korakih:
+
+1. **Sklep na enoto:** delimo, da dobimo vrednost za $1$ (za $1\,\text{cm}$, $1$ liter, $1$ uro).
+2. **Sklep na želeno število:** to vrednost pomnožimo z želenim številom enot.
+
+Vrednost za $1$ enoto je natanko koeficient $k$. Sklepni račun je torej isto kot $y = k \cdot x$, le povedano z besedami.
 
 ## Rešeni primeri
 
-### Primer 1 (lažji): preverjanje s tabelo
+### Primer 1 (lažji): tabela z zemljevida
 
-Ali sta količini v tabeli premo sorazmerni?
+Lana izmeri na zemljevidu tri razdalje in zapiše, koliko so dolge v naravi: $2\,\text{cm}$ je $5\,\text{km}$, $4\,\text{cm}$ je $10\,\text{km}$, $6\,\text{cm}$ je $15\,\text{km}$. Ali sta količini premo sorazmerni? Koliko kilometrov pomeni $10\,\text{cm}$?
 
-| $x$ | 2 | 4 | 6 |
-|---|---|---|---|
-| $y$ | 5 | 10 | 15 |
+**Podatki:** $2\,\text{cm} \to 5\,\text{km}$, $4\,\text{cm} \to 10\,\text{km}$, $6\,\text{cm} \to 15\,\text{km}$; nova razdalja $x = 10\,\text{cm}$
+**Iščemo:** ali je zveza premo sorazmerna, koeficient $k$ in razdaljo $y$ za $10\,\text{cm}$
 
-1. Izračunamo količnike $\frac{y}{x}$, ker je pri premem sorazmerju stalen.
-2. $\frac{5}{2} = 2{,}5$, $\frac{10}{4} = 2{,}5$, $\frac{15}{6} = 2{,}5$.
-3. Vsi količniki so enaki, zato je sorazmerje premo, $k = 2{,}5$.
-4. Preverimo še z drugim pogledom: $x$ se podvoji ($2 \to 4$), $y$ se tudi podvoji ($5 \to 10$). ✓
+:::formula
+Premo sorazmerje: $\dfrac{y}{x} = k$ je v vseh stolpcih enak, $y = k \cdot x$
+:::
 
-### Primer 2: sklepni račun
+**Rešitev:**
 
-$4$ zvezki stanejo $6\,\text{€}$. Koliko stane $10$ zvezkov?
+1. Količniki: $5 : 2 = 2{,}5$, $10 : 4 = 2{,}5$, $15 : 6 = 2{,}5$.
+2. Vsi so enaki, zato je zveza premo sorazmerna in $k = 2{,}5$: $1\,\text{cm}$ pomeni $2{,}5\,\text{km}$.
+3. Za $10\,\text{cm}$: $2{,}5 \cdot 10 = 25$.
 
-1. **Na eno enoto (delimo):** $1$ zvezek stane $6 : 4 = 1{,}5\,\text{€}$.
-2. **Na želeno število (množimo):** $10$ zvezkov stane $10 \cdot 1{,}5 = 15\,\text{€}$.
-3. **Odgovor:** $10$ zvezkov stane $15\,\text{€}$.
-4. **Preverimo smiselnost:** $10$ zvezkov je več kot $4$, zato mora biti cena višja kot $6\,\text{€}$. ✓
+Količini sta premo sorazmerni; $10\,\text{cm}$ na zemljevidu pomeni $25\,\text{km}$ v naravi.
 
-### Primer 3 (težji): tabela, formula in graf
+### Primer 2: gorivo za daljšo pot
 
-Avto vozi s stalno hitrostjo in v $2\,\text{h}$ prevozi $120\,\text{km}$. a) Zapiši formulo za prevožene kilometre $y$ v odvisnosti od časa $x$. b) Dopolni tabelo. c) Opiši graf.
+Družina se pelje na morje. Avto na prvih $300\,\text{km}$ porabi $21$ litrov goriva. Do cilja je skupaj $500\,\text{km}$. Koliko litrov porabi na vsej poti, če vozi enakomerno?
 
-1. **Koeficient sorazmernosti:** $k = \frac{120}{2} = 60$. To je prevoženih $60\,\text{km}$ na uro.
-2. **Formula:** $y = 60 \cdot x$.
-3. **Tabela:**
+**Podatki:** $300\,\text{km} \to 21\,\text{l}$; vsa pot $500\,\text{km}$; poraba je enakomerna
+**Iščemo:** porabo goriva za $500\,\text{km}$
 
-| $x$ (čas v $\text{h}$) | 1 | 2 | 3 | 4,5 |
-|---|---|---|---|---|
-| $y$ (pot v $\text{km}$) | 60 | 120 | 180 | 270 |
+:::formula
+Sklepni račun: vrednost za $1\,\text{km}$ $=$ poraba $:$ pot, nato pomnožimo z novo potjo.
+:::
 
-   Za zadnji stolpec: $60 \cdot 4{,}5 = 270$.
-4. **Graf:** točke $(1, 60)$, $(2, 120)$, $(3, 180)$, $(4{,}5, 270)$ ležijo na premici skozi izhodišče $(0, 0)$, ker v $0\,\text{h}$ prevozimo $0\,\text{km}$.
-5. **Preverimo:** $\frac{270}{4{,}5} = 60$. ✓
+**Rešitev:**
+
+1. Sklep na enoto: na $1\,\text{km}$ avto porabi $21 : 300 = 0{,}07$ litra.
+2. Sklep na želeno število: na $500\,\text{km}$ porabi $0{,}07 \cdot 500 = 35$ litrov.
+3. Smiselnost: pot je daljša od $300\,\text{km}$, zato mora biti tudi poraba večja od $21\,\text{l}$. Tako je.
+
+Na vsej poti avto porabi $35$ litrov goriva.
+
+### Primer 3 (težji): od zemljevida do ure prihoda
+
+Na zemljevidu Lana prebere, da $6\,\text{cm}$ pomeni $15\,\text{km}$. Pohodna pot do koče je na zemljevidu dolga $8{,}4\,\text{cm}$. Lana prehodi $4\,\text{km}$ v eni uri. Koliko časa bo hodila?
+
+**Podatki:** $6\,\text{cm} \to 15\,\text{km}$; pot na zemljevidu $8{,}4\,\text{cm}$; hitrost hoje $4\,\text{km}$ na uro
+**Iščemo:** čas hoje
+
+:::formula
+Dve premi sorazmerji zapored: najprej razdalja v naravi $y = k \cdot x$, nato čas $=$ pot $:$ pot v eni uri.
+:::
+
+**Rešitev:**
+
+1. Koeficient zemljevida: $15 : 6 = 2{,}5$, torej $1\,\text{cm}$ pomeni $2{,}5\,\text{km}$.
+2. Pot v naravi: $8{,}4 \cdot 2{,}5 = 21$, torej $21\,\text{km}$.
+3. Pri hoji sta čas in pot premo sorazmerna. V $1$ uri Lana prehodi $4\,\text{km}$, za $21\,\text{km}$ potrebuje $21 : 4 = 5{,}25$ ure.
+4. Ostanek $0{,}25$ ure pretvorimo v minute: $0{,}25 \cdot 60 = 15$.
+
+Lana bo hodila $5$ ur in $15$ minut.
+
+### Primer 4: zdaj ti
+
+Graf porabe goriva nekega avtomobila je premica skozi izhodišče in točko $(150, 9)$: na $150\,\text{km}$ avto porabi $9$ litrov. Koliko litrov porabi na $350\,\text{km}$?
+
+**Podatki:** premica skozi $(0, 0)$ in $(150, 9)$; $x$ je pot v km, $y$ poraba v litrih; nova pot $350\,\text{km}$
+**Iščemo:** porabo $y$ za $350\,\text{km}$
+
+:::formula
+$k = \dfrac{y}{x}$, nato $y = k \cdot x$
+:::
+
+**Rešitev:**
+
+1. Graf je premica skozi izhodišče, zato gre za premo sorazmerje.
+2. Koeficient: $9 : 150 = 0{,}06$ litra na kilometer.
+3. Izračunaj sam še porabo za $350\,\text{km}$.
+
+:::premisli
+Koliko litrov avto porabi na $350\,\text{km}$?
+---
+$0{,}06 \cdot 350 = 21$, torej $21$ litrov. Preizkus: $21 : 350 = 0{,}06$, količnik je enak kot pri točki $(150, 9)$.
+:::
 
 ## Pogoste napake
 
-- **Mešanje premega sorazmerja z vsako rastočo odvisnostjo.** Da količina raste, še ne pomeni, da je sorazmerje premo. Vedno preveri, ali je količnik $\frac{y}{x}$ stalen.
-- **Seštevanje namesto množenja.** Če $3$ čokolade stanejo $4\,\text{€}$, $6$ čokolad ne stane $4 + 3 = 7\,\text{€}$, ampak $2 \cdot 4 = 8\,\text{€}$. Količino pomnožimo, ne prištejemo.
-- **Pozabljena enota.** Rezultat brez enote ni popoln odgovor (npr. $15$ namesto $15\,\text{€}$).
-- **Graf ne gre skozi izhodišče.** Če premica ne poteka skozi $(0, 0)$, to ni premo sorazmerje.
-- **Zamenjava stolpcev.** Pri računanju količnika vedno deli $y$ z $x$ in pri vseh parih na enak način.
+- **Vsaka rast je premo sorazmerje.** Taksi z vstopnino, starost in višina otroka: obe količini rasteta, a ne v istem razmerju. Preveri, ali je $y : x$ v vseh parih enak.
+- **Prištevanje namesto množenja.** »$2\,\text{cm}$ je $5\,\text{km}$, torej je $4\,\text{cm}$ $7\,\text{km}$, ker sem prištel $2$.« Pri premem sorazmerju se količini **množita** z istim številom: $2\,\text{cm}$ krat $2$ je $4\,\text{cm}$, zato $5\,\text{km}$ krat $2$ je $10\,\text{km}$.
+- **Deljenje v napačno smer.** Pri sklepu na enoto učenec izračuna $300 : 21$ namesto $21 : 300$. Vprašaj se, kaj iščeš: litre na $1$ kilometer, zato litre deliš s kilometri.
+- **Graf, ki zgreši izhodišče.** Učenec nariše premico skozi točke, a ne preveri, ali gre skozi $(0, 0)$. Premica, ki ne gre skozi izhodišče, ne prikazuje premega sorazmerja.
+- **Zamenjava s »stalno porabo«.** Pri krajši poti je poraba na $1\,\text{km}$ ($k$) enaka, skupna poraba pa manjša. Ločuj koeficient $k$ od vrednosti $y$.
 
 ## Povzetek
 
-- Količini sta premo sorazmerni, če se ob množenju ene z nekim številom z istim številom pomnoži tudi druga.
-- Količnik $\frac{y}{x} = k$ je stalen, $k$ je koeficient sorazmernosti; zveza je $y = kx$.
-- V tabeli preverimo, ali so vsi količniki $\frac{y}{x}$ enaki.
-- Graf je premica skozi izhodišče $(0, 0)$.
-- Sklepni račun: najprej na eno enoto (delimo), nato na želeno število enot (množimo).
+- Količini sta premo sorazmerni, če se ob povečanju (zmanjšanju) ene za nekajkrat druga poveča (zmanjša) za enakokrat.
+- Količnik $y : x$ je stalen; to je koeficient sorazmernosti $k$, zveza je $y = k \cdot x$. $k$ je vrednost za $1$ enoto.
+- Tabela: v vsakem stolpcu izračunaj $y : x$; vsi količniki morajo biti enaki.
+- Graf: točke ležijo na premici skozi izhodišče $(0, 0)$; večji $k$ pomeni strmejšo premico.
+- Sklepni račun: najprej sklep na enoto (deljenje), nato na želeno število enot (množenje); preveri smiselnost.
+- Rast ni dovolj: taksi z vstopnino ni premo sorazmerje.
 
-## Drugače: Na sliki
+## Drugače: Kot zgodba
 
-Spodnja demonstracija »Graf funkcije y = kx + n« prikazuje premico v koordinatnem sistemu. Pri premem sorazmerju nas zanima poseben primer, ko je $n = 0$, torej $y = kx$.
+Dedek in Lana sta pred izletom razgrnila zemljevid. V kotu je pisalo: $2\,\text{cm}$ na zemljevidu je $1\,\text{km}$ v naravi.
 
-- Nastavi $n = 0$ in opazuj: premica vedno poteka skozi izhodišče. To je graf premega sorazmerja.
-- Spreminjaj $k$: večji ko je $k$, strmejša je premica. Pri $k = 2$ se $y$ poveča za $2$, ko se $x$ poveča za $1$.
-- Zdaj nastavi $n$ na neko število, različno od $0$. Premica se premakne in ne gre več skozi izhodišče. Takšna zveza **ni** premo sorazmerje, ker $x = 0$ ne da $y = 0$.
+»Do slapa je $9\,\text{cm}$,« je rekla Lana. »Je to $9\,\text{km}$?« Dedek je odkimal. »Vsaka $2\,\text{cm}$ sta en kilometer. Koliko kilometrov je potem en sam centimeter?« Lana je razmislila: pol kilometra. »Torej je $9\,\text{cm}$ devetkrat po pol kilometra, $4{,}5\,\text{km}$.«
 
-Poskusi še simulacijo spodaj (»Premo sorazmerje«), kjer lahko preveriš, kdaj sta dva para vrednosti v enakem razmerju.
+»In koliko časa bova hodila?« je vprašal dedek. »Midva prehodiva $3\,\text{km}$ na uro.« Lana je spet šla prek ene enote: v $1$ uri $3\,\text{km}$, za $4{,}5\,\text{km}$ torej poldrugo uro, ker je $4{,}5 : 3 = 1{,}5$.
 
-## Drugače: Iz vsakdanjega življenja
-
-**Na tržnici.** Prodajalec ima napis: »Češnje: $4\,\text{€}$ za $1\,\text{kg}$.« Če vzameš pol kilograma, plačaš $2\,\text{€}$, za dva kilograma $8\,\text{€}$. Cena sledi masi: dvakrat več češenj, dvakrat višji znesek. Cena in masa sta premo sorazmerni.
-
-**Recept.** Palačinke za $4$ osebe potrebujejo $2$ jajci. Za $8$ oseb potrebuješ $4$ jajca (dvakrat več oseb, dvakrat več jajc). Ko recept povečuješ ali zmanjšuješ, delaš ravno sklepni račun.
-
-**Primer, ki ni premo sorazmerje.** Taksi zaračuna $3\,\text{€}$ osnovne cene in še $1\,\text{€}$ za vsak kilometer. Za $2\,\text{km}$ plačaš $5\,\text{€}$, za $4\,\text{km}$ pa $7\,\text{€}$, ne $10\,\text{€}$. Cena se ni podvojila, zato sorazmerje ni premo.
+Ob slapu je dedek pokazal še nekaj. »Če bi pot narisali dvakrat daljšo, bi bila dvakrat daljša tudi hoja. Če bi narisali nič centimetrov, bi hodila nič minut.« Lana je to dopolnila: »Zato bi bil graf premica, ki se začne v izhodišču.«
 
 ## Drugače: Korak za korakom s številkami
 
-Naloga: $5$ kosov enakih svinčnikov stane $3{,}50\,\text{€}$. Koliko stane $8$ kosov?
+Naloga: $5$ avtobusnih vozovnic stane $7{,}50\,\text{€}$. Koliko stane $8$ vozovnic?
 
-**Z razmislekom o enoti (sklepni račun):**
+**Pot 1: sklepni račun.**
 
-1. $5$ svinčnikov → $3{,}50\,\text{€}$
-2. $1$ svinčnik → $3{,}50 : 5 = 0{,}70\,\text{€}$
-3. $8$ svinčnikov → $8 \cdot 0{,}70 = 5{,}60\,\text{€}$
+1. $5$ vozovnic stane $7{,}50\,\text{€}$.
+2. $1$ vozovnica stane $7{,}50 : 5 = 1{,}50$, torej $1{,}50\,\text{€}$ (deljenje: od več proti eni).
+3. $8$ vozovnic stane $1{,}50 \cdot 8 = 12$, torej $12\,\text{€}$ (množenje: od ene proti več).
 
-**S tabelo in koeficientom:**
+**Pot 2: tabela s koeficientom.**
 
-| $x$ (število svinčnikov) | 1 | 5 | 8 |
+| vozovnice $x$ | $1$ | $5$ | $8$ |
 |---|---|---|---|
-| $y$ (cena v €) | 0,70 | 3,50 | ? |
+| cena $y$ (€) | $1{,}50$ | $7{,}50$ | ? |
 
-1. $k = \frac{3{,}50}{5} = 0{,}70$.
-2. $y = 0{,}70 \cdot x$.
-3. Za $x = 8$: $y = 0{,}70 \cdot 8 = 5{,}60$.
+1. $k = 7{,}50 : 5 = 1{,}50$.
+2. $y = 1{,}50 \cdot x$.
+3. Za $x = 8$: $y = 1{,}50 \cdot 8 = 12$.
 
-Oba načina dasta isti rezultat: $5{,}60\,\text{€}$. Izberi tistega, ki ti je bližje; tabela je uporabna, kadar moraš izračunati več vrednosti naenkrat.
-
-## Drugače: Bolj natančno
-
-Spoznali smo, da pri premem sorazmerju velja $y = kx$. Zakaj iz tega sledi, da se ob podvojitvi $x$ podvoji tudi $y$?
-
-Vzemimo dva para vrednosti: $(x_1, y_1)$ in $(x_2, y_2)$, oba z istim koeficientom $k$. Potem je $y_1 = kx_1$ in $y_2 = kx_2$. Če je $x_2 = 2x_1$, je
-
-$$y_2 = k \cdot 2x_1 = 2 \cdot (kx_1) = 2y_1.$$
-
-Enako velja za poljubno število namesto $2$. Iz $\frac{y_1}{x_1} = \frac{y_2}{x_2} = k$ sledi tudi, da lahko neznano vrednost izračunamo z razmerjem:
-
-$$\frac{y_2}{x_2} = \frac{y_1}{x_1} \quad \Rightarrow \quad y_2 = \frac{y_1}{x_1} \cdot x_2.$$
-
-Pri sklepnem računu $4$ zvezki → $6\,\text{€}$, $10$ zvezkov → ? je to natanko to, kar naredimo: $y_2 = \frac{6}{4} \cdot 10 = 15$.
+Obe poti dasta $12\,\text{€}$. Preizkus smiselnosti: $8$ je več kot $5$, zato mora biti cena večja od $7{,}50\,\text{€}$.
 
 ## Preveri se
 
-? Katera tabela prikazuje premo sorazmerje?
-- $x$: 1, 2, 3; $y$: 3, 4, 5
-+ $x$: 1, 2, 3; $y$: 4, 8, 12
-- $x$: 2, 4, 6; $y$: 1, 2, 4
-- $x$: 1, 2, 3; $y$: 12, 6, 4
-> Pri premem sorazmerju je količnik $\frac{y}{x}$ stalen. Pri tabeli $4, 8, 12$ je vedno $4$. Pri tabeli $3, 4, 5$ se $y$ le povečuje za $1$ (seštevanje), kar ni sorazmerje.
+? Pri vožnji s stalno hitrostjo sta čas in prevožena pot premo sorazmerna. Kaj to pomeni?
+- Le to, da pot narašča, ko narašča čas.
+~ To velja tudi za taksi z vstopnino, ki ni premo sorazmerje. Pomembno je, da rasteta v istem razmerju.
++ Kolikokrat daljši je čas vožnje, tolikokrat daljša je pot.
+- Ko se čas podvoji, se pot razpolovi.
+~ Tako se obnašata količini v obratnem sorazmerju. Pri premem sorazmerju se pot podvoji.
+- Vsako uro se pot podaljša, začne pa se pri $10\,\text{km}$.
+~ Če se pot ne začne pri $0$, graf ne gre skozi izhodišče in zveza ni premo sorazmerna.
+> Premo sorazmerje: kolikokrat se poveča ena količina, tolikokrat se poveča druga. V $2$-krat daljšem času prevoziš $2$-krat daljšo pot.
 
-? $6$ jabolk tehta $900\,\text{g}$. Koliko tehta $10$ takih jabolk?
-- $904\,\text{g}$
-- $1350\,\text{g}$
-+ $1500\,\text{g}$
-> $1$ jabolko tehta $900 : 6 = 150\,\text{g}$, torej $10$ jabolk tehta $10 \cdot 150 = 1500\,\text{g}$.
+? Na zemljevidu A pomeni $1\,\text{cm}$ v naravi $2\,\text{km}$, na B $5\,\text{km}$, na C $0{,}5\,\text{km}$. Za vsakega narišemo graf (razdalja v naravi glede na razdaljo na zemljevidu). Uredi premice od najbolj strme do najbolj položne.
+- C, A, B
+~ Vrstni red si obrnil. Večji koeficient pomeni, da $y$ hitreje raste, zato je premica bolj strma.
++ B, A, C
+- A, B, C
+~ To je le vrstni red, v katerem so zemljevidi našteti. Primerjaj koeficiente $5$, $2$ in $0{,}5$.
+> Strmina je odvisna od $k$: B ($k = 5$) je najbolj strma, nato A ($k = 2$), najbolj položna je C ($k = 0{,}5$).
 
-? Kako izgleda graf premega sorazmerja?
-- Poljubna premica, ki seka os $y$ nad izhodiščem.
-- Krivulja, ki se vzpenja vedno hitreje.
-+ Premica, ki poteka skozi izhodišče $(0, 0)$.
-> Pri $y = kx$ za $x = 0$ dobimo $y = 0$, zato graf poteka skozi izhodišče in je premica. Če premica seka os $y$ drugje, zveza ni premo sorazmerje.
+? Avto na $300\,\text{km}$ porabi $18$ litrov goriva. Kaj se zgodi, če pot skrajšamo na tretjino in vozi enako?
+- Porabi $3$ litre manj, torej $15$ litrov.
+~ Tretjina pomeni deljenje s $3$, ne odštevanje $3$. Pri premem sorazmerju se količini množita ali delita z istim številom.
++ Porabi tretjino goriva, torej $6$ litrov.
+- Porabi trikrat več, torej $54$ litrov.
+~ Krajša pot ne more porabiti več goriva. Ko se pot zmanjša, se zmanjša tudi poraba.
+- Porabi še vedno $18$ litrov, ker je avto isti.
+~ Isti ostane koeficient (litri na $1\,\text{km}$), ne skupna poraba. Na krajši poti avto porabi manj.
+> Pot se zmanjša na tretjino, zato se tudi poraba: $18 : 3 = 6$ litrov.
+
+? Na zemljevidu $4\,\text{cm}$ pomeni $10\,\text{km}$. Koliko kilometrov pomeni $7\,\text{cm}$?
+- $13\,\text{km}$
+~ Prištel si $3$, ker je $7$ za $3$ več kot $4$. Pri premem sorazmerju množimo, ne prištevamo.
+- $28\,\text{km}$
+~ To je $7 \cdot 4$. Najprej izračunaj, koliko kilometrov pomeni $1\,\text{cm}$.
++ $17{,}5\,\text{km}$
+- $2{,}8\,\text{km}$
+~ Deljenje si obrnil in dobil $0{,}4$ namesto $2{,}5$. Večja razdalja na zemljevidu pomeni večjo razdaljo v naravi.
+> $1\,\text{cm}$ pomeni $10 : 4 = 2{,}5\,\text{km}$, zato $7\,\text{cm}$ pomeni $7 \cdot 2{,}5 = 17{,}5\,\text{km}$.
+
+? Vlak s stalno hitrostjo v $3$ urah prevozi $240\,\text{km}$. Koliko časa potrebuje za $400\,\text{km}$?
+- $1{,}8\,\text{h}$
+~ Računal si, kot da daljša pot traja manj časa (obratno sorazmerje). Za daljšo pot vlak potrebuje več časa.
+- $4\,\text{h}$
+~ Za $160\,\text{km}$ več si prištel eno uro. V $1$ uri vlak prevozi $80\,\text{km}$, zato $160\,\text{km}$ traja $2$ uri.
++ $5\,\text{h}$
+> V $1$ uri vlak prevozi $240 : 3 = 80\,\text{km}$. Za $400\,\text{km}$ potrebuje $400 : 80 = 5$ ur.
