@@ -259,3 +259,13 @@ Posledica: $\aleph_0 = |\mathbb{N}| < |\mathcal{P}(\mathbb{N})| < |\mathcal{P}(\
 ~ Ta slika na $(-1, 2)$, zato ni surjektivna. Dolžina ciljnega intervala je $4$, ne $3$.
 + $f(x) = 4x - 1$
 > $f(0) = -1$ in $f(1) = 3$; linearna funkcija s pozitivnim naklonom je injektivna in zadene vsako točko vmes, zato je bijekcija $(0, 1) \to (-1, 3)$.
+
+:::simboli
+f | bijekcija | | | f⁻¹ njen inverz
+A | množica
+m, n | naravni števili | | | v tabeli parov m vrstica, n stolpec
+\pi | zaporedna številka para (m, n) | \pi(m, n) = \frac{(m+n-2)(m+n-1)}{2} + m | | tu ne pomeni števila π
+s | številka diagonale tabele parov | s = m + n | | diagonala ima s − 1 parov
+x | točka intervala (0, 1)
+y | točka intervala (2, 5) | y = 3x + 2
+:::

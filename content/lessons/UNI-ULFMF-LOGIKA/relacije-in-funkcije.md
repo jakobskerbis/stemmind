@@ -229,3 +229,17 @@ Funkcijo nariši kot dva stolpca točk s puščicami iz levega v desnega. Štej 
 - linearna urejenost.
 ~ Števili $4$ in $6$ nista primerljivi: nobeno ne deli drugega.
 > Relacija je refleksivna ($a \mid a$), antisimetrična (iz $a \mid b$ in $b \mid a$ pri naravnih številih sledi $a = b$) in tranzitivna, ni pa linearna, ker $4 \nmid 6$ in $6 \nmid 4$.
+
+:::simboli
+A | množica (domena) | | | relacija na A je R ⊆ A × A
+B | kodomena funkcije
+R | relacija
+a | element množice A (predstavnik razreda [a])
+x | element množice
+f | funkcija (preslikava)
+x_1, x_2 | elementa domene funkcije f
+y | element kodomene
+m, k | celi števili | m = 3k
+q | količnik pri deljenju s 3
+r | ostanek pri deljenju s 3 | r = x - 3q | | r ∈ {0, 1, 2}
+:::

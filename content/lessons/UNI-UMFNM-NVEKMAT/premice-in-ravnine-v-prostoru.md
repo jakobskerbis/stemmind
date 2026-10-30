@@ -251,3 +251,25 @@ Premica je množica $\{\vec r_A + t\,\vec e ;\ t \in \mathbb{R}\}$, torej premak
 ~ To bi dal sinus, ki ga uporabimo za kot med premico in ravnino. Med ravninama računamo s kosinusom normal.
 + $60^\circ$
 > Normali $(1, 1, 0)$ in $(0, 1, 1)$: $\cos\varphi = \dfrac{1}{\sqrt{2}\,\sqrt{2}} = \dfrac{1}{2}$, torej $\varphi = 60^\circ$.
+
+:::simboli
+\vec r | krajevni vektor točke premice (ravnine) | \vec r = \vec r_A + t\,\vec e
+\vec r_A | krajevni vektor dane točke A | | | r_B pri drugi premici
+t | parameter | | | t ∈ ℝ; pri ravnini še s
+\vec e | smerni vektor premice | | | e ≠ 0
+\vec e_1, \vec e_2 | smerna vektorja dveh premic
+e_1, e_2, e_3 | komponente smernega vektorja e
+x, y, z | koordinate točke
+x_0, y_0, z_0 | koordinate točke A
+x_1, y_1, z_1 | koordinate točke T
+a, b, c | komponente normale (koeficienti enačbe ravnine)
+d | prosti člen enačbe ravnine | d = \vec n \cdot \vec r_A
+\vec n | normala ravnine | \vec n = (a, b, c) | | pravokotna na ravnino
+\delta | razdalja (točke od ravnine, premice; med premicama) | \delta = \frac{\lvert a x_1 + b y_1 + c z_1 - d \rvert}{\sqrt{a^2 + b^2 + c^2}}
+\varphi | kot med premicama ali premico in ravnino | \cos\varphi = \frac{\lvert \vec e_1 \cdot \vec e_2 \rvert}{\lvert \vec e_1 \rvert\,\lvert \vec e_2 \rvert} | | 0° ≤ φ ≤ 90°; pri premici in ravnini sin φ
+\Sigma, \Sigma_1, \Sigma_2 | ravnina (ime ravnine) | | | Σ₁, Σ₂ vzporedni ravnini
+A | dana točka premice (ravnine)
+B | točka druge premice | | | pri ravnini skozi tri točke druga točka
+C | tretja točka ravnine
+T | poljubna točka (premice, ravnine ali zunaj nje)
+:::

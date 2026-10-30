@@ -240,3 +240,18 @@ kjer je $\vec{a}_j$ na $i$-tem mestu. Za $j \neq i$ ima matrika dva enaka stolpc
 - za $k = 4$
 ~ To je število $4$ iz $\det A = k^2 - 4$, ne njegova ničla. Pri $k = 4$ je $\det A = 12$.
 > $\det A = k^2 - 4 = 0$ pri $k = \pm 2$. Za vse druge $k$ Cramer da eno samo rešitev.
+
+:::simboli
+a_{11}, a_{12}, a_{21}, a_{22} | koeficienti sistema (elementi matrike A)
+x | neznanka sistema | | | x_1, …, x_n v splošnem zapisu
+x_i | i-ta neznanka | x_i = \frac{\det A_i}{\det A} | | det A ≠ 0
+y, z | neznanki sistema
+b | desna stran enačbe | | | b₁, b₂ desni strani obeh enačb
+\vec{b} | stolpec desnih strani | \vec{b} = x_1\vec{a}_1 + x_2\vec{a}_2 + \cdots + x_n\vec{a}_n
+A | kvadratna matrika koeficientov sistema
+A_i, A_1, A_2, A_3 | matrika A z i-tim stolpcem, zamenjanim z desnimi stranmi
+\vec{a}_1, \vec{a}_2, \vec{a}_n, \vec{a}_j | stolpci matrike A
+i, j | indeksa stolpcev (neznank)
+n | število enačb in neznank
+p | koeficient pri t² v enačbi parabole | | | y = pt² + qt + r
+:::

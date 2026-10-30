@@ -233,3 +233,12 @@ Kartezični produkt nariši kot mrežo: na vodoravno os nanesi elemente $A$, na 
 - $10$
 ~ Tako dobiš, če od $30$ odšteješ le študente z enim predmetom ($13 + 7$) in pozabiš na $5$ študentov, ki obiskujejo oba.
 > $|A \cup B| = 18 + 12 - 5 = 25$, zato nobenega predmeta ne obiskuje $30 - 25 = 5$ študentov.
+
+:::simboli
+A, B | množici
+X, Y | množici, katerih enakost dokazujemo
+M | končna množica | | | če ima n elementov, ima potenčna množica 2ⁿ elementov
+x | element množice
+a, b | komponenti urejenega para | | | a ∈ A, b ∈ B
+p, q | izjavi
+:::

@@ -252,3 +252,13 @@ Recept za indukcijo:
 ~ $0$ je le prvi element ($n = 1$). Lihi $n \ge 3$ dajo $-\tfrac23$, $-\tfrac45$, ..., ki so manjši od $0$.
 + $\sup B = \tfrac32$, $\inf B = -1$
 > Sodi $n$: $1 + \tfrac1n$, največji pri $n = 2$, torej $\sup B = \max B = \tfrac32$. Lihi $n$: $-1 + \tfrac1n > -1$ in se poljubno približajo $-1$, zato $\inf B = -1$, minimuma ni.
+
+:::simboli
+n | naravno število
+n_0 | začetna vrednost indukcije | | | trditev velja za vse n ≥ n₀
+T | trditev, odvisna od n | | | T(n) ⇒ T(n+1) je indukcijski korak
+A | množica realnih števil
+a | element množice A
+M | supremum (najmanjša zgornja meja) množice A | M = \sup A
+\varepsilon | poljubno majhno pozitivno število | | | ε > 0
+:::

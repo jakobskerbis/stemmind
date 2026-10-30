@@ -274,3 +274,17 @@ Za pozitivno definitno kvadratno formo velja ista slika obrnjeno: nivojnice $q =
 - Za vse $a$, ker sta $1$ in $4$ pozitivna.
 ~ Pozitivna diagonala ne zadošča; odločata predznaka lastnih vrednosti, pri velikem $|a|$ je ena negativna.
 > Matrika je $\begin{pmatrix}1&a\\a&4\end{pmatrix}$, sled $5 > 0$, $\det = 4 - a^2$. Obe lastni vrednosti sta pozitivni natanko pri $4 - a^2 > 0$, torej $|a| < 2$.
+
+:::simboli
+A | linearna preslikava (simetrična matrika) | A = Q D Q^T | | sebiadjungirana, če A* = A
+x, y | vektorja v ℝⁿ | | | v kvadratni formi koordinati točke
+x_1, x_2 | komponenti vektorja x
+Q | ortogonalna matrika | Q^T Q = I | | v stolpcih ortonormirani lastni vektorji
+T | transponiranje (oznaka Q^T)
+I | identična (enotska) matrika
+\lambda, \mu | lastni vrednosti preslikave A | \det(A - \lambda I) = 0 | | λ₁, …, λₙ na diagonali D
+D | diagonalna matrika lastnih vrednosti
+q | kvadratna forma | q = x^TAx
+u_1, u_2, u_n | koordinate v glavnih oseh (lastni bazi)
+c | vrednost kvadratne forme na krivulji q = c | | | v ax² + bxy + cy² pa koeficient
+:::

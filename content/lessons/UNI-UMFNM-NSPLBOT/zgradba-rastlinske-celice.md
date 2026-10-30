@@ -229,3 +229,12 @@ Kje analogija odpove: obzidje ni živo, a ga gradijo prebivalci sami, in raste s
 - $0{,}85\,\%$
 ~ $0{,}85$ je delež kot decimalno število. V odstotkih ga pomnožiš s $100$: $85\,\%$.
 > Vakuola: $50\,000 - 7500 = 42\,500\,\mu\text{m}^3$, delež $\dfrac{42\,500}{50\,000} = 0{,}85 = 85\,\%$.
+
+:::simboli
+L | prava dolžina (celice, kloroplasta) | L = \frac{\text{dolžina na sliki}}{\text{dolžina merilca na sliki}} \cdot \text{oznaka merilca} | \mu m
+V | prostornina celice | V = a \cdot b \cdot c | \mu m^3
+a, b, c | dolžina, širina in višina celice | | \mu m | celica približno kvader
+V_{\text{cit}} | prostornina citoplazme | V_{\text{cit}} = (1 - \text{delež vakuole}) \cdot V | \mu m^3
+d | velikost na sliki (mikrografiji) | | mm
+M | povečava | | – | prava velikost = d/M
+:::

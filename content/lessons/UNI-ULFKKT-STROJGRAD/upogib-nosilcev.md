@@ -226,3 +226,27 @@ Iz $\sigma = E y/\rho$ in $E/\rho = M/I$ sledi $\sigma = \dfrac{M y}{I}$, z $I =
 ~ To je $FL/2$. Reakcija je le $F/2$, njena ročica do sredine pa $L/2$.
 + $500\,\mathrm{N\,m}$
 > Reakcija $500\,\mathrm{N}$ z ročico $1\,\mathrm{m}$: $M_\mathrm{max} = \dfrac{FL}{4} = \dfrac{1000 \cdot 2}{4}\,\mathrm{N\,m} = 500\,\mathrm{N\,m}$.
+
+:::simboli
+\sigma | upogibna (normalna) napetost v prerezu | \sigma = \frac{M\,y}{I} | MPa | pri osni obremenitvi σ = F/A
+\sigma_\mathrm{max} | največja napetost v skrajnem vlaknu | \sigma_\mathrm{max} = \frac{M}{W} | MPa
+M | upogibni moment | M = F \cdot a | N m | pogosto v N mm
+M_\mathrm{max} | največji upogibni moment v nosilcu | M_\mathrm{max} = \frac{F L}{4} | N m | za silo na sredini prostoležečega nosilca
+y | razdalja od nevtralne osi | | mm | največja v skrajnem vlaknu, y = h/2
+I | vztrajnostni moment preseka | I = \int_A y^2\,\mathrm{d}A | mm^4 | za pravokotnik I = bh³/12
+W | odpornostni moment preseka | W = \frac{I}{h/2} | mm^3 | za pravokotnik W = bh²/6
+W_\mathrm{cev} | odpornostni moment cevi | W_\mathrm{cev} = \frac{\pi (D^4 - d^4)}{32\,D} | mm^3
+W_\mathrm{valj} | odpornostni moment polnega valja | W_\mathrm{valj} = \frac{\pi d_\mathrm{v}^3}{32} | mm^3
+h | višina prereza | | mm
+b | širina prereza | | mm
+A | ploščina prereza | A = \frac{\pi}{4}(D^2 - d^2) | mm^2 | zveza velja za cev
+E | elastični (Youngov) modul materiala | | MPa
+\rho | krivinski polmer upognjene nevtralne osi | \rho = \frac{E I}{M} | mm
+T | prečna sila v prerezu | T = F | N
+F | zunanja sila (breme) na nosilec | | N
+a | razdalja od prostega konca do prereza | | mm | ročica sile F
+L | dolžina (razpon) nosilca | | mm
+D | zunanji premer cevi | | mm
+d | notranji premer cevi | | mm | pri polnem krogu njegov premer
+d_\mathrm{v} | premer polnega valja | d_\mathrm{v}^2 = D^2 - d^2 | mm | valj z enako ploščino prereza kot cev
+:::

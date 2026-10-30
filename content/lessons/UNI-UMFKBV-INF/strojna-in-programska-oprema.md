@@ -244,3 +244,9 @@ V tem zaporedju so vsi deli lekcije: vhod, OS, shramba, RAM, procesor, izhod.
 - operacijski sistem
 ~ Operacijski sistem je program, ki upravlja naprave; senzor je ena od naprav, ki jih upravlja.
 > Senzor meri temperaturo in podatek pošlje procesorju, zato je vhodna naprava, torej strojna oprema.
+
+:::simboli
+N | število fotografij, ki jih shranimo | N = \frac{\text{kapaciteta}}{\text{velikost ene fotografije}} | – | zaokrožimo navzdol
+t | čas nalaganja | t = \frac{\text{količina podatkov}}{\text{hitrost branja}} | s
+n | število programov, ki izmenično dobivajo rezine | | – | krog traja n rezin
+:::

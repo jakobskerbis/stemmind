@@ -268,3 +268,21 @@ $$\|x + y\|^2 = \|x\|^2 + 2\langle x, y\rangle + \|y\|^2 \le (\|x\| + \|y\|)^2.$
 - Raztegne se, ker so elementi različni od $0$ in $1$.
 ~ Ohranitev dolžin ni odvisna od posameznih elementov, temveč od $Q^{\mathsf T}Q = I$, kar tu velja.
 > $Q^{\mathsf T}Q = I$, torej izometrija, in $\det Q = -1$, torej zrcaljenje. Premica zrcaljenja ima smer lastnega vektorja $(2, 1)$ za lastno vrednost $1$.
+
+:::simboli
+x, y | vektorja normiranega prostora
+x_i | komponente vektorja x
+t | parameter na daljici med x in y | | | t ∈ [0, 1]
+K | konveksna množica | | | vsebuje daljico med poljubnima točkama
+P | množica, katere konveksnost preverjamo
+A | matrika (linearna preslikava) | | | ‖Ax‖ ≤ ‖A‖ ‖x‖
+Q | ortogonalna matrika | Q^{\mathsf T}Q = I | | det Q = ±1
+T | transponiranje (oznaka A^T)
+I | identična (enotska) matrika
+\lambda_{\max} | največja lastna vrednost matrike AᵀA
+d | vektor odmika sonde od točke srečanja | | km
+d_i | komponente vektorja odmika | | km
+e | napaka usmeritve teleskopa | | ″ | v kotnih sekundah
+v | os rotacije (vektor z Qv = v)
+\varphi | kot rotacije
+:::

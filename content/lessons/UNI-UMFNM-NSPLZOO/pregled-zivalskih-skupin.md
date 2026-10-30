@@ -266,3 +266,7 @@ Za $n = 5$ je to $105$, za $n = 10$ že $34\,459\,425$. Zato drevesa iščemo z 
 - Med členonožce, ker se premika.
 ~ Gibanje ni znak debla; členonožci imajo členjene okončine.
 > Gre za podančico, glisto. Valjasto nečlenjeno telo in psevdocelom sta znaka glist.
+
+:::simboli
+n | število živalskih skupin v drevesu | | – | dreves je (2n − 3)!!
+:::

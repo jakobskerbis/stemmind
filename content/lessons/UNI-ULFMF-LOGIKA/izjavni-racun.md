@@ -279,3 +279,13 @@ Preveri distributivni zakon $p \wedge (q \vee r) \sim (p \wedge q) \vee (p \wedg
 + $\big(p \wedge (p \Rightarrow q)\big) \Rightarrow q$
 - $p \wedge \neg p$
 > To je modus ponens: če sta $p$ in $p \Rightarrow q$ resnični, mora biti resnična $q$. Prvi dve formuli sta neresnični pri $p = 0$, $q = 1$, zadnja je protislovje.
+
+:::simboli
+A_1, A_2, A_n | predpostavke (premise) sklepa
+A | izjavna formula
+B | izjavna formula | | | v sklepu zaključek
+n | število izjavnih spremenljivk | | | tabela ima 2ⁿ vrstic
+X, Y | izjavi v implikaciji X ⇒ Y | | | 1 resnično, 0 neresnično
+F | izjavna formula, ki jo preverjamo
+p, q | izjavni spremenljivki
+:::

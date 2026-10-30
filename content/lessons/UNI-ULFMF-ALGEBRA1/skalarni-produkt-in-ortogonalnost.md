@@ -290,3 +290,22 @@ z enakostjo le za $w = p$. Projekcija je torej enolična in ni odvisna od izbire
 ~ Projekcija je v splošnem krajša od $v$: $\|p\|^2 = \|v\|^2 - \|v - p\|^2$.
 + Ker je $v - p$ pravokoten na $W$, zato po Pitagori $\|v - w\|^2 = \|v - p\|^2 + \|p - w\|^2$ za vsak $w \in W$.
 > Drugi člen je nenegativen in enak $0$ le za $w = p$, zato je $p$ edina najbližja točka.
+
+:::simboli
+x, y | vektorja v ℝⁿ | | | v ⟨p, q⟩ je x spremenljivka polinomov
+x_1, x_2, x_n | komponente vektorja x
+y_1, y_2, y_n | komponente vektorja y
+p, q | polinoma stopnje največ 1 | | | v dokazu najbližje točke p = proj_W v
+d | oznaka diferenciala (dx) v integralu
+u, v | vektorja prostora s skalarnim produktom
+w | poljuben vektor podprostora W
+\varphi | kot med vektorjema u in v | \cos \varphi = \frac{\langle u, v \rangle}{\lVert u \rVert \, \lVert v \rVert} | | φ ∈ [0, π]
+W | podprostor z ortogonalno bazo u_1, …, u_k
+u_1, u_2, u_j, u_m | ortogonalni vektorji (baza podprostora W) | u_2 = v_2 - \operatorname{proj}_{u_1} v_2 | | v Gram-Schmidtovem postopku u₁ = v₁
+v_1, v_2 | vektorji začetne baze podprostora W
+e_m | normirani vektor ortonormirane baze | e_m = \frac{u_m}{\lVert u_m \rVert}
+j | indeks člena vsote
+k | razsežnost podprostora W (število baznih vektorjev)
+t | realni parameter v dokazu Cauchy-Schwarzove neenakosti
+b | dana točka, ki jo projiciramo na W
+:::
