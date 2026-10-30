@@ -12,6 +12,7 @@ export function flaskLevel(mL) {
   if (V <= Vc) return (RB - Math.cbrt(RB ** 3 - (3 * KB * V) / Math.PI)) / KB;
   return Math.min(HC + HN, HC + (V - Vc) / (Math.PI * RN * RN));
 }
+const frac = (x) => x - Math.floor(x);
 const rAt = (hmm) => (hmm <= HC ? RB - KB * hmm : RN);
 
 // Dokaz CO₂: soda bikarbona in kislina v bučki na tehtnici, plin skozi cevko v apnico ali trska v vratu bučke.
@@ -32,7 +33,7 @@ export function labCo2(el) {
     ],
     { empty: "Še ni meritev. Ko streseš sodo v kislino, pritisni »Zapiši meritev« (ali vklopi zapis vsakih 10 s)." },
   );
-  const graph = dataGraph({ x: [0, 180], y: [-1, 0.1], xStep: 30, xLabel: "t [s]", yLabel: "Δm [g]", title: "Graf spremembe mase v odvisnosti od časa" });
+  const graph = dataGraph({ x: [0, 180], y: [-1, 0.1], xStep: 30, xLabel: "t [s]", yLabel: "Δm [g]", title: "Graf spremembe mase v odvisnosti od časa", origin: false });
   const qBox = h("div");
   const pts = [];
   let m0 = null, auto = false, nextAuto = 0, nEv = 0, readT = 0;
@@ -41,7 +42,7 @@ export function labCo2(el) {
   const acidSel = select({ label: "tekočina", options: Object.entries(ACIDS).map(([k, A]) => [k, A.name]), value: "kis" });
   const volSl = slider({ label: "merilni valj", min: 10, max: 60, step: 5, value: 30, unit: "mL" });
   const sodaSl = slider({ label: "soda bikarbona", min: 0.2, max: 5, step: 0.1, value: 1, unit: "g" });
-  const goggles = toggle("zaščitna očala", false, (v) => v && log.push("Zaščitna očala so na nosu.", "ok"));
+  const goggles = toggle("zaščitna očala", false, (v) => v && log.push("Nadel si si zaščitna očala.", "ok"));
   const pourBtn = button("Nalij v bučko", () => pour(), "primary small");
   const sodaBtn = button("Stresi sodo v bučko", () => addSoda(), "primary small");
   const stopSeg = segmented({ options: [["brez", "brez zamaška"], ["cevka", "zamašek s cevko"], ["zaprto", "zamašek brez cevke"]], value: "brez", onChange: (v) => (B.setStopper(v), draw()) });
@@ -62,7 +63,7 @@ export function labCo2(el) {
       h("div", { class: "demo-buttons" }, recBtn, autoT),
     ],
     extra: [status, log, h("h4", { class: "lab-h" }, "Meritve"), table, graph, qBox, notes(POENOSTAVITVE.co2, "NaHCO₃ + H⁺ → Na⁺ + H₂O + CO₂. Molske mase IUPAC; topnost CO₂ (Sander 2015) in Ca(OH)₂ (CRC); citronska kislina v limoninem soku 47 g/L (Penniston 2008); molska prostornina plina pri 20 °C in 101,3 kPa 24,1 L/mol.")],
-    tryText: "Kako bi dokazal, da pri reakciji sode bikarbone s kislino nastaja ogljikov dioksid? Preizkusi apnico in trsko. Za koliko gramov se zmanjša masa, če porabiš 1 g sode? Kaj se zgodi z 4 g sode in 60 mL kisa?",
+    tryText: "Kako bi dokazal, da pri reakciji sode bikarbone s kislino nastaja ogljikov dioksid? Preizkusi apnico in trsko. Kateri dokaz je zanesljiv? Napovej, za koliko gramov se zmanjša masa bučke, če porabiš 1 g sode, in to izmeri. Kaj se zgodi s 4 g sode in 60 mL kisa?",
   });
   el.classList.add("lab");
 
@@ -71,16 +72,18 @@ export function labCo2(el) {
     const id = acidSel.get();
     if (ACIDS[id].nevarno && !goggles.get()) return log.push("Klorovodikova kislina je jedka. Najprej si nadeni zaščitna očala.", "warn");
     if (B.Vliq * 1000 + volSl.get() > 100) return log.push("Toliko ne gre v 100 mL bučko: tekočina bi segala v vrat.", "warn");
-    const before = B.t0;
+    const before = B.t0, mBefore = B.liquidMass;
     B.pour(id, volSl.get());
-    log.push(`V bučko si nalil ${volSl.get()} mL: ${ACIDS[id].name}.`, "info");
+    // med poskusom: Δm štejemo od nove začetne mase (dolito tekočino tehtnica pokaže takoj)
+    if (before != null && m0 != null) m0 += Math.round((B.liquidMass - mBefore) * 100) / 100;
+    log.push(`Z merilnim valjem si v bučko nalil ${volSl.get()}\u00a0mL. Tekočina: ${ACIDS[id].name}.`, "info");
     if (before == null && B.t0 != null) start();
     draw();
   }
   function addSoda() {
     const before = B.t0;
     const g = B.addSoda(sodaSl.get());
-    log.push(`Na tehtalni ladjici si stehtal ${fmt(g, 2)} g sode in jo stresel v bučko.`, "info");
+    log.push(`Na tehtalni ladjici si stehtal ${fixed(g, 2)}\u00a0g sode in jo stresel v bučko.`, "info");
     if (before == null && B.t0 != null) start();
     else if (m0 != null) m0 += Math.round(g * 100) / 100;
     if (B.t0 == null && B.acid && ACIDS[B.acid.id]?.cH === 0) log.push("Soda se v vodi raztaplja, mehurčkov ni: brez kisline ni reakcije.", "info");
@@ -88,7 +91,7 @@ export function labCo2(el) {
   }
   function start() {
     m0 = B.readMass();
-    log.push(`Začetna masa bučke s snovmi: ${fmt(m0, 2)} g. Štoparica teče.`, "info");
+    log.push(`Začetna masa bučke s snovmi: ${fixed(m0, 2)}\u00a0g. Štoparica teče.`, "info");
     const lim = Math.max(0.5, Math.ceil(B.co2Theory() * M.CO2 * 1.15 * 2) / 2);
     graph.setAxes({ y: [-lim, 0.1], yStep: lim > 2 ? 0.5 : lim > 1 ? 0.25 : lim > 0.5 ? 0.2 : 0.1 });
     nextAuto = 10;
@@ -133,7 +136,7 @@ export function labCo2(el) {
     draw();
   }
   function readOut() {
-    bal.set(B.readMass().toFixed(2), "g", "berljivost 0,01 g");
+    bal.set(B.readMass().toFixed(2), "g", "berljivost 0,01\u00a0g");
     clock.set(B.t0 == null ? "0.0" : elapsed().toFixed(1), "s", B.t0 == null ? "čaka na reakcijo" : "od stika sode s kislino");
     const q = B.rate * VM_SOBA * 1e6; // mL/s
     const done = B.t0 != null && (B.soda < 1e-6 || (B.acid?.nH ?? 0) < 1e-6);
@@ -168,9 +171,9 @@ export function labCo2(el) {
         conclusion({
           text: `Po enačbi bi moralo iz bučke uiti ${fmt(lossTh, 2)} g CO₂ (${fmt(B.reacted() * M.NaHCO3, 2)} g sode · 44,01 / 84,01). Izmeril si ${fmt(-last[1], 2)} g. Zakaj je izmerjena izguba manjša?`,
           options: [
-            { t: "Del CO₂ je ostal raztopljen v tekočini in uhaja počasi.", ok: true, why: "V litru vode se pri 20 °C raztopi okoli 1,7 g CO₂. Če počakaš nekaj minut, se masa še malo zmanjša." },
-            { t: "Pri kemijski reakciji se masa ne ohranja.", ok: false, why: "Masa se ohranja. Manjka le tisto, kar je še v bučki kot raztopljen plin." },
-            { t: "Soda se ni stehtala.", ok: false, why: "Soda je bila stehtana na 0,01 g natančno; ta napaka je mnogo manjša od razlike." },
+            { t: "Del CO₂ je še v bučki: raztopljen v tekočini in kot plin nad njo, ki uhaja počasi.", ok: true, why: "V litru vode se pri 20 °C raztopi okoli 1,7 g CO₂. CO₂ je tudi težji od zraka (1,84 g/L proti 1,20 g/L), zato bučka, polna CO₂, tehta nekaj stotink grama več. Če počakaš nekaj minut, se masa še malo zmanjša." },
+            { t: "Pri kemijski reakciji se masa ne ohranja.", ok: false, why: "Masa se ohranja. Manjka le CO₂, ki je še v bučki (raztopljen v tekočini in nad njo)." },
+            { t: "Tehtnica ni dovolj natančna.", ok: false, why: "Tehtnica meri na 0,01 g natančno. Ta napaka je mnogo manjša od razlike." },
           ],
         }),
       );
@@ -207,6 +210,7 @@ export function labCo2(el) {
     // stojalo za epruveto
     s("rect", { x: TX - 30, y: TB - 30, width: 60, height: 8, rx: 2, class: "lab-box" }, svg);
     s("rect", { x: TX - 30, y: TB + 6, width: 60, height: 8, rx: 2, class: "lab-box" }, svg);
+    for (const x of [TX - 30, TX + 26]) s("rect", { x, y: TB - 30, width: 4, height: FB + 32 - (TB - 30), class: "lab-box" }, svg);
     // tekočina in pena v bučki
     const Vl = B.Vliq * 1000, lvl = flaskLevel(Vl);
     const trap = (h0, h1, cls) => {
@@ -217,12 +221,20 @@ export function labCo2(el) {
     };
     if (Vl > 0) trap(0, lvl, `lab-liq lab-liq-${B.acid?.id || "voda"}`);
     const foamH = Math.min(HC + HN, flaskLevel(Math.min(140, Vl + B.foam * 1000))) - lvl;
-    if (foamH > 0.5) trap(lvl, lvl + foamH, "lab-foam");
+    if (foamH > 0.5) {
+      trap(lvl, lvl + foamH, "lab-foam");
+      // mehurčki pene (pena se vidi tudi na svetlem ozadju)
+      for (let i = 0, n = Math.min(90, Math.round(foamH * 1.5)); i < n; i++) {
+        const hh = lvl + frac(Math.sin(i * 78.233) * 43758.5) * foamH;
+        s("circle", { cx: FX + (frac(Math.sin(i * 12.9898) * 43758.5) - 0.5) * 1.7 * rAt(hh) * K, cy: yOf(hh), r: 1.6 + frac(i * 0.37) * 1.8, class: "lab-foam-b" }, svg);
+      }
+    }
     // soda na dnu
     const solid = B.soda * M.NaHCO3;
     if (solid > 0.005) {
       const r = Math.cbrt((3 * (solid / 1.1) * 1000) / (2 * Math.PI)) * K;
-      s("ellipse", { cx: FX, cy: FB - 1, rx: r * 1.3, ry: r * 0.45, class: "lab-powder" }, svg);
+      // kupček na dnu (polelipsa nad dnom bučke)
+      s("path", { d: `M${FX - r * 1.3},${FB - 1} A${r * 1.3},${r * 0.9} 0 0 1 ${FX + r * 1.3},${FB - 1} Z`, class: "lab-powder" }, svg);
     }
     bubbles.forEach((b) => s("circle", { cx: FX + b.x, cy: b.y, r: b.r, class: "lab-bubble" }, svg));
     // bučka (obris) z oznakami 25, 50, 75, 100 mL
@@ -237,11 +249,25 @@ export function labCo2(el) {
     if (B.zamasek !== "brez") s("path", { d: `M${FX - RN * K - 3},${yt - 12} H${FX + RN * K + 3} L${FX + RN * K - 1},${yt + 12} H${FX - RN * K + 1} Z`, class: "lab-stopper" }, svg);
     const tl = 55; // gladina apnice v epruveti: 10 mL v epruveti Ø 16 mm je ~65 mm visoko
     s("rect", { x: TX - 11, y: TB - tl * K, width: 22, height: tl * K, class: "lab-liq lab-liq-voda" }, svg);
-    if (B.epruveta === "apnica" && B.milky() > 0.01) s("rect", { x: TX - 11, y: TB - tl * K, width: 22, height: tl * K, class: "lab-milk", opacity: Math.min(0.95, B.milky()) }, svg);
+    const milk = B.epruveta === "apnica" ? B.milky() : 0;
+    if (milk > 0.01) {
+      s("rect", { x: TX - 11, y: TB - tl * K, width: 22, height: tl * K, class: "lab-milk", opacity: Math.min(0.95, milk) }, svg);
+      // bela oborina CaCO₃ kot drobni delci: motnost se vidi tudi brez razlikovanja barv
+      for (let i = 0, n = Math.round(60 * Math.min(1, milk)); i < n; i++) s("circle", { cx: TX - 8 + frac(Math.sin(i * 12.9898) * 43758.5) * 16, cy: TB - 4 - frac(Math.sin(i * 78.233) * 43758.5) * (tl * K - 8), r: 1.1, class: "lab-ppt" }, svg);
+    }
     tubeBubbles.forEach((b) => s("circle", { cx: b.x, cy: b.y, r: b.r, class: "lab-bubble" }, svg));
     s("path", { d: `M${TX - 11},${TT} V${TB - 8} Q${TX - 11},${TB + 3} ${TX},${TB + 3} Q${TX + 11},${TB + 3} ${TX + 11},${TB - 8} V${TT}`, class: "lab-glass" }, svg);
-    label(svg, TX, TT - 10, B.epruveta, "lbl small");
+    label(svg, TX + 16, TT + 10, B.epruveta, "lbl small", "start");
+    if (B.epruveta === "apnica") label(svg, TX + 16, TT + 26, milk > 0.3 ? "motna" : "bistra", "lbl small", "start");
     if (B.zamasek === "cevka") s("path", { d: `M${FX},${yt - 12} V30 H${TX} V${TB - 14}`, class: "lab-tube" }, svg);
+    // pena, ki je prelila bučko: teče po zunanji steni in naredi lužo na mizi ob tehtnici
+    if (B.spilled > 0.05 && B.zamasek === "brez") {
+      const run = `M${FX + RN * K + 1.5},${yt} V${yc} L${xr + 2},${FB} H${FX + 73} V${FB + 30}`;
+      s("path", { d: run, class: "lab-foam-run-edge" }, svg);
+      s("path", { d: run, class: "lab-foam-run" }, svg);
+      s("ellipse", { cx: FX + 72 + 20, cy: FB + 31, rx: Math.min(26, 8 + B.spilled * 3), ry: 3.5, class: `lab-liq lab-liq-${B.acid?.id || "voda"} lab-puddle` }, svg);
+      if (foamH > 0.5 && lvl + foamH >= HC + HN - 0.5) s("ellipse", { cx: FX, cy: yt, rx: RN * K + 5, ry: 7, class: "lab-foam" }, svg);
+    }
     // trska
     if (B.flame) {
       const x = FX + 6, y = yt + 6;
@@ -250,8 +276,9 @@ export function labCo2(el) {
       else s("path", { d: `M${x},${y - 2} q-7,-10 0,-24 q7,14 0,24 z`, class: "lab-flame" }, svg);
     }
     // merilo
-    s("line", { x1: 330, y1: 290, x2: 330 + 10 * K * 2, y2: 290, class: "lab-scale" }, svg);
-    s("text", { x: 330 + 10 * K, y: 286, class: "tick small", "text-anchor": "middle" }, svg, "2 cm");
+    s("line", { x1: 16, y1: 22, x2: 16 + 10 * K * 2, y2: 22, class: "lab-scale" }, svg);
+    s("text", { x: 16 + 10 * K, y: 17, class: "tick small", "text-anchor": "middle" }, svg, "2 cm");
+    if (stopSeg.get() !== B.zamasek) stopSeg.set(B.zamasek, true); // zamašek je izletel
     splintBtn.disabled = false;
     tubeSel.hidden = B.zamasek !== "cevka";
   }

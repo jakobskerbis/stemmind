@@ -32,16 +32,18 @@ export function labOhm(el, { load = "R100" } = {}) {
   let last = { U: null, I: null };
 
   const uSl = slider({ label: "napetost napajalnika", min: 0, max: NAPAJALNIK.max, step: 0.1, value: 0, unit: "V", onInput: (v) => (B.U0 = v) });
-  const loadSel = select({ label: "porabnik", options: Object.entries(LOADS).map(([k, L]) => [k, L.name]), value: B.load, onChange: (v) => ((B.load = v), graph.setAxes({ y: [0, YMAX[v]] }), redrawGraph(), draw()) });
-  const amSeg = segmented({ options: POS, value: B.amPos, onChange: (v) => ((B.amPos = v), draw()) });
-  const vmSeg = segmented({ options: POS, value: B.vmPos, onChange: (v) => ((B.vmPos = v), draw()) });
+  const loadSel = select({ label: "porabnik", options: Object.entries(LOADS).map(([k, L]) => [k, L.name]), value: B.load, onChange: (v) => ((B.load = v), graph.setAxes({ y: [0, YMAX[v]] }), redrawGraph(), refresh()) });
+  // po vsaki spremembi vezja takoj nov odčitek, da »Zapiši meritev« ne zapiše vrednosti prejšnjega vezja
+  const refresh = () => (B.solve(), readMeters(), draw());
+  const amSeg = segmented({ options: POS, value: B.amPos, onChange: (v) => ((B.amPos = v), refresh()) });
+  const vmSeg = segmented({ options: POS, value: B.vmPos, onChange: (v) => ((B.vmPos = v), refresh()) });
   amSeg.setAttribute("aria-label", "ampermeter priključi");
   vmSeg.setAttribute("aria-label", "voltmeter priključi");
-  const amRange = select({ label: "območje ampermetra", options: [["20m", "20 mA"], ["200m", "200 mA"], ["10", "10 A (drug priključek)"]], value: B.amRange, onChange: (v) => (B.amRange = v) });
-  const vmRange = select({ label: "območje voltmetra", options: [["2", "2 V"], ["20", "20 V"], ["200", "200 V"]], value: B.vmRange, onChange: (v) => (B.vmRange = v) });
+  const amRange = select({ label: "območje ampermetra", options: [["20m", "20 mA"], ["200m", "200 mA"], ["10", "10 A (drug priključek)"]], value: B.amRange, onChange: (v) => ((B.amRange = v), refresh()) });
+  const vmRange = select({ label: "območje voltmetra", options: [["2", "2 V"], ["20", "20 V"], ["200", "200 V"]], value: B.vmRange, onChange: (v) => ((B.vmRange = v), refresh()) });
   const rec = button("Zapiši meritev", () => record(), "primary small");
-  const fuseBtn = button("Zamenjaj varovalko v ampermetru", () => (B.replaceFuse(), log.push("Nova varovalka je v ampermetru.", "ok"), draw()));
-  const partBtn = button("Vzemi nov porabnik", () => (B.replacePart(), log.push(`Nov ${LOADS[B.load].name}.`, "ok"), draw()));
+  const fuseBtn = button("Zamenjaj varovalko v ampermetru", () => (B.replaceFuse(), log.push("Nova varovalka je v ampermetru.", "ok"), refresh()));
+  const partBtn = button("Vzemi nov porabnik", () => (B.replacePart(), log.push(`${LOADS[B.load].type === "R" ? "Nov" : "Nova"} ${LOADS[B.load].name}.`, "ok"), refresh()));
   const clearBtn = button("Izbriši meritve", () => (table.clear(), Object.keys(series).forEach((k) => delete series[k]), redrawGraph()));
   const row = (lab, ...kids) => h("div", { class: "lab-row" }, h("span", { class: "demo-slider-label" }, lab), ...kids);
 
@@ -64,7 +66,7 @@ export function labOhm(el, { load = "R100" } = {}) {
       Ishow = fixed(ImA, Math.max(0, r.dec - (r.unit === "A" ? 3 : 0)));
     } else if (Ir?.over) Ishow = "OL";
     const ok = Uv && !Uv.over && ImA != null;
-    const R = ok && Math.abs(ImA) > 1e-9 ? fmt((Uv.value / ImA) * 1000, (Uv.value / ImA) * 1000 >= 100 ? 0 : 1) : "–";
+    const R = ok && Math.abs(ImA) > 1e-9 ? fixed((Uv.value / ImA) * 1000, (Uv.value / ImA) * 1000 >= 100 ? 0 : 1) : "–";
     table.add({ p: LOADS[p].name.replace("upornik ", "").replace(" / 0,1 A", ""), U: Ushow, I: Ishow, R });
     if (ok) (series[p] ||= []).push([Uv.value, ImA]);
     else log.push("Ta meritev ni popolna: za graf potrebuješ odčitek obeh merilnikov.", "warn");
@@ -80,7 +82,7 @@ export function labOhm(el, { load = "R100" } = {}) {
     graph.draw(list);
     const fit = list.find((S) => S.id === cur && Number.isFinite(S.k));
     fitOut.innerHTML = fit
-      ? `Premica skozi izhodišče (metoda najmanjših kvadratov): <i>R</i> = 1/naklon = <b>${fmt(1000 / fit.k, 1)} Ω</b>. Na uporniku piše ${LOADS[cur].nom} Ω ± 5 %.`
+      ? `Črtkana premica skozi izhodišče se tvojim točkam najbolje prilega. Naklon: ${fmt(fit.k, 2)} mA/V = ${fmt(fit.k / 1000, 5)} A/V, zato <i>R</i> = 1/naklon = <b>${fmt(1000 / fit.k, 1)} Ω</b>. Na uporniku piše ${LOADS[cur].nom} Ω ± 5 %.`
       : LOADS[cur].type === "R" ? "Za premico in upor iz naklona potrebuješ vsaj 3 meritve." : "Žarnica: primerjaj <i>U</i>/<i>I</i> pri različnih napetostih.";
   }
   function maybeAsk(p) {
@@ -101,8 +103,8 @@ export function labOhm(el, { load = "R100" } = {}) {
         : conclusion({
             text: "Kaj kažejo tvoje meritve za žarnico?",
             options: [
-              { t: "Graf se ukrivi navzdol: z napetostjo se upor žarnice veča, ker se nitka segreje.", ok: true, why: "Upor kovine raste s temperaturo; volframova nitka pri svetenju doseže ~2500 °C in ima ~10-krat večji upor kot hladna." },
-              { t: "Graf je premica skozi izhodišče, tako kot pri uporniku.", ok: false, why: "Primerjaj <i>U</i>/<i>I</i> pri 2 V in pri 6 V: ni enak, zato žarnica ne upošteva Ohmovega zakona pri vseh napetostih." },
+              { t: "Graf se ukrivi navzdol: z napetostjo se upor žarnice veča, ker se nitka segreje.", ok: true, why: "Upor kovine raste s temperaturo; volframova nitka pri svetenju doseže okoli 2000 °C in ima ~10-krat večji upor kot hladna." },
+              { t: "Graf je premica skozi izhodišče, tako kot pri uporniku.", ok: false, why: "Primerjaj <i>U</i>/<i>I</i> pri 2 V in pri 6 V: ni enak, zato upor žarnice ni stalen in njen graf ni premica." },
               { t: "Tok pada, ko napetost raste.", ok: false, why: "Tok še vedno narašča, a počasneje kot napetost." },
             ],
           }),
@@ -113,7 +115,7 @@ export function labOhm(el, { load = "R100" } = {}) {
     vroc: (e) => [`Upornik se greje: moč ${fmt(e.P, 2)} W je večja od dovoljene ${fmt(UPOR.P, 2)} W.`, "warn"],
     zgorel: () => ["Upornik je zgorel (dim, zoglenela prevleka). Krog je prekinjen. Preveč moči: <i>P</i> = <i>U</i>·<i>I</i>.", "bad"],
     nitka: () => ["Nitka žarnice se je pretrgala: napetost je bila precej večja od nazivnih 6 V.", "bad"],
-    varovalka: (e) => [`Pok! V ampermetru je pregorela varovalka (tok ${fmt(Math.abs(e.I), 2)} A). Ampermeter zdaj kaže 0. Ampermeter ima zelo majhen upor, zato ga vedno veži zaporedno.`, "bad"],
+    varovalka: (e) => [`Pok! V ampermetru je pregorela varovalka (tok ${fmt(Math.abs(e.I), 2)} A). Ampermeter zdaj ne meri toka. Ampermeter ima zelo majhen upor, zato ga vedno veži zaporedno.`, "bad"],
     cc: () => ["Napajalnik je omejil tok na 1 A in znižal napetost (lučka CC). Je v krogu kratek stik?", "warn"],
   };
   let nEv = 0;
@@ -131,13 +133,13 @@ export function labOhm(el, { load = "R100" } = {}) {
   };
   function readMeters() {
     const st = B.state;
-    sup.set(Math.max(0, st.Usup).toFixed(1), "V", st.cc ? "CC: omejitev toka" : `nastavljeno ${fmt(B.U0, 1)} V`);
+    sup.set(Math.max(0, st.Usup).toFixed(1), "V", st.cc ? "CC: omejitev toka" : `nastavljeno ${fmt(B.U0, 1)}\u00a0V`);
     last.I = B.readA();
     last.U = B.readV();
     const ar = AM_RANGES[B.amRange], vr = VM_RANGES[B.vmRange];
-    if (last.I) am.set(last.I.text, last.I.over ? "" : ar.unit, `območje ${ar.max * ar.k} ${ar.unit}`);
+    if (last.I) am.set(last.I.text, last.I.over ? "" : ar.unit, `območje ${ar.max * ar.k}\u00a0${ar.unit}`);
     else am.set("", "", "ni priključen");
-    if (last.U) vm.set(last.U.text, last.U.over ? "" : "V", `območje ${vr.max} V`);
+    if (last.U) vm.set(last.U.text, last.U.over ? "" : "V", `območje ${vr.max}\u00a0V`);
     else vm.set("", "", "ni priključen");
   }
 
@@ -189,7 +191,7 @@ export function labOhm(el, { load = "R100" } = {}) {
       s("circle", { cx: X1, cy: YC, r: 16, class: "lab-bulb" }, svg);
       s("path", { d: p.burnt ? `M${X1 - 11},${YC - 11} l7,7 M${X1 + 11},${YC + 11} l-7,-7 M${X1 + 11},${YC - 11} l-22,22` : `M${X1 - 11},${YC - 11} l22,22 M${X1 + 11},${YC - 11} l-22,22`, class: "lab-filament" }, svg);
       label(svg, X1 - 22, YC, "6 V", "lbl small", "end");
-      if (p.burnt) label(svg, X1 - 22, YC + 18, "pregorela", "lbl small", "end");
+      if (p.burnt) label(svg, X1, YC + 36, "pregorela", "lbl small");
     }
     fuseBtn.hidden = !B.fuseOf().blown;
     partBtn.hidden = !p.burnt;

@@ -25,7 +25,7 @@ test("multimeter stays within its datasheet accuracy (±(0,5 % + 2 digita) V, ±
 
 test("fast fuse blows inside the IEC 60127-2 (F) time windows", () => {
   const t = (x) => 1 / fuseRate(x, 1);
-  assert.equal(fuseRate(1.3, 1), 0, "pod 1,41 × In ne pregori");
+  assert.equal(fuseRate(1.5, 1), 0, "1,5 × In: zdrži vsaj 1 h");
   assert.ok(t(2.1) <= 1800, "2,1 × In: največ 30 min");
   assert.ok(t(2.75) >= 0.01 && t(2.75) <= 2, `2,75 × In: 10 ms–2 s (${t(2.75)})`);
   assert.ok(t(4) >= 0.003 && t(4) <= 0.3, `4 × In: 3 ms–0,3 s (${t(4)})`);
@@ -109,12 +109,28 @@ test("0,5 W resistor overheats and burns only well above its rating", () => {
 test("lamp follows the tungsten rules: P ∝ U^1,6, cold filament ~10× smaller resistance", () => {
   near(6 / lampR(6), ZARNICA.Ir, 1e-12, "nazivni tok pri 6 V");
   near((3 / lampR(3)) / (6 / lampR(6)), 0.5 ** 0.6, 1e-9, "tok pri pol napetosti");
-  near(lampR(0.001), lampR(6) * ZARNICA.hladna, 1e-9, "hladna nitka");
+  // hladna nitka: literatura navaja 10- do 15-krat manjši upor kot pri svetenju (60 Ω → 4–6 Ω)
+  assert.ok(lampR(0.001) >= 60 / 15 && lampR(0.001) <= 60 / 10, `hladna nitka ${lampR(0.001)} Ω`);
+  // napajalnik iz 0 V naravnost na 8 V: s hladno nitko bi tok presegel 1 A, a v CC napetost ne sme preseči nastavljene
+  const s8 = new OhmBench({ seed: 5 });
+  s8.load = "L6";
+  s8.solve();
+  s8.U0 = 8;
+  const st8 = s8.solve();
+  assert.ok(!st8.cc && st8.Usup <= 8, `napajalnik ${st8.Usup} V`);
+  near(st8.Iload, 0.1 * (st8.Uload / 6) ** 0.6, 1e-6, "tok žarnice pri 8 V (I ∝ U^0,6)");
   const b = new OhmBench({ seed: 5 });
   b.load = "L6";
   b.U0 = 12;
   b.step(1);
   assert.ok(b.parts.L6.burnt, "pri 12 V nitka pregori");
+  const t12 = b.events.find((e) => e.type === "nitka").t;
+  assert.ok(t12 > 0.3 && t12 < 1, `pri 12 V najprej močno zasveti (${t12} s)`);
+  const c = new OhmBench({ seed: 5 });
+  c.load = "L6";
+  c.U0 = 9; // 1,5 × nazivna: življenjska doba 1000 h / 1,5^13 ≈ 5 h
+  c.step(120);
+  assert.ok(!c.parts.L6.burnt, "pri 9 V zdrži");
 });
 
 // ------------------------------------------------------------------ CO₂
@@ -131,8 +147,9 @@ test("1,00 g NaHCO₃ with excess HCl releases 0,524 g CO₂ (law of conservatio
   near(th, 0.5239, 0.003, "teorija");
   b.step(30);
   const loss30 = m0 - b.massTrue();
-  // po 30 s je v 50 mL še do 0,038 mol/L · 0,05 L · 44 g/mol = 0,084 g raztopljenega CO₂
-  assert.ok(loss30 < th - 0.03 && loss30 > th - 0.09, `po 30 s: ${loss30}`);
+  // po 30 s je v 50 mL še do 0,038 mol/L · 0,05 L · 44 g/mol = 0,084 g raztopljenega CO₂, v 80 mL nad tekočino
+  // pa do 0,08 L · (1,84 − 1,20) g/L = 0,051 g CO₂ več, kot bi tehtal zrak (gostoti pri 20 °C, CRC)
+  assert.ok(loss30 < th - 0.03 && loss30 > th - 0.135, `po 30 s: ${loss30}`);
   b.step(3600);
   near(m0 - b.massTrue(), th, 0.005, "po 1 h je ušel ves CO₂");
   // prostornina plina pri 20 °C: 1 g sode → 286 mL
@@ -223,6 +240,11 @@ test("too much foam overflows a 100 mL flask; a closed stopper pops", () => {
 
 test("CO₂ solubility and flask geometry match the real values", () => {
   near(CO2_TOPNOST * M.CO2, 1.69, 0.05, "g CO₂ na liter pri 20 °C (Sander 2015)");
+  // bučka s 50 mL tekočine in samim CO₂ nad njo: 80 mL · (1,842 − 1,204) g/L = 0,051 g (CRC, 20 °C), ±3 % (idealni plin)
+  const b = new Co2Bench({ seed: 1 });
+  b.pour("voda", 50);
+  b.x = 1;
+  near(b.headspaceMass(), (BUCKA.V - b.Vliq) * (1.842 - 1.204), 0.002, "CO₂ nad tekočino");
   // ISO 1773, 100 mL: višina 105 mm; nazivnih 100 mL je pod ramo stožca (80 mm), do vrha vratu ~135 mL
   assert.ok(flaskLevel(100) < 80, "100 mL pod ramo");
   near(flaskLevel(BUCKA.V * 1000), 92, 4, "130 mL sega v vrat (do vrha ~135 mL)");

@@ -70,12 +70,13 @@ export function meterSpec(trueValue, range, kind) {
   return Math.abs(trueValue * range.k) * pct + digits * 10 ** -range.dec;
 }
 
-// Talilna varovalka, hitra (F), po IEC 60127-2: pri 2,1 × In v 30 min, pri 2,75 × In v 10 ms–2 s,
-// pri 4 × In v 3 ms–0,3 s, pri 10 × In v manj kot 20 ms. Model: segrevanje Q raste kot 0,55 · (x² − 2)
-// za x = I/In > √2 in varovalka pregori pri Q = 1 (čas t = 1 / (0,55 · (x² − 2))).
+// Talilna varovalka, hitra (F), po IEC 60127-2 (standardni list 1): pri 1,5 × In zdrži vsaj 1 h, pri 2,1 × In
+// pregori v 30 min, pri 2,75 × In v 10 ms–2 s, pri 4 × In v 3 ms–0,3 s, pri 10 × In v manj kot 20 ms.
+// Model: segrevanje Q raste kot 0,55 · (x² − 1,5²) za x = I/In > 1,5 in varovalka pregori pri Q = 1
+// (čas t = 1 / (0,55 · (x² − 2,25))); pod 1,5 × In ne pregori.
 export function fuseRate(I, In) {
   const x = Math.abs(I) / In;
-  return x > Math.SQRT2 ? 0.55 * (x * x - 2) : 0;
+  return x > 1.5 ? 0.55 * (x * x - 2.25) : 0;
 }
 
 // ------------------------------------------------------------------ Ohmov zakon: deli
@@ -85,8 +86,9 @@ export function fuseRate(I, In) {
 export const UPOR = { P: 0.5, tol: 0.05, alfa: 50e-6, rth: 170, tau: 8, tZgori: 350 };
 // Žarnica z volframovo nitko 6 V / 0,1 A. Pravila za žarnice (npr. IES Lighting Handbook):
 // moč ∝ U^1,6 (torej tok ∝ U^0,6), svetlobni tok ∝ U^3,4. Hladna nitka ima ~10-krat manjši upor od vroče.
-// Nitka se pretrga, ko je napetost več kot 1,5-krat nazivna dlje od 0,3 s (ocena).
-export const ZARNICA = { Ur: 6, Ir: 0.1, eksp: 0.6, svet: 3.4, hladna: 0.1 };
+// Življenjska doba ∝ U^−13 (isti vir), nazivna 1000 h (ocena za majhne žarnice): pri 9 V bi zdržala ~5 h.
+// Nad 1,8-kratno nazivno napetostjo nitka po kratkem močnem bliskanju (0,6 s) pregori (ocena).
+export const ZARNICA = { Ur: 6, Ir: 0.1, eksp: 0.6, svet: 3.4, hladna: 0.1, zivljenje: 1000 * 3600, zivEksp: 13 };
 export const LOADS = {
   R47: { type: "R", nom: 47, name: "upornik 47 Ω" },
   R100: { type: "R", nom: 100, name: "upornik 100 Ω" },
@@ -168,8 +170,9 @@ export class OhmBench {
     const N = n - 1; // neznanke: vozlišča 1..n-1
     let Rl = this.loadR(this.lastUl ?? ZARNICA.Ur);
     let cc = false, v = [];
-    for (let it = 0; it < 80; it++) {
-      for (const e of els) e.R = e.kind === "A" ? amR() : e.kind === "V" ? R_VOLTMETER : Rl;
+    // Napajalnik: najprej kot vir napetosti (CV); če bi tok presegel omejitev, kot vir toka (CC).
+    // Način določimo pri vsakem koraku iteracije znova, ker se upor žarnice spreminja (v CC je napetost vedno pod nastavljeno).
+    const nodal = (ccMode) => {
       const G = Array.from({ length: N }, () => new Array(N).fill(0));
       const I = new Array(N).fill(0);
       const add = (i, j, g) => {
@@ -178,13 +181,15 @@ export class OhmBench {
         if (i > 0 && j > 0) (G[i - 1][j - 1] -= g), (G[j - 1][i - 1] -= g);
       };
       for (const e of els) add(e.a, e.b, 1 / e.R);
-      if (cc) I[0] += NAPAJALNIK.ilim;
+      if (ccMode) I[0] += NAPAJALNIK.ilim;
       else add(1, 0, 1 / NAPAJALNIK.rs), (I[0] += this.U0 / NAPAJALNIK.rs);
-      v = [0, ...solveLinear(G, I)];
-      if (!cc && (this.U0 - v[1]) / NAPAJALNIK.rs > NAPAJALNIK.ilim) {
-        cc = true;
-        continue;
-      }
+      return [0, ...solveLinear(G, I)];
+    };
+    for (let it = 0; it < 80; it++) {
+      for (const e of els) e.R = e.kind === "A" ? amR() : e.kind === "V" ? R_VOLTMETER : Rl;
+      v = nodal(false);
+      cc = (this.U0 - v[1]) / NAPAJALNIK.rs > NAPAJALNIK.ilim;
+      if (cc) v = nodal(true);
       const load = els.find((e) => e.kind === "load");
       const Ul = v[load.a] - v[load.b];
       const Rn = this.loadR(Ul);
@@ -214,8 +219,10 @@ export class OhmBench {
         if (P > UPOR.P * 1.05 && !p.hotSaid) (p.hotSaid = true), this.events.push({ t: this.t, type: "vroc", P });
         if (p.T > UPOR.tZgori) (p.burnt = true), this.events.push({ t: this.t, type: "zgorel", P });
       } else if (!p.burnt) {
-        p.over = Math.abs(st.Uload) > 1.5 * ZARNICA.Ur ? p.over + h : 0;
-        if (p.over > 0.3) (p.burnt = true), this.events.push({ t: this.t, type: "nitka" });
+        const u = Math.abs(st.Uload) / ZARNICA.Ur;
+        p.over = u > 1.8 ? p.over + h : 0;
+        p.wear = (p.wear || 0) + (h * u ** ZARNICA.zivEksp) / ZARNICA.zivljenje;
+        if (p.over > 0.6 || p.wear >= 1) (p.burnt = true), this.events.push({ t: this.t, type: "nitka" });
       }
       if (st.Iam != null) {
         const f = this.fuseOf();
@@ -267,9 +274,12 @@ export function fitOrigin(pts) {
 // NaHCO₃ + H⁺ → Na⁺ + H₂O + CO₂. M(NaHCO₃) = 84,007 g/mol, M(CO₂) = 44,009 g/mol, M(CaCO₃) = 100,086 g/mol
 // (IUPAC 2021, standardne atomske mase).
 export const M = { NaHCO3: 84.007, CO2: 44.009, CaCO3: 100.086, citronska: 192.12 };
+// Povprečna molska masa suhega zraka 28,96 g/mol (ISO 2533, standardna atmosfera).
+export const M_ZRAK = 28.96;
 // Kisline: koncentracija kislih protonov, ki reagirajo s hidrogenkarbonatom, gostota pri 20 °C.
 // - limonin sok: 46,7 g/L citronske kisline (Penniston in sod., J Endourol 2008: 1,38 g na unčo) = 0,243 mol/L,
-//   triprotonska; ker CO₂ uhaja, reagirajo vsi trije protoni (3 NaHCO₃ + C₆H₈O₇ → Na₃C₆H₅O₇ + 3 H₂O + 3 CO₂).
+//   triprotonska; ker CO₂ uhaja, reagirajo vsi trije protoni (3 NaHCO₃ + C₆H₈O₇ → Na₃C₆H₅O₇ + 3 H₂O + 3 CO₂);
+//   gostota ~1,03 g/mL (ocena).
 // - kis: 5 % ocetna kislina (50 g/L, M = 60,05 g/mol) = 0,833 mol/L, gostota 1,006 g/mL.
 // - klorovodikova kislina 1 mol/L, gostota 1,016 g/mL (CRC Handbook).
 // tau = čas, v katerem se pri presežku kisline porabi ~63 % sode v prahu (ocena po trajanju penjenja v šoli),
@@ -286,10 +296,11 @@ export const CO2_TOPNOST = 0.038;
 // Apnica: nasičena raztopina Ca(OH)₂, topnost 1,73 g/L pri 20 °C (CRC) = 0,0233 mol/L; v epruveti 10 mL.
 // Mehurček skozi ~6 cm apnice odda ~15 % CO₂ (ocena); ko je Ca(OH)₂ porabljen, CaCO₃ s CO₂ in vodo
 // počasi preide v topen Ca(HCO₃)₂ (~3 % CO₂ iz mehurčka, ocena), zato se apnica ob dolgem uvajanju zbistri.
+// Motnost: 0,15 g/L CaCO₃ zakrije ~63 % prosojnosti (ocena).
 export const APNICA = { c: 0.0233, V: 0.01, f1: 0.15, f2: 0.03, motnost: 0.15 };
 // Erlenmajerica 100 mL: do vratu drži ~130 mL (ocena po merah ISO 1773), masa ~75 g (borosilikatno steklo).
 // Gumijasti zamašek brez cevke izleti pri nadtlaku ~20 kPa (ocena). Trska ugasne, ko je kisika manj kot 15 %
-// (gorenje lesa in sveč: meja 15–16 % O₂). Zrak ima 20,95 % O₂.
+// (ocena; za sveče se navaja meja 15–16 % O₂). Zrak ima 20,95 % O₂ (suh zrak).
 export const BUCKA = { V: 0.13, masa: 75, zamasek: 20000, o2zrak: 0.2095, o2meja: 0.15 };
 // Tehtnica: berljivost 0,01 g, ponovljivost ±0,01 g; med burnim penjenjem zaradi tresljajev do ±0,03 g.
 
@@ -328,7 +339,8 @@ export class Co2Bench {
     this.acid.V += V;
     this.acid.nH += A.cH * V;
     this.acid.nH0 = Math.max(this.acid.nH0, this.acid.nH);
-    this.acid.tau = A.tau;
+    // voda kislino le razredči: hitrost ostane od kisline (prej je dolivanje vode reakcijo ustavilo)
+    this.acid.tau = A.cH > 0 ? Math.min(this.acid.tau ?? Infinity, A.tau) : this.acid.tau ?? Infinity;
     this.acid.pena = Math.max(this.acid.pena || 0, A.pena);
     this.liquidMass += V * 1000 * A.rho;
     if (this.soda > 0 && A.cH > 0 && this.t0 == null) this.t0 = this.t;
@@ -340,13 +352,18 @@ export class Co2Bench {
     if (this.acid?.nH > 0 && this.t0 == null) this.t0 = this.t;
     return m;
   }
-  // Masa na tehtnici (prava vrednost).
+  // Masa na tehtnici (prava vrednost). Plin v bučki: zrak v njej tehtnica ne čuti (izravna ga vzgon), CO₂ pa je
+  // težji od zraka, zato je bučka s CO₂ nad tekočino težja za x · n · (M(CO₂) − M(zrak)), pri 80 mL plina do ~0,05 g.
   massTrue() {
-    return this.flaskMass + this.liquidMass + this.sodaAdded - this.escaped * M.CO2 - this.spilled;
+    return this.flaskMass + this.liquidMass + this.sodaAdded - this.escaped * M.CO2 - this.spilled + this.headspaceMass();
+  }
+  headspaceMass() {
+    const n = Math.max(BUCKA.V - this.Vliq, 0) / (VM_SOBA * 1000); // mol plina nad tekočino
+    return this.x * n * (M.CO2 - M_ZRAK);
   }
   // Odčitek tehtnice z berljivostjo 0,01 g.
   readMass() {
-    const shake = 0.004 + Math.min(0.012, this.rate * 2);
+    const shake = 0.004 + Math.min(0.008, this.rate * 2); // σ do 0,012 g, odrezano pri 2,5 σ: do ±0,03 g
     return Math.round((this.massTrue() + gauss(this.r, shake, 2.5)) * 100) / 100;
   }
   // Koliko CO₂ (mol) lahko še nastane plus kar je že nastalo: omejitveni reaktant.
@@ -396,10 +413,7 @@ export class Co2Bench {
         // zamašek izleti: ujeti plin uide, del tekočine brizgne iz bučke
         this.events.push({ t: this.t, type: "zamasek" });
         this.zamasek = "brez";
-        this.dp = 0;
-        this.escaped += this.trapped;
-        this.trapped = 0;
-        this.x = 0.6;
+        this.release();
         this.spill(0.15);
       }
     } else {
@@ -416,7 +430,7 @@ export class Co2Bench {
   spill(f) {
     const a = this.acid;
     if (!a || f <= 0) return;
-    this.spilled += f * (this.massTrue() - this.flaskMass - this.soda * M.NaHCO3);
+    this.spilled += f * (this.massTrue() - this.headspaceMass() - this.flaskMass - this.soda * M.NaHCO3);
     a.nH *= 1 - f;
     a.V *= 1 - f;
     this.dissolved *= 1 - f;
@@ -456,9 +470,21 @@ export class Co2Bench {
     this.events.push({ t: this.t, type: out ? "trska-ugasne" : "trska-gori", o2: this.o2() });
     return { ok: true, out };
   }
+  // Odprta zaprta bučka: presežek plina uide, v bučki ostane plin pri zunanjem tlaku s premešano sestavo
+  // (delež CO₂ = (x · n + ujeti CO₂) / (n + ujeti CO₂), n = mol plina nad tekočino pri 1 atm).
+  release() {
+    const tr = this.trapped || 0;
+    if (tr > 0) {
+      const n = Math.max(BUCKA.V - this.Vliq, 1e-5) / (VM_SOBA * 1000);
+      this.x = (this.x * n + tr) / (n + tr);
+      this.escaped += tr;
+    }
+    this.trapped = 0;
+    this.dp = 0;
+  }
   setStopper(z) {
     if (z === this.zamasek) return;
-    if (this.zamasek === "zaprto" && this.trapped) (this.escaped += this.trapped), (this.trapped = 0), (this.dp = 0);
+    if (this.zamasek === "zaprto") this.release();
     this.zamasek = z;
   }
 }
@@ -473,7 +499,7 @@ export const POENOSTAVITVE = {
   co2: [
     "Hitrost reakcije in penjenje sta ocenjena po trajanju penjenja v šolskem poskusu, ne izračunana iz kemijske kinetike.",
     "Temperatura je ves čas 20 °C (reakcija sode s kislino raztopino v resnici malo ohladi).",
-    "Izhlapevanje vode in vzgon zraka na tehtnici nista upoštevana (v nekaj minutah sta manjša od 0,01 g).",
+    "Izhlapevanje vode ni upoštevano (v nekaj minutah je manjše od 0,01 g). Upoštevano je, da je CO₂ v bučki težji od zraka, ki ga je izpodrinil.",
     "Zrak v bučki je dobro premešan; v resnici se težji CO₂ nabira pri dnu.",
   ],
 };

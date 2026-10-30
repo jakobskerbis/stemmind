@@ -4,10 +4,12 @@ import { h, s, fmt, svgBox, axes, tex } from "./kit.js";
 
 // Ura, ki teče v realnem času in se ustavi, ko simulacije ni več na strani.
 // Ne uporablja requestAnimationFrame, ker meritve tečejo tudi pri »manj gibanja« (ni animacije, le odčitki).
+// »Ponastavi« (sim/index.js) zgradi simulacijo znova v istem elementu, zato se stara ura ustavi, ko se začne nova.
 export function ticker(el, fn, ms = 100) {
   let last = performance.now();
+  const gen = (el._labTick = (el._labTick || 0) + 1);
   const id = setInterval(() => {
-    if (el.dataset.mounted && !el.isConnected) return clearInterval(id);
+    if (el._labTick !== gen || (el.dataset.mounted && !el.isConnected)) return clearInterval(id);
     if (el.isConnected) el.dataset.mounted = "1";
     const now = performance.now();
     fn(Math.min(0.25, (now - last) / 1000));
@@ -17,11 +19,13 @@ export function ticker(el, fn, ms = 100) {
 }
 
 // Zaslon digitalnega merilnika (LCD). set(text, unit, note).
+// Ni aria-live: zadnja števka niha večkrat na sekundo, bralnik zaslona bi jo bral brez konca.
+// Zapisana meritev (tabela) in dogodki (dnevnik) so napovedani.
 export function lcd(name, { cls = "" } = {}) {
   const val = h("span", { class: "lab-lcd-val" }, "–");
   const unit = h("span", { class: "lab-lcd-unit" });
   const note = h("span", { class: "lab-lcd-note" });
-  const el = h("div", { class: `lab-lcd ${cls}`, role: "status", "aria-label": name }, h("span", { class: "lab-lcd-name" }, name), h("span", { class: "lab-lcd-screen" }, val, unit), note);
+  const el = h("div", { class: `lab-lcd ${cls}`, role: "group", "aria-label": name }, h("span", { class: "lab-lcd-name" }, name), h("span", { class: "lab-lcd-screen" }, val, unit), note);
   el.set = (text, u = "", n = "") => {
     const t = String(text).replace(".", ",").replace("-", "−");
     if (val.textContent !== t) val.textContent = t;
@@ -52,7 +56,8 @@ export function dataTable(cols, { empty = "Še ni meritev. Odčitaj merilnik in 
 }
 
 // Graf meritev s stalnimi osmi. draw(series): [{ pts: [[x, y]], shape: "o" | "^", cls: "a", label, line?: f(x) }]
-export function dataGraph({ W = 340, H = 220, x, y, xLabel, yLabel, xStep, yStep, title }) {
+// origin: false postavi časovno os na spodnji rob (pri negativnih vrednostih, npr. Δm), da se oznake ne prekrivajo.
+export function dataGraph({ W = 340, H = 220, x, y, xLabel, yLabel, xStep, yStep, title, origin = true }) {
   const svg = svgBox(W, H, "lab-graph");
   svg.setAttribute("aria-label", title || "Graf meritev");
   const wrap = h("figure", { class: "lab-graph-wrap" }, svg);
@@ -63,7 +68,7 @@ export function dataGraph({ W = 340, H = 220, x, y, xLabel, yLabel, xStep, yStep
   const opts = { x, y };
   wrap.draw = (series = []) => {
     svg.replaceChildren();
-    A = axes(svg, { W, H, x: opts.x, y: opts.y, pad: 38, padT: 14, padR: 14, xLabel, yLabel, xStep: opts.xStep ?? xStep, yStep: opts.yStep ?? yStep });
+    A = axes(svg, { W, H, x: opts.x, y: opts.y, pad: 38, padT: 14, padR: 14, origin, xLabel, yLabel, xStep: opts.xStep ?? xStep, yStep: opts.yStep ?? yStep });
     const inside = ([px, py]) => px >= A.x0 && px <= A.x1 && py >= A.y0 && py <= A.y1;
     legend.replaceChildren();
     for (const S of series) {
