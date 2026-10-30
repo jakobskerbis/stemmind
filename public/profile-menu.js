@@ -3,6 +3,7 @@
 // (ostala koda bere in nastavlja njega), ta meni je le njegov obraz.
 import { icon } from "./icons.js";
 import { t } from "./i18n.js";
+import { mountSubjectSwitch, SUBJECT_KEYS } from "./subject-switch.js";
 
 const $ = (sel) => document.querySelector(sel);
 let D = null; // { getState, showView, escapeHtml, accountsOn, logout, describe }
@@ -103,6 +104,7 @@ function render() {
       <span class="pm-who"><b dir="auto">${esc(student.name)}</b><small class="muted">${esc(D.describe(student))}</small></span>
     </div>
     <div class="pm-sep" role="separator"></div>
+    <div class="subj-sw" hidden></div>
     ${others}
     ${item("add", "user-plus", t("pm.add"))}
     ${item("zbirke", "award", t("zb.title"))}
@@ -110,6 +112,7 @@ function render() {
     ${item("settings", "settings", t("nav.settings"))}
     ${accounts ? item("account", "user", t("nav.account")) : ""}
     ${accounts ? `<div class="pm-sep" role="separator"></div>${item("logout", "log-out", t("pm.logout"))}` : ""}`;
+  mountSubjectSwitch($("#profile-pop .subj-sw"), { onPicked: () => close(true) });
 }
 
 function onPick(e) {
@@ -142,7 +145,7 @@ function onPick(e) {
 }
 
 function onKey(e) {
-  const items = [...$("#profile-pop").querySelectorAll(".pm-item")];
+  const items = [...$("#profile-pop").querySelectorAll(`.pm-item, ${SUBJECT_KEYS}`)];
   const i = items.indexOf(document.activeElement);
   if (e.key === "Escape" || e.key === "Tab") {
     if (e.key === "Escape") e.preventDefault();
