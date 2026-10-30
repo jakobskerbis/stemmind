@@ -11,7 +11,7 @@ const tb = { browse: false, subject: null, book: null, group: null, query: "", t
 
 // Kar iz Nastavitev določa učbenik: smer, program, predmet in razred/letnik.
 const profileOf = (s) =>
-  s ? [s.id, s.settings?.educational_track, s.settings?.study_program, s.settings?.subject, s.settings?.curriculum_level].join("|") : "";
+  s ? [s.id, s.settings?.educational_track, s.settings?.study_program, s.settings?.subject, s.settings?.study_course, s.settings?.curriculum_level].join("|") : "";
 
 // Ko učenec v Nastavitvah zamenja smer, predmet ali letnik, se učbenik znova prilagodi.
 function syncProfile() {
