@@ -64,8 +64,9 @@ function Root() {
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(0,0,0,0.4)", padding: 24 }}>
           <View style={{ backgroundColor: th.surface, borderColor: th.border, borderWidth: 1, borderRadius: 16, padding: 24, alignItems: "center", gap: 12, minWidth: 240 }}>
             <ActivityIndicator color={th.accent} />
+            {/* po 10 %, da bralnik zaslona ne bere vsakega odstotka */}
             <Text style={{ color: th.text, fontSize: 16, textAlign: "center" }} accessibilityLiveRegion="polite">
-              {t("mob.updateDownloading", { pct: updating ?? 0 })}
+              {t("mob.updateDownloading", { pct: Math.floor((updating ?? 0) / 10) * 10 })}
             </Text>
           </View>
         </View>
