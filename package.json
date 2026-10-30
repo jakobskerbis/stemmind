@@ -5,7 +5,7 @@
   "description": "Evklid – AI inštruktor za matematiko, fiziko in kemijo",
   "type": "module",
   "engines": {
-    "node": ">=22.5"
+    "node": ">=22.13"
   },
   "scripts": {
     "start": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning server/index.js",
