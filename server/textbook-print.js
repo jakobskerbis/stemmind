@@ -211,8 +211,8 @@ export function shell(title, content, css = "") {
 ${css}
 </style></head>
 <body>
-<div class="bar"><span>${esc(title)}</span><button type="button" onclick="window.print()">Shrani kot PDF</button></div>
+<div class="bar"><span>${esc(title)}</span><button type="button" id="natisni">Shrani kot PDF</button></div>
 <main>${content}</main>
-<script>if (location.hash === "#natisni") addEventListener("load", () => setTimeout(() => print(), 300));</script>
+<script src="/ucbenik-tisk.js"></script>
 </body></html>`;
 }

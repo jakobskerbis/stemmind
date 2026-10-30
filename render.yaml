@@ -23,6 +23,8 @@ services:
         sync: false
       - key: EVKLID_PASSWORD
         sync: false
+      - key: EVKLID_DATA_KEY       # šifriranje pogovorov v bazi (docs/varnost-podatkov.md); kopija v upravitelju gesel!
+        sync: false
       - key: EVKLID_ACCOUNTS
         value: "1"
       - key: EVKLID_BASE_URL

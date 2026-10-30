@@ -3,7 +3,7 @@
 // Profil z geslom je na napravi odprt šele po vpisu gesla. Odklep velja na tej napravi,
 // dokler na njej ne odpremo drugega profila istega računa, do odjave ali največ UNLOCK_DAYS.
 // Profil brez gesla (stari profili, gost) strežnik ne zaklene; aplikacija ob odprtju zahteva, da ga nastaviš.
-import { hashPassword, verifyPassword } from "./auth.js";
+import { hashPassword, verifyPassword, needsRehash } from "./auth.js";
 
 export const UNLOCK_DAYS = 30;
 export const PROFILE_PASSWORD_MIN = 4;
@@ -40,18 +40,23 @@ export class ProfileLocks {
   hasPassword(studentId) {
     return !!this.db.prepare("SELECT 1 FROM profile_passwords WHERE student_id = ?").get(studentId);
   }
-  verify(studentId, pw) {
+  // Enaka shema kot geslo računa (auth.js); star zapis ob uspešnem vpisu tiho zamenjamo z močnejšim.
+  async verify(studentId, pw) {
     const row = this.db.prepare("SELECT hash FROM profile_passwords WHERE student_id = ?").get(studentId);
-    return !!row && typeof pw === "string" && verifyPassword(pw, row.hash);
+    const ok = await verifyPassword(typeof pw === "string" ? pw : "", row?.hash);
+    if (!row || typeof pw !== "string" || !ok) return false;
+    if (needsRehash(row.hash)) this.db.prepare("UPDATE profile_passwords SET hash = ? WHERE student_id = ? AND hash = ?").run(await hashPassword(pw), studentId, row.hash);
+    return true;
   }
   // Novo geslo zaklene profil na vseh napravah.
-  setPassword(studentId, pw) {
+  async setPassword(studentId, pw) {
+    const hash = await hashPassword(pw);
     this.db
       .prepare(
         `INSERT INTO profile_passwords (student_id, hash) VALUES (?, ?)
          ON CONFLICT(student_id) DO UPDATE SET hash = excluded.hash, updated_at = datetime('now')`,
       )
-      .run(studentId, hashPassword(pw));
+      .run(studentId, hash);
     this.db.prepare("DELETE FROM profile_unlocks WHERE student_id = ?").run(studentId);
   }
   isUnlocked(studentId, deviceId, now = Date.now()) {

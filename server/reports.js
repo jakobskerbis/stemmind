@@ -3,6 +3,7 @@
 // (answer_cache), da ga ne dobi noben drug učenec. Stikalo EVKLID_CHAT_OFF=1 izklopi klepet za vse.
 // Postopek ob neljubem dogodku: docs/krizni-nacrt.md.
 import { cleanText } from "./settings.js";
+import { seal, unseal } from "./crypto-polje.js";
 
 export const REPORT_REASONS = ["wrong", "unsafe", "other"];
 // Največ prijav enega učenca na dan (zaščita pred zlorabo).
@@ -46,8 +47,11 @@ export function listReports(db, limit = 200) {
   return db
     .prepare("SELECT * FROM message_reports ORDER BY id DESC LIMIT ?")
     .all(limit)
-    .map((r) => ({ ...r, code: messageCode(r.message_id) }));
+    .map((r) => ({ ...openReport(r), code: messageCode(r.message_id) }));
 }
+
+// Opomba, vprašanje in odgovor so šifrirani (server/crypto-polje.js).
+export const openReport = (r) => r && { ...r, note: unseal(r.note), question: unseal(r.question), answer: unseal(r.answer) };
 
 export function mountReports(app, store, { loadConversation, localOnly }) {
   ensureReportsTable(store.db);
@@ -77,7 +81,7 @@ export function mountReports(app, store, { loadConversation, localOnly }) {
     const anonymize = (t) => (name.length > 1 ? t.replaceAll(name, "[ime]") : t);
     store.db
       .prepare("INSERT INTO message_reports (student_id, conversation_id, message_id, reason, note, question, answer, purged) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
-      .run(conv.student_id, conv.id, mid, reason, cleanText(req.body?.note, 500) || null, question?.display_text?.slice(0, 2000) || null, anonymize(msg.display_text).slice(0, 8000), purged);
+      .run(conv.student_id, conv.id, mid, reason, seal(cleanText(req.body?.note, 500) || null), seal(question?.display_text?.slice(0, 2000) || null), seal(anonymize(msg.display_text).slice(0, 8000)), purged);
     console.warn(`[evklid] prijava napake ${code} (${reason}), pogovor ${conv.id}`);
     res.status(201).json({ ok: true, code });
   });

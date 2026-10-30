@@ -3,6 +3,8 @@
 // pravilen priklic premakne kartico v naslednjo škatlo (1, 3, 7, 16, 35, 90 dni),
 // napačen jo vrne na začetek (na vrsti takoj, v isti seji še enkrat).
 
+import { seal, unseal, blindIndex } from "./crypto-polje.js";
+
 export const INTERVALS = [1, 3, 7, 16, 35, 90];
 export const MAX_PER_REPLY = 3;
 export const MAX_CARDS = 2000;
@@ -26,8 +28,8 @@ export const normCard = (front) =>
 const view = (r) =>
   r && {
     id: r.id,
-    front: r.front,
-    back: r.back,
+    front: unseal(r.front),
+    back: unseal(r.back),
     subject: r.subject,
     topic: r.topic,
     topic_id: r.topic_id,
@@ -59,7 +61,8 @@ export class Flashcards {
       const back = clean(c.back, BACK_MAX);
       const norm = normCard(front);
       if (!norm || !back) continue;
-      const r = ins.run(studentId, conversationId, topicId, subject, topic ? String(topic).slice(0, 80) : null, front, back, norm, source, verified ? 1 : 0);
+      // Besedilo šifrirano, norm je slepi indeks (server/crypto-polje.js); brez ključa oboje nespremenjeno.
+      const r = ins.run(studentId, conversationId, topicId, subject, topic ? String(topic).slice(0, 80) : null, seal(front), seal(back), blindIndex(norm), source, verified ? 1 : 0);
       if (r.changes) added.push(this.get(studentId, Number(r.lastInsertRowid), { pending: true }));
     }
     return added;
@@ -126,7 +129,7 @@ export class Flashcards {
     const b = back === undefined ? c.back : clean(back, BACK_MAX);
     if (!normCard(f) || !b) return { error: "empty" };
     try {
-      this.db.prepare("UPDATE flashcards SET front = ?, back = ?, norm = ? WHERE id = ?").run(f, b, normCard(f), id);
+      this.db.prepare("UPDATE flashcards SET front = ?, back = ?, norm = ? WHERE id = ?").run(seal(f), seal(b), blindIndex(normCard(f)), id);
     } catch {
       return { error: "duplicate" };
     }

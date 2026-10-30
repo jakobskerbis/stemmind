@@ -1,6 +1,7 @@
 // HTTP strežnik Evklid: API + statični vmesnik.
 import "./env.js";
 import express from "express";
+import helmet from "helmet";
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
@@ -45,6 +46,7 @@ import { mountScan } from "./scan.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
 import { BRAND } from "./brand.js";
 import { mobileClient, mountMobile } from "./mobile/index.js";
+import { startPrivacyJobs, withoutImages, PHOTO_REJECTED_TEXT } from "./zasebnost.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -109,9 +111,72 @@ function mountOldLinkRedirect(app, homeCheck) {
   });
 }
 
+// Varnostne glave (helmet). CSP: samo lastne skripte (brez vrinjenih), slogi tudi vrinjeni (KaTeX, style=),
+// slike tudi z drugih strani https (kotiček z novicami), blob: za fotografije s kamere in posnetke.
+// Plačilo (Stripe) in portal sta navadni preusmeritvi (location.href), zato ju CSP ne omejuje.
+// Mobilna aplikacija (Expo) uporablja API in svoj WebView z lokalnim HTML, zato je CSP ne zadeva.
+export const CSP = {
+  "default-src": ["'self'"],
+  "script-src": ["'self'"],
+  "style-src": ["'self'", "'unsafe-inline'"],
+  "img-src": ["'self'", "data:", "blob:", "https:"],
+  "font-src": ["'self'", "data:"],
+  "connect-src": ["'self'"],
+  "media-src": ["'self'", "blob:"],
+  "worker-src": ["'self'", "blob:"],
+  "object-src": ["'none'"],
+  "base-uri": ["'self'"],
+  "form-action": ["'self'"],
+  "frame-ancestors": ["'none'"],
+};
+// Kamera (skeniranje, fotografija naloge) in mikrofon (govor) samo za to stran; senzorji gibanja za igre.
+export const PERMISSIONS_POLICY = [
+  "camera=(self)",
+  "microphone=(self)",
+  "fullscreen=(self)",
+  "accelerometer=(self)",
+  "gyroscope=(self)",
+  "magnetometer=(self)",
+  "clipboard-write=(self)",
+  "web-share=(self)",
+  "geolocation=()",
+  "payment=()",
+  "usb=()",
+  "serial=()",
+  "hid=()",
+  "midi=()",
+  "display-capture=()",
+  "browsing-topics=()",
+  "xr-spatial-tracking=()",
+].join(", ");
+// Javni podatki brez osebnih (učne poti, učbenik, formule): brskalnik jih sme hraniti in preveriti (ETag).
+const PUBLIC_API = /^\/api\/(paths|programs|formulas|references|textbook\/|topic|teacher\/topics|account\/prices)(\/|\?|$)/;
+
+function securityHeaders(app) {
+  app.use(
+    helmet({
+      contentSecurityPolicy: { useDefaults: false, directives: CSP },
+      strictTransportSecurity: false, // spodaj, samo prek https
+      referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+      crossOriginOpenerPolicy: { policy: "same-origin" },
+      crossOriginEmbedderPolicy: false,
+      xFrameOptions: { action: "deny" },
+    }),
+  );
+  app.use((req, res, next) => {
+    res.set("Permissions-Policy", PERMISSIONS_POLICY);
+    if (req.secure) res.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    // Odgovori API so osebni: ne v predpomnilnik (poti, ki nastavijo svoje predpomnjenje, to prepišejo).
+    if (req.path.startsWith("/api/")) res.set("Cache-Control", PUBLIC_API.test(req.originalUrl) ? "no-cache" : "no-store");
+    next();
+  });
+}
+
 export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
   const app = express();
+  app.disable("x-powered-by");
+  securityHeaders(app);
   mountOldLinkRedirect(app, opts.homeCheck);
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
   // Različica in zasedenost: odprte strani se po posodobitvi osvežijo, samodejna posodobitev
@@ -144,7 +209,8 @@ export function createApp(store, opts = {}) {
   // Neuspele klice API zapišemo v dnevnik, da je napako na telefonu mogoče poiskati.
   app.use("/api", (req, res, next) => {
     res.on("finish", () => {
-      if (res.statusCode >= 400) console.warn(`[evklid] ${res.statusCode} ${req.method} ${req.originalUrl}`);
+      // Brez poizvedbe (?token=… ipd.) in brez telesa zahteve.
+      if (res.statusCode >= 400) console.warn(`[evklid] ${res.statusCode} ${req.method} ${req.originalUrl.split("?")[0]}`);
     });
     next();
   });
@@ -489,6 +555,9 @@ export function createApp(store, opts = {}) {
       if (rest) send("delta", { text: rest });
 
       let meta = parseMeta(result.text);
+      // Fotografija, ki ni učno gradivo (obraz, oseba, osebni dokument …): inštruktor jo zavrne z flag=photo,
+      // slika pa se takoj odstrani iz shranjenega sporočila (j, 2026-10-30).
+      if (image && meta?.flag === "photo") store.setMessageContent(userMsgId, withoutImages(userContent, PHOTO_REJECTED_TEXT), 2);
       let display = (note || "") + stripMeta(result.text);
       // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
@@ -507,7 +576,7 @@ export function createApp(store, opts = {}) {
               if (ok) store.db.prepare("UPDATE answer_cache SET verified = 1 WHERE key = ? AND text = ?").run(key, generic);
               else {
                 store.db.prepare("DELETE FROM answer_cache WHERE key = ? AND text = ? AND verified = 0").run(key, generic);
-                console.warn(`[evklid] odgovor ni shranjen za ponovno uporabo (${reason})`);
+                console.warn(`[evklid] odgovor ni shranjen za ponovno uporabo (${String(reason).slice(0, 120)})`);
               }
             });
           }
@@ -540,7 +609,7 @@ export function createApp(store, opts = {}) {
         const ids = cards.map((c) => c.id);
         settleLater(runVerify({ question: text, answer: cardsText, kind: "cards" }), (ok, reason) => {
           store.cards.settle(ids, ok);
-          if (!ok) console.warn(`[evklid] kartice niso shranjene (${reason})`);
+          if (!ok) console.warn(`[evklid] kartice niso shranjene (${String(reason).slice(0, 120)})`);
         });
       }
       // Nepreverjenih kartic učenec še ne vidi (tudi ne v obvestilu »dodane kartice«).
@@ -969,5 +1038,7 @@ export function createApp(store, opts = {}) {
     res.status(err.status || 400).json({ error: err.type === "entity.too.large" ? "Zahteva je prevelika." : "Zahteva ni v pravilni obliki." });
   });
 
+  // Šifriranje obstoječih vrstic in dnevno čiščenje po rokih hrambe (server/zasebnost.js).
+  startPrivacyJobs(store.db, { scheduler: opts.scheduler !== false && opts.privacyJobs !== false });
   return app;
 }

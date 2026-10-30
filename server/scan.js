@@ -33,7 +33,9 @@ export const READ_PROMPT =
   "a limit as lim_(x->a) f. Keep the student's letters for variables.\n" +
   '- "tex": the same problem in LaTeX.\n' +
   "Ignore task numbers (1., a)), instructions and crossed-out work. If the instruction says what to do (Razstavi / factor, Poenostavi / simplify, Izračunaj / evaluate, Odvajaj / differentiate), add \"goal\": factor|simplify|evaluate|derivative|solve.\n" +
-  'Return only JSON: {"problems":[{"text":"...","tex":"...","goal":"..."}]} (most prominent problem first, at most 6). If no maths is readable: {"problems":[]}.';
+  'Return only JSON: {"problems":[{"text":"...","tex":"...","goal":"..."}]} (most prominent problem first, at most 6). If no maths is readable: {"problems":[]}.\n' +
+  // Fotografije, ki niso učno gradivo, zavrnemo (j, 2026-10-30); slike strežnik nikoli ne shrani.
+  'If the image is not schoolwork (a face or person, selfie, ID or other personal document, private message, random scene), do not describe it and return only {"problems":[],"unrelated":true}.';
 
 export async function readMathPhoto({ imageBase64, mediaType = "image/jpeg" }) {
   const model = READ_MODEL();
@@ -53,7 +55,7 @@ export async function readMathPhoto({ imageBase64, mediaType = "image/jpeg" }) {
     ],
   });
   const data = jsonFrom(textOf(final)) || {};
-  return { problems: cleanProblems(data.problems), usage: final.usage, model: final.model || model };
+  return { problems: data.unrelated === true ? [] : cleanProblems(data.problems), unrelated: data.unrelated === true, usage: final.usage, model: final.model || model };
 }
 
 const GOALS = ["factor", "simplify", "evaluate", "derivative", "solve"];
@@ -156,7 +158,7 @@ export function mountScan(app, { loadStudent, usage, readFn = readMathPhoto, sol
       const out = await readFn({ imageBase64: m[2], mediaType: m[1] });
       if (out.mock) return res.json({ problems: [], mock: true });
       if (out.usage) usage?.log(s.id, out.model, out.usage, "skeniranje");
-      res.json({ problems: out.problems });
+      res.json({ problems: out.problems, ...(out.unrelated ? { unrelated: true } : {}) });
     } catch (err) {
       console.error("[evklid] skeniranje:", err?.message || err);
       res.status(502).json({ error: errorText(err, "Branje fotografije trenutno ne deluje. Nalogo vpiši s tipkami.") });

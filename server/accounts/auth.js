@@ -4,19 +4,68 @@ import crypto from "node:crypto";
 export const COOKIE = "sm_session";
 const SESSION_DAYS = 30;
 
-export function hashPassword(password) {
-  const salt = crypto.randomBytes(16);
-  const key = crypto.scryptSync(password, salt, 64);
-  return `scrypt$${salt.toString("base64")}$${key.toString("base64")}`;
+// Novi zapisi: scrypt2$N$r$p$sol$ključ (N = 2^17, r = 8, p = 1, priporočilo OWASP). Stari scrypt$sol$ključ
+// (Node privzeto, N = 2^14) še vedno preverimo in ob uspešni prijavi tiho zamenjamo (needsRehash).
+// scrypt teče asinhrono (ne ustavi strežnika); naenkrat največ en izračun, ker vsak porabi 128 MB pomnilnika.
+// Testi (node --test) uporabljajo N = 2^14, da ostanejo hitri; parametri so zapisani v vsakem zapisu.
+const COST = () => (process.env.NODE_TEST_CONTEXT ? { N: 2 ** 14, r: 8, p: 1 } : { N: 2 ** 17, r: 8, p: 1 });
+const KEY_LEN = 64;
+const maxmem = ({ N, r }) => 128 * N * r + 32 * 1024 * 1024;
+
+let running = Promise.resolve();
+function scrypt(password, salt, len, opts) {
+  const job = running.then(
+    () =>
+      new Promise((resolve, reject) =>
+        crypto.scrypt(String(password), salt, len, { ...opts, maxmem: maxmem(opts) }, (err, key) => (err ? reject(err) : resolve(key))),
+      ),
+  );
+  running = job.catch(() => {});
+  return job;
 }
 
-export function verifyPassword(password, stored) {
-  const [kind, salt, key] = String(stored).split("$");
-  if (kind !== "scrypt" || !salt || !key) return false;
-  const expected = Buffer.from(key, "base64");
-  const actual = crypto.scryptSync(password, Buffer.from(salt, "base64"), expected.length);
+export async function hashPassword(password, cost = COST()) {
+  const salt = crypto.randomBytes(16);
+  const key = await scrypt(password, salt, KEY_LEN, cost);
+  return `scrypt2$${cost.N}$${cost.r}$${cost.p}$${salt.toString("base64")}$${key.toString("base64")}`;
+}
+
+function parseHash(stored) {
+  const parts = String(stored || "").split("$");
+  if (parts[0] === "scrypt" && parts.length === 3) return { N: 2 ** 14, r: 8, p: 1, salt: parts[1], key: parts[2] };
+  if (parts[0] === "scrypt2" && parts.length === 6) {
+    const [N, r, p] = parts.slice(1, 4).map(Number);
+    // Razumne meje: zapis v bazi ne sme sprožiti izračuna, ki bi porabil ves pomnilnik.
+    if (!(N >= 2 ** 10 && N <= 2 ** 18 && (N & (N - 1)) === 0 && r >= 1 && r <= 8 && p >= 1 && p <= 2)) return null;
+    return { N, r, p, salt: parts[4], key: parts[5] };
+  }
+  return null;
+}
+
+export async function verifyPassword(password, stored) {
+  const h = parseHash(stored);
+  if (!h || !h.salt || !h.key) {
+    await scrypt("x", "x", KEY_LEN, COST()); // enak čas kot pravo preverjanje
+    return false;
+  }
+  const expected = Buffer.from(h.key, "base64");
+  if (!expected.length) return false;
+  const actual = await scrypt(password, Buffer.from(h.salt, "base64"), expected.length, { N: h.N, r: h.r, p: h.p });
   return crypto.timingSafeEqual(actual, expected);
 }
+
+// Ali je treba geslo ob naslednji uspešni prijavi znova zgostiti (starejši ali šibkejši zapis).
+export function needsRehash(stored) {
+  const h = parseHash(stored);
+  const c = COST();
+  return !h || !String(stored).startsWith("scrypt2$") || h.N < c.N || h.r !== c.r || h.p !== c.p;
+}
+
+// Namesto gesla, ki ga nihče ne pozna (gost, prijava z Apple): zapis, ki se nikoli ne ujema.
+export const unusablePasswordHash = () => `none$${crypto.randomBytes(16).toString("base64")}`;
+
+// Ob neobstoječem računu porabimo enak čas kot pri preverjanju gesla (brez razkritja, ali e-naslov obstaja).
+export const fakeVerify = () => verifyPassword("x", `scrypt2$${COST().N}$8$1$AAAAAAAAAAAAAAAAAAAAAA==$${Buffer.alloc(KEY_LEN).toString("base64")}`).then(() => false);
 
 export const randomToken = (bytes = 32) => crypto.randomBytes(bytes).toString("base64url");
 export const sha256 = (s) => crypto.createHash("sha256").update(String(s)).digest("hex");
@@ -82,6 +131,8 @@ export class Throttle {
     return h.count >= this.max;
   }
   fail(key) {
+    // Pomnilnik ne sme rasti brez meje (naključni e-naslovi): potekle zapise občasno počistimo.
+    if (this.hits.size > 20000) for (const [k, v] of this.hits) if (Date.now() - v.start > this.windowMs) this.hits.delete(k);
     const h = this.hits.get(key);
     if (!h || Date.now() - h.start > this.windowMs) this.hits.set(key, { start: Date.now(), count: 1 });
     else h.count++;

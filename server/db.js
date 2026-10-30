@@ -6,6 +6,7 @@ import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { DEFAULT_SETTINGS, normalizeSettings, normalizeWeaknessList } from "./settings.js";
 import { Flashcards } from "./flashcards.js";
+import { seal, unseal, sealJson, unsealJson, UNREADABLE } from "./crypto-polje.js";
 
 // Baza ima ime aplikacije (data/<ime>.db). Ob prvem zagonu po preimenovanju prepišemo najnovejšo
 // bazo s prejšnjim imenom (brand.json → legacy) v novo (VACUUM INTO zajame tudi neshranjeni WAL).
@@ -235,6 +236,14 @@ const parseStudent = (row) =>
     level_since: row.level_changed_at || row.created_at,
   };
 
+// Branje šifriranih polj; neberljiva vrstica dobi nadomestno besedilo (strežnik se ne ustavi).
+const openConv = (c) => c && { ...c, title: unseal(c.title) };
+export const openMessage = (m) => ({
+  ...m,
+  display_text: unseal(m.display_text),
+  api_content: unsealJson(m.api_content, [{ type: "text", text: UNREADABLE }]),
+});
+
 export class Store {
   constructor(db) {
     this.db = db;
@@ -282,23 +291,24 @@ export class Store {
     return this.db.prepare("DELETE FROM students WHERE id = ?").run(id).changes > 0;
   }
 
-  // --- pogovori ---
+  // --- pogovori (naslov je začetek učenčevega vprašanja, zato šifriran; server/crypto-polje.js) ---
   listConversations(studentId) {
     return this.db
       .prepare("SELECT * FROM conversations WHERE student_id = ? ORDER BY updated_at DESC, id DESC")
-      .all(studentId);
+      .all(studentId)
+      .map(openConv);
   }
   getConversation(id) {
-    return this.db.prepare("SELECT * FROM conversations WHERE id = ?").get(id);
+    return openConv(this.db.prepare("SELECT * FROM conversations WHERE id = ?").get(id));
   }
   createConversation(studentId, { pathTopic = null, title = "Nov pogovor" } = {}) {
     const r = this.db
       .prepare("INSERT INTO conversations (student_id, path_topic, title) VALUES (?, ?, ?)")
-      .run(studentId, pathTopic, title);
+      .run(studentId, pathTopic, seal(title));
     return this.getConversation(Number(r.lastInsertRowid));
   }
   renameConversation(id, title) {
-    this.db.prepare("UPDATE conversations SET title = ? WHERE id = ?").run(title, id);
+    this.db.prepare("UPDATE conversations SET title = ? WHERE id = ?").run(seal(title), id);
   }
   touchConversation(id) {
     this.db.prepare("UPDATE conversations SET updated_at = datetime('now') WHERE id = ?").run(id);
@@ -313,7 +323,7 @@ export class Store {
       .prepare(
         "INSERT INTO messages (conversation_id, role, api_content, display_text, has_image) VALUES (?, ?, ?, ?, ?)",
       )
-      .run(conversationId, role, JSON.stringify(apiContent), displayText, hasImage ? 1 : 0);
+      .run(conversationId, role, sealJson(apiContent), seal(displayText), hasImage ? 1 : 0);
     this.touchConversation(conversationId);
     return Number(r.lastInsertRowid);
   }
@@ -321,7 +331,11 @@ export class Store {
     return this.db
       .prepare("SELECT * FROM messages WHERE conversation_id = ? ORDER BY id")
       .all(conversationId)
-      .map((m) => ({ ...m, api_content: JSON.parse(m.api_content) }));
+      .map(openMessage);
+  }
+  // Zamenja vsebino uporabnikovega sporočila (npr. odstranjena fotografija, server/zasebnost.js).
+  setMessageContent(id, apiContent, hasImage) {
+    this.db.prepare("UPDATE messages SET api_content = ?, has_image = ? WHERE id = ?").run(sealJson(apiContent), hasImage, id);
   }
   // Zgodovina za API: dosledno zaporedje, brez sprememb že poslanih blokov.
   apiHistory(conversationId) {
@@ -361,7 +375,8 @@ export class Store {
          WHERE e.student_id = ? AND e.flag != 'none'
          ORDER BY e.id DESC LIMIT ?`,
       )
-      .all(studentId, limit);
+      .all(studentId, limit)
+      .map(openConv);
   }
   activityByDay(studentId, days = 30) {
     return this.db

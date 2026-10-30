@@ -5,7 +5,11 @@ import { BRAND, LEGACY } from "../brand.js";
 import { isLocalRequest } from "../feedback.js";
 import express from "express";
 import { migrateAccounts } from "./schema.js";
-import { hashPassword, verifyPassword, randomToken, sha256, readCookie, Sessions, setSessionCookie, clearSessionCookie, Throttle } from "./auth.js";
+import { hashPassword, verifyPassword, needsRehash, fakeVerify, unusablePasswordHash, randomToken, sha256, readCookie, Sessions, setSessionCookie, clearSessionCookie, Throttle } from "./auth.js";
+import { audit, detachAudit } from "../dnevnik-dostopov.js";
+import { openMessage } from "../db.js";
+import { openReport } from "../reports.js";
+import { unseal } from "../crypto-polje.js";
 import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, paidActive, isPremiumChild, isoIn, freeDailyQuestions, freeMonthlyPoolUsd, freeStudentMonthlyUsd, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION, GRACE_DAYS } from "./plans.js";
 import { Stripe, verifyWebhook } from "./stripe.js";
 import { Mailer, verifyEmail, resetEmail, referralRewardEmail, paymentFailedEmail } from "./email.js";
@@ -86,6 +90,11 @@ export function mountAccounts(app, store, opts = {}) {
   const locks = new ProfileLocks(db);
   const reauthHooks = []; // potrditev izbrisa računa brez gesla (prijava z Apple)
   const profileThrottle = new Throttle(10);
+  // Poskusi ugibanja z več naslovov IP: e-naslov 30 napačnih na uro, en naslov IP 100 na 15 minut,
+  // profil (geslo ima lahko samo 4 znake) in račun 30 na uro ne glede na IP.
+  const emailThrottle = new Throttle(30, 3600000);
+  const ipThrottle = new Throttle(100, 15 * 60000);
+  const acrossThrottle = new Throttle(30, 3600000);
   const json = express.json({ limit: "100kb" });
   const log = opts.log || console;
   const promoCfg = opts.promo ?? promoConfig(env);
@@ -398,7 +407,7 @@ export function mountAccounts(app, store, opts = {}) {
 
     const refCode = String(req.body?.referral_code || "").trim().toUpperCase();
     const referrer = refCode ? db.prepare("SELECT id FROM parents WHERE referral_code = ? AND is_guest = 0").get(refCode) : null;
-    const { id, verifyToken: token } = createParent(req, { email, passwordHash: hashPassword(password), name: req.body?.name, birthIso: v.birthIso, referrerId: referrer?.id ?? null });
+    const { id, verifyToken: token } = createParent(req, { email, passwordHash: await hashPassword(password), name: req.body?.name, birthIso: v.birthIso, referrerId: referrer?.id ?? null });
 
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(email, verifyEmail(url));
@@ -434,7 +443,7 @@ export function mountAccounts(app, store, opts = {}) {
         `INSERT INTO parents (email, password_hash, privacy_version, unsubscribe_token, referral_code, weekly_email, is_guest, guest_net)
          VALUES (?, ?, ?, ?, ?, 0, 1, ?)`,
       )
-      .run(`gost-${randomToken(12)}@gost.invalid`, hashPassword(randomToken()), PRIVACY_VERSION, randomToken(18), code, net);
+      .run(`gost-${randomToken(12)}@gost.invalid`, unusablePasswordHash(), PRIVACY_VERSION, randomToken(18), code, net);
     const id = Number(r.lastInsertRowid);
     guests.logCreated(net);
     const country = String(req.headers["cf-ipcountry"] || req.body?.country || "").toUpperCase();
@@ -452,10 +461,11 @@ export function mountAccounts(app, store, opts = {}) {
     const v = checkSignup(req, res);
     if (!v) return;
     const token = randomToken();
+    const hash = await hashPassword(v.password);
     db.prepare(
       `UPDATE parents SET email = ?, password_hash = ?, name = ?, is_admin = ?, verify_token_hash = ?, privacy_version = ?,
          privacy_accepted_at = datetime('now'), birth_date = ?, weekly_email = 1, is_guest = 0 WHERE id = ?`,
-    ).run(v.email, hashPassword(v.password), cleanText(req.body?.name, 60), 0, sha256(token), PRIVACY_VERSION, v.birthIso, p.id);
+    ).run(v.email, hash, cleanText(req.body?.name, 60), 0, sha256(token), PRIVACY_VERSION, v.birthIso, p.id);
     db.prepare("UPDATE consents SET parent_email = ? WHERE parent_id = ?").run(v.email, p.id);
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(v.email, verifyEmail(url));
@@ -506,13 +516,18 @@ export function mountAccounts(app, store, opts = {}) {
     res.json({ ok: true, ...(devLinks(req) ? { dev_verify_url: url } : {}) });
   });
 
-  app.post("/api/auth/login", json, (req, res) => {
+  app.post("/api/auth/login", json, async (req, res) => {
     const email = String(req.body?.email || "").trim().toLowerCase();
     const key = `${email}|${req.ip}`;
-    if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
+    if (throttle.blocked(key) || emailThrottle.blocked(email) || ipThrottle.blocked(req.ip)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
     const p = parentByEmail(email);
-    if (!p || !verifyPassword(String(req.body?.password || ""), p.password_hash)) {
+    const password = String(req.body?.password || "");
+    // Brez računa enako dolgo računamo, da čas odgovora ne izda, ali e-naslov obstaja.
+    if (!(p ? await verifyPassword(password, p.password_hash) : await fakeVerify())) {
       throttle.fail(key);
+      emailThrottle.fail(email);
+      ipThrottle.fail(req.ip);
+      audit(db, { req, parentId: p?.id ?? null, action: "login_fail", ok: false });
       return res.status(401).json({ error: "Napačen e-naslov ali geslo." });
     }
     const fromGuest = req.parent?.is_guest && req.parent.id !== p.id ? req.parent : null;
@@ -521,6 +536,8 @@ export function mountAccounts(app, store, opts = {}) {
       return res.status(409).json({ error: "Profila brez računa ni mogoče prenesti, ker v paketu tega računa ni prostora. Ustvari nov račun ali najprej izbriši podatke brez računa.", guest_conflict: true });
     }
     throttle.reset(key);
+    if (needsRehash(p.password_hash)) update(p.id, { password_hash: await hashPassword(password) }); // močnejši zapis gesla
+    audit(db, { req, parentId: p.id, action: "login" });
     const guest = fromGuest ? adoptGuest(fromGuest, p) : null;
     setSessionCookie(req, res, sessions.create(p.id));
     res.json({ parent: publicParent(p), ...(guest ? { guest_moved: guest.moved } : {}) });
@@ -528,6 +545,7 @@ export function mountAccounts(app, store, opts = {}) {
 
   app.post("/api/auth/logout", (req, res) => {
     if (req.parent) locks.lockDevice(childIds(req.parent.id), req.deviceId);
+    if (req.parent) audit(db, { req, parentId: req.parent.id, action: "logout" });
     sessions.destroy(readCookie(req));
     clearSessionCookie(req, res);
     // Gumb »Odjava« na zaslonu za geslo profila je navaden obrazec (deluje tudi, če skript odpove).
@@ -545,6 +563,7 @@ export function mountAccounts(app, store, opts = {}) {
     if (p) {
       const token = randomToken();
       update(p.id, { reset_token_hash: sha256(token), reset_expires_at: isoIn(1 / 24) });
+      audit(db, { req, parentId: p.id, action: "password_reset_request" });
       devUrl = `${baseUrl(req)}/?reset=${token}`;
       await sendMail(p.email, resetEmail(devUrl));
     }
@@ -552,19 +571,23 @@ export function mountAccounts(app, store, opts = {}) {
     res.json({ ok: true, ...(devLinks(req) && devUrl ? { dev_reset_url: devUrl } : {}) });
   });
 
-  app.post("/api/auth/reset", json, (req, res) => {
+  app.post("/api/auth/reset", json, async (req, res) => {
     const token = String(req.body?.token || "");
     const password = String(req.body?.password || "");
     if (password.length < 8) return res.status(400).json({ error: "Geslo mora imeti vsaj 8 znakov." });
     const p = token && db.prepare("SELECT * FROM parents WHERE reset_token_hash = ?").get(sha256(token));
     if (!p || Date.parse(p.reset_expires_at) < Date.now()) return res.status(400).json({ error: "Povezava je potekla. Zahtevajte novo." });
+    const hash = await hashPassword(password);
+    // Povezava velja enkrat: ob hkratnih zahtevah z istim žetonom uspe le prva.
+    if (!db.prepare("SELECT 1 FROM parents WHERE id = ? AND reset_token_hash = ?").get(p.id, p.reset_token_hash)) return res.status(400).json({ error: "Povezava je potekla. Zahtevajte novo." });
     update(p.id, {
-      password_hash: hashPassword(password),
+      password_hash: hash,
       reset_token_hash: null,
       reset_expires_at: null,
       email_verified_at: p.email_verified_at || new Date().toISOString(),
     });
-    sessions.destroyAll(p.id);
+    sessions.destroyAll(p.id); // vse seje (tudi napadalčeve) so po novem geslu neveljavne
+    audit(db, { req, parentId: p.id, action: "password_reset" });
     setSessionCookie(req, res, sessions.create(p.id));
     res.json({ ok: true });
   });
@@ -679,14 +702,17 @@ export function mountAccounts(app, store, opts = {}) {
   // Izvoz vseh podatkov (GDPR čl. 15 in 20).
   // Prenos vseh podatkov: s seje računa, ki si jo delijo profili na napravi, zato z geslom računa
   // (sicer bi brat prebral pogovore zaklenjenega sestrinega profila). Gost gesla nima.
-  app.post("/api/account/export", json, (req, res) => {
+  app.post("/api/account/export", json, async (req, res) => {
     const p = req.parent;
     const key = `export${p.id}|${req.ip}`;
-    if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
-    if (!p.is_guest && !verifyPassword(String(req.body?.password || ""), p.password_hash)) {
+    if (throttle.blocked(key) || acrossThrottle.blocked(`acct${p.id}`)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
+    if (!p.is_guest && !(await verifyPassword(String(req.body?.password || ""), p.password_hash))) {
       throttle.fail(key);
+      acrossThrottle.fail(`acct${p.id}`);
+      audit(db, { req, parentId: p.id, action: "export", ok: false });
       return res.status(401).json({ error: "Napačno geslo." });
     }
+    audit(db, { req, parentId: p.id, action: "export" });
     const parent = { ...p };
     for (const k of ["password_hash", "verify_token_hash", "reset_token_hash", "reset_expires_at", "unsubscribe_token"]) delete parent[k];
     const q = (sql, ...a) => db.prepare(sql).all(...a);
@@ -698,18 +724,29 @@ export function mountAccounts(app, store, opts = {}) {
         ...c,
         conversations: store.listConversations(c.id).map((conv) => ({
           ...conv,
-          messages: q("SELECT role, display_text AS text, has_image, created_at FROM messages WHERE conversation_id = ? ORDER BY id", conv.id),
+          // Šifrirana besedila (server/crypto-polje.js) gredo v izvoz odšifrirana.
+          messages: q("SELECT role, display_text, has_image > 0 AS has_image, created_at FROM messages WHERE conversation_id = ? ORDER BY id", conv.id).map((m) => {
+            const { display_text, ...rest } = openMessage(m);
+            return { role: rest.role, text: display_text, has_image: rest.has_image, created_at: rest.created_at };
+          }),
         })),
         events: q("SELECT subject, topic, error, mode, flag, created_at FROM events WHERE student_id = ?", c.id),
         topics: q("SELECT * FROM topic_state WHERE student_id = ?", c.id),
         tasks: q("SELECT topic_id, mode, level, attempts, hint_used, solved, first_try_correct, last_answer, created_at FROM tasks WHERE student_id = ?", c.id),
         xp: q("SELECT amount, reason, created_at FROM xp_events WHERE student_id = ?", c.id),
         // Prijave napak (server/reports.js): tudi opomba učenca so njegovi podatki.
-        reports: q("SELECT message_id, reason, note, question, answer, created_at FROM message_reports WHERE student_id = ?", c.id),
+        reports: q("SELECT message_id, reason, note, question, answer, created_at FROM message_reports WHERE student_id = ?", c.id).map(openReport),
+        flashcards: (() => {
+          try {
+            return q("SELECT front, back, subject, topic, source, box, due, reviews, created_at FROM flashcards WHERE student_id = ? AND verified = 1", c.id).map((f) => ({ ...f, front: unseal(f.front), back: unseal(f.back) }));
+          } catch {
+            return [];
+          }
+        })(),
         schedule: (() => {
           try {
             const r = db.prepare("SELECT data FROM schedules WHERE student_id = ?").get(c.id);
-            return r ? JSON.parse(r.data) : null;
+            return r ? JSON.parse(unseal(r.data)) : null;
           } catch {
             return null; // tabela urnikov še ne obstaja
           }
@@ -728,7 +765,13 @@ export function mountAccounts(app, store, opts = {}) {
       for (const fn of reauthHooks) if (await fn(req, p)) return true;
       return false;
     };
-    if (!p.is_guest && !verifyPassword(String(req.body?.password || ""), p.password_hash) && !(await reauth())) return res.status(401).json({ error: "Napačno geslo." });
+    const delKey = `delete${p.id}`;
+    if (acrossThrottle.blocked(delKey)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez eno uro." });
+    if (!p.is_guest && !(await verifyPassword(String(req.body?.password || ""), p.password_hash)) && !(await reauth())) {
+      acrossThrottle.fail(delKey);
+      audit(db, { req, parentId: p.id, action: "account_delete", ok: false });
+      return res.status(401).json({ error: "Napačno geslo." });
+    }
     // Naročnino iz App Store ali Google Play prekliče uporabnik v trgovini; Stripe je ne pozna.
     if (stripe.enabled && p.sub_id && PAID.has(p.sub_status) && (!p.sub_provider || p.sub_provider === "stripe")) {
       try {
@@ -741,6 +784,9 @@ export function mountAccounts(app, store, opts = {}) {
     guests.snapshotParent(p.id); // poraba gosta ostane šteta za omrežje
     db.prepare("DELETE FROM students WHERE parent_id = ?").run(p.id);
     db.prepare("DELETE FROM parents WHERE id = ?").run(p.id);
+    // Dnevnik dostopov ostane brez povezave na izbrisani račun (brez e-naslova).
+    audit(db, { req, parentId: p.id, action: "account_delete" });
+    detachAudit(db, p.id);
     clearSessionCookie(req, res);
     res.json({ ok: true });
   });
@@ -772,7 +818,7 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   // Odklep profila na tej napravi z geslom profila. Profil brez gesla: { password, set: true } nastavi prvo geslo.
-  app.post("/api/students/:id/unlock", json, (req, res) => {
+  app.post("/api/students/:id/unlock", json, async (req, res) => {
     const p = req.parent;
     const id = Number(req.params.id);
     if (p.is_guest) return res.json({ ok: true });
@@ -781,14 +827,17 @@ export function mountAccounts(app, store, opts = {}) {
       if (req.body?.set !== true) return res.status(409).json({ error: "Profil še nima gesla. Nastavi ga.", needs_password: true });
       const bad = checkProfilePassword(pw);
       if (bad) return res.status(400).json({ error: bad });
-      locks.setPassword(id, pw);
+      await locks.setPassword(id, pw);
       locks.unlock(id, req.deviceId, childIds(p.id));
+      audit(db, { req, parentId: p.id, action: "profile_password_set", target: `student:${id}` });
       return res.json({ ok: true });
     }
     const key = `${id}|${req.ip}`;
-    if (profileThrottle.blocked(key)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusi čez 15 minut." });
-    if (!locks.verify(id, pw)) {
+    if (profileThrottle.blocked(key) || acrossThrottle.blocked(`profile${id}`)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusi čez 15 minut." });
+    if (!(await locks.verify(id, pw))) {
       profileThrottle.fail(key);
+      acrossThrottle.fail(`profile${id}`);
+      audit(db, { req, parentId: p.id, action: "profile_unlock_fail", target: `student:${id}`, ok: false });
       return res.status(401).json({ error: "Napačno geslo profila." });
     }
     profileThrottle.reset(key);
@@ -797,22 +846,25 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   // Novo geslo profila (sprememba ali pozabljeno geslo): potrdi ga geslo računa ali sedanje geslo profila.
-  app.post("/api/account/profile-password", json, (req, res) => {
+  app.post("/api/account/profile-password", json, async (req, res) => {
     const p = req.parent;
     if (p.is_guest) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
     const id = Number(req.body?.student_id);
     if (!Number.isInteger(id) || ownerOf(id) !== p.id) return res.status(404).json({ error: "Učenec ne obstaja." });
     const key = `acct${p.id}|${req.ip}`;
-    if (profileThrottle.blocked(key)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusi čez 15 minut." });
+    if (profileThrottle.blocked(key) || acrossThrottle.blocked(`acct${p.id}`)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusi čez 15 minut." });
     const auth = String(req.body?.auth ?? "");
-    if (!verifyPassword(auth, p.password_hash) && !locks.verify(id, auth)) {
+    if (!(await verifyPassword(auth, p.password_hash)) && !(await locks.verify(id, auth))) {
       profileThrottle.fail(key);
+      acrossThrottle.fail(`acct${p.id}`);
+      audit(db, { req, parentId: p.id, action: "profile_password_set", target: `student:${id}`, ok: false });
       return res.status(401).json({ error: "Napačno geslo računa." });
     }
     const bad = checkProfilePassword(req.body?.password);
     if (bad) return res.status(400).json({ error: bad });
     profileThrottle.reset(key);
-    locks.setPassword(id, req.body.password);
+    await locks.setPassword(id, req.body.password);
+    audit(db, { req, parentId: p.id, action: "profile_password_set", target: `student:${id}` });
     res.json({ ok: true });
   });
 
@@ -827,7 +879,7 @@ export function mountAccounts(app, store, opts = {}) {
     res.json({ ok: true });
   });
 
-  app.post("/api/students", json, (req, res) => {
+  app.post("/api/students", json, async (req, res) => {
     const p = req.parent;
     if (!p.email_verified_at && !p.is_guest) return res.status(403).json({ error: "Najprej potrdite e-naslov (povezava je v e-pošti).", verify: true });
     // Število profilov = paket (preizkus: 2, brezplačno: 1). Menjava profila največ enkrat na 30 dni.
@@ -888,7 +940,7 @@ export function mountAccounts(app, store, opts = {}) {
     devices.logChange(p.id, "created", s.id);
     devices.use(s.id, req.deviceId, deviceLabel(req.get("user-agent")));
     if (profilePw) {
-      locks.setPassword(s.id, profilePw);
+      await locks.setPassword(s.id, profilePw);
       locks.unlock(s.id, req.deviceId, childIds(p.id));
     }
     res.status(201).json({ ...store.getStudent(s.id), birth_year: year });
