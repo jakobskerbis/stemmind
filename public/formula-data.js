@@ -489,7 +489,9 @@ export function annotateTex(tex, subject = override || subjectFn()) {
             const sub = readSub(end);
             const full = sub && `${own}_${normSub(sub.raw)}`;
             if (full && lookupSymbol(full, subject)) { out += guard(wrap(`s:${subject}:${full}`, tex.slice(i, sub.end))); i = sub.end; continue; }
-            if (lookupSymbol(own, subject)) { out += guard(wrap(`s:${subject}:${own}`, whole)); i = end; continue; }
+            // Pokončna enočrkovna enota (\frac{\text{kg}}{\text{m}^3}, km/\mathrm{h}, $\mathrm{A}$) in diferencial \mathrm{d}x nista oznaki lekcije (m ni masa).
+            const notOwn = own.length === 1 && (lookupUnit(own) || (own === "d" && /^\s*[A-Za-z\\]/.test(tex.slice(end))));
+            if (!notOwn && lookupSymbol(own, subject)) { out += guard(wrap(`s:${subject}:${own}`, whole)); i = end; continue; }
           }
         }
         // Indeks za besedilom (\mathrm{SE}_r, \text{H}_2) ostane del besedila.

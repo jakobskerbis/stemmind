@@ -91,3 +91,14 @@ test("oznake ne pokvarijo razmikov, opisa stolpcev in nezaprtih ukazov", () => {
     }, g);
   }
 });
+
+test("pokončna enota ali diferencial ni oznaka lekcije (kg/m³: m ni masa)", () => {
+  const { list } = parseSymbolsBlock("m | masa telesa | | kg\ns | lega | | m\nd | razdalja | | m\ne | Eulerjevo število | |");
+  withFormulaSubject("FIZ", () => {
+    const own = (tex) => codes(annotateTex(tex)).filter((c) => /^s:@/.test(c)).map((c) => c.split(":")[2]);
+    assert.deepEqual(own("\\frac{\\text{kg}}{\\text{m}^3}"), []);
+    assert.deepEqual(own("\\dfrac{\\mathrm{m}}{\\mathrm{s}}"), []);
+    assert.deepEqual(own("E\\,\\mathrm{d}x"), []);
+    assert.deepEqual(own("\\mathrm{e}^{-t} + m"), ["e", "m"]);
+  }, list);
+});
