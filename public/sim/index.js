@@ -147,6 +147,9 @@ export const ENGINES = {
   // tekmovanja: fizika in kemija
   vzvod: ["fiz-tek.js", "vzvod"], stojece: ["fiz-tek.js", "stojece"], kirchhoff: ["fiz-tek.js", "kirchhoff"], dimenzije: ["fiz-tek.js", "dimenzije"],
   hess: ["kem-tek.js", "hess"], pufer: ["kem-tek.js", "pufer"], vsepr: ["kem-tek.js", "vsepr"],
+  // virtualni laboratorij (modeli v lab-model.js, testi v test/laboratorij.test.js, opis v docs/laboratorij.md)
+  "lab-ohm": ["lab-fiz.js", "labOhm"],
+  "lab-co2": ["lab-kem.js", "labCo2"],
   // zbirka več simulacij (za mešane maturitetne naloge)
   zbirka: ["index.js", "zbirka"],
 };
