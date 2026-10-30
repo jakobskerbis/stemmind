@@ -5,13 +5,19 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-1-bromobutan z raztopino $\mathrm{NaOH}$ da butan-1-ol: brom zamenja skupina $\mathrm{OH}$. Če isti reagent dodaš 2-bromo-2-metilpropanu in segreješ, pa dobiš večinoma plin 2-metilpropen. Reagent je enak, produkt pa povsem druge vrste. Zakaj?
+Maja zbira stare vinilne plošče in opazi, da je prozorna barvna plošča, ki je leta stala na soncu ob oknu, porumenela. Plošče so iz PVC, polimera z atomom klora na vsakem drugem ogljiku verige. Toplota in svetloba iz verige počasi odcepljata $\mathrm{HCl}$, nastajajo dvojne vezi $\mathrm{C{=}C}$ in z njimi rumena barva: to je **eliminacija**. Vez $\mathrm{C{-}X}$ pa lahko tudi zamenja partnerja. 1-bromobutan z raztopino $\mathrm{NaOH}$ da butan-1-ol, ker brom zamenja skupina $\mathrm{OH}$; 2-bromo-2-metilpropan z istim reagentom ob segrevanju pa da večinoma plin 2-metilpropen. Reagent je enak, produkt pa povsem druge vrste.
 
-Ker lahko haloalkan reagira na štiri načine: z dvema substitucijama ($\mathrm{S_N1}$, $\mathrm{S_N2}$) in dvema eliminacijama ($\mathrm{E1}$, $\mathrm{E2}$). Kateri prevlada, določajo zgradba substrata, reagent, topilo in temperatura. Ko te mehanizme razumeš, znaš načrtovati sintezo alkoholov, etrov, nitrilov in alkenov in napovedati njihovo stereokemijo.
+Razlog je v tem, da haloalkan lahko reagira na štiri načine: z dvema substitucijama ($\mathrm{S_N1}$, $\mathrm{S_N2}$) in dvema eliminacijama ($\mathrm{E1}$, $\mathrm{E2}$). Kateri prevlada, določajo zgradba substrata, reagent, topilo in temperatura. Ko te mehanizme razumeš, znaš načrtovati sintezo alkoholov, etrov, nitrilov in alkenov in napovedati njihovo stereokemijo.
 
 ## Razlaga
 
-**1. Igralci.** V haloalkanu $\mathrm{R{-}X}$ je vez $\mathrm{C{-}X}$ polarna: ogljik je delno pozitiven ($\delta+$). Ta ogljik imenujemo **ogljik $\alpha$**, sosednje ogljike **ogljiki $\beta$**.
+### Izhodiščni primer
+
+Vzemi substrata iz uvoda: 1-bromobutan in 2-bromo-2-metilpropan, oba z $\mathrm{NaOH}$. Prvi da alkohol, drugi alken. Na koncu razlage boš oba izida napovedal z eno tabelo; do tja potrebuješ igralce, štiri mehanizme in pravilo izbire.
+
+### Igralci
+
+V haloalkanu $\mathrm{R{-}X}$ je vez $\mathrm{C{-}X}$ polarna: ogljik je delno pozitiven ($\delta+$). Ta ogljik imenujemo **ogljik $\alpha$**, sosednje ogljike **ogljiki $\beta$**.
 
 - **Nukleofil** ($\mathrm{Nu^-}$ ali $\mathrm{Nu{:}}$) ima prost elektronski par in napade ogljik $\delta+$. Primeri: $\mathrm{OH^-}$, $\mathrm{CH_3O^-}$, $\mathrm{CN^-}$, $\mathrm{I^-}$, $\mathrm{H_2O}$.
 - **Izstopajoča skupina** $\mathrm{X}$ odide z elektronskim parom vezi.
@@ -19,9 +25,13 @@ Ker lahko haloalkan reagira na štiri načine: z dvema substitucijama ($\mathrm{
 
 Pri **substituciji** nukleofil zamenja izstopajočo skupino. Pri **eliminaciji** odideta $\mathrm{H}$ z ogljika $\beta$ in $\mathrm{X}$ z ogljika $\alpha$, nastane dvojna vez $\mathrm{C{=}C}$. Eliminacija je obratna reakcija adicije, ki jo že poznaš.
 
-**2. Dobra izstopajoča skupina je šibka baza.** Ko odide, mora stabilno nositi negativni naboj. Vrstni red: $\mathrm{I^-} > \mathrm{Br^-} > \mathrm{Cl^-} \gg \mathrm{F^-}$. Skupina $\mathrm{OH^-}$ je močna baza in slaba izstopajoča skupina. Zato alkohol reagira šele v kislem: protonirani $\mathrm{R{-}OH_2^+}$ odda nevtralno vodo, ki je odlična izstopajoča skupina.
+### Dobra izstopajoča skupina je šibka baza
 
-**3. Mehanizem $\mathrm{S_N2}$** (substitucija, nukleofilna, bimolekularna). Poteče v **enem koraku**. Nukleofil napade ogljik $\alpha$ **s hrbtne strani**, nasproti izstopajoče skupine. V prehodnem stanju sta $\mathrm{Nu}$ in $\mathrm{X}$ delno vezana, ostale tri skupine pa ležijo v ravnini. Nato se skupine prevesijo kot dežnik v vetru: nastane **inverzija konfiguracije** (Waldnova inverzija).
+Ko odide, mora stabilno nositi negativni naboj. Vrstni red: $\mathrm{I^-} > \mathrm{Br^-} > \mathrm{Cl^-} \gg \mathrm{F^-}$. Skupina $\mathrm{OH^-}$ je močna baza in slaba izstopajoča skupina. Zato alkohol reagira šele v kislem: protonirani $\mathrm{R{-}OH_2^+}$ odda nevtralno vodo, ki je odlična izstopajoča skupina.
+
+### Mehanizem $\mathrm{S_N2}$: hrbtni napad
+
+Ime pomeni substitucijo, nukleofilno, bimolekularno. Reakcija poteče v **enem koraku**. Nukleofil napade ogljik $\alpha$ **s hrbtne strani**, nasproti izstopajoče skupine. V prehodnem stanju sta $\mathrm{Nu}$ in $\mathrm{X}$ delno vezana, ostale tri skupine pa ležijo v ravnini. Nato se skupine prevesijo kot dežnik v vetru: nastane **inverzija konfiguracije** (Waldnova inverzija).
 
 V koraku sodelujeta dve molekuli, zato je hitrost odvisna od obeh koncentracij:
 
@@ -29,7 +39,9 @@ $$v = k\,[\mathrm{RX}]\,[\mathrm{Nu}]$$
 
 Hrbtni napad ovirajo velike skupine na ogljiku $\alpha$. Hitrost $\mathrm{S_N2}$ pada: metil $>$ 1° $>$ 2° $\gg$ 3° (terciarni praktično ne reagira). Pospešijo jo močan nukleofil in **polarna aprotična topila** (aceton, DMSO, DMF), ki nukleofila ne obdajo z vodikovimi vezmi.
 
-**4. Mehanizem $\mathrm{S_N1}$** (unimolekularna). Poteče v **dveh korakih**:
+### Mehanizem $\mathrm{S_N1}$: prek karbokationa
+
+Unimolekularna substitucija poteče v **dveh korakih**:
 
 1. Počasi: vez $\mathrm{C{-}X}$ se sama heterolitsko pretrga, nastane karbokation in $\mathrm{X^-}$.
 2. Hitro: nukleofil napade ravninski karbokation.
@@ -46,11 +58,15 @@ Pri $\mathrm{S_N2}$ in pri $\mathrm{S_N1}$ podvojimo koncentracijo nukleofila. K
 Pri $\mathrm{S_N2}$ se hitrost podvoji, ker je $[\mathrm{Nu}]$ v hitrostnem zakonu. Pri $\mathrm{S_N1}$ ostane enaka: nukleofil sodeluje šele v hitrem drugem koraku, hitrost pa določa počasna ionizacija.
 :::
 
-**5. Mehanizem $\mathrm{E2}$.** En korak: baza odtrga $\mathrm{H}$ z ogljika $\beta$, elektroni vezi $\mathrm{C{-}H}$ tvorijo vez $\pi$, $\mathrm{X}$ hkrati odide. Hitrost je $v = k\,[\mathrm{RX}]\,[\mathrm{B}]$. Vodik in izstopajoča skupina morata biti **antiperiplanarna**: v isti ravnini, na nasprotnih straneh vezi $\mathrm{C{-}C}$. E2 pospešijo močne baze ($\mathrm{CH_3CH_2O^-}$, $\mathrm{OH^-}$, $\mathrm{(CH_3)_3CO^-}$) in višja temperatura.
+### Mehanizem $\mathrm{E2}$
+
+En korak: baza odtrga $\mathrm{H}$ z ogljika $\beta$, elektroni vezi $\mathrm{C{-}H}$ tvorijo vez $\pi$, $\mathrm{X}$ hkrati odide. Hitrost je $v = k\,[\mathrm{RX}]\,[\mathrm{B}]$. Vodik in izstopajoča skupina morata biti **antiperiplanarna**: v isti ravnini, na nasprotnih straneh vezi $\mathrm{C{-}C}$. E2 pospešijo močne baze ($\mathrm{CH_3CH_2O^-}$, $\mathrm{OH^-}$, $\mathrm{(CH_3)_3CO^-}$) in višja temperatura.
 
 Če je na voljo več ogljikov $\beta$, nastane več alkenov. **Zajcevo pravilo:** prevlada bolj substituiran alken, ker je stabilnejši. Izjema je velika baza, npr. kalijev *terc*-butoksid $\mathrm{(CH_3)_3COK}$: težko doseže notranji vodik in odtrga končnega, zato nastane manj substituiran alken (**Hofmannov produkt**).
 
-**6. Mehanizem $\mathrm{E1}$.** Prvi korak je enak kot pri $\mathrm{S_N1}$: nastane karbokation. Nato šibka baza (pogosto topilo) odtrga $\mathrm{H}$ z ogljika $\beta$. Hitrost je $v = k\,[\mathrm{RX}]$. $\mathrm{E1}$ in $\mathrm{S_N1}$ vedno tekmujeta, ker imata skupni vmesni delec. Višja temperatura premakne razmerje proti eliminaciji. Velja Zajcevo pravilo.
+### Mehanizem $\mathrm{E1}$
+
+Prvi korak je enak kot pri $\mathrm{S_N1}$: nastane karbokation. Nato šibka baza (pogosto topilo) odtrga $\mathrm{H}$ z ogljika $\beta$. Hitrost je $v = k\,[\mathrm{RX}]$. $\mathrm{E1}$ in $\mathrm{S_N1}$ vedno tekmujeta, ker imata skupni vmesni delec. Višja temperatura premakne razmerje proti eliminaciji. Velja Zajcevo pravilo.
 
 :::premisli
 Zakaj višja temperatura pospešuje eliminacijo bolj kot substitucijo? Preštej delce na levi in desni.
@@ -58,7 +74,7 @@ Zakaj višja temperatura pospešuje eliminacijo bolj kot substitucijo? Preštej 
 Pri eliminaciji iz dveh delcev ($\mathrm{RX}$ in baza) nastanejo trije (alken, $\mathrm{HB}$, $\mathrm{X^-}$), pri substituciji iz dveh dva. Eliminacija poveča entropijo ($\Delta S > 0$), člen $-T\Delta S$ v $\Delta G$ pa je z višjo temperaturo vedno bolj negativen.
 :::
 
-**7. Primerjava mehanizmov.**
+### Štirje mehanizmi v eni tabeli
 
 | mehanizem | hitrostni zakon | stereokemija | tipičen substrat |
 |---|---|---|---|
@@ -67,7 +83,9 @@ Pri eliminaciji iz dveh delcev ($\mathrm{RX}$ in baza) nastanejo trije (alken, $
 | $\mathrm{E2}$ | $k[\mathrm{RX}][\mathrm{B}]$ | anti H in X | 3°, 2°, 1° z veliko bazo |
 | $\mathrm{E1}$ | $k[\mathrm{RX}]$ | ni stereospecifična (Zajcev) | 3°, 2° |
 
-**8. Kako se odločiš.** Najprej poglej substrat, nato reagent:
+### Kako se odločiš
+
+Najprej poglej substrat, nato reagent:
 
 | substrat | močan Nu, šibka baza ($\mathrm{I^-}$, $\mathrm{CN^-}$) | močna baza ($\mathrm{RO^-}$, $\mathrm{OH^-}$) | šibek Nu/baza ($\mathrm{H_2O}$, $\mathrm{ROH}$) |
 |---|---|---|---|
@@ -76,6 +94,8 @@ Pri eliminaciji iz dveh delcev ($\mathrm{RX}$ in baza) nastanejo trije (alken, $
 | 3° | $\mathrm{S_N1}$ | $\mathrm{E2}$ | $\mathrm{S_N1}$ + $\mathrm{E1}$ |
 
 Pri terciarnem substratu $\mathrm{S_N2}$ nikoli ne poteče. Pri primarnem karbokation ne nastane, zato $\mathrm{S_N1}$ in $\mathrm{E1}$ odpadeta.
+
+Zdaj še izhodiščni primer. Kakšen je 1-bromobutan? Primaren. Kakšen reagent je $\mathrm{OH^-}$? Močna, a majhna baza. Tabela da $\mathrm{S_N2}$, zato nastane butan-1-ol. In 2-bromo-2-metilpropan? Terciaren, hrbtna stran je zaprta, z močno bazo ostane E2, ob segrevanju še toliko bolj. Nastane 2-metilpropen.
 
 ## Rešeni primeri
 
@@ -143,7 +163,7 @@ $v = k\,[\mathrm{RX}]\,[\mathrm{Nu}]$
 **Iščemo:** mehanizem in produkt
 
 :::formula
-Tabela iz točke 8: substrat, nato reagent.
+Tabela »Kako se odločiš«: substrat, nato reagent.
 :::
 
 **Rešitev:**
@@ -192,6 +212,8 @@ Kako s hitrostjo ločiš $\mathrm{S_N1}$ od $\mathrm{S_N2}$? Merimo začetno hit
 | 1 | $0{,}10$ | $0{,}10$ | $1{,}2 \cdot 10^{-6}$ |
 | 2 | $0{,}10$ | $0{,}20$ | $1{,}2 \cdot 10^{-6}$ |
 | 3 | $0{,}20$ | $0{,}10$ | $2{,}4 \cdot 10^{-6}$ |
+
+Postopek je podoben uglaševanju kitare: naenkrat zavrtiš le en vijak in poslušaš, kaj se spremeni. Tudi tu se poskusa, ki ju primerjamo, razlikujeta le v eni koncentraciji.
 
 1. Poskus 1 → 2: $[\mathrm{OH^-}]$ podvojimo, hitrost ostane enaka. Hidroksid ni v hitrostnem zakonu.
 2. Poskus 1 → 3: $[\mathrm{RX}]$ podvojimo, hitrost se podvoji. Reakcija je prvega reda glede na $\mathrm{RX}$.

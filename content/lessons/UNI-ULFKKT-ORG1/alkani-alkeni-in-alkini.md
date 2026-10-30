@@ -5,22 +5,34 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Metan v zemeljskem plinu stoji v jeklenki leta in se ne spremeni. Etilen (eten), ki ga oddajajo zoreče banane, pa v tovarni z vodo in kislinskim katalizatorjem da etanol, z bromom pa v nekaj sekundah razbarva rdečerjavo bromovico. Obe molekuli imata le ogljik in vodik. Zakaj je ena tako lena, druga pa tako reaktivna?
+Dvojna vez $\mathrm{C{=}C}$ je močnejša od enojne $\mathrm{C{-}C}$. Pa vendar metan v jeklenki zemeljskega plina leta stoji nespremenjen, etilen (eten), ki ga oddajajo zoreče banane, pa z bromom v nekaj sekundah razbarva rdečerjavo bromovico in v tovarni z vodo ob kislinskem katalizatorju da etanol. Obe molekuli imata le ogljik in vodik. Na tej »šibki« dvojni vezi sloni celo glasba: gramofonske plošče so iz PVC, ki nastane, ko se molekule kloroetena (vinilklorida) prek dvojnih vezi povežejo v dolge verige. Od tod ime »vinilka«.
 
-Odgovor je v vezeh. Alkani imajo samo vezi $\sigma$, alkeni in alkini pa tudi vezi $\pi$. Ko razumeš, kako reagira vez $\pi$ in kaj se dogaja z alkani na svetlobi, znaš napovedati **produkt** brez učenja na pamet: kateri izomer nastane pri adiciji $\mathrm{HBr}$, zakaj brom izbira drugače kot klor in kako iz alkina dobiš *cis*- ali *trans*-alken.
+Paradoks razreši zgradba vezi. Dvojna vez je ena vez $\sigma$ in ena vez $\pi$, vez $\pi$ pa je šibkejša in se pretrga prva. Alkani imajo samo vezi $\sigma$, alkeni in alkini pa tudi vezi $\pi$. Ko razumeš, kako reagira vez $\pi$ in kaj se dogaja z alkani na svetlobi, znaš napovedati **produkt** brez učenja na pamet: kateri izomer nastane pri adiciji $\mathrm{HBr}$, zakaj brom izbira drugače kot klor in kako iz alkina dobiš *cis*- ali *trans*-alken.
 
 ## Razlaga
 
-**1. Dve vrsti reaktivnosti.** Vez $\sigma$ $\mathrm{C{-}H}$ je močna in nepolarna, elektroni so tesno med jedroma. Alkani zato ne reagirajo s kislinami, bazami ali oksidanti pri sobni temperaturi. Reagirajo šele z zelo reaktivnimi delci z enim neparnim elektronom, z **radikali**. Vez $\pi$ v alkenu je šibkejša, njeni elektroni ležijo nad in pod ravnino molekule in so lahko dosegljivi. Alken je zato **nukleofil**: daje elektronski par **elektrofilu**, delcu, ki elektrone išče (npr. $\mathrm{H^+}$, $\mathrm{Br_2}$).
+### Slika: kje ležijo elektroni
 
-**2. Elektrofilna adicija $\mathrm{HBr}$.** Pri **adiciji** se dva delca vežeta na oba ogljika dvojne vezi, vez $\pi$ izgine. Mehanizem ima dva koraka:
+**Dve vrsti reaktivnosti.** Vez $\sigma$ $\mathrm{C{-}H}$ je močna in nepolarna, elektroni so tesno med jedroma. Alkani zato ne reagirajo s kislinami, bazami ali oksidanti pri sobni temperaturi. Reagirajo šele z zelo reaktivnimi delci z enim neparnim elektronom, z **radikali**. Vez $\pi$ v alkenu je šibkejša, njeni elektroni ležijo nad in pod ravnino molekule in so lahko dosegljivi. Alken je zato **nukleofil**: daje elektronski par **elektrofilu**, delcu, ki elektrone išče (npr. $\mathrm{H^+}$, $\mathrm{Br_2}$).
+
+```
+  alkan (le σ)                 alken (σ + π)
+                                 ░░░ oblak π ░░░
+  H3C ── CH3                   H2C ═══════ CH2
+  elektroni tesno med jedroma    ░░░ oblak π ░░░
+  → dosežejo jih le radikali    → dosegljiv elektrofilom
+```
+
+### Adicije na alkene
+
+**Elektrofilna adicija $\mathrm{HBr}$.** Pri **adiciji** se dva delca vežeta na oba ogljika dvojne vezi, vez $\pi$ izgine. Mehanizem ima dva koraka:
 
 1. Elektroni $\pi$ napadejo $\mathrm{H}$ iz $\mathrm{HBr}$. Nastane vez $\mathrm{C{-}H}$ in **karbokation**: ogljik s tremi vezmi, prazno orbitalo $p$ in nabojem $+$ ($sp^2$, ravninski).
 2. Bromidni ion $\mathrm{Br^-}$ s svojim nevezanim parom napade karbokation. Nastane vez $\mathrm{C{-}Br}$.
 
 Prvi korak je počasen, ker nastane nabit delec. Ta korak določa hitrost in **odloči, kateri produkt nastane**.
 
-**3. Stabilnost karbokationov.** Alkilne skupine okoli pozitivnega ogljika ga stabilizirajo. Elektroni sosednjih vezi $\mathrm{C{-}H}$ in $\mathrm{C{-}C}$ se delno razširijo v prazno orbitalo $p$ (**hiperkonjugacija**), alkilne skupine pa še nekoliko potiskajo elektrone proti ogljiku (induktivni učinek). Več alkilnih skupin pomeni stabilnejši kation:
+**Stabilnost karbokationov.** Alkilne skupine okoli pozitivnega ogljika ga stabilizirajo. Elektroni sosednjih vezi $\mathrm{C{-}H}$ in $\mathrm{C{-}C}$ se delno razširijo v prazno orbitalo $p$ (**hiperkonjugacija**), alkilne skupine pa še nekoliko potiskajo elektrone proti ogljiku (induktivni učinek). Več alkilnih skupin pomeni stabilnejši kation:
 
 | karbokation | primer | št. alkilnih skupin | stabilnost |
 |---|---|---|---|
@@ -31,7 +43,7 @@ Prvi korak je počasen, ker nastane nabit delec. Ta korak določa hitrost in **o
 
 Enako zaporedje $3^\circ > 2^\circ > 1^\circ > \text{metil}$ velja za radikale.
 
-**4. Markovnikovo pravilo.** Pri propenu $\mathrm{CH_3CH{=}CH_2}$ se $\mathrm{H^+}$ lahko veže na C1 ali na C2:
+**Markovnikovo pravilo.** Pri propenu $\mathrm{CH_3CH{=}CH_2}$ se $\mathrm{H^+}$ lahko veže na C1 ali na C2:
 
 - $\mathrm{H}$ na C1 (končni $\mathrm{CH_2}$): pozitivni naboj ostane na C2, kation je **sekundarni**.
 - $\mathrm{H}$ na C2: naboj je na C1, kation je **primarni**.
@@ -44,24 +56,38 @@ Na 2-metilpropen $\mathrm{(CH_3)_2C{=}CH_2}$ adiramo $\mathrm{HCl}$. Napovej gla
 2-kloro-2-metilpropan, $\mathrm{(CH_3)_3CCl}$. Če se $\mathrm{H}$ veže na $\mathrm{CH_2}$, nastane terciarni kation; druga možnost bi dala primarni kation, ki je veliko manj stabilen.
 :::
 
-**5. Druge adicije na alkene.** Vse sledijo isti logiki ali pa imajo poseben razlog, da ji ne:
+**Druge adicije na alkene.** Vse sledijo isti logiki ali pa imajo poseben razlog, da ji ne:
 
 - **Hidratacija** ($\mathrm{H_2O}$, kislinski katalizator $\mathrm{H_2SO_4}$): prek karbokationa, markovnikovski alkohol. Propen da propan-2-ol.
 - **Halogeniranje** ($\mathrm{Br_2}$ ali $\mathrm{Cl_2}$): namesto prostega karbokationa nastane trikotni **bromonijev ion**. $\mathrm{Br^-}$ ga napade z nasprotne strani, zato se atoma broma vežeta **anti** (na nasprotni strani ravnine). Iz ciklopentena nastane *trans*-1,2-dibromociklopentan kot racemat. Ta reakcija je test na dvojno vez: bromovica se razbarva.
 - **Hidrogeniranje** ($\mathrm{H_2}$, kovinski katalizator Pt, Pd ali Ni): oba vodika prideta s površine kovine na isto stran, adicija je **syn**. Nastane alkan.
-- **$\mathrm{HBr}$ s peroksidi** ($\mathrm{ROOR}$, svetloba): radikalski mehanizem, produkt je **antimarkovnikovski** (razlaga v točki 8).
+- **$\mathrm{HBr}$ s peroksidi** ($\mathrm{ROOR}$, svetloba): radikalski mehanizem, produkt je **antimarkovnikovski** (razlaga spodaj, pri radikalskih reakcijah).
 
 Kadar karbokation nastane na ravninskem ogljiku, ga nukleofil lahko napade z obeh strani. Če pri tem nastane stereocenter, dobimo racemat.
 
-**6. Alkini.** Trojna vez ima dve vezi $\pi$, zato alkin lahko adira **dvakrat**. S prebitkom $\mathrm{HBr}$ iz propina nastane 2,2-dibromopropan (obakrat po Markovnikovu). Pri hidrogeniranju izbiramo katalizator:
+### Alkini
 
-- $\mathrm{H_2}$, Pt ali Pd na oglju: do konca, nastane alkan.
-- $\mathrm{H_2}$, **Lindlarjev katalizator** (zastrupljen Pd): ustavi se pri alkenu, syn adicija da ***cis*-alken**.
-- $\mathrm{Na}$ v tekočem $\mathrm{NH_3}$: ***trans*-alken**.
+Trojna vez ima dve vezi $\pi$, zato alkin lahko adira **dvakrat**. S prebitkom $\mathrm{HBr}$ iz propina nastane 2,2-dibromopropan (obakrat po Markovnikovu). Pri hidrogeniranju izbiramo katalizator:
+
+| reagent | kje se ustavi | produkt |
+|---|---|---|
+| $\mathrm{H_2}$, Pt ali Pd na oglju | gre do konca | alkan |
+| $\mathrm{H_2}$, **Lindlarjev katalizator** (zastrupljen Pd) | pri alkenu, syn adicija | ***cis*-alken** |
+| $\mathrm{Na}$ v tekočem $\mathrm{NH_3}$ | pri alkenu | ***trans*-alken** |
 
 Hidratacija alkina (z $\mathrm{H_2SO_4}$ in $\mathrm{Hg^{2+}}$) najprej da **enol** (OH na ogljiku dvojne vezi), ki se takoj pretvori v keton. Iz propina nastane propanon.
 
-**7. Radikalsko halogeniranje alkanov.** Metan in klor v temi ne reagirata. Na svetlobi nastane klorometan in $\mathrm{HCl}$. Gre za **verižno reakcijo** v treh fazah:
+### Radikalske reakcije
+
+**Radikalsko halogeniranje alkanov.** Metan in klor v temi ne reagirata. Na svetlobi nastane klorometan in $\mathrm{HCl}$. Veriga se vrti v krogu:
+
+```
+        Cl·  ── + CH4 ──►  HCl + CH3·
+         ▲                      │
+         └── CH3Cl ◄── + Cl2 ───┘
+```
+
+Gre za **verižno reakcijo** v treh fazah:
 
 1. **Iniciacija:** svetloba razcepi $\mathrm{Cl_2}$ **homolitsko** (vsak atom dobi en elektron): $\mathrm{Cl_2} \rightarrow 2\,\mathrm{Cl\cdot}$.
 2. **Propagacija** (ponavlja se tisočkrat):
@@ -85,7 +111,7 @@ Zakaj je brom toliko bolj izbirčen od klora? Namig: korak $\mathrm{X\cdot} + \m
 Pri bromu je prehodno stanje pozno in podobno radikalu $\mathrm{R\cdot}$, zato se razlika v stabilnosti radikalov ($3^\circ > 2^\circ > 1^\circ$) skoraj v celoti pozna v hitrosti. Pri kloru je prehodno stanje zgodnje, podobno izhodnemu alkanu, zato so razlike majhne (Hammondov postulat).
 :::
 
-**8. Antimarkovnikovska adicija $\mathrm{HBr}$.** S peroksidi nastane radikal $\mathrm{Br\cdot}$. Ta se veže prvi, in to na končni $\mathrm{CH_2}$, ker tako nastane stabilnejši sekundarni radikal. Nato radikal odtrga $\mathrm{H}$ iz $\mathrm{HBr}$. Iz propena nastane **1-bromopropan**. Pravilo »prek najstabilnejšega vmesnega delca« velja tudi tu. To deluje samo s $\mathrm{HBr}$, s $\mathrm{HCl}$ in $\mathrm{HI}$ ne.
+**Antimarkovnikovska adicija $\mathrm{HBr}$.** S peroksidi nastane radikal $\mathrm{Br\cdot}$. Ta se veže prvi, in to na končni $\mathrm{CH_2}$, ker tako nastane stabilnejši sekundarni radikal. Nato radikal odtrga $\mathrm{H}$ iz $\mathrm{HBr}$. Iz propena nastane **1-bromopropan**. Pravilo »prek najstabilnejšega vmesnega delca« velja tudi tu. To deluje samo s $\mathrm{HBr}$, s $\mathrm{HCl}$ in $\mathrm{HI}$ ne.
 
 ## Rešeni primeri
 

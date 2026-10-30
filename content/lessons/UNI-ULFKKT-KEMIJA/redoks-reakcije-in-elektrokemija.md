@@ -5,17 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Redoks reakcije so reakcije, pri katerih se elektroni prenašajo z enega delca na drugega. Med njimi so gorenje, rjavenje železa, fotosinteza in celično dihanje, beljenje s klorom, delovanje baterij in pridobivanje kovin iz rud. Ko prenos elektronov speljemo skozi žico, dobimo električni tok: to je **elektrokemija**. Galvanski členi (baterije, akumulatorji, gorivne celice) pretvarjajo kemijsko energijo v električno, pri **elektrolizi** pa z električno energijo poganjamo reakcije, ki same ne bi potekle (pridobivanje aluminija, klora, galvanizacija).
-
-V laboratoriju redoks reakcije uporabljamo za titracije (permanganometrija, jodometrija), elektrode za merjenje pH in koncentracij ionov, v biologiji pa redoks potenciali povedo, v katero smer tečejo elektroni v dihalni verigi.
-
-V tej lekciji se naučiš:
-
-- določiti **oksidacijska števila** in prepoznati oksidacijo, redukcijo, oksidant in reducent,
-- **urediti redoks enačbe** z metodo polreakcij v kislem in bazičnem,
-- razumeti **galvanski člen** in **standardne elektrodne potenciale**,
-- izračunati napetost člena, Gibbsovo energijo in vpliv koncentracije (Nernstova enačba),
-- računati z elektrolizo (Faradayev zakon).
+Alkalna baterija v kuhinjski tehtnici da $1{,}5\,\mathrm{V}$, litijev akumulator v telefonu $3{,}7\,\mathrm{V}$. Zakaj ravno toliko in ne $5\,\mathrm{V}$? Napetosti ne določa velikost baterije, ampak snovi, ki si izmenjata elektrone. Isti prenos elektronov počrni srebrno žličko ob jajčnem rumenjaku in jo spet očisti, ko jo v vroči vodi s sodo položiš na aluminijasto folijo, aluminij za to folijo pa pridobivajo z elektrolizo. Z lestvico elektrodnih potencialov izračunaš napetost člena, smer reakcije in maso kovine, ki se izloči; v laboratoriju pa na istih zakonih slonijo titracije s permanganatom in pH-meter.
 
 ## Razlaga
 
@@ -51,7 +41,16 @@ V **bazičnem** postopamo enako, nato pa na obe strani dodamo toliko $\mathrm{OH
 
 Preizkus naboja: levo $-2 - 6 = -8$, desno $-6 - 2 = -8$.
 
-**4. Galvanski člen.** Če cinkovo ploščico potopimo v raztopino $\mathrm{Cu^{2+}}$, se na njej izloča baker, cink pa se raztaplja. Če polreakciji ločimo v dve posodi, povezani z žico in **solnim mostom**, tečejo elektroni skozi žico: dobimo **Daniellov člen**.
+**4. Galvanski člen.** Začni s štirimi preprostimi poskusi: kovino potopiš v raztopino ionov druge kovine.
+
+| Kovina v raztopini | Kaj opazimo |
+|---|---|
+| cink v $\mathrm{Cu^{2+}}$ | na cinku se izloča baker, cink se raztaplja |
+| železen žebelj v $\mathrm{Cu^{2+}}$ | žebelj se prevleče z bakrom |
+| baker v $\mathrm{Ag^+}$ | na bakru rastejo kristali srebra |
+| baker v $\mathrm{Zn^{2+}}$ | nič |
+
+Vzorec: kovina odda elektrone ionom »plemenitejše« kovine, obratno pa ne gre. Lestvico, ki to napove vnaprej, da razdelek 5. Če polreakciji pri cinku in bakru ločimo v dve posodi, povezani z žico in **solnim mostom**, tečejo elektroni skozi žico: dobimo **Daniellov člen**.
 
 - **Anoda** je elektroda, kjer poteka **oksidacija** ($\mathrm{Zn \to Zn^{2+} + 2\,e^-}$); v galvanskem členu je negativni pol.
 - **Katoda** je elektroda, kjer poteka **redukcija** ($\mathrm{Cu^{2+} + 2\,e^- \to Cu}$); v galvanskem členu je pozitivni pol.
@@ -73,7 +72,13 @@ Zapis člena: $\mathrm{Zn(s)\,|\,Zn^{2+}(aq)\,||\,Cu^{2+}(aq)\,|\,Cu(s)}$, anoda
 | $\mathrm{Fe^{2+} + 2\,e^- \to Fe}$ | $-0{,}44$ |
 | $\mathrm{Zn^{2+} + 2\,e^- \to Zn}$ | $-0{,}76$ |
 
-Večji $E^\circ$ pomeni močnejši **oksidant** (levo zgoraj, $\mathrm{MnO_4^-}$), manjši $E^\circ$ pa močnejši **reducent** (desno spodaj, $\mathrm{Zn}$).
+Večji $E^\circ$ pomeni močnejši **oksidant** (levo zgoraj, $\mathrm{MnO_4^-}$), manjši $E^\circ$ pa močnejši **reducent** (desno spodaj, $\mathrm{Zn}$). Tako lestvica pojasni vse štiri poskuse zgoraj.
+
+:::premisli
+Ali se srebrna žlička v raztopini $\mathrm{Cu^{2+}}$ prevleče z bakrom? Napovej iz preglednice.
+---
+Ne. $\mathrm{Cu^{2+}}$ ($+0{,}34\,\mathrm{V}$) je šibkejši oksidant od $\mathrm{Ag^+}$ ($+0{,}80\,\mathrm{V}$), zato srebru ne more odvzeti elektronov. Poteče le obratno: baker v raztopini $\mathrm{Ag^+}$ izloča srebro, kot kaže tretji poskus.
+:::
 
 **6. Napetost člena in spontanost.**
 
@@ -84,6 +89,12 @@ Elektrodnih potencialov **ne množimo** s koeficienti, ker so intenzivne količi
 $$\Delta_\mathrm{r}G^\circ = -zFE^\circ_\text{člena},$$
 
 kjer je $z$ število prenesenih elektronov in $F = 96\,485\,\mathrm{C/mol}$ Faradayeva konstanta. Reakcija je spontana, če je $E_\text{člena} > 0$ ($\Delta_\mathrm{r}G < 0$).
+
+:::premisli
+Alkalna baterija velikosti D je nekajkrat težja od baterije AAA. Katera ima večjo napetost?
+---
+Obe imata okoli $1{,}5\,\mathrm{V}$. Napetost je odvisna le od snovi na elektrodah (razlike potencialov), ne od njihove količine. Večja baterija ima več snovi, zato da več naboja in dlje zdrži. Iz istega razloga $E^\circ$ ne množimo s koeficienti; z $z$ se poveča le $\Delta_\mathrm{r}G^\circ = -zFE^\circ$.
+:::
 
 **7. Nernstova enačba.** Pri nestandardnih koncentracijah je
 
@@ -112,16 +123,16 @@ Vsota oksidacijskih števil vseh atomov = naboj delca.
 
 **Rešitev:**
 
-1. $\mathrm{H_2SO_4}$: $2 \cdot (+1) + x + 4 \cdot (-2) = 0$, $x = +6$.
-2. $\mathrm{KMnO_4}$: $+1 + x + 4 \cdot (-2) = 0$, $x = +7$.
-3. $\mathrm{Cr_2O_7^{2-}}$: $2x + 7 \cdot (-2) = -2$, $2x = 12$, $x = +6$.
-4. $\mathrm{NH_4^+}$: $x + 4 \cdot (+1) = +1$, $x = -3$.
+1. $\mathrm{H_2SO_4}$: $2 \cdot (+1) + x + 4 \cdot (-2) = 0$, $x = +6$ (H ima $+1$, O $-2$, molekula je nevtralna).
+2. $\mathrm{KMnO_4}$: $+1 + x + 4 \cdot (-2) = 0$, $x = +7$ (K je alkalijska kovina, zato $+1$).
+3. $\mathrm{Cr_2O_7^{2-}}$: $2x + 7 \cdot (-2) = -2$, $2x = 12$, $x = +6$ (vsota je enaka naboju iona, $-2$, ne $0$).
+4. $\mathrm{NH_4^+}$: $x + 4 \cdot (+1) = +1$, $x = -3$ (dušik je bolj elektronegativen od vodika, zato je negativen).
 5. $\mathrm{H_2O_2}$: $2 \cdot (+1) + 2x = 0$, $x = -1$ (peroksid).
 6. Odgovor: S $+6$, Mn $+7$, Cr $+6$, N $-3$, O v vodikovem peroksidu $-1$.
 
 ### Primer 2
 
-Uredi enačbo reakcije, s katero permanganatni ion v kisli raztopini oksidira železove(II) ione: $\mathrm{MnO_4^- + Fe^{2+} \to Mn^{2+} + Fe^{3+}}$. Ali reakcija pri standardnih pogojih poteče spontano? $E^\circ(\mathrm{MnO_4^-/Mn^{2+}}) = +1{,}51\,\mathrm{V}$, $E^\circ(\mathrm{Fe^{3+}/Fe^{2+}}) = +0{,}77\,\mathrm{V}$.
+Železo v obogatenih žitnih kosmičih določijo tako, da vzorec raztopijo v kislini in titrirajo s permanganatom. Uredi enačbo reakcije, s katero permanganatni ion v kisli raztopini oksidira železove(II) ione: $\mathrm{MnO_4^- + Fe^{2+} \to Mn^{2+} + Fe^{3+}}$. Ali reakcija pri standardnih pogojih poteče spontano? $E^\circ(\mathrm{MnO_4^-/Mn^{2+}}) = +1{,}51\,\mathrm{V}$, $E^\circ(\mathrm{Fe^{3+}/Fe^{2+}}) = +0{,}77\,\mathrm{V}$.
 
 **Podatki:** neurejena enačba $\mathrm{MnO_4^- + Fe^{2+} \to Mn^{2+} + Fe^{3+}}$, kislo okolje, $E^\circ(\mathrm{MnO_4^-/Mn^{2+}}) = +1{,}51\,\mathrm{V}$, $E^\circ(\mathrm{Fe^{3+}/Fe^{2+}}) = +0{,}77\,\mathrm{V}$
 **Iščemo:** urejeno enačbo in $E^\circ_\text{člena}$
@@ -132,9 +143,9 @@ Metoda polreakcij (O z $\mathrm{H_2O}$, H z $\mathrm{H^+}$, naboj z $\mathrm{e^-
 
 **Rešitev:**
 
-1. Oksidacija: $\mathrm{Fe^{2+} \to Fe^{3+} + e^-}$.
+1. Oksidacija: $\mathrm{Fe^{2+} \to Fe^{3+} + e^-}$ (oksidacijsko število železa naraste z $+2$ na $+3$, odda en elektron).
 2. Redukcija: $\mathrm{MnO_4^- \to Mn^{2+}}$. Kisik uredimo s $4\,\mathrm{H_2O}$ na desni, vodik z $8\,\mathrm{H^+}$ na levi: $\mathrm{MnO_4^- + 8\,H^+ \to Mn^{2+} + 4\,H_2O}$. Naboj levo $+7$, desno $+2$, zato dodamo $5\,\mathrm{e^-}$ na levo: $\mathrm{MnO_4^- + 8\,H^+ + 5\,e^- \to Mn^{2+} + 4\,H_2O}$.
-3. Oksidacijo pomnožimo s $5$ in seštejemo: $\mathrm{MnO_4^- + 8\,H^+ + 5\,Fe^{2+} \to Mn^{2+} + 5\,Fe^{3+} + 4\,H_2O}$.
+3. Oksidacijo pomnožimo s $5$, da je oddanih elektronov toliko kot sprejetih, in seštejemo: $\mathrm{MnO_4^- + 8\,H^+ + 5\,Fe^{2+} \to Mn^{2+} + 5\,Fe^{3+} + 4\,H_2O}$.
 4. Preizkus naboja: levo $-1 + 8 + 10 = +17$, desno $+2 + 15 = +17$. Atomi: Mn $1$, Fe $5$, O $4$, H $8$ na obeh straneh.
 5. Napetost: katoda je permanganat (redukcija), anoda železo: $E^\circ = 1{,}51 - 0{,}77 = 0{,}74\,\mathrm{V} > 0$.
 6. Odgovor: $\mathrm{MnO_4^- + 8\,H^+ + 5\,Fe^{2+} \to Mn^{2+} + 5\,Fe^{3+} + 4\,H_2O}$; reakcija je spontana ($E^\circ = 0{,}74\,\mathrm{V}$), zato jo uporabljamo za titracijo železa.
@@ -152,12 +163,36 @@ $E^\circ = E^\circ_\text{katode} - E^\circ_\text{anode}$, $\quad \Delta_\mathrm{
 
 **Rešitev:**
 
-1. $E^\circ = 0{,}34 - (-0{,}76) = 1{,}10\,\mathrm{V}$.
+1. $E^\circ = 0{,}34 - (-0{,}76) = 1{,}10\,\mathrm{V}$ (baker ima višji potencial, zato je katoda).
 2. $\Delta_\mathrm{r}G^\circ = -2 \cdot 96\,485\,\mathrm{C/mol} \cdot 1{,}10\,\mathrm{V} = -2{,}12 \cdot 10^5\,\mathrm{J/mol} = -212\,\mathrm{kJ/mol}$ ($1\,\mathrm{C \cdot V} = 1\,\mathrm{J}$).
 3. Kvocient: $Q = 0{,}010/1{,}0 = 0{,}010$, $\log Q = -2{,}00$ (trdnih kovin ne pišemo).
 4. $E = 1{,}10\,\mathrm{V} - \dfrac{0{,}0592\,\mathrm{V}}{2} \cdot (-2{,}00) = 1{,}10 + 0{,}0592 = 1{,}16\,\mathrm{V}$.
-5. $\log K = 2 \cdot 1{,}10/0{,}0592 = 37{,}2$, $K \approx 1{,}5 \cdot 10^{37}$.
+5. V ravnotežju je $E = 0$ in $Q = K$: $\log K = 2 \cdot 1{,}10/0{,}0592 = 37{,}2$, $K \approx 1{,}5 \cdot 10^{37}$.
 6. Odgovor: $E^\circ = 1{,}10\,\mathrm{V}$, $\Delta_\mathrm{r}G^\circ \approx -212\,\mathrm{kJ/mol}$, pri danih koncentracijah $E \approx 1{,}16\,\mathrm{V}$ (manj produkta $\mathrm{Zn^{2+}}$ poveča napetost), $K \approx 1{,}5 \cdot 10^{37}$: reakcija praktično poteče do konca.
+
+### Primer 4 – zdaj ti
+
+Jedilni pribor posrebrijo v raztopini srebrovih ionov $\mathrm{Ag^+}$. Vilice so katoda, skozi raztopino teče tok $0{,}500\,\mathrm{A}$ $20{,}0\,\mathrm{min}$. Koliko srebra se izloči na vilicah? $M(\mathrm{Ag}) = 107{,}87\,\mathrm{g/mol}$, $F = 96\,485\,\mathrm{C/mol}$.
+
+**Podatki:** $I = 0{,}500\,\mathrm{A}$, $t = 20{,}0\,\mathrm{min}$, $M(\mathrm{Ag}) = 107{,}87\,\mathrm{g/mol}$, $F = 96\,485\,\mathrm{C/mol}$, katodna reakcija $\mathrm{Ag^+ + e^- \to Ag}$
+**Iščemo:** maso izločenega srebra $m(\mathrm{Ag})$
+
+:::formula
+$Q = I\,t$, $\quad n(\mathrm{e^-}) = \dfrac{Q}{F}$, $\quad m = \dfrac{I\,t\,M}{z\,F}$
+:::
+
+**Rešitev:**
+
+1. Na katodi: $\mathrm{Ag^+ + e^- \to Ag}$, zato je $z = 1$ (vsak ion sprejme en elektron).
+2. Čas v sekundah: $t = 20{,}0 \cdot 60 = 1200\,\mathrm{s}$, ker je amper coulomb na sekundo.
+3. Naboj: $Q = It = 0{,}500\,\mathrm{A} \cdot 1200\,\mathrm{s} = 600\,\mathrm{C}$.
+4. Iz naboja izračunaj množino elektronov in nato maso srebra sam.
+
+:::premisli
+Koliko srebra se izloči na vilicah?
+---
+$n(\mathrm{e^-}) = 600/96\,485 = 0{,}006\,219\,\mathrm{mol}$, in ker je $z = 1$, je to tudi $n(\mathrm{Ag})$. Masa: $m = 0{,}006\,219 \cdot 107{,}87\,\mathrm{g} \approx 0{,}671\,\mathrm{g}$ srebra.
+:::
 
 ## Pogoste napake
 
@@ -239,23 +274,39 @@ $$E^\circ = \frac{1 \cdot 0{,}77 + 2 \cdot (-0{,}44)}{3}\,\mathrm{V} = -0{,}037\
 ? Kolikšno je oksidacijsko število žvepla v natrijevem tiosulfatu $\mathrm{Na_2S_2O_3}$?
 + $+2$
 - $+4$
+~ Tako dobiš, če računaš, kot da je v formuli en sam atom žvepla: $2 + x - 6 = 0$. V $\mathrm{Na_2S_2O_3}$ sta dva, zato $2x = 4$.
 - $+6$
+~ $+6$ ima žveplo v sulfatu $\mathrm{SO_4^{2-}}$. Tiosulfat je podoben, a ima dva atoma žvepla in le tri kisike, zato je povprečno oksidacijsko število nižje.
 > $2 \cdot (+1) + 2x + 3 \cdot (-2) = 0$, torej $2x = 4$ in $x = +2$ (povprečno oksidacijsko število obeh atomov žvepla).
 
 ? Na kateri elektrodi galvanskega člena poteka oksidacija?
 + na anodi
 - na katodi
+~ Zamenjava pojmov: na katodi delci elektrone sprejemajo, to je redukcija. Zmede lahko to, da je katoda v galvanskem členu pozitivni pol.
 - v solnem mostu
+~ Solni most sklene krog, a v njem se le gibljejo ioni in ohranjajo nevtralnost raztopin; elektroni se tam ne prenašajo.
 > Oksidacija vedno poteka na anodi, redukcija na katodi. V solnem mostu se le gibljejo ioni.
 
 ? Kolikšna je standardna napetost člena iz srebrove ($E^\circ = +0{,}80\,\mathrm{V}$) in cinkove ($E^\circ = -0{,}76\,\mathrm{V}$) elektrode?
 - $0{,}04\,\mathrm{V}$
+~ Potenciala si seštel, $0{,}80 + (-0{,}76)$. Napetost je razlika katoda minus anoda, zato se minus pri cinku spremeni v plus.
 + $1{,}56\,\mathrm{V}$
 - $2{,}36\,\mathrm{V}$
+~ Potencial srebra si pomnožil z $2$, ker je v enačbi $2\,\mathrm{Ag^+}$. $E^\circ$ je intenzivna količina in se s koeficientom ne množi.
 > $E^\circ = E^\circ_\text{katode} - E^\circ_\text{anode} = 0{,}80 - (-0{,}76) = 1{,}56\,\mathrm{V}$. $2{,}36\,\mathrm{V}$ dobiš, če potencial srebra napačno pomnožiš z $2$, $0{,}04\,\mathrm{V}$ pa, če potenciala seštevaš.
 
 ? Kateri delec je med naštetimi najmočnejši oksidant (glej preglednico potencialov)?
 - $\mathrm{Zn^{2+}}$
+~ Cink je res zelo reaktiven, a kot reducent (kovina $\mathrm{Zn}$). Njegov ion ima najnižji potencial ($-0{,}76\,\mathrm{V}$) in elektrone najslabše sprejema.
 - $\mathrm{Cu^{2+}}$
+~ $\mathrm{Cu^{2+}}$ je oksidant (oksidira cink), a s potencialom le $+0{,}34\,\mathrm{V}$; permanganat je na lestvici precej višje.
 + $\mathrm{MnO_4^-}$ v kislem
 > Močnejši oksidant ima večji standardni redukcijski potencial: $\mathrm{MnO_4^-}$ $+1{,}51\,\mathrm{V}$, $\mathrm{Cu^{2+}}$ $+0{,}34\,\mathrm{V}$, $\mathrm{Zn^{2+}}$ $-0{,}76\,\mathrm{V}$.
+
+? Zatemnjeno srebrno žličko (obloga $\mathrm{Ag_2S}$) položiš v vročo vodo s sodo na aluminijasto folijo in v nekaj minutah spet zasveti. Zakaj?
+- Vroča voda s sodo raztopi črno oblogo in jo odplakne.
+~ $\mathrm{Ag_2S}$ je v vodi netopen in brez folije obloga ostane. Srebro se ne odplakne, ampak se vrne na žličko kot kovina.
++ Aluminij odda elektrone, srebrovi ioni v oblogi pa se reducirajo nazaj v kovinsko srebro.
+- Srebro odda elektrone aluminiju in se tako očisti.
+~ Obrnjena smer: srebro je v oblogi že oksidirano ($\mathrm{Ag^+}$). Da postane spet kovina, mora elektrone sprejeti, ne oddati.
+> Aluminij ima zelo nizek potencial ($E^\circ(\mathrm{Al^{3+}/Al}) = -1{,}66\,\mathrm{V}$) in je močan reducent, $\mathrm{Ag^+}$ ($+0{,}80\,\mathrm{V}$) pa elektrone rad sprejme. Žlička in folija v raztopini sode tvorita majhen galvanski člen.
