@@ -30,13 +30,15 @@ Windows Task Scheduler ni potreben.
 
 ## Render (evklid.app, od 30. 10. 2026)
 
-GitHub vsakih 15 minut preveri, ali je v `main` kaj novega (`.github/workflows/render-posodobitev.yml`,
+Ob vsaki združitvi v `main` GitHub zažene preverbo, ki počaka na miren trenutek in vmes preverja vsakih
+5 minut; novejša združitev jo zamenja. Urnik vsako uro je le rezerva, ker GitHub urnike pogosto zamakne za ure
+(`.github/workflows/render-posodobitev.yml`,
 pravila v `scripts/render-objava.js`; v `render.yaml` je `autoDeploy: false`). Ponovni zagon s trajnim
 diskom pomeni približno minuto izpada, zato:
 
 | Stanje | Kdaj se objavi |
 |---|---|
-| Nihče ne uporablja Evklida (10 minut nihče nič ne pošlje, nihče ne čaka na odgovor) | v ~15 minutah |
+| Nihče ne uporablja Evklida (10 minut nihče nič ne pošlje, nihče ne čaka na odgovor) | takoj (v nekaj minutah) |
 | Nekdo se ravno uči | počaka na miren trenutek, najdlje 3 ure od združitve spremembe |
 | Zadnja objava pred manj kot 1 uro | počaka (razen po 3 urah čakanja) |
 | Ista različica je bila že sprožena, a ne teče (objava ni uspela) | ne ponavlja 3 ure |

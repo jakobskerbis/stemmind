@@ -1,5 +1,5 @@
 // Kdaj objaviti novo različico na Renderju (j, 2026-10-30: »optimiziraj samodejne posodobitve«).
-// GitHub Actions to preveri vsakih 15 minut (.github/workflows/render-posodobitev.yml).
+// GitHub Actions ob vsaki združitvi v main (in vsako uro za vsak primer): .github/workflows/render-posodobitev.yml.
 // Na Renderju s trajnim diskom vsaka objava pomeni ~1 minuto izpada, zato:
 //  - objavi hitro (v ~15 min), ko nihče ne uporablja Evklida (miren strežnik);
 //  - med uporabo počaka, a najdlje NAJDLJE_MIN od prve neobjavljene spremembe;
@@ -54,30 +54,38 @@ async function main() {
     if (!r.ok) throw new Error(`GitHub ${p}: ${r.status}`);
     return r.json();
   };
-  const mainSha = (await gh("commits/main")).sha;
-  let stanje = null;
-  try {
-    const r = await fetch(`${url}/healthz/stanje`, { signal: AbortSignal.timeout(10000) });
-    if (r.ok) stanje = await r.json();
-  } catch {}
-  let cakaMin = 0;
-  try {
-    const cmp = stanje?.razlicica ? await gh(`compare/${stanje.razlicica}...main`) : { commits: [await gh("commits/main")] };
-    const t = pendingSince(cmp.commits || [], mainSha);
-    if (t) cakaMin = (Date.now() - t) / 60000;
-  } catch {}
   const fs = await import("node:fs");
   const file = process.env.ZADNJA || ".render-objava.json";
   let zadnja = null;
   try { zadnja = JSON.parse(fs.readFileSync(file, "utf8")); } catch {}
-  const d = decide({ stanje, mainSha, cakaMin, rocno: ROCNO === "1", zadnja });
-  console.log(`main ${mainSha.slice(0, 12)}, strežnik ${stanje?.razlicica || "?"}, čaka ${Math.round(cakaMin)} min: ${d.zakaj}`);
-  if (!d.objavi) return;
-  const r = await fetch(HOOK, { method: "POST" });
-  if (!r.ok) throw new Error(`Render: ${r.status}`);
-  fs.writeFileSync(file, JSON.stringify({ sha: mainSha, at: Date.now() }));
-  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, "sprozeno=1\n");
-  console.log("Objava sprožena.");
+  // CAKAJ=1 (ob vsaki združitvi v main): če zdaj ni pravi trenutek, preverja vsakih 5 minut,
+  // dokler se ne objavi ali ne mine NAJDLJE_MIN + 20 min. Novejša združitev ta tek prekine (concurrency).
+  const konec = Date.now() + (process.env.CAKAJ === "1" ? (NAJDLJE_MIN + 20) * 60000 : 0);
+  for (;;) {
+    const mainSha = (await gh("commits/main")).sha;
+    let stanje = null;
+    try {
+      const r = await fetch(`${url}/healthz/stanje`, { signal: AbortSignal.timeout(10000) });
+      if (r.ok) stanje = await r.json();
+    } catch {}
+    let cakaMin = 0;
+    try {
+      const cmp = stanje?.razlicica ? await gh(`compare/${stanje.razlicica}...main`) : { commits: [await gh("commits/main")] };
+      const t = pendingSince(cmp.commits || [], mainSha);
+      if (t) cakaMin = (Date.now() - t) / 60000;
+    } catch {}
+    const d = decide({ stanje, mainSha, cakaMin, rocno: ROCNO === "1", zadnja });
+    console.log(`${new Date().toISOString().slice(11, 16)} main ${mainSha.slice(0, 12)}, strežnik ${stanje?.razlicica || "?"}, čaka ${Math.round(cakaMin)} min: ${d.zakaj}`);
+    if (d.objavi) {
+      const r = await fetch(HOOK, { method: "POST" });
+      if (!r.ok) throw new Error(`Render: ${r.status}`);
+      fs.writeFileSync(file, JSON.stringify({ sha: mainSha, at: Date.now() }));
+      if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, "sprozeno=1\n");
+      return console.log("Objava sprožena.");
+    }
+    if (d.zakaj === "že teče zadnja različica" || d.zakaj.startsWith("ta različica je že bila sprožena") || Date.now() + 5 * 60000 > konec) return;
+    await new Promise((res) => setTimeout(res, 5 * 60000));
+  }
 }
 
 if (process.argv[1]?.endsWith("render-objava.js")) {
