@@ -242,3 +242,23 @@ Celotna deformacija je vsota mehanske in toplotne: $\varepsilon = \dfrac{\sigma}
 - Brez dolžine cevi je ni mogoče izračunati.
 ~ Pri vpetju brez reže se dolžina pokrajša: $\sigma = E\alpha\,\Delta T$.
 > $\sigma = 200\,000\,\mathrm{MPa} \cdot 12 \cdot 10^{-6}\,\mathrm{K^{-1}} \cdot 30\,\mathrm{K} = 72\,\mathrm{MPa}$, tlačna. Zato imajo dolge cevi kompenzatorje.
+
+:::simboli
+L | dolžina palice | | m | ΔL je podaljšek palice
+F | osna sila | F = \dfrac{E A\,\Delta L}{L} | N |
+E | modul elastičnosti | | Pa | jeklo ≈ 200 GPa, aluminij ≈ 70 GPa
+A | ploščina prečnega prereza | A = \dfrac{\pi d^2}{4} | m^2 | za okroglo palico
+\Delta L_T | prosti toplotni podaljšek | \Delta L_T = \alpha\,\Delta T\,L | m |
+\alpha | temperaturni razteznostni koeficient | | K^{-1} | jeklo 12 · 10⁻⁶ K⁻¹
+T | temperatura palice | | K | ΔT je segretje palice
+\sigma_T | toplotna napetost v vpeti palici | \sigma_T = -E\,\alpha\,\Delta T | Pa | negativna: tlačna napetost
+N | notranja osna sila | | N | pri lastni teži N(x) = ρgAx
+x | lega prereza, merjena od spodnjega konca | | m |
+\rho | gostota materiala | | kg/m^3 |
+g | težni pospešek | | m/s^2 | 9,81 m/s²
+\sigma | normalna napetost | \sigma = \dfrac{F}{A} | Pa | v zgledih v MPa (N/mm²)
+\varepsilon | deformacija (relativni podaljšek) | \varepsilon = \dfrac{\sigma}{E} | – | \varepsilon = ΔL/L
+\Delta T_d | segretje, pri katerem se reža zapre | \alpha\,\Delta T_d\,L = \delta | K |
+\delta | reža med palico in steno | | m |
+d | premer palice | | m |
+:::

@@ -244,3 +244,21 @@ Pogoj, da je $I$ **interval**, je bistven. Funkciji $\ln|x|$ in $\ln|x| + \opera
 - $\ln|x(x + 1)| + C$
 - $\ln|x| \cdot \ln|x + 1| + C$
 > Parcialni ulomki: $\frac{1}{x(x + 1)} = \frac{1}{x} - \frac{1}{x + 1}$. Vsak člen da en logaritem.
+
+:::simboli
+f | funkcija pod integralom (integrand) | | | F'(x) = f(x)
+x | neodvisna spremenljivka (integracijska spremenljivka) | | |
+d | oznaka diferenciala (dx, dt, du, dv) | | | pove, po kateri spremenljivki integriramo
+F | primitivna funkcija | F'(x) = f(x) | |
+C | integracijska konstanta | | | poljubno realno število
+g | notranja funkcija pri substituciji | | | njen odvod g' mora biti v integrandu
+t | nova spremenljivka pri substituciji | t = g(x) | | dt = g'(x)\, dx
+u | faktor, ki ga odvajamo (integracija po delih) | | | du = u'\, dx
+v | funkcija, ki jo dobimo z integriranjem dv | v = \int dv | |
+a | realna konstanta (ničla imenovalca x − a) | | | v a^x osnova potence, a > 0
+b | druga ničla imenovalca (x − b) | | | v f(ax + b) prosti člen
+k | stopnja (večkratnost) faktorja (x − a)^k | | | naravno število, k ≥ 2
+n | eksponent potence | | | n ≠ −1
+p | polinom v števcu racionalne funkcije | | |
+A, B | koeficienta parcialnih ulomkov | | | dobimo ju s primerjavo števcev
+:::

@@ -21,13 +21,13 @@ V varnostni statistiki je naloga ista. Iz števila nezgod, okvar ali izpadov v n
 Večja od $N$ ne more biti nikoli, enaka $N$ pa le, če slučajno izvlečemo prav zadnji listek. Največja številka je torej vedno $\le N$ in pogosto manjša. Ocena zato v povprečju **podceni** $N$; greši sistematično v eno smer.
 :::
 
-**Cenilka in ocena.** Vzorec $X_1, \dots, X_n$ je zaporedje slučajnih spremenljivk. **Cenilka** $\hat\theta = T(X_1, \dots, X_n)$ je funkcija vzorca, zato je tudi sama slučajna spremenljivka: pri vsakem novem vzorcu da drugo vrednost. **Ocena** je ena konkretna vrednost, na primer $61$.
+**Cenilka in ocena.** Vzorec $X_1, \dots, X_n$ je zaporedje slučajnih spremenljivk. **Cenilka** $\hat{\theta} = T(X_1, \dots, X_n)$ je funkcija vzorca, zato je tudi sama slučajna spremenljivka: pri vsakem novem vzorcu da drugo vrednost. **Ocena** je ena konkretna vrednost, na primer $61$.
 
 **Pristranskost** cenilke je razlika med njeno pričakovano vrednostjo in pravim parametrom:
 
-$$b(\hat\theta) = E(\hat\theta) - \theta$$
+$$b(\hat{\theta}) = E(\hat{\theta}) - \theta$$
 
-Cenilka je **nepristranska**, če je $E(\hat\theta) = \theta$ za vsako možno vrednost $\theta$. To ne pomeni, da zadene pri tvojem vzorcu. Pomeni, da bi se njene ocene pri mnogo ponovitvah v povprečju ujele s $\theta$.
+Cenilka je **nepristranska**, če je $E(\hat{\theta}) = \theta$ za vsako možno vrednost $\theta$. To ne pomeni, da zadene pri tvojem vzorcu. Pomeni, da bi se njene ocene pri mnogo ponovitvah v povprečju ujele s $\theta$.
 
 Za tombolo velja (preverba na majhnem primeru je v »Korak za korakom«, izpeljava v »Bolj natančno«): če izvlečemo $k$ listkov brez vračanja in je $M$ največja številka, je
 
@@ -51,17 +51,17 @@ Največja je pri $p = 0{,}8$. Tabela pa **ne** pove, da je $p = 0{,}8$ »najverj
 
 $$L(\theta) = \prod_{i=1}^{n} f(x_i;\theta).$$
 
-**Cenilka največjega verjetja** (MLE, angl. *maximum likelihood estimator*) je $\hat\theta$, pri kateri je $L$ največja. Ker je logaritem naraščajoč, je laže maksimizirati $\ell(\theta) = \ln L(\theta)$: produkt postane vsota. Recept:
+**Cenilka največjega verjetja** (MLE, angl. *maximum likelihood estimator*) je $\hat{\theta}$, pri kateri je $L$ največja. Ker je logaritem naraščajoč, je laže maksimizirati $\ell(\theta) = \ln L(\theta)$: produkt postane vsota. Recept:
 
 1. zapiši $L(\theta)$ in $\ell(\theta)$,
 2. reši $\ell'(\theta) = 0$,
 3. preveri, da gre za maksimum, in poglej tudi robove dovoljenih $\theta$.
 
-**MLE ni nujno nepristranska.** Za normalno porazdelitev metoda da $\hat\mu = \bar X$ in
+**MLE ni nujno nepristranska.** Za normalno porazdelitev metoda da $\hat{\mu} = \bar X$ in
 
-$$\hat\sigma^2 = \frac1n \sum_{i=1}^{n} (X_i - \bar X)^2.$$
+$$\hat{\sigma}^2 = \frac1n \sum_{i=1}^{n} (X_i - \bar X)^2.$$
 
-$\bar X$ je nepristranska, $\hat\sigma^2$ pa ne: $E(\hat\sigma^2) = \dfrac{n-1}{n}\sigma^2$. Nepristranska je **vzorčna disperzija** z delitvijo z $n-1$:
+$\bar X$ je nepristranska, $\hat{\sigma}^2$ pa ne: $E(\hat{\sigma}^2) = \dfrac{n-1}{n}\sigma^2$. Nepristranska je **vzorčna disperzija** z delitvijo z $n-1$:
 
 $$s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar X)^2.$$
 
@@ -71,7 +71,7 @@ Zakaj deljenje z $n$ disperzijo v povprečju podceni? Namig: od katere točke so
 Vsota $\sum (x_i - c)^2$ je najmanjša prav pri $c = \bar x$. Ker $\mu$ ne poznamo, merimo odmike od $\bar x$, ki je podatkom bližje kot pravi $\mu$. Odmiki so zato premajhni, vsota tudi. Delitev z $n-1$ to natanko popravi.
 :::
 
-Pristranskost $\hat\sigma^2$ je $-\sigma^2/n$ in gre proti $0$, ko $n$ raste. Taki cenilki rečemo **asimptotično nepristranska**. Pri velikih vzorcih je razlika med $n$ in $n-1$ zanemarljiva, pri petih meritvah pa ne.
+Pristranskost $\hat{\sigma}^2$ je $-\sigma^2/n$ in gre proti $0$, ko $n$ raste. Taki cenilki rečemo **asimptotično nepristranska**. Pri velikih vzorcih je razlika med $n$ in $n-1$ zanemarljiva, pri petih meritvah pa ne.
 
 ## Rešeni primeri
 
@@ -138,13 +138,13 @@ $L(N) = \dfrac{1}{\binom{N}{k}}$ za $N \ge m$, sicer $0$; $\quad \hat N = m \cdo
 
 ### Primer 4 – zdaj ti
 
-Sprinter je v štirih tekih na $100\,\mathrm{m}$ dosegel $11{,}2$, $11{,}5$, $11{,}0$ in $11{,}3\,\mathrm{s}$. Čase modeliramo z normalno porazdelitvijo. Izračunaj $\hat\sigma^2$ (MLE) in nepristransko $s^2$.
+Sprinter je v štirih tekih na $100\,\mathrm{m}$ dosegel $11{,}2$, $11{,}5$, $11{,}0$ in $11{,}3\,\mathrm{s}$. Čase modeliramo z normalno porazdelitvijo. Izračunaj $\hat{\sigma}^2$ (MLE) in nepristransko $s^2$.
 
 **Podatki:** $n = 4$, časi $11{,}2$; $11{,}5$; $11{,}0$; $11{,}3\,\mathrm{s}$
-**Iščemo:** $\hat\sigma^2$ in $s^2$
+**Iščemo:** $\hat{\sigma}^2$ in $s^2$
 
 :::formula
-$\hat\sigma^2 = \dfrac{1}{n}\sum (x_i - \bar x)^2$, $\quad s^2 = \dfrac{1}{n-1}\sum (x_i - \bar x)^2$
+$\hat{\sigma}^2 = \dfrac{1}{n}\sum (x_i - \bar x)^2$, $\quad s^2 = \dfrac{1}{n-1}\sum (x_i - \bar x)^2$
 :::
 
 **Rešitev:**
@@ -154,25 +154,25 @@ $\hat\sigma^2 = \dfrac{1}{n}\sum (x_i - \bar x)^2$, $\quad s^2 = \dfrac{1}{n-1}\
 3. Zdaj deli sam, nato preveri:
 
 :::premisli
-Katera od obeh ocen je večja in za koliko? Izračunaj $\hat\sigma^2$ in $s^2$.
+Katera od obeh ocen je večja in za koliko? Izračunaj $\hat{\sigma}^2$ in $s^2$.
 ---
-$\hat\sigma^2 = 0{,}13/4 = 0{,}0325\,\mathrm{s^2}$, $s^2 = 0{,}13/3 \approx 0{,}0433\,\mathrm{s^2}$. Pri $n = 4$ je razlika kar tretjina.
+$\hat{\sigma}^2 = 0{,}13/4 = 0{,}0325\,\mathrm{s^2}$, $s^2 = 0{,}13/3 \approx 0{,}0433\,\mathrm{s^2}$. Pri $n = 4$ je razlika kar tretjina.
 :::
 
 ## Pogoste napake
 
 - **Verjetje je verjetnost parametra.** »$L(0{,}8) = 0{,}30$, torej je $p = 0{,}8$ s $30\,\%$ verjetnostjo.« Napačno: $L$ je verjetnost **podatkov** pri danem $p$; po $p$ se ne sešteje v $1$. Prav: MLE je vrednost, pri kateri so podatki najbolj verjetni.
 - **Nepristranska pomeni točna.** »Moja ocena je nepristranska, torej je prava vrednost.« Napačno: nepristranskost je lastnost povprečja čez vse možne vzorce. Prav: posamezna ocena lahko zgreši; o natančnosti govori disperzija cenilke.
-- **MLE je vedno nepristranska.** Protiprimera sta $\hat\sigma^2$ z delitvijo z $n$ in največja številka pri tomboli. Prav: pristranskost vedno preveri z $E(\hat\theta)$.
+- **MLE je vedno nepristranska.** Protiprimera sta $\hat{\sigma}^2$ z delitvijo z $n$ in največja številka pri tomboli. Prav: pristranskost vedno preveri z $E(\hat{\theta})$.
 - **Vedno iščem ničlo odvoda.** Pri tomboli $L(N)$ pada, odvod nima ničle. Prav: maksimum je lahko na robu dovoljenih vrednosti; preveri robove.
 
 ## Povzetek
 
-- Cenilka $\hat\theta = T(X_1,\dots,X_n)$ je slučajna spremenljivka; ocena je njena vrednost pri danem vzorcu.
-- Pristranskost $b = E(\hat\theta) - \theta$; nepristranska, če $E(\hat\theta) = \theta$ za vsak $\theta$.
+- Cenilka $\hat{\theta} = T(X_1,\dots,X_n)$ je slučajna spremenljivka; ocena je njena vrednost pri danem vzorcu.
+- Pristranskost $b = E(\hat{\theta}) - \theta$; nepristranska, če $E(\hat{\theta}) = \theta$ za vsak $\theta$.
 - MLE: maksimiziraj $L(\theta) = \prod f(x_i;\theta)$ oziroma $\ell = \ln L$; reši $\ell' = 0$ in preveri robove.
-- Bernoulli: $\hat p = k/n$; Poisson: $\hat\lambda = \bar x$; normalna: $\hat\mu = \bar x$, $\hat\sigma^2 = \frac1n\sum(x_i-\bar x)^2$.
-- $\hat\sigma^2$ je pristranska ($E = \frac{n-1}{n}\sigma^2$); nepristranska je $s^2$ z $n-1$.
+- Bernoulli: $\hat p = k/n$; Poisson: $\hat\lambda = \bar x$; normalna: $\hat{\mu} = \bar x$, $\hat{\sigma}^2 = \frac1n\sum(x_i-\bar x)^2$.
+- $\hat{\sigma}^2$ je pristranska ($E = \frac{n-1}{n}\sigma^2$); nepristranska je $s^2$ z $n-1$.
 - Tombola: MLE $= M$ podcenjuje; nepristranska je $M\frac{k+1}{k} - 1$.
 
 ## Drugače: Kot zgodba
@@ -198,7 +198,7 @@ Vzemimo majhen boben: $N = 5$ listkov, izvlečemo $k = 2$. Možnih parov je $\bi
 
 ## Drugače: Bolj natančno
 
-Dokaz, da je $E(\hat\sigma^2) = \frac{n-1}{n}\sigma^2$. Naj bo $E(X_i) = \mu$, $D(X_i) = \sigma^2$, neodvisni. Razpišemo:
+Dokaz, da je $E(\hat{\sigma}^2) = \frac{n-1}{n}\sigma^2$. Naj bo $E(X_i) = \mu$, $D(X_i) = \sigma^2$, neodvisni. Razpišemo:
 
 $$\sum (X_i - \bar X)^2 = \sum (X_i - \mu)^2 - n(\bar X - \mu)^2.$$
 
@@ -208,10 +208,10 @@ Za tombolo: $P(M \le j) = \binom{j}{k}/\binom{N}{k}$, torej $P(M = j) = \binom{j
 
 ## Preveri se
 
-? Tri od spodnjih trditev opisujejo nepristransko cenilko $\hat\theta$. Katera ne sodi zraven?
+? Tri od spodnjih trditev opisujejo nepristransko cenilko $\hat{\theta}$. Katera ne sodi zraven?
 - Njena pričakovana vrednost je $\theta$ za vsako vrednost $\theta$.
 ~ To je sama definicija nepristranskosti, zato sodi zraven.
-- Njena pristranskost $E(\hat\theta) - \theta$ je enaka $0$.
+- Njena pristranskost $E(\hat{\theta}) - \theta$ je enaka $0$.
 ~ To je ista definicija, zapisana z razliko; sodi zraven.
 + Pri vsakem vzorcu da natanko vrednost $\theta$.
 - Pri mnogo ponovitvah se njene ocene v povprečju ujamejo s $\theta$.
@@ -228,13 +228,13 @@ Za tombolo: $P(M \le j) = \binom{j}{k}/\binom{N}{k}$, torej $P(M = j) = \binom{j
 ~ $0{,}5$ je »pošten« kovanec, a podatkov ne upošteva. MLE izbere $p$, pri katerem so podatki najbolj verjetni.
 > $\hat p = k/n = 18/24 = 0{,}75$.
 
-? Kaj se zgodi s pristranskostjo cenilke $\hat\sigma^2 = \frac1n\sum(X_i - \bar X)^2$, ko velikost vzorca $n$ raste?
+? Kaj se zgodi s pristranskostjo cenilke $\hat{\sigma}^2 = \frac1n\sum(X_i - \bar X)^2$, ko velikost vzorca $n$ raste?
 - Raste, ker seštejemo več kvadratov.
 ~ Več kvadratov delimo tudi z večjim $n$; pristranskost je $-\sigma^2/n$.
 - Ostane enaka, ker je cenilka pristranska ne glede na $n$.
 ~ Res je pristranska za vsak končen $n$, a velikost pristranskosti se manjša.
 + Gre proti $0$: cenilka je asimptotično nepristranska.
-> $E(\hat\sigma^2) - \sigma^2 = -\sigma^2/n \to 0$, ko $n \to \infty$.
+> $E(\hat{\sigma}^2) - \sigma^2 = -\sigma^2/n \to 0$, ko $n \to \infty$.
 
 ? Izpeljava MLE za Poissonov $\lambda$ iz $n$ podatkov. Korak 1: $L(\lambda) = \prod e^{-\lambda}\lambda^{x_i}/x_i!$. Korak 2: $\ell(\lambda) = -\lambda + (\sum x_i)\ln\lambda - \sum\ln(x_i!)$. Korak 3: $\ell'(\lambda) = -1 + \sum x_i/\lambda$. Korak 4: $\hat\lambda = \sum x_i$. V katerem koraku je nastala napaka?
 - Korak 1
@@ -253,3 +253,29 @@ Za tombolo: $P(M \le j) = \binom{j}{k}/\binom{N}{k}$, torej $P(M = j) = \binom{j
 - MLE ne obstaja, ker odvod $\ell'(\lambda)$ nima ničle.
 ~ Maksimum je na robu, pri $\lambda = 0$. Ničla odvoda ni nujna.
 > Pri $\sum x_i = 0$ je $L(\lambda) = e^{-6\lambda}$, največja pri $\lambda = 0$. Majhen $\lambda$ hitro da pol leta brez nezgod, zato ocena ne dokazuje, da tveganja ni.
+
+:::simboli
+\theta | neznani parameter porazdelitve | | |
+\hat{\theta} | cenilka parametra \theta | | | funkcija vzorca, zato slučajna spremenljivka
+b | pristranskost cenilke | b(\hat{\theta}) = E(\hat{\theta}) - \theta | | nepristranska, če je b = 0
+E | pričakovana vrednost | | |
+M | največja izvlečena številka (slučajna spremenljivka) | | |
+k | število izvlečenih listkov | | | pri binomskem zgledu število zadetkov
+N | število vseh listkov (neznani parameter) | | |
+\hat N | nepristranska cenilka za N | \hat N = m \cdot \dfrac{k+1}{k} - 1 | |
+m | izmerjena največja številka | | | N ≥ m
+L | funkcija verjetja | L(\theta) = \prod_{i=1}^{n} f(x_i;\theta) | | MLE je \hat{\theta}, pri kateri je L največja
+i | indeks podatka | | |
+n | velikost vzorca | | |
+f | gostota ali verjetnostna funkcija | | |
+x_i | izmerjeni podatki | | |
+X_i | podatki kot slučajne spremenljivke | | | neodvisne, E(X_i) = \mu, D(X_i) = \sigma^2
+\bar X | vzorčno povprečje (slučajna spremenljivka) | \bar X = \frac{1}{n}\sum X_i | | nepristranska cenilka za \mu
+\bar x | povprečje izmerjenih podatkov | \bar x = \frac{1}{n}\sum x_i | |
+\sigma | standardni odklon porazdelitve | | |
+\hat{\sigma} | cenilka standardnega odklona po metodi največjega verjetja | \hat{\sigma}^2 = \frac1n \sum_{i=1}^{n} (X_i - \bar X)^2 | | pristranska: E(\hat{\sigma}^2) = \frac{n-1}{n}\sigma^2
+s | vzorčni standardni odklon | s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar X)^2 | | s^2 je nepristranska cenilka za \sigma^2
+\mu | pričakovana vrednost porazdelitve | | |
+p | delež zadetkov (verjetnost uspeha) | | |
+\lambda | parameter Poissonove porazdelitve | | | povprečno število dogodkov
+:::

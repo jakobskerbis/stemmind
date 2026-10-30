@@ -240,3 +240,32 @@ Po Lagrangeevem izreku je prvi oklepaj $f_x(a + \theta_1h, b + k)\,h$, drugi $f_
 - $2$
 - $4\sin t\cos t$
 > $\dot{z} = 2x\dot{x} + 2y\dot{y} = -2\cos t\sin t + 2\sin t\cos t = 0$. Točka se giblje po krožnici, ki je nivojnica funkcije $z$.
+
+:::simboli
+f | funkcija dveh spremenljivk | | | z = f(x, y)
+x, y | neodvisni spremenljivki (koordinati točke) | | | pri implicitnem odvajanju je y = y(x)
+a, b | koordinati točke (a, b), v kateri odvajamo | | |
+f_x | parcialni odvod funkcije f po x | f_x = \frac{\partial f}{\partial x} | | y držimo konstanten
+f_y | parcialni odvod funkcije f po y | f_y = \frac{\partial f}{\partial y} | | x držimo konstanten
+h, k | prirastka spremenljivk x in y | | |
+o | ostanek, ki gre proti 0 hitreje od argumenta (mali o) | | |
+z | vrednost funkcije (višina nad ravnino xy) | z = f(x, y) | |
+\Delta f | največja absolutna napaka rezultata | \Delta f \le \lvert f_x\rvert\,\Delta x + \lvert f_y\rvert\,\Delta y | |
+\Delta x | absolutna napaka meritve x | | |
+\Delta y | absolutna napaka meritve y | | |
+\vec{u} | enotski vektor smeri | | | \lvert\vec{u}\rvert = 1
+\varphi | kot med gradientom in smerjo \vec{u} | | |
+t | parameter, od katerega sta odvisna x in y | | | pogosto čas
+\dot{x} | odvod x po t | \dot{x} = \frac{\mathrm{d}x}{\mathrm{d}t} | |
+\dot{y} | odvod y po t | \dot{y} = \frac{\mathrm{d}y}{\mathrm{d}t} | |
+u, v | spremenljivki, od katerih sta odvisna x in y | | | x = x(u, v), y = y(u, v)
+F_x | parcialni odvod funkcije F po x | F_x = \frac{\partial F}{\partial x} | | krivulja je F(x, y) = 0
+F_y | parcialni odvod funkcije F po y | F_y = \frac{\partial F}{\partial y} | | pogoj F_y ≠ 0
+T | temperatura na plošči | T(x, y) = 100 - x^2 - 2y^2 | °C | v zgledu s plinom temperatura v K
+T_x | parcialni odvod temperature po x | T_x = -2x | °C/cm
+T_y | parcialni odvod temperature po y | T_y = -4y | °C/cm
+p | tlak idealnega plina | p = \frac{nRT}{V} | Pa
+V | prostornina plina | | m^3
+n | množina plina | | mol | tudi število spremenljivk funkcije
+R | splošna plinska konstanta | | J/(mol K) | 8,314 J/(mol K)
+:::

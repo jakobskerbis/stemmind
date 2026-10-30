@@ -215,3 +215,15 @@ Enak postopek z matriko $[A \mid I]$ namesto $[A \mid \vec{b}]$ da inverzno matr
 + $x = 3$, $y = 2$
 - $x = 4$, $y = 1$
 > Seštejemo enačbi: $2x = 6$, $x = 3$, nato $y = 5 - 3 = 2$. Preizkus: $3 - 2 = 1$.
+
+:::simboli
+a_{11}, a_{12}, a_{1n}, a_{m1}, a_{mn} | koeficienti sistema (elementi matrike A) | | | a_{ij}: i-ta enačba, j-ta neznanka
+x_1, x_2, x_n | neznanke sistema | | |
+b_1, b_m | desne strani enačb | | |
+x | masa raztopine z deležem 10 % | | g |
+y | masa raztopine z deležem 40 % | | g |
+A | matrika sistema | | | razsežnost m × n
+\vec{b} | stolpec desnih strani | | |
+n | število neznank | | |
+r | rang matrike sistema | r = \operatorname{rang} A | | n − r je število prostih parametrov
+:::

@@ -240,3 +240,35 @@ Premica torej prebode ravnino v točki $(-2, 4, -5)$ pod kotom približno $9{,}6
 - $(7, 2, -1)$
 + $(2, -1, 3)$
 > Koeficienti pred $x$, $y$ in $z$ so komponente normale; desna stran $7$ le premakne ravnino.
+
+:::simboli
+\vec{a} | vektor a | | | \lvert\vec{a}\rvert je njegova dolžina
+a_1, a_2, a_3 | komponente vektorja \vec{a} | | |
+\vec{b} | vektor b | | |
+b_1, b_2, b_3 | komponente vektorja \vec{b} | | |
+\vec{c} | vektor c (tretji vektor mešanega produkta) | | |
+c_1, c_2, c_3 | komponente vektorja \vec{c} | | |
+\varphi | kot med vektorjema | \cos\varphi = \dfrac{\vec{a} \cdot \vec{b}}{\lvert\vec{a}\rvert\,\lvert\vec{b}\rvert} | | \varphi \in [0, \pi]
+\vec{i}, \vec{j}, \vec{k} | enotski vektorji v smereh osi x, y, z | | |
+\vec{r} | krajevni vektor poljubne točke premice ali ravnine | \vec{r} = \vec{r}_0 + t\,\vec{s} | |
+\vec{r}_0 | krajevni vektor dane točke T_0 | | |
+t | parameter premice | | | t ∈ ℝ
+\vec{s} | smerni vektor premice | | |
+x, y, z | koordinate točke na premici ali ravnini | | |
+x_0, y_0, z_0 | koordinate točke T_0 | | |
+s_1, s_2, s_3 | komponente smernega vektorja \vec{s} | | |
+a, b, c | komponente normale ravnine | | | \vec{n} = (a, b, c)
+d | prosti člen v enačbi ravnine | d = \vec{n} \cdot \vec{r}_0 | | d(T_1, Σ) in d pri premici pomenita razdaljo
+\vec{n} | normala ravnine | \vec{n} = \overrightarrow{AB} \times \overrightarrow{AC} | | pravokotna na ravnino
+T_1 | točka, katere razdaljo do ravnine iščemo | | |
+\Sigma | ravnina | | | podana z enačbo ax + by + cz = d
+x_1, y_1, z_1 | koordinate točke T_1 | | |
+T_0 | dana točka na premici ali ravnini | | |
+T | poljubna točka (na ravnini ali zunaj premice) | | |
+S | ploščina trikotnika ABC | S = \frac{1}{2}\,\lvert\overrightarrow{AB} \times \overrightarrow{AC}\rvert | |
+A, B, C, D | oglišča trikotnika ABC oziroma tetraedra ABCD | | |
+\vec{r}_A | krajevni vektor točke A | | |
+V | prostornina tetraedra ABCD | V = \frac{1}{6}\,\lvert(\overrightarrow{AB}, \overrightarrow{AC}, \overrightarrow{AD})\rvert | |
+v | višina tetraedra iz oglišča D | v = \dfrac{\lvert\vec{n} \cdot \overrightarrow{AD}\rvert}{\lvert\vec{n}\rvert} | |
+\vec{r}_D | krajevni vektor točke D | | |
+:::

@@ -168,25 +168,25 @@ Največ $2^n$ stereoizomerov; mezo oblika (notranja zrcalna ravnina) zmanjša š
 
 ### Primer 4: zdaj ti
 
-Raztopina vzorca kiralne spojine s koncentracijo $0{,}100\,\text{g/mL}$ v kiveti dolžine $1{,}00\,\text{dm}$ zasuka ravnino polarizirane svetlobe za $+2{,}40^\circ$. Čisti (S)-enantiomer ima $[\alpha] = +30{,}0^\circ$. Kolikšna je specifična rotacija vzorca, kolikšen je enantiomerni presežek $ee$ in kakšna je sestava zmesi?
+Raztopina vzorca kiralne spojine s koncentracijo $0{,}100\,\text{g/mL}$ v kiveti dolžine $1{,}00\,\text{dm}$ zasuka ravnino polarizirane svetlobe za $+2{,}40^\circ$. Čisti (S)-enantiomer ima $[\alpha] = +30{,}0^\circ$. Kolikšna je specifična rotacija vzorca, kolikšen je enantiomerni presežek $\mathrm{ee}$ in kakšna je sestava zmesi?
 
 **Podatki:** $\alpha = +2{,}40^\circ$, $l = 1{,}00\,\text{dm}$, $c = 0{,}100\,\text{g/mL}$, čisti (S): $[\alpha]_{\text{čist}} = +30{,}0^\circ$
-**Iščemo:** $[\alpha]$ vzorca, $ee$ in deleža (S) in (R)
+**Iščemo:** $[\alpha]$ vzorca, $\mathrm{ee}$ in deleža (S) in (R)
 
 :::formula
-$[\alpha] = \dfrac{\alpha}{l \cdot c}$, $\quad ee = \dfrac{[\alpha]}{[\alpha]_{\text{čist}}} \cdot 100\,\%$, $\quad x_S = \dfrac{100\,\% + ee}{2}$
+$[\alpha] = \dfrac{\alpha}{l \cdot c}$, $\quad \mathrm{ee} = \dfrac{[\alpha]}{[\alpha]_{\text{čist}}} \cdot 100\,\%$, $\quad x_S = \dfrac{100\,\% + \mathrm{ee}}{2}$
 :::
 
 **Rešitev:**
 
 1. Specifična rotacija: $[\alpha] = \dfrac{2{,}40^\circ}{1{,}00 \cdot 0{,}100} = +24{,}0^\circ$.
 2. Vzorec vrti manj kot čisti (S), torej je delno racemiziran; preostanek (R) izniči del vrtenja.
-3. Izračunaj $ee$ in sestavo sam.
+3. Izračunaj $\mathrm{ee}$ in sestavo sam.
 
 :::premisli
-Koliko sta $ee$ in deleža (S) in (R)?
+Koliko sta $\mathrm{ee}$ in deleža (S) in (R)?
 ---
-$ee = \dfrac{24{,}0}{30{,}0} \cdot 100\,\% = 80\,\%$. Delež (S) je $\dfrac{100 + 80}{2} = 90\,\%$, delež (R) je $10\,\%$. Preveri: $90 - 10 = 80$.
+$\mathrm{ee} = \dfrac{24{,}0}{30{,}0} \cdot 100\,\% = 80\,\%$. Delež (S) je $\dfrac{100 + 80}{2} = 90\,\%$, delež (R) je $10\,\%$. Preveri: $90 - 10 = 80$.
 :::
 
 ## Pogoste napake
@@ -247,7 +247,7 @@ Pri več stereocentrih: zapiši vse kombinacije ($2^n$), preveri, ali sta konca 
 
 **Fischerjeva projekcija.** Navpične vezi kažejo stran od opazovalca, vodoravne proti njemu. Če je H na vodoravni vezi, smer $1 \to 2 \to 3$ obrnemo. Oznaka D/L pri sladkorjih in aminokislinah ni enaka R/S.
 
-**Enantiomerni presežek.** $ee = \dfrac{n_{\text{glavni}} - n_{\text{manjši}}}{n_{\text{glavni}} + n_{\text{manjši}}}$. Ocena iz rotacije velja le, če v vzorcu ni drugih optično aktivnih snovi.
+**Enantiomerni presežek.** $\mathrm{ee} = \dfrac{n_{\text{glavni}} - n_{\text{manjši}}}{n_{\text{glavni}} + n_{\text{manjši}}}$. Ocena iz rotacije velja le, če v vzorcu ni drugih optično aktivnih snovi.
 
 ## Preveri se
 
@@ -290,3 +290,13 @@ Pri več stereocentrih: zapiši vse kombinacije ($2^n$), preveri, ali sta konca 
 ~ Oblika mezo je možna le, če sta konca enaka; tu sta Br in Cl različna, zato je ni.
 + $4$
 > Dva stereocentra in brez simetrije: $2^2 = 4$, to sta dva para enantiomerov.
+
+:::simboli
+\alpha | izmerjeni kot zasuka ravnine polarizirane svetlobe | | ° | + desno, − levo
+l | dolžina kivete | | dm |
+c | masna koncentracija | | g/mL |
+s, p | orbitali s in p (v oznaki hibridizacije sp³) | | |
+n | število stereocentrov | | – | stereoizomerov je največ 2^n
+\mathrm{ee} | enantiomerni presežek | \mathrm{ee} = \dfrac{[\alpha]}{[\alpha]_{\text{čist}}} \cdot 100\,\% | \% |
+x_S | delež enantiomera (S) | x_S = \dfrac{100\,\% + \mathrm{ee}}{2} | \% | če prevladuje (S)
+:::

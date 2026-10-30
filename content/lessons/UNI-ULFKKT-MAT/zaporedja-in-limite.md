@@ -226,3 +226,18 @@ Ker je $k! \ge 2^{k-1}$, je to največ $1 + 1 + \frac{1}{2} + \frac{1}{4} + \dot
 - $3$
 - $1{,}5$
 > Iz $L = 0{,}5L + 3$ sledi $0{,}5L = 3$, torej $L = 6$.
+
+:::simboli
+a_n | splošni (n-ti) člen zaporedja | | |
+L | limita zaporedja | L = \lim_{n \to \infty} a_n | |
+\varepsilon | poljubno majhno pozitivno število (polmer okolice) | | | \varepsilon > 0
+n | indeks člena | | | naravno število
+N | indeks, od katerega naprej so vsi členi blizu L | | | odvisen od \varepsilon
+b_n | splošni člen drugega zaporedja | | |
+A | limita zaporedja a_n | A = \lim_{n \to \infty} a_n | |
+B | limita zaporedja b_n | B = \lim_{n \to \infty} b_n | | pri kvocientu B ≠ 0
+e | Eulerjevo število | e = \lim_{n \to \infty}\left(1 + \frac{1}{n}\right)^n | | e ≈ 2,718 28
+a_m | člen zaporedja z indeksom m | | |
+m | drugi indeks (Cauchyjev pogoj) | | | m, n ≥ N
+k | eksponent potence (tudi indeks vsote) | | | k > 0
+:::

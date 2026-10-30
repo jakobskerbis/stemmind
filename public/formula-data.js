@@ -484,9 +484,10 @@ export function annotateTex(tex, subject = override || subjectFn()) {
         continue;
       }
       // \bar{x}, \vec F: lastna oznaka lekcije (aritmetična sredina), sicer pomen črke pod znakom.
-      const dArg = DECOR[name] && subject?.[0] === "@" && /^\{\s*(\\[a-zA-Z]+|[A-Za-z])\s*\}|^[A-Za-z]/.exec(tex.slice(j));
+      const dArg = DECOR[name] && subject?.[0] === "@" && /^\{\s*(\\[a-zA-Z]+|[A-Za-z])\s*\}|^(\\[a-zA-Z]+)|^[A-Za-z]/.exec(tex.slice(j));
       if (dArg) {
-        const ch = dArg[1] ? (GREEK[dArg[1].slice(1)] || dArg[1]) : dArg[0];
+        const g1 = dArg[1] || dArg[2];
+        const ch = g1 ? (GREEK[g1.slice(1)] || g1) : dArg[0];
         const key = `${DECOR[name]}(${ch})`;
         const after = j + dArg[0].length;
         const sub = readSub(after);
