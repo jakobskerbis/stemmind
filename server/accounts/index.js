@@ -6,7 +6,7 @@ import { isLocalRequest } from "../feedback.js";
 import express from "express";
 import { migrateAccounts } from "./schema.js";
 import { hashPassword, verifyPassword, randomToken, sha256, readCookie, Sessions, setSessionCookie, clearSessionCookie, Throttle } from "./auth.js";
-import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, paidActive, isPremiumChild, isoIn, freeDailyQuestions, freeMonthlyPoolUsd, freeStudentMonthlyUsd, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION, GRACE_DAYS } from "./plans.js";
+import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, paidActive, isPremiumChild, isoIn, SCHOOL_PLANS, schoolPlanFor, isSchoolPlan, GIFT, freeDailyQuestions, freeMonthlyPoolUsd, freeStudentMonthlyUsd, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION, GRACE_DAYS } from "./plans.js";
 import { Stripe, verifyWebhook } from "./stripe.js";
 import { Mailer, verifyEmail, resetEmail, referralRewardEmail, paymentFailedEmail } from "./email.js";
 import { mountBilling, migrateBilling, publicPass, ADULT_TEXT, WITHDRAWAL_TEXT } from "./billing.js";
@@ -23,6 +23,7 @@ import { gateNeeded } from "../gate.js";
 import { rights as rightsOf, lessonInteractive as lessonOpen } from "../placila/pravice.js";
 import { createSchoolSource } from "../placila/sola-vir.js";
 import { offerPolicy } from "../placila/ponudbe.js";
+import { mountGifts } from "../placila/darila.js";
 import { Schedules, nowParts } from "../schedule.js";
 
 export const CONSENT_TEXT =
@@ -94,6 +95,7 @@ export function mountAccounts(app, store, opts = {}) {
   // Število profilov pri aktivacijski kodi je lastnost kode, ki jo je račun porabil.
   const accessOf = (p) => accessFor(p, Date.now(), p.promo_until ? promo.termsOf(p.id).seats : promoCfg.seats);
   let billing = null; // paketi pred testom, povezave za starše (mountBilling spodaj)
+  let gifts = null; // darilne kode (mountGifts spodaj)
 
   const baseUrl = (req) => (env.EVKLID_BASE_URL || (req ? `${req.protocol}://${req.get("host")}` : `http://localhost:${env.PORT || 3000}`)).replace(/\/$/, "");
 
@@ -143,8 +145,14 @@ export function mountAccounts(app, store, opts = {}) {
   function personalOf(studentId) {
     const parentId = ownerOf(studentId);
     if (!parentId) return { tier: "legacy", until: null }; // stari podatki brez starša
-    const access = accessOf(getParent(parentId));
-    if (isPremiumChild(access, childIds(parentId), studentId)) return { tier: access.tier, until: access.until };
+    const parent = getParent(parentId);
+    const access = accessOf(parent);
+    // Osebno ob šolski licenci: mesto dobi najprej otrok s šolsko licenco (sicer najstarejši profil).
+    if (access.tier === "paid" && isSchoolPlan(parent.sub_plan)) {
+      const ids = childIds(parentId);
+      const order = [...ids.filter((id) => schools.hasLicence(id)), ...ids.filter((id) => !schools.hasLicence(id))];
+      if (order.slice(0, access.seats).includes(studentId)) return { tier: access.tier, until: access.until };
+    } else if (isPremiumChild(access, childIds(parentId), studentId)) return { tier: access.tier, until: access.until };
     if (billing?.passPremium(studentId)) return { tier: "pass", until: billing.passes.activeFor(studentId)?.ends_at || null };
     return null;
   }
@@ -601,6 +609,10 @@ export function mountAccounts(app, store, opts = {}) {
       parent: publicParent(p),
       access,
       free_daily_questions: freeDailyQuestions(),
+      // Osebno ob šolski licenci: ponudi se, ko ima vsaj en otrok šolsko licenco (samo v evrih).
+      school_plans: childIds(p.id).some((id) => schools.hasLicence(id)) && currencyOf(req, p) === "EUR" ? SCHOOL_PLANS : [],
+      gifts: gifts ? gifts.listFor(p.id) : [],
+      gift_price: GIFT.amount,
       children: children(p.id).map((c) => ({
         id: c.id,
         name: c.name,
@@ -652,7 +664,8 @@ export function mountAccounts(app, store, opts = {}) {
     if (req.parent.guest_net && !req.parent.email_verified_at) return res.status(403).json({ error: "Najprej potrdi e-naslov." });
     const key = `promo|${req.parent.id}`;
     if (throttle.blocked(key)) return res.status(429).json({ error: "Preveč poskusov. Poskusite čez 15 minut." });
-    const r = promo.redeem(req.parent, req.body?.code);
+    // Darilna koda (DAR-XXXX-XXXX) ima svoja pravila (server/placila/darila.js).
+    const r = gifts?.isGift(req.body?.code) ? gifts.redeem(req.parent, req.body?.code) : promo.redeem(req.parent, req.body?.code);
     if (r.error) {
       throttle.fail(key);
       return res.status(r.exhausted ? 410 : 400).json({ error: r.error });
@@ -912,15 +925,19 @@ export function mountAccounts(app, store, opts = {}) {
     if (needStripe(res)) return;
     const p = req.parent;
     const currency = currencyOf(req, p);
-    const plan = planFor(Number(req.body?.seats), req.body?.interval, currency);
+    const school = req.body?.school === true;
+    const plan = school ? schoolPlanFor(req.body?.interval) : planFor(Number(req.body?.seats), req.body?.interval, currency);
     if (!plan) return res.status(400).json({ error: "Neznan paket." });
+    if (school && !childIds(p.id).some((id) => schools.hasLicence(id))) {
+      return res.status(403).json({ error: "Ta cena velja samo za učence s šolsko licenco." });
+    }
     if (PAID.has(p.sub_status)) return res.status(409).json({ error: "Naročnino že imate. Paket spremenite v portalu.", portal: true });
     // Naročnino sklene polnoletna oseba; mladoletni imetnik pošlje staršu povezavo za plačilo.
     if (isMinor(p)) return res.status(403).json({ error: "Naročnino plača starš. Pošlji mu povezavo za plačilo.", pay_link: true });
     if (req.body?.adult !== true || req.body?.withdrawal !== true) return res.status(400).json({ error: "Pred plačilom potrdite obe izjavi.", consent: true });
     try {
       const customer = await ensureCustomer(p);
-      const { prices } = await stripe.ensurePrices(currency);
+      const { prices } = school ? await stripe.ensureSchoolPrices() : await stripe.ensurePrices(currency);
       const base = baseUrl(req);
       // Preostanek 7-dnevnega preizkusa ali aktivacijske kode se prenese v Stripe (če sta še vsaj 2 dni).
       const trialEnd = Math.max(Date.parse(p.trial_ends_at || 0) || 0, Date.parse(p.promo_until || 0) || 0);
@@ -1063,7 +1080,9 @@ export function mountAccounts(app, store, opts = {}) {
     isMinor,
     applySubscription,
     syncCustomer,
+    hasSchoolChild: (parentId) => childIds(parentId).some((id) => schools.hasLicence(id)),
   });
+  gifts = mountGifts(app, { db, stripe, json, log, getParent, ensureCustomer, baseUrl, isMinor, recordConsent: billing.recordConsent, paidActive });
 
   // Naročnina iz dogodka: sveže stanje iz Stripa (dogodki lahko pridejo v napačnem vrstnem redu).
   async function freshSubscription(obj) {
@@ -1086,6 +1105,10 @@ export function mountAccounts(app, store, opts = {}) {
       case "checkout.session.async_payment_succeeded": {
         if (obj.metadata?.kind === "pass") {
           billing.completePassSession(obj);
+          break;
+        }
+        if (obj.metadata?.kind === "gift") {
+          gifts.complete(obj);
           break;
         }
         if (obj.metadata?.pay_link && obj.subscription && stripe.enabled) {
@@ -1121,9 +1144,11 @@ export function mountAccounts(app, store, opts = {}) {
       case "charge.refunded": {
         const pass = billing.passes.byPayment(obj.payment_intent);
         if (pass && obj.amount_refunded > 0) billing.passes.end(pass.id, "refunded"); // tudi delno vračilo ob odstopu
+        if (obj.amount_refunded > 0) gifts.end(obj.payment_intent, "refunded"); // darilna koda: tudi delno vračilo
         break;
       }
       case "charge.dispute.created": {
+        if (gifts.end(obj.payment_intent, "disputed")) break;
         const pass = billing.passes.byPayment(obj.payment_intent);
         if (pass) {
           billing.passes.end(pass.id, "disputed");

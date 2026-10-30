@@ -67,6 +67,8 @@ export function createSchoolSource(
         },
       ];
     },
+    // Ali ima učenec zdaj šolsko licenco (brez porabe AI; za ceno Osebno ob šolski licenci).
+    hasLicence: (studentId) => !!src?.access(db, studentId, Date.now()),
     // Članstvo za pravila ponudb (server/placila/ponudbe.js): { inSchool, inClass, offersOff } ali null.
     membership: (studentId) => src?.membership?.(db, studentId) || null,
     clearCache: () => cache.clear(),

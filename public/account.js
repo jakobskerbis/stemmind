@@ -258,6 +258,10 @@ export async function initAccount({ onReady }) {
       // Paket pred testom: potrditev plačila ob vrnitvi (deluje tudi brez webhooka).
       const r = await api("/api/billing/pass/confirm", { method: "POST", body: { session_id: sessionId } }).catch(() => null);
       toast(r?.paid ? t("pass.paid") : t("pass.pending"));
+    } else if (billing === "gift" && sessionId) {
+      // Darilna koda: potrditev ob vrnitvi; koda je potem v zavihku Račun.
+      const r = await api("/api/billing/gift/confirm", { method: "POST", body: { session_id: sessionId } }).catch(() => null);
+      toast(r?.paid ? t("gift.paid") : t("pass.pending"));
     } else if (billing !== "cancel") await api("/api/billing/sync", { method: "POST" }).catch(() => {});
     if (billing === "success") toast("Hvala! Naročnina je aktivna.");
     status = await api("/api/account/status");
@@ -639,6 +643,7 @@ function planText(acc) {
       trial ? `<p class="muted">Do ${date(parent.trial_ends_at)} (preizkus) lahko uporabljata 2 otroka, nato velja koda za ${acc.promo?.seats > 1 ? `${acc.promo.seats} otroke` : "1 otroka"}.</p>` : ""}`;
   }
   if (access.tier === "bonus") return `<p><b>Brezplačni mesec</b> iz priporočila do ${date(access.until)}.</p>`;
+  if (access.tier === "gift") return `<p>${esc(t("gift.tier", { date: date(access.until) }))}</p>`;
   return `<p><b>Brezplačni paket:</b> vadnica brez omejitev in ${acc.free_daily_questions} vprašanj inštruktorju na dan.</p>`;
 }
 
@@ -654,6 +659,7 @@ function plansPicker(acc) {
     <form id="plan-form" class="plans" novalidate>
       <div class="plan-row"><div class="plan-head">1 otrok</div>${cell(1, "month")}${cell(1, "year")}</div>
       <div class="plan-row"><div class="plan-head">2 otroka</div>${cell(2, "month")}${cell(2, "year")}</div>
+      ${schoolRow(acc)}
       <p class="form-error" role="alert" hidden></p>
       ${acc.prices_draft ? `<p class="muted">Cene v lokalni valuti so predlog (razvojna različica).</p>` : ""}
       ${acc.parent.minor
@@ -667,6 +673,39 @@ function plansPicker(acc) {
     </form>`;
 }
 
+// Osebno ob šolski licenci (5,99 € / 49 €): samo, ko ima vsaj en otrok šolsko licenco.
+function schoolRow(acc) {
+  if (!acc.school_plans?.length) return "";
+  const cell = (p) => `<label class="plan"><input type="radio" name="plan" value="s-${p.interval}">
+      <span><b>${money(p.amount, "EUR")}</b> / ${esc(t(p.interval === "year" ? "school.perYear" : "school.perMonth"))}</span></label>`;
+  return `<div class="plan-row"><div class="plan-head">${esc(t("school.planHead"))}</div>${acc.school_plans.map(cell).join("")}</div>
+    <p class="muted">${esc(t("school.planNote"))}</p>`;
+}
+// Vrednost izbire paketa: »1-month« (otroci-obdobje) ali »s-year« (Osebno ob šolski licenci).
+const planBody = (v) => {
+  const [a, interval] = String(v).split("-");
+  return a === "s" ? { school: true, interval } : { seats: Number(a), interval };
+};
+
+// Darilna koda: polnoletna oseba kupi eno leto Osebno za en profil (49 €) in kodo podari.
+function giftBox(acc) {
+  if (!acc.billing || acc.parent.minor || acc.parent.guest) return "";
+  const list = (acc.gifts || [])
+    .map((g) => `<li>${g.code ? `<b>${esc(g.code)}</b> <button type="button" data-gift-copy="${esc(g.code)}">${esc(t("gift.copy"))}</button>` : ""} <span class="pill${g.redeemed ? " ok" : ""}">${esc(t(g.status !== "paid" ? "gift.refunded" : g.redeemed ? "gift.used" : "gift.unused"))}</span></li>`)
+    .join("");
+  return `<div class="card">
+      <h2>${icon("gift")} ${esc(t("gift.title"))}</h2>
+      <p>${esc(t("gift.text", { price: money(acc.gift_price || 4900, "EUR") }))}</p>
+      ${list ? `<ul class="gift-list">${list}</ul>` : ""}
+      <details><summary>${esc(t("gift.buy"))}</summary>
+        <form id="gift-form" class="form" novalidate>
+          ${consentFields()}
+          <p class="form-error" role="alert" hidden></p>
+          <button class="primary" type="submit">${esc(t("pay.continue"))}</button>
+        </form></details>
+    </div>`;
+}
+
 // Vnos aktivacijske kode; skrbnik vidi še porabo in povezavo za deljenje.
 function promoBox(acc, paid) {
   const pr = acc.promo || {};
@@ -675,8 +714,9 @@ function promoBox(acc, paid) {
     ? `<div class="promo-admin"><p><b>Aktivacijska koda ${esc(a.code)}:</b> porabljenih ${a.used} od ${a.limit} · vsak dobi ${a.days} dni polnega dostopa.</p>
         <div class="inline"><input id="promo-url" readonly value="${esc(a.url)}"><button id="promo-copy" type="button">Kopiraj</button></div></div>`
     : "";
-  if (!pr.available || pr.redeemed || paid) return admin;
-  return `<details${store.get("evklid_koda") ? " open" : ""}><summary>Imate aktivacijsko kodo?</summary>
+  // Darilne kode (DAR-…) se vpišejo v isto polje, zato je polje tudi, ko aktivacijskih kod ni.
+  if (paid) return admin;
+  return `<details${store.get("evklid_koda") ? " open" : ""}><summary>${esc(t("gift.codeSummary"))}</summary>
       <form id="promo-form" class="inline form">
         <input name="code" maxlength="40" required autocapitalize="characters" placeholder="npr. EVKLID3X" value="${esc(store.get("evklid_koda") || "")}">
         <button class="primary" type="submit">Aktiviraj</button>
@@ -902,6 +942,7 @@ async function renderAccount() {
       ${promoBox(acc, paid)}
     </div>
     ${acc.promo?.codes ? adminCodes(acc) : ""}
+    ${giftBox(acc)}
 
     <div class="card">
       <h2>Otroci</h2>
@@ -960,12 +1001,11 @@ async function renderAccount() {
 
   $("#plan-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const [seats, interval] = e.target.plan.value.split("-");
     const btn = $("button[type=submit]", e.target);
     btn.disabled = true;
     try {
       if (!consentsOk(e.target)) throw new Error(t("payp.consentMissing"));
-      const r = await api("/api/billing/checkout", { method: "POST", body: { seats: Number(seats), interval, ...consentBody() } });
+      const r = await api("/api/billing/checkout", { method: "POST", body: { ...planBody(e.target.plan.value), ...consentBody() } });
       location.href = r.url;
     } catch (err) {
       btn.disabled = false;
@@ -975,10 +1015,9 @@ async function renderAccount() {
   // Mladoletni imetnik: povezava, s katero plača starš.
   $("#plan-link")?.addEventListener("click", async (e) => {
     const f = $("#plan-form");
-    const [seats, interval] = f.plan.value.split("-");
     e.target.disabled = true;
     try {
-      const r = await api("/api/billing/pay-link", { method: "POST", body: { kind: "sub", seats: Number(seats), interval } });
+      const r = await api("/api/billing/pay-link", { method: "POST", body: { kind: "sub", ...planBody(f.plan.value) } });
       const out = $("#plan-link-out");
       out.innerHTML = linkBox(r.url);
       bindLinkBox(out, r.url, toast);
@@ -989,6 +1028,25 @@ async function renderAccount() {
     }
   });
   bindAdminCodes(acc);
+  $("#gift-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const btn = $("button[type=submit]", e.target);
+    btn.disabled = true;
+    try {
+      if (!consentsOk(e.target)) throw new Error(t("payp.consentMissing"));
+      const r = await api("/api/billing/gift", { method: "POST", body: consentBody() });
+      location.href = r.url;
+    } catch (err) {
+      btn.disabled = false;
+      showError(e.target, err);
+    }
+  });
+  document.querySelectorAll("[data-gift-copy]").forEach((b) =>
+    b.addEventListener("click", async () => {
+      await navigator.clipboard?.writeText(b.dataset.giftCopy).catch(() => {});
+      toast(t("gift.copied"));
+    }),
+  );
   $("#promo-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const btn = $("button[type=submit]", e.target);
@@ -996,7 +1054,7 @@ async function renderAccount() {
     try {
       const r = await api("/api/account/promo", { method: "POST", body: { code: e.target.code.value } });
       store.set("evklid_koda", null);
-      toast(`Aktivacijska koda velja ✓ Poln dostop do ${date(r.access.until)}.`);
+      toast(r.access.tier === "gift" ? t("gift.redeemed", { date: date(r.access.until) }) : `Aktivacijska koda velja ✓ Poln dostop do ${date(r.access.until)}.`);
       await onReadyCb?.({ keepView: true });
       renderAccount();
     } catch (err) {
