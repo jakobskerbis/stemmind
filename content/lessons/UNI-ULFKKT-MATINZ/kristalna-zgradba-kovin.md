@@ -252,7 +252,7 @@ Robno dislokacijo si nariši kot mrežo navpičnih črt, kjer se ena črta konč
 \rho | gostota kovine | \rho = \dfrac{n\,M}{a^3\,N_\mathrm{A}} | g/cm^3
 n | število atomov v osnovni celici | n = \dfrac{\rho\, a^3 N_\mathrm{A}}{M} | – | BCC: 2, FCC: 4
 M | molska masa | | g/mol
-a | mrežni parameter (dolžina roba celice) | a = 2\sqrt2\,R | nm | za FCC; za računanje gostote pretvorimo v cm
+a | mrežni parameter (dolžina roba celice) | | nm | FCC: a = 2√2 R, BCC: a√3 = 4R; za gostoto v cm
 N_\mathrm{A} | Avogadrova konstanta | | mol^{-1} | 6,022 · 10²³ mol⁻¹
 N_\mathrm{v} | število vrzeli | | – |
 N | število vseh mest za atome | | – |

@@ -292,11 +292,11 @@ Pri več stereocentrih: zapiši vse kombinacije ($2^n$), preveri, ali sta konca 
 > Dva stereocentra in brez simetrije: $2^2 = 4$, to sta dva para enantiomerov.
 
 :::simboli
-\alpha | izmerjeni kot zasuka ravnine polarizirane svetlobe | | ° | + desno, − levo
+\alpha | izmerjeni kot zasuka ravnine polarizirane svetlobe | | ° | + desno, − levo; [α] = α/(l c) je specifična sučnost
 l | dolžina kivete | | dm |
 c | masna koncentracija | | g/mL |
 s, p | orbitali s in p (v oznaki hibridizacije sp³) | | |
-n | število stereocentrov | | – | stereoizomerov je največ 2^n
+n | število stereocentrov | | – | stereoizomerov je največ 2ⁿ
 \mathrm{ee} | enantiomerni presežek | \mathrm{ee} = \dfrac{[\alpha]}{[\alpha]_{\text{čist}}} \cdot 100\,\% | \% |
 x_S | delež enantiomera (S) | x_S = \dfrac{100\,\% + \mathrm{ee}}{2} | \% | če prevladuje (S)
 :::

@@ -240,9 +240,9 @@ Model velja za haploidne organizme (bakterije) z ločenimi generacijami in brez 
 
 :::simboli
 p_t | delež odpornih po t generacijah | | – |
-q_t | delež občutljivih po t generacijah | | – | p_t + q_t = 1
+q_t | delež občutljivih po t generacijah | q_t = 1 - p_t | – |
 p_0 | začetni delež odpornih | | – |
-q_0 | začetni delež občutljivih | | – | q_0 = 1 - p_0
+q_0 | začetni delež občutljivih | q_0 = 1 - p_0 | – |
 w_R | relativni fitnes odpornih | | – | najbolj uspešni imajo 1
 w_S | relativni fitnes občutljivih | | – |
 t | število generacij | | – | pri molekulski uri čas razcepa v milijonih let

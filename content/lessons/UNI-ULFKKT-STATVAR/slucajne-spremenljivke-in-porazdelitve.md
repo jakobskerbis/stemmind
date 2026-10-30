@@ -250,5 +250,5 @@ x | vrednost zvezne spremenljivke | | |
 \mu | pričakovana vrednost (središče normalne porazdelitve) | | |
 \sigma | standardni odklon (širina normalne porazdelitve) | | |
 z | standardizirana vrednost | z = \dfrac{x - \mu}{\sigma} | |
-\Phi | porazdelitvena funkcija standardne normalne porazdelitve | | | \Phi(z) = P(Z ≤ z), iz tabele
+\Phi | porazdelitvena funkcija standardne normalne porazdelitve | | | Φ(z) = P(Z ≤ z), iz tabele
 :::

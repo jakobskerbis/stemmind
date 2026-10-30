@@ -267,5 +267,5 @@ m, n | naravni števili | | | v tabeli parov m vrstica, n stolpec
 \pi | zaporedna številka para (m, n) | \pi(m, n) = \frac{(m+n-2)(m+n-1)}{2} + m | | tu ne pomeni števila π
 s | številka diagonale tabele parov | s = m + n | | diagonala ima s − 1 parov
 x | točka intervala (0, 1)
-y | točka intervala (2, 5) | y = 3x + 2
+y | točka intervala (2, 5) | | | v zgledu y = f(x) = 3x + 2
 :::

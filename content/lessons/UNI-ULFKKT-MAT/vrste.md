@@ -245,22 +245,22 @@ $$\frac{1}{R} = \limsup_{n \to \infty} \sqrt[n]{|c_n|}$$
 
 :::simboli
 n | indeks (zaporedna številka) člena | | |
-a_n | splošni člen vrste | | | potreben pogoj konvergence: a_n → 0
+a_n | splošni člen vrste | | | potreben pogoj konvergence: aₙ → 0
 a_1, a_2, a_3 | prvi, drugi in tretji člen vrste | | |
 a | prvi člen geometrijske vrste | | | a ≠ 0
-q | količnik geometrijske vrste | | | vrsta konvergira za \lvert q\rvert < 1
-p | eksponent v vrsti \sum \frac{1}{n^p} | | | konvergira natanko za p > 1
+q | količnik geometrijske vrste | | | vrsta konvergira za |q| < 1
+p | eksponent v vrsti Σ 1/nᵖ | | | konvergira natanko za p > 1
 c_n | koeficienti potenčne vrste | | |
 x | spremenljivka potenčne vrste | | |
 x_0 | središče potenčne vrste | | |
-R | konvergenčni polmer | R = \lim_{n \to \infty}\left\lvert\frac{c_n}{c_{n+1}}\right\rvert | | konvergenca za \lvert x - x_0\rvert < R
+R | konvergenčni polmer | R = \lim_{n \to \infty}\left\lvert\frac{c_n}{c_{n+1}}\right\rvert | | konvergenca za |x − x₀| < R
 c_{n+1} | naslednji koeficient potenčne vrste | | |
 a_{n+1}, a_{n+2}, a_m | členi vrste za indeksom n | | |
-\varepsilon | poljubno majhno pozitivno število | | | \varepsilon > 0
+\varepsilon | poljubno majhno pozitivno število | | | ε > 0
 m | indeks, večji od n (Cauchyjev pogoj) | | |
 N | indeks, od katerega naprej velja ocena | | |
-S_{2^k} | delna vsota prvih 2^k členov harmonične vrste | | | S_{2^k} ≥ 1 + k/2
-k | eksponent v potenci (2^k oziroma q^k) | | |
+S_{2^k} | delna vsota prvih 2ᵏ členov harmonične vrste | | | vsaj 1 + k/2, zato vrsta divergira
+k | eksponent v potenci (2ᵏ oziroma qᵏ) | | |
 b_n | splošni člen primerjalne vrste | | |
-L | limita kvocienta pri kriterijih | L = \lim \dfrac{a_{n+1}}{a_n} | | L < 1: konvergenca; pri limitnem primerjalnem L = \lim a_n/b_n
+L | limita kvocienta pri kriterijih | L = \lim \dfrac{a_{n+1}}{a_n} | | L < 1: konvergenca; pri limitnem primerjalnem L = lim aₙ/bₙ
 :::

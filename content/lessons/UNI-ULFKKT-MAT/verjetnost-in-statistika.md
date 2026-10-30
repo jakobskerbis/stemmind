@@ -233,9 +233,9 @@ E | pričakovana vrednost | E(X) = \sum_i x_i\, p_i | |
 X | slučajna spremenljivka | | | vsakemu izidu priredi število
 i | indeks vrednosti oziroma meritve | | |
 x_i | i-ta vrednost (podatek) | | | v regresiji neodvisna spremenljivka, npr. koncentracija
-p_i | verjetnost vrednosti x_i | p_i = P(X = x_i) | | \sum p_i = 1
+p_i | verjetnost vrednosti xᵢ | p_i = P(X = x_i) | | Σ pᵢ = 1
 x | vrednost zvezne slučajne spremenljivke | | |
-f | gostota verjetnosti | | | f(x) ≥ 0 in \int f(x)\,dx = 1
+f | gostota verjetnosti | | | f(x) ≥ 0 in ∫ f(x) dx = 1
 d | oznaka diferenciala (dx) | | |
 D | varianca | D(X) = E\big((X - \mu)^2\big) = E(X^2) - \mu^2 | |
 \sigma | standardni odklon | \sigma = \sqrt{D(X)} | |
@@ -244,16 +244,16 @@ P | verjetnost | | | število med 0 in 1
 k | število uspehov (vrednost X) | | | v regresiji y = kx + n smerni koeficient
 n | število ponovitev poskusa oziroma meritev | | | v regresiji y = kx + n začetna vrednost
 p | verjetnost uspeha v enem poskusu | | |
-\lambda | parameter Poissonove porazdelitve | | | E(X) = \sigma^2 = \lambda
+\lambda | parameter Poissonove porazdelitve | | | E(X) = σ² = λ
 e | Eulerjevo število | | | e ≈ 2,718
 \bar x | vzorčno povprečje | \bar x = \frac{1}{n}\sum x_i | |
 s | vzorčni standardni odklon | s = \sqrt{\frac{1}{n - 1}\sum (x_i - \bar x)^2} | |
 F | vsota kvadratov navpičnih odstopanj od premice | F(k, n) = \sum_{i=1}^n (y_i - kx_i - n)^2 | | drugje porazdelitvena funkcija F(x) = P(X ≤ x)
-y_i | izmerjena vrednost pri x_i (npr. absorbanca) | | |
-\bar y | povprečje vrednosti y_i | | |
+y_i | izmerjena vrednost pri xᵢ (npr. absorbanca) | | |
+\bar y | povprečje vrednosti yᵢ | \bar y = \frac{1}{n}\sum y_i | |
 r | korelacijski koeficient | r = \frac{\sum (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum (x_i - \bar x)^2 \sum (y_i - \bar y)^2}} | | -1 ≤ r ≤ 1
-X_i | neodvisne slučajne spremenljivke (posamezne meritve) | | | E(X_i) = \mu, D(X_i) = \sigma^2
-\bar X | povprečje slučajnih spremenljivk X_i | \bar X = \frac{1}{n}\sum X_i | | E(\bar X) = \mu
+X_i | neodvisne slučajne spremenljivke (posamezne meritve) | | | E(Xᵢ) = μ, D(Xᵢ) = σ²
+\bar X | povprečje slučajnih spremenljivk Xᵢ | \bar X = \frac{1}{n}\sum X_i | | njegova pričakovana vrednost je μ
 s_{\bar x} | standardna napaka povprečja | s_{\bar x} = \frac{s}{\sqrt n} | |
 B | binomska porazdelitev B(n, p) | | | v P(A ∪ B) oznaka dogodka
 :::

@@ -234,14 +234,14 @@ b | imaginarni del števila z | b = \operatorname{Im} z | | realno število, bre
 i | imaginarna enota | i^2 = -1 | |
 c | realni del drugega števila c + di | | |
 d | imaginarni del drugega števila c + di | | | pri deljenju c + di ≠ 0
-r | absolutna vrednost (modul) števila z | r = \sqrt{a^2 + b^2} | | razdalja od izhodišča, r = \lvert z\rvert
+r | absolutna vrednost (modul) števila z | r = \sqrt{a^2 + b^2} | | razdalja od izhodišča, r = |z|
 \varphi | argument števila z | \cos\varphi = \frac{a}{r} | | kot s pozitivnim delom realne osi
 e | Eulerjevo število | | | e ≈ 2,718
 r_1, r_2 | absolutni vrednosti obeh faktorjev | | |
 \varphi_1, \varphi_2 | argumenta obeh faktorjev | | | pri množenju se seštejeta
 n | stopnja potence oziroma korena | | | naravno število
-w_k | k-ti izmed n-tih korenov števila z | w_k = \sqrt[n]{r}\, e^{i\frac{\varphi + 2k\pi}{n}} | | ležijo na krožnici s polmerom \sqrt[n]{r}
+w_k | k-ti izmed n-tih korenov števila z | w_k = \sqrt[n]{r}\, e^{i\frac{\varphi + 2k\pi}{n}} | | ležijo na krožnici s polmerom ⁿ√r
 k | zaporedna številka korena | | | k = 0, 1, …, n − 1
 w | kompleksno število (delitelj) | | | w ≠ 0
-\bar w | konjugirano število k w | | | imaginarnemu delu spremenimo predznak
+\bar w | konjugirano število k w | \bar w = c - di | | za w = c + di; imaginarnemu delu spremenimo predznak
 :::

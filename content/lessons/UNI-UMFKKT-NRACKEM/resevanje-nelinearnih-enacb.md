@@ -281,10 +281,10 @@ za neki $\xi_n$ med $x_n$ in $r$. Zato obstaja okolica ničle, v kateri metoda k
 > $2^n \ge \frac{1}{0{,}001} = 1000$. Ker je $2^9 = 512$ premalo in $2^{10} = 1024$ dovolj, je $n = 10$.
 
 :::simboli
-c | koncentracija zdravila v krvi | c(t) = 10\,t\,e^{-t/2} | mg/L | deluje pri c ≥ 2 mg/L
+c | koncentracija zdravila v krvi | | mg/L | v zgledu c(t) = 10 t e^(−t/2); deluje pri c ≥ 2 mg/L
 t | čas od zaužitja | | h
 e | Eulerjevo število | | | e ≈ 2,718
-f | funkcija, katere ničlo iščemo | f(t) = 10\,t\,e^{-t/2} - 2
+f | funkcija, katere ničlo iščemo | | | v zgledu f(t) = c(t) − 2
 f' | odvod funkcije f
 f'' | drugi odvod funkcije f
 x_n | n-ti približek ničle

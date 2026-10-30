@@ -235,6 +235,6 @@ A, B, C | končne množice (dogodki, ki jih štejemo)
 A_i | i-ta množica v načelu vključitev in izključitev
 \bar{A}, \bar{B} | komplementa množic A in B | \lvert \bar{A} \cap \bar{B} \rvert = N - \lvert A \cup B \rvert
 N | število vseh elementov (vseh možnosti)
-I | neprazna podmnožica indeksov \{1, \ldots, n\}
+I | neprazna podmnožica indeksov {1, …, n}
 i, j | indeksa množic
 :::

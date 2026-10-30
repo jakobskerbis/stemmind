@@ -277,7 +277,7 @@ K | konveksna množica | | | vsebuje daljico med poljubnima točkama
 P | množica, katere konveksnost preverjamo
 A | matrika (linearna preslikava) | | | ‖Ax‖ ≤ ‖A‖ ‖x‖
 Q | ortogonalna matrika | Q^{\mathsf T}Q = I | | det Q = ±1
-T | transponiranje (oznaka A^T)
+T | transponiranje (oznaka Aᵀ)
 I | identična (enotska) matrika
 \lambda_{\max} | največja lastna vrednost matrike AᵀA
 d | vektor odmika sonde od točke srečanja | | km

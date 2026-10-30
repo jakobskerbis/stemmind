@@ -243,7 +243,7 @@ kjer je $\vec{a}_j$ na $i$-tem mestu. Za $j \neq i$ ima matrika dva enaka stolpc
 
 :::simboli
 a_{11}, a_{12}, a_{21}, a_{22} | koeficienti sistema (elementi matrike A)
-x | neznanka sistema | | | x_1, …, x_n v splošnem zapisu
+x | neznanka sistema | | | x₁, …, xₙ v splošnem zapisu
 x_i | i-ta neznanka | x_i = \frac{\det A_i}{\det A} | | det A ≠ 0
 y, z | neznanki sistema
 b | desna stran enačbe | | | b₁, b₂ desni strani obeh enačb

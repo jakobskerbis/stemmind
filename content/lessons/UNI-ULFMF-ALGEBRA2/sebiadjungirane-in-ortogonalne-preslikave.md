@@ -276,11 +276,11 @@ Za pozitivno definitno kvadratno formo velja ista slika obrnjeno: nivojnice $q =
 > Matrika je $\begin{pmatrix}1&a\\a&4\end{pmatrix}$, sled $5 > 0$, $\det = 4 - a^2$. Obe lastni vrednosti sta pozitivni natanko pri $4 - a^2 > 0$, torej $|a| < 2$.
 
 :::simboli
-A | linearna preslikava (simetrična matrika) | A = Q D Q^T | | sebiadjungirana, če A* = A
+A | linearna preslikava (simetrična matrika) | | | sebiadjungirana, če A* = A; tedaj A = QDQᵀ
 x, y | vektorja v ℝⁿ | | | v kvadratni formi koordinati točke
 x_1, x_2 | komponenti vektorja x
 Q | ortogonalna matrika | Q^T Q = I | | v stolpcih ortonormirani lastni vektorji
-T | transponiranje (oznaka Q^T)
+T | transponiranje (oznaka Qᵀ)
 I | identična (enotska) matrika
 \lambda, \mu | lastni vrednosti preslikave A | \det(A - \lambda I) = 0 | | λ₁, …, λₙ na diagonali D
 D | diagonalna matrika lastnih vrednosti

@@ -209,8 +209,8 @@ Predstavljaj si tri stvari iz trgovine: gumico, žvečilni gumi in prepečenec.
 > Žilavost mora biti zagotovljena pri najnižji temperaturi, pri kateri del dela; oznaka J2 to zagotavlja pri $-20\,^\circ\mathrm{C}$.
 
 :::simboli
-\mathrm{HV} | trdota po Vickersu | \mathrm{HV} = 0{,}1891\,\dfrac{F}{d^2} | – | F v N, d v mm; za jekla R_m ≈ 3,3 · HV
-F | sila | F = R_e \cdot S | N |
+\mathrm{HV} | trdota po Vickersu | \mathrm{HV} = 0{,}1891\,\dfrac{F}{d^2} | – | F v N, d v mm; za jekla natezna trdnost ≈ 3,3 · HV
+F | sila | | N | pri meji tečenja F = Rₑ · S
 d | povprečna diagonala vtiska | d = \dfrac{d_1 + d_2}{2} | mm | v S = πd²/4 premer palice
 d_1, d_2 | izmerjeni diagonali vtiska | | mm
 R_e | meja tečenja | | MPa |

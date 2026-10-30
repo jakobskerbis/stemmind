@@ -272,6 +272,6 @@ Postopek je podoben uglaševanju kitare: naenkrat zavrtiš le en vijak in poslu�
 > Terciarni substrat, dobra izstopajoča skupina in polarno protično topilo: vse pospešuje nastanek karbokationa.
 
 :::simboli
-v | hitrost reakcije | v = k\,[\mathrm{RX}]\,[\mathrm{Nu}] | mol/(L s) | pri S_N1 in E1 v = k[RX]
-k | konstanta hitrosti | | | pri S_N2 v L/(mol s), pri S_N1 v 1/s
+v | hitrost reakcije | v = k\,[\mathrm{RX}]\,[\mathrm{Nu}] | mol/(L s) | velja za SN2; pri SN1 in E1 v = k[RX]
+k | konstanta hitrosti | | | pri SN2 v L/(mol s), pri SN1 v 1/s
 :::

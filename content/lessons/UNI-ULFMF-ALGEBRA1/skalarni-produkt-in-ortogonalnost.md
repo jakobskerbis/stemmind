@@ -295,13 +295,13 @@ z enakostjo le za $w = p$. Projekcija je torej enolična in ni odvisna od izbire
 x, y | vektorja v ℝⁿ | | | v ⟨p, q⟩ je x spremenljivka polinomov
 x_1, x_2, x_n | komponente vektorja x
 y_1, y_2, y_n | komponente vektorja y
-p, q | polinoma stopnje največ 1 | | | v dokazu najbližje točke p = proj_W v
+p, q | polinoma stopnje največ 1 | | | v dokazu najbližje točke je p projekcija v na W
 d | oznaka diferenciala (dx) v integralu
 u, v | vektorja prostora s skalarnim produktom
 w | poljuben vektor podprostora W
 \varphi | kot med vektorjema u in v | \cos \varphi = \frac{\langle u, v \rangle}{\lVert u \rVert \, \lVert v \rVert} | | φ ∈ [0, π]
-W | podprostor z ortogonalno bazo u_1, …, u_k
-u_1, u_2, u_j, u_m | ortogonalni vektorji (baza podprostora W) | u_2 = v_2 - \operatorname{proj}_{u_1} v_2 | | v Gram-Schmidtovem postopku u₁ = v₁
+W | podprostor z ortogonalno bazo u₁, …, uₖ
+u_1, u_2, u_j, u_m | ortogonalni vektorji (baza podprostora W) | u_m = v_m - \sum_{j<m} \operatorname{proj}_{u_j} v_m | | v Gram-Schmidtovem postopku u₁ = v₁
 v_1, v_2 | vektorji začetne baze podprostora W
 e_m | normirani vektor ortonormirane baze | e_m = \frac{u_m}{\lVert u_m \rVert}
 j | indeks člena vsote

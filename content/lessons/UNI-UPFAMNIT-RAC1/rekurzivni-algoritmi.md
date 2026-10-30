@@ -275,7 +275,7 @@ Manj potez ne gre: preden se največji disk premakne, mora vseh $n - 1$ manjših
 :::simboli
 n | število diskov | | – | pri dvojiškem iskanju število elementov tabele
 P | število potez za stolp z n diski | P(n) = 2P(n-1) + 1 | – | P(n) = 2ⁿ − 1
-s | indeks sredine dela tabele | s = (\mathrm{lo} + \mathrm{hi}) | – | celoštevilsko deljeno z 2
+s | indeks sredine dela tabele | s = \left\lfloor \frac{\mathrm{lo} + \mathrm{hi}}{2} \right\rfloor | – | vsoto celoštevilsko delimo z 2
 \mathrm{lo} | spodnja meja (indeks) dela tabele | | –
 \mathrm{hi} | zgornja meja (indeks) dela tabele | | –
 k | število primerjav | | – | najmanjši k z 2ᵏ ≥ n + 1

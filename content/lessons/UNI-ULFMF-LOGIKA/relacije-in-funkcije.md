@@ -239,7 +239,7 @@ x | element množice
 f | funkcija (preslikava)
 x_1, x_2 | elementa domene funkcije f
 y | element kodomene
-m, k | celi števili | m = 3k
+m, k | celi števili | | | 3 deli m natanko tedaj, ko je m = 3k
 q | količnik pri deljenju s 3
 r | ostanek pri deljenju s 3 | r = x - 3q | | r ∈ {0, 1, 2}
 :::

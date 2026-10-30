@@ -261,7 +261,7 @@ Analogija ima mejo: denar nima smeri, sila lepenja pa vedno kaže nasproti težn
 F | sila trenja (lepenja) med podlago in telesom | F = \mu_\mathrm{t} N | N | pri mirovanju F ≤ μ_l N
 \mu_\mathrm{l} | koeficient lepenja | \mu_\mathrm{l} = \tan\alpha_\mathrm{max} | – | običajno večji od μ_t
 \mu_\mathrm{t} | koeficient trenja (pri drsenju) | \mu_\mathrm{t} = \frac{F}{N} | – | običajno μ_t < μ_l
-N | normalna sila podlage | N = G \cos\alpha | N | na vodoravnih tleh N = G
+N | normalna sila podlage | | N | na klancu N = G cos α, na vodoravnih tleh N = G
 G | teža telesa | | N
 P | potisna (vlečna) sila | | N
 \alpha | naklonski kot klanca | \tan\alpha = \frac{\Delta h}{d} | °

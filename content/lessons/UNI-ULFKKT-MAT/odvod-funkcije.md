@@ -265,6 +265,8 @@ Ker je $f$ zvezna (odvedljiva), gre $f(x + h) \to f(x)$, kvocienta pa gresta pro
 
 :::simboli
 f | odvedljiva funkcija | | |
+f' | odvod funkcije f | f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h} | | smerni koeficient tangente v x₀
+h' | odvod sestavljene funkcije h(x) = f(g(x)) | h'(x) = f'(g(x)) \cdot g'(x) | | verižno pravilo
 x_0 | točka, v kateri odvajamo (dotikališče) | | |
 h | prirastek neodvisne spremenljivke | | | h → 0; v verižnem pravilu h(x) = f(g(x))
 x | neodvisna spremenljivka | | |

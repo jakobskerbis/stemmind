@@ -256,7 +256,7 @@ Za tombolo: $P(M \le j) = \binom{j}{k}/\binom{N}{k}$, torej $P(M = j) = \binom{j
 
 :::simboli
 \theta | neznani parameter porazdelitve | | |
-\hat{\theta} | cenilka parametra \theta | | | funkcija vzorca, zato slučajna spremenljivka
+\hat{\theta} | cenilka parametra θ | | | funkcija vzorca, zato slučajna spremenljivka
 b | pristranskost cenilke | b(\hat{\theta}) = E(\hat{\theta}) - \theta | | nepristranska, če je b = 0
 E | pričakovana vrednost | | |
 M | največja izvlečena številka (slučajna spremenljivka) | | |
@@ -264,17 +264,17 @@ k | število izvlečenih listkov | | | pri binomskem zgledu število zadetkov
 N | število vseh listkov (neznani parameter) | | |
 \hat N | nepristranska cenilka za N | \hat N = m \cdot \dfrac{k+1}{k} - 1 | |
 m | izmerjena največja številka | | | N ≥ m
-L | funkcija verjetja | L(\theta) = \prod_{i=1}^{n} f(x_i;\theta) | | MLE je \hat{\theta}, pri kateri je L največja
+L | funkcija verjetja | L(\theta) = \prod_{i=1}^{n} f(x_i;\theta) | | cenilka največjega verjetja je θ̂, pri kateri je L največja
 i | indeks podatka | | |
 n | velikost vzorca | | |
 f | gostota ali verjetnostna funkcija | | |
 x_i | izmerjeni podatki | | |
-X_i | podatki kot slučajne spremenljivke | | | neodvisne, E(X_i) = \mu, D(X_i) = \sigma^2
-\bar X | vzorčno povprečje (slučajna spremenljivka) | \bar X = \frac{1}{n}\sum X_i | | nepristranska cenilka za \mu
+X_i | podatki kot slučajne spremenljivke | | | neodvisne, E(Xᵢ) = μ, D(Xᵢ) = σ²
+\bar X | vzorčno povprečje (slučajna spremenljivka) | \bar X = \frac{1}{n}\sum X_i | | nepristranska cenilka za μ
 \bar x | povprečje izmerjenih podatkov | \bar x = \frac{1}{n}\sum x_i | |
 \sigma | standardni odklon porazdelitve | | |
-\hat{\sigma} | cenilka standardnega odklona po metodi največjega verjetja | \hat{\sigma}^2 = \frac1n \sum_{i=1}^{n} (X_i - \bar X)^2 | | pristranska: E(\hat{\sigma}^2) = \frac{n-1}{n}\sigma^2
-s | vzorčni standardni odklon | s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar X)^2 | | s^2 je nepristranska cenilka za \sigma^2
+\hat{\sigma} | cenilka standardnega odklona po metodi največjega verjetja | \hat{\sigma}^2 = \frac1n \sum_{i=1}^{n} (X_i - \bar X)^2 | | σ̂² je pristranska: E(σ̂²) = (n − 1)σ²/n
+s | vzorčni standardni odklon | s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar X)^2 | | s² je nepristranska cenilka za σ²
 \mu | pričakovana vrednost porazdelitve | | |
 p | delež zadetkov (verjetnost uspeha) | | |
 \lambda | parameter Poissonove porazdelitve | | | povprečno število dogodkov

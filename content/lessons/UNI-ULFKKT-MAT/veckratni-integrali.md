@@ -228,7 +228,7 @@ P | pravokotnik [a, b] × [c, d] (območje integracije) | | |
 f | funkcija, ki jo integriramo | | | pri f ≥ 0 integral da prostornino pod grafom
 x, y | spremenljivki integracije (koordinati v ravnini) | | |
 d | zgornja meja za y na pravokotniku | | | v dx, dy, dA tudi oznaka diferenciala
-A | ploščina (dA je element ploščine) | | | v polarnih koordinatah dA = r\, dr\, d\varphi
+A | ploščina (dA je element ploščine) | | | v polarnih koordinatah dA = r dr dφ
 a, b | meji za x | | | a ≤ x ≤ b
 c | spodnja meja za y na pravokotniku | | |
 D | območje integracije v ravnini | | |
@@ -239,15 +239,15 @@ z | tretja koordinata (višina) | | |
 V | prostornina telesa (dV je element prostornine) | V = \iiint_T 1\, dV | |
 g_1 | spodnja meja za z | | |
 g_2 | zgornja meja za z | | |
-J | Jacobijeva determinanta | J = \frac{\partial(x, y)}{\partial(u, v)} | | \lvert J\rvert pove povečanje ploščine; polarno J = r
+J | Jacobijeva determinanta | J = \frac{\partial(x, y)}{\partial(u, v)} | | |J| pove povečanje ploščine; polarno J = r
 u, v | novi spremenljivki pri zamenjavi | | | x = x(u, v), y = y(u, v)
 m | masa telesa | m = \iiint_T \rho\, dV | kg
-\varphi | polarni kot v ravnini xy | | | \varphi \in [0, 2\pi)
+\varphi | polarni kot v ravnini xy | | | φ ∈ [0, 2π)
 r | oddaljenost od izhodišča (polarna oz. sferna koordinata) | | | r ≥ 0
-\vartheta | kot od pozitivne osi z (sferna koordinata) | | | \vartheta \in [0, \pi]
+\vartheta | kot od pozitivne osi z (sferna koordinata) | | | ϑ ∈ [0, π]
 e | Eulerjevo število | | | e ≈ 2,718
 \psi_1 | spodnja meja za x (funkcija y) | | | območje tipa II
 \psi_2 | zgornja meja za x (funkcija y) | | | območje tipa II
-\rho | gostota | | kg/m^3 | v zgledu \rho(r) = \rho_0(1 - r/R)
+\rho | gostota | | kg/m^3 | v zgledu ρ(r) = ρ₀(1 − r/R)
 R | polmer krogle | | m
 :::

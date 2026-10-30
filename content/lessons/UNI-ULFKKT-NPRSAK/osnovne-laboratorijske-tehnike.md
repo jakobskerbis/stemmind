@@ -251,7 +251,7 @@ m_2 | masa posode z vodo | | g |
 m_1 | masa prazne posode | | g |
 V | prostornina | V = \dfrac{m}{\rho} | mL |
 \rho | gostota vode | | g/mL | 0,9982 g/mL pri 20 °C
-m_\mathrm{v} | masa vode za raztapljanje | m_\mathrm{v} = \dfrac{m(\mathrm{KNO_3})}{169} \cdot 100\,\mathrm{g} | g | 169 g KNO₃ na 100 g vode pri 80 °C
+m_\mathrm{v} | masa vode za raztapljanje | | g | pri 80 °C se v 100 g vode raztopi 169 g KNO₃
 m_\mathrm{kristalov} | masa izločenih kristalov | | g |
 h | višina padavin | h = \dfrac{V}{A} | mm |
 A | ploščina odprtine dežemera | | cm^2 |

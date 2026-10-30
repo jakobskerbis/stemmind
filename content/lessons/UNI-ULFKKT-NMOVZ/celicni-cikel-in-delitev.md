@@ -248,7 +248,7 @@ Dokler ni vsaka šablona trdno privezana na kamion, delovodja ne pusti odpeljati
 > Dokler vsi kinetohori niso pravilno pripeti, signal kontrolne točke vretena zavira APC/C; sekurin se ne razgradi, separaza ostane neaktivna in celica obstane v metafazi.
 
 :::simboli
-n | število parov homolognih kromosomov (haploidno število) | | – | pri človeku n = 23
+n | število kromosomov v enem kompletu (haploidno število) | | – | pri človeku n = 23, diploidna celica 2n
 t_{\mathrm{faza}} | trajanje faze celičnega cikla | t_{\mathrm{faza}} \approx \dfrac{N_{\mathrm{faza}}}{N} \cdot T | h |
 N_{\mathrm{faza}} | število celic v tej fazi | | – |
 N | število vseh preštetih celic | | – |

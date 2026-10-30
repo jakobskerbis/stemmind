@@ -238,6 +238,6 @@ Operacije nad množicami imajo tudi metode: `a.union(b)`, `a.intersection(b)`, `
 > Unija je {penicilin, aspirin, lateks, oreščki}: $3 + 2 - 1 = 4$.
 
 :::simboli
-a | prva množica (Pythonov set) | | | \lvert a\rvert pomeni len(a)
+a | prva množica (Pythonov set) | | | |a| pomeni len(a)
 b | druga množica (Pythonov set) | | |
 :::

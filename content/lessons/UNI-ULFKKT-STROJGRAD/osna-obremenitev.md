@@ -257,7 +257,7 @@ x | lega prereza, merjena od spodnjega konca | | m |
 \rho | gostota materiala | | kg/m^3 |
 g | težni pospešek | | m/s^2 | 9,81 m/s²
 \sigma | normalna napetost | \sigma = \dfrac{F}{A} | Pa | v zgledih v MPa (N/mm²)
-\varepsilon | deformacija (relativni podaljšek) | \varepsilon = \dfrac{\sigma}{E} | – | \varepsilon = ΔL/L
+\varepsilon | deformacija (relativni podaljšek) | \varepsilon = \dfrac{\Delta L}{L} | – | po Hookovem zakonu ε = σ/E
 \Delta T_d | segretje, pri katerem se reža zapre | \alpha\,\Delta T_d\,L = \delta | K |
 \delta | reža med palico in steno | | m |
 d | premer palice | | m |

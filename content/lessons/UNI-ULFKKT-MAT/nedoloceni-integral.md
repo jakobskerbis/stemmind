@@ -252,12 +252,13 @@ d | oznaka diferenciala (dx, dt, du, dv) | | | pove, po kateri spremenljivki int
 F | primitivna funkcija | F'(x) = f(x) | |
 C | integracijska konstanta | | | poljubno realno število
 g | notranja funkcija pri substituciji | | | njen odvod g' mora biti v integrandu
-t | nova spremenljivka pri substituciji | t = g(x) | | dt = g'(x)\, dx
-u | faktor, ki ga odvajamo (integracija po delih) | | | du = u'\, dx
+t | nova spremenljivka pri substituciji | t = g(x) | | dt = g′(x) dx
+g' | odvod notranje funkcije g | | |
+u | faktor, ki ga odvajamo (integracija po delih) | | | du = u′ dx
 v | funkcija, ki jo dobimo z integriranjem dv | v = \int dv | |
-a | realna konstanta (ničla imenovalca x − a) | | | v a^x osnova potence, a > 0
+a | realna konstanta (ničla imenovalca x − a) | | | v aˣ osnova potence, a > 0
 b | druga ničla imenovalca (x − b) | | | v f(ax + b) prosti člen
-k | stopnja (večkratnost) faktorja (x − a)^k | | | naravno število, k ≥ 2
+k | stopnja (večkratnost) faktorja (x − a)ᵏ | | | naravno število, k ≥ 2
 n | eksponent potence | | | n ≠ −1
 p | polinom v števcu racionalne funkcije | | |
 A, B | koeficienta parcialnih ulomkov | | | dobimo ju s primerjavo števcev

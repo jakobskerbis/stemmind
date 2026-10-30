@@ -264,6 +264,6 @@ Q | količina | | m^2/teden | Q* ravnovesna količina
 P | cena | | €/m^2 | P* ravnovesna cena
 a | količina povpraševanja pri ceni 0 | | m^2/teden
 b | naklon povpraševanja (padec količine na 1 € cene) | | | b > 0
-c | presečišče ponudbe pri ceni 0 | | m^2/teden
+c | ponujena količina pri ceni 0 | | m^2/teden | lahko je negativna
 d | naklon ponudbe (porast količine na 1 € cene) | | | d > 0
 :::

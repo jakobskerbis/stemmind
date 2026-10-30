@@ -240,12 +240,12 @@ Formalne potenčne vrste tvorijo kolobar; $\frac{1}{1-x}$ je inverz $1-x$ v tem 
 > $\frac{e^{3x}+e^x}{2}$ da $\frac{3^3+1}{2} = 14$. Ročno: brez A $8$, z dvema A $3 \cdot 2 = 6$.
 
 :::simboli
-A | navadna rodovna funkcija zaporedja (a_n) | A(x) = \sum_{n \ge 0} a_n x^n
-\hat{A} | eksponentna rodovna funkcija zaporedja (a_n) | \hat A(x) = \sum_{n \ge 0} a_n \frac{x^n}{n!}
-B | rodovna funkcija zaporedja (b_n)
+A | navadna rodovna funkcija zaporedja (aₙ) | A(x) = \sum_{n \ge 0} a_n x^n
+\hat{A} | eksponentna rodovna funkcija zaporedja (aₙ) | \hat A(x) = \sum_{n \ge 0} a_n \frac{x^n}{n!}
+B | rodovna funkcija zaporedja (bₙ)
 x | formalna spremenljivka | | | le »obešalnik« za člene
 a_n, a_k | člen zaporedja (število objektov velikosti n) | | | aₖ za prvi del velikosti k
-b | člen zaporedja (b_n) | | | bₘ za drugi del velikosti m
+b | člen zaporedja (bₙ) | | | bₘ za drugi del velikosti m
 n | velikost objekta (indeks člena)
 k, m | velikosti delov pri sestavljanju | | | k + m = n
 C_n, C_k, C_{n-1-k} | Catalanovo število | C_n = \sum_{k=0}^{n-1} C_k\, C_{n-1-k} | | kontrola: Cₙ = (2n)! / (n! (n + 1)!)

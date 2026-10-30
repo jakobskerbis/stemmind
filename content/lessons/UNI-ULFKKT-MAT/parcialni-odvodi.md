@@ -253,17 +253,18 @@ z | vrednost funkcije (višina nad ravnino xy) | z = f(x, y) | |
 \Delta f | največja absolutna napaka rezultata | \Delta f \le \lvert f_x\rvert\,\Delta x + \lvert f_y\rvert\,\Delta y | |
 \Delta x | absolutna napaka meritve x | | |
 \Delta y | absolutna napaka meritve y | | |
-\vec{u} | enotski vektor smeri | | | \lvert\vec{u}\rvert = 1
-\varphi | kot med gradientom in smerjo \vec{u} | | |
+\vec{u} | enotski vektor smeri | | | |u| = 1
+\varphi | kot med gradientom in smerjo vektorja u | | |
 t | parameter, od katerega sta odvisna x in y | | | pogosto čas
 \dot{x} | odvod x po t | \dot{x} = \frac{\mathrm{d}x}{\mathrm{d}t} | |
 \dot{y} | odvod y po t | \dot{y} = \frac{\mathrm{d}y}{\mathrm{d}t} | |
 u, v | spremenljivki, od katerih sta odvisna x in y | | | x = x(u, v), y = y(u, v)
 F_x | parcialni odvod funkcije F po x | F_x = \frac{\partial F}{\partial x} | | krivulja je F(x, y) = 0
-F_y | parcialni odvod funkcije F po y | F_y = \frac{\partial F}{\partial y} | | pogoj F_y ≠ 0
-T | temperatura na plošči | T(x, y) = 100 - x^2 - 2y^2 | °C | v zgledu s plinom temperatura v K
-T_x | parcialni odvod temperature po x | T_x = -2x | °C/cm
-T_y | parcialni odvod temperature po y | T_y = -4y | °C/cm
+F_y | parcialni odvod funkcije F po y | F_y = \frac{\partial F}{\partial y} | | pogoj: F_y ≠ 0
+y' | odvod implicitno podane funkcije y(x) | y' = -\frac{F_x}{F_y} | |
+T | temperatura na plošči | | °C | v zgledu T(x, y) = 100 − x² − 2y²; pri plinu v K
+T_x | parcialni odvod temperature po x | T_x = \frac{\partial T}{\partial x} | °C/cm
+T_y | parcialni odvod temperature po y | T_y = \frac{\partial T}{\partial y} | °C/cm
 p | tlak idealnega plina | p = \frac{nRT}{V} | Pa
 V | prostornina plina | | m^3
 n | množina plina | | mol | tudi število spremenljivk funkcije

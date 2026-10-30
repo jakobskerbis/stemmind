@@ -253,13 +253,13 @@ Nad $\mathbb{R}$ mora $m_A$ še razpasti na linearne faktorje: rotacija za $90^\
 
 :::simboli
 A | kvadratna matrika
-\lambda | spremenljivka polinoma (lastna vrednost) | | | ničle p_A so lastne vrednosti
+\lambda | spremenljivka polinoma (lastna vrednost) | | | ničle karakterističnega polinoma so lastne vrednosti
 p_A | karakteristični polinom matrike A | p_A(\lambda) = \det(\lambda I - A)
 I | identična (enotska) matrika
 n | velikost matrike (stopnja polinoma)
 c_0, c_k | koeficienti karakterističnega polinoma | | | p_A(λ) = λⁿ + cₙ₋₁λⁿ⁻¹ + … + c₀
 B, C | matriki iz primera
-B_0, B_1, B_k, B_{k-1}, B_{n-1} | matrični koeficienti adjungiranke adj(λI − A) | | v dokazu Cayley-Hamiltonovega izreka
+B_0, B_1, B_k, B_{k-1}, B_{n-1} | matrični koeficienti adjungiranke adj(λI − A) | | | v dokazu Cayley-Hamiltonovega izreka
 M | matrika iz primera
 p_M | karakteristični polinom matrike M
 m | minimalni polinom | | | deli p in ima iste ničle

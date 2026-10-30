@@ -248,18 +248,20 @@ Povezava z zvokom: za členkasto palico pod tlačno silo $F$ velja za osnovno la
 > Prečka prepreči odmik vstran na sredini, cev se lahko izboči le v dveh krajših lokih. $F_{kr} \propto 1/L_u^2$.
 
 :::simboli
-F_{kr} | kritična (uklonska) sila | F_{kr} = \frac{\pi^2 E I}{L_u^2} | N | za členkasto palico L_u = L
+F_{kr} | kritična (uklonska) sila | F_{kr} = \frac{\pi^2 E I}{L_u^2} | N | za členkasto palico je uklonska dolžina enaka L
 E | modul elastičnosti | | Pa | jeklo ≈ 200 GPa
-I | najmanjši vztrajnostni moment preseka | I = \dfrac{\pi d^4}{64} | m^4 | za poln krog
+I | najmanjši vztrajnostni moment preseka | | m^4 | poln krog πd⁴/64, cev π(D⁴ − d⁴)/64
 L | dolžina palice | | m |
 L_u | uklonska dolžina | L_u = \beta L | m |
 \beta | koeficient uklonske dolžine | | – | členkasto 1, konzola 2
 w | bočni odmik (izbočenje) palice | | m |
 k | parameter enačbe izbočenja | k^2 = \frac{F}{EI} | 1/m |
 F | osna tlačna sila | | N |
-d | premer palice (pri cevi notranji premer) | d = \sqrt[4]{\dfrac{64\, I_{\text{potr}}}{\pi}} | m |
+d | premer palice (pri cevi notranji premer) | | m |
 n | varnost proti uklonu | n = \dfrac{F_{kr}}{F} | – |
 D | zunanji premer cevi | | m |
 I_{\text{potr}} | potrebni vztrajnostni moment | I_{\text{potr}} = \dfrac{F_{kr} L^2}{\pi^2 E} | m^4 |
-\lambda | vitkost palice | \lambda = \dfrac{L_u}{d/4} | – | za poln krog; Euler velja pri jeklu za λ ≳ 100
+\lambda | vitkost palice | \lambda = \dfrac{L_u}{i} | – | Euler velja pri jeklu za λ ≳ 100
+i | vztrajnostni polmer preseka | i = \sqrt{\frac{I}{A}} | m | za poln krog i = d/4
+A | ploščina prečnega prereza | | m^2 |
 :::

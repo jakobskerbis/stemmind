@@ -233,7 +233,7 @@ Glukozni obroč si predstavljaj kot šestkotno ploščico, ki leži na mizi (Haw
 :::simboli
 M | molska masa | M = \frac{m}{n} | g/mol
 n | množina snovi | n = \frac{m}{M} | mol | v (CH₂O)ₙ število ponovitev enote
-m | masa | m = \frac{E}{e} | g
+m | masa | | g
 \alpha | specifična optična rotacija | | ° | [α]_α čistega α-anomera, [α]_β čistega β-anomera; α označuje tudi anomer
 \beta | β-anomer (OH na C1 nad ravnino obroča)
 x_\alpha | delež α-anomera v ravnovesni zmesi | x_\alpha = 1 - x_\beta | –
