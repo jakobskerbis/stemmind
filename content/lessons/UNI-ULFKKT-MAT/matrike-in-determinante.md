@@ -232,3 +232,23 @@ kjer vsota teče po vseh $n!$ permutacijah $\sigma$ množice $\{1, \dots, n\}$, 
 + $\begin{bmatrix} 2 & 4 \\ 1 & 2 \end{bmatrix}$
 - $\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$
 > Determinanta je $2 \cdot 2 - 4 \cdot 1 = 0$; vrstici sta sorazmerni. Ostali imata determinanti $3$ in $-1$.
+
+:::simboli
+A, B | matriki | |
+a_{ij} | element matrike A v i-ti vrstici in j-tem stolpcu | |
+b_{ij} | element matrike B v i-ti vrstici in j-tem stolpcu | |
+i | indeks vrstice | |
+j | indeks stolpca | |
+k | indeks seštevanja pri množenju matrik | | | teče od 1 do n
+n | število stolpcev (red kvadratne matrike) | |
+a, b, c, d | elementi matrike reda 2 | |
+\lambda | število, s katerim množimo matriko | |
+\vec{x} | vektor neznank sistema | \vec{x} = A^{-1}\vec{b} |
+\vec{b} | vektor desnih strani sistema | |
+C_{ij} | kofaktor (algebrski komplement) elementa a_ij | C_{ij} = (-1)^{i+j} M_{ij} |
+C_{1j} | kofaktor elementa a_1j v prvi vrstici | C_{1j} = (-1)^{1+j} M_{1j} | | razvoj determinante po prvi vrstici
+M_{ij} | poddeterminanta brez i-te vrstice in j-tega stolpca | |
+\sigma | permutacija množice {1, …, n} | | | sgn(σ) = ±1 je predznak permutacije
+S_n | množica vseh permutacij n elementov | | | ima n! elementov
+T | oznaka za transponiranje | | | A^T: vrstice zapišemo kot stolpce
+:::

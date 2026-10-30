@@ -231,3 +231,28 @@ kjer je $I_\mathrm{T}$ ploskovni vztrajnostni moment okoli vodoravne osi skozi t
 - $2943\,\mathrm{kg}$
 ~ Pomešal si silo in maso: $\rho g V = 2943\,\mathrm{N}$, kar je sila, ne masa.
 > Ob polni potopitvi $\rho V = (m_\text{deska} + m_\text{tovor})$: $1000 \cdot 0{,}30 - 10 = 290\,\mathrm{kg}$.
+
+:::simboli
+p | absolutni tlak v tekočini | p = p_0 + \rho g h | Pa
+p_0 | zračni tlak nad gladino | | Pa | približno 101 325 Pa
+p_\mathrm{n} | nadtlak (hidrostatični tlak) | p_\mathrm{n} = p - p_0 = \rho g h | Pa
+\rho | gostota tekočine | | kg/m^3 | za vodo 1000 kg/m³
+g | težni pospešek | | m/s^2 | 9,81 m/s²
+h | globina pod gladino | | m
+F | sila tekočine na ploskev | F = \rho g h_\mathrm{T} A | N | pri žogi rezultanta F = F_vz − mg
+h_\mathrm{T} | globina težišča ploskve | h_\mathrm{T} = h_1 + \frac{a}{2} | m
+h_1 | globina zgornjega roba ploskve | | m
+A | ploščina ploskve | A = a b | m^2
+a | rob kocke oziroma višina pravokotne ploskve | | m
+b | širina pravokotne ploskve | | m
+F_\mathrm{vz} | sila vzgona | F_\mathrm{vz} = \rho g V | N | Arhimedov zakon
+V | prostornina potopljenega telesa | | m^3 | za kroglo V = 4/3 π r³
+r | polmer žoge | | m
+m | masa telesa | | kg
+z | navpična koordinata (os navzgor) | | m
+y | razdalja vzdolž ploskve od presečišča z gladino | | m
+\theta | naklonski kot ploskve proti gladini | | °
+y_\mathrm{T} | lega težišča ploskve, merjena vzdolž ploskve | | m
+y_\mathrm{P} | lega središča tlaka, merjena vzdolž ploskve | y_\mathrm{P} = y_\mathrm{T} + \frac{I_\mathrm{T}}{y_\mathrm{T} A} | m | središče tlaka je vedno pod težiščem
+I_\mathrm{T} | ploskovni vztrajnostni moment okoli osi skozi težišče | | m^4 | za pravokotnik b a³/12
+:::

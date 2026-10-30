@@ -238,3 +238,28 @@ za neki $\xi_h$ med $x$ in $x + h$ (izrek o povprečni vrednosti). Ko gre $h \to
 + $\frac{1}{2}$
 - $\frac{1}{4}$
 > $\int_{-1}^{1} x^3\, dx = 0$, ker se dela s predznakoma izničita. Ploščina je $2 \int_0^1 x^3\, dx = 2 \cdot \frac{1}{4} = \frac{1}{2}$.
+
+:::simboli
+f | integrirana funkcija (integrand) | |
+x | spremenljivka integracije | |
+a | spodnja meja integracije | |
+b | zgornja meja integracije | |
+d | oznaka diferenciala | | | dx pove, po kateri spremenljivki integriramo
+R | Riemannova vsota | R = \sum_{i=1}^{n} f(\xi_i)\, \Delta x_i |
+n | število podintervalov | | | v ∫xⁿ dx eksponent potence, n ≠ −1
+i | zaporedna številka podintervala | | | i = 1, …, n
+\xi_i | izbrana točka v i-tem podintervalu | |
+\Delta x_i | dolžina i-tega podintervala | \Delta x_i = x_i - x_{i-1} |
+\xi | točka iz izreka o povprečni vrednosti | | | ξ leži na [a, b]
+F | primitivna funkcija funkcije f | F' = f |
+F' | odvod primitivne funkcije | F' = f |
+t | spremenljivka pod integralom | | | v primeru z zdravilom čas v urah
+h | prirastek spremenljivke x | | | h ≠ 0, nato h → 0
+\xi_h | točka med x in x + h | |
+S | ploščina lika med grafoma | S = \int_a^b \big(f(x) - g(x)\big)\, dx | | velja, če je f ≥ g na [a, b]
+g | spodnja funkcija (spodnji graf) | |
+V | prostornina vrtenine | V = \pi \int_a^b f(x)^2\, dx |
+A | ploščina prereza vrtenine | A(x) = \pi f(x)^2 |
+\bar A | povprečna ploščina prereza | \bar A = \frac{1}{b - a} \int_a^b A(x)\, dx |
+\bar c | povprečna koncentracija zdravila v krvi | \bar c = \frac{1}{6} \int_0^6 (6t - t^2)\, dt | mg/L
+:::

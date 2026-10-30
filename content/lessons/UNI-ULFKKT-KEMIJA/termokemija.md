@@ -295,3 +295,27 @@ kar se tu dobro ujema z vrednostjo iz tvorbenih entalpij ($-393{,}5 + 2 \cdot (-
 - Odda mu približno $12{,}8\,\mathrm{kJ}$ toplote in ga segreje.
 ~ Pozitivna $\Delta H$ pomeni, da sistem toploto prejema. Obkladek jo jemlje okolici, zato hladi.
 > $n = 40{,}0/80{,}04 = 0{,}4998\,\mathrm{mol}$, $q = 0{,}4998 \cdot 25{,}7\,\mathrm{kJ} \approx 12{,}8\,\mathrm{kJ}$. Raztapljanje je endotermno, zato raztopina toploto jemlje gležnju.
+
+:::simboli
+\Delta U | sprememba notranje energije | \Delta U = q + w | kJ | pri stalni prostornini ΔU = q_V
+q | toplota | q = m\,c_p\,\Delta T | J | prejeta toplota je pozitivna
+w | delo | | J | pri razpenjanju w = −p ΔV
+\Delta H | reakcijska entalpija | \Delta H = q_p | kJ/mol | negativna: eksotermna reakcija
+q_p | toplota pri stalnem tlaku | | J
+\Delta_\mathrm{r} | sprememba pri reakciji (reakcijska količina) | | | ΔᵣH°: standardna reakcijska entalpija
+\Delta_\mathrm{f} | sprememba pri nastanku spojine iz elementov | | | ΔfH°: standardna tvorbena entalpija
+H | entalpija | H = U + pV | kJ/mol | ΔᵣH°: reakcijska, Δf H°: standardna tvorbena entalpija
+\Delta H_\text{celotna} | entalpija celotne reakcije | \Delta H_\text{celotna} = \Delta H_1 + \Delta H_2 + \dots | kJ/mol | Hessov zakon
+\Delta H_1, \Delta H_2 | entalpiji posameznih stopenj | | kJ/mol
+\nu | stehiometrični koeficient snovi | | –
+m | masa snovi (raztopine) | | g
+c_p | specifična toplota | | J/(g K) | za vodo 4,18 J/(g K)
+T | absolutna temperatura | | K
+T_1, T_2 | temperaturi, med katerima preračunamo ΔᵣH° | | K
+\Delta n_\mathrm{g} | sprememba množine plinov | | mol
+R | splošna plinska konstanta | | J/(mol K) | RT = 2,48 kJ/mol pri 298 K
+C_p | toplotna kapaciteta pri stalnem tlaku | | J/K | ΔᵣCp°: razlika kapacitet produktov in reaktantov
+C_{p,\mathrm{m}} | molska toplotna kapaciteta pri stalnem tlaku | | J/(mol K)
+n | množina snovi | n = \frac{m}{M} | mol
+M | molska masa | | g/mol
+:::

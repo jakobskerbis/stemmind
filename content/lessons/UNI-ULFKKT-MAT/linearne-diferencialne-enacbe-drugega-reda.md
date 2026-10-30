@@ -254,3 +254,40 @@ Primer: za $y'' + y = \frac{1}{\cos x}$ na $\left(-\frac{\pi}{2}, \frac{\pi}{2}\
 + $(C_1 + C_2x)e^{2x}$
 - $e^{2x}(C_1\cos 2x + C_2\sin 2x)$
 > $\lambda^2 - 4\lambda + 4 = (\lambda - 2)^2$, dvojna ničla $2$. Druga neodvisna rešitev je $xe^{2x}$.
+
+:::simboli
+y | iskana funkcija (rešitev enačbe) | |
+y' | prvi odvod iskane funkcije | |
+y'' | drugi odvod iskane funkcije | |
+x | neodvisna spremenljivka | | | pri nihanju odmik uteži od lege mirovanja
+a | konstantni koeficient pri y' | | | v ma = F pospešek
+b | konstantni koeficient pri y | | | pri nihanju koeficient dušenja v kg/s
+f | desna stran enačbe | | | f ≡ 0: homogena enačba
+p, q | koeficienta linearne enačbe (funkciji x) | |
+x_0 | točka začetnih pogojev | | | pri nihanju začetni odmik
+y_0 | vrednost rešitve v x₀ | |
+y_1 | prva rešitev homogene enačbe | | | v pogoju y'(x₀) = y₁ vrednost odvoda
+y_2 | druga, linearno neodvisna rešitev homogene enačbe | |
+y_1', y_2' | odvoda rešitev y₁ in y₂ | |
+y_h | splošna rešitev homogene enačbe | y_h = C_1 y_1 + C_2 y_2 |
+y_p | partikularna rešitev nehomogene enačbe | |
+C_1, C_2 | poljubni konstanti | | | določimo ju iz začetnih pogojev
+C_1' | odvod prve spremenljive konstante | C_1' = -\frac{y_2 f}{W} | | variacija konstant
+C_2' | odvod druge spremenljive konstante | C_2' = \frac{y_1 f}{W} | | variacija konstant
+W | Wronskijeva determinanta | W = y_1 y_2' - y_1' y_2 | | W ≠ 0: rešitvi sta linearno neodvisni
+\lambda | ničla karakteristične enačbe | | | λ² + aλ + b = 0
+\lambda_1, \lambda_2 | ničli karakteristične enačbe | |
+\alpha | realni del kompleksne ničle λ | |
+\beta | imaginarni del kompleksne ničle λ | |
+i | imaginarna enota | | | i² = −1
+e | Eulerjevo število | | | e ≈ 2,718
+m | masa uteži | | kg
+\dot x | hitrost uteži | | m/s | odvod odmika po času
+k | koeficient vzmeti | | N/m | v nastavku večkratnost ničle karakteristične enačbe
+F | zunanja sila | | N
+t | čas | | s
+T | nihajni čas dušenega nihanja | T = \frac{2\pi}{\beta} | s
+A | koeficient desne strani f = A e^{μx} | |
+B | neznani koeficient v nastavku za y_p | |
+\mu | eksponent v desni strani f = A e^{μx} | |
+:::

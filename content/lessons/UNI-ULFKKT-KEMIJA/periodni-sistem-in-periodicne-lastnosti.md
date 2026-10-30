@@ -289,3 +289,25 @@ Mulliken jo je definiral kot povprečje ionizacijske energije in elektronske afi
 - v 13. skupini
 ~ Število podanih vrednosti ne pove števila valenčnih elektronov; šteje, kje je največji skok.
 > Največji skok je med $I_1$ in $I_2$ ($4562/496 \approx 9{,}2$): po enem elektronu že posežemo v notranjo lupino. Element ima en valenčni elektron, to je natrij v 1. skupini.
+
+:::simboli
+Z_\mathrm{eff} | efektivni naboj jedra | Z_\mathrm{eff} = Z - S | – | v enotah osnovnega naboja
+Z | vrstno število elementa | | – | število protonov v jedru
+S | konstanta senčenja | S = 0{,}35\,N_{n} + 0{,}85\,N_{n-1} + 1{,}00\,N_{\le n-2} | – | po Slaterjevih pravilih
+N_{n} | število drugih elektronov v isti lupini n | | –
+N_{n-1} | število elektronov v lupini n − 1 | | –
+N_{\le n-2} | število elektronov v lupinah n − 2 in nižje | | –
+n | glavno kvantno število zunanje lupine | | – | enako številki periode
+r | polmer atoma ali iona | | pm
+\Delta H | entalpija ionizacije | \Delta H \approx I_1 | kJ/mol | pozitivna: ionizacija porabi energijo
+I_1 | prva ionizacijska energija | | kJ/mol | najmanjša pri alkalijskih kovinah
+I_2 | druga ionizacijska energija | | kJ/mol
+I_3 | tretja ionizacijska energija | | kJ/mol
+I_k | k-ta ionizacijska energija | | kJ/mol
+I_{k+1} | (k + 1)-ta ionizacijska energija | | kJ/mol
+k | zaporedna številka odstranjenega elektrona | | – | velik skok za Iₖ: k valenčnih elektronov
+E | energija za odstranitev treh elektronov | E = I_1 + I_2 + I_3 | kJ/mol
+\chi | elektronegativnost | | – | Δχ: razlika elektronegativnosti vezanih atomov
+\chi_\mathrm{A}, \chi_\mathrm{B} | elektronegativnosti vezanih atomov A in B | | –
+D | disociacijska energija vezi | | eV | npr. D(A−B) za vez med A in B
+:::

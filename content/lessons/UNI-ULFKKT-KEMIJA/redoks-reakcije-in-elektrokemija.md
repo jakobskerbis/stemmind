@@ -310,3 +310,20 @@ $$E^\circ = \frac{1 \cdot 0{,}77 + 2 \cdot (-0{,}44)}{3}\,\mathrm{V} = -0{,}037\
 - Srebro odda elektrone aluminiju in se tako očisti.
 ~ Obrnjena smer: srebro je v oblogi že oksidirano ($\mathrm{Ag^+}$). Da postane spet kovina, mora elektrone sprejeti, ne oddati.
 > Aluminij ima zelo nizek potencial ($E^\circ(\mathrm{Al^{3+}/Al}) = -1{,}66\,\mathrm{V}$) in je močan reducent, $\mathrm{Ag^+}$ ($+0{,}80\,\mathrm{V}$) pa elektrone rad sprejme. Žlička in folija v raztopini sode tvorita majhen galvanski člen.
+
+:::simboli
+E | elektrodni potencial oziroma napetost člena | E = E^\circ - \frac{RT}{zF}\ln Q | V | E°: standardni; E°(člena) = E°(katode) − E°(anode)
+\Delta_\mathrm{r} | sprememba pri reakciji (reakcijska količina) | | | ΔᵣG: reakcijska Gibbsova energija
+G | Gibbsova energija | | kJ/mol | ΔᵣG° = −zFE°; spontano, ko je negativna
+z | število prenesenih elektronov | | – | pri elektrolizi: elektronov na ion
+F | Faradayeva konstanta | | C/mol | 96 485 C/mol
+R | splošna plinska konstanta | | J/(mol K)
+T | absolutna temperatura | | K
+Q | kvocient reakcije | | – | v Q = I t je Q naboj v C
+K | konstanta ravnotežja | | – | v ravnotežju je E = 0 in Q = K
+m | masa izločene snovi | m = \frac{I\,t\,M}{z\,F} | g
+I | električni tok | | A
+t | čas elektrolize | | s
+M | molska masa izločene snovi | | g/mol
+n | množina elektronov | n(\mathrm{e^-}) = \frac{Q}{F} | mol
+:::
