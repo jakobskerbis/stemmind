@@ -76,7 +76,7 @@ Svetloba v eni sekundi preleti približno $3 \cdot 10^8\,\text{m}$. Debelina čl
 
 ## Pogoste napake
 
-- **Napačno štetje mest.** Pri $0{,}00045$ je eksponent $-4$, ne $-5$. Vejico premikaš, dokler ne stoji za prvo neničelno števko, in štejеš premike, ne ničel.
+- **Napačno štetje mest.** Pri $0{,}00045$ je eksponent $-4$, ne $-5$. Vejico premikaš, dokler ne stoji za prvo neničelno števko, in šteješ premike, ne ničel.
 - **Napačen predznak eksponenta.** Veliko število ($\ge 10$) ima pozitiven eksponent, majhno število ($<1$) pa negativnega. Eksponent $-3$ ne pomeni negativnega števila, ampak število $0{,}001$.
 - **Predpona $a$ izven območja.** Zapis $25 \cdot 10^5$ ni znanstveni zapis, ker $a = 25$ ni med $1$ in $10$. Pravilno: $2{,}5 \cdot 10^6$.
 - **Pozabljene ničle pri pretvorbi nazaj.** $3 \cdot 10^4$ je $30\,000$, ne $34$ in ne $3000$.

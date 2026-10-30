@@ -151,7 +151,8 @@ export function printPage(pathKey, topicSlug = null) {
   return shell(title, toc + body);
 }
 
-function shell(title, content) {
+// Skupna lupina strani za tisk (tudi gradiva: povzetek na eni strani, delovni list); css: dodatna pravila.
+export function shell(title, content, css = "") {
   return `<!doctype html>
 <html lang="sl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
@@ -207,6 +208,7 @@ function shell(title, content) {
     a { color: inherit; }
     @page { margin: 18mm 16mm; }
   }
+${css}
 </style></head>
 <body>
 <div class="bar"><span>${esc(title)}</span><button type="button" onclick="window.print()">Shrani kot PDF</button></div>

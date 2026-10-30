@@ -15,7 +15,7 @@ Strošek: paket Starter ≈ 7 $/mesec + disk 1 GB ≈ 0,25 $/mesec. Brezplačni 
    - `EVKLID_ADMIN_EMAILS` – tvoj e-naslov.
    - `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `RESEND_API_KEY`, `RESEND_FROM` – lahko pustiš prazno; brez njih plačila niso vklopljena, e-pošta pa se le izpiše v dnevnik.
 4. Klikni **Apply**. Po nekaj minutah je aplikacija na naslovu `https://evklid….onrender.com`.
-5. Vsaka sprememba, ki pride v `main`, se objavi sama.
+5. Vsaka sprememba, ki pride v `main`, se objavi sama, ko nihče ne uporablja aplikacije (docs/posodobitve.md).
 
 ## Pred javno objavo (obvezno)
 

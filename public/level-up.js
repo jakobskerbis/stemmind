@@ -58,12 +58,13 @@ const WELCOME = {
 /**
  * Kartica ob prehodu na višjo stopnjo.
  * @param {HTMLElement} box
- * @param {{ stage: "SS"|"UNI", premium: boolean, accounts: boolean, onAccount: () => void, onClose: () => void }} o
+ * @param {{ stage: "SS"|"UNI", premium: boolean, accounts: boolean, offers?: { show: boolean, prices: boolean } | null, onAccount: () => void, onClose: () => void }} o
  */
 export function renderWelcome(box, o) {
   const w = WELCOME[o.stage];
   if (!w) return;
-  const upsell = !o.premium && o.accounts;
+  // Pravila ponudb (server/placila/ponudbe.js): ne med poukom, ne pod 15 let, ne, če jih je učitelj izklopil.
+  const upsell = !o.premium && o.accounts && (!o.offers || (o.offers.show && o.offers.prices));
   box.innerHTML = `
     <div class="card level-card welcome">
       <div class="lc-head"><span class="lc-ic">${icon("party-popper")}</span><h2>${w.title}</h2>

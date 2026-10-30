@@ -3,6 +3,7 @@ import { mountSim } from "./sim/index.js";
 import { t, locale } from "./i18n.js";
 import { withFormulaSubject } from "./formula-data.js";
 import { lessonSteps } from "./lesson-steps.js";
+import { gradivaHtml, wireGradiva, stopReading } from "./gradiva.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
@@ -198,6 +199,7 @@ export async function openLesson(topicId) {
 }
 
 async function renderHome() {
+  stopReading();
   current = null;
   const box = $("#view-textbook");
   const student = ctx.getStudent();
@@ -384,6 +386,7 @@ function wireFormulas(root) {
 }
 
 async function renderLesson(topicId) {
+  stopReading();
   const box = $("#view-textbook");
   let L;
   try {
@@ -412,7 +415,7 @@ async function renderLesson(topicId) {
     : locked
       ? `<section class="card tb-locked"><h2>${ic("lock")}Poskus: ${esc(L.locked.demo)}</h2>
           <p>Interaktivni poskusi, simulacije in sprotno preverjanje so na voljo v plačljivem paketu in med 7-dnevnim preizkusom. Besedilo lekcije in PDF sta brezplačna.</p>
-          <button type="button" class="primary" id="tb-upgrade">${ic("sparkles")}Poglej pakete</button></section>`
+          ${!L.offers || (L.offers.show && L.offers.prices) ? `<button type="button" class="primary" id="tb-upgrade">${ic("sparkles")}Poglej pakete</button>` : ""}</section>`
       : "";
   const altHtml = lesson?.alternatives?.length
     ? `<div class="tb-alt">
@@ -487,7 +490,7 @@ async function renderLesson(topicId) {
     <button type="button" class="ghost back tb-back" id="tb-back">${ic("arrow-left")}${esc(t("nav.textbook"))}</button>
     <p class="muted tb-crumb">${esc(L.pathLabel)} · ${esc(L.unit)}</p>
     <h1 class="tb-title">${esc(L.name)}</h1>
-    ${lesson ? `<div class="tb-tools"><a class="tb-pdf" href="/ucbenik/${L.path}/${L.id.split("/")[1]}#natisni" target="_blank" rel="noopener">${ic("download")}PDF lekcije</a>${modeBtn}</div>` : ""}
+    ${lesson ? `<div class="tb-tools"><a class="tb-pdf" href="/ucbenik/${L.path}/${L.id.split("/")[1]}#natisni" target="_blank" rel="noopener">${ic("download")}PDF lekcije</a>${modeBtn}<span class="tb-gradiva"></span></div>` : ""}
     <p class="muted tb-sel-hint">${ic("message-circle")}Ti kakšen del ni jasen? Označi ga in pritisni »Razloži«.</p>
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
     ${L.pretest_due ? `<section class="card tb-pretest"><h2>${ic("target")}${esc(t("pretest.title"))}</h2><p>${esc(t("pretest.lessonIntro"))}</p><button type="button" class="primary" id="tb-pretest">${ic("play")}${esc(t("pretest.start"))}</button></section>` : ""}
@@ -506,6 +509,16 @@ async function renderLesson(topicId) {
     </section></div><aside class="tb-side">${demoHtml}</aside></div>`;
   placeDemos(box);
   window.scrollTo(0, 0);
+  // Gradiva (povzetek na eni strani, branje na glas, delovni list) naložimo zraven.
+  const gr = box.querySelector(".tb-gradiva");
+  if (gr) {
+    const sid = ctx.getStudent().id;
+    gradivaHtml(sid, L.id).then((html) => {
+      if (!gr.isConnected || current?.id !== L.id) return;
+      gr.innerHTML = html;
+      wireGradiva(gr, sid);
+    });
+  }
   box.scrollTop = 0;
 
   $("#tb-back").addEventListener("click", () => {
