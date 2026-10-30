@@ -230,8 +230,11 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .subj-sw-btn[aria-expanded="true"] > svg.subj-sw-chev { transform: rotate(180deg); }
 .subj-sw-list { max-height: min(320px, 45dvh); overflow-y: auto; margin: 2px 0 4px; padding: 4px; border-radius: 12px; background: var(--surface-2); }
 .subj-sw-label { padding: 8px 12px 4px; font-size: 0.74rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
-.subj-sw-opt { min-height: 40px; font-weight: 600; }
+.subj-sw-opt { font-weight: 600; } /* 44 px za dotik kot .pm-item */
 .subj-sw-opt > span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+/* dir="auto" (latinično ime predmeta v arabščini): poravnava po smeri menija, ne po smeri imena. */
+.subj-sw-opt > span, .subj-sw-text b { text-align: left; }
+[dir="rtl"] .subj-sw-opt > span, [dir="rtl"] .subj-sw-text b { text-align: right; }
 .subj-sw-opt > svg.subj-sw-check { flex: none; width: 18px; height: 18px; color: var(--accent); }
 .subj-sw-opt[aria-checked="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 800; }
 .subj-sw-btn:hover, .subj-sw-btn:focus-visible, .subj-sw-opt:hover, .subj-sw-opt:focus-visible { background: var(--surface-2); outline: none; }
