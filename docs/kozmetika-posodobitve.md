@@ -11,16 +11,19 @@ Vsako sredo ob 02:13 UTC (samodejni tedenski zagon v niti o kozmetiki). Nove vrs
 
 ## Iz česa izhajamo
 
-1. **Želje otrok** iz trgovine (»Kaj si želiš v trgovini?«). Shranijo se v tabelo `feedback` z `kind = "cosmetics"`
-   in v `data/povratne-informacije.json` na računalniku, kjer teče Evklid. Povzetek ima razdelek »Želje za trgovino
-   z avatarji« (`/api/feedback/export?format=md`, samo lokalno). Želje se shranijo brez imena; so prosto besedilo,
-   zato jih nikoli ne objavi in ne prepisuj v repozitorij.
-2. **Kaj otroci nosijo in kupujejo**: `data/kozmetika-trendi.json` (strežnik ga zapiše ob zagonu in vsakih 6 h)
-   ali `GET /api/avatar/trends` (samo na tem računalniku). Samo števila: pod 3 učenci skupaj nič, predmetov
-   z manj kot 3 učenci ni v seštevku.
+Evklid teče na Renderju (evklid.app, od 30. 10. 2026). Tedenska posodobitev prebere podatke z
+`GET https://evklid.app/api/kozmetika/export` z glavo `Authorization: Bearer $EVKLID_EXPORT_TOKEN`
+(ključ je v okolju Renderja in v skrivnostih okolja Claude; nikoli ga ne izpiši ali zapiši v repozitorij).
+Brez ključa izvoz vidi samo skrbnik (prijavljen z naslovom iz `EVKLID_ADMIN_EMAILS`) ali računalnik s strežnikom.
+
+1. **Želje otrok** iz trgovine (»Kaj si želiš v trgovini?«): `wishes` v izvozu (besedilo, jezik, dan; brez imen
+   in id-jev; v bazi tabela `feedback`, `kind = "cosmetics"`). Želje so prosto besedilo, zato jih nikoli ne
+   objavi in ne prepisuj v repozitorij; v poročilu j-ju jih povzemi (npr. »3 otroci želijo pirate«).
+2. **Kaj otroci nosijo in kupujejo**: `trends` v izvozu (prijavljen skrbnik jih vidi tudi na `GET /api/avatar/trends`).
+   Samo števila: pod 3 učenci skupaj nič, predmetov z manj kot 3 učenci ni v seštevku.
 3. Splošne povratne informacije (docs/povratne-informacije.md), kadar se dotikajo avatarja, lig ali Zbirk.
 
-Če podatkov ni (j-jev računalnik ni dosegljiv ali še ni želja), naredi posodobitev po spodnjem ravnovesju in
+Če podatkov ni (ključ manjka, strežnik ni dosegljiv ali še ni želja), naredi posodobitev po spodnjem ravnovesju in
 v poročilu povej, da podatkov ni bilo.
 
 ## Kaj dodamo vsak teden

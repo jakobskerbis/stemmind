@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { summaryMarkdown, normalizeFeedback } from "../server/feedback.js";
-import { Avatars } from "../server/avatar.js";
+import { Avatars, exportTokenOk } from "../server/avatar.js";
 import { ADDED, ITEM, isNew, isNewDate } from "../public/avatar.js";
 
 // Tedenske posodobitve kozmetike (j, 30. 10. 2026; docs/kozmetika-posodobitve.md).
@@ -56,4 +56,31 @@ test("trendi avatarjev: samo števila in šele od 3 učencev naprej", () => {
   for (const id of ids) av.equip(id, { body: "body_gold" });
   assert.equal(av.trends().worn.body_gold, 3);
   assert.ok(!JSON.stringify(t).includes("\"A\""));
+});
+
+test("izvoz za tedensko posodobitev: ključ v stalnem času, želje brez imen", async () => {
+  const env = { EVKLID_EXPORT_TOKEN: "x".repeat(32) };
+  const req = (h) => ({ headers: h ? { authorization: h } : {} });
+  assert.ok(exportTokenOk(req(`Bearer ${"x".repeat(32)}`), env));
+  assert.ok(!exportTokenOk(req(`Bearer ${"x".repeat(31)}`), env));
+  assert.ok(!exportTokenOk(req(), env));
+  assert.ok(!exportTokenOk(req("Bearer short"), { EVKLID_EXPORT_TOKEN: "short" })); // prekratek ključ ne velja
+  assert.ok(!exportTokenOk(req("Bearer "), { EVKLID_EXPORT_TOKEN: "" }));
+
+  const store = openDb(":memory:");
+  const server = createApp(store, {}).listen(0);
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const post = (p, body) => fetch(base + p, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  try {
+    const s = await (await post("/api/students", { name: "Ana Novak" })).json();
+    await post(`/api/students/${s.id}/feedback`, { kind: "cosmetics", ideas: "zmajevo jajce", lang: "sl" });
+    const out = await (await fetch(base + "/api/kozmetika/export")).json(); // lokalno: dovoljeno
+    assert.equal(out.wishes.length, 1);
+    assert.deepEqual(Object.keys(out.wishes[0]).sort(), ["day", "lang", "text"]);
+    assert.equal(out.wishes[0].text, "zmajevo jajce");
+    assert.ok(!JSON.stringify(out).includes("Ana"));
+    assert.equal(out.trends.enough, false);
+  } finally {
+    server.close();
+  }
 });
