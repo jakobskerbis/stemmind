@@ -118,7 +118,10 @@ function open(el) {
   openEl = el;
   el.setAttribute("aria-expanded", "true");
   el.classList.add("fx-open");
-  const r = el.getBoundingClientRect();
+  // Vodoravno ob simbolu, navpično pod (nad) celo formulo, da kartica ne prekrije ulomka.
+  const r0 = el.getBoundingClientRect();
+  const f = (el.closest(".katex") || el).getBoundingClientRect();
+  const r = { left: r0.left, width: r0.width, top: Math.min(r0.top, f.top), bottom: Math.max(r0.bottom, f.bottom) };
   const w = Math.min(340, window.innerWidth - 24);
   pop.style.width = `${w}px`;
   const left = Math.max(12, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 12));
