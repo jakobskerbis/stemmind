@@ -320,7 +320,8 @@ html.lite[data-era] { --font-head: Georgia, "Times New Roman", serif; }
 :root[data-era] .unit:nth-child(8n + 6) { --um: var(--m6); }
 :root[data-era] .unit:nth-child(8n + 7) { --um: var(--m7); }
 :root[data-era] .unit:nth-child(8n) { --um: var(--m8); }
-@media (max-width: 700px) { :root[data-era] .unit::after { width: 64px; height: 64px; top: 12px; inset-inline-end: 12px; } }
+/* Telefon: naslov sklopa sega čez vso širino, zato je risba spodaj ob gumbu Preizkus znanja (na začetku vrstice). */
+@media (max-width: 700px) { :root[data-era] .unit::after { width: 56px; height: 56px; top: auto; bottom: 12px; inset-inline-end: 12px; } }
 @media (min-width: 1100px) {
   /* Robova okna ob osrednjem stolpcu (780 px): risba je na sredini roba, desna višje, leva nižje. */
   :root[data-era] .view:not(#view-path, #view-chat)::before,
