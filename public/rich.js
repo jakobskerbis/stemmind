@@ -103,6 +103,8 @@ const RELATION = /=|<|>|[≈≤≥≠→⇒⇔]|\\(?:le|ge|leq|geq|ne|neq|approx
 const NAME_WORD = /\p{L}{3,}/u;
 const NOT_NAME = /\b(?:npr|tj|oz|ali|in|ter)\b\.?/giu;
 const LEAD_SPACE = /^(?:\s|\\[;,:!>]|\\q?quad(?![a-zA-Z])|~)+/;
+// Kos, ki nadaljuje stavek (»…, ko $…$«, »…, npr. $…$«), ostane pri formuli pred njim.
+const CONTINUES = /^\s*(?:ko|če|kjer|ki|da|ker|dokler|kadar|npr\.|tj\.|oz\.)(?!\p{L})/iu;
 
 // Besedilo celice razdeli pri vejici ali podpičju (s presledkom za njim) zunaj oklepajev in formul.
 // Kos brez zveze (»maksimum,«, »$a$,«) se pridruži naslednjemu, zadnji pa prejšnjemu.
@@ -129,7 +131,11 @@ function splitCell(cell, isFormula) {
   let carry = "";
   for (const p of parts) {
     const text = carry + p.text;
-    if (isFormula(text)) {
+    if (!carry && out.length && CONTINUES.test(text)) {
+      const last = out[out.length - 1];
+      last.text += last.sep + text;
+      last.sep = p.sep;
+    } else if (isFormula(text)) {
       out.push({ text, sep: p.sep });
       carry = "";
     } else carry = text + p.sep;

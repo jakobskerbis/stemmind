@@ -170,3 +170,8 @@ test("klikljive formule: \\log_a, \\vec F, \\frac1e se izrišejo brez rdeče nap
     if (/log_a/.test(tex)) assert.match(html, /data-fx=/, "simbol ostane klikljiv");
   }
 });
+
+test("formula sheet: a clause after a comma (ko, če, npr.) stays with its formula", () => {
+  const md = "| | |\n|---|---|\n| Rang | $A x = b$ je rešljiv natanko tedaj, ko $r(A) = r(A|b)$ |\n| Nevtralizacija | kislina $+$ baza → sol, npr. $\\mathrm{HCl + NaOH \\rightarrow NaCl + H_2O}$ |";
+  assert.equal(count(renderRich(md), /<tr>/g), 3);
+});
