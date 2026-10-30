@@ -78,6 +78,9 @@ namesto spletne različice, prav tako stran https://evklid.app/prenesi. Ob novi 
   ponudi »Posodobi«: en dotik prenese APK in odpre sistemsko namestitev (prvič Android vpraša, ali Evklid
   sme nameščati aplikacije). Podatki ostanejo, ker je APK podpisan z istim ključem (keystore na expo.dev,
   nikoli ga ne briši).
+- Če je APK zunaj strežnika (`EVKLID_ANDROID_APK_URL`), strežnik njegove različice ne pozna in aplikacija nove
+  različice APK ne ponudi; posodobitve JavaScripta delujejo vseeno.
+- Nov jezik vmesnika (nova datoteka v `public/i18n/ui/`) spremeni prstni odtis, zato potrebuje nov APK.
 - APK 1.0.0 (gradnja 4, 30. 10. 2026) posodabljanja še nima: nanj je treba novo različico enkrat namestiti ročno.
 
 **Gumb »Namesti aplikacijo« po napravah** (`public/install.js`, podatki z `/api/app-links`):
