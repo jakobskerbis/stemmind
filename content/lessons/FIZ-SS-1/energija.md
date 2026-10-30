@@ -213,3 +213,21 @@ To je natanko ohranitev energije: kar telo izgubi pri potencialni energiji, prid
 - Na višini $\dfrac{h}{4}$
 + Na višini $\dfrac{h}{2}$
 > Skupna energija je $mgh$. Na višini $\dfrac{h}{2}$ je $W_p = \dfrac{mgh}{2}$, zato je $W_k = mgh - \dfrac{mgh}{2} = \dfrac{mgh}{2}$, torej sta enaki. Tik pred trkom je potencialna energija že $0$, na višini $\dfrac{h}{4}$ pa je potencialna energija le $\dfrac{mgh}{4}$, kinetična pa $\dfrac{3mgh}{4}$.
+
+:::simboli
+W_k | kinetična energija | W_k = \dfrac{mv^2}{2} | J | hitrost vstavimo v m/s
+W_p | potencialna energija | W_p = mgh | J | višino merimo od izbrane ničelne ravni
+W_{pr} | prožnostna energija | W_{pr} = \frac{kx^2}{2} | J
+W_{k1}, W_{p1}, W_{pr1} | kinetična, potencialna, prožnostna energija v stanju 1 | | J
+W_{k2}, W_{p2}, W_{pr2} | kinetična, potencialna, prožnostna energija v stanju 2 | | J
+m | masa | | kg
+v | hitrost | | m/s
+g | težni pospešek | | m/s^2 | 9,8 m/s²
+h | višina nad ničelno ravnjo | | m
+k | prožnostni koeficient vzmeti | | N/m
+x | raztezek ali skrček vzmeti | | m | glede na ravnovesno lego
+A | delo | A = F s \cos\alpha | J | enako spremembi energije
+F | sila | | N
+s | pot | | m
+a | pospešek | a = F/m | m/s^2
+:::

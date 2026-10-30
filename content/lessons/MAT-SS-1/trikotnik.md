@@ -219,3 +219,16 @@ Pri vsakem koraku preveri enote ($\text{cm}$ in $\text{cm}^2$) in smiselnost: po
 - višine
 + simetrale stranic
 > Središče očrtane krožnice je enako oddaljeno od vseh treh oglišč, torej leži na simetralah stranic. Simetrale kotov se sekajo v središču včrtane krožnice.
+
+:::simboli
+\alpha, \beta, \gamma | notranji koti trikotnika | | |
+\gamma' | zunanji kot pri oglišču C | \gamma' = 180^\circ - \gamma = \alpha + \beta | |
+a, b, c | stranice trikotnika | | | v pravokotnem trikotniku je c hipotenuza
+S | ploščina trikotnika | S = r \cdot s | |
+r | polmer včrtane krožnice | r = \frac{S}{s} | |
+s | polobseg | s = \frac{a + b + c}{2} | |
+R | polmer očrtane krožnice | | | v pravokotnem trikotniku R = c/2
+T | težišče | | | deli težiščnico v razmerju 2 : 1
+C | oglišče trikotnika | | | v primeru oglišče s pravim kotom
+t_c | težiščnica iz oglišča C | | |
+:::

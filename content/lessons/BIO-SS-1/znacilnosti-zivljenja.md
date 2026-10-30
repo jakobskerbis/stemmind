@@ -236,3 +236,8 @@ Na vsaki ravni se pokaže kaj novega: celica je živa, iglica lovi svetlobo, goz
 ~ Tudi mrtva celica lahko ostane cela. Odločata presnova in razmnoževanje, ne le oblika.
 + Bile so žive v stanju mirovanja, saj sta se presnova in razmnoževanje znova začela.
 > Ko sta se v ugodnih razmerah znova začela presnova in delitev, je jasno, da celice niso odmrle. Podobno velja za seme v predalu.
+
+:::simboli
+n | število vzkaljenih semen | | –
+N | število vseh posejanih semen | | –
+:::

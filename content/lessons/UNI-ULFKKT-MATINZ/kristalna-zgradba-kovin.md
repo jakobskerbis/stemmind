@@ -247,3 +247,18 @@ Robno dislokacijo si nariši kot mrežo navpičnih črt, kjer se ena črta konč
 - Ostane enaka, ker je število atomov enako.
 ~ Enako število atomov lahko zasede različno prostornino, odvisno od tega, kako tesno so zloženi.
 > Zapolnjenost naraste z $0{,}68$ na $0{,}74$, zato se železo ob prehodu skrči, čeprav se segreva. To se vidi na dilatometrski krivulji jekla.
+
+:::simboli
+\rho | gostota kovine | \rho = \dfrac{n\,M}{a^3\,N_\mathrm{A}} | g/cm^3
+n | število atomov v osnovni celici | n = \dfrac{\rho\, a^3 N_\mathrm{A}}{M} | – | BCC: 2, FCC: 4
+M | molska masa | | g/mol
+a | mrežni parameter (dolžina roba celice) | | nm | FCC: a = 2√2 R, BCC: a√3 = 4R; za gostoto v cm
+N_\mathrm{A} | Avogadrova konstanta | | mol^{-1} | 6,022 · 10²³ mol⁻¹
+N_\mathrm{v} | število vrzeli | | – |
+N | število vseh mest za atome | | – |
+e | Eulerjevo število | | – | e ≈ 2,718
+Q_\mathrm{v} | energija za nastanek vrzeli | | eV |
+k | Boltzmannova konstanta | | eV/K | 8,617 · 10⁻⁵ eV/K
+T | temperatura | | K | °C pretvorimo v kelvine
+R | polmer atoma | | nm |
+:::

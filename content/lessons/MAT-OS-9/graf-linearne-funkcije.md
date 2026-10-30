@@ -172,3 +172,12 @@ Ničlo dobimo tako: $kx + n = 0$ pomeni $kx = -n$. Če je $k \neq 0$, delimo s $
 + Pada in seka os $y$ pri $5$.
 - Narašča in seka os $y$ pri $5$.
 > Smerni koeficient je $k = -3 < 0$, zato funkcija pada. Začetna vrednost je $n = 5$, zato graf seka os $y$ v točki $(0, 5)$.
+
+:::simboli
+x | neodvisna spremenljivka (abscisa) | | | ničla: x = −n/k
+y | vrednost funkcije (ordinata) | y = kx + n |
+k | smerni koeficient premice | k = \frac{y_2 - y_1}{x_2 - x_1} | | k > 0 narašča, k < 0 pada
+n | začetna vrednost (presečišče z osjo y) | | | graf seka os y v točki (0, n)
+x_1, y_1 | koordinati prve točke na grafu | |
+x_2, y_2 | koordinati druge točke na grafu | |
+:::

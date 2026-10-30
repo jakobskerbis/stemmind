@@ -200,3 +200,10 @@ Pri deljenju količine $c$ v razmerju $a : b$ dobi prvi del $\dfrac{a}{a + b} \c
 + $1 : 3$
 - $4 : 1$
 > Razširimo z $10$: $4 : 12$, nato krajšamo s $4$: $1 : 3$.
+
+:::simboli
+a, b | člena razmerja | | | a : b beremo »a proti b«
+k | število, s katerim množimo ali delimo oba člena | | | k ≠ 0
+D | največji skupni delitelj | | | po deljenju z D(a, b) sta člena tuji števili
+c | količina, ki jo delimo v razmerju | | | en del je c : (a + b); v a : b : c tretji člen
+:::

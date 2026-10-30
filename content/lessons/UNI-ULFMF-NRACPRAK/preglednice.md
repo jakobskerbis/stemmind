@@ -263,3 +263,11 @@ Zakaj $n - 1$? Ker je $\sum_i (x_i - \bar{x}) = 0$, je prostih le $n - 1$ odmiko
 - <code>=&#36;B3*C&#36;1</code>
 ~ Stolpec A je zaklenjen z <code>&#36;</code> pred črko, zato se ne premakne v B.
 > Premik je za eno vrstico in en stolpec. V <code>&#36;A2</code> se premakne le vrstica (v <code>&#36;A3</code>), v <code>B&#36;1</code> le stolpec (v <code>C&#36;1</code>). Tako vsaka celica vzame dolžino iz svoje vrstice in ceno iz svojega stolpca.
+
+:::simboli
+s | vzorčni standardni odklon | s = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2} | | v enoti podatkov; s² je varianca
+\bar{x} | aritmetična sredina (povprečje) | \bar{x} = \frac{x_1 + \dots + x_n}{n}
+x | podatek (vrednost v celici) | | | x₁, …, xₙ vsi podatki
+n | število podatkov
+i | zaporedna številka podatka
+:::

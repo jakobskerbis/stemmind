@@ -3,7 +3,7 @@
 // Uporabljata ga odjemalec (risanje, trgovina) in strežnik (cene, preverjanje).
 // Predmeti za znanje (značka, efekt, ozadja, kompleti, učni pass) so v public/zbirke.js: ne kupijo se,
 // odklene jih samo obvladana snov.
-import { KNOWLEDGE, DRAW, baseId } from "./zbirke.js";
+import { KNOWLEDGE, DRAW, baseId, BODY_PATH } from "./zbirke.js";
 
 export const SLOTS = ["kind", "body", "eyes", "mouth", "hat", "outfit", "acc", "badge", "bg", "fx"];
 export const COINS_PER_CORRECT = 1;
@@ -95,6 +95,7 @@ export const ITEM = Object.fromEntries(ITEMS.map((x) => [x.id, x]));
 // aplikacijo. Teden dni ga trgovina in Zbirke kažejo z oznako »Novo«. Nov predmet = vrstica tukaj.
 export const ADDED = {
   ...Object.fromEntries(["hat_flame", "bg_nebula", "outfit_starcape", "pot_blackhole", "pot_comet", "pot_starcrown", "kind_phoenix", "kind_whale", "meme_pica", "meme_gelato", "meme_tung", "meme_tungfx", "meme_kavicina", "meme_bananini", "meme_saturnita", "meme_slonini", "meme_smrekini"].map((id) => [id, "2026-10-30"])),
+  ...Object.fromEntries(["meme_limone", "meme_spageti", "meme_skampi", "meme_testenine", "meme_kokos", "meme_frigo", "meme_luna", "meme_cajnik", "meme_lubenica"].map((id) => [id, "2026-10-30"])),
 };
 export const NEW_DAYS = 7;
 // Splošno: datum »YYYY-MM-DD« je mlajši od NEW_DAYS dni (tudi za nove vrste iger, oznaka .gm-new v games.css).
@@ -204,7 +205,6 @@ const BODY = {
   body_robot: ["#cbd5e1", "#64748b"], body_galaxy: ["#4c1d95", "#1e1b4b"], body_gold: ["#fde047", "#ca8a04"], body_rainbow: ["#f87171", "#60a5fa"],
 };
 const INK = "#1f2937";
-const BODY_PATH = "M50 24c19 0 31 13 31 34v24c0 8-6 12-14 12H33c-8 0-14-4-14-12V58c0-21 12-34 31-34z";
 
 function defs(u, body) {
   const [a, b] = BODY[body] || BODY.body_blue;

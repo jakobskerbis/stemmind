@@ -250,3 +250,10 @@ Sovršna kota sta poseben primer: oba kraka kažeta v nasprotno smer, zato sta e
 - $290^\circ$
 ~ To je $360^\circ - 70^\circ$, izbočeni kot, ne topi.
 > Kota sta različnih vrst, zato je $\alpha + \beta = 180^\circ$ in $\beta = 180^\circ - 70^\circ = 110^\circ$.
+
+:::simboli
+\alpha | izmerjeni kot (zgoraj desno) | | °
+\beta | sokot kota α | \beta = 180^\circ - \alpha | ° | sokota skupaj merita 180°
+\gamma | sovršni kot kota α | \gamma = \alpha | ° | sovršna kota sta enaka
+\delta | sovršni kot kota β | \delta = \beta | °
+:::

@@ -262,3 +262,9 @@ Na osi $x$ teče čas zgodbe, na osi $y$ živi junakinja, temperatura. Vzpon pom
 ~ Vodoravna črta leži na višini $180$, ne na osi $x$. Vodoravno pomeni stalno, ne nič.
 + Temperatura je bila ves ta čas stalna, $180\,^\circ\mathrm{C}$.
 > Vodoraven graf pomeni, da se odvisna količina ne spreminja. Temperatura je $25$ minut ostala $180\,^\circ\mathrm{C}$.
+
+:::simboli
+T | točka v koordinatnem sistemu | | | T(x, y): najprej x, nato y
+x | abscisa (prva koordinata) | | | os x je vodoravna
+y | ordinata (druga koordinata) | | | os y je navpična
+:::

@@ -225,3 +225,9 @@ Poleg stopinj kote merimo tudi v **radianih**, ki jih boš spoznal pozneje: $180
 + $4^\circ 10'$
 - $4^\circ 70'$
 > Minute: $18' + 52' = 70' = 1^\circ 10'$. Stopinje: $2^\circ + 1^\circ + 1^\circ = 4^\circ$. Rezultat je $4^\circ 10'$.
+
+:::simboli
+\alpha | dani kot | | |
+\beta | sokot ali komplementarni kot kota α | \beta = 180^\circ - \alpha | | komplementarni kot: β = 90° − α
+\gamma | sovršni kot ali sokot kota α | | | sovršni kot je enak α, sokot 180° − α
+:::

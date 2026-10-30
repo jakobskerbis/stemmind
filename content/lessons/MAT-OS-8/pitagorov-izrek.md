@@ -139,3 +139,8 @@ Obe ploščini sta enaki, zato $a^2 + 2ab + b^2 = 2ab + c^2$. Na obeh straneh od
 + Ne, ker $5^2 + 6^2 = 61$, $8^2 = 64$.
 - Da, ker $5 + 6 > 8$.
 > Trikotnik je pravokoten samo, če je vsota kvadratov krajših stranic enaka kvadratu najdaljše. $61 \ne 64$.
+
+:::simboli
+a, b | kateta pravokotnega trikotnika | | | kateti oklepata pravi kot
+c | hipotenuza | c = \sqrt{a^2 + b^2} | | leži nasproti pravega kota, najdaljša stranica
+:::

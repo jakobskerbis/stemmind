@@ -577,7 +577,9 @@ function renderVerify() {
 
 // ---------- otroci ----------
 
-function childForm(consentText, programs = []) {
+// password: geslo profila samo za drugi in nadaljnje profile (en profil ga ne potrebuje, j 2026-10-30);
+// others: obstoječi profili brez gesla, ki ga z drugim profilom dobijo tudi sami.
+function childForm(consentText, programs = [], password = true, others = []) {
   const y = new Date().getFullYear();
   const years = Array.from({ length: 60 }, (_, i) => y - 6 - i);
   // Mladoletni imetnik računa ustvari samo svoj profil (letnica iz datuma rojstva ob registraciji).
@@ -607,7 +609,8 @@ function childForm(consentText, programs = []) {
       <label class="year-field"${self ? " hidden" : ""}>Letnica rojstva
         <select name="birth_year"${self ? "" : " required"}><option value="">Izberite …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
       </label>
-      ${status?.parent?.guest ? "" : `<label>${esc(t("lock.password"))} <input type="password" name="profile_password" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="new-password" required></label>
+      ${status?.parent?.guest || !password ? "" : `<label>${esc(t("lock.password"))} <input type="password" name="profile_password" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="new-password" required></label>
+      ${others.map((o) => `<label>${esc(t("lock.passwordFor", { name: o.name }))} <input type="password" name="other_pw_${o.id}" data-other="${o.id}" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="new-password" required></label>`).join("")}
       <small class="muted">${esc(t("lock.hint"))}</small>`}
       <label class="check"><input type="checkbox" name="consent" required>
         <span class="consent-self"${self ? "" : " hidden"}>Profil je moj. Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu podatkov</a> in soglašam z obdelavo svojih podatkov (ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.</span>
@@ -653,10 +656,15 @@ function bindChildForm(after) {
     if (!picker.complete()) return showError(f, new Error("Izberite šolo in letnik do konca."));
     const profilePw = f.profile_password?.value;
     if (f.profile_password && profilePw.length < PROFILE_PW_MIN) return showError(f, new Error(t("lock.short")));
+    const otherPasswords = {};
+    for (const el of f.querySelectorAll("[data-other]")) {
+      if (el.value.length < PROFILE_PW_MIN) return showError(f, new Error(t("lock.short")));
+      otherPasswords[el.dataset.other] = el.value;
+    }
     try {
       const s = await api("/api/students", {
         method: "POST",
-        body: { name: f.name.value, birth_year: Number(f.birth_year.value), self: isSelf(), consent: f.consent.checked, settings: childSettings(f), ...(profilePw ? { profile_password: profilePw } : {}) },
+        body: { name: f.name.value, birth_year: Number(f.birth_year.value), self: isSelf(), consent: f.consent.checked, settings: childSettings(f), ...(profilePw ? { profile_password: profilePw } : {}), ...(Object.keys(otherPasswords).length ? { other_passwords: otherPasswords } : {}) },
       });
       store.set("studentId", String(s.id));
       store.set("evklid_invite_name", null);
@@ -672,7 +680,7 @@ async function renderAddChild() {
   shell(`
     <h1>Ustvarite profil</h1>
     <p class="muted">Vsak učenec, dijak ali študent ima svoj profil z učno potjo in napredkom. Za otroke, mlajše od 15 let, je potrebno soglasje starša.</p>
-    ${childForm(acc.consent_text, programs)}
+    ${childForm(acc.consent_text, programs, acc.children?.length > 0)}
     <p class="auth-links"><a href="#" id="add-child-logout">Odjava</a></p>`);
   $("#add-child-logout").addEventListener("click", (e) => (e.preventDefault(), logout()));
   bindChildForm(continueFlow);
@@ -1168,7 +1176,7 @@ export async function renderAccount() {
       <ul class="child-list">${acc.children
         .map((c) => `<li><b>${esc(c.name)}</b> <span class="muted">(${c.birth_year || "–"})</span> ${
           c.premium ? `<span class="pill ok">poln dostop</span>` : `<span class="pill">brezplačni paket · danes ${c.questions_today}/${acc.free_daily_questions}</span>`
-        }${c.pass ? ` <span class="pill">${esc(t("acct.passPill", { date: date(c.pass.ends_at) }))}</span>` : ""} ${aiPill(c.ai_month)}${c.has_password ? "" : ` <span class="pill">${esc(t("lock.none"))}</span>`}</li>`)
+        }${c.pass ? ` <span class="pill">${esc(t("acct.passPill", { date: date(c.pass.ends_at) }))}</span>` : ""} ${aiPill(c.ai_month)}${c.has_password || acc.children.length < 2 ? "" : ` <span class="pill">${esc(t("lock.none"))}</span>`}</li>`)
         .join("")}</ul>
       ${acc.children.length ? `<details class="profile-pw"><summary>${esc(t("lock.change"))}</summary>
         <form id="profile-pw-form" class="form" novalidate>
@@ -1185,7 +1193,7 @@ export async function renderAccount() {
       ${acc.swap_blocked_until
         ? `<p class="muted">Profil lahko zamenjate enkrat na 30 dni. Nov profil boste lahko dodali ${date(acc.swap_blocked_until)}.</p>`
         : acc.children.length < acc.max_children
-          ? `<details><summary>Dodaj profil</summary>${childForm(acc.consent_text, await loadPrograms(api))}</details>`
+          ? `<details><summary>Dodaj profil</summary>${childForm(acc.consent_text, await loadPrograms(api), acc.children.length > 0, acc.children.filter((c) => !c.has_password))}</details>`
           : `<p class="muted">Vaš paket ima ${acc.max_children === 1 ? "1 profil" : `${acc.max_children} profila`}.${acc.max_children === 1 ? " Za drugega otroka izberite paket za 2 otroka." : ""}</p>`}
       <p class="muted">Vsak profil je lahko hkrati odprt samo na eni napravi. Profil zamenjate (izbrišete v zavihku Nastavitve in dodate novega) največ enkrat na 30 dni.</p>
     </div>

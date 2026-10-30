@@ -263,3 +263,14 @@ V **odprti kulturi** (kemostatu) sveže gojišče stalno dotekamo in enako prost
 - $90\,\mathrm{min}$
 ~ V $90$ minutah se število ni le podvojilo, ampak povečalo $8$-krat; to so tri podvojitve.
 > Razmerje $8 = 2^3$, zato $n = 3$ in $g = \dfrac{90\,\mathrm{min}}{3} = 30\,\mathrm{min}$.
+
+:::simboli
+N | število celic po času t | N = N_0 \cdot 2^n | – |
+N_0 | začetno število celic | | – |
+n | število generacij | n = \dfrac{t}{g} | – | velja le v eksponentni fazi
+g | generacijski čas | g = \dfrac{t}{n} | min | čas, v katerem se število celic podvoji
+t | čas rasti | t = n \cdot g | min |
+t_\mathrm{eksp} | trajanje eksponentne faze | t_\mathrm{eksp} = t_\mathrm{skupaj} - t_\mathrm{lag} | h |
+t_\mathrm{skupaj} | celoten čas gojenja | | h |
+t_\mathrm{lag} | trajanje faze prilagajanja (lag faze) | | h | v tem času se celice ne delijo
+:::

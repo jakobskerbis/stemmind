@@ -223,3 +223,16 @@ Na tej lestvici je mitohondrij po velikosti skoraj enak bakteriji, kar se ujema 
 ~ Prokariont ima DNA v nukleoidu, brez ovojnice. Jedra ni, DNA pa je.
 + Velikost in oblika se ujemata z bakterijami; za podrobno zgradbo potrebuješ elektronski mikroskop.
 > Paličaste celice velikosti okoli $2\,\mu\mathrm{m}$ so tipične za mlečnokislinske bakterije v jogurtu. Ribosomov in drugih drobnih struktur s svetlobnim mikroskopom ne ločiš.
+
+:::simboli
+k | razmerje dolžin celic | k = \dfrac{d_\text{j}}{d_\text{b}} | –
+d_\text{j} | premer jetrne celice | | µm | okoli 20 µm
+d_\text{b} | dolžina bakterije | | µm | okoli 2 µm
+V_\text{j} | prostornina jetrne celice | | µm^3
+V_\text{b} | prostornina bakterije | | µm^3
+P | površina celice (kocke) | P = 6a^2 | µm^2 | skozi površino celica izmenjuje snovi
+a | dolžina roba kocke | | µm
+V | prostornina celice (kocke) | V = a^3 | µm^3 | pri kapsuli: skupna prostornina bakterij
+N | število bakterij | | – | v kapsuli 10¹⁰
+V_1 | prostornina ene bakterije | | µm^3
+:::

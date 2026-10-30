@@ -250,3 +250,17 @@ $$c_1 V_1 = c_2 V_2$$
 ~ Tako dobiš, če $500\,\text{mL}$ vode *dodaš* ($V_2 = 600\,\text{mL}$). Naloga pa pravi, da je *končna* prostornina $500\,\text{mL}$.
 + $0{,}20\,\text{mol/L}$
 > Iz $c_1 V_1 = c_2 V_2$ sledi $c_2 = \dfrac{1{,}0 \cdot 100}{500} = 0{,}20\,\text{mol/L}$. Odgovor $0{,}17\,\text{mol/L}$ bi dobil, če bi $500\,\text{mL}$ vode *dodal* ($V_2 = 600\,\text{mL}$), naloga pa pravi, da je končna prostornina $500\,\text{mL}$.
+
+:::simboli
+m | masa (topljenca, topila ali raztopine) | | g | m(raztopina) = m(topljenec) + m(topilo)
+w | masni delež topljenca | w = \frac{m(\text{topljenec})}{m(\text{raztopina})} | – | v odstotkih: pomnožimo s 100
+c | množinska koncentracija | c = \frac{n}{V} | mol/L | tudi c = m : (M · V)
+n | množina topljenca | n = \dfrac{m}{M} | mol
+V | prostornina cele raztopine | | L
+M | molska masa topljenca | | g/mol
+n_1, n_2 | množina topljenca pred in po redčenju | | mol | pri redčenju je n₁ = n₂
+c_1 | koncentracija pred redčenjem | | mol/L
+c_2 | koncentracija po redčenju | c_2 = c_1 \cdot \dfrac{V_1}{V_2} | mol/L
+V_1 | prostornina raztopine pred redčenjem | V_1 = \dfrac{c_2 \cdot V_2}{c_1} | L | V₁ in V₂ sta lahko oba v mL
+V_2 | prostornina raztopine po redčenju | | L
+:::

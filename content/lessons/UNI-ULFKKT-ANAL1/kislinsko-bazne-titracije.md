@@ -243,3 +243,20 @@ Indikator je stražar ob vratih, ki zamenja uniformo pri določeni kislosti. Če
 - bromtimolmodro ($6{,}0$–$7{,}6$)
 ~ Izbira temelji na predpostavki, da je v EP pH $7$; pri šibki bazi je pH v EP pod $7$.
 > V EP je amonijev ion, šibka kislina, zato je pH okoli $5{,}3$. To leži v območju metilrdečega.
+
+:::simboli
+\mathrm{pH} | pH raztopine | \mathrm{pH} = -\log c(\mathrm{H_3O^+}) | – | pri polovici EP pri šibki kislini pH = pKₐ
+n | množina snovi | | mol | v EP: n(kislina) = n(baza) po enačbi reakcije
+c | množinska koncentracija | | mol/L
+V | prostornina | | mL
+c_\mathrm{k} | koncentracija kisline | c_\mathrm{k} = \dfrac{c_\mathrm{b} V_\mathrm{EP}}{V_\mathrm{k}} | mol/L
+V_\mathrm{k} | prostornina titrirane kisline | | mL
+c_\mathrm{b} | koncentracija baze (titranta) | | mol/L
+V_\mathrm{b,EP} | prostornina baze do ekvivalentne točke | | mL
+V_\mathrm{EP} | prostornina titranta v ekvivalentni točki | | mL
+V_\mathrm{skupaj} | skupna prostornina raztopine v čaši | | mL | prostornina kisline + dodanega titranta
+K_\mathrm{a} | konstanta kisline | K_\mathrm{a} = 10^{-\mathrm{p}K_\mathrm{a}} | mol/L | ocetna kislina: 1,75 · 10⁻⁵
+\mathrm{p}K_\mathrm{a} | negativni logaritem konstante kisline | \mathrm{p}K_\mathrm{a} = -\log K_\mathrm{a} | – | ocetna kislina: 4,76
+K_\mathrm{b} | konstanta baze | K_\mathrm{b} = \dfrac{K_\mathrm{w}}{K_\mathrm{a}} | mol/L | za konjugirano bazo, npr. acetat
+K_\mathrm{w} | ionski produkt vode | | mol^2/L^2 | 1,0 · 10⁻¹⁴ pri 25 °C
+:::

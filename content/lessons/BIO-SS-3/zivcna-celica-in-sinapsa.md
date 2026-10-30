@@ -265,3 +265,13 @@ Sinapse so lahko **vzburjevalne** (potencial premaknejo proti pragu) ali **zavir
 ~ Sproščanje sproži $\mathrm{Ca^{2+}}$ in poteka normalno. Kokain deluje na korak po sproščanju.
 + Dopamin ostane dlje v špranji in naslednjo celico dlje vzburja.
 > Ker se dopamin ne odstrani, se znova in znova veže na receptorje. Učinek je močnejši in daljši; možgani se sčasoma prilagodijo, kar vodi v toleranco in odvisnost.
+
+:::simboli
+t | čas prevajanja živčnega signala | t = \dfrac{s}{v} | s | s sinapsami še prištejemo zakasnitve
+s | dolžina živčne poti | | m
+v | hitrost prevajanja živčnega impulza | v = \dfrac{s}{t} | m/s | z mielinom 50 do 120 m/s
+U | membranski potencial (napetost na membrani) | | mV | v mirovanju okoli −70 mV
+U_{\mathrm{končna}} | končni membranski potencial | | mV
+U_{\mathrm{začetna}} | začetni membranski potencial | | mV
+t_{\mathrm{sinapsa}} | zakasnitev na eni sinapsi | | ms | okoli 0,5 ms
+:::

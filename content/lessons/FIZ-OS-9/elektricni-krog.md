@@ -216,3 +216,10 @@ $$U = U_1 = U_2$$
 + Ker so luči vezane vzporedno, vsaka v svoji veji.
 - Ker se pri ugasnitvi ene luči napetost poveča na ostalih.
 > Pri vzporedni vezavi ima vsak porabnik svojo vejo, zato prekinitev ene veje ne vpliva na druge. Pri zaporedni vezavi bi se z odklopom ene luči prekinil celoten krog. Pri vzporedni vezavi pa napetost na ostalih lučeh ostane enaka napetosti vira, zato se ne poveča.
+
+:::simboli
+I | skupni električni tok | | A | zaporedno enak povsod, vzporedno se razdeli
+I_1, I_2 | tok skozi posamezni porabnik | | A
+U | napetost vira | | V
+U_1, U_2, U_3 | napetost na posameznem porabniku | | V
+:::

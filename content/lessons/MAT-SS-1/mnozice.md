@@ -231,3 +231,12 @@ Formulo za moč unije utemeljimo tako: množica $A \cup B$ razpade na tri disjun
 - $A \cap B$
 - $A \setminus B$
 > Element zunaj unije ni v $A$ in ni v $B$, torej je v $A^c$ in v $B^c$. To je prvo De Morganovo pravilo. Izraz $A^c \cup B^c$ je enak $(A \cap B)^c$.
+
+:::simboli
+A, B | množici | | | moč množice je število njenih elementov
+x | element množice | | |
+X | poljubna množica | | |
+c | oznaka komplementa (v A^c) | | | komplement: elementi univerzalne množice, ki niso v A
+N | množica dijakov, ki govorijo nemško | | | A angleško, I italijansko
+I | množica dijakov, ki govorijo italijansko | | |
+:::

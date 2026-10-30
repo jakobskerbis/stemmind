@@ -167,3 +167,9 @@ Preveri s prejšnjim primerom: $a = 10$ da $v = 5\sqrt{3} \approx 8{,}66$, kar s
 - $9\,\text{m}$
 + $3\,\text{m}$
 > Lestev je hipotenuza, zato kvadrat višine odštejemo: $5^2 - 4^2 = 25 - 16 = 9$, $\sqrt{9} = 3\,\text{m}$. Rezultat $1$ dobiš z odštevanjem dolžin namesto kvadratov, $9$ pa pozabi koren.
+
+:::simboli
+a, b | kateti (stranici pravokotnika) | | | v enakokrakem trikotniku a osnovnica, b krak
+d | diagonala pravokotnika | d = \sqrt{a^2 + b^2} | | hipotenuza pravokotnega trikotnika
+v | višina enakokrakega trikotnika | v = \sqrt{b^2 - \left(\frac{a}{2}\right)^2} | | enakostranični: v = a√3 : 2
+:::

@@ -185,3 +185,13 @@ Zakon velja le do neke meje. Če vzmet preveč raztegneš, se trajno deformira i
 - $3\,\mathrm{N}$
 + $1{,}2\,\mathrm{N}$
 > En razmik je $2\,\mathrm{N} : 5 = 0{,}4\,\mathrm{N}$, trije razmiki so $3 \cdot 0{,}4\,\mathrm{N} = 1{,}2\,\mathrm{N}$. Odgovor $3\,\mathrm{N}$ dobiš, če vsako črtico šteješ kot $1\,\mathrm{N}$.
+
+:::simboli
+F | sila | F = k \cdot x | N
+k | koeficient (konstanta) vzmeti | | N/m | odvisen od vzmeti
+x | raztezek vzmeti | x = \dfrac{F}{k} | m | v nalogah pogosto v cm
+x_1 | raztezek pri znani sili F₁ | | cm
+x_2 | raztezek pri sili F₂ | x_2 = \dfrac{x_1}{F_1} \cdot F_2 | cm
+F_1 | znana sila (prva meritev) | | N
+F_2 | sila, pri kateri iščemo raztezek | | N
+:::

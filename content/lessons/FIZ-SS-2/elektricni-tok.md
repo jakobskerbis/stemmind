@@ -198,3 +198,18 @@ kjer je $\rho$ **specifični upor** snovi. Dvakrat daljša žica ima dvakrat ve�
 - Tok ostane enak.
 + Tok se podvoji.
 > Po Ohmovem zakonu je $I = \dfrac{U}{R}$. Pri stalnem $R$ je tok premo sorazmeren z napetostjo, zato se z napetostjo podvoji tudi tok.
+
+:::simboli
+I | električni tok | I = \dfrac{e}{t} | A
+e | električni naboj | | A\,s | 1 A s = 1 C
+t | čas | | s
+U | električna napetost | U = I \cdot R | V
+R | električni upor | R = \rho \cdot \frac{l}{S} | Ω | za kovine pri stalni temperaturi R = U/I
+\rho | specifični upor snovi | | Ω\,m
+l | dolžina žice | | m
+S | presek žice | | m^2
+U_1 | napetost pri prvi meritvi | | V
+I_1 | tok pri prvi meritvi | | A
+U_2 | napetost pri drugi meritvi | | V
+I_2 | tok pri napetosti U₂ | I_2 = \dfrac{U_2}{R} | A
+:::

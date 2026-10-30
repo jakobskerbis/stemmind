@@ -205,3 +205,9 @@ Preverjanje: $13 + 14 = 27$. ✓
 + protoni in nevtroni
 - nevtroni in elektroni
 > V jedru so protoni in nevtroni, ki jih skupaj imenujemo nukleoni. Elektroni so zunaj jedra, v elektronski ovojnici.
+
+:::simboli
+A | masno (nukleonsko) število | A = Z + N | – | število protonov in nevtronov v jedru
+Z | vrstno (atomsko) število | | – | število protonov; v nevtralnem atomu tudi elektronov
+N | število nevtronov | N = A - Z | –
+:::

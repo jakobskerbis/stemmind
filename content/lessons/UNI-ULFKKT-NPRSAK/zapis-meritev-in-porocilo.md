@@ -240,3 +240,18 @@ V vseh treh primerih število števk pove, koliko zaupaš napravi. Laboratorijsk
 - $2 \cdot 10^{-3}\,\text{mol}$
 ~ Ničle spredaj ne štejejo; $0{,}0215$ ima 3 značilne števke, ne ene.
 > $n = c \cdot V = 0{,}1000\,\text{mol/L} \cdot 0{,}0215\,\text{L} = 2{,}15 \cdot 10^{-3}\,\text{mol}$, s tremi značilnimi števkami kot prostornina.
+
+:::simboli
+a | število pred potenco v znanstvenem zapisu | | – | 1 ≤ a < 10; vse števke so značilne
+n | množina snovi | n = \dfrac{m}{M} | mol | v zapisu a · 10ⁿ celoštevilski eksponent
+Z | znesek | Z = m \cdot p | € |
+m | masa | | g | v primeru z zneskom v kg
+p | cena na kilogram | | €/kg |
+m_\text{čaše + kristalov} | masa čaše s kristali | | g |
+m_\text{čaše} | masa prazne čaše | | g |
+\eta | izkoristek | \eta = \dfrac{m}{m_\text{teor}} \cdot 100\,\% | \% |
+m_\text{teor} | teoretična masa produkta | | g |
+M | molska masa | | g/mol |
+c | množinska koncentracija | c = \dfrac{n}{V} | mol/L |
+V | prostornina raztopine | | L |
+:::

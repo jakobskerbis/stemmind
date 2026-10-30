@@ -206,3 +206,13 @@ Opomba: gostota je odvisna od temperature in pri plinih tudi od tlaka, saj se pr
 + $30\,\text{cm}^3$
 - $1{,}25\,\text{cm}^3$
 > Prostornina kamna je razlika odčitkov: $150\,\text{ml} - 120\,\text{ml} = 30\,\text{ml} = 30\,\text{cm}^3$. Končni odčitek je prostornina vode in kamna skupaj, vsota pa nima pomena.
+
+:::simboli
+\rho | gostota | \rho = \dfrac{m}{V} | kg/m^3 | 1 g/cm³ = 1000 kg/m³
+m | masa telesa | m = \rho \cdot V | kg
+V | prostornina telesa | V = V_2 - V_1 | m^3 | kocka: V = a³
+a | rob kocke | | cm
+V_1 | začetna prostornina vode v merilnem valju | | ml
+V_2 | prostornina vode s potopljenim telesom | | ml
+\rho_{\text{vode}} | gostota vode | | g/cm^3 | 1 g/cm³; telo plava, če je ρ manjša
+:::

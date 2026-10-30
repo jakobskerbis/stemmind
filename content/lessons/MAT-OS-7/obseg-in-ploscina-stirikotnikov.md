@@ -237,3 +237,16 @@ $$S = \frac{e \cdot (f_1 + f_2)}{2} = \frac{e \cdot f}{2}$$
 ~ To je obseg strehe $32\,\text{m}$ krat $50$. Sneg pokriva ploskev, zato potrebuješ ploščino.
 + $2200\,\text{kg}$
 > $S = \dfrac{(14 + 8) \cdot 4}{2} = 44\,\text{m}^2$, snega je $44 \cdot 50 = 2200\,\text{kg}$.
+
+:::simboli
+S | ploščina štirikotnika | | | paralelogram a · v_a, trapez (a + c) · v : 2
+o | obseg štirikotnika | o = a + b + c + d | | paralelogram: o = 2(a + b)
+a | stranica (osnovnica) | | | pri trapezu ena od osnovnic
+b | sosednja stranica | | | pri trapezu krak
+c | druga osnovnica trapeza | | | vzporedna z a
+d | drugi krak trapeza | |
+v_a | višina na stranico a | |
+v | višina (razdalja med osnovnicama) | | | pri rombu višina na stranico a
+e, f | diagonali | | | pri rombu in deltoidu pravokotni: S = e · f : 2
+f_1, f_2 | dela diagonale f | | | f₁ + f₂ = f
+:::

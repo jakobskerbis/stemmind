@@ -234,3 +234,21 @@ Brez spomina eksponentne: $P(T > s + t \mid T > s) = \frac{e^{-\lambda(s+t)}}{e^
 - Normalna, ker je vreme vsota mnogih vplivov.
 ~ Normalna je zvezna, število dni pa je celo število od $0$ do $30$.
 > Fiksno število neodvisnih poskusov z isto verjetnostjo uspeha je natanko binomska shema.
+
+:::simboli
+P | verjetnost | | | število med 0 in 1
+X | slučajna spremenljivka | | |
+k | vrednost diskretne spremenljivke (število uspehov ali dogodkov) | | |
+n | število neodvisnih poskusov | | |
+p | verjetnost uspeha v enem poskusu | | |
+\lambda | povprečno število dogodkov v intervalu | | | pri eksponentni porazdelitvi na časovno enoto
+e | Eulerjevo število | | | e ≈ 2,718
+f | gostota verjetnosti | | |
+t | čas | | | t ≥ 0
+T | čas čakanja do prvega dogodka | | | eksponentno porazdeljen
+x | vrednost zvezne spremenljivke | | |
+\mu | pričakovana vrednost (središče normalne porazdelitve) | | |
+\sigma | standardni odklon (širina normalne porazdelitve) | | |
+z | standardizirana vrednost | z = \dfrac{x - \mu}{\sigma} | |
+\Phi | porazdelitvena funkcija standardne normalne porazdelitve | | | Φ(z) = P(Z ≤ z), iz tabele
+:::

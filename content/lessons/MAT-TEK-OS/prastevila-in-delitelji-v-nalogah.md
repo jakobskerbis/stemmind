@@ -234,3 +234,11 @@ Nariši dva prekrivajoča se kroga. V presek daš kroglice, ki jih imata obe vre
 - Po $18$ obratih
 ~ Za skupni večkratnik si vzel produkt $12 \cdot 18 = 216$. Števili nista tuji, zato je $v$ manjši.
 > Mimo stičišča mora iti $v(12, 18) = 36$ zob. Manjši zobnik se zavrti $36 : 12 = 3$-krat, večji pa $36 : 18 = 2$-krat.
+
+:::simboli
+n | naravno število | n = p^a \cdot q^b \cdot r^c | |
+p, q, r | različna praštevila (prafaktorji števila n) | | |
+a, b, c | eksponenti prafaktorjev | | | pri D in v sta a, b dani naravni števili
+D | največji skupni delitelj | | |
+v | najmanjši skupni večkratnik | | | D · v = a · b
+:::

@@ -194,3 +194,7 @@ Podobno velja za odštevanje: $a - b$ je tisto število $x$, za katero je $x + b
 + $9$
 - $15$
 > Najprej množenje in deljenje: $(-4)\cdot(-3) = 12$ in $(-18):6 = -3$. Nato seštevanje: $12 + (-3) = 9$.
+
+:::simboli
+a, b | celi števili | | | −b je nasprotno število števila b
+:::

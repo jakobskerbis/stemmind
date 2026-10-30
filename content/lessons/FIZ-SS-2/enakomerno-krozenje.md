@@ -247,3 +247,12 @@ Trikotnika sta podobna, zato $\dfrac{\Delta v}{v} = \dfrac{v\,\Delta t}{r}$. Sle
 ~ Hitrost se res podvoji in je na kvadrat, a pozabil si, da se podvoji tudi $r$ v imenovalcu.
 + Poveča se dvakrat.
 > Hitrost se podvoji, njen kvadrat poveča štirikrat, polmer pa dvakrat: $a_r$ se poveča $\dfrac{4}{2} = 2$-krat. Isto pove $a_r = \dfrac{4\pi^2 r}{t_0^2}$.
+
+:::simboli
+v | obodna hitrost | v = \dfrac{2\pi r}{t_0} | m/s | velikost stalna, smer se spreminja
+r | polmer kroženja | | m
+t_0 | obhodni čas | t_0 = \dfrac{2\pi r}{v} | s | čas enega celega obhoda
+a_r | radialni (centripetalni) pospešek | a_r = \dfrac{v^2}{r} | m/s^2 | kaže proti središču
+F_r | rezultanta sil proti središču | F_r = m\,a_r = \frac{m v^2}{r} | N
+m | masa | | kg
+:::

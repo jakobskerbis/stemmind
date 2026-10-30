@@ -242,3 +242,13 @@ Formulo za vsoto dokažemo tudi s popolno indukcijo. Za $q \ne 1$ velja pri $n =
 ~ To je peti člen $a_5 = 3^4$, ne vsota prvih petih členov.
 + $121$
 > $S_5 = 1 \cdot \dfrac{3^5 - 1}{3 - 1} = \dfrac{242}{2} = 121$; preizkus: $1 + 3 + 9 + 27 + 81 = 121$.
+
+:::simboli
+a_n | splošni (n-ti) člen zaporedja | a_n = a_1 + (n-1)\,d | | geometrijsko: aₙ = a₁ · qⁿ⁻¹
+a_{n+1} | člen, ki sledi členu a_n | | |
+a_1 | prvi člen zaporedja | | |
+d | diferenca aritmetičnega zaporedja | d = a_{n+1} - a_n | |
+q | količnik geometrijskega zaporedja | q = \frac{a_{n+1}}{a_n} | | v formuli za vsoto q ≠ 1
+n | zaporedna številka člena (število členov) | | |
+S_n | vsota prvih n členov | S_n = \frac{n}{2}\,(a_1 + a_n) | | geometrijsko: Sₙ = a₁ · (qⁿ − 1)/(q − 1)
+:::

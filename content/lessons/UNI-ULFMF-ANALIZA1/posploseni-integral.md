@@ -243,3 +243,15 @@ Postopek za vsak posplošeni integral:
 - $12$
 ~ Primitivna funkcija za $x^{-1/3}$ je $\frac32 x^{2/3}$, ne $3x^{2/3}$.
 > $\int_\varepsilon^8 x^{-1/3}\,dx = \frac32\left(8^{2/3} - \varepsilon^{2/3}\right) \to \frac32 \cdot 4 = 6$, ko $\varepsilon \to 0^+$.
+
+:::simboli
+f | integrand (funkcija, ki jo integriramo) | | | integrabilna na vsakem [a, b]
+x | integracijska spremenljivka
+d | oznaka diferenciala (dx) v integralu
+a | spodnja meja integracije
+b | zgornja meja integracije | | | pošljemo jo proti ∞ ali proti singularnosti
+p | eksponent v potenci 1/xᵖ | | | na [1, ∞) konvergira za p > 1, na (0, 1] za p < 1
+\varepsilon | odmik od singularnosti | | | ε → 0⁺
+C | integracijska konstanta
+g | primerjalna funkcija | | | 0 ≤ f(x) ≤ g(x)
+:::

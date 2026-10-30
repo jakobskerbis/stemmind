@@ -283,3 +283,39 @@ Pri mrežici z $N$ režami je jakost $j \propto \sin^2(N\delta/2)/\sin^2(\delta/
 - Pri vsakem prehodu, če je vpadni kot dovolj velik
 ~ Misliš, da dovolj velik vpadni kot vedno zadošča; mejni kot obstaja le, če je $n_2/n_1 < 1$; pri prehodu v gostejšo snov enačba $\sin\alpha_m = n_2/n_1$ nima rešitve.
 > Totalni odboj je mogoč le pri prehodu iz optično gostejše v redkejšo snov, tu pri vpadnih kotih nad $48{,}8^\circ$.
+
+:::simboli
+n | lomni količnik snovi | n = \frac{c_0}{c} | – | zrak 1,00, voda 1,33, steklo okoli 1,5
+n_1 | lomni količnik snovi, iz katere svetloba prihaja | | –
+n_2 | lomni količnik snovi, v katero svetloba prehaja | | –
+n_\mathrm{zrak} | lomni količnik zraka | | – | 1,00
+n_\mathrm{voda} | lomni količnik vode | | – | 1,33
+c_0 | hitrost svetlobe v praznem prostoru | | m/s | 3,00 · 10⁸ m/s
+c | hitrost svetlobe v snovi | c = \frac{c_0}{n} | m/s
+\alpha | vpadni kot | | ° | merjen od pravokotnice na mejo
+\beta | lomni kot | | ° | merjen od pravokotnice na mejo
+\alpha_m | mejni kot totalnega odboja | \sin\alpha_m = \frac{n_2}{n_1} | ° | le pri prehodu v optično redkejšo snov
+a | razdalja predmeta od leče | | m
+b | razdalja slike od leče | | m | b < 0: navidezna slika
+f | goriščna razdalja leče | | m | razpršilna leča: f < 0
+M | povečava slike | M = \frac{y'}{y} = -\frac{b}{a} | – | negativna: slika je obrnjena
+y | velikost predmeta | | m
+y' | velikost slike | y' = My | m | negativna: slika je obrnjena
+m | red ojačitve (interferenčni red) | | – | m = 0, ±1, ±2, …
+m_{\max} | največji red ojačitve | m_{\max} \le \frac{d}{\lambda} | –
+\lambda | valovna dolžina svetlobe | \lambda = \frac{\lambda_0}{n} | m | v snovi krajša kot v praznem prostoru
+\lambda_0 | valovna dolžina svetlobe v praznem prostoru | | m
+d | razdalja med režama (konstanta mrežice) | | m
+\theta | kot uklona (smer proti progi) | | °
+\theta_m | kot ojačitve m-tega reda | d\sin\theta_m = m\lambda | °
+y_m | odmik m-te proge od sredine zaslona | y_m = L\tan\theta_m | m
+L | razdalja do zaslona | | m
+t | čas potovanja svetlobe | | s
+x | mesto, kjer žarek prečka mejo | | m
+h_1 | višina točke A nad mejo | | m
+h_2 | globina točke B pod mejo | | m
+D | vodoravna razdalja med točkama A in B | | m | pri uklonu širina reže ali premer odprtine
+j | jakost svetlobe | | W/m^2
+j_1 | jakost svetlobe iz ene reže | | W/m^2
+s | razdalja med točkama, ki ju ločimo | s \approx L\theta | m
+:::

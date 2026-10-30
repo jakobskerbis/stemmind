@@ -249,3 +249,12 @@ V splošnem: $\frac{a}{b} + \frac{c}{d} = \frac{a \cdot d + c \cdot b}{b \cdot d
 - $1\frac{1}{6}$ km
 ~ Celi del si zmanjšal, ulomka pa vseeno odštel v obratnem vrstnem redu ($\frac{3}{6} - \frac{2}{6}$).
 > $4\frac{1}{3} - 2\frac{1}{2} = 4\frac{2}{6} - 2\frac{3}{6} = 3\frac{8}{6} - 2\frac{3}{6} = 1\frac{5}{6}$ km. Preizkus: $2\frac{3}{6} + 1\frac{5}{6} = 3\frac{8}{6} = 4\frac{2}{6}$.
+
+:::simboli
+a, b | števca ulomkov | | | v a/b = a · k / (b · k) je b imenovalec
+c | skupni imenovalec | | | c ≠ 0
+k | število, s katerim razširimo ulomek | | | k ≠ 0
+x | iskani del proge | | | v primeru 2 Timova razdalja
+t | čas, ki ostane za tretjo etapo | | h
+v | najmanjši skupni večkratnik imenovalcev | | | najmanjši skupni imenovalec
+:::

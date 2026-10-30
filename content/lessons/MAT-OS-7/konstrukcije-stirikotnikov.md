@@ -231,3 +231,15 @@ Diskusija ni formalnost. Pri ssk lahko lok seka krak kota v dveh točkah in dobi
 ~ Tako dobiš točko na premici $AD$, ki je od $A$ oddaljena $5\,\text{cm}$, ne oglišča $C$. Oglišče $C$ leži nad $B$, ne nad $A$.
 + Lok okoli $A$ s polmerom $5\,\text{cm}$ seka pravokotnico na $AB$, postavljeno v točki $B$.
 > $C$ leži na pravokotnici v $B$ (pravi kot) in je od $A$ oddaljen $e = 5\,\text{cm}$, zato je presečišče loka in pravokotnice.
+
+:::simboli
+A, B, C, D | oglišča štirikotnika | | | po vrsti okoli lika
+a | stranica AB | | | pri trapezu osnovnica
+b | stranica BC | | | pri trapezu krak
+c | stranica CD | | | pri trapezu druga, krajša osnovnica
+d | stranica DA | | | pri trapezu drugi krak
+e | diagonala AC | |
+f | diagonala BD | |
+S | presečišče diagonal | | | pri rombu diagonali razpolavlja
+E | presečišče vzporednice skozi D z AB | | | pomožni trikotnik AED ima stranico AE = a − c
+:::

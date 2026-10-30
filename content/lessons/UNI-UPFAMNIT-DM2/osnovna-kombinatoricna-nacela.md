@@ -217,3 +217,11 @@ Tretji dan vodja trdi, da je bilo lani vsako od štirih vrst vremena približno 
 ~ Število povezav mora biti celo. Ta rezultat pove, da tak graf ne obstaja.
 + Trditev ne more biti res.
 > Vsota stopenj je $7 \cdot 5 = 35$ in je liha, vsota stopenj pa je vedno $2|E|$, torej soda. Takega grafa ni.
+
+:::simboli
+m_1, m_2 | števili izidov v disjunktnih skupinah | | | npr. poti iz zahodne in vzhodne doline
+n | število izidov drugega koraka | | | pri Dirichletovem načelu število predmetov
+k | število predalov | | | pri načelu produkta število korakov
+v | vozlišče grafa
+E | množica povezav grafa | | | število povezav je moč množice E
+:::

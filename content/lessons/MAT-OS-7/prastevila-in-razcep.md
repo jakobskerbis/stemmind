@@ -243,3 +243,7 @@ Vrstni red pravil je vedno isti: najprej $2$, dokler gre, nato $3$, nato $5$, na
 - Nobena, ker je $72$ sodo.
 ~ Sodost ne preprečuje deljenja, ravno nasprotno: $72$ ima veliko deliteljev.
 > Iz $2, 2, 2, 3, 3$ dobimo $6 = 2 \cdot 3$, $8 = 2 \cdot 2 \cdot 2$ in $9 = 3 \cdot 3$. Res: $72 : 6 = 12$, $72 : 8 = 9$, $72 : 9 = 8$.
+
+:::simboli
+p | praštevilo | | | delimo, dokler je p · p največ toliko kot število
+:::

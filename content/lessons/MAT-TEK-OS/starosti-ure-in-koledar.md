@@ -262,3 +262,9 @@ Na steni visi koledar s sedmimi stolpci. Po sedmih korakih v desno si spet v ist
 - Podatki so protislovni, ker bi morala biti vsota pred 5 leti 60.
 ~ $60$ bi veljalo, če bi bili pred 5 leti rojeni vsi štirje. Mlajši otrok takrat še ni bil rojen.
 > Če bi pred 5 leti živeli vsi štirje, bi bila vsota $80 - 20 = 60$, ne $63$. Torej so takrat živeli le trije; danes so skupaj stari $63 + 15 = 78$ let. Mlajši otrok je star $80 - 78 = 2$ leti, kar je manj kot 5 in se ujema.
+
+:::simboli
+k | kolikokrat je starejša oseba starejša | | | razlika starosti je k − 1 delov
+h | število ur, ki jih kaže ura | | | od 0 do 12
+m | število minut, ki jih kaže ura | | | drugje: število oseb
+:::

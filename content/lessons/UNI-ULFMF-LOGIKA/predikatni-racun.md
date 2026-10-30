@@ -248,3 +248,13 @@ Recept za negacijo izjave s kvantifikatorji, na primeru $\forall \varepsilon > 0
 - $\forall M \leq 0\ \exists n \in \mathbb{N}\colon |a_n| > M$
 ~ Pogoj $M > 0$ je domena kvantifikatorja in se ne zanika.
 > Vsak kvantifikator se obrne, domene ostanejo, $\neg(|a_n| \leq M) \sim |a_n| > M$: za vsako mejo $M$ najdemo člen, ki jo preseže.
+
+:::simboli
+x, y | predmetni spremenljivki
+P | predikat (izjavna forma)
+A | množica, na katero omejimo kvantifikator | | | v pravilih za negacijo poljubna formula
+D | področje pogovora (domena)
+p, q | izjavi
+n | naravno število
+M | realno število (zgornja meja)
+:::

@@ -223,3 +223,16 @@ Ko je eno oglišče v kotu okvira, so kotni trikotniki natanko trije. Če se lik
 - $12\,\text{cm}^2$
 ~ Delil si dvakrat. Trikotnik je polovica pravokotnika, ne četrtina.
 > $p = \dfrac{8 \cdot 6}{2} = 24\,\text{cm}^2$, ne glede na lego $P$ na $CD$.
+
+:::simboli
+p | ploščina lika | p = a \cdot v | | p = a · v velja za paralelogram
+a | osnovnica (stranica kvadrata) | | |
+v | višina na osnovnico | | |
+p_{\text{okvir}} | ploščina okvirnega pravokotnika | | |
+p_1, p_2, p_3 | ploščine odrezanih kotnih trikotnikov | | |
+m, n | kateti kotnega trikotnika | | |
+p_{ABP} | ploščina trikotnika ABP | | |
+p_{CDP} | ploščina trikotnika CDP | | |
+v_1 | razdalja točke P od stranice AB | | |
+v_2 | razdalja točke P od stranice CD | | | v₁ + v₂ = a
+:::

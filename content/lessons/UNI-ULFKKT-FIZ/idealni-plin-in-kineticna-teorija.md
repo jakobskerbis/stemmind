@@ -287,3 +287,40 @@ Iz nje sledijo najverjetnejša hitrost $\sqrt{2k_BT/m_0}$, povprečna $\sqrt{8k_
 - Kolikšna je celotna notranja energija zraka v kabini.
 ~ Notranja energija $W_n = \tfrac{f}{2}nRT$ je odvisna tudi od množine plina in prostostnih stopenj; temperatura je mera na eno molekulo.
 > $\langle W_k\rangle = \tfrac{3}{2}k_BT$: absolutna temperatura je mera za povprečno translacijsko kinetično energijo ene molekule, ne glede na to, koliko je plina.
+
+:::simboli
+p | tlak plina | pV = nRT | Pa
+p_1, p_2 | tlak plina v stanju 1 in 2 | | Pa
+p_0 | normalni zračni tlak | | Pa | 1,013 · 10⁵ Pa
+p_z | zunanji (zračni) tlak | | Pa | nadtlak je p − p_z
+V | prostornina plina | | m^3
+V_0 | prostornina plina pri normalnih pogojih | V_0 = \frac{nRT_0}{p_0} | m^3
+n | množina snovi | n = \frac{N}{N_A} | mol | iz plinske enačbe n = pV/(RT)
+N | število molekul | N = nN_A | –
+N_A | Avogadrova konstanta | | mol^{-1} | 6,022 · 10²³ mol⁻¹
+R | splošna plinska konstanta | | J/(mol K) | 8,314 J/(mol K)
+k_B | Boltzmannova konstanta | k_B = \frac{R}{N_A} | J/K | 1,381 · 10⁻²³ J/K
+T | absolutna temperatura | | K
+T_0 | temperatura pri normalnih pogojih | | K | 273,15 K
+T_1, T_2 | temperatura plina v stanju 1 in 2 | | K
+t | temperatura v stopinjah Celzija | T/\mathrm{K} = t/{}^\circ\mathrm{C} + 273{,}15 | °C
+m_0 | masa ene molekule | | kg
+m | masa plina | m = nM | kg
+M | molska masa | | kg/mol | v nalogah pogosto v g/mol
+v | hitrost molekule | | m/s
+v_x | komponenta hitrosti molekule v smeri x | | m/s
+v_{\text{ef}} | efektivna hitrost molekul | v_{\text{ef}} = \sqrt{\langle v^2\rangle} = \sqrt{\frac{3RT}{M}} | m/s | malo večja od povprečne hitrosti
+W_k | kinetična energija molekule | \langle W_k\rangle = \tfrac{3}{2}k_BT | J | ⟨ ⟩ pomeni povprečje
+W_n | notranja energija plina | W_n = \tfrac{f}{2}nRT | J | f je število prostostnih stopenj
+\Delta W_n | sprememba notranje energije plina | \Delta W_n = nC_V\Delta T | J | velja za vsako spremembo
+C_V | molska toplotna kapaciteta pri stalni prostornini | C_V = \tfrac{f}{2}R | J/(mol K)
+C_p | molska toplotna kapaciteta pri stalnem tlaku | C_p = C_V + R | J/(mol K)
+Q_V | toplota pri stalni prostornini | Q_V = nC_V\Delta T | J
+Q_p | toplota pri stalnem tlaku | Q_p = nC_p\Delta T | J
+A' | delo plina pri stalnem tlaku | A' = p\Delta V = nR\Delta T | J
+F | sila molekul na steno | | N
+\Delta t | čas, v katerem štejemo trke s steno | | s
+S | ploščina stene | | m^2
+f | Maxwellova porazdelitev hitrosti | | s/m | tudi število prostostnih stopenj v C_V = (f/2)R
+e | osnova naravnega logaritma | | – | e ≈ 2,718
+:::

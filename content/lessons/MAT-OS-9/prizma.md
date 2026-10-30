@@ -169,3 +169,13 @@ $$a_1 v + a_2 v + \dots + a_n v = (a_1 + a_2 + \dots + a_n)\, v = o \cdot v.$$
 + Podvoji se.
 - Poveča se na štirikratnik.
 > Prostornina je $V = O \cdot v$. Če se $v$ podvoji, $O$ pa ostane, se podvoji tudi $V$.
+
+:::simboli
+P | površina prizme | P = 2O + \mathrm{pl} | |
+O | ploščina osnovne ploskve | | |
+\mathrm{pl} | ploščina plašča | \mathrm{pl} = o \cdot v | | velja za pokončno prizmo
+o | obseg osnovne ploskve | | |
+v | višina prizme | | |
+V | prostornina prizme | V = O \cdot v | |
+a_1, a_2, a_n | stranice osnovne ploskve | | | širine pravokotnikov, ki sestavljajo plašč
+:::

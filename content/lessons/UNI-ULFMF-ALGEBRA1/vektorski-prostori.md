@@ -257,3 +257,14 @@ Obstajajo tudi neskončnorazsežni prostori, npr. prostor vseh polinomov $\mathb
 - $a = 1$
 ~ Pri $a = 1$ je determinanta $2$. Verjetno si pri razvoju zamenjal predznak drugega člena.
 > $\det = 1 \cdot (1 - 0) - 1 \cdot (0 - a) + 0 = 1 + a$, kar je $0$ pri $a = -1$. Takrat velja $(1,1,0) - (0,1,-1) = (1,0,1)$.
+
+:::simboli
+\alpha, \beta | skalarja (koeficienta linearne kombinacije) | | | α₁, …, αₙ so koordinate vektorja v bazi
+v | vektor prostora V | v = \alpha_1 b_1 + \ldots + \alpha_n b_n
+v_1, v_2, v_3, v_k | vektorji linearne kombinacije
+b_1, b_n | vektorji baze prostora V
+U | vektorski podprostor prostora V
+u | vektor podprostora U
+c_0, c_1, c_2 | koeficienti polinoma (koordinate v standardni bazi)
+x | spremenljivka polinoma | | | x, y tudi rešitvi homogenega sistema
+:::

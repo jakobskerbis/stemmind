@@ -208,3 +208,18 @@ torej »povprečje kvadratov minus kvadrat povprečja«. Preizkus za podatke $2,
 - $90^\circ$
 + $54^\circ$
 > Središčni kot je $0{,}15 \cdot 360^\circ = 54^\circ$.
+
+:::simboli
+\bar{x} | aritmetična sredina (povprečje) | \bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n}
+x_1, x_2, x_n | vrednosti podatkov | | |
+x_i | i-ta vrednost podatka | | |
+n | število podatkov | | |
+\sigma | standardni odklon | \sigma = \sqrt{\sigma^2} | | σ² je varianca
+M | mediana | | | srednja vrednost urejenih podatkov
+R | razmah (variacijski razmik) | R = x_{\max} - x_{\min} | |
+x_{\max} | največji podatek | | |
+x_{\min} | najmanjši podatek | | |
+Q_1 | prvi kvartil | | | mediana spodnje polovice podatkov
+Q_3 | tretji kvartil | | | Q₃ − Q₁ je medkvartilni razmik
+f_i | frekvenca vrednosti x_i | | |
+:::

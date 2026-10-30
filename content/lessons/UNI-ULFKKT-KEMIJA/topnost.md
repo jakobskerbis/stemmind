@@ -225,3 +225,16 @@ ker je le del raztopljenega aniona v obliki $\mathrm{A^-}$. Pri $[\mathrm{H^+}] 
 + zmanjša se
 - ostane enaka
 > Dodani $\mathrm{Cl^-}$ je skupni ion; ravnotežje $\mathrm{AgCl(s) \rightleftharpoons Ag^+ + Cl^-}$ se premakne v levo, del AgCl se obori in topnost se zmanjša.
+
+:::simboli
+m | število kationov v formulski enoti | | – | m(…) pomeni maso snovi v g
+n | število anionov v formulski enoti | | – | n(…) pomeni množino snovi v mol
+z | naboj iona | | – | z₊ kationa, z₋ aniona
+K_\mathrm{sp} | topnostni produkt | K_\mathrm{sp} = (ms)^m(ns)^n | – | koncentracije v mol/L brez enote
+s | množinska topnost | | mol/L
+\gamma | masna topnost | \gamma = s\,M | g/L
+M | molska masa | | g/mol
+a, b | števili, ki uravnata atome ključnega elementa | | – | gravimetrični faktor; za BaSO₄ a = b = 1
+K_\mathrm{a} | konstanta kislosti šibke kisline HA | | –
+w | masni delež iskane snovi v vzorcu | w = \frac{m(\text{iskane snovi})}{m(\text{vzorca})} | –
+:::

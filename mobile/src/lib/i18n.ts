@@ -3,7 +3,7 @@
 import { getCalendars, getLocales } from "expo-localization";
 import { useSyncExternalStore } from "react";
 import SL from "../../../public/i18n/sl.js";
-import { uiChain, uiLanguage, detectLanguage, RTL } from "../../../public/i18n/languages.js";
+import { uiChain, uiLanguage, detectLanguage, homeLanguage, RTL } from "../../../public/i18n/languages.js";
 
 type Dict = Record<string, string | Record<string, string>>;
 
@@ -43,13 +43,11 @@ const LOADERS: Record<string, () => Dict> = {
   sw: () => require("../../../public/i18n/ui/sw.json"),
 };
 
-// Telefon v angleščini v Sloveniji (časovni pas Ljubljana): Evklid je slovenski, zato slovenščina.
-// Drug jezik lahko učenec izbere v nastavitvah profila.
+// Telefon v angleščini v Sloveniji dobi slovenščino (homeLanguage, enako kot splet).
 function deviceLanguage(): string {
   const code = detectLanguage(getLocales().map((l) => l.languageTag)).code as string;
-  if (code !== "en") return code;
   try {
-    return getCalendars()[0]?.timeZone === "Europe/Ljubljana" ? "sl" : code;
+    return homeLanguage(code, getCalendars()[0]?.timeZone || "");
   } catch {
     return code;
   }

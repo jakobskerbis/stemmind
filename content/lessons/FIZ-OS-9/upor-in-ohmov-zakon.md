@@ -230,3 +230,13 @@ Upor žice: $R = \zeta \dfrac{l}{S}$, kjer je $l$ dolžina, $S$ presek in $\zeta
 - Ker se napetost baterije zmanjša na polovico.
 ~ Napetost baterije ostane enaka. Razdeli se med žarnici, tok pa se zmanjša zaradi večjega skupnega upora.
 > Večji skupni upor pri isti napetosti pomeni manjši tok ($I = \dfrac{U}{R}$), zato obe žarnici svetita šibkeje.
+
+:::simboli
+R | električni upor | R = \dfrac{U}{I} | Ω
+U | električna napetost | U = R \cdot I | V
+I | električni tok | I = \dfrac{U}{R} | A
+U_1 | napetost pri prvi meritvi | | V
+I_1 | tok pri prvi meritvi | | A
+U_2 | nižja napetost (druga meritev) | | V
+I_2 | tok pri nižji napetosti | I_2 = \dfrac{U_2}{R} | A
+:::

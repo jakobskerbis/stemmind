@@ -198,3 +198,13 @@ Ker lahko dve stranici in kot nasproti krajše od njiju dajo dva različna triko
 - $a = 4\,\text{cm}$, $b = 6\,\text{cm}$, $\alpha = 30^\circ$
 - $a = 3\,\text{cm}$, $b = 6\,\text{cm}$, $\alpha = 40^\circ$
 > Kot $\alpha$ leži nasproti stranice $a$. Samo v prvem primeru je $a$ daljša od $b$. V drugem primeru obstajata dva neskladna trikotnika, v tretjem pa nobeden.
+
+:::simboli
+A, B, C | oglišča trikotnika | |
+a | stranica nasproti oglišča A | | | a = BC
+b | stranica nasproti oglišča B | | | b = AC
+c | stranica nasproti oglišča C | | | c = AB; vedno a + b > c
+\alpha | notranji kot pri oglišču A | | °
+\beta | notranji kot pri oglišču B | \beta = 180^\circ - \alpha - \gamma | °
+\gamma | notranji kot pri oglišču C | | °
+:::

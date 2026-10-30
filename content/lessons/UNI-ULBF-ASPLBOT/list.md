@@ -241,3 +241,15 @@ Puščice: CO₂ vstopa spodaj skozi režo in se po praznih prostorih razširi d
 - Vsi enako, ker voda izhlapeva skozi vso površino.
 ~ Kutikula zadrži večino vode; transpiracija teče skozi reže.
 > Večina rež je spodaj, zato vazelin tam zapre glavno pot transpiracije.
+
+:::simboli
+g | gostota listnih rež | g = \dfrac{N}{A} | mm^{-2} | število rež na kvadratni milimeter
+N | število listnih rež | | –
+A | ploščina vidnega polja | A = a^2 | mm^2 | krožno polje: A = πr²; pri celem listu ploščina lista
+a | stranica kvadratnega polja | | mm
+g_\mathrm{s} | gostota rež na spodnji strani lista | | mm^{-2}
+g_\mathrm{z} | gostota rež na zgornji strani lista | | mm^{-2}
+\delta | delež rež na spodnji strani lista | \delta = \dfrac{A \cdot g_\mathrm{s}}{N} | –
+r | polmer krožnega vidnega polja | r = \dfrac{d}{2} | mm
+d | premer krožnega vidnega polja | | mm
+:::

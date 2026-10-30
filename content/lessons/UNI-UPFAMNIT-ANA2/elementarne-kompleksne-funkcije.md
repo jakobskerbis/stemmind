@@ -260,3 +260,15 @@ Seštejmo vrsto $\sum (i\pi)^{n}/n!$ člen za členom, z zaokroženimi vrednostm
 - približno $106$ tisoč €
 ~ To je $80 + 30\sin\frac{\pi}{3}$: vzet je imaginarni del namesto realnega.
 > $\operatorname{Re}(e^{i\pi/3}) = \cos\frac{\pi}{3} = \frac12$, zato $P(2) = 80 + 30 \cdot 0{,}5 = 95$.
+
+:::simboli
+P | mesečna prodaja v trgovini | P(t) = 50 + \operatorname{Re}\big(20\,e^{i\pi t/6}\big) | | v tisočih evrov
+t | število mesecev od januarja | | | t = 0 je januar
+e | Eulerjevo število | | | e ≈ 2,718
+i | imaginarna enota | | | i² = −1
+z | kompleksno število | z = x + iy
+x | realni del kompleksnega števila z | | | v vrsti za eˣ realno število
+y | imaginarni del kompleksnega števila z
+w | kompleksno število (eksponent, logaritem) | | | eʷ = z
+n | zaporedna številka člena vrste
+:::

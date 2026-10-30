@@ -212,3 +212,18 @@ Vzemimo pravokotnik s stranicama $a = 9\,\text{cm}$ in $b = 12\,\text{cm}$ ter m
 - $255^\circ$
 + $75^\circ$
 > V tetivnem štirikotniku imata nasprotna kota vsoto $180^\circ$, zato je iskani kot $180^\circ - 105^\circ = 75^\circ$.
+
+:::simboli
+\alpha, \beta, \gamma, \delta | notranji koti štirikotnika | | | α je drugje tudi središčni kot
+o | obseg | | |
+r | polmer kroga | | |
+S | ploščina lika | | | krog: S = πr²; S je tudi središče krožnice
+l | dolžina krožnega loka | l = \frac{\pi r \alpha}{180^\circ} | | α je središčni kot
+S_{\text{izs}} | ploščina krožnega izseka | S_{\text{izs}} = \frac{\pi r^2 \alpha}{360^\circ} | |
+a, c | osnovnici trapeza | | | a je tudi stranica kvadrata ali romba
+b, d | kraka trapeza | | | d je drugje premer, d = 2r
+e, f | diagonali štirikotnika | | | e = AC, f = BD
+v | višina trapeza ali romba | v^2 = b^2 - \left(\frac{a - c}{2}\right)^2 | | zveza velja za enakokraki trapez
+\varphi | obodni kot | \varphi = \frac{\alpha}{2} | | polovica središčnega kota nad istim lokom
+A, B, C, D | oglišča štirikotnika ABCD | | | v nalogi s krogom točke na krožnici
+:::

@@ -67,7 +67,7 @@ V simulaciji spodaj »Medmolekulske sile in vrelišča« izberi spojine z vodiko
 
 Katere medmolekulske sile prevladujejo med molekulami metana $\mathrm{CH_4}$, vodikovega klorida $\mathrm{HCl}$ in amoniaka $\mathrm{NH_3}$?
 
-**Podatki:** $\mathrm{CH_4}$: vezi $\mathrm{C{-}H}$, $\Delta EN = 0{,}4$, simetrična molekula; $\mathrm{HCl}$: $\Delta EN = 1{,}0$, polarna; $\mathrm{NH_3}$: vezi $\mathrm{N{-}H}$, $\Delta EN = 0{,}8$, polarna, dušik ima prost elektronski par
+**Podatki:** $\mathrm{CH_4}$: vezi $\mathrm{C{-}H}$, $\Delta\mathrm{EN} = 0{,}4$, simetrična molekula; $\mathrm{HCl}$: $\Delta\mathrm{EN} = 1{,}0$, polarna; $\mathrm{NH_3}$: vezi $\mathrm{N{-}H}$, $\Delta\mathrm{EN} = 0{,}8$, polarna, dušik ima prost elektronski par
 **Iščemo:** vrsto prevladujoče medmolekulske sile za vsako snov
 
 :::formula
@@ -124,7 +124,7 @@ Snov je tekoča, če velja $T_t < T < T_v$.
 
 Jupitrova atmosfera vsebuje amoniak $\mathrm{NH_3}$ in fosfin $\mathrm{PH_3}$. Vrelišči teh dveh snovi sta $-33\,°\mathrm{C}$ in $-88\,°\mathrm{C}$. Katero vrelišče pripada kateri snovi?
 
-**Podatki:** $A_r(\mathrm{N}) = 14$, $A_r(\mathrm{P}) = 31$, $A_r(\mathrm{H}) = 1$; vrelišči $-33\,°\mathrm{C}$ in $-88\,°\mathrm{C}$; $EN(\mathrm{N}) = 3{,}0$, $EN(\mathrm{P}) = 2{,}2$
+**Podatki:** $A_r(\mathrm{N}) = 14$, $A_r(\mathrm{P}) = 31$, $A_r(\mathrm{H}) = 1$; vrelišči $-33\,°\mathrm{C}$ in $-88\,°\mathrm{C}$; $\mathrm{EN}(\mathrm{N}) = 3{,}0$, $\mathrm{EN}(\mathrm{P}) = 2{,}2$
 **Iščemo:** vrelišče vsake snovi
 
 :::formula
@@ -140,7 +140,7 @@ Večja $M_r$ → močnejše disperzijske sile; vodikove vezi → bistveno višje
 :::premisli
 Katera snov vre pri $-33\,°\mathrm{C}$?
 ---
-Amoniak. Vodik je vezan na dušik, ki je med $\mathrm{F}$, $\mathrm{O}$, $\mathrm{N}$, zato med molekulami $\mathrm{NH_3}$ nastajajo vodikove vezi. Fosfor ima $EN$ enako kot vodik, vodikovih vezi ni. Fosfin vre pri $-88\,°\mathrm{C}$, kljub dvakrat večji masi.
+Amoniak. Vodik je vezan na dušik, ki je med $\mathrm{F}$, $\mathrm{O}$, $\mathrm{N}$, zato med molekulami $\mathrm{NH_3}$ nastajajo vodikove vezi. Fosfor ima $\mathrm{EN}$ enako kot vodik, vodikovih vezi ni. Fosfin vre pri $-88\,°\mathrm{C}$, kljub dvakrat večji masi.
 :::
 
 ## Pogoste napake
@@ -225,3 +225,11 @@ Vrelišča od zgoraj navzdol: $-162\,°\mathrm{C}$, $-85\,°\mathrm{C}$, $100\,�
 - S heksanom, ker je močnejše topilo za vse snovi.
 ~ Nobeno topilo ne topi vsega. Nepolarni heksan topi nepolarne snovi, na primer maščobe.
 > Podobno se topi v podobnem: skupine $\mathrm{O{-}H}$ v sladkorju tvorijo vodikove vezi z vodo, zato se sladkor v vodi dobro raztaplja.
+
+:::simboli
+M_r | relativna molekulska masa | | – | vsota A_r vseh atomov v molekuli
+A_r | relativna atomska masa | | – | iz periodnega sistema
+T | temperatura snovi | | °C
+T_t | tališče | | °C
+T_v | vrelišče | | °C | snov je tekoča, če je T_t < T < T_v
+:::

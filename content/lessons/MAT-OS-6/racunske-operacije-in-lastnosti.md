@@ -244,3 +244,7 @@ Postopek za vsak izraz:
 + $7 \cdot (3 + 4) = 7 \cdot 3 + 7 \cdot 4$
 - $7 \cdot (3 + 4) = 7 \cdot 3 + 4$
 > Razčlenjevalni zakon: $7 \cdot 7 = 49$ in $21 + 28 = 49$. Pri deljenju zamenjava števil ne velja ($18 : 6 = 3$, a $6 : 18$ ni naravno število), pri odštevanju prestavitev oklepaja spremeni rezultat ($8 \ne 16$), pri četrtem zapisu pa je s $7$ pomnožen samo prvi člen ($25 \ne 49$).
+
+:::simboli
+a, b, c | poljubna števila | | | zakoni veljajo za vsa števila
+:::

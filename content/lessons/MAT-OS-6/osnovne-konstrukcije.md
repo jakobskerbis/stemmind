@@ -234,3 +234,10 @@ Zakaj konstrukcije res delujejo? Pri simetrali daljice narišemo dva loka z isti
 + Z lokom s središčem $T$ izrežemo točki $A$ in $B$ na $p$, nato konstruiramo simetralo daljice $AB$.
 - Razpolovimo kot med premico $p$ in daljico iz $T$ do poljubne točke na $p$.
 > Točka $T$ je po konstrukciji enako oddaljena od $A$ in $B$, zato leži na simetrali daljice $AB$, ta pa je pravokotna na $p$.
+
+:::simboli
+A, B | krajišči daljice AB | | | daljica AB
+r | polmer loka (razmik šestila) | | | pri simetrali večji od polovice dolžine AB
+T | dana točka | | | skozi njo konstruiramo pravokotnico na p
+p | dana premica | |
+:::

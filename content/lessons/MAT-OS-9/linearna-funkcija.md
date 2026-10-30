@@ -171,3 +171,12 @@ Razmerje je torej neodvisno od izbire točk in je enako $k$. Ravno to pomeni, da
 + Funkcija pada in seka os $y$ v točki $(0, 5)$.
 - Funkcija pada in seka os $y$ v točki $(0, -2)$.
 > Ker je $k = -2 < 0$, funkcija pada. Pri $x = 0$ je $y = n = 5$, zato premica seka os $y$ v točki $(0, 5)$.
+
+:::simboli
+y | vrednost funkcije (odvisna spremenljivka) | y = kx + n | | pri hranilniku privarčevani znesek v €
+x | neodvisna spremenljivka | | | pri hranilniku število tednov
+k | smerni koeficient premice | k = \frac{y_2 - y_1}{x_2 - x_1} | | pove, za koliko se y spremeni, ko se x poveča za 1
+n | začetna vrednost (presečišče z osjo y) | | |
+x_1, x_2 | abscisi dveh točk na premici | | | x₂ ≠ x₁
+y_1, y_2 | ordinati dveh točk na premici | | |
+:::
