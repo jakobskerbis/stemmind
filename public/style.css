@@ -227,6 +227,10 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .test-notice .tn-list { flex-basis: 100%; margin: 2px 0 6px; padding-inline-start: 2.4em; line-height: 1.45; }
 .test-notice .tn-list li + li { margin-top: 3px; }
 .test-notice .tn-report button { color: inherit; text-decoration: underline; }
+/* Mnenje se pošlje k profilu: brez izbranega profila (uvod, prijava) »Sporoči napako« ne bi naredil ničesar. */
+body.onboarding .test-notice .tn-report, body.auth-mode .test-notice .tn-report { display: none; }
+.test-notice button.small { min-height: 40px !important; }
+.test-notice button.ghost:hover { color: inherit; background: color-mix(in srgb, currentColor 12%, transparent); }
 
 /* ---------- pogledi, kartice, obrazci ---------- */
 .view { flex: 1; min-height: 0; }

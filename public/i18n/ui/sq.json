@@ -65,6 +65,7 @@
   "beta.text": "Evklid dhe tutori janë ende në version testimi, prandaj disa gjëra nuk funksionojnë ende.",
   "beta.more": "Çfarë nuk funksionon ende",
   "beta.close": "Mbyll njoftimin",
+  "beta.tutorOff": "Tutori nuk po përgjigjet tani, sepse mbaroi krediti i AI-së. Ushtrimet, mësimet dhe lojërat funksionojnë.",
   "beta.tutor": "Tutori mund të gabojë, prandaj kontrollo rezultatet e rëndësishme. Ndonjëherë nuk përgjigjet kur mbaron krediti i AI-së.",
   "beta.pay": "Pagesat janë vetëm prova: abonimet, paketat para testit dhe kodet dhuratë nuk mund të blihen ende vërtet.",
   "beta.email": "Email-et nuk dërgohen ende: konfirmimi i llogarisë, rivendosja e fjalëkalimit dhe raportet për prindërit nuk funksionojnë tani për tani.",

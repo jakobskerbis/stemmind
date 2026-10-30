@@ -3,7 +3,7 @@
 import { t } from "./i18n.js";
 
 const KEY = "evklid.testnaVerzija";
-const ITEMS = { tutor: "beta.tutor", pay: "beta.pay", email: "beta.email", apps: "beta.apps" };
+const ITEMS = { tutorOff: "beta.tutorOff", tutor: "beta.tutor", pay: "beta.pay", email: "beta.email", apps: "beta.apps" };
 
 function get() {
   try {

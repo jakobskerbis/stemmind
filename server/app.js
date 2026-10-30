@@ -304,7 +304,7 @@ export function createApp(store, opts = {}) {
   // Obvestilo »Testna verzija«: kaj še ne dela. EVKLID_TESTNA_VERZIJA=off ga skrije (ob javni objavi).
   const testNotice = () => {
     if (/^(off|0|false|ne)$/i.test(process.env.EVKLID_TESTNA_VERZIJA || "")) return [];
-    const items = ["tutor"];
+    const items = [usage.creditOutRecently() ? "tutorOff" : "tutor"];
     if (!/_live_/.test(process.env.STRIPE_SECRET_KEY || "")) items.push("pay");
     if (!process.env.RESEND_API_KEY) items.push("email");
     items.push("apps");
