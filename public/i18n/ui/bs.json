@@ -2373,5 +2373,8 @@
   "pilot.parents": "Roditelji",
   "pilot.note": "Pregledi stranica broje se bez kolačića i bez IP adresa, samo kao broj po danu. Roboti i pregledi linkova se ne broje.",
   "pay.giftAdult": "Punoljetna sam osoba i kupujem poklon-kod za Evklid.",
-  "pay.giftWithdrawal": "Znam da mogu odustati u roku od 14 dana od kupovine i dobiti povrat cijelog iznosa ako kod još nije unesen. Kada se kod unese, korištenje počinje i pravo na odustajanje prestaje."
+  "pay.giftWithdrawal": "Znam da mogu odustati u roku od 14 dana od kupovine i dobiti povrat cijelog iznosa ako kod još nije unesen. Kada se kod unese, korištenje počinje i pravo na odustajanje prestaje.",
+  "pay.howMany": "Za koliko djece?",
+  "pay.seats1": "1 dijete",
+  "pay.seats2": "2 djece"
 }

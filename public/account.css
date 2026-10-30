@@ -9,16 +9,17 @@ a { color: var(--accent); }
 label.check input { margin-top: 4px; flex: none; width: 18px; height: 18px; }
 
 .plans { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
-.plan-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 8px; align-items: stretch; }
-.plan-head { font-weight: 600; align-self: center; }
+.plans[hidden], .plan-row[hidden] { display: none; }
+.plan-who { border: 0; margin: 0; padding: 0; min-width: 0; }
+.plan-who legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+.plan-who-opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+.plan-who-opts .plan { align-items: center; min-height: 44px; }
+.plan-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: stretch; }
+.plan-note { grid-column: 1 / -1; margin: 0; }
 .plan { display: flex; gap: 8px; align-items: flex-start; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px; cursor: pointer; background: var(--bg); }
 .plan:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: var(--accent-soft); }
 .plan input { margin-top: 4px; }
 .plan .muted { font-size: 0.8rem; }
-@media (max-width: 520px) {
-  .plan-row { grid-template-columns: 1fr 1fr; }
-  .plan-head { grid-column: 1 / -1; }
-}
 
 /* Darilne kode: koda, Kopiraj in stanje v eni vrstici (na ozkem zaslonu se prelomi) */
 .gift-list { list-style: none; padding: 0; margin: 0 0 8px; display: flex; flex-direction: column; gap: 8px; }

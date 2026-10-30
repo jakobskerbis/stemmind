@@ -2393,5 +2393,8 @@
   "pilot.parents": "Rodiče",
   "pilot.note": "Zobrazení stránek se počítají bez cookies a bez IP adres, jen jako počet za den. Roboti a náhledy odkazů se nepočítají.",
   "pay.giftAdult": "Jsem plnoletá osoba a kupuji dárkový kód pro Evklid.",
-  "pay.giftWithdrawal": "Vím, že mohu do 14 dnů od nákupu odstoupit a dostat zpět celou částku, pokud kód ještě nebyl uplatněn. Po uplatnění kódu začíná užívání a právo na odstoupení zaniká."
+  "pay.giftWithdrawal": "Vím, že mohu do 14 dnů od nákupu odstoupit a dostat zpět celou částku, pokud kód ještě nebyl uplatněn. Po uplatnění kódu začíná užívání a právo na odstoupení zaniká.",
+  "pay.howMany": "Pro kolik dětí?",
+  "pay.seats1": "1 dítě",
+  "pay.seats2": "2 děti"
 }

@@ -2351,5 +2351,8 @@
   "pilot.parents": "Prindër",
   "pilot.note": "Shikimet e faqeve numërohen pa cookies dhe pa adresa IP, vetëm si numër në ditë. Robotët dhe parapamjet e lidhjeve nuk numërohen.",
   "pay.giftAdult": "Jam madhor/e dhe po blej një kod dhuratë për Evklid.",
-  "pay.giftWithdrawal": "E di se mund të tërhiqem brenda 14 ditëve nga blerja dhe të marr rimbursim të plotë nëse kodi nuk është përdorur ende. Pasi kodi përdoret, përdorimi fillon dhe e drejta e tërheqjes përfundon."
+  "pay.giftWithdrawal": "E di se mund të tërhiqem brenda 14 ditëve nga blerja dhe të marr rimbursim të plotë nëse kodi nuk është përdorur ende. Pasi kodi përdoret, përdorimi fillon dhe e drejta e tërheqjes përfundon.",
+  "pay.howMany": "Për sa fëmijë?",
+  "pay.seats1": "1 fëmijë",
+  "pay.seats2": "2 fëmijë"
 }

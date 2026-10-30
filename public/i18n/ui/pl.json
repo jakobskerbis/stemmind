@@ -2399,5 +2399,8 @@
   "pilot.parents": "Rodzice",
   "pilot.note": "Wyświetlenia stron są liczone bez plików cookie i bez adresów IP, tylko jako liczba na dzień. Boty i podglądy linków nie są liczone.",
   "pay.giftAdult": "Jestem osobą pełnoletnią i kupuję kod podarunkowy do Evklid.",
-  "pay.giftWithdrawal": "Wiem, że mogę odstąpić w ciągu 14 dni od zakupu i otrzymać pełny zwrot, jeśli kod nie został jeszcze wykorzystany. Po wykorzystaniu kodu korzystanie się rozpoczyna, a prawo do odstąpienia wygasa."
+  "pay.giftWithdrawal": "Wiem, że mogę odstąpić w ciągu 14 dni od zakupu i otrzymać pełny zwrot, jeśli kod nie został jeszcze wykorzystany. Po wykorzystaniu kodu korzystanie się rozpoczyna, a prawo do odstąpienia wygasa.",
+  "pay.howMany": "Dla ilu dzieci?",
+  "pay.seats1": "1 dziecko",
+  "pay.seats2": "2 dzieci"
 }

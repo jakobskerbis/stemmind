@@ -2351,5 +2351,8 @@
   "pilot.parents": "Parents",
   "pilot.note": "Les vues de pages sont comptées sans cookies ni adresses IP, uniquement en nombre par jour. Les robots et les aperçus de liens ne sont pas comptés.",
   "pay.giftAdult": "Je suis majeur(e) et j'achète un code cadeau pour Evklid.",
-  "pay.giftWithdrawal": "Je sais que je peux me rétracter dans les 14 jours suivant l'achat et être remboursé(e) intégralement si le code n'a pas été utilisé. Dès que le code est utilisé, l'accès commence et le droit de rétractation prend fin."
+  "pay.giftWithdrawal": "Je sais que je peux me rétracter dans les 14 jours suivant l'achat et être remboursé(e) intégralement si le code n'a pas été utilisé. Dès que le code est utilisé, l'accès commence et le droit de rétractation prend fin.",
+  "pay.howMany": "Pour combien d’enfants ?",
+  "pay.seats1": "1 enfant",
+  "pay.seats2": "2 enfants"
 }

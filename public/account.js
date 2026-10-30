@@ -652,14 +652,20 @@ function plansPicker(acc) {
     const p = acc.plans.find((x) => x.seats === seats && x.interval === interval);
     const cur = p.currency || "EUR";
     const perMonth = interval === "year" ? `<span class="muted">≈ ${money(Math.round(p.amount / 10), cur)} / mesec (10 mesecev)</span>` : "";
-    return `<label class="plan"><input type="radio" name="plan" value="${seats}-${interval}" ${seats === 1 && interval === "month" ? "checked" : ""}>
+    return `<label class="plan"><input type="radio" name="plan" value="${seats}-${interval}">
       <span><b>${money(p.amount, cur)}</b> / ${interval === "year" ? "šolsko leto" : "mesec"}<br>${perMonth}</span></label>`;
   };
+  // Najprej izbira, za koliko otrok; šele nato cene samo za to izbiro (j 2026-10-30: prej je bilo prenatrpano).
+  const who = [["1", t("pay.seats1")], ["2", t("pay.seats2")], ...(acc.school_plans?.length ? [["s", t("school.planHead")]] : [])];
   return `
     <form id="plan-form" class="plans" novalidate>
-      <div class="plan-row"><div class="plan-head">1 otrok</div>${cell(1, "month")}${cell(1, "year")}</div>
-      <div class="plan-row"><div class="plan-head">2 otroka</div>${cell(2, "month")}${cell(2, "year")}</div>
+      <fieldset class="plan-who"><legend>${esc(t("pay.howMany"))}</legend>
+        <div class="plan-who-opts">${who.map(([v, label]) => `<label class="plan"><input type="radio" name="who" value="${v}"> <span><b>${esc(label)}</b></span></label>`).join("")}</div>
+      </fieldset>
+      <div class="plan-row" data-who="1" hidden>${cell(1, "month")}${cell(1, "year")}</div>
+      <div class="plan-row" data-who="2" hidden>${cell(2, "month")}${cell(2, "year")}</div>
       ${schoolRow(acc)}
+      <div id="plan-rest" class="plans" hidden>
       <p class="form-error" role="alert" hidden></p>
       ${acc.prices_draft ? `<p class="muted">Cene v lokalni valuti so predlog (razvojna različica).</p>` : ""}
       ${acc.parent.minor
@@ -670,6 +676,7 @@ function plansPicker(acc) {
       ${acc.parent.minor ? "" : `<p class="muted">Plačilo poteka varno prek Stripe. Naročnino lahko kadar koli prekličete.${
         acc.access.tier === "trial" ? " Preostanek preizkusa se ohrani: prvo plačilo bo šele po njegovem koncu." : ""
       }</p>`}
+      </div>
     </form>`;
 }
 
@@ -678,8 +685,7 @@ function schoolRow(acc) {
   if (!acc.school_plans?.length) return "";
   const cell = (p) => `<label class="plan"><input type="radio" name="plan" value="s-${p.interval}">
       <span><b>${money(p.amount, "EUR")}</b> / ${esc(t(p.interval === "year" ? "school.perYear" : "school.perMonth"))}</span></label>`;
-  return `<div class="plan-row"><div class="plan-head">${esc(t("school.planHead"))}</div>${acc.school_plans.map(cell).join("")}</div>
-    <p class="muted">${esc(t("school.planNote"))}</p>`;
+  return `<div class="plan-row" data-who="s" hidden>${acc.school_plans.map(cell).join("")}<p class="muted plan-note">${esc(t("school.planNote"))}</p></div>`;
 }
 // Vrednost izbire paketa: »1-month« (otroci-obdobje) ali »s-year« (Osebno ob šolski licenci).
 const planBody = (v) => {
@@ -1046,6 +1052,15 @@ async function renderAccount() {
       <button id="delete-account" class="danger" type="button">Izbriši račun in vse podatke</button>
     </div>`;
 
+  // Izbira števila otrok pokaže samo cene za to izbiro (mesečno je izbrano) in nato soglasja ter gumb.
+  $("#plan-form")?.addEventListener("change", (e) => {
+    if (e.target.name !== "who") return;
+    const f = e.currentTarget;
+    for (const row of f.querySelectorAll(".plan-row")) row.hidden = row.dataset.who !== e.target.value;
+    const first = f.querySelector(`.plan-row[data-who="${e.target.value}"] input[name=plan]`);
+    if (first) first.checked = true;
+    $("#plan-rest", f).hidden = false;
+  });
   $("#plan-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const btn = $("button[type=submit]", e.target);

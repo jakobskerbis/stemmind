@@ -2327,5 +2327,8 @@
   "pilot.parents": "Orang tua",
   "pilot.note": "Tayangan halaman dihitung tanpa cookie dan tanpa alamat IP, hanya sebagai jumlah per hari. Bot dan pratinjau tautan tidak dihitung.",
   "pay.giftAdult": "Saya sudah dewasa dan membeli kode hadiah untuk Evklid.",
-  "pay.giftWithdrawal": "Saya tahu bahwa saya dapat membatalkan dalam 14 hari sejak pembelian dan mendapat pengembalian penuh jika kode belum ditukarkan. Setelah kode ditukarkan, penggunaan dimulai dan hak pembatalan berakhir."
+  "pay.giftWithdrawal": "Saya tahu bahwa saya dapat membatalkan dalam 14 hari sejak pembelian dan mendapat pengembalian penuh jika kode belum ditukarkan. Setelah kode ditukarkan, penggunaan dimulai dan hak pembatalan berakhir.",
+  "pay.howMany": "Untuk berapa anak?",
+  "pay.seats1": "1 anak",
+  "pay.seats2": "2 anak"
 }

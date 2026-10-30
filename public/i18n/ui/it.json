@@ -2351,5 +2351,8 @@
   "pilot.parents": "Genitori",
   "pilot.note": "Le visite alle pagine sono contate senza cookie e senza indirizzi IP, solo come numero al giorno. Bot e anteprime dei link non vengono contati.",
   "pay.giftAdult": "Sono maggiorenne e acquisto un codice regalo per Evklid.",
-  "pay.giftWithdrawal": "So che posso recedere entro 14 giorni dall'acquisto e ottenere il rimborso completo se il codice non è stato riscattato. Una volta riscattato il codice, l'uso inizia e il diritto di recesso termina."
+  "pay.giftWithdrawal": "So che posso recedere entro 14 giorni dall'acquisto e ottenere il rimborso completo se il codice non è stato riscattato. Una volta riscattato il codice, l'uso inizia e il diritto di recesso termina.",
+  "pay.howMany": "Per quanti figli?",
+  "pay.seats1": "1 figlio",
+  "pay.seats2": "2 figli"
 }

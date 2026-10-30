@@ -2349,5 +2349,8 @@
   "pilot.parents": "Szülők",
   "pilot.note": "Az oldalmegtekintéseket sütik és IP-címek nélkül számoljuk, csak napi darabszámként. A robotokat és a linkelőnézeteket nem számoljuk.",
   "pay.giftAdult": "Nagykorú vagyok, és ajándékkódot vásárolok az Evklidhez.",
-  "pay.giftWithdrawal": "Tudom, hogy a vásárlástól számított 14 napon belül elállhatok, és a teljes összeget visszakapom, ha a kódot még nem váltották be. A kód beváltásával a használat megkezdődik, és az elállási jog megszűnik."
+  "pay.giftWithdrawal": "Tudom, hogy a vásárlástól számított 14 napon belül elállhatok, és a teljes összeget visszakapom, ha a kódot még nem váltották be. A kód beváltásával a használat megkezdődik, és az elállási jog megszűnik.",
+  "pay.howMany": "Hány gyereknek?",
+  "pay.seats1": "1 gyerek",
+  "pay.seats2": "2 gyerek"
 }

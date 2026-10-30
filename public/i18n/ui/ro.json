@@ -2375,5 +2375,8 @@
   "pilot.parents": "Părinți",
   "pilot.note": "Vizualizările paginilor se numără fără cookie-uri și fără adrese IP, doar ca număr pe zi. Roboții și previzualizările de linkuri nu se numără.",
   "pay.giftAdult": "Sunt major(ă) și cumpăr un cod cadou pentru Evklid.",
-  "pay.giftWithdrawal": "Știu că mă pot retrage în 14 zile de la cumpărare și primesc rambursarea integrală dacă codul nu a fost folosit. Odată folosit codul, utilizarea începe și dreptul de retragere încetează."
+  "pay.giftWithdrawal": "Știu că mă pot retrage în 14 zile de la cumpărare și primesc rambursarea integrală dacă codul nu a fost folosit. Odată folosit codul, utilizarea începe și dreptul de retragere încetează.",
+  "pay.howMany": "Pentru câți copii?",
+  "pay.seats1": "1 copil",
+  "pay.seats2": "2 copii"
 }

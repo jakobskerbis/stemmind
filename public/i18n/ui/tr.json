@@ -2349,5 +2349,8 @@
   "pilot.parents": "Veliler",
   "pilot.note": "Sayfa görüntülenmeleri çerez ve IP adresi olmadan, yalnızca günlük sayı olarak sayılır. Botlar ve bağlantı önizlemeleri sayılmaz.",
   "pay.giftAdult": "Reşit olduğumu ve Evklid için bir hediye kodu satın aldığımı onaylıyorum.",
-  "pay.giftWithdrawal": "Kod henüz kullanılmadıysa satın alma tarihinden itibaren 14 gün içinde cayabileceğimi ve tam iade alacağımı biliyorum. Kod kullanıldığında kullanım başlar ve cayma hakkı sona erer."
+  "pay.giftWithdrawal": "Kod henüz kullanılmadıysa satın alma tarihinden itibaren 14 gün içinde cayabileceğimi ve tam iade alacağımı biliyorum. Kod kullanıldığında kullanım başlar ve cayma hakkı sona erer.",
+  "pay.howMany": "Kaç çocuk için?",
+  "pay.seats1": "1 çocuk",
+  "pay.seats2": "2 çocuk"
 }

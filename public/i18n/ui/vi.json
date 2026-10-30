@@ -2327,5 +2327,8 @@
   "pilot.parents": "Phụ huynh",
   "pilot.note": "Lượt xem trang được đếm không dùng cookie và không lưu địa chỉ IP, chỉ là số lượng mỗi ngày. Bot và bản xem trước liên kết không được tính.",
   "pay.giftAdult": "Tôi đã đủ tuổi thành niên và mua mã quà tặng cho Evklid.",
-  "pay.giftWithdrawal": "Tôi biết mình có thể hủy trong vòng 14 ngày kể từ khi mua và được hoàn tiền toàn bộ nếu mã chưa được sử dụng. Khi mã đã được sử dụng, việc dùng bắt đầu và quyền hủy chấm dứt."
+  "pay.giftWithdrawal": "Tôi biết mình có thể hủy trong vòng 14 ngày kể từ khi mua và được hoàn tiền toàn bộ nếu mã chưa được sử dụng. Khi mã đã được sử dụng, việc dùng bắt đầu và quyền hủy chấm dứt.",
+  "pay.howMany": "Cho bao nhiêu con?",
+  "pay.seats1": "1 con",
+  "pay.seats2": "2 con"
 }

@@ -2351,5 +2351,8 @@
   "pilot.parents": "Parents",
   "pilot.note": "Page views are counted without cookies and without IP addresses, only as a daily total. Bots and link previews are not counted.",
   "pay.giftAdult": "I am an adult and I am buying a gift code for Evklid.",
-  "pay.giftWithdrawal": "I know I can withdraw within 14 days of purchase and get a full refund if the code has not been redeemed. Once the code is redeemed, use begins and the right of withdrawal ends."
+  "pay.giftWithdrawal": "I know I can withdraw within 14 days of purchase and get a full refund if the code has not been redeemed. Once the code is redeemed, use begins and the right of withdrawal ends.",
+  "pay.howMany": "How many children is it for?",
+  "pay.seats1": "1 child",
+  "pay.seats2": "2 children"
 }
