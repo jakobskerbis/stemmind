@@ -39,6 +39,7 @@ import { mountCorner } from "./corner.js";
 import { mountWebApp } from "./webapp.js";
 import { Schedules, scheduleView, schedulePrompt, syncTestPlan } from "./schedule.js";
 import { mountSchedule } from "./schedule-api.js";
+import { mountScan } from "./scan.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
 import { BRAND } from "./brand.js";
 
@@ -930,6 +931,7 @@ export function createApp(store, opts = {}) {
   mountKnowledge(app, knowledge, { loadStudent, avatars });
   mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
   mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup, modelCapFor: (id) => accounts?.modelCapFor?.(id) ?? null });
+  mountScan(app, { loadStudent, usage, readFn: opts.scanReadFn, solveFn: opts.scanSolveFn });
 
   // --- poraba AI ---
   // Poraba AI za vse profile: brez računov samo na računalniku, kjer teče strežnik

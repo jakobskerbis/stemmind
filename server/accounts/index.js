@@ -6,9 +6,10 @@ import { isLocalRequest } from "../feedback.js";
 import express from "express";
 import { migrateAccounts } from "./schema.js";
 import { hashPassword, verifyPassword, randomToken, sha256, readCookie, Sessions, setSessionCookie, clearSessionCookie, Throttle } from "./auth.js";
-import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, isPremiumChild, isoIn, freeDailyQuestions, freeMonthlyPoolUsd, freeStudentMonthlyUsd, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION } from "./plans.js";
+import { planByKey, planFor, plansFor, currencyForCountry, REGIONAL_DRAFT, monthlyAmount, accessFor, paidActive, isPremiumChild, isoIn, freeDailyQuestions, freeMonthlyPoolUsd, freeStudentMonthlyUsd, TRIAL_DAYS, REFERRAL_DAYS, MAX_CHILDREN, PRIVACY_VERSION, GRACE_DAYS } from "./plans.js";
 import { Stripe, verifyWebhook } from "./stripe.js";
-import { Mailer, verifyEmail, resetEmail, referralRewardEmail } from "./email.js";
+import { Mailer, verifyEmail, resetEmail, referralRewardEmail, paymentFailedEmail } from "./email.js";
+import { mountBilling, migrateBilling, publicPass, ADULT_TEXT, WITHDRAWAL_TEXT } from "./billing.js";
 import { buildWeeklyReport, weekKey, isSendTime } from "./weekly.js";
 import { buildGoalReminder, reminderDays, isNoonTime, ljNow } from "./goal-reminder.js";
 import { Devices, deviceLabel, deviceWarnLimit } from "./devices.js";
@@ -53,6 +54,7 @@ export function mountAccounts(app, store, opts = {}) {
 
   const db = store.db;
   migrateAccounts(db);
+  migrateBilling(db);
   const aiUsage = new Usage(db);
   // Uporaba brez registracije je odstranjena: vedno izklopljena, vklopijo jo le testi (opts.guest).
   const guestOn = opts.guest ?? guestModeOn(process.env);
@@ -84,7 +86,9 @@ export function mountAccounts(app, store, opts = {}) {
   const promoCfg = opts.promo ?? promoConfig(env);
   const promo = createPromo(db, promoCfg);
   if (promoCfg.code) log.info?.(`[evklid] aktivacijska koda ${promoCfg.code}: porabljenih ${promo.used()}/${promoCfg.limit}, ${promoCfg.days} dni`);
-  const accessOf = (p) => accessFor(p, Date.now(), promoCfg.seats);
+  // Število profilov pri aktivacijski kodi je lastnost kode, ki jo je račun porabil.
+  const accessOf = (p) => accessFor(p, Date.now(), p.promo_until ? promo.termsOf(p.id).seats : promoCfg.seats);
+  let billing = null; // paketi pred testom, povezave za starše (mountBilling spodaj)
 
   const baseUrl = (req) => (env.EVKLID_BASE_URL || (req ? `${req.protocol}://${req.get("host")}` : `http://localhost:${env.PORT || 3000}`)).replace(/\/$/, "");
 
@@ -134,15 +138,15 @@ export function mountAccounts(app, store, opts = {}) {
     const parentId = ownerOf(studentId);
     if (!parentId) return true; // stari podatki brez starša
     const access = accessOf(getParent(parentId));
-    return isPremiumChild(access, childIds(parentId), studentId);
+    return isPremiumChild(access, childIds(parentId), studentId) || !!billing?.passPremium(studentId);
   }
 
-  // Najzmogljivejši dovoljeni model za učenca: pri dostopu iz aktivacijske kode »sonnet«
-  // (namesto Opusa), sicer null (brez omejitve; brezplačni paket omeji usage.chooseMode).
+  // Najzmogljivejši dovoljeni model za učenca: pri dostopu iz aktivacijske kode model kode
+  // (EVKLID3X: »sonnet« namesto Opusa), sicer null (brez omejitve; brezplačni paket omeji usage.chooseMode).
   function modelCapFor(studentId) {
     const parentId = ownerOf(studentId);
-    if (!parentId || !promoCfg.maxModel) return null;
-    return accessOf(getParent(parentId)).tier === "promo" ? promoCfg.maxModel : null;
+    if (!parentId) return null;
+    return accessOf(getParent(parentId)).tier === "promo" ? promo.termsOf(parentId).maxModel : null;
   }
 
   // Poraba AI brezplačnih učencev v tem mesecu (učenci brez naročnine, preizkusa, bonusa ali kode).
@@ -197,7 +201,7 @@ export function mountAccounts(app, store, opts = {}) {
     next();
   });
 
-  const PUBLIC = [/^\/auth\//, /^\/account\/status$/, /^\/account\/prices$/, /^\/account\/unsubscribe$/, /^\/stripe\/webhook$/, /^\/config$/];
+  const PUBLIC = [/^\/auth\//, /^\/account\/status$/, /^\/account\/prices$/, /^\/account\/unsubscribe$/, /^\/stripe\/webhook$/, /^\/config$/, /^\/pay\/[^/]+(\/checkout|\/confirm)?$/];
   app.use("/api", (req, res, next) => {
     if (PUBLIC.some((re) => re.test(req.path))) return next();
     const p = req.parent;
@@ -535,7 +539,8 @@ export function mountAccounts(app, store, opts = {}) {
         id: c.id,
         name: c.name,
         birth_year: c.birth_year,
-        premium: isPremiumChild(access, ids, c.id),
+        premium: isPremiumChild(access, ids, c.id) || !!billing?.passPremium(c.id),
+        pass: publicPass(billing?.passes.latestFor(c.id)),
         questions_today: questionsToday(c.id),
         ai_month: aiUsage.studentMonth(c.id),
         devices: devices.recent(c.id),
@@ -551,10 +556,16 @@ export function mountAccounts(app, store, opts = {}) {
       email: mailer.enabled,
       promo: {
         redeemed: !!db.prepare("SELECT 1 FROM promo_redemptions WHERE parent_id = ?").get(p.id),
-        available: !!promoCfg.code,
-        seats: promoCfg.seats,
+        available: promo.anyActive(),
+        seats: promo.termsOf(p.id).seats,
         ...(p.is_admin && promoCfg.code ? { admin: { ...promo.stats(), url: `${baseUrl(req)}/?koda=${promoCfg.code}` } } : {}),
+        ...(p.is_admin ? { codes: promo.list(), base_url: `${baseUrl(req)}/?koda=` } : {}),
       },
+      ...(p.is_admin
+        ? { billing_events: db.prepare("SELECT id, type, received_at, processed_at, error FROM billing_events ORDER BY received_at DESC, rowid DESC LIMIT 10").all() }
+        : {}),
+      consents: { adult: ADULT_TEXT, withdrawal: WITHDRAWAL_TEXT },
+      grace_days: GRACE_DAYS,
       referral: { code: p.referral_code, url: `${baseUrl(req)}/?ref=${p.referral_code}`, rewards, days: REFERRAL_DAYS },
       consent_text: CONSENT_TEXT,
     };
@@ -831,6 +842,9 @@ export function mountAccounts(app, store, opts = {}) {
     const plan = planFor(Number(req.body?.seats), req.body?.interval, currency);
     if (!plan) return res.status(400).json({ error: "Neznan paket." });
     if (PAID.has(p.sub_status)) return res.status(409).json({ error: "Naročnino že imate. Paket spremenite v portalu.", portal: true });
+    // Naročnino sklene polnoletna oseba; mladoletni imetnik pošlje staršu povezavo za plačilo.
+    if (isMinor(p)) return res.status(403).json({ error: "Naročnino plača starš. Pošlji mu povezavo za plačilo.", pay_link: true });
+    if (req.body?.adult !== true || req.body?.withdrawal !== true) return res.status(400).json({ error: "Pred plačilom potrdite obe izjavi.", consent: true });
     try {
       const customer = await ensureCustomer(p);
       const { prices } = await stripe.ensurePrices(currency);
@@ -851,6 +865,8 @@ export function mountAccounts(app, store, opts = {}) {
         subscription_data,
         metadata: { parent_id: p.id },
       });
+      const lang = /^[a-z]{2,3}(-[A-Za-z]{2,4})?$/.test(String(req.body?.lang || "")) ? req.body.lang : "sl";
+      db.prepare("INSERT INTO billing_consents (parent_id, payer_email, kind, text) VALUES (?, ?, 'sub', ?)").run(p.id, p.email, `${ADULT_TEXT}\n${WITHDRAWAL_TEXT}\n[jezik: ${lang}]`);
       res.json({ url: session.url });
     } catch (err) {
       log.error?.("[evklid] Stripe checkout:", err.message);
@@ -878,7 +894,16 @@ export function mountAccounts(app, store, opts = {}) {
     const plan = planByKey(price.lookup_key);
     const seats = plan?.seats || Number(price.metadata?.seats) || 1;
     const end = sub.current_period_end ?? item?.current_period_end;
+    const before = getParent(parentId);
+    // Naročnina iz druge trgovine (npr. Apple v aplikaciji za iOS, sub_provider = 'apple'), ki še velja,
+    // ima prednost: dogodek Stripa je ne prepiše.
+    if (before?.sub_provider && before.sub_provider !== "stripe" && paidActive(before) && sub.id !== before.sub_id) {
+      log.error?.("[evklid] Stripe naročnina prezrta: račun ima veljavno naročnino", before.sub_provider, parentId);
+      return;
+    }
     update(parentId, {
+      // Prvo neuspelo plačilo začne odlog (GRACE_DAYS); ob uspešnem plačilu se ponastavi.
+      past_due_since: sub.status === "past_due" ? before?.past_due_since || new Date().toISOString() : null,
       sub_id: sub.id,
       sub_status: sub.status,
       sub_plan: plan?.key || price.lookup_key || price.id || null,
@@ -944,6 +969,108 @@ export function mountAccounts(app, store, opts = {}) {
     await sendMail(p.email, referralRewardEmail(appUrl));
   }
 
+  billing = mountBilling(app, {
+    db,
+    store,
+    stripe,
+    log,
+    json,
+    kv,
+    promo,
+    getParent,
+    update,
+    childIds,
+    ownerOf,
+    ensureCustomer,
+    accessOf,
+    baseUrl,
+    sendMail,
+    currencyOf,
+    isMinor,
+    applySubscription,
+    syncCustomer,
+  });
+
+  // Naročnina iz dogodka: sveže stanje iz Stripa (dogodki lahko pridejo v napačnem vrstnem redu).
+  async function freshSubscription(obj) {
+    if (!stripe.enabled || !obj?.id) return obj;
+    try {
+      const fresh = await stripe.request("GET", `/subscriptions/${obj.id}`);
+      return fresh?.id === obj.id ? fresh : obj;
+    } catch (err) {
+      log.error?.("[evklid] sveža naročnina:", err.message);
+      return obj;
+    }
+  }
+
+  // Vsak dogodek obdelamo enkrat; ob napaki odgovorimo 500, da ga Stripe pošlje znova.
+  async function handleEvent(event) {
+    const obj = event.data?.object || {};
+    const parentFor = () => parentByCustomer(obj.customer) || (obj.metadata?.parent_id && getParent(Number(obj.metadata.parent_id)));
+    switch (event.type) {
+      case "checkout.session.completed":
+      case "checkout.session.async_payment_succeeded": {
+        if (obj.metadata?.kind === "pass") {
+          billing.completePassSession(obj);
+          break;
+        }
+        if (obj.metadata?.pay_link && obj.subscription && stripe.enabled) {
+          await billing.completeSubSession(obj);
+          break;
+        }
+        const p = parentFor() || getParent(Number(obj.client_reference_id));
+        if (!p) break;
+        if (!p.stripe_customer_id && obj.customer) update(p.id, { stripe_customer_id: obj.customer });
+        if (obj.subscription && stripe.enabled) await applySubscription(p.id, await stripe.request("GET", `/subscriptions/${obj.subscription}`));
+        break;
+      }
+      case "customer.subscription.created":
+      case "customer.subscription.updated":
+      case "customer.subscription.deleted": {
+        const p = parentFor();
+        if (p) await applySubscription(p.id, await freshSubscription(obj));
+        break;
+      }
+      case "invoice.paid": {
+        const p = parentFor();
+        if (p && obj.amount_paid > 0) await maybeRewardReferral(p.id);
+        break;
+      }
+      case "invoice.payment_failed": {
+        const p = parentFor();
+        if (!p) break;
+        const claim = db.prepare("INSERT OR IGNORE INTO email_log (parent_id, kind, period) VALUES (?, 'payment_failed', ?)").run(p.id, String(obj.id || ""));
+        if (claim.changes) await sendMail(p.email, paymentFailedEmail(baseUrl(null) + "/", GRACE_DAYS));
+        break;
+      }
+      // Vračilo ali spor pri paketu pred testom: paket se takoj konča.
+      case "charge.refunded": {
+        const pass = billing.passes.byPayment(obj.payment_intent);
+        if (pass && obj.amount_refunded > 0) billing.passes.end(pass.id, "refunded"); // tudi delno vračilo ob odstopu
+        break;
+      }
+      case "charge.dispute.created": {
+        const pass = billing.passes.byPayment(obj.payment_intent);
+        if (pass) {
+          billing.passes.end(pass.id, "disputed");
+          break;
+        }
+        // Spor pri naročnini: naročnina se takoj prekliče, profili preidejo na brezplačni paket.
+        if (!stripe.enabled || !obj.charge) break;
+        const charge = await stripe.request("GET", `/charges/${obj.charge}`);
+        const p = parentByCustomer(charge.customer);
+        const inv = charge.invoice ? await stripe.request("GET", `/invoices/${typeof charge.invoice === "string" ? charge.invoice : charge.invoice.id}`) : null;
+        const disputedSub = typeof inv?.subscription === "string" ? inv.subscription : inv?.subscription?.id;
+        if (p?.sub_id && PAID.has(p.sub_status) && (p.sub_provider || "stripe") === "stripe" && (!disputedSub || disputedSub === p.sub_id)) {
+          const sub = await stripe.request("DELETE", `/subscriptions/${p.sub_id}`);
+          await applySubscription(p.id, sub?.id ? sub : { ...p, id: p.sub_id, status: "canceled", items: { data: [{ price: { lookup_key: p.sub_plan } }] } });
+          log.error?.("[evklid] spor pri plačilu: naročnina preklicana", p.id);
+        }
+        break;
+      }
+    }
+  }
+
   app.post("/api/stripe/webhook", express.raw({ type: "*/*", limit: "1mb" }), async (req, res) => {
     const raw = Buffer.isBuffer(req.body) ? req.body.toString("utf8") : "";
     if (!verifyWebhook(raw, req.get("stripe-signature"), webhookSecret)) return res.status(400).json({ error: "Neveljaven podpis." });
@@ -953,33 +1080,19 @@ export function mountAccounts(app, store, opts = {}) {
     } catch {
       return res.status(400).json({ error: "Neveljaven JSON." });
     }
-    const obj = event.data?.object || {};
+    const id = typeof event.id === "string" && event.id ? event.id.slice(0, 100) : null;
+    if (id) {
+      db.prepare("INSERT OR IGNORE INTO billing_events (id, type) VALUES (?, ?)").run(id, String(event.type || "").slice(0, 100));
+      const seen = db.prepare("SELECT processed_at FROM billing_events WHERE id = ?").get(id);
+      if (seen?.processed_at) return res.json({ received: true, duplicate: true });
+    }
     try {
-      const parentFor = () => parentByCustomer(obj.customer) || (obj.metadata?.parent_id && getParent(Number(obj.metadata.parent_id)));
-      switch (event.type) {
-        case "checkout.session.completed": {
-          const p = parentFor() || getParent(Number(obj.client_reference_id));
-          if (!p) break;
-          if (!p.stripe_customer_id && obj.customer) update(p.id, { stripe_customer_id: obj.customer });
-          if (obj.subscription && stripe.enabled) await applySubscription(p.id, await stripe.request("GET", `/subscriptions/${obj.subscription}`));
-          break;
-        }
-        case "customer.subscription.created":
-        case "customer.subscription.updated":
-        case "customer.subscription.deleted": {
-          const p = parentFor();
-          if (p) await applySubscription(p.id, obj);
-          break;
-        }
-        case "invoice.paid": {
-          const p = parentFor();
-          if (p && obj.amount_paid > 0) await maybeRewardReferral(p.id);
-          break;
-        }
-      }
+      await handleEvent(event);
+      if (id) db.prepare("UPDATE billing_events SET processed_at = datetime('now'), error = NULL WHERE id = ?").run(id);
       res.json({ received: true });
     } catch (err) {
       log.error?.("[evklid] webhook:", event.type, err.message);
+      if (id) db.prepare("UPDATE billing_events SET error = ? WHERE id = ?").run(String(err.message).slice(0, 300), id);
       res.status(500).json({ error: "Napaka pri obdelavi." });
     }
   });
@@ -1040,6 +1153,7 @@ export function mountAccounts(app, store, opts = {}) {
     const timer = setInterval(() => {
       if (process.env.EVKLID_WEEKLY_EMAIL !== "0" && isSendTime()) sendWeeklyAll().catch((e) => log.error?.("[evklid] tedenska poročila:", e.message));
       if (process.env.EVKLID_GOAL_EMAIL !== "0" && isNoonTime()) sendGoalRemindersAll().catch((e) => log.error?.("[evklid] opomniki cilja:", e.message));
+      billing.billingDaily().catch((e) => log.error?.("[evklid] dnevna opravila plačil:", e.message));
       try {
         guests.cleanup();
       } catch (e) {
@@ -1049,6 +1163,6 @@ export function mountAccounts(app, store, opts = {}) {
     timer.unref();
   }
 
-  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, guests };
+  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, guests, billing };
 }
 

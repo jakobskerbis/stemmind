@@ -5,19 +5,11 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Kemijska enačba pove, **kateri** delci reagirajo in v **kakšnem razmerju**. V laboratoriju, v tovarni, v lekarni ali v bioreaktorju pa delcev ne štejemo, ampak tehtamo grame in merimo mililitre. Stehiometrija je most med tem dvojim: iz mase ali prostornine izračunamo število delcev, iz enačbe razmerje in nazaj maso produkta. Brez tega ne moremo pripraviti reakcijske zmesi, oceniti, koliko produkta lahko dobimo, ugotoviti, katere surovine bo zmanjkalo, ali iz rezultatov analize ugotoviti formulo neznane spojine.
-
-Stehiometrija je zato prvo orodje vsakega kemijskega računa: pri sintezi zdravila, pri gnojenju njive (koliko dušika je v gnojilu), pri izgorevanju goriva (koliko $\mathrm{CO_2}$ nastane), pri presnovi (koliko kisika porabi celica za glukozo) in pri vseh nadaljnjih poglavjih (raztopine, ravnotežja, termokemija).
-
-V tej lekciji se naučiš:
-
-- računati z **množino snovi** in molsko maso,
-- iz urejene enačbe izračunati maso produkta ali porabljenega reaktanta,
-- poiskati **omejujoči reaktant** in presežek,
-- izračunati **teoretični** in **dejanski izkoristek**,
-- iz masnih deležev ali sežigne analize določiti **empirično** in **molekulsko formulo**.
+Avto na poti na morje porabi okoli $7\,\mathrm{kg}$ bencina, iz izpuha pa pride okoli $22\,\mathrm{kg}$ ogljikovega dioksida, trikrat več, kot je bilo goriva. Masa ni nastala iz nič: vsak atom ogljika iz goriva je s seboj vzel dva atoma kisika iz zraka. Takega računa ne narediš z grami, ampak s štetjem delcev, z moli. Stehiometrija je most med tehtnico in enačbo: iz mase izračunaš množino, iz enačbe razmerje in nazaj maso produkta. Z njo pripraviš reakcijsko zmes, napoveš, katere surovine bo zmanjkalo, in iz sežigne analize ugotoviš formulo neznane spojine, pri sintezi zdravila prav tako kot pri gnojenju njive.
 
 ## Razlaga
+
+Iz enačbe $\mathrm{2\,H_2 + O_2 \to 2\,H_2O}$ hočeš izračunati, koliko kisika potrebuješ za $2\,\mathrm{g}$ vodika. Mamljiv odgovor je $1\,\mathrm{g}$, saj je koeficient pri kisiku za polovico manjši. Pravilno pa je okoli $15{,}9\,\mathrm{g}$, ker je molekula kisika skoraj $16$-krat težja od molekule vodika: koeficienti štejejo **delce**, ne grame. Zato najprej potrebujemo količino, ki šteje delce.
 
 **1. Množina snovi.** Množina snovi $n$ je osnovna fizikalna količina z enoto **mol**. En mol vsebuje natanko $N_\mathrm{A} = 6{,}022\,140\,76 \cdot 10^{23}$ osnovnih delcev (atomov, molekul, ionov, formulskih enot). $N_\mathrm{A}$ je **Avogadrova konstanta** z enoto $\mathrm{mol^{-1}}$. Število delcev je
 
@@ -39,9 +31,15 @@ kjer je $N(\mathrm{X})$ število atomov X v formuli. V vodi je $w(\mathrm{H}) = 
 
 $$\mathrm{C_6H_{12}O_6 + 6\,O_2 \longrightarrow 6\,CO_2 + 6\,H_2O}$$
 
-sledi $n(\mathrm{CO_2}) : n(\mathrm{C_6H_{12}O_6}) = 6 : 1$. Splošno za reaktant A in produkt B s koeficientoma $\nu_\mathrm{A}$ in $\nu_\mathrm{B}$:
+sledi $n(\mathrm{CO_2}) : n(\mathrm{C_6H_{12}O_6}) = 6 : 1$, masi pa sta v povsem drugem razmerju. Splošno za reaktant A in produkt B s koeficientoma $\nu_\mathrm{A}$ in $\nu_\mathrm{B}$:
 
 $$\frac{n(\mathrm{A})}{\nu_\mathrm{A}} = \frac{n(\mathrm{B})}{\nu_\mathrm{B}}.$$
+
+:::premisli
+Zmešaš $10\,\mathrm{g}$ vodika in $10\,\mathrm{g}$ kisika. Ali zreagirata brez ostanka, saj sta masi enaki?
+---
+Ne. $n(\mathrm{H_2}) = 10/2{,}016 = 4{,}96\,\mathrm{mol}$, $n(\mathrm{O_2}) = 10/32{,}00 = 0{,}3125\,\mathrm{mol}$. Za $0{,}3125\,\mathrm{mol}$ kisika je potrebnih le $0{,}625\,\mathrm{mol}$ vodika ($1{,}26\,\mathrm{g}$), zato ostane okoli $8{,}74\,\mathrm{g}$ vodika. Enake mase pomenijo zelo različno število delcev.
+:::
 
 **5. Pot računa.** Skoraj vsaka stehiometrijska naloga ima tri korake:
 
@@ -57,6 +55,12 @@ $$\eta = \frac{m_\text{dejanska}}{m_\text{teoretična}} \cdot 100\,\%.$$
 
 Pri večstopenjski sintezi se izkoristki posameznih stopenj zmnožijo: tri stopnje po $80\,\%$ dajo skupaj le $0{,}8^3 \approx 51\,\%$.
 
+:::premisli
+Sošolec pri vajah izračuna izkoristek $108\,\%$ in je ponosen na zelo dobro reakcijo. Kaj mu poveš?
+---
+Več produkta, kot ga dopušča omejujoči reaktant, ne more nastati, zato izkoristek nad $100\,\%$ pomeni napako. Najpogosteje je produkt še vlažen ali nečist (topilo, stranski produkti povečajo maso), lahko pa je napaka v računu teoretične mase.
+:::
+
 **8. Empirična in molekulska formula.** **Empirična formula** podaja najmanjše celoštevilsko razmerje atomov v spojini (za glukozo $\mathrm{CH_2O}$). **Molekulska formula** pove dejansko število atomov v molekuli ($\mathrm{C_6H_{12}O_6}$) in je celoštevilski večkratnik empirične. Postopek:
 
 1. iz masnih deležev (ali mas) izračunaj **množine** elementov, npr. na $100\,\mathrm{g}$ spojine,
@@ -70,7 +74,7 @@ Pri **sežigni analizi** organske spojine ves ogljik preide v $\mathrm{CO_2}$, v
 
 ### Primer 1 (lažji)
 
-Koliko gramov ogljikovega dioksida nastane pri popolnem sežigu $45{,}0\,\mathrm{g}$ glukoze $\mathrm{C_6H_{12}O_6}$? Uporabi $A_\mathrm{r}(\mathrm{C}) = 12{,}01$, $A_\mathrm{r}(\mathrm{H}) = 1{,}008$, $A_\mathrm{r}(\mathrm{O}) = 16{,}00$.
+Planinka na poti na Triglav poje energijsko ploščico s $45{,}0\,\mathrm{g}$ glukoze $\mathrm{C_6H_{12}O_6}$, ki jo celice popolnoma oksidirajo (enako kot pri sežigu). Koliko gramov ogljikovega dioksida pri tem nastane? Uporabi $A_\mathrm{r}(\mathrm{C}) = 12{,}01$, $A_\mathrm{r}(\mathrm{H}) = 1{,}008$, $A_\mathrm{r}(\mathrm{O}) = 16{,}00$.
 
 **Podatki:** $m(\mathrm{C_6H_{12}O_6}) = 45{,}0\,\mathrm{g}$, $A_\mathrm{r}(\mathrm{C}) = 12{,}01$, $A_\mathrm{r}(\mathrm{H}) = 1{,}008$, $A_\mathrm{r}(\mathrm{O}) = 16{,}00$, reakcija: $\mathrm{C_6H_{12}O_6 + 6\,O_2 \to 6\,CO_2 + 6\,H_2O}$
 **Iščemo:** maso $m(\mathrm{CO_2})$
@@ -82,8 +86,8 @@ $n = \dfrac{m}{M}$, $\quad n(\mathrm{CO_2}) = 6\,n(\mathrm{C_6H_{12}O_6})$, $\qu
 **Rešitev:**
 
 1. Molski masi: $M(\mathrm{C_6H_{12}O_6}) = 6 \cdot 12{,}01 + 12 \cdot 1{,}008 + 6 \cdot 16{,}00 = 180{,}16\,\mathrm{g/mol}$, $M(\mathrm{CO_2}) = 12{,}01 + 2 \cdot 16{,}00 = 44{,}01\,\mathrm{g/mol}$.
-2. Množina glukoze: $n = 45{,}0\,\mathrm{g} / 180{,}16\,\mathrm{g/mol} = 0{,}2498\,\mathrm{mol}$.
-3. Iz enačbe: $n(\mathrm{CO_2}) = 6 \cdot 0{,}2498\,\mathrm{mol} = 1{,}499\,\mathrm{mol}$.
+2. Množina glukoze (enačba povezuje množine, ne mase): $n = 45{,}0\,\mathrm{g} / 180{,}16\,\mathrm{g/mol} = 0{,}2498\,\mathrm{mol}$.
+3. Iz enačbe (koeficient $6$ pri $\mathrm{CO_2}$ proti $1$ pri glukozi): $n(\mathrm{CO_2}) = 6 \cdot 0{,}2498\,\mathrm{mol} = 1{,}499\,\mathrm{mol}$.
 4. Masa: $m(\mathrm{CO_2}) = 1{,}499\,\mathrm{mol} \cdot 44{,}01\,\mathrm{g/mol} \approx 66{,}0\,\mathrm{g}$.
 5. Odgovor: pri sežigu nastane približno $66{,}0\,\mathrm{g}$ ogljikovega dioksida, kar je več od mase glukoze, ker se ogljik veže s kisikom iz zraka.
 
@@ -100,9 +104,9 @@ Omejujoči reaktant ima najmanjše razmerje $n/\nu$. $\quad \eta = \dfrac{m_\tex
 
 **Rešitev:**
 
-1. Množini: $n(\mathrm{Al}) = 20{,}0 / 26{,}98 = 0{,}7413\,\mathrm{mol}$, $n(\mathrm{Fe_2O_3}) = 50{,}0 / 159{,}70 = 0{,}3131\,\mathrm{mol}$.
+1. Množini (primerjati smemo le množine, ne mase): $n(\mathrm{Al}) = 20{,}0 / 26{,}98 = 0{,}7413\,\mathrm{mol}$, $n(\mathrm{Fe_2O_3}) = 50{,}0 / 159{,}70 = 0{,}3131\,\mathrm{mol}$.
 2. Razmerji $n/\nu$: za $\mathrm{Al}$ $0{,}7413/2 = 0{,}3706\,\mathrm{mol}$, za $\mathrm{Fe_2O_3}$ $0{,}3131/1 = 0{,}3131\,\mathrm{mol}$. Manjše je pri $\mathrm{Fe_2O_3}$, zato je **železov(III) oksid omejujoči reaktant**. (Preizkus: za $0{,}3131\,\mathrm{mol}$ $\mathrm{Fe_2O_3}$ potrebujemo $0{,}6262\,\mathrm{mol}$ Al, imamo ga $0{,}7413\,\mathrm{mol}$.)
-3. Teoretično: $n(\mathrm{Fe}) = 2 \cdot 0{,}3131 = 0{,}6262\,\mathrm{mol}$, $m(\mathrm{Fe}) = 0{,}6262 \cdot 55{,}85 \approx 34{,}97\,\mathrm{g}$.
+3. Teoretično iz omejujočega reaktanta, ker ga zmanjka prvega: $n(\mathrm{Fe}) = 2 \cdot 0{,}3131 = 0{,}6262\,\mathrm{mol}$, $m(\mathrm{Fe}) = 0{,}6262 \cdot 55{,}85 \approx 34{,}97\,\mathrm{g}$.
 4. Izkoristek: $\eta = 30{,}5 / 34{,}97 \cdot 100\,\% \approx 87{,}2\,\%$.
 5. Presežek: porabi se $0{,}6262\,\mathrm{mol}$ Al, ostane $0{,}7413 - 0{,}6262 = 0{,}1151\,\mathrm{mol}$, kar je $0{,}1151 \cdot 26{,}98 \approx 3{,}11\,\mathrm{g}$ aluminija.
 6. Odgovor: omejujoči reaktant je $\mathrm{Fe_2O_3}$; nastane lahko največ $35{,}0\,\mathrm{g}$ železa, izkoristek je $87{,}2\,\%$, neporabljenega ostane približno $3{,}11\,\mathrm{g}$ aluminija.
@@ -120,12 +124,36 @@ $n(\mathrm{C}) = n(\mathrm{CO_2})$, $\quad n(\mathrm{H}) = 2\,n(\mathrm{H_2O})$,
 
 **Rešitev:**
 
-1. Ogljik: $n(\mathrm{C}) = 0{,}3664 / 44{,}01 = 0{,}008\,325\,\mathrm{mol}$, $m(\mathrm{C}) = 0{,}008\,325 \cdot 12{,}01 = 0{,}1000\,\mathrm{g}$.
-2. Vodik: $n(\mathrm{H}) = 2 \cdot 0{,}1500 / 18{,}02 = 0{,}016\,65\,\mathrm{mol}$, $m(\mathrm{H}) = 0{,}016\,65 \cdot 1{,}008 = 0{,}016\,78\,\mathrm{g}$.
-3. Kisik kot razlika: $m(\mathrm{O}) = 0{,}2500 - 0{,}1000 - 0{,}0168 = 0{,}1332\,\mathrm{g}$, $n(\mathrm{O}) = 0{,}1332/16{,}00 = 0{,}008\,326\,\mathrm{mol}$.
+1. Ogljik (ves ogljik vzorca je v $\mathrm{CO_2}$, en atom C na molekulo): $n(\mathrm{C}) = 0{,}3664 / 44{,}01 = 0{,}008\,325\,\mathrm{mol}$, $m(\mathrm{C}) = 0{,}008\,325 \cdot 12{,}01 = 0{,}1000\,\mathrm{g}$.
+2. Vodik (dva atoma H na molekulo vode): $n(\mathrm{H}) = 2 \cdot 0{,}1500 / 18{,}02 = 0{,}016\,65\,\mathrm{mol}$, $m(\mathrm{H}) = 0{,}016\,65 \cdot 1{,}008 = 0{,}016\,78\,\mathrm{g}$.
+3. Kisik kot razlika, ker je del kisika v produktih prišel iz zraka: $m(\mathrm{O}) = 0{,}2500 - 0{,}1000 - 0{,}0168 = 0{,}1332\,\mathrm{g}$, $n(\mathrm{O}) = 0{,}1332/16{,}00 = 0{,}008\,326\,\mathrm{mol}$.
 4. Delimo z najmanjšo množino ($0{,}008\,325$): $\mathrm{C} : \mathrm{H} : \mathrm{O} = 1{,}000 : 2{,}000 : 1{,}000$. Empirična formula je $\mathrm{CH_2O}$.
 5. $M(\mathrm{CH_2O}) = 12{,}01 + 2{,}016 + 16{,}00 = 30{,}03\,\mathrm{g/mol}$, $k = 180/30{,}03 \approx 5{,}99 \approx 6$.
 6. Odgovor: empirična formula je $\mathrm{CH_2O}$, molekulska pa $\mathrm{C_6H_{12}O_6}$ (npr. glukoza ali fruktoza; sama formula izomerov ne loči).
+
+### Primer 4 – zdaj ti
+
+Na taborjenju kuhaš na gorilniku, ki porabi celo kartušo s $220\,\mathrm{g}$ propana $\mathrm{C_3H_8}$. Koliko gramov ogljikovega dioksida pri tem nastane? Reakcija: $\mathrm{C_3H_8 + 5\,O_2 \to 3\,CO_2 + 4\,H_2O}$; $A_\mathrm{r}(\mathrm{C}) = 12{,}01$, $A_\mathrm{r}(\mathrm{H}) = 1{,}008$, $M(\mathrm{CO_2}) = 44{,}01\,\mathrm{g/mol}$.
+
+**Podatki:** $m(\mathrm{C_3H_8}) = 220\,\mathrm{g}$, $A_\mathrm{r}(\mathrm{C}) = 12{,}01$, $A_\mathrm{r}(\mathrm{H}) = 1{,}008$, $M(\mathrm{CO_2}) = 44{,}01\,\mathrm{g/mol}$, enačba $\mathrm{C_3H_8 + 5\,O_2 \to 3\,CO_2 + 4\,H_2O}$
+**Iščemo:** maso $m(\mathrm{CO_2})$
+
+:::formula
+$n = \dfrac{m}{M}$, $\quad n(\mathrm{CO_2}) = 3\,n(\mathrm{C_3H_8})$, $\quad m = n\,M$
+:::
+
+**Rešitev:**
+
+1. Molska masa (vsota atomskih mas po formuli): $M(\mathrm{C_3H_8}) = 3 \cdot 12{,}01 + 8 \cdot 1{,}008 = 44{,}09\,\mathrm{g/mol}$.
+2. Množina propana, ker enačba povezuje množine: $n = 220\,\mathrm{g} / 44{,}09\,\mathrm{g/mol} = 4{,}990\,\mathrm{mol}$.
+3. Iz enačbe (trije atomi C dajo tri molekule $\mathrm{CO_2}$): $n(\mathrm{CO_2}) = 3 \cdot 4{,}990\,\mathrm{mol} = 14{,}97\,\mathrm{mol}$.
+4. Maso $\mathrm{CO_2}$ izračunaj sam.
+
+:::premisli
+Koliko $\mathrm{CO_2}$ nastane in zakaj je to več od mase propana v kartuši?
+---
+$m(\mathrm{CO_2}) = 14{,}97\,\mathrm{mol} \cdot 44{,}01\,\mathrm{g/mol} \approx 659\,\mathrm{g}$, trikrat več od $220\,\mathrm{g}$ propana. Vsak atom ogljika se veže z dvema atomoma kisika iz zraka, prav tako kot pri avtu iz uvoda.
+:::
 
 ## Pogoste napake
 
@@ -204,24 +232,40 @@ reaktant, pri katerem je dosežen minimum, pa je omejujoči. Teoretični izkoris
 
 ? Koliko mol je $4{,}0\,\mathrm{g}$ natrijevega hidroksida ($M = 40{,}0\,\mathrm{g/mol}$)?
 - $10\,\mathrm{mol}$
+~ Delil si obratno, $M/m = 40{,}0/4{,}0$. Enote izdajo napako: $\mathrm{g/mol}$ deljeno z $\mathrm{g}$ da $\mathrm{mol^{-1}}$, ne mol.
 + $0{,}10\,\mathrm{mol}$
 - $160\,\mathrm{mol}$
+~ Maso si pomnožil z molsko maso in dobil $\mathrm{g^2/mol}$. Množina je masa, deljena z $M$.
 > $n = m/M = 4{,}0\,\mathrm{g} / 40{,}0\,\mathrm{g/mol} = 0{,}10\,\mathrm{mol}$. $10$ dobiš, če deliš obratno, $160$ pa, če množiš.
 
 ? Za reakcijo $\mathrm{2\,H_2 + O_2 \to 2\,H_2O}$ zmešamo $4\,\mathrm{mol}$ $\mathrm{H_2}$ in $3\,\mathrm{mol}$ $\mathrm{O_2}$. Kateri reaktant je omejujoči?
 + vodik
 - kisik
+~ Kisika je manj ($3\,\mathrm{mol}$ proti $4\,\mathrm{mol}$), zato se zdi, da ga bo prej zmanjkalo. Na vsako molekulo $\mathrm{O_2}$ pa potrebuješ dve molekuli $\mathrm{H_2}$, zato primerjaj $n/\nu$.
 - nobeden, zmes je stehiometrična
+~ Stehiometrično razmerje je $2 : 1$, tu pa $4 : 3$. Za $3\,\mathrm{mol}$ kisika bi potrebovali $6\,\mathrm{mol}$ vodika.
 > Razmerji $n/\nu$: vodik $4/2 = 2$, kisik $3/1 = 3$. Manjše je pri vodiku. Za $4\,\mathrm{mol}$ $\mathrm{H_2}$ potrebujemo le $2\,\mathrm{mol}$ $\mathrm{O_2}$, zato $1\,\mathrm{mol}$ kisika ostane.
 
 ? Teoretični izkoristek sinteze je $50{,}0\,\mathrm{g}$ produkta, dobili smo $40{,}0\,\mathrm{g}$. Kolikšen je izkoristek?
 - $125\,\%$
+~ Zamenjal si števec in imenovalec. Izkoristek nad $100\,\%$ bi pomenil več produkta, kot ga sploh lahko nastane.
 - $20\,\%$
+~ To je delež izgub ($10{,}0\,\mathrm{g}$ od $50{,}0\,\mathrm{g}$), ne izkoristek.
 + $80\,\%$
 > $\eta = 40{,}0/50{,}0 \cdot 100\,\% = 80\,\%$. $125\,\%$ dobiš, če zamenjaš števec in imenovalec, $20\,\%$ pa je delež izgub.
 
 ? Spojina vsebuje $85{,}6\,\%$ ogljika in $14{,}4\,\%$ vodika (masni delež). Kakšna je njena empirična formula?
 - $\mathrm{CH}$
+~ Za vodik si vzel molsko maso molekule $\mathrm{H_2}$ ($2{,}016$) in dobil $7{,}14\,\mathrm{mol}$, razmerje pa $1 : 1$. Štejemo atome v spojini, zato $1{,}008$.
 + $\mathrm{CH_2}$
 - $\mathrm{CH_3}$
+~ Morda pomisliš na etan. $\mathrm{CH_3}$ bi imel masni delež vodika okoli $20\,\%$ ($3{,}024/15{,}03$), ta spojina pa ima le $14{,}4\,\%$.
 > Na $100\,\mathrm{g}$: $n(\mathrm{C}) = 85{,}6/12{,}01 = 7{,}13\,\mathrm{mol}$, $n(\mathrm{H}) = 14{,}4/1{,}008 = 14{,}3\,\mathrm{mol}$. Razmerje $\mathrm{H}:\mathrm{C} = 2{,}00$, torej $\mathrm{CH_2}$ (npr. eten $\mathrm{C_2H_4}$ ali cikloheksan $\mathrm{C_6H_{12}}$).
+
+? Kaj se zgodi s teoretično maso železa v Primeru 2, če namesto $20{,}0\,\mathrm{g}$ dodaš $40{,}0\,\mathrm{g}$ aluminija, $\mathrm{Fe_2O_3}$ pa ostane $50{,}0\,\mathrm{g}$?
+- Podvoji se.
+~ Misliš, da več katerega koli reaktanta da več produkta. Količino produkta določa omejujoči reaktant, tu $\mathrm{Fe_2O_3}$, ki ga je enako kot prej.
++ Ostane enaka.
+- Zmanjša se, ker presežek aluminija moti reakcijo.
+~ Presežek reaktanta produkta ne zmanjša; neporabljenega aluminija le ostane več.
+> Za $\mathrm{Fe_2O_3}$ je $n/\nu = 0{,}3131\,\mathrm{mol}$, za $40{,}0\,\mathrm{g}$ Al pa $0{,}7413\,\mathrm{mol}$. Omejujoči ostane $\mathrm{Fe_2O_3}$, zato teoretično še vedno nastane $34{,}97\,\mathrm{g}$ železa.

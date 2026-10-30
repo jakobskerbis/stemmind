@@ -9,7 +9,7 @@ import { dialectsFor } from "./dialects.js";
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock } from "./account.js";
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
-import { initAppsMenu, closeAppsMenu } from "./apps-menu.js";
+import { initQuickStart, closeQuickStart } from "./quick-start.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
@@ -29,6 +29,7 @@ import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
+import { initScan, showScan, leaveScan, scanBack } from "./scan/scan.js";
 import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
 import { xpStatsHtml, xpItemsHtml, levelRowHtml, paintBadge, celebrateXp } from "./xp-fx.js";
@@ -109,7 +110,7 @@ function renderUserText(text) {
 // ---------- pogledi ----------
 
 function showView(name) {
-  // Uvod profila: izbira dela v meniju pod logotipom ali tipka Nazaj ga zapreta (prej so ostali skriti vsi zavihki).
+  // Uvod profila: izbira v meniju pod logotipom ali tipka Nazaj ga zapreta (prej so ostali skriti vsi zavihki).
   // Prvi profil na napravi mora nastati, zato takrat ostanemo na uvodu.
   if (name !== "onboard" && document.body.classList.contains("onboarding")) {
     if (!state.student) return;
@@ -132,6 +133,8 @@ function showView(name) {
   }
   if (name === "progress") loadProgress();
   if (name === "schedule") showSchedule();
+  if (name === "scan") showScan();
+  else leaveScan();
   if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
   if (name === "textbook") showTextbook();
@@ -209,7 +212,7 @@ window.addEventListener("popstate", () => {
   overlayEntry = false;
   const keep = () => currentView !== "path" && history.pushState({ stm: 1, v: currentView }, "");
   // Odprt meni (klobuk ali profil) Nazaj le zapre, pogled ostane.
-  if (closeAppsMenu() || closeProfileMenu()) return keep();
+  if (closeQuickStart() || closeProfileMenu()) return keep();
   if (installSheetOpen()) {
     closeInstallSheet({ fromBack: true });
     return keep();
@@ -226,6 +229,7 @@ window.addEventListener("popstate", () => {
   }
   if (currentView === "textbook" && textbookBack()) return keep();
   if (currentView === "games" && gamesBack()) return keep();
+  if (currentView === "scan" && scanBack()) return keep();
   const subMe = ME_VIEWS.includes(currentView) && !["me", "graph"].includes(currentView);
   if (subMe && $("#tabbar").offsetParent) return showView("me"); // telefon: nazaj na »Jaz«
   fromBack = true;
@@ -236,7 +240,7 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke", "scan"];
 // Zbirke in učni pass: odpre pogled, po želji s predmetom v pogledu »preglej« (from = pogled za Nazaj).
 let zbOpen = {};
 function openZbirke(item = null, from = null) {
@@ -439,7 +443,9 @@ async function selectStudent(id) {
   if (!$("#view-settings").hidden) fillSettingsForm();
   if (!$("#view-progress").hidden) loadProgress();
   if (!$("#view-league").hidden) loadLeague(state.student.id);
+  if (!$("#view-scan").hidden) showScan(); // naloga prejšnjega profila ne ostane na zaslonu
   state.pathKey = null;
+  state.modes = null; // »Nadaljuj z učenjem« in goNew ne smeta pokazati naslednje teme prejšnjega profila
   clearLevelCard();
   state.symbols?.refresh();
   maybeTour.done = false; // vodič je za vsak profil posebej (settings.tour_version)
@@ -451,10 +457,10 @@ async function selectStudent(id) {
 }
 $("#student-select").addEventListener("change", (e) => selectStudent(e.target.value));
 
-// Klik na klobuk zgoraj levo: mreža vseh delov aplikacije.
-initAppsMenu({ getState: () => state, showView, currentView: () => currentView });
+// Klik na klobuk zgoraj levo: »Nadaljuj z učenjem« (naslednja tema, trening, kar je danes na vrsti).
+initQuickStart({ getState: () => state, refresh: refreshModes, showView, goNew, startSession, showTestPrep, overlayOpened, overlayClosed });
 
-// Klik na ime zgoraj desno: meni profila (menjava, nov profil, nastavitve, račun, odjava).
+// Klik na ime zgoraj desno: meni profila (menjava, nov profil, zbirke, mnenje, nastavitve, račun, odjava).
 initProfileMenu({
   getState: () => state,
   showView,
@@ -957,11 +963,19 @@ function fillGoalFields(fresh = false) {
 // Izbira šole po korakih (OŠ/SŠ/fakulteta → … → letnik).
 let levelPicker = null;
 
+// Kartica »Izbriši profil« nosi ime trenutnega profila (tudi po preimenovanju v Nastavitvah).
+function fillDeleteCard() {
+  const name = state.student.name;
+  $("#delete-student-text").textContent = t("set.deleteText", { name });
+  $("#delete-student").textContent = t("set.deleteStudent", { name });
+}
+
 async function fillSettingsForm() {
   const f = $("#settings-form");
   const s = state.student.settings;
   fillCornerSummary();
   f.name.value = state.student.name;
+  fillDeleteCard();
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
   f.data_mode.value = s.data_mode || "auto";
@@ -1041,6 +1055,7 @@ $("#settings-form").addEventListener("submit", async (e) => {
   syncCompetitionTab();
   applyLite();
   $("#student-select").options[$("#student-select").selectedIndex].textContent = updated.name;
+  fillDeleteCard();
   refreshProfileButton();
   renderState(null);
   state.symbols?.refresh();
@@ -1453,9 +1468,10 @@ async function refreshXp() {
 
 async function refreshModes() {
   if (!state.student) return null;
+  const sid = state.student.id;
   const q = state.pathKey ? `?path=${encodeURIComponent(state.pathKey)}` : "";
-  const m = await api(`/api/students/${state.student.id}/modes${q}`).catch(() => null);
-  if (!m) return null;
+  const m = await api(`/api/students/${sid}/modes${q}`).catch(() => null);
+  if (!m || state.student?.id !== sid) return null; // medtem zamenjan profil
   state.modes = m;
   setCardsDue(m.cardsDue);
   const badge = $('#modebar [data-mode="review"] .badge');
@@ -2950,6 +2966,22 @@ function scheduleChanged() {
   refreshModes();
 }
 initSchedule({ api, escapeHtml, toast, showView, startSession, getStudent: () => state.student, onChange: () => (renderScheduleCard($("#schedule-card")), refreshModes()) });
+// Skeniranje nalog (public/scan/): fotografija ali vpis → rešitev po korakih.
+initScan({
+  api,
+  escapeHtml,
+  toast,
+  getStudent: () => state.student,
+  askTutor: (text) => {
+    showView("chat");
+    const box = $("#input");
+    box.value = text;
+    autoGrow();
+    box.focus();
+  },
+  openGraph: (exprs) => openGraphOverlay(exprs, t("scan.nav")),
+});
+document.querySelectorAll("[data-open-scan]").forEach((b) => b.addEventListener("click", () => showView("scan")));
 
 initTextbook({
   api,

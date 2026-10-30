@@ -5,11 +5,11 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Plini so povsod: zrak, ki ga dihamo, kisik v jeklenki v bolnišnici, $\mathrm{CO_2}$, ki ga proizvajajo kvasovke pri fermentaciji, vodik pri elektrolizi, dušik za inertno atmosfero v laboratoriju, zemeljski plin v kurilni napravi. Pri plinih ne tehtamo, ampak merimo **tlak**, **prostornino** in **temperaturo**, iz njih pa izračunamo **množino** snovi.
+Zemeljski plin plačuješ po kubičnih metrih, a kubični meter ni vedno enaka količina plina. Kubični meter mrzlega plina vsebuje več molekul kot kubični meter toplega, kubični meter stisnjenega pa več kot razredčenega. Zato dobavitelj izmerjene kubične metre pred obračunom preračuna na dogovorjeno temperaturo in tlak. Pri plinih torej ne tehtamo, ampak merimo **tlak**, **prostornino** in **temperaturo**, iz njih pa izračunamo **množino** snovi.
 
 Zakaj je to mogoče? Ker se razredčeni plini obnašajo skoraj enako, ne glede na to, iz katerih molekul so. To opisuje **splošna plinska enačba**. Za zmesi plinov (zrak, izdihani zrak, izpušni plini, plini v bioreaktorju) potrebujemo še pojem **parcialnega tlaka** in **Daltonov zakon**.
 
-V tej lekciji se naučiš:
+Cilji:
 
 - uporabljati splošno plinsko enačbo $pV = nRT$ in pravilno pretvarjati enote,
 - iz gostote plina določiti molsko maso,
@@ -18,6 +18,12 @@ V tej lekciji se naučiš:
 - presoditi, kdaj model idealnega plina ni več dober.
 
 ## Razlaga
+
+**Najprej en račun.** Števec pokaže porabo $1{,}00\,\mathrm{m^3}$ metana pri $15\,^\circ\mathrm{C}$ in $101{,}325\,\mathrm{kPa}$. Koliko molov je to? Uporabimo enačbo, ki jo spodaj sestavimo iz plinskih zakonov:
+
+$$n = \frac{pV}{RT} = \frac{101\,325\,\mathrm{Pa} \cdot 1{,}00\,\mathrm{m^3}}{8{,}314\,\mathrm{J/(mol\,K)} \cdot 288{,}15\,\mathrm{K}} \approx 42{,}3\,\mathrm{mol}.$$
+
+Z $M(\mathrm{CH_4}) = 16{,}04\,\mathrm{g/mol}$ je to okoli $678\,\mathrm{g}$ metana. Račun potrebuje le tri izmerjene količine in eno konstanto; vrsta plina vstopi šele pri masi. Koraki 1 do 7 posplošijo ta račun: od kod enačba, katere enote, kaj pri zmeseh in kdaj ji lahko zaupamo.
 
 **1. Stanje plina.** Stanje dane množine plina opišemo s štirimi količinami:
 
@@ -41,6 +47,12 @@ Ker je $1\,\mathrm{J} = 1\,\mathrm{Pa\,m^3}$, moramo vstaviti tlak v $\mathrm{Pa
 
 $$\frac{p_1V_1}{T_1} = \frac{p_2V_2}{T_2}.$$
 
+:::premisli
+Pozimi se plin v števcu ohladi na $5\,^\circ\mathrm{C}$, tlak ostane $101{,}325\,\mathrm{kPa}$. Vsebuje $1{,}00\,\mathrm{m^3}$ zdaj več ali manj metana kot pri $15\,^\circ\mathrm{C}$ in za koliko?
+---
+Več. Pri stalnih $p$ in $V$ je $n \propto 1/T$, zato se množina poveča za faktor $288{,}15/278{,}15 \approx 1{,}036$, na okoli $43{,}8\,\mathrm{mol}$ (za približno $3{,}6\,\%$). Zato dobavitelj prostornino preračuna na dogovorjeno temperaturo.
+:::
+
 **Molska prostornina** idealnega plina pri $0\,^\circ\mathrm{C}$ in $101{,}325\,\mathrm{kPa}$ je $V_m = RT/p \approx 22{,}4\,\mathrm{L/mol}$. (Pri standardnem tlaku $100\,\mathrm{kPa}$ in $0\,^\circ\mathrm{C}$ je $22{,}7\,\mathrm{L/mol}$, pri $25\,^\circ\mathrm{C}$ in $101{,}325\,\mathrm{kPa}$ pa $24{,}5\,\mathrm{L/mol}$; vedno preveri, katere pogoje navaja naloga.)
 
 **4. Gostota in molska masa.** Z $n = m/M$ in $\rho = m/V$ dobimo
@@ -60,6 +72,12 @@ $$p = p_1 + p_2 + \dots = \sum_i p_i.$$
 Iz tega sledi zveza z **množinskim deležem** $x_i = n_i/n_{\text{skupna}}$:
 
 $$p_i = x_i\,p, \qquad \sum_i x_i = 1.$$
+
+:::premisli
+V zaprto posodo z dušikom pri $100\,\mathrm{kPa}$ dodajamo kisik, dokler skupni tlak ne naraste na $150\,\mathrm{kPa}$; temperatura je ves čas enaka. Kaj se zgodi s parcialnim tlakom dušika?
+---
+Ostane $100\,\mathrm{kPa}$. Parcialni tlak $p_i = n_iRT/V$ je odvisen le od množine dušika, prostornine in temperature, ki se niso spremenile. Množinski delež dušika je sicer padel na $2/3$, a skupni tlak se je povečal: $\tfrac23 \cdot 150\,\mathrm{kPa} = 100\,\mathrm{kPa}$.
+:::
 
 Pri idealnih plinih je množinski delež enak prostorninskemu deležu: zrak ima okoli $21\,\%$ kisika po prostornini, zato $x(\mathrm{O_2}) \approx 0{,}21$.
 
@@ -82,7 +100,7 @@ $n = \dfrac{pV}{RT}$, $T = t + 273{,}15\,\mathrm{K}$, $m = nM$
 
 **Rešitev:**
 
-1. Pretvorbe: $p = 2{,}00 \cdot 10^5\,\mathrm{Pa}$, $V = 5{,}00 \cdot 10^{-3}\,\mathrm{m^3}$, $T = 298{,}15\,\mathrm{K}$.
+1. Pretvorbe, ker $R$ v $\mathrm{J/(mol\,K)}$ zahteva paskale, kubične metre in kelvine: $p = 2{,}00 \cdot 10^5\,\mathrm{Pa}$, $V = 5{,}00 \cdot 10^{-3}\,\mathrm{m^3}$, $T = 298{,}15\,\mathrm{K}$.
 2. $n = \dfrac{2{,}00 \cdot 10^5\,\mathrm{Pa} \cdot 5{,}00 \cdot 10^{-3}\,\mathrm{m^3}}{8{,}314\,\mathrm{J/(mol\,K)} \cdot 298{,}15\,\mathrm{K}} = \dfrac{1000\,\mathrm{J}}{2479\,\mathrm{J/mol}} \approx 0{,}403\,\mathrm{mol}$.
 3. $m = 0{,}403\,\mathrm{mol} \cdot 28{,}02\,\mathrm{g/mol} \approx 11{,}3\,\mathrm{g}$.
 4. Odgovor: v jeklenki je približno $0{,}403\,\mathrm{mol}$ oziroma $11{,}3\,\mathrm{g}$ dušika.
@@ -100,9 +118,9 @@ $M = \dfrac{\rho RT}{p}$
 
 **Rešitev:**
 
-1. Pretvorbe: $\rho = 1{,}25\,\mathrm{g/L} = 1{,}25\,\mathrm{kg/m^3}$, $T = 273{,}15\,\mathrm{K}$, $p = 101\,325\,\mathrm{Pa}$.
+1. Pretvorbe v osnovne enote, da se enote $R$ izidejo: $\rho = 1{,}25\,\mathrm{g/L} = 1{,}25\,\mathrm{kg/m^3}$, $T = 273{,}15\,\mathrm{K}$, $p = 101\,325\,\mathrm{Pa}$.
 2. $M = \dfrac{1{,}25\,\mathrm{kg/m^3} \cdot 8{,}314\,\mathrm{J/(mol\,K)} \cdot 273{,}15\,\mathrm{K}}{101\,325\,\mathrm{Pa}} \approx 0{,}0280\,\mathrm{kg/mol} = 28{,}0\,\mathrm{g/mol}$.
-3. Preizkus z molsko prostornino: $1{,}25\,\mathrm{g/L} \cdot 22{,}4\,\mathrm{L/mol} = 28{,}0\,\mathrm{g/mol}$.
+3. Preizkus z molsko prostornino, ker so pogoji ravno $0\,^\circ\mathrm{C}$ in $101{,}325\,\mathrm{kPa}$: $1{,}25\,\mathrm{g/L} \cdot 22{,}4\,\mathrm{L/mol} = 28{,}0\,\mathrm{g/mol}$.
 4. Molsko maso $28\,\mathrm{g/mol}$ imajo $\mathrm{N_2}$, $\mathrm{CO}$ in $\mathrm{C_2H_4}$; za odločitev bi potrebovali še kemijski preizkus.
 5. Odgovor: molska masa plina je približno $28{,}0\,\mathrm{g/mol}$; to je lahko dušik, ogljikov monoksid ali eten.
 
@@ -122,9 +140,32 @@ $n_i = m_i/M_i$, $x_i = n_i/n$, $p = \dfrac{nRT}{V}$, $p_i = x_i\,p = \dfrac{n_i
 1. Množini: $n(\mathrm{He}) = 4{,}00 / 4{,}003\,\mathrm{mol} \approx 0{,}999\,\mathrm{mol}$, $n(\mathrm{O_2}) = 16{,}0 / 32{,}00\,\mathrm{mol} = 0{,}500\,\mathrm{mol}$; skupaj $n \approx 1{,}499\,\mathrm{mol}$.
 2. Množinska deleža: $x(\mathrm{He}) = 0{,}999 / 1{,}499 \approx 0{,}667$, $x(\mathrm{O_2}) \approx 0{,}333$. Čeprav je kisika po masi štirikrat več, je helija po množini dvakrat več.
 3. Skupni tlak: $T = 300{,}15\,\mathrm{K}$, $V = 1{,}00 \cdot 10^{-2}\,\mathrm{m^3}$, $p = \dfrac{1{,}499 \cdot 8{,}314 \cdot 300{,}15}{1{,}00 \cdot 10^{-2}}\,\mathrm{Pa} \approx 3{,}74 \cdot 10^5\,\mathrm{Pa} = 374\,\mathrm{kPa}$.
-4. Parcialna tlaka: $p(\mathrm{He}) = 0{,}667 \cdot 374\,\mathrm{kPa} \approx 249\,\mathrm{kPa}$, $p(\mathrm{O_2}) = 0{,}333 \cdot 374\,\mathrm{kPa} \approx 125\,\mathrm{kPa}$.
+4. Parcialna tlaka (po Daltonu je vsak sorazmeren z množinskim deležem): $p(\mathrm{He}) = 0{,}667 \cdot 374\,\mathrm{kPa} \approx 249\,\mathrm{kPa}$, $p(\mathrm{O_2}) = 0{,}333 \cdot 374\,\mathrm{kPa} \approx 125\,\mathrm{kPa}$.
 5. Preizkus: $p(\mathrm{O_2}) = \dfrac{0{,}500 \cdot 8{,}314 \cdot 300{,}15}{1{,}00 \cdot 10^{-2}}\,\mathrm{Pa} \approx 125\,\mathrm{kPa}$ in $249 + 125 = 374\,\mathrm{kPa}$.
 6. Odgovor: $x(\mathrm{He}) \approx 0{,}667$ in $x(\mathrm{O_2}) \approx 0{,}333$, parcialna tlaka sta približno $249\,\mathrm{kPa}$ in $125\,\mathrm{kPa}$, skupni tlak pa $374\,\mathrm{kPa}$.
+
+### Primer 4 – zdaj ti
+
+V trgovini za zabave stane jeklenka helija za balone $60\,€$. Jeklenka ima prostornino $10{,}0\,\mathrm{L}$ in tlak $2{,}00 \cdot 10^4\,\mathrm{kPa}$ pri $20\,^\circ\mathrm{C}$. Koliko balonov po $5{,}00\,\mathrm{L}$ napolnimo pri $101\,\mathrm{kPa}$ in $25\,^\circ\mathrm{C}$, če $10{,}0\,\mathrm{L}$ helija (pri teh pogojih) ostane v jeklenki? Koliko stane helij v enem balonu?
+
+**Podatki:** $V_1 = 10{,}0\,\mathrm{L}$, $p_1 = 2{,}00 \cdot 10^4\,\mathrm{kPa}$, $t_1 = 20\,^\circ\mathrm{C}$, $p_2 = 101\,\mathrm{kPa}$, $t_2 = 25\,^\circ\mathrm{C}$, prostornina balona $5{,}00\,\mathrm{L}$, v jeklenki ostane $10{,}0\,\mathrm{L}$, cena $60\,€$
+**Iščemo:** število balonov in ceno helija na balon
+
+:::formula
+$\dfrac{p_1V_1}{T_1} = \dfrac{p_2V_2}{T_2} \Rightarrow V_2 = V_1 \cdot \dfrac{p_1}{p_2} \cdot \dfrac{T_2}{T_1}$
+:::
+
+**Rešitev:**
+
+1. Temperaturi v kelvinih, ker plinski zakoni veljajo za absolutno temperaturo: $T_1 = 293{,}15\,\mathrm{K}$, $T_2 = 298{,}15\,\mathrm{K}$.
+2. Množina helija se ne spremeni, zato $V_2 = 10{,}0\,\mathrm{L} \cdot \dfrac{2{,}00 \cdot 10^4\,\mathrm{kPa}}{101\,\mathrm{kPa}} \cdot \dfrac{298{,}15\,\mathrm{K}}{293{,}15\,\mathrm{K}} \approx 2014\,\mathrm{L}$.
+3. Odštej helij, ki ostane v jeklenki, in izračunaj število balonov ter ceno na balon sam.
+
+:::premisli
+Koliko balonov napolnimo in koliko stane helij v enem?
+---
+Uporabnega helija je $2014\,\mathrm{L} - 10\,\mathrm{L} = 2004\,\mathrm{L}$, kar da $2004 / 5{,}00 \approx 400{,}8$, torej $400$ polnih balonov (zaokrožimo navzdol, ker zadnji ne bi bil poln). Helij v enem balonu stane $60\,€ / 400 = 0{,}15\,€$.
+:::
 
 ## Pogoste napake
 
@@ -206,24 +247,40 @@ kar je okoli $10\,\%$ manj.
 
 ? Koliko kelvinov je $25\,^\circ\mathrm{C}$?
 - $248{,}15\,\mathrm{K}$
+~ Od $273{,}15$ si odštel $25$ namesto prištel; temperatura nad lediščem je več kot $273{,}15\,\mathrm{K}$.
 + $298{,}15\,\mathrm{K}$
 - $25\,\mathrm{K}$
+~ Kelvin in stopinja Celzija sta enako velika, ničli pa sta različni: prišteti moraš $273{,}15$.
 > $T/\mathrm{K} = t/^\circ\mathrm{C} + 273{,}15 = 298{,}15$.
 
 ? Pri stalni temperaturi in množini plina tlak podvojimo. Kaj se zgodi s prostornino?
 - Podvoji se.
+~ Pri stalni temperaturi sta tlak in prostornina obratno sorazmerna; sorazmerje bi veljalo za $p$ in $T$ pri stalni prostornini.
 + Razpolovi se.
 - Ostane enaka.
+~ Prostornina bi ostala enaka le v togi posodi; pri večjem tlaku se plin stisne, ker je $pV$ stalen.
 > Po Boylovem zakonu je $pV$ stalen, zato se pri dvakrat večjem tlaku prostornina razpolovi.
 
 ? V zmesi je $0{,}30\,\mathrm{mol}$ $\mathrm{N_2}$ in $0{,}10\,\mathrm{mol}$ $\mathrm{O_2}$, skupni tlak je $200\,\mathrm{kPa}$. Kolikšen je parcialni tlak kisika?
 - $100\,\mathrm{kPa}$
+~ Polovico tlaka bi dobil kisik le, če bi bilo obeh plinov enako; kisik je le četrtina vseh molov.
 - $66{,}7\,\mathrm{kPa}$
+~ Delil si z množino dušika ($0{,}10/0{,}30$) namesto s skupno množino $0{,}40\,\mathrm{mol}$.
 + $50\,\mathrm{kPa}$
 > $x(\mathrm{O_2}) = 0{,}10/0{,}40 = 0{,}25$, $p(\mathrm{O_2}) = 0{,}25 \cdot 200\,\mathrm{kPa} = 50\,\mathrm{kPa}$. $66{,}7\,\mathrm{kPa}$ dobiš, če deliš z množino dušika namesto s skupno množino.
 
 ? Kolikšna je molska prostornina idealnega plina pri $0\,^\circ\mathrm{C}$ in $101{,}325\,\mathrm{kPa}$?
 + $22{,}4\,\mathrm{L/mol}$
 - $24{,}5\,\mathrm{L/mol}$
+~ To je molska prostornina pri $25\,^\circ\mathrm{C}$; pri $0\,^\circ\mathrm{C}$ je plin gostejši in zavzame manj prostora.
 - $8{,}31\,\mathrm{L/mol}$
+~ To je številska vrednost plinske konstante $R$, ne molska prostornina; manjka še $T/p$.
 > $V_m = RT/p = 8{,}314 \cdot 273{,}15 / 101\,325\,\mathrm{m^3/mol} \approx 0{,}0224\,\mathrm{m^3/mol}$. $24{,}5\,\mathrm{L/mol}$ velja pri $25\,^\circ\mathrm{C}$.
+
+? V treh enakih balonih iz trgovine je pri enakem tlaku in temperaturi helij, dušik in ogljikov dioksid. Razvrsti balone po masi plina, od najlažjega.
++ helij < dušik < ogljikov dioksid
+- vsi trije vsebujejo enako maso plina
+~ Enaka je množina (Avogadrov zakon), ne masa: masa je $m = nM$, molske mase pa so $4$, $28$ in $44\,\mathrm{g/mol}$.
+- ogljikov dioksid < dušik < helij
+~ Večje molekule ne zavzamejo več prostora v plinu, ker je med molekulami večinoma prazen prostor; v vsakem balonu je enako molekul.
+> Pri enakih $p$, $V$ in $T$ je v vseh balonih enaka množina plina, $n = pV/(RT)$. Masa $m = nM$ zato raste z molsko maso: $\mathrm{He}$ ($4\,\mathrm{g/mol}$) < $\mathrm{N_2}$ ($28\,\mathrm{g/mol}$) < $\mathrm{CO_2}$ ($44\,\mathrm{g/mol}$).

@@ -71,3 +71,39 @@ export function referralRewardEmail(appUrl) {
     text: `Družina, ki ste jo povabili, se je naročila na Evklid. Oboji ste dobili en mesec brezplačno. ${appUrl}`,
   };
 }
+
+// Neuspelo plačilo naročnine: poln dostop ostane še nekaj dni, starš posodobi kartico v zavihku Račun.
+export function paymentFailedEmail(appUrl, graceDays) {
+  return {
+    subject: "Evklid: plačilo naročnine ni uspelo",
+    html: layout(
+      "Plačilo ni uspelo",
+      `<p>Zadnjega plačila naročnine ni bilo mogoče izvesti. Poln dostop ostane še ${graceDays} dni.</p><p>V zavihku Račun kliknite »Upravljaj naročnino in račune« in posodobite kartico. Če tega ne storite, profili preidejo na brezplačni paket. Noben podatek se ne izbriše.</p>${button(appUrl, "Odpri Evklid")}`,
+    ),
+    text: `Plačilo naročnine za Evklid ni uspelo. Poln dostop ostane še ${graceDays} dni. Kartico posodobite v zavihku Račun: ${appUrl}`,
+  };
+}
+
+// 7 dni pred koncem aktivacijske kode.
+export function promoEndingEmail(untilText, appUrl) {
+  return {
+    subject: "Evklid: brezplačni dostop se kmalu konča",
+    html: layout(
+      "Brezplačni dostop se kmalu konča",
+      `<p>Poln dostop z aktivacijsko kodo velja do ${esc(untilText)}. Potem profili preidejo na brezplačni paket, napredek pa ostane.</p><p>Če želite nadaljevati brez omejitev, izberite naročnino v zavihku Račun. Prvo plačilo bo šele po koncu kode.</p>${button(appUrl, "Odpri Evklid")}`,
+    ),
+    text: `Poln dostop z aktivacijsko kodo za Evklid velja do ${untilText}. Naročnino lahko izberete v zavihku Račun: ${appUrl}`,
+  };
+}
+
+// 30 dni pred samodejno obnovitvijo letne naročnine.
+export function renewalEmail(dateText, amountText, appUrl) {
+  return {
+    subject: "Evklid: letna naročnina se bo obnovila",
+    html: layout(
+      "Letna naročnina se bo obnovila",
+      `<p>Vaša letna naročnina na Evklid se bo samodejno obnovila ${esc(dateText)} za ${esc(amountText)}.</p><p>Če je ne želite podaljšati, jo do takrat prekličite v zavihku Račun (»Upravljaj naročnino in račune«).</p>${button(appUrl, "Odpri Evklid")}`,
+    ),
+    text: `Vaša letna naročnina na Evklid se bo samodejno obnovila ${dateText} za ${amountText}. Prekličete jo v zavihku Račun: ${appUrl}`,
+  };
+}

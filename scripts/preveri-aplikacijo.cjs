@@ -293,6 +293,26 @@ async function tab(p, view) {
 }
 const currentView = (p) => p.evaluate(() => [...document.querySelectorAll("main.view")].find((v) => !v.hidden)?.id || "");
 
+// Klobuk zgoraj levo: »Nadaljuj z učenjem« (public/quick-start.js). Nazaj zapre meni, vrstica odpre temo.
+async function quickStart(p) {
+  await tab(p, "path");
+  await click(p, ".topbar .brand", { wait: 300 });
+  await expectVisible(p, '#quick-pop .qs-row[data-act="new"]', "»Nadaljuj« pod klobukom");
+  if ((await p.locator("#quick-pop .qs-row").count()) < 2) throw new Error("pod klobukom manjka današnji trening");
+  await screen(p, "nadaljuj-meni");
+  await p.goBack();
+  await settle(p, 200);
+  if (await p.locator("#quick-pop").isVisible()) throw new Error("tipka Nazaj ne zapre menija pod klobukom");
+  await click(p, ".topbar .brand", { wait: 300 });
+  await click(p, '#quick-pop .qs-row[data-act="new"]', { wait: 500 });
+  if ((await currentView(p)) !== "view-topic") throw new Error("»Nadaljuj« ne odpre teme");
+  await screen(p, "nadaljuj-tema");
+  // Na telefonu plošča za vnos prekrije spodnjo vrstico: nazaj s tipko Nazaj.
+  await p.goBack();
+  await settle(p, 300);
+  if ((await currentView(p)) !== "view-path") throw new Error("tipka Nazaj po »Nadaljuj« ne vodi na učno pot");
+}
+
 // ---------- koraki ----------
 
 // Vodič ob prvi uporabi: vsak profil ga dobi enkrat (settings.tour_version na strežniku).
@@ -633,6 +653,41 @@ async function schedule(p) {
   await screen(p, "urnik-izpolnjen");
 }
 
+// Skeniraj nalogo: vpis (fotografija v preizkusnem načinu ne bere), rešitev po korakih, metode, graf, premica.
+async function scan(p, label) {
+  await tab(p, "scan");
+  await expectVisible(p, '#view-scan [data-act="type"]', "skeniranje");
+  await screen(p, `skeniraj-${label}`);
+  await click(p, '#view-scan [data-act="type"]');
+  await p.fill("#scan-input", "(x+1)/2 - (x-1)/3 = 1");
+  await expectVisible(p, "#view-scan .scan-preview .katex", "predogled naloge");
+  await click(p, '#view-scan [data-act="solve"]', { wait: 300 });
+  await expectVisible(p, "#view-scan .scan-answer .scan-badge.ok", "preverjena rešitev");
+  await click(p, '#view-scan [data-act="next"]');
+  await click(p, '#view-scan [data-why="1"]');
+  await expectVisible(p, "#view-scan .scan-why", "razlaga koraka");
+  await click(p, '#view-scan [data-act="all"]');
+  await screen(p, `skeniraj-linearna-${label}`);
+  await click(p, '#view-scan [data-act="edit"]');
+  await p.fill("#scan-input", "2x^2+3x-2=0");
+  await click(p, '#view-scan [data-act="solve"]', { wait: 300 });
+  await click(p, '#view-scan [data-method="1"]', { wait: 200 });
+  await click(p, '#view-scan [data-act="all"]');
+  await expectVisible(p, "#view-scan .scan-graph-host canvas", "graf");
+  await screen(p, `skeniraj-kvadratna-${label}`);
+  await click(p, '#view-scan [data-act="edit"]');
+  await p.fill("#scan-input", "2x - 3 < 5x + 6");
+  await click(p, '#view-scan [data-act="solve"]', { wait: 300 });
+  await expectVisible(p, "#view-scan .scan-nl-svg", "številska premica");
+  await click(p, '#view-scan [data-act="edit"]');
+  await p.fill("#scan-input", "sqrt(x+3) = x - 3");
+  await click(p, '#view-scan [data-act="solve"]', { wait: 600 });
+  await expectVisible(p, "#view-scan .scan-ai-state", "naloga za AI (preizkusni način)");
+  await click(p, '#view-scan [data-act="new"]', { wait: 200 });
+  await expectVisible(p, "#view-scan .scan-hist .list-row", "zadnje naloge");
+  await screen(p, `skeniraj-zgodovina-${label}`);
+}
+
 async function profileMenu(p) {
   await click(p, "#profile-btn");
   await expectVisible(p, "#profile-pop .pm-item", "meni profila");
@@ -700,6 +755,14 @@ async function desktop(browser, app) {
     await screen(p, "dnevni-trening");
     await click(p, "#back-to-path");
   });
+  await step(p, "nadaljuj", () => quickStart(p));
+  // Zbirke so na računalniku v meniju profila (na telefonu pod »Jaz«).
+  await step(p, "profil-zbirke", async () => {
+    await click(p, "#profile-btn");
+    await click(p, '#profile-pop [data-act="zbirke"]', { wait: 400 });
+    if ((await currentView(p)) !== "view-zbirke") throw new Error("Zbirke se iz menija profila niso odprle");
+    await tab(p, "path");
+  });
   for (const m of ["review", "test", "cards"]) {
     await step(p, `nacin-${m}`, async () => {
       await tab(p, "path");
@@ -720,6 +783,7 @@ async function desktop(browser, app) {
   await step(p, "lige", () => league(p));
   await step(p, "kartice", () => flashcards(p));
   await step(p, "urnik", () => schedule(p));
+  await step(p, "skeniraj", () => scan(p, "OS"));
   // »Dodaj profil« se da preklicati: Nastavitve in zavihki se vrnejo.
   await step(p, "nov-profil-preklic", async () => {
     await click(p, "#profile-btn");
@@ -843,6 +907,7 @@ async function phone(browser, app) {
     await settle(p, 300);
     if ((await currentView(p)) !== "view-path") throw new Error("tipka Nazaj s teme ne vodi na učno pot");
   });
+  await step(p, "tel-nadaljuj", () => quickStart(p));
   await step(p, "tel-klepet", () => chat(p, "tel"));
   await step(p, "tel-osvezitev", async () => {
     // Osvežitev na podstrani (potegni za osvežitev) in tipka Nazaj: aplikacija mora ostati odprta.
@@ -860,6 +925,7 @@ async function phone(browser, app) {
   await step(p, "tel-ucbenik", () => textbook(p, "tel"));
   await step(p, "tel-kalkulator", () => calculator(p, "tel"));
   await step(p, "tel-igre", () => games(p, "tel"));
+  await step(p, "tel-skeniraj", () => scan(p, "tel"));
   await p.context().close();
 }
 
