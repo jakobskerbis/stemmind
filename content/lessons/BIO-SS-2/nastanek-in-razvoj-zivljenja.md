@@ -213,3 +213,9 @@ Predstavljaj si orkester, ki nastaja milijarde let.
 ~ To je zmnožek $540 \cdot 36$. Število glukoz dobiš z deljenjem potrebnega ATP z ATP na eno glukozo.
 + $15$
 > $\dfrac{540}{36} = 15$ molekul glukoze. Brez kisika bi jih potrebovala $270$, kar je $18$-krat več.
+
+:::simboli
+T | starost Zemlje | | leto | 4,6 milijarde let
+t_{\mathrm{p}} | dolžina pesmi | | s
+t | trenutek v pesmi, ki ustreza dogodku | t = \dfrac{\text{čas od nastanka Zemlje}}{T} \cdot t_\mathrm{p} | s | šteto od začetka pesmi
+:::

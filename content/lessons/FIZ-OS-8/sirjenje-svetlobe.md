@@ -233,3 +233,14 @@ Ena palica, njena senca in pravilo o premočrtnem širjenju svetlobe so bili dov
 - Ker se je v Sloveniji svetloba Sonca ukrivila okoli Lune.
 ~ Svetloba se v zraku in v vesolju širi premočrtno, okoli Lune ne zavije.
 > Senca Lune na Zemlji je ozek pas. Kdor je v njem, vidi popolni mrk; v širši polsenci okoli njega vidiš le delni mrk.
+
+:::simboli
+H | višina sence | H = h \cdot \dfrac{b}{a} | cm | v nalogi tudi premer sence
+h | višina predmeta | | cm
+a | razdalja svetilo–predmet | | cm
+b | razdalja svetilo–zaslon | | cm
+h_{\text{z}} | višina zvonika | h_\text{z} = \dfrac{s_\text{z}}{s_\text{p} : h_\text{p}} | m
+s_{\text{z}} | dolžina sence zvonika | | m
+s_{\text{p}} | dolžina sence palice | | m
+h_{\text{p}} | višina palice | | m
+:::

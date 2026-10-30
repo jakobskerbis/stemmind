@@ -239,3 +239,12 @@ Nejc poskusi znova. Zajemalko potisne malo globlje, kot kaže oko, in cmok je uj
 ~ V isti snovi se svetloba širi premočrtno. Smer spremeni le na meji med vodo in zrakom.
 + Svetloba od potopljenega dela se na gladini lomi, zato oko ta del vidi na drugem mestu, kot je v resnici.
 > Na gladini gre svetloba v optično redkejši zrak in se lomi stran od pravokotnice. Oko podaljša žarke naravnost nazaj, zato je potopljeni del videti višje in žlica prelomljena.
+
+:::simboli
+\alpha | vpadni kot | \alpha = 90^\circ - \gamma | ^\circ | merimo ga od vpadne pravokotnice
+\beta | lomni kot | | ^\circ | v optično gostejši snovi je β < α
+\gamma | kot med žarkom in gladino | | ^\circ
+f | goriščna razdalja leče | | cm | \bar{f} je povprečje meritev
+f_1, f_2, f_3 | izmerjene goriščne razdalje | | cm
+\Delta f | absolutna napaka goriščne razdalje | | cm | največji odmik meritve od povprečja
+:::

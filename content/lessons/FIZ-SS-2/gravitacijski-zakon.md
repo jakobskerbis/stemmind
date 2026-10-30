@@ -231,3 +231,21 @@ Zato astronavti na ISS lebdijo. Gravitacija nanje deluje, a padajo skupaj s post
 - $19\,110\,\mathrm{km}$
 ~ Tako dobiš, če misliš, da sila pada premo z razdaljo, in vzameš $r = 4 R_Z$. Sila pada s kvadratom, zato zadošča $r = 2 R_Z$.
 > Četrtina sile pomeni dvakratno razdaljo od središča: $r = 2 R_Z$. Višina nad površjem je $r - R_Z = R_Z = 6370\,\mathrm{km}$.
+
+:::simboli
+F_g | gravitacijska sila | F_g = G\,\dfrac{m_1 m_2}{r^2} | N
+G | gravitacijska konstanta | | N\,m^2/kg^2 | 6,67 · 10⁻¹¹ N m²/kg²
+m_1, m_2 | masi teles | | kg
+r | razdalja med središčema teles | | m | pri satelitu polmer tira
+m | masa telesa (satelita) | | kg
+M_Z | masa Zemlje | | kg | 5,97 · 10²⁴ kg
+R_Z | polmer Zemlje | | m | 6370 km
+M | masa osrednjega telesa | | kg
+g | težni pospešek | g = \frac{G M_Z}{R_Z^2} | m/s^2 | na površju Zemlje 9,81 m/s²
+v | hitrost kroženja satelita | v = \sqrt{\dfrac{G M_Z}{r}} | m/s
+t_0 | obhodni čas | t_0 = \dfrac{2\pi r}{v} | s
+g_L | težni pospešek na Luni | g_L = \dfrac{G M_L}{R_L^2} | m/s^2 | približno 1,62 m/s²
+M_L | masa Lune | | kg
+R_L | polmer Lune | | m | 1740 km
+F_L | teža na Luni | F_L = m\, g_L | N
+:::

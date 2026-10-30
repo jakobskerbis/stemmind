@@ -157,6 +157,7 @@ export function checkSymbols(body, err, warn) {
     const list = [...missing];
     warn(`${list.length} oznak v formulah nima vrstice v »:::simboli«: ${list.slice(0, 12).join(", ")}${list.length > 12 ? " …" : ""}`);
   }
-  const unused = [...keys].filter((k) => !used.has(k) && !/^[A-Za-z]{2,}$/.test(k));
+  const rawUsed = (k) => text.includes(`{${k.split("_")[0]}}`); // \mathrm{SE}, \mathrm{pH}
+  const unused = [...keys].filter((k) => !used.has(k) && !rawUsed(k));
   if (unused.length) warn(`:::simboli: oznake ${unused.slice(0, 8).join(", ")} ni v nobeni formuli lekcije`);
 }

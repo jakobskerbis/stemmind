@@ -214,3 +214,21 @@ To je poseben primer zakona o ohranitvi energije in je osnova za račun končne 
 - $Q = mq_t$
 + $Q = mq_i$
 > Pri izparevanju pri vrelišču se temperatura ne spreminja ($\Delta T = 0$), zato enačba $Q = mc\Delta T$ ne pride v poštev. Za izparevanje uporabimo specifično izparilno toploto $q_i$, specifična talilna toplota $q_t$ pa je za taljenje.
+
+:::simboli
+\Delta W_n | sprememba notranje energije | \Delta W_n = Q | J | kadar telo ne opravlja dela
+Q | toplota | Q = m\,c\,\Delta T | J | pri segrevanju Q > 0, pri ohlajanju Q < 0
+m | masa | | kg
+c | specifična toplota | c = \dfrac{Q}{m\,\Delta T} | J/(kg\,K) | voda 4200 J/(kg K)
+T | temperatura | | ^\circ C | razlika 1 K je enaka razliki 1 °C
+T_1 | začetna temperatura | | ^\circ C
+T_2 | končna temperatura | | ^\circ C
+\Delta T_1 | segrevanje ledu do tališča | \Delta T_1 = 0\,^\circ\text{C} - T_1 | K
+\Delta T_2 | segrevanje vode od tališča | \Delta T_2 = T_2 - 0\,^\circ\text{C} | K
+q_t | specifična talilna toplota | | J/kg | voda 334 kJ/kg
+q_i | specifična izparilna toplota | | J/kg | voda 2260 kJ/kg
+Q_{\text{oddana}} | toplota, ki jo toplejše telo odda | | J
+Q_{\text{sprejeta}} | toplota, ki jo hladnejše telo sprejme | | J
+c_{\text{led}} | specifična toplota ledu | | J/(kg\,K) | 2100 J/(kg K)
+c_{\text{voda}} | specifična toplota vode | | J/(kg\,K) | 4200 J/(kg K)
+:::

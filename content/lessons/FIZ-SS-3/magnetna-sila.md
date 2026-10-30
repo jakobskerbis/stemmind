@@ -238,3 +238,19 @@ neodvisen od hitrosti. Hitrejši delec opiše večji krog v enakem času. To izk
 ~ Pozabil si pomnožiti z nabojem $e = 1{,}6\cdot10^{-19}\,\mathrm{A\,s}$.
 + $9{,}6\cdot10^{-14}\,\mathrm{N}$
 > $F = e v B = 1{,}6\cdot10^{-19} \cdot 3\cdot10^6 \cdot 0{,}2\,\mathrm{N} = 9{,}6\cdot10^{-14}\,\mathrm{N}$.
+
+:::simboli
+F | magnetna sila | F = I\, l\, B\, \sin\alpha | N | na naboj F = e v B sin α
+I | električni tok | | A
+l | dolžina žice v polju | | m
+B | gostota magnetnega polja | | T | 1 T = 1 N/(A m)
+\alpha | kot med žico (hitrostjo) in poljem | | ^\circ
+e | naboj delca | | A\,s | osnovni naboj 1,6 · 10⁻¹⁹ A s
+v | hitrost delca | | m/s
+m | masa delca | | kg
+r | polmer krožnice delca | r = \dfrac{m\, v}{e\, B} | m
+q | naboj delca z znakom | | A\,s | pri negativnem q sila kaže nasprotno
+t_0 | obhodni čas delca | t_0 = \frac{2\pi m}{q B} | s | ni odvisen od hitrosti
+F_{\mathrm{s}} | skupna sila na vse odseke žice | F_\mathrm{s} = N\, I\, l\, B | N
+N | število odsekov žice | | –
+:::

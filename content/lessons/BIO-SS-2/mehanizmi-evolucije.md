@@ -200,3 +200,12 @@ Kaj pove tabela? Odpornih je vsak dan le dvakrat več, delež pa skoči z $1\,\%
 ~ To je $20 \cdot 160$: čas ni število delitev. Najprej izračunaj, kolikokrat se bakterije delijo.
 + $5120$
 > Delitev je $\dfrac{160}{20} = 8$, zato $20 \cdot 2^8 = 20 \cdot 256 = 5120$.
+
+:::simboli
+p | pogostost alela L | p = \dfrac{\text{število alelov L}}{\text{število vseh alelov}} | – | v simulaciji pogostost alela A; med 0 in 1
+q | pogostost alela a | q = \dfrac{\text{število alelov a}}{\text{število vseh alelov}} | – | med 0 in 1
+N | število bakterij v populaciji | | – | v simulaciji velikost populacije
+N_{\mathrm{odp}} | število odpornih bakterij na začetku | N_\mathrm{odp} = N \cdot \text{delež} | –
+N_{\mathrm{po}} | število odpornih bakterij po razmnoževanju | N_\mathrm{po} = N_\mathrm{odp} \cdot 2^n | –
+n | število delitev | | – | ena delitev podvoji število bakterij
+:::

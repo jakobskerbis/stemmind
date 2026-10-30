@@ -196,3 +196,14 @@ Opomba: tekočina pritiska enako v vseh smereh, ker se delci tekočine prosto pr
 - Večji je v posodi z manj vode.
 - V ozki posodi je enak nič.
 > Hidrostatični tlak je $p = \rho g h$ in je odvisen le od gostote tekočine in globine, ne od količine vode ali oblike posode. Obe posodi imata isti $\rho$ in isti $h$, zato je tlak enak.
+
+:::simboli
+p | tlak | p = \dfrac{F}{S} | Pa | v tekočini p = ρ g h (hidrostatični tlak)
+F | sila, pravokotna na površino | F = p \cdot S | N
+S | ploščina površine | | m^2 | 1 m² = 10 000 cm²
+F_g | teža | F_g = m \cdot g | N
+\rho | gostota tekočine | | kg/m^3
+g | težni pospešek | | N/kg | približno 10 N/kg
+h | globina v tekočini | | m
+m | masa | | kg
+:::

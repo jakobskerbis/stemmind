@@ -306,12 +306,12 @@ export const SYMBOLS_BLOCK_RE = /^[ \t]*:::[ \t]*simboli[ \t]*\n([\s\S]*?)\n[ \t
 // Ključ oznake iz TeX: "I_0", "I_{0}" → "I_0"; "\\varepsilon" → "ε"; "\\Delta H" → "ΔH"; "\\mathrm{pH}" → "pH".
 export function symbolKeyOf(tex) {
   let s = String(tex).trim();
-  const raw = /^\\(?:mathrm|text|textrm)\s*\{([^{}]+)\}$/.exec(s);
-  if (raw) return raw[1].replace(/\s+/g, "");
+  const raw = /^\\(?:mathrm|text|textrm)\s*\{([^{}]+)\}\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+))?$/.exec(s);
+  if (raw) return raw[1].replace(/\s+/g, "") + (raw[2] ? `_${normSub(raw[2])}` : "");
   let delta = "";
   const d = /^\\Delta\s*/.exec(s);
   if (d && s.length > d[0].length) { delta = "Δ"; s = s.slice(d[0].length); }
-  const m = /^(\\([a-zA-Z]+)|[A-Za-z])\s*(?:_\s*(\{.*\}|\\?[A-Za-z0-9]+))?$/.exec(s);
+  const m = /^(\\([a-zA-Z]+)|[A-Za-z])\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+))?$/.exec(s);
   if (!m) return null;
   const base = m[2] ? GREEK[m[2]] : m[1];
   if (!base) return null;
@@ -438,10 +438,17 @@ export function annotateTex(tex, subject = override || subjectFn()) {
           if (u && afterNumber()) { out += wrap(`u:${u.key}`, whole); i = end; continue; }
           // Veččrkovna oznaka lekcije (\mathrm{pH}, \mathrm{Re}) ni enota, če ne stoji za številom.
           const own = subject?.[0] === "@" && subject !== "@*" && !/\d\}?\s*(\\[,;: ]|~)?\s*$/.test(out) && normSub(tex.slice(j + 1, end - 1));
-          if (own && lookupSymbol(own, subject)) { out += wrap(`s:${subject}:${own}`, whole); i = end; continue; }
+          if (own) {
+            const sub = readSub(end);
+            const full = sub && `${own}_${normSub(sub.raw)}`;
+            if (full && lookupSymbol(full, subject)) { out += wrap(`s:${subject}:${full}`, tex.slice(i, sub.end)); i = sub.end; continue; }
+            if (lookupSymbol(own, subject)) { out += wrap(`s:${subject}:${own}`, whole); i = end; continue; }
+          }
         }
-        out += whole;
-        i = end;
+        // Indeks za besedilom (\mathrm{SE}_r, \text{H}_2) ostane del besedila.
+        const tail = UNIT_CMDS.has(name) && tex[j] === "{" ? readSub(end) : null;
+        out += tail ? tex.slice(i, tail.end) : whole;
+        i = tail ? tail.end : end;
         continue;
       }
       const g = GREEK[name];
@@ -449,6 +456,15 @@ export function annotateTex(tex, subject = override || subjectFn()) {
       if (g === "Δ" && /^[A-Za-z]/.test(tex.slice(j)) && subject?.[0] === "@" && lookupSymbol(`Δ${tex[j]}`, subject)) { i = symbol(`Δ${tex[j]}`, i, j + 1, false); continue; }
       if (g === "Δ" && /^[A-Za-z]/.test(tex.slice(j)) && symbolKey(tex[j], "", subject, tex)) { i = symbol(tex[j], i, j + 1, true); continue; }
       if (g === "Ω" && afterNumber()) { out += wrap("u:Ω", tex.slice(i, j).trimEnd()) + " "; i = j; continue; }
+      // 5\,\mu\mathrm{m}: predpona enote, ne oznaka.
+      if (g === "μ" && afterNumber()) {
+        const um = /^\\(?:mathrm|text)\s*\{([^{}]+)\}|^[A-Za-z]+/.exec(tex.slice(j));
+        const u = um && lookupUnit(`μ${um[1] || um[0]}`);
+        if (u) { out += wrap(`u:${u.key}`, tex.slice(i, j + um[0].length)); i = j + um[0].length; continue; }
+        out += tex.slice(i, j);
+        i = j;
+        continue;
+      }
       if (g && g !== "Δ") { i = symbol(g, i, j, false); continue; }
       out += tex.slice(i, j);
       i = j;

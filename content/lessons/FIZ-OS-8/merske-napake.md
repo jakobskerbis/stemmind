@@ -235,3 +235,15 @@ Nauk zgodbe: šele ko poznaš velikost svoje merske napake, lahko presodiš, ali
 - Povprečje bo predolgo, ker so štoparice zagnali prepozno.
 ~ Če štoparico zaženeš prepozno, ustaviš pa ob pravem času, izmeriš manj časa, ne več.
 > Pozni zagon vsako meritev skrajša za približno enako. Povprečje te sistematične napake ne odpravi; pomaga le boljši način merjenja.
+
+:::simboli
+t | izmerjeni čas | | s | \bar{t} je povprečje meritev
+t_1, t_2, t_n | posamezne meritve časa | | s
+\Delta t | absolutna napaka časa | | s | največji odmik meritve od povprečja
+n | število meritev | | –
+d | premer | | mm | \bar{d} je povprečni premer
+d_1, d_2, d_3, d_4 | posamezne meritve premera | | mm
+l | dolžina | | cm | \bar{l} je povprečna dolžina
+l_1, l_2, l_5 | posamezne meritve dolžine | | cm
+\Delta l | absolutna napaka dolžine | | cm | največji odmik meritve od povprečja
+:::

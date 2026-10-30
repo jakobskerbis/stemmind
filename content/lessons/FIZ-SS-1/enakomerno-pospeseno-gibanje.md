@@ -199,3 +199,11 @@ Pri tej izpeljavi smo privzeli, da je gibanje po premici in da se smer gibanja n
 + prepotovano pot
 - čas gibanja
 > Hitrost krat čas daje pot, zato je ploščina pod grafom $v(t)$ prepotovana pot. Pospešek je naklon grafa $v(t)$, ne njegova ploščina.
+
+:::simboli
+a | pospešek | a = \dfrac{v - v_0}{t} | m/s^2
+v | hitrost ob času t | v = v_0 + a\,t | m/s
+v_0 | začetna hitrost | | m/s | hitrost ob t = 0
+t | čas | t = \dfrac{v - v_0}{a} | s
+s | pot | s = v_0\,t + \dfrac{a\,t^2}{2} | m
+:::

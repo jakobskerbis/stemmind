@@ -178,3 +178,9 @@ Ploščina pod grafom $v(t)$ od časa $0$ do $t$ je pravokotnik s ploščino $v 
 - Navpična črta pri času $3\,\mathrm{s}$.
 + Poševna premica skozi izhodišče.
 > Pot je $s = 3 \cdot t$, pot narašča sorazmerno s časom, zato je graf poševna premica skozi izhodišče. Vodoravna črta je graf $v(t)$ (ali mirovanje v grafu $s(t)$).
+
+:::simboli
+v | hitrost | v = \dfrac{s}{t} | m/s | 1 m/s = 3,6 km/h
+s | pot | s = v \cdot t | m
+t | čas | t = \dfrac{s}{v} | s
+:::

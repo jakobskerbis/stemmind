@@ -238,3 +238,18 @@ Opazovalec na peronu vidi isti met drugače: ključi letijo po loku. Za njega je
 ~ Odštevamo le nasprotni hitrosti. Pravokotni hitrosti dasta rezultanto, večjo od vsake posebej.
 + približno $5{,}1\,\text{m/s}$
 > $v = \sqrt{(5\,\text{m/s})^2 + (1{,}2\,\text{m/s})^2} = \sqrt{26{,}44}\,\text{m/s} \approx 5{,}1\,\text{m/s}$.
+
+:::simboli
+v | velikost rezultantne hitrosti | v = \sqrt{v_x^2 + v_y^2} | m/s | za pravokotni hitrosti
+v_1 | hitrost drona glede na zrak (čolna glede na vodo) | | m/s
+v_2 | hitrost vetra (toka reke) | | m/s
+v_x | vodoravna komponenta hitrosti | | m/s | pri vodoravnem metu ves čas v₀
+v_y | navpična komponenta hitrosti | v_y = g t | m/s
+v_0 | začetna (vodoravna) hitrost | v_0 = \dfrac{x}{t} | m/s
+h | višina, s katere telo pade | h = \dfrac{g t^2}{2} | m
+g | težni pospešek | | m/s^2 | približno 9,81 m/s²
+t | čas | t = \sqrt{\dfrac{2h}{g}} | s
+x | vodoravna razdalja (domet) | x = v_0 t | m
+d | širina reke | | m
+s | zanos čolna ob toku | s = v_2 t | m
+:::

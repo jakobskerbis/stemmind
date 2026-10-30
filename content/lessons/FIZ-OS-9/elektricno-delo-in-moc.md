@@ -201,3 +201,11 @@ Enote se ujemajo: $1\,\mathrm{V} = 1\,\dfrac{\mathrm{J}}{\mathrm{C}}$ in $1\,\ma
 + električno delo (porabljeno energijo)
 - električni tok
 > Kilovatna ura je enota za delo oziroma energijo, saj je to moč v $\mathrm{kW}$, pomnožena s časom v $\mathrm{h}$. Moč merimo v vatih, tok v amperih.
+
+:::simboli
+P | električna moč | P = U \cdot I | W
+U | električna napetost | | V
+I | električni tok | I = \dfrac{P}{U} | A
+A | električno delo | A = U \cdot I \cdot t | J | pri računu za elektriko v kWh
+t | čas delovanja porabnika | | s | 1 kWh = 3 600 000 J
+:::

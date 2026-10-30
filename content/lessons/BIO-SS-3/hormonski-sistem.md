@@ -237,3 +237,15 @@ Pri sladkorni bolezni tipa 2 se tarčne celice na inzulin odzivajo slabše (**in
 ~ Znojenje je posledica nizke glukoze, ne vzrok. Voda glukoze ne dvigne.
 + Kozarec sladkega soka ali nekaj kock sladkorja.
 > Inzulin brez obroka je glukozo v krvi preveč znižal (hipoglikemija). Hiter sladkor jo dvigne v nekaj minutah. Če se stanje ne izboljša, pokliči 112.
+
+:::simboli
+n | množina glukoze | n = c \cdot V | mmol
+c | množinska koncentracija glukoze v krvi | | mmol/L | normalno okoli 5 mmol/L
+c_1 | znižana koncentracija glukoze | | mmol/L
+c_2 | normalna (ciljna) koncentracija glukoze | | mmol/L
+V | prostornina krvi | | L | pri odraslem okoli 5 L
+m | masa glukoze | m = n \cdot M | g
+M | molska masa glukoze | | g/mol | 180 g/mol
+m_{\mathrm{jod}} | masa joda v dnevni količini soli | m_{\mathrm{jod}} = 20\,\mathrm{mg/kg} \cdot m_s | μg
+m_s | masa soli, zaužite na dan | | g
+:::

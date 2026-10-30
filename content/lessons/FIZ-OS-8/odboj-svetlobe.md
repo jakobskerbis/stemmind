@@ -241,3 +241,16 @@ Ko pevka pokima, bobnar v zrcalu vidi znak za začetek refrena.
 - $45\,\text{cm}$, če stopi dovolj daleč od zrcala.
 ~ Oddaljenost ne pomaga: točki odboja ostaneta na istih višinah, zato na vsaki razdalji vidi enak del sebe.
 > Najnižje zrcalo je polovica višine: $\dfrac{180\,\text{cm}}{2} = 90\,\text{cm}$, ne glede na to, kako daleč stoji.
+
+:::simboli
+\alpha | vpadni kot | \alpha = \dfrac{\varphi}{2} | ^\circ | merimo ga od vpadne pravokotnice
+\beta | odbojni kot | \beta = \alpha | ^\circ
+\varphi | kot med vpadnim in odbitim žarkom | \varphi = \alpha + \beta | ^\circ
+\gamma | kot med vpadnim žarkom in zrcalom | \gamma = 90^\circ - \alpha | ^\circ
+d | razdalja med predmetom in njegovo sliko | d = 2 \cdot a | m
+a | razdalja predmeta od zrcala | | m
+z | najmanjša višina zrcala | z = t - s = \dfrac{h}{2} | cm
+t | višina zgornjega roba zrcala nad tlemi | | cm
+s | višina spodnjega roba zrcala nad tlemi | | cm
+h | višina človeka | | cm
+:::

@@ -255,3 +255,12 @@ Masa se pokrajša. To velja le, če upor zraka lahko zanemarimo. Pri realnem pad
 - $2{,}8\,\mathrm{s}$
 ~ Pozabil si faktor $\frac{1}{2}$: iz $80 = 10\,t^2$ dobiš $t^2 = 8$. Pravilno je $t^2 = \frac{2h}{g} = 16\,\mathrm{s^2}$.
 > Iz $h = \frac{1}{2}\,g\,t^2$ sledi $t^2 = \dfrac{2h}{g} = \dfrac{2 \cdot 80}{10} = 16\,\mathrm{s^2}$, torej $t = 4\,\mathrm{s}$.
+
+:::simboli
+g | težnostni pospešek | | m/s^2 | približno 9,8 m/s², za račun pogosto 10 m/s²
+v | hitrost | v = g\,t | m/s | velja, če telo spustimo (v₀ = 0)
+t | čas padanja | t = \sqrt{\dfrac{2h}{g}} | s
+h | višina padca (opravljena pot) | h = \dfrac{1}{2}\,g\,t^2 | m
+a | pospešek | a = \frac{\Delta v}{\Delta t} | m/s^2 | pri prostem padu a = g
+m | masa | | kg | pospešek ni odvisen od mase
+:::
