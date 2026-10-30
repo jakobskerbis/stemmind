@@ -60,6 +60,7 @@
   "lock.auth": "Heslo účtu alebo súčasné heslo profilu",
   "lock.saved": "Heslo profilu je uložené.",
   "lock.none": "bez hesla",
+  "lock.offline": "Nie je spojenie so serverom Evklid. Skontroluj, či je počítač s Evklidom zapnutý, a skús to znova.",
   "mock.title": "Testovací režim.",
   "mock.text": "Bez API kľúča tútor vracia pripravené odpovede.",
   "common.loading": "Načítava sa …",

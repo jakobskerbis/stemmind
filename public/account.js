@@ -94,7 +94,9 @@ function showTaken(d, rawFetch) {
 // Vsak profil ima svoje geslo. Zaklenjen profil (locked) odpre geslo; profil brez gesla (needs_password)
 // pred prvo uporabo dobi geslo. Vrne id profila, ki ga odpremo: tega ali drugega, ki ga izbere uporabnik.
 const PROFILE_PW_MIN = 4;
-const lockError = (err) => (err.status === 401 ? t("lock.wrong") : err.status === 429 ? t("lock.tooMany") : err.message);
+// Strežnik ni dosegljiv (računalnik z Evklidom ugasnjen, tunel ne teče): brez odziva ali napaka 5xx.
+const unreachable = (err) => !err.status || err.status >= 500;
+const lockError = (err) => (unreachable(err) ? t("lock.offline") : err.status === 401 ? t("lock.wrong") : err.status === 429 ? t("lock.tooMany") : err.message);
 
 export function openProfileLock(student, students = []) {
   $("#lock-overlay")?.remove();
@@ -125,7 +127,7 @@ export function openProfileLock(student, students = []) {
       </form></details>`}
     ${others.length ? `<p class="muted lock-others-title">${esc(t("lock.other"))}</p>
       <div class="lock-others">${others.map((o) => `<button type="button" data-id="${o.id}" dir="auto">${esc(o.name)}</button>`).join("")}</div>` : ""}
-    <form method="post" action="/api/auth/logout" class="lock-logout"><button type="submit" class="ghost" id="lock-logout">${esc(t("pm.logout"))}</button></form>
+    <form method="post" action="/api/auth/logout" class="lock-logout"><p class="form-error" role="alert" hidden></p><button type="submit" class="ghost" id="lock-logout">${esc(t("pm.logout"))}</button></form>
   </div>`;
   document.body.appendChild(box);
   // Aplikacija za zaslonom ni dosegljiva s tipko Tab ali bralnikom zaslona, dokler je profil zaklenjen.
@@ -184,8 +186,14 @@ export function openProfileLock(student, students = []) {
       });
     }
     box.querySelectorAll(".lock-others [data-id]").forEach((b) => b.addEventListener("click", () => done(Number(b.dataset.id))));
-    // Odjava je navaden obrazec (strežnik preusmeri na prijavo), da deluje v vsakem brskalniku, tudi brez skripta.
-    $(".lock-logout", box).addEventListener("submit", () => store.set("studentId", null));
+    // Odjava je navaden obrazec (deluje tudi brez skripta); s skriptom pokažemo napako, ko strežnik ni dosegljiv
+    // (sicer bi aplikacija iz shranjene kopije spet pokazala isto okno in gumb bi bil videti mrtev).
+    const out = $(".lock-logout", box);
+    submit(out, async () => {
+      await logoutRequest();
+      store.set("studentId", null);
+      location.replace("/?odjava=1");
+    });
   });
 }
 
@@ -1090,10 +1098,19 @@ async function renderAccount() {
   });
 }
 
+// Odjava na strežniku; ob počasni povezavi največ 6 s, nato napaka (status 0 = ni odziva).
+async function logoutRequest() {
+  const timeout = new Promise((_, reject) => setTimeout(() => reject(Object.assign(new Error("timeout"), { status: 0 })), 6000));
+  await Promise.race([api("/api/auth/logout", { method: "POST" }), timeout]);
+}
+
 export async function logout() {
   if (status?.parent?.guest && !confirm(t("guest.logoutConfirm"))) return;
-  // Ob počasni ali prekinjeni povezavi ne čakamo v nedogled: stran se po 4 s vseeno naloži znova.
-  await Promise.race([api("/api/auth/logout", { method: "POST" }).catch(() => {}), new Promise((r) => setTimeout(r, 4000))]);
+  try {
+    await logoutRequest();
+  } catch (err) {
+    if (unreachable(err)) return toast(t("lock.offline")); // brez strežnika odjava ni mogoča
+  }
   store.set("studentId", null);
   location.replace("/?odjava=1");
 }

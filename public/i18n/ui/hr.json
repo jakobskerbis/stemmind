@@ -59,6 +59,7 @@
   "lock.auth": "Lozinka računa ili trenutačna lozinka profila",
   "lock.saved": "Lozinka profila je spremljena.",
   "lock.none": "bez lozinke",
+  "lock.offline": "Nema veze s poslužiteljem Evklid. Provjeri je li računalo s Evklidom uključeno i pokušaj ponovno.",
   "mock.title": "Probni način.",
   "mock.text": "Bez API ključa instruktor vraća pripremljene odgovore.",
   "common.loading": "Učitavam …",

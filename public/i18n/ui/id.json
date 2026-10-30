@@ -57,6 +57,7 @@
   "lock.auth": "Kata sandi akun atau kata sandi profil saat ini",
   "lock.saved": "Kata sandi profil disimpan.",
   "lock.none": "tanpa kata sandi",
+  "lock.offline": "Tidak ada koneksi ke server Evklid. Pastikan komputer yang menjalankan Evklid menyala, lalu coba lagi.",
   "mock.title": "Mode uji coba.",
   "mock.text": "Tanpa kunci API, tutor memberikan jawaban yang sudah disiapkan.",
   "common.loading": "Memuat …",

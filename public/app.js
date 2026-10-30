@@ -411,7 +411,16 @@ async function selectStudent(id) {
   const target = state.students.find((s) => s.id === Number(id));
   // Vsak profil ima svoje geslo (z računi): zaklenjen profil najprej odklenemo, profil brez gesla ga dobi.
   // Uporabnik lahko namesto tega izbere drug profil; seznam se nato naloži znova (odklep zaklene druge profile).
-  if (target && (target.locked || target.needs_password)) return loadStudents(await openProfileLock(target, state.students));
+  // Brez povezave s strežnikom (shranjena kopija) računi niso vklopljeni: odpremo profil za vadbo brez gesla,
+  // zaklenjenega pa ne (zanj ni shranjenih nastavitev).
+  if (target && accountsOn() && (target.locked || target.needs_password)) return loadStudents(await openProfileLock(target, state.students));
+  if (target?.locked) {
+    const open = state.students.find((s) => !s.locked);
+    // Vsi profili zaklenjeni: brez strežnika ni kaj odpreti; ob zagonu bootFailed pokaže »ni dosegljiva« in počaka.
+    if (!open) throw new Error(t("lock.offline"));
+    $("#student-select").value = open.id;
+    return selectStudent(open.id);
+  }
   state.student = target;
   // Jezik je del profila: ob menjavi učenca se vmesnik preklopi v njegov jezik (stran se naloži znova).
   const want = state.student.settings.language;

@@ -58,6 +58,7 @@
   "lock.auth": "Hesap şifresi ya da mevcut profil şifresi",
   "lock.saved": "Profil şifresi kaydedildi.",
   "lock.none": "şifresiz",
+  "lock.offline": "Evklid sunucusuna bağlantı yok. Evklid'in çalıştığı bilgisayarın açık olduğunu kontrol et ve tekrar dene.",
   "mock.title": "Test modu.",
   "mock.text": "API anahtarı olmadan öğretmen hazır cevaplar verir.",
   "common.loading": "Yükleniyor …",

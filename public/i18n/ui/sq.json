@@ -58,6 +58,7 @@
   "lock.auth": "Fjalëkalimi i llogarisë ose fjalëkalimi aktual i profilit",
   "lock.saved": "Fjalëkalimi i profilit u ruajt.",
   "lock.none": "pa fjalëkalim",
+  "lock.offline": "Nuk ka lidhje me serverin e Evklid. Kontrollo nëse kompjuteri me Evklid është i ndezur dhe provo përsëri.",
   "mock.title": "Modalitet prove.",
   "mock.text": "Pa çelës API, tutori jep përgjigje të përgatitura.",
   "common.loading": "Po ngarkohet …",

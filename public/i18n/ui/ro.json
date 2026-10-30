@@ -59,6 +59,7 @@
   "lock.auth": "Parola contului sau parola actuală a profilului",
   "lock.saved": "Parola profilului a fost salvată.",
   "lock.none": "fără parolă",
+  "lock.offline": "Nu există conexiune cu serverul Evklid. Verifică dacă calculatorul cu Evklid este pornit și încearcă din nou.",
   "mock.title": "Mod de test.",
   "mock.text": "Fără cheie API, tutorul dă răspunsuri pregătite.",
   "common.loading": "Se încarcă …",
