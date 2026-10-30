@@ -9,7 +9,6 @@
 
 // Nad mitičnimi (j, 30. 10. 2026: »naj obstajajo redkejši predmeti«): kozmični in večni, samo za največ XP in iger.
 export const RARITY_TIER = { common: 1, rare: 2, epic: 3, legendary: 4, mythic: 5, cosmic: 6, eternal: 7 };
-export const RARITY_BY_TIER = ["common", "common", "rare", "epic", "legendary", "mythic"];
 
 export const COLLECTIONS = [
   { id: "pse", subject: "KEM", slot: "badge", icon: "atom", name: { sl: "Periodni sistem", en: "Periodic table" } },
@@ -386,7 +385,7 @@ const ACC = {
 
 const HAT = {
   pot_starcrown: () =>
-    `<ellipse cx="50" cy="16" rx="25" ry="6" fill="none" stroke="#fef08a" stroke-width="7" opacity=".45"/><ellipse cx="50" cy="16" rx="25" ry="6" fill="none" stroke="#facc15" stroke-width="2.6"/>${[[27, 16, 4.5, "#e0f2fe"], [38, 10, 5.5, "#fde047"], [50, 7, 7.5, "#fff7ad"], [62, 10, 5.5, "#fde047"], [73, 16, 4.5, "#e0f2fe"]].map(([x, y, r, c]) => star(x, y, r, c)).join("")}`,
+    `<ellipse cx="50" cy="13" rx="34" ry="13" fill="#fde047" opacity=".28"/><ellipse cx="50" cy="17" rx="27" ry="7" fill="none" stroke="#fef08a" stroke-width="9" opacity=".55"/><ellipse cx="50" cy="17" rx="27" ry="7" fill="none" stroke="#f59e0b" stroke-width="3.2"/>${[[23, 17, 7, "#7dd3fc"], [35, 10, 8.5, "#facc15"], [50, 7, 11, "#fde047"], [65, 10, 8.5, "#facc15"], [77, 17, 7, "#f9a8d4"]].map(([x, y, r, c]) => star(x, y, r, c)).join("")}<path d="M50 1l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#fff"/>`,
   hat_pixel: () => `<path d="M30 34V16h5v6h5V12h6v10h8V12h6v10h5v-6h5v18z" fill="#facc15" stroke="${INK}" stroke-width="2" stroke-linejoin="miter"/><g fill="#ef4444"><rect x="36" y="26" width="4" height="4"/><rect x="60" y="26" width="4" height="4"/></g><rect x="48" y="25" width="4" height="5" fill="#3b82f6"/>`,
   pot_owl: () => `<g transform="translate(50 18)"><ellipse rx="12" ry="11" fill="#a16207" stroke="${INK}" stroke-width="2"/><path d="M-10-8l-3-6 6 3M10-8l3-6-6 3" fill="#a16207" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/><circle cx="-5" cy="-2" r="4.2" fill="#fef3c7" stroke="${INK}" stroke-width="1.2"/><circle cx="5" cy="-2" r="4.2" fill="#fef3c7" stroke="${INK}" stroke-width="1.2"/><circle cx="-5" cy="-2" r="1.8" fill="${INK}"/><circle cx="5" cy="-2" r="1.8" fill="${INK}"/><path d="M-1.5 2l1.5 3 1.5-3z" fill="#f59e0b"/><path d="M-6 6q6 4 12 0" stroke="#fde68a" stroke-width="1.2" fill="none"/></g>`,
   pot_laurel: () => `<g fill="#65a30d" stroke="#365314" stroke-width=".8">${Array.from({ length: 7 }, (_, i) => { const a = Math.PI * (0.95 + i * 0.09); return `<ellipse cx="${(50 + 30 * Math.cos(a)).toFixed(1)}" cy="${(40 + 18 * Math.sin(a)).toFixed(1)}" rx="5" ry="2.4" transform="rotate(${((a * 180) / Math.PI + 70).toFixed(0)} ${(50 + 30 * Math.cos(a)).toFixed(1)} ${(40 + 18 * Math.sin(a)).toFixed(1)})"/><ellipse cx="${(50 - 30 * Math.cos(a)).toFixed(1)}" cy="${(40 + 18 * Math.sin(a)).toFixed(1)}" rx="5" ry="2.4" transform="rotate(${(110 - (a * 180) / Math.PI).toFixed(0)} ${(50 - 30 * Math.cos(a)).toFixed(1)} ${(40 + 18 * Math.sin(a)).toFixed(1)})"/>`; }).join("")}</g><circle cx="50" cy="23" r="2.4" fill="#facc15" stroke="${INK}" stroke-width=".8"/>`,

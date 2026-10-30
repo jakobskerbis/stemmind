@@ -11,7 +11,7 @@ export const COINS_PER_DAY = 150;
 
 // Redkost po ceni (barva okvirja v trgovini).
 // Redkost po ceni; kozmični in večni predmeti so samo za znanje in igre (public/zbirke.js).
-export const rarity = (price) => (price === 0 ? "free" : price <= 25 ? "common" : price <= 60 ? "rare" : price <= 150 ? "epic" : price <= 300 ? "legendary" : "mythic");
+export const rarity = (price) => (price === 0 ? "free" : price <= 25 ? "common" : price <= 60 ? "rare" : price <= 150 ? "epic" : price <= 1000 ? "legendary" : "mythic");
 // Redkost predmeta: pri predmetih za znanje težavnost snovi, pri ostalih cena.
 export const itemRarity = (x) => x?.rarity || rarity(x?.price ?? 0);
 
@@ -57,7 +57,7 @@ export const ITEMS = [
   it("hat_wizard", "hat", 140, "Čarovniški klobuk", "Wizard hat"),
   it("hat_crown", "hat", 220, "Krona", "Crown"),
   it("hat_astro", "hat", 300, "Vesoljska čelada", "Space helmet"),
-  it("hat_flame", "hat", 500, "Ognjena krona", "Crown of fire"),
+  it("hat_flame", "hat", 1500, "Ognjena krona", "Crown of fire"),
   // oblačilo
   it("outfit_none", "outfit", 0, "Brez", "None"),
   it("outfit_bow", "outfit", 20, "Metuljček", "Bow tie"),
@@ -66,7 +66,7 @@ export const ITEMS = [
   it("outfit_lab", "outfit", 70, "Laboratorijska halja", "Lab coat"),
   it("outfit_hero", "outfit", 150, "Junak s plaščem", "Hero cape"),
   it("outfit_armor", "outfit", 280, "Zlati oklep", "Golden armour"),
-  it("outfit_starcape", "outfit", 800, "Zvezdni plašč", "Starry cloak"),
+  it("outfit_starcape", "outfit", 2500, "Zvezdni plašč", "Starry cloak"),
   // dodatek
   it("acc_none", "acc", 0, "Brez", "None"),
   it("acc_glasses", "acc", 30, "Očala", "Glasses"),
@@ -83,7 +83,7 @@ export const ITEMS = [
   it("bg_stars", "bg", 90, "Zvezdna noč", "Starry night"),
   it("bg_space", "bg", 150, "Vesolje", "Space"),
   it("bg_lava", "bg", 260, "Vulkan", "Volcano"),
-  it("bg_nebula", "bg", 650, "Meglica", "Nebula"),
+  it("bg_nebula", "bg", 2000, "Meglica", "Nebula"),
   // značka in efekt (predmeti zanje so samo za znanje, public/zbirke.js)
   it("badge_none", "badge", 0, "Brez", "None"),
   it("fx_none", "fx", 0, "Brez", "None"),
