@@ -2616,5 +2616,16 @@
   "win.resetDone": "Die Anordnung wurde zurückgesetzt.",
   "full.close": "Schließen",
   "full.message": "Deine Nachricht",
-  "full.task": "Aufgabentext"
+  "full.task": "Aufgabentext",
+  "nav.lab": "Labor",
+  "lab.meSub": "Virtuelle Experimente in Physik und Chemie",
+  "lab.intro": "Du baust die Experimente selbst auf und misst: Geräte, Messungen, Tabelle, Diagramm und Schlussfolgerung. Fehler haben Folgen wie im echten Labor.",
+  "lab.start": "Experiment starten",
+  "lab.inTextbook": "Thema im Lehrbuch öffnen",
+  "lab.locked": "Gesperrt",
+  "lab.lockedTitle": "Experiment: {title}",
+  "lab.lockedText": "Interaktive Experimente, Simulationen und sofortige Überprüfung gibt es im kostenpflichtigen Paket und während der 7-tägigen Testphase. Lektionstext und PDF sind kostenlos.",
+  "lab.packages": "Pakete ansehen",
+  "lab.empty": "Noch keine Experimente.",
+  "lab.error": "Das Labor konnte nicht geladen werden."
 }

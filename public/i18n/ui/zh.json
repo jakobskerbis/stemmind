@@ -2592,5 +2592,16 @@
   "win.resetDone": "布局已重置。",
   "full.close": "关闭",
   "full.message": "你的消息",
-  "full.task": "题目"
+  "full.task": "题目",
+  "nav.lab": "实验室",
+  "lab.meSub": "物理和化学虚拟实验",
+  "lab.intro": "自己搭建装置并测量：器材、测量、表格、图像和结论。和真实实验室一样，操作失误会带来后果。",
+  "lab.start": "开始实验",
+  "lab.inTextbook": "在课本中打开该主题",
+  "lab.locked": "已锁定",
+  "lab.lockedTitle": "实验：{title}",
+  "lab.lockedText": "互动实验、模拟和即时检查在付费套餐和 7 天试用期内提供。课文和 PDF 免费。",
+  "lab.packages": "查看套餐",
+  "lab.empty": "还没有实验。",
+  "lab.error": "无法加载实验室。"
 }

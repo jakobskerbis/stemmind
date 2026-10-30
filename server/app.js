@@ -40,6 +40,7 @@ import { mountReports, chatOff, messageCode } from "./reports.js";
 import { verifyAnswer, codeCheck } from "./verify.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
+import { mountLab } from "./laboratorij.js";
 import { Avatars, mountAvatar } from "./avatar.js";
 import { Knowledge, mountKnowledge } from "./zbirke.js";
 import { mountCorner } from "./corner.js";
@@ -1055,6 +1056,7 @@ export function createApp(store, opts = {}) {
   mountKviz(app, store, { loadStudent, leagues }); // kviz v živo za razred
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress, avatars, knowledge });
+  mountLab(app, { loadStudent, accounts }); // virtualni laboratorij: vsi poskusi, zaklep kot v učbeniku
   mountAvatar(app, avatars, { loadStudent, trendsFile: opts.trendsFile ?? null });
   mountKnowledge(app, knowledge, { loadStudent, avatars });
   mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });

@@ -2592,5 +2592,16 @@
   "win.resetDone": "Đã đặt lại bố cục.",
   "full.close": "Đóng",
   "full.message": "Tin nhắn của bạn",
-  "full.task": "Đề bài"
+  "full.task": "Đề bài",
+  "nav.lab": "Phòng thí nghiệm",
+  "lab.meSub": "Thí nghiệm ảo môn vật lý và hóa học",
+  "lab.intro": "Em tự lắp và đo các thí nghiệm: dụng cụ, phép đo, bảng, đồ thị và kết luận. Sai sót có hậu quả như trong phòng thí nghiệm thật.",
+  "lab.start": "Bắt đầu thí nghiệm",
+  "lab.inTextbook": "Mở chủ đề trong sách giáo khoa",
+  "lab.locked": "Đã khóa",
+  "lab.lockedTitle": "Thí nghiệm: {title}",
+  "lab.lockedText": "Thí nghiệm tương tác, mô phỏng và kiểm tra tức thì có trong gói trả phí và trong thời gian dùng thử 7 ngày. Nội dung bài học và PDF miễn phí.",
+  "lab.packages": "Xem các gói",
+  "lab.empty": "Chưa có thí nghiệm nào.",
+  "lab.error": "Không thể tải phòng thí nghiệm."
 }

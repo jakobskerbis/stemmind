@@ -2616,5 +2616,16 @@
   "win.resetDone": "La disposition a été réinitialisée.",
   "full.close": "Fermer",
   "full.message": "Ton message",
-  "full.task": "Énoncé de l'exercice"
+  "full.task": "Énoncé de l'exercice",
+  "nav.lab": "Laboratoire",
+  "lab.meSub": "Expériences virtuelles de physique et de chimie",
+  "lab.intro": "Tu montes et mesures toi-même les expériences : matériel, mesures, tableau, graphique et conclusion. Les erreurs ont des conséquences comme dans un vrai laboratoire.",
+  "lab.start": "Lancer l'expérience",
+  "lab.inTextbook": "Ouvrir le thème dans le manuel",
+  "lab.locked": "Verrouillé",
+  "lab.lockedTitle": "Expérience : {title}",
+  "lab.lockedText": "Les expériences interactives, les simulations et la vérification immédiate sont disponibles dans la formule payante et pendant l'essai de 7 jours. Le texte de la leçon et le PDF sont gratuits.",
+  "lab.packages": "Voir les formules",
+  "lab.empty": "Pas encore d'expériences.",
+  "lab.error": "Impossible de charger le laboratoire."
 }

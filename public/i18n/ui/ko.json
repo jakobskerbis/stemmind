@@ -2592,5 +2592,16 @@
   "win.resetDone": "레이아웃을 초기화했습니다.",
   "full.close": "닫기",
   "full.message": "내 메시지",
-  "full.task": "문제 내용"
+  "full.task": "문제 내용",
+  "nav.lab": "실험실",
+  "lab.meSub": "물리와 화학 가상 실험",
+  "lab.intro": "실험 장치를 직접 꾸미고 측정해요: 기구, 측정, 표, 그래프, 결론. 실수하면 실제 실험실처럼 결과가 나타나요.",
+  "lab.start": "실험 시작",
+  "lab.inTextbook": "교과서에서 주제 열기",
+  "lab.locked": "잠김",
+  "lab.lockedTitle": "실험: {title}",
+  "lab.lockedText": "인터랙티브 실험, 시뮬레이션, 즉시 확인은 유료 패키지와 7일 무료 체험 기간에 이용할 수 있어요. 수업 본문과 PDF는 무료예요.",
+  "lab.packages": "패키지 보기",
+  "lab.empty": "아직 실험이 없어요.",
+  "lab.error": "실험실을 불러오지 못했어요."
 }

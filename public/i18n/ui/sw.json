@@ -2614,5 +2614,16 @@
   "win.resetDone": "Mpangilio umewekwa upya.",
   "full.close": "Funga",
   "full.message": "Ujumbe wako",
-  "full.task": "Maandishi ya swali"
+  "full.task": "Maandishi ya swali",
+  "nav.lab": "Maabara",
+  "lab.meSub": "Majaribio pepe ya fizikia na kemia",
+  "lab.intro": "Unaunda na kupima majaribio mwenyewe: vifaa, vipimo, jedwali, grafu na hitimisho. Makosa yana matokeo kama katika maabara halisi.",
+  "lab.start": "Anza jaribio",
+  "lab.inTextbook": "Fungua mada kwenye kitabu cha kiada",
+  "lab.locked": "Imefungwa",
+  "lab.lockedTitle": "Jaribio: {title}",
+  "lab.lockedText": "Majaribio shirikishi, uigaji na ukaguzi wa papo hapo vinapatikana katika kifurushi cha kulipia na wakati wa majaribio ya siku 7. Maandishi ya somo na PDF ni bure.",
+  "lab.packages": "Tazama vifurushi",
+  "lab.empty": "Bado hakuna majaribio.",
+  "lab.error": "Maabara haikuweza kupakiwa."
 }

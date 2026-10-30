@@ -34,6 +34,7 @@ import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
 import { initScan, showScan, leaveScan, scanBack } from "./scan/scan.js";
+import { initLab, showLab, labBack } from "./laboratorij.js";
 import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
 import { initTestNotice } from "./testna-verzija.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
@@ -171,6 +172,7 @@ function initView(name) {
   }
   if (name === "progress") loadProgress();
   if (name === "schedule") showSchedule();
+  if (name === "lab") showLab();
   if (name === "scan") showScan();
   if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
@@ -262,6 +264,7 @@ window.addEventListener("popstate", () => {
   if (currentView === "textbook" && textbookBack()) return keep();
   if (currentView === "games" && gamesBack()) return keep();
   if (currentView === "scan" && scanBack()) return keep();
+  if (currentView === "lab" && labBack()) return keep();
   const subMe = meView(currentView) && !["me", "graph"].includes(currentView);
   if (subMe && $("#tabbar").offsetParent) return showView("me"); // telefon: nazaj na »Jaz«
   fromBack = true;
@@ -272,7 +275,7 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke", "scan"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke", "scan", "lab"];
 // Tekmovanja in »NPZ in matura« si na telefonu delita četrto mesto spodnje vrstice; tisti, ki ga tam ni, je pod »Jaz«.
 const meView = (name) => ME_VIEWS.includes(name) || (!!name && name === offTabbarPrep());
 // Zbirke in učni pass: odpre pogled, po želji s predmetom v pogledu »preglej« (from = pogled za Nazaj).
@@ -479,6 +482,7 @@ async function selectStudent(id) {
   if (!$("#view-progress").hidden) loadProgress();
   if (!$("#view-league").hidden) loadLeague(state.student.id);
   if (!$("#view-scan").hidden) showScan(); // naloga prejšnjega profila ne ostane na zaslonu
+  if (!$("#view-lab").hidden) showLab(); // zaklep in vrstni red poskusov sta po profilu
   state.pathKey = null;
   state.modes = null; // »Nadaljuj z učenjem« in goNew ne smeta pokazati naslednje teme prejšnjega profila
   clearLevelCard();
@@ -3326,6 +3330,8 @@ initScan({
   },
   openGraph: (exprs) => openGraphOverlay(exprs, t("scan.nav")),
 });
+// Laboratorij (public/laboratorij.js): vsi virtualni poskusi; »Odpri temo v učbeniku« odpre lekcijo.
+initLab({ api, escapeHtml, getStudent: () => state.student, openLesson });
 document.querySelectorAll("[data-open-scan]").forEach((b) => b.addEventListener("click", () => showView("scan")));
 
 initTextbook({

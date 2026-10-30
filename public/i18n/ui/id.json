@@ -2592,5 +2592,16 @@
   "win.resetDone": "Tata letak telah diatur ulang.",
   "full.close": "Tutup",
   "full.message": "Pesanmu",
-  "full.task": "Teks soal"
+  "full.task": "Teks soal",
+  "nav.lab": "Laboratorium",
+  "lab.meSub": "Percobaan virtual fisika dan kimia",
+  "lab.intro": "Kamu merakit dan mengukur sendiri percobaannya: alat, pengukuran, tabel, grafik, dan kesimpulan. Kesalahan punya akibat seperti di laboratorium sungguhan.",
+  "lab.start": "Mulai percobaan",
+  "lab.inTextbook": "Buka topik di buku pelajaran",
+  "lab.locked": "Terkunci",
+  "lab.lockedTitle": "Percobaan: {title}",
+  "lab.lockedText": "Percobaan interaktif, simulasi, dan pemeriksaan langsung tersedia dalam paket berbayar dan selama uji coba 7 hari. Teks pelajaran dan PDF gratis.",
+  "lab.packages": "Lihat paket",
+  "lab.empty": "Belum ada percobaan.",
+  "lab.error": "Laboratorium tidak dapat dimuat."
 }

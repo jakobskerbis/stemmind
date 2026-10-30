@@ -512,3 +512,37 @@ export function simsForTopic(topicId) {
   const list = Array.isArray(v[0]) ? v : [v];
   return list.map(([id, title, opts]) => ({ id, title, opts: opts || {} }));
 }
+
+// ---------------------------------------------------------------- virtualni laboratorij (zavihek Laboratorij)
+// Vsak poskus (simulacija z id »lab-…«) je na seznamu enkrat, s temami, pri katerih je v učbeniku.
+// Ključ: id simulacije ali id:JSON(možnosti), če ima isti poskus več različic. subject: skupina na seznamu
+// (FIZ, KEM, pozneje NAR); title in desc (ena vrstica: kaj učenec naredi) sta kot vsebina simulacij v slovenščini.
+export const LAB_INFO = {
+  "lab-ohm": {
+    subject: "FIZ",
+    title: "Ohmov zakon: tok in napetost",
+    desc: "Sestavi električni krog z upornikom ali žarnico, pravilno priključi ampermeter in voltmeter ter izmeri, kako je tok odvisen od napetosti.",
+  },
+  "lab-co2": {
+    subject: "KEM",
+    title: "Soda bikarbona in kislina",
+    desc: "Na tehtnici zmešaj sodo bikarbono s kislino, spremljaj izgubo mase in z apnico dokaži, da nastaja ogljikov dioksid.",
+  },
+};
+export const labKey = (id, opts = {}) => (opts && Object.keys(opts).length ? `${id}:${JSON.stringify(opts)}` : id);
+
+// Vsi poskusi laboratorija iz SIM_TOPICS: { key, id, opts, subject, title, desc, topics: [{ id, title }] }.
+export function labExperiments() {
+  const all = new Map();
+  for (const topicId of Object.keys(SIM_TOPICS))
+    for (const d of simsForTopic(topicId)) {
+      if (!d.id.startsWith("lab-")) continue;
+      const key = labKey(d.id, d.opts);
+      if (!all.has(key)) {
+        const info = LAB_INFO[key] || LAB_INFO[d.id] || {};
+        all.set(key, { key, id: d.id, opts: d.opts, subject: info.subject || topicId.split("-")[0], title: info.title || d.title, desc: info.desc || "", topics: [] });
+      }
+      all.get(key).topics.push({ id: topicId, title: d.title });
+    }
+  return [...all.values()];
+}

@@ -2643,5 +2643,16 @@
   "win.resetDone": "Aranjamentul a fost resetat.",
   "full.close": "Închide",
   "full.message": "Mesajul tău",
-  "full.task": "Enunțul problemei"
+  "full.task": "Enunțul problemei",
+  "nav.lab": "Laborator",
+  "lab.meSub": "Experimente virtuale de fizică și chimie",
+  "lab.intro": "Construiești și măsori singur experimentele: aparatură, măsurători, tabel, grafic și concluzie. Greșelile au urmări ca într-un laborator adevărat.",
+  "lab.start": "Începe experimentul",
+  "lab.inTextbook": "Deschide tema în manual",
+  "lab.locked": "Blocat",
+  "lab.lockedTitle": "Experiment: {title}",
+  "lab.lockedText": "Experimentele interactive, simulările și verificarea pe loc sunt disponibile în pachetul plătit și în perioada de probă de 7 zile. Textul lecției și PDF-ul sunt gratuite.",
+  "lab.packages": "Vezi pachetele",
+  "lab.empty": "Încă nu există experimente.",
+  "lab.error": "Laboratorul nu a putut fi încărcat."
 }

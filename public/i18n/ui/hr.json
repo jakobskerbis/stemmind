@@ -2641,5 +2641,16 @@
   "win.resetDone": "Raspored je vraćen na izvorni.",
   "full.close": "Zatvori",
   "full.message": "Tvoja poruka",
-  "full.task": "Tekst zadatka"
+  "full.task": "Tekst zadatka",
+  "nav.lab": "Laboratorij",
+  "lab.meSub": "Virtualni pokusi iz fizike i kemije",
+  "lab.intro": "Pokuse sastavljaš i mjeriš sam: pribor, mjerenja, tablica, graf i zaključak. Pogreške imaju posljedice kao u pravom laboratoriju.",
+  "lab.start": "Započni pokus",
+  "lab.inTextbook": "Otvori temu u udžbeniku",
+  "lab.locked": "Zaključano",
+  "lab.lockedTitle": "Pokus: {title}",
+  "lab.lockedText": "Interaktivni pokusi, simulacije i trenutna provjera dostupni su u plaćenom paketu i tijekom 7-dnevne probe. Tekst lekcije i PDF su besplatni.",
+  "lab.packages": "Pogledaj pakete",
+  "lab.empty": "Još nema pokusa.",
+  "lab.error": "Laboratorij se nije mogao učitati."
 }
