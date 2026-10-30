@@ -18,7 +18,7 @@
 | Trenje | $F_{tr} = k_{tr} F_N$ |
 | Radialna sila | $F_r = \dfrac{m v^2}{r}$ |
 | Gravitacijski zakon | $F = \dfrac{G m_1 m_2}{r^2}$, $\; g = \dfrac{G M}{r^2}$ |
-| Navor | $M = r F \sin \varphi$; ravnovesje: $\sum \vec{F} = 0$, $\sum M = 0$ |
+| Navor | $M = r F \sin \varphi$; ravnovesje: $\sum \vec{F} = 0$ in $\sum M = 0$ |
 | Hookov zakon | $F = k x$ |
 
 ## Energija
@@ -62,11 +62,11 @@
 
 | | |
 |---|---|
-| Nihanje | $x = x_0 \sin \omega t$, $\; t_0 = 2 \pi \sqrt{\dfrac{m}{k}}$, nihalo $t_0 = 2 \pi \sqrt{\dfrac{l}{g}}$ |
+| Nihanje | $x = x_0 \sin \omega t$, vzmet $t_0 = 2 \pi \sqrt{\dfrac{m}{k}}$, nihalo $t_0 = 2 \pi \sqrt{\dfrac{l}{g}}$ |
 | Valovanje | $c = \lambda \nu$, $\; \nu = \dfrac{1}{t_0}$ |
 | Hitrost na vrvi | $c = \sqrt{\dfrac{F}{\mu}}$ |
 | Lomni zakon | $\dfrac{\sin \alpha}{\sin \beta} = \dfrac{c_1}{c_2} = \dfrac{n_2}{n_1}$ |
-| Leča, zrcalo | $\dfrac{1}{f} = \dfrac{1}{a} + \dfrac{1}{b}$, $\; \dfrac{S}{P} = \dfrac{b}{a}$, zrcalo $f = \dfrac{r}{2}$ |
+| Leča, zrcalo | $\dfrac{1}{f} = \dfrac{1}{a} + \dfrac{1}{b}$, povečava $\dfrac{S}{P} = \dfrac{b}{a}$, zrcalo $f = \dfrac{r}{2}$ |
 | Uklonska mrežica | $d \sin \varphi = N \lambda$ |
 | Dopplerjev pojav | $\nu' = \nu \dfrac{c \pm v_o}{c \mp v_i}$ (zgornji predznak: opazovalec in izvor se približujeta) |
 

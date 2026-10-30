@@ -42,7 +42,7 @@
 | Šibka kislina | $K_a = \dfrac{[\mathrm{H_3O^+}][\mathrm{A^-}]}{[\mathrm{HA}]}$, $\; [\mathrm{H_3O^+}] \approx \sqrt{K_a c}$ |
 | Šibka baza | $K_b = \dfrac{[\mathrm{BH^+}][\mathrm{OH^-}]}{[\mathrm{B}]}$, $\; K_a K_b = K_w$ |
 | Pufer | $\mathrm{pH} = \mathrm{p}K_a + \log \dfrac{[\mathrm{A^-}]}{[\mathrm{HA}]}$ |
-| Titracija | v ekvivalentni točki $n(\mathrm{H_3O^+}) = n(\mathrm{OH^-})$; za enoprotonsko kislino $c_k V_k = c_b V_b$ |
+| Titracija | v ekvivalentni točki $n(\mathrm{H_3O^+}) = n(\mathrm{OH^-})$; za enoprotonsko kislino in bazo $c_k V_k = c_b V_b$ |
 | Topnostni produkt | $\mathrm{A}_x\mathrm{B}_y$: $\; K_{sp} = [\mathrm{A}]^x [\mathrm{B}]^y$ |
 
 ## Redoks in elektrokemija

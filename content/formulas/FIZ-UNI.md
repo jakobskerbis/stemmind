@@ -45,7 +45,7 @@
 | Plinska enačba | $p V = n R T = N k_B T$ |
 | 1. zakon | $\Delta W_n = Q - A$, $\; A = \int p\,dV$ |
 | Notranja energija idealnega plina | $W_n = n c_V T$; enoatomni $c_V = \dfrac{3}{2}R$, dvoatomni $c_V = \dfrac{5}{2}R$; $\; c_p - c_V = R$, $\; \kappa = \dfrac{c_p}{c_V}$ |
-| Procesi | izotermni $A = n R T \ln\dfrac{V_2}{V_1}$; adiabatni $p V^\kappa = \text{konst.}$, $\; T V^{\kappa - 1} = \text{konst.}$ |
+| Procesi | izotermni $A = n R T \ln\dfrac{V_2}{V_1}$; adiabatni $p V^\kappa = \text{konst.}$ oz. $T V^{\kappa - 1} = \text{konst.}$ |
 | Entropija | $dS = \dfrac{dQ}{T}$, $\; \Delta S = n c_V \ln\dfrac{T_2}{T_1} + n R \ln\dfrac{V_2}{V_1}$ |
 | Izkoristek | $\eta = \dfrac{A}{Q_{\text{dov}}}$, Carnot $\eta_C = 1 - \dfrac{T_2}{T_1}$ |
 | Kinetična teorija | $\dfrac{m_0 \overline{v^2}}{2} = \dfrac{3}{2} k_B T$, $\; v_{\text{ef}} = \sqrt{\dfrac{3 R T}{M}}$ |
@@ -76,7 +76,7 @@
 | | |
 |---|---|
 | Lomni zakon | $n_1 \sin\alpha_1 = n_2 \sin\alpha_2$, $\; n = \dfrac{c_0}{c}$, totalni odboj $\sin\alpha_m = \dfrac{n_2}{n_1}$ |
-| Leče, zrcala | $\dfrac{1}{f} = \dfrac{1}{a} + \dfrac{1}{b}$, $\; M = -\dfrac{b}{a}$, zrcalo $f = \dfrac{r}{2}$, $\; \omega = \dfrac{1}{f}$ |
+| Leče, zrcala | $\dfrac{1}{f} = \dfrac{1}{a} + \dfrac{1}{b}$, povečava $M = -\dfrac{b}{a}$, zrcalo $f = \dfrac{r}{2}$, lomnost $\omega = \dfrac{1}{f}$ |
 | Interferenca | dve reži ali uklonska mrežica $d \sin\vartheta = N\lambda$ (ojačitev), ena reža $b \sin\vartheta = N\lambda$ (minimum) |
 | Tanka plast | $2 n d \cos\beta = \left(N + \tfrac{1}{2}\right)\lambda$ ojačitev (z enim odbojem na gostejši snovi) |
 | Ločljivost | $\sin\vartheta_{\min} = 1{,}22\,\dfrac{\lambda}{D}$ |
