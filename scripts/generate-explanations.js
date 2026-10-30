@@ -20,7 +20,7 @@ const arg = (name) => {
   const i = args.indexOf(name);
   return i === -1 ? null : args[i + 1];
 };
-const model = arg("--model") || process.env.KOMPRENO_EXPLAIN_MODEL || "claude-opus-5-5";
+const model = arg("--model") || process.env.EVKLID_EXPLAIN_MODEL || "claude-opus-5-5";
 const onlyPath = arg("--path");
 const force = args.includes("--force");
 

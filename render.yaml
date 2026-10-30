@@ -2,7 +2,7 @@
 # Navodila: docs/objava.md
 services:
   - type: web
-    name: kompreno
+    name: evklid
     runtime: node
     region: frankfurt          # najbližje Sloveniji
     plan: starter              # trajni disk ni na voljo v brezplačnem paketu
@@ -11,31 +11,31 @@ services:
     healthCheckPath: /healthz
     autoDeploy: false          # nova različica vsaki 2 uri: .github/workflows/render-posodobitev.yml
     disk:
-      name: kompreno-data
+      name: evklid-data
       mountPath: /var/data     # baza učencev ostane ob vsaki posodobitvi
       sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: "22.12.0"
-      - key: KOMPRENO_DB
-        value: /var/data/kompreno.db
+      - key: EVKLID_DB
+        value: /var/data/evklid.db
       - key: ANTHROPIC_API_KEY
         sync: false
-      - key: KOMPRENO_PASSWORD
+      - key: EVKLID_PASSWORD
         sync: false
-      - key: KOMPRENO_ACCOUNTS
+      - key: EVKLID_ACCOUNTS
         value: "1"
-      - key: KOMPRENO_BASE_URL
+      - key: EVKLID_BASE_URL
         sync: false
-      - key: KOMPRENO_ADMIN_EMAILS
+      - key: EVKLID_ADMIN_EMAILS
         sync: false
-      - key: KOMPRENO_DAILY_QUESTIONS
+      - key: EVKLID_DAILY_QUESTIONS
         value: "0"
-      - key: KOMPRENO_FREE_DAILY_QUESTIONS
+      - key: EVKLID_FREE_DAILY_QUESTIONS
         value: "10"
-      - key: KOMPRENO_STUDENT_MONTHLY_USD
+      - key: EVKLID_STUDENT_MONTHLY_USD
         value: "1.5"
-      - key: KOMPRENO_MONTHLY_BUDGET_USD
+      - key: EVKLID_MONTHLY_BUDGET_USD
         value: "50"
       - key: STRIPE_SECRET_KEY
         sync: false

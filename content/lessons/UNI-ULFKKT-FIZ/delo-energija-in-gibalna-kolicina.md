@@ -5,11 +5,15 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Newtonov zakon $\sum\vec{F} = m\vec{a}$ v načelu reši vsako nalogo iz mehanike, a pogosto zelo zamudno: pri vožnji po valoviti progi se sila ves čas spreminja, pri trku dveh krogel pa sploh ne vemo, kako velika je sila med njima. Zato iz Newtonovega zakona izpeljemo dve novi orodji, **energijo** in **gibalno količino**, ter zakona o njuni ohranitvi. Z njima hitro povežemo začetno in končno stanje, ne da bi spremljali vse vmes.
-
-Ohranitveni zakoni so med najsplošnejšimi v naravi. Energijski račun uporabljaš pri presnovi, kemijskih reakcijah, elektrarnah in strojih, gibalno količino pa pri trkih avtomobilov, reaktivnem pogonu, eksplozijah in trkih molekul v plinu.
+Luka, bobnar v študentskem bendu, po koncertu spušča kovček z ojačevalnikom po ukrivljeni klančini z odra. Če mu uide, s kolikšno hitrostjo prileti na tla? Z Newtonovim zakonom $\sum\vec{F} = m\vec{a}$ bi moral slediti sili na vsakem koščku klančine, pri udarcu palice ob boben pa sile med njima sploh ne bi poznal. Zato iz Newtonovega zakona izpeljemo dve novi orodji, **energijo** in **gibalno količino**, ter zakona o njuni ohranitvi: z njima povežeš začetno in končno stanje, ne da bi spremljal vse vmes. Ohranitveni zakoni so med najsplošnejšimi v naravi; energijski račun srečaš pri presnovi, kemijskih reakcijah, elektrarnah in strojih, gibalno količino pa pri trkih avtomobilov, reaktivnem pogonu, eksplozijah in trkih molekul v plinu.
 
 ## Razlaga
+
+### Najprej en primer
+
+Lukov kovček izračunajmo kar z ohranitvijo energije, ki jo poznaš iz gimnazije: masa $10\,\mathrm{kg}$, višina odra $0{,}80\,\mathrm{m}$, kovček zdrsne iz mirovanja, trenje zanemarimo. Normalna sila klančine je ves čas pravokotna na gibanje in ne opravi dela, zato kovček vso izgubljeno potencialno energijo $mgh = 10 \cdot 9{,}81 \cdot 0{,}80\,\mathrm{J} \approx 78{,}5\,\mathrm{J}$ dobi kot kinetično. Iz $\tfrac{1}{2}mv^2 = mgh$ sledi $v = \sqrt{2gh} = \sqrt{2 \cdot 9{,}81 \cdot 0{,}80}\,\mathrm{m/s} \approx 3{,}96\,\mathrm{m/s}$. Masa se pokrajša, oblika klančine pa v računu sploh ne nastopa. Spodaj korak za korakom posplošimo, zakaj tak račun deluje: od dela sile prek potencialne energije do ohranitve energije in nato do gibalne količine, ki ureja trke.
+
+### Delo in moč
 
 **1. Delo sile.** Stalna sila $\vec{F}$ na premiku $\Delta\vec{r}$ opravi delo
 
@@ -28,6 +32,8 @@ Ne. Roka drži torbo s silo navpično navzgor, premik pa je vodoraven, zato je $
 :::
 
 **2. Moč.** Moč je delo na časovno enoto: $P = \mathrm{d}A/\mathrm{d}t = \vec{F}\cdot\vec{v}$. Enota je watt, $1\,\mathrm{W} = 1\,\mathrm{J/s}$.
+
+### Energija
 
 **3. Kinetična energija in izrek o kinetični energiji.** Kinetična energija telesa z maso $m$ in hitrostjo $v$ je $W_k = \tfrac{1}{2}mv^2$. **Izrek o kinetični energiji** pravi:
 
@@ -49,6 +55,8 @@ $$\Delta W_k + \Delta W_p = A'.$$
 
 Če opravljajo delo le konservativne sile ($A' = 0$), se **mehanska energija** $W_k + W_p$ ohranja. Trenje mehansko energijo zmanjša ($A' < 0$), motor ali mišice jo povečajo ($A' > 0$). Celotna energija, ki vključuje tudi notranjo energijo, pa se ohrani vedno: »izgubljena« mehanska energija se pretvori v notranjo energijo (segrevanje).
 
+### Gibalna količina in trki
+
 **6. Gibalna količina in sunek sile.** Gibalna količina je vektor $\vec{G} = m\vec{v}$, enota $\mathrm{kg\,m/s}$. Drugi Newtonov zakon v splošni obliki je $\sum\vec{F} = \mathrm{d}\vec{G}/\mathrm{d}t$. Z integriranjem dobimo **izrek o gibalni količini**:
 
 $$\Delta\vec{G} = \int_{t_1}^{t_2}\sum\vec{F}\,\mathrm{d}t.$$
@@ -61,11 +69,15 @@ $$\sum_i m_i\vec{v}_i = \sum_i m_i\vec{v}_i\,'.$$
 
 Enačba je vektorska, zato velja po vsaki komponenti posebej.
 
-**8. Trki.** Pri vsakem trku (ko so zunanje sile zanemarljive) se ohranja gibalna količina. Glede na kinetično energijo ločimo:
+**8. Trki.** Pri vsakem trku (ko so zunanje sile zanemarljive) se ohranja gibalna količina. Vrste trkov se razlikujejo po tem, kaj se zgodi s kinetično energijo:
 
-- **prožni trk:** kinetična energija se ohrani (trki biljardnih krogel, molekul plina),
-- **neprožni trk:** del kinetične energije preide v notranjo energijo in deformacijo,
-- **popolnoma neprožni trk:** telesi se po trku gibljeta skupaj, $\vec{v}\,' = \dfrac{m_1\vec{v}_1 + m_2\vec{v}_2}{m_1 + m_2}$.
+| Trk | Gibalna količina | Kinetična energija | Primer |
+|---|---|---|---|
+| prožni | se ohrani | se ohrani | biljardne krogle, molekule plina |
+| neprožni | se ohrani | del preide v notranjo energijo in deformacijo | žoga, ki odskoči nižje, kot je padla |
+| popolnoma neprožni | se ohrani | izguba je največja možna; telesi se po trku gibljeta skupaj | balistično nihalo, sprijeta vozička |
+
+Pri popolnoma neprožnem trku je skupna hitrost $\vec{v}\,' = \dfrac{m_1\vec{v}_1 + m_2\vec{v}_2}{m_1 + m_2}$.
 
 Za čelni prožni trk, pri katerem drugo telo pred trkom miruje, iz obeh ohranitvenih zakonov sledi:
 
@@ -85,7 +97,7 @@ Le če je celotna gibalna količina pred trkom nič, na primer ko se dve enaki t
 
 ### Primer 1 (lažji)
 
-Klado z maso $2{,}0\,\mathrm{kg}$, ki na začetku miruje na gladki vodoravni podlagi, potiskamo z vodoravno silo $10\,\mathrm{N}$ na razdalji $3{,}0\,\mathrm{m}$. Trenje zanemarimo. Kolikšno hitrost doseže klada?
+Tehnik po gladkem odru potiska kovček z efekti za kitaro. Kovček ima maso $2{,}0\,\mathrm{kg}$ in na začetku miruje, tehnik pa nanj na razdalji $3{,}0\,\mathrm{m}$ deluje z vodoravno silo $10\,\mathrm{N}$. Trenje zanemarimo. Kolikšno hitrost doseže kovček?
 
 **Podatki:** $m = 2{,}0\,\mathrm{kg}$, $v_1 = 0$, $F = 10\,\mathrm{N}$ (vzporedno s premikom), $s = 3{,}0\,\mathrm{m}$, trenja ni
 **Iščemo:** končno hitrost $v_2$
@@ -97,9 +109,9 @@ $A = Fs$, $A = \Delta W_k = \tfrac{1}{2}mv_2^2 - \tfrac{1}{2}mv_1^2$
 **Rešitev:**
 
 1. Teža in normalna sila sta pravokotni na premik in ne opravita dela. Delo opravi le sila potiskanja: $A = 10\,\mathrm{N} \cdot 3{,}0\,\mathrm{m} = 30\,\mathrm{J}$.
-2. Po izreku o kinetični energiji je $\tfrac{1}{2}mv_2^2 = 30\,\mathrm{J}$ (ker klada na začetku miruje, je vse delo kar končna kinetična energija).
+2. Po izreku o kinetični energiji je $\tfrac{1}{2}mv_2^2 = 30\,\mathrm{J}$ (ker kovček na začetku miruje, je vse delo kar končna kinetična energija).
 3. $v_2 = \sqrt{2A/m} = \sqrt{2 \cdot 30\,\mathrm{J} / 2{,}0\,\mathrm{kg}} = \sqrt{30}\,\mathrm{m/s} \approx 5{,}48\,\mathrm{m/s}$.
-4. Odgovor: klada doseže hitrost približno $5{,}48\,\mathrm{m/s}$.
+4. Odgovor: kovček doseže hitrost približno $5{,}48\,\mathrm{m/s}$.
 
 ### Primer 2
 

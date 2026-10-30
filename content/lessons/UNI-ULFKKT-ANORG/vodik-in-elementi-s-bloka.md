@@ -5,13 +5,11 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Košček natrija vržeš v vodo. Zacvrči, se stali v srebrno kroglico, drsi po gladini in sprošča plin. Če vodi dodaš fenolftalein, se obarva rožnato: nastala je baza. Kos magnezija v hladni vodi pa skoraj ne naredi ničesar. Zakaj se kovini iz sosednjih skupin tako razlikujeta?
-
-Odgovor je v elektronski konfiguraciji. Elementi s-bloka (1. in 2. skupina) imajo zunanje elektrone v orbitali $n\mathrm{s}$ in jih zlahka oddajo. Iz te ene lastnosti sledijo njihove spojine in reakcije: od kuhinjske soli in sode do apna, cementa in trdote vode. Vodik ima podobno konfiguracijo, a se obnaša povsem drugače. Te snovi srečaš v vsakem laboratoriju in v veliki kemijski industriji.
+Sošolec trdi: »Vodik je v 1. skupini nad litijem, torej je kovina, kot natrij.« Košček natrija v vodi zacvrči, se stali v srebrno kroglico, drsi po gladini in sprošča plin, voda s fenolftaleinom pa se obarva rožnato, ker nastane baza. Vodik je nasprotno lahek plin, s katerim meteorologi polnijo vremenske balone, kos magnezija iz sosednje skupine pa v hladni vodi skoraj ne naredi ničesar. Vsi trije imajo zunanje elektrone v orbitali $n\mathrm{s}$, a se obnašajo povsem različno. Ko razumeš te razlike, razumeš tudi kuhinjsko sol, sodo, apno, cement in trdoto vode, pa tudi, v čem ima sošolec prav in v čem ne.
 
 ## Razlaga
 
-**1. Vodik.** Konfiguracija je $1\mathrm{s}^1$. Vodik lahko elektron odda (kot kovine 1. skupine), sprejme še enega (kot halogeni) ali ga deli. Zato ima tri oksidacijska števila: $+1$ (v $\mathrm{H_2O}$, $\mathrm{HCl}$), $0$ (v $\mathrm{H_2}$) in $-1$ (v hidridih kovin, npr. $\mathrm{NaH}$). Prva ionizacijska energija je $1312\,\mathrm{kJ/mol}$, več kot dvakrat več kot pri litiju, zato vodik ni kovina.
+**1. Vodik.** Postavi ga ob litij: konfiguracija je enako zgrajena ($1\mathrm{s}^1$ proti $2\mathrm{s}^1$), skoraj vse drugo pa se razlikuje. Vodik lahko elektron odda (kot kovine 1. skupine), sprejme še enega (kot halogeni) ali ga deli. Zato ima tri oksidacijska števila: $+1$ (v $\mathrm{H_2O}$, $\mathrm{HCl}$), $0$ (v $\mathrm{H_2}$) in $-1$ (v hidridih kovin, npr. $\mathrm{NaH}$). Prva ionizacijska energija je $1312\,\mathrm{kJ/mol}$, več kot dvakrat več kot pri litiju, zato vodik ni kovina.
 
 Element je dvoatomni plin $\mathrm{H_2}$ z močno vezjo ($436\,\mathrm{kJ/mol}$), zato je pri sobni temperaturi dokaj nereaktiven. Ima tri izotope: protij $^1\mathrm{H}$, devterij $^2\mathrm{H}$ (D) in radioaktivni tritij $^3\mathrm{H}$ (T).
 
@@ -66,6 +64,16 @@ Ioni dajo značilno barvo plamena: litij karminsko rdečo, natrij rumeno, kalij 
 $$\mathrm{Ca + 2\,H_2O \longrightarrow Ca(OH)_2 + H_2}$$
 
 Berilij je izjema: majhen ion $\mathrm{Be^{2+}}$ ima tako veliko gostoto naboja, da so njegove spojine pretežno kovalentne, oksid in hidroksid pa amfoterna.
+
+En valenčni elektron več spremeni skoraj vse. Razlike med sosedoma v periodi:
+
+| Lastnost | 1. skupina (npr. Na) | 2. skupina (npr. Mg) |
+|---|---|---|
+| valenčna konfiguracija | $n\mathrm{s}^1$ | $n\mathrm{s}^2$ |
+| oksidacijsko število | $+1$ | $+2$ |
+| kovinska vez | šibka, en elektron na atom; mehke, nizka tališča | dva elektrona; trše, višja tališča |
+| s hladno vodo | Na reagira živahno | Mg skoraj ne reagira, le z vročo vodo ali paro |
+| hidroksid | $\mathrm{MOH}$ | $\mathrm{M(OH)_2}$ |
 
 **7. Trendi spojin 2. skupine.**
 

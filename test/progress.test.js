@@ -4,6 +4,7 @@ import { openDb } from "../server/db.js";
 import { Progress, RULES } from "../server/progress.js";
 import { roundHalfUp, fmt } from "../server/practice/check.js";
 import { windowHistory } from "../server/usage.js";
+import { nowParts } from "../server/schedule.js";
 
 function correctInput(a) {
   if (a.type === "number") return (a.decimals != null ? fmt(roundHalfUp(a.value, a.decimals), a.decimals) : fmt(a.value)) + (a.unit ? " " + a.unit : "");
@@ -175,8 +176,10 @@ test("test prep: harder tasks closer to the date; unit practice only when unlock
   const path = "MAT-OS-8";
   const view = p.pathView(s.id, path);
   const ui = view.units.findIndex((u) => u.hasPractice);
-  const later = new Date(Date.now() + 10 * 86400000).toISOString().slice(0, 10);
-  const soon = new Date(Date.now() + 1 * 86400000).toISOString().slice(0, 10);
+  // Slovenski dan, kot ga šteje progress.testPlan (nowParts), sicer test pade med 23:00 in 24:00 UTC.
+  const base = Date.parse(`${nowParts().date}T12:00:00Z`);
+  const later = new Date(base + 10 * 86400000).toISOString().slice(0, 10);
+  const soon = new Date(base + 1 * 86400000).toISOString().slice(0, 10);
   assert.equal(p.setTestPlan(s.id, path, [], later), null);
   p.setTestPlan(s.id, path, [ui], later);
   const far = p.getSession(p.startTest(s.id).sessionId).plan;
@@ -341,4 +344,17 @@ test("international path in the Slovenian UI shows Slovenian topic and unit name
   const tEn = p.startPlacement(en.id, key, unitIdx);
   assert.ok(!/[A-Z][a-z]+ in the /.test(tSl.task.topicName), tSl.task.topicName);
   assert.notEqual(tSl.task.topicName, tEn.task.topicName);
+});
+
+test("XP summary: level progress, today's XP and the daily goal from the profile", () => {
+  const { store, p, s } = setup();
+  let x = p.xpSummary(s.id);
+  assert.deepEqual([x.total, x.level, x.levelFrom, x.levelTo, x.today, x.goal], [0, 1, 0, 50, 0, 50]);
+  p.award(s.id, [[60, "pravilno"]]);
+  x = p.xpSummary(s.id);
+  assert.deepEqual([x.total, x.level, x.levelFrom, x.levelTo, x.today], [60, 2, 50, 200, 60]);
+  store.updateStudent(s.id, { settings: { xp_goal: 100 } });
+  assert.equal(p.xpSummary(s.id).goal, 100);
+  store.updateStudent(s.id, { settings: { xp_goal: 77 } });
+  assert.equal(p.xpSummary(s.id).goal, 50, "neznan cilj → privzeti");
 });

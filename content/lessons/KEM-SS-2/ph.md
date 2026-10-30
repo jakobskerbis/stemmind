@@ -1,173 +1,247 @@
 ---
 stanje: osnutek
-demo: ph
 avtor: AI
 ---
 
 ## Zakaj se tega učimo
 
-Pri sklopu o kislinah in bazah si spoznal, da kisline v vodi oddajajo vodikove ione ($\mathrm{H^+}$, natančneje oksonijeve ione $\mathrm{H_3O^+}$), baze pa hidroksidne ione ($\mathrm{OH^-}$). Znaš tudi izračunati množinsko koncentracijo raztopine ($c = n / V$) in poznaš zapis z desetiškimi potencami, npr. $10^{-3} = 0{,}001$.
+Uganka za začetek. Na vesoljski postaji je vsak liter vode dragocen. Astronavtka ima $1\,\text{L}$ raztopine klorovodikove kisline s pH $2$. Za poskus potrebuje raztopino s pH $4$. Koliko vode mora dodati?
 
-Koncentracije ionov v raztopinah so zelo majhne in se razlikujejo za več velikostnih razredov: od $1\,\text{mol/L}$ do $0{,}00000000000001\,\text{mol/L}$. Z njimi je nerodno računati. Zato so kemiki uvedli **pH**, preprosto število, ki pove, kako kisla ali bazična je raztopina. Z njim se srečaš pri bazenski vodi, kozmetiki, zemlji v vrtu, v laboratoriju in v želodcu.
+Ugibaj, preden bereš naprej. Večina reče »še en liter«, saj se zdi, da je $4$ dvakrat $2$. Odgovor je presenetljiv: dodati mora $99\,\text{L}$ vode. Razlog za to se skriva v tem, kako je pH sploh definiran.
+
+Isto število srečaš daleč od Zemlje. Kapljice v oblakih Venere so iz koncentrirane žveplove kisline, zato mora sonda, ki skozi njih leti, prenesti zelo kislo okolje. Za ocean pod ledom Saturnove lune Enkelad pa nekatere ocene kažejo, da je bazičen. Kemiki kislost ali bazičnost raztopin opišejo z enim številom, pH, ki v večini vodnih raztopin leži med $0$ in $14$. Danes se naučiš, kako to število izračunaš za raztopine močnih kislin in baz.
 
 ## Razlaga
 
-**1. Definicija pH.** pH je negativni desetiški logaritem množinske koncentracije oksonijevih (vodikovih) ionov:
+Lestvico zgradimo po kosih. Za vsakim kosom je kratek preizkus z odgovorom.
 
-$$\mathrm{pH} = -\log\,[\mathrm{H^+}]$$
+**1. Kos: oksonijevi ioni iz močne kisline.** Pri kislinah in bazah si spoznal, da kislina odda proton vodi. Nastanejo **oksonijevi ioni** $\mathrm{H_3O^+}$ (pogosto jih na kratko pišemo kot $\mathrm{H^+}$). **Močna kislina**, na primer $\mathrm{HCl}$ ali $\mathrm{HNO_3}$, odda proton popolnoma:
 
-Pri tem je $[\mathrm{H^+}]$ koncentracija v $\text{mol/L}$. Če je koncentracija potenca števila 10, je račun preprost: pri $[\mathrm{H^+}] = 10^{-x}$ je $\mathrm{pH} = x$.
+$$\mathrm{HCl + H_2O \rightarrow H_3O^+ + Cl^-}$$
 
-**2. Podobno pOH.** Za hidroksidne ione definiramo:
+Iz vsake molekule $\mathrm{HCl}$ nastane en oksonijev ion. Zato pri enoprotonski močni kislini velja $[\mathrm{H_3O^+}] = c(\text{kisline})$. Oglati oklepaji pomenijo množinsko koncentracijo v $\text{mol/L}$.
 
-$$\mathrm{pOH} = -\log\,[\mathrm{OH^-}]$$
+*Preizkus:* koliko je $[\mathrm{H_3O^+}]$ v raztopini $\mathrm{HNO_3}$ s $c = 0{,}01\,\text{mol/L}$? *Odgovor: $0{,}01\,\text{mol/L} = 10^{-2}\,\text{mol/L}$.*
 
-**3. Ionski produkt vode.** Pri $25\,^\circ\mathrm{C}$ v vsaki vodni raztopini velja:
+**2. Kos: od potence do pH.** Koncentracije oksonijevih ionov segajo od približno $1$ do $10^{-14}\,\text{mol/L}$. S tolikimi ničlami je nerodno računati. Zato uporabimo **desetiški logaritem**: $\log 10^{x} = x$. Logaritem pove, na katero potenco moraš dvigniti $10$, da dobiš dano število. **pH** je definiran kot
 
-$$[\mathrm{H^+}]\cdot[\mathrm{OH^-}] = 10^{-14}$$
+$$\mathrm{pH} = -\log\,[\mathrm{H_3O^+}]$$
 
-Iz tega sledi:
+Minus je tam zato, da so vrednosti pozitivne: $-\log 10^{-3} = -(-3) = 3$.
+
+*Preizkus:* $[\mathrm{H_3O^+}] = 10^{-5}\,\text{mol/L}$. Koliko je pH? *Odgovor: $5$.*
+
+**3. Kos: lestvica in faktor deset.** Oglej si, kaj se dogaja vzdolž lestvice:
+
+| pH | $[\mathrm{H_3O^+}]$ v $\text{mol/L}$ | vrsta raztopine |
+|---|---|---|
+| $1$ | $10^{-1} = 0{,}1$ | močno kisla |
+| $2$ | $10^{-2} = 0{,}01$ | kisla |
+| $4$ | $10^{-4} = 0{,}0001$ | kisla |
+| $7$ | $10^{-7}$ | nevtralna |
+| $12$ | $10^{-12}$ | bazična |
+
+Pri $\mathrm{pH} < 7$ je raztopina kisla, pri $\mathrm{pH} = 7$ nevtralna, pri $\mathrm{pH} > 7$ bazična (vse pri $25\,^\circ\mathrm{C}$). Ko se pH poveča za $1$, je oksonijevih ionov **desetkrat manj**. Od pH $2$ do pH $4$ se koncentracija zmanjša $10 \cdot 10 = 100$-krat. Prav zato mora astronavtka iz uganke $1\,\text{L}$ razredčiti do $100\,\text{L}$, torej dodati $99\,\text{L}$ vode.
+
+V simulaciji spodaj (»pH lestvica«) nastavi drsnik na pH $3$ in si zapiši $[\mathrm{H_3O^+}]$. Nato ga premakni na pH $4$. Opazuj eksponent: zmanjša se natanko za ena, koncentracija pa pade na desetino.
+
+:::premisli
+Astronavtka $1\,\text{L}$ raztopine s pH $2$ razredči samo do $2\,\text{L}$. Napovej: bo pH $4$, $3$ ali nekaj med $2$ in $3$?
+---
+Med $2$ in $3$. Koncentracija se le razpolovi: $[\mathrm{H_3O^+}] = 0{,}005\,\text{mol/L}$, $\mathrm{pH} = -\log 0{,}005 \approx 2{,}30$. Za en cel korak pH bi morala raztopino razredčiti desetkrat.
+:::
+
+**4. Kos: voda in pOH.** Iz poglavja o ravnotežju veš, da voda v majhni meri reagira sama s seboj: $\mathrm{2H_2O \rightleftharpoons H_3O^+ + OH^-}$. Pri $25\,^\circ\mathrm{C}$ je ravnotežni **ionski produkt vode**
+
+$$K_w = [\mathrm{H_3O^+}] \cdot [\mathrm{OH^-}] = 10^{-14}$$
+
+To velja v vsaki vodni raztopini. Če je enega iona več, je drugega ustrezno manj. Po vzoru pH definiramo **pOH** $= -\log[\mathrm{OH^-}]$. Iz ionskega produkta sledi
 
 $$\mathrm{pH} + \mathrm{pOH} = 14$$
 
-**4. Lestvica.**
+*Preizkus:* raztopina ima pOH $3$. Koliko je pH? *Odgovor: $14 - 3 = 11$, raztopina je bazična.*
 
-- $\mathrm{pH} < 7$: kisla raztopina ($[\mathrm{H^+}] > 10^{-7}\,\text{mol/L}$),
-- $\mathrm{pH} = 7$: nevtralna raztopina (čista voda),
-- $\mathrm{pH} > 7$: bazična raztopina.
+**5. Kos: močne baze.** **Močne baze**, na primer $\mathrm{NaOH}$ in $\mathrm{KOH}$, v vodi popolnoma disociirajo: $\mathrm{NaOH \rightarrow Na^+ + OH^-}$. Zato je $[\mathrm{OH^-}] = c(\text{baze})$. Barijev hidroksid $\mathrm{Ba(OH)_2}$ ima dve hidroksidni skupini, zato da dvakrat več ionov: $[\mathrm{OH^-}] = 2 \cdot c$. Pri bazi gre račun v dveh korakih: najprej pOH, nato $\mathrm{pH} = 14 - \mathrm{pOH}$.
 
-Sprememba pH za 1 pomeni **desetkratno** spremembo koncentracije $\mathrm{H^+}$.
+*Preizkus:* koliko je pH raztopine $\mathrm{KOH}$ s $c = 10^{-2}\,\text{mol/L}$? *Odgovor: $\mathrm{pOH} = 2$, $\mathrm{pH} = 12$.*
 
-**5. Močne kisline in baze.** Močne kisline (npr. $\mathrm{HCl}$, $\mathrm{HNO_3}$, $\mathrm{H_2SO_4}$ v prvi stopnji) in močne baze (npr. $\mathrm{NaOH}$, $\mathrm{KOH}$) v vodi **popolnoma disociirajo**. Zato velja:
+:::premisli
+Kislino s pH $5$ razredčimo tisočkrat, nato še enkrat tisočkrat. Ali dobimo pH $11$? Zakaj?
+---
+Ne. Razredčena kislina ne more postati bazična, saj ji ne dodamo nobenih ionov $\mathrm{OH^-}$. Ko kisline skoraj ni več, odločajo ioni iz vode same, zato se pH le približuje $7$ (z nižje strani).
+:::
 
-- enoprotonska močna kislina $\mathrm{HA}$: $[\mathrm{H^+}] = c(\mathrm{HA})$,
-- baza z eno hidroksidno skupino ($\mathrm{NaOH}$, $\mathrm{KOH}$): $[\mathrm{OH^-}] = c(\text{baze})$.
-
-**6. Postopek.**
-
-*Za kislino:* $[\mathrm{H^+}] = c$ in nato $\mathrm{pH} = -\log[\mathrm{H^+}]$.
-
-*Za bazo:* $[\mathrm{OH^-}] = c$, nato $\mathrm{pOH} = -\log[\mathrm{OH^-}]$ in končno $\mathrm{pH} = 14 - \mathrm{pOH}$.
-
-**7. Obratni račun.** Iz pH dobiš koncentracijo: $[\mathrm{H^+}] = 10^{-\mathrm{pH}}\,\text{mol/L}$.
+**6. Kos: koncentracije, ki niso potence števila 10.** Pri $c = 0{,}002\,\text{mol/L}$ uporabiš kalkulator: $\mathrm{pH} = -\log 0{,}002 \approx 2{,}70$. Ocena za kontrolo: $0{,}002$ leži med $10^{-3}$ in $10^{-2}$, zato mora biti pH med $2$ in $3$. Pot nazaj je **obratni račun**: $[\mathrm{H_3O^+}] = 10^{-\mathrm{pH}}\,\text{mol/L}$.
 
 ## Rešeni primeri
 
-### Primer 1: močna kislina
+### Primer 1 (lažji): tesnilo za Venero
 
-Kolikšen je pH raztopine $\mathrm{HCl}$ s koncentracijo $0{,}001\,\text{mol/L}$?
+Tesnila za sondo, ki bo letela skozi kisle oblake Venere, najprej preizkusijo v raztopini $\mathrm{HCl}$ s koncentracijo $0{,}0010\,\text{mol/L}$. Kolikšen je pH te raztopine?
 
-1. $\mathrm{HCl}$ je močna enoprotonska kislina, popolnoma disociira: $\mathrm{HCl \rightarrow H^+ + Cl^-}$.
-2. Zato je $[\mathrm{H^+}] = c(\mathrm{HCl}) = 0{,}001\,\text{mol/L} = 10^{-3}\,\text{mol/L}$.
-3. $\mathrm{pH} = -\log 10^{-3} = 3$.
-4. Preverimo: pH je manjši od 7, raztopina je kisla. ✓
+**Podatki:** $c(\mathrm{HCl}) = 0{,}0010\,\text{mol/L}$, $\mathrm{HCl}$ je močna enoprotonska kislina
+**Iščemo:** $\mathrm{pH}$
 
-### Primer 2: močna baza
+:::formula
+$[\mathrm{H_3O^+}] = c(\mathrm{HCl})$, $\quad \mathrm{pH} = -\log[\mathrm{H_3O^+}]$
+:::
 
-Kolikšen je pH raztopine $\mathrm{NaOH}$ s koncentracijo $0{,}01\,\text{mol/L}$?
+**Rešitev:**
 
-1. $\mathrm{NaOH}$ je močna baza: $\mathrm{NaOH \rightarrow Na^+ + OH^-}$.
-2. Zato je $[\mathrm{OH^-}] = 0{,}01\,\text{mol/L} = 10^{-2}\,\text{mol/L}$.
-3. $\mathrm{pOH} = -\log 10^{-2} = 2$.
-4. Zaradi $\mathrm{pH} + \mathrm{pOH} = 14$ je $\mathrm{pH} = 14 - 2 = 12$.
-5. Preverimo: pH je večji od 7, raztopina je bazična. ✓
+1. $\mathrm{HCl}$ odda proton popolnoma, zato je $[\mathrm{H_3O^+}] = 0{,}0010\,\text{mol/L} = 10^{-3}\,\text{mol/L}$.
+2. $\mathrm{pH} = -\log 10^{-3} = 3{,}00$.
+3. Kontrola: pH je manjši od $7$, kar se za kislino spodobi.
+4. Odgovor: raztopina ima pH $3{,}00$.
 
-### Primer 3 (težji): koncentracija, ki ni potenca števila 10
+### Primer 2: baza z dvema hidroksidnima skupinama
 
-Raztopimo $0{,}40\,\text{g}$ $\mathrm{NaOH}$ v vodi in dopolnimo do $500\,\text{mL}$ raztopine. Kolikšen je pH? ($M(\mathrm{NaOH}) = 40\,\text{g/mol}$)
+V laboratoriju za vesoljske materiale pripravijo raztopino $\mathrm{Ba(OH)_2}$ s koncentracijo $0{,}0025\,\text{mol/L}$. Kolikšen je pH?
 
-1. **Množina:** $n = \dfrac{m}{M} = \dfrac{0{,}40\,\text{g}}{40\,\text{g/mol}} = 0{,}010\,\text{mol}$.
-2. **Prostornina v litrih:** $V = 500\,\text{mL} = 0{,}500\,\text{L}$.
-3. **Koncentracija:** $c = \dfrac{n}{V} = \dfrac{0{,}010\,\text{mol}}{0{,}500\,\text{L}} = 0{,}020\,\text{mol/L}$.
-4. Močna baza popolnoma disociira: $[\mathrm{OH^-}] = 0{,}020\,\text{mol/L} = 2{,}0\cdot 10^{-2}\,\text{mol/L}$.
-5. $\mathrm{pOH} = -\log(2{,}0\cdot 10^{-2}) = -(\log 2{,}0 + \log 10^{-2}) = -(0{,}30 - 2) = 1{,}70$.
-6. $\mathrm{pH} = 14 - 1{,}70 = 12{,}30$.
-7. Preverimo: koncentracija je med $10^{-2}$ in $10^{-1}$, zato mora biti pOH med 1 in 2, pH pa med 12 in 13. ✓
+**Podatki:** $c(\mathrm{Ba(OH)_2}) = 0{,}0025\,\text{mol/L}$, močna baza, dva iona $\mathrm{OH^-}$ na formulsko enoto
+**Iščemo:** $\mathrm{pH}$
+
+:::formula
+$[\mathrm{OH^-}] = 2 \cdot c$, $\quad \mathrm{pOH} = -\log[\mathrm{OH^-}]$, $\quad \mathrm{pH} = 14 - \mathrm{pOH}$
+:::
+
+**Rešitev:**
+
+1. Disociacija: $\mathrm{Ba(OH)_2 \rightarrow Ba^{2+} + 2\,OH^-}$. Iz ene formulske enote nastaneta dva hidroksidna iona.
+2. $[\mathrm{OH^-}] = 2 \cdot 0{,}0025\,\text{mol/L} = 0{,}005\,\text{mol/L}$.
+3. $\mathrm{pOH} = -\log 0{,}005 \approx 2{,}30$.
+4. $\mathrm{pH} = 14 - 2{,}30 = 11{,}70$.
+5. Kontrola: baza, pH nad $7$. Ustreza.
+6. Odgovor: raztopina ima pH $11{,}70$.
+
+### Primer 3 (težji): model Enkeladovega oceana
+
+Raziskovalci želijo v laboratoriju posnemati bazični ocean Enkelada. Potrebujejo $250\,\text{mL}$ raztopine $\mathrm{NaOH}$ s pH $11{,}00$. Koliko gramov $\mathrm{NaOH}$ morajo raztopiti? ($M(\mathrm{NaOH}) = 40{,}0\,\text{g/mol}$)
+
+**Podatki:** $\mathrm{pH} = 11{,}00$, $V = 250\,\text{mL} = 0{,}250\,\text{L}$, $M = 40{,}0\,\text{g/mol}$
+**Iščemo:** maso $m(\mathrm{NaOH})$
+
+:::formula
+$\mathrm{pOH} = 14 - \mathrm{pH}$, $\quad [\mathrm{OH^-}] = 10^{-\mathrm{pOH}}$
+
+$n = c \cdot V$, $\quad m = n \cdot M$
+:::
+
+**Rešitev:**
+
+1. Vprašanje je obrnjeno: iz pH iščemo snov. Najprej pOH: $\mathrm{pOH} = 14 - 11{,}00 = 3{,}00$.
+2. $[\mathrm{OH^-}] = 10^{-3}\,\text{mol/L}$. Ker $\mathrm{NaOH}$ popolnoma disociira, je tudi $c(\mathrm{NaOH}) = 10^{-3}\,\text{mol/L}$.
+3. Množina: $n = 0{,}001\,\text{mol/L} \cdot 0{,}250\,\text{L} = 0{,}00025\,\text{mol}$. Prostornino smo pretvorili v litre, ker je koncentracija v $\text{mol/L}$.
+4. Masa: $m = 0{,}00025\,\text{mol} \cdot 40\,\text{g/mol} = 0{,}01\,\text{g}$.
+5. Odgovor: raztopiti morajo $0{,}010\,\text{g}$ ($10\,\text{mg}$) $\mathrm{NaOH}$. Tako majhno maso v praksi raje odmerijo iz bolj koncentrirane raztopine.
+
+### Primer 4 – zdaj ti
+
+Na vesoljski postaji $10{,}0\,\text{mL}$ raztopine $\mathrm{HCl}$ s koncentracijo $0{,}10\,\text{mol/L}$ razredčijo z vodo do $500\,\text{mL}$. Kolikšen je pH nove raztopine?
+
+**Podatki:** $V_1 = 10{,}0\,\text{mL}$, $c_1 = 0{,}10\,\text{mol/L}$, $V_2 = 500\,\text{mL}$
+**Iščemo:** $\mathrm{pH}$ razredčene raztopine
+
+:::formula
+$c_1 \cdot V_1 = c_2 \cdot V_2$, $\quad \mathrm{pH} = -\log c_2$
+:::
+
+**Rešitev:**
+
+1. Množina kisline se pri redčenju ne spremeni, spremeni se le prostornina.
+2. $c_2 = \dfrac{c_1 \cdot V_1}{V_2}$. Enoti mL se pokrajšata, zato pretvorba ni potrebna.
+3. Izračunaj $c_2$ in nato pH sam, potem preveri:
+
+:::premisli
+Koliko sta $c_2$ in pH?
+---
+$c_2 = \dfrac{0{,}10 \cdot 10{,}0}{500}\,\text{mol/L} = 0{,}0020\,\text{mol/L}$ in $\mathrm{pH} = -\log 0{,}0020 \approx 2{,}70$. Raztopino smo razredčili $50$-krat, zato je pH zrasel z $1{,}00$ na $2{,}70$, za manj kot dve enoti.
+:::
 
 ## Pogoste napake
 
-- **Pozabljen minus v definiciji.** $\log 10^{-3} = -3$, pH pa je $+3$. Pri $\mathrm{pH} = -\log[\mathrm{H^+}]$ se negativni predznak odpravi.
-- **Za bazo se izračuna pH kot $-\log[\mathrm{OH^-}]$.** To je pOH. Za pH moraš še odšteti od 14.
-- **Koncentracija v napačnih enotah.** Pri računu mora biti prostornina v litrih, ne v mililitrih.
-- **Zamenjava kisle in bazične raztopine.** Pri kislini je pH manjši od 7, pri bazi večji. Vedno preveri smiselnost rezultata.
-- **Mislimo, da je razlika 1 v pH majhna.** Razlika 1 pomeni desetkratno razliko koncentracije, razlika 3 pa tisočkratno.
+- **Izgubljen minus.** Kdor računa $\log 10^{-3} = -3$ in tam ostane, dobi negativen pH za navadno razredčeno kislino. Definicija ima minus: $\mathrm{pH} = -\log[\mathrm{H_3O^+}]$, zato je pH $3$.
+- **pOH namesto pH.** Pri bazi je $-\log[\mathrm{OH^-}]$ šele pOH. Kdor se tu ustavi, za bazo dobi pH pod $7$, kar je nesmiselno. Popravek: $\mathrm{pH} = 14 - \mathrm{pOH}$.
+- **Pozabljeni drugi ion $\mathrm{OH^-}$.** Pri $\mathrm{Ba(OH)_2}$ ali $\mathrm{Ca(OH)_2}$ je $[\mathrm{OH^-}] = 2 \cdot c$, ne $c$. Formulo baze vedno preberi do konca.
+- **Linearno razmišljanje.** »pH $4$ je dvakrat pH $2$, torej je kisline polovico manj.« Napačno: lestvica je logaritemska. Vsaka enota pomeni faktor $10$, dve enoti faktor $100$.
+- **Mililitri v $c = n/V$.** Prostornino v mililitrih vstaviš v obrazec za $\text{mol/L}$ in dobiš koncentracijo, ki je tisočkrat premajhna. Pred računom pretvori v litre.
 
 ## Povzetek
 
-- $\mathrm{pH} = -\log[\mathrm{H^+}]$, $\mathrm{pOH} = -\log[\mathrm{OH^-}]$, pri $25\,^\circ\mathrm{C}$ velja $\mathrm{pH} + \mathrm{pOH} = 14$.
-- $\mathrm{pH} < 7$ kislo, $\mathrm{pH} = 7$ nevtralno, $\mathrm{pH} > 7$ bazično.
-- Močna enoprotonska kislina: $[\mathrm{H^+}] = c$. Močna baza z eno skupino $\mathrm{OH}$: $[\mathrm{OH^-}] = c$.
-- Pri bazi najprej izračunaj pOH, nato $\mathrm{pH} = 14 - \mathrm{pOH}$.
-- Sprememba pH za 1 pomeni desetkratno spremembo $[\mathrm{H^+}]$.
+- $\mathrm{pH} = -\log[\mathrm{H_3O^+}]$ in $\mathrm{pOH} = -\log[\mathrm{OH^-}]$; obratno $[\mathrm{H_3O^+}] = 10^{-\mathrm{pH}}$.
+- Pri $25\,^\circ\mathrm{C}$: $[\mathrm{H_3O^+}] \cdot [\mathrm{OH^-}] = 10^{-14}$, torej $\mathrm{pH} + \mathrm{pOH} = 14$.
+- pH pod $7$ kislo, $7$ nevtralno, nad $7$ bazično.
+- Močna enoprotonska kislina: $[\mathrm{H_3O^+}] = c$. Močna baza: $[\mathrm{OH^-}] = c$ oziroma $2c$ pri dveh skupinah $\mathrm{OH}$.
+- Pri bazi najprej pOH, nato $\mathrm{pH} = 14 - \mathrm{pOH}$.
+- Ena enota pH pomeni desetkratno razliko v koncentraciji oksonijevih ionov.
 
 ## Drugače: Na sliki
 
-V interaktivni demonstraciji »pH lestvica« zgoraj vidiš lestvico od 0 do 14. Na levi je kislo območje, na sredini nevtralna točka pri 7, na desni bazično območje. Premikaj se po lestvici in opazuj, kako se s pH spreminja koncentracija ionov $\mathrm{H^+}$.
+Predstavljaj si pH lestvico kot stopnice, ki vodijo navzdol v klet. Vsaka stopnica ni enako visoka po koncentraciji, ampak vsaka koncentracijo **deli z deset**:
 
-Pomembna ugotovitev: lestvica je **logaritemska**. Vsak korak v desno pomeni desetkrat manj $\mathrm{H^+}$ ionov. Raztopina s pH 3 ima torej $100$-krat več $\mathrm{H^+}$ kot raztopina s pH 5. Zato je lestvica videti enakomerna, čeprav so razlike v koncentracijah ogromne.
+```
+pH 1   | 0,1 mol/L        ##########
+pH 2   | 0,01 mol/L       #
+pH 3   | 0,001 mol/L      (desetina vrstice višje)
+  ⋮
+pH 7   | 0,0000001 mol/L  nevtralno
+```
 
-Preizkusi še simulacijo spodaj (»pH lestvica«), kjer primerjaš pH različnih raztopin in razmisliš, kje so ioni $\mathrm{H_3O^+}$ v presežku in kje $\mathrm{OH^-}$.
-
-## Drugače: Iz vsakdanjega življenja
-
-Primerjaj pH z lestvico potresov ali glasnosti: vsak korak pomeni večkratnik, ne prištevanje enake količine.
-
-Primer: kis ima pH okoli 3, kuhinjska voda okoli 7. Razlika je 4 stopnje, torej ima kis približno $10^4 = 10\,000$-krat več $\mathrm{H^+}$ ionov na liter. Zato kis čutimo kot kislo, vodo pa ne.
-
-Če razredčiš kislo raztopino, se pH poveča in približuje 7. Če $\mathrm{HCl}$ s pH 2 razredčiš v desetkratni prostornini, dobiš pH 3. To je isti princip kot pri razredčenem soku: manj ionov na liter.
-
-Uporaba: bazenska voda mora imeti pH med približno 7 in 8, da ne draži oči. Tudi čistila in šamponi so prilagojeni pH kože.
-
-## Drugače: Korak za korakom s številkami
-
-Primerjajmo tri raztopine in sledimo istemu receptu:
-
-| Raztopina | $c$ (mol/L) | Ioni | Račun | pH |
-|---|---|---|---|---|
-| $\mathrm{HCl}$ | $10^{-1}$ | $[\mathrm{H^+}] = 10^{-1}$ | $-\log 10^{-1}$ | $1$ |
-| $\mathrm{HNO_3}$ | $10^{-4}$ | $[\mathrm{H^+}] = 10^{-4}$ | $-\log 10^{-4}$ | $4$ |
-| $\mathrm{KOH}$ | $10^{-3}$ | $[\mathrm{OH^-}] = 10^{-3}$, pOH $=3$ | $14 - 3$ | $11$ |
-
-Recept:
-
-1. Ugotovi, ali je snov močna kislina ali močna baza.
-2. Zapiši koncentracijo ustreznih ionov ($\mathrm{H^+}$ pri kislini, $\mathrm{OH^-}$ pri bazi).
-3. Izračunaj $-\log$ te koncentracije (pH oziroma pOH).
-4. Pri bazi odštej: $\mathrm{pH} = 14 - \mathrm{pOH}$.
-5. Preveri: kislina mora imeti $\mathrm{pH} < 7$, baza $\mathrm{pH} > 7$.
-
-Primer s koncentracijo, ki ni potenca števila 10: pri $c = 0{,}050\,\text{mol/L}$ $\mathrm{HCl}$ je $[\mathrm{H^+}] = 5{,}0\cdot 10^{-2}$ in $\mathrm{pH} = -(\log 5{,}0 - 2) = -(0{,}70 - 2) = 1{,}30$.
+Stolpec za pH $2$ je že desetkrat krajši od stolpca za pH $1$, stolpca za pH $3$ pa skoraj ne vidiš več. Na navadni lestvici bi bilo vse od pH $3$ naprej stisnjeno v ničlo. Logaritem stopnice razporedi enakomerno, da lahko na isti trak spraviš Venerine kisle oblake in bazično vodo Enkelada.
 
 ## Drugače: Bolj natančno
 
-**Zakaj logaritem?** Logaritem pri osnovi 10 pove, na katero potenco moramo dvigniti 10, da dobimo dano število: $\log 10^{x} = x$. Zato iz zelo majhnih števil (npr. $10^{-9}$) dobimo obvladljiva števila (9).
+**Od kod $\mathrm{pH} + \mathrm{pOH} = 14$.** Logaritmiramo ionski produkt vode in uporabimo pravilo $\log(a \cdot b) = \log a + \log b$:
 
-**Od kod $\mathrm{pH} + \mathrm{pOH} = 14$?** Voda se rahlo razpade (avtoprotoliza): $\mathrm{2H_2O \rightleftharpoons H_3O^+ + OH^-}$. Pri $25\,^\circ\mathrm{C}$ je ravnotežni ionski produkt vode $K_w = [\mathrm{H^+}][\mathrm{OH^-}] = 10^{-14}$. Če enačbo logaritmiramo in pomnožimo z $-1$:
+$$\log[\mathrm{H_3O^+}] + \log[\mathrm{OH^-}] = -14$$
 
-$$-\log[\mathrm{H^+}] - \log[\mathrm{OH^-}] = 14 \;\Rightarrow\; \mathrm{pH} + \mathrm{pOH} = 14$$
+Ko pomnožimo z $-1$, dobimo $\mathrm{pH} + \mathrm{pOH} = 14$. V čisti vodi sta koncentraciji enaki, $10^{-7}\,\text{mol/L}$, zato je pH $7$.
 
-V čisti vodi sta koncentraciji ionov enaki: $[\mathrm{H^+}] = [\mathrm{OH^-}] = 10^{-7}\,\text{mol/L}$, zato je pH enak 7.
+**Meje preprostega računa.** Pri zelo razredčeni kislini ($c \approx 10^{-7}\,\text{mol/L}$ ali manj) ioni iz vode niso več zanemarljivi. Raztopina $\mathrm{HCl}$ s $c = 10^{-8}\,\text{mol/L}$ nima pH $8$, ampak približno $6{,}98$: iz ravnotežja $x \cdot (x - 10^{-8}) = 10^{-14}$ dobimo $x \approx 1{,}05 \cdot 10^{-7}\,\text{mol/L}$. Tudi $K_w$ je odvisen od temperature: pri višji temperaturi je večji, zato je nevtralni pH tam nekoliko pod $7$. Pri šibkih kislinah in bazah popolna disociacija ne velja; to obravnava naslednje poglavje.
 
-**Omejitve.** Ta račun velja za močne kisline in baze pri običajnih koncentracijah (približno med $10^{-6}$ in $1\,\text{mol/L}$) in pri $25\,^\circ\mathrm{C}$. Pri zelo razredčenih raztopinah ($\approx 10^{-7}\,\text{mol/L}$ ali manj) moramo upoštevati še ione iz vode. Pri šibkih kislinah in bazah popolna disociacija ne velja, to obravnavamo posebej.
+**Zaokroževanje.** Pri pH je število decimalk enako številu značilnih mest koncentracije: $c = 2{,}0 \cdot 10^{-3}\,\text{mol/L}$ (dve značilni mesti) da pH $2{,}70$ (dve decimalki).
 
 ## Preveri se
 
-? Kolikšen je pH raztopine $\mathrm{HCl}$ s koncentracijo $10^{-2}\,\text{mol/L}$?
-- $-2$
-- $12$
-+ $2$
-- $7$
-> $\mathrm{HCl}$ je močna kislina, zato je $[\mathrm{H^+}] = 10^{-2}\,\text{mol/L}$ in $\mathrm{pH} = -\log 10^{-2} = 2$. Rezultat $-2$ pozabi minus v definiciji, $12$ pa bi dobil, če bi kislino obravnaval kot bazo.
+? Katera trditev je pravilna (pri $25\,^\circ\mathrm{C}$)?
+- Raztopina s pH $8$ je rahlo kisla.
+~ Meja je pri $7$: vse nad $7$ je bazično. Morda si pomislil, da manjše število pomeni manj kisline.
++ Nižji pH pomeni večjo koncentracijo oksonijevih ionov.
+- pH baze izračunamo kot $-\log[\mathrm{OH^-}]$.
+~ To je pOH. pH dobiš šele z $\mathrm{pH} = 14 - \mathrm{pOH}$.
+- Raztopina s pH $3$ ima trikrat več $\mathrm{H_3O^+}$ kot raztopina s pH $1$.
+~ Lestvica ni linearna, pa tudi smer je obrnjena: pH $3$ ima $100$-krat **manj** ionov kot pH $1$.
+> Zaradi minusa v $\mathrm{pH} = -\log[\mathrm{H_3O^+}]$ večja koncentracija da manjši pH.
 
-? Kolikšen je pH raztopine $\mathrm{KOH}$ s koncentracijo $10^{-3}\,\text{mol/L}$?
-- $3$
-+ $11$
-- $-3$
-- $10^{-11}$
-> $[\mathrm{OH^-}] = 10^{-3}\,\text{mol/L}$, torej $\mathrm{pOH} = 3$ in $\mathrm{pH} = 14 - 3 = 11$. Odgovor $3$ je pOH, ne pH.
+? Kolikšen je pH raztopine $\mathrm{HCl}$ s koncentracijo $0{,}040\,\text{mol/L}$?
+- $-1{,}40$
+~ To je $\log 0{,}040$ brez minusa iz definicije pH.
++ $1{,}40$
+- $12{,}60$
+~ Kislino si obravnaval kot bazo in rezultat odštel od $14$.
+> $[\mathrm{H_3O^+}] = 0{,}040\,\text{mol/L}$, $\mathrm{pH} = -\log 0{,}040 \approx 1{,}40$. Kontrola: $0{,}040$ je med $10^{-2}$ in $10^{-1}$, zato je pH med $1$ in $2$.
 
-? Za koliko se razlikujeta koncentraciji $\mathrm{H^+}$ v raztopinah s pH 2 in pH 4?
-- Raztopina s pH 4 ima dvakrat več $\mathrm{H^+}$.
-- Raztopina s pH 2 ima dvakrat več $\mathrm{H^+}$.
-+ Raztopina s pH 2 ima $100$-krat več $\mathrm{H^+}$.
-> Razlika dveh enot pH pomeni $10^2 = 100$-kratno razliko koncentracije. Nižji pH pomeni več $\mathrm{H^+}$ ionov: $10^{-2}$ proti $10^{-4}\,\text{mol/L}$.
+? Tina je izračunala pH raztopine $\mathrm{Ba(OH)_2}$ s $c = 0{,}010\,\text{mol/L}$ takole: $[\mathrm{OH^-}] = 0{,}010\,\text{mol/L}$, $\mathrm{pOH} = 2$, $\mathrm{pH} = 12$. Kje je napaka?
+- V koraku $\mathrm{pH} = 14 - \mathrm{pOH}$; pravilno bi bilo $\mathrm{pH} = \mathrm{pOH}$.
+~ Za bazo pOH in pH nista enaka, vsota je $14$. Ta korak je Tina naredila prav.
+- Napake ni, pH je $12$.
+~ Ta račun velja za $\mathrm{NaOH}$, ki ima eno skupino $\mathrm{OH}$. $\mathrm{Ba(OH)_2}$ jih ima dve.
++ $[\mathrm{OH^-}]$ je $0{,}020\,\text{mol/L}$, zato je pH približno $12{,}30$.
+> $\mathrm{Ba(OH)_2 \rightarrow Ba^{2+} + 2\,OH^-}$, torej $[\mathrm{OH^-}] = 0{,}020\,\text{mol/L}$, $\mathrm{pOH} \approx 1{,}70$ in $\mathrm{pH} \approx 12{,}30$.
+
+? Primerjaj raztopini s pH $2$ in pH $4$. Kaj velja za koncentraciji oksonijevih ionov?
+- Raztopina s pH $4$ ima dvakrat več $\mathrm{H_3O^+}$.
+~ Večji pH pomeni manj ionov, in razmerje ni $4 : 2$, ker lestvica ni linearna.
+- Raztopina s pH $2$ ima dvakrat več $\mathrm{H_3O^+}$.
+~ Smer je prava, faktor pa ne: vsaka enota pH pomeni faktor $10$, ne prištevanja.
++ Raztopina s pH $2$ ima $100$-krat več $\mathrm{H_3O^+}$.
+> $10^{-2}\,\text{mol/L}$ proti $10^{-4}\,\text{mol/L}$: razlika dveh enot pomeni $10 \cdot 10 = 100$.
+
+? Želodčni sok vsebuje klorovodikovo kislino in ima pH okoli $2{,}0$. Kolikšna je približno koncentracija $\mathrm{HCl}$, če upoštevamo samo to kislino?
+- $2{,}0\,\text{mol/L}$
+~ pH ni koncentracija, ampak negativni eksponent: $[\mathrm{H_3O^+}] = 10^{-2}$.
+- $100\,\text{mol/L}$
+~ Pozabil si minus v eksponentu: $10^{+2}$ namesto $10^{-2}$.
++ $0{,}010\,\text{mol/L}$
+- $10^{-12}\,\text{mol/L}$
+~ To bi bila $[\mathrm{OH^-}]$. Pri kislini $\mathrm{pH} = 2$ pomeni neposredno $[\mathrm{H_3O^+}] = 10^{-2}\,\text{mol/L}$.
+> Obratni račun: $[\mathrm{H_3O^+}] = 10^{-\mathrm{pH}} = 10^{-2}\,\text{mol/L}$. Ker je $\mathrm{HCl}$ močna kislina, je $c(\mathrm{HCl}) \approx 0{,}010\,\text{mol/L}$.

@@ -4,6 +4,7 @@ import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { Stripe, signWebhook, verifyWebhook, formEncode } from "../server/accounts/stripe.js";
 import { accessFor, isPremiumChild } from "../server/accounts/plans.js";
+import { promoConfig } from "../server/accounts/promo.js";
 import { weekKey, isSendTime } from "../server/accounts/weekly.js";
 
 const SECRET = "whsec_test";
@@ -32,6 +33,9 @@ function fakeFetch(calls) {
     return { ok: false, status: 404, json: async () => ({ error: { message: "ni" } }) };
   };
 }
+
+// Uporaba brez računa je v aplikaciji odstranjena; testi starih gostov jo vklopijo v kodi.
+const withGuests = (fn) => withServer(fn, { guest: true });
 
 async function withServer(fn, extra = {}) {
   const store = openDb(":memory:");
@@ -149,7 +153,7 @@ test("register, verify, consent and ownership", async () => {
 });
 
 test("free tier limits tutor questions; subscription via webhook lifts it", async () => {
-  process.env.KOMPRENO_FREE_DAILY_QUESTIONS = "2";
+  process.env.EVKLID_FREE_DAILY_QUESTIONS = "2";
   try {
     await withServer(async ({ client, calls, store }) => {
       const a = client();
@@ -166,10 +170,10 @@ test("free tier limits tutor questions; subscription via webhook lifts it", asyn
       assert.equal(blocked.body.upgrade, true);
 
       // Plačilo: checkout s pravilno ceno.
-      const co = await a("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "year" } });
+      const co = await a("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "year", adult: true, withdrawal: true } });
       assert.equal(co.body.url, "https://checkout.stripe.test/cs_1");
       const session = calls.find((c) => c.path === "/v1/checkout/sessions");
-      assert.equal(session.body["line_items[0][price]"], "price_kompreno_1_year");
+      assert.equal(session.body["line_items[0][price]"], "price_evklid_1_year");
       assert.equal(session.body.mode, "subscription");
       assert.equal(session.body["subscription_data[trial_end]"], undefined); // preizkus je že potekel
       assert.equal(calls.filter((c) => c.path === "/v1/prices" && c.method === "POST").length, 4);
@@ -184,7 +188,7 @@ test("free tier limits tutor questions; subscription via webhook lifts it", asyn
             customer,
             status: "active",
             cancel_at_period_end: false,
-            items: { data: [{ price: { id: "price_x", lookup_key: "kompreno_1_year" }, current_period_end: 1893456000 }] },
+            items: { data: [{ price: { id: "price_x", lookup_key: "evklid_1_year" }, current_period_end: 1893456000 }] },
           },
         },
       };
@@ -196,22 +200,22 @@ test("free tier limits tutor questions; subscription via webhook lifts it", asyn
 
       const acc = (await a("/api/account")).body;
       assert.equal(acc.access.tier, "paid");
-      assert.equal(acc.parent.subscription.plan, "kompreno_1_year");
+      assert.equal(acc.parent.subscription.plan, "evklid_1_year");
       assert.equal(acc.parent.subscription.period_end, "2030-01-01T00:00:00.000Z");
       assert.equal((await ask("tretje")).status, 200);
-      assert.equal((await a("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month" } })).status, 409);
+      assert.equal((await a("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month", adult: true, withdrawal: true } })).status, 409);
 
       const portal = await a("/api/billing/portal", { method: "POST" });
       assert.equal(portal.body.url, "https://billing.stripe.test/p");
     });
   } finally {
-    delete process.env.KOMPRENO_FREE_DAILY_QUESTIONS;
+    delete process.env.EVKLID_FREE_DAILY_QUESTIONS;
   }
 });
 
 test("free tier stops at the monthly AI budget (all free students and per student)", async () => {
-  process.env.KOMPRENO_FREE_POOL_USD = "0.5";
-  process.env.KOMPRENO_FREE_STUDENT_USD = "0";
+  process.env.EVKLID_FREE_POOL_USD = "0.5";
+  process.env.EVKLID_FREE_STUDENT_USD = "0";
   try {
     await withServer(async ({ client, calls, store }) => {
       const a = client();
@@ -226,17 +230,17 @@ test("free tier stops at the monthly AI budget (all free students and per studen
       const pool = await ask("drugo");
       assert.equal(pool.status, 429);
       assert.match(pool.body.error, /za vse porabljena/);
-      process.env.KOMPRENO_FREE_POOL_USD = "0";
-      process.env.KOMPRENO_FREE_STUDENT_USD = "0.5";
+      process.env.EVKLID_FREE_POOL_USD = "0";
+      process.env.EVKLID_FREE_STUDENT_USD = "0.5";
       const per = await ask("tretje");
       assert.equal(per.status, 429);
       assert.match(per.body.error, /Ta mesec si porabil/);
-      process.env.KOMPRENO_FREE_STUDENT_USD = "0";
+      process.env.EVKLID_FREE_STUDENT_USD = "0";
       assert.equal((await ask("četrto")).status, 200);
     });
   } finally {
-    delete process.env.KOMPRENO_FREE_POOL_USD;
-    delete process.env.KOMPRENO_FREE_STUDENT_USD;
+    delete process.env.EVKLID_FREE_POOL_USD;
+    delete process.env.EVKLID_FREE_STUDENT_USD;
   }
 });
 
@@ -244,9 +248,9 @@ test("checkout carries remaining app trial into Stripe", async () => {
   await withServer(async ({ client, calls }) => {
     const a = client();
     await registerVerified(a, calls, "dani@primer.si");
-    await a("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month" } });
+    await a("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month", adult: true, withdrawal: true } });
     const session = calls.find((c) => c.path === "/v1/checkout/sessions");
-    assert.equal(session.body["line_items[0][price]"], "price_kompreno_2_month");
+    assert.equal(session.body["line_items[0][price]"], "price_evklid_2_month");
     const days = (Number(session.body["subscription_data[trial_end]"]) * 1000 - Date.now()) / 86400000;
     assert.ok(days > 6.9 && days <= 7, String(days));
   });
@@ -259,13 +263,13 @@ test("referral: both parents get a free month after the first payment", async ()
     const b = client();
     const reg = await b("/api/auth/register", { method: "POST", body: { email: "fran@primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT, referral_code: ref.referral_code.toLowerCase() } });
     assert.equal(reg.body.referred, true);
-    await b("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month" } });
+    await b("/api/billing/checkout", { method: "POST", body: { seats: 2, interval: "month", adult: true, withdrawal: true } });
     const customer = store.db.prepare("SELECT stripe_customer_id FROM parents WHERE email = 'fran@primer.si'").get().stripe_customer_id;
 
     const send = (status) => {
       const raw = JSON.stringify({
         type: "customer.subscription.updated",
-        data: { object: { id: "sub_9", customer, status, items: { data: [{ price: { lookup_key: "kompreno_2_month" }, current_period_end: 1893456000 }] } } },
+        data: { object: { id: "sub_9", customer, status, items: { data: [{ price: { lookup_key: "evklid_2_month" }, current_period_end: 1893456000 }] } } },
       });
       return client()("/api/stripe/webhook", { method: "POST", raw, headers: { "stripe-signature": signWebhook(raw, SECRET) } });
     };
@@ -310,9 +314,12 @@ test("weekly report, export and account deletion", async () => {
     assert.equal(consent.under_15, 1);
     assert.equal(consent.parent_email, "gal@primer.si");
 
-    const exp = await a("/api/account/export");
+    assert.equal((await a("/api/account/export")).status, 404);
+    assert.equal((await a("/api/account/export", { method: "POST", body: { password: "narobe123" } })).status, 401);
+    const exp = await a("/api/account/export", { method: "POST", body: { password: "geslo1234" } });
     assert.equal(exp.body.children[0].name, "Zala");
     assert.equal(exp.body.parent.password_hash, undefined);
+    assert.deepEqual(exp.body.children[0].reports, [], "prijave napak so v izvozu");
 
     assert.equal((await a("/api/account", { method: "DELETE", body: { password: "narobe123" } })).status, 401);
     assert.equal((await a("/api/account", { method: "DELETE", body: { password: "geslo1234" } })).status, 200);
@@ -433,6 +440,142 @@ test("anti-sharing: a profile is open on one device at a time", async () => {
   });
 });
 
+test("profile password: each profile has its own, locks other devices and siblings, owner can reset", async () => {
+  await withServer(async ({ client, calls }) => {
+    const phone = client();
+    await registerVerified(phone, calls, "mia@primer.si");
+    const add = (name, extra = {}) => phone("/api/students", { method: "POST", body: { name, birth_year: YEAR - 12, consent: true, ...extra } });
+    assert.equal((await add("Prekratko", { profile_password: "123" })).status, 400);
+    const ana = (await add("Ana", { profile_password: "ana-1" })).body;
+    const bor = (await add("Bor")).body; // brez gesla: aplikacija ga zahteva ob prvem odprtju
+    let list = (await phone("/api/students")).body;
+    // Bor je bil ustvarjen zadnji; Ana se je ob tem na tej napravi ne zaklene (Bor nima gesla).
+    assert.equal(list.find((s) => s.id === ana.id).needs_password, false);
+    assert.equal(list.find((s) => s.id === bor.id).needs_password, true);
+    assert.equal(JSON.stringify(list).includes("hash"), false);
+    assert.equal((await phone(`/api/students/${bor.id}/xp`)).status, 200); // profil brez gesla ni zaklenjen
+
+    // Prvo geslo za Bora: samo z set: true in vsaj 4 znaki.
+    assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "bor-1" } })).status, 409);
+    assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "12", set: true } })).status, 400);
+    assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "bor-1", set: true } })).status, 200);
+    assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "drugo", set: true } })).status, 401);
+
+    // Odklep Bora zaklene Ano na tej napravi (brat ne odpre sestrinega profila).
+    const locked = await phone(`/api/students/${ana.id}/xp`);
+    assert.equal(locked.status, 423);
+    assert.equal(locked.body.locked, true);
+    assert.equal(locked.body.name, "Ana");
+    list = (await phone("/api/students")).body;
+    assert.deepEqual(Object.keys(list.find((s) => s.id === ana.id)).sort(), ["id", "locked", "name"]);
+    assert.equal((await phone(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "narobe" } })).status, 401);
+    assert.equal((await phone(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "ana-1" } })).status, 200);
+    assert.equal((await phone(`/api/students/${ana.id}/xp`)).status, 200);
+    const conv = (await phone(`/api/students/${ana.id}/conversations`, { method: "POST" })).body;
+    assert.equal((await phone(`/api/students/${bor.id}/xp`)).status, 423);
+
+    // Druga naprava: prijava v račun ne odpre profila; tudi pogovora ne.
+    const tablet = client();
+    assert.equal((await tablet("/api/auth/login", { method: "POST", body: { email: "mia@primer.si", password: "geslo1234" } })).status, 200);
+    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 423);
+    assert.equal((await tablet(`/api/conversations/${conv.id}`)).status, 423);
+    assert.equal((await tablet(`/api/students/${ana.id}/claim`, { method: "POST" })).status, 423);
+    // Express ujema poti brez ozira na velike črke in dekodira parametre: tudi tako ostane profil zaklenjen.
+    const enc = String(ana.id).replace(/\d/g, (d) => `%3${d}`);
+    assert.equal((await tablet(`/api/STUDENTS/${ana.id}/xp`)).status, 423);
+    assert.equal((await tablet(`/api/Conversations/${conv.id}`)).status, 423);
+    assert.equal((await tablet(`/api/students/${enc}/xp`)).status, 404);
+    assert.equal((await tablet(`/api/students/0x${ana.id.toString(16)}`)).status, 404);
+
+    // Pozabljeno geslo: lastnik ga ponastavi z geslom računa; nato je profil zaklenjen povsod.
+    const reset = (auth, password) => tablet("/api/account/profile-password", { method: "POST", body: { student_id: ana.id, auth, password } });
+    assert.equal((await reset("narobe", "nova-ana")).status, 401);
+    assert.equal((await reset("geslo1234", "ab")).status, 400);
+    assert.equal((await reset("geslo1234", "nova-ana")).status, 200);
+    assert.equal((await phone(`/api/students/${ana.id}/xp`)).status, 423);
+    assert.equal((await phone(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "ana-1" } })).status, 401);
+    // Sprememba s sedanjim geslom profila (brez gesla računa).
+    assert.equal((await reset("nova-ana", "tretja-ana")).status, 200);
+    assert.equal((await tablet(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "tretja-ana" } })).status, 200);
+    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 409); // telefon ima profil še odprt → prevzem
+    assert.equal((await tablet(`/api/students/${ana.id}/claim`, { method: "POST" })).status, 200);
+    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 200);
+    assert.equal((await tablet("/api/account")).body.children.every((c) => c.has_password), true);
+
+    // Tuj profil: ni ga mogoče odkleniti ne ponastaviti.
+    const other = client();
+    await registerVerified(other, calls, "tuj@primer.si");
+    assert.equal((await other(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "tretja-ana" } })).status, 404);
+    assert.equal((await other(`/api/students/${enc}/unlock`, { method: "POST", body: { password: "x1234", set: true } })).status, 404);
+    assert.equal((await other(`/api/students/${enc}`)).status, 404);
+    assert.equal((await other(`/api/Students/${ana.id}`)).status, 404);
+    assert.equal((await other("/api/account/profile-password", { method: "POST", body: { student_id: ana.id, auth: "geslo1234", password: "x1234" } })).status, 404);
+
+    // Odjava zaklene profile na tej napravi; »odjavi druge naprave« zaklene profile drugod.
+    await tablet("/api/auth/logout", { method: "POST" });
+    assert.equal((await tablet("/api/auth/login", { method: "POST", body: { email: "mia@primer.si", password: "geslo1234" } })).status, 200);
+    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 423);
+    assert.equal((await tablet(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "tretja-ana" } })).status, 200);
+    await phone("/api/account/logout-others", { method: "POST" });
+    assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "bor-1" } })).status, 200);
+    await phone("/api/account/logout-others", { method: "POST" });
+    assert.equal((await tablet("/api/students")).status, 401);
+  });
+});
+
+test("profile password: guests are never locked", async () => {
+  await withGuests(async ({ client }) => {
+    const g = client();
+    assert.equal((await guestStart(g)).status, 201);
+    await guestKid(g);
+    const kid = (await g("/api/students")).body[0];
+    assert.equal(kid.needs_password, undefined);
+    assert.equal((await g(`/api/students/${kid.id}/xp`)).status, 200);
+    assert.equal((await g(`/api/students/${kid.id}/unlock`, { method: "POST", body: {} })).status, 200);
+    assert.equal((await g("/api/account/profile-password", { method: "POST", body: { student_id: kid.id, auth: "", password: "abcd" } })).status, 403);
+  });
+});
+
+test("brez e-pošte: povezava za potrditev in novo geslo samo na računalniku s strežnikom; omejitev registracij", async () => {
+  await withServer(
+    async ({ client }) => {
+      const remote = { "X-Forwarded-For": "203.0.113.9" };
+      const body = (email) => ({ email, password: "geslo1234", accept_privacy: true, birth_date: ADULT });
+      const local = await client()("/api/auth/register", { method: "POST", body: body("doma@primer.si") });
+      assert.match(local.body.dev_verify_url, /\/api\/auth\/verify\?token=/);
+      const far = await client()("/api/auth/register", { method: "POST", body: body("tujec@primer.si"), headers: remote });
+      assert.equal(far.status, 201);
+      assert.equal(far.body.dev_verify_url, undefined);
+      // Pozabljeno geslo: od drugod nikoli povezave v odgovoru (prevzem tujega računa).
+      const forgot = await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" }, headers: remote });
+      assert.equal(forgot.body.dev_reset_url, undefined);
+      assert.match((await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" } })).body.dev_reset_url, /\?reset=/);
+      // Povezave za novo geslo: največ 5 na uro za isti e-naslov (ne zasujemo nabiralnika).
+      for (let i = 0; i < 3; i++) assert.equal((await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" } })).status, 200);
+      assert.equal((await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" } })).status, 429);
+      // Največ 5 novih računov z enega naslova na dan (prvi je že zgoraj).
+      for (let i = 0; i < 4; i++) assert.equal((await client()("/api/auth/register", { method: "POST", body: body(`r${i}@primer.si`), headers: remote })).status, 201);
+      assert.equal((await client()("/api/auth/register", { method: "POST", body: body("r9@primer.si"), headers: remote })).status, 429);
+      // IPv6: vsi naslovi istega /64 štejejo skupaj.
+      for (let i = 1; i <= 5; i++) assert.equal((await client()("/api/auth/register", { method: "POST", body: body(`v${i}@primer.si`), headers: { "X-Forwarded-For": `2001:db8:1:2::${i}` } })).status, 201);
+      assert.equal((await client()("/api/auth/register", { method: "POST", body: body("v6@primer.si"), headers: { "X-Forwarded-For": "2001:db8:1:2:abcd::9" } })).status, 429);
+      assert.equal((await client()("/api/auth/register", { method: "POST", body: body("v7@primer.si"), headers: { "X-Forwarded-For": "2001:db8:1:3::1" } })).status, 201);
+    },
+    { resendKey: "" },
+  );
+});
+
+test("odjava z obrazcem (brez skripta) preusmeri na prijavo", async () => {
+  await withServer(async ({ client, calls }) => {
+    const a = client();
+    await registerVerified(a, calls, "obrazec@primer.si");
+    const r = await a("/api/auth/logout", { method: "POST", headers: { Accept: "text/html", "Content-Type": "application/x-www-form-urlencoded" } });
+    assert.equal(r.status, 303);
+    assert.equal(r.headers.get("location"), "/");
+    assert.equal((await a("/api/students")).status, 401);
+  });
+});
+
 test("textbook: interactive part only with a paid plan or trial; PDF is public", async () => {
   await withServer(async ({ client, calls, store, base }) => {
     const a = client();
@@ -479,7 +622,7 @@ test("leagues with accounts: teacher's classes belong to the account; children j
 test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari znova", async () => {
   const calls = [];
   const kv = new Map();
-  kv.set("stripe_prices", JSON.stringify({ product: "prod_1", prices: { kompreno_1_month: "price_old" }, amounts: { kompreno_1_month: 899 } }));
+  kv.set("stripe_prices", JSON.stringify({ product: "prod_1", prices: { evklid_1_month: "price_old" }, amounts: { evklid_1_month: 899 } }));
   kv.set("stripe_portal_config", "bpc_old");
   const fetchFn = async (url, init) => {
     const u = new URL(url);
@@ -490,10 +633,10 @@ test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari zn
       // Stara cena za 1 otroka (8,99 €), ostale so že prave.
       return ok({
         data: [
-          { id: "price_old", lookup_key: "kompreno_1_month", unit_amount: 899, product: "prod_1" },
-          { id: "price_1y", lookup_key: "kompreno_1_year", unit_amount: 8900, product: "prod_1" },
-          { id: "price_2m", lookup_key: "kompreno_2_month", unit_amount: 1599, product: "prod_1" },
-          { id: "price_2y", lookup_key: "kompreno_2_year", unit_amount: 13900, product: "prod_1" },
+          { id: "price_old", lookup_key: "evklid_1_month", unit_amount: 899, product: "prod_1" },
+          { id: "price_1y", lookup_key: "evklid_1_year", unit_amount: 8900, product: "prod_1" },
+          { id: "price_2m", lookup_key: "evklid_2_month", unit_amount: 1599, product: "prod_1" },
+          { id: "price_2y", lookup_key: "evklid_2_year", unit_amount: 13900, product: "prod_1" },
         ],
       });
     }
@@ -503,14 +646,14 @@ test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari zn
   };
   const stripe = new Stripe({ secretKey: "sk_test_x", fetchFn, kv: { get: (k) => kv.get(k), set: (k, v) => kv.set(k, v) } });
   const r = await stripe.ensurePrices();
-  assert.equal(r.prices.kompreno_1_month, "price_new");
-  assert.equal(r.prices.kompreno_1_year, "price_1y");
+  assert.equal(r.prices.evklid_1_month, "price_new");
+  assert.equal(r.prices.evklid_1_year, "price_1y");
   const created = calls.find((c) => c.path === "/v1/prices" && c.method === "POST");
   assert.equal(created.body.unit_amount, "999");
   assert.equal(created.body.transfer_lookup_key, "true");
   assert.equal(calls.find((c) => c.path === "/v1/prices/price_old").body.active, "false");
   assert.equal(kv.get("stripe_portal_config"), ""); // portal z novimi cenami
-  assert.equal(JSON.parse(kv.get("stripe_prices")).amounts.kompreno_1_month, 999);
+  assert.equal(JSON.parse(kv.get("stripe_prices")).amounts.evklid_1_month, 999);
   // Drugi klic bere iz predpomnilnika.
   const n = calls.length;
   await stripe.ensurePrices();
@@ -519,11 +662,11 @@ test("sprememba cene: nova cena v Stripu, stara arhivirana, portal se ustvari zn
 
 
 test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", async () => {
-  const promo = { code: "KOMPRENO100", limit: 2, days: 365, seats: 1 };
+  const promo = { code: "EVKLID100", limit: 2, days: 365, seats: 1 };
   await withServer(async ({ client, calls, store }) => {
     // Ob registraciji (male črke, presledki), dostop po koncu preizkusa ostane.
     const a = client();
-    const reg = await a("/api/auth/register", { method: "POST", body: { email: "a@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT, promo_code: " kompreno100 " } });
+    const reg = await a("/api/auth/register", { method: "POST", body: { email: "a@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT, promo_code: " evklid100 " } });
     assert.equal(reg.status, 201);
     const days = (Date.parse(reg.body.promo_until) - Date.now()) / 86400000;
     assert.ok(days > 364.9 && days <= 365, String(days));
@@ -536,7 +679,7 @@ test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", asyn
     acc = (await a("/api/account")).body;
     assert.deepEqual([acc.access.tier, acc.access.seats], ["promo", 1]);
     // Drugič na istem računu ne gre.
-    assert.equal((await a("/api/account/promo", { method: "POST", body: { code: "KOMPRENO100" } })).status, 400);
+    assert.equal((await a("/api/account/promo", { method: "POST", body: { code: "EVKLID100" } })).status, 400);
 
     // Napačna koda ne ustavi registracije.
     const b = client();
@@ -545,41 +688,101 @@ test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", asyn
     assert.match(regB.body.promo_error, /ni veljavna/);
     assert.equal((await b("/api/account")).body.access.tier, "trial");
     // Pozneje v zavihku Račun.
-    const ok = await b("/api/account/promo", { method: "POST", body: { code: "KOMPRENO100" } });
+    const ok = await b("/api/account/promo", { method: "POST", body: { code: "EVKLID100" } });
     assert.equal(ok.status, 200);
     assert.equal(ok.body.access.tier, "promo");
 
     // Limit 2 je dosežen.
     const c = client();
     await registerVerified(c, calls, "c@kod.si");
-    const full = await c("/api/account/promo", { method: "POST", body: { code: "KOMPRENO100" } });
+    const full = await c("/api/account/promo", { method: "POST", body: { code: "EVKLID100" } });
     assert.equal(full.status, 410);
     assert.match(full.body.error, /Vseh 2 aktivacij/);
     assert.equal(store.db.prepare("SELECT COUNT(*) AS n FROM promo_redemptions").get().n, 2);
 
     // Preostanek kode se prenese v Stripe, da starš ne plača, dokler koda velja.
     store.db.prepare("UPDATE parents SET email_verified_at = datetime('now') WHERE email = ?").run("a@kod.si");
-    await a("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "month" } });
+    await a("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "month", adult: true, withdrawal: true } });
     const session = calls.find((x) => x.path === "/v1/checkout/sessions");
     const left = (Number(session.body["subscription_data[trial_end]"]) * 1000 - Date.now()) / 86400000;
     assert.ok(left > 364, String(left));
   }, { promo });
 });
 
+test("aktivacijska koda EVKLID3X: 3 meseci, zmogljivejši model največ Sonnet", async () => {
+  const cfg = promoConfig({});
+  assert.deepEqual([cfg.code, cfg.days, cfg.limit, cfg.maxModel], ["EVKLID3X", 90, 100, "sonnet"]);
+  assert.equal(promoConfig({ EVKLID_PROMO_MODEL: "Opus" }).maxModel, null);
+  const modes = [];
+  const streamFn = async ({ mode, onText }) => {
+    modes.push(mode);
+    onText("ok");
+    return { text: 'ok\n<<META subject=MAT topic="-" error=0 mode=A flag=none>>', stopReason: "end_turn" };
+  };
+  const photoCaps = [];
+  const schedulePhotoFn = async ({ capped }) => {
+    photoCaps.push(capped);
+    return { lessons: [], events: [], usage: null, model: "test" };
+  };
+  await withServer(async ({ client, calls, store }) => {
+    const a = client();
+    const reg = await registerVerified(a, calls, "sonnet@kod.si", { promo_code: "evklid3x" });
+    const days = (Date.parse(store.db.prepare("SELECT promo_until FROM parents WHERE id = ?").get(reg.id).promo_until) - Date.now()) / 86400000;
+    assert.ok(days > 89.9 && days <= 90, String(days));
+    store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z'").run();
+    const kid = (await a("/api/students", { method: "POST", body: { name: "Lan", birth_year: YEAR - 10, consent: true } })).body;
+    const conv = (await a(`/api/students/${kid.id}/conversations`, { method: "POST" })).body;
+    const again = () => a(`/api/conversations/${conv.id}/messages`, { method: "POST", body: { text: "Razloži podrobneje.", deep: true } });
+    // Prva ponovna razlaga: Haiku z več razmisleka; druga zapored: Sonnet namesto Opusa.
+    assert.equal((await again()).status, 200);
+    assert.equal((await again()).status, 200);
+    assert.deepEqual(modes, ["think", "mid"]);
+    // Tudi fotografija urnika ne gre k Opusu.
+    const photo = () => a(`/api/students/${kid.id}/schedule/photo`, { method: "POST", body: { image: "data:image/jpeg;base64,AAAA" } });
+    assert.equal((await photo()).status, 200);
+    assert.deepEqual(photoCaps, [true]);
+    // Tretja zaporedna prošnja: Opus. Novo sporočilo števec ponastavi.
+    assert.equal((await again()).status, 200);
+    assert.equal(modes.at(-1), "deep");
+    await a(`/api/conversations/${conv.id}/messages`, { method: "POST", body: { text: "Hvala." } });
+    await again();
+    await again();
+    assert.deepEqual(modes.slice(-3), ["chat", "think", "mid"]);
+    // Skrita omejitev: 2 Opusa na dan (privzeto), nato tiho Sonnet.
+    await again();
+    assert.equal(modes.at(-1), "deep");
+    const hidden = await again();
+    assert.equal(modes.at(-1), "mid");
+    assert.doesNotMatch(JSON.stringify(hidden.body), /zmogljivejš|hitrejši model/);
+    // Z naročnino omejitve ni: druga zaporedna prošnja gre k Opusu.
+    store.db.prepare("UPDATE parents SET sub_status = 'active', sub_seats = 1 WHERE id = ?").run(reg.id);
+    assert.equal((await again()).status, 200);
+    assert.equal(modes.at(-1), "deep");
+    await photo();
+    assert.deepEqual(photoCaps, [true, false]);
+  }, { promo: cfg, streamFn, schedulePhotoFn });
+});
+
 test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
-  process.env.KOMPRENO_ADMIN_EMAILS = "skrbnik@kod.si";
+  process.env.EVKLID_ADMIN_EMAILS = "skrbnik@kod.si";
   try {
-    await withServer(async ({ client }) => {
+    await withServer(async ({ client, calls, store }) => {
       const a = client();
+      const old = store.createStudent("Iz časa pred računi");
       await a("/api/auth/register", { method: "POST", body: { email: "skrbnik@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
+      // Skrbnik šele po potrditvi e-naslova (sicer bi se kdorkoli registriral s tem naslovom).
+      assert.equal((await a("/api/usage", { headers: { "X-Forwarded-For": "1.2.3.4" } })).status, 403);
+      assert.equal(store.db.prepare("SELECT parent_id FROM students WHERE id = ?").get(old.id).parent_id, null);
+      await a(verifyLink(calls));
+      assert.notEqual(store.db.prepare("SELECT parent_id FROM students WHERE id = ?").get(old.id).parent_id, null);
       assert.equal((await a("/api/usage", { headers: { "X-Forwarded-For": "1.2.3.4" } })).status, 200);
       const { admin } = (await a("/api/account")).body.promo;
-      assert.equal(admin.code, "KOMPRENO100");
-      assert.deepEqual([admin.used, admin.limit, admin.days], [0, 100, 365]);
-      assert.match(admin.url, /\/\?koda=KOMPRENO100$/);
+      assert.equal(admin.code, "EVKLID3X");
+      assert.deepEqual([admin.used, admin.limit, admin.days], [0, 100, 90]);
+      assert.match(admin.url, /\/\?koda=EVKLID3X$/);
     });
   } finally {
-    delete process.env.KOMPRENO_ADMIN_EMAILS;
+    delete process.env.EVKLID_ADMIN_EMAILS;
   }
 });
 
@@ -647,4 +850,219 @@ test("preverjanje starosti: premlad otrok dobi povezavo za starše, dijak ima sa
     assert.equal(tooYoung.status, 403);
     assert.equal(tooYoung.body.self_too_young, true);
   });
+});
+
+// --- uporaba brez registracije (gost) ---
+const guestStart = (call) => call("/api/auth/guest", { method: "POST", body: { accept_privacy: true } });
+const guestKid = async (call, name = "Gost") => {
+  const kid = await call("/api/students", { method: "POST", body: { name, birth_year: YEAR - 12, consent: true } });
+  assert.equal(kid.status, 201, JSON.stringify(kid.body));
+  return kid.body;
+};
+
+test("guest: use without registration, free tier, no e-mail", async () => {
+  await withGuests(async ({ client }) => {
+    const a = client();
+    assert.equal((await a("/api/account/status")).body.guest_mode, true);
+    assert.equal((await a("/api/auth/guest", { method: "POST", body: {} })).status, 400); // brez strinjanja z zasebnostjo
+    // Naprava, zavrnjena pri registraciji zaradi starosti, tudi brez računa ne more naprej.
+    const young = await client()("/api/auth/guest", { method: "POST", body: { accept_privacy: true }, headers: { cookie: "evklid_age=1" } });
+    assert.equal(young.status, 403);
+    const g = await guestStart(a);
+    assert.equal(g.status, 201);
+    assert.equal(g.body.parent.guest, true);
+    assert.equal(g.body.parent.email, null);
+    const st = (await a("/api/account/status")).body;
+    assert.equal(st.logged_in, true);
+    assert.equal(st.parent.guest, true);
+    const kid = await guestKid(a); // brez potrditve e-naslova
+    const acc = (await a("/api/account")).body;
+    assert.equal(acc.access.tier, "free"); // gost nima preizkusa
+    assert.equal(acc.max_children, 1);
+    assert.equal((await a("/api/students", { method: "POST", body: { name: "Drugi", birth_year: YEAR - 12, consent: true } })).status, 400);
+    assert.equal((await a("/api/account/weekly-report/send", { method: "POST" })).status, 400);
+    assert.equal((await a("/api/auth/resend-verification", { method: "POST" })).status, 400);
+    // Drug gost ne vidi tujega profila.
+    const b = client();
+    await guestStart(b);
+    assert.equal((await b(`/api/students/${kid.id}`)).status, 404);
+    // Gost izbriše vse brez gesla.
+    assert.equal((await a("/api/account", { method: "DELETE", body: {} })).status, 200);
+  });
+});
+
+test("guest: clearing cookies or deleting the profile does not give a new free allowance", async () => {
+  process.env.EVKLID_FREE_DAILY_QUESTIONS = "2";
+  try {
+    await withGuests(async ({ client }) => {
+      const a = client();
+      await guestStart(a);
+      const kid = await guestKid(a);
+      const conv = (await a(`/api/students/${kid.id}/conversations`, { method: "POST" })).body;
+      const ask = (call, c, t) => call(`/api/conversations/${c.id}/messages`, { method: "POST", body: { text: t } });
+      assert.equal((await ask(a, conv, "1")).status, 200);
+      assert.equal((await ask(a, conv, "2")).status, 200);
+      const blocked = await ask(a, conv, "3");
+      assert.equal(blocked.status, 429);
+      assert.match(blocked.body.error, /ustvari račun/);
+
+      // Nov gost z istega omrežja (izbrisani piškotki) deli isto kvoto.
+      const b = client();
+      await guestStart(b);
+      const kidB = await guestKid(b);
+      const convB = (await b(`/api/students/${kidB.id}/conversations`, { method: "POST" })).body;
+      assert.equal((await ask(b, convB, "1")).status, 429);
+
+      // Izbris pogovora kvote ne povrne.
+      assert.equal((await a(`/api/conversations/${conv.id}`, { method: "DELETE" })).status, 200);
+      const conv2 = (await a(`/api/students/${kid.id}/conversations`, { method: "POST" })).body;
+      assert.equal((await ask(a, conv2, "4")).status, 429);
+      // Nadgradnja brez potrditve e-naslova kvote ne povrne.
+      const up = await b("/api/auth/upgrade", { method: "POST", body: { email: "lazni@primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
+      assert.equal(up.status, 200);
+      assert.equal((await ask(b, convB, "x")).status, 429);
+      // Tudi izbris profila ali vseh podatkov kvote ne povrne.
+      assert.equal((await a(`/api/students/${kid.id}`, { method: "DELETE" })).status, 200);
+      assert.equal((await a("/api/account", { method: "DELETE", body: {} })).status, 200);
+      assert.equal((await ask(b, convB, "2")).status, 429);
+      const c = client();
+      await guestStart(c);
+      const kidC = await guestKid(c);
+      const convC = (await c(`/api/students/${kidC.id}/conversations`, { method: "POST" })).body;
+      assert.equal((await ask(c, convC, "1")).status, 429);
+    });
+  } finally {
+    delete process.env.EVKLID_FREE_DAILY_QUESTIONS;
+  }
+});
+
+test("guest: monthly AI spend counts for the whole network, also after deletion", async () => {
+  process.env.EVKLID_FREE_STUDENT_USD = "0.5";
+  try {
+    await withGuests(async ({ client, store }) => {
+      const a = client();
+      await guestStart(a);
+      const kid = await guestKid(a);
+      store.db.prepare("INSERT INTO usage (student_id, model, kind, cost_usd) VALUES (?, 'claude-haiku', 'chat', 0.6)").run(kid.id);
+      assert.equal((await a("/api/account", { method: "DELETE", body: {} })).status, 200);
+      const b = client();
+      await guestStart(b);
+      const kidB = await guestKid(b);
+      const conv = (await b(`/api/students/${kidB.id}/conversations`, { method: "POST" })).body;
+      const r = await b(`/api/conversations/${conv.id}/messages`, { method: "POST", body: { text: "x" } });
+      assert.equal(r.status, 429);
+      assert.match(r.body.error, /Ta mesec si porabil/);
+    });
+  } finally {
+    delete process.env.EVKLID_FREE_STUDENT_USD;
+  }
+});
+
+test("guest: limited number of new guests per network per day (deleted guests count too)", async () => {
+  process.env.EVKLID_GUEST_PER_DAY = "2";
+  try {
+    await withGuests(async ({ client }) => {
+      const first = client();
+      assert.equal((await guestStart(first)).status, 201);
+      assert.equal((await first("/api/account", { method: "DELETE", body: {} })).status, 200);
+      assert.equal((await guestStart(client())).status, 201);
+      const third = await guestStart(client());
+      assert.equal(third.status, 429);
+      assert.equal(third.body.guest_limit, true);
+    });
+  } finally {
+    delete process.env.EVKLID_GUEST_PER_DAY;
+  }
+});
+
+test("guest: upgrade to an account keeps the profile and progress", async () => {
+  await withGuests(async ({ client, calls }) => {
+    const a = client();
+    await guestStart(a);
+    const kid = await guestKid(a, "Nika");
+    const conv = (await a(`/api/students/${kid.id}/conversations`, { method: "POST" })).body;
+    assert.equal((await a(`/api/conversations/${conv.id}/messages`, { method: "POST", body: { text: "živjo" } })).status, 200);
+    assert.equal((await a("/api/auth/upgrade", { method: "POST", body: { email: "nika@primer.si", password: "kratko", accept_privacy: true, birth_date: ADULT } })).status, 400);
+    const up = await a("/api/auth/upgrade", { method: "POST", body: { email: "Nika@Primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
+    assert.equal(up.status, 200, JSON.stringify(up.body));
+    assert.equal(up.body.parent.guest, false);
+    assert.equal(up.body.parent.email, "nika@primer.si");
+    const kids = (await a("/api/students")).body;
+    assert.deepEqual(kids.map((k) => k.id), [kid.id]);
+    assert.equal((await a(`/api/conversations/${conv.id}`)).status, 200);
+    // Do potrditve e-naslova ostane brezplačni paket (ni preizkusa, ni aktivacijske kode).
+    assert.equal((await a("/api/account")).body.access.tier, "free");
+    assert.equal((await a("/api/account/promo", { method: "POST", body: { code: "EVKLID100" } })).status, 403);
+    assert.equal((await a("/api/auth/upgrade", { method: "POST", body: { email: "x@primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } })).status, 400);
+    // E-naslov potrdi kot pri registraciji: šele nato 7-dnevni preizkus; prijava z geslom deluje.
+    await a(verifyLink(calls));
+    assert.equal((await a("/api/account")).body.access.tier, "trial");
+    const b = client();
+    assert.equal((await b("/api/auth/login", { method: "POST", body: { email: "nika@primer.si", password: "geslo1234" } })).status, 200);
+    assert.equal((await b("/api/students")).body.length, 1);
+    // Obstoječ e-naslov: nadgradnja ga ne prevzame.
+    const c = client();
+    await guestStart(c);
+    const dup = await c("/api/auth/upgrade", { method: "POST", body: { email: "nika@primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
+    assert.equal(dup.status, 409);
+    assert.equal(dup.body.exists, true);
+  });
+});
+
+test("guest: logging into an existing account moves the guest profile when there is room", async () => {
+  await withGuests(async ({ client, calls, store }) => {
+    const owner = client();
+    await registerVerified(owner, calls, "lastnik@primer.si");
+    const a = client();
+    await guestStart(a);
+    const kid = await guestKid(a, "Tim");
+    const r = await a("/api/auth/login", { method: "POST", body: { email: "lastnik@primer.si", password: "geslo1234" } });
+    assert.equal(r.status, 200);
+    assert.equal(r.body.guest_moved, 1);
+    assert.deepEqual((await owner("/api/students")).body.map((k) => k.id), [kid.id]);
+    // Ni prostora v paketu (preizkus je potekel: 1 profil): prijava ne uspe, profil gosta ostane.
+    store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z' WHERE email = 'lastnik@primer.si'").run();
+    const b = client();
+    await guestStart(b);
+    await guestKid(b, "Ana");
+    const full = await b("/api/auth/login", { method: "POST", body: { email: "lastnik@primer.si", password: "geslo1234" } });
+    assert.equal(full.status, 409);
+    assert.equal(full.body.guest_conflict, true);
+    assert.equal((await b("/api/students")).body.length, 1);
+    // Gost ne more do plačil ali aktivacijske kode.
+    assert.equal((await b("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "month", adult: true, withdrawal: true } })).status, 403);
+    assert.equal((await b("/api/account/promo", { method: "POST", body: { code: "EVKLID100" } })).status, 403);
+  });
+});
+
+test("guest: switched off (default) stops guests but lets them create an account", async () => {
+  await withServer(async ({ client, store }) => {
+    const a = client();
+    const off = await guestStart(a);
+    assert.equal(off.status, 404);
+    assert.equal((await a("/api/account/status")).body.guest_mode, false);
+    // Gost, ustvarjen, ko je bil način še vklopljen.
+    const id = Number(
+      store.db
+        .prepare("INSERT INTO parents (email, password_hash, privacy_version, unsubscribe_token, referral_code, is_guest, guest_net) VALUES ('gost-x@gost.invalid', 'x', 'v', 'u', 'GOSTX12', 1, 'n')")
+        .run().lastInsertRowid,
+    );
+    const { Sessions, COOKIE } = await import("../server/accounts/auth.js");
+    const { token } = new Sessions(store.db).create(id);
+    const b = (path, opts = {}) => a(path, { ...opts, headers: { cookie: `${COOKIE}=${token}` } });
+    const r = await b("/api/students");
+    assert.equal(r.status, 401);
+    assert.equal(r.body.guest_off, true);
+    const up = await b("/api/auth/upgrade", { method: "POST", body: { email: "pozno@primer.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
+    assert.equal(up.status, 200);
+  });
+});
+
+test("guest mode is removed: off everywhere, EVKLID_GUEST cannot turn it on", async () => {
+  const { guestModeOn, netKey } = await import("../server/accounts/guest.js");
+  assert.equal(guestModeOn({}), false);
+  assert.equal(guestModeOn({ NODE_ENV: "production", EVKLID_GUEST: "1" }), false);
+  assert.equal(guestModeOn({ EVKLID_GUEST: "1" }), false);
+  assert.equal(netKey("::ffff:10.0.0.7"), "10.0.0.7");
+  assert.equal(netKey("2001:db8:1:2:aaaa::1"), netKey("2001:db8:1:2:bbbb:cccc:dddd:eeee"));
 });

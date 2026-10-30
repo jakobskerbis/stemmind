@@ -12,7 +12,7 @@ import { cleanText, normalizeSettings } from "./settings.js";
 import { PROGRAMS, UNI_PATHS } from "./university-data.js";
 import { ALL_SUBJECTS } from "./subjects.js";
 import { getPath, pathKeyFor } from "./curriculum.js";
-import { getClient, isMockMode, MODEL_DEEP, quickParams } from "./claude.js";
+import { getClient, isMockMode, MODEL_DEEP, MODEL_MID, quickParams } from "./claude.js";
 import { EVENT_KINDS } from "../public/settings-registry.js";
 
 export { EVENT_KINDS };
@@ -389,10 +389,11 @@ export async function scheduleSources({ fetchFn = fetch, settings = null } = {})
 // Fotografija urnika: model prebere ure in teste, učenec jih pred shranjevanjem preveri.
 
 // Natančnost je tu pomembnejša od cene (urnik se prebere enkrat na semester), zato zmogljivejši model.
-const photoModel = () => process.env.KOMPRENO_SCHEDULE_MODEL || MODEL_DEEP;
+// capped: aktivacijska koda dovoli največ Sonnet (j 2026-10-30), zato tam MODEL_MID namesto Opusa.
+const photoModel = (capped = false) => (capped ? MODEL_MID : process.env.EVKLID_SCHEDULE_MODEL || MODEL_DEEP);
 
-export async function readTimetablePhoto({ imageBase64, mediaType = "image/jpeg", today = new Date().toISOString().slice(0, 10) }) {
-  const model = photoModel();
+export async function readTimetablePhoto({ imageBase64, mediaType = "image/jpeg", today = new Date().toISOString().slice(0, 10), capped = false }) {
+  const model = photoModel(capped);
   if (isMockMode()) return { mock: true, lessons: [], events: [], usage: null, model };
   const final = await getClient().messages.create({
     model,

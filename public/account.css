@@ -11,8 +11,8 @@ label.check input { margin-top: 4px; flex: none; width: 18px; height: 18px; }
 .plans { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
 .plan-row { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 8px; align-items: stretch; }
 .plan-head { font-weight: 600; align-self: center; }
-.plan { display: flex; gap: 8px; align-items: flex-start; border: 1px solid var(--border); border-radius: 10px; padding: 10px; cursor: pointer; background: var(--bg); }
-.plan:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.plan { display: flex; gap: 8px; align-items: flex-start; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px; cursor: pointer; background: var(--bg); }
+.plan:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: var(--accent-soft); }
 .plan input { margin-top: 4px; }
 .plan .muted { font-size: 0.8rem; }
 @media (max-width: 520px) {
@@ -36,8 +36,39 @@ details .card { margin-top: 8px; }
 }
 .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 100; }
 .overlay-card { max-width: 420px; width: 100%; margin: 0; }
+/* Geslo profila: zaslon za odklep ali prvo geslo */
+#lock-overlay { z-index: 200; overflow-y: auto; align-items: flex-start; }
+.lock-card { margin: auto 0; display: flex; flex-direction: column; gap: 10px; }
+.lock-card > .pm-avatar { align-self: center; }
+.lock-card > h2 { text-align: center; margin: 0; overflow-wrap: anywhere; }
+.lock-card .form { gap: 10px; }
+.lock-card input[type="password"] { width: 100%; box-sizing: border-box; }
+.lock-card button { min-height: 44px; }
+/* summary ostane list-item (puščica kot pri »Imate aktivacijsko kodo?«), višina 44 px s paddingom */
+.lock-forgot summary, .profile-pw summary, .code-new summary { margin: 0; padding: 10px 0; line-height: 24px; }
+.lock-forgot .form { margin-top: 6px; }
+.lock-others-title { margin: 6px 0 0; }
+.lock-others { display: flex; flex-wrap: wrap; gap: 8px; }
+.lock-others button { overflow-wrap: anywhere; }
+.lock-logout { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.profile-pw { margin-top: 10px; }
 .warn { background: #fff4d6; color: #6b4e00; padding: 8px 10px; border-radius: 10px; font-size: 0.92rem; }
 .dark .warn { background: #3a3014; color: #f3d98a; }
 #ask-parent .form-actions { flex-wrap: wrap; }
 .whose-field { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
 .whose-field legend { font-weight: 600; margin-bottom: 4px; padding: 0; }
+/* Uporaba brez registracije */
+.guest-login { margin-top: 14px; }
+.guest-login summary { cursor: pointer; font-weight: 600; }
+/* Plačila: potrditvi, povezava za starše, skrbniške kode */
+.pay-consent { font-size: 0.9rem; margin: 6px 0; }
+.pay-link { margin-top: 10px; }
+.pay-link .inline { display: flex; flex-wrap: wrap; gap: 8px; }
+.pay-link .inline input { flex: 1 1 200px; }
+.pay-link button { min-height: 40px; }
+.code-list, .event-list { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 10px; }
+.code-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.code-row > div:first-child { min-width: 0; overflow-wrap: anywhere; }
+.code-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.code-actions button { min-height: 40px; }
+.event-list code { overflow-wrap: anywhere; }

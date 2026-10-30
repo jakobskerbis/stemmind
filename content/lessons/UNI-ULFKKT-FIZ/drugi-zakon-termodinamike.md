@@ -5,11 +5,23 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Prvi zakon termodinamike pove, da se energija ohranja, ne pove pa, **v katero smer** procesi tečejo sami od sebe. Topla kava se v sobi ohladi, nikoli pa se sama od sebe ne segreje na račun hladnejšega zraka, čeprav bi bila energija ohranjena tudi v tem primeru. Črnilo se v vodi razleze, nikoli pa se samo ne zbere nazaj v kapljico. Drugi zakon termodinamike opiše to **nepovratnost** in jo izmeri z novo funkcijo stanja, **entropijo**.
-
-Iz drugega zakona sledi tudi ena najpomembnejših tehničnih omejitev: noben **toplotni stroj** ne more vse prejete toplote pretvoriti v delo. Največji možni izkoristek, **Carnotov izkoristek**, je odvisen le od temperatur toplega in hladnega rezervoarja. Ta omejitev velja za elektrarne, motorje z notranjim zgorevanjem, hladilnike in toplotne črpalke, entropija pa v kemiji skupaj z entalpijo odloča, ali reakcija poteče sama od sebe.
+Telefon je med igranjem igrice segret na okoli $35\,^\circ\mathrm{C}$ ($308\,\mathrm{K}$), zrak v sobi ima $20\,^\circ\mathrm{C}$ ($293\,\mathrm{K}$). Bi lahko to odpadno toploto spet spremenil v elektriko za baterijo? Prvi zakon termodinamike temu ne nasprotuje, saj zahteva le ohranitev energije; ne pove pa, **v katero smer** procesi tečejo sami od sebe. Drugi zakon pove, da noben **toplotni stroj** ne pretvori vse prejete toplote v delo: tudi idealen bi med tema temperaturama dal največ $1 - 293/308 \approx 5\,\%$, in ta meja, **Carnotov izkoristek**, je odvisna le od temperatur obeh rezervoarjev. Isti zakon pojasni, zakaj se topla kava v sobi ohladi in se črnilo v vodi razleze, nikoli pa obratno, to **nepovratnost** pa izmeri z novo funkcijo stanja, **entropijo**. Meja velja za elektrarne, motorje z notranjim zgorevanjem, hladilnike in toplotne črpalke, entropija pa v kemiji skupaj z entalpijo odloča, ali reakcija poteče sama od sebe.
 
 ## Razlaga
+
+Drugi zakon je najlaže razumeti ob prvem, ki ga že poznaš. Oba govorita o istih toplotah in delih, odgovarjata pa na različni vprašanji:
+
+| | Prvi zakon | Drugi zakon |
+|---|---|---|
+| Vprašanje | Ali se energija ohrani? | V katero smer proces teče sam od sebe? |
+| Topla kava se v sobi ohladi | dovoljeno | dovoljeno |
+| Kava se sama segreje na račun hladnejšega zraka | dovoljeno (energija je ohranjena) | prepovedano |
+| Toplotni stroj | delo je prejeta toplota minus oddana | del toplote mora vedno oditi v hladni rezervoar, zato izkoristek ni nikoli $100\,\%$ in ne preseže Carnotovega |
+| Ključna funkcija stanja | notranja energija | entropija $S$ |
+
+Spodnji razdelki desni stolpec razložijo korak za korakom.
+
+### Smer procesov
 
 **1. Povratne in nepovratne spremembe.** Sprememba je **povratna (reverzibilna)**, če jo lahko z neskončno majhno spremembo pogojev obrnemo tako, da se v začetno stanje vrneta sistem **in** okolica. Takšne spremembe so idealizacija: potekajo neskončno počasi, prek samih ravnovesnih stanj, brez trenja in brez prenosa toplote ob končni temperaturni razliki. Vsi resnični procesi (trenje, mešanje, prevajanje toplote, kemijske reakcije, prosta ekspanzija plina) so **nepovratni**.
 
@@ -19,6 +31,8 @@ Iz drugega zakona sledi tudi ena najpomembnejših tehničnih omejitev: noben **t
 - **Kelvin-Planckova:** ni mogoče sestaviti stroja, ki bi pri krožni spremembi prejemal toploto iz enega samega rezervoarja in jo v celoti pretvarjal v delo.
 
 Obe obliki sta enakovredni: iz kršitve ene bi lahko sestavili napravo, ki krši drugo.
+
+### Stroji med dvema rezervoarjema
 
 **3. Toplotni stroj.** Toplotni stroj deluje v ciklu. V vsakem ciklu iz toplega rezervoarja pri temperaturi $T_1$ prejme toploto $Q_1$, hladnemu rezervoarju pri $T_2$ odda toploto $Q_2$ (tu sta $Q_1$ in $Q_2$ pozitivni velikosti), opravi pa delo $A' = Q_1 - Q_2$ (prvi zakon za cikel). **Izkoristek** je
 
@@ -44,6 +58,8 @@ Ohladiti hladnega: $1 - 200/600 \approx 67\,\%$, segreti toplega pa le $1 - 300/
 - **Grelno število** toplotne črpalke: $\varepsilon_g = Q_1/A$, največ $\dfrac{T_1}{T_1 - T_2}$.
 
 Obe števili sta lahko večji od $1$: s $1\,\mathrm{kJ}$ dela lahko v hišo prečrpamo več kot $1\,\mathrm{kJ}$ toplote.
+
+### Entropija in njen pomen
 
 **6. Entropija.** Pri Carnotovem ciklu iz $Q_2/Q_1 = T_2/T_1$ sledi $Q_1/T_1 - Q_2/T_2 = 0$. Količina »prejeta toplota, deljena s temperaturo« se v povratnem ciklu sešteje v nič. To je znak, da obstaja funkcija stanja, katere sprememba je
 
@@ -73,7 +89,7 @@ Ne. Voda ni izoliran sistem: toploto, ki jo odda pri zmrzovanju, zamrzovalnik z 
 
 ### Primer 1 (lažji)
 
-Toplotni stroj v vsakem ciklu iz toplega rezervoarja s temperaturo $600\,\mathrm{K}$ prejme $2{,}0\,\mathrm{kJ}$ toplote in hladnemu rezervoarju s temperaturo $300\,\mathrm{K}$ odda $1{,}4\,\mathrm{kJ}$ toplote. Koliko dela opravi v enem ciklu, kolikšen je njegov izkoristek in kako se primerja s Carnotovim? Za koliko se v enem ciklu spremeni entropija obeh rezervoarjev skupaj?
+Inženirka Maja na preizkuševališču meri prototip toplotnega stroja. V vsakem ciklu iz toplega rezervoarja s temperaturo $600\,\mathrm{K}$ prejme $2{,}0\,\mathrm{kJ}$ toplote in hladnemu rezervoarju s temperaturo $300\,\mathrm{K}$ odda $1{,}4\,\mathrm{kJ}$ toplote. Koliko dela opravi v enem ciklu, kolikšen je njegov izkoristek in kako se primerja s Carnotovim? Za koliko se v enem ciklu spremeni entropija obeh rezervoarjev skupaj?
 
 **Podatki:** $T_1 = 600\,\mathrm{K}$, $T_2 = 300\,\mathrm{K}$, $Q_1 = 2{,}0\,\mathrm{kJ}$, $Q_2 = 1{,}4\,\mathrm{kJ}$
 **Iščemo:** delo $A'$, izkoristek $\eta$, Carnotov izkoristek $\eta_C$, spremembo entropije rezervoarjev $\Delta S$

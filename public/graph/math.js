@@ -1242,6 +1242,7 @@ export function numTex(v, comma = true) {
 
 export function toTex(node, opt = {}) {
   const comma = opt.comma !== false;
+  const sep = opt.sep || ","; // ločilo argumentov (znanstveni kalkulator: »;«, ker je vejica decimalna)
   const T = (n) => toTex(n, opt);
   const wrap = (n, p) => (prec(n) < p || (p >= 4 && isNegLike(n)) ? `\\left(${T(n)}\\right)` : T(n));
   if (!node) return "";
@@ -1312,12 +1313,12 @@ export function toTex(node, opt = {}) {
           return `\\binom{${a[0]}}{${a[1]}}`;
         default: {
           const f = TEXF[n.f] || `\\operatorname{${n.f}}`;
-          return `${f}\\left(${a.join(",")}\\right)`;
+          return `${f}\\left(${a.join(sep)}\\right)`;
         }
       }
     }
     case "ufn":
-      return `${n.f}${"'".repeat(n.d)}\\left(${n.args.map(T).join(",")}\\right)`;
+      return `${n.f}${"'".repeat(n.d)}\\left(${n.args.map(T).join(sep)}\\right)`;
     case "cmp":
       return n.terms.map((t, i) => (i ? `${CMPTEX[n.ops[i - 1]]} ` : "") + T(t)).join(" ");
     case "tuple":

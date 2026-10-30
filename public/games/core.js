@@ -3,8 +3,8 @@
 import { makeQuestion, shuffle, gameLang } from "./topics.js";
 import { icon } from "../icons.js";
 
-const SOUND_KEY = "kompreno.gameSound";
-const PACE_KEY = "kompreno.gamePace";
+const SOUND_KEY = "evklid.gameSound";
+const PACE_KEY = "evklid.gamePace";
 export const PACES = { slow: 0.7, mid: 1, fast: 1.3 };
 export const INK = "#1b1b2f"; // obroba v slogu starih Flash iger
 function getPace() {
@@ -97,7 +97,7 @@ export function runGame(host, opts) {
         <button type="button" class="gm-btn gm-pause" aria-label="${esc(t("games.pause"))}">${icon("pause")}</button>
       </div>
       <div class="gm-timer" hidden><i></i></div>
-      <div class="gm-stage"><canvas tabindex="0" aria-label="${esc(opts.title)}"></canvas><div class="gm-overlay"></div></div>
+      <div class="gm-stage"><canvas dir="ltr" tabindex="0" aria-label="${esc(opts.title)}"></canvas><div class="gm-overlay"></div></div>
     </div>`;
   const $ = (s) => host.querySelector(s);
   const canvas = $("canvas"), g = canvas.getContext("2d");

@@ -1,5 +1,6 @@
 // Paketi, cene in pravica do polnega dostopa.
 import "../env.js";
+import { BRAND, LEGACY } from "../brand.js";
 
 export const TRIAL_DAYS = 7;
 export const REFERRAL_DAYS = 30;
@@ -14,10 +15,10 @@ export const PRIVACY_VERSION = "2026-10-29";
 // 7,8 €; AI stane 1–2 € na dejavnega učenca → 6–7 € na mesec za nas (≈ 75 %).
 // Šolsko leto: 89 € = 7,42 € na mesec (26 % ceneje), plačilo vnaprej, manj odpovedi.
 export const PLANS = [
-  { key: "kompreno_1_month", seats: 1, interval: "month", amount: 999, label: "1 otrok, mesečno" },
-  { key: "kompreno_1_year", seats: 1, interval: "year", amount: 8900, label: "1 otrok, šolsko leto" },
-  { key: "kompreno_2_month", seats: 2, interval: "month", amount: 1599, label: "2 otroka, mesečno" },
-  { key: "kompreno_2_year", seats: 2, interval: "year", amount: 13900, label: "2 otroka, šolsko leto" },
+  { key: `${BRAND.slug}_1_month`, seats: 1, interval: "month", amount: 999, label: "1 otrok, mesečno" },
+  { key: `${BRAND.slug}_1_year`, seats: 1, interval: "year", amount: 8900, label: "1 otrok, šolsko leto" },
+  { key: `${BRAND.slug}_2_month`, seats: 2, interval: "month", amount: 1599, label: "2 otroka, mesečno" },
+  { key: `${BRAND.slug}_2_year`, seats: 2, interval: "year", amount: 13900, label: "2 otroka, šolsko leto" },
 ];
 
 // ---------- regijske cene (potrdil j, 2026-10-28) ----------
@@ -68,7 +69,7 @@ export function plansFor(currency = "EUR") {
   const r = REGIONAL_PRICES[currency];
   if (!r) return PLANS.map((p) => ({ ...p, currency: "EUR" }));
   return SHAPE.map(([seats, interval, label], i) => ({
-    key: `kompreno_${seats}_${interval}_${currency.toLowerCase()}`,
+    key: `${BRAND.slug}_${seats}_${interval}_${currency.toLowerCase()}`,
     seats,
     interval,
     amount: minorUnits(currency, r.prices[i]),
@@ -78,15 +79,15 @@ export function plansFor(currency = "EUR") {
 }
 export const ALL_PLANS = [...PLANS.map((p) => ({ ...p, currency: "EUR" })), ...Object.keys(REGIONAL_PRICES).flatMap(plansFor)];
 
-// Cene, ustvarjene pred preimenovanjem (STEMMind), imajo v Stripu lookup_key »stemmind_…«.
-const currentKey = (key) => String(key ?? "").replace(/^stemmind_/, "kompreno_");
+// Cene, ustvarjene pod prejšnjim imenom aplikacije (brand.json → legacy), imajo v Stripu lookup_key »<staro>_…«.
+const currentKey = (key) => LEGACY.reduce((k, l) => (k.startsWith(`${l.slug}_`) ? `${BRAND.slug}_${k.slice(l.slug.length + 1)}` : k), String(key ?? ""));
 export const planByKey = (key) => ALL_PLANS.find((p) => p.key === currentKey(key)) || null;
 export const planFor = (seats, interval, currency = "EUR") => plansFor(currency).find((p) => p.seats === seats && p.interval === interval) || null;
 export const monthlyAmount = (seats, currency = "EUR") => planFor(seats >= 2 ? 2 : 1, "month", currency).amount;
 
 export const freeDailyQuestions = () => {
-  const v = Number(process.env.KOMPRENO_FREE_DAILY_QUESTIONS);
-  return Number.isFinite(v) && process.env.KOMPRENO_FREE_DAILY_QUESTIONS ? v : 10;
+  const v = Number(process.env.EVKLID_FREE_DAILY_QUESTIONS);
+  return Number.isFinite(v) && process.env.EVKLID_FREE_DAILY_QUESTIONS ? v : 10;
 };
 
 // Brezplačni paket ne sme stati več, kot določi skrbnik (v dolarjih, kot zaračunava Claude API; 0 = brez omejitve).
@@ -96,15 +97,38 @@ const envUsd = (k, d) => {
   const v = Number(process.env[k]);
   return process.env[k] !== undefined && process.env[k] !== "" && Number.isFinite(v) ? v : d;
 };
-export const freeMonthlyPoolUsd = () => envUsd("KOMPRENO_FREE_POOL_USD", 10);
-export const freeStudentMonthlyUsd = () => envUsd("KOMPRENO_FREE_STUDENT_USD", 0.2);
+export const freeMonthlyPoolUsd = () => envUsd("EVKLID_FREE_POOL_USD", 10);
+export const freeStudentMonthlyUsd = () => envUsd("EVKLID_FREE_STUDENT_USD", 0.2);
+
+// ---------- paketi pred testom (enkratno plačilo, j 2026-10-30) ----------
+// Poln dostop za en profil za 7, 14 ali 30 dni, brez naročnine. Cene so 30 % nad prvim predlogom
+// (3,99 / 5,99 / 8,99 €), kot je odločil j. aiUsd = največja poraba AI v času paketa; ko je porabljena,
+// profil do konca paketa dela kot v brezplačnem paketu. Zaenkrat samo v evrih.
+export const PASSES = [
+  { days: 7, amount: 519, aiUsd: 0.75, label: "Kratka priprava" },
+  { days: 14, amount: 779, aiUsd: 1.5, label: "Temeljita priprava" },
+  { days: 30, amount: 1169, aiUsd: 3, label: "Velika priprava" },
+].map((p) => ({ ...p, key: `${BRAND.slug}_pass_${p.days}`, currency: "EUR" }));
+export const passByDays = (days) => PASSES.find((p) => p.days === Number(days)) || null;
+// Najmanjši paket, ki pokrije čas do dneva po testu (test čez daysLeft dni; 0 = danes).
+export const passForDaysLeft = (daysLeft) => PASSES.find((p) => p.days >= daysLeft + 1) || null;
+
+// Neuspelo plačilo: poln dostop ostane še GRACE_DAYS dni, nato velja brezplačni paket.
+export const GRACE_DAYS = 7;
 
 const PAID = new Set(["active", "trialing", "past_due"]);
 const later = (iso, now) => iso && Date.parse(iso.replace(" ", "T") + (iso.includes("Z") ? "" : "Z")) > now;
 
+// Naročnina daje poln dostop (status past_due samo GRACE_DAYS dni od prvega neuspelega plačila).
+export function paidActive(parent, now = Date.now()) {
+  if (!parent?.sub_status || !PAID.has(parent.sub_status)) return false;
+  if (parent.sub_status !== "past_due" || !parent.past_due_since) return true;
+  return later(new Date(Date.parse(parent.past_due_since) + GRACE_DAYS * 86400000).toISOString(), now);
+}
+
 // Kaj starš trenutno ima: paid (naročnina), trial (preizkus), bonus (mesec iz priporočila) ali free.
 export function accessFor(parent, now = Date.now(), promoSeats = 1) {
-  if (parent.sub_status && PAID.has(parent.sub_status)) {
+  if (paidActive(parent, now)) {
     return { tier: "paid", seats: parent.sub_seats || 1, until: parent.sub_period_end };
   }
   // Aktivacijska koda; med 7-dnevnim preizkusom ostaneta 2 profila.

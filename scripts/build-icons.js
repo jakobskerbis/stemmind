@@ -33,6 +33,10 @@ const NAMES = [
   "newspaper", "pin", "pin-off",
   // igre: zaklenjene igre in gradnja
   "unlock", "castle",
+  // igre v slogu mobilnih iger (public/games/fun.js)
+  "chef-hat", "car", "paw-print", "shopping-basket", "grid-2x2", "cherry", "droplet", "bomb",
+  // skeniranje nalog (public/scan/)
+  "scan-line", "scan-text", "badge-check", "image",
 ];
 const dir = path.join("node_modules", "lucide-static", "icons");
 const out = {};

@@ -2,14 +2,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import express from "express";
-import { passwordGate } from "../server/gate.js";
+import { passwordGate, gateNeeded } from "../server/gate.js";
 
 async function withServer(fn) {
   const app = express();
   app.use(passwordGate("skrivno geslo"));
   app.get("/", (_req, res) => res.send("DOMOV"));
   app.get("/api/x", (_req, res) => res.json({ ok: true }));
-  app.get("/manifest.webmanifest", (_req, res) => res.json({ name: "Kompreno" }));
+  app.get("/manifest.webmanifest", (_req, res) => res.json({ name: "Evklid" }));
   const server = app.listen(0);
   const base = `http://127.0.0.1:${server.address().port}`;
   try { await fn(base); } finally { server.close(); }
@@ -40,7 +40,7 @@ test("prijava z obrazcem nastavi piškotek, ki odpre aplikacijo", () => withServ
   assert.equal(ok.status, 303);
   assert.equal(ok.headers.get("location"), "/"); // brez preusmeritve na tujo stran
   const c = cookieOf(ok);
-  assert.match(c, /^kompreno_geslo=[a-f0-9]{64}$/);
+  assert.match(c, /^evklid_geslo=[a-f0-9]{64}$/);
   assert.match(ok.headers.get("set-cookie"), /HttpOnly/);
   const r = await fetch(base + "/api/x", { headers: { cookie: c } });
   assert.equal(r.status, 200);
@@ -62,3 +62,11 @@ test("staro geslo prek HTTP Basic še deluje", () => withServer(async (base) => 
   const r = await fetch(base + "/api/x", { headers: { authorization: auth } });
   assert.equal(r.status, 200);
 }));
+
+test("z računi skupnega gesla ni (vstop je prijava v račun), razen z EVKLID_GATE=1", () => {
+  assert.equal(gateNeeded({}), false);
+  assert.equal(gateNeeded({ EVKLID_PASSWORD: "x" }), true);
+  assert.equal(gateNeeded({ EVKLID_PASSWORD: "x", EVKLID_ACCOUNTS: "1" }), false);
+  assert.equal(gateNeeded({ EVKLID_PASSWORD: "x", EVKLID_ACCOUNTS: "1", EVKLID_GATE: "1" }), true);
+  assert.equal(gateNeeded({ EVKLID_ACCOUNTS: "1", EVKLID_GATE: "1" }), false);
+});

@@ -5,11 +5,22 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Energijo telesu lahko dovedemo na dva načina: z **delom** (stisnemo plin z batom, mešamo kapljevino) ali s **toploto** (telo postavimo na grelno ploščo). Oboje spremeni **notranjo energijo** telesa. Prvi zakon termodinamike je zakon o ohranitvi energije, razširjen na toploto: energija ne nastane iz nič in ne izgine, le prehaja med telesi in se pretvarja iz ene oblike v drugo.
-
-Prvi zakon je temelj termodinamike in z njo energijskih računov v kemiji (reakcijske entalpije, kalorimetrija), biologiji (energijska bilanca organizma), strojništvu (motorji, kompresorji, hladilniki) in meteorologiji (nastanek oblakov). V tej lekciji se naučimo računati delo plina, uporabljati prvi zakon pri posebnih spremembah idealnega plina in razlikovati izotermne in adiabatne spremembe.
+Pol minute žagaj suho desko z ročno žago, nato previdno potipaj list: topel je, čeprav ga nisi držal nad ognjem. Enako se segrejeta sveder po vrtanju v beton in brusni papir po brušenju lesa. List žage je energijo dobil z **delom** tvojih rok; enako segretje bi dosegel s **toploto**, če bi ga za hip položil na grelno ploščo. Oboje spremeni **notranjo energijo** telesa in nič energije se pri tem ne izgubi. Prvi zakon termodinamike je ta ohranitev energije, razširjena na toploto. Z njim računamo energijsko bilanco kompresorjev, motorjev, hladilnikov, kemijskih reakcij (kalorimetrija, entalpije), organizmov in dvigajočega se zraka, iz katerega nastanejo oblaki.
 
 ## Razlaga
+
+### Od mehanske energije k notranji
+
+Iz mehanike poznaš izrek o kinetični in potencialni energiji: delo zunanjih sil spremeni mehansko energijo telesa, pri trenju pa se zdi, da energija »izgine«. Prvi zakon pokaže, kam gre: v notranjo energijo. Razlike med starim in novim zakonom:
+
+| | mehanika | termodinamika |
+|---|---|---|
+| katera energija | $W_k + W_p$ telesa kot celote | notranja energija $W_n$ (gibanje in vezi delcev) |
+| kako jo spremenimo | z delom | z delom **in** s toploto |
+| trenje | energija se »izgubi« | energija ostane, poveča $W_n$ |
+| zakon | $A = \Delta W_k + \Delta W_p$ | $\Delta W_n = Q + A$ |
+
+### Pojmi in delo plina
 
 **1. Sistem in okolica.** Sistem je del sveta, ki ga opazujemo (plin v valju, reakcijska zmes, organizem), vse drugo je okolica. **Zaprt** sistem z okolico izmenjuje energijo, ne pa snovi; **izoliran** sistem ne izmenjuje ničesar. Stanje sistema opišejo **spremenljivke stanja** ($p$, $V$, $T$, $n$). Količina, ki je odvisna le od stanja, ne pa od tega, kako smo do stanja prišli, je **funkcija stanja**. Notranja energija je funkcija stanja, delo in toplota pa nista: odvisna sta od poti.
 
@@ -22,6 +33,14 @@ $$\Delta W_n = nC_V\Delta T \quad\text{za vsako spremembo idealnega plina.}$$
 $$A = -\int_{V_1}^{V_2} p\,\mathrm{d}V.$$
 
 Pri stiskanju ($\mathrm{d}V < 0$) plin delo prejme ($A > 0$), pri razširjanju ga odda ($A < 0$). Delo, ki ga plin opravi, je $A' = -A = \int p\,\mathrm{d}V$, in je enako **ploščini pod krivuljo** v diagramu $p(V)$. Pri stalnem tlaku je $A = -p\,\Delta V$.
+
+:::premisli
+Plin se razširi z $1\,\mathrm{L}$ na $3\,\mathrm{L}$. Kdaj opravi več dela: če tlak ves čas ostane $2\,\mathrm{bar}$ ali če med razširjanjem enakomerno pade z $2\,\mathrm{bar}$ na $1\,\mathrm{bar}$?
+---
+Pri stalnem tlaku: ploščina pod krivuljo v diagramu $p(V)$ je večja, ker tlak ves čas ostane pri najvišji vrednosti. Delo torej ni odvisno le od začetne in končne prostornine, temveč od poti, zato delo ni funkcija stanja.
+:::
+
+### Prvi zakon in posebne spremembe
 
 **4. Toplota.** Toplota $Q$ je energija, ki preide med telesoma zaradi temperaturne razlike. Je pozitivna, kadar jo sistem **prejme**. Toplota ni nekaj, kar telo »vsebuje«; telo ima notranjo energijo, toplota pa je le način njenega prenosa.
 
@@ -48,6 +67,14 @@ $$pV^\kappa = \text{konst.}, \qquad TV^{\kappa - 1} = \text{konst.}, \qquad \kap
 
 Adiabatna sprememba je dober model za hitre procese, pri katerih toplota ne utegne steči (stiskanje v motorju, širjenje zvoka, dvigajoči se zrak), ali za dobro izolirane sisteme. Ker je $\kappa > 1$, je adiabata v diagramu $p(V)$ bolj strma od izoterme skozi isto točko.
 
+:::premisli
+Da plin segrejemo za isti $\Delta T$, potrebujemo pri stalnem tlaku več toplote kot pri stalni prostornini. Zakaj?
+---
+Pri stalnem tlaku se plin med segrevanjem razširja in opravlja delo na okolico ($nR\Delta T$). Toplota mora pokriti enako povečanje notranje energije $nC_V\Delta T$ in še to delo, zato je $C_p = C_V + R$.
+:::
+
+### Entalpija in krožne spremembe
+
 **7. Entalpija.** Pri kemijskih reakcijah, ki potekajo pri stalnem tlaku (odprta čaša), je priročna funkcija stanja **entalpija** $H = W_n + pV$. Pri stalnem tlaku je $\Delta H = \Delta W_n + p\Delta V = Q_p$: sprememba entalpije je kar izmenjana toplota. Zato tabele v kemiji navajajo reakcijske entalpije.
 
 **8. Krožna sprememba.** Pri krožni spremembi se sistem vrne v začetno stanje, zato je $\Delta W_n = 0$ in $Q_{\text{cel}} = -A_{\text{cel}}$. Delo, ki ga plin opravi v enem ciklu, je ploščina, ki jo cikel obkroža v diagramu $p(V)$. Na tem temeljijo toplotni stroji (več v lekciji o drugem zakonu termodinamike).
@@ -56,7 +83,7 @@ Adiabatna sprememba je dober model za hitre procese, pri katerih toplota ne uteg
 
 ### Primer 1 (lažji)
 
-Plin v valju z batom se pri stalnem tlaku $1{,}0 \cdot 10^5\,\mathrm{Pa}$ razširi z $2{,}0\,\mathrm{L}$ na $5{,}0\,\mathrm{L}$ in pri tem prejme $800\,\mathrm{J}$ toplote. Koliko dela prejme plin in za koliko se mu spremeni notranja energija?
+Zrak v pnevmatskem valju mizarske stiskalnice se pri stalnem tlaku $1{,}0 \cdot 10^5\,\mathrm{Pa}$ razširi z $2{,}0\,\mathrm{L}$ na $5{,}0\,\mathrm{L}$ in pri tem prejme $800\,\mathrm{J}$ toplote. Koliko dela prejme zrak in za koliko se mu spremeni notranja energija?
 
 **Podatki:** $p = 1{,}0 \cdot 10^5\,\mathrm{Pa}$, $V_1 = 2{,}0\,\mathrm{L}$, $V_2 = 5{,}0\,\mathrm{L}$, $Q = +800\,\mathrm{J}$
 **Iščemo:** delo $A$ in spremembo notranje energije $\Delta W_n$
@@ -67,9 +94,9 @@ $A = -p\,\Delta V$, $\Delta W_n = Q + A$
 
 **Rešitev:**
 
-1. $\Delta V = 3{,}0\,\mathrm{L} = 3{,}0 \cdot 10^{-3}\,\mathrm{m^3}$.
+1. $\Delta V = 3{,}0\,\mathrm{L} = 3{,}0 \cdot 10^{-3}\,\mathrm{m^3}$; v kubičnih metrih, da bo delo v joulih.
 2. $A = -1{,}0 \cdot 10^5\,\mathrm{Pa} \cdot 3{,}0 \cdot 10^{-3}\,\mathrm{m^3} = -300\,\mathrm{J}$; plin opravi $300\,\mathrm{J}$ dela na okolico.
-3. $\Delta W_n = 800\,\mathrm{J} - 300\,\mathrm{J} = 500\,\mathrm{J}$.
+3. Po prvem zakonu sešteješ prejeto toploto in prejeto delo: $\Delta W_n = 800\,\mathrm{J} - 300\,\mathrm{J} = 500\,\mathrm{J}$.
 4. Odgovor: plin prejme delo $-300\,\mathrm{J}$ (sam opravi $300\,\mathrm{J}$ dela), njegova notranja energija se poveča za $500\,\mathrm{J}$.
 
 ### Primer 2
@@ -85,10 +112,10 @@ $A = -nRT\ln\dfrac{V_2}{V_1}$, $\Delta W_n = 0$, $Q = -A$, $p = \dfrac{nRT}{V}$
 
 **Rešitev:**
 
-1. $nRT = 0{,}50 \cdot 8{,}314 \cdot 300\,\mathrm{J} \approx 1247\,\mathrm{J}$.
+1. $nRT = 0{,}50 \cdot 8{,}314 \cdot 300\,\mathrm{J} \approx 1247\,\mathrm{J}$; ta produkt nastopa v delu in v tlaku, zato ga izračunamo najprej.
 2. $A = -1247\,\mathrm{J} \cdot \ln 3 = -1247\,\mathrm{J} \cdot 1{,}099 \approx -1370\,\mathrm{J}$; plin opravi $A' \approx 1370\,\mathrm{J}$ dela.
 3. Temperatura je stalna, zato je $\Delta W_n = 0$ in $Q = -A \approx +1370\,\mathrm{J}$.
-4. Končni tlak: $p_2 = 1247\,\mathrm{J} / 0{,}030\,\mathrm{m^3} \approx 4{,}16 \cdot 10^4\,\mathrm{Pa}$ (tretjina začetnega $1{,}25 \cdot 10^5\,\mathrm{Pa}$).
+4. Končni tlak iz plinske enačbe: $p_2 = 1247\,\mathrm{J} / 0{,}030\,\mathrm{m^3} \approx 4{,}16 \cdot 10^4\,\mathrm{Pa}$ (tretjina začetnega $1{,}25 \cdot 10^5\,\mathrm{Pa}$).
 5. Odgovor: plin opravi približno $1{,}37\,\mathrm{kJ}$ dela in prejme prav toliko toplote; notranja energija se ne spremeni, končni tlak je približno $41{,}6\,\mathrm{kPa}$.
 
 ### Primer 3 (težji)
@@ -104,17 +131,41 @@ $T_2 = T_1\left(\dfrac{V_1}{V_2}\right)^{\kappa - 1}$, $p_2 = p_1\left(\dfrac{V_
 
 **Rešitev:**
 
-1. Kompresijsko razmerje je $V_1/V_2 = 10$.
-2. $T_2 = 300\,\mathrm{K} \cdot 10^{0{,}40} \approx 300\,\mathrm{K} \cdot 2{,}512 \approx 754\,\mathrm{K}$ (okoli $480\,^\circ\mathrm{C}$).
-3. $p_2 = 1{,}0 \cdot 10^5\,\mathrm{Pa} \cdot 10^{1{,}40} \approx 2{,}51 \cdot 10^6\,\mathrm{Pa}$ (okoli $25\,\mathrm{bar}$).
-4. $p_1V_1 = 100\,\mathrm{J}$, $p_2V_2 = 2{,}512 \cdot 10^6 \cdot 1{,}0 \cdot 10^{-4}\,\mathrm{J} \approx 251\,\mathrm{J}$, zato $A = (251 - 100)/0{,}40\,\mathrm{J} \approx 378\,\mathrm{J}$.
+1. Kompresijsko razmerje je $V_1/V_2 = 10$; nastopa v obeh adiabatnih enačbah.
+2. Iz $TV^{\kappa-1} = \text{konst.}$: $T_2 = 300\,\mathrm{K} \cdot 10^{0{,}40} \approx 300\,\mathrm{K} \cdot 2{,}512 \approx 754\,\mathrm{K}$ (okoli $480\,^\circ\mathrm{C}$).
+3. Iz $pV^\kappa = \text{konst.}$: $p_2 = 1{,}0 \cdot 10^5\,\mathrm{Pa} \cdot 10^{1{,}40} \approx 2{,}51 \cdot 10^6\,\mathrm{Pa}$ (okoli $25\,\mathrm{bar}$).
+4. $p_1V_1 = 100\,\mathrm{J}$, $p_2V_2 = 2{,}512 \cdot 10^6 \cdot 1{,}0 \cdot 10^{-4}\,\mathrm{J} \approx 251\,\mathrm{J}$, zato $A = (251 - 100)/0{,}40\,\mathrm{J} \approx 378\,\mathrm{J}$; ker je $Q = 0$, je vse to delo enako $\Delta W_n$.
 5. Preizkus: $n = p_1V_1/(RT_1) \approx 0{,}0401\,\mathrm{mol}$, $\Delta W_n = n\cdot\tfrac{5}{2}R\cdot(754 - 300)\,\mathrm{K} \approx 378\,\mathrm{J}$. ✓
 6. Izotermno: $p_2 = 10\,p_1 = 1{,}0 \cdot 10^6\,\mathrm{Pa}$, $A = p_1V_1\ln 10 = 100\,\mathrm{J} \cdot 2{,}303 \approx 230\,\mathrm{J}$; plin bi to energijo sproti oddal kot toploto.
 7. Odgovor: pri adiabatnem stiskanju se zrak segreje na približno $754\,\mathrm{K}$, tlak naraste na približno $2{,}5 \cdot 10^6\,\mathrm{Pa}$, zrak pa prejme približno $378\,\mathrm{J}$ dela, ki se v celoti shrani v notranji energiji. Izotermno stiskanje bi zahtevalo le $230\,\mathrm{J}$ in dalo $10\,\mathrm{bar}$. Visoka temperatura po adiabatnem stiskanju vžge vbrizgano gorivo.
 
+### Primer 4 – zdaj ti
+
+Pnevmatski valj stiskalnice v delavnici stoji ob peči. Zrak v njem ($0{,}40\,\mathrm{mol}$, idealni dvoatomni plin) se pri stalnem tlaku segreje za $50\,\mathrm{K}$. Koliko toplote prejme, za koliko se mu poveča notranja energija in koliko dela prejme?
+
+**Podatki:** $n = 0{,}40\,\mathrm{mol}$, $\Delta T = 50\,\mathrm{K}$, $p$ stalen, $C_V = \tfrac{5}{2}R$, $C_p = \tfrac{7}{2}R$, $R = 8{,}314\,\mathrm{J/(mol\,K)}$
+**Iščemo:** toploto $Q$, spremembo notranje energije $\Delta W_n$, delo $A$
+
+:::formula
+$Q = nC_p\Delta T$, $\Delta W_n = nC_V\Delta T$, $A = -p\Delta V = -nR\Delta T$
+:::
+
+**Rešitev:**
+
+1. Molski toploti dvoatomnega plina: $C_p \approx 29{,}1\,\mathrm{J/(mol\,K)}$, $C_V \approx 20{,}8\,\mathrm{J/(mol\,K)}$.
+2. Tlak je stalen, zato toploto računamo s $C_p$: $Q = 0{,}40 \cdot 29{,}1 \cdot 50\,\mathrm{J} = 582\,\mathrm{J}$.
+3. Notranja energija idealnega plina se vedno spremeni za $nC_V\Delta T$: $\Delta W_n = 0{,}40 \cdot 20{,}8 \cdot 50\,\mathrm{J} = 416\,\mathrm{J}$.
+4. Zdaj ti: izračunaj delo $A$, ki ga zrak prejme, in preveri, ali velja $\Delta W_n = Q + A$.
+
+:::premisli
+Koliko dela prejme zrak in ali se energijska bilanca ujema?
+---
+$A = -nR\Delta T = -0{,}40 \cdot 8{,}314 \cdot 50\,\mathrm{J} \approx -166\,\mathrm{J}$: zrak opravi okoli $166\,\mathrm{J}$ dela na bat. Preizkus: $Q + A \approx 582\,\mathrm{J} - 166\,\mathrm{J} = 416\,\mathrm{J} = \Delta W_n$. ✓ Okoli $29\,\%$ prejete toplote gre v delo, ostanek ostane v zraku kot notranja energija.
+:::
+
 ## Pogoste napake
 
-- **Mešanje predznakov dela.** Odloči se za en dogovor. V tej lekciji je $A$ delo, ki ga sistem **prejme**: pri razširjanju je negativno.
+- **Mešanje predznakov dela.** Odloči se za en dogovor. Tu je $A$ delo, ki ga sistem **prejme**: pri razširjanju je negativno.
 - **Toplota in temperatura.** Pri adiabatnem stiskanju se plin segreje, čeprav ne prejme nobene toplote. Pri izotermnem razširjanju plin prejema toploto, temperatura pa se ne spremeni.
 - **$\Delta W_n = nC_p\Delta T$ pri izobarni spremembi.** Notranja energija idealnega plina se vedno spremeni za $nC_V\Delta T$. $nC_p\Delta T$ je toplota pri stalnem tlaku.
 - **Uporaba $pV^\kappa$ pri izotermni spremembi.** Pri izotermni velja $pV = \text{konst.}$, pri adiabatni $pV^\kappa = \text{konst.}$ Zamenjava da napačen tlak.
@@ -191,26 +242,42 @@ S $T = pV/(nR)$ dobimo $pV^\kappa = \text{konst.}$ Naklon adiabate je $\frac{\ma
 
 ## Preveri se
 
+? Katera od teh količin je funkcija stanja?
+- Toplota $Q$
+~ Toplota je odvisna od poti: med istima stanjema plin prejme različno toploto, odvisno od tega, po kateri spremembi ga peljemo.
+- Delo $A$
+~ Delo je ploščina pod krivuljo v diagramu $p(V)$, ta pa je odvisna od poti, ne le od začetnega in končnega stanja.
++ Notranja energija $W_n$
+> Notranja energija je odvisna le od stanja (pri idealnem plinu le od $T$). Toplota in delo opisujeta prenos energije med spremembo, zato sta odvisna od poti.
+
 ? Plin prejme $500\,\mathrm{J}$ toplote in pri tem opravi $200\,\mathrm{J}$ dela na okolico. Za koliko se mu spremeni notranja energija?
 - $700\,\mathrm{J}$
+~ Seštel si toploto in delo, kot da bi plin delo prejel. Delo, ki ga plin opravi, mu energijo odvzame.
 + $300\,\mathrm{J}$
 - $-300\,\mathrm{J}$
+~ Predznak je obrnjen: plin je prejel več energije ($500\,\mathrm{J}$), kot je je oddal ($200\,\mathrm{J}$), zato se mu notranja energija poveča.
 > $\Delta W_n = Q + A = 500\,\mathrm{J} + (-200\,\mathrm{J}) = 300\,\mathrm{J}$. Delo, ki ga plin opravi, mu energijo zmanjša.
 
 ? Kaj velja pri izotermnem razširjanju idealnega plina?
 - Plin ne prejme toplote.
+~ To velja za adiabatno spremembo. Brez dovedene toplote bi se plin pri razširjanju ohladil, temperatura ne bi ostala stalna.
 - Notranja energija se poveča.
+~ Notranja energija idealnega plina je odvisna le od temperature. Ta je stalna, zato je $\Delta W_n = 0$.
 + Prejeta toplota je enaka delu, ki ga plin opravi.
 > Pri stalni temperaturi je $\Delta W_n = 0$, zato je $Q = -A$: vsa prejeta toplota se pretvori v delo plina.
 
 ? Plin hitro (adiabatno) stisnemo. Kaj se zgodi s temperaturo?
 + Naraste.
 - Ostane enaka.
+~ »Brez toplote« ne pomeni »brez spremembe temperature«. Plin pri stiskanju prejme delo, ki mu poveča notranjo energijo.
 - Pade.
+~ Temperatura pade pri adiabatnem razširjanju, ko plin delo odda. Pri stiskanju ga prejme.
 > Pri $Q = 0$ je $\Delta W_n = A > 0$, ker plin pri stiskanju prejme delo. Notranja energija in s tem temperatura narasteta.
 
 ? Plin se pri stalnem tlaku $2{,}0 \cdot 10^5\,\mathrm{Pa}$ razširi za $3{,}0\,\mathrm{L}$. Koliko dela opravi?
 - $6{,}0 \cdot 10^5\,\mathrm{J}$
+~ Litrov nisi pretvoril v kubične metre: $1\,\mathrm{L} = 10^{-3}\,\mathrm{m^3}$.
 - $60\,\mathrm{J}$
+~ Pri pretvorbi si se zmotil za faktor 10: $3{,}0\,\mathrm{L} = 3{,}0 \cdot 10^{-3}\,\mathrm{m^3}$, ne $3{,}0 \cdot 10^{-4}\,\mathrm{m^3}$.
 + $600\,\mathrm{J}$
 > $A' = p\Delta V = 2{,}0 \cdot 10^5\,\mathrm{Pa} \cdot 3{,}0 \cdot 10^{-3}\,\mathrm{m^3} = 600\,\mathrm{J}$. $6{,}0 \cdot 10^5\,\mathrm{J}$ dobiš, če litrov ne pretvoriš v kubične metre.

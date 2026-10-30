@@ -1,18 +1,19 @@
 // Shramba (SQLite, vgrajen v Node 22).
 import "./env.js";
+import { BRAND, LEGACY } from "./brand.js";
 import fs from "node:fs";
 import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { DEFAULT_SETTINGS, normalizeSettings, normalizeWeaknessList } from "./settings.js";
 import { Flashcards } from "./flashcards.js";
 
-// Do 29. 10. 2026 se je aplikacija imenovala STEMMind in baza data/stemmind.db. Ob prvem zagonu
-// z novim imenom jo prepišemo v data/kompreno.db (VACUUM INTO zajame tudi neshranjeni WAL).
+// Baza ima ime aplikacije (data/<ime>.db). Ob prvem zagonu po preimenovanju prepišemo najnovejšo
+// bazo s prejšnjim imenom (brand.json → legacy) v novo (VACUUM INTO zajame tudi neshranjeni WAL).
 // Stara datoteka ostane kot varnostna kopija in za morebitno vrnitev na prejšnjo različico.
 export function migrateLegacyDb(file) {
-  if (file === ":memory:" || path.basename(file) !== "kompreno.db" || fs.existsSync(file)) return false;
-  const old = path.join(path.dirname(file), "stemmind.db");
-  if (!fs.existsSync(old)) return false;
+  if (file === ":memory:" || path.basename(file) !== `${BRAND.slug}.db` || fs.existsSync(file)) return false;
+  const old = LEGACY.map((l) => path.join(path.dirname(file), `${l.slug}.db`)).find((f) => fs.existsSync(f));
+  if (!old) return false;
   const src = new DatabaseSync(old);
   try {
     src.exec(`VACUUM INTO '${file.replace(/'/g, "''")}'`);
@@ -22,7 +23,7 @@ export function migrateLegacyDb(file) {
   return true;
 }
 
-export function openDb(file = process.env.KOMPRENO_DB || "data/kompreno.db") {
+export function openDb(file = process.env.EVKLID_DB || `data/${BRAND.slug}.db`) {
   if (file !== ":memory:") fs.mkdirSync(path.dirname(file), { recursive: true });
   migrateLegacyDb(file);
   const db = new DatabaseSync(file);
@@ -187,6 +188,12 @@ export function openDb(file = process.env.KOMPRENO_DB || "data/kompreno.db") {
   const convCols = db.prepare("PRAGMA table_info(conversations)").all().map((c) => c.name);
   if (!convCols.includes("path_topic")) db.exec("ALTER TABLE conversations ADD COLUMN path_topic TEXT");
   if (!convCols.includes("deep")) db.exec("ALTER TABLE conversations ADD COLUMN deep INTEGER NOT NULL DEFAULT 0");
+  // Trojno preverjanje (server/verify.js): shranjen odgovor in kartica sta vidna šele, ko sta preverjena.
+  // Stari shranjeni odgovori niso bili preverjeni, zato ostanejo skriti (privzeto 0); stare kartice ostanejo.
+  const cacheCols = db.prepare("PRAGMA table_info(answer_cache)").all().map((c) => c.name);
+  if (!cacheCols.includes("verified")) db.exec("ALTER TABLE answer_cache ADD COLUMN verified INTEGER NOT NULL DEFAULT 0");
+  const cardCols = db.prepare("PRAGMA table_info(flashcards)").all().map((c) => c.name);
+  if (!cardCols.includes("verified")) db.exec("ALTER TABLE flashcards ADD COLUMN verified INTEGER NOT NULL DEFAULT 1");
   // Priprava na test, ki jo je nastavil test iz urnika (server/schedule.js).
   const planCols = db.prepare("PRAGMA table_info(test_plans)").all().map((c) => c.name);
   if (!planCols.includes("event_id")) db.exec("ALTER TABLE test_plans ADD COLUMN event_id TEXT");

@@ -4,7 +4,8 @@ import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { getTopic, getPath } from "../server/curriculum.js";
 import { KNOWLEDGE, COLLECTIONS, PASS, PASS_REWARDS, RARITY_TIER, seasonOf, seasonLabel, topicTier } from "../public/zbirke.js";
-import { avatarSvg, cleanAvatar, SLOTS, ITEMS } from "../public/avatar.js";
+import { avatarSvg, cleanAvatar, SLOTS, ITEMS, itemRarity } from "../public/avatar.js";
+import SL from "../public/i18n/sl.js";
 import { publicAvatar } from "../server/avatar.js";
 
 test("zbirke: every item draws, every condition topic exists at the item's level, XP ladder rises with rarity", () => {
@@ -23,15 +24,28 @@ test("zbirke: every item draws, every condition topic exists at the item's level
     if (x.need?.t) assert.equal(topicTier(getPath(getTopic(x.need.t[0]).path)), RARITY_TIER[x.rarity], `${x.id}: zgled`);
   }
   // Za znanje snovi je legendaren en sam predmet; ostali epski, legendarni in mitični so na Poti znanja (XP).
-  assert.deepEqual(KNOWLEDGE.filter((x) => x.rarity === "legendary" && !x.need?.xp).map((x) => x.id), ["fx_doppler"]);
+  assert.deepEqual(KNOWLEDGE.filter((x) => x.rarity === "legendary" && !x.need?.xp && !x.need?.league && x.collection !== "igre").map((x) => x.id), ["fx_doppler"]);
   const pot = KNOWLEDGE.filter((x) => x.collection === "pot");
-  assert.ok(pot.length >= 12 && pot.every((x) => x.need.xp > 0 && ["epic", "legendary", "mythic"].includes(x.rarity)));
+  assert.ok(pot.length >= 12 && pot.every((x) => x.need.xp > 0 && ["epic", "legendary", "mythic", "cosmic", "eternal"].includes(x.rarity)));
   for (let i = 1; i < pot.length; i++) {
     assert.ok(pot[i].need.xp > pot[i - 1].need.xp, pot[i].id);
     assert.ok(RARITY_TIER[pot[i].rarity] >= RARITY_TIER[pot[i - 1].rarity], pot[i].id);
   }
-  assert.ok(KNOWLEDGE.filter((x) => x.rarity === "mythic").every((x) => x.collection === "pot"));
-  for (const c of COLLECTIONS.filter((c) => c.id !== "pot")) {
+  assert.ok(KNOWLEDGE.filter((x) => x.rarity === "mythic").every((x) => ["pot", "lige"].includes(x.collection)));
+  for (const x of ITEMS) assert.ok(SL[`games.rarity.${itemRarity(x)}`], `${x.id}: ni imena redkosti`);
+  // Kozmični in večni (j, 30. 10. 2026): nad mitičnimi, samo za največ XP ali iger, nikoli za kovance.
+  for (const r of ["cosmic", "eternal"]) assert.ok(KNOWLEDGE.filter((x) => x.rarity === r).length >= 2 && KNOWLEDGE.filter((x) => x.rarity === r).every((x) => ["pot", "igre"].includes(x.collection)), r);
+  // Zmage na lestvicah: samo značke, ena za vsako ligo, nobena se ne kupi.
+  const lige = KNOWLEDGE.filter((x) => x.collection === "lige");
+  assert.ok(lige.length === 10 && lige.every((x) => x.slot === "badge" && x.need.league && x.earn && !x.price));
+  // Liki iz iger: pogoj so igre (pravilni odgovori ali različne končane igre), redkost raste s pogojem.
+  const igre = KNOWLEDGE.filter((x) => x.collection === "igre");
+  assert.ok(igre.filter((x) => x.slot === "kind").length >= 12 && igre.every((x) => (x.need.games > 0) !== (x.need.cleared > 0) && x.earn && !x.price));
+  for (const key of ["games", "cleared"]) {
+    const l = igre.filter((x) => x.need[key]);
+    for (let i = 1; i < l.length; i++) assert.ok(l[i].need[key] > l[i - 1].need[key] && RARITY_TIER[l[i].rarity] >= RARITY_TIER[l[i - 1].rarity], l[i].id);
+  }
+  for (const c of COLLECTIONS.filter((c) => !["pot", "lige", "igre"].includes(c.id))) {
     const n = KNOWLEDGE.filter((x) => x.collection === c.id && !x.set).length;
     const set = KNOWLEDGE.find((x) => x.collection === c.id && x.set);
     assert.ok(set && set.need.own < n, c.id);
@@ -53,13 +67,33 @@ test("zbirke: seasons follow the school half-years", () => {
   assert.equal(seasonLabel("2026-2"), "26/27 II");
 });
 
+test("avatar: up to 6 items per drawer, same spot replaces, old single ids still read", async () => {
+  const { wear, takeOff, slotFull, MULTI_MAX } = await import("../public/avatar.js");
+  let eq = cleanAvatar({ acc: "acc_glasses" }, [], true); // star zapis z enim nizom
+  assert.deepEqual(eq.acc, ["acc_glasses"]);
+  eq = wear(wear(wear(eq, "acc_blush"), "pot_pregl"), "acc_shades"); // druga očala zamenjajo prva
+  assert.deepEqual(cleanAvatar(eq, [], true).acc, ["acc_blush", "pot_pregl", "acc_shades"]);
+  assert.deepEqual(takeOff(eq, "acc_blush").acc, ["pot_pregl", "acc_shades"]);
+  assert.deepEqual(wear(eq, "acc_none").acc, []);
+  const els = ["el_h", "el_he", "el_ne", "el_o", "el_na", "el_fe", "el_s"];
+  const many = cleanAvatar({ badge: els }, els);
+  assert.equal(many.badge.length, MULTI_MAX);
+  assert.ok(slotFull(many, "el_mg") && !slotFull(many, "el_s") && !many.badge.includes("el_h"));
+  assert.deepEqual(cleanAvatar({ outfit: ["outfit_bow", "outfit_scarf"], hat: ["hat_crown", "hat_phones", "pot_laurel"] }, [], true), { ...cleanAvatar({}, []), outfit: ["outfit_scarf"], hat: ["hat_crown", "hat_phones", "pot_laurel"] });
+  for (let n = 1; n <= MULTI_MAX; n++) {
+    const svg = avatarSvg({ badge: [...els.slice(0, n - 1), "pot_infinity"], fx: ["pot_aurora", "fx_spark"], acc: ["acc_glasses", "pot_pregl"] });
+    assert.ok(!/undefined|NaN/.test(svg) && svg.endsWith("</svg>"), `${n} badges`);
+  }
+  assert.deepEqual(cleanAvatar({ eyes: ["eyes_happy"] }, []).eyes, "eyes_dots"); // en predmet: seznam ne velja
+});
+
 test("zbirke: seasonal ids and unknown parts are cleaned", () => {
-  assert.equal(cleanAvatar({ outfit: "pass_coat~2026-1" }, ["pass_coat~2026-1"]).outfit, "pass_coat~2026-1");
-  assert.equal(cleanAvatar({ outfit: "pass_coat" }, ["pass_coat"]).outfit, "outfit_none");
-  assert.equal(cleanAvatar({ outfit: "pass_coat~2026-1" }, []).outfit, "outfit_none");
-  assert.equal(cleanAvatar({ badge: "el_fe~2026-1" }, ["el_fe~2026-1"]).badge, "badge_none");
-  assert.equal(cleanAvatar({ fx: "el_fe" }, ["el_fe"]).fx, "fx_none"); // napačen predal
-  assert.equal(publicAvatar(JSON.stringify({ badge: "el_fe", outfit: "pass_coat~2026-1", hat: "<script>" })).outfit, "pass_coat~2026-1");
+  assert.deepEqual(cleanAvatar({ outfit: "pass_coat~2026-1" }, ["pass_coat~2026-1"]).outfit, ["pass_coat~2026-1"]);
+  assert.deepEqual(cleanAvatar({ outfit: "pass_coat" }, ["pass_coat"]).outfit, []);
+  assert.deepEqual(cleanAvatar({ outfit: "pass_coat~2026-1" }, []).outfit, []);
+  assert.deepEqual(cleanAvatar({ badge: "el_fe~2026-1" }, ["el_fe~2026-1"]).badge, []);
+  assert.deepEqual(cleanAvatar({ fx: "el_fe" }, ["el_fe"]).fx, []); // napačen predal
+  assert.deepEqual(publicAvatar(JSON.stringify({ badge: "el_fe", outfit: "pass_coat~2026-1", hat: "<script>" })).outfit, ["pass_coat~2026-1"]);
 });
 
 test("zbirke: items unlock only from mastered topics and the learning pass, never from coins", async () => {
@@ -102,8 +136,8 @@ test("zbirke: items unlock only from mastered topics and the learning pass, neve
     xp(s.id, 0, "x");
     assert.equal((await call(`/api/students/${s.id}/avatar/buy`, { item: "el_ag" })).status, 400);
     r = await call(`/api/students/${s.id}/avatar`, { equipped: { badge: "el_fe", fx: "fx_spark" } });
-    assert.equal(r.body.equipped.badge, "el_fe");
-    assert.equal(r.body.equipped.fx, "fx_none");
+    assert.deepEqual(r.body.equipped.badge, ["el_fe"]);
+    assert.deepEqual(r.body.equipped.fx, []);
     assert.ok(r.body.owned.includes("el_fe"));
 
     // Vitrina: samo svoji predmeti, največ trije.
@@ -138,6 +172,7 @@ test("zbirke: items unlock only from mastered topics and the learning pass, neve
     const k = new Knowledge(store.db);
     assert.ok(k.revoke(s.id, "el_fe", "test"));
     assert.ok(!k.owned(s.id).includes("el_fe"));
+    assert.ok(!JSON.parse(store.db.prepare("SELECT equipped FROM avatar_state WHERE student_id = ?").get(s.id).equipped).badge.includes("el_fe"));
     k.sync(s.id);
     assert.ok(!k.owned(s.id).includes("el_fe"));
     assert.equal(store.db.prepare("SELECT revoke_reason FROM knowledge_items WHERE student_id = ? AND item = 'el_fe'").get(s.id).revoke_reason, "test");
@@ -157,9 +192,9 @@ test("zbirke: items unlock only from mastered topics and the learning pass, neve
     assert.ok(k.sync(s.id).includes("pot_noether"));
     assert.ok(!k.owned(s.id).includes("pot_aurora"));
     r = await call(`/api/students/${s.id}/avatar`, { equipped: { hat: "pot_laurel", bg: "pot_noether", fx: "pot_aurora" } });
-    assert.equal(r.body.equipped.hat, "pot_laurel");
+    assert.deepEqual(r.body.equipped.hat, ["pot_laurel"]);
     assert.equal(r.body.equipped.bg, "pot_noether");
-    assert.equal(r.body.equipped.fx, "fx_none");
+    assert.deepEqual(r.body.equipped.fx, []);
     assert.equal((await call(`/api/students/${s.id}/zbirke`)).body.xp, mythic);
   } finally {
     server.close();
@@ -185,4 +220,33 @@ test("day streak: today does not break it yet, one missed day a week is frozen",
   assert.equal(p.dayStreak(sid), 9); // luknji 8 dni narazen: obe zamrznjeni
   on(0, 3);
   assert.equal(p.dayStreak(sid), 1); // dva zaporedna zamujena dneva
+});
+
+test("game characters unlock from game results, drawn in the student's colour, never bought", async () => {
+  const store = openDb(":memory:");
+  const app = createApp(store, {});
+  const server = app.listen(0);
+  const base = `http://localhost:${server.address().port}`;
+  const call = async (p, body) => {
+    const res = await fetch(base + p, { method: body ? "POST" : "GET", headers: { "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+    return { status: res.status, body: await res.json() };
+  };
+  try {
+    const s = (await call("/api/students", { name: "Igralka", settings: { curriculum_level: "8. razred" } })).body;
+    let r = await call(`/api/students/${s.id}/avatar`, { equipped: { kind: "kind_cat" } });
+    assert.equal(r.body.equipped.kind, "kind_blob"); // še zaklenjen
+    r = await call(`/api/students/${s.id}/games/result`, { game: "maze:frac_add", score: 10, correct: 25, wrong: 1, tier: 1 });
+    assert.ok(r.body.zbirke.includes("kind_cat") && !r.body.zbirke.includes("kind_bear"));
+    r = await call(`/api/students/${s.id}/avatar`, { equipped: { kind: "kind_cat", body: "body_green" } });
+    assert.equal(r.body.equipped.kind, "kind_cat");
+    assert.equal((await call(`/api/students/${s.id}/avatar/buy`, { item: "kind_bear" })).status, 400);
+    const z = (await call(`/api/students/${s.id}/zbirke`)).body;
+    assert.equal(z.games.correct, 25);
+    assert.equal(z.items.find((i) => i.id === "kind_cat").source, "games");
+    // Lik prevzame barvo telesa (gradient), ne svoje.
+    const svg = avatarSvg({ kind: "kind_cat", body: "body_green" });
+    assert.ok(svg.includes("M24 44L26 12") && /url\(#gav\d+\)/.test(svg) && !/undefined|NaN/.test(svg));
+  } finally {
+    server.close();
+  }
 });

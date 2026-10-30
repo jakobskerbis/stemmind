@@ -25,7 +25,7 @@ export function migrateAccounts(db) {
       stripe_customer_id TEXT,
       sub_id TEXT,
       sub_status TEXT,                        -- active | trialing | past_due | canceled | ...
-      sub_plan TEXT,                          -- npr. kompreno_2_month
+      sub_plan TEXT,                          -- npr. evklid_2_month
       sub_seats INTEGER NOT NULL DEFAULT 0,
       sub_period_end TEXT,
       sub_cancel_at_period_end INTEGER NOT NULL DEFAULT 0,
@@ -110,8 +110,13 @@ export function migrateAccounts(db) {
   if (!pcols.includes("promo_until")) db.exec("ALTER TABLE parents ADD COLUMN promo_until TEXT");
   // Datum rojstva imetnika računa (preverjanje starosti, glej age.js). Stari računi: NULL = polnoleten.
   if (!pcols.includes("birth_date")) db.exec("ALTER TABLE parents ADD COLUMN birth_date TEXT");
+  // Gost (uporaba brez registracije, odstranjena 2026-10-29; stari gostje ostanejo): račun brez e-naslova, vezan na piškotek naprave.
+  // guest_net = zgoščeni IP omrežja, da brisanje piškotkov ne da nove brezplačne kvote.
+  if (!pcols.includes("is_guest")) db.exec("ALTER TABLE parents ADD COLUMN is_guest INTEGER NOT NULL DEFAULT 0");
+  if (!pcols.includes("guest_net")) db.exec("ALTER TABLE parents ADD COLUMN guest_net TEXT");
   const cols = db.prepare("PRAGMA table_info(students)").all().map((c) => c.name);
   if (!cols.includes("parent_id")) db.exec("ALTER TABLE students ADD COLUMN parent_id INTEGER REFERENCES parents(id) ON DELETE CASCADE");
   if (!cols.includes("birth_year")) db.exec("ALTER TABLE students ADD COLUMN birth_year INTEGER");
   db.exec("CREATE INDEX IF NOT EXISTS idx_students_parent ON students(parent_id)");
+  db.exec("CREATE INDEX IF NOT EXISTS idx_parents_guest_net ON parents(guest_net) WHERE is_guest = 1");
 }

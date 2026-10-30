@@ -5,15 +5,15 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Bakterija *E. coli* se v dobrih pogojih razdeli vsakih $20$ do $40$ minut. Pred vsako delitvijo mora prepisati vseh približno $4{,}6$ milijona baznih parov svoje DNA, in to skoraj brez napake.
+V vrečki zmečkaj nekaj jagod z žličko detergenta za posodo in ščepcem soli, precedi in po robu kozarca nalij mrzel alkohol. Na meji tekočin se v nekaj minutah pokažejo bele, sluzaste niti: DNA, vidna s prostim očesom. Bakterija *E. coli* ima v svoji DNA približno $4{,}6$ milijona baznih parov, kar je manj podatkov kot ena fotografija s telefona. Prepisati jih mora pred vsako delitvijo, v dobrih pogojih vsakih $20$ do $40$ minut, in to skoraj brez napake.
 
-Kako je molekula zgrajena, da se da tako hitro in natančno prepisati? Odgovor je v zgradbi: dve verigi se ujemata kot ključ in ključavnica, zato vsaka nosi navodilo za drugo.
-
-Iz poglavja o proteinih veš, da zaporedje aminokislin določa obliko in delovanje proteina. Nukleinske kisline so shramba in prenašalec tega zaporedja.
+Natančno kopijo omogoča zgradba: dve verigi se ujemata kot ključ in ključavnica, zato vsaka nosi navodilo za drugo. Tako nukleinske kisline hranijo in prenašajo zaporedje, ki določa obliko in delovanje proteinov.
 
 ## Razlaga
 
-**1. Nukleotid je gradnik.** Nukleinska kislina je polimer. Njena monomerna enota je **nukleotid**, ki ima tri dele:
+### Blok 1: nukleotid je gradnik
+
+Nukleinska kislina je polimer. Njena monomerna enota je **nukleotid**, ki ima tri dele:
 
 - **pentozo** (sladkor s petimi ogljiki): v RNA je to **riboza**, v DNA **2'-deoksiriboza**, ki ji na ogljiku C2' manjka skupina $-\mathrm{OH}$;
 - **dušikovo bazo**, vezano na C1' sladkorja;
@@ -21,13 +21,21 @@ Iz poglavja o proteinih veš, da zaporedje aminokislin določa obliko in delovan
 
 Sladkor z bazo brez fosfata je **nukleozid** (npr. adenozin). Ogljike sladkorja označujemo s črtico (1', 2' …), da jih ločimo od atomov baze.
 
-**2. Baze.** **Purina** sta adenin (A) in gvanin (G); imata dva zlita obroča. **Pirimidini** so citozin (C), timin (T) in uracil (U); imajo en obroč. DNA vsebuje A, G, C, T. RNA vsebuje A, G, C, U: uracil je timin brez metilne skupine.
+**Purina** sta adenin (A) in gvanin (G); imata dva zlita obroča. **Pirimidini** so citozin (C), timin (T) in uracil (U); imajo en obroč. DNA vsebuje A, G, C, T. RNA vsebuje A, G, C, U: uracil je timin brez metilne skupine.
 
-**3. Veriga in njena smer.** Nukleotidi se povežejo s **fosfodiestrsko vezjo**: fosfat poveže ogljik C3' enega sladkorja s C5' naslednjega. Nastane ogrodje sladkor–fosfat–sladkor, iz katerega štrlijo baze. Pri $\mathrm{pH} \approx 7$ ima vsak fosfat negativni naboj, zato je ogrodje polianion.
+*Preveri:* kaj manjka adenozinu, da bi bil nukleotid? (Fosfat.)
+
+### Blok 2: veriga in njena smer
+
+Nukleotidi se povežejo s **fosfodiestrsko vezjo**: fosfat poveže ogljik C3' enega sladkorja s C5' naslednjega. Nastane ogrodje sladkor–fosfat–sladkor, iz katerega štrlijo baze. Pri $\mathrm{pH} \approx 7$ ima vsak fosfat negativni naboj, zato je ogrodje polianion.
 
 Veriga ima dva različna konca: na enem je prost 5'-fosfat, na drugem prosta 3'-OH skupina. Zaporedje zato vedno pišemo **od 5' proti 3'**: 5'-ATGC-3' ni isto kot 5'-CGTA-3'.
 
-**4. Dvojna vijačnica DNA.** V celici DNA tvori dve verigi, ovite druga okoli druge v desnosučno vijačnico (oblika B). Pomembna so tri pravila:
+*Preveri:* kje je na verigi prosta skupina $-\mathrm{OH}$, na koncu 5' ali 3'? (Na koncu 3'.)
+
+### Blok 3: dvojna vijačnica DNA
+
+V celici DNA tvori dve verigi, ovite druga okoli druge v desnosučno vijačnico (oblika B). Pomembna so tri pravila:
 
 - Verigi sta **antiparalelni**: ena teče $5' \to 3'$, druga ob njej $3' \to 5'$.
 - Baze se parijo **komplementarno**: A s T z dvema vodikovima vezema, G s C s tremi.
@@ -41,13 +49,17 @@ Zakaj se v dvojni vijačnici ne moreta spariti dva purina, npr. A in G?
 Dva purina imata skupaj štiri obroče in sta preširoka za razdaljo med ogrodjema. Dva pirimidina bi bila preozka. Le par purin–pirimidin ohrani stalen premer vijačnice, pa še vodikove vezi se ujemajo le pri A–T in G–C.
 :::
 
-**5. Chargaffova pravila.** Iz parjenja sledi: v dvoverižni DNA je $\%A = \%T$ in $\%G = \%C$, torej je purinov toliko kot pirimidinov. Za eno samo verigo ali za RNA to ne velja.
+**Chargaffova pravila.** Iz parjenja sledi: v dvoverižni DNA je $\%A = \%T$ in $\%G = \%C$, torej je purinov toliko kot pirimidinov. Za eno samo verigo ali za RNA to ne velja.
 
-**6. Mere vijačnice.** Sosednja bazna para sta razmaknjena $0{,}34\,\text{nm}$. En zavoj vijačnice ima približno $10{,}5$ baznega para. Na površini sta velik in majhen žleb, kamor se vežejo proteini.
+**Mere vijačnice.** Sosednja bazna para sta razmaknjena $0{,}34\,\text{nm}$. En zavoj vijačnice ima približno $10{,}5$ baznega para. Na površini sta velik in majhen žleb, kamor se vežejo proteini.
 
 Vijačnico drži skupaj predvsem **zlaganje baz** (privlak med ploskvami sosednjih baznih parov), vodikove vezi pa določajo, kateri par je pravi. DNA z več pari G–C je stabilnejša: za ločitev verig, **denaturacijo**, potrebuje višjo temperaturo.
 
-**7. RNA.** RNA je običajno ena sama veriga. Ta se zvije sama nase: komplementarni deli tvorijo kratke dvojne odseke, lasnice. Tako nastanejo različne oblike za različne naloge:
+*Preveri:* koliko baznih parov obsega $10$ zavojev vijačnice? (Približno $105$.)
+
+### Blok 4: RNA
+
+RNA je običajno ena sama veriga. Ta se zvije sama nase: komplementarni deli tvorijo kratke dvojne odseke, lasnice. Tako nastanejo različne oblike za različne naloge:
 
 - **mRNA** prenaša zapis gena do ribosoma;
 - **tRNA** prinaša aminokisline;
@@ -62,9 +74,15 @@ Dodatna skupina 2'-OH naredi RNA kemijsko manj stabilno. V bazični raztopini na
 | oblika | dvojna vijačnica | ena veriga, zvita |
 | obstojnost | velika | manjša (2'-OH) |
 
-**8. Podvajanje je semikonzervativno.** Pri podvajanju (replikaciji) se verigi ločita in vsaka služi kot **matrica** za novo verigo. Vsaka hčerinska molekula ima eno staro in eno novo verigo. To je leta 1958 pokazal poskus Meselsona in Stahla s težkim dušikom $^{15}\mathrm{N}$.
+*Preveri:* zakaj RNA v bazični raztopini razpade, DNA pa ne? (Zaradi skupine 2'-OH.)
 
-**9. Replikacijske vilice.** Podvajanje se začne na **izvoru podvajanja** (ori). Od tam gresta dve vilici v nasprotnih smereh. V vsaki vilici delajo encimi:
+### Blok 5: podvajanje je semikonzervativno
+
+Pri podvajanju (replikaciji) se verigi ločita in vsaka služi kot **matrica** za novo verigo. Vsaka hčerinska molekula ima eno staro in eno novo verigo. To je leta 1958 pokazal poskus Meselsona in Stahla s težkim dušikom $^{15}\mathrm{N}$.
+
+### Blok 6: replikacijske vilice
+
+Podvajanje se začne na **izvoru podvajanja** (ori). Od tam gresta dve vilici v nasprotnih smereh. V vsaki vilici delajo encimi:
 
 - **helikaza** razpira verigi (porablja ATP);
 - **proteini SSB** varujejo razprti enojni verigi;
@@ -76,7 +94,11 @@ DNA-polimeraza ima dve omejitvi. Nukleotid lahko doda le na prosto 3'-OH skupino
 
 Gradniki so deoksinukleozid-trifosfati (dATP, dGTP, dCTP, dTTP). Ob vezavi se odcepi pirofosfat, ki ga pirofosfataza hidrolizira. To naredi reakcijo močno eksergono, kot pri sklopljenih reakcijah iz bioenergetike.
 
-**10. Vodilna in zaostajajoča veriga.** Ker sta matrici antiparalelni, se ena nova veriga lahko podaljšuje ves čas v smeri gibanja vilice. To je **vodilna veriga**. Druga mora rasti stran od vilice, zato nastaja v koščkih, **Okazakijevih fragmentih** (pri bakterijah $1000$ do $2000$ nukleotidov). To je **zaostajajoča veriga**.
+*Preveri:* kateri encim naredi začetni oligonukleotid iz RNA? (Primaza.)
+
+### Blok 7: vodilna in zaostajajoča veriga
+
+Ker sta matrici antiparalelni, se ena nova veriga lahko podaljšuje ves čas v smeri gibanja vilice. To je **vodilna veriga**. Druga mora rasti stran od vilice, zato nastaja v koščkih, **Okazakijevih fragmentih** (pri bakterijah $1000$ do $2000$ nukleotidov). To je **zaostajajoča veriga**.
 
 Na sliki v besedah:
 
@@ -95,13 +117,15 @@ Nastajala bi neprekinjeno, tako kot vodilna. Okazakijevi fragmenti so potrebni s
 
 Na koncu DNA-polimeraza I pri bakterijah odstrani primerje iz RNA in vrzeli zapolni z DNA. **DNA-ligaza** nato poveže sosednje fragmente s fosfodiestrsko vezjo.
 
-**11. Natančnost.** Polimeraza ima tudi eksonukleazno aktivnost $3' \to 5'$. Napačno vgrajen nukleotid takoj odreže in ga zamenja s pravim (**popravljanje napak**). Skupaj s kasnejšimi popravki ostane manj kot ena napaka na $10^9$ nukleotidov.
+### Blok 8: natančnost
+
+Polimeraza ima tudi eksonukleazno aktivnost $3' \to 5'$. Napačno vgrajen nukleotid takoj odreže in ga zamenja s pravim (**popravljanje napak**). Skupaj s kasnejšimi popravki ostane manj kot ena napaka na $10^9$ nukleotidov.
 
 ## Rešeni primeri
 
 ### Primer 1 (lažji): Chargaffova pravila
 
-Analiza dvoverižne DNA nekega organizma pokaže, da je $22\,\%$ baz gvanin. Kolikšen delež je citozina, adenina in timina?
+Laboratorijski analizator pošlje rezultat kar na telefon: v dvoverižni DNA nekega organizma je $22\,\%$ baz gvanin. Kolikšen delež je citozina, adenina in timina?
 
 **Podatki:** dvoverižna DNA, $\%G = 22\,\%$
 **Iščemo:** $\%C$, $\%A$, $\%T$

@@ -111,7 +111,9 @@ export function createCalculator(root, opts) {
   }
   function upgrade(s) {
     const base = emptyState();
-    return { ...base, ...s, settings: { ...base.settings, ...(s.settings || {}) }, view: s.view || base.view, items: s.items.map((it) => ({ id: it.id || newId(), ...it })) };
+    // prazen graf vedno začne v običajnem oknu (prej se je lahko shranilo oddaljeno −150 … 150)
+    const blank = !s.items.some((it) => it.type !== "expr" || String(it.text || "").trim());
+    return { ...base, ...s, settings: { ...base.settings, ...(s.settings || {}) }, view: (!blank && s.view) || base.view, items: s.items.map((it) => ({ id: it.id || newId(), ...it })) };
   }
   function scheduleSave() {
     clearTimeout(saveTimer);
@@ -1039,7 +1041,7 @@ export function createCalculator(root, opts) {
   async function exportImage() {
     const blob = await view.toBlob(legend());
     if (!blob) return;
-    const file = typeof File !== "undefined" ? new File([blob], "kompreno-graf.png", { type: "image/png" }) : null;
+    const file = typeof File !== "undefined" ? new File([blob], "evklid-graf.png", { type: "image/png" }) : null;
     if (isTouch() && file && navigator.canShare?.({ files: [file] })) {
       try {
         await navigator.share({ files: [file], title: t("gc.title") });
@@ -1050,7 +1052,7 @@ export function createCalculator(root, opts) {
     }
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "kompreno-graf.png";
+    a.download = "evklid-graf.png";
     document.body.append(a);
     a.click();
     a.remove();

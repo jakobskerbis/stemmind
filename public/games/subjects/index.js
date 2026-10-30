@@ -4,6 +4,8 @@ import * as MAT15 from "./mat15.js";
 import * as MAT2 from "./mat2.js";
 import * as FIZ2 from "./fiz2.js";
 import * as KEM2 from "./kem2.js";
+import * as BIO2 from "./bio2.js";
+import * as NAR2 from "./nar2.js";
 import * as SPO from "./spo.js";
 import * as NIT from "./nit.js";
 import * as NAR from "./nar.js";
@@ -14,4 +16,4 @@ import * as GEO from "./geo.js";
 import * as RAC from "./rac.js";
 import * as EKO from "./eko.js";
 
-export const PACKS = { MAT15, MAT2, FIZ2, KEM2, SPO, NIT, NAR, FIZ, KEM, BIO, GEO, RAC, EKO };
+export const PACKS = { MAT15, MAT2, FIZ2, KEM2, BIO2, NAR2, SPO, NIT, NAR, FIZ, KEM, BIO, GEO, RAC, EKO };

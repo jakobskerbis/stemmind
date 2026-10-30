@@ -5,11 +5,11 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Elektrostatika opisuje sile med mirujočimi naboji. To so sile, ki držijo skupaj atome, molekule in kristale: ionska vez v kuhinjski soli, vodikova vez v vodi, zvijanje beljakovine in vezava zdravila na receptor so v jedru električne interakcije. Kemija je na neki način uporabna elektrostatika.
+Podrgni napihnjen balon ob suhe lase in ga počasi približaj koščkom papirja na mizi. Koščki poskočijo k balonu, še preden se jih ta dotakne, in pri tem premagajo lastno težo. To je elektrostatika: sila med mirujočimi naboji. Ista sila drži skupaj atome, molekule in kristale; ionska vez v kuhinjski soli, vodikova vez v vodi, zvijanje beljakovine in vezava zdravila na receptor so v jedru električne interakcije, zato je kemija na neki način uporabna elektrostatika.
 
-Iste zakonitosti uporabljamo v tehniki in laboratoriju: kondenzatorji v elektroniki, elektroforeza, ki ločuje DNK in beljakovine po naboju, elektrostatični filtri v dimnikih, fotokopirni stroji, masni spektrometer in elektronski mikroskop, kjer električno polje pospeši nabite delce.
+Zunaj kemije jo srečaš v delavnici pri elektrostatičnem lakiranju kovinskih ograj, v elektrostatičnih filtrih v dimnikih in v fotokopirnih strojih. V laboratoriju elektroforeza z njo ločuje DNK in beljakovine po naboju, v masnem spektrometru in elektronskem mikroskopu pa električno polje pospeši nabite delce. Kondenzatorji v elektroniki pa shranjujejo energijo ločenih nabojev.
 
-V tej lekciji spoznaš:
+Vse to stoji na štirih pojmih, ki se gradijo drug na drugem:
 
 - **Coulombov zakon** za silo med točkastima nabojema in vpliv snovi med njima,
 - **električno polje** kot lastnost prostora okoli nabojev in kako ga seštevamo iz več nabojev,
@@ -17,6 +17,10 @@ V tej lekciji spoznaš:
 - **kondenzator**, njegovo kapaciteto in energijo, ki jo shrani.
 
 ## Razlaga
+
+Elektrostatika je v marsičem dvojček gravitacije, ki jo že poznaš. Najhitreje jo zgradiš tako, da ob vsakem pojmu vprašaš: kaj je enako kot pri teži in kaj drugače?
+
+### Naboj in sila: kot gravitacija, a z dvema predznakoma
 
 **1. Naboj.** Naboj je lastnost delcev; obstaja pozitiven in negativen. Enoimenska naboja se odbijata, raznoimenska privlačita. Naboj je **kvantiziran**: vsak naboj je celoštevilski večkratnik osnovnega naboja $e_0 = 1{,}602 \cdot 10^{-19}\,\mathrm{C}$ (elektron ima $-e_0$, proton $+e_0$). Naboj se **ohranja**: v zaprtem sistemu je vsota nabojev stalna. Enota je **coulomb**, $1\,\mathrm{C} = 1\,\mathrm{A\,s}$.
 
@@ -26,13 +30,22 @@ $$F = \frac{1}{4\pi\varepsilon_0}\,\frac{|q_1q_2|}{r^2}, \qquad \frac{1}{4\pi\va
 
 Sila leži na zveznici nabojev; $\varepsilon_0 = 8{,}85 \cdot 10^{-12}\,\mathrm{A\,s/(V\,m)}$ je **influenčna konstanta**. Če sta naboja v snovi z **dielektričnostjo** $\varepsilon$ (voda: $\varepsilon \approx 80$), je sila $\varepsilon$-krat manjša. Zato se soli v vodi raztapljajo: privlak med ioni je tam okoli osemdesetkrat šibkejši.
 
+| | Gravitacija | Elektrostatika |
+|---|---|---|
+| vir sile | masa (vedno pozitivna) | naboj ($+$ ali $-$) |
+| smer sile | vedno privlak | privlak ali odboj |
+| odvisnost od razdalje | $1/r^2$ | $1/r^2$ |
+| snov med telesoma | ne vpliva | zmanjša silo $\varepsilon$-krat |
+
 :::premisli
 Oba naboja podvojimo in hkrati podvojimo tudi razdaljo med njima. Kaj se zgodi s silo?
 ---
 Ostane enaka: produkt nabojev se poveča štirikrat, kvadrat razdalje pa tudi štirikrat, $2 \cdot 2/2^2 = 1$.
 :::
 
-**3. Električno polje.** Naboj spremeni prostor okoli sebe: v vsaki točki je **električna poljska jakost**
+### Polje: lastnost prostora okoli naboja
+
+**3. Električno polje.** Tako kot Zemlja ustvari težnostno polje, naboj spremeni prostor okoli sebe: v vsaki točki je **električna poljska jakost**
 
 $$\vec{E} = \frac{\vec{F}}{q},$$
 
@@ -48,9 +61,13 @@ $$E = \frac{\sigma}{\varepsilon_0}, \qquad \sigma = \frac{Q}{S}.$$
 
 Zunaj plošč je polje (skoraj) nič. V notranjosti prevodnika v ravnovesju je polje nič, naboj pa se zbere na površini. Če prevodnik postavimo v zunanje polje, se prosti elektroni v njem premaknejo, dokler njihovo polje v notranjosti ne izniči zunanjega (**influenca**). Na tem temelji Faradayeva kletka: kovinsko ohišje zaščiti občutljive merilne naprave pred zunanjimi električnimi motnjami, avtomobil pa potnike ob udaru strele.
 
-**5. Potencialna energija in potencial.** Električna sila je konservativna: delo pri premiku naboja ni odvisno od poti. Zato lahko vpeljemo **električni potencial** $\varphi$, potencialno energijo na enoto naboja: $W_p = q\varphi$. **Napetost** med točkama je razlika potencialov, $U_{AB} = \varphi_A - \varphi_B$; enota je volt, $1\,\mathrm{V} = 1\,\mathrm{J/C}$. Ko se naboj $q$ premakne iz $A$ v $B$, električna sila opravi delo
+### Potencial: električna »višina«
+
+**5. Potencialna energija in potencial.** Električna sila je konservativna kot teža: delo pri premiku naboja ni odvisno od poti. Zato lahko vpeljemo **električni potencial** $\varphi$, potencialno energijo na enoto naboja: $W_p = q\varphi$. **Napetost** med točkama je razlika potencialov, $U_{AB} = \varphi_A - \varphi_B$; enota je volt, $1\,\mathrm{V} = 1\,\mathrm{J/C}$. Ko se naboj $q$ premakne iz $A$ v $B$, električna sila opravi delo
 
 $$A = qU_{AB}.$$
+
+Primerjava s težo: potencial ima vlogo produkta $gh$, napetost vlogo višinske razlike. Razlika je v predznaku: kamen vedno pade navzdol, naboj pa »pade« proti nižjemu ali višjemu potencialu, odvisno od svojega predznaka.
 
 Potencial točkastega naboja $Q$ (z ničlo v neskončnosti) je
 
@@ -70,6 +87,8 @@ Proti višjemu. Sila naboj vedno vleče tja, kjer je njegova potencialna energij
 
 **6. Elektronvolt.** V atomski in molekulski fiziki energijo pogosto merimo v **elektronvoltih**: $1\,\mathrm{eV}$ je energija, ki jo dobi osnovni naboj, ko preleti napetost $1\,\mathrm{V}$, torej $1\,\mathrm{eV} = 1{,}602 \cdot 10^{-19}\,\mathrm{J}$.
 
+### Kondenzator: shramba naboja in energije
+
 **7. Kondenzator.** Kondenzator sta dva prevodnika (plošči), ki nosita nasprotna naboja $\pm Q$. Med njima je napetost $U$, sorazmerna z nabojem. **Kapaciteta** je
 
 $$C = \frac{Q}{U}, \qquad [C] = \mathrm{F} = \mathrm{A\,s/V}.$$
@@ -80,7 +99,12 @@ $$C = \frac{\varepsilon\varepsilon_0S}{d}.$$
 
 Dielektrik poveča kapaciteto $\varepsilon$-krat, ker se njegove molekule polarizirajo in delno izničijo polje plošč.
 
-**8. Vezava kondenzatorjev.** Pri **vzporedni** vezavi je na vseh ista napetost, naboji se seštejejo: $C = C_1 + C_2 + \dots$ Pri **zaporedni** vezavi imajo vsi enak naboj, napetosti se seštejejo: $1/C = 1/C_1 + 1/C_2 + \dots$ (obratno kot pri uporih).
+**8. Vezava kondenzatorjev.** Pri **vzporedni** vezavi je na vseh ista napetost, naboji se seštejejo: $C = C_1 + C_2 + \dots$ Pri **zaporedni** vezavi imajo vsi enak naboj, napetosti se seštejejo: $1/C = 1/C_1 + 1/C_2 + \dots$ Pravili sta ravno obratni kot pri uporih:
+
+| vezava | skupno vsem | kondenzatorji | upori |
+|---|---|---|---|
+| vzporedna | napetost | $C = C_1 + C_2 + \dots$ | $1/R = 1/R_1 + 1/R_2 + \dots$ |
+| zaporedna | naboj (pri uporih tok) | $1/C = 1/C_1 + 1/C_2 + \dots$ | $R = R_1 + R_2 + \dots$ |
 
 **9. Energija kondenzatorja.** Za polnjenje moramo opraviti delo proti električni sili. Shranjena energija je
 
@@ -131,7 +155,7 @@ $E_k = \dfrac{1}{4\pi\varepsilon_0}\dfrac{|Q_k|}{r_k^2}$, $\vec{E} = \vec{E}_1 +
 
 ### Primer 3 (težji)
 
-Ploščati kondenzator ima plošči s površino $0{,}020\,\mathrm{m^2}$ na razmiku $1{,}0\,\mathrm{mm}$, vmes je zrak. Priključimo ga na napetost $100\,\mathrm{V}$. Kolikšni so kapaciteta, naboj, poljska jakost in shranjena energija? Nato kondenzator odklopimo in prostor med ploščama zapolnimo s snovjo z dielektričnostjo $4{,}0$. Kolikšni sta zdaj napetost in energija?
+V delavnici sestavimo ploščati kondenzator iz dveh aluminijastih plošč s površino $0{,}020\,\mathrm{m^2}$, ki ju distančniki držijo na razmiku $1{,}0\,\mathrm{mm}$; vmes je zrak. Priključimo ga na napetost $100\,\mathrm{V}$. Kolikšni so kapaciteta, naboj, poljska jakost in shranjena energija? Nato kondenzator odklopimo in vmesni prostor zapolnimo z izolacijsko ploščo z dielektričnostjo $4{,}0$. Kolikšni sta zdaj napetost in energija?
 
 **Podatki:** $S = 0{,}020\,\mathrm{m^2}$, $d = 1{,}0\,\mathrm{mm} = 1{,}0 \cdot 10^{-3}\,\mathrm{m}$, $\varepsilon_\mathrm{zrak} = 1{,}0$, $U = 100\,\mathrm{V}$, $\varepsilon = 4{,}0$, $\varepsilon_0 = 8{,}85 \cdot 10^{-12}\,\mathrm{A\,s/(V\,m)}$, po odklopu je naboj stalen
 **Iščemo:** $C$, $Q$, $E$, $W$ pred vstavitvijo, $U'$ in $W'$ po vstavitvi dielektrika

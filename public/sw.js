@@ -5,7 +5,7 @@
 // - pošiljanje (POST …) gre vedno na strežnik; vaje brez povezave ureja public/offline.js.
 // Strežnik ime spodaj dopolni z različico knjižnic (server/razlicica.js): ob novi knjižnici se
 // stari predpomnilnik pobriše. Nove datoteke aplikacije pridejo same (najprej omrežje).
-const VERSION = "kompreno-v1";
+const VERSION = "evklid-v1";
 const STATIC = `${VERSION}-static`;
 const VENDOR = `${VERSION}-vendor`;
 const API = `${VERSION}-api`;

@@ -5,6 +5,7 @@ import { ARCADE } from "./arcade.js";
 import { BUILD_GAMES } from "./build.js";
 import { ARCADE2 } from "./arcade2.js";
 import { SENSOR_GAMES } from "./sensors.js";
+import { FUN_GAMES } from "./fun.js";
 
 const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -678,4 +679,4 @@ export const sorter = {
   },
 };
 
-export const ENGINES = [meteor, balloons, runner, sorter, ...ARCADE, ...ARCADE2, ...BUILD_GAMES, ...SENSOR_GAMES];
+export const ENGINES = [meteor, balloons, runner, sorter, ...ARCADE, ...ARCADE2, ...BUILD_GAMES, ...SENSOR_GAMES, ...FUN_GAMES];

@@ -1,57 +1,177 @@
 // Jedro znanstvenega kalkulatorja in pretvornika enot: brez DOM, zato ga lahko preizkusimo v Node.
 // Izraze razčleni in izračuna isti razčlenjevalnik kot grafični kalkulator (math.js).
-import { parse, compile, toTex, freeVars, MathError } from "./math.js";
+import { parse, compile, toTex, freeVars, diff, simplify, substitute, BUILTINS, MathError } from "./math.js";
 
 const ANS = "A_{ans}"; // »Ans« v izrazu; razčlenjevalnik bi »ans« razbil v a·n·s
 const ANS_VAR = "A_ans"; // ime spremenljivke po razčlenitvi
+const DEG = "G_{deg}"; // »°«: 1 v stopinjah, π/180 v radianih; v zapisu ostane ° (ne izgine)
+const DEG_VAR = "G_deg";
+export const HIDDEN_VARS = new Set([ANS_VAR, DEG_VAR]);
+
+/** Razdeli besedilo na vrhnji ravni (zunaj oklepajev) pri znakih iz »seps«. */
+export function splitTop(s, seps = ";") {
+  const out = [];
+  let depth = 0;
+  let cur = "";
+  for (const c of String(s)) {
+    if ("([{".includes(c)) depth++;
+    else if (")]}".includes(c)) depth = Math.max(0, depth - 1);
+    if (depth === 0 && seps.includes(c)) {
+      out.push(cur);
+      cur = "";
+    } else cur += c;
+  }
+  out.push(cur);
+  return out;
+}
+
+// »∫(f; a; b)« → »∫_(a)^(b) (f) dx« (zapis, ki ga razume razčlenjevalnik)
+function rewriteIntegrals(s) {
+  for (let guard = 0; guard < 20; guard++) {
+    const i = s.indexOf("∫(");
+    if (i < 0) break;
+    let depth = 0;
+    let j = i + 1;
+    for (; j < s.length; j++) {
+      if (s[j] === "(") depth++;
+      else if (s[j] === ")" && --depth === 0) break;
+    }
+    const args = splitTop(s.slice(i + 2, j), ",");
+    if (args.length !== 3) break;
+    s = `${s.slice(0, i)}(∫_(${args[1]})^(${args[2]}) (${args[0]}) dx)${s.slice(j + 1)}`;
+  }
+  return s;
+}
 
 /**
  * Besedilo s tipkovnice → izraz za razčlenjevalnik.
  * - decimalna vejica je vedno vejica med števkami (tudi v oklepaju), argumente loči »;«,
- * - »°« v radianih pomeni ·π/180, v stopinjah ga izpustimo,
- * - 1,2E5 → 1,2·10^(5), manjkajoče zaklepaje dodamo na konec.
+ * - »°« pomeni ·π/180 v radianih in ·1 v stopinjah (v zapisu ostane °),
+ * - 1,2E5 → 1,2·10^(5), manjkajoče zaklepaje dodamo na konec, ∫(f; a; b) je določeni integral.
  */
-export function prepare(text, { comma = true, deg = false } = {}) {
+export function prepare(text, { comma = true } = {}) {
   let s = String(text ?? "").trim();
   s = s.replace(/(?<![A-Za-z])Ans(?![A-Za-z])/g, ANS);
   if (comma) s = s.replace(/(\d),(?=\d)/g, "$1.");
   s = s.replace(/;/g, ",");
   s = s.replace(/(\d|\.)[eE]([+\-−]?\d+)/g, "$1*10^($2)");
-  s = s.replace(/°/g, deg ? "" : "*(π/180)");
+  s = s.replace(/°/g, `*${DEG}`);
   let open = 0;
   for (const c of s) {
     if (c === "(") open++;
     else if (c === ")") open = Math.max(0, open - 1);
   }
-  return s + ")".repeat(open);
+  return rewriteIntegrals(s + ")".repeat(open));
 }
 
 /** Je besedilo prirejanje »a = 5«? Vrne ime spremenljivke ali null. */
 function assignment(ast) {
   if (ast?.k !== "cmp" || ast.ops.length !== 1 || ast.ops[0] !== "=") return null;
   const l = ast.terms[0];
-  return l.k === "var" && l.name !== ANS_VAR ? l.name : null;
+  return l.k === "var" && !HIDDEN_VARS.has(l.name) ? l.name : null;
+}
+
+// Prepis drevesa pred računanjem (zapis ostane, kot ga je vpisal učenec):
+// - a + p % → a·(1 + p/100) kot na kalkulatorju v telefonu (200 + 10 % = 220),
+// - round(x; n) zaokroži na n decimalk,
+// - d/dx(f; a) je odvod v točki a.
+function rewrite(n, ctx) {
+  if (!n || typeof n !== "object") return n;
+  const r = (x) => rewrite(x, ctx);
+  if ((n.k === "+" || n.k === "-") && n.b?.k === "pct") {
+    const one = { k: "num", v: 1 };
+    const part = { k: "/", a: r(n.b.a), b: { k: "num", v: 100 } };
+    return { k: "*", a: r(n.a), b: { k: "grp", a: { k: n.k, a: one, b: part } } };
+  }
+  if (n.k === "call" && n.f === "round" && n.args.length === 2) {
+    const p = { k: "^", a: { k: "num", v: 10 }, b: r(n.args[1]) };
+    return { k: "/", a: { k: "call", f: "round", args: [{ k: "*", a: r(n.args[0]), b: p }] }, b: p };
+  }
+  if (n.k === "der" && n.a?.k === "tuple" && n.a.items.length === 2) {
+    const d = simplify(diff(r(n.a.items[0]), n.v, ctx));
+    return { k: "grp", a: substitute(d, { [n.v]: r(n.a.items[1]) }) };
+  }
+  const out = { ...n };
+  for (const key of ["a", "b", "other"]) if (n[key]) out[key] = r(n[key]);
+  for (const key of ["args", "terms", "items"]) if (Array.isArray(n[key])) out[key] = n[key].map(r);
+  if (n.cases) out.cases = n.cases.map(([c, v]) => [r(c), r(v)]);
+  if (n.lo) out.lo = r(n.lo);
+  if (n.hi) out.hi = r(n.hi);
+  return out;
+}
+
+/** Zapis TeX za zgodovino: ° namesto pomožne spremenljivke, Ans, odvod v točki. */
+export function lineTex(ast, comma = true) {
+  if (ast?.k === "der" && ast.a?.k === "tuple" && ast.a.items.length === 2) {
+    const [f, a] = ast.a.items;
+    return `\\left.\\frac{d}{d${ast.v}}\\left(${lineTex(f, comma)}\\right)\\right|_{${ast.v}=${lineTex(a, comma)}}`;
+  }
+  return toTex(ast, { comma, sep: comma ? ";" : "," })
+    .replaceAll(ANS, "\\mathrm{Ans}")
+    .replace(/\s*(?:\\cdot\s*)?G_\{deg\}/g, "^{\\circ}")
+    .replace(/\\cdot\s*10\^/g, "\\cdot 10^");
+}
+
+const FN_NAME = /^\s*([A-Za-z])\s*\(\s*([A-Za-z])\s*\)\s*=(?!=)/;
+/** Je vrstica definicija funkcije »f(x) = …«? Vrne { name, param, body } ali null. */
+export function functionDef(text) {
+  const m = FN_NAME.exec(String(text ?? ""));
+  if (!m || BUILTINS.has(m[1]) || m[1] === "e" || m[1] === m[2]) return null;
+  return { name: m[1], param: m[2], body: String(text).slice(m[0].length).trim() };
+}
+
+/**
+ * Pripravi vrstico za računanje: drevo, prevedeno drevo, obseg spremenljivk in kontekst
+ * (uporabniške funkcije f(x) = …). Vrže MathError.
+ * funcs: { f: { param, body } } (besedilo telesa, kot ga je vpisal učenec)
+ */
+export function compileLine(text, { vars = {}, ans = 0, deg = false, comma = true, funcs = {} } = {}) {
+  const src = prepare(text, { comma });
+  if (!src) return null;
+  const names = new Set(Object.keys(funcs));
+  const scope = Object.assign(Object.create(null), vars, { [ANS_VAR]: ans, [DEG_VAR]: deg ? 1 : Math.PI / 180 });
+  const defs = {};
+  const ctx = { deg, funcs: defs, global: scope };
+  for (const [name, f] of Object.entries(funcs)) {
+    try {
+      defs[name] = { params: [f.param], ast: rewrite(parse(prepare(f.body, { comma }), { funcs: names }), ctx), body: null };
+    } catch {}
+  }
+  for (const d of Object.values(defs)) {
+    try {
+      d.body = compile(d.ast, ctx);
+    } catch {
+      d.body = () => NaN;
+    }
+  }
+  const ast = parse(src, { funcs: names });
+  return { src, ast, scope, ctx, rw: (node) => rewrite(node, ctx), run: (node) => compile(rewrite(node, ctx), ctx) };
+}
+
+/** Neznanke v drevesu (brez znanih spremenljivk in pomožnih imen). */
+export function unknownsOf(node, vars = {}) {
+  return [...freeVars(node)].filter((v) => !HIDDEN_VARS.has(v) && !(v in vars));
 }
 
 /**
  * Izračuna vrstico.
  * @returns {{ value:number, tex:string, assign?:string } | { error:{code, info} } | null}
  */
-export function evaluate(text, { vars = {}, ans = 0, deg = false, comma = true } = {}) {
-  const src = prepare(text, { comma, deg });
-  if (!src) return null;
+export function evaluate(text, env = {}) {
+  const { vars = {}, comma = true } = env;
   try {
-    let ast = parse(src);
+    const line = compileLine(text, env);
+    if (!line) return null;
+    const { ast, scope, run, rw } = line;
     const name = assignment(ast);
     const expr = name ? ast.terms[1] : ast;
     if (ast.k === "cmp" && !name) return { error: { code: "notCalc", info: {} } };
-    const fv = [...freeVars(expr)].filter((v) => v !== ANS_VAR && !(v in vars));
+    const fv = unknownsOf(rw(expr), vars);
     if (fv.length) return { error: { code: "missing", info: { names: fv } } };
-    const scope = Object.assign(Object.create(null), vars, { [ANS_VAR]: ans });
-    let value = compile(expr, { deg })(scope);
+    let value = run(expr)(scope);
     if (Array.isArray(value)) value = value.length === 1 ? value[0] : NaN;
     if (typeof value === "boolean") value = value ? 1 : 0;
-    const tex = toTex(ast, { comma }).replaceAll(ANS, "\\mathrm{Ans}").replace(/\\cdot\s*10\^/g, "\\cdot 10^");
+    const tex = lineTex(ast, comma);
     return name ? { value, tex, assign: name } : { value, tex };
   } catch (e) {
     if (e instanceof MathError) return { error: { code: e.code, info: e.info || {} } };
@@ -157,12 +277,51 @@ export function formatNumber(v, { mode = "auto", comma = true } = {}) {
     const p = v.toPrecision(d);
     return plain(/e/.test(p) ? String(Number(p)) : p);
   }
+  if (mode === "eng") {
+    // inženirski zapis: eksponent je večkratnik 3 (k, M, G … in m, μ, n …)
+    if (a === 0) return plain("0");
+    let e = Math.floor(Math.log10(a) / 3) * 3;
+    let m = Number((v / 10 ** e).toPrecision(10));
+    if (Math.abs(m) >= 1000) {
+      e += 3;
+      m = Number((v / 10 ** e).toPrecision(10));
+    }
+    if (e === 0) return plain(String(m));
+    const ms = String(m);
+    return { text: `${dec(ms)} · 10^${e}`.replace(/^-/, "−"), tex: `${texDec(ms)}\\cdot 10^{${e}}` };
+  }
   if (mode === "sci") return a === 0 ? plain("0") : sci(Math.min(9, Math.max(0, String(Number(v.toPrecision(10))).replace(/[-.]|e.*$/g, "").replace(/^0+/, "").replace(/0+$/, "").length - 1)));
   if (a !== 0 && (a >= 1e12 || a < 1e-6)) return sci(9);
   let s = String(Number(v.toPrecision(12)));
   if (/e/.test(s)) return sci(9);
   return plain(s);
 }
+
+/** Mešano število za nepravi ulomek (npr. 7/3 → 2\\tfrac{1}{3}) ali null. */
+export function mixedTex(v) {
+  const f = toFraction(v, 1000);
+  if (!f || f.q === 1 || Math.abs(f.p) < f.q) return null;
+  const whole = Math.floor(Math.abs(f.p) / f.q);
+  return `${f.p < 0 ? "-" : ""}${whole}\\tfrac{${Math.abs(f.p) % f.q}}{${f.q}}`;
+}
+
+/** Razcep celega števila na prafaktorje: [[p, k], …] ali null (ni celo, je premajhno ali preveliko). */
+export function primeFactors(v) {
+  if (!Number.isInteger(v) || Math.abs(v) < 2 || Math.abs(v) > 1e12) return null;
+  let n = Math.abs(v);
+  const out = [];
+  for (let p = 2; p * p <= n; p += p === 2 ? 1 : 2) {
+    let k = 0;
+    while (n % p === 0) {
+      n /= p;
+      k++;
+    }
+    if (k) out.push([p, k]);
+  }
+  if (n > 1) out.push([n, 1]);
+  return out;
+}
+export const factorsTex = (v, f) => `${v < 0 ? "-" : ""}${f.map(([p, k]) => (k > 1 ? `${p}^{${k}}` : String(p))).join("\\cdot ")}`;
 
 // ---------- konstante ----------
 // Vrednosti CODATA 2018 (SI); »show« je zaokrožen zapis za seznam.

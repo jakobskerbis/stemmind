@@ -49,7 +49,7 @@ function krizanje(level, r, { di }) {
     const v = 100 * share(res, ask[1]);
     return {
       text: `Gena A in B ležita na različnih kromosomih, A in B sta dominantna. Križamo ${p1} × ${p2}. Kolikšen delež potomcev je ${ask[2]}?`,
-      answer: pctNum(v, [[v === 6.25 ? 25 : 6.25, "Pri dveh genih je 16 enako verjetnih kombinacij (4 × 4 gamete), ne 4."], [100 - v, "Izračunal si delež preostalih potomcev."]]),
+      answer: pctNum(v, [[v === 6.25 ? 25 : 6.25, p1 === p2 ? "Pri dveh genih je 16 enako verjetnih kombinacij (4 × 4 gamete), ne 4." : "Gena obravnavaj posebej: izračunaj delež za vsak gen in ju zmnoži."], [100 - v, "Izračunal si delež preostalih potomcev."]]),
       hint: "Gena se dedujeta neodvisno: izračunaj verjetnost za vsak gen posebej in ju zmnoži.",
       data: { given: [`\\text{starš 1} = ${p1}`, `\\text{starš 2} = ${p2}`], find: [`d(\\text{${ask[0].replace(/_/g, "\\_")}})`] },
       formula: "P(A \\text{ in } B) = P(A) \\cdot P(B)",
@@ -98,7 +98,7 @@ function krizanje(level, r, { di }) {
   const v = 100 * share(res, test);
   return {
     text: `Pri ${who} je alel A za ${dom} dominanten nad alelom a za ${rec}. Križamo ${p1} × ${p2}. Kolikšen delež potomcev ima ${what}?`,
-    answer: pctNum(v, [[100 - v, "To je delež preostalih potomcev."], [ask === "dom" ? 50 : 75, ask === "dom" ? "Tudi Aa ima črno dlako: dominantni alel se izrazi že v enem izvodu." : "Preštej le polja, ki ustrezajo vprašanju."]]),
+    answer: pctNum(v, [[100 - v, "To je delež preostalih potomcev."], [ask === "dom" ? 50 : 75, ask === "dom" ? `Tudi Aa ima ${dom}: dominantni alel se izrazi že v enem izvodu.` : "Preštej le polja, ki ustrezajo vprašanju."]]),
     hint: "Vsak starš da gameto z enim alelom. Nariši Punnettov kvadrat 2 × 2.",
     data: { given: [`\\text{starš 1} = ${p1}`, `\\text{starš 2} = ${p2}`], find: [`d(\\text{${ask === "het" ? "Aa" : ask === "rec" ? "aa" : "A\\_"}})`] },
     formula: false,

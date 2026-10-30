@@ -5,15 +5,15 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Ogljikov dioksid $\mathrm{CO_2}$ je pri sobni temperaturi plin. Silicijev dioksid $\mathrm{SiO_2}$, kremen in pesek, pa se tali šele pri približno $1700\,^\circ\mathrm{C}$. Ogljik in silicij sta v isti skupini, formuli sta enaki. Zakaj sta snovi tako različni?
+Vrečka čipsa na polici v trgovini je napihnjena z dušikom $\mathrm{N_2}$, ker je ta plin tako nereaktiven, da hrane ne pokvari. Beli fosfor iz iste skupine pa se na zraku sam vžge. Še bolj čudno: ogljikov dioksid $\mathrm{CO_2}$ v gazirani pijači je plin, silicijev dioksid $\mathrm{SiO_2}$, kremen in pesek, pa se tali šele pri približno $1700\,^\circ\mathrm{C}$, čeprav sta C in Si v isti skupini in sta formuli enaki. Zakaj sta si snovi tako različni?
 
-Podobno: dušik $\mathrm{N_2}$ je tako nereaktiven, da z njim polnimo embalažo hrane. Beli fosfor, ki je v isti skupini, pa se na zraku sam vžge.
-
-Elementi p-bloka so osnova velike kemijske industrije: klor za belila in PVC, žveplova kislina (kemikalija z največjo proizvodnjo na svetu), amoniak in fosfati za gnojila, silicij za čipe in steklo. Ko razumeš nekaj trendov, ti ni treba vsake spojine učiti na pamet.
+Na elementih p-bloka stoji velik del kemijske industrije: klor za belila in PVC, žveplova kislina (kemikalija z največjo proizvodnjo na svetu), amoniak in fosfati za gnojila, silicij za čipe in steklo. Ko razumeš nekaj trendov, ti ni treba vsake spojine učiti na pamet.
 
 ## Razlaga
 
-**1. Kje je p-blok.** Pri elementih s-bloka (skupini 1 in 2) se je zadnji elektron vgradil v orbitalo $ns$. Pri p-bloku (skupine 13 do 18) se polnijo orbitale $np$. Valenčna konfiguracija je $ns^2\,np^1$ do $ns^2\,np^6$. V tej lekciji obravnavamo skupine 14 do 17.
+Mamljiva ideja: elementi iste skupine imajo enako valenčno konfiguracijo, torej se obnašajo enako. Če bi to držalo, bi bil $\mathrm{SiO_2}$ plin kot $\mathrm{CO_2}$, beli fosfor pa nereaktiven kot dušik. Ideja drži le napol: konfiguracija določi število valenčnih elektronov, velikost atoma pa odloči, kaj atom z njimi naredi. Spodaj jo popravljamo po kosih.
+
+**1. Kje je p-blok.** Pri elementih s-bloka (skupini 1 in 2) se je zadnji elektron vgradil v orbitalo $ns$. Pri p-bloku (skupine 13 do 18) se polnijo orbitale $np$. Valenčna konfiguracija je $ns^2\,np^1$ do $ns^2\,np^6$. Tu obravnavamo skupine 14 do 17.
 
 | Skupina | Valenčna konfiguracija | Najvišje oks. število | Primer |
 |---|---|---|---|
@@ -26,7 +26,7 @@ Najvišje oksidacijsko število je enako številu valenčnih elektronov (števil
 
 **2. Od nekovin do kovin.** V vsaki skupini se navzdol atomski polmer veča, elektronegativnost pa manjša. Zato se kovinski značaj veča. V ogljikovi skupini sta C in Si nekovini oziroma polkovini, Ge je polkovina, Sn in Pb sta kovini. V dušikovi skupini je N plin, Bi pa kovina.
 
-**3. Efekt inertnega para.** Pri težkih elementih (Tl, Pb, Bi) je par elektronov $6s^2$ močno vezan in rad ne sodeluje pri vezavi. Zato je zanje stabilnejše oksidacijsko število za $2$ nižje od najvišjega: $\mathrm{Pb^{2+}}$ namesto Pb(IV), $\mathrm{Bi^{3+}}$ namesto Bi(V). Spojine z najvišjim številom, npr. $\mathrm{PbO_2}$, so zato močni oksidanti.
+**3. Efekt inertnega para.** Naslednja mamljiva ideja: element najraje odda vse valenčne elektrone, zato je najvišje oksidacijsko število najstabilnejše. Za lahke elemente to drži, za težke ne. Pri težkih elementih (Tl, Pb, Bi) je par elektronov $6s^2$ močno vezan in rad ne sodeluje pri vezavi. Zato je zanje stabilnejše oksidacijsko število za $2$ nižje od najvišjega: $\mathrm{Pb^{2+}}$ namesto Pb(IV), $\mathrm{Bi^{3+}}$ namesto Bi(V). Spojine z najvišjim številom, npr. $\mathrm{PbO_2}$, so zato močni oksidanti.
 
 :::premisli
 Kaj napoveš: kateri dioksid je močnejši oksidant, $\mathrm{SnO_2}$ ali $\mathrm{PbO_2}$? Kaj se zgodi, če $\mathrm{PbO_2}$ prelijemo s koncentrirano klorovodikovo kislino?
@@ -34,7 +34,7 @@ Kaj napoveš: kateri dioksid je močnejši oksidant, $\mathrm{SnO_2}$ ali $\math
 Močnejši oksidant je $\mathrm{PbO_2}$: za svinec je stabilnejši Pb(II), zato se Pb(IV) rad reducira. S HCl nastane klor: $\mathrm{PbO_2 + 4\,HCl \rightarrow PbCl_2 + Cl_2 + 2\,H_2O}$. Pri kositru je Sn(IV) stabilen, zato $\mathrm{SnO_2}$ tega ne naredi.
 :::
 
-**4. Prvi element skupine je poseben.** C, N, O in F so majhni in zelo elektronegativni. Njihove orbitale $2p$ se dobro prekrivajo, zato tvorijo močne vezi $\pi$: $\mathrm{C{=}O}$, $\mathrm{N{\equiv}N}$, $\mathrm{O{=}O}$. Težji elementi vezi $\pi$ tvorijo slabo, zato raje naredijo več enojnih vezi.
+**4. Prvi element skupine je poseben.** Tu ideja »enaka skupina, enaka kemija« pade najbolj očitno. C, N, O in F so majhni in zelo elektronegativni. Njihove orbitale $2p$ se dobro prekrivajo, zato tvorijo močne vezi $\pi$: $\mathrm{C{=}O}$, $\mathrm{N{\equiv}N}$, $\mathrm{O{=}O}$. Težji elementi vezi $\pi$ tvorijo slabo, zato raje naredijo več enojnih vezi.
 
 To je odgovor na vprašanje z začetka. V $\mathrm{CO_2}$ je ogljik z dvema dvojnima vezema vezan na dva kisika. Nastanejo majhne molekule, med njimi so le šibke sile, zato je snov plin. Silicij pa se z enojnimi vezmi $\mathrm{Si{-}O}$ veže na štiri kisike, vsak kisik poveže dva silicija. Nastane trirazsežna mreža, kot ogromna molekula. Za taljenje je treba trgati kovalentne vezi.
 
@@ -50,7 +50,7 @@ Trojna vez $\mathrm{N{\equiv}N}$ je zelo močna (približno $945\,\mathrm{kJ/mol
 
 Fluor je najbolj elektronegativen element, zato ima v spojinah vedno oksidacijsko število $-1$. Klor, brom in jod imajo s kisikom tudi pozitivna števila. Oksokisline klora: $\mathrm{HOCl}$ ($+1$), $\mathrm{HClO_2}$ ($+3$), $\mathrm{HClO_3}$ ($+5$), $\mathrm{HClO_4}$ ($+7$). Več kisikov pomeni močnejšo kislino; $\mathrm{HClO_4}$ je ena najmočnejših kislin.
 
-Vodikovi halogenidi so v vodi kisline. Moč narašča $\mathrm{HF} < \mathrm{HCl} < \mathrm{HBr} < \mathrm{HI}$, ker je vez $\mathrm{H{-}X}$ navzdol vse daljša in šibkejša. HF je šibka kislina.
+Vodikovi halogenidi so v vodi kisline. Ker je fluor najbolj elektronegativen, bi pričakoval, da je HF najmočnejša, a velja obratno. Moč narašča $\mathrm{HF} < \mathrm{HCl} < \mathrm{HBr} < \mathrm{HI}$, ker je vez $\mathrm{H{-}X}$ navzdol vse daljša in šibkejša. HF je šibka kislina.
 
 **6. Halkogeni (16. skupina).** Kisik obstaja kot $\mathrm{O_2}$ in ozon $\mathrm{O_3}$, žveplo kot obroči $\mathrm{S_8}$. Žveplo tvori verige in obroče iz enakih atomov (pravimo *katenacija*), podobno kot ogljik. Kisik ima skoraj vedno $-2$, žveplo pa $-2$ ($\mathrm{H_2S}$), $+4$ ($\mathrm{SO_2}$) in $+6$ ($\mathrm{H_2SO_4}$). Voda je tekočina, $\mathrm{H_2S}$ pa plin, ker med molekulami vode nastajajo vodikove vezi.
 
@@ -62,7 +62,7 @@ Vodikovi halogenidi so v vodi kisline. Moč narašča $\mathrm{HF} < \mathrm{HCl
 
 ### Primer 1 (lažji): oksidacijsko število klora
 
-Belilo vsebuje natrijev hipoklorit $\mathrm{NaOCl}$. Kalijev perklorat $\mathrm{KClO_4}$ je oksidant v pirotehniki. Določi oksidacijsko število klora v obeh spojinah.
+Belilo vsebuje natrijev hipoklorit $\mathrm{NaOCl}$, novoletni ognjemet pa kot oksidant kalijev perklorat $\mathrm{KClO_4}$. Določi oksidacijsko število klora v obeh spojinah.
 
 **Podatki:** spojini $\mathrm{NaOCl}$ in $\mathrm{KClO_4}$; Na in K imata $+1$, O ima $-2$
 **Iščemo:** oksidacijsko število klora $x$ v vsaki spojini
@@ -119,7 +119,7 @@ $m(\mathrm{H_2SO_4}) = w \cdot m_\text{raztopine}$, $n = \dfrac{m}{M}$, $n(\math
 
 ### Primer 4: zdaj ti
 
-Amonijev nitrat $\mathrm{NH_4NO_3}$ je gnojilo. Določi oksidacijsko število dušika v kationu $\mathrm{NH_4^+}$ in v anionu $\mathrm{NO_3^-}$.
+V vrtnem centru kupiš vrečo gnojila z amonijevim nitratom $\mathrm{NH_4NO_3}$. Določi oksidacijsko število dušika v kationu $\mathrm{NH_4^+}$ in v anionu $\mathrm{NO_3^-}$.
 
 **Podatki:** ion $\mathrm{NH_4^+}$ (naboj $+1$), ion $\mathrm{NO_3^-}$ (naboj $-1$); H ima $+1$, O ima $-2$
 **Iščemo:** oksidacijsko število dušika v vsakem ionu

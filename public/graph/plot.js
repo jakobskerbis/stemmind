@@ -92,7 +92,9 @@ export class GraphView {
       const sy = (v.ymax - v.ymin) / oldH;
       this.view = { xmin: cx - (sx * W) / 2, xmax: cx + (sx * W) / 2, ymin: cy - (sy * H) / 2, ymax: cy + (sy * H) / 2 };
     } else if (v) this.view = this.squared(v);
-    this.sized = true;
+    // Platno, ki še ni na strani (širina 0), nima pravega merila: ob prvi pravi velikosti ohranimo
+    // območje (−10 … 10), ne enote na piksel, sicer se graf odpre oddaljen (−150 … 150).
+    this.sized = r.width > 0 && r.height > 0;
     this.draw();
   }
 
@@ -1275,7 +1277,7 @@ export class GraphView {
     ctx.fillStyle = C.poi;
     ctx.textAlign = "right";
     ctx.textBaseline = "bottom";
-    ctx.fillText("Kompreno", W - 10, H - 8);
+    ctx.fillText("Evklid", W - 10, H - 8);
     return new Promise((res) => c.toBlob(res, "image/png"));
   }
 

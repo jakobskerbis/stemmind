@@ -4,14 +4,15 @@
 import { icon, hydrateIcons } from "./icons.js";
 import { t, locale } from "./i18n.js";
 import { schoolSubjectsFor, SUBJECT_NAMES } from "./programs.js";
+import { renderPassOffer } from "./pass-offer.js";
 
 let D = null; // { api, getStudent, showView, startSession, toast, escapeHtml, onChange }
 let data = null; // zadnji odgovor strežnika { schedule, courses }
 let preview = null; // uvoz, ki ga učenec še preverja { lessons, events, source }
 
-const REMIND_KEY = "kompreno.scheduleReminders";
-const NOTIFIED_KEY = "kompreno.scheduleNotified";
-const HIDE_KEY = "kompreno.scheduleCardHidden";
+const REMIND_KEY = "evklid.scheduleReminders";
+const NOTIFIED_KEY = "evklid.scheduleNotified";
+const HIDE_KEY = "evklid.scheduleCardHidden";
 const ls = {
   get: (k) => {
     try {
@@ -114,6 +115,7 @@ function render() {
     ${s.source?.url ? `<p class="muted sch-linked">${icon("link")} ${t("sch.linked", { label: esc(s.source.label || new URL(s.source.url).hostname) })} <button type="button" class="text-btn" data-act="refresh">${t("sch.refresh")}</button></p>` : ""}
     <h2 class="sch-h">${t("sch.upcoming")}</h2>
     ${evList}
+    <div id="sch-pass"></div>
     ${plan && plan.daysLeft >= 0 ? `<p class="muted">${t("sch.planNote", { date: esc(fmtDate(plan.date)) })} <button type="button" class="text-btn" data-act="prep">${t("sch.prepare")}</button></p>` : ""}
     <div class="card sch-remind">
       <label class="check"><input type="checkbox" id="sch-remind" ${remind ? "checked" : ""}> <span><b>${t("sch.remindersOn")}</b><br><small class="muted">${t("sch.remindersSub")}</small></span></label>
@@ -122,6 +124,8 @@ function render() {
     ${s.lessons.length || s.events.length ? `<button type="button" class="ghost danger-text" data-act="clear">${icon("trash-2")} ${t("sch.clear")}</button>` : ""}`;
   hydrateIcons?.(box());
   wire();
+  // Paket pred testom (samo z računi in brez naročnine; strežnik odloči, ali ga ponudi).
+  renderPassOffer(box().querySelector("#sch-pass"), { api: D.api, studentId: sid(), toast: D.toast });
 }
 
 function wire() {

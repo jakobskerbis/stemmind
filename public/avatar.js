@@ -5,28 +5,31 @@
 // odklene jih samo obvladana snov.
 import { KNOWLEDGE, DRAW, baseId } from "./zbirke.js";
 
-export const SLOTS = ["body", "eyes", "mouth", "hat", "outfit", "acc", "badge", "bg", "fx"];
+export const SLOTS = ["kind", "body", "eyes", "mouth", "hat", "outfit", "acc", "badge", "bg", "fx"];
 export const COINS_PER_CORRECT = 1;
 export const COINS_PER_DAY = 150;
 
 // Redkost po ceni (barva okvirja v trgovini).
-export const rarity = (price) => (price === 0 ? "free" : price <= 25 ? "common" : price <= 60 ? "rare" : price <= 150 ? "epic" : "legendary");
+// Redkost po ceni; kozmični in večni predmeti so samo za znanje in igre (public/zbirke.js).
+export const rarity = (price) => (price === 0 ? "free" : price <= 25 ? "common" : price <= 60 ? "rare" : price <= 150 ? "epic" : price <= 1000 ? "legendary" : "mythic");
 // Redkost predmeta: pri predmetih za znanje težavnost snovi, pri ostalih cena.
 export const itemRarity = (x) => x?.rarity || rarity(x?.price ?? 0);
 
 const it = (id, slot, price, sl, en) => ({ id, slot, price, name: { sl, en } });
 export const ITEMS = [
+  // lik (ostali liki se odklenejo z igranjem iger, public/zbirke.js)
+  it("kind_blob", "kind", 0, "Klasičen", "Classic"),
   // telo
   it("body_blue", "body", 0, "Modra", "Blue"),
   it("body_green", "body", 0, "Zelena", "Green"),
-  it("body_orange", "body", 20, "Oranžna", "Orange"),
-  it("body_pink", "body", 20, "Roza", "Pink"),
-  it("body_purple", "body", 40, "Vijolična", "Purple"),
-  it("body_teal", "body", 40, "Turkizna", "Teal"),
-  it("body_robot", "body", 90, "Robot", "Robot"),
-  it("body_galaxy", "body", 140, "Galaksija", "Galaxy"),
-  it("body_gold", "body", 200, "Zlata", "Gold"),
-  it("body_rainbow", "body", 300, "Mavrica", "Rainbow"),
+  it("body_orange", "body", 0, "Oranžna", "Orange"),
+  it("body_pink", "body", 0, "Roza", "Pink"),
+  it("body_purple", "body", 0, "Vijolična", "Purple"),
+  it("body_teal", "body", 0, "Turkizna", "Teal"),
+  it("body_robot", "body", 0, "Robot", "Robot"),
+  it("body_galaxy", "body", 0, "Galaksija", "Galaxy"),
+  it("body_gold", "body", 0, "Zlata", "Gold"),
+  it("body_rainbow", "body", 0, "Mavrica", "Rainbow"),
   // oči
   it("eyes_dots", "eyes", 0, "Pikice", "Dots"),
   it("eyes_happy", "eyes", 0, "Vesele", "Happy"),
@@ -54,6 +57,7 @@ export const ITEMS = [
   it("hat_wizard", "hat", 140, "Čarovniški klobuk", "Wizard hat"),
   it("hat_crown", "hat", 220, "Krona", "Crown"),
   it("hat_astro", "hat", 300, "Vesoljska čelada", "Space helmet"),
+  it("hat_flame", "hat", 1500, "Ognjena krona", "Crown of fire"),
   // oblačilo
   it("outfit_none", "outfit", 0, "Brez", "None"),
   it("outfit_bow", "outfit", 20, "Metuljček", "Bow tie"),
@@ -62,6 +66,7 @@ export const ITEMS = [
   it("outfit_lab", "outfit", 70, "Laboratorijska halja", "Lab coat"),
   it("outfit_hero", "outfit", 150, "Junak s plaščem", "Hero cape"),
   it("outfit_armor", "outfit", 280, "Zlati oklep", "Golden armour"),
+  it("outfit_starcape", "outfit", 2500, "Zvezdni plašč", "Starry cloak"),
   // dodatek
   it("acc_none", "acc", 0, "Brez", "None"),
   it("acc_glasses", "acc", 30, "Očala", "Glasses"),
@@ -78,6 +83,7 @@ export const ITEMS = [
   it("bg_stars", "bg", 90, "Zvezdna noč", "Starry night"),
   it("bg_space", "bg", 150, "Vesolje", "Space"),
   it("bg_lava", "bg", 260, "Vulkan", "Volcano"),
+  it("bg_nebula", "bg", 2000, "Meglica", "Nebula"),
   // značka in efekt (predmeti zanje so samo za znanje, public/zbirke.js)
   it("badge_none", "badge", 0, "Brez", "None"),
   it("fx_none", "fx", 0, "Brez", "None"),
@@ -86,24 +92,97 @@ export const ITEMS = [
 export const ITEM = Object.fromEntries(ITEMS.map((x) => [x.id, x]));
 // Predmet za id iz inventarja (tudi sezonski »pass_coat~2026-1«).
 export const itemOf = (id) => ITEM[baseId(id)] || null;
-export const DEFAULT_AVATAR = { body: "body_blue", eyes: "eyes_dots", mouth: "mouth_smile", hat: "hat_none", outfit: "outfit_none", acc: "acc_none", badge: "badge_none", bg: "bg_sky", fx: "fx_none" };
+// Predali, v katerih nosiš več predmetov hkrati (seznam id-jev, največ MULTI_MAX). Predmeta na istem
+// mestu (npr. dvoje očal) se izključujeta: novi zamenja starega. Ostali predali imajo en predmet.
+export const MULTI = ["hat", "outfit", "acc", "badge", "fx"];
+export const MULTI_MAX = 6;
+const SPOT = { hat_phones: "ears", hat_flower: "flower", pot_laurel: "wreath", outfit_bow: "neck", outfit_scarf: "neck", acc_blush: "cheeks", pot_pregl: "hand", pass_pencil: "pencil", acc_joystick: "controller" };
+const SPOT_MAIN = { hat: "head", outfit: "body", acc: "eyes" };
+// Vrstni red risanja (spodaj → zgoraj); značke in efekti po vrsti oblačenja.
+const SPOT_ORDER = { hat: ["wreath", "head", "ears", "flower"], outfit: ["body", "neck"], acc: ["cheeks", "eyes", "hand", "pencil", "controller"] };
+export const spotOf = (x) => SPOT[x.id] || SPOT_MAIN[x.slot] || x.id;
+export const isMulti = (slot) => MULTI.includes(slot);
+
+export const DEFAULT_AVATAR = { kind: "kind_blob", body: "body_blue", eyes: "eyes_dots", mouth: "mouth_smile", hat: [], outfit: [], acc: [], badge: [], bg: "bg_sky", fx: [] };
 export const itemName = (x, lang) => x.name[lang] || x.name.en;
+const isNone = (id) => /_none$/.test(id);
+
+// Id-ji, ki jih avatar nosi v predalu (tudi star zapis z enim nizom).
+export function worn(eq, slot) {
+  const v = eq?.[slot];
+  const list = Array.isArray(v) ? v : v ? [v] : [];
+  return list.map(String).filter((id) => !isNone(id));
+}
+export const isWorn = (eq, id) => {
+  const x = itemOf(id);
+  return !!x && (isMulti(x.slot) ? worn(eq, x.slot).includes(id) : eq?.[x.slot] === id);
+};
+// Doda predmet v predal (predmet na istem mestu zamenja); »Brez« izprazni predal.
+export function wear(eq, id) {
+  const x = itemOf(id);
+  if (!x) return eq;
+  if (!isMulti(x.slot)) return { ...eq, [x.slot]: id };
+  if (isNone(id)) return { ...eq, [x.slot]: [] };
+  const spot = spotOf(x);
+  return { ...eq, [x.slot]: [...worn(eq, x.slot).filter((i) => itemOf(i) && spotOf(itemOf(i)) !== spot), id] };
+}
+export function takeOff(eq, id) {
+  const x = itemOf(id);
+  if (!x) return eq;
+  return isMulti(x.slot) ? { ...eq, [x.slot]: worn(eq, x.slot).filter((i) => i !== id) } : { ...eq, [x.slot]: DEFAULT_AVATAR[x.slot] };
+}
+// Ali je predal poln (nov predmet ne zamenja nobenega na istem mestu).
+export function slotFull(eq, id) {
+  const x = itemOf(id);
+  if (!x || !isMulti(x.slot) || isNone(id)) return false;
+  const list = worn(eq, x.slot);
+  return !list.includes(id) && list.length >= MULTI_MAX && !list.some((i) => itemOf(i) && spotOf(itemOf(i)) === spotOf(x));
+}
 
 // Popravi izbiro: vsak del obstaja, je v pravem predalu in ga učenec ima (ali je brezplačen).
 // any = true: samo znani deli, brez preverjanja lastništva (shranjen avatar za prikaz drugim).
 export function cleanAvatar(eq, owned = [], any = false) {
   const have = new Set(owned);
+  const ok = (id, slot) => {
+    const x = itemOf(id);
+    if (!x || x.slot !== slot) return false;
+    // Sezonski predmet samo s sezono, ostali brez pripone.
+    if (x.collection === "pass" ? !/^[a-z_]+~\d{4}-[12]$/.test(id) : id !== x.id) return false;
+    return any || x.price === 0 || have.has(id);
+  };
   const out = { ...DEFAULT_AVATAR };
   for (const slot of SLOTS) {
-    const id = String(eq?.[slot] ?? "");
-    const x = itemOf(id);
-    if (!x || x.slot !== slot) continue;
-    // Sezonski predmet samo s sezono, ostali brez pripone.
-    if (x.collection === "pass" ? !/^[a-z_]+~\d{4}-[12]$/.test(id) : id !== x.id) continue;
-    if (any || x.price === 0 || have.has(id)) out[slot] = id;
+    if (isMulti(slot)) {
+      let list = [];
+      for (const id of worn(eq, slot)) if (ok(id, slot)) list = wear({ [slot]: list }, id)[slot];
+      out[slot] = list.slice(-MULTI_MAX);
+    } else {
+      const id = eq?.[slot];
+      if (typeof id === "string" && ok(id, slot)) out[slot] = id;
+    }
   }
   return out;
 }
+
+// Mesta značk na prsih: ena ostane na svojem mestu, več jih je manjših (središče x, y in merilo).
+const BADGE_AT = {
+  2: [[35, 84], [65, 84]].map((p) => [...p, 0.78]),
+  3: [[30, 82], [50, 89], [70, 82]].map((p) => [...p, 0.64]),
+  4: [[29, 79], [71, 79], [38, 90], [62, 90]].map((p) => [...p, 0.56]),
+  5: [[28, 77], [72, 77], [32, 89], [50, 90], [68, 89]].map((p) => [...p, 0.52]),
+  6: [[29, 77], [50, 81], [71, 77], [33, 89], [50, 92], [67, 89]].map((p) => [...p, 0.46]),
+};
+function badges(list) {
+  if (list.length <= 1) return list.map((id) => DRAW.badge(id)).join("");
+  return list
+    .map((id, i) => {
+      const [x, y, k] = BADGE_AT[Math.min(list.length, MULTI_MAX)][i];
+      const [ox, oy] = itemOf(id)?.sym ? [66, 83] : [64, 82]; // središče značke na njenem mestu
+      return `<g transform="translate(${x} ${y}) scale(${k}) translate(${-ox} ${-oy})">${DRAW.badge(id)}</g>`;
+    })
+    .join("");
+}
+const byOrder = (slot, list) => (SPOT_ORDER[slot] ? [...list].sort((a, b) => SPOT_ORDER[slot].indexOf(spotOf(itemOf(a))) - SPOT_ORDER[slot].indexOf(spotOf(itemOf(b)))) : list);
 
 // ---------- risanje (viewBox 0 0 100 100) ----------
 const BODY = {
@@ -130,6 +209,8 @@ const BG = {
   bg_ocean: () => `<rect width="100" height="100" fill="#7dd3fc"/><path d="M0 70q12-8 25 0t25 0 25 0 25 0V100H0z" fill="#0ea5e9"/><path d="M0 84q12-7 25 0t25 0 25 0 25 0V100H0z" fill="#0369a1"/>`,
   bg_stars: () => `<rect width="100" height="100" fill="#1e293b"/><g fill="#fde047">${[[12, 14], [80, 10], [90, 40], [8, 50], [22, 86], [88, 82], [60, 8]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.6"/>`).join("")}</g><circle cx="84" cy="22" r="7" fill="#f8fafc"/><circle cx="87" cy="20" r="6" fill="#1e293b"/>`,
   bg_space: () => `<rect width="100" height="100" fill="#2e1065"/><g fill="#e9d5ff">${[[10, 10], [30, 6], [92, 30], [6, 70], [94, 90], [70, 6]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.3"/>`).join("")}</g><circle cx="14" cy="30" r="8" fill="#f472b6"/><ellipse cx="14" cy="30" rx="13" ry="3" fill="none" stroke="#fbcfe8" stroke-width="1.5"/>`,
+  bg_nebula: (u) =>
+    `<defs><radialGradient id="neb1${u}" cx=".25" cy=".3" r=".6"><stop offset="0" stop-color="#f472b6" stop-opacity=".95"/><stop offset="1" stop-color="#f472b6" stop-opacity="0"/></radialGradient><radialGradient id="neb2${u}" cx=".8" cy=".7" r=".6"><stop offset="0" stop-color="#22d3ee" stop-opacity=".85"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient><radialGradient id="neb3${u}" cx=".7" cy=".15" r=".4"><stop offset="0" stop-color="#a78bfa" stop-opacity=".9"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></radialGradient></defs><rect width="100" height="100" fill="#0b1026"/><rect width="100" height="100" fill="url(#neb1${u})"/><rect width="100" height="100" fill="url(#neb2${u})"/><rect width="100" height="100" fill="url(#neb3${u})"/><g fill="#fff">${[[8, 8, 1.4], [30, 14, 1], [52, 6, 1.6], [90, 12, 1.2], [94, 44, 1], [6, 46, 1.2], [12, 92, 1.4], [88, 92, 1]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g><path d="M78 30l1.4 3.6 3.6 1.4-3.6 1.4-1.4 3.6-1.4-3.6-3.6-1.4 3.6-1.4z" fill="#fef9c3"/>`,
   bg_lava: (u) => `<defs><linearGradient id="lv${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7f1d1d"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs><rect width="100" height="100" fill="url(#lv${u})"/><path d="M0 100L18 62 30 70 42 52 58 72 70 58 84 70 100 56V100z" fill="#292524"/><g fill="#fdba74">${[[20, 20], [70, 14], [86, 34]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.4"/>`).join("")}</g>`,
 };
 
@@ -178,12 +259,16 @@ const HAT = {
   hat_viking: () => `<path d="M24 36q0-22 26-22t26 22z" fill="#94a3b8" stroke="${INK}" stroke-width="2.5"/><path d="M50 14v22" stroke="#64748b" stroke-width="3"/><path d="M26 30q-14-4-12-22 6 12 16 14zM74 30q14-4 12-22-6 12-16 14z" fill="#fef3c7" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"/>`,
   hat_wizard: () => `<path d="M20 34q30 8 60 0L58 26 44 -2 36 26z" fill="#4338ca" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 18l2 4 4 .5-3 2.5 1 4-4-2-4 2 1-4-3-2.5 4-.5z" fill="#fde047"/><circle cx="54" cy="10" r="1.6" fill="#fde047"/>`,
   hat_crown: () => `<path d="M28 34V14l11 10 11-14 11 14 11-10v20z" fill="#facc15" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><circle cx="39" cy="28" r="2.5" fill="#ef4444"/><circle cx="50" cy="27" r="3" fill="#3b82f6"/><circle cx="61" cy="28" r="2.5" fill="#22c55e"/>`,
+  hat_flame: () =>
+    `<path d="M28 36C22 26 27 18 32 12c1 7 4 10 7 11C37 14 42 6 50 1c-1 9 3 14 7 16 1-6 5-10 9-12-1 7 1 12 4 15 3-3 5-4 7-4-1 8-3 15-7 20z" fill="#f97316" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"/><path d="M35 34c-3-6-1-11 2-14 1 4 3 6 5 6-1-6 2-11 8-15 0 6 2 10 5 11 1-3 3-5 6-6-1 5 0 9 3 11 0 3-1 5-3 7z" fill="#fde047"/><rect x="27" y="31" width="46" height="7" rx="2.5" fill="#b91c1c" stroke="${INK}" stroke-width="2"/><path d="M50 32l2.4 2.5L50 37l-2.4-2.5z" fill="#fef9c3" stroke="${INK}" stroke-width="1"/>`,
   hat_astro: () => `<circle cx="50" cy="56" r="40" fill="#bae6fd" fill-opacity=".28" stroke="#e2e8f0" stroke-width="4"/><circle cx="50" cy="56" r="40" fill="none" stroke="${INK}" stroke-width="1.5"/><path d="M26 32q8-10 20-12" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".8"/>`,
 };
 
 // Oblačila: del za telesom (plašč) in del na telesu (obrezan z obliko telesa).
 const OUTFIT_BACK = {
   outfit_hero: () => `<path d="M26 64L10 98h80L74 64z" fill="#dc2626" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/>`,
+  outfit_starcape: () =>
+    `<path d="M26 62L6 98h88L74 62z" fill="#1e1b4b" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><g fill="#fde68a">${[[14, 90, 1.6], [24, 78, 1.2], [84, 86, 1.6], [76, 74, 1.1], [90, 96, 1], [10, 97, 1]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}</g>`,
 };
 const OUTFIT = {
   outfit_none: () => "",
@@ -192,18 +277,25 @@ const OUTFIT = {
   outfit_hoodie: (u) => `<g clip-path="url(#c${u})"><path d="M0 76q50 10 100 0v30H0z" fill="#22c55e" stroke="${INK}" stroke-width="2"/><path d="M44 80v10M56 80v10" stroke="#f8fafc" stroke-width="2"/><rect x="38" y="88" width="24" height="8" rx="3" fill="#16a34a"/></g>`,
   outfit_lab: (u) => `<g clip-path="url(#c${u})"><path d="M0 74h100v30H0z" fill="#f8fafc" stroke="${INK}" stroke-width="2"/><path d="M50 74v26M50 74l-10 10M50 74l10 10" stroke="#cbd5e1" stroke-width="2" fill="none"/><rect x="58" y="84" width="10" height="8" fill="none" stroke="#94a3b8" stroke-width="1.5"/><path d="M61 80v8" stroke="#3b82f6" stroke-width="2"/></g>`,
   outfit_hero: (u) => `<g clip-path="url(#c${u})"><path d="M0 74h100v30H0z" fill="#2563eb"/></g><path d="M50 76l3 6 6 .6-4.5 4 1.4 6-5.9-3.3-5.9 3.3 1.4-6-4.5-4 6-.6z" fill="#facc15" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>`,
+  outfit_starcape: () =>
+    `<path d="M28 72q22 10 44 0" stroke="#facc15" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M50 72l2.6 5.4 5.9.6-4.4 4 1.3 5.8L50 84.8l-5.4 3 1.3-5.8-4.4-4 5.9-.6z" fill="#facc15" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>`,
   outfit_armor: (u) => `<g clip-path="url(#c${u})"><path d="M0 72h100v32H0z" fill="#eab308" stroke="${INK}" stroke-width="2"/><path d="M0 82h100" stroke="#a16207" stroke-width="2"/></g><path d="M42 74h16v12q0 8-8 10-8-2-8-10z" fill="#fde047" stroke="${INK}" stroke-width="2"/>`,
 };
 
 let uid = 0;
-// SVG niz avatarja; eq = { body, eyes, mouth, hat, outfit, acc, badge, bg, fx }.
+// SVG niz avatarja; eq = { body, eyes, mouth, bg: id; hat, outfit, acc, badge, fx: seznam id-jev }.
 export function avatarSvg(eq, { size = 64, title = "" } = {}) {
   const a = { ...DEFAULT_AVATAR, ...(eq || {}) };
   const u = `av${++uid}`;
   const body = BODY[a.body] ? a.body : "body_blue";
+  // Največ MULTI_MAX (predogled novega predmeta v polnem predalu jih ima lahko 7: BADGE_AT jih ne pozna).
+  const W = (slot) => byOrder(slot, worn(a, slot).filter((id) => itemOf(id)).slice(-MULTI_MAX));
+  const fx = W("fx");
+  const outfit = W("outfit");
+  const each = (list, f) => list.map(f).join("");
   return `<svg class="avatar-svg" viewBox="0 0 100 100" width="${size}" height="${size}" role="img"${title ? ` aria-label="${title.replace(/"/g, "&quot;")}"` : ` aria-hidden="true"`}>
-${defs(u, body)}${DRAW.bg(a.bg, u) ?? (BG[a.bg] || BG.bg_sky)(u)}${DRAW.fxBack(a.fx, u)}${(OUTFIT_BACK[a.outfit] || (() => ""))()}
-<path d="${BODY_PATH}" fill="url(#g${u})" stroke="${INK}" stroke-width="3"/>${(BODY_EXTRA[body] || (() => ""))()}
+${defs(u, body)}${DRAW.bg(a.bg, u) ?? (BG[a.bg] || BG.bg_sky)(u)}${each(fx, (id) => DRAW.fxBack(id, u))}${each(outfit, (id) => (OUTFIT_BACK[id] || (() => ""))())}${DRAW.kindBack(a.kind, u)}
+<path d="${BODY_PATH}" fill="url(#g${u})" stroke="${INK}" stroke-width="3"/>${(BODY_EXTRA[body] || (() => ""))()}${DRAW.kindFront(a.kind, u)}
 <path d="M30 40q4-8 12-10" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".35"/>
-${DRAW.outfit(a.outfit, u) ?? (OUTFIT[a.outfit] || OUTFIT.outfit_none)(u)}${DRAW.badge(a.badge)}${(EYES[a.eyes] || EYES.eyes_dots)()}${(MOUTH[a.mouth] || MOUTH.mouth_smile)()}${DRAW.acc(a.acc, u) ?? (ACC[a.acc] || ACC.acc_none)()}${DRAW.hat(a.hat) ?? (HAT[a.hat] || HAT.hat_none)()}${DRAW.fxFront(a.fx)}</svg>`;
+${each(outfit, (id) => DRAW.outfit(id, u) ?? (OUTFIT[id] || OUTFIT.outfit_none)(u))}${badges(W("badge"))}${(EYES[a.eyes] || EYES.eyes_dots)()}${(MOUTH[a.mouth] || MOUTH.mouth_smile)()}${each(W("acc"), (id) => DRAW.acc(id, u) ?? (ACC[id] || ACC.acc_none)())}${each(W("hat"), (id) => DRAW.hat(id) ?? (HAT[id] || HAT.hat_none)())}${each(fx, (id) => DRAW.fxFront(id))}</svg>`;
 }

@@ -14,7 +14,7 @@ import { PROFILE_SETTINGS, DEVICE_SETTINGS, SCHEDULE_SETTINGS, EVENT_KINDS, devi
 import { scheduleView } from "./schedule.js";
 import { goalsFor, validDate } from "../public/goal-data.js";
 import { Avatars } from "./avatar.js";
-import { ITEM, ITEMS, SLOTS } from "../public/avatar.js";
+import { ITEMS, SLOTS, MULTI_MAX, isMulti, itemOf, wear } from "../public/avatar.js";
 import { INTERESTS, cleanInterests } from "../public/interests.js";
 import { dialectsFor } from "../public/dialects.js";
 
@@ -205,6 +205,7 @@ function profileView(student) {
     goal: s.goal,
     goal_date: s.goal_date,
     goal_reminder: s.goal_reminder ? "on" : "off",
+    xp_goal: String(s.xp_goal ?? 50),
     interests: s.interests ?? [],
     interest_custom: s.interest_custom || "",
     news_level: s.news_level,
@@ -336,6 +337,10 @@ function validateProfile(changes, student) {
     if (["on", "off"].includes(changes.goal_reminder)) patch.goal_reminder = changes.goal_reminder === "on";
     else errors.push("goal_reminder: on or off");
   }
+  if (changes.xp_goal !== undefined) {
+    if (PROFILE_SETTINGS.xp_goal.values.includes(String(changes.xp_goal))) patch.xp_goal = Number(changes.xp_goal);
+    else errors.push(`xp_goal: allowed ${PROFILE_SETTINGS.xp_goal.values.join(", ")}`);
+  }
   if (changes.personality_setting !== undefined) patch.personality_setting = cleanText(String(changes.personality_setting), 200);
   if (changes.language !== undefined) {
     const code = String(changes.language).trim();
@@ -380,7 +385,11 @@ export function createSettingsTools({ store, studentId, conversationId, device =
     const out = { profile: profileView(student), device: dev, note: "Device settings not listed are at their defaults." };
     const owned = new Set(avatars.owned(studentId));
     out.profile.avatar = avatars.view(studentId).equipped;
-    out.avatar_items_available = ITEMS.filter((x) => x.price === 0 || owned.has(x.id)).map((x) => `${x.slot}: ${x.id} (${x.name.en})`);
+    // Brezplačni in svoji deli; sezonski predmeti s svojo sezono (npr. pass_coat~2026-1).
+    out.avatar_items_available = [
+      ...ITEMS.filter((x) => x.price === 0 || owned.has(x.id)).map((x) => [x, x.id]),
+      ...[...owned].filter((id) => id.includes("~") && itemOf(id)).map((id) => [itemOf(id), id]),
+    ].map(([x, id]) => `${x.slot}: ${id} (${x.name.en})`);
     const s = student.settings;
     if (input.options === "study_program") out.options = programItems().map((p) => `${p.id}: ${p.label}`);
     if (input.options === "study_course")
@@ -408,14 +417,20 @@ export function createSettingsTools({ store, studentId, conversationId, device =
     let avatarChange = null;
     if (changes.avatar !== undefined) {
       const a = changes.avatar;
-      if (!a || typeof a !== "object" || Array.isArray(a)) errors.push("avatar: object {slot: item id}");
+      if (!a || typeof a !== "object" || Array.isArray(a)) errors.push("avatar: object {slot: item id or list of ids}");
       else {
         const owned = new Set(avatars.owned(studentId));
-        for (const [slot, id] of Object.entries(a)) {
-          const x = ITEM[id];
-          if (!SLOTS.includes(slot)) errors.push(`avatar: unknown slot ${slot}`);
-          else if (!x || x.slot !== slot) errors.push(`avatar: ${id} is not a ${slot} item`);
-          else if (x.price > 0 && !owned.has(id)) errors.push(`avatar: ${id} not owned yet (bought with game coins in the games shop)`);
+        for (const [slot, v] of Object.entries(a)) {
+          if (!SLOTS.includes(slot)) {
+            errors.push(`avatar: unknown slot ${slot}`);
+            continue;
+          }
+          if (Array.isArray(v) && (!isMulti(slot) || v.length > MULTI_MAX)) errors.push(isMulti(slot) ? `avatar: at most ${MULTI_MAX} items in ${slot}` : `avatar: ${slot} takes one item id`);
+          for (const id of Array.isArray(v) ? v : [v]) {
+            const x = itemOf(String(id));
+            if (!x || x.slot !== slot) errors.push(`avatar: ${id} is not a ${slot} item`);
+            else if (x.price !== 0 && !owned.has(id)) errors.push(x.earn ? `avatar: ${id} is locked (unlocked only by ${x.collection === "igre" ? "playing games" : "learning"}, see Zbirke)` : `avatar: ${id} not owned yet (bought with game coins in the games shop)`);
+          }
         }
         avatarChange = a;
       }
@@ -467,7 +482,10 @@ export function createSettingsTools({ store, studentId, conversationId, device =
       if (applyPatch.language && langInfo(applyPatch.language).code !== "sl") result.note = (result.note ? result.note + " " : "") + "Reply in the new language from now on.";
     }
     if (avatarChange) {
-      const to = avatars.equip(studentId, { ...avatars.view(studentId).equipped, ...avatarChange });
+      // En id v predalu z več predmeti se doda k ostalim (wear), seznam zamenja cel predal.
+      let eq = avatars.view(studentId).equipped;
+      for (const [slot, v] of Object.entries(avatarChange)) eq = isMulti(slot) && !Array.isArray(v) ? wear(eq, String(v)) : { ...eq, [slot]: v };
+      const to = avatars.equip(studentId, eq);
       result.applied.push({ setting: "avatar", to });
       send("avatar", { avatar: to });
     }
@@ -534,7 +552,7 @@ export function createSettingsTools({ store, studentId, conversationId, device =
       if (name === "change_schedule") return changeSchedule(input);
       return { content: `unknown tool ${name}`, isError: true };
     } catch (err) {
-      console.error("[kompreno] orodje nastavitev:", err?.message ?? err);
+      console.error("[evklid] orodje nastavitev:", err?.message ?? err);
       return { content: "internal error, settings not changed", isError: true };
     }
   }

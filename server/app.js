@@ -1,4 +1,4 @@
-// HTTP strežnik Kompreno: API + statični vmesnik.
+// HTTP strežnik Evklid: API + statični vmesnik.
 import "./env.js";
 import express from "express";
 import fs from "node:fs";
@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
 import { createStreamFilter, parseMeta, parseCards, stripMeta } from "./meta.js";
 import { studentResults } from "./results.js";
-import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
+import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, MODEL_MID, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
 import { Usage, LIMITS, windowHistory, recentHistory } from "./usage.js";
 import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
@@ -23,12 +23,14 @@ import { SETTINGS_TOOLS, createSettingsTools, cleanDevice, looksLikeSettings } f
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
-import { passwordGate } from "./gate.js";
+import { passwordGate, gateNeeded } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
 import { examInfo, examKeyFor, isExamPath, examOf, examPrompt, taskLanguage, localizeExamView, localizeExamTopic } from "./exams.js";
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
+import { mountReports, chatOff, messageCode } from "./reports.js";
+import { verifyAnswer, codeCheck } from "./verify.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { Avatars, mountAvatar } from "./avatar.js";
@@ -37,13 +39,16 @@ import { mountCorner } from "./corner.js";
 import { mountWebApp } from "./webapp.js";
 import { Schedules, scheduleView, schedulePrompt, syncTestPlan } from "./schedule.js";
 import { mountSchedule } from "./schedule-api.js";
+import { mountScan } from "./scan.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
+import { BRAND } from "./brand.js";
+import { mobileClient, mountMobile } from "./mobile/index.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_IMAGE_B64 = 7 * 1024 * 1024; // ~5 MB slike
 const MAX_TEXT = 6000;
-const ANSWER_CACHE = process.env.KOMPRENO_ANSWER_CACHE !== "0";
+const ANSWER_CACHE = process.env.EVKLID_ANSWER_CACHE !== "0";
 
 // Ključ za ponovno uporabo odgovora: isto prvo vprašanje pri istih nastavitvah.
 // mode: način klica (chat/lite/think/deep); pathTopic: tema učne poti (npr. »Začniva s temo …«).
@@ -52,6 +57,7 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
   if (norm.length < 8) return null;
   const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.study_course, settings.curriculum_level, settings.solving_mode, settings.personality_setting, mode === "deep" ? 1 : 0];
   if (mode === "think") parts.push("think");
+  if (mode === "mid") parts.push("mid");
   // Pri temi učne poti tudi šibke točke, da se osebni odgovor ne prenese k drugemu učencu.
   if (pathTopic) parts.push(`tema:${pathTopic}`, weak.join(","));
   // Jezik dodamo samo, kadar ni slovenščina, da obstoječi shranjeni odgovori ostanejo veljavni.
@@ -69,9 +75,42 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
 // Brskalnik prenese le pisavo, ki jo slog res uporablja.
 const FONTS = [["nunito", "nunito"], ["instrument-sans", "instrument-sans"], ["ibm-plex-sans", "ibm-plex-sans"]];
 
+// Stara povezava (ngrok ali začasni tunel Cloudflare) vodi na lastno domeno (brand.json), ko ta
+// kaže na ta isti strežnik: nameščena aplikacija in shranjene povezave tako ne ostanejo prazne.
+const INSTANCE = crypto.randomUUID();
+const TUNNEL_HOST = /\.(ngrok(-free)?\.(app|dev|io|pizza)|trycloudflare\.com)$/i;
+function mountOldLinkRedirect(app, homeCheck) {
+  const domain = BRAND.domain;
+  if (!domain || process.env[`${BRAND.env}_PREUSMERI`] === "0") return;
+  const check = homeCheck || (async () => {
+    const r = await fetch(`https://${domain}/healthz/stanje`, { signal: AbortSignal.timeout(4000) });
+    return (await r.json()).id === INSTANCE;
+  });
+  // Odgovor velja 5 minut; potem ga osvežimo v ozadju (zahteva ne čaka do 4 s, sicer bi service
+  // worker po svojem roku 4 s ponudil shranjeno stran namesto preusmeritve). Čaka le prva zahteva.
+  let known = { at: 0, ok: false };
+  let pending = null;
+  const refresh = () => (pending ||= check().catch(() => false).then((ok) => {
+    known = { at: Date.now(), ok };
+    pending = null;
+    return ok;
+  }));
+  const homeIsUs = () => {
+    if (Date.now() - known.at < 5 * 60 * 1000) return known.ok;
+    const p = refresh();
+    return known.at ? known.ok : p;
+  };
+  app.use(async (req, res, next) => {
+    if (!TUNNEL_HOST.test(req.hostname || "") || !req.originalUrl.startsWith("/") || !(await homeIsUs())) return next();
+    res.set("Cache-Control", "no-store");
+    res.redirect(302, `https://${domain}${req.originalUrl}`);
+  });
+}
+
 export function createApp(store, opts = {}) {
   const { streamFn = streamReply, readFn = readHandwriting } = opts;
   const app = express();
+  mountOldLinkRedirect(app, opts.homeCheck);
   app.get("/healthz", (_req, res) => res.send("ok")); // za gostovanje, brez gesla
   // Različica in zasedenost: odprte strani se po posodobitvi osvežijo, samodejna posodobitev
   // (scripts/nadzor.js) pa strežnik znova zažene, ko nihče ne čaka na odgovor.
@@ -79,10 +118,12 @@ export function createApp(store, opts = {}) {
   const activity = { active: 0, lastSend: 0 };
   app.get("/healthz/stanje", (_req, res) => {
     res.set("Cache-Control", "no-store");
-    res.json({ razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
+    res.json({ id: INSTANCE, razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
   });
-  const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (KOMPRENO_ACCOUNTS=1)
-  if (process.env.KOMPRENO_PASSWORD) app.use(passwordGate(process.env.KOMPRENO_PASSWORD)); // stran za prijavo + piškotek
+  app.use(mobileClient); // mobilna aplikacija: seja v glavi namesto piškotka (server/mobile)
+  const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (EVKLID_ACCOUNTS=1)
+  mountMobile(app, accounts, { scheduler: opts.scheduler, fetchFn: opts.fetchFn, ...opts.mobile }); // prijava z Apple, nakupi v trgovinah, obvestila, /prenesi
+  if (gateNeeded()) app.use(passwordGate(process.env.EVKLID_PASSWORD)); // skupno geslo (samo brez računov, glej gate.js)
   mountWebApp(app); // manifest v jeziku vmesnika, povezava za Google Play
   app.use("/api", (req, res, next) => {
     activity.active++;
@@ -101,7 +142,7 @@ export function createApp(store, opts = {}) {
   // Neuspele klice API zapišemo v dnevnik, da je napako na telefonu mogoče poiskati.
   app.use("/api", (req, res, next) => {
     res.on("finish", () => {
-      if (res.statusCode >= 400) console.warn(`[kompreno] ${res.statusCode} ${req.method} ${req.originalUrl}`);
+      if (res.statusCode >= 400) console.warn(`[evklid] ${res.statusCode} ${req.method} ${req.originalUrl}`);
     });
     next();
   });
@@ -109,13 +150,13 @@ export function createApp(store, opts = {}) {
   const modules = path.join(here, "..", "node_modules");
   const publicDir = path.join(here, "..", "public");
   // Service worker z različico knjižnic v imenu predpomnilnika (glej server/razlicica.js).
-  const swSource = fs.readFileSync(path.join(publicDir, "sw.js"), "utf8").replace('"kompreno-v1"', `"kompreno-v1-${vendorVersion()}"`);
+  const swSource = fs.readFileSync(path.join(publicDir, "sw.js"), "utf8").replace('"evklid-v1"', `"evklid-v1-${vendorVersion()}"`);
   app.get("/sw.js", (_req, res) => {
     res.set("Cache-Control", "no-cache");
     res.type("text/javascript").send(swSource);
   });
   // Lahki način: stisnjene datoteke in JSON (brotli/gzip) za počasne in drage mobilne povezave.
-  if (process.env.KOMPRENO_COMPRESS !== "0") {
+  if (process.env.EVKLID_COMPRESS !== "0") {
     app.use(
       compressedStatic([
         ["/vendor/katex/", path.join(modules, "katex", "dist")],
@@ -145,9 +186,20 @@ export function createApp(store, opts = {}) {
 
   const busy = new Set(); // pogovori, ki trenutno čakajo na odgovor
   const pendingSettings = new Map(); // pogovor → predlog spremembe šole/letnika, ki čaka na potrditev
-  // »Vprašaj Kompreno« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
+  // »Vprašaj Evklida« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
   const helpTasks = new Map();
   const usage = new Usage(store.db);
+  // Kartice, ki so čakale na preverjanje ob ponovnem zagonu, ne bodo nikoli preverjene: proč z njimi
+  // (sicer bi skrite blokirale isto vprašanje, UNIQUE student_id + norm).
+  store.db.prepare("DELETE FROM flashcards WHERE verified = 0").run();
+  // Trojno preverjanje pred shranjevanjem za ponovno uporabo (server/verify.js). Brez API ključa
+  // (preizkusni način) so odgovori vnaprej pripravljeni: preveri jih samo koda.
+  const verifyLive = () => !!opts.verifyFn || !isMockMode();
+  const runVerify = opts.verifyFn || ((a) => verifyAnswer({ ...a, usage }));
+  const settleLater = (promise, done) =>
+    Promise.resolve(promise)
+      .then((v) => done(!!v?.ok, v?.reason || ""), (e) => done(false, e?.message || "napaka"))
+      .catch((e) => console.warn(`[evklid] preverjanje: ${e?.message || e}`));
   const progress = new Progress(store);
   const knowledge = new Knowledge(store.db); // zbirke znanja in učni pass (server/zbirke.js)
   // Urnik učenca (server/schedule.js): ure, testi; gre v prompt in v Pripravo na test.
@@ -167,6 +219,10 @@ export function createApp(store, opts = {}) {
   };
 
   mountFeedback(app, store, { usage, file: opts.feedbackFile ?? null, createFn: opts.feedbackCreateFn });
+  mountReports(app, store, {
+    loadConversation,
+    localOnly: (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Samo na računalniku, kjer teče Evklid." })),
+  });
 
   app.get("/api/config", (req, res) => {
     res.json({
@@ -177,6 +233,7 @@ export function createApp(store, opts = {}) {
       defaults: DEFAULT_SETTINGS,
       daily_questions: LIMITS.dailyQuestions() || null,
       feedback: { prompt: feedbackPromptOn(), ai: feedbackAiOn(), admin: isLocalRequest(req) },
+      chat_off: chatOff(),
     });
   });
 
@@ -232,7 +289,7 @@ export function createApp(store, opts = {}) {
 
   // Ogled sestavljenega prompta, samo za razvoj.
   app.get("/api/students/:id/prompt", (req, res) => {
-    if (process.env.KOMPRENO_DEBUG !== "1") return res.status(404).end();
+    if (process.env.EVKLID_DEBUG !== "1") return res.status(404).end();
     const s = loadStudent(req, res);
     if (!s) return;
     res.type("text/plain").send(
@@ -256,12 +313,15 @@ export function createApp(store, opts = {}) {
     const c = loadConversation(req, res);
     if (!c) return;
     const last = store.lastEvent(c.id);
+    const reported = new Set(store.db.prepare("SELECT message_id FROM message_reports WHERE conversation_id = ?").all(c.id).map((r) => r.message_id));
     res.json({
       ...c,
       state: last ? { subject: last.subject, mode: last.mode } : null,
       topic: c.path_topic ? { id: c.path_topic, name: getTopic(c.path_topic)?.name } : null,
       messages: store.listMessages(c.id).map((m) => ({
         id: m.id,
+        code: m.role === "assistant" ? messageCode(m.id) : undefined,
+        reported: reported.has(m.id) || undefined,
         role: m.role,
         text: m.display_text,
         has_image: !!m.has_image,
@@ -271,7 +331,10 @@ export function createApp(store, opts = {}) {
   });
   app.delete("/api/conversations/:id", (req, res) => {
     const c = loadConversation(req, res);
-    if (c) res.json({ ok: store.deleteConversation(c.id) });
+    if (!c) return;
+    // Prijava napake ostane kot zapis dogodka (odgovor inštruktorja), učenčevo vprašanje in opomba pa se izbrišeta.
+    store.db.prepare("UPDATE message_reports SET question = NULL, note = NULL WHERE conversation_id = ?").run(c.id);
+    res.json({ ok: store.deleteConversation(c.id) });
   });
 
   // --- klepet (Server-Sent Events) ---
@@ -286,7 +349,9 @@ export function createApp(store, opts = {}) {
       return res.status(400).json({ error: "Slika mora biti JPG, PNG, WEBP ali GIF in manjša od 5 MB." });
     }
     if (!text && !image) return res.status(400).json({ error: "Sporočilo je prazno." });
-    if (busy.has(conv.id)) return res.status(409).json({ error: "Počakaj, da Kompreno odgovori." });
+    // Stikalo za nujne primere (docs/krizni-nacrt.md): klepet izklopljen, Vadnica in lekcije delujejo.
+    if (chatOff()) return res.status(503).json({ error: "Klepet z inštruktorjem je začasno izklopljen. Ostali deli aplikacije delujejo.", chat_off: true });
+    if (busy.has(conv.id)) return res.status(409).json({ error: "Počakaj, da Evklid odgovori." });
     const blocked = usage.blockReason(student.id);
     if (blocked) return res.status(429).json({ error: blocked, limit: true });
     busy.add(conv.id);
@@ -299,15 +364,21 @@ export function createApp(store, opts = {}) {
     const again = req.body?.deep === true;
     const againStreak = again ? (conv.deep || 0) + 1 : 0;
     if (againStreak !== (conv.deep || 0)) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(againStreak, conv.id);
+    // Aktivacijska koda: druga zaporedna prošnja gre k Sonnetu, šele tretja (in vsaka naslednja) k Opusu
+    // (j 2026-10-30). Tekmovanja in fotografija urnika pri kodi ostanejo pri Sonnetu.
+    // Nad skrito omejitvijo Opusa (usage.promoOpusSpent) tudi tretja prošnja tiho dobi Sonnet, brez opombe.
+    const capped = !!accounts?.modelCapFor?.(student.id) && (againStreak < 3 || usage.promoOpusSpent(student.id, MODEL_DEEP));
     const { mode, note } = usage.chooseMode(student.id, {
       wantDeep: againStreak >= 2,
       wantThink: againStreak === 1,
       competition: student.settings.track === "COMPETITION",
       lite,
       free: !!accounts && !accounts.premiumFor(student.id),
-      deepModel: MODEL_DEEP,
+      deepModel: capped ? MODEL_MID : MODEL_DEEP,
+      capped,
     });
-    const deep = mode === "deep";
+    // »mid« (Sonnet pri aktivacijski kodi) se obnaša kot podrobna razlaga, le z drugim modelom.
+    const deep = mode === "deep" || mode === "mid";
 
     const userContent = [];
     if (image) userContent.push({ type: "image", source: { type: "base64", media_type: image.media_type, data: image.data } });
@@ -378,7 +449,7 @@ export function createApp(store, opts = {}) {
               lastAnswer: help.task.last_answer,
             })
           : null;
-      const cached = hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
+      const cached = hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND verified = 1 AND created_at >= datetime('now','-30 days')").get(key);
       if (note) send("delta", { text: note });
       const run = cached
         ? async ({ onText }) => {
@@ -414,11 +485,25 @@ export function createApp(store, opts = {}) {
       // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
       let content = [{ type: "text", text: result.text || "…" }];
-      const cost = cached ? 0 : usage.log(student.id, result.model || (deep ? MODEL_DEEP : MODEL), result.usage);
+      const cost = cached ? 0 : usage.log(student.id, result.model || (mode === "mid" ? MODEL_MID : deep ? MODEL_DEEP : MODEL), result.usage);
       if (settingsTools.state.proposal) send("proposal", settingsTools.state.proposal);
       if (key && !cached && !result.toolCalls && !settingsTools.state.used && result.stopReason === "end_turn" && result.text) {
+        // Drugim učencem gre odgovor šele po trojnem preverjanju (koda + dva AI pregleda, server/verify.js).
         const generic = student.name.length > 1 ? result.text.replaceAll(student.name, "{{IME}}") : result.text;
-        store.db.prepare("INSERT OR REPLACE INTO answer_cache (key, text) VALUES (?, ?)").run(key, generic);
+        const plain = stripMeta(result.text);
+        if (!codeCheck(plain)) {
+          const live = verifyLive();
+          store.db.prepare("INSERT OR REPLACE INTO answer_cache (key, text, verified) VALUES (?, ?, ?)").run(key, generic, live ? 0 : 1);
+          if (live) {
+            settleLater(runVerify({ question: text, answer: plain }), (ok, reason) => {
+              if (ok) store.db.prepare("UPDATE answer_cache SET verified = 1 WHERE key = ? AND text = ?").run(key, generic);
+              else {
+                store.db.prepare("DELETE FROM answer_cache WHERE key = ? AND text = ? AND verified = 0").run(key, generic);
+                console.warn(`[evklid] odgovor ni shranjen za ponovno uporabo (${reason})`);
+              }
+            });
+          }
+        }
       }
       if (result.stopReason === "refusal") {
         display = REFUSAL_TEXT;
@@ -429,27 +514,41 @@ export function createApp(store, opts = {}) {
 
       const assistantId = store.addMessage(conv.id, "assistant", content, display);
       // Kartice za ponavljanje iz odgovora (ne pri zavrnitvi in ne pri opozorilih).
+      // Kartice so vidne šele po trojnem preverjanju; z napačnim računom se sploh ne shranijo.
+      const parsedCards = result.stopReason !== "refusal" && (!meta || meta.flag === "none") ? parseCards(result.text) : [];
+      const cardsText = parsedCards.map((c) => `${c.front} → ${c.back}`).join("\n");
+      const liveCards = verifyLive();
       const cards =
-        result.stopReason !== "refusal" && (!meta || meta.flag === "none")
-          ? store.cards.add(student.id, parseCards(result.text), {
+        parsedCards.length && !codeCheck(cardsText)
+          ? store.cards.add(student.id, parsedCards, {
               conversationId: conv.id,
               topicId: conv.path_topic,
               subject: meta?.subject ?? student.settings.subject,
               topic: meta?.topic ?? (conv.path_topic ? getTopic(conv.path_topic)?.name : null),
+              verified: !liveCards,
             })
           : [];
-      if (cards.length) send("cards", { cards: cards.map((c) => ({ id: c.id, front: c.front })), due: store.cards.dueCount(student.id) });
+      if (cards.length && liveCards) {
+        const ids = cards.map((c) => c.id);
+        settleLater(runVerify({ question: text, answer: cardsText, kind: "cards" }), (ok, reason) => {
+          store.cards.settle(ids, ok);
+          if (!ok) console.warn(`[evklid] kartice niso shranjene (${reason})`);
+        });
+      }
+      // Nepreverjenih kartic učenec še ne vidi (tudi ne v obvestilu »dodane kartice«).
+      if (cards.length && !liveCards) send("cards", { cards: cards.map((c) => ({ id: c.id, front: c.front })), due: store.cards.dueCount(student.id) });
       if (meta) {
         store.addEvent({ student_id: student.id, conversation_id: conv.id, message_id: assistantId, ...meta });
         if (meta.done && conv.path_topic && progress.markMastered(student.id, conv.path_topic, "chat")) {
           send("mastered", { topic: getTopic(conv.path_topic)?.name, unlocked: knowledge.sync(student.id) });
         }
       } else {
-        console.warn(`[kompreno] odgovor brez META (pogovor ${conv.id})`);
+        console.warn(`[evklid] odgovor brez META (pogovor ${conv.id})`);
       }
       finished = true;
       send("done", {
         id: assistantId,
+        code: messageCode(assistantId),
         text: display,
         state: meta ? { subject: meta.subject, mode: meta.mode } : null,
         title: store.getConversation(conv.id).title,
@@ -465,7 +564,7 @@ export function createApp(store, opts = {}) {
       store.db.prepare("DELETE FROM messages WHERE id = ?").run(userMsgId);
       if (again) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(conv.deep || 0, conv.id);
       if (!controller.signal.aborted) {
-        console.error("[kompreno] napaka pri klicu modela:", err?.status ?? "", err?.message ?? err);
+        console.error("[evklid] napaka pri klicu modela:", err?.status ?? "", err?.message ?? err);
         send("error", { error: ERROR_TEXT });
       }
       res.end();
@@ -793,11 +892,11 @@ export function createApp(store, opts = {}) {
       if (out.usage) usage.log(s.id, out.model, out.usage, "ocr");
       res.json({ text: out.text, message: out.text ? null : "Zapisa nisem uspel prebrati. Poskusi pisati večje ali uporabi tipke." });
     } catch (err) {
-      console.error("[kompreno] branje rokopisa:", err?.message || err);
+      console.error("[evklid] branje rokopisa:", err?.message || err);
       res.status(502).json({ error: "Branje zapisa trenutno ne deluje. Odgovor vpiši s tipkami." });
     }
   });
-  // »Vprašaj Kompreno«: odpre pogovor z nalogo in učenčevim odgovorom.
+  // »Vprašaj Evklida«: odpre pogovor z nalogo in učenčevim odgovorom.
   app.post("/api/students/:id/tasks/:taskId/help", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
@@ -830,11 +929,12 @@ export function createApp(store, opts = {}) {
   const avatars = new Avatars(store.db);
   mountLeagues(app, store, { loadStudent });
   mountGraphs(app, store, { loadStudent });
-  mountGames(app, store, { loadStudent, progress, avatars });
+  mountGames(app, store, { loadStudent, progress, avatars, knowledge });
   mountAvatar(app, avatars, { loadStudent });
   mountKnowledge(app, knowledge, { loadStudent, avatars });
   mountCorner(app, store, { loadStudent, fetchFn: opts.newsFetch, offline: opts.newsOffline });
-  mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup });
+  mountSchedule(app, store, { loadStudent, progress, usage, schedules, photoFn: opts.schedulePhotoFn, fetchFn: opts.fetchFn, lookup: opts.lookup, modelCapFor: (id) => accounts?.modelCapFor?.(id) ?? null });
+  mountScan(app, { loadStudent, usage, readFn: opts.scanReadFn, solveFn: opts.scanSolveFn });
 
   // --- poraba AI ---
   // Poraba AI za vse profile: brez računov samo na računalniku, kjer teče strežnik
@@ -848,6 +948,13 @@ export function createApp(store, opts = {}) {
   app.get("/api/students/:id/usage", (req, res) => {
     const s = loadStudent(req, res);
     if (s) res.json(usage.studentMonth(s.id));
+  });
+
+  // Napačno ali preveliko telo zahteve: kratek odgovor v JSON (odjemalec pokaže sporočilo)
+  // namesto strani z napako in celotnega sklada v dnevniku.
+  app.use((err, _req, res, next) => {
+    if (res.headersSent || !["entity.parse.failed", "entity.too.large"].includes(err?.type)) return next(err);
+    res.status(err.status || 400).json({ error: err.type === "entity.too.large" ? "Zahteva je prevelika." : "Zahteva ni v pravilni obliki." });
   });
 
   return app;
