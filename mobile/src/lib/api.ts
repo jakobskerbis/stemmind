@@ -69,6 +69,11 @@ async function setSession(value: string | null) {
 }
 export const clearSession = () => setSession(null);
 
+let onTaken: ((studentId: number) => void) | null = null;
+export const setTakenHandler = (fn: ((studentId: number) => void) | null) => {
+  onTaken = fn;
+};
+
 type Opts = { method?: string; body?: unknown; signal?: AbortSignal; stream?: boolean };
 
 // Vrne odgovor (Response) za tokove, sicer razčlenjen JSON. Napaka: ApiError (status 0 = brez povezave).
@@ -103,6 +108,8 @@ export async function request(path: string, opts: Opts = {}) {
   if (opts.stream && res.ok) return res;
   const type = res.headers.get("content-type") || "";
   const body = type.includes("json") ? await res.json().catch(() => ({})) : await res.text();
+  // Profil je odprt na drugi napravi (server/accounts/index.js): ponudimo prevzem (_layout.tsx).
+  if (res.status === 409 && body?.taken && onTaken) onTaken(Number(body.student_id));
   if (!res.ok) throw new ApiError(res.status, typeof body === "object" ? body : { error: String(body).slice(0, 200) });
   return body;
 }

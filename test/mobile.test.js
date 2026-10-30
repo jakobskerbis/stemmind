@@ -117,6 +117,29 @@ test("app session travels in headers, never as cookies", async () => {
   });
 });
 
+test("profile open on another device: app gets 409 taken, claim with app headers takes it over", async () => {
+  await withServer(async ({ appClient, adult }) => {
+    const a = appClient();
+    await adult(a);
+    const created = await a("/api/students", { body: { name: "Ana", self: true, consent: true } });
+    assert.equal(created.status, 201, JSON.stringify(created.body));
+    const id = created.body.id;
+    assert.equal((await a(`/api/students/${id}`)).status, 200);
+    // Isti račun na drugi napravi (aplikacija pošlje POST /claim s telesom {}, kot src/lib/api.ts).
+    const b = appClient();
+    assert.equal((await b("/api/auth/login", { body: { email: "starsh@primer.si", password: "geslo12345" } })).status, 200);
+    const taken = await b(`/api/students/${id}`);
+    assert.equal(taken.status, 409);
+    assert.equal(taken.body.taken, true);
+    assert.equal(taken.body.student_id, id);
+    const claim = await b(`/api/students/${id}/claim`, { body: {} });
+    assert.equal(claim.status, 200, JSON.stringify(claim.body));
+    assert.equal((await b(`/api/students/${id}`)).status, 200);
+    // Prva naprava ga zdaj nima več.
+    assert.equal((await a(`/api/students/${id}`)).status, 409);
+  });
+});
+
 test("Apple JWS: test chain verifies, Apple root is pinned, tampering fails", () => {
   const payload = verifyAppleJws(appleJws(tx()), { rootFingerprint: CHAIN.rootFingerprint });
   assert.equal(payload.originalTransactionId, "1000000001");
