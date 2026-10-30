@@ -20,6 +20,9 @@ label.check input { margin-top: 4px; flex: none; width: 18px; height: 18px; }
   .plan-head { grid-column: 1 / -1; }
 }
 
+/* Darilne kode: koda, Kopiraj in stanje v eni vrstici (na ozkem zaslonu se prelomi) */
+.gift-list { list-style: none; padding: 0; margin: 0 0 8px; display: flex; flex-direction: column; gap: 8px; }
+.gift-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .child-list { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 8px; }
 .pill { display: inline-block; font-size: 0.8rem; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); }
 .pill.ok { color: var(--ok); }
@@ -45,7 +48,7 @@ details .card { margin-top: 8px; }
 .lock-card input[type="password"] { width: 100%; box-sizing: border-box; }
 .lock-card button { min-height: 44px; }
 /* summary ostane list-item (puščica kot pri »Imate aktivacijsko kodo?«), višina 44 px s paddingom */
-.lock-forgot summary, .profile-pw summary, .code-new summary { margin: 0; padding: 10px 0; line-height: 24px; }
+.lock-forgot summary, .profile-pw summary, .code-new summary, .gift-card summary, .promo-code summary { margin: 0; padding: 10px 0; line-height: 24px; }
 .lock-forgot .form { margin-top: 6px; }
 .lock-others-title { margin: 6px 0 0; }
 .lock-others { display: flex; flex-wrap: wrap; gap: 8px; }

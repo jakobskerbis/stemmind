@@ -2373,5 +2373,7 @@
   "pilot.askers": "Elevi",
   "pilot.ai": "AI",
   "pilot.parents": "Părinți",
-  "pilot.note": "Vizualizările paginilor se numără fără cookie-uri și fără adrese IP, doar ca număr pe zi. Roboții și previzualizările de linkuri nu se numără."
+  "pilot.note": "Vizualizările paginilor se numără fără cookie-uri și fără adrese IP, doar ca număr pe zi. Roboții și previzualizările de linkuri nu se numără.",
+  "pay.giftAdult": "Sunt major(ă) și cumpăr un cod cadou pentru Evklid.",
+  "pay.giftWithdrawal": "Știu că mă pot retrage în 14 zile de la cumpărare și primesc rambursarea integrală dacă codul nu a fost folosit. Odată folosit codul, utilizarea începe și dreptul de retragere încetează."
 }

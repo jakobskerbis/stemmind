@@ -2353,5 +2353,7 @@
   "pilot.askers": "Alunos",
   "pilot.ai": "IA",
   "pilot.parents": "Pais",
-  "pilot.note": "As visualizações são contadas sem cookies e sem endereços IP, apenas o número por dia. Bots e pré-visualizações de ligações não são contados."
+  "pilot.note": "As visualizações são contadas sem cookies e sem endereços IP, apenas o número por dia. Bots e pré-visualizações de ligações não são contados.",
+  "pay.giftAdult": "Sou maior de idade e estou a comprar um código de oferta para o Evklid.",
+  "pay.giftWithdrawal": "Sei que posso desistir no prazo de 14 dias após a compra e receber o reembolso total se o código não tiver sido resgatado. Depois de resgatado, o uso começa e o direito de desistência termina."
 }

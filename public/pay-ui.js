@@ -5,9 +5,10 @@ import { t, currentLang } from "./i18n.js";
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
 // Dve obvezni potrditvi (besedilo hrani tudi strežnik ob vsakem plačilu).
-export const consentFields = () => `
-  <label class="check pay-consent"><input type="checkbox" name="adult" required><span>${esc(t("pay.adult"))}</span></label>
-  <label class="check pay-consent"><input type="checkbox" name="withdrawal" required><span>${esc(t("pay.withdrawal"))}</span></label>`;
+// kind "gift": izjavi za nakup darilne kode (uporaba se začne šele ob vpisu kode).
+export const consentFields = (kind = "") => `
+  <label class="check pay-consent"><input type="checkbox" name="adult" required><span>${esc(t(kind === "gift" ? "pay.giftAdult" : "pay.adult"))}</span></label>
+  <label class="check pay-consent"><input type="checkbox" name="withdrawal" required><span>${esc(t(kind === "gift" ? "pay.giftWithdrawal" : "pay.withdrawal"))}</span></label>`;
 
 export const consentsOk = (form) => !!form.adult?.checked && !!form.withdrawal?.checked;
 // Potrditvi za strežnik, z jezikom, v katerem ju je plačnik prebral.

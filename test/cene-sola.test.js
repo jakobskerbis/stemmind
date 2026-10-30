@@ -56,6 +56,7 @@ function fakeStripe() {
     const ok = (data) => ({ ok: true, status: 200, json: async () => data });
     if (u.host === "api.resend.com") return ok({ id: "email_" + ++n });
     const p = u.pathname.replace("/v1", "");
+    if (state.objects?.[p]) return ok(state.objects[p]);
     if (p === "/customers") return ok({ id: "cus_" + ++n });
     if (p === "/prices" && init.method === "GET") return ok({ data: [] });
     if (p === "/products") return ok({ id: "prod_1" });
@@ -323,5 +324,59 @@ test("darilna koda: mladoletni je ne more kupiti", async () => {
       (await a("/api/billing/gift", { method: "POST", body: OK })).status,
       403,
     );
+  });
+});
+
+test("Osebno ob šolski licenci: stara povezava za starše ne da šolske cene, ko licence ni več", async () => {
+  await withServer(async ({ licensed, register }) => {
+    const { a } = await register("povezava@kod.si");
+    const k = (await a("/api/students", { method: "POST", body: { name: "Eva", birth_year: YEAR - 13, consent: true } })).body;
+    assert.equal((await a("/api/billing/pay-link", { method: "POST", body: { kind: "sub", school: true, interval: "month" } })).status, 403);
+    licensed.add(k.id);
+    const link = await a("/api/billing/pay-link", { method: "POST", body: { kind: "sub", school: true, interval: "month" } });
+    assert.equal(link.status, 201, JSON.stringify(link.body));
+    licensed.delete(k.id); // učenec je zapustil razred
+    const token = new URL(link.body.url).searchParams.get("t");
+    const pay = await a(`/api/pay/${token}/checkout`, { method: "POST", body: { email: "mama@kod.si", ...OK } });
+    assert.equal(pay.status, 403, JSON.stringify(pay.body));
+  });
+});
+
+test("darilna koda: izbris prejemnika ne sprosti kode, vračilo enega od dveh daril vzame le njegove dni, spor ne prekliče naročnine", async () => {
+  await withServer(async ({ store, stripe, register, hook }) => {
+    const { a: buyer, parent } = await register("kupec2@kod.si");
+    const codes = [];
+    for (const pi of ["pi_a", "pi_b", "pi_c"]) {
+      await buyer("/api/billing/gift", { method: "POST", body: OK });
+      const s = stripe.calls.filter((c) => c.path === "/v1/checkout/sessions").at(-1);
+      const sid = "cs_" + pi;
+      stripe.state.sessions[sid] = { id: sid, payment_status: "paid", payment_intent: pi, metadata: { kind: "gift", gift_id: s.body["metadata[gift_id]"], parent_id: String(parent.id) } };
+      codes.push((await buyer("/api/billing/gift/confirm", { method: "POST", body: { session_id: sid } })).body.code);
+    }
+    // Prejemnik vpiše kodo med preizkusom: darilo začne teči po koncu preizkusa.
+    const { a: gone } = await register("odhod@kod.si");
+    const trialEnd = Date.parse((await gone("/api/account")).body.access.until);
+    const red = await gone("/api/account/promo", { method: "POST", body: { code: codes[0] } });
+    assert.equal(red.status, 200);
+    assert.equal(red.body.access.tier, "trial");
+    const until = Date.parse(red.body.gift_until);
+    assert.ok(Math.abs(until - trialEnd - 365 * 86400000) < 5000);
+    assert.equal((await gone("/api/account", { method: "DELETE", body: { password: "geslo1234" } })).status, 200);
+    const { a: other } = await register("drugi@kod.si");
+    store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z' WHERE email = 'drugi@kod.si'").run();
+    assert.match((await other("/api/account/promo", { method: "POST", body: { code: codes[0] } })).body.error, /že uporabljena/);
+    // Dve darili: vračilo enega pusti drugo leto.
+    for (const c of codes.slice(1)) assert.equal((await other("/api/account/promo", { method: "POST", body: { code: c } })).status, 200);
+    await hook({ id: "evt_r1", type: "charge.refunded", data: { object: { payment_intent: "pi_b", amount_refunded: 4900 } } });
+    const acc = (await other("/api/account")).body.access;
+    assert.equal(acc.tier, "gift");
+    const days = (Date.parse(acc.until) - Date.now()) / 86400000;
+    assert.ok(days > 364.9 && days <= 365, String(days));
+    // Spor po vračilu istega darila: kupčeva naročnina ostane.
+    store.db.prepare("UPDATE parents SET sub_id = 'sub_k', sub_status = 'active', stripe_customer_id = 'cus_k' WHERE id = ?").run(parent.id);
+    stripe.state.objects = { "/charges/ch_b": { id: "ch_b", customer: "cus_k" } };
+    await hook({ id: "evt_d1", type: "charge.dispute.created", data: { object: { payment_intent: "pi_b", charge: "ch_b" } } });
+    assert.ok(!stripe.calls.some((c) => c.method === "DELETE" && c.path.startsWith("/v1/subscriptions")));
+    assert.equal(store.db.prepare("SELECT sub_status FROM parents WHERE id = ?").get(parent.id).sub_status, "active");
   });
 });

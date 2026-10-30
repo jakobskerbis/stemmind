@@ -2,7 +2,7 @@ import { icon } from "./icons.js";
 import { loadPrograms, programsCache } from "./programs.js";
 import { mountLevelPicker, schoolSystemOptions } from "./level-picker.js";
 import { systemForCountry } from "./regions.js";
-import { currentLang, currentRegion, deviceRegion, t } from "./i18n.js";
+import { currentLang, currentRegion, deviceRegion, locale, t } from "./i18n.js";
 import { openProfileMenu } from "./profile-menu.js";
 import { consentFields, consentsOk, consentBody, linkBox, bindLinkBox } from "./pay-ui.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
@@ -691,15 +691,17 @@ const planBody = (v) => {
 function giftBox(acc) {
   if (!acc.billing || acc.parent.minor || acc.parent.guest) return "";
   const list = (acc.gifts || [])
-    .map((g) => `<li>${g.code ? `<b>${esc(g.code)}</b> <button type="button" data-gift-copy="${esc(g.code)}">${esc(t("gift.copy"))}</button>` : ""} <span class="pill${g.redeemed ? " ok" : ""}">${esc(t(g.status !== "paid" ? "gift.refunded" : g.redeemed ? "gift.used" : "gift.unused"))}</span></li>`)
+    .map((g) => `<li>${g.code ? `<b dir="ltr">${esc(g.code)}</b> <button type="button" data-gift-copy="${esc(g.code)}" aria-label="${esc(t("gift.copy"))} ${esc(g.code)}">${esc(t("gift.copy"))}</button>` : ""} <span class="pill${g.redeemed ? " ok" : ""}">${esc(t(g.status !== "paid" ? "gift.refunded" : g.redeemed ? "gift.used" : "gift.unused"))}</span></li>`)
     .join("");
-  return `<div class="card">
+  // Cena v obliki jezika vmesnika (sl: 49,00 €, en: €49.00), ker je kartica v celoti prevedena.
+  const price = ((acc.gift_price || 4900) / 100).toLocaleString(locale(), { style: "currency", currency: "EUR" });
+  return `<div class="card gift-card">
       <h2>${icon("gift")} ${esc(t("gift.title"))}</h2>
-      <p>${esc(t("gift.text", { price: money(acc.gift_price || 4900, "EUR") }))}</p>
+      <p>${esc(t("gift.text", { price }))}</p>
       ${list ? `<ul class="gift-list">${list}</ul>` : ""}
       <details><summary>${esc(t("gift.buy"))}</summary>
         <form id="gift-form" class="form" novalidate>
-          ${consentFields()}
+          ${consentFields("gift")}
           <p class="form-error" role="alert" hidden></p>
           <button class="primary" type="submit">${esc(t("pay.continue"))}</button>
         </form></details>
@@ -716,7 +718,7 @@ function promoBox(acc, paid) {
     : "";
   // Darilne kode (DAR-…) se vpišejo v isto polje, zato je polje tudi, ko aktivacijskih kod ni.
   if (paid) return admin;
-  return `<details${store.get("evklid_koda") ? " open" : ""}><summary>${esc(t("gift.codeSummary"))}</summary>
+  return `<details class="promo-code"${store.get("evklid_koda") ? " open" : ""}><summary>${esc(t("gift.codeSummary"))}</summary>
       <form id="promo-form" class="inline form">
         <input name="code" maxlength="40" required autocapitalize="characters" placeholder="npr. EVKLID3X" value="${esc(store.get("evklid_koda") || "")}">
         <button class="primary" type="submit">Aktiviraj</button>
@@ -1099,7 +1101,7 @@ async function renderAccount() {
     try {
       const r = await api("/api/account/promo", { method: "POST", body: { code: e.target.code.value } });
       store.set("evklid_koda", null);
-      toast(r.access.tier === "gift" ? t("gift.redeemed", { date: date(r.access.until) }) : `Aktivacijska koda velja ✓ Poln dostop do ${date(r.access.until)}.`);
+      toast(r.gift_until ? t("gift.redeemed", { date: date(r.gift_until) }) : `Aktivacijska koda velja ✓ Poln dostop do ${date(r.access.until)}.`);
       await onReadyCb?.({ keepView: true });
       renderAccount();
     } catch (err) {

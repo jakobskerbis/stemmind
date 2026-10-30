@@ -670,7 +670,8 @@ export function mountAccounts(app, store, opts = {}) {
       throttle.fail(key);
       return res.status(r.exhausted ? 410 : 400).json({ error: r.error });
     }
-    res.json(accountView(req, getParent(req.parent.id)));
+    // Darilo med preizkusom ali kodo začne teči pozneje, zato je datum v odgovoru (access je lahko še trial).
+    res.json({ ...accountView(req, getParent(req.parent.id)), ...(r.gift ? { gift_until: r.until } : {}) });
   });
 
   // Na računalniku, kjer teče strežnik: »ta račun je moj«, da števec porabe vidim tudi na telefonu.
@@ -928,6 +929,7 @@ export function mountAccounts(app, store, opts = {}) {
     const school = req.body?.school === true;
     const plan = school ? schoolPlanFor(req.body?.interval) : planFor(Number(req.body?.seats), req.body?.interval, currency);
     if (!plan) return res.status(400).json({ error: "Neznan paket." });
+    if (school && currency !== "EUR") return res.status(400).json({ error: "Šolska cena je samo v evrih." });
     if (school && !childIds(p.id).some((id) => schools.hasLicence(id))) {
       return res.status(403).json({ error: "Ta cena velja samo za učence s šolsko licenco." });
     }
@@ -939,8 +941,11 @@ export function mountAccounts(app, store, opts = {}) {
       const customer = await ensureCustomer(p);
       const { prices } = school ? await stripe.ensureSchoolPrices() : await stripe.ensurePrices(currency);
       const base = baseUrl(req);
-      // Preostanek 7-dnevnega preizkusa ali aktivacijske kode se prenese v Stripe (če sta še vsaj 2 dni).
-      const trialEnd = Math.max(Date.parse(p.trial_ends_at || 0) || 0, Date.parse(p.promo_until || 0) || 0);
+      // Preostanek preizkusa, aktivacijske ali darilne kode se prenese v Stripe (če sta še vsaj 2 dni; Stripe dovoli največ 730 dni).
+      const trialEnd = Math.min(
+        Date.now() + 729 * 86400000,
+        Math.max(Date.parse(p.trial_ends_at || 0) || 0, Date.parse(p.promo_until || 0) || 0, Date.parse(p.gift_until || 0) || 0),
+      );
       const subscription_data = { metadata: { parent_id: p.id } };
       if (trialEnd - Date.now() > 49 * 3600000) subscription_data.trial_end = Math.floor(trialEnd / 1000);
       const session = await stripe.request("POST", "/checkout/sessions", {
@@ -951,7 +956,8 @@ export function mountAccounts(app, store, opts = {}) {
         success_url: `${base}/?billing=success&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${base}/?billing=cancel`,
         locale: currency === "EUR" ? "sl" : "auto",
-        allow_promotion_codes: "true",
+        // Šolska cena je že znižana: brez dodatnih kod za popust.
+        ...(school ? {} : { allow_promotion_codes: "true" }),
         subscription_data,
         metadata: { parent_id: p.id },
       });

@@ -2349,5 +2349,7 @@
   "pilot.askers": "Schüler",
   "pilot.ai": "KI",
   "pilot.parents": "Eltern",
-  "pilot.note": "Seitenaufrufe werden ohne Cookies und ohne IP-Adressen gezählt, nur als Anzahl pro Tag. Bots und Linkvorschauen werden nicht gezählt."
+  "pilot.note": "Seitenaufrufe werden ohne Cookies und ohne IP-Adressen gezählt, nur als Anzahl pro Tag. Bots und Linkvorschauen werden nicht gezählt.",
+  "pay.giftAdult": "Ich bin volljährig und kaufe einen Geschenkcode für Evklid.",
+  "pay.giftWithdrawal": "Ich weiß, dass ich innerhalb von 14 Tagen nach dem Kauf widerrufen kann und den vollen Betrag zurückerhalte, solange der Code nicht eingelöst ist. Sobald der Code eingelöst ist, beginnt die Nutzung und das Widerrufsrecht erlischt."
 }

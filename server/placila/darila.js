@@ -4,6 +4,11 @@
 // Vračilo ali spor pred vpisom kodo izklopi; po vpisu se dostop prejemnika konča.
 import express from "express";
 import { randomBytes } from "node:crypto";
+
+// Izjavi ob nakupu darilne kode (darilo se uporabi pozneje, zato drugače kot pri naročnini).
+export const GIFT_ADULT_TEXT = "Sem polnoletna oseba in kupujem darilno kodo za Evklid.";
+export const GIFT_WITHDRAWAL_TEXT =
+  "Vem, da lahko v 14 dneh od nakupa odstopim in dobim vrnjeno celotno plačilo, če koda še ni vpisana. Ko je koda vpisana, se uporaba začne in pravica do odstopa preneha.";
 import { GIFT, isoIn } from "../accounts/plans.js";
 
 const ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // brez I, O, 0, 1
@@ -18,7 +23,7 @@ export function migrateGifts(db) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS gifts (
       id INTEGER PRIMARY KEY,
-      buyer_id INTEGER NOT NULL REFERENCES parents(id) ON DELETE CASCADE,
+      buyer_id INTEGER REFERENCES parents(id) ON DELETE SET NULL, -- izbris kupca ne izbriše podarjene kode
       amount INTEGER NOT NULL,
       currency TEXT NOT NULL DEFAULT 'EUR',
       days INTEGER NOT NULL,
@@ -91,38 +96,44 @@ export function mountGifts(app, ctx) {
     return false;
   }
 
-  // Vračilo ali spor: nevpisana koda ne velja več; vpisana konča dostop prejemnika.
+  // Vračilo ali spor: nevpisana koda ne velja več; vpisana prejemniku odvzame dni tega darila
+  // (druga vpisana darila ostanejo). Vrne true, če plačilo pripada darilu (tudi že vrnjenemu),
+  // da spor pri darilu ne prekliče kupčeve naročnine.
   function end(paymentId, status) {
     const g =
       paymentId &&
       db.prepare("SELECT * FROM gifts WHERE payment_id = ?").get(paymentId);
-    if (!g || g.status !== "paid") return false;
-    db.prepare("UPDATE gifts SET status = ? WHERE id = ?").run(status, g.id);
-    if (g.redeemed_by)
-      db.prepare(
-        "UPDATE parents SET gift_until = datetime('now') WHERE id = ?",
-      ).run(g.redeemed_by);
+    if (!g) return false;
+    if (db.prepare("UPDATE gifts SET status = ? WHERE id = ? AND status = 'paid'").run(status, g.id).changes && g.redeemed_by) {
+      const r = getParent(g.redeemed_by);
+      const left = Math.max(Date.now(), (Date.parse(r?.gift_until || 0) || 0) - g.days * 86400000);
+      db.prepare("UPDATE parents SET gift_until = ? WHERE id = ?").run(new Date(left).toISOString(), g.redeemed_by);
+    }
     return true;
   }
 
   // Vpis kode: dostop eno leto od danes ali od konca prejšnjega darila. Vrne { ok, until } ali { error }.
-  function redeem(parent, raw) {
+  // Darilo začne teči po preizkusu ali aktivacijski kodi (ti imata prednost v accessFor).
+  function redeem(stale, raw) {
+    const parent = getParent(stale.id) || stale;
     const g = byCode(raw);
     if (!g || g.status !== "paid")
       return { error: "Ta darilna koda ni veljavna." };
-    if (g.redeemed_by) return { error: "Ta darilna koda je že uporabljena." };
+    // redeemed_at, ne redeemed_by: ob izbrisu prejemnikovega računa je redeemed_by NULL.
+    if (g.redeemed_at) return { error: "Ta darilna koda je že uporabljena." };
     if (paidActive(parent))
       return {
         error:
           "Že imate naročnino, zato darilo ni potrebno. Prihranite ga za nekoga drugega.",
       };
-    const from = later(parent.gift_until)
-      ? Date.parse(parent.gift_until)
-      : Date.now();
+    const from = Math.max(
+      Date.now(),
+      ...[parent.gift_until, parent.trial_ends_at, parent.promo_until].map((d) => (later(d) ? Date.parse(d) : 0)),
+    );
     const until = isoIn(g.days, from);
     const r = db
       .prepare(
-        "UPDATE gifts SET redeemed_by = ?, redeemed_at = datetime('now') WHERE id = ? AND redeemed_by IS NULL",
+        "UPDATE gifts SET redeemed_by = ?, redeemed_at = datetime('now') WHERE id = ? AND redeemed_at IS NULL AND status = 'paid'",
       )
       .run(parent.id, g.id);
     if (!r.changes) return { error: "Ta darilna koda je že uporabljena." };
@@ -184,6 +195,8 @@ export function mountGifts(app, ctx) {
           )
           .run(p.id, GIFT.amount, GIFT.currency, GIFT.days).lastInsertRowid,
       );
+      const lang = /^[a-z]{2,3}(-[A-Za-z]{2,4})?$/.test(String(req.body?.lang || "")) ? req.body.lang : "sl";
+      db.prepare("INSERT INTO billing_consents (parent_id, payer_email, kind, text) VALUES (?, ?, 'gift', ?)").run(p.id, p.email, `${GIFT_ADULT_TEXT}\n${GIFT_WITHDRAWAL_TEXT}\n[jezik: ${lang}]`);
       const meta = { kind: "gift", gift_id: id, parent_id: p.id };
       const base = baseUrl(req);
       const session = await stripe.request("POST", "/checkout/sessions", {

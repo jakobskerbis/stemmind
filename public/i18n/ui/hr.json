@@ -2371,5 +2371,7 @@
   "pilot.askers": "Učenici",
   "pilot.ai": "AI",
   "pilot.parents": "Roditelji",
-  "pilot.note": "Pregledi stranica broje se bez kolačića i bez IP adresa, samo kao broj po danu. Roboti i pregledi poveznica ne broje se."
+  "pilot.note": "Pregledi stranica broje se bez kolačića i bez IP adresa, samo kao broj po danu. Roboti i pregledi poveznica ne broje se.",
+  "pay.giftAdult": "Punoljetna sam osoba i kupujem darovni kod za Evklid.",
+  "pay.giftWithdrawal": "Znam da mogu odustati u roku od 14 dana od kupnje i dobiti povrat cijelog iznosa ako kod još nije unesen. Kada se kod unese, korištenje počinje i pravo na odustajanje prestaje."
 }

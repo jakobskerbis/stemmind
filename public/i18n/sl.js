@@ -2129,6 +2129,8 @@ export default {
   "scan.w.dCombine": "Odvode posameznih členov združimo in zapišemo čim preprosteje.",
   "pay.adult": "Sem polnoletna oseba in plačujem za svoj profil ali kot starš oziroma skrbnik.",
   "pay.withdrawal": "Želim, da se uporaba začne takoj. Vem, da lahko v 14 dneh odstopim od pogodbe in da v tem primeru dobim vrnjen sorazmerni del plačila.",
+  "pay.giftAdult": "Sem polnoletna oseba in kupujem darilno kodo za Evklid.",
+  "pay.giftWithdrawal": "Vem, da lahko v 14 dneh od nakupa odstopim in dobim vrnjeno celotno plačilo, če koda še ni vpisana. Ko je koda vpisana, se uporaba začne in pravica do odstopa preneha.",
   "pay.consentMissing": "Pred plačilom obkljukaj obe potrditvi.",
   "pay.continue": "Nadaljuj na plačilo",
   "pay.payNow": "Plačam zdaj",

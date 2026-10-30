@@ -2395,5 +2395,7 @@
   "pilot.askers": "Žiaci",
   "pilot.ai": "AI",
   "pilot.parents": "Rodičia",
-  "pilot.note": "Zobrazenia stránok sa počítajú bez cookies a bez IP adries, iba ako počet za deň. Roboty a náhľady odkazov sa nepočítajú."
+  "pilot.note": "Zobrazenia stránok sa počítajú bez cookies a bez IP adries, iba ako počet za deň. Roboty a náhľady odkazov sa nepočítajú.",
+  "pay.giftAdult": "Som plnoletá osoba a kupujem darčekový kód pre Evklid.",
+  "pay.giftWithdrawal": "Viem, že môžem do 14 dní od nákupu odstúpiť a dostať späť celú sumu, ak kód ešte nebol uplatnený. Po uplatnení kódu sa začína používanie a právo na odstúpenie zaniká."
 }

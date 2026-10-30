@@ -413,6 +413,8 @@ export function mountBilling(app, ctx) {
       if (l.kind === "sub") {
         if (paidActive(parent)) return res.status(409).json({ error: "To je že plačano. Hvala!", paid: true });
         const plan = planByKey(l.plan_key);
+        // Povezava je lahko stara: šolska cena le, če ima otrok šolsko licenco še ob plačilu.
+        if (plan.school && !hasSchoolChild(parent.id)) return res.status(403).json({ error: "Ta cena velja samo za učence s šolsko licenco. Prosite za novo povezavo." });
         const { prices } = plan.school ? await stripe.ensureSchoolPrices() : await stripe.ensurePrices(plan.currency || "EUR");
         const trialEnd = Math.max(Date.parse(parent.trial_ends_at || 0) || 0, Date.parse(parent.promo_until || 0) || 0);
         const subscription_data = { metadata: { parent_id: parent.id } };

@@ -2347,5 +2347,7 @@
   "pilot.askers": "Wanafunzi",
   "pilot.ai": "AI",
   "pilot.parents": "Wazazi",
-  "pilot.note": "Kutazamwa kwa kurasa kunahesabiwa bila vidakuzi na bila anwani za IP, kama idadi kwa siku tu. Roboti na muhtasari wa viungo hazihesabiwi."
+  "pilot.note": "Kutazamwa kwa kurasa kunahesabiwa bila vidakuzi na bila anwani za IP, kama idadi kwa siku tu. Roboti na muhtasari wa viungo hazihesabiwi.",
+  "pay.giftAdult": "Mimi ni mtu mzima na ninanunua msimbo wa zawadi wa Evklid.",
+  "pay.giftWithdrawal": "Najua kwamba ninaweza kujiondoa ndani ya siku 14 tangu ununuzi na kurudishiwa pesa zote ikiwa msimbo bado haujatumika. Msimbo ukishatumika, matumizi huanza na haki ya kujiondoa inaisha."
 }
