@@ -1,4 +1,4 @@
-// Univerzitetni študijski programi 1. stopnje (UN) in njihovi predmeti.
+// Univerzitetni študijski programi 1. stopnje (UN) in enoviti magistrski (EMŠ, le prvi letniki) ter njihovi predmeti.
 //
 // Predmetniki so povzeti po javno objavljenih dokumentih fakultet (zbrano
 // 27.–28. 10. 2026; glej PROGRAMS[*].source). Zajeti so obvezni predmeti z
@@ -1353,7 +1353,7 @@ for (const [fac, courses] of Object.entries(COURSES)) {
 
 // Oznaka programa in ključi poti po letnikih (+ izbirni).
 for (const p of Object.values(PROGRAMS)) {
-  p.label = `${FAC_SHORT[p.faculty]} – ${p.name} (UN)`;
+  p.label = `${FAC_SHORT[p.faculty]} – ${p.name} (${p.degree || "UN"})`;
   p.courseKeys = p.years.map((codes) => codes.map((c) => courseKey(p.faculty, c)));
   p.electiveKeys = (p.electives || []).map((c) => courseKey(p.faculty, c));
   for (const k of [...p.courseKeys.flat(), ...p.electiveKeys]) {

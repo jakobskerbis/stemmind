@@ -2,6 +2,11 @@
 
 Trenutni prompt je v `prompts/system_prompt.md`.
 
+## 2026-10-30: tehniški in medicinski programi
+
+- Uvodni odstavek in razdelek UNIVERZA zdaj omenjata študente prvih (predkliničnih) letnikov medicine, dentalne medicine, veterinarstva in farmacije (enoviti magistrski programi, oznaka EMŠ). Pri teh programih tutor poudari mehanizme, strokovno izrazje in povezavo med zgradbo in delovanjem, o zdravljenju konkretnih ljudi ali živali pa ne svetuje.
+- Opis programa v nastavitvah (`server/curriculum.js`, `studyProgramPrompt`) pri EMŠ programih pravi »enoviti magistrski študijski program«.
+
 ## 2026-10-30: fotografije, ki niso učno gradivo
 
 - Nova vrstica v Posebnih situacijah (stalni del, nad `EVKLID:NASTAVITVE`, zato predpomnilnik ostane skupen): fotografije brez učnega gradiva (obraz, oseba, osebni dokument, zasebno sporočilo) inštruktor na kratko zavrne, jih ne opisuje in v META nastavi `flag=photo`. Sprejme naloge, zapiske, učbenik, tablo, graf na zaslonu ter predmete ali poskuse, o katerih učenec sprašuje; ljudi, ki so le v kadru (ilustracije, učitelj ob tabli, roke pri poskusu), prezre. Če ni prepričan, fotografijo sprejme.
