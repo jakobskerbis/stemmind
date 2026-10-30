@@ -98,6 +98,16 @@ export function promoEndingEmail(untilText, appUrl) {
   };
 }
 
+// Osebno ob šolski licenci: licenca ne velja več, zato se naročnina ob koncu obdobja ne podaljša.
+export function schoolSubEndEmail(endText, regularText, appUrl) {
+  const body = `Vaš otrok nima več šolske licence, zato se naročnina »Osebno ob šolski licenci« ne bo samodejno podaljšala.${endText ? ` Velja še do ${endText} in do takrat ostane vse kot zdaj.` : ""} Če želite Evklid uporabljati tudi potem, v zavihku Račun izberite redno naročnino (od ${regularText} na mesec).`;
+  return {
+    subject: "Evklid: naročnina ob šolski licenci se ne bo podaljšala",
+    html: layout("Naročnina se ne bo podaljšala", `<p>${esc(body)}</p>${button(appUrl, "Odpri Evklid")}`),
+    text: `${body} ${appUrl}`,
+  };
+}
+
 // 30 dni pred samodejno obnovitvijo letne naročnine.
 export function renewalEmail(dateText, amountText, appUrl) {
   return {
