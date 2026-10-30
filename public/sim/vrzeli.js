@@ -1,10 +1,17 @@
 // Simulacije za teme, dodane po primerjavi z učnimi načrti (2026-10-30): pravilnostne tabele, lega
 // premic in ravnin v kocki, koordinatni sistem, vezava vzmeti, izmenični tok in nihajni krog,
 // elektromagnetni spekter in zvezde (HR-diagram). Merila: docs/kakovost.md §3.
-import { h, s, svgBox, slider, select, segmented, readout, layout, tex, texBlock, fmt, tfmt, clamp, label, axes, fnPath, arrow, animate, playButton, draggable, handle, buttons } from "./kit.js";
+import { h, s, svgBox, slider, select, segmented, readout, layout, tex, texBlock, fmt, tfmt, clamp, label, axes, fnPath, arrow, animate, playButton, draggable, handle, buttons, button } from "./kit.js";
 import { G, springPath, force } from "./fiz-skupno.js";
 
 const T = (x, d = 2) => tfmt(x, d);
+// Napis z indeksom v SVG: subLbl(svg, x, y, "U", "ef", " = 230 V") → U_ef = 230 V.
+function subLbl(p, x, y, a, b, rest, cls, anchor = "middle") {
+  const t = label(p, x, y, a, cls, anchor);
+  s("tspan", { "baseline-shift": "sub", "font-size": "75%" }, t, b);
+  if (rest) s("tspan", {}, t, rest);
+  return t;
+}
 // Potenca števila 10 z eksponentom v zgornjem indeksu: pot10(-3) → "10⁻³".
 const pot10 = (e) => "10" + String(e).replace("-", "⁻").replace(/\d/g, (c) => "⁰¹²³⁴⁵⁶⁷⁸⁹"[c]);
 // Število v znanstvenem zapisu za TeX: sci(3e8) → "3{,}00 \cdot 10^{8}".
@@ -48,7 +55,7 @@ export function logika(el) {
   segB.setAttribute("aria-label", "Vrednost izjave B");
   const draw = () => {
     const [, n1, t1, f1] = get(i1), [, n2, t2, f2] = get(i2);
-    const cell = (v) => `<td style="text-align:center"><b class="${v ? "ok-text" : "bad-text"}">${PN(v)}</b></td>`;
+    const cell = (v) => `<td style="text-align:center"><b style="color:var(${v ? "--ok" : "--danger"})">${PN(v)}</b></td>`;
     const rows = ROWS.map(([x, y]) => {
       const on = x === a && y === b;
       return `<tr data-a="${x}" data-b="${y}" tabindex="0" role="button" aria-label="Vrstica A = ${PN(x)}, B = ${PN(y)}" style="cursor:pointer${on ? ";background:var(--surface-2);outline:2px solid var(--accent)" : ""}">${cell(x)}${cell(y)}${cell(f1(x, y))}${cell(f2(x, y))}</tr>`;
@@ -245,7 +252,8 @@ export function koordTrikotnik(el) {
     }
     ["A", "B", ...(mode === "ploscina" ? ["C"] : [])].forEach((nm, i) => {
       const hd = handle(svg, ["a", "c", "b"][i]);
-      label(hd, 0, -16, `${nm}(${P[nm][0]}, ${P[nm][1]})`, "pt-lbl");
+      const [px, py] = P[nm];
+      label(hd, px >= 4 ? -8 : px <= -4 ? 8 : 0, py >= 5 ? 20 : -16, `${nm}(${px}, ${py})`, "pt-lbl", px >= 4 ? "end" : px <= -4 ? "start" : "middle");
       hd.move(...XY(P[nm]));
       draggable(svg, hd, (x, y) => {
         const [u, v] = Ax.inv(x, y);
@@ -349,15 +357,17 @@ export function izmenicni(el, { mode = "sinus" } = {}) {
     const A = axes(svg, { W: 340, H: 220, x: [0, 40], y: [-400, 400], pad: 40, xLabel: "t [ms]", yLabel: "U [V]", xStep: 5, yStep: 100 });
     const u = (t) => U0 * Math.sin(2 * Math.PI * f * t / 1000);
     [Uef, -Uef].forEach((v, i) => s("line", { x1: A.L, y1: A.Y(v), x2: A.R, y2: A.Y(v), class: "guide stroke-c", "stroke-dasharray": "6 4", "data-name": i ? null : "Efektivna napetost" }, svg));
-    label(svg, A.R - 4, A.Y(Uef) - 8, `U_ef = ${fmt(Uef, 0)} V`, "tick small b", "end");
+    subLbl(svg, A.R - 4, A.Y(Uef) - 8, "U", "ef", ` = ${fmt(Uef, 0)} V`, "tick small b", "end");
     s("path", { d: fnPath(u, A, { n: 600 }), class: "graph-line", "data-name": "Napetost U(t)" }, svg);
     const B = axes(svg2, { W: 340, H: 170, x: [0, 40], y: [0, 3200], pad: 40, xLabel: "t [ms]", yLabel: "P [W]", xStep: 5, yStep: 800 });
     s("path", { d: fnPath((t) => u(t) ** 2 / R, B, { n: 600 }), class: "graph-line stroke-a", "data-name": "Moč P(t)" }, svg2);
     s("line", { x1: B.L, y1: B.Y(P0 / 2), x2: B.R, y2: B.Y(P0 / 2), class: "guide stroke-c", "stroke-dasharray": "6 4", "data-name": "Povprečna moč" }, svg2);
-    label(svg2, B.R - 4, B.Y(P0 / 2) - 8, `P̄ = ${fmt(P0 / 2, 0)} W`, "tick small b", "end");
-    out.innerHTML = texBlock(`U(t) = U_0 \\sin(2\\pi \\nu t),\\quad \\nu = ${f}\\ \\text{Hz},\\ t_0 = \\frac{1}{\\nu} = ${T(1000 / f, 1)}\\ \\text{ms}`) +
-      texBlock(`U_\\text{ef} = \\frac{U_0}{\\sqrt{2}} = \\frac{${U0}\\ \\text{V}}{\\sqrt{2}} \\approx ${T(Uef, 0)}\\ \\text{V},\\quad I_\\text{ef} = \\frac{U_\\text{ef}}{R} \\approx ${T(Uef / R, 2)}\\ \\text{A}`) +
-      `<p>Moč na uporniku P = U²/R niha med 0 in ${fmt(P0, 0)} W, njeno povprečje je polovica največje: P̄ = U<sub>ef</sub>·I<sub>ef</sub> = ${fmt(P0 / 2, 0)} W. Efektivna napetost je tista enosmerna napetost, ki bi na istem uporniku dala enako povprečno moč.</p>
+    label(svg2, B.R - 4, B.T + 8, `povprečna moč (črtkano): ${fmt(P0 / 2, 0)} W`, "tick small b", "end");
+    out.innerHTML = texBlock(`U(t) = U_0 \\sin(2\\pi \\nu t)`) +
+      texBlock(`\\nu = ${f}\\ \\text{Hz},\\quad t_0 = \\frac{1}{\\nu} = ${T(1000 / f, 1)}\\ \\text{ms}`) +
+      texBlock(`U_\\text{ef} = \\frac{U_0}{\\sqrt{2}} = \\frac{${U0}\\ \\text{V}}{\\sqrt{2}} \\approx ${T(Uef, 0)}\\ \\text{V}`) +
+      texBlock(`I_\\text{ef} = \\frac{U_\\text{ef}}{R} \\approx ${T(Uef / R, 2)}\\ \\text{A}`) +
+      `<p>Moč na uporniku P = U²/R niha med 0 in ${fmt(P0, 0)} W, njeno povprečje je polovica največje: <span style="text-decoration:overline">P</span> = U<sub>ef</sub>·I<sub>ef</sub> = ${fmt(P0 / 2, 0)} W. Efektivna napetost je tista enosmerna napetost, ki bi na istem uporniku dala enako povprečno moč.</p>
        <p class="muted">Največji tok I₀ = U₀/R = ${fmt(I0, 2)} A. Omrežje v Sloveniji: 230 V (efektivno), 50 Hz.</p>`;
   };
   layout(el, {
@@ -384,7 +394,7 @@ function nihajniKrog(el) {
     svg2.replaceChildren();
     const T0 = per(), ph = (2 * Math.PI * t) / T0, q = Math.cos(ph), i = -Math.sin(ph);
     // kondenzator (levo) in tuljava (desno)
-    s("rect", { x: 40, y: 30, width: 180, height: 110, rx: 6, class: "guide", fill: "none" }, svg);
+    s("path", { d: "M40,62 V30 H220 V50 M220,140 H40 V106", class: "wire", "stroke-width": 3 }, svg);
     s("rect", { x: 26, y: 62, width: 28, height: 6, class: "fill-text" }, svg);
     s("rect", { x: 26, y: 100, width: 28, height: 6, class: "fill-text" }, svg);
     const n = Math.round(Math.abs(q) * 5);
@@ -402,7 +412,7 @@ function nihajniKrog(el) {
     [["W_e", We, "c", 270], ["W_m", Wm, "a", 305]].forEach(([nm, v, col, x]) => {
       s("rect", { x, y: 30, width: 22, height: 110, class: "box" }, svg);
       s("rect", { x, y: 140 - 110 * v, width: 22, height: 110 * v, class: `fill-${col}`, "data-name": nm === "W_e" ? "Električna energija" : "Magnetna energija" }, svg);
-      label(svg, x + 11, 154, nm === "W_e" ? "W_el" : "W_mag", "tick small");
+      subLbl(svg, x + 11, 154, "W", nm === "W_e" ? "el" : "mag", "", "tick small");
     });
     const A = axes(svg2, { W: 340, H: 170, x: [0, 40], y: [-1.2, 1.2], pad: 34, xLabel: "t [ms]", yLabel: "", xStep: 5, yStep: 0.5, yFmt: () => "" });
     s("path", { d: fnPath((u) => Math.cos((2 * Math.PI * u) / T0), A, { n: 800 }), class: "graph-line stroke-c", "data-name": "Naboj q(t)" }, svg2);
@@ -412,7 +422,8 @@ function nihajniKrog(el) {
     label(svg2, A.L + 6, A.T + 8, "q(t)", "tick small b fill-c", "start");
     label(svg2, A.L + 46, A.T + 8, "I(t)", "tick small b fill-a", "start");
     const f0 = 1000 / T0;
-    out.innerHTML = texBlock(`t_0 = 2\\pi\\sqrt{LC} = 2\\pi\\sqrt{${T(L / 1000, 3)}\\ \\text{H} \\cdot ${sci(C / 1e6, 1)}\\ \\text{F}} \\approx ${T(T0, 2)}\\ \\text{ms},\\quad \\nu_0 = \\frac{1}{t_0} \\approx ${T(f0, 0)}\\ \\text{Hz}`) +
+    out.innerHTML = texBlock(`\\begin{aligned} t_0 &= 2\\pi\\sqrt{LC} \\\\ &= 2\\pi\\sqrt{${T(L / 1000, 3)}\\ \\text{H} \\cdot ${sci(C / 1e6, 1)}\\ \\text{F}} \\\\ &\\approx ${T(T0, 2)}\\ \\text{ms} \\end{aligned}`) +
+      texBlock(`\\nu_0 = \\frac{1}{t_0} \\approx ${T(f0, 0)}\\ \\text{Hz}`) +
       `<p>Nabit kondenzator se prazni skozi tuljavo. Električna energija kondenzatorja (W<sub>el</sub>) se pretaka v magnetno energijo tuljave (W<sub>mag</sub>) in nazaj; vsota je stalna (brez upora ni izgub). Ko je naboj največji, je tok nič, in obratno.</p>
        <p class="muted">Animacija je ${SLOW}-krat upočasnjena. Večja L ali C pomeni daljši nihajni čas in nižjo lastno frekvenco.</p>`;
   };
@@ -446,8 +457,15 @@ const PASOVI = [
 ];
 const vidnaBarva = (nm) => `hsl(${clamp(270 - ((nm - 380) / (750 - 380)) * 270, 0, 270)} 90% 50%)`;
 
+// Valovna dolžina za napis drsnika: 5,0·10⁻⁷ m.
+function lamTxt(x) {
+  let e = Math.floor(Math.log10(x) + 1e-9), m = x / 10 ** e;
+  if (+m.toFixed(1) >= 10) (m /= 10), e++;
+  return e === 0 ? `${fmt(m, 1)} m` : `${fmt(m, 1)}·${pot10(e)} m`;
+}
+
 export function emSpekter(el) {
-  const svg = svgBox(340, 170);
+  const svg = svgBox(340, 130);
   const out = readout();
   let lg = -6.3;
   const X0 = 20, X1 = 320, lo = -12, hi = 3;
@@ -456,9 +474,10 @@ export function emSpekter(el) {
   const draw = () => {
     svg.replaceChildren();
     // valovanje, ki se proti desni podaljšuje
-    let d = "";
+    let d = "", ph = 0;
     for (let k = 0; k <= 300; k++) {
-      const x = X0 + k, y = 30 - 12 * Math.sin(0.0006 * (300 - k) ** 2 * 0.9 + k * 0.05);
+      ph += 0.5 * Math.exp((-k * Math.log(12)) / 300); // valovna dolžina proti desni enakomerno narašča
+      const x = X0 + k, y = 30 - 12 * Math.sin(ph);
       d += `${k ? "L" : "M"}${x},${y.toFixed(1)} `;
     }
     s("path", { d, class: "graph-line stroke-muted thin-line", opacity: 0.6, "data-name": "Valovanje" }, svg);
@@ -485,13 +504,14 @@ export function emSpekter(el) {
     }, { label: "Oznaka valovne dolžine: premikaj jo s puščicami" });
     const lam = 10 ** lg, nu = C_LUC / lam, E = H_PL * nu;
     const pas = PASOVI.find(([a, b]) => lg >= a && lg < b) || PASOVI.at(-1);
-    out.innerHTML = texBlock(`\\lambda = ${sci(lam)}\\ \\text{m},\\quad \\nu = \\frac{c}{\\lambda} = \\frac{3{,}00 \\cdot 10^{8}\\ \\text{m/s}}{${sci(lam)}\\ \\text{m}} = ${sci(nu)}\\ \\text{Hz}`) +
-      texBlock(`E_f = h\\nu = ${sci(E)}\\ \\text{J} = ${sci(E / EV)}\\ \\text{eV}`) +
+    out.innerHTML = texBlock(`\\lambda = ${sci(lam)}\\ \\text{m}`) +
+      texBlock(`\\begin{aligned} \\nu &= \\frac{c}{\\lambda} = \\frac{3{,}00 \\cdot 10^{8}\\ \\text{m/s}}{${sci(lam)}\\ \\text{m}} \\\\ &= ${sci(nu)}\\ \\text{Hz} \\end{aligned}`) +
+      texBlock(`\\begin{aligned} E_f &= h\\nu = ${sci(E)}\\ \\text{J} \\\\ &= ${sci(E / EV)}\\ \\text{eV} \\end{aligned}`) +
       `<p>To je <b>${pas[2]}</b>${pas[2] === "vidna svetloba" ? ` (barva pri ${fmt(lam * 1e9, 0)} nm: <span style="display:inline-block;width:1.2em;height:0.8em;border-radius:3px;background:${vidnaBarva(lam * 1e9)}"></span>)` : ""}. Nastane ${pas[3]}. Uporaba: ${pas[4]}.</p>
        <p class="muted">Vsa elektromagnetna valovanja nastanejo pri pospešenem gibanju nabojev in se v vakuumu širijo s hitrostjo svetlobe c = 3,00·10⁸ m/s. Razlikujejo se le po valovni dolžini (in frekvenci).</p>`;
   };
-  sl = slider({ label: "valovna dolžina (log₁₀ λ/m)", min: lo, max: hi, step: 0.1, value: lg, format: (v) => `10^${fmt(v, 1)} m`, onInput: (v) => ((lg = v), draw()) });
-  layout(el, { stage: [svg], controls: [sl], out, tryText: "Mikrovalovna pečica deluje pri 2,45 GHz. Poišči valovno dolžino, pri kateri je frekvenca toliko. V katerem delu spektra je 1 m dolga radijska antena?" });
+  sl = slider({ label: "valovna dolžina λ (logaritemska skala)", min: lo, max: hi, step: 0.1, value: lg, format: (v) => lamTxt(10 ** v), onInput: (v) => ((lg = v), draw()) });
+  layout(el, { stage: [svg], controls: [sl], out, tryText: "Mikrovalovna pečica deluje pri 2,45 GHz. Poišči valovno dolžino, pri kateri je frekvenca toliko. V katerem delu spektra je valovanje z valovno dolžino 1 m?" });
   draw();
 }
 
@@ -509,7 +529,7 @@ function barvaT(T0) {
 const razred = (T0) => (T0 >= 30000 ? "O (modra)" : T0 >= 10000 ? "B (modrobela)" : T0 >= 7500 ? "A (bela)" : T0 >= 6000 ? "F (rumenobela)" : T0 >= 5200 ? "G (rumena)" : T0 >= 3700 ? "K (oranžna)" : "M (rdeča)");
 
 export function zvezde(el) {
-  const svg = svgBox(340, 300);
+  const svg = svgBox(340, 312);
   const out = readout();
   let Tz = 5800, lgR = 0;
   let slT, slR;
@@ -537,7 +557,8 @@ export function zvezde(el) {
     s("path", { d: `M${hx(35000)},${hy(1e5)} Q${hx(9000)},${hy(30)} ${hx(5800)},${hy(1)} T${hx(2800)},${hy(1e-3)}`, class: "graph-line stroke-muted", "stroke-width": 14, opacity: 0.18, fill: "none", "data-name": "Glavna veja" }, svg);
     ZVEZDE.forEach(([n, t0, l0]) => {
       s("circle", { cx: hx(t0), cy: hy(l0), r: 3.5, fill: barvaT(t0), stroke: "var(--text)", "stroke-width": 0.6, "data-name": "Znane zvezde" }, svg);
-      label(svg, hx(t0) + 6, hy(l0) - 7, n, "tick small", "start");
+      const desno = hx(t0) > 250; // napis ob desnem robu na levo od točke, da ga ne odreže
+      label(svg, hx(t0) + (desno ? -6 : 6), hy(l0) - 7, n, "tick small", desno ? "end" : "start");
     });
     const hd = handle(svg, "danger");
     hd.move(hx(Tz), hy(clamp(L, 1e-4, 1e6)));
@@ -553,12 +574,144 @@ export function zvezde(el) {
     const j = SIGMA * Tz ** 4, lmax = 2.9e-3 / Tz;
     const tip = lgR <= -1.3 ? (Tz >= 5000 ? "bela pritlikavka" : "zelo majhna hladna zvezda") : lgR >= 2.3 ? "nadorjakinja" : lgR >= 1.2 ? "orjakinja" : Math.abs(Math.log10(L) - 4.4 * lgR) < 1.2 ? "zvezda glavne veje" : "zvezda zunaj glavne veje";
     out.innerHTML = texBlock(`\\frac{L}{L_\\odot} = \\left(\\frac{R}{R_\\odot}\\right)^2 \\left(\\frac{T}{T_\\odot}\\right)^4 = ${T(R, R < 1 ? 2 : 1)}^2 \\cdot \\left(\\frac{${Tz}}{5800}\\right)^4 \\approx ${sci(L, 2)}`) +
-      texBlock(`j = \\sigma T^4 = ${sci(j, 2)}\\ \\tfrac{\\text{W}}{\\text{m}^2},\\quad \\lambda_\\text{max} = \\frac{2{,}9 \\cdot 10^{-3}\\ \\text{K m}}{T} \\approx ${T(lmax * 1e9, 0)}\\ \\text{nm}`) +
+      texBlock(`j = \\sigma T^4 = ${sci(j, 2)}\\ \\tfrac{\\text{W}}{\\text{m}^2}`) +
+      texBlock(`\\lambda_\\text{max} = \\frac{2{,}9 \\cdot 10^{-3}\\ \\text{K m}}{T} \\approx ${T(lmax * 1e9, 0)}\\ \\text{nm}`) +
       `<p>Spektralni razred <b>${razred(Tz)}</b>; vrsta: ${tip}. Svetilnost L = ${tex(sci(L * L_SONCE, 2))} W. Vsak kvadratni meter površine seva j = σT⁴ (Stefanov zakon), zato je pri isti temperaturi svetlejša večja zvezda.</p>
        <p class="muted">Zvezde glavne veje v sredici zlivajo vodik v helij (fuzija). Svetloba od Sonca potuje 8,3 minute, od Proksime Kentavra 4,2 leta.</p>`;
   };
   slT = slider({ label: "temperatura površja T", min: 2500, max: 40000, step: 100, value: Tz, unit: "K", onInput: (v) => ((Tz = v), draw()) });
   slR = slider({ label: "polmer R (log₁₀ R/R☉)", min: -2, max: 3, step: 0.05, value: lgR, format: (v) => `${fmt(10 ** v, v < 0 ? 2 : v < 1 ? 1 : 0)} R☉`, onInput: (v) => ((lgR = v), draw()) });
   layout(el, { stage: [svg], controls: [slT, slR], out, tryText: "Betelgeza je hladnejša od Sonca, a 100 000-krat svetlejša. Kolikšen mora biti njen polmer? Poišči ga z drsnikoma in preveri s Stefanovim zakonom." });
+  draw();
+}
+
+// ------------------------------------------------------------ matematična indukcija (domine)
+// Baza podre prvo domino, indukcijski korak (iz P(k) sledi P(k + 1)) vsako naslednjo. »Lažna formula«
+// ima veljaven korak, a napačno bazo: ne pade nobena domina.
+const IND = {
+  naravna: {
+    name: "1 + 2 + … + n = n(n + 1)/2",
+    P: "1 + 2 + \\dots + n = \\frac{n(n + 1)}{2}",
+    term: (n) => n, R: (n) => (n * (n + 1)) / 2,
+    termTex: "(k + 1)",
+    step: ["\\frac{k(k + 1)}{2} + (k + 1)", "\\frac{k(k + 1) + 2(k + 1)}{2}", "\\frac{(k + 1)(k + 2)}{2}"],
+    pic: "stopnice",
+  },
+  liha: {
+    name: "1 + 3 + … + (2n − 1) = n²",
+    P: "1 + 3 + \\dots + (2n - 1) = n^2",
+    term: (n) => 2 * n - 1, R: (n) => n * n,
+    termTex: "(2k + 1)",
+    step: ["k^2 + (2k + 1)", "(k + 1)^2"],
+    pic: "kvadrat",
+  },
+  kvadrati: {
+    name: "1² + 2² + … + n² = n(n + 1)(2n + 1)/6",
+    P: "1^2 + 2^2 + \\dots + n^2 = \\frac{n(n + 1)(2n + 1)}{6}",
+    term: (n) => n * n, R: (n) => (n * (n + 1) * (2 * n + 1)) / 6,
+    termTex: "(k + 1)^2",
+    step: ["\\frac{k(k + 1)(2k + 1)}{6} + (k + 1)^2", "\\frac{(k + 1)(2k^2 + 7k + 6)}{6}", "\\frac{(k + 1)(k + 2)(2k + 3)}{6}"],
+    pic: "kvadrati",
+  },
+  lazna: {
+    name: "lažna: vsota = (n² + n + 2)/2",
+    P: "1 + 2 + \\dots + n = \\frac{n^2 + n + 2}{2}",
+    term: (n) => n, R: (n) => (n * n + n + 2) / 2,
+    termTex: "(k + 1)",
+    step: ["\\frac{k^2 + k + 2}{2} + (k + 1)", "\\frac{k^2 + 3k + 4}{2}", "\\frac{(k + 1)^2 + (k + 1) + 2}{2}"],
+    pic: "stopnice",
+  },
+};
+
+export function domine(el) {
+  const svg = svgBox(340, 250);
+  const out = readout();
+  const N = 10;
+  let key = "naravna", k = 0, baza = null, msg = "";
+  const F = () => IND[key];
+  const S = (n) => Array.from({ length: n }, (_, i) => F().term(i + 1)).reduce((t, v) => t + v, 0);
+  // vsota s členi: do 5 členov vse, sicer 1 + 2 + 3 + … + zadnji
+  const terms = (n) => (n <= 5 ? Array.from({ length: n }, (_, i) => F().term(i + 1)) : [1, 2, 3].map(F().term).concat("…", F().term(n))).join(" + ");
+  const draw = () => {
+    svg.replaceChildren();
+    // domine: padla je tista, za katero je trditev dokazana
+    for (let i = 1; i <= N; i++) {
+      const x = 4 + i * 30, fell = i <= k;
+      const r = s("rect", { x: x - 5, y: 18, width: 10, height: 50, rx: 2, class: fell ? "fill-ok" : "box", "data-name": fell ? "Dokazano" : null }, svg);
+      if (fell) r.setAttribute("transform", `rotate(${i === N ? 80 : 58} ${x + 5} 68)`);
+      label(svg, x, 82, String(i), `tick small${i === k + 1 && baza !== false ? " b" : ""}`);
+    }
+    label(svg, 12, 82, "n", "tick small");
+    // slika vsote za n = k (pred bazo za n = 4): zadnji, pravkar dodani člen je obarvan drugače
+    const n = k || 4, pic = F().pic, top = 120, H = 120;
+    const cell = (x, y, c, cls) => s("rect", { x, y, width: c - 1, height: c - 1, class: cls }, svg);
+    if (pic === "stopnice") {
+      const c = Math.min(22, H / n, 300 / (n + 1)), x0 = 170 - ((n + 1) * c) / 2, y0 = top + H - n * c;
+      for (let col = 0; col <= n; col++)
+        for (let row = 0; row < n; row++) {
+          const filled = row < col; // stolpec col ima col kvadratkov vsote
+          cell(x0 + col * c, y0 + (n - 1 - row) * c, c, filled ? (col === n && k ? "fill-c" : "fill-a") : "fill-soft");
+        }
+      label(svg, 170, top - 8, n === 1 ? "2 · 1 = 1 · 2" : `2 · (${terms(n)}) = ${n} · ${n + 1}`, "tick", "middle");
+    } else if (pic === "kvadrat") {
+      const c = Math.min(22, H / n), x0 = 170 - (n * c) / 2, y0 = top + H - n * c;
+      for (let r = 0; r < n; r++)
+        for (let q = 0; q < n; q++) {
+          const g = Math.max(r, q); // kotnik št. g ima 2g + 1 kvadratkov
+          cell(x0 + q * c, y0 + (n - 1 - r) * c, c, g === n - 1 && k ? "fill-c" : g % 2 ? "fill-b" : "fill-a");
+        }
+      label(svg, 170, top - 8, `${terms(n)} = ${n}²`, "tick", "middle");
+    } else {
+      const tot = (n * (n + 1)) / 2, c = Math.min(22, H / n, 320 / (tot + n)), gap = c;
+      let x = 170 - (tot * c + (n - 1) * gap) / 2;
+      for (let q = 1; q <= n; q++) {
+        s("rect", { x, y: top + H - q * c, width: q * c, height: q * c, class: q === n && k ? "fill-c" : "fill-a", opacity: 0.85 }, svg);
+        x += q * c + gap;
+      }
+      label(svg, 170, top - 8, `${n === 1 ? "1²" : n === 2 ? "1² + 2²" : `1² + … + ${n}²`} = ${S(n)}`, "tick", "middle");
+    }
+    const f = F(), R1 = f.R(1), T1 = f.term(1);
+    let html = `<p>Trditev ${tex("P(n)")}: ${tex(f.P)}</p>`;
+    html += baza === null
+      ? `<p>1. <b>Baza</b> še ni preverjena: nobena domina še ni padla.</p>`
+      : baza
+        ? `<p>1. <b>Baza</b> ${tex(`n = 1`)}: leva stran ${tex(String(T1))}, desna ${tex(T(R1, 2))}. <b class="ok-text">Velja</b>, prva domina pade.</p>`
+        : `<p>1. <b>Baza</b> ${tex(`n = 1`)}: leva stran ${tex(String(T1))}, desna ${tex(T(R1, 2))}. <b class="bad-text">Ne velja</b>, prva domina ne pade.</p>`;
+    html += `<p>2. <b>Indukcijski korak</b>: predpostavimo, da velja ${tex("P(k)")}. Prištejemo naslednji člen ${tex(f.termTex)}:</p>` +
+      texBlock(`\\begin{aligned} S(k + 1) &= S(k) + ${f.termTex} \\\\ ${f.step.map((x) => `&= ${x}`).join(" \\\\ ")} \\end{aligned}`) +
+      `<p>To je ravno ${tex("P(k + 1)")}: korak velja za vsak k. Če pade domina k, pade tudi domina k + 1.</p>`;
+    if (k >= 2) {
+      const a = k - 1;
+      html += `<p>Zadnji korak s števili (${tex(`k = ${a}`)}): ${tex(`S(${k}) = S(${a}) + ${f.term(k)} = ${T(f.R(a), 2)} + ${f.term(k)} = ${T(S(k), 2)}`)}, desna stran za n = ${k} pa je tudi ${T(f.R(k), 2)}.</p>`;
+    }
+    if (key === "lazna") {
+      const vals = [1, 2, 3, 4].map((m) => `${S(m)} ≠ ${T(f.R(m), 2)}`).join(", ");
+      html += `<p class="muted">Leva in desna stran za n = 1, 2, 3, 4: ${vals}. Desna stran je vedno za 1 prevelika. Korak sam ni dovolj, potrebna je tudi baza.</p>`;
+    }
+    if (msg) html += `<p><b>${msg}</b></p>`;
+    out.innerHTML = html;
+  };
+  const doBase = () => {
+    baza = F().R(1) === F().term(1);
+    k = baza ? 1 : 0;
+    msg = baza ? "Prva domina je padla. Zdaj poskusi s korakom." : "Baza ne velja: prva domina stoji, zato tudi korak ne podre nobene.";
+    draw();
+  };
+  const doStep = () => {
+    if (baza === null) msg = "Najprej preveri bazo: brez prve domine korak ne podre nobene.";
+    else if (!baza) msg = "Korak velja, a domine stojijo: veriga se nikjer ne začne.";
+    else if (k >= N) msg = `Padlo je vseh ${N} domin na sliki. Ker korak velja za vsak k, trditev velja za vsa naravna števila.`;
+    else (k++, (msg = `Iz P(${k - 1}) sledi P(${k}): padla je domina ${k}.`));
+    draw();
+  };
+  layout(el, {
+    stage: [svg],
+    controls: [
+      select({ label: "trditev", options: Object.entries(IND).map(([v, x]) => [v, x.name]), value: key, onChange: (v) => ((key = v), (k = 0), (baza = null), (msg = ""), draw()) }),
+      buttons(button("1. Preveri bazo (n = 1)", doBase, "secondary"), button("2. Indukcijski korak k → k + 1", doStep, "primary")),
+    ],
+    out,
+    tryText: "Preveri bazo in naredi nekaj korakov. Nato izberi lažno formulo: korak še vedno velja. Zakaj ne pade nobena domina in kaj to pove o bazi?",
+  });
   draw();
 }

@@ -364,6 +364,7 @@ const PRESETS = {
     fmtParam: { b: (v) => (v < 0 ? "−1 (zrcali čez os y)" : "1") },
     choice: ["osnovna funkcija", [["kv", "f(x) = x²"], ["abs", "f(x) = |x|"], ["kor", "f(x) = √x"], ["kub", "f(x) = x³"], ["rec", "f(x) = 1/x"]]],
     f: (x, P) => P.a * TRANS[P.choice].f(P.b * (x - P.p)) + P.q,
+    fName: "g(x)",
     gName: "Osnovna funkcija f",
     g: (x, P) => TRANS[P.choice].f(x),
     tex: (P) => {
@@ -404,7 +405,7 @@ const PRESETS = {
       const even = n % 2 === 0, pos = n > 0;
       const Z = even ? (pos ? (a > 0 ? "[0, ∞)" : "(−∞, 0]") : a > 0 ? "(0, ∞)" : "(−∞, 0)") : pos ? "ℝ" : "ℝ ∖ {0}";
       return `<p><b>${pos ? "Pozitivni" : "Negativni"} ${even ? "sodi" : "lihi"} eksponent.</b> Definicijsko območje ${pos ? "ℝ" : "ℝ ∖ {0}"}, zaloga vrednosti ${Z}. Funkcija je <b>${even ? "soda" : "liha"}</b>: graf je simetričen glede na ${even ? "os y" : "koordinatno izhodišče"}.</p>
-        <p>${pos ? `Ničla x = 0 (stopnje ${n}). ${n === 1 ? "To je premica." : even ? "Graf je parabola višje stopnje." : "Graf je kubična parabola ali podobna krivulja."}` : "Ničel ni. Os x in os y sta asimptoti (hiperbola)."} Graf gre skozi (1, ${fmt(a)}) in (−1, ${fmt(a * (-1) ** n)}).</p>
+        <p>${pos ? `Ničla x = 0 (stopnje ${n}). ${n === 1 ? "To je premica." : n === 2 ? "Graf je parabola." : n === 3 ? "Graf je kubična parabola." : even ? "Graf je podoben paraboli, ob izhodišču je bolj sploščen." : "Graf je podoben kubični paraboli, ob izhodišču je bolj sploščen."}` : "Ničel ni. Os x in os y sta asimptoti (hiperbola)."} Graf gre skozi (1, ${fmt(a)}) in (−1, ${fmt(a * (-1) ** n)}).</p>
         <p class="muted">Večji kot je |n|, bolj se graf na intervalu (−1, 1) približa osi x${pos ? "" : " (pri negativnem n pa se vrednosti na tem intervalu večajo)"}.</p>`;
     },
     tryText: "Primerjaj n = 2 in n = 4 ter n = −1 in n = −2. Kje sta grafa x² in x⁴ enaka? Kateri je bližje osi x med −1 in 1?",
@@ -414,9 +415,9 @@ const PRESETS = {
 // Funkcije za prednastavitev »lastnosti« (pri a ≠ 0). f brez faktorja a (lin: f(x) = x).
 const intv = (lo, hi, l = "[", r = "]") => `${l}${lo}, ${hi}${r}`;
 const LAST = {
-  kv: { f: (x) => x * x - 4, tex: (a) => `${cf(a)}(x^2 - 4)`, D: "ℝ", Z: (a) => (a > 0 ? intv(fmt(-4 * a), "∞", "[", ")") : intv("−∞", fmt(-4 * a), "(", "]")), zeros: () => [-2, 2], mono: (a) => (a > 0 ? "pada na (−∞, 0], narašča na [0, ∞)" : "narašča na (−∞, 0], pada na [0, ∞)"), par: "soda, f(−x) = f(x)" },
+  kv: { f: (x) => x * x - 4, tex: (a) => (a === 1 ? "x^2 - 4" : `${cf(a)}(x^2 - 4)`), D: "ℝ", Z: (a) => (a > 0 ? intv(fmt(-4 * a), "∞", "[", ")") : intv("−∞", fmt(-4 * a), "(", "]")), zeros: () => [-2, 2], mono: (a) => (a > 0 ? "pada na (−∞, 0], narašča na [0, ∞)" : "narašča na (−∞, 0], pada na [0, ∞)"), par: "soda, f(−x) = f(x)" },
   kub: { f: (x) => x ** 3, tex: (a) => `${cf(a)}x^3`, D: "ℝ", Z: () => "ℝ", zeros: () => [0], mono: (a) => (a > 0 ? "narašča na vsem ℝ" : "pada na vsem ℝ"), par: "liha, f(−x) = −f(x)", inv: (x, a) => Math.cbrt(x / a), invTex: (a) => (a === 1 ? "\\sqrt[3]{x}" : `\\sqrt[3]{\\frac{x}{${T(a)}}}`) },
-  abs: { f: (x) => Math.abs(x) - 2, tex: (a) => `${cf(a)}(|x| - 2)`, D: "ℝ", Z: (a) => (a > 0 ? intv(fmt(-2 * a), "∞", "[", ")") : intv("−∞", fmt(-2 * a), "(", "]")), zeros: () => [-2, 2], mono: (a) => (a > 0 ? "pada na (−∞, 0], narašča na [0, ∞)" : "narašča na (−∞, 0], pada na [0, ∞)"), par: "soda, f(−x) = f(x)" },
+  abs: { f: (x) => Math.abs(x) - 2, tex: (a) => (a === 1 ? "|x| - 2" : `${cf(a)}(|x| - 2)`), D: "ℝ", Z: (a) => (a > 0 ? intv(fmt(-2 * a), "∞", "[", ")") : intv("−∞", fmt(-2 * a), "(", "]")), zeros: () => [-2, 2], mono: (a) => (a > 0 ? "pada na (−∞, 0], narašča na [0, ∞)" : "narašča na (−∞, 0], pada na [0, ∞)"), par: "soda, f(−x) = f(x)" },
   rec: { f: (x) => (x === 0 ? NaN : 1 / x), tex: (a) => (a < 0 ? `-\\frac{${T(-a)}}{x}` : `\\frac{${T(a)}}{x}`), D: "ℝ ∖ {0}", Z: () => "ℝ ∖ {0}", zeros: () => [], mono: (a) => `${a > 0 ? "pada" : "narašča"} na (−∞, 0) in posebej na (0, ∞), ne pa na celem definicijskem območju`, par: "liha, f(−x) = −f(x)", inv: (x, a) => (x === 0 ? NaN : a / x), invTex: (a) => `\\frac{${T(a)}}{x}\\ (\\text{sama sebi inverzna})` },
   kor: { f: (x) => (x < -4 ? NaN : Math.sqrt(x + 4)), tex: (a) => `${cf(a)}\\sqrt{x + 4}`, D: "[−4, ∞)", Z: (a) => (a > 0 ? "[0, ∞)" : "(−∞, 0]"), zeros: () => [-4], mono: (a) => (a > 0 ? "narašča na [−4, ∞)" : "pada na [−4, ∞)"), par: "ni ne soda ne liha (definicijsko območje ni simetrično)", inv: (x, a) => (x / a < 0 ? NaN : (x / a) ** 2 - 4), invTex: (a) => `\\left(\\frac{x}{${T(a)}}\\right)^2 - 4,\\ \\frac{x}{${T(a)}} \\ge 0` },
   lin: { f: (x) => x, tex: (a) => `${cf(a)}x + 2`, D: "ℝ", Z: () => "ℝ", zeros: (a) => [-2 / a], mono: (a) => (a > 0 ? "narašča na vsem ℝ" : "pada na vsem ℝ"), par: "ni ne soda ne liha", inv: (x, a) => (x - 2) / a, invTex: (a) => `\\frac{x - 2}{${T(a)}}` },
@@ -452,7 +453,7 @@ export function graf(el, { preset = "kvadratna" } = {}) {
     const f = (x) => C.f(x, P);
     if (C.g) s("path", { d: fnPath((x) => C.g(x, P), A), class: "graph-line stroke-b thin-line", "data-name": C.gName }, svg);
     C.marks?.(A, P, svg, f);
-    s("path", { d: fnPath(f, A, { n: 500 }), class: "graph-line", "data-name": "f(x)" }, svg);
+    s("path", { d: fnPath(f, A, { n: 500 }), class: "graph-line", "data-name": C.fName || "f(x)" }, svg);
     C.marks && svg.querySelectorAll(".pt").forEach((p) => svg.append(p));
     eq.innerHTML = tex(C.tex(P));
     out.innerHTML = C.info(P, f);

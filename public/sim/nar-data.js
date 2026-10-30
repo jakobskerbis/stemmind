@@ -342,6 +342,8 @@ export const SETS = {
   carroll: {
     q: "V katero polje Carrollovega diagrama sodi število? Vrstici: sodo ali liho. Stolpca: večje od 10 ali največ 10.",
     cats: [["sv", "sodo in večje od 10"], ["sm", "sodo in največ 10"], ["lv", "liho in večje od 10"], ["lm", "liho in največ 10"]],
+    // Polja kot tabela 2 × 2 (public/sim/nar.js): vrstici, stolpca in ključi polj.
+    grid: { rows: ["sodo", "liho"], cols: ["večje od 10", "največ 10"], cells: [["sv", "sm"], ["lv", "lm"]] },
     items: [
       ["12", "sv", "12 je deljivo z 2 in je večje od 10."],
       ["8", "sm", "8 je deljivo z 2 in je manjše od 10."],
@@ -378,7 +380,7 @@ export const SETS = {
       ["Para poganja turbino, ta pa generator.", "jedrska", "V jedrski elektrarni toplota iz reaktorja upari vodo; para vrti turbino in generator."],
     ],
     hint: "Pomisli, kaj naprava potrebuje za delovanje: signal s satelita, svetlobo, ki jo seva, svetlobo, ki jo prejme, ali jedrsko gorivo.",
-    try: "Katera od štirih naprav ne potrebuje goriva in nima vrtečih se delov? Katera ne bi delovala, če ne bi poznali hitrosti svetlobe?",
+    try: "Katera od štirih naprav daje električno energijo brez goriva in brez vrtečih se delov? Katera ne bi delovala, če ne bi poznali hitrosti svetlobe?",
   },
   oksidi: {
     q: "Kakšen je ta oksid?",

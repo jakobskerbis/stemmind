@@ -290,7 +290,7 @@ export const SIM_TOPICS = {
   "MAT-SS-4/verjetnost": ["verjetnost", "Verjetnost in relativna frekvenca"],
   "MAT-SS-4/statistika": ["statistika", "Statistika: histogram in škatla z brki"],
   "MAT-SS-4/mesane-maturitetne-naloge": ["zbirka", "Zbirka simulacij za maturo", { items: MATURA_MAT }],
-  "MAT-SS-4/matematicna-indukcija": ["hanoi", "Hanojski stolpi: 2ⁿ − 1 potez"],
+  "MAT-SS-4/matematicna-indukcija": [["domine", "Domine: baza in indukcijski korak"], ["hanoi", "Hanojski stolpi: 2ⁿ − 1 potez"]],
   // ---------------------------------------------------------------- FIZ OŠ 8
   "FIZ-OS-8/fizikalne-kolicine-in-enote": ["enote", "Predpone in pretvarjanje enot", { set: "predpone", sets: ["predpone", "dolzina", "masa", "cas", "prostornina"] }],
   "FIZ-OS-8/merske-napake": ["meritve", "Merjenje in merska napaka"],
