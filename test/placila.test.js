@@ -188,7 +188,7 @@ test("paket pred testom: ponudba samo brez naročnine, potrditve, plačilo, poln
     await withServer(async ({ client, stripe, store, hook }) => {
       const a = client();
       const parent = await registerVerified(a, stripe, "cene@paket.si");
-      const kid = (await a("/api/students", { method: "POST", body: { name: "Lan", birth_year: YEAR - 12, consent: true } })).body;
+      const kid = (await a("/api/students", { method: "POST", body: { name: "Lan", birth_year: YEAR - 16, consent: true } })).body;
       store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z'").run();
 
       // Brez testa v urniku ni ponudbe.
@@ -275,7 +275,7 @@ test("paket pred testom: preizkus, ki pokrije test, ponudbe ne prikaže; webhook
   await withServer(async ({ client, stripe, store, hook }) => {
     const a = client();
     const parent = await registerVerified(a, stripe, "pre@paket.si");
-    const kid = (await a("/api/students", { method: "POST", body: { name: "Mia", birth_year: YEAR - 12, consent: true } })).body;
+    const kid = (await a("/api/students", { method: "POST", body: { name: "Mia", birth_year: YEAR - 16, consent: true } })).body;
     await addTest(a, kid.id, day(2));
     // 7-dnevni preizkus traja dlje kot do dneva po testu.
     assert.equal((await a(`/api/students/${kid.id}/pass-offer`)).body.offer, null);

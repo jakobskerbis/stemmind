@@ -19,7 +19,11 @@ export function createSchoolSource(
   const src =
     source ||
     (schools
-      ? { access: schools.schoolAccess, students: schools.schoolStudents }
+      ? {
+          access: schools.schoolAccess,
+          students: schools.schoolStudents,
+          membership: schools.schoolMembership,
+        }
       : null);
   if (!CACHES.has(db)) CACHES.set(db, new Map());
   const cache = CACHES.get(db);
@@ -53,6 +57,7 @@ export function createSchoolSource(
           id: a.licenceId,
           school_id: a.schoolId,
           school_name: a.schoolName,
+          stage: a.stage ?? null,
           plan: a.plan,
           subjects: a.subjects ?? null,
           grades: a.grades ?? null,
@@ -62,6 +67,8 @@ export function createSchoolSource(
         },
       ];
     },
+    // Članstvo za pravila ponudb (server/placila/ponudbe.js): { inSchool, inClass, offersOff } ali null.
+    membership: (studentId) => src?.membership?.(db, studentId) || null,
     clearCache: () => cache.clear(),
   };
 }
