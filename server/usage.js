@@ -97,7 +97,7 @@ export class Usage {
   // kadar je zmogljivejši model zaradi omejitve nadomeščen.
   // wantThink: prva ponovna razlaga (Haiku z več razmisleka); wantDeep: ponovna prošnja zapored (Opus).
   // free: brezplačni paket (brez naročnine, preizkusa ali kode) nikoli ne dobi zmogljivejšega modela.
-  // capped: paket z omejenim modelom (aktivacijska koda) dobi namesto Opusa Sonnet (Opus šele ob 3. zaporedni prošnji, glej app.js).
+  // capped: namesto Opusa Sonnet (šolska licenca vedno; Osebno in aktivacijska koda pred 3. zaporedno prošnjo, glej app.js).
   chooseMode(studentId, { wantDeep = false, wantThink = false, competition = false, lite = false, free = false, deepModel = "claude-opus", capped = false } = {}) {
     if (competition && !wantDeep && !LIMITS.competitionDeep()) return { mode: "think", note: null };
     if (free && (wantDeep || competition)) return { mode: "think", note: wantDeep ? NOTES.free : null };

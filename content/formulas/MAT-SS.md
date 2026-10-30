@@ -15,7 +15,9 @@
 |---|---|
 | Splošna oblika | $f(x) = a x^2 + b x + c$, $\; D = b^2 - 4 a c$ |
 | Rešitvi enačbe | $x_{1,2} = \dfrac{-b \pm \sqrt{D}}{2 a}$ ($D > 0$ dve, $D = 0$ ena, $D < 0$ ni realnih) |
-| Teme | $T(p, q)$, $\; p = -\dfrac{b}{2 a}$, $\; q = -\dfrac{D}{4 a}$ |
+| Teme | $T(p, q)$ |
+| | $p = -\dfrac{b}{2 a}$ |
+| | $q = -\dfrac{D}{4 a}$ |
 | Temenska oblika | $f(x) = a (x - p)^2 + q$ |
 | Ničelna oblika | $f(x) = a (x - x_1)(x - x_2)$ |
 | Vietovi formuli | $x_1 + x_2 = -\dfrac{b}{a}$, $\; x_1 x_2 = \dfrac{c}{a}$ |
@@ -42,7 +44,7 @@
 | Sinusni izrek | $\dfrac{a}{\sin \alpha} = \dfrac{b}{\sin \beta} = \dfrac{c}{\sin \gamma} = 2 R$ |
 | Kosinusni izrek | $c^2 = a^2 + b^2 - 2 a b \cos \gamma$ |
 | Ploščina trikotnika | $S = \dfrac{a b \sin \gamma}{2}$, $\; S = \sqrt{s (s - a)(s - b)(s - c)}$, $\; s = \dfrac{a + b + c}{2}$ |
-| Polmera | $R = \dfrac{a b c}{4 S}$ (očrtana), $\; r = \dfrac{S}{s}$ (včrtana krožnica) |
+| Polmera | $R = \dfrac{a b c}{4 S}$ (očrtana krožnica), $\; r = \dfrac{S}{s}$ (včrtana krožnica) |
 
 | $x$ | $0$ | $\frac{\pi}{6}$ | $\frac{\pi}{4}$ | $\frac{\pi}{3}$ | $\frac{\pi}{2}$ |
 |---|---|---|---|---|---|
@@ -98,7 +100,7 @@
 | | $(e^x)' = e^x$, $(a^x)' = a^x \ln a$, $(\ln x)' = \dfrac{1}{x}$, $(\log_a x)' = \dfrac{1}{x \ln a}$ |
 | Pravila | $(u v)' = u' v + u v'$, $\; \left(\dfrac{u}{v}\right)' = \dfrac{u' v - u v'}{v^2}$, $\; (f(g(x)))' = f'(g(x))\, g'(x)$ |
 | Tangenta | $y - y_0 = f'(x_0)(x - x_0)$ |
-| Ekstrem | $f'(x_0) = 0$; maksimum, če $f''(x_0) < 0$, minimum, če $f''(x_0) > 0$ |
+| Ekstrem | $f'(x_0) = 0$ in $f''(x_0) < 0$: maksimum; $f'(x_0) = 0$ in $f''(x_0) > 0$: minimum |
 | Integrali | $\int x^n\,dx = \dfrac{x^{n+1}}{n + 1} + C$ ($n \ne -1$), $\int \dfrac{dx}{x} = \ln \lvert x \rvert + C$ |
 | | $\int e^x\,dx = e^x + C$, $\int \sin x\,dx = -\cos x + C$, $\int \cos x\,dx = \sin x + C$ |
 | Newton–Leibniz | $\int_a^b f(x)\,dx = F(b) - F(a)$ |

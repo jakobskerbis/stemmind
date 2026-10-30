@@ -22,7 +22,7 @@ Osebni AI inštruktor za matematiko, fiziko in kemijo za slovenske učence (OŠ 
 
 ## Zagon
 
-Potrebuješ Node.js 22.5 ali novejši.
+Potrebuješ Node.js 22.13 ali novejši.
 
 ```bash
 npm install

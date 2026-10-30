@@ -4,7 +4,7 @@
 // Večino nalog reši brez AI že vmesnik (public/scan/solvecore.js). AI pride na vrsto le pri nalogah, ki jih
 // ta ne zna (koreni, logaritmi, trigonometrija, integrali …). AI rešitev strežnik preveri z isto kodo kot vmesnik
 // (public/scan/verify.js); nepreverjena se pokaže z opozorilom, nikoli kot »preverjeno«.
-import { getClient, isMockMode, quickParams, MODEL_MID } from "./claude.js";
+import { getClient, isMockMode, quickParams, MODEL_MID, errorText } from "./claude.js";
 import { verifyAi } from "../public/scan/verify.js";
 import { languagePrompt } from "./prompt.js";
 
@@ -159,7 +159,7 @@ export function mountScan(app, { loadStudent, usage, readFn = readMathPhoto, sol
       res.json({ problems: out.problems });
     } catch (err) {
       console.error("[evklid] skeniranje:", err?.message || err);
-      res.status(502).json({ error: "Branje fotografije trenutno ne deluje. Nalogo vpiši s tipkami." });
+      res.status(502).json({ error: errorText(err, "Branje fotografije trenutno ne deluje. Nalogo vpiši s tipkami.") });
     }
   });
 
@@ -180,7 +180,7 @@ export function mountScan(app, { loadStudent, usage, readFn = readMathPhoto, sol
       res.json({ solution: out.solution });
     } catch (err) {
       console.error("[evklid] reševanje:", err?.message || err);
-      res.status(502).json({ error: "Reševanje trenutno ne deluje. Poskusi znova čez trenutek." });
+      res.status(502).json({ error: errorText(err, "Reševanje trenutno ne deluje. Poskusi znova čez trenutek.") });
     }
   });
 }

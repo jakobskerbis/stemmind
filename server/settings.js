@@ -4,6 +4,7 @@ import { ALL_SUBJECTS, SCHOOL_SUBJECTS, REGIONAL_SUBJECTS, subjectForLevel } fro
 import { LANGUAGE_CODES, DEFAULT_LANGUAGE } from "../public/i18n/languages.js";
 import { cleanInterests, NEWS_LEVELS, NEWS_LANGS } from "../public/interests.js";
 import { cleanDialect } from "../public/dialects.js";
+import { cleanChildhood } from "../public/games/childhood.js";
 import { SYSTEM_IDS, DEFAULT_SYSTEM, isRegional, gradeInfo, defaultGrade, trackForLevel } from "../public/regions.js";
 import { GOALS, DEFAULT_GOAL, goalsFor, validDate } from "../public/goal-data.js";
 import { DEFAULT_XP_GOAL, cleanXpGoal } from "../public/xp-levels.js";
@@ -50,6 +51,8 @@ export const DEFAULT_SETTINGS = {
   interest_custom: "",
   news_level: "auto",
   news_lang: "all",
+  // Igre iz otroštva (public/games/childhood.js): null = vprašalnik še ni bil izpolnjen, [] = preskočen.
+  game_childhood: null,
 };
 
 // Proste besedilne nastavitve gredo v sistemski prompt, zato jih skrajšamo
@@ -98,6 +101,7 @@ export function normalizeSettings(input = {}) {
   // Regija naprave (ISO 3166, npr. "BR"): inštruktor prilagodi izraze in zapis.
   if (typeof input.region === "string" && /^[A-Z]{2}$/.test(input.region)) out.region = input.region;
   if (input.interests !== undefined) out.interests = cleanInterests(input.interests);
+  if (input.game_childhood !== undefined) out.game_childhood = cleanChildhood(input.game_childhood);
   if (input.interest_custom !== undefined) out.interest_custom = cleanText(input.interest_custom, 40);
   // Narečje mora pripadati jeziku pogovora (ob menjavi jezika se vrne na knjižni jezik).
   out.dialect = cleanDialect(input.dialect, out.language);

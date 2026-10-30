@@ -5,6 +5,7 @@ import { marked } from "marked";
 import katex from "katex";
 import { createRenderer, streamSafe, fixTables, isTableSeparator, centerNumberColumns } from "../public/rich.js";
 import { nextChunk } from "../public/pace.js";
+import { annotateTex } from "../public/formula-data.js";
 
 const { renderRich } = createRenderer({ marked, katex, sanitize: (h) => h });
 
@@ -129,4 +130,48 @@ test("stolpec z dolgim besedilom se sme prelomiti, formule ne", () => {
 test("podčrtan naslov in vodoravna črta nista tabela", () => {
   assert.doesNotMatch(renderRich("a | b\n---\n\nnaprej"), /<table/);
   assert.match(renderRich("Besedilo\n\n---\n\nnaprej"), /<hr>/);
+});
+
+// j, 2026-10-30: »naj bo vsaka formula in izrek v svojem okencu v tabeli«.
+test("dvostolpčna tabela formul: vsaka formula v svoji vrstici, ime samo v prvi", () => {
+  const md = [
+    "| | |",
+    "|---|---|",
+    "| Pravila | $\\log_a (x y) = \\log_a x + \\log_a y$, $\\; \\log_a x^n = n \\log_a x$ |",
+    "| Ekstrem | $f'(x_0) = 0$; maksimum, če $f''(x_0) < 0$, minimum, če $f''(x_0) > 0$ |",
+    "| Definicija | $\\log_a x = y \\iff a^y = x$ ($a > 0$, $a \\ne 1$, $x > 0$) |",
+    "| Elektroni | največ $2$, $8$, $8$ |",
+    "| Trikotnik | kot ob $B$, del kotov ob $A$ in $C$ |",
+  ].join("\n");
+  const html = renderRich(md);
+  const rows = [...html.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map((m) => m[1]);
+  assert.equal(rows.length, 1 + 2 + 3 + 1 + 1 + 1, "glava + 2 pravili + 3 dele ekstrema + po ena vrstica");
+  assert.match(rows[1], /<td>Pravila<\/td>/);
+  assert.match(rows[2], /^\s*<td><\/td>/, "druga formula ima prazno ime");
+  assert.match(rows[4], /maksimum, če/);
+  assert.ok(!/\\displaystyle \\;/.test(html), "presledek pred ločeno formulo je odstranjen");
+  assert.ok(!/\\displaystyle ;/.test(html), "ločilo ni ostalo v formuli");
+  assert.match(rows[6], /Definicija[\s\S]*a \\ne 1/, "pogoji v oklepaju ostanejo pri formuli");
+  assert.match(rows[7], /največ[\s\S]*<annotation encoding="application\/x-tex">\\displaystyle 8<\/annotation>/, "seznam števil ostane skupaj");
+  assert.match(html, /kot ob <span class="katex">[\s\S]*?del kotov/, "stavek z enim simbolom se ne razdeli");
+});
+
+test("tabela, v kateri je tudi prvi stolpec seznam, ostane cela", () => {
+  const md = "| kisline | baze |\n|---|---|\n| $\\mathrm{HCl}$ klorovodikova, $\\mathrm{HNO_3}$ dušikova | $\\mathrm{NaOH}$ natrijev hidroksid, $\\mathrm{KOH}$ kalijev hidroksid |";
+  assert.equal(count(renderRich(md), /<tr>/g), 2);
+});
+
+test("klikljive formule: \\log_a, \\vec F, \\frac1e se izrišejo brez rdeče napake", () => {
+  const annotate = (tex) => annotateTex(tex, "MAT");
+  const r = createRenderer({ marked, katex, sanitize: (h) => h, annotate });
+  for (const tex of ["\\log_a x^n = n \\log_a x", "\\ln x = \\log_e x", "\\vec F = m \\vec a", "\\bar v \\cdot t", "\\frac1e", "\\int_a^b f(x)\\,dx"]) {
+    const html = r.renderMath(tex, false);
+    assert.doesNotMatch(html, /katex-error/, tex);
+    if (/log_a/.test(tex)) assert.match(html, /data-fx=/, "simbol ostane klikljiv");
+  }
+});
+
+test("formula sheet: a clause after a comma (ko, če, npr.) stays with its formula", () => {
+  const md = "| | |\n|---|---|\n| Rang | $A x = b$ je rešljiv natanko tedaj, ko $r(A) = r(A|b)$ |\n| Nevtralizacija | kislina $+$ baza → sol, npr. $\\mathrm{HCl + NaOH \\rightarrow NaCl + H_2O}$ |";
+  assert.equal(count(renderRich(md), /<tr>/g), 3);
 });

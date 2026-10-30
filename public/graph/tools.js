@@ -573,7 +573,8 @@ export function createFormulas(root, opts) {
           const [a, b] = r.children;
           if (!a.textContent.trim() && !b.textContent.trim()) continue;
           const item = document.createElement("div");
-          item.className = r.parentElement.tagName === "THEAD" ? "fm-item fm-head" : "fm-item";
+          // Prazno ime: še ena formula pod istim imenom (rich.js da vsaki formuli svojo vrstico).
+          item.className = r.parentElement.tagName === "THEAD" ? "fm-item fm-head" : a.textContent.trim() ? "fm-item" : "fm-item fm-cont";
           item.innerHTML = `<div class="fm-name">${a.innerHTML}</div><div class="fm-f">${b.innerHTML}</div>`;
           list.append(item);
         }
