@@ -300,7 +300,8 @@ test("weekly report, export and account deletion", async () => {
 
     const preview = await a("/api/account/weekly-report/preview");
     assert.match(preview.body, /Zala/);
-    assert.match(preview.body, /<b>40<\/b>/);
+    assert.match(preview.body, /Naslednji koraki/);
+    assert.match(preview.body, /1 dan vaje/);
     const sent = await a("/api/account/weekly-report/send", { method: "POST" });
     assert.equal(sent.status, 200);
     const mail = calls.filter((c) => c.host === "api.resend.com").at(-1);
@@ -342,8 +343,52 @@ test("weekly scheduler sends once per week", async () => {
   ).run();
   const s = store.createStudent("Ivo");
   store.db.prepare("UPDATE students SET parent_id = 1 WHERE id = ?").run(s.id);
+  // Dva tedna brez vaje: poročila ne pošljemo.
+  assert.equal(await api.sendWeeklyAll(), 0);
+  store.db.prepare("INSERT INTO xp_events (student_id, amount, reason) VALUES (?, 10, 'test')").run(s.id);
   assert.equal(await api.sendWeeklyAll(), 1);
   assert.equal(await api.sendWeeklyAll(), 0);
+});
+
+test("weekly report: what was learned, weak spots, next steps, Slovenian plurals", async () => {
+  const { buildWeeklyReport, plural, headline, isQuiet } = await import("../server/accounts/weekly.js");
+  const store = openDb(":memory:");
+  const s = store.createStudent("Zala", { educational_track: "OSNOVNA_SOLA", curriculum_level: "6. razred", subject: "MAT" });
+  const db = store.db;
+  const topic = "MAT-OS-6/zapis-in-urejanje-velikih-stevil";
+  const task = db.prepare("INSERT INTO tasks (student_id, topic_id, level, payload, attempts, solved, first_try_correct) VALUES (?, ?, 1, '{}', 1, 1, ?)");
+  for (const ok of [0, 0, 1, 0]) task.run(s.id, topic, ok);
+  db.prepare("INSERT INTO topic_state (student_id, topic_id, status, mastered_at) VALUES (?, ?, 'mastered', datetime('now'))").run(s.id, "MAT-OS-6/ulomki");
+  const r = buildWeeklyReport(db, { name: "" }, [store.getStudent(s.id)], { appUrl: "https://x/", unsubscribeUrl: "https://x/u" });
+  const w = r.children[0];
+  assert.equal(w.solved, 4);
+  assert.equal(w.accuracy, 25);
+  assert.match(w.weak[0].name, /velikih števil/);
+  assert.match(r.html, /Snov tega tedna/);
+  assert.match(r.html, /Matematika/);
+  assert.match(r.html, /Še vaditi/);
+  assert.match(r.html, /Za pogovor doma/);
+  assert.match(r.subject, /^Zala ta teden: 1 dan vaje/);
+  assert.equal(r.quiet, false);
+  // Profil »Zame«: brez nasvetov za starše.
+  const me = buildWeeklyReport(db, { name: "" }, [store.getStudent(s.id)], { appUrl: "https://x/", unsubscribeUrl: "https://x/u", selfIds: [s.id] });
+  assert.doesNotMatch(me.html, /Za pogovor doma/);
+  assert.match(me.html, /Živjo, Zala/);
+  assert.deepEqual([1, 2, 3, 5, 101, 102, 111].map((n) => plural(n, ["naloga", "nalogi", "naloge", "nalog"])), [
+    "1 naloga", "2 nalogi", "3 naloge", "5 nalog", "101 naloga", "102 nalogi", "111 nalog",
+  ]);
+  assert.equal(headline({ active_days: 0 }), "Ta teden ni bilo vaje.");
+  assert.equal(isQuiet({ active_days: 0, prev_active_days: 1 }), false);
+  // Graf po dnevih: vsota stolpcev = rešene naloge + vprašanja, višine v celicah (Outlook), največji dan = 64 px.
+  assert.equal(w.strip.length, 7);
+  assert.equal(w.strip.reduce((n, d) => n + d.tasks, 0), w.solved);
+  const { barsHtml } = await import("../server/accounts/weekly.js");
+  const bars = barsHtml([{ label: "po", active: true, tasks: 6, asked: 2 }, { label: "to", active: true, tasks: 0, asked: 0 }, { label: "sr", active: false, tasks: 0, asked: 0 }]);
+  assert.match(bars, /height="16" bgcolor="#b4c0f8"/);
+  assert.match(bars, /height="48" bgcolor="#4f6bed"/);
+  assert.match(bars, />8</);
+  assert.match(bars, /✓/); // dejaven dan brez nalog
+  assert.doesNotMatch(bars, /<div style="height/);
 });
 
 test("helpers: webhook signature, form encoding, access, week key", () => {
@@ -846,6 +891,8 @@ test("preverjanje starosti: premlad otrok dobi povezavo za starše, dijak ima sa
     assert.equal(mine.status, 201);
     assert.equal(mine.body.birth_year, Number(ymd(18).slice(0, 4)));
     assert.match(store.db.prepare("SELECT text FROM consents WHERE student_id = ?").get(mine.body.id).text, /^Profil je moj/);
+    // Tedensko poročilo za »Zame« nagovori dijaka samega.
+    assert.match((await adult("/api/account/weekly-report/preview")).body, /Živjo, Tina/);
     // Star račun brez datuma rojstva: »Zame« samo, če je letnica dovolj stara.
     store.db.prepare("UPDATE parents SET birth_date = NULL WHERE email = 'maturant@primer.si'").run();
     const tooYoung = await adult("/api/students", { method: "POST", body: { name: "Mlajši", birth_year: YEAR - 15, self: true, consent: true } });
