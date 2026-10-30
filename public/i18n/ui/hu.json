@@ -58,6 +58,7 @@
   "lock.auth": "Fiók jelszava vagy a profil jelenlegi jelszava",
   "lock.saved": "A profil jelszava elmentve.",
   "lock.none": "jelszó nélkül",
+  "lock.offline": "Nincs kapcsolat az Evklid szerverrel. Ellenőrizd, hogy be van-e kapcsolva az Evklidet futtató számítógép, és próbáld újra.",
   "mock.title": "Próba mód.",
   "mock.text": "API-kulcs nélkül az oktató előre elkészített válaszokat ad.",
   "common.loading": "Betöltés …",

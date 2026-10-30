@@ -58,6 +58,7 @@
   "lock.auth": "Contraseña de la cuenta o contraseña actual del perfil",
   "lock.saved": "Contraseña del perfil guardada.",
   "lock.none": "sin contraseña",
+  "lock.offline": "No hay conexión con el servidor de Evklid. Comprueba que el ordenador con Evklid esté encendido e inténtalo de nuevo.",
   "mock.title": "Modo de prueba.",
   "mock.text": "Sin clave API, el tutor devuelve respuestas preparadas.",
   "common.loading": "Cargando …",

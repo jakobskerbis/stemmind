@@ -57,6 +57,7 @@
   "lock.auth": "帳戶密碼或目前的個人檔案密碼",
   "lock.saved": "個人檔案密碼已儲存。",
   "lock.none": "無密碼",
+  "lock.offline": "無法連線到 Evklid 伺服器。請檢查執行 Evklid 的電腦是否已開機，然後再試一次。",
   "mock.title": "測試模式。",
   "mock.text": "沒有 API 金鑰時，輔導老師會給出預設回答。",
   "common.loading": "載入中 …",

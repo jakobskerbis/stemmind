@@ -59,6 +59,7 @@ export default {
   "lock.auth": "Geslo računa ali sedanje geslo profila",
   "lock.saved": "Geslo profila je shranjeno.",
   "lock.none": "brez gesla",
+  "lock.offline": "Ni povezave s strežnikom Evklid. Preveri, ali je računalnik z Evklidom prižgan, in poskusi znova.",
   "mock.title": "Preizkusni način.",
   "mock.text": "Brez API ključa inštruktor vrača pripravljene odgovore.",
   "common.loading": "Nalagam …",

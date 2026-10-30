@@ -57,6 +57,7 @@
   "lock.auth": "账户密码或当前个人资料密码",
   "lock.saved": "个人资料密码已保存。",
   "lock.none": "无密码",
+  "lock.offline": "无法连接到 Evklid 服务器。请检查运行 Evklid 的电脑是否已开机，然后重试。",
   "mock.title": "测试模式。",
   "mock.text": "没有 API 密钥时，辅导老师会给出预设回答。",
   "common.loading": "加载中 …",

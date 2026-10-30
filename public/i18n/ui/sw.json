@@ -58,6 +58,7 @@
   "lock.auth": "Nenosiri la akaunti au nenosiri la sasa la wasifu",
   "lock.saved": "Nenosiri la wasifu limehifadhiwa.",
   "lock.none": "bila nenosiri",
+  "lock.offline": "Hakuna muunganisho na seva ya Evklid. Hakikisha kompyuta inayoendesha Evklid imewashwa, kisha jaribu tena.",
   "mock.title": "Hali ya majaribio.",
   "mock.text": "Bila ufunguo wa API, mwalimu hutoa majibu yaliyoandaliwa.",
   "common.loading": "Inapakia …",
