@@ -135,11 +135,14 @@ export function runGame(host, opts) {
     showFb("", "");
     const n = engine.options || 4;
     G.opts = shuffle([q.a, ...q.w.slice(0, n - 1)]);
-    $(".gm-q").textContent = q.q;
+    // igra z več nalogami hkrati (npr. »Kdo je slepar?«) ima v glavi svoje navodilo namesto ene naloge
+    $(".gm-q").textContent = engine.prompt ? t(engine.prompt) : q.q;
     if (engine.timer) startTimer(engine.timer / Math.max(0.8, Math.min(1.4, G.speed)));
     eng.question?.(q);
   }
   G.isRight = (s) => s === G.q?.a;
+  // dodatna naloga iste snovi (za igre, ki pokažejo več nalog hkrati)
+  G.ask = () => makeQuestion(concept.id, G.tier);
   function startTimer(sec) {
     timer = { left: sec, total: sec };
     $(".gm-timer").hidden = false;

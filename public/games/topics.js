@@ -41,6 +41,12 @@ export const sup = (n) => String(n).replace(/[-0-9]/g, (c) => SUP[c]);
 const sub = (n) => String(n).replace(/[0-9]/g, (c) => SUB[c]);
 
 // število: decimalna vejica po jeziku, pravi minus, brez plavajočih ostankov
+// Trditev iz naloge: »?« zamenja ponujena vrednost, sicer »= vrednost« (sortirnica, »Kdo je slepar?«).
+export function statement(q, v) {
+  if (/\?$/.test(q) && !/[=:]\s*\?$/.test(q) && !/\?°$/.test(q)) return [q, v];
+  if (q.includes("?")) return ["", q.replace("?", v)];
+  return [q, /^[a-zA-Zα-ω(]{0,3}\s?[=<>≤≥]/.test(v) || v.startsWith("{") ? `⇒ ${v}` : `= ${v}`];
+}
 export function fmt(x) {
   if (!Number.isFinite(x)) return String(x);
   let s = String(Math.round(x * 1e6) / 1e6);
