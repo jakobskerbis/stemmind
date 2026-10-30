@@ -640,6 +640,8 @@ export function mountAccounts(app, store, opts = {}) {
         topics: q("SELECT * FROM topic_state WHERE student_id = ?", c.id),
         tasks: q("SELECT topic_id, mode, level, attempts, hint_used, solved, first_try_correct, last_answer, created_at FROM tasks WHERE student_id = ?", c.id),
         xp: q("SELECT amount, reason, created_at FROM xp_events WHERE student_id = ?", c.id),
+        // Prijave napak (server/reports.js): tudi opomba učenca so njegovi podatki.
+        reports: q("SELECT message_id, reason, note, question, answer, created_at FROM message_reports WHERE student_id = ?", c.id),
         schedule: (() => {
           try {
             const r = db.prepare("SELECT data FROM schedules WHERE student_id = ?").get(c.id);

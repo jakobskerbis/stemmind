@@ -188,6 +188,12 @@ export function openDb(file = process.env.EVKLID_DB || `data/${BRAND.slug}.db`) 
   const convCols = db.prepare("PRAGMA table_info(conversations)").all().map((c) => c.name);
   if (!convCols.includes("path_topic")) db.exec("ALTER TABLE conversations ADD COLUMN path_topic TEXT");
   if (!convCols.includes("deep")) db.exec("ALTER TABLE conversations ADD COLUMN deep INTEGER NOT NULL DEFAULT 0");
+  // Trojno preverjanje (server/verify.js): shranjen odgovor in kartica sta vidna šele, ko sta preverjena.
+  // Stari shranjeni odgovori niso bili preverjeni, zato ostanejo skriti (privzeto 0); stare kartice ostanejo.
+  const cacheCols = db.prepare("PRAGMA table_info(answer_cache)").all().map((c) => c.name);
+  if (!cacheCols.includes("verified")) db.exec("ALTER TABLE answer_cache ADD COLUMN verified INTEGER NOT NULL DEFAULT 0");
+  const cardCols = db.prepare("PRAGMA table_info(flashcards)").all().map((c) => c.name);
+  if (!cardCols.includes("verified")) db.exec("ALTER TABLE flashcards ADD COLUMN verified INTEGER NOT NULL DEFAULT 1");
   // Priprava na test, ki jo je nastavil test iz urnika (server/schedule.js).
   const planCols = db.prepare("PRAGMA table_info(test_plans)").all().map((c) => c.name);
   if (!planCols.includes("event_id")) db.exec("ALTER TABLE test_plans ADD COLUMN event_id TEXT");

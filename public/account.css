@@ -50,6 +50,7 @@ details .card { margin-top: 8px; }
 .lock-others-title { margin: 6px 0 0; }
 .lock-others { display: flex; flex-wrap: wrap; gap: 8px; }
 .lock-others button { overflow-wrap: anywhere; }
+.lock-logout { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
 .profile-pw { margin-top: 10px; }
 .warn { background: #fff4d6; color: #6b4e00; padding: 8px 10px; border-radius: 10px; font-size: 0.92rem; }
 .dark .warn { background: #3a3014; color: #f3d98a; }
