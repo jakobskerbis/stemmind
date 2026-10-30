@@ -40,6 +40,7 @@ const dims = (cells) => [Math.max(...cells.map((c) => c[0])) + 1, Math.max(...ce
 
 export const blocks = {
   id: "blocks",
+  added: "2026-10-30", // oznaka »Novo« 7 dni (docs/igre-tedensko.md)
   story: {
     sl: [["Gradbišče", "Robotka Kocka gradi mesto iz pisanih blokov."], ["Most", "Za most čez reko potrebuje ravne vrste."], ["Nebotičnik", "Bloki padajo hitreje, nebotičnik raste."], ["Mesto luči", "Še nekaj vrst in mesto zasveti!"]],
     en: [["Building site", "Kocka the robot builds a town from colourful blocks."], ["The bridge", "The bridge over the river needs straight rows."], ["Skyscraper", "Blocks fall faster, the skyscraper grows."], ["City of lights", "A few more rows and the city lights up!"]],
@@ -278,6 +279,7 @@ function gem(g, x, y, r, k, crack = 0) {
 
 export const match = {
   id: "match",
+  added: "2026-10-30", // oznaka »Novo« 7 dni (docs/igre-tedensko.md)
   story: {
     sl: [["Rudnik", "Krt Rudi koplje dragulje globoko pod goro."], ["Kristalna jama", "V jami se lesketajo kristali vseh barv."], ["Podzemno jezero", "Dragulji se skrivajo ob temni vodi."], ["Zakladnica", "Še nekaj skupin in Rudi odpre zakladnico!"]],
     en: [["The mine", "Rudi the mole digs gems deep under the mountain."], ["Crystal cave", "Crystals of every colour sparkle in the cave."], ["Underground lake", "Gems hide by the dark water."], ["The treasury", "A few more groups and Rudi opens the treasury!"]],
@@ -508,6 +510,7 @@ function card(G, g, c, w, h, face_up) {
 
 export const cards = {
   id: "cards",
+  added: "2026-10-30", // oznaka »Novo« 7 dni (docs/igre-tedensko.md)
   story: {
     sl: [["Kartaški večer", "Lisica Zala te izzove na partijo kart."], ["Mačji turnir", "Mačka Tina igra hitro in zvito."], ["Medvedji brlog", "Medved Bor ima najmočnejše karte v gozdu."], ["Finale", "Sova Modra čaka v finalu. Zmagaj še nekaj štihov!"]],
     en: [["Card night", "Zala the fox challenges you to a game of cards."], ["Cat tournament", "Tina the cat plays fast and sly."], ["Bear den", "Bor the bear has the strongest cards in the forest."], ["The final", "Modra the owl waits in the final. Win a few more tricks!"]],
