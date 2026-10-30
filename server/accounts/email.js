@@ -49,10 +49,10 @@ export const button = (href, label) =>
 
 export function verifyEmail(url) {
   return {
-    subject: "Potrdi e-naslov za Evklid",
+    subject: "Potrdite e-naslov za Evklid",
     html: layout(
-      "Potrdi svoj e-naslov",
-      `<p>Pozdravljeni! S klikom na gumb potrdite e-naslov in da ste zakoniti zastopnik otroka, ki bo uporabljal Evklid.</p>${button(url, "Potrdi e-naslov")}<p style="font-size:13px;color:#5f6779">Če se niste registrirali, to sporočilo prezrite.</p>`,
+      "Potrdite svoj e-naslov",
+      `<p>Pozdravljeni! S klikom na gumb potrdite svoj e-naslov in izjavite, da ste zakoniti zastopnik otroka, ki bo uporabljal Evklid.</p>${button(url, "Potrdite e-naslov")}<p style="font-size:13px;color:#5f6779">Če se niste registrirali, to sporočilo prezrite.</p>`,
     ),
     text: `Potrdite e-naslov za Evklid: ${url}`,
   };
@@ -61,7 +61,7 @@ export function verifyEmail(url) {
 export function resetEmail(url) {
   return {
     subject: "Novo geslo za Evklid",
-    html: layout("Nastavi novo geslo", `<p>Za novo geslo kliknite spodnji gumb. Povezava velja 1 uro.</p>${button(url, "Nastavi novo geslo")}<p style="font-size:13px;color:#5f6779">Če niste zahtevali novega gesla, sporočilo prezrite.</p>`),
+    html: layout("Nastavite novo geslo", `<p>Za novo geslo kliknite spodnji gumb. Povezava velja 1 uro.</p>${button(url, "Nastavite novo geslo")}<p style="font-size:13px;color:#5f6779">Če niste zahtevali novega gesla, sporočilo prezrite.</p>`),
     text: `Novo geslo za Evklid (velja 1 uro): ${url}`,
   };
 }
@@ -69,8 +69,8 @@ export function resetEmail(url) {
 export function referralRewardEmail(appUrl) {
   return {
     subject: "Evklid: prislužili ste brezplačen mesec 🎁",
-    html: layout("Hvala za priporočilo!", `<p>Družina, ki ste jo povabili, se je naročila na Evklid. Oboji ste dobili en mesec brezplačno.</p>${button(appUrl, "Odpri Evklid")}`),
-    text: `Družina, ki ste jo povabili, se je naročila na Evklid. Oboji ste dobili en mesec brezplačno. ${appUrl}`,
+    html: layout("Hvala za priporočilo!", `<p>Družina, ki ste jo povabili, se je naročila na Evklid. Obe družini sta dobili en mesec brezplačno.</p>${button(appUrl, "Odpri Evklid")}`),
+    text: `Družina, ki ste jo povabili, se je naročila na Evklid. Obe družini sta dobili en mesec brezplačno. ${appUrl}`,
   };
 }
 
@@ -80,7 +80,7 @@ export function paymentFailedEmail(appUrl, graceDays) {
     subject: "Evklid: plačilo naročnine ni uspelo",
     html: layout(
       "Plačilo ni uspelo",
-      `<p>Zadnjega plačila naročnine ni bilo mogoče izvesti. Poln dostop ostane še ${graceDays} dni.</p><p>V zavihku Račun kliknite »Upravljaj naročnino in račune« in posodobite kartico. Če tega ne storite, profili preidejo na brezplačni paket. Noben podatek se ne izbriše.</p>${button(appUrl, "Odpri Evklid")}`,
+      `<p>Zadnje plačilo naročnine ni uspelo. Poln dostop ostane še ${graceDays} dni.</p><p>V zavihku Račun kliknite »Upravljaj naročnino in račune« in posodobite kartico. Če tega ne storite, profili preidejo na brezplačni paket. Noben podatek se ne izbriše.</p>${button(appUrl, "Odpri Evklid")}`,
     ),
     text: `Plačilo naročnine za Evklid ni uspelo. Poln dostop ostane še ${graceDays} dni. Kartico posodobite v zavihku Račun: ${appUrl}`,
   };

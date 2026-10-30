@@ -19,7 +19,7 @@ let running = Promise.resolve();
 let waiting = 0;
 function scrypt(password, salt, len, opts) {
   if (waiting >= SCRYPT_QUEUE_MAX) {
-    const e = new Error("Strežnik je trenutno preobremenjen. Poskusite čez nekaj sekund.");
+    const e = new Error("Evklid je trenutno preobremenjen. Poskusi čez nekaj sekund.");
     e.code = "SCRYPT_BUSY";
     e.status = 503;
     return Promise.reject(e);
