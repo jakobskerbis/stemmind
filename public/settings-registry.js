@@ -11,6 +11,7 @@
 
 import { INTEREST_IDS, NEWS_LEVELS, NEWS_LANGS } from "./interests.js";
 import { DIALECTS } from "./dialects.js";
+import { GENRE_IDS } from "./games/childhood.js";
 
 const DIALECT_LIST = Object.entries(DIALECTS).map(([l, list]) => `${l}: ${list.map((d) => d.id).join(", ")}`).join("; ");
 
@@ -38,6 +39,7 @@ export const PROFILE_SETTINGS = {
   interest_custom: { desc: "own extra topic for the news corner, max 40 chars of keywords, e.g. 'črne luknje' (English keywords find more news); '' clears it" },
   news_level: { values: NEWS_LEVELS, desc: "news corner depth: simple = written for kids and teens, all = also research news, auto = by school stage" },
   news_lang: { values: NEWS_LANGS, desc: "news corner: all = also English sources, mine = only news in the app language (fewer)" },
+  game_childhood: { list: true, values: GENRE_IDS, desc: `kinds of games the student played as a child (games questionnaire); the games section shows Evklid's own learning games in these styles; whole new list, ids: ${GENRE_IDS.join(", ")}` },
   weak_points: { list: true, desc: "student's own list of weak points (whole new list, replaces the old one), e.g. ['ulomki', 'pretvarjanje enot']" },
 };
 

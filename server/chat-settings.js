@@ -16,6 +16,7 @@ import { goalsFor, validDate } from "../public/goal-data.js";
 import { Avatars } from "./avatar.js";
 import { ITEMS, SLOTS, MULTI_MAX, isMulti, itemOf, wear } from "../public/avatar.js";
 import { INTERESTS, cleanInterests } from "../public/interests.js";
+import { GENRE_IDS, cleanChildhood } from "../public/games/childhood.js";
 import { dialectsFor } from "../public/dialects.js";
 
 const PATH_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => PROFILE_SETTINGS[k].confirm);
@@ -210,6 +211,7 @@ function profileView(student) {
     interest_custom: s.interest_custom || "",
     news_level: s.news_level,
     news_lang: s.news_lang,
+    game_childhood: s.game_childhood ?? [],
     weak_points: student.manual_weaknesses || [],
   };
 }
@@ -316,6 +318,12 @@ function validateProfile(changes, student) {
     const bad = raw.filter((v) => String(v).trim() && !cleanInterests([v]).length);
     if (bad.length) errors.push(`interests: unknown ${bad.join(", ")}; allowed ${INTERESTS.map((i) => `${i.id} (${i.en})`).join(", ")}`);
     else patch.interests = ids;
+  }
+  if (changes.game_childhood !== undefined) {
+    const raw = Array.isArray(changes.game_childhood) ? changes.game_childhood : String(changes.game_childhood ?? "").split(",");
+    const bad = raw.filter((v) => String(v).trim() && !GENRE_IDS.includes(String(v).trim()));
+    if (bad.length) errors.push(`game_childhood: unknown ${bad.join(", ")}; allowed ${GENRE_IDS.join(", ")}`);
+    else patch.game_childhood = cleanChildhood(raw);
   }
   if (changes.interest_custom !== undefined) patch.interest_custom = cleanText(String(changes.interest_custom ?? ""), 40);
   for (const key of ["track", "solving_mode", "data_mode", "news_level", "news_lang"]) {
@@ -621,6 +629,7 @@ const MOCK_LABELS = {
   subject: "predmet",
   solving_mode: "način",
   dialect: "narečje",
+  game_childhood: "igre iz otroštva",
 };
 
 // Besedilo odgovora v preizkusnem načinu iz rezultata orodja.

@@ -190,3 +190,27 @@ test("games: lock is switched off (j 2026-10-29: »Odstrani zaporo iger«)", asy
   const { LOCKS_ON } = await import("../public/games/unlock.js");
   assert.equal(LOCKS_ON, false);
 });
+
+test("games: childhood questionnaire genres map to existing games; tutor can change the choice", async () => {
+  const { GENRES, cleanChildhood, childhoodEngines } = await import("../public/games/childhood.js");
+  const sl = (await import("../public/i18n/sl.js")).default;
+  const ids = new Set(ENGINES.map((e) => e.id));
+  for (const g of GENRES) {
+    assert.ok(g.engines.length && g.engines.every((e) => ids.has(e)), g.id);
+    assert.ok(sl[`games.g.${g.id}`], `games.g.${g.id}`);
+  }
+  assert.equal(cleanChildhood(null), null);
+  assert.deepEqual(cleanChildhood(["snake", "x", "snake", " cards "]), ["snake", "cards"]);
+  assert.deepEqual(childhoodEngines(["space", "cards"]), ["invaders", "meteor", "cards"]);
+  const store = openDb(":memory:");
+  const s = store.createStudent("Ana", {});
+  assert.equal(s.settings.game_childhood, null);
+  assert.deepEqual(store.updateStudent(s.id, { settings: { game_childhood: ["blocks", "nope"] } }).settings.game_childhood, ["blocks"]);
+  const { createSettingsTools } = await import("../server/chat-settings.js");
+  const t = createSettingsTools({ store, studentId: s.id, conversationId: 1, pending: new Map() });
+  const r = JSON.parse((await t.onToolUse("change_settings", { changes: { game_childhood: ["match", "pet"] } })).content);
+  assert.equal(r.status, "applied");
+  assert.deepEqual(store.getStudent(s.id).settings.game_childhood, ["match", "pet"]);
+  const bad = JSON.parse((await t.onToolUse("change_settings", { changes: { game_childhood: ["tetris"] } })).content);
+  assert.equal(bad.status, "error");
+});

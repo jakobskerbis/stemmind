@@ -16,6 +16,7 @@ function onPath(e, c) {
 }
 import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
+import { GENRES, childhoodEngines } from "./childhood.js";
 import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
 import { seasonOf } from "../zbirke.js";
 import { unlockedText } from "../zbirke-view.js";
@@ -56,7 +57,7 @@ const GLYPH = {
   e_pct: "%", e_vat: "DDV", e_interest: "€%", e_profit: "€", e_breakeven: "✕", e_margin: "MC", e_elast: "Ed", e_shift: "S↑", e_equil: "S=D", e_market: "🏪", e_oppcost: "⚖", e_gdp: "BDP", e_unemp: "u", e_policy: "🏛", e_bank: "🏦", e_fx: "$€",
 };
 
-let ctx = null; // { api, getStudent, refreshXp, currentLang }
+let ctx = null; // { api, getStudent, setStudent, toast, refreshXp, currentLang }
 let data = { year: 8, games: {}, concepts: {}, known: [], passed: [] };
 // Stanje za odklepanje (unlock.js), zgrajeno iz podatkov strežnika.
 const lockState = () => ({ year: data.year, games: data.games, known: new Set(data.known || []), passed: new Set(data.passed || []) });
@@ -126,9 +127,15 @@ function tile(e, c) {
   </button>`;
 }
 
+// Igre iz otroštva (childhood.js): null = vprašalnik še ni bil izpolnjen, [] = preskočen.
+const kidList = () => ctx.getStudent()?.settings?.game_childhood ?? null;
+
 function renderPortal() {
   const q = filter.q.trim().toLowerCase();
-  const kinds = ENGINES.filter((e) => filter.kind === "all" || e.id === filter.kind);
+  const kid = kidList();
+  const kidEngines = childhoodEngines(kid);
+  if (filter.kind === "kid" && !kidEngines.length) filter.kind = "all";
+  const kinds = ENGINES.filter((e) => filter.kind === "all" || e.id === filter.kind || (filter.kind === "kid" && kidEngines.includes(e.id)));
   const match = (c, e) => !q || `${conceptName(c)} ${areaName(c.area)} ${kindName(e)}`.toLowerCase().includes(q);
   // Iskanje gre čez vse predmete, sicer le izbrani predmet.
   // »Zate« brez iger za ta predmet (npr. fakultetni predmet v OŠ) → vsa področja predmeta.
@@ -154,6 +161,16 @@ function renderPortal() {
     if (!tiles.length) return "";
     return `<section class="gm-sec"><h2><span class="gm-dot" style="background:${areaColor(id)}"></span>${esc(areaName(id))}<span class="gm-count">${tiles.length}</span></h2><div class="gm-grid">${tiles.join("")}</div></section>`;
   }).join("");
+  // Tvoje igre iz otroštva: vsaka izbrana vrsta igre z dvema snovma, ki ju zdaj izbereš (predmet, področje).
+  let kidSec = "";
+  if (kidEngines.length && filter.kind === "all" && !q) {
+    const pool = CONCEPTS.filter((c) => pick(c));
+    const tiles = pool.length ? kidEngines.flatMap((id, i) => [0, 1].map((j) => [ENGINES.find((e) => e.id === id), pool[(i * 7 + j * 3) % pool.length]])).filter(([e, c], k, all) => e && all.findIndex(([e2, c2]) => e2 === e && c2 === c) === k).slice(0, 12) : [];
+    if (tiles.length) kidSec = `<section class="gm-sec gm-kidsec"><h2><span class="gm-kid-ic" aria-hidden="true">🕹️</span>${esc(t("games.kidTitle"))}<span class="gm-count">${tiles.length}</span><button type="button" class="ghost gm-kidedit" data-act="kid">${icon("pencil")}${esc(t("games.kidEdit"))}</button></h2><div class="gm-grid">${tiles.map(([e, c]) => tile(e, c)).join("")}</div></section>`;
+  }
+  const kidAsk = kid === null && ctx.getStudent() && !q
+    ? `<div class="gm-kidask"><span class="gm-kid-ic" aria-hidden="true">🕹️</span><span class="gm-kidask-t"><b>${esc(t("games.kidAsk"))}</b><small>${esc(t("games.kidAskSub"))}</small></span><span class="gm-kidask-b"><button type="button" class="primary" data-act="kid">${esc(t("games.kidPick"))}</button><button type="button" class="ghost" data-act="kidskip">${esc(t("games.kidLater"))}</button></span></div>`
+    : "";
   const chip = (val, label, on) => `<button type="button" class="${on ? "active" : ""}" data-val="${val}">${esc(label)}</button>`;
   root.innerHTML = `
     <div class="gm-portal">
@@ -169,10 +186,11 @@ function renderPortal() {
         ${AREAS.filter((a) => a[3] === filter.subject).map(([id]) => chip(id, areaName(id), filter.area === id)).join("")}
       </div>
       <div class="chip-row gm-kinds" role="group" aria-label="${esc(t("games.kinds"))}">
-        ${chip("all", t("games.allKinds"), filter.kind === "all")}${ENGINES.map((e) => chip(e.id, kindName(e), filter.kind === e.id)).join("")}
+        ${chip("all", t("games.allKinds"), filter.kind === "all")}${kidEngines.length ? chip("kid", `🕹️ ${t("games.kidChip")}`, filter.kind === "kid") : ""}${ENGINES.map((e) => chip(e.id, kindName(e), filter.kind === e.id)).join("")}
       </div>
+      ${kidAsk}${kid && !kidEngines.length ? `<button type="button" class="ghost gm-kidlink" data-act="kid">🕹️ ${esc(t("games.kidLink"))}</button>` : ""}
       ${paths ? `<p class="gm-pathhint">${icon("compass")} ${esc(t("games.pathHint"))}</p>` : ""}
-      ${total ? sections : `<p class="muted gm-none">${esc(t("games.none"))}</p>`}
+      ${kidSec}${total ? sections : `<p class="muted gm-none">${esc(t("games.none"))}</p>`}
     </div>`;
   root.querySelector(".gm-subjects")?.addEventListener("click", (ev) => {
     const b = ev.target.closest("button[data-val]");
@@ -207,7 +225,85 @@ function renderPortal() {
   });
   root.querySelectorAll(".gm-tile").forEach((b) => b.addEventListener("click", () => openGame(b.dataset.game)));
   root.querySelector('[data-act="shop"]').addEventListener("click", () => renderShop("", true));
+  root.querySelectorAll('[data-act="kid"]').forEach((b) => b.addEventListener("click", askChildhood));
+  root.querySelector('[data-act="kidskip"]')?.addEventListener("click", () => saveChildhood([]));
   root.querySelector('.gm-top [data-act="zbirke"]')?.addEventListener("click", () => window.evklid?.openZbirke(null, "games"));
+}
+
+// Shrani izbiro v profil (velja na vseh napravah; inštruktor jo lahko spremeni iz klepeta).
+async function saveChildhood(list) {
+  const s = ctx.getStudent();
+  if (!s) return false;
+  try {
+    const updated = await ctx.api(`/api/students/${s.id}`, { method: "PUT", body: { settings: { game_childhood: list } } });
+    ctx.setStudent?.(updated);
+  } catch (err) {
+    ctx.toast?.(err.message, null);
+    return false;
+  }
+  if (!game) renderPortal();
+  return true;
+}
+
+// Vprašalnik: zvrsti iger iz otroštva; pod vsako piše, v katero Evklidovo igro se spremeni.
+function askChildhood() {
+  if (!ctx.getStudent() || document.querySelector(".gm-kidq")) return;
+  const pick = new Set(kidList() || []);
+  const back = document.activeElement;
+  const dlg = document.createElement("div");
+  dlg.className = "iq-wrap";
+  dlg.innerHTML = `<div class="iq card gm-kidq" role="dialog" aria-modal="true" aria-labelledby="kid-title">
+    <h2 id="kid-title">🕹️ ${esc(t("games.kidQ"))}</h2>
+    <p class="muted">${esc(t("games.kidQSub"))}</p>
+    <div class="iq-grid">${GENRES.map((g) => `<button type="button" class="iq-opt${pick.has(g.id) ? " on" : ""}" data-g="${g.id}" aria-pressed="${pick.has(g.id)}"><span class="iq-emoji" aria-hidden="true">${g.emoji}</span><span>${esc(t(`games.g.${g.id}`))}<small class="gm-kidto">${icon("arrow-right")}${esc(g.engines.map((id) => t(`games.e.${id}`)).join(", "))}</small></span></button>`).join("")}</div>
+    <div class="iq-actions"><button type="button" class="ghost" data-k="close">${esc(t("games.kidLater"))}</button><button type="button" class="primary" data-k="save">${icon("check")}${esc(t("common.save"))}</button></div>
+  </div>`;
+  document.body.appendChild(dlg);
+  // po shranjevanju je portal nov (stari gumb ni več v strani): fokus na gumb »Uredi« ali vabilo
+  const close = () => {
+    dlg.remove();
+    (back?.isConnected ? back : root?.querySelector('[data-act="kid"]'))?.focus?.({ preventScroll: true });
+  };
+  dlg.addEventListener("click", async (ev) => {
+    const opt = ev.target.closest("[data-g]");
+    if (opt) {
+      const id = opt.dataset.g;
+      pick.has(id) ? pick.delete(id) : pick.add(id);
+      opt.classList.toggle("on", pick.has(id));
+      opt.setAttribute("aria-pressed", String(pick.has(id)));
+      return;
+    }
+    if (ev.target === dlg || ev.target.closest('[data-k="close"]')) return close();
+    const save = ev.target.closest('[data-k="save"]');
+    if (!save) return;
+    save.disabled = true;
+    const list = GENRES.map((g) => g.id).filter((id) => pick.has(id));
+    if (!(await saveChildhood(list))) {
+      save.disabled = false;
+      return;
+    }
+    close();
+    if (list.length) {
+      ctx.toast?.(t("games.kidAdded", { n: childhoodEngines(list).length }));
+      root?.querySelector(".gm-kidsec")?.classList.add("gm-kidnew");
+      root?.querySelector(".gm-kidsec")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  });
+  dlg.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.stopPropagation();
+      close();
+    } else if (e.key === "Tab") {
+      // fokus ostane v oknu (aria-modal)
+      const f = [...dlg.querySelectorAll("button:not(:disabled)")];
+      const i = f.indexOf(document.activeElement);
+      if (e.shiftKey ? i <= 0 : i === f.length - 1) {
+        e.preventDefault();
+        f.at(e.shiftKey ? -1 : 0)?.focus();
+      }
+    }
+  });
+  dlg.querySelector(".iq-opt")?.focus({ preventScroll: true });
 }
 
 function openGame(id) {

@@ -3008,7 +3008,7 @@ initFormulaInfo();
   $("#mock-banner").hidden = !cfg.mock;
   $("#chat-off").hidden = !cfg.chat_off;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
-  initGames({ api, getStudent: () => state.student, refreshXp, currentLang });
+  initGames({ api, getStudent: () => state.student, setStudent: studentUpdated, toast: (m, ic = "check") => toast(m, ic), refreshXp, currentLang });
   initZbirke({ api, getStudent: () => state.student, currentLang, showView });
   initCorner({
     api,

@@ -1576,3 +1576,6 @@ export const mines = {
 };
 
 export const FUN_GAMES = [diner, hills, pet, catcher, pairs, slicer, water, mines];
+
+// Pomožne risbe za igre v retro.js.
+export { rand, clamp, shuffle, INK, chap, inRect, numKey, circle, pill, answerText, face, sky };
