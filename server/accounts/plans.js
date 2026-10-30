@@ -100,12 +100,35 @@ const envUsd = (k, d) => {
 export const freeMonthlyPoolUsd = () => envUsd("EVKLID_FREE_POOL_USD", 10);
 export const freeStudentMonthlyUsd = () => envUsd("EVKLID_FREE_STUDENT_USD", 0.2);
 
+// ---------- paketi pred testom (enkratno plačilo, j 2026-10-30) ----------
+// Poln dostop za en profil za 7, 14 ali 30 dni, brez naročnine. Cene so 30 % nad prvim predlogom
+// (3,99 / 5,99 / 8,99 €), kot je odločil j. aiUsd = največja poraba AI v času paketa; ko je porabljena,
+// profil do konca paketa dela kot v brezplačnem paketu. Zaenkrat samo v evrih.
+export const PASSES = [
+  { days: 7, amount: 519, aiUsd: 0.75, label: "Kratka priprava" },
+  { days: 14, amount: 779, aiUsd: 1.5, label: "Temeljita priprava" },
+  { days: 30, amount: 1169, aiUsd: 3, label: "Velika priprava" },
+].map((p) => ({ ...p, key: `${BRAND.slug}_pass_${p.days}`, currency: "EUR" }));
+export const passByDays = (days) => PASSES.find((p) => p.days === Number(days)) || null;
+// Najmanjši paket, ki pokrije čas do dneva po testu (test čez daysLeft dni; 0 = danes).
+export const passForDaysLeft = (daysLeft) => PASSES.find((p) => p.days >= daysLeft + 1) || null;
+
+// Neuspelo plačilo: poln dostop ostane še GRACE_DAYS dni, nato velja brezplačni paket.
+export const GRACE_DAYS = 7;
+
 const PAID = new Set(["active", "trialing", "past_due"]);
 const later = (iso, now) => iso && Date.parse(iso.replace(" ", "T") + (iso.includes("Z") ? "" : "Z")) > now;
 
+// Naročnina daje poln dostop (status past_due samo GRACE_DAYS dni od prvega neuspelega plačila).
+export function paidActive(parent, now = Date.now()) {
+  if (!parent?.sub_status || !PAID.has(parent.sub_status)) return false;
+  if (parent.sub_status !== "past_due" || !parent.past_due_since) return true;
+  return later(new Date(Date.parse(parent.past_due_since) + GRACE_DAYS * 86400000).toISOString(), now);
+}
+
 // Kaj starš trenutno ima: paid (naročnina), trial (preizkus), bonus (mesec iz priporočila) ali free.
 export function accessFor(parent, now = Date.now(), promoSeats = 1) {
-  if (parent.sub_status && PAID.has(parent.sub_status)) {
+  if (paidActive(parent, now)) {
     return { tier: "paid", seats: parent.sub_seats || 1, until: parent.sub_period_end };
   }
   // Aktivacijska koda; med 7-dnevnim preizkusom ostaneta 2 profila.

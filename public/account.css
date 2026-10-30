@@ -59,3 +59,15 @@ details .card { margin-top: 8px; }
 /* Uporaba brez registracije */
 .guest-login { margin-top: 14px; }
 .guest-login summary { cursor: pointer; font-weight: 600; }
+/* Plačila: potrditvi, povezava za starše, skrbniške kode */
+.pay-consent { font-size: 0.9rem; margin: 6px 0; }
+.pay-link { margin-top: 10px; }
+.pay-link .inline { display: flex; flex-wrap: wrap; gap: 8px; }
+.pay-link .inline input { flex: 1 1 200px; }
+.pay-link button { min-height: 40px; }
+.code-list, .event-list { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 10px; }
+.code-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.code-row > div:first-child { min-width: 0; overflow-wrap: anywhere; }
+.code-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.code-actions button { min-height: 40px; }
+.event-list code { overflow-wrap: anywhere; }

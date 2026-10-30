@@ -4,6 +4,7 @@ import { mountLevelPicker, schoolSystemOptions } from "./level-picker.js";
 import { systemForCountry } from "./regions.js";
 import { currentLang, currentRegion, deviceRegion, t } from "./i18n.js";
 import { openProfileMenu } from "./profile-menu.js";
+import { consentFields, consentsOk, consentBody, linkBox, bindLinkBox } from "./pay-ui.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku EVKLID_ACCOUNTS=1.
 
@@ -235,6 +236,7 @@ export async function initAccount({ onReady }) {
   const reset = q.get("reset");
   const verified = q.get("verified");
   const billing = q.get("billing");
+  const sessionId = q.get("session_id");
   if (q.toString()) history.replaceState(null, "", location.pathname);
   if (verified === "1") toast("E-naslov je potrjen ✓");
   if (verified === "0") toast("Povezava za potrditev ni veljavna ali je že uporabljena.");
@@ -244,7 +246,11 @@ export async function initAccount({ onReady }) {
     return false;
   }
   if (billing && status.logged_in) {
-    if (billing !== "cancel") await api("/api/billing/sync", { method: "POST" }).catch(() => {});
+    if (billing === "pass" && sessionId) {
+      // Paket pred testom: potrditev plačila ob vrnitvi (deluje tudi brez webhooka).
+      const r = await api("/api/billing/pass/confirm", { method: "POST", body: { session_id: sessionId } }).catch(() => null);
+      toast(r?.paid ? t("pass.paid") : t("pass.pending"));
+    } else if (billing !== "cancel") await api("/api/billing/sync", { method: "POST" }).catch(() => {});
     if (billing === "success") toast("Hvala! Naročnina je aktivna.");
     status = await api("/api/account/status");
   }
@@ -646,7 +652,11 @@ function plansPicker(acc) {
       <div class="plan-row"><div class="plan-head">2 otroka</div>${cell(2, "month")}${cell(2, "year")}</div>
       <p class="form-error" hidden></p>
       ${acc.prices_draft ? `<p class="muted">Cene v lokalni valuti so predlog (razvojna različica).</p>` : ""}
-      <button class="primary" type="submit">Nadaljuj na plačilo</button>
+      ${acc.parent.minor
+        ? `<p class="muted">${esc(t("pay.minorNote"))}</p>
+           <button class="primary" type="button" id="plan-link">${esc(t("pay.askParent"))}</button><div id="plan-link-out"></div>`
+        : `${consentFields()}
+           <button class="primary" type="submit">${esc(t("pay.continue"))}</button>`}
       <p class="muted">Plačilo poteka varno prek Stripe. Naročnino lahko kadar koli prekličete.${
         acc.access.tier === "trial" ? " Preostanek preizkusa se ohrani: prvo plačilo bo šele po njegovem koncu." : ""
       }</p>
@@ -668,6 +678,80 @@ function promoBox(acc, paid) {
         <button class="primary" type="submit">Aktiviraj</button>
         <p class="form-error" hidden></p>
       </form></details>${admin}`;
+}
+
+// Skrbnik: aktivacijske kode (seznam, nova koda, vklop/izklop) in zadnji dogodki plačil.
+function adminCodes(acc) {
+  const rows = acc.promo.codes
+    .map(
+      (c) => `<li class="code-row"><div><b>${esc(c.code)}</b>${c.from_env ? ` <span class="pill">${esc(t("admin.fromEnv"))}</span>` : ""} <span class="pill ${c.active ? "ok" : ""}">${esc(t(c.active ? "admin.on" : "admin.off"))}</span>
+        <br><small class="muted">${esc(t("admin.usage", { used: c.used, max: c.max_uses, days: c.days, seats: c.seats }))} · ${esc(c.max_model === "sonnet" ? t("admin.modelSonnet") : t("admin.modelAny"))}${c.valid_until ? ` · ${esc(t("admin.untilShort", { date: date(c.valid_until) }))}` : ""}${c.note ? ` · ${esc(c.note)}` : ""}</small></div>
+        <div class="code-actions"><button type="button" data-code-copy="${esc(c.code)}">${esc(t("admin.copyLink"))}</button>
+        <button type="button" data-code-toggle="${esc(c.code)}" data-active="${c.active ? 1 : 0}">${esc(t(c.active ? "admin.disable" : "admin.enable"))}</button></div></li>`,
+    )
+    .join("");
+  const events = (acc.billing_events || [])
+    .map((e) => `<li><code>${esc(e.type)}</code> <small class="muted">${esc(e.received_at)}${e.error ? ` · ${esc(t("admin.eventError"))}: ${esc(e.error)}` : e.processed_at ? "" : " · …"}</small></li>`)
+    .join("");
+  return `
+    <div class="card admin-codes">
+      <h2>${esc(t("admin.codes"))}</h2>
+      <ul class="code-list">${rows}</ul>
+      <details><summary>${esc(t("admin.create"))}</summary>
+        <form id="code-form" class="form" novalidate>
+          <label>${esc(t("admin.code"))} <input name="code" required maxlength="30" autocapitalize="characters" pattern="[A-Za-z0-9-]{4,30}"></label>
+          <label>${esc(t("admin.days"))} <input name="days" type="number" min="1" max="730" value="30" required></label>
+          <label>${esc(t("admin.uses"))} <input name="max_uses" type="number" min="1" max="100000" value="100" required></label>
+          <label>${esc(t("admin.seats"))} <select name="seats"><option value="1">1</option><option value="2">2</option></select></label>
+          <label>${esc(t("admin.model"))} <select name="max_model"><option value="sonnet">${esc(t("admin.modelSonnet"))}</option><option value="">${esc(t("admin.modelAny"))}</option></select></label>
+          <label>${esc(t("admin.until"))} <input name="valid_until" type="date"></label>
+          <label>${esc(t("admin.note"))} <input name="note" maxlength="120"></label>
+          <p class="form-error" role="alert" hidden></p>
+          <button class="primary" type="submit">${esc(t("admin.create"))}</button>
+        </form></details>
+      <h3>${esc(t("admin.events"))}</h3>
+      ${events ? `<ul class="event-list">${events}</ul>` : `<p class="muted">${esc(t("admin.noEvents"))}</p>`}
+    </div>`;
+}
+
+function bindAdminCodes(acc) {
+  if (!acc.promo?.codes) return;
+  $("#code-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    $(".form-error", f).hidden = true;
+    try {
+      await api("/api/admin/promo-codes", {
+        method: "POST",
+        body: { code: f.code.value, days: Number(f.days.value), max_uses: Number(f.max_uses.value), seats: Number(f.seats.value), max_model: f.max_model.value, valid_until: f.valid_until.value || null, note: f.note.value },
+      });
+      toast(t("admin.created"));
+      renderAccount();
+    } catch (err) {
+      showError(f, err);
+    }
+  });
+  document.querySelectorAll("[data-code-toggle]").forEach((b) =>
+    b.addEventListener("click", async () => {
+      try {
+        await api(`/api/admin/promo-codes/${encodeURIComponent(b.dataset.codeToggle)}/active`, { method: "POST", body: { active: b.dataset.active !== "1" } });
+        renderAccount();
+      } catch (err) {
+        toast(err.message);
+      }
+    }),
+  );
+  document.querySelectorAll("[data-code-copy]").forEach((b) =>
+    b.addEventListener("click", async () => {
+      const url = acc.promo.base_url + encodeURIComponent(b.dataset.codeCopy);
+      try {
+        await navigator.clipboard.writeText(url);
+        toast(t("pay.copied"));
+      } catch {
+        prompt(t("admin.copyLink"), url);
+      }
+    }),
+  );
 }
 
 // ---------- uporaba brez računa (gost) ----------
@@ -813,13 +897,14 @@ async function renderAccount() {
       ${acc.billing && acc.parent.has_customer ? `<button id="portal-btn" type="button">Upravljaj naročnino in račune</button>` : ""}
       ${promoBox(acc, paid)}
     </div>
+    ${acc.promo?.codes ? adminCodes(acc) : ""}
 
     <div class="card">
       <h2>Otroci</h2>
       <ul class="child-list">${acc.children
         .map((c) => `<li><b>${esc(c.name)}</b> <span class="muted">(${c.birth_year || "–"})</span> ${
           c.premium ? `<span class="pill ok">poln dostop</span>` : `<span class="pill">brezplačni paket · danes ${c.questions_today}/${acc.free_daily_questions}</span>`
-        } ${aiPill(c.ai_month)}${c.has_password ? "" : ` <span class="pill">${esc(t("lock.none"))}</span>`}</li>`)
+        }${c.pass ? ` <span class="pill">${esc(t("acct.passPill", { date: date(c.pass.ends_at) }))}</span>` : ""} ${aiPill(c.ai_month)}${c.has_password ? "" : ` <span class="pill">${esc(t("lock.none"))}</span>`}</li>`)
         .join("")}</ul>
       ${acc.children.length ? `<details class="profile-pw"><summary>${esc(t("lock.change"))}</summary>
         <form id="profile-pw-form" class="form" novalidate>
@@ -875,13 +960,31 @@ async function renderAccount() {
     const btn = $("button[type=submit]", e.target);
     btn.disabled = true;
     try {
-      const r = await api("/api/billing/checkout", { method: "POST", body: { seats: Number(seats), interval } });
+      if (!consentsOk(e.target)) throw new Error(t("pay.consentMissing"));
+      const r = await api("/api/billing/checkout", { method: "POST", body: { seats: Number(seats), interval, ...consentBody() } });
       location.href = r.url;
     } catch (err) {
       btn.disabled = false;
       showError(e.target, err);
     }
   });
+  // Mladoletni imetnik: povezava, s katero plača starš.
+  $("#plan-link")?.addEventListener("click", async (e) => {
+    const f = $("#plan-form");
+    const [seats, interval] = f.plan.value.split("-");
+    e.target.disabled = true;
+    try {
+      const r = await api("/api/billing/pay-link", { method: "POST", body: { kind: "sub", seats: Number(seats), interval } });
+      const out = $("#plan-link-out");
+      out.innerHTML = linkBox(r.url);
+      bindLinkBox(out, r.url, toast);
+    } catch (err) {
+      showError(f, err);
+    } finally {
+      e.target.disabled = false;
+    }
+  });
+  bindAdminCodes(acc);
   $("#promo-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const btn = $("button[type=submit]", e.target);
