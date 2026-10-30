@@ -41,7 +41,7 @@
   //   Ime v izbiri sloga: ap.style<Slog> in ap.style<Slog>Text (prva črka velika), npr. ap.styleRenesansa.
   const ERAS = {
     antik: {
-      light: { bg: "#f5f0e8", surface: "#fffcf7", menu: "#fffcf7", text: "#241c15", accent: "#a8461f" },
+      light: { bg: "#f5f0e8", surface: "#fffcf7", menu: "#fffcf7", text: "#241c15", accent: "#973f1c" },
       dark: { bg: "#16110d", surface: "#211a14", menu: "#211a14", text: "#f2e8da", accent: "#e08a52" },
       font: ["EB Garamond Variable", "eb-garamond"], hero: 6, band: ["meander", 8, 8], glyph: "ikona",
       motifs: ["dorski-steber", "amfora", "sova", "konstrukcija", "jonski-steber", "lovor", "valj-krogla", "pitagora"],
@@ -86,8 +86,9 @@
     },
   };
   for (const [k, e] of Object.entries(ERAS)) BASES[k] = { light: e.light, dark: e.dark };
-  // Motivi v ozadju so v barvi besedila s tem deležem (ui.css: 6 %); kontrast se preverja tudi na njih.
-  const MOTIF = 0.07;
+  // Motivi v ozadju so v barvi besedila (ui.css: sloja 7 % in 5 %, ki se lahko prekrivata: 1 − 0,93 · 0,95 ≈ 11,7 %);
+  // kontrast besedila se preverja na podlagi z najmočnejšim deležem, ki se lahko pojavi pod besedilom.
+  const MOTIF = 0.12;
   const BASE = BASES.cist;
   const baseOf = (s) => BASES[s && STYLES.includes(s.style) ? s.style : "cist"];
   // Najmanjši kontrast (WCAG): navadno besedilo 7 (AAA), sivo besedilo in poudarki 4.5 (AA).
@@ -340,7 +341,7 @@
     return pairs.every(([a, b, m]) => contrast(a, b) >= m - 0.01);
   }
 
-  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, ERAS, baseOf, MIN, readable, loadFont };
+  window.STEMTheme = { load, save, apply, compute, check, contrast, randomAccent, randomPalette, isDarkMode, BASE, BASES, STYLES, ERAS, baseOf, MIN, MOTIF, readable, loadFont };
   apply();
   mq.addEventListener?.("change", () => apply());
 })();

@@ -43,6 +43,16 @@ test("every history style passes the contrast check in light and dark mode, also
   }
 });
 
+test("the motif contrast check covers the strongest motif opacity in ui.css (two layers may overlap)", () => {
+  const css = fs.readFileSync(path.join(PUB, "ui.css"), "utf8");
+  const pct = (v) => Number(css.match(new RegExp(`${v}: color-mix\\(in srgb, var\\(--text\\) ([\\d.]+)%`))?.[1]) / 100;
+  const a = pct("--motif-c"), b = pct("--motif-c2");
+  assert.ok(a > 0 && b > 0, "--motif-c in --motif-c2 v ui.css");
+  assert.ok(T.MOTIF >= 1 - (1 - a) * (1 - b) - 1e-9, `MOTIF ${T.MOTIF} < ${(1 - (1 - a) * (1 - b)).toFixed(3)}`);
+  // Vsak zaslon ima oba sloja; osem mest (--a1 … --a8) za osem risb sloga.
+  for (let i = 1; i <= 8; i++) assert.ok(css.includes(`var(--a${i}) no-repeat var(--g${i})`), `--a${i}`);
+});
+
 test("every history style has its font, motif files, fact texts, picker names and tutor setting", () => {
   const deps = JSON.parse(fs.readFileSync(path.join(PUB, "..", "package.json"), "utf8")).dependencies;
   for (const [id, e] of Object.entries(T.ERAS)) {
