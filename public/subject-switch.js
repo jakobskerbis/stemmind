@@ -60,6 +60,15 @@ export async function mountSubjectSwitch(box, { onPicked } = {}) {
       sel?.scrollIntoView({ block: "nearest" });
     }
   });
+  // Esc pri razprtem seznamu najprej zapre le seznam, ne celega menija.
+  box.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || list.hidden) return;
+    e.preventDefault();
+    e.stopPropagation();
+    list.hidden = true;
+    btn.setAttribute("aria-expanded", "false");
+    btn.focus({ preventScroll: true });
+  });
   list.addEventListener("click", async (e) => {
     const b = e.target.closest(".subj-sw-opt");
     if (!b) return;
