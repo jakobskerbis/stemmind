@@ -5,15 +5,20 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Električni tok poganja skoraj vse naprave okoli nas, od telefona do laboratorijskega potenciostata. Z njim merimo: pH-meter, konduktometer, termočlen in fotodioda pretvorijo kemijsko ali fizikalno količino v napetost ali tok. Tok teče tudi po živih celicah: prevajanje živčnega impulza je v prvem približku električno vezje iz uporov in kondenzatorjev, ki jim pravimo celična membrana.
-
-V gimnaziji si spoznal Ohmov zakon in preprosta vezja z zaporedno in vzporedno vezanimi upori. Na fakulteti te zamisli razširimo:
-
-- tok povežemo z gibanjem nosilcev naboja in z lastnostmi snovi (specifični upor, gostota toka),
-- s **Kirchhoffovima zakonoma** izračunamo tokove v poljubno razvejanem vezju, tudi z več viri,
-- spoznamo **RC vezje**, kjer se tok s časom spreminja eksponentno; s tem opišemo polnjenje kondenzatorja, bliskavico, defibrilator in membrano živčne celice.
+Ana, študentka kemije, na tečaju prve pomoči opazi, da se defibrilator polni nekaj sekund, sunek skozi prsni koš pa traja le delček sekunde. Zakaj aparat energije ne odda kar sproti iz baterije? Odgovor je **RC vezje**: kondenzator se počasi polni prek velikega upora in se nato prek majhnega upora telesa hitro izprazni, tok pa se pri tem s časom spreminja eksponentno. Enako vezje iz uporov in kondenzatorjev v prvem približku opiše celično membrano in prevajanje živčnega impulza. Ohmov zakon ter zaporedno in vzporedno vezane upore poznaš iz gimnazije; tu tok povežeš z gibanjem nosilcev naboja in lastnostmi snovi (specifični upor, gostota toka), s **Kirchhoffovima zakonoma** pa izračunaš tokove v poljubno razvejanem vezju z več viri. Ista orodja potrebuješ za vsako napravo, ki kemijsko ali fizikalno količino pretvori v napetost ali tok, od pH-metra, konduktometra in termočlena do fotodiode in laboratorijskega potenciostata.
 
 ## Razlaga
+
+O toku se hitro ustalijo štiri mamljive predstave. Vse so napačne ali vsaj nepopolne, a vsaka ima jedro, iz katerega zraste pravilna slika:
+
+| Mamljiva predstava | Kaj v resnici velja | Razdelek |
+|---|---|---|
+| Ob pritisku stikala elektroni v hipu pridrvijo od vira do žarnice. | Elektroni lezejo z delčki milimetra na sekundo; s skoraj svetlobno hitrostjo se razširi električno polje. | 1 |
+| Vsak dodatni upor poveča upor vezja. | Vzporedno vezan upor ga zmanjša, ker tok dobi dodatno pot. | 5 |
+| Tok se na poti skozi upore »porablja«. | Kolikor naboja priteče v razcep žic, toliko ga odteče; porablja se energija, ne naboj. | 3, 6 |
+| Skozi kondenzator tok ne teče, zato ob priklopu v vezju ne teče nič. | Med ploščama res ne teče, a ob priklopu praznega kondenzatorja po žicah steče največji tok, ki nato pojema. | 8 |
+
+### Tok, upor in moč
 
 **1. Električni tok.** Tok je naboj, ki v časovni enoti preteče skozi presek vodnika:
 
@@ -41,6 +46,8 @@ $$P = UI = I^2R = \frac{U^2}{R}.$$
 
 Na uporu se ta moč pretvori v toploto (Joulova toplota).
 
+### Viri in vezave
+
 **4. Vir napetosti.** Baterija ali akumulator ima **gonilno napetost** $U_g$ in **notranji upor** $R_n$. Ko iz vira teče tok $I$, je napetost na njegovih sponkah
 
 $$U = U_g - IR_n.$$
@@ -55,12 +62,16 @@ Pri kratkem stiku ($R = 0$) teče največji tok $U_g/R_n$, ki baterijo hitro seg
 Vzporedno imata isto napetost, zato je $P = U^2/R$ večja pri manjšem uporu: močneje sveti žarnica z $R$. Zaporedno teče skozi obe isti tok, zato je $P = I^2R$ večja pri večjem uporu: močneje sveti žarnica z $2R$ (upor žarnic tu jemljemo kot stalen).
 :::
 
+### Kirchhoffova zakona
+
 **6. Kirchhoffova zakona.** Vezja z več viri ali s prepletenimi vejami ne moremo vedno poenostaviti na zaporedne in vzporedne dele. Takrat uporabimo dva splošna zakona.
 
 - **Prvi (vozliščni) zakon:** vsota tokov, ki pritekajo v vozlišče, je enaka vsoti tokov, ki iz njega odtekajo, $\sum I_k = 0$ (pritekajoče štejemo pozitivno, odtekajoče negativno). To je ohranitev naboja: v vozlišču se naboj ne nabira.
 - **Drugi (zančni) zakon:** vsota gonilnih napetosti v sklenjeni zanki je enaka vsoti padcev napetosti na uporih, $\sum U_{g,k} = \sum R_kI_k$. To je ohranitev energije: naboj, ki obkroži zanko, se vrne na isti potencial.
 
 Postopek: (a) vsaki veji izberi smer toka (če je izbira napačna, dobiš negativen tok); (b) zapiši vozliščne enačbe (za $N$ vozlišč je neodvisnih $N - 1$); (c) zapiši zančne enačbe za toliko neodvisnih zank, da imaš toliko enačb, kolikor je neznanih tokov; (d) reši sistem linearnih enačb. Pri zančnem zakonu gonilno napetost štejemo pozitivno, če nas smer obhoda vodi skozi vir od $-$ proti $+$, padec $RI$ pa pozitivno, če gremo skozi upor v smeri izbranega toka.
+
+### Kondenzator in RC vezje
 
 **7. Kondenzator v vezju.** Kondenzator s kapaciteto $C$ ima na ploščah naboj $Q = CU$. Enosmeren tok skozenj ne teče, med polnjenjem ali praznjenjem pa naboj teče po žicah do plošč in nazaj.
 
@@ -125,7 +136,7 @@ Vozlišče: $I_1 + I_2 = I_3$. Zanki: $U_1 = R_1I_1 + R_3I_3$, $U_2 = R_2I_2 + R
 
 ### Primer 3 (težji)
 
-Kondenzator s kapaciteto $47\,\mu\mathrm{F}$, ki je na začetku prazen, prek upora $100\,\mathrm{k}\Omega$ priključimo na baterijo z gonilno napetostjo $9{,}0\,\mathrm{V}$ (notranji upor zanemarimo). Kolikšna je časovna konstanta? Po kolikšnem času je napetost na kondenzatorju $5{,}0\,\mathrm{V}$ in kolikšen tok takrat teče? Koliko energije je v kondenzatorju, ko je popolnoma napolnjen?
+Ana na laboratorijski vaji sestavi počasen model celične membrane, da lahko napetost spremlja z voltmetrom. Kondenzator s kapaciteto $47\,\mu\mathrm{F}$, ki je na začetku prazen, prek upora $100\,\mathrm{k}\Omega$ priključi na baterijo z gonilno napetostjo $9{,}0\,\mathrm{V}$ (notranji upor zanemarimo). Kolikšna je časovna konstanta? Po kolikšnem času je napetost na kondenzatorju $5{,}0\,\mathrm{V}$ in kolikšen tok takrat teče? Koliko energije je v kondenzatorju, ko je popolnoma napolnjen?
 
 **Podatki:** $C = 47\,\mu\mathrm{F} = 4{,}7 \cdot 10^{-5}\,\mathrm{F}$, $R = 100\,\mathrm{k}\Omega = 1{,}0 \cdot 10^{5}\,\Omega$, $U_g = 9{,}0\,\mathrm{V}$, $Q(0) = 0$, $U_C = 5{,}0\,\mathrm{V}$
 **Iščemo:** $\tau$, čas $t_1$, ko je $U_C = 5{,}0\,\mathrm{V}$, tok $I(t_1)$, energijo $W$ pri polnem kondenzatorju

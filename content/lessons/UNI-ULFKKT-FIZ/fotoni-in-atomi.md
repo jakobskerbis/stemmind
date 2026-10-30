@@ -5,6 +5,8 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
+Ob radiatorju se lahko greješ cel popoldan, pa te ne opeče; pol ure opoldanskega sonca pa lahko kožo pordeči. Radiator koži preda veliko energije, a v drobnih obrokih. Ultravijolična svetloba prinaša obroke, od katerih je vsak posebej dovolj velik, da poškoduje molekulo DNK v celici kože. Šteje torej velikost enega obroka, ne skupna moč. Ta obrok je **foton**.
+
 Na koncu 19. stoletja se je zdelo, da klasična fizika razloži skoraj vse. Ostalo je nekaj »drobnih« ugank: zakaj svetloba iz kovine izbije elektrone le, če ima dovolj kratko valovno dolžino, zakaj razredčen vodik sveti le pri nekaj točno določenih barvah in zakaj so atomi sploh stabilni. Odgovori na ta vprašanja so vodili do **kvantne fizike**, ki je danes temelj kemije, znanosti o materialih in velikega dela biologije.
 
 Brez kvantnih zamisli ne razumemo:
@@ -14,9 +16,13 @@ Brez kvantnih zamisli ne razumemo:
 - **elektronskega mikroskopa**, ki zaradi valovne narave elektronov vidi veliko manjše podrobnosti kot svetlobni,
 - zgradbe periodnega sistema in kemijske vezi.
 
-V tej lekciji spoznamo **foton** in **fotoefekt**, **de Brogliejevo valovno dolžino** delcev ter **energijske nivoje** atoma na primeru vodika.
+Pot vodi od **fotona** in **fotoefekta** prek **de Brogliejeve valovne dolžine** delcev do **energijskih nivojev** atoma na primeru vodika.
 
 ## Razlaga
+
+### Najprej en foton: zakaj UV opeče, radiator pa ne
+
+Vzemimo ultravijolično svetlobo UV-B z valovno dolžino $300\,\mathrm{nm}$. Njena frekvenca je $\nu = c/\lambda = 3{,}00 \cdot 10^8/3{,}00 \cdot 10^{-7}\,\mathrm{Hz} = 1{,}00 \cdot 10^{15}\,\mathrm{Hz}$, en obrok energije pa je zmnožek frekvence in Planckove konstante $h$ (natančneje jo vpeljemo spodaj): $h\nu = 6{,}626 \cdot 10^{-34} \cdot 1{,}00 \cdot 10^{15}\,\mathrm{J} \approx 6{,}6 \cdot 10^{-19}\,\mathrm{J} \approx 4{,}1\,\mathrm{eV}$. To je dovolj za prekinitev ali preureditev kemijske vezi v DNK. Infrardeče sevanje radiatorja ima valovno dolžino okoli $10\,\mu\mathrm{m}$, njegov obrok je zato več kot tridesetkrat manjši, okoli $0{,}12\,\mathrm{eV}$, in molekule le segreje. Iz tega primera sledi splošno pravilo.
 
 **1. Foton.** Svetloba z frekvenco $\nu$ izmenjuje energijo s snovjo v obrokih, **fotonih**, z energijo
 
@@ -27,6 +33,8 @@ kjer je $h = 6{,}626 \cdot 10^{-34}\,\mathrm{J\,s}$ **Planckova konstanta**. Fot
 $$p = \frac{h}{\lambda} = \frac{W_f}{c}.$$
 
 Priročno je računati v elektronvoltih: $hc \approx 1240\,\mathrm{eV\,nm}$, zato ima foton z valovno dolžino $\lambda$ (v nanometrih) energijo $W_f \approx 1240/\lambda\,\mathrm{eV}$. Vidna svetloba ($400$ do $700\,\mathrm{nm}$) ima fotone z energijo od približno $3{,}1$ do $1{,}8\,\mathrm{eV}$, kar je ravno reda energije kemijskih vezi in elektronskih prehodov v molekulah. Svetlobni tok z močjo $P$ prinese v sekundi $P/W_f$ fotonov.
+
+### Fotoefekt: en foton, en elektron
 
 **2. Fotoefekt.** Ko na čisto kovinsko površino posvetimo s svetlobo, ta lahko izbije elektrone. Poskusi pokažejo:
 
@@ -47,6 +55,8 @@ Kovino z mejno valovno dolžino $550\,\mathrm{nm}$ osvetlimo enkrat z zelo šibk
 Le pri šibki modri svetlobi. En foton preda energijo enemu elektronu; modri foton ima dovolj energije, rdeči ne. Še tako veliko rdečih fotonov ne pomaga, ker energij več fotonov elektron ne sešteje.
 :::
 
+### Delci kot valovi
+
 **3. De Brogliejeva valovna dolžina.** Če ima svetloba lastnosti delcev, imajo morda delci lastnosti valovanja. De Broglie je predlagal, da delcu z gibalno količino $p$ pripada valovna dolžina
 
 $$\lambda = \frac{h}{p} = \frac{h}{mv}.$$
@@ -63,7 +73,9 @@ Proton in elektron imata enako kinetično energijo. Kateri ima daljšo de Brogli
 Elektron. Pri enaki kinetični energiji je $p = \sqrt{2mW_k}$ manjša pri manjši masi, $\lambda = h/p$ pa zato daljša. Proton je okoli $1836$-krat težji, zato je njegova valovna dolžina okoli $\sqrt{1836} \approx 43$-krat krajša.
 :::
 
-**4. Energijski nivoji atoma.** Atomi plina oddajajo in absorbirajo svetlobo le pri določenih valovnih dolžinah: spekter je **črtast**. Razlaga je, da ima elektron v atomu lahko le določene energije, **energijske nivoje** $W_1 < W_2 < W_3 < \dots$ Ko elektron preide z višjega nivoja $W_m$ na nižji $W_n$, atom izseva foton z energijo
+### Od črt v spektru do nivojev atoma
+
+**4. Energijski nivoji atoma.** Ko skozi razredčen vodik v stekleni cevi steče električni tok, plin ne zasveti v mavrici barv, ampak le v nekaj ostrih črtah; najmočnejša vidna je rdeča pri $656\,\mathrm{nm}$. Tako se vedejo vsi atomi plina: oddajajo in absorbirajo svetlobo le pri določenih valovnih dolžinah, zato je spekter **črtast**. Razlaga je, da ima elektron v atomu lahko le določene energije, **energijske nivoje** $W_1 < W_2 < W_3 < \dots$ Ko elektron preide z višjega nivoja $W_m$ na nižji $W_n$, atom izseva foton z energijo
 
 $$h\nu = W_m - W_n.$$
 
@@ -85,7 +97,7 @@ Prehodi na $n = 1$ tvorijo **Lymanovo serijo** (ultravijolično), na $n = 2$ **B
 
 ### Primer 1 (lažji)
 
-Laserski kazalnik oddaja zeleno svetlobo z valovno dolžino $500\,\mathrm{nm}$ in močjo $1{,}0\,\mathrm{mW}$. Kolikšna sta energija in gibalna količina enega fotona? Koliko fotonov odda laser v eni sekundi?
+Laserski kazalnik, s katerim predavateljica kaže strukturne formule na prosojnici, oddaja zeleno svetlobo z valovno dolžino $500\,\mathrm{nm}$ in močjo $1{,}0\,\mathrm{mW}$. Kolikšna sta energija in gibalna količina enega fotona? Koliko fotonov odda laser v eni sekundi?
 
 **Podatki:** $\lambda = 500\,\mathrm{nm} = 5{,}00 \cdot 10^{-7}\,\mathrm{m}$, $P = 1{,}0\,\mathrm{mW} = 1{,}0 \cdot 10^{-3}\,\mathrm{W}$, $t = 1{,}0\,\mathrm{s}$, $h = 6{,}626 \cdot 10^{-34}\,\mathrm{J\,s}$, $c = 3{,}00 \cdot 10^8\,\mathrm{m/s}$, $e_0 = 1{,}602 \cdot 10^{-19}\,\mathrm{C}$
 **Iščemo:** energijo fotona $W_f$, gibalno količino $p$, število fotonov $N$ v eni sekundi

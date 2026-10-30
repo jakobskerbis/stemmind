@@ -5,15 +5,17 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Valovanje je način, kako se motnja ali energija širi po prostoru, ne da bi se snov premaknila z enega kraja na drugega. Tako potuje zvok po zraku, potresni sunek po Zemlji, val po vrvi in, brez snovi, tudi svetloba. Isti matematični opis velja za vse: zato ga je vredno spoznati enkrat in natančno.
-
-Valovanje srečaš povsod v naravoslovju in tehniki. Ultrazvok uporabljamo za slikanje v medicini in za merjenje pretoka krvi, v kemiji za čiščenje in pospeševanje reakcij (sonokemija), v biologiji netopirji in delfini z odbitim zvokom »vidijo« okolico. Glasbila delujejo na podlagi **stoječega valovanja**, policijski radar in vremenski radar pa izkoriščata **Dopplerjev pojav**.
-
-V tej lekciji zapišemo **valovno enačbo** in njeno rešitev, izračunamo hitrost valovanja na struni in v plinu, razložimo stoječe valovanje in lastna nihanja strun in piščali, opišemo **zvok** z jakostjo in ravnijo v decibelih ter nazadnje izpeljemo, kako se frekvenca spremeni, ko se izvir ali opazovalec giblje.
+Christian Doppler je predlagal, da gibanje zvezde spremeni barvo njene svetlobe. Zamisel so kmalu preizkusili z zvokom: na odprtem vagonu vlaka so glasbeniki igrali stalen ton, poslušalci z dobrim posluhom ob progi pa so slišali, da je ton med približevanjem višji in med oddaljevanjem nižji. Že pred tem je Newton izračunal hitrost zvoka v zraku in dobil približno $15\,\%$ premajhno vrednost; napako je pozneje popravil Laplace, ko je upošteval, da se zrak v zvočnem valu stiska adiabatno. Isti matematični opis velja za zvok, val na struni, potresni sunek in svetlobo. Danes ga srečaš pri ultrazvočnem pregledu, v vsakem glasbilu in pri radarju, ki izmeri hitrost avtomobila, preden voznik plača kazen.
 
 ## Razlaga
 
+### Kaj potuje, ko potuje val?
+
+Zamikajoča predstava je, da val nese snov s seboj: da zvok »priteče« od zvočnika do ušesa kot pihljaj zraka. Pobarvaj košček vrvi in pošlji po njej val: košček poskoči gor in dol in se vrne na svoje mesto. Potuje **motnja** in z njo energija, snov pa le niha okoli svoje lege. Valovanje je torej način, kako se energija širi po prostoru, ne da bi se snov premaknila z enega kraja na drugega.
+
 **1. Vrste valovanja.** Pri **transverzalnem** valovanju delci nihajo pravokotno na smer širjenja (val na vrvi, svetloba). Pri **longitudinalnem** nihajo vzdolž smeri širjenja (zvok v plinih in tekočinah, kjer se izmenjujejo zgoščine in razredčine). V trdninah se lahko širita obe vrsti z različnima hitrostma.
+
+### Opis in hitrost
 
 **2. Sinusno valovanje.** Odmik delcev v valovanju, ki se širi v smeri $+x$, je
 
@@ -35,6 +37,14 @@ $$c = \sqrt{\frac{\kappa RT}{M}},$$
 
 kjer je $\kappa = c_p/c_V$ razmerje specifičnih toplot (za zrak $1{,}4$), $T$ absolutna temperatura in $M$ molska masa. V tekočini je $c = \sqrt{K/\rho}$ s stisljivostnim modulom $K$; v vodi je zvok okoli $1500\,\mathrm{m/s}$, v zraku pri $20\,^\circ\mathrm{C}$ pa okoli $343\,\mathrm{m/s}$.
 
+:::premisli
+Če vrv tresemo hitreje (z večjo frekvenco), ali val po njej steče hitreje?
+---
+Ne. Hitrost določata le sila v vrvi in njena dolžinska gostota, $c = \sqrt{F/\mu}$. Večja frekvenca da pri isti hitrosti krajšo valovno dolžino, $\lambda = c/\nu$.
+:::
+
+### Energija in zvok
+
 **4. Energija in jakost.** Valovanje prenaša energijo. **Gostota energijskega toka** (jakost) $j$ je moč, ki preteče skozi enoto površine pravokotno na smer širjenja, $j = P/S$, enota $\mathrm{W/m^2}$. Za sinusno valovanje je $j \propto s_0^2\omega^2$. Točkast izvir z močjo $P$ seva enakomerno na vse strani, zato je na razdalji $r$
 
 $$j = \frac{P}{4\pi r^2}.$$
@@ -44,6 +54,8 @@ $$j = \frac{P}{4\pi r^2}.$$
 $$L = 10\,\mathrm{dB} \cdot \log_{10}\frac{j}{j_0}.$$
 
 Desetkrat večja jakost pomeni $10\,\mathrm{dB}$ več, dvakrat večja pa okoli $3\,\mathrm{dB}$ več. Slišimo frekvence od okoli $20\,\mathrm{Hz}$ do $20\,\mathrm{kHz}$; nad tem je **ultrazvok**, pod tem **infrazvok**.
+
+### Stoječe valovanje
 
 **6. Superpozicija in odboj.** Ker je valovna enačba linearna, se odmika dveh valovanj seštejeta. Na trdno vpetem koncu strune se val odbije z obrnjeno fazo (odmik mora biti tam nič), na prostem koncu pa brez spremembe faze.
 
@@ -62,6 +74,16 @@ Frekvenca $\nu_1$ je **osnovna**, višje so **višje harmonične frekvence**. En
 $$\nu_n = (2n - 1)\,\frac{c}{4l},$$
 
 torej le lihi večkratniki osnovne frekvence.
+
+:::premisli
+Zakaj ima piščal, zaprta na enem koncu, nižji osnovni ton kot enako dolga odprta piščal?
+---
+V zaprti piščali je pri osnovnem nihanju na dolžini le četrtina valovne dolžine ($\lambda_1 = 4l$), v odprti pa polovica ($\lambda_1 = 2l$). Pri enaki hitrosti zvoka ima zaprta piščal dvakrat daljšo valovno dolžino, zato pol nižjo frekvenco (oktavo nižje).
+:::
+
+### Dopplerjev pojav
+
+Zamikajoča razlaga je, da sirena zveni višje, ker je bližje. Bližina pa spremeni le glasnost; višina tona je odvisna od smeri gibanja: ton je visok ves čas približevanja in pade v trenutku, ko gre avto mimo.
 
 **9. Dopplerjev pojav.** Izvir oddaja zvok s frekvenco $\nu$, hitrost zvoka glede na zrak je $c$. Če se opazovalec giblje proti izviru s hitrostjo $v_o$, se izvir pa proti opazovalcu s hitrostjo $v_i$ (obe glede na zrak), opazovalec sliši frekvenco
 
@@ -84,8 +106,8 @@ $c = \sqrt{F/\mu}$, $\nu_n = n\,\dfrac{c}{2l}$
 
 **Rešitev:**
 
-1. $c = \sqrt{120\,\mathrm{N}/4{,}0 \cdot 10^{-3}\,\mathrm{kg/m}} = \sqrt{30\,000}\,\mathrm{m/s} \approx 173\,\mathrm{m/s}$.
-2. $\nu_1 = 173{,}2\,\mathrm{m/s}/(2 \cdot 0{,}65\,\mathrm{m}) \approx 133\,\mathrm{Hz}$; valovna dolžina je $\lambda_1 = 2l = 1{,}30\,\mathrm{m}$.
+1. Hitrost določata sila in dolžinska gostota strune: $c = \sqrt{120\,\mathrm{N}/4{,}0 \cdot 10^{-3}\,\mathrm{kg/m}} = \sqrt{30\,000}\,\mathrm{m/s} \approx 173\,\mathrm{m/s}$.
+2. Pri osnovnem nihanju sta vozla le na koncih: $\nu_1 = 173{,}2\,\mathrm{m/s}/(2 \cdot 0{,}65\,\mathrm{m}) \approx 133\,\mathrm{Hz}$; valovna dolžina je $\lambda_1 = 2l = 1{,}30\,\mathrm{m}$.
 3. $\nu_2 = 2\nu_1 \approx 266\,\mathrm{Hz}$; struna ima takrat vozel tudi na sredini.
 4. Odgovor: valovanje potuje po struni s hitrostjo okoli $173\,\mathrm{m/s}$, osnovna frekvenca je približno $133\,\mathrm{Hz}$, drugo lastno nihanje pa ima frekvenco približno $266\,\mathrm{Hz}$.
 
@@ -102,7 +124,7 @@ $c = \sqrt{\kappa RT/M}$, zaprta piščal: $\nu_n = (2n - 1)\,\dfrac{c}{4l}$
 
 **Rešitev:**
 
-1. $c = \sqrt{1{,}4 \cdot 8{,}314 \cdot 293{,}15/0{,}029}\,\mathrm{m/s} \approx 343\,\mathrm{m/s}$.
+1. Zvok v zraku je adiabaten, temperatura je v kelvinih: $c = \sqrt{1{,}4 \cdot 8{,}314 \cdot 293{,}15/0{,}029}\,\mathrm{m/s} \approx 343\,\mathrm{m/s}$.
 2. Osnovno nihanje: na dolžino gre četrtina valovne dolžine, $\lambda_1 = 4l = 2{,}0\,\mathrm{m}$, zato $\nu_1 = 343\,\mathrm{m/s}/2{,}0\,\mathrm{m} \approx 172\,\mathrm{Hz}$.
 3. Naslednje lastno nihanje ima $l = 3\lambda/4$, torej $\nu_2 = 3\nu_1 \approx 515\,\mathrm{Hz}$. Frekvence $2\nu_1$ zaprta piščal nima.
 4. Odgovor: zvok ima hitrost okoli $343\,\mathrm{m/s}$, osnovna frekvenca piščali je okoli $172\,\mathrm{Hz}$, naslednja lastna frekvenca pa okoli $515\,\mathrm{Hz}$ (trikratnik osnovne).
@@ -125,6 +147,30 @@ Mirujoč opazovalec: $\nu_\mathrm{p} = \nu\,\dfrac{c}{c - v_i}$, $\nu_\mathrm{o}
 3. Frekvenca sirene: $\nu = \nu_\mathrm{p}\,(c - v_i)/c = 760\,\mathrm{Hz} \cdot 313{,}5/340 \approx 701\,\mathrm{Hz}$.
 4. Preizkus z drugo enačbo: $\nu = \nu_\mathrm{o}\,(c + v_i)/c = 650\,\mathrm{Hz} \cdot 366{,}5/340 \approx 701\,\mathrm{Hz}$ ✓.
 5. Odgovor: avto pelje s hitrostjo približno $26{,}5\,\mathrm{m/s}$ (okoli $95\,\mathrm{km/h}$), sirena pa oddaja frekvenco približno $700\,\mathrm{Hz}$.
+
+### Primer 4 – zdaj ti
+
+V trgovini z glasbili prodajalec uglašuje ukulele za kupca. Struna A ima med vpetiščema dolžino $0{,}35\,\mathrm{m}$ in dolžinsko gostoto $0{,}40\,\mathrm{g/m}$, njena osnovna frekvenca naj bo $440\,\mathrm{Hz}$. S kolikšno silo mora biti napeta? Za koliko odstotkov mora silo povečati, da se ton zviša za polton (frekvenca $1{,}059$-krat večja)?
+
+**Podatki:** $l = 0{,}35\,\mathrm{m}$, $\mu = 0{,}40\,\mathrm{g/m} = 4{,}0 \cdot 10^{-4}\,\mathrm{kg/m}$, $\nu_1 = 440\,\mathrm{Hz}$, struna vpeta na obeh koncih, polton: $\nu' = 1{,}059\,\nu_1$
+**Iščemo:** silo $F$ in relativno povečanje sile za polton
+
+:::formula
+$\nu_1 = \dfrac{c}{2l}$, $c = \sqrt{F/\mu}$, torej $F = \mu c^2$ in $F \propto \nu_1^2$
+:::
+
+**Rešitev:**
+
+1. Struna je vpeta na obeh koncih, zato je pri osnovnem nihanju na njej pol valovne dolžine: $\lambda_1 = 2l = 0{,}70\,\mathrm{m}$.
+2. Hitrost valovanja dobimo iz frekvence in valovne dolžine: $c = \lambda_1\nu_1 = 0{,}70 \cdot 440\,\mathrm{m/s} = 308\,\mathrm{m/s}$.
+3. Zdaj ti: iz $c = \sqrt{F/\mu}$ izrazi in izračunaj silo $F$.
+4. Zdaj ti: za koliko odstotkov mora prodajalec povečati silo, da se frekvenca poveča $1{,}059$-krat?
+
+:::premisli
+Kolikšna je sila in za koliko jo je treba povečati?
+---
+$F = \mu c^2 = 4{,}0 \cdot 10^{-4}\,\mathrm{kg/m} \cdot (308\,\mathrm{m/s})^2 \approx 37{,}9\,\mathrm{N}$. Ker je $\nu_1 \propto \sqrt{F}$, je $F \propto \nu_1^2$: $1{,}059^2 \approx 1{,}12$, zato mora silo povečati za približno $12\,\%$ (na okoli $42{,}6\,\mathrm{N}$).
+:::
 
 ## Pogoste napake
 
@@ -201,24 +247,40 @@ $$\mu\,\mathrm{d}x\,\frac{\partial^2s}{\partial t^2} = F\,\frac{\partial^2s}{\pa
 
 ? Zvok s frekvenco $680\,\mathrm{Hz}$ se širi s hitrostjo $340\,\mathrm{m/s}$. Kolikšna je valovna dolžina?
 - $2{,}0\,\mathrm{m}$
+~ Razmerje je obrnjeno: $\lambda = c/\nu$, ne $\nu/c$. Preveri enote: $\mathrm{Hz}/(\mathrm{m/s})$ ni meter.
 + $0{,}50\,\mathrm{m}$
 - $0{,}25\,\mathrm{m}$
+~ Delil si še z 2, kot da bi računal valovno dolžino na struni ($\lambda = 2l$). Za potujoče valovanje velja kar $\lambda = c/\nu$.
 > $\lambda = c/\nu = 340/680\,\mathrm{m} = 0{,}50\,\mathrm{m}$. $2{,}0\,\mathrm{m}$ je obrnjeno razmerje.
 
 ? Silo, s katero je napeta struna, povečamo na štirikratno vrednost. Kako se spremeni osnovna frekvenca?
 - Poveča se štirikrat.
+~ Frekvenca je sorazmerna s hitrostjo, hitrost pa s korenom sile, ne s silo samo.
 + Poveča se dvakrat.
 - Ostane enaka.
+~ Dolžina strune se res ne spremeni, a z večjo silo se poveča hitrost valovanja in z njo frekvenca.
 > $\nu_1 = c/(2l)$ in $c = \sqrt{F/\mu}$, zato je $\nu_1 \propto \sqrt{F}$; $\sqrt{4} = 2$.
 
 ? Piščal, zaprta na enem koncu, ima osnovno frekvenco $\nu_1$. Kolikšna je njena naslednja lastna frekvenca?
 - $2\nu_1$
+~ To velja za struno in za odprto piščal. Zaprti konec mora biti vozel, odprti hrbet, zato sodih večkratnikov ni.
 + $3\nu_1$
 - $4\nu_1$
+~ Tudi $4\nu_1$ je sod večkratnik; zaprta piščal ima le lihe: $\nu_1$, $3\nu_1$, $5\nu_1$ …
 > Na zaprtem koncu je vozel, na odprtem hrbet, zato so možni le lihi večkratniki: $\nu_1$, $3\nu_1$, $5\nu_1$ …
 
 ? Jakost zvoka se poveča na desetkratno vrednost. Kako se spremeni raven jakosti zvoka?
 + Poveča se za $10\,\mathrm{dB}$.
 - Poveča se za $1\,\mathrm{dB}$.
+~ Zamenjal si bel in decibel: desetkratna jakost je $1$ bel, to je $10\,\mathrm{dB}$.
 - Poveča se desetkrat.
+~ Raven je logaritemska: množenju jakosti ustreza prištevanje k ravni, ne množenje ravni.
 > $\Delta L = 10\,\mathrm{dB} \cdot \log_{10}10 = 10\,\mathrm{dB}$. Raven je logaritemska, zato se ne pomnoži z istim faktorom kot jakost.
+
+? V trgovini z zvočniki prodajalec pravi, da dražji zvočnik z dvakratno zvočno močjo igra »dvakrat glasneje«. Za koliko se na istem mestu poveča raven jakosti zvoka?
++ Za približno $3\,\mathrm{dB}$.
+- Za približno $6\,\mathrm{dB}$.
+~ Uporabil si $20\,\mathrm{dB} \cdot \log_{10}$, ki velja za razmerje amplitud, ne jakosti. $6\,\mathrm{dB}$ ustreza štirikratni jakosti; dvakratna moč da na istem mestu le dvakratno jakost.
+- Za $10\,\mathrm{dB}$.
+~ Zamenjal si občutek glasnosti z jakostjo: »dvakrat glasneje« res pomeni okoli $10\,\mathrm{dB}$ več, a to je desetkratna jakost, ne dvakratna.
+> Jakost je na istem mestu sorazmerna z močjo, zato je $\Delta L = 10\,\mathrm{dB} \cdot \log_{10}2 \approx 3\,\mathrm{dB}$. Za občutek »dvakrat glasneje« je potrebnih okoli $10\,\mathrm{dB}$.

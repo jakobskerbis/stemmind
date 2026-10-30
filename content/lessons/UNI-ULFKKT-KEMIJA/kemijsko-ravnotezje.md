@@ -5,11 +5,13 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-V gimnaziji reakcije pogosto zapišemo s puščico v eno smer, kot da reaktanti povsem preidejo v produkte. Mnogo reakcij pa se ustavi prej: v zaprti posodi nastane zmes reaktantov in produktov, katere sestava se ne spreminja več. Pravimo, da je sistem v **kemijskem ravnotežju**. Koliko produkta je v ravnotežni zmesi, pove **konstanta ravnotežja**, kako se ravnotežje odzove na spremembe, pa **Le Chatelierovo načelo**.
+Tilen igra bobne v bendu in pred vsako vajo kupi plastenko gazirane vode. Ko jo odpre, voda zašumi, po dveh skladbah na toplem odru pa je že povsem »mrtva«. Zaprta plastenka v hladilniku ostane gazirana tedne. Tilen bi rad vedel, ali naj plastenko vmes zapira, ali naj jo hladi, ali oboje. Odgovor ni v tem, koliko plina je v vodi, ampak v **kemijskem ravnotežju** med raztopljenim in plinastim $\mathrm{CO_2}$.
+
+V gimnaziji reakcije pogosto zapišemo s puščico v eno smer, kot da reaktanti povsem preidejo v produkte. Mnogo reakcij pa se ustavi prej: v zaprti posodi nastane zmes reaktantov in produktov, katere sestava se ne spreminja več. Koliko produkta je v ravnotežni zmesi, pove **konstanta ravnotežja**, kako se ravnotežje odzove na spremembe, pa **Le Chatelierovo načelo**.
 
 To znanje potrebuje vsak, ki želi reakcijo voditi: inženir pri sintezi amoniaka, biokemik pri vezavi kisika na hemoglobin, farmacevt pri stabilnosti zdravila, okoljevarstvenik pri raztapljanju $\mathrm{CO_2}$ v morju. Na ravnotežju temeljijo tudi naslednja poglavja: kisline in baze, pufri, topnost in elektrokemija.
 
-V tej lekciji se naučiš:
+Za to potrebuješ štiri orodja:
 
 - zapisati izraz za **konstanto ravnotežja** $K_c$ in $K_p$ ter ju povezati,
 - s **kvocientom reakcije** $Q$ napovedati smer reakcije,
@@ -18,9 +20,21 @@ V tej lekciji se naučiš:
 
 ## Razlaga
 
-**1. Dinamično ravnotežje.** Reakcija $\mathrm{A + B \rightleftharpoons C + D}$ teče v obe smeri. Na začetku je hitrost reakcije v desno velika, v levo majhna. Ko se koncentracije reaktantov zmanjšujejo in produktov povečujejo, se hitrosti izenačita. Takrat se sestava ne spreminja več, čeprav obe reakciji tečeta naprej: ravnotežje je **dinamično**. Do istega ravnotežja pridemo iz reaktantov ali iz produktov.
+### Dinamično ravnotežje
 
-**2. Zakon o vplivu koncentracij.** Za splošno reakcijo
+Najprej slika. Na vodoravni osi je čas, na navpični hitrost reakcije. Krivulja hitrosti v desno začne visoko in pada, krivulja hitrosti v levo začne pri nič in raste; kjer se srečata, nadaljujeta kot ena sama vodoravna črta.
+
+Reakcija $\mathrm{A + B \rightleftharpoons C + D}$ teče v obe smeri. Na začetku je hitrost reakcije v desno velika, v levo majhna. Ko se koncentracije reaktantov zmanjšujejo in produktov povečujejo, se hitrosti izenačita. Takrat se sestava ne spreminja več, čeprav obe reakciji tečeta naprej: ravnotežje je **dinamično**. Do istega ravnotežja pridemo iz reaktantov ali iz produktov.
+
+:::premisli
+V ravnotežno zmes $\mathrm{H_2}$, $\mathrm{I_2}$ in $\mathrm{HI}$ dodaš malo $\mathrm{HI}$ z radioaktivnim jodom. Ali se bo označeni jod čez čas pojavil tudi v molekulah $\mathrm{I_2}$?
+---
+Da. Ker obe reakciji tečeta naprej, se $\mathrm{HI}$ stalno razkraja v $\mathrm{H_2}$ in $\mathrm{I_2}$ in spet nastaja. Prav takšni poskusi z izotopi dokazujejo, da je ravnotežje dinamično.
+:::
+
+### Zakon o vplivu koncentracij
+
+Za splošno reakcijo
 
 $$a\,\mathrm{A} + b\,\mathrm{B} \rightleftharpoons c\,\mathrm{C} + d\,\mathrm{D}$$
 
@@ -30,36 +44,62 @@ $$K_c = \frac{[\mathrm{C}]^c\,[\mathrm{D}]^d}{[\mathrm{A}]^a\,[\mathrm{B}]^b},$$
 
 kjer oglati oklepaji pomenijo **ravnotežne** množinske koncentracije. Produkti so v števcu, reaktanti v imenovalcu, koeficienti so eksponenti. $K_c$ je odvisna le od temperature, ne od začetnih koncentracij.
 
-**3. Heterogena ravnotežja.** Čiste trdne snovi in čiste tekočine (tudi topilo voda v razredčenih raztopinah) v izrazu za $K$ **ne nastopajo**, ker je njihova aktivnost $1$. Za $\mathrm{CaCO_3(s) \rightleftharpoons CaO(s) + CO_2(g)}$ je $K_c = [\mathrm{CO_2}]$.
+### Heterogena ravnotežja
 
-**4. Ravnotežje plinov.** Za pline pogosto pišemo konstanto s parcialnimi tlaki, $K_p = \dfrac{p_\mathrm{C}^c\,p_\mathrm{D}^d}{p_\mathrm{A}^a\,p_\mathrm{B}^b}$. Ker je $p = cRT$, velja
+Čiste trdne snovi in čiste tekočine (tudi topilo voda v razredčenih raztopinah) v izrazu za $K$ **ne nastopajo**, ker je njihova aktivnost $1$. Za $\mathrm{CaCO_3(s) \rightleftharpoons CaO(s) + CO_2(g)}$ je $K_c = [\mathrm{CO_2}]$.
+
+### Ravnotežje plinov
+
+Za pline pogosto pišemo konstanto s parcialnimi tlaki, $K_p = \dfrac{p_\mathrm{C}^c\,p_\mathrm{D}^d}{p_\mathrm{A}^a\,p_\mathrm{B}^b}$. Ker je $p = cRT$, velja
 
 $$K_p = K_c\,(RT)^{\Delta n}, \qquad \Delta n = (c + d) - (a + b),$$
 
 kjer $\Delta n$ šteje le plinaste snovi. Če so tlaki v barih in koncentracije v $\mathrm{mol/L}$, je $R = 0{,}083\,14\,\mathrm{L\,bar\,mol^{-1}\,K^{-1}}$.
 
-**5. Pomen velikosti $K$.** Če je $K \gg 1$ (npr. $10^{10}$), je v ravnotežju skoraj vse v obliki produktov in reakcija poteče »do konca«. Če je $K \ll 1$, skoraj ne poteče. Pri $K$ okoli $1$ so v ravnotežju pomembne količine reaktantov in produktov.
+### Pomen velikosti $K$
 
-**6. Računanje s konstantami.** Konstanta je vezana na zapis enačbe:
+Če je $K \gg 1$ (npr. $10^{10}$), je v ravnotežju skoraj vse v obliki produktov in reakcija poteče »do konca«. Če je $K \ll 1$, skoraj ne poteče. Pri $K$ okoli $1$ so v ravnotežju pomembne količine reaktantov in produktov.
+
+### Računanje s konstantami
+
+Konstanta je vezana na zapis enačbe:
 
 - obrnjena reakcija: $K' = 1/K$,
 - enačba, pomnožena z $m$: $K' = K^m$ (npr. z $\tfrac12$ dobimo $\sqrt K$),
 - vsota dveh reakcij: $K = K_1 \cdot K_2$.
 
-**7. Kvocient reakcije.** $Q$ ima enako obliko kot $K$, le da vanj vstavimo **trenutne** koncentracije. Primerjava pove smer:
+### Kvocient reakcije
 
-- $Q < K$: produktov je premalo, reakcija teče v desno (nastajajo produkti),
-- $Q > K$: produktov je preveč, reakcija teče v levo,
+$Q$ ima enako obliko kot $K$, le da vanj vstavimo **trenutne** koncentracije. Predstavljaj si številsko premico z oznako pri vrednosti $K$: trenutni $Q$ leži nekje na njej, sistem pa vedno drsi proti oznaki.
+
+- $Q < K$ (levo od oznake): produktov je premalo, reakcija teče v desno (nastajajo produkti),
+- $Q > K$ (desno od oznake): produktov je preveč, reakcija teče v levo,
 - $Q = K$: sistem je v ravnotežju.
 
-**8. Preglednica »začetek, sprememba, ravnotežje«.** Pri računanju ravnotežnih koncentracij zapišemo za vsako snov začetno koncentracijo, spremembo (z neznanko $x$, pomnoženo s koeficientom) in ravnotežno koncentracijo. Ravnotežne izraze vstavimo v $K$ in rešimo enačbo za $x$. Na koncu preverimo, da nobena koncentracija ni negativna.
+:::premisli
+Ravnotežno zmes $\mathrm{N_2O_4 \rightleftharpoons 2\,NO_2}$ stisneš na polovico prostornine, zato se obe koncentraciji podvojita. Kam se na premici premakne $Q = [\mathrm{NO_2}]^2/[\mathrm{N_2O_4}]$?
+---
+Števec zraste štirikrat, imenovalec dvakrat, zato se $Q$ podvoji in pristane desno od $K$. Reakcija teče v levo, k manj molekulam plina; to je Le Chatelierovo načelo, izpeljano iz $Q$.
+:::
 
-**9. Le Chatelierovo načelo.** Če sistem v ravnotežju zmotimo, se ravnotežje premakne v smer, ki motnjo delno izniči.
+### Preglednica »začetek, sprememba, ravnotežje«
 
-- **Koncentracija:** dodatek reaktanta ali odstranjevanje produkta premakne ravnotežje v desno; $K$ ostane enaka, spremeni se $Q$.
-- **Tlak (prostornina):** zmanjšanje prostornine (povečanje tlaka) premakne ravnotežje na stran z **manj molekulami plina**. Pri $\Delta n = 0$ tlak nima vpliva. Dodatek inertnega plina pri stalni prostornini ne spremeni parcialnih tlakov in ne premakne ravnotežja.
-- **Temperatura:** je edina sprememba, ki spremeni $K$. Pri **eksotermni** reakciji ($\Delta H < 0$) višja temperatura zmanjša $K$ (premik v levo), pri **endotermni** jo poveča.
-- **Katalizator** pospeši obe smeri enako, zato se ravnotežje doseže hitreje, njegova lega pa se ne spremeni.
+Pri računanju ravnotežnih koncentracij zapišemo za vsako snov začetno koncentracijo, spremembo (z neznanko $x$, pomnoženo s koeficientom) in ravnotežno koncentracijo. Ravnotežne izraze vstavimo v $K$ in rešimo enačbo za $x$. Na koncu preverimo, da nobena koncentracija ni negativna.
+
+### Le Chatelierovo načelo
+
+Če sistem v ravnotežju zmotimo, se ravnotežje premakne v smer, ki motnjo delno izniči.
+
+| Motnja | Premik ravnotežja | $K$ |
+|---|---|---|
+| dodatek reaktanta ali odstranjevanje produkta | v desno (spremeni se $Q$) | ostane enaka |
+| manjša prostornina (večji tlak) | na stran z **manj molekulami plina**; pri $\Delta n = 0$ brez vpliva | ostane enaka |
+| inertni plin pri stalni prostornini | ni premika (parcialni tlaki ostanejo enaki) | ostane enaka |
+| višja temperatura, **eksotermna** reakcija ($\Delta H < 0$) | v levo | se zmanjša |
+| višja temperatura, **endotermna** reakcija | v desno | se poveča |
+| katalizator | ni premika, ravnotežje se le doseže hitreje (obe smeri pospeši enako) | ostane enaka |
+
+Temperatura je torej edina sprememba, ki spremeni $K$.
 
 ## Rešeni primeri
 
@@ -93,7 +133,7 @@ $K_c = \dfrac{[\mathrm{HI}]^2}{[\mathrm{H_2}][\mathrm{I_2}]}$; preglednica: zač
 
 **Rešitev:**
 
-1. Začetne koncentracije: $c_0(\mathrm{H_2}) = c_0(\mathrm{I_2}) = 1{,}00/2{,}00 = 0{,}500\,\mathrm{mol/L}$.
+1. Začetne koncentracije (v $K_c$ gredo koncentracije, ne množine): $c_0(\mathrm{H_2}) = c_0(\mathrm{I_2}) = 1{,}00/2{,}00 = 0{,}500\,\mathrm{mol/L}$.
 2. Preglednica ($\mathrm{mol/L}$):
 
 | | $\mathrm{H_2}$ | $\mathrm{I_2}$ | $\mathrm{HI}$ |
@@ -122,7 +162,7 @@ $Q = \dfrac{[\mathrm{PCl_3}][\mathrm{Cl_2}]}{[\mathrm{PCl_5}]}$, primerjava $Q$ 
 **Rešitev:**
 
 1. $Q = \dfrac{0{,}0500 \cdot 0{,}0500}{0{,}100} = 0{,}0250$. Ker je $Q < K_c$, reakcija teče v desno (razpada $\mathrm{PCl_5}$).
-2. Ravnotežje: $[\mathrm{PCl_5}] = 0{,}100 - x$, $[\mathrm{PCl_3}] = [\mathrm{Cl_2}] = 0{,}0500 + x$.
+2. Ravnotežje: $[\mathrm{PCl_5}] = 0{,}100 - x$, $[\mathrm{PCl_3}] = [\mathrm{Cl_2}] = 0{,}0500 + x$ (ker reakcija teče v desno, se $\mathrm{PCl_5}$ porabi, produkta pa nastajata).
 3. Enačba: $\dfrac{(0{,}0500 + x)^2}{0{,}100 - x} = 0{,}0420$, kar uredimo v $x^2 + 0{,}142\,x - 0{,}001\,70 = 0$.
 4. $x = \dfrac{-0{,}142 + \sqrt{0{,}142^2 + 4 \cdot 0{,}001\,70}}{2} = \dfrac{-0{,}142 + 0{,}1642}{2} = 0{,}0111\,\mathrm{mol/L}$ (negativna rešitev nima pomena).
 5. Ravnotežje: $[\mathrm{PCl_5}] = 0{,}0889\,\mathrm{mol/L}$, $[\mathrm{PCl_3}] = [\mathrm{Cl_2}] = 0{,}0611\,\mathrm{mol/L}$. Preizkus: $0{,}0611^2/0{,}0889 \approx 0{,}0420$.
@@ -130,12 +170,36 @@ $Q = \dfrac{[\mathrm{PCl_3}][\mathrm{Cl_2}]}{[\mathrm{PCl_5}]}$, primerjava $Q$ 
 7. Povečanje prostornine zniža tlak; ravnotežje se premakne na stran z več molekulami plina, torej v desno.
 8. Odgovor: reakcija teče v desno do $[\mathrm{PCl_5}] = 0{,}0889\,\mathrm{mol/L}$ in $[\mathrm{PCl_3}] = [\mathrm{Cl_2}] = 0{,}0611\,\mathrm{mol/L}$; $K_p \approx 1{,}83$; večja prostornina še poveča razpad $\mathrm{PCl_5}$.
 
+### Primer 4 – zdaj ti
+
+Tilnova plastenka gazirane vode je zaprta in pri $25\,^\circ\mathrm{C}$ v ravnotežju $\mathrm{CO_2(g) \rightleftharpoons CO_2(aq)}$ pri tlaku $\mathrm{CO_2}$ nad vodo $3{,}0\,\mathrm{bar}$. Z aktivnostmi (glej »Bolj natančno«) je konstanta $K = \dfrac{[\mathrm{CO_2(aq)}]/c^\circ}{p_{\mathrm{CO_2}}/p^\circ} = 0{,}034$. Ko plastenko odpre, je nad vodo zrak s $p_{\mathrm{CO_2}} = 4{,}0 \cdot 10^{-4}\,\mathrm{bar}$. V katero smer teče proces in kolikšna je raztopljena koncentracija $\mathrm{CO_2}$, ko se vzpostavi novo ravnotežje?
+
+**Podatki:** $K = 0{,}034$ (pri $25\,^\circ\mathrm{C}$), $p_{\mathrm{CO_2}} = 3{,}0\,\mathrm{bar}$ (zaprta), $p_{\mathrm{CO_2}} = 4{,}0 \cdot 10^{-4}\,\mathrm{bar}$ (odprta), $c^\circ = 1\,\mathrm{mol/L}$, $p^\circ = 1\,\mathrm{bar}$
+**Iščemo:** $[\mathrm{CO_2(aq)}]$ v zaprti plastenki, smer procesa po odprtju, novo ravnotežno $[\mathrm{CO_2(aq)}]$
+
+:::formula
+$K = \dfrac{[\mathrm{CO_2(aq)}]/c^\circ}{p_{\mathrm{CO_2}}/p^\circ}$; $\quad Q > K$: v levo
+:::
+
+**Rešitev:**
+
+1. Zaprta plastenka je v ravnotežju, zato velja $[\mathrm{CO_2(aq)}] = K \cdot p_{\mathrm{CO_2}} = 0{,}034 \cdot 3{,}0 = 0{,}102\,\mathrm{mol/L}$.
+2. Takoj po odprtju je raztopljenega $\mathrm{CO_2}$ še enako, tlak pa pade, zato $Q = \dfrac{0{,}102}{4{,}0 \cdot 10^{-4}} = 255$. Ker je $Q \gg K$, proces teče v levo: $\mathrm{CO_2}$ uhaja iz vode.
+3. Izračunaj novo ravnotežno $[\mathrm{CO_2(aq)}]$ sam in premisli, zakaj Tilnu pomaga hladilnik, nato preveri:
+
+:::premisli
+Kolikšna je $[\mathrm{CO_2(aq)}]$ v odprti plastenki po vzpostavitvi ravnotežja? Zakaj hladna voda ostane gazirana dlje?
+---
+$[\mathrm{CO_2(aq)}] = 0{,}034 \cdot 4{,}0 \cdot 10^{-4} = 1{,}36 \cdot 10^{-5}\,\mathrm{mol/L}$, praktično nič: odprta plastenka slej ko prej izgubi ves plin, zato jo je treba zapirati. Raztapljanje $\mathrm{CO_2}$ je eksotermno, zato je pri nižji temperaturi $K$ večja in voda zadrži več plina; poleg tega je pri nizki temperaturi uhajanje počasnejše.
+:::
+
 ## Pogoste napake
 
 - **Začetne namesto ravnotežnih koncentracij.** V $K$ vstavljamo le ravnotežne vrednosti. Začetne koncentracije vstavimo v $Q$.
 - **Trdne snovi in voda v izrazu.** $[\mathrm{CaCO_3(s)}]$ ali $[\mathrm{H_2O(l)}]$ ne pišemo v $K$.
 - **Pozabljeni koeficienti.** Pri $\mathrm{2\,NO_2}$ je v izrazu $[\mathrm{NO_2}]^2$, v preglednici pa sprememba $+2x$, ne $+x$.
 - **»Dodatek reaktanta spremeni $K$.«** Ne. $K$ se spremeni le s temperaturo. Dodatek snovi spremeni $Q$, sistem pa se vrne k isti $K$.
+- **»Višja temperatura vedno poveča $K$.«** Le pri endotermnih reakcijah. Pri eksotermnih se $K$ zmanjša, čeprav reakcija teče hitreje.
 - **Katalizator premakne ravnotežje.** Ne, le pospeši doseganje ravnotežja.
 - **Tlak in snovi v različnih fazah.** Pri $\Delta n$ štejemo le pline. V reakciji $\mathrm{C(s) + CO_2(g) \rightleftharpoons 2\,CO(g)}$ je $\Delta n = 2 - 1 = 1$.
 - **Napačna rešitev kvadratne enačbe.** Rešitev, ki da negativno koncentracijo ali porabi več snovi, kot je je na voljo, zavrzi.
@@ -218,24 +282,40 @@ $$\ln\frac{K_2}{K_1} = -\frac{\Delta_\mathrm{r}H^\circ}{R}\left(\frac{1}{T_2} - 
 
 ? Kateri je pravilni izraz za konstanto ravnotežja reakcije $\mathrm{CaCO_3(s) \rightleftharpoons CaO(s) + CO_2(g)}$?
 - $K_c = \dfrac{[\mathrm{CaO}][\mathrm{CO_2}]}{[\mathrm{CaCO_3}]}$
+~ Zapisal si vse snovi kot pri homogeni reakciji; trdni snovi imata aktivnost $1$ in v izrazu ne nastopata.
 + $K_c = [\mathrm{CO_2}]$
 - $K_c = \dfrac{1}{[\mathrm{CO_2}]}$
+~ Ulomek si obrnil: $\mathrm{CO_2}$ je produkt, zato je v števcu.
 > Trdni snovi $\mathrm{CaCO_3}$ in $\mathrm{CaO}$ imata aktivnost $1$ in ju ne pišemo. Ostane le produkt $\mathrm{CO_2}$ v števcu.
 
 ? Za reakcijo je kvocient $Q$ večji od konstante $K$. Kaj se zgodi?
 - reakcija teče v desno, nastajajo produkti
+~ Pravilo si obrnil: v desno teče pri $Q < K$, ko je produktov premalo.
 + reakcija teče v levo, nastajajo reaktanti
 - sistem je že v ravnotežju
+~ Ravnotežje velja le pri $Q = K$; $Q > K$ pomeni, da je produktov preveč.
 > Pri $Q > K$ je produktov preveč glede na ravnotežje, zato se del produktov pretvori nazaj v reaktante, dokler ni $Q = K$.
 
 ? Reakcija je eksotermna. Kaj se zgodi s konstanto ravnotežja, če temperaturo povišamo?
 - poveča se
+~ Višja temperatura res pospeši reakcijo, a lega eksotermnega ravnotežja se premakne v levo, k reaktantom.
 + zmanjša se
 - ostane enaka
+~ Zamenjaš temperaturo s koncentracijo ali katalizatorjem, ki $K$ ne spremenita; temperatura je edina sprememba, ki $K$ spremeni.
 > Pri eksotermni reakciji se toplota sprošča; višja temperatura premakne ravnotežje v endotermno smer (v levo) in $K$ se zmanjša. Temperatura je edina sprememba, ki spremeni $K$.
 
 ? Za reakcijo $\mathrm{A \rightleftharpoons B}$ je $K = 4{,}0 \cdot 10^2$. Kolikšna je konstanta za reakcijo $\mathrm{B \rightleftharpoons A}$?
 - $-4{,}0 \cdot 10^2$
+~ Obrnjeno reakcijo si obravnaval kot $\Delta H$, ki zamenja predznak; konstanta se obrne v recipročno vrednost in je vedno pozitivna.
 - $4{,}0 \cdot 10^{-2}$
+~ Le eksponent si spremenil v negativnega, mantise pa nisi obrnil; $4{,}0 \cdot 10^{-2}$ je $1/25$, ne $1/400$.
 + $2{,}5 \cdot 10^{-3}$
 > Za obrnjeno reakcijo je $K' = 1/K = 1/400 = 2{,}5 \cdot 10^{-3}$. Konstanta ravnotežja ni nikoli negativna.
+
+? Študentka za $\mathrm{N_2O_4 \rightleftharpoons 2\,NO_2}$ z $[\mathrm{N_2O_4}] = 0{,}0400\,\mathrm{mol/L}$ in $[\mathrm{NO_2}] = 0{,}0120\,\mathrm{mol/L}$ zapiše: $K_c = 0{,}0120/0{,}0400 = 0{,}300$. Kateri korak je napačen?
+- ulomek je obrnjen, $\mathrm{N_2O_4}$ spada v števec
+~ $\mathrm{N_2O_4}$ je reaktant in spada v imenovalec, kot ga je zapisala; ulomek je pravilen.
++ $[\mathrm{NO_2}]$ ni kvadrirala, koeficient $2$ je eksponent
+- vstavila bi morala začetne koncentracije
+~ V $K$ gredo prav ravnotežne koncentracije; začetne bi vstavila v $Q$.
+> Pravilno je $K_c = 0{,}0120^2/0{,}0400 = 3{,}6 \cdot 10^{-3}$ (Primer 1). Brez kvadrata dobi vrednost, ki je več kot osemdesetkrat prevelika.
