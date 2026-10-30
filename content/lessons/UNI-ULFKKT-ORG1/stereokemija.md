@@ -5,42 +5,66 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Poglej svoji roki. Imata enake prste v enakem vrstnem redu, pa vendar leve rokavice ne moreš udobno obleči na desno roko. Leva roka je zrcalna slika desne, a ju ne moreš prekriti.
+Iz plastelina naredi kroglico in vanjo zapiči štiri zobotrebce, kot kažejo oglišča tetraedra. Na konce natakni štiri kroglice različnih barv, nato zgradi še model, ki je zrcalna slika prvega. Obračaj ju, kolikor hočeš: vseh barv nikoli ne spraviš na ista mesta. Na drugem modelu zamenjaj dve barvi in modela se nenadoma prekrijeta.
 
-Enako velja za mnoge molekule. Karvon ima eno samo formulo $\mathrm{C_{10}H_{14}O}$ in enako vezane atome. Ena oblika diši po meti, njena zrcalna slika po kumini. Nosni receptorji so iz kiralnih proteinov, zato ju ločijo, kot rokavica loči roki.
-
-Pri zdravilih je razlika lahko usodna: ena oblika zdravi, zrcalna je neučinkovita ali škodljiva.
+Tvoj model je ogljik s štirimi različnimi skupinami. Takšen ogljik je v mnogih molekulah. Karvon ima eno samo formulo $\mathrm{C_{10}H_{14}O}$ in enako vezane atome, a ena oblika diši po meti, njena zrcalna slika po kumini: nosni receptorji so iz kiralnih proteinov in ju ločijo, kot rokavica loči levo roko od desne. Pri zdravilih je razlika lahko usodna: ena oblika zdravi, zrcalna je neučinkovita ali škodljiva.
 
 ## Razlaga
 
-**1. Vrste izomerov.** Izomeri imajo enako molekulsko formulo. **Konstitucijski izomeri** imajo atome povezane v drugačnem vrstnem redu (butan-1-ol in butan-2-ol). **Stereoizomeri** imajo enako povezane atome, razlikujejo pa se v razporeditvi v prostoru. Delimo jih na enantiomere in diastereomere.
+### Blok 1: vrste izomerov
 
-**2. Kiralnost.** Predmet je **kiralen**, če ga ne moremo prekriti z njegovo zrcalno sliko (roka, vijak). **Akiralen** predmet se s svojo zrcalno sliko prekrije (žlica, kozarec). Akiralna molekula ima navadno **zrcalno ravnino**, ki jo deli na dve zrcalni polovici.
+Izomeri imajo enako molekulsko formulo. **Konstitucijski izomeri** imajo atome povezane v drugačnem vrstnem redu (butan-1-ol in butan-2-ol). **Stereoizomeri** imajo enako povezane atome, razlikujejo pa se v razporeditvi v prostoru. Delimo jih na enantiomere in diastereomere.
 
-**3. Stereocenter.** Iz prejšnjih poglavij veš, da ima ogljik $sp^3$ štiri vezi v tetraedru. Če so na tak ogljik vezane **štiri različne skupine**, je ogljik **stereocenter** (kiralni center). Molekula z enim stereocentrom je vedno kiralna.
+*Preveri:* sta butan-1-ol in butan-2-ol stereoizomera? (Ne, skupina $-\mathrm{OH}$ je vezana na drug ogljik, zato sta konstitucijska izomera.)
+
+### Blok 2: kiralnost
+
+Predmet je **kiralen**, če ga ne moremo prekriti z njegovo zrcalno sliko (roka, vijak). **Akiralen** predmet se s svojo zrcalno sliko prekrije (žlica, kozarec). Akiralna molekula ima navadno **zrcalno ravnino**, ki jo deli na dve zrcalni polovici.
+
+*Preveri:* je mizarsko kladivo kiralno? (Ne, zrcalna ravnina gre skozi ročaj in glavo.)
+
+### Blok 3: stereocenter
+
+Iz prejšnjih poglavij veš, da ima ogljik $sp^3$ štiri vezi v tetraedru. Če so na tak ogljik vezane **štiri različne skupine**, je ogljik **stereocenter** (kiralni center). Molekula z enim stereocentrom je vedno kiralna.
 
 Primer: v butan-2-olu $\mathrm{CH_3CH(OH)CH_2CH_3}$ ima C2 skupine $-\mathrm{H}$, $-\mathrm{OH}$, $-\mathrm{CH_3}$ in $-\mathrm{CH_2CH_3}$. Vse štiri so različne, zato je C2 stereocenter. V propan-2-olu sta na C2 dve skupini $-\mathrm{CH_3}$, zato C2 ni stereocenter in molekula je akiralna.
 
-**4. Enantiomera.** Dve molekuli, ki sta zrcalni sliki in se ne prekrijeta, sta **enantiomera**. Imata enako tališče, vrelišče, topnost in gostoto. Razlikujeta se v dveh stvareh:
+*Preveri:* je C2 v butan-1-olu stereocenter? (Ne, nosi dva vodika.)
+
+### Blok 4: enantiomera
+
+Dve molekuli, ki sta zrcalni sliki in se ne prekrijeta, sta **enantiomera**. Imata enako tališče, vrelišče, topnost in gostoto. Razlikujeta se v dveh stvareh:
 
 - vrtita ravnino **linearno polarizirane svetlobe** za enak kot v nasprotni smeri; to je **optična aktivnost**;
 - drugače reagirata z drugimi kiralnimi molekulami (encimi, receptorji).
 
 Zmes enakih količin obeh enantiomerov je **racemat**. Je optično neaktivna, ker se vrtenji izničita.
 
-**5. Specifična rotacija.** Kot zasuka $\alpha$ merimo s polarimetrom. Odvisen je od dolžine kivete $l$ (v dm) in masne koncentracije $c$ (v g/mL). Lastnost snovi je **specifična rotacija**:
+*Preveri:* se enantiomera razlikujeta po vrelišču? (Ne, vrelišče je enako.)
+
+### Blok 5: specifična rotacija
+
+Kot zasuka $\alpha$ merimo s polarimetrom. Odvisen je od dolžine kivete $l$ (v dm) in masne koncentracije $c$ (v g/mL). Lastnost snovi je **specifična rotacija**:
 
 $$[\alpha] = \frac{\alpha}{l \cdot c}$$
 
 Predznak $(+)$ pomeni vrtenje v desno, $(-)$ v levo. Ta predznak se meri, ne razbere se iz formule.
 
-**6. Pravila CIP za prioriteto.** Da konfiguracijo poimenujemo, skupinam na stereocentru najprej določimo prioriteto (pravila Cahna, Ingolda in Preloga):
+*Preveri:* kaj se zgodi z $\alpha$, če isto raztopino natočiš v dvakrat daljšo kiveto? (Kot se podvoji, $[\alpha]$ ostane enaka.)
+
+### Blok 6: pravila CIP za prioriteto
+
+Da konfiguracijo poimenujemo, skupinam na stereocentru najprej določimo prioriteto (pravila Cahna, Ingolda in Preloga):
 
 1. Primerjamo atome, ki so **neposredno** vezani na stereocenter. Višje vrstno število pomeni višjo prioriteto: $\mathrm{Br} > \mathrm{Cl} > \mathrm{O} > \mathrm{N} > \mathrm{C} > \mathrm{H}$.
 2. Če sta atoma enaka, primerjamo **trojici atomov**, vezanih nanju, urejeni od najvišjega. Odločilna je prva razlika. $-\mathrm{CH_2OH}$ ima trojico (O, H, H), $-\mathrm{CH(CH_3)_2}$ pa (C, C, H). Ker je O $>$ C, zmaga $-\mathrm{CH_2OH}$, čeprav je manjša skupina.
 3. Dvojna vez šteje, kot da je atom podvojen: $-\mathrm{CH{=}O}$ šteje kot (O, O, H).
 
-**7. Konfiguracija R ali S.** Molekulo zavrtimo tako, da skupina z najnižjo prioriteto (4) kaže **stran od nas**. Nato sledimo skupinam $1 \to 2 \to 3$:
+*Preveri:* kaj ima višjo prioriteto, $-\mathrm{OH}$ ali $-\mathrm{CH_2Br}$? ($-\mathrm{OH}$: odloči neposredno vezani atom, O $>$ C; brom za ogljikom ne pride v poštev.)
+
+### Blok 7: konfiguracija R ali S
+
+Molekulo zavrtimo tako, da skupina z najnižjo prioriteto (4) kaže **stran od nas**. Nato sledimo skupinam $1 \to 2 \to 3$:
 
 - v smeri urinega kazalca: **R** (lat. *rectus*, desno);
 - v nasprotni smeri: **S** (lat. *sinister*, levo).
@@ -53,7 +77,9 @@ Na modelu (R)-spojine zamenjaš mesti dveh skupin na stereocentru. Kakšno konfi
 Ena zamenjava da (S), torej enantiomer. Druga zamenjava vrne (R). Vsaka zamenjava dveh skupin obrne smer $1 \to 2 \to 3$.
 :::
 
-**8. Diastereomeri.** Če ima molekula več stereocentrov, lahko nastanejo stereoizomeri, ki **niso** zrcalne slike. To so **diastereomeri**. Imajo različne fizikalne lastnosti: tališče, topnost, $R_f$ pri kromatografiji.
+### Blok 8: diastereomeri
+
+Če ima molekula več stereocentrov, lahko nastanejo stereoizomeri, ki **niso** zrcalne slike. To so **diastereomeri**. Imajo različne fizikalne lastnosti: tališče, topnost, $R_f$ pri kromatografiji.
 
 Pri $n$ stereocentrih je stereoizomerov največ $2^n$. Za dva stereocentra (npr. v 2-bromo-3-klorobutanu) so štiri kombinacije:
 
@@ -71,9 +97,15 @@ Zmes dveh enantiomerov hočeš ločiti z destilacijo ali kristalizacijo. Ali bo 
 Enantiomerov ne ločiš, ker imata enako vrelišče in topnost. Diastereomere ločiš, ker imajo različne fizikalne lastnosti. Zato enantiomere s kiralnim reagentom pretvorimo v diastereomere.
 :::
 
-**9. Spojine mezo.** Kadar sta oba konca molekule enaka, ima ena od kombinacij notranjo zrcalno ravnino. Taka **spojina mezo** ima stereocentre, a je akiralna in optično neaktivna. Zato je stereoizomerov manj kot $2^n$.
+### Blok 9: spojine mezo
 
-**10. Cis in trans.** Iz poglavja o vezeh veš, da okoli dvojne vezi ni prostega vrtenja. Zato sta *cis*- in *trans*-but-2-en dva stereoizomera, ki nista zrcalni sliki. Tudi to sta diastereomera: imata različno vrelišče.
+Kadar sta oba konca molekule enaka, ima ena od kombinacij notranjo zrcalno ravnino. Taka **spojina mezo** ima stereocentre, a je akiralna in optično neaktivna. Zato je stereoizomerov manj kot $2^n$.
+
+*Preveri:* ima 2,3-dibromobutan obliko mezo? (Da, konca molekule sta enaka.)
+
+### Blok 10: cis in trans
+
+Okoli dvojne vezi ni prostega vrtenja (poglavje o vezeh). Zato sta *cis*- in *trans*-but-2-en dva stereoizomera, ki nista zrcalni sliki. Tudi to sta diastereomera: imata različno vrelišče.
 
 ## Rešeni primeri
 
@@ -116,7 +148,7 @@ Pravila CIP za prioriteto; skupina 4 stran od opazovalca; $1 \to 2 \to 3$ v smer
 
 ### Primer 3 (težji): vinska kislina in spojina mezo
 
-Vinska kislina je 2,3-dihidroksibutandiojska kislina, $\mathrm{HOOC{-}CH(OH){-}CH(OH){-}COOH}$. Koliko stereoizomerov ima? Kateri je enantiomer in kateri diastereomer (2R,3R)-vinske kisline?
+Louis Pasteur je leta 1848 pod povečevalnim steklom s pinceto ročno razvrstil kristale soli racemne vinske kisline: eni so bili zrcalna slika drugih. Tako je prvič ločil enantiomera. Vinska kislina je 2,3-dihidroksibutandiojska kislina, $\mathrm{HOOC{-}CH(OH){-}CH(OH){-}COOH}$. Koliko stereoizomerov ima? Kateri je enantiomer in kateri diastereomer (2R,3R)-vinske kisline?
 
 **Podatki:** $\mathrm{HOOC{-}CH(OH){-}CH(OH){-}COOH}$; stereocentra C2 in C3; konca molekule sta enaka
 **Iščemo:** število stereoizomerov, enantiomer in diastereomer oblike (2R,3R)
@@ -191,6 +223,7 @@ Pri dveh stereocentrih nariši mrežo $2 \times 2$ (C2 v vrsticah, C3 v stolpcih
 ## Drugače: Iz vsakdanjega življenja
 
 - **Roke in rokavice.** Dve roki sta enantiomera: enaka teža, enaka dolžina prstov. Razliko opazi samo nekaj kiralnega, rokavica. Tako tudi encim loči enantiomera zdravila, tehtnica pa ne.
+- **Vijaki in matice.** Vijak z desnim navojem je kiralen: v ogledalu ima levi navoj. Matica z desnim navojem se na vijak z levim ne privije, čeprav sta enako debela in enako dolga.
 
 ## Drugače: Korak za korakom s številkami
 

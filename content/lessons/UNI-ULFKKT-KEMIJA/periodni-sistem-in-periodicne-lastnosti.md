@@ -5,14 +5,14 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Periodni sistem ni le preglednica simbolov, ampak zgoščen povzetek kemije. Iz lege elementa lahko brez merjenja napovemo, kako velik je njegov atom, kako lahko odda elektron, kako močno ga privlači v vezi, ali bo tvoril katione ali anione in kakšne spojine bo imel. Mendelejev je na podlagi periodičnosti napovedal lastnosti takrat neznanih elementov (galija, germanija) tako natančno, da so jih kasneje našli prav tam, kjer jih je pričakoval.
+Vzemi telefon in poišči oznako baterije (na nalepki, v navodilih ali v nastavitvah): Li-ion. Zakaj prav litij in ne natrij, ki ga je v morski vodi na tone? Odgovor se skriva v legi obeh kovin v periodnem sistemu: litij je najlažja kovina, njegov ion je drobcen in zlahka potuje med plastmi grafita. Iz lege elementa brez merjenja napovemo, kako velik je njegov atom, kako lahko odda elektron in kako močno v vezi vleče elektrone k sebi. Tako je Mendelejev napovedal lastnosti galija in germanija, še preden so ju odkrili.
 
 V nadaljnjem študiju boš periodične lastnosti uporabljal ves čas: elektronegativnost pri polarnosti vezi in topnosti, ionizacijsko energijo pri redoks reakcijah in spektroskopiji, ionske polmere pri kristalih, mineralih in bioloških kanalih za ione (zakaj celica loči $\mathrm{K^+}$ od $\mathrm{Na^+}$).
 
-V tej lekciji se naučiš:
+Razlaga poteka v osmih kratkih korakih, vmes pa te ustavijo kratka vprašanja. Na koncu boš znal:
 
-- kako je periodni sistem povezan z elektronsko konfiguracijo (skupine, periode, bloki),
-- kaj je **efektivni naboj jedra** in zakaj določa trende,
+- pojasniti, kako je periodni sistem povezan z elektronsko konfiguracijo (skupine, periode, bloki),
+- opisati **efektivni naboj jedra** in pojasniti, zakaj določa trende,
 - razložiti trende **atomskih in ionskih polmerov**,
 - razložiti trende **ionizacijske energije** in njene izjeme,
 - uporabljati **elektronegativnost** za napoved polarnosti vezi.
@@ -32,6 +32,12 @@ kjer je $S$ konstanta senčenja. Elektroni v isti lupini se med seboj senčijo s
 
 Skoraj vse periodične lastnosti sledijo iz teh dveh dejstev.
 
+:::premisli
+Natrij in klor sta oba v 3. periodi. Napovej, kateri atom je večji, še preden prebereš naslednji korak.
+---
+Natrij. Zunanji elektroni obeh so v lupini $n = 3$, a klor ima večji $Z_\mathrm{eff}$ in jih pritegne bliže jedru. Kovalentni polmer klora je okoli $99\,\mathrm{pm}$, kovinski polmer natrija okoli $186\,\mathrm{pm}$.
+:::
+
 **3. Atomski polmer.** Atom nima ostrega roba, zato polmer določimo iz razdalj med jedri: **kovalentni polmer** je polovica razdalje med jedroma v enojni vezi istih atomov, **kovinski polmer** polovica razdalje med sosednjima atomoma v kovini. Trend:
 
 - vzdolž periode se polmer **zmanjšuje** (večji $Z_\mathrm{eff}$ močneje pritegne elektrone),
@@ -44,6 +50,8 @@ Največje atome imajo alkalijske kovine spodaj levo (Cs, Fr), najmanjše žlahtn
 $$r(\mathrm{O^{2-}}) > r(\mathrm{F^-}) > r(\mathrm{Na^+}) > r(\mathrm{Mg^{2+}}) > r(\mathrm{Al^{3+}}),$$
 
 približno $140$, $133$, $102$, $72$ in $54\,\mathrm{pm}$.
+
+*Hitro preverjanje:* kateri ion je manjši, $\mathrm{Li^+}$ v bateriji telefona ali $\mathrm{Na^+}$? ($\mathrm{Li^+}$: ima eno lupino manj.)
 
 **5. Ionizacijska energija.** **Prva ionizacijska energija** $I_1$ je energija, potrebna za odstranitev najšibkeje vezanega elektrona iz atoma v plinastem stanju:
 
@@ -64,6 +72,12 @@ Dve izjemi od naraščanja imata jasen vzrok:
 
 **Zaporedne ionizacijske energije** $I_1 < I_2 < I_3 < \dots$ naraščajo, ker elektron odvzemamo vse bolj pozitivnemu ionu. **Velik skok** nastopi, ko začnemo odvzemati elektrone iz notranje lupine (konfiguracija žlahtnega plina). Po mestu skoka prepoznamo število valenčnih elektronov in skupino elementa.
 
+:::premisli
+Magnezij ima konfiguracijo $[\mathrm{Ne}]\,3s^2$. Med katerima zaporednima ionizacijskima energijama pričakuješ velik skok in zakaj?
+---
+Med $I_2$ in $I_3$. Prva dva elektrona odvzamemo iz lupine $3s$, tretji pa mora priti iz notranje, močno vezane podlupine $2p^6$ (izmerjeno: $I_2 = 1451$, $I_3 = 7733\,\mathrm{kJ/mol}$).
+:::
+
 **6. Elektronska afiniteta.** Energija, ki se sprosti (ali porabi), ko atom v plinastem stanju sprejme elektron: $\mathrm{X(g) + e^- \to X^-(g)}$. Največjo afiniteto imajo halogeni (klor okoli $349\,\mathrm{kJ/mol}$ sproščene energije), saj z dodatnim elektronom dosežejo konfiguracijo žlahtnega plina. Trend je manj pravilen kot pri ionizacijski energiji.
 
 **7. Elektronegativnost** $\chi$ je sposobnost atoma, da v kemijski vezi k sebi pritegne vezne elektrone. Ni neposredno merljiva, ampak je izračunana iz vezavnih energij (Paulingova lestvica, brez enote). Trend: vzdolž periode **narašča**, navzdol po skupini **pada**. Nekaj vrednosti:
@@ -73,6 +87,8 @@ Dve izjemi od naraščanja imata jasen vzrok:
 | $3{,}98$ | $3{,}44$ | $3{,}16$ | $3{,}04$ | $2{,}55$ | $2{,}20$ | $0{,}93$ | $0{,}82$ | $0{,}79$ |
 
 Razlika elektronegativnosti $\Delta\chi$ med vezanima atomoma pove značaj vezi (orientacijsko): $\Delta\chi < 0{,}4$ nepolarna kovalentna, $0{,}4 \le \Delta\chi < 1{,}7$ polarna kovalentna, $\Delta\chi \gtrsim 1{,}7$ pretežno ionska. Meje niso ostre; vez $\mathrm{H{-}F}$ z $\Delta\chi = 1{,}78$ je še kovalentna.
+
+*Hitro preverjanje:* kakšna je vez $\mathrm{O{-}H}$ v vodi? ($\Delta\chi = 3{,}44 - 2{,}20 = 1{,}24$, polarna kovalentna.)
 
 **8. Kovinski značaj** se povečuje navzdol po skupini in proti levi strani periode, kjer je ionizacijska energija majhna. Kovine tvorijo katione in bazične okside ($\mathrm{Na_2O}$), nekovine anione in kisle okside ($\mathrm{SO_3}$), polkovine (B, Si, Ge, As) so na diagonali med njimi.
 
@@ -110,10 +126,10 @@ Velik skok med $I_k$ in $I_{k+1}$ pomeni $k$ valenčnih elektronov. $\quad E = I
 
 **Rešitev:**
 
-1. Razmerja zaporednih energij: $I_2/I_1 = 3{,}14$, $I_3/I_2 = 1{,}51$, $I_4/I_3 = 4{,}22$.
+1. Razmerja zaporednih energij izračunamo, ker skok najlaže opazimo relativno: $I_2/I_1 = 3{,}14$, $I_3/I_2 = 1{,}51$, $I_4/I_3 = 4{,}22$.
 2. Največji skok je med $I_3$ in $I_4$: po treh elektronih začnemo odvzemati elektron iz notranje lupine $2p^6$.
 3. Element ima torej $3$ valenčne elektrone ($3s^2\,3p^1$), je v 13. skupini in 3. periodi: to je **aluminij**.
-4. Energija za $\mathrm{Al(g) \to Al^{3+}(g)}$: $578 + 1817 + 2745 = 5140\,\mathrm{kJ/mol}$.
+4. Energija za $\mathrm{Al(g) \to Al^{3+}(g)}$ je vsota prvih treh, ker elektrone odvzemamo enega za drugim: $578 + 1817 + 2745 = 5140\,\mathrm{kJ/mol}$.
 5. Odgovor: element je aluminij; za tvorbo $1\,\mathrm{mol}$ ionov $\mathrm{Al^{3+}}$ iz plinastih atomov potrebujemo $5140\,\mathrm{kJ}$. (V spojinah se ta energija povrne z nastankom kristalne mreže ali hidratacijo ionov.)
 
 ### Primer 3 (težji)
@@ -135,6 +151,29 @@ $Z_\mathrm{eff} = Z - S$, $\quad S = 0{,}35\,N_{n} + 0{,}85\,N_{n-1} + 1{,}00\,N
 4. $Z_\mathrm{eff}(\mathrm{Cl}) = 17 - 10{,}90 = 6{,}10$.
 5. Zunanji elektroni klora čutijo skoraj trikrat večji efektivni naboj ($6{,}10/2{,}20 \approx 2{,}8$), zato so bliže jedru (manjši polmer: kovalentni polmer klora je okoli $99\,\mathrm{pm}$, kovinski polmer natrija okoli $186\,\mathrm{pm}$) in močneje vezani (večja $I_1$: $1251$ proti $496\,\mathrm{kJ/mol}$).
 6. Odgovor: $Z_\mathrm{eff}(\mathrm{Na}) \approx 2{,}2$, $Z_\mathrm{eff}(\mathrm{Cl}) \approx 6{,}1$; večji efektivni naboj pri kloru pojasni manjši atom in večjo ionizacijsko energijo.
+
+### Primer 4 – zdaj ti
+
+Zaslon telefona prekriva kaljeno aluminosilikatno steklo, v katerem so vezi $\mathrm{Si{-}O}$ in $\mathrm{Al{-}O}$. Z razliko elektronegativnosti oceni značaj obeh vezi in ugotovi, katera je bolj ionska.
+
+**Podatki:** $\chi(\mathrm{O}) = 3{,}44$, $\chi(\mathrm{Si}) = 1{,}90$, $\chi(\mathrm{Al}) = 1{,}61$; meje: $\Delta\chi < 0{,}4$ nepolarna, $0{,}4 \le \Delta\chi < 1{,}7$ polarna kovalentna, $\Delta\chi \gtrsim 1{,}7$ pretežno ionska
+**Iščemo:** značaj vezi $\mathrm{Si{-}O}$ in $\mathrm{Al{-}O}$ ter katera je bolj ionska
+
+:::formula
+$\Delta\chi = |\chi_\mathrm{A} - \chi_\mathrm{B}|$; večja $\Delta\chi$ pomeni bolj ionsko vez.
+:::
+
+**Rešitev:**
+
+1. $\mathrm{Si{-}O}$: $\Delta\chi = 3{,}44 - 1{,}90 = 1{,}54$.
+2. Ker je $0{,}4 \le 1{,}54 < 1{,}7$, je vez $\mathrm{Si{-}O}$ polarna kovalentna; kisik nosi delni negativni naboj, ker je bolj elektronegativen.
+3. Izračunaj $\Delta\chi$ za $\mathrm{Al{-}O}$ in vez razvrsti sam.
+
+:::premisli
+Kakšna je vez $\mathrm{Al{-}O}$ in katera od obeh vezi je bolj ionska? Zakaj?
+---
+$\Delta\chi = 3{,}44 - 1{,}61 = 1{,}83$, kar je nad mejo $1{,}7$: vez $\mathrm{Al{-}O}$ je pretežno ionska in bolj ionska od $\mathrm{Si{-}O}$. Aluminij je v 3. periodi levo od silicija, zato ima manjšo elektronegativnost in elektrone laže prepusti kisiku.
+:::
 
 ## Pogoste napake
 
@@ -213,24 +252,40 @@ Mulliken jo je definiral kot povprečje ionizacijske energije in elektronske afi
 
 ? Kateri atom ima največji polmer?
 - natrij
+~ Natrij je v skupini najvišje (lupina $n = 3$) in je med naštetimi najmanjši; morda si zamenjal smer trenda.
 - kalij
+~ Kalij je večji od natrija, a cezij ima še dve lupini več, zato je še večji.
 + cezij
 > Vsi trije so alkalijske kovine; navzdol po skupini se dodajajo lupine, zato ima cezij ($n = 6$) največji polmer.
 
 ? Zakaj ima kisik manjšo prvo ionizacijsko energijo kot dušik?
 - ker ima kisik manjši naboj jedra
+~ Ravno obratno: kisik ima $Z = 8$, dušik $Z = 7$; večji naboj bi energijo celo povečal.
 + ker sta v eni orbitali $2p$ kisika dva elektrona, ki se odbijata
 - ker je kisikov atom večji od dušikovega
+~ Vzdolž periode se atom manjša, zato je kisik nekoliko manjši od dušika; vzrok je odboj v parjeni orbitali $2p$.
 > Kisik ima $2p^4$: en par elektronov v isti orbitali. Odboj v paru olajša odstranitev elektrona. Dušik ima stabilno polzasedeno podlupino $2p^3$, kisikov atom pa je celo nekoliko manjši.
 
 ? Kateri je pravilni vrstni red polmerov izoelektronskih delcev?
 + $\mathrm{Na^+} < \mathrm{F^-} < \mathrm{O^{2-}}$
 - $\mathrm{O^{2-}} < \mathrm{F^-} < \mathrm{Na^+}$
+~ Obrnjen vrstni red: pri enakem številu elektronov večji naboj jedra delec skrči, zato je $\mathrm{Na^+}$ najmanjši.
 - $\mathrm{F^-} < \mathrm{Na^+} < \mathrm{O^{2-}}$
+~ $\mathrm{Na^+}$ ima največji naboj jedra ($Z = 11$) in je zato manjši od $\mathrm{F^-}$, ne večji.
 > Vsi imajo $10$ elektronov. Večji naboj jedra ($Z = 11$ za Na, $9$ za F, $8$ za O) jih bolj pritegne, zato je $\mathrm{Na^+}$ najmanjši, $\mathrm{O^{2-}}$ največji.
 
 ? Kateri element ima največjo elektronegativnost?
 - kisik
+~ Kisik je drugi najbolj elektronegativen ($3{,}44$), fluor pa je v isti periodi še bolj desno.
 - klor
+~ Klor je v isti skupini kot fluor, a eno lupino niže; navzdol po skupini elektronegativnost pada.
 + fluor
 > Elektronegativnost narašča vzdolž periode in pada navzdol po skupini. Fluor je zgoraj desno (brez žlahtnih plinov) in ima vrednost $3{,}98$.
+
+? Element ima zaporedne ionizacijske energije $I_1 = 496$, $I_2 = 4562$ in $I_3 = 6910\,\mathrm{kJ/mol}$. V kateri skupini je?
++ v 1. skupini
+- v 2. skupini
+~ Za 2. skupino bi moral biti velik skok šele med $I_2$ in $I_3$; tu je že med $I_1$ in $I_2$.
+- v 13. skupini
+~ Število podanih vrednosti ne pove števila valenčnih elektronov; šteje, kje je največji skok.
+> Največji skok je med $I_1$ in $I_2$ ($4562/496 \approx 9{,}2$): po enem elektronu že posežemo v notranjo lupino. Element ima en valenčni elektron, to je natrij v 1. skupini.
