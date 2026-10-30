@@ -5,6 +5,7 @@ import { systemForCountry } from "./regions.js";
 import { currentLang, currentRegion, deviceRegion, locale, t } from "./i18n.js";
 import { openProfileMenu } from "./profile-menu.js";
 import { consentFields, consentsOk, consentBody, linkBox, bindLinkBox } from "./pay-ui.js";
+import { renderCreditCard } from "./credit-card.js";
 // Starševski račun: prijava, potrditev e-naslova, otroci s soglasjem, naročnina, priporočila.
 // Deluje samo, ko je na strežniku EVKLID_ACCOUNTS=1.
 
@@ -325,6 +326,10 @@ export async function initAccount({ onReady }) {
       // Paket pred testom: potrditev plačila ob vrnitvi (deluje tudi brez webhooka).
       const r = await api("/api/billing/pass/confirm", { method: "POST", body: { session_id: sessionId } }).catch(() => null);
       toast(r?.paid ? t("pass.paid") : t("pass.pending"));
+    } else if (billing === "credit" && sessionId) {
+      // Dokup porabe AI: potrditev ob vrnitvi s plačilne strani (deluje tudi brez webhooka).
+      const r = await api("/api/billing/credit/confirm", { method: "POST", body: { session_id: sessionId } }).catch(() => null);
+      toast(r?.paid ? t("credit.paid") : t("credit.pending"));
     } else if (billing === "gift" && sessionId) {
       // Darilna koda: potrditev ob vrnitvi; koda je potem v zavihku Račun.
       const r = await api("/api/billing/gift/confirm", { method: "POST", body: { session_id: sessionId } }).catch(() => null);
@@ -1137,6 +1142,7 @@ async function renderAccount() {
           : `<p class="muted">Vaš paket ima ${acc.max_children === 1 ? "1 profil" : `${acc.max_children} profila`}.${acc.max_children === 1 ? " Za drugega otroka izberite paket za 2 otroka." : ""}</p>`}
       <p class="muted">Vsak profil je lahko hkrati odprt samo na eni napravi. Profil zamenjate (izbrišete v zavihku Nastavitve in dodate novega) največ enkrat na 30 dni.</p>
     </div>
+    <div id="credit-card"></div>
 
     <div class="card">
       <h2>${icon("award")} Povabi prijatelje</h2>
@@ -1204,6 +1210,7 @@ async function renderAccount() {
     }
   });
   bindAdminCodes(acc);
+  renderCreditCard($("#credit-card"), { api });
   $("#gift-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const btn = $("button[type=submit]", e.target);

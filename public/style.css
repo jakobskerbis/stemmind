@@ -962,6 +962,10 @@ body.onboarding .tabs, body.onboarding .tabbar, body.onboarding #modebar, body.o
 .um-tip.act { border-inline-start-color: #eab308; }
 .um-tip p { margin: 4px 0 0; }
 .um-claim { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; }
+.um-budget-form { display: flex; gap: 8px; align-items: flex-end; margin: 6px 0; flex-wrap: wrap; }
+.um-budget-form label { display: flex; flex-direction: column; gap: 2px; font-size: 0.85rem; flex: 1 1 160px; }
+.um-budget-form input { width: 100%; font-weight: 600; padding: 8px 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--bg); min-height: 44px; }
+.um-budget-form input:focus { border-color: var(--accent); outline: none; }
 @media (max-width: 760px) {
   .usage-pop { top: 56px; right: 16px; }
   .stat.usage-meter { font-size: 0.85rem; }
@@ -979,3 +983,6 @@ body.onboarding .tabs, body.onboarding .tabbar, body.onboarding #modebar, body.o
 .check-row { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
 .check-row input { flex: none; width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--accent); }
 .check-row span { display: flex; flex-direction: column; gap: 2px; }
+.credit-amount { display: inline-flex; align-items: center; gap: 4px; margin-inline-start: 6px; }
+.credit-amount input { width: 7.5em; min-height: 40px; }
+.credit-est { display: block; margin-top: 4px; }
