@@ -78,9 +78,9 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
 
-// Pisave slogov (docs/oblikovanje.md): Čist = Instrument Sans, Igriv = Nunito, Temen = IBM Plex Sans.
+// Pisave slogov (docs/oblikovanje.md): Čist = Instrument Sans, Igriv = Nunito, Temen = IBM Plex Sans, Antični = EB Garamond (naslovi).
 // Brskalnik prenese le pisavo, ki jo slog res uporablja.
-const FONTS = [["nunito", "nunito"], ["instrument-sans", "instrument-sans"], ["ibm-plex-sans", "ibm-plex-sans"]];
+const FONTS = [["nunito", "nunito"], ["instrument-sans", "instrument-sans"], ["ibm-plex-sans", "ibm-plex-sans"], ["eb-garamond", "eb-garamond"]];
 
 // Stara povezava (ngrok ali začasni tunel Cloudflare) vodi na lastno domeno (brand.json), ko ta
 // kaže na ta isti strežnik: nameščena aplikacija in shranjene povezave tako ne ostanejo prazne.

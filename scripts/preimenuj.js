@@ -40,7 +40,9 @@ const SKIP_FILES = new Set(["brand.json", "test/ime.test.js", "scripts/preimenuj
 const TEXT = /\.(js|cjs|mjs|json|md|html|css|bat|cmd|command|yaml|yml|txt|svg|webmanifest|py|csv)$|^(Dockerfile|\.env\.example)$/;
 // Ime repozitorija in j-jeve mape (<slug>-main, <slug>-sim) se ne menjata sama: repozitorij preimenuje j na GitHubu,
 // nato v brand.json → repo vpiši novo ime in staro dodaj v legacy[].repo.
-const KEEP = [new RegExp(esc(cur.repo || "\u0000"), "g"), new RegExp(`${esc(cur.slug)}-(?:main|sim)\\b`, "g")];
+// Dejstva o grških matematikih (ključi »greek.*« v public/i18n) govorijo o matematiku Evklidu, ne o aplikaciji:
+// ostanejo, kot so. Ob preimenovanju v greek.f1 v vseh jezikih ročno odstrani stavek, da se aplikacija imenuje po njem.
+const KEEP = [new RegExp(esc(cur.repo || "\u0000"), "g"), new RegExp(`${esc(cur.slug)}-(?:main|sim)\\b`, "g"), /^\s*"greek\.[^\n]*/gm];
 
 function* walk(dir) {
   for (const d of fs.readdirSync(dir, { withFileTypes: true })) {

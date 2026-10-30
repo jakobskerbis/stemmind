@@ -270,7 +270,8 @@ html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important;
 
 /* ---------- Slogi (Nastavitve → Videz → Slog; theme.js nastavi data-style na <html>) ----------
    Čist je privzeti (style.css :root). Igriv: Nunito, bolj zaobljen, »pritisnjeni« gumbi s spodnjo senco.
-   Temen: IBM Plex Sans, vedno temen, ostrejši robovi. Barve slogov izračuna theme.js. */
+   Temen: IBM Plex Sans, vedno temen, ostrejši robovi. Antični: marmor in terakota, naslovi v EB Garamond.
+   Barve slogov izračuna theme.js. */
 :root[data-style="igriv"] {
   --font: "Nunito Variable", "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --radius: 22px;
@@ -285,12 +286,85 @@ html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important;
   --radius-sm: 7px;
   --shadow: none;
 }
+/* Antični: topel marmor, terakota (v temnem načinu črnofiguralna keramika: skoraj črna, terakota in okra),
+   klasična serifna pisava (EB Garamond) samo za naslove, meander na robu sklopov. Besedilo ostane v --font. */
+:root[data-style="antik"] {
+  --font-head: "EB Garamond Variable", "EB Garamond", Georgia, "Times New Roman", serif;
+  --radius: 16px;
+  --radius-sm: 11px;
+  --shadow: 0 1px 2px color-mix(in srgb, var(--text) 8%, transparent);
+}
+:root.dark[data-style="antik"] { --shadow: none; }
+/* Marmor: ena zelo rahla žila in topel sij čez ozadje (iz --text, zato sledijo lastnim barvam); brez slike, brez fixed. */
+:root[data-style="antik"] body {
+  background-image:
+    linear-gradient(112deg, transparent 0 52%, color-mix(in srgb, var(--text) 2%, transparent) 54%, transparent 56.5%),
+    radial-gradient(120% 70% at 90% 0%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 70%);
+  background-repeat: no-repeat;
+  background-size: 100% 100vh;
+}
+html.lite[data-style="antik"] body { background-image: none; }
+:where(:root[data-style="antik"]) :is(h1, h2, h3),
+:root[data-style="antik"] .brand-name { font-family: var(--font-head); font-weight: 650; letter-spacing: 0; font-size-adjust: ex-height 0.46; }
+:root[data-style="antik"] .brand-name { font-size: 1.32rem; font-weight: 700; }
+:root[data-style="antik"] .eyebrow { letter-spacing: 0.12em; }
+/* Meander pod glavo vsakega sklopa na Učni poti. */
+:root[data-style="antik"] .unit-head { position: relative; padding-bottom: 16px; margin-bottom: 4px; }
+:root[data-style="antik"] .unit-head::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: var(--meander-h); background: var(--meander-c); -webkit-mask: var(--meander) repeat-x 0 0 / var(--meander-h) var(--meander-h); mask: var(--meander) repeat-x 0 0 / var(--meander-h) var(--meander-h); }
+/* Lahki način: brez spletne pisave tudi za naslove. */
+html.lite[data-style="antik"] { --font-head: Georgia, "Times New Roman", serif; }
+
 /* Čist in Temen: brez prelivov in senc pod logotipom in kartico Današnji trening. */
 :root:not([data-style="igriv"]) .logo { box-shadow: none; }
 :root:not([data-style="igriv"]) h1, :root:not([data-style="igriv"]) h2 { font-weight: 700; }
 
+/* ---------- Pridih stare Grčije (vsi slogi; docs/oblikovanje.md) ----------
+   Logotip: Evklidovi Elementi I.1 (ikona »elementi«). Meander (grški ključ) kot tanek pas iz maske SVG:
+   barva je spremenljivka, zato sledi svetlemu/temnemu načinu in lastnim barvam. Kartica »Grški matematiki«
+   (public/greek.js) v praznem klepetu in na dnu Učne poti. */
+:root {
+  --meander: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h7v1H0zM0 1h1v7H0zM1 7h7v1H1zM6 1h1v5H6zM2 5h4v1H2zM2 2h1v3H2zM3 2h2v1H3z'/%3E%3C/svg%3E");
+  --meander-h: 8px;
+  --meander-c: color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+.logo svg.i { width: 26px; height: 26px; }
+@media (min-width: 761px) {
+  .topbar::after {
+    content: ""; position: absolute; inset-inline: 0; bottom: calc(-1px - var(--meander-h)); height: var(--meander-h); pointer-events: none;
+    background: var(--meander-c); opacity: 0.6;
+    -webkit-mask: var(--meander) repeat-x 0 0 / var(--meander-h) var(--meander-h); mask: var(--meander) repeat-x 0 0 / var(--meander-h) var(--meander-h);
+  }
+}
+.gr-fact {
+  position: relative; display: flex; align-items: flex-start; gap: 12px; width: 100%; margin: 0 0 16px;
+  padding: calc(var(--meander-h) + 12px) 8px 12px 14px; padding-inline: 14px 8px; text-align: start;
+  background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+}
+.gr-fact::before {
+  content: ""; position: absolute; inset-inline: 0; top: 0; height: var(--meander-h); background: var(--meander-c);
+  -webkit-mask: var(--meander) repeat-x 0 0 / var(--meander-h) var(--meander-h); mask: var(--meander) repeat-x 0 0 / var(--meander-h) var(--meander-h);
+}
+.gr-ic { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; color: var(--accent); background: var(--accent-soft); }
+.gr-ic svg.i { width: 26px; height: 26px; }
+.gr-body { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.gr-text { margin: 0; font-size: 0.95rem; line-height: 1.5; }
+.gr-fact .gr-next { flex: none; align-self: center; color: var(--muted); }
+.gr-fact .gr-next:hover { color: var(--accent); }
+.empty:has(.gr-chat) { max-width: 560px; }
+.empty .gr-chat { margin: 16px 0 0; }
+.empty .gr-chat .gr-text { font-size: 0.9rem; line-height: 1.45; }
+/* Telefon: ikona, naslov in gumb v eni vrsti, besedilo čez vso širino pod njimi. */
+@media (max-width: 560px) {
+  .gr-fact { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 4px 10px; }
+  .gr-body { display: contents; }
+  .gr-ic { width: 34px; height: 34px; }
+  .gr-ic svg.i { width: 24px; height: 24px; }
+  .gr-fact .gr-next { grid-column: 3; grid-row: 1; }
+  .gr-text { grid-column: 1 / -1; padding-inline-end: 6px; }
+}
+
 /* Izbira sloga v Nastavitve → Videz */
-.style-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.style-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px; }
 .style-card { display: flex !important; justify-content: flex-start !important; align-items: center; gap: 12px; text-align: start; padding: 12px 14px !important; min-height: 64px !important; }
 .style-card.on { border-color: var(--accent) !important; background: var(--accent-soft) !important; }
 .style-sw { display: flex; flex: none; }

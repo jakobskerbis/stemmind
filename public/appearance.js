@@ -1,4 +1,4 @@
-// Nastavitve → Videz: slog (Čist / Igriv / Temen), svetli/temni način, poudarki, barve oken, menijev in pisave, naključne barve.
+// Nastavitve → Videz: slog (Čist / Igriv / Temen / Antični), svetli/temni način, poudarki, barve oken, menijev in pisave, naključne barve.
 // Vse se zgodi takoj in velja za to napravo (theme.js).
 import { icon } from "./icons.js";
 import { t } from "./i18n.js";
@@ -19,6 +19,7 @@ const STYLES = [
   ["cist", t("ap.styleCist"), t("ap.styleCistText"), ["#f6f7f9", "#ffffff", "#2353d1"], "Instrument Sans Variable"],
   ["igriv", t("ap.styleIgriv"), t("ap.styleIgrivText"), ["#fff6ea", "#ffc56b", "#6a3bd6"], "Nunito Variable"],
   ["temen", t("ap.styleTemen"), t("ap.styleTemenText"), ["#0d1117", "#151b23", "#4cd3a4"], "IBM Plex Sans Variable"],
+  ["antik", t("ap.styleAntik"), t("ap.styleAntikText"), ["#f5f0e8", "#fffcf7", "#a8461f"], "EB Garamond Variable"],
 ];
 const MODES = [["light", "sun", t("ap.light")], ["dark", "moon", t("ap.dark")], ["system", "sun-moon", t("ap.system")]];
 

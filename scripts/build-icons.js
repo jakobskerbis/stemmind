@@ -7,7 +7,7 @@ const NAMES = [
   "map", "compass", "repeat", "clipboard-check", "zap", "message-circle", "chart-column", "settings", "user",
   "star", "flame", "check", "x", "lock", "pencil", "keyboard", "eraser", "undo-2", "trash-2", "plus", "eye",
   "camera", "send", "arrow-left", "arrow-right", "lightbulb", "trophy", "target", "puzzle", "book-open",
-  "sparkles", "circle-help", "menu", "chevron-right", "graduation-cap", "play", "rotate-ccw", "award",
+  "sparkles", "circle-help", "menu", "chevron-right", "graduation-cap", "play", "rotate-ccw", "gift", "award",
   "calendar", "info", "search", "users", "circle-check", "circle-x", "bot", "trending-up", "download", "flask-conical", "monitor-play", "refresh-cw", "medal", "timer", "skip-forward", "flag",
   "sigma", "sun", "moon", "sun-moon", "palette", "dices", "paintbrush", "mic", "square", "circle-arrow-up", "party-popper", "globe", "wifi-off", "cloud-upload", "feather", "message-square-heart",
   "library", "file-text", "list-checks", "external-link", "notebook-pen", "bell",
@@ -44,7 +44,16 @@ for (const n of NAMES) {
   const svg = fs.readFileSync(path.join(dir, `${n}.svg`), "utf8");
   out[n] = svg.slice(svg.indexOf(">", svg.indexOf("<svg")) + 1, svg.lastIndexOf("</svg>")).replace(/\s*\n\s*/g, "").trim();
 }
-const js = `// Ikone Lucide (ISC licenca, https://lucide.dev). Ustvarjeno s scripts/build-icons.js.
+// Lastne ikone (ista mreža 24 × 24, currentColor).
+// »elementi«: Evklidovi Elementi, I. knjiga, 1. trditev – enakostranični trikotnik nad daljico AB iz dveh krogov
+// s središčema A in B (logotip v aplikaciji; ikona za namestitev in favicon ostaneta v public/icons/).
+const CUSTOM = {
+  elementi:
+    '<circle cx="8.5" cy="12" r="7" stroke-width="1.5" /><circle cx="15.5" cy="12" r="7" stroke-width="1.5" />' +
+    '<path d="M8.5 12h7L12 5.94z" fill="currentColor" fill-opacity="0.3" stroke-width="1.75" />',
+};
+Object.assign(out, CUSTOM);
+const js = `// Ikone Lucide (ISC licenca, https://lucide.dev) in lastne (CUSTOM). Ustvarjeno s scripts/build-icons.js.
 const P = ${JSON.stringify(out, null, 0).replace(/","/g, '",\n  "')};
 
 export function icon(name, cls = "") {

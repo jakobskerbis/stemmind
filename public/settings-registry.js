@@ -46,7 +46,7 @@ export const PROFILE_SETTINGS = {
 // Nastavitve te naprave (localStorage); strežnik jih ne hrani, odjemalec jih uporabi takoj.
 // ls: ključ v localStorage in preslikava vrednosti; brez ls ima nastavitev svojo kodo v public/chat-settings.js.
 export const DEVICE_SETTINGS = {
-  style: { values: ["cist", "igriv", "temen"], desc: "visual style: cist = clean (default), igriv = playful/rounded, temen = always dark" },
+  style: { values: ["cist", "igriv", "temen", "antik"], desc: "visual style: cist = clean (default), igriv = playful/rounded, temen = always dark, antik = ancient Greek (marble, terracotta, serif headings; light or dark)" },
   theme: { values: ["light", "dark", "system"], desc: "light / dark mode, system = follow the device (ignored in style temen)" },
   accent: { desc: "accent colour: '#rrggbb', 'random' or 'default' (contrast is fixed automatically)" },
   colors: { values: ["random", "default"], desc: "whole colour palette of the current light/dark mode: random or back to default" },

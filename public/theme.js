@@ -1,9 +1,10 @@
 // Svetli/temni način in lastne barve. Navaden skript v <head>, da se barve nastavijo pred prvim izrisom.
 // Nastavitve so shranjene na tej napravi (localStorage "evklid.theme"):
-//   { style: "cist" | "igriv" | "temen", mode: "system" | "light" | "dark", accent: "#rrggbb" | null,
+//   { style: "cist" | "igriv" | "temen" | "antik", mode: "system" | "light" | "dark", accent: "#rrggbb" | null,
 //     light: { bg, surface, menu, text } | null, dark: { … } | null }
 // Slog (docs/oblikovanje.md): Čist (privzeto, Instrument Sans, umirjen), Igriv (Nunito, zaobljen, topel),
-// Temen (IBM Plex Sans, vedno temen, metin poudarek). Slog nastavi data-style na <html> (pisava, oblike)
+// Temen (IBM Plex Sans, vedno temen, metin poudarek), Antični (marmor in terakota, naslovi v EB Garamond;
+// temni način kot črnofiguralna keramika). Slog nastavi data-style na <html> (pisava, oblike)
 // in osnovne barve; lastne barve uporabnika veljajo nad njimi.
 // Iz teh nekaj barv izračunamo vse ostale (robove, sivo besedilo, poudarke …) in pri tem
 // pazimo na kontrast, da je besedilo vedno dobro berljivo.
@@ -29,7 +30,7 @@
 
 (function () {
   const KEY = "evklid.theme";
-  const STYLES = ["cist", "igriv", "temen"];
+  const STYLES = ["cist", "igriv", "temen", "antik"];
   // Osnovne barve slogov. Čist je enak privzetim barvam v style.css (brez izračuna).
   const BASES = {
     cist: {
@@ -43,6 +44,10 @@
     temen: {
       light: { bg: "#0d1117", surface: "#151b23", menu: "#151b23", text: "#e6eaf0", accent: "#4cd3a4" },
       dark: { bg: "#0d1117", surface: "#151b23", menu: "#151b23", text: "#e6eaf0", accent: "#4cd3a4" },
+    },
+    antik: {
+      light: { bg: "#f5f0e8", surface: "#fffcf7", menu: "#fffcf7", text: "#241c15", accent: "#a8461f" },
+      dark: { bg: "#16110d", surface: "#211a14", menu: "#211a14", text: "#f2e8da", accent: "#e08a52" },
     },
   };
   const BASE = BASES.cist;

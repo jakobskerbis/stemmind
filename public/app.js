@@ -1,6 +1,7 @@
 // Evklid – odjemalec (brez ogrodja).
 import { attachPad, closePad, openPad, padIsSheet } from "./pad.js";
 import { icon, hydrateIcons } from "./icons.js";
+import { greekFactHtml, wireGreekFacts } from "./greek.js";
 import { t, locale, currentLang, currentRegion, regionFor, setLanguage, deviceRegion } from "./i18n.js";
 import { systemForCountry, isRegional, SCHOOL_SYSTEMS } from "./regions.js";
 import { mountLanguageCard } from "./language.js";
@@ -515,7 +516,9 @@ function renderEmptyChat() {
     <div class="tutor-avatar big" aria-hidden="true">${icon("sparkles")}</div>
     <p class="big">${t("chat.hello", { name: escapeHtml(state.student.name) })}</p>
     <p>${t("chat.intro")}</p>
-    <div class="ideas">${ideas.map((t) => `<button type="button" class="idea" data-idea="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("")}</div></div>`;
+    <div class="ideas">${ideas.map((t) => `<button type="button" class="idea" data-idea="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("")}</div>
+    ${greekFactHtml("gr-chat")}</div>`;
+  wireGreekFacts($("#messages"));
   $("#messages").querySelectorAll("[data-idea]").forEach((b) =>
     b.addEventListener("click", () => {
       $("#input").value = b.dataset.idea;
@@ -1692,7 +1695,10 @@ async function loadPath(key = state.pathKey) {
         </div>
       </section>`;
       })
-      .join("");  if (!maybeTour.done) {
+      .join("") +
+    greekFactHtml("gr-path");
+  wireGreekFacts(content);
+  if (!maybeTour.done) {
     maybeTour.done = true;
     maybeTour();
   }
