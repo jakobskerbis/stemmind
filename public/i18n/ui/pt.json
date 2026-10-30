@@ -2618,6 +2618,10 @@
   "win.settingNote": "Reordene os separadores arrastando-os (em ecrãs táteis, mantenha premido primeiro). No computador, arraste um separador da barra superior para a página e ele abre numa janela que pode mover e redimensionar. A conversa com o tutor continua visível como uma bolha.",
   "win.reset": "Repor disposição",
   "win.resetDone": "A disposição foi reposta.",
+  "split.resize": "Alterar largura",
+  "split.hint": "Arrasta para alterar a largura. Duplo clique para repor.",
+  "split.showList": "Mostrar lista de conversas",
+  "split.settingNote": "No computador e no tablet, arrasta o divisor entre as partes da página (lista de conversas, explicação, simulações, calculadora) para mudar a largura.",
   "full.close": "Fechar",
   "full.message": "A tua mensagem",
   "full.task": "Enunciado do exercício"

@@ -2662,6 +2662,10 @@
   "win.settingNote": "Karty přeuspořádáš přetažením (na dotykové obrazovce nejdřív dlouze podrž). Na počítači přetáhni kartu z horní lišty na stránku a otevře se v okně, které můžeš přesouvat a měnit jeho velikost. Rozhovor s doučovatelem zůstane vidět jako bublina.",
   "win.reset": "Obnovit rozložení",
   "win.resetDone": "Rozložení bylo obnoveno.",
+  "split.resize": "Změnit šířku",
+  "split.hint": "Tažením změníš šířku. Dvojklik vrátí výchozí.",
+  "split.showList": "Zobrazit seznam konverzací",
+  "split.settingNote": "Na počítači a tabletu změníš šířku částí stránky (seznam konverzací, výklad, simulace, kalkulačka) přetažením oddělovače mezi nimi.",
   "full.close": "Zavřít",
   "full.message": "Tvoje zpráva",
   "full.task": "Zadání úlohy"

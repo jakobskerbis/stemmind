@@ -2614,6 +2614,10 @@
   "win.settingNote": "Riordina le schede trascinandole (sugli schermi touch, tieni premuto prima). Sul computer trascina una scheda dalla barra in alto sulla pagina e si apre in una finestra che puoi spostare e ridimensionare. La conversazione con il tutor resta visibile come bolla.",
   "win.reset": "Ripristina disposizione",
   "win.resetDone": "La disposizione è stata ripristinata.",
+  "split.resize": "Cambia larghezza",
+  "split.hint": "Trascina per cambiare la larghezza. Doppio clic per ripristinare.",
+  "split.showList": "Mostra elenco conversazioni",
+  "split.settingNote": "Su computer e tablet trascina il divisore tra le parti della pagina (elenco conversazioni, spiegazione, simulazioni, calcolatrice) per cambiarne la larghezza.",
   "full.close": "Chiudi",
   "full.message": "Il tuo messaggio",
   "full.task": "Testo dell'esercizio"

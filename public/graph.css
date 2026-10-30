@@ -18,7 +18,7 @@
 .gc {
   --gc-panel: 380px;
   position: relative; flex: 1; min-height: 0; min-width: 0;
-  display: grid; grid-template-columns: var(--gc-panel) 1fr; grid-template-rows: 1fr auto;
+  display: grid; grid-template-columns: var(--gc-panel) minmax(0, 1fr); grid-template-rows: 1fr auto;
   background: var(--bg);
 }
 .gc-panel {
@@ -58,6 +58,8 @@
   position: relative; display: grid; grid-template-columns: 44px 1fr auto; align-items: start;
   border-bottom: 1px solid var(--border); background: var(--surface); min-height: 56px;
 }
+/* Prazna vrstica ima tudi razred .empty (style.css, prazen klepet: max-width 440px): ostane čez celo širino seznama. */
+.gc-row.empty { max-width: none; margin: 0; }
 .gc-row.selected, .gc-row.editing { background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface)); }
 .gc-row.editing { box-shadow: inset 3px 0 0 var(--accent); }
 .gc-side { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 0 6px; background: var(--surface-2); align-self: stretch; }
@@ -258,7 +260,7 @@ body.graph-open { overflow: hidden; }
 .calc-open svg.i { flex-shrink: 0; }
 
 /* ---------- znanstveni kalkulator (public/graph/sci.js) ---------- */
-.sc { flex: 1; min-height: 0; min-width: 0; display: grid; grid-template-columns: 1fr minmax(360px, 460px); background: var(--bg); }
+.sc { flex: 1; min-height: 0; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) var(--split-sc, minmax(360px, 460px)); background: var(--bg); }
 .sc-screen { display: flex; flex-direction: column; min-height: 0; background: var(--surface); border-right: 1px solid var(--border); }
 .sc-bar { display: flex; align-items: center; gap: 6px; padding: 8px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .sc-angle > button { padding: 4px 10px !important; font-size: 0.8rem; min-height: 34px; }

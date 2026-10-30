@@ -2612,6 +2612,10 @@
   "win.settingNote": "A füleket húzással rendezheted át (érintőképernyőn előbb tartsd lenyomva). Számítógépen húzz egy fület a felső sávból az oldalra, és egy mozgatható, átméretezhető ablakban nyílik meg. Az oktatóval folytatott beszélgetés buborékként látható marad.",
   "win.reset": "Elrendezés visszaállítása",
   "win.resetDone": "Az elrendezés visszaállt.",
+  "split.resize": "Szélesség módosítása",
+  "split.hint": "Húzd a szélesség módosításához. Dupla kattintással visszaáll.",
+  "split.showList": "Beszélgetések listájának megjelenítése",
+  "split.settingNote": "Számítógépen és táblagépen az oldal részei (beszélgetéslista, magyarázat, szimulációk, számológép) közötti elválasztó húzásával módosíthatod a szélességüket.",
   "full.close": "Bezárás",
   "full.message": "Az üzeneted",
   "full.task": "A feladat szövege"

@@ -2590,6 +2590,10 @@
   "win.settingNote": "Kéo các thẻ để sắp xếp lại (trên màn hình cảm ứng, hãy nhấn giữ trước). Trên máy tính, kéo một thẻ từ thanh trên cùng vào trang và nó sẽ mở trong một cửa sổ mà bạn có thể di chuyển và đổi kích thước. Cuộc trò chuyện với gia sư vẫn hiển thị dưới dạng bong bóng.",
   "win.reset": "Đặt lại bố cục",
   "win.resetDone": "Đã đặt lại bố cục.",
+  "split.resize": "Đổi độ rộng",
+  "split.hint": "Kéo để đổi độ rộng. Nhấp đúp để đặt lại.",
+  "split.showList": "Hiện danh sách cuộc trò chuyện",
+  "split.settingNote": "Trên máy tính và máy tính bảng, kéo thanh phân cách giữa các phần của trang (danh sách cuộc trò chuyện, phần giải thích, mô phỏng, máy tính) để đổi độ rộng.",
   "full.close": "Đóng",
   "full.message": "Tin nhắn của bạn",
   "full.task": "Đề bài"

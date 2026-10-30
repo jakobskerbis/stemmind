@@ -1,7 +1,7 @@
-/* Premična okna, mehurček inštruktorja in preurejanje vrstic (public/okna.js, public/vrstice.js).
-   Pravila: docs/oblikovanje.md, razdelek »Premična okna«. Barve samo iz spremenljivk.
-   Položaj okna (left/top/width/height) nastavi JS v zaslonskih koordinatah, zato so ročaji za velikost
-   fizično levo/desno (enako v RTL); vse ostalo je logično. */
+/* Premična okna, mehurček inštruktorja, preurejanje vrstic in ločnice med deli strani (public/okna.js,
+   public/vrstice.js, public/razdelilnik.js). Pravila: docs/oblikovanje.md, razdelka »Premična okna« in
+   »Spreminjanje velikosti delov«. Barve samo iz spremenljivk. Položaj okna (left/top/width/height) in ločnice
+   nastavi JS v zaslonskih koordinatah, zato so ročaji za velikost fizično levo/desno (enako v RTL); vse ostalo je logično. */
 
 .okna { display: contents; }
 
@@ -215,3 +215,36 @@ body.vr-busy, body.vr-busy * { cursor: grabbing !important; user-select: none !i
 
 /* ---------- nastavitev ---------- */
 .okna-card .okna-reset { margin-top: 14px; margin-inline-start: 34px; min-height: 40px !important; }
+
+/* ---------- ločnice med deli strani (razdelilnik.js) ----------
+   Ločnica je absolutno postavljena v vsebniku (.split-host); JS nastavi left/top in višino iz stolpcev mreže.
+   Vidna je tanka ručka na sredini; črta v barvi poudarka ob lebdenju, fokusu in potegu. */
+.split-host { position: relative; }
+.split-handle { position: absolute; z-index: 4; touch-action: none; outline: none; -webkit-tap-highlight-color: transparent; }
+.split-handle[hidden] { display: none; }
+.split-x { width: 12px; transform: translateX(-50%); cursor: col-resize; }
+.split-y { height: 12px; transform: translateY(-50%); cursor: row-resize; }
+.split-handle::before { content: ""; position: absolute; border-radius: 2px; background: transparent; transition: background-color 0.15s; }
+.split-x::before { top: 0; bottom: 0; left: 50%; width: 2px; margin-left: -1px; }
+.split-y::before { left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; }
+.split-grip {
+  position: sticky; display: block; border-radius: 3px; background: var(--border);
+  box-shadow: 0 0 0 2px var(--bg); transition: background-color 0.15s, transform 0.15s;
+}
+.split-x .split-grip { top: calc(50% - 18px); width: 6px; height: 36px; margin: 0 auto; }
+.split-y .split-grip { left: calc(50% - 18px); width: 36px; height: 6px; margin-block: 3px; }
+.split-handle:hover::before, .split-handle:focus-visible::before, .split-handle.dragging::before { background: var(--accent); }
+.split-handle:hover .split-grip, .split-handle:focus-visible .split-grip, .split-handle.dragging .split-grip { background: var(--accent); }
+.split-x:focus-visible .split-grip { transform: scaleX(1.35); }
+.split-y:focus-visible .split-grip { transform: scaleY(1.35); }
+/* Na dotik (tablica) širše območje za prst. */
+@media (pointer: coarse) {
+  .split-x { width: 28px; }
+  .split-y { height: 28px; }
+  .split-x .split-grip { top: calc(50% - 22px); height: 44px; }
+}
+/* Med potegom se besedilo ne označuje, platna in vdelave ne lovijo kazalca. */
+body.splitting { user-select: none; -webkit-user-select: none; }
+body.splitting-x, body.splitting-x * { cursor: col-resize !important; }
+body.splitting-y, body.splitting-y * { cursor: row-resize !important; }
+body.splitting iframe, body.splitting canvas { pointer-events: none; }

@@ -2614,6 +2614,10 @@
   "win.settingNote": "Drag tabs to reorder them (on touch screens, press and hold first). On a computer, drag a tab from the top bar onto the page and it opens in a window you can move and resize. The conversation with the tutor stays visible as a bubble.",
   "win.reset": "Reset layout",
   "win.resetDone": "Layout has been reset.",
+  "split.resize": "Resize",
+  "split.hint": "Drag to change the width. Double-click to reset.",
+  "split.showList": "Show conversation list",
+  "split.settingNote": "On a computer or tablet, drag the divider between parts of a page (conversation list, explanation, simulations, calculator) to change their width.",
   "full.close": "Close",
   "full.message": "Your message",
   "full.task": "Task text"

@@ -2639,6 +2639,10 @@
   "win.settingNote": "Kartice preurediš povlačenjem (na ekranu osjetljivom na dodir prvo dugo pritisni). Na računaru povuci karticu s gornje trake na stranicu i otvorit će se u prozoru koji možeš pomjerati i mijenjati mu veličinu. Razgovor s instruktorom ostaje vidljiv kao oblačić.",
   "win.reset": "Vrati izvorni raspored",
   "win.resetDone": "Raspored je vraćen na izvorni.",
+  "split.resize": "Promijeni širinu",
+  "split.hint": "Povuci da promijeniš širinu. Dvoklik vraća zadanu.",
+  "split.showList": "Prikaži listu razgovora",
+  "split.settingNote": "Na računaru i tabletu širinu dijelova stranice (lista razgovora, objašnjenje, simulacije, kalkulator) mijenjaš povlačenjem razdjelnika između njih.",
   "full.close": "Zatvori",
   "full.message": "Tvoja poruka",
   "full.task": "Tekst zadatka"

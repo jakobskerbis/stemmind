@@ -173,7 +173,7 @@ a.btn-secondary svg { color: var(--accent); }
    Enako na tablici ležeče (na dotik, od 1000 px); ožji stolpci zanjo so v touch.css. */
 @media (min-width: 1200px), (min-width: 1000px) and (hover: none) and (pointer: coarse) {
   /* Učna pot: levo izbira, trening in načini (ostanejo vidni), desno sklopi in teme. */
-  #view-path { max-width: 1320px; display: grid; grid-template-columns: minmax(360px, 440px) minmax(0, 1fr); gap: 0 28px; align-items: start; align-content: start; }
+  #view-path { max-width: 1320px; display: grid; grid-template-columns: var(--split-path, minmax(360px, 440px)) minmax(0, 1fr); gap: 0 28px; align-items: start; align-content: start; }
   /* Na nizkem zaslonu stolpec ne sme biti višji od okna, sicer zadnja kartica ni dosegljiva: dobi svoj drsnik. */
   #view-path > .path-side { position: sticky; top: 0; max-height: calc(100dvh - 120px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; margin: -6px; padding: 6px; }
   #view-path .hero { grid-template-columns: auto 1fr; }
@@ -188,7 +188,7 @@ a.btn-secondary svg { color: var(--accent); }
   /* Tema: levo naloga, desno razlaga, ki ostane vidna med reševanjem. */
   #view-topic:has(.topic-grid) { max-width: 1400px; }
   body:not(.pad-open) .topic-grid {
-    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); grid-template-areas: "head expl" "practice expl"; grid-template-rows: auto 1fr;
+    display: grid; grid-template-columns: minmax(0, 1.05fr) var(--split-topic, minmax(0, 1fr)); grid-template-areas: "head expl" "practice expl"; grid-template-rows: auto 1fr;
     gap: 0 24px; align-items: start;
   }
   body:not(.pad-open) .topic-grid > .topic-head { grid-area: head; }
@@ -198,12 +198,12 @@ a.btn-secondary svg { color: var(--accent); }
 
   /* Serija nalog (trening, ponavljanje …): desno razlaga teme trenutne naloge. */
   #view-topic:has(.session-grid > aside:not([hidden])) { max-width: 1400px; }
-  body:not(.pad-open) .session-grid:has(> aside:not([hidden])) { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 0 24px; align-items: start; }
+  body:not(.pad-open) .session-grid:has(> aside:not([hidden])) { display: grid; grid-template-columns: minmax(0, 1.05fr) var(--split-topic, minmax(0, 1fr)); gap: 0 24px; align-items: start; }
   .session-grid > aside { position: sticky; top: 0; max-height: calc(100dvh - 150px); overflow-y: auto; }
 
   /* Lekcija: besedilo levo, poskusi desno (pritrjeni, da so vidni med branjem). */
   #view-textbook:has(.tb-lesson-grid.has-side) { max-width: 1440px; }
-  .tb-lesson-grid.has-side { display: grid; grid-template-columns: minmax(0, 1fr) minmax(420px, 560px); gap: 0 28px; align-items: start; }
+  .tb-lesson-grid.has-side { display: grid; grid-template-columns: minmax(0, 1fr) var(--split-lesson, minmax(420px, 560px)); gap: 0 28px; align-items: start; }
   .tb-lesson-grid.has-side .tb-side { position: sticky; top: 0; max-height: calc(100dvh - 120px); overflow-y: auto; overscroll-behavior: contain; padding-bottom: 8px; }
   .tb-side .demo-values { grid-template-columns: 1fr 1fr; }
   .tb-lesson-grid.has-side .tb-side .demo-svg { max-width: 100%; max-height: 46dvh; width: auto; display: block; margin: 0 auto; }
@@ -221,7 +221,7 @@ a.btn-secondary svg { color: var(--accent); }
 @media (min-width: 1700px) {
   /* Zelo širok zaslon: razlaga ostane ob nalogi tudi, ko je odprta plošča za vnos. */
   body.pad-open .topic-grid {
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "head expl" "practice expl"; grid-template-rows: auto 1fr; gap: 0 24px; align-items: start;
+    display: grid; grid-template-columns: minmax(0, 1fr) var(--split-topic, minmax(0, 1fr)); grid-template-areas: "head expl" "practice expl"; grid-template-rows: auto 1fr; gap: 0 24px; align-items: start;
   }
   body.pad-open .topic-grid > .topic-head { grid-area: head; }
   body.pad-open .topic-grid > .explanation { grid-area: expl; position: sticky; top: 0; max-height: calc(100dvh - 150px); overflow-y: auto; }

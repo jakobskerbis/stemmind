@@ -2614,6 +2614,10 @@
   "win.settingNote": "Réorganise les onglets en les faisant glisser (sur écran tactile, maintiens d'abord le doigt appuyé). Sur ordinateur, fais glisser un onglet de la barre du haut sur la page : il s'ouvre dans une fenêtre que tu peux déplacer et redimensionner. La conversation avec le tuteur reste visible sous forme de bulle.",
   "win.reset": "Réinitialiser la disposition",
   "win.resetDone": "La disposition a été réinitialisée.",
+  "split.resize": "Modifier la largeur",
+  "split.hint": "Fais glisser pour modifier la largeur. Double-clic pour rétablir.",
+  "split.showList": "Afficher la liste des conversations",
+  "split.settingNote": "Sur ordinateur et tablette, fais glisser le séparateur entre les parties de la page (liste des conversations, explication, simulations, calculatrice) pour changer leur largeur.",
   "full.close": "Fermer",
   "full.message": "Ton message",
   "full.task": "Énoncé de l'exercice"

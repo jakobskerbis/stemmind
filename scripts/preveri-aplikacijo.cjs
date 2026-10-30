@@ -586,6 +586,45 @@ async function okna(p, label) {
   }
 }
 
+// Ločnice med deli strani (public/razdelilnik.js): poteg ločnice ob seznamu pogovorov razširi seznam,
+// širina ostane po ponovnem nalaganju, puščica jo spremeni za 16 px, dvoklik vrne privzeto.
+async function razdelilnik(p, label) {
+  const handle = async () => {
+    await tab(p, "chat");
+    const h = p.locator("#view-chat > .split-handle");
+    await h.waitFor({ state: "visible", timeout: 5000 }).catch(() => {
+      throw new Error("ni ločnice ob seznamu pogovorov");
+    });
+    return h;
+  };
+  const width = () => p.locator("#view-chat > .sidebar").evaluate((el) => Math.round(el.getBoundingClientRect().width));
+  let h = await handle();
+  const w0 = await width();
+  const b = await h.boundingBox();
+  const y = b.y + Math.min(b.height / 2, 300);
+  await p.mouse.move(b.x + b.width / 2, y);
+  await p.mouse.down();
+  for (let i = 1; i <= 5; i++) await p.mouse.move(b.x + b.width / 2 + 16 * i, y);
+  await p.mouse.up();
+  await settle(p, 200);
+  const w1 = await width();
+  if (Math.abs(w1 - w0 - 80) > 3) throw new Error(`poteg ločnice ni razširil seznama pogovorov (${w0} → ${w1} px)`);
+  await screen(p, `razdelilnik-klepet-${label}`);
+  await p.reload();
+  await settle(p, 500);
+  h = await handle();
+  const w2 = await width();
+  if (Math.abs(w2 - w1) > 2) throw new Error(`širina seznama se po ponovnem nalaganju ni ohranila (${w1} → ${w2} px)`);
+  await h.focus();
+  await p.keyboard.press("ArrowLeft");
+  await settle(p, 150);
+  if (Math.abs((await width()) - (w2 - 16)) > 2) throw new Error("puščica levo na ločnici ne zoži seznama za 16 px");
+  await h.dblclick();
+  await settle(p, 200);
+  if (Math.abs((await width()) - w0) > 2) throw new Error("dvoklik na ločnico ne vrne privzete širine");
+  await tab(p, "path");
+}
+
 async function competition(p, label, view = "competition") {
   await tab(p, view);
   await expectVisible(p, `#${view}-content [data-comp-train]`, "tekmovanja ali izpiti");
@@ -864,6 +903,7 @@ async function desktop(browser, app) {
   await step(p, "klepet", () => chat(p, "OS"));
   await step(p, "kalkulator", () => calculator(p, "OS"));
   await step(p, "okna", () => okna(p, "OS"));
+  await step(p, "razdelilnik", () => razdelilnik(p, "OS"));
   await step(p, "tekmovanja", () => competition(p, "OS"));
   await step(p, "poskusno-tekmovanje", () => contest(p, "OS"));
   await step(p, "npz-matura", () => examsView(p, "OS"));

@@ -2612,6 +2612,10 @@
   "win.settingNote": "Sekmeleri sürükleyerek yeniden sıralarsın (dokunmatik ekranda önce basılı tut). Bilgisayarda bir sekmeyi üst çubuktan sayfaya sürükle; taşıyabileceğin ve boyutunu değiştirebileceğin bir pencerede açılır. Özel öğretmenle sohbet bir baloncuk olarak görünür kalır.",
   "win.reset": "Düzeni sıfırla",
   "win.resetDone": "Düzen sıfırlandı.",
+  "split.resize": "Genişliği değiştir",
+  "split.hint": "Genişliği değiştirmek için sürükle. Varsayılana dönmek için çift tıkla.",
+  "split.showList": "Sohbet listesini göster",
+  "split.settingNote": "Bilgisayarda ve tablette sayfa bölümleri (sohbet listesi, açıklama, simülasyonlar, hesap makinesi) arasındaki ayırıcıyı sürükleyerek genişliklerini değiştirebilirsin.",
   "full.close": "Kapat",
   "full.message": "Mesajın",
   "full.task": "Soru metni"
