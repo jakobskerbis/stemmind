@@ -29,6 +29,7 @@ import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
+import { initScan, showScan, leaveScan } from "./scan/scan.js";
 import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
 import { xpStatsHtml, xpItemsHtml, levelRowHtml, paintBadge, celebrateXp } from "./xp-fx.js";
@@ -132,6 +133,8 @@ function showView(name) {
   }
   if (name === "progress") loadProgress();
   if (name === "schedule") showSchedule();
+  if (name === "scan") showScan();
+  else leaveScan();
   if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
   if (name === "textbook") showTextbook();
@@ -236,7 +239,7 @@ window.addEventListener("popstate", () => {
   }
 });
 
-const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke"];
+const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke", "scan"];
 // Zbirke in učni pass: odpre pogled, po želji s predmetom v pogledu »preglej« (from = pogled za Nazaj).
 let zbOpen = {};
 function openZbirke(item = null, from = null) {
@@ -2810,6 +2813,22 @@ function scheduleChanged() {
   refreshModes();
 }
 initSchedule({ api, escapeHtml, toast, showView, startSession, getStudent: () => state.student, onChange: () => (renderScheduleCard($("#schedule-card")), refreshModes()) });
+// Skeniranje nalog (public/scan/): fotografija ali vpis → rešitev po korakih.
+initScan({
+  api,
+  escapeHtml,
+  toast,
+  getStudent: () => state.student,
+  askTutor: (text) => {
+    showView("chat");
+    const box = $("#input");
+    box.value = text;
+    autoGrow();
+    box.focus();
+  },
+  openGraph: (exprs) => openGraphOverlay(exprs, t("scan.nav")),
+});
+document.querySelectorAll("[data-open-scan]").forEach((b) => b.addEventListener("click", () => showView("scan")));
 
 initTextbook({
   api,

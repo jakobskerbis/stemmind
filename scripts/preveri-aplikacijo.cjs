@@ -633,6 +633,41 @@ async function schedule(p) {
   await screen(p, "urnik-izpolnjen");
 }
 
+// Skeniraj nalogo: vpis (fotografija v preizkusnem načinu ne bere), rešitev po korakih, metode, graf, premica.
+async function scan(p, label) {
+  await tab(p, "scan");
+  await expectVisible(p, '#view-scan [data-act="type"]', "skeniranje");
+  await screen(p, `skeniraj-${label}`);
+  await click(p, '#view-scan [data-act="type"]');
+  await p.fill("#scan-input", "(x+1)/2 - (x-1)/3 = 1");
+  await expectVisible(p, "#view-scan .scan-preview .katex", "predogled naloge");
+  await click(p, '#view-scan [data-act="solve"]', { wait: 300 });
+  await expectVisible(p, "#view-scan .scan-answer .scan-badge.ok", "preverjena rešitev");
+  await click(p, '#view-scan [data-act="next"]');
+  await click(p, '#view-scan [data-why="1"]');
+  await expectVisible(p, "#view-scan .scan-why", "razlaga koraka");
+  await click(p, '#view-scan [data-act="all"]');
+  await screen(p, `skeniraj-linearna-${label}`);
+  await click(p, '#view-scan [data-act="edit"]');
+  await p.fill("#scan-input", "2x^2+3x-2=0");
+  await click(p, '#view-scan [data-act="solve"]', { wait: 300 });
+  await click(p, '#view-scan [data-method="1"]', { wait: 200 });
+  await click(p, '#view-scan [data-act="all"]');
+  await expectVisible(p, "#view-scan .scan-graph-host canvas", "graf");
+  await screen(p, `skeniraj-kvadratna-${label}`);
+  await click(p, '#view-scan [data-act="edit"]');
+  await p.fill("#scan-input", "2x - 3 < 5x + 6");
+  await click(p, '#view-scan [data-act="solve"]', { wait: 300 });
+  await expectVisible(p, "#view-scan .scan-nl-svg", "številska premica");
+  await click(p, '#view-scan [data-act="edit"]');
+  await p.fill("#scan-input", "sqrt(x+3) = x - 3");
+  await click(p, '#view-scan [data-act="solve"]', { wait: 600 });
+  await expectVisible(p, "#view-scan .scan-ai-state", "naloga za AI (preizkusni način)");
+  await click(p, '#view-scan [data-act="new"]', { wait: 200 });
+  await expectVisible(p, "#view-scan .scan-hist .list-row", "zadnje naloge");
+  await screen(p, `skeniraj-zgodovina-${label}`);
+}
+
 async function profileMenu(p) {
   await click(p, "#profile-btn");
   await expectVisible(p, "#profile-pop .pm-item", "meni profila");
@@ -720,6 +755,7 @@ async function desktop(browser, app) {
   await step(p, "lige", () => league(p));
   await step(p, "kartice", () => flashcards(p));
   await step(p, "urnik", () => schedule(p));
+  await step(p, "skeniraj", () => scan(p, "OS"));
   // »Dodaj profil« se da preklicati: Nastavitve in zavihki se vrnejo.
   await step(p, "nov-profil-preklic", async () => {
     await click(p, "#profile-btn");
@@ -860,6 +896,7 @@ async function phone(browser, app) {
   await step(p, "tel-ucbenik", () => textbook(p, "tel"));
   await step(p, "tel-kalkulator", () => calculator(p, "tel"));
   await step(p, "tel-igre", () => games(p, "tel"));
+  await step(p, "tel-skeniraj", () => scan(p, "tel"));
   await p.context().close();
 }
 

@@ -12,6 +12,7 @@ const TILES = [
   ["path", "map", "nav.path"],
   ["textbook", "book-open", "nav.textbook"],
   ["chat", "message-circle", "nav.chat"],
+  ["scan", "scan-line", "scan.nav"],
   ["graph", "calculator", "nav.graph"],
   ["competition", "medal", "nav.competition"],
   ["games", "gamepad-2", "nav.games"],
