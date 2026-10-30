@@ -30,6 +30,7 @@ export const GENRES = [
   { id: "balloons", emoji: "🎈", engines: ["balloons"] },
   { id: "tilt", emoji: "🔮", engines: ["marble"] },
   { id: "lander", emoji: "🌙", engines: ["lander"] },
+  { id: "impostor", emoji: "🕵️", engines: ["impostor"] },
 ];
 export const GENRE_IDS = GENRES.map((g) => g.id);
 
@@ -48,6 +49,7 @@ export const childhoodEngines = (list) => [...new Set((list || []).flatMap((id) 
 // za novo igro (wishes.js, tedenski pregled za j-ja). Ključne besede so samo za prepoznavo vnosa;
 // naše igre imen tujih iger nikoli ne prikažejo. Shrani se v settings.game_titles (največ 5 × 40 znakov).
 const TITLE_HINTS = [
+  ["impostor", /among ?us|impost|slepar|\bsus\b|mafij|mafia|werewolf|volkodlak|town of salem|cluedo|detektiv|vohun/],
   ["blocks", /tetri|tetro|tetirs|tertis|padajo|block ?blast|blocks?\b|kock/],
   ["maze", /pac.?man|labirint|maze|duh/],
   ["platform", /mario(?! ?kart)|sonic(?! dash)|doodle|platform|skak|jump|kangur|crash band|rayman|celeste/],
