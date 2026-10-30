@@ -358,7 +358,7 @@ export function createApp(store, opts = {}) {
     // Lahki način: vedno (lite), nikoli (normal) ali po povezavi naprave, ki jo sporoči odjemalec (auto).
     const lite = student.settings.data_mode === "lite" || (student.settings.data_mode !== "normal" && req.body?.lite === true);
     // »Razloži podrobneje« je vedno na voljo, čim ceneje: prva ponovna razlaga je Haiku z več
-    // razmisleka (z novim pristopom), Opus šele, ko učenec zaporedoma prosi še enkrat (z dnevno in
+    // razmisleka (z novim pristopom), močnejši model šele, ko učenec zaporedoma prosi še enkrat (z dnevno in
     // mesečno omejitvijo). Števec zaporednih prošenj je conversations.deep; običajno sporočilo ga ponastavi.
     // Tekmovanja: privzeto Haiku z več razmisleka.
     const again = req.body?.deep === true;
@@ -367,7 +367,10 @@ export function createApp(store, opts = {}) {
     // Aktivacijska koda: druga zaporedna prošnja gre k Sonnetu, šele tretja (in vsaka naslednja) k Opusu
     // (j 2026-10-30). Tekmovanja in fotografija urnika pri kodi ostanejo pri Sonnetu.
     // Nad skrito omejitvijo Opusa (usage.promoOpusSpent) tudi tretja prošnja tiho dobi Sonnet, brez opombe.
-    const capped = !!accounts?.modelCapFor?.(student.id) && (againStreak < 3 || usage.promoOpusSpent(student.id, MODEL_DEEP));
+    // Pravice (server/placila/pravice.js): Osebno do Opusa šele ob 3. prošnji, šolska licenca največ Sonnet,
+    // aktivacijska koda še s skrito mejo Opusa. Brez računov (lokalno) ostane Opus ob 2. prošnji.
+    const ladder = accounts?.ladderFor?.(student.id) || null;
+    const capped = !!ladder && (!ladder.opus || againStreak < 3 || (ladder.promo && usage.promoOpusSpent(student.id, MODEL_DEEP)));
     const { mode, note } = usage.chooseMode(student.id, {
       wantDeep: againStreak >= 2,
       wantThink: againStreak === 1,
@@ -618,7 +621,7 @@ export function createApp(store, opts = {}) {
     if (!s) return;
     const view = lessonView(String(req.query.id || ""));
     if (!view) return res.status(404).json({ error: "Tema ne obstaja." });
-    const interactive = !accounts || accounts.premiumFor(s.id);
+    const interactive = !accounts || accounts.lessonInteractive(s.id, view.id);
     // Nova tema z nalogami: na začetku lekcije povabilo na test predznanja.
     const st = progress.state(s.id, view.id);
     const pretest_due = !!view.practice && st.status === "new" && st.pretest == null;
