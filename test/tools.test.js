@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { evaluate, prepare, exactTex, formatNumber, convert, toFraction, CONSTANTS, QUANTITIES } from "../public/graph/scicore.js";
+import { evaluate, prepare, exactTex, formatNumber, convert, toFraction, CONSTANTS, QUANTITIES, mixedTex, primeFactors, factorsTex } from "../public/graph/scicore.js";
+import { analyze, solutionTex, intervalsTex, systemTex, polyCoeffs, previewTex } from "../public/graph/scisolve.js";
 import { stats, evalComplex, polyRoots, M, readMatrix, convertBase, molarMass } from "../public/graph/toolscore.js";
 import { ELEMENTS, MASSES, CATEGORIES, shells, fullConfig, EXTRA } from "../public/graph/pse-data.js";
 import { balance, parseSpecies, stoich, phOf, phAll, solveConc, dilution, massFraction, saltFormula, solubility, SOL_CATIONS, SOL_ANIONS } from "../public/graph/chemcore.js";
@@ -39,6 +40,103 @@ test("znanstveni kalkulator: spremenljivke, napake in enačbe", () => {
   assert.ok(evaluate("3b").error, "neznana spremenljivka je napaka");
   assert.equal(evaluate("x + 1 = 3").error?.code, "notCalc");
   assert.ok(evaluate("2 +* 3").error);
+});
+
+test("znanstveni kalkulator: odstotki kot na telefonu, °, zaokroževanje, integral, odvod v točki", () => {
+  near(ev("200 + 10%"), 220);
+  near(ev("200 − 10%"), 180);
+  near(ev("10% · 50"), 5);
+  assert.match(evaluate("sin(30°)", { deg: true }).tex, /30\^\{\\circ\}/);
+  near(ev("sin(30°)", { deg: true }), 0.5);
+  near(ev("round(2,567; 2)"), 2.57);
+  near(ev("∫(x²; 0; 3)"), 9, 1e-8);
+  near(ev("d/dx(x³; 2)"), 12, 1e-9);
+  assert.match(evaluate("gcd(12; 18)").tex, /12;18/, "argumenti z ; (decimalna vejica)");
+});
+
+test("znanstveni kalkulator: enačbe, točne rešitve, kompleksne rešitve", () => {
+  const sol = (text, opts) => {
+    const r = analyze(text, opts);
+    assert.equal(r.kind, "solve", `${text}: ${JSON.stringify(r)}`);
+    return r;
+  };
+  assert.deepEqual(sol("x² − 5x + 6 = 0").roots, [2, 3]);
+  assert.deepEqual(sol("2x + 3 = 7").roots, [2]);
+  assert.match(solutionTex(sol("x/3 + 1/2 = 1")), /frac\{3\}\{2\}/);
+  const golden = sol("x² − x − 1 = 0");
+  assert.match(golden.exact, /\\frac\{1 \\pm \\sqrt\{5\}\}\{2\}/);
+  near(golden.roots[1], (1 + Math.sqrt(5)) / 2);
+  assert.match(sol("x² + 2x + 5 = 0").exact, /-1 \\pm 2i/);
+  assert.deepEqual(sol("x³ − 6x² + 11x − 6 = 0").roots, [1, 2, 3]);
+  const q = sol("x⁴ = 16");
+  assert.deepEqual(q.roots, [-2, 2]);
+  assert.equal(q.complex.length, 2);
+  near(sol("2^x = 10").roots[0], Math.log2(10));
+  near(sol("e^x = x + 2").roots[1], 1.1461932206, 1e-8);
+  assert.deepEqual(sol("√(x) = 3").roots, [9]);
+  const tri = sol("sin(x) = 0,5", { deg: true });
+  assert.deepEqual(tri.roots, [30, 150]);
+  assert.ok(tri.interval, "periodična enačba ima interval ene periode");
+  assert.equal(sol("2cos(x) = 1").roots.length, 2);
+  assert.ok(sol("x = x").all);
+  assert.ok(sol("x + 1 = x").none);
+  assert.equal(sol("sin(x) = 2").roots.length, 0);
+  // spremenljivka iz pomnilnika ni neznanka
+  assert.deepEqual(sol("a·x = 6", { vars: { a: 3 } }).roots, [2]);
+});
+
+test("znanstveni kalkulator: neenačbe, sistemi, drži/ne drži", () => {
+  assert.match(intervalsTex(analyze("x² < 4")), /\(-2;\\,2\)/);
+  assert.match(intervalsTex(analyze("x² ≥ 4")), /\(-\\infty;\\,-2\] \\cup \[2;\\,\\infty\)/);
+  assert.match(intervalsTex(analyze("(x − 1)/(x + 2) > 0")), /\(-\\infty;\\,-2\) \\cup \(1;\\,\\infty\)/, "pol ni v rešitvi");
+  assert.match(intervalsTex(analyze("x² + 1 > 0")), /mathbb\{R\}/);
+  assert.match(intervalsTex(analyze("x² ≤ 0")), /\\\{0\\\}/);
+  assert.match(intervalsTex(analyze("|x − 2| < 3")), /\(-1;\\,5\)/);
+  assert.match(intervalsTex(analyze("1 < x ≤ 3")), /\(1;\\,3\]/);
+  const s = analyze("x + y = 3; x − y = 1");
+  assert.deepEqual(s.values, [2, 1]);
+  assert.match(systemTex(s), /x = 2/);
+  assert.deepEqual(analyze("2a + b + c = 7; a − b = 1; c = 2").values, [2, 1, 2]);
+  assert.ok(analyze("x + y = 1; 2x + 2y = 5").none);
+  assert.ok(analyze("x + y = 1; 2x + 2y = 2").many);
+  assert.equal(analyze("x² + y² = 25; y = x + 1").kind, "plot");
+  assert.equal(analyze("2 + 2 = 4").value, true);
+  assert.equal(analyze("3 > 5").value, false);
+});
+
+test("znanstveni kalkulator: funkcije f(x), odvodi, kompleksna števila, risanje", () => {
+  const f = analyze("f(x) = x² + 1");
+  assert.equal(f.kind, "func");
+  assert.deepEqual(f.plot, ["y = x² + 1"]);
+  const funcs = { f: { param: "x", body: f.body } };
+  near(analyze("f(3) + 1", { funcs }).value, 11);
+  near(analyze("f'(2)", { funcs }).value, 4, 1e-9);
+  assert.equal(analyze("f(x) = x + b").error?.code, "missing");
+  const d = analyze("d/dx(x³)");
+  assert.equal(d.kind, "deriv");
+  assert.match(d.resTex, /3x\^\{2\}/);
+  const z = analyze("(1 + 2i)(3 − i)");
+  assert.equal(z.kind, "complex");
+  assert.deepEqual([z.re, z.im], [5, 5]);
+  assert.deepEqual([analyze("i²").re, analyze("i²").im], [-1, 0]);
+  assert.equal(analyze("x² + 1").kind, "expr");
+  assert.equal(analyze("y = 2x + 1").kind, "plot");
+  assert.deepEqual(analyze("2x + 3 = 7").plot, ["y = 2x + 3", "y = 7"]);
+  assert.deepEqual(analyze("2,5x = 5").plot, ["y = 2.5x", "y = 5"], "graf dobi decimalno piko");
+  assert.equal(previewTex("x + y = 3; x − y = 1").startsWith("\\begin{cases}"), true);
+  assert.deepEqual(polyCoeffs((x) => 2 * x ** 3 - x + 4), [2, 0, -1, 4]);
+  assert.equal(polyCoeffs(Math.sin), null);
+});
+
+test("števila: mešani ulomki, prafaktorji, inženirski zapis", () => {
+  assert.equal(mixedTex(7 / 3), "2\\tfrac{1}{3}");
+  assert.equal(mixedTex(1 / 3), null);
+  assert.deepEqual(primeFactors(360), [[2, 3], [3, 2], [5, 1]]);
+  assert.equal(factorsTex(360, primeFactors(360)), "2^{3}\\cdot 3^{2}\\cdot 5");
+  assert.equal(primeFactors(2.5), null);
+  assert.equal(formatNumber(12345.678, { mode: "eng" }).text, "12,345678 · 10^3");
+  assert.equal(formatNumber(0.00047, { mode: "eng" }).text, "470 · 10^-6");
+  assert.equal(formatNumber(999999.9999999, { mode: "eng" }).text, "1 · 10^6");
 });
 
 test("natančni rezultati: ulomki, koreni, večkratniki π", () => {

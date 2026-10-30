@@ -111,7 +111,9 @@ export function createCalculator(root, opts) {
   }
   function upgrade(s) {
     const base = emptyState();
-    return { ...base, ...s, settings: { ...base.settings, ...(s.settings || {}) }, view: s.view || base.view, items: s.items.map((it) => ({ id: it.id || newId(), ...it })) };
+    // prazen graf vedno začne v običajnem oknu (prej se je lahko shranilo oddaljeno −150 … 150)
+    const blank = !s.items.some((it) => it.type !== "expr" || String(it.text || "").trim());
+    return { ...base, ...s, settings: { ...base.settings, ...(s.settings || {}) }, view: (!blank && s.view) || base.view, items: s.items.map((it) => ({ id: it.id || newId(), ...it })) };
   }
   function scheduleSave() {
     clearTimeout(saveTimer);
