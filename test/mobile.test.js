@@ -363,7 +363,10 @@ test("admin APK upload: only admins, only known hosts, only ZIP files", async ()
   const file = path.join(dir, "evklid.apk");
   const zip = Buffer.concat([Buffer.from([0x50, 0x4b, 0x03, 0x04]), Buffer.alloc(2048, 7)]);
   const fake = async (url) => {
-    if (url.startsWith("https://expo.dev/artifacts/")) return new Response(null, { status: 302, headers: { location: "https://storage.googleapis.com/eas/x.apk" } });
+    // Prava pot expo.dev (30. 10. 2026): expo.dev → api.expo.dev → wf-artifacts.eascdn.net.
+    if (url.startsWith("https://expo.dev/artifacts/eas/")) return new Response(null, { status: 307, headers: { location: url.replace("https://expo.dev/artifacts/eas/", "https://api.expo.dev/v2/artifacts/eas/").replace(/\.apk$/, "") } });
+    if (url.startsWith("https://api.expo.dev/v2/artifacts/eas/")) return new Response(null, { status: 307, headers: { location: "https://wf-artifacts.eascdn.net/builds/internal-st/x.apk?sig=1" } });
+    if (url === "https://wf-artifacts.eascdn.net/builds/internal-st/x.apk?sig=1") return new Response(zip, { status: 200 });
     if (url === "https://storage.googleapis.com/eas/x.apk") return new Response(zip, { status: 200 });
     if (url === "https://expo.dev/evil") return new Response(null, { status: 302, headers: { location: "http://127.0.0.1:3000/x" } });
     if (url === "https://github.com/not-zip") return new Response("<html>", { status: 200 });

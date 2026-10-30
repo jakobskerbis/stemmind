@@ -17,7 +17,7 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&
 const httpsUrl = (u) => (/^https:\/\/[^\s"'<>]+$/.test(String(u || "")) ? u : null);
 
 // Od kod skrbnik lahko naloži APK (gradnje EAS in izdaje GitHub, z njihovimi preusmeritvami).
-const APK_HOSTS = /(^|\.)(expo\.dev|expo\.io|storage\.googleapis\.com|github\.com|githubusercontent\.com)$/i;
+const APK_HOSTS = /(^|\.)(expo\.dev|expo\.io|eascdn\.net|storage\.googleapis\.com|github\.com|githubusercontent\.com)$/i;
 const MAX_APK = 300 * 1024 * 1024;
 
 // Prenese APK s povezave v datoteko: samo https in znani strežniki (tudi po preusmeritvah), največ 300 MB,
