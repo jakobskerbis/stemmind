@@ -1,7 +1,9 @@
 // Kovanci in avatar: pravilni odgovori v igrah prinesejo kovance, z njimi učenec kupuje dele avatarja
 // (public/avatar.js). Brez pravega denarja. Avatar je edino, kar učenec izbere in vidijo drugi (lige, razred).
 import { ITEM, SLOTS, DEFAULT_AVATAR, COINS_PER_CORRECT, COINS_PER_DAY, cleanAvatar } from "../public/avatar.js";
+import fs from "node:fs";
 import { ensureKnowledgeTables } from "./zbirke.js";
+import { isLocalRequest } from "./feedback.js";
 
 export function ensureAvatarTables(db) {
   ensureKnowledgeTables(db); // predmeti za znanje (server/zbirke.js) so tudi del inventarja
@@ -111,12 +113,43 @@ export class Avatars {
       .run(id, JSON.stringify(clean));
     return clean;
   }
+  // Anonimni seštevki za tedensko posodobitev kozmetike (docs/kozmetika-posodobitve.md): koliko učencev
+  // nosi oziroma je kupilo kateri predmet. Samo števila, brez imen; pod TRENDS_MIN učencev nič.
+  trends() {
+    const rows = this.db.prepare("SELECT equipped FROM avatar_state").all();
+    if (rows.length < TRENDS_MIN) return { students: rows.length, enough: false };
+    const worn = {};
+    for (const r of rows) {
+      const eq = publicAvatar(r.equipped) || {};
+      for (const slot of SLOTS) for (const id of [].concat(eq[slot] || [])) if (id && !/_none$/.test(id) && id !== DEFAULT_AVATAR[slot]) worn[id] = (worn[id] || 0) + 1;
+    }
+    const bought = Object.fromEntries(this.db.prepare("SELECT item, COUNT(*) AS n FROM avatar_items GROUP BY item").all().map((r) => [r.item, r.n]));
+    // Predmet z manj kot TRENDS_MIN učenci izpustimo, da se iz seštevka ne da sklepati na posameznika.
+    const sort = (o) => Object.fromEntries(Object.entries(o).filter(([, n]) => n >= TRENDS_MIN).sort((a, b) => b[1] - a[1]));
+    return { students: rows.length, enough: true, worn: sort(worn), bought: sort(bought) };
+  }
   view(id) {
     return { coins: this.balance(id), earnedToday: this.earnedToday(id), perDay: COINS_PER_DAY, owned: this.owned(id), equipped: this.equipped(id) || { ...DEFAULT_AVATAR }, saved: !!this.equipped(id) };
   }
 }
 
-export function mountAvatar(app, avatars, { loadStudent }) {
+export const TRENDS_MIN = 3;
+
+export function mountAvatar(app, avatars, { loadStudent, trendsFile = null }) {
+  // Samo na računalniku, kjer teče Evklid (kot zbrana mnenja), ne prek povezave za telefon.
+  app.get("/api/avatar/trends", (req, res) => (isLocalRequest(req) ? res.json(avatars.trends()) : res.status(403).json({ error: "Samo na računalniku, kjer teče Evklid." })));
+  // Kopija v data/kozmetika-trendi.json (ob zagonu in vsakih 6 h), da jo tedenska posodobitev prebere brez baze.
+  if (trendsFile) {
+    const write = () => {
+      try {
+        fs.writeFileSync(trendsFile, JSON.stringify({ at: new Date().toISOString(), ...avatars.trends() }, null, 2));
+      } catch (e) {
+        console.warn(`[evklid] kozmetika-trendi: ${e.message}`);
+      }
+    };
+    write();
+    setInterval(write, 6 * 3600e3).unref();
+  }
   app.get("/api/students/:id/avatar", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;

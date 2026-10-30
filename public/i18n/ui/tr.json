@@ -1260,6 +1260,13 @@
   "games.bought": "Alındı ve giyildi!",
   "games.multiHint": "Bu çekmeceden aynı anda en fazla {n} eşya giyebilirsin. Aynı yerdeki bir eşya (ör. ikinci bir gözlük) eskisinin yerini alır; çıkarmak için tekrar dokun.",
   "games.slotFull": "Bu çekmeceden zaten {n} eşya giyiyorsun. Yenisini giymek için birini çıkar.",
+  "games.new": "Yeni",
+  "games.newWeek": "Bu haftanın yenileri",
+  "games.wishTitle": "Mağazada ne görmek istersin?",
+  "games.wishHint": "Her hafta yeni eşyalar ekliyoruz. Nasıl bir şapka, karakter, arka plan ya da rozet istediğini yaz. Adını ya da başka kişisel bilgilerini yazma.",
+  "games.wishPlaceholder": "Örneğin: korsan şapkası, gözlüklü baykuş karakteri …",
+  "games.wishSend": "Dileğini gönder",
+  "games.wishThanks": "Teşekkürler! Dileğini bir sonraki güncellemede dikkate alacağız.",
   "games.boughtFull": "Satın alındı! Bu çekmeceden zaten {n} eşya giyiyorsun: yenisini giymek için birini çıkar.",
   "games.slot.kind": "Karakter",
   "games.slot.body": "Renk",
@@ -2312,5 +2319,33 @@
   "gr.weakSheet": "Zayıf konulardan çalışma kâğıdı",
   "gr.pastTitle": "Çözümlü geçmiş sınavlar",
   "gr.pastText": "Resmî sınav kâğıtlarını ve puanlama kılavuzlarını tüm haklarına sahip olan Ulusal Sınav Merkezi (RIC) yayımlar; bu yüzden burada kopyalamıyoruz. Yukarıdaki deneme sınavı aynı biçimde ve aynı sürede kendi sorularımızı kullanır.",
-  "gr.pastOpen": "Sınavları ric.si'de aç"
+  "gr.pastOpen": "Sınavları ric.si'de aç",
+  "pilot.title": "Pilot ölçümü",
+  "pilot.period": "Dönem",
+  "pilot.days": "son {n} gün",
+  "pilot.school": "Okul",
+  "pilot.allSchools": "tüm öğrenciler",
+  "pilot.qPerDay": "günlük özel öğretmene soru",
+  "pilot.qPerStudent": "öğrenci başına günlük soru (soru sorduğu günlerde)",
+  "pilot.aiPerStudent": {
+    "one": "öğrenci başına aylık YZ maliyeti (YZ kullanan {n} öğrenci)",
+    "other": "öğrenci başına aylık YZ maliyeti (YZ kullanan {n} öğrenci)"
+  },
+  "pilot.aiTotal": "dönemdeki YZ maliyeti",
+  "pilot.visitsParents": {
+    "other": "veli sayfası görüntülenmesi"
+  },
+  "pilot.visitsPay": {
+    "other": "ödeme sayfası görüntülenmesi"
+  },
+  "pilot.schoolStudents": {
+    "one": "Okulun sınıflarında {n} öğrenci var.",
+    "other": "Okulun sınıflarında {n} öğrenci var."
+  },
+  "pilot.day": "Gün",
+  "pilot.questions": "Sorular",
+  "pilot.askers": "Öğrenciler",
+  "pilot.ai": "YZ",
+  "pilot.parents": "Veliler",
+  "pilot.note": "Sayfa görüntülenmeleri çerez ve IP adresi olmadan, yalnızca günlük sayı olarak sayılır. Botlar ve bağlantı önizlemeleri sayılmaz."
 }

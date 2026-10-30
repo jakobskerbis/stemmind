@@ -1260,6 +1260,13 @@
   "games.bought": "U ble dhe u vesh!",
   "games.multiHint": "Nga ky sirtar mund të veshësh deri në {n} sende njëherësh. Një send në të njëjtin vend (p.sh. syze të dyta) zëvendëson të vjetrin; prek përsëri për ta hequr.",
   "games.slotFull": "Nga ky sirtar vesh tashmë {n} sende. Hiq një për të veshur një të ri.",
+  "games.new": "E re",
+  "games.newWeek": "Të rejat e javës",
+  "games.wishTitle": "Çfarë do të doje në dyqan?",
+  "games.wishHint": "Çdo javë shtojmë sende të reja. Shkruaj çfarë kapele, personazhi, sfondi apo distinktivi do të doje. Mos shkruaj emrin tënd apo të dhëna të tjera personale.",
+  "games.wishPlaceholder": "Për shembull: kapelë pirati, personazh buf me syze …",
+  "games.wishSend": "Dërgo dëshirën",
+  "games.wishThanks": "Faleminderit! Do ta kemi parasysh dëshirën tënde në përditësimin e ardhshëm.",
   "games.boughtFull": "U ble! Nga ky sirtar vesh tashmë {n} sende: hiq një për të veshur të riun.",
   "games.slot.kind": "Personazh",
   "games.slot.body": "Ngjyra",
@@ -2312,5 +2319,35 @@
   "gr.weakSheet": "Fletë pune nga temat e dobëta",
   "gr.pastTitle": "Provime të mëparshme me zgjidhje",
   "gr.pastText": "Provimet zyrtare dhe udhëzimet e vlerësimit i publikon Qendra Shtetërore e Provimeve (RIC), që ka të gjitha të drejtat, prandaj nuk i kopjojmë këtu. Provimi provë më lart ka detyrat tona në të njëjtën formë dhe me të njëjtën kohë.",
-  "gr.pastOpen": "Hap provimet në ric.si"
+  "gr.pastOpen": "Hap provimet në ric.si",
+  "pilot.title": "Matja në pilot",
+  "pilot.period": "Periudha",
+  "pilot.days": "{n} ditët e fundit",
+  "pilot.school": "Shkolla",
+  "pilot.allSchools": "të gjithë nxënësit",
+  "pilot.qPerDay": "pyetje për tutorin në ditë",
+  "pilot.qPerStudent": "pyetje për nxënës në ditë (në ditët kur pyet)",
+  "pilot.aiPerStudent": {
+    "one": "kosto e IA-së për nxënës në muaj ({n} nxënës me IA)",
+    "other": "kosto e IA-së për nxënës në muaj ({n} nxënës me IA)"
+  },
+  "pilot.aiTotal": "kosto e IA-së në periudhë",
+  "pilot.visitsParents": {
+    "one": "shikim i faqes për prindërit",
+    "other": "shikime të faqes për prindërit"
+  },
+  "pilot.visitsPay": {
+    "one": "shikim i faqes së pagesës",
+    "other": "shikime të faqes së pagesës"
+  },
+  "pilot.schoolStudents": {
+    "one": "Shkolla ka {n} nxënës në klasa.",
+    "other": "Shkolla ka {n} nxënës në klasa."
+  },
+  "pilot.day": "Dita",
+  "pilot.questions": "Pyetje",
+  "pilot.askers": "Nxënës",
+  "pilot.ai": "IA",
+  "pilot.parents": "Prindër",
+  "pilot.note": "Shikimet e faqeve numërohen pa cookies dhe pa adresa IP, vetëm si numër në ditë. Robotët dhe parapamjet e lidhjeve nuk numërohen."
 }

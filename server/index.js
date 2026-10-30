@@ -7,7 +7,9 @@ import { isMockMode, MODEL } from "./claude.js";
 const store = openDb();
 // Povratne informacije testerjev se zapišejo tudi v datoteko ob bazi (data/povratne-informacije.json).
 const feedbackFile = path.resolve(path.dirname(process.env.EVKLID_DB || "data/evklid.db"), "povratne-informacije.json");
-const app = createApp(store, { feedbackFile });
+// Anonimni seštevki avatarjev za tedensko posodobitev kozmetike (data/kozmetika-trendi.json).
+const trendsFile = path.resolve(path.dirname(feedbackFile), "kozmetika-trendi.json");
+const app = createApp(store, { feedbackFile, trendsFile });
 const port = Number(process.env.PORT || 3000);
 
 app.listen(port, () => {

@@ -1272,6 +1272,13 @@
   "games.bought": "Koupeno a oblečeno!",
   "games.multiHint": "Z tohoto šuplíku můžeš nosit až {n} věcí najednou. Věc na stejném místě (např. druhé brýle) nahradí tu předchozí, dalším klepnutím ji sundáš.",
   "games.slotFull": "Z tohoto šuplíku už nosíš {n} věcí. Jednu sundej, abys mohl obléct novou.",
+  "games.new": "Nové",
+  "games.newWeek": "Novinky tohoto týdne",
+  "games.wishTitle": "Co si přeješ v obchodě?",
+  "games.wishHint": "Každý týden přidáváme nové věci. Napiš, jaký klobouk, postavu, pozadí nebo odznak si přeješ. Nepiš své jméno ani jiné osobní údaje.",
+  "games.wishPlaceholder": "Například: pirátský klobouk, postava sovy s brýlemi …",
+  "games.wishSend": "Poslat přání",
+  "games.wishThanks": "Děkujeme! Tvé přání zohledníme při další aktualizaci.",
   "games.boughtFull": "Koupeno! Z tohoto šuplíku už nosíš {n} věcí: jednu sundej, abys oblékl novou.",
   "games.slot.kind": "Postava",
   "games.slot.body": "Barva",
@@ -2352,5 +2359,37 @@
   "gr.weakSheet": "Pracovní list ze slabých témat",
   "gr.pastTitle": "Minulé testy s řešením",
   "gr.pastText": "Oficiální testy a pokyny k hodnocení zveřejňuje Státní zkušební centrum (RIC), které k nim má všechna práva, proto je zde nekopírujeme. Zkušební test výše obsahuje naše úlohy ve stejné podobě a se stejným časem.",
-  "gr.pastOpen": "Otevřít testy na ric.si"
+  "gr.pastOpen": "Otevřít testy na ric.si",
+  "pilot.title": "Měření v pilotu",
+  "pilot.period": "Období",
+  "pilot.days": "posledních {n} dní",
+  "pilot.school": "Škola",
+  "pilot.allSchools": "všichni žáci",
+  "pilot.qPerDay": "dotazů na doučovatele za den",
+  "pilot.qPerStudent": "dotazů na žáka za den (ve dnech, kdy se ptá)",
+  "pilot.aiPerStudent": {
+    "one": "náklady na AI na žáka za měsíc ({n} žák s AI)",
+    "few": "náklady na AI na žáka za měsíc ({n} žáci s AI)",
+    "many": "náklady na AI na žáka za měsíc ({n} žáka s AI)",
+    "other": "náklady na AI na žáka za měsíc ({n} žáků s AI)"
+  },
+  "pilot.aiTotal": "náklady na AI za období",
+  "pilot.visitsParents": {
+    "other": "zobrazení stránky pro rodiče"
+  },
+  "pilot.visitsPay": {
+    "other": "zobrazení platební stránky"
+  },
+  "pilot.schoolStudents": {
+    "one": "Škola má ve třídách {n} žáka.",
+    "few": "Škola má ve třídách {n} žáky.",
+    "many": "Škola má ve třídách {n} žáka.",
+    "other": "Škola má ve třídách {n} žáků."
+  },
+  "pilot.day": "Den",
+  "pilot.questions": "Dotazy",
+  "pilot.askers": "Žáci",
+  "pilot.ai": "AI",
+  "pilot.parents": "Rodiče",
+  "pilot.note": "Zobrazení stránek se počítají bez cookies a bez IP adres, jen jako počet za den. Roboti a náhledy odkazů se nepočítají."
 }

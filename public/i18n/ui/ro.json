@@ -1266,6 +1266,13 @@
   "games.bought": "Cumpărat și îmbrăcat!",
   "games.multiHint": "Din acest sertar poți purta până la {n} obiecte deodată. Un obiect în același loc (de ex. a doua pereche de ochelari) îl înlocuiește pe cel vechi; atinge din nou ca să-l scoți.",
   "games.slotFull": "Din acest sertar porți deja {n} obiecte. Scoate unul ca să porți unul nou.",
+  "games.new": "Nou",
+  "games.newWeek": "Noutățile săptămânii",
+  "games.wishTitle": "Ce ți-ar plăcea în magazin?",
+  "games.wishHint": "În fiecare săptămână adăugăm obiecte noi. Scrie ce pălărie, personaj, fundal sau insignă ți-ar plăcea. Nu scrie numele tău sau alte date personale.",
+  "games.wishPlaceholder": "De exemplu: o pălărie de pirat, un personaj bufniță cu ochelari …",
+  "games.wishSend": "Trimite dorința",
+  "games.wishThanks": "Mulțumim! Vom ține cont de dorința ta la următoarea actualizare.",
   "games.boughtFull": "Cumpărat! Din acest sertar porți deja {n} obiecte: scoate unul ca să-l porți pe cel nou.",
   "games.slot.kind": "Personaj",
   "games.slot.body": "Culoare",
@@ -2332,5 +2339,39 @@
   "gr.weakSheet": "Fișă din temele slabe",
   "gr.pastTitle": "Subiecte anterioare cu soluții",
   "gr.pastText": "Subiectele oficiale și baremele sunt publicate de Centrul Național de Examene (RIC), care deține toate drepturile, de aceea nu le copiem aici. Examenul de probă de mai sus folosește sarcinile noastre, în același format și cu același timp.",
-  "gr.pastOpen": "Deschide subiectele pe ric.si"
+  "gr.pastOpen": "Deschide subiectele pe ric.si",
+  "pilot.title": "Măsurători în pilot",
+  "pilot.period": "Perioadă",
+  "pilot.days": "ultimele {n} zile",
+  "pilot.school": "Școală",
+  "pilot.allSchools": "toți elevii",
+  "pilot.qPerDay": "întrebări către tutor pe zi",
+  "pilot.qPerStudent": "întrebări per elev pe zi (în zilele în care întreabă)",
+  "pilot.aiPerStudent": {
+    "one": "cost AI per elev pe lună ({n} elev cu AI)",
+    "few": "cost AI per elev pe lună ({n} elevi cu AI)",
+    "other": "cost AI per elev pe lună ({n} de elevi cu AI)"
+  },
+  "pilot.aiTotal": "cost AI în perioadă",
+  "pilot.visitsParents": {
+    "one": "vizualizare a paginii pentru părinți",
+    "few": "vizualizări ale paginii pentru părinți",
+    "other": "de vizualizări ale paginii pentru părinți"
+  },
+  "pilot.visitsPay": {
+    "one": "vizualizare a paginii de plată",
+    "few": "vizualizări ale paginii de plată",
+    "other": "de vizualizări ale paginii de plată"
+  },
+  "pilot.schoolStudents": {
+    "one": "Școala are {n} elev în clase.",
+    "few": "Școala are {n} elevi în clase.",
+    "other": "Școala are {n} de elevi în clase."
+  },
+  "pilot.day": "Zi",
+  "pilot.questions": "Întrebări",
+  "pilot.askers": "Elevi",
+  "pilot.ai": "AI",
+  "pilot.parents": "Părinți",
+  "pilot.note": "Vizualizările paginilor se numără fără cookie-uri și fără adrese IP, doar ca număr pe zi. Roboții și previzualizările de linkuri nu se numără."
 }
