@@ -1,10 +1,15 @@
+/// <reference types="node" />
 // Nastavitve aplikacije Evklid za iPhone, iPad in Android (Expo, CNG: mapi ios/ in android/ nastaneta ob gradnji).
 // Ime in id-ji so v ../brand.json (enako kot za strežnik). Kanal razdeljevanja določi EXPO_PUBLIC_CHANNEL (eas.json):
 //   store  – App Store / Google Play: naročnina samo prek nakupa v aplikaciji (zahteva obeh trgovin);
 //   direct – APK s strani evklid.app/prenesi: naročnina prek obstoječega plačila na spletu (Stripe).
 import type { ExpoConfig } from "expo/config";
+import fs from "node:fs";
+import path from "node:path";
 import brand from "../brand.json";
 
+// Jeziki vmesnika (isti kot na spletu): iOS po njih izbere jezik sistema in desno-levo postavitev (arabščina, perzijščina, urdu).
+const LOCALES = ["sl", ...fs.readdirSync(path.join(__dirname, "../public/i18n/ui")).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5))];
 const channel = process.env.EXPO_PUBLIC_CHANNEL === "direct" ? "direct" : "store";
 const id = brand.app.bundle_id;
 // Besedila dovoljenj (slovensko; angleško in druge jezike sistema v locales/).
@@ -49,7 +54,7 @@ const config: ExpoConfig = {
     "expo-secure-store",
     "expo-sqlite",
     "expo-web-browser",
-    "expo-localization",
+    ["expo-localization", { supportsRTL: true, supportedLocales: { ios: LOCALES } }],
     "expo-apple-authentication",
     ["expo-splash-screen", { image: "./assets/splash-icon.png", imageWidth: 160, backgroundColor: "#F6F7F9", dark: { backgroundColor: "#0D1117" } }],
     ["expo-camera", { cameraPermission: CAMERA, recordAudioAndroid: false, barcodeScannerEnabled: false }],

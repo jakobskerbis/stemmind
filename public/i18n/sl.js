@@ -1781,4 +1781,7 @@ export default {
   "mob.autoRenewIos": "Naročnina se samodejno podaljša, razen če jo prekličeš vsaj 24 ur pred koncem obdobja. Plačilo bremeni tvoj Apple ID. Naročnino upravljaš in prekličeš v nastavitvah Apple ID.",
   "mob.autoRenewAndroid": "Naročnina se samodejno podaljša, dokler je ne prekličeš v Google Play (Plačila in naročnine).",
   "mob.payOnWeb": "Plačilo se odpre v brskalniku. Ko končaš, se vrni v aplikacijo.",
+  "mob.purchasePending": "Nakup čaka na potrditev. Naročnina začne veljati, ko je plačilo potrjeno.",
+  "mob.accessUntil": "Poln dostop do {date}",
+  "mob.endsOn": "Velja do {date}, ne podaljša se",
 };

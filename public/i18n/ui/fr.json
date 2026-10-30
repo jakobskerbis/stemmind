@@ -1749,5 +1749,8 @@
   "mob.storeUnavailable": "La boutique est indisponible pour le moment. Réessaie plus tard.",
   "mob.autoRenewIos": "L’abonnement se renouvelle automatiquement, sauf si tu le résilies au moins 24 heures avant la fin de la période. Le paiement est débité de ton Apple ID. Tu gères et résilies l’abonnement dans les réglages de ton Apple ID.",
   "mob.autoRenewAndroid": "L’abonnement se renouvelle automatiquement jusqu’à ce que tu le résilies dans Google Play (Paiements et abonnements).",
-  "mob.payOnWeb": "Le paiement s’ouvre dans le navigateur. Une fois terminé, reviens dans l’appli."
+  "mob.payOnWeb": "Le paiement s’ouvre dans le navigateur. Une fois terminé, reviens dans l’appli.",
+  "mob.purchasePending": "L'achat est en attente de confirmation. L'abonnement commence dès que le paiement est confirmé.",
+  "mob.accessUntil": "Accès complet jusqu'au {date}",
+  "mob.endsOn": "Valable jusqu'au {date}, sans renouvellement"
 }

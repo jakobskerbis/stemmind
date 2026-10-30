@@ -1773,5 +1773,8 @@
   "mob.storeUnavailable": "Obchod je momentálne nedostupný. Skús to znova neskôr.",
   "mob.autoRenewIos": "Predplatné sa automaticky obnovuje, pokiaľ ho nezrušíš aspoň 24 hodín pred koncom obdobia. Platba sa strhne z tvojho Apple ID. Predplatné spravuješ a zrušíš v nastaveniach Apple ID.",
   "mob.autoRenewAndroid": "Predplatné sa automaticky obnovuje, kým ho nezrušíš v Google Play (Platby a predplatné).",
-  "mob.payOnWeb": "Platba sa otvorí v prehliadači. Keď skončíš, vráť sa do aplikácie."
+  "mob.payOnWeb": "Platba sa otvorí v prehliadači. Keď skončíš, vráť sa do aplikácie.",
+  "mob.purchasePending": "Nákup čaká na potvrdenie. Predplatné začne platiť po potvrdení platby.",
+  "mob.accessUntil": "Plný prístup do {date}",
+  "mob.endsOn": "Platí do {date}, nepredĺži sa"
 }

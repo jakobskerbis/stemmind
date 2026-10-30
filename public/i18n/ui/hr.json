@@ -1761,5 +1761,8 @@
   "mob.storeUnavailable": "Trgovina trenutačno nije dostupna. Pokušaj ponovno kasnije.",
   "mob.autoRenewIos": "Pretplata se automatski obnavlja, osim ako je otkažeš najmanje 24 sata prije isteka razdoblja. Plaćanje tereti tvoj Apple ID. Pretplatom upravljaš i otkazuješ je u postavkama Apple ID-ja.",
   "mob.autoRenewAndroid": "Pretplata se automatski obnavlja dok je ne otkažeš na Google Playu (Plaćanja i pretplate).",
-  "mob.payOnWeb": "Plaćanje se otvara u pregledniku. Kad završiš, vrati se u aplikaciju."
+  "mob.payOnWeb": "Plaćanje se otvara u pregledniku. Kad završiš, vrati se u aplikaciju.",
+  "mob.purchasePending": "Kupnja čeka potvrdu. Pretplata počinje vrijediti kada se plaćanje potvrdi.",
+  "mob.accessUntil": "Puni pristup do {date}",
+  "mob.endsOn": "Vrijedi do {date}, ne obnavlja se"
 }

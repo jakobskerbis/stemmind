@@ -55,7 +55,7 @@ async function withServer(fn, mobile = {}) {
     accounts: true,
     scheduler: false,
     log: { error() {}, warn() {}, info() {} },
-    mobile: { appleJws: { rootFingerprint: CHAIN.rootFingerprint }, appleKeys: [JWK], play, env: { EVKLID_GOOGLE_RTDN_TOKEN: "skrivnost-rtdn" }, ...mobile },
+    mobile: { appleJws: { rootFingerprint: CHAIN.rootFingerprint }, appleKeys: [JWK], play, env: { EVKLID_GOOGLE_RTDN_TOKEN: "skrivnost-rtdn", EVKLID_STORE_TEST_PURCHASES: "1" }, ...mobile },
   });
   const server = app.listen(0);
   const base = `http://127.0.0.1:${server.address().port}`;
@@ -166,6 +166,30 @@ test("App Store purchase gives the plan, other account is refused, refund notifi
     row = store.db.prepare("SELECT sub_status FROM parents WHERE id = ?").get(p.id);
     assert.equal(row.sub_status, "canceled");
   });
+});
+
+// Testni nakupi so brezplačni (TestFlight, peskovnik): veljajo samo za testne račune.
+test("test purchases count only for store testers and admins", async () => {
+  await withServer(
+    async ({ appClient, adult, play }) => {
+      const c = appClient();
+      await adult(c);
+      const token = (await c("/api/billing/store")).body.account_token;
+      const apple = await c("/api/billing/apple", { body: { signed_transaction: appleJws(tx({ appAccountToken: token })) } });
+      assert.equal(apple.status, 400);
+      assert.equal(apple.body.test_purchase, true);
+      play.subs.set("testni-zeton-12345", { testPurchase: {}, lineItems: [{ productId: tx().productId, expiryTime: new Date(Date.now() + 86400000).toISOString() }], subscriptionState: "SUBSCRIPTION_STATE_ACTIVE", externalAccountIdentifiers: { obfuscatedExternalAccountId: token } });
+      assert.equal((await c("/api/billing/google", { body: { purchase_token: "testni-zeton-12345" } })).status, 400);
+
+      const t = appClient();
+      await adult(t, "tester@primer.si");
+      const tToken = (await t("/api/billing/store")).body.account_token;
+      const ok = await t("/api/billing/apple", { body: { signed_transaction: appleJws(tx({ appAccountToken: tToken, originalTransactionId: "1000000077" })) } });
+      assert.equal(ok.status, 200, JSON.stringify(ok.body));
+      assert.equal(ok.body.account.access.tier, "paid");
+    },
+    { env: { EVKLID_STORE_TESTERS: "tester@primer.si" } },
+  );
 });
 
 test("store purchase never overwrites a paid Stripe subscription", async () => {

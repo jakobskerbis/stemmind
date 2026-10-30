@@ -78,7 +78,9 @@ Ob novi različici aplikacije ponovi koraka 3 in 4.
    V TestFlight nastavi javno povezavo in jo vpiši v `.env` kot `EVKLID_TESTFLIGHT_URL` (stran /prenesi
    jo pokaže). Po odobritvi v App Store: `EVKLID_APP_STORE_URL`.
 7. Za pregled pri Applu: demo račun (e-naslov, geslo, profil z geslom) v polju »App Review
-   Information«; starostna oznaka po vprašalniku (AI klepet, verjetno 9+ ali 13+); kategorija
+   Information«. Njegov e-naslov dodaj v `.env` v `EVKLID_STORE_TESTERS` (z vejico ločeni naslovi):
+   testni nakupi (peskovnik, TestFlight) so brezplačni, zato veljajo samo za te račune in za skrbnike;
+   `EVKLID_STORE_TEST_PURCHASES=1` jih začasno dovoli vsem (samo med pregledom). Nato: starostna oznaka po vprašalniku (AI klepet, verjetno 9+ ali 13+); kategorija
    Izobraževanje, **ne** kategorija Kids; izpolni »App Privacy« (e-naslov, ime, napredek, fotografije
    nalog, brez sledenja in oglasov).
 
@@ -94,7 +96,11 @@ Ob novi različici aplikacije ponovi koraka 3 in 4.
    `EVKLID_GOOGLE_RTDN_TOKEN`.
 6. `npx eas-cli build --profile production --platform android`, nato `npx eas-cli submit --platform android`.
 7. Obrazec »Data safety«, ciljna starostna skupina (13+ ali vključno z mlajšimi po pravilniku Families),
-   demo račun za pregled. Po objavi: `EVKLID_PLAY_URL`.
+   demo račun za pregled (tudi v `EVKLID_STORE_TESTERS`, enako kot pri Applu; licenčni testerji kupujejo brezplačno). Po objavi: `EVKLID_PLAY_URL`.
+
+Pravilnik o zasebnosti (`public/zasebnost.html`) že navaja Apple, Google in Expo kot obdelovalce.
+Odgovore inštruktorja lahko uporabnik prijavi v aplikaciji (»Prijavi napako«), kar zahtevata pravili
+obeh trgovin za vsebino, ki jo ustvari AI.
 
 ## Za razvijalce
 

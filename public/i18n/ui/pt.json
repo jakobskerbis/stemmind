@@ -1753,5 +1753,8 @@
   "mob.storeUnavailable": "A loja não está disponível neste momento. Tenta outra vez mais tarde.",
   "mob.autoRenewIos": "A subscrição renova-se automaticamente, a menos que a canceles pelo menos 24 horas antes do fim do período. O pagamento é cobrado no teu Apple ID. Geres e cancelas a subscrição nas definições do Apple ID.",
   "mob.autoRenewAndroid": "A subscrição renova-se automaticamente até a cancelares no Google Play (Pagamentos e subscrições).",
-  "mob.payOnWeb": "O pagamento abre no navegador. Quando terminares, volta à app."
+  "mob.payOnWeb": "O pagamento abre no navegador. Quando terminares, volta à app.",
+  "mob.purchasePending": "A compra aguarda confirmação. A assinatura começa quando o pagamento for confirmado.",
+  "mob.accessUntil": "Acesso completo até {date}",
+  "mob.endsOn": "Válida até {date}, não será renovada"
 }

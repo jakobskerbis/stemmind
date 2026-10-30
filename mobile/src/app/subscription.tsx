@@ -17,6 +17,7 @@ import { Banner, Body, Button, Card, Chip, ErrorView, Icon, Loading, Screen, Tit
 type Access = { tier: "paid" | "promo" | "trial" | "bonus" | "free"; seats: number; until: string | null };
 type Plan = { seats: number; interval: "month" | "year"; amount: number; currency: string };
 
+const day = (iso: string) => new Date(iso).toLocaleDateString();
 const EULA = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/";
 
 export default function Subscription() {
@@ -44,13 +45,17 @@ export default function Subscription() {
   const buy = async (p: StoreProduct) => {
     setBuying(p.id);
     try {
-      if (usesStoreBilling) await buyInStore(p, info.account_token);
-      else await buyOnWeb(p.seats, p.interval);
+      const out = usesStoreBilling ? await buyInStore(p, info.account_token) : await buyOnWeb(p.seats, p.interval);
       await refresh();
       await reload();
       if (usesStoreBilling) {
-        celebrate();
-        Alert.alert(t("mob.thanks"), t("mob.subActive"));
+        // Nakup je zapisan, a ne velja (račun že plačuje drugje) ali še čaka na potrditev.
+        if (out?.conflict) Alert.alert(t("mob.subConflict"));
+        else if (out?.pending) Alert.alert(t("mob.purchasePending"));
+        else {
+          celebrate();
+          Alert.alert(t("mob.thanks"), t("mob.subActive"));
+        }
       }
     } catch (err: any) {
       if (err?.cancelled) return;
@@ -78,8 +83,16 @@ export default function Subscription() {
     <Screen>
       <Stack.Screen options={{ title: t("mob.subscription") }} />
       <Card tone={paid ? "ok" : "accent"}>
-        <Title size={20}>{paid ? t("mob.subActive") : access.tier === "trial" && access.until ? t("mob.trialUntil", { date: new Date(access.until || "").toLocaleDateString() }) : t("mob.subFree")}</Title>
-        {paid && access.until ? <Body muted>{t("mob.renews", { date: new Date(access.until).toLocaleDateString() })}</Body> : null}
+        <Title size={20}>
+          {paid
+            ? t("mob.subActive")
+            : access.until && access.tier === "trial"
+              ? t("mob.trialUntil", { date: day(access.until) })
+              : access.until && (access.tier === "promo" || access.tier === "bonus")
+                ? t("mob.accessUntil", { date: day(access.until) })
+                : t("mob.subFree")}
+        </Title>
+        {paid && access.until ? <Body muted>{t(parent?.subscription?.cancel_at_period_end ? "mob.endsOn" : "mob.renews", { date: day(access.until) })}</Body> : null}
         {!paid ? (
           <View style={{ gap: 8 }}>
             {["mob.perk1", "mob.perk2", "mob.perk3", "mob.perk4"].map((k) => (

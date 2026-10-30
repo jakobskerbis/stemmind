@@ -168,7 +168,7 @@ function NavLink({ label, dir, onPress }: { label: string; dir: "prev" | "next";
   return (
     <Pressable onPress={onPress} accessibilityRole="link" style={({ pressed }) => ({ flex: 1, padding: 12, borderRadius: radius.card, backgroundColor: th.surface, borderWidth: 1, borderColor: th.border, opacity: pressed ? 0.6 : 1, alignItems: dir === "next" ? "flex-end" : "flex-start" })}>
       <Text style={{ color: th.muted, fontSize: 13 }}>{dir === "next" ? t("tb.steps.next") : t("tb.steps.prev")}</Text>
-      <Text style={{ color: th.accent, fontWeight: "700", textAlign: dir === "next" ? "right" : "left" }} numberOfLines={2}>{label}</Text>
+      <Text style={{ color: th.accent, fontWeight: "700" }} numberOfLines={2}>{label}</Text>
     </Pressable>
   );
 }

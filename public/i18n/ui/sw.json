@@ -1749,5 +1749,8 @@
   "mob.storeUnavailable": "Duka halipatikani kwa sasa. Jaribu tena baadaye.",
   "mob.autoRenewIos": "Usajili husasishwa kiotomatiki, isipokuwa ukiughairi angalau saa 24 kabla ya kipindi kuisha. Malipo hutozwa kwenye Apple ID yako. Unadhibiti na kughairi usajili kwenye mipangilio ya Apple ID.",
   "mob.autoRenewAndroid": "Usajili husasishwa kiotomatiki hadi utakapoughairi kwenye Google Play (Malipo na usajili).",
-  "mob.payOnWeb": "Malipo yanafunguka kwenye kivinjari. Ukimaliza, rudi kwenye programu."
+  "mob.payOnWeb": "Malipo yanafunguka kwenye kivinjari. Ukimaliza, rudi kwenye programu.",
+  "mob.purchasePending": "Ununuzi unasubiri kuthibitishwa. Usajili utaanza malipo yakithibitishwa.",
+  "mob.accessUntil": "Ufikiaji kamili hadi {date}",
+  "mob.endsOn": "Halali hadi {date}, hautasasishwa"
 }

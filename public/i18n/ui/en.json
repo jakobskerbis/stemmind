@@ -1749,5 +1749,8 @@
   "mob.storeUnavailable": "The store can't be reached right now. Try again later.",
   "mob.autoRenewIos": "The subscription renews automatically unless you cancel it at least 24 hours before the end of the period. Payment is charged to your Apple ID. You can manage and cancel the subscription in your Apple ID settings.",
   "mob.autoRenewAndroid": "The subscription renews automatically until you cancel it in Google Play (Payments & subscriptions).",
-  "mob.payOnWeb": "Payment opens in the browser. When you're done, come back to the app."
+  "mob.payOnWeb": "Payment opens in the browser. When you're done, come back to the app.",
+  "mob.purchasePending": "The purchase is awaiting approval. The subscription starts once the payment is confirmed.",
+  "mob.accessUntil": "Full access until {date}",
+  "mob.endsOn": "Valid until {date}, won't renew"
 }

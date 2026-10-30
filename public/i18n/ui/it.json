@@ -1749,5 +1749,8 @@
   "mob.storeUnavailable": "Lo store non è raggiungibile al momento. Riprova più tardi.",
   "mob.autoRenewIos": "L’abbonamento si rinnova automaticamente, a meno che tu non lo disdica almeno 24 ore prima della fine del periodo. Il pagamento viene addebitato sul tuo Apple ID. Puoi gestire e disdire l’abbonamento nelle impostazioni dell’Apple ID.",
   "mob.autoRenewAndroid": "L’abbonamento si rinnova automaticamente finché non lo disdici in Google Play (Pagamenti e abbonamenti).",
-  "mob.payOnWeb": "Il pagamento si apre nel browser. Quando hai finito, torna all’app."
+  "mob.payOnWeb": "Il pagamento si apre nel browser. Quando hai finito, torna all’app.",
+  "mob.purchasePending": "L'acquisto è in attesa di conferma. L'abbonamento parte quando il pagamento è confermato.",
+  "mob.accessUntil": "Accesso completo fino al {date}",
+  "mob.endsOn": "Valido fino al {date}, non si rinnova"
 }

@@ -31,7 +31,7 @@ export const isPlain = (s: string) => !/[$*_`|#<>\\[\]]|^\s*[-+]\s|^\s*\d+\.\s/m
 export function docHtml(body: string, th: Theme, { size = 17, center = false } = {}) {
   return `<!doctype html><html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data: https:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:">
 <style>
 :root{color-scheme:${th.dark ? "dark" : "light"}}
 html,body{margin:0;padding:0;background:transparent;color:${th.text};font:${size}px/1.5 -apple-system,system-ui,Roboto,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%;word-wrap:break-word}

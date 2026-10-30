@@ -1749,5 +1749,8 @@
   "mob.storeUnavailable": "Der Store ist gerade nicht erreichbar. Versuch es später nochmal.",
   "mob.autoRenewIos": "Das Abo verlängert sich automatisch, sofern du es nicht mindestens 24 Stunden vor Ende des Zeitraums kündigst. Die Zahlung wird über deine Apple ID abgerechnet. Du verwaltest und kündigst das Abo in den Einstellungen deiner Apple ID.",
   "mob.autoRenewAndroid": "Das Abo verlängert sich automatisch, bis du es bei Google Play kündigst (Zahlungen und Abos).",
-  "mob.payOnWeb": "Die Zahlung öffnet sich im Browser. Wenn du fertig bist, kehr zur App zurück."
+  "mob.payOnWeb": "Die Zahlung öffnet sich im Browser. Wenn du fertig bist, kehr zur App zurück.",
+  "mob.purchasePending": "Der Kauf wartet auf Bestätigung. Das Abo gilt, sobald die Zahlung bestätigt ist.",
+  "mob.accessUntil": "Voller Zugang bis {date}",
+  "mob.endsOn": "Gültig bis {date}, wird nicht verlängert"
 }

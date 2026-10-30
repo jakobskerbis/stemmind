@@ -31,19 +31,57 @@ export async function loadProducts(): Promise<{ info: StoreInfo; products: Store
   return { info, products: info.products.filter((p) => byId.has(p.id)).map((p) => ({ ...p, price: byId.get(p.id).displayPrice, _store: byId.get(p.id) })) };
 }
 
-// Pošlje nakup strežniku. Vrne pogled računa ali vrže napako (ApiError).
-async function confirm(purchase: any) {
+// Pošlje nakup strežniku in ga v trgovini zaključi šele, ko ga strežnik sprejme (sicer ga trgovina
+// dostavi znova). Vrne odgovor strežnika { account, conflict } ali vrže napako (ApiError).
+// Nakup, ki še čaka (npr. starš ga mora potrditi ali plačilo z gotovino), se ne pošilja.
+type Confirmed = { account?: any; conflict?: string | null; pending?: boolean };
+async function confirm(purchase: any): Promise<Confirmed> {
+  if (purchase.purchaseState === "pending") return { pending: true };
   const body = Platform.OS === "ios" ? { signed_transaction: purchase.purchaseToken } : { purchase_token: purchase.purchaseToken };
   const out = await api(Platform.OS === "ios" ? "/api/billing/apple" : "/api/billing/google", { body });
-  await lib().finishTransaction({ purchase, isConsumable: false });
-  return out.account;
+  await lib().finishTransaction({ purchase, isConsumable: false }).catch(() => {});
+  return out;
+}
+
+let buying = false;
+
+// Nakupi, ki pridejo mimo gumba za nakup: prekinjen nakup (brez povezave, napaka strežnika), nakup, ki
+// ga je pozneje potrdil starš, ponovna dostava trgovine. Teče, dokler je uporabnik prijavljen.
+export function watchPurchases(onChange: () => void) {
+  if (!usesStoreBilling) return () => {};
+  const I = lib();
+  let alive = true;
+  const sub = I.purchaseUpdatedListener(async (purchase: any) => {
+    if (buying) return;
+    try {
+      if (!(await confirm(purchase)).pending) onChange();
+    } catch {
+      // ostane nezaključen; poskusimo ob naslednjem zagonu
+    }
+  });
+  (async () => {
+    try {
+      await I.initConnection();
+      const list = (await I.getAvailablePurchases()) as any[];
+      // Android: nepotrjen nakup Google po 3 dneh vrne. iOS nezaključene dostavi poslušalcu sam.
+      for (const p of list) if (alive && Platform.OS === "android" && p.isAcknowledgedAndroid === false) await confirm(p).then(onChange).catch(() => {});
+    } catch {
+      // trgovina ni dosegljiva
+    }
+  })();
+  return () => {
+    alive = false;
+    sub.remove();
+  };
 }
 
 // Nakup naročnine v trgovini. Rezultat pride prek poslušalca (tako deluje StoreKit in Play Billing).
-export function buyInStore(product: StoreProduct & { _store?: any }, accountToken: string): Promise<any> {
+export function buyInStore(product: StoreProduct & { _store?: any }, accountToken: string): Promise<Confirmed> {
   const I = lib();
-  return new Promise((resolve, reject) => {
+  buying = true;
+  return new Promise<Confirmed>((resolve, reject) => {
     const done = () => {
+      buying = false;
       ok.remove();
       bad.remove();
     };
@@ -83,7 +121,7 @@ export async function restorePurchases() {
   let account = null;
   for (const p of list) {
     try {
-      account = await confirm(p);
+      account = (await confirm(p)).account || account;
     } catch {
       // nakup drugega računa ali neznan izdelek: preskočimo
     }

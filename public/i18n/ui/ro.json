@@ -1761,5 +1761,8 @@
   "mob.storeUnavailable": "Magazinul nu este disponibil acum. Încearcă din nou mai târziu.",
   "mob.autoRenewIos": "Abonamentul se reînnoiește automat, dacă nu îl anulezi cu cel puțin 24 de ore înainte de sfârșitul perioadei. Plata se încasează prin Apple ID-ul tău. Gestionezi și anulezi abonamentul în setările Apple ID.",
   "mob.autoRenewAndroid": "Abonamentul se reînnoiește automat până când îl anulezi în Google Play (Plăți și abonamente).",
-  "mob.payOnWeb": "Plata se deschide în browser. Când termini, revino în aplicație."
+  "mob.payOnWeb": "Plata se deschide în browser. Când termini, revino în aplicație.",
+  "mob.purchasePending": "Achiziția așteaptă confirmarea. Abonamentul începe după confirmarea plății.",
+  "mob.accessUntil": "Acces complet până la {date}",
+  "mob.endsOn": "Valabil până la {date}, nu se reînnoiește"
 }

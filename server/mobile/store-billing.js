@@ -75,7 +75,13 @@ export function mountStoreBilling(app, ctx, opts = {}) {
   migrateStoreBilling(db);
   const json = express.json({ limit: "64kb" });
   const appleOpts = opts.appleJws || {};
-  const allowSandbox = env.EVKLID_APPLE_SANDBOX !== "0"; // Applov pregled aplikacije kupuje v peskovniku
+  // Testni nakupi (Applov peskovnik, TestFlight, Googlovi licenčni testerji) so brezplačni, zato veljajo
+  // samo za skrbnike in račune v EVKLID_STORE_TESTERS (npr. demo račun za pregled pri Applu in Googlu),
+  // ali za vse, dokler je EVKLID_STORE_TEST_PURCHASES=1 (samo med pregledom aplikacije).
+  const testers = String(env.EVKLID_STORE_TESTERS || "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
+  const testOk = (p) =>
+    env.EVKLID_STORE_TEST_PURCHASES === "1" || !!p.is_admin || (!!p.email_verified_at && testers.includes(String(p.email || "").toLowerCase()));
+  const TEST_REFUSED = "Testni nakup velja samo za testne račune.";
   const play = opts.play || new GooglePlay({ serviceAccount: loadServiceAccount(env.EVKLID_GOOGLE_PLAY_KEY), packageName: ANDROID_PACKAGE, fetchFn: opts.fetchFn });
 
   const accountToken = (p) => {
@@ -143,7 +149,7 @@ export function mountStoreBilling(app, ctx, opts = {}) {
       throw err;
     }
     if (tx.bundleId !== BUNDLE_ID) return res.status(400).json({ error: "Nakup ni iz te aplikacije." });
-    if (tx.environment === "Sandbox" && !allowSandbox) return res.status(400).json({ error: "Testni nakup ni veljaven." });
+    if (tx.environment === "Sandbox" && !testOk(p)) return res.status(400).json({ error: TEST_REFUSED, test_purchase: true });
     if (tx.appAccountToken && tx.appAccountToken.toLowerCase() !== accountToken(p)) return res.status(409).json({ error: "Ta nakup pripada drugemu računu Evklid.", other_account: true });
     const out = apply("apple", String(tx.originalTransactionId), appleState(tx), p.id);
     if (out.error) return res.status(400).json({ error: out.error });
@@ -167,6 +173,7 @@ export function mountStoreBilling(app, ctx, opts = {}) {
     }
     if (!sub) return res.status(400).json({ error: "Nakupa ni bilo mogoče preveriti." });
     const state = googleSubscriptionState(sub);
+    if (state.environment === "Sandbox" && !testOk(p)) return res.status(400).json({ error: TEST_REFUSED, test_purchase: true });
     if (state.accountToken && state.accountToken.toLowerCase() !== accountToken(p)) return res.status(409).json({ error: "Ta nakup pripada drugemu računu Evklid.", other_account: true });
     if (state.linkedToken) db.prepare("UPDATE store_subscriptions SET status = 'replaced' WHERE provider = 'google' AND original_id = ?").run(state.linkedToken);
     const out = apply("google", token, state, p.id, state.linkedToken);
@@ -192,6 +199,8 @@ export function mountStoreBilling(app, ctx, opts = {}) {
     const state = appleState(tx, renewal);
     if (["REFUND", "REVOKE"].includes(note.notificationType)) state.status = "expired";
     if (note.notificationType === "DID_FAIL_TO_RENEW" && state.status === "expired") state.status = note.subtype === "GRACE_PERIOD" ? "grace" : "billing_retry";
+    // Testni nakup posodobi samo naročnino, ki jo je strežnik že sprejel (testni račun).
+    if (tx.environment === "Sandbox" && !row("apple", String(tx.originalTransactionId))) return res.json({ ok: true });
     const owner = parentByToken(tx.appAccountToken);
     const out = apply("apple", String(tx.originalTransactionId), state, owner?.id || null);
     if (out.error) log.warn?.(`[evklid] obvestilo App Store za neznan izdelek ${tx.productId}`);
@@ -217,6 +226,7 @@ export function mountStoreBilling(app, ctx, opts = {}) {
       if (sub) {
         const state = googleSubscriptionState(sub);
         if (msg.voidedPurchaseNotification) state.status = "expired"; // vračilo
+        if (state.environment === "Sandbox" && !row("google", token) && !(state.linkedToken && row("google", state.linkedToken))) return res.status(204).end();
         if (state.linkedToken) db.prepare("UPDATE store_subscriptions SET status = 'replaced' WHERE provider = 'google' AND original_id = ?").run(state.linkedToken);
         apply("google", token, state, parentByToken(state.accountToken)?.id || null, state.linkedToken);
       }

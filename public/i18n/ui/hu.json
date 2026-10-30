@@ -1749,5 +1749,8 @@
   "mob.storeUnavailable": "Az áruház most nem érhető el. Próbáld újra később.",
   "mob.autoRenewIos": "Az előfizetés automatikusan megújul, hacsak le nem mondod legalább 24 órával az időszak vége előtt. A fizetés az Apple ID-dat terheli. Az előfizetést az Apple ID beállításaiban kezelheted és mondhatod le.",
   "mob.autoRenewAndroid": "Az előfizetés automatikusan megújul, amíg le nem mondod a Google Playen (Fizetések és előfizetések).",
-  "mob.payOnWeb": "A fizetés a böngészőben nyílik meg. Ha végeztél, térj vissza az alkalmazásba."
+  "mob.payOnWeb": "A fizetés a böngészőben nyílik meg. Ha végeztél, térj vissza az alkalmazásba.",
+  "mob.purchasePending": "A vásárlás jóváhagyásra vár. Az előfizetés a fizetés megerősítése után indul.",
+  "mob.accessUntil": "Teljes hozzáférés eddig: {date}",
+  "mob.endsOn": "Érvényes eddig: {date}, nem újul meg"
 }

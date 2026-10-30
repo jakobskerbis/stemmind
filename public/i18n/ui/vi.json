@@ -1737,5 +1737,8 @@
   "mob.storeUnavailable": "Hiện không kết nối được với cửa hàng. Hãy thử lại sau.",
   "mob.autoRenewIos": "Gói đăng ký tự động gia hạn, trừ khi bạn hủy ít nhất 24 giờ trước khi kỳ hiện tại kết thúc. Khoản thanh toán được tính vào Apple ID của bạn. Bạn quản lý và hủy gói đăng ký trong phần cài đặt Apple ID.",
   "mob.autoRenewAndroid": "Gói đăng ký tự động gia hạn cho đến khi bạn hủy trong Google Play (Thanh toán và gói thuê bao).",
-  "mob.payOnWeb": "Trang thanh toán sẽ mở trong trình duyệt. Khi xong, hãy quay lại ứng dụng."
+  "mob.payOnWeb": "Trang thanh toán sẽ mở trong trình duyệt. Khi xong, hãy quay lại ứng dụng.",
+  "mob.purchasePending": "Giao dịch mua đang chờ xác nhận. Gói đăng ký bắt đầu khi thanh toán được xác nhận.",
+  "mob.accessUntil": "Truy cập đầy đủ đến {date}",
+  "mob.endsOn": "Có hiệu lực đến {date}, không gia hạn"
 }

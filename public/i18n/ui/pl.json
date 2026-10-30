@@ -1773,5 +1773,8 @@
   "mob.storeUnavailable": "Sklep jest teraz niedostępny. Spróbuj ponownie później.",
   "mob.autoRenewIos": "Subskrypcja odnawia się automatycznie, chyba że anulujesz ją co najmniej 24 godziny przed końcem okresu. Płatność zostanie pobrana z twojego Apple ID. Subskrypcją zarządzasz i anulujesz ją w ustawieniach Apple ID.",
   "mob.autoRenewAndroid": "Subskrypcja odnawia się automatycznie, dopóki nie anulujesz jej w Google Play (Płatności i subskrypcje).",
-  "mob.payOnWeb": "Płatność otworzy się w przeglądarce. Gdy skończysz, wróć do aplikacji."
+  "mob.payOnWeb": "Płatność otworzy się w przeglądarce. Gdy skończysz, wróć do aplikacji.",
+  "mob.purchasePending": "Zakup czeka na potwierdzenie. Subskrypcja zacznie działać po potwierdzeniu płatności.",
+  "mob.accessUntil": "Pełny dostęp do {date}",
+  "mob.endsOn": "Ważna do {date}, nie odnowi się"
 }

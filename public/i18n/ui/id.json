@@ -1737,5 +1737,8 @@
   "mob.storeUnavailable": "Toko sedang tidak bisa diakses. Coba lagi nanti.",
   "mob.autoRenewIos": "Langganan diperpanjang otomatis, kecuali kamu membatalkannya paling lambat 24 jam sebelum periode berakhir. Pembayaran ditagihkan ke Apple ID-mu. Kelola dan batalkan langganan di pengaturan Apple ID.",
   "mob.autoRenewAndroid": "Langganan diperpanjang otomatis sampai kamu membatalkannya di Google Play (Pembayaran & langganan).",
-  "mob.payOnWeb": "Pembayaran dibuka di browser. Setelah selesai, kembali ke aplikasi."
+  "mob.payOnWeb": "Pembayaran dibuka di browser. Setelah selesai, kembali ke aplikasi.",
+  "mob.purchasePending": "Pembelian menunggu konfirmasi. Langganan dimulai setelah pembayaran dikonfirmasi.",
+  "mob.accessUntil": "Akses penuh hingga {date}",
+  "mob.endsOn": "Berlaku hingga {date}, tidak diperpanjang"
 }

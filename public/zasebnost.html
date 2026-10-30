@@ -31,7 +31,7 @@
   <h2>2. Katere podatke obdelujemo</h2>
   <table>
     <tr><th>Kdo</th><th>Podatki</th></tr>
-    <tr><td>Starš</td><td>e-naslov, ime (neobvezno), datum rojstva (za preverjanje starosti), geslo (shranjeno samo kot zgoščena vrednost), čas potrditve e-naslova in soglasij, stanje naročnine. Podatke o plačilni kartici obdeluje izključno Stripe, mi jih ne vidimo in ne hranimo.</td></tr>
+    <tr><td>Starš</td><td>e-naslov, ime (neobvezno), datum rojstva (za preverjanje starosti), geslo (shranjeno samo kot zgoščena vrednost), čas potrditve e-naslova in soglasij, stanje naročnine. Podatke o plačilni kartici obdeluje izključno Stripe (oziroma Apple ali Google pri nakupu v mobilni aplikaciji), mi jih ne vidimo in ne hranimo. Pri Prijavi z Apple še Applov anonimni identifikator uporabnika in e-naslov, ki ga Apple posreduje (lahko je skrit naslov za posredovanje).</td></tr>
     <tr><td>Otrok</td><td>ime ali vzdevek, letnica rojstva, šola in razred, nastavitve učenja, pogovori z AI inštruktorjem, fotografije nalog, ki jih otrok naloži, rešene naloge, napredek, točke in šibke točke.</td></tr>
   </table>
   <p>Priporočamo, da otrok uporablja vzdevek in da na fotografijah nalog ni obrazov ali drugih osebnih podatkov.</p>
@@ -52,8 +52,12 @@
     <tr><td>Anthropic PBC</td><td>AI model, ki pripravi odgovore inštruktorja in prebere fotografije nalog. Po pogodbenih pogojih ponudnika se podatki ne uporabljajo za učenje modelov.</td><td>ZDA</td></tr>
     <tr><td>Stripe Payments Europe Ltd.</td><td>plačila in računi</td><td>EU / ZDA</td></tr>
     <tr><td>Resend</td><td>pošiljanje e-pošte</td><td>ZDA</td></tr>
+    <tr><td>Apple Distribution International Ltd.</td><td>mobilna aplikacija za iPhone in iPad: Prijava z Apple, nakup naročnine v aplikaciji, dostava obvestil (APNs)</td><td>EU / ZDA</td></tr>
+    <tr><td>Google Ireland Ltd.</td><td>mobilna aplikacija za Android: nakup naročnine v Google Play, dostava obvestil (Firebase Cloud Messaging)</td><td>EU / ZDA</td></tr>
+    <tr><td>650 Industries, Inc. (Expo)</td><td>posredovanje obvestil v mobilno aplikacijo (žeton naprave in besedilo obvestila)</td><td>ZDA</td></tr>
     <tr><td><span class="todo">[gostitelj, npr. Render]</span></td><td>strežnik in baza podatkov</td><td><span class="todo">[…]</span></td></tr>
   </table>
+  <p><b>Mobilna aplikacija</b>: kamera in galerija se uporabita samo, ko otrok sam fotografira ali izbere nalogo; fotografija gre inštruktorju kot v spletni aplikaciji. Obvestila (opomnik za vajo, cilj) so neobvezna in se izklopijo v aplikaciji ali v nastavitvah telefona. Aplikacija ne uporablja oglasov, sledenja med aplikacijami ali lokacije.</p>
   <p><b>Glasovni vnos</b> (mikrofon v Inštruktorju) ni obvezen. Govor v besedilo pretvori brskalnik na napravi (npr. Google v Chromu, Apple v Safariju) po pogojih ponudnika brskalnika; mi zvoka ne prejmemo in ne hranimo, k nam pride samo zapisano besedilo, ko ga otrok pošlje.</p>
   <p>Prenosi v ZDA potekajo na podlagi okvira EU-ZDA za zasebnost podatkov ali standardnih pogodbenih klavzul Evropske komisije.</p>
 

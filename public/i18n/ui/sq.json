@@ -1749,5 +1749,8 @@
   "mob.storeUnavailable": "Dyqani nuk është i arritshëm tani. Provo përsëri më vonë.",
   "mob.autoRenewIos": "Abonimi rinovohet automatikisht, përveç nëse e anulon të paktën 24 orë para fundit të periudhës. Pagesa ngarkohet në Apple ID-në tënde. Abonimin e menaxhon dhe e anulon te cilësimet e Apple ID.",
   "mob.autoRenewAndroid": "Abonimi rinovohet automatikisht derisa ta anulosh në Google Play (Pagesat dhe abonimet).",
-  "mob.payOnWeb": "Pagesa hapet në shfletues. Kur të mbarosh, kthehu në aplikacion."
+  "mob.payOnWeb": "Pagesa hapet në shfletues. Kur të mbarosh, kthehu në aplikacion.",
+  "mob.purchasePending": "Blerja pret konfirmimin. Abonimi fillon sapo të konfirmohet pagesa.",
+  "mob.accessUntil": "Qasje e plotë deri më {date}",
+  "mob.endsOn": "Vlen deri më {date}, nuk rinovohet"
 }

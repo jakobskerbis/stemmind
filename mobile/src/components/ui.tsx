@@ -1,6 +1,6 @@
 // Gradniki zaslonov (po docs/oblikovanje.md: kartice, gumbi, seznami, opozorila), z barvami iz useTheme().
 import React from "react";
-import { ActivityIndicator, I18nManager, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, type TextInputProps, type ViewStyle, type StyleProp, type ScrollViewProps } from "react-native";
+import { ActivityIndicator, Keyboard, I18nManager, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, type TextInputProps, type ViewStyle, type StyleProp, type ScrollViewProps } from "react-native";
 import { SymbolView, type AndroidSymbol } from "expo-symbols";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { SFSymbol } from "sf-symbols-typescript";
@@ -18,12 +18,28 @@ export function Icon({ name, size = 22, color }: { name: IconName; size?: number
   return <SymbolView name={name} size={size} tintColor={color || th.text} style={flip ? { transform: [{ scaleX: -1 }] } : undefined} />;
 }
 
+// Višina tipkovnice na Androidu (prikaz od roba do roba: okno se ob tipkovnici ne pomanjša samo).
+export function useAndroidKeyboard() {
+  const [height, setHeight] = React.useState(0);
+  React.useEffect(() => {
+    if (Platform.OS !== "android") return;
+    const show = Keyboard.addListener("keyboardDidShow", (e) => setHeight(e.endCoordinates.height));
+    const hide = Keyboard.addListener("keyboardDidHide", () => setHeight(0));
+    return () => {
+      show.remove();
+      hide.remove();
+    };
+  }, []);
+  return height;
+}
+
 export function Screen({ children, refreshControl, style, contentContainerStyle, ...rest }: ScrollViewProps & { children: React.ReactNode }) {
   const th = useTheme();
+  const keyboard = useAndroidKeyboard();
   return (
     <ScrollView
       style={[{ flex: 1, backgroundColor: th.bg }, style]}
-      contentContainerStyle={[{ padding: 16, paddingBottom: 48, gap: 12 }, contentContainerStyle]}
+      contentContainerStyle={[{ padding: 16, paddingBottom: 48 + keyboard, gap: 12 }, contentContainerStyle]}
       contentInsetAdjustmentBehavior="automatic"
       keyboardShouldPersistTaps="handled"
       automaticallyAdjustKeyboardInsets

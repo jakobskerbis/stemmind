@@ -1749,5 +1749,8 @@
   "mob.storeUnavailable": "Mağazaya şu anda ulaşılamıyor. Daha sonra tekrar dene.",
   "mob.autoRenewIos": "Abonelik, dönem bitiminden en az 24 saat önce iptal etmezsen otomatik olarak yenilenir. Ödeme Apple ID'nden tahsil edilir. Aboneliği Apple ID ayarlarından yönetir ve iptal edersin.",
   "mob.autoRenewAndroid": "Abonelik, Google Play'de (Ödemeler ve abonelikler) iptal edene kadar otomatik olarak yenilenir.",
-  "mob.payOnWeb": "Ödeme tarayıcıda açılır. İşin bitince uygulamaya geri dön."
+  "mob.payOnWeb": "Ödeme tarayıcıda açılır. İşin bitince uygulamaya geri dön.",
+  "mob.purchasePending": "Satın alma onay bekliyor. Abonelik, ödeme onaylandığında başlar.",
+  "mob.accessUntil": "{date} tarihine kadar tam erişim",
+  "mob.endsOn": "{date} tarihine kadar geçerli, yenilenmeyecek"
 }

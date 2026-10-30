@@ -8,17 +8,21 @@ import { StatusBar } from "expo-status-bar";
 import { SessionProvider, useSession } from "@/lib/session";
 import { t, useLanguage } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
+import { watchPurchases } from "@/lib/billing";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 function Root() {
-  const { ready, signedIn, student } = useSession();
+  const { ready, signedIn, student, refresh } = useSession();
   const th = useTheme();
   useLanguage();
 
   useEffect(() => {
     if (ready) SplashScreen.hideAsync().catch(() => {});
   }, [ready]);
+
+  // Nakupi v trgovini, ki niso prišli prek gumba (prekinjeni, potrjeni pozneje), se zapišejo ob zagonu.
+  useEffect(() => (signedIn ? watchPurchases(() => refresh().catch(() => {})) : undefined), [signedIn, refresh]);
 
   // Dotik obvestila odpre učno pot.
   useEffect(() => {

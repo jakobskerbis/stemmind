@@ -1737,5 +1737,8 @@
   "mob.storeUnavailable": "暂时无法连接商店，请稍后再试。",
   "mob.autoRenewIos": "订阅会自动续订，除非你在当前周期结束前至少 24 小时取消。费用将从你的 Apple ID 扣除。你可以在 Apple ID 设置中管理和取消订阅。",
   "mob.autoRenewAndroid": "订阅会自动续订，直到你在 Google Play（付款和订阅）中取消为止。",
-  "mob.payOnWeb": "付款将在浏览器中打开。完成后请返回应用。"
+  "mob.payOnWeb": "付款将在浏览器中打开。完成后请返回应用。",
+  "mob.purchasePending": "购买正在等待确认。付款确认后，订阅即会生效。",
+  "mob.accessUntil": "{date} 前可完整使用",
+  "mob.endsOn": "有效期至 {date}，不会续订"
 }
