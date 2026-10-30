@@ -2,7 +2,7 @@
 import { icon } from "./icons.js";
 import { avatarSvg, itemOf, itemName } from "./avatar.js";
 import { DRAW } from "./zbirke.js";
-import { t, currentLang } from "./i18n.js";
+import { t, currentLang, locale } from "./i18n.js";
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const api = async (url, opts = {}) => {
@@ -68,12 +68,38 @@ function monthCard(M) {
     </div>`;
 }
 
+const fmtDay = (s) => new Date(`${s}T12:00:00`).toLocaleDateString(locale(), { day: "numeric", month: "numeric" });
+
+// Razredne naloge, ki jih je dal učitelj. Učitelj vidi samo rezultate pri teh temah (zasebni prostor).
+function classTasksHtml(x) {
+  if (!x) return "";
+  const items = x.items
+    .map((a) => {
+      const st = a.status === "done" ? t("lg.taskDone") : t("lg.taskProgress", { solved: a.solved, goal: a.goal });
+      return `<li class="${a.status === "done" ? "done" : ""}"><span><b>${esc(a.title)}</b>${a.due ? ` · ${esc(t("lg.taskDue", { date: fmtDay(a.due) }))}` : ""}<br><span class="st">${a.status === "done" ? icon("circle-check") : ""} ${esc(st)}</span></span>
+        <button type="button" class="secondary small" data-task="${esc(a.topicId)}">${icon("play")}<span>${esc(t("lg.taskOpen"))}</span></button></li>`;
+    })
+    .join("");
+  return `<h3 class="h-icon">${icon("list-checks")} ${esc(t("lg.tasks"))}</h3>
+    ${items ? `<ul class="lg-tasks">${items}</ul>` : `<p class="muted">${esc(t("lg.noTasks"))}</p>`}
+    <p class="muted small">${esc(t("lg.teacherSees"))}</p>
+    <div class="tc-actions">
+      <button type="button" class="ghost small" data-export>${icon("download")}<span>${esc(t("lg.export"))}</span></button>
+      <button type="button" class="ghost small" data-transfer aria-expanded="false">${icon("arrow-left-right")}<span>${esc(t("lg.transfer"))}</span></button>
+      <form class="lg-transfer row" hidden>
+        <input name="code" placeholder="${esc(t("lg.codePh"))}" aria-label="${esc(t("lg.transferCode"))}" maxlength="9" autocomplete="off" autocapitalize="characters" required>
+        <button class="primary" type="submit">${esc(t("lg.transferGo"))}</button>
+      </form>
+    </div>`;
+}
+
 export async function loadLeague(studentId) {
   current = studentId;
   const root = $("#league-content");
   let data;
+  let tasks = null; // razredne naloge (server/schools.js); brez njih liga še vedno deluje
   try {
-    data = await api(`/api/students/${studentId}/league`);
+    [data, tasks] = await Promise.all([api(`/api/students/${studentId}/league`), api(`/api/students/${studentId}/assignments`).catch(() => null)]);
   } catch (e) {
     root.innerHTML = `<p class="muted">${esc(e.message)}</p>`;
     return;
@@ -109,6 +135,7 @@ export async function loadLeague(studentId) {
     </div>
     ${monthCard(data.month)}
     ${data.classes.length ? `<div class="chip-row lg-period" role="group">${["week", "month"].map((k) => `<button type="button" class="${period === k ? "active" : ""}" data-period="${k}" aria-pressed="${period === k}">${esc(t(k === "week" ? "lg.thisWeek" : "lg.thisMonth"))}</button>`).join("")}</div>` : ""}
+    ${tasks?.licence ? `<p class="lg-licence muted">${icon("badge-check")} ${esc(t("lg.licence", { school: tasks.licence.school, date: fmtDay(tasks.licence.validUntil) }))}</p>` : ""}
     ${data.classes
       .map(
         (c) => `<div class="card">
@@ -118,6 +145,7 @@ export async function loadLeague(studentId) {
           </div>
           <p class="muted">${esc(t(period === "month" ? "lg.classMonth" : c.kind === "friends" ? "lg.boardFriends" : "lg.board"))}</p>
           ${boardHtml(byPeriod(c.board))}
+          ${c.kind === "class" ? classTasksHtml(tasks?.classes.find((x) => x.classId === c.id)) : ""}
           <button type="button" class="ghost small" data-leave="${c.id}">${icon("x")}<span>${esc(t("lg.leave"))}</span></button>
         </div>`,
       )
@@ -166,6 +194,39 @@ export async function loadLeague(studentId) {
       toast(err.message);
     }
   });
+  root.querySelectorAll("[data-task]").forEach((b) => b.addEventListener("click", () => window.evklid?.openTopic?.(b.dataset.task)));
+  root.querySelectorAll("[data-transfer]").forEach((b) =>
+    b.addEventListener("click", () => {
+      const f = b.nextElementSibling;
+      f.hidden = !f.hidden;
+      b.setAttribute("aria-expanded", String(!f.hidden));
+      if (!f.hidden) f.elements.code.focus();
+    }),
+  );
+  root.querySelectorAll(".lg-transfer").forEach((f) =>
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!confirm(t("lg.transferConfirm"))) return;
+      try {
+        const r = await api(`/api/students/${studentId}/transfer`, { method: "POST", body: { code: f.elements.code.value } });
+        toast(t("lg.transferred", { name: r.class.name }));
+        loadLeague(studentId);
+      } catch (err) {
+        toast(err.message);
+      }
+    }),
+  );
+  root.querySelectorAll("[data-export]").forEach((b) =>
+    b.addEventListener("click", async () => {
+      const r = await fetch(`/api/students/${studentId}/school-export`);
+      if (!r.ok) return toast(t("lg.error", { status: r.status }));
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(await r.blob());
+      a.download = "evklid-napredek.json";
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }),
+  );
   root.querySelectorAll("[data-leave]").forEach((b) =>
     b.addEventListener("click", async () => {
       if (!confirm(t("lg.leaveConfirm"))) return;
