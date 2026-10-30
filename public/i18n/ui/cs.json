@@ -2320,5 +2320,18 @@
   "tc.deleteClass": "Smazat třídu",
   "tc.deleteClassConfirm": "Třída bude smazána pro všechny žáky. Jejich pokrok zůstane. Pokračovat?",
   "tc.free": "Učitelský účet, třídy, úkoly, export a přesun třídy na jinou školu jsou vždy zdarma.",
-  "tc.offersOff": "Nezobrazovat žákům této třídy nabídky placených balíčků"
+  "tc.offersOff": "Nezobrazovat žákům této třídy nabídky placených balíčků",
+  "gr.povzetek": "Shrnutí na jedné stránce",
+  "gr.zvok": "Poslechnout shrnutí",
+  "gr.zvokStop": "Zastavit čtení",
+  "gr.delovni": "Pracovní list s řešením",
+  "gr.noVoice": "Toto zařízení nemá slovinský hlas pro čtení nahlas. Zkus prohlížeč Edge nebo přidej slovinský hlas v nastavení zařízení.",
+  "gr.noSpeech": "Tento prohlížeč neumí číst nahlas.",
+  "gr.popup": "Prohlížeč zablokoval nové okno. Povol vyskakovací okna pro tuto stránku a zkus to znovu.",
+  "gr.locked": "Pracovní listy na doma jsou součástí balíčku.",
+  "gr.noWeak": "Zatím nemáš slabá témata. Nejprve vyřeš několik úloh v Procvičování.",
+  "gr.weakSheet": "Pracovní list ze slabých témat",
+  "gr.pastTitle": "Minulé testy s řešením",
+  "gr.pastText": "Oficiální testy a pokyny k hodnocení zveřejňuje Státní zkušební centrum (RIC), které k nim má všechna práva, proto je zde nekopírujeme. Zkušební test výše obsahuje naše úlohy ve stejné podobě a se stejným časem.",
+  "gr.pastOpen": "Otevřít testy na ric.si"
 }

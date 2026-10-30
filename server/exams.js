@@ -63,6 +63,15 @@ const mockOf = (key) => {
   return EXAMS[id].subjects[subject].mock;
 };
 
+// Uradne pretekle pole: RIC ima vse pravice (»© Državni izpitni center, vse pravice pridržane«),
+// zato jih ne kopiramo, ampak povežemo na stran RIC; poskusni izpit je iz naših nalog.
+const MATURA_PAGE = { MAT: "matematika", FIZ: "fizika", KEM: "kemija", BIO: "biologija" };
+export function officialPapers(examId, subject) {
+  if (examId === "NPZ6" || examId === "NPZ9") return { source: "RIC", url: "https://www.ric.si/nacionalno-preverjanje-znanja/preizkusi-znanja/" };
+  if (examId === "MATURA" && MATURA_PAGE[subject]) return { source: "RIC", url: `https://www.ric.si/splosna-matura/predmeti/${MATURA_PAGE[subject]}/` };
+  return null;
+}
+
 // Opis za zavihek: izpit, predmeti, format poskusnega izpita.
 export function examInfo(key, system, lang = "en") {
   if (!isExamPath(key)) return null;
@@ -84,6 +93,7 @@ export function examInfo(key, system, lang = "en") {
     // Jezik nalog: slovenski izpiti slovensko, indijski v hindijščini za hindijske učence, sicer angleško.
     tasksLang: e.systems.includes("SI") ? "sl" : e.lang,
     subjectName: e.subjectNames[subject],
+    official: officialPapers(id, subject),
     subjects: Object.keys(e.subjects).map((s) => ({ key: `${s}-EX-${id}`, subject: s, name: e.subjectNames[s] })),
     exams: { own: own.map(brief), other: other.map(brief) },
     mock: {

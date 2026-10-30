@@ -2280,5 +2280,18 @@
   "tc.deleteClass": "Fshi klasën",
   "tc.deleteClassConfirm": "Klasa do të fshihet për të gjithë nxënësit. Përparimi i tyre mbetet. Të vazhdoj?",
   "tc.free": "Llogaria e mësuesit, klasat, detyrat, eksporti dhe zhvendosja e klasës në një shkollë tjetër janë gjithmonë falas.",
-  "tc.offersOff": "Mos u shfaq nxënësve të kësaj klase oferta për paketa me pagesë"
+  "tc.offersOff": "Mos u shfaq nxënësve të kësaj klase oferta për paketa me pagesë",
+  "gr.povzetek": "Përmbledhje në një faqe",
+  "gr.zvok": "Dëgjo përmbledhjen",
+  "gr.zvokStop": "Ndalo leximin",
+  "gr.delovni": "Fletë pune me zgjidhje",
+  "gr.noVoice": "Kjo pajisje nuk ka zë slloven për lexim me zë. Provo shfletuesin Edge ose shto një zë slloven te cilësimet e pajisjes.",
+  "gr.noSpeech": "Ky shfletues nuk di të lexojë me zë.",
+  "gr.popup": "Shfletuesi bllokoi dritaren e re. Lejo dritaret që shfaqen për këtë faqe dhe provo përsëri.",
+  "gr.locked": "Fletët e punës për shtëpi janë pjesë e paketës.",
+  "gr.noWeak": "Ende nuk ke tema të dobëta. Fillimisht zgjidh disa detyra te Ushtrimet.",
+  "gr.weakSheet": "Fletë pune nga temat e dobëta",
+  "gr.pastTitle": "Provime të mëparshme me zgjidhje",
+  "gr.pastText": "Provimet zyrtare dhe udhëzimet e vlerësimit i publikon Qendra Shtetërore e Provimeve (RIC), që ka të gjitha të drejtat, prandaj nuk i kopjojmë këtu. Provimi provë më lart ka detyrat tona në të njëjtën formë dhe me të njëjtën kohë.",
+  "gr.pastOpen": "Hap provimet në ric.si"
 }

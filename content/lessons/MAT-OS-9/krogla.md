@@ -87,7 +87,7 @@ Površina krogle je $100\pi\,\text{cm}^2$. Kolikšna je njena prostornina?
 - Površina: $P = 4\pi r^2$ (štirikratnik ploščine največjega kroga).
 - Prostornina: $V = \dfrac{4}{3}\pi r^3$.
 - Če je podan premer, najprej izračunaj $r = d : 2$.
-- Pri obratnih nalogah iz $P$ ali $V$ izrazi $r^2$ oziroma $r^3$ in korени.
+- Pri obratnih nalogah iz $P$ ali $V$ izrazi $r^2$ oziroma $r^3$ in koreni.
 - Prostornina krogle je $\frac{2}{3}$ prostornine valja z enakim polmerom in višino $2r$.
 
 ## Drugače: Na sliki

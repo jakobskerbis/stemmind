@@ -2284,5 +2284,18 @@
   "tc.deleteClass": "Eliminar turma",
   "tc.deleteClassConfirm": "A turma será eliminada para todos os alunos. O progresso deles mantém-se. Continuar?",
   "tc.free": "A conta de professor, as turmas, os trabalhos, a exportação e a transferência de uma turma para outra escola são sempre gratuitos.",
-  "tc.offersOff": "Não mostrar ofertas de planos pagos aos alunos desta turma"
+  "tc.offersOff": "Não mostrar ofertas de planos pagos aos alunos desta turma",
+  "gr.povzetek": "Resumo numa página",
+  "gr.zvok": "Ouvir o resumo",
+  "gr.zvokStop": "Parar a leitura",
+  "gr.delovni": "Ficha de exercícios com soluções",
+  "gr.noVoice": "Este dispositivo não tem voz eslovena para ler em voz alta. Experimenta o navegador Edge ou adiciona uma voz eslovena nas definições do dispositivo.",
+  "gr.noSpeech": "Este navegador não consegue ler em voz alta.",
+  "gr.popup": "O navegador bloqueou a nova janela. Permite pop-ups para este site e tenta de novo.",
+  "gr.locked": "As fichas para casa fazem parte do plano.",
+  "gr.noWeak": "Ainda não tens temas fracos. Resolve primeiro algumas tarefas em Prática.",
+  "gr.weakSheet": "Ficha dos temas fracos",
+  "gr.pastTitle": "Exames anteriores com soluções",
+  "gr.pastText": "Os exames oficiais e os critérios de correção são publicados pelo Centro Nacional de Exames (RIC), que detém todos os direitos, por isso não os copiamos aqui. O exame de treino acima usa tarefas nossas no mesmo formato e com o mesmo tempo.",
+  "gr.pastOpen": "Abrir exames em ric.si"
 }

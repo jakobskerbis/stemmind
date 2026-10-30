@@ -2280,5 +2280,18 @@
   "tc.deleteClass": "Klasse löschen",
   "tc.deleteClassConfirm": "Die Klasse wird für alle Schüler gelöscht. Ihr Fortschritt bleibt erhalten. Fortfahren?",
   "tc.free": "Lehrerkonto, Klassen, Aufgaben, Export und der Umzug einer Klasse an eine andere Schule sind immer kostenlos.",
-  "tc.offersOff": "Schülerinnen und Schülern dieser Klasse keine Angebote für Bezahlpakete zeigen"
+  "tc.offersOff": "Schülerinnen und Schülern dieser Klasse keine Angebote für Bezahlpakete zeigen",
+  "gr.povzetek": "Zusammenfassung auf einer Seite",
+  "gr.zvok": "Zusammenfassung anhören",
+  "gr.zvokStop": "Vorlesen beenden",
+  "gr.delovni": "Arbeitsblatt mit Lösungen",
+  "gr.noVoice": "Dieses Gerät hat keine slowenische Stimme zum Vorlesen. Versuche den Edge-Browser oder füge in den Geräteeinstellungen eine slowenische Stimme hinzu.",
+  "gr.noSpeech": "Dieser Browser kann nicht vorlesen.",
+  "gr.popup": "Der Browser hat das neue Fenster blockiert. Erlaube Pop-ups für diese Seite und versuche es erneut.",
+  "gr.locked": "Arbeitsblätter für zu Hause sind im Paket enthalten.",
+  "gr.noWeak": "Du hast noch keine schwachen Themen. Löse zuerst einige Aufgaben im Übungsbereich.",
+  "gr.weakSheet": "Arbeitsblatt aus schwachen Themen",
+  "gr.pastTitle": "Frühere Prüfungen mit Lösungen",
+  "gr.pastText": "Die offiziellen Prüfungsbögen und Bewertungsanleitungen veröffentlicht das Staatliche Prüfungszentrum (RIC), das alle Rechte daran hält; deshalb kopieren wir sie hier nicht. Die Probeprüfung oben enthält unsere eigenen Aufgaben im gleichen Format und mit gleicher Zeit.",
+  "gr.pastOpen": "Prüfungsbögen auf ric.si öffnen"
 }
