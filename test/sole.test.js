@@ -205,6 +205,9 @@ test("school orders with accounts: public form, admin only for an admin parent",
     assert.equal((await ok.json()).orders.length, 1);
     assert.equal((await fetch(`${base}/api/admin/school-orders/${id}`, put)).status, 200);
     assert.equal((await fetch(`${base}/api/admin/school-orders/${id}/predracun`, { headers: { cookie } })).status, 200);
+    // Omejitev na IP: lažna glava Cf-Connecting-Ip je ne obide (na Renderju šteje req.ip).
+    for (let i = 0; i < 4; i++) assert.equal((await post(base, good({ startDate: nextYear }), { "cf-connecting-ip": `10.0.0.${i}` })).status, 201);
+    assert.equal((await post(base, good({ startDate: nextYear }), { "cf-connecting-ip": "10.0.0.99" })).status, 429);
   } finally {
     server.close();
   }

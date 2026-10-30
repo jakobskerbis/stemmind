@@ -207,7 +207,9 @@ export function mountSchoolOrders(app, store, { accounts, isLocalRequest }) {
   const db = store.db;
   migrateSchoolOrders(db);
   const hits = new Map(); // ip -> časi sprejetih naročil v zadnji uri (v pomnilniku)
-  const ipOf = (req) => String(req.headers["cf-connecting-ip"] || req.ip || req.socket?.remoteAddress || "");
+  // Z računi (Render) kot drugod v aplikaciji req.ip (trust proxy 1 v accounts/index.js): glave Cf-Connecting-Ip lahko
+  // pošlje vsak in bi z njo obšel omejitev. Brez računov (tunel Cloudflare do tega računalnika) jo nastavi Cloudflare.
+  const ipOf = (req) => String((accounts ? req.ip : req.headers["cf-connecting-ip"] || req.ip) || req.socket?.remoteAddress || "");
   const recent = (ip, now) => (hits.get(ip) || []).filter((t) => now - t < 3600000);
 
   app.post("/api/school-orders", (req, res) => {
