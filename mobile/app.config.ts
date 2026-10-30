@@ -1,0 +1,69 @@
+// Nastavitve aplikacije Evklid za iPhone, iPad in Android (Expo, CNG: mapi ios/ in android/ nastaneta ob gradnji).
+// Ime in id-ji so v ../brand.json (enako kot za strežnik). Kanal razdeljevanja določi EXPO_PUBLIC_CHANNEL (eas.json):
+//   store  – App Store / Google Play: naročnina samo prek nakupa v aplikaciji (zahteva obeh trgovin);
+//   direct – APK s strani evklid.app/prenesi: naročnina prek obstoječega plačila na spletu (Stripe).
+import type { ExpoConfig } from "expo/config";
+import brand from "../brand.json";
+
+const channel = process.env.EXPO_PUBLIC_CHANNEL === "direct" ? "direct" : "store";
+const id = brand.app.bundle_id;
+// Besedila dovoljenj (slovensko; angleško in druge jezike sistema v locales/).
+const CAMERA = `${brand.name} uporabi kamero, da poslikaš nalogo in jo inštruktor razloži po korakih.`;
+const PHOTOS = `${brand.name} odpre fotografijo naloge, ki jo izbereš, da jo inštruktor razloži.`;
+
+const config: ExpoConfig = {
+  name: brand.name,
+  slug: brand.slug,
+  scheme: brand.slug,
+  version: "1.0.0",
+  orientation: "default",
+  icon: "./assets/icon.png",
+  userInterfaceStyle: "automatic",
+  backgroundColor: "#F6F7F9",
+  ios: {
+    bundleIdentifier: id,
+    supportsTablet: true,
+    usesAppleSignIn: true,
+    config: { usesNonExemptEncryption: false },
+    infoPlist: {
+      CFBundleAllowMixedLocalizations: true,
+      NSCameraUsageDescription: CAMERA,
+      NSPhotoLibraryUsageDescription: PHOTOS,
+    },
+  },
+  locales: { en: "./locales/en.json", sl: "./locales/sl.json" },
+  android: {
+    package: id,
+    adaptiveIcon: {
+      backgroundColor: "#2353D1",
+      foregroundImage: "./assets/android-icon-foreground.png",
+      backgroundImage: "./assets/android-icon-background.png",
+      monochromeImage: "./assets/android-icon-monochrome.png",
+    },
+    permissions: ["android.permission.CAMERA", "android.permission.POST_NOTIFICATIONS", "android.permission.VIBRATE"],
+    blockedPermissions: ["android.permission.RECORD_AUDIO", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"],
+    predictiveBackGestureEnabled: true,
+  },
+  plugins: [
+    "expo-router",
+    "expo-secure-store",
+    "expo-sqlite",
+    "expo-web-browser",
+    "expo-localization",
+    "expo-apple-authentication",
+    ["expo-splash-screen", { image: "./assets/splash-icon.png", imageWidth: 160, backgroundColor: "#F6F7F9", dark: { backgroundColor: "#0D1117" } }],
+    ["expo-camera", { cameraPermission: CAMERA, recordAudioAndroid: false, barcodeScannerEnabled: false }],
+    ["expo-image-picker", { photosPermission: PHOTOS, cameraPermission: false, microphonePermission: false }],
+    ["expo-notifications", { color: "#2353D1", defaultChannel: "opomniki" }],
+    "expo-iap", // nakupi v aplikaciji; APK za neposredni prenos jih ne kliče (glej src/lib/billing.ts)
+  ],
+  experiments: { typedRoutes: true },
+  extra: {
+    channel,
+    apiUrl: process.env.EXPO_PUBLIC_API_URL || `https://${brand.domain}`,
+    // Id projekta EAS (expo.dev): v brand.json app.eas_project_id ali v spremenljivki EAS_PROJECT_ID.
+    eas: (process.env.EAS_PROJECT_ID || brand.app.eas_project_id) ? { projectId: process.env.EAS_PROJECT_ID || brand.app.eas_project_id } : undefined,
+  },
+};
+
+export default config;

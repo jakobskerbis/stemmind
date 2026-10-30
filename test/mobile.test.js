@@ -67,13 +67,13 @@ async function withServer(fn, mobile = {}) {
         method: opts.method || (opts.body ? "POST" : "GET"),
         headers: {
           "content-type": "application/json",
-          "x-evklid-app": "ios/1.0.0",
-          "x-evklid-device": device,
+          "x-app-client": "ios/1.0.0",
+          "x-app-device": device,
           ...(session ? { authorization: `Bearer ${session}` } : {}),
         },
         body: opts.body ? JSON.stringify(opts.body) : undefined,
       });
-      const s = res.headers.get("x-evklid-session");
+      const s = res.headers.get("x-app-session");
       if (s) session = s === "-" ? null : s;
       const type = res.headers.get("content-type") || "";
       return { status: res.status, headers: res.headers, body: type.includes("json") ? await res.json() : await res.text() };
@@ -98,7 +98,7 @@ test("app session travels in headers, never as cookies", async () => {
   await withServer(async ({ appClient, adult }) => {
     const c = appClient();
     await adult(c);
-    assert.ok(c.session()?.length >= 20, "seja v glavi X-Evklid-Session");
+    assert.ok(c.session()?.length >= 20, "seja v glavi X-App-Session");
     const created = await c("/api/students", { body: { name: "Ana", self: true, consent: true } });
     assert.equal(created.status, 201, JSON.stringify(created.body));
     const list = await c("/api/students");
@@ -283,4 +283,26 @@ test("download page offers the APK when it exists and works without login", asyn
     },
     { apkFile: fileURLToPath(new URL("./fixtures/apple-chain.json", import.meta.url)), env: { EVKLID_TESTFLIGHT_URL: "https://testflight.apple.com/join/TEST" } },
   );
+});
+
+// Aplikacija izriše Markdown in formule z istim public/rich.js kot splet, a brez DOMPurify in s
+// formulami v MathML (WebView na telefonu jih izriše brez pisav). Odgovor AI ne sme izpisati HTML.
+test("mobilni izris: rich.js z MathML in brez DOMPurify, HTML iz AI je izpisan kot besedilo", async () => {
+  const { Marked } = await import("marked");
+  const katex = (await import("katex")).default;
+  const { createRenderer } = await import("../public/rich.js");
+  const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const mathml = { renderToString: (tex, o) => katex.renderToString(tex, { ...o, output: "mathml" }) };
+  const ai = createRenderer({ marked: new Marked({ renderer: { html: ({ text }) => esc(text) } }), katex: mathml, sanitize: (h) => h });
+  const html = ai.renderRich("Velja $a^2 + b^2 = c^2$.\n\n<img src=x onerror=alert(1)>");
+  assert.match(html, /<math/);
+  assert.doesNotMatch(html, /class="katex-html"/);
+  assert.doesNotMatch(html, /<img/);
+});
+
+// Preverjanje odgovora brez povezave uporablja isti modul kot strežnik.
+test("mobilno preverjanje brez povezave: server/practice/check.js deluje brez strežnika", async () => {
+  const { checkAnswer } = await import("../server/practice/check.js");
+  assert.equal(checkAnswer({ type: "number", value: 2 }, "2").kind, "correct");
+  assert.notEqual(checkAnswer({ type: "number", value: 2 }, "3").kind, "correct");
 });

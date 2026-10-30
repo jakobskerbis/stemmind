@@ -1,0 +1,111 @@
+# Mobilna aplikacija (iPhone, iPad, Android)
+
+Prava aplikacija v mapi `mobile/` (Expo, React Native), ne ovita spletna stran. Uporablja isti strežnik
+in isti račun kot splet, napredek je skupen.
+
+## Kaj zna
+
+- **Učna pot** z ravnjo, nizom dni in dnevnim ciljem XP, Današnji trening, ponavljanje, teme po poglavjih.
+- **Vaje** z rešenim zgledom, postopnimi namigi, rešitvijo, slikami (graf premice, številska premica) in
+  gumbom »Vprašaj inštruktorja«. Vibracija ob pravilnem in napačnem odgovoru.
+- **Vaje brez povezave**: naloge učne poti se shranijo na telefon, odgovor preveri telefon (isto
+  preverjanje kot strežnik, `server/practice/check.js`), ob povezavi strežnik odgovore preveri še
+  enkrat in podeli XP.
+- **Lekcije** po korakih (kratke kartice z vprašanji »Preveri se« vmes, `public/lesson-steps.js`) ali vse
+  naenkrat, »Razloži drugače«, formule in tabele kot na spletu.
+- **Učbenik** s kazalom in iskanjem.
+- **Inštruktor**: klepet, odgovor prihaja sproti, fotografija naloge (kamera ali galerija),
+  »Razloži podrobneje«, predlog spremembe šole in letnika.
+- **Skeniraj**: kamera z okvirjem in svetilko; fotografija gre inštruktorju v nov pogovor.
+- **Opomniki**: dnevni opomnik ob izbrani uri (deluje brez povezave, odpade, ko je cilj dosežen) in
+  potisna obvestila strežnika (npr. »Matura: še 3 dnevi«).
+- **Prijava** z e-naslovom ali **Prijava z Apple**, profili z gesli, izbris računa v aplikaciji.
+- **Naročnina**: v trgovinah nakup v aplikaciji (Apple In-App Purchase, Google Play Billing), v APK za
+  neposredni prenos plačilo na spletu (Stripe).
+- Svetla in temna tema, 33 jezikov vmesnika (isti prevodi kot splet), iPad, dostopnost (VoiceOver,
+  TalkBack).
+
+## Dve različici
+
+| | Neposredni prenos (zdaj) | Trgovini (kasneje) |
+|---|---|---|
+| Kje | Android: APK na evklid.app/prenesi | App Store, Google Play |
+| Gradnja | `eas build --profile direct --platform android` | `eas build --profile production` |
+| Plačilo | Stripe na spletu (9,99 / 89 / 15,99 / 139 €) | nakup v aplikaciji (11,99 / 104,99 / 18,99 / 159,99 €) |
+| Provizija | Stripe ~1,5 % + 0,25 € | 15 % (Apple Small Business Program, Google Play) |
+
+Cene v trgovinah so višje zaradi provizije. Aplikacija iz trgovine ne sme omenjati cenejših cen na
+spletu (pravila Apple 3.1.1 in Google Play), zato jih ne omenja.
+
+**iPhone zdaj:** brez Applovega razvijalskega računa (99 $ na leto) aplikacije na iPhone ni mogoče
+namestiti mimo trgovine. Do takrat iPhone uporablja spletno aplikacijo (Safari → Deli → Dodaj na
+začetni zaslon). Ko je račun, gre aplikacija najprej v TestFlight (do 10.000 testerjev, brez pregleda
+za notranje testerje), nato v App Store.
+
+## Kaj mora narediti človek
+
+**Račune v trgovinah mora odpreti polnoletna oseba** (npr. starš). Apple in Google zahtevata
+polnoletnost in pravo identiteto; ime razvijalca je javno vidno v trgovini.
+
+### 1. APK za Android (brezplačno, zdaj)
+
+1. Na [expo.dev](https://expo.dev) ustvari brezplačen račun.
+2. V ukazni vrstici v mapi `stemmind-main\mobile`:
+   ```
+   npm install
+   npx eas-cli login
+   npx eas-cli init
+   ```
+   `init` izpiše id projekta. Vpiši ga v `brand.json` → `app.eas_project_id` (ali ga pošlji Claudu).
+3. `npx eas-cli build --profile direct --platform android` (gradnja teče v oblaku Expo, ~15 minut).
+4. Prenesi APK s povezave, ki jo izpiše, in ga shrani kot `data\evklid.apk` v mapi strežnika.
+   Stran https://evklid.app/prenesi ga takoj ponudi. (Ali APK naloži drugam in v `.env` nastavi
+   `EVKLID_ANDROID_APK_URL`.)
+
+Ob novi različici aplikacije ponovi koraka 3 in 4.
+
+### 2. Apple (ko bo odrasla oseba odprla račun)
+
+1. Apple Developer Program, 99 $ na leto, kot posameznik: https://developer.apple.com/programs/enroll/
+2. Prijava v [App Store Small Business Program](https://developer.apple.com/app-store/small-business-program/) (provizija 15 % namesto 30 %).
+3. V App Store Connect: nova aplikacija z id-jem `app.evklid`, skupina naročnin z izdelki
+   `evklid.month.1` (11,99 €), `evklid.year.1` (104,99 €), `evklid.month.2` (18,99 €), `evklid.year.2` (159,99 €).
+4. App Store Server Notifications V2: `https://evklid.app/webhooks/app-store` (produkcija in sandbox).
+5. Ključ za Prijavo z Apple (Keys → Sign in with Apple) in v `.env` strežnika:
+   `EVKLID_APPLE_TEAM_ID`, `EVKLID_APPLE_KEY_ID`, `EVKLID_APPLE_PRIVATE_KEY` (vsebina datoteke .p8).
+   Potrebno za preklic prijave z Apple ob izbrisu računa.
+6. `npx eas-cli build --profile production --platform ios`, nato `npx eas-cli submit --platform ios`.
+   V TestFlight nastavi javno povezavo in jo vpiši v `.env` kot `EVKLID_TESTFLIGHT_URL` (stran /prenesi
+   jo pokaže). Po odobritvi v App Store: `EVKLID_APP_STORE_URL`.
+7. Za pregled pri Applu: demo račun (e-naslov, geslo, profil z geslom) v polju »App Review
+   Information«; starostna oznaka po vprašalniku (AI klepet, verjetno 9+ ali 13+); kategorija
+   Izobraževanje, **ne** kategorija Kids; izpolni »App Privacy« (e-naslov, ime, napredek, fotografije
+   nalog, brez sledenja in oglasov).
+
+### 3. Google Play (ko bo odrasla oseba odprla račun)
+
+1. Račun razvijalca, 25 $ enkrat: https://play.google.com/console/signup
+2. Nov osebni račun mora pred objavo izvesti zaprto testiranje (vsaj 12 testerjev, 14 dni).
+3. Aplikacija `app.evklid`, naročnine z istimi id-ji in cenami kot pri Applu.
+4. Servisni račun v Google Cloud z dostopom do Play Console (Finance), ključ JSON v `.env` kot
+   `EVKLID_GOOGLE_PLAY_KEY` (pot do datoteke ali vsebina).
+5. Obvestila v realnem času (RTDN): tema Pub/Sub s potisno naročnino na
+   `https://evklid.app/webhooks/google-play?token=SKRIVNOST`, isto skrivnost v `.env` kot
+   `EVKLID_GOOGLE_RTDN_TOKEN`.
+6. `npx eas-cli build --profile production --platform android`, nato `npx eas-cli submit --platform android`.
+7. Obrazec »Data safety«, ciljna starostna skupina (13+ ali vključno z mlajšimi po pravilniku Families),
+   demo račun za pregled. Po objavi: `EVKLID_PLAY_URL`.
+
+## Za razvijalce
+
+- Zagon: `cd mobile && npm install && npx expo start` (razvojna gradnja: `eas build --profile development`).
+- Preverjanje: `npx tsc --noEmit` v `mobile/`, strežnik: `node --test test/mobile.test.js`.
+- Ime, id-ji in domena so v `brand.json` (`app.bundle_id`, `app.product_prefix`). Id-ja sta po objavi trajna.
+- Aplikacija uvaža kodo spleta in strežnika (`public/i18n`, `public/rich.js`, `public/lesson-steps.js`,
+  `public/xp-levels.js`, `server/practice/check.js`); `mobile/metro.config.js` gleda celoten repozitorij.
+- Nov niz besedila: ključ `mob.*` v `public/i18n/sl.js` in v vseh 32 `public/i18n/ui/*.json`.
+- Strežnik za aplikacijo: `server/mobile/` (seja v glavi namesto piškotka, Prijava z Apple, nakupi in
+  obvestila trgovin, potisna obvestila, stran /prenesi). Glave `X-App-Client`, `X-App-Device`,
+  `X-App-Session` so namenoma brez imena aplikacije, da preimenovanje ne pokvari nameščenih različic.
+- Skeniranje: zavihek Skeniraj zdaj pošlje fotografijo inštruktorju. Ko bo združen reševalnik po korakih
+  (ločena nit), naj zavihek najprej pokliče njegov API.

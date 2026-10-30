@@ -20,6 +20,12 @@ export const STORE_PRODUCTS = [1, 2].flatMap((seats) =>
 );
 export const productById = (id) => STORE_PRODUCTS.find((p) => p.id === id) || null;
 
+// Osnovne cene v trgovinah (EUR z DDV, j 2026-10-30), vpišejo se v App Store Connect in Google Play Console;
+// drugim državam jih trgovini preračunata sami. Višje kot na spletu (plans.js), da po proviziji 15 %
+// ostane približno toliko kot pri Stripu: 9,99 → 11,99; 89 → 104,99; 15,99 → 18,99; 139 → 159,99.
+// V aplikaciji iz trgovine ne smemo omeniti, da je na spletu ceneje (pravila Apple in Google).
+export const STORE_PRICES_EUR = { month: { 1: 11.99, 2: 18.99 }, year: { 1: 104.99, 2: 159.99 } };
+
 export function migrateStoreBilling(db) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS store_subscriptions (

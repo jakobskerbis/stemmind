@@ -11,7 +11,8 @@
   "app": {
     "_opis": "Mobilna aplikacija (mobile/). Ta id-ja sta po objavi v App Store in Google Play trajna: ob preimenovanju ju ne spreminjaj.",
     "bundle_id": "app.evklid",
-    "product_prefix": "evklid"
+    "product_prefix": "evklid",
+    "eas_project_id": ""
   },
   "legacy": [
     {

@@ -10,15 +10,15 @@ import { mountDownload } from "./download.js";
 const TOKEN = /^[A-Za-z0-9_-]{20,200}$/;
 
 // Aplikacija ne uporablja piškotkov: sejo pošlje v glavi "Authorization: Bearer …", napravo v
-// "X-Evklid-Device". Glavi pretvorimo v piškotka, ki ju bere obstoječa koda računov, novo sejo pa
-// vrnemo v glavi "X-Evklid-Session" (namesto Set-Cookie). Velja samo za zahteve z glavo X-Evklid-App,
+// "X-App-Device". Glavi pretvorimo v piškotka, ki ju bere obstoječa koda računov, novo sejo pa
+// vrnemo v glavi "X-App-Session" (namesto Set-Cookie). Velja samo za zahteve z glavo X-App-Client,
 // ki je brskalnik z druge strani ne more poslati brez CORS (zato ni nevarnosti CSRF).
 export function mobileClient(req, res, next) {
-  if (!req.get("x-evklid-app")) return next();
+  if (!req.get("x-app-client")) return next();
   const cookies = [];
   const bearer = /^Bearer\s+(\S+)$/i.exec(req.get("authorization") || "")?.[1];
   if (bearer && TOKEN.test(bearer)) cookies.push(`${COOKIE}=${bearer}`);
-  const device = req.get("x-evklid-device");
+  const device = req.get("x-app-device");
   if (device && TOKEN.test(device)) cookies.push(`${DEVICE_COOKIE}=${device}`);
   req.headers.cookie = cookies.join("; ");
   const append = res.append.bind(res);
@@ -27,7 +27,7 @@ export function mobileClient(req, res, next) {
     const keep = [];
     for (const v of [].concat(value)) {
       const s = String(v);
-      if (s.startsWith(`${COOKIE}=`)) res.setHeader("X-Evklid-Session", s.slice(COOKIE.length + 1).split(";")[0] || "-");
+      if (s.startsWith(`${COOKIE}=`)) res.setHeader("X-App-Session", s.slice(COOKIE.length + 1).split(";")[0] || "-");
       else if (!s.startsWith(`${DEVICE_COOKIE}=`)) keep.push(s);
     }
     return keep.length ? append(field, keep) : res;
