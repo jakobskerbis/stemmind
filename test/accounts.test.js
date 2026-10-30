@@ -442,7 +442,7 @@ test("anti-sharing: a profile is open on one device at a time", async () => {
   });
 });
 
-test("profile password: each profile has its own, locks other devices and siblings, owner can reset", async () => {
+test("profile password: each profile has its own, once per device, locks other devices, owner can reset", async () => {
   await withServer(async ({ client, calls }) => {
     const phone = client();
     await registerVerified(phone, calls, "mia@primer.si");
@@ -463,23 +463,20 @@ test("profile password: each profile has its own, locks other devices and siblin
     assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "bor-1", set: true } })).status, 200);
     assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "drugo", set: true } })).status, 401);
 
-    // Odklep Bora zaklene Ano na tej napravi (brat ne odpre sestrinega profila).
-    const locked = await phone(`/api/students/${ana.id}/xp`);
-    assert.equal(locked.status, 423);
-    assert.equal(locked.body.locked, true);
-    assert.equal(locked.body.name, "Ana");
-    list = (await phone("/api/students")).body;
-    assert.deepEqual(Object.keys(list.find((s) => s.id === ana.id)).sort(), ["id", "locked", "name"]);
-    assert.equal((await phone(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "narobe" } })).status, 401);
-    assert.equal((await phone(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "ana-1" } })).status, 200);
+    // Geslo samo enkrat na napravo (j, 2026-10-30): odklep Bora ne zaklene Ane, menjava profila brez gesla.
     assert.equal((await phone(`/api/students/${ana.id}/xp`)).status, 200);
     const conv = (await phone(`/api/students/${ana.id}/conversations`, { method: "POST" })).body;
-    assert.equal((await phone(`/api/students/${bor.id}/xp`)).status, 423);
+    assert.equal((await phone(`/api/students/${bor.id}/xp`)).status, 200);
 
     // Druga naprava: prijava v račun ne odpre profila; tudi pogovora ne.
     const tablet = client();
     assert.equal((await tablet("/api/auth/login", { method: "POST", body: { email: "mia@primer.si", password: "geslo1234" } })).status, 200);
-    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 423);
+    const locked = await tablet(`/api/students/${ana.id}/xp`);
+    assert.equal(locked.status, 423);
+    assert.equal(locked.body.locked, true);
+    assert.equal(locked.body.name, "Ana");
+    list = (await tablet("/api/students")).body;
+    assert.deepEqual(Object.keys(list.find((s) => s.id === ana.id)).sort(), ["id", "locked", "name"]);
     assert.equal((await tablet(`/api/conversations/${conv.id}`)).status, 423);
     assert.equal((await tablet(`/api/students/${ana.id}/claim`, { method: "POST" })).status, 423);
     // Express ujema poti brez ozira na velike črke in dekodira parametre: tudi tako ostane profil zaklenjen.
@@ -513,11 +510,14 @@ test("profile password: each profile has its own, locks other devices and siblin
     assert.equal((await other(`/api/Students/${ana.id}`)).status, 404);
     assert.equal((await other("/api/account/profile-password", { method: "POST", body: { student_id: ana.id, auth: "geslo1234", password: "x1234" } })).status, 404);
 
-    // Odjava zaklene profile na tej napravi; »odjavi druge naprave« zaklene profile drugod.
-    await tablet("/api/auth/logout", { method: "POST" });
-    assert.equal((await tablet("/api/auth/login", { method: "POST", body: { email: "mia@primer.si", password: "geslo1234" } })).status, 200);
-    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 423);
+    // Geslo samo enkrat: po odjavi in ponovni prijavi z geslom računa profil ne zahteva gesla znova
+    // (kdor pozna geslo računa, lahko geslo profila tako ali tako ponastavi). Brez seje pa nič ni dostopno.
     assert.equal((await tablet(`/api/students/${ana.id}/unlock`, { method: "POST", body: { password: "tretja-ana" } })).status, 200);
+    await tablet("/api/auth/logout", { method: "POST" });
+    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 401);
+    assert.equal((await tablet("/api/auth/login", { method: "POST", body: { email: "mia@primer.si", password: "geslo1234" } })).status, 200);
+    assert.equal((await tablet(`/api/students/${ana.id}/xp`)).status, 200);
+    // »Odjavi vse druge naprave« pa profile drugod zaklene.
     await phone("/api/account/logout-others", { method: "POST" });
     assert.equal((await phone(`/api/students/${bor.id}/unlock`, { method: "POST", body: { password: "bor-1" } })).status, 200);
     await phone("/api/account/logout-others", { method: "POST" });
@@ -1129,15 +1129,17 @@ test("account lock: owner actions need the account password on this device", asy
     assert.equal((await b("/api/auth/login", { method: "POST", body: { email: "lastnik@primer.si", password: "geslo1234" } })).status, 200);
     assert.equal((await b("/api/account")).status, 200);
     assert.equal((await a("/api/account")).status, 403);
-  });
+  }, { accountLock: true });
 });
 
-test("account lock: off with accountLock: false", async () => {
+test("account lock: off by default (password only once, j 2026-10-30)", async () => {
   await withServer(async ({ client, calls }) => {
     const a = client();
     await registerVerified(a, calls, "brez@primer.si");
     await a("/api/account/lock", { method: "POST" });
     assert.equal((await a("/api/account")).status, 200);
     assert.equal((await a("/api/account/status")).body.account_lock, false);
-  }, { accountLock: false });
+    // Izvoz podatkov še vedno zahteva geslo računa.
+    assert.equal((await a("/api/account/export", { method: "POST", body: { password: "narobe12" } })).status, 401);
+  });
 });

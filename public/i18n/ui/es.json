@@ -44,7 +44,7 @@
   "lock.repeat": "Repite la contraseña",
   "lock.open": "Abrir perfil",
   "lock.save": "Guardar contraseña",
-  "lock.hint": "Al menos 4 caracteres. Se pide en un dispositivo nuevo, después de cerrar sesión y después de abrir otro perfil en el dispositivo.",
+  "lock.hint": "Al menos 4 caracteres. Solo la introduces una vez en cada dispositivo.",
   "lock.mismatch": "Las contraseñas no coinciden.",
   "lock.short": "La contraseña debe tener al menos 4 caracteres.",
   "lock.wrong": "Contraseña incorrecta.",

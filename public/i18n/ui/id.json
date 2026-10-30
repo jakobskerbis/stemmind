@@ -43,7 +43,7 @@
   "lock.repeat": "Ulangi kata sandi",
   "lock.open": "Buka profil",
   "lock.save": "Simpan kata sandi",
-  "lock.hint": "Minimal 4 karakter. Diperlukan di perangkat baru, setelah keluar, dan setelah profil lain dibuka di perangkat ini.",
+  "lock.hint": "Minimal 4 karakter. Kamu cukup memasukkannya sekali di setiap perangkat.",
   "lock.mismatch": "Kata sandi tidak sama.",
   "lock.short": "Kata sandi harus memiliki minimal 4 karakter.",
   "lock.wrong": "Kata sandi salah.",

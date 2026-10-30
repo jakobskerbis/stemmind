@@ -2,7 +2,7 @@
 import crypto from "node:crypto";
 
 export const COOKIE = "sm_session";
-const SESSION_DAYS = 30;
+const SESSION_DAYS = 365; // prijava enkrat na napravo (j, 2026-10-30: »naj se mora vsak uporabnik prijavit samo enkrat«)
 
 // Novi zapisi: scrypt2$N$r$p$sol$ključ (N = 2^17, r = 8, p = 1, priporočilo OWASP). Stari scrypt$sol$ključ
 // (Node privzeto, N = 2^14) še vedno preverimo in ob uspešni prijavi tiho zamenjamo (needsRehash).

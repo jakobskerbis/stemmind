@@ -57,7 +57,7 @@ function watchTakenProfiles() {
     if (res.status === 409) {
       res.clone().json().then((d) => d?.taken && showTaken(d, orig)).catch(() => {});
     }
-    // Profil je bil medtem zaklenjen (odklep drugega profila na tej napravi, novo geslo, odjava drugod).
+    // Profil je bil medtem zaklenjen (novo geslo profila, »Odjavi vse druge naprave« na drugi napravi).
     if (res.status === 423) {
       res.clone().json().then((d) => {
         if (!d?.locked || $("#lock-overlay")) return;
@@ -118,13 +118,13 @@ function askAccountPassword(rawFetch) {
   return accountAsk;
 }
 
-// Ko zapustiš zavihek Račun, se račun na tej napravi takoj zaklene.
+// Ko zapustiš zavihek Račun, se račun na tej napravi takoj zaklene (samo z EVKLID_ACCOUNT_LOCK=1).
 function lockAccountOnLeave() {
   const view = $("#view-account");
   if (!view) return;
   let wasOpen = !view.hidden;
   new MutationObserver(() => {
-    if (wasOpen && view.hidden) {
+    if (wasOpen && view.hidden && status?.account_lock) {
       view.innerHTML = ""; // podatki računa ne ostanejo na zaslonu za zaklepom
       fetch("/api/account/lock", { method: "POST" }).catch(() => {});
     }

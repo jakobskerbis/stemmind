@@ -1,11 +1,12 @@
 // Geslo za vsak profil (j, 2026-10-29: »vsak profil naj ima svoje geslo«).
 // Račun (e-naslov + geslo) ima lahko več profilov; vsak profil ima še svoje geslo.
-// Profil z geslom je na napravi odprt šele po vpisu gesla. Odklep velja na tej napravi,
-// dokler na njej ne odpremo drugega profila istega računa, do odjave ali največ UNLOCK_DAYS.
+// Profil z geslom je na napravi odprt šele po vpisu gesla. Geslo se vpiše enkrat na napravo (j, 2026-10-30:
+// »naj aplikacija ne zahteva gesla več kot enkrat«): odklep ostane tudi ob menjavi profila in odjavi;
+// velja do novega gesla profila, »Odjavi vse druge naprave« (na drugih napravah) ali UNLOCK_DAYS.
 // Profil brez gesla (stari profili, gost) strežnik ne zaklene; aplikacija ob odprtju zahteva, da ga nastaviš.
 import { hashPassword, verifyPassword, needsRehash } from "./auth.js";
 
-export const UNLOCK_DAYS = 30;
+export const UNLOCK_DAYS = 365;
 export const PROFILE_PASSWORD_MIN = 4;
 export const PROFILE_PASSWORD_MAX = 200;
 
@@ -70,21 +71,14 @@ export class ProfileLocks {
   locked(studentId, deviceId) {
     return this.hasPassword(studentId) && !this.isUnlocked(studentId, deviceId);
   }
-  // Odklene profil na tej napravi; drugi profili istega računa se na njej zaklenejo (brat ne odpre sestrinega).
-  unlock(studentId, deviceId, siblingIds = [], now = Date.now()) {
-    const del = this.db.prepare("DELETE FROM profile_unlocks WHERE student_id = ? AND device_id = ?");
-    for (const id of siblingIds) if (id !== studentId) del.run(id, deviceId);
+  // Odklene profil na tej napravi. Drugi odklenjeni profili ostanejo odklenjeni (menjava profila brez gesla).
+  unlock(studentId, deviceId, now = Date.now()) {
     this.db
       .prepare(
         `INSERT INTO profile_unlocks (student_id, device_id, expires_at) VALUES (?, ?, ?)
          ON CONFLICT(student_id, device_id) DO UPDATE SET expires_at = excluded.expires_at`,
       )
       .run(studentId, deviceId, now + UNLOCK_DAYS * 86400000);
-  }
-  // Odjava: profili računa se na tej napravi zaklenejo.
-  lockDevice(studentIds, deviceId) {
-    const del = this.db.prepare("DELETE FROM profile_unlocks WHERE student_id = ? AND device_id = ?");
-    for (const id of studentIds) del.run(id, deviceId);
   }
   // »Odjavi vse druge naprave«: profili ostanejo odklenjeni samo na tej napravi.
   lockOtherDevices(studentIds, deviceId) {

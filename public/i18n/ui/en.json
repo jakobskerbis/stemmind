@@ -44,7 +44,7 @@
   "lock.repeat": "Repeat password",
   "lock.open": "Open profile",
   "lock.save": "Save password",
-  "lock.hint": "At least 4 characters. It is needed on a new device, after logging out and after another profile was opened on the device.",
+  "lock.hint": "At least 4 characters. You enter it only once on each device.",
   "lock.mismatch": "The passwords do not match.",
   "lock.short": "The password must have at least 4 characters.",
   "lock.wrong": "Wrong password.",

@@ -45,7 +45,7 @@ export default {
   "lock.repeat": "Ponovi geslo",
   "lock.open": "Odpri profil",
   "lock.save": "Shrani geslo",
-  "lock.hint": "Vsaj 4 znaki. Geslo je potrebno na novi napravi, po odjavi in ko je bil na napravi vmes odprt drug profil.",
+  "lock.hint": "Vsaj 4 znaki. Na vsaki napravi ga vpišeš samo enkrat.",
   "lock.mismatch": "Gesli se ne ujemata.",
   "lock.short": "Geslo mora imeti vsaj 4 znake.",
   "lock.wrong": "Napačno geslo.",

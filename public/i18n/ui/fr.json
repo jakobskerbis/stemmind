@@ -44,7 +44,7 @@
   "lock.repeat": "Répète le mot de passe",
   "lock.open": "Ouvrir le profil",
   "lock.save": "Enregistrer le mot de passe",
-  "lock.hint": "Au moins 4 caractères. Il est demandé sur un nouvel appareil, après une déconnexion et après l’ouverture d’un autre profil sur l’appareil.",
+  "lock.hint": "Au moins 4 caractères. Tu ne le saisis qu’une seule fois sur chaque appareil.",
   "lock.mismatch": "Les mots de passe ne correspondent pas.",
   "lock.short": "Le mot de passe doit comporter au moins 4 caractères.",
   "lock.wrong": "Mot de passe incorrect.",

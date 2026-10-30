@@ -93,8 +93,9 @@ export function mountAccounts(app, store, opts = {}) {
   const devLinks = (req) => !mailer.enabled && (isLocalRequest(req) || gateNeeded(env));
   const locks = new ProfileLocks(db);
   const accountLocks = new AccountLocks(db);
-  // Zaklep računa: dejanja lastnika zahtevajo geslo računa (EVKLID_ACCOUNT_LOCK=0 izklopi).
-  const accountLockOn = opts.accountLock ?? env.EVKLID_ACCOUNT_LOCK !== "0";
+  // Zaklep računa: dejanja lastnika zahtevajo geslo računa. Privzeto izklopljen (j, 2026-10-30: geslo samo
+  // enkrat); EVKLID_ACCOUNT_LOCK=1 ga vklopi. Izvoz in izbris računa geslo zahtevata vedno.
+  const accountLockOn = opts.accountLock ?? env.EVKLID_ACCOUNT_LOCK === "1";
   const accountThrottle = new Throttle(10);
   // Račun brez gesla (prijava z Apple) ali gost: zaklepa ni, ker ni gesla za odklep.
   const lockable = (p) => accountLockOn && !p.is_guest && !String(p.password_hash || "").startsWith("none$");
@@ -595,7 +596,8 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   app.post("/api/auth/logout", (req, res) => {
-    if (req.parent) locks.lockDevice(childIds(req.parent.id), req.deviceId);
+    // Profili na napravi ostanejo odklenjeni (geslo samo enkrat, j 2026-10-30); brez seje niso dostopni,
+    // ob ponovni prijavi z geslom računa pa jih ni treba odklepati znova.
     if (req.parent) accountLocks.lock(req.parent.id, req.deviceId);
     if (req.parent) audit(db, { req, parentId: req.parent.id, action: "logout" });
     sessions.destroy(readCookie(req));
@@ -913,7 +915,7 @@ export function mountAccounts(app, store, opts = {}) {
       const bad = checkProfilePassword(pw);
       if (bad) return res.status(400).json({ error: bad });
       await locks.setPassword(id, pw);
-      locks.unlock(id, req.deviceId, childIds(p.id));
+      locks.unlock(id, req.deviceId);
       audit(db, { req, parentId: p.id, action: "profile_password_set", target: `student:${id}` });
       return res.json({ ok: true });
     }
@@ -926,7 +928,7 @@ export function mountAccounts(app, store, opts = {}) {
       return res.status(401).json({ error: "Napačno geslo profila." });
     }
     profileThrottle.reset(key);
-    locks.unlock(id, req.deviceId, childIds(p.id));
+    locks.unlock(id, req.deviceId);
     res.json({ ok: true });
   });
 
@@ -1028,7 +1030,7 @@ export function mountAccounts(app, store, opts = {}) {
     devices.use(s.id, req.deviceId, deviceLabel(req.get("user-agent")));
     if (profilePw) {
       await locks.setPassword(s.id, profilePw);
-      locks.unlock(s.id, req.deviceId, childIds(p.id));
+      locks.unlock(s.id, req.deviceId);
     }
     res.status(201).json({ ...store.getStudent(s.id), birth_year: year });
   });
