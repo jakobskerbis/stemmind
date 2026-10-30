@@ -230,6 +230,19 @@ export function snapTo(sl, v) {
 }
 // Vleči oznako (miška, prst, puščice): toValue(px) → vrednost; drsnik se premakne in sproži en izris.
 function linkDrag(svg, g, sl, toValue, label) {
+  // Puščice premaknejo drsnik za en korak (Shift: 10 korakov) kot na drsniku. Ne iz lege na zaslonu kot pri
+  // draggable: napis ob robu osi premakne središče oznake, zato bi puščica levo oznako premaknila v desno.
+  g.addEventListener("keydown", (ev) => {
+    const d = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1 }[ev.key];
+    if (!d) return;
+    ev.preventDefault();
+    ev.stopImmediatePropagation();
+    const idx = [...svg.querySelectorAll(".drag")].indexOf(g);
+    const v = snapTo(sl, sl.get() + d * (Number(sl.input.step) || 1) * (ev.shiftKey ? 10 : 1));
+    if (v !== sl.get()) sl.set(v);
+    const now = g.isConnected ? g : svg.querySelectorAll(".drag")[idx];
+    if (now && now !== document.activeElement) now.focus?.();
+  });
   draggable(svg, g, (px) => {
     const v = snapTo(sl, toValue(px));
     if (v !== sl.get()) sl.set(v);
@@ -266,8 +279,10 @@ export function spanMark(svg, A, x1, x2, text, cls = "a", { sl, key, parent, y2 
   s("text", { x: (a + b) / 2, y: ty, class: "amark-lbl", "text-anchor": "middle" }, g, text);
   if (sl) {
     const end = s("g", { class: "amark-end", "data-for": key || null }, g);
-    s("rect", { x: A.X(x2) - 18, y: y - 18, width: 36, height: 36, class: "hit" }, end);
-    s("circle", { cx: A.X(x2), cy: y, r: 5, class: "amark-knob" }, end);
+    // ročica ostane na grafu, tudi ko je x2 zunaj okna (sicer je ne moreš prijeti)
+    const kx = A.X(clamp(x2, A.x0, A.x1));
+    s("rect", { x: kx - 18, y: y - 18, width: 36, height: 36, class: "hit" }, end);
+    s("circle", { cx: kx, cy: y, r: 5, class: "amark-knob" }, end);
     linkDrag(svg, end, sl, (qx) => A.inv(qx, 0)[0] - x1, `${text}: premikaj konec s puščicami`);
   }
   return g;

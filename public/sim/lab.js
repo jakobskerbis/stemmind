@@ -74,7 +74,12 @@ export function dataGraph({ W = 340, H = 220, x, y, xLabel, yLabel, xStep, yStep
   wrap.setAxes = (ax) => Object.assign(opts, ax);
   const opts = { x, y };
   const chip = (key, sym, text) =>
-    h("button", { type: "button", class: "lab-leg layer-chip", "aria-pressed": String(!off.has(key)), onclick: () => (off.has(key) ? off.delete(key) : off.add(key), wrap.draw(last)) }, sym, text);
+    h("button", { type: "button", class: "lab-leg layer-chip", "data-layer": key, "aria-pressed": String(!off.has(key)), onclick: () => {
+      off.has(key) ? off.delete(key) : off.add(key);
+      wrap.draw(last);
+      // draw legendo nariše znova: fokus ostane na istem gumbu (tipkovnica)
+      [...legend.children].find((c) => c.dataset.layer === key)?.focus();
+    } }, sym, text);
   wrap.draw = (series = []) => {
     last = series;
     svg.replaceChildren();

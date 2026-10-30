@@ -330,19 +330,19 @@ export function titracija(el, { mode = "os" } = {}) {
       const v = (i / 200) * 50;
       d += (i ? "L" : "M") + A.X(v).toFixed(1) + " " + A.Y(titPH(kind, ca, Va, ct, v)).toFixed(1);
     }
-    s("path", { d, class: "graph-line" }, svg);
+    s("path", { d, class: "graph-line", "data-name": "Titracijska krivulja" }, svg);
     const ve = Veq();
     if (ve <= 50) {
       const pe = titPH(kind, ca, Va, ct, ve);
-      s("line", { x1: A.X(ve), y1: A.Y(0), x2: A.X(ve), y2: A.Y(pe), class: "guide" }, svg);
-      s("circle", { cx: A.X(ve), cy: A.Y(pe), r: 4, class: "fill-danger" }, svg);
+      s("line", { x1: A.X(ve), y1: A.Y(0), x2: A.X(ve), y2: A.Y(pe), class: "guide", "data-name": "Prostornina pri TE" }, svg);
+      s("circle", { cx: A.X(ve), cy: A.Y(pe), r: 4, class: "fill-danger", "data-name": "Točka ekvivalence" }, svg);
       label(svg, A.X(ve) + 5, A.Y(pe) + (TIT[kind][1] === "acid" ? 10 : -10), "TE", "tick small b", "start");
       if (TIT[kind][2] < 1) {
         const ph = titPH(kind, ca, Va, ct, ve / 2);
-        s("circle", { cx: A.X(ve / 2), cy: A.Y(ph), r: 3.5, class: "fill-b" }, svg);
+        s("circle", { cx: A.X(ve / 2), cy: A.Y(ph), r: 3.5, class: "fill-b", "data-name": "Polovična nevtralizacija" }, svg);
       }
     }
-    s("circle", { cx: A.X(Vt), cy: A.Y(pH), r: 5, class: "fill-a" }, svg);
+    s("circle", { cx: A.X(Vt), cy: A.Y(pH), r: 5, class: "fill-a", "data-name": "Trenutni pH" }, svg);
   };
   const info = () => {
     const pH = titPH(kind, ca, Va, ct, Vt), ve = Veq(), [name, type, K, tt, an] = TIT[kind];
@@ -458,10 +458,10 @@ export function hitrost(el) {
   const draw = () => {
     svg.replaceChildren();
     s("rect", { x: box.x, y: box.y, width: box.w, height: box.h, rx: 8, class: "box" }, svg);
-    P.forEach((p) => s("circle", { cx: p.x, cy: p.y, r: p.t === "C" ? 8 : 6, class: p.t === "A" ? "fill-a" : p.t === "B" ? "fill-b" : "fill-c" }, svg));
+    P.forEach((p) => s("circle", { cx: p.x, cy: p.y, r: p.t === "C" ? 8 : 6, class: p.t === "A" ? "fill-a" : p.t === "B" ? "fill-b" : "fill-c", "data-name": `Delci ${p.t}` }, svg));
     const t1 = Math.max(30, Math.ceil(time / 10) * 10);
     const A = axes(svg, { W: 340, H: 320, x: [0, t1], y: [0, n0], pad: 30, padT: 205, xStep: t1 / 5, yStep: n0 >= 20 ? 10 : 5, xLabel: "t / s", yLabel: "N(A)" });
-    s("path", { d: hist.map(([t, n], i) => `${i ? "L" : "M"}${A.X(t).toFixed(1)} ${A.Y(n).toFixed(1)}`).join(""), class: "graph-line stroke-a" }, svg);
+    s("path", { d: hist.map(([t, n], i) => `${i ? "L" : "M"}${A.X(t).toFixed(1)} ${A.Y(n).toFixed(1)}`).join(""), class: "graph-line stroke-a", "data-name": "Delci A" }, svg);
   };
   const info = () => {
     const nA = P.filter((p) => p.t === "A").length;

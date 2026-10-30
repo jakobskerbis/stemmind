@@ -1,6 +1,6 @@
 // Simulacije: grafi funkcij (s prednastavitvami), limita, odvod, integral, zaporedja, vrste, obresti,
 // kompleksna števila in gibanje (srečanje).
-import { h, s, svgBox, slider, select, segmented, toggle, button, buttons, readout, layout, tex, texBlock, fmt, tfmt, clamp, label, axes, fnPath, arrow, animate, playButton, draggable, handle, deg, rad, axisMark, spanMark, axisSlider } from "./kit.js";
+import { h, s, svgBox, slider, select, segmented, toggle, button, buttons, readout, layout, tex, texBlock, fmt, tfmt, clamp, label, axes, fnPath, arrow, animate, playButton, draggable, handle, deg, rad, axisMark, spanMark, axisSlider, snapTo } from "./kit.js";
 
 const PI = Math.PI;
 const T = (x, d = 2) => tfmt(x, d);
@@ -61,9 +61,9 @@ const PRESETS = {
     f: (x, P) => P.a * (x - P.p) ** 2 + P.q,
     tex: (P) => (P.a ? `f(x) = ${cf(P.a)}${shift("x", P.p)}^2${term(P.q)}` : `f(x) = ${T(P.q)}`),
     marks: (A, P, svg) => {
-      s("line", { x1: A.X(P.p), y1: A.T, x2: A.X(P.p), y2: A.B, class: "guide" }, svg);
-      dot(svg, A, P.p, P.q, "c", "T");
-      dot(svg, A, 0, P.a * P.p * P.p + P.q, "b", "");
+      s("line", { x1: A.X(P.p), y1: A.T, x2: A.X(P.p), y2: A.B, class: "guide", "data-name": "Simetrijska os" }, svg);
+      dot(svg, A, P.p, P.q, "c", "T", "Teme");
+      dot(svg, A, 0, P.a * P.p * P.p + P.q, "b", "", "Presečišče z osjo y");
     },
     info: (P) => {
       const b = -2 * P.a * P.p, c = P.a * P.p * P.p + P.q;
@@ -81,8 +81,8 @@ const PRESETS = {
     marks: (A, P, svg) => {
       if (!P.a) return;
       const D = P.b * P.b - 4 * P.a * P.c;
-      if (D >= 0) [(-P.b - Math.sqrt(D)) / (2 * P.a), (-P.b + Math.sqrt(D)) / (2 * P.a)].forEach((x) => dot(svg, A, x, 0, "a", ""));
-      dot(svg, A, -P.b / (2 * P.a), P.c - (P.b * P.b) / (4 * P.a), "c", "T");
+      if (D >= 0) [(-P.b - Math.sqrt(D)) / (2 * P.a), (-P.b + Math.sqrt(D)) / (2 * P.a)].forEach((x) => dot(svg, A, x, 0, "a", "", "Ničli"));
+      dot(svg, A, -P.b / (2 * P.a), P.c - (P.b * P.b) / (4 * P.a), "c", "T", "Teme");
     },
     info: (P) => {
       if (!P.a) return "<p>Pri a = 0 enačba ni kvadratna, ampak linearna.</p>";
@@ -109,7 +109,7 @@ const PRESETS = {
         const x = A.x0 + ((A.x1 - A.x0) * i) / n, good = ok(f(x));
         if (good && start === null) start = x;
         if ((!good || i === n) && start !== null) {
-          s("line", { x1: A.X(start), y1: A.Y(0), x2: A.X(good ? x : x - (A.x1 - A.x0) / n), y2: A.Y(0), class: "ray a" }, svg);
+          s("line", { x1: A.X(start), y1: A.Y(0), x2: A.X(good ? x : x - (A.x1 - A.x0) / n), y2: A.Y(0), class: "ray a", "data-name": "Rešitev" }, svg);
           start = null;
         }
       }
@@ -175,8 +175,8 @@ const PRESETS = {
     f: (x, P) => (Math.abs(P.a - 1) < 1e-9 ? 1 + P.q : P.a ** (x - P.p) + P.q),
     tex: (P) => `f(x) = ${T(P.a, 1)}^{${shift("x", P.p).replace(/[()]/g, "")}}${term(P.q)}`,
     marks: (A, P, svg) => {
-      s("line", { x1: A.L, y1: A.Y(P.q), x2: A.R, y2: A.Y(P.q), class: "guide stroke-danger" }, svg);
-      dot(svg, A, P.p, 1 + P.q, "c", "");
+      s("line", { x1: A.L, y1: A.Y(P.q), x2: A.R, y2: A.Y(P.q), class: "guide stroke-danger", "data-name": "Asimptota" }, svg);
+      dot(svg, A, P.p, 1 + P.q, "c", "", "Točka (p, 1 + q)");
     },
     info: (P) => `<p>${P.a > 1 ? "a > 1: funkcija <b>narašča</b> (eksponentna rast)." : P.a < 1 ? "0 < a < 1: funkcija <b>pada</b> (eksponentno upadanje)." : "a = 1: konstantna funkcija, ni eksponentna."} Vodoravna asimptota je y = ${fmt(P.q)} (rdeča črta): graf se ji približuje, a je ne doseže.</p>
       <p>Graf gre skozi (${fmt(P.p)}, ${fmt(1 + P.q)}), ker je a⁰ = 1. Zaloga vrednosti: (${fmt(P.q)}, ∞).</p>
@@ -210,11 +210,11 @@ const PRESETS = {
     win: [-3, 8, -3, 8],
     tex: (P) => `f(x) = \\log_{${T(P.a, 1)}} x`,
     marks: (A, P, svg, f) => {
-      s("line", { x1: A.X(-3), y1: A.Y(-3), x2: A.X(8), y2: A.Y(8), class: "guide" }, svg);
+      s("line", { x1: A.X(-3), y1: A.Y(-3), x2: A.X(8), y2: A.Y(8), class: "guide", "data-name": "y = x" }, svg);
       const x = P["x (preizkus)"], y = f(x);
-      dot(svg, A, x, y, "c", "");
+      dot(svg, A, x, y, "c", "", "Preizkusna točka");
       dot(svg, A, y, x, "b", "");
-      dot(svg, A, 1, 0, "a", "");
+      dot(svg, A, 1, 0, "a", "", "Točka (1, 0)");
     },
     info: (P, f) => {
       const x = P["x (preizkus)"], y = f(x);
@@ -338,9 +338,10 @@ const PRESETS = {
   },
 };
 
-function dot(svg, A, x, y, cls, name) {
+// title: ime točke na gumbu »Prikaži« (public/sim/prikaz.js), npr. »Teme«.
+function dot(svg, A, x, y, cls, name, title) {
   if (!Number.isFinite(y) || y < A.y0 - 1 || y > A.y1 + 1 || x < A.x0 || x > A.x1) return;
-  s("circle", { cx: A.X(x), cy: A.Y(y), r: 6, class: `pt fill-${cls}` }, svg);
+  s("circle", { cx: A.X(x), cy: A.Y(y), r: 6, class: `pt fill-${cls}`, "data-name": title || null }, svg);
   if (name) label(svg, A.X(x) + 12, A.Y(y) - 10, name, "pt-lbl");
 }
 
@@ -428,7 +429,7 @@ export function odvod(el, { mode = "tangenta" } = {}) {
       const hnd = handle(svg, "c");
       hnd.move(A.X(x0), A.Y(y0v));
       draggable(svg, hnd, (px) => {
-        x0 = clamp(A.inv(px, 0)[0], a, b);
+        x0 = snapTo(xs, A.inv(px, 0)[0]);
         xs.set(x0, true);
         draw();
       });
@@ -485,6 +486,10 @@ export function integral(el, { mode = "doloceni" } = {}) {
     const [x0, x1, y0, y1] = Fn.win;
     if (mode === "doloceni") {
       const A = axes(svg, { W: 340, H: 300, x: [x0, x1], y: [y0, y1] });
+      // drsnika a in b obsegata okno osi (ob menjavi funkcije ju align omeji): a in b sta potem enaki drsnikoma
+      sa.align(A);
+      sb.align(A);
+      (a = sa.get()), (b = sb.get());
       const lo = clamp(Math.min(a, b), x0, x1), hi = clamp(Math.max(a, b), x0, x1), w = (hi - lo) / n;
       let sum = 0;
       const nm = rule === "trapez" ? "Trapezi" : "Pravokotniki";
@@ -502,8 +507,6 @@ export function integral(el, { mode = "doloceni" } = {}) {
       }
       s("path", { d: fnPath(Fn.f, A), class: "graph-line", "data-name": "f(x)" }, svg);
       // meji a in b sta na osi označeni v barvi svojih drsnikov; oznaki se da vleči
-      sa.align(A);
-      sb.align(A);
       axisMark(svg, A, clamp(a, x0, x1), `a = ${fmt(a, 1)}`, "a", { y: Fn.f(clamp(a, x0, x1)), sl: sa, key: "a" });
       axisMark(svg, A, clamp(b, x0, x1), `b = ${fmt(b, 1)}`, "c", { y: Fn.f(clamp(b, x0, x1)), sl: sb, key: "b", lblDy: Math.abs(A.X(a) - A.X(b)) < 56 ? 14 : 0 });
       const exact = Fn.F(hi) - Fn.F(lo);
