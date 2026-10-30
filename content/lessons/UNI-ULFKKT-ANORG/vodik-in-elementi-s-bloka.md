@@ -268,3 +268,13 @@ Pri karbonatih si predstavljaj kation kot magnet ob karbonatnem ionu. Majhen $\m
 - raztopina $\mathrm{Ba(OH)_2}$ v presežku, ker je hidroksid netopen
 ~ $\mathrm{Ba(OH)_2}$ je dobro topen; obori se $\mathrm{BaSO_4}$, presežek pa naredi vodo močno bazično.
 > Topnost sulfatov v 2. skupini navzdol pada. $\mathrm{Ba^{2+} + SO_4^{2-} \to BaSO_4}$ je praktično netopen in se obori.
+
+:::simboli
+n | množina snovi | n = \dfrac{m}{M} | mol | v ns: glavno kvantno število
+m | masa | | g
+M | molska masa | | g/mol
+V | prostornina plina | V = \dfrac{nRT}{p} | L
+R | splošna plinska konstanta | | J/(mol K) | 8,314 J/(mol K)
+T | absolutna temperatura | | K
+p | tlak | | kPa
+:::

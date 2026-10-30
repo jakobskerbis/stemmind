@@ -306,3 +306,38 @@ Za točkasti naboj je $\varphi(r) = -\int_\infty^r \frac{Q}{4\pi\varepsilon_0r'^
 - Razpolovi se.
 ~ Razpolovi se kapaciteta, ne napetost; pri stalnem naboju je $U = Q/C$, zato manjša kapaciteta pomeni večjo napetost.
 > $C = \varepsilon\varepsilon_0S/d$ se pri dvojnem razmiku razpolovi. Naboj odklopljenega kondenzatorja je stalen, zato se $U = Q/C$ podvoji; polje $E = U/d$ ostane enako.
+
+:::simboli
+\vec{F} | vektor električne sile | | N
+F | električna sila med nabojema | F = \frac{1}{4\pi\varepsilon_0}\,\frac{\lvert q_1q_2\rvert}{r^2} | N
+\varepsilon_0 | influenčna konstanta | | A\,s/(V\,m) | 8,85 · 10⁻¹² A s/(V m)
+\varepsilon | dielektričnost snovi | | – | voda: približno 80
+q_1, q_2 | točkasta naboja | | C
+q | poskusni naboj | | C
+Q | naboj, ki ustvarja polje | | C | pri kondenzatorju naboj na plošči
+Q_k | naboj k-tega točkastega naboja | | C
+r | razdalja od naboja | | m
+\vec{r} | krajevni vektor točke | | m
+r_k | razdalja od k-tega naboja | | m
+k | zaporedna številka naboja | | – | indeks v vsoti
+\vec{E} | vektor jakosti električnega polja | \vec{E} = \frac{\vec{F}}{q} | V/m
+\vec{E}_1, \vec{E}_2 | jakosti polja posameznih nabojev | | V/m | skupno polje je njuna vektorska vsota
+E | jakost električnega polja | E = \frac{1}{4\pi\varepsilon_0}\,\frac{\lvert Q\rvert}{r^2} | V/m | homogeno polje: E = U/d
+E_x | komponenta polja v smeri x | E_x = -\frac{\mathrm{d}\varphi}{\mathrm{d}x} | V/m
+E_k | jakost polja k-tega naboja | E_k = \frac{1}{4\pi\varepsilon_0}\frac{\lvert Q_k\rvert}{r_k^2} | V/m | ne kinetična energija
+x | koordinata vzdolž osi x | | m
+\sigma | ploskovna gostota naboja | \sigma = \frac{Q}{S} | C/m^2
+S | površina plošče | | m^2
+A | delo električne sile | A = qU_{AB} | J
+U_{AB} | napetost med točkama A in B | U_{AB} = \varphi_A - \varphi_B | V
+U | napetost med ploščama kondenzatorja | | V
+\varphi | električni potencial | \varphi = \frac{1}{4\pi\varepsilon_0}\,\frac{Q}{r} | V | potencialna energija na enoto naboja
+C | kapaciteta kondenzatorja | C = \frac{Q}{U} | F
+C_s | kapaciteta na enoto površine membrane | | F/m^2 | v nalogi 1,0 µF/cm²
+d | razmik med ploščama | | m
+W | energija nabitega kondenzatorja | W = \frac{1}{2}QU = \frac{1}{2}CU^2 = \frac{Q^2}{2C} | J
+W_p | potencialna energija naboja | W_p = q\varphi | J
+\vec{s} | premik (element poti) | | m
+N | število ionov | N = \frac{Q}{e_0} | –
+e_0 | osnovni naboj | | C | 1,602 · 10⁻¹⁹ C
+:::

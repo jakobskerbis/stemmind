@@ -257,3 +257,10 @@ Ker je $a - b = a + (-b)$, pravilo velja tudi za razlike, le predznak ostane pri
 - $n + 2c + 8$
 ~ Učence si le prištel, nisi pa pomnožil njihovega števila s ceno $c + 4$.
 > Oseb je $n + 2$, vsaka plača $c + 4$ evrov: $(n + 2)(c + 4) = nc + 4n + 2c + 8$.
+
+:::simboli
+x | neznana dolžina | | | avtocestni del poti, stranica kampa ali zemljevida
+a, b, c, d | poljubna števila (členi) | | | vsak člen prvega oklepaja z vsakim drugega
+m, n, k, l | poljubna števila (členi) | | | minus pred oklepajem: −(m − n) = −m + n
+p | ploščina zemljevida brez legende | p = (x + 8)(x + 5) - 3x |
+:::

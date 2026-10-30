@@ -232,3 +232,10 @@ Zakaj so pravilni tlakovalni liki le trije: v oglišču se morajo srečati vsaj 
 ~ Kotna polja so črna in srednje tudi. Ostane $12$ črnih in $12$ belih polj, barvanje ne prepove.
 + Da, na primer zunanji obroč iz $16$ polj in notranji obroč iz $8$ polj pokrijemo z dominami po obodu.
 > $25 - 1 = 24$ polj, $12$ črnih in $12$ belih. Pokritje obstaja: vsak obroč ima sodo število polj, zato ga domine pokrijejo zaporedoma.
+
+:::simboli
+\alpha | najmanjši kot vrtenja | \alpha = \dfrac{360^\circ}{k} | ° | po vrtenju za α se lik prekrije sam s sabo
+k | število leg, v katerih se lik prekrije | | – | v enem polnem obratu
+x | notranji kot pravilnega n-kotnika | x = \dfrac{(n-2) \cdot 180^\circ}{n} | ° | v primeru: kot tretjega lika v oglišču
+n | število oglišč pravilnega n-kotnika | | | n ≥ 3
+:::

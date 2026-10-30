@@ -229,3 +229,11 @@ Pri kubu je postopek podoben. Za $(x - 1)^3$ je $a = x$ in $b = 1$. Zapišemo ko
 + $2499$
 - $2599$
 > Zmnožek vsote in razlike: $(50 + 1)(50 - 1) = 50^2 - 1^2 = 2500 - 1 = 2499$. Rezultat $2500$ dobiš, če pozabiš odšteti $1^2$, rezultat $2501$ pa, če kvadrat drugega člena prišteješ, namesto da bi ga odštel.
+
+:::simboli
+x | spremenljivka | | |
+a, b, c, d | členi v obrazcih (števila ali izrazi) | | |
+p, q, r | členi izraza v oklepaju | | | v (p − q)³ sta p in q člena dvočlenika
+m, n | koeficienta podobnih enočlenikov | | | drugje tudi eksponenta ali število členov
+k | eksponent spremenljivke | | | podobni enočleniki imajo enak eksponent
+:::

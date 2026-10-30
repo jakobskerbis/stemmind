@@ -219,3 +219,11 @@ Najpogostejša past je četrti korak: odštevanje negativnega eksponenta je pri�
 + $7{,}2 \cdot 10^{-3}$
 - $7{,}2 \cdot 10^{-4}$
 > Vejico moramo premakniti za tri mesta v desno, da dobimo število $7{,}2$, zato je eksponent $-3$: $7{,}2 \cdot 10^{-3} = 7{,}2 \cdot 0{,}001 = 0{,}0072$. Pri drugih možnostih bi dobil $7200$, $0{,}072$ ali $0{,}00072$.
+
+:::simboli
+a | osnova potence | | |
+b | osnova druge potence | | |
+n | eksponent | | | naravno ali celo število
+m | eksponent druge potence | | |
+t | čas potovanja svetlobe od Sonca | | s |
+:::

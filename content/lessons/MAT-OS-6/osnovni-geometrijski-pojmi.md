@@ -231,3 +231,12 @@ V zvezku s kvadratno mrežo vse to vidiš na papirju. Vse vodoravne črte mreže
 - $a$ in $c$ sovpadata
 - Tega ne moremo ugotoviti.
 > Premica, ki je pravokotna na eno od dveh vzporednic, je pravokotna tudi na drugo, zato $a \perp c$.
+
+:::simboli
+X, Y | točki | | | XY je daljica ali poltrak s krajiščem X
+p | premica | | | X ∈ p: točka X leži na premici p
+A, B | krajišči daljice AB | | | dolžino daljice zapišemo z navpičnicama: ∣AB∣
+C | točka na daljici AB | | | ∣AB∣ = ∣AC∣ + ∣CB∣
+M | razpolovišče daljice | | | enako oddaljeno od obeh krajišč
+a, b, c, d | premice v isti ravnini | | | ∥ vzporedni, ⊥ pravokotni
+:::

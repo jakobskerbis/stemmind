@@ -1645,6 +1645,7 @@ export default {
   "fx.noUnit": "Nima enote.",
   "fx.change": "Sprememba količine: {what}",
   "fx.close": "Zapri",
+  "fx.parts": "Kjer je",
   "ap.style": "Slog",
   "ap.styleCist": "Čist",
   "ap.styleCistText": "Umirjen in pregleden",

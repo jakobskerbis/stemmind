@@ -248,3 +248,7 @@ Po Hammondovem postulatu je prehodno stanje počasnega koraka po energiji blizu 
 - klorobenzen
 ~ Klor je del alkilnega halida, ki da elektrofil $\text{R}^+$; na obroč se veže alkil, ne klor.
 > Friedel-Craftsovo alkiliranje poteka prek karbokationa, ki se s premikom hidrida premesti v stabilnejši sekundarni kation, zato nastane izopropilbenzen.
+
+:::simboli
+n | nenegativno celo število v Hücklovem pravilu | | – | n = 0, 1, 2, …; 4n + 2 elektronov π je aromatsko
+:::

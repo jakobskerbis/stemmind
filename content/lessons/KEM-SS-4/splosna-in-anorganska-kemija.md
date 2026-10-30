@@ -248,3 +248,13 @@ Redoks si nariši kot podajo žoge. Elektron je žoga. Kdor jo poda, se oksidira
 - Nič, ker so v $\mathrm{NO}$ kovalentne vezi in ni ionov.
 ~ Oksidacijska števila določamo tudi v molekulah s kovalentnimi vezmi. Sprememba z $0$ na $+2$ je oksidacija.
 > V $\mathrm{NO}$ ima kisik $-2$, zato dušik $+2$. Dušik se oksidira, kisik se reducira; $\mathrm{NO}$ nato prispeva k kislemu dežju.
+
+:::simboli
+n | množina snovi | n = \frac{m}{M} | mol | v raztopini tudi n = c · V
+m | masa snovi | m = n \cdot M | g
+M | molska masa | | g/mol
+w | masni delež | | – | m(S) = w · m(premog); 2,0 % = 0,020
+c | množinska koncentracija | c(\mathrm{H_3O^+}) = 10^{-\mathrm{pH}} | mol/L
+V | prostornina raztopine | | L
+\mathrm{pH} | pH vrednost | \mathrm{pH} = -\log c(\mathrm{H_3O^+}) | – | pod 7 kislo, nad 7 bazično
+:::

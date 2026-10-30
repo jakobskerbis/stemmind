@@ -250,3 +250,12 @@ Ime »organske« je ostalo iz časov, ko so mislili, da jih lahko tvorijo le ži
 - Izobutan ima več atomov, ker je razvejan.
 ~ Razvejanost ne doda atomov; ob istem številu C in H se spremeni le razporeditev.
 > Molekulska formula je seznam atomov, ne zemljevid vezi. Butan ima nerazvejano verigo, izobutan razvejano.
+
+:::simboli
+x | število atomov ogljika v molekuli | | – | v molekulski formuli CₓHᵧ
+y | število atomov vodika v molekuli | | – | v molekulski formuli CₓHᵧ
+k | število vodikovih atomov na enem ogljiku | | – | 4 − število vezi do sosednjih atomov C
+M | molska masa spojine | M = x \cdot M(\mathrm{C}) + y \cdot M(\mathrm{H}) | g/mol
+n | množina snovi | n = \dfrac{m}{M} | mol
+m | masa vzorca | | g
+:::

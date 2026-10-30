@@ -285,3 +285,14 @@ Predstavljaj si, da je pozitivni naboj »breme«. Sekundarni ogljik ima dva sose
 ~ Ta redukcija da *trans*-alken.
 + $\mathrm{H_2}$, Lindlarjev katalizator
 > Zastrupljeni Pd adira en ekvivalent $\mathrm{H_2}$ syn, oba vodika na isto stran, zato nastane *cis*-but-2-en.
+
+:::simboli
+\Delta H | reakcijska entalpija | \Delta H = \sum E(\text{pretrgane vezi}) - \sum E(\text{nastale vezi}) | kJ/mol | negativna: reakcija je eksotermna
+E | energija vezi | | kJ/mol |
+n_i | število vodikov vrste i | | – | npr. primarni, sekundarni, terciarni vodiki
+r_i | relativna hitrost na en vodik vrste i | | – |
+n_j | število vodikov vrste j (v vsoti) | | – | seštejemo po vseh vrstah vodikov
+r_j | relativna hitrost na en vodik vrste j | | – |
+n | število vodikov dane vrste | | – |
+r | relativna hitrost na en vodik | | – | brom je bolj izbirčen kot klor
+:::

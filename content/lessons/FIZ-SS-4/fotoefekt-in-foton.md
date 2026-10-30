@@ -234,3 +234,18 @@ Za hitro računanje v eV si zapomni $hc \approx 1240\,\mathrm{eV\,nm}$. Tako je 
 ~ Segrevanje ni fotoefekt. Za izbitje elektrona mora en foton imeti vsaj $2{,}0\,\mathrm{eV}$.
 + Ne, ker ima en foton premalo energije.
 > $W_f \approx \dfrac{1240\,\mathrm{eV\,nm}}{940\,\mathrm{nm}} \approx 1{,}3\,\mathrm{eV} < 2{,}0\,\mathrm{eV}$. Fotoefekta ni pri nobeni jakosti.
+
+:::simboli
+W_f | energija fotona | W_f = h\nu = \frac{hc}{\lambda} | J | pogosto v eV; 1 eV = 1,60 · 10⁻¹⁹ J
+h | Planckova konstanta | | J\,s | h = 6,63 · 10⁻³⁴ J s
+\nu | frekvenca svetlobe | \nu = \frac{c}{\lambda} | Hz
+\nu_m | mejna frekvenca | \nu_m = \frac{A_i}{h} | Hz | pod njo elektroni ne izletijo
+c | hitrost svetlobe | c = \lambda\nu | m/s | c = 3,00 · 10⁸ m/s
+\lambda | valovna dolžina svetlobe | \lambda = \frac{c}{\nu} | m
+\lambda_m | mejna valovna dolžina | \lambda_m = \frac{hc}{A_i} | m | pri daljših valovnih dolžinah fotoefekta ni
+W_k | največja kinetična energija izbitih elektronov | W_k = h\nu - A_i | J | pogosto v eV
+A_i | izstopno delo kovine | | J | lastnost kovine; pogosto v eV
+N | število fotonov | N = \frac{P\,t}{W_f} | – |
+P | moč vira sevanja | | W |
+t | čas | | s
+:::

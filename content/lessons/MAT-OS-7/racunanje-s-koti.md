@@ -217,3 +217,9 @@ Zanimivost: ena kotna minuta zemljepisne širine ustreza na zemeljskem površju 
 - $15^\circ 40'$
 + $15^\circ 24'$
 > Decimalni del pomnožimo s $60$: $0{,}4 \cdot 60' = 24'$, torej $15{,}4^\circ = 15^\circ 24'$.
+
+:::simboli
+\alpha | dani kot | | ° | 1° = 60' (kotnih minut)
+\beta | sokot kota α | \beta = 180^\circ - \alpha | ° | v primeru 3: β = 3 · α
+\gamma | komplementarni kot kota α | \gamma = 90^\circ - \alpha | ° | v primeru 3 sokot kota β
+:::

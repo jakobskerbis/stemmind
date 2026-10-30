@@ -256,3 +256,17 @@ Analogija ima mejo: denar nima smeri, sila lepenja pa vedno kaže nasproti težn
 - $0{,}20$
 ~ Zamenjava stopinj in odstotkov: $20^\circ$ ni $20\,\%$.
 > $\mu_\mathrm{l} \ge \tan 20^\circ \approx 0{,}36$.
+
+:::simboli
+F | sila trenja (lepenja) med podlago in telesom | F = \mu_\mathrm{t} N | N | pri mirovanju F ≤ μ_l N
+\mu_\mathrm{l} | koeficient lepenja | \mu_\mathrm{l} = \tan\alpha_\mathrm{max} | – | običajno večji od μ_t
+\mu_\mathrm{t} | koeficient trenja (pri drsenju) | \mu_\mathrm{t} = \frac{F}{N} | – | običajno μ_t < μ_l
+N | normalna sila podlage | | N | na klancu N = G cos α, na vodoravnih tleh N = G
+G | teža telesa | | N
+P | potisna (vlečna) sila | | N
+\alpha | naklonski kot klanca | \tan\alpha = \frac{\Delta h}{d} | °
+\alpha_\mathrm{max} | mejni kot klanca | \tan\alpha_\mathrm{max} = \mu_\mathrm{l} | ° | pri večjem naklonu telo zdrsne
+\beta | kot vlečne sile (pasu) glede na vodoravnico | | °
+h | nadmorska višina | | m | Δh višinska razlika med plastnicama
+d | vodoravna razdalja (projekcija na karti) | | m
+:::

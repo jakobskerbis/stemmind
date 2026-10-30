@@ -1446,6 +1446,7 @@
   "fx.noUnit": "単位なし",
   "fx.change": "変化量: {what}",
   "fx.close": "閉じる",
+  "fx.parts": "各記号",
   "ap.style": "スタイル",
   "ap.styleCist": "クリーン",
   "ap.styleCistText": "落ち着いて見やすい",

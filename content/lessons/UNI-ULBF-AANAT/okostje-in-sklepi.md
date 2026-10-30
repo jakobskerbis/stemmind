@@ -245,3 +245,21 @@ Robotske roke prodajajo z oznako »7 osi«. Preštejmo, koliko osi ima človešk
 - Ker je ploščica sinovialni sklep in se lahko razlije sklepna tekočina.
 ~ Epifizna ploščica je hrustančni stik med epifizo in metafizo. Sklepne votline in tekočine nima.
 > V epifizni ploščici se hrustanec množi in se spreminja v kost, zato se kost daljša. Če se ploščica poškoduje, lahko noga zraste krajša ali ukrivljena.
+
+:::simboli
+n_\text{roka} | število kosti ene roke | n_\text{roka} = n_\text{zapestnice} + n_\text{dlančnice} + n_\text{prstnice} | –
+n_\text{zapestnice} | število zapestnic | | – | 8
+n_\text{dlančnice} | število dlančnic | | – | 5
+n_\text{prstnice} | število prstnic | | – | 14
+m | število manjkajočih kosti | m = n_\text{roka} - 25 | –
+n_\text{hrbtenica} | število kosti hrbtenice | n_\text{hrbtenica} = 80 - n_\text{lobanja} - n_\text{koščice} - n_\text{podjezičnica} - n_\text{prsni koš} | – | pri odraslem so nekatera vretenca zraščena
+n_\text{lobanja} | število kosti lobanje | | – | 22
+n_\text{koščice} | število slušnih koščic | | – | 6
+n_\text{podjezičnica} | število podjezičnic | | – | 1
+n_\text{prsni koš} | število kosti prsnega koša | | – | 25
+n | število kosti apendikularnega skeleta | n = n_\text{ramenski obroč} + n_\text{zgornja uda} + n_\text{medenični obroč} + n_\text{spodnja uda} | –
+n_\text{ramenski obroč} | število kosti ramenskega obroča | | – | 2 na stran
+n_\text{zgornja uda} | število kosti obeh zgornjih udov | | – | 30 na ud
+n_\text{medenični obroč} | število kosti medeničnega obroča | | – | 2 kolčnici
+n_\text{spodnja uda} | število kosti obeh spodnjih udov | | – | 30 na ud
+:::

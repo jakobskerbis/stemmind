@@ -249,3 +249,10 @@ Ista soba, dve števili, dve enoti. V trgovini zato prodajajo letvice v metrih, 
 - $24$
 ~ $24$ je dolžina stranice v centimetrih, ne število koščkov.
 > Ob stranici gre $24 : 6 = 4$ koščke, vrst je $4$, skupaj $4 \cdot 4 = 16$. S ploščinami: $576 : 36 = 16$.
+
+:::simboli
+o | obseg lika | o = 2 \cdot (a + b) | | kvadrat: o = 4 · a
+p | ploščina lika | p = a \cdot b | | kvadrat: p = a²
+a | dolžina pravokotnika (stranica kvadrata) | |
+b | širina pravokotnika | b = p : a |
+:::

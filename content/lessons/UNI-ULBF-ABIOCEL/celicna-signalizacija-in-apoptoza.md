@@ -242,3 +242,9 @@ Apoptozo nariši v štirih sličicah: (1) okrogla celica, (2) manjša celica z z
 - Celice takoj odmrejo z nekrozo.
 ~ Toksin ne poškoduje membrane; spremeni signalizacijo, zato celice delujejo preveč, ne odmrejo.
 > $\mathrm{G_s}$ ne more ugasniti, adenilat-ciklaza neprestano dela cAMP. PKA odpre kanale za $\mathrm{Cl^-}$, za njim gre voda v črevo.
+
+:::simboli
+N | število molekul produkta | N = 1 \cdot 10 \cdot 100 \cdot \dfrac12 \cdot 10 \cdot 1000 | – | ojačanje signala v kaskadi
+N_\text{dan} | število celic, ki odmrejo v enem dnevu | | – | okoli 6 · 10¹⁰
+N_\text{telo} | število vseh celic v telesu | | – | okoli 3 · 10¹³
+:::

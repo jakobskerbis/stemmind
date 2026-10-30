@@ -226,3 +226,11 @@ Zmnožek dveh celih števil je $4$: možnosti so $1 \cdot 4$, $2 \cdot 2$, $4 \c
 - $8$
 ~ $66 : 8$ zaokroženo da $8$, a $8 \cdot 8 = 64$, ne $66$. Rešitev mora dati natanko $66$.
 > $5x + 8y = 66$ ima rešitvi $(10, 2)$ in $(2, 7)$. Druga ima $2 + 7 = 9$ etap.
+
+:::simboli
+x, y | celoštevilski neznanki | | | v Aninem primeru števili avtobusnih in vlakovnih vozovnic
+x_0, y_0 | ena znana rešitev enačbe | | |
+a, b | koeficienta enačbe ax + by = c | | |
+D | največji skupni delitelj števil a in b | | | rešitve obstajajo natanko tedaj, ko D deli c
+t | poljubno celo število (parameter) | | |
+:::

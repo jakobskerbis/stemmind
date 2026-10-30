@@ -4,6 +4,7 @@ import katex from "katex";
 import { parseLesson, expandFormulaBlocks } from "./textbook.js";
 import { getTopic } from "./curriculum.js";
 import { checkArithmetic } from "./lesson-math.js";
+import { SYMBOLS_BLOCK_RE, parseSymbolsBlock, symbolsIn } from "../public/formula-data.js";
 
 const REQUIRED = [
   [/^zakaj/i, "Zakaj se tega učimo"],
@@ -103,14 +104,66 @@ export function checkLessonSource(src, topicId) {
   for (const m of calc.mismatches) {
     (m.rel > 0.02 ? err : warn)(`vrstica ${m.line + fmOffset}: račun se ne ujema: $${m.tex}$ (${m.left} ≠ ${m.right})`);
   }
+  checkSymbols(body, err, warn);
   if (/\bPhET\b/.test(body)) err("v besedilu ne omenjaj PhET; napiši »interaktivna simulacija spodaj«");
   if (/\.{3}\s*$/m.test(body.replace(/\$[^$]*\$/g, ""))) warn("vrstica se konča s »...« (nedokončano besedilo?)");
 
-  const words = body.replace(/\$[^$]*\$/g, " ").split(/\s+/).filter(Boolean).length;
+  const words = body.replace(SYMBOLS_BLOCK_RE, "").replace(/\$[^$]*\$/g, " ").split(/\s+/).filter(Boolean).length;
   // Šablonski stavki naredijo lekcije enolične (j, 29. 10. 2026: lekcije ne smejo biti monotone).
   const stock = STOCK_PHRASES.filter((re) => re.test(body)).map((re) => `»${re.source.replace(/\\b|\\s\+/g, " ").trim()}«`);
   if (stock.length) warn(`šablonski stavek ${stock.join(", ")}: začni s situacijo, vprašanjem ali poskusom`);
   if (words < 800) warn(`lekcija je kratka (${words} besed, cilj 1300–2300)`);
   if (words > 2800) warn(`lekcija je dolga (${words} besed, cilj 1300–2300)`);
   return { errors, warnings, words, examples: ex ? ex.md.split(/^### +/m).length - 1 : 0, questions: qs.length, calcChecked: calc.checked };
+}
+
+// Oznake lekcije (:::simboli, content/lessons/README.md): vsaka vrstica se razbere in izriše,
+// vsaka oznaka iz izpostavljenih formul ($$…$$ in :::formula) ima svojo vrstico.
+const DISPLAY_FORMULA_RE = /^[ \t]*:::[ \t]*formula[ \t]*\n([\s\S]*?)\n[ \t]*:::[ \t]*$/gm;
+const ALWAYS_KNOWN = new Set(["π"]);
+export function checkSymbols(body, err, warn) {
+  const blocks = [...body.matchAll(SYMBOLS_BLOCK_RE)];
+  const keys = new Set();
+  for (const [, block] of blocks) {
+    const { list, errors } = parseSymbolsBlock(block);
+    for (const e of errors) err(`:::simboli: ${e}`);
+    for (const g of list) {
+      for (const [what, tex] of [["oznaka", g.tex.join(", ")], ["zveza", g.r], ["enota", g.u && !/^(–|-|—|1|brez)$/.test(g.u) ? `\\mathrm{${g.u}}` : ""]]) {
+        if (!tex) continue;
+        try {
+          katex.renderToString(tex, { throwOnError: true, strict: "ignore" });
+        } catch (e) {
+          err(`:::simboli: ${what} »${tex.slice(0, 40)}« se ne izriše (${String(e.message).split("\n")[0].slice(0, 60)})`);
+        }
+      }
+      if (/\\[a-zA-Z]|[_^]\{/.test(`${g.n} ${g.note}`.replace(/\$[^$]*\$/g, ""))) warn(`:::simboli: ime ali opomba pri »${g.tex.join(", ")}« ima TeX brez $…$ (na kartici bi se izpisal surov)`);
+      g.keys.forEach((k) => keys.add(k));
+    }
+  }
+  if (blocks.length > 1) warn("več blokov »:::simboli«; združi jih v enega na koncu lekcije");
+  const text = body.replace(SYMBOLS_BLOCK_RE, "");
+  const display = [];
+  text.replace(/\$\$([\s\S]+?)\$\$/g, (_, t) => (display.push(t), ""));
+  text.replace(DISPLAY_FORMULA_RE, (_, f) => (f.replace(/\$\$?([^$]+?)\$\$?/g, (__, t) => (display.push(t), "")), ""));
+  const used = new Set();
+  const missing = new Set();
+  const inner = (k) => /^\w+\((.+)\)/.exec(k)?.[1]; // bar(x) → x
+  const covered = (k) => covered1(k) || covered1(k.replace(/'/g, "")); // v'_1 brez lastne vrstice = pomen v
+  const covered1 = (k) => keys.has(k) || keys.has(k.split("_")[0]) || (k[0] === "Δ" && keys.has(k.slice(1).split("_")[0])) || keys.has(inner(k));
+  for (const tex of display) {
+    for (const [k] of symbolsIn(tex, "@*")) if (!covered(k) && !ALWAYS_KNOWN.has(k)) missing.add(k);
+  }
+  const all = [];
+  text.replace(/\$\$?([^$]+?)\$\$?/g, (_, t) => (all.push(t), ""));
+  for (const tex of all) for (const [k] of symbolsIn(tex, "@*")) { used.add(k); used.add(k.split("_")[0]); if (k[0] === "Δ") used.add(k.slice(1).split("_")[0]); if (inner(k)) used.add(inner(k)).add(k.replace(/^\w+\((.+?)\)/, "$1")); }
+  if (missing.size) {
+    const list = [...missing];
+    warn(`${list.length} oznak v formulah nima vrstice v »:::simboli«: ${list.slice(0, 12).join(", ")}${list.length > 12 ? " …" : ""}`);
+  }
+  const rawUsed = (k) => { // \mathrm{SE}, \mathrm{pH}, \mathrm{p}K_a
+    const b = k.replace(/^Δ/, "").split("_")[0];
+    return text.includes(`{${b}}`) || (b.length > 1 && text.includes(`{${b.slice(0, -1)}}${b.slice(-1)}`));
+  };
+  const unused = [...keys].filter((k) => !used.has(k) && !rawUsed(k));
+  if (unused.length) warn(`:::simboli: oznake ${unused.slice(0, 8).join(", ")} ni v nobeni formuli lekcije`);
 }

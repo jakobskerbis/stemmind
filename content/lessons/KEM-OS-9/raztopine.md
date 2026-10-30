@@ -192,3 +192,11 @@ Iz tega se vidi, zakaj sta $w$ in $\gamma$ različni količini. Povezuje ju gost
 + $20\,\text{g}$
 - $230\,\text{g}$
 > $m(\text{topljenca}) = w \cdot m(\text{raztopine}) = 0{,}08 \cdot 250\,\text{g} = 20\,\text{g}$. Odstotek je treba najprej zapisati kot decimalno število $0{,}08$.
+
+:::simboli
+m | masa (topljenca, topila ali raztopine) | | g | m(raztopine) = m(topljenca) + m(topila)
+w | masni delež topljenca | w = \frac{m(\text{topljenca})}{m(\text{raztopine})} | – | v odstotkih: pomnožimo s 100
+\gamma | masna koncentracija | \gamma = \frac{m(\text{topljenca})}{V(\text{raztopine})} | g/L | γ = w · ρ
+V | prostornina raztopine | | L
+\rho | gostota raztopine | \rho = \dfrac{m(\text{raztopine})}{V(\text{raztopine})} | g/L | v istih enotah kot γ
+:::

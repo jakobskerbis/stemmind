@@ -207,3 +207,8 @@ Enote, ki jih uporabljamo v naravoslovju, sestavljajo **mednarodni sistem enot (
 ~ $1{,}5$ je pravilno število litrov, a ga nisi pretvoril v mililitre.
 + $1500\,\mathrm{mL}$
 > $2 \cdot 0{,}75 = 1{,}5$, torej $1{,}5\,\mathrm{L}$, in $1{,}5 \cdot 1000 = 1500$, torej $1500\,\mathrm{mL}$.
+
+:::simboli
+m_\mathrm{k} | masa košarkarske žoge | | g
+m_\mathrm{n} | masa nogometne žoge | | g | 0,43 kg = 430 g
+:::

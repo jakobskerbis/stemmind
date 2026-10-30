@@ -212,3 +212,12 @@ Naslednji dan je zamesila dve enaki testi z enako moko, vodo in kvasom. Eno je p
 ~ Brez enote ne vemo, ali je pekel 25 minut ali 25 sekund.
 + Enota, na primer minute.
 > Meritev je vedno število in enota: $25\,\mathrm{min}$, $30\,\mathrm{min}$, $28\,\mathrm{min}$.
+
+:::simboli
+t | čas meritve | | s
+\bar{t} | povprečni čas | \bar{t} = \dfrac{t_1 + t_2 + t_3}{3} | s
+t_1, t_2, t_3 | izmerjeni časi posameznih ponovitev | | s
+o | obseg balona | | cm
+\bar{o} | povprečni obseg balona | \bar{o} = \dfrac{o_1 + o_2}{2} | cm
+o_1, o_2 | izmerjena obsega balona | | cm
+:::

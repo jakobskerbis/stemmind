@@ -244,3 +244,11 @@ Podobno pri potovanju: iz vsake države vzameš glavno mesto, pravilo je jasno. 
 - Da, ker je v vsakem kraju več kot en hotel.
 ~ Število hotelov v posameznem kraju ni pomembno; pomembno je, da je krajev končno mnogo.
 > Z indukcijo po številu množic: iz $12$ nepraznih množic izberemo po en element brez AC. Aksiom izbire potrebujemo šele za neskončne družine brez pravila izbire.
+
+:::simboli
+S | naslednik | S(n) = n \cup \{n\}
+n | naravno število (kot množica)
+V | število vozovnic na progi z n postajami | V(n) = \frac{n(n-1)}{2} | | »množica vseh množic« V ne obstaja
+P | delno urejena množica v Zornovi lemi | | | P(n) je tudi trditev pri indukciji
+a, b | naravni števili | | | pri aksiomu para poljubni množici
+:::

@@ -226,3 +226,9 @@ Enota $\text{km}$ se pokrajša, ostane $\text{m}$.
 - $7{,}2\,\dfrac{\text{m}}{\text{s}}$
 + $20\,\dfrac{\text{m}}{\text{s}}$
 > Iz $\text{km/h}$ v $\text{m/s}$ delimo s $3{,}6$: $72 : 3{,}6 = 20$. Množenje s $3{,}6$ bi dalo $259{,}2$, kar je napačna smer pretvorbe.
+
+:::simboli
+s | pot | s = v \cdot t | m
+v | hitrost | | m/s | 1 m/s = 3,6 km/h
+t | čas | | s
+:::

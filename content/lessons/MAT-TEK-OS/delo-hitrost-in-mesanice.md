@@ -219,3 +219,13 @@ Zvečer meša malto. Ena vreča ima malo cementa, druga veliko, a druge je trikr
 ~ $10$ minut je pravilen čas vožnje, a šteje od $7.20$, ko šef odpelje.
 + Ob $7.30$
 > Do $7.20$ delavec prevozi $15 \cdot \dfrac{1}{3} = 5\,\mathrm{km}$. Razmik se manjša za $45 - 15 = 30\,\mathrm{km/h}$, torej $\dfrac{5}{30}\,\mathrm{h} = 10\,\mathrm{min}$. Dohiti ga ob $7.30$.
+
+:::simboli
+t | čas skupnega dela | \frac{1}{t} = \frac{1}{t_1} + \frac{1}{t_2} | h | pri bagrih čas do srečanja
+t_1, t_2 | časa posameznikov za celo delo | | h |
+d | dolžina jarka | | m |
+v_A, v_B | hitrosti kopanja bagrov A in B | | m/h |
+s_A | dolžina, ki jo izkoplje bager A | s_A = v_A \cdot t | m |
+x | masa dodanega cementa | | kg |
+v_\mathrm{p} | povprečna hitrost | v_\mathrm{p} = \frac{\text{celotna pot}}{\text{celotni čas}} | km/h |
+:::

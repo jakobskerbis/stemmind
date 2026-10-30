@@ -153,3 +153,7 @@ Preizkus ima pomen kot kontrola pravilnosti postopka. Če smo kje naredili napak
 - $3x+4=\dfrac{5}{6}$
 + $3x+4=5$
 > Pomnožiti moramo vsak člen: $6\cdot\dfrac{x}{2}=3x$, $6\cdot\dfrac{2}{3}=4$, $6\cdot\dfrac{5}{6}=5$. Pri drugem odgovoru je ostala desna stran nepomnožena, pri prvem pa je napačno izračunan člen $\dfrac{2}{3}$.
+
+:::simboli
+x | neznanka | | |
+:::

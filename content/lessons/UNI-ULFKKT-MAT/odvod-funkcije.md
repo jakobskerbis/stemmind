@@ -262,3 +262,16 @@ Ker je $f$ zvezna (odvedljiva), gre $f(x + h) \to f(x)$, kvocienta pa gresta pro
 - $\frac{1}{2}$
 - $\ln 2$
 > $f'(x) = \frac{2x}{x^2 + 1}$, zato je $f'(1) = \frac{2}{2} = 1$. Odgovor $\frac{1}{2}$ dobiš, če pozabiš na odvod notranje funkcije $2x$.
+
+:::simboli
+f | odvedljiva funkcija | | |
+f' | odvod funkcije f | f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h} | | smerni koeficient tangente v x₀
+h' | odvod sestavljene funkcije h(x) = f(g(x)) | h'(x) = f'(g(x)) \cdot g'(x) | | verižno pravilo
+x_0 | točka, v kateri odvajamo (dotikališče) | | |
+h | prirastek neodvisne spremenljivke | | | h → 0; v verižnem pravilu h(x) = f(g(x))
+x | neodvisna spremenljivka | | |
+g | druga (notranja) funkcija | | | pri verižnem pravilu notranja funkcija
+y | ordinata točke na tangenti oziroma normali | | |
+u, v | odvedljivi funkciji v pravilu za produkt in kvocient | | | pri kvocientu v ≠ 0
+\alpha | kot med tangento in osjo x | \tan\alpha = f'(x_0) | |
+:::

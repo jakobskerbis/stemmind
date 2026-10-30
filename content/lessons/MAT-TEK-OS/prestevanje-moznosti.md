@@ -217,3 +217,9 @@ Naslednji dan sosed Bor ponudi še tri strehe iz slame. Ana zdaj pri polici ne i
 - $10$
 ~ Tako dobiš, če $(2, 3, 4)$, $(3, 2, 4)$ in podobne šteješ posebej. Vrstni red stranic tu ni pomemben.
 > Z urejenimi stranicami $a \le b \le c$ in pogojem $a + b > c$ dobiš $(3, 3, 3)$, $(2, 3, 4)$ in $(1, 4, 4)$.
+
+:::simboli
+a | število možnosti prvega koraka | | | pri trikotniku: najkrajša stranica
+b | število možnosti drugega koraka | | | pri trikotniku: srednja stranica
+c | število možnosti tretjega koraka | | | pri trikotniku: najdaljša stranica, c < a + b
+:::

@@ -233,3 +233,20 @@ Za neokrogle prereze (pravokotnik, profil I) prerezi niso več ravni, ampak se v
 - Približno $0{,}25\,\mathrm{MPa}$
 ~ To je $T/A$, kot pri nategu. Navor ni sila in napetost ni enakomerna.
 > $\tau_{\max} = \dfrac{16 \cdot 20\,000\,\mathrm{N\,mm}}{\pi \cdot (10\,\mathrm{mm})^3} \approx 102\,\mathrm{MPa}$. V breztežnosti se navor ne spremeni: steblo napenja roka astronavta, ne teža.
+
+:::simboli
+\gamma | strižna deformacija | \gamma = \frac{\rho\,\varphi}{L} | rad |
+\rho | razdalja od osi gredi | | m | na obodu ρ = d/2
+\varphi | zasučni kot gredi | \varphi = \dfrac{TL}{GJ} | rad |
+L | dolžina gredi | | m |
+\tau | strižna napetost | \tau = G\,\frac{\rho\,\varphi}{L} | Pa | sorazmerna z ρ
+G | strižni modul | | Pa | jeklo 80 GPa
+J | polarni vztrajnostni moment preseka | J = \int_A \rho^2\,\mathrm{d}A | m^4 | za poln krog J = πd⁴/32 = 2I
+d | premer gredi (pri cevi notranji premer) | | m | pri dimenzioniranju d ≥ ∛(16T/(π τ_dop))
+J_{\text{cev}} | polarni vztrajnostni moment cevi | J_{\text{cev}} = \frac{\pi (D^4 - d^4)}{32} | m^4 |
+D | zunanji premer cevi | | m |
+\tau_{\max} | največja strižna napetost (na obodu) | \tau_{\max} = \frac{T\,d/2}{J} = \frac{16\,T}{\pi d^3} | Pa | za cev τ_max = T·(D/2)/J
+T | navor | | N m | v zgledih v N mm
+A | ploščina prečnega prereza | | m^2 | za cev A = π(D² − d²)/4
+\tau_{\text{dop}} | dopustna strižna napetost | | Pa | v zgledih v MPa
+:::

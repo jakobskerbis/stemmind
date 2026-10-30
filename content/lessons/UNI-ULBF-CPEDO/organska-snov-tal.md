@@ -241,3 +241,20 @@ Primerjava ima mejo: mikroorganizmi lesa ne kopičijo, ampak ga večino »pokuri
 ~ Šota se je ohranila le, ker ni bilo kisika. Ko ga dobi, se razkraja kot vsaka organska snov.
 + Organska snov se bo mineralizirala do $\mathrm{CO_2}$, tla se bodo posedala.
 > Izsušitev prinese kisik, mineralizacija steče hitro. Masa organske snovi odhaja kot $\mathrm{CO_2}$, zato površina tal pada, kar ogroža temelje in ceste.
+
+:::simboli
+\mathrm{OST} | delež organske snovi tal | \mathrm{OST} \approx 1{,}72 \cdot C_\mathrm{org} | \% | OST vsebuje okrog 58 % ogljika
+C_\mathrm{org} | delež organskega ogljika v tleh | | \%
+\mathrm{C/N} | razmerje med ogljikom in dušikom | \mathrm{C/N} = \dfrac{m_\mathrm{C}}{m_\mathrm{N}} = \dfrac{w_\mathrm{C}}{w_\mathrm{N}} | – | pri velikem C/N mikrobi jemljejo dušik iz tal
+m_\mathrm{C} | masa ogljika | | kg
+m_\mathrm{N} | masa dušika | | kg
+w_\mathrm{C} | masni delež ogljika | | – | v odstotkih
+w_\mathrm{N} | masni delež dušika | | – | v odstotkih
+m_\mathrm{C,1}, m_\mathrm{C,2} | masi ogljika v obeh sestavinah mešanice | | kg
+m_\mathrm{N,1}, m_\mathrm{N,2} | masi dušika v obeh sestavinah mešanice | | kg
+m_\mathrm{N,potrebni} | masa dušika, ki ga potrebujejo mikroorganizmi | m_\mathrm{N,potrebni} = \dfrac{m_\mathrm{C,biomasa}}{8} | kg | biomasa mikrobov ima C/N = 8
+m_\mathrm{C,biomasa} | masa ogljika, vgrajenega v biomaso mikrobov | | kg
+m_\mathrm{N,sproščeni} | masa dušika, sproščenega iz razgrajene snovi | | kg
+m_\mathrm{N,iz\ tal} | masa dušika, ki ga mikrobi vzamejo iz tal | m_\mathrm{N,iz\ tal} = m_\mathrm{N,potrebni} - m_\mathrm{N,sproščeni} | kg
+x | masa trave | | kg
+:::

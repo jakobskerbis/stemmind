@@ -231,3 +231,7 @@ Iz definicije sledi: $|a| \ge 0$ za vsak $a$, $|a| = 0$ natanko tedaj, ko je $a 
 - $-11\,\text{m}$
 ~ Višinska razlika kot razdalja ni nikoli negativna.
 > Do pritličja je $|-4| = 4\,\text{m}$, naprej še $|7| = 7\,\text{m}$; skupaj $4 + 7 = 11\,\text{m}$.
+
+:::simboli
+a, b | celi števili | | | −a je nasprotno število števila a
+:::

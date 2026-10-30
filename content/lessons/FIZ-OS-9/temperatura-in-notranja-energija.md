@@ -232,3 +232,12 @@ Na potovanjih pomaga hitro preverjanje v glavi: v ZDA je $32\,^\circ\mathrm{F}$ 
 ~ Enaka snov ne pomeni enake energije. Odločata količina snovi in temperatura.
 + Delci čaja se gibljejo hitreje, a voda v kadi ima več notranje energije.
 > Temperatura pove povprečno energijo enega delca, notranja energija pa skupno energijo vseh delcev. V kadi je več stokrat več delcev, zato je vsota večja.
+
+:::simboli
+t | temperatura v stopinjah Celzija | t = T - 273 | ^\circ C
+T | temperatura v kelvinih (absolutna temperatura) | T = t + 273 | K
+t_{\mathrm{F}} | temperatura v stopinjah Fahrenheita | t_\mathrm{F} = 1{,}8 \cdot t + 32 | ^\circ F
+t_1 | temperatura v Ljubljani | | ^\circ C
+t_2 | temperatura v Chicagu | t_2 = \dfrac{t_\mathrm{F} - 32}{1{,}8} | ^\circ C
+\Delta t | razlika temperatur | \Delta t = t_1 - t_2 | ^\circ C | v kelvinih je razlika enaka
+:::

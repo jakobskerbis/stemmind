@@ -222,3 +222,16 @@ Analogija ima mejo: steklenica se pri podajanju ne zmanjša, energija pa se pri 
 - Barva ni pomembna, pomembno je le, da je kovček zaprt.
 ~ Pri sevanju je barva zelo pomembna: temne površine vpijejo več, svetle večino odbijejo.
 > Svetla, sijoča površina večino sevanja odbije, izolacija pa upočasni prevajanje tistega malo toplote, ki se vpije, do kitare.
+
+:::simboli
+Q | toplota | Q = m \cdot c \cdot \Delta T | J
+m | masa | | kg | v nalogah tudi v g
+c | specifična toplota | | J/(kg\cdot{}^\circ C)
+T | temperatura | | ^\circ C
+T_{\text{zač}} | začetna temperatura | | ^\circ C
+T_{\text{konč}} | končna temperatura | | ^\circ C
+t | čas segrevanja | t = \dfrac{Q}{P} | s
+P | moč (grelnikov ali sončnega sevanja) | | W
+P_{\text{vpita}} | moč, ki jo telo vpije | P_{\text{vpita}} = 0{,}9 \cdot P | W | tu se vpije 90 %
+A | vpita energija | A = P_{\text{vpita}} \cdot t | J
+:::

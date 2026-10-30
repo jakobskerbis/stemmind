@@ -211,3 +211,26 @@ Zunanji tlak $p_0$ se pokrati. Ker je $H S = V$ prostornina kvadra, dobimo Arhim
 + Ker je njegova gostota manjša od gostote vode.
 - Ker je vzgon vedno večji od teže.
 > Telo plava, če je njegova gostota manjša od gostote tekočine. Pomembna ni teža sama, ampak gostota. Pri plavajočem telesu je vzgon enak teži, ne večji.
+
+:::simboli
+p | tlak | p = p_0 + \rho\,g\,h | Pa | v tekočini skupni tlak; splošno p = F/S
+F | sila, pravokotna na ploskev | | N
+S | ploščina ploskve | | m^2
+p_h | hidrostatični tlak | p_h = \rho\,g\,h | Pa
+p_0 | zunanji (zračni) tlak | | Pa | približno 100 000 Pa
+\rho | gostota | | kg/m^3 | pri tlaku gostota tekočine, pri plavanju gostota telesa
+g | težni pospešek | | m/s^2 | približno 9,8 m/s²
+h | globina pod gladino | | m
+F_g | teža | F_g = m\,g | N
+m | masa telesa | m = \rho\,V | kg
+F_v | vzgon | F_v = \rho_t\,g\,V_i | N | Arhimedov zakon
+\rho_t | gostota tekočine | | kg/m^3
+V_i | prostornina potopljenega dela telesa | | m^3 | enaka prostornini izpodrinjene tekočine
+V | prostornina telesa | | m^3
+a | rob kocke | | m
+F_1 | sila tekočine na zgornjo ploskev | | N
+F_2 | sila tekočine na spodnjo ploskev | | N
+h_1 | globina zgornje ploskve | | m
+h_2 | globina spodnje ploskve | | m | h₂ = h₁ + H
+H | višina kvadra | | m
+:::

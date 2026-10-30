@@ -225,3 +225,14 @@ Pomisli na klavirsko tipko. Če jo pritisneš zelo nežno, kladivce ne doseže s
 ~ To sta le dve podvojitvi. Z $20\,^\circ\mathrm{C}$ na $50\,^\circ\mathrm{C}$ so trije koraki po $10\,^\circ\mathrm{C}$.
 + $15\,\mathrm{s}$
 > Trije koraki po $10\,^\circ\mathrm{C}$ pomenijo $8$-krat večjo hitrost, zato čas $\dfrac{120\,\mathrm{s}}{8} = 15\,\mathrm{s}$.
+
+:::simboli
+v | hitrost reakcije | v = \frac{\lvert \Delta c \rvert}{\Delta t} | mol/(L s) | pri merjenju plina v = V : t, v mL/s
+c | množinska koncentracija reaktanta | | mol/L | Δc je negativna, zato pišemo absolutno vrednost
+t | čas | | s
+V | prostornina nastalega plina | | mL
+v_1 | hitrost reakcije brez katalizatorja | v_1 = \dfrac{V_1}{t} | mL/s | v primeru 2 hitrost v prvem intervalu
+v_2 | hitrost reakcije s katalizatorjem | v_2 = \dfrac{V_2}{t} | mL/s | v primeru 2 hitrost v drugem intervalu
+V_1 | prostornina kisika brez katalizatorja | | mL
+V_2 | prostornina kisika s katalizatorjem | | mL
+:::

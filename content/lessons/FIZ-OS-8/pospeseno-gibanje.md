@@ -190,3 +190,13 @@ Ta izpeljava velja le za enakomerno pospešeno gibanje, kjer povprečna hitrost 
 - $32\,\text{m}$
 + $16\,\text{m}$
 > $s = \dfrac{a t^2}{2} = \dfrac{2 \cdot 16}{2} = 16\,\text{m}$. Odgovor $8\,\text{m}$ dobiš z množenjem $a \cdot t$, odgovor $32\,\text{m}$ pa, če pozabiš deliti z $2$.
+
+:::simboli
+a | pospešek | a = \dfrac{\Delta v}{\Delta t} | m/s^2
+v | hitrost | v = a \cdot t | m/s | pri prostem padu v = g · t
+v_0 | začetna hitrost | | m/s | iz mirovanja je v₀ = 0
+v_{\text{povp}} | povprečna hitrost | v_{\text{povp}} = \frac{a t}{2} | m/s | velja pri gibanju iz mirovanja
+t | čas | | s
+s | pot | s = \dfrac{a \cdot t^2}{2} | m | velja pri gibanju iz mirovanja
+g | težnostni pospešek | | m/s^2 | na Zemlji približno 10 m/s²
+:::

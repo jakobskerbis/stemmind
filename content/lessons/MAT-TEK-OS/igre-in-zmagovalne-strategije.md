@@ -216,3 +216,8 @@ Za igro z več kupčki je Bouton odkril pravilo z dvojiškim zapisom števil. Za
 - Odloča sreča, strategije ni.
 ~ V igri ni sreče in oba vidita vse, zato ima eden od igralcev zmagovalno strategijo.
 > Kdor reče $20$, zmaga. Ciljna števila so $4, 8, 12, 16, 20$. Prvi lahko reče največ do $3$, zato drugi reče do $4$ in nato vsakič dopolni do $4$.
+
+:::simboli
+k | največje število žetonov v eni potezi | | | položaji P so večkratniki k + 1
+t | številka tipke, ki jo pritisne drugi igralec | | | prvi igralec odgovori s tipko 16 − t
+:::

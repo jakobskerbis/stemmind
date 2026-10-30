@@ -237,3 +237,9 @@ Ko smo dodali vodik, je bil $Q = 32 < K = 64$, zato je reakcija tekla v desno.
 - Ker se ob odprtju poveča $K$.
 ~ $K$ se spremeni le s temperaturo. Ob odprtju se spremeni koncentracija plina nad pijačo.
 > Ko $\mathrm{CO_2}$ uide iz plastenke, sistem nadomešča izgubljeni plin: raztopljeni $\mathrm{CO_2}$ izhaja v mehurčkih. To je Le Chatelierjevo načelo.
+
+:::simboli
+K | konstanta ravnotežja | K = \frac{[\mathrm{C}]^c \cdot [\mathrm{D}]^d}{[\mathrm{A}]^a \cdot [\mathrm{B}]^b} | – | stalna pri dani temperaturi; velik K: skoraj sami produkti
+a, b | stehiometrijska koeficienta reaktantov | | – | v K eksponenta v imenovalcu
+c, d | stehiometrijska koeficienta produktov | | – | v K eksponenta v števcu; c(HI) pa je koncentracija
+:::

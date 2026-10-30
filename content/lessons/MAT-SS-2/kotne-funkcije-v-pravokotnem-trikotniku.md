@@ -201,3 +201,12 @@ Druga vsakdanja uporaba je lestev. Varno postavljena lestev naj s tlemi oklepa k
 + $0{,}8$
 - $0{,}36$
 > Iz $\sin^2 \alpha + \cos^2 \alpha = 1$ sledi $\cos \alpha = \sqrt{1 - 0{,}36} = \sqrt{0{,}64} = 0{,}8$. Napaka $0{,}4$ nastane, če pozabiš kvadrirati.
+
+:::simboli
+\alpha | ostri kot pravokotnega trikotnika | | |
+\beta | drugi ostri kot | \beta = 90^\circ - \alpha | |
+a | kateta nasproti kota α | a = c \cdot \sin \alpha | |
+b | priležna kateta kota α | b = c \cdot \cos \alpha | |
+c | hipotenuza | c^2 = a^2 + b^2 | |
+S | ploščina trikotnika | S = \frac{a \cdot b}{2} | |
+:::

@@ -180,3 +180,9 @@ Zanimivost pri računanju s števili: $37 \cdot 15 + 37 \cdot 85 = 37 \cdot 100 
 + $-3(2x + 3)$
 - $3(-2x + 3)$
 > Izpostavimo $-3$: $-6x : (-3) = 2x$ in $-9 : (-3) = 3$, zato je $-6x - 9 = -3(2x + 3)$. Preverimo: $-3 \cdot 2x = -6x$ in $-3 \cdot 3 = -9$. Ostala zapisa po množenju dasta $-6x + 9$.
+
+:::simboli
+a | skupni faktor | | | izpostavimo ga pred oklepaj
+b, c | preostala faktorja členov | |
+x | spremenljivka | |
+:::

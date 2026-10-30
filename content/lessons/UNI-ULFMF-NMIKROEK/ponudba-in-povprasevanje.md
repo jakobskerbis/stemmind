@@ -256,3 +256,14 @@ Premik povpraševanja za $\Delta a$ spremeni ceno za $\dfrac{\Delta a}{b + d}$. 
 ~ Premik ponudbe desno pri nespremenjenem povpraševanju poveča prodano količino.
 + Cena pade, prodana količina zraste.
 > Boljša tehnologija premakne ponudbo desno. Ravnovesje drsi navzdol po krivulji povpraševanja: nižja cena, večja količina.
+
+:::simboli
+Q_D | povpraševana količina (funkcija povpraševanja) | Q_D = a - bP | m^2/teden | padajoča funkcija cene
+Q_S | ponujena količina (funkcija ponudbe) | Q_S = c + dP | m^2/teden | naraščajoča funkcija cene
+Q | količina | | m^2/teden | Q* ravnovesna količina
+P | cena | | €/m^2 | P* ravnovesna cena
+a | količina povpraševanja pri ceni 0 | | m^2/teden
+b | naklon povpraševanja (padec količine na 1 € cene) | | | b > 0
+c | ponujena količina pri ceni 0 | | m^2/teden | lahko je negativna
+d | naklon ponudbe (porast količine na 1 € cene) | | | d > 0
+:::

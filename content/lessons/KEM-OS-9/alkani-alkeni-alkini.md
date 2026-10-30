@@ -263,3 +263,8 @@ Njihov daljni bratranec 2-metilpropan je skrivnost uganke z začetka: ima prav t
 ~ Alkani imajo manjšo gostoto od vode, zato ne potonejo.
 + Kapljice ostanejo na površini in se z vodo ne pomešajo.
 > Alkani se ne mešajo z vodo in imajo manjšo gostoto, zato olje plava na vodi.
+
+:::simboli
+n | število atomov ogljika v molekuli | | – | alkan CₙH₂ₙ₊₂, alken CₙH₂ₙ
+M | molska masa alkana | M = 14n + 2 | g/mol | iz M(C) = 12 g/mol in M(H) = 1 g/mol
+:::

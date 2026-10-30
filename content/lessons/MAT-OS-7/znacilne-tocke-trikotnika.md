@@ -204,3 +204,18 @@ Tako si z enim trikotnikom preveril skoraj vsa pravila iz razlage.
 - na stranici $c$
 + zunaj trikotnika
 > $\gamma = 180^\circ - 50^\circ - 30^\circ = 100^\circ$, trikotnik je topokotni, zato je središče očrtane krožnice zunaj trikotnika.
+
+:::simboli
+A, B, C | oglišča trikotnika | |
+a, b, c | stranice trikotnika | | | v pravokotnem trikotniku je c hipotenuza
+T | težišče | | | presečišče težiščnic; deli jih v razmerju 2 : 1
+t_a, t_b, t_c | težiščnice | | | t_a gre iz oglišča A do razpolovišča stranice a
+A_1 | razpolovišče stranice a | |
+O | središče očrtane krožnice | | | presečišče simetral stranic
+R | polmer očrtane krožnice | | | v pravokotnem trikotniku R = c : 2
+V | višinska točka | | | presečišče višin ali njihovih nosilk
+S | središče včrtane krožnice | | | presečišče simetral notranjih kotov
+\alpha | notranji kot pri oglišču A | | °
+\beta | notranji kot pri oglišču B | | °
+\gamma | notranji kot pri oglišču C | \gamma = 180^\circ - \alpha - \beta | °
+:::

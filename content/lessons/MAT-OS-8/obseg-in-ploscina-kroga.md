@@ -238,3 +238,10 @@ Za samo število $\pi$ pomaga primerjava z menjalnico, v kateri tečaj nikoli ne
 - $62{,}8\,\text{cm}^2$
 ~ To je $2\pi$ krat premer, obseg z napačnim polmerom. Ploščina potrebuje $r^2$.
 > Polmer je $5\,\text{cm}$, zato je $p = 3{,}14 \cdot 5^2 = 3{,}14 \cdot 25 = 78{,}5\,\text{cm}^2$.
+
+:::simboli
+o | obseg kroga (dolžina krožnice) | o = 2\pi r | | tudi o = π · d
+d | premer | d = 2r |
+r | polmer | r = \dfrac{d}{2} | | razdalja od središča do krožnice
+p | ploščina kroga | p = \pi r^2 |
+:::
