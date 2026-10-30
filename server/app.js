@@ -15,6 +15,7 @@ import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
 import { mountGradiva } from "./gradiva.js";
+import { mountKviz } from "./kviz.js";
 import { mountSchools } from "./schools.js";
 import { visitCounter, mountPilot } from "./pilot.js";
 import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths, localTopic } from "./curriculum.js";
@@ -943,7 +944,8 @@ export function createApp(store, opts = {}) {
   const leagues = mountLeagues(app, store, { loadStudent });
   mountSchools(app, store, { loadStudent, leagues, accounts: !!accounts }); // šole, učitelji, licence, razredne naloge
   mountPilot(app, store, { accounts: !!accounts, isLocalRequest }); // merjenje v pilotu (skrbnik)
-  mountGradiva(app, store, { loadStudent, accounts }); // povzetek na eni strani, zvočni povzetek, delovni listi
+  mountGradiva(app, store, { loadStudent, accounts, leagues }); // povzetek na eni strani, zvočni povzetek, delovni listi
+  mountKviz(app, store, { loadStudent, leagues }); // kviz v živo za razred
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress, avatars, knowledge });
   mountAvatar(app, avatars, { loadStudent, trendsFile: opts.trendsFile ?? null });

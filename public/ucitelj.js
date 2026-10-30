@@ -3,6 +3,8 @@
 // Strežnik: server/schools.js (šole, naloge, licence) in server/leagues.js (razredi, lestvice).
 import { icon, hydrateIcons } from "./icons.js";
 import { t, locale, applyI18n } from "./i18n.js";
+import { openPrintable } from "./gradiva.js";
+import { hostQuiz } from "./kviz.js";
 
 applyI18n();
 hydrateIcons();
@@ -157,6 +159,22 @@ function overviewHtml(c, v) {
       <div class="form-actions"><button class="primary" type="submit">${icon("plus")}<span>${esc(t("tc.assign"))}</span></button></div>
       <p class="muted small">${esc(t("tc.doneRule", { n: home?.doneSolved ?? v.doneSolved }))}</p>
     </form>
+    <h3>${esc(t("kv.section"))}</h3>
+    <form class="tc-gr-form form">
+      <label>${esc(t("tc.path"))}<select name="path">${pathOptions(c.path || "")}</select></label>
+      <label>${esc(t("tc.topic"))}<select name="topic" required><option value="">${esc(t("tc.pickPath"))}</option></select></label>
+      <label>${esc(t("kv.count"))}<select name="n">${[5, 8, 10, 12].map((n) => `<option value="${n}" ${n === 8 ? "selected" : ""}>${n}</option>`).join("")}</select></label>
+      <div class="tc-gr">
+        <label class="tc-offers"><input type="checkbox" name="key" checked> ${esc(t("kv.withKey"))}</label>
+        <button type="button" class="secondary" data-sheet>${icon("clipboard-check")}<span>${esc(t("kv.sheet"))}</span></button>
+      </div>
+      <div class="tc-gr">
+        <label>${esc(t("kv.seconds"))} <select name="seconds">${[20, 30, 45, 60, 90].map((n) => `<option value="${n}" ${n === 30 ? "selected" : ""}>${esc(t("kv.secs", { n }))}</option>`).join("")}</select></label>
+        <button type="button" class="primary" data-quiz>${icon("zap")}<span>${esc(t("kv.live"))}</span></button>
+        <button type="button" class="secondary" data-quiz-open hidden>${icon("zap")}<span>${esc(t("kv.reopen"))}</span></button>
+      </div>
+      <p class="muted small">${esc(t("kv.joinHow"))}</p>
+    </form>
     <h3>${esc(t("tc.students"))}</h3>
     ${v.members.length
       ? `<div class="tc-scroll"><table class="table tc-table"><thead><tr><th scope="col">${esc(t("tc.nick"))}</th><th scope="col">${esc(t("tc.label"))}</th><th scope="col">${esc(t("tc.xpWeek"))}</th><th scope="col">${esc(t("tc.xpTotal"))}</th>${head}<th scope="col"><span class="sr-only">${esc(t("tc.remove"))}</span></th></tr></thead><tbody>${rows}</tbody></table></div>`
@@ -222,6 +240,7 @@ async function loadOverview(card, c) {
       toast(err.message);
     }
   });
+  wireMaterials(body, c);
   body.querySelectorAll("[data-del-a]").forEach((b) =>
     b.addEventListener("click", async () => {
       if (!confirm(t("tc.deleteAssignmentConfirm"))) return;
@@ -281,6 +300,45 @@ async function loadOverview(card, c) {
       saveKeys(loadKeys().filter((x) => x.code !== c.code));
       open.delete(c.code);
       render();
+    } catch (e) {
+      toast(e.message);
+    }
+  });
+}
+
+// Delovni list (učitelju zastonj, z rešitvami ali brez) in kviz v živo za razred (server/kviz.js).
+function wireMaterials(body, c) {
+  const f = $(".tc-gr-form", body);
+  const base = `/api/teacher/classes/${encodeURIComponent(c.code)}`;
+  const headers = () => (keyOf(c.code) ? { "X-Teacher-Key": keyOf(c.code) } : {});
+  f.elements.path.addEventListener("change", () => loadTopics(f));
+  loadTopics(f);
+  const topic = () => {
+    if (!f.elements.topic.value) toast(t("tc.pickTopic"));
+    return f.elements.topic.value;
+  };
+  const reopen = $("[data-quiz-open]", f);
+  const host = (game) => hostQuiz({ code: c.code, key: keyOf(c.code), game, onClose: () => checkLive() });
+  async function checkLive() {
+    try {
+      const g = await api(`${base}/kviz`, { code: c.code });
+      reopen.hidden = !g.state || g.state === "end";
+      reopen.onclick = () => host(g);
+    } catch {
+      reopen.hidden = true;
+    }
+  }
+  checkLive();
+  $("[data-sheet]", f).addEventListener("click", () => {
+    const id = topic();
+    if (id) openPrintable(`${base}/delovni-list?topic=${encodeURIComponent(id)}&n=${f.elements.n.value}${f.elements.key.checked ? "" : "&resitve=0"}`, toast, headers());
+  });
+  $("[data-quiz]", f).addEventListener("click", async () => {
+    const id = topic();
+    if (!id) return;
+    if (!reopen.hidden && !confirm(t("kv.replaceConfirm"))) return;
+    try {
+      host(await api(`${base}/kviz`, { method: "POST", code: c.code, body: { topicId: id, n: Number(f.elements.n.value), seconds: Number(f.elements.seconds.value) } }));
     } catch (e) {
       toast(e.message);
     }
