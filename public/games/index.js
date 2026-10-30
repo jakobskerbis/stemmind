@@ -17,7 +17,7 @@ function onPath(e, c) {
 import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
 import { GENRES, childhoodEngines } from "./childhood.js";
-import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
+import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isNew, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
 import { seasonOf } from "../zbirke.js";
 import { unlockedText } from "../zbirke-view.js";
 
@@ -469,8 +469,17 @@ function renderShop(msg = "", top = false) {
     // Izbran tuj predmet: gumb za nakup kar na kartici (na telefonu je predogled zgoraj izven zaslona).
     return `<div class="gm-item gm-r-${itemRarity(x)}${on ? " on" : ""}${shop.pick === x.id ? " sel" : ""}${x.earn && !has(x) ? " gm-earn" : ""}">
       <button type="button" class="gm-item-btn" data-item="${x.id}" aria-pressed="${on}">${avatarSvg(wear(thumbBase, x.id), { size: 72 })}
-      <b>${esc(itemName(x, lang))}</b><small>${state}</small></button>${shop.pick === x.id ? action : ""}</div>`;
+      <b>${esc(itemName(x, lang))}</b><small>${state}</small></button>${isNew(x.id) ? `<span class="gm-new">${esc(t("games.new"))}</span>` : ""}${shop.pick === x.id ? action : ""}</div>`;
   };
+  // Novo ta teden (tedenske posodobitve): dotik odpre predal predmeta in ga pokaže na avatarju.
+  const fresh = ITEMS.filter((x) => isNew(x.id) && x.collection !== "pass");
+  const freshRow = fresh.length
+    ? `<section class="gm-fresh card"><h2>${icon("sparkles")} ${esc(t("games.newWeek"))}</h2><div class="gm-fresh-row">${fresh
+        .map((x) => `<button type="button" class="gm-fresh-item gm-r-${itemRarity(x)}" data-fresh="${x.id}" title="${esc(itemName(x, lang))}">${avatarSvg(wear(thumbBase, x.id), { size: 56 })}<span>${esc(itemName(x, lang))}</span></button>`)
+        .join("")}</div></section>`
+    : "";
+  const wishBox = `<section class="gm-wish card"><h2>${icon("message-square-heart")} ${esc(t("games.wishTitle"))}</h2><p class="muted">${esc(t("games.wishHint"))}</p>
+    <form class="gm-wish-form"><input type="text" maxlength="200" name="wish" placeholder="${esc(t("games.wishPlaceholder"))}" aria-label="${esc(t("games.wishTitle"))}"><button type="submit" class="secondary">${icon("send")}${esc(t("games.wishSend"))}</button></form></section>`;
   root.innerHTML = `<div class="gm-portal gm-shop">
     <button type="button" class="text-btn" data-act="back">${icon("arrow-left")}${esc(t("games.back"))}</button>
     <div class="gm-shop-top card">
@@ -483,10 +492,12 @@ function renderShop(msg = "", top = false) {
         ${msg ? `<p class="gm-shop-msg" role="status">${esc(msg)}</p>` : ""}
       </div>
     </div>
-    <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${esc(t(`games.slot.${x}`))}${isMulti(x) && worn(av.equipped, x).length ? ` <small>${worn(av.equipped, x).length}/${MULTI_MAX}</small>` : ""}</button>`).join("")}</div>
+    ${freshRow}
+    <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${fresh.some((i) => i.slot === x) ? `<span class="gm-new-dot" aria-hidden="true"></span>` : ""}${esc(t(`games.slot.${x}`))}${isMulti(x) && worn(av.equipped, x).length ? ` <small>${worn(av.equipped, x).length}/${MULTI_MAX}</small>` : ""}</button>`).join("")}</div>
     ${isMulti(shop.slot) ? `<p class="muted gm-earn-hint">${icon("layers")}<span>${esc(t("games.multiHint", { n: MULTI_MAX }))}</span></p>` : ""}
     ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon(shop.slot === "kind" ? "gamepad-2" : "award")}<span>${esc(t(shop.slot === "kind" ? "zb.shopHintKind" : "zb.shopHint"))} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
     <div class="gm-items">${slotItems(shop.slot, owned).map(card).join("")}</div>
+    ${wishBox}
   </div>`;
   const s = ctx.getStudent();
   const save = async (url, body, okMsg) => {
@@ -503,6 +514,29 @@ function renderShop(msg = "", top = false) {
   const sel = root.querySelector(".gm-item.sel .primary, .gm-item.sel p");
   sel?.closest(".gm-item").scrollIntoView({ block: "nearest" });
   root.querySelectorAll("[data-slot]").forEach((b) => b.addEventListener("click", () => ((shop.slot = b.dataset.slot), (shop.pick = null), renderShop())));
+  root.querySelectorAll("[data-fresh]").forEach((b) =>
+    b.addEventListener("click", () => {
+      const x = itemOf(b.dataset.fresh);
+      shop.slot = x.slot;
+      shop.pick = x.id;
+      renderShop();
+      root.querySelector(".gm-item.sel")?.scrollIntoView({ block: "center" });
+    }),
+  );
+  root.querySelector(".gm-wish-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = e.currentTarget;
+    const wish = f.wish.value.trim();
+    if (!wish || !s) return;
+    f.querySelector("button").disabled = true;
+    try {
+      await ctx.api(`/api/students/${s.id}/feedback`, { method: "POST", body: JSON.stringify({ kind: "cosmetics", ideas: wish, lang }) });
+      f.outerHTML = `<p class="gm-shop-msg" role="status">${esc(t("games.wishThanks"))}</p>`;
+    } catch (err) {
+      f.querySelector("button").disabled = false;
+      ctx.toast?.(err.message);
+    }
+  });
   root.querySelectorAll("[data-item]").forEach((b) =>
     b.addEventListener("click", () => {
       const x = { ...itemOf(b.dataset.item), id: b.dataset.item };
