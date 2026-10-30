@@ -2618,5 +2618,16 @@
   "win.resetDone": "Az elrendezés visszaállt.",
   "full.close": "Bezárás",
   "full.message": "Az üzeneted",
-  "full.task": "A feladat szövege"
+  "full.task": "A feladat szövege",
+  "nav.lab": "Labor",
+  "lab.meSub": "Virtuális fizika- és kémiakísérletek",
+  "lab.intro": "A kísérleteket te magad állítod össze és méred: eszközök, mérések, táblázat, grafikon és következtetés. A hibáknak következményei vannak, mint egy igazi laborban.",
+  "lab.start": "Kísérlet indítása",
+  "lab.inTextbook": "Téma megnyitása a tankönyvben",
+  "lab.locked": "Zárolva",
+  "lab.lockedTitle": "Kísérlet: {title}",
+  "lab.lockedText": "Az interaktív kísérletek, szimulációk és azonnali ellenőrzés a fizetős csomagban és a 7 napos próbaidő alatt érhetők el. A lecke szövege és a PDF ingyenes.",
+  "lab.packages": "Csomagok megtekintése",
+  "lab.empty": "Még nincsenek kísérletek.",
+  "lab.error": "A labort nem sikerült betölteni."
 }

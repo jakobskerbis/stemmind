@@ -31,6 +31,9 @@ consequences of mistakes and answers a conclusion question. Brief: j, point 8 of
 | `public/sim/lab-kem.js` | `labCo2` (engine `lab-co2`), `flaskLevel` |
 
 Engines are registered in `public/sim/index.js` and shown at topics through `public/sim/katalog.js`.
+The »Laboratorij« tab (`public/laboratorij.js`, `server/laboratorij.js`, `GET /api/students/:id/lab`) lists every `lab-` engine
+once (deduped by engine + opts) with the topics it belongs to; a new experiment needs an entry in `LAB_INFO` in `katalog.js`
+(subject, title, one-line description), which `test/laboratorij-pogled.test.js` checks. Lock = the textbook's lesson lock.
 
 ## Experiments
 

@@ -2620,5 +2620,16 @@
   "win.resetDone": "Paraqitja u rivendos.",
   "full.close": "Mbyll",
   "full.message": "Mesazhi yt",
-  "full.task": "Teksti i detyrës"
+  "full.task": "Teksti i detyrës",
+  "nav.lab": "Laboratori",
+  "lab.meSub": "Eksperimente virtuale fizike dhe kimie",
+  "lab.intro": "Eksperimentet i ndërton dhe i mat vetë: pajisjet, matjet, tabela, grafiku dhe përfundimi. Gabimet kanë pasoja si në një laborator të vërtetë.",
+  "lab.start": "Fillo eksperimentin",
+  "lab.inTextbook": "Hap temën në tekstin mësimor",
+  "lab.locked": "E kyçur",
+  "lab.lockedTitle": "Eksperiment: {title}",
+  "lab.lockedText": "Eksperimentet interaktive, simulimet dhe kontrolli i menjëhershëm janë në dispozicion në paketën me pagesë dhe gjatë provës 7-ditore. Teksti i mësimit dhe PDF-ja janë falas.",
+  "lab.packages": "Shiko paketat",
+  "lab.empty": "Ende nuk ka eksperimente.",
+  "lab.error": "Laboratori nuk mund të ngarkohej."
 }

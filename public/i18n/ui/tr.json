@@ -2618,5 +2618,16 @@
   "win.resetDone": "Düzen sıfırlandı.",
   "full.close": "Kapat",
   "full.message": "Mesajın",
-  "full.task": "Soru metni"
+  "full.task": "Soru metni",
+  "nav.lab": "Laboratuvar",
+  "lab.meSub": "Sanal fizik ve kimya deneyleri",
+  "lab.intro": "Deneyleri kendin kurar ve ölçersin: düzenek, ölçümler, tablo, grafik ve sonuç. Hataların gerçek bir laboratuvardaki gibi sonuçları olur.",
+  "lab.start": "Deneyi başlat",
+  "lab.inTextbook": "Konuyu ders kitabında aç",
+  "lab.locked": "Kilitli",
+  "lab.lockedTitle": "Deney: {title}",
+  "lab.lockedText": "Etkileşimli deneyler, simülasyonlar ve anında kontrol ücretli pakette ve 7 günlük deneme süresinde kullanılabilir. Ders metni ve PDF ücretsizdir.",
+  "lab.packages": "Paketleri gör",
+  "lab.empty": "Henüz deney yok.",
+  "lab.error": "Laboratuvar yüklenemedi."
 }

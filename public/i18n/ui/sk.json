@@ -2672,5 +2672,16 @@
   "win.resetDone": "Rozloženie bolo obnovené.",
   "full.close": "Zavrieť",
   "full.message": "Tvoja správa",
-  "full.task": "Zadanie úlohy"
+  "full.task": "Zadanie úlohy",
+  "nav.lab": "Laboratórium",
+  "lab.meSub": "Virtuálne pokusy z fyziky a chémie",
+  "lab.intro": "Pokusy si zostavíš a zmeriaš sám: pomôcky, merania, tabuľka, graf a záver. Chyby majú následky ako v skutočnom laboratóriu.",
+  "lab.start": "Spustiť pokus",
+  "lab.inTextbook": "Otvoriť tému v učebnici",
+  "lab.locked": "Zamknuté",
+  "lab.lockedTitle": "Pokus: {title}",
+  "lab.lockedText": "Interaktívne pokusy, simulácie a priebežná kontrola sú dostupné v platenom balíku a počas 7-dňovej skúšobnej doby. Text lekcie a PDF sú zadarmo.",
+  "lab.packages": "Pozrieť balíky",
+  "lab.empty": "Zatiaľ žiadne pokusy.",
+  "lab.error": "Laboratórium sa nepodarilo načítať."
 }

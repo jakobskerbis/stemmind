@@ -671,6 +671,28 @@ async function games(p, label) {
   await expectVisible(p, "#games-content .gm-portal", "igre po koncu igre");
 }
 
+// Laboratorij (public/laboratorij.js): seznam poskusov, odprt poskus s simulacijo; Nazaj in Esc vrneta na seznam,
+// »Odpri temo v učbeniku« odpre lekcijo.
+async function lab(p, label) {
+  await tab(p, "lab");
+  await expectVisible(p, "#view-lab .lab-card", "poskusi v laboratoriju");
+  await screen(p, `laboratorij-${label}`);
+  const opened = "#view-lab .lab-mount .demo-reset, #view-lab .lab-locked";
+  await click(p, "#view-lab .lab-card [data-lab-open]", { wait: 300 });
+  await expectVisible(p, opened, "odprt poskus");
+  await screen(p, `poskus-${label}`);
+  await p.goBack();
+  await settle(p, 300);
+  if ((await currentView(p)) !== "view-lab") throw new Error("Nazaj v poskusu ne vodi na seznam laboratorija");
+  await expectVisible(p, "#view-lab .lab-card", "seznam po tipki Nazaj");
+  await click(p, "#view-lab .lab-card [data-lab-open]", { wait: 300 });
+  await expectVisible(p, opened, "odprt poskus");
+  await p.keyboard.press("Escape");
+  await expectVisible(p, "#view-lab .lab-card", "seznam po Esc");
+  await click(p, "#view-lab .lab-card [data-lab-topic]", { wait: 300 });
+  await expectVisible(p, "#view-textbook .tb-title", "tema učbenika iz laboratorija");
+}
+
 async function views(p, label) {
   for (const v of ["corner", "progress", "settings", "league", "schedule"]) {
     await step(p, `${v}-${label}`, async () => {
@@ -871,6 +893,7 @@ async function desktop(browser, app) {
   await step(p, "ucbenik", () => textbook(p, "OS"));
   await step(p, "klepet", () => chat(p, "OS"));
   await step(p, "kalkulator", () => calculator(p, "OS"));
+  await step(p, "laboratorij", () => lab(p, "OS"));
   await step(p, "okna", () => okna(p, "OS"));
   await step(p, "tekmovanja", () => competition(p, "OS"));
   await step(p, "poskusno-tekmovanje", () => contest(p, "OS"));
@@ -1032,6 +1055,7 @@ async function phone(browser, app) {
   });
   await step(p, "tel-ucbenik", () => textbook(p, "tel"));
   await step(p, "tel-kalkulator", () => calculator(p, "tel"));
+  await step(p, "tel-laboratorij", () => lab(p, "tel"));
   await step(p, "tel-okna", () => okna(p, "tel"));
   await step(p, "tel-igre", () => games(p, "tel"));
   await step(p, "tel-skeniraj", () => scan(p, "tel"));

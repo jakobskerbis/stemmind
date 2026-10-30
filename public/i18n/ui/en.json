@@ -2620,5 +2620,16 @@
   "win.resetDone": "Layout has been reset.",
   "full.close": "Close",
   "full.message": "Your message",
-  "full.task": "Task text"
+  "full.task": "Task text",
+  "nav.lab": "Laboratory",
+  "lab.meSub": "Virtual physics and chemistry experiments",
+  "lab.intro": "Set up and carry out the experiments yourself: equipment, measurements, table, graph and conclusion. Mistakes have consequences, just like in a real lab.",
+  "lab.start": "Start experiment",
+  "lab.inTextbook": "Open topic in the textbook",
+  "lab.locked": "Locked",
+  "lab.lockedTitle": "Experiment “{title}”",
+  "lab.lockedText": "Interactive experiments, simulations and instant checks are available in the paid package and during the 7-day trial. The lesson text and PDF are free.",
+  "lab.packages": "See packages",
+  "lab.empty": "No experiments yet.",
+  "lab.error": "The laboratory could not be loaded."
 }

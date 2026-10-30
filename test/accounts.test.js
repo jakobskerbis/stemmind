@@ -632,6 +632,7 @@ test("textbook: interactive part only with a paid plan or trial; PDF is public",
     const trial = (await a(url)).body;
     assert.equal(trial.interactive, true);
     assert.equal(trial.demo.id, "pitagora");
+    assert.ok((await a(`/api/students/${kid.id}/lab`)).body.experiments.every((x) => !x.locked && x.id), "preizkus odklene laboratorij");
 
     store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z'").run();
     const free = (await a(url)).body;
@@ -639,6 +640,16 @@ test("textbook: interactive part only with a paid plan or trial; PDF is public",
     assert.equal(free.demo, null);
     assert.equal(free.locked.demo, "Pitagorov izrek s kvadrati");
     assert.ok(free.lesson.sections.length > 3, "besedilo ostane brezplačno");
+    // Zavihek Laboratorij: isti zaklep (brez simulacije, s pravili ponudb za »Poglej pakete«).
+    const lab = (await a(`/api/students/${kid.id}/lab`)).body;
+    assert.ok(lab.experiments.length >= 2 && lab.experiments.every((x) => x.locked && x.id === null && x.title && x.topics.length));
+    assert.ok(lab.offers && "show" in lab.offers);
+    // Laboratorij tujega profila, brez prijave ali z napačnim id: 4xx kot pri lekciji.
+    const other = client();
+    await registerVerified(other, calls, "tuj@primer.si");
+    assert.equal((await other(`/api/students/${kid.id}/lab`)).status, 404);
+    assert.equal((await client()(`/api/students/${kid.id}/lab`)).status, 401);
+    for (const bad of ["__proto__", "abc", "%31", "1.5", "-1", "999999"]) assert.equal((await a(`/api/students/${bad}/lab`)).status, 404, bad);
 
     // Neprijavljen obiskovalec ne dobi lekcije prek API, PDF pa je javen.
     assert.equal((await client()(url)).status, 401);
