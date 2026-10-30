@@ -339,7 +339,8 @@ export function runGame(host, opts) {
       }
       return;
     }
-    if ((e.key === "Enter" || e.key === " ") && !G.running && overlay.querySelector("[data-act=play], [data-act=again]")) {
+    // Enter/presledek na gumbu (👍/👎, »Druge igre«) sproži ta gumb, ne »Znova«
+    if ((e.key === "Enter" || e.key === " ") && !G.running && !e.target.closest?.("button") && overlay.querySelector("[data-act=play], [data-act=again]")) {
       overlay.querySelector("[data-act=play], [data-act=again]").click();
       e.preventDefault();
       return;
@@ -384,7 +385,17 @@ export function runGame(host, opts) {
       overlay.querySelectorAll("[data-pace]").forEach((b) => b.classList.toggle("active", b.dataset.pace === pace));
     }
     if (act === "exit") opts.onExit?.();
+    // 👍/👎 za vrsto igre (tedenske nove igre sledijo ocenam); ponoven tap oceno odstrani
+    if (act === "rate-up" || act === "rate-down") {
+      const up = act === "rate-up";
+      rating = rating === up ? null : up;
+      opts.onRate?.(rating);
+      overlay.querySelectorAll("[data-act^=rate-]").forEach((b) => b.setAttribute("aria-pressed", String(rating === (b.dataset.act === "rate-up"))));
+      const thanks = overlay.querySelector(".gm-rate small");
+      if (thanks) thanks.textContent = rating === null ? "" : t("games.rateThanks");
+    }
   });
+  let rating = opts.rating ?? null;
 
   // ---------- začetek in konec ----------
   function intro() {
@@ -473,6 +484,7 @@ export function runGame(host, opts) {
         <p>${esc(t("games.summary", { ok: G.correct, all: G.correct + G.wrong }))}${info.xp ? ` · <b class="gm-xp">+${info.xp} XP</b>` : ""}${info.coins ? ` · <b class="gm-coins">+${info.coins} ${icon("coins")}</b>` : ""}</p>
         ${info.unlocked ? `<p class="gm-record gm-unlocked">${icon("unlock")} ${esc(info.unlocked)}</p>` : ""}
         ${mist}
+        ${opts.onRate ? `<div class="gm-rate" role="group" aria-label="${esc(t("games.rateQ"))}"><span>${esc(t("games.rateQ"))}</span><button type="button" class="ghost" data-act="rate-up" aria-pressed="${rating === true}" aria-label="${esc(t("games.rateUp"))}">👍</button><button type="button" class="ghost" data-act="rate-down" aria-pressed="${rating === false}" aria-label="${esc(t("games.rateDown"))}">👎</button><small aria-live="polite"></small></div>` : ""}
         <div class="actions"><button type="button" class="secondary" data-act="exit">${icon("arrow-left")}${esc(t("games.other"))}</button><button type="button" class="primary" data-act="again">${icon("rotate-ccw")}${esc(t("games.again"))}</button></div>
       </div>`;
     };
