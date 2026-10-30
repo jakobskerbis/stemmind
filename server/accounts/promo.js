@@ -1,8 +1,8 @@
 // Aktivacijska koda za prve stranke: prvih N računov dobi poln dostop za D dni.
 // Nastavitve v .env: EVKLID_PROMO_CODE (privzeto EVKLID3X), EVKLID_PROMO_LIMIT (100),
 // EVKLID_PROMO_DAYS (90 = 3 meseci), EVKLID_PROMO_SEATS (1 otrok). EVKLID_PROMO_CODE=off kodo izklopi.
-// EVKLID_PROMO_MODEL: najzmogljivejši model za imetnike kode, privzeto »sonnet« (j 2026-10-30:
-// nikoli Opus); »opus« omejitev izklopi.
+// EVKLID_PROMO_MODEL: zmogljivejši model za imetnike kode, privzeto »sonnet« (j 2026-10-30): Sonnet
+// ob 2. zaporedni »Razloži podrobneje«, Opus šele ob 3.; »opus« omejitev izklopi.
 import "../env.js";
 import { isoIn } from "./plans.js";
 
