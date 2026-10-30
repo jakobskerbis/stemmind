@@ -79,4 +79,56 @@
 .exam-other { max-width: 360px; }
 .exam-other select { width: 100%; }
 .task-top:has(.pts.neg) .task-topic { flex-basis: 100%; }
-.prep-switch { margin: 0 0 12px; }
+
+/* NPZ in matura: kartica Pripravljenost (dni do izpita, delež znane snovi, najšibkejše teme) */
+.exam-ready { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+.er-top { display: flex; align-items: center; gap: 14px; }
+.er-ring { width: 72px; height: 72px; font-size: 1rem; }
+.er-ring::before { inset: 7px; }
+.er-text { min-width: 0; }
+.er-text h2 { margin: 2px 0 0; font-size: 1.15rem; }
+.er-text p { margin: 4px 0 0; }
+.er-date { border-top: 1px solid var(--border); padding-top: 12px; }
+.er-when { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin: 0; color: var(--warm); font-weight: 700; }
+.er-when svg.i { flex: none; }
+.er-when span { color: var(--text); }
+.er-when .text-btn { margin-inline-start: auto; }
+.er-form { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 10px 12px; }
+.er-form[hidden] { display: none; }
+.er-form .er-note { flex-basis: 100%; }
+.er-weak-title { margin: 4px 0 0; font-size: 1rem; }
+.er-weak { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.er-weak li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
+.er-weak .er-dot { flex: none; }
+.er-name { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.er-name b { overflow-wrap: anywhere; }
+.er-name small { color: var(--muted); }
+.er-weak button { flex: none; }
+
+/* Pretekle pole (izbira po korakih kot pri ravni izobrazbe, povezave na ric.si) */
+.exam-papers { margin-top: 12px; }
+.pp-picker { display: flex; flex-direction: column; gap: 10px; }
+.pp-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.pp-row { display: grid; grid-template-columns: 9.5em 1fr; gap: 6px 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.pp-when { display: flex; flex-direction: column; }
+.pp-when b { font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.pp-when span { color: var(--muted); font-size: 0.86rem; }
+.pp-files { display: flex; flex-wrap: wrap; gap: 6px; }
+.pp-file { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; }
+.pp-file svg.i:last-child { width: 14px; height: 14px; opacity: 0.7; }
+.pp-expl { grid-column: 2; display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.84rem; }
+.pp-expl svg.i { width: 15px; height: 15px; flex: none; }
+.pp-more { align-self: flex-start; }
+@media (max-width: 560px) {
+  .pp-row { grid-template-columns: 1fr; }
+  .pp-expl { grid-column: 1; }
+  .pp-file { padding-inline: 10px; }
+  .comp-pickers .seg > button { padding-inline: 6px !important; font-size: 0.95rem; }
+  .er-weak li { flex-wrap: wrap; }
+  .er-weak button { margin-inline-start: auto; }
+}
+.er-dot { width: 36px; height: 36px; }
+.er-dot svg.i { width: 18px; height: 18px; }
+.er-dot.learning { background: var(--accent); color: var(--accent-text); }
+.er-dot.due { background: var(--gold); color: #fff; }
+.er-dot.new { background: var(--surface); color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent-soft); }
