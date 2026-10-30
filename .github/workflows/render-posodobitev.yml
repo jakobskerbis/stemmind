@@ -33,7 +33,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      # Zadnja sprožena objava (da neuspele objave ne ponavlja vsakih 15 minut).
+      # Zadnja sprožena objava (da neuspele objave ne ponavlja ob vsakem teku).
       - uses: actions/cache/restore@v4
         with:
           path: .render-objava.json
@@ -46,10 +46,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           ROCNO: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
-          CAKAJ: ${{ github.event_name == 'push' && '1' || '0' }}
+          # Tudi urnik čaka: novi tek (cancel-in-progress) prekine čakajočega, zato mora čakati naprej sam.
+          CAKAJ: ${{ github.event_name != 'workflow_dispatch' && '1' || '0' }}
         run: node scripts/render-objava.js
       - uses: actions/cache/save@v4
-        if: steps.objava.outputs.sprozeno == '1'
+        # always(): shrani tudi, če novejši tek prekliče ta tek takoj po sprožitvi.
+        if: always() && steps.objava.outputs.sprozeno == '1'
         with:
           path: .render-objava.json
           key: render-objava-${{ github.run_id }}
