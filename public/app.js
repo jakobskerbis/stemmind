@@ -440,6 +440,7 @@ async function selectStudent(id) {
   if (!$("#view-progress").hidden) loadProgress();
   if (!$("#view-league").hidden) loadLeague(state.student.id);
   state.pathKey = null;
+  state.modes = null; // »Nadaljuj z učenjem« in goNew ne smeta pokazati naslednje teme prejšnjega profila
   clearLevelCard();
   state.symbols?.refresh();
   maybeTour.done = false; // vodič je za vsak profil posebej (settings.tour_version)
@@ -1453,9 +1454,10 @@ async function refreshXp() {
 
 async function refreshModes() {
   if (!state.student) return null;
+  const sid = state.student.id;
   const q = state.pathKey ? `?path=${encodeURIComponent(state.pathKey)}` : "";
-  const m = await api(`/api/students/${state.student.id}/modes${q}`).catch(() => null);
-  if (!m) return null;
+  const m = await api(`/api/students/${sid}/modes${q}`).catch(() => null);
+  if (!m || state.student?.id !== sid) return null; // medtem zamenjan profil
   state.modes = m;
   setCardsDue(m.cardsDue);
   const badge = $('#modebar [data-mode="review"] .badge');

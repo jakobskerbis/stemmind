@@ -62,7 +62,10 @@ function open() {
   const pop = $("#profile-pop");
   const r = btn.getBoundingClientRect();
   pop.style.top = `${Math.round(r.bottom + 8)}px`;
-  pop.style.right = `${Math.max(8, Math.round(window.innerWidth - r.right))}px`;
+  // Ob gumbu profila; v RTL je gumb levo, zato meni poravnamo z levim robom.
+  const rtl = document.documentElement.dir === "rtl";
+  pop.style.left = pop.style.right = "";
+  pop.style[rtl ? "left" : "right"] = `${Math.max(8, Math.round(rtl ? r.left : window.innerWidth - r.right))}px`;
   pop.hidden = false;
   btn.setAttribute("aria-expanded", "true");
   (pop.querySelector('[aria-checked="false"]') || pop.querySelector(".pm-item"))?.focus({ preventScroll: true });

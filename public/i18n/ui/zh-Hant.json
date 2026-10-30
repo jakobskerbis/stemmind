@@ -1,6 +1,6 @@
 {
   "qs.title": "繼續學習",
-  "qs.test": "考試在{when}",
+  "qs.test": "{when}考試",
   "nav.path": "學習路徑",
   "nav.textbook": "課本",
   "nav.chat": "輔導老師",

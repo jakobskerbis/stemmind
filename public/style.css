@@ -176,6 +176,7 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
   position: fixed; z-index: 60; width: min(290px, calc(100vw - 16px)); max-height: calc(100dvh - 88px); overflow-y: auto;
   margin: 0; padding: 6px; box-shadow: var(--shadow-lg, 0 12px 40px rgba(0, 0, 0, 0.18)); animation: dd-in 0.14s ease; transform-origin: top right;
 }
+[dir="rtl"] .profile-pop { transform-origin: top left; }
 .profile-pop[hidden] { display: none; }
 .pm-head { display: flex; align-items: center; gap: 12px; padding: 10px 10px 8px; }
 .pm-who { display: flex; flex-direction: column; min-width: 0; }
@@ -204,12 +205,12 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 [dir="rtl"] .quick-pop { transform-origin: top right; }
 .quick-pop[hidden] { display: none; }
 .qs-title { padding: 4px 8px 6px; font-size: 0.78rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
-.qs-row { min-height: 56px; }
 .qs-row b { overflow-wrap: anywhere; }
 .qs-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .qs-row .lr-text .qs-eyebrow { color: var(--accent); font-size: 0.74rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
-.qs-main .ic { background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #fff; }
-.qs-done .ic { background: var(--ok-bg); color: var(--ok); }
+/* .qs-row.: ui.css (naložen za style.css) sicer povozi ozadje ikone v .list-row .ic. */
+.qs-row.qs-main .ic { background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #fff; }
+.qs-row.qs-done .ic { background: var(--ok-bg); color: var(--ok); }
 /* Ozek telefon: samo začetnica, ime je v meniju. */
 @media (max-width: 400px) {
   .profile-btn { padding: 4px; gap: 0; }
