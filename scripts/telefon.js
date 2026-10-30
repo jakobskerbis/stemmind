@@ -15,6 +15,7 @@ import readline from "node:readline/promises";
 import { fileURLToPath } from "node:url";
 import { superviseServer, autoUpdate, openLog, logSay, serverStatus, RESTART_CODE } from "./nadzor.js";
 import { renameLegacyShortcuts } from "./bliznjice.js";
+import { gateNeeded } from "../server/gate.js";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const envFile = path.join(root, ".env");
@@ -57,9 +58,17 @@ function appendEnv(lines) {
   fs.writeFileSync(envFile, `${text}${sep}${lines.join("\n")}\n`);
 }
 
+// Z računi (EVKLID_ACCOUNTS=1) skupnega gesla ni: vsak se prijavi v svoj račun (server/gate.js).
+const accountsOn = () => envValue(readEnv(), "EVKLID_ACCOUNTS") === "1";
+const gateOn = () => {
+  const text = readEnv();
+  const env = Object.fromEntries(["EVKLID_PASSWORD", "EVKLID_ACCOUNTS", "EVKLID_GATE"].map((k) => [k, envValue(text, k)]));
+  return gateNeeded(env);
+};
+
 async function ensurePassword() {
   const text = readEnv();
-  if (envValue(text, "EVKLID_PASSWORD")) return;
+  if (envValue(text, "EVKLID_PASSWORD") || accountsOn()) return;
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   say("Povezava za telefon bo zaščitena z geslom, da je ne more odpreti kdorkoli.");
   let pw = "";
@@ -334,11 +343,13 @@ async function main() {
         .catch(() => {});
     }
   }
-  const pw = envValue(readEnv(), "EVKLID_PASSWORD");
-  const friend = `${url}/?geslo=${encodeURIComponent(pw)}`;
+  // Povezava z geslom samo, če velja skupno geslo; z računi se vsak prijavi v svoj račun.
+  const gate = gateOn();
+  const friend = gate ? `${url}/?geslo=${encodeURIComponent(envValue(readEnv(), "EVKLID_PASSWORD"))}` : url;
   fs.mkdirSync(path.dirname(urlFile), { recursive: true });
   fs.writeFileSync(urlFile, url + "\n");
-  fs.writeFileSync(friendFile, friend + "\n");
+  if (gate) fs.writeFileSync(friendFile, friend + "\n");
+  else fs.rmSync(friendFile, { force: true }); // stara povezava z geslom ne velja več
   const copied = copyToClipboard(friend);
   say();
   say("==============================================================");
@@ -346,12 +357,17 @@ async function main() {
   say();
   say(`  ${url}`);
   say();
-  say("  Povezava za prijatelje (prijavi jih takoj, brez vpisa gesla):");
-  say();
-  say(`  ${friend}`);
-  say();
-  if (copied) say("  Povezava za prijatelje je že kopirana: prilepi jo v sporočilo.");
-  say("  Ob prvem odprtju brez gesla v povezavi stran vpraša za geslo iz .env.");
+  if (gate) {
+    say("  Povezava za prijatelje (prijavi jih takoj, brez vpisa gesla):");
+    say();
+    say(`  ${friend}`);
+    say();
+    if (copied) say("  Povezava za prijatelje je že kopirana: prilepi jo v sporočilo.");
+    say("  Ob prvem odprtju brez gesla v povezavi stran vpraša za geslo iz .env.");
+  } else {
+    if (copied) say("  Povezava je že kopirana: prilepi jo v sporočilo.");
+    say("  Kdor ni prijavljen, vidi stran za prijavo: prijavi se v svoj račun ali ga ustvari.");
+  }
   say("  Na telefonu v meniju brskalnika izberi »Dodaj na začetni zaslon«.");
   say();
   say("  Povezava deluje, dokler je to okno odprto in računalnik prižgan.");

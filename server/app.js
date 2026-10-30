@@ -23,7 +23,7 @@ import { SETTINGS_TOOLS, createSettingsTools, cleanDevice, looksLikeSettings } f
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
-import { passwordGate } from "./gate.js";
+import { passwordGate, gateNeeded } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
 import { examInfo, examKeyFor, isExamPath, examOf, examPrompt, taskLanguage, localizeExamView, localizeExamTopic } from "./exams.js";
@@ -116,7 +116,7 @@ export function createApp(store, opts = {}) {
     res.json({ id: INSTANCE, razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
   });
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (EVKLID_ACCOUNTS=1)
-  if (process.env.EVKLID_PASSWORD) app.use(passwordGate(process.env.EVKLID_PASSWORD)); // stran za prijavo + piškotek
+  if (gateNeeded()) app.use(passwordGate(process.env.EVKLID_PASSWORD)); // skupno geslo (samo brez računov, glej gate.js)
   mountWebApp(app); // manifest v jeziku vmesnika, povezava za Google Play
   app.use("/api", (req, res, next) => {
     activity.active++;

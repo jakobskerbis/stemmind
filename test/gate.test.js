@@ -2,7 +2,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import express from "express";
-import { passwordGate } from "../server/gate.js";
+import { passwordGate, gateNeeded } from "../server/gate.js";
 
 async function withServer(fn) {
   const app = express();
@@ -62,3 +62,11 @@ test("staro geslo prek HTTP Basic še deluje", () => withServer(async (base) => 
   const r = await fetch(base + "/api/x", { headers: { authorization: auth } });
   assert.equal(r.status, 200);
 }));
+
+test("z računi skupnega gesla ni (vstop je prijava v račun), razen z EVKLID_GATE=1", () => {
+  assert.equal(gateNeeded({}), false);
+  assert.equal(gateNeeded({ EVKLID_PASSWORD: "x" }), true);
+  assert.equal(gateNeeded({ EVKLID_PASSWORD: "x", EVKLID_ACCOUNTS: "1" }), false);
+  assert.equal(gateNeeded({ EVKLID_PASSWORD: "x", EVKLID_ACCOUNTS: "1", EVKLID_GATE: "1" }), true);
+  assert.equal(gateNeeded({ EVKLID_ACCOUNTS: "1", EVKLID_GATE: "1" }), false);
+});
