@@ -57,7 +57,7 @@ function cardFor(code) {
   const symbol = (delta ? "\\Delta " : "") + (delta ? e.tex || symTex(key) : groupTex(e, key));
   const relation = e.r && !delta ? e.r : "";
   return {
-    label: `${delta ? "Δ" : ""}${plainKey(key)}${inGroup(e, key) ? ` (${e.keys.map(plainKey).join(", ")})` : ""} — ${plainText(name)}`,
+    label: `${delta ? "Δ" : ""}${plainKey(key)}${!delta && inGroup(e, key) ? ` (${e.keys.map(plainKey).join(", ")})` : ""} — ${plainText(name)}`,
     html: `<div class="fx-title">${tex(symbol)}<b dir="auto">${richText(name, tex, esc)}</b></div>
       ${relation ? `<div class="fx-line"><span class="fx-k">${t("fx.formula")}</span>${tex(`\\displaystyle ${relation}`)}</div>${partsHtml(relation, subject, key, tex, esc)}` : ""}
       ${unitHtml(e, tex, esc)}
@@ -93,7 +93,7 @@ function partsHtml(relation, subject, self, tex, esc) {
     const p = lookupSymbol(k, subj, relation) || lookupSymbolAny(k, subj);
     if (!p) return "";
     const g = !d && inGroup(p, k) ? `${subj}|${p.keys.join(",")}` : "";
-    if (g && groups.has(g)) return ""; // m_1 in m_2 z istim imenom: ena vrstica »m₁, m₂ masi teles«
+    if (g && (groups.has(g) || p.keys.includes(self))) return ""; // skupina tapnjene oznake je že v naslovu // m_1 in m_2 z istim imenom: ena vrstica »m₁, m₂ masi teles«
     if (g) groups.add(g);
     const nm = d ? t("fx.change", { what: nameOf(p) }) : nameOf(p);
     const unit = p.u && !/^(–|-|—|1|brez)$/.test(p.u) ? (lookupUnit(normUnitKey(p.u))?.key ? unitTex(lookupUnit(normUnitKey(p.u)).key) : `\\mathrm{${p.u.replace(/ +/g, "\\,")}}`) : "";
