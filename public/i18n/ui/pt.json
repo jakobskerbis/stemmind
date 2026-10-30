@@ -2624,5 +2624,16 @@
   "win.resetDone": "A disposição foi reposta.",
   "full.close": "Fechar",
   "full.message": "A tua mensagem",
-  "full.task": "Enunciado do exercício"
+  "full.task": "Enunciado do exercício",
+  "nav.lab": "Laboratório",
+  "lab.meSub": "Experiências virtuais de física e química",
+  "lab.intro": "Montas e medes tu mesmo as experiências: material, medições, tabela, gráfico e conclusão. Os erros têm consequências como num laboratório real.",
+  "lab.start": "Iniciar experiência",
+  "lab.inTextbook": "Abrir o tema no manual",
+  "lab.locked": "Bloqueado",
+  "lab.lockedTitle": "Experiência: {title}",
+  "lab.lockedText": "Experiências interativas, simulações e verificação imediata estão disponíveis no pacote pago e durante o teste de 7 dias. O texto da lição e o PDF são gratuitos.",
+  "lab.packages": "Ver pacotes",
+  "lab.empty": "Ainda não há experiências.",
+  "lab.error": "Não foi possível carregar o laboratório."
 }

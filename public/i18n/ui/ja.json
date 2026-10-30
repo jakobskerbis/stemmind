@@ -2596,5 +2596,16 @@
   "win.resetDone": "レイアウトをリセットしました。",
   "full.close": "閉じる",
   "full.message": "あなたのメッセージ",
-  "full.task": "問題文"
+  "full.task": "問題文",
+  "nav.lab": "実験室",
+  "lab.meSub": "物理と化学のバーチャル実験",
+  "lab.intro": "実験は自分で組み立てて測定します：器具、測定、表、グラフ、結論。本物の実験室と同じように、ミスには結果が伴います。",
+  "lab.start": "実験を始める",
+  "lab.inTextbook": "教科書でこの単元を開く",
+  "lab.locked": "ロック中",
+  "lab.lockedTitle": "実験：{title}",
+  "lab.lockedText": "インタラクティブな実験、シミュレーション、その場での確認は有料パッケージと7日間の無料体験で利用できます。レッスンの本文とPDFは無料です。",
+  "lab.packages": "パッケージを見る",
+  "lab.empty": "まだ実験はありません。",
+  "lab.error": "実験室を読み込めませんでした。"
 }

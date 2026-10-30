@@ -2596,5 +2596,16 @@
   "win.resetDone": "版面已重設。",
   "full.close": "關閉",
   "full.message": "你的訊息",
-  "full.task": "題目"
+  "full.task": "題目",
+  "nav.lab": "實驗室",
+  "lab.meSub": "物理和化學虛擬實驗",
+  "lab.intro": "自己搭建裝置並測量：器材、測量、表格、圖表和結論。和真實實驗室一樣，操作失誤會帶來後果。",
+  "lab.start": "開始實驗",
+  "lab.inTextbook": "在課本中開啟該主題",
+  "lab.locked": "已鎖定",
+  "lab.lockedTitle": "實驗：{title}",
+  "lab.lockedText": "互動實驗、模擬和即時檢查在付費方案和 7 天試用期內提供。課文和 PDF 免費。",
+  "lab.packages": "查看方案",
+  "lab.empty": "還沒有實驗。",
+  "lab.error": "無法載入實驗室。"
 }

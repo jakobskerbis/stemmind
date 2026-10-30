@@ -20,7 +20,7 @@ import { GENRE_IDS, cleanChildhood, cleanTitles } from "../public/games/childhoo
 import { dialectsFor } from "../public/dialects.js";
 
 // Deli aplikacije, ki jih inštruktor odpre v premičnem oknu (public/okna.js), in načini kalkulatorja.
-export const WINDOW_VIEWS = ["graph", "textbook", "path", "scan", "schedule", "corner", "progress", "games", "competition", "exams", "league", "settings"];
+export const WINDOW_VIEWS = ["graph", "textbook", "path", "scan", "schedule", "corner", "progress", "games", "competition", "exams", "league", "settings", "lab"];
 export const CALC_MODES = ["sci", "graph", "tools", "pse", "formulas"];
 
 const PATH_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => PROFILE_SETTINGS[k].confirm);
@@ -113,7 +113,7 @@ export const SETTINGS_TOOLS = [
     input_schema: {
       type: "object",
       properties: {
-        view: { type: "string", enum: WINDOW_VIEWS, description: "graph = calculator; path = learning path; corner = news corner" },
+        view: { type: "string", enum: WINDOW_VIEWS, description: "graph = calculator; path = learning path; corner = news corner; lab = virtual laboratory (all experiments)" },
         calc_mode: { type: "string", enum: CALC_MODES, description: "only for view graph: sci = scientific, graph = graphing, tools = unit converter and tools, pse = periodic table, formulas" },
       },
       required: ["view"],
@@ -615,6 +615,7 @@ const WINDOW_TARGETS = [
   [/^(kalkulator\w*|računal\w*|calculator)$/, "graph", null, "kalkulator", "the calculator"],
   [/^(učbenik\w*|textbook)$/, "textbook", null, "učbenik", "the textbook"],
   [/^(urnik\w*|timetable|schedule)$/, "schedule", null, "urnik", "the timetable"],
+  [/^((virtualn\w* )?laboratorij\w*|(the )?lab|laboratory)$/, "lab", null, "laboratorij", "the laboratory"],
 ];
 
 export function openWindowIntent(text) {

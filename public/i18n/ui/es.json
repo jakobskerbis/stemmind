@@ -2620,5 +2620,16 @@
   "win.resetDone": "Se ha restablecido el diseño.",
   "full.close": "Cerrar",
   "full.message": "Tu mensaje",
-  "full.task": "Enunciado de la tarea"
+  "full.task": "Enunciado de la tarea",
+  "nav.lab": "Laboratorio",
+  "lab.meSub": "Experimentos virtuales de física y química",
+  "lab.intro": "Montas y mides tú mismo los experimentos: material, mediciones, tabla, gráfica y conclusión. Los errores tienen consecuencias como en un laboratorio real.",
+  "lab.start": "Empezar experimento",
+  "lab.inTextbook": "Abrir el tema en el libro",
+  "lab.locked": "Bloqueado",
+  "lab.lockedTitle": "Experimento: {title}",
+  "lab.lockedText": "Los experimentos interactivos, las simulaciones y la comprobación al momento están disponibles en el paquete de pago y durante la prueba de 7 días. El texto de la lección y el PDF son gratuitos.",
+  "lab.packages": "Ver paquetes",
+  "lab.empty": "Todavía no hay experimentos.",
+  "lab.error": "No se pudo cargar el laboratorio."
 }

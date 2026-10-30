@@ -2674,5 +2674,16 @@
   "win.resetDone": "Układ został przywrócony.",
   "full.close": "Zamknij",
   "full.message": "Twoja wiadomość",
-  "full.task": "Treść zadania"
+  "full.task": "Treść zadania",
+  "nav.lab": "Laboratorium",
+  "lab.meSub": "Wirtualne doświadczenia z fizyki i chemii",
+  "lab.intro": "Doświadczenia budujesz i mierzysz sam: sprzęt, pomiary, tabela, wykres i wniosek. Błędy mają skutki jak w prawdziwym laboratorium.",
+  "lab.start": "Rozpocznij doświadczenie",
+  "lab.inTextbook": "Otwórz temat w podręczniku",
+  "lab.locked": "Zablokowane",
+  "lab.lockedTitle": "Doświadczenie: {title}",
+  "lab.lockedText": "Interaktywne doświadczenia, symulacje i bieżące sprawdzanie są dostępne w płatnym pakiecie i podczas 7-dniowego okresu próbnego. Tekst lekcji i PDF są bezpłatne.",
+  "lab.packages": "Zobacz pakiety",
+  "lab.empty": "Brak doświadczeń.",
+  "lab.error": "Nie udało się wczytać laboratorium."
 }
