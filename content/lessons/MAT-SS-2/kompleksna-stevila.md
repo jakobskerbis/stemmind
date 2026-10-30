@@ -227,3 +227,13 @@ Pari oblike $(a, 0)$ se obnašajo natanko kot realna števila, par $(0, 1)$ pa o
 - $-1$
 + $-i$
 > $27 = 6 \cdot 4 + 3$, zato je $i^{27} = i^3 = -i$.
+
+:::simboli
+i | imaginarna enota | i^2 = -1 | |
+z | kompleksno število | z = a + bi | | z̄ = a − bi je konjugirano število
+a | realni del | | | Re z = a
+b | imaginarni del | | | Im z = b je realno število, ne bi
+c | realni del drugega kompleksnega števila | | |
+d | imaginarni del drugega kompleksnega števila | | |
+z_1, z_2 | kompleksni števili (deljenec in delitelj) | | | z₂ ≠ 0
+:::

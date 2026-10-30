@@ -232,3 +232,11 @@ Rezultat je $\dfrac{1}{6} = 0{,}1\overline{6}$.
 - $\dfrac{4}{9}$
 + $\dfrac{5}{11}$
 > Naj bo $x = 0{,}\overline{45}$. Perioda ima dve števki, zato je $100x = 45{,}\overline{45}$. Odštejemo $x$: $99x = 45$, torej $x = \dfrac{45}{99} = \dfrac{5}{11}$. Ulomek $\dfrac{9}{20}$ je $0{,}45$ brez ponavljanja.
+
+:::simboli
+a | števec ulomka | | | celo število; a′ je števec razširjenega ulomka
+b | imenovalec ulomka | | | naravno število
+c | števec drugega ulomka | | | c′ je števec razširjenega ulomka
+d | imenovalec drugega ulomka | | |
+v | skupni imenovalec | | | najmanjši skupni večkratnik imenovalcev
+:::

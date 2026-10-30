@@ -237,3 +237,9 @@ Za zunanje kote si zamisli godbo na pihala, ki koraka okoli trga. Na vsakem voga
 ~ To je $7 \cdot 180^\circ$. Trikotnikov iz enega oglišča je $n - 2$, ne $n - 1$.
 + $1080^\circ$
 > Iz enega oglišča gre $5$ diagonal, ki osemkotnik razrežejo na $6$ trikotnikov: $(8 - 2) \cdot 180^\circ = 1080^\circ$.
+
+:::simboli
+n | število oglišč mnogokotnika | | | vsota notranjih kotov je (n − 2) · 180°
+\alpha | notranji kot pravilnega n-kotnika | \alpha = \frac{(n-2) \cdot 180^\circ}{n} | |
+A, B, C, D | oglišča lika | | | v primeru s trapezom AB ∥ CD
+:::

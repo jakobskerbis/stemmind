@@ -299,6 +299,7 @@ function symbolKey(base, sub, subject, tex) {
 //   :::
 // Polja: oznake (TeX, več z vejico) | ime | zveza v TeX (neobvezno) | enota (TeX ali ključ iz UNITS;
 // »–« = nima enote; prazno = ne izpiši) | opomba (neobvezno).
+const DECOR = { bar: "bar", overline: "bar", hat: "hat", vec: "vec", tilde: "tilde", dot: "dot" };
 const LOCAL = []; // id -> { subject, table: { ključ: vnos } }
 const localIds = new Map();
 export const SYMBOLS_BLOCK_RE = /^[ \t]*:::[ \t]*simboli[ \t]*\n([\s\S]*?)\n[ \t]*:::[ \t]*$/gm;
@@ -306,6 +307,11 @@ export const SYMBOLS_BLOCK_RE = /^[ \t]*:::[ \t]*simboli[ \t]*\n([\s\S]*?)\n[ \t
 // Ključ oznake iz TeX: "I_0", "I_{0}" → "I_0"; "\\varepsilon" → "ε"; "\\Delta H" → "ΔH"; "\\mathrm{pH}" → "pH".
 export function symbolKeyOf(tex) {
   let s = String(tex).trim();
+  const dec = /^\\(bar|overline|hat|vec|tilde|dot)\s*(\{[^{}]*\}|[A-Za-z])\s*(?:_\s*(\{.*\}|\\?[A-Za-z0-9]+))?$/.exec(s); // \bar{x}, \vec F_1
+  if (dec) {
+    const inner = symbolKeyOf(dec[2].replace(/^\{|\}$/g, ""));
+    return inner && !inner.includes("_") ? `${DECOR[dec[1]]}(${inner})${dec[3] ? `_${normSub(dec[3])}` : ""}` : null;
+  }
   const dm = /^\\Delta\s*(\\(?:mathrm|text)\s*\{.*)$/.exec(s); // \Delta\mathrm{EN}
   if (dm) { const k = symbolKeyOf(dm[1]); return k ? `Δ${k}` : null; }
   const raw = /^\\(?:mathrm|text|textrm)\s*\{([^{}]+)\}\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+))?$/.exec(s);
@@ -452,6 +458,23 @@ export function annotateTex(tex, subject = override || subjectFn()) {
         out += tail ? tex.slice(i, tail.end) : whole;
         i = tail ? tail.end : end;
         continue;
+      }
+      // \bar{x}, \vec F: lastna oznaka lekcije (aritmetična sredina), sicer pomen črke pod znakom.
+      const dArg = DECOR[name] && subject?.[0] === "@" && /^\{\s*(\\[a-zA-Z]+|[A-Za-z])\s*\}|^[A-Za-z]/.exec(tex.slice(j));
+      if (dArg) {
+        const ch = dArg[1] ? (GREEK[dArg[1].slice(1)] || dArg[1]) : dArg[0];
+        const key = `${DECOR[name]}(${ch})`;
+        const after = j + dArg[0].length;
+        const sub = readSub(after);
+        const full = sub && `${key}_${normSub(sub.raw)}`;
+        const hit = full && lookupSymbol(full, subject) ? [full, sub.end] : lookupSymbol(key, subject) ? [key, after] : null;
+        if (hit) {
+          const bare = /(?:[_^]|\\[a-zA-Z]+|\\[dt]?frac\s*\w)\s*$/.test(out);
+          const marked = wrap(`s:${subject}:${hit[0]}`, tex.slice(i, hit[1]));
+          out += bare ? `{${marked}}` : marked;
+          i = hit[1];
+          continue;
+        }
       }
       const g = GREEK[name];
       // ΔH, ΔG … kot lastna oznaka lekcije; sicer Δx = »sprememba« osnovne količine.

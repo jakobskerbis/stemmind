@@ -253,7 +253,8 @@ Hi-kvadrat srečaš pri metu kovanca. V $100$ metih pričakuješ $50$ grbov. Če
 > Korelacija meri povezanost. Da vaja izboljša ocene, bi pokazal šele poskus z naključno razporeditvijo v skupine.
 
 :::simboli
-x | posamezna meritev (npr. srčni utrip) | | /min | \bar{x} = \frac{\sum x_i}{n} je povprečje
+x | posamezna meritev (npr. srčni utrip) |  | /min
+\bar{x} | povprečje meritev | \bar{x} = \frac{\sum x_i}{n} | /min
 n | število meritev (velikost vzorca) | | –
 s | standardni odklon | s = \sqrt{\dfrac{\sum (x_i - \bar{x})^2}{n - 1}} | /min | tipična razdalja meritve od povprečja
 s_1, s_2 | standardna odklona obeh skupin | | /min

@@ -205,3 +205,15 @@ Izraz v oglatem oklepaju je vsota nenegativnega kvadrata in pozitivnega števila
 - $\mathbb{R}$
 - $(-\infty, 1]$
 > Kvadrat ni nikoli negativen, enak $0$ pa je le pri $x = 1$. Parabola se osi $x$ dotakne v eni točki.
+
+:::simboli
+a | vodilni koeficient (pri x²) | | | a ≠ 0
+b | linearni koeficient (pri x) | | |
+c | prosti člen | | |
+x | neznanka | | |
+f | kvadratna funkcija | f(x) = ax^2 + bx + c | |
+D | diskriminanta | D = b^2 - 4ac | |
+x_{1,2} | ničli kvadratne funkcije | x_{1,2} = \frac{-b \pm \sqrt{D}}{2a} | |
+x_1, x_2 | manjša in večja ničla | | | x₁ < x₂
+t | čas od meta | | s | višina h(t) = 20t − 5t² v metrih
+:::

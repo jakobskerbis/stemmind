@@ -178,3 +178,9 @@ Množico rešitev $x > a$ v zapisu množic pišemo $\{x \in \mathbb{R} \mid x > 
 - $x < 3$
 + $x > 3$
 > Prazen krogec pomeni strogo neenakost, obarvanje na desno pa pomeni večje vrednosti. Zato je rešitev $x > 3$.
+
+:::simboli
+x | neznanka | | |
+a, b | števili z a < b | | | a je tudi meja rešitev pri x > a
+c | negativno število, s katerim množimo | | | c < 0 obrne znak neenakosti
+:::

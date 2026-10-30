@@ -234,3 +234,11 @@ Vsoto $2$ ima zadnji par, zato je $x^2 + 2x - 24 = (x-4)(x+6)$. Preizkus pri $x 
 + $3x(x - 2)(x + 2)$
 - $3x(x - 4)(x + 1)$
 > Najprej izpostavimo $3x$: $3x(x^2 - 4)$. Drugi faktor je razlika kvadratov, zato je razcep $3x(x-2)(x+2)$. Ostale možnosti dajo $3x(x^2 - 4x + 4)$, $3x^3 + 12x$ in $3x(x^2 - 3x - 4)$.
+
+:::simboli
+x, y | spremenljivki | | |
+a, b | števili z vsoto p in zmnožkom q | | | v ab + ac = a(b + c) je a skupni faktor
+c, d | členi v oklepaju po izpostavljanju | | |
+p | koeficient pri x v tričleniku | p = a + b | |
+q | prosti člen tričlenika | q = a \cdot b | |
+:::

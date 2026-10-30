@@ -233,7 +233,8 @@ Absolutna napaka je v obeh primerih enaka, relativna pa zelo različna. Zato je 
 
 :::simboli
 \delta | relativna napaka | \delta = \frac{\Delta x}{\bar{x}} | – | pogosto v odstotkih
-x | izmerjena količina | | | \bar{x} je povprečje meritev
+x | izmerjena količina
+\bar{x} | povprečje meritev | \bar{x} = \frac{\sum x_i}{n}
 \Delta x | absolutna napaka | | | največje odstopanje od povprečja
 T | izmerjena telesna temperatura | | ^\circ C
 \Delta T | absolutna napaka temperature | | ^\circ C | pri eni meritvi najmanjši razdelek

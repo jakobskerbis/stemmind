@@ -276,3 +276,20 @@ Iz simetrije enotske krožnice velja $\sin(-x) = -\sin x$, zato je sinus **liha*
 - Za $\frac{\pi}{6}$ v levo.
 ~ Izpostavljanje je pravo, smer pa ne: $x - \frac{\pi}{6}$ pomeni premik v desno.
 > $2x - \frac{\pi}{3} = 2\left(x - \frac{\pi}{6}\right)$, torej $c = \frac{\pi}{6}$ in premik v desno.
+
+:::simboli
+f | sinusna funkcija | f(x) = A\sin\big(b(x - c)\big) + d | |
+x | kot v radianih (neodvisna spremenljivka) | | |
+A | raztezek v smeri osi y | A = \frac{f_{\max} - f_{\min}}{2} | | amplituda je absolutna vrednost A
+b | raztezek v smeri osi x | b = \frac{2\pi}{T} | | pri b > 0
+c | premik grafa v smeri osi x | | |
+d | premik grafa v smeri osi y | d = \frac{f_{\max} + f_{\min}}{2} | | srednja črta je y = d
+T | osnovna perioda | T = \frac{2\pi}{\lvert b \rvert} | | drugje T točka na enotski krožnici
+Z_f | zaloga vrednosti funkcije | Z_f = [d - \lvert A \rvert,\ d + \lvert A \rvert] | |
+u | argument sinusa | | |
+k | poljubno celo število | | |
+h_{\max} | največja višina sedeža | | m | pri panoramskem kolesu
+h_{\min} | najmanjša višina sedeža | | m |
+f_{\max} | največja vrednost funkcije | | |
+f_{\min} | najmanjša vrednost funkcije | | |
+:::
