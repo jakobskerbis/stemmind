@@ -348,6 +348,9 @@ html.lite[data-era] .view::before { display: none; }
 /* Žetoni (XP, niz dni, stanje pogovora) v odtenku poudarka. */
 :root[data-era] .stat { background: var(--accent-soft); }
 :root[data-era] .chip { background: var(--accent-soft); color: var(--accent); }
+/* Iskalnik v spustnem seznamu: privzeto belo polje bi na temnem meniju dobilo svetlo besedilo menija. */
+:root[data-era] .dd-search input { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 0 12px; }
+:root[data-era] .dd-search input::placeholder { color: var(--muted); opacity: 1; }
 /* Obvestila: ton obdobja (pergament, zlato, žafran …) namesto rumene, ikona v poudarku. */
 :root[data-era] .banner { background: var(--banner, var(--surface)); color: var(--text); border-bottom: 1px solid color-mix(in srgb, var(--edge-c, var(--band-c)) 55%, transparent); }
 :root[data-era] .banner > svg.i { flex: none; color: var(--accent); }
