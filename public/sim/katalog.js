@@ -165,6 +165,7 @@ export const SIM_TOPICS = {
   "MAT-OS-6/kocka-in-kvader": ["telesa", "Kocka in kvader: mreža, površina, prostornina", { bodies: ["kocka", "kvader"] }],
   "MAT-OS-6/prikazi-podatkov": ["diagram", "Prikazi podatkov", { type: "stolpcni" }],
   "MAT-OS-6/kombinatoricne-situacije": ["kombinatorika", "Drevesni prikaz možnosti", { mode: "drevo" }],
+  "MAT-OS-6/mnozice-in-diagrami": [["venn", "Vennov diagram: presek in unija"], ["uvrsti", "Carrollov diagram", { set: "carroll" }]],
   // ---------------------------------------------------------------- MAT OŠ 7
   "MAT-OS-7/prastevila-in-razcep": [["razcep", "Razcep na prafaktorje"], ["stotica", "Eratostenovo sito", { mode: "sito" }]],
   "MAT-OS-7/najvecji-skupni-delitelj-in-najmanjsi-skupni-veckratnik": [["dvvenn", "D in v z Vennovim diagramom"], ["stotica", "Skupni večkratniki", { mode: "veckratniki" }]],
@@ -217,6 +218,7 @@ export const SIM_TOPICS = {
   "MAT-OS-9/besedilne-naloge": ["srecanje", "Gibanje: srečanje in dohitevanje"],
   "MAT-OS-9/podobni-trikotniki": ["podobnost", "Podobni trikotniki"],
   "MAT-OS-9/talesov-izrek": ["tales", "Talesov izrek o sorazmerjih"],
+  "MAT-OS-9/tocke-premice-in-ravnine-v-prostoru": ["prostor", "Točke, premice in ravnine v kocki"],
   "MAT-OS-9/prizma": ["telesa", "Prizma: mreža, površina, prostornina", { bodies: ["prizma", "kvader"] }],
   "MAT-OS-9/valj": ["telesa", "Valj: mreža, površina, prostornina", { bodies: ["valj"] }],
   "MAT-OS-9/piramida": ["telesa", "Piramida: mreža, površina, prostornina", { bodies: ["piramida"] }],
@@ -242,6 +244,8 @@ export const SIM_TOPICS = {
   "MAT-SS-1/trikotnik": [["trikotnik", "Trikotnik: stranice in koti", { mode: "vrste" }], ["trikotnik", "Značilne točke trikotnika", { mode: "tocke" }]],
   "MAT-SS-1/stirikotniki-in-krog": [["stirikotnik", "Štirikotniki"], ["obodni", "Obodni in središčni kot", { mode: "obodni" }]],
   "MAT-SS-1/obdelava-podatkov": ["statistika", "Obdelava podatkov: sredine in razpršenost"],
+  "MAT-SS-1/osnove-logike": ["logika", "Pravilnostne tabele in enakovredne izjave"],
+  "MAT-SS-1/pravokotni-koordinatni-sistem-v-ravnini": ["koord-trikotnik", "Razdalja, razpolovišče in ploščina trikotnika"],
   // ---------------------------------------------------------------- MAT SŠ 2
   "MAT-SS-2/koreni": [["koren", "Kvadratni koren in približki"], ["graf", "Grafi korenskih funkcij", { preset: "koreni" }]],
   "MAT-SS-2/potence-z-racionalnimi-eksponenti": ["graf", "Potenčna funkcija z racionalnim eksponentom", { preset: "potencna" }],
@@ -255,6 +259,9 @@ export const SIM_TOPICS = {
   "MAT-SS-2/logaritemska-funkcija-in-enacbe": ["graf", "Logaritemska funkcija", { preset: "logaritemska" }],
   "MAT-SS-2/podobnost": ["podobnost", "Podobnost in središčni razteg"],
   "MAT-SS-2/kotne-funkcije-v-pravokotnem-trikotniku": ["trig-trikotnik", "Kotne funkcije v pravokotnem trikotniku"],
+  "MAT-SS-2/funkcije-in-njihove-lastnosti": ["graf", "Lastnosti funkcije in inverzna funkcija", { preset: "lastnosti" }],
+  "MAT-SS-2/transformacije-grafov": ["graf", "Premik, zrcaljenje in raztezanje grafa", { preset: "transformacije" }],
+  "MAT-SS-2/potencna-in-korenska-funkcija": [["graf", "Potenčne funkcije s celim eksponentom", { preset: "potencna-cela" }], ["graf", "Korenska funkcija kot inverzna funkcija", { preset: "koreni" }]],
   // ---------------------------------------------------------------- MAT SŠ 3
   "MAT-SS-3/kotne-funkcije-poljubnega-kota": ["enotska", "Enotska krožnica", { mode: "krog" }],
   "MAT-SS-3/grafi-kotnih-funkcij": [["enotska", "Od enotske krožnice do grafa", { mode: "graf" }], ["graf", "Graf A sin(b(x − c)) + d", { preset: "sinus" }]],
@@ -283,6 +290,7 @@ export const SIM_TOPICS = {
   "MAT-SS-4/verjetnost": ["verjetnost", "Verjetnost in relativna frekvenca"],
   "MAT-SS-4/statistika": ["statistika", "Statistika: histogram in škatla z brki"],
   "MAT-SS-4/mesane-maturitetne-naloge": ["zbirka", "Zbirka simulacij za maturo", { items: MATURA_MAT }],
+  "MAT-SS-4/matematicna-indukcija": [["domine", "Domine: baza in indukcijski korak"], ["hanoi", "Hanojski stolpi: 2ⁿ − 1 potez"]],
   // ---------------------------------------------------------------- FIZ OŠ 8
   "FIZ-OS-8/fizikalne-kolicine-in-enote": ["enote", "Predpone in pretvarjanje enot", { set: "predpone", sets: ["predpone", "dolzina", "masa", "cas", "prostornina"] }],
   "FIZ-OS-8/merske-napake": ["meritve", "Merjenje in merska napaka"],
@@ -315,6 +323,7 @@ export const SIM_TOPICS = {
   "FIZ-OS-9/elektricno-delo-in-moc": ["poraba", "Poraba električne energije doma"],
   "FIZ-OS-9/magneti-in-magnetno-polje": ["magnet", "Magnetno polje in kompas", { mode: "magnet" }],
   "FIZ-OS-9/elektromagnet": ["magnet", "Elektromagnet", { mode: "tuljava" }],
+  "FIZ-OS-9/fizika-v-sodobnih-napravah": [["uvrsti", "GPS, laser, sončna celica, jedrska elektrarna", { set: "naprave" }], ["fotoefekt", "Svetloba izbija elektrone (sončna celica)"], ["razpad", "Razpad jeder (jedrsko gorivo in odpadki)"]],
   // ---------------------------------------------------------------- KEM OŠ 8
   "KEM-OS-8/varno-delo-v-laboratoriju": ["razvrsti", "Varnostni znaki v laboratoriju", { set: "ghs" }],
   "KEM-OS-8/snovi-in-njihove-lastnosti": [["delci", "Agregatna stanja snovi", { mode: "snovi" }], ["razvrsti", "Čiste snovi in zmesi", { set: "zmesi" }]],
@@ -360,6 +369,8 @@ export const SIM_TOPICS = {
   "FIZ-SS-1/delo-in-moc": ["delo", "Delo in moč", { mode: "moc" }],
   "FIZ-SS-1/energija": ["skejt", "Ohranitev mehanske energije"],
   "FIZ-SS-1/tlak-in-vzgon": [["tlak", "Hidrostatični tlak", { mode: "hidro" }], ["gostota", "Vzgon in Arhimedov zakon", { mode: "vzgon" }]],
+  "FIZ-SS-1/proznost": [["vzmet", "Hookov zakon", { mode: "hooke" }], ["vezava-vzmeti", "Zaporedna in vzporedna vezava vzmeti"]],
+  "FIZ-SS-1/navor-in-ravnovesje": ["vzvod", "Navor in ravnovesje vzvoda"],
   // ---------------------------------------------------------------- FIZ SŠ 2
   "FIZ-SS-2/enakomerno-krozenje": ["krozenje", "Enakomerno kroženje"],
   "FIZ-SS-2/gravitacijski-zakon": ["orbita", "Gravitacijski zakon in orbite"],
@@ -371,6 +382,7 @@ export const SIM_TOPICS = {
   "FIZ-SS-2/elektricno-polje": ["naboji", "Električno polje točkastih nabojev", { mode: "polje" }],
   "FIZ-SS-2/elektricni-tok": [["ohm", "Električni tok in Ohmov zakon"], ["lab-ohm", "Laboratorij: upornik in žarnica"]],
   "FIZ-SS-2/elektricna-vezja": ["krog-el", "Zaporedna in vzporedna vezava upornikov", { mode: "uporniki" }],
+  "FIZ-SS-2/prevajanje-toplote-in-sevanje": [["prenos", "Prevajanje, konvekcija in sevanje"], ["zvezde", "Stefanov zakon: sevanje vročega telesa"]],
   // ---------------------------------------------------------------- FIZ SŠ 3
   "FIZ-SS-3/magnetno-polje": ["magnet", "Magnetno polje magneta, žice in tuljave", { mode: "zica" }],
   "FIZ-SS-3/magnetna-sila": ["lorentz", "Naboj v magnetnem polju"],
@@ -380,11 +392,15 @@ export const SIM_TOPICS = {
   "FIZ-SS-3/zvok": ["val", "Zvok: frekvenca in glasnost", { mode: "zvok" }],
   "FIZ-SS-3/geometrijska-optika": [["lece", "Leče in slike"], ["zarki", "Lom in popolni odboj", { mode: "lom" }]],
   "FIZ-SS-3/valovna-optika": ["interferenca", "Interferenca na dveh režah"],
+  "FIZ-SS-3/izmenicni-tok-in-nihajni-krog": [["izmenicni", "Izmenična napetost in efektivna vrednost", { mode: "sinus" }], ["izmenicni", "Električni nihajni krog", { mode: "lc" }]],
+  "FIZ-SS-3/elektromagnetno-valovanje": [["em-spekter", "Elektromagnetni spekter"], ["val", "Valovna dolžina in frekvenca", { mode: "precno" }]],
   // ---------------------------------------------------------------- FIZ SŠ 4
   "FIZ-SS-4/fotoefekt-in-foton": ["fotoefekt", "Fotoefekt"],
   "FIZ-SS-4/atom": ["spektri", "Bohrov model in spekter vodika"],
   "FIZ-SS-4/jedro-in-radioaktivnost": ["razpad", "Radioaktivni razpad in razpolovni čas"],
   "FIZ-SS-4/mesane-maturitetne-naloge": ["zbirka", "Zbirka simulacij za maturo", { items: MATURA_FIZ }],
+  "FIZ-SS-4/osoncje-in-gibanje-planetov": [["orbita", "Keplerjevi zakoni"], ["osoncje", "Zemlja, Luna in Sonce"]],
+  "FIZ-SS-4/zvezde-in-vesolje": ["zvezde", "Zvezde na HR-diagramu"],
   // ---------------------------------------------------------------- KEM SŠ 1
   "KEM-SS-1/zgradba-atoma": ["atom", "Atom, ioni in izotopi", { mode: "sestavi" }],
   "KEM-SS-1/periodni-sistem": ["periodni", "Periodne lastnosti elementov", { highlight: "trendi" }],
@@ -406,6 +422,9 @@ export const SIM_TOPICS = {
   "KEM-SS-2/oksidacijska-stevila": ["oksidacijska", "Določanje oksidacijskih števil"],
   "KEM-SS-2/redoks-reakcije": ["reaktivnost", "Redoks: kovina v raztopini soli", { mode: "redoks" }],
   "KEM-SS-2/galvanski-cleni-in-elektroliza": ["galvanski", "Galvanski člen in elektroliza"],
+  "KEM-SS-2/lastnosti-elementov-v-periodnem-sistemu": [["periodni", "Kovine, nekovine in polkovine", { highlight: "vrste" }], ["periodni", "Trendi lastnosti", { highlight: "trendi" }], ["uvrsti", "Kisli, bazični in amfoterni oksidi", { set: "oksidi" }]],
+  "KEM-SS-2/alkalijske-kovine-in-halogeni": [["uvrsti", "Ali reakcija poteče?", { set: "halogeni" }], ["periodni", "Skupine periodnega sistema", { highlight: "skupine" }], ["medmolekulske", "Vrelišča halogenov"]],
+  "KEM-SS-2/elementi-v-bioloskih-sistemih": ["uvrsti", "Biogeni elementi", { set: "biogeni" }],
   // ---------------------------------------------------------------- KEM SŠ 3
   "KEM-SS-3/ogljikovodiki": ["organska", "Ogljikovodiki", { groups: ["alkan", "alken", "alkin"] }],
   "KEM-SS-3/izomerija": ["organska", "Izomerija", { mode: "izomeri" }],
@@ -413,6 +432,7 @@ export const SIM_TOPICS = {
   "KEM-SS-3/karbonilne-spojine": ["organska", "Aldehidi in ketoni", { groups: ["aldehid", "keton"] }],
   "KEM-SS-3/karboksilne-kisline-in-derivati": ["organska", "Karboksilne kisline in derivati", { groups: ["kislina", "ester", "amid"] }],
   "KEM-SS-3/organske-reakcije": ["organske-reakcije", "Vrste organskih reakcij"],
+  "KEM-SS-3/dusikove-organske-spojine": [["organska", "Amini, amidi in aminokisline", { groups: ["amin", "amid", "aminokislina"] }], ["uvrsti", "Dušikove organske spojine", { set: "dusikove" }]],
   "KEM-SS-3/ogljikovi-hidrati-lipidi-beljakovine": ["polimer", "Ogljikovi hidrati, lipidi in beljakovine", { sets: ["skrob", "mascoba", "beljakovina"] }],
   "KEM-SS-3/polimeri": ["polimer", "Adicijska in kondenzacijska polimerizacija", { sets: ["polieten", "pvc", "poliester", "beljakovina"] }],
   // ---------------------------------------------------------------- KEM SŠ 4

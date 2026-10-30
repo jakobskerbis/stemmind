@@ -1,7 +1,7 @@
 // Razvrščanje s takojšnjo razlago pri naravoslovju (OŠ 6. in 7. razred) in biologiji.
 // Učenec vidi kartico (organ, organizem, pojav …) in izbere skupino; po izbiri dobi razlago,
 // napačne kartice pridejo na vrsto še enkrat na koncu kroga.
-import { s, svgBox, button, buttons, readout, layout, label } from "./kit.js";
+import { h, s, svgBox, button, buttons, readout, layout, label } from "./kit.js";
 import { SETS as NAR } from "./nar-data.js";
 import { SETS as BIO } from "./bio-data.js";
 
@@ -40,14 +40,29 @@ function sortSim(el, set) {
     total++;
     const [, ans, why] = def.items[cur];
     const ok = ans === k;
-    if (ok) right++;
+    if (ok) right++, place(k, def.items[cur][0]);
     else again.add(cur);
     out.innerHTML = `<p>${ok ? '<b class="ok-text">Pravilno!</b>' : `<b class="bad-text">Ne čisto.</b> Pravilno je: <b>${catName(ans)}</b>.`} ${why}</p>${score()}`;
   };
+  // Carrollov diagram (def.grid): polja so gumbi v tabeli 2 × 2, pravilno uvrščene kartice ostanejo v svojem polju.
+  const cellBtn = {}, placed = {};
+  const place = (k, t) => {
+    if (!cellBtn[k]) return;
+    (placed[k] ||= new Set()).add(t);
+    cellBtn[k].textContent = [...placed[k]].join(", ");
+  };
+  const grid = def.grid && h("table", { class: "demo-table sort-grid", style: "width:100%;table-layout:fixed" },
+    h("tr", {}, h("th", {}), ...def.grid.cols.map((c) => h("th", { scope: "col" }, c))),
+    ...def.grid.rows.map((r, i) => h("tr", {}, h("th", { scope: "row" }, r), ...def.grid.cells[i].map((k) => {
+      const b = button("?", () => pick(k), "secondary");
+      b.setAttribute("aria-label", catName(k));
+      b.style.cssText = "width:100%;min-height:48px;white-space:normal";
+      return h("td", {}, (cellBtn[k] = b));
+    }))));
   next();
   layout(el, {
     stage: svg,
-    controls: [buttons(...def.cats.map(([k, t]) => button(t, () => pick(k), "secondary"))), buttons(button("Naslednja ▸", next, "primary small"))],
+    controls: [grid || buttons(...def.cats.map(([k, t]) => button(t, () => pick(k), "secondary"))), buttons(button("Naslednja ▸", next, "primary small"))],
     out,
     tryText: def.try,
   });
