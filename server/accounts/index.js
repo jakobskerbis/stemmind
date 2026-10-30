@@ -20,6 +20,8 @@ import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
 import { guestModeOn, guestNet, guestPerDay, GuestQuota, GUEST_SESSION_DAYS, netKey } from "./guest.js";
 import { ProfileLocks, checkProfilePassword } from "./profile-lock.js";
 import { gateNeeded } from "../gate.js";
+import { rights as rightsOf, lessonInteractive as lessonOpen } from "../placila/pravice.js";
+import { createSchoolSource } from "../placila/sola-vir.js";
 
 export const CONSENT_TEXT =
   "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da Evklid obdeluje otrokove osebne podatke " +
@@ -135,19 +137,44 @@ export function mountAccounts(app, store, opts = {}) {
       : null,
   });
 
-  function premiumFor(studentId) {
+  // Osebni paket (»Evklid Osebno«): naročnina, preizkus, koda, bonus ali paket pred testom. Vrne { tier, until } ali null.
+  function personalOf(studentId) {
     const parentId = ownerOf(studentId);
-    if (!parentId) return true; // stari podatki brez starša
+    if (!parentId) return { tier: "legacy", until: null }; // stari podatki brez starša
     const access = accessOf(getParent(parentId));
-    return isPremiumChild(access, childIds(parentId), studentId) || !!billing?.passPremium(studentId);
+    if (isPremiumChild(access, childIds(parentId), studentId)) return { tier: access.tier, until: access.until };
+    if (billing?.passPremium(studentId)) return { tier: "pass", until: billing.passes.activeFor(studentId)?.ends_at || null };
+    return null;
+  }
+  const schools = createSchoolSource(db, { source: opts.schoolSource, personalOf: (id) => !!personalOf(id) });
+
+  // Vse pravice učenca iz vseh virov (server/placila/pravice.js): osebni paket in šolska licenca se seštejeta.
+  const rightsFor = (studentId) => rightsOf({ personal: personalOf(studentId), schools: schools.forStudent(studentId), freeDaily: freeDailyQuestions() });
+
+  // Poln dostop iz katerega koli vira (osebni paket ali šolska licenca).
+  function premiumFor(studentId) {
+    const r = rightsFor(studentId);
+    return r.personal || r.school;
   }
 
-  // Najzmogljivejši dovoljeni model za učenca: pri dostopu iz aktivacijske kode model kode
-  // (EVKLID3X: »sonnet« namesto Opusa), sicer null (brez omejitve; brezplačni paket omeji usage.chooseMode).
+  // Interaktivni del lekcije: Osebno za vse teme, šolska licenca za svoje predmete in razrede.
+  const lessonInteractive = (studentId, topicId) => lessonOpen(rightsFor(studentId), topicId);
+
+  // Lestev »Razloži podrobneje«: opus = ali sme do Opusa (ob 3. zaporedni prošnji), promo = skrita meja Opusa
+  // aktivacijske kode (usage.promoOpusSpent). Šolska licenca brez osebnega paketa: največ Sonnet.
+  function ladderFor(studentId) {
+    const r = rightsFor(studentId);
+    // Skrita meja velja le za kodo z omejenim modelom (EVKLID_PROMO_MODEL=opus je brez nje, kot doslej).
+    return { opus: r.maxModel === "opus", promo: r.personalTier === "promo" && !!promo.termsOf(ownerOf(studentId)).maxModel };
+  }
+
+  // Najzmogljivejši dovoljeni model za učenca (za klice zunaj lestve, npr. fotografija urnika): pri dostopu
+  // iz aktivacijske kode model kode (EVKLID3X: »sonnet« namesto Opusa), pri samo šolski licenci »sonnet«,
+  // sicer null (brez omejitve; brezplačni paket omeji usage.chooseMode).
   function modelCapFor(studentId) {
-    const parentId = ownerOf(studentId);
-    if (!parentId) return null;
-    return accessOf(getParent(parentId)).tier === "promo" ? promo.termsOf(parentId).maxModel : null;
+    const r = rightsFor(studentId);
+    if (r.personalTier === "promo") return promo.termsOf(ownerOf(studentId)).maxModel;
+    return !r.personal && r.school ? "sonnet" : null;
   }
 
   // Poraba AI brezplačnih učencev v tem mesecu (učenci brez naročnine, preizkusa, bonusa ali kode).
@@ -260,14 +287,22 @@ export function mountAccounts(app, store, opts = {}) {
       }
     }
 
-    // Brezplačni paket: omejeno število vprašanj inštruktorju na dan.
-    if (c && req.method === "POST" && /\/messages$/i.test(req.path) && !premiumFor(studentId)) {
-      const limit = freeDailyQuestions();
-      if (questionsToday(studentId) >= limit) {
+    // Vprašanja inštruktorju na dan: brezplačni paket (10) ali vsota šolske licence (15) in Osebno (60).
+    if (c && req.method === "POST" && /\/messages$/i.test(req.path)) {
+      const r = rightsFor(studentId);
+      if (!r.personal && !r.school) {
+        const limit = freeDailyQuestions();
+        if (questionsToday(studentId) >= limit) {
+          return res.status(429).json({
+            error: `Danes si porabil vseh ${limit} brezplačnih vprašanj za inštruktorja. Vadnica deluje naprej neomejeno. ${moreHint(studentId)}`,
+            limit: true,
+            upgrade: true,
+          });
+        }
+      } else if (r.dailyQuestions && questionsToday(studentId) >= r.dailyQuestions) {
         return res.status(429).json({
-          error: `Danes si porabil vseh ${limit} brezplačnih vprašanj za inštruktorja. Vadnica deluje naprej neomejeno. ${moreHint(studentId)}`,
+          error: `Danes si porabil vseh ${r.dailyQuestions} vprašanj za inštruktorja. Jutri jih spet dobiš. Vadnica in lekcije delujejo naprej neomejeno.`,
           limit: true,
-          upgrade: true,
         });
       }
     }
@@ -543,7 +578,6 @@ export function mountAccounts(app, store, opts = {}) {
 
   function accountView(req, p) {
     const access = accessOf(p);
-    const ids = childIds(p.id);
     const rewards = db.prepare("SELECT COUNT(*) AS n FROM referral_rewards WHERE referrer_id = ?").get(p.id).n;
     return {
       parent: publicParent(p),
@@ -553,7 +587,8 @@ export function mountAccounts(app, store, opts = {}) {
         id: c.id,
         name: c.name,
         birth_year: c.birth_year,
-        premium: isPremiumChild(access, ids, c.id) || !!billing?.passPremium(c.id),
+        premium: premiumFor(c.id),
+        school: rightsFor(c.id).school,
         pass: publicPass(billing?.passes.latestFor(c.id)),
         questions_today: questionsToday(c.id),
         ai_month: aiUsage.studentMonth(c.id),
@@ -1185,6 +1220,6 @@ export function mountAccounts(app, store, opts = {}) {
 
   // Za mobilno aplikacijo (server/mobile): prijava z Apple, nakupi v trgovinah, obvestila.
   const mobile = { db, sessions, getParent, parentByEmail, publicParent, accountView, createParent, checkAge, childIds, children, accessOf, signupThrottle, addReauth: (fn) => reauthHooks.push(fn) };
-  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, guests, billing, mobile };
+  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, rightsFor, lessonInteractive, ladderFor, schools, guests, billing, mobile };
 }
 

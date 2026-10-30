@@ -754,7 +754,7 @@ test("aktivacijska koda EVKLID3X: 3 meseci, zmogljivejši model največ Sonnet",
     const hidden = await again();
     assert.equal(modes.at(-1), "mid");
     assert.doesNotMatch(JSON.stringify(hidden.body), /zmogljivejš|hitrejši model/);
-    // Z naročnino omejitve ni: druga zaporedna prošnja gre k Opusu.
+    // Z naročnino skrite omejitve ni: naslednja zaporedna prošnja (že nad 3.) gre k Opusu.
     store.db.prepare("UPDATE parents SET sub_status = 'active', sub_seats = 1 WHERE id = ?").run(reg.id);
     assert.equal((await again()).status, 200);
     assert.equal(modes.at(-1), "deep");
