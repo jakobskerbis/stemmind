@@ -15,6 +15,7 @@ import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
 import { mountLeagues } from "./leagues.js";
 import { mountGradiva } from "./gradiva.js";
+import { mountSchools } from "./schools.js";
 import { getTopic, getPath, listPaths, pathKeyFor, pathLabelFor, learningPathPrompt, listPrograms, listProgramPaths, localTopic } from "./curriculum.js";
 import { uiLanguage } from "../public/i18n/languages.js";
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor, formulaSheet } from "./textbook.js";
@@ -934,7 +935,8 @@ export function createApp(store, opts = {}) {
 
   // --- tedenske lige, razredi in skupine prijateljev ---
   const avatars = new Avatars(store.db);
-  mountLeagues(app, store, { loadStudent });
+  const leagues = mountLeagues(app, store, { loadStudent });
+  mountSchools(app, store, { loadStudent, leagues, accounts: !!accounts }); // šole, učitelji, licence, razredne naloge
   mountGradiva(app, store, { loadStudent, accounts }); // povzetek na eni strani, zvočni povzetek, delovni listi
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress, avatars, knowledge });
