@@ -2640,7 +2640,7 @@
   "win.reset": "Vrati izvorni raspored",
   "win.resetDone": "Raspored je vraćen na izvorni.",
   "split.resize": "Promijeni širinu",
-  "split.hint": "Povuci da promijeniš širinu. Dvoklik vraća zadanu.",
+  "split.hint": "Povuci da promijeniš širinu. Dvoklik vraća zadanu širinu.",
   "split.showList": "Prikaži popis razgovora",
   "split.settingNote": "Na računalu i tabletu širinu dijelova stranice (popis razgovora, objašnjenje, simulacije, kalkulator) mijenjaš povlačenjem razdjelnika između njih.",
   "full.close": "Zatvori",

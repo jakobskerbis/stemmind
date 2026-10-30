@@ -56,8 +56,8 @@ export function createCalculator(root, opts) {
         <button type="button" class="gc-btn" data-act="redo" title="${esc(t("gc.redo"))}" aria-label="${esc(t("gc.redo"))}">${icon("redo-2")}</button>
         <button type="button" class="gc-btn gc-playall" data-act="playall" data-on="false" hidden></button>
         <span class="gc-bar-sp"></span>
-        <button type="button" class="gc-btn gc-text-btn" data-act="examples">${icon("sparkles")}<span>${esc(t("gc.examples"))}</span></button>
-        <button type="button" class="gc-btn gc-text-btn" data-act="graphs">${icon("folder-open")}<span>${esc(t("gc.myGraphs"))}</span></button>
+        <button type="button" class="gc-btn gc-text-btn" data-act="examples" title="${esc(t("gc.examples"))}">${icon("sparkles")}<span>${esc(t("gc.examples"))}</span></button>
+        <button type="button" class="gc-btn gc-text-btn" data-act="graphs" title="${esc(t("gc.myGraphs"))}">${icon("folder-open")}<span>${esc(t("gc.myGraphs"))}</span></button>
         <button type="button" class="gc-btn" data-act="more" title="${esc(t("gc.more"))}" aria-label="${esc(t("gc.more"))}">${icon("ellipsis-vertical")}</button>
       </div>
       <div class="gc-list" role="list"></div>

@@ -51,6 +51,20 @@
 /* ob gumbu »Predvajaj vse« je vrstica polna: »Moji grafi« ostane samo ikona */
 .gc-bar:has(.gc-playall:not([hidden])) [data-act="graphs"] span { display: none; }
 .gc-text-btn svg.i { color: var(--accent); }
+/* Ozek seznam izrazov (ločnica, razdelilnik.js, do 280 px): napis se raje skrajša s tropičjem, kot da bi segel
+   čez sosednji gumb; pod 370 px ostaneta samo ikoni (napis ostane za bralnike zaslona, title za miško). */
+.gc-panel { container: gc-panel / inline-size; }
+.gc .gc-text-btn { min-width: 40px; flex-shrink: 1; }
+.gc-text-btn svg.i { flex-shrink: 0; }
+.gc-text-btn span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+@container gc-panel (max-width: 439px) {
+  .gc-bar { gap: 2px; padding-inline: 6px; }
+  .gc .gc-text-btn { padding-inline: 6px; }
+}
+@container gc-panel (max-width: 370px) {
+  .gc-text-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+}
 
 /* seznam izrazov */
 .gc-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
@@ -60,6 +74,9 @@
 }
 /* Prazna vrstica ima tudi razred .empty (style.css, prazen klepet: max-width 440px): ostane čez celo širino seznama. */
 .gc-row.empty { max-width: none; margin: 0; }
+/* Z ločnico (razdelilnik.js) dobita kalkulatorja razmik med stolpcema, da 12-px ločnica ne prekrije roba
+   platna ali tipkovnice (poteg ob robu grafa premika graf, ne spreminja širine). */
+.gc:has(> .split-handle:not([hidden])), .sc:has(> .split-handle:not([hidden])) { column-gap: 12px; }
 .gc-row.selected, .gc-row.editing { background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface)); }
 .gc-row.editing { box-shadow: inset 3px 0 0 var(--accent); }
 .gc-side { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 0 6px; background: var(--surface-2); align-self: stretch; }

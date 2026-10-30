@@ -2663,7 +2663,7 @@
   "win.reset": "Obnovit rozložení",
   "win.resetDone": "Rozložení bylo obnoveno.",
   "split.resize": "Změnit šířku",
-  "split.hint": "Tažením změníš šířku. Dvojklik vrátí výchozí.",
+  "split.hint": "Tažením změníš šířku. Dvojklik vrátí výchozí šířku.",
   "split.showList": "Zobrazit seznam konverzací",
   "split.settingNote": "Na počítači a tabletu změníš šířku částí stránky (seznam konverzací, výklad, simulace, kalkulačka) přetažením oddělovače mezi nimi.",
   "full.close": "Zavřít",

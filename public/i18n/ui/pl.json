@@ -2669,7 +2669,7 @@
   "win.reset": "Przywróć układ",
   "win.resetDone": "Układ został przywrócony.",
   "split.resize": "Zmień szerokość",
-  "split.hint": "Przeciągnij, aby zmienić szerokość. Dwuklik przywraca domyślną.",
+  "split.hint": "Przeciągnij, aby zmienić szerokość. Dwuklik przywraca domyślną szerokość.",
   "split.showList": "Pokaż listę rozmów",
   "split.settingNote": "Na komputerze i tablecie zmienisz szerokość części strony (lista rozmów, wyjaśnienie, symulacje, kalkulator), przeciągając separator między nimi.",
   "full.close": "Zamknij",

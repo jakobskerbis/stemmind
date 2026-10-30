@@ -141,7 +141,7 @@ export default {
   "win.reset": "Ponastavi postavitev",
   "win.resetDone": "Postavitev je ponastavljena.",
   "split.resize": "Spremeni širino",
-  "split.hint": "Povleci, da spremeniš širino. Dvoklik vrne privzeto.",
+  "split.hint": "Povleci, da spremeniš širino. Dvoklik vrne privzeto širino.",
   "split.showList": "Pokaži seznam pogovorov",
   "split.settingNote": "Na računalniku in tablici spremeniš širino delov strani (seznam pogovorov, razlaga, simulacije, kalkulator), tako da povlečeš ločnico med njimi.",
   "full.close": "Zapri",

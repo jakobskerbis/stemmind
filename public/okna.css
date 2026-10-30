@@ -228,7 +228,7 @@ body.vr-busy, body.vr-busy * { cursor: grabbing !important; user-select: none !i
 .split-x::before { top: 0; bottom: 0; left: 50%; width: 2px; margin-left: -1px; }
 .split-y::before { left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; }
 .split-grip {
-  position: sticky; display: block; border-radius: 3px; background: var(--border);
+  position: sticky; display: block; border-radius: 3px; background: color-mix(in srgb, var(--muted) 55%, var(--border));
   box-shadow: 0 0 0 2px var(--bg); transition: background-color 0.15s, transform 0.15s;
 }
 .split-x .split-grip { top: calc(50% - 18px); width: 6px; height: 36px; margin: 0 auto; }
@@ -237,6 +237,9 @@ body.vr-busy, body.vr-busy * { cursor: grabbing !important; user-select: none !i
 .split-handle:hover .split-grip, .split-handle:focus-visible .split-grip, .split-handle.dragging .split-grip { background: var(--accent); }
 .split-x:focus-visible .split-grip { transform: scaleX(1.35); }
 .split-y:focus-visible .split-grip { transform: scaleY(1.35); }
+/* Skrit seznam pogovorov: ločnica je ob robu vsebnika, zato je cela znotraj njega (ne pol čez rob). */
+.split-collapsed > .split-x { transform: none; }
+[dir="rtl"] .split-collapsed > .split-x { transform: translateX(-100%); }
 /* Na dotik (tablica) širše območje za prst. */
 @media (pointer: coarse) {
   .split-x { width: 28px; }
