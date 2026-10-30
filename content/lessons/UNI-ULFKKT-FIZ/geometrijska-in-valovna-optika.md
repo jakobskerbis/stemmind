@@ -5,6 +5,8 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
+Pri gastroskopiji zdravnik skozi upogljivo cevko vidi steno želodca, čeprav cevka med potjo večkrat zavije. Ko se v bazenu potopiš in pogledaš poševno navzgor proti gladini, ne vidiš neba, temveč srebrno ogledalo, v katerem se zrcali dno. Prvo je medicinska naprava, drugo igra na počitnicah, a za obema stoji isti pojav. Svetloba, ki iz gostejše snovi pod dovolj poševnim kotom zadene mejo z redkejšo, ne more ven in se v celoti odbije: to je **totalni odboj**.
+
 Svetloba je glavni vir informacij o svetu okoli nas in eno najpomembnejših orodij v laboratoriju. Mikroskop, spektrofotometer, refraktometer, optično vlakno, laser in fotoaparat delujejo na podlagi nekaj preprostih zakonov optike. Biolog z mikroskopom opazuje celice, kemik z refraktometrom meri koncentracijo sladkorja, inženir po optičnem vlaknu prenaša podatke, farmacevt s polarimetrom in spektrometrom preverja čistost zdravila.
 
 Optiko obravnavamo na dva načina:
@@ -13,6 +15,10 @@ Optiko obravnavamo na dva načina:
 - **Valovna optika** upošteva, da je svetloba elektromagnetno valovanje z valovno dolžino nekaj sto nanometrov. Z njo razložimo **interferenco** (barve milnih mehurčkov, uklonska mrežica v spektrometru) in **uklon**, ki postavlja mejo, kako drobne podrobnosti lahko vidimo z mikroskopom.
 
 ## Razlaga
+
+Mikavna predstava je, da je svetloba le snop ravnih žarkov in da je ločljivost mikroskopa omejena samo s tem, kako dobro so brušene leče: z dovolj popolnim steklom bi videli poljubno drobne podrobnosti. Prvi del te predstave je zelo uporaben in z njim razložimo lom, totalni odboj in leče. Drugi del je napačen; popravi ga šele valovna narava svetlobe.
+
+### Žarki: lom, odboj in leče
 
 **1. Lomni količnik.** Svetloba ima v praznem prostoru hitrost $c_0 = 3{,}00 \cdot 10^8\,\mathrm{m/s}$, v snovi pa manjšo hitrost $c$. **Lomni količnik** snovi je
 
@@ -36,7 +42,7 @@ Pri prehodu v optično gostejšo snov ($n_2 > n_1$) se žarek lomi **k pravokotn
 
 $$\sin\alpha_m = \frac{n_2}{n_1}.$$
 
-Pri večjih vpadnih kotih se svetloba v celoti odbije. Na tem delujejo optična vlakna, prizme v daljnogledih in refraktometri.
+Pri večjih vpadnih kotih se svetloba v celoti odbije. Totalni odboj ni odboj od posebej gladke ali zrcalne ploskve: zgodi se na povsem prozorni meji, a le pri prehodu iz optično gostejše v optično redkejšo snov. Na tem delujejo optična vlakna, prizme v daljnogledih in refraktometri.
 
 **4. Disperzija.** Lomni količnik je odvisen od valovne dolžine; v steklu je za modro svetlobo večji kot za rdečo. Zato prizma razkloni belo svetlobo v spekter in zato nastane mavrica.
 
@@ -49,6 +55,10 @@ $$\frac{1}{a} + \frac{1}{b} = \frac{1}{f}.$$
 $$M = \frac{y'}{y} = -\frac{b}{a};$$
 
 negativen predznak pomeni obrnjeno sliko. **Lomnost** leče je $1/f$, enota je **dioptrija**, $1\,\mathrm{dpt} = 1\,\mathrm{m^{-1}}$. Lomnosti tankih leč, ki so tesno skupaj, se seštejejo. Goriščno razdaljo določajo krivinski radiji ploskev in lomni količnik: $1/f = (n - 1)(1/r_1 + 1/r_2)$ za izbočeni ploskvi v zraku (izdolbeno ploskev vzamemo z negativnim radijem).
+
+### Kjer žarki ne zadoščajo: svetloba kot valovanje
+
+Žarkovna slika ne pove, zakaj se milni mehurček obarva ali zakaj dva snopa svetlobe skupaj lahko dasta temo. Za to potrebujemo valovanje.
 
 **6. Svetloba kot valovanje: interferenca.** Ko se srečata dve **koherentni** valovanji (z enako frekvenco in stalno fazno razliko), se njuni polji seštejeta. Kjer je razlika poti $\Delta$ celoštevilski večkratnik valovne dolžine, je **ojačitev**, kjer je liha polovica valovne dolžine, je **oslabitev**:
 
@@ -63,6 +73,10 @@ Na zaslonu na razdalji $L \gg d$ so proge enakomerno razmaknjene za $\Delta y = 
 **8. Uklonska mrežica.** Mrežica ima veliko enako razmaknjenih rež s **konstanto mrežice** $d$ (npr. $600$ rež na milimeter pomeni $d = 1{,}67\,\mu\mathrm{m}$). Ojačitve so pri istih kotih kot pri dveh režah, $d\sin\theta = m\lambda$, a so zelo ozke in svetle. Ker je kot ojačitve odvisen od $\lambda$, mrežica razkloni svetlobo v spekter, zato je srce mnogih spektrometrov. Največji red je $m \le d/\lambda$, ker je $\sin\theta \le 1$.
 
 **9. Interferenca na tankih plasteh.** Svetloba, odbita na zgornji in spodnji ploskvi tanke plasti z debelino $h$ in lomnim količnikom $n$, interferira. Pri pravokotnem vpadu je razlika poti $2nh$, pri odboju na optično gostejši snovi pa se faza dodatno spremeni za pol valovne dolžine. Od tod barve milnih mehurčkov in oljnih madežev ter protiodbojne plasti na lečah.
+
+### Uklon: meja, ki je ne odpravi nobena leča
+
+Zdaj lahko popravimo mikavno predstavo z začetka. Tudi popolna leča ima končno odprtino, svetloba pa se na vsaki odprtini ukloni.
 
 **10. Uklon.** Valovanje se za oviro ali odprtino ukloni, torej zaide tudi v geometrijsko senco. Pri reži s širino $D$ so temne proge pri $D\sin\theta = m\lambda$ ($m = \pm1, \pm2, \dots$); osrednja svetla proga ima kotno polširino $\sin\theta \approx \lambda/D$. Pri okrogli odprtini s premerom $D$ je prvi temni kolobar pri $\sin\theta \approx 1{,}22\,\lambda/D$. Ta kot je **mejna ločljivost**: dveh točk, ki ju vidimo pod manjšim kotom, z napravo ne moremo ločiti.
 
@@ -94,7 +108,7 @@ $n_1\sin\alpha = n_2\sin\beta$, $\sin\alpha_m = n_\mathrm{zrak}/n_\mathrm{voda}$
 
 ### Primer 2
 
-Predmet, visok $2{,}0\,\mathrm{cm}$, postavimo $15\,\mathrm{cm}$ pred zbiralno lečo z goriščno razdaljo $10\,\mathrm{cm}$. Kje nastane slika, kolikšna je povečava in kakšna je slika? Kaj se spremeni, če predmet premaknemo na razdaljo $6{,}0\,\mathrm{cm}$ pred lečo?
+Na optični klopi v praktikumu postavimo predmet, visok $2{,}0\,\mathrm{cm}$, $15\,\mathrm{cm}$ pred zbiralno lečo z goriščno razdaljo $10\,\mathrm{cm}$. Kje nastane slika, kolikšna je povečava in kakšna je slika? Kaj se spremeni, če predmet premaknemo na razdaljo $6{,}0\,\mathrm{cm}$ pred lečo?
 
 **Podatki:** $y = 2{,}0\,\mathrm{cm}$, $a_1 = 15\,\mathrm{cm}$, $a_2 = 6{,}0\,\mathrm{cm}$, $f = 10\,\mathrm{cm}$ (zbiralna leča)
 **Iščemo:** razdaljo slike $b$, povečavo $M$, velikost slike $y'$ in vrsto slike za obe legi predmeta

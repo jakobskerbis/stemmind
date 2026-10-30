@@ -5,7 +5,7 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Zakaj je kuhinjska sol trdna snov s tališčem $801\,^\circ\mathrm{C}$, voda tekočina, ogljikov dioksid pa plin? Zakaj je molekula vode upognjena, molekula $\mathrm{CO_2}$ pa linearna? Zakaj se sladkor raztaplja v vodi, olje pa ne? Odgovor na vsa ta vprašanja je v **kemijski vezi** in v **silah med molekulami**.
+Na kuhinjskem pultu so sol, sladkor in olje. Sladkor se v suhi ponvi kmalu stopi v karamelo, sol pa ostane trdna, saj ima tališče $801\,^\circ\mathrm{C}$. V vodi se sladkor raztopi tako kot sol, olje pa splava na vrh juhe. Molekula vode je upognjena, molekula $\mathrm{CO_2}$ iz mehurčkov v kisli vodi pa linearna. Preden bereš naprej, ugani: kaj imata skupnega sol in sladkor, da se oba topita v vodi, in kaj ju loči? Ključ do uganke sta **kemijska vez** in **sile med molekulami**.
 
 V gimnaziji si spoznal ionsko in kovalentno vez ter Lewisove strukture. Na fakulteti te pojme poglobimo in jih povežemo:
 
@@ -18,7 +18,11 @@ To je temelj za organsko kemijo, biokemijo, farmacijo in znanost o materialih.
 
 ## Razlaga
 
-**1. Elektronegativnost in vrste vezi.** **Elektronegativnost** $\chi$ je merilo, kako močno atom v vezi privlači skupne elektrone. Na Paulingovi lestvici je najvišja pri fluoru ($3{,}98$), visoka pri kisiku ($3{,}44$), dušiku ($3{,}04$) in kloru ($3{,}16$), nizka pri alkalijskih kovinah (natrij $0{,}93$). Razlika $\Delta\chi$ med vezanima atomoma okvirno pove vrsto vezi:
+### Elektronegativnost in vrste vezi
+
+**Elektronegativnost** $\chi$ je merilo, kako močno atom v vezi privlači skupne elektrone. Na Paulingovi lestvici je najvišja pri fluoru ($3{,}98$), visoka pri kisiku ($3{,}44$), dušiku ($3{,}04$) in kloru ($3{,}16$), nizka pri alkalijskih kovinah (natrij $0{,}93$).
+
+Primerjaj tri snovi, ki vse vsebujejo klor. Kuhinjska sol $\mathrm{NaCl}$ ($\Delta\chi = 3{,}16 - 0{,}93 = 2{,}23$) je trd kristal ionov. Vodikov klorid $\mathrm{HCl}$ ($\Delta\chi = 0{,}96$) je plin iz molekul z delnima nabojema. Klor $\mathrm{Cl_2}$ ($\Delta\chi = 0$) je plin iz povsem simetričnih molekul. Vzorec: večja kot je razlika, bolj se skupni par pomakne k enemu atomu, pri največjih razlikah pa elektron preide v celoti. Iz takih primerjav izhaja okvirno pravilo za razliko $\Delta\chi$ med vezanima atomoma:
 
 - $\Delta\chi < 0{,}4$: **nepolarna kovalentna** vez (elektroni so enakomerno porazdeljeni, npr. $\mathrm{Cl_2}$, vez $\mathrm{C{-}H}$),
 - $0{,}4 \le \Delta\chi \le 1{,}7$: **polarna kovalentna** vez (delna naboja $\delta^+$ in $\delta^-$, npr. $\mathrm{H{-}Cl}$, $\mathrm{O{-}H}$),
@@ -26,15 +30,27 @@ To je temelj za organsko kemijo, biokemijo, farmacijo in znanost o materialih.
 
 Meje niso ostre: prehod od kovalentne do ionske vezi je zvezen.
 
-**2. Ionska vez.** Atom z nizko ionizacijsko energijo (kovina) odda elektrone, atom z visoko elektronsko afiniteto (nekovina) jih sprejme. Nastali kationi in anioni se privlačijo z električno silo v vse smeri, zato ne tvorijo molekul, ampak **ionsko kristalno mrežo**. Moč mreže opisuje **mrežna energija**: energija, ki se sprosti, ko iz plinastih ionov nastane mol kristala. Iz Coulombovega zakona sledi, da je približno sorazmerna z $\frac{z_+ z_-}{r_+ + r_-}$: večja naboja in manjša iona dasta trdnejšo mrežo (in višje tališče). Ionske snovi so trde, krhke, v talini in raztopini prevajajo električni tok.
+### Ionska vez
 
-**3. Kovalentna vez.** Atoma si delita elektronski par. **Lewisova struktura** prikaže vezne in nevezne (proste) elektronske pare. Postopek: (1) preštej valenčne elektrone (pri ionih prištej ali odštej naboj), (2) poveži atome z enojnimi vezmi, (3) dopolni oktete zunanjih atomov, (4) ostanek postavi na osrednji atom, (5) po potrebi tvori dvojne ali trojne vezi. **Formalni naboj** atoma je
+Atom z nizko ionizacijsko energijo (kovina) odda elektrone, atom z visoko elektronsko afiniteto (nekovina) jih sprejme. Nastali kationi in anioni se privlačijo z električno silo v vse smeri, zato ne tvorijo molekul, ampak **ionsko kristalno mrežo**. Moč mreže opisuje **mrežna energija**: energija, ki se sprosti, ko iz plinastih ionov nastane mol kristala. Iz Coulombovega zakona sledi, da je približno sorazmerna z $\frac{z_+ z_-}{r_+ + r_-}$: večja naboja in manjša iona dasta trdnejšo mrežo (in višje tališče). Ionske snovi so trde, krhke, v talini in raztopini prevajajo električni tok.
+
+### Kovalentna vez
+
+Atoma si delita elektronski par. **Lewisova struktura** prikaže vezne in nevezne (proste) elektronske pare. Postopek: (1) preštej valenčne elektrone (pri ionih prištej ali odštej naboj), (2) poveži atome z enojnimi vezmi, (3) dopolni oktete zunanjih atomov, (4) ostanek postavi na osrednji atom, (5) po potrebi tvori dvojne ali trojne vezi. **Formalni naboj** atoma je
 
 $$FN = (\text{valenčni } e^-) - (\text{nevezni } e^-) - \tfrac{1}{2}(\text{vezni } e^-);$$
 
 najboljša struktura ima formalne naboje čim bližje nič. **Red vezi** (enojna, dvojna, trojna) je povezan z dolžino in energijo vezi: za ogljik je $\mathrm{C{-}C}$ dolga približno $154\,\mathrm{pm}$ ($347\,\mathrm{kJ/mol}$), $\mathrm{C{=}C}$ $134\,\mathrm{pm}$ ($614\,\mathrm{kJ/mol}$), $\mathrm{C{\equiv}C}$ $120\,\mathrm{pm}$ ($839\,\mathrm{kJ/mol}$).
 
-**4. Model VSEPR.** Elektronski pari okoli osrednjega atoma se med seboj odbijajo in se razporedijo čim dlje narazen. Štejemo **elektronske skupine**: vsak vezani atom (ne glede na red vezi) in vsak nevezni par. Zapis $\mathrm{AX}_m\mathrm{E}_n$ pomeni osrednji atom $\mathrm{A}$, $m$ vezanih atomov in $n$ neveznih parov.
+### Model VSEPR
+
+Elektronski pari okoli osrednjega atoma se med seboj odbijajo in se razporedijo čim dlje narazen. Štejemo **elektronske skupine**: vsak vezani atom (ne glede na red vezi) in vsak nevezni par. Zapis $\mathrm{AX}_m\mathrm{E}_n$ pomeni osrednji atom $\mathrm{A}$, $m$ vezanih atomov in $n$ neveznih parov.
+
+:::premisli
+Metan $\mathrm{CH_4}$ ima okoli ogljika štiri vezi in kot $109{,}5^\circ$. Amonijak $\mathrm{NH_3}$ ima okoli dušika tri vezi in en nevezni par, torej prav tako štiri skupine. Bo kot $\mathrm{H{-}N{-}H}$ večji ali manjši od $109{,}5^\circ$?
+---
+Manjši, okoli $107^\circ$. Razporeditev skupin je še vedno tetraedrska, a nevezni par je bliže jedru in se odbija močneje kot vezni, zato potisne vezi skupaj.
+:::
 
 - $2$ skupini: linearno, $180^\circ$ ($\mathrm{CO_2}$),
 - $3$ skupine: trigonalno planarno, $120^\circ$ ($\mathrm{BF_3}$); z enim neveznim parom kotna oblika ($\mathrm{SO_2}$),
@@ -44,7 +60,9 @@ najboljša struktura ima formalne naboje čim bližje nič. **Red vezi** (enojna
 
 Nevezni pari se odbijajo močneje kot vezni, zato kote stisnejo. **Razporeditev elektronskih skupin** in **oblika molekule** (razporeditev atomov) se razlikujeta, kadar ima osrednji atom nevezne pare.
 
-**5. Hibridizacija.** Atomske orbitale osrednjega atoma se pomešajo v enakovredne **hibridne orbitale**, usmerjene tako, kot zahteva VSEPR. Število hibridnih orbital je enako številu elektronskih skupin:
+### Hibridizacija
+
+Atomske orbitale osrednjega atoma se pomešajo v enakovredne **hibridne orbitale**, usmerjene tako, kot zahteva VSEPR. Število hibridnih orbital je enako številu elektronskih skupin:
 
 - $2$ skupini: $sp$ (ena $s$ in ena $p$), $180^\circ$,
 - $3$ skupine: $sp^2$, $120^\circ$,
@@ -52,9 +70,13 @@ Nevezni pari se odbijajo močneje kot vezni, zato kote stisnejo. **Razporeditev 
 
 Hibridne orbitale tvorijo **vezi $\sigma$** (prekrivanje vzdolž osi vezi). Nehibridizirane orbitale $p$ se lahko bočno prekrijejo v **vezi $\pi$**. Enojna vez je ena $\sigma$, dvojna $\sigma + \pi$, trojna $\sigma + 2\pi$. Ker vez $\pi$ zahteva vzporedni orbitali $p$, okoli dvojne vezi ni prostega vrtenja (od tod izomerija *cis-trans*).
 
-**6. Polarnost molekule.** Polarne vezi še ne pomenijo polarne molekule. **Dipolni moment** molekule je vektorska vsota dipolnih momentov vezi. V simetričnih molekulah ($\mathrm{CO_2}$, $\mathrm{BF_3}$, $\mathrm{CH_4}$, $\mathrm{CCl_4}$) se izničijo in molekula je nepolarna; v upognjeni $\mathrm{H_2O}$ ali piramidalnem $\mathrm{NH_3}$ se ne.
+### Polarnost molekule
 
-**7. Medmolekulske sile** (od najšibkejših do najmočnejših, okvirno):
+Polarne vezi še ne pomenijo polarne molekule. **Dipolni moment** molekule je vektorska vsota dipolnih momentov vezi. V simetričnih molekulah ($\mathrm{CO_2}$, $\mathrm{BF_3}$, $\mathrm{CH_4}$, $\mathrm{CCl_4}$) se izničijo in molekula je nepolarna; v upognjeni $\mathrm{H_2O}$ ali piramidalnem $\mathrm{NH_3}$ se ne.
+
+### Medmolekulske sile
+
+Od najšibkejših do najmočnejših, okvirno:
 
 - **disperzijske (Londonove) sile**: med vsemi molekulami, zaradi trenutnih dipolov; večje z večjim številom elektronov in večjo površino molekule,
 - **dipol-dipol**: med polarnimi molekulami,
@@ -63,11 +85,17 @@ Hibridne orbitale tvorijo **vezi $\sigma$** (prekrivanje vzdolž osi vezi). Nehi
 
 Vse so mnogo šibkejše od kovalentnih vezi ($150$ do $1000\,\mathrm{kJ/mol}$). Močnejše medmolekulske sile pomenijo višje vrelišče, višjo površinsko napetost in višjo viskoznost. Za topnost velja »podobno se topi v podobnem«.
 
+:::premisli
+Zdaj se vrni k uganki s pulta: zakaj se sladkor raztopi v vodi, olje pa ne, čeprav sladkor ni ionska snov kot sol?
+---
+Sladkor ima veliko skupin $\mathrm{O{-}H}$ in z vodo tvori vodikove vezi, sol pa se veže z vodo prek sil ion-dipol. Olje je skoraj nepolarno in ima le disperzijske sile; molekule vode raje ostanejo povezane med seboj z vodikovimi vezmi in olje izrinejo.
+:::
+
 ## Rešeni primeri
 
 ### Primer 1 (lažji)
 
-Z elektronegativnostmi razvrsti vezi v $\mathrm{NaCl}$, $\mathrm{HCl}$, $\mathrm{Cl_2}$ in vez $\mathrm{C{-}H}$ v metanu. Elektronegativnosti: $\chi(\mathrm{Na}) = 0{,}93$, $\chi(\mathrm{H}) = 2{,}20$, $\chi(\mathrm{C}) = 2{,}55$, $\chi(\mathrm{Cl}) = 3{,}16$.
+Z elektronegativnostmi razvrsti vezi v kuhinjski soli $\mathrm{NaCl}$, v $\mathrm{HCl}$, $\mathrm{Cl_2}$ in vez $\mathrm{C{-}H}$ v metanu. Elektronegativnosti: $\chi(\mathrm{Na}) = 0{,}93$, $\chi(\mathrm{H}) = 2{,}20$, $\chi(\mathrm{C}) = 2{,}55$, $\chi(\mathrm{Cl}) = 3{,}16$.
 
 **Podatki:** $\chi(\mathrm{Na}) = 0{,}93$, $\chi(\mathrm{H}) = 2{,}20$, $\chi(\mathrm{C}) = 2{,}55$, $\chi(\mathrm{Cl}) = 3{,}16$; vezi $\mathrm{Na{-}Cl}$, $\mathrm{H{-}Cl}$, $\mathrm{Cl{-}Cl}$, $\mathrm{C{-}H}$
 **Iščemo:** vrsto vsake vezi in na katerem atomu je delni negativni naboj
@@ -81,7 +109,7 @@ $\Delta\chi = \chi_{\text{večja}} - \chi_{\text{manjša}}$; $\Delta\chi < 0{,}4
 1. $\mathrm{NaCl}$: $\Delta\chi = 3{,}16 - 0{,}93 = 2{,}23 > 1{,}7$, ionska vez; klor je anion $\mathrm{Cl^-}$.
 2. $\mathrm{HCl}$: $\Delta\chi = 3{,}16 - 2{,}20 = 0{,}96$, polarna kovalentna; $\delta^-$ je na kloru.
 3. $\mathrm{Cl_2}$: $\Delta\chi = 0$, nepolarna kovalentna.
-4. $\mathrm{C{-}H}$: $\Delta\chi = 2{,}55 - 2{,}20 = 0{,}35 < 0{,}4$, praktično nepolarna.
+4. $\mathrm{C{-}H}$: $\Delta\chi = 2{,}55 - 2{,}20 = 0{,}35 < 0{,}4$, praktično nepolarna, ker ogljik le malo močneje privlači skupni par kot vodik.
 5. Odgovor: $\mathrm{NaCl}$ ima ionsko vez, $\mathrm{HCl}$ polarno kovalentno (negativni pol na $\mathrm{Cl}$), $\mathrm{Cl_2}$ in $\mathrm{C{-}H}$ pa nepolarni kovalentni vezi.
 
 ### Primer 2
@@ -124,6 +152,29 @@ Okoli $\mathrm{O}$: $\mathrm{AX_2E_2}$, $4$ skupine $\to sp^3$, kotna oblika. Si
 4. Etanol: ima skupino $\mathrm{O{-}H}$, zato poleg disperzijskih in dipolnih sil tvori **vodikove vezi** z nevezanimi pari kisika sosednjih molekul.
 5. Ker so molske mase (in s tem disperzijske sile) skoraj enake, vrstni red določajo dodatne sile: propan (le disperzijske) $<$ eter (dipol-dipol) $\ll$ etanol (vodikove vezi).
 6. Odgovor: kisik je v obeh spojinah $sp^3$ s kotno obliko; vrelišča naraščajo od propana ($-42\,^\circ\mathrm{C}$) prek etra ($-24\,^\circ\mathrm{C}$) do etanola ($78\,^\circ\mathrm{C}$), ker se dodajo najprej dipolne sile in nato vodikove vezi, ki jih je treba pri vrenju pretrgati.
+
+### Primer 4 – zdaj ti
+
+Sladkor (saharoza) se v čaju raztopi v nekaj sekundah. V njegovih molekulah so vezi $\mathrm{C{-}H}$, $\mathrm{C{-}O}$ in $\mathrm{O{-}H}$. Razvrsti jih po polarnosti in pojasni, katere sile povežejo sladkor z vodo. Elektronegativnosti: $\chi(\mathrm{H}) = 2{,}20$, $\chi(\mathrm{C}) = 2{,}55$, $\chi(\mathrm{O}) = 3{,}44$.
+
+**Podatki:** $\chi(\mathrm{H}) = 2{,}20$, $\chi(\mathrm{C}) = 2{,}55$, $\chi(\mathrm{O}) = 3{,}44$; vezi $\mathrm{C{-}H}$, $\mathrm{C{-}O}$, $\mathrm{O{-}H}$
+**Iščemo:** vrstni red polarnosti vezi in vrsto sil med sladkorjem in vodo
+
+:::formula
+$\Delta\chi = \chi_{\text{večja}} - \chi_{\text{manjša}}$; vodikova vez nastane, ko je $\mathrm{H}$ vezan na $\mathrm{O}$, $\mathrm{N}$ ali $\mathrm{F}$
+:::
+
+**Rešitev:**
+
+1. $\mathrm{C{-}H}$: $\Delta\chi = 2{,}55 - 2{,}20 = 0{,}35$, praktično nepolarna, ker je razlika pod mejo $0{,}4$.
+2. $\mathrm{C{-}O}$: $\Delta\chi = 3{,}44 - 2{,}55 = 0{,}89$, polarna kovalentna; $\delta^-$ je na kisiku, ker ta močneje privlači skupni par.
+3. Izračunaj še $\Delta\chi$ za $\mathrm{O{-}H}$ in sklepaj, katere sile povežejo sladkor z vodo, nato preveri:
+
+:::premisli
+Katera vez je najbolj polarna in kakšne sile nastanejo med molekulami sladkorja in vode?
+---
+$\mathrm{O{-}H}$: $\Delta\chi = 3{,}44 - 2{,}20 = 1{,}24$, najbolj polarna vez (vrstni red $\mathrm{O{-}H} > \mathrm{C{-}O} > \mathrm{C{-}H}$). Ker je vodik vezan na kisik, skupine $\mathrm{O{-}H}$ sladkorja tvorijo vodikove vezi z vodo; zato se sladkor raztaplja.
+:::
 
 ## Pogoste napake
 
@@ -213,24 +264,40 @@ Za $\mathrm{N_2}$ je red $3$, za $\mathrm{O_2}$ pa $2$, pri čemer ima $\mathrm{
 
 ? Kakšna je oblika molekule vode?
 - linearna
+~ Upoštevaš le dve vezi in pozabiš na dva nevezna para kisika; ta odbijata vezi in molekulo upogneta.
 + kotna (upognjena)
 - trigonalno planarna
+~ Trigonalna oblika zahteva tri skupine; kisik jih ima štiri (dve vezi in dva nevezna para).
 > Kisik ima dve vezi in dva nevezna para ($\mathrm{AX_2E_2}$): elektronske skupine so razporejene tetraedrsko, atomi pa tvorijo kotno obliko s kotom okoli $104{,}5^\circ$.
 
 ? Kakšna je hibridizacija ogljika v $\mathrm{CO_2}$?
 + $sp$
 - $sp^2$
+~ Dvojna vez te spomni na eten ($sp^2$), a hibridizacijo določa število skupin okoli ogljika, tu sta le dve.
 - $sp^3$
+~ Vsako dvojno vez si štel kot dve skupini; pri VSEPR je večkratna vez ena sama skupina.
 > Ogljik ima dve elektronski skupini (dve dvojni vezi, vsaka šteje enkrat), zato je linearen in $sp$ hibridiziran.
 
 ? Med molekulami katere snovi delujejo vodikove vezi?
 - $\mathrm{CH_4}$
+~ Metan ima veliko vodikov, a so vezani na ogljik; vez $\mathrm{C{-}H}$ je skoraj nepolarna in vodik skoraj nima delnega pozitivnega naboja.
 - $\mathrm{CCl_4}$
+~ Vezi $\mathrm{C{-}Cl}$ so polarne, a molekula je simetrična in sploh nima vodika; med molekulami delujejo le disperzijske sile.
 + $\mathrm{CH_3OH}$
 > Metanol ima vodik, vezan na kisik. V $\mathrm{CH_4}$ in $\mathrm{CCl_4}$ ni vezi $\mathrm{O{-}H}$, $\mathrm{N{-}H}$ ali $\mathrm{F{-}H}$.
 
 ? Katera molekula je nepolarna, čeprav ima polarne vezi?
 - $\mathrm{H_2O}$
+~ Vezi $\mathrm{O{-}H}$ so res polarne, a voda je upognjena, zato se dipola seštejeta in molekula je polarna.
 + $\mathrm{CO_2}$
 - $\mathrm{NH_3}$
+~ Trije enaki atomi zvenijo simetrično, a nevezni par naredi piramido; dipoli kažejo vsi na isto stran in se ne izničijo.
 > V linearni molekuli $\mathrm{CO_2}$ sta dipola vezi $\mathrm{C{=}O}$ nasprotno usmerjena in se izničita.
+
+? Maja kuha testenine in reče: »Ko voda v loncu zavre, molekule vode razpadejo na vodik in kisik.« Kaj je narobe?
+- Nič, mehurčki so vodik in kisik.
+~ Mehurčki so vodna para; za razcep vezi $\mathrm{O{-}H}$ ($463\,\mathrm{kJ/mol}$) je treba veliko več energije, kot je dobi voda pri $100\,^\circ\mathrm{C}$.
++ Pretrgajo se vodikove vezi med molekulami, molekule $\mathrm{H_2O}$ ostanejo cele.
+- Pretrgajo se ionske vezi med ioni $\mathrm{H^+}$ in $\mathrm{OH^-}$.
+~ Voda je iz molekul s kovalentnimi vezmi, ne ionska snov; ionov je v čisti vodi zanemarljivo malo.
+> Pri vrenju se premagajo medmolekulske sile (pri vodi predvsem vodikove vezi); kovalentne vezi v molekulah ostanejo, zato je para še vedno $\mathrm{H_2O}$.

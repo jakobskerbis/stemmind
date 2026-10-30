@@ -5,11 +5,23 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Doslej smo telesa obravnavali kot točke: zanimalo nas je le, kam se premakne njihovo masno središče. Kolo, vrata, rotor centrifuge, vijačni ključ ali podlaket pa se tudi **vrtijo**, in pri tem ni vseeno, kje in v kateri smeri prijemlje sila. Za opis vrtenja potrebujemo tri nove količine: **navor** (vrtilni učinek sile), **vztrajnostni moment** (vztrajnost pri vrtenju) in **vrtilno količino** (vrtilni »dvojček« gibalne količine).
-
-Ugotovili bomo, da je vrtenje okoli stalne osi matematično enako prememu gibanju, le z drugimi črkami. Z istimi zamislimi razložimo delovanje vzvodov v telesu, stabilnost žiroskopa, pirueto drsalke, kotaljenje koles in vrtenje molekul, ki prispeva k toplotni kapaciteti plinov.
+Sošolec trdi: »Dva enako težka rotorja motor zavrti enako hitro, masa je pač masa.« Pri gibanju naravnost bi imel prav, pri vrtenju pa ne. Ventilator v prenosniku, motorček za vibracije v telefonu in rotor trdega diska so rotorji, pri katerih šteje, kako daleč od osi je masa, ne le koliko je je. Telefon vrtenje tudi meri: žiroskop v njem zazna, kako hitro ga obračaš. Za opis vrtenja potrebujemo tri nove količine – **navor**, **vztrajnostni moment** in **vrtilno količino** –, ki imajo vsaka svoj par pri gibanju naravnost. Sošolčevo trditev ovržeš, ko vidiš, v čem se para razlikujeta.
 
 ## Razlaga
+
+### Kaj ostane enako in kaj je novo
+
+Vrtenje okoli stalne osi je zgrajeno po vzoru gibanja naravnost; vsaka količina ima svoj par. Razlike so tisto, česar se je treba naučiti na novo:
+
+| gibanje naravnost | vrtenje okoli stalne osi | kaj je novo |
+|---|---|---|
+| pot $x$, hitrost $v$ | kot $\varphi$, kotna hitrost $\omega$ | vse točke imajo isto $\omega$, ne pa iste $v = \omega r$ |
+| sila $F$ | navor $M = r_\perp F$ | šteje tudi, kje in v kateri smeri sila prijemlje |
+| masa $m$ | vztrajnostni moment $J = \sum m_ir_i^2$ | odvisen od razporeditve mase in izbire osi |
+| $F = ma$ | $M = J\alpha$ | |
+| $G = mv$ | $\Gamma = J\omega$ | telo lahko z notranjimi silami samo spremeni $J$ |
+
+### Kinematika in navor
 
 **1. Togo telo in vrtenje okoli stalne osi.** Togo telo je idealizacija, pri kateri se razdalje med deli telesa ne spreminjajo. Pri vrtenju okoli stalne osi se vse točke zavrtijo za enak kot $\varphi$, zato imajo enako kotno hitrost $\omega = \mathrm{d}\varphi/\mathrm{d}t$ in enak kotni pospešek $\alpha = \mathrm{d}\omega/\mathrm{d}t$. Točka na razdalji $r$ od osi ima obodno hitrost $v = \omega r$.
 
@@ -18,6 +30,8 @@ Ugotovili bomo, da je vrtenje okoli stalne osi matematično enako prememu gibanj
 $$\vec{M} = \vec{r} \times \vec{F}, \qquad M = rF\sin\varphi = r_\perp F.$$
 
 Tu je $\varphi$ kot med $\vec{r}$ in $\vec{F}$, $r_\perp = r\sin\varphi$ pa **ročica**: pravokotna razdalja od osi do nosilke sile. Enota je $\mathrm{N\,m}$ (ne pišemo J, čeprav je enota enaka). Sila, katere nosilka gre skozi os, nima navora. Smer vektorja $\vec{M}$ določa pravilo desne roke: prsti v smeri vrtenja, palec v smeri navora.
+
+### Vztrajnost pri vrtenju
 
 **3. Vztrajnostni moment.** Kinetična energija vrtečega se telesa je vsota prispevkov posameznih delov: $W_k = \sum\tfrac{1}{2}m_iv_i^2 = \tfrac{1}{2}\left(\sum m_ir_i^2\right)\omega^2$. Izraz v oklepaju je **vztrajnostni moment** glede na izbrano os:
 
@@ -41,6 +55,14 @@ $$\sum M = J\alpha.$$
 
 Primerjava z gibanjem naravnost: sila $\leftrightarrow$ navor, masa $\leftrightarrow$ vztrajnostni moment, pospešek $\leftrightarrow$ kotni pospešek.
 
+:::premisli
+Kolesi imata enako maso in polmer: pri prvem je vsa masa v tankem obroču, drugo je poln kolut. Katero se pri enakem navoru hitreje zavrti?
+---
+Kolut. Obroč ima $J = mR^2$, kolut le $\tfrac{1}{2}mR^2$, ker je del njegove mase blizu osi. Pri enakem navoru ima kolut dvakrat večji kotni pospešek, čeprav sta kolesi enako težki.
+:::
+
+### Energija in vrtilna količina
+
 **5. Energija in delo pri vrtenju.** Kinetična energija vrtenja je $W_k = \tfrac{1}{2}J\omega^2$, delo navora $A = \int M\,\mathrm{d}\varphi$ (pri stalnem navoru $A = M\varphi$), moč $P = M\omega$. Telo, ki se **kotali** brez spodrsavanja, ima obe vrsti kinetične energije:
 
 $$W_k = \tfrac{1}{2}mv_{ms}^2 + \tfrac{1}{2}J_{ms}\omega^2, \qquad v_{ms} = \omega R.$$
@@ -50,6 +72,14 @@ $$W_k = \tfrac{1}{2}mv_{ms}^2 + \tfrac{1}{2}J_{ms}\omega^2, \qquad v_{ms} = \ome
 $$\sum\vec{M} = \frac{\mathrm{d}\vec{\Gamma}}{\mathrm{d}t}.$$
 
 Če je vsota zunanjih navorov nič, se vrtilna količina **ohranja**: $J_1\omega_1 = J_2\omega_2$. Telo, ki zmanjša vztrajnostni moment (drsalka pritegne roke), se zavrti hitreje.
+
+:::premisli
+Mirno sediš na vrtljivem stolu in nad glavo držiš kolo s kolesa. Kolo zavrtiš v smeri urinega kazalca (gledano od zgoraj). Kaj naredi stol?
+---
+Zavrti se v nasprotno smer. Med teboj in kolesom delujejo le notranje sile, zato skupna vrtilna količina ostane nič: vrtilna količina kolesa v eno smer mora biti uravnotežena z enako veliko vrtilno količino tebe in stola v drugo.
+:::
+
+### Ravnovesje in postopek
 
 **7. Ravnovesje togega telesa.** Togo telo miruje, če sta izpolnjena oba pogoja:
 
@@ -74,7 +104,7 @@ $M = rF\sin\varphi$
 
 **Rešitev:**
 
-1. Ročica je $r_\perp = r\sin\varphi = 0{,}25\,\mathrm{m} \cdot \sin 60^\circ \approx 0{,}217\,\mathrm{m}$.
+1. Šteje le pravokotna razdalja od osi do nosilke sile, zato je ročica $r_\perp = r\sin\varphi = 0{,}25\,\mathrm{m} \cdot \sin 60^\circ \approx 0{,}217\,\mathrm{m}$.
 2. Navor: $M = r_\perp F = 0{,}217\,\mathrm{m} \cdot 80\,\mathrm{N} \approx 17{,}3\,\mathrm{N\,m}$.
 3. Pri pravokotni sili bi bil navor $0{,}25 \cdot 80\,\mathrm{N\,m} = 20\,\mathrm{N\,m}$, kar je največ, kar lahko s to silo dosežemo.
 4. Odgovor: navor na matico je približno $17{,}3\,\mathrm{N\,m}$.
@@ -92,11 +122,11 @@ Utež: $mg - F_v = ma$. Kolut: $F_vR = J\alpha$. Vez: $a = \alpha R$. Sledi $a =
 
 **Rešitev:**
 
-1. Vztrajnostni moment koluta: $J = \tfrac{1}{2} \cdot 3{,}0\,\mathrm{kg} \cdot (0{,}10\,\mathrm{m})^2 = 0{,}015\,\mathrm{kg\,m^2}$, torej $J/R^2 = 1{,}5\,\mathrm{kg}$.
+1. Vztrajnostni moment koluta potrebujemo v enačbi za kolut: $J = \tfrac{1}{2} \cdot 3{,}0\,\mathrm{kg} \cdot (0{,}10\,\mathrm{m})^2 = 0{,}015\,\mathrm{kg\,m^2}$, torej $J/R^2 = 1{,}5\,\mathrm{kg}$.
 2. Iz enačbe za kolut in vezi: $F_v = J\alpha/R = (J/R^2)\,a$. Vstavimo v enačbo za utež: $mg = (m + J/R^2)\,a$.
 3. Pospešek: $a = \dfrac{0{,}50 \cdot 9{,}81}{0{,}50 + 1{,}5}\,\mathrm{m/s^2} \approx 2{,}45\,\mathrm{m/s^2}$.
-4. Sila vrvice: $F_v = m(g - a) = 0{,}50\,\mathrm{kg} \cdot (9{,}81 - 2{,}45)\,\mathrm{m/s^2} \approx 3{,}68\,\mathrm{N}$, kar je manj od teže uteži ($4{,}91\,\mathrm{N}$).
-5. Hitrost po $1{,}0\,\mathrm{m}$: $v = \sqrt{2ah} = \sqrt{2 \cdot 2{,}45 \cdot 1{,}0}\,\mathrm{m/s} \approx 2{,}21\,\mathrm{m/s}$.
+4. Sila vrvice iz enačbe za utež: $F_v = m(g - a) = 0{,}50\,\mathrm{kg} \cdot (9{,}81 - 2{,}45)\,\mathrm{m/s^2} \approx 3{,}68\,\mathrm{N}$, kar je manj od teže uteži ($4{,}91\,\mathrm{N}$).
+5. Pospešek je stalen, zato je hitrost po $1{,}0\,\mathrm{m}$: $v = \sqrt{2ah} = \sqrt{2 \cdot 2{,}45 \cdot 1{,}0}\,\mathrm{m/s} \approx 2{,}21\,\mathrm{m/s}$.
 6. Preizkus z energijo: $mgh = 4{,}905\,\mathrm{J}$; $\tfrac{1}{2}mv^2 + \tfrac{1}{2}J(v/R)^2 \approx 1{,}23\,\mathrm{J} + 3{,}68\,\mathrm{J} = 4{,}91\,\mathrm{J}$. ✓
 7. Odgovor: utež pada s pospeškom približno $2{,}45\,\mathrm{m/s^2}$, sila vrvice je približno $3{,}68\,\mathrm{N}$, po $1{,}0\,\mathrm{m}$ pa ima utež hitrost približno $2{,}21\,\mathrm{m/s}$.
 
@@ -115,10 +145,34 @@ $J_1\omega_1 = J_2\omega_2$, $\omega = 2\pi\nu$, $W_k = \tfrac{1}{2}J\omega^2$
 
 1. Teža in sila ležaja imata nosilke vzdolž osi ali skozi njo, zato nimata navora okoli navpične osi. Vrtilna količina se ohranja.
 2. $\nu_2 = \nu_1 J_1/J_2 = 0{,}50\,\mathrm{s^{-1}} \cdot 6{,}0/2{,}0 = 1{,}5\,\mathrm{s^{-1}}$.
-3. Kotni hitrosti: $\omega_1 = 2\pi \cdot 0{,}50\,\mathrm{s^{-1}} = \pi\,\mathrm{s^{-1}} \approx 3{,}14\,\mathrm{s^{-1}}$, $\omega_2 = 3\pi\,\mathrm{s^{-1}} \approx 9{,}42\,\mathrm{s^{-1}}$.
+3. Za energijo potrebujemo kotni hitrosti v $\mathrm{s^{-1}}$, ne obratov na sekundo: $\omega_1 = 2\pi \cdot 0{,}50\,\mathrm{s^{-1}} = \pi\,\mathrm{s^{-1}} \approx 3{,}14\,\mathrm{s^{-1}}$, $\omega_2 = 3\pi\,\mathrm{s^{-1}} \approx 9{,}42\,\mathrm{s^{-1}}$.
 4. $W_{k1} = \tfrac{1}{2} \cdot 6{,}0 \cdot 3{,}14^2\,\mathrm{J} \approx 29{,}6\,\mathrm{J}$, $W_{k2} = \tfrac{1}{2} \cdot 2{,}0 \cdot 9{,}42^2\,\mathrm{J} \approx 88{,}8\,\mathrm{J}$.
 5. Kinetična energija se je povečala za približno $59{,}2\,\mathrm{J}$. Ker je $W_k = \Gamma^2/(2J)$ in se $\Gamma$ ohranja, se energija poveča za faktor $J_1/J_2 = 3$.
 6. Odgovor: stol se vrti s $1{,}5$ obrata na sekundo, kinetična energija naraste s $29{,}6\,\mathrm{J}$ na $88{,}8\,\mathrm{J}$; razliko, približno $59\,\mathrm{J}$, opravijo študentove mišice, ko vlečejo uteži proti osi.
+
+### Primer 4 – zdaj ti
+
+Za snemanje izdelka v $360^\circ$ položiš telefon na sredino vrtljive ploščadi. Ploščad je poln homogen kolut z maso $0{,}80\,\mathrm{kg}$ in polmerom $0{,}15\,\mathrm{m}$, telefon ima glede na os vztrajnostni moment $2{,}0 \cdot 10^{-4}\,\mathrm{kg\,m^2}$. Motor naj ploščad iz mirovanja v $2{,}0\,\mathrm{s}$ enakomerno zavrti do $0{,}25$ obrata na sekundo. Kolikšen navor mora dajati motor? Trenje zanemari.
+
+**Podatki:** $m_p = 0{,}80\,\mathrm{kg}$, $R = 0{,}15\,\mathrm{m}$, $J_t = 2{,}0 \cdot 10^{-4}\,\mathrm{kg\,m^2}$, $\omega_0 = 0$, $t = 2{,}0\,\mathrm{s}$, $\nu = 0{,}25\,\mathrm{s^{-1}}$
+**Iščemo:** navor motorja $M$
+
+:::formula
+$J_p = \tfrac{1}{2}m_pR^2$, $J = J_p + J_t$, $\omega = 2\pi\nu$, $\alpha = \omega/t$, $M = J\alpha$
+:::
+
+**Rešitev:**
+
+1. Ploščad je poln kolut: $J_p = 0{,}5 \cdot 0{,}80 \cdot 0{,}15^2\,\mathrm{kg\,m^2} = 0{,}0090\,\mathrm{kg\,m^2}$.
+2. Vztrajnostna momenta okoli iste osi se seštejeta: $J = 0{,}0090\,\mathrm{kg\,m^2} + 0{,}00020\,\mathrm{kg\,m^2} = 0{,}0092\,\mathrm{kg\,m^2}$.
+3. Zakon vrtenja zahteva kotno hitrost v $\mathrm{s^{-1}}$: $\omega = 2\pi \cdot 0{,}25\,\mathrm{s^{-1}} \approx 1{,}57\,\mathrm{s^{-1}}$.
+4. Zdaj ti: izračunaj kotni pospešek ploščadi in navor motorja.
+
+:::premisli
+Kolikšna sta kotni pospešek in navor?
+---
+$\alpha = \omega/t = 1{,}57\,\mathrm{s^{-1}}/2{,}0\,\mathrm{s} \approx 0{,}785\,\mathrm{s^{-2}}$, $M = J\alpha = 0{,}0092\,\mathrm{kg\,m^2} \cdot 0{,}785\,\mathrm{s^{-2}} \approx 7{,}2 \cdot 10^{-3}\,\mathrm{N\,m}$. Telefon prispeva le okoli $2\,\%$ vztrajnostnega momenta, ker je blizu osi.
+:::
 
 ## Pogoste napake
 
@@ -192,24 +246,40 @@ Kolikšen je vztrajnostni moment palice z maso $1{,}2\,\mathrm{kg}$ in dolžino 
 
 ? Na kljuko vrat, $0{,}50\,\mathrm{m}$ od tečajev, delujemo s silo $20\,\mathrm{N}$ pravokotno na vrata. Kolikšen je navor?
 - $40\,\mathrm{N\,m}$
+~ Silo si delil z ročico: $20/0{,}50 = 40$. Navor je zmnožek ročice in sile.
 + $10\,\mathrm{N\,m}$
 - $5{,}0\,\mathrm{N\,m}$
+~ Pomnožil si še z $\tfrac{1}{2}$, kot pri kinetični energiji. Pri pravokotni sili je navor kar $rF$.
 > $M = rF = 0{,}50\,\mathrm{m} \cdot 20\,\mathrm{N} = 10\,\mathrm{N\,m}$. $40\,\mathrm{N\,m}$ dobiš, če silo deliš z ročico namesto množiš.
 
 ? Kolikšen je vztrajnostni moment tanke palice z maso $m$ in dolžino $l$ glede na os skozi krajišče, pravokotno na palico?
 - $\tfrac{1}{12}ml^2$
+~ To velja za os skozi središče. Okoli krajišča je masa v povprečju dlje od osi, zato je $J$ večji (Steinerjev izrek).
 - $ml^2$
+~ Tako bi bilo, če bi bila vsa masa na drugem koncu, na razdalji $l$. Palica ima maso razporejeno od $0$ do $l$.
 + $\tfrac{1}{3}ml^2$
 > Po Steinerjevem izreku je $J = \tfrac{1}{12}ml^2 + m(l/2)^2 = \tfrac{1}{3}ml^2$. $\tfrac{1}{12}ml^2$ velja za os skozi središče.
 
 ? S klanca hkrati spustimo poln valj, polno kroglo in tanek obroč. Katero telo se, če se kotalijo brez spodrsavanja, prvo pripelje na dno?
 + Krogla.
 - Obroč.
+~ Obroč ima vso maso daleč od osi ($J = mR^2$), zato gre pri njem največji delež energije v vrtenje in je najpočasnejši.
 - Vsa hkrati.
+~ To velja za telesa, ki drsijo brez trenja. Pri kotaljenju je del energije v vrtenju, ta delež pa je odvisen od oblike telesa.
 > Pri kotaljenju je $v^2 = 2gh/(1 + J/(mR^2))$. Krogla ima najmanjše razmerje $J/(mR^2) = 2/5$, zato je najhitrejša; obroč z razmerjem $1$ je najpočasnejši.
 
 ? Drsalka med pirueto pritegne roke k telesu. Kaj se zgodi z njeno vrtilno količino in kinetično energijo?
 - Vrtilna količina se poveča, kinetična energija ostane enaka.
+~ Notranje sile vrtilne količine ne spremenijo, ta se brez zunanjih navorov ohranja. Spremeni se kinetična energija.
 + Vrtilna količina ostane enaka, kinetična energija se poveča.
 - Obe ostaneta enaki.
+~ Vrtilna količina se ohranja, kinetična energija pa ne: drsalka z mišicami opravi delo, ko pritegne roke.
 > Zunanjih navorov ni, zato se $\Gamma = J\omega$ ohranja. Ker je $W_k = \Gamma^2/(2J)$ in se $J$ zmanjša, se kinetična energija poveča; razliko opravijo mišice.
+
+? Rotor ventilatorja v prenosniku ima vztrajnostni moment $2{,}0 \cdot 10^{-6}\,\mathrm{kg\,m^2}$. Motor ga iz mirovanja v $0{,}50\,\mathrm{s}$ enakomerno zavrti do kotne hitrosti $400\,\mathrm{s^{-1}}$. Kolikšen je navor motorja?
+- $4{,}0 \cdot 10^{-4}\,\mathrm{N\,m}$
+~ Kotno hitrost si s časom pomnožil, namesto da bi jo delil: $\alpha = \omega/t$.
+- $8{,}0 \cdot 10^{-4}\,\mathrm{N\,m}$
+~ To je vrtilna količina $J\omega$ (v $\mathrm{kg\,m^2/s}$), ne navor. Navor je sprememba vrtilne količine na enoto časa.
++ $1{,}6 \cdot 10^{-3}\,\mathrm{N\,m}$
+> $\alpha = \omega/t = 400\,\mathrm{s^{-1}}/0{,}50\,\mathrm{s} = 800\,\mathrm{s^{-2}}$, zato $M = J\alpha = 2{,}0 \cdot 10^{-6}\,\mathrm{kg\,m^2} \cdot 800\,\mathrm{s^{-2}} = 1{,}6 \cdot 10^{-3}\,\mathrm{N\,m}$.
