@@ -78,28 +78,28 @@
 
   <h2>Kaj dobi učitelj</h2>
   <div class="grid g2">
-    <div class="tile"><h3>Brezplačen učiteljski račun</h3><p>Učitelj za svoj račun ne plača ničesar, tudi brez šolske licence.</p></div>
+    <div class="tile"><h3>Brezplačen učiteljski račun</h3><p>Učitelj za svoj račun ne plača ničesar, tudi brez šolske licence. <a href="/ucitelj.html">Odprite učiteljski račun</a></p></div>
     <div class="tile"><h3>Razredi</h3><p>Razred odprete v nekaj sekundah, učenci se pridružijo s kodo razreda.</p></div>
     <div class="tile"><h3>Pregled razreda</h3><p>Pri vsaki dodeljeni temi vidite, kdo jo je že opravil in kdo potrebuje pomoč.</p></div>
     <div class="tile"><h3>Razredne naloge</h3><p>Razredu dodelite teme z učne poti; učenci rešujejo naloge s takojšnjim preverjanjem in namigi.</p></div>
     <div class="tile"><h3>Izvoz CSV</h3><p>Rezultate razreda prenesete v preglednico z enim klikom.</p></div>
     <div class="tile"><h3>Zasebnost učencev</h3><p>Učitelj vidi samo razredne naloge in lige razreda, nikoli zasebnih pogovorov z inštruktorjem.</p></div>
   </div>
-  <p class="small">Prehod učenca na drugo šolo in izvoz njegovega napredka sta vedno brezplačna. Učenci z licenco dobijo vse vsebine šolskih predmetov licence in do {{dailyQuestions}} vprašanj inštruktorju na dan.</p>
+  <p class="small">Prehod učenca na drugo šolo in izvoz njegovega napredka sta vedno brezplačna. Učenci z licenco dobijo vse vsebine predmetov, ki jih licenca zajema, in {{dailyQuestions}}.</p>
 
   <h2>Cene</h2>
   <div class="grid g3">
     <div class="tile price"><h3>Licenca za razrede</h3><span class="amt">{{price.class}}</span><span class="per">na učenca na leto</span><p>Za posamezne razrede ali predmete.</p></div>
-    <div class="tile price best"><h3>Cela šola</h3><span class="amt">{{price.school}}</span><span class="per">na učenca na leto</span><p>Za vse učence šole.</p></div>
-    <div class="tile price"><h3>Pilotna šola</h3><span class="amt">{{price.pilot}}</span><span class="per">na učenca na leto, {{pilot.years}} leti</span><p>Za šole, ki z nami preizkusijo {{name}} in nam povedo, kaj izboljšati.</p></div>
+    <div class="tile price best"><h3>Cela šola</h3><span class="amt">{{price.school}}</span><span class="per">na učenca na leto</span><p>Za vse učence šole, po nižji ceni na učenca.</p></div>
+    <div class="tile price"><h3>Pilotna šola</h3><span class="amt">{{price.pilot}}</span><span class="per">na učenca na leto, za {{pilot.years}} leti</span><p>Za šole, ki z nami preizkusijo {{name}} in nam povedo, kaj izboljšati.</p></div>
   </div>
-  <p class="small">Končne cene bodo navedene na predračunu.</p>
+  <p class="small">Cena velja za vsakega učenca, ki ga licenca zajema. Končni znesek bo naveden na predračunu.</p>
 
   <h2>Kako poteka plačilo</h2>
   <ol class="steps">
-    <li><b>Naročilnica.</b> Šola pošlje naročilnico ali izpolni obrazec spodaj.</li>
+    <li><b>Naročilo.</b> Šola izpolni obrazec spodaj; številko naročilnice, če jo ima, vpiše v opombo.</li>
     <li><b>Predračun ali pogodba.</b> Pripravimo predračun (ali pogodbo, če jo šola potrebuje) s številom učencev in ceno.</li>
-    <li><b>e-Račun prek UJP.</b> Račun v obliki e-SLOG izstavimo iz računovodskega programa prek ponudnika e-računov, ki ga pošlje v UJP (Uprava RS za javna plačila).</li>
+    <li><b>E-račun prek UJP.</b> E-račun (e-SLOG) izstavimo prek ponudnika e-računov, ki ga pošlje v UJP (Uprava RS za javna plačila).</li>
     <li><b>Plačilo na TRR.</b> Šola plača na transakcijski račun v 30 dneh.</li>
   </ol>
   <p class="small">Za e-račun potrebujemo matično in davčno številko šole, pri proračunskih uporabnikih pa še šifro proračunskega uporabnika. Vse to vpišete v obrazec.</p>
@@ -107,11 +107,11 @@
   <h2>Pogosta vprašanja</h2>
   <div class="faq">
     <details><summary>Kdo je upravljavec osebnih podatkov učencev?</summary>
-      <p>Pri šolski licenci je šola upravljavec osebnih podatkov, {{name}} pa obdelovalec, ki podatke obdeluje samo po navodilih šole. Pred začetkom skupaj podpišemo pogodbo o obdelavi osebnih podatkov (člen 28 Splošne uredbe o varstvu podatkov). Podrobno: <a href="/zasebnost.html">Obvestilo o varstvu osebnih podatkov</a>.</p></details>
+      <p>Pri šolski licenci je šola upravljavec osebnih podatkov, {{name}} pa obdelovalec, ki podatke obdeluje samo po navodilih šole. Pred začetkom skupaj podpišemo pogodbo o obdelavi osebnih podatkov (28. člen Splošne uredbe o varstvu podatkov). Podrobno: <a href="/zasebnost.html">Obvestilo o varstvu osebnih podatkov</a>.</p></details>
     <details><summary>Ali učitelj vidi pogovore učencev z inštruktorjem?</summary>
       <p>Ne. Učitelj vidi samo rezultate pri temah, ki jih je dodelil razredu, in lestvico lige razreda. Zasebni pogovori, druge teme in ostali podatki iz profila učenca ostanejo zasebni.</p></details>
     <details><summary>Ali lahko najprej preizkusimo?</summary>
-      <p>Da. Učiteljski račun je brezplačen, zato lahko učitelj razred odpre takoj. Za šole, ki želijo daljši preizkus, je na voljo pilotna cena.</p></details>
+      <p>Da. Učiteljski račun je brezplačen, zato lahko učitelj razred odpre takoj: <a href="/ucitelj.html">Za učitelje</a>. Za šole, ki želijo daljši preizkus, je na voljo pilotna cena.</p></details>
     <details><summary>Kaj se zgodi, ko učenec zamenja šolo?</summary>
       <p>Učenec svoj napredek prenese na novo šolo ali ga izvozi. Oboje je vedno brezplačno, tudi brez licence.</p></details>
     <details><summary>Kako dolgo velja licenca?</summary>
@@ -119,17 +119,17 @@
   </div>
 
   <h2 id="narocilo">Naročilo ali povpraševanje</h2>
-  <p class="small">Obrazec nas ne zavezuje k ničemur, prav tako ne šole: odgovorimo vam s predračunom ali z vprašanji.</p>
+  <p class="small">Oddaja obrazca šole ne zavezuje k ničemur. Odgovorimo vam s predračunom ali z vprašanji.</p>
   <div class="order" id="order-box">
     <form id="order-form" class="form" novalidate data-prices="{{prices}}">
       <fieldset>
         <legend>Šola</legend>
         <div class="form">
           <label>Ime šole <input name="school" required maxlength="150" autocomplete="organization"></label>
-          <label>Naslov <input name="address" required maxlength="200" autocomplete="street-address" placeholder="Ulica 1, 1000 Ljubljana"></label>
+          <label>Naslov <input name="address" required maxlength="200" autocomplete="street-address" placeholder="npr. Šolska ulica 1, 1000 Ljubljana"></label>
           <div class="two">
             <label>Matična številka <input name="registrationNo" required inputmode="numeric" maxlength="12" pattern="[0-9 ]{7,12}" placeholder="7 ali 10 števk"></label>
-            <label>Davčna številka <input name="taxId" required maxlength="12" placeholder="SI12345678"></label>
+            <label>Davčna številka <input name="taxId" required maxlength="12" placeholder="npr. SI12345678"></label>
           </div>
           <label class="check"><input type="checkbox" name="budgetUser" id="budget-user"> <span>Šola je proračunski uporabnik (prejema e-račune prek UJP)</span></label>
           <label id="budget-code-row" hidden>Šifra proračunskega uporabnika <input name="budgetCode" inputmode="numeric" maxlength="5" pattern="[0-9]{5}" placeholder="5 števk"></label>
@@ -149,7 +149,7 @@
         <legend>Paket</legend>
         <label class="radio"><input type="radio" name="plan" value="class" required> Licenca za razrede ({{price.class}} na učenca na leto)</label>
         <label class="radio"><input type="radio" name="plan" value="school" checked> Cela šola ({{price.school}} na učenca na leto)</label>
-        <label class="radio"><input type="radio" name="plan" value="pilot"> Pilotna šola ({{price.pilot}} na učenca na leto, {{pilot.years}} leti)</label>
+        <label class="radio"><input type="radio" name="plan" value="pilot"> Pilotna šola ({{price.pilot}} na učenca na leto, za {{pilot.years}} leti)</label>
       </fieldset>
       <div class="two">
         <label>Okvirno število učencev <input name="students" type="number" inputmode="numeric" min="1" max="{{maxStudents}}" required></label>
@@ -161,7 +161,7 @@
       <label class="check"><input type="checkbox" name="consent" required> <span>{{consent}}</span></label>
       <p class="form-error" role="alert" hidden></p>
       <button class="primary" type="submit">Pošlji</button>
-      <p class="small muted">Podatke uporabimo samo za odgovor na to naročilo in za predračun. Ničesar ne pošiljamo samodejno.</p>
+      <p class="small muted">Podatke uporabimo samo za odgovor na to naročilo in za predračun. Samodejnih sporočil ne pošiljamo.</p>
     </form>
   </div>
 </main>
@@ -175,9 +175,9 @@
     var iso = function (d) { return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
     f.startDate.min = iso(today);
     f.startDate.max = iso(new Date(today.getFullYear() + 2, today.getMonth(), today.getDate() - 1));
-    // Privzeti začetek: 1. september (letos ali drugo leto).
-    var sep = new Date(today.getFullYear(), 8, 1);
-    f.startDate.value = iso(sep < today ? new Date(today.getFullYear() + 1, 8, 1) : sep);
+    // Privzeti začetek: med šolskim letom (september–april) danes, sicer 1. september.
+    var m = today.getMonth();
+    f.startDate.value = iso(m >= 8 || m <= 3 ? today : new Date(today.getFullYear(), 8, 1));
     var budget = document.getElementById("budget-user");
     var codeRow = document.getElementById("budget-code-row");
     budget.addEventListener("change", function () {

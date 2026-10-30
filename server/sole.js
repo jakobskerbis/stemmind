@@ -12,7 +12,7 @@ import { schoolDailyQuestions } from "./placila/pravice.js";
 
 export const ORDER_STATUSES = ["new", "contacted", "offer_sent", "won", "lost"];
 export const PLAN_LABELS = { class: "Licenca za razrede", school: "Cela šola", pilot: "Pilotna šola" };
-export const CONSENT_TEXT = "Strinjam se, da me glede tega naročila ali povpraševanja kontaktirate na navedeni e-naslov ali telefon.";
+export const CONSENT_TEXT = "Strinjam se, da me glede tega naročila ali povpraševanja kontaktirate po e-pošti ali telefonu.";
 export const ORDER_LIMITS = { perIpHour: 5, perDay: 100, maxStudents: 5000, maxNote: 1000 };
 const PAYMENT_DAYS = 30;
 
@@ -124,7 +124,7 @@ export function solePage() {
     "price.school": eurShort(P.school.eur),
     "price.pilot": eurShort(P.pilot.eur),
     "pilot.years": String(P.pilot.years),
-    dailyQuestions: String(schoolDailyQuestions()),
+    dailyQuestions: schoolDailyQuestions() > 0 ? `do ${schoolDailyQuestions()} vprašanj inštruktorju na dan` : "neomejeno število vprašanj inštruktorju",
     consent: CONSENT_TEXT,
     maxStudents: String(ORDER_LIMITS.maxStudents),
     maxNote: String(ORDER_LIMITS.maxNote),
@@ -215,7 +215,7 @@ export function mountSchoolOrders(app, store, { accounts, isLocalRequest }) {
     const now = Date.now();
     const ip = ipOf(req);
     const mine = recent(ip, now);
-    if (mine.length >= ORDER_LIMITS.perIpHour) return res.status(429).json({ error: "Preveč naročil v kratkem času. Poskusite čez eno uro ali nam pišite." });
+    if (mine.length >= ORDER_LIMITS.perIpHour) return res.status(429).json({ error: "Preveč naročil v kratkem času. Poskusite znova čez eno uro." });
     // Past za robote: skrito polje, ki ga človek ne izpolni. Odgovor je enak uspehu, a nič se ne shrani.
     if (typeof b.website === "string" && b.website.trim()) {
       hits.set(ip, [...mine, now]);
@@ -224,7 +224,7 @@ export function mountSchoolOrders(app, store, { accounts, isLocalRequest }) {
     const v = validateOrder(b, new Date(now));
     if (v.error) return res.status(400).json({ error: v.error });
     if (db.prepare("SELECT COUNT(*) AS n FROM school_orders WHERE created_at >= datetime('now', '-1 day')").get().n >= ORDER_LIMITS.perDay)
-      return res.status(429).json({ error: "Danes je prišlo veliko naročil. Poskusite jutri ali nam pišite." });
+      return res.status(429).json({ error: "Danes je prišlo veliko naročil. Poskusite znova jutri." });
     const o = v.order;
     const cols = Object.keys(o);
     const id = Number(db.prepare(`INSERT INTO school_orders (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")})`).run(...cols.map((k) => o[k])).lastInsertRowid);
