@@ -1,0 +1,13 @@
+# Samodejni predlogi posodobitev odvisnosti (varnostni popravki). Pregled: docs/varnost-podatkov.md.
+# Mobilna aplikacija (mobile/) ni vključena: Expo SDK posodabljamo skupaj, ne po paketih.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

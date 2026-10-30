@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getClient, isMockMode, MODEL, quickParams } from "./claude.js";
 import { cleanText } from "./settings.js";
+import { seal, unseal, sealJson, unsealJson, encryptionOn } from "./crypto-polje.js";
 
 export const AREAS = ["path", "tutor", "textbook", "competition", "design", "speed", "league"];
 export const AREA_NAMES = {
@@ -99,14 +100,14 @@ const parseRow = (r) => ({
   id: r.id,
   created_at: r.created_at,
   kind: r.kind,
-  name: r.name,
+  name: unseal(r.name),
   student_id: r.student_id,
   ratings: JSON.parse(r.ratings),
   recommend: r.recommend,
-  good: r.good || "",
-  bad: r.bad || "",
-  ideas: r.ideas || "",
-  interview: JSON.parse(r.interview),
+  good: unseal(r.good) || "",
+  bad: unseal(r.bad) || "",
+  ideas: unseal(r.ideas) || "",
+  interview: unsealJson(r.interview, []),
   lang: r.lang,
   device: r.device,
   screen: r.screen,
@@ -127,7 +128,7 @@ export class FeedbackStore {
         `INSERT INTO feedback (student_id, name, kind, ratings, recommend, good, bad, ideas, interview, lang, device, screen)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       )
-      .run(studentId, fb.name, fb.kind, JSON.stringify(fb.ratings), fb.recommend, fb.good, fb.bad, fb.ideas, JSON.stringify(fb.interview), fb.lang, fb.device, fb.screen);
+      .run(studentId, seal(fb.name), fb.kind, JSON.stringify(fb.ratings), fb.recommend, seal(fb.good), seal(fb.bad), seal(fb.ideas), sealJson(fb.interview), fb.lang, fb.device, fb.screen);
     this.writeFile();
     return Number(r.lastInsertRowid);
   }
@@ -135,8 +136,9 @@ export class FeedbackStore {
     return this.db.prepare("SELECT * FROM feedback ORDER BY id").all().map(parseRow);
   }
   // Datoteka je vedno cela kopija tabele, da jo lahko kdorkoli prebere brez baze.
+  // S ključem za šifriranje (produkcija) nešifrirane kopije ne pišemo; mnenja so v bazi in na /api/feedback.
   writeFile() {
-    if (!this.file) return;
+    if (!this.file || encryptionOn()) return;
     try {
       fs.mkdirSync(path.dirname(this.file), { recursive: true });
       const tmp = this.file + ".tmp";

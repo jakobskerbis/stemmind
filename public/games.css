@@ -95,6 +95,16 @@
 .gm-kidnew .gm-tile:nth-child(2n) { animation-delay: 0.06s; }
 .gm-kidnew .gm-tile:nth-child(3n) { animation-delay: 0.12s; }
 @keyframes gm-kidpop { from { transform: scale(0.6); opacity: 0; } to { transform: none; opacity: 1; } }
+.gm-trends { margin: 0 0 12px; padding: 10px 14px; }
+.gm-trends summary { cursor: pointer; font-weight: 800; }
+.gm-trends h3 { margin: 12px 0 4px; font-size: 0.95rem; }
+.gm-trends ol { margin: 0; padding-inline-start: 22px; }
+.gm-trends button { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; }
+.gm-wishlink { margin-inline-end: 8px; }
+.gm-rate { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin: 10px 0 2px; font-weight: 700; }
+.gm-rate button { min-width: 48px; min-height: 44px; font-size: 1.35rem; line-height: 1; border: 2px solid var(--border); border-radius: 12px; }
+.gm-rate button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.gm-rate small { flex-basis: 100%; min-height: 1.2em; text-align: center; color: var(--muted); font-weight: 600; }
 @media (prefers-reduced-motion: reduce) { .gm-kidnew .gm-tile { animation: none; } }
 /* Zaklenjena igra: siva, s ključavnico; klik pokaže, kako jo odkleneš. */
 .gm-tile.gm-locked { filter: grayscale(0.85) brightness(0.82); }
@@ -254,6 +264,8 @@ body.gm-on .gm-host { flex: 1; min-height: 0; }
 .gm-item, .zb-card, .gm-fresh-item { position: relative; }
 .gm-new { position: absolute; top: -8px; left: -8px; z-index: 1; padding: 1px 7px; border-radius: 99px; font-size: 0.72rem; font-weight: 900; letter-spacing: 0.02em; color: #fff; background: #16a34a; border: 2px solid var(--surface, #fff); pointer-events: none; }
 .gm-new-dot { display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; background: #16a34a; vertical-align: middle; }
+/* nova vrsta igre: ploščica ima overflow: hidden, zato oznaka znotraj, desno od ikone vrste igre */
+.gm-tile > .gm-new { top: 10px; left: auto; inset-inline-start: 46px; }
 .gm-fresh { margin: 12px 0 0; padding: 12px 14px; }
 .gm-fresh h2, .gm-wish h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 1.05rem; }
 .gm-fresh-row { display: flex; gap: 10px; overflow-x: auto; padding: 12px 12px 6px 4px; }

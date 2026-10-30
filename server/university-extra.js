@@ -31766,6 +31766,1072 @@ export const EXTRA_FACULTIES = [
             ]
           ]
         ]
+      ],
+      "PMAT": [
+        "Matematika",
+        "MAT",
+        [
+          "MAT_A",
+          "STATISTIKA"
+        ],
+        [
+          [
+            "Diferencialne enačbe v farmaciji",
+            [
+              "Diferencialne enačbe prvega reda | ločljive spremenljivke, linearna enačba, začetni pogoj",
+              "Eksponentna rast in razpad | kinetika prvega reda, razpolovni čas, izločanje učinkovine",
+              "Sistemi linearnih diferencialnih enačb | predelčni modeli, rešitev za dva predelka"
+            ]
+          ]
+        ]
+      ],
+      "PFBG": [
+        "Farmacevtska biologija z genetiko",
+        "BIO",
+        [],
+        [
+          [
+            "Celica",
+            [
+              "Zgradba evkariontske celice | organeli, celična membrana, citoskelet",
+              "Rastlinska celica | celična stena, plastidi, vakuola, sekundarni metaboliti",
+              "Celični cikel in delitev | mitoza, mejoza, regulacija celičnega cikla"
+            ]
+          ],
+          [
+            "Rastlinska tkiva in organi",
+            [
+              "Rastlinska tkiva | tvorna, krovna, prevajalna in izločalna tkiva",
+              "Rastlinski organi | korenina, steblo, list, cvet, plod in seme",
+              "Mikroskopija rastlinskih drog | anatomske značilnosti, identifikacija drog"
+            ]
+          ],
+          [
+            "Sistematika zdravilnih rastlin",
+            [
+              "Načela sistematike | nomenklatura, taksonomske kategorije",
+              "Pomembne družine zdravilnih rastlin | ustnatice, košarnice, kobulnice, razhudnikovke"
+            ]
+          ],
+          [
+            "Genetika",
+            [
+              "Mendlovo dedovanje | dominantnost, recesivnost, monohibridno in dihibridno križanje",
+              "Kromosomi in spolno vezano dedovanje | kariotip, vezani geni, rodovniki",
+              "Mutacije in genske bolezni | tipi mutacij, kromosomske nepravilnosti",
+              "Od gena do proteina | prepisovanje, prevajanje, genetski kod"
+            ]
+          ]
+        ]
+      ],
+      "PSAK": [
+        "Splošna in anorganska kemija",
+        "KEM",
+        [
+          "SPL_KEM",
+          "ANORG"
+        ],
+        [
+          [
+            "Anorganske spojine v farmaciji",
+            [
+              "Anorganske učinkovine in pomožne snovi | antacidi, soli železa, cinkov oksid, kalcijeve soli",
+              "Kovinski kompleksi v medicini | cisplatin, kelatna terapija, kontrastna sredstva"
+            ]
+          ]
+        ]
+      ],
+      "PFK1": [
+        "Farmacevtska kemija I",
+        "KEM",
+        [],
+        [
+          [
+            "Uvod v farmacevtsko kemijo",
+            [
+              "Zdravilo in učinkovina | definicije, viri učinkovin, razvoj zdravil",
+              "Nomenklatura učinkovin | mednarodna nelastniška imena INN, kemijska imena"
+            ]
+          ],
+          [
+            "Zgradba in lastnosti učinkovin",
+            [
+              "Funkcionalne skupine učinkovin | kislost, bazičnost, polarnost",
+              "Fizikalno-kemijske lastnosti | pKa, logP, topnost, ionizacija pri fiziološkem pH",
+              "Stereokemija učinkovin | kiralnost, enantiomeri, razlike v delovanju"
+            ]
+          ],
+          [
+            "Tarče in delovanje",
+            [
+              "Interakcije učinkovina–tarča | vodikove vezi, ionske in hidrofobne interakcije",
+              "Biološke tarče | receptorji, encimi, ionski kanalčki, prenašalci",
+              "Odnos med strukturo in delovanjem | farmakofor, bioizosterija"
+            ]
+          ],
+          [
+            "Presnova učinkovin",
+            [
+              "Reakcije I. faze | oksidacije s citokromi P450, redukcije, hidrolize",
+              "Reakcije II. faze | glukuronidacija, sulfatacija, konjugacija z glutationom",
+              "Predzdravila | aktivacija, primeri predzdravil"
+            ]
+          ]
+        ]
+      ],
+      "PFINF": [
+        "Farmacevtska informatika",
+        "RAC",
+        [],
+        [
+          [
+            "Informacijski viri",
+            [
+              "Viri informacij o zdravilih | povzetek glavnih značilnosti zdravila, navodilo za uporabo, farmakopeja",
+              "Iskanje po bibliografskih bazah | PubMed, iskalni nizi, logični operatorji",
+              "Ocena kakovosti informacij | vrste virov, zanesljivost, citiranje"
+            ]
+          ],
+          [
+            "Obdelava podatkov",
+            [
+              "Preglednice | formule, funkcije, grafi, urejanje podatkov",
+              "Opisna statistika v preglednici | povprečje, mediana, standardni odklon, histogram",
+              "Podatkovne baze | tabele, relacije, poizvedbe"
+            ]
+          ],
+          [
+            "Informatika v zdravstvu",
+            [
+              "Kemijske strukture v računalniku | SMILES, strukturne baze, risanje molekul",
+              "Elektronski recept in e-zdravje | sistemi v lekarni, varstvo osebnih podatkov"
+            ]
+          ]
+        ]
+      ],
+      "PMIKRO": [
+        "Mikrobiologija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna mikrobiologija",
+            [
+              "Zgradba bakterijske celice | celična stena po Gramu, membrana, bički, endospore",
+              "Rast in razmnoževanje bakterij | rastna krivulja, gojišča, pogoji rasti",
+              "Mikrobna genetika | plazmidi, konjugacija, transformacija, transdukcija"
+            ]
+          ],
+          [
+            "Nadzor mikroorganizmov",
+            [
+              "Sterilizacija in dezinfekcija | toplotni postopki, filtracija, kemična sredstva",
+              "Protimikrobna zdravila | mehanizmi delovanja antibiotikov, protiglivna zdravila",
+              "Odpornost proti antibiotikom | mehanizmi, testiranje občutljivosti, antibiogram"
+            ]
+          ],
+          [
+            "Povzročitelji okužb",
+            [
+              "Patogene bakterije | stafilokoki, streptokoki, enterobakterije, mikobakterije",
+              "Virusi | zgradba, razmnoževanje, pomembni humani virusi",
+              "Glive in paraziti | kvasovke, plesni, protozoji"
+            ]
+          ],
+          [
+            "Mikrobiologija v farmaciji",
+            [
+              "Mikrobiološka kakovost zdravil | sterilni in nesterilni izdelki, farmakopejske zahteve",
+              "Aseptično delo | čisti prostori, validacija, preskus sterilnosti"
+            ]
+          ]
+        ]
+      ],
+      "PUVF": [
+        "Uvod v farmacijo",
+        "BIO",
+        [],
+        [
+          [
+            "Farmacevtska stroka",
+            [
+              "Zgodovina farmacije | razvoj lekarništva, pomembni mejniki",
+              "Poklic farmacevta | področja dela, lekarniška, bolnišnična, industrijska farmacija",
+              "Etika v farmaciji | kodeks farmacevtske etike, zaupnost"
+            ]
+          ],
+          [
+            "Zdravila in sistem",
+            [
+              "Zdravilo in pot zdravila do bolnika | razvoj, dovoljenje za promet, predpisovanje, izdaja",
+              "Farmacevtski sistem v Sloveniji | lekarniška dejavnost, zakonodaja, zdravstveno zavarovanje",
+              "Varna uporaba zdravil | neželeni učinki, farmakovigilanca"
+            ]
+          ],
+          [
+            "Komunikacija",
+            [
+              "Komunikacija z bolnikom | svetovanje ob izdaji zdravila, aktivno poslušanje",
+              "Strokovno pisanje in predstavitev | struktura poročila, navajanje virov"
+            ]
+          ]
+        ]
+      ],
+      "PFT1": [
+        "Farmacevtska tehnologija I",
+        "KEM",
+        [],
+        [
+          [
+            "Uvod in pomožne snovi",
+            [
+              "Farmacevtske oblike in poti aplikacije | razvrstitev, farmakopeja",
+              "Pomožne snovi | polnila, veziva, razgrajevala, drsila, konzervansi"
+            ]
+          ],
+          [
+            "Tekoče farmacevtske oblike",
+            [
+              "Raztopine | topnost, povečevanje topnosti, sirupi, kapljice",
+              "Disperzni sistemi | suspenzije, emulzije, stabilnost",
+              "Parenteralne oblike | injekcije, infuzije, izotoničnost, sterilnost"
+            ]
+          ],
+          [
+            "Poltrdne farmacevtske oblike",
+            [
+              "Mazila in kreme | podlage, izdelava, reologija",
+              "Supozitoriji | podlage, izdelava, sproščanje",
+              "Dermalna in transdermalna dostava | prehajanje skozi kožo, obliži"
+            ]
+          ],
+          [
+            "Trdne farmacevtske oblike",
+            [
+              "Praški in granulati | mletje, mešanje, vlažno in suho granuliranje",
+              "Tablete | stiskanje, lastnosti tablet, farmakopejski preskusi",
+              "Kapsule in obloženi izdelki | trde in mehke kapsule, filmske obloge"
+            ]
+          ],
+          [
+            "Magistralna izdelava",
+            [
+              "Izdelava zdravil v lekarni | recept, preračuni, dobra praksa",
+              "Kakovost in stabilnost izdelkov | preskušanje, rok uporabnosti, shranjevanje"
+            ]
+          ]
+        ]
+      ],
+      "POK": [
+        "Organska kemija",
+        "KEM",
+        [
+          "ORG_1",
+          "ORG_2"
+        ],
+        [
+          [
+            "Heterocikli in biomolekule",
+            [
+              "Heterociklične spojine | piridin, pirol, imidazol, purini, reaktivnost",
+              "Organska kemija biomolekul | ogljikovi hidrati, aminokisline, lipidi"
+            ]
+          ]
+        ]
+      ],
+      "PFIZF": [
+        "Fizikalna farmacija",
+        "KEM",
+        [],
+        [
+          [
+            "Trdno stanje",
+            [
+              "Kristalne in amorfne snovi | polimorfija, hidrati, solvati",
+              "Velikost in oblika delcev | porazdelitev velikosti, specifična površina, pretočnost praškov"
+            ]
+          ],
+          [
+            "Raztapljanje in topnost",
+            [
+              "Topnost učinkovin | vpliv pH, temperature, sotopila",
+              "Hitrost raztapljanja | Noyes-Whitneyjeva enačba, preskus sproščanja",
+              "Porazdelitveni koeficient | logP, logD, pomen za absorpcijo"
+            ]
+          ],
+          [
+            "Površine in disperzni sistemi",
+            [
+              "Površinska napetost in surfaktanti | adsorpcija, micele, kritična micelna koncentracija",
+              "Koloidni sistemi | stabilnost, zeta potencial, DLVO teorija"
+            ]
+          ],
+          [
+            "Reologija in polimeri",
+            [
+              "Reologija | newtonske in nenewtonske tekočine, viskoznost, tiksotropija",
+              "Polimeri v farmaciji | lastnosti, raztopine polimerov, hidrogeli"
+            ]
+          ],
+          [
+            "Difuzija",
+            [
+              "Difuzija in prehajanje membran | Fickova zakona, permeabilnost",
+              "Osmoza in izotoničnost | osmotski tlak, izotonične raztopine, izračun"
+            ]
+          ]
+        ]
+      ],
+      "PFBK": [
+        "Farmacevtska biokemija",
+        "KEM",
+        [
+          "BIOKEM"
+        ],
+        [
+          [
+            "Ogljikovi hidrati in lipidi",
+            [
+              "Zgradba ogljikovih hidratov in lipidov | monosaharidi, polisaharidi, maščobne kisline, fosfolipidi",
+              "Presnova lipidov | β-oksidacija, sinteza maščobnih kislin, holesterol",
+              "Glukoneogeneza in glikogen | uravnavanje glukoze v krvi, vloga hormonov"
+            ]
+          ],
+          [
+            "Dušikove spojine",
+            [
+              "Presnova aminokislin | transaminacija, cikel sečnine",
+              "Presnova nukleotidov | sinteza purinov in pirimidinov, razgradnja"
+            ]
+          ],
+          [
+            "Encimi kot tarče zdravil",
+            [
+              "Inhibitorji encimov kot zdravila | reverzibilna in ireverzibilna inhibicija, primeri",
+              "Signalne poti | receptorji, sekundarni obveščevalci, kinaze"
+            ]
+          ],
+          [
+            "Biokemijske metode",
+            [
+              "Izolacija in analiza proteinov | elektroforeza, kromatografija, prenos western",
+              "Določanje encimske aktivnosti | spektrofotometrični testi, enote aktivnosti"
+            ]
+          ]
+        ]
+      ],
+      "PFK2": [
+        "Farmacevtska kemija II",
+        "KEM",
+        [],
+        [
+          [
+            "Učinkovine na avtonomni živčni sistem",
+            [
+              "Holinergične učinkovine | agonisti in antagonisti muskarinskih receptorjev, zaviralci acetilholinesteraze",
+              "Adrenergične učinkovine | agonisti in antagonisti adrenergičnih receptorjev, zaviralci beta"
+            ]
+          ],
+          [
+            "Učinkovine na osrednji živčni sistem",
+            [
+              "Anksiolitiki in hipnotiki | benzodiazepini, mehanizem na receptorju GABA-A",
+              "Antidepresivi in antipsihotiki | zaviralci ponovnega privzema, antagonisti dopaminskih receptorjev",
+              "Analgetiki | opioidi, odnos med strukturo in delovanjem"
+            ]
+          ],
+          [
+            "Lokalni anestetiki in mišični relaksanti",
+            [
+              "Lokalni anestetiki | estri in amidi, delovanje na natrijeve kanalčke",
+              "Nevromišični blokatorji | depolarizirajoči in nedepolarizirajoči relaksanti"
+            ]
+          ],
+          [
+            "Sinteza učinkovin",
+            [
+              "Sintezne poti izbranih učinkovin | ključne stopnje, izhodne spojine",
+              "Analiza učinkovin | identifikacija, čistota, sorodne snovi"
+            ]
+          ]
+        ]
+      ],
+      "PFK3": [
+        "Farmacevtska kemija III",
+        "KEM",
+        [],
+        [
+          [
+            "Srčno-žilne učinkovine",
+            [
+              "Antihipertenzivi | zaviralci ACE, sartani, kalcijevi antagonisti, diuretiki",
+              "Hipolipemiki in antikoagulanti | statini, zaviralci faktorja Xa, varfarin"
+            ]
+          ],
+          [
+            "Protimikrobne učinkovine",
+            [
+              "Beta-laktamski antibiotiki | penicilini, cefalosporini, zaviralci beta-laktamaz",
+              "Druge protibakterijske učinkovine | makrolidi, kinoloni, tetraciklini, sulfonamidi",
+              "Protivirusne in protiglivne učinkovine | nukleozidni analogi, zaviralci proteaz, azoli"
+            ]
+          ],
+          [
+            "Protivnetne in hormonske učinkovine",
+            [
+              "Nesteroidna protivnetna zdravila | zaviralci COX, struktura in delovanje",
+              "Steroidni hormoni | kortikosteroidi, spolni hormoni, struktura steroidnega skeleta",
+              "Antidiabetiki | inzulin, metformin, sulfonilsečnine, zaviralci SGLT2"
+            ]
+          ],
+          [
+            "Protirakave učinkovine",
+            [
+              "Citostatiki | alkilirajoče učinkovine, antimetaboliti, zaviralci topoizomeraz",
+              "Tarčna zdravila | zaviralci kinaz, monoklonska protitelesa"
+            ]
+          ],
+          [
+            "Laboratorijsko delo",
+            [
+              "Sinteza in čiščenje učinkovin | prekristalizacija, kromatografija, izkoristek",
+              "Identifikacija sintetiziranih spojin | tališče, TLC, spektroskopija"
+            ]
+          ]
+        ]
+      ],
+      "PFG1": [
+        "Farmakognozija I",
+        "BIO",
+        [],
+        [
+          [
+            "Uvod v farmakognozijo",
+            [
+              "Rastlinske droge | pridobivanje, sušenje, shranjevanje, kakovost",
+              "Biosinteza sekundarnih metabolitov | šikimatna, acetatna in mevalonatna pot"
+            ]
+          ],
+          [
+            "Ogljikovi hidrati in lipidi",
+            [
+              "Droge z ogljikovimi hidrati | škrob, sluzi, pektini, gumiji",
+              "Maščobna olja in voski | sestava, pridobivanje, uporaba"
+            ]
+          ],
+          [
+            "Fenolne spojine",
+            [
+              "Fenolne kisline in kumarini | zgradba, droge, delovanje",
+              "Flavonoidi in čreslovine | lastnosti, droge, uporaba",
+              "Antrakinoni | odvajalne droge, mehanizem"
+            ]
+          ],
+          [
+            "Terpeni in alkaloidi",
+            [
+              "Eterična olja | sestava, pridobivanje, droge",
+              "Saponini in srčni glikozidi | zgradba, delovanje, droge",
+              "Alkaloidi | razvrstitev, droge, farmakološki učinki"
+            ]
+          ]
+        ]
+      ],
+      "PFG2": [
+        "Farmakognozija II",
+        "BIO",
+        [],
+        [
+          [
+            "Makroskopska in mikroskopska analiza",
+            [
+              "Makroskopsko vrednotenje drog | organoleptične lastnosti, prepoznavanje",
+              "Mikroskopska analiza drog | značilni anatomski elementi, praški drog"
+            ]
+          ],
+          [
+            "Kemijska analiza drog",
+            [
+              "Ekstrakcija rastlinskih drog | maceracija, perkolacija, destilacija z vodno paro",
+              "Tankoplastna kromatografija drog | identifikacija, primerjava s standardi",
+              "Vsebnostne metode | določanje eteričnega olja, flavonoidov, čreslovin"
+            ]
+          ],
+          [
+            "Kakovost drog",
+            [
+              "Farmakopejske zahteve za droge | monografije, istovetnost, čistota",
+              "Ponarejanje in onesnaženje drog | primesi, težke kovine, mikrobna kontaminacija"
+            ]
+          ]
+        ]
+      ],
+      "PPATF": [
+        "Patološka fiziologija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna patofiziologija",
+            [
+              "Poškodba in smrt celice | nekroza, apoptoza, prilagoditve celic",
+              "Vnetje | akutno in kronično vnetje, mediatorji vnetja, zvišana telesna temperatura",
+              "Motnje imunskega odziva | preobčutljivost, avtoimunost, imunske pomanjkljivosti"
+            ]
+          ],
+          [
+            "Srce, ožilje in dihala",
+            [
+              "Ateroskleroza in arterijska hipertenzija | patogeneza, posledice",
+              "Srčno popuščanje in ishemična bolezen srca | mehanizmi, kompenzacija",
+              "Bolezni dihal | astma, KOPB, dihalna odpoved"
+            ]
+          ],
+          [
+            "Presnova in endokrinologija",
+            [
+              "Sladkorna bolezen | tip 1 in tip 2, inzulinska rezistenca, zapleti",
+              "Motnje ščitnice in nadledvičnic | hiper- in hipofunkcija"
+            ]
+          ],
+          [
+            "Ledvice, prebavila in živčevje",
+            [
+              "Bolezni ledvic | akutna in kronična ledvična odpoved, motnje vode in elektrolitov",
+              "Bolezni prebavil in jeter | peptični ulkus, ciroza, vnetne črevesne bolezni",
+              "Nevrodegenerativne bolezni | Alzheimerjeva in Parkinsonova bolezen, epilepsija"
+            ]
+          ],
+          [
+            "Tumorji",
+            [
+              "Patofiziologija raka | onkogeni, tumorski zaviralni geni, zasevanje",
+              "Paraneoplastični pojavi in kaheksija | sistemski učinki tumorjev"
+            ]
+          ]
+        ]
+      ],
+      "PIFA": [
+        "Instrumentalna farmacevtska analiza",
+        "KEM",
+        [
+          "SPEKTROSKOPIJA"
+        ],
+        [
+          [
+            "Kromatografija",
+            [
+              "Tekočinska kromatografija visoke ločljivosti | stacionarne faze, detektorji, ločljivost",
+              "Plinska kromatografija | kolone, detektorji, uporaba za ostanke topil",
+              "Kvantitativna kromatografska analiza | umeritvena krivulja, notranji standard"
+            ]
+          ],
+          [
+            "Masna spektrometrija in sklopljene tehnike",
+            [
+              "Masna spektrometrija | ionizacija, analizatorji, fragmentacija",
+              "Sklopljene tehnike | LC-MS, GC-MS, uporaba v analizi zdravil"
+            ]
+          ],
+          [
+            "Druge metode",
+            [
+              "Elektroforezne metode | kapilarna elektroforeza, ločevanje učinkovin",
+              "Termične metode | DSC, TGA, določanje polimorfov"
+            ]
+          ],
+          [
+            "Validacija",
+            [
+              "Validacija analiznih metod | točnost, natančnost, linearnost, meja zaznave",
+              "Robustnost in primernost sistema | preskus primernosti sistema, ponovljivost"
+            ]
+          ]
+        ]
+      ],
+      "PSOCF": [
+        "Socialna farmacija",
+        "EKO",
+        [],
+        [
+          [
+            "Zdravila v družbi",
+            [
+              "Uporaba zdravil v populaciji | potrošnja zdravil, ATC/DDD sistem",
+              "Sodelovanje bolnikov pri zdravljenju | adherenca, dejavniki, ukrepi"
+            ]
+          ],
+          [
+            "Zdravstveni sistem",
+            [
+              "Organizacija zdravstvenega varstva | financiranje, zavarovanje, vloga lekarne",
+              "Regulativa zdravil | dovoljenje za promet, cene, razvrščanje na liste"
+            ]
+          ],
+          [
+            "Farmacevtska skrb",
+            [
+              "Farmacevtska skrb | prepoznavanje težav z zdravili, svetovanje",
+              "Samozdravljenje | zdravila brez recepta, odgovorno svetovanje"
+            ]
+          ],
+          [
+            "Raziskovanje",
+            [
+              "Raziskovalne metode v socialni farmaciji | anketa, intervju, kakovostna in količinska analiza",
+              "Farmakoepidemiologija | uporaba podatkov o predpisovanju, varnost zdravil v populaciji"
+            ]
+          ]
+        ]
+      ],
+      "PFT2": [
+        "Farmacevtska tehnologija II",
+        "KEM",
+        [],
+        [
+          [
+            "Prirejeno sproščanje",
+            [
+              "Farmacevtske oblike s podaljšanim sproščanjem | ogrodni in membranski sistemi",
+              "Kinetika sproščanja | ničti in prvi red, Higuchijev model"
+            ]
+          ],
+          [
+            "Posebne poti dostave",
+            [
+              "Inhalacijske farmacevtske oblike | inhalatorji, velikost delcev, depozicija v pljučih",
+              "Oftalmične in nazalne oblike | kapljice za oko, sterilnost, pH in izotoničnost",
+              "Vaginalne in rektalne oblike | posebnosti absorpcije"
+            ]
+          ],
+          [
+            "Nanodostavni sistemi",
+            [
+              "Liposomi in nanodelci | izdelava, karakterizacija, ciljana dostava",
+              "Biološka zdravila | proteinske učinkovine, stabilnost, formulacija"
+            ]
+          ],
+          [
+            "Industrijska izdelava",
+            [
+              "Prenos v industrijsko merilo | procesni parametri, oprema",
+              "Dobra proizvodna praksa | kakovost, dokumentacija, validacija procesov"
+            ]
+          ]
+        ]
+      ],
+      "PFARMAK": [
+        "Farmakologija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna farmakologija",
+            [
+              "Farmakodinamika | receptorji, agonisti, antagonisti, krivulja odmerek–učinek",
+              "Terapevtska širina in neželeni učinki | ED50, LD50, varnost",
+              "Interakcije zdravil | farmakokinetične in farmakodinamične interakcije"
+            ]
+          ],
+          [
+            "Avtonomni in osrednji živčni sistem",
+            [
+              "Farmakologija avtonomnega živčevja | holinergiki, adrenergiki, antagonisti",
+              "Psihofarmaki | antidepresivi, antipsihotiki, anksiolitiki",
+              "Analgetiki in anestetiki | opioidi, nesteroidni antirevmatiki, splošni anestetiki"
+            ]
+          ],
+          [
+            "Srce, ožilje in kri",
+            [
+              "Zdravila za srce in ožilje | antihipertenzivi, antiaritmiki, zdravila za srčno popuščanje",
+              "Zdravila za hemostazo | antikoagulanti, antiagregacijska zdravila"
+            ]
+          ],
+          [
+            "Kemoterapija",
+            [
+              "Protimikrobna zdravila | spekter delovanja, odpornost, izbira antibiotika",
+              "Protirakava zdravila | citostatiki, tarčna zdravila, neželeni učinki"
+            ]
+          ],
+          [
+            "Endokrini, dihalni in prebavni sistem",
+            [
+              "Hormoni in antagonisti | inzulin, kortikosteroidi, ščitnični hormoni, kontracepcija",
+              "Zdravila za dihala in prebavila | bronhodilatatorji, zaviralci protonske črpalke"
+            ]
+          ]
+        ]
+      ],
+      "PFBT": [
+        "Farmacevtska biotehnologija",
+        "BIO",
+        [],
+        [
+          [
+            "Tehnologija rekombinantne DNA",
+            [
+              "Kloniranje genov | vektorji, restrikcijski encimi, ligacija",
+              "Ekspresijski sistemi | bakterije, kvasovke, sesalske celice"
+            ]
+          ],
+          [
+            "Biološka zdravila",
+            [
+              "Rekombinantni proteini | inzulin, rastni faktorji, eritropoetin",
+              "Monoklonska protitelesa | pridobivanje, humanizacija, uporaba",
+              "Cepiva | vrste cepiv, mRNA cepiva, adjuvansi"
+            ]
+          ],
+          [
+            "Bioprocesi",
+            [
+              "Fermentacija in gojenje celic | bioreaktorji, pogoji gojenja",
+              "Izolacija in čiščenje proteinov | kromatografija, kakovost biološkega zdravila"
+            ]
+          ],
+          [
+            "Napredna zdravljenja",
+            [
+              "Genska in celična terapija | virusni vektorji, CAR-T celice",
+              "Biološko podobna zdravila | primerljivost, regulativa"
+            ]
+          ]
+        ]
+      ],
+      "PBFK": [
+        "Biofarmacija s farmakokinetiko",
+        "BIO",
+        [],
+        [
+          [
+            "Biofarmacija",
+            [
+              "Absorpcija učinkovin | prehajanje bioloških membran, prenašalci, vpliv hrane",
+              "Biofarmacevtski klasifikacijski sistem | topnost, permeabilnost, razredi BCS",
+              "Biološka uporabnost in bioekvivalenca | AUC, cmax, tmax, generična zdravila"
+            ]
+          ],
+          [
+            "Farmakokinetični parametri",
+            [
+              "Porazdelitev | volumen porazdelitve, vezava na plazemske proteine",
+              "Izločanje | očistek, razpolovni čas, ledvično in jetrno izločanje",
+              "Enoprostorni model | intravenski bolus, peroralna aplikacija, konstanta absorpcije"
+            ]
+          ],
+          [
+            "Večkratno odmerjanje",
+            [
+              "Večkratno odmerjanje | kopičenje, stacionarno stanje, odmerni interval",
+              "Intravenska infuzija | hitrost infundiranja, udarni odmerek"
+            ]
+          ],
+          [
+            "Klinična farmakokinetika",
+            [
+              "Prilagajanje odmerkov | ledvična okvara, starostniki, otroci",
+              "Nelinearna farmakokinetika | Michaelis-Mentenova kinetika izločanja",
+              "Terapevtsko spremljanje koncentracij | ozka terapevtska širina, primeri"
+            ]
+          ]
+        ]
+      ],
+      "PSTAB": [
+        "Stabilnost zdravil",
+        "KEM",
+        [],
+        [
+          [
+            "Kemijska stabilnost",
+            [
+              "Razgradne poti učinkovin | hidroliza, oksidacija, fotoliza",
+              "Kemijska kinetika | reakcije ničtega in prvega reda, rok uporabnosti",
+              "Vpliv pH in temperature | profil pH–hitrost, Arrheniusova enačba"
+            ]
+          ],
+          [
+            "Fizikalna stabilnost",
+            [
+              "Fizikalne spremembe | polimorfni prehodi, kristalizacija, vlaga",
+              "Stabilnost disperznih sistemov | sedimentacija, koalescenca"
+            ]
+          ],
+          [
+            "Stabilizacija in preskušanje",
+            [
+              "Stabilizacija zdravil | antioksidanti, pufri, embalaža",
+              "Preskušanje stabilnosti | smernice ICH, pospešeni in dolgoročni preskusi",
+              "Razgradni produkti | identifikacija, meje, toksikološka ocena"
+            ]
+          ]
+        ]
+      ],
+      "PANZ": [
+        "Analiza in nadzor zdravil",
+        "KEM",
+        [
+          "ANAL_1"
+        ],
+        [
+          [
+            "Farmakopeja",
+            [
+              "Evropska farmakopeja | monografije, splošne metode, referenčni standardi",
+              "Preskusi istovetnosti | kemijske reakcije, IR, TLC"
+            ]
+          ],
+          [
+            "Kontrola kakovosti",
+            [
+              "Preskusi čistote | sorodne snovi, ostanki topil, nečistote anorganskega izvora",
+              "Vsebnost učinkovine | titrimetrične in kromatografske metode",
+              "Analiza farmacevtskih oblik | enakomernost vsebnosti, sproščanje, razpadnost"
+            ]
+          ],
+          [
+            "Sistem kakovosti",
+            [
+              "Dobra laboratorijska praksa | dokumentacija, sledljivost, specifikacije",
+              "Uradna kontrola zdravil | sproščanje serij, nadzor na trgu"
+            ]
+          ]
+        ]
+      ],
+      "PKLKEM": [
+        "Klinična kemija",
+        "KEM",
+        [],
+        [
+          [
+            "Laboratorijska medicina",
+            [
+              "Predanalitična faza | odvzem vzorcev, vplivni dejavniki, motnje",
+              "Referenčne vrednosti in interpretacija | referenčni interval, občutljivost, specifičnost",
+              "Kontrola kakovosti v laboratoriju | notranja in zunanja kontrola, Westgardova pravila"
+            ]
+          ],
+          [
+            "Presnovni testi",
+            [
+              "Ogljikovi hidrati | glukoza, HbA1c, test obremenitve z glukozo",
+              "Lipidi in srčni označevalci | holesterol, trigliceridi, troponini",
+              "Elektroliti in acidobazno ravnovesje | natrij, kalij, plinska analiza krvi"
+            ]
+          ],
+          [
+            "Delovanje organov",
+            [
+              "Jetrni testi | aminotransferaze, bilirubin, alkalna fosfataza",
+              "Ledvični testi | kreatinin, ocena glomerulne filtracije, urin",
+              "Hormonski testi | ščitnični hormoni, imunokemijske metode"
+            ]
+          ],
+          [
+            "Molekularna diagnostika",
+            [
+              "Farmakogenetski testi | polimorfizmi CYP, prilagajanje terapije",
+              "Molekularni testi v laboratoriju | PCR, genotipizacija, interpretacija"
+            ]
+          ]
+        ]
+      ],
+      "PNSU": [
+        "Načrtovanje in sinteza učinkovin",
+        "KEM",
+        [
+          "ORG_SINTEZA"
+        ],
+        [
+          [
+            "Načrtovanje učinkovin",
+            [
+              "Iskanje spojin vodnic | rešetanje, fragmentni pristop, naravne spojine",
+              "Računalniško podprto načrtovanje | sidranje, farmakoforni modeli, QSAR"
+            ]
+          ],
+          [
+            "Optimizacija spojin vodnic",
+            [
+              "Optimizacija lastnosti ADME | Lipinskijeva pravila, topnost, presnovna stabilnost",
+              "Bioizosterne zamenjave | klasični in neklasični bioizosteri, vpliv na aktivnost",
+              "Predzdravila v načrtovanju učinkovin | izboljšanje biološke uporabnosti, aktivacija v organizmu"
+            ]
+          ]
+        ]
+      ],
+      "PTOKSK": [
+        "Toksikološka kemija",
+        "KEM",
+        [],
+        [
+          [
+            "Osnove toksikologije",
+            [
+              "Odnos odmerek–odziv | NOAEL, LD50, akutna in kronična toksičnost",
+              "Toksikokinetika | absorpcija, bioaktivacija, izločanje strupov"
+            ]
+          ],
+          [
+            "Mehanizmi toksičnosti",
+            [
+              "Reaktivni metaboliti | elektrofili, prosti radikali, oksidativni stres",
+              "Toksičnost za organe | hepatotoksičnost, nefrotoksičnost, kancerogenost"
+            ]
+          ],
+          [
+            "Strupi",
+            [
+              "Kovine in organska topila | svinec, živo srebro, benzen",
+              "Pesticidi in okoljska onesnažila | organofosfati, dioksini, endokrini motilci"
+            ]
+          ]
+        ]
+      ],
+      "PINDF": [
+        "Industrijska farmacija",
+        "KEM",
+        [],
+        [
+          [
+            "Razvoj in izdelava",
+            [
+              "Razvoj farmacevtskih oblik v industriji | predformulacija, načrtovanje kakovosti",
+              "Procesne tehnologije | granulacija, tabletiranje, oblaganje, liofilizacija",
+              "Povečevanje merila | prenos tehnologije, procesna analitska tehnologija"
+            ]
+          ],
+          [
+            "Kakovost in regulativa",
+            [
+              "Dobra proizvodna praksa | sistem kakovosti, validacija, čisti prostori",
+              "Registracijska dokumentacija | modul CTD, dovoljenje za promet"
+            ]
+          ],
+          [
+            "Proizvodnja in oskrba",
+            [
+              "Embalaža zdravil | primarna in sekundarna ovojnina, ponarejanje",
+              "Oskrbovalna veriga zdravil | dobra distribucijska praksa, hladna veriga"
+            ]
+          ]
+        ]
+      ],
+      "PKLINF": [
+        "Klinična farmacija",
+        "BIO",
+        [],
+        [
+          [
+            "Optimizacija terapije",
+            [
+              "Pregled zdravljenja z zdravili | težave z zdravili, intervencije farmacevta",
+              "Individualizacija odmerjanja | ledvična in jetrna okvara, starostniki"
+            ]
+          ],
+          [
+            "Terapija pogostih bolezni",
+            [
+              "Zdravljenje srčno-žilnih bolezni | hipertenzija, srčno popuščanje, antikoagulacija",
+              "Zdravljenje okužb | izbira antibiotika, protimikrobna politika",
+              "Zdravljenje sladkorne bolezni in astme | smernice, spremljanje"
+            ]
+          ],
+          [
+            "Posebne skupine bolnikov",
+            [
+              "Zdravila pri otrocih | odmerjanje po telesni masi, farmakokinetika",
+              "Zdravila pri starostnikih in v nosečnosti | polifarmacija, teratogenost"
+            ]
+          ]
+        ]
+      ],
+      "PIMUN": [
+        "Imunologija",
+        "BIO",
+        [],
+        [
+          [
+            "Imunski sistem",
+            [
+              "Prirojena imunost | fagociti, komplement, receptorji za prepoznavanje vzorcev",
+              "Pridobljena imunost | limfociti T in B, predstavitev antigena, MHC",
+              "Protitelesa | zgradba, razredi, funkcije"
+            ]
+          ],
+          [
+            "Imunopatologija in imunoterapija",
+            [
+              "Preobčutljivostne reakcije | tipi I–IV, alergija na zdravila",
+              "Imunomodulacijska zdravila | imunosupresivi, biološka zdravila, cepiva"
+            ]
+          ],
+          [
+            "Imunokemijske metode",
+            [
+              "Imunokemijske metode | ELISA, pretočna citometrija, imunoblot",
+              "Imunski testi v diagnostiki | aglutinacija, imunofluorescenca, določanje protiteles"
+            ]
+          ]
+        ]
+      ],
+      "PFITO": [
+        "Fitofarmaki",
+        "BIO",
+        [],
+        [
+          [
+            "Rastlinska zdravila",
+            [
+              "Zdravila rastlinskega izvora | zakonodaja, tradicionalna in dobro uveljavljena uporaba",
+              "Standardizacija izvlečkov | markerske spojine, kakovost"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Fitoterapija bolezni dihal in prebavil | ekspektoransi, karminativi",
+              "Fitoterapija živčevja in srčno-žilnega sistema | šentjanževka, baldrijan, glog",
+              "Varnost fitofarmakov | neželeni učinki, interakcije z zdravili"
+            ]
+          ],
+          [
+            "Kakovost rastlinskih izdelkov",
+            [
+              "Proizvodnja rastlinskih zdravil | ekstrakcija, sušeni izvlečki",
+              "Rastlinska prehranska dopolnila | razmejitev od zdravil, nadzor"
+            ]
+          ]
+        ]
+      ],
+      "PKAKOV": [
+        "Kakovost zdravil",
+        "KEM",
+        [],
+        [
+          [
+            "Sistem kakovosti",
+            [
+              "Zagotavljanje kakovosti zdravil | dobre prakse GxP, smernice ICH",
+              "Obvladovanje tveganj za kakovost | ICH Q9, analiza tveganj"
+            ]
+          ],
+          [
+            "Specifikacije in nečistote",
+            [
+              "Specifikacije zdravil | parametri kakovosti, meje",
+              "Nečistote in genotoksične nečistote | razvrstitev, toksikološke meje"
+            ]
+          ],
+          [
+            "Validacija in nadzor",
+            [
+              "Validacija procesov in metod | življenjski cikel validacije",
+              "Odstopanja in korektivni ukrepi | CAPA, preiskava odstopanj, odpoklic"
+            ]
+          ]
+        ]
       ]
     },
     "programs": {
@@ -31856,6 +32922,62 @@ export const EXTRA_FACULTIES = [
           "FIZIOL",
           "KOZMKEM"
         ]
+      },
+      "UL-FFA-FAR": {
+        "name": "Farmacija",
+        "source": "https://www.ffa.uni-lj.si/docs/default-source/predmetnik/farmacija_predmetnik.pdf?sfvrsn=2",
+        "sourceYear": "predmetnik EMŠ Farmacija, verzija veljavna od 2025/26; preverjeni 1.–4. letnik",
+        "years": [
+          [
+            "FIZ",
+            "PMAT",
+            "PFBG",
+            "PSAK",
+            "ANAHIST",
+            "ANALKEM",
+            "PFK1",
+            "PFINF",
+            "PMIKRO",
+            "PUVF"
+          ],
+          [
+            "PFT1",
+            "FIZIOL",
+            "POK",
+            "FIZKEM",
+            "PFIZF",
+            "PFBK",
+            "PFK2"
+          ],
+          [
+            "PFK3",
+            "PFG1",
+            "PPATF",
+            "PIFA",
+            "PSOCF",
+            "PFT2",
+            "PFG2"
+          ],
+          [
+            "PFARMAK",
+            "PFBT",
+            "PBFK",
+            "PSTAB",
+            "PANZ",
+            "PKLKEM"
+          ]
+        ],
+        "electives": [
+          "PNSU",
+          "PTOKSK",
+          "PINDF",
+          "PKLINF",
+          "PIMUN",
+          "PREHDOP",
+          "PFITO",
+          "PKAKOV"
+        ],
+        "degree": "EMŠ"
       }
     }
   },
@@ -33957,6 +35079,1768 @@ export const EXTRA_FACULTIES = [
             ]
           ]
         ]
+      ],
+      "GGRADIVA": [
+        "Gradiva",
+        "KEM",
+        [],
+        [
+          [
+            "Osnove nauka o gradivih",
+            [
+              "Pregled in razvrstitev gradiv | sistematika gradiv, zgradba in lastnosti, izbira gradiva za gradbeni element",
+              "Standardizacija gradiv | standardi in predpisi, tehnične specifikacije, istovetnost gradbenih proizvodov"
+            ]
+          ],
+          [
+            "Lastnosti in preiskave gradiv",
+            [
+              "Fizikalne lastnosti gradiv | gostota, poroznost, vpijanje vode, toplotne lastnosti",
+              "Mehanske lastnosti materialov | tlačna in natezna trdnost, elastični modul, lezenje in krčenje",
+              "Eksperimentalne preiskave gradiv | vzorčenje, preizkušanje, vrednotenje rezultatov"
+            ]
+          ],
+          [
+            "Keramična gradiva in veziva",
+            [
+              "Naravni kamen, opeka in steklo | nastanek, lastnosti, uporaba v gradbeništvu",
+              "Mineralna veziva, malte in ometi | apno, cement, sadra, hidratacija, sestava malt",
+              "Beton | sestava betona, svež in strjen beton, trajnost betona"
+            ]
+          ],
+          [
+            "Kovinska gradiva",
+            [
+              "Železove kovine | jeklo, betonsko jeklo, mehanske lastnosti",
+              "Neželezove kovine in zlitine | aluminij, baker, cink, korozija kovin"
+            ]
+          ],
+          [
+            "Polimerna in kompozitna gradiva",
+            [
+              "Polimerna gradiva | umetne mase, bitumen, ogljikovodikova gradiva",
+              "Kompozitna gradiva | kompoziti z delci in vlakni, les kot naravni kompozit"
+            ]
+          ]
+        ]
+      ],
+      "GUVODGR": [
+        "Uvod v gradbeništvo",
+        "FIZ",
+        [],
+        [
+          [
+            "Zgodovina gradbeništva",
+            [
+              "Razvoj konstrukcijskih oblik in mostov | zgodovinski pregled, nosilni sistemi, mostovi skozi čas",
+              "Razvoj gradbenih materialov in tehnologij | od kamna do armiranega betona, razvoj cestogradnje in gradbene znanosti"
+            ]
+          ],
+          [
+            "Sodobno gradbeništvo",
+            [
+              "Visokogradnja in sodobne stavbe | nosilne konstrukcije stavb, primeri sodobnih objektov",
+              "Geotehnika, hidrotehnika in promet | področja gradbeništva, značilni objekti, interdisciplinarnost"
+            ]
+          ],
+          [
+            "Vloga inženirja",
+            [
+              "Odgovornost inženirja | vloga v družbi, etika, varnost objektov",
+              "Od ideje do objekta | načrtovanje gradnje, izvajanje gradnje, udeleženci graditve"
+            ]
+          ],
+          [
+            "Projektna naloga",
+            [
+              "Idejna rešitev objekta | zasnova konstrukcije, variante, predstavitev rešitve"
+            ]
+          ]
+        ]
+      ],
+      "GINZKOM": [
+        "Inženirska komunikacija",
+        "RAC",
+        [],
+        [
+          [
+            "Inženirska komunikacija kot proces",
+            [
+              "Razvoj in pomen inženirske komunikacije | zgodovina, informacijski proces, pravni okvir graditve"
+            ]
+          ],
+          [
+            "Inženirska risba",
+            [
+              "Standardni grafični jezik | črte, merila, kotiranje, standardi tehničnega risanja",
+              "Osnovne risarske veščine | prostoročno skiciranje, pogledi, prerezi"
+            ]
+          ],
+          [
+            "Projekcije",
+            [
+              "Vrste projekcij | paralelna in centralna projekcija, aksonometrija",
+              "Mongeova projekcija | točka, premica, ravnina, položajni in metrični problemi"
+            ]
+          ],
+          [
+            "Računalniška grafika",
+            [
+              "Osnove računalniške grafike | vektorska in rastrska grafika, koordinatni sistemi",
+              "Modeli risarske programske opreme | MVC model, od risbe do informacijskega modela stavbe (BIM)"
+            ]
+          ]
+        ]
+      ],
+      "GSTATDIN": [
+        "Osnove statike in dinamike",
+        "FIZ",
+        [
+          "STATIKA"
+        ],
+        [
+          [
+            "Modeliranje gradbenih konstrukcij",
+            [
+              "Modeli podpor in vezi | vrste podpor, prostostne stopnje, statična določenost",
+              "Modeli konstrukcij | paličja, prostoležeči in previsni nosilci, Gerberjev nosilec, okvirji, tričlenski lok",
+              "Modeli obtežb | lastna teža, sneg, veter, koncentrirana in porazdeljena obtežba"
+            ]
+          ],
+          [
+            "Notranje sile v nosilcih",
+            [
+              "Notranje sile ravnih nosilcev | osna sila, prečna sila, upogibni moment, diagrami",
+              "Diferencialne zveze med obtežbo in notranjimi silami | zveza q–V–M, ekstremni moment"
+            ]
+          ],
+          [
+            "Dinamika",
+            [
+              "Kinetika masne točke | Newtonovi zakoni, delo in energija, gibalna količina",
+              "Vrtenje togega telesa | vztrajnostni moment, vrtenje okoli osi",
+              "Nihanje sistema z eno prostostno stopnjo | lastna frekvenca, dušenje, vsiljeno nihanje"
+            ]
+          ]
+        ]
+      ],
+      "GRACINF": [
+        "Računalništvo in informatika",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove računalništva",
+            [
+              "Razvoj in delovanje računalnikov | zgradba računalnika, predstavitev podatkov, pravni in družbeni vidiki",
+              "Operacijski sistemi | naloge operacijskega sistema, datotečni sistem, virtualizacija"
+            ]
+          ],
+          [
+            "Dokumenti in preglednice",
+            [
+              "Priprava zahtevnejših dokumentov | dokumentni standardi, slogi, strukturiranje daljših dokumentov",
+              "Tabelarično računanje | formule, uvoz podatkov, grafi, makro ukazi"
+            ]
+          ],
+          [
+            "Podatki in standardi",
+            [
+              "Podatkovni standardi | kodiranje znakov, formati zapisa, XML in JSON",
+              "Informacijski sistemi v inženirstvu | računalništvo v oblaku, računska okolja"
+            ]
+          ],
+          [
+            "Osnove programiranja",
+            [
+              "Algoritmi in programiranje | spremenljivke, pogoji, zanke, funkcije",
+              "Programi v inženirstvu | pregled inženirske programske opreme, avtomatizacija izračunov"
+            ]
+          ]
+        ]
+      ],
+      "GSTAVB1": [
+        "Stavbarstvo I",
+        "FIZ",
+        [],
+        [
+          [
+            "Grajeno okolje",
+            [
+              "Stavba v naravnem okolju | sistem grajeno–naravno okolje, zgodovina in razvoj stavb",
+              "Pravni okviri oblikovanja okolja | predpisi, evrokodi, slovenska zakonodaja"
+            ]
+          ],
+          [
+            "Inženirsko oblikovanje stavb",
+            [
+              "Metodologija inženirskega oblikovanja | faze oblikovanja, funkcionalna analiza prostorov",
+              "Modularna koordinacija | moduli, mreže, merska standardizacija"
+            ]
+          ],
+          [
+            "Konstrukcijski sklopi",
+            [
+              "Funkcionalne cone in konstrukcijski sklopi | identifikacija sklopov, sistem material–struktura–prostor",
+              "Gradbenofizikalne zahteve | toplotna, hidro in zvočna zaščita, matrike NK-TI-HI",
+              "Od zasnove do opisa za izvedbo | sestava sklopa, opis plasti"
+            ]
+          ],
+          [
+            "Gradbena fizika sklopov",
+            [
+              "Prevod toplote | toplotna prevodnost, toplotna prehodnost U",
+              "Difuzija vodne pare | kondenzacija v konstrukciji, parna zapora"
+            ]
+          ]
+        ]
+      ],
+      "GCESTE": [
+        "Ceste",
+        "GEO",
+        [],
+        [
+          [
+            "Planiranje cest",
+            [
+              "Prometna politika in okolje | planiranje cest, vplivi na okolje",
+              "Razvrstitev cest in projektna dokumentacija | kategorije cest, faze projekta"
+            ]
+          ],
+          [
+            "Geometrija ceste",
+            [
+              "Prečni prerez | vozni pas, bankine, prečni nagibi",
+              "Horizontalni potek osi | krožni lok, prehodnice, razširitve",
+              "Vertikalni potek osi | nagibi nivelete, zaokrožitve, preglednost"
+            ]
+          ],
+          [
+            "Vozišče",
+            [
+              "Odvodnjavanje ceste | prečni in vzdolžni odtok, jarki in kanalizacija",
+              "Dimenzioniranje zgornjega ustroja | plasti voziščne konstrukcije, prometna obremenitev"
+            ]
+          ],
+          [
+            "Križišča in ureditve",
+            [
+              "Vrste križišč | nivojska in krožna križišča",
+              "Kolesarske in peš površine | dimenzije, varnost",
+              "Umirjanje in mirujoči promet | ukrepi umirjanja, parkirišča, prometna signalizacija"
+            ]
+          ]
+        ]
+      ],
+      "GTEHNOL": [
+        "Tehnologija",
+        "FIZ",
+        [],
+        [
+          [
+            "Uvod v tehnologijo gradnje",
+            [
+              "Razvoj tehnologij gradnje | zgodovinski pregled, sodobni tehnološki procesi, posebnosti posameznih konstrukcij"
+            ]
+          ],
+          [
+            "Zemeljska dela in temeljenje",
+            [
+              "Pripravljalna dela | čiščenje terena, geološko-geomehanske raziskave, zakoličba",
+              "Gradbena jama | izkopi, nasipi, transport, zavarovanje gradbene jame",
+              "Izvedba temeljenja | plitko in globoko temeljenje"
+            ]
+          ],
+          [
+            "Zidarska in betonska dela",
+            [
+              "Zidane konstrukcije | tipi zidovja, dimenzioniranje malt, postopek zidanja",
+              "Betonska dela | opaži, armatura, vgrajevanje in nega betona"
+            ]
+          ],
+          [
+            "Gradbišče",
+            [
+              "Organizacija gradbišča | ureditev gradbišča, mehanizacija, transport",
+              "Varnost in kakovost pri gradnji | varstvo pri delu, nadzor kakovosti"
+            ]
+          ]
+        ]
+      ],
+      "GTRDNOST": [
+        "Trdnost",
+        "FIZ",
+        [
+          "TRDNOST"
+        ],
+        [
+          [
+            "Deformabilno telo",
+            [
+              "Kinematika deformabilnega telesa | vektor pomikov, tenzor deformacij, normalne in strižne deformacije",
+              "Napetostno stanje | napetostni vektor, napetostni tenzor, glavne napetosti, Mohrov krog"
+            ]
+          ],
+          [
+            "Teorija elastičnosti",
+            [
+              "Posplošeni Hookov zakon | elastični modul, Poissonov količnik, strižni modul",
+              "Osnovne enačbe linearne elastičnosti | ravnotežne, kinematične in konstitucijske enačbe"
+            ]
+          ],
+          [
+            "Nosilci",
+            [
+              "Geometrijske karakteristike prečnega prereza | težišče, vztrajnostni momenti, glavne osi",
+              "Strig pri upogibu | strižne napetosti, strižni tok",
+              "Kriteriji porušitve | Tresca, von Mises, dimenzioniranje"
+            ]
+          ]
+        ]
+      ],
+      "GUREPROS": [
+        "Urejanje prostora",
+        "GEO",
+        [],
+        [
+          [
+            "Prostor in razvoj",
+            [
+              "Temeljni pojmi urejanja prostora | življenjski cikel nepremičninskega projekta, faze urejanja prostora",
+              "Urbanizacija in potrebe po zemljiščih | razvojne faze urbanizacije, demografske spremembe, napovedovanje potreb po zemljiščih"
+            ]
+          ],
+          [
+            "Prostorski akti",
+            [
+              "Vrste in sprejemanje prostorskih aktov | vsebina, postopek sprejemanja, občinski prostorski načrt, OPPN",
+              "Prostorski izvedbeni pogoji | lokacijski pogoji, projekt za gradbeno dovoljenje, vpliv na uspešnost investicije"
+            ]
+          ],
+          [
+            "Izvajanje prostorskih aktov",
+            [
+              "Parcelacija in stvarne pravice | parcelacija zemljišč, lastninska pravica, pridobitev lastninske pravice v javno korist",
+              "Komunalno opremljanje zemljišč | gospodarska javna infrastruktura, komunalni prispevek"
+            ]
+          ]
+        ]
+      ],
+      "GSTATLIN": [
+        "Statika linijskih konstrukcij",
+        "FIZ",
+        [],
+        [
+          [
+            "Vplivi na konstrukcije",
+            [
+              "Vplivi po Evrokodih | lastna teža, koristna obtežba, sneg, veter",
+              "Modeliranje stavb | konstrukcijski elementi, podpore, stiki med elementi"
+            ]
+          ],
+          [
+            "Statično določene konstrukcije",
+            [
+              "Reakcije in notranje sile | ravnotežne enačbe, diagrami notranjih sil",
+              "Paličja in okvirji | metoda vozlišč, metoda prerezov, notranje sile okvirjev",
+              "Vplivnice | vplivnice reakcij in notranjih sil, pomična obtežba"
+            ]
+          ],
+          [
+            "Pomiki",
+            [
+              "Princip virtualnega dela | virtualne sile, izračun pomikov",
+              "Pomiki linijskih konstrukcij | upogibnica, vpliv temperature in posedkov podpor"
+            ]
+          ],
+          [
+            "Statično nedoločene konstrukcije",
+            [
+              "Metoda sil | osnovni sistem, kompatibilnostni pogoji",
+              "Metoda pomikov | togostna matrika, vozliščni pomiki"
+            ]
+          ]
+        ]
+      ],
+      "GSTAVB2": [
+        "Stavbarstvo II",
+        "FIZ",
+        [],
+        [
+          [
+            "Fasadni pas",
+            [
+              "Vertikalni in horizontalni fasadni pas | zasnova po vrstah stavb, iteracija do merila 1:20"
+            ]
+          ],
+          [
+            "Križanja konstrukcijskih sklopov",
+            [
+              "Stik zunanje stene s streho in medetažno konstrukcijo | detajli, zveznost plasti",
+              "Stik s tlemi na terenu in notranjimi delitvami | hidroizolacija, toplotna zaščita",
+              "Preboji in prehodi | okna, dimniki, zračniki"
+            ]
+          ],
+          [
+            "Toplotni mostovi",
+            [
+              "Linijske toplotne izgube | toplotni most, linijska toplotna prehodnost",
+              "Izračun prehoda toplote v detajlu | temperaturno polje, površinska temperatura"
+            ]
+          ],
+          [
+            "Detajli za izvedbo",
+            [
+              "Prenos sistemov v detajl | merila 1:5 do 1:1, izvedljivost, opis za izvedbo"
+            ]
+          ]
+        ]
+      ],
+      "GBETON": [
+        "Betonske konstrukcije",
+        "FIZ",
+        [],
+        [
+          [
+            "Beton in armatura",
+            [
+              "Vrste betonskih konstrukcij | armiran in prednapet beton, področja uporabe",
+              "Lastnosti betona in jekla | mehanske in reološke lastnosti, lezenje in krčenje"
+            ]
+          ],
+          [
+            "Metoda mejnih stanj",
+            [
+              "Mejna stanja nosilnosti in uporabnosti | delni varnostni faktorji, kombinacije vplivov",
+              "Računski diagrami materialov | parabola-pravokotnik, bilinearni diagram jekla"
+            ]
+          ],
+          [
+            "Upogib z osno silo",
+            [
+              "Dimenzioniranje pravokotnega prereza | enojna in dvojna armatura, velika ekscentričnost",
+              "Prerezi T oblike | sodelujoča širina pasnice",
+              "Interakcijski diagrami | tlačno obremenjeni stebri, mala ekscentričnost"
+            ]
+          ],
+          [
+            "Strig in mejna stanja uporabnosti",
+            [
+              "Strižna nosilnost | stremena, model palic in vezi",
+              "Razpoke in povesi | širina razpok, omejitev povesov"
+            ]
+          ]
+        ]
+      ],
+      "GINZHID": [
+        "Inženirska hidrotehnika",
+        "GEO",
+        [],
+        [
+          [
+            "Padavine in odtok",
+            [
+              "Vodna bilanca | padavine, izhlapevanje, površinski odtok",
+              "Analiza nalivov | intenziteta, povratna doba, ITP krivulje"
+            ]
+          ],
+          [
+            "Rečna hidravlika",
+            [
+              "Osnove rečne hidravlike | pretočne hitrosti, enakomerni tok v strugi",
+              "Erozijske sile | strižna napetost, stabilnost struge"
+            ]
+          ],
+          [
+            "Visoke vode",
+            [
+              "Protipoplavni ukrepi | nasipi, zadrževalniki, protipoplavna gradnja objektov",
+              "Poplavna varnost urbaniziranih območij | poplavna nevarnost, lastne in zaledne vode"
+            ]
+          ],
+          [
+            "Odvodnja",
+            [
+              "Sistemi odvodnje | zajem zalednih voda, kanali, prepusti",
+              "Zadrževanje in razbremenjevanje voda | zadrževalni bazeni, koincidenca visokih voda, dimenzioniranje"
+            ]
+          ]
+        ]
+      ],
+      "GJEKL1": [
+        "Jeklene konstrukcije I",
+        "FIZ",
+        [],
+        [
+          [
+            "Jeklo kot gradbeni material",
+            [
+              "Izdelava in lastnosti jekla | kemijska sestava, mehanske lastnosti, kvalitete jekla",
+              "Polizdelki in obdelava | vroče valjani profili, varjenje, zaostale napetosti"
+            ]
+          ],
+          [
+            "Varnost konstrukcij",
+            [
+              "Mejna stanja po Evrokodu 3 | delni faktorji, zanesljivost konstrukcij",
+              "Razvrstitev prerezov | razredi kompaktnosti, lokalna stabilnost, efektivni prerez"
+            ]
+          ],
+          [
+            "Nosilnost elementov",
+            [
+              "Natezni in tlačni elementi | nosilnost prereza, uklon tlačenih palic",
+              "Upogibni elementi | upogibna in strižna nosilnost, bočna zvrnitev"
+            ]
+          ],
+          [
+            "Spoji",
+            [
+              "Vijačni spoji | strig vijaka, bočni pritisk, natezni vijaki",
+              "Zvarni spoji | kotni in čelni zvari, nosilnost zvarov"
+            ]
+          ]
+        ]
+      ],
+      "GPLOSK": [
+        "Ploskovne konstrukcije",
+        "FIZ",
+        [],
+        [
+          [
+            "Ravninske konstrukcije",
+            [
+              "Ravninsko napetostno in deformacijsko stanje | osnovne enačbe, stene",
+              "Osnosimetrične konstrukcije | debelostenske cevi, rotacijsko simetrični problemi"
+            ]
+          ],
+          [
+            "Porušitev in plastifikacija",
+            [
+              "Kriteriji porušitve in plastifikacije | Tresca, von Mises, Mohr-Coulomb"
+            ]
+          ],
+          [
+            "Plošče",
+            [
+              "Teorija plošč | Kirchhoffova in Reissner-Mindlinova teorija",
+              "Analitične rešitve upogiba plošč | pravokotne in krožne plošče, robni pogoji"
+            ]
+          ],
+          [
+            "Lupine in numerične metode",
+            [
+              "Membranska teorija lupin | rotacijske lupine, membranske sile",
+              "Metoda končnih elementov | diskretizacija, končni elementi za stene in plošče"
+            ]
+          ]
+        ]
+      ],
+      "GMASIV": [
+        "Masivne konstrukcije",
+        "FIZ",
+        [],
+        [
+          [
+            "Prednapenjanje",
+            [
+              "Jeklo za prednapenjanje | mehanske in reološke lastnosti",
+              "Načini in sistemi prednapenjanja | prednapenjanje pred strjevanjem in po njem, sidra"
+            ]
+          ],
+          [
+            "Dimenzioniranje prednapetih elementov",
+            [
+              "Računski modeli prednapetih konstrukcij | načela, mejna stanja, stopnja prednapetja",
+              "Izgube sile prednapetja | trenje, zdrs v sidru, lezenje, krčenje, relaksacija"
+            ]
+          ],
+          [
+            "Zasnova kablov in armature",
+            [
+              "Dimenzije prereza in kablov | izbira prereza, težiščna linija kablov",
+              "Mehka armatura | vzdolžna in prečna armatura v prednapetih elementih",
+              "Razpoke delno prednapetih konstrukcij | širina in razdalja razpok"
+            ]
+          ]
+        ]
+      ],
+      "GLESKON": [
+        "Lesene konstrukcije",
+        "FIZ",
+        [],
+        [
+          [
+            "Les kot gradbeni material",
+            [
+              "Lastnosti lesa | fizikalne, mehanske in reološke lastnosti, vpliv vlage",
+              "Gradbeni lesni proizvodi | lepljen lameliran les, križno lepljen les, trdnostni razredi"
+            ]
+          ],
+          [
+            "Dimenzioniranje elementov",
+            [
+              "Metoda mejnih stanj za les | modifikacijski faktorji, razredi uporabe",
+              "Nosilnost lesenih elementov | nateg, tlak, upogib, strig, uklon"
+            ]
+          ],
+          [
+            "Spoji in mejna stanja uporabnosti",
+            [
+              "Mehanski spoji | žeblji, vijaki, mozniki",
+              "Povesi lesenih nosilcev | trenutni in končni pomiki, lezenje lesa"
+            ]
+          ]
+        ]
+      ],
+      "GHIDROL": [
+        "Hidrologija",
+        "GEO",
+        [],
+        [
+          [
+            "Voda v naravi",
+            [
+              "Razvoj hidrologije | hidrologija kot znanost, fizikalne in kemijske lastnosti vode",
+              "Hidrološki krog | kroženje vode, energije in snovi v naravi"
+            ]
+          ],
+          [
+            "Statistika v hidrologiji",
+            [
+              "Verjetnostne porazdelitve | teoretične in empirične porazdelitve, faktor frekvence",
+              "Povratna doba | verjetnostne mreže, regresija in korelacija"
+            ]
+          ],
+          [
+            "Padavine in izhlapevanje",
+            [
+              "Meritve padavin | napake meritev, obdelava padavinskih podatkov",
+              "Izhlapevanje in infiltracija | evapotranspiracija, infiltracija"
+            ]
+          ],
+          [
+            "Odtok",
+            [
+              "Merjenje pretokov | vodostaj, pretočna krivulja",
+              "Visoke vode | hidrogram, enotni hidrogram, ocena visokih voda"
+            ]
+          ]
+        ]
+      ],
+      "GZELEZ": [
+        "Železnice",
+        "GEO",
+        [],
+        [
+          [
+            "Železniški sistem",
+            [
+              "Podsistemi železnice | definicije, vrste prog, elementi železniškega tira",
+              "Zgornji ustroj | tirnice, pragovi, tirna greda, tir na čvrsti podlagi"
+            ]
+          ],
+          [
+            "Kretnice",
+            [
+              "Zgradba kretnic | sestavni deli, kot kretnice",
+              "Projektiranje kretnic | višinski načrti krivinskih kretnic, hitrosti preko kretnic"
+            ]
+          ],
+          [
+            "Projektiranje prog",
+            [
+              "Trasiranje proge | krožni lok, prehodnice",
+              "Nadvišanje | primanjkljaj in višek nadvišanja, bočni pospešek"
+            ]
+          ],
+          [
+            "Spodnji ustroj in postaje",
+            [
+              "Spodnji ustroj železnic | nasipi, useki, odvodnjavanje",
+              "Železniške postaje | postajne tirne naprave, peroni, nivojski prehodi"
+            ]
+          ]
+        ]
+      ],
+      "GPROMET": [
+        "Prometno inženirstvo",
+        "GEO",
+        [],
+        [
+          [
+            "Prometni tok",
+            [
+              "Osnove teorije prometnega toka | gostota, hitrost, pretok, fundamentalni diagram",
+              "Meritve prometnih parametrov | štetje prometa, PLDP, konična ura"
+            ]
+          ],
+          [
+            "Prometno planiranje",
+            [
+              "Metode prometnega planiranja | štiristopenjski model, generiranje in razdelitev potovanj"
+            ]
+          ],
+          [
+            "Kapacitivnost križišč",
+            [
+              "Nesemaforizirana križišča | prepustnost, nivo uslug",
+              "Semaforizirana in krožna križišča | signalni plan, kapaciteta krožnega križišča"
+            ]
+          ],
+          [
+            "Upravljanje in varnost prometa",
+            [
+              "Inteligentni transportni sistemi | upravljanje prometnih tokov",
+              "Prometna varnost in ekologija | prometne nesreče, hrup, emisije"
+            ]
+          ]
+        ]
+      ],
+      "GGIS": [
+        "Geografski informacijski sistemi",
+        "GEO",
+        [],
+        [
+          [
+            "Prostorski podatki",
+            [
+              "Pomen prostorskih podatkov | vloga informacij o prostoru pri odločanju",
+              "Informacijski sistemi in GIS | PIS, GIS, LIS, sestavine in razvoj GIS"
+            ]
+          ],
+          [
+            "Modeliranje prostora",
+            [
+              "Podatkovni modeli | vektorski in rastrski model, topologija",
+              "Koncept prostora in časa | abstrakcija stvarnega prostora, UML"
+            ]
+          ],
+          [
+            "Zajem in analize",
+            [
+              "Viri prostorskih podatkov | zajem, kakovost, metapodatki",
+              "Prostorske analize | prekrivanje, vplivna območja, analize omrežij"
+            ]
+          ],
+          [
+            "Uporaba GIS",
+            [
+              "GIS v gradbeništvu in prometu | primeri uporabe, prikaz rezultatov"
+            ]
+          ]
+        ]
+      ],
+      "GNACSTAV": [
+        "Uvod v načrtovanje stavb",
+        "FIZ",
+        [],
+        [
+          [
+            "Predstavitev objekta",
+            [
+              "Standardna predstavitev objekta | merila, projektne mreže, modularna koordinacija",
+              "Prostorske simulacije in modeli | fizični in digitalni modeli objekta"
+            ]
+          ],
+          [
+            "Stanovanjske stavbe",
+            [
+              "Razvoj stanovanjskih stavb | tipologija, razvoj v prostoru in času",
+              "Analiza primerov | funkcionalna zasnova stanovanja"
+            ]
+          ],
+          [
+            "Zasnova stavbe",
+            [
+              "Funkcionalna zasnova | program, površine, povezave prostorov",
+              "Umestitev stavbe v prostor | orientacija, dostopi, okolica"
+            ]
+          ]
+        ]
+      ],
+      "GBIOKLIM": [
+        "Bioklimatsko načrtovanje",
+        "FIZ",
+        [],
+        [
+          [
+            "Bioklimatska orientacija",
+            [
+              "Fiziološke potrebe človeka | toplotno ugodje, svetloba, kakovost zraka",
+              "Podnebje lokacije | geografske in podnebne razmere, sonaravni razvoj"
+            ]
+          ],
+          [
+            "Pasivni sistemi",
+            [
+              "Direktni zajem sončne energije | zasteklitve, toplotna masa",
+              "Zbiralno-shranjevalna stena in steklenjak | Trombejeva stena, hibridni sistemi"
+            ]
+          ],
+          [
+            "Analize stavbe",
+            [
+              "Stacionarna toplotna analiza | toplotne izgube in dobitki, prezračevanje, vlaga",
+              "Dnevna svetloba | faktor dnevne svetlobe, osončenje"
+            ]
+          ]
+        ]
+      ],
+      "GPRENOVA": [
+        "Prenova stavb",
+        "FIZ",
+        [],
+        [
+          [
+            "Pojmi prenove",
+            [
+              "Vzdrževanje, prenova in sanacija | opredelitev pojmov, življenjska doba stavbe",
+              "Struktura vzdrževalnih del | načrt vzdrževanja"
+            ]
+          ],
+          [
+            "Sanacije ovoja stavbe",
+            [
+              "Napake in poškodbe ovoja | vlaga, razpoke, toplotni mostovi",
+              "Sanacijski ukrepi | toplotna izolacija, hidroizolacija"
+            ]
+          ],
+          [
+            "Sprememba namembnosti",
+            [
+              "Zakonodaja in zahteve | sprememba namembnosti prostora",
+              "Projekt prenove | analiza stanja, študija možnosti, zasnova prenove",
+              "Odziv prenovljene stavbe | svetloba, toplota, vlaga, zvok, požar"
+            ]
+          ]
+        ]
+      ],
+      "GDIGNAC": [
+        "Digitalno načrtovanje",
+        "RAC",
+        [],
+        [
+          [
+            "BIM",
+            [
+              "Vloga računalnika pri načrtovanju | modeli BIM, orodja za konceptualno in detajlno načrtovanje"
+            ]
+          ],
+          [
+            "Geometrija v prostoru",
+            [
+              "Koordinatni sistemi in mreže | ravnina in prostor, transformacije",
+              "Modeliranje teles | platonična telesa, telesa CSG"
+            ]
+          ],
+          [
+            "Modeliranje stavb in terena",
+            [
+              "Elementi stavb | knjižnice predmetov GDL, parametrični elementi",
+              "Modeliranje terena | digitalni model reliefa, modeli izvedenega stanja"
+            ]
+          ],
+          [
+            "Programiranje in vizualizacija",
+            [
+              "Programiranje geometrije | API, algoritemsko modeliranje",
+              "Upodabljanje | površine, teksture, senčenje, svetloba"
+            ]
+          ]
+        ]
+      ],
+      "GKOMGOSP": [
+        "Komunalno gospodarstvo",
+        "EKO",
+        [],
+        [
+          [
+            "Javne gospodarske službe",
+            [
+              "Javne potrebe | javne gospodarske službe, komunalne dejavnosti v sistemu javnih financ",
+              "Komunalna infrastruktura | vrste, lastništvo, upravljanje"
+            ]
+          ],
+          [
+            "Stroški in cene",
+            [
+              "Stroški komunalnih dejavnosti | amortizacija, načini obračuna",
+              "Oblikovanje cen komunalnih storitev | struktura stroškovne cene, normativi"
+            ]
+          ],
+          [
+            "Organiziranost",
+            [
+              "Organizacijske oblike izvajanja | javno podjetje, koncesija, režijski obrat, javno-zasebno partnerstvo",
+              "Financiranje komunalne infrastrukture | javne finance na lokalni ravni, komunalni prispevek",
+              "Ekonomski instrumenti varstva okolja | okoljske dajatve, načelo povzročitelj plača"
+            ]
+          ]
+        ]
+      ],
+      "GFIZGEO": [
+        "Fizika za geodezijo",
+        "FIZ",
+        [],
+        [
+          [
+            "Merjenje in kinematika",
+            [
+              "Merske napake | absolutna in relativna napaka, razširjanje napak",
+              "Kinematika | premo in krivo gibanje, pospeškometer"
+            ]
+          ],
+          [
+            "Dinamika",
+            [
+              "Newtonovi zakoni | statika, dinamika, gibalna in vrtilna količina",
+              "Delo, moč in energija | izrek o kinetični energiji, ohranitev energije",
+              "Gibanje v neinercialnem sistemu | Coriolisova sila, vrteča se Zemlja"
+            ]
+          ],
+          [
+            "Gravitacija",
+            [
+              "Gravitacijski zakon | Keplerjevi zakoni, gravitacijska potencialna energija",
+              "Gibanje satelitov in plimovanje | tirnice satelitov, plima"
+            ]
+          ],
+          [
+            "Nihanje in valovanje",
+            [
+              "Harmonično nihanje | harmonično in dušeno nihanje",
+              "Valovanje | elektromagnetno valovanje, širjenje, interferenca"
+            ]
+          ]
+        ]
+      ],
+      "GPROGORO": [
+        "Programska orodja v geodeziji",
+        "RAC",
+        [],
+        [
+          [
+            "Informacije in komunikacija",
+            [
+              "Inženirska informacija | vloga informacij, informacijski sistemi, informacijska pismenost",
+              "Komunikacijske tehnologije | oblike komuniciranja, omrežja"
+            ]
+          ],
+          [
+            "Pisarniška orodja",
+            [
+              "Urejanje dokumentov | struktura, slogi, tehnično poročilo",
+              "Preglednice v geodeziji | formule, grafi, obdelava meritev"
+            ]
+          ],
+          [
+            "Geodetska programska oprema",
+            [
+              "Pregled programskih orodij | CAD, GIS in geodetski programi",
+              "Grafični prikaz podatkov | vektorska grafika, izris"
+            ]
+          ]
+        ]
+      ],
+      "GUVODGEO": [
+        "Uvod v geodezijo",
+        "GEO",
+        [],
+        [
+          [
+            "Geodezija kot stroka",
+            [
+              "Definicija in razdelitev geodezije | področja, naloge, povezava z drugimi vedami",
+              "Organiziranost stroke | kompetence geodeta, mednarodna organiziranost"
+            ]
+          ],
+          [
+            "Zgodovina geodezije",
+            [
+              "Razvoj geodezije | od antike do satelitske geodezije, geodezija na Slovenskem"
+            ]
+          ],
+          [
+            "Osnovni pojmi",
+            [
+              "Oblika Zemlje in referenčne ploskve | geoid, elipsoid, ravnina",
+              "Koordinatni sistemi in kartografske projekcije | državni koordinatni sistem",
+              "Geodetski instrumenti in meritve | merjenje kotov, dolžin in višinskih razlik"
+            ]
+          ]
+        ]
+      ],
+      "GGEORAC": [
+        "Geodetski računi",
+        "MAT",
+        [],
+        [
+          [
+            "Števila in natančnost",
+            [
+              "Števila kot rezultat merjenja | veljavne števke, zaokroževanje, napake numeričnega računanja"
+            ]
+          ],
+          [
+            "Koti in trigonometrija",
+            [
+              "Kotne mere | stopinje, gradi, radiani, pretvorbe",
+              "Trigonometrija v ravnini | sinusni in kosinusni izrek, reševanje trikotnikov"
+            ]
+          ],
+          [
+            "Koordinatni sistemi",
+            [
+              "Pravokotni in polarni koordinatni sistem | pretvorbe, smerni kot, dolžina",
+              "Transformacije koordinat | premik, zasuk, merilo"
+            ]
+          ],
+          [
+            "Osnovne geodetske naloge",
+            [
+              "Računanje koordinat točk | presek naprej, ločni presek, zunanji in notranji urez, točke na liniji",
+              "Poligon in površine | poligonski vlak, računanje površin iz koordinat"
+            ]
+          ],
+          [
+            "Računanje na krogli",
+            [
+              "Sferna trigonometrija | sferni trikotnik, ortodroma in loksodroma, geografske koordinate",
+              "Prva in druga geodetska naloga na krogli | smer in dolžina, računanje koordinat"
+            ]
+          ]
+        ]
+      ],
+      "GGRINFRA": [
+        "Gradbeništvo in infrastruktura",
+        "FIZ",
+        [],
+        [
+          [
+            "Gradbeni objekti",
+            [
+              "Klasifikacija gradbenih objektov | standardna klasifikacija dejavnosti in objektov",
+              "Gradbena dokumentacija | projektna dokumentacija, gradbeno dovoljenje"
+            ]
+          ],
+          [
+            "Temeljenje in konstrukcije",
+            [
+              "Geomehanske podlage in zemeljska dela | tla, izkopi, temeljenje",
+              "Konstrukcijski elementi | nosilci, stebri, plošče, stene"
+            ]
+          ],
+          [
+            "Visoke in nizke gradnje",
+            [
+              "Projektiranje in gradnja stavb | faze gradnje, osnovni materiali",
+              "Prometna in komunalna infrastruktura | ceste, železnice, vodovod, kanalizacija",
+              "Vloga geodeta pri gradnji | zbirni kataster gospodarske javne infrastrukture, gradbena pogodba"
+            ]
+          ]
+        ]
+      ],
+      "GDETIZM": [
+        "Detajlna izmera",
+        "GEO",
+        [],
+        [
+          [
+            "Koordinatni sistemi",
+            [
+              "Državni horizontalni in višinski sistem | D96/TM, višinski referenčni sistem",
+              "Državna kartografska projekcija | prečna Mercatorjeva projekcija"
+            ]
+          ],
+          [
+            "Metode detajlne izmere",
+            [
+              "Namen in delitev metod | polarna metoda, ortogonalna metoda, GNSS",
+              "Postopek izmere | planiranje, kodiranje, skica, izvedba"
+            ]
+          ],
+          [
+            "Instrumenti",
+            [
+              "Tahimeter | merjenje kotov in dolžin, pogreški instrumenta",
+              "Nivelir | geometrični nivelman, višinske razlike"
+            ]
+          ],
+          [
+            "Obdelava izmere",
+            [
+              "Izvrednotenje meritev | izračun koordinat, kontrole",
+              "Izris in kartiranje | topografski načrt, topografski ključ"
+            ]
+          ]
+        ]
+      ],
+      "GSTATGEO": [
+        "Statistične metode v geodeziji",
+        "MAT",
+        [
+          "STATISTIKA"
+        ],
+        [
+          [
+            "Opisna statistika",
+            [
+              "Predstavitev podatkov | grafični in numerični prikazi prostorskih podatkov",
+              "Kvantili in frekvenčne porazdelitve | podatki v razredih, histogram"
+            ]
+          ],
+          [
+            "Verjetnost",
+            [
+              "Osnove verjetnostnega računa | dogodki, verjetnost, pogojna verjetnost",
+              "Slučajne spremenljivke in porazdelitve | normalna porazdelitev, pričakovana vrednost, varianca"
+            ]
+          ],
+          [
+            "Regresija",
+            [
+              "Linearna regresija in korelacija | metoda najmanjših kvadratov, korelacijski koeficient"
+            ]
+          ]
+        ]
+      ],
+      "GIZRAV1": [
+        "Izravnalni račun I",
+        "MAT",
+        [],
+        [
+          [
+            "Opazovanja",
+            [
+              "Opazovanja in pogreški | pravi pogrešek, popravek, vrste pogreškov",
+              "Matematični model | funkcijski in stohastični model"
+            ]
+          ],
+          [
+            "Verjetnost v izravnavi",
+            [
+              "Normalna porazdelitev pogreškov | srednji pogrešek, natančnost in točnost",
+              "Uteži opazovanj | utež, varianca enote uteži"
+            ]
+          ],
+          [
+            "Izravnava",
+            [
+              "Izravnava direktnih opazovanj | aritmetična in utežena sredina",
+              "Metoda najmanjših kvadratov | normalne enačbe, ocena natančnosti"
+            ]
+          ]
+        ]
+      ],
+      "GIZRAV2": [
+        "Izravnalni račun II",
+        "MAT",
+        [],
+        [
+          [
+            "Prenos varianc",
+            [
+              "Zakon o prenosu varianc in kovarianc | kovariančna matrika, linearizacija",
+              "Potrebna natančnost opazovanj | načrtovanje meritev"
+            ]
+          ],
+          [
+            "Modeli izravnave",
+            [
+              "Posredna izravnava | enačbe popravkov, normalne enačbe, kofaktorska matrika",
+              "Pogojna izravnava | pogojne enačbe, korelate",
+              "Splošni model izravnave | posredna in pogojna izravnava kot posebna primera"
+            ]
+          ],
+          [
+            "Ocena natančnosti",
+            [
+              "Natančnost izravnanih količin | a-posteriori varianca, elipse pogreškov",
+              "Statistično testiranje | test modela, odkrivanje grobih pogreškov"
+            ]
+          ]
+        ]
+      ],
+      "GFOTOG1": [
+        "Fotogrametrija I",
+        "GEO",
+        [],
+        [
+          [
+            "Osnove fotogrametrije",
+            [
+              "Definicija in razvoj fotogrametrije | terminologija, zgodovinski razvoj",
+              "Osnove fotografije | objektiv, osvetlitev, slikovni senzorji"
+            ]
+          ],
+          [
+            "Snemanje",
+            [
+              "Letalski snemalni sistemi | aerosnemanje, načrt leta, prekrivanje posnetkov",
+              "Kalibracija fotoaparata | kalibracijsko poročilo, notranja orientacija, distorzija"
+            ]
+          ],
+          [
+            "Orientacija posnetkov",
+            [
+              "Zunanja orientacija | kolinearnostne enačbe, oslonilne točke",
+              "Stereofotogrametrija | paralaksa, relativna in absolutna orientacija"
+            ]
+          ],
+          [
+            "Fotogrametrični izdelki",
+            [
+              "Ortofoto in digitalni model reliefa | ortorektifikacija, aerotriangulacija"
+            ]
+          ]
+        ]
+      ],
+      "GVISGEO": [
+        "Višja geodezija",
+        "GEO",
+        [],
+        [
+          [
+            "Oblika Zemlje",
+            [
+              "Oblika in velikost Zemlje | geoid, rotacijski elipsoid",
+              "Parametri elipsoida | polosi, sploščenost, ekscentričnost"
+            ]
+          ],
+          [
+            "Koordinate na elipsoidu",
+            [
+              "Krivulje na elipsoidu | poldnevnik, prvi vertikal, vzporednik, polmeri ukrivljenosti",
+              "Geodetske in astronomske koordinate | odklon navpičnice",
+              "Kartezične in elipsoidne koordinate | pretvorbe, geocentrični sistem"
+            ]
+          ],
+          [
+            "Geodetske naloge na elipsoidu",
+            [
+              "Geodetska linija | normalni preseki, geodetska linija",
+              "Prva in druga geodetska naloga | računanje na krogli in elipsoidu"
+            ]
+          ]
+        ]
+      ],
+      "GKARTO": [
+        "Kartografija",
+        "GEO",
+        [],
+        [
+          [
+            "Osnove kartografije",
+            [
+              "Pomen kartografije | karta in njene lastnosti, kartografska komunikacija",
+              "Zgodovina kartografije | razvoj v svetu in v Sloveniji, razvoj tehnologije"
+            ]
+          ],
+          [
+            "Prostorska podatkovna infrastruktura",
+            [
+              "Državni topografski sistem | nacionalna in evropska prostorska podatkovna infrastruktura"
+            ]
+          ],
+          [
+            "Kartografske projekcije",
+            [
+              "Vrste projekcij | konformne, ekvivalentne, ekvidistantne",
+              "Deformacije v projekcijah | Tissotova indikatrisa, merilo"
+            ]
+          ],
+          [
+            "Oblikovanje karte",
+            [
+              "Kartografski znaki | grafične spremenljivke, legenda",
+              "Kartografska generalizacija | izbor, poenostavitev, premik",
+              "Tematska kartografija | kartogrami, kartodiagrami"
+            ]
+          ]
+        ]
+      ],
+      "GGEOINF1": [
+        "Geoinformatika I",
+        "GEO",
+        [],
+        [
+          [
+            "Prostorski informacijski sistemi",
+            [
+              "Pomen prostorskih podatkov | izrazoslovje, vloga pri odločanju",
+              "Sistem, informacijski sistem in GIS | PIS, GIS, LIS, sestavine"
+            ]
+          ],
+          [
+            "Podatkovni modeli",
+            [
+              "Vektorski in rastrski podatki | geometrija, topologija, atributi",
+              "Prostorske podatkovne baze | relacijski model, SQL, prostorski indeksi"
+            ]
+          ],
+          [
+            "Zajem in kakovost",
+            [
+              "Tehnike zajema podatkov | digitalizacija, georeferenciranje",
+              "Kakovost podatkov | natančnost, popolnost, metapodatki"
+            ]
+          ],
+          [
+            "Analize",
+            [
+              "Prostorske analize | poizvedbe, prekrivanje, vplivna območja"
+            ]
+          ]
+        ]
+      ],
+      "GOBDPOD": [
+        "Osnove obdelave podatkov",
+        "RAC",
+        [],
+        [
+          [
+            "Programiranje",
+            [
+              "Uvod v programiranje | algoritmi, metodologije razvoja programske opreme",
+              "Programski jezik Python | spremenljivke, zanke, funkcije"
+            ]
+          ],
+          [
+            "Knjižnice za računanje",
+            [
+              "Matematične knjižnice | NumPy, matrike, vektorizacija",
+              "Risanje grafov | Matplotlib, prikaz meritev"
+            ]
+          ],
+          [
+            "Baze podatkov",
+            [
+              "Osnove baz podatkov | relacijski model, SQL poizvedbe",
+              "Sodobne razširitve | prostorske baze, obdelava velikih količin podatkov"
+            ]
+          ]
+        ]
+      ],
+      "GPROSNAC": [
+        "Prostorsko načrtovanje",
+        "GEO",
+        [],
+        [
+          [
+            "Urejanje prostora",
+            [
+              "Ravni urejanja prostora | občina, regija, država",
+              "Prostorski akti | strategija prostorskega razvoja, OPN, OPPN"
+            ]
+          ],
+          [
+            "Metode dela",
+            [
+              "Timsko in interdisciplinarno delo | udeleženci, sodelovanje javnosti",
+              "Prostorske inventarizacije in analize | stanje prostora, okoljska nosilnost, karte privlačnosti in zmogljivosti"
+            ]
+          ],
+          [
+            "Raba prostora in izvajanje planov",
+            [
+              "Raba tal v urbanem in ruralnem prostoru | kmetijstvo, gozdarstvo, poselitev, turizem in rekreacija",
+              "Prostorski management | izvajanje planov, zemljiška politika"
+            ]
+          ]
+        ]
+      ],
+      "GPRECIZ": [
+        "Precizna klasična geodetska izmera",
+        "GEO",
+        [],
+        [
+          [
+            "Geodetske mreže",
+            [
+              "Geodetske točke | precizna stabilizacija, signalizacija",
+              "Terestrične geodetske mreže | ravninske in višinske mreže, zasnova mreže"
+            ]
+          ],
+          [
+            "Merske metode in instrumenti",
+            [
+              "Precizno merjenje kotov | girusna metoda, sistematični pogreški",
+              "Precizno merjenje dolžin | elektronski razdaljemeri, popravki dolžin",
+              "Precizni nivelman | višinska mreža, pogreški nivelmana"
+            ]
+          ],
+          [
+            "Obdelava mrež",
+            [
+              "Posredna izravnava mrež | ocena natančnosti merjenih in iskanih količin",
+              "Analiza kakovosti mreže | zanesljivost, elipse pogreškov"
+            ]
+          ]
+        ]
+      ],
+      "GUVPRAV": [
+        "Uvod v pravo",
+        "EKO",
+        [],
+        [
+          [
+            "Država",
+            [
+              "Pojem države in državne oblasti | ustavni organi, delitev oblasti",
+              "Javna uprava | ministrstva, upravne enote, javna pooblastila, lokalna samouprava"
+            ]
+          ],
+          [
+            "Pravo in pravna država",
+            [
+              "Pojem prava | pravno pravilo in pravno načelo, pravica in dolžnost, pravna država",
+              "Sistem prava | notranje in mednarodno pravo, pravo EU, javno in zasebno pravo, pravo okolja"
+            ]
+          ],
+          [
+            "Pravni red",
+            [
+              "Hierarhija pravnih aktov | ustava, zakoni, podzakonski akti, akti lokalnih skupnosti",
+              "Razlaga pravnih aktov | metode razlage, pravne praznine"
+            ]
+          ],
+          [
+            "Pravni postopki",
+            [
+              "Vrste pravnih postopkov | zakonodajni, sodni in upravni postopek",
+              "Upravna odločba | vrste odločb, sestavine odločbe, sklepi, dostop do informacij javnega značaja"
+            ]
+          ]
+        ]
+      ],
+      "GGNSS": [
+        "GNSS v geodeziji",
+        "GEO",
+        [],
+        [
+          [
+            "Satelitska geodezija",
+            [
+              "Osnovni pojmi satelitske geodezije | koncepti, zgodovinski razvoj",
+              "Koordinatni in časovni sistemi | ITRF, ETRS89, časovni sistemi GNSS"
+            ]
+          ],
+          [
+            "Sistemi GNSS",
+            [
+              "Zgradba GNSS | GPS, GLONASS, Galileo, BeiDou, segmenti sistema",
+              "Signali in opazovanja | kodna in fazna opazovanja, tirnice satelitov"
+            ]
+          ],
+          [
+            "Pogreški",
+            [
+              "Viri pogreškov GNSS | ionosfera, troposfera, ure, večpotje"
+            ]
+          ],
+          [
+            "Metode določanja položaja",
+            [
+              "Absolutno in relativno določanje položaja | diferencialni GNSS, RTK",
+              "Omrežja referenčnih postaj | omrežje SIGNAL, uporaba v geodetski izmeri"
+            ]
+          ]
+        ]
+      ],
+      "GGEOINZ1": [
+        "Geodezija v inženirstvu I",
+        "GEO",
+        [],
+        [
+          [
+            "Naloge geodezije v inženirstvu",
+            [
+              "Geodetska dela pri gradnji | vrste del, trendi, standardi",
+              "Natančnost in dovoljena odstopanja | toleranca, merska natančnost"
+            ]
+          ],
+          [
+            "Zakoličevanje",
+            [
+              "Merjenje in zakoličevanje dolžin | merski trak, elektronski razdaljemer",
+              "Zakoličevanje kotov in točk | polarna metoda, presek",
+              "Zakoličevanje višin | niveliranje, višinske točke"
+            ]
+          ],
+          [
+            "Gradnja objektov",
+            [
+              "Geodetska mreža na gradbišču | mikromreža, osi objekta",
+              "Kontrola gradnje | izmera izvedenega stanja, pomiki"
+            ]
+          ]
+        ]
+      ],
+      "GDALJZAZ": [
+        "Daljinsko zaznavanje I",
+        "GEO",
+        [],
+        [
+          [
+            "Uvod v daljinsko zaznavanje",
+            [
+              "Definicija in razvoj daljinskega zaznavanja | terminologija, postopek"
+            ]
+          ],
+          [
+            "Fizikalne osnove",
+            [
+              "Elektromagnetno valovanje | elektromagnetni spekter, sevanje",
+              "Interakcija z atmosfero in površjem | atmosferska okna, spektralni podpisi"
+            ]
+          ],
+          [
+            "Senzorji in sateliti",
+            [
+              "Pasivni in aktivni senzorji | optični, termalni, radarski senzorji",
+              "Satelitski sistemi | Landsat, Sentinel, ločljivosti"
+            ]
+          ],
+          [
+            "Obdelava posnetkov",
+            [
+              "Predobdelava posnetkov | radiometrični in geometrični popravki",
+              "Klasifikacija | nadzorovana in nenadzorovana klasifikacija, vegetacijski indeksi"
+            ]
+          ]
+        ]
+      ],
+      "GUREPOD": [
+        "Urejanje podeželskega prostora",
+        "GEO",
+        [],
+        [
+          [
+            "Podeželje",
+            [
+              "Pojem in funkcije podeželja | urbano-ruralni kontinuum, večfunkcionalnost",
+              "Podeželska naselja | funkcije, razvoj"
+            ]
+          ],
+          [
+            "Kmetijstvo in prostor",
+            [
+              "Kmetijska proizvodnja | težnje doma in v svetu, kmetijska zemljišča",
+              "Naravne in družbene razmere | omejitve, varovana območja"
+            ]
+          ],
+          [
+            "Instrumenti urejanja",
+            [
+              "Komasacije in agrarne operacije | namen in postopek komasacije",
+              "Razvoj podeželja | razvojni programi, politika razvoja podeželja"
+            ]
+          ]
+        ]
+      ],
+      "GEKOMAN": [
+        "Ekonomika in management v geodeziji",
+        "EKO",
+        [],
+        [
+          [
+            "Ekonomika poslovanja",
+            [
+              "Ekonomski problem | redkost dobrin, izbira",
+              "Osnove finančne matematike | obrestovanje, časovna vrednost denarja"
+            ]
+          ],
+          [
+            "Tržno gospodarstvo",
+            [
+              "Tržni mehanizmi | povpraševanje, ponudba, oblikovanje cen",
+              "Konkurenca | popolna in nepopolna konkurenca"
+            ]
+          ],
+          [
+            "Podjetje in management",
+            [
+              "Osnove podjetništva | prvine poslovnega procesa, analiza poslovnih procesov, poslovni izidi",
+              "Management | ravni managementa, strateško planiranje, poslanstvo in cilji organizacije",
+              "Organizacija | klasične in sodobne oblike organizacije, poslovne funkcije, pristop LFA"
+            ]
+          ]
+        ]
+      ],
+      "GSTVPRAV": [
+        "Stvarno pravo",
+        "EKO",
+        [],
+        [
+          [
+            "Temelji stvarnega prava",
+            [
+              "Načela stvarnega prava | temeljni pojmi in načela",
+              "Stvari | premične in nepremične stvari, javno dobro, sestavine in pritikline"
+            ]
+          ],
+          [
+            "Posest in lastnina",
+            [
+              "Posest | pojem, pomen in varstvo posesti",
+              "Lastninska pravica | pridobitev, solastnina, etažna lastnina"
+            ]
+          ],
+          [
+            "Druge stvarne pravice",
+            [
+              "Služnosti | stvarne in osebne služnosti",
+              "Zastavna pravica in hipoteka | zavarovanje terjatev",
+              "Zemljiška knjiga | vpisi, načela zemljiške knjige"
+            ]
+          ]
+        ]
+      ],
+      "GNEPREM": [
+        "Upravljanje in vrednotenje nepremičnin",
+        "EKO",
+        [],
+        [
+          [
+            "Nepremičninski trg",
+            [
+              "Nepremičnine in trg | razvoj in življenjski cikel nepremičnin, značilnosti in transparentnost trga",
+              "Upravljanje nepremičnin | upravljanje stavb, zemljiška politika"
+            ]
+          ],
+          [
+            "Vrednotenje nepremičnin",
+            [
+              "Načela vrednotenja | tržna vrednost, mednarodni, evropski in slovenski standardi ocenjevanja",
+              "Metode vrednotenja | pristop primerjave, donosa in stroškov",
+              "Množično vrednotenje | modeli vrednotenja, zajem podatkov, evidenca trga nepremičnin"
+            ]
+          ]
+        ]
+      ],
+      "GKATASTR": [
+        "Evidence in katastri nepremičnin",
+        "GEO",
+        [],
+        [
+          [
+            "Zemljiški informacijski sistemi",
+            [
+              "Vloga zemljiških evidenc | državna prostorska podatkovna infrastruktura, pomen za družbo",
+              "Zgodovina zemljiških evidenc | razvoj v svetu"
+            ]
+          ],
+          [
+            "Kataster v Sloveniji",
+            [
+              "Razvoj zemljiškega katastra | franciscejski in reambulančni kataster, stabilni kataster",
+              "Kataster nepremičnin | parcele, stavbe, deli stavb"
+            ]
+          ],
+          [
+            "Katastrski postopki",
+            [
+              "Katastrska izmera | metode izmere, ureditev meje",
+              "Vzdrževanje katastra | parcelacija, evidentiranje sprememb"
+            ]
+          ]
+        ]
+      ],
+      "GPROGR": [
+        "Programiranje",
+        "RAC",
+        [],
+        [
+          [
+            "Uvod v programiranje",
+            [
+              "Kaj je programiranje | programiranje brez računalnika, programski jeziki",
+              "Algoritmi | zapis algoritma, diagram poteka"
+            ]
+          ],
+          [
+            "Python",
+            [
+              "Spremenljivke in podatkovni tipi | pretvorbe, operatorji",
+              "Krmilne strukture | pogojni stavki, zanke",
+              "Funkcije in moduli | parametri, knjižnice"
+            ]
+          ],
+          [
+            "Podatkovne strukture",
+            [
+              "Seznami, slovarji in datoteke | branje in pisanje datotek, obdelava podatkov"
+            ]
+          ]
+        ]
+      ],
+      "GIZBGI": [
+        "Izbrane vsebine iz geodetske izmere",
+        "GEO",
+        [],
+        [
+          [
+            "Izbira merske metode",
+            [
+              "Specifični pogoji izmere | omejitve merskih tehnik in metod",
+              "Izbira instrumentarija | omejitve instrumentov, kalibracija"
+            ]
+          ],
+          [
+            "Posebne izmere",
+            [
+              "Meritve v specifičnih razmerah | zaprti prostori, nedostopne točke",
+              "Sodobne merske tehnike | oblak točk, terestrično lasersko skeniranje"
+            ]
+          ]
+        ]
+      ],
+      "GPODJET": [
+        "Podjetništvo",
+        "EKO",
+        [],
+        [
+          [
+            "Podjetnik in priložnost",
+            [
+              "Podjetništvo in podjetnik | pomen podjetništva, vloga podjetnika, notranje, družinsko in tehnološko podjetništvo",
+              "Poslovna priložnost | inovacije, prepoznavanje in vrednotenje ideje"
+            ]
+          ],
+          [
+            "Poslovni načrt",
+            [
+              "Panoga, trg in trženje | tržna raziskava in analiza, načrt trženja",
+              "Proizvodni načrt in ekipa | proizvodi in storitve, vodstvena skupina in kadri, terminski načrt",
+              "Finančni načrt | stroški, prihodki, kritična tveganja, viri financiranja"
+            ]
+          ]
+        ]
+      ],
+      "GPRAVGR": [
+        "Pravica gradnje in gradbena pogodba",
+        "EKO",
+        [],
+        [
+          [
+            "Civilno in stvarno pravo",
+            [
+              "Civilno pravo | splošne značilnosti, pravni viri",
+              "Pravica gradnje | pravica gradnje po gradbenih predpisih, lastninska pravica, etažna lastnina, stavbna pravica, služnost, hipoteka",
+              "Evidentiranje nepremičnin | kataster in zemljiška knjiga"
+            ]
+          ],
+          [
+            "Gradbena pogodba",
+            [
+              "Sklenitev pogodbe | predpogodbena faza, ponudba, javno naročanje, veljavnost pogodbe",
+              "Gradbena in podjemna pogodba | določanje cene, izpolnitev, jamčevanje za napake",
+              "Gradbene uzance in FIDIC | Obligacijski zakonik, posebne gradbene uzance, mednarodni pogoji",
+              "Odškodninska odgovornost | predpostavke odškodninskega zahtevka, krivdna in objektivna odgovornost"
+            ]
+          ]
+        ]
       ]
     },
     "programs": {
@@ -34011,6 +36895,16028 @@ export const EXTRA_FACULTIES = [
           "VOKTEH",
           "VEKOTOX"
         ]
+      },
+      "UL-FGG-GR": {
+        "name": "Gradbeništvo (UN)",
+        "source": "https://www.fgg.uni-lj.si/wp-content/uploads/2026/05/Predmetnik-BA-GR-UN-2026_2027.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki); vsebine po učnih načrtih 2026/27. V 6. semestru študent izbere enega od štirih modulov (konstrukcije, hidrotehnika, promet, stavbarstvo) – modulski predmeti so navedeni med izbirnimi. Matematika I, Matematika II, Fizika, Geodezija, Hidromehanika, Mehanika tal in inženirska geologija, Organizacija gradbenih del in poslovanje, Geotehnika, Osnove potresnega inženirstva, Hidravlika in Osnove zdravstvene hidrotehnike so isti predmeti kot pri VOI (koda V…).",
+        "years": [
+          [
+            "VFIZ",
+            "GGRADIVA",
+            "VMAT1",
+            "GUVODGR",
+            "GINZKOM",
+            "VMAT2",
+            "GSTATDIN",
+            "GRACINF",
+            "GSTAVB1"
+          ],
+          [
+            "GCESTE",
+            "VHIDMEH",
+            "GTEHNOL",
+            "GTRDNOST",
+            "GUREPROS",
+            "VGEODEZ",
+            "VMEHTAL",
+            "VORG",
+            "GSTATLIN",
+            "GSTAVB2"
+          ],
+          [
+            "GBETON",
+            "VGEOTEH",
+            "GINZHID",
+            "GJEKL1",
+            "VPOTRES"
+          ]
+        ],
+        "electives": [
+          "GPLOSK",
+          "GMASIV",
+          "GLESKON",
+          "VHIDRAV",
+          "GHIDROL",
+          "VZDRHID",
+          "GZELEZ",
+          "GPROMET",
+          "GGIS",
+          "GNACSTAV",
+          "GBIOKLIM",
+          "GPRENOVA",
+          "GDIGNAC",
+          "GKOMGOSP"
+        ]
+      },
+      "UL-FGG-GIG": {
+        "name": "Geodezija in geoinformatika (UN)",
+        "source": "https://www.fgg.uni-lj.si/wp-content/uploads/2026/05/Predmetnik-GIG-UN-za-s.-l.-2026_2027.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki); vsebine po učnih načrtih 2026/27. Matematika I in Matematika II sta prikazana z vsebino VOI (koda VMAT1, VMAT2).",
+        "years": [
+          [
+            "VMAT1",
+            "GFIZGEO",
+            "GPROGORO",
+            "GUVODGEO",
+            "GGEORAC",
+            "VMAT2",
+            "GGRINFRA",
+            "GDETIZM",
+            "GSTATGEO",
+            "GIZRAV1"
+          ],
+          [
+            "GFOTOG1",
+            "GVISGEO",
+            "GKARTO",
+            "GIZRAV2",
+            "GGEOINF1",
+            "GOBDPOD",
+            "GPROSNAC",
+            "GPRECIZ",
+            "GUVPRAV",
+            "GGNSS"
+          ],
+          [
+            "GGEOINZ1",
+            "GDALJZAZ",
+            "GUREPOD",
+            "GEKOMAN",
+            "GSTVPRAV",
+            "GNEPREM",
+            "GKATASTR"
+          ]
+        ],
+        "electives": [
+          "GPROGR",
+          "GIZBGI",
+          "GDIGNAC",
+          "GPODJET",
+          "GPRAVGR"
+        ]
+      }
+    }
+  },
+  {
+    "id": "UL-FRI",
+    "name": "UL Fakulteta za računalništvo in informatiko",
+    "short": "UL FRI",
+    "courses": {
+      "P1": [
+        "Programiranje 1",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove programa",
+            [
+              "Prevajanje in izvajanje programa | zgradba preprostega programa v Javi, prevajanje, izvajanje, vrste napak",
+              "Podatkovni tipi in spremenljivke | predstavitev celih in realnih števil, znaki, logične vrednosti, deklaracije konstant in spremenljivk"
+            ]
+          ],
+          [
+            "Stavki",
+            [
+              "Izrazi in operatorji | prireditveni stavek, prioriteta operatorjev, pretvorbe tipov",
+              "Izbirni in ponavljalni stavki | if, switch, while, for, gnezdenje zank"
+            ]
+          ],
+          [
+            "Metode in tabele",
+            [
+              "Metode | vloga in vrste metod, parametri, vračanje vrednosti, rekurzija",
+              "Tabele | enodimenzionalne in večdimenzionalne tabele, iskanje, preprosto urejanje"
+            ]
+          ],
+          [
+            "Objektno programiranje",
+            [
+              "Razredi in objekti | atributi, konstruktorji, objektne metode, enkapsulacija",
+              "Dedovanje in vmesniki | podrazredi, prekrivanje metod, polimorfizem, abstraktni razredi",
+              "Zbirke | seznami, množice, slovarji, iteratorji"
+            ]
+          ]
+        ]
+      ],
+      "OMA": [
+        "Osnove matematične analize",
+        "MAT",
+        [
+          "ANALIZA_1"
+        ],
+        [
+          [
+            "Funkcije več spremenljivk",
+            [
+              "Parcialni odvodi | definicija, verižno pravilo, gradient, diferencial",
+              "Ekstremi funkcij več spremenljivk | stacionarne točke, Hessejeva matrika, vezani ekstremi"
+            ]
+          ],
+          [
+            "Aproksimacija in numerični postopki",
+            [
+              "Linearna aproksimacija in Taylorjev polinom | diferencial, Taylorjeva formula, ocena ostanka",
+              "Reševanje nelinearnih enačb | reševanje nelinearnih enačb, konvergenca, ustavitveni pogoj",
+              "Numerično integriranje | numerično računanje določenega integrala, ocena napake"
+            ]
+          ],
+          [
+            "Diferencialne enačbe",
+            [
+              "Zakoni rasti in enačbe z ločljivima spremenljivkama | eksponentna in logistična rast, splošna in posebna rešitev",
+              "Linearna diferencialna enačba prvega reda | homogena in nehomogena enačba, primeri uporabe"
+            ]
+          ]
+        ]
+      ],
+      "DS": [
+        "Diskretne strukture",
+        "MAT",
+        [
+          "LOGIKA"
+        ],
+        [
+          [
+            "Sklepanje",
+            [
+              "Sklepanje v izjavnem računu | pravila sklepanja, pomožni sklepi, nabori veznikov"
+            ]
+          ],
+          [
+            "Relacije in preslikave",
+            [
+              "Ekvivalenčne relacije in delne urejenosti | lastnosti relacij, ekvivalenčni razredi, Hassejev diagram, ovojnice",
+              "Injektivnost in surjektivnost | inverzna preslikava, kompozitum, Dirichletov princip",
+              "Načelo vključitev in izključitev | moč unije končnih množic, preštevanje elementov"
+            ]
+          ],
+          [
+            "Osnove teorije števil",
+            [
+              "Razširjeni Evklidov algoritem | največji skupni delitelj, linearne diofantske enačbe",
+              "Modularna aritmetika in RSA | kongruence, Eulerjeva funkcija, šifriranje RSA"
+            ]
+          ],
+          [
+            "Permutacije in grafi",
+            [
+              "Permutacije | računanje s permutacijami, cikli, parnost, konjugirane permutacije",
+              "Osnove teorije grafov | izomorfizem, operacije z grafi, podgrafi, povezanost, drevesa",
+              "Eulerjevi in Hamiltonovi grafi | Eulerjev in Hamiltonov problem, barvanja grafov"
+            ]
+          ]
+        ]
+      ],
+      "ODV": [
+        "Osnove digitalnih vezij",
+        "RAC",
+        [],
+        [
+          [
+            "Boolova algebra",
+            [
+              "Preklopne funkcije | Boolova algebra, pravilnostna tabela, normalne oblike",
+              "Funkcijsko polni sistemi | NAND, NOR, dokaz polnosti"
+            ]
+          ],
+          [
+            "Kombinacijska vezja",
+            [
+              "Minimizacija preklopnih funkcij | Veitchev in Karnaughjev diagram, minimalne oblike",
+              "Strukturna preklopna vezja | kodirnik, dekodirnik, multiplekser, ROM",
+              "Aritmetično-logična vezja | seštevalnik, primerjalnik, ALE"
+            ]
+          ],
+          [
+            "Sekvenčna vezja",
+            [
+              "Pomnilne celice | zapah, flip-flopi D, JK in T, registri, števci",
+              "Načrtovanje avtomatov | Moorov in Mealyjev avtomat, prehajalni diagram, realizacija"
+            ]
+          ],
+          [
+            "VHDL in programabilna vezja",
+            [
+              "Osnove VHDL | entiteta, arhitektura, opis vezij, simulacija",
+              "Programabilna logična vezja | PLD, FPGA, sinteza vezja"
+            ]
+          ]
+        ]
+      ],
+      "FIZ": [
+        "Fizika",
+        "FIZ",
+        [],
+        [
+          [
+            "Mehanika točkastega telesa",
+            [
+              "Kinematika | vektorji, hitrost, pospešek, uporaba odvodov in integralov",
+              "Newtonovi zakoni in gravitacija | masa, sile, dinamika",
+              "Delo, energija in trki | moč, gibalna količina, ohranitveni zakoni"
+            ]
+          ],
+          [
+            "Togo telo, nihanje in valovanje",
+            [
+              "Vrtenje togega telesa | središče mase, navor, vztrajnostni moment, vrtilna količina",
+              "Mehansko nihanje in valovanje | harmonično nihanje, valovanje, valovna enačba"
+            ]
+          ],
+          [
+            "Elektrostatika in enosmerni tok",
+            [
+              "Elektrostatika | naboj, Coulombov zakon, potencial, napetost",
+              "Snov v električnem polju | dielektrik, kondenzator, kapacitivnost",
+              "Električni tok in vezja | Ohmov zakon, Kirchhoffova zakona, moč"
+            ]
+          ],
+          [
+            "Magnetizem",
+            [
+              "Magnetno polje in magnetna sila | trajni magneti, elektromagneti, magnetni pretok, snov v magnetnem polju",
+              "Indukcijski zakon | induktivnost, transformator"
+            ]
+          ],
+          [
+            "Elektromagnetno valovanje in optika",
+            [
+              "Nihajni krog in elektromagnetno valovanje | električni nihajni krog, svetloba kot EM valovanje",
+              "Interferenca in uklon | interferenca, uklon na reži in mrežici, optična vlakna, optične komunikacije"
+            ]
+          ]
+        ]
+      ],
+      "P2": [
+        "Programiranje 2",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove jezika C",
+            [
+              "Podatkovni tipi in krmilne strukture v C | osnovni tipi, operatorji, pogojni stavki, zanke",
+              "Razvoj programov in razhroščevanje | prevajanje, povezovanje, razhroščevalnik"
+            ]
+          ],
+          [
+            "Kazalci in funkcije",
+            [
+              "Kazalci in tabele | naslovi, kazalčna aritmetika, tabele kot kazalci",
+              "Funkcije in prenos argumentov | prenos po vrednosti, kazalci kot argumenti"
+            ]
+          ],
+          [
+            "Pomnilnik in podatki",
+            [
+              "Dinamično dodeljevanje pomnilnika | malloc, free, puščanje pomnilnika",
+              "Nizi in vhodno-izhodne operacije | znakovni nizi, standardni vhod in izhod, datoteke",
+              "Strukture | struct, povezani seznami"
+            ]
+          ],
+          [
+            "Algoritmi in predprocesor",
+            [
+              "Algoritmi urejanja | urejanje z mehurčki, izbiranjem, vstavljanjem",
+              "Rekurzija in sestopanje | rekurzivne funkcije, algoritmi sestopanja",
+              "Predprocesor | makri, pogojno prevajanje, vključevanje datotek"
+            ]
+          ]
+        ]
+      ],
+      "LA": [
+        "Linearna algebra",
+        "MAT",
+        [
+          "ALGEBRA_1"
+        ],
+        [
+          [
+            "Uporabe linearne algebre",
+            [
+              "Ortogonalne projekcije in predoločeni sistemi | projekcija na podprostor, metoda najmanjših kvadratov",
+              "Simetrične in ortogonalne matrike | diagonalizacija, spektralni razcep"
+            ]
+          ]
+        ]
+      ],
+      "ARS": [
+        "Arhitektura računalniških sistemov",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove računanja",
+            [
+              "Modeli računanja in von Neumannova arhitektura | Turingov stroj, zgodovinski razvoj, zgradba računalnika",
+              "Predstavitev podatkov | dvojiški zapis, dvojiški komplement, plavajoča vejica"
+            ]
+          ],
+          [
+            "Ukazna arhitektura",
+            [
+              "Ukazi in načini naslavljanja | ukazni nabor, operandi, RISC in CISC",
+              "Zbirni jezik | programiranje v zbirniku, podprogrami, sklad"
+            ]
+          ],
+          [
+            "Centralna procesna enota",
+            [
+              "Izvajanje ukazov | podatkovna pot, kontrolna enota, mikroprogramiranje",
+              "Cevovod | cevovodne nevarnosti, napovedovanje skokov, zmogljivost"
+            ]
+          ],
+          [
+            "Pomnilniški sistem",
+            [
+              "Predpomnilnik | lokalnost, preslikave, zadetki in zgrešitve",
+              "Navidezni pomnilnik | ostranjevanje, tabela strani, TLB"
+            ]
+          ]
+        ]
+      ],
+      "RK": [
+        "Računalniške komunikacije",
+        "RAC",
+        [],
+        [
+          [
+            "Uvod v omrežja",
+            [
+              "Plasti in protokoli | protokolarni sklad, storitve, hrbtenica in krajevna omrežja",
+              "Zakasnitve v omrežju | zakasnitev obdelave, čakanja, prenosa in razširjanja"
+            ]
+          ],
+          [
+            "Aplikacijska in transportna plast",
+            [
+              "Omrežne aplikacije | HTTP, FTP, SMTP, DNS, peer-to-peer, vtiči",
+              "Transportni protokoli UDP in TCP | multipleksiranje, zanesljiv prenos, nadzor zasičenja"
+            ]
+          ],
+          [
+            "Omrežna plast",
+            [
+              "Protokol IP | naslavljanje, podomrežja, IPv6",
+              "Usmerjanje | algoritmi usmerjanja, usmerjevalni protokoli"
+            ]
+          ],
+          [
+            "Povezavna plast in varnost",
+            [
+              "Lokalna omrežja | Ethernet, MAC naslovi, stikala, ARP",
+              "Varnost v omrežjih | šifriranje, avtentikacija, požarni zidovi"
+            ]
+          ]
+        ]
+      ],
+      "OIS": [
+        "Osnove informacijskih sistemov",
+        "RAC",
+        [],
+        [
+          [
+            "Informatika v organizaciji",
+            [
+              "Informacijski sistemi | podatek, informacija, znanje, vloga informatike",
+              "Upravljanje IT | ogrodja upravljanja IT, zrelost arhitekture podjetja"
+            ]
+          ],
+          [
+            "Naložbe v IT",
+            [
+              "Vrednotenje naložb v IT | NPV, UCP, nematerialne koristi, IT portfelj",
+              "Tveganja projektov IT | pristop z opcijami, povračilo sredstev"
+            ]
+          ],
+          [
+            "Uvajanje informacijskih sistemov",
+            [
+              "Upravljanje sprememb | odpor uporabnikov, model sprejetosti, evolucijske in revolucionarne spremembe",
+              "Delovni sistemi in poslovni procesi | metamodel delovnega sistema, modeliranje procesov"
+            ]
+          ]
+        ]
+      ],
+      "APS1": [
+        "Algoritmi in podatkovne strukture 1",
+        "RAC",
+        [],
+        [
+          [
+            "Zahtevnost in urejanje",
+            [
+              "Modeli računanja in računska zahtevnost | asimptotična notacija, časovna in prostorska zahtevnost",
+              "Urejanje | urejanje z zlivanjem, hitro urejanje, urejanje s kopico"
+            ]
+          ],
+          [
+            "Podatkovne strukture",
+            [
+              "Abstraktni podatkovni tipi | sklad, vrsta, slovar, prioritetna vrsta",
+              "Drevesne strukture | dvojiška iskalna drevesa, uravnotežena drevesa, kopice"
+            ]
+          ],
+          [
+            "Grafi",
+            [
+              "Požrešni algoritmi in minimalna vpeta drevesa | Primov in Kruskalov algoritem",
+              "Najkrajše poti | Dijkstrov algoritem, Bellman-Fordov algoritem"
+            ]
+          ],
+          [
+            "Načrtovanje algoritmov",
+            [
+              "Deli in vladaj | rekurzivni razcep, rekurzivne enačbe",
+              "Dinamično programiranje | optimalne podstrukture, memoizacija, problem nahrbtnika",
+              "Računska geometrija in težki problemi | konveksna ovojnica, sestopanje, aproksimacija"
+            ]
+          ]
+        ]
+      ],
+      "OPB": [
+        "Osnove podatkovnih baz",
+        "RAC",
+        [],
+        [
+          [
+            "Uvod v podatkovne baze",
+            [
+              "Sistemi za upravljanje podatkovnih baz | vrste SUPB, vloge pri upravljanju, arhitektura",
+              "Relacijski model | relacije, ključi, integritetne omejitve"
+            ]
+          ],
+          [
+            "Poizvedovalni jeziki",
+            [
+              "Relacijska algebra | selekcija, projekcija, stik, množične operacije",
+              "Poizvedbe SQL | SELECT, stiki, združevanje, gnezdene poizvedbe",
+              "Definicija in spreminjanje podatkov | CREATE, INSERT, UPDATE, pogledi"
+            ]
+          ],
+          [
+            "Načrtovanje podatkovnih baz",
+            [
+              "Konceptualno modeliranje ER | entitete, razmerja, preslikava v relacije",
+              "Normalizacija | funkcijske odvisnosti, normalne oblike"
+            ]
+          ],
+          [
+            "Transakcije",
+            [
+              "Transakcije in sočasnost | lastnosti ACID, zaklepanje, obnovitev",
+              "Indeksi in fizična organizacija | B-drevesa, optimizacija poizvedb"
+            ]
+          ]
+        ]
+      ],
+      "VS": [
+        "Verjetnost in statistika",
+        "MAT",
+        [
+          "VERJETNOST_1",
+          "STATISTIKA"
+        ],
+        [
+          [
+            "Odvisnost spremenljivk",
+            [
+              "Linearna regresija in korelacija | kovarianca, koeficient korelacije, premica regresije",
+              "Slučajni vektorji | skupna porazdelitev, neodvisnost, robne porazdelitve"
+            ]
+          ]
+        ]
+      ],
+      "ORS": [
+        "Organizacija računalniških sistemov",
+        "RAC",
+        [],
+        [
+          [
+            "Tehnologija in sinhronizacija",
+            [
+              "Tehnologija CMOS | logični nivoji, logični gradniki, urin signal",
+              "Sinhronizacija in metastabilnost | sinhronizatorji, prehodi med urinimi domenami"
+            ]
+          ],
+          [
+            "Vhod in izhod",
+            [
+              "Vhodno-izhodni vmesniki | V/I naprave, paralelni in serijski krmilniki",
+              "Prekinitve in DMA | prekinitveni krmilniki, prekinitveno voden V/I, neposreden dostop do pomnilnika"
+            ]
+          ],
+          [
+            "Pomnilnik in vodila",
+            [
+              "Pomnilniška hierarhija in navidezni pomnilnik | predpomnilnik, ostranjevanje",
+              "Vodila in vrste prenosov | sinhronski, asinhronski, eksplozijski, izvorno-sinhronski prenos"
+            ]
+          ],
+          [
+            "Vzporedni sistemi",
+            [
+              "Večjedrni in mnogojedrni sistemi | vzporednost, zmogljivost",
+              "Predpomnilniška skladnost | protokoli skladnosti, MESI"
+            ]
+          ]
+        ]
+      ],
+      "IRZ": [
+        "Izračunljivost in računska zahtevnost",
+        "RAC",
+        [],
+        [
+          [
+            "Matematični uvod",
+            [
+              "Dokazovalne tehnike | indukcija, protislovje, formalizacija problemov in jezikov",
+              "Bijekcije in diagonalizacija | števnost, neštevne množice, Cantorjev diagonalni argument"
+            ]
+          ],
+          [
+            "Avtomati",
+            [
+              "Končni avtomati in regularni jeziki | DKA, NKA, regularni izrazi",
+              "Skladovni avtomati | kontekstno neodvisne gramatike"
+            ]
+          ],
+          [
+            "Izračunljivost",
+            [
+              "Turingovi stroji | Church-Turingova teza, univerzalni Turingov stroj",
+              "Neodločljivi problemi | problem ustavitve, prevedbe"
+            ]
+          ],
+          [
+            "Računska zahtevnost",
+            [
+              "Razreda P in NP | polinomski čas, preverjanje rešitev",
+              "NP-polnost | Cook-Levinov izrek, polinomske prevedbe"
+            ]
+          ]
+        ]
+      ],
+      "TIS": [
+        "Teorija informacij in sistemov",
+        "RAC",
+        [],
+        [
+          [
+            "Informacija",
+            [
+              "Entropija in medsebojna informacija | lastna informacija, entropija, pogojna entropija"
+            ]
+          ],
+          [
+            "Stiskanje podatkov",
+            [
+              "Kodiranje vira | razvrstitev kodov, Kraftova neenakost, Shannonov teorem",
+              "Huffmanov in aritmetični kod | optimalni kodi, stiskanje s slovarjem, stiskanje z izgubami"
+            ]
+          ],
+          [
+            "Kanal in varnostno kodiranje",
+            [
+              "Kapaciteta kanala | vir brez spomina, diskretni kanal, Shannonov teorem o kodiranju kanala",
+              "Hammingov kod | Hammingova razdalja, odkrivanje in popravljanje napak",
+              "Ciklični kodi in CRC | linearni bločni kodi, ciklična redundanca"
+            ]
+          ],
+          [
+            "Signali",
+            [
+              "Signali in Fourierova analiza | frekvenčni spekter, Fourierova transformacija",
+              "Vzorčenje | vzorčni teorem, diskretni signali"
+            ]
+          ]
+        ]
+      ],
+      "APS2": [
+        "Algoritmi in podatkovne strukture 2",
+        "RAC",
+        [],
+        [
+          [
+            "Analiza algoritmov",
+            [
+              "Asimptotična notacija | definicije, primeri, primerjava rasti",
+              "Krovni izrek | rekurzivne enačbe, dokaz krovnega izreka"
+            ]
+          ],
+          [
+            "Deli in vladaj",
+            [
+              "Hitro iskanje k-tega elementa | quickselect, pričakovana zahtevnost",
+              "Hitro množenje | Karacubov algoritem, Strassenovo množenje matrik"
+            ]
+          ],
+          [
+            "Dinamično programiranje",
+            [
+              "Kompleksnejši opis stanja | problem trgovskega potnika, barvanje grafov",
+              "Zahtevnejše računanje delnih rezultatov | najdaljše naraščajoče podzaporedje, spuščanje jajc"
+            ]
+          ],
+          [
+            "Pretoki v omrežjih",
+            [
+              "Maksimalni pretok | Ford-Fulkersonova metoda, Edmonds-Karpov algoritem, minimalni prerez",
+              "Prirejanja v dvodelnih grafih | prevedba na pretok, uporabe"
+            ]
+          ]
+        ]
+      ],
+      "OS": [
+        "Operacijski sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Zgradba operacijskega sistema",
+            [
+              "Vloga operacijskega sistema | abstrakcija, virtualizacija, sočasnost, persistenca",
+              "Sistemski klici in jedro | arhitektura OS, lupina, vrste OS"
+            ]
+          ],
+          [
+            "Procesi in niti",
+            [
+              "Življenjski cikel procesa | procesi, niti, multiprogramiranje",
+              "Razvrščanje | algoritmi razvrščanja, realni čas",
+              "Medprocesna komunikacija | posredovanje sporočil, deljeni pomnilnik, cevi"
+            ]
+          ],
+          [
+            "Sinhronizacija",
+            [
+              "Kritični odsek | ključavnice, semaforji, monitorji",
+              "Smrtni objem | pogoji, preprečevanje, izogibanje, zaznavanje"
+            ]
+          ],
+          [
+            "Pomnilnik in datoteke",
+            [
+              "Upravljanje pomnilnika | ostranjevanje, segmentacija, zamenjevalni algoritmi",
+              "Datotečni sistemi | imeniki, dodeljevanje prostora, zaščita"
+            ]
+          ]
+        ]
+      ],
+      "OUI": [
+        "Osnove umetne inteligence",
+        "RAC",
+        [],
+        [
+          [
+            "Preiskovanje prostora stanj",
+            [
+              "Neinformirano preiskovanje | prostor stanj, globinsko, širinsko, iterativno poglabljanje",
+              "Hevristično preiskovanje | A*, IDA*, izrek o popolnosti, ocenitvene funkcije",
+              "AND/OR grafi | dekompozicija problemov, algoritem AO*"
+            ]
+          ],
+          [
+            "Strojno učenje",
+            [
+              "Učenje iz podatkov | odločitvena drevesa, ocenjevanje uspešnosti, prekomerno prilagajanje",
+              "Klasifikacija in regresija | naivni Bayes, k najbližjih sosedov, linearna regresija"
+            ]
+          ],
+          [
+            "Znanje in sklepanje",
+            [
+              "Predstavitev znanja | logika, pravila, sklepanje",
+              "Planiranje | STRIPS, planiranje s sredstvi in cilji"
+            ]
+          ],
+          [
+            "Igre",
+            [
+              "Algoritem minimaks | drevo igre, ocenjevalna funkcija",
+              "Alfa-beta rezanje | učinkovitost, iterativno poglabljanje"
+            ]
+          ]
+        ]
+      ],
+      "TPO": [
+        "Tehnologija programske opreme",
+        "RAC",
+        [],
+        [
+          [
+            "Programsko inženirstvo",
+            [
+              "Profesionalno programsko inženirstvo | izdelki, specifikacija, lastnosti kakovosti, etika",
+              "Projektno vodenje | upravljanje tveganj, časovno načrtovanje, ocenjevanje stroškov COCOMO II"
+            ]
+          ],
+          [
+            "Procesi razvoja",
+            [
+              "Procesni modeli | slapovni in iterativni model, agilni razvoj, Scrum",
+              "Zajem zahtev | funkcionalne in nefunkcionalne zahteve, uporabniške zgodbe"
+            ]
+          ],
+          [
+            "Modeliranje in načrtovanje",
+            [
+              "Modeliranje z UML | diagrami primerov uporabe, razredov in zaporedja",
+              "Arhitektura in načrtovalski vzorci | slogi arhitekture, vzorci načrtovanja"
+            ]
+          ],
+          [
+            "Kakovost programske opreme",
+            [
+              "Preverjanje in vrednotenje | testiranje enot, integracijsko in sprejemno testiranje",
+              "Obvladovanje sprememb | upravljanje konfiguracij, izboljševanje procesa, CMM"
+            ]
+          ]
+        ]
+      ],
+      "MATMOD": [
+        "Matematično modeliranje",
+        "MAT",
+        [],
+        [
+          [
+            "Linearni modeli",
+            [
+              "Predoločeni sistemi | metoda najmanjših kvadratov, posplošeni inverzi",
+              "Matrične faktorizacije | QR, singularni razcep, PCA, nenegativna faktorizacija"
+            ]
+          ],
+          [
+            "Nelinearni modeli",
+            [
+              "Modeliranje s funkcijami več spremenljivk | lokalni, vezani in globalni ekstremi",
+              "Nelinearna optimizacija | Newtonova metoda, gradientni spust, optimizacijski modeli"
+            ]
+          ],
+          [
+            "Dinamični modeli",
+            [
+              "Modeli z diferencialnimi enačbami | začetni in robni problemi, linearni sistemi, ravnovesja",
+              "Numerično reševanje začetnih problemov | Eulerjeva metoda, Runge-Kutta"
+            ]
+          ],
+          [
+            "Geometrijski modeli",
+            [
+              "Parametrizirane krivulje | regularne in singularne točke, tangenta, normala, dolžina loka",
+              "Interpolacija in aproksimacija s krivuljami | zlepki, ploščine in volumni"
+            ]
+          ]
+        ]
+      ],
+      "PPJ": [
+        "Principi programskih jezikov",
+        "RAC",
+        [],
+        [
+          [
+            "Paradigme programiranja",
+            [
+              "Modeli računanja in paradigme | imperativno, objektno, funkcijsko, logično in vzporedno programiranje",
+              "Elementi postopkovnih jezikov | spremenljivke, kontrolne strukture, podprogrami, pregled jezikov"
+            ]
+          ],
+          [
+            "Logično programiranje",
+            [
+              "Prolog | logika kot programski jezik, unifikacija, sestopanje, simbolično programiranje",
+              "Programiranje z omejitvami | ideje in principi, logično programiranje z omejitvami CLP"
+            ]
+          ],
+          [
+            "Sintaksa in semantika",
+            [
+              "Gramatike in operacijska semantika | opis sintakse, pravila izvajanja",
+              "Denotacijska semantika | denotacijske definicije, povezava z gramatiko jezika",
+              "Aksiomatska semantika in pravilnost programov | parcialna in totalna pravilnost, invariante"
+            ]
+          ]
+        ]
+      ],
+      "RACTEH": [
+        "Računalniške tehnologije",
+        "FIZ",
+        [],
+        [
+          [
+            "Valovanje in kvanti",
+            [
+              "Nihanje in valovanje | sklopljena nihala, valovna enačba, superpozicija, interferenca",
+              "Dualnost delec-valovanje | fotoefekt, sevanje črnega telesa, elektroni in fotoni",
+              "Schrödingerjeva enačba | valovna funkcija, delec v jami, tunelski pojav, načelo nedoločenosti"
+            ]
+          ],
+          [
+            "Kvantno računanje",
+            [
+              "Kubit in meritev | dvonivojski sistem, spin, interpretacija meritve",
+              "Kvantne operacije | unitarnost, Bellova stanja, implementacije kvantnih računalnikov"
+            ]
+          ],
+          [
+            "Elektroni v snovi",
+            [
+              "Atomi, vezi in kristali | Bohrov model, atomske orbitale, kemijska vez",
+              "Kovine in polprevodniki | efektivna masa, Hallov pojav, fotoprevodnost, FET, CMOS"
+            ]
+          ],
+          [
+            "Nanoelektronika in shranjevanje podatkov",
+            [
+              "Heterostrukture in nanoelektronika | kvantne jame, žice in pike, enoelektronski tranzistor",
+              "Magnetizem in pomnilniki | spintronika, magnetoupornost, flash pomnilnik, magnetno in optično hranjenje"
+            ]
+          ]
+        ]
+      ],
+      "SPLPROG": [
+        "Spletno programiranje",
+        "RAC",
+        [],
+        [
+          [
+            "Odjemalski del",
+            [
+              "HTML in CSS | struktura dokumenta, oblikovanje, odzivni dizajn",
+              "JavaScript in DOM | dogodki, manipulacija DOM, asinhrono programiranje"
+            ]
+          ],
+          [
+            "Strežniški del",
+            [
+              "Strežniške aplikacije | Node.js, usmerjanje zahtev, MVC",
+              "REST API | HTTP metode, JSON, odjemalec-strežnik"
+            ]
+          ],
+          [
+            "Podatki in varnost",
+            [
+              "Shranjevanje podatkov | podatkovne baze v spletnih aplikacijah, NoSQL",
+              "Varnost spletnih aplikacij | avtentikacija, XSS, SQL vrivanje"
+            ]
+          ],
+          [
+            "Sodobni razvoj",
+            [
+              "Ogrodja za enostranske aplikacije | komponente, stanje, usmerjanje",
+              "Testiranje in uvajanje | avtomatsko testiranje, namestitev v oblak"
+            ]
+          ]
+        ]
+      ],
+      "PREV": [
+        "Prevajalniki",
+        "RAC",
+        [],
+        [
+          [
+            "Leksikalna analiza",
+            [
+              "Regularni izrazi in končni avtomati | simboli, leksemi, pregledovalnik",
+              "Generatorji leksikalnih analizatorjev | pravila, obravnava napak"
+            ]
+          ],
+          [
+            "Sintaksna analiza",
+            [
+              "Kontekstno neodvisne gramatike | izpeljave, dvoumnost",
+              "Razčlenjevanje LL in LR | od zgoraj navzdol, od spodaj navzgor"
+            ]
+          ],
+          [
+            "Semantična analiza",
+            [
+              "Tabela simbolov in dosegi | razreševanje imen",
+              "Preverjanje tipov | pravila tipov, semantične napake"
+            ]
+          ],
+          [
+            "Generiranje kode",
+            [
+              "Vmesna koda | klicni zapisi, vmesna predstavitev",
+              "Izbira ukazov in dodeljevanje registrov | strojna koda, optimizacija"
+            ]
+          ]
+        ]
+      ],
+      "INTSIS": [
+        "Inteligentni sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Računanje po vzorih iz narave",
+            [
+              "Genetski algoritmi | predstavitev, selekcija, križanje, mutacija, genetsko programiranje"
+            ]
+          ],
+          [
+            "Strojno učenje",
+            [
+              "Pristranskost in varianca | pretirano prilagajanje, učenje predstavitev, izbira atributov",
+              "Ansambelske in jedrne metode | naključni gozdovi, boosting, metoda podpornih vektorjev",
+              "Nevronske mreže | arhitekture, vzvratno razširjanje napake, globoko učenje, razlaga modelov"
+            ]
+          ],
+          [
+            "Obdelava naravnega jezika",
+            [
+              "Predstavitev besedil | vreča besed, vložitve besed, semantična podobnost",
+              "Klasifikacija besedil | pridobivanje informacij, uporabe"
+            ]
+          ],
+          [
+            "Spodbujevano učenje",
+            [
+              "Učenje Q in TD | nagrade, strategije, vrednostne funkcije",
+              "Globoko spodbujevano učenje | aproksimacija vrednostne funkcije z nevronskimi mrežami"
+            ]
+          ]
+        ]
+      ],
+      "RGTI": [
+        "Računalniška grafika in tehnologija iger",
+        "RAC",
+        [],
+        [
+          [
+            "Geometrijske transformacije",
+            [
+              "Homogene koordinate | translacija, rotacija, skaliranje, kompozitum",
+              "Projekcije in kamera | perspektivna in pravokotna projekcija, pogled"
+            ]
+          ],
+          [
+            "Upodabljanje",
+            [
+              "Grafični cevovod | rasterizacija, z-medpomnilnik, senčilniki",
+              "Osvetlitev in senčenje | Phongov model, viri svetlobe",
+              "Teksture | preslikava tekstur, filtriranje",
+              "Sledenje žarku | globalno upodabljanje, odboj, lom"
+            ]
+          ],
+          [
+            "Modeliranje",
+            [
+              "Predstavitev 3D modelov | mreže trikotnikov, krivulje in ploskve",
+              "Animacija | ključne slike, skeletna animacija"
+            ]
+          ],
+          [
+            "Tehnologija iger",
+            [
+              "Igralni pogon | zanka igre, graf scene",
+              "Fizika in trki | zaznavanje trkov, razdelitev prostora"
+            ]
+          ]
+        ]
+      ],
+      "UOZP": [
+        "Uvod v odkrivanje znanj iz podatkov",
+        "RAC",
+        [],
+        [
+          [
+            "Poslovna inteligenca",
+            [
+              "Poslovna inteligenca | značilne aplikacije, vloga v informacijskih sistemih, tehnologije znanja",
+              "Podatkovna skladišča in predobdelava | večdimenzionalni podatki, priprava podatkov"
+            ]
+          ],
+          [
+            "Podpora odločanju",
+            [
+              "Računalniško podprto odločanje | odločitveni modeli, zajemanje znanja, nepopolni in negotovi podatki",
+              "Skupinsko odločanje | metode podpore odločanju v skupinah, razlaga odločitev"
+            ]
+          ],
+          [
+            "Odkrivanje znanj",
+            [
+              "Napovedni modeli | strojna gradnja modelov odločanja, ocenjevanje modelov",
+              "Vizualizacija podatkov in modelov | razsevni diagrami, projekcije",
+              "Razvrščanje v skupine | hierarhično gručenje, metoda voditeljev"
+            ]
+          ],
+          [
+            "Splet in priporočanje",
+            [
+              "Analiza spleta in družbenih omrežij | rangiranje spletnih strani, PageRank",
+              "Priporočilni sistemi | sodelovalno filtriranje, matrični razcep"
+            ]
+          ]
+        ]
+      ],
+      "PORSIS": [
+        "Porazdeljeni sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Sočasnost in niti",
+            [
+              "Procesi in niti | prepletanje, ustvarjanje in pridruževanje niti",
+              "Sinhronizacija niti | medsebojno izključevanje, atomične operacije, pogojne spremenljivke, pregrada",
+              "Vzorci sočasnosti | semaforji, proizvajalec-porabnik, bralci in pisatelji, bazen nalog"
+            ]
+          ],
+          [
+            "Grafični pospeševalniki",
+            [
+              "Programiranje grafičnih pospeševalnikov | arhitektura GPE, vzporedna izvedba ščepcev"
+            ]
+          ],
+          [
+            "Osnove porazdeljenih sistemov",
+            [
+              "Odjemalec-strežnik in RPC | mrežni protokoli, klic oddaljenih funkcij",
+              "Modeli sistemov in napake | sinhroni in asinhroni sistemi, bizantinske napake, problem dveh generalov"
+            ]
+          ],
+          [
+            "Čas in replikacija",
+            [
+              "Sinhronizacija ur | fizične ure, NTP, Lamportova ura, vektorske ure",
+              "Podvajanje in konsenz | konsistentnost replik, avtomati stanj, sklepčnost"
+            ]
+          ]
+        ]
+      ]
+    },
+    "programs": {
+      "UL-FRI-RI": {
+        "name": "Računalništvo in informatika",
+        "source": "https://fri.uni-lj.si/upload/Zborniki/Zbornik_BUN_RI_1000468_julij_202.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (predstavitveni zbornik 2026/27); 3. letnik: obvezna OUI in TPO, ostalo moduli/izbirni",
+        "years": [
+          [
+            "P1",
+            "OMA",
+            "DS",
+            "ODV",
+            "FIZ",
+            "P2",
+            "LA",
+            "ARS",
+            "RK",
+            "OIS"
+          ],
+          [
+            "APS1",
+            "OPB",
+            "VS",
+            "ORS",
+            "IRZ",
+            "TIS",
+            "APS2",
+            "OS"
+          ],
+          [
+            "OUI",
+            "TPO"
+          ]
+        ],
+        "electives": [
+          "MATMOD",
+          "PPJ",
+          "RACTEH",
+          "SPLPROG",
+          "PREV",
+          "INTSIS",
+          "RGTI",
+          "UOZP",
+          "PORSIS"
+        ]
+      }
+    }
+  },
+  {
+    "id": "UL-FE",
+    "name": "UL Fakulteta za elektrotehniko",
+    "short": "UL FE",
+    "courses": {
+      "MAT1": [
+        "Matematika I",
+        "MAT",
+        [
+          "ANALIZA_1"
+        ],
+        []
+      ],
+      "MEHTD": [
+        "Mehanika in termodinamika",
+        "FIZ",
+        [
+          "FIZ_1"
+        ],
+        []
+      ],
+      "OE1": [
+        "Osnove elektrotehnike I",
+        "FIZ",
+        [],
+        [
+          [
+            "Elektrostatika",
+            [
+              "Elektrostatika | naboj, sila med naboji, superpozicija",
+              "Električna poljska jakost in potencial | Gaussov zakon, napetost, ekvipotencialne ploskve",
+              "Kapacitivnost | kondenzatorji, vezave, energija električnega polja"
+            ]
+          ],
+          [
+            "Enosmerni tok",
+            [
+              "Električni tok in upornost | gostota toka, Ohmov zakon, Joulov zakon",
+              "Električni tok in vezja | zaporedna in vzporedna vezava, delilnik napetosti"
+            ]
+          ],
+          [
+            "Analiza enosmernih vezij",
+            [
+              "Metode analize vezij | metoda zančnih tokov, metoda spojiščnih potencialov",
+              "Theveninov in Nortonov nadomestni vir | superpozicija, prilagoditev bremena"
+            ]
+          ],
+          [
+            "Prehodni pojavi",
+            [
+              "Polnjenje in praznjenje kondenzatorja | RC vezje, časovna konstanta",
+              "Nelinearni elementi | karakteristike, delovna točka"
+            ]
+          ]
+        ]
+      ],
+      "OSNPROG": [
+        "Osnove programiranja",
+        "RAC",
+        [],
+        [
+          [
+            "Algoritmi",
+            [
+              "Algoritmi in diagrami poteka | koraki reševanja problema, psevdokoda",
+              "Spremenljivke in izrazi | podatkovni tipi, operatorji, vhod in izhod"
+            ]
+          ],
+          [
+            "Krmilne strukture",
+            [
+              "Pogojni stavki | odločitve, logični izrazi",
+              "Zanke | ponavljanje, števne in pogojne zanke"
+            ]
+          ],
+          [
+            "Funkcije in podatki",
+            [
+              "Funkcije | parametri, vračanje vrednosti, doseg spremenljivk",
+              "Seznami in nizi | indeksiranje, iteracija, preprosti algoritmi iskanja in urejanja",
+              "Datoteke | branje in pisanje podatkov"
+            ]
+          ]
+        ]
+      ],
+      "ATOPT": [
+        "Atomika in optika",
+        "FIZ",
+        [
+          "OPTIKA",
+          "MODERNA_1"
+        ],
+        [
+          [
+            "Trdna snov in jedro",
+            [
+              "Pasovna struktura trdnin | prevodniki, izolatorji, polprevodniki",
+              "Jedrska fizika | razpadi, razpolovni čas, jedrske reakcije"
+            ]
+          ]
+        ]
+      ],
+      "MAT2": [
+        "Matematika II",
+        "MAT",
+        [
+          "ALGEBRA_1"
+        ],
+        [
+          [
+            "Funkcije več spremenljivk",
+            [
+              "Parcialni odvodi | zveznost, parcialni odvodi, verižno pravilo, gradient",
+              "Ekstremi funkcij več spremenljivk | stacionarne točke, vezani ekstremi, Lagrangeeva metoda",
+              "Večkratni integrali | dvojni in trojni integral, uvedba novih spremenljivk"
+            ]
+          ]
+        ]
+      ],
+      "OE2": [
+        "Osnove elektrotehnike II",
+        "FIZ",
+        [],
+        [
+          [
+            "Magnetno polje",
+            [
+              "Magnetno polje toka | Biot-Savartov zakon, Amperov zakon",
+              "Magnetni materiali in magnetni krogi | permeabilnost, histereza, magnetna upornost"
+            ]
+          ],
+          [
+            "Elektromagnetna indukcija",
+            [
+              "Faradayev zakon indukcije | inducirana napetost, Lenzovo pravilo",
+              "Induktivnost in magnetna energija | lastna in medsebojna induktivnost, RL vezje"
+            ]
+          ],
+          [
+            "Izmenični tokovi",
+            [
+              "Izmenični tokovi | kompleksni račun, upor, tuljava, kondenzator",
+              "Moč v izmeničnih vezjih | delovna, jalova in navidezna moč, faktor moči",
+              "Resonanca | zaporedni in vzporedni nihajni krog, kakovost"
+            ]
+          ],
+          [
+            "Trifazni sistemi",
+            [
+              "Trifazni sistem | vezava v zvezdo in trikot, fazne in medfazne napetosti",
+              "Moč trifaznega sistema | simetrična in nesimetrična bremena"
+            ]
+          ]
+        ]
+      ],
+      "PROGMK": [
+        "Programiranje mikrokrmilnikov",
+        "RAC",
+        [],
+        [
+          [
+            "Mikrokrmilnik",
+            [
+              "Zgradba mikrokrmilnika | jedro, pomnilnik, periferne enote",
+              "Programiranje v C za vgrajene sisteme | registri, bitne operacije, prevajanje in nalaganje"
+            ]
+          ],
+          [
+            "Periferne enote",
+            [
+              "Vhodno-izhodni priključki | GPIO, tipke, LED",
+              "Časovniki in prekinitve | prekinitvene rutine, PWM",
+              "A/D pretvorba | vzorčenje analognih signalov, ločljivost"
+            ]
+          ],
+          [
+            "Komunikacija",
+            [
+              "Serijski vmesniki | UART, SPI, I2C",
+              "Povezovanje s senzorji | branje meritev, protokoli"
+            ]
+          ]
+        ]
+      ],
+      "DIGSTR": [
+        "Digitalne strukture",
+        "RAC",
+        [],
+        [
+          [
+            "Logične funkcije",
+            [
+              "Boolova algebra in logična vrata | pravilnostne tabele, normalne oblike",
+              "Minimizacija logičnih funkcij | Karnaughjev diagram"
+            ]
+          ],
+          [
+            "Kombinacijska vezja",
+            [
+              "Kombinacijski gradniki | multiplekser, dekodirnik, kodirnik",
+              "Aritmetična vezja | seštevalniki, odštevalniki, primerjalniki"
+            ]
+          ],
+          [
+            "Sekvenčna vezja",
+            [
+              "Flip-flopi in registri | sinhronska vezja, pomikalni registri",
+              "Končni avtomati | Moorov in Mealyjev avtomat, števci"
+            ]
+          ],
+          [
+            "Digitalni sistemi",
+            [
+              "Pomnilniki | ROM, RAM, organizacija",
+              "Programirljiva logika in opisni jeziki | FPGA, VHDL"
+            ]
+          ]
+        ]
+      ],
+      "KOMSIS": [
+        "Komunikacijski sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Komunikacijski sistem",
+            [
+              "Model komunikacijskega sistema | vir, kanal, sprejemnik, šum",
+              "Signali in pasovna širina | spekter, prenosna zmogljivost"
+            ]
+          ],
+          [
+            "Prenos",
+            [
+              "Prenosni mediji | baker, optična vlakna, radijski kanal",
+              "Modulacije in multipleksiranje | analogne in digitalne modulacije, FDM, TDM"
+            ]
+          ],
+          [
+            "Omrežja",
+            [
+              "Plastni model omrežij | OSI, TCP/IP",
+              "Komutacija in naslavljanje | komutacija vodov in paketov, IP naslovi"
+            ]
+          ],
+          [
+            "Sodobni sistemi",
+            [
+              "Mobilna omrežja | celična zgradba, generacije mobilnih omrežij",
+              "Širokopasovni dostop | xDSL, optični dostop, kakovost storitve"
+            ]
+          ]
+        ]
+      ],
+      "MAT3": [
+        "Matematika III",
+        "MAT",
+        [
+          "INTEG_FOURIER"
+        ],
+        [
+          [
+            "Navadne diferencialne enačbe",
+            [
+              "Diferencialne enačbe prvega reda | ločljive spremenljivke, linearne enačbe",
+              "Linearne diferencialne enačbe višjega reda | homogene in nehomogene enačbe, konstantni koeficienti",
+              "Sistemi linearnih diferencialnih enačb | matrična oblika, lastne vrednosti"
+            ]
+          ],
+          [
+            "Vektorska analiza",
+            [
+              "Gradient, divergenca in rotor | skalarna in vektorska polja, operator nabla",
+              "Krivuljni in ploskovni integrali | delo polja, pretok",
+              "Integralski izreki | Gaussov in Stokesov izrek"
+            ]
+          ]
+        ]
+      ],
+      "MERITVE": [
+        "Meritve",
+        "FIZ",
+        [],
+        [
+          [
+            "Osnove merjenja",
+            [
+              "Merilni sistem in enote | SI, etaloni, sledljivost",
+              "Merilna negotovost | sistematični in naključni pogreški, ocena negotovosti"
+            ]
+          ],
+          [
+            "Merjenje električnih veličin",
+            [
+              "Merjenje napetosti in toka | analogni in digitalni instrumenti, notranja upornost",
+              "Merjenje upornosti in impedance | mostična vezja, U-I metoda",
+              "Merjenje moči in energije | enofazni in trifazni sistemi"
+            ]
+          ],
+          [
+            "Merilni instrumenti",
+            [
+              "Osciloskop | časovni in frekvenčni prikaz, proženje",
+              "Digitalni merilni instrumenti | A/D pretvorba, vzorčenje"
+            ]
+          ]
+        ]
+      ],
+      "ELSTROJ": [
+        "Električni stroji",
+        "FIZ",
+        [],
+        [
+          [
+            "Transformator",
+            [
+              "Delovanje transformatorja | prestava, nadomestno vezje, izgube",
+              "Trifazni transformator | vezave, paralelno obratovanje"
+            ]
+          ],
+          [
+            "Enosmerni stroji",
+            [
+              "Enosmerni motor in generator | zgradba, vzbujanje",
+              "Karakteristike enosmernih strojev | navor, vrtilna hitrost, krmiljenje"
+            ]
+          ],
+          [
+            "Izmenični stroji",
+            [
+              "Asinhronski stroj | vrtilno magnetno polje, slip, navorna karakteristika",
+              "Sinhronski stroj | generator, motor, kazalčni diagram"
+            ]
+          ]
+        ]
+      ],
+      "MAT4": [
+        "Matematika IV",
+        "MAT",
+        [
+          "VERJETNOST_1",
+          "STATISTIKA"
+        ],
+        [
+          [
+            "Odvisnost slučajnih spremenljivk",
+            [
+              "Slučajni vektorji | skupna porazdelitev, neodvisnost",
+              "Regresija in korelacija | kovarianca, linearna regresija"
+            ]
+          ]
+        ]
+      ],
+      "MERINST": [
+        "Merilna instrumentacija",
+        "FIZ",
+        [],
+        [
+          [
+            "Senzorji",
+            [
+              "Merilni pretvorniki | temperatura, sila, tlak, pomik",
+              "Lastnosti senzorjev | občutljivost, linearnost, dinamični odziv"
+            ]
+          ],
+          [
+            "Obdelava merilnih signalov",
+            [
+              "Merilni ojačevalniki | diferencialni ojačevalnik, šum, filtriranje",
+              "A/D in D/A pretvorniki | vzorčenje, kvantizacija, ločljivost"
+            ]
+          ],
+          [
+            "Merilni sistemi",
+            [
+              "Računalniško podprte meritve | zajem podatkov, virtualna instrumentacija",
+              "Merilni vmesniki | vodila, komunikacija z instrumenti"
+            ]
+          ]
+        ]
+      ],
+      "POLPREL": [
+        "Polprevodniška elektronika",
+        "FIZ",
+        [],
+        [
+          [
+            "Polprevodniki",
+            [
+              "Lastni in primesni polprevodniki | nosilci naboja, dopiranje",
+              "Transport nosilcev | drift, difuzija, rekombinacija"
+            ]
+          ],
+          [
+            "Diode",
+            [
+              "PN spoj | zaporna plast, tokovno-napetostna karakteristika",
+              "Diodna vezja | usmerniki, Zenerjeva dioda, svetleče diode"
+            ]
+          ],
+          [
+            "Tranzistorji",
+            [
+              "Bipolarni tranzistor | delovna področja, modeli, ojačevalnik",
+              "MOS tranzistor | zgradba, karakteristike, CMOS"
+            ]
+          ],
+          [
+            "Osnovna vezja",
+            [
+              "Ojačevalne stopnje | delovna točka, ojačenje",
+              "Stikala in logična vrata | tranzistor kot stikalo"
+            ]
+          ]
+        ]
+      ],
+      "AVS": [
+        "Avtomatsko vodenje sistemov",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeli sistemov",
+            [
+              "Matematični modeli dinamičnih sistemov | diferencialne enačbe, linearizacija",
+              "Prenosne funkcije | Laplaceova transformacija, bločni diagrami"
+            ]
+          ],
+          [
+            "Analiza sistemov vodenja",
+            [
+              "Časovni odziv | stopnični odziv, sistemi prvega in drugega reda",
+              "Stabilnost | poli, Routhov kriterij"
+            ]
+          ],
+          [
+            "Regulacija",
+            [
+              "Zaprtozančna regulacija | povratna zanka, statični pogrešek",
+              "PID regulator | nastavljanje parametrov"
+            ]
+          ]
+        ]
+      ],
+      "DES": [
+        "Digitalni elektronski sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Načrtovanje digitalnih sistemov",
+            [
+              "Opisni jezik strojne opreme | VHDL, modeli vezij",
+              "Simulacija in sinteza | testne strukture, časovna analiza"
+            ]
+          ],
+          [
+            "Programirljiva vezja",
+            [
+              "Arhitektura FPGA | logični bloki, povezave",
+              "Vgrajeni procesorji | sistem na čipu"
+            ]
+          ],
+          [
+            "Digitalni podsistemi",
+            [
+              "Krmilni avtomati in podatkovne poti | načrtovanje zaporednih sistemov",
+              "Vmesniki | komunikacija s perifernimi enotami"
+            ]
+          ]
+        ]
+      ],
+      "ENOK": [
+        "Energetika in okolje",
+        "FIZ",
+        [],
+        [
+          [
+            "Energetski viri",
+            [
+              "Fosilni in jedrski viri | zaloge, pretvorba energije",
+              "Obnovljivi viri | sonce, veter, voda, biomasa"
+            ]
+          ],
+          [
+            "Proizvodnja električne energije",
+            [
+              "Elektrarne | termoelektrarne, hidroelektrarne, jedrske elektrarne",
+              "Učinkovitost pretvorb | izkoristek, soproizvodnja"
+            ]
+          ],
+          [
+            "Okolje",
+            [
+              "Vplivi energetike na okolje | emisije, podnebne spremembe",
+              "Trajnostna energetika | učinkovita raba energije, shranjevanje energije"
+            ]
+          ]
+        ]
+      ],
+      "INFSIS": [
+        "Informacijski sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Informacijski sistemi",
+            [
+              "Vloga informacijskih sistemov | podatki, procesi, organizacija",
+              "Razvoj informacijskih sistemov | življenjski cikel, zahteve"
+            ]
+          ],
+          [
+            "Podatkovne baze",
+            [
+              "Podatkovno modeliranje | ER model, relacijski model",
+              "Jezik SQL | poizvedbe, spreminjanje podatkov"
+            ]
+          ],
+          [
+            "Spletni informacijski sistemi",
+            [
+              "Arhitektura spletnih aplikacij | odjemalec-strežnik, storitve",
+              "Varnost informacijskih sistemov | dostop, zaščita podatkov"
+            ]
+          ]
+        ]
+      ],
+      "ANSIS": [
+        "Analiza sistemov",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeliranje sistemov",
+            [
+              "Teoretično modeliranje | ravnotežne enačbe, analogije med sistemi",
+              "Prostor stanj | spremenljivke stanja, linearizacija"
+            ]
+          ],
+          [
+            "Časovna analiza",
+            [
+              "Odziv linearnih sistemov | impulzni in stopnični odziv, konvolucija",
+              "Stabilnost sistemov | lastne vrednosti, ravnovesne točke"
+            ]
+          ],
+          [
+            "Frekvenčna analiza",
+            [
+              "Frekvenčni odziv | Bodejev diagram, Nyquistov diagram",
+              "Identifikacija sistemov | določanje modela iz meritev"
+            ]
+          ]
+        ]
+      ],
+      "GRADSV": [
+        "Gradniki sistemov vodenja",
+        "FIZ",
+        [],
+        [
+          [
+            "Merilni členi",
+            [
+              "Senzorji v sistemih vodenja | merjenje položaja, hitrosti, temperature, tlaka",
+              "Merilni pretvorniki | standardni signali, prilagoditev"
+            ]
+          ],
+          [
+            "Izvršni členi",
+            [
+              "Aktuatorji | električni, pnevmatski in hidravlični pogoni",
+              "Ventili in motorji | karakteristike, izbira"
+            ]
+          ],
+          [
+            "Regulatorji",
+            [
+              "Industrijski regulatorji | zvezni in nezvezni regulatorji",
+              "Realizacija regulatorjev | analogna in digitalna izvedba"
+            ]
+          ]
+        ]
+      ],
+      "OSNROB": [
+        "Osnove robotike",
+        "FIZ",
+        [],
+        [
+          [
+            "Kinematika robota",
+            [
+              "Homogene transformacije | položaj in orientacija, koordinatni sistemi",
+              "Direktna in inverzna kinematika | Denavit-Hartenbergov zapis",
+              "Jacobijeva matrika | hitrosti, singularnosti"
+            ]
+          ],
+          [
+            "Dinamika robota",
+            [
+              "Dinamični model | Lagrangeeve enačbe, sile in navori",
+              "Načrtovanje trajektorij | interpolacija, časovni potek"
+            ]
+          ],
+          [
+            "Vodenje robota",
+            [
+              "Vodenje položaja | regulacija sklepov",
+              "Robotski senzorji in programiranje | zaznavanje, industrijski roboti"
+            ]
+          ]
+        ]
+      ],
+      "SIGNALI": [
+        "Signali",
+        "FIZ",
+        [],
+        [
+          [
+            "Zvezni signali",
+            [
+              "Vrste signalov | periodični, energijski, močnostni signali",
+              "Fourierova vrsta in transformacija | spekter, lastnosti transformacije"
+            ]
+          ],
+          [
+            "Linearni sistemi",
+            [
+              "Konvolucija | impulzni odziv, LTI sistemi",
+              "Laplaceova transformacija | prenosna funkcija, stabilnost"
+            ]
+          ],
+          [
+            "Diskretni signali",
+            [
+              "Vzorčenje | vzorčni teorem, prekrivanje spektra",
+              "Z-transformacija | diskretni sistemi, diferenčne enačbe"
+            ]
+          ]
+        ]
+      ],
+      "ELAVT": [
+        "Elektronika v avtomatiki",
+        "FIZ",
+        [],
+        [
+          [
+            "Analogna vezja",
+            [
+              "Operacijski ojačevalnik | invertirajoči, neinvertirajoči, diferencialni ojačevalnik",
+              "Aktivni filtri | nizkoprepustni in visokoprepustni filtri"
+            ]
+          ],
+          [
+            "Pretvorba signalov",
+            [
+              "Prilagoditev merilnih signalov | instrumentacijski ojačevalnik, galvanska ločitev",
+              "A/D in D/A pretvorba | vrste pretvornikov"
+            ]
+          ],
+          [
+            "Digitalna elektronika v vodenju",
+            [
+              "Mikrokrmilniki v avtomatiki | vhodi, izhodi, časovniki",
+              "Napajanje in močnostni izhodi | napajalniki, krmiljenje bremen"
+            ]
+          ]
+        ]
+      ],
+      "IKRS": [
+        "Industrijski krmilni in regulacijski sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Programirljivi krmilniki",
+            [
+              "Zgradba PLK | vhodno-izhodni moduli, cikel izvajanja",
+              "Programiranje PLK | lestvični diagram, funkcijski bloki, IEC 61131"
+            ]
+          ],
+          [
+            "Regulacijski sistemi",
+            [
+              "Digitalna regulacija | PID v diskretni obliki, vzorčenje",
+              "Kaskadna in napredna regulacija | predkrmiljenje, kaskada"
+            ]
+          ],
+          [
+            "Industrijska avtomatizacija",
+            [
+              "Industrijske komunikacije | procesna vodila, industrijski Ethernet",
+              "Nadzorni sistemi | SCADA, HMI, varnost procesa"
+            ]
+          ]
+        ]
+      ],
+      "RACSIM": [
+        "Računalniška simulacija",
+        "RAC",
+        [],
+        [
+          [
+            "Modeliranje",
+            [
+              "Simulacijski modeli | zvezni in diskretni modeli, bločni diagrami",
+              "Validacija modelov | primerjava z meritvami"
+            ]
+          ],
+          [
+            "Zvezna simulacija",
+            [
+              "Numerična integracija | Eulerjeva metoda, Runge-Kutta, izbira koraka",
+              "Simulacijska orodja | Matlab, Simulink"
+            ]
+          ],
+          [
+            "Diskretna simulacija",
+            [
+              "Simulacija diskretnih dogodkov | čakalne vrste, dogodki",
+              "Naključna števila in Monte Carlo | generatorji, statistična analiza rezultatov"
+            ]
+          ]
+        ]
+      ],
+      "EKS": [
+        "Elektronske komponente in senzorji",
+        "FIZ",
+        [],
+        [
+          [
+            "Pasivne komponente",
+            [
+              "Upori, kondenzatorji in tuljave | zgradba, tolerance, parazitni pojavi",
+              "Elektromehanske komponente | releji, stikala, konektorji"
+            ]
+          ],
+          [
+            "Senzorji",
+            [
+              "Senzorji temperature in svetlobe | termistorji, termočleni, fotodiode",
+              "Senzorji sile in pospeška | uporovni lističi, MEMS senzorji"
+            ]
+          ],
+          [
+            "Senzorski sistemi",
+            [
+              "Prilagoditev senzorskih signalov | mostična vezja, ojačevalniki",
+              "Zanesljivost komponent | staranje, odpovedi"
+            ]
+          ]
+        ]
+      ],
+      "OPTOEL": [
+        "Optoelektronika",
+        "FIZ",
+        [],
+        [
+          [
+            "Svetloba in snov",
+            [
+              "Optične lastnosti polprevodnikov | absorpcija, emisija, pasovna vrzel",
+              "Valovodi in optična vlakna | popolni odboj, slabljenje"
+            ]
+          ],
+          [
+            "Izvori svetlobe",
+            [
+              "Svetleče diode | delovanje, učinkovitost",
+              "Laserji | stimulirana emisija, polprevodniški laserji"
+            ]
+          ],
+          [
+            "Detektorji in sončne celice",
+            [
+              "Fotodetektorji | fotodiode, slikovni senzorji",
+              "Sončne celice | karakteristika, izkoristek"
+            ]
+          ]
+        ]
+      ],
+      "SIGSIS": [
+        "Signali in sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Signali",
+            [
+              "Zvezni signali | osnovni signali, energija, moč",
+              "Fourierova analiza signalov | Fourierova vrsta, Fourierova transformacija"
+            ]
+          ],
+          [
+            "Sistemi",
+            [
+              "Linearni časovno nespremenljivi sistemi | konvolucija, impulzni odziv",
+              "Prenosne funkcije | Laplaceova transformacija, frekvenčni odziv"
+            ]
+          ],
+          [
+            "Filtri",
+            [
+              "Analogni filtri | Butterworthov in Čebiševov filter",
+              "Modulacija | amplitudna modulacija, spekter"
+            ]
+          ]
+        ]
+      ],
+      "LINEV": [
+        "Linearna elektronska vezja",
+        "FIZ",
+        [],
+        [
+          [
+            "Ojačevalniki",
+            [
+              "Tranzistorske ojačevalne stopnje | modeli malih signalov, ojačenje",
+              "Večstopenjski ojačevalniki | sklopitev, diferencialni ojačevalnik"
+            ]
+          ],
+          [
+            "Povratna vezava",
+            [
+              "Negativna povratna vezava | vpliv na ojačenje in pasovno širino",
+              "Stabilnost ojačevalnikov | kompenzacija"
+            ]
+          ],
+          [
+            "Operacijski ojačevalniki",
+            [
+              "Osnovna vezja z operacijskimi ojačevalniki | seštevalnik, integrator",
+              "Neidealnosti operacijskega ojačevalnika | ofset, končno ojačenje, hitrost"
+            ]
+          ]
+        ]
+      ],
+      "ANEV": [
+        "Analogna elektronska vezja",
+        "FIZ",
+        [],
+        [
+          [
+            "Analogni gradniki",
+            [
+              "Tokovna zrcala in viri | integrirana vezja",
+              "Izhodne stopnje | razredi A, B, AB"
+            ]
+          ],
+          [
+            "Filtri in oscilatorji",
+            [
+              "Aktivni filtri | načrtovanje filtrov",
+              "Oscilatorji | pogoji za nihanje, RC in LC oscilatorji"
+            ]
+          ],
+          [
+            "Mešani signali",
+            [
+              "Primerjalniki in pretvorniki | A/D, D/A",
+              "Napajalna vezja | linearni in stikalni regulatorji"
+            ]
+          ]
+        ]
+      ],
+      "DSS": [
+        "Diskretni signali in sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Diskretni signali",
+            [
+              "Vzorčenje in kvantizacija | vzorčni teorem, prekrivanje",
+              "Diskretni sistemi | diferenčne enačbe, konvolucija"
+            ]
+          ],
+          [
+            "Transformacije",
+            [
+              "Z-transformacija | prenosna funkcija, poli in ničle",
+              "Diskretna Fourierova transformacija | DFT, FFT"
+            ]
+          ],
+          [
+            "Digitalni filtri",
+            [
+              "Filtri FIR | načrtovanje z okni",
+              "Filtri IIR | bilinearna transformacija"
+            ]
+          ]
+        ]
+      ],
+      "GST": [
+        "Govorne in slikovne tehnologije",
+        "RAC",
+        [],
+        [
+          [
+            "Govorne tehnologije",
+            [
+              "Govorni signal | nastanek govora, značilke, spektrogram",
+              "Razpoznavanje in sinteza govora | akustični modeli, sinteza iz besedila"
+            ]
+          ],
+          [
+            "Slikovne tehnologije",
+            [
+              "Digitalna slika | zajem, barvni prostori, histogram",
+              "Obdelava slik | filtriranje, robovi, segmentacija"
+            ]
+          ],
+          [
+            "Razpoznavanje vzorcev",
+            [
+              "Klasifikacija | značilke, razvrščevalniki, globoko učenje",
+              "Biometrija | razpoznavanje obrazov in govorcev"
+            ]
+          ]
+        ]
+      ],
+      "EEOMR": [
+        "Elektroenergetska omrežja in naprave",
+        "FIZ",
+        [],
+        [
+          [
+            "Elektroenergetsko omrežje",
+            [
+              "Zgradba elektroenergetskega sistema | proizvodnja, prenos, distribucija",
+              "Vodi | parametri vodov, nadomestna vezja"
+            ]
+          ],
+          [
+            "Naprave",
+            [
+              "Stikalne naprave | odklopniki, ločilniki, varovalke",
+              "Energetski transformatorji v omrežju | regulacija napetosti"
+            ]
+          ],
+          [
+            "Obratovanje omrežij",
+            [
+              "Padci napetosti in izgube | izračun razmer v omrežju",
+              "Kratki stiki in zaščita | kratkostični tokovi, zaščitni releji"
+            ]
+          ]
+        ]
+      ],
+      "MODES": [
+        "Modeliranje električnih strojev",
+        "FIZ",
+        [],
+        [
+          [
+            "Osnove modeliranja",
+            [
+              "Magnetni krog stroja | navitja, magnetna energija",
+              "Transformacije koordinat | Clarkova in Parkova transformacija"
+            ]
+          ],
+          [
+            "Dinamični modeli",
+            [
+              "Model enosmernega stroja | električna in mehanska enačba",
+              "Model asinhronskega stroja | dq model, prehodni pojavi",
+              "Model sinhronskega stroja | stroji s trajnimi magneti"
+            ]
+          ],
+          [
+            "Numerično modeliranje",
+            [
+              "Metoda končnih elementov | magnetno polje v stroju",
+              "Simulacija pogonov | modeli v simulacijskih orodjih"
+            ]
+          ]
+        ]
+      ],
+      "OSNMEH": [
+        "Osnove mehatronike",
+        "FIZ",
+        [],
+        [
+          [
+            "Mehatronski sistem",
+            [
+              "Zgradba mehatronskega sistema | senzorji, aktuatorji, krmilnik",
+              "Mehanski prenosi | gonila, jermeni, vreteno"
+            ]
+          ],
+          [
+            "Pogoni",
+            [
+              "Električni pogoni | izbira motorja, momentna karakteristika",
+              "Pnevmatika in hidravlika | cilindri, ventili"
+            ]
+          ],
+          [
+            "Vodenje",
+            [
+              "Krmiljenje gibanja | servopogoni, koračni motorji",
+              "Načrtovanje mehatronskih naprav | integracija, primeri"
+            ]
+          ]
+        ]
+      ],
+      "REGTEH": [
+        "Regulacijska tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeli",
+            [
+              "Prenosne funkcije regulacijskih sistemov | bločni diagrami, signalni grafi",
+              "Prostor stanj | vodljivost, spoznavnost"
+            ]
+          ],
+          [
+            "Analiza",
+            [
+              "Stabilnost zaprte zanke | Routh-Hurwitz, Nyquistov kriterij",
+              "Diagram lege korenov | vpliv ojačenja"
+            ]
+          ],
+          [
+            "Načrtovanje regulatorjev",
+            [
+              "PID regulacija | nastavitvena pravila, protinasičenje",
+              "Frekvenčno načrtovanje | fazna in amplitudna rezerva, kompenzatorji",
+              "Digitalna izvedba regulatorja | diskretizacija, vzorčenje"
+            ]
+          ]
+        ]
+      ],
+      "EESIS": [
+        "Elektroenergetski sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Pretoki moči",
+            [
+              "Izračun pretokov moči | admitančna matrika, Newton-Raphsonova metoda",
+              "Regulacija napetosti in jalove moči | kompenzacija"
+            ]
+          ],
+          [
+            "Obratovanje sistema",
+            [
+              "Regulacija frekvence in delovne moči | primarna in sekundarna regulacija",
+              "Stabilnost sistema | statična in prehodna stabilnost"
+            ]
+          ],
+          [
+            "Trg in planiranje",
+            [
+              "Ekonomično obratovanje | razdelitev obremenitev",
+              "Vključevanje obnovljivih virov | razpršena proizvodnja, pametna omrežja"
+            ]
+          ]
+        ]
+      ],
+      "ENELEK": [
+        "Energetska elektronika",
+        "FIZ",
+        [],
+        [
+          [
+            "Močnostni polprevodniki",
+            [
+              "Močnostna stikala | diode, tiristorji, MOSFET, IGBT",
+              "Izgube in hlajenje | stikalne in prevodne izgube"
+            ]
+          ],
+          [
+            "Usmerniki",
+            [
+              "Neregulirani usmerniki | enofazni in trifazni mostič",
+              "Krmiljeni usmerniki | tiristorski usmerniki, kot vžiga"
+            ]
+          ],
+          [
+            "Pretvorniki",
+            [
+              "Enosmerni pretvorniki | znižavalnik, zviševalnik",
+              "Razsmerniki | pulzno-širinska modulacija, frekvenčni pretvorniki"
+            ]
+          ]
+        ]
+      ],
+      "VNTEH": [
+        "Visokonapetostna tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Električno polje",
+            [
+              "Visokonapetostna električna polja | porazdelitev polja, krmiljenje polja",
+              "Izolacijski materiali | plini, tekočine, trdni izolatorji"
+            ]
+          ],
+          [
+            "Preboji",
+            [
+              "Preboj v plinih | Townsendov mehanizem, Paschenov zakon",
+              "Delne razelektritve | nastanek, merjenje"
+            ]
+          ],
+          [
+            "Prenapetosti in preizkušanje",
+            [
+              "Prenapetosti | atmosferske in stikalne prenapetosti, prenapetostna zaščita",
+              "Visokonapetostni preizkusi | generatorji udarnih napetosti, merjenje"
+            ]
+          ]
+        ]
+      ],
+      "ELDIN": [
+        "Elektrodinamika",
+        "FIZ",
+        [],
+        [
+          [
+            "Maxwellove enačbe",
+            [
+              "Maxwellove enačbe | diferencialna in integralska oblika, robni pogoji",
+              "Energija elektromagnetnega polja | Poyntingov vektor"
+            ]
+          ],
+          [
+            "Elektromagnetni valovi",
+            [
+              "Ravni valovi | razširjanje, polarizacija, odboj",
+              "Valovanje v snoveh | prevodniki, kožni pojav"
+            ]
+          ],
+          [
+            "Vodi in antene",
+            [
+              "Prenosni vodi | karakteristična impedanca, odboji, Smithov diagram",
+              "Valovodi in antene | rodovi, sevanje, smernost"
+            ]
+          ]
+        ]
+      ],
+      "TIIK": [
+        "Teorija informacij in izvorno kodiranje",
+        "RAC",
+        [],
+        [
+          [
+            "Mera informacije",
+            [
+              "Entropija | lastna informacija, entropija vira",
+              "Medsebojna informacija | pogojna entropija, kapaciteta kanala"
+            ]
+          ],
+          [
+            "Kodiranje vira",
+            [
+              "Brezizgubno kodiranje | Huffmanov kod, aritmetično kodiranje, Lempel-Ziv",
+              "Izgubno kodiranje | kvantizacija, transformacijsko kodiranje"
+            ]
+          ],
+          [
+            "Kodiranje signalov",
+            [
+              "Kodiranje govora in zvoka | psihoakustični model",
+              "Kodiranje slike in videa | JPEG, napovedno kodiranje"
+            ]
+          ]
+        ]
+      ],
+      "INTSIS": [
+        "Inteligentni sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Inteligentni agenti",
+            [
+              "Preiskovanje | neinformirano in hevristično preiskovanje",
+              "Sklepanje | pravila, mehka logika"
+            ]
+          ],
+          [
+            "Strojno učenje",
+            [
+              "Nadzorovano učenje | klasifikacija, regresija, ocenjevanje",
+              "Nevronske mreže | perceptron, globoko učenje"
+            ]
+          ],
+          [
+            "Uporabe",
+            [
+              "Inteligentne storitve | priporočilni sistemi, analiza uporabnikov",
+              "Inteligentni sistemi v komunikacijah | prilagodljivi sistemi"
+            ]
+          ]
+        ]
+      ],
+      "ZSS": [
+        "Zvezni signali in sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Zvezni signali",
+            [
+              "Opis signalov | determinirani in naključni signali, korelacija",
+              "Spekter signala | Fourierova transformacija, močnostni spekter"
+            ]
+          ],
+          [
+            "Zvezni sistemi",
+            [
+              "LTI sistemi | konvolucija, impulzni odziv",
+              "Laplaceova transformacija | prenosna funkcija, stabilnost"
+            ]
+          ],
+          [
+            "Prenos signalov",
+            [
+              "Filtriranje | idealni in realni filtri",
+              "Analogne modulacije | AM, FM, pasovna širina"
+            ]
+          ]
+        ]
+      ],
+      "DOS": [
+        "Digitalna obdelava signalov",
+        "FIZ",
+        [],
+        [
+          [
+            "Diskretni signali in sistemi",
+            [
+              "Vzorčenje in rekonstrukcija | vzorčni teorem, prekrivanje spektra",
+              "Diskretni LTI sistemi | diferenčne enačbe, Z-transformacija"
+            ]
+          ],
+          [
+            "Spektralna analiza",
+            [
+              "DFT in FFT | diskretna Fourierova transformacija, hitri algoritmi",
+              "Okenske funkcije | spektralno prepuščanje, ločljivost"
+            ]
+          ],
+          [
+            "Digitalni filtri",
+            [
+              "Načrtovanje filtrov FIR | metoda oken, linearna faza",
+              "Načrtovanje filtrov IIR | bilinearna transformacija, stabilnost"
+            ]
+          ],
+          [
+            "Uporabe",
+            [
+              "Obdelava zvoka | odmev, izenačevalniki",
+              "Signalni procesorji | izvedba v realnem času"
+            ]
+          ]
+        ]
+      ],
+      "DIGKOM": [
+        "Digitalne komunikacije",
+        "FIZ",
+        [],
+        [
+          [
+            "Prenos v osnovnem pasu",
+            [
+              "Linijsko kodiranje | impulzi, medsimbolna interferenca",
+              "Optimalni sprejemnik | prilagojeni filter, verjetnost napake"
+            ]
+          ],
+          [
+            "Digitalne modulacije",
+            [
+              "ASK, FSK in PSK | konstelacije, pasovna širina",
+              "QAM in OFDM | spektralna učinkovitost"
+            ]
+          ],
+          [
+            "Kanalsko kodiranje",
+            [
+              "Bločni kodi | odkrivanje in popravljanje napak",
+              "Konvolucijski kodi | Viterbijev algoritem"
+            ]
+          ]
+        ]
+      ],
+      "KOMPROT": [
+        "Komunikacijski protokoli",
+        "RAC",
+        [],
+        [
+          [
+            "Protokolni sklad",
+            [
+              "Načela protokolov | plasti, storitve, sporočila",
+              "Opis protokolov | končni avtomati, diagrami zaporedja"
+            ]
+          ],
+          [
+            "Internetni protokoli",
+            [
+              "IP in usmerjanje | IPv4, IPv6, usmerjevalni protokoli",
+              "TCP in UDP | zanesljiv prenos, nadzor pretoka"
+            ]
+          ],
+          [
+            "Aplikacijski protokoli",
+            [
+              "HTTP in spletne storitve | REST, WebSocket",
+              "Protokoli za večpredstavnost | SIP, RTP"
+            ]
+          ]
+        ]
+      ],
+      "NUMMET": [
+        "Numerične metode",
+        "MAT",
+        [
+          "NUMERIKA"
+        ],
+        [
+          [
+            "Napake in stabilnost",
+            [
+              "Zaokrožitvene napake | plavajoča vejica, širjenje napak",
+              "Pogojenost problema | občutljivost, stabilnost algoritma"
+            ]
+          ],
+          [
+            "Aproksimacija",
+            [
+              "Numerično odvajanje | diferenčne formule, ocena napake",
+              "Metoda najmanjših kvadratov | predoločeni sistemi, QR razcep"
+            ]
+          ]
+        ]
+      ],
+      "UVMMS": [
+        "Uvod v multimedijske sisteme",
+        "RAC",
+        [],
+        [
+          [
+            "Zaznavanje",
+            [
+              "Človeški vid | zaznavanje barv, svetlost, ločljivost",
+              "Človeški sluh | glasnost, frekvenčno območje, maskiranje"
+            ]
+          ],
+          [
+            "Digitalni mediji",
+            [
+              "Predstavitev slike, zvoka in videa | vzorčenje, kvantizacija, formati",
+              "Stiskanje medijev | brezizgubno in izgubno stiskanje"
+            ]
+          ],
+          [
+            "Multimedijske storitve",
+            [
+              "Multimedijski sistemi in storitve | zajem, prenos, prikaz",
+              "Uporabniška izkušnja | interakcija, kakovost izkušnje"
+            ]
+          ]
+        ]
+      ],
+      "PROG1": [
+        "Programiranje 1",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove programa",
+            [
+              "Prevajanje in izvajanje programa | zgradba preprostega programa v Javi, prevajanje, izvajanje, vrste napak",
+              "Podatkovni tipi in spremenljivke | predstavitev celih in realnih števil, znaki, logične vrednosti, deklaracije"
+            ]
+          ],
+          [
+            "Stavki",
+            [
+              "Izrazi in operatorji | prireditveni stavek, prioriteta operatorjev, pretvorbe tipov",
+              "Izbirni in ponavljalni stavki | if, switch, while, for, gnezdenje zank"
+            ]
+          ],
+          [
+            "Metode in tabele",
+            [
+              "Metode | vloga in vrste metod, parametri, vračanje vrednosti, rekurzija",
+              "Tabele | enodimenzionalne in večdimenzionalne tabele, iskanje, preprosto urejanje"
+            ]
+          ],
+          [
+            "Objektno programiranje",
+            [
+              "Razredi in objekti | atributi, konstruktorji, objektne metode, enkapsulacija",
+              "Dedovanje in vmesniki | podrazredi, prekrivanje metod, polimorfizem",
+              "Zbirke | seznami, množice, slovarji, iteratorji"
+            ]
+          ]
+        ]
+      ],
+      "KARKOM": [
+        "Karierna komunikacija",
+        "EKO",
+        [],
+        [
+          [
+            "Komunikacija",
+            [
+              "Modeli komuniciranja | verbalna in neverbalna komunikacija, poslušanje",
+              "Medosebna komunikacija | timsko delo, reševanje konfliktov"
+            ]
+          ],
+          [
+            "Strokovno sporočanje",
+            [
+              "Pisna komunikacija | strokovno poročilo, poslovna e-pošta",
+              "Javno nastopanje | predstavitev, retorika, vizualni pripomočki"
+            ]
+          ],
+          [
+            "Kariera",
+            [
+              "Načrtovanje kariere | kompetence, osebna blagovna znamka",
+              "Zaposlitveni postopek | življenjepis, zaposlitveni razgovor"
+            ]
+          ]
+        ]
+      ],
+      "OMA": [
+        "Osnove matematične analize",
+        "MAT",
+        [
+          "ANALIZA_1"
+        ],
+        [
+          [
+            "Funkcije več spremenljivk",
+            [
+              "Parcialni odvodi | definicija, verižno pravilo, gradient, diferencial",
+              "Ekstremi funkcij več spremenljivk | stacionarne točke, Hessejeva matrika, vezani ekstremi"
+            ]
+          ],
+          [
+            "Aproksimacija in numerični postopki",
+            [
+              "Linearna aproksimacija in Taylorjev polinom | diferencial, Taylorjeva formula, ocena ostanka",
+              "Reševanje nelinearnih enačb | reševanje nelinearnih enačb, konvergenca, ustavitveni pogoj",
+              "Numerično integriranje | numerično računanje določenega integrala, ocena napake"
+            ]
+          ],
+          [
+            "Diferencialne enačbe",
+            [
+              "Zakoni rasti in enačbe z ločljivima spremenljivkama | eksponentna in logistična rast, splošna in posebna rešitev",
+              "Linearna diferencialna enačba prvega reda | homogena in nehomogena enačba, primeri uporabe"
+            ]
+          ]
+        ]
+      ],
+      "LA": [
+        "Linearna algebra",
+        "MAT",
+        [
+          "ALGEBRA_1"
+        ],
+        [
+          [
+            "Uporabe linearne algebre",
+            [
+              "Ortogonalne projekcije in predoločeni sistemi | projekcija na podprostor, metoda najmanjših kvadratov",
+              "Simetrične in ortogonalne matrike | diagonalizacija, spektralni razcep"
+            ]
+          ]
+        ]
+      ],
+      "TOMM": [
+        "Tehnološke osnove multimedije",
+        "FIZ",
+        [],
+        [
+          [
+            "Električna vezja",
+            [
+              "Električni tok in vezja | napetost, tok, Ohmov in Kirchhoffova zakona",
+              "Izmenični tokovi | kazalci, impedanca, frekvenčni odziv"
+            ]
+          ],
+          [
+            "Elektronika",
+            [
+              "Polprevodniški elementi | dioda, tranzistor",
+              "Ojačevalniki in filtri | operacijski ojačevalnik, RC filtri"
+            ]
+          ],
+          [
+            "Pretvorba signalov",
+            [
+              "A/D in D/A pretvorba | vzorčenje, kvantizacija",
+              "Pretvorniki v multimediji | mikrofoni, zvočniki, slikovni senzorji, zasloni"
+            ]
+          ]
+        ]
+      ],
+      "PROG2": [
+        "Programiranje 2",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove jezika C",
+            [
+              "Podatkovni tipi in krmilne strukture v C | osnovni tipi, operatorji, pogojni stavki, zanke",
+              "Razvoj programov in razhroščevanje | prevajanje, povezovanje, razhroščevalnik"
+            ]
+          ],
+          [
+            "Kazalci in funkcije",
+            [
+              "Kazalci in tabele | naslovi, kazalčna aritmetika, tabele kot kazalci",
+              "Funkcije in prenos argumentov | prenos po vrednosti, kazalci kot argumenti"
+            ]
+          ],
+          [
+            "Pomnilnik in podatki",
+            [
+              "Dinamično dodeljevanje pomnilnika | malloc, free, puščanje pomnilnika",
+              "Nizi in vhodno-izhodne operacije | znakovni nizi, standardni vhod in izhod, datoteke",
+              "Strukture | struct, povezani seznami"
+            ]
+          ],
+          [
+            "Algoritmi in predprocesor",
+            [
+              "Algoritmi urejanja | urejanje z mehurčki, izbiranjem, vstavljanjem",
+              "Rekurzija in sestopanje | rekurzivne funkcije, algoritmi sestopanja",
+              "Predprocesor | makri, pogojno prevajanje, vključevanje datotek"
+            ]
+          ]
+        ]
+      ],
+      "MMVSEB": [
+        "Multimedijske vsebine",
+        "RAC",
+        [],
+        [
+          [
+            "Digitalna slika",
+            [
+              "Rastrska in vektorska grafika | ločljivost, barvni modeli, formati",
+              "Urejanje slik | sloji, maske, popravki"
+            ]
+          ],
+          [
+            "Zvok in video",
+            [
+              "Digitalni zvok | snemanje, urejanje, formati",
+              "Digitalni video | kodeki, ločljivost, hitrost sličic"
+            ]
+          ],
+          [
+            "Interaktivne vsebine",
+            [
+              "Animacija | časovnica, ključne slike",
+              "Avtorska orodja | izdelava interaktivnih multimedijskih vsebin"
+            ]
+          ]
+        ]
+      ],
+      "SSTEH": [
+        "Studijska in snemalna tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Zvočna tehnika",
+            [
+              "Mikrofoni | vrste, smernost, postavitev",
+              "Mešalne mize in snemanje zvoka | nivoji, obdelava, monitoring"
+            ]
+          ],
+          [
+            "Slikovna tehnika",
+            [
+              "Kamera in objektivi | senzor, osvetlitev, globinska ostrina",
+              "Razsvetljava | svetlobni viri, barvna temperatura, tritočkovna osvetlitev"
+            ]
+          ],
+          [
+            "Studio",
+            [
+              "Televizijski studio | signalna pot, režija",
+              "Snemanje na terenu | prenosna oprema, sinhronizacija slike in zvoka"
+            ]
+          ]
+        ]
+      ],
+      "IKTD": [
+        "Informacijsko-komunikacijske tehnologije in družba",
+        "EKO",
+        [],
+        [
+          [
+            "Informacijska družba",
+            [
+              "Razvoj informacijske družbe | digitalizacija, digitalni razkorak",
+              "Družbeni vplivi IKT | družbena omrežja, mediji"
+            ]
+          ],
+          [
+            "Pravo in etika",
+            [
+              "Varstvo osebnih podatkov | zasebnost, GDPR",
+              "Intelektualna lastnina | avtorske pravice, licence"
+            ]
+          ],
+          [
+            "Digitalna ekonomija",
+            [
+              "Poslovni modeli v IKT | platforme, storitve",
+              "Regulacija komunikacij | trg elektronskih komunikacij"
+            ]
+          ]
+        ]
+      ],
+      "INTERSIS": [
+        "Internetni sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Internetna arhitektura",
+            [
+              "Zgradba interneta | ponudniki, izmenjevalna vozlišča, naslavljanje",
+              "Protokoli TCP/IP | IP, TCP, UDP, DNS"
+            ]
+          ],
+          [
+            "Internetne storitve",
+            [
+              "Splet in HTTP | strežniki, odjemalci, predpomnjenje",
+              "Pretakanje vsebin | CDN, prilagodljivo pretakanje"
+            ]
+          ],
+          [
+            "Sodobni internetni sistemi",
+            [
+              "Računalništvo v oblaku | virtualizacija, storitveni modeli",
+              "Varnost na internetu | TLS, napadi, zaščita"
+            ]
+          ]
+        ]
+      ],
+      "AKUST": [
+        "Akustika v komunikacijah",
+        "FIZ",
+        [],
+        [
+          [
+            "Zvočno valovanje",
+            [
+              "Zvočno polje | tlak, hitrost, intenziteta, decibeli",
+              "Razširjanje zvoka | odboj, uklon, absorpcija"
+            ]
+          ],
+          [
+            "Psihoakustika",
+            [
+              "Zaznavanje zvoka | glasnost, višina, maskiranje",
+              "Prostorski sluh | lokalizacija, binavralno poslušanje"
+            ]
+          ],
+          [
+            "Elektroakustika",
+            [
+              "Elektroakustični pretvorniki | mikrofoni, zvočniki, slušalke",
+              "Prostorska akustika | odmevni čas, ozvočenje"
+            ]
+          ]
+        ]
+      ],
+      "SPLPROG": [
+        "Spletno programiranje",
+        "RAC",
+        [],
+        [
+          [
+            "Odjemalski del",
+            [
+              "HTML in CSS | struktura dokumenta, oblikovanje, odzivni dizajn",
+              "JavaScript in DOM | dogodki, manipulacija DOM, asinhrono programiranje"
+            ]
+          ],
+          [
+            "Strežniški del",
+            [
+              "Strežniške aplikacije | Node.js, usmerjanje zahtev, MVC",
+              "REST API | HTTP metode, JSON, odjemalec-strežnik"
+            ]
+          ],
+          [
+            "Podatki in varnost",
+            [
+              "Shranjevanje podatkov | podatkovne baze v spletnih aplikacijah, NoSQL",
+              "Varnost spletnih aplikacij | avtentikacija, XSS, SQL vrivanje"
+            ]
+          ],
+          [
+            "Sodobni razvoj",
+            [
+              "Ogrodja za enostranske aplikacije | komponente, stanje, usmerjanje",
+              "Testiranje in uvajanje | avtomatsko testiranje, namestitev v oblak"
+            ]
+          ]
+        ]
+      ],
+      "RTVS": [
+        "Radijski in televizijski sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Radijski prenos",
+            [
+              "Razširjanje radijskih valov | frekvenčna območja, antene",
+              "Modulacije v radiodifuziji | AM, FM, digitalni radio DAB"
+            ]
+          ],
+          [
+            "Televizija",
+            [
+              "Televizijski signal | ločljivost, barvni prostori, formati",
+              "Digitalna televizija | DVB, kompresija, multipleks"
+            ]
+          ],
+          [
+            "Distribucija",
+            [
+              "Prizemna, satelitska in kabelska distribucija | omrežja, sprejem",
+              "Internetna televizija | IPTV, OTT storitve"
+            ]
+          ]
+        ]
+      ],
+      "PVITD": [
+        "Projektno vodenje, inovativnost in timsko delo",
+        "EKO",
+        [],
+        [
+          [
+            "Projektno vodenje",
+            [
+              "Življenjski cikel projekta | cilji, obseg, faze",
+              "Načrtovanje projekta | gantogram, mrežni plan, viri"
+            ]
+          ],
+          [
+            "Inovativnost",
+            [
+              "Inovacijski proces | ustvarjalnost, ideje, prototipi",
+              "Intelektualna lastnina in podjetništvo | patenti, zagonska podjetja"
+            ]
+          ],
+          [
+            "Timsko delo",
+            [
+              "Delovanje tima | vloge, komunikacija, odločanje",
+              "Vodenje tima | motivacija, konflikti"
+            ]
+          ]
+        ]
+      ],
+      "OSNOBL": [
+        "Osnove oblikovanja",
+        "RAC",
+        [],
+        [
+          [
+            "Oblikovanje in tehnologija",
+            [
+              "Zgodovina oblikovanja | umetnost in znanost, oblikovanje in tehnologija",
+              "Oblikovalsko mišljenje | proces, uporabnik, iteracija"
+            ]
+          ],
+          [
+            "Likovne prvine",
+            [
+              "Barvna teorija | barvni krog, kontrast, harmonija",
+              "Kompozicija in zaznava | ravnovesje, ritem, principi zaznave celote"
+            ]
+          ],
+          [
+            "Vizualno sporočanje",
+            [
+              "Tipografija | črkovne vrste, berljivost",
+              "Celostna grafična podoba | logotip, strukturiranje vizualnega sporočila",
+              "Uporabniški vmesniki in informacijska grafika | načrtovanje vmesnika, vizualizacija podatkov"
+            ]
+          ]
+        ]
+      ],
+      "OUI": [
+        "Osnove umetne inteligence",
+        "RAC",
+        [],
+        [
+          [
+            "Preiskovanje prostora stanj",
+            [
+              "Neinformirano preiskovanje | prostor stanj, globinsko, širinsko, iterativno poglabljanje",
+              "Hevristično preiskovanje | A*, IDA*, izrek o popolnosti, ocenitvene funkcije",
+              "AND/OR grafi | dekompozicija problemov, algoritem AO*"
+            ]
+          ],
+          [
+            "Strojno učenje",
+            [
+              "Učenje iz podatkov | odločitvena drevesa, ocenjevanje uspešnosti, prekomerno prilagajanje",
+              "Klasifikacija in regresija | naivni Bayes, k najbližjih sosedov, linearna regresija"
+            ]
+          ],
+          [
+            "Znanje in sklepanje",
+            [
+              "Predstavitev znanja | logika, pravila, sklepanje",
+              "Planiranje | STRIPS, planiranje s sredstvi in cilji"
+            ]
+          ],
+          [
+            "Igre",
+            [
+              "Algoritem minimaks | drevo igre, ocenjevalna funkcija",
+              "Alfa-beta rezanje | učinkovitost, iterativno poglabljanje"
+            ]
+          ]
+        ]
+      ],
+      "MMSIS": [
+        "Multimedijski sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Slika in video",
+            [
+              "Manipulacija slikovnih gradiv | slikovni formati, barvni prostori, osnovne operacije",
+              "Video podatki in standardi zapisa | zaporedja slik, kontejnerji, video standardi"
+            ]
+          ],
+          [
+            "Pridobivanje multimedijskih informacij",
+            [
+              "Pridobivanje informacij s tekstom | indeksiranje, iskanje, rangiranje",
+              "Arhitektura in evalvacija iskalnih sistemov | natančnost, priklic",
+              "Avtomatsko opisovanje vsebine slik | razgradnja slikovne in video informacije"
+            ]
+          ],
+          [
+            "Stiskanje in interaktivni mediji",
+            [
+              "Standardi stiskanja | brezizgubno in izgubno stiskanje, JPEG, MPEG",
+              "Obogatena resničnost | interaktivni mediji v multimedijskem sistemu"
+            ]
+          ]
+        ]
+      ],
+      "RGTI": [
+        "Računalniška grafika in tehnologija iger",
+        "RAC",
+        [],
+        [
+          [
+            "Geometrijske transformacije",
+            [
+              "Homogene koordinate | translacija, rotacija, skaliranje, kompozitum",
+              "Projekcije in kamera | perspektivna in pravokotna projekcija, pogled"
+            ]
+          ],
+          [
+            "Upodabljanje",
+            [
+              "Grafični cevovod | rasterizacija, z-medpomnilnik, senčilniki",
+              "Osvetlitev in senčenje | Phongov model, viri svetlobe",
+              "Teksture | preslikava tekstur, filtriranje",
+              "Sledenje žarku | globalno upodabljanje, odboj, lom"
+            ]
+          ],
+          [
+            "Modeliranje",
+            [
+              "Predstavitev 3D modelov | mreže trikotnikov, krivulje in ploskve",
+              "Animacija | ključne slike, skeletna animacija"
+            ]
+          ],
+          [
+            "Tehnologija iger",
+            [
+              "Igralni pogon | zanka igre, graf scene",
+              "Fizika in trki | zaznavanje trkov, razdelitev prostora"
+            ]
+          ]
+        ]
+      ],
+      "VKZV": [
+        "Varnost komunikacij in zaščita vsebin",
+        "RAC",
+        [],
+        [
+          [
+            "Kriptografija",
+            [
+              "Simetrična kriptografija | bločne šifre, AES, načini delovanja",
+              "Asimetrična kriptografija | RSA, izmenjava ključev, digitalni podpis",
+              "Zgoščevalne funkcije | integriteta, MAC"
+            ]
+          ],
+          [
+            "Varnost komunikacij",
+            [
+              "Varnostni protokoli | TLS, VPN, avtentikacija",
+              "Napadi in obramba | ranljivosti, požarni zidovi, zaznavanje vdorov"
+            ]
+          ],
+          [
+            "Zaščita vsebin",
+            [
+              "Upravljanje digitalnih pravic | DRM, licence",
+              "Vodni žigi | vstavljanje in zaznavanje"
+            ]
+          ]
+        ]
+      ],
+      "MONTAZA": [
+        "Montaža in postprodukcija",
+        "RAC",
+        [],
+        [
+          [
+            "Montaža",
+            [
+              "Filmski jezik | kadri, plani, kontinuiteta",
+              "Nelinearna montaža | časovnica, rezi, prehodi"
+            ]
+          ],
+          [
+            "Postprodukcija slike",
+            [
+              "Barvna korekcija | gradacija, barvni prostori",
+              "Vizualni učinki | kompozitiranje, maske"
+            ]
+          ],
+          [
+            "Zvok in izvoz",
+            [
+              "Zvočna postprodukcija | mešanje, sinhronizacija",
+              "Izvoz in formati | kodeki, distribucija"
+            ]
+          ]
+        ]
+      ],
+      "MIS": [
+        "Mobilnost in internet stvari",
+        "RAC",
+        [],
+        [
+          [
+            "Mobilne komunikacije",
+            [
+              "Mobilna omrežja | 4G, 5G, mobilnost uporabnika",
+              "Brezžična krajevna omrežja | Wi-Fi, Bluetooth"
+            ]
+          ],
+          [
+            "Internet stvari",
+            [
+              "Naprave interneta stvari | senzorji, mikrokrmilniki, energijska učinkovitost",
+              "Protokoli interneta stvari | MQTT, CoAP, LPWAN"
+            ]
+          ],
+          [
+            "Storitve",
+            [
+              "Platforme interneta stvari | oblak, obdelava podatkov",
+              "Mobilne aplikacije | lokacijske storitve, varnost"
+            ]
+          ]
+        ]
+      ],
+      "TNUV": [
+        "Terminalske naprave in uporabniški vmesniki",
+        "RAC",
+        [],
+        [
+          [
+            "Terminalske naprave",
+            [
+              "Pametni telefoni in tablice | zgradba, senzorji, zasloni",
+              "Nosljive naprave in navidezna resničnost | očala, interakcija"
+            ]
+          ],
+          [
+            "Uporabniški vmesniki",
+            [
+              "Načela načrtovanja vmesnikov | uporabnost, dostopnost",
+              "Načini interakcije | dotik, glas, geste"
+            ]
+          ],
+          [
+            "Razvoj in vrednotenje",
+            [
+              "Razvoj mobilnih aplikacij | razvojna ogrodja, prototipi",
+              "Vrednotenje uporabniške izkušnje | uporabniško testiranje, metrike"
+            ]
+          ]
+        ]
+      ],
+      "ORGMAN": [
+        "Organizacija in management",
+        "EKO",
+        [],
+        [
+          [
+            "Organizacija in poslovanje",
+            [
+              "Organizacija in poslovni model | opredelitev pojmov, organizacija, poslovanje, poslovni model",
+              "Organizacijska struktura | funkcijska, projektna, matrična organizacija"
+            ]
+          ],
+          [
+            "Vedenje v organizaciji",
+            [
+              "Posameznik v organizaciji | osebnostne lastnosti, znanje, spretnosti",
+              "Motivacija in vodenje | teorije motivacije, stili vodenja, medsebojna interakcija"
+            ]
+          ],
+          [
+            "Analiza poslovnega modela",
+            [
+              "Gradniki poslovnega modela | predpostavka vrednosti, ključni viri, ključne aktivnosti, profitna formula",
+              "Vrednotenje in sprememba poslovnega modela | diagnosticiranje odstopanj, opcijski pristop"
+            ]
+          ]
+        ]
+      ],
+      "EPOS": [
+        "Elektronsko poslovanje",
+        "EKO",
+        [],
+        [
+          [
+            "Osnove e-poslovanja",
+            [
+              "Opredelitev in razvoj e-poslovanja | temeljne definicije, zgodovinski pregled, modeli B2B in B2C",
+              "Sistemski pogled na e-poslovanje | logistične verige, verige dodane vrednosti, vpliv odločanja"
+            ]
+          ],
+          [
+            "Tehnološki vidiki",
+            [
+              "Tehnologije e-poslovanja | XML, spletne storitve, komponentne arhitekture, semantični splet",
+              "Digitalni plačilni sistemi | e-plačila, kriptovalute, bitcoin"
+            ]
+          ],
+          [
+            "Organizacijski in pravni vidiki",
+            [
+              "Novi poslovni modeli | evolucija poslovnih funkcij in procesov, revizijski postopki",
+              "Zakonodaja e-poslovanja | ZEPEP, elektronski podpis, varovanje intelektualne lastnine"
+            ]
+          ]
+        ]
+      ],
+      "UMZAZ": [
+        "Umetno zaznavanje",
+        "RAC",
+        [],
+        [
+          [
+            "Zajem in obdelava slik",
+            [
+              "Model kamere | projekcija, kalibracija",
+              "Filtriranje in robovi | konvolucija, detektorji robov"
+            ]
+          ],
+          [
+            "Značilnice in ujemanje",
+            [
+              "Lokalne značilnice | detekcija in opis točk",
+              "Geometrija več pogledov | homografija, stereo"
+            ]
+          ],
+          [
+            "Razpoznavanje",
+            [
+              "Razpoznavanje objektov | klasifikacija, detekcija",
+              "Globoko učenje za vid | konvolucijske nevronske mreže"
+            ]
+          ]
+        ]
+      ]
+    },
+    "programs": {
+      "UL-FE-ELA": {
+        "name": "Elektrotehnika – smer Avtomatika",
+        "source": "https://fe.uni-lj.si/wp-content/uploads/2026/04/ULFE-EL-2026-1.pdf",
+        "sourceYear": "predstavitveni zbornik 2026, predmetnik preverjen; smer Avtomatika (1. in 2. letnik skupna vsem smerem)",
+        "years": [
+          [
+            "MAT1",
+            "MEHTD",
+            "OE1",
+            "OSNPROG",
+            "ATOPT",
+            "MAT2",
+            "OE2",
+            "PROGMK"
+          ],
+          [
+            "DIGSTR",
+            "KOMSIS",
+            "MAT3",
+            "MERITVE",
+            "ELSTROJ",
+            "MAT4",
+            "MERINST",
+            "POLPREL"
+          ],
+          [
+            "ANSIS",
+            "GRADSV",
+            "OSNROB",
+            "SIGNALI",
+            "ELAVT",
+            "IKRS",
+            "RACSIM"
+          ]
+        ],
+        "electives": [
+          "AVS",
+          "DES",
+          "ENOK",
+          "INFSIS",
+          "OPTOEL",
+          "OSNMEH",
+          "INTSIS",
+          "NUMMET"
+        ]
+      },
+      "UL-FE-ELE": {
+        "name": "Elektrotehnika – smer Elektronika",
+        "source": "https://fe.uni-lj.si/wp-content/uploads/2026/04/ULFE-EL-2026-1.pdf",
+        "sourceYear": "predstavitveni zbornik 2026, predmetnik preverjen; smer Elektronika (1. in 2. letnik skupna vsem smerem)",
+        "years": [
+          [
+            "MAT1",
+            "MEHTD",
+            "OE1",
+            "OSNPROG",
+            "ATOPT",
+            "MAT2",
+            "OE2",
+            "PROGMK"
+          ],
+          [
+            "DIGSTR",
+            "KOMSIS",
+            "MAT3",
+            "MERITVE",
+            "ELSTROJ",
+            "MAT4",
+            "MERINST",
+            "POLPREL"
+          ],
+          [
+            "EKS",
+            "OPTOEL",
+            "SIGSIS",
+            "LINEV",
+            "ANEV",
+            "DSS",
+            "GST"
+          ]
+        ],
+        "electives": [
+          "AVS",
+          "DES",
+          "ENOK",
+          "INFSIS",
+          "OSNROB",
+          "OSNMEH",
+          "INTSIS",
+          "NUMMET"
+        ]
+      },
+      "UL-FE-ELM": {
+        "name": "Elektrotehnika – smer Energetika in mehatronika",
+        "source": "https://fe.uni-lj.si/wp-content/uploads/2026/04/ULFE-EL-2026-1.pdf",
+        "sourceYear": "predstavitveni zbornik 2026, predmetnik preverjen; smer Energetika in mehatronika (1. in 2. letnik skupna vsem smerem)",
+        "years": [
+          [
+            "MAT1",
+            "MEHTD",
+            "OE1",
+            "OSNPROG",
+            "ATOPT",
+            "MAT2",
+            "OE2",
+            "PROGMK"
+          ],
+          [
+            "DIGSTR",
+            "KOMSIS",
+            "MAT3",
+            "MERITVE",
+            "ELSTROJ",
+            "MAT4",
+            "MERINST",
+            "POLPREL"
+          ],
+          [
+            "EEOMR",
+            "MODES",
+            "OSNMEH",
+            "REGTEH",
+            "EESIS",
+            "ENELEK",
+            "VNTEH"
+          ]
+        ],
+        "electives": [
+          "AVS",
+          "DES",
+          "ENOK",
+          "INFSIS",
+          "OSNROB",
+          "OPTOEL",
+          "INTSIS",
+          "NUMMET"
+        ]
+      },
+      "UL-FE-ELI": {
+        "name": "Elektrotehnika – smer Informacijsko komunikacijske tehnologije",
+        "source": "https://fe.uni-lj.si/wp-content/uploads/2026/04/ULFE-EL-2026-1.pdf",
+        "sourceYear": "predstavitveni zbornik 2026, predmetnik preverjen; smer IKT (1. in 2. letnik skupna vsem smerem)",
+        "years": [
+          [
+            "MAT1",
+            "MEHTD",
+            "OE1",
+            "OSNPROG",
+            "ATOPT",
+            "MAT2",
+            "OE2",
+            "PROGMK"
+          ],
+          [
+            "DIGSTR",
+            "KOMSIS",
+            "MAT3",
+            "MERITVE",
+            "ELSTROJ",
+            "MAT4",
+            "MERINST",
+            "POLPREL"
+          ],
+          [
+            "ELDIN",
+            "TIIK",
+            "INTSIS",
+            "ZSS",
+            "DOS",
+            "DIGKOM",
+            "KOMPROT"
+          ]
+        ],
+        "electives": [
+          "AVS",
+          "DES",
+          "ENOK",
+          "INFSIS",
+          "OSNROB",
+          "OPTOEL",
+          "OSNMEH",
+          "NUMMET"
+        ]
+      },
+      "UL-FE-MM": {
+        "name": "Multimedija",
+        "source": "https://multimedija.info/dodiplomski-studij-predmetnik/",
+        "sourceYear": "2026/27, predmetnik po semestrih preverjen (multimedija.info, povezano z uradne strani FRI; ujema se s shemo FRI 2026); skupni program FE in FRI",
+        "years": [
+          [
+            "UVMMS",
+            "PROG1",
+            "KARKOM",
+            "KOMSIS",
+            "OMA",
+            "LA",
+            "TOMM",
+            "PROG2",
+            "MMVSEB",
+            "INFSIS"
+          ],
+          [
+            "SSTEH",
+            "IKTD",
+            "INTERSIS",
+            "AKUST",
+            "SPLPROG",
+            "RTVS",
+            "DOS",
+            "PVITD",
+            "OSNOBL"
+          ],
+          [
+            "OUI",
+            "MMSIS",
+            "RGTI",
+            "VKZV",
+            "MONTAZA",
+            "MIS",
+            "TNUV"
+          ]
+        ],
+        "electives": [
+          "GST",
+          "RACSIM",
+          "KOMPROT",
+          "ORGMAN",
+          "EPOS",
+          "UMZAZ",
+          "EKS"
+        ]
+      }
+    }
+  },
+  {
+    "id": "UM-FERI",
+    "name": "UM Fakulteta za elektrotehniko, računalništvo in informatiko",
+    "short": "UM FERI",
+    "courses": {
+      "ORS": [
+        "Osnove računalniških sistemov",
+        "RAC",
+        [],
+        [
+          [
+            "Predstavitev podatkov",
+            [
+              "Številski sistemi | dvojiški, osmiški in šestnajstiški zapis, pretvorbe med sistemi",
+              "Predstavitev števil in znakov | dvojiški komplement, plavajoča vejica, ASCII in Unicode"
+            ]
+          ],
+          [
+            "Logična vezja",
+            [
+              "Boolova algebra | logične funkcije, pravilnostne tabele, poenostavljanje izrazov",
+              "Kombinacijska in sekvenčna vezja | logična vrata, multiplekser, seštevalnik, flip-flop, register"
+            ]
+          ],
+          [
+            "Zgradba računalnika",
+            [
+              "Von Neumannova arhitektura | procesor, pomnilnik, vodila, vhodno-izhodne naprave",
+              "Izvajanje ukazov | cikel prevzem-izvedba, strojni jezik, zbirnik"
+            ]
+          ],
+          [
+            "Programska oprema sistema",
+            [
+              "Operacijski sistem in datoteke | vloga OS, procesi, datotečni sistemi",
+              "Turingov stroj | model računanja, izračunljivost, algoritem"
+            ]
+          ]
+        ]
+      ],
+      "PROG1": [
+        "Programiranje I",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove programa",
+            [
+              "Spremenljivke in podatkovni tipi | deklaracija, celoštevilski in realni tipi, operatorji",
+              "Vhod in izhod | branje in izpis podatkov, formatiranje"
+            ]
+          ],
+          [
+            "Krmilne strukture",
+            [
+              "Pogojni stavki | if, else, switch, logični izrazi",
+              "Zanke | for, while, do-while, gnezdenje zank"
+            ]
+          ],
+          [
+            "Funkcije",
+            [
+              "Funkcije in parametri | definicija, klic, vračanje vrednosti, prenos parametrov",
+              "Rekurzija | rekurzivne funkcije, osnovni primer, sklad klicev"
+            ]
+          ],
+          [
+            "Podatkovne strukture jezika",
+            [
+              "Tabele in nizi | enodimenzionalne in večdimenzionalne tabele, obdelava nizov",
+              "Kazalci in dinamični pomnilnik | naslovi, kazalčna aritmetika, dodeljevanje pomnilnika",
+              "Strukture in datoteke | sestavljeni tipi, branje in pisanje datotek"
+            ]
+          ]
+        ]
+      ],
+      "UPO": [
+        "Uporabniška programska oprema",
+        "RAC",
+        [],
+        [
+          [
+            "Programska oprema in uporabnik",
+            [
+              "Vrste in kakovost uporabniške programske opreme | delitev programske opreme, licence in intelektualna lastnina, kriteriji kakovosti",
+              "Uporabniški vmesniki | načini interakcije, kontrolniki, kriteriji kakovosti vmesnika"
+            ]
+          ],
+          [
+            "Besedila in predstavitve",
+            [
+              "Urejanje in oblikovanje besedil | vizualno in logično urejanje, tipografija, PDF, LaTeX",
+              "Elektronske predstavitve | vrste gradiv, oblikovanje prosojnic, govorna predstavitev"
+            ]
+          ],
+          [
+            "Preglednice in matematična orodja",
+            [
+              "Preglednice | naslavljanje celic, formule, funkcije, grafikoni",
+              "Matematična orodja | Matlab in Octave, vektorji, matrike, grafi"
+            ]
+          ],
+          [
+            "Grafika in vzdrževanje",
+            [
+              "Urejanje digitalnih slik | rastrska in vektorska grafika, formati",
+              "Vzdrževanje računalnika | protivirusna zaščita, stiskanje in arhiviranje podatkov",
+              "Izmenjava podatkov med programi | formati, uvoz in izvoz, integracija"
+            ]
+          ]
+        ]
+      ],
+      "OSS": [
+        "Osnove svetovnega spleta",
+        "RAC",
+        [],
+        [
+          [
+            "Delovanje spleta",
+            [
+              "Internet in HTTP | odjemalec in strežnik, zahteve in odgovori, URL, DNS",
+              "Spletni standardi | W3C, dostopnost, varnost na spletu"
+            ]
+          ],
+          [
+            "Gradnja spletnih strani",
+            [
+              "HTML | struktura dokumenta, elementi, obrazci, semantične oznake",
+              "CSS | izbirniki, škatlasti model, postavitev s flexbox in grid, odzivnost"
+            ]
+          ],
+          [
+            "Dinamika na odjemalcu",
+            [
+              "JavaScript | spremenljivke, funkcije, dogodki, DOM",
+              "Delo s podatki | JSON, asinhrone zahteve, fetch"
+            ]
+          ]
+        ]
+      ],
+      "DS": [
+        "Diskretne strukture",
+        "MAT",
+        [
+          "DISKRETNE_STRUKTURE"
+        ],
+        [
+          [
+            "Teorija števil in Boolove algebre",
+            [
+              "Osnove teorije števil | deljivost, praštevila, kongruence, kitajski izrek o ostankih",
+              "Urejenosti in Boolove algebre | delno urejene množice, mreže, Boolove funkcije"
+            ]
+          ]
+        ]
+      ],
+      "PROG2": [
+        "Programiranje II",
+        "RAC",
+        [],
+        [
+          [
+            "Razredi in objekti v C++",
+            [
+              "Razredi in objekti | atributi, metode, konstruktorji in destruktorji, skrivanje informacij",
+              "Kazalci na objekte | kazalec this, dinamično ustvarjanje objektov, delo z viri"
+            ]
+          ],
+          [
+            "Prekrivanje in dedovanje",
+            [
+              "Prekrivanje metod in operatorjev | prekrivanje funkcij, operatorji kot metode in prijateljske funkcije",
+              "Dedovanje in polimorfizem | izpeljani razredi, virtualne funkcije, abstraktni razredi, večkratno dedovanje"
+            ]
+          ],
+          [
+            "Šablone in izjeme",
+            [
+              "Šablone | šablone funkcij in razredov",
+              "Knjižnica STL | vsebniki, iteratorji, algoritmi",
+              "Izjeme | proženje in lovljenje izjem"
+            ]
+          ],
+          [
+            "Tokovi in načrtovanje",
+            [
+              "Podatkovni tokovi in datoteke | vhodni in izhodni tokovi, vhod-izhod za lastne tipe",
+              "Objektno usmerjena analiza in načrtovanje | analiza, načrtovanje, diagram razredov UML"
+            ]
+          ]
+        ]
+      ],
+      "APS": [
+        "Algoritmi in podatkovne strukture",
+        "RAC",
+        [],
+        [
+          [
+            "Analiza algoritmov",
+            [
+              "Časovna zahtevnost | notacija O, najslabši in povprečni primer",
+              "Rekurzivni algoritmi | deli in vladaj, rekurenčne enačbe"
+            ]
+          ],
+          [
+            "Osnovne podatkovne strukture",
+            [
+              "Seznami, skladi in vrste | povezani seznam, implementacija s tabelo, operacije",
+              "Drevesa | dvojiška iskalna drevesa, kopica, uravnoteženost",
+              "Razpršene tabele | razpršilne funkcije, reševanje trkov"
+            ]
+          ],
+          [
+            "Urejanje in iskanje",
+            [
+              "Algoritmi urejanja | navadno vstavljanje, urejanje z zlivanjem, hitro urejanje, urejanje s kopico",
+              "Iskanje | linearno in dvojiško iskanje, iskanje v drevesih"
+            ]
+          ],
+          [
+            "Grafi",
+            [
+              "Predstavitev grafov | matrika sosednosti, seznam sosedov",
+              "Preiskovanje grafov | iskanje v širino in globino, najkrajše poti"
+            ]
+          ],
+          [
+            "Algoritmične strategije",
+            [
+              "Požrešna metoda | preprosti problem nahrbtnika, Primov in Kruskalov algoritem",
+              "Dinamično programiranje | Floyd-Warshallov algoritem, optimalna dvojiška drevesa",
+              "Vračanje ter razveji in omeji | problem N kraljic, barvanje grafov, 0/1 nahrbtnik"
+            ]
+          ]
+        ]
+      ],
+      "ARA": [
+        "Aplikacije računalniških algoritmov",
+        "RAC",
+        [],
+        [
+          [
+            "Urejanje v linearnem času",
+            [
+              "Števno urejanje | štetje pojavitev, stabilnost, časovna zahtevnost",
+              "Korensko urejanje | urejanje radix po števkah, izbira osnove"
+            ]
+          ],
+          [
+            "Iskanje vzorcev v nizih",
+            [
+              "Iskanje vzorca v nizu | naivni pristop, Rabin-Karpov algoritem",
+              "Knuth-Morris-Prattov in Boyer-Moorov algoritem | predponska funkcija, pravilo slabega znaka, Horspoolov algoritem",
+              "Urejevalna razdalja | dinamično programiranje, Bellmanova enačba, Wagner-Fischerjev algoritem"
+            ]
+          ],
+          [
+            "Enostavna kriptologija",
+            [
+              "Klasični šifrirniki | pomikalni šifrirnik, Vigenèrjev šifrirnik, Playfair, ADFGX",
+              "Kriptoanaliza klasičnih šifrirnikov | frekvenčna analiza, iskanje dolžine ključa"
+            ]
+          ],
+          [
+            "Stiskanje podatkov",
+            [
+              "Entropija in statistično kodiranje | entropija informacije, RLE, Shannon-Fanojev in Huffmanov algoritem",
+              "Aritmetično kodiranje | kodiranje z intervali, kodiranje s pomikanjem",
+              "Slovarske metode | LZ77, LZ78, LZW, Golombovo kodiranje"
+            ]
+          ],
+          [
+            "Transformacije nizov in priponske strukture",
+            [
+              "Burrows-Wheelerjeva transformacija | BWT, premik naprej (MTF), inverzna transformacija",
+              "Priponsko polje in priponsko drevo | gradnja, številsko drevo trie, Ukkonenov algoritem, iskanje podnizov"
+            ]
+          ]
+        ]
+      ],
+      "PB1": [
+        "Podatkovne baze I",
+        "RAC",
+        [],
+        [
+          [
+            "Modeliranje podatkov",
+            [
+              "Podatkovni model ER | entitete, atributi, razmerja, kardinalnost",
+              "Relacijski model | relacije, ključi, referenčna integriteta"
+            ]
+          ],
+          [
+            "Jezik SQL",
+            [
+              "Poizvedbe SQL | SELECT, WHERE, stiki, združevanje, podpoizvedbe",
+              "Definicija in spreminjanje podatkov | CREATE, INSERT, UPDATE, DELETE, omejitve"
+            ]
+          ],
+          [
+            "Načrtovanje baze",
+            [
+              "Normalizacija | funkcijske odvisnosti, 1NO, 2NO, 3NO, BCNO",
+              "Transakcije | lastnosti ACID, sočasni dostop, indeksi"
+            ]
+          ]
+        ]
+      ],
+      "MA": [
+        "Matematična analiza",
+        "MAT",
+        [
+          "MAT_A"
+        ],
+        [
+          [
+            "Vrste",
+            [
+              "Konvergenca številskih vrst | geometrijska vrsta, kriteriji konvergence, absolutna in pogojna konvergenca",
+              "Potenčne in Taylorjeve vrste | konvergenčni polmer, razvoj funkcij v vrsto"
+            ]
+          ]
+        ]
+      ],
+      "RA": [
+        "Računalniške arhitekture",
+        "RAC",
+        [],
+        [
+          [
+            "Zgradba procesorja",
+            [
+              "Nabor ukazov | formati ukazov, načini naslavljanja, RISC in CISC",
+              "Podatkovna pot in krmilna enota | ALE, registri, mikroprogramiranje"
+            ]
+          ],
+          [
+            "Zmogljivost",
+            [
+              "Cevovod | stopnje cevovoda, nevarnosti, napovedovanje skokov",
+              "Merjenje zmogljivosti | CPI, Amdahlov zakon"
+            ]
+          ],
+          [
+            "Pomnilniška hierarhija",
+            [
+              "Predpomnilnik | preslikave, zgrešitve, lokalnost",
+              "Navidezni pomnilnik | strani, TLB"
+            ]
+          ],
+          [
+            "Vhod in izhod",
+            [
+              "Prekinitve in DMA | obravnava prekinitev, neposreden dostop do pomnilnika",
+              "Vodila in vhodno-izhodne naprave | sistemsko vodilo, krmilniki naprav, pomnilniško preslikan vhod-izhod"
+            ]
+          ]
+        ]
+      ],
+      "OS": [
+        "Operacijski sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Procesi",
+            [
+              "Procesi in niti | stanja procesa, preklop konteksta, niti",
+              "Razvrščanje procesov | FCFS, SJF, krožno razvrščanje, prioritete"
+            ]
+          ],
+          [
+            "Sočasnost",
+            [
+              "Sinhronizacija | kritični odsek, semaforji, monitorji",
+              "Smrtni objem | pogoji, preprečevanje, izogibanje"
+            ]
+          ],
+          [
+            "Upravljanje pomnilnika",
+            [
+              "Ostranjevanje in segmentacija | naslovni prostor, tabele strani",
+              "Zamenjava strani | FIFO, LRU, optimalni algoritem"
+            ]
+          ],
+          [
+            "Datoteke in naprave",
+            [
+              "Datotečni sistemi | imeniki, dodeljevanje prostora, zaščita",
+              "Upravljanje vhodno-izhodnih naprav | gonilniki, medpomnjenje, razvrščanje diskovnih zahtev"
+            ]
+          ]
+        ]
+      ],
+      "MUR": [
+        "Mrežno usmerjeno računanje",
+        "RAC",
+        [],
+        [
+          [
+            "Omrežni modeli",
+            [
+              "Plastni model | OSI, TCP/IP, enkapsulacija",
+              "Fizična in povezavna plast | prenosni mediji, Ethernet, okvirji"
+            ]
+          ],
+          [
+            "Omrežna in transportna plast",
+            [
+              "Naslavljanje IP in usmerjanje | IPv4, IPv6, podomrežja, usmerjevalne tabele",
+              "TCP in UDP | povezave, zanesljiv prenos, nadzor zamašitev"
+            ]
+          ],
+          [
+            "Omrežne aplikacije",
+            [
+              "Programiranje vtičnic | odjemalec-strežnik, vtičnice TCP in UDP",
+              "Aplikacijski protokoli | HTTP, DNS, e-pošta"
+            ]
+          ]
+        ]
+      ],
+      "RPO": [
+        "Razvoj programske opreme",
+        "RAC",
+        [],
+        [
+          [
+            "Proces razvoja",
+            [
+              "Modeli življenjskega cikla | slapovni, iterativni in agilni pristopi, Scrum",
+              "Zajem zahtev | funkcionalne in nefunkcionalne zahteve, primeri uporabe"
+            ]
+          ],
+          [
+            "Modeliranje",
+            [
+              "Jezik UML | diagrami razredov, zaporedja in aktivnosti",
+              "Načrtovanje arhitekture | moduli, sklopljenost in kohezija"
+            ]
+          ],
+          [
+            "Kakovost",
+            [
+              "Testiranje programske opreme | ravni testiranja, črna in bela škatla",
+              "Upravljanje verzij | Git, veje, pregled kode"
+            ]
+          ]
+        ]
+      ],
+      "LA": [
+        "Linearna algebra",
+        "MAT",
+        [],
+        [
+          [
+            "Vektorji",
+            [
+              "Vektorji | operacije z vektorji, skalarni, vektorski in mešani produkt",
+              "Premice in ravnine | enačbe premice in ravnine v prostoru, razdalje"
+            ]
+          ],
+          [
+            "Matrike",
+            [
+              "Matrike in determinante | računanje z matrikami, inverz, lastnosti determinante",
+              "Sistemi linearnih enačb | Gaussova eliminacija, rang, rešljivost"
+            ]
+          ],
+          [
+            "Vektorski prostori",
+            [
+              "Vektorski prostori in baze | linearna neodvisnost, baza, dimenzija",
+              "Linearne preslikave | matrika preslikave, jedro in slika"
+            ]
+          ],
+          [
+            "Spektralna teorija",
+            [
+              "Lastne vrednosti in lastni vektorji | karakteristični polinom, diagonalizacija",
+              "Skalarni produkt in ortogonalnost | ortonormirana baza, Gram-Schmidtov postopek, simetrične matrike"
+            ]
+          ]
+        ]
+      ],
+      "ICR": [
+        "Interakcija človek-računalnik",
+        "RAC",
+        [],
+        [
+          [
+            "Človek in uporabnost",
+            [
+              "Kognitivne osnove interakcije | zaznavanje, pozornost, spomin",
+              "Uporabnost in uporabniška izkušnja | kriteriji uporabnosti, hevristike"
+            ]
+          ],
+          [
+            "Načrtovanje vmesnikov",
+            [
+              "Uporabniško osredotočeno načrtovanje | persone, scenariji, prototipi",
+              "Oblikovanje vmesnikov | postavitev, barve, dostopnost"
+            ]
+          ],
+          [
+            "Vrednotenje",
+            [
+              "Metode vrednotenja | uporabniško testiranje, vprašalniki, hevristično vrednotenje",
+              "Analiza rezultatov vrednotenja | merjenje učinkovitosti, napake uporabnikov, poročilo o uporabnosti"
+            ]
+          ]
+        ]
+      ],
+      "SPV": [
+        "Sociološki in poklicni vidiki",
+        "EKO",
+        [],
+        [
+          [
+            "Etika v računalništvu",
+            [
+              "Poklicna etika | etični kodeksi, odgovornost inženirja",
+              "Zasebnost in varstvo podatkov | GDPR, nadzor, informirana privolitev"
+            ]
+          ],
+          [
+            "Pravni vidiki",
+            [
+              "Intelektualna lastnina | avtorske pravice, patenti, licence programske opreme",
+              "Računalniška kriminaliteta | zloraba sistemov, pravna ureditev"
+            ]
+          ],
+          [
+            "Družba in tehnologija",
+            [
+              "Družbeni vplivi informatike | digitalni razkorak, avtomatizacija dela, umetna inteligenca",
+              "Trajnostni vidiki informatike | poraba energije, elektronski odpadki, odgovorna raba tehnologije"
+            ]
+          ]
+        ]
+      ],
+      "UI": [
+        "Umetna inteligenca",
+        "RAC",
+        [],
+        [
+          [
+            "Preiskovanje",
+            [
+              "Neinformirano preiskovanje | preiskovanje v širino in globino, iterativno poglabljanje",
+              "Hevristično preiskovanje | A*, hevristike, lokalno iskanje"
+            ]
+          ],
+          [
+            "Igre in omejitve",
+            [
+              "Igranje iger | minimaks, rezanje alfa-beta",
+              "Problemi z omejitvami | sestopanje, propagacija omejitev"
+            ]
+          ],
+          [
+            "Znanje in učenje",
+            [
+              "Predstavitev znanja | logika, pravila, sklepanje",
+              "Osnove strojnega učenja | odločitvena drevesa, ocenjevanje modelov"
+            ]
+          ]
+        ]
+      ],
+      "PPJ": [
+        "Prevajanje programskih jezikov",
+        "RAC",
+        [],
+        [
+          [
+            "Leksikalna analiza",
+            [
+              "Regularni izrazi in avtomati | končni avtomati, gradnja pregledovalnika",
+              "Leksikalni simboli | žetoni, ključne besede, identifikatorji, obravnava napak"
+            ]
+          ],
+          [
+            "Sintaksna analiza",
+            [
+              "Kontekstno proste gramatike | izpeljave, drevesa izpeljav, dvoumnost",
+              "Razčlenjevanje | rekurzivni spust, LL in LR razčlenjevalniki"
+            ]
+          ],
+          [
+            "Semantika in generiranje kode",
+            [
+              "Semantična analiza | tabela simbolov, preverjanje tipov",
+              "Vmesna in ciljna koda | abstraktno sintaksno drevo, generiranje kode, optimizacija"
+            ]
+          ]
+        ]
+      ],
+      "RG": [
+        "Računalniška grafika",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove",
+            [
+              "Rastrski algoritmi | risanje daljic in krožnic, zapolnjevanje",
+              "Geometrijske transformacije | homogene koordinate, translacija, rotacija, skaliranje"
+            ]
+          ],
+          [
+            "Tridimenzionalna grafika",
+            [
+              "Projekcije in kamera | perspektivna in pravokotna projekcija, gledišče",
+              "Odstranjevanje skritih ploskev | z-medpomnilnik, rezanje"
+            ]
+          ],
+          [
+            "Upodabljanje",
+            [
+              "Osvetljevanje in senčenje | Phongov model, Gouraudovo senčenje",
+              "Teksture | preslikava tekstur, filtriranje"
+            ]
+          ]
+        ]
+      ],
+      "VGS": [
+        "Vgrajeni sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Strojna oprema",
+            [
+              "Mikrokrmilniki | zgradba, pomnilnik, vhodno-izhodni priključki",
+              "Periferne enote | časovniki, AD-pretvorniki, serijske povezave"
+            ]
+          ],
+          [
+            "Programiranje",
+            [
+              "Programiranje vgrajenih sistemov | prekinitve, gonilniki, nizkonivojski C",
+              "Sistemi v realnem času | časovne omejitve, operacijski sistemi RTOS"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Poraba energije in zanesljivost | varčni načini, nadzorni časovnik",
+              "Razvoj in razhroščevanje vgrajenih sistemov | razvojna okolja, simulatorji, razhroščevalnik JTAG"
+            ]
+          ]
+        ]
+      ],
+      "VERJ": [
+        "Verjetnost",
+        "MAT",
+        [
+          "VERJETNOST_1"
+        ],
+        [
+          [
+            "Slučajni vektorji",
+            [
+              "Slučajni vektorji | skupna porazdelitev, robne porazdelitve, neodvisnost",
+              "Kovarianca in korelacija | kovarianca, koeficient korelacije"
+            ]
+          ],
+          [
+            "Uporaba verjetnosti",
+            [
+              "Pogojna verjetnost in Bayesov izrek | popolna verjetnost, neodvisnost dogodkov",
+              "Normalna porazdelitev v praksi | standardizacija, aproksimacija binomske porazdelitve"
+            ]
+          ]
+        ]
+      ],
+      "PPR": [
+        "Paralelno in porazdeljeno računanje",
+        "RAC",
+        [],
+        [
+          [
+            "Vzporedne arhitekture",
+            [
+              "Modeli vzporednosti | Flynnova klasifikacija, skupni in porazdeljeni pomnilnik",
+              "Pohitritev in učinkovitost | Amdahlov in Gustafsonov zakon"
+            ]
+          ],
+          [
+            "Programiranje",
+            [
+              "Niti in OpenMP | vzporedne zanke, sinhronizacija",
+              "Izmenjava sporočil | MPI, kolektivne operacije",
+              "Grafični procesorji | CUDA, model mrežnih blokov"
+            ]
+          ],
+          [
+            "Porazdeljeni sistemi",
+            [
+              "Porazdeljeni algoritmi | konsenz, ure, odpornost na napake",
+              "Porazdeljeni sistemi v oblaku | odjemalec-strežnik, replikacija, razširljivost"
+            ]
+          ]
+        ]
+      ],
+      "FIZ1": [
+        "Fizika I",
+        "FIZ",
+        [
+          "FIZ_1"
+        ],
+        []
+      ],
+      "OE1": [
+        "Osnove elektrotehnike I",
+        "FIZ",
+        [],
+        [
+          [
+            "Elektrostatika",
+            [
+              "Elektrostatika | Coulombov zakon, električna poljska jakost, potencial",
+              "Kapacitivnost | kondenzatorji, vezave, energija električnega polja"
+            ]
+          ],
+          [
+            "Enosmerni tokokrogi",
+            [
+              "Električni tok in vezja | Ohmov zakon, Kirchhoffova zakona, moč",
+              "Metode analize vezij | metoda zančnih tokov, metoda vozliščnih potencialov",
+              "Teoremi vezij | superpozicija, Theveninov in Nortonov nadomestni vir"
+            ]
+          ],
+          [
+            "Električno polje v snovi",
+            [
+              "Dielektriki in prevodniki | polarizacija, mejni pogoji",
+              "Energija in sile v električnem polju | gostota energije, sila na naboj in prevodnik"
+            ]
+          ]
+        ]
+      ],
+      "ETM": [
+        "Elektrotehnični materiali",
+        "FIZ",
+        [],
+        [
+          [
+            "Zgradba snovi",
+            [
+              "Atomi in kristalna zgradba | vezi, kristalne mreže, napake v kristalih",
+              "Energijski pasovi | prevodniki, polprevodniki, izolatorji"
+            ]
+          ],
+          [
+            "Prevodni in polprevodni materiali",
+            [
+              "Prevodni materiali | upornost, temperaturna odvisnost, superprevodnost",
+              "Polprevodniki | lastni in primesni polprevodniki, pn-spoj"
+            ]
+          ],
+          [
+            "Dielektrični in magnetni materiali",
+            [
+              "Dielektrični materiali | permitivnost, izgube, preboj",
+              "Magnetni materiali | diamagnetizem, paramagnetizem, feromagnetizem, histereza"
+            ]
+          ]
+        ]
+      ],
+      "PE1": [
+        "Programiranje za elektrotehnike I",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove programiranja",
+            [
+              "Spremenljivke in podatkovni tipi | tipi, operatorji, izrazi",
+              "Pogojni stavki in zanke | if, for, while"
+            ]
+          ],
+          [
+            "Funkcije in strukture",
+            [
+              "Funkcije | parametri, vračanje vrednosti, rekurzija",
+              "Tabele in nizi | obdelava tabel, iskanje in urejanje"
+            ]
+          ],
+          [
+            "Inženirska uporaba",
+            [
+              "Numerični izračuni v programu | zaokrožitvene napake, preprosti algoritmi",
+              "Datoteke in meritve | branje in zapis podatkov meritev"
+            ]
+          ]
+        ]
+      ],
+      "ANA1": [
+        "Analiza I",
+        "MAT",
+        [
+          "MAT_A"
+        ],
+        [
+          [
+            "Uporabe odvoda in integrala",
+            [
+              "Reševanje nelinearnih enačb | iskanje ničel, konvergenca",
+              "Taylorjev polinom | aproksimacija funkcij, ostanek",
+              "Uporaba določenega integrala | ploščina, prostornina, dolžina loka"
+            ]
+          ]
+        ]
+      ],
+      "DE": [
+        "Diferencialne enačbe",
+        "MAT",
+        [],
+        [
+          [
+            "Številske in potenčne vrste",
+            [
+              "Vrste | konvergenčni kriteriji, absolutna in pogojna konvergenca, alternirajoče vrste",
+              "Potenčne in Taylorjeve vrste | konvergenčni polmer, razvoj funkcij v vrsto, Z-transformacija"
+            ]
+          ],
+          [
+            "Fourierova analiza",
+            [
+              "Fourierova vrsta | sinusna in kosinusna vrsta, razvoj periodičnih funkcij",
+              "Fourierova transformacija | lastnosti, spekter signala"
+            ]
+          ],
+          [
+            "Funkcije več spremenljivk",
+            [
+              "Parcialni odvodi | zveznost, diferencial, Taylorjeva formula",
+              "Ekstremi funkcij več spremenljivk | lokalni in vezani ekstremi, Lagrangeeva funkcija"
+            ]
+          ],
+          [
+            "Navadne diferencialne enačbe",
+            [
+              "Diferencialne enačbe prvega reda | polje smeri, začetni problem, linearna enačba prvega reda",
+              "Linearne diferencialne enačbe višjega reda | konstantni koeficienti, determinanta Wronskega, nastavek za partikularno rešitev",
+              "Sistemi linearnih diferencialnih enačb | matrična oblika, lastne vrednosti"
+            ]
+          ],
+          [
+            "Laplaceova transformacija",
+            [
+              "Laplaceova transformacija | definicija, računska pravila, tabela transformirank",
+              "Reševanje začetnih problemov z Laplaceovo transformacijo | RLC-vezje, odziv na stopnico"
+            ]
+          ]
+        ]
+      ],
+      "OE2": [
+        "Osnove elektrotehnike II",
+        "FIZ",
+        [],
+        [
+          [
+            "Magnetno polje",
+            [
+              "Magnetno polje in indukcija | Biot-Savartov zakon, Amperov zakon, Faradayev zakon",
+              "Induktivnost | lastna in medsebojna induktivnost, energija magnetnega polja",
+              "Magnetni krogi | magnetna napetost, reluktanca, feromagnetna jedra"
+            ]
+          ],
+          [
+            "Izmenični tokokrogi",
+            [
+              "Izmenični tokovi | kazalci, impedanca, admitanca",
+              "Moč izmeničnega toka | delovna, jalova in navidezna moč, kompenzacija"
+            ]
+          ],
+          [
+            "Prehodni pojavi in trifazni sistemi",
+            [
+              "Prehodni pojavi | polnjenje kondenzatorja, RL- in RC-vezja",
+              "Trifazni sistemi | vezava v zvezdo in trikot, trifazna moč"
+            ]
+          ]
+        ]
+      ],
+      "MET": [
+        "Meritve v elektrotehniki",
+        "FIZ",
+        [],
+        [
+          [
+            "Osnove merjenja",
+            [
+              "Merilne enote in etaloni | SI, sledljivost, kalibracija",
+              "Merilna negotovost | sistematični in naključni pogreški, ocena negotovosti"
+            ]
+          ],
+          [
+            "Merilni instrumenti",
+            [
+              "Analogni in digitalni instrumenti | voltmeter, ampermeter, AD-pretvorba",
+              "Osciloskop | časovni prikaz signalov, proženje"
+            ]
+          ],
+          [
+            "Merilne metode",
+            [
+              "Merjenje upornosti in impedance | mostična vezja, metoda U-I",
+              "Merjenje moči in energije | enofazna in trifazna moč, števci"
+            ]
+          ]
+        ]
+      ],
+      "PE2": [
+        "Programiranje za elektrotehnike II",
+        "RAC",
+        [],
+        [
+          [
+            "Napredno programiranje",
+            [
+              "Kazalci in dinamične strukture | dinamični pomnilnik, povezani seznami",
+              "Strukture in moduli | sestavljeni tipi, ločeno prevajanje"
+            ]
+          ],
+          [
+            "Objektni pristop",
+            [
+              "Razredi in objekti | enkapsulacija, metode, konstruktorji",
+              "Dedovanje | podrazredi, polimorfizem"
+            ]
+          ],
+          [
+            "Programiranje strojne opreme",
+            [
+              "Bitne operacije in registri | maske, pomiki, delo z registri naprav",
+              "Branje in obdelava signalov | zajem vzorcev, preprosto filtriranje, zapis rezultatov"
+            ]
+          ]
+        ]
+      ],
+      "FIZV": [
+        "Fizika valovanja",
+        "FIZ",
+        [],
+        [
+          [
+            "Nihanje",
+            [
+              "Harmonično nihanje | nihajni čas, energija, dušeno in vsiljeno nihanje",
+              "Sklopljena nihala | lastna nihanja, utripanje, prenos energije"
+            ]
+          ],
+          [
+            "Valovanje",
+            [
+              "Valovanje | valovna enačba, hitrost, interferenca, stoječe valovanje",
+              "Zvok | jakost zvoka, Dopplerjev pojav"
+            ]
+          ],
+          [
+            "Svetloba",
+            [
+              "Geometrijska in valovna optika | odboj, lom, uklon, interferenca",
+              "Elektromagnetno valovanje | spekter, gostota energijskega toka, polarizacija"
+            ]
+          ]
+        ]
+      ],
+      "FIZS": [
+        "Fizika snovi",
+        "FIZ",
+        [],
+        [
+          [
+            "Kvantni pojavi",
+            [
+              "Posebna teorija relativnosti | Lorentzove transformacije, enakost mase in energije, Comptonov pojav",
+              "Fotoni in atomi | fotoefekt, energijski nivoji, spektri",
+              "Valovna narava delcev | de Brogliejeva valovna dolžina, načelo nedoločenosti"
+            ]
+          ],
+          [
+            "Zgradba snovi",
+            [
+              "Kristali in vezi | kristalne mreže, vrste vezi",
+              "Elektroni v trdnini | energijski pasovi, prevodniki in polprevodniki"
+            ]
+          ],
+          [
+            "Jedro",
+            [
+              "Jedrska fizika | razpadni zakon, vrste sevanja",
+              "Jedrske reakcije | vezavna energija, cepitev in zlivanje jeder"
+            ]
+          ]
+        ]
+      ],
+      "DT": [
+        "Digitalna tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Logične funkcije",
+            [
+              "Boolova algebra in logične funkcije | pravilnostne tabele, kanonične oblike",
+              "Minimizacija | Karnaughov diagram, poenostavljanje"
+            ]
+          ],
+          [
+            "Kombinacijska vezja",
+            [
+              "Kombinacijska vezja | dekodirniki, multiplekserji, seštevalniki, primerjalniki",
+              "Logične družine | TTL, CMOS, napetostni nivoji"
+            ]
+          ],
+          [
+            "Sekvenčna vezja",
+            [
+              "Pomnilne celice | zatiči, flip-flopi",
+              "Števci in registri | sinhroni in asinhroni števci, pomikalni registri",
+              "Končni avtomati | Moorov in Mealyjev avtomat, diagram stanj"
+            ]
+          ]
+        ]
+      ],
+      "OEL": [
+        "Osnove elektronike",
+        "FIZ",
+        [],
+        [
+          [
+            "Polprevodniški elementi",
+            [
+              "Dioda | pn-spoj, karakteristika, usmerniki, Zenerjeva dioda",
+              "Bipolarni tranzistor | delovne točke, ojačevalnik s skupnim emitorjem",
+              "Unipolarni tranzistor | MOSFET, karakteristike, stikalo"
+            ]
+          ],
+          [
+            "Ojačevalniki",
+            [
+              "Operacijski ojačevalnik | idealni OO, invertirajoči in neinvertirajoči ojačevalnik",
+              "Frekvenčni odziv | pasovna širina, Bodejev diagram"
+            ]
+          ],
+          [
+            "Napajanje",
+            [
+              "Napajalniki | usmerjanje, glajenje, stabilizacija napetosti",
+              "Tranzistor kot stikalo | vklop in izklop bremena, izgube, krmiljenje releja"
+            ]
+          ]
+        ]
+      ],
+      "EEP": [
+        "Električni in elektromehanski pretvorniki",
+        "FIZ",
+        [],
+        [
+          [
+            "Transformator",
+            [
+              "Transformator | princip delovanja, nadomestno vezje, izkoristek",
+              "Trifazni transformator | vezave, uporaba v omrežju"
+            ]
+          ],
+          [
+            "Električni stroji",
+            [
+              "Enosmerni stroj | zgradba, karakteristike, krmiljenje vrtljajev",
+              "Asinhronski stroj | vrtilno magnetno polje, slip, navorna karakteristika",
+              "Sinhronski stroj | generator in motor, obratovanje na omrežju"
+            ]
+          ],
+          [
+            "Elektromehanska pretvorba",
+            [
+              "Sile in navori v magnetnem polju | energija polja, elektromagneti, aktuatorji",
+              "Energijska bilanca pretvornikov | izgube, izkoristek, segrevanje"
+            ]
+          ]
+        ]
+      ],
+      "SIG": [
+        "Signali",
+        "FIZ",
+        [],
+        [
+          [
+            "Signali in sistemi",
+            [
+              "Vrste signalov | zvezni in diskretni, periodični, energijski in močnostni",
+              "Linearni časovno nespremenljivi sistemi | impulzni odziv, konvolucija"
+            ]
+          ],
+          [
+            "Frekvenčna analiza",
+            [
+              "Fourierova vrsta | razvoj periodičnih signalov, spekter",
+              "Fourierova transformacija | lastnosti, frekvenčni odziv"
+            ]
+          ],
+          [
+            "Diskretni signali",
+            [
+              "Vzorčenje | vzorčni izrek, prekrivanje spektrov",
+              "Z-transformacija in DFT | diskretna Fourierova transformacija, FFT"
+            ]
+          ]
+        ]
+      ],
+      "REG1": [
+        "Regulacije I",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeli sistemov",
+            [
+              "Prenosne funkcije | Laplaceova transformacija, poli in ničle, bločni diagrami",
+              "Časovni odziv | sistemi prvega in drugega reda, stopnični odziv"
+            ]
+          ],
+          [
+            "Regulacijska zanka",
+            [
+              "Povratna zanka | statični pogrešek, motnje, občutljivost",
+              "Stabilnost | Routhov kriterij, Nyquistov kriterij"
+            ]
+          ],
+          [
+            "Načrtovanje regulatorja",
+            [
+              "PID-regulator | P, I in D delovanje, nastavitev parametrov",
+              "Frekvenčne metode | Bodejev diagram, fazna in amplitudna rezerva"
+            ]
+          ]
+        ]
+      ],
+      "TS": [
+        "Teorija sistemov",
+        "FIZ",
+        [],
+        [
+          [
+            "Opis sistemov",
+            [
+              "Prostor stanj | spremenljivke stanja, linearizacija",
+              "Rešitev enačb stanja | prehodna matrika, odziv sistema"
+            ]
+          ],
+          [
+            "Lastnosti sistemov",
+            [
+              "Vodljivost in spoznavnost | kriteriji, kanonične oblike",
+              "Stabilnost sistemov | lastne vrednosti, Ljapunovljeva stabilnost"
+            ]
+          ],
+          [
+            "Diskretni sistemi",
+            [
+              "Diskretni modeli | diferenčne enačbe, Z-transformacija",
+              "Diskretizacija zveznih sistemov | vzorčenje, diskretne enačbe stanja, stabilnost"
+            ]
+          ]
+        ]
+      ],
+      "SENZ": [
+        "Senzorji",
+        "FIZ",
+        [],
+        [
+          [
+            "Osnove senzorjev",
+            [
+              "Lastnosti senzorjev | občutljivost, linearnost, histereza, dinamični odziv",
+              "Obdelava signala senzorjev | mostiči, ojačevalniki, AD-pretvorba"
+            ]
+          ],
+          [
+            "Merjenje mehanskih veličin",
+            [
+              "Senzorji pomika in hitrosti | potenciometri, induktivni in optični dajalniki",
+              "Senzorji sile in tlaka | merilni lističi, piezoelektrični senzorji"
+            ]
+          ],
+          [
+            "Merjenje drugih veličin",
+            [
+              "Senzorji temperature | termočleni, uporovni termometri, termistorji",
+              "Optični senzorji | fotodiode, optična vlakna"
+            ]
+          ]
+        ]
+      ],
+      "MID": [
+        "Modeliranje in identifikacije",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeliranje",
+            [
+              "Teoretično modeliranje | bilančne enačbe, električni in mehanski sistemi",
+              "Simulacija modelov | numerična integracija, simulacijska orodja"
+            ]
+          ],
+          [
+            "Identifikacija",
+            [
+              "Neparametrične metode | stopnični in frekvenčni odziv",
+              "Metoda najmanjših kvadratov | parametrični modeli, ocena parametrov"
+            ]
+          ],
+          [
+            "Vrednotenje",
+            [
+              "Validacija modela | ujemanje z meritvami, izbira strukture modela",
+              "Uporaba modelov | simulacija za načrtovanje vodenja, napovedovanje odziva"
+            ]
+          ]
+        ]
+      ],
+      "MK": [
+        "Mikrokrmilniki",
+        "RAC",
+        [],
+        [
+          [
+            "Zgradba mikrokrmilnika",
+            [
+              "Arhitektura mikrokrmilnika | jedro, pomnilnik, vodila",
+              "Vhodno-izhodni priključki | digitalni vhodi in izhodi, registri"
+            ]
+          ],
+          [
+            "Periferne enote",
+            [
+              "Časovniki in PWM | štetje, pulzno-širinska modulacija",
+              "AD-pretvorba in komunikacija | ADC, UART, SPI, I2C"
+            ]
+          ],
+          [
+            "Programiranje",
+            [
+              "Prekinitve | prekinitveni vektorji, prioritete, obravnava dogodkov",
+              "Programiranje v C | delo z registri, gonilniki perifernih enot"
+            ]
+          ]
+        ]
+      ],
+      "REG2": [
+        "Regulacije II",
+        "FIZ",
+        [],
+        [
+          [
+            "Regulacija v prostoru stanj",
+            [
+              "Postavljanje polov | povratna zveza po stanjih",
+              "Opazovalniki stanj | Luenbergerjev opazovalnik"
+            ]
+          ],
+          [
+            "Digitalna regulacija",
+            [
+              "Diskretni regulacijski sistemi | vzorčenje, Z-transformacija, stabilnost",
+              "Diskretni PID-regulator | diskretizacija, izvedba na računalniku"
+            ]
+          ],
+          [
+            "Napredne strukture",
+            [
+              "Kaskadna regulacija in krmiljenje naprej | kompenzacija motenj",
+              "Nelinearnosti v regulacijski zanki | nasičenje aktuatorja, zaščita pred navijanjem integratorja"
+            ]
+          ]
+        ]
+      ],
+      "IE": [
+        "Industrijska elektronika",
+        "FIZ",
+        [],
+        [
+          [
+            "Močnostni polprevodniki",
+            [
+              "Močnostna stikala | diode, tiristorji, MOSFET, IGBT",
+              "Krmiljenje močnostnih stikal | krmilniki vrat, stikalne izgube, zaščitna vezja"
+            ]
+          ],
+          [
+            "Pretvorniki",
+            [
+              "Usmerniki | nekrmiljeni in krmiljeni usmerniki",
+              "Enosmerni pretvorniki | znižalni in zvišalni pretvornik",
+              "Razsmerniki | enofazni in trifazni razsmernik, PWM"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Napajanje pogonov | frekvenčni pretvorniki, izkoristek, hlajenje",
+              "Napajalniki in polnilniki | stikalni napajalniki, polnjenje baterij"
+            ]
+          ]
+        ]
+      ],
+      "GSV": [
+        "Gradniki sistemov vodenja",
+        "FIZ",
+        [],
+        [
+          [
+            "Merilni del",
+            [
+              "Merilni pretvorniki | standardni signali, prilagoditev signalov",
+              "Zajem merilnih signalov | AD-pretvorba, filtriranje, galvanska ločitev"
+            ]
+          ],
+          [
+            "Krmilni del",
+            [
+              "Programirljivi logični krmilniki | zgradba PLK, lestvični diagram",
+              "Industrijski regulatorji | izvedbe regulatorjev, nastavitev"
+            ]
+          ],
+          [
+            "Izvršni del",
+            [
+              "Aktuatorji | ventili, motorji, frekvenčni pretvorniki",
+              "Nadzorni sistemi | SCADA, človek-stroj vmesnik"
+            ]
+          ]
+        ]
+      ],
+      "OR": [
+        "Osnove robotike",
+        "FIZ",
+        [],
+        [
+          [
+            "Kinematika robota",
+            [
+              "Lega in orientacija | rotacijske matrike, homogene transformacije",
+              "Direktna kinematika | Denavit-Hartenbergovi parametri",
+              "Inverzna kinematika | analitične in numerične rešitve"
+            ]
+          ],
+          [
+            "Hitrosti in dinamika",
+            [
+              "Jacobijeva matrika | hitrosti, singularnosti",
+              "Dinamika robota | Lagrangeeve enačbe, navori v sklepih"
+            ]
+          ],
+          [
+            "Vodenje",
+            [
+              "Načrtovanje trajektorij | interpolacija v sklepih in kartezičnem prostoru",
+              "Vodenje robota | regulacija lege v sklepih"
+            ]
+          ]
+        ]
+      ],
+      "UAV": [
+        "Uvod v analizo vezij",
+        "FIZ",
+        [],
+        [
+          [
+            "Metode analize",
+            [
+              "Sistematične metode | vozliščna in zančna analiza, matrična oblika",
+              "Odvisni viri in dvovhodi | parametri dvovhodov, ojačevalniški modeli"
+            ]
+          ],
+          [
+            "Izmenična analiza",
+            [
+              "Frekvenčne karakteristike | resonanca, filtri prvega in drugega reda",
+              "Moč v izmeničnih vezjih | kompleksna moč, prilagoditev bremena"
+            ]
+          ],
+          [
+            "Prehodna analiza",
+            [
+              "Prehodni pojavi v vezjih | Laplaceova transformacija vezij, začetni pogoji",
+              "Odziv vezij drugega reda | aperiodični in nihajni odziv, dušenje"
+            ]
+          ]
+        ]
+      ],
+      "RNV": [
+        "Računalniško načrtovanje vezij",
+        "FIZ",
+        [],
+        [
+          [
+            "Simulacija vezij",
+            [
+              "Simulator SPICE | opis vezja, modeli elementov",
+              "Vrste analiz | DC, AC in prehodna analiza"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Shematski zajem | knjižnice elementov, hierarhija",
+              "Optimizacija in toleranca | parametrična analiza, Monte Carlo"
+            ]
+          ],
+          [
+            "Digitalno načrtovanje",
+            [
+              "Opisni jeziki strojne opreme | VHDL, Verilog, sinteza",
+              "Simulacija digitalnih vezij | testne strukture, časovni diagrami"
+            ]
+          ]
+        ]
+      ],
+      "MEL": [
+        "Meritve v elektroniki",
+        "FIZ",
+        [],
+        [
+          [
+            "Merilna oprema",
+            [
+              "Digitalni osciloskop | vzorčenje, proženje, merjenje časovnih parametrov",
+              "Generatorji signalov | funkcijski in arbitrarni generatorji"
+            ]
+          ],
+          [
+            "Meritve vezij",
+            [
+              "Merjenje frekvenčnega odziva | amplitudni in fazni odziv",
+              "Spektralna analiza | analizator spektra, FFT"
+            ]
+          ],
+          [
+            "Avtomatizirane meritve",
+            [
+              "Računalniško vodene meritve | vodila za instrumente, zajem podatkov",
+              "Merilni sistemi z računalnikom | kartice za zajem podatkov, programska obdelava meritev"
+            ]
+          ]
+        ]
+      ],
+      "DSS": [
+        "Digitalne strukture in sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Programirljiva logika",
+            [
+              "FPGA in CPLD | zgradba, logični bloki, povezave",
+              "Opis vezij v VHDL | entitete, procesi, sočasni stavki"
+            ]
+          ],
+          [
+            "Digitalni sistemi",
+            [
+              "Podatkovna pot in krmilnik | registrski prenosi, končni avtomat",
+              "Pomnilniki | RAM, ROM, FIFO"
+            ]
+          ],
+          [
+            "Časovni vidiki",
+            [
+              "Časovna analiza | zakasnitve, sinhronizacija, takt",
+              "Asinhroni signali | metastabilnost, prehod med taktnimi domenami"
+            ]
+          ]
+        ]
+      ],
+      "MRA": [
+        "Mikroračunalniške arhitekture",
+        "RAC",
+        [],
+        [
+          [
+            "Mikroprocesor",
+            [
+              "Zgradba mikroprocesorja | registri, ALE, nabor ukazov",
+              "Zbirni jezik | ukazi, naslavljanje, podprogrami"
+            ]
+          ],
+          [
+            "Sistem",
+            [
+              "Pomnilnik in vodila | pomnilniški prostor, vodila, časovni diagrami",
+              "Prekinitve in periferija | prekinitveni sistem, vhodno-izhodne enote"
+            ]
+          ],
+          [
+            "Sodobne arhitekture",
+            [
+              "Arhitektura ARM | jedra Cortex, cevovod",
+              "Predpomnilnik in cevovod | hierarhija pomnilnika, stopnje cevovoda"
+            ]
+          ]
+        ]
+      ],
+      "EV": [
+        "Elektronska vezja",
+        "FIZ",
+        [],
+        [
+          [
+            "Ojačevalniki",
+            [
+              "Večstopenjski ojačevalniki | sklopi, diferencialni ojačevalnik",
+              "Povratna vezava | vrste povratne vezave, stabilnost"
+            ]
+          ],
+          [
+            "Vezja z operacijskimi ojačevalniki",
+            [
+              "Aktivni filtri | nizko- in visokoprepustni filtri, pasovni filtri",
+              "Oscilatorji | pogoji oscilacije, RC- in LC-oscilatorji"
+            ]
+          ],
+          [
+            "Pretvorba signalov",
+            [
+              "AD- in DA-pretvorniki | ločljivost, vrste pretvornikov",
+              "Primerjalniki in vzorčevalniki | Schmittov prožilnik, vzorčenje in zadrževanje"
+            ]
+          ]
+        ]
+      ],
+      "ASAV": [
+        "Analiza in sinteza analognih vezij",
+        "FIZ",
+        [],
+        [
+          [
+            "Analiza",
+            [
+              "Prenosne funkcije | poli in ničle, frekvenčni odziv",
+              "Občutljivost vezij | toleranca elementov"
+            ]
+          ],
+          [
+            "Sinteza",
+            [
+              "Aproksimacija filtrov | Butterworth, Čebišev, Bessel",
+              "Realizacija filtrov | pasivni LC in aktivni RC filtri"
+            ]
+          ],
+          [
+            "Načrtovanje z orodji",
+            [
+              "Računalniško podprta sinteza filtrov | simulacija, uglaševanje elementov",
+              "Filtri s preklapljanimi kondenzatorji | princip delovanja, uporaba v integriranih vezjih"
+            ]
+          ]
+        ]
+      ],
+      "OPI": [
+        "Osnove programskega inženirstva",
+        "RAC",
+        [],
+        [
+          [
+            "Razvojni proces",
+            [
+              "Življenjski cikel programske opreme | faze razvoja, agilni pristopi",
+              "Zahteve | zajem in specifikacija zahtev"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Modeliranje z UML | diagrami primerov uporabe, razredov, stanj",
+              "Arhitektura programske opreme | arhitekturni slogi, moduli"
+            ]
+          ],
+          [
+            "Preverjanje",
+            [
+              "Testiranje in kakovost | testni primeri, verifikacija in validacija",
+              "Vzdrževanje programske opreme | refaktoriranje, upravljanje sprememb, upravljanje verzij"
+            ]
+          ]
+        ]
+      ],
+      "AAV": [
+        "Akustika in avdio/video tehnologija",
+        "FIZ",
+        [],
+        [
+          [
+            "Akustika",
+            [
+              "Zvočno valovanje | jakost in nivo zvoka, decibel",
+              "Prostorska akustika | odmevni čas, absorpcija"
+            ]
+          ],
+          [
+            "Avdio tehnologija",
+            [
+              "Elektroakustični pretvorniki | mikrofoni, zvočniki",
+              "Digitalni zvok | vzorčenje, kvantizacija, kodiranje"
+            ]
+          ],
+          [
+            "Video tehnologija",
+            [
+              "Video signal | ločljivost, barvni prostori, stiskanje videa",
+              "Video naprave | kamere, zasloni, video vmesniki"
+            ]
+          ]
+        ]
+      ],
+      "NVE": [
+        "Napajalni viri v elektroniki",
+        "FIZ",
+        [],
+        [
+          [
+            "Linearni viri",
+            [
+              "Linearni stabilizatorji | zaporedni regulator, padec napetosti",
+              "Referenčni viri napetosti | Zenerjeva dioda, referenca s prepovedanim pasom"
+            ]
+          ],
+          [
+            "Stikalni viri",
+            [
+              "Stikalni pretvorniki | znižalni, zvišalni in invertirajoči pretvornik",
+              "Izolirani pretvorniki | zaporni in prevodni pretvornik, transformator"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Izkoristek in toplota | izgube, hlajenje, EMC",
+              "Baterije in polnjenje | vrste baterij, polnilni postopki, upravljanje baterij"
+            ]
+          ]
+        ]
+      ],
+      "ELDIN": [
+        "Elektrodinamika",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeli elektromehanskih sistemov",
+            [
+              "Elementarni elektromehanski sistemi | električni in mehanski elementi, energija, spremenljivke stanja",
+              "Analogije in dualnost | električno-mehanske analogije, dualna vezja"
+            ]
+          ],
+          [
+            "Lagrangeev opis",
+            [
+              "Euler-Lagrangeeva enačba | posplošene koordinate, energijska funkcija, elektromehanski primeri",
+              "Linearni sistemi | linearizacija, algebra linearnih operatorjev"
+            ]
+          ],
+          [
+            "Odziv sistemov",
+            [
+              "Prehajalna matrika in odziv | homogena in partikularna rešitev, elementarni vzbujalni signali",
+              "Harmonsko vzbujani sistemi | stacionarni odziv, resonanca"
+            ]
+          ],
+          [
+            "Računalniška analiza",
+            [
+              "Vektorski prostori v analizi vezij | lastne vrednosti, lastna nihanja sistema",
+              "Simulacija dinamičnih sistemov | modeli električnih vezij, elektromehanskih sistemov in transformatorjev"
+            ]
+          ]
+        ]
+      ],
+      "MIV": [
+        "Modeliranje in vodenje",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeliranje",
+            [
+              "Modeli dinamičnih sistemov | diferencialne enačbe, prenosne funkcije",
+              "Modeli elektromehanskih sistemov | motorji, mehanska bremena"
+            ]
+          ],
+          [
+            "Vodenje",
+            [
+              "Regulacijska zanka | povratna vezava, stabilnost, točnost",
+              "Regulatorji | PI in PID, nastavitev"
+            ]
+          ],
+          [
+            "Simulacija",
+            [
+              "Simulacija vodenih sistemov | simulacijska orodja, vrednotenje",
+              "Vodenje elektromehanskih sistemov | regulacija hitrosti in lege motorja"
+            ]
+          ]
+        ]
+      ],
+      "EP": [
+        "Električni pogoni",
+        "FIZ",
+        [],
+        [
+          [
+            "Mehanika pogona",
+            [
+              "Gibalna enačba pogona | vztrajnost, bremenski navori, obratovalne točke",
+              "Prenosi in bremena | prenosna razmerja, reducirani vztrajnostni moment"
+            ]
+          ],
+          [
+            "Pogonski motorji",
+            [
+              "Enosmerni pogoni | regulacija vrtljajev in toka",
+              "Izmenični pogoni | frekvenčni pretvornik, U/f krmiljenje, vektorsko vodenje"
+            ]
+          ],
+          [
+            "Izbira pogona",
+            [
+              "Dimenzioniranje pogona | obratovalni režimi, segrevanje",
+              "Energijska učinkovitost pogonov | izkoristek, zaviranje in rekuperacija"
+            ]
+          ]
+        ]
+      ],
+      "ENE": [
+        "Električne naprave v energetiki",
+        "FIZ",
+        [],
+        [
+          [
+            "Stikalne naprave",
+            [
+              "Stikala in odklopniki | električni oblok, gašenje obloka",
+              "Zaščitne naprave | varovalke, releji"
+            ]
+          ],
+          [
+            "Postroji",
+            [
+              "Razdelilne postaje | zbiralke, merilni transformatorji",
+              "Kratki stik | tokovi kratkega stika, termične in dinamične obremenitve"
+            ]
+          ],
+          [
+            "Izolacija",
+            [
+              "Izolacijski sistemi in prenapetosti | koordinacija izolacije, prenapetostni odvodniki",
+              "Ozemljitve in zaščita pred električnim udarom | ozemljitveni sistemi, napetost dotika"
+            ]
+          ]
+        ]
+      ],
+      "EEO": [
+        "Elementi elektroenergetskih omrežij",
+        "FIZ",
+        [],
+        [
+          [
+            "Vodi",
+            [
+              "Nadzemni vodi in kabli | parametri voda, nadomestno vezje",
+              "Parametri vodov | upornost, induktivnost in kapacitivnost voda"
+            ]
+          ],
+          [
+            "Elementi omrežja",
+            [
+              "Transformatorji v omrežju | regulacija napetosti, vezave",
+              "Generatorji in bremena | modeli v omrežju"
+            ]
+          ],
+          [
+            "Obratovanje",
+            [
+              "Pretoki moči | padci napetosti, izgube",
+              "Regulacija napetosti in jalove moči | kompenzacija, regulacijski transformatorji"
+            ]
+          ]
+        ]
+      ],
+      "KRS": [
+        "Krmilno-regulacijski sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Strojna oprema",
+            [
+              "Mikroprocesorski krmilniki | zgradba, zajem signalov",
+              "Zajem in obdelava signalov v krmilniku | AD-pretvorba, dajalniki, filtriranje"
+            ]
+          ],
+          [
+            "Regulacija pogonov",
+            [
+              "Kaskadna regulacija | tokovna, hitrostna in pozicijska zanka",
+              "Vodenje pretvornikov | PWM, sinhronizacija"
+            ]
+          ],
+          [
+            "Izvedba",
+            [
+              "Programska izvedba regulatorjev | diskretizacija, časovna razporeditev",
+              "Preizkušanje krmilno-regulacijskega sistema | simulacija v zanki, meritve odziva"
+            ]
+          ]
+        ]
+      ],
+      "RMN": [
+        "Računalniško modeliranje in načrtovanje naprav",
+        "FIZ",
+        [],
+        [
+          [
+            "Numerične metode polja",
+            [
+              "Metoda končnih elementov | mreženje, robni pogoji",
+              "Izračun magnetnega polja | magnetni potencial, nelinearni materiali"
+            ]
+          ],
+          [
+            "Načrtovanje naprav",
+            [
+              "Načrtovanje električnih strojev | dimenzioniranje, izgube",
+              "Optimizacija naprav | ciljne funkcije, parametrična optimizacija"
+            ]
+          ],
+          [
+            "Vrednotenje modelov",
+            [
+              "Preverjanje izračunov z meritvami | primerjava, vrednotenje natančnosti",
+              "Toplotni izračuni naprav | segrevanje, hlajenje, toplotni model"
+            ]
+          ]
+        ]
+      ],
+      "PEEG": [
+        "Proizvodnja električne energije in gospodarjenje",
+        "FIZ",
+        [],
+        [
+          [
+            "Viri energije",
+            [
+              "Termoelektrarne | parni proces, izkoristek",
+              "Hidroelektrarne | moč vode, turbine",
+              "Jedrske elektrarne | fisija, reaktorji, varnost",
+              "Obnovljivi viri | sončne in vetrne elektrarne"
+            ]
+          ],
+          [
+            "Gospodarjenje",
+            [
+              "Trg z električno energijo | cene, obremenitveni diagram, stroški proizvodnje",
+              "Ekonomika proizvodnje | stroški naložbe, obratovalni stroški, cena energije"
+            ]
+          ],
+          [
+            "Elektroenergetski sistem",
+            [
+              "Obratovanje elektroenergetskega sistema | uravnavanje frekvence, rezerve moči",
+              "Okoljski vidiki proizvodnje | emisije, učinkovitost, trajnostni razvoj"
+            ]
+          ]
+        ]
+      ],
+      "PREE": [
+        "Prenos in razdeljevanje električne energije",
+        "FIZ",
+        [],
+        [
+          [
+            "Prenosno omrežje",
+            [
+              "Struktura omrežja | napetostni nivoji, topologije",
+              "Izračun omrežij | pretoki moči, padci napetosti"
+            ]
+          ],
+          [
+            "Razdelilno omrežje",
+            [
+              "Razdelilna omrežja | ozemljitve, kakovost električne energije",
+              "Zaščita omrežij | selektivnost, distančna zaščita"
+            ]
+          ],
+          [
+            "Načrtovanje omrežij",
+            [
+              "Načrtovanje in obratovanje omrežij | razpršeni viri, pametna omrežja",
+              "Kakovost oskrbe | zanesljivost, prekinitve, napetostne razmere"
+            ]
+          ]
+        ]
+      ],
+      "MVEM": [
+        "Modeliranje in vodenje elektromehanskih sistemov",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeli strojev",
+            [
+              "Model enosmernega stroja | električne in mehanske enačbe",
+              "Dinamični model izmeničnih strojev | dq-transformacija"
+            ]
+          ],
+          [
+            "Vodenje",
+            [
+              "Vektorsko vodenje | orientacija polja, tokovna regulacija",
+              "Pozicijsko vodenje | servo pogoni, trajektorije"
+            ]
+          ],
+          [
+            "Simulacija",
+            [
+              "Simulacija elektromehanskih sistemov | modeli pretvornika, motorja in bremena",
+              "Preizkus vodenja na laboratorijskem sistemu | meritve, nastavitev regulatorjev"
+            ]
+          ]
+        ]
+      ],
+      "KA": [
+        "Komunikacije v avtomatiki",
+        "RAC",
+        [],
+        [
+          [
+            "Industrijska omrežja",
+            [
+              "Industrijska vodila | Modbus, Profibus, CAN",
+              "Industrijski Ethernet | Profinet, EtherCAT, realni čas"
+            ]
+          ],
+          [
+            "Protokoli",
+            [
+              "Komunikacijski modeli | odjemalec-strežnik, objavi-naroči, OPC UA",
+              "Brezžične komunikacije v industriji | senzorska omrežja, varnost"
+            ]
+          ],
+          [
+            "Integracija",
+            [
+              "Integracija sistemov vodenja | piramida avtomatizacije, Industrija 4.0",
+              "Varnost industrijskih omrežij | segmentacija, avtentikacija, zaščita naprav"
+            ]
+          ]
+        ]
+      ],
+      "SERVO1": [
+        "Servosistemi I",
+        "FIZ",
+        [],
+        [
+          [
+            "Servopogoni",
+            [
+              "Zgradba servosistema | motor, pretvornik, dajalnik",
+              "Servomotorji | sinhronski motorji s trajnimi magneti"
+            ]
+          ],
+          [
+            "Regulacija",
+            [
+              "Pozicijska regulacija | kaskadna struktura, nastavitev",
+              "Mehanska resonanca | elastične sklopke, dušenje"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Izbira in uporaba servopogonov | dimenzioniranje, primeri uporabe",
+              "Dajalniki lege in hitrosti | inkrementalni in absolutni dajalniki, resolverji"
+            ]
+          ]
+        ]
+      ],
+      "DSK": [
+        "Digitalni signalni krmilniki v avtomatiki",
+        "RAC",
+        [],
+        [
+          [
+            "Arhitektura",
+            [
+              "Digitalni signalni krmilniki | jedro DSP, aritmetika s fiksno vejico",
+              "Pomnilnik in prekinitve | pomnilniška organizacija, prekinitveni sistem"
+            ]
+          ],
+          [
+            "Periferija za vodenje",
+            [
+              "PWM in ADC v vodenju | sinhronizacija zajema, dajalniki",
+              "Komunikacijski vmesniki | SPI, UART, CAN"
+            ]
+          ],
+          [
+            "Algoritmi",
+            [
+              "Izvedba regulacijskih algoritmov | diskretni PI, filtri",
+              "Programiranje v realnem času | prekinitve, časovne omejitve"
+            ]
+          ]
+        ]
+      ],
+      "NTV": [
+        "Načrtovanje tiskanih vezij in elektromagnetna združljivost",
+        "FIZ",
+        [],
+        [
+          [
+            "Tiskana vezja",
+            [
+              "Načrtovanje tiskanega vezja | razmestitev elementov, vodenje povezav",
+              "Večplastna vezja | napajalne ravnine, signalna integriteta"
+            ]
+          ],
+          [
+            "Elektromagnetna združljivost",
+            [
+              "Viri motenj | prevodne in sevane motnje",
+              "Ukrepi EMC | oklapljanje, filtriranje, ozemljitev"
+            ]
+          ],
+          [
+            "Preskušanje",
+            [
+              "Preskušanje EMC | standardi, merjenje motenj",
+              "Odpornost na motnje | elektrostatična razelektritev, prehodni pojavi, prenapetosti"
+            ]
+          ]
+        ]
+      ],
+      "UVT": [
+        "Uvod v telekomunikacije",
+        "FIZ",
+        [],
+        [
+          [
+            "Komunikacijski sistem",
+            [
+              "Model komunikacijskega sistema | vir, kanal, sprejemnik, šum",
+              "Signali in spekter | frekvenčni pas, pasovna širina, decibeli"
+            ]
+          ],
+          [
+            "Prenos informacije",
+            [
+              "Modulacija | amplitudna, frekvenčna in digitalna modulacija",
+              "Kapaciteta kanala | Shannonova formula, razmerje signal-šum"
+            ]
+          ],
+          [
+            "Omrežja",
+            [
+              "Telekomunikacijska omrežja | telefonija, mobilna in internetna omrežja",
+              "Standardizacija in regulacija | ITU, ETSI, radijski frekvenčni spekter"
+            ]
+          ]
+        ]
+      ],
+      "OSPO": [
+        "Osnove strojne in programske opreme",
+        "RAC",
+        [],
+        [
+          [
+            "Strojna oprema",
+            [
+              "Predstavitev podatkov | številski sistemi, kodiranje",
+              "Logična vezja | logična vrata, kombinacijska in sekvenčna vezja",
+              "Zgradba računalnika | procesor, pomnilnik, vhod-izhod"
+            ]
+          ],
+          [
+            "Programska oprema",
+            [
+              "Operacijski sistem | procesi, datoteke, ukazna lupina",
+              "Programski jeziki in orodja | prevajalnik, tolmač, razvojno okolje"
+            ]
+          ],
+          [
+            "Programiranje",
+            [
+              "Od programa do izvajanja | prevajanje, povezovanje, nalaganje",
+              "Zbirni jezik | ukazi, registri, preprosti programi"
+            ]
+          ]
+        ]
+      ],
+      "PTK": [
+        "Programiranje za telekomunikacije",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove programiranja",
+            [
+              "Podatkovni tipi in izrazi | spremenljivke, operatorji",
+              "Krmilne strukture | pogoji, zanke",
+              "Funkcije | parametri, rekurzija, moduli"
+            ]
+          ],
+          [
+            "Podatkovne strukture",
+            [
+              "Tabele, seznami in slovarji | iskanje in urejanje",
+              "Nizi in datoteke | obdelava besedila, branje in pisanje datotek"
+            ]
+          ],
+          [
+            "Uporaba v telekomunikacijah",
+            [
+              "Obdelava signalov v programu | vzorci, preprosti filtri",
+              "Omrežno programiranje | vtičnice, preprost protokol"
+            ]
+          ]
+        ]
+      ],
+      "EMV": [
+        "Elektromagnetno valovanje",
+        "FIZ",
+        [
+          "EM_POLJE"
+        ],
+        [
+          [
+            "Vodenje valovanja",
+            [
+              "Prenosni vodi | karakteristična impedanca, odboj, stoječi valovi",
+              "Antene | sevalni diagram, dobitek"
+            ]
+          ],
+          [
+            "Valovi v snovi",
+            [
+              "Ravni val v snovi | slabljenje, vdorna globina, odboj na meji",
+              "Polarizacija valovanja | linearna, krožna in eliptična polarizacija"
+            ]
+          ]
+        ]
+      ],
+      "OPJ": [
+        "Objektno programiranje v Javi",
+        "RAC",
+        [],
+        [
+          [
+            "Jezik Java",
+            [
+              "Osnove Jave | tipi, razredi, paketi",
+              "Razredi in objekti | konstruktorji, enkapsulacija"
+            ]
+          ],
+          [
+            "Objektni koncepti",
+            [
+              "Dedovanje in polimorfizem | podrazredi, vmesniki, abstraktni razredi",
+              "Izjeme | obravnava izjem"
+            ]
+          ],
+          [
+            "Knjižnice",
+            [
+              "Zbirke | seznami, množice, slovarji",
+              "Tokovi in lambda izrazi | funkcijski slog v Javi"
+            ]
+          ]
+        ]
+      ],
+      "KS": [
+        "Komunikacijski sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Analogni prenos",
+            [
+              "Amplitudna modulacija | AM, DSB, SSB",
+              "Kotna modulacija | FM, PM"
+            ]
+          ],
+          [
+            "Digitalni prenos",
+            [
+              "Digitalne modulacije | ASK, FSK, PSK, QAM",
+              "Šum in napake | razmerje signal-šum, verjetnost napake"
+            ]
+          ],
+          [
+            "Kodiranje",
+            [
+              "Kanalsko kodiranje | paritetni in Hammingov kod",
+              "Izvorno kodiranje | entropija, Huffmanovo kodiranje"
+            ]
+          ]
+        ]
+      ],
+      "DOS": [
+        "Digitalna obdelava signalov",
+        "FIZ",
+        [],
+        [
+          [
+            "Diskretni signali",
+            [
+              "Vzorčenje in kvantizacija | vzorčni izrek, kvantizacijski šum",
+              "Diskretni sistemi | konvolucija, diferenčne enačbe, Z-transformacija"
+            ]
+          ],
+          [
+            "Frekvenčna analiza",
+            [
+              "DFT in FFT | spektralna analiza, okna",
+              "Frekvenčni odziv diskretnih sistemov | amplitudni in fazni odziv, poli in ničle"
+            ]
+          ],
+          [
+            "Filtri",
+            [
+              "Digitalni filtri FIR | okenska metoda, linearna faza",
+              "Digitalni filtri IIR | bilinearna transformacija"
+            ]
+          ]
+        ]
+      ],
+      "UPDL": [
+        "Uvod v programirljivo digitalno logiko",
+        "RAC",
+        [],
+        [
+          [
+            "Programirljiva vezja",
+            [
+              "Vrste programirljive logike | PLD, CPLD, FPGA",
+              "Zgradba vezja FPGA | logični bloki, vpogledne tabele, povezovalna mreža"
+            ]
+          ],
+          [
+            "Jezik VHDL",
+            [
+              "Osnove VHDL | entitete, arhitekture, signali",
+              "Sekvenčna logika v VHDL | procesi, registri, avtomati"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Simulacija in sinteza | testne strukture, časovna analiza",
+              "Izvedba na razvojni plošči | pripisovanje priključkov, programiranje vezja"
+            ]
+          ]
+        ]
+      ],
+      "OKO": [
+        "Osnove komunikacijskih omrežij",
+        "RAC",
+        [],
+        [
+          [
+            "Omrežni modeli",
+            [
+              "Plastni model | OSI, TCP/IP",
+              "Lokalna omrežja | Ethernet, stikala, VLAN"
+            ]
+          ],
+          [
+            "Internet",
+            [
+              "Protokol IP | naslavljanje, podomrežja, usmerjanje",
+              "Transportni protokoli | TCP, UDP"
+            ]
+          ],
+          [
+            "Aplikacije",
+            [
+              "Aplikacijski protokoli | HTTP, DNS, DHCP",
+              "Brezžična lokalna omrežja | Wi-Fi, dostopne točke, varnost"
+            ]
+          ]
+        ]
+      ],
+      "OTAS": [
+        "Osnove telekomunikacijskih aplikacij in storitev",
+        "RAC",
+        [],
+        [
+          [
+            "Mobilni ekosistem",
+            [
+              "Mobilni ekosistem | platforme, trgovine z aplikacijami, deležniki",
+              "Vrste mobilnih aplikacij | domorodne, spletne in hibridne aplikacije"
+            ]
+          ],
+          [
+            "Razvoj mobilnih aplikacij",
+            [
+              "Razvoj mobilnih aplikacij | programski jeziki, ogrodja, razvojna orodja",
+              "Povezovanje aplikacij z viri | lokacija, družbena omrežja, personalizacija",
+              "Trženje mobilnih aplikacij | poslovni modeli, analitika uporabe"
+            ]
+          ],
+          [
+            "Telekomunikacijske storitve",
+            [
+              "Kategorije telekomunikacijskih storitev | mobilne in fiksne, pretočne in medijske storitve",
+              "Nosilne storitve in storitve z dodano vrednostjo | primeri, umetna inteligenca v storitvah"
+            ]
+          ],
+          [
+            "Internet stvari in oblak",
+            [
+              "Storitve interneta stvari | zasnova, zajem in obdelava podatkov, uporabniški vmesnik",
+              "Oblačne storitve | virtualizacija, sistemska podpora storitvam"
+            ]
+          ]
+        ]
+      ],
+      "AVS": [
+        "Avdiovizualne storitve",
+        "RAC",
+        [],
+        [
+          [
+            "Avdio",
+            [
+              "Kodiranje zvoka | PCM, MP3, AAC, psihoakustika",
+              "Psihoakustika | slušni prag, maskiranje, zaznavanje glasnosti"
+            ]
+          ],
+          [
+            "Video",
+            [
+              "Kodiranje slike | JPEG, JPEG 2000, MJPEG",
+              "Kodiranje videa | H.264, HEVC, predikcija gibanja",
+              "Pretakanje | RTP, RTSP, prilagodljivo pretakanje"
+            ]
+          ],
+          [
+            "Storitve",
+            [
+              "Avdiovizualne storitve | IPTV, video na zahtevo, kakovost izkušnje",
+              "Kakovost avdiovizualnih storitev | subjektivno in objektivno ocenjevanje kakovosti"
+            ]
+          ]
+        ]
+      ],
+      "ALGT": [
+        "Algoritmi v telekomunikacijah",
+        "RAC",
+        [],
+        [
+          [
+            "Matematične osnove",
+            [
+              "Kombinatorika | variacije, permutacije, kombinacije",
+              "Grafi in njihove lastnosti | dvodelni, Eulerjevi, Hamiltonovi in ravninski grafi"
+            ]
+          ],
+          [
+            "Podatkovne strukture",
+            [
+              "Seznami, skladi in vrste | enosmerni, dvosmerni in krožni seznam, prednostna vrsta",
+              "Zgoščene tabele in drevesa | zgoščevalne funkcije, dvojiška drevesa",
+              "Predstavitev grafov | matrika sosednosti, seznam sosedov, objektna izvedba"
+            ]
+          ],
+          [
+            "Algoritmi na grafih",
+            [
+              "Iskanje v grafih | iskanje v širino in globino, povezljivost",
+              "Najkrajše poti in vpeta drevesa | Dijkstra, Bellman-Ford, Prim, Kruskal",
+              "Ujemanje in barvanje grafov | prirejanja, barvanje, aproksimacijski in hevristični algoritmi"
+            ]
+          ],
+          [
+            "Uporaba v omrežjih",
+            [
+              "Usmerjevalni algoritmi | vektor razdalj, stanje povezav",
+              "Strojno učenje v telekomunikacijah | klasifikacija prometa, napovedovanje obremenitve"
+            ]
+          ]
+        ]
+      ],
+      "PKO": [
+        "Prostrana komunikacijska omrežja",
+        "RAC",
+        [],
+        [
+          [
+            "Vodovno preklapljanje",
+            [
+              "Klasična telefonija | vodovno preklapljanje, krmilna signalizacija",
+              "Optična prenosna omrežja | SDH, valovno multipleksiranje"
+            ]
+          ],
+          [
+            "Paketno preklapljanje",
+            [
+              "Paketno preklapljanje IP | datagrami, navidezni kanali, usmerjanje",
+              "Programsko določena omrežja | ločitev krmilne in podatkovne ravnine, krmilnik SDN"
+            ]
+          ],
+          [
+            "Kakovost storitev",
+            [
+              "Parametri kakovosti storitev | zakasnitev, trepetanje, izgube, vrednotenje",
+              "Integrirane in diferencirane storitve | razporejanje paketov, MPLS"
+            ]
+          ],
+          [
+            "Varnost",
+            [
+              "Grožnje in zaščita omrežja | napadi, požarni zidovi, kriptografija",
+              "Omrežni varnostni protokoli | IPsec, TLS, VPN"
+            ]
+          ],
+          [
+            "Konvergirana omrežja",
+            [
+              "Vse-IP omrežja in širokopasovni dostop | žične in optične dostopovne tehnologije",
+              "VoIP in fiksno-mobilna konvergenca | signalizacija SIP, prenos govora"
+            ]
+          ]
+        ]
+      ],
+      "ODS": [
+        "Oddajni sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Radijska tehnika",
+            [
+              "Oddajniki in sprejemniki | mešanje, superheterodinski sprejemnik",
+              "Razširjanje radijskih valov | slabljenje, odboj, vidljivost"
+            ]
+          ],
+          [
+            "Antene",
+            [
+              "Antenski sistemi | dipol, antenske skupine, dobitek",
+              "Napajanje anten | prilagoditev, prenosni vodi, razmerje stoječega valovanja"
+            ]
+          ],
+          [
+            "Radiodifuzija",
+            [
+              "Digitalna radiodifuzija | DVB-T, DAB, OFDM",
+              "Satelitski sistemi | geostacionarni sateliti, satelitske povezave"
+            ]
+          ]
+        ]
+      ],
+      "OPK": [
+        "Optične komunikacije",
+        "FIZ",
+        [],
+        [
+          [
+            "Optično vlakno",
+            [
+              "Širjenje svetlobe v vlaknu | popolni odboj, numerična apertura, rodovi",
+              "Slabljenje in disperzija | izgube, kromatska disperzija"
+            ]
+          ],
+          [
+            "Komponente",
+            [
+              "Optični viri in detektorji | laserske diode, LED, fotodiode",
+              "Optični ojačevalniki | EDFA"
+            ]
+          ],
+          [
+            "Sistemi",
+            [
+              "Optični prenosni sistemi | WDM, proračun moči",
+              "Optična dostopovna omrežja | pasivna optična omrežja, FTTH"
+            ]
+          ]
+        ]
+      ],
+      "ONTS": [
+        "Osnove načrtovanja telekomunikacijskih storitev",
+        "RAC",
+        [],
+        [
+          [
+            "Vrste storitev",
+            [
+              "Klasifikacija telekomunikacijskih storitev | klasične storitve, delitev po sistemu in vrsti",
+              "Arhitektura NGN | odprti vmesniki, IP Multimedia Subsystem"
+            ]
+          ],
+          [
+            "Internet in oblak",
+            [
+              "Storitve WebRTC | internetna arhitektura, komunikacija v brskalniku",
+              "Oblačni storitveni modeli | infrastruktura, platforma in programska oprema kot storitev, virtualizacija"
+            ]
+          ],
+          [
+            "Sodobna omrežja",
+            [
+              "Programsko določena omrežja | SDN, skalabilnost omrežij in storitev",
+              "Storitve v mobilnem omrežju 5G | VoLTE, namenska omrežja 5G"
+            ]
+          ],
+          [
+            "Kakovost in primeri",
+            [
+              "Kakovost storitve in uporabniške izkušnje | QoS, QoE, vrednotenje",
+              "Napredne storitve | pametni dom, pametno mesto, storitve IoT z umetno inteligenco"
+            ]
+          ]
+        ]
+      ],
+      "IOT": [
+        "Internet stvari",
+        "RAC",
+        [],
+        [
+          [
+            "Naprave",
+            [
+              "Senzorska vozlišča | mikrokrmilniki, senzorji, napajanje",
+              "Napajanje naprav IoT | baterije, varčni načini, zbiranje energije"
+            ]
+          ],
+          [
+            "Komunikacije",
+            [
+              "Brezžične tehnologije IoT | Bluetooth LE, Zigbee, LoRaWAN, NB-IoT",
+              "Protokoli IoT | MQTT, CoAP"
+            ]
+          ],
+          [
+            "Platforme",
+            [
+              "Obdelava podatkov IoT | oblak, robno računanje, varnost",
+              "Aplikacije interneta stvari | pametni dom, industrija, zdravje"
+            ]
+          ]
+        ]
+      ],
+      "KOND": [
+        "Konfiguriranje omrežnih naprav",
+        "RAC",
+        [],
+        [
+          [
+            "Stikala",
+            [
+              "Konfiguracija stikal | VLAN, protokol vpetega drevesa",
+              "Agregacija povezav | LACP, redundanca povezav"
+            ]
+          ],
+          [
+            "Usmerjevalniki",
+            [
+              "Konfiguracija usmerjevalnikov | statično in dinamično usmerjanje, OSPF",
+              "Omrežne storitve | NAT, DHCP, ACL"
+            ]
+          ],
+          [
+            "Upravljanje",
+            [
+              "Nadzor in avtomatizacija omrežja | SNMP, skripte",
+              "Varnost omrežnih naprav | dostop SSH, upravljanje gesel, varnostne kopije konfiguracije"
+            ]
+          ]
+        ]
+      ],
+      "FMBO": [
+        "Fiksna in mobilna brezžična omrežja",
+        "RAC",
+        [],
+        [
+          [
+            "Brezžični prenos",
+            [
+              "Radijski kanal | slabljenje, presih, večpotje",
+              "Večdostopne tehnike | FDMA, TDMA, CDMA, OFDMA"
+            ]
+          ],
+          [
+            "Brezžična omrežja",
+            [
+              "Brezžična lokalna omrežja | Wi-Fi, IEEE 802.11",
+              "Mobilna omrežja | GSM, UMTS, LTE, 5G",
+              "Celična zasnova | celice, ponovna raba frekvenc, predaja zveze"
+            ]
+          ],
+          [
+            "Fiksna dostopovna omrežja",
+            [
+              "Fiksni brezžični dostop | točka-točka, radijske zveze",
+              "Satelitski in mikrovalovni dostop | povezave točka-večtočka, proračun zveze"
+            ]
+          ]
+        ]
+      ],
+      "MOBI": [
+        "Mobilna interakcija",
+        "RAC",
+        [],
+        [
+          [
+            "Vseprisotno računalništvo",
+            [
+              "Model interakcije v okoljih IoT | vseprisotno računalništvo, inteligentna okolja",
+              "Brezžična senzorska omrežja | storitve, poraba moči, porazdelitev funkcionalnosti"
+            ]
+          ],
+          [
+            "Mobilno označevanje",
+            [
+              "Kode QR | kodiranje in dekodiranje, varnost, dinamične kode",
+              "Kode QR in razširjena resničnost | interakcija s kodami, univerzalna identifikacija"
+            ]
+          ],
+          [
+            "Pogovorni vmesniki",
+            [
+              "Pogovorni agenti | klepetalni roboti, sistemi dialoga, umetna inteligenca",
+              "Priporočilni sistemi | umetna inteligenca, uporaba v okoljih IoT"
+            ]
+          ],
+          [
+            "Nove oblike interakcije",
+            [
+              "Nosljive naprave | klasifikacija, uporaba, podpora AR in VR",
+              "Haptični vmesniki | haptika, povratna informacija, haptične naprave",
+              "Interakcija z gestami | taksonomija gest, uporaba v VR in AR"
+            ]
+          ]
+        ]
+      ],
+      "FMPI": [
+        "Formalne metode v programskem inženirstvu",
+        "RAC",
+        [],
+        [
+          [
+            "Formalna specifikacija",
+            [
+              "Logika in specifikacija | predikatna logika, invariante",
+              "Avtomati in modeli | končni avtomati, prehodni sistemi"
+            ]
+          ],
+          [
+            "Preverjanje",
+            [
+              "Preverjanje modelov | temporalna logika, preverjanje lastnosti",
+              "Dokazovanje pravilnosti | predpogoji in popogoji"
+            ]
+          ],
+          [
+            "Orodja",
+            [
+              "Orodja za formalno preverjanje | preverjevalniki modelov, primeri uporabe",
+              "Formalni opis sočasnih sistemov | Petrijeve mreže, procesne algebre"
+            ]
+          ]
+        ]
+      ],
+      "MM": [
+        "Multimedia",
+        "RAC",
+        [],
+        [
+          [
+            "Mediji",
+            [
+              "Digitalna slika | barvni modeli, ločljivost, formati",
+              "Digitalni zvok in video | vzorčenje, formati"
+            ]
+          ],
+          [
+            "Stiskanje",
+            [
+              "Stiskanje slik | JPEG, kvantizacija, entropijsko kodiranje",
+              "Stiskanje videa | MPEG, kompenzacija gibanja"
+            ]
+          ],
+          [
+            "Multimedijski sistemi",
+            [
+              "Multimedijske aplikacije | sinhronizacija, pretakanje",
+              "Interaktivna multimedija | uporabniški vmesnik, animacija"
+            ]
+          ]
+        ]
+      ],
+      "NKP": [
+        "Načrtovanje komunikacijskih protokolov",
+        "RAC",
+        [],
+        [
+          [
+            "Zasnova protokola",
+            [
+              "Elementi protokola | storitev, sporočila, pravila",
+              "Specifikacija protokola | avtomati stanj, diagrami zaporedja"
+            ]
+          ],
+          [
+            "Preverjanje",
+            [
+              "Validacija protokolov | smrtni objem, dosegljivost",
+              "Testiranje protokolov | testni primeri, skladnost s specifikacijo"
+            ]
+          ],
+          [
+            "Izvedba",
+            [
+              "Izvedba protokolov | vtičnice, preizkušanje",
+              "Standardizacija protokolov | RFC, IETF, primeri protokolov"
+            ]
+          ]
+        ]
+      ],
+      "ISTK": [
+        "Internetne storitve v telekomunikacijah",
+        "RAC",
+        [],
+        [
+          [
+            "Spletne storitve",
+            [
+              "Spletne tehnologije | HTTP, REST, WebSocket",
+              "Govor prek IP | VoIP, SIP, WebRTC"
+            ]
+          ],
+          [
+            "Oblak",
+            [
+              "Storitve v oblaku | virtualizacija, kontejnerji",
+              "Vsebinska dostavna omrežja | predpomnjenje, porazdelitev obremenitve"
+            ]
+          ],
+          [
+            "Razvoj storitev",
+            [
+              "Razvoj internetne storitve | arhitektura, uvajanje, spremljanje",
+              "Varnost internetnih storitev | TLS, avtentikacija, zaščita API"
+            ]
+          ]
+        ]
+      ],
+      "MAM": [
+        "Matematična analiza",
+        "MAT",
+        [
+          "MAT_A"
+        ],
+        [
+          [
+            "Množice, vrste in funkcije več spremenljivk",
+            [
+              "Izjavni račun in množice | izjave, kvantifikatorji, operacije z množicami, matematična indukcija",
+              "Številske vrste | geometrijska vrsta, konvergenčni kriteriji",
+              "Parcialni odvodi | parcialni odvodi, totalni diferencial, ekstremi, vezani ekstremi"
+            ]
+          ]
+        ]
+      ],
+      "LAM": [
+        "Linearna algebra",
+        "MAT",
+        [],
+        [
+          [
+            "Vektorji",
+            [
+              "Vektorji | operacije z vektorji, skalarni, vektorski in mešani produkt",
+              "Premice in ravnine | enačbe premice in ravnine v prostoru, razdalje"
+            ]
+          ],
+          [
+            "Matrike",
+            [
+              "Matrike in determinante | računanje z matrikami, inverz, lastnosti determinante",
+              "Sistemi linearnih enačb | Gaussova eliminacija, rang, rešljivost"
+            ]
+          ],
+          [
+            "Vektorski prostori",
+            [
+              "Vektorski prostori in baze | linearna neodvisnost, baza, dimenzija",
+              "Linearne preslikave | matrika preslikave, jedro in slika"
+            ]
+          ],
+          [
+            "Spektralna teorija",
+            [
+              "Lastne vrednosti in lastni vektorji | karakteristični polinom, diagonalizacija",
+              "Cayley-Hamiltonov izrek | minimalni in karakteristični polinom, uporaba"
+            ]
+          ]
+        ]
+      ],
+      "MATER1": [
+        "Materiali I",
+        "FIZ",
+        [],
+        [
+          [
+            "Zgradba materialov",
+            [
+              "Atomi in kemijske vezi | zgradba atoma, ionska, kovalentna in kovinska vez",
+              "Kristalne strukture | kristalni sistemi, indeksiranje ravnin in smeri, teksture",
+              "Realna zgradba in mikrostruktura | kristalne napake, faze, mikrostruktura"
+            ]
+          ],
+          [
+            "Nekristalni materiali in kompoziti",
+            [
+              "Amorfni materiali in stekla | metastabilne zgradbe, steklasto stanje",
+              "Polimeri | zgradba in sinteza polimerov",
+              "Keramika in kompoziti | zgradba keramike, vrste kompozitov"
+            ]
+          ],
+          [
+            "Termodinamika materialov",
+            [
+              "Fazni diagrami | binarni in ternarni diagrami, pravilo vzvoda",
+              "Trdne raztopine | termodinamika trdnih raztopin, topnost"
+            ]
+          ],
+          [
+            "Difuzija",
+            [
+              "Difuzija v materialih | Fickova zakona, difuzijski mehanizmi",
+              "Uporaba difuzije | cementacija, nitriranje, sintranje"
+            ]
+          ],
+          [
+            "Fazne premene",
+            [
+              "Strjevanje kovin in zlitin | nukleacija, rast kristalov, hitro strjevanje",
+              "Fazne premene v trdnem | izločanje, evtektoidna in martenzitna premena, diagrami TTT"
+            ]
+          ]
+        ]
+      ],
+      "MATER2": [
+        "Materiali II",
+        "FIZ",
+        [
+          "KOV_MAT"
+        ],
+        [
+          [
+            "Deformacija in lom",
+            [
+              "Plastična deformacija in utrjevanje | dislokacije, mehanizmi utrjanja kovin, keramike in polimerov",
+              "Lezenje, utrujanje in lom | dinamična trdnost, krhki in žilavi lom, viskoelastičnost polimerov"
+            ]
+          ],
+          [
+            "Vpliv okolja na materiale",
+            [
+              "Korozija in oksidacija | elektrokemijska korozija, visokotemperaturna oksidacija, zaščita",
+              "Razgradnja polimerov in obraba | toplotna, oksidacijska in svetlobna razgradnja, erozija"
+            ]
+          ],
+          [
+            "Preiskave materialov",
+            [
+              "Preizkušanje materialov | natezni preizkus, trdota, tehnološki preskusi",
+              "Neporušne preiskave in mikrostruktura | ultrazvok, penetranti, metalografija"
+            ]
+          ]
+        ]
+      ],
+      "RPR": [
+        "Računalniški praktikum",
+        "RAC",
+        [],
+        [
+          [
+            "MATLAB kot računalo",
+            [
+              "Računanje z realnimi in kompleksnimi števili | ukazna vrstica, spremenljivke, vgrajene funkcije",
+              "Vektorji in matrike | tvorba, operacije, tabele podatkov"
+            ]
+          ],
+          [
+            "Programiranje v MATLAB-u",
+            [
+              "Krmilni stavki in M-datoteke | if, case, for, while, lastne funkcije",
+              "Grafi funkcij | grafi ene in več spremenljivk, oblikovanje grafov"
+            ]
+          ],
+          [
+            "Reševanje inženirskih problemov",
+            [
+              "Sistemi enačb in diferencialne enačbe | reševanje sistemov, enostavne numerične metode, odzivi sistemov",
+              "Simbolično računanje | odvodi, integrali, poenostavljanje izrazov"
+            ]
+          ],
+          [
+            "Simulink",
+            [
+              "Grafično modeliranje v Simulinku | bloki, generiranje signalov, simulacija",
+              "Zajem in obdelava meritev | zajemanje merilnih vrednosti, karakteristike in odzivi"
+            ]
+          ]
+        ]
+      ],
+      "MMH": [
+        "Mehanika za mehatronike",
+        "FIZ",
+        [
+          "STATIKA",
+          "DINAMIKA"
+        ],
+        [
+          [
+            "Trdnost",
+            [
+              "Notranje sile in vztrajnostni momenti prerezov | nosilci, palice, vrvi, težišče",
+              "Osnovne obremenitve | tlak in vlek, upogib, torzija"
+            ]
+          ],
+          [
+            "Trki in analitična dinamika",
+            [
+              "Trki | centrični in ekscentrični trk, koeficient restitucije",
+              "Lagrangeeve enačbe | posplošene koordinate, enačbe gibanja"
+            ]
+          ]
+        ]
+      ],
+      "TD": [
+        "Tehniška dokumentacija",
+        "FIZ",
+        [],
+        [
+          [
+            "Tehnično risanje",
+            [
+              "Projekcije in pogledi | pravokotna projekcija, prerezi",
+              "Kotiranje | pravila kotiranja, tolerance"
+            ]
+          ],
+          [
+            "Standardi",
+            [
+              "Standardizirani elementi | vijaki, navoji, simboli",
+              "Tolerance in hrapavost | tolerance mer, oblike in lege, hrapavost površin"
+            ]
+          ],
+          [
+            "Računalniško podprto risanje",
+            [
+              "CAD-modeliranje | 3D-model, delavniška risba, sestav",
+              "Električne sheme | simboli, vezalni načrti"
+            ]
+          ]
+        ]
+      ],
+      "SMEH": [
+        "Sistemi mehatronike",
+        "FIZ",
+        [],
+        [
+          [
+            "Mehatronski sistem",
+            [
+              "Gradniki mehatronskega sistema | senzorji, aktuatorji, krmilnik",
+              "Modeliranje mehatronskih sistemov | analogije med električnimi in mehanskimi sistemi"
+            ]
+          ],
+          [
+            "Primeri sistemov",
+            [
+              "Pogoni in aktuatorji | elektromotorji, pnevmatski valji",
+              "Mehatronski izdelki | robotika, vozila, gospodinjski aparati"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Sistemski pristop k načrtovanju | V-model, simulacija, integracija",
+              "Zanesljivost mehatronskih sistemov | odpovedi, vzdrževanje, varnost"
+            ]
+          ]
+        ]
+      ],
+      "OEM": [
+        "Osnove elektrotehnike",
+        "FIZ",
+        [],
+        [
+          [
+            "Elektrostatika",
+            [
+              "Elektrostatika | Coulombov zakon, poljska jakost, potencial, napetost",
+              "Kapacitivnost | dielektriki, kondenzatorji, energija električnega polja"
+            ]
+          ],
+          [
+            "Enosmerna vezja",
+            [
+              "Električni tok in vezja | Ohmov in Joulov zakon, Kirchhoffova zakona",
+              "Metode analize vezij | zančni tokovi, vozliščni potenciali, Theveninov in Nortonov teorem"
+            ]
+          ],
+          [
+            "Magnetno polje",
+            [
+              "Magnetno polje toka | Amperov in Biot-Savartov zakon, magnetni pretok",
+              "Indukcija in induktivnost | inducirana napetost, lastna in medsebojna induktivnost, energija magnetnega polja",
+              "Magnetni krogi | magnetni materiali, analiza magnetnih krogov"
+            ]
+          ],
+          [
+            "Izmenični tokokrogi",
+            [
+              "Izmenični tokovi | sinusne veličine, kazalci, impedanca",
+              "Moč izmeničnega toka | delovna, jalova in navidezna moč",
+              "Trifazni sistemi | vezava v zvezdo in trikot, moč"
+            ]
+          ],
+          [
+            "Prehodni pojavi",
+            [
+              "Prehodni pojavi prvega reda | RC- in RL-vezja, časovna konstanta",
+              "Prehodni pojavi drugega reda | RLC-vezje, aperiodični in nihajni odziv"
+            ]
+          ]
+        ]
+      ],
+      "VZS": [
+        "Valovanje in zgradba snovi",
+        "FIZ",
+        [],
+        [
+          [
+            "Nihanje in valovanje",
+            [
+              "Harmonično nihanje | nihajni čas, dušenje, resonanca",
+              "Valovanje | interferenca, stoječe valovanje, zvok"
+            ]
+          ],
+          [
+            "Svetloba",
+            [
+              "Geometrijska in valovna optika | lom, uklon, interferenca",
+              "Polarizacija svetlobe | polarizatorji, Malusov zakon"
+            ]
+          ],
+          [
+            "Zgradba snovi",
+            [
+              "Fotoni in atomi | fotoefekt, spektri",
+              "Trdnine | kristali, energijski pasovi"
+            ]
+          ]
+        ]
+      ],
+      "EMH": [
+        "Elektronika za mehatronike",
+        "FIZ",
+        [],
+        [
+          [
+            "Polprevodniški elementi",
+            [
+              "Diode in tranzistorji | karakteristike, stikalno delovanje",
+              "Operacijski ojačevalnik | osnovne vezave"
+            ]
+          ],
+          [
+            "Digitalna elektronika",
+            [
+              "Logična vezja | vrata, flip-flopi, števci",
+              "AD- in DA-pretvorba | ločljivost, vzorčenje, pretvorniki"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Krmiljenje bremen | močnostna stikala, H-mostič",
+              "Napajanje elektronskih vezij | usmerniki, stabilizatorji napetosti"
+            ]
+          ]
+        ]
+      ],
+      "REGM": [
+        "Regulacije",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeli",
+            [
+              "Prenosne funkcije | Laplaceova transformacija, bločni diagrami",
+              "Časovni odziv | sistemi prvega in drugega reda"
+            ]
+          ],
+          [
+            "Regulacija",
+            [
+              "Stabilnost | poli, Routhov kriterij",
+              "PID-regulator | delovanje, nastavitev",
+              "Frekvenčna analiza | Bodejev diagram, rezerve stabilnosti"
+            ]
+          ],
+          [
+            "Izvedba",
+            [
+              "Digitalna izvedba regulatorja | vzorčenje, diskretni PID",
+              "Regulacija mehatronskih sistemov | regulacija hitrosti in lege, primeri"
+            ]
+          ]
+        ]
+      ],
+      "VA": [
+        "Vektorska analiza",
+        "MAT",
+        [],
+        [
+          [
+            "Prostori s skalarnim produktom",
+            [
+              "Evklidski in unitarni prostori | ortogonalne baze, ortogonalni komplement, Rieszov izrek",
+              "Sebi-adjungirane preslikave | adjungirana in normalna preslikava"
+            ]
+          ],
+          [
+            "Krivulje in polja",
+            [
+              "Prostorske krivulje | dolžina loka, tangenta, normala, binormala, Frenetove formule",
+              "Gradient, divergenca in rotor | skalarna in vektorska polja, operator nabla"
+            ]
+          ],
+          [
+            "Večkratni integrali",
+            [
+              "Večkratni integrali | integrali s parametrom, dvojni in trojni integral, zamenjava spremenljivk",
+              "Krivuljni in ploskovni integrali | delo, pretok, neodvisnost od poti"
+            ]
+          ],
+          [
+            "Integralski izreki",
+            [
+              "Gaussov in Stokesov izrek | uporaba v fiziki in tehniki",
+              "Greenova formula | povezava krivuljnega in dvojnega integrala"
+            ]
+          ],
+          [
+            "Kompleksna analiza",
+            [
+              "Holomorfne funkcije | limita, odvod, Cauchy-Riemannove enačbe",
+              "Cauchyjev izrek in residui | Cauchyjeva integralska formula, Laurentova vrsta, residui"
+            ]
+          ]
+        ]
+      ],
+      "DIFA": [
+        "Diferencialna analiza",
+        "MAT",
+        [],
+        [
+          [
+            "Fourierova analiza",
+            [
+              "Fourierova vrsta | sinusna in kosinusna vrsta, konvergenca",
+              "Fourierova transformacija in funkciji gama in beta | integralske transformacije, lastnosti"
+            ]
+          ],
+          [
+            "Laplaceova transformacija",
+            [
+              "Laplaceova transformacija | definicija, računska pravila",
+              "Reševanje začetnih problemov z Laplaceovo transformacijo | linearne enačbe s konstantnimi koeficienti"
+            ]
+          ],
+          [
+            "Enačbe prvega reda",
+            [
+              "Diferencialne enačbe prvega reda | ločljive in linearne enačbe, Cauchyjeva naloga",
+              "Eksistenca in enoličnost rešitev | eksistenčni izreki, polje smeri"
+            ]
+          ],
+          [
+            "Linearne enačbe in sistemi",
+            [
+              "Linearne diferencialne enačbe višjega reda | homogene enačbe, konstantni koeficienti",
+              "Sistemi linearnih diferencialnih enačb | sistemi prvega reda, matrična oblika, lastne vrednosti",
+              "Mehanska in električna nihanja | dušeno in vsiljeno nihanje, resonanca"
+            ]
+          ],
+          [
+            "Parcialne diferencialne enačbe",
+            [
+              "Klasične parcialne diferencialne enačbe | valovna, toplotna in Laplaceova enačba",
+              "Metoda ločitve spremenljivk | robni pogoji, razvoj v Fourierovo vrsto"
+            ]
+          ]
+        ]
+      ],
+      "STREL": [
+        "Strojni elementi",
+        "FIZ",
+        [
+          "STROJNI_EL"
+        ],
+        [
+          [
+            "Osnove dimenzioniranja",
+            [
+              "Trdnostni preračun | napetosti, dopustne napetosti, varnost",
+              "Tolerance in ujemi | sistem ISO"
+            ]
+          ],
+          [
+            "Prenosniki",
+            [
+              "Jermenski in verižni prenosniki | prenosno razmerje, izbira",
+              "Zobniški prenosniki | prenosno razmerje, izkoristek, obremenitev zob"
+            ]
+          ]
+        ]
+      ],
+      "KT": [
+        "Krmilna tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Logično krmiljenje",
+            [
+              "Kontaktna in logična krmilja | releji, logične funkcije",
+              "Programirljivi logični krmilniki | zgradba, programski jeziki IEC 61131-3"
+            ]
+          ],
+          [
+            "Krmiljenje pogonov",
+            [
+              "Pnevmatska in elektropnevmatska krmilja | ventili, valji, krmilne sheme",
+              "Sekvenčno krmiljenje | koračni diagram, GRAFCET"
+            ]
+          ],
+          [
+            "Varnost",
+            [
+              "Varnost krmilnih sistemov | zasilni izklop, varnostne funkcije",
+              "Diagnostika krmilnih sistemov | odkrivanje napak, alarmi"
+            ]
+          ]
+        ]
+      ],
+      "PG": [
+        "Planetna gonila",
+        "FIZ",
+        [],
+        [
+          [
+            "Zobniki",
+            [
+              "Ozobje | evolventa, modul, ubiranje",
+              "Nosilnost zobnikov | upogibna in kontaktna trdnost zob"
+            ]
+          ],
+          [
+            "Planetna gonila",
+            [
+              "Kinematika planetnih gonil | Willisova enačba, prenosna razmerja",
+              "Moči in izkoristek | pretok moči, izgube"
+            ]
+          ],
+          [
+            "Konstruiranje",
+            [
+              "Dimenzioniranje planetnega gonila | nosilnost zob, ležaji",
+              "Uporaba planetnih gonil | robotika, vozila, pogoni strojev"
+            ]
+          ]
+        ]
+      ],
+      "HIP": [
+        "Hidravlika in pnevmatika",
+        "FIZ",
+        [
+          "HIDRAVLIKA"
+        ],
+        [
+          [
+            "Pnevmatika",
+            [
+              "Priprava stisnjenega zraka | kompresorji, priprava zraka",
+              "Pnevmatski elementi in krmilja | valji, ventili, krmilne sheme"
+            ]
+          ],
+          [
+            "Hidravlični sistemi",
+            [
+              "Hidravlični ventili in krmilja | potni, tlačni in tokovni ventili, krmilne sheme",
+              "Proporcionalna in servo hidravlika | elektrohidravlični pogoni"
+            ]
+          ]
+        ]
+      ],
+      "ROBZ": [
+        "Robotizacija",
+        "FIZ",
+        [],
+        [
+          [
+            "Robotske celice",
+            [
+              "Zasnova robotske celice | izbira robota, prijemala, varnost",
+              "Programiranje robotov | učenje, simulacija"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Robotizirani procesi | varjenje, strega, montaža",
+              "Robotski vid | kamera, prepoznavanje predmetov, kalibracija"
+            ]
+          ],
+          [
+            "Gospodarnost",
+            [
+              "Ekonomika robotizacije | čas cikla, donosnost naložbe",
+              "Sodelujoči roboti | varnost, sodelovanje človeka in robota"
+            ]
+          ]
+        ]
+      ],
+      "OVE": [
+        "Obnovljivi viri energije",
+        "FIZ",
+        [],
+        [
+          [
+            "Sončna energija",
+            [
+              "Fotovoltaika | sončne celice, izkoristek",
+              "Sončni kolektorji | toplotna pretvorba"
+            ]
+          ],
+          [
+            "Veter in voda",
+            [
+              "Vetrne elektrarne | moč vetra, Betzova meja",
+              "Male hidroelektrarne | turbine"
+            ]
+          ],
+          [
+            "Drugi viri",
+            [
+              "Biomasa in geotermalna energija | pretvorba, uporaba",
+              "Shranjevanje energije | baterije, vodik, črpalne hidroelektrarne"
+            ]
+          ]
+        ]
+      ],
+      "RPP": [
+        "Reševanje problemov s programiranjem",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove programiranja",
+            [
+              "Spremenljivke in izrazi | tipi, operatorji",
+              "Krmilne strukture | pogoji, zanke",
+              "Funkcije | parametri, rekurzija"
+            ]
+          ],
+          [
+            "Podatkovne strukture",
+            [
+              "Seznami in slovarji | operacije, iteracija",
+              "Nizi in datoteke | obdelava besedila, branje in pisanje datotek"
+            ]
+          ],
+          [
+            "Reševanje problemov",
+            [
+              "Algoritmično razmišljanje | razgradnja problema, psevdokoda",
+              "Iskanje in urejanje | osnovni algoritmi"
+            ]
+          ]
+        ]
+      ],
+      "OIS": [
+        "Osnove informacijskih sistemov",
+        "RAC",
+        [],
+        [
+          [
+            "Informacijski sistem",
+            [
+              "Pojem informacijskega sistema | podatki, informacije, znanje",
+              "Vrste informacijskih sistemov | transakcijski, ERP, CRM, poslovna inteligenca"
+            ]
+          ],
+          [
+            "Razvoj in uvajanje",
+            [
+              "Življenjski cikel IS | analiza, načrtovanje, uvajanje",
+              "Uvajanje informacijskega sistema | prenos podatkov, usposabljanje uporabnikov"
+            ]
+          ],
+          [
+            "Organizacija",
+            [
+              "IS v organizaciji | strategija, digitalna preobrazba",
+              "Etika in varnost v IS | varstvo podatkov, odgovorna raba"
+            ]
+          ]
+        ]
+      ],
+      "MPP": [
+        "Modeliranje poslovnih procesov",
+        "RAC",
+        [],
+        [
+          [
+            "Poslovni procesi",
+            [
+              "Pojem poslovnega procesa | aktivnosti, vloge, cilji",
+              "Vrste poslovnih procesov | temeljni, podporni in upravljavski procesi"
+            ]
+          ],
+          [
+            "Notacija BPMN",
+            [
+              "Elementi BPMN | dogodki, aktivnosti, prehodi",
+              "Modeliranje z BPMN | bazeni, steze, sporočila"
+            ]
+          ],
+          [
+            "Analiza procesov",
+            [
+              "Analiza in prenova procesov | kazalniki, simulacija",
+              "Izvajanje procesov | sistemi za upravljanje procesov, avtomatizacija"
+            ]
+          ]
+        ]
+      ],
+      "STAT": [
+        "Statistika",
+        "MAT",
+        [
+          "VERJ_STAT"
+        ],
+        [
+          [
+            "Opisna statistika",
+            [
+              "Opisna statistika | srednje vrednosti, razpršenost, grafični prikazi",
+              "Regresija in korelacija | linearna regresija, koeficient korelacije"
+            ]
+          ]
+        ]
+      ],
+      "OST": [
+        "Osnove spletnih tehnologij",
+        "RAC",
+        [],
+        [
+          [
+            "Splet",
+            [
+              "Delovanje spleta | HTTP, odjemalec in strežnik",
+              "HTML in CSS | struktura, slogi, odzivnost"
+            ]
+          ],
+          [
+            "Programiranje",
+            [
+              "JavaScript | DOM, dogodki",
+              "Strežniško programiranje | obdelava zahtev, povezava z bazo"
+            ]
+          ],
+          [
+            "Podatki",
+            [
+              "Izmenjava podatkov na spletu | JSON, XML, REST",
+              "Spletni obrazci in seje | pošiljanje podatkov, piškotki, seje"
+            ]
+          ]
+        ]
+      ],
+      "RIS": [
+        "Razvoj informacijskih sistemov",
+        "RAC",
+        [],
+        [
+          [
+            "Analiza",
+            [
+              "Zajem zahtev | primeri uporabe, uporabniške zgodbe",
+              "Specifikacija zahtev | funkcionalne in nefunkcionalne zahteve, prioritete"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Modeliranje z UML | diagrami razredov, zaporedja",
+              "Načrtovanje podatkov | model ER, preslikava v relacije"
+            ]
+          ],
+          [
+            "Izvedba",
+            [
+              "Agilni razvoj | Scrum, iteracije",
+              "Testiranje in uvajanje | testiranje sprejemljivosti, uvedba v produkcijo"
+            ]
+          ]
+        ]
+      ],
+      "OORS": [
+        "Ogrodja in okolja za razvoj spletnih rešitev",
+        "RAC",
+        [],
+        [
+          [
+            "Odjemalec",
+            [
+              "Ogrodja za uporabniški vmesnik | komponente, stanje, usmerjanje",
+              "Odzivni uporabniški vmesniki | komponente vmesnika, prilagajanje zaslonu"
+            ]
+          ],
+          [
+            "Strežnik",
+            [
+              "Strežniška ogrodja | MVC, REST API",
+              "Dostop do podatkov | ORM, avtentikacija"
+            ]
+          ],
+          [
+            "Uvajanje",
+            [
+              "Razvojno okolje in uvajanje | upravljalniki paketov, kontejnerji",
+              "Avtomatizirana gradnja | CI/CD, testiranje"
+            ]
+          ]
+        ]
+      ],
+      "ISSU": [
+        "Inteligentni sistemi in strojno učenje",
+        "RAC",
+        [],
+        [
+          [
+            "Uvod",
+            [
+              "Inteligentni sistemi | preiskovanje, znanje",
+              "Predstavitev znanja | pravila, ontologije, sklepanje"
+            ]
+          ],
+          [
+            "Nadzorovano učenje",
+            [
+              "Klasifikacija | odločitvena drevesa, k-najbližjih sosedov",
+              "Regresija | linearna regresija, regularizacija",
+              "Nevronske mreže | perceptron, večnivojske mreže, učenje z vzvratnim razširjanjem"
+            ]
+          ],
+          [
+            "Nenadzorovano učenje",
+            [
+              "Gručenje | k-voditeljev, hierarhično gručenje",
+              "Zmanjševanje dimenzionalnosti | glavne komponente, izbira značilk"
+            ]
+          ],
+          [
+            "Vrednotenje",
+            [
+              "Vrednotenje modelov | prečno preverjanje, točnost, preprileganje",
+              "Pristranskost in razložljivost modelov | neuravnoteženi podatki, razlaga napovedi"
+            ]
+          ]
+        ]
+      ],
+      "PB2": [
+        "Podatkovne baze II",
+        "RAC",
+        [],
+        [
+          [
+            "Napredni SQL",
+            [
+              "Pogledi, prožilci in procedure | shranjene procedure, prožilci",
+              "Okenske funkcije in rekurzivne poizvedbe | razvrščanje, združevanje, skupni tabelni izrazi"
+            ]
+          ],
+          [
+            "Transakcije",
+            [
+              "Upravljanje transakcij | izolacijske ravni, zaklepanje",
+              "Obnovitev po napaki | dnevnik transakcij, varnostne kopije"
+            ]
+          ],
+          [
+            "Fizična organizacija",
+            [
+              "Indeksi in optimizacija | B-drevesa, načrti izvajanja",
+              "Organizacija datotek | strani, zapisi, medpomnilnik"
+            ]
+          ],
+          [
+            "Nerelacijske baze",
+            [
+              "Baze NoSQL | dokumentne, ključ-vrednost, grafne baze",
+              "Porazdeljene baze | replikacija, particioniranje, izrek CAP"
+            ]
+          ],
+          [
+            "Podatkovna skladišča",
+            [
+              "Dimenzijski model | dejstva, dimenzije, zvezdna shema, denormalizacija",
+              "Proces ETL | zajem, preoblikovanje in nalaganje podatkov"
+            ]
+          ]
+        ]
+      ],
+      "AISV": [
+        "Arhitekture IS in vzorci",
+        "RAC",
+        [],
+        [
+          [
+            "Arhitekture",
+            [
+              "Arhitekturni slogi | plastna, mikrostoritve, dogodkovna",
+              "Dokumentiranje arhitekture | pogledi, diagrami, arhitekturne odločitve"
+            ]
+          ],
+          [
+            "Vzorci",
+            [
+              "Načrtovalski vzorci | kreacijski, strukturni, vedenjski",
+              "Arhitekturni vzorci | MVC, repozitorij"
+            ]
+          ],
+          [
+            "Kakovost",
+            [
+              "Atributi kakovosti | zmogljivost, razširljivost, vzdrževanje",
+              "Vrednotenje arhitekture | scenariji kakovosti, kompromisi"
+            ]
+          ]
+        ]
+      ],
+      "OIV": [
+        "Osnove informacijske varnosti",
+        "RAC",
+        [],
+        [
+          [
+            "Načela",
+            [
+              "Cilji varnosti | zaupnost, celovitost, razpoložljivost",
+              "Upravljanje tveganj | sredstva, grožnje, ranljivosti, ukrepi"
+            ]
+          ],
+          [
+            "Kriptografija",
+            [
+              "Simetrična kriptografija | AES, načini delovanja",
+              "Asimetrična kriptografija | RSA, digitalni podpis"
+            ]
+          ],
+          [
+            "Varnost sistemov",
+            [
+              "Avtentikacija in nadzor dostopa | gesla, večfaktorska avtentikacija",
+              "Napadi in zaščita | zlonamerna koda, požarni zidovi"
+            ]
+          ]
+        ]
+      ],
+      "MOS": [
+        "Modeli in odločitveni sistemi",
+        "RAC",
+        [],
+        [
+          [
+            "Odločanje",
+            [
+              "Večkriterijsko odločanje | kriteriji, uteži, AHP",
+              "Odločitvena drevesa in tveganje | pričakovana vrednost"
+            ]
+          ],
+          [
+            "Sistemi za podporo odločanju",
+            [
+              "Sistemi za podporo odločanju | podatki, modeli, uporabniški vmesnik",
+              "Ekspertni sistemi | baza znanja, pravila, sklepanje"
+            ]
+          ],
+          [
+            "Modeli",
+            [
+              "Simulacijski in optimizacijski modeli | linearno programiranje, simulacija",
+              "Napovedni modeli | regresija, časovne vrste"
+            ]
+          ]
+        ]
+      ],
+      "RVIR": [
+        "Razvoj vseprisotnih informacijskih rešitev",
+        "RAC",
+        [],
+        [
+          [
+            "Vseprisotno računalništvo",
+            [
+              "Mobilne in nosljive naprave | senzorji, kontekst",
+              "Kontekstno odvisne aplikacije | lokacija, zaznavanje okolice"
+            ]
+          ],
+          [
+            "Razvoj",
+            [
+              "Razvoj mobilnih aplikacij | življenjski cikel aplikacije, vmesnik",
+              "Povezljivost | oblak, IoT, sinhronizacija"
+            ]
+          ],
+          [
+            "Kakovost",
+            [
+              "Uporabnost in zasebnost vseprisotnih rešitev | uporabniška izkušnja, varstvo podatkov",
+              "Testiranje mobilnih rešitev | emulatorji, preizkus na napravah"
+            ]
+          ]
+        ]
+      ],
+      "IUP": [
+        "Inteligentno upravljanje procesov",
+        "RAC",
+        [],
+        [
+          [
+            "Upravljanje procesov",
+            [
+              "Sistemi za upravljanje poslovnih procesov | izvajanje procesov",
+              "Spremljanje izvajanja procesov | kazalniki uspešnosti, nadzorne plošče"
+            ]
+          ],
+          [
+            "Rudarjenje procesov",
+            [
+              "Rudarjenje procesov | dnevniki dogodkov, odkrivanje modelov",
+              "Preverjanje skladnosti | primerjava modela in dnevnika, odstopanja"
+            ]
+          ],
+          [
+            "Avtomatizacija",
+            [
+              "Robotska avtomatizacija procesov | RPA, inteligentna avtomatizacija",
+              "Strojno učenje v procesih | napovedovanje izidov, priporočila"
+            ]
+          ]
+        ]
+      ],
+      "TIDS": [
+        "Tehnologije integracije in digitalizacije storitev",
+        "RAC",
+        [],
+        [
+          [
+            "Integracija",
+            [
+              "Integracijski vzorci | sporočilni sistemi, vmesna programska oprema",
+              "Spletne storitve | REST, API"
+            ]
+          ],
+          [
+            "Digitalizacija",
+            [
+              "Digitalne storitve | e-storitve, oblak",
+              "Digitalna identiteta | e-podpis, enotna prijava"
+            ]
+          ],
+          [
+            "Procesi",
+            [
+              "Avtomatizacija storitvenih procesov | orkestracija, poslovna pravila",
+              "Integracija podatkov | ETL, preslikava podatkov, kakovost podatkov"
+            ]
+          ]
+        ]
+      ],
+      "PSSV": [
+        "Praktikum: spletni sistemi in vsebine",
+        "RAC",
+        [],
+        [
+          [
+            "Spletni sistem",
+            [
+              "Načrtovanje spletnega sistema | zahteve, arhitektura",
+              "Upravljanje vsebin | CMS, iskalna optimizacija"
+            ]
+          ],
+          [
+            "Izvedba",
+            [
+              "Razvoj in uvajanje | testiranje, objava",
+              "Varnost spletnih sistemov | avtentikacija, zaščita pred napadi"
+            ]
+          ],
+          [
+            "Vsebine",
+            [
+              "Spletne vsebine in uporabniki | dostopnost, analitika obiska",
+              "Upravljanje spletnega projekta | timsko delo, upravljanje verzij"
+            ]
+          ]
+        ]
+      ],
+      "VPIS": [
+        "Vodenje projektov informacijskih sistemov",
+        "EKO",
+        [],
+        [
+          [
+            "Projekt",
+            [
+              "Načrtovanje projekta | cilji, obseg, WBS",
+              "Časovno načrtovanje | Ganttov diagram, kritična pot"
+            ]
+          ],
+          [
+            "Vodenje",
+            [
+              "Viri in stroški | ocena stroškov, tveganja",
+              "Agilno vodenje projektov | Scrum, Kanban"
+            ]
+          ],
+          [
+            "Zaključek",
+            [
+              "Spremljanje in zaključek projekta | metoda prislužene vrednosti, poročanje",
+              "Kakovost in komuniciranje v projektu | deležniki, poročila, zaključno poročilo"
+            ]
+          ]
+        ]
+      ],
+      "AVP": [
+        "Arhitekture velepodatkov",
+        "RAC",
+        [],
+        [
+          [
+            "Velepodatki",
+            [
+              "Značilnosti velepodatkov | obseg, hitrost, raznolikost",
+              "Zbiranje in priprava podatkov | viri podatkov, čiščenje, ETL"
+            ]
+          ],
+          [
+            "Arhitekture",
+            [
+              "Porazdeljeno shranjevanje | HDFS, podatkovna jezera",
+              "Porazdeljena obdelava | MapReduce, Spark"
+            ]
+          ],
+          [
+            "Pretočna obdelava",
+            [
+              "Pretočna obdelava podatkov | Kafka, okna",
+              "Analitika velepodatkov | strojno učenje na velepodatkih, vizualizacija"
+            ]
+          ]
+        ]
+      ],
+      "ZK": [
+        "Zagotavljanje kakovosti",
+        "RAC",
+        [],
+        [
+          [
+            "Kakovost programske opreme",
+            [
+              "Modeli kakovosti | ISO 25010, metrike",
+              "Statična analiza kode | pravila kodiranja, orodja za analizo"
+            ]
+          ],
+          [
+            "Testiranje",
+            [
+              "Tehnike testiranja | testiranje enot, integracijsko, regresijsko",
+              "Avtomatizacija testiranja | CI/CD"
+            ]
+          ],
+          [
+            "Procesi",
+            [
+              "Pregledi in standardi | pregledi kode, CMMI",
+              "Upravljanje napak | sledenje napakam, analiza vzrokov"
+            ]
+          ]
+        ]
+      ],
+      "DF": [
+        "Digitalna forenzika",
+        "RAC",
+        [],
+        [
+          [
+            "Forenzični postopek",
+            [
+              "Forenzični postopek | zavarovanje dokazov, veriga skrbništva",
+              "Forenzični posnetek | slika diska, zgoščene vrednosti, preverjanje celovitosti"
+            ]
+          ],
+          [
+            "Analiza",
+            [
+              "Analiza datotečnih sistemov | izbrisane datoteke, metapodatki",
+              "Omrežna in pomnilniška forenzika | zajem prometa, analiza pomnilnika"
+            ]
+          ],
+          [
+            "Poročanje",
+            [
+              "Forenzično poročilo | pravni vidiki, predstavitev dokazov",
+              "Forenzika mobilnih naprav | zajem podatkov, aplikacije, lokacijski podatki"
+            ]
+          ]
+        ]
+      ],
+      "KV": [
+        "Kibernetska varnost",
+        "RAC",
+        [],
+        [
+          [
+            "Grožnje",
+            [
+              "Kibernetske grožnje | napadi, ranljivosti",
+              "Socialni inženiring | ribarjenje, prevare, ozaveščanje uporabnikov"
+            ]
+          ],
+          [
+            "Zaščita",
+            [
+              "Varnost omrežij | VPN, IDS, segmentacija",
+              "Varnost spletnih aplikacij | OWASP, injekcije"
+            ]
+          ],
+          [
+            "Upravljanje",
+            [
+              "Odziv na incidente | upravljanje tveganj",
+              "Varnostni standardi | ISO 27001, NIS2, varnostne politike"
+            ]
+          ]
+        ]
+      ]
+    },
+    "programs": {
+      "UM-FERI-RIT": {
+        "name": "Računalništvo in informacijske tehnologije",
+        "source": "https://moja.um.si/studijski-programi/Strani/akreditacija.aspx?jezik=S&deli=N&program=0000312&fakulteta=FERI",
+        "sourceYear": "2026/27, predmetnik preverjen (moja.um.si, akreditiran predmetnik); izbirni predmeti projektov 2. in 3. letnika v electives",
+        "years": [
+          [
+            "ORS",
+            "PROG1",
+            "UPO",
+            "OSS",
+            "DS",
+            "PROG2",
+            "APS",
+            "ARA",
+            "PB1",
+            "MA"
+          ],
+          [
+            "RA",
+            "OS",
+            "MUR",
+            "RPO",
+            "LA"
+          ],
+          [
+            "ICR",
+            "SPV"
+          ]
+        ],
+        "electives": [
+          "UI",
+          "PPJ",
+          "RG",
+          "VGS",
+          "VERJ",
+          "PPR"
+        ]
+      },
+      "UM-FERI-EAR": {
+        "name": "Elektrotehnika – Avtomatika in robotika",
+        "source": "https://moja.um.si/studijski-programi/Strani/akreditacija.aspx?jezik=S&deli=D&program=0000308&fakulteta=FERI",
+        "sourceYear": "2026/27, akreditiran predmetnik (moja.um.si) preverjen; smer od poletnega semestra 2. letnika",
+        "years": [
+          [
+            "FIZ1",
+            "OE1",
+            "ETM",
+            "PE1",
+            "ANA1",
+            "DE",
+            "OE2",
+            "MET",
+            "PE2",
+            "FIZV",
+            "FIZS"
+          ],
+          [
+            "DT",
+            "OEL",
+            "EEP",
+            "SIG",
+            "LA",
+            "REG1",
+            "TS",
+            "SENZ",
+            "MID",
+            "MK"
+          ],
+          [
+            "REG2",
+            "IE",
+            "GSV",
+            "OR"
+          ]
+        ],
+        "electives": [
+          "EV",
+          "PEEG",
+          "RNV",
+          "ELDIN",
+          "KA",
+          "SERVO1",
+          "DSK",
+          "VERJ"
+        ]
+      },
+      "UM-FERI-EEL": {
+        "name": "Elektrotehnika – Elektronika",
+        "source": "https://moja.um.si/studijski-programi/Strani/akreditacija.aspx?jezik=S&deli=D&program=0000308&fakulteta=FERI",
+        "sourceYear": "2026/27, akreditiran predmetnik (moja.um.si) preverjen; smer od poletnega semestra 2. letnika",
+        "years": [
+          [
+            "FIZ1",
+            "OE1",
+            "ETM",
+            "PE1",
+            "ANA1",
+            "DE",
+            "OE2",
+            "MET",
+            "PE2",
+            "FIZV",
+            "FIZS"
+          ],
+          [
+            "DT",
+            "OEL",
+            "EEP",
+            "SIG",
+            "LA",
+            "UAV",
+            "RNV",
+            "MEL",
+            "DSS",
+            "MRA"
+          ],
+          [
+            "EV",
+            "ASAV",
+            "OPI",
+            "AAV",
+            "NVE"
+          ]
+        ],
+        "electives": [
+          "REG2",
+          "PEEG",
+          "KA",
+          "NTV",
+          "SERVO1",
+          "DSK",
+          "VERJ"
+        ]
+      },
+      "UM-FERI-EME": {
+        "name": "Elektrotehnika – Močnostna elektrotehnika",
+        "source": "https://moja.um.si/studijski-programi/Strani/akreditacija.aspx?jezik=S&deli=D&program=0000308&fakulteta=FERI",
+        "sourceYear": "2026/27, akreditiran predmetnik (moja.um.si) preverjen; smer od poletnega semestra 2. letnika",
+        "years": [
+          [
+            "FIZ1",
+            "OE1",
+            "ETM",
+            "PE1",
+            "ANA1",
+            "DE",
+            "OE2",
+            "MET",
+            "PE2",
+            "FIZV",
+            "FIZS"
+          ],
+          [
+            "DT",
+            "OEL",
+            "EEP",
+            "SIG",
+            "LA",
+            "ELDIN",
+            "MIV",
+            "EP",
+            "ENE",
+            "EEO"
+          ],
+          [
+            "KRS",
+            "RMN",
+            "PEEG",
+            "PREE",
+            "MVEM"
+          ]
+        ],
+        "electives": [
+          "REG2",
+          "EV",
+          "RNV",
+          "KA",
+          "NTV",
+          "SERVO1",
+          "DSK",
+          "MRA"
+        ]
+      },
+      "UM-FERI-TK": {
+        "name": "Telekomunikacije",
+        "source": "https://moja.um.si/studijski-programi/Strani/akreditacija.aspx?jezik=S&deli=N&program=0000314&fakulteta=FERI",
+        "sourceYear": "2026/27, predmetnik preverjen (moja.um.si, akreditiran predmetnik)",
+        "years": [
+          [
+            "ANA1",
+            "UVT",
+            "OSPO",
+            "PTK",
+            "DE",
+            "EMV",
+            "OPJ",
+            "PB1",
+            "KS"
+          ],
+          [
+            "OPI",
+            "DOS",
+            "UPDL",
+            "OKO",
+            "OTAS",
+            "MRA",
+            "AVS",
+            "ALGT",
+            "PKO",
+            "ODS"
+          ],
+          [
+            "OPK",
+            "ONTS",
+            "IOT",
+            "KOND",
+            "FMBO",
+            "MOBI"
+          ]
+        ],
+        "electives": [
+          "FMPI",
+          "MM",
+          "NKP",
+          "ISTK"
+        ]
+      },
+      "UM-FERI-MEH": {
+        "name": "Mehatronika",
+        "source": "https://moja.um.si/studijski-programi/Strani/akreditacija.aspx?jezik=S&deli=N&program=0000315&fakulteta=FERI",
+        "sourceYear": "2026/27, predmetnik preverjen (moja.um.si, akreditiran predmetnik); skupni program FERI in FS, 3. letnik ima le dva obvezna predmeta",
+        "years": [
+          [
+            "MAM",
+            "MATER1",
+            "PE1",
+            "RPR",
+            "MMH",
+            "TD",
+            "LAM",
+            "MATER2",
+            "MET",
+            "SMEH",
+            "OEM",
+            "VZS"
+          ],
+          [
+            "EMH",
+            "REGM",
+            "VA",
+            "DIFA",
+            "STREL",
+            "SENZ",
+            "MK",
+            "KT",
+            "PG"
+          ],
+          [
+            "IE",
+            "HIP"
+          ]
+        ],
+        "electives": [
+          "OR",
+          "EEP",
+          "ROBZ",
+          "KA",
+          "OVE",
+          "DSK"
+        ]
+      },
+      "UM-FERI-IPTIS": {
+        "name": "Informatika in podatkovne tehnologije – Informacijski sistemi",
+        "source": "https://moja.um.si/studijski-programi/Strani/akreditacija.aspx?jezik=S&deli=D&program=0025925&fakulteta=FERI",
+        "sourceYear": "2026/27, akreditiran predmetnik (moja.um.si) preverjen; smer od 3. letnika; nabor izbirnih predmetov ni objavljen",
+        "years": [
+          [
+            "ORS",
+            "DS",
+            "RPP",
+            "OIS",
+            "MPP",
+            "STAT",
+            "OPJ",
+            "PB1",
+            "OST"
+          ],
+          [
+            "RIS",
+            "LA",
+            "OORS",
+            "ISSU",
+            "PB2",
+            "AISV",
+            "MA",
+            "OIV"
+          ],
+          [
+            "MOS",
+            "RVIR",
+            "IUP",
+            "TIDS",
+            "PSSV",
+            "VPIS",
+            "AVP"
+          ]
+        ]
+      },
+      "UM-FERI-IPTIV": {
+        "name": "Informatika in podatkovne tehnologije – Informacijska varnost",
+        "source": "https://moja.um.si/studijski-programi/Strani/akreditacija.aspx?jezik=S&deli=D&program=0025925&fakulteta=FERI",
+        "sourceYear": "2026/27, akreditiran predmetnik (moja.um.si) preverjen; smer od 3. letnika; nabor izbirnih predmetov ni objavljen",
+        "years": [
+          [
+            "ORS",
+            "DS",
+            "RPP",
+            "OIS",
+            "MPP",
+            "STAT",
+            "OPJ",
+            "PB1",
+            "OST"
+          ],
+          [
+            "RIS",
+            "LA",
+            "OORS",
+            "ISSU",
+            "PB2",
+            "AISV",
+            "MA",
+            "OIV"
+          ],
+          [
+            "ZK",
+            "DF",
+            "KV",
+            "TIDS",
+            "PSSV",
+            "VPIS",
+            "AVP"
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "UL-MF",
+    "name": "UL Medicinska fakulteta",
+    "short": "UL MF",
+    "courses": {
+      "ANAT": [
+        "Anatomija",
+        "BIO",
+        [],
+        [
+          [
+            "Uvod in gibalni sistem",
+            [
+              "Anatomsko izrazoslovje in orientacija | ravnine in smeri telesa, latinsko izrazoslovje, topografske regije",
+              "Kosti, sklepi in mišice | zgradba kosti, vrste sklepov, mehanika gibanja, zgradba skeletne mišice"
+            ]
+          ],
+          [
+            "Zgornji ud",
+            [
+              "Skelet in sklepi zgornjega uda | ramenski obroč, ramenski, komolčni in zapestni sklep, gibi in njihov obseg",
+              "Mišičje zgornjega uda | mišične skupine, funkcija, inervacija",
+              "Brahialni pletež in žilje zgornjega uda | periferni živci in njihove okvare, arterije, povrhnje vene, bezgavke"
+            ]
+          ],
+          [
+            "Spodnji ud",
+            [
+              "Skelet in sklepi spodnjega uda | medenica, kolčni, kolenski in gleženjski sklep, stopalni loki",
+              "Mišičje spodnjega uda | mišične skupine, vloga pri hoji, inervacija",
+              "Lumbosakralni pletež in žilje spodnjega uda | femoralni in ishiadični živec, arterije, vene, topografske regije"
+            ]
+          ],
+          [
+            "Prsni koš",
+            [
+              "Stena prsnega koša in prepona | rebra, dihalne mišice, trebušna prepona, mlečna žleza",
+              "Srce in osrčnik | srčne votline, zaklopke, venčne arterije, prevodni sistem, avskultacijska mesta",
+              "Pljuča in medpljučje | sapnik, bronhialno drevo, prsna mrena, organi medpljučja, mali krvni obtok"
+            ]
+          ],
+          [
+            "Trebuh in medenica",
+            [
+              "Trebušna stena in ingvinalni kanal | plasti trebušne stene, ingvinalni kanal, kile, descensus testis",
+              "Prebavni organi in trebušna mrena | želodec, tanko in debelo črevo, jetra, trebušna slinavka, vranica, portalna vena",
+              "Sečila in spolni organi | ledvici, nadledvični žlezi, sečila, moški in ženski spolni organi, mala medenica"
+            ]
+          ]
+        ]
+      ],
+      "MEDBIOFIZ": [
+        "Medicinska biofizika",
+        "FIZ",
+        [
+          "FIZ_1"
+        ],
+        [
+          [
+            "Biomehanika in tekočine v telesu",
+            [
+              "Ravnotežje togega telesa | ravnovesje telesa, vzvodi, sile v mišicah in sklepih, primeri iz ortopedije",
+              "Viskoznost in Reynoldsovo število | Poiseuillov zakon, upor ožilja, žilna stenoza, laminarni in turbulentni tok",
+              "Površinska napetost in Laplaceov zakon | kapilarni dvig, alveoli in surfaktant, anevrizma"
+            ]
+          ],
+          [
+            "Prehajanje snovi in bioelektrični pojavi",
+            [
+              "Difuzija in prenos snovi | Fickov zakon, prehajanje snovi preko membran, posplošeni Ohmov zakon",
+              "Osmoza in topnost plinov | osmozni tlak, Henryjev zakon, dekompresijska bolezen, vlažnost zraka",
+              "Membranski potencial | Nernstova in Goldmanova enačba, prevajanje živčnega impulza",
+              "Električni signali telesa | EKG, EMG, EEG, vpliv električnega in magnetnega polja na tkivo"
+            ]
+          ],
+          [
+            "Valovanje, svetloba in zvok",
+            [
+              "Zvok in ultrazvok | uho, akustična impedanca, ultrazvočna diagnostika, vpliv na tkivo",
+              "Svetloba in oko | lom, leče, optični inštrumenti, mikroskop, laser",
+              "Absorpcija in fotometrija | Beer-Lambertov zakon, spektroskopija, pulzni oksimeter"
+            ]
+          ],
+          [
+            "Ionizirajoče sevanje in slikovne metode",
+            [
+              "Jedrska fizika | vrste ionizirajočega sevanja, razpolovni čas, absorbirana doza, radioterapija",
+              "Slikovne metode v medicini | rentgen, CT, magnetna resonanca, PET, scintigrafija"
+            ]
+          ]
+        ]
+      ],
+      "MEDCELBIO": [
+        "Medicinska celična biologija",
+        "BIO",
+        [],
+        [
+          [
+            "Membrane in medcelična komunikacija",
+            [
+              "Biološke membrane in transport | zgradba membrane, sklopljeni transportni sistemi, kanalčki in črpalke",
+              "Medcelični stiki in signalizacija | celična polarnost, stiki, prenos sporočil"
+            ]
+          ],
+          [
+            "Organeli in citoskelet",
+            [
+              "Endomembranski sistem | endoplazemski retikulum, Golgijev aparat, vezikli, lizosomi, ekso- in endocitoza",
+              "Mitohondrij in jedro | semiavtonomni organel, jedrna ovojnica, kromatin, kromosomi",
+              "Citoskelet in gibanje celic | mikrotubuli, aktinski in intermediarni filamenti, bolezni citoskeleta"
+            ]
+          ],
+          [
+            "Celični cikel in celična smrt",
+            [
+              "Celični cikel in delitve | kontrolne točke, replikacija DNA, telomere, mitoza, mejoza",
+              "Celična smrt in staranje | nekroza, apoptoza, celično staranje, rakave celice"
+            ]
+          ],
+          [
+            "Dedovanje na celični ravni",
+            [
+              "Mendlovo dedovanje | avtosomno dominantno in recesivno, spolno vezano dedovanje, odstopanja",
+              "Mutacije in neklasično dedovanje | genske, kromosomske in genomske mutacije, mitohondrijsko in multifaktorsko dedovanje, vtisnjenje"
+            ]
+          ],
+          [
+            "Gametogeneza in zgodnji razvoj",
+            [
+              "Spermatogeneza in oogeneza | primordialne in matične celice, mejoza v gametogenezi",
+              "Oploditev in zgodnji razvoj | določitev spola, zgodnje faze embrionalnega razvoja"
+            ]
+          ]
+        ]
+      ],
+      "TEMBIOKEM": [
+        "Temelji biokemije",
+        "KEM",
+        [
+          "BIOKEM_TEMELJI"
+        ],
+        [
+          [
+            "Fizikalno-kemijske osnove živega",
+            [
+              "Bioelementi in kemijske vezi | ionske in kovalentne spojine, šibke medmolekulske interakcije v bioloških sistemih",
+              "Kisline in baze | voda in vodne raztopine, pH, pufri v telesu",
+              "Gibbsova energija in kemijsko ravnotežje | prosta entalpija, sklopljene reakcije, ATP"
+            ]
+          ],
+          [
+            "Bioorganska kemija",
+            [
+              "Funkcionalne skupine in reakcije | alkoholi, tioli, aldehidi, ketoni, karboksilne kisline, amini in amidi",
+              "Proteini v telesu | fibrilarni in globularni proteini, kolagen, mioglobin, hemoglobin, imunoglobulini"
+            ]
+          ],
+          [
+            "Encimi in koencimi",
+            [
+              "Mehanizmi encimske katalize | aktivno mesto, kataliza, uravnavanje delovanja encimov",
+              "Vitamini in koencimi | vodotopni vitamini, koencimi, primeri encimsko kataliziranih reakcij"
+            ]
+          ],
+          [
+            "Membrane in biosignaliziranje",
+            [
+              "Membranski transport | kinetika in bioenergetika transporta, transporterji, kanalčki in črpalke",
+              "Biosignaliziranje | receptorji, prenos signala, sekundarni obveščevalci"
+            ]
+          ]
+        ]
+      ],
+      "UKM1": [
+        "Uvod v klinično medicino 1",
+        "BIO",
+        [],
+        [
+          [
+            "Medicinska etika in profesionalizem",
+            [
+              "Etična načela v medicini | avtonomija, dobronamernost, neškodljivost, pravičnost, zaupnost",
+              "Profesionalizem in odgovornost | etično odločanje, varovanje osebnih podatkov, kulturne kompetence"
+            ]
+          ],
+          [
+            "Medicinska terminologija",
+            [
+              "Latinsko-grško izrazoslovje | osnovno besedišče, slovnična pravila, izgovarjava",
+              "Terminologija v praksi | anatomski izrazi, latinske diagnoze, recepture, angleški izrazi latinskega izvora"
+            ]
+          ],
+          [
+            "Zgodovina medicine z medicinsko humanistiko",
+            [
+              "Razvoj medicine skozi čas | spreminjanje pogledov na zdravje in bolezen, pomembna odkritja",
+              "Medicinska humanistika | narativna medicina, zgodovinske zablode, poslanstvo zdravnika"
+            ]
+          ],
+          [
+            "Sporazumevanje",
+            [
+              "Osnove sporazumevanja z bolnikom | modeli sporazumevanja, empatija, aktivno poslušanje, vodenje posveta",
+              "Posebne okoliščine sporazumevanja | akutna stanja, otroci, starostniki, svojci, preprečevanje okužb"
+            ]
+          ],
+          [
+            "Nujna medicinska pomoč",
+            [
+              "Pristop ABCDE in temeljni postopki oživljanja | prepoznava ogroženosti, TPO z AED, vzdrževanje dihalne poti",
+              "Nujna stanja | akutni koronarni sindrom, politravma, poškodbe glave, zastrupitve, opekline, podhladitev"
+            ]
+          ]
+        ]
+      ],
+      "HISTEMB": [
+        "Histologija in embriologija",
+        "BIO",
+        [],
+        [
+          [
+            "Osnovna tkiva",
+            [
+              "Epiteliji in žleze | razdelitev epitelijev, žlezni epitelij",
+              "Veziva, hrustanec in kost | medceličnina, vlakna, maščobno tkivo, hrustančevina, kostnina, osifikacija",
+              "Kri, mišičnina in živčevina | krvne celice, hemopoeza, krčenje mišičnine, nevroni in nevroglija"
+            ]
+          ],
+          [
+            "Histologija organskih sistemov I",
+            [
+              "Koža in endokrine žleze | zgradba kože in priveskov, ščitnica, nadledvična žleza, hipofiza",
+              "Imunski sistem in obtočila | bezgavke, vranica, priželjc, srce, arterije, kapilare, vene",
+              "Prebavila in dihala | ustna votlina, zobje, prebavna cev, jetra, pankreas, dihalna pot, pljuča"
+            ]
+          ],
+          [
+            "Histologija organskih sistemov II",
+            [
+              "Sečila in spolovila | ledvica, sečni mehur, modo, jajčnik, razvoj foliklov, maternica",
+              "Čutila | oko, uho"
+            ]
+          ],
+          [
+            "Embriologija",
+            [
+              "Zgodnji razvoj | oploditev, morula, blastocista, zarodek in plod, posteljica in plodove membrane",
+              "Razvoj organskih sistemov | razvoj živčevja, srca, dihal, sečil, prebavil in spolovil",
+              "Teratologija | prirojene razvojne nepravilnosti, teratogeni dejavniki, genetske anomalije"
+            ]
+          ]
+        ]
+      ],
+      "RAZMED1": [
+        "Raziskovanje v medicini 1",
+        "MAT",
+        [],
+        [
+          [
+            "Medicina kot znanost",
+            [
+              "Z dokazi podprta medicina | raziskovalni problem, bazično in klinično raziskovanje, znanost in psevdoznanost",
+              "Iskanje in presoja virov | podatkovne zbirke, kritično branje, vrednotenje dokazov"
+            ]
+          ],
+          [
+            "Opisna statistika",
+            [
+              "Statistična obdelava rezultatov | povprečje, mediana, standardni odklon, kvantili",
+              "Grafični prikazi podatkov | histogram, škatla z ročaji, razsevni diagram"
+            ]
+          ],
+          [
+            "Informatika in poročanje",
+            [
+              "Osnove statističnega sklepanja | vzorec in populacija, negotovost ocen",
+              "Poročilo iz podatkov | priprava podatkov, informatika v strokovnem in raziskovalnem delu"
+            ]
+          ]
+        ]
+      ],
+      "FIZIOL": [
+        "Fiziologija človeka",
+        "BIO",
+        [],
+        [
+          [
+            "Fiziološki principi",
+            [
+              "Homeostaza in uravnavanje | povratne zanke, transportni pojavi po telesu in preko membrane",
+              "Membranski in akcijski potencial | lokalizirani in potujoči potenciali, električno komuniciranje",
+              "Skeletna in gladka mišica | sklopitev vzburjenja in krčenja, mehanika krčenja"
+            ]
+          ],
+          [
+            "Krvni obtok",
+            [
+              "Srce | srčni ciklus, električna aktivnost, energetika srca, nadzor delovanja",
+              "Hemodinamika in mikrocirkulacija | arterije in vene, izmenjava v kapilarah",
+              "Uravnavanje arterijskega tlaka | nadzor srčnega pretoka, baroreceptorji"
+            ]
+          ],
+          [
+            "Dihanje",
+            [
+              "Ventilacija in mehanika dihanja | pljučni volumni, podajnost, upor dihalnih poti",
+              "Izmenjava in transport plinov | difuzija, ventilacijsko-perfuzijsko razmerje, transport O2 in CO2",
+              "Uravnavanje dihanja | kemoreceptorji, dihalni centri"
+            ]
+          ],
+          [
+            "Ledvice, prebava in endokrini sistem",
+            [
+              "Ledvice in elektroliti | glomerulna filtracija, tubulni transport, uravnavanje volumna in pH",
+              "Prebava in absorpcija | motorika, sekrecija, absorpcija hranil",
+              "Endokrino uravnavanje | hormoni, presnova, rast, razmnoževanje"
+            ]
+          ]
+        ]
+      ],
+      "RAZMED2": [
+        "Raziskovanje v medicini 2",
+        "MAT",
+        [],
+        [
+          [
+            "Verjetnost",
+            [
+              "Klasična verjetnost | pogojna verjetnost, neodvisnost, Bayesova formula, diagnostični testi",
+              "Slučajne spremenljivke in porazdelitve | binomska in normalna porazdelitev"
+            ]
+          ],
+          [
+            "Statistično sklepanje",
+            [
+              "Statistično sklepanje | intervali zaupanja, preizkušanje domnev",
+              "Analiza številskih in opisnih spremenljivk | t-test, hi-kvadrat test, neparametrične metode"
+            ]
+          ],
+          [
+            "Modeli in načrtovanje",
+            [
+              "Linearna regresija in korelacija | premica regresije, koeficient korelacije, interpretacija",
+              "Načrtovanje poskusov | uvod v analizo variance, velikost vzorca",
+              "Analiza preživetja | Kaplan-Meierjeva krivulja, cenzurirani podatki"
+            ]
+          ]
+        ]
+      ],
+      "FKHA": [
+        "Funkcionalna in klinično-aplikativna histologija in anatomija",
+        "BIO",
+        [],
+        [
+          [
+            "Klinično aplikativna anatomija",
+            [
+              "Topografska anatomija v klinični praksi | palpacijske točke, dostopi, mesta punkcij in injiciranja",
+              "Radiološka anatomija | prepoznava struktur na RTG, CT in MR posnetkih"
+            ]
+          ],
+          [
+            "Funkcionalna histologija",
+            [
+              "Histologija v diagnostiki | povezava zgradbe tkiv s funkcijo, normalen histološki izvid",
+              "Klinično pomembne histološke spremembe | prilagoditve tkiv, regeneracija"
+            ]
+          ],
+          [
+            "Povezovanje zgradbe in funkcije",
+            [
+              "Organski sistemi v kliničnih primerih | srce, pljuča, prebavila, ledvice",
+              "Anatomske različice | klinično pomembne različice in njihov vpliv na diagnozo"
+            ]
+          ]
+        ]
+      ],
+      "SFZ": [
+        "Struktura in funkcija živčevja",
+        "BIO",
+        [],
+        [
+          [
+            "Zgradba živčevja",
+            [
+              "Nevroni, glija in sinapse | histologija živčevja, periferni živec, gangliji",
+              "Hrbtenjača in možgansko deblo | spinalni živci, možganski živci, jedra",
+              "Mali in veliki možgani | diencefalon, možganska skorja, bazalni gangliji, limbični sistem"
+            ]
+          ],
+          [
+            "Proge in ovojnice",
+            [
+              "Senzorične in motorične proge | potek prog, zveze bazalnih ganglijev in malih možganov",
+              "Ovojnice, ventrikli in žilje | možganske ovojnice, likvor, arterije in venski sinusi"
+            ]
+          ],
+          [
+            "Nevrofiziologija",
+            [
+              "Elektrofiziologija nevronov | akcijski potencial, sinaptični prenos, merjenje nevrofizioloških pojavov",
+              "Senzorični in motorični sistemi | receptorji, refleksi, nadzor gibanja",
+              "Avtonomno živčevje in višje funkcije | simpatikus in parasimpatikus, spanje, spomin, učenje"
+            ]
+          ],
+          [
+            "Čutila in razvoj",
+            [
+              "Oko in uho | zgradba in delovanje vida, sluha in ravnotežja",
+              "Razvoj živčevja | nevrulacija, razvojne nepravilnosti"
+            ]
+          ]
+        ]
+      ],
+      "MOLGEN": [
+        "Medicinska molekularna genetika",
+        "BIO",
+        [],
+        [
+          [
+            "Ohranjanje genetske informacije",
+            [
+              "Podvojevanje DNA | replikacijski kompleks, polimeraze, jedrna in mitohondrijska DNA",
+              "Poškodbe in popravljanje DNA | mutacije, genetska variabilnost"
+            ]
+          ],
+          [
+            "Izražanje genov",
+            [
+              "Prepisovanje in prevajanje | biosinteza RNA, dodelava RNA, genetski kod, biosinteza proteinov",
+              "Uravnavanje izražanja genov | ravni uravnavanja, epigenetski mehanizmi, nekodirajoča RNA"
+            ]
+          ],
+          [
+            "Genska tehnologija",
+            [
+              "Rekombinantna DNA | osnove tehnologije, uporaba v medicini, gensko zdravljenje",
+              "Molekularna genetika raka | onkogeni, tumorski supresorji"
+            ]
+          ],
+          [
+            "Molekularnogenetska diagnostika",
+            [
+              "Genetske preiskave | sekvenciranje po Sangerju in NGS, FISH, primerjalna genomska hibridizacija",
+              "Farmakogenetika in osebna medicina | interpretacija rezultatov, etični in pravni vidiki",
+              "Populacijska genetika človeka | Mendelsko dedovanje, mozaicizem, Hardy-Weinbergovo ravnovesje"
+            ]
+          ]
+        ]
+      ],
+      "IMUNO": [
+        "Imunologija",
+        "BIO",
+        [],
+        [
+          [
+            "Antigeni in protitelesa",
+            [
+              "Protitelesa in imunoglobulinski geni | zgradba, razredi, nastanek raznolikosti",
+              "Interakcija antigen-protitelo | imunološke diagnostične tehnike"
+            ]
+          ],
+          [
+            "Celice imunskega sistema",
+            [
+              "Molekule MHC in predstavljanje antigenov | procesiranje zunajceličnih in znotrajceličnih antigenov",
+              "Limfociti T in B | T-celični receptor, zorenje, aktivacija, diferenciacija",
+              "Prirojena imunost | fagociti, komplement, citokini"
+            ]
+          ],
+          [
+            "Imunski odziv v zdravju in bolezni",
+            [
+              "Imunski odziv pri okužbah | bakterije, virusi, paraziti",
+              "Avtoimunost in transplantacija | toleranca, avtoimunske bolezni, zavrnitev presadka"
+            ]
+          ]
+        ]
+      ],
+      "UKM2": [
+        "Uvod v klinično medicino 2",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna propedevtika",
+            [
+              "Anamneza | struktura pogovora, družinska in socialna anamneza",
+              "Telesni pregled | inspekcija, palpacija, perkusija, avskultacija, vitalni znaki"
+            ]
+          ],
+          [
+            "Zdravnik in bolnik",
+            [
+              "Odnos zdravnik-bolnik | v bolnika usmerjena oskrba, zaupnost, sporočanje slabe novice",
+              "Varno delo v kliničnem okolju | higiena rok, preprečevanje okužb, varnost bolnika"
+            ]
+          ],
+          [
+            "Timsko delo in psihološka medicina",
+            [
+              "Timsko delo | večprofesionalni timi, vloge, komunikacija v timu",
+              "Psihološka medicina | psihosomatski pristop, stres, odziv na bolezen"
+            ]
+          ]
+        ]
+      ],
+      "MEDBIOKEM": [
+        "Medicinska biokemija",
+        "KEM",
+        [],
+        [
+          [
+            "Presnova ogljikovih hidratov",
+            [
+              "Glikoliza in glukoneogeneza | prebava, razgradnja in biosinteza, uravnavanje",
+              "Glikogen in pentozafosfatna pot | presnova glikogena, bolezni presnove ogljikovih hidratov",
+              "Oksidativni procesi | citratni cikel, dihalna veriga, oksidativna fosforilacija"
+            ]
+          ],
+          [
+            "Presnova lipidov",
+            [
+              "Razgradnja in sinteza maščobnih kislin | beta-oksidacija, ketonska telesa",
+              "Holesterol in lipoproteini | sinteza holesterola, žolčne kisline, lipoproteini, eikozanoidi"
+            ]
+          ],
+          [
+            "Presnova dušikovih spojin",
+            [
+              "Presnova aminokislin | razgradnja, cikel sečnine, neesencialne aminokisline, prirojene motnje",
+              "Presnova nukleotidov | biosinteza in razgradnja purinov in pirimidinov, protin"
+            ]
+          ],
+          [
+            "Molekularna biologija in hormoni",
+            [
+              "Biosinteza proteinov | posttranslacijske modifikacije, uravnavanje",
+              "Hormoni in celično signaliziranje | biosinteza, mehanizmi delovanja, uravnavanje presnove",
+              "Presnova tkiv in organov | jetra, mišica, maščevje, možgani, stradanje in sitost"
+            ]
+          ]
+        ]
+      ],
+      "JAVZDR": [
+        "Javno zdravje",
+        "BIO",
+        [],
+        [
+          [
+            "Koncepti in determinante zdravja",
+            [
+              "Osnovni koncepti javnega zdravja | zdravje, bolezen, preventiva, promocija zdravja",
+              "Determinante zdravja | družbeno in fizično okolje, življenjski slog, kompleksne determinante"
+            ]
+          ],
+          [
+            "Metode javnega zdravja",
+            [
+              "Proučevanje zdravja prebivalstva | kazalniki zdravja, incidenca, prevalenca, epidemiološke raziskave",
+              "Javnozdravstveno ukrepanje | presejanje, cepljenje, zdravstvena politika"
+            ]
+          ],
+          [
+            "Veliki javnozdravstveni problemi",
+            [
+              "Kronične nenalezljive bolezni | srčno-žilne bolezni, rak, sladkorna bolezen, odvisnosti",
+              "Ranljive skupine prebivalstva | otroci, starostniki, socialno ogroženi"
+            ]
+          ]
+        ]
+      ],
+      "FARMAK": [
+        "Farmakologija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna farmakologija",
+            [
+              "Farmakodinamika | tarčne molekule, receptorji, krivulja odmerek-učinek, agonisti in antagonisti",
+              "Farmakokinetika | absorpcija, porazdelitev, presnova, izločanje, razpolovni čas",
+              "Varnost zdravil | neželeni učinki, interakcije, neklinično in klinično preskušanje"
+            ]
+          ],
+          [
+            "Zdravila za avtonomno in osrednje živčevje",
+            [
+              "Avtonomno živčevje | holinergiki, adrenergiki, antagonisti",
+              "Osrednje živčevje | analgetiki, anestetiki, antidepresivi, antiepileptiki"
+            ]
+          ],
+          [
+            "Zdravila po organskih sistemih",
+            [
+              "Srčno-žilni sistem | antihipertenzivi, diuretiki, antiaritmiki, antikoagulanti",
+              "Protimikrobna zdravila | antibiotiki, protivirusna in protiglivična zdravila",
+              "Endokrini sistem in vnetje | inzulin, kortikosteroidi, nesteroidni antirevmatiki"
+            ]
+          ],
+          [
+            "Farmakološki pristopi",
+            [
+              "Odmerjanje in način uporabe | poti vnosa, prilagoditev odmerka",
+              "Eksperimentalni modeli v farmakologiji | in vitro in in vivo modeli"
+            ]
+          ]
+        ]
+      ],
+      "KLINBIOKEM": [
+        "Klinična biokemija in laboratorijska diagnostika",
+        "KEM",
+        [],
+        [
+          [
+            "Laboratorijska diagnostika",
+            [
+              "Organizacija laboratorijske diagnostike | vrste bioloških vzorcev, predanalitična faza",
+              "Analitske metode in kakovost | referenčne vrednosti, zagotavljanje kakovosti, preiskave ob preiskovancu"
+            ]
+          ],
+          [
+            "Osnovne preiskave",
+            [
+              "Hematološke preiskave in analiza urina | krvna slika, urinski test",
+              "Elektroliti in acidobazno ravnovesje | plinska analiza krvi, oksimetrija",
+              "Plazemski proteini, encimi in lipidi | tumorski označevalci, neproteinske dušikove spojine"
+            ]
+          ],
+          [
+            "Preiskave organskih funkcij",
+            [
+              "Jetra, ledvice in pankreas | funkcijski testi, interpretacija izvidov",
+              "Presnovne motnje in srce | glukoza, HbA1c, ščitnica, srčni označevalci, status železa"
+            ]
+          ]
+        ]
+      ],
+      "KLINMIKRO": [
+        "Klinična mikrobiologija",
+        "BIO",
+        [],
+        [
+          [
+            "Bakteriologija",
+            [
+              "Zgradba in genetika bakterij | bakterijska celica, metabolizem, razmnoževanje, klasifikacija",
+              "Diagnostika bakterijskih okužb | odvzem vzorcev, normalna flora, osamitev in identifikacija",
+              "Antibiotiki in odpornost | mehanizmi delovanja, mehanizmi odpornosti, antibiogram, dezinfekcija in sterilizacija"
+            ]
+          ],
+          [
+            "Virologija",
+            [
+              "Lastnosti in razmnoževanje virusov | virusna genetika, patogeneza, onkogeneza",
+              "Diagnostika virusnih okužb | neposredno, posredno in molekularno dokazovanje, protivirusna zdravila"
+            ]
+          ],
+          [
+            "Mikologija in parazitologija",
+            [
+              "Glive | dermatofiti, kutane, podkožne in sistemske mikoze",
+              "Paraziti | praživali, helminti, diagnostika parazitoz"
+            ]
+          ]
+        ]
+      ],
+      "PATOL": [
+        "Patologija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna patologija I",
+            [
+              "Celična okvara in adaptacija | hipertrofija, atrofija, metaplazija, nekroza, apoptoza",
+              "Vnetje, regeneracija in reparacija | akutno in kronično vnetje, celjenje ran",
+              "Obtočne motnje | edem, tromboza, embolija, infarkt, šok"
+            ]
+          ],
+          [
+            "Splošna patologija II",
+            [
+              "Neoplazija | benigni in maligni tumorji, kancerogeneza, zasevanje, gradiranje",
+              "Imunopatologija in genetske bolezni | preobčutljivost, pediatrične bolezni, bolezni okolja in prehrane"
+            ]
+          ],
+          [
+            "Specialna patologija I",
+            [
+              "Kardiovaskularna patologija | ateroskleroza, ishemična bolezen srca, bolezni zaklopk",
+              "Patologija dihal in prebavil | pljučnica, KOPB, rak pljuč, bolezni želodca in črevesja",
+              "Patologija jeter in pankreasa | hepatitis, ciroza, bolezni žolčnika"
+            ]
+          ],
+          [
+            "Specialna patologija II",
+            [
+              "Ledvice in sečila | glomerulonefritis, tumorji ledvic in sečil",
+              "Živčevje, ginekološka patologija in dojka | možganska kap, tumorji, rak dojke",
+              "Lokomotorni aparat in hematopatologija | bolezni kosti, levkemije, limfomi"
+            ]
+          ]
+        ]
+      ],
+      "PATOFIZ": [
+        "Patofiziologija",
+        "BIO",
+        [],
+        [
+          [
+            "Presnova in termoregulacija",
+            [
+              "Telesna temperatura | vročina, hipertermija, podhladitev",
+              "Motnje presnove | stradanje, debelost, sladkorna bolezen, hipoglikemija, bolezni ščitnice"
+            ]
+          ],
+          [
+            "Celica, vnetje in rak",
+            [
+              "Celična smrt in prosti radikali | odziv na stres, delovanje toksinov",
+              "Kancerogeneza in staranje | rakava celica, sevalna bolezen, opekline, električna poškodba"
+            ]
+          ],
+          [
+            "Telesne tekočine in kri",
+            [
+              "Motnje vode in elektrolitov | dehidracija, motnje kalcija in fosforja",
+              "Acidoza in alkaloza | respiratorne in metabolne motnje, kompenzacija",
+              "Kri in strjevanje | anemije, motnje strjevanja, tromboza, ledvična odpoved"
+            ]
+          ],
+          [
+            "Dihanje",
+            [
+              "Motnje zunanjega dihanja | obstruktivne bolezni, pnevmotoraks, dispneja, kašelj",
+              "Hipoksija in cianoza | motnje notranjega dihanja, mitohondrijske motnje, motnje zaradi zračnega pritiska"
+            ]
+          ]
+        ]
+      ],
+      "KLINMED": [
+        "Klinična medicina",
+        "BIO",
+        [],
+        [
+          [
+            "Specialna propedevtika",
+            [
+              "Pregled po organskih sistemih | srce in ožilje, pljuča, trebuh, živčevje",
+              "Klinične veščine | odvzem krvi, vstavitev venskega kanala, kateterizacija"
+            ]
+          ],
+          [
+            "Nujna stanja",
+            [
+              "Dopolnilni postopki oživljanja | motnje ritma, defibrilacija, zdravila pri oživljanju",
+              "Pristop k nujnim stanjem | šok, dihalna stiska, anafilaksija"
+            ]
+          ],
+          [
+            "Uvod v kirurško delo in sodelovanje",
+            [
+              "Uvod v kirurško delo | asepsa, kirurško umivanje, šivanje ran",
+              "Medprofesionalno sodelovanje | delo z medicinskimi sestrami in drugimi zdravstvenimi poklici"
+            ]
+          ]
+        ]
+      ],
+      "RAZMED3": [
+        "Raziskovanje v medicini 3",
+        "BIO",
+        [],
+        [
+          [
+            "Etika in vrste raziskav",
+            [
+              "Etična načela raziskav | soglasje, komisije za etiko, raziskave na ljudeh in živalih",
+              "Klinične raziskave | faze, randomizacija, zaslepitev, raziskave javnega zdravja"
+            ]
+          ],
+          [
+            "Načrtovanje in branje raziskav",
+            [
+              "Načrtovanje medicinske raziskave | raziskovalno vprašanje, izbira načrta, vzorec",
+              "Kritično branje znanstvenega članka | pristranskosti, interpretacija rezultatov"
+            ]
+          ],
+          [
+            "Digitalizacija in podatki",
+            [
+              "Bioinformatika v medicini | velike podatkovne zbirke, pogenomske tehnologije",
+              "Umetna inteligenca v medicini | strojno učenje, analiza slik in podatkovnih zbirk"
+            ]
+          ]
+        ]
+      ],
+      "RADIOL": [
+        "Radiologija s slikovno diagnostiko",
+        "BIO",
+        [],
+        [
+          [
+            "Radiološke diagnostične metode",
+            [
+              "Rentgen in CT | nastanek slike, kontrastna sredstva, varstvo pred sevanji",
+              "Ultrazvok in magnetna resonanca | načela, indikacije, omejitve"
+            ]
+          ],
+          [
+            "Intervencijska radiologija in nuklearna medicina",
+            [
+              "Invazivne diagnostične in terapevtske metode | angiografija, perkutani posegi",
+              "Nuklearnomedicinske metode | scintigrafija, PET, terapija z radionuklidi"
+            ]
+          ],
+          [
+            "Radiološka anatomija in bolezenska stanja",
+            [
+              "Radiološka anatomija | prsni koš, trebuh, glava, skelet",
+              "Radiološke značilnosti pogostih bolezni | pljučnica, zlomi, možganska kap, tumorji"
+            ]
+          ]
+        ]
+      ],
+      "ANATDM": [
+        "Anatomija za dentalno medicino",
+        "BIO",
+        [],
+        [
+          [
+            "Udi",
+            [
+              "Zgornji ud | skelet, sklepi in mišice, brahialni pletež, žilje, topografske regije",
+              "Spodnji ud | skelet, sklepi in mišice, lumbosakralni pletež, žilje"
+            ]
+          ],
+          [
+            "Trup",
+            [
+              "Prsni koš | stena, prepona, srce, pljuča, medpljučje, plodov krvni obtok",
+              "Trebuh in medenica | trebušna stena, prebavni organi, sečila, spolni organi"
+            ]
+          ],
+          [
+            "Glava in vrat",
+            [
+              "Lobanja in čeljusti | kosti lobanje, zgornja in spodnja čeljust, čeljustni sklep",
+              "Žvečne in mimične mišice | funkcija, inervacija",
+              "Ustna votlina in vrat | zobje, jezik, slinavke, žrelo, grlo, regije vratu"
+            ]
+          ],
+          [
+            "Živčevje glave in vratu",
+            [
+              "Možganski živci | trivejni živec, obrazni živec, inervacija zob in ustne votline",
+              "Žilje in bezgavke glave in vratu | arterije, vene, limfna drenaža"
+            ]
+          ]
+        ]
+      ],
+      "BIOCELDM": [
+        "Biologija celice za dentalno medicino",
+        "BIO",
+        [],
+        [
+          [
+            "Membrane in komunikacija",
+            [
+              "Biološke membrane in transport | sklopljeni transportni sistemi, medcelični stiki, polarnost",
+              "Prenos sporočil | receptorji, signalne poti"
+            ]
+          ],
+          [
+            "Organeli in citoskelet",
+            [
+              "Endomembranski sistem | endoplazemski retikulum, Golgijev aparat, lizosomi, ekso- in endocitoza",
+              "Citoskelet in gibanje celic | mikrotubuli, aktinski in intermediarni filamenti"
+            ]
+          ],
+          [
+            "Jedro, delitev in dedovanje",
+            [
+              "Jedro in celični cikel | kromatin, kromosomi, mitoza, mejoza, apoptoza",
+              "Osnove dedovanja | Mendlove zakonitosti, mutacije, spolno vezano dedovanje"
+            ]
+          ]
+        ]
+      ],
+      "UKDM1": [
+        "Uvod v klinično dentalno medicino 1",
+        "BIO",
+        [],
+        [
+          [
+            "Etika, profesionalizem in terminologija",
+            [
+              "Medicinska etika in profesionalizem | etična načela, zaupnost, odgovornost",
+              "Medicinska terminologija | latinsko-grško izrazoslovje, anatomski in klinični izrazi"
+            ]
+          ],
+          [
+            "Zgodovina in sporazumevanje",
+            [
+              "Zgodovina medicine z medicinsko humanistiko | razvoj medicine in zobozdravstva",
+              "Sporazumevanje z bolnikom | empatija, aktivno poslušanje, vodenje pogovora"
+            ]
+          ],
+          [
+            "Nujna medicinska pomoč",
+            [
+              "Pristop ABCDE in temeljni postopki oživljanja | TPO z AED, vzdrževanje dihalne poti",
+              "Nujna stanja v zobni ambulanti | sinkopa, anafilaksija, aspiracija tujka"
+            ]
+          ]
+        ]
+      ],
+      "RAZDM1": [
+        "Raziskovanje v dentalni medicini 1",
+        "MAT",
+        [],
+        [
+          [
+            "Dentalna medicina kot znanost",
+            [
+              "Z dokazi podprta dentalna medicina | raziskovalni problem, vrste raziskav",
+              "Iskanje in presoja virov | podatkovne zbirke, kritično branje"
+            ]
+          ],
+          [
+            "Osnove obdelave podatkov",
+            [
+              "Statistična obdelava rezultatov | povprečje, mediana, standardni odklon",
+              "Grafični prikazi in poročilo | prikaz podatkov, priprava poročila"
+            ]
+          ]
+        ]
+      ],
+      "HISTEMBDM": [
+        "Histologija in embriologija za dentalno medicino",
+        "BIO",
+        [],
+        [
+          [
+            "Osnovna tkiva",
+            [
+              "Epiteliji, veziva in hrustanec | razdelitev epitelijev, žleze, medceličnina",
+              "Kost, kri in mišičnina | osifikacija, hemopoeza, krčenje mišičnine",
+              "Živčevina | nevroni, nevroglija, sinapse"
+            ]
+          ],
+          [
+            "Histologija organov",
+            [
+              "Koža, obtočila in imunski sistem | zgradba kože, žile, bezgavke",
+              "Ustna votlina in prebavila | ustna sluznica, jezik, slinavke, prebavna cev, jetra",
+              "Dihala, sečila in endokrine žleze | pljuča, ledvica, ščitnica, hipofiza"
+            ]
+          ],
+          [
+            "Embriologija",
+            [
+              "Zgodnji razvoj | oploditev, blastocista, posteljica",
+              "Razvoj glave in vratu | škržni loki, razvoj obraza in neba, razcepi",
+              "Razvojne nepravilnosti | teratogeni dejavniki"
+            ]
+          ]
+        ]
+      ],
+      "MORFZOB": [
+        "Funkcionalna in klinično aplikativna morfologija in embriologija zobnega organa",
+        "BIO",
+        [],
+        [
+          [
+            "Histologija zobnega organa",
+            [
+              "Trda zobna tkiva | sklenina, dentin, zobni cement",
+              "Pulpa in obzobna tkiva | zobna pulpa, pozobnica, dlesen, zobiščni odrastek"
+            ]
+          ],
+          [
+            "Embriologija zobnega organa",
+            [
+              "Razvoj zoba | zgodnji razvoj, nastanek dentina, sklenine in korenine",
+              "Izraščanje zob | mlečni in stalni zobje, regeneracija in reparacija trdih tkiv"
+            ]
+          ],
+          [
+            "Morfologija zob",
+            [
+              "Anatomija stalnih zob | sekalci, podočniki, ličniki, kočniki, označevanje zob",
+              "Modelacija zob v vosku | anatomske osnove modelacije"
+            ]
+          ]
+        ]
+      ],
+      "JAVZDRDM": [
+        "Javno zdravje v dentalni medicini",
+        "BIO",
+        [],
+        [
+          [
+            "Koncepti in determinante zdravja",
+            [
+              "Osnovni koncepti javnega zdravja | zdravje, preventiva, promocija zdravja",
+              "Determinante zdravja | družbeno in fizično okolje, kompleksne determinante"
+            ]
+          ],
+          [
+            "Metode in ukrepanje",
+            [
+              "Proučevanje zdravja prebivalstva | epidemiološki kazalniki, raziskave ustnega zdravja",
+              "Javnozdravstveno ukrepanje | fluoridacija, preventivni programi, presejanje"
+            ]
+          ],
+          [
+            "Veliki javnozdravstveni problemi",
+            [
+              "Kronične bolezni in ustno zdravje | karies, parodontalna bolezen, kajenje, sladkor",
+              "Ranljive skupine | otroci, starostniki, osebe s posebnimi potrebami"
+            ]
+          ]
+        ]
+      ],
+      "RAZDM2": [
+        "Raziskovanje v dentalni medicini 2",
+        "MAT",
+        [],
+        [
+          [
+            "Verjetnost",
+            [
+              "Klasična verjetnost | pogojna verjetnost, neodvisnost",
+              "Slučajne spremenljivke in porazdelitve | binomska in normalna porazdelitev"
+            ]
+          ],
+          [
+            "Statistični testi",
+            [
+              "Statistično sklepanje | intervali zaupanja, preizkušanje domnev",
+              "Osnovni statistični testi | t-test, hi-kvadrat, ANOVA, neparametrični testi"
+            ]
+          ],
+          [
+            "Regresija",
+            [
+              "Linearna regresija in korelacija | premica regresije, koeficient korelacije, interpretacija",
+              "Regresijski modeli | večkratna regresija, interpretacija koeficientov"
+            ]
+          ]
+        ]
+      ],
+      "BIOKGENDM": [
+        "Biokemija in genetika za dentalno medicino",
+        "KEM",
+        [],
+        [
+          [
+            "Presnova",
+            [
+              "Bioenergetika in oksidativni procesi | citratni cikel, oksidativna fosforilacija",
+              "Presnova ogljikovih hidratov in lipidov | glikoliza, glukoneogeneza, beta-oksidacija",
+              "Presnova aminokislin in nukleotidov | cikel sečnine, purini in pirimidini"
+            ]
+          ],
+          [
+            "Dentalna biokemija",
+            [
+              "Proteini trdih in obzobnih tkiv | kolagen, skleninski proteini, biomineralizacija",
+              "Kalcij, fosfat in slina | uravnavanje kalcija in fosfata, hormoni, biokemija sline"
+            ]
+          ],
+          [
+            "Genetika",
+            [
+              "Izražanje genetske informacije | DNA kot genetski material, prepisovanje, prevajanje",
+              "Genska tehnologija in diagnostika | analiza nukleinskih kislin, PCR, sekvenciranje",
+              "Dedovanje in razvojne okvare zob | Mendlovo dedovanje, populacijska genetika, genetika okvar zobnega organa"
+            ]
+          ]
+        ]
+      ],
+      "FIZIOLDM": [
+        "Fiziologija za dentalno medicino",
+        "BIO",
+        [],
+        [
+          [
+            "Fiziološki principi",
+            [
+              "Homeostaza in transport | transportni pojavi, uravnavanje v bioloških sistemih",
+              "Membranski potencial in mišice | akcijski potencial, skeletna in gladka mišica"
+            ]
+          ],
+          [
+            "Krvni obtok in dihanje",
+            [
+              "Srce in hemodinamika | srčni ciklus, arterijski tlak, mikrocirkulacija",
+              "Dihanje | ventilacija, izmenjava in transport plinov, uravnavanje"
+            ]
+          ],
+          [
+            "Ledvice, prebava in hormoni",
+            [
+              "Ledvice in elektroliti | filtracija, uravnavanje volumna in pH",
+              "Prebava in slina | žvečenje, požiranje, izločanje sline",
+              "Endokrini sistem | hormonsko uravnavanje presnove in kalcija"
+            ]
+          ],
+          [
+            "Živčevje in stomatognati sistem",
+            [
+              "Senzorični in motorični sistemi | bolečina, okus, refleksi",
+              "Fiziologija stomatognatega sistema | žvečni refleksi, nadzor gibanja spodnje čeljusti"
+            ]
+          ]
+        ]
+      ],
+      "MIKIMDM": [
+        "Mikrobiologija in imunologija za dentalno medicino",
+        "BIO",
+        [],
+        [
+          [
+            "Bakteriologija",
+            [
+              "Zgradba in genetika bakterij | metabolizem, razmnoževanje, klasifikacija, normalna flora",
+              "Diagnostika in zdravljenje okužb | odvzem vzorcev, antibiotiki, odpornost, dezinfekcija in sterilizacija"
+            ]
+          ],
+          [
+            "Virusi, glive in paraziti",
+            [
+              "Virologija | razmnoževanje, patogeneza, dokazovanje virusov",
+              "Glive in paraziti | kandidoza, mikoze, pomembni paraziti"
+            ]
+          ],
+          [
+            "Imunologija",
+            [
+              "Prirojena in pridobljena imunost | fagociti, komplement, limfociti T in B, protitelesa",
+              "Imunski odziv v ustni votlini | slina, mikrobiom, imunopatologija"
+            ]
+          ]
+        ]
+      ],
+      "UKDM2": [
+        "Uvod v klinično dentalno medicino 2",
+        "BIO",
+        [],
+        [
+          [
+            "Timsko delo in psihološka medicina",
+            [
+              "Timsko delo | večprofesionalni timi, varno delo v kliničnem okolju",
+              "Psihološka medicina | odnos zdravnik-bolnik, strah pred zobozdravnikom"
+            ]
+          ],
+          [
+            "Splošna propedevtika",
+            [
+              "Anamneza | splošna in stomatološka anamneza",
+              "Telesni pregled | vitalni znaki, osnove kliničnega pregleda"
+            ]
+          ],
+          [
+            "Stomatološka propedevtika 1",
+            [
+              "Pregled ustne votline | zobni status, ekstraoralni in intraoralni pregled",
+              "Instrumenti in delovno mesto | ergonomija, osnovni instrumentarij"
+            ]
+          ]
+        ]
+      ],
+      "DENTMAT": [
+        "Dentalni materiali in tehnologija dentalnih materialov",
+        "KEM",
+        [],
+        [
+          [
+            "Lastnosti materialov",
+            [
+              "Fizikalne in mehanske lastnosti | trdnost, elastična in plastična deformacija, duktilnost",
+              "Elektrokemične lastnosti in biokompatibilnost | korozija, galvanski členi, tkivni odziv"
+            ]
+          ],
+          [
+            "Odtisni materiali, mavci in cementi",
+            [
+              "Mavci in vložne mase | strjevanje, volumske spremembe, natančnost odlitka",
+              "Elastomerni odtisni materiali | vrste, kemizem, lastnosti",
+              "Dentalni cementi | klasični, kompozitni in steklastoionomerni cementi"
+            ]
+          ],
+          [
+            "Kovine, keramika in polimeri",
+            [
+              "Kovine in dentalne zlitine | struktura kovin, sestava in izbira zlitin",
+              "Keramike in kompoziti | razdelitev keramik, kompozitne smole, polimerizacija"
+            ]
+          ]
+        ]
+      ],
+      "MINIINV": [
+        "Uvod v diagnostiko in minimalno invazivno stomatologijo",
+        "BIO",
+        [],
+        [
+          [
+            "Karies in okvare trdih zobnih tkiv",
+            [
+              "Nastanek in razpoznava kariesa | biofilm, demineralizacija, diagnostične metode",
+              "Minimalno invazivno zdravljenje | remineralizacija, zalivanje fisur, preventiva"
+            ]
+          ],
+          [
+            "Obzobna tkiva in ustna sluznica",
+            [
+              "Bolezni obzobnih tkiv | gingivitis, parodontitis, parodontalni indeksi",
+              "Spremembe ustne sluznice | razpoznava pogostih bolezenskih stanj"
+            ]
+          ]
+        ]
+      ],
+      "PATOFDM": [
+        "Patofiziologija za dentalno medicino",
+        "BIO",
+        [],
+        [
+          [
+            "Presnova in termoregulacija",
+            [
+              "Telesna temperatura in stradanje | vročina, podhladitev",
+              "Endokrine motnje | sladkorna bolezen, hipoglikemija, bolezni ščitnice"
+            ]
+          ],
+          [
+            "Celica in vnetje",
+            [
+              "Celična smrt, vnetje in stres | prosti radikali, opekline, sevalna bolezen",
+              "Kancerogeneza | rakava celica"
+            ]
+          ],
+          [
+            "Tekočine, kri in dihanje",
+            [
+              "Motnje tekočin in acidobaznega ravnovesja | dehidracija, acidoza, alkaloza, kalcij in fosfor",
+              "Motnje strjevanja krvi | krvavitve, tromboza",
+              "Motnje dihanja | hipoksija, astma, obstruktivne pljučne bolezni"
+            ]
+          ]
+        ]
+      ],
+      "PREDKLIN": [
+        "Stomatološki predklinični praktikum",
+        "BIO",
+        [],
+        [
+          [
+            "Zobne bolezni",
+            [
+              "Zobne preparacije | biološke osnove, nomenklatura, izolacija delovnega polja",
+              "Restavracije | amalgamske in kompozitne restavracije, adhezija na sklenino in dentin"
+            ]
+          ],
+          [
+            "Endodontija",
+            [
+              "Zdravljenje zobne pulpe | vitalna in nekrotična pulpa, mikrobiologija",
+              "Koreninski kanal | širjenje, čiščenje in polnjenje kanala, ponovno zdravljenje"
+            ]
+          ],
+          [
+            "Stomatološka protetika",
+            [
+              "Preparacije za fiksnoprotetične izdelke | prevleke, mostovi",
+              "Snemna protetika | osnove izdelave delnih in totalnih protez"
+            ]
+          ]
+        ]
+      ],
+      "PATOLDM": [
+        "Patologija za dentalno medicino",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna patologija",
+            [
+              "Celična okvara, vnetje in reparacija | adaptacija, nekroza, celjenje",
+              "Obtočne motnje in imunopatologija | tromboza, embolija, preobčutljivost",
+              "Neoplazija | benigni in maligni tumorji"
+            ]
+          ],
+          [
+            "Specialna patologija",
+            [
+              "Srce, ožilje in dihala | ateroskleroza, pljučnica, rak pljuč",
+              "Prebavila, jetra in ledvice | hepatitis, ciroza, glomerulonefritis",
+              "Živčevje, kri in lokomotorni aparat | levkemije, limfomi"
+            ]
+          ],
+          [
+            "Oralna patologija",
+            [
+              "Bolezni ustne sluznice in slinavk | levkoplakija, rak ustne votline, sialoadenitis",
+              "Ciste in tumorji čeljusti | odontogene ciste, razvojne nepravilnosti"
+            ]
+          ]
+        ]
+      ],
+      "FARMDM": [
+        "Farmakologija za dentalno medicino",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna farmakologija",
+            [
+              "Farmakodinamika | tarčne molekule, mehanizmi delovanja zdravil",
+              "Farmakokinetika | absorpcija, porazdelitev, presnova, izločanje",
+              "Škodljivo delovanje zdravil | neželeni učinki, interakcije, preskušanje zdravil"
+            ]
+          ],
+          [
+            "Pregled zdravil",
+            [
+              "Analgetiki in protivnetna zdravila | NSAR, opioidi",
+              "Protimikrobna zdravila v zobozdravstvu | antibiotiki, profilaksa",
+              "Zdravila, pomembna pri zobozdravstvenem posegu | antikoagulanti, bisfosfonati"
+            ]
+          ]
+        ]
+      ],
+      "KLINVES": [
+        "Klinične veščine v medicini",
+        "BIO",
+        [],
+        [
+          [
+            "Specialna propedevtika",
+            [
+              "Pregled po organskih sistemih | srce, pljuča, trebuh, živčevje",
+              "Osnove kirurgije | asepsa, oskrba ran, šivanje"
+            ]
+          ],
+          [
+            "Nujna stanja",
+            [
+              "Dopolnilni postopki oživljanja | defibrilacija, zdravila",
+              "Prehospitalna oskrba bolnika | poškodbe, šok"
+            ]
+          ],
+          [
+            "Medprofesionalno sodelovanje",
+            [
+              "Sodelovanje v zdravstvenem timu | komunikacija, predaja bolnika",
+              "Bolnik s sistemsko boleznijo | priprava na poseg, tveganja"
+            ]
+          ]
+        ]
+      ],
+      "OKLUZIJA": [
+        "Temelji zobne okluzije",
+        "BIO",
+        [],
+        [
+          [
+            "Statična in dinamična okluzija",
+            [
+              "Statična okluzija | medčeljustni odnosi, malokluzije",
+              "Dinamična okluzija | gibi spodnje čeljusti, anteriorne in posteriorne determinante"
+            ]
+          ],
+          [
+            "Analiza okluzije",
+            [
+              "Artikulatorji in obrazni lok | izbor, umavčenje modelov",
+              "Registracije medčeljustnih odnosov | študijski modeli, klinična analiza"
+            ]
+          ],
+          [
+            "Okluzijski koncepti",
+            [
+              "Diagnostična modelacija | modelacija v vosku, digitalna modelacija",
+              "Gradnja protetične okluzije | izbor okluzijskega koncepta"
+            ]
+          ]
+        ]
+      ],
+      "RAZDM3": [
+        "Raziskovanje v dentalni medicini 3",
+        "BIO",
+        [],
+        [
+          [
+            "Etika in vrste raziskav",
+            [
+              "Etična načela raziskav | soglasje, etične komisije",
+              "Klinične raziskave v dentalni medicini | načrti raziskav, randomizacija"
+            ]
+          ],
+          [
+            "Kritično branje in digitalizacija",
+            [
+              "Kritično branje znanstvenega članka | pristranskosti, interpretacija",
+              "Digitalizacija in umetna inteligenca | podatkovne zbirke, strojno učenje"
+            ]
+          ]
+        ]
+      ],
+      "STOMPROP2": [
+        "Stomatološka propedevtika 2",
+        "BIO",
+        [],
+        [
+          [
+            "Klinični pregled stomatološkega bolnika",
+            [
+              "Anamneza in sporazumevanje | empatičen pristop, sinteza podatkov",
+              "Ekstraoralni in intraoralni pregled | zobni, parodontalni in ortodontski status"
+            ]
+          ],
+          [
+            "Diagnostične metode",
+            [
+              "Dopolnilne preiskave | rentgenski posnetki zob, testi vitalnosti",
+              "Načrt zdravljenja | delovna diagnoza, zaporedje posegov"
+            ]
+          ]
+        ]
+      ],
+      "BREZBOL": [
+        "Brezbolečinsko delo v zobozdravstvu",
+        "BIO",
+        [],
+        [
+          [
+            "Lokalni anestetiki",
+            [
+              "Farmakologija lokalnih anestetikov | mehanizem delovanja, vazokonstriktorji, odmerjanje",
+              "Zapleti lokalne anestezije | toksičnost, alergija, lokalni zapleti"
+            ]
+          ],
+          [
+            "Tehnike anestezije",
+            [
+              "Infiltracijska anestezija | anatomske osnove, izvedba",
+              "Prevodna anestezija | blok spodnjega alveolarnega živca, druge tehnike"
+            ]
+          ],
+          [
+            "Prestrašen bolnik",
+            [
+              "Strah pred zobozdravnikom | prepoznava, komunikacija, vedenjske tehnike",
+              "Sedacija | indikacije in osnove"
+            ]
+          ]
+        ]
+      ],
+      "IZBBIOKEM": [
+        "Izbrane teme iz biokemije",
+        "KEM",
+        [],
+        [
+          [
+            "Encimi v medicini",
+            [
+              "Encimska kinetika | Michaelis-Mentenova enačba, inhibicija, zdravila kot inhibitorji",
+              "Encimi kot diagnostični označevalci | aktivnost encimov v plazmi"
+            ]
+          ],
+          [
+            "Steroidi in signalizacija",
+            [
+              "Biokemija steroidov | biosinteza, presnova, hormonsko odvisne bolezni",
+              "Signalne poti | receptorji, kinaze, sekundarni obveščevalci"
+            ]
+          ]
+        ]
+      ],
+      "IZBBIOFIZ": [
+        "Izbrane teme iz biofizike",
+        "FIZ",
+        [],
+        [
+          [
+            "Biofizika membran",
+            [
+              "Mehanske lastnosti membran | elastičnost, ukrivljenost, vezikli",
+              "Električne lastnosti membran | kapacitivnost, elektroporacija"
+            ]
+          ],
+          [
+            "Biofizikalne metode",
+            [
+              "Mikroskopija in spektroskopija | fluorescenca, optična pinceta",
+              "Modeliranje v biofiziki | kvantitativni opis bioloških pojavov"
+            ]
+          ]
+        ]
+      ],
+      "IZBCELBIO": [
+        "Izbrane teme iz celične biologije",
+        "BIO",
+        [],
+        [
+          [
+            "Celica v zdravju in bolezni",
+            [
+              "Matične celice in tkivno inženirstvo | regenerativna medicina, celične kulture",
+              "Celične osnove raka | motnje celičnega cikla, invazija"
+            ]
+          ],
+          [
+            "Metode celične biologije",
+            [
+              "Mikroskopske tehnike | elektronska in konfokalna mikroskopija",
+              "Celični modeli bolezni | organoidi, genetsko spremenjene celice"
+            ]
+          ]
+        ]
+      ],
+      "IZBANAT": [
+        "Izbrane teme iz anatomije",
+        "BIO",
+        [],
+        [
+          [
+            "Klinična anatomija",
+            [
+              "Anatomija pri kliničnem pregledu | palpacija, površinska anatomija",
+              "Anatomija na slikovnih preiskavah | prerezi, 3D-rekonstrukcije"
+            ]
+          ],
+          [
+            "Disekcija in različice",
+            [
+              "Disekcija | priprava preparatov, topografski odnosi",
+              "Anatomske različice | klinično pomembne različice žilja in živcev"
+            ]
+          ]
+        ]
+      ],
+      "IZBHISTEMB": [
+        "Izbrane teme iz histologije in embriologije",
+        "BIO",
+        [],
+        [
+          [
+            "Histološke tehnike",
+            [
+              "Priprava in barvanje preparatov | rutinska in imunohistokemična barvanja",
+              "Prepoznava tkiv pod mikroskopom | diferencialna diagnostika tkiv"
+            ]
+          ],
+          [
+            "Razvojna biologija",
+            [
+              "Molekularni nadzor razvoja | signalne molekule, indukcija",
+              "Prirojene nepravilnosti | primeri in vzroki"
+            ]
+          ]
+        ]
+      ],
+      "IZBFIZIOL": [
+        "Izbrane teme iz fiziologije",
+        "BIO",
+        [],
+        [
+          [
+            "Integrativna fiziologija",
+            [
+              "Fiziologija napora | srčno-žilni in dihalni odziv na obremenitev",
+              "Mikrocirkulacija | uravnavanje pretoka, endotelij"
+            ]
+          ],
+          [
+            "Fiziološke meritve",
+            [
+              "Elektrokardiografija | odvodi, normalen EKG, srčna os",
+              "Fiziologija v posebnih okoljih | višina, potapljanje, hiperbarične razmere"
+            ]
+          ]
+        ]
+      ],
+      "IZBMOLGEN": [
+        "Izbrane teme iz medicinske molekularne genetike",
+        "BIO",
+        [],
+        [
+          [
+            "Genomska medicina",
+            [
+              "Sekvenciranje naslednje generacije | analiza podatkov, interpretacija variant",
+              "Farmakogenomika | genetske razlike v odzivu na zdravila"
+            ]
+          ],
+          [
+            "Molekularne metode",
+            [
+              "PCR in kvantitativni PCR | načrtovanje, uporaba v diagnostiki",
+              "Urejanje genoma | CRISPR-Cas9, etični vidiki"
+            ]
+          ]
+        ]
+      ],
+      "IZBIMUNO": [
+        "Izbrane teme iz imunologije",
+        "BIO",
+        [],
+        [
+          [
+            "Klinična imunologija",
+            [
+              "Imunske pomanjkljivosti | prirojene in pridobljene",
+              "Alergije in preobčutljivost | tipi preobčutljivosti, diagnostika"
+            ]
+          ],
+          [
+            "Imunološka diagnostika in terapija",
+            [
+              "Imunološke preiskave | pretočna citometrija, ELISA",
+              "Cepiva in imunoterapija | vrste cepiv, monoklonska protitelesa"
+            ]
+          ]
+        ]
+      ],
+      "IZBMIKIMDM": [
+        "Izbrane teme iz mikrobiologije in imunologije",
+        "BIO",
+        [],
+        [
+          [
+            "Ustni mikrobiom",
+            [
+              "Zobni biofilm | nastanek, sestava, kariogene bakterije",
+              "Parodontalni patogeni | mikrobiologija parodontitisa"
+            ]
+          ],
+          [
+            "Okužbe v zobozdravstvu",
+            [
+              "Preprečevanje okužb v ambulanti | sterilizacija, dezinfekcija, krvno prenosljive okužbe",
+              "Imunski odziv v ustni votlini | sluznična imunost"
+            ]
+          ]
+        ]
+      ],
+      "IZBBIOGEN": [
+        "Izbrane teme iz biokemije in genetike za dentalno medicino",
+        "KEM",
+        [],
+        [
+          [
+            "Biomineralizacija",
+            [
+              "Mineralizacija sklenine in dentina | hidroksiapatit, fluorapatit",
+              "Demineralizacija in remineralizacija | pH, vloga sline in fluorida"
+            ]
+          ],
+          [
+            "Genetika zobnih anomalij",
+            [
+              "Dedne motnje zob | amelogenesis imperfecta, dentinogenesis imperfecta",
+              "Genetska diagnostika v dentalni medicini | genetske preiskave, svetovanje"
+            ]
+          ]
+        ]
+      ]
+    },
+    "programs": {
+      "UL-MF-MED": {
+        "name": "Medicina",
+        "source": "https://www.mf.uni-lj.si/download_file/view/23833/192",
+        "sourceYear": "2026/27, predmetnik preverjen (1.–3. letnik, Predstavitveni zbornik EMŠ Medicina 2026/2027)",
+        "years": [
+          [
+            "ANAT",
+            "MEDBIOFIZ",
+            "MEDCELBIO",
+            "TEMBIOKEM",
+            "UKM1",
+            "HISTEMB",
+            "RAZMED1"
+          ],
+          [
+            "FIZIOL",
+            "RAZMED2",
+            "FKHA",
+            "SFZ",
+            "MOLGEN",
+            "IMUNO",
+            "UKM2",
+            "MEDBIOKEM",
+            "JAVZDR"
+          ],
+          [
+            "FARMAK",
+            "KLINBIOKEM",
+            "KLINMIKRO",
+            "PATOL",
+            "PATOFIZ",
+            "KLINMED",
+            "RAZMED3",
+            "RADIOL"
+          ]
+        ],
+        "electives": [
+          "IZBBIOKEM",
+          "IZBBIOFIZ",
+          "IZBCELBIO",
+          "IZBANAT",
+          "IZBHISTEMB",
+          "IZBFIZIOL",
+          "IZBIMUNO",
+          "IZBMOLGEN"
+        ],
+        "degree": "EMŠ"
+      },
+      "UL-MF-DM": {
+        "name": "Dentalna medicina",
+        "source": "https://www.mf.uni-lj.si/download_file/view/24637/193",
+        "sourceYear": "2026/27, predmetnik preverjen (1.–3. letnik, Predstavitveni zbornik EMŠ Dentalna medicina 2026/2027)",
+        "years": [
+          [
+            "ANATDM",
+            "MEDBIOFIZ",
+            "BIOCELDM",
+            "UKDM1",
+            "TEMBIOKEM",
+            "RAZDM1",
+            "HISTEMBDM"
+          ],
+          [
+            "MORFZOB",
+            "JAVZDRDM",
+            "RAZDM2",
+            "BIOKGENDM",
+            "FIZIOLDM",
+            "MIKIMDM",
+            "UKDM2",
+            "DENTMAT",
+            "MINIINV"
+          ],
+          [
+            "PATOFDM",
+            "PREDKLIN",
+            "PATOLDM",
+            "FARMDM",
+            "KLINVES",
+            "OKLUZIJA",
+            "RAZDM3",
+            "STOMPROP2",
+            "BREZBOL"
+          ]
+        ],
+        "electives": [
+          "IZBANAT",
+          "IZBBIOKEM",
+          "IZBBIOFIZ",
+          "IZBCELBIO",
+          "IZBHISTEMB",
+          "IZBFIZIOL",
+          "IZBMIKIMDM",
+          "IZBBIOGEN"
+        ],
+        "degree": "EMŠ"
+      }
+    }
+  },
+  {
+    "id": "UL-VF",
+    "name": "UL Veterinarska fakulteta",
+    "short": "UL VF",
+    "courses": {
+      "BIOCEL": [
+        "Biologija celice",
+        "BIO",
+        [],
+        [
+          [
+            "Zgradba celice",
+            [
+              "Biološke membrane in transport | zgradba membrane, difuzija, aktivni transport, endo- in eksocitoza",
+              "Organeli | endoplazemski retikulum, Golgijev aparat, lizosomi, mitohondriji, jedro",
+              "Citoskelet | mikrotubuli, aktinski in intermediarni filamenti, gibanje celic"
+            ]
+          ],
+          [
+            "Komunikacija med celicami",
+            [
+              "Medcelični stiki | tesni, presledkovni stiki, dezmosomi",
+              "Celična signalizacija | receptorji, signalne poti, hormoni"
+            ]
+          ],
+          [
+            "Celični cikel in smrt",
+            [
+              "Celični cikel in delitve | mitoza, mejoza, kontrolne točke",
+              "Celična smrt | apoptoza, nekroza, staranje celic"
+            ]
+          ]
+        ]
+      ],
+      "ANATDZ": [
+        "Anatomija domačih živali",
+        "BIO",
+        [],
+        [
+          [
+            "Gibalni sistem",
+            [
+              "Osteologija | skelet trupa in udov pri psu, konju, govedu in prašiču",
+              "Artrologija | sklepi udov in hrbtenice, primerjava med vrstami",
+              "Miologija | mišice trupa in udov, funkcija, inervacija"
+            ]
+          ],
+          [
+            "Notranji organi",
+            [
+              "Prebavila | zobovje, želodec prežvekovalcev in enoprebavnih živali, črevo, jetra",
+              "Dihala in obtočila | nosna votlina, grlo, pljuča, srce, glavne žile",
+              "Sečila in spolovila | ledvice, sečni mehur, spolni organi samcev in samic"
+            ]
+          ],
+          [
+            "Živčevje in čutila",
+            [
+              "Osrednje in periferno živčevje | možgani, hrbtenjača, možganski in spinalni živci",
+              "Čutila in koža | oko, uho, koža in njeni priveski, kopita in parklji"
+            ]
+          ],
+          [
+            "Topografska anatomija",
+            [
+              "Topografija glave, vratu in trupa | klinično pomembne regije, mesta injiciranja",
+              "Primerjalna anatomija perutnine | posebnosti ptic"
+            ]
+          ]
+        ]
+      ],
+      "BIOKEM1": [
+        "Biokemija 1",
+        "KEM",
+        [
+          "BIOKEM_TEMELJI"
+        ],
+        [
+          [
+            "Kemijske osnove",
+            [
+              "Kisline in baze | pH, pufri v telesnih tekočinah",
+              "Raztopine | koncentracije, osmolarnost, koligativne lastnosti"
+            ]
+          ],
+          [
+            "Biomolekule in encimi",
+            [
+              "Zgradba in funkcija proteinov | hemoglobin, kolagen, zvijanje proteinov",
+              "Vitamini in koencimi | vodotopni in v maščobah topni vitamini",
+              "Biološke membrane | lipidi membran, membranski transport"
+            ]
+          ]
+        ]
+      ],
+      "HIGPREH": [
+        "Higiena živali, fiziologija prehrane in okoljsko upravljanje",
+        "BIO",
+        [],
+        [
+          [
+            "Fiziologija prehrane",
+            [
+              "Hranljive snovi in njihova vloga | ogljikovi hidrati, beljakovine, maščobe, minerali, vitamini",
+              "Prebava pri prežvekovalcih in enoprebavnih živalih | vamp, fermentacija, absorpcija",
+              "Potrebe po hranilih in energiji | vzdrževanje, rast, prireja mleka"
+            ]
+          ],
+          [
+            "Higiena živali",
+            [
+              "Zoohigiena | mikroklima v hlevu, temperatura, vlaga, prezračevanje",
+              "Voda za napajanje | kakovost, higiena"
+            ]
+          ],
+          [
+            "Okoljsko upravljanje",
+            [
+              "Ravnanje z gnojem in odpadki | emisije, onesnaževanje voda in zraka",
+              "Trajnostna reja | vpliv živinoreje na okolje, zmanjševanje emisij"
+            ]
+          ]
+        ]
+      ],
+      "GENET": [
+        "Genetika",
+        "BIO",
+        [],
+        [
+          [
+            "Osnove dedovanja",
+            [
+              "Mendlovo dedovanje | monohibridno in dihibridno križanje, dominanca, aleli",
+              "Vezava genov in spolni kromosomi | vezano dedovanje, določanje spola"
+            ]
+          ],
+          [
+            "Molekularna genetika",
+            [
+              "Zgradba in podvojevanje DNA | gen, genom, replikacija",
+              "Izražanje genov in mutacije | prepisovanje, prevajanje, vrste mutacij"
+            ]
+          ],
+          [
+            "Populacijska in kvantitativna genetika",
+            [
+              "Populacijska genetika | Hardy-Weinbergovo ravnovesje, inbriding",
+              "Kvantitativne lastnosti | heritabiliteta, selekcija"
+            ]
+          ],
+          [
+            "Veterinarska genetika",
+            [
+              "Dedne bolezni živali | primeri pri psih, mačkah in domačih živalih",
+              "Genetski testi | molekularni označevalci, določanje porekla"
+            ]
+          ]
+        ]
+      ],
+      "RASTLINE": [
+        "Krmne, strupene in zdravilne rastline",
+        "BIO",
+        [],
+        [
+          [
+            "Krmne rastline",
+            [
+              "Travniške in pašne rastline | trave, metuljnice, hranilna vrednost",
+              "Poljščine za krmo | koruza, žita, krmne rastline"
+            ]
+          ],
+          [
+            "Strupene rastline",
+            [
+              "Strupene rastline za živali | prepoznava, učinkovine, znaki zastrupitve",
+              "Sobne in vrtne strupene rastline | nevarnosti za pse in mačke"
+            ]
+          ],
+          [
+            "Zdravilne rastline",
+            [
+              "Zdravilne rastline v veterini | učinkovine, uporaba",
+              "Prepoznavanje rastlin | določevanje na terenu"
+            ]
+          ]
+        ]
+      ],
+      "HISTEMB1": [
+        "Histologija z embriologijo 1",
+        "BIO",
+        [],
+        [
+          [
+            "Mikroskopija in histološke tehnike",
+            [
+              "Priprava histoloških preparatov | fiksacija, barvanje, mikroskopiranje",
+              "Mikroskopske tehnike | svetlobna in elektronska mikroskopija, ločljivost, imunohistokemija"
+            ]
+          ],
+          [
+            "Osnovna tkiva",
+            [
+              "Epitelij in žleze | vrste epitelijev, žlezni epitelij",
+              "Vezivo, hrustanec in kost | medceličnina, osifikacija",
+              "Mišičnina in živčevina | vrste mišičnine, nevroni, glija"
+            ]
+          ],
+          [
+            "Kri in hemopoeza",
+            [
+              "Krvne celice | eritrociti, levkociti, trombociti pri domačih živalih",
+              "Hemopoeza | kostni mozeg, razvoj krvnih celic"
+            ]
+          ],
+          [
+            "Splošna embriologija",
+            [
+              "Gametogeneza in oploditev | spermatogeneza, oogeneza",
+              "Zgodnji razvoj zarodka | brazdanje, gastrulacija, zarodni listi, plodove ovojnice"
+            ]
+          ]
+        ]
+      ],
+      "ZIVINOREJA": [
+        "Živinoreja",
+        "BIO",
+        [],
+        [
+          [
+            "Reja goveda in drobnice",
+            [
+              "Govedoreja | pasme, prireja mleka in mesa, tehnologija reje",
+              "Reja ovac in koz | pasme, sistemi reje"
+            ]
+          ],
+          [
+            "Reja prašičev, perutnine in konj",
+            [
+              "Prašičereja | pasme, reprodukcija, pitanje",
+              "Perutninarstvo | nesnice, brojlerji",
+              "Konjereja | pasme, uporaba, reja"
+            ]
+          ],
+          [
+            "Selekcija in rejski programi",
+            [
+              "Ocenjevanje plemenske vrednosti | kontrola proizvodnje, rodovniki",
+              "Rejski programi | cilji selekcije, ohranjanje avtohtonih pasem"
+            ]
+          ]
+        ]
+      ],
+      "HISTEMB2": [
+        "Histologija z embriologijo 2",
+        "BIO",
+        [],
+        [
+          [
+            "Histologija organskih sistemov I",
+            [
+              "Obtočila in limfni organi | srce, žile, bezgavke, vranica, priželjc",
+              "Dihala | dihalne poti, pljuča",
+              "Prebavila | prebavna cev, predželodci prežvekovalcev, jetra, pankreas"
+            ]
+          ],
+          [
+            "Histologija organskih sistemov II",
+            [
+              "Sečila in spolovila | ledvica, modo, jajčnik, maternica",
+              "Endokrine žleze in koža | hipofiza, ščitnica, nadledvična žleza, koža, mlečna žleza",
+              "Čutila | oko, uho"
+            ]
+          ],
+          [
+            "Specialna embriologija",
+            [
+              "Organogeneza | razvoj srca, prebavil, sečil in spolovil",
+              "Posteljica pri domačih živalih | tipi placent",
+              "Razvojne nepravilnosti | teratogeni dejavniki"
+            ]
+          ]
+        ]
+      ],
+      "BIOKEM2": [
+        "Biokemija 2",
+        "KEM",
+        [],
+        [
+          [
+            "Energetska presnova",
+            [
+              "Bioenergetika | ATP, redoks reakcije, sklopljene reakcije",
+              "Citratni cikel in oksidativna fosforilacija | dihalna veriga, ATP-sintaza"
+            ]
+          ],
+          [
+            "Presnova ogljikovih hidratov in lipidov",
+            [
+              "Glikoliza in glukoneogeneza | uravnavanje, presnova glikogena, hlapne maščobne kisline pri prežvekovalcih",
+              "Presnova lipidov | beta-oksidacija, ketogeneza, sinteza maščobnih kislin"
+            ]
+          ],
+          [
+            "Presnova dušikovih spojin in uravnavanje",
+            [
+              "Presnova aminokislin | transaminacija, cikel sečnine",
+              "Hormonsko uravnavanje presnove | inzulin, glukagon, presnovne bolezni živali"
+            ]
+          ]
+        ]
+      ],
+      "VETFIZIOL": [
+        "Veterinarska fiziologija",
+        "BIO",
+        [],
+        [
+          [
+            "Celična fiziologija in živčevje",
+            [
+              "Membranski potencial in prenos signalov | akcijski potencial, sinapse",
+              "Živčni sistem | refleksi, avtonomno živčevje",
+              "Mišice | skeletna, gladka in srčna mišica"
+            ]
+          ],
+          [
+            "Kri, srce in dihanje",
+            [
+              "Kri | sestava, strjevanje, krvne skupine živali",
+              "Srce in krvni obtok | srčni ciklus, krvni tlak, EKG",
+              "Dihanje | ventilacija, izmenjava plinov, dihanje ptic"
+            ]
+          ],
+          [
+            "Prebava, ledvice in endokrinologija",
+            [
+              "Fiziologija prebave | enoprebavne živali, prežvekovalci, vampova fermentacija",
+              "Ledvice in acidobazno ravnovesje | filtracija, koncentracija urina",
+              "Endokrini sistem in reprodukcija | hormoni, spolni cikel, laktacija"
+            ]
+          ]
+        ]
+      ],
+      "MIKROIMUN": [
+        "Mikrobiologija z imunologijo",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna bakteriologija",
+            [
+              "Zgradba in fiziologija bakterij | rast, metabolizem, genetika",
+              "Diagnostika bakterijskih okužb | gojenje, identifikacija, antibiogram"
+            ]
+          ],
+          [
+            "Specialna bakteriologija in mikologija",
+            [
+              "Pomembne patogene bakterije živali | stafilokoki, streptokoki, klostridiji, salmonele, mikobakterije",
+              "Glive | dermatofiti, kvasovke, mikotoksini"
+            ]
+          ],
+          [
+            "Virologija",
+            [
+              "Splošna virologija | zgradba, razmnoževanje, patogeneza",
+              "Pomembni virusi živali | steklina, slinavka in parkljevka, prašičja kuga, ptičja influenca"
+            ]
+          ],
+          [
+            "Imunologija",
+            [
+              "Prirojena in pridobljena imunost | celice, protitelesa, komplement",
+              "Cepljenje in imunoprofilaksa | vrste cepiv, kolostralna imunost",
+              "Imunološka diagnostika | serološki testi, ELISA"
+            ]
+          ]
+        ]
+      ],
+      "DOBROBIT1": [
+        "Dobrobit živali, etika in zakonodaja 1",
+        "BIO",
+        [],
+        [
+          [
+            "Dobrobit živali",
+            [
+              "Koncepti dobrobiti | pet svoboščin, ocenjevanje dobrobiti",
+              "Dobrobit v reji in prevozu | bivalni pogoji, ravnanje z živalmi"
+            ]
+          ],
+          [
+            "Etika",
+            [
+              "Veterinarska etika | odnos do živali, etične dileme",
+              "Poklicna etika veterinarja | odgovornost, kodeks"
+            ]
+          ],
+          [
+            "Zakonodaja",
+            [
+              "Zakon o zaščiti živali | pravice in obveznosti skrbnikov",
+              "Evropska zakonodaja o dobrobiti | reja, prevoz, zakol"
+            ]
+          ]
+        ]
+      ],
+      "VARNAKRMA": [
+        "Varna krma",
+        "BIO",
+        [],
+        [
+          [
+            "Krma in njena kakovost",
+            [
+              "Vrste krme | voluminozna in močna krma, silaža, krmne mešanice",
+              "Analiza krme | Weendejeva analiza, hranilna vrednost"
+            ]
+          ],
+          [
+            "Nevarnosti v krmi",
+            [
+              "Mikotoksini in mikrobiološka onesnaženja | plesni, salmonele",
+              "Kemijska onesnaževala | težke kovine, ostanki pesticidov, dioksini"
+            ]
+          ],
+          [
+            "Zakonodaja in nadzor",
+            [
+              "Varnost krme v prehranski verigi | sistem HACCP, sledljivost",
+              "Krmni dodatki | vrste, dovoljena uporaba"
+            ]
+          ]
+        ]
+      ],
+      "PARAZIT": [
+        "Parazitologija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna parazitologija",
+            [
+              "Odnos zajedavec-gostitelj | razvojni krogi, prenašalci",
+              "Diagnostika parazitoz | koprološke metode, serologija"
+            ]
+          ],
+          [
+            "Protozoji",
+            [
+              "Kokcidije in drugi protozoji | eimerije, toksoplazma, giardije",
+              "Krvni protozoji | babezije, lišmanije"
+            ]
+          ],
+          [
+            "Helminti",
+            [
+              "Trakulje in metljaji | ehinokoki, jetrni metljaj",
+              "Gliste | želodčno-črevesni zajedavci prežvekovalcev, srčna glista"
+            ]
+          ],
+          [
+            "Členonožci in zatiranje",
+            [
+              "Zunanji zajedavci | klopi, pršice, bolhe, uši",
+              "Zatiranje zajedavcev | antiparazitiki, odpornost, zoonoze"
+            ]
+          ]
+        ]
+      ],
+      "PATOL1": [
+        "Patologija 1",
+        "BIO",
+        [],
+        [
+          [
+            "Celična okvara",
+            [
+              "Celična okvara in prilagoditve | atrofija, hipertrofija, degeneracije",
+              "Nekroza in apoptoza | vrste nekroze, postmortalne spremembe"
+            ]
+          ],
+          [
+            "Motnje krvnega obtoka in vnetje",
+            [
+              "Obtočne motnje | hiperemija, krvavitev, tromboza, infarkt, edem",
+              "Vnetje | akutno in kronično vnetje, vrste eksudatov, celjenje"
+            ]
+          ],
+          [
+            "Neoplazije in obdukcija",
+            [
+              "Tumorji | benigni in maligni tumorji, zasevanje",
+              "Obdukcijska tehnika | postopek obdukcije pri različnih vrstah živali"
+            ]
+          ]
+        ]
+      ],
+      "PATOFIZ": [
+        "Patološka fiziologija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna patofiziologija",
+            [
+              "Vnetje in vročina | mediatorji, sistemski odziv",
+              "Motnje vode, elektrolitov in acidobaznega ravnovesja | dehidracija, acidoza, alkaloza"
+            ]
+          ],
+          [
+            "Patofiziologija organskih sistemov I",
+            [
+              "Srčno-žilni sistem | srčno popuščanje, šok, aritmije",
+              "Dihala | hipoksija, dispneja",
+              "Kri in hemostaza | anemije, motnje strjevanja"
+            ]
+          ],
+          [
+            "Patofiziologija organskih sistemov II",
+            [
+              "Ledvice in jetra | ledvična odpoved, jetrna odpoved",
+              "Presnovne in endokrine motnje | ketoza, mlečna mrzlica, sladkorna bolezen, hipotiroza",
+              "Prebavila | kolike pri konju, timpanija vampa"
+            ]
+          ]
+        ]
+      ],
+      "PATOL2": [
+        "Patologija 2",
+        "BIO",
+        [],
+        [
+          [
+            "Specialna patologija I",
+            [
+              "Patologija srca in ožilja | miokarditis, kardiomiopatije",
+              "Patologija dihal | pljučnice, plevritis",
+              "Patologija prebavil | enteritisi, bolezni jeter"
+            ]
+          ],
+          [
+            "Specialna patologija II",
+            [
+              "Patologija sečil in spolovil | nefritis, mastitis",
+              "Patologija živčevja in gibal | encefalitisi, miopatije",
+              "Patologija kože in endokrinih organov | dermatitisi, tumorji"
+            ]
+          ],
+          [
+            "Patologija kužnih bolezni",
+            [
+              "Patomorfologija virusnih in bakterijskih bolezni | značilne spremembe",
+              "Patologija perutnine in rib | pogoste bolezni"
+            ]
+          ]
+        ]
+      ],
+      "BIOSTAT": [
+        "Biostatistika",
+        "MAT",
+        [],
+        [
+          [
+            "Opisna statistika",
+            [
+              "Statistična obdelava rezultatov | povprečje, mediana, standardni odklon",
+              "Prikaz podatkov | tabele, grafi"
+            ]
+          ],
+          [
+            "Verjetnost in porazdelitve",
+            [
+              "Klasična verjetnost | pogojna verjetnost, diagnostični testi, občutljivost, specifičnost",
+              "Slučajne spremenljivke in porazdelitve | binomska, Poissonova, normalna"
+            ]
+          ],
+          [
+            "Statistično sklepanje",
+            [
+              "Statistično sklepanje | intervali zaupanja, preizkušanje domnev",
+              "Linearna regresija in korelacija | premica regresije, koeficient korelacije, interpretacija",
+              "Primerjava skupin | t-test, hi-kvadrat test"
+            ]
+          ]
+        ]
+      ],
+      "KLINDIAG": [
+        "Osnove klinične diagnostike",
+        "BIO",
+        [],
+        [
+          [
+            "Klinični pregled živali",
+            [
+              "Anamneza in splošni pregled | ravnanje z živalmi, fiksacija, vitalni znaki",
+              "Pregled po organskih sistemih | srce, pljuča, prebavila, sečila, koža"
+            ]
+          ],
+          [
+            "Laboratorijska diagnostika",
+            [
+              "Odvzem in pošiljanje vzorcev | kri, urin, blato",
+              "Hematologija in klinična kemija | krvna slika, biokemijski profil"
+            ]
+          ],
+          [
+            "Klinično razmišljanje",
+            [
+              "Od simptoma do diagnoze | problemsko usmerjen pristop, diferencialna diagnoza",
+              "Klinični zapis in diagnostični načrt | problemsko usmerjen zapis, izbira dodatnih preiskav"
+            ]
+          ]
+        ]
+      ],
+      "FARMTOKS": [
+        "Farmakologija s toksikologijo",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna farmakologija",
+            [
+              "Farmakokinetika | absorpcija, porazdelitev, presnova, izločanje, razlike med vrstami",
+              "Farmakodinamika | receptorji, odmerek-učinek"
+            ]
+          ],
+          [
+            "Specialna farmakologija",
+            [
+              "Zdravila za živčevje | anestetiki, analgetiki, sedativi",
+              "Protimikrobna in antiparazitska zdravila | antibiotiki, preudarna raba",
+              "Protivnetna in hormonska zdravila | NSAR, kortikosteroidi"
+            ]
+          ],
+          [
+            "Toksikologija",
+            [
+              "Splošna toksikologija | odmerek-odziv, akutna in kronična toksičnost",
+              "Pogoste zastrupitve živali | rodenticidi, svinec, strupene rastline"
+            ]
+          ],
+          [
+            "Zakonodaja o zdravilih",
+            [
+              "Karenca in ostanki zdravil | živila živalskega izvora",
+              "Predpisovanje in ravnanje z zdravili | kaskadna raba"
+            ]
+          ]
+        ]
+      ],
+      "VARNAHRANA1": [
+        "Varna hrana 1",
+        "BIO",
+        [],
+        [
+          [
+            "Živila živalskega izvora",
+            [
+              "Meso | zgradba, postmortalne spremembe, kakovost",
+              "Mleko in mlečni izdelki | sestava, higiena pridobivanja"
+            ]
+          ],
+          [
+            "Nevarnosti v živilih",
+            [
+              "Mikrobiološke nevarnosti | salmonele, kampilobakter, listerija",
+              "Kemijske nevarnosti | ostanki zdravil, onesnaževala"
+            ]
+          ],
+          [
+            "Sistem varnosti hrane",
+            [
+              "HACCP | analiza tveganj, kritične kontrolne točke",
+              "Veterinarski nadzor | zakonodaja, uradni nadzor"
+            ]
+          ]
+        ]
+      ],
+      "KIRUOFT": [
+        "Kirurgija in oftalmologija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna kirurgija",
+            [
+              "Asepsa in antisepsa | sterilizacija, priprava operacijskega polja",
+              "Kirurške tehnike | instrumenti, šivanje, hemostaza",
+              "Rane in celjenje | vrste ran, oskrba"
+            ]
+          ],
+          [
+            "Anestezija in perioperativna oskrba",
+            [
+              "Osnove anestezije | premedikacija, splošna in lokalna anestezija",
+              "Pooperativna oskrba | analgezija, zapleti"
+            ]
+          ],
+          [
+            "Oftalmologija",
+            [
+              "Pregled očesa | oftalmološke preiskave",
+              "Bolezni očesa | veznica, roženica, leča, glavkom"
+            ]
+          ]
+        ]
+      ],
+      "SLIKDIAG": [
+        "Slikovne diagnostične tehnike v veterinarski medicini",
+        "BIO",
+        [],
+        [
+          [
+            "Rentgenska diagnostika",
+            [
+              "Nastanek rentgenske slike | sevanje, kontrast, varstvo pred sevanji",
+              "Rentgenska anatomija | prsni koš, trebuh, skelet"
+            ]
+          ],
+          [
+            "Ultrazvok in druge metode",
+            [
+              "Ultrazvočna diagnostika | načela, trebušni ultrazvok, ehokardiografija",
+              "CT, MR in endoskopija | indikacije pri živalih"
+            ]
+          ]
+        ]
+      ],
+      "HIGOKOLJE": [
+        "Higiena živali in okolja",
+        "BIO",
+        [],
+        [
+          [
+            "Higiena reje",
+            [
+              "Hlevska mikroklima | prezračevanje, svetloba, plini",
+              "Biovarnost na farmi | preprečevanje vnosa bolezni"
+            ]
+          ],
+          [
+            "Dezinfekcija in zatiranje škodljivcev",
+            [
+              "Čiščenje in dezinfekcija | razkužila, postopki",
+              "Dezinsekcija in deratizacija | zatiranje glodalcev in žuželk"
+            ]
+          ],
+          [
+            "Okolje in živali",
+            [
+              "Ravnanje z živalskimi odpadki | kafilerija, gnoj",
+              "Onesnaževanje okolja | vpliv na zdravje živali in ljudi"
+            ]
+          ]
+        ]
+      ],
+      "VETINF": [
+        "Veterinarska informatika",
+        "RAC",
+        [],
+        [
+          [
+            "Informacijska tehnologija",
+            [
+              "Računalniška orodja | urejanje besedil, preglednice, predstavitve",
+              "Iskanje informacij | strokovne podatkovne zbirke, viri"
+            ]
+          ],
+          [
+            "Podatki v veterini",
+            [
+              "Podatkovne baze | registri živali, klinični informacijski sistemi",
+              "Obdelava podatkov | preglednice, osnovne analize"
+            ]
+          ]
+        ]
+      ],
+      "BIOFIZDIAG": [
+        "Biofizikalne osnove kliničnih diagnostičnih metod",
+        "FIZ",
+        [],
+        [
+          [
+            "Elektrofiziološke metode",
+            [
+              "Električni tok in vezja | električni model tkiva, impedanca",
+              "Elektrokardiografija | nastanek signala, odvodi"
+            ]
+          ],
+          [
+            "Slikovne metode",
+            [
+              "Rentgensko slikanje | rentgenski žarki, CT, absorpcija sevanja",
+              "Ultrazvok in magnetna resonanca | fizikalne osnove"
+            ]
+          ],
+          [
+            "Optične metode",
+            [
+              "Spektrometrične metode | fotometrija, pulzna oksimetrija",
+              "Mikroskopija | ločljivost, fluorescenca"
+            ]
+          ]
+        ]
+      ],
+      "ALTBELJ": [
+        "Alternativni trajnostni viri prehranskih beljakovin",
+        "BIO",
+        [],
+        [
+          [
+            "Potrebe po beljakovinah",
+            [
+              "Beljakovine v prehrani | aminokislinska sestava, prebavljivost",
+              "Trajnost prireje beljakovin | okoljski odtis"
+            ]
+          ],
+          [
+            "Alternativni viri",
+            [
+              "Žuželke kot vir beljakovin | reja, varnost",
+              "Alge, mikrobne in rastlinske beljakovine | pridobivanje, uporaba v krmi in hrani"
+            ]
+          ]
+        ]
+      ],
+      "ETOLOG": [
+        "Etologija v zdravstvenem varstvu živali",
+        "BIO",
+        [],
+        [
+          [
+            "Osnove etologije",
+            [
+              "Vedenje domačih živali | socialno vedenje, komunikacija",
+              "Učenje in vedenje | pogojevanje, socializacija"
+            ]
+          ],
+          [
+            "Vedenje in zdravje",
+            [
+              "Vedenjske motnje | stereotipije, agresivnost",
+              "Vedenje kot kazalnik bolezni in bolečine | ocenjevanje bolečine"
+            ]
+          ]
+        ]
+      ],
+      "ANATEKSOT": [
+        "Anatomija laboratorijskih in eksotičnih živali",
+        "BIO",
+        [],
+        [
+          [
+            "Laboratorijske živali",
+            [
+              "Anatomija glodavcev | miš, podgana, morski prašiček",
+              "Anatomija kunca | posebnosti prebavil in zobovja"
+            ]
+          ],
+          [
+            "Eksotične živali",
+            [
+              "Anatomija ptic | zračne vreče, skelet",
+              "Anatomija plazilcev | posebnosti obtočil in dihal"
+            ]
+          ]
+        ]
+      ],
+      "METODOL": [
+        "Metodologija znanstveno raziskovalnega dela",
+        "BIO",
+        [],
+        [
+          [
+            "Raziskovalni proces",
+            [
+              "Raziskovalno vprašanje in hipoteza | načrtovanje poskusa",
+              "Viri in literatura | iskanje, citiranje"
+            ]
+          ],
+          [
+            "Znanstveno pisanje",
+            [
+              "Struktura znanstvenega članka | uvod, metode, rezultati, razprava",
+              "Predstavitev rezultatov | tabele, grafi, ustna predstavitev"
+            ]
+          ]
+        ]
+      ],
+      "MIKROPRAK": [
+        "Mikrobiološki praktikum",
+        "BIO",
+        [],
+        [
+          [
+            "Laboratorijske tehnike",
+            [
+              "Aseptično delo in gojišča | priprava gojišč, nacepljanje",
+              "Barvanje in mikroskopija | barvanje po Gramu"
+            ]
+          ],
+          [
+            "Identifikacija mikroorganizmov",
+            [
+              "Biokemijski testi | identifikacija bakterij",
+              "Testiranje občutljivosti | antibiogram, MIK"
+            ]
+          ]
+        ]
+      ],
+      "EKSPATOF": [
+        "Eksperimentalna patofiziologija in toksinologija",
+        "BIO",
+        [],
+        [
+          [
+            "Eksperimentalni modeli",
+            [
+              "Modeli bolezni | in vitro in in vivo modeli",
+              "Fiziološke meritve | elektrofiziologija, merjenje krčenja mišic"
+            ]
+          ],
+          [
+            "Toksinologija",
+            [
+              "Živalski in bakterijski toksini | kačji strupi, nevrotoksini",
+              "Mehanizmi delovanja toksinov | ionski kanali, sinapse"
+            ]
+          ]
+        ]
+      ]
+    },
+    "programs": {
+      "UL-VF-VET": {
+        "name": "Veterinarstvo",
+        "source": "https://www.vf.uni-lj.si/sites/default/files/upload/files/Dodiplomski_Predmetni%20zbornik_2026_2027_ver5_0.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (1.–3. letnik, Predmetni zbornik EMŠ Veterinarstvo 2026/2027)",
+        "years": [
+          [
+            "BIOCEL",
+            "ANATDZ",
+            "BIOKEM1",
+            "HIGPREH",
+            "GENET",
+            "RASTLINE",
+            "HISTEMB1",
+            "ZIVINOREJA"
+          ],
+          [
+            "HISTEMB2",
+            "BIOKEM2",
+            "VETFIZIOL",
+            "MIKROIMUN",
+            "DOBROBIT1",
+            "VARNAKRMA",
+            "PARAZIT",
+            "PATOL1"
+          ],
+          [
+            "PATOFIZ",
+            "PATOL2",
+            "BIOSTAT",
+            "KLINDIAG",
+            "FARMTOKS",
+            "VARNAHRANA1",
+            "KIRUOFT",
+            "SLIKDIAG",
+            "HIGOKOLJE"
+          ]
+        ],
+        "electives": [
+          "VETINF",
+          "BIOFIZDIAG",
+          "ALTBELJ",
+          "ETOLOG",
+          "ANATEKSOT",
+          "METODOL",
+          "MIKROPRAK",
+          "EKSPATOF"
+        ],
+        "degree": "EMŠ"
+      }
+    }
+  },
+  {
+    "id": "UM-FS",
+    "name": "UM Fakulteta za strojništvo",
+    "short": "UM FS",
+    "courses": {
+      "MA": [
+        "Matematična analiza",
+        "MAT",
+        [
+          "MAT_A"
+        ],
+        [
+          [
+            "Vrste in posplošeni integral",
+            [
+              "Vrste | številske vrste, geometrijska vrsta, kriteriji konvergence, potenčne vrste",
+              "Posplošeni integral | integrali z neskončnimi mejami, integrali neomejenih funkcij, konvergenca"
+            ]
+          ]
+        ]
+      ],
+      "LA": [
+        "Linearna algebra",
+        "MAT",
+        [],
+        [
+          [
+            "Vektorji in analitična geometrija",
+            [
+              "Vektorji | skalarni, vektorski in mešani produkt, kot med vektorjema, premica in ravnina",
+              "Razdalje v prostoru | razdalja točke od premice in ravnine, presečišča, projekcije"
+            ]
+          ],
+          [
+            "Matrike in sistemi",
+            [
+              "Matrike in determinante | računanje z matrikami, inverzna matrika, determinanta",
+              "Sistemi linearnih enačb | Gaussova eliminacija, rang, rešljivost"
+            ]
+          ],
+          [
+            "Lastne vrednosti",
+            [
+              "Lastne vrednosti in lastni vektorji | karakteristični polinom, diagonalizacija",
+              "Kvadratne forme | simetrične matrike, glavne osi, definitnost"
+            ]
+          ]
+        ]
+      ],
+      "MEH1": [
+        "Mehanika I",
+        "FIZ",
+        [],
+        [
+          [
+            "Sile in momenti",
+            [
+              "Sile in momenti | rezultanta sil, moment sile, dvojica sil",
+              "Redukcija sistema sil | ekvivalentni sistemi, rezultanta v prostoru, vijačnica sil"
+            ]
+          ],
+          [
+            "Ravnotežje",
+            [
+              "Ravnotežje togega telesa | reakcije podpor, prostoležeči nosilec, konzola",
+              "Sistemi teles | Gerberjev nosilec, okviri, metoda razstavljanja"
+            ]
+          ],
+          [
+            "Paličja in nosilci",
+            [
+              "Paličja | metoda vozlišč, metoda prereza",
+              "Notranje sile v nosilcih | osna sila, prečna sila, upogibni moment, diagrami"
+            ]
+          ],
+          [
+            "Težišča in trenje",
+            [
+              "Težišče | težišče ploskev in teles, Pappus-Guldinova pravila",
+              "Trenje | Coulombovo trenje, lepenje",
+              "Trenje vrvi | Eulerjeva enačba, jermenski prenos"
+            ]
+          ]
+        ]
+      ],
+      "MEH2": [
+        "Mehanika II",
+        "FIZ",
+        [
+          "TRDNOST"
+        ],
+        [
+          [
+            "Prerezne količine",
+            [
+              "Statični momenti in težišče prereza | statični moment ploskve, težišče sestavljenih prerezov",
+              "Ploskovni vztrajnostni momenti | Steinerjev izrek, glavne osi, odpornostni moment"
+            ]
+          ],
+          [
+            "Napetostno stanje",
+            [
+              "Ravninsko napetostno stanje | Mohrov krog, glavne napetosti, transformacija napetosti",
+              "Primerjalne napetosti | hipoteze o porušitvi, von Misesova in Trescova napetost"
+            ]
+          ],
+          [
+            "Deformacije nosilcev",
+            [
+              "Upogibnica | diferencialna enačba upogibnice, poves, zasuk",
+              "Strig pri upogibu | strižne napetosti v prerezu, Žuravskijeva formula"
+            ]
+          ]
+        ]
+      ],
+      "MEH3": [
+        "Mehanika III",
+        "FIZ",
+        [
+          "DINAMIKA"
+        ],
+        [
+          [
+            "Kinematika",
+            [
+              "Kinematika | premo in krivo gibanje, poševni met, kroženje",
+              "Kinematika togega telesa | ravninsko gibanje, trenutni pol hitrosti",
+              "Relativno gibanje | gibljivi koordinatni sistem, Coriolisov pospešek"
+            ]
+          ],
+          [
+            "Analitična dinamika",
+            [
+              "D'Alembertov princip in virtualno delo | posplošene koordinate, princip virtualnega dela",
+              "Lagrangeeve enačbe druge vrste | kinetična in potencialna energija, enačbe gibanja sistemov"
+            ]
+          ]
+        ]
+      ],
+      "MAT1": [
+        "Materiali I",
+        "FIZ",
+        [],
+        [
+          [
+            "Zgradba materialov",
+            [
+              "Atomska zgradba in vezi | kovinska, ionska, kovalentna vez, vpliv na lastnosti",
+              "Kristalna zgradba kovin | kristalne mreže, napake v kristalih",
+              "Difuzija v trdnem | Fickova zakona, aktivacijska energija"
+            ]
+          ],
+          [
+            "Lastnosti in preizkušanje",
+            [
+              "Mehanske lastnosti materialov | natezni preizkus, trdota, žilavost",
+              "Utrujanje in lezenje | Wöhlerjeva krivulja, trajna dinamična trdnost, lezenje pri visokih temperaturah"
+            ]
+          ],
+          [
+            "Fazne pretvorbe",
+            [
+              "Fazni diagrami | binarni diagrami, vzvodno pravilo, diagram Fe-C",
+              "Strjevanje kovin | nukleacija, rast kristalnih zrn, mikrostruktura"
+            ]
+          ]
+        ]
+      ],
+      "MAT2": [
+        "Materiali II",
+        "FIZ",
+        [
+          "NEKOV_MAT"
+        ],
+        [
+          [
+            "Jekla",
+            [
+              "Toplotna obdelava jekel | kaljenje, popuščanje, žarjenje",
+              "Vrste jekel in litin | konstrukcijska, orodna in nerjavna jekla, sive litine, označevanje"
+            ]
+          ],
+          [
+            "Neželezne kovine",
+            [
+              "Lahke kovine | aluminijeve, magnezijeve in titanove zlitine, izločevalno utrjevanje",
+              "Bakrove in nikljeve zlitine | medenina, bron, superzlitine"
+            ]
+          ],
+          [
+            "Korozija",
+            [
+              "Korozija kovin | elektrokemijska korozija, vrste korozije",
+              "Zaščita pred korozijo | prevleke, katodna zaščita, izbira materiala"
+            ]
+          ]
+        ]
+      ],
+      "TKF": [
+        "Temelji klasične fizike",
+        "FIZ",
+        [
+          "FIZ_1"
+        ],
+        [
+          [
+            "Elektrika in magnetizem",
+            [
+              "Elektrostatika | Coulombov zakon, električno polje, potencial, kondenzator",
+              "Električni tok in vezja | Ohmov zakon, Kirchhoffova zakona, RC vezje",
+              "Magnetno polje in indukcija | Lorentzova sila, Amperov zakon, indukcijski zakon"
+            ]
+          ]
+        ]
+      ],
+      "VZS": [
+        "Valovanje in zgradba snovi",
+        "FIZ",
+        [],
+        [
+          [
+            "Valovanje",
+            [
+              "Valovanje | valovna enačba, stoječe valovanje, zvok, Dopplerjev pojav",
+              "Elektromagnetno valovanje | spekter, gostota energijskega toka, tlak svetlobe"
+            ]
+          ],
+          [
+            "Optika",
+            [
+              "Geometrijska in valovna optika | lom, leče, interferenca, uklon",
+              "Polarizacija | Malusov zakon, Brewsterjev kot, dvolomnost"
+            ]
+          ],
+          [
+            "Zgradba snovi",
+            [
+              "Fotoni in atomi | fotoefekt, de Brogliejeva valovna dolžina, energijski nivoji",
+              "Molekule in trdna snov | kemijske vezi, kristali, prevodniki in polprevodniki",
+              "Jedrska fizika | zgradba jedra, radioaktivni razpad, razpolovni čas, vezavna energija"
+            ]
+          ]
+        ]
+      ],
+      "II": [
+        "Inženirska informatika",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove programiranja",
+            [
+              "Spremenljivke in podatkovni tipi | števila, nizi, seznami, operatorji",
+              "Krmilni stavki | pogojni stavki, zanke, logični izrazi",
+              "Funkcije | parametri, vračanje vrednosti, moduli"
+            ]
+          ],
+          [
+            "Algoritmi in podatki",
+            [
+              "Algoritmi | diagram poteka, iskanje in urejanje, zahtevnost",
+              "Delo z datotekami in podatki | branje in zapis datotek, tabele meritev"
+            ]
+          ],
+          [
+            "Inženirski izračuni",
+            [
+              "Vektorji in matrike v programu | matrične operacije, reševanje sistemov enačb",
+              "Grafični prikaz podatkov | diagrami, aproksimacija meritev"
+            ]
+          ]
+        ]
+      ],
+      "TD": [
+        "Tehniška dokumentacija",
+        "FIZ",
+        [],
+        [
+          [
+            "Tehniško risanje",
+            [
+              "Standardi tehniškega risanja | formati, merila, črte, glava risbe",
+              "Pravokotne projekcije | pogledi, evropska projekcija, risanje teles",
+              "Prerezi in posebni prikazi | polni in delni prerezi, šrafure, poenostavitve"
+            ]
+          ],
+          [
+            "Kotiranje in tolerance",
+            [
+              "Kotiranje | pravila kotiranja, kotirne verige, kotiranje oblik",
+              "Tolerance in ujemi | ISO sistem toleranc, izvrtina in gred, ohlapni in tesni ujemi",
+              "Hrapavost in geometrijske tolerance | oznake hrapavosti, tolerance oblike in lege"
+            ]
+          ],
+          [
+            "Standardni elementi in sestavi",
+            [
+              "Risanje standardnih elementov | navoji, vijaki, zobniki, vzmeti, zvari",
+              "Sestavne risbe | pozicije, kosovnica, prikaz sestava"
+            ]
+          ]
+        ]
+      ],
+      "TERMO": [
+        "Termodinamika",
+        "FIZ",
+        [
+          "TERMO_FS"
+        ],
+        [
+          [
+            "Pare in odprti sistemi",
+            [
+              "Termodinamske lastnosti čistih snovi | parni tlak, vrela kapljevina, mokra in pregreta para, parne tabele",
+              "Prvi zakon za odprte sisteme | entalpija, stacionarni tok, šobe, turbine, kompresorji",
+              "Eksergija | delovna sposobnost, eksergijske izgube"
+            ]
+          ]
+        ]
+      ],
+      "PT1": [
+        "Proizvodne tehnologije I",
+        "FIZ",
+        [],
+        [
+          [
+            "Pregled in praoblikovanje",
+            [
+              "Razvrstitev proizvodnih postopkov | praoblikovanje, preoblikovanje, odrezovanje, spajanje",
+              "Livarstvo | peščeno litje, tlačno litje, modeli in jedra, livarske napake",
+              "Metalurgija prahov | stiskanje, sintranje, lastnosti izdelkov"
+            ]
+          ],
+          [
+            "Preoblikovanje",
+            [
+              "Masivno preoblikovanje | kovanje, valjanje, iztiskovanje, preoblikovalna sila",
+              "Pločevinsko preoblikovanje | štancanje, krivljenje, globoki vlek"
+            ]
+          ],
+          [
+            "Odrezovanje in aditivne tehnologije",
+            [
+              "Osnove odrezovanja | struženje, frezanje, vrtanje, rezalni parametri",
+              "Aditivne tehnologije | 3D tisk, selektivno lasersko taljenje, hitra izdelava prototipov"
+            ]
+          ]
+        ]
+      ],
+      "IO1": [
+        "Inženirska orodja I",
+        "RAC",
+        [],
+        [
+          [
+            "3D modeliranje",
+            [
+              "Parametrično modeliranje | skice, omejitve, izvleki in rotacije, značilke",
+              "Sestavi | povezovanje delov, kinematske vezi, kolizije",
+              "Izdelava risb iz modela | pogledi, prerezi, kotiranje, kosovnica"
+            ]
+          ],
+          [
+            "Meritve in obdelava",
+            [
+              "Osnove merjenja | merilni instrumenti, merilni pogrešek, kalibracija",
+              "Inženirski izračuni s programskimi orodji | preglednice, Matlab, prikaz rezultatov"
+            ]
+          ],
+          [
+            "Inženirska dokumentacija",
+            [
+              "Tehniška poročila | struktura poročila, prikaz rezultatov, navajanje virov",
+              "Predstavitev inženirskega dela | ustna predstavitev, grafični prikazi, timsko delo"
+            ]
+          ]
+        ]
+      ],
+      "VA": [
+        "Vektorska analiza",
+        "MAT",
+        [],
+        [
+          [
+            "Funkcije več spremenljivk",
+            [
+              "Parcialni odvodi | parcialni odvodi, totalni diferencial, gradient, verižno pravilo",
+              "Ekstremi funkcij več spremenljivk | stacionarne točke, Hessejeva matrika, vezani ekstremi"
+            ]
+          ],
+          [
+            "Integrali",
+            [
+              "Večkratni integrali | dvojni in trojni integral, polarne, cilindrične in sferne koordinate",
+              "Uporaba večkratnih integralov | masa, težišče, vztrajnostni moment"
+            ]
+          ],
+          [
+            "Vektorska polja",
+            [
+              "Krivulje in ploskve | parametrizacija, tangenta, ločna dolžina, normala ploskve",
+              "Gradient, divergenca in rotor | skalarna in vektorska polja, operator nabla",
+              "Krivuljni in ploskovni integrali | delo sile, pretok, Gaussov in Stokesov izrek"
+            ]
+          ]
+        ]
+      ],
+      "DA": [
+        "Diferencialna analiza",
+        "MAT",
+        [],
+        [
+          [
+            "Enačbe prvega reda",
+            [
+              "Diferencialne enačbe prvega reda | ločljive in linearne enačbe, začetni problem, modeli rasti in razpada",
+              "Eksaktne in Bernoullijeve enačbe | integrirajoči množitelj, substitucije"
+            ]
+          ],
+          [
+            "Enačbe višjega reda",
+            [
+              "Linearne diferencialne enačbe drugega reda | homogene s konstantnimi koeficienti, nastavek za partikularno rešitev",
+              "Mehanska nihanja z diferencialnimi enačbami | prosto, dušeno in vsiljeno nihanje, resonanca"
+            ]
+          ],
+          [
+            "Sistemi in transformacije",
+            [
+              "Sistemi diferencialnih enačb | linearni sistemi, prevedba enačbe višjega reda na sistem",
+              "Laplaceova transformacija | lastnosti, inverzna transformacija, reševanje linearnih diferencialnih enačb"
+            ]
+          ]
+        ]
+      ],
+      "MT": [
+        "Mehanika tekočin",
+        "FIZ",
+        [
+          "MEH_TEKOCIN"
+        ],
+        [
+          [
+            "Gibalna količina in podobnost",
+            [
+              "Izrek o gibalni količini | sile curka na ploskve, sile na kolena cevi",
+              "Enote in dimenzijska analiza | Buckinghamov teorem, brezdimenzijska števila, modelna podobnost"
+            ]
+          ],
+          [
+            "Obtekanje teles",
+            [
+              "Mejna plast | laminarna in turbulentna mejna plast, odcepitev",
+              "Upor in vzgon | koeficient upora, aeroprofil"
+            ]
+          ]
+        ]
+      ],
+      "SE": [
+        "Strojni elementi",
+        "FIZ",
+        [
+          "STROJNI_EL"
+        ],
+        [
+          [
+            "Osnove dimenzioniranja",
+            [
+              "Dinamična trdnost strojnih delov | koncentracija napetosti, Smithov diagram, varnost",
+              "Tolerance in ujemi | ISO sistem toleranc, izvrtina in gred, ohlapni in tesni ujemi"
+            ]
+          ],
+          [
+            "Zveze in vzmeti",
+            [
+              "Gredne vezi | moznik, utorna gred, stiskani spoj",
+              "Zvarne zveze | vrste zvarov, preračun zvarov",
+              "Vzmeti | vijačne vzmeti, togost, preračun"
+            ]
+          ],
+          [
+            "Prenosniki",
+            [
+              "Jermenski in verižni prenos | sile v jermenu, prestavno razmerje, izbira verige",
+              "Sklopke | toge, elastične in tarne sklopke, prenos navora"
+            ]
+          ]
+        ]
+      ],
+      "PT2": [
+        "Proizvodne tehnologije II",
+        "FIZ",
+        [],
+        [
+          [
+            "Napredno odrezovanje",
+            [
+              "Brušenje in fina obdelava | brusna sredstva, honanje, lepanje, kakovost površine",
+              "Obdelovalnost in obraba orodij | Taylorjeva enačba, rezalni materiali, hlajenje"
+            ]
+          ],
+          [
+            "CNC obdelava",
+            [
+              "Numerično krmiljeni stroji | zgradba CNC stroja, koordinatni sistemi, osi",
+              "CNC programiranje | G-koda, cikli, CAM"
+            ]
+          ],
+          [
+            "Nekonvencionalni postopki in tehnološki postopek",
+            [
+              "Elektroerozija in laserska obdelava | potopna in žična erozija, lasersko rezanje",
+              "Vodni curek in drugi postopki | abrazivni vodni curek, elektrokemijska obdelava",
+              "Načrtovanje tehnološkega postopka | zaporedje operacij, izbira stroja, tehnološka dokumentacija"
+            ]
+          ]
+        ]
+      ],
+      "PRT": [
+        "Prenos toplote",
+        "FIZ",
+        [
+          "PRENOS_TOPLOTE"
+        ],
+        [
+          [
+            "Nestacionarni prenos",
+            [
+              "Nestacionarni prevod toplote | Biotovo število, metoda koncentrirane kapacitete",
+              "Rebra | učinkovitost rebra, povečanje prenosa toplote"
+            ]
+          ],
+          [
+            "Fazne spremembe",
+            [
+              "Vrenje in kondenzacija | mehurčkasto vrenje, filmska kondenzacija",
+              "Uparjalniki in kondenzatorji | prestop toplote pri fazni spremembi, dimenzioniranje"
+            ]
+          ]
+        ]
+      ],
+      "ET": [
+        "Elektrotehnika",
+        "FIZ",
+        [
+          "ELEKTRO"
+        ],
+        [
+          [
+            "Električna polja",
+            [
+              "Elektrostatika | Coulombov zakon, električno polje, potencial, kondenzator",
+              "Magnetni krog | magnetni pretok, reluktanca, tuljava"
+            ]
+          ],
+          [
+            "Trifazni sistemi in elektronika",
+            [
+              "Trifazni sistemi | vezava zvezda in trikot, trifazna moč",
+              "Osnove elektronike | dioda, tranzistor, usmernik",
+              "Električna varnost | zaščita pred električnim udarom, ozemljitev"
+            ]
+          ]
+        ]
+      ],
+      "OP": [
+        "Organizacija proizvodnje",
+        "EKO",
+        [],
+        [
+          [
+            "Proizvodni sistem",
+            [
+              "Tipi proizvodnje | posamična, serijska, masovna proizvodnja, procesna in predmetna razporeditev",
+              "Razmestitev proizvodnje | layout, materialni tok, linija"
+            ]
+          ],
+          [
+            "Planiranje",
+            [
+              "Planiranje proizvodnje | napovedovanje, glavni plan, MRP",
+              "Terminiranje | Ganttov diagram, pravila razvrščanja, pretočni čas"
+            ]
+          ],
+          [
+            "Vitka proizvodnja",
+            [
+              "Vitka proizvodnja | izgube, kanban, just-in-time, 5S",
+              "Produktivnost in kapacitete | izkoriščenost, ozko grlo, OEE"
+            ]
+          ]
+        ]
+      ],
+      "MK": [
+        "Meroslovje in kakovost",
+        "FIZ",
+        [],
+        [
+          [
+            "Meroslovje",
+            [
+              "Merske enote in sledljivost | SI sistem, etaloni, kalibracija",
+              "Merilna negotovost | tip A in B, sestavljena in razširjena negotovost",
+              "Merilni instrumenti za dolžine | kljunasto merilo, mikrometer, koordinatni merilni stroj"
+            ]
+          ],
+          [
+            "Geometrijske specifikacije",
+            [
+              "Tolerance in ujemi | ISO sistem toleranc, izvrtina in gred, ohlapni in tesni ujemi",
+              "Merjenje hrapavosti in oblike | Ra, Rz, merjenje okroglosti"
+            ]
+          ],
+          [
+            "Kakovost",
+            [
+              "Statistična kontrola procesa | kontrolne karte, sposobnost procesa Cp in Cpk",
+              "Sistemi vodenja kakovosti | ISO 9001, PDCA, orodja kakovosti"
+            ]
+          ]
+        ]
+      ],
+      "OPOS": [
+        "Osnove procesnega in okoljskega strojništva",
+        "FIZ",
+        [],
+        [
+          [
+            "Bilance",
+            [
+              "Snovne bilance | bilance sestavin, mešanje tokov, recikel, stopnja pretvorbe",
+              "Energijske bilance | odprti sistemi, entalpija toka"
+            ]
+          ],
+          [
+            "Procesne operacije",
+            [
+              "Mehanske procesne operacije | drobljenje, sejanje, mešanje, filtracija",
+              "Toplotno-snovne operacije | uparjanje, sušenje, destilacija"
+            ]
+          ],
+          [
+            "Varstvo okolja",
+            [
+              "Onesnaževanje zraka | emisije, dimni plini, prašni delci",
+              "Odpadne vode in odpadki | čiščenje odpadnih vod, ravnanje z odpadki"
+            ]
+          ]
+        ]
+      ],
+      "ESN": [
+        "Energetski stroji in naprave",
+        "FIZ",
+        [
+          "ENERGETSKI"
+        ],
+        [
+          [
+            "Pogonski stroji",
+            [
+              "Kompresorji in ventilatorji | batni in vijačni kompresorji, ventilatorji, moč pogona",
+              "Motorji z notranjim zgorevanjem | štiritaktni in dvotaktni motor, moč, izkoristek"
+            ]
+          ],
+          [
+            "Kotli in toplotne črpalke",
+            [
+              "Parni kotli | zgradba, izkoristek, gorivo",
+              "Hladilne naprave in toplotne črpalke | kompresorski krožni proces, grelno število"
+            ]
+          ]
+        ]
+      ],
+      "OK": [
+        "Osnove konstruiranja",
+        "FIZ",
+        [],
+        [
+          [
+            "Konstrukcijski proces",
+            [
+              "Faze konstruiranja | zahteve, funkcijska struktura, koncept, izvedba",
+              "Zahtevnik | zahteve in želje, specifikacija izdelka"
+            ]
+          ],
+          [
+            "Iskanje rešitev",
+            [
+              "Metode iskanja rešitev | morfološka matrika, viharjenje možganov",
+              "Vrednotenje variant | tehnično in ekonomsko vrednotenje, uteži"
+            ]
+          ],
+          [
+            "Oblikovanje",
+            [
+              "Oblikovanje za izdelavo in montažo | pravila DFM in DFA, tehnologičnost",
+              "Izbira materiala | Ashbyjevi diagrami, kriteriji izbire"
+            ]
+          ]
+        ]
+      ],
+      "TSL": [
+        "Transportni sistemi in logistika",
+        "FIZ",
+        [],
+        [
+          [
+            "Transportne naprave",
+            [
+              "Dvigala in žerjavi | vrste žerjavov, vrvi, škripčevja, nosilnost",
+              "Kontinuirni transporterji | tračni, valjčni in verižni transporterji, zmogljivost",
+              "Industrijska vozila | viličarji, avtomatsko vodena vozila"
+            ]
+          ],
+          [
+            "Skladiščenje",
+            [
+              "Skladiščni sistemi | regalna skladišča, avtomatizirana skladišča, izkoriščenost",
+              "Pakiranje in identifikacija | embalaža, palete, črtne kode in RFID"
+            ]
+          ],
+          [
+            "Logistika",
+            [
+              "Notranja logistika | materialni tok, komisioniranje",
+              "Oskrbovalne verige | distribucija, zaloge, optimizacija transporta"
+            ]
+          ]
+        ]
+      ],
+      "IO2": [
+        "Inženirska orodja II",
+        "RAC",
+        [],
+        [
+          [
+            "Metoda končnih elementov",
+            [
+              "Metoda končnih elementov | diskretizacija, togostna matrika, palični element",
+              "Trdnostna analiza v programu MKE | robni pogoji, mreža, vrednotenje napetosti"
+            ]
+          ],
+          [
+            "CAM",
+            [
+              "Računalniško podprta izdelava | poti orodja, strategije obdelave",
+              "Generiranje NC kode | postprocesor, simulacija obdelave, preverjanje kolizij"
+            ]
+          ],
+          [
+            "Računalniška dinamika tekočin",
+            [
+              "Osnove CFD | diskretizacija, mreža, robni pogoji, konvergenca",
+              "Vrednotenje simulacij | preverjanje mreže, primerjava z meritvami"
+            ]
+          ]
+        ]
+      ],
+      "TK": [
+        "Tehniška kibernetika",
+        "FIZ",
+        [
+          "DIN_PROCESOV"
+        ],
+        [
+          [
+            "Sistemi in modeli",
+            [
+              "Sistemi in signali | vhod, izhod, motnje, odprta in zaprta zanka",
+              "Matematični modeli dinamičnih sistemov | mehanski, električni in hidravlični sistemi, linearizacija"
+            ]
+          ],
+          [
+            "Analiza sistemov",
+            [
+              "Frekvenčni odziv | Bodejev diagram, Nyquistov diagram",
+              "Stabilnost sistemov | Routh-Hurwitzov kriterij, rezerva faze in ojačenja"
+            ]
+          ],
+          [
+            "Krmiljenje",
+            [
+              "Logično krmiljenje | Boolova algebra, krmilniki PLK, lestvični diagram",
+              "Sekvenčna krmiljenja | časovniki, števniki, koračna veriga"
+            ]
+          ]
+        ]
+      ],
+      "GP": [
+        "Gospodarjenje v proizvodnji",
+        "EKO",
+        [],
+        [
+          [
+            "Podjetje in stroški",
+            [
+              "Proizvodno podjetje | cilji, poslovne funkcije, organizacijske oblike",
+              "Stroški | stalni in spremenljivi stroški, prag rentabilnosti",
+              "Kalkulacije | lastna cena, delitvena in dodatna kalkulacija"
+            ]
+          ],
+          [
+            "Investicije",
+            [
+              "Investicijske odločitve | doba vračanja, neto sedanja vrednost, interna stopnja donosnosti",
+              "Amortizacija | metode amortizacije, življenjska doba opreme"
+            ]
+          ],
+          [
+            "Uspešnost",
+            [
+              "Kazalniki uspešnosti | produktivnost, ekonomičnost, rentabilnost",
+              "Načrtovanje poslovanja | poslovni načrt, proračun, kontrola"
+            ]
+          ]
+        ]
+      ],
+      "PS": [
+        "Prenos snovi",
+        "FIZ",
+        [
+          "PRENOS_SNOVI"
+        ],
+        [
+          [
+            "Difuzija",
+            [
+              "Molekularna difuzija | ekvimolarna in enosmerna difuzija, difuzijski koeficient",
+              "Nestacionarna difuzija | difuzija v polneskončno telo, Fourierovo število"
+            ]
+          ],
+          [
+            "Konvektivni prenos snovi",
+            [
+              "Snovna prestopnost | Sherwoodovo in Schmidtovo število, analogija s prenosom toplote",
+              "Medfazni prenos snovi | dvofilmska teorija, celotni koeficient prenosa"
+            ]
+          ],
+          [
+            "Procesi",
+            [
+              "Kristalizacija in sušenje | bilance, ravnotežja",
+              "Destilacija | ravnotežne stopnje, McCabe-Thiele"
+            ]
+          ]
+        ]
+      ],
+      "EM": [
+        "Eksperimentalne metode",
+        "FIZ",
+        [
+          "OBDELAVA_PODATKOV"
+        ],
+        [
+          [
+            "Merilni sistemi",
+            [
+              "Zgradba merilnega sistema | zaznavalo, pretvornik, zajem podatkov, vzorčenje",
+              "Dinamične lastnosti zaznaval | časovna konstanta, frekvenčni odziv"
+            ]
+          ],
+          [
+            "Merjenje veličin",
+            [
+              "Merjenje temperature | termoelementi, uporovni termometri, termografija",
+              "Merjenje tlaka in pretoka | manometri, zaslonka, Venturijeva cev, anemometri",
+              "Merjenje sil in deformacij | uporovni lističi, Wheatstonov most"
+            ]
+          ]
+        ]
+      ],
+      "TPN": [
+        "Toplotni postroji in naprave",
+        "FIZ",
+        [],
+        [
+          [
+            "Goriva in gorenje",
+            [
+              "Goriva | trdna, tekoča in plinasta goriva, kurilnost",
+              "Stehiometrija gorenja | potreba po zraku, razmernik zraka, sestava dimnih plinov"
+            ]
+          ],
+          [
+            "Kotli in elektrarne",
+            [
+              "Parni kotli | zgradba, izkoristek, gorivo",
+              "Parne elektrarne | Rankinov proces z dogrevanjem in regeneracijo, izkoristek",
+              "Plinsko-parni postroji | kombinirani proces, kogeneracija"
+            ]
+          ],
+          [
+            "Toplotne naprave",
+            [
+              "Toplotni prenosniki | logaritemska srednja temperaturna razlika",
+              "Daljinsko ogrevanje | toplotna postaja, razvod toplote, toplotne izgube"
+            ]
+          ]
+        ]
+      ],
+      "MNZ1": [
+        "Motorji z notranjim zgorevanjem I",
+        "FIZ",
+        [],
+        [
+          [
+            "Delovanje motorja",
+            [
+              "Delovni cikli motorjev | Ottov in Dieslov proces, dejanski indikatorski diagram",
+              "Značilne veličine motorja | srednji efektivni tlak, moč, navor, specifična poraba"
+            ]
+          ],
+          [
+            "Zgorevanje in tvorba zmesi",
+            [
+              "Tvorba zmesi | vbrizgavanje goriva, razmerje zrak-gorivo",
+              "Zgorevanje v motorju | vžig, potek zgorevanja, detonacija"
+            ]
+          ],
+          [
+            "Mehanizem in emisije",
+            [
+              "Ročični mehanizem | kinematika bata, sile v mehanizmu, uravnoteženje",
+              "Emisije motorjev | NOx, CO, delci, katalizator"
+            ]
+          ]
+        ]
+      ],
+      "POT": [
+        "Procesna in okoljska tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Mehanske operacije",
+            [
+              "Sedimentacija in filtracija | Stokesov zakon, usedalniki, filtrski upor",
+              "Ciklonski in vrečasti filtri | ločevanje prahu, izkoristek"
+            ]
+          ],
+          [
+            "Čiščenje plinov",
+            [
+              "Čiščenje dimnih plinov | razžveplanje, odstranjevanje NOx, elektrofiltri",
+              "Absorpcija in ekstrakcija | porazdelitveni koeficient, bilance"
+            ]
+          ],
+          [
+            "Čiščenje voda in odpadki",
+            [
+              "Čiščenje odpadnih voda | mehanska, biološka in kemijska stopnja",
+              "Termična obdelava odpadkov | sežig, piroliza, uplinjanje"
+            ]
+          ]
+        ]
+      ],
+      "HS1": [
+        "Hidravlični stroji I",
+        "FIZ",
+        [],
+        [
+          [
+            "Teorija turbinskih strojev",
+            [
+              "Eulerjeva turbinska enačba | hitrostni trikotniki, specifično delo",
+              "Podobnost turbinskih strojev | specifična vrtilna frekvenca, afinitetni zakoni"
+            ]
+          ],
+          [
+            "Črpalke",
+            [
+              "Črpalke in turbine | moč, izkoristek, višina črpanja",
+              "Karakteristike črpalk | Q-H krivulja, obratovalna točka, vezava črpalk",
+              "Kavitacija | NPSH, posledice kavitacije"
+            ]
+          ],
+          [
+            "Vodne turbine",
+            [
+              "Vodne turbine | Peltonova, Francisova in Kaplanova turbina, izbira turbine",
+              "Hidroelektrarne | padec, pretok, moč elektrarne, črpalne elektrarne"
+            ]
+          ]
+        ]
+      ],
+      "FMTS": [
+        "Fizikalno modeliranje tehniških sistemov",
+        "FIZ",
+        [],
+        [
+          [
+            "Modeliranje",
+            [
+              "Proces modeliranja | predpostavke, poenostavitve, validacija modela",
+              "Dimenzijska analiza in podobnost | Buckinghamov teorem, modelni preizkusi"
+            ]
+          ],
+          [
+            "Modeli sistemov",
+            [
+              "Mehanski modeli | masa, vzmet, dušilka, prostostne stopnje",
+              "Analogije med sistemi | električni, hidravlični in toplotni sistemi"
+            ]
+          ],
+          [
+            "Simulacije",
+            [
+              "Simulacija dinamičnih sistemov | blokovni diagrami, numerična integracija",
+              "Analiza občutljivosti | vpliv parametrov, primerjava z meritvami"
+            ]
+          ]
+        ]
+      ],
+      "IRS": [
+        "Inženirske računalniške simulacije",
+        "RAC",
+        [],
+        [
+          [
+            "Metoda končnih elementov",
+            [
+              "Metoda končnih elementov | diskretizacija, togostna matrika, palični element",
+              "Vrste končnih elementov | lupinski, prostorski in nosilčni elementi, interpolacija"
+            ]
+          ],
+          [
+            "Analize",
+            [
+              "Linearna statična analiza | robni pogoji, obremenitve, vrednotenje napetosti",
+              "Modalna analiza | lastne frekvence, lastne oblike"
+            ]
+          ],
+          [
+            "Zanesljivost rezultatov",
+            [
+              "Konvergenca mreže | gostitev mreže, singularnosti, napake modela",
+              "Nelinearne analize | materialna in geometrijska nelinearnost, kontakt"
+            ]
+          ]
+        ]
+      ],
+      "MKON": [
+        "Metodika konstruiranja",
+        "FIZ",
+        [],
+        [
+          [
+            "Sistematično konstruiranje",
+            [
+              "Metodični pristop h konstruiranju | VDI 2221, faze razvoja izdelka",
+              "Funkcijska analiza | glavna funkcija, funkcijska struktura"
+            ]
+          ],
+          [
+            "Koncipiranje",
+            [
+              "Morfološka analiza | iskanje delnih rešitev, kombiniranje",
+              "Odločanje med variantami | odločitvene matrike, tehnično-ekonomsko vrednotenje"
+            ]
+          ],
+          [
+            "Kakovost konstrukcije",
+            [
+              "Analiza možnih napak | FMEA, ocena tveganja",
+              "Okolju prijazno konstruiranje | življenjski cikel, reciklabilnost, izbira materialov"
+            ]
+          ]
+        ]
+      ],
+      "RPK": [
+        "Računalniško podprto konstruiranje",
+        "RAC",
+        [],
+        [
+          [
+            "Modeliranje",
+            [
+              "Parametrično in značilkovno modeliranje | tabele variant, konstrukcijske značilke",
+              "Ploskovno modeliranje | krivulje, NURBS ploskve, zveznost"
+            ]
+          ],
+          [
+            "Sestavi in dokumentacija",
+            [
+              "Modeliranje sestavov | od spodaj navzgor, od zgoraj navzdol, knjižnice standardnih delov",
+              "Tehniška dokumentacija iz CAD | delavniške risbe, sestavne risbe, kosovnice"
+            ]
+          ],
+          [
+            "Integracija",
+            [
+              "Upravljanje podatkov o izdelku | PDM, različice, izmenjava podatkov STEP",
+              "Analize na CAD modelu | masne lastnosti, kolizije, osnovne trdnostne analize"
+            ]
+          ]
+        ]
+      ],
+      "SK": [
+        "Strojne konstrukcije",
+        "FIZ",
+        [],
+        [
+          [
+            "Nosilne konstrukcije",
+            [
+              "Nosilne konstrukcije strojev | okvirji, nosilci, ohišja",
+              "Stabilnost konstrukcij | uklon palic, bočna zvrnitev"
+            ]
+          ],
+          [
+            "Trajnost",
+            [
+              "Utrujanje konstrukcij | S-N krivulja, Palmgren-Minerjevo pravilo",
+              "Osnove lomne mehanike | faktor intenzivnosti napetosti, rast razpoke"
+            ]
+          ],
+          [
+            "Spoji",
+            [
+              "Varjene konstrukcije | preračun zvarov, oblikovanje spojev",
+              "Vijačene konstrukcije | prednapeti vijaki, strig in bočni pritisk"
+            ]
+          ]
+        ]
+      ],
+      "SM": [
+        "Spajanje materialov",
+        "FIZ",
+        [],
+        [
+          [
+            "Varjenje",
+            [
+              "Obločno varjenje | REO, MIG/MAG, TIG, varilni parametri",
+              "Uporovno in plamensko varjenje | točkovno varjenje, plinsko varjenje",
+              "Varjenje z visoko gostoto energije | lasersko in elektronsko varjenje"
+            ]
+          ],
+          [
+            "Metalurgija zvara",
+            [
+              "Varivost jekel | toplotno vplivano področje, ogljikov ekvivalent, predgrevanje",
+              "Napake v zvarih | razpoke, poroznost, preizkušanje zvarov"
+            ]
+          ],
+          [
+            "Drugi postopki",
+            [
+              "Lotanje in lepljenje | mehko in trdo lotanje, lepila, priprava površin",
+              "Spajanje polimerov in kompozitov | ultrazvočno varjenje, mehanski spoji"
+            ]
+          ]
+        ]
+      ],
+      "OPR": [
+        "Odrezovalni procesi",
+        "FIZ",
+        [],
+        [
+          [
+            "Mehanika odrezovanja",
+            [
+              "Tvorba odrezka | strižna ravnina, vrste odrezkov, nalepek",
+              "Rezalne sile in moč | specifična rezalna sila, Kienzlejeva enačba"
+            ]
+          ],
+          [
+            "Orodja",
+            [
+              "Geometrija rezalnega orodja | cepilni kot, prosti kot, nastavni kot",
+              "Obdelovalnost in obraba orodij | Taylorjeva enačba, rezalni materiali, hlajenje"
+            ]
+          ],
+          [
+            "Postopki",
+            [
+              "Struženje in frezanje | rezalni parametri, čas obdelave",
+              "Vrtanje in brušenje | povrtavanje, brusni parametri, kakovost površine"
+            ]
+          ]
+        ]
+      ],
+      "OPS": [
+        "Obdelovalni in preoblikovalni stroji",
+        "FIZ",
+        [],
+        [
+          [
+            "Obdelovalni stroji",
+            [
+              "Zgradba obdelovalnih strojev | ogrodje, vodila, glavno vreteno, pogoni",
+              "CNC obdelovalni centri | osi, menjalnik orodij, krmilje"
+            ]
+          ],
+          [
+            "Preoblikovalni stroji",
+            [
+              "Stiskalnice | mehanske in hidravlične stiskalnice, sila in energija",
+              "Kovaški stroji | kladiva, kovaške stiskalnice"
+            ]
+          ],
+          [
+            "Lastnosti strojev",
+            [
+              "Togost in natančnost strojev | statična in dinamična togost, vibracije, geometrijska natančnost",
+              "Preizkušanje obdelovalnih strojev | prevzemni preizkusi, merjenje natančnosti"
+            ]
+          ]
+        ]
+      ],
+      "RIP": [
+        "Računalniško integrirana proizvodnja",
+        "FIZ",
+        [],
+        [
+          [
+            "Koncept CIM",
+            [
+              "Računalniško integrirana proizvodnja | CAD, CAPP, CAM, informacijski tok",
+              "Računalniško podprto načrtovanje tehnologije | CAPP, tehnološki postopek, baze podatkov"
+            ]
+          ],
+          [
+            "Avtomatizirani sistemi",
+            [
+              "Prilagodljivi obdelovalni sistemi | celice, transport obdelovancev, robotske celice",
+              "Programiranje CNC strojev | G-koda, cikli, postprocesor"
+            ]
+          ],
+          [
+            "Pametna proizvodnja",
+            [
+              "Industrija 4.0 | internet stvari, digitalni dvojček, zajem podatkov iz strojev",
+              "Informacijski sistemi v proizvodnji | ERP, MES, povezovanje podatkov"
+            ]
+          ]
+        ]
+      ],
+      "NVP": [
+        "Načrtovanje in vodenje proizvodnje",
+        "EKO",
+        [],
+        [
+          [
+            "Načrtovanje",
+            [
+              "Napovedovanje povpraševanja | drseče povprečje, eksponentno glajenje",
+              "Načrtovanje potreb po materialu | MRP, kosovnica, zaloge"
+            ]
+          ],
+          [
+            "Vodenje",
+            [
+              "Terminiranje proizvodnje | razvrščanje opravil, Johnsonovo pravilo",
+              "Upravljanje zalog | ekonomična količina naročila, varnostna zaloga"
+            ]
+          ],
+          [
+            "Spremljanje in izboljšave",
+            [
+              "Spremljanje proizvodnje | MES, kazalniki, OEE",
+              "Vitka proizvodnja | izgube, kanban, just-in-time, 5S"
+            ]
+          ]
+        ]
+      ],
+      "MSOS": [
+        "Mehatronski sistemi na obdelovalnih strojih",
+        "FIZ",
+        [],
+        [
+          [
+            "Pogoni",
+            [
+              "Elektromotorni pogoni strojev | servomotorji, linearni motorji, krmilniki pogonov",
+              "Mehanski prenosi | kroglična vretena, zobati jermeni, vodila"
+            ]
+          ],
+          [
+            "Merjenje in vodenje",
+            [
+              "Merilni sistemi na strojih | dajalniki pozicije, linearna merila",
+              "Regulacija osi | kaskadna regulacija položaja, hitrosti in toka"
+            ]
+          ],
+          [
+            "Fluidna tehnika na strojih",
+            [
+              "Hidravlični sistemi na strojih | vpenjanje, hidravlični valji, ventili",
+              "Pnevmatika na strojih | pnevmatični valji, vakuumska prijemala"
+            ]
+          ]
+        ]
+      ],
+      "MS": [
+        "Montažni sistemi",
+        "FIZ",
+        [],
+        [
+          [
+            "Montaža",
+            [
+              "Montažni procesi | spajanje, rokovanje, kontrola, montažni postopki",
+              "Montažnost izdelka | DFA, zmanjšanje števila delov"
+            ]
+          ],
+          [
+            "Montažni sistemi",
+            [
+              "Ročni in avtomatski montažni sistemi | montažne linije, takt, ravnotežje linije",
+              "Strežne naprave | dodajalniki, prijemala, roboti v montaži"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Načrtovanje montažnega sistema | zmogljivost, takt, simulacija",
+              "Ekonomika montaže | stroški montaže, izbira stopnje avtomatizacije"
+            ]
+          ]
+        ]
+      ],
+      "KU": [
+        "Klimatizacija in udobje",
+        "FIZ",
+        [],
+        [
+          [
+            "Vlažen zrak",
+            [
+              "Vlažen zrak | absolutna in relativna vlažnost, Mollierov diagram",
+              "Procesi priprave zraka | ogrevanje, hlajenje, vlaženje, razvlaževanje"
+            ]
+          ],
+          [
+            "Toplotno udobje",
+            [
+              "Toplotno udobje | PMV in PPD, operativna temperatura",
+              "Kakovost zraka v prostoru | prezračevanje, CO2, izmenjava zraka"
+            ]
+          ],
+          [
+            "Sistemi",
+            [
+              "Klimatski sistemi | klimatska naprava, rekuperacija toplote, razvod zraka",
+              "Toplotne obremenitve prostora | notranji viri, sončno sevanje, hladilna moč"
+            ]
+          ]
+        ]
+      ],
+      "RSEP": [
+        "Računalniške simulacije v energetskem in procesnem strojništvu",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove CFD",
+            [
+              "Ohranitveni zakoni v CFD | Navier-Stokesove enačbe, energijska enačba",
+              "Metoda končnih volumnov | diskretizacija, sheme, konvergenca"
+            ]
+          ],
+          [
+            "Simulacije",
+            [
+              "Modeli turbulence | k-epsilon, k-omega, stenske funkcije",
+              "Simulacija prenosa toplote | konjugirani prenos, robni pogoji"
+            ]
+          ],
+          [
+            "Vrednotenje",
+            [
+              "Preverjanje in validacija | neodvisnost mreže, primerjava z meritvami",
+              "Prikaz rezultatov simulacij | tokovnice, polja hitrosti in temperature, poročanje"
+            ]
+          ]
+        ]
+      ],
+      "EPV": [
+        "Ekološka problematika vozil in motorjev z notranjim zgorevanjem",
+        "FIZ",
+        [],
+        [
+          [
+            "Emisije",
+            [
+              "Nastanek emisij | NOx, CO, ogljikovodiki, delci",
+              "Emisijski predpisi | norme EURO, preizkusni cikli"
+            ]
+          ],
+          [
+            "Zmanjševanje emisij",
+            [
+              "Naknadna obdelava izpušnih plinov | katalizatorji, filtri delcev, SCR",
+              "Alternativna goriva | biodizel, zemeljski plin, vodik"
+            ]
+          ],
+          [
+            "Vozila in okolje",
+            [
+              "Okoljski vpliv vozil | hrup, poraba goriva, izpusti CO2",
+              "Električna in hibridna vozila | baterije, izkoristek, emisije v življenjskem ciklu"
+            ]
+          ]
+        ]
+      ],
+      "SRE": [
+        "Smotrna raba energije",
+        "FIZ",
+        [],
+        [
+          [
+            "Energetska učinkovitost",
+            [
+              "Energetski pregled | energetske bilance, kazalniki rabe energije",
+              "Izraba odpadne toplote | rekuperacija, toplotne črpalke"
+            ]
+          ],
+          [
+            "Stavbe in industrija",
+            [
+              "Energetska učinkovitost stavb | toplotna izolacija, energetska izkaznica",
+              "Učinkovita raba energije v industriji | stisnjen zrak, pogoni, razsvetljava"
+            ]
+          ],
+          [
+            "Ekonomika in upravljanje",
+            [
+              "Ekonomika ukrepov | doba vračanja, stroški energije",
+              "Energetsko upravljanje | ISO 50001, spremljanje rabe energije"
+            ]
+          ]
+        ]
+      ],
+      "OVE": [
+        "Obnovljivi viri energije",
+        "FIZ",
+        [],
+        [
+          [
+            "Sonce",
+            [
+              "Sončna energija | sončno sevanje, sončni kolektorji, toplotni sistemi",
+              "Fotovoltaika | sončne celice, izkoristek, fotovoltaični sistemi"
+            ]
+          ],
+          [
+            "Voda in veter",
+            [
+              "Vetrna energija | moč vetra, Betzova meja, vetrne turbine",
+              "Hidroenergija | moč vodnega toka, male hidroelektrarne"
+            ]
+          ],
+          [
+            "Biomasa in geotermija",
+            [
+              "Biomasa | kurjenje biomase, bioplin, kurilnost",
+              "Geotermalna energija | plitva in globoka geotermija, toplotne črpalke"
+            ]
+          ]
+        ]
+      ],
+      "TRS": [
+        "Toplotni rotacijski stroji",
+        "FIZ",
+        [],
+        [
+          [
+            "Osnove",
+            [
+              "Eulerjeva turbinska enačba | hitrostni trikotniki, specifično delo",
+              "Stopnja turbinskega stroja | akcijska in reakcijska stopnja, stopnja reakcije, hitrostni trikotniki stopnje"
+            ]
+          ],
+          [
+            "Stroji",
+            [
+              "Parne turbine | zgradba, ekspanzija v stopnjah, izkoristek",
+              "Plinske turbine | Jouleov proces, zgorevalna komora, izkoristek",
+              "Turbokompresorji | radialni in aksialni kompresorji, karakteristika, črpanje"
+            ]
+          ],
+          [
+            "Obratovanje",
+            [
+              "Karakteristike in regulacija turbinskih strojev | delna obremenitev, regulacija z lopaticami",
+              "Izgube v turbinskih strojih | profilne izgube, izgube puščanja, notranji izkoristek"
+            ]
+          ]
+        ]
+      ],
+      "HT": [
+        "Hladilna tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Hladilni procesi",
+            [
+              "Kompresorski hladilni proces | hladilno število, log p-h diagram",
+              "Absorpcijsko hlajenje | delovanje, delovne snovi"
+            ]
+          ],
+          [
+            "Hladilna sredstva",
+            [
+              "Hladilna sredstva | lastnosti, okoljski vpliv, GWP",
+              "Naravna hladiva in predpisi | amoniak, CO2, ogljikovodiki, F-plini"
+            ]
+          ],
+          [
+            "Komponente",
+            [
+              "Kompresorji hladilnih naprav | batni, vijačni in spiralni kompresorji",
+              "Komponente hladilnih naprav | kondenzator, uparjalnik, ekspanzijski ventil"
+            ]
+          ]
+        ]
+      ],
+      "HP": [
+        "Hidravlika in pnevmatika",
+        "FIZ",
+        [
+          "HIDRAVLIKA"
+        ],
+        [
+          [
+            "Hidravlične komponente",
+            [
+              "Hidravlični ventili | potni, tlačni in tokovni ventili, simboli",
+              "Hidravlične sheme | osnovna vezja, regulacija hitrosti"
+            ]
+          ],
+          [
+            "Pnevmatika",
+            [
+              "Pnevmatični sistemi | priprava stisnjenega zraka, pnevmatični valji, ventili",
+              "Elektropnevmatika | krmiljenje z releji in PLK"
+            ]
+          ]
+        ]
+      ],
+      "KM": [
+        "Konstrukcijski materiali",
+        "FIZ",
+        [],
+        [
+          [
+            "Izbira materialov",
+            [
+              "Izbira materiala | Ashbyjevi diagrami, kriteriji izbire",
+              "Lahki konstrukcijski materiali | aluminijeve in titanove zlitine, kompoziti"
+            ]
+          ],
+          [
+            "Konstrukcijska jekla",
+            [
+              "Konstrukcijska jekla | mikrolegirana jekla, varivost, žilavost",
+              "Vrste jekel in litin | konstrukcijska, orodna in nerjavna jekla, sive litine, označevanje"
+            ]
+          ],
+          [
+            "Poškodbe",
+            [
+              "Mehanizmi porušitve | krhki in duktilni lom, utrujanje, lezenje",
+              "Lomna žilavost | KIc, preizkušanje"
+            ]
+          ]
+        ]
+      ],
+      "DN": [
+        "Dvigalne naprave",
+        "FIZ",
+        [],
+        [
+          [
+            "Elementi",
+            [
+              "Vrvi in škripčevja | jeklene vrvi, izbira vrvi, prestave škripčevja",
+              "Kavlji in prijemala | preračun kavlja, prijemalne naprave"
+            ]
+          ],
+          [
+            "Mehanizmi",
+            [
+              "Dvižni mehanizem | moč pogona, zavore",
+              "Vozni mehanizem | vozni upor, pogon žerjavnega mačka"
+            ]
+          ],
+          [
+            "Konstrukcije",
+            [
+              "Jeklena konstrukcija žerjava | obremenitve, pogonske skupine, standardi",
+              "Varnost dvigalnih naprav | omejevalniki, preizkusi, predpisi"
+            ]
+          ]
+        ]
+      ],
+      "ZG": [
+        "Zobniška gonila",
+        "FIZ",
+        [],
+        [
+          [
+            "Geometrija",
+            [
+              "Zobniki | prestavno razmerje, modul, sile na zobu",
+              "Evolventno ozobje | ubirnica, stopnja prekritja, profilni pomik"
+            ]
+          ],
+          [
+            "Nosilnost",
+            [
+              "Nosilnost zobnikov | upogibna trdnost korena, bočna nosilnost",
+              "Materiali zobnikov | cementiranje, nitriranje, izbira materiala"
+            ]
+          ],
+          [
+            "Gonila",
+            [
+              "Vrste zobniških gonil | valjasta, stožčasta, polžasta gonila",
+              "Mazanje in izkoristek | izgube, segrevanje gonila"
+            ]
+          ]
+        ]
+      ],
+      "DSN": [
+        "Dimenzioniranje strojev in naprav",
+        "FIZ",
+        [],
+        [
+          [
+            "Obremenitve",
+            [
+              "Obremenitve strojnih delov | statične in dinamične obremenitve, spektri",
+              "Koncentracija napetosti | zareze, faktor oblike"
+            ]
+          ],
+          [
+            "Dimenzioniranje",
+            [
+              "Dimenzioniranje na trajno trdnost | Haighov diagram, varnost",
+              "Dimenzioniranje na omejeno življenjsko dobo | Wöhlerjeva krivulja, kumulativna poškodba"
+            ]
+          ],
+          [
+            "Napredni pristopi",
+            [
+              "Numerično dimenzioniranje | MKE v dimenzioniranju, lokalni pristopi",
+              "Lomna mehanika v dimenzioniranju | razpoke, faktor intenzivnosti napetosti"
+            ]
+          ]
+        ]
+      ],
+      "PG": [
+        "Planetna gonila",
+        "FIZ",
+        [],
+        [
+          [
+            "Kinematika",
+            [
+              "Kinematika planetnih gonil | Willisova enačba, prestavna razmerja",
+              "Vrste planetnih gonil | enostavna in sestavljena gonila, diferencial"
+            ]
+          ],
+          [
+            "Sile in izkoristek",
+            [
+              "Sile v planetnem gonilu | porazdelitev obremenitve med planete",
+              "Izkoristek planetnih gonil | izgube, samozapornost"
+            ]
+          ],
+          [
+            "Konstrukcija",
+            [
+              "Konstrukcijska izvedba | ležajenje, montažni pogoji, izbira števila zob",
+              "Uporaba planetnih gonil | avtomatski menjalniki, vetrne turbine, robotika"
+            ]
+          ]
+        ]
+      ],
+      "VKS": [
+        "Varjene konstrukcije v strojništvu",
+        "FIZ",
+        [],
+        [
+          [
+            "Oblikovanje",
+            [
+              "Oblikovanje varjenih konstrukcij | vrste spojev, priprava robov",
+              "Označevanje zvarov | simboli na risbah, dimenzije zvarov"
+            ]
+          ],
+          [
+            "Preračun",
+            [
+              "Preračun zvarnih spojev | statična trdnost zvarov",
+              "Utrujanje varjenih spojev | kategorije detajlov, razpon napetosti"
+            ]
+          ],
+          [
+            "Napetosti in kakovost",
+            [
+              "Zaostale napetosti in deformacije | krčenje zvarov, zmanjšanje deformacij, žarjenje",
+              "Kontrola kakovosti zvarov | standardi, neporušne preiskave"
+            ]
+          ]
+        ]
+      ],
+      "VOZ": [
+        "Vozila",
+        "FIZ",
+        [],
+        [
+          [
+            "Vozne upornosti",
+            [
+              "Vozni upori | kotalni, zračni in vzponski upor, upor pospeševanja",
+              "Vlečna sila in vozna karakteristika | menjalnik, prestavna razmerja"
+            ]
+          ],
+          [
+            "Dinamika vozila",
+            [
+              "Zaviranje | zavorna pot, porazdelitev zavorne sile",
+              "Vzdolžna in prečna dinamika | prenos obremenitve, krmiljenje"
+            ]
+          ],
+          [
+            "Sklopi vozila",
+            [
+              "Podvozje in pogonski sklop | vzmetenje, sklopka, diferencial",
+              "Krmilni mehanizem in pnevmatike | geometrija krmiljenja, lastnosti pnevmatik"
+            ]
+          ]
+        ]
+      ],
+      "VMI": [
+        "Virtualno modeliranje izdelkov",
+        "RAC",
+        [],
+        [
+          [
+            "Virtualni izdelek",
+            [
+              "Digitalni model izdelka | geometrija, lastnosti, simulacije",
+              "Virtualni prototip | preverjanje funkcije, ergonomija"
+            ]
+          ],
+          [
+            "Navidezna resničnost",
+            [
+              "Navidezna in razširjena resničnost | naprave, uporaba v razvoju izdelkov",
+              "Vizualizacija izdelka | upodabljanje, materiali in osvetlitev"
+            ]
+          ],
+          [
+            "Simulacije",
+            [
+              "Kinematične simulacije izdelka | gibanje mehanizmov, kolizije",
+              "Digitalni dvojček izdelka | povezava modela z dejanskim izdelkom, podatki"
+            ]
+          ]
+        ]
+      ],
+      "PO": [
+        "Preoblikovalna orodja",
+        "FIZ",
+        [],
+        [
+          [
+            "Orodja za pločevino",
+            [
+              "Rezilna orodja | rezalna reža, rezalna sila, razpored izrezovancev",
+              "Upogibna in vlečna orodja | izravnalna dolžina, vlečni koraki"
+            ]
+          ],
+          [
+            "Orodja za masivno preoblikovanje",
+            [
+              "Kovaški utopi | delilna ravnina, nalivni koti, obrobni kanal",
+              "Orodja za iztiskovanje | matrice, pestiči, sile"
+            ]
+          ],
+          [
+            "Snovanje orodij",
+            [
+              "Materiali orodij | orodna jekla, obraba, površinska obdelava",
+              "Simulacija preoblikovanja | MKE, napovedovanje napak"
+            ]
+          ]
+        ]
+      ],
+      "SDE": [
+        "Študij dela in ergonomija",
+        "EKO",
+        [],
+        [
+          [
+            "Študij dela",
+            [
+              "Študij metod dela | analiza delovnega postopka, izboljšave",
+              "Merjenje dela | snemanje časov, normativi, MTM"
+            ]
+          ],
+          [
+            "Ergonomija",
+            [
+              "Antropometrija in delovno mesto | oblikovanje delovnega mesta, dosegi",
+              "Fiziološke obremenitve | dvigovanje bremen, utrujenost, delovno okolje"
+            ]
+          ],
+          [
+            "Organizacija dela",
+            [
+              "Oblikovanje delovnih sistemov | delitev dela, takt, delovne skupine",
+              "Varnost in zdravje pri delu | ocena tveganja, varnostni ukrepi"
+            ]
+          ]
+        ]
+      ],
+      "ROBZ": [
+        "Robotizacija",
+        "FIZ",
+        [],
+        [
+          [
+            "Industrijski roboti",
+            [
+              "Zgradba industrijskih robotov | osi, delovni prostor, nosilnost, ponovljivost",
+              "Kinematika robota | koordinatni sistemi, direktna in inverzna kinematika"
+            ]
+          ],
+          [
+            "Programiranje",
+            [
+              "Programiranje robotov | učenje s prikazovanjem, robotski jezik, vrste gibov",
+              "Simulacija robotskih celic | offline programiranje, preverjanje dosega in kolizij"
+            ]
+          ],
+          [
+            "Robotske celice",
+            [
+              "Prijemala in periferija | mehanska in vakuumska prijemala, senzorji",
+              "Varnost in načrtovanje robotske celice | varnostne zahteve, sodelujoči roboti"
+            ]
+          ]
+        ]
+      ],
+      "OPG": [
+        "Oblikovanje polimernih gradiv",
+        "KEM",
+        [],
+        [
+          [
+            "Polimeri",
+            [
+              "Polimeri | zgradba, termoplasti in duromeri, lastnosti",
+              "Reologija polimernih talin | viskoznost, strižno redčenje"
+            ]
+          ],
+          [
+            "Postopki",
+            [
+              "Brizganje | brizgalni stroj, orodje, parametri, napake",
+              "Ekstrudiranje in pihanje | profili, folije, votli izdelki",
+              "Aditivna izdelava iz polimerov | FDM, SLS, stereolitografija"
+            ]
+          ],
+          [
+            "Orodja in izdelki",
+            [
+              "Orodja za brizganje | dolivni sistem, temperiranje, izmetavanje",
+              "Oblikovanje polimernih izdelkov | debelina sten, nalivni koti, krčenje"
+            ]
+          ]
+        ]
+      ],
+      "VZD": [
+        "Vzdrževanje",
+        "FIZ",
+        [],
+        [
+          [
+            "Vzdrževanje",
+            [
+              "Strategije vzdrževanja | korektivno, preventivno, prediktivno vzdrževanje",
+              "Zanesljivost | intenzivnost odpovedi, MTBF, krivulja kadi"
+            ]
+          ],
+          [
+            "Diagnostika",
+            [
+              "Tehnična diagnostika | analiza vibracij, termografija, analiza olja",
+              "Nadzor stanja | trendi, mejne vrednosti, napovedovanje odpovedi"
+            ]
+          ],
+          [
+            "Organizacija",
+            [
+              "Organizacija vzdrževanja | TPM, informacijski sistem vzdrževanja",
+              "Stroški vzdrževanja | rezervni deli, stroški življenjskega cikla"
+            ]
+          ]
+        ]
+      ],
+      "KT": [
+        "Krmilna tehnika",
+        "FIZ",
+        [],
+        [
+          [
+            "Logična krmiljenja",
+            [
+              "Logično krmiljenje | Boolova algebra, krmilniki PLK, lestvični diagram",
+              "Kombinacijska in sekvenčna krmiljenja | logične funkcije, pomnilni elementi, časovniki"
+            ]
+          ],
+          [
+            "Programiranje PLK",
+            [
+              "Programski jeziki PLK | IEC 61131-3, funkcijski bloki, strukturirani tekst",
+              "Sekvenčni potek | GRAFCET, koračna veriga"
+            ]
+          ],
+          [
+            "Komponente",
+            [
+              "Senzorji in aktuatorji v krmilni tehniki | stikala, bližinska stikala, ventili, releji",
+              "Varnost krmilij | zasilni izklop, varnostni releji"
+            ]
+          ]
+        ]
+      ],
+      "IK": [
+        "Inženirske kalkulacije",
+        "EKO",
+        [],
+        [
+          [
+            "Stroški izdelka",
+            [
+              "Stroški | stalni in spremenljivi stroški, prag rentabilnosti",
+              "Kalkulacije | lastna cena, delitvena in dodatna kalkulacija"
+            ]
+          ],
+          [
+            "Kalkulacija proizvodnje",
+            [
+              "Kalkulacija strojne ure | amortizacija, energija, vzdrževanje",
+              "Ocena stroškov v razvoju | ciljni stroški, primerjalne kalkulacije"
+            ]
+          ],
+          [
+            "Odločanje",
+            [
+              "Investicijske odločitve | doba vračanja, neto sedanja vrednost, interna stopnja donosnosti",
+              "Primerjava tehnoloških variant | kritična količina, izbira postopka"
+            ]
+          ]
+        ]
+      ],
+      "RI": [
+        "Razvoj izdelka",
+        "EKO",
+        [],
+        [
+          [
+            "Razvojni proces",
+            [
+              "Proces razvoja izdelka | faze, stage-gate, sočasni inženiring",
+              "Ideje in trg | iskanje idej, analiza trga, zahteve kupcev"
+            ]
+          ],
+          [
+            "Načrtovanje kakovosti",
+            [
+              "Razvoj funkcije kakovosti | QFD, hiša kakovosti",
+              "Analiza možnih napak | FMEA, ocena tveganja"
+            ]
+          ],
+          [
+            "Uvajanje",
+            [
+              "Uvajanje izdelka v proizvodnjo | prototipi, preizkusi, zagon proizvodnje",
+              "Varovanje intelektualne lastnine | patenti, modeli, znamke"
+            ]
+          ]
+        ]
+      ],
+      "MEHM": [
+        "Mehanika za mehatronike",
+        "FIZ",
+        [],
+        [
+          [
+            "Statika",
+            [
+              "Sile in momenti | rezultanta sil, moment sile, dvojica sil",
+              "Ravnotežje togega telesa | reakcije podpor, prostoležeči nosilec, konzola",
+              "Trenje | Coulombovo trenje, lepenje"
+            ]
+          ],
+          [
+            "Trdnost",
+            [
+              "Napetosti in deformacije | Hookov zakon, natezni preizkus, dopustna napetost",
+              "Upogib nosilcev | prečne sile in upogibni momenti, upogibna napetost",
+              "Torzija | strižna napetost v okrogli gredi, zasuk"
+            ]
+          ],
+          [
+            "Kinematika",
+            [
+              "Kinematika | premo in krivo gibanje, poševni met, kroženje",
+              "Kinematika togega telesa | ravninsko gibanje, trenutni pol hitrosti"
+            ]
+          ],
+          [
+            "Dinamika",
+            [
+              "Newtonovi zakoni in sile | trenje, sile pri kroženju, gravitacija",
+              "Vrtenje togega telesa | navor, vztrajnostni moment, vrtilna količina",
+              "Harmonično nihanje | nihajni čas, nihalo na vijačni vzmeti, matematično nihalo, dušenje"
+            ]
+          ]
+        ]
+      ],
+      "PE1": [
+        "Programiranje za elektrotehnike I",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove jezika",
+            [
+              "Spremenljivke in podatkovni tipi | števila, znaki, operatorji, pretvorbe",
+              "Krmilni stavki | pogojni stavki, zanke, logični izrazi",
+              "Funkcije | parametri, vračanje vrednosti, rekurzija"
+            ]
+          ],
+          [
+            "Podatkovne strukture",
+            [
+              "Tabele in nizi | enodimenzionalne in večdimenzionalne tabele, obdelava nizov",
+              "Kazalci in strukture | naslovi, kazalci, strukture, dinamični pomnilnik"
+            ]
+          ],
+          [
+            "Algoritmi",
+            [
+              "Osnovni algoritmi | iskanje, urejanje, zahtevnost",
+              "Delo z datotekami | branje in pisanje datotek, obdelava podatkov"
+            ]
+          ]
+        ]
+      ],
+      "RP": [
+        "Računalniški praktikum",
+        "RAC",
+        [],
+        [
+          [
+            "Delo z računalnikom",
+            [
+              "Operacijski sistem in datoteke | ukazna vrstica, datotečni sistem, skripte",
+              "Tehniško pisanje | urejanje dokumentov, enačbe, citiranje"
+            ]
+          ],
+          [
+            "Inženirska orodja",
+            [
+              "Preglednice | formule, funkcije, grafi, obdelava meritev",
+              "Matlab za inženirje | matrike, skripte, risanje grafov"
+            ]
+          ],
+          [
+            "Omrežja in varnost",
+            [
+              "Osnove računalniških omrežij | internet, oblak, varnostne kopije",
+              "Varnost podatkov | gesla, šifriranje, zlonamerna programska oprema"
+            ]
+          ]
+        ]
+      ],
+      "OE": [
+        "Osnove elektrotehnike",
+        "FIZ",
+        [],
+        [
+          [
+            "Elektrostatika",
+            [
+              "Elektrostatika | Coulombov zakon, električno polje, potencial, kondenzator",
+              "Kapacitivnost in energija polja | vezave kondenzatorjev, dielektrik"
+            ]
+          ],
+          [
+            "Enosmerna vezja",
+            [
+              "Električni tok in vezja | Ohmov zakon, Kirchhoffova zakona, RC vezje",
+              "Metode analize vezij | Theveninovo nadomestno vezje, superpozicija, zančne in vozliščne enačbe"
+            ]
+          ],
+          [
+            "Magnetizem",
+            [
+              "Magnetno polje in indukcija | Lorentzova sila, Amperov zakon, indukcijski zakon",
+              "Induktivnost | lastna in medsebojna induktivnost, energija magnetnega polja"
+            ]
+          ],
+          [
+            "Izmenični tokovi",
+            [
+              "Izmenični tokovi | kazalci, impedanca, delovna in jalova moč",
+              "Resonanca in trifazni sistemi | nihajni krog, vezava zvezda in trikot"
+            ]
+          ]
+        ]
+      ],
+      "MEL": [
+        "Meritve v elektrotehniki",
+        "FIZ",
+        [],
+        [
+          [
+            "Osnove meritev",
+            [
+              "Merilni pogreški in negotovost | sistematični in naključni pogreški, merilna negotovost",
+              "Merske enote in etaloni | SI sistem, sledljivost"
+            ]
+          ],
+          [
+            "Merilni instrumenti",
+            [
+              "Merjenje napetosti in toka | analogni in digitalni instrumenti, razširitev merilnega območja",
+              "Merjenje upornosti in impedance | mostična vezja, U-I metoda",
+              "Osciloskop | merjenje časovnih potekov, frekvence, faze"
+            ]
+          ],
+          [
+            "Moč in zajem podatkov",
+            [
+              "Merjenje moči in energije | enofazna in trifazna moč, števci",
+              "Digitalni merilni sistemi | AD pretvorba, vzorčenje, zajem podatkov"
+            ]
+          ]
+        ]
+      ],
+      "SMEH": [
+        "Sistemi mehatronike",
+        "FIZ",
+        [],
+        [
+          [
+            "Mehatronski sistem",
+            [
+              "Zgradba mehatronskega sistema | mehanski del, senzorji, aktuatorji, krmilnik",
+              "Modeliranje mehatronskih sistemov | mehanski in električni modeli, analogije"
+            ]
+          ],
+          [
+            "Senzorji in aktuatorji",
+            [
+              "Senzorji v mehatroniki | pozicija, hitrost, sila, temperatura",
+              "Aktuatorji | enosmerni motor, koračni motor, pnevmatični in hidravlični aktuatorji"
+            ]
+          ],
+          [
+            "Vodenje",
+            [
+              "Odprta in zaprta zanka | povratna zveza, preprost P regulator",
+              "Krmilnik v mehatronskem sistemu | vhodi in izhodi, PWM, programiranje"
+            ]
+          ]
+        ]
+      ],
+      "REG": [
+        "Regulacije",
+        "FIZ",
+        [
+          "DIN_PROCESOV"
+        ],
+        [
+          [
+            "Opis sistemov",
+            [
+              "Modeli v prostoru stanj | spremenljivke stanja, linearizacija",
+              "Bločni diagrami | poenostavljanje, povratna zveza"
+            ]
+          ],
+          [
+            "Analiza",
+            [
+              "Frekvenčni odziv | Bodejev diagram, Nyquistov diagram",
+              "Stabilnost sistemov | Routh-Hurwitzov kriterij, rezerva faze in ojačenja"
+            ]
+          ],
+          [
+            "Načrtovanje regulatorjev",
+            [
+              "Nastavitev PID regulatorja | Ziegler-Nicholsova metoda, kriteriji kakovosti",
+              "Diskretna regulacija | vzorčenje, z-transformacija, digitalni regulator"
+            ]
+          ]
+        ]
+      ],
+      "ELM": [
+        "Elektronika za mehatronike",
+        "FIZ",
+        [],
+        [
+          [
+            "Polprevodniški elementi",
+            [
+              "Diode | karakteristika, usmerniki, Zenerjeva dioda",
+              "Tranzistorji | bipolarni tranzistor, MOSFET, tranzistor kot stikalo"
+            ]
+          ],
+          [
+            "Analogna vezja",
+            [
+              "Operacijski ojačevalniki | invertirajoči in neinvertirajoči ojačevalnik, seštevalnik, integrator",
+              "Filtri | nizko in visokoprepustni filter, frekvenčna karakteristika"
+            ]
+          ],
+          [
+            "Digitalna vezja",
+            [
+              "Logična vezja | logična vrata, kombinacijska vezja, flip-flopi",
+              "AD in DA pretvorniki | ločljivost, vzorčenje, vrste pretvornikov"
+            ]
+          ]
+        ]
+      ],
+      "MIK": [
+        "Mikrokrmilniki",
+        "RAC",
+        [],
+        [
+          [
+            "Zgradba",
+            [
+              "Arhitektura mikrokrmilnika | CPE, pomnilnik, registri, vodila",
+              "Vhodno-izhodne enote | digitalni vhodi in izhodi, GPIO"
+            ]
+          ],
+          [
+            "Periferija",
+            [
+              "Časovniki in prekinitve | prekinitvene rutine, PWM",
+              "AD pretvornik mikrokrmilnika | zajem analognih signalov",
+              "Serijske komunikacije | UART, SPI, I2C"
+            ]
+          ],
+          [
+            "Programiranje",
+            [
+              "Programiranje mikrokrmilnikov v C | razvojno okolje, razhroščevanje",
+              "Vgrajeni sistemi | delovanje v realnem času, nizka poraba, primeri uporabe"
+            ]
+          ]
+        ]
+      ],
+      "SEN": [
+        "Senzorji",
+        "FIZ",
+        [],
+        [
+          [
+            "Osnove",
+            [
+              "Lastnosti senzorjev | občutljivost, linearnost, ločljivost, histereza",
+              "Obdelava signalov senzorjev | ojačanje, filtriranje, mostična vezja"
+            ]
+          ],
+          [
+            "Vrste senzorjev",
+            [
+              "Senzorji položaja in hitrosti | potenciometer, inkrementalni dajalnik, induktivni senzorji",
+              "Senzorji sile in tlaka | uporovni lističi, piezoelektrični senzorji",
+              "Senzorji temperature | termoelement, Pt100, termistor",
+              "Optični senzorji | fotodiode, svetlobne zavese, optična vlakna"
+            ]
+          ],
+          [
+            "Sodobni senzorji",
+            [
+              "Senzorji pospeška in vibracij | MEMS, piezoelektrični pospeškomeri",
+              "Pametni senzorji in vodila | digitalni izhod, kalibracija, senzorska omrežja"
+            ]
+          ]
+        ]
+      ],
+      "IE": [
+        "Industrijska elektronika",
+        "FIZ",
+        [],
+        [
+          [
+            "Močnostni elementi",
+            [
+              "Močnostna polprevodniška stikala | tiristor, IGBT, MOSFET, izgube",
+              "Krmiljenje in hlajenje stikal | krmilna vezja, toplotne izgube, hladilniki"
+            ]
+          ],
+          [
+            "Pretvorniki",
+            [
+              "Usmerniki | enofazni in trifazni usmerniki, krmiljeni usmerniki",
+              "Enosmerni pretvorniki | znižavalni in zviševalni pretvornik",
+              "Razsmerniki | pulzno-širinska modulacija, frekvenčni pretvornik"
+            ]
+          ],
+          [
+            "Pogoni in omrežje",
+            [
+              "Elektromotorni pogoni | krmiljenje enosmernega in asinhronskega motorja",
+              "Kakovost električne energije | harmoniki, filtri, elektromagnetna združljivost"
+            ]
+          ]
+        ]
+      ],
+      "OR": [
+        "Osnove robotike",
+        "FIZ",
+        [],
+        [
+          [
+            "Opis lege",
+            [
+              "Homogene transformacije | rotacijske matrike, translacija, koordinatni sistemi",
+              "Denavit-Hartenbergova notacija | parametri sklepov"
+            ]
+          ],
+          [
+            "Kinematika",
+            [
+              "Kinematika robota | koordinatni sistemi, direktna in inverzna kinematika",
+              "Jacobijeva matrika | hitrosti, singularnosti"
+            ]
+          ],
+          [
+            "Dinamika in vodenje",
+            [
+              "Dinamika robota | enačbe gibanja manipulatorja",
+              "Vodenje robota | regulacija položaja sklepov, načrtovanje trajektorij"
+            ]
+          ]
+        ]
+      ],
+      "EEP": [
+        "Električni in elektromehanski pretvorniki",
+        "FIZ",
+        [],
+        [
+          [
+            "Osnove pretvorbe",
+            [
+              "Elektromehanska pretvorba energije | sila na vodnik, inducirana napetost, energijska bilanca",
+              "Transformator | nadomestno vezje, izgube, izkoristek"
+            ]
+          ],
+          [
+            "Električni stroji",
+            [
+              "Enosmerni stroji | zgradba, navorna karakteristika, krmiljenje hitrosti",
+              "Asinhronski stroji | slip, navorna karakteristika, zagon",
+              "Sinhronski stroji in koračni motorji | vzbujanje, sinhrona hitrost, koračni motor"
+            ]
+          ],
+          [
+            "Pogoni",
+            [
+              "Izbira elektromotorja | obratovalne karakteristike, obremenitev, segrevanje",
+              "Frekvenčno krmiljenje motorjev | frekvenčni pretvornik, regulacija hitrosti"
+            ]
+          ]
+        ]
+      ],
+      "VPS": [
+        "Vodenje proizvodnih sistemov",
+        "FIZ",
+        [],
+        [
+          [
+            "Avtomatizacija",
+            [
+              "Avtomatizacijska piramida | senzorji, PLK, SCADA, MES",
+              "Programirljivi logični krmilniki | IEC 61131-3, cikel PLK"
+            ]
+          ],
+          [
+            "Nadzor",
+            [
+              "Sistemi SCADA | nadzor in vodenje procesa, alarmi",
+              "Industrijska omrežja | Profibus, Profinet, Ethernet/IP"
+            ]
+          ],
+          [
+            "Diskretni dogodki",
+            [
+              "Modeliranje diskretnih dogodkov | avtomati stanj, Petrijeve mreže",
+              "Simulacija proizvodnih sistemov | diskretna simulacija, ozka grla"
+            ]
+          ]
+        ]
+      ],
+      "KAV": [
+        "Komunikacije v avtomatiki",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove",
+            [
+              "Model OSI in topologije | plasti, zvezda, vodilo, obroč",
+              "Prenos podatkov | serijski prenos, modulacija, napake pri prenosu"
+            ]
+          ],
+          [
+            "Industrijska vodila",
+            [
+              "Industrijska omrežja | Profibus, Profinet, Ethernet/IP",
+              "Vodilo CAN in Modbus | okvir, arbitraža, naslavljanje"
+            ]
+          ],
+          [
+            "Brezžične komunikacije in varnost",
+            [
+              "Brezžične komunikacije v industriji | WLAN, Bluetooth, internet stvari",
+              "Varnost industrijskih omrežij | segmentacija, požarni zid, avtentikacija"
+            ]
+          ]
+        ]
+      ],
+      "DSK": [
+        "Digitalni signalni krmilniki v avtomatiki",
+        "RAC",
+        [],
+        [
+          [
+            "Digitalni signali",
+            [
+              "Vzorčenje in kvantizacija | Nyquistov teorem, prekrivanje spektra",
+              "Digitalni filtri | FIR in IIR filtri, z-transformacija"
+            ]
+          ],
+          [
+            "Digitalni signalni krmilniki",
+            [
+              "Arhitektura DSK | aritmetika s fiksno vejico, periferija",
+              "Diskretna regulacija | vzorčenje, z-transformacija, digitalni regulator"
+            ]
+          ],
+          [
+            "Uporaba",
+            [
+              "Programiranje DSK | razvojno okolje, prekinitve, optimizacija kode",
+              "Vodenje elektromotornih pogonov z DSK | PWM, zajem toka, regulacijska zanka"
+            ]
+          ]
+        ]
+      ],
+      "OEK": [
+        "Osnove ekonomije",
+        "EKO",
+        [],
+        [
+          [
+            "Mikroekonomija",
+            [
+              "Ponudba in povpraševanje | tržno ravnotežje, cenovna elastičnost",
+              "Potrošnik in podjetje | koristnost, proizvodna funkcija, stroški",
+              "Tržne strukture | popolna konkurenca, monopol, oligopol"
+            ]
+          ],
+          [
+            "Makroekonomija",
+            [
+              "Bruto domači proizvod | merjenje BDP, gospodarska rast",
+              "Denar in inflacija | centralna banka, obrestne mere, inflacija",
+              "Brezposelnost in ekonomska politika | fiskalna in monetarna politika"
+            ]
+          ],
+          [
+            "Mednarodna ekonomija",
+            [
+              "Mednarodna menjava | primerjalne prednosti, menjalni tečaj, plačilna bilanca",
+              "Gospodarska integracija | EU, notranji trg, evro"
+            ]
+          ]
+        ]
+      ],
+      "ALG": [
+        "Algebra",
+        "MAT",
+        [],
+        [
+          [
+            "Kompleksna števila in polinomi",
+            [
+              "Realna in kompleksna števila | računanje s kompleksnimi števili, polarni zapis, Eulerjeva formula, koreni",
+              "Polinomi | ničle, osnovni izrek algebre, razcep"
+            ]
+          ],
+          [
+            "Vektorji",
+            [
+              "Vektorji | skalarni, vektorski in mešani produkt, kot med vektorjema, premica in ravnina",
+              "Vektorski prostori | linearna neodvisnost, baza, dimenzija"
+            ]
+          ],
+          [
+            "Matrike",
+            [
+              "Matrike in determinante | računanje z matrikami, inverzna matrika, determinanta",
+              "Sistemi linearnih enačb | Gaussova eliminacija, rang, rešljivost",
+              "Linearne preslikave | matrika preslikave, jedro in slika"
+            ]
+          ],
+          [
+            "Lastne vrednosti",
+            [
+              "Lastne vrednosti in lastni vektorji | karakteristični polinom, diagonalizacija",
+              "Kvadratne forme | simetrične matrike, glavne osi, definitnost"
+            ]
+          ]
+        ]
+      ],
+      "EP": [
+        "Ekonomika podjetja",
+        "EKO",
+        [],
+        [
+          [
+            "Podjetje",
+            [
+              "Podjetje in okolje | oblike podjetij, deležniki, cilji",
+              "Poslovni procesi | nabava, proizvodnja, prodaja"
+            ]
+          ],
+          [
+            "Stroški in poslovni izid",
+            [
+              "Stroški | stalni in spremenljivi stroški, prag rentabilnosti",
+              "Prihodki in poslovni izid | dobiček, kritje"
+            ]
+          ],
+          [
+            "Uspešnost",
+            [
+              "Kazalniki uspešnosti | produktivnost, ekonomičnost, rentabilnost",
+              "Investicijske odločitve | doba vračanja, neto sedanja vrednost, interna stopnja donosnosti"
+            ]
+          ]
+        ]
+      ],
+      "OOSM": [
+        "Osnove organizacije in splošnega managementa",
+        "EKO",
+        [],
+        [
+          [
+            "Organizacija",
+            [
+              "Organizacijska struktura | funkcijska, divizijska in matrična struktura",
+              "Organizacijska kultura | vrednote, norme, klima"
+            ]
+          ],
+          [
+            "Management",
+            [
+              "Funkcije managementa | planiranje, organiziranje, vodenje, kontrola",
+              "Odločanje | proces odločanja, odločitvene metode",
+              "Vodenje in motivacija | stili vodenja, teorije motivacije"
+            ]
+          ],
+          [
+            "Sistemski pristop",
+            [
+              "Sistemski pristop k organizaciji | celovitost, okolje, poslovni sistem",
+              "Etika in družbena odgovornost | poslovna etika, deležniki"
+            ]
+          ]
+        ]
+      ],
+      "ORAC": [
+        "Osnove računovodstva",
+        "EKO",
+        [],
+        [
+          [
+            "Osnove",
+            [
+              "Računovodske kategorije | sredstva, obveznosti, prihodki, odhodki",
+              "Bilanca stanja | aktiva, pasiva, bilančno ravnotežje"
+            ]
+          ],
+          [
+            "Knjiženje",
+            [
+              "Dvostavno knjigovodstvo | konti, knjigovodske listine, temeljnica",
+              "Knjiženje poslovnih dogodkov | nabava, prodaja, plače, amortizacija"
+            ]
+          ],
+          [
+            "Izkazi",
+            [
+              "Izkaz poslovnega izida | prihodki, odhodki, dobiček",
+              "Analiza računovodskih izkazov | kazalniki likvidnosti, zadolženosti, donosnosti"
+            ]
+          ]
+        ]
+      ],
+      "PM": [
+        "Projektni management",
+        "EKO",
+        [],
+        [
+          [
+            "Projekt",
+            [
+              "Projekt in projektni cikel | cilji, faze, deležniki",
+              "Organizacija projekta | projektna skupina, vloge, matrična organizacija"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Struktura projekta | WBS, aktivnosti",
+              "Časovno načrtovanje | mrežni diagram, metoda kritične poti, Ganttov diagram",
+              "Viri in stroški projekta | izravnava virov, proračun"
+            ]
+          ],
+          [
+            "Izvajanje",
+            [
+              "Spremljanje projekta | metoda prislužene vrednosti, odstopanja",
+              "Upravljanje tveganj projekta | identifikacija, ocena, ukrepi"
+            ]
+          ]
+        ]
+      ],
+      "OMK": [
+        "Osnove marketinga",
+        "EKO",
+        [],
+        [
+          [
+            "Trg",
+            [
+              "Marketinško okolje | mikro in makro okolje, SWOT",
+              "Vedenje kupcev | nakupni proces, organizacijski nakup",
+              "Segmentacija in pozicioniranje | izbira ciljnega trga"
+            ]
+          ],
+          [
+            "Trženjski splet",
+            [
+              "Izdelek in cena | življenjski cikel izdelka, oblikovanje cen",
+              "Distribucija in komuniciranje | prodajne poti, oglaševanje, pospeševanje prodaje"
+            ]
+          ],
+          [
+            "Marketinški načrt",
+            [
+              "Marketinški načrt | cilji, strategija, nadzor",
+              "Digitalni marketing | splet, družbena omrežja, merjenje učinka"
+            ]
+          ]
+        ]
+      ],
+      "UP": [
+        "Upravljanje proizvodnje",
+        "EKO",
+        [],
+        [
+          [
+            "Strategija",
+            [
+              "Proizvodna strategija | konkurenčne prednosti, proizvodni program",
+              "Načrtovanje zmogljivosti | kapacitete, ozka grla, izkoriščenost"
+            ]
+          ],
+          [
+            "Načrtovanje",
+            [
+              "Načrtovanje potreb po materialu | MRP, kosovnica, zaloge",
+              "Upravljanje zalog | ekonomična količina naročila, varnostna zaloga",
+              "Terminiranje proizvodnje | razvrščanje opravil, Johnsonovo pravilo"
+            ]
+          ],
+          [
+            "Izboljšave",
+            [
+              "Vitka proizvodnja | izgube, kanban, just-in-time, 5S",
+              "Simulacija proizvodnih procesov | diskretna simulacija, ozka grla"
+            ]
+          ]
+        ]
+      ],
+      "OFIN": [
+        "Osnove financ",
+        "EKO",
+        [],
+        [
+          [
+            "Časovna vrednost denarja",
+            [
+              "Obrestni račun | navadno in obrestno obrestovanje, efektivna obrestna mera",
+              "Rente in amortizacija | sedanja vrednost rente, anuitetno odplačevanje"
+            ]
+          ],
+          [
+            "Finančni trgi",
+            [
+              "Finančni trgi in inštrumenti | delnice, obveznice, banke",
+              "Tveganje in donos | pričakovani donos, razpršitev naložb"
+            ]
+          ],
+          [
+            "Financiranje podjetja",
+            [
+              "Viri financiranja | lastniški in dolžniški kapital, stroški kapitala",
+              "Investicijske odločitve | doba vračanja, neto sedanja vrednost, interna stopnja donosnosti"
+            ]
+          ]
+        ]
+      ],
+      "MCV": [
+        "Management človeških virov",
+        "EKO",
+        [],
+        [
+          [
+            "Kadrovanje",
+            [
+              "Načrtovanje kadrov | analiza del, pridobivanje in izbira kadrov",
+              "Usposabljanje in razvoj | izobraževanje, karierni razvoj"
+            ]
+          ],
+          [
+            "Uspešnost",
+            [
+              "Ocenjevanje delovne uspešnosti | metode ocenjevanja, letni razgovor",
+              "Nagrajevanje | plačni sistemi, motivacija"
+            ]
+          ],
+          [
+            "Odnosi",
+            [
+              "Delovna razmerja | pogodba o zaposlitvi, delovni čas, sindikati",
+              "Komuniciranje z zaposlenimi | notranje komuniciranje, zadovoljstvo zaposlenih"
+            ]
+          ]
+        ]
+      ],
+      "ODM": [
+        "Odločitveni modeli",
+        "EKO",
+        [],
+        [
+          [
+            "Odločanje",
+            [
+              "Večkriterijsko odločanje | kriteriji, uteži, metoda AHP",
+              "Odločanje v negotovosti | odločitvena drevesa, pričakovana vrednost"
+            ]
+          ],
+          [
+            "Optimizacijski modeli",
+            [
+              "Linearno programiranje | simpleksna metoda, dualnost, grafična rešitev",
+              "Transportni problem | začetna rešitev, optimalnost"
+            ]
+          ],
+          [
+            "Simulacije",
+            [
+              "Simulacijski modeli | metoda Monte Carlo, scenariji",
+              "Analiza občutljivosti | sprememba parametrov, robustnost odločitve"
+            ]
+          ]
+        ]
+      ],
+      "INO": [
+        "Inoviranje",
+        "EKO",
+        [],
+        [
+          [
+            "Inovacije",
+            [
+              "Vrste inovacij | produktne, procesne, organizacijske inovacije",
+              "Inovacijski proces | od ideje do trga, ustvarjalne tehnike"
+            ]
+          ],
+          [
+            "Upravljanje",
+            [
+              "Upravljanje inovacij v podjetju | inovacijska kultura, sistem predlogov",
+              "Intelektualna lastnina | patenti, modeli, znamke"
+            ]
+          ],
+          [
+            "Trženje inovacij",
+            [
+              "Uvajanje inovacij na trg | difuzija inovacij, poslovni model",
+              "Odprte inovacije | sodelovanje z univerzami in zagonskimi podjetji"
+            ]
+          ]
+        ]
+      ],
+      "PODJ": [
+        "Podjetništvo",
+        "EKO",
+        [],
+        [
+          [
+            "Podjetnik",
+            [
+              "Podjetništvo in podjetnik | podjetniške lastnosti, priložnosti",
+              "Oblike podjetij | s.p., d.o.o., d.d., registracija"
+            ]
+          ],
+          [
+            "Ustanovitev",
+            [
+              "Poslovni model | Canvas, vrednostna ponudba",
+              "Poslovni načrt | analiza trga, finančni načrt"
+            ]
+          ],
+          [
+            "Rast",
+            [
+              "Financiranje novih podjetij | lastna sredstva, tvegani kapital, krediti",
+              "Rast podjetja | strategije rasti, zagonska podjetja"
+            ]
+          ]
+        ]
+      ],
+      "SRAC": [
+        "Stroškovno računovodstvo",
+        "EKO",
+        [],
+        [
+          [
+            "Stroški",
+            [
+              "Razvrščanje stroškov | neposredni in posredni, stalni in spremenljivi stroški",
+              "Stroškovna mesta in nosilci | razporejanje splošnih stroškov"
+            ]
+          ],
+          [
+            "Kalkulacije",
+            [
+              "Kalkulacije | lastna cena, delitvena in dodatna kalkulacija",
+              "Kalkulacija po aktivnostih | ABC metoda, gonilniki stroškov"
+            ]
+          ],
+          [
+            "Odločanje",
+            [
+              "Analiza stroškov, obsega in dobička | prispevek za kritje, prag rentabilnosti",
+              "Standardni stroški in odmiki | načrtovani stroški, analiza odmikov"
+            ]
+          ]
+        ]
+      ]
+    },
+    "programs": {
+      "UM-FS-STRK": {
+        "name": "Strojništvo (UN) – smer Konstrukterstvo",
+        "source": "https://www.fs.um.si/fileadmin/Documents/FS/Studij/1stopnja/UNI/Strojnistvo/Predmetnik_1._stopnja_UN_STR_od_2026-2027.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki, smer v 3. letniku)",
+        "years": [
+          [
+            "MA",
+            "MEH1",
+            "MAT1",
+            "TKF",
+            "II",
+            "TD",
+            "LA",
+            "MEH2",
+            "MAT2",
+            "TERMO",
+            "VZS",
+            "PT1",
+            "IO1"
+          ],
+          [
+            "VA",
+            "DA",
+            "MEH3",
+            "MT",
+            "SE",
+            "PT2",
+            "PRT",
+            "ET",
+            "OP",
+            "MK",
+            "OPOS",
+            "ESN",
+            "OK",
+            "TSL",
+            "IO2"
+          ],
+          [
+            "TK",
+            "GP",
+            "FMTS",
+            "IRS",
+            "MKON",
+            "RPK",
+            "SK",
+            "SM"
+          ]
+        ],
+        "electives": [
+          "KM",
+          "DN",
+          "ZG",
+          "DSN",
+          "PG",
+          "VKS",
+          "VOZ",
+          "VMI"
+        ]
+      },
+      "UM-FS-STRE": {
+        "name": "Strojništvo (UN) – smer Energetsko, procesno in okoljsko strojništvo",
+        "source": "https://www.fs.um.si/fileadmin/Documents/FS/Studij/1stopnja/UNI/Strojnistvo/Predmetnik_1._stopnja_UN_STR_od_2026-2027.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki, smer v 3. letniku)",
+        "years": [
+          [
+            "MA",
+            "MEH1",
+            "MAT1",
+            "TKF",
+            "II",
+            "TD",
+            "LA",
+            "MEH2",
+            "MAT2",
+            "TERMO",
+            "VZS",
+            "PT1",
+            "IO1"
+          ],
+          [
+            "VA",
+            "DA",
+            "MEH3",
+            "MT",
+            "SE",
+            "PT2",
+            "PRT",
+            "ET",
+            "OP",
+            "MK",
+            "OPOS",
+            "ESN",
+            "OK",
+            "TSL",
+            "IO2"
+          ],
+          [
+            "TK",
+            "GP",
+            "PS",
+            "EM",
+            "TPN",
+            "MNZ1",
+            "POT",
+            "HS1"
+          ]
+        ],
+        "electives": [
+          "KU",
+          "RSEP",
+          "EPV",
+          "SRE",
+          "OVE",
+          "TRS",
+          "HT",
+          "HP"
+        ]
+      },
+      "UM-FS-STRP": {
+        "name": "Strojništvo (UN) – smer Proizvodne tehnologije in sistemi",
+        "source": "https://www.fs.um.si/fileadmin/Documents/FS/Studij/1stopnja/UNI/Strojnistvo/Predmetnik_1._stopnja_UN_STR_od_2026-2027.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki, smer v 3. letniku)",
+        "years": [
+          [
+            "MA",
+            "MEH1",
+            "MAT1",
+            "TKF",
+            "II",
+            "TD",
+            "LA",
+            "MEH2",
+            "MAT2",
+            "TERMO",
+            "VZS",
+            "PT1",
+            "IO1"
+          ],
+          [
+            "VA",
+            "DA",
+            "MEH3",
+            "MT",
+            "SE",
+            "PT2",
+            "PRT",
+            "ET",
+            "OP",
+            "MK",
+            "OPOS",
+            "ESN",
+            "OK",
+            "TSL",
+            "IO2"
+          ],
+          [
+            "TK",
+            "GP",
+            "OPR",
+            "OPS",
+            "RIP",
+            "NVP",
+            "MSOS",
+            "MS"
+          ]
+        ],
+        "electives": [
+          "PO",
+          "SDE",
+          "ROBZ",
+          "OPG",
+          "VZD",
+          "KT",
+          "IK",
+          "RI"
+        ]
+      },
+      "UM-FS-MEH": {
+        "name": "Mehatronika (UN)",
+        "source": "https://www.fs.um.si/fileadmin/Documents/FS/Studij/1stopnja/UNI/Mehatronika/Predmetnik_1._stopnja_UN_MEH_2026-2027.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki)",
+        "years": [
+          [
+            "MA",
+            "MEHM",
+            "MAT1",
+            "PE1",
+            "TD",
+            "RP",
+            "LA",
+            "VZS",
+            "OE",
+            "MEL",
+            "MAT2",
+            "SMEH"
+          ],
+          [
+            "VA",
+            "DA",
+            "SE",
+            "REG",
+            "ELM",
+            "PG",
+            "KT",
+            "MIK",
+            "SEN"
+          ],
+          [
+            "IE",
+            "HP"
+          ]
+        ],
+        "electives": [
+          "OR",
+          "ROBZ",
+          "EEP",
+          "VPS",
+          "MSOS",
+          "RPK",
+          "KAV",
+          "DSK"
+        ]
+      },
+      "UM-FS-GING": {
+        "name": "Gospodarsko inženirstvo – smer Strojništvo (UN)",
+        "source": "https://www.fs.um.si/fileadmin/Documents/FS/Studij/1stopnja/UNI/Gospodarsko_inzenirstvo/Predmetnik_1._stopnja_UN_GING-S_2026-2027.pdf",
+        "sourceYear": "2026/27, predmetnik preverjen (vsi 3 letniki)",
+        "years": [
+          [
+            "MA",
+            "MEH1",
+            "MAT1",
+            "TKF",
+            "TD",
+            "OEK",
+            "ALG",
+            "MEH2",
+            "MAT2",
+            "TERMO",
+            "PT1",
+            "EP"
+          ],
+          [
+            "DA",
+            "MT",
+            "SE",
+            "PT2",
+            "II",
+            "OOSM",
+            "MK",
+            "ET",
+            "OPOS",
+            "ESN",
+            "OK",
+            "TSL",
+            "ORAC"
+          ],
+          [
+            "RIP",
+            "SK",
+            "PM",
+            "OMK",
+            "UP",
+            "RI"
+          ]
+        ],
+        "electives": [
+          "OFIN",
+          "MCV",
+          "ODM",
+          "INO",
+          "PODJ",
+          "SRAC",
+          "MKON",
+          "ROBZ"
+        ]
+      }
+    }
+  },
+  {
+    "id": "UM-FGPA",
+    "name": "UM Fakulteta za gradbeništvo, prometno inženirstvo in arhitekturo",
+    "short": "UM FGPA",
+    "courses": {
+      "MAT1": [
+        "Matematika 1",
+        "MAT",
+        [
+          "MAT_1"
+        ],
+        []
+      ],
+      "MAT2": [
+        "Matematika 2",
+        "MAT",
+        [
+          "MAT_2"
+        ],
+        []
+      ],
+      "FIZ": [
+        "Fizika",
+        "FIZ",
+        [
+          "FIZ_1"
+        ],
+        [
+          [
+            "Elektrika",
+            [
+              "Elektrostatika | Coulombov zakon, električno polje, potencial, kondenzator",
+              "Električni tok in vezja | Ohmov zakon, Kirchhoffova zakona, RC vezje"
+            ]
+          ]
+        ]
+      ],
+      "GM1": [
+        "Gradbena mehanika 1",
+        "FIZ",
+        [],
+        [
+          [
+            "Sile in momenti",
+            [
+              "Sile in momenti | rezultanta sil, moment sile, dvojica sil",
+              "Težišče | težišče ploskev in teles, porazdeljene obtežbe"
+            ]
+          ],
+          [
+            "Ravnotežje",
+            [
+              "Ravnotežje togega telesa | reakcije podpor, prostoležeči nosilec, konzola",
+              "Sestavljene konstrukcije | Gerberjev nosilec, tričlenski lok, okvirji"
+            ]
+          ],
+          [
+            "Notranje sile",
+            [
+              "Notranje sile v nosilcih | osna sila, prečna sila, upogibni moment, diagrami",
+              "Diferencialne zveze med obtežbo in notranjimi silami | q, T in M, ekstremni moment"
+            ]
+          ],
+          [
+            "Paličja in trenje",
+            [
+              "Paličja | metoda vozlišč, metoda prereza",
+              "Trenje | Coulombovo trenje, lepenje"
+            ]
+          ]
+        ]
+      ],
+      "GM2": [
+        "Gradbena mehanika 2",
+        "FIZ",
+        [
+          "TRDNOST"
+        ],
+        [
+          [
+            "Prerezne količine",
+            [
+              "Statični momenti in težišče prereza | statični moment ploskve, težišče sestavljenih prerezov",
+              "Ploskovni vztrajnostni momenti | Steinerjev izrek, glavne osi, odpornostni moment"
+            ]
+          ],
+          [
+            "Napetostno in deformacijsko stanje",
+            [
+              "Ravninsko napetostno stanje | Mohrov krog, glavne napetosti, transformacija napetosti",
+              "Primerjalne napetosti | hipoteze o porušitvi, von Misesova in Trescova napetost"
+            ]
+          ],
+          [
+            "Upogib in strig",
+            [
+              "Strig pri upogibu | strižne napetosti v prerezu, strižni tok",
+              "Ekscentrični tlak | jedro prereza, nevtralna os",
+              "Upogibnica | diferencialna enačba upogibnice, poves, zasuk"
+            ]
+          ]
+        ]
+      ],
+      "UMGI": [
+        "Uvod v materiale v gradbenem inženirstvu",
+        "KEM",
+        [],
+        [
+          [
+            "Zgradba in lastnosti",
+            [
+              "Zgradba gradbenih materialov | kristalna in amorfna zgradba, poroznost",
+              "Fizikalne lastnosti gradiv | gostota, poroznost, vpijanje vode, toplotna prevodnost",
+              "Mehanske lastnosti materialov | tlačna in natezna trdnost, modul elastičnosti, krhkost in duktilnost"
+            ]
+          ],
+          [
+            "Naravni in umetni kamen",
+            [
+              "Naravni kamen | vrste kamnin v gradbeništvu, uporaba, obstojnost",
+              "Opečni izdelki | izdelava, lastnosti, zidaki"
+            ]
+          ],
+          [
+            "Preizkušanje in trajnost",
+            [
+              "Preizkušanje gradiv | standardi, vzorčenje, porušni preizkusi",
+              "Trajnost gradiv | zmrzlinska odpornost, kemijska obstojnost, staranje"
+            ]
+          ]
+        ]
+      ],
+      "IG": [
+        "Inženirska geologija",
+        "GEO",
+        [],
+        [
+          [
+            "Kamnine in minerali",
+            [
+              "Minerali | glavni kamninotvorni minerali, prepoznavanje",
+              "Vrste kamnin | magmatske, sedimentne in metamorfne kamnine"
+            ]
+          ],
+          [
+            "Geološki procesi",
+            [
+              "Preperevanje in erozija | fizikalno in kemično preperevanje, nastanek tal",
+              "Geološke strukture | plasti, prelomi, gube, geološka karta"
+            ]
+          ],
+          [
+            "Inženirsko-geološke razmere",
+            [
+              "Pobočni procesi | plazovi, podori, sanacija",
+              "Podzemna voda | vodonosniki, prepustnost, kras",
+              "Inženirsko-geološke raziskave | vrtine, terenski preizkusi, klasifikacija hribin"
+            ]
+          ]
+        ]
+      ],
+      "RI": [
+        "Računalništvo in informatika",
+        "RAC",
+        [],
+        [
+          [
+            "Osnove informatike",
+            [
+              "Zgradba računalnika | strojna in programska oprema, zapis podatkov",
+              "Preglednice | formule, funkcije, grafi, obdelava meritev"
+            ]
+          ],
+          [
+            "Programiranje",
+            [
+              "Osnove programiranja | spremenljivke, pogoji, zanke, funkcije",
+              "Algoritmi | diagram poteka, iskanje in urejanje, zahtevnost"
+            ]
+          ],
+          [
+            "Informacijsko modeliranje",
+            [
+              "Informacijsko modeliranje gradenj | BIM, modeli, izmenjava podatkov IFC",
+              "Sodelovanje v BIM | skupno podatkovno okolje, koordinacija modelov, iskanje kolizij"
+            ]
+          ]
+        ]
+      ],
+      "STAV1": [
+        "Stavbarstvo 1",
+        "FIZ",
+        [],
+        [
+          [
+            "Stavba kot sistem",
+            [
+              "Konstrukcijski sistemi stavb | masivni, skeletni in mešani sistemi",
+              "Zahteve za stavbe | nosilnost, požarna varnost, zaščita pred vlago, toplotna zaščita"
+            ]
+          ],
+          [
+            "Konstrukcijski sklopi",
+            [
+              "Temelji in hidroizolacija | pasovni temelji, temeljna plošča, zaščita pred talno vodo",
+              "Stene in zidovi | opečni zidovi, nosilne in predelne stene",
+              "Stropi | AB plošče, leseni stropi, montažni stropi"
+            ]
+          ],
+          [
+            "Strehe",
+            [
+              "Poševne strehe | ostrešje, kritina, prezračevanje",
+              "Ravne strehe | sestava, toplotna izolacija, hidroizolacija, odvodnjavanje"
+            ]
+          ]
+        ]
+      ],
+      "GF": [
+        "Gradbena fizika",
+        "FIZ",
+        [],
+        [
+          [
+            "Toplota",
+            [
+              "Prevod toplote | Fourierov zakon, večplastne stene, toplotni upor",
+              "Toplotna prehodnost konstrukcij | U-vrednost, toplotni mostovi",
+              "Toplotne izgube stavbe | transmisijske in ventilacijske izgube"
+            ]
+          ],
+          [
+            "Vlaga",
+            [
+              "Difuzija vodne pare | delni tlak pare, rosišče, Glaserjeva metoda",
+              "Vlaga v konstrukcijah | kapilarni dvig, površinska kondenzacija, plesen"
+            ]
+          ],
+          [
+            "Akustika in svetloba",
+            [
+              "Zvočna izolativnost | zračni in udarni zvok, zakon mase",
+              "Akustika prostorov | absorpcija, odmevni čas",
+              "Naravna osvetlitev | faktor dnevne svetlobe"
+            ]
+          ]
+        ]
+      ],
+      "MGI": [
+        "Materiali v gradbenem inženirstvu",
+        "KEM",
+        [],
+        [
+          [
+            "Veziva",
+            [
+              "Mineralna veziva | apno, mavec, cement, hidratacija",
+              "Malte | sestava, lastnosti, uporaba"
+            ]
+          ],
+          [
+            "Beton",
+            [
+              "Sestava betona | agregat, vodocementno razmerje, dodatki",
+              "Lastnosti svežega in strjenega betona | obdelavnost, trdnost, krčenje, lezenje",
+              "Trajnost betona | karbonatizacija, zmrzovanje, razredi izpostavljenosti"
+            ]
+          ],
+          [
+            "Drugi materiali",
+            [
+              "Gradbeno jeklo | vrste jekla, armatura, korozija",
+              "Les kot gradbeni material | anizotropija, vlažnost, trdnostni razredi",
+              "Bitumen in polimeri | asfalt, hidroizolacije, polimerni materiali"
+            ]
+          ]
+        ]
+      ],
+      "GMCAD": [
+        "Geometrijsko modeliranje in CAD",
+        "RAC",
+        [],
+        [
+          [
+            "Opisna geometrija",
+            [
+              "Pravokotno projiciranje | Mongeova projekcija, tlorisi in narisi",
+              "Kotirana projekcija | plastnice, naklon, zemeljska dela",
+              "Aksonometrija in perspektiva | izometrija, centralna projekcija"
+            ]
+          ],
+          [
+            "Krivulje in ploskve",
+            [
+              "Krivulje v prostoru | parametrični zapis, Bézierjeve krivulje",
+              "Ploskve | rotacijske, premonosne in translacijske ploskve"
+            ]
+          ],
+          [
+            "CAD",
+            [
+              "Risanje v CAD | 2D risanje, plasti, kotiranje",
+              "3D modeliranje objektov | telesa, ploskovni modeli, prerezi"
+            ]
+          ]
+        ]
+      ],
+      "MTAL": [
+        "Mehanika tal",
+        "FIZ",
+        [],
+        [
+          [
+            "Lastnosti zemljin",
+            [
+              "Fizikalne lastnosti zemljin | vlažnost, gostota, količnik por, stopnja zasičenosti",
+              "Klasifikacija zemljin | zrnavost, Atterbergove meje, USCS"
+            ]
+          ],
+          [
+            "Voda v tleh",
+            [
+              "Efektivne napetosti | princip efektivnih napetosti, porni tlak",
+              "Precejanje vode | Darcyjev zakon, prepustnost, tokovna mreža"
+            ]
+          ],
+          [
+            "Deformacije in trdnost",
+            [
+              "Stisljivost in konsolidacija | edometrski modul, Terzaghijeva konsolidacija, posedki",
+              "Strižna trdnost zemljin | Mohr-Coulombov kriterij, triosni in direktni strižni preizkus",
+              "Napetosti v tleh | Boussinesqova rešitev, porazdelitev napetosti pod temeljem"
+            ]
+          ]
+        ]
+      ],
+      "MTH": [
+        "Mehanika tekočin in hidravlika",
+        "FIZ",
+        [
+          "MEH_TEKOCIN"
+        ],
+        [
+          [
+            "Tok v ceveh",
+            [
+              "Cevovodi | zaporedni in vzporedni cevovodi, energijska in piezometrična črta",
+              "Vodni udar | hitrost vala, tlačni sunek"
+            ]
+          ],
+          [
+            "Tok v odprtih koritih",
+            [
+              "Enakomerni tok v kanalih | Manningova enačba, hidravlični radij",
+              "Specifična energija | kritična globina, deroči in mirni tok, vodni skok"
+            ]
+          ],
+          [
+            "Iztoki in prelivi",
+            [
+              "Iztoki in prelivi | iztok skozi odprtino, ostrorobi in širokorobi preliv",
+              "Tok podzemne vode | Darcyjev zakon, vodnjaki"
+            ]
+          ]
+        ]
+      ],
+      "TEM1": [
+        "Temeljenje 1",
+        "GEO",
+        [],
+        [
+          [
+            "Geotehnično projektiranje",
+            [
+              "Geotehnične raziskave | sondiranje, vrtine, standardni penetracijski preizkus",
+              "Evrokod 7 | mejna stanja, projektni pristopi, delni faktorji"
+            ]
+          ],
+          [
+            "Plitvo temeljenje",
+            [
+              "Nosilnost tal | Terzaghijeva enačba, faktorji nosilnosti",
+              "Posedki temeljev | posedki pasovnih in točkovnih temeljev, dopustni posedki",
+              "Dimenzioniranje plitvih temeljev | pasovni, točkovni temelji, temeljne plošče"
+            ]
+          ],
+          [
+            "Izkopi",
+            [
+              "Zemeljski pritiski | aktivni in pasivni pritisk, Rankinova teorija",
+              "Stabilnost brežin izkopov | naklon brežin, varovanje izkopa, vpliv vode"
+            ]
+          ]
+        ]
+      ],
+      "PGP1": [
+        "Projektiranje in gradnja prometnic 1",
+        "FIZ",
+        [],
+        [
+          [
+            "Ceste",
+            [
+              "Elementi ceste | projektna hitrost, prečni profil, vozni pasovi",
+              "Horizontalni potek trase | premica, krožni lok, prehodnica, zavoj",
+              "Vertikalni potek trase | niveleta, vzponi, zaokrožitve"
+            ]
+          ],
+          [
+            "Zemeljska dela",
+            [
+              "Zemeljska dela na cesti | nasip, vkop, masni diagram",
+              "Odvodnjavanje cest | prečni in vzdolžni sklon, jarki, prepusti"
+            ]
+          ],
+          [
+            "Promet",
+            [
+              "Prometne obremenitve | PLDP, merodajna urna obremenitev",
+              "Prometna varnost | preglednost, varnostne ograje, signalizacija"
+            ]
+          ]
+        ]
+      ],
+      "PGP2": [
+        "Projektiranje in gradnja prometnic 2",
+        "FIZ",
+        [],
+        [
+          [
+            "Voziščne konstrukcije",
+            [
+              "Sestava voziščne konstrukcije | obrabna, nosilna in tamponska plast",
+              "Dimenzioniranje voziščnih konstrukcij | prometna obremenitev, ekvivalentne osne obremenitve"
+            ]
+          ],
+          [
+            "Materiali",
+            [
+              "Asfaltne zmesi | bitumen, agregat, vgrajevanje",
+              "Betonska vozišča | plošče, rege, uporaba"
+            ]
+          ],
+          [
+            "Železnice",
+            [
+              "Železniška proga | zgornji ustroj, tirnice, pragovi, tirne kretnice",
+              "Trasiranje železniških prog | radiji, nadvišanje, vzponi"
+            ]
+          ]
+        ]
+      ],
+      "GM3": [
+        "Gradbena mehanika 3",
+        "FIZ",
+        [],
+        [
+          [
+            "Energijske metode",
+            [
+              "Princip virtualnega dela | virtualne sile, izračun pomikov, Mohrov integral",
+              "Maxwell-Bettijev izrek | vzajemnost pomikov"
+            ]
+          ],
+          [
+            "Statično nedoločene konstrukcije",
+            [
+              "Metoda sil | stopnja nedoločenosti, osnovni sistem, enačbe kompatibilnosti",
+              "Metoda pomikov | togostne enačbe, okvirji"
+            ]
+          ],
+          [
+            "Vplivnice in stabilnost",
+            [
+              "Vplivnice | vplivnice reakcij in notranjih sil, pomične obtežbe",
+              "Uklon | Eulerjeva kritična sila"
+            ]
+          ]
+        ]
+      ],
+      "OGD": [
+        "Organizacija gradbenih del",
+        "EKO",
+        [],
+        [
+          [
+            "Gradbišče",
+            [
+              "Ureditev gradbišča | elaborat, načrt gradbišča, deponije, dostopi",
+              "Izbira gradbene mehanizacije | zmogljivost, stroški, razporeditev"
+            ]
+          ],
+          [
+            "Planiranje",
+            [
+              "Mrežno planiranje | metoda kritične poti, rezerve",
+              "Gantogram in terminski plan | trajanje aktivnosti, normativi",
+              "Planiranje virov | delovna sila, mehanizacija, izravnava virov"
+            ]
+          ],
+          [
+            "Izvedba",
+            [
+              "Spremljanje gradnje | gradbeni dnevnik, nadzor, primopredaja",
+              "Kontrola kakovosti gradnje | preizkusi, dokazila o skladnosti"
+            ]
+          ]
+        ]
+      ],
+      "OPK": [
+        "Osnove projektiranja konstrukcij",
+        "FIZ",
+        [],
+        [
+          [
+            "Evrokodi",
+            [
+              "Sistem evrokodov | EN 1990, nacionalni dodatki, projektna življenjska doba",
+              "Mejna stanja | mejno stanje nosilnosti in uporabnosti",
+              "Metoda delnih varnostnih faktorjev | karakteristične in projektne vrednosti"
+            ]
+          ],
+          [
+            "Vplivi",
+            [
+              "Lastna in koristna obtežba | stalni in spremenljivi vplivi",
+              "Obtežba snega in vetra | karakteristična obtežba, oblikovni koeficienti",
+              "Kombinacije vplivov | osnovna kombinacija, kombinacijski faktorji"
+            ]
+          ],
+          [
+            "Zasnova konstrukcij",
+            [
+              "Zasnova nosilne konstrukcije | prenos obtežb, statični sistemi, togost stavbe",
+              "Potresna obtežba | projektni spekter, faktor obnašanja, masa stavbe"
+            ]
+          ]
+        ]
+      ],
+      "GEOD": [
+        "Geodezija",
+        "GEO",
+        [],
+        [
+          [
+            "Osnove",
+            [
+              "Koordinatni sistemi | državni koordinatni sistem, projekcije, D96/TM",
+              "Merske napake | grobe, sistematične in naključne napake"
+            ]
+          ],
+          [
+            "Meritve",
+            [
+              "Merjenje kotov in dolžin | teodolit, tahimeter, elektronsko merjenje razdalj",
+              "Nivelman | geometrični in trigonometrični nivelman, višinske razlike",
+              "GNSS | satelitsko določanje položaja, RTK"
+            ]
+          ],
+          [
+            "Uporaba v gradbeništvu",
+            [
+              "Zakoličba objektov | polarna metoda, ortogonalna metoda",
+              "Izračun površin in prostornin | profili, digitalni model reliefa"
+            ]
+          ]
+        ]
+      ],
+      "LK": [
+        "Lesene konstrukcije",
+        "FIZ",
+        [],
+        [
+          [
+            "Les",
+            [
+              "Lastnosti konstrukcijskega lesa | anizotropija, vlažnost, trdnostni razredi, lepljeni les",
+              "Projektiranje po Evrokodu 5 | razredi uporabe, trajanje obtežbe, kmod"
+            ]
+          ],
+          [
+            "Elementi",
+            [
+              "Dimenzioniranje nateznih in tlačnih elementov | uklon lesenih palic",
+              "Dimenzioniranje upogibnih elementov | upogib, strig, poves"
+            ]
+          ],
+          [
+            "Spoji in požar",
+            [
+              "Spoji lesenih konstrukcij | mozniki, vijaki, žeblji, ploščati spojniki",
+              "Požarna odpornost lesenih konstrukcij | zoglenevanje, efektivni prerez"
+            ]
+          ]
+        ]
+      ],
+      "TGPM": [
+        "Tehnologija gradbene proizvodnje in mehanizacija",
+        "FIZ",
+        [],
+        [
+          [
+            "Zemeljska dela",
+            [
+              "Zemeljska dela | izkopi, nasipi, komprimacija, varovanje gradbene jame",
+              "Gradbeni stroji za zemeljska dela | bagri, buldožerji, valjarji, zmogljivost strojev"
+            ]
+          ],
+          [
+            "Betonska dela",
+            [
+              "Opažni sistemi | klasični in sistemski opaži, drsni opaži",
+              "Betonska in armiračka dela | transport, vgrajevanje in nega betona"
+            ]
+          ],
+          [
+            "Mehanizacija in montaža",
+            [
+              "Dvigala in žerjavi na gradbišču | stolpni žerjav, izbira žerjava",
+              "Montažna gradnja | prefabricirani elementi, transport, montaža"
+            ]
+          ]
+        ]
+      ],
+      "BK": [
+        "Betonske konstrukcije",
+        "FIZ",
+        [],
+        [
+          [
+            "Materiali in konstruiranje",
+            [
+              "Beton in armatura po Evrokodu 2 | trdnostni razredi, delovni diagrami, krovni sloj",
+              "Pravila armiranja | sidranje, preklopi, minimalna armatura"
+            ]
+          ],
+          [
+            "Mejno stanje nosilnosti",
+            [
+              "Dimenzioniranje na upogib | pravokotni in T-prerez, potrebna armatura",
+              "Dimenzioniranje na strig | strižna armatura, model paličja",
+              "Tlačni elementi | stebri, vpliv vitkosti"
+            ]
+          ],
+          [
+            "Mejno stanje uporabnosti",
+            [
+              "Razpoke in povesi | širina razpok, omejitev povesov",
+              "Omejitev napetosti | napetosti v betonu in armaturi, karakteristična kombinacija"
+            ]
+          ]
+        ]
+      ],
+      "GE": [
+        "Gradbena ekonomika",
+        "EKO",
+        [],
+        [
+          [
+            "Stroški gradnje",
+            [
+              "Popis del in predračun | količine, enotne cene, popis",
+              "Kalkulacija cene | neposredni stroški, režija, dobiček"
+            ]
+          ],
+          [
+            "Investicije",
+            [
+              "Investicijska dokumentacija | investicijski program, faze",
+              "Investicijske odločitve | doba vračanja, neto sedanja vrednost, interna stopnja donosnosti"
+            ]
+          ],
+          [
+            "Trg",
+            [
+              "Javno naročanje | postopki, merila za izbor, ponudba",
+              "Gradbena pogodba | pogodbene oblike, FIDIC, obračun"
+            ]
+          ]
+        ]
+      ],
+      "VZUV": [
+        "Vodne zgradbe in urejanje voda",
+        "GEO",
+        [],
+        [
+          [
+            "Hidrologija",
+            [
+              "Hidrološki krog | padavine, odtok, izhlapevanje",
+              "Visoke vode | povratna doba, merodajni pretok, hidrogram"
+            ]
+          ],
+          [
+            "Vodne zgradbe",
+            [
+              "Pregrade | vrste pregrad, sile na pregrado, stabilnost",
+              "Prelivi in zapornice | prelivna polja, podslapja"
+            ]
+          ],
+          [
+            "Urejanje voda",
+            [
+              "Regulacija vodotokov | prečni profil, zavarovanje brežin, pragovi",
+              "Protipoplavna zaščita | nasipi, zadrževalniki, ogroženost"
+            ]
+          ]
+        ]
+      ],
+      "JK": [
+        "Jeklene konstrukcije",
+        "FIZ",
+        [],
+        [
+          [
+            "Osnove",
+            [
+              "Konstrukcijsko jeklo in prerezi | jekla S235–S355, razredi kompaktnosti prerezov",
+              "Projektiranje po Evrokodu 3 | mejna stanja, delni faktorji, globalna analiza"
+            ]
+          ],
+          [
+            "Elementi",
+            [
+              "Natezni elementi | nosilnost bruto in neto prereza",
+              "Tlačni elementi | uklonske krivulje, vitkost",
+              "Upogibni elementi | upogibna nosilnost, bočna zvrnitev, strig"
+            ]
+          ],
+          [
+            "Spoji",
+            [
+              "Vijačni spoji | strig, bočni pritisk, prednapeti vijaki",
+              "Zvarni spoji | kotni in čelni zvari, nosilnost zvara"
+            ]
+          ]
+        ]
+      ],
+      "STAV2": [
+        "Stavbarstvo 2",
+        "FIZ",
+        [],
+        [
+          [
+            "Ovoj stavbe",
+            [
+              "Fasadni sistemi | kontaktne in prezračevane fasade",
+              "Okna in vrata | vgradnja, toplotna prehodnost, zrakotesnost"
+            ]
+          ],
+          [
+            "Notranji elementi",
+            [
+              "Stopnice | oblikovanje, razmerje višine in širine nastopa",
+              "Tlaki in finalne obloge | plavajoči pod, zvočna izolacija"
+            ]
+          ],
+          [
+            "Energijska učinkovitost",
+            [
+              "Energijsko učinkovite stavbe | nizkoenergijska in pasivna hiša, PURES",
+              "Skoraj ničenergijske stavbe | obnovljivi viri v stavbah, energijska bilanca"
+            ]
+          ]
+        ]
+      ],
+      "VGD": [
+        "Varstvo pri gradbenem delu",
+        "EKO",
+        [],
+        [
+          [
+            "Zakonodaja",
+            [
+              "Zakonodaja o varnosti in zdravju pri delu | dolžnosti delodajalca, koordinator",
+              "Varnostni načrt | ocena tveganja, ukrepi"
+            ]
+          ],
+          [
+            "Nevarnosti na gradbišču",
+            [
+              "Delo na višini | odri, zaščitne ograje, osebna varovalna oprema",
+              "Izkopi in gradbene jame | varovanje izkopov, zasutje",
+              "Stroji in električna energija na gradbišču | varna raba strojev, električni razvod"
+            ]
+          ],
+          [
+            "Ukrepi",
+            [
+              "Požarna varnost in prva pomoč na gradbišču | gašenje, evakuacija, organizacija prve pomoči",
+              "Varnostne oznake in ureditev gradbišča | znaki, ograje, dostopne poti"
+            ]
+          ]
+        ]
+      ],
+      "UPVO": [
+        "Urbanistično planiranje in varstvo okolja",
+        "GEO",
+        [],
+        [
+          [
+            "Urbanizem",
+            [
+              "Prostorsko planiranje | prostorski akti, OPN, namenska raba prostora",
+              "Urbanistični parametri | faktor zazidanosti, gostota, odmiki"
+            ]
+          ],
+          [
+            "Varstvo okolja",
+            [
+              "Presoja vplivov na okolje | postopek, okoljsko poročilo",
+              "Onesnaževanje okolja | zrak, voda, hrup, tla",
+              "Trajnostni razvoj mest | zelena infrastruktura, mobilnost"
+            ]
+          ],
+          [
+            "Infrastruktura",
+            [
+              "Komunalna infrastruktura | vodovod, kanalizacija, ceste v naselju",
+              "Promet v naselju | umirjanje prometa, javni prevoz"
+            ]
+          ]
+        ]
+      ],
+      "VGP": [
+        "Vodenje gradbenih projektov",
+        "EKO",
+        [],
+        [
+          [
+            "Projekt",
+            [
+              "Gradbeni projekt in udeleženci | investitor, projektant, izvajalec, nadzor",
+              "Vodenje projekta | načrtovanje, organizacija, kontrola"
+            ]
+          ],
+          [
+            "Upravljanje",
+            [
+              "Upravljanje časa in stroškov | terminski plan, stroškovni načrt, odstopanja",
+              "Upravljanje tveganj | identifikacija in ocena tveganj"
+            ]
+          ],
+          [
+            "Dokumentacija",
+            [
+              "Projektna dokumentacija | IZP, DGD, PZI, gradbeno dovoljenje",
+              "Gradbena zakonodaja | gradbeni zakon, uporabno dovoljenje"
+            ]
+          ]
+        ]
+      ],
+      "OVN": [
+        "Osnove vrednotenja nepremičnin",
+        "EKO",
+        [],
+        [
+          [
+            "Vrednotenje",
+            [
+              "Pojem vrednosti nepremičnine | tržna vrednost, standardi ocenjevanja",
+              "Način tržnih primerjav | primerljive prodaje, prilagoditve",
+              "Donosni način | kapitalizacija donosa, diskontiranje",
+              "Nabavnovrednostni način | stroški nadomestitve, zmanjšanje vrednosti"
+            ]
+          ],
+          [
+            "Dejavniki vrednosti",
+            [
+              "Dejavniki vrednosti nepremičnin | lokacija, stanje, pravni položaj",
+              "Najgospodarnejša uporaba | pravna dopustnost, fizična možnost, finančna izvedljivost"
+            ]
+          ],
+          [
+            "Uporaba vrednotenja",
+            [
+              "Poročilo o oceni vrednosti | namen ocene, predpostavke, uskladitev vrednosti",
+              "Množično vrednotenje nepremičnin | modeli vrednotenja, register nepremičnin"
+            ]
+          ]
+        ]
+      ],
+      "OVS": [
+        "Osnove vzdrževanja in sanacij",
+        "FIZ",
+        [],
+        [
+          [
+            "Poškodbe",
+            [
+              "Poškodbe gradbenih konstrukcij | razpoke, vlaga, korozija armature",
+              "Diagnostika stanja | pregled, neporušne preiskave"
+            ]
+          ],
+          [
+            "Sanacije",
+            [
+              "Sanacija betonskih konstrukcij | reparaturne malte, ojačitve",
+              "Sanacija zidanih stavb | injektiranje, hidroizolacija, protipotresne ojačitve"
+            ]
+          ],
+          [
+            "Vzdrževanje",
+            [
+              "Načrtovanje vzdrževanja | redni pregledi, življenjska doba, stroški",
+              "Upravljanje stavb | upravljanje objektov, stroški življenjskega cikla"
+            ]
+          ]
+        ]
+      ],
+      "MCZ": [
+        "Maloprometne ceste in zakonodaja",
+        "FIZ",
+        [],
+        [
+          [
+            "Maloprometne ceste",
+            [
+              "Elementi maloprometnih cest | prečni profil, izogibališča, vozišče",
+              "Gozdne in poljske poti | trasiranje, odvodnjavanje"
+            ]
+          ],
+          [
+            "Zakonodaja",
+            [
+              "Cestna zakonodaja | zakon o cestah, kategorizacija cest, projektni pogoji",
+              "Prometna signalizacija | prometni znaki, označbe na vozišču"
+            ]
+          ],
+          [
+            "Vzdrževanje",
+            [
+              "Vzdrževanje maloprometnih cest | makadamska vozišča, odvodnjavanje",
+              "Zimska služba | posipanje, pluženje, nevarna mesta"
+            ]
+          ]
+        ]
+      ],
+      "GVP": [
+        "Gradnja in vzdrževanje prometnic",
+        "FIZ",
+        [],
+        [
+          [
+            "Gradnja",
+            [
+              "Gradnja spodnjega ustroja | nasipi, komprimacija, kontrola zgoščenosti",
+              "Vgrajevanje asfalta | finišer, valjanje, temperatura vgradnje"
+            ]
+          ],
+          [
+            "Vzdrževanje",
+            [
+              "Poškodbe vozišč | razpoke, kolesnice, udarne jame",
+              "Vzdrževanje in obnova vozišč | preplastitve, recikliranje"
+            ]
+          ],
+          [
+            "Upravljanje",
+            [
+              "Gospodarjenje s cestami | ocena stanja vozišč, prioritete obnov",
+              "Delovne zapore na cestah | delovna območja, prometna ureditev, varnost"
+            ]
+          ]
+        ]
+      ],
+      "CKMP": [
+        "Cestna križišča in mestne prometne površine",
+        "FIZ",
+        [],
+        [
+          [
+            "Križišča",
+            [
+              "Oblikovanje nivojskih križišč | preglednost, zavijalni pasovi",
+              "Krožna križišča | vrste, geometrija, prepustnost",
+              "Izvennivojska križišča | priključki, rampe"
+            ]
+          ],
+          [
+            "Mestne površine",
+            [
+              "Mestne prometne površine | pločniki, kolesarske steze, parkirišča",
+              "Površine za javni potniški promet | postajališča, rumeni pasovi"
+            ]
+          ],
+          [
+            "Prepustnost",
+            [
+              "Prepustnost križišč | nivo uslug, merodajni promet",
+              "Semaforizirana križišča | signalni program, cikel, faze"
+            ]
+          ]
+        ]
+      ],
+      "MZ": [
+        "Masivne zgradbe",
+        "FIZ",
+        [],
+        [
+          [
+            "Zidane konstrukcije",
+            [
+              "Zidovje | nosilnost zidovja, Evrokod 6",
+              "Povezano zidovje | vezi, preklade"
+            ]
+          ],
+          [
+            "Armiranobetonske zgradbe",
+            [
+              "Plošče | eno- in dvosmerne plošče, armiranje",
+              "Okvirji in stene | horizontalna obtežba, zasnova konstrukcije"
+            ]
+          ],
+          [
+            "Potresna odpornost",
+            [
+              "Potresna odpornost masivnih zgradb | zasnova, duktilnost, Evrokod 8",
+              "Potresna analiza stavb | projektni spekter, faktor obnašanja, etažne sile"
+            ]
+          ]
+        ]
+      ],
+      "JZ": [
+        "Jeklene zgradbe",
+        "FIZ",
+        [],
+        [
+          [
+            "Zasnova",
+            [
+              "Zasnova jeklenih hal | okvirji, povezja, sekundarni nosilci",
+              "Obtežbe hal | sneg, veter, žerjavi"
+            ]
+          ],
+          [
+            "Dimenzioniranje",
+            [
+              "Dimenzioniranje okvirjev | globalna analiza, stabilnost okvirja",
+              "Priključki in sidranje | čelne pločevine, vznožja stebrov"
+            ]
+          ],
+          [
+            "Večetažne zgradbe",
+            [
+              "Jeklene večetažne zgradbe | sovprežne konstrukcije, povezja",
+              "Požarna odpornost jeklenih konstrukcij | kritična temperatura, požarna zaščita"
+            ]
+          ]
+        ]
+      ],
+      "TEM2": [
+        "Temeljenje 2",
+        "GEO",
+        [],
+        [
+          [
+            "Globoko temeljenje",
+            [
+              "Piloti | vrste pilotov, nosilnost osamljenega pilota, skupine pilotov",
+              "Preizkusi pilotov | statični in dinamični preizkus"
+            ]
+          ],
+          [
+            "Podporne konstrukcije",
+            [
+              "Oporni zidovi | stabilnost proti zdrsu in prevrnitvi",
+              "Zagatne stene in sidra | vpete in sidrane stene"
+            ]
+          ],
+          [
+            "Stabilnost",
+            [
+              "Stabilnost pobočij | metoda lamel, faktor varnosti",
+              "Sanacija plazov | drenaže, podporne konstrukcije, sidranje"
+            ]
+          ]
+        ]
+      ],
+      "VCPV": [
+        "Vodovod in čiščenje pitnih voda",
+        "GEO",
+        [],
+        [
+          [
+            "Oskrba z vodo",
+            [
+              "Viri pitne vode | podzemna in površinska voda, zajetja",
+              "Poraba vode | specifična poraba, neenakomernost"
+            ]
+          ],
+          [
+            "Vodovodno omrežje",
+            [
+              "Dimenzioniranje vodovodnega omrežja | tlačne razmere, tlačne izgube",
+              "Vodovodni objekti | črpališča, vodohrani, hidranti"
+            ]
+          ],
+          [
+            "Priprava vode",
+            [
+              "Čiščenje pitne vode | koagulacija, filtracija, dezinfekcija",
+              "Kakovost pitne vode | parametri, predpisi, nadzor"
+            ]
+          ]
+        ]
+      ],
+      "KCOV": [
+        "Kanalizacija in čiščenje odpadnih voda",
+        "GEO",
+        [],
+        [
+          [
+            "Kanalizacija",
+            [
+              "Kanalizacijski sistemi | mešani in ločeni sistem, objekti",
+              "Dimenzioniranje kanalov | sušni in padavinski odtok, polnjenje"
+            ]
+          ],
+          [
+            "Čiščenje",
+            [
+              "Čiščenje odpadnih voda | mehanska, biološka in kemijska stopnja",
+              "Male komunalne čistilne naprave | rastlinske in biološke čistilne naprave"
+            ]
+          ],
+          [
+            "Blato in padavinske vode",
+            [
+              "Obdelava blata | zgoščevanje, anaerobna stabilizacija, odstranjevanje",
+              "Ravnanje s padavinsko vodo | zadrževalni bazeni, ponikanje"
+            ]
+          ]
+        ]
+      ],
+      "HI": [
+        "Hišne instalacije",
+        "FIZ",
+        [],
+        [
+          [
+            "Vodovod in kanalizacija",
+            [
+              "Hišni vodovod | priključek, razvod, topla sanitarna voda",
+              "Hišna kanalizacija | odtoki, odzračevanje, dimenzioniranje"
+            ]
+          ],
+          [
+            "Ogrevanje in prezračevanje",
+            [
+              "Ogrevalni sistemi | radiatorsko in talno ogrevanje, toplotne črpalke",
+              "Prezračevanje stavb | naravno in prisilno prezračevanje, rekuperacija"
+            ]
+          ],
+          [
+            "Elektro in plinske instalacije",
+            [
+              "Osnove elektroinstalacij v stavbah | razvod, zaščita, razsvetljava",
+              "Plinske instalacije | priključek, razvod, varnost"
+            ]
+          ]
+        ]
+      ]
+    },
+    "programs": {
+      "UM-FGPA-GR": {
+        "name": "Gradbeništvo (UN)",
+        "source": "https://moja.um.si/studijski-programi/Strani/akreditacija.aspx?jezik=S&deli=N&program=0000330&fakulteta=FGPA",
+        "sourceYear": "aktualni akreditirani predmetnik na moja.um.si (prebran 30. 10. 2026), preverjeni vsi 3 letniki; program razpisan 2026/27; izbirni = predmeti 4 modulov 3. letnika (študent izbere en modul)",
+        "years": [
+          [
+            "MAT1",
+            "FIZ",
+            "GM1",
+            "UMGI",
+            "IG",
+            "RI",
+            "STAV1",
+            "MAT2",
+            "GM2",
+            "GF",
+            "MGI",
+            "GMCAD",
+            "MTAL"
+          ],
+          [
+            "MTH",
+            "TEM1",
+            "PGP1",
+            "GM3",
+            "OGD",
+            "OPK",
+            "GEOD",
+            "PGP2",
+            "LK",
+            "TGPM",
+            "BK",
+            "GE"
+          ],
+          [
+            "VZUV",
+            "JK",
+            "STAV2",
+            "VGD",
+            "UPVO"
+          ]
+        ],
+        "electives": [
+          "VGP",
+          "OVN",
+          "OVS",
+          "MCZ",
+          "GVP",
+          "CKMP",
+          "MZ",
+          "JZ",
+          "TEM2",
+          "VCPV",
+          "KCOV",
+          "HI"
+        ]
+      }
+    }
+  },
+  {
+    "id": "UM-MF",
+    "name": "UM Medicinska fakulteta",
+    "short": "UM MF",
+    "courses": {
+      "ANAHE": [
+        "Anatomija s histologijo in embriologijo",
+        "BIO",
+        [],
+        [
+          [
+            "Histologija",
+            [
+              "Celica in epitelno tkivo | zgradba celice, vrste epitelov, žleze",
+              "Vezivno tkivo, hrustanec in kost | celice, zunajcelični matriks, okostenevanje",
+              "Mišično in živčno tkivo | skeletna, srčna in gladka mišičnina, nevroni, glija",
+              "Kri in limfatični organi | krvne celice, hematopoeza, bezgavke, vranica"
+            ]
+          ],
+          [
+            "Embriologija",
+            [
+              "Gametogeneza in oploditev | spermatogeneza, oogeneza, brazdanje",
+              "Zgodnji razvoj zarodka | gastrulacija, zarodni listi, nevrulacija",
+              "Razvoj organskih sistemov in prirojene nepravilnosti | razvoj srca, teratogeni"
+            ]
+          ],
+          [
+            "Gibala",
+            [
+              "Anatomsko izrazoslovje | ravnine, smeri, telesne votline",
+              "Kosti in sklepi | aksialni in apendikularni skelet, zgradba sklepov",
+              "Mišice zgornjega in spodnjega uda | izvor, narastišče, oživčenje, funkcija"
+            ]
+          ],
+          [
+            "Prsni koš in trebuh",
+            [
+              "Srce in veliko žilje | zgradba srca, osrčnik, koronarne arterije",
+              "Pljuča in mediastinum | lobusi, plevra, organi mediastinuma",
+              "Trebušni organi | prebavna cev, jetra, trebušna slinavka, peritonej",
+              "Organi retroperitoneja in medenice | ledvice, sečila, spolovila"
+            ]
+          ],
+          [
+            "Glava, vrat in živčevje",
+            [
+              "Glava in vrat | lobanja, mišice, žile in živci vratu",
+              "Osrednje živčevje | možgani, hrbtenjača, možganski prekati",
+              "Periferno živčevje in čutila | možganski živci, živčni pleteži, oko, uho"
+            ]
+          ],
+          [
+            "Mikroskopska anatomija organov",
+            [
+              "Histologija prebavil in dihal | stena prebavne cevi, alveoli",
+              "Histologija sečil in endokrinih žlez | nefron, ščitnica, nadledvična žleza"
+            ]
+          ]
+        ]
+      ],
+      "KEM": [
+        "Kemija",
+        "KEM",
+        [
+          "SPL_KEM"
+        ],
+        [
+          [
+            "Organska kemija za medicino",
+            [
+              "Funkcionalne skupine bioloških molekul | alkoholi, karbonilne spojine, karboksilne kisline, amini",
+              "Izomerija in kiralnost biomolekul | enantiomeri, pomen za delovanje zdravil",
+              "Kemijske reakcije v organizmu | hidroliza, kondenzacija, oksidacija in redukcija"
+            ]
+          ]
+        ]
+      ],
+      "BIOKEM": [
+        "Biokemija",
+        "KEM",
+        [
+          "BIOKEM"
+        ],
+        [
+          [
+            "Ogljikovi hidrati",
+            [
+              "Zgradba ogljikovih hidratov | monosaharidi, glikogen, glikoproteini",
+              "Glukoneogeneza in presnova glikogena | uravnavanje glukoze v krvi, inzulin, glukagon",
+              "Pentozafosfatna pot | NADPH, pomanjkanje G6PD"
+            ]
+          ],
+          [
+            "Lipidi",
+            [
+              "Zgradba lipidov in membran | maščobne kisline, fosfolipidi, holesterol",
+              "Presnova lipidov | β-oksidacija, ketonska telesa, sinteza maščobnih kislin",
+              "Lipoproteini | hilomikroni, LDL, HDL, hiperlipidemije"
+            ]
+          ],
+          [
+            "Dušikove spojine",
+            [
+              "Presnova aminokislin | transaminacija, cikel sečnine, prirojene motnje",
+              "Presnova nukleotidov in hema | sinteza purinov, sečna kislina, bilirubin"
+            ]
+          ],
+          [
+            "Integracija presnove",
+            [
+              "Presnova v sitosti in stradanju | vloga jeter, mišic in maščevja",
+              "Hormonsko uravnavanje presnove | signalne poti, sekundarni obveščevalci",
+              "Vitamini in koencimi | vodotopni in v maščobah topni vitamini, pomanjkanja"
+            ]
+          ]
+        ]
+      ],
+      "BIOFIZ": [
+        "Biofizika",
+        "FIZ",
+        [],
+        [
+          [
+            "Mehanika v medicini",
+            [
+              "Biomehanika | sile v mišično-skeletnem sistemu, ravnovesje, vzvodi",
+              "Napetosti in deformacije | napetost, deformacija, Youngov modul",
+              "Hemodinamika | Poiseuillov zakon, upor ožilja, krvni tlak, turbulenca"
+            ]
+          ],
+          [
+            "Termodinamika in transport",
+            [
+              "Termodinamika organizma | energijska bilanca, toplotne izgube, termoregulacija",
+              "Difuzija in osmoza | Fickov zakon, osmotski tlak, transport skozi membrane"
+            ]
+          ],
+          [
+            "Bioelektrika",
+            [
+              "Membranski potencial | Nernstova enačba, Goldmanova enačba, ionski kanali",
+              "Akcijski potencial in prevajanje | elektrotonično širjenje, mielinizacija",
+              "Elektrokardiografija | električna os srca, odvodi"
+            ]
+          ],
+          [
+            "Valovanje in optika",
+            [
+              "Zvok in sluh | jakost, decibeli, ultrazvok v diagnostiki",
+              "Optika očesa | lom svetlobe, leče, napake vida, mikroskop"
+            ]
+          ],
+          [
+            "Sevanja",
+            [
+              "Ionizirajoče sevanje | radioaktivni razpad, doza, biološki učinki, varstvo",
+              "Slikovne metode | rentgen, CT, magnetna resonanca, PET"
+            ]
+          ]
+        ]
+      ],
+      "UVMED": [
+        "Uvod v medicino",
+        "BIO",
+        [],
+        [
+          [
+            "Prva pomoč",
+            [
+              "Temeljni postopki oživljanja | prepoznava srčnega zastoja, stisi prsnega koša, AED",
+              "Prva pomoč pri poškodbah | krvavitve, opekline, zlomi, položaj poškodovanca",
+              "Nujna stanja | zadušitev, šok, nezavest, anafilaksija"
+            ]
+          ],
+          [
+            "Zgodovina medicine",
+            [
+              "Razvoj medicine | antika, Hipokrat, Galen, renesansa, moderna medicina",
+              "Pomembni mejniki | cepljenje, antibiotiki, anestezija"
+            ]
+          ],
+          [
+            "Medicinska terminologija",
+            [
+              "Latinsko in grško izrazoslovje | predpone, pripone, korenske besede",
+              "Anatomska in klinična terminologija | sestavljanje in razumevanje diagnoz"
+            ]
+          ],
+          [
+            "Odnos s pacientom",
+            [
+              "Komunikacija z bolnikom | anamneza, empatija, zaupnost",
+              "Etika zdravnika | načela biomedicinske etike, pojasnilna dolžnost"
+            ]
+          ]
+        ]
+      ],
+      "BIOCEL": [
+        "Biologija celice",
+        "BIO",
+        [],
+        [
+          [
+            "Celične strukture",
+            [
+              "Celična membrana | zgradba, membranski transport, endocitoza",
+              "Organeli | endoplazemski retikulum, Golgijev aparat, lizosomi, mitohondriji",
+              "Citoskelet | mikrotubuli, aktinski filamenti, intermediarni filamenti"
+            ]
+          ],
+          [
+            "Celične funkcije",
+            [
+              "Sinteza in razvrščanje proteinov | signalni peptidi, vezikularni transport",
+              "Celična signalizacija | receptorji, sekundarni obveščevalci, signalne kaskade",
+              "Celični stiki in zunajcelični matriks | tesni stiki, dezmosomi, integrini"
+            ]
+          ],
+          [
+            "Življenjski cikel celice",
+            [
+              "Celični cikel | faze, kontrolne točke, ciklini",
+              "Mitoza in mejoza | poteki, pomen, napake",
+              "Celična smrt | apoptoza, nekroza, avtofagija"
+            ]
+          ],
+          [
+            "Celica v bolezni",
+            [
+              "Matične celice in diferenciacija | totipotentnost, regeneracija",
+              "Spremembe celic pri raku | nenadzorovana delitev, onkogeni"
+            ]
+          ]
+        ]
+      ],
+      "MBGEN": [
+        "Molekularna biologija z genetiko",
+        "BIO",
+        [],
+        [
+          [
+            "Genom in izražanje genov",
+            [
+              "Zgradba DNA in kromatina | dvojna vijačnica, nukleosomi, kromosomi",
+              "Podvajanje in popravljanje DNA | replikacijske vilice, mehanizmi popravljanja",
+              "Prepisovanje in prevajanje | RNA-polimeraza, obdelava RNA, ribosomi",
+              "Uravnavanje izražanja genov | transkripcijski dejavniki, epigenetika, mikroRNA"
+            ]
+          ],
+          [
+            "Klasična genetika",
+            [
+              "Mendlovo dedovanje | dominantno in recesivno dedovanje, rodovniki",
+              "Spolno vezano in mitohondrijsko dedovanje | X-vezane bolezni",
+              "Kromosomske nepravilnosti | aneuploidije, translokacije, kariotip"
+            ]
+          ],
+          [
+            "Molekularne metode",
+            [
+              "PCR in sekvenciranje | princip, uporaba v diagnostiki",
+              "Genomika v medicini | sekvenciranje naslednje generacije, polimorfizmi"
+            ]
+          ],
+          [
+            "Medicinska genetika",
+            [
+              "Monogenske in multifaktorske bolezni | cistična fibroza, genetska nagnjenost",
+              "Genetsko svetovanje in testiranje | predimplantacijska in prenatalna diagnostika"
+            ]
+          ]
+        ]
+      ],
+      "METRAZ": [
+        "Metode raziskovalnega dela v medicini z medicinsko statistiko",
+        "MAT",
+        [
+          "STATISTIKA"
+        ],
+        [
+          [
+            "Raziskovanje v medicini",
+            [
+              "Znanstvena metoda | hipoteza, raziskovalno vprašanje, spremenljivke",
+              "Vrste raziskav | opazovalne raziskave, kohortne raziskave, raziskave primerov s kontrolami, klinični poskusi",
+              "Etika raziskovanja | informirana privolitev, komisija za etiko"
+            ]
+          ],
+          [
+            "Opisna statistika",
+            [
+              "Vrste podatkov | številske in opisne spremenljivke, merske lestvice",
+              "Mere srednje vrednosti in razpršenosti | mediana, interkvartilni razmik, grafični prikazi"
+            ]
+          ],
+          [
+            "Statistični testi",
+            [
+              "Primerjava povprečij | t-test, analiza variance",
+              "Primerjava deležev | hi-kvadrat test, Fisherjev test",
+              "Korelacija in regresija | Pearsonov in Spearmanov koeficient"
+            ]
+          ],
+          [
+            "Pisanje znanstvenega dela",
+            [
+              "Iskanje literature | PubMed, ključne besede, citiranje",
+              "Struktura znanstvenega članka | IMRaD, predstavitev rezultatov"
+            ]
+          ]
+        ]
+      ],
+      "FIZIOL": [
+        "Fiziologija",
+        "BIO",
+        [],
+        [
+          [
+            "Celična fiziologija",
+            [
+              "Membranski transport in potencial | mirovni potencial, akcijski potencial",
+              "Sinapsa in mišično krčenje | živčno-mišični stik, skeletna in gladka mišica"
+            ]
+          ],
+          [
+            "Živčevje",
+            [
+              "Senzorični sistemi | receptorji, bolečina, vid, sluh",
+              "Motorični sistem | refleksi, mali možgani, bazalni gangliji",
+              "Avtonomno živčevje | simpatikus, parasimpatikus, višje živčne funkcije"
+            ]
+          ],
+          [
+            "Srce in krvni obtok",
+            [
+              "Delovanje srca | srčni cikel, prevodni sistem, minutni volumen",
+              "Krvni obtok | krvni tlak, mikrocirkulacija, uravnavanje pretoka",
+              "Kri | krvne celice, hemostaza, krvne skupine"
+            ]
+          ],
+          [
+            "Dihanje",
+            [
+              "Mehanika dihanja | pljučni volumni, podajnost, upor dihalnih poti",
+              "Izmenjava in prenos plinov | difuzija, hemoglobin, uravnavanje dihanja"
+            ]
+          ],
+          [
+            "Ledvice in acidobazno ravnovesje",
+            [
+              "Delovanje ledvic | glomerulna filtracija, tubulni transport, očistek",
+              "Telesne tekočine in elektroliti | uravnavanje volumna, natrija in kalija",
+              "Acidobazno ravnovesje | pufrski sistemi, respiratorna in metabolna kompenzacija"
+            ]
+          ],
+          [
+            "Prebava in endokrinologija",
+            [
+              "Prebavila | gibljivost, izločanje, absorpcija hranil",
+              "Endokrini sistem | hipofiza, ščitnica, nadledvična žleza, uravnavanje glukoze",
+              "Razmnoževanje | spolni hormoni, menstruacijski cikel, nosečnost"
+            ]
+          ]
+        ]
+      ],
+      "MIKIMU": [
+        "Mikrobiologija z imunologijo",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna mikrobiologija",
+            [
+              "Zgradba in rast bakterij | celična stena, dejavniki virulence, toksini",
+              "Mikrobiološka diagnostika | mikroskopija, osamitev, serologija, molekularne metode",
+              "Protimikrobna zdravila in odpornost | mehanizmi delovanja, antibiogram"
+            ]
+          ],
+          [
+            "Bakterije in glive",
+            [
+              "Gram-pozitivne bakterije | stafilokoki, streptokoki, klostridiji",
+              "Gram-negativne bakterije | enterobakterije, psevdomonas, nevserije",
+              "Mikobakterije in glive | tuberkuloza, kandida, aspergilus"
+            ]
+          ],
+          [
+            "Virusi in paraziti",
+            [
+              "Splošna virologija | zgradba, razmnoževanje, patogeneza",
+              "Klinično pomembni virusi | hepatitisni virusi, HIV, herpesvirusi, respiratorni virusi",
+              "Paraziti | protozoji, helminti"
+            ]
+          ],
+          [
+            "Imunologija",
+            [
+              "Prirojena imunost | fagocitoza, komplement, vnetje",
+              "Pridobljena imunost | limfociti T in B, MHC, protitelesa",
+              "Imunopatologija | preobčutljivost, avtoimunost, imunske pomanjkljivosti",
+              "Cepljenje | aktivna in pasivna imunizacija, vrste cepiv"
+            ]
+          ]
+        ]
+      ],
+      "ZDPM": [
+        "Z dokazi podprta medicina",
+        "BIO",
+        [],
+        [
+          [
+            "Načela",
+            [
+              "Z dokazi podprta medicina | koraki, klinično vprašanje PICO",
+              "Hierarhija dokazov | sistematični pregledi, randomizirane raziskave, smernice"
+            ]
+          ],
+          [
+            "Kritično vrednotenje",
+            [
+              "Ocena terapevtske raziskave | randomizacija, slepljenje, pristranskosti",
+              "Mere učinka | relativno in absolutno tveganje, število bolnikov za zdravljenje",
+              "Diagnostični testi | občutljivost, specifičnost, napovedne vrednosti, razmerje verjetij"
+            ]
+          ],
+          [
+            "Sinteza dokazov",
+            [
+              "Sistematični pregled in metaanaliza | iskanje, heterogenost, gozdni diagram",
+              "Klinične smernice | razvoj, ocena kakovosti dokazov GRADE"
+            ]
+          ]
+        ]
+      ],
+      "MEDINF": [
+        "Medicinska informatika, e-zdravje in medicinska statistika",
+        "RAC",
+        [],
+        [
+          [
+            "Medicinska informatika",
+            [
+              "Zdravstveni podatki | elektronski zdravstveni zapis, klasifikacije MKB, standardi",
+              "Bolnišnični informacijski sistemi | struktura, interoperabilnost, HL7"
+            ]
+          ],
+          [
+            "E-zdravje",
+            [
+              "Storitve e-zdravja | e-recept, e-napotnica, telemedicina",
+              "Varnost in zasebnost podatkov | varstvo osebnih podatkov, dostopne pravice"
+            ]
+          ],
+          [
+            "Medicinska statistika",
+            [
+              "Statistična obdelava podatkov | priprava podatkov, statistični programi",
+              "Analiza preživetja | Kaplan-Meierjeva krivulja, log-rang test",
+              "Logistična regresija | razmerje obetov, interpretacija"
+            ]
+          ],
+          [
+            "Odločanje",
+            [
+              "Sistemi za podporo odločanju | pravila, umetna inteligenca v medicini",
+              "Umetna inteligenca v diagnostiki | strojno učenje, validacija modelov, omejitve"
+            ]
+          ]
+        ]
+      ],
+      "FARMTOK": [
+        "Farmakologija s toksikologijo",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna farmakologija",
+            [
+              "Farmakokinetika | absorpcija, porazdelitev, presnova, izločanje",
+              "Farmakodinamika | receptorji, krivulja odmerek–učinek, agonisti, antagonisti",
+              "Neželeni učinki in interakcije | farmakovigilanca, interakcije zdravil"
+            ]
+          ],
+          [
+            "Živčni sistem",
+            [
+              "Zdravila za avtonomno živčevje | holinergiki, adrenergiki",
+              "Zdravila za osrednje živčevje | antidepresivi, antipsihotiki, antiepileptiki",
+              "Analgetiki in anestetiki | opioidi, nesteroidni antirevmatiki, lokalni anestetiki"
+            ]
+          ],
+          [
+            "Srce, ožilje in kri",
+            [
+              "Zdravila za srce in ožilje | antihipertenzivi, antiaritmiki, nitrati",
+              "Zdravila za hemostazo | antikoagulanti, antiagregacijska zdravila, trombolitiki"
+            ]
+          ],
+          [
+            "Kemoterapija",
+            [
+              "Protimikrobna zdravila | antibiotiki, protivirusna in protiglivna zdravila",
+              "Protirakava zdravila | citostatiki, tarčna zdravila, imunoterapija"
+            ]
+          ],
+          [
+            "Endokrinologija in toksikologija",
+            [
+              "Hormoni in antidiabetiki | inzulin, peroralni antidiabetiki, kortikosteroidi",
+              "Klinična toksikologija | zastrupitve, antidoti, odstranjevanje strupa"
+            ]
+          ]
+        ]
+      ],
+      "PSIHZ": [
+        "Psihologija zdravja",
+        "BIO",
+        [],
+        [
+          [
+            "Psihologija in zdravje",
+            [
+              "Biopsihosocialni model | zdravje in bolezen, dejavniki vpliva",
+              "Zdravstveno vedenje | modeli spreminjanja vedenja, kajenje, prehrana, gibanje"
+            ]
+          ],
+          [
+            "Stres in bolezen",
+            [
+              "Stres in obvladovanje | stresorji, fiziološki odziv, strategije spoprijemanja",
+              "Psihosomatika in kronična bolezen | prilagajanje na bolezen, kakovost življenja",
+              "Bolečina | psihološki vidiki doživljanja bolečine"
+            ]
+          ],
+          [
+            "Odnos zdravnik–bolnik",
+            [
+              "Komunikacija in sodelovanje bolnika | adherenca, sporočanje slabih novic",
+              "Izgorelost zdravstvenih delavcev | dejavniki tveganja, preventiva"
+            ]
+          ]
+        ]
+      ],
+      "PATOL1": [
+        "Patologija I (splošna patologija)",
+        "BIO",
+        [],
+        [
+          [
+            "Celična poškodba",
+            [
+              "Prilagoditve celic | hipertrofija, atrofija, metaplazija",
+              "Poškodba in smrt celice | reverzibilna poškodba, nekroza, apoptoza",
+              "Odlaganja v tkivih | amiloid, kalcinacija, pigmenti"
+            ]
+          ],
+          [
+            "Vnetje in celjenje",
+            [
+              "Akutno vnetje | žilne spremembe, levkociti, mediatorji",
+              "Kronično vnetje | granulomsko vnetje, posledice",
+              "Celjenje ran | regeneracija, brazgotinjenje, fibroza"
+            ]
+          ],
+          [
+            "Hemodinamske motnje",
+            [
+              "Edem, hiperemija in krvavitev | mehanizmi, posledice",
+              "Tromboza, embolija in infarkt | Virchowova triada, vrste embolij",
+              "Šok | vrste šoka, patogeneza"
+            ]
+          ],
+          [
+            "Neoplazija",
+            [
+              "Značilnosti tumorjev | benigni in maligni tumorji, nomenklatura, displazija",
+              "Karcinogeneza | genetske spremembe, karcinogeni, zasevanje"
+            ]
+          ]
+        ]
+      ],
+      "INTERNA": [
+        "Interna medicina s propedevtiko",
+        "BIO",
+        [],
+        [
+          [
+            "Propedevtika",
+            [
+              "Anamneza | struktura pogovora, družinska in socialna anamneza",
+              "Klinični pregled | inspekcija, palpacija, perkusija, avskultacija",
+              "Pregled srca in pljuč | srčni toni, šumi, dihalni zvoki"
+            ]
+          ],
+          [
+            "Kardiologija",
+            [
+              "Ishemična bolezen srca | angina pektoris, akutni koronarni sindrom",
+              "Srčno popuščanje in aritmije | simptomi, EKG, zdravljenje",
+              "Arterijska hipertenzija | diagnostika, zapleti, zdravljenje"
+            ]
+          ],
+          [
+            "Pulmologija in gastroenterologija",
+            [
+              "Bolezni dihal | astma, KOPB, pljučnica",
+              "Bolezni prebavil in jeter | peptični ulkus, hepatitis, ciroza"
+            ]
+          ],
+          [
+            "Endokrinologija in nefrologija",
+            [
+              "Sladkorna bolezen | diagnostika, akutni in kronični zapleti, zdravljenje",
+              "Bolezni ščitnice | hipertiroza, hipotiroza",
+              "Bolezni ledvic | akutna ledvična okvara, kronična ledvična bolezen"
+            ]
+          ],
+          [
+            "Hematologija in revmatologija",
+            [
+              "Anemije | razvrstitev, diagnostika",
+              "Revmatske bolezni | revmatoidni artritis, sistemske vezivnotkivne bolezni"
+            ]
+          ]
+        ]
+      ],
+      "KIRUR": [
+        "Kirurgija",
+        "BIO",
+        [],
+        [
+          [
+            "Splošna kirurgija",
+            [
+              "Kirurška asepsa in antisepsa | sterilizacija, priprava operativnega polja",
+              "Rane in celjenje | vrste ran, oskrba, šivanje",
+              "Kirurške okužbe | absces, flegmona, perioperativna antibiotična zaščita"
+            ]
+          ],
+          [
+            "Perioperativna obravnava",
+            [
+              "Predoperativna priprava | ocena tveganja, privolitev",
+              "Pooperativni zapleti | krvavitev, tromboembolija, dehiscenca",
+              "Tekočinska terapija in šok | nadomeščanje tekočin, transfuzija"
+            ]
+          ],
+          [
+            "Abdominalna kirurgija",
+            [
+              "Akutni abdomen | apendicitis, ileus, perforacija",
+              "Kile in bolezni žolčnika | dimeljska kila, holecistitis"
+            ]
+          ],
+          [
+            "Travmatologija",
+            [
+              "Oskrba poškodovanca | ATLS, primarni in sekundarni pregled",
+              "Zlomi | razvrstitev, imobilizacija, osnovni principi zdravljenja",
+              "Poškodbe glave in prsnega koša | pnevmotoraks, možganski pretres"
+            ]
+          ],
+          [
+            "Posebna področja",
+            [
+              "Žilna kirurgija | periferna arterijska bolezen, anevrizma",
+              "Kirurška onkologija | načela onkološke kirurgije"
+            ]
+          ]
+        ]
+      ],
+      "SPECPAT": [
+        "Patologija – specialna patologija",
+        "BIO",
+        [],
+        [
+          [
+            "Srce, ožilje in pljuča",
+            [
+              "Patologija srca | miokardni infarkt, kardiomiopatije, bolezni zaklopk",
+              "Patologija žil | ateroskleroza, anevrizme, vaskulitisi",
+              "Patologija pljuč | pljučnice, emfizem, pljučni rak"
+            ]
+          ],
+          [
+            "Prebavila",
+            [
+              "Patologija prebavne cevi | gastritis, vnetne črevesne bolezni, rak debelega črevesa",
+              "Patologija jeter in trebušne slinavke | hepatitis, ciroza, pankreatitis"
+            ]
+          ],
+          [
+            "Sečila in spolovila",
+            [
+              "Patologija ledvic | glomerulonefritis, tumorji ledvic",
+              "Patologija spolovil in dojke | rak materničnega vratu, rak dojke, rak prostate"
+            ]
+          ],
+          [
+            "Drugi organski sistemi",
+            [
+              "Patologija endokrinih žlez | tumorji ščitnice, adenomi hipofize",
+              "Patologija krvotvornih organov | levkemije, limfomi",
+              "Patologija živčevja | možganska kap, tumorji osrednjega živčevja"
+            ]
+          ]
+        ]
+      ],
+      "RADIO": [
+        "Radiologija",
+        "BIO",
+        [],
+        [
+          [
+            "Osnove radiologije",
+            [
+              "Fizikalne osnove slikanja | rentgenski žarki, ultrazvok, magnetna resonanca",
+              "Varstvo pred sevanji | doza, načelo ALARA, nosečnost",
+              "Kontrastna sredstva | vrste, neželeni učinki"
+            ]
+          ],
+          [
+            "Radiološka anatomija in diagnostika",
+            [
+              "Radiologija prsnega koša | rentgenogram pljuč, pljučnica, pnevmotoraks",
+              "Radiologija trebuha | ultrazvok, CT, akutni abdomen",
+              "Radiologija gibal | zlomi, degenerativne spremembe"
+            ]
+          ],
+          [
+            "Nevroradiologija in intervencije",
+            [
+              "Nevroradiologija | CT glave, možganska kap, krvavitev",
+              "Intervencijska radiologija | angiografija, perkutani posegi"
+            ]
+          ]
+        ]
+      ],
+      "KLINBK": [
+        "Klinična biokemija",
+        "KEM",
+        [],
+        [
+          [
+            "Laboratorijska diagnostika",
+            [
+              "Predanalitika | odvzem in transport vzorcev, motilni dejavniki",
+              "Interpretacija izvidov | referenčni intervali, biološka variabilnost, kritične vrednosti"
+            ]
+          ],
+          [
+            "Presnovni označevalci",
+            [
+              "Glukoza in lipidi | HbA1c, lipidogram",
+              "Elektroliti in acidobazno ravnovesje | natrij, kalij, plinska analiza arterijske krvi",
+              "Srčni označevalci | troponini, natriuretični peptidi"
+            ]
+          ],
+          [
+            "Organski testi",
+            [
+              "Jetrni testi | aminotransferaze, bilirubin, holestatski encimi",
+              "Ledvični testi | kreatinin, ocena glomerulne filtracije, analiza urina",
+              "Endokrinološki testi | ščitnični hormoni, kortizol"
+            ]
+          ],
+          [
+            "Tumorski označevalci in hematologija",
+            [
+              "Tumorski označevalci | PSA, CEA, CA 125, omejitve uporabe",
+              "Laboratorijska hematologija in koagulacija | hemogram, PČ, INR, D-dimer"
+            ]
+          ]
+        ]
+      ],
+      "ORTOP": [
+        "Ortopedija",
+        "BIO",
+        [],
+        [
+          [
+            "Klinični pregled gibal",
+            [
+              "Ortopedski pregled | inspekcija, gibljivost sklepov, specialni testi",
+              "Slikovna diagnostika v ortopediji | rentgen, ultrazvok, MR"
+            ]
+          ],
+          [
+            "Degenerativne bolezni",
+            [
+              "Artroza | koleno, kolk, zdravljenje, endoproteze",
+              "Bolezni hrbtenice | bolečina v križu, diskus hernija, skolioza"
+            ]
+          ],
+          [
+            "Otroška in športna ortopedija",
+            [
+              "Otroška ortopedija | razvojna displazija kolka, deformacije stopal",
+              "Športne poškodbe | poškodbe vezi in meniskusov, tendinopatije"
+            ]
+          ]
+        ]
+      ],
+      "IVBIOFIZ": [
+        "Izbrane vsebine in novosti v biofiziki in medicinski fiziki",
+        "FIZ",
+        [],
+        [
+          [
+            "Medicinska fizika",
+            [
+              "Fizika slikovne diagnostike | CT, MR, PET, ločljivost",
+              "Fizika radioterapije | linearni pospeševalnik, načrtovanje obsevanja"
+            ]
+          ],
+          [
+            "Biofizika celice",
+            [
+              "Mehanika celice | citoskelet, adhezija, mehanotransdukcija",
+              "Biofizikalne metode | fluorescenčna mikroskopija, optična pinceta"
+            ]
+          ],
+          [
+            "Biofizika sevanj in nanomedicina",
+            [
+              "Biološki učinki sevanj | poškodbe DNA, dozimetrija",
+              "Nanodelci v medicini | ciljana dostava, slikanje"
+            ]
+          ]
+        ]
+      ],
+      "IVBIOKEM": [
+        "Izbrane vsebine in novosti v biokemiji",
+        "KEM",
+        [],
+        [
+          [
+            "Sodobna biokemija",
+            [
+              "Presnovne motnje | prirojene napake presnove, presnovni sindrom",
+              "Oksidativni stres | prosti radikali, antioksidanti"
+            ]
+          ],
+          [
+            "Metode",
+            [
+              "Proteomika in metabolomika | masna spektrometrija, biooznačevalci",
+              "Biokemijski označevalci bolezni | izbor, validacija, klinični pomen"
+            ]
+          ],
+          [
+            "Biokemija signalizacije",
+            [
+              "Signalne poti in bolezen | receptorske tirozin kinaze, motnje signalizacije",
+              "Biokemija staranja | telomere, mitohondriji"
+            ]
+          ]
+        ]
+      ],
+      "PRAVEKO": [
+        "Osnove prava in ekonomike v zdravstvu",
+        "EKO",
+        [],
+        [
+          [
+            "Pravo v zdravstvu",
+            [
+              "Pravice pacientov | Zakon o pacientovih pravicah, privolitev, zaupnost",
+              "Odgovornost zdravnika | strokovna napaka, kazenska in civilna odgovornost"
+            ]
+          ],
+          [
+            "Ekonomika zdravstva",
+            [
+              "Financiranje zdravstva | obvezno in dopolnilno zavarovanje, plačilni modeli",
+              "Ekonomske analize v zdravstvu | stroškovna učinkovitost, QALY"
+            ]
+          ],
+          [
+            "Organizacija zdravstva",
+            [
+              "Zdravstveni sistem v Sloveniji | ravni zdravstvenega varstva, javna mreža",
+              "Kakovost in varnost v zdravstvu | kazalniki kakovosti, neželeni dogodki"
+            ]
+          ]
+        ]
+      ],
+      "MEDTEH": [
+        "Osnove medicinske tehnologije",
+        "FIZ",
+        [],
+        [
+          [
+            "Medicinske naprave",
+            [
+              "Merjenje bioloških signalov | senzorji, EKG, EEG, ojačevalniki",
+              "Diagnostične in terapevtske naprave | monitorji, defibrilatorji, infuzijske črpalke"
+            ]
+          ],
+          [
+            "Varnost",
+            [
+              "Električna varnost in standardi | uhajavi tokovi, razredi naprav",
+              "Upravljanje medicinske opreme | vzdrževanje, kalibracija, zakonodaja o medicinskih pripomočkih"
+            ]
+          ],
+          [
+            "Slikovne in laboratorijske naprave",
+            [
+              "Naprave za slikanje | ultrazvočni aparati, rentgen, endoskopi",
+              "Avtomatizacija laboratorija | analizatorji, obposteljna diagnostika"
+            ]
+          ]
+        ]
+      ],
+      "IVGEN": [
+        "Izbrane vsebine in novosti v genetiki in genomiki v medicini",
+        "BIO",
+        [],
+        [
+          [
+            "Genomska medicina",
+            [
+              "Sekvenciranje genoma v diagnostiki | eksom, interpretacija različic",
+              "Farmakogenomika | polimorfizmi presnovnih encimov, prilagajanje zdravljenja"
+            ]
+          ],
+          [
+            "Nove tehnologije",
+            [
+              "Urejanje genoma | CRISPR-Cas9, genska terapija",
+              "Etični vidiki genetike | genetsko testiranje, zasebnost"
+            ]
+          ],
+          [
+            "Genetika pogostih bolezni",
+            [
+              "Poligensko tveganje | asociacijske študije celotnega genoma, poligenska ocena tveganja",
+              "Genetika raka | dedni sindromi, BRCA, somatske mutacije"
+            ]
+          ]
+        ]
+      ],
+      "KOMUN": [
+        "Komuniciranje v medicini",
+        "BIO",
+        [],
+        [
+          [
+            "Komunikacija z bolnikom",
+            [
+              "Struktura kliničnega pogovora | Calgary-Cambridge model, odprta vprašanja",
+              "Sporočanje slabih novic | protokol SPIKES",
+              "Komunikacija s posebnimi skupinami | otroci, starostniki, svojci"
+            ]
+          ],
+          [
+            "Timska komunikacija",
+            [
+              "Komunikacija v zdravstvenem timu | predaja bolnika, SBAR",
+              "Medpoklicno sodelovanje | vloge v timu, reševanje konfliktov"
+            ]
+          ],
+          [
+            "Zahtevne situacije",
+            [
+              "Komunikacija ob napaki | razkritje napake, opravičilo",
+              "Jezikovne in kulturne ovire | tolmač, kulturna občutljivost"
+            ]
+          ]
+        ]
+      ],
+      "UPSTAT": [
+        "Uporabna statistika v medicini",
+        "MAT",
+        [],
+        [
+          [
+            "Analiza podatkov",
+            [
+              "Neparametrični testi | Mann-Whitneyjev test, Wilcoxonov test",
+              "Linearna in multipla regresija | modeli, interpretacija koeficientov",
+              "Velikost vzorca in moč testa | napaka tipa I in II"
+            ]
+          ],
+          [
+            "Statistični programi",
+            [
+              "Delo s statističnim programom | vnos podatkov, izbira testa, poročanje rezultatov",
+              "Grafično prikazovanje rezultatov | škatla z ročaji, razsevni diagram, poročanje negotovosti"
+            ]
+          ],
+          [
+            "Raziskovalni načrt",
+            [
+              "Načrtovanje raziskave | randomizacija, slepljenje, kontrolna skupina",
+              "Ponovljene meritve | parni t-test, mešani modeli"
+            ]
+          ]
+        ]
+      ],
+      "KLPREH": [
+        "Klinična prehrana 1",
+        "BIO",
+        [],
+        [
+          [
+            "Prehransko stanje",
+            [
+              "Ocena prehranskega stanja | ITM, presejalni testi, podhranjenost",
+              "Energijske in hranilne potrebe | bazalni metabolizem, beljakovine"
+            ]
+          ],
+          [
+            "Prehranska podpora",
+            [
+              "Enteralna prehrana | indikacije, poti, zapleti",
+              "Parenteralna prehrana | sestava, indikacije, zapleti"
+            ]
+          ],
+          [
+            "Prehrana pri boleznih",
+            [
+              "Prehrana pri sladkorni bolezni in debelosti | dietni ukrepi, energijski vnos",
+              "Prehrana kirurškega in kritično bolnega | presnovni odziv na stres, sindrom ponovnega hranjenja"
+            ]
+          ]
+        ]
+      ]
+    },
+    "programs": {
+      "UM-MF-SM": {
+        "name": "Splošna medicina",
+        "source": "https://www.mf.um.si/attachments/article/2590/brosuraMF2627.pdf",
+        "sourceYear": "2026/27 (brošura Študentom na pot, predmetnik splošne medicine); preverjeni 1.–3. letnik",
+        "years": [
+          [
+            "ANAHE",
+            "KEM",
+            "BIOKEM",
+            "BIOFIZ",
+            "UVMED",
+            "BIOCEL",
+            "MBGEN",
+            "METRAZ"
+          ],
+          [
+            "FIZIOL",
+            "MIKIMU",
+            "ZDPM",
+            "MEDINF",
+            "FARMTOK",
+            "PSIHZ",
+            "PATOL1"
+          ],
+          [
+            "INTERNA",
+            "KIRUR",
+            "SPECPAT",
+            "RADIO",
+            "KLINBK",
+            "ORTOP"
+          ]
+        ],
+        "electives": [
+          "IVBIOFIZ",
+          "IVBIOKEM",
+          "PRAVEKO",
+          "MEDTEH",
+          "IVGEN",
+          "KOMUN",
+          "UPSTAT",
+          "KLPREH"
+        ],
+        "degree": "EMŠ"
       }
     }
   }

@@ -2,6 +2,16 @@
 
 Trenutni prompt je v `prompts/system_prompt.md`.
 
+## 2026-10-30: tehniški in medicinski programi
+
+- Uvodni odstavek in razdelek UNIVERZA zdaj omenjata študente prvih (predkliničnih) letnikov medicine, dentalne medicine, veterinarstva in farmacije (enoviti magistrski programi, oznaka EMŠ). Pri teh programih tutor poudari mehanizme, strokovno izrazje in povezavo med zgradbo in delovanjem, o zdravljenju konkretnih ljudi ali živali pa ne svetuje.
+- Opis programa v nastavitvah (`server/curriculum.js`, `studyProgramPrompt`) pri EMŠ programih pravi »enoviti magistrski študijski program«.
+
+## 2026-10-30: fotografije, ki niso učno gradivo
+
+- Nova vrstica v Posebnih situacijah (stalni del, nad `EVKLID:NASTAVITVE`, zato predpomnilnik ostane skupen): fotografije brez učnega gradiva (obraz, oseba, osebni dokument, zasebno sporočilo) inštruktor na kratko zavrne, jih ne opisuje in v META nastavi `flag=photo`. Sprejme naloge, zapiske, učbenik, tablo, graf na zaslonu ter predmete ali poskuse, o katerih učenec sprašuje; ljudi, ki so le v kadru (ilustracije, učitelj ob tabli, roke pri poskusu), prezre. Če ni prepričan, fotografijo sprejme.
+- Strežnik (`server/app.js`) ob `flag=photo` takoj zamenja sliko v shranjenem sporočilu z opombo; zastavica `photo` se staršem ne prikaže kot opozorilo. Skeniranje (`server/scan.js`) take fotografije prav tako zavrne. Brez dodatnega klica modela.
+
 ## Različica 3 (2026-10-28): širši obseg in predpomnjenje
 
 - **Dva dela, ločena z vrstico `<!-- EVKLID:NASTAVITVE … -->`.** Vse nad njo je stalno in enako za vse učence; strežnik (`server/prompt.js`, `systemBlocks`) ga pošlje kot prvi blok `system` z oznako `cache_control`, zato se pri Claude API predpomni in deli med vsemi pogovori. Nastavitve učenca (ime, predmet, šola, raven, program, način, osebnost, šibke točke, učna pot) so v drugem bloku na koncu. Prej so bile nastavitve na vrhu, kar je prekinilo skupni predpomnilnik že v prvi vrstici.

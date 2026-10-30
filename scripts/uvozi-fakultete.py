@@ -44,6 +44,8 @@ for r in data["results"]:
             prog = {"name": p["name"], "source": p["source"], "sourceYear": p["sourceYear"], "years": p["years"]}
             if p.get("electives"):
                 prog["electives"] = p["electives"]
+            if p.get("degree") == "EMŠ":
+                prog["degree"] = "EMŠ"
             if p.get("replace"):
                 prog["replace"] = True
             elif p["id"] in fac["programs"]:

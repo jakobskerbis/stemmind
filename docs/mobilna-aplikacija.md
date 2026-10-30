@@ -58,11 +58,21 @@ polnoletnost in pravo identiteto; ime razvijalca je javno vidno v trgovini.
    ```
    `init` izpiše id projekta. Vpiši ga v `brand.json` → `app.eas_project_id` (ali ga pošlji Claudu).
 3. `npx eas-cli build --profile direct --platform android` (gradnja teče v oblaku Expo, ~15 minut).
-4. Prenesi APK s povezave, ki jo izpiše, in ga shrani kot `data\evklid.apk` v mapi strežnika.
-   Stran https://evklid.app/prenesi ga takoj ponudi. (Ali APK naloži drugam in v `.env` nastavi
-   `EVKLID_ANDROID_APK_URL`.)
+4. Kopiraj povezavo do APK, ki jo izpiše gradnja (ali na expo.dev → Builds → Install → kopiraj povezavo).
+   Na evklid.app se prijavi kot skrbnik, odpri **Račun → Aplikacija za Android (APK)**, prilepi povezavo
+   in tapni »Naloži APK«. Strežnik APK shrani na trajni disk (na Renderju `/var/data/evklid.apk`, doma
+   `data\evklid.apk`). (Ali v nastavitvah strežnika nastavi `EVKLID_ANDROID_APK_URL`.)
 
-Ob novi različici aplikacije ponovi koraka 3 in 4.
+Takoj zatem gumb **»Namesti aplikacijo«** na Androidu ponudi pravo aplikacijo (APK s koraki za namestitev)
+namesto spletne različice, prav tako stran https://evklid.app/prenesi. Ob novi različici ponovi koraka 3 in 4.
+
+**Gumb »Namesti aplikacijo« po napravah** (`public/install.js`, podatki z `/api/app-links`):
+- Android: Google Play, ko je objavljena (`EVKLID_PLAY_URL`), sicer APK; spletna različica ostane druga možnost.
+- iPhone, iPad: App Store (`EVKLID_APP_STORE_URL`), sicer TestFlight (`EVKLID_TESTFLIGHT_URL`), sicer koraki
+  »Deli → Dodaj na začetni zaslon«.
+- Računalnik: Chrome in Edge namestita Evklid kot program (ikona v meniju Start ali med programi, svoje okno,
+  odstranitev kot pri drugih programih). Samostojen namestitveni program (.exe) ni boljši: večji je, Windows
+  pa brez plačljivega podpisnega potrdila opozarja »neznan založnik«.
 
 ### 2. Apple (ko bo odrasla oseba odprla račun)
 

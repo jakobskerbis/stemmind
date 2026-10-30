@@ -37,7 +37,7 @@ function say(root, msg) {
 
 // Stran za tisk odpremo v novem oknu: okno odpremo takoj (sicer ga brskalnik blokira), vsebino
 // naložimo s prijavo trenutne seje in jo zapišemo vanj (base: poti do slogov in KaTeX).
-export async function openPrintable(url, onError) {
+export async function openPrintable(url, onError, headers = {}) {
   const w = window.open("", "_blank");
   if (!w) return onError(t("gr.popup"));
   try {
@@ -46,7 +46,7 @@ export async function openPrintable(url, onError) {
   } catch {}
   let r;
   try {
-    r = await fetch(url);
+    r = await fetch(url, { headers });
   } catch {
     w.close();
     return onError(t("off.noConnection"));

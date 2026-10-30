@@ -11,6 +11,7 @@
     "expo-crypto": "~58.0.7",
     "expo-dev-client": "~58.0.17",
     "expo-device": "~58.0.5",
+    "expo-font": "~58.0.11",
     "expo-haptics": "~58.0.7",
     "expo-iap": "^6.3.0",
     "expo-image-manipulator": "~58.0.16",

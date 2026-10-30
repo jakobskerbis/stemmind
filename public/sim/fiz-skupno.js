@@ -48,10 +48,10 @@ export function timeGraph(svg, { W = 340, H = 190, tMax, y0, y1, yLabel, f, t, c
     }
     s("path", { d: d + ` L${A.X(t)},${A.Y(0)} Z`, class: "area-fill fill-b" }, svg);
   }
-  s("path", { d: fnPath(f, A, { n: 200 }), class: "graph-line stroke-muted thin-line", opacity: 0.35 }, svg);
-  if (t > 0) s("path", { d: fnPath(f, A, { to: t, n: Math.max(4, Math.round(200 * (t / tMax))) }), class: `graph-line ${cls}` }, svg);
+  s("path", { d: fnPath(f, A, { n: 200 }), class: "graph-line stroke-muted thin-line", opacity: 0.35, "data-name": "Celoten potek" }, svg);
+  if (t > 0) s("path", { d: fnPath(f, A, { to: t, n: Math.max(4, Math.round(200 * (t / tMax))) }), class: `graph-line ${cls}`, "data-name": "Potek do t" }, svg);
   const y = f(t);
-  if (Number.isFinite(y) && y >= y0 && y <= y1) s("circle", { cx: A.X(t), cy: A.Y(y), r: 4.5, class: "pt fill-accent" }, svg);
+  if (Number.isFinite(y) && y >= y0 && y <= y1) s("circle", { cx: A.X(t), cy: A.Y(y), r: 4.5, class: "pt fill-accent", "data-name": "Trenutek t" }, svg);
   return A;
 }
 

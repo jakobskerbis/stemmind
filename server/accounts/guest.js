@@ -5,6 +5,7 @@ import "../env.js";
 // ali profila ne da nove kvote, se vprašanja na dan in mesečna poraba AI štejejo za vse goste
 // z istega omrežja (zgoščen IP, pri IPv6 omrežje /64) skupaj, tudi za že izbrisane goste.
 import { sha256 } from "./auth.js";
+import { detachAudit } from "../dnevnik-dostopov.js";
 
 export const GUEST_SESSION_DAYS = 365;
 
@@ -141,6 +142,7 @@ export class GuestQuota {
       this.snapshotParent(id);
       this.db.prepare("DELETE FROM students WHERE parent_id = ?").run(id);
       this.db.prepare("DELETE FROM parents WHERE id = ?").run(id);
+      detachAudit(this.db, id); // id se lahko ponovno uporabi: dnevnik ne sme preiti na nov račun
     }
     this.db.prepare("DELETE FROM guest_spent WHERE day < date('now','start of month','-1 month')").run();
     this.db.prepare("DELETE FROM guest_created WHERE created_at < datetime('now','-2 day')").run();

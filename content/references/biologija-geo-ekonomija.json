@@ -6177,6 +6177,641 @@
     "UNI-ULFGG-VEKOTOX": [
       "bio-ekologija",
       "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULFE-KARKOM": [
+      "eko-management-organizacija",
+      "eko-podjetnistvo-trzenje"
+    ],
+    "UNI-ULFE-IKTD": [
+      "eko-management-organizacija",
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-ULFE-PVITD": [
+      "eko-management-organizacija",
+      "eko-podjetnistvo-trzenje"
+    ],
+    "UNI-ULFE-ORGMAN": [
+      "eko-management-organizacija"
+    ],
+    "UNI-ULFE-EPOS": [
+      "eko-podjetnistvo-trzenje",
+      "rac-ui-splet"
+    ],
+    "UNI-UMFERI-SPV": [
+      "eko-okoljska-ekonomika-pravo",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFERI-VPIS": [
+      "eko-management-organizacija"
+    ],
+    "UNI-ULMF-ANAT": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-MEDCELBIO": [
+      "bio-biologija-celice",
+      "bio-genetika"
+    ],
+    "UNI-ULMF-UKM1": [
+      "bio-raziskovalne-metode-bioetika",
+      "bio-javno-zdravje-higiena-delo"
+    ],
+    "UNI-ULMF-HISTEMB": [
+      "bio-anatomija-histologija",
+      "bio-biologija-celice"
+    ],
+    "UNI-ULMF-RAZMED1": [
+      "bio-raziskovalne-metode-bioetika",
+      "mat-statistika",
+      "rac-informatika-pisarna"
+    ],
+    "UNI-ULMF-FIZIOL": [
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-ULMF-FKHA": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-SFZ": [
+      "bio-biopsihologija-nevroznanost",
+      "bio-anatomija-histologija",
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-ULMF-MOLGEN": [
+      "bio-molekularna-biologija",
+      "bio-genetika",
+      "bio-genomika-bioinformatika"
+    ],
+    "UNI-ULMF-IMUNO": [
+      "bio-imunologija"
+    ],
+    "UNI-ULMF-UKM2": [
+      "bio-razvojna-socialna-klinicna-psihologija",
+      "bio-raziskovalne-metode-bioetika"
+    ],
+    "UNI-ULMF-JAVZDR": [
+      "bio-javno-zdravje-higiena-delo"
+    ],
+    "UNI-ULMF-FARMAK": [
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULMF-KLINMIKRO": [
+      "bio-medicinska-mikrobiologija-virologija",
+      "bio-mikrobiologija"
+    ],
+    "UNI-ULMF-PATOL": [
+      "bio-anatomija-histologija",
+      "bio-hematologija-koza-laboratorij"
+    ],
+    "UNI-ULMF-PATOFIZ": [
+      "bio-fiziologija-cloveka-zivali",
+      "bio-hematologija-koza-laboratorij"
+    ],
+    "UNI-ULMF-KLINMED": [
+      "bio-fiziologija-cloveka-zivali",
+      "bio-javno-zdravje-higiena-delo"
+    ],
+    "UNI-ULMF-RAZMED3": [
+      "bio-raziskovalne-metode-bioetika",
+      "rac-strojno-ucenje",
+      "bio-genomika-bioinformatika"
+    ],
+    "UNI-ULMF-ANATDM": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-BIOCELDM": [
+      "bio-biologija-celice",
+      "bio-genetika"
+    ],
+    "UNI-ULMF-UKDM1": [
+      "bio-raziskovalne-metode-bioetika",
+      "bio-javno-zdravje-higiena-delo"
+    ],
+    "UNI-ULMF-RAZDM1": [
+      "bio-raziskovalne-metode-bioetika",
+      "mat-statistika"
+    ],
+    "UNI-ULMF-HISTEMBDM": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-MORFZOB": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-JAVZDRDM": [
+      "bio-javno-zdravje-higiena-delo"
+    ],
+    "UNI-ULMF-FIZIOLDM": [
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-ULMF-MIKIMDM": [
+      "bio-medicinska-mikrobiologija-virologija",
+      "bio-imunologija"
+    ],
+    "UNI-ULMF-UKDM2": [
+      "bio-razvojna-socialna-klinicna-psihologija",
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-MINIINV": [
+      "bio-anatomija-histologija",
+      "bio-medicinska-mikrobiologija-virologija"
+    ],
+    "UNI-ULMF-PATOFDM": [
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-ULMF-PATOLDM": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-FARMDM": [
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULMF-KLINVES": [
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-ULMF-OKLUZIJA": [
+      "bio-anatomija-histologija",
+      "fiz-dinamika-togih-teles"
+    ],
+    "UNI-ULMF-RAZDM3": [
+      "bio-raziskovalne-metode-bioetika",
+      "rac-strojno-ucenje"
+    ],
+    "UNI-ULMF-STOMPROP2": [
+      "bio-anatomija-histologija",
+      "bio-razvojna-socialna-klinicna-psihologija"
+    ],
+    "UNI-ULMF-BREZBOL": [
+      "bio-farmakologija-toksikologija",
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-IZBCELBIO": [
+      "bio-biologija-celice"
+    ],
+    "UNI-ULMF-IZBANAT": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-IZBHISTEMB": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULMF-IZBFIZIOL": [
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-ULMF-IZBMOLGEN": [
+      "bio-molekularna-biologija",
+      "bio-genomika-bioinformatika"
+    ],
+    "UNI-ULMF-IZBIMUNO": [
+      "bio-imunologija"
+    ],
+    "UNI-ULMF-IZBMIKIMDM": [
+      "bio-medicinska-mikrobiologija-virologija",
+      "bio-imunologija"
+    ],
+    "UNI-ULVF-BIOCEL": [
+      "bio-biologija-celice"
+    ],
+    "UNI-ULVF-ANATDZ": [
+      "bio-anatomija-histologija",
+      "bio-zoologija"
+    ],
+    "UNI-ULVF-HIGPREH": [
+      "bio-zivinoreja-prehrana-zivali",
+      "bio-javno-zdravje-higiena-delo",
+      "geo-varstvo-okolja-monitoring"
+    ],
+    "UNI-ULVF-GENET": [
+      "bio-genetika",
+      "bio-zlahtnjenje-selekcija"
+    ],
+    "UNI-ULVF-RASTLINE": [
+      "bio-botanika-sistematika",
+      "bio-farmakologija-toksikologija",
+      "bio-zivinoreja-prehrana-zivali"
+    ],
+    "UNI-ULVF-HISTEMB1": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULVF-ZIVINOREJA": [
+      "bio-zivinoreja-prehrana-zivali",
+      "bio-zlahtnjenje-selekcija"
+    ],
+    "UNI-ULVF-HISTEMB2": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULVF-VETFIZIOL": [
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-ULVF-MIKROIMUN": [
+      "bio-mikrobiologija",
+      "bio-imunologija",
+      "bio-medicinska-mikrobiologija-virologija"
+    ],
+    "UNI-ULVF-DOBROBIT1": [
+      "bio-etologija",
+      "bio-raziskovalne-metode-bioetika",
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-ULVF-VARNAKRMA": [
+      "bio-zivinoreja-prehrana-zivali",
+      "bio-zivilska-mikrobiologija-varnost",
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULVF-PARAZIT": [
+      "bio-zoologija",
+      "bio-medicinska-mikrobiologija-virologija"
+    ],
+    "UNI-ULVF-PATOL1": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULVF-PATOFIZ": [
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-ULVF-PATOL2": [
+      "bio-anatomija-histologija",
+      "bio-medicinska-mikrobiologija-virologija"
+    ],
+    "UNI-ULVF-KLINDIAG": [
+      "bio-fiziologija-cloveka-zivali",
+      "bio-hematologija-koza-laboratorij"
+    ],
+    "UNI-ULVF-FARMTOKS": [
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULVF-VARNAHRANA1": [
+      "bio-zivilska-mikrobiologija-varnost",
+      "bio-zivilska-tehnologija",
+      "bio-javno-zdravje-higiena-delo"
+    ],
+    "UNI-ULVF-KIRUOFT": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULVF-HIGOKOLJE": [
+      "bio-javno-zdravje-higiena-delo",
+      "geo-varstvo-okolja-monitoring"
+    ],
+    "UNI-ULVF-ALTBELJ": [
+      "bio-prehrana-dietetika",
+      "bio-zivinoreja-prehrana-zivali",
+      "bio-biotehnologija"
+    ],
+    "UNI-ULVF-ETOLOG": [
+      "bio-etologija"
+    ],
+    "UNI-ULVF-ANATEKSOT": [
+      "bio-anatomija-histologija",
+      "bio-zoologija"
+    ],
+    "UNI-ULVF-METODOL": [
+      "bio-raziskovalne-metode-bioetika"
+    ],
+    "UNI-ULVF-MIKROPRAK": [
+      "bio-mikrobiologija",
+      "bio-medicinska-mikrobiologija-virologija"
+    ],
+    "UNI-ULVF-EKSPATOF": [
+      "bio-farmakologija-toksikologija",
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-ULFGG-GCESTE": [
+      "geo-inzenirska-geologija-geotehnika",
+      "geo-gis-kartografija-geodezija"
+    ],
+    "UNI-ULFGG-GUREPROS": [
+      "geo-gis-kartografija-geodezija",
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-ULFGG-GHIDROL": [
+      "geo-hidrologija-vodni-viri",
+      "mat-statistika",
+      "geo-klimatologija-atmosfera"
+    ],
+    "UNI-ULFGG-GZELEZ": [
+      "geo-inzenirska-geologija-geotehnika",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-ULFGG-GGIS": [
+      "geo-gis-kartografija-geodezija",
+      "rac-gis"
+    ],
+    "UNI-ULFGG-GKOMGOSP": [
+      "eko-management-organizacija",
+      "eko-finance-racunovodstvo"
+    ],
+    "UNI-ULFGG-GUVODGEO": [
+      "geo-gis-kartografija-geodezija"
+    ],
+    "UNI-ULFGG-GDETIZM": [
+      "geo-gis-kartografija-geodezija",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-ULFGG-GFOTOG1": [
+      "geo-gis-kartografija-geodezija",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULFGG-GVISGEO": [
+      "geo-gis-kartografija-geodezija",
+      "mat-geometrija"
+    ],
+    "UNI-ULFGG-GKARTO": [
+      "geo-gis-kartografija-geodezija"
+    ],
+    "UNI-ULFGG-GGEOINF1": [
+      "geo-gis-kartografija-geodezija",
+      "rac-gis",
+      "rac-podatkovne-baze"
+    ],
+    "UNI-ULFGG-GPROSNAC": [
+      "geo-gis-kartografija-geodezija",
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-ULFGG-GPRECIZ": [
+      "geo-gis-kartografija-geodezija",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-ULFGG-GUVPRAV": [
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-ULFGG-GGNSS": [
+      "geo-gis-kartografija-geodezija",
+      "fiz-astronomija-astrofizika"
+    ],
+    "UNI-ULFGG-GGEOINZ1": [
+      "geo-gis-kartografija-geodezija",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-ULFGG-GDALJZAZ": [
+      "geo-gis-kartografija-geodezija",
+      "fiz-optika-fotonika"
+    ],
+    "UNI-ULFGG-GUREPOD": [
+      "eko-agrarna-ekonomika-politika",
+      "geo-gis-kartografija-geodezija"
+    ],
+    "UNI-ULFGG-GEKOMAN": [
+      "eko-mikroekonomija",
+      "eko-management-organizacija",
+      "eko-podjetnistvo-trzenje"
+    ],
+    "UNI-ULFGG-GSTVPRAV": [
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-ULFGG-GNEPREM": [
+      "eko-finance-racunovodstvo",
+      "eko-management-organizacija"
+    ],
+    "UNI-ULFGG-GKATASTR": [
+      "geo-gis-kartografija-geodezija",
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-ULFGG-GIZBGI": [
+      "geo-gis-kartografija-geodezija",
+      "fiz-merjenje-napake"
+    ],
+    "UNI-ULFGG-GPODJET": [
+      "eko-podjetnistvo-trzenje"
+    ],
+    "UNI-ULFGG-GPRAVGR": [
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-UMFS-OP": [
+      "eko-management-organizacija",
+      "fiz-izdelovalne-tehnologije"
+    ],
+    "UNI-UMFS-TSL": [
+      "eko-management-organizacija",
+      "fiz-strojni-elementi-konstruiranje"
+    ],
+    "UNI-UMFS-GP": [
+      "eko-management-organizacija",
+      "eko-finance-racunovodstvo"
+    ],
+    "UNI-UMFS-NVP": [
+      "eko-management-organizacija",
+      "mat-optimizacija-or"
+    ],
+    "UNI-UMFS-SDE": [
+      "eko-management-organizacija",
+      "fiz-varnost-delovno-okolje"
+    ],
+    "UNI-UMFS-IK": [
+      "eko-finance-racunovodstvo",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFS-RI": [
+      "eko-management-organizacija",
+      "fiz-strojni-elementi-konstruiranje",
+      "eko-podjetnistvo-trzenje"
+    ],
+    "UNI-UMFS-OEK": [
+      "eko-mikroekonomija",
+      "eko-makroekonomija-denar"
+    ],
+    "UNI-UMFS-EP": [
+      "eko-mikroekonomija",
+      "eko-finance-racunovodstvo",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFS-OOSM": [
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFS-ORAC": [
+      "eko-finance-racunovodstvo"
+    ],
+    "UNI-UMFS-PM": [
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFS-OMK": [
+      "eko-podjetnistvo-trzenje"
+    ],
+    "UNI-UMFS-UP": [
+      "eko-management-organizacija",
+      "mat-optimizacija-or"
+    ],
+    "UNI-UMFS-OFIN": [
+      "eko-finance-racunovodstvo",
+      "mat-financna-aktuarska"
+    ],
+    "UNI-UMFS-MCV": [
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFS-INO": [
+      "eko-podjetnistvo-trzenje",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFS-PODJ": [
+      "eko-podjetnistvo-trzenje"
+    ],
+    "UNI-UMFS-SRAC": [
+      "eko-finance-racunovodstvo"
+    ],
+    "UNI-UMFGPA-IG": [
+      "geo-inzenirska-geologija-geotehnika",
+      "geo-splosna-geologija",
+      "geo-hidrogeologija-kras"
+    ],
+    "UNI-UMFGPA-MTAL": [
+      "geo-inzenirska-geologija-geotehnika",
+      "geo-pedologija-tla"
+    ],
+    "UNI-UMFGPA-TEM1": [
+      "geo-inzenirska-geologija-geotehnika",
+      "fiz-mehanika-konstrukcij"
+    ],
+    "UNI-UMFGPA-OGD": [
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFGPA-GEOD": [
+      "geo-gis-kartografija-geodezija"
+    ],
+    "UNI-UMFGPA-GE": [
+      "eko-finance-racunovodstvo",
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFGPA-VZUV": [
+      "geo-hidrologija-vodni-viri",
+      "fiz-hidravlika-vodni-tokovi"
+    ],
+    "UNI-UMFGPA-UPVO": [
+      "geo-varstvo-okolja-monitoring",
+      "eko-okoljska-ekonomika-pravo"
+    ],
+    "UNI-UMFGPA-VGP": [
+      "eko-management-organizacija"
+    ],
+    "UNI-UMFGPA-OVN": [
+      "eko-finance-racunovodstvo"
+    ],
+    "UNI-UMFGPA-TEM2": [
+      "geo-inzenirska-geologija-geotehnika"
+    ],
+    "UNI-UMFGPA-VCPV": [
+      "geo-hidrologija-vodni-viri",
+      "kem-obdelava-voda-odpadki"
+    ],
+    "UNI-UMFGPA-KCOV": [
+      "geo-odpadki-odpadne-vode-tehnologije",
+      "kem-obdelava-voda-odpadki"
+    ],
+    "UNI-UMMF-ANAHE": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-UMMF-UVMED": [
+      "bio-javno-zdravje-higiena-delo",
+      "bio-raziskovalne-metode-bioetika"
+    ],
+    "UNI-UMMF-BIOCEL": [
+      "bio-biologija-celice",
+      "bio-molekularna-biologija"
+    ],
+    "UNI-UMMF-MBGEN": [
+      "bio-molekularna-biologija",
+      "bio-genetika",
+      "bio-genomika-bioinformatika"
+    ],
+    "UNI-UMMF-FIZIOL": [
+      "bio-fiziologija-cloveka-zivali",
+      "bio-biopsihologija-nevroznanost"
+    ],
+    "UNI-UMMF-MIKIMU": [
+      "bio-medicinska-mikrobiologija-virologija",
+      "bio-imunologija"
+    ],
+    "UNI-UMMF-ZDPM": [
+      "bio-raziskovalne-metode-bioetika",
+      "mat-statistika"
+    ],
+    "UNI-UMMF-FARMTOK": [
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-UMMF-PSIHZ": [
+      "bio-razvojna-socialna-klinicna-psihologija",
+      "bio-psihologija-uvod-kognicija"
+    ],
+    "UNI-UMMF-PATOL1": [
+      "bio-anatomija-histologija",
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-UMMF-INTERNA": [
+      "bio-fiziologija-cloveka-zivali",
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-UMMF-KIRUR": [
+      "bio-anatomija-histologija",
+      "bio-fiziologija-cloveka-zivali"
+    ],
+    "UNI-UMMF-SPECPAT": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-UMMF-ORTOP": [
+      "bio-anatomija-histologija"
+    ],
+    "UNI-UMMF-PRAVEKO": [
+      "eko-management-organizacija",
+      "eko-mikroekonomija"
+    ],
+    "UNI-UMMF-IVGEN": [
+      "bio-genetika",
+      "bio-genomika-bioinformatika"
+    ],
+    "UNI-UMMF-KOMUN": [
+      "bio-razvojna-socialna-klinicna-psihologija"
+    ],
+    "UNI-UMMF-KLPREH": [
+      "bio-prehrana-dietetika"
+    ],
+    "UNI-ULFFA-PFBG": [
+      "bio-biologija-celice",
+      "bio-genetika",
+      "bio-botanika-sistematika"
+    ],
+    "UNI-ULFFA-PMIKRO": [
+      "bio-mikrobiologija",
+      "bio-medicinska-mikrobiologija-virologija"
+    ],
+    "UNI-ULFFA-PUVF": [
+      "bio-farmakologija-toksikologija",
+      "bio-javno-zdravje-higiena-delo"
+    ],
+    "UNI-ULFFA-PFG1": [
+      "bio-botanika-sistematika",
+      "kem-organska-kemija",
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULFFA-PFG2": [
+      "bio-botanika-sistematika",
+      "kem-analizna-kemija"
+    ],
+    "UNI-ULFFA-PPATF": [
+      "bio-fiziologija-cloveka-zivali",
+      "bio-anatomija-histologija"
+    ],
+    "UNI-ULFFA-PSOCF": [
+      "bio-javno-zdravje-higiena-delo",
+      "eko-management-organizacija"
+    ],
+    "UNI-ULFFA-PFARMAK": [
+      "bio-farmakologija-toksikologija"
+    ],
+    "UNI-ULFFA-PFBT": [
+      "bio-biotehnologija",
+      "bio-molekularna-biologija"
+    ],
+    "UNI-ULFFA-PBFK": [
+      "bio-farmakologija-toksikologija",
+      "mat-diferencialne-enacbe",
+      "mat-modeliranje"
+    ],
+    "UNI-ULFFA-PTOKSK": [
+      "bio-farmakologija-toksikologija",
+      "kem-varnost-nevarne-snovi-pozari"
+    ],
+    "UNI-ULFFA-PKLINF": [
+      "bio-farmakologija-toksikologija",
+      "bio-javno-zdravje-higiena-delo"
+    ],
+    "UNI-ULFFA-PIMUN": [
+      "bio-imunologija"
+    ],
+    "UNI-ULFFA-PFITO": [
+      "bio-farmakologija-toksikologija",
+      "bio-botanika-sistematika"
     ]
   },
   "courseItems": {

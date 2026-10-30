@@ -13,6 +13,7 @@ import { Schedules, nowParts, cleanDate, TEST_KINDS } from "../schedule.js";
 import { cleanText } from "../settings.js";
 import { ljNow } from "./goal-reminder.js";
 import { promoEndingEmail, renewalEmail } from "./email.js";
+import { audit } from "../dnevnik-dostopov.js";
 
 export const ADULT_TEXT = "Sem polnoleten/-na in plačujem za svoj profil ali kot starš oziroma skrbnik.";
 export const WITHDRAWAL_TEXT =
@@ -492,12 +493,14 @@ export function mountBilling(app, ctx) {
     if (!admin(req, res)) return;
     const r = promo.create(req.body);
     if (r.error) return res.status(r.exists ? 409 : 400).json({ error: r.error });
+    audit(db, { req, parentId: req.parent?.id, actor: "admin", action: "promo_create" });
     res.status(201).json({ codes: promo.list() });
   });
   app.post("/api/admin/promo-codes/:code/active", json, (req, res) => {
     if (!admin(req, res)) return;
     const r = promo.setActive(req.params.code, req.body?.active === true);
     if (r.error) return res.status(404).json({ error: r.error });
+    audit(db, { req, parentId: req.parent?.id, actor: "admin", action: req.body?.active === true ? "promo_on" : "promo_off" });
     res.json({ codes: promo.list() });
   });
 

@@ -11,6 +11,9 @@ import { verifyAppleJws, AppleSignatureError, APPLE_ROOT_G3 } from "../server/mo
 import { BUNDLE_ID, STORE_PRODUCTS, appleState } from "../server/mobile/store-billing.js";
 import { googleSubscriptionState } from "../server/mobile/google-play.js";
 import { goalPushText } from "../server/mobile/push.js";
+import { fetchApk } from "../server/mobile/download.js";
+import os from "node:os";
+import path from "node:path";
 
 const CHAIN = JSON.parse(fs.readFileSync(new URL("./fixtures/apple-chain.json", import.meta.url), "utf8"));
 const ADULT = "1985-04-12";
@@ -339,6 +342,68 @@ test("download page offers the APK when it exists and works without login", asyn
     },
     { apkFile: fileURLToPath(new URL("./fixtures/apple-chain.json", import.meta.url)), env: { EVKLID_TESTFLIGHT_URL: "https://testflight.apple.com/join/TEST" } },
   );
+});
+
+// Gumb »Namesti aplikacijo« v spletni aplikaciji vpraša, kje je prava aplikacija za telefon.
+test("app links: APK and TestFlight for the install button", async () => {
+  await withServer(
+    async ({ base }) => {
+      const l = await (await fetch(`${base}/api/app-links`)).json(); // javno kot stran /prenesi
+      assert.equal(l.apk, "/prenesi/evklid.apk");
+      assert.equal(l.testflight, "https://testflight.apple.com/join/TEST");
+      assert.equal(l.play, null);
+    },
+    { apkFile: fileURLToPath(new URL("./fixtures/apple-chain.json", import.meta.url)), env: { EVKLID_TESTFLIGHT_URL: "https://testflight.apple.com/join/TEST" } },
+  );
+});
+
+// Skrbnik naloži APK s povezave iz expo.dev; strežnik sledi preusmeritvam samo na znane strežnike.
+test("admin APK upload: only admins, only known hosts, only ZIP files", async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "apk-"));
+  const file = path.join(dir, "evklid.apk");
+  const zip = Buffer.concat([Buffer.from([0x50, 0x4b, 0x03, 0x04]), Buffer.alloc(2048, 7)]);
+  const fake = async (url) => {
+    if (url.startsWith("https://expo.dev/artifacts/")) return new Response(null, { status: 302, headers: { location: "https://storage.googleapis.com/eas/x.apk" } });
+    if (url === "https://storage.googleapis.com/eas/x.apk") return new Response(zip, { status: 200 });
+    if (url === "https://expo.dev/evil") return new Response(null, { status: 302, headers: { location: "http://127.0.0.1:3000/x" } });
+    if (url === "https://github.com/not-zip") return new Response("<html>", { status: 200 });
+    if (url === "https://github.com/bad-location") return new Response(null, { status: 302, headers: { location: "https://[" } });
+    if (url === "https://github.com/down") throw new TypeError("fetch failed");
+    if (url === "https://github.com/cut")
+      return new Response(new ReadableStream({ start: (c) => (c.enqueue(new Uint8Array(zip)), c.error(new TypeError("terminated"))) }), { status: 200 });
+    return new Response(null, { status: 404 });
+  };
+  try {
+    assert.match((await fetchApk("https://example.com/x.apk", file, fake)).error, /expo\.dev/);
+    assert.match((await fetchApk("https://expo.dev/evil", file, fake)).error, /expo\.dev/);
+    assert.match((await fetchApk("https://github.com/not-zip", file, fake)).error, /APK/);
+    // napake omrežja in slaba preusmeritev: sporočilo za skrbnika, brez izjeme in brez začasne datoteke
+    assert.equal((await fetchApk("https://github.com/bad-location", file, fake)).error, "Povezava ni veljavna.");
+    assert.equal((await fetchApk("https://github.com/down", file, fake)).error, "Prenos ni uspel.");
+    assert.equal((await fetchApk("https://github.com/cut", file, fake)).error, "Prenos ni uspel.");
+    assert.deepEqual(fs.readdirSync(dir), []);
+    assert.equal((await fetchApk("https://expo.dev/artifacts/eas/abc.apk", file, fake)).bytes, zip.length);
+    assert.deepEqual(fs.readFileSync(file), zip);
+    assert.deepEqual(fs.readdirSync(dir), ["evklid.apk"]); // brez ostankov začasnih datotek
+
+    await withServer(
+      async ({ appClient, adult, store }) => {
+        const c = appClient();
+        await adult(c);
+        assert.equal((await c("/api/admin/apk")).status, 403);
+        assert.equal((await c("/api/admin/apk", { body: { url: "https://expo.dev/artifacts/eas/abc.apk" } })).status, 403);
+        store.db.prepare("UPDATE parents SET is_admin = 1").run();
+        const r = await c("/api/admin/apk", { body: { url: "https://expo.dev/artifacts/eas/abc.apk" } });
+        assert.equal(r.status, 200, JSON.stringify(r.body));
+        assert.equal(r.body.file.bytes, zip.length);
+        assert.equal((await c("/api/admin/apk", { body: { url: "https://example.com/x.apk" } })).status, 400);
+        assert.equal((await c("/api/app-links")).body.apk, "/prenesi/evklid.apk");
+      },
+      { apkFile: path.join(dir, "server.apk"), fetch: fake },
+    );
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 // Aplikacija izriše Markdown in formule z istim public/rich.js kot splet, a brez DOMPurify in s

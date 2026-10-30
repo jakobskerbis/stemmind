@@ -1,5 +1,6 @@
 // Pregled vseh simulacij iz kataloga na telefonski širini (360 px) po merilih docs/kakovost.md §3:
-// napake v konzoli, vodoravno drsenje, oznake kontrol, tipkovnica za vlečne elemente, »Poskusi«, »Ponastavi«.
+// napake v konzoli, vodoravno drsenje, oznake kontrol, tipkovnica za vlečne elemente, »Poskusi«, »Ponastavi«,
+// drsnik, poravnan z osjo (kit.axisSlider): ročica je pri min, sredini in max navpično pod oznako na osi (≤ 2 px, 360 in 1280 px).
 // Zagon: node scripts/preveri-simulacije.cjs   (potrebuje Playwright s Chromiumom; zažene strežnik na vratih 3998)
 const { spawn } = require("node:child_process");
 const path = require("node:path");
@@ -47,11 +48,45 @@ const PORT = 3998;
         reset: !!m.querySelector(".demo-reset") || SIMS[i].id === "zbirka",
         unlabeled: ctrls.filter((c) => !(c.getAttribute("aria-label") || c.textContent.trim() || c.labels?.length || c.title)).length,
         dragNoKey: m.querySelectorAll(".drag:not([tabindex])").length,
+        axis: [...m.querySelectorAll(".axis-slider[data-for]")].map((x) => x.dataset.for),
       };
+    };
+    const frames = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    // Postavi drsnik key na v in vrne lego ročice (iz geometrije tirnice) in oznake na osi.
+    window.axisProbe = async (key, v) => {
+      const m = document.querySelector("#box > div");
+      const sl = m.querySelector(`.axis-slider[data-for="${key}"]`), inp = sl.querySelector("input");
+      if (v != null) inp.value = v, inp.dispatchEvent(new Event("input", { bubbles: true }));
+      await frames();
+      sl.scrollIntoView({ block: "center" });
+      await frames();
+      const tick = m.querySelector(`.amark[data-for="${key}"] .amark-tick`);
+      const ir = inp.getBoundingClientRect(), tr = tick?.getBoundingClientRect();
+      const thumb = parseFloat(getComputedStyle(inp).getPropertyValue("--thumb")) || 0;
+      const lo = +inp.min, hi = +inp.max, val = +inp.value;
+      return { markX: tr ? tr.left + tr.width / 2 : NaN, thumbX: ir.left + thumb / 2 + ((val - lo) / (hi - lo)) * (ir.width - thumb), y: ir.top + ir.height / 2, lo, hi, step: +inp.step, ppu: (ir.width - thumb) / (hi - lo), val };
     };
   });
   const n = await p.evaluate(() => SIMS.length);
   const bad = [];
+  // Ročica pod oznako: izračunana lega in klik na tirnico pod oznako (drsnik skoči na isto vrednost).
+  const axisCheck = async (keys) => {
+    const out = [];
+    for (const key of keys) {
+      const r0 = await p.evaluate((k) => axisProbe(k), key);
+      const mid = r0.lo + Math.round((r0.hi - r0.lo) / 2 / r0.step) * r0.step;
+      for (const v of [r0.lo, mid, r0.hi]) {
+        const r = await p.evaluate(([k, v]) => axisProbe(k, v), [key, v]);
+        if (!(Math.abs(r.thumbX - r.markX) <= 2)) out.push(`${key} = ${r.val}: ročica ${r.thumbX.toFixed(1)} px, oznaka ${r.markX.toFixed(1)} px`);
+        await p.evaluate(([k, v]) => axisProbe(k, v), [key, v < mid ? r0.hi : r0.lo]);
+        await p.mouse.click(r.markX, r.y);
+        const c = await p.evaluate((k) => axisProbe(k), key);
+        if (Math.abs(c.val - r.val) * r.ppu > 2 + (r.step * r.ppu) / 2) out.push(`${key}: klik pod oznako ${r.val} da ${c.val}`);
+      }
+    }
+    return out;
+  };
+  const aligned = [];
   for (let i = 0; i < n; i++) {
     const sim = await p.evaluate((i) => SIMS[i], i);
     cur = `${sim.id} (${sim.topic})`;
@@ -62,12 +97,21 @@ const PORT = 3998;
     if (!r.reset) issues.push("brez »Ponastavi«");
     if (r.unlabeled) issues.push(`${r.unlabeled} kontrol brez oznake`);
     if (r.dragNoKey) issues.push(`${r.dragNoKey} vlečnih elementov brez tipkovnice`);
+    if (r.axis.length) aligned.push([i, r.axis]), issues.push(...(await axisCheck(r.axis)).map((x) => `360 px: ${x}`));
+    if (issues.length) bad.push(`${cur}: ${issues.join("; ")}`);
+  }
+  await p.setViewportSize({ width: 1280, height: 800 });
+  for (const [i, keys] of aligned) {
+    const sim = await p.evaluate((i) => SIMS[i], i);
+    cur = `${sim.id} (${sim.topic})`;
+    await p.evaluate((i) => mountOne(i), i);
+    const issues = (await axisCheck(keys)).map((x) => `1280 px: ${x}`);
     if (issues.length) bad.push(`${cur}: ${issues.join("; ")}`);
   }
   await b.close();
   srv.kill();
   bad.forEach((x) => console.log(x));
   errs.forEach((x) => console.log("NAPAKA " + x));
-  console.log(`Simulacij: ${n}, s pomanjkljivostmi: ${bad.length}, napak v konzoli: ${errs.length}`);
+  console.log(`Simulacij: ${n}, z drsnikom ob osi: ${aligned.length}, s pomanjkljivostmi: ${bad.length}, napak v konzoli: ${errs.length}`);
   process.exit(bad.length || errs.length ? 1 : 0);
 })();

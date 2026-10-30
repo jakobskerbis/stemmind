@@ -47,7 +47,12 @@ export const accountsOn = () => enabled;
 function watchTakenProfiles() {
   const orig = window.fetch.bind(window);
   window.fetch = async (...args) => {
-    const res = await orig(...args);
+    let res = await orig(...args);
+    // Zaklenjen račun: zavihek Račun in dejanja lastnika zahtevajo geslo računa. Po odklepu zahtevo ponovimo.
+    if (res.status === 403) {
+      const d = await res.clone().json().catch(() => null);
+      if (d?.account_locked && (await askAccountPassword(orig))) res = await orig(...args);
+    }
     if (res.status === 409) {
       res.clone().json().then((d) => d?.taken && showTaken(d, orig)).catch(() => {});
     }
@@ -63,6 +68,67 @@ function watchTakenProfiles() {
     }
     return res;
   };
+}
+
+// Okno za geslo računa. Hkratne zahteve počakajo na isti vpis. Vrne true, ko je račun odklenjen.
+let accountAsk = null;
+function askAccountPassword(rawFetch) {
+  if (accountAsk) return accountAsk;
+  accountAsk = new Promise((resolve) => {
+    const box = document.createElement("div");
+    box.id = "account-lock-overlay";
+    box.className = "overlay";
+    box.innerHTML = `<div class="card overlay-card lock-card" role="dialog" aria-modal="true" aria-labelledby="acc-lock-title">
+      <span class="pm-avatar big" aria-hidden="true">${icon("lock")}</span>
+      <h2 id="acc-lock-title">Samo za lastnika računa</h2>
+      <form class="form" id="acc-lock-form" novalidate>
+        <p class="muted">Račun, naročnino in profile ureja lastnik računa. Vpiši geslo računa (tisto, s katerim se prijaviš z e-naslovom).</p>
+        <label>Geslo računa <input type="password" name="password" autocomplete="current-password" required></label>
+        <p class="form-error" role="alert" hidden></p>
+        <div class="form-actions">
+          <button class="primary" type="submit">Odkleni</button>
+          <button type="button" class="ghost" id="acc-lock-cancel">Prekliči</button>
+        </div>
+      </form></div>`;
+    document.body.appendChild(box);
+    const form = $("#acc-lock-form", box);
+    form.password.focus();
+    const finish = (ok) => {
+      box.remove();
+      accountAsk = null;
+      resolve(ok);
+    };
+    $("#acc-lock-cancel", box).addEventListener("click", () => finish(false));
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const r = await rawFetch("/api/account/unlock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: form.password.value }),
+      }).catch(() => null);
+      if (r?.ok) return finish(true);
+      const d = await r?.json().catch(() => ({}));
+      const box2 = $(".form-error", form);
+      box2.textContent = d?.error || "Strežnik ni dosegljiv.";
+      box2.hidden = false;
+      form.password.select();
+    });
+  });
+  return accountAsk;
+}
+
+// Ko zapustiš zavihek Račun, se račun na tej napravi takoj zaklene.
+function lockAccountOnLeave() {
+  const view = $("#view-account");
+  if (!view) return;
+  let wasOpen = !view.hidden;
+  new MutationObserver(() => {
+    if (wasOpen && view.hidden) {
+      view.innerHTML = ""; // podatki računa ne ostanejo na zaslonu za zaklepom
+      fetch("/api/account/lock", { method: "POST" }).catch(() => {});
+    }
+    wasOpen = !view.hidden;
+  }).observe(view, { attributes: true, attributeFilter: ["hidden"] });
 }
 
 function showTaken(d, rawFetch) {
@@ -229,6 +295,7 @@ export async function initAccount({ onReady }) {
   if (!enabled) return true;
   $("#account-tab").hidden = false;
   watchTakenProfiles();
+  lockAccountOnLeave();
   guardLogoOnAuth();
   $("#account-tab").addEventListener("click", renderAccount);
 
@@ -763,7 +830,53 @@ function adminCodes(acc) {
         </form></details>
       <h3>${esc(t("admin.events"))}</h3>
       ${events ? `<ul class="event-list">${events}</ul>` : `<p class="muted">${esc(t("admin.noEvents"))}</p>`}
+      <h3>${esc(t("admin.apk"))}</h3>
+      <p class="muted small">${esc(t("admin.apkHelp"))}</p>
+      <p id="apk-status" aria-live="polite"></p>
+      <form id="apk-form" class="form" novalidate>
+        <label>${esc(t("admin.apkUrl"))} <input name="url" type="url" required placeholder="https://expo.dev/artifacts/eas/….apk" inputmode="url" autocomplete="off"></label>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="primary" type="submit">${esc(t("admin.apkSave"))}</button>
+      </form>
     </div>`;
+}
+
+// Skrbnik: APK za Android na strežniku (server/mobile/download.js), ponujen na /prenesi in ob »Namesti aplikacijo«.
+function apkText(r) {
+  if (r.url) return t("admin.apkLink");
+  if (!r.file) return t("admin.apkNone");
+  return t("admin.apkHave", { date: date(r.file.at), mb: (r.file.bytes / 1048576).toLocaleString(currentLang(), { minimumFractionDigits: 1, maximumFractionDigits: 1 }) });
+}
+async function loadApk() {
+  const out = $("#apk-status");
+  if (!out) return;
+  try {
+    out.textContent = apkText(await api("/api/admin/apk"));
+  } catch {
+    out.textContent = "";
+  }
+}
+function bindApk() {
+  loadApk();
+  $("#apk-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const btn = $("button[type=submit]", f);
+    $(".form-error", f).hidden = true;
+    btn.disabled = true;
+    btn.setAttribute("aria-busy", "true");
+    try {
+      const r = await api("/api/admin/apk", { method: "POST", body: { url: f.url.value } });
+      $("#apk-status").textContent = apkText(r);
+      toast(apkText(r));
+      f.reset();
+    } catch (err) {
+      showError(f, err);
+    } finally {
+      btn.disabled = false;
+      btn.removeAttribute("aria-busy");
+    }
+  });
 }
 
 // Skrbnik: merjenje v pilotu (server/pilot.js): vprašanja na dan, strošek AI na učenca, obiski strani za starše.
@@ -812,6 +925,7 @@ async function loadPilot(days = 30, school = "", focusId = "") {
 function bindAdminCodes(acc) {
   if (!acc.promo?.codes) return;
   loadPilot();
+  bindApk();
   $("#code-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const f = e.target;
