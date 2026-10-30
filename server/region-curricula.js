@@ -116,7 +116,7 @@ export const EN = {
   "FIZ-SS-3/izmenicni-tok-in-nihajni-krog": "Alternating current and the LC circuit | sinusoidal voltage, effective value, oscillating circuit, natural frequency",
   "FIZ-SS-3/elektromagnetno-valovanje": "Electromagnetic waves | origin, spectrum, speed of light, c = λν",
   "FIZ-SS-4/osoncje-in-gibanje-planetov": "The Solar System and planetary motion | bodies in the Solar System, Kepler's laws, gravity and orbits",
-  "FIZ-SS-4/zvezde-in-vesolje": "Stars and the universe | luminosity, Stefan's law, star temperature, fusion in stars, distances in space",
+  "FIZ-SS-4/zvezde-in-vesolje": "Stars and the universe | luminosity, Stefan's and Wien's laws, star temperature, fusion in stars, distances in space",
   "KEM-SS-2/lastnosti-elementov-v-periodnem-sistemu": "Properties of elements in the periodic table | metals, non-metals and metalloids, trends, acidic and basic oxides",
   "KEM-SS-2/alkalijske-kovine-in-halogeni": "Alkali metals and halogens | reactions with water and oxygen, halides, displacement of halogens",
   "KEM-SS-2/elementi-v-bioloskih-sistemih": "Elements in living systems | biogenic elements (C, H, O, N, P, S, Ca, Fe) and their compounds in living things",

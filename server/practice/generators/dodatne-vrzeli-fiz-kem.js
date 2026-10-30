@@ -3,7 +3,7 @@
 // astronomija (gimnazija), elementi v periodnem sistemu in dušikove organske spojine (gimnazija).
 // Merila: docs/kakovost.md §2. Vsak odgovor je izračunan v kodi iz istih števil, kot so v besedilu;
 // konstante so zapisane v besedilu naloge.
-import { NAMES } from "../rng.js";
+import { NAMES, g } from "../rng.js";
 import { roundHalfUp } from "../check.js";
 import { lv, tt, tx, dat, res, dw, M, num, choice, T, sortiraj } from "./vrzeli-util.js";
 
@@ -187,7 +187,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
           "Električna moč je le del (η) toplotne moči reaktorja. Ostalo gre v okolico.",
           G, [waste ? "P_{\\text{okolica}}" : "P_{\\text{t}}"],
           waste ? ["P_{\\text{t}} = \\dfrac{P_{\\text{el}}}{\\eta}", "P_{\\text{okolica}} = P_{\\text{t}} - P_{\\text{el}}"] : "P_{\\text{t}} = \\dfrac{P_{\\text{el}}}{\\eta}",
-          [`$P_{\\text{t}} = \\dfrac{${Pel}\\ \\mathrm{MW}}{${tx(eta / 100)}} ${res(Pth, 1, "MW")}$`, ...(waste ? [`$P_{\\text{okolica}} = ${tx(Pth, 1)}\\ \\mathrm{MW} - ${Pel}\\ \\mathrm{MW} ${res(ans, 0, "MW")}$`] : [`Zaokroženo: $${tx(Pth, 0)}\\ \\mathrm{MW}$`])],
+          [`$P_{\\text{t}} = \\dfrac{${Pel}\\ \\mathrm{MW}}{${tx(eta / 100)}} ${res(Pth, Number.isInteger(roundHalfUp(Pth, 6)) ? 0 : 1, "MW")}$`, ...(waste ? [`$P_{\\text{okolica}} = ${tx(Pth, Number.isInteger(roundHalfUp(Pth, 6)) ? 0 : 1)}\\ \\mathrm{MW} - ${Pel}\\ \\mathrm{MW} ${res(ans, 0, "MW")}$`] : [`Zaokroženo: $${tx(Pth, 0)}\\ \\mathrm{MW}$`])],
         );
       }
       const P = r.pick([3, 4, 5, 6, 8, 10]), eta = r.int(15, 22), S = (P * 100) / eta;
@@ -466,7 +466,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
           num(kw ? j / 1000 : j, kw ? "kW/m²" : "W/m²", d, [M(kw ? j : j * 1000, kw ? "Rezultat pretvori v kilovate: deli s 1000." : "Rezultat je že v W/m²."), M((SIG * T0 ** 3) / (kw ? 1000 : 1), "Po Stefanovem zakonu je gostota sorazmerna s četrto potenco temperature.")], { unitAlternatives: [kw ? "kW/m2" : "W/m2"] }),
           "Uporabi Stefanov zakon j = σT⁴. Temperatura mora biti v kelvinih.",
           G, ["j"], "j = \\sigma\\,T^4",
-          [`$T^4 = ${T0}^4\\ \\mathrm{K^4} ${res(T0 ** 4 / 1e8, 2, "")} \\cdot 10^{8}\\ \\mathrm{K^4}$`, `$j = \\sigma\\,T^4 ${res(j, 0, "W/m²")}${kw ? ` ${res(j / 1000, 1, "kW/m²")}` : ""}$`],
+          [`$T^4 = ${T0}^4\\ \\mathrm{K^4} \\approx ${sci3(T0 ** 4).t}\\ \\mathrm{K^4}$`, `$j = \\sigma\\,T^4 ${res(j, 0, "W/m²")}${kw ? ` ${res(j / 1000, 1, "kW/m²")}` : ""}$`],
         );
       }
       if (level === 1) {
@@ -492,7 +492,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
           num(Q, "MJ", 1, [M(Q / 3600, "Čas pretvori v sekunde: 1 h = 3600 s."), M(Q / 1000, "Debelino pretvori v metre: 1 mm = 0,001 m.")]),
           "Izračunaj toplotni tok skozi šipo, nato toploto Q = P t.",
           G, ["Q"], ["P = \\dfrac{\\lambda\\,S\\,\\Delta T}{d}", "Q = P\\,t"],
-          [`$P = \\dfrac{1 \\cdot ${tx(S)} \\cdot ${dT}}{${tx(d / 1000)}}\\ \\mathrm{W} ${res(P, 0, "W")}$`, `$t = ${th}\\ \\mathrm{h} = ${th * 3600}\\ \\mathrm{s}$`, `$Q = P\\,t ${res(Q * 1e6, 0, "J")} ${res(Q, 1, "MJ")}$`],
+          [`$P = \\dfrac{1 \\cdot ${tx(S)} \\cdot ${dT}}{${tx(d / 1000)}}\\ \\mathrm{W} ${res(P, 0, "W")}$`, `$t = ${th}\\ \\mathrm{h} = ${th * 3600}\\ \\mathrm{s}$`, `$Q = P\\,t \\approx ${sci3(Q * 1e6).t}\\ \\mathrm{J} ${res(Q, 1, "MJ")}$`],
         );
       }
       if (level === 2 && k === 1) {
@@ -798,7 +798,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
         const d = r.pick([5.8, 5.9, 6, 6.1, 6.2, 6.3]), c = 2 * (d / 100) * 2.45e9 / 1000;
         const G = [dat("d", tx(d), "cm"), dat("\\nu", "2{,}45", "GHz")];
         return T(
-          `${r.pick(NAMES)} je v mikrovalovno pečico brez vrtljivega krožnika postavil ploščo s čokolado. Po kratkem segrevanju se je čokolada stopila v pegah, ki so bile med seboj oddaljene ${$(G[0])} (pol valovne dolžine). Frekvenca mikrovalov je ${$(G[1])}. Kolikšno hitrost svetlobe dobimo iz tega poskusa v km/s?${zaok(0)}`,
+          `${((nm) => `${nm} je v mikrovalovno pečico brez vrtljivega krožnika ${g(nm, "postavil", "postavila")}`)(r.pick(NAMES))} ploščo s čokolado. Po kratkem segrevanju se je čokolada stopila v pegah, ki so bile med seboj oddaljene ${$(G[0])} (pol valovne dolžine). Frekvenca mikrovalov je ${$(G[1])}. Kolikšno hitrost svetlobe dobimo iz tega poskusa v km/s?${zaok(0)}`,
           num(c, "km/s", 0, [M(c / 2, "Razdalja med pegama je λ/2, zato je λ = 2d."), M(c * 1000, "Rezultat je v m/s; pretvori v km/s.")]),
           "Iz razdalje med pegama določi valovno dolžino, nato c = λν.",
           G, ["c"], ["\\lambda = 2d", "c = \\lambda\\,\\nu"],
@@ -828,14 +828,15 @@ export const DODATNE_VRZELI_FIZ_KEM = [
           [`$c' = \\dfrac{300\\,000\\ \\mathrm{km/s}}{${tx(n)}} ${res(v, 0, "km/s")}$`],
         );
       }
-      const lam = 10 * r.int(10, 100), E = (6.63e-34 * C0) / (lam * 1e-9) / 1.6e-19;
-      const G = [dat("\\lambda", tx(lam), "nm"), dat("h", "6{,}63 \\cdot 10^{-34}", "J\\,s"), C_DAT, dat("e_0", "1{,}60 \\cdot 10^{-19}", "As")];
+      // frekvenca vidne svetlobe (energija fotona je snov 4. letnika, zato je tu ni)
+      const lam = 10 * r.int(38, 75), nu = C0 / (lam * 1e-9) / 1e12;
+      const G = [dat("\\lambda", tx(lam), "nm"), C_DAT];
       return T(
-        `Kolikšna je energija fotona elektromagnetnega valovanja z valovno dolžino ${$(G[0])}? Uporabi ${$(G[1])}, ${$(G[2])} in ${$(G[3])}. Rezultat zapiši v elektronvoltih in ga zaokroži ${dw(2)}.`,
-        num(E, "eV", 2),
-        "Energija fotona je E = hν = hc/λ; 1 eV = 1,60 · 10⁻¹⁹ J.",
-        G, ["E"], ["E = h\\,\\nu = \\dfrac{h\\,c}{\\lambda}"],
-        [`$E = \\dfrac{6{,}63 \\cdot 10^{-34} \\cdot 3{,}00 \\cdot 10^8}{${lam} \\cdot 10^{-9}}\\ \\mathrm{J} ${res(E * 1.6, 3, "")} \\cdot 10^{-19}\\ \\mathrm{J}$`, `$E = \\dfrac{${tx(E * 1.6, 3)} \\cdot 10^{-19}}{1{,}60 \\cdot 10^{-19}}\\ \\mathrm{eV} ${res(E, 2, "eV")}$`],
+        `Vidna svetloba ima v vakuumu valovno dolžino ${$(G[0])}. Kolikšna je njena frekvenca? Uporabi ${$(G[1])}. Rezultat zapiši v terahercih (1 THz = 10¹² Hz) in ga zaokroži ${dw(0)}.`,
+        num(nu, "THz", 0, [M(C0 / lam / 1e12, "Nanometre pretvori v metre: 1 nm = 10⁻⁹ m."), M(nu * 1e12, "Rezultat je v hercih; pretvori ga v teraherce.")]),
+        "Iz c = λν izrazi ν. Valovno dolžino najprej pretvori v metre.",
+        G, ["\\nu"], "\\nu = \\dfrac{c}{\\lambda}",
+        [`$\\lambda = ${lam} \\cdot 10^{-9}\\ \\mathrm{m}$`, `$\\nu = \\dfrac{3{,}00 \\cdot 10^8\\ \\mathrm{m/s}}{${lam} \\cdot 10^{-9}\\ \\mathrm{m}} \\approx ${sci3(nu * 1e12).t}\\ \\mathrm{Hz} ${res(nu, 0, "THz")}$`],
       );
     },
   },
@@ -927,7 +928,8 @@ export const DODATNE_VRZELI_FIZ_KEM = [
         );
       }
       if (k === 0) {
-        const rp = r.int(5, 15) / 10, ra = r.int(30, 350) / 10, vp = r.int(30, 60), va = (vp * rp) / ra;
+        // v_p iz energijskega zakona (v_Z = 29,78 km/s pri 1 a. e.), da je tir res elipsa z danima r_p in r_a.
+        const rp = r.int(5, 15) / 10, ra = r.int(30, 350) / 10, vp = roundHalfUp(29.78 * Math.sqrt((2 * ra) / (rp * (rp + ra))), 1), va = (vp * rp) / ra;
         const G = [dat("r_{\\text{p}}", tx(rp), AE), dat("r_{\\text{a}}", tx(ra), AE), dat("v_{\\text{p}}", tx(vp), "km/s")];
         return T(
           `Komet je v periheliju ${$(G[0])} od Sonca in ima tam hitrost ${$(G[2])}. V afeliju je ${$(G[1])} od Sonca. Kolikšna je njegova hitrost v afeliju?${zaok(2)}`,
@@ -988,7 +990,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
             num(j, "MW/m²", 1, [M(j * 1000, "1 MW = 10⁶ W, ne 10³ W."), M((SIG * T0 ** 3) / 1e6, "Gostota je sorazmerna s četrto potenco temperature.")], { unitAlternatives: ["MW/m2"] }),
             "Uporabi Stefanov zakon j = σT⁴.",
             G, ["j"], "j = \\sigma\\,T^4",
-            [`$j = 5{,}67 \\cdot 10^{-8} \\cdot ${T0}^4\\ \\mathrm{W/m^2} ${res(j * 1e6 / 1e7, 2, "")} \\cdot 10^{7}\\ \\mathrm{W/m^2}$`, `$j ${res(j, 1, "MW/m²")}$`],
+            [`$j = 5{,}67 \\cdot 10^{-8} \\cdot ${T0}^4\\ \\mathrm{W/m^2} \\approx ${sci3(j * 1e6).t}\\ \\mathrm{W/m^2}$`, `$j ${res(j, 1, "MW/m²")}$`],
           );
         }
         if (k === 2) {
@@ -1018,7 +1020,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
         const d = L < 1 ? sig3(L) : L < 100 ? 1 : 0;
         const G = [dat("\\dfrac{R}{R_{\\odot}}", tx(R), ""), dat("T", tx(T0), "K"), TSUN_DAT];
         return T(
-          `Zvezda ima ${tx(R).replace("{,}", ",")}-krat večji polmer od Sonca $(${G[0]})$ in površinsko temperaturo ${$(G[1])}. Kolikokrat je njen izsev večji od izseva Sonca? Temperatura Sončevega površja je ${$(G[2])}.${zaok(d)}`,
+          `Polmer zvezde je ${R > 1 ? `${tx(R).replace("{,}", ",")}-krat večji od polmera Sonca` : `${tx(R).replace("{,}", ",")} polmera Sonca`} $(${G[0]})$, površinska temperatura pa ${$(G[1])}. Kolikšno je razmerje med izsevom zvezde in izsevom Sonca $\\dfrac{L}{L_{\\odot}}$? Temperatura Sončevega površja je ${$(G[2])}.${zaok(d)}`,
           num(L, "", d, [M(R * R * (T0 / TSUN), "Izsev je sorazmeren s četrto potenco temperature."), M(R * (T0 / TSUN) ** 4, "Izsev je sorazmeren s površino, torej s kvadratom polmera.")]),
           "Izsev je L = 4πR²σT⁴. Razmerje izsevov zapiši z razmerjema polmerov in temperatur.",
           G, ["\\dfrac{L}{L_{\\odot}}"], "\\dfrac{L}{L_{\\odot}} = \\left(\\dfrac{R}{R_{\\odot}}\\right)^2 \\left(\\dfrac{T}{T_{\\odot}}\\right)^4",
@@ -1035,7 +1037,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
           num(j, "W/m²", dd, [M(LSUN / (PI * d * d), "Sevanje se porazdeli po površini krogle 4πr², ne kroga πr²."), M(LSUN / (4 * PI * a * a * 1.5e8 * 1.5e8), "Razdaljo pretvori v metre, ne v kilometre.")], { unitAlternatives: ["W/m2"] }),
           "Sonce seva enakomerno na vse strani; na razdalji r se izsev porazdeli po površini krogle 4πr².",
           G, ["j"], "j = \\dfrac{L_{\\odot}}{4\\pi r^2}",
-          [`$r = ${tx(a)} \\cdot 1{,}50 \\cdot 10^{11}\\ \\mathrm{m} ${res(d / 1e11, 3, "")} \\cdot 10^{11}\\ \\mathrm{m}$`, `$j = \\dfrac{3{,}83 \\cdot 10^{26}}{4\\pi (${tx(d / 1e11, 3)} \\cdot 10^{11})^2}\\ \\mathrm{W/m^2} ${res(j, dd, "W/m²")}$`],
+          [`$r = ${tx(a)} \\cdot 1{,}50 \\cdot 10^{11}\\ \\mathrm{m} ${Math.abs(sci3(d).v - d) > 1e-6 * d ? "\\approx" : "="} ${sci3(d).t}\\ \\mathrm{m}$`, `$j = \\dfrac{3{,}83 \\cdot 10^{26}}{4\\pi (${sci3(d).t})^2}\\ \\mathrm{W/m^2} ${res(j, dd, "W/m²")}$`],
         );
       }
       if (level === 2) {
@@ -1064,7 +1066,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
         const d = R < 1 ? sig3(R) : 2;
         const G = [dat("\\dfrac{L}{L_{\\odot}}", tx(Lr), ""), dat("T", tx(T0), "K"), TSUN_DAT];
         return T(
-          `Izsev zvezde je ${tx(Lr).replace("{,}", ",")}-krat tolikšen kot izsev Sonca $(${G[0]})$, temperatura njenega površja je ${$(G[1])}. Kolikokrat je njen polmer večji od polmera Sonca? Temperatura Sončevega površja je ${$(G[2])}.${zaok(d)}`,
+          `Izsev zvezde je ${tx(Lr).replace("{,}", ",")}-krat tolikšen kot izsev Sonca $(${G[0]})$, temperatura njenega površja je ${$(G[1])}. Kolikšno je razmerje med polmerom zvezde in polmerom Sonca $\\dfrac{R}{R_{\\odot}}$? Temperatura Sončevega površja je ${$(G[2])}.${zaok(d)}`,
           num(R, "", d, [M(Lr * (TSUN / T0) ** 4, "Iz L ∝ R² T⁴ moraš na koncu koreniti."), M(Math.sqrt(Lr) * (TSUN / T0), "Temperaturno razmerje nastopa s kvadratom: R ∝ √L / T².")]),
           "Iz L = 4πR²σT⁴ izrazi razmerje polmerov.",
           G, ["\\dfrac{R}{R_{\\odot}}"], "\\dfrac{R}{R_{\\odot}} = \\sqrt{\\dfrac{L}{L_{\\odot}}} \\left(\\dfrac{T_{\\odot}}{T}\\right)^2",
@@ -1080,7 +1082,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
           num(dist, "", 0, [M(dist * Math.sqrt(4 * PI), "Svetloba se razširi po površini krogle 4πr²."), M(dist * dist * LY, "Na koncu koreniš in razdaljo pretvoriš v svetlobna leta.")]),
           "Izsev se razširi po površini krogle s polmerom r: j = L / (4πr²). Izrazi r.",
           G, ["r"], "r = \\sqrt{\\dfrac{L}{4\\pi j}}",
-          [`$L = ${tx(f)} \\cdot 3{,}83 \\cdot 10^{26}\\ \\mathrm{W} ${res(Lw / 1e26, 3, "")} \\cdot 10^{26}\\ \\mathrm{W}$`, `$r = \\sqrt{\\dfrac{L}{4\\pi j}} ${res(dist * LY / 1e15, 2, "")} \\cdot 10^{15}\\ \\mathrm{m}$`, `$r = \\dfrac{${tx(dist * LY / 1e15, 2)} \\cdot 10^{15}}{9{,}46 \\cdot 10^{15}} ${res(dist, 0, "")}$ sv. l.`],
+          [`$L = ${tx(f)} \\cdot 3{,}83 \\cdot 10^{26}\\ \\mathrm{W} ${Math.abs(sci3(Lw).v - Lw) > 1e-9 * Lw ? "\\approx" : "="} ${sci3(Lw).t}\\ \\mathrm{W}$`, `$r = \\sqrt{\\dfrac{L}{4\\pi j}} \\approx ${sci3(dist * LY).t}\\ \\mathrm{m}$`, `$r = \\dfrac{${sci3(dist * LY).t}}{9{,}46 \\cdot 10^{15}} ${res(dist, 0, "")}$ sv. l.`],
         );
       }
       const l1 = 10 * r.int(20, 60), l2 = l1 + 10 * r.int(5, 50), ratio = (l2 / l1) ** 4;
@@ -1114,7 +1116,8 @@ export const DODATNE_VRZELI_FIZ_KEM = [
       const nm = (e) => `${e[1]} (${e[0]})`;
       const TYPES = { k: ["kovina", "leži levo od stopničaste meje med kovinami in nekovinami"], n: ["nekovina", "leži desno zgoraj od stopničaste meje"], p: ["polkovina", "leži ob stopničasti meji (B, Si, Ge, As, Sb, Te)"] };
       if (level === 1 && k === 0) {
-        const e = r.pick(EL), [right, why] = TYPES[e[5]];
+        // selen izpustimo: nekateri učbeniki ga štejejo med polkovine
+        const e = r.pick(EL.filter((x) => x[0] !== "Se")), [right, why] = TYPES[e[5]];
         return T(
           `Ali je ${nm(e)} kovina, nekovina ali polkovina?`,
           choice(r, cap(right), Object.entries(TYPES).filter(([t]) => t !== e[5]).map(([, [n]]) => [cap(n), `${cap(e[1])} ${why}, zato je ${right}.`])),
@@ -1327,7 +1330,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
         const ans = askV ? (n / 2) * VM : (n / 2) * 2 * AR[Y];
         return T(
           `Raztopina vsebuje ${$(G[0])} kalijevega ${Y === "Br" ? "bromida" : "jodida"}. Uvajamo ${X === "Cl" ? "klor" : "brom"}: $\\mathrm{${X}_2 + 2\\,K${Y} \\rightarrow 2\\,K${X} + ${Y}_2}$. ${askV ? "Kolikšna prostornina klora (pri normalnih pogojih) je potrebna za popolno reakcijo?" : `Koliko gramov ${Y === "Br" ? "broma" : "joda"} nastane?`} Uporabi ${arText(els)}${askV ? ` in ${$(dat("V_{\\text{m}}", "22{,}4", "L/mol"))}` : ""}.${zaok(2)}`,
-          num(ans, askV ? "L" : "g", 2, [M(askV ? n * VM : n * 2 * AR[Y], `Iz enačbe: 2 mol KY ustrezata 1 mol ${askV ? "Cl₂" : "Y₂"}.`), M(askV ? NaN : n * AR[Y], `Molekula ${Y}₂ ima dva atoma: M = 2 A_r.`)]),
+          num(ans, askV ? "L" : "g", 2, [M(askV ? n * VM : n * 2 * AR[Y], `Iz enačbe: 2 mol K${Y} ustrezata 1 mol ${askV ? "Cl₂" : `${Y}₂`}, zato množino K${Y} deliš z 2.`), M(askV ? NaN : (n / 2) * AR[Y], `Molekula ${Y}₂ ima dva atoma: M = 2 A_r.`)]),
           "Maso soli pretvori v množino in uporabi razmerje iz enačbe (2 : 1).",
           G, [askV ? "V(\\mathrm{Cl_2})" : `m(\\mathrm{${Y}_2})`], ["n = \\dfrac{m}{M}", askV ? "V = n\\,V_{\\text{m}}" : "m = n\\,M"],
           [molarSteps(`K${Y}`), `$n(\\mathrm{K${Y}}) = \\dfrac{${tx(m)}}{${tx(MKY, 2)}}\\ \\mathrm{mol} ${res(n, 4, "mol")}$`, `$n(\\mathrm{${askV ? X : Y}_2}) = \\tfrac{1}{2}\\,n(\\mathrm{K${Y}}) ${res(n / 2, 4, "mol")}$`, askV ? `$V = ${tx(n / 2, 4)} \\cdot 22{,}4\\ \\mathrm{L} ${res(ans, 2, "L")}$` : `$m = ${tx(n / 2, 4)} \\cdot ${tx(2 * AR[Y], 2)}\\ \\mathrm{g} ${res(ans, 2, "g")}$`],
@@ -1503,7 +1506,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
         const three = level === 3, pick = r.shuffle(AA).slice(0, three ? 3 : 2), sum = pick.reduce((s, a) => s + a[1], 0), nb = pick.length - 1, Mp = sum - nb * 18.02;
         const G = [...pick.map(([n, m]) => dat(`M(\\text{${n}})`, tx(m, 2), "g/mol")), dat("M(\\mathrm{H_2O})", "18{,}02", "g/mol")];
         return T(
-          `Iz aminokislin ${pick.map((a) => a[0]).join(", ").replace(/, ([^,]*)$/, " in $1")} nastane ${three ? "tripeptid" : "dipeptid"}. Kolikšna je njegova molska masa? Molske mase so ${G.slice(0, -1).map($).join(", ")}, ${$(G[G.length - 1])}.${zaok(2)}`,
+          `Iz aminokislin ${pick.map((a) => a[0] + "a").join(", ").replace(/, ([^,]*)$/, " in $1")} nastane ${three ? "tripeptid" : "dipeptid"}. Kolikšna je njegova molska masa? Molske mase so ${G.slice(0, -1).map($).join(", ")}, ${$(G[G.length - 1])}.${zaok(2)}`,
           num(Mp, "g/mol", 2, [M(sum, "Pri nastanku vsake peptidne vezi se odcepi molekula vode."), M(sum - (three ? 1 : 2) * 18.02, three ? "Med tremi aminokislinami nastaneta dve peptidni vezi, zato se odcepita dve molekuli vode." : "Med dvema aminokislinama nastane ena peptidna vez, odcepi se ena molekula vode.")]),
           "Pri kondenzaciji aminokislin se ob vsaki peptidni vezi odcepi ena molekula vode.",
           G, ["M(\\text{peptid})"], `M = \\sum M(\\text{aminokislin}) - ${nb} \\cdot M(\\mathrm{H_2O})`,
@@ -1519,7 +1522,7 @@ export const DODATNE_VRZELI_FIZ_KEM = [
           num(pH, "", 2, [M(pOH, "To je pOH; pH = 14 − pOH."), M(14 + Math.log10(c), "Amin je šibka baza: koncentracija OH⁻ ni enaka koncentraciji amina."), M(14 + Math.log10(Kb * c), "Koncentracija OH⁻ je koren iz K_b c.")]),
           "Amin sprejme proton od vode: RNH₂ + H₂O ⇌ RNH₃⁺ + OH⁻. Iz K_b izračunaj [OH⁻], nato pOH in pH.",
           G, ["\\mathrm{pH}"], ["[\\mathrm{OH^-}] = \\sqrt{K_b\\,c}", "\\mathrm{pH} = 14 - \\mathrm{pOH}"],
-          [`$[\\mathrm{OH^-}] = \\sqrt{${Kt} \\cdot ${tx(c)}}\\ \\mathrm{mol/L} ${res(x * 1e3, 3, "")} \\cdot 10^{-3}\\ \\mathrm{mol/L}$`, `$\\mathrm{pOH} = -\\log [\\mathrm{OH^-}] ${res(pOH, 2, "")}$`, `$\\mathrm{pH} = 14 - ${tx(pOH, 2)} ${res(pH, 2, "")}$`],
+          [`$[\\mathrm{OH^-}] = \\sqrt{${Kt} \\cdot ${tx(c)}}\\ \\mathrm{mol/L} \\approx ${sci3(x).t}\\ \\mathrm{mol/L}$`, `$\\mathrm{pOH} = -\\log [\\mathrm{OH^-}] ${res(pOH, 2, "")}$`, `$\\mathrm{pH} = 14 - ${tx(pOH, 2)} ${res(pH, 2, "")}$`],
         );
       }
       const CL = [

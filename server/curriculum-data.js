@@ -631,7 +631,7 @@ export const PATHS = {
       ]],
       ["Astronomija", [
         "Osončje in gibanje planetov | telesa v Osončju, Keplerjevi zakoni, gravitacija in kroženje planetov",
-        "Zvezde in vesolje | svetilnost, Stefanov zakon, temperatura zvezd, fuzija v zvezdah, razdalje v vesolju",
+        "Zvezde in vesolje | izsev, Stefanov in Wienov zakon, temperatura zvezd, fuzija v zvezdah, razdalje v vesolju",
       ]],
       ["Priprava na maturo", [
         "Mešane maturitetne naloge | ponovitev vseh letnikov",

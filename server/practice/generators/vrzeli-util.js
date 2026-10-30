@@ -47,7 +47,7 @@ export function frac(n, d, mistakes = []) {
   if (d < 0) (n = -n), (d = -d);
   const k = g(n, d) || 1;
   const v = n / d;
-  return { type: "fraction", num: n / k, den: d / k, mistakes: mistakes.filter((m) => m && Number.isFinite(m.value) && Math.abs(m.value - v) > 1e-9).slice(0, 3) };
+  return { type: "fraction", num: n / k, den: d / k, mistakes: mistakes.filter((m, i) => m && Number.isFinite(m.value) && Math.abs(m.value - v) > 1e-9 && !mistakes.slice(0, i).some((p) => p && Math.abs(p.value - m.value) < 1e-9)).slice(0, 3) };
 }
 // Izbirni odgovor: correct je besedilo pravilne možnosti, wrong = [[besedilo, zakaj narobe], …] (vzamemo največ 3).
 export function choice(r, correct, wrong, extra = {}) {
@@ -76,7 +76,7 @@ export function sortiraj(set, level, r) {
       hint: def.hint,
       data: { given, find: [tt("primer iz skupine")] },
       formula: false,
-      solution: [`${cap(right[0])}: ${nm(k)}.`, right[2]].join("\n"),
+      solution: [`${cap(right[0]).replace(/\.$/, "")}: ${nm(k)}.`, right[2]].join("\n"),
     };
   }
   const item = r.pick(def.items);

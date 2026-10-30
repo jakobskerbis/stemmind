@@ -3,6 +3,7 @@
 // grafov, potenčna in korenska funkcija, matematična indukcija (gimnazija). Merila: docs/kakovost.md §2.
 // Vsak odgovor je izračunan v kodi iz istih števil, kot so v besedilu.
 import { gcd } from "../check.js";
+import { nOf, verbOf } from "../rng.js";
 import { lv, tt, tx, dat, eq, res, M, num, frac, choice, T, sortiraj } from "./vrzeli-util.js";
 
 const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
@@ -10,6 +11,15 @@ const setTex = (arr) => `\\{${arr.join(", ")}\\}`;
 const par = (x) => (x < 0 ? `(${x})` : `${x}`);
 const sg = (n) => (n < 0 ? `- ${-n}` : `+ ${n}`);
 const lcm = (a, b) => (a * b) / gcd(a, b);
+// Okrajšan ulomek v TeX: fracTex(8, -4) → "-2", fracTex(-8, 3) → "-\\dfrac{8}{3}".
+const fracTex = (n, d) => {
+  const g = gcd(Math.abs(n), Math.abs(d)) || 1, s = n * d < 0 ? "-" : "";
+  const p = Math.abs(n) / g, q = Math.abs(d) / g;
+  return q === 1 ? `${s}${p}` : `${s}\\dfrac{${p}}{${q}}`;
+};
+// Glagol na začetku besedne zveze ob številu 2–4: vb(3, "igra klavir") → "igrajo klavir".
+const VB = { trenira: ["trenirata", "trenirajo"], obiskuje: ["obiskujeta", "obiskujejo"], ima: ["imata", "imajo"], igra: ["igrata", "igrajo"], poje: ["pojeta", "pojejo"] };
+const vb = (n, t) => t.replace(/^\S+/, (w) => (VB[w] ? verbOf(n, w, VB[w][0], VB[w][1]) : w));
 const mono = (c, v) => (c === 1 ? v : c === -1 ? `-${v}` : `${c}${v}`);
 
 // ------------------------------------------------------------ logika: izjave kot funkcije
@@ -25,6 +35,9 @@ const R2 = rows(["A", "B"]), R3 = rows(["A", "B", "C"]);
 const PN = (b) => (b ? "P" : "N");
 const PNw = (b) => (b ? "pravilna" : "nepravilna");
 const rowTxt = (v) => Object.entries(v).map(([k, b]) => `${k} ${PNw(b)}`).join(", ");
+// »ko je A pravilna in B nepravilna« (za razlage napak).
+const koTxt = (v) => "ko je " + Object.entries(v).map(([k, b]) => `${k} ${PNw(b)}`).join(", ").replace(/, ([^,]*)$/, " in $1");
+const vVrst = (n) => `v $${n}$ ${n === 1 ? "vrstici" : "vrsticah"}`;
 const col = (F, R) => R.map((v) => F.f(v));
 const sameCol = (F, G, R) => R.every((v) => F.f(v) === G.f(v));
 const firstDiff = (F, G, R) => R.find((v) => F.f(v) !== G.f(v));
@@ -127,10 +140,10 @@ export const DODATNE_VRZELI_MAT = [
           ["ima doma psa", "ima doma mačko", "ima psa in mačko", "nima ne psa ne mačke"],
           ["igra klavir", "igra kitaro", "igra oba inštrumenta", "ne igra nobenega od teh dveh inštrumentov"],
         ];
-        const c = r.int(2, 6), a = c + r.int(3, 9), b = c + r.int(2, 8), U = a + b - c, N = U + r.int(1, 6), x = r.pick(CTX);
+        const c = r.int(2, 6), a = c + r.int(3, 9), b = c + r.int(3, 8), U = a + b - c, N = U + r.int(1, 6), x = r.pick(CTX);
         return T(
-          `V razredu je ${N} učencev. ${a} jih ${x[0]}, ${b} jih ${x[1]}, ${c} pa jih ${x[2]}. Koliko učencev ${x[3]}?`,
-          num(N - U, "", null, [M(N - a - b, `Učence, ki ${x[2].replace(/^(trenira|obiskuje|ima|igra)/, "$1")}, si odštel dvakrat. Šteti jih moraš le enkrat.`), M(U, "To je število učencev v uniji (vsaj eno od obojega). Odšteti ga moraš od vseh učencev."), M(N - a - b - c, "Presek moraš k vsoti prišteti nazaj, ne odšteti.")]),
+          `V razredu je ${N} učencev. ${a} jih ${x[0]}, ${b} jih ${x[1]}, ${c} pa ${c >= 5 ? `jih ${x[2]}` : vb(c, x[2])}. Koliko učencev ${x[3]}?`,
+          num(N - U, "", null, [M(N - a - b, `Učence, ki ${vb(3, x[2])}, si odštel dvakrat. Šteti jih moraš le enkrat.`), M(U, "To je število učencev v uniji (vsaj eno od obojega). Odšteti ga moraš od vseh učencev."), M(N - a - b - c, "Presek moraš k vsoti prišteti nazaj, ne odšteti.")]),
           "Nariši Vennov diagram: v presek zapiši tiste z obojim, nato izračunaj, koliko jih je vsaj v enem krogu.",
           [`n = ${N}`, `n(A) = ${a}`, `n(B) = ${b}`, `n(A \\cap B) = ${c}`], [tt("zunaj obeh krogov")],
           "n(A \\cup B) = n(A) + n(B) - n(A \\cap B)",
@@ -143,10 +156,10 @@ export const DODATNE_VRZELI_MAT = [
         const all = range(1, N), hit = all.filter((x) => p1[1](x) && p2[1](x));
         return T(
           `Števila od 1 do ${N} razvrstimo v Carrollov diagram: vrstici sta »sodo« in »liho«, stolpca pa »večje od ${m}« in »največ ${m}«. Koliko števil je v polju »${p1[0]} in ${p2[0]}«?`,
-          num(hit.length, "", null, [M(all.filter(p1[1]).length, `Si preštel vsa števila, ki so ${p1[0]}? Upoštevati moraš še stolpec »${p2[0]}«.`), M(all.filter(p2[1]).length, `Si upošteval le stolpec? Število mora biti tudi ${p1[0]}.`)]),
+          num(hit.length, "", null, [M(all.filter(p1[1]).length, `Si preštel vsa števila v vrstici »${p1[0]}«? Upoštevati moraš še stolpec »${p2[0]}«.`), M(all.filter(p2[1]).length, `Si upošteval le stolpec »${p2[0]}«? Število mora biti tudi v vrstici »${p1[0]}«.`)]),
           "V polje sodijo števila, ki ustrezajo obema pogojema hkrati. Zapiši jih po vrsti.",
           [`${tt("zadnje število")} = ${N}`, `${tt("meja")} = ${m}`], [tt("število števil v polju")], false,
-          [`Števila, ki so ${p1[0]} in ${p2[0]}: ${hit.join(", ")}.`, `Teh je $${hit.length}$.`],
+          [`Števila v polju »${p1[0]} in ${p2[0]}«: ${hit.join(", ")}.`, `Teh je $${hit.length}$.`],
         );
       }
       if (level === 3 && k === 0) {
@@ -162,10 +175,10 @@ export const DODATNE_VRZELI_MAT = [
         );
       }
       if (level === 3 && k === 1) {
-        const c = r.int(2, 7), a = c + r.int(3, 10), b = c + r.int(2, 9), U = a + b - c, d = r.int(1, 6), N = U + d;
+        const c = r.int(2, 7), a = c + r.int(3, 10), b = c + r.int(3, 9), U = a + b - c, d = r.int(1, 6), N = U + d;
         return T(
-          `V razredu je ${N} učencev. ${a} jih rado bere, ${b} jih rado riše, ${d} pa ne mara ne branja ne risanja. Koliko učencev rado bere in riše?`,
-          num(c, "", null, [M(a + b - N, `Si pozabil na ${d} učencev, ki ne marajo ničesar od tega? Niso v nobenem krogu.`), M(U, "To je število učencev, ki imajo radi vsaj eno. Iščemo presek."), M(N - d - a, "To je število tistih, ki rade le rišejo.")]),
+          `V razredu je ${N} učencev. ${a} jih rado bere, ${b} jih rado riše, ${d} pa ${verbOf(d, "ne mara", "ne marata", "ne marajo")} ne branja ne risanja. Koliko učencev rado bere in riše?`,
+          num(c, "", null, [M(a + b - N, `Si pozabil na ${nOf(d, "učenca", "učenca", "učence", "učencev")}, ki ne marajo ničesar od tega? Niso v nobenem krogu.`), M(U, "To je število učencev, ki imajo radi vsaj eno. Iščemo presek."), M(N - d - a, "To je število tistih, ki le radi rišejo.")]),
           "Najprej izračunaj, koliko učencev je v vsaj enem krogu Vennovega diagrama.",
           [`n = ${N}`, `n(A) = ${a}`, `n(B) = ${b}`, `${tt("nobeno")} = ${d}`], ["n(A \\cap B)"],
           "n(A \\cup B) = n(A) + n(B) - n(A \\cap B)",
@@ -177,7 +190,7 @@ export const DODATNE_VRZELI_MAT = [
         const nA = Math.floor(N / a), nB = Math.floor(N / b), l = lcm(a, b), nAB = Math.floor(N / l), U = nA + nB - nAB;
         return T(
           `Med števili od 1 do ${N} je $A$ množica večkratnikov števila ${a}, $B$ pa množica večkratnikov števila ${b}. Koliko števil od 1 do ${N} ni ne v $A$ ne v $B$?`,
-          num(N - U, "", null, [M(N - nA - nB, `Skupne večkratnike (števila ${l}) si odštel dvakrat.`), M(N - nA, "Odšteti moraš tudi večkratnike drugega števila."), M(U, "To je število elementov unije. Iščemo števila zunaj obeh krogov.")]),
+          num(N - U, "", null, [M(N - nA - nB, `Skupne večkratnike (večkratnike števila ${l}) si odštel dvakrat, zato jih moraš enkrat prišteti nazaj.`), M(N - nA, "Odšteti moraš tudi večkratnike drugega števila."), M(U, "To je število elementov unije. Iščemo števila zunaj obeh krogov.")]),
           `Preštej večkratnike vsakega števila in skupne večkratnike (večkratnike števila ${l}).`,
           [`${tt("zadnje število")} = ${N}`], [tt("zunaj A in B")],
           "n(A \\cup B) = n(A) + n(B) - n(A \\cap B)",
@@ -318,7 +331,7 @@ export const DODATNE_VRZELI_MAT = [
       const n = r.int(4, 7), q = r.pick(["premic", "ravnin"]);
       const ans = q === "premic" ? binom(n, 2) : binom(n, 3);
       return T(
-        `V prostoru je ${n} točk. Nobene tri ne ležijo na isti premici in nobene štiri ne v isti ravnini. Koliko različnih ${q} določajo te točke?`,
+        `V prostoru ${n <= 4 ? `so ${n} točke` : `je ${n} točk`}. Nobene tri ne ležijo na isti premici in nobene štiri ne v isti ravnini. Koliko različnih ${q} določajo te točke?`,
         num(ans, "", null, q === "premic" ? [M(n * (n - 1), "Vsako premico si štel dvakrat (AB in BA sta ista premica)."), M(binom(n, 3), "To je število ravnin. Premico določata dve točki.")] : [M(binom(n, 2), "To je število premic. Ravnino določajo tri nekolinearne točke."), M(n * (n - 1) * (n - 2), "Vsako ravnino si štel 6-krat (vrstni red treh točk ni pomemben).")]),
         q === "premic" ? "Premico določata dve različni točki. Koliko je parov točk?" : "Ravnino določajo tri točke, ki ne ležijo na isti premici. Koliko je trojic točk?",
         [`n = ${n}`], [`${tt("število")}\\ ${tt(q)}`],
@@ -364,7 +377,7 @@ export const DODATNE_VRZELI_MAT = [
         const idx = c.findIndex((x) => x === ask);
         return T(
           `V kateri vrstici pravilnostne tabele je izjava $${F.t}$ ${PNw(ask)}? Taka vrstica je ena sama.`,
-          { type: "choice", options: R2.map(rowTxt), index: idx, why: R2.map((v, i) => (i === idx ? null : `Pri ${rowTxt(v)} je ${F.u} ${PNw(c[i])}.`)) },
+          { type: "choice", options: R2.map(rowTxt), index: idx, why: R2.map((v, i) => (i === idx ? null : `Ko je ${koTxt(v).slice(6)}, je ${F.u} ${PNw(c[i])}.`)) },
           "Izračunaj vrednost izjave v vseh štirih vrsticah tabele.",
           [`${tt("izjava")} = ${F.t}`], [tt("vrstica tabele")], false,
           [...R2.map((v, i) => `${rowTxt(v)}: $${F.t}$ je ${PNw(c[i])}.`), `Izjava je ${PNw(ask)} le v vrstici ${rowTxt(R2[idx])}.`],
@@ -373,7 +386,7 @@ export const DODATNE_VRZELI_MAT = [
       if (level === 1) {
         const n = r.int(2, 5), names = ["A", "B", "C", "D", "E"].slice(0, n);
         return T(
-          `V sestavljeni izjavi nastopa ${n} izjav${n === 2 ? "i" : n <= 4 ? "e" : ""}: ${names.map((x) => `$${x}$`).join(", ")}. Koliko vrstic ima njena pravilnostna tabela?`,
+          `V sestavljeni izjavi ${n === 2 ? "nastopata 2 izjavi" : n <= 4 ? `nastopajo ${n} izjave` : `nastopa ${n} izjav`}: ${names.map((x) => `$${x}$`).join(", ")}. Koliko vrstic ima njena pravilnostna tabela?`,
           num(2 ** n, "", null, [M(2 * n, "Vsaka nova izjava število vrstic podvoji, ne poveča za 2."), M(n * n, "Število vrstic je potenca števila 2.")]),
           "Vsaka izjava je lahko pravilna ali nepravilna. Koliko je vseh kombinacij?",
           [`n = ${n}`], [tt("število vrstic")], "2^n",
@@ -394,7 +407,7 @@ export const DODATNE_VRZELI_MAT = [
           num(cnt, "", null, [M(4 - cnt, "Si preštel vrstice, v katerih je izjava nepravilna?"), M(ci, `To je število pravilnih vrstic za oklepaj $(${inner.u})$, ne za celo izjavo.`)]),
           "Sestavi tabelo s stolpci A, B, oklepaj in cela izjava. Najprej izračunaj oklepaj.",
           [`${tt("izjava")} = ${F.t}`], [tt("število pravilnih vrstic")], false,
-          [...R2.map((v, i) => `${rowTxt(v)}: $${inner.t}$ je ${PN(inner.f(v))}, cela izjava je ${PN(c[i])}.`), `Izjava je pravilna v $${cnt}$ vrsticah.`],
+          ["P pomeni pravilna, N nepravilna.", ...R2.map((v, i) => `${rowTxt(v)}: $${inner.t}$ je ${PN(inner.f(v))}, cela izjava je ${PN(c[i])}.`), `Izjava je pravilna ${vVrst(cnt)}.`],
         );
       }
       if (level === 2 && k === 1) {
@@ -409,7 +422,7 @@ export const DODATNE_VRZELI_MAT = [
         const right = r.pick(eqs);
         const wrong = r.shuffle(neq).slice(0, 3).map((G) => {
           const v = firstDiff(F, G, R2);
-          return [G.t, `Ni enakovredna: pri ${rowTxt(v)} je ${F.u} ${PNw(F.f(v))}, ${G.u} pa ${PNw(G.f(v))}.`];
+          return [G.t, `Ni enakovredna: ${koTxt(v)}, je ${F.u} ${PNw(F.f(v))}, ${G.u} pa ${PNw(G.f(v))}.`];
         });
         return T(
           `Katera izjava je enakovredna izjavi $${F.t}$?`,
@@ -460,7 +473,7 @@ export const DODATNE_VRZELI_MAT = [
         const F = r.pick(TAV), vars = (G) => (G.t.includes("C") ? R3 : R2);
         const wrong = r.shuffle(NE).slice(0, 3).map(([G, w]) => {
           const v = vars(G).find((x) => !G.f(x));
-          return [G.t, `${w} Ni tavtologija: pri ${rowTxt(v)} je nepravilna.`];
+          return [G.t, `${w} Ni tavtologija: ${koTxt(v)}, je nepravilna.`];
         });
         return T(
           "Katera izjava je tavtologija (pravilna pri vseh vrednostih izjav, ki v njej nastopajo)?",
@@ -482,10 +495,10 @@ export const DODATNE_VRZELI_MAT = [
         const short = (v) => `${PN(v.A)}${PN(v.B)}${PN(v.C)}`;
         return T(
           `V koliko vrsticah pravilnostne tabele je izjava $${F.t}$ pravilna?`,
-          num(cnt, "", null, [M(8 - cnt, "Si preštel nepravilne vrstice?"), M(col(inner, R3).filter(Boolean).length, "To velja za oklepaj, ne za celo izjavo."), M(cnt / 2, "Tabela s tremi izjavami ima 8 vrstic, ne 4.")]),
+          num(cnt, "", null, [M(8 - cnt, "Si preštel nepravilne vrstice?"), M(col(inner, R3).filter(Boolean).length, "To velja za oklepaj, ne za celo izjavo."), M(cnt % 2 ? NaN : cnt / 2, "Tabela s tremi izjavami ima 8 vrstic, ne 4.")]),
           "Tabela ima 8 vrstic (A, B, C). Najprej izračunaj stolpec za oklepaj.",
           [`${tt("izjava")} = ${F.t}`], [tt("število pravilnih vrstic")], "2^3 = 8\\ \\text{vrstic}",
-          [`Vrednosti (A B C: oklepaj → izjava): ${R3.map((v) => `${short(v)}: ${PN(inner.f(v))} → ${PN(F.f(v))}`).join("; ")}.`, `Izjava je pravilna v $${cnt}$ vrsticah.`],
+          ["P pomeni pravilna, N nepravilna.", `Vrednosti (A B C: oklepaj → izjava): ${R3.map((v) => `${short(v)}: ${PN(inner.f(v))} → ${PN(F.f(v))}`).join("; ")}.`, `Izjava je pravilna ${vVrst(cnt)}.`],
         );
       }
       const PAIRS = [
@@ -497,7 +510,7 @@ export const DODATNE_VRZELI_MAT = [
       const [F, eqs, neq] = r.pick(PAIRS), right = r.pick(eqs);
       const wrong = neq.filter((G) => !sameCol(F, G, R3)).map((G) => {
         const v = firstDiff(F, G, R3);
-        return [G.t, `Ni enakovredna: pri ${rowTxt(v)} je dana izjava ${PNw(F.f(v))}, ta pa ${PNw(G.f(v))}.`];
+        return [G.t, `Ni enakovredna: ${koTxt(v)}, je dana izjava ${PNw(F.f(v))}, ta pa ${PNw(G.f(v))}.`];
       });
       return T(
         `Katera izjava je enakovredna izjavi $${F.t}$?`,
@@ -633,7 +646,7 @@ export const DODATNE_VRZELI_MAT = [
           `Najprej izračunaj ${order === "fg" ? "g" : "f"}(${x0}), nato rezultat vstavi v ${order === "fg" ? "f" : "g"}.`,
           [`f(x) = ${fx}`, `g(x) = ${gx}`, `x = ${x0}`], [order === "fg" ? "(f \\circ g)(x)" : "(g \\circ f)(x)"],
           order === "fg" ? "(f \\circ g)(x) = f(g(x))" : "(g \\circ f)(x) = g(f(x))",
-          order === "fg" ? [`$g(${x0}) = ${par(x0)}^2 ${sg(c)} = ${gg(x0)}$`, `$f(${gg(x0)}) = ${a} \\cdot ${par(gg(x0))} ${sg(b)} = ${val}$`] : [`$f(${x0}) = ${a} \\cdot ${par(x0)} ${sg(b)} = ${f(x0)}$`, `$g(${f(x0)}) = ${par(f(x0))}^2 ${sg(c)} = ${val}$`],
+          order === "fg" ? [`$g(${x0}) = ${par(x0)}^2${c ? " " + sg(c) : ""} = ${gg(x0)}$`, `$f(${gg(x0)}) = ${a} \\cdot ${par(gg(x0))}${b ? " " + sg(b) : ""} = ${val}$`] : [`$f(${x0}) = ${a} \\cdot ${par(x0)}${b ? " " + sg(b) : ""} = ${f(x0)}$`, `$g(${f(x0)}) = ${par(f(x0))}^2${c ? " " + sg(c) : ""} = ${val}$`],
         );
       }
       if (level === 1 && k === 1) {
@@ -659,15 +672,15 @@ export const DODATNE_VRZELI_MAT = [
       if (level === 1) {
         const a = r.pick([2, 3, -1, -2]), b = r.int(1, 5), c = r.int(1, 6);
         const POOL = [
-          [`${mono(a, "x^4")} ${sg(-b)}x^2`, (x) => a * x ** 4 - b * x * x], [`x^2 ${sg(-c)}`, (x) => x * x - c], [`|x| ${sg(c)}`, (x) => Math.abs(x) + c], [`${mono(a, "x^2")} + |x|`, (x) => a * x * x + Math.abs(x)],
-          [`${mono(a, "x^3")} ${sg(b)}x`, (x) => a * x ** 3 + b * x], [`\\dfrac{${a}}{x}`, (x) => a / x], [`x^5 - ${b}x^3`, (x) => x ** 5 - b * x ** 3], [`x|x|`, (x) => x * Math.abs(x)],
-          [`x^2 ${sg(b)}x`, (x) => x * x + b * x], [`x^3 ${sg(c)}`, (x) => x ** 3 + c], [`(x ${sg(-c)})^2`, (x) => (x - c) ** 2], [`${mono(a, "x")} ${sg(c)}`, (x) => a * x + c],
+          [`${mono(a, "x^4")} ${sg(-b)}x^2`.replace(/([+-]) 1x/, "$1 x"), (x) => a * x ** 4 - b * x * x], [`x^2 ${sg(-c)}`, (x) => x * x - c], [`|x| ${sg(c)}`, (x) => Math.abs(x) + c], [`${mono(a, "x^2")} + |x|`, (x) => a * x * x + Math.abs(x)],
+          [`${mono(a, "x^3")} ${sg(b)}x`.replace(/([+-]) 1x/, "$1 x"), (x) => a * x ** 3 + b * x], [`\\dfrac{${a}}{x}`, (x) => a / x], [`x^5 - ${b === 1 ? "" : b}x^3`, (x) => x ** 5 - b * x ** 3], [`x|x|`, (x) => x * Math.abs(x)],
+          [`x^2 ${sg(b)}x`.replace(/([+-]) 1x/, "$1 x"), (x) => x * x + b * x], [`x^3 ${sg(c)}`, (x) => x ** 3 + c], [`(x ${sg(-c)})^2`, (x) => (x - c) ** 2], [`${mono(a, "x")} ${sg(c)}`, (x) => a * x + c],
         ];
         const [tex, f] = r.pick(POOL), X = [0.7, 1.3, 2.9];
         const even = X.every((x) => Math.abs(f(-x) - f(x)) < 1e-9), odd = X.every((x) => Math.abs(f(-x) + f(x)) < 1e-9);
         const OPT = ["soda", "liha", "ni ne soda ne liha"], idx = even ? 0 : odd ? 1 : 2;
         const f1 = f(1), fm1 = f(-1);
-        const why = OPT.map((o, i) => (i === idx ? null : i === 0 ? `Ni soda: f(−1) = ${tx(fm1).replace("{,}", ",")}, f(1) = ${tx(f1).replace("{,}", ",")}, torej f(−x) ≠ f(x).` : i === 1 ? `Ni liha: f(−1) = ${tx(fm1).replace("{,}", ",")}, −f(1) = ${tx(-f1).replace("{,}", ",")}, torej f(−x) ≠ −f(x).` : `Je ${even ? "soda: f(−x) = f(x)" : "liha: f(−x) = −f(x)"} za vsak x.`));
+        const why = OPT.map((o, i) => (i === idx ? null : i === 0 ? `Ni soda: f(−1) = ${tx(fm1).replace("{,}", ",").replace("-", "−")}, f(1) = ${tx(f1).replace("{,}", ",").replace("-", "−")}, torej f(−x) ≠ f(x).` : i === 1 ? `Ni liha: f(−1) = ${tx(fm1).replace("{,}", ",").replace("-", "−")}, −f(1) = ${tx(-f1).replace("{,}", ",").replace("-", "−")}, torej f(−x) ≠ −f(x).` : `Je ${even ? "soda: f(−x) = f(x)" : "liha: f(−x) = −f(x)"} za vsak x.`));
         return T(
           `Ali je funkcija $f(x) = ${tex}$ soda, liha ali ni ne soda ne liha?`,
           { type: "choice", options: OPT, index: idx, why },
@@ -678,12 +691,12 @@ export const DODATNE_VRZELI_MAT = [
       }
       if (level === 2 && k === 0) {
         const cube = r.next() < 0.4;
-        const a = r.pick([2, 3, 4, -2, -3, 5]), b = r.int(-9, 9), x0 = cube ? r.int(-3, 3) : r.int(-6, 8);
+        const a = r.pick([2, 3, 4, -2, -3, 5]), b = r.nonZero(-9, 9), x0 = cube ? r.int(-3, 3) : r.int(-6, 8);
         const y0 = cube ? a * x0 ** 3 + b : a * x0 + b;
         const fx = `${mono(a, cube ? "x^3" : "x")} ${sg(b)}`;
         return T(
           `Dana je funkcija $f(x) = ${fx}$. Izračunaj $f^{-1}(${y0})$.`,
-          num(x0, "", null, [M(cube ? a * y0 ** 3 + b : a * y0 + b, "To je f(y), ne vrednost obratne funkcije."), M(cube ? (y0 - b) / a : 1 / y0, cube ? "Pozabil si izračunati tretji koren." : "Obratna funkcija ni 1/f.")]),
+          num(x0, "", null, [M(cube ? a * y0 ** 3 + b : a * y0 + b, "To je f(y), ne vrednost obratne funkcije."), M(cube ? (y0 - b) / a : 1 / (a * y0 + b), cube ? "Pozabil si izračunati tretji koren." : "Obratna funkcija ni 1/f: f⁻¹(y) ni enako 1/f(y).")]),
           "Vrednost f⁻¹(y) je tisti x, za katerega velja f(x) = y. Reši enačbo.",
           [`f(x) = ${fx}`, `y = ${y0}`], ["f^{-1}(y)"],
           "f^{-1}(y) = x \\iff f(x) = y",
@@ -738,11 +751,11 @@ export const DODATNE_VRZELI_MAT = [
           "Reši enačbo f(x) = k: pomnoži z imenovalcem in izrazi x.",
           [`f(x) = ${fT}`, `k = ${kk}`], ["f^{-1}(k)"],
           "f(x) = k \\Rightarrow x = f^{-1}(k)",
-          [`$${mono(a, "x")} ${sg(b)} = ${kk}(x ${sg(d)})$`, `$${mono(a, "x")} - ${par(kk)}x = ${kk * d} ${sg(-b)}$`, `$(${a - kk})x = ${kk * d - b}$, $x = \\dfrac{${kk * d - b}}{${a - kk}}$`],
+          [`$${mono(a, "x")}${b ? " " + sg(b) : ""} = ${kk === 0 ? "0" : `${kk === 1 ? "" : kk === -1 ? "-" : kk}(x ${sg(d)})`}$`, `$${mono(a - kk, "x")} = ${kk * d - b}$`, `$x = ${fracTex(kk * d - b, a - kk)}$`],
         );
       }
       if (level === 3 && k === 1) {
-        const a = r.pick([1, 2, 3]), x0 = r.int(2, 6), b = r.int(-9, 9), m = a * x0 * x0 + b;
+        const a = r.pick([1, 2, 3]), x0 = r.int(2, 6), b = r.nonZero(-9, 9), m = a * x0 * x0 + b;
         const fx = `${mono(a, "x")} ${sg(b)}`;
         return T(
           `Dani sta $f(x) = ${fx}$ in $g(x) = x^2$. Poišči pozitivno rešitev enačbe $(f \\circ g)(x) = ${m}$.`,
@@ -864,7 +877,7 @@ export const DODATNE_VRZELI_MAT = [
         const gT = order === "zrcali-premik" ? `-(${inner(p)})^2 ${sg(q)}` : `-\\left((${inner(p)})^2 ${sg(q)}\\right)`;
         return T(
           `Graf funkcije $f(x) = x^2$ ${steps}. Dobimo graf funkcije $g$. Izračunaj $g(${x1})$.`,
-          num(val, "", null, [M(other, "Vrstni red preslikav je pomemben: zrcaljenje čez os x spremeni predznak vsega, kar je že izračunano."), M(f(x1 - p) + q, "Pozabil si na zrcaljenje čez os x."), M(-f(x1 + p) + (order === "zrcali-premik" ? q : -q), "Premik v desno pomeni x − p.")]),
+          num(val, "", null, [M(other, "Vrstni red preslikav je pomemben: zrcaljenje čez os x spremeni predznak vsega, kar je že izračunano."), M(f(x1 - p) + q, "Pozabil si na zrcaljenje čez os x."), M(-f(x1 + p) + (order === "zrcali-premik" ? q : -q), p > 0 ? `Premik v desno za ${p} pomeni x − ${p}.` : `Premik v levo za ${-p} pomeni x + ${-p}.`)]),
           "Zapiši g(x) po korakih, v vrstnem redu preslikav.",
           [`f(x) = x^2`, `x = ${x1}`], [`g(${x1})`],
           ["-f(x)\\ \\text{(zrcaljenje čez os x)}", "f(x - p) + q\\ \\text{(premik)}"],
@@ -886,7 +899,7 @@ export const DODATNE_VRZELI_MAT = [
       const fx = (x) => 1 / x, val = a * fx(x1 - p);
       return T(
         `Graf funkcije $f(x) = \\dfrac{1}{x}$ raztegnemo v smeri osi y s faktorjem ${a}, nato ga zrcalimo čez os y in na koncu premaknemo za ${p} v desno. Izračunaj $g(${x1})$ in zaokroži na dve decimalki.`,
-        num(-a / (x1 - p), "", 2, [M(val, "Zrcaljenje čez os y zamenja x z −x: g(x) = a · f(−(x − p))."), M(-a / (-x1 - p), "Premik naredimo zadnji: v že zrcaljeni funkciji x zamenjamo z x − p."), M(-1 / (a * (x1 - p)), "Raztezanje v smeri osi y pomnoži vrednost, ne x.")]),
+        num(-a / (x1 - p), "", 2, [M(val, "Zrcaljenje čez os y zamenja x z −x: g(x) = a · f(−(x − p))."), M(-a / (x1 + p), "Premik naredimo zadnji: v že zrcaljeni funkciji a/(−x) zamenjamo x z x − p. Če premakneš pred zrcaljenjem, dobiš a/(−x − p)."), M(-1 / (a * (x1 - p)), "Raztezanje v smeri osi y pomnoži vrednost, ne x.")]),
         "Zapiši funkcijo po korakih: a·f(x), nato a·f(−x), nato x zamenjaš z x − p.",
         ["f(x) = \\dfrac{1}{x}", `a = ${a}`, `p = ${p}`, `x = ${x1}`], [`g(${x1})`],
         ["a\\,f(x)", "f(-x)", "f(x - p)"],
@@ -911,15 +924,15 @@ export const DODATNE_VRZELI_MAT = [
             num(a * x ** n, "", null, [M(a * Math.abs(x) ** n, "Pazi na predznak: liha potenca negativnega števila je negativna."), M((a * x) ** n, `Potenciraš le x, ne a·x.`)]),
             "Najprej izračunaj potenco, nato pomnoži s koeficientom.",
             [`f(x) = ${fx}`, `x = ${x}`], [`f(${x})`], "f(x) = a\\,x^n",
-            [`$${par(x)}^{${n}} = ${x ** n}$`, `$f(${x}) = ${a} \\cdot ${par(x ** n)} = ${a * x ** n}$`],
+            [`$${par(x)}^{${n}} = ${x ** n}$`, a === 1 ? `$f(${x}) = ${x ** n}$` : `$f(${x}) = ${a === -1 ? "-" : `${a} \\cdot `}${par(x ** n)} = ${a * x ** n}$`],
           );
         const den = x ** -n;
         return T(
           `Izračunaj vrednost funkcije $f(x) = ${fx}$ pri $x = ${x}$. Rezultat zapiši kot okrajšan ulomek ali celo število.`,
-          frac(a, den, [M(a * den, "Negativni eksponent pomeni obratno vrednost: x⁻ⁿ = 1/xⁿ."), M(-a / den, "Preveri predznak potence negativnega števila."), M(1 / (a * den), "Koeficient a ostane v števcu.")]),
+          frac(a, den, [M(a * den, "Negativni eksponent pomeni obratno vrednost: x⁻ⁿ = 1/xⁿ."), M(-a / den, x < 0 && n % 2 ? "Preveri predznak: liha potenca negativnega števila je negativna." : "Pazi na predznak koeficienta a."), M(1 / (a * den), "Koeficient a ostane v števcu.")]),
           "Negativni eksponent: x⁻ⁿ = 1/xⁿ.",
           [`f(x) = ${fx}`, `x = ${x}`], [`f(${x})`], "x^{-n} = \\dfrac{1}{x^n}",
-          [`$${par(x)}^{${n}} = \\dfrac{1}{${par(x)}^{${-n}}} = \\dfrac{1}{${den}}$`, `$f(${x}) = \\dfrac{${a}}{${den}}$`],
+          [`$${par(x)}^{${n}} = \\dfrac{1}{${par(x)}^{${-n}}} = \\dfrac{1}{${den}}$`, `$f(${x}) = \\dfrac{${a}}{${den}}${fracTex(a, den) === `\\dfrac{${a}}{${den}}` ? "" : ` = ${fracTex(a, den)}`}$`],
         );
       }
       if (level === 1 && k === 1) {
@@ -1056,7 +1069,7 @@ export const DODATNE_VRZELI_MAT = [
           num(term(m + 1), "", null, [M(term(m), `To je zadnji člen vsote za n = ${m}. Prišteti moramo naslednjega.`), M(m + 1, "Člen dobiš tako, da v splošni člen vstaviš n + 1.")]),
           "Vsota za n + 1 ima en člen več: splošni člen pri n + 1.",
           [`${tt("vsota")} = ${lhs}`, `n = ${m}`], [tt("dodani člen")], "S(n+1) = S(n) + a_{n+1}",
-          [`Splošni člen vsote pri $n = ${m + 1}$:`, `$a_{${m + 1}} = ${term(m + 1)}$`],
+          [`Splošni člen vsote je $${lhs.split("\\ldots + ")[1]}$, pri $n = ${m + 1}$:`, `$a_{${m + 1}} = ${lhs.split("\\ldots + ")[1].replace(/(\d)n/g, "$1 \\cdot n").replace(/n/g, String(m + 1))} = ${term(m + 1)}$`],
         );
       }
       if (level === 1 && k === 1) {
@@ -1120,11 +1133,11 @@ export const DODATNE_VRZELI_MAT = [
         );
       }
       if (level === 2) {
-        const b = r.pick([2, 3, 4]), m = r.int(3, 6);
+        const b = r.pick([3, 4, 5]), m = r.int(3, 6), zs = b - 1 === 2 ? "z" : "s";
         const lhs = (b ** m - 1) / (b - 1);
         return T(
-          `Z indukcijo smo dokazali, da je $${b}^n - 1$ deljivo z ${b - 1}. Izračunaj količnik $\\dfrac{${b}^{${m}} - 1}{${b - 1}}$.`,
-          num(lhs, "", null, [M(b ** m - 1, `Rezultat moraš še deliti z ${b - 1}.`), M(b ** (m - 1), "Količnik je vsota 1 + b + … + b^(m−1).")]),
+          `Z indukcijo smo dokazali, da je $${b}^n - 1$ deljivo ${zs} ${b - 1}. Izračunaj količnik $\\dfrac{${b}^{${m}} - 1}{${b - 1}}$.`,
+          num(lhs, "", null, [M(b ** m - 1, `Rezultat moraš še deliti ${zs} ${b - 1}.`), M(b ** (m - 1), "Količnik je vsota 1 + b + … + b^(m−1).")]),
           `Izračunaj ${b}^${m}, odštej 1 in deli. Preveri z vsoto 1 + ${b} + … + ${b}^${m - 1}.`,
           [`b = ${b}`, `m = ${m}`], [tt("količnik")], "\\dfrac{b^m - 1}{b - 1} = 1 + b + \\ldots + b^{m-1}",
           [`$${b}^{${m}} - 1 = ${b ** m - 1}$`, `$${b ** m - 1} : ${b - 1} = ${lhs}$`, `Preizkus: $${range(0, m - 1).map((j) => b ** j).join(" + ")} = ${lhs}$`],
