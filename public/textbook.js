@@ -486,6 +486,19 @@ async function renderLesson(topicId) {
     ? `<button type="button" class="ghost tb-mode-btn" id="tb-mode">${ic(stepMode ? "file-text" : "layers")}${esc(t(stepMode ? "tb.steps.all" : "tb.steps.byStep"))}</button>`
     : "";
 
+  // »Kaj zdaj?«: po korakih je del zadnjega koraka, nad vrstico Nazaj / Naprej (ta je lepljiva in s senco
+  // prekrije prostor pod seboj, zato pod njo ne sme biti ničesar, sicer odreže naslov in rob kartice).
+  const nextHtml = `<section class="card tb-next"${stepMode ? " hidden" : ""}>
+    <h2>Kaj zdaj?</h2>
+    <div class="actions">
+      ${L.practice ? `<button type="button" class="primary" id="tb-practice">${ic("pencil")}Vadi naloge</button>` : ""}
+      <button type="button" class="secondary" id="tb-ask">${ic("message-circle")}Še ni jasno? Vprašaj tutorja</button>
+    </div>
+    <div class="tb-nav">
+      ${L.prev ? `<button type="button" class="ghost" data-lesson="${esc(L.prev.id)}">← ${esc(L.prev.name)}</button>` : "<span></span>"}
+      ${L.next ? `<button type="button" class="ghost" data-lesson="${esc(L.next.id)}">${esc(L.next.name)} →</button>` : ""}
+    </div>
+  </section>`;
   box.innerHTML = `<div class="tb-lesson-grid${demoHtml ? " has-side" : ""}"><div class="tb-main">
     <button type="button" class="ghost back tb-back" id="tb-back">${ic("arrow-left")}${esc(t("nav.textbook"))}</button>
     <p class="muted tb-crumb">${esc(L.pathLabel)} · ${esc(L.unit)}</p>
@@ -495,18 +508,8 @@ async function renderLesson(topicId) {
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
     ${L.pretest_due ? `<section class="card tb-pretest"><h2>${ic("target")}${esc(t("pretest.title"))}</h2><p>${esc(t("pretest.lessonIntro"))}</p><button type="button" class="primary" id="tb-pretest">${ic("play")}${esc(t("pretest.start"))}</button></section>` : ""}
     ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej tutorju.</p>` : ""}
-    ${stepMode ? `<div class="tb-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${steps.length}"><span></span></div>${stepsHtml}${stepper}` : `${sectionHtml}${fallback}${checksHtml}`}
-    <section class="card tb-next"${stepMode ? " hidden" : ""}>
-      <h2>Kaj zdaj?</h2>
-      <div class="actions">
-        ${L.practice ? `<button type="button" class="primary" id="tb-practice">${ic("pencil")}Vadi naloge</button>` : ""}
-        <button type="button" class="secondary" id="tb-ask">${ic("message-circle")}Še ni jasno? Vprašaj tutorja</button>
-      </div>
-      <div class="tb-nav">
-        ${L.prev ? `<button type="button" class="ghost" data-lesson="${esc(L.prev.id)}">← ${esc(L.prev.name)}</button>` : "<span></span>"}
-        ${L.next ? `<button type="button" class="ghost" data-lesson="${esc(L.next.id)}">${esc(L.next.name)} →</button>` : ""}
-      </div>
-    </section></div><aside class="tb-side">${demoHtml}</aside></div>`;
+    ${stepMode ? `<div class="tb-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${steps.length}"><span></span></div>${stepsHtml}${nextHtml}${stepper}` : `${sectionHtml}${fallback}${checksHtml}${nextHtml}`}
+    </div><aside class="tb-side">${demoHtml}</aside></div>`;
   placeDemos(box);
   window.scrollTo(0, 0);
   // Gradiva (povzetek na eni strani, branje na glas, delovni list) naložimo zraven.
