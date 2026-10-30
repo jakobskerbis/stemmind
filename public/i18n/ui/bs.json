@@ -42,6 +42,7 @@
   "lock.text": "Ovaj profil je zaključan. Upiši lozinku profila.",
   "lock.setText": "Svaki profil ima svoju lozinku. Postavi lozinku za ovaj profil kako ga niko drugi ne bi mogao otvoriti bez nje.",
   "lock.password": "Lozinka profila",
+  "lock.passwordFor": "Lozinka profila {name}",
   "lock.repeat": "Ponovi lozinku",
   "lock.open": "Otvori profil",
   "lock.save": "Sačuvaj lozinku",

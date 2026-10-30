@@ -41,6 +41,7 @@
   "lock.text": "Ez a profil zárolva van. Írd be a jelszavát.",
   "lock.setText": "Minden profilnak saját jelszava van. Állíts be jelszót ehhez a profilhoz, hogy más ne nyithassa meg nélküle.",
   "lock.password": "Profil jelszava",
+  "lock.passwordFor": "{name} profiljelszava",
   "lock.repeat": "Jelszó ismét",
   "lock.open": "Profil megnyitása",
   "lock.save": "Jelszó mentése",

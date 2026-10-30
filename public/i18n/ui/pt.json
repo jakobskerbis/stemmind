@@ -41,6 +41,7 @@
   "lock.text": "Este perfil está bloqueado. Escreve a sua palavra-passe.",
   "lock.setText": "Cada perfil tem a sua própria palavra-passe. Define uma palavra-passe para este perfil para que mais ninguém o possa abrir sem ela.",
   "lock.password": "Palavra-passe do perfil",
+  "lock.passwordFor": "Palavra-passe do perfil de {name}",
   "lock.repeat": "Repete a palavra-passe",
   "lock.open": "Abrir perfil",
   "lock.save": "Guardar palavra-passe",

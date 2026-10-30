@@ -1019,6 +1019,16 @@ export function mountAccounts(app, store, opts = {}) {
       const bad = checkProfilePassword(profilePw);
       if (bad) return res.status(400).json({ error: bad, profile_password: true });
     }
+    // Drugi profil na računu: odslej velja geslo profila, zato ga dobijo tudi obstoječi profili brez gesla
+    // (sicer bi ga nastavil, kdor jih prvi odpre). { other_passwords: { "<id>": "geslo" } }
+    const others = {};
+    for (const id of childIds(p.id)) {
+      const pw = req.body?.other_passwords?.[id];
+      if (pw == null || pw === "" || locks.hasPassword(id)) continue;
+      const bad = checkProfilePassword(pw);
+      if (bad) return res.status(400).json({ error: bad, profile_password: true });
+      others[id] = pw;
+    }
     const under15 = now - year <= 15; // previdno: v letu 15. rojstnega dne še štejemo kot mlajšega od 15
     const s = store.createStudent(name, req.body?.settings);
     db.prepare("UPDATE students SET parent_id = ?, birth_year = ? WHERE id = ?").run(p.id, year, s.id);
@@ -1036,6 +1046,10 @@ export function mountAccounts(app, store, opts = {}) {
     if (profilePw) {
       await locks.setPassword(s.id, profilePw);
       locks.unlock(s.id, req.deviceId);
+    }
+    for (const [id, pw] of Object.entries(others)) {
+      await locks.setPassword(Number(id), pw);
+      locks.unlock(Number(id), req.deviceId);
     }
     res.status(201).json({ ...store.getStudent(s.id), birth_year: year });
   });

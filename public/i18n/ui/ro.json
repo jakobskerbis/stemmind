@@ -42,6 +42,7 @@
   "lock.text": "Acest profil este blocat. Introdu parola lui.",
   "lock.setText": "Fiecare profil are propria parolă. Setează o parolă pentru acest profil, ca nimeni altcineva să nu-l poată deschide fără ea.",
   "lock.password": "Parola profilului",
+  "lock.passwordFor": "Parola profilului {name}",
   "lock.repeat": "Repetă parola",
   "lock.open": "Deschide profilul",
   "lock.save": "Salvează parola",

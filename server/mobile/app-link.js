@@ -57,7 +57,8 @@ export function createAppLinks(ctx) {
     // Zaklep računa (EVKLID_ACCOUNT_LOCK=1): telefon dobi odklenjen zavihek Račun samo, če je odklenjen v brskalniku.
     const accountIsOpen = accountOpen(who.parent, deviceId) ? 1 : 0;
     const ids = childIds(who.parent.id);
-    const open = deviceId ? ids.filter((id) => locks.isUnlocked(id, deviceId, now)) : [];
+    // Račun z enim profilom nima gesla profila (j, 2026-10-30): profil je odprt in telefon ga prevzame.
+    const open = ids.length === 1 ? ids : deviceId ? ids.filter((id) => locks.isUnlocked(id, deviceId, now)) : [];
     // Nazadnje uporabljeni odprti profil v tem brskalniku, sicer edini odprti.
     const last = open.length
       ? db.prepare(`SELECT student_id FROM profile_devices WHERE device_id = ? AND student_id IN (${open.map(() => "?").join(",")}) ORDER BY last_seen DESC LIMIT 1`).get(deviceId, ...open)?.student_id
