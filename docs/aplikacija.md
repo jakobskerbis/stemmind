@@ -4,6 +4,9 @@ Evklid je spletna aplikacija, ki jo uporabnik namesti na začetni zaslon (PWA). 
 trgovine z aplikacijami: dobi svojo ikono, odpre se čez cel zaslon brez vrstice brskalnika in
 deluje tudi brez povezave (shranjene naloge, učbenik, kalkulator).
 
+Poleg tega ima Evklid pravo aplikacijo za iPhone, iPad in Android (mapa `mobile/`): glej
+[mobilna-aplikacija.md](mobilna-aplikacija.md).
+
 ## Kako jo uporabnik namesti
 
 Aplikacija to ponudi sama: kartica »Evklid kot aplikacija« na Učni poti (lahko jo skrije za

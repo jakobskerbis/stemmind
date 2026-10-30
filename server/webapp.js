@@ -14,9 +14,10 @@ const UI_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "pu
 const KEYS = ["inst.desc", "nav.path", "nav.textbook", "nav.chat", "nav.graph"];
 const cache = new Map();
 
-// Besedila za manifest iz prevodov vmesnika (veriga nadomestnih jezikov kot v brskalniku).
-function strings(lang) {
-  if (cache.has(lang)) return cache.get(lang);
+// Slovarji vmesnika za jezik (veriga nadomestnih jezikov kot v brskalniku), tudi za stran /prenesi.
+const dictCache = new Map();
+export function uiDicts(lang) {
+  if (dictCache.has(lang)) return dictCache.get(lang);
   const dicts = uiChain(lang)
     .filter((c) => UI_LANGUAGES.includes(c))
     .map((c) => {
@@ -27,6 +28,18 @@ function strings(lang) {
         return {};
       }
     });
+  dictCache.set(lang, dicts);
+  return dicts;
+}
+
+// Besedilo ključa v jeziku (s spremenljivkami {ime}); manjkajoč prevod vzame slovenščino.
+export const uiText = (lang, key, vars = {}) =>
+  String(uiDicts(lang).find((d) => typeof d[key] === "string")?.[key] ?? SL[key] ?? key).replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m));
+
+// Besedila za manifest.
+function strings(lang) {
+  if (cache.has(lang)) return cache.get(lang);
+  const dicts = uiDicts(lang);
   const out = Object.fromEntries(KEYS.map((k) => [k, dicts.find((d) => typeof d[k] === "string")?.[k] || k]));
   cache.set(lang, out);
   return out;

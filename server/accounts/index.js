@@ -80,6 +80,7 @@ export function mountAccounts(app, store, opts = {}) {
   const forgotThrottle = new Throttle(5, 3600000); // pošiljanje povezav za novo geslo: 5 na uro
   const devLinks = (req) => !mailer.enabled && (isLocalRequest(req) || gateNeeded(env));
   const locks = new ProfileLocks(db);
+  const reauthHooks = []; // potrditev izbrisa računa brez gesla (prijava z Apple)
   const profileThrottle = new Throttle(10);
   const json = express.json({ limit: "100kb" });
   const log = opts.log || console;
@@ -286,8 +287,15 @@ export function mountAccounts(app, store, opts = {}) {
     if (!EMAIL_RE.test(email) || email.length > 200) return res.status(400).json({ error: "Vpišite veljaven e-naslov." }), null;
     if (password.length < 8) return res.status(400).json({ error: "Geslo mora imeti vsaj 8 znakov." }), null;
     if (req.body?.accept_privacy !== true) return res.status(400).json({ error: "Potrebno je strinjanje z obvestilom o varstvu podatkov." }), null;
+    const birthIso = checkAge(req, res);
+    if (!birthIso) return null;
+    if (parentByEmail(email)) return res.status(409).json({ error: "Ta e-naslov je že registriran. Prijavite se.", exists: true }), null;
+    return { email, password, birthIso };
+  }
 
-    // Preverjanje starosti: mlajši od starosti digitalne privolitve dobijo povezavo za starše.
+  // Preverjanje starosti: mlajši od starosti digitalne privolitve dobijo povezavo za starše.
+  // Vrne datum rojstva (YYYY-MM-DD) ali null (odgovor je že poslan). Tudi za prijavo z Apple (server/mobile).
+  function checkAge(req, res) {
     const birth = parseBirthDate(req.body?.birth_date);
     const age = birth ? ageOn(birth) : null;
     if (age === null || age < 0 || age > 120) return res.status(400).json({ error: "Vpišite datum rojstva.", birth_date: true }), null;
@@ -303,9 +311,27 @@ export function mountAccounts(app, store, opts = {}) {
         min_age: minAge,
       }), null;
     }
-    if (parentByEmail(email)) return res.status(409).json({ error: "Ta e-naslov je že registriran. Prijavite se.", exists: true }), null;
-    const birthIso = `${birth.y}-${String(birth.m).padStart(2, "0")}-${String(birth.d).padStart(2, "0")}`;
-    return { email, password, birthIso };
+    return `${birth.y}-${String(birth.m).padStart(2, "0")}-${String(birth.d).padStart(2, "0")}`;
+  }
+
+  // Nov račun (registracija z e-naslovom ali prijava z Apple). verified: e-naslov je že potrjen (Apple).
+  // Vrne { id, verifyToken }.
+  function createParent(req, { email, passwordHash, name, birthIso, referrerId = null, verified = false }) {
+    const token = randomToken();
+    let code = referralCode();
+    while (db.prepare("SELECT 1 FROM parents WHERE referral_code = ?").get(code)) code = referralCode();
+    const r = db
+      .prepare(
+        `INSERT INTO parents (email, password_hash, name, is_admin, verify_token_hash, privacy_version, trial_ends_at, unsubscribe_token, referral_code, referred_by)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      )
+      .run(email, passwordHash, cleanText(name, 60), 0, verified ? null : sha256(token), PRIVACY_VERSION, isoIn(TRIAL_DAYS), randomToken(18), code, referrerId);
+    const id = Number(r.lastInsertRowid);
+    db.prepare("UPDATE parents SET birth_date = ? WHERE id = ?").run(birthIso, id);
+    if (verified) update(id, { email_verified_at: new Date().toISOString() });
+    const country = String(req.headers["cf-ipcountry"] || req.body?.country || "").toUpperCase();
+    if (/^[A-Z]{2}$/.test(country)) db.prepare("UPDATE parents SET country = ? WHERE id = ?").run(country, id);
+    return { id, verifyToken: token };
   }
 
   app.post("/api/auth/register", json, async (req, res) => {
@@ -319,19 +345,7 @@ export function mountAccounts(app, store, opts = {}) {
 
     const refCode = String(req.body?.referral_code || "").trim().toUpperCase();
     const referrer = refCode ? db.prepare("SELECT id FROM parents WHERE referral_code = ? AND is_guest = 0").get(refCode) : null;
-    const token = randomToken();
-    let code = referralCode();
-    while (db.prepare("SELECT 1 FROM parents WHERE referral_code = ?").get(code)) code = referralCode();
-    const r = db
-      .prepare(
-        `INSERT INTO parents (email, password_hash, name, is_admin, verify_token_hash, privacy_version, trial_ends_at, unsubscribe_token, referral_code, referred_by)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      )
-      .run(email, hashPassword(password), cleanText(req.body?.name, 60), 0, sha256(token), PRIVACY_VERSION, isoIn(TRIAL_DAYS), randomToken(18), code, referrer?.id ?? null);
-    const id = Number(r.lastInsertRowid);
-    db.prepare("UPDATE parents SET birth_date = ? WHERE id = ?").run(v.birthIso, id);
-    const country = String(req.headers["cf-ipcountry"] || req.body?.country || "").toUpperCase();
-    if (/^[A-Z]{2}$/.test(country)) db.prepare("UPDATE parents SET country = ? WHERE id = ?").run(country, id);
+    const { id, verifyToken: token } = createParent(req, { email, passwordHash: hashPassword(password), name: req.body?.name, birthIso: v.birthIso, referrerId: referrer?.id ?? null });
 
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(email, verifyEmail(url));
@@ -656,8 +670,14 @@ export function mountAccounts(app, store, opts = {}) {
   // Izbris računa z vsemi otroki in pogovori (GDPR čl. 17).
   app.delete("/api/account", json, async (req, res) => {
     const p = req.parent;
-    if (!p.is_guest && !verifyPassword(String(req.body?.password || ""), p.password_hash)) return res.status(401).json({ error: "Napačno geslo." });
-    if (stripe.enabled && p.sub_id && PAID.has(p.sub_status)) {
+    // Brez gesla (račun s prijavo z Apple): potrditev z novo prijavo pri Applu (server/mobile).
+    const reauth = async () => {
+      for (const fn of reauthHooks) if (await fn(req, p)) return true;
+      return false;
+    };
+    if (!p.is_guest && !verifyPassword(String(req.body?.password || ""), p.password_hash) && !(await reauth())) return res.status(401).json({ error: "Napačno geslo." });
+    // Naročnino iz App Store ali Google Play prekliče uporabnik v trgovini; Stripe je ne pozna.
+    if (stripe.enabled && p.sub_id && PAID.has(p.sub_status) && (!p.sub_provider || p.sub_provider === "stripe")) {
       try {
         await stripe.request("DELETE", `/subscriptions/${p.sub_id}`);
       } catch (err) {
@@ -1163,6 +1183,8 @@ export function mountAccounts(app, store, opts = {}) {
     timer.unref();
   }
 
-  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, guests, billing };
+  // Za mobilno aplikacijo (server/mobile): prijava z Apple, nakupi v trgovinah, obvestila.
+  const mobile = { db, sessions, getParent, parentByEmail, publicParent, accountView, createParent, checkAge, childIds, children, accessOf, signupThrottle, addReauth: (fn) => reauthHooks.push(fn) };
+  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, guests, billing, mobile };
 }
 
