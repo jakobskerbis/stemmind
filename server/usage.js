@@ -67,6 +67,10 @@ export class Usage {
     }
     return cost;
   }
+  // Poraba ene vrste (npr. "verify") danes, v USD.
+  kindToday(kind) {
+    return this.db.prepare("SELECT COALESCE(SUM(cost_usd),0) AS s FROM usage WHERE kind = ? AND created_at >= date('now')").get(kind).s;
+  }
   monthTotal(studentId = null) {
     const q = `SELECT COALESCE(SUM(cost_usd),0) AS s FROM usage WHERE created_at >= date('now','start of month')${studentId ? " AND student_id = ?" : ""}`;
     return studentId ? this.db.prepare(q).get(studentId).s : this.db.prepare(q).get().s;

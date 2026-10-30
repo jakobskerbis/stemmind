@@ -319,6 +319,7 @@ test("weekly report, export and account deletion", async () => {
     const exp = await a("/api/account/export", { method: "POST", body: { password: "geslo1234" } });
     assert.equal(exp.body.children[0].name, "Zala");
     assert.equal(exp.body.parent.password_hash, undefined);
+    assert.deepEqual(exp.body.children[0].reports, [], "prijave napak so v izvozu");
 
     assert.equal((await a("/api/account", { method: "DELETE", body: { password: "narobe123" } })).status, 401);
     assert.equal((await a("/api/account", { method: "DELETE", body: { password: "geslo1234" } })).status, 200);

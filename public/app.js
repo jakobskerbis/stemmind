@@ -414,7 +414,16 @@ async function selectStudent(id) {
   const target = state.students.find((s) => s.id === Number(id));
   // Vsak profil ima svoje geslo (z računi): zaklenjen profil najprej odklenemo, profil brez gesla ga dobi.
   // Uporabnik lahko namesto tega izbere drug profil; seznam se nato naloži znova (odklep zaklene druge profile).
-  if (target && (target.locked || target.needs_password)) return loadStudents(await openProfileLock(target, state.students));
+  // Brez povezave s strežnikom (shranjena kopija) računi niso vklopljeni: odpremo profil za vadbo brez gesla,
+  // zaklenjenega pa ne (zanj ni shranjenih nastavitev).
+  if (target && accountsOn() && (target.locked || target.needs_password)) return loadStudents(await openProfileLock(target, state.students));
+  if (target?.locked) {
+    const open = state.students.find((s) => !s.locked);
+    // Vsi profili zaklenjeni: brez strežnika ni kaj odpreti; ob zagonu bootFailed pokaže »ni dosegljiva« in počaka.
+    if (!open) throw new Error(t("lock.offline"));
+    $("#student-select").value = open.id;
+    return selectStudent(open.id);
+  }
   state.student = target;
   // Jezik je del profila: ob menjavi učenca se vmesnik preklopi v njegov jezik (stran se naloži znova).
   const want = state.student.settings.language;
@@ -537,7 +546,7 @@ async function openConversation(id) {
   const box = $("#messages");
   box.innerHTML = "";
   if (!conv.messages.length) renderEmptyChat();
-  for (const m of conv.messages) addMessage(m.role, m.text, m.has_image);
+  for (const m of conv.messages) addMessage(m.role, m.text, m.has_image, m);
   renderState(conv.state);
   renderConversationList();
   box.scrollTop = box.scrollHeight;
@@ -564,11 +573,12 @@ $("#new-chat").addEventListener("click", () => {
 
 // ---------- sporočila ----------
 
-function addMessage(role, text, hasImage = false) {
+function addMessage(role, text, hasImage = false, info = null) {
   const box = $("#messages");
   box.querySelector(".empty")?.remove();
   const el = document.createElement("div");
-  el.className = `msg ${role}`;
+  // Napaka (npr. izklopljen klepet) je brez »Razloži podrobneje« in brez prijave.
+  el.className = `msg ${role}${info?.error ? " error" : ""}`;
   if (role === "user") {
     el.innerHTML = renderUserText(text);
     if (hasImage) {
@@ -581,6 +591,7 @@ function addMessage(role, text, hasImage = false) {
     el.innerHTML = renderRich(text);
     if (text) addDeepButton(el, false);
     if (text) addGraphButton(el, text);
+    if (text && info?.id) addMsgFoot(el, info);
   }
   box.appendChild(el);
   box.scrollTop = box.scrollHeight;
@@ -591,6 +602,9 @@ async function send(text, { deep = false } = {}) {
   if (state.sending) return;
   const image = state.image;
   if (!text && !image) return;
+  // Izklopljen klepet (EVKLID_CHAT_OFF): nič ne pošljemo, vprašanje in fotografija ostaneta.
+  if (!$("#chat-off").hidden) return;
+  let userEl = null;
   state.sending = true;
   $("#send").disabled = true;
   state.pacer?.skip();
@@ -600,7 +614,7 @@ async function send(text, { deep = false } = {}) {
       const conv = await api(`/api/students/${state.student.id}/conversations`, { method: "POST" });
       state.conversationId = conv.id;
     }
-    addMessage("user", text, !!image);
+    userEl = addMessage("user", text, !!image);
     $("#input").value = "";
     autoGrow();
     clearImage();
@@ -628,6 +642,7 @@ async function send(text, { deep = false } = {}) {
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       bubble.remove();
+      if (err.chat_off) throw Object.assign(new Error(t("chat.off")), { chatOff: true });
       throw new Error(err.error || t("common.error", { status: res.status }));
     }
 
@@ -670,6 +685,7 @@ async function send(text, { deep = false } = {}) {
       if (doneData && !doneData.settings) addDeepButton(bubble, doneData.deep);
       if (doneData?.text) addGraphButton(bubble, doneData.text);
       if (cardsData) addCardsNote(bubble, cardsData);
+      if (doneData?.id) addMsgFoot(bubble, doneData);
       if (proposal) addProposal(bubble, proposal, { onConfirm: confirmChatProposal });
       if (state.pacer === pacer) state.pacer = null;
       // Nov jezik: vmesnik se naloži znova v njem (ko je odgovor izpisan).
@@ -678,8 +694,18 @@ async function send(text, { deep = false } = {}) {
     });
     await loadConversations();
   } catch (err) {
-    addMessage("assistant", err.message).classList.add("error");
+    // Izklopljen klepet: samo obvestilo nad poljem, vprašanje ostane v polju.
+    if (err.chatOff) {
+      userEl?.remove();
+      if (!$("#messages .msg")) renderEmptyChat(); // prazen pogovor spet pokaže pozdrav in predloge
+      $("#chat-off").hidden = false;
+      $("#input").value = text;
+      autoGrow();
+      return;
+    }
+    addMessage("assistant", err.message, false, { error: true });
     $("#input").value = text;
+    autoGrow();
   } finally {
     state.sending = false;
     $("#send").disabled = false;
@@ -1234,6 +1260,105 @@ async function loadProgress() {
   $("#flag-list").innerHTML = flags
     .map((f) => `<li>${t("prog.flagIn", { when: f.created_at.slice(0, 16), flag: FLAG_NAMES[f.flag] ?? f.flag, title: escapeHtml(f.title) })}</li>`)
     .join("");
+}
+
+// Pod odgovorom inštruktorja: koda sporočila (z njo najdemo sporočilo s posnetka zaslona,
+// scripts/najdi-sporocilo.js) in »Prijavi napako« (server/reports.js, docs/krizni-nacrt.md).
+function addMsgFoot(el, { id, code, reported }) {
+  if (el.classList.contains("error") || el.querySelector(".msg-foot")) return;
+  const foot = document.createElement("div");
+  foot.className = "msg-foot";
+  const tag = document.createElement("span");
+  tag.className = "msg-code";
+  tag.textContent = code || "";
+  tag.title = t("rep.code");
+  const done = () => {
+    foot.querySelector(".msg-report")?.remove();
+    const s = document.createElement("span");
+    s.className = "rep-done";
+    s.innerHTML = `${icon("check")}<span></span>`;
+    s.lastChild.textContent = t("rep.done");
+    foot.append(s);
+  };
+  foot.append(tag);
+  if (reported) done();
+  else {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "ghost msg-report";
+    b.innerHTML = `${icon("flag")}<span></span>`;
+    b.lastChild.textContent = t("rep.btn");
+    b.addEventListener("click", () => openReport(el, foot, b, id, done));
+    foot.append(b);
+  }
+  el.appendChild(foot);
+}
+
+function openReport(el, foot, btn, id, done) {
+  if (el.querySelector(".report-box")) return;
+  const convId = state.conversationId;
+  btn.setAttribute("aria-expanded", "true");
+  const box = document.createElement("div");
+  box.className = "report-box";
+  box.setAttribute("role", "group");
+  box.innerHTML = `<p></p><div class="rep-reasons"></div><textarea maxlength="500" rows="2"></textarea>
+    <p class="rep-err" role="alert" hidden></p>
+    <div class="rep-actions"><button type="button" class="primary small rep-send"></button><button type="button" class="ghost rep-cancel"></button></div>`;
+  box.querySelector("p").textContent = t("rep.ask");
+  box.setAttribute("aria-label", t("rep.ask"));
+  const area = box.querySelector("textarea");
+  area.placeholder = t("rep.notePh");
+  area.setAttribute("aria-label", t("rep.notePh"));
+  let reason = null;
+  for (const r of ["wrong", "unsafe", "other"]) {
+    const rb = document.createElement("button");
+    rb.type = "button";
+    rb.className = "secondary small";
+    rb.setAttribute("aria-pressed", "false");
+    rb.textContent = t(`rep.${r}`);
+    rb.addEventListener("click", () => {
+      reason = r;
+      box.querySelectorAll(".rep-reasons button").forEach((x) => x.setAttribute("aria-pressed", String(x === rb)));
+      err.hidden = true;
+    });
+    box.querySelector(".rep-reasons").append(rb);
+  }
+  const err = box.querySelector(".rep-err");
+  const sendBtn = box.querySelector(".rep-send");
+  const close = () => {
+    box.remove();
+    btn.setAttribute("aria-expanded", "false");
+    btn.focus();
+  };
+  sendBtn.textContent = t("rep.send");
+  box.querySelector(".rep-cancel").textContent = t("rep.cancel");
+  box.querySelector(".rep-cancel").addEventListener("click", close);
+  box.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.stopPropagation();
+      close();
+    }
+  });
+  sendBtn.addEventListener("click", async () => {
+    if (!reason) {
+      err.textContent = t("rep.pick");
+      err.hidden = false;
+      return;
+    }
+    sendBtn.disabled = true;
+    try {
+      await api(`/api/conversations/${convId}/messages/${id}/report`, { method: "POST", body: { reason, note: area.value } });
+      box.remove();
+      done();
+      toast(t("rep.thanks"), "check");
+    } catch (e) {
+      err.textContent = e.message;
+      err.hidden = false;
+      sendBtn.disabled = false;
+    }
+  });
+  foot.after(box);
+  box.querySelector(".rep-reasons button").focus();
 }
 
 // Gumb »Razloži podrobneje« uporabi zmogljivejši (dražji) model samo na zahtevo.
@@ -2853,6 +2978,7 @@ initFormulaInfo();
 (async () => {
   const cfg = await api("/api/config");
   $("#mock-banner").hidden = !cfg.mock;
+  $("#chat-off").hidden = !cfg.chat_off;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   initGames({ api, getStudent: () => state.student, refreshXp, currentLang });
   initZbirke({ api, getStudent: () => state.student, currentLang, showView });
