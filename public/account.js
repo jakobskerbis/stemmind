@@ -118,13 +118,13 @@ function askAccountPassword(rawFetch) {
   return accountAsk;
 }
 
-// Ko zapustiš zavihek Račun, se račun na tej napravi takoj zaklene.
+// Ko zapustiš zavihek Račun, se račun na tej napravi takoj zaklene (samo z EVKLID_ACCOUNT_LOCK=1).
 function lockAccountOnLeave() {
   const view = $("#view-account");
   if (!view) return;
   let wasOpen = !view.hidden;
   new MutationObserver(() => {
-    if (wasOpen && view.hidden) {
+    if (wasOpen && view.hidden && status?.account_lock) {
       view.innerHTML = ""; // podatki računa ne ostanejo na zaslonu za zaklepom
       fetch("/api/account/lock", { method: "POST" }).catch(() => {});
     }

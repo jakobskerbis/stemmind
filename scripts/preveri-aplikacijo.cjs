@@ -1054,17 +1054,34 @@ async function accounts(browser, app) {
     await p.fill('#auth-form input[name="email"]', email);
     await p.fill('#auth-form input[name="password"]', "geslo1234");
     await click(p, '#auth-form button[type="submit"]', { wait: 600 });
-    // Vsak profil ima svoje geslo: po odjavi je profil na tej napravi zaklenjen.
-    await expectVisible(p, "#lock-overlay #lock-form", "geslo profila po prijavi", 8000);
-    await screen(p, "geslo-profila");
-    p.allow = [/^401 \/api\/students\/\d+\/unlock$/];
-    await p.fill('#lock-form input[name="password"]', "narobe");
-    await click(p, '#lock-form button[type="submit"]', { wait: 300 });
-    await expectVisible(p, "#lock-form .form-error", "napaka ob napačnem geslu profila");
-    p.allow = [];
-    await p.fill('#lock-form input[name="password"]', "miha-1");
-    await click(p, '#lock-form button[type="submit"]', { wait: 600 });
+    // Geslo samo enkrat (j, 2026-10-30): po ponovni prijavi z geslom računa profil ne zahteva gesla znova.
+    if (await p.$("#lock-overlay")) throw new Error("po ponovni prijavi profil spet zahteva geslo");
     await expectVisible(p, "#view-path #xp-card .hero", "učna pot po prijavi", 8000);
+    // Zaslon za geslo profila: na drugi napravi (nov piškotek naprave) profil zahteva svoje geslo enkrat.
+    const p2 = await newPage(browser, false, "pc2", app.base);
+    try {
+      await p2.goto(app.base + "/");
+      await expectVisible(p2, "#auth-form", "prijava na drugi napravi", 8000);
+      await p2.fill('#auth-form input[name="email"]', email);
+      await p2.fill('#auth-form input[name="password"]', "geslo1234");
+      await click(p2, '#auth-form button[type="submit"]', { wait: 600 });
+      await expectVisible(p2, "#lock-overlay #lock-form", "geslo profila na drugi napravi", 8000);
+      await screen(p2, "geslo-profila");
+      p2.allow = [/^401 \/api\/students\/\d+\/unlock$/];
+      await p2.fill('#lock-form input[name="password"]', "narobe");
+      await click(p2, '#lock-form button[type="submit"]', { wait: 300 });
+      await expectVisible(p2, "#lock-form .form-error", "napaka ob napačnem geslu profila");
+      // Profil je odprt na prvi napravi: druga ga prevzame (»Nadaljuj tukaj«).
+      p2.allow = [/^409 \/api\/students\/\d+\//];
+      await p2.fill('#lock-form input[name="password"]', "miha-1");
+      await click(p2, '#lock-form button[type="submit"]', { wait: 600 });
+      await expectVisible(p2, "#taken-here", "prevzem profila na drugi napravi", 8000);
+      await click(p2, "#taken-here", { wait: 800 });
+      p2.allow = [];
+      await expectVisible(p2, "#view-path #xp-card .hero", "učna pot na drugi napravi", 8000);
+    } finally {
+      await p2.context().close();
+    }
   });
   await step(p, "ucitelj", async () => {
     await p.goto(app.base + "/ucitelj.html");
