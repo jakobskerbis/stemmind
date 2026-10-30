@@ -2,8 +2,9 @@
 // (public/avatar.js). Brez pravega denarja. Avatar je edino, kar učenec izbere in vidijo drugi (lige, razred).
 import { ITEM, SLOTS, DEFAULT_AVATAR, COINS_PER_CORRECT, COINS_PER_DAY, cleanAvatar } from "../public/avatar.js";
 import fs from "node:fs";
+import crypto from "node:crypto";
 import { ensureKnowledgeTables } from "./zbirke.js";
-import { isLocalRequest } from "./feedback.js";
+import { isLocalRequest, purgeOldWishes } from "./feedback.js";
 
 export function ensureAvatarTables(db) {
   ensureKnowledgeTables(db); // predmeti za znanje (server/zbirke.js) so tudi del inventarja
@@ -135,9 +136,35 @@ export class Avatars {
 
 export const TRENDS_MIN = 3;
 
+// Ključ za izvoz brez prijave: dolg vsaj 24 znakov, primerjava v stalnem času.
+export function exportTokenOk(req, env = process.env) {
+  const want = String(env.EVKLID_EXPORT_TOKEN || "");
+  const got = /^Bearer\s+(\S+)$/i.exec(req.headers?.authorization || "")?.[1] || "";
+  if (want.length < 24 || !got) return false;
+  const a = crypto.createHash("sha256").update(got).digest();
+  const b = crypto.createHash("sha256").update(want).digest();
+  return crypto.timingSafeEqual(a, b);
+}
+const exportAllowed = (req) => exportTokenOk(req) || !!req.parent?.is_admin || isLocalRequest(req);
+
 export function mountAvatar(app, avatars, { loadStudent, trendsFile = null }) {
-  // Samo na računalniku, kjer teče Evklid (kot zbrana mnenja), ne prek povezave za telefon.
-  app.get("/api/avatar/trends", (req, res) => (isLocalRequest(req) ? res.json(avatars.trends()) : res.status(403).json({ error: "Samo na računalniku, kjer teče Evklid." })));
+  // Samo skrbnik, računalnik s strežnikom ali tedenska posodobitev s ključem EVKLID_EXPORT_TOKEN.
+  const denied = (res) => res.status(403).json({ error: "Samo za skrbnika." });
+  app.get("/api/avatar/trends", (req, res) => (exportAllowed(req) ? res.json(avatars.trends()) : denied(res)));
+  // Izvoz za tedensko posodobitev kozmetike (docs/kozmetika-posodobitve.md): anonimni seštevki in želje
+  // otrok brez imen in id-jev (samo besedilo, jezik, dan). Pot je mimo gesla in prijave (gate.js,
+  // accounts), zato jo varuje ključ ali skrbnik.
+  app.get("/api/kozmetika/export", (req, res) => {
+    res.set("Cache-Control", "no-store");
+    // Brez ključa 404 (kot da poti ni), ključ samo v glavi Authorization.
+    if (!exportAllowed(req)) return res.status(404).json({ error: "Ne obstaja." });
+    purgeOldWishes(avatars.db);
+    const wishes = avatars.db
+      .prepare("SELECT ideas, lang, date(created_at) AS day FROM feedback WHERE kind = 'cosmetics' AND ideas != '' ORDER BY id DESC LIMIT 500")
+      .all()
+      .map((r) => ({ text: r.ideas, lang: r.lang || null, day: r.day }));
+    res.json({ at: new Date().toISOString(), trends: avatars.trends(), wishes });
+  });
   // Kopija v data/kozmetika-trendi.json (ob zagonu in vsakih 6 h), da jo tedenska posodobitev prebere brez baze.
   if (trendsFile) {
     const write = () => {
