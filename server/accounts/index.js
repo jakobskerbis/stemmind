@@ -1336,10 +1336,14 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   // --- tedensko poročilo ---
+  // Profili »Zame« (učenec 15+ sam): poročilo ga nagovori neposredno, brez nasvetov za starše.
+  const selfIds = (parentId) =>
+    db.prepare("SELECT student_id FROM consents WHERE parent_id = ? AND text = ?").all(parentId, SELF_CONSENT_TEXT).map((r) => r.student_id);
   const reportFor = (p, req) =>
     buildWeeklyReport(db, p, children(p.id), {
       appUrl: baseUrl(req) + "/",
       unsubscribeUrl: `${baseUrl(req)}/api/account/unsubscribe?token=${p.unsubscribe_token}`,
+      selfIds: selfIds(p.id),
     });
 
   app.get("/api/account/weekly-report/preview", (req, res) => res.type("html").send(reportFor(req.parent, req).html));
@@ -1358,9 +1362,11 @@ export function mountAccounts(app, store, opts = {}) {
     let sent = 0;
     for (const p of parents) {
       if (!childIds(p.id).length) continue;
+      const report = reportFor(p, null);
+      if (report.quiet) continue; // dva tedna brez vaje: ne pošiljamo praznih poročil
       const claim = db.prepare("INSERT OR IGNORE INTO email_log (parent_id, kind, period) VALUES (?, 'weekly', ?)").run(p.id, period);
       if (!claim.changes) continue;
-      const ok = await sendMail(p.email, reportFor(p, null));
+      const ok = await sendMail(p.email, report);
       if (!ok) db.prepare("UPDATE email_log SET ok = 0 WHERE parent_id = ? AND kind = 'weekly' AND period = ?").run(p.id, period);
       else sent++;
     }

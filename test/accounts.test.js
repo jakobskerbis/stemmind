@@ -300,7 +300,8 @@ test("weekly report, export and account deletion", async () => {
 
     const preview = await a("/api/account/weekly-report/preview");
     assert.match(preview.body, /Zala/);
-    assert.match(preview.body, /<b>40<\/b>/);
+    assert.match(preview.body, /Naslednji koraki/);
+    assert.match(preview.body, /1 dan vaje/);
     const sent = await a("/api/account/weekly-report/send", { method: "POST" });
     assert.equal(sent.status, 200);
     const mail = calls.filter((c) => c.host === "api.resend.com").at(-1);
@@ -342,8 +343,42 @@ test("weekly scheduler sends once per week", async () => {
   ).run();
   const s = store.createStudent("Ivo");
   store.db.prepare("UPDATE students SET parent_id = 1 WHERE id = ?").run(s.id);
+  // Dva tedna brez vaje: poročila ne pošljemo.
+  assert.equal(await api.sendWeeklyAll(), 0);
+  store.db.prepare("INSERT INTO xp_events (student_id, amount, reason) VALUES (?, 10, 'test')").run(s.id);
   assert.equal(await api.sendWeeklyAll(), 1);
   assert.equal(await api.sendWeeklyAll(), 0);
+});
+
+test("weekly report: what was learned, weak spots, next steps, Slovenian plurals", async () => {
+  const { buildWeeklyReport, plural, headline, isQuiet } = await import("../server/accounts/weekly.js");
+  const store = openDb(":memory:");
+  const s = store.createStudent("Zala", { educational_track: "OSNOVNA_SOLA", curriculum_level: "6. razred", subject: "MAT" });
+  const db = store.db;
+  const topic = "MAT-OS-6/zapis-in-urejanje-velikih-stevil";
+  const task = db.prepare("INSERT INTO tasks (student_id, topic_id, level, payload, attempts, solved, first_try_correct) VALUES (?, ?, 1, '{}', 1, 1, ?)");
+  for (const ok of [0, 0, 1, 0]) task.run(s.id, topic, ok);
+  db.prepare("INSERT INTO topic_state (student_id, topic_id, status, mastered_at) VALUES (?, ?, 'mastered', datetime('now'))").run(s.id, "MAT-OS-6/ulomki");
+  const r = buildWeeklyReport(db, { name: "" }, [store.getStudent(s.id)], { appUrl: "https://x/", unsubscribeUrl: "https://x/u" });
+  const w = r.children[0];
+  assert.equal(w.solved, 4);
+  assert.equal(w.accuracy, 25);
+  assert.match(w.weak[0].name, /velikih števil/);
+  assert.match(r.html, /Snov tega tedna/);
+  assert.match(r.html, /Matematika/);
+  assert.match(r.html, /Še vaditi/);
+  assert.match(r.html, /Za pogovor doma/);
+  assert.match(r.subject, /^Zala ta teden: 1 dan vaje/);
+  assert.equal(r.quiet, false);
+  // Profil »Zame«: brez nasvetov za starše.
+  const me = buildWeeklyReport(db, { name: "" }, [store.getStudent(s.id)], { appUrl: "https://x/", unsubscribeUrl: "https://x/u", selfIds: [s.id] });
+  assert.doesNotMatch(me.html, /Za pogovor doma/);
+  assert.match(me.html, /Živjo, Zala/);
+  assert.deepEqual([1, 2, 3, 5, 101, 102, 111].map((n) => plural(n, ["naloga", "nalogi", "naloge", "nalog"])), [
+    "1 naloga", "2 nalogi", "3 naloge", "5 nalog", "101 naloga", "102 nalogi", "111 nalog",
+  ]);
+  assert.equal(headline({ active_days: 0 }), "Ta teden ni bilo vaje.");
+  assert.equal(isQuiet({ active_days: 0, prev_active_days: 1 }), false);
 });
 
 test("helpers: webhook signature, form encoding, access, week key", () => {
