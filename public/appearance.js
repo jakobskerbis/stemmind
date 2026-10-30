@@ -27,8 +27,20 @@ const MODES = [["light", "sun", t("ap.light")], ["dark", "moon", t("ap.dark")], 
 
 export function mountAppearance(box) {
   if (!box || !T) return;
-  // Pisave zgodovinskih slogov za predogled imen (brskalnik prenese le znake, ki jih res izriše).
-  for (const e of Object.values(T.ERAS || {})) T.loadFont?.(e.font[1]);
+  // Pisave zgodovinskih slogov za predogled imen: šele ko je Videz res na zaslonu (modul se naloži ob zagonu)
+  // in ne v lahkem načinu; brskalnik prenese le znake, ki jih res izriše.
+  const previewFonts = () => {
+    if (document.documentElement.classList.contains("lite")) return;
+    for (const e of Object.values(T.ERAS || {})) T.loadFont?.(e.font[1]);
+  };
+  if (typeof IntersectionObserver === "function") {
+    const io = new IntersectionObserver((en) => {
+      if (!en.some((x) => x.isIntersecting)) return;
+      io.disconnect();
+      previewFonts();
+    });
+    io.observe(box);
+  } else previewFonts();
   const render = () => {
     const s = T.load();
     const card = ([v, name, text, sw, font]) => `
