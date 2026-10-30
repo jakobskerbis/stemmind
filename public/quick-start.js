@@ -4,6 +4,7 @@
 // ostal, današnji trening in kar je danes na vrsti (ponavljanje, bližnji test, kartice).
 import { icon } from "./icons.js";
 import { t } from "./i18n.js";
+import { mountSubjectSwitch, SUBJECT_KEYS } from "./subject-switch.js";
 
 const $ = (sel) => document.querySelector(sel);
 let D = null; // { getState, refresh, showView, goNew, startSession, showTestPrep, overlayOpened, overlayClosed }
@@ -56,10 +57,30 @@ function rows(m) {
   return out;
 }
 
+// Naslov, predmet (menjava kar tu: naslednji korak je potem v novem predmetu) in vrstice.
 function render() {
-  const list = rows(D.getState().modes);
   $("#quick-pop").innerHTML = `<div class="qs-title" id="quick-title">${esc(t("qs.title"))}</div>
-    ${list
+    <div class="subj-sw" hidden></div><div class="qs-rows"></div>`;
+  renderRows();
+  mountSubjectSwitch($("#quick-pop .subj-sw"), { onPicked: afterSubject });
+}
+
+// Po menjavi predmeta meni ostane odprt in pokaže naslednji korak v novem predmetu.
+function afterSubject() {
+  if (!isOpen()) return;
+  Promise.resolve(D.refresh())
+    .catch(() => null)
+    .then(() => {
+      if (!isOpen()) return;
+      render();
+      place();
+      $("#quick-pop .qs-row")?.focus({ preventScroll: true });
+    });
+}
+
+function renderRows() {
+  const list = rows(D.getState().modes);
+  $("#quick-pop .qs-rows").innerHTML = `${list
       .map(
         (r) => `<button type="button" class="list-row qs-row${r.main ? " qs-main" : ""}${r.done ? " qs-done" : ""}" role="menuitem" data-act="${r.act}">
           <span class="ic" aria-hidden="true">${icon(r.done ? "check" : r.ic)}</span>
@@ -98,7 +119,7 @@ function open() {
     .then((m) => {
       if (!m || !isOpen() || D.getState().student?.id !== sid) return;
       const focused = document.activeElement?.closest?.(".qs-row")?.dataset.act;
-      render();
+      renderRows();
       place();
       (pop.querySelector(`.qs-row[data-act="${focused}"]`) || pop.querySelector(".qs-row"))?.focus({ preventScroll: true });
     });
@@ -132,7 +153,7 @@ function onKey(e) {
     if (e.key === "Escape") e.preventDefault();
     return close(e.key === "Escape");
   }
-  const items = [...$("#quick-pop").querySelectorAll(".qs-row")];
+  const items = [...$("#quick-pop").querySelectorAll(`.qs-row, ${SUBJECT_KEYS}`)];
   const i = items.indexOf(document.activeElement);
   const go = { ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: items.length - 1 }[e.key];
   if (go === undefined) return;

@@ -213,6 +213,34 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 /* .qs-row.: ui.css (naložen za style.css) sicer povozi ozadje ikone v .list-row .ic. */
 .qs-row.qs-main .ic { background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #fff; }
 .qs-row.qs-done .ic { background: var(--ok-bg); color: var(--ok); }
+/* Predmet v menijih zgoraj (public/subject-switch.js): vrstica, ki se razpre v seznam predmetov. */
+.subj-sw[hidden], .subj-sw-list[hidden] { display: none; }
+.quick-pop .subj-sw { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.subj-sw-btn, .subj-sw-opt {
+  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; padding: 8px 12px; border: 0; border-radius: 10px;
+  background: none; color: var(--text); font: inherit; font-weight: 700; text-align: start; cursor: pointer;
+}
+.subj-sw-btn { padding-inline-start: 8px; }
+.subj-sw-btn .ic { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); }
+.subj-sw-btn .ic svg.i { width: 20px; height: 20px; }
+.subj-sw-text { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.subj-sw-text small { color: var(--muted); font-size: 0.78rem; font-weight: 700; }
+.subj-sw-text b { overflow-wrap: anywhere; }
+.subj-sw-btn > svg.subj-sw-chev { flex: none; width: 18px; height: 18px; color: var(--muted); transition: transform 0.15s; }
+.subj-sw-btn[aria-expanded="true"] > svg.subj-sw-chev { transform: rotate(180deg); }
+.subj-sw-list { max-height: min(320px, 45dvh); overflow-y: auto; margin: 2px 0 4px; padding: 4px; border-radius: 12px; background: var(--surface-2); }
+.subj-sw-label { padding: 8px 12px 4px; font-size: 0.74rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.subj-sw-opt { font-weight: 600; } /* 44 px za dotik kot .pm-item */
+.subj-sw-opt > span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+/* dir="auto" (latinično ime predmeta v arabščini): poravnava po smeri menija, ne po smeri imena. */
+.subj-sw-opt > span, .subj-sw-text b { text-align: left; }
+[dir="rtl"] .subj-sw-opt > span, [dir="rtl"] .subj-sw-text b { text-align: right; }
+.subj-sw-opt > svg.subj-sw-check { flex: none; width: 18px; height: 18px; color: var(--accent); }
+.subj-sw-opt[aria-checked="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 800; }
+.subj-sw-btn:hover, .subj-sw-btn:focus-visible, .subj-sw-opt:hover, .subj-sw-opt:focus-visible { background: var(--surface-2); outline: none; }
+.subj-sw-list .subj-sw-opt:hover, .subj-sw-list .subj-sw-opt:focus-visible { background: var(--surface); }
+.subj-sw-btn:focus-visible, .subj-sw-opt:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.subj-sw-opt:disabled { cursor: progress; opacity: 0.6; }
 /* Ozek telefon: samo začetnica, ime je v meniju. */
 @media (max-width: 400px) {
   .profile-btn { padding: 4px; gap: 0; }
