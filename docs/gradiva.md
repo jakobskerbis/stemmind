@@ -5,10 +5,10 @@ English on purpose: agents read this file. Code: `server/gradiva.js`, `server/go
 
 ## Access
 
-One function decides: `canUse(student, vrsta)` in `server/gradiva.js`. `free` types (made from the free
-textbook text, no cost) are for everyone; the rest need `accounts.premiumFor` until
-`server/placila/pravice.js` adds the school licence (school licence: school subjects; Osebno: all
-subjects). Locked materials are hidden in the lesson; offers belong to the offers work (brief point 3).
+One function decides: `canUse(student, vrsta, topicId)` in `server/gradiva.js`. `free` types (made from
+the free textbook text, no cost) are for everyone; topic materials follow `lessonInteractive` from
+`server/placila/pravice.js` (school licence: its subjects and grades; Osebno: all); the weak-topic
+worksheet is Osebno only. Locked materials are hidden in the lesson; offers belong to the offers work (brief point 3).
 
 ## Types
 

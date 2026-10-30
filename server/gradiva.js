@@ -1,8 +1,8 @@
 // Nove vrste gradiv ob lekciji (docs/gradiva.md): povzetek na eni strani z miselnim vzorcem,
 // zvočni povzetek in delovni list za tisk z rešitvami. Vse je narejeno iz že pregledanih lekcij
 // in generatorjev nalog, zato ne stane nič in ne potrebuje nove vsebine.
-// Kdo kaj dobi, odloča ena funkcija (canUse); ko pride server/placila/pravice.js s šolsko licenco,
-// se zamenja le ta.
+// Kdo kaj dobi, odloča ena funkcija (canUse) po pravicah iz server/placila/pravice.js:
+// šolska licenca za teme svojih predmetov in razredov, Evklid Osebno za vse.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -295,7 +295,12 @@ const SEED_MAX = 999999;
 const seedOf = (v) => (/^\d{1,6}$/.test(String(v ?? "")) ? Math.max(1, Number(v)) : 1 + Math.floor(Math.random() * SEED_MAX));
 
 export function mountGradiva(app, store, { loadStudent, accounts }) {
-  const canUse = (s, vrsta) => !!VRSTE[vrsta] && (VRSTE[vrsta].free || !accounts || accounts.premiumFor(s.id));
+  // topicId: gradivo ene teme (kot interaktivni del lekcije); brez teme (list iz šibkih tem) samo Osebno.
+  const canUse = (s, vrsta, topicId = null) => {
+    if (!VRSTE[vrsta]) return false;
+    if (VRSTE[vrsta].free || !accounts) return true;
+    return topicId ? accounts.lessonInteractive(s.id, topicId) : !!accounts.rightsFor(s.id).personal;
+  };
   const topicOf = (req, res) => {
     const t = getTopic(String(req.query.topic || ""));
     if (!t) res.status(404).json({ error: "Tema ne obstaja." });
@@ -321,7 +326,7 @@ export function mountGradiva(app, store, { loadStudent, accounts }) {
       items.push({ vrsta: "povzetek", url: `/gradiva/povzetek/${p}/${slug}` }, { vrsta: "zvok" });
     }
     if (hasGenerator(t.id)) items.push({ vrsta: "delovni-list" });
-    res.json({ topic: t.id, items: items.map((x) => ({ ...x, icon: VRSTE[x.vrsta].icon, locked: !canUse(s, x.vrsta) })) });
+    res.json({ topic: t.id, items: items.map((x) => ({ ...x, icon: VRSTE[x.vrsta].icon, locked: !canUse(s, x.vrsta, t.id) })) });
   });
 
   // Šibke teme za delovni list za doma (gumb na strani Napredek).
@@ -346,15 +351,17 @@ export function mountGradiva(app, store, { loadStudent, accounts }) {
   app.get("/api/students/:id/gradiva/delovni-list", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
-    if (!canUse(s, "delovni-list")) return res.status(403).json({ error: "Delovni listi so v paketu.", code: "gr.locked" });
     const weak = req.query.sibke === "1";
+    const locked = () => res.status(403).json({ error: "Delovni listi so v paketu.", code: "gr.locked" });
     let ids;
     if (weak) {
+      if (!canUse(s, "delovni-list")) return locked();
       ids = weakTopicIds(store.db, s.id);
       if (!ids.length) return res.status(404).json({ error: "Še nimaš šibkih tem. Najprej reši nekaj nalog.", code: "gr.noWeak" });
     } else {
       const t = topicOf(req, res);
       if (!t) return;
+      if (!canUse(s, "delovni-list", t.id)) return locked();
       ids = [t.id];
     }
     const perTopic = Math.min(10, Math.max(2, Math.trunc(Number(req.query.n)) || (weak ? 4 : 6)));
