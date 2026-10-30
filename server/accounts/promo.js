@@ -84,7 +84,7 @@ export function createPromo(db, cfg) {
     const row = CODE_RE.test(code) ? get(code) : null;
     if (!row || !row.active || (row.valid_until && row.valid_until < today())) return { error: "Ta aktivacijska koda ni veljavna." };
     if (db.prepare("SELECT 1 FROM promo_redemptions WHERE parent_id = ?").get(parent.id)) {
-      return { error: "Ta aktivacijska koda je na tem računu že uporabljena." };
+      return { error: "Na tem računu je bila aktivacijska koda že uporabljena." };
     }
     if (["active", "trialing", "past_due"].includes(parent.sub_status)) {
       return { error: "Naročnino že imaš, zato koda ni potrebna. Prihrani jo za prijatelja." };

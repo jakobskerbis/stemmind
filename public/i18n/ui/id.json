@@ -58,7 +58,7 @@
   "lock.auth": "Kata sandi akun atau kata sandi profil saat ini",
   "lock.saved": "Kata sandi profil disimpan.",
   "lock.none": "tanpa kata sandi",
-  "lock.offline": "Tidak ada koneksi ke Evklid. Pastikan komputer yang menjalankan Evklid menyala, lalu coba lagi.",
+  "lock.offline": "Tidak ada koneksi ke Evklid. Periksa koneksi internet, lalu coba lagi.",
   "mock.title": "Mode uji coba.",
   "mock.text": "Saat ini tutor hanya memberikan contoh jawaban yang sudah disiapkan.",
   "beta.title": "Versi uji coba.",
@@ -1183,7 +1183,7 @@
   },
   "credit.note": "Jumlah percakapan adalah perkiraan, bisa juga lebih banyak. Percakapan yang dibeli tidak kedaluwarsa dan berlaku untuk semua profil di akun ini.",
   "credit.minor": "Percakapan tambahan dibayar oleh pemegang akun dewasa (orang tua atau wali).",
-  "credit.off": "Pembayaran belum diaktifkan.",
+  "credit.off": "Pembayaran saat ini tidak tersedia.",
   "credit.custom": "Jumlah lain:",
   "credit.customLabel": "Jumlah dalam euro",
   "credit.customEst": {

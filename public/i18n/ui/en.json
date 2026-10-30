@@ -59,7 +59,7 @@
   "lock.auth": "Account password or current profile password",
   "lock.saved": "Profile password saved.",
   "lock.none": "no password",
-  "lock.offline": "Can't reach Evklid. Check that the computer running Evklid is on and try again.",
+  "lock.offline": "Can't reach Evklid. Check your internet connection and try again.",
   "mock.title": "Test mode.",
   "mock.text": "The tutor is only giving prepared sample answers right now.",
   "beta.title": "Test version.",
@@ -1189,7 +1189,7 @@
   },
   "credit.note": "The number of conversations is an estimate; there may be more. Bought conversations do not expire and work for all profiles on this account.",
   "credit.minor": "Extra conversations are paid for by an adult account holder (parent or guardian).",
-  "credit.off": "Payments are not switched on yet.",
+  "credit.off": "Payments are currently unavailable.",
   "credit.custom": "Other amount:",
   "credit.customLabel": "Amount in euros",
   "credit.customEst": {

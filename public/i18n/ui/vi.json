@@ -58,7 +58,7 @@
   "lock.auth": "Mật khẩu tài khoản hoặc mật khẩu hồ sơ hiện tại",
   "lock.saved": "Đã lưu mật khẩu hồ sơ.",
   "lock.none": "chưa có mật khẩu",
-  "lock.offline": "Không kết nối được với Evklid. Hãy kiểm tra máy tính chạy Evklid đã bật chưa rồi thử lại.",
+  "lock.offline": "Không kết nối được với Evklid. Hãy kiểm tra kết nối internet rồi thử lại.",
   "mock.title": "Chế độ thử nghiệm.",
   "mock.text": "Hiện gia sư chỉ trả lời bằng các câu trả lời mẫu đã chuẩn bị sẵn.",
   "beta.title": "Phiên bản thử nghiệm.",
@@ -1183,7 +1183,7 @@
   },
   "credit.note": "Số cuộc trò chuyện là ước tính, có thể nhiều hơn. Các cuộc trò chuyện đã mua không hết hạn và dùng được cho mọi hồ sơ của tài khoản này.",
   "credit.minor": "Cuộc trò chuyện thêm do chủ tài khoản đã thành niên (cha mẹ hoặc người giám hộ) thanh toán.",
-  "credit.off": "Thanh toán chưa được bật.",
+  "credit.off": "Hiện chưa thể thanh toán.",
   "credit.custom": "Số tiền khác:",
   "credit.customLabel": "Số tiền bằng euro",
   "credit.customEst": {

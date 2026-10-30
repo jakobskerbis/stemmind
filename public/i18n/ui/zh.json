@@ -58,7 +58,7 @@
   "lock.auth": "账户密码或当前个人资料密码",
   "lock.saved": "个人资料密码已保存。",
   "lock.none": "无密码",
-  "lock.offline": "无法连接到 Evklid。请检查运行 Evklid 的电脑是否已开机，然后重试。",
+  "lock.offline": "无法连接到 Evklid。请检查网络连接，然后重试。",
   "mock.title": "测试模式。",
   "mock.text": "辅导老师目前只会给出预先准备好的示例回答。",
   "beta.title": "测试版。",
@@ -1183,7 +1183,7 @@
   },
   "credit.note": "对话次数只是估计，也可能更多。购买的对话不会过期，适用于本账户的所有档案。",
   "credit.minor": "额外对话由成年账户持有人（家长或监护人）支付。",
-  "credit.off": "付款尚未开启。",
+  "credit.off": "目前无法付款。",
   "credit.custom": "其他金额：",
   "credit.customLabel": "金额（欧元）",
   "credit.customEst": {

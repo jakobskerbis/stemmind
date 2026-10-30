@@ -59,7 +59,7 @@
   "lock.auth": "Nenosiri la akaunti au nenosiri la sasa la wasifu",
   "lock.saved": "Nenosiri la wasifu limehifadhiwa.",
   "lock.none": "bila nenosiri",
-  "lock.offline": "Hakuna muunganisho na Evklid. Hakikisha kompyuta inayoendesha Evklid imewashwa, kisha jaribu tena.",
+  "lock.offline": "Hakuna muunganisho na Evklid. Angalia muunganisho wako wa intaneti, kisha jaribu tena.",
   "mock.title": "Hali ya majaribio.",
   "mock.text": "Kwa sasa mwalimu anatoa tu majibu ya mfano yaliyoandaliwa.",
   "beta.title": "Toleo la majaribio.",
@@ -1189,7 +1189,7 @@
   },
   "credit.note": "Idadi ya mazungumzo ni makadirio, yanaweza kuwa mengi zaidi. Mazungumzo yaliyonunuliwa hayaishi muda na yanafaa kwa wasifu wote wa akaunti hii.",
   "credit.minor": "Mazungumzo ya ziada hulipwa na mmiliki mtu mzima wa akaunti (mzazi au mlezi).",
-  "credit.off": "Malipo bado hayajawashwa.",
+  "credit.off": "Malipo hayapatikani kwa sasa.",
   "credit.custom": "Kiasi kingine:",
   "credit.customLabel": "Kiasi kwa euro",
   "credit.customEst": {

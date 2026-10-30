@@ -58,7 +58,7 @@
   "lock.auth": "계정 비밀번호 또는 현재 프로필 비밀번호",
   "lock.saved": "프로필 비밀번호를 저장했습니다.",
   "lock.none": "비밀번호 없음",
-  "lock.offline": "Evklid에 연결할 수 없습니다. Evklid가 실행되는 컴퓨터가 켜져 있는지 확인한 뒤 다시 시도하세요.",
+  "lock.offline": "Evklid에 연결할 수 없습니다. 인터넷 연결을 확인한 뒤 다시 시도하세요.",
   "mock.title": "테스트 모드.",
   "mock.text": "지금은 튜터가 미리 준비된 예시 답변만 보여 줍니다.",
   "beta.title": "테스트 버전입니다.",
@@ -1183,7 +1183,7 @@
   },
   "credit.note": "대화 횟수는 추정치이며 더 많을 수도 있습니다. 구매한 대화는 만료되지 않으며 이 계정의 모든 프로필에서 쓸 수 있습니다.",
   "credit.minor": "추가 대화는 성인 계정 소유자(부모 또는 보호자)가 결제합니다.",
-  "credit.off": "결제가 아직 켜져 있지 않습니다.",
+  "credit.off": "현재 결제를 이용할 수 없습니다.",
   "credit.custom": "다른 금액:",
   "credit.customLabel": "유로 금액",
   "credit.customEst": {
