@@ -187,27 +187,30 @@ export function nextSteps(w, self = false) {
 const h3 = (t) => `<p style="margin:18px 0 6px;font-size:13px;font-weight:bold;color:${MUTED};text-transform:uppercase;letter-spacing:.04em">${t}</p>`;
 
 // Graf po dnevih: stolpec = rešene naloge (temno) + vprašanja inštruktorju (svetlo), število nad stolpcem.
-// Samo tabele in višine v px, ker e-poštni odjemalci ne prikažejo SVG ali canvas.
+// Samo tabele: e-poštni odjemalci ne prikažejo SVG ali canvas, Outlook pa ne upošteva višine in širine divov,
+// zato je vsak del stolpca celica z višino (height) in barvo (bgcolor).
 const LIGHT = "#b4c0f8";
+const cell = (h, color, extra = "") =>
+  `<tr><td height="${h}" bgcolor="${color}" style="height:${h}px;background:${color};font-size:1px;line-height:1px;mso-line-height-rule:exactly;${extra}">&nbsp;</td></tr>`;
 export function barsHtml(strip) {
   const H = 64;
   const max = Math.max(1, ...strip.map((d) => d.tasks + d.asked));
   const px = (n) => (n ? Math.max(4, Math.round((n / max) * H)) : 0);
-  const bar = (h, color) => (h ? `<div style="height:${h}px;background:${color};font-size:0;line-height:0">&nbsp;</div>` : "");
   const col = (d) => {
     const n = d.tasks + d.asked;
     const t = px(d.tasks);
-    const q = n ? Math.max(0, px(n) - t) : 0;
-    // Dejaven dan brez nalog in vprašanj (npr. lekcija, igra): nizek stolpec, da se dan vseeno vidi.
-    const only = !n && d.active ? bar(4, BLUE) : "";
-    const empty = !n && !d.active ? bar(2, "#dfe3ee") : "";
-    return `<td style="width:14%;padding:0 3px;vertical-align:bottom;text-align:center;height:${H + 18}px">
+    // Vprašanja dobijo vsaj 3 px, da se vidijo tudi ob veliko nalogah.
+    const q = d.asked ? Math.max(3, px(n) - t) : 0;
+    // Dejaven dan brez nalog in vprašanj (npr. lekcija, igra): nizek stolpec, da se dan vseeno vidi; prazen dan: siva črta.
+    const parts = n ? [[q, LIGHT], [t, BLUE]].filter(([h]) => h) : [[d.active ? 4 : 2, d.active ? BLUE : "#dfe3ee"]];
+    const rows = parts.map(([h, color], i) => cell(h, color, i ? "" : "border-radius:4px 4px 0 0")).join("");
+    return `<td width="14%" valign="bottom" style="width:14%;padding:0 3px;vertical-align:bottom;text-align:center;height:${H + 18}px">
 <div style="font-size:11px;font-weight:bold;color:#1d2433;line-height:14px">${n || (d.active ? "✓" : "")}</div>
-<div style="width:26px;margin:0 auto;border-radius:4px 4px 0 0;overflow:hidden">${bar(q, LIGHT)}${bar(t, BLUE)}${only}${empty}</div></td>`;
+<table role="presentation" width="26" cellpadding="0" cellspacing="0" align="center" style="width:26px;border-collapse:collapse;margin:0 auto">${rows}</table></td>`;
   };
   const label = (d) => `<td style="text-align:center;font-size:11px;color:${MUTED};padding-top:4px;border-top:1px solid #dfe3ee">${d.label}</td>`;
-  const key = (color, text) => `<span style="display:inline-block;width:10px;height:10px;background:${color};border-radius:2px;vertical-align:middle"></span> ${text}`;
-  return `<table role="presentation" style="width:100%;max-width:340px;border-collapse:collapse;margin:6px 0 0"><tr>${strip.map(col).join("")}</tr><tr>${strip
+  const key = (color, text) => `<span style="color:${color};font-size:14px">■</span> ${text}`;
+  return `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;max-width:340px;border-collapse:collapse;margin:6px 0 0"><tr>${strip.map(col).join("")}</tr><tr>${strip
     .map(label)
     .join("")}</tr></table>
 <p style="margin:4px 0 0;font-size:12px;color:${MUTED}">${key(BLUE, "rešene naloge")} &nbsp; ${key(LIGHT, "vprašanja inštruktorju")}</p>`;
@@ -239,13 +242,16 @@ function learnedHtml(subjects) {
   if (!subjects.length) return "";
   const topicRow = (t) => {
     const pct = t.rate !== null && t.judged >= 2 ? Math.round(t.rate * 100) : null;
+    // Dve celici (pobarvan del + ostanek) namesto diva s širino v %, ki ga Outlook raztegne čez vso širino.
+    const w = pct === null ? 0 : Math.max(pct, 3);
+    const seg = (width, color, radius) =>
+      `<td width="${width}%" height="8" bgcolor="${color}" style="width:${width}%;height:8px;background:${color};border-radius:${radius};padding:0;font-size:1px;line-height:1px;mso-line-height-rule:exactly">&nbsp;</td>`;
     const graph =
       pct === null
         ? ""
-        : `<table role="presentation" style="width:100%;border-collapse:collapse"><tr><td style="background:#eef0f6;border-radius:4px;height:8px;padding:0;font-size:0;line-height:0"><div style="width:${Math.max(
-            pct,
-            3,
-          )}%;height:8px;background:${rateColor(t.rate)};border-radius:4px;font-size:0;line-height:0">&nbsp;</div></td></tr></table>`;
+        : `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse"><tr>${seg(w, rateColor(t.rate), w < 100 ? "4px 0 0 4px" : "4px")}${
+            w < 100 ? seg(100 - w, "#eef0f6", "0 4px 4px 0") : ""
+          }</tr></table>`;
     return `<tr><td style="padding:5px 8px 5px 0;vertical-align:middle">${esc(t.name)}<div style="font-size:12px;color:${MUTED}">${plural(t.solved || 0, NALOG)}</div></td>
 <td style="width:34%;padding:5px 0;vertical-align:middle">${graph}</td>
 <td style="width:52px;padding:5px 0 5px 8px;text-align:right;vertical-align:middle;font-weight:bold;white-space:nowrap">${pct === null ? "" : `${pct} %`}</td></tr>`;
@@ -255,9 +261,9 @@ function learnedHtml(subjects) {
       s.practice.length ? `<table role="presentation" style="width:100%;border-collapse:collapse;font-size:14px">${s.practice.map(topicRow).join("")}</table>` : ""
     }${s.chat.length ? `<p style="margin:2px 0;font-size:14px">💬 V klepetu: ${s.chat.map(esc).join(", ")}</p>` : ""}`;
   const legend = subjects.some((s) => s.practice.some((t) => t.judged >= 2))
-    ? `<p style="margin:6px 0 0;font-size:12px;color:${MUTED}">Pas pokaže, kolikšen del nalog je bil pravilen že v prvem poskusu.</p>`
+    ? `<p style="margin:0 0 4px;font-size:12px;color:${MUTED}">Pas pokaže, kolikšen del nalog je bil pravilen že v prvem poskusu.</p>`
     : "";
-  return h3("Snov tega tedna") + subjects.map(block).join("") + legend;
+  return h3("Snov tega tedna") + legend + subjects.map(block).join("");
 }
 
 function listHtml(icon, title, items) {
