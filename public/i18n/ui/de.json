@@ -1673,6 +1673,8 @@
   "games.trNone": "Noch keine Stimmen.",
   "games.trCopy": "Liste für Claude kopieren",
   "games.trCopied": "Liste kopiert. Füge sie im Thread IGRE ein.",
+  "games.trAll": "Alle Stimmen bisher",
+  "games.trPlays": "Spieler in den letzten 7 Tagen",
   "chat.aiNote": "Evklid kann sich irren. Prüfe wichtige Ergebnisse.",
   "chat.off": "Der Chat mit dem Tutor ist vorübergehend ausgeschaltet. Der Rest der App funktioniert weiter.",
   "rep.btn": "Fehler melden",

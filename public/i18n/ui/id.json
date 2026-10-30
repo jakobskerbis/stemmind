@@ -1665,6 +1665,8 @@
   "games.trNone": "Belum ada suara.",
   "games.trCopy": "Salin daftar untuk Claude",
   "games.trCopied": "Daftar disalin. Tempelkan di utas IGRE.",
+  "games.trAll": "Semua suara sejauh ini",
+  "games.trPlays": "Pemain dalam 7 hari terakhir",
   "chat.aiNote": "Evklid bisa salah. Periksa hasil yang penting.",
   "chat.off": "Obrolan dengan tutor dimatikan sementara. Bagian lain aplikasi tetap berjalan.",
   "rep.btn": "Laporkan kesalahan",

@@ -144,6 +144,9 @@ function trendsText() {
     `${t("games.trNow")}: ${line(sorted(tr.wishes?.[tr.week]), wishName)}`,
     `${t("games.trRatings")}: ${line(Object.entries(tr.ratings || {}).map(([id, r]) => [id, `👍${r.up} 👎${r.down}`]), (id) => t(`games.e.${id}`))}`,
     `${t("games.trKid")}: ${line(sorted(tr.childhood), (id) => t(`games.g.${id}`))}`,
+    // za izenačenje (docs/igre-tedensko.md: več glasov skupaj) in igranost
+    `${t("games.trAll")}: ${line(sorted(tr.allWishes), wishName)}`,
+    `${t("games.trPlays")}: ${line(sorted(tr.plays), (id) => t(`games.e.${id}`))}`,
   ].join("\n");
 }
 function trendsCard() {
@@ -156,6 +159,8 @@ function trendsCard() {
       <h3>${esc(t("games.trNow"))}</h3>${rows(sorted(tr.wishes?.[tr.week]), wishName)}
       <h3>${esc(t("games.trRatings"))}</h3>${rows(Object.entries(tr.ratings || {}).map(([id, r]) => [id, `👍 ${r.up} · 👎 ${r.down}`]), (id) => t(`games.e.${id}`))}
       <h3>${esc(t("games.trKid"))}</h3>${rows(sorted(tr.childhood), (id) => t(`games.g.${id}`))}
+      <h3>${esc(t("games.trAll"))}</h3>${rows(sorted(tr.allWishes), wishName)}
+      <h3>${esc(t("games.trPlays"))}</h3>${rows(sorted(tr.plays), (id) => t(`games.e.${id}`))}
       <button type="button" class="secondary" data-act="trcopy">${icon("clipboard-check")}${esc(t("games.trCopy"))}</button>`;
   return `<details class="card gm-trends"${trOpen ? " open" : ""}><summary>📋 ${esc(t("games.trTitle"))}</summary><p class="muted small">${esc(t("games.trOnly"))}</p>${body}</details>`;
 }
@@ -386,6 +391,7 @@ function askWish() {
       return;
     }
     data.wish = pick;
+    if (trends) trends = await ctx.api("/api/games/trends").catch(() => trends); // plošča za j-ja s svežim glasom
     if (!game) renderPortal();
     close();
     ctx.toast?.(t("games.wishThanks"));

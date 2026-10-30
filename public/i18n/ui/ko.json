@@ -1665,6 +1665,8 @@
   "games.trNone": "아직 투표가 없어요.",
   "games.trCopy": "Claude용 목록 복사",
   "games.trCopied": "목록을 복사했어요. IGRE 스레드에 붙여 넣으세요.",
+  "games.trAll": "지금까지의 모든 투표",
+  "games.trPlays": "최근 7일간 플레이어",
   "chat.aiNote": "Evklid는 틀릴 수 있어요. 중요한 결과는 직접 확인하세요.",
   "chat.off": "튜터와의 채팅이 잠시 꺼져 있어요. 앱의 다른 기능은 계속 쓸 수 있어요.",
   "rep.btn": "오류 신고",

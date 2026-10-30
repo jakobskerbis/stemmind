@@ -1335,6 +1335,8 @@ export default {
   "games.trNone": "Še ni glasov.",
   "games.trCopy": "Kopiraj seznam za Clauda",
   "games.trCopied": "Seznam je kopiran. Prilepi ga v nit IGRE.",
+  "games.trAll": "Vsi glasovi doslej",
+  "games.trPlays": "Igralci v zadnjih 7 dneh",
   "games.e.orb": "Čarobna krogla",
   "games.e.orb.how": "Stresi telefon ali tapni gumb s puščicama za naslednji odgovor. Pri pravem tapni kroglo ali ✓.",
   "games.subjects": "Predmeti",

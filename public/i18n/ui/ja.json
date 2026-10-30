@@ -1665,6 +1665,8 @@
   "games.trNone": "まだ投票はありません。",
   "games.trCopy": "Claude 用にリストをコピー",
   "games.trCopied": "リストをコピーしました。IGRE スレッドに貼り付けてください。",
+  "games.trAll": "これまでの全投票",
+  "games.trPlays": "過去7日間のプレイヤー",
   "chat.aiNote": "Evklidは間違えることがあります。大事な結果は自分で確かめてください。",
   "chat.off": "チューターとのチャットは一時的に停止しています。アプリのほかの部分は引き続き使えます。",
   "rep.btn": "間違いを報告",

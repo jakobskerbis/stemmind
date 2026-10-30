@@ -1673,6 +1673,8 @@
   "games.trNone": "Henüz oy yok.",
   "games.trCopy": "Listeyi Claude için kopyala",
   "games.trCopied": "Liste kopyalandı. IGRE başlığına yapıştır.",
+  "games.trAll": "Şimdiye kadarki tüm oylar",
+  "games.trPlays": "Son 7 gündeki oyuncular",
   "chat.aiNote": "Evklid hata yapabilir. Önemli sonuçları kontrol et.",
   "chat.off": "Özel öğretmenle sohbet şimdilik kapalı. Uygulamanın geri kalanı çalışmaya devam ediyor.",
   "rep.btn": "Hata bildir",

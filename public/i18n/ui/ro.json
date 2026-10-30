@@ -1681,6 +1681,8 @@
   "games.trNone": "Încă nu sunt voturi.",
   "games.trCopy": "Copiază lista pentru Claude",
   "games.trCopied": "Listă copiată. Lipește-o în firul IGRE.",
+  "games.trAll": "Toate voturile până acum",
+  "games.trPlays": "Jucători în ultimele 7 zile",
   "chat.aiNote": "Evklid poate greși. Verifică rezultatele importante.",
   "chat.off": "Chatul cu tutorul este oprit temporar. Restul aplicației funcționează în continuare.",
   "rep.btn": "Raportează o greșeală",

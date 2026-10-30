@@ -1689,6 +1689,8 @@
   "games.trNone": "Nie ma jeszcze głosów.",
   "games.trCopy": "Skopiuj listę dla Claude",
   "games.trCopied": "Lista skopiowana. Wklej ją do wątku IGRE.",
+  "games.trAll": "Wszystkie głosy do tej pory",
+  "games.trPlays": "Gracze w ostatnich 7 dniach",
   "chat.aiNote": "Evklid może się mylić. Sprawdzaj ważne wyniki.",
   "chat.off": "Czat z korepetytorem jest chwilowo wyłączony. Reszta aplikacji nadal działa.",
   "rep.btn": "Zgłoś błąd",

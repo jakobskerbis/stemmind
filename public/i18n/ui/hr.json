@@ -1681,6 +1681,8 @@
   "games.trNone": "Još nema glasova.",
   "games.trCopy": "Kopiraj popis za Claude",
   "games.trCopied": "Popis je kopiran. Zalijepi ga u nit IGRE.",
+  "games.trAll": "Svi glasovi do sada",
+  "games.trPlays": "Igrači u zadnjih 7 dana",
   "chat.aiNote": "Evklid može pogriješiti. Provjeri važne rezultate.",
   "chat.off": "Razgovor s instruktorom privremeno je isključen. Ostatak aplikacije i dalje radi.",
   "rep.btn": "Prijavi pogrešku",

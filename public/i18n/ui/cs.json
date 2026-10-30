@@ -1689,6 +1689,8 @@
   "games.trNone": "Zatím žádné hlasy.",
   "games.trCopy": "Zkopírovat seznam pro Claude",
   "games.trCopied": "Seznam je zkopírovaný. Vlož ho do vlákna IGRE.",
+  "games.trAll": "Všechny hlasy dosud",
+  "games.trPlays": "Hráči za posledních 7 dní",
   "chat.aiNote": "Evklid se může mýlit. Důležité výsledky si ověř.",
   "chat.off": "Chat s doučovatelem je dočasně vypnutý. Zbytek aplikace dál funguje.",
   "rep.btn": "Nahlásit chybu",

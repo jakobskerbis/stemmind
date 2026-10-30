@@ -1665,6 +1665,8 @@
   "games.trNone": "Chưa có bình chọn nào.",
   "games.trCopy": "Sao chép danh sách cho Claude",
   "games.trCopied": "Đã sao chép danh sách. Hãy dán vào chuỗi IGRE.",
+  "games.trAll": "Tất cả phiếu bầu đến nay",
+  "games.trPlays": "Người chơi trong 7 ngày qua",
   "chat.aiNote": "Evklid có thể nhầm. Hãy kiểm tra các kết quả quan trọng.",
   "chat.off": "Trò chuyện với gia sư tạm thời bị tắt. Các phần khác của ứng dụng vẫn hoạt động.",
   "rep.btn": "Báo lỗi",

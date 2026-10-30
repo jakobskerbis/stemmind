@@ -339,7 +339,8 @@ export function runGame(host, opts) {
       }
       return;
     }
-    if ((e.key === "Enter" || e.key === " ") && !G.running && overlay.querySelector("[data-act=play], [data-act=again]")) {
+    // Enter/presledek na gumbu (👍/👎, »Druge igre«) sproži ta gumb, ne »Znova«
+    if ((e.key === "Enter" || e.key === " ") && !G.running && !e.target.closest?.("button") && overlay.querySelector("[data-act=play], [data-act=again]")) {
       overlay.querySelector("[data-act=play], [data-act=again]").click();
       e.preventDefault();
       return;

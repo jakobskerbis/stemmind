@@ -1673,6 +1673,8 @@
   "games.trNone": "Ende s’ka vota.",
   "games.trCopy": "Kopjo listën për Claude",
   "games.trCopied": "Lista u kopjua. Ngjite në temën IGRE.",
+  "games.trAll": "Të gjitha votat deri tani",
+  "games.trPlays": "Lojtarë në 7 ditët e fundit",
   "chat.aiNote": "Evklid mund të gabojë. Kontrollo rezultatet e rëndësishme.",
   "chat.off": "Biseda me tutorin është çaktivizuar përkohësisht. Pjesa tjetër e aplikacionit vazhdon të funksionojë.",
   "rep.btn": "Raporto një gabim",

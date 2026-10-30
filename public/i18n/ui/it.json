@@ -1673,6 +1673,8 @@
   "games.trNone": "Ancora nessun voto.",
   "games.trCopy": "Copia l'elenco per Claude",
   "games.trCopied": "Elenco copiato. Incollalo nella discussione IGRE.",
+  "games.trAll": "Tutti i voti finora",
+  "games.trPlays": "Giocatori negli ultimi 7 giorni",
   "chat.aiNote": "Evklid può sbagliare. Controlla i risultati importanti.",
   "chat.off": "La chat con il tutor è disattivata per ora. Il resto dell'app funziona ancora.",
   "rep.btn": "Segnala un errore",

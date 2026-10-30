@@ -1673,6 +1673,8 @@
   "games.trNone": "Még nincs szavazat.",
   "games.trCopy": "Lista másolása Claude számára",
   "games.trCopied": "Lista kimásolva. Illeszd be az IGRE szálba.",
+  "games.trAll": "Összes szavazat eddig",
+  "games.trPlays": "Játékosok az elmúlt 7 napban",
   "chat.aiNote": "Evklid tévedhet. A fontos eredményeket ellenőrizd.",
   "chat.off": "A csevegés az oktatóval átmenetileg ki van kapcsolva. Az alkalmazás többi része továbbra is működik.",
   "rep.btn": "Hiba jelentése",
