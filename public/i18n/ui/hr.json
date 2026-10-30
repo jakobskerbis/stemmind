@@ -2377,7 +2377,7 @@
   "kv.fullscreen": "Cijeli zaslon",
   "kv.gone": "Kviz više nije dostupan.",
   "kv.joinBtn": "Pridruži se kvizu",
-  "kv.joinHow": "Učenici: u aplikaciji otvorite Lige i dodirnite »Pridruži se kvizu«.",
+  "kv.joinHow": "Učenici: u Evklidu otvorite Lige (na mobitelu Ja → Lige) i dodirnite »Pridruži se kvizu«.",
   "kv.joined": "Pridruženo: {n}",
   "kv.live": "Kviz uživo",
   "kv.liveIn": "Kviz uživo: {name}",
@@ -2398,6 +2398,6 @@
   "kv.sent": "Odgovor je poslan. Pričekaj rezultat.",
   "kv.sheet": "Radni list",
   "kv.top": "Vrh ljestvice",
-  "kv.wait": "Pridružio si se. Pričekaj da učitelj počne.",
+  "kv.wait": "U kvizu si. Pričekaj da počne.",
   "kv.withKey": "S rješenjima na zadnjoj stranici"
 }

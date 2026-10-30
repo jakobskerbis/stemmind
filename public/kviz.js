@@ -20,16 +20,20 @@ async function call(url, { method = "GET", body, headers = {} } = {}) {
   return d;
 }
 
+// Naslov okna: »Kviz v živo · 7.a · tema«; imena v <bdi>, da se v RTL ne pomešajo.
+const titleHtml = (...names) => [esc(t("kv.live")), ...names.filter(Boolean).map((n) => `<bdi>${esc(n)}</bdi>`)].join(" · ");
+
 // Okno čez ves zaslon; zapre se z gumbom ali Esc. Vrne { dlg, body, foot, close }.
+// Fokus gre na naslov (bralnik zaslona ga prebere), ne na gumb za zapiranje.
 function screen(cls, title, onClose) {
   const dlg = document.createElement("dialog");
   dlg.className = `kv ${cls}`;
-  dlg.setAttribute("aria-label", title);
-  dlg.innerHTML = `<header class="kv-head"><h2 dir="auto"></h2><span class="kv-timer" aria-live="off"></span>
+  dlg.setAttribute("aria-labelledby", "kv-title");
+  dlg.innerHTML = `<header class="kv-head"><h2 id="kv-title" tabindex="-1"></h2><span class="kv-timer" role="timer" aria-live="off" aria-label="${esc(t("kv.seconds"))}"></span>
     <button type="button" class="ghost kv-x" aria-label="${esc(t("gr.close"))}" title="${esc(t("gr.close"))}">${icon("x")}</button></header>
     <div class="kv-body" aria-live="polite"></div><footer class="kv-foot"></footer>`;
   document.body.append(dlg);
-  $(dlg, "h2").textContent = title;
+  $(dlg, "h2").innerHTML = title;
   hydrateIcons(dlg);
   let closed = false;
   const close = () => {
@@ -46,6 +50,7 @@ function screen(cls, title, onClose) {
     close();
   });
   dlg.showModal();
+  $(dlg, "h2").focus();
   return { dlg, body: $(dlg, ".kv-body"), foot: $(dlg, ".kv-foot"), close, isClosed: () => closed };
 }
 const $ = (root, s) => root.querySelector(s);
@@ -83,7 +88,7 @@ const head = (v) => (v.q >= 0 ? `<p class="kv-qn">${esc(t("kv.question", { n: v.
 export function hostQuiz({ code, key, game, onClose }) {
   const headers = key ? { "X-Teacher-Key": key } : {};
   const base = `/api/teacher/classes/${encodeURIComponent(code)}/kviz`;
-  const s = screen("kv-host", `${t("kv.live")} · ${game.className} · ${game.topic.name}`, () => {
+  const s = screen("kv-host", titleHtml(game.className, game.topic.name), () => {
     clearInterval(poll);
     tm.stop();
     onClose?.();
@@ -119,8 +124,8 @@ export function hostQuiz({ code, key, game, onClose }) {
       const max = Math.max(1, ...(c.options || [0]));
       html = `${head(v)}<div class="kv-q" dir="auto">${q.html}</div>
         ${q.options
-          ? `<ol class="kv-opts kv-res">${q.options.map((o, i) => `<li class="${i === q.index ? "ok" : ""}"><span class="kv-l">${i === q.index ? icon("check") : LETTERS[i]}</span><span>${o}</span><span class="kv-bar" style="--w:${(c.options[i] / max) * 100}%"></span><b>${c.options[i]}</b></li>`).join("")}</ol>`
-          : `<p class="kv-ans">${esc(t("kv.correctAnswer"))}: <b>${q.answerHtml}</b></p>`}
+          ? `<ol class="kv-opts kv-res">${q.options.map((o, i) => `<li class="${i === q.index ? "ok" : ""}"><span class="kv-l">${LETTERS[i]}</span><span>${o}</span>${i === q.index ? `<span class="kv-ok" role="img" aria-label="${esc(t("kv.correctAnswer"))}">${icon("check")}</span>` : ""}<span class="kv-bar" style="--w:${(c.options[i] / max) * 100}%"></span><b>${c.options[i]}</b></li>`).join("")}</ol>`
+          : `<p class="kv-ans">${esc(t("kv.correctAnswer"))}: <b><bdi>${q.answerHtml}</bdi></b></p>`}
         <p class="kv-sum"><span class="ok">${icon("check")} ${esc(t("task.correct"))}: ${c.right}</span> · <span class="bad">${icon("x")} ${esc(t("task.wrong"))}: ${c.wrong}</span> · ${esc(t("kv.none"))}: ${c.none}</p>
         ${q.solutionHtml ? `<details class="kv-sol"><summary>${esc(t("task.solution"))}</summary>${q.solutionHtml}</details>` : ""}
         ${v.board.length ? `<h3>${esc(t("kv.top"))}</h3>${boardHtml(v.board, 0)}` : ""}`;
@@ -178,7 +183,7 @@ export function hostQuiz({ code, key, game, onClose }) {
 
 export function playQuiz(studentId, gameId, onClose) {
   const base = `/api/students/${studentId}/kviz/${encodeURIComponent(gameId)}`;
-  const s = screen("kv-play", t("kv.live"), () => {
+  const s = screen("kv-play", titleHtml(), () => {
     clearInterval(poll);
     tm.stop();
     onClose?.();
@@ -193,7 +198,7 @@ export function playQuiz(studentId, gameId, onClose) {
   const render = (nv) => {
     v = nv;
     tm.set(v);
-    $(s.dlg, "h2").textContent = `${t("kv.live")} · ${v.className}`;
+    $(s.dlg, "h2").innerHTML = titleHtml(v.className);
     const k = `${v.state}:${v.q}:${v.answered}`;
     if (k === shown && v.state !== "lobby") return;
     shown = k;
@@ -211,9 +216,9 @@ export function playQuiz(studentId, gameId, onClose) {
       const r = v.result;
       const res = r.ok
         ? `<p class="kv-big ok">${icon("circle-check")} ${esc(t("kv.plus", { n: r.points }))}</p>`
-        : `<p class="kv-big bad">${icon("circle-x")} ${esc(t(r.none ? "comp.timeUp" : "task.wrong"))}</p><p class="kv-ans">${esc(t("kv.correctAnswer"))}: <b>${q.answerHtml}</b></p>`;
+        : `<p class="kv-big bad">${icon("circle-x")} ${esc(t(r.none ? "comp.timeUp" : "task.wrong"))}</p><p class="kv-ans">${esc(t("kv.correctAnswer"))}: <b><bdi>${q.answerHtml}</bdi></b></p>`;
       html = `${head(v)}${res}${scoreLine()}`;
-    } else html = `<p class="kv-big">${esc(t("kv.over"))}</p>${scoreLine()}<p class="muted">${esc(t("kv.correctOf", { n: v.correct, total: v.total }))}</p>`;
+    } else html = `<p class="kv-big">${esc(t("kv.over"))}</p>${scoreLine()}<p class="muted kv-c">${esc(t("kv.correctOf", { n: v.correct, total: v.total }))}</p>`;
     s.body.innerHTML = html;
     hydrateIcons(s.body);
     s.body.querySelectorAll(".kv-opt").forEach((b) => b.addEventListener("click", () => send(Number(b.dataset.i))));
