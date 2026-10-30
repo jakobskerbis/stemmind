@@ -5,186 +5,241 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Iz prejšnjih razredov že znaš poštevanko, veš, kaj je večkratnik in kaj delitelj števila, ter znaš uporabiti pravila za deljivost (npr. število je deljivo z $2$, če je sodo). Znaš tudi zapisati zmnožek enakih faktorjev s potenco, npr. $2 \cdot 2 \cdot 2 = 2^3$.
+Tjaša pomaga učiteljici športa pri športnem dnevu. Na igrišču je $84$ učencev. Razdeliti jih mora v enako velike ekipe, in nihče ne sme ostati brez ekipe. Ekipa naj ima od $5$ do $15$ igralcev. Katere velikosti so možne?
 
-Zdaj gremo korak naprej: vsako naravno število večje od $1$ lahko zapišemo kot zmnožek **praštevil**. Praštevila so nekakšni »gradniki« vseh števil, tako kot so atomi gradniki snovi. Razcep na prafaktorje potrebuješ, ko iščeš **največji skupni delitelj** in **najmanjši skupni večkratnik** dveh števil, ko krajšaš ulomke in ko iščeš skupni imenovalec pri seštevanju ulomkov. Uporablja se tudi v računalništvu, na primer pri šifriranju podatkov.
+Tjaša bi lahko poskušala na slepo: po $5$? Po $8$? Po $10$? Hitreje gre, če ve, iz katerih »gradnikov« je število $84$ zloženo. Ti gradniki so **praštevila**. Ko število zapiše kot zmnožek praštevil, takoj vidi vse možne velikosti ekip.
+
+Naslednje leto pride na športni dan $89$ učencev. Tokrat Tjaša ne najde nobene velikosti ekipe, razen ene same ekipe z vsemi ali »ekip« po enega učenca. Zakaj je število $89$ tako trmasto, boš razumel do konca lekcije.
+
+Razcep na prafaktorje boš potreboval kmalu: pri največjem skupnem delitelju, pri najmanjšem skupnem večkratniku in pri krajšanju ulomkov.
 
 ## Razlaga
 
-**1. Praštevilo.** Naravno število, večje od $1$, je **praštevilo**, če ima natanko dva delitelja: število $1$ in samega sebe.
+**Mamljiva zmota: »Liho število je praštevilo.«** Tjaša najprej pomisli: $84$ je sodo, torej se da deliti, $89$ pa je liho, torej se ne da. Ta misel je napačna. Število $9$ je liho, pa je $9 = 3 \cdot 3$. Tudi $15 = 3 \cdot 5$ in $21 = 3 \cdot 7$ sta lihi števili, ki se dasta deliti. Lihost pove le, da število ni deljivo z $2$.
 
-Prva praštevila so: $2, 3, 5, 7, 11, 13, 17, 19, 23, 29, \dots$
+**Kaj praštevilo zares je.** **Delitelj** števila je število, s katerim ga delimo brez ostanka. Naravno število, večje od $1$, je **praštevilo**, če ima natanko dva delitelja: $1$ in samo sebe. Prva praštevila so $2, 3, 5, 7, 11, 13, 17, 19, 23, 29$. Število $2$ je edino sodo praštevilo.
 
-- Število $2$ je edino sodo praštevilo. Vsa druga soda števila so deljiva z $2$, zato imajo vsaj tri delitelje.
-- Število $1$ **ni** praštevilo, ker ima samo en delitelj.
+Število, večje od $1$, ki ni praštevilo, je **sestavljeno število**. Ima vsaj tri delitelje. Število $1$ ni ne praštevilo ne sestavljeno število, saj ima en sam delitelj.
 
-**2. Sestavljeno število.** Naravno število, večje od $1$, ki ni praštevilo, je **sestavljeno**. Ima vsaj tri delitelje. Na primer $12$ ima delitelje $1, 2, 3, 4, 6, 12$.
+:::premisli
+Ali je $51$ praštevilo? Napovej, nato preveri z vsoto števk.
+---
+Ni. Vsota števk je $5 + 1 = 6$, kar je deljivo s $3$. Zato je tudi $51$ deljivo s $3$: $51 = 3 \cdot 17$.
+:::
 
-**3. Prafaktorji.** Če število zapišemo kot zmnožek praštevil, rečemo, da smo ga **razcepili na prafaktorje**. Primer: $12 = 2 \cdot 2 \cdot 3 = 2^2 \cdot 3$.
+**Kako preverimo, ali je število praštevilo.** Poskusimo deliti s praštevili po vrsti: $2, 3, 5, 7, \dots$ Pomagajo pravila deljivosti: z $2$, če je zadnja števka soda; s $3$, če je vsota števk deljiva s $3$; s $5$, če je zadnja števka $0$ ali $5$. Za $7$ preprostega pravila ni, zato kar delimo.
 
-**4. Izrek o enoličnosti.** Vsako sestavljeno število ima razcep na prafaktorje, ki je (do vrstnega reda faktorjev) **en sam**. Zato je razcep »prstni odtis« števila.
+Za $89$: ni sodo, vsota števk $17$ ni deljiva s $3$, ne konča se z $0$ ali $5$, pri deljenju s $7$ pa ostane ostanek $5$.
 
-**5. Kako razcepimo število.** Število zaporedoma delimo z najmanjšimi praštevili ($2, 3, 5, 7, \dots$), dokler ne dobimo $1$. Vsakič delimo z najmanjšim praštevilom, s katerim je število še deljivo.
+:::premisli
+Pri $89$ smo poskusili $2$, $3$, $5$ in $7$. Zakaj ni treba poskusiti še $11$, $13$ in večjih praštevil?
+---
+Če bi bilo $89$ zmnožek dveh števil, ki sta obe vsaj $11$, bi bil zmnožek vsaj $11 \cdot 11 = 121$, kar je več kot $89$. Zato bi moral biti vsaj en faktor manjši od $11$, te pa smo že preizkusili. Torej je $89$ praštevilo.
+:::
 
-**6. Pomoč: pravila za deljivost.**
+Pravilo za vsa števila: deliti poskušamo samo s praštevili $p$, pri katerih je $p \cdot p$ največ toliko kot število.
 
-- z $2$: zadnja števka je soda ($0, 2, 4, 6, 8$),
-- s $3$: vsota števk je deljiva s $3$,
-- s $5$: zadnja števka je $0$ ali $5$,
-- z $10$: zadnja števka je $0$.
+**Druga zmota: »Vsak zapis z množenjem je razcep.«** Zapis $84 = 4 \cdot 21$ je pravilen račun, ni pa še razcep na prafaktorje. Ne $4$ ne $21$ nista praštevili. **Razcep na prafaktorje** je zapis števila kot zmnožka samih praštevil. Ta praštevila imenujemo **prafaktorji**. Vsako sestavljeno število ima razcep.
 
-**7. Zapis s potencami.** Enake prafaktorje zapišemo s potenco: $2 \cdot 2 \cdot 2 \cdot 3 \cdot 3 = 2^3 \cdot 3^2$.
+**Postopek.** Število delimo z najmanjšim praštevilom, s katerim je deljivo. Z enakim praštevilom delimo, dokler gre, nato preidemo na naslednje. Ustavimo se pri $1$. Za $84$ je zapis takšen:
+
+| Število | Delimo s | Rezultat |
+|---|---|---|
+| $84$ | $2$ | $42$ |
+| $42$ | $2$ | $21$ |
+| $21$ | $3$ | $7$ |
+| $7$ | $7$ | $1$ |
+
+Prafaktorji so v srednjem stolpcu: $84 = 2 \cdot 2 \cdot 3 \cdot 7$. Enake faktorje zapišemo krajše s **potenco**: $2 \cdot 2 = 2^2$, torej $84 = 2^2 \cdot 3 \cdot 7$. Mali zgornji indeks pove, kolikokrat se faktor ponovi.
+
+**Razcep je en sam.** Miha začne drugače: $84 = 6 \cdot 14$, nato $6 = 2 \cdot 3$ in $14 = 2 \cdot 7$. Dobi iste prafaktorje $2, 2, 3, 7$, le v drugem vrstnem redu. Ne glede na začetek je razcep (do vrstnega reda) vedno enak.
+
+V simulaciji spodaj »Razcep na prafaktorje« nastavi $360$ in večkrat pritisni »Razcepi drugače«. Opazuj: drevo je vsakič drugačno, obarvani krogi na koncu vej pa so vedno ista praštevila.
+
+**Kaj Tjaši pove razcep.** Vsak delitelj števila $84$ je zmnožek nekaterih njegovih prafaktorjev. Iz $2, 2, 3, 7$ sestavi velikosti med $5$ in $15$: $2 \cdot 3 = 6$, $7$, $2 \cdot 2 \cdot 3 = 12$ in $2 \cdot 7 = 14$. Število $89$ pa je praštevilo, zato ima samo delitelja $1$ in $89$.
 
 ## Rešeni primeri
 
-### Primer 1 (lažji): razcep števila 60
+### Primer 1 (lažji): minute nogometne tekme
 
-Razcepi število $60$ na prafaktorje.
+Nogometna tekma traja $90$ minut. Razcepi število $90$ na prafaktorje.
 
-1. $60$ je sodo, zato delimo z $2$: $60 : 2 = 30$.
-2. $30$ je sodo, delimo z $2$: $30 : 2 = 15$.
-3. $15$ ni deljivo z $2$ (je liho). Vsota števk je $1 + 5 = 6$, deljiva s $3$, zato delimo s $3$: $15 : 3 = 5$.
-4. $5$ je praštevilo, delimo s $5$: $5 : 5 = 1$.
-5. Ustavimo se pri $1$. Prafaktorji so vsa števila, s katerimi smo delili:
+**Podatki:** število $90$
+**Iščemo:** razcep števila $90$ na prafaktorje
 
-$$60 = 2 \cdot 2 \cdot 3 \cdot 5 = 2^2 \cdot 3 \cdot 5$$
+:::formula
+Deli z najmanjšim praštevilom, s katerim je število deljivo, dokler ne dobiš $1$. Prafaktorji so vsa števila, s katerimi si delil.
+:::
 
-6. Preverimo: $4 \cdot 3 \cdot 5 = 60$. ✓
+**Rešitev:**
 
-### Primer 2: razcep števila 252
+1. $90$ je sodo, zato delimo z $2$: $90 : 2 = 45$.
+2. $45$ je liho; vsota števk $4 + 5 = 9$ je deljiva s $3$: $45 : 3 = 15$.
+3. Tudi $15$ je deljivo s $3$, ker je $1 + 5 = 6$: $15 : 3 = 5$.
+4. $5$ je praštevilo: $5 : 5 = 1$. Tu se ustavimo.
+5. Preverimo z množenjem: $2 \cdot 3 \cdot 3 \cdot 5 = 90$.
 
-Razcepi število $252$ na prafaktorje.
+Razcep je $90 = 2 \cdot 3^2 \cdot 5$.
 
-1. $252$ je sodo: $252 : 2 = 126$.
-2. $126$ je sodo: $126 : 2 = 63$.
-3. $63$ je liho. Vsota števk je $6 + 3 = 9$, deljiva s $3$: $63 : 3 = 21$.
-4. $21$: vsota števk je $3$, deljiva s $3$: $21 : 3 = 7$.
-5. $7$ je praštevilo: $7 : 7 = 1$.
-6. Zapis: $252 = 2 \cdot 2 \cdot 3 \cdot 3 \cdot 7 = 2^2 \cdot 3^2 \cdot 7$.
-7. Preverimo: $4 \cdot 9 = 36$, $36 \cdot 7 = 252$. ✓
+### Primer 2: startna številka na teku
 
-### Primer 3 (težji): ali je število praštevilo in razcep večjega števila
+Tekačica Ema ima na mestnem teku startno številko $119$. Pravi, da je to praštevilo, ker se ne da deliti ne z $2$ ne s $3$ ne s $5$. Ali ima prav? Če nima, razcepi $119$ na prafaktorje.
 
-**a)** Ali je število $91$ praštevilo?
+**Podatki:** število $119$; ni deljivo z $2$, $3$ in $5$
+**Iščemo:** ali je $119$ praštevilo; če ni, njegov razcep
 
-1. $91$ je liho, torej ni deljivo z $2$.
-2. Vsota števk je $9 + 1 = 10$, ni deljiva s $3$.
-3. Zadnja števka ni $0$ ali $5$, zato ni deljivo s $5$.
-4. Poskusimo s $7$: $7 \cdot 13 = 91$. Torej je $91$ deljivo s $7$.
-5. Odgovor: $91$ **ni** praštevilo, ampak je sestavljeno: $91 = 7 \cdot 13$. (Pozor: na videz je podobno praštevilu, a ga pravila za $2, 3, 5$ ne razkrijejo.)
+:::formula
+Deli s praštevili $p$ po vrsti, dokler je $p \cdot p$ največ toliko kot število. Če nobeno ne deli števila, je praštevilo.
+:::
 
-**b)** Razcepi število $1\,260$.
+**Rešitev:**
 
-1. $1\,260 : 2 = 630$
-2. $630 : 2 = 315$
-3. $315$ je liho, vsota števk je $3 + 1 + 5 = 9$, zato delimo s $3$: $315 : 3 = 105$
-4. $105$: vsota števk je $6$, delimo s $3$: $105 : 3 = 35$
-5. $35$ ni deljivo s $3$ (vsota števk $8$). Zadnja števka je $5$, delimo s $5$: $35 : 5 = 7$
-6. $7 : 7 = 1$
+1. Do katerega praštevila moramo preizkušati? $11 \cdot 11 = 121$, kar je več kot $119$. Dovolj je preizkusiti $2$, $3$, $5$ in $7$.
+2. Z $2$, $3$ in $5$ število ni deljivo; vsota števk je $1 + 1 + 9 = 11$, zato res ne s $3$.
+3. Ostane $7$, za katerega ni pravila, zato delimo: $119 : 7 = 17$. Deljenje gre brez ostanka.
+4. $17$ je praštevilo, zato je razcep končan: $7 \cdot 17 = 119$.
 
-$$1\,260 = 2 \cdot 2 \cdot 3 \cdot 3 \cdot 5 \cdot 7 = 2^2 \cdot 3^2 \cdot 5 \cdot 7$$
+Ema nima prav. Število $119$ je sestavljeno, njegov razcep je $119 = 7 \cdot 17$.
 
-Preverimo: $4 \cdot 9 = 36$, $36 \cdot 5 = 180$, $180 \cdot 7 = 1\,260$. ✓
+### Primer 3 (težji): žoge v mrežah
+
+Trener ima $126$ teniških žog. Spraviti jih želi v mreže tako, da je v vsaki mreži enako število žog, in sicer od $10$ do $20$. Nobena žoga ne sme ostati. Koliko žog je lahko v eni mreži?
+
+**Podatki:** $126$ žog; v vsaki mreži enako število žog, od $10$ do $20$; brez ostanka
+**Iščemo:** možna števila žog v eni mreži
+
+:::formula
+Število žog v mreži mora biti delitelj števila $126$. Vsak delitelj je zmnožek nekaterih prafaktorjev števila.
+:::
+
+**Rešitev:**
+
+1. Razcepimo $126$: $126 : 2 = 63$, $63 : 3 = 21$, $21 : 3 = 7$, $7 : 7 = 1$.
+2. Torej je $126 = 2 \cdot 3^2 \cdot 7$, prafaktorji so $2, 3, 3, 7$.
+3. Iz njih sestavimo zmnožke med $10$ in $20$: $2 \cdot 7 = 14$ in $2 \cdot 3 \cdot 3 = 18$. Drugi zmnožki so premajhni (na primer $3 \cdot 3 = 9$) ali preveliki ($3 \cdot 7 = 21$).
+4. Preverimo: $126 : 14 = 9$ in $126 : 18 = 7$.
+
+V eni mreži je lahko $14$ žog (potrebuje $9$ mrež) ali $18$ žog (potrebuje $7$ mrež).
+
+### Primer 4: zdaj ti
+
+Na šahovskem turnirju igra $168$ igralcev. Razcepi $168$ na prafaktorje.
+
+**Podatki:** število $168$
+**Iščemo:** razcep števila $168$ na prafaktorje
+
+:::formula
+Deli z najmanjšim možnim praštevilom, dokler ne dobiš $1$.
+:::
+
+**Rešitev:**
+
+1. $168 : 2 = 84$, ker je $168$ sodo.
+2. $84 : 2 = 42$ in $42 : 2 = 21$; obe števili sta sodi.
+3. $21$ je liho. Nadaljuj sam: s katerim praštevilom deliš, kaj dobiš in kako se glasi razcep?
+
+:::premisli
+Kako se nadaljuje in kakšen je razcep števila $168$?
+---
+$21 : 3 = 7$ in $7 : 7 = 1$. Delili smo trikrat z $2$, enkrat s $3$ in enkrat s $7$, zato je $168 = 2^3 \cdot 3 \cdot 7$. Preizkus: $8 \cdot 3 \cdot 7 = 168$.
+:::
 
 ## Pogoste napake
 
-- **Število $1$ imamo za praštevilo.** Ni ga, ker ima samo en delitelj.
-- **Število $2$ ne štejemo med praštevila**, ker je sodo. Je pa edino sodo praštevilo.
-- **Razcep ni popoln.** Zapis $60 = 4 \cdot 15$ ni razcep na prafaktorje, ker $4$ in $15$ nista praštevili. Faktorje moraš razstaviti naprej: $4 = 2 \cdot 2$, $15 = 3 \cdot 5$.
-- **Pozabljen faktor.** Če pri deljenju izpustiš kakšno praštevilo, zmnožek ne da več prvotnega števila. Vedno preveri z množenjem.
-- **Prehitro ustavljanje.** Pri $91$ ali $119 = 7 \cdot 17$ pravila za $2, 3, 5$ ne pomagajo, zato je treba poskusiti še $7, 11, \dots$
-- **Napačno seštevanje namesto množenja.** Prafaktorje med seboj množimo, ne seštevamo: $2 + 2 + 3 + 5 = 12$, ne $60$.
+- **»Liho pomeni praštevilo.«** Učenec reče, da je $21$ praštevilo, ker ni sodo. Lihost izključi le delitelj $2$. Preizkusi še $3$, $5$, $7$: $21 = 3 \cdot 7$.
+- **»Število $1$ je praštevilo.«** Zdi se, da se $1$ deli samo z $1$ in s samim seboj. A to je en in isti delitelj, praštevilo pa jih ima natanko dva. Zato $1$ ni praštevilo.
+- **Prehitro ustavljanje.** Učenec preveri le $2$, $3$ in $5$ ter razglasi $91$ ali $119$ za praštevilo. Preizkušati moraš vsa praštevila $p$, pri katerih je $p \cdot p$ največ toliko kot število, torej tudi $7$: $91 = 7 \cdot 13$.
+- **Nedokončan razcep.** Zapis $84 = 4 \cdot 21$ ni razcep na prafaktorje, ker $4$ in $21$ nista praštevili. Razstavljaj naprej, dokler so vsi faktorji praštevila.
+- **Napačno branje potence.** Učenec prebere $2^3$ kot $2 \cdot 3 = 6$. Potenca $2^3$ pomeni $2 \cdot 2 \cdot 2 = 8$. Vedno preveri razcep z množenjem.
 
 ## Povzetek
 
-- Praštevilo ima natanko dva delitelja: $1$ in samega sebe. Prva so $2, 3, 5, 7, 11, 13, \dots$
-- Število $1$ ni praštevilo; $2$ je edino sodo praštevilo.
-- Sestavljeno število ima več kot dva delitelja.
-- Vsako sestavljeno število lahko zapišemo kot zmnožek prafaktorjev, in to na en sam način (do vrstnega reda).
-- Razcep dobimo z zaporednim deljenjem z najmanjšimi možnimi praštevili, dokler ne pridemo do $1$.
-- Enake faktorje zapišemo s potenco, npr. $60 = 2^2 \cdot 3 \cdot 5$.
-- Rezultat vedno preverimo z množenjem.
+- Praštevilo je naravno število, večje od $1$, z natanko dvema deliteljema: $1$ in samim sabo. Prva so $2, 3, 5, 7, 11, 13$.
+- $1$ ni praštevilo; $2$ je edino sodo praštevilo. Liho število ni nujno praštevilo.
+- Ali je število praštevilo: deli s praštevili $p$, dokler je $p \cdot p$ največ toliko kot število.
+- Razcep na prafaktorje: deli z najmanjšim možnim praštevilom, dokler ne dobiš $1$. Razcep je en sam (do vrstnega reda).
+- Enake faktorje zapišemo s potenco: $84 = 2^2 \cdot 3 \cdot 7$. Rezultat preveri z množenjem.
+- Vsak delitelj števila je zmnožek nekaterih njegovih prafaktorjev.
 
-## Drugače: Na sliki
+## Drugače: Kot zgodba
 
-Razcep si lahko predstavljaš kot **drevo faktorjev**. Število razdeliš na dva faktorja, nato vsakega, ki še ni praštevilo, razdeliš naprej. Ko so vse veje končane s praštevili, si na koncu.
+Jan in Lara igrata igro s kartami. Na vsaki karti je praštevilo: $2$, $3$, $5$, $7$ in tako naprej, vsakega je dovolj. Kdor želi »kupiti« število, mora položiti karte, katerih zmnožek je to število.
 
-Za $60$:
+Lara želi kupiti $60$. Položi $2$ in $30$. »Karte $30$ ni,« reče Jan, »$30$ ni praštevilo.« Lara zamenja $30$ s kartami $2$, $3$ in $5$. Na mizi so zdaj $2, 2, 3, 5$, in res: $2 \cdot 2 \cdot 3 \cdot 5 = 60$.
 
-```
-        60
-       /  \
-      6    10
-     / \   / \
-    2   3 2   5
-```
+Jan kupi isto število po svoje. Začne s $3$ in $20$, nato $20$ zamenja z $2$, $2$ in $5$. Ko primerjata karte, ugotovita, da imata obe roki iste štiri karte. Še tolikokrat poskusita, vedno dobita $2, 2, 3, 5$. Vsako število ima svojo eno samo »roko« kart.
 
-Listi drevesa (spodnja števila) so $2, 3, 2, 5$. Njihov zmnožek je $60 = 2^2 \cdot 3 \cdot 5$.
+Nato Lara predlaga še karto $1$. Jan se zasmeji: »Z njo bi lahko vsako roko podaljšala v nedogled, $1 \cdot 1 \cdot 2 \cdot 2 \cdot 3 \cdot 5$ je še vedno $60$.« Zato karte $1$ v igri ni, tako kot $1$ ni praštevilo.
 
-Drevo lahko začneš z drugačnim razcepom, npr. $60 = 4 \cdot 15$, pa na koncu dobiš iste liste. To je slikovni dokaz, da je razcep en sam.
-
-## Drugače: Iz vsakdanjega življenja
-
-Predstavljaj si, da imaš kocke LEGO samo v petih barvah: vsaka barva je eno praštevilo. Vsako število je stolp, ki je sestavljen iz teh kock. Stolp $12$ vsebuje dve »modri« kocki ($2$) in eno »rdečo« ($3$): $12 = 2 \cdot 2 \cdot 3$.
-
-Še ena slika: $24$ učencev se želi razporediti v enako velike skupine. Razcep $24 = 2^3 \cdot 3$ ti pove, iz katerih »koščkov« lahko sestaviš skupine: po $2$, $3$, $4 = 2 \cdot 2$, $6 = 2 \cdot 3$, $8 = 2 \cdot 2 \cdot 2$ ali $12 = 2 \cdot 2 \cdot 3$. Vsak delitelj števila $24$ je zmnožek nekaterih njegovih prafaktorjev.
-
-Pri $13$ učencih pa je praštevilo: razdeliš jih lahko le v $1$ skupino ali v $13$ skupin po enega učenca.
+Na koncu Lara poskuša kupiti $13$. Rabi samo eno karto, $13$. Drugače ne gre, ker je $13$ praštevilo.
 
 ## Drugače: Korak za korakom s številkami
 
-Razcep števila $180$ v tabeli. V levem stolpcu je trenutno število, v desnem najmanjše praštevilo, s katerim je deljivo.
+Razcep števila $1\,260$, vrstica za vrstico. V zadnjem stolpcu je, zakaj smo izbrali ta delitelj.
 
-| Število | Delimo s | Rezultat |
-|---------|----------|----------|
-| $180$ | $2$ | $90$ |
-| $90$ | $2$ | $45$ |
-| $45$ | $3$ | $15$ |
-| $15$ | $3$ | $5$ |
-| $5$ | $5$ | $1$ |
+| Število | Delimo s | Rezultat | Zakaj |
+|---|---|---|---|
+| $1\,260$ | $2$ | $630$ | sodo |
+| $630$ | $2$ | $315$ | sodo |
+| $315$ | $3$ | $105$ | $3 + 1 + 5 = 9$ |
+| $105$ | $3$ | $35$ | $1 + 0 + 5 = 6$ |
+| $35$ | $5$ | $7$ | konča se s $5$ |
+| $7$ | $7$ | $1$ | praštevilo |
 
-Prafaktorji so v stolpcu »Delimo s«: $2, 2, 3, 3, 5$.
+1. Preberi srednji stolpec: $2, 2, 3, 3, 5, 7$.
+2. Enake faktorje združi s potenco: $1\,260 = 2^2 \cdot 3^2 \cdot 5 \cdot 7$.
+3. Preizkus z množenjem: $4 \cdot 9 = 36$, $36 \cdot 5 = 180$, $180 \cdot 7 = 1\,260$.
 
-$$180 = 2^2 \cdot 3^2 \cdot 5$$
-
-Preverimo: $4 \cdot 9 \cdot 5 = 36 \cdot 5 = 180$. ✓
-
-Postopek za vsako nalogo:
-
-1. Preveri, ali je število deljivo z $2$. Če da, deli, in tako naprej, dokler ni več deljivo.
-2. Poskusi s $3$, nato s $5$, nato s $7$, nato z $11$ ...
-3. Ustaviš se, ko dobiš $1$.
-4. Enake faktorje zapiši s potenco in preveri z množenjem.
-
-## Drugače: Bolj natančno
-
-**Zakaj je $1$ izvzeta iz praštevil?** Če bi bilo $1$ praštevilo, razcep ne bi bil en sam: $6 = 2 \cdot 3 = 1 \cdot 2 \cdot 3 = 1 \cdot 1 \cdot 2 \cdot 3$. Ker želimo, da je razcep enoličen, $1$ ne štejemo med praštevila.
-
-**Zakaj se razcep vedno konča?** Pri vsakem deljenju z najmanjšim možnim praštevilom (vsaj $2$) se število vsaj prepolovi, zato postaja vedno manjše. Ker so naravna števila navzdol omejena z $1$, se postopek mora končati.
-
-**Zakaj je najmanjši delitelj večji od $1$ vedno praštevilo?** Recimo, da bi bil najmanjši tak delitelj $d$ sestavljen. Potem bi imel manjši delitelj $e$, kjer je $1 < e < d$. Ta $e$ bi delil tudi dano število, kar je protislovje, ker je $d$ najmanjši. Zato je $d$ praštevilo. Zato nam pri deljenju z najmanjšim možnim številom ni treba posebej preverjati, ali je delitelj praštevilo.
-
-**Eratostenovo rešeto.** Praštevila do $30$ najdeš tako, da izpišeš števila od $2$ do $30$, obdržiš $2$ in prečrtaš vse njegove večkratnike, nato obdržiš $3$ in prečrtaš njegove večkratnike, nato $5$ in tako naprej. Neprečrtana števila so praštevila: $2, 3, 5, 7, 11, 13, 17, 19, 23, 29$.
+Vrstni red pravil je vedno isti: najprej $2$, dokler gre, nato $3$, nato $5$, nato $7$, $11$ in tako naprej.
 
 ## Preveri se
 
-? Katero od naštetih števil je praštevilo?
-- $1$
-- $27$
-+ $17$
-- $39$
-> $17$ je deljivo samo z $1$ in s $17$. Število $1$ ima en sam delitelj, $27 = 3 \cdot 9$ in $39 = 3 \cdot 13$ pa sta sestavljeni števili.
+? Katero od števil $2$, $17$, $23$, $27$ ni praštevilo?
+- $2$
+~ $2$ je sodo, a ima samo delitelja $1$ in $2$. Je edino sodo praštevilo.
+- $23$
+~ $23$ ni deljivo z $2$, $3$ ali $5$, in $5 \cdot 5 = 25$ je že več kot $23$. Zato je praštevilo.
++ $27$
+- $17$
+~ $17$ ima samo delitelja $1$ in $17$, zato je praštevilo.
+> $27 = 3 \cdot 3 \cdot 3$ je sestavljeno število. Ostala tri so praštevila. Pozor: $27$ je liho, pa vseeno ni praštevilo.
 
-? Kako se pravilno glasi razcep števila $72$ na prafaktorje?
-- $2 \cdot 4 \cdot 9$
-- $2^2 \cdot 3^3$
-+ $2^3 \cdot 3^2$
-- $8 \cdot 9$
-> $72 : 2 = 36$, $36 : 2 = 18$, $18 : 2 = 9$, $9 : 3 = 3$, $3 : 3 = 1$. Torej so trije faktorji $2$ in dva faktorja $3$: $2^3 \cdot 3^2 = 8 \cdot 9 = 72$. Zapisa $2 \cdot 4 \cdot 9$ in $8 \cdot 9$ nista razcepa na prafaktorje, ker $4$, $8$ in $9$ niso praštevila, $2^2 \cdot 3^3$ pa je $108$.
+? Kateri zapis je razcep števila $150$ na prafaktorje?
+- $2 \cdot 75$
+~ $75$ ni praštevilo ($75 = 3 \cdot 5 \cdot 5$), zato razcep še ni končan.
+- $2 \cdot 3 \cdot 25$
+~ $25 = 5 \cdot 5$ ni praštevilo. Razcep mora vsebovati same prafaktorje.
++ $2 \cdot 3 \cdot 5^2$
+- $2 \cdot 3^2 \cdot 5$
+~ Ta zapis da $2 \cdot 9 \cdot 5 = 90$. Potenco si dal napačnemu faktorju; preveri z množenjem.
+> $150 : 2 = 75$, $75 : 3 = 25$, $25 : 5 = 5$, $5 : 5 = 1$. Torej $150 = 2 \cdot 3 \cdot 5^2$.
 
-? Katero število ima razcep $2^2 \cdot 3 \cdot 5$?
-- $30$
-- $20$
-+ $60$
-- $90$
-> $2^2 \cdot 3 \cdot 5 = 4 \cdot 3 \cdot 5 = 60$. Število $30$ dobiš, če pozabiš kvadrat pri $2$, število $90$ pa ustreza razcepu $2 \cdot 3^2 \cdot 5$.
+? Prafaktorji nekega števila so $2$, $3$, $3$ in $5$. Kaj zato zagotovo drži?
+- Število je liho, ker so trije od štirih prafaktorjev lihi.
+~ Že en faktor $2$ naredi zmnožek sodega. Število je sodo.
+- Število je deljivo s $4$.
+~ Za deljivost s $4 = 2 \cdot 2$ bi potreboval dva faktorja $2$, v razcepu pa je samo eden.
++ Število je deljivo z $18$.
+- Število je deljivo s $7$.
+~ Če $7$ ni med prafaktorji, število ni deljivo s $7$. Razcep je en sam, drugih prafaktorjev ni.
+> $18 = 2 \cdot 3 \cdot 3$, vsi ti faktorji so v razcepu. Število je $90$, in $90 : 18 = 5$.
+
+? Žan preverja, ali je $91$ praštevilo. (1) $91$ ni sodo, zato ni deljivo z $2$. (2) $9 + 1 = 10$, zato ni deljivo s $3$. (3) Ne konča se z $0$ ali $5$, zato ni deljivo s $5$. (4) Torej je $91$ praštevilo. Kateri korak je napačen?
+- Korak (1)
+~ Liho število res ni deljivo z $2$; ta korak drži.
+- Korak (2)
+~ Vsota števk $10$ ni deljiva s $3$, zato $91$ res ni deljivo s $3$.
+- Korak (3)
+~ Pravilo za $5$ je uporabljeno prav.
++ Korak (4)
+> Ker je $7 \cdot 7 = 49$ manj kot $91$, mora Žan preizkusiti še $7$. In res: $91 = 7 \cdot 13$, zato $91$ ni praštevilo.
+
+? Na turnirju v odbojki je $72$ igralcev. Organizatorka želi enako velike ekipe s $6$ do $10$ igralci, brez ostanka. Katere velikosti ekip so možne? ($72 = 2^3 \cdot 3^2$)
+- Samo $6$ in $9$
+~ Pozabil si na $2 \cdot 2 \cdot 2 = 8$. Potenca $2^3$ pomeni tri faktorje $2$.
++ $6$, $8$ in $9$
+- $6$, $7$, $8$, $9$ in $10$
+~ $7$ in $10 = 2 \cdot 5$ nista zmnožka prafaktorjev števila $72$, zato pri deljenju ostane ostanek.
+- Nobena, ker je $72$ sodo.
+~ Sodost ne preprečuje deljenja, ravno nasprotno: $72$ ima veliko deliteljev.
+> Iz $2, 2, 2, 3, 3$ dobimo $6 = 2 \cdot 3$, $8 = 2 \cdot 2 \cdot 2$ in $9 = 3 \cdot 3$. Res: $72 : 6 = 12$, $72 : 8 = 9$, $72 : 9 = 8$.
