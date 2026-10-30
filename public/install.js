@@ -1,6 +1,9 @@
-// Evklid kot aplikacija na začetnem zaslonu (PWA).
-// - Android, Chrome in Edge na računalniku: gumb »Namesti aplikacijo« odpre okno brskalnika za namestitev.
-// - iPhone in iPad: Safari namestitve ne ponudi sam, zato pokažemo tri korake (Deli → Dodaj na začetni zaslon).
+// Evklid kot aplikacija na napravi.
+// - Telefon: prava aplikacija (mobile/), ko je na voljo (/api/app-links): Google Play ali App Store odpre
+//   trgovino, APK za Android se prenese s koraki za namestitev, iPhone brez trgovine prek TestFlight.
+//   Spletna različica (PWA) ostane druga možnost.
+// - Računalnik (Chrome, Edge): okno brskalnika za namestitev programa (meni Start, svoje okno, brez povezave).
+// - iPhone in iPad brez aplikacije: Safari namestitve ne ponudi sam, zato pokažemo tri korake (Deli → Dodaj na začetni zaslon).
 // - Odprto v Instagramu, Messengerju …: najprej odpri v brskalniku.
 // Kartica je na Učni poti (dokler je ne skriješ), vrstica v »Jaz« in kartica v Nastavitvah ostaneta.
 import { icon } from "./icons.js";
@@ -9,6 +12,7 @@ import { t, currentLang } from "./i18n.js";
 const KEY = "evklid.install"; // čas, ko je bila kartica na Učni poti skrita
 const HIDE_DAYS = 21;
 let deferred = null; // beforeinstallprompt
+let links = {}; // prava aplikacija: { apk, play, appStore, testflight } s strežnika
 let ctx = { toast: () => {}, onSheet: () => {} };
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -39,6 +43,15 @@ export function platform(ua = navigator.userAgent, touch = navigator.maxTouchPoi
   return { os: ios ? "ios" : android ? "android" : "desktop", inApp, safariMac, mobile: ios || android };
 }
 
+// Prava aplikacija za to napravo: { href, store } (trgovina), { href, kind: "apk" | "testflight" } ali null.
+export function nativeApp(p = platform(), l = links) {
+  if (p.inApp) return null;
+  if (p.os === "android") return l.play ? { href: l.play, store: true } : l.apk ? { href: l.apk, kind: "apk" } : null;
+  if (p.os === "ios") return l.appStore ? { href: l.appStore, store: true } : l.testflight ? { href: l.testflight, kind: "testflight" } : null;
+  return null;
+}
+const anyNative = () => !!(links.apk || links.play || links.appStore || links.testflight);
+
 // Ali ponudimo namestitev: ne v že nameščeni aplikaciji; na računalniku samo, ko brskalnik to zna.
 export function canOffer(p = platform()) {
   if (isStandalone()) return false;
@@ -67,8 +80,19 @@ function steps(p) {
   return { list: [["download", t("inst.desk1")]] };
 }
 
-// Gumb: okno brskalnika za namestitev, kjer ga ni, pa navodila.
+// Gumb: trgovina ali prava aplikacija, sicer okno brskalnika za namestitev, kjer ga ni, pa navodila.
 export async function install() {
+  const app = nativeApp();
+  if (app?.store) {
+    window.open(app.href, "_blank", "noopener");
+    return;
+  }
+  if (app) return openSheet(app);
+  return installWeb();
+}
+
+// Spletna različica (PWA).
+async function installWeb() {
   if (deferred) {
     const ev = deferred;
     deferred = null;
@@ -80,7 +104,22 @@ export async function install() {
   openSheet();
 }
 
-function openSheet() {
+// Koraki za pravo aplikacijo mimo trgovine (APK, TestFlight).
+function nativeSheet(app) {
+  const apk = app.kind === "apk";
+  const list = apk
+    ? [
+        ["download", t("inst.apk1")],
+        ["folder-open", t("inst.apk2")],
+        ["check", t("inst.apk3")],
+      ]
+    : [];
+  return `<a class="btn-primary is-get" href="${esc(app.href)}"${apk ? " download" : ' target="_blank" rel="noopener"'}>${icon(apk ? "download" : "external-link")}<span>${esc(t(apk ? "dl.apk" : "dl.testflight"))}</span></a>
+    ${list.length ? `<ol class="is-steps">${list.map(([ic, txt]) => `<li><span class="is-ic">${icon(ic)}</span><span>${esc(txt)}</span></li>`).join("")}</ol>` : `<p class="muted is-note">${esc(t("dl.testflightSteps"))}</p>`}
+    <button type="button" class="ghost is-web is-ok">${esc(t("inst.webBtn"))}</button>`;
+}
+
+function openSheet(app = null) {
   let dlg = $("#install-sheet");
   if (!dlg) {
     dlg = document.createElement("dialog");
@@ -88,6 +127,12 @@ function openSheet() {
     dlg.className = "install-sheet";
     dlg.addEventListener("click", (e) => {
       if (e.target === dlg || e.target.closest(".is-close")) closeInstallSheet();
+      else if (e.target.closest(".is-web")) {
+        if (deferred) {
+          closeInstallSheet();
+          installWeb();
+        } else openSheet();
+      }
     });
     dlg.addEventListener("cancel", (e) => {
       e.preventDefault();
@@ -97,12 +142,17 @@ function openSheet() {
   }
   const p = platform();
   const { list, note } = steps(p);
+  // Na računalniku še pot do aplikacije za telefon.
+  const phone = !p.mobile && anyNative() ? `<p class="muted is-note">${esc(t("inst.phone", { url: `${location.host}/prenesi` }))}</p>` : "";
+  const body = app
+    ? nativeSheet(app)
+    : `${list.length ? `<ol class="is-steps">${list.map(([ic, txt]) => `<li><span class="is-ic">${icon(ic)}</span><span>${esc(txt)}</span></li>`).join("")}</ol>` : ""}
+    ${note ? `<p class="muted is-note">${esc(note)}</p>` : ""}${phone}`;
   dlg.innerHTML = `<div class="is-box" role="document">
-    <div class="is-head"><img src="/icons/icon-192.png" alt="" width="48" height="48"><h2>${esc(t("inst.sheetTitle"))}</h2>
+    <div class="is-head"><img src="/icons/icon-192.png" alt="" width="48" height="48"><h2>${esc(t(app || !p.mobile ? "inst.title" : "inst.sheetTitle"))}</h2>
       <button type="button" class="ghost icon-only is-close" aria-label="${esc(t("nav.back"))}" title="${esc(t("nav.back"))}">${icon("x")}</button></div>
-    ${list.length ? `<ol class="is-steps">${list.map(([ic, txt]) => `<li><span class="is-ic">${icon(ic)}</span><span>${esc(txt)}</span></li>`).join("")}</ol>` : ""}
-    ${note ? `<p class="muted is-note">${esc(note)}</p>` : ""}
-    <button type="button" class="primary is-close is-ok">${esc(t("common.done"))}</button>
+    ${body}
+    <button type="button" class="${app ? "secondary " : "primary "}is-close is-ok">${esc(t("common.done"))}</button>
   </div>`;
   dlg.classList.toggle("is-top", p.os === "ios" && /iPad|Macintosh/.test(navigator.userAgent)); // na iPadu je »Deli« zgoraj
   if (!dlg.open) {
@@ -120,12 +170,13 @@ export function closeInstallSheet({ fromBack = false } = {}) {
 }
 
 function cardHtml(p) {
-  const text = p.mobile ? t("inst.text") : t("inst.textDesk");
-  const btn = deferred ? t("inst.btn") : t("inst.how");
+  const app = nativeApp(p);
+  const text = app ? t("inst.textNative") : p.mobile ? t("inst.text") : t("inst.textDesk");
+  const direct = deferred || app;
   return `<span class="fb-card-ic">${icon(p.mobile ? "smartphone" : "download")}</span>
     <div class="fb-card-text"><b>${esc(t("inst.title"))}</b><p class="muted">${esc(text)}</p></div>
     <span></span>
-    <button type="button" class="primary fb-card-go inst-go">${icon(deferred ? "download" : "info")}<span>${esc(btn)}</span></button>`;
+    <button type="button" class="primary fb-card-go inst-go">${icon(direct ? "download" : "info")}<span>${esc(direct ? t("inst.btn") : t("inst.how"))}</span></button>`;
 }
 
 function hiddenOnPath() {
@@ -143,7 +194,7 @@ export function refresh() {
     if (!card.hidden) {
       // Na Učni poti majhna vrstica (ne odrine vaj navzdol); dotik kjer koli odpre namestitev.
       card.className = "card list-card install-mini";
-      card.innerHTML = `<button type="button" class="list-row inst-go"><span class="ic">${icon(p.mobile ? "smartphone" : "download")}</span><span class="lr-text"><b>${esc(t("inst.title"))}</b><small>${esc(p.mobile ? t("inst.meSub") : t("inst.textDesk"))}</small></span>${icon("chevron-right")}</button>
+      card.innerHTML = `<button type="button" class="list-row inst-go"><span class="ic">${icon(p.mobile ? "smartphone" : "download")}</span><span class="lr-text"><b>${esc(t("inst.title"))}</b><small>${esc(nativeApp(p) ? t("inst.textNative") : p.mobile ? t("inst.meSub") : t("inst.textDesk"))}</small></span>${icon("chevron-right")}</button>
         <button type="button" class="ghost icon-only fb-card-x" aria-label="${esc(t("inst.dismiss"))}" title="${esc(t("inst.dismiss"))}">${icon("x")}</button>`;
       card.querySelector(".inst-go").onclick = install;
       card.querySelector(".fb-card-x").onclick = () => {
@@ -178,10 +229,18 @@ export function initInstall(opts = {}) {
   window.addEventListener("appinstalled", () => {
     deferred = null;
     closeInstallSheet();
-    ctx.toast(t("inst.done"), "circle-check");
+    ctx.toast(t(platform().mobile ? "inst.done" : "inst.doneDesk"), "circle-check");
     refresh();
   });
   $("#me-install")?.addEventListener("click", install);
   matchMedia("(display-mode: standalone)").addEventListener?.("change", refresh);
   refresh();
+  // Ali je za telefon na voljo prava aplikacija (APK, trgovini, TestFlight).
+  fetch("/api/app-links", { credentials: "same-origin" })
+    .then((r) => (r.ok ? r.json() : {}))
+    .then((l) => {
+      links = l && typeof l === "object" ? l : {};
+      refresh();
+    })
+    .catch(() => {});
 }

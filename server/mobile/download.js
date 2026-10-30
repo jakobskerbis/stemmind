@@ -1,10 +1,14 @@
 // Stran /prenesi: Evklid kot aplikacija za Android in iPhone, tudi mimo trgovin.
 // - Android: datoteka APK (EAS Build, profil "direct"). Vir: EVKLID_ANDROID_APK_URL ali datoteka
-//   data/<slug>.apk na tem strežniku (postreže se na /prenesi/<slug>.apk).
+//   <slug>.apk v mapi baze (na Renderju trajni disk /var/data, doma data/), postreže se na /prenesi/<slug>.apk.
+//   Skrbnik jo naloži v Nastavitvah: prilepi povezavo iz expo.dev (POST /api/admin/apk).
 // - iPhone: Apple aplikacij mimo trgovine ne dovoli; povezava TestFlight (EVKLID_TESTFLIGHT_URL), sicer spletna aplikacija.
 // - App Store in Google Play: EVKLID_APP_STORE_URL, EVKLID_PLAY_URL, ko bosta aplikaciji objavljeni.
 import fs from "node:fs";
 import path from "node:path";
+import { Readable } from "node:stream";
+import { pipeline } from "node:stream/promises";
+import express from "express";
 import { BRAND } from "../brand.js";
 import { uiText, manifestLang } from "../webapp.js";
 import { RTL } from "../../public/i18n/languages.js";
@@ -12,10 +16,99 @@ import { RTL } from "../../public/i18n/languages.js";
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const httpsUrl = (u) => (/^https:\/\/[^\s"'<>]+$/.test(String(u || "")) ? u : null);
 
+// Od kod skrbnik lahko naloži APK (gradnje EAS in izdaje GitHub, z njihovimi preusmeritvami).
+const APK_HOSTS = /(^|\.)(expo\.dev|expo\.io|storage\.googleapis\.com|github\.com|githubusercontent\.com)$/i;
+const MAX_APK = 300 * 1024 * 1024;
+
+// Prenese APK s povezave v datoteko: samo https in znani strežniki (tudi po preusmeritvah), največ 300 MB,
+// vsebina se mora začeti kot ZIP (APK je ZIP). Najprej v začasno datoteko, nato zamenjava naenkrat.
+export async function fetchApk(url, file, fetchImpl = fetch) {
+  let u = String(url || "").trim();
+  let res = null;
+  for (let hop = 0; hop < 6 && !res; hop++) {
+    let p;
+    try {
+      p = new URL(u);
+    } catch {
+      return { error: "Povezava ni veljavna." };
+    }
+    if (p.protocol !== "https:" || !APK_HOSTS.test(p.hostname)) return { error: "Povezava mora biti do expo.dev ali GitHub (https)." };
+    const r = await fetchImpl(p.href, { redirect: "manual" });
+    const loc = r.status >= 300 && r.status < 400 ? r.headers.get("location") : null;
+    if (loc) u = new URL(loc, p).href;
+    else if (!r.ok) return { error: `Prenos ni uspel (${r.status}).` };
+    else res = r;
+  }
+  if (!res?.body) return { error: "Preveč preusmeritev." };
+  if (Number(res.headers.get("content-length")) > MAX_APK) return { error: "Datoteka je prevelika." };
+  const tmp = `${file}.${process.pid}.tmp`;
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  let bytes = 0;
+  let head = Buffer.alloc(0);
+  try {
+    await pipeline(
+      Readable.fromWeb(res.body),
+      async function* (src) {
+        for await (const chunk of src) {
+          bytes += chunk.length;
+          if (bytes > MAX_APK) throw new Error("Datoteka je prevelika.");
+          if (head.length < 4) head = Buffer.concat([head, chunk]).subarray(0, 4);
+          yield chunk;
+        }
+      },
+      fs.createWriteStream(tmp),
+    );
+    if (!head.equals(Buffer.from([0x50, 0x4b, 0x03, 0x04]))) throw new Error("To ni datoteka APK.");
+    fs.renameSync(tmp, file);
+    return { bytes };
+  } catch (e) {
+    fs.rmSync(tmp, { force: true });
+    return { error: e.message || "Prenos ni uspel." };
+  }
+}
+
 export function mountDownload(app, opts = {}) {
   const env = opts.env || process.env;
-  const apkFile = opts.apkFile || path.resolve(env.EVKLID_ANDROID_APK_FILE || `data/${BRAND.slug}.apk`);
   const apkName = `${BRAND.slug}.apk`;
+  const dataDir = path.dirname(env.EVKLID_DB || `data/${BRAND.slug}.db`);
+  const apkFile = opts.apkFile || path.resolve(env.EVKLID_ANDROID_APK_FILE || path.join(dataDir, apkName));
+
+  // Kje je aplikacija za posamezno napravo (gumb »Namesti aplikacijo« v spletni aplikaciji).
+  const links = () => ({
+    apk: httpsUrl(env.EVKLID_ANDROID_APK_URL) || (fs.existsSync(apkFile) ? `/prenesi/${apkName}` : null),
+    play: httpsUrl(env.EVKLID_PLAY_URL),
+    appStore: httpsUrl(env.EVKLID_APP_STORE_URL),
+    testflight: httpsUrl(env.EVKLID_TESTFLIGHT_URL),
+  });
+  app.get("/api/app-links", (_req, res) => res.set("Cache-Control", "no-cache").json(links()));
+
+  const admin = (req, res) => {
+    if (req.parent?.is_admin) return true;
+    res.status(403).json({ error: "Samo za skrbnika." });
+    return false;
+  };
+  const apkStatus = () => {
+    const st = fs.statSync(apkFile, { throwIfNoEntry: false });
+    return { file: st ? { bytes: st.size, at: st.mtime.toISOString() } : null, url: httpsUrl(env.EVKLID_ANDROID_APK_URL) };
+  };
+  app.get("/api/admin/apk", (req, res) => {
+    if (admin(req, res)) res.json(apkStatus());
+  });
+  let busy = false;
+  app.post("/api/admin/apk", express.json({ limit: "4kb" }), async (req, res) => {
+    if (!admin(req, res)) return;
+    if (busy) return res.status(409).json({ error: "Prenos že poteka." });
+    busy = true;
+    try {
+      const r = await fetchApk(req.body?.url, apkFile, opts.fetch || fetch);
+      if (r.error) return res.status(400).json({ error: r.error });
+      res.json(apkStatus());
+    } catch {
+      res.status(502).json({ error: "Prenos ni uspel." });
+    } finally {
+      busy = false;
+    }
+  });
 
   app.get(`/prenesi/${apkName}`, (_req, res) => {
     if (!fs.existsSync(apkFile)) return res.status(404).send("APK ni na voljo.");
@@ -26,10 +119,7 @@ export function mountDownload(app, opts = {}) {
   app.get("/prenesi", (req, res) => {
     const lang = manifestLang(req.query.lang, req.acceptsLanguages());
     const t = (k, v) => esc(uiText(lang, k, v));
-    const apk = httpsUrl(env.EVKLID_ANDROID_APK_URL) || (fs.existsSync(apkFile) ? `/prenesi/${apkName}` : null);
-    const play = httpsUrl(env.EVKLID_PLAY_URL);
-    const appStore = httpsUrl(env.EVKLID_APP_STORE_URL);
-    const testflight = httpsUrl(env.EVKLID_TESTFLIGHT_URL);
+    const { apk, play, appStore, testflight } = links();
     const ua = String(req.get("user-agent") || "");
     const first = /iPhone|iPad|Macintosh.*Mobile/.test(ua) ? "ios" : "android";
     const btn = (href, label, primary = true) => `<a class="btn${primary ? "" : " sec"}" href="${esc(href)}">${label}</a>`;

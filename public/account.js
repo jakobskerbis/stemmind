@@ -715,7 +715,53 @@ function adminCodes(acc) {
         </form></details>
       <h3>${esc(t("admin.events"))}</h3>
       ${events ? `<ul class="event-list">${events}</ul>` : `<p class="muted">${esc(t("admin.noEvents"))}</p>`}
+      <h3>${esc(t("admin.apk"))}</h3>
+      <p class="muted small">${esc(t("admin.apkHelp"))}</p>
+      <p id="apk-status" aria-live="polite"></p>
+      <form id="apk-form" class="form" novalidate>
+        <label>${esc(t("admin.apkUrl"))} <input name="url" type="url" required placeholder="https://expo.dev/artifacts/eas/….apk" inputmode="url" autocomplete="off"></label>
+        <p class="form-error" role="alert" hidden></p>
+        <button class="primary" type="submit">${esc(t("admin.apkSave"))}</button>
+      </form>
     </div>`;
+}
+
+// Skrbnik: APK za Android na strežniku (server/mobile/download.js), ponujen na /prenesi in ob »Namesti aplikacijo«.
+function apkText(r) {
+  if (r.url) return t("admin.apkLink");
+  if (!r.file) return t("admin.apkNone");
+  return t("admin.apkHave", { date: date(r.file.at), mb: (r.file.bytes / 1048576).toFixed(1) });
+}
+async function loadApk() {
+  const out = $("#apk-status");
+  if (!out) return;
+  try {
+    out.textContent = apkText(await api("/api/admin/apk"));
+  } catch {
+    out.textContent = "";
+  }
+}
+function bindApk() {
+  loadApk();
+  $("#apk-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const f = e.target;
+    const btn = $("button[type=submit]", f);
+    $(".form-error", f).hidden = true;
+    btn.disabled = true;
+    btn.setAttribute("aria-busy", "true");
+    try {
+      const r = await api("/api/admin/apk", { method: "POST", body: { url: f.url.value } });
+      $("#apk-status").textContent = apkText(r);
+      toast(apkText(r));
+      f.reset();
+    } catch (err) {
+      showError(f, err);
+    } finally {
+      btn.disabled = false;
+      btn.removeAttribute("aria-busy");
+    }
+  });
 }
 
 // Skrbnik: merjenje v pilotu (server/pilot.js): vprašanja na dan, strošek AI na učenca, obiski strani za starše.
@@ -764,6 +810,7 @@ async function loadPilot(days = 30, school = "", focusId = "") {
 function bindAdminCodes(acc) {
   if (!acc.promo?.codes) return;
   loadPilot();
+  bindApk();
   $("#code-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const f = e.target;
