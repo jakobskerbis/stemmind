@@ -96,11 +96,11 @@ export function createScientific(root, opts) {
           <button type="button" data-deg="1" title="${esc(t("gc.deg"))}">DEG</button><button type="button" data-deg="0" title="${esc(t("gc.rad"))}">RAD</button>
         </div>
         <label class="sc-format-l"><span class="sr-only">${esc(t("sc.format"))}</span><select class="sc-format" aria-label="${esc(t("sc.format"))}"></select></label>
+        <div class="sc-vars" hidden></div>
         <span class="sc-sp"></span>
         <button type="button" class="ghost small sc-const-btn" aria-expanded="false" title="${esc(t("sc.constants"))}">${icon("atom")}<span>${esc(t("sc.constants"))}</span></button>
         <button type="button" class="ghost icon-only sc-clear-h" title="${esc(t("sc.clearHistory"))}" aria-label="${esc(t("sc.clearHistory"))}">${icon("trash-2")}</button>
       </div>
-      <div class="sc-vars" hidden></div>
       <div class="sc-history" aria-label="${esc(t("sc.history"))}" role="log"></div>
       <div class="sc-entry">
         <div class="sc-line">
@@ -224,18 +224,22 @@ export function createScientific(root, opts) {
         break;
       case "solve":
         e.res = solutionTex(r, c, st.format);
+        e.r = pick(r, ["v", "roots", "complex", "exact", "all", "none", "deg"]);
         if (r.interval) e.note = { key: "sc.onePeriod", tex: r.interval };
-        if (!r.roots.length && r.complex?.length && !r.exact) e.note = { key: "sc.noReal" };
+        if (!r.roots.length && r.complex?.length) e.note = { key: "sc.noReal" };
         e.steps = true;
         if (r.roots.length) e.first = r.roots[0];
         break;
       case "ineq":
         e.res = intervalsTex(r, c, st.format);
+        e.r = pick(r, ["v", "intervals"]); // ±∞ se v JSON shrani kot null
+        if (r.interval) e.note = { key: "sc.onePeriod", tex: r.interval };
         e.steps = true;
         break;
       case "system":
         if (r.values) {
           e.res = systemTex(r, c, st.format);
+          e.r = pick(r, ["unknowns", "values"]);
           e.steps = true;
         } else e.note = { key: r.none ? "sc.sysNone" : "sc.sysMany" };
         break;
@@ -261,6 +265,21 @@ export function createScientific(root, opts) {
     return e;
   }
 
+  const pick = (o, keys) => Object.fromEntries(keys.filter((k) => o[k] !== undefined).map((k) => [k, o[k]]));
+  // Rešitev po trenutni obliki zapisa (po menjavi oblike se osveži tudi starejša zgodovina);
+  // vnosi brez »r« (shranjeni pred to različico) obdržijo shranjeni zapis.
+  function resTex(e) {
+    const r = e.r;
+    if (!r) return e.res || "";
+    try {
+      const c = comma();
+      if (e.kind === "solve") return solutionTex({ complex: [], ...r }, c, st.format);
+      if (e.kind === "ineq") return intervalsTex({ ...r, intervals: r.intervals.map((i) => ({ ...i, lo: i.lo ?? -Infinity, hi: i.hi ?? Infinity })) }, c, st.format);
+      if (e.kind === "system") return systemTex(r, c, st.format);
+    } catch {}
+    return e.res || "";
+  }
+
   function resultHtml(e) {
     const icon2 = (n) => icon(n);
     switch (e.kind || "value") {
@@ -275,11 +294,11 @@ export function createScientific(root, opts) {
       case "solve":
       case "system": {
         // vsaka rešitev posebej, da se na ozkem zaslonu prelomi med rešitvami, ne sredi njih
-        const parts = String(e.res || "").split(",\\quad ").filter(Boolean);
+        const parts = String(resTex(e)).split(",\\quad ").filter(Boolean);
         return parts.length ? `<span class="sc-parts">${parts.map((x) => `<span>${texHtml(x)}</span>`).join("")}</span>` : "";
       }
       case "ineq":
-        return e.res ? texHtml(e.res) : "";
+        return resTex(e) ? texHtml(resTex(e)) : "";
       default:
         return "";
     }
@@ -569,8 +588,9 @@ export function createScientific(root, opts) {
     const c = comma();
     if ((it.kind || "value") === "value") return formatNumber(it.value, { mode: st.format, comma: c }).text;
     if (it.kind === "complex") return complexText(it);
-    return String(it.res || "")
-      .replace(/\\(quad|,|;|left|right|Leftrightarrow)/g, " ")
+    return String(resTex(it))
+      .replace(/\\Leftrightarrow/g, "⇔")
+      .replace(/\\(quad|,|;|left|right)/g, " ")
       .replace(/\\approx/g, "≈")
       .replace(/\\le/g, "≤")
       .replace(/\\ge/g, "≥")

@@ -8,6 +8,9 @@ import { evalComplex, polyRoots } from "./toolscore.js";
 const RANGE = 100; // numerično iščemo rešitve na [−RANGE, RANGE]
 const SAMPLES = 20000;
 const TRIG = /(sin|cos|tan|cot|sec|csc)\(/;
+// Iskanje rešitev ne sme zamrzniti vmesnika (∑ s 10 000 členi): po 1,5 s odnehamo (»ne znam rešiti«).
+const BUDGET_MS = 1500;
+let deadline = Infinity;
 
 const gcd = (a, b) => {
   a = Math.abs(a);
@@ -19,7 +22,12 @@ const near = (a, b, eps = 1e-9) => Math.abs(a - b) <= eps * Math.max(1, Math.abs
 const clean = (x) => (Math.abs(x - Math.round(x)) < 1e-9 * Math.max(1, Math.abs(x)) ? Math.round(x) : Math.abs(x) < 1e-12 ? 0 : x);
 
 /** Decimalni zapis: v samodejni obliki na 8 mest (rešitve so dolge), sicer po izbrani obliki. */
-const decTex = (v, comma, mode = "auto") => formatNumber(mode === "auto" ? Number(clean(v).toPrecision(8)) : clean(v), { mode, comma }).tex;
+const decTex = (v, comma, mode = "auto") => {
+  const x = clean(v);
+  // samodejno: 6 decimalk (vse rešitve enako dolge), zelo majhna števila na 6 veljavnih mest
+  const a = mode === "auto" ? (Math.abs(x) >= 1e-3 || x === 0 ? Number(x.toFixed(6)) : Number(x.toPrecision(6))) : x;
+  return formatNumber(a, { mode, comma }).tex;
+};
 /** Število v TeX: točna oblika (ulomek, koren, π) ≈ decimalno, sicer decimalni zapis. */
 export function numberTex(v, comma = true, mode = "auto") {
   const ex = exactTex(clean(v));
@@ -60,7 +68,8 @@ export function polyCoeffs(f, maxDeg = 8) {
   const scale = Math.max(1, ...p.map(Math.abs));
   p = p.map((a) => (Math.abs(a) < 1e-9 * scale ? 0 : clean(a)));
   const ev = (x) => p.reduceRight((s, a) => s * x + a, 0);
-  for (const x of [0.37, -1.73, 2.51, -3.29, 6.7, -9.4]) {
+  // tudi daleč od vzorcev: cos(x) v stopinjah je na −10 … 10 skoraj polinom (Taylor), na ±100 ne več
+  for (const x of [0.37, -1.73, 2.51, -3.29, 6.7, -9.4, 23.9, -47.3, 97.1]) {
     const y = f(x);
     if (typeof y !== "number" || !Number.isFinite(y) || !near(ev(x), y, 1e-7)) return null;
   }
@@ -121,10 +130,21 @@ function criticalPoints(f, a, b, n = SAMPLES) {
   let ym = NaN;
   if (Math.abs(y0) < 1e-12) add(a);
   for (let i = 1; i <= n; i++) {
+    if (Date.now() > deadline) throw new MathError("notCalc");
+    // veliko robov definicijskega območja (x^x pri x < 0) ali ničel (floor) ne sme ustaviti iskanja
+    // spremembe predznaka naprej po osi
+    const full = pts.length > 400;
     const x1 = a + i * h;
     const y1 = val(x1);
-    if (y1 === 0) add(x1);
-    else if (cls(y0) !== cls(y1) && y0 !== 0) {
+    if (y1 === 0) {
+      if (!full || Number.isFinite(y0)) add(x1);
+    } else if (cls(y0) !== cls(y1) && y0 !== 0) {
+      if (full && (cls(y0) === 2 || cls(y1) === 2)) {
+        ym = y0;
+        x0 = x1;
+        y0 = y1;
+        continue;
+      }
       // bisekcija na meji (ničla, pol ali rob definicijskega območja)
       let lo = x0;
       let hi = x1;
@@ -140,7 +160,7 @@ function criticalPoints(f, a, b, n = SAMPLES) {
         else hi = m;
       }
       add((lo + hi) / 2);
-    } else if (Number.isFinite(ym) && Number.isFinite(y0) && Number.isFinite(y1) && Math.abs(y0) < Math.abs(ym) && Math.abs(y0) <= Math.abs(y1) && Math.sign(ym) === Math.sign(y0) && Math.sign(y0) === Math.sign(y1)) {
+    } else if (!full && Number.isFinite(ym) && Number.isFinite(y0) && Number.isFinite(y1) && Math.abs(y0) < Math.abs(ym) && Math.abs(y0) <= Math.abs(y1) && Math.sign(ym) === Math.sign(y0) && Math.sign(y0) === Math.sign(y1)) {
       // morda dotikališče (dvojna ničla)
       let lo = x0 - h;
       let hi = x1;
@@ -157,7 +177,7 @@ function criticalPoints(f, a, b, n = SAMPLES) {
     ym = y0;
     x0 = x1;
     y0 = y1;
-    if (pts.length > 400) break;
+    if (pts.length > 1000) break;
   }
   return pts.sort((p, q) => p - q);
 }
@@ -168,6 +188,14 @@ const isRoot = (f, x) => {
   const s = Math.max(1, Math.abs(f(x + 1e-3)), Math.abs(f(x - 1e-3)));
   return Math.abs(y) < 1e-7 * s;
 };
+
+const isPeriodic = (F, P) =>
+  [0.31, 1.7, -2.9, 4.4, 11.3].every((x) => {
+    const a = F(x);
+    const b = F(x + P);
+    return Number.isNaN(a) ? Number.isNaN(b) : near(a, b, 1e-7);
+  });
+const periodTex = (deg, comma) => (deg ? `[0^{\\circ}${comma ? ";" : ","}\\,360^{\\circ})` : `[0${comma ? ";" : ","}\\,2\\pi)`);
 
 // ---------- enačba z eno neznanko ----------
 
@@ -192,15 +220,10 @@ function solveOne(F, v, { comma, deg, src }) {
     return { kind: "solve", v, roots: roots.sort((a, b) => a - b), complex, poly };
   }
   const P = deg ? 360 : 2 * Math.PI;
-  const same = (x) => {
-    const a = F(x);
-    const b = F(x + P);
-    return Number.isNaN(a) ? Number.isNaN(b) : near(a, b, 1e-7);
-  };
-  if (TRIG.test(src) && [0.31, 1.7, -2.9, 4.4, 11.3].every(same)) {
+  if (TRIG.test(src) && isPeriodic(F, P)) {
     // periodična enačba: rešitve na eni periodi kota (v stopinjah [0°, 360°), v radianih [0, 2π))
     const roots = criticalPoints(F, 0, P, 6000).filter((x) => isRoot(F, x) && x >= 0 && x < P - 1e-9);
-    return { kind: "solve", v, roots, complex: [], interval: deg ? `[0^{\\circ}${comma ? ";" : ","}\\,360^{\\circ})` : `[0${comma ? ";" : ","}\\,2\\pi)`, periodic: true };
+    return { kind: "solve", v, roots, complex: [], interval: periodTex(deg, comma), periodic: true, deg: !!deg };
   }
   const R = deg ? 10 * RANGE : RANGE;
   let roots = criticalPoints(F, -R, R).filter((x) => isRoot(F, x));
@@ -219,6 +242,7 @@ export function solutionTex(r, comma = true, mode = "auto") {
   const name = (i) => (many ? `${v}_{${i + 1}}` : v);
   if (r.exact)
     r.roots.forEach((x, i) => parts.push(`${name(i)} \\approx ${decTex(x, comma, mode)}`));
+  else if (r.deg) r.roots.forEach((x, i) => parts.push(`${name(i)} = ${decTex(x, comma, mode)}^{\\circ}`));
   else r.roots.forEach((x, i) => parts.push(`${name(i)} = ${numberTex(x, comma, mode)}`));
   if (!r.exact)
     (r.complex || []).forEach(([re, im], i) => {
@@ -231,33 +255,60 @@ export function solutionTex(r, comma = true, mode = "auto") {
 
 // ---------- neenačbe ----------
 
-function solveIneq(pred, Fs, v, comma) {
+const CMP_OK = { "<": (d) => d < 0, ">": (d) => d > 0, "<=": (d) => d <= 0, ">=": (d) => d >= 0, "=": (d) => d === 0, "!=": (d) => d !== 0 };
+
+/**
+ * pairs: [[L, R], …] (strani verige a < b ≤ c …), ops: primerjave med njimi.
+ * period: rešujemo samo na [0, period) (trigonometrične neenačbe), sicer na vsej realni osi.
+ */
+function solveIneq(pairs, ops, v, period = 0) {
+  const Fs = pairs.map(([L, R]) => (x) => L(x) - R(x));
+  const LO = period ? 0 : -Infinity;
+  const HI = period || Infinity;
   let pts = [];
   for (const F of Fs) {
-    const poly = polyCoeffs(F);
+    const poly = period ? null : polyCoeffs(F);
     if (poly && poly.length > 1)
       for (const [re, im] of polyRoots(poly)) {
         if (Math.abs(im) < 1e-7 * Math.max(1, Math.abs(re))) pts.push(clean(re));
       }
-    pts.push(...criticalPoints(F, -RANGE, RANGE));
+    pts.push(...(period ? criticalPoints(F, 0, period, 6000) : criticalPoints(F, -RANGE, RANGE)));
   }
-  pts = pts.sort((a, b) => a - b).filter((x, i, a) => i === 0 || !near(x, a[i - 1], 1e-7));
-  const test = (x) => {
+  pts = pts
+    .filter((x) => x > LO && x < HI && !(period && near(x, HI, 1e-9)))
+    .sort((a, b) => a - b)
+    .filter((x, i, a) => i === 0 || !near(x, a[i - 1], 1e-7));
+  // V točki (ničla, pol, rob definicijskega območja) je razlika strani lahko 1e-16 namesto 0
+  // in tan(90°) je 1,6·10^16 namesto pola: ničlo zaokrožimo na 0, pol ni rešitev.
+  const test = (x, point) => {
     try {
-      return pred(x) === true;
+      return pairs.every(([L, R], i) => {
+        const a = L(x);
+        const b = R(x);
+        if (typeof a !== "number" || typeof b !== "number" || !Number.isFinite(a) || !Number.isFinite(b)) return false;
+        let d = a - b;
+        if (point) {
+          const s = Math.max(1, Math.abs(a), Math.abs(b));
+          if (Math.abs(d) <= 1e-9 * s) d = 0;
+          else if (Math.abs(d) > 1e9 * Math.max(1, Math.min(Math.abs(a), Math.abs(b)))) return false;
+        }
+        return CMP_OK[ops[i]]?.(d) === true;
+      });
     } catch {
       return false;
     }
   };
-  // odseki: (−∞, p0), {p0}, (p0, p1), … , (pk, ∞)
+  // odseki: [LO], (LO, p0), {p0}, (p0, p1), … , (pk, HI)
+  const ends = [LO, ...pts, HI];
+  const mid = (a, b) => (a === -Infinity ? (b === Infinity ? 0 : b - Math.max(1, Math.abs(b))) : b === Infinity ? a + Math.max(1, Math.abs(a)) : (a + b) / 2);
   const segs = [];
-  const mid = (i) => (i === 0 ? (pts.length ? pts[0] - Math.max(1, Math.abs(pts[0])) : 0) : i === pts.length ? pts[i - 1] + Math.max(1, Math.abs(pts[i - 1])) : (pts[i - 1] + pts[i]) / 2);
-  for (let i = 0; i <= pts.length; i++) {
-    segs.push({ lo: i === 0 ? -Infinity : pts[i - 1], hi: i === pts.length ? Infinity : pts[i], ok: test(mid(i)) });
-    if (i < pts.length) segs.push({ point: pts[i], ok: test(pts[i]) });
+  if (period) segs.push({ point: LO, ok: test(LO, true) });
+  for (let i = 0; i + 1 < ends.length; i++) {
+    segs.push({ lo: ends[i], hi: ends[i + 1], ok: test(mid(ends[i], ends[i + 1]), false) });
+    if (i + 2 < ends.length) segs.push({ point: ends[i + 1], ok: test(ends[i + 1], true) });
   }
   // združimo v intervale
-  const out = [];
+  let out = [];
   let cur = null;
   for (const s of segs) {
     if (!s.ok) {
@@ -275,6 +326,8 @@ function solveIneq(pred, Fs, v, comma) {
     } else cur = { lo: s.lo, loIn: false, hi: s.hi, hiIn: false };
   }
   if (cur) out.push(cur);
+  // velja na vsej periodi → velja za vsak x
+  if (period && out.length === 1 && out[0].lo === LO && out[0].loIn && out[0].hi === HI) out = [{ lo: -Infinity, loIn: false, hi: Infinity, hiIn: false }];
   return { kind: "ineq", v, intervals: out };
 }
 
@@ -403,12 +456,15 @@ export function previewTex(text, env = {}) {
 export function analyze(text, env = {}) {
   const comma = env.comma !== false;
   const vars = env.vars || {};
-  const raw = String(text ?? "").trim();
+  let raw = String(text ?? "").trim();
   if (!raw) return null;
+  deadline = Date.now() + BUDGET_MS;
 
   // sistem: več enačb, ločenih s »;« na vrhnji ravni
   const parts = splitTop(raw, ";\n").map((x) => x.trim()).filter(Boolean);
   if (parts.length >= 2 && parts.every((p) => /[=<>≤≥]/.test(p))) return system(parts, env);
+  if (parts.length === 1) raw = parts[0]; // »x² = 4;« (odvečno ločilo na koncu)
+  else if (!parts.length) return null;
 
   // definicija funkcije
   const def = functionDef(raw);
@@ -425,6 +481,8 @@ export function analyze(text, env = {}) {
     }
   }
 
+  // odvodi in integrali so vedno v radianih (d/dx sin x = cos x, ∫ sin x od 0 do π = 2), tudi v načinu DEG
+  if (env.deg && /d\/d|∫|'/.test(raw)) env = { ...env, deg: false };
   const r = evaluate(raw, env);
   if (r && !r.error) return { kind: "value", ...r };
   if (!r) return null;
@@ -482,14 +540,14 @@ export function analyze(text, env = {}) {
           const res = solveOne(F, v, { comma, deg: !!env.deg, src: raw });
           return { ...res, tex, plot };
         }
-        const pred = fnOf(ast, v);
-        const Fs = [];
-        for (let i = 0; i + 1 < ast.terms.length; i++) {
-          const L = fnOf(ast.terms[i], v);
-          const R = fnOf(ast.terms[i + 1], v);
-          Fs.push((x) => L(x) - R(x));
-        }
-        return { ...solveIneq(pred, Fs, v, comma), tex, plot };
+        const pairs = [];
+        for (let i = 0; i + 1 < ast.terms.length; i++) pairs.push([fnOf(ast.terms[i], v), fnOf(ast.terms[i + 1], v)]);
+        // periodična neenačba (sin x > 0): rešitve na eni periodi kota, kot pri enačbah
+        const P = env.deg ? 360 : 2 * Math.PI;
+        const periodic = TRIG.test(raw) && pairs.every(([L, R]) => isPeriodic((x) => L(x) - R(x), P));
+        const res = solveIneq(pairs, ast.ops, v, periodic ? P : 0);
+        const full = res.intervals.length === 1 && res.intervals[0].lo === -Infinity && res.intervals[0].hi === Infinity;
+        return { ...res, ...(periodic && res.intervals.length && !full ? { interval: periodTex(!!env.deg, comma), periodic: true } : {}), tex, plot };
       }
       if (U.length === 2 && U.includes("x") && U.includes("y")) return { kind: "plot", tex, plot: [plotText(raw, env)] };
       return { error: { code: "missing", info: { names: U.slice(1) } } };
@@ -544,7 +602,7 @@ function system(parts, env) {
     if (res) return { ...res, tex, plot };
     // nelinearen sistem z x in y: pokažemo grafa (presečišča so rešitve)
     if (plot.length) return { kind: "plot", tex, plot, nonlinear: true };
-    return { error: { code: "other", info: {} } };
+    return { error: { code: "notCalc", info: {} } }; // »Te enačbe ne znam rešiti«
   } catch (e) {
     return { error: { code: e.code || "other", info: e.info || {} } };
   }

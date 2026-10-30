@@ -104,6 +104,33 @@ test("znanstveni kalkulator: neenačbe, sistemi, drži/ne drži", () => {
   assert.equal(analyze("3 > 5").value, false);
 });
 
+test("znanstveni kalkulator: popravki pregleda (stopinje, poli, periodične neenačbe, zamrznitev)", () => {
+  // cos(x) v stopinjah je na −10 … 10 skoraj polinom: ne sme veljati za polinom
+  assert.deepEqual(analyze("cos(x) = 0", { deg: true }).roots, [90, 270]);
+  assert.deepEqual(analyze("cos(x) = 0,5", { deg: true }).roots, [60, 300]);
+  assert.equal(analyze("x + sin(x) = 1", { deg: true }).roots.length, 1);
+  // pol in −0 nista rešitvi neenačbe
+  assert.match(intervalsTex(analyze("1/(x − 1) > 0")), /x \\in \(1;\\,\\infty\)/);
+  assert.match(intervalsTex(analyze("1/x ≤ 1")), /\(-\\infty;\\,0\) \\cup \[1;\\,\\infty\)/);
+  assert.match(intervalsTex(analyze("ln(x) ≤ 0")), /\(0;\\,1\]/);
+  assert.match(intervalsTex(analyze("√(x − 1) + 1 > 0")), /\[1;\\,\\infty\)/, "rob definicijskega območja ostane");
+  // trigonometrična neenačba: na eni periodi, kot enačba
+  const s = analyze("sin(x) > 0", { deg: true });
+  assert.match(intervalsTex(s), /x \\in \(0;\\,180\)$/);
+  assert.ok(s.interval);
+  assert.match(intervalsTex(analyze("tan(x) > 0")), /\(0;\\,\\frac\{\\pi\}\{2\}\) \\cup \(\\pi;\\,\\frac\{3\\pi\}\{2\}\)/, "tan(90°) ni rešitev");
+  assert.match(intervalsTex(analyze("sin(x) < 2", { deg: true })), /mathbb\{R\}/);
+  // ničla na točki vzorčenja za mnogimi robovi definicijskega območja (x^x pri x < 0)
+  assert.deepEqual(analyze("x^x = 4").roots, [2]);
+  // odvečno »;« na koncu, nelinearen sistem s tremi neznankami
+  assert.deepEqual(analyze("x² − 5x + 6 = 0;").roots, [2, 3]);
+  assert.equal(analyze("x² + y = 1; y + z = 2; z = x").error?.code, "notCalc");
+  // pretežko: odnehamo, namesto da zamrznemo zaslon
+  const t0 = Date.now();
+  assert.equal(analyze("∑_(n=1)^(10000) sin(n x) > 0").error?.code, "notCalc");
+  assert.ok(Date.now() - t0 < 4000);
+});
+
 test("znanstveni kalkulator: funkcije f(x), odvodi, kompleksna števila, risanje", () => {
   const f = analyze("f(x) = x² + 1");
   assert.equal(f.kind, "func");
