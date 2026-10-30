@@ -747,6 +747,12 @@ test("aktivacijska koda EVKLID3X: 3 meseci, zmogljivejši model največ Sonnet",
     await again();
     await again();
     assert.deepEqual(modes.slice(-3), ["chat", "think", "mid"]);
+    // Skrita omejitev: 2 Opusa na dan (privzeto), nato tiho Sonnet.
+    await again();
+    assert.equal(modes.at(-1), "deep");
+    const hidden = await again();
+    assert.equal(modes.at(-1), "mid");
+    assert.doesNotMatch(JSON.stringify(hidden.body), /zmogljivejš|hitrejši model/);
     // Z naročnino omejitve ni: druga zaporedna prošnja gre k Opusu.
     store.db.prepare("UPDATE parents SET sub_status = 'active', sub_seats = 1 WHERE id = ?").run(reg.id);
     assert.equal((await again()).status, 200);
