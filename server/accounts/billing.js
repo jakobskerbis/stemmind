@@ -8,11 +8,11 @@
 // - dnevna opravila: usklajevanje naročnin s Stripom, opomnik pred koncem kode in pred letno obnovitvijo.
 import express from "express";
 import { randomToken, sha256, Throttle } from "./auth.js";
-import { PASSES, passByDays, passForDaysLeft, paidActive, planFor, planByKey, isPremiumChild, GRACE_DAYS, currencyDecimals, schoolPlanFor } from "./plans.js";
+import { PASSES, passByDays, passForDaysLeft, paidActive, planFor, planByKey, isPremiumChild, GRACE_DAYS, currencyDecimals, schoolPlanFor, isSchoolPlan } from "./plans.js";
 import { Schedules, nowParts, cleanDate, TEST_KINDS } from "../schedule.js";
 import { cleanText } from "../settings.js";
 import { ljNow } from "./goal-reminder.js";
-import { promoEndingEmail, renewalEmail } from "./email.js";
+import { promoEndingEmail, renewalEmail, schoolPriceEndEmail } from "./email.js";
 import { audit } from "../dnevnik-dostopov.js";
 import { CREDIT_PACKS, packById, customPack, CUSTOM_MIN_CENTS, creditUsdFor, conversationsFor } from "../placila/krediti.js";
 
@@ -156,7 +156,7 @@ export function nextTest(schedules, studentId, now = new Date()) {
 }
 
 export function mountBilling(app, ctx) {
-  const { credits = null, db, store, stripe, log, json, getParent, update, childIds, ownerOf, ensureCustomer, accessOf, baseUrl, sendMail, currencyOf, isMinor, applySubscription, syncCustomer, promo, kv, offersFor = () => ({ show: true, prices: true }), hasSchoolChild = () => false } = ctx;
+  const { credits = null, db, store, stripe, log, json, getParent, update, childIds, ownerOf, ensureCustomer, accessOf, baseUrl, sendMail, currencyOf, isMinor, applySubscription, syncCustomer, promo, kv, offersFor = () => ({ show: true, prices: true }), hasSchoolChild = () => false, mailEnabled = () => false } = ctx;
   migrateBilling(db);
   const passes = new Passes(db);
   const schedules = new Schedules(db);
@@ -632,7 +632,49 @@ export function mountBilling(app, ctx) {
       if (plan?.interval !== "year" || !paidActive(p, now.getTime())) continue;
       out.renewal += await remind(p, "renewal", p.sub_period_end.slice(0, 10), renewalEmail(fmtDate(p.sub_period_end), fmtMoney(plan.amount, plan.currency || "EUR"), appUrl));
     }
+    await schoolPriceEnd(now, out, appUrl);
     return out;
+  }
+
+  // Osebno ob šolski licenci po izteku licence (j 2026-10-30: »ob podaljšanju 9,99 €/89 €«).
+  // Ko noben otrok nima več šolske licence, starš dobi obvestilo. Najmanj 30 dni po uspešno poslanem
+  // obvestilu se cena v Stripu zamenja z redno ceno za 1 otroka (brez sorazmernega obračuna), zato
+  // velja od naslednjega podaljšanja. Brez poslanega obvestila se cena ne spremeni.
+  // Če licenca medtem spet velja, se odštevanje ponastavi.
+  async function schoolPriceEnd(now, out, appUrl) {
+    out.school_notice = 0;
+    out.school_switched = 0;
+    for (const p of db.prepare("SELECT * FROM parents WHERE sub_id IS NOT NULL AND sub_cancel_at_period_end = 0").all()) {
+      if (!isSchoolPlan(p.sub_plan) || !paidActive(p, now.getTime())) continue;
+      const key = `school_price_end:${p.id}`;
+      const since = kv.get(key) || "";
+      if (hasSchoolChild(p.id)) {
+        if (since) kv.set(key, "");
+        continue;
+      }
+      if (since === "switched") continue;
+      const regular = planFor(1, planByKey(p.sub_plan).interval, "EUR");
+      if (!since) {
+        if (!mailEnabled()) continue; // brez prave e-pošte ni obvestila in zato tudi ne spremembe cene
+        const from = fmtDate(iso(now.getTime() + 30 * 86400000));
+        const sent = await remind(p, "school_price_end", ljNow(now).date, schoolPriceEndEmail(from, fmtMoney(regular.amount, "EUR"), regular.interval, appUrl));
+        if (sent) kv.set(key, iso(now.getTime()));
+        out.school_notice += sent;
+        continue;
+      }
+      if (!stripe.enabled || now.getTime() < Date.parse(since) + 30 * 86400000) continue;
+      try {
+        const sub = await stripe.request("GET", `/subscriptions/${p.sub_id}`);
+        const item = sub.items?.data?.[0];
+        if (!item) continue;
+        const { prices } = await stripe.ensurePrices("EUR");
+        await stripe.request("POST", `/subscriptions/${p.sub_id}`, { items: [{ id: item.id, price: prices[regular.key] }], proration_behavior: "none" });
+        kv.set(key, "switched");
+        out.school_switched++;
+      } catch (err) {
+        log.error?.("[evklid] redna cena po šolski licenci:", p.id, err.message);
+      }
+    }
   }
 
   return { passes, passPremium, completePassSession, completeCreditSession, completeSubSession, billingDaily, recordConsent };
