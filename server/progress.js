@@ -10,6 +10,7 @@ import { isExamPath, mockPlan, scaledScore, examGrade } from "./exams.js";
 import { toChoice } from "./practice/choice.js";
 import { taskLanguage, localName } from "./exams.js";
 import { levelProgress, cleanXpGoal } from "../public/xp-levels.js";
+import { nowParts } from "./schedule.js";
 
 // Tekmovalni trening in poskusno tekmovanje veljata tudi za priprave na izpite.
 const isPrepPath = (key) => isCompetitionPath(key) || isExamPath(key);
@@ -607,7 +608,7 @@ export class Progress {
     if (!r) return null;
     const units = JSON.parse(r.units);
     const path = getPath(r.path_key);
-    const daysLeft = Math.round((Date.parse(r.test_date) - Date.parse(today())) / 86400000);
+    const daysLeft = Math.round((Date.parse(r.test_date) - Date.parse(nowParts().date)) / 86400000); // slovenski dan, kot v urniku
     return {
       path: r.path_key,
       units,

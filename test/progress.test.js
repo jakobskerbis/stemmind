@@ -4,6 +4,7 @@ import { openDb } from "../server/db.js";
 import { Progress, RULES } from "../server/progress.js";
 import { roundHalfUp, fmt } from "../server/practice/check.js";
 import { windowHistory } from "../server/usage.js";
+import { nowParts } from "../server/schedule.js";
 
 function correctInput(a) {
   if (a.type === "number") return (a.decimals != null ? fmt(roundHalfUp(a.value, a.decimals), a.decimals) : fmt(a.value)) + (a.unit ? " " + a.unit : "");
@@ -175,8 +176,10 @@ test("test prep: harder tasks closer to the date; unit practice only when unlock
   const path = "MAT-OS-8";
   const view = p.pathView(s.id, path);
   const ui = view.units.findIndex((u) => u.hasPractice);
-  const later = new Date(Date.now() + 10 * 86400000).toISOString().slice(0, 10);
-  const soon = new Date(Date.now() + 1 * 86400000).toISOString().slice(0, 10);
+  // Slovenski dan, kot ga šteje progress.testPlan (nowParts), sicer test pade med 23:00 in 24:00 UTC.
+  const base = Date.parse(`${nowParts().date}T12:00:00Z`);
+  const later = new Date(base + 10 * 86400000).toISOString().slice(0, 10);
+  const soon = new Date(base + 1 * 86400000).toISOString().slice(0, 10);
   assert.equal(p.setTestPlan(s.id, path, [], later), null);
   p.setTestPlan(s.id, path, [ui], later);
   const far = p.getSession(p.startTest(s.id).sessionId).plan;

@@ -36,7 +36,7 @@ const FMF_ICS =
   ev("Analiza 1 (MAT-1\\, PM-1)\\, Vaje (V)\\, [2]", "20261008T120000", "20261008T140000") +
   ev("Analiza 1 (MAT-1\\, PM-1)\\, Vaje (V)\\, [2]", "20261015T120000", "20261015T140000") +
   ev("Sprejem brucev M (MAT-1\\, PM-1)\\, Ostalo (O)", "20261001T090000", "20261001T100000") +
-  ev("1. kolokvij Analiza 1", "20261208T160000", "20261208T180000", "CATEGORIES:Reservation\r\n") +
+  ev("1. kolokvij Analiza 1", "20991208T160000", "20991208T180000", "CATEGORIES:Reservation\r\n") +
   "END:VCALENDAR\r\n";
 
 test("ics: repeated meetings become weekly lessons, single tests become dates, one-off events are skipped", () => {
@@ -47,7 +47,7 @@ test("ics: repeated meetings become weekly lessons, single tests become dates, o
   assert.deepEqual(out.lessons.filter((l) => l.kind === "Vaje").map((l) => l.group).sort(), ["1", "2"]);
   assert.ok(out.lessons.every((l) => l.source === "ics" && l.key));
   assert.equal(out.events.length, 1);
-  assert.deepEqual([out.events[0].date, out.events[0].time, out.events[0].kind, out.events[0].course], ["2026-12-08", "16:00", "kolokvij", "UNI-ULFMF-ANALIZA1"]);
+  assert.deepEqual([out.events[0].date, out.events[0].time, out.events[0].kind, out.events[0].course], ["2099-12-08", "16:00", "kolokvij", "UNI-ULFMF-ANALIZA1"]);
   assert.equal(parseIcs("ni koledar", FMF), null);
 });
 
@@ -95,13 +95,13 @@ test("view and prompt: today, tomorrow and upcoming tests; private summary reach
   const store = openDb(":memory:");
   const sch = new Schedules(store.db);
   const s = store.createStudent("Ana", SCHOOL);
-  sch.save(s.id, { lessons: [{ day: 1, start: "08:20", name: "Matematika" }, { day: 2, start: "09:10", name: "Fizika" }], events: [{ date: "2026-11-03", kind: "test", name: "Test – Fizika", subject_name: "Fizika" }] }, s.settings);
-  const v = scheduleView(sch.get(s.id), s.settings, new Date("2026-11-02T09:00:00Z"));
+  sch.save(s.id, { lessons: [{ day: 1, start: "08:20", name: "Matematika" }, { day: 2, start: "09:10", name: "Fizika" }], events: [{ date: "2099-11-03", kind: "test", name: "Test – Fizika", subject_name: "Fizika" }] }, s.settings);
+  const v = scheduleView(sch.get(s.id), s.settings, new Date("2099-11-02T09:00:00Z"));
   assert.deepEqual([v.today.map((l) => l.name), v.tomorrow.map((l) => l.name)], [["Matematika"], ["Fizika"]]);
   assert.equal(v.reminders[0].daysLeft, 1);
   assert.ok(v.today[0].path, "matematika ima učno pot");
   const text = schedulePrompt(v);
-  assert.match(text, /ponedeljek 2026-11-02.*danes: 08:20 Matematika; jutri: 09:10 Fizika; testi in roki: 2026-11-03 \(jutri\) test: Test – Fizika/);
+  assert.match(text, /ponedeljek 2099-11-02.*danes: 08:20 Matematika; jutri: 09:10 Fizika; testi in roki: 2099-11-03 \(jutri\) test: Test – Fizika/);
   const prompt = buildSystemPrompt({ settings: s.settings, schedule: text });
   assert.ok(prompt.indexOf(text) > prompt.indexOf("EVKLID:NASTAVITVE"));
   assert.match(schedulePrompt({ lessons: [], events: [] }), /ni vnesel/);
@@ -128,7 +128,8 @@ async function withApp(opts, fn) {
   }
 }
 
-// Datumi v slovenskem času, kot jih računa strežnik (nowParts); z UTC sta testa padla med 23:00 in 24:00 UTC.
+// Datumi v slovenskem času, kot jih računa strežnik (nowParts); z UTC sta testa padla, ko je v Sloveniji že
+// naslednji dan (pozimi 23–24, poleti 22–24 UTC). Fiksni datumi so v letu 2099, da testi ne zastarajo.
 const inDays = (n) => new Date(Date.parse(`${nowParts().date}T12:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
 
 test("API: saving a test sets Priprava na test by itself, a manual plan wins, deleting the test removes the auto plan", async () => {
