@@ -72,7 +72,11 @@ export function authoredMap(topicId) {
     else if (out.length) out[out.length - 1].subs.push(m[2].trim());
   }
   return out.length
-    ? out.slice(0, 8).map((b) => (b.subs.length ? { label: b.label || b.detail, detail: b.subs.join(" · ") } : { label: b.label, detail: b.detail }))
+    ? out.slice(0, 8).map((b) => {
+        if (!b.subs.length) return { label: b.label, detail: b.detail };
+        // »Veja: podrobnost« s podalinejami: podrobnost za dvopičjem ostane pred podalinejami.
+        return b.label ? { label: b.label, detail: [b.detail, ...b.subs].filter(Boolean).join(" · ") } : { label: b.detail, detail: b.subs.join(" · ") };
+      })
     : null;
 }
 
@@ -181,6 +185,8 @@ function formatNumber(a) {
   return comma(Number.isInteger(a.decimals) ? out : out.replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, ""));
 }
 const LETTERS = "abcdefghij";
+// Ena izbira pri nalogi z izbiro (LaTeX ali navadno besedilo); tudi za kviz v živo.
+export const optionHtml = (task, o) => (task.options_tex ? inline(`$${o}$`) : inline(String(o)));
 export function answerHtml(task) {
   const a = task.answer;
   switch (a.type) {
@@ -189,7 +195,7 @@ export function answerHtml(task) {
     case "fraction":
       return renderMd(`$\\dfrac{${a.num}}{${a.den}}$`).replace(/^<p>|<\/p>\s*$/g, "");
     case "choice":
-      return `${LETTERS[a.index]}) ${task.options_tex ? inline(`$${a.options[a.index]}$`) : inline(String(a.options[a.index]))}`;
+      return `${LETTERS[a.index]}) ${optionHtml(task, a.options[a.index])}`;
     case "coefficients":
       return esc(a.values.join(", "));
     default:
@@ -250,7 +256,7 @@ export function worksheetPage({ topicIds, perTopic = 4, seed = 1, title = null, 
   const list = tasks
     .map((t) => {
       const opts = t.answer.type === "choice"
-        ? `<ol class="opts">${t.answer.options.map((o) => `<li>${t.options_tex ? inline(`$${o}$`) : inline(String(o))}</li>`).join("")}</ol>`
+        ? `<ol class="opts">${t.answer.options.map((o) => `<li>${optionHtml(t, o)}</li>`).join("")}</ol>`
         : `<div class="lines"><p>Podatki:</p><p>Iščemo:</p><p>Rešitev:</p><p>Odgovor:${t.answer.unit ? ` ____________ ${esc(t.answer.unit)}` : ""}</p></div>`;
       return `<li><span class="lvl" aria-label="težavnost ${t.level}">${STARS[t.level] || ""}</span> ${renderMd(t.text)}${opts}</li>`;
     })
@@ -297,7 +303,7 @@ export function weakTopicIds(db, studentId, limit = 3) {
 const SEED_MAX = 999999;
 const seedOf = (v) => (/^\d{1,6}$/.test(String(v ?? "")) ? Math.max(1, Number(v)) : 1 + Math.floor(Math.random() * SEED_MAX));
 
-export function mountGradiva(app, store, { loadStudent, accounts }) {
+export function mountGradiva(app, store, { loadStudent, accounts, leagues = null }) {
   // topicId: gradivo ene teme (kot interaktivni del lekcije); brez teme (list iz šibkih tem) samo Osebno.
   const canUse = (s, vrsta, topicId = null) => {
     if (!VRSTE[vrsta]) return false;
@@ -396,6 +402,19 @@ export function mountGradiva(app, store, { loadStudent, accounts }) {
     }
     const perTopic = Math.min(10, Math.max(2, Math.trunc(Number(req.query.n)) || (weak ? 4 : 6)));
     const html = worksheetPage({ topicIds: ids, perTopic, seed: seedOf(req.query.seme), title: weak ? "Vaja iz šibkih tem" : null });
+    if (!html) return res.status(404).json({ error: "Za to temo nalog za tisk še ni." });
+    res.set("Cache-Control", "no-store").type("html").send(html);
+  });
+
+  // Delovni list za razred: učitelju vedno zastonj (koda razreda in učiteljev ključ ali lastnik razreda).
+  // ?resitve=0 natisne list brez rešitev (za učence); privzeto so rešitve na zadnji strani.
+  app.get("/api/teacher/classes/:code/delovni-list", (req, res) => {
+    const cls = leagues?.authTeacher(req.params.code, req.get("x-teacher-key"), req.parent?.id ?? null);
+    if (!cls) return res.status(403).json({ error: "Napačna koda ali ključ razreda." });
+    const t = topicOf(req, res);
+    if (!t) return;
+    const perTopic = Math.min(12, Math.max(2, Math.trunc(Number(req.query.n)) || 8));
+    const html = worksheetPage({ topicIds: [t.id], perTopic, seed: seedOf(req.query.seme), solutions: req.query.resitve !== "0" });
     if (!html) return res.status(404).json({ error: "Za to temo nalog za tisk še ni." });
     res.set("Cache-Control", "no-store").type("html").send(html);
   });

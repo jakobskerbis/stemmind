@@ -28,6 +28,8 @@ const uni = topics.some((t) => t.id.startsWith("UNI-"));
 const tek = topics.some((t) => /(^|-)TEK(-|$)/.test(t.id.split("/")[0])); // tekmovanja
 const exemplar = topics[0].exemplar;
 const files = topics.map((t) => t.file).join(" ");
+// Avtorski miselni vzorec ob lekciji (nit Gradiva, docs/gradiva.md): isti id kot lekcija.
+const maps = topics.map((t) => t.file.replace(/^content\/lessons\//, "content/gradiva/miselni/")).join(" ");
 
 // Raznolikost oblike (j 2026-10-29: »Naj se lekcije po obliki ne ponavljajo in naj ne bodo monotone«).
 // Vsaka tema dobi stalen načrt oblike (iz id-ja), sosednji temi v paru pa se vedno razlikujeta.
@@ -106,6 +108,7 @@ House rules: Slovenian with the terminology of the level; decimal comma \`$3{,}5
 }
 
 Workflow (docs/token-rules.md §2): one \`Write\` per file; one \`node -e\` for all numbers; then once \`node scripts/check-lesson.js -q ${files}\`; fix with \`Edit\`, never rewrite; do not read the file back. If \`lessonExists\` is true, upgrade the existing lesson: run the checker, fix what it and the bar flag, keep correct text.
+Also write the mind map per lesson, \`${maps}\` (docs/gradiva.md): front matter \`avtor: AI\`, \`stanje: osnutek\`; 4–8 top-level bullets, each a 1–4 word keyword (no colon: details go in the sub-bullets) for the lesson's main ideas in teaching order (not a copy of Povzetek), each with 1–3 indented sub-bullets (formula in $…$, unit, example or typical mistake); no line over 12 words. Check: \`node scripts/check-gradivo.js -q ${maps}\`. If the map exists, fix it with \`Edit\` instead.
 Reply ≤ 3 lines per lesson: \`OK <id>, <words> besed\` or what is unresolved. No lesson text in the reply.
 
 ## Topics
@@ -113,14 +116,15 @@ Reply ≤ 3 lines per lesson: \`OK <id>, <words> besed\` or what is unresolved. 
 
 const REVIEWER = `# Evklid review brief: ${topics.length} lesson${topics.length > 1 ? "s" : ""} (second, independent pass)
 
-Run first: \`node scripts/check-lesson.js -q ${files}\`. Format, LaTeX and pure-number steps are then already checked (it prints how many steps it recomputed and any mismatch). Read for content only and check:
+Run first: \`node scripts/check-lesson.js -q ${files}\` and \`node scripts/check-gradivo.js -q ${maps}\`. Format, LaTeX and pure-number steps are then already checked (it prints how many steps it recomputed and any mismatch). Read for content only and check:
 1. Remaining numbers: substitutions, rounding, units and significant figures in every worked example (batch them into one \`node -e\`); every \`+\` quiz answer truly correct, every \`-\` truly wrong; every \`~\` names the real error.
 2. Level fits the path: nothing used that the path has not taught yet; every goal covered.
 3. »Podatki« lists all given data; steps say why; Primer 3 is a transfer case; the faded final step exists.
 4. Pogoste napake are real misconceptions of this topic and match the distractors; the 2 »premisli« ask for a prediction or a »zakaj«.
 5. Slovenian terminology of the level, decimal comma, tables ≤ 4 columns.
-6. Not monotone: the opening, the explanation path and the quiz types are not the same template as the other lesson in this brief; no stock phrases (»V tej lekciji se bomo naučili«, »Poglejmo si«); fix the worst repetition with a small Edit.${uni ? "\n7. University lesson: generic (no faculty or course name), proofs in »Drugače: Bolj natančno«." : ""}${
-  tek ? "\n7. Competition lesson: strategies and typical problem types at competition level (easy ≈ school round, hard ≈ national round), complete solutions, no real past problems, years or results cited." : ""
+6. Not monotone: the opening, the explanation path and the quiz types are not the same template as the other lesson in this brief; no stock phrases (»V tej lekciji se bomo naučili«, »Poglejmo si«); fix the worst repetition with a small Edit.
+7. Mind map \`${maps}\`: every branch matches the lesson and adds nothing new; the lesson's main idea is a branch; maths renders.${uni ? "\n8. University lesson: generic (no faculty or course name), proofs in »Drugače: Bolj natančno«." : ""}${
+  tek ? "\n8. Competition lesson: strategies and typical problem types at competition level (easy ≈ school round, hard ≈ national round), complete solutions, no real past problems, years or results cited." : ""
 }
 Fix with small \`Edit\`s, never rewrite. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 5 lines.
 
@@ -135,7 +139,8 @@ The checker and a second reviewer have already verified numbers, keys, level and
 3. Not monotone (docs/kakovost.md §1b): the opening, the explanation path and the quiz do not feel like the same template as the other lessons in this brief; vary the worst repetition.
 4. Flow: Zakaj → Razlaga → examples → quiz builds up; a jump that needs an unstated step gets one sentence.
 5. Phone: no table wider than 4 columns, long formulas split, nothing conveyed only by colour.
-Small \`Edit\`s only (≤ 8 per lesson), never a rewrite. Keep every number, formula, structure and \`+\`/\`-\` key unchanged; if you believe a number or key is wrong, do not change it: add a reply line \`DVOM: <id> line <n>: <why>\` (the orchestrator checks every DVOM line). Then run \`node scripts/check-lesson.js -q ${files}\` once. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 4 lines.
+6. Mind map \`${maps}\`: every branch matches the lesson and adds nothing new; the lesson's main idea is a branch; maths renders.
+Small \`Edit\`s only (≤ 8 per lesson), never a rewrite. Keep every number, formula, structure and \`+\`/\`-\` key unchanged; if you believe a number or key is wrong, do not change it: add a reply line \`DVOM: <id> line <n>: <why>\` (the orchestrator checks every DVOM line). Then run \`node scripts/check-lesson.js -q ${files}\` and \`node scripts/check-gradivo.js -q ${maps}\` once. Do not read the exemplar or the README. Reply per lesson: \`<id>: N popravkov – <5–10 words each>\`, ≤ 4 lines.
 
 ## Lessons
 `;

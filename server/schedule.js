@@ -14,6 +14,7 @@ import { ALL_SUBJECTS } from "./subjects.js";
 import { getPath, pathKeyFor } from "./curriculum.js";
 import { getClient, isMockMode, MODEL_DEEP, MODEL_MID, quickParams } from "./claude.js";
 import { EVENT_KINDS } from "../public/settings-registry.js";
+import { seal, unseal } from "./crypto-polje.js";
 
 export { EVENT_KINDS };
 export const TEST_KINDS = ["test", "kolokvij", "izpit", "ustno"];
@@ -441,7 +442,7 @@ export class Schedules {
     const r = this.db.prepare("SELECT data FROM schedules WHERE student_id = ?").get(studentId);
     if (!r) return { lessons: [], events: [], source: null };
     try {
-      const d = JSON.parse(r.data);
+      const d = JSON.parse(unseal(r.data)); // šifrirano (server/crypto-polje.js)
       return { lessons: d.lessons || [], events: d.events || [], source: d.source || null };
     } catch {
       return { lessons: [], events: [], source: null };
@@ -457,7 +458,7 @@ export class Schedules {
         `INSERT INTO schedules (student_id, data) VALUES (?, ?)
          ON CONFLICT(student_id) DO UPDATE SET data = excluded.data, updated_at = datetime('now')`,
       )
-      .run(studentId, JSON.stringify(clean));
+      .run(studentId, seal(JSON.stringify(clean)));
     return clean;
   }
   clear(studentId) {

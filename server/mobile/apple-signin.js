@@ -5,7 +5,7 @@
 import crypto from "node:crypto";
 import fs from "node:fs";
 import express from "express";
-import { hashPassword, randomToken, setSessionCookie } from "../accounts/auth.js";
+import { unusablePasswordHash, setSessionCookie } from "../accounts/auth.js";
 import { netKey } from "../accounts/guest.js";
 import { isLocalRequest } from "../feedback.js";
 import { verifyAppleIdentityToken, appleClientSecret, AppleSignatureError } from "./apple-crypto.js";
@@ -77,7 +77,7 @@ export function mountAppleSignIn(app, ctx, opts = {}) {
       if (!birthIso) return;
       signupThrottle.fail(key);
       const name = [req.body?.given_name, req.body?.family_name].filter(Boolean).join(" ");
-      const { id } = createParent(req, { email: who.email, passwordHash: hashPassword(randomToken()), name, birthIso, verified: true });
+      const { id } = createParent(req, { email: who.email, passwordHash: unusablePasswordHash(), name, birthIso, verified: true });
       db.prepare("UPDATE parents SET apple_sub = ? WHERE id = ?").run(who.sub, id);
       p = getParent(id);
       created = true;

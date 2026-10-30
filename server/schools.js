@@ -9,6 +9,7 @@
 // Pravice (kaj šolska licenca odklene) računa server/placila/pravice.js z `schoolAccess()` od tu.
 import crypto from "node:crypto";
 import { getPath, getTopic, baseTopicIds } from "./curriculum.js";
+import { audit } from "./dnevnik-dostopov.js";
 
 export const SCHOOL = {
   maxSchoolsPerTeacher: 3,
@@ -535,6 +536,7 @@ export function mountSchools(app, store, { loadStudent, leagues, accounts = true
     const st = { done: "opravljeno", started: "začeto", todo: "ni začeto" };
     const lines = [head, ...v.members.map((m) => [m.nickname, m.label, m.xp, m.total, ...v.assignments.map((a) => `${st[a.results[m.ref].status]} (${a.results[m.ref].solved})`)])];
     const file = `razred-${v.name.replace(/[^\p{L}\p{N}]+/gu, "-")}.csv`;
+    audit(db, { req, parentId: req.parent?.id ?? null, actor: "teacher", action: "class_export", target: `class:${cls.id}` });
     res.set("Content-Disposition", `attachment; filename="${encodeURIComponent(file)}"; filename*=UTF-8''${encodeURIComponent(file)}`);
     res.type("text/csv; charset=utf-8").send("﻿" + lines.map((l) => l.map(csvCell).join(";")).join("\r\n"));
   });
@@ -580,6 +582,7 @@ export function mountSchools(app, store, { loadStudent, leagues, accounts = true
     if (!s) return;
     const topics = db.prepare("SELECT topic_id, level, status, mastered_at, updated_at FROM topic_state WHERE student_id = ? ORDER BY topic_id").all(s.id);
     const data = { exported_at: new Date().toISOString(), student: s.name, classes: schools.studentAssignments(s.id), topics };
+    audit(db, { req, parentId: req.parent?.id ?? null, action: "school_export", target: `student:${s.id}` });
     res.set("Content-Disposition", `attachment; filename="napredek-${s.id}.json"`);
     res.type("application/json").send(JSON.stringify(data, null, 2));
   });
@@ -587,6 +590,7 @@ export function mountSchools(app, store, { loadStudent, leagues, accounts = true
   // --- skrbnik Evklida: licence (po plačanem e-računu ali za pilot) ---
   app.get("/api/admin/schools", (req, res) => {
     if (!isAdmin(req, res)) return;
+    audit(db, { req, parentId: req.parent.id, actor: "admin", action: "schools_view" });
     res.json(
       db.prepare("SELECT id, name, place, stage, created_at FROM schools ORDER BY id").all().map((s) => ({
         ...s,
@@ -628,11 +632,14 @@ export function mountSchools(app, store, { loadStudent, leagues, accounts = true
         clean(b.invoiceRef, 60),
         clean(b.note, 200),
       );
+    audit(db, { req, parentId: req.parent.id, actor: "admin", action: "licence_add", target: `school:${id}` });
     res.status(201).json({ id: Number(r.lastInsertRowid), ...schools.licenceView(id) });
   });
   app.delete("/api/admin/licences/:lid", (req, res) => {
     if (!isAdmin(req, res)) return;
-    res.json({ ok: db.prepare("DELETE FROM school_licences WHERE id = ?").run(Number(req.params.lid)).changes > 0 });
+    const ok = db.prepare("DELETE FROM school_licences WHERE id = ?").run(Number(req.params.lid)).changes > 0;
+    audit(db, { req, parentId: req.parent.id, actor: "admin", action: "licence_delete", target: `licence:${Number(req.params.lid)}`, ok });
+    res.json({ ok });
   });
 
   return schools;

@@ -3,6 +3,7 @@ import { icon } from "./icons.js";
 import { avatarSvg, itemOf, itemName } from "./avatar.js";
 import { DRAW } from "./zbirke.js";
 import { t, currentLang, locale } from "./i18n.js";
+import { quizCardHtml, playQuiz } from "./kviz.js";
 const $ = (sel) => document.querySelector(sel);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const api = async (url, opts = {}) => {
@@ -93,6 +94,38 @@ function classTasksHtml(x) {
     </div>`;
 }
 
+// Kviz v živo v učenčevem razredu: kartica na vrhu Lig. Dokler so Lige odprte, preverimo vsakih 5 s,
+// da se kartica pokaže, ko učitelj začne kviz (samo učenci, ki so v razredu).
+let quizTimer = null;
+let inQuiz = false;
+async function refreshQuiz(studentId) {
+  const box = document.getElementById("kv-live");
+  if (!box || current !== studentId || box.closest("[hidden]")) {
+    clearInterval(quizTimer);
+    quizTimer = null;
+    return;
+  }
+  if (inQuiz) return;
+  const html = await quizCardHtml(studentId);
+  if (current !== studentId || box.innerHTML === html) return;
+  box.innerHTML = html;
+  box.querySelectorAll("[data-kviz]").forEach((b) =>
+    b.addEventListener("click", () => {
+      inQuiz = true;
+      playQuiz(studentId, b.dataset.kviz, () => {
+        inQuiz = false;
+        refreshQuiz(studentId);
+      });
+    }),
+  );
+}
+function watchQuiz(studentId, inClass) {
+  clearInterval(quizTimer);
+  quizTimer = null;
+  refreshQuiz(studentId);
+  if (inClass) quizTimer = setInterval(() => refreshQuiz(studentId), 5000);
+}
+
 export async function loadLeague(studentId) {
   current = studentId;
   const root = $("#league-content");
@@ -116,6 +149,7 @@ export async function loadLeague(studentId) {
     : "";
 
   root.innerHTML = `
+    <div id="kv-live"></div>
     <div class="card league-hero tier-${L.tier}">
       <div class="lg-hero-av">${avatarSvg(L.avatar, { size: 84, title: L.nickname })}${tierBadge(L.tier, "big lg-tier")}</div>
       <div>
@@ -164,6 +198,7 @@ export async function loadLeague(studentId) {
       <p class="muted">${esc(t("lg.teacher"))} <a href="ucitelj.html" target="_blank">${esc(t("lg.teacherLink"))}</a></p>
     </div>`;
 
+  watchQuiz(studentId, data.classes.some((c) => c.kind === "class"));
   $("#nick-change").addEventListener("click", showNickPicker);
   root.querySelectorAll("[data-period]").forEach((b) =>
     b.addEventListener("click", () => {

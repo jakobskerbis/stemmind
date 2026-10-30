@@ -214,3 +214,43 @@ test("games: childhood questionnaire genres map to existing games; tutor can cha
   const bad = JSON.parse((await t.onToolUse("change_settings", { changes: { game_childhood: ["tetris"] } })).content);
   assert.equal(bad.status, "error");
 });
+
+test("games: ratings, weekly vote and the anonymous trends summary", async () => {
+  const { weekKey } = await import("../public/games/wishes.js");
+  const { gameTrends } = await import("../server/games.js");
+  assert.equal(weekKey(new Date("2026-11-04T05:00:00Z")), "2026-11-04"); // sreda
+  assert.equal(weekKey(new Date("2026-11-03T23:00:00Z")), "2026-10-28"); // torek → prejšnja sreda
+  const store = openDb(":memory:");
+  const app = createApp(store, {});
+  const server = app.listen(0);
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const post = (p, body) => fetch(base + p, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  try {
+    const ids = ["A", "B", "C"].map((n) => store.createStudent(n, {}).id);
+    assert.equal((await post(`/api/students/${ids[0]}/games/rate`, { engine: "nope", up: true })).status, 400);
+    assert.equal((await post(`/api/students/${ids[0]}/games/wish`, { genre: "tetris" })).status, 400);
+    assert.equal((await post(`/api/students/${ids[0]}/games/rate`, { engine: "cards", up: true })).status, 200);
+    assert.equal(gameTrends(store.db).enough, false); // premalo učencev: brez števil
+    await post(`/api/students/${ids[1]}/games/rate`, { engine: "cards", up: false });
+    await post(`/api/students/${ids[1]}/games/wish`, { genre: "golf" });
+    await post(`/api/students/${ids[2]}/games/wish`, { genre: "darts" });
+    await post(`/api/students/${ids[2]}/games/wish`, { genre: "golf" }); // glas se zamenja
+    const tr = gameTrends(store.db);
+    assert.equal(tr.enough, true);
+    assert.deepEqual(tr.ratings.cards, { up: 1, down: 1 });
+    assert.deepEqual(tr.wishes[tr.week], { golf: 2 });
+    assert.ok(!JSON.stringify(tr).includes('"A"'));
+    const g = await (await fetch(`${base}/api/students/${ids[2]}/games`)).json();
+    assert.equal(g.wish, "golf");
+    assert.equal((await fetch(`${base}/api/games/trends`)).status, 200); // na računalniku s strežnikom
+    assert.equal((await fetch(`${base}/api/games/trends`, { headers: { "X-Forwarded-For": "203.0.113.5" } })).status, 403); // od drugod ne
+    // trije igralci in en glas: samo igranje ne odpre števil (glas bi bil razkrit)
+    const st2 = openDb(":memory:");
+    createApp(st2, {});
+    for (const n of ["D", "E", "F"]) st2.db.prepare("INSERT INTO game_scores (student_id, game, best) VALUES (?, 'cards:frac_add', 1)").run(st2.createStudent(n, {}).id);
+    st2.db.prepare("INSERT INTO game_wishes (student_id, week, genre) VALUES (1, ?, 'golf')").run(weekKey());
+    assert.equal(gameTrends(st2.db).enough, false);
+  } finally {
+    server.close();
+  }
+});

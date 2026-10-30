@@ -16,12 +16,21 @@ worksheet is Osebno only. Locked materials are hidden in the lesson; offers belo
 |---|---|---|---|
 | One-page summary + mind map (`povzetek`) | built | lesson »Povzetek«, »Pogoste napake«, `:::formula` blocks; optional authored map | free, `/gradiva/povzetek/<POT>/<tema>` |
 | Audio summary (`zvok`) | built | same text, LaTeX read aloud by `server/govor.js`, browser `speechSynthesis` with a Slovenian voice | free |
-| Printable worksheet with solutions (`delovni-list`) | built | task generators (already reviewed), seeded: same »koda lista« = same sheet | paid; teachers free (next PR) |
+| Printable worksheet with solutions (`delovni-list`) | built | task generators (already reviewed), seeded: same »koda lista« = same sheet | paid; teachers free on the teacher page (class code + key or class owner), with or without the solutions page |
 | Weak-topic worksheet | built | tasks of the last 60 days, ≥3 tasks and ≥40 % wrong at first try | paid, button on Napredek |
 | Past NPZ / matura | links only | RIC holds all rights (»© Državni izpitni center, vse pravice pridržane« on every paper), so papers are linked on ric.si, never copied. The timed mock exam (PR #125) uses our own tasks in the RIC format | everyone |
 | Home experiment (`poskus`), real-life project (`projekt`) | format + print page built, no content yet | `content/gradiva/<vrsta>/<POT>/<tema>.md` | as topic materials |
 | Short video from a simulation (`video`) | format + in-app player built, no content yet | script `content/gradiva/video/<POT>/<tema>.md` drives an existing simulation, captions read aloud | as topic materials |
-| Live class quiz | later PR | teacher page, class code | teachers |
+| Live class quiz (`server/kviz.js`, `public/kviz.js`) | built | same task generators; teacher runs it on the projector from the class card, class members join in Lige | teachers free, only members of that class can join |
+
+## Live class quiz
+
+One quiz per class, in server memory only (one Render process; a quiz lasts one lesson and no results are
+stored). It ends 30 min after the last activity or 3 h after it started. States: lobby → question → reveal → …
+→ end; a question closes when the time is up or every player has answered. Points: 500 for a right answer plus
+up to 500 for speed; an answer rounded differently counts as right; an empty or non-number answer, or a
+missing unit, is not a mistake (the student types again, and the unit is shown next to the input). Players are
+shown by their league nickname, as on the class board. Both screens ask the server every 1.5 s.
 
 ## Authored mind map (content)
 
@@ -33,14 +42,16 @@ Without a file the mind map branches are the lesson's summary bullets. A better 
 avtor: AI
 stanje: osnutek
 ---
-- Upor: nasprotuje toku
+- Upor
+  - nasprotuje toku
   - enota ohm ($\Omega$)
 - Ohmov zakon
   - $I = \dfrac{U}{R}$
 ```
 
-Top-level bullets are branches (at most 8, keyword first, `Label: detail` allowed), indented bullets are
-details. With an authored map the summary page also shows the lesson summary.
+Top-level bullets are branches (at most 8): a keyword of 1–4 words, no colon (as the lesson brief says).
+Indented bullets are details. A branch written `Label: detail` still works: the detail is shown before the
+indented bullets. With an authored map the summary page also shows the lesson summary.
 
 ## Written materials (content files)
 

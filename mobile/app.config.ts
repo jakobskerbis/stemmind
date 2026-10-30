@@ -19,6 +19,8 @@ const PHOTOS = `${brand.name} odpre fotografijo naloge, ki jo izbereš, da jo in
 const config: ExpoConfig = {
   name: brand.name,
   slug: brand.slug,
+  // Račun na expo.dev, ki mu pripada projekt EAS (brand.json app.expo_owner).
+  owner: brand.app.expo_owner || undefined,
   scheme: brand.slug,
   version: "1.0.0",
   orientation: "default",
