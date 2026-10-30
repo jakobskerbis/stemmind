@@ -286,8 +286,10 @@ export function mountFeedback(app, store, { usage, file = null, createFn } = {})
     if (fb.count() >= MAX_ROWS) return res.status(429).json({ error: "Zbranih je že dovolj mnenj. Hvala!" });
     // Želje za trgovino: največ 5 na dan na učenca, da otrok ne zasuje tabele.
     if (entry.kind === "cosmetics" && fb.db.prepare("SELECT COUNT(*) AS n FROM feedback WHERE student_id = ? AND kind = 'cosmetics' AND date(created_at) = date('now')").get(s.id).n >= 5)
-      return res.status(429).json({ error: "Danes si poslal že dovolj želja. Hvala!" });
-    if (!entry.name) entry.name = s.name;
+      return res.status(429).json({ error: "Za danes je želja dovolj. Hvala!" });
+    // Želje za trgovino brez imena (otrok piše prosto besedilo; povzetek pokaže samo #id).
+    if (entry.kind === "cosmetics") entry.name = null;
+    else if (!entry.name) entry.name = s.name;
     res.status(201).json({ id: fb.add(s.id, entry) });
   });
 
@@ -311,7 +313,8 @@ export function mountFeedback(app, store, { usage, file = null, createFn } = {})
   const localOnly = (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Mnenja so vidna samo na računalniku, kjer teče Evklid." }));
   app.get("/api/feedback", localOnly, (_req, res) => {
     const list = fb.list();
-    res.json({ count: list.length, entries: list, summary: summaryMarkdown(list), file });
+    const wishes = list.filter((e) => e.kind === "cosmetics").length;
+    res.json({ count: list.length - wishes, wishes, entries: list, summary: summaryMarkdown(list), file });
   });
   app.get("/api/feedback/export", localOnly, (req, res) => {
     const list = fb.list();

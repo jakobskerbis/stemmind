@@ -469,7 +469,7 @@ function renderShop(msg = "", top = false) {
     // Izbran tuj predmet: gumb za nakup kar na kartici (na telefonu je predogled zgoraj izven zaslona).
     return `<div class="gm-item gm-r-${itemRarity(x)}${on ? " on" : ""}${shop.pick === x.id ? " sel" : ""}${x.earn && !has(x) ? " gm-earn" : ""}">
       <button type="button" class="gm-item-btn" data-item="${x.id}" aria-pressed="${on}">${avatarSvg(wear(thumbBase, x.id), { size: 72 })}
-      <b>${esc(itemName(x, lang))}</b><small>${state}</small></button>${isNew(x.id) ? `<span class="gm-new">${esc(t("games.new"))}</span>` : ""}${shop.pick === x.id ? action : ""}</div>`;
+      ${isNew(x.id) ? `<span class="gm-new">${esc(t("games.new"))}</span>` : ""}<b>${esc(itemName(x, lang))}</b><small>${state}</small></button>${shop.pick === x.id ? action : ""}</div>`;
   };
   // Novo ta teden (tedenske posodobitve): dotik odpre predal predmeta in ga pokaže na avatarju.
   const fresh = ITEMS.filter((x) => isNew(x.id) && x.collection !== "pass");
@@ -479,7 +479,7 @@ function renderShop(msg = "", top = false) {
         .join("")}</div></section>`
     : "";
   const wishBox = `<section class="gm-wish card"><h2>${icon("message-square-heart")} ${esc(t("games.wishTitle"))}</h2><p class="muted">${esc(t("games.wishHint"))}</p>
-    <form class="gm-wish-form"><input type="text" maxlength="200" name="wish" placeholder="${esc(t("games.wishPlaceholder"))}" aria-label="${esc(t("games.wishTitle"))}"><button type="submit" class="secondary">${icon("send")}${esc(t("games.wishSend"))}</button></form></section>`;
+    <form class="gm-wish-form"><input type="text" maxlength="200" name="wish" required placeholder="${esc(t("games.wishPlaceholder"))}" aria-label="${esc(t("games.wishTitle"))}"><button type="submit" class="secondary">${icon("send")}${esc(t("games.wishSend"))}</button></form></section>`;
   root.innerHTML = `<div class="gm-portal gm-shop">
     <button type="button" class="text-btn" data-act="back">${icon("arrow-left")}${esc(t("games.back"))}</button>
     <div class="gm-shop-top card">
@@ -531,7 +531,8 @@ function renderShop(msg = "", top = false) {
     f.querySelector("button").disabled = true;
     try {
       await ctx.api(`/api/students/${s.id}/feedback`, { method: "POST", body: JSON.stringify({ kind: "cosmetics", ideas: wish, lang }) });
-      f.outerHTML = `<p class="gm-shop-msg" role="status">${esc(t("games.wishThanks"))}</p>`;
+      f.outerHTML = `<p class="gm-shop-msg gm-wish-done" role="status" tabindex="-1">${esc(t("games.wishThanks"))}</p>`;
+      root.querySelector(".gm-wish-done")?.focus();
     } catch (err) {
       f.querySelector("button").disabled = false;
       ctx.toast?.(err.message);

@@ -6,16 +6,18 @@ posodobitvijo. Ta dokument velja za avatarje, trgovino, Zbirke in lestvice.
 
 ## Kdaj
 
-Vsako sredo ob 02:13 UTC (samodejni tedenski zagon v niti »kozmetika«). Igre pridejo okoli 04:13 UTC.
+Vsako sredo ob 02:13 UTC (samodejni tedenski zagon v niti o kozmetiki). Nove vrste iger doda nit IGRE okoli
+04:13 UTC istega dne (docs/igre-smernice.md); oznako »Novo« za igre dela z istim `isNewDate` in `.gm-new`.
 
 ## Iz česa izhajamo
 
 1. **Želje otrok** iz trgovine (»Kaj si želiš v trgovini?«). Shranijo se v tabelo `feedback` z `kind = "cosmetics"`
    in v `data/povratne-informacije.json` na računalniku, kjer teče Evklid. Povzetek ima razdelek »Želje za trgovino
-   z avatarji« (`/api/feedback/export?format=md`, samo lokalno). Želje so prosto besedilo: nikoli jih ne objavi
-   in ne prepiši imen v repozitorij.
+   z avatarji« (`/api/feedback/export?format=md`, samo lokalno). Želje se shranijo brez imena; so prosto besedilo,
+   zato jih nikoli ne objavi in ne prepisuj v repozitorij.
 2. **Kaj otroci nosijo in kupujejo**: `data/kozmetika-trendi.json` (strežnik ga zapiše ob zagonu in vsakih 6 h)
-   ali `GET /api/avatar/trends`. Samo števila, pod 3 učenci nič.
+   ali `GET /api/avatar/trends` (samo na tem računalniku). Samo števila: pod 3 učenci skupaj nič, predmetov
+   z manj kot 3 učenci ni v seštevku.
 3. Splošne povratne informacije (docs/povratne-informacije.md), kadar se dotikajo avatarja, lig ali Zbirk.
 
 Če podatkov ni (j-jev računalnik ni dosegljiv ali še ni želja), naredi posodobitev po spodnjem ravnovesju in
@@ -34,7 +36,8 @@ v poročilu povej, da podatkov ni bilo.
 ## Pravila, ki ostanejo
 
 - Brez naključja (škatle presenečenja), brez časovno omejene ponudbe in odštevanja, brez pravega denarja.
-  Predmet, ki pride, ostane za vedno (EU pravila za otroke, dokument o kozmetiki).
+  Predmet, ki pride, ostane za vedno (EU pravila za otroke; j-jev dokument »Kozmetika in personalizacija«,
+  povzetek v glavi public/zbirke.js).
 - Kozmični in večni predmeti samo za znanje in igre. Mitični v trgovini nad 1000 kovancev.
 - Izvirne risbe, brez znamk in likov iz drugih iger. Risba v viewBox 0 0 100 100, unikatni `id` s `${u}`.
 - Vsako novo besedilo vmesnika gre v public/i18n/sl.js in vseh 32 public/i18n/ui/*.json (imena predmetov

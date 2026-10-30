@@ -52,6 +52,8 @@ test("trendi avatarjev: samo števila in šele od 3 učencev naprej", () => {
   assert.equal(t.enough, true);
   assert.equal(t.students, 3);
   assert.equal(t.worn.hat_cap, undefined); // hat_cap ni kupljen, equip ga ne obleče
-  assert.equal(t.worn.body_gold, 1);
+  assert.equal(t.worn.body_gold, undefined); // samo en učenec: ni v seštevku
+  for (const id of ids) av.equip(id, { body: "body_gold" });
+  assert.equal(av.trends().worn.body_gold, 3);
   assert.ok(!JSON.stringify(t).includes("\"A\""));
 });
