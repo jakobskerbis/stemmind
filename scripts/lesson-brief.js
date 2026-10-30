@@ -108,7 +108,7 @@ House rules: Slovenian with the terminology of the level; decimal comma \`$3{,}5
 }
 
 Workflow (docs/token-rules.md §2): one \`Write\` per file; one \`node -e\` for all numbers; then once \`node scripts/check-lesson.js -q ${files}\`; fix with \`Edit\`, never rewrite; do not read the file back. If \`lessonExists\` is true, upgrade the existing lesson: run the checker, fix what it and the bar flag, keep correct text.
-Also write the mind map per lesson, \`${maps}\` (docs/gradiva.md): front matter \`avtor: AI\`, \`stanje: osnutek\`; 4–8 top-level bullets, each a 1–4 word keyword (no colon: the app hides text after it when sub-bullets follow) for the lesson's main ideas in teaching order (not a copy of Povzetek), each with 1–3 indented sub-bullets (formula in $…$, unit, example or typical mistake); no line over 12 words. Check: \`node scripts/check-gradivo.js -q ${maps}\`. If the map exists, fix it with \`Edit\` instead.
+Also write the mind map per lesson, \`${maps}\` (docs/gradiva.md): front matter \`avtor: AI\`, \`stanje: osnutek\`; 4–8 top-level bullets, each a 1–4 word keyword (no colon: details go in the sub-bullets) for the lesson's main ideas in teaching order (not a copy of Povzetek), each with 1–3 indented sub-bullets (formula in $…$, unit, example or typical mistake); no line over 12 words. Check: \`node scripts/check-gradivo.js -q ${maps}\`. If the map exists, fix it with \`Edit\` instead.
 Reply ≤ 3 lines per lesson: \`OK <id>, <words> besed\` or what is unresolved. No lesson text in the reply.
 
 ## Topics

@@ -75,7 +75,7 @@ export function authoredMap(topicId) {
     ? out.slice(0, 8).map((b) => {
         if (!b.subs.length) return { label: b.label, detail: b.detail };
         // »Veja: podrobnost« s podalinejami: podrobnost za dvopičjem ostane pred podalinejami.
-        return b.label ? { label: b.label, detail: [b.detail, ...b.subs].join(" · ") } : { label: b.detail, detail: b.subs.join(" · ") };
+        return b.label ? { label: b.label, detail: [b.detail, ...b.subs].filter(Boolean).join(" · ") } : { label: b.detail, detail: b.subs.join(" · ") };
       })
     : null;
 }
