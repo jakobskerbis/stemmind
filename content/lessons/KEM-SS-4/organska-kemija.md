@@ -229,3 +229,9 @@ Postopek za molekulsko formulo na drugi snovi iz kuhinje, ki ima oster kisel von
 - $1800\,\mathrm{mol}$
 ~ To je $m \cdot M$. Masa se z molsko maso deli, ne množi.
 > $n = \dfrac{m}{M} = \dfrac{30\,\mathrm{g}}{60\,\mathrm{g/mol}} = 0{,}50\,\mathrm{mol}$; cena ne vpliva na račun.
+
+:::simboli
+n | množina snovi | n = \dfrac{m}{M} | mol | v CₙH₂ₙ₊₂ pa število atomov ogljika
+m | masa snovi | m = n \cdot M | g
+M | molska masa | | g/mol
+:::

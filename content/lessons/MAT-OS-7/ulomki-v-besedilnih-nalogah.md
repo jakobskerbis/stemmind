@@ -201,3 +201,10 @@ $$c = d : \frac{a}{b} = d \cdot \frac{b}{a}$$
 - $27 : 8 \cdot 3$
 + $27 : 3 \cdot 8$
 > Trije deli so $27$, en del je $27 : 3 = 9$, osem delov pa $9 \cdot 8 = 72$.
+
+:::simboli
+a | števec | | | koliko delov vzamemo
+b | imenovalec | | | na koliko enakih delov razdelimo celoto
+c | celota | c = d : \frac{a}{b} = d \cdot \frac{b}{a} |
+d | vrednost dela a/b celote | d = \frac{a}{b} \cdot c |
+:::

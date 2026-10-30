@@ -218,3 +218,9 @@ Osno simetričen lik pomeni natančno to: njegova zrcalna slika čez neko premic
 - Os $o$ je vzporedna z daljico $AA'$.
 - Točka $A'$ leži na isti strani osi kot $A$.
 > Daljica $AA'$ je pravokotna na os in os jo razpolovi. Točka $A'$ je zato na drugi strani osi, enako daleč kot $A$.
+
+:::simboli
+A, B | točki, ki ju zrcalimo | | | A' (A črtica) je zrcalna slika točke A
+X | poljubno oglišče lika | | | X' je njegova zrcalna slika
+d | razdalja točke od osi zrcaljenja | | | d' je razdalja slike od osi; d' = d
+:::

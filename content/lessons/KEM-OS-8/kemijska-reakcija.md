@@ -226,3 +226,7 @@ $$4\,\mathrm{Al} + 3\,\mathrm{O_2} \longrightarrow 2\,\mathrm{Al_2O_3}$$
 + $2\,\mathrm{H_2} + \mathrm{O_2} \longrightarrow 2\,\mathrm{H_2O}$
 - $\mathrm{H_2} + \mathrm{O_2} \longrightarrow \mathrm{H_2O_2}$
 > V urejeni enačbi so na obeh straneh 4 atomi H in 2 atoma O. Prva enačba ima levo 2 atoma O, desno le 1. Pri tretji je spremenjen indeks v formuli vode, zato opisuje drugo snov (vodikov peroksid); pri urejanju smemo spreminjati le koeficiente, ne indeksov.
+
+:::simboli
+m | masa snovi | | g | pri kemijski reakciji se skupna masa ohrani
+:::

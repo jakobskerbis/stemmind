@@ -241,3 +241,13 @@ Ploščina je v vseh vrsticah ista, obseg pa raste, ker se poševni stranici dal
 - $147\,\text{cm}$
 ~ To je $21 \cdot 7$. Neznano višino dobiš z deljenjem, ne z množenjem.
 > $a \cdot v_a = 2 \cdot 21 = 42$, zato $v_a = 42 : 7 = 6\,\text{cm}$. Preizkus: $\dfrac{7 \cdot 6}{2} = 21$.
+
+:::simboli
+o | obseg trikotnika | o = a + b + c | | enakokraki z osnovnico c: o = c + 2a
+p | ploščina trikotnika | p = \frac{a \cdot v_a}{2} | | pravokotni: p = a · b : 2 (a, b kateti)
+a, b | stranici trikotnika | | | v pravokotnem trikotniku kateti; v primeru 4 a krak
+c | tretja stranica | | | v primeru 4 osnovnica enakokrakega trikotnika
+v_a | višina na stranico a | v_a = \dfrac{2 \cdot p}{a} |
+v_b | višina na stranico b | |
+v_c | višina na stranico c | |
+:::

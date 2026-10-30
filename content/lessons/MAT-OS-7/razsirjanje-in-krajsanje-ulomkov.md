@@ -250,3 +250,10 @@ Dva ulomka $\dfrac{a}{b}$ in $\dfrac{c}{d}$ sta enakovredna natanko tedaj, ko je
 - do oznake $\dfrac{6}{4}$
 ~ Imenovalec si spremenil, števec pa prepisal. $\dfrac{6}{4}$ je več kot cela žlička in dvakrat več od predpisanega odmerka.
 > $\dfrac{6}{8}$ skrajšamo z $2$: $\dfrac{6 : 2}{8 : 2} = \dfrac{3}{4}$. Sirup naliješ do oznake za tri četrtine.
+
+:::simboli
+a | števec | |
+b | imenovalec | | | b ≠ 0
+n | število, s katerim razširimo ali krajšamo | | | n ≠ 0; pri krajšanju skupni delitelj a in b
+D | največji skupni delitelj | | | krajšanje z D(a, b) da okrajšani ulomek
+:::

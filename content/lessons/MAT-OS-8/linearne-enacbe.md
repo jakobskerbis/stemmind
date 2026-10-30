@@ -250,3 +250,10 @@ $$x = \frac{c - b}{a}$$
 - $x = \dfrac{10}{3}$
 ~ Člen $x$ si prenesel z napačnim predznakom: $2x + x = 10$. Na obeh straneh moraš odšteti $x$.
 > $2x - 6 = x + 4$; odštejemo $x$: $x - 6 = 4$; prištejemo $6$: $x = 10$. Preizkus: $2 \cdot (10 - 3) = 14$ in $10 + 4 = 14$. ✓
+
+:::simboli
+x | neznanka | x = \frac{c - b}{a} | | rešitev enačbe ax + b = c
+a | koeficient pri neznanki | | | a ≠ 0
+b | prosti člen na levi strani | |
+c | desna stran enačbe | | | v A + c = B + c poljubno število
+:::

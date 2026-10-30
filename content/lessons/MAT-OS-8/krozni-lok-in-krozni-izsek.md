@@ -253,3 +253,12 @@ Spominja na ploščino trikotnika »osnovnica krat višina, deljeno z $2$«: lok
 - približno $150{,}7\,\text{cm}$
 ~ To je $\dfrac{1}{3} \cdot \pi \cdot 12^2 = 48\pi$, ploščina izseka v $\text{cm}^2$. Pot konice je lok.
 > $20$ minut je tretjina ure, kot je $120^\circ$. $l = \dfrac{1}{3} \cdot 2\pi \cdot 12\,\text{cm} = 8\pi\,\text{cm} \approx 25{,}1\,\text{cm}$.
+
+:::simboli
+l | dolžina krožnega loka | l = \frac{\alpha}{360^\circ} \cdot 2\pi r |
+\alpha | središčni kot | | ° | vrh ima v središču kroga
+r | polmer kroga | | | pri postaji ISS r = R + h
+p_i | ploščina krožnega izseka | p_i = \frac{\alpha}{360^\circ} \cdot \pi r^2 |
+R | polmer Zemlje | | km | približno 6400 km
+h | višina postaje nad površjem Zemlje | | km
+:::

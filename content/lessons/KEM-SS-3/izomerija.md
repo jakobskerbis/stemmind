@@ -261,3 +261,8 @@ Vsako vrsto izomerije si lahko predstavljaš kot preprosto sliko.
 - Ima dva enantiomera z različnima molekulskima formulama.
 ~ Enantiomera imata enako formulo in enaka vrelišča. Razlikujeta se le po razporeditvi v prostoru.
 > Srednji ogljik nosi štiri različne skupine, zato je kiralen. Alanin obstaja kot dva enantiomera, živa bitja pa uporabljajo le enega.
+
+:::simboli
+n | število atomov ogljika v molekuli | | – | alkan CₙH₂ₙ₊₂
+M | molska masa alkana | M = 14n + 2 | g/mol | iz A_r(C) = 12 in A_r(H) = 1
+:::

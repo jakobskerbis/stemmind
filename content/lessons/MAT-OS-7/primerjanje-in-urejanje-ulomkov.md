@@ -207,3 +207,12 @@ Zanimivo je še to: med dvema različnima ulomkoma vedno leži še kak ulomek. M
 + $\dfrac{4}{7}$
 - $\dfrac{2}{5}$
 > Ulomek je večji od $\dfrac{1}{2}$, če je dvakratnik števca večji od imenovalca. Pri $\dfrac{4}{7}$ je $8 > 7$, pri drugih je dvakratnik števca manjši od imenovalca ($6 < 7$, $10 < 11$, $4 < 5$).
+
+:::simboli
+a | števec ulomka | |
+b | imenovalec prvega ulomka | | | v a/n < b/n je b števec
+c | števec drugega ulomka | |
+d | imenovalec drugega ulomka | | | b · d je skupni imenovalec
+n, m | imenovalca ulomkov | | | večji imenovalec pomeni manjše dele
+v | najmanjši skupni večkratnik | | | v(6, 9) = 18 je najmanjši skupni imenovalec
+:::

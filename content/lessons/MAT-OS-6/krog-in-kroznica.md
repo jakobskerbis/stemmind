@@ -195,3 +195,10 @@ Predstavljaj si krožnico, narisano s šestilom, z majhno piko v sredini. Pika j
 + Krožnica je rob, krog pa vsebuje tudi notranjost.
 - Središče krožnice leži na krožnici.
 > Krožnica je samo črta, krog je krožnica skupaj z notranjostjo. Središče je v notranjosti kroga, ne na krožnici, in samo tetiva skozi središče je premer.
+
+:::simboli
+r | polmer krožnice | r = \frac{d}{2} | | razdalja od središča do krožnice
+d | premer krožnice | d = 2r | | najdaljša tetiva
+S | središče krožnice | |
+T | točka, ki jo primerjamo s krožnico | | | razdalja ST manjša od r: znotraj, enaka: na krožnici, večja: zunaj
+:::

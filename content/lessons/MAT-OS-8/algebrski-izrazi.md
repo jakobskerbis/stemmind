@@ -246,3 +246,11 @@ Za nepodobna člena takšnega pravila ni. Dovolj je en protiprimer: za $x = 2$ j
 ~ To dobiš, če $16h + 5$ združiš v $21h$. Člena $16h$ in $5$ nista podobna.
 + $37\,\text{€}$
 > Skupaj: $8h + 3 + 8h + 2 = 16h + 5$. Za $h = 2$: $16 \cdot 2 + 5 = 37$, torej $37\,\text{€}$.
+
+:::simboli
+d | število zadetih dvojk | | | točke igralca: 2d + 3t + p
+t | število zadetih trojk | |
+p | število zadetih prostih metov | |
+x, a | spremenljivki v izrazih | | | namesto njiju vstavimo števila
+m, n | koeficienta podobnih členov | | | v nalogi z Majo je n število krogov
+:::

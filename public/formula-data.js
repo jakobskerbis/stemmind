@@ -306,6 +306,8 @@ export const SYMBOLS_BLOCK_RE = /^[ \t]*:::[ \t]*simboli[ \t]*\n([\s\S]*?)\n[ \t
 // Ključ oznake iz TeX: "I_0", "I_{0}" → "I_0"; "\\varepsilon" → "ε"; "\\Delta H" → "ΔH"; "\\mathrm{pH}" → "pH".
 export function symbolKeyOf(tex) {
   let s = String(tex).trim();
+  const dm = /^\\Delta\s*(\\(?:mathrm|text)\s*\{.*)$/.exec(s); // \Delta\mathrm{EN}
+  if (dm) { const k = symbolKeyOf(dm[1]); return k ? `Δ${k}` : null; }
   const raw = /^\\(?:mathrm|text|textrm)\s*\{([^{}]+)\}\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+))?$/.exec(s);
   if (raw) return raw[1].replace(/\s+/g, "") + (raw[2] ? `_${normSub(raw[2])}` : "");
   let delta = "";
@@ -454,6 +456,12 @@ export function annotateTex(tex, subject = override || subjectFn()) {
       const g = GREEK[name];
       // ΔH, ΔG … kot lastna oznaka lekcije; sicer Δx = »sprememba« osnovne količine.
       if (g === "Δ" && /^[A-Za-z]/.test(tex.slice(j)) && subject?.[0] === "@" && lookupSymbol(`Δ${tex[j]}`, subject)) { i = symbol(`Δ${tex[j]}`, i, j + 1, false); continue; }
+      const dRaw = g === "Δ" && subject?.[0] === "@" && subject !== "@*" && /^\\(?:mathrm|text)\s*\{([^{}]+)\}/.exec(tex.slice(j));
+      if (dRaw && lookupSymbol(`Δ${normSub(dRaw[1])}`, subject)) {
+        out += wrap(`s:${subject}:Δ${normSub(dRaw[1])}`, tex.slice(i, j + dRaw[0].length));
+        i = j + dRaw[0].length;
+        continue;
+      }
       if (g === "Δ" && /^[A-Za-z]/.test(tex.slice(j)) && symbolKey(tex[j], "", subject, tex)) { i = symbol(tex[j], i, j + 1, true); continue; }
       if (g === "Ω" && afterNumber()) { out += wrap("u:Ω", tex.slice(i, j).trimEnd()) + " "; i = j; continue; }
       // 5\,\mu\mathrm{m}: predpona enote, ne oznaka.

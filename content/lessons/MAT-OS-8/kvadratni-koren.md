@@ -272,3 +272,12 @@ Tudi ocena je upravičena. Za nenegativna števila večje število da večji kva
 - med $45$ in $46$
 ~ $90 : 2 = 45$: koren si zamenjal z deljenjem z $2$.
 > $9^2 = 81 < 90 < 100 = 10^2$, zato je stranica med $9\,\text{m}$ in $10\,\text{m}$ (približno $9{,}5\,\text{m}$).
+
+:::simboli
+a | število pod korenom | | | a ≥ 0; v a = √S stranica kvadrata
+b | kvadratni koren števila a | b = \sqrt{a} | | b ≥ 0 in b² = a; v √(a · b) drugo število
+x, y | kvadratna korena števil a in b | | | x = √a, y = √b
+S | ploščina kvadrata | | | stranica je √S
+n | naravno število za oceno korena | | | iz n² < S < (n + 1)² sledi n < √S < n + 1
+o | obseg kvadrata | o = 4a |
+:::

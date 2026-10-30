@@ -50,24 +50,24 @@ V simulaciji spodaj »Periodne lastnosti elementov« izberi lastnost »atomski p
 | Ionizacijska energija | se veča | se manjša |
 | Elektronegativnost | se veča | se manjša |
 
-**6. Elektronegativnost.** Elektronegativnost ($EN$) je merilo za to, kako močno atom v kemijski vezi privlači skupni elektronski par. Po Paulingovi lestvici je število brez enote. Najvišjo vrednost ima fluor ($\approx 4{,}0$), najnižje imajo alkalijske kovine in težje zemeljskoalkalijske kovine ($\approx 0{,}7$ do $1{,}0$). Žlahtnim plinom elektronegativnosti navadno ne pripisujemo, ker skoraj ne tvorijo vezi.
+**6. Elektronegativnost.** Elektronegativnost ($\mathrm{EN}$) je merilo za to, kako močno atom v kemijski vezi privlači skupni elektronski par. Po Paulingovi lestvici je število brez enote. Najvišjo vrednost ima fluor ($\approx 4{,}0$), najnižje imajo alkalijske kovine in težje zemeljskoalkalijske kovine ($\approx 0{,}7$ do $1{,}0$). Žlahtnim plinom elektronegativnosti navadno ne pripisujemo, ker skoraj ne tvorijo vezi.
 
 Približne vrednosti za nekaj elementov:
 
 | Element | H | Li | C | N | O | F | Na | Mg | Al | Si | P | S | Cl |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| $EN$ | 2,2 | 1,0 | 2,6 | 3,0 | 3,4 | 4,0 | 0,9 | 1,3 | 1,6 | 1,9 | 2,2 | 2,6 | 3,2 |
+| $\mathrm{EN}$ | 2,2 | 1,0 | 2,6 | 3,0 | 3,4 | 4,0 | 0,9 | 1,3 | 1,6 | 1,9 | 2,2 | 2,6 | 3,2 |
 
-**7. Elektronegativnost in vrsta vezi.** Razliko elektronegativnosti $\Delta EN = |EN_1 - EN_2|$ uporabimo za grobo oceno vezi. Meje so orientacijske:
+**7. Elektronegativnost in vrsta vezi.** Razliko elektronegativnosti $\Delta\mathrm{EN} = |\mathrm{EN}_1 - \mathrm{EN}_2|$ uporabimo za grobo oceno vezi. Meje so orientacijske:
 
-- $\Delta EN$ blizu $0$: **nepolarna kovalentna vez**. Elektronski par je skupen enakomerno, kot pri $\mathrm{Cl_2}$.
-- $\Delta EN$ srednja: **polarna kovalentna vez**. Elektronski par je bližje bolj elektronegativnemu atomu, ki ima delni negativni naboj ($\delta^-$), drugi pa delni pozitivni ($\delta^+$).
-- $\Delta EN$ velika (nad približno $1{,}7$): **ionska vez**. Elektron praktično preide z enega atoma na drugega.
+- $\Delta\mathrm{EN}$ blizu $0$: **nepolarna kovalentna vez**. Elektronski par je skupen enakomerno, kot pri $\mathrm{Cl_2}$.
+- $\Delta\mathrm{EN}$ srednja: **polarna kovalentna vez**. Elektronski par je bližje bolj elektronegativnemu atomu, ki ima delni negativni naboj ($\delta^-$), drugi pa delni pozitivni ($\delta^+$).
+- $\Delta\mathrm{EN}$ velika (nad približno $1{,}7$): **ionska vez**. Elektron praktično preide z enega atoma na drugega.
 
 :::premisli
-Kakšna vez nastane med kalijem ($EN = 0{,}8$) in fluorom ($EN = 4{,}0$)?
+Kakšna vez nastane med kalijem ($\mathrm{EN} = 0{,}8$) in fluorom ($\mathrm{EN} = 4{,}0$)?
 ---
-Ionska. $\Delta EN = |0{,}8 - 4{,}0| = 3{,}2$, kar je daleč nad $1{,}7$. Kalij odda elektron in postane $\mathrm{K^+}$, fluor ga sprejme in postane $\mathrm{F^-}$.
+Ionska. $\Delta\mathrm{EN} = |0{,}8 - 4{,}0| = 3{,}2$, kar je daleč nad $1{,}7$. Kalij odda elektron in postane $\mathrm{K^+}$, fluor ga sprejme in postane $\mathrm{F^-}$.
 :::
 
 ## Rešeni primeri
@@ -95,20 +95,20 @@ V isti periodi elektronegativnost narašča od leve proti desni.
 
 Oceni vrsto vezi v $\mathrm{Cl_2}$, $\mathrm{HCl}$ in $\mathrm{NaCl}$. Elektronegativnosti: $\mathrm{Cl}$ $3{,}2$, $\mathrm{H}$ $2{,}2$, $\mathrm{Na}$ $0{,}9$.
 
-**Podatki:** $EN(\mathrm{Cl}) = 3{,}2$, $EN(\mathrm{H}) = 2{,}2$, $EN(\mathrm{Na}) = 0{,}9$; spojine $\mathrm{Cl_2}$, $\mathrm{HCl}$, $\mathrm{NaCl}$
+**Podatki:** $\mathrm{EN}(\mathrm{Cl}) = 3{,}2$, $\mathrm{EN}(\mathrm{H}) = 2{,}2$, $\mathrm{EN}(\mathrm{Na}) = 0{,}9$; spojine $\mathrm{Cl_2}$, $\mathrm{HCl}$, $\mathrm{NaCl}$
 **Iščemo:** vrsto vezi v vsaki spojini
 
 :::formula
-$\Delta EN = |EN_1 - EN_2|$
+$\Delta\mathrm{EN} = |\mathrm{EN}_1 - \mathrm{EN}_2|$
 
 blizu $0$: nepolarna; srednja: polarna; nad približno $1{,}7$: ionska
 :::
 
 **Rešitev:**
 
-1. **$\mathrm{Cl_2}$:** oba atoma sta enaka, zato $\Delta EN = 3{,}2 - 3{,}2 = 0$. Vez je nepolarna kovalentna.
-2. **$\mathrm{HCl}$:** $\Delta EN = 3{,}2 - 2{,}2 = 1{,}0$. Vrednost je srednja, zato je vez polarna kovalentna. Klor je bolj elektronegativen, torej ima $\delta^-$, vodik pa $\delta^+$.
-3. **$\mathrm{NaCl}$:** $\Delta EN = 3{,}2 - 0{,}9 = 2{,}3$. Vrednost je velika, zato je vez ionska: natrij odda elektron, klor ga sprejme.
+1. **$\mathrm{Cl_2}$:** oba atoma sta enaka, zato $\Delta\mathrm{EN} = 3{,}2 - 3{,}2 = 0$. Vez je nepolarna kovalentna.
+2. **$\mathrm{HCl}$:** $\Delta\mathrm{EN} = 3{,}2 - 2{,}2 = 1{,}0$. Vrednost je srednja, zato je vez polarna kovalentna. Klor je bolj elektronegativen, torej ima $\delta^-$, vodik pa $\delta^+$.
+3. **$\mathrm{NaCl}$:** $\Delta\mathrm{EN} = 3{,}2 - 0{,}9 = 2{,}3$. Vrednost je velika, zato je vez ionska: natrij odda elektron, klor ga sprejme.
 4. Smiselnost: večja ko je razlika, bolj je vez ionska. $0 < 1{,}0 < 2{,}3$ se ujema z vrstnim redom nepolarna, polarna, ionska.
 5. Odgovor: $\mathrm{Cl_2}$ ima nepolarno kovalentno vez, $\mathrm{HCl}$ polarno kovalentno, $\mathrm{NaCl}$ ionsko.
 
@@ -117,21 +117,21 @@ blizu $0$: nepolarna; srednja: polarna; nad približno $1{,}7$: ionska
 Žveplo ($\mathrm{S}$) je v 3. periodi in 16. skupini. Določi število valenčnih elektronov in primerjaj njegovo elektronegativnost s kisikom ($\mathrm{O}$) in klorom ($\mathrm{Cl}$). Nato primerjaj atomski polmer žvepla s kisikom.
 
 **Podatki:** $\mathrm{S}$: 3. perioda, 16. skupina; $\mathrm{O}$: 2. perioda, 16. skupina; $\mathrm{Cl}$: 3. perioda, 17. skupina
-**Iščemo:** število valenčnih elektronov žvepla, primerjavo $EN$ s kisikom in klorom, primerjavo polmera s kisikom
+**Iščemo:** število valenčnih elektronov žvepla, primerjavo $\mathrm{EN}$ s kisikom in klorom, primerjavo polmera s kisikom
 
 :::formula
 Valenčni elektroni (skupine 13 do 18): številka skupine $- 10$.
 
-Po periodi (→): $EN$ narašča, polmer se manjša.
+Po periodi (→): $\mathrm{EN}$ narašča, polmer se manjša.
 
-Po skupini (↓): $EN$ se manjša, polmer narašča.
+Po skupini (↓): $\mathrm{EN}$ se manjša, polmer narašča.
 :::
 
 **Rešitev:**
 
 1. **Valenčni elektroni.** 16. skupina ima $16 - 10 = 6$ valenčnih elektronov. Žveplo jih ima torej $6$. Zasedene so $3$ lupine, ker je v 3. periodi.
-2. **Žveplo in klor.** Oba sta v 3. periodi, klor je bolj desno (17. skupina). Elektronegativnost raste po periodi, zato je $EN(\mathrm{Cl}) > EN(\mathrm{S})$. Vrednosti: $3{,}2 > 2{,}6$.
-3. **Žveplo in kisik.** Oba sta v 16. skupini, kisik je višje (2. perioda). Elektronegativnost se po skupini navzdol manjša, zato je $EN(\mathrm{O}) > EN(\mathrm{S})$. Vrednosti: $3{,}4 > 2{,}6$.
+2. **Žveplo in klor.** Oba sta v 3. periodi, klor je bolj desno (17. skupina). Elektronegativnost raste po periodi, zato je $\mathrm{EN}(\mathrm{Cl}) > \mathrm{EN}(\mathrm{S})$. Vrednosti: $3{,}2 > 2{,}6$.
+3. **Žveplo in kisik.** Oba sta v 16. skupini, kisik je višje (2. perioda). Elektronegativnost se po skupini navzdol manjša, zato je $\mathrm{EN}(\mathrm{O}) > \mathrm{EN}(\mathrm{S})$. Vrednosti: $3{,}4 > 2{,}6$.
 4. **Atomski polmer.** Žveplo je v skupini nižje, ima eno lupino več, zato je njegov atom *večji* od kisikovega.
 5. **Sklep.** Vrstni red elektronegativnosti: $\mathrm{S} < \mathrm{O}$ in $\mathrm{S} < \mathrm{Cl}$. Polmer: $r(\mathrm{S}) > r(\mathrm{O})$.
 
@@ -139,17 +139,17 @@ Po skupini (↓): $EN$ se manjša, polmer narašča.
 
 V vodi ($\mathrm{H_2O}$) so vezi $\mathrm{O{-}H}$, v amoniaku ($\mathrm{NH_3}$) vezi $\mathrm{N{-}H}$. Katere vezi so bolj polarne in kateri atom v njih nosi delni negativni naboj?
 
-**Podatki:** $EN(\mathrm{O}) = 3{,}4$, $EN(\mathrm{N}) = 3{,}0$, $EN(\mathrm{H}) = 2{,}2$
+**Podatki:** $\mathrm{EN}(\mathrm{O}) = 3{,}4$, $\mathrm{EN}(\mathrm{N}) = 3{,}0$, $\mathrm{EN}(\mathrm{H}) = 2{,}2$
 **Iščemo:** katera vez je bolj polarna in kje je $\delta^-$
 
 :::formula
-$\Delta EN = |EN_1 - EN_2|$; $\delta^-$ nosi bolj elektronegativni atom.
+$\Delta\mathrm{EN} = |\mathrm{EN}_1 - \mathrm{EN}_2|$; $\delta^-$ nosi bolj elektronegativni atom.
 :::
 
 **Rešitev:**
 
-1. Polarnost primerjamo z razliko elektronegativnosti, ker večja razlika pomeni bolj neenakomerno deljen par: $\Delta EN(\mathrm{O{-}H}) = |3{,}4 - 2{,}2| = 1{,}2$.
-2. $\Delta EN(\mathrm{N{-}H}) = |3{,}0 - 2{,}2| = 0{,}8$.
+1. Polarnost primerjamo z razliko elektronegativnosti, ker večja razlika pomeni bolj neenakomerno deljen par: $\Delta\mathrm{EN}(\mathrm{O{-}H}) = |3{,}4 - 2{,}2| = 1{,}2$.
+2. $\Delta\mathrm{EN}(\mathrm{N{-}H}) = |3{,}0 - 2{,}2| = 0{,}8$.
 3. Primerjaj sam in določi, kje je $\delta^-$, nato preveri:
 
 :::premisli
@@ -164,8 +164,8 @@ Bolj polarna je vez $\mathrm{O{-}H}$ ($1{,}2 > 0{,}8$). Obe vezi sta polarni kov
 - **»Več elektronov, večji atom.«** Napačno: »$\mathrm{Cl}$ ima več elektronov kot $\mathrm{Na}$, zato je večji.« V isti periodi se število lupin ne spremeni, naboj jedra pa raste, zato se atom manjša. O polmeru odloča predvsem število lupin, šele nato naboj jedra.
 - **Mešanje polmera in elektronegativnosti.** Po periodi se polmer *manjša*, elektronegativnost pa *veča*. Trenda sta nasprotna, zato ju ne prenašaj z ene lastnosti na drugo.
 - **Napačno razmišljanje o številu lupin.** Številka periode pove število lupin, številka skupine pa (pri glavnih skupinah) število valenčnih elektronov, ne obratno. Pri skupinah 13 do 18 je število valenčnih elektronov številka skupine minus $10$.
-- **Pozabljena absolutna vrednost pri $\Delta EN$.** Napačno: »$1{,}3 - 3{,}4 = -2{,}1$ je manj od nič, torej je vez nepolarna.« Razlika je vedno pozitivna: $\Delta EN = |EN_1 - EN_2|$; vrstni red atomov ni pomemben.
-- **Preveliko zaupanje v meje.** Meje med nepolarno, polarno in ionsko vezjo so le orientacijske, vezi so v resnici zvezen prehod. Vez z $\Delta EN = 1{,}6$ ni bistveno drugačna od vezi z $\Delta EN = 1{,}8$.
+- **Pozabljena absolutna vrednost pri $\Delta\mathrm{EN}$.** Napačno: »$1{,}3 - 3{,}4 = -2{,}1$ je manj od nič, torej je vez nepolarna.« Razlika je vedno pozitivna: $\Delta\mathrm{EN} = |\mathrm{EN}_1 - \mathrm{EN}_2|$; vrstni red atomov ni pomemben.
+- **Preveliko zaupanje v meje.** Meje med nepolarno, polarno in ionsko vezjo so le orientacijske, vezi so v resnici zvezen prehod. Vez z $\Delta\mathrm{EN} = 1{,}6$ ni bistveno drugačna od vezi z $\Delta\mathrm{EN} = 1{,}8$.
 
 ## Povzetek
 
@@ -173,7 +173,7 @@ Bolj polarna je vez $\mathrm{O{-}H}$ ($1{,}2 > 0{,}8$). Obe vezi sta polarni kov
 - Po periodi proti desni: atomski polmer se manjša, ionizacijska energija in elektronegativnost se večata.
 - Po skupini navzdol: atomski polmer se veča, ionizacijska energija in elektronegativnost se manjšata.
 - Elektronegativnost je sposobnost atoma, da v vezi privlači skupni elektronski par. Najvišja je pri fluoru ($\approx 4{,}0$).
-- Razlika elektronegativnosti $\Delta EN$ pove, ali je vez nepolarna ($\approx 0$), polarna (srednja) ali ionska (velika, nad približno $1{,}7$).
+- Razlika elektronegativnosti $\Delta\mathrm{EN}$ pove, ali je vez nepolarna ($\approx 0$), polarna (srednja) ali ionska (velika, nad približno $1{,}7$).
 
 ## Drugače: Na sliki
 
@@ -188,7 +188,7 @@ Zaradi obeh puščic je »vrh« elektronegativnosti zgoraj desno (fluor), »dno�
 
 Elektronegativnost si lahko predstavljaš kot **vleko vrvi** med dvema ljudema. Skupni elektronski par je vrv.
 
-- Če sta oba enako močna ($\mathrm{Cl_2}$, $\Delta EN = 0$), je vrv na sredini. To je nepolarna vez.
+- Če sta oba enako močna ($\mathrm{Cl_2}$, $\Delta\mathrm{EN} = 0$), je vrv na sredini. To je nepolarna vez.
 - Če je en malo močnejši ($\mathrm{HCl}$), vrv potegne k sebi, a je ne dobi povsem. To je polarna vez.
 - Če je en neprimerno močnejši ($\mathrm{NaCl}$), vrv povsem prevzame. To je ionska vez.
 
@@ -209,7 +209,7 @@ Primer s številkami za 2. periodo:
 |---|---|---|---|---|---|---|---|
 | Skupina | 1 | 2 | 13 | 14 | 15 | 16 | 17 |
 | Valenčni elektroni | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-| $EN$ | 1,0 | 1,6 | 2,0 | 2,6 | 3,0 | 3,4 | 4,0 |
+| $\mathrm{EN}$ | 1,0 | 1,6 | 2,0 | 2,6 | 3,0 | 3,4 | 4,0 |
 
 Vidiš, da elektronegativnost od litija do fluora stalno raste, in da se z vsakim korakom doda en valenčni elektron.
 
@@ -217,7 +217,7 @@ Vidiš, da elektronegativnost od litija do fluora stalno raste, in da se z vsaki
 
 | Element | F | Cl | Br | I |
 |---|---|---|---|---|
-| $EN$ | 4,0 | 3,2 | 3,0 | 2,7 |
+| $\mathrm{EN}$ | 4,0 | 3,2 | 3,0 | 2,7 |
 
 Navzdol po skupini elektronegativnost pada.
 
@@ -230,7 +230,7 @@ $$F \propto \frac{Z_\text{ef}\cdot e^2}{r^2}$$
 - **Po periodi** $Z$ narašča, število notranjih (senčečih) elektronov pa ostane enako. Zato $Z_\text{ef}$ narašča, razdalja $r$ se rahlo manjša, privlak pa se poveča. Posledica so manjši polmer, višja ionizacijska energija in večja elektronegativnost.
 - **Po skupini** se doda nova lupina. $r$ se bistveno poveča, notranji elektroni pa močno zakrijejo naboj jedra, zato je privlak šibkejši.
 
-Paulingova lestvica je zasnovana tako, da elektronegativnost povezuje z energijo vezi. Če sta povezana atoma različnih elementov, je vez v resnici močnejša, kot bi pričakovali iz povprečja vezi med enakimi atomi. Dodatna energija vezi je tem večja, čim večja je razlika elektronegativnosti. Zato je $\Delta EN$ uporaben pokazatelj polarnosti vezi.
+Paulingova lestvica je zasnovana tako, da elektronegativnost povezuje z energijo vezi. Če sta povezana atoma različnih elementov, je vez v resnici močnejša, kot bi pričakovali iz povprečja vezi med enakimi atomi. Dodatna energija vezi je tem večja, čim večja je razlika elektronegativnosti. Zato je $\Delta\mathrm{EN}$ uporaben pokazatelj polarnosti vezi.
 
 ## Preveri se
 
@@ -264,16 +264,26 @@ Paulingova lestvica je zasnovana tako, da elektronegativnost povezuje z energijo
 
 ? Katera vez je med naštetimi najbolj polarna?
 - $\mathrm{H{-}H}$
-~ Atoma sta enaka, $\Delta EN = 0$, zato je vez nepolarna.
+~ Atoma sta enaka, $\Delta\mathrm{EN} = 0$, zato je vez nepolarna.
 + $\mathrm{H{-}F}$
 - $\mathrm{H{-}Cl}$
 ~ Klor je večji atom, a polarnost določa razlika elektronegativnosti: $1{,}0$ pri $\mathrm{H{-}Cl}$ proti $1{,}8$ pri $\mathrm{H{-}F}$.
-> $\Delta EN$ za $\mathrm{H{-}H}$ je $0$, za $\mathrm{H{-}Cl}$ je $3{,}2 - 2{,}2 = 1{,}0$, za $\mathrm{H{-}F}$ pa $4{,}0 - 2{,}2 = 1{,}8$. Največja razlika pomeni najbolj polarno vez.
+> $\Delta\mathrm{EN}$ za $\mathrm{H{-}H}$ je $0$, za $\mathrm{H{-}Cl}$ je $3{,}2 - 2{,}2 = 1{,}0$, za $\mathrm{H{-}F}$ pa $4{,}0 - 2{,}2 = 1{,}8$. Največja razlika pomeni najbolj polarno vez.
 
-? Kakšna je vez med magnezijem ($EN = 1{,}3$) in kisikom ($EN = 3{,}4$) v $\mathrm{MgO}$?
+? Kakšna je vez med magnezijem ($\mathrm{EN} = 1{,}3$) in kisikom ($\mathrm{EN} = 3{,}4$) v $\mathrm{MgO}$?
 + Ionska.
-- Polarna kovalentna, ker je $\Delta EN$ srednje velika.
-~ $\Delta EN = 2{,}1$ je nad mejo približno $1{,}7$, zato vez ni več polarna kovalentna, ampak ionska.
+- Polarna kovalentna, ker je $\Delta\mathrm{EN}$ srednje velika.
+~ $\Delta\mathrm{EN} = 2{,}1$ je nad mejo približno $1{,}7$, zato vez ni več polarna kovalentna, ampak ionska.
 - Nepolarna, ker je $1{,}3 - 3{,}4$ negativno.
-~ Pozabil si absolutno vrednost. $\Delta EN = |1{,}3 - 3{,}4| = 2{,}1$ je vedno pozitivna.
-> $\Delta EN = |1{,}3 - 3{,}4| = 2{,}1 > 1{,}7$, zato je vez ionska: magnezij odda dva elektrona kisiku ($\mathrm{Mg^{2+}}$ in $\mathrm{O^{2-}}$).
+~ Pozabil si absolutno vrednost. $\Delta\mathrm{EN} = |1{,}3 - 3{,}4| = 2{,}1$ je vedno pozitivna.
+> $\Delta\mathrm{EN} = |1{,}3 - 3{,}4| = 2{,}1 > 1{,}7$, zato je vez ionska: magnezij odda dva elektrona kisiku ($\mathrm{Mg^{2+}}$ in $\mathrm{O^{2-}}$).
+
+:::simboli
+F | privlačna sila jedra na valenčni elektron | F \propto \frac{Z_\text{ef}\cdot e^2}{r^2} | N | ∝ pomeni »je sorazmerna z« (Coulombov zakon)
+Z_{\text{ef}} | efektivni naboj jedra | | – | manjši od Z, ker notranji elektroni senčijo jedro
+e | osnovni naboj | | C | e = 1,60 · 10⁻¹⁹ C
+r | razdalja valenčnega elektrona od jedra | | m | približno polmer atoma
+\Delta\mathrm{EN} | razlika elektronegativnosti | \Delta\mathrm{EN} = \lvert \mathrm{EN}_1 - \mathrm{EN}_2 \rvert | – | blizu 0 nepolarna, nad 1,7 ionska vez
+\mathrm{EN} | elektronegativnost | | – | po Paulingu; največja pri fluoru (≈ 4,0)
+\delta | delni naboj atoma v polarni vezi | | – | δ⁻ ima bolj elektronegativni atom, δ⁺ drugi
+:::

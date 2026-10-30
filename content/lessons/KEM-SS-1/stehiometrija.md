@@ -292,3 +292,12 @@ Ker se atomi pri reakciji ne ustvarjajo in ne uničujejo, je vsota mas vseh snov
 ~ To je masa nastalega $\mathrm{CO_2}$ ($2{,}0 \cdot 44\,\text{g}$), ne $\mathrm{CaO}$.
 + $112\,\text{g}$
 > $n(\mathrm{CaCO_3}) = 200/100 = 2{,}0\,\text{mol}$, nastane $2{,}0\,\text{mol}$ $\mathrm{CaO}$, torej $m = 2{,}0 \cdot 56 = 112\,\text{g}$. Odgovor $56\,\text{g}$ bi veljal za $1\,\text{mol}$, $88\,\text{g}$ pa je masa nastalega $\mathrm{CO_2}$.
+
+:::simboli
+n | množina snovi | n = \dfrac{m}{M} | mol
+m | masa snovi | m = n \cdot M | g
+M | molska masa | | g/mol
+\nu | stehiometrijski koeficient | | – | število pred formulo v urejeni enačbi
+N | število delcev | N = n \cdot N_\mathrm{A} | –
+N_{\mathrm{A}} | Avogadrova konstanta | | mol^{-1} | N_A = 6,022 · 10²³ mol⁻¹
+:::
