@@ -58,7 +58,7 @@ function unitHtml(e, tex, esc) {
     if (/^(–|-|—|1|brez)$/.test(e.u)) return noUnit;
   } else if (!e.u) return noteOf(e) ? "" : noUnit;
   const u = lookupUnit(normUnitKey(e.u));
-  if (!u) return `<div class="fx-line"><span class="fx-k">${t("fx.unit")}</span>${tex(`\\mathrm{${e.u}}`)}</div>`;
+  if (!u) return `<div class="fx-line"><span class="fx-k">${t("fx.unit")}</span>${tex(`\\mathrm{${e.u.replace(/ +/g, "\\,")}}`)}</div>`;
   return `<div class="fx-line"><span class="fx-k">${t("fx.unit")}</span>${tex(unitTex(u.key))}${nameOf(u) !== u.key ? `<span class="fx-un">(${esc(nameOf(u))})</span>` : ""}</div>
     ${u.c ? `<div class="fx-line fx-sub">${tex(u.c)}${descOf(u) ? ` <span>${esc(descOf(u))}</span>` : ""}</div>` : descOf(u) ? `<div class="fx-line fx-sub"><span>${esc(descOf(u))}</span></div>` : ""}`;
 }
@@ -73,7 +73,7 @@ function partsHtml(relation, subject, self, tex, esc) {
     const p = lookupSymbol(k, subj, relation) || lookupSymbolAny(k, subj);
     if (!p) return "";
     const nm = d ? t("fx.change", { what: nameOf(p) }) : nameOf(p);
-    const unit = p.u && !/^(–|-|—|1|brez)$/.test(p.u) ? (lookupUnit(normUnitKey(p.u))?.key ? unitTex(lookupUnit(normUnitKey(p.u)).key) : `\\mathrm{${p.u}}`) : "";
+    const unit = p.u && !/^(–|-|—|1|brez)$/.test(p.u) ? (lookupUnit(normUnitKey(p.u))?.key ? unitTex(lookupUnit(normUnitKey(p.u)).key) : `\\mathrm{${p.u.replace(/ +/g, "\\,")}}`) : "";
     return `<li>${tex((d ? "\\Delta " : "") + (p.tex || symTex(k)))}<span>${esc(nm)}${unit ? ` <span class="fx-un">[${tex(unit)}]</span>` : ""}</span></li>`;
   }).join("");
   return rows ? `<div class="fx-parts"><span class="fx-k">${t("fx.parts")}</span><ul>${rows}</ul></div>` : "";
