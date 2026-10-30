@@ -309,8 +309,9 @@ html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important;
 .katex .vlist { pointer-events: none; }
 .katex [data-fx], .katex [data-fx] * { pointer-events: auto; }
 .katex .pstrut { pointer-events: none !important; }
-[data-fx][role="button"] { cursor: pointer; border-radius: 3px; padding: 0 0.08em; margin: 0 -0.08em; box-shadow: inset 0 -1.5px 0 color-mix(in srgb, var(--accent) 55%, transparent); background-image: none; }
-[data-fx][role="button"]:hover, [data-fx].fx-open { background: var(--accent-soft); box-shadow: inset 0 -1.5px 0 var(--accent); }
+/* Klikljiv znak je napisan modro, brez podčrte (j, 30. 10.: čistejši videz). */
+[data-fx][role="button"] { cursor: pointer; border-radius: 3px; padding: 0 0.08em; margin: 0 -0.08em; color: var(--accent); background-image: none; }
+[data-fx][role="button"]:hover, [data-fx].fx-open { background: var(--accent-soft); }
 [data-fx][role="button"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .fx-pop {
   position: absolute; z-index: 1200; background: var(--surface); color: var(--text);
