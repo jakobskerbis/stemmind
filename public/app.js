@@ -648,9 +648,10 @@ async function send(text, { deep = false } = {}) {
     const box = $("#messages");
     const paint = (shown) => {
       const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
-      bubble.innerHTML = renderRich(streamSafe(shown));
+      bubble.innerHTML = renderRich(streamSafe(shown)) || "<p></p>"; // prazen odstavek nosi piko »piše« (style.css)
       if (atBottom) box.scrollTop = box.scrollHeight;
     };
+    paint("");
     // Odgovor se izpisuje z berljivim tempom; dotik sporočila pokaže vse naenkrat.
     const pacer = createPacer(currentPace(), paint);
     state.pacer = pacer;

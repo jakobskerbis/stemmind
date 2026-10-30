@@ -394,7 +394,8 @@ html[data-tutor-ic] .msg.assistant::after {
 .msg.error { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
 /* Pika »piše …« na koncu zadnjega odstavka; ::before in ::after mehurčka sta avatar inštruktorja in ju ne smemo zadeti
    (prej je .typing::after avatarju dodal zamik 4 px, utripanje in modro ozadje, zato je bil znak izven sredine). */
-.msg.assistant.typing > :last-child::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-inline-start: 4px; border-radius: 50%; background: var(--accent); animation: blink 1s ease-in-out infinite; }
+/* Pri seznamu za besedilom zadnje točke, ne v novi vrstici; prazen mehurček dobi <p></p> (app.js, paint). */
+.msg.assistant.typing > :last-child:not(ul, ol)::after, .msg.assistant.typing > :is(ul, ol):last-child > li:last-child::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-inline-start: 4px; border-radius: 50%; background: var(--accent); animation: blink 1s ease-in-out infinite; }
 @keyframes blink { 50% { opacity: 0.2; } }
 .deep-btn { display: inline-flex !important; margin-top: 10px; font-size: 0.85rem; min-height: 34px !important; padding: 4px 12px !important; color: var(--muted) !important; }
 /* Pod odgovorom: koda sporočila (za preverjanje posnetkov zaslona) in »Prijavi napako« (server/reports.js) */
