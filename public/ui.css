@@ -367,12 +367,12 @@ html.lite[data-era] { --font-head: Georgia, "Times New Roman", serif; }
   }
 }
 /* Risbe v kotu: sklopi Učne poti (osem po vrsti), stranska vrstica pogovorov, kartice s praznim kotom. */
-:root[data-era] :is(.unit, #view-me .me-head, #view-progress .card) { position: relative; isolation: isolate; }
+:root[data-era] :is(.unit, #view-me .me-head, #view-progress .card:not(.goal-card)) { position: relative; isolation: isolate; }
 /* Na telefonu je odprta vrstica pogovorov absolutna (style.css: .sidebar.open), zato ji položaja ne spreminjamo. */
 :root[data-era] .chat-view .sidebar { isolation: isolate; }
 :root[data-era] .chat-view .sidebar:not(.open) { position: relative; }
 /* :where, da posamezni primeri spodaj (telefon, Jaz, Napredek) prepišejo velikost in mesto. */
-:root[data-era] :where(.unit, #view-me .me-head, #view-progress .card)::after,
+:root[data-era] :where(.unit, #view-me .me-head, #view-progress .card:not(.goal-card))::after,
 :root[data-era] .chat-view .sidebar::after {
   content: ""; position: absolute; z-index: -1; inset-inline-end: 14px; top: 18px; width: 112px; height: 112px; pointer-events: none;
   background: var(--motif-c); -webkit-mask: var(--um, var(--m1)) center / contain no-repeat; mask: var(--um, var(--m1)) center / contain no-repeat;
@@ -391,7 +391,8 @@ html.lite[data-era] { --font-head: Georgia, "Times New Roman", serif; }
   mask: var(--m1) no-repeat right -50px bottom -40px / 210px 210px, var(--m6) no-repeat left 22px bottom 46% / 92px 92px;
 }
 :root[data-era] #view-me .me-head::after { --um: var(--m2); width: 80px; height: 80px; top: auto; bottom: -20px; inset-inline-end: 36px; transform: rotate(-10deg); }
-:root[data-era] #view-progress .card::after { --um: var(--m5); width: 76px; height: 76px; top: 12px; transform: rotate(8deg); }
+/* Napredek: majhna risba ob kratkem naslovu (h2), nad prvo vrstico besedila (ta je ~58 px pod robom kartice). */
+:root[data-era] #view-progress .card::after { --um: var(--m5); width: 44px; height: 44px; top: 7px; transform: rotate(8deg); }
 :root[data-era] #view-progress .card:nth-of-type(2n)::after { --um: var(--m8); transform: rotate(-7deg); }
 /* Telefon: naslov sklopa sega čez vso širino, zato je risba spodaj ob gumbu Preizkus znanja (na začetku vrstice). */
 @media (max-width: 700px) { :root[data-era] .unit::after { width: 64px; height: 64px; top: auto; bottom: 12px; inset-inline-end: 12px; transform: rotate(-8deg); } }
