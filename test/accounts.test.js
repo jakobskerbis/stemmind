@@ -718,6 +718,11 @@ test("aktivacijska koda EVKLID3X: 3 meseci, zmogljivejši model največ Sonnet",
     onText("ok");
     return { text: 'ok\n<<META subject=MAT topic="-" error=0 mode=A flag=none>>', stopReason: "end_turn" };
   };
+  const photoCaps = [];
+  const schedulePhotoFn = async ({ capped }) => {
+    photoCaps.push(capped);
+    return { lessons: [], events: [], usage: null, model: "test" };
+  };
   await withServer(async ({ client, calls, store }) => {
     const a = client();
     const reg = await registerVerified(a, calls, "sonnet@kod.si", { promo_code: "evklid3x" });
@@ -731,11 +736,17 @@ test("aktivacijska koda EVKLID3X: 3 meseci, zmogljivejši model največ Sonnet",
     assert.equal((await again()).status, 200);
     assert.equal((await again()).status, 200);
     assert.deepEqual(modes, ["think", "mid"]);
+    // Tudi fotografija urnika ne gre k Opusu.
+    const photo = () => a(`/api/students/${kid.id}/schedule/photo`, { method: "POST", body: { image: "data:image/jpeg;base64,AAAA" } });
+    assert.equal((await photo()).status, 200);
+    assert.deepEqual(photoCaps, [true]);
     // Z naročnino omejitve ni: druga zaporedna prošnja gre k Opusu.
     store.db.prepare("UPDATE parents SET sub_status = 'active', sub_seats = 1 WHERE id = ?").run(reg.id);
     assert.equal((await again()).status, 200);
     assert.equal(modes.at(-1), "deep");
-  }, { promo: cfg, streamFn });
+    await photo();
+    assert.deepEqual(photoCaps, [true, false]);
+  }, { promo: cfg, streamFn, schedulePhotoFn });
 });
 
 test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
