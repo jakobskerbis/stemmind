@@ -927,10 +927,56 @@ async function loadPilot(days = 30, school = "", focusId = "") {
   $("#pilot-school")?.addEventListener("change", reload);
 }
 
+// Skrbnik: naročila šol s strani /sole (server/sole.js): stanje, opomba, predračun za tisk.
+async function loadSchoolOrders() {
+  const out = $("#orders-out");
+  if (!out) return;
+  let r;
+  try {
+    r = await api("/api/admin/school-orders");
+  } catch (err) {
+    out.innerHTML = `<p class="muted">${esc(err.message)}</p>`;
+    return;
+  }
+  const loc = currentRegion() ? `${currentLang()}-${currentRegion()}` : currentLang();
+  const eur = (x) => Number(x).toLocaleString(loc, { style: "currency", currency: "EUR" });
+  const day = (s) => new Date(`${s}T12:00:00`).toLocaleDateString(loc);
+  const rows = r.orders
+    .map(
+      (o) => `<li class="order-row" data-order="${o.id}">
+        <div><b>${esc(o.number)}</b> · ${esc(o.school_name)}</div>
+        <div class="muted small">${esc(t(`orders.plan.${o.plan}`))} · ${esc(t("orders.students", { n: o.students }))} · ${esc(eur(o.total))} · ${esc(t("orders.start", { date: day(o.start_date) }))}</div>
+        <div class="muted small">${esc(o.contact_name)} · <a href="mailto:${esc(o.email)}">${esc(o.email)}</a>${o.phone ? ` · ${esc(o.phone)}` : ""}</div>
+        ${o.note ? `<p class="small order-note">${esc(o.note)}</p>` : ""}
+        <div class="order-ctl">
+          <label>${esc(t("orders.status"))} <select data-order-status>${r.statuses.map((st) => `<option value="${st}" ${st === o.status ? "selected" : ""}>${esc(t(`orders.st.${st}`))}</option>`).join("")}</select></label>
+          <label>${esc(t("orders.note"))} <input data-order-note maxlength="1000" value="${esc(o.admin_note)}"></label>
+          <a href="/api/admin/school-orders/${o.id}/predracun" target="_blank" rel="noopener">${esc(t("orders.proforma"))}</a>
+        </div>
+      </li>`,
+    )
+    .join("");
+  out.innerHTML = `${rows ? `<ul class="order-list">${rows}</ul>` : `<p class="muted">${esc(t("orders.empty"))}</p>`}
+    <p class="muted small">${esc(t("orders.hint"))} <a href="/sole" target="_blank" rel="noopener">/sole</a></p>`;
+  const save = async (li, body) => {
+    try {
+      await api(`/api/admin/school-orders/${li.dataset.order}`, { method: "PUT", body });
+      toast(t("common.saved"));
+    } catch (err) {
+      toast(err.message);
+    }
+  };
+  out.querySelectorAll("[data-order]").forEach((li) => {
+    $("[data-order-status]", li).addEventListener("change", (e) => save(li, { status: e.target.value }));
+    $("[data-order-note]", li).addEventListener("change", (e) => save(li, { note: e.target.value }));
+  });
+}
+
 function bindAdminCodes(acc) {
   if (!acc.promo?.codes) return;
   loadPilot();
   bindApk();
+  loadSchoolOrders();
   $("#code-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const f = e.target;
@@ -1115,6 +1161,7 @@ async function renderAccount() {
     ${acc.promo?.codes ? adminCodes(acc) : ""}
     ${giftBox(acc)}
     ${acc.promo?.codes ? `<div class="card" id="pilot-card"><h2>${esc(t("pilot.title"))}</h2><div id="pilot-out"><p class="muted">${esc(t("common.loading"))}</p></div></div>` : ""}
+    ${acc.promo?.codes ? `<div class="card" id="orders-card"><h2>${esc(t("orders.title"))}</h2><div id="orders-out"><p class="muted">${esc(t("common.loading"))}</p></div></div>` : ""}
 
     <div class="card">
       <h2>Otroci</h2>
