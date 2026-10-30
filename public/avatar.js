@@ -95,6 +95,7 @@ export const ITEM = Object.fromEntries(ITEMS.map((x) => [x.id, x]));
 // aplikacijo. Teden dni ga trgovina in Zbirke kažejo z oznako »Novo«. Nov predmet = vrstica tukaj.
 export const ADDED = {
   ...Object.fromEntries(["hat_flame", "bg_nebula", "outfit_starcape", "pot_blackhole", "pot_comet", "pot_starcrown", "kind_phoenix", "kind_whale", "meme_pica", "meme_gelato", "meme_tung", "meme_tungfx", "meme_kavicina", "meme_bananini", "meme_saturnita", "meme_slonini", "meme_smrekini"].map((id) => [id, "2026-10-30"])),
+  ...Object.fromEntries(["meme_limone", "meme_spageti", "meme_skampi", "meme_testenine", "meme_kokos", "meme_frigo", "meme_luna", "meme_cajnik", "meme_lubenica"].map((id) => [id, "2026-10-30"])),
 };
 export const NEW_DAYS = 7;
 // Splošno: datum »YYYY-MM-DD« je mlajši od NEW_DAYS dni (tudi za nove vrste iger, oznaka .gm-new v games.css).
