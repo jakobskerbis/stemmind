@@ -1923,6 +1923,7 @@
   "mob.fromWeb": "¿Ya usas Evklid en el navegador?",
   "mob.fromWebBtn": "Continuar con la sesión del navegador",
   "mob.linkBusy": "Iniciando sesión …",
+  "mob.linkConfirm": "Iniciar sesión en la app con la cuenta {email}",
   "mob.noAccount": "¿Aún no tienes cuenta?",
   "mob.register": "Crear cuenta",
   "mob.registerIntro": "La cuenta la crea un padre o una madre, o un estudiante que ya haya cumplido 15 años. Una cuenta puede tener varios perfiles.",

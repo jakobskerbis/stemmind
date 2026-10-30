@@ -371,7 +371,7 @@ test("app link: signed-in phone browser opens the app signed in, with its open p
 
     // Brez prijave: ni povezave; stran, ki jo odpre aplikacija, pove, naj se prijavi v aplikaciji.
     assert.equal(token((await web("/prenesi")).body), undefined);
-    assert.match((await web("/prenesi?app=1&lang=sl")).body, /nisi prijavljen/);
+    assert.match((await web("/prenesi?app=1&lang=sl")).body, /Ta brskalnik ni prijavljen/);
 
     const reg = await web("/api/auth/register", { body: { email: "brskalnik@primer.si", password: "geslo12345", accept_privacy: true, birth_date: ADULT } });
     assert.equal(reg.status, 201, JSON.stringify(reg.body));
@@ -395,7 +395,13 @@ test("app link: signed-in phone browser opens the app signed in, with its open p
     const plain = await fetch(`${base}/api/auth/app-link`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ token: t }) });
     assert.equal(plain.status, 400);
 
+    // Najprej vpraša, za kateri račun je povezava; žeton ostane neporabljen.
     const phone = appClient();
+    const peek = await phone("/api/auth/app-link/check", { body: { token: t } });
+    assert.equal(peek.status, 200);
+    assert.equal(peek.body.email, "brskalnik@primer.si");
+    assert.equal(phone.session(), null, "preverjanje še ne prijavi");
+    assert.equal((await phone("/api/auth/app-link/check", { body: { token: "x".repeat(40) } })).status, 400);
     const r = await phone("/api/auth/app-link", { body: { token: t } });
     assert.equal(r.status, 200, JSON.stringify(r.body));
     assert.equal(r.body.parent.email, "brskalnik@primer.si");
@@ -411,15 +417,16 @@ test("app link: signed-in phone browser opens the app signed in, with its open p
 
     // Enkrat.
     assert.equal((await appClient()("/api/auth/app-link", { body: { token: t } })).status, 400);
+    // Potekla povezava (brskalnik je še prijavljen).
+    const t3 = token((await web("/prenesi")).body);
+    store.db.prepare("UPDATE app_links SET expires_at = ? WHERE used_at IS NULL").run(Date.now() - 1000);
+    assert.equal((await appClient()("/api/auth/app-link", { body: { token: t3 } })).body.expired, true);
     // Odjava v brskalniku razveljavi neporabljeno povezavo.
     const t2 = token((await web("/prenesi")).body);
     await web("/api/auth/logout", { body: {} });
     const late = await appClient()("/api/auth/app-link", { body: { token: t2 } });
     assert.equal(late.status, 400);
     assert.equal(late.body.expired, true);
-    // Potekla povezava.
-    store.db.prepare("UPDATE app_links SET used_at = NULL, expires_at = ?").run(Date.now() - 1000);
-    assert.equal((await appClient()("/api/auth/app-link", { body: { token: t } })).status, 400);
   });
 });
 

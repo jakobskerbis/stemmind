@@ -172,7 +172,7 @@ export function mountDownload(app, opts = {}) {
       if (token) {
         const href = appLinkUrl(token, { android: first === "android", fallback: `https://${BRAND.domain}/prenesi` });
         appLink = `<section id="app"><h2>${t("dl.linkTitle")}</h2><p class="muted">${t("dl.linkText")}</p>${btn(href, t("dl.linkBtn"))}</section>`;
-      } else if (req.query.app) appLink = `<section id="app"><p>${t("dl.linkSignedOut")}</p></section>`;
+      } else if (req.query.app) appLink = `<section id="app"><p style="margin:0">${t("dl.linkSignedOut")}</p></section>`;
     }
     const ios = `<section><h2>${t("dl.ios")}</h2>
       ${appStore ? btn(appStore, t("dl.appStore")) : ""}

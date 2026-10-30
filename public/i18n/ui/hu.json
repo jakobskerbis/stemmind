@@ -1923,6 +1923,7 @@
   "mob.fromWeb": "Már használod az Evklidet a böngészőben?",
   "mob.fromWebBtn": "Folytatás a böngésző bejelentkezésével",
   "mob.linkBusy": "Bejelentkezés …",
+  "mob.linkConfirm": "Bejelentkezés az alkalmazásba ezzel a fiókkal: {email}",
   "mob.noAccount": "Még nincs fiókod?",
   "mob.register": "Fiók létrehozása",
   "mob.registerIntro": "A fiókot szülő vagy legalább 15 éves diák hozhatja létre. Egy fiókhoz több profil is tartozhat.",

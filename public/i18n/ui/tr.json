@@ -1923,6 +1923,7 @@
   "mob.fromWeb": "Evklid'i zaten tarayıcıda mı kullanıyorsun?",
   "mob.fromWebBtn": "Tarayıcıdaki oturumla devam et",
   "mob.linkBusy": "Giriş yapılıyor …",
+  "mob.linkConfirm": "Uygulamaya {email} hesabıyla giriş",
   "mob.noAccount": "Henüz hesabın yok mu?",
   "mob.register": "Hesap oluştur",
   "mob.registerIntro": "Hesabı bir ebeveyn ya da 15 yaşını doldurmuş bir öğrenci oluşturur. Bir hesapta birden fazla profil olabilir.",

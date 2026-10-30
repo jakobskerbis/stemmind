@@ -11,7 +11,7 @@ import { randomToken, sha256, readCookie, setSessionCookie, Throttle, COOKIE } f
 import { DEVICE_COOKIE, deviceLabel } from "../accounts/devices.js";
 import { audit } from "../dnevnik-dostopov.js";
 import { BRAND } from "../brand.js";
-import { BUNDLE_ID } from "./store-billing.js";
+import { ANDROID_PACKAGE } from "./store-billing.js";
 
 export const LINK_MIN = 15;
 
@@ -23,6 +23,7 @@ export function migrateAppLinks(db) {
       session_hash TEXT NOT NULL,
       student_ids TEXT NOT NULL DEFAULT '[]',
       student_id INTEGER,
+      account_open INTEGER NOT NULL DEFAULT 1,
       expires_at INTEGER NOT NULL,
       used_at INTEGER
     );
@@ -33,7 +34,7 @@ export function migrateAppLinks(db) {
 export function appLinkUrl(token, { android = false, fallback = "" } = {}) {
   const q = `prijava?t=${encodeURIComponent(token)}`;
   if (!android) return `${BRAND.slug}://${q}`;
-  return `intent://${q}#Intent;scheme=${BRAND.slug};package=${BUNDLE_ID};${fallback ? `S.browser_fallback_url=${encodeURIComponent(fallback)};` : ""}end`;
+  return `intent://${q}#Intent;scheme=${BRAND.slug};package=${ANDROID_PACKAGE};${fallback ? `S.browser_fallback_url=${encodeURIComponent(fallback)};` : ""}end`;
 }
 
 export function createAppLinks(ctx) {
@@ -53,33 +54,34 @@ export function createAppLinks(ctx) {
     if (!who) return null;
     const device = readCookie(req, DEVICE_COOKIE);
     const deviceId = device && device.length >= 20 ? sha256(device) : null;
-    // Zaklep računa (EVKLID_ACCOUNT_LOCK=1): nova naprava za račun samo iz odklenjenega brskalnika.
-    if (!accountOpen(who.parent, deviceId)) return null;
+    // Zaklep računa (EVKLID_ACCOUNT_LOCK=1): telefon dobi odklenjen zavihek Račun samo, če je odklenjen v brskalniku.
+    const accountIsOpen = accountOpen(who.parent, deviceId) ? 1 : 0;
     const ids = childIds(who.parent.id);
     const open = deviceId ? ids.filter((id) => locks.isUnlocked(id, deviceId, now)) : [];
     // Nazadnje uporabljeni odprti profil v tem brskalniku, sicer edini odprti.
     const last = open.length
-      ? db
-          .prepare(`SELECT student_id FROM profile_devices WHERE device_id = ? AND student_id IN (${open.map(() => "?").join(",")}) ORDER BY last_seen DESC LIMIT 1`)
-          .get(deviceId, ...open)?.student_id
+      ? db.prepare(`SELECT student_id FROM profile_devices WHERE device_id = ? AND student_id IN (${open.map(() => "?").join(",")}) ORDER BY last_seen DESC LIMIT 1`).get(deviceId, ...open)?.student_id
       : null;
     const token = randomToken();
     db.prepare("DELETE FROM app_links WHERE expires_at < ?").run(now - 86400000);
-    db.prepare("INSERT INTO app_links (token_hash, parent_id, session_hash, student_ids, student_id, expires_at) VALUES (?, ?, ?, ?, ?, ?)").run(
+    db.prepare("INSERT INTO app_links (token_hash, parent_id, session_hash, student_ids, student_id, account_open, expires_at) VALUES (?, ?, ?, ?, ?, ?, ?)").run(
       sha256(token),
       who.parent.id,
       who.sessionHash,
       JSON.stringify(open),
       last ?? (open.length === 1 ? open[0] : null),
+      accountIsOpen,
       now + LINK_MIN * 60000,
     );
     return token;
   }
 
-  // Porabi žeton (samo enkrat). Vrne { parent, studentIds, studentId } ali null.
-  function consume(token, now = Date.now()) {
+  // Veljaven žeton → { parent, studentIds, studentId, accountOpen } ali null. use = true ga porabi (samo enkrat).
+  function check(token, { use = false, now = Date.now() } = {}) {
     if (typeof token !== "string" || !/^[A-Za-z0-9_-]{20,200}$/.test(token)) return null;
-    const row = db.prepare("UPDATE app_links SET used_at = ? WHERE token_hash = ? AND used_at IS NULL AND expires_at > ? RETURNING parent_id, session_hash, student_ids, student_id").get(now, sha256(token), now);
+    const row = use
+      ? db.prepare("UPDATE app_links SET used_at = ? WHERE token_hash = ? AND used_at IS NULL AND expires_at > ? RETURNING *").get(now, sha256(token), now)
+      : db.prepare("SELECT * FROM app_links WHERE token_hash = ? AND used_at IS NULL AND expires_at > ?").get(sha256(token), now);
     if (!row) return null;
     const live = db.prepare("SELECT expires_at FROM parent_sessions WHERE token_hash = ? AND parent_id = ?").get(row.session_hash, row.parent_id);
     if (!live || Date.parse(live.expires_at) < now) return null;
@@ -87,30 +89,60 @@ export function createAppLinks(ctx) {
     if (!parent || parent.is_guest) return null;
     const own = new Set(childIds(parent.id));
     const studentIds = JSON.parse(row.student_ids || "[]").filter((id) => own.has(id));
-    return { parent, studentIds, studentId: own.has(row.student_id) ? row.student_id : null };
+    return {
+      parent,
+      studentIds,
+      studentId: own.has(row.student_id) ? row.student_id : null,
+      accountOpen: !!row.account_open,
+    };
   }
+  const consume = (token, now) => check(token, { use: true, now });
+  const peek = (token, now) => check(token, { now });
 
-  return { browserParent, create, consume };
+  return { browserParent, create, consume, peek };
 }
 
-// Aplikacija zamenja žeton za svojo sejo.
+// Aplikacija najprej vpraša, za kateri račun je povezava (»Prijava kot …?«, da je tuja povezava ne prijavi
+// potiho v drug račun), nato žeton zamenja za svojo sejo.
 export function mountAppLink(app, ctx, links) {
   const { db, sessions, publicParent, locks, accountLocks, devices } = ctx;
   const json = express.json({ limit: "4kb" });
   const throttle = new Throttle(20);
+  const expired = (res) =>
+    res.status(400).json({
+      error: "Povezava je potekla ali je že bila uporabljena. V brskalniku osveži stran in tapni gumb znova.",
+      expired: true,
+    });
+  const guard = (req, res) => {
+    if (!req.get("x-app-client")) res.status(400).json({ error: "Samo za aplikacijo." });
+    else if (throttle.blocked(req.ip)) res.status(429).json({ error: "Preveč poskusov. Poskusi čez 15 minut." });
+    else return true;
+    return false;
+  };
+  app.post("/api/auth/app-link/check", json, (req, res) => {
+    if (!guard(req, res)) return;
+    const got = links.peek(req.body?.token);
+    if (!got) {
+      throttle.fail(req.ip);
+      return expired(res);
+    }
+    res.json({ email: got.parent.email, name: got.parent.name || "" });
+  });
   app.post("/api/auth/app-link", json, (req, res) => {
-    if (!req.get("x-app-client")) return res.status(400).json({ error: "Samo za aplikacijo." });
-    if (throttle.blocked(req.ip)) return res.status(429).json({ error: "Preveč poskusov. Poskusi čez 15 minut." });
+    if (!guard(req, res)) return;
     const got = links.consume(req.body?.token);
     if (!got) {
       throttle.fail(req.ip);
-      return res.status(400).json({ error: "Povezava je potekla ali je že bila uporabljena. V brskalniku osveži stran in tapni gumb znova.", expired: true });
+      return expired(res);
     }
     const { parent, studentIds, studentId } = got;
     for (const id of studentIds) locks.unlock(id, req.deviceId);
     // Učenec gre iz brskalnika v aplikacijo: telefon prevzame profil (en profil hkrati na eni napravi).
-    if (studentId) devices.use(studentId, req.deviceId, deviceLabel(req.get("user-agent")), { takeover: true });
-    accountLocks.unlock(parent.id, req.deviceId);
+    if (studentId)
+      devices.use(studentId, req.deviceId, deviceLabel(req.get("user-agent")), {
+        takeover: true,
+      });
+    if (got.accountOpen) accountLocks.unlock(parent.id, req.deviceId);
     setSessionCookie(req, res, sessions.create(parent.id));
     audit(db, { req, parentId: parent.id, action: "login_app_link" });
     res.json({ parent: publicParent(parent), student_id: studentId });

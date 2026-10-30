@@ -1911,6 +1911,7 @@
   "mob.fromWeb": "이미 브라우저에서 Evklid를 사용하고 있나요?",
   "mob.fromWebBtn": "브라우저 로그인으로 계속하기",
   "mob.linkBusy": "로그인 중 …",
+  "mob.linkConfirm": "{email} 계정으로 앱에 로그인",
   "mob.noAccount": "아직 계정이 없나요?",
   "mob.register": "계정 만들기",
   "mob.registerIntro": "계정은 보호자나 만 15세 이상인 학생이 만들어요. 계정 하나에 프로필을 여러 개 둘 수 있어요.",

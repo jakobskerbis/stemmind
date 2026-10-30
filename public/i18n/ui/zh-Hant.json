@@ -1911,6 +1911,7 @@
   "mob.fromWeb": "已經在瀏覽器中使用 Evklid？",
   "mob.fromWebBtn": "沿用瀏覽器中的登入繼續",
   "mob.linkBusy": "正在登入 …",
+  "mob.linkConfirm": "使用帳戶 {email} 登入應用程式",
   "mob.noAccount": "還沒有帳戶？",
   "mob.register": "建立帳戶",
   "mob.registerIntro": "帳戶由家長或已滿 15 歲的學生建立。一個帳戶可以有多個個人檔案。",

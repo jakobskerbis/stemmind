@@ -1911,6 +1911,7 @@
   "mob.fromWeb": "Bạn đã dùng Evklid trên trình duyệt?",
   "mob.fromWebBtn": "Tiếp tục với đăng nhập từ trình duyệt",
   "mob.linkBusy": "Đang đăng nhập …",
+  "mob.linkConfirm": "Đăng nhập ứng dụng bằng tài khoản {email}",
   "mob.noAccount": "Chưa có tài khoản?",
   "mob.register": "Tạo tài khoản",
   "mob.registerIntro": "Tài khoản do phụ huynh hoặc học sinh đã đủ 15 tuổi tạo. Một tài khoản có thể có nhiều hồ sơ.",

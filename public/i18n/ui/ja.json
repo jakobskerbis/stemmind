@@ -1911,6 +1911,7 @@
   "mob.fromWeb": "すでにブラウザで Evklid を使っていますか？",
   "mob.fromWebBtn": "ブラウザのログインで続ける",
   "mob.linkBusy": "ログイン中 …",
+  "mob.linkConfirm": "アカウント {email} でアプリにログイン",
   "mob.noAccount": "アカウントをお持ちでないですか？",
   "mob.register": "アカウントを作成",
   "mob.registerIntro": "アカウントは保護者か、15歳以上の生徒が作成します。1つのアカウントに複数のプロフィールを作れます。",
