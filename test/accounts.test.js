@@ -1080,3 +1080,64 @@ test("potrdi-racun.js potrdi e-naslov brez e-pošte (strežnik brez Resend)", as
   assert.ok(db.prepare("SELECT email_verified_at FROM parents").get().email_verified_at);
   assert.deepEqual(confirmEmail(db, "JAZ@primer.si"), { found: true, already: true });
 });
+
+test("account lock: owner actions need the account password on this device", async () => {
+  await withServer(async ({ client, calls, store }) => {
+    const a = client();
+    await registerVerified(a, calls, "lastnik@primer.si");
+    // Takoj po registraciji je naprava odklenjena.
+    let st = (await a("/api/account/status")).body;
+    assert.equal(st.account_lock, true);
+    assert.equal(st.account_unlocked, true);
+    const kid = (await a("/api/students", { method: "POST", body: { name: "Tine", birth_year: YEAR - 10, consent: true, profile_password: "tine1" } })).body;
+    assert.ok(kid.id);
+
+    // Zaklep (odhod iz zavihka Račun): otrok ne odpre računa, plačila, novega profila ali izbrisa.
+    await a("/api/account/lock", { method: "POST" });
+    st = (await a("/api/account/status")).body;
+    assert.equal(st.account_unlocked, false);
+    for (const [path, method, body] of [
+      ["/api/account", "GET"],
+      ["/API/Account/", "GET"],
+      ["/api/account/export", "POST", { password: "x" }],
+      ["/api/billing/checkout", "POST", { seats: 1, interval: "month" }],
+      ["/api/billing/portal", "POST"],
+      ["/api/account/logout-others", "POST"],
+      ["/api/students", "POST", { name: "Drugi", birth_year: YEAR - 9, consent: true }],
+      [`/api/students/${kid.id}`, "DELETE"],
+    ]) {
+      const r = await a(path, { method, body });
+      assert.equal(r.status, 403, `${method} ${path}`);
+      assert.equal(r.body.account_locked, true);
+    }
+    // Učenje deluje naprej (profil je odklenjen ob ustvarjanju na tej napravi).
+    assert.equal((await a("/api/students")).status, 200);
+    assert.equal((await a(`/api/students/${kid.id}/xp`)).status, 200);
+
+    // Napačno geslo ne odklene, pravilno odklene.
+    assert.equal((await a("/api/account/unlock", { method: "POST", body: { password: "narobe12" } })).status, 401);
+    assert.equal((await a("/api/account")).status, 403);
+    assert.equal((await a("/api/account/unlock", { method: "POST", body: { password: "geslo1234" } })).status, 200);
+    assert.equal((await a("/api/account")).status, 200);
+
+    // Odklep po EVKLID_ACCOUNT_UNLOCK_MIN (10) minutah nedejavnosti poteče.
+    store.db.prepare("UPDATE account_unlocks SET expires_at = ?").run(Date.now() - 1);
+    assert.equal((await a("/api/account")).status, 403);
+
+    // Odklep velja samo za to napravo: nova prijava drugje jo odklene samo zase.
+    const b = client();
+    assert.equal((await b("/api/auth/login", { method: "POST", body: { email: "lastnik@primer.si", password: "geslo1234" } })).status, 200);
+    assert.equal((await b("/api/account")).status, 200);
+    assert.equal((await a("/api/account")).status, 403);
+  });
+});
+
+test("account lock: off with accountLock: false", async () => {
+  await withServer(async ({ client, calls }) => {
+    const a = client();
+    await registerVerified(a, calls, "brez@primer.si");
+    await a("/api/account/lock", { method: "POST" });
+    assert.equal((await a("/api/account")).status, 200);
+    assert.equal((await a("/api/account/status")).body.account_lock, false);
+  }, { accountLock: false });
+});

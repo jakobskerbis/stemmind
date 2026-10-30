@@ -22,6 +22,7 @@ import { Usage } from "../usage.js";
 import { promoConfig, createPromo } from "./promo.js";
 import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
 import { guestModeOn, guestNet, guestPerDay, GuestQuota, GUEST_SESSION_DAYS, netKey } from "./guest.js";
+import { AccountLocks, ownerOnly } from "./account-lock.js";
 import { ProfileLocks, checkProfilePassword } from "./profile-lock.js";
 import { gateNeeded } from "../gate.js";
 import { rights as rightsOf, lessonInteractive as lessonOpen } from "../placila/pravice.js";
@@ -88,6 +89,12 @@ export function mountAccounts(app, store, opts = {}) {
   const forgotThrottle = new Throttle(5, 3600000); // pošiljanje povezav za novo geslo: 5 na uro
   const devLinks = (req) => !mailer.enabled && (isLocalRequest(req) || gateNeeded(env));
   const locks = new ProfileLocks(db);
+  const accountLocks = new AccountLocks(db);
+  // Zaklep računa: dejanja lastnika zahtevajo geslo računa (EVKLID_ACCOUNT_LOCK=0 izklopi).
+  const accountLockOn = opts.accountLock ?? env.EVKLID_ACCOUNT_LOCK !== "0";
+  const accountThrottle = new Throttle(10);
+  // Račun brez gesla (prijava z Apple) ali gost: zaklepa ni, ker ni gesla za odklep.
+  const lockable = (p) => accountLockOn && !p.is_guest && !String(p.password_hash || "").startsWith("none$");
   const reauthHooks = []; // potrditev izbrisa računa brez gesla (prijava z Apple)
   const profileThrottle = new Throttle(10);
   // Poskusi ugibanja z več naslovov IP: e-naslov 30 napačnih na uro, en naslov IP 100 na 15 minut,
@@ -261,6 +268,9 @@ export function mountAccounts(app, store, opts = {}) {
     if (PUBLIC.some((re) => re.test(req.path))) return next();
     const p = req.parent;
     if (!p) return res.status(401).json({ error: "Prijavi se.", login: true });
+    if (lockable(p) && ownerOnly(req.path, req.method) && !accountLocks.touch(p.id, req.deviceId)) {
+      return res.status(403).json({ error: "Za to vpiši geslo računa.", account_locked: true });
+    }
     if (p.is_guest && /^\/billing\//.test(req.path)) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
     if (p.is_guest && !guestOn) return res.status(401).json({ error: "Uporaba brez računa ni več mogoča. Ustvari račun, da obdržiš napredek.", login: true, guest_off: true });
     // Porabo AI vidi samo skrbnik ali kdor aplikacijo odpre na računalniku, kjer teče strežnik.
@@ -414,6 +424,7 @@ export function mountAccounts(app, store, opts = {}) {
     // Aktivacijska koda ob registraciji; napačna koda registracije ne ustavi.
     const promoRaw = String(req.body?.promo_code || "").trim();
     const promoResult = promoRaw ? promo.redeem(getParent(id), promoRaw) : null;
+    accountLocks.unlock(id, req.deviceId);
     setSessionCookie(req, res, sessions.create(id));
     res.status(201).json({
       parent: publicParent(getParent(id)),
@@ -470,6 +481,7 @@ export function mountAccounts(app, store, opts = {}) {
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(v.email, verifyEmail(url));
     sessions.destroyAll(p.id);
+    accountLocks.unlock(p.id, req.deviceId);
     setSessionCookie(req, res, sessions.create(p.id));
     res.json({ parent: publicParent(getParent(p.id)), ...(devLinks(req) ? { dev_verify_url: url } : {}) });
   });
@@ -546,12 +558,14 @@ export function mountAccounts(app, store, opts = {}) {
     if (rehashed) db.prepare("UPDATE parents SET password_hash = ? WHERE id = ? AND password_hash = ?").run(rehashed, p.id, p.password_hash);
     audit(db, { req, parentId: p.id, action: "login" });
     const guest = fromGuest ? adoptGuest(fromGuest, p) : null;
+    accountLocks.unlock(p.id, req.deviceId);
     setSessionCookie(req, res, sessions.create(p.id));
     res.json({ parent: publicParent(p), ...(guest ? { guest_moved: guest.moved } : {}) });
   });
 
   app.post("/api/auth/logout", (req, res) => {
     if (req.parent) locks.lockDevice(childIds(req.parent.id), req.deviceId);
+    if (req.parent) accountLocks.lock(req.parent.id, req.deviceId);
     if (req.parent) audit(db, { req, parentId: req.parent.id, action: "logout" });
     sessions.destroy(readCookie(req));
     clearSessionCookie(req, res);
@@ -593,8 +607,10 @@ export function mountAccounts(app, store, opts = {}) {
       reset_expires_at: null,
       email_verified_at: p.email_verified_at || new Date().toISOString(),
     });
+    accountLocks.lockAll(p.id);
     sessions.destroyAll(p.id); // vse seje (tudi napadalčeve) so po novem geslu neveljavne
     audit(db, { req, parentId: p.id, action: "password_reset" });
+    accountLocks.unlock(p.id, req.deviceId);
     setSessionCookie(req, res, sessions.create(p.id));
     res.json({ ok: true });
   });
@@ -610,7 +626,32 @@ export function mountAccounts(app, store, opts = {}) {
       children: p ? childIds(p.id).length : 0,
       billing: stripe.enabled,
       email: mailer.enabled,
+      account_lock: p ? lockable(p) : false,
+      account_unlocked: p ? !lockable(p) || accountLocks.isUnlocked(p.id, req.deviceId) : false,
     });
+  });
+
+  // Odklep računa na tej napravi z geslom računa (zavihek Račun, nov ali izbrisan profil).
+  app.post("/api/account/unlock", json, async (req, res) => {
+    const p = req.parent;
+    if (!lockable(p)) return res.json({ ok: true });
+    const key = `${p.id}|${req.ip}`;
+    if (accountThrottle.blocked(key)) return res.status(429).json({ error: "Preveč napačnih poskusov. Poskusite čez 15 minut." });
+    const ok = await verifyPassword(String(req.body?.password || ""), p.password_hash);
+    if (!ok) {
+      accountThrottle.fail(key);
+      audit(db, { req, parentId: p.id, action: "account_unlock", ok: false });
+      return res.status(401).json({ error: "Napačno geslo." });
+    }
+    accountThrottle.reset(key);
+    accountLocks.unlock(p.id, req.deviceId);
+    res.json({ ok: true });
+  });
+
+  // Zaklep takoj (ob odhodu iz zavihka Račun).
+  app.post("/api/account/lock", (req, res) => {
+    accountLocks.lock(req.parent.id, req.deviceId);
+    res.json({ ok: true });
   });
 
   // Država za ceno: Cloudflare (CF-IPCountry, npr. tunel ali gostovanje za Cloudflare), sicer
@@ -883,6 +924,8 @@ export function mountAccounts(app, store, opts = {}) {
     sessions.destroyOthers(req.parent.id, readCookie(req));
     devices.releaseOthers(childIds(req.parent.id), req.deviceId);
     locks.lockOtherDevices(childIds(req.parent.id), req.deviceId);
+    accountLocks.lockAll(req.parent.id);
+    accountLocks.unlock(req.parent.id, req.deviceId);
     res.json({ ok: true });
   });
 
