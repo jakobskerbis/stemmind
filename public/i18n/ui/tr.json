@@ -2580,5 +2580,17 @@
   "pay.giftWithdrawal": "Kod henüz kullanılmadıysa satın alma tarihinden itibaren 14 gün içinde cayabileceğimi ve tam iade alacağımı biliyorum. Kod kullanıldığında kullanım başlar ve cayma hakkı sona erer.",
   "pay.howMany": "Kaç çocuk için?",
   "pay.seats1": "1 çocuk",
-  "pay.seats2": "2 çocuk"
+  "pay.seats2": "2 çocuk",
+  "win.dragHint": "Pencere için sayfaya sürükle",
+  "win.max": "Tam ekranda aç",
+  "win.close": "Pencereyi kapat",
+  "win.bubble": "Özel öğretmenle sohbeti aç",
+  "win.bubbleHide": "Baloncuğu gizle",
+  "win.setting": "Taşınabilir pencereler",
+  "win.settingNote": "Sekmeleri sürükleyerek yeniden sıralarsın (dokunmatik ekranda önce basılı tut). Bilgisayarda bir sekmeyi üst çubuktan sayfaya sürükle; taşıyabileceğin ve boyutunu değiştirebileceğin bir pencerede açılır. Özel öğretmenle sohbet bir baloncuk olarak görünür kalır.",
+  "win.reset": "Düzeni sıfırla",
+  "win.resetDone": "Düzen sıfırlandı.",
+  "full.close": "Kapat",
+  "full.message": "Mesajın",
+  "full.task": "Soru metni"
 }

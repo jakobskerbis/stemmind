@@ -2582,5 +2582,17 @@
   "pay.giftWithdrawal": "Sé que puedo desistir en los 14 días siguientes a la compra y recibir el reembolso completo si el código no se ha canjeado. Una vez canjeado, el uso comienza y el derecho de desistimiento termina.",
   "pay.howMany": "¿Para cuántos hijos?",
   "pay.seats1": "1 hijo",
-  "pay.seats2": "2 hijos"
+  "pay.seats2": "2 hijos",
+  "win.dragHint": "Arrastra a la página para abrir una ventana",
+  "win.max": "Abrir en pantalla completa",
+  "win.close": "Cerrar ventana",
+  "win.bubble": "Abrir la conversación con el tutor",
+  "win.bubbleHide": "Ocultar burbuja",
+  "win.setting": "Ventanas móviles",
+  "win.settingNote": "Reordena las pestañas arrastrándolas (en pantallas táctiles, mantén pulsado primero). En el ordenador, arrastra una pestaña de la barra superior a la página y se abrirá en una ventana que puedes mover y cambiar de tamaño. La conversación con el tutor sigue visible como una burbuja.",
+  "win.reset": "Restablecer diseño",
+  "win.resetDone": "Se ha restablecido el diseño.",
+  "full.close": "Cerrar",
+  "full.message": "Tu mensaje",
+  "full.task": "Enunciado de la tarea"
 }

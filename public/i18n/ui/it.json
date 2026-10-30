@@ -2582,5 +2582,17 @@
   "pay.giftWithdrawal": "So che posso recedere entro 14 giorni dall'acquisto e ottenere il rimborso completo se il codice non è stato riscattato. Una volta riscattato il codice, l'uso inizia e il diritto di recesso termina.",
   "pay.howMany": "Per quanti figli?",
   "pay.seats1": "1 figlio",
-  "pay.seats2": "2 figli"
+  "pay.seats2": "2 figli",
+  "win.dragHint": "Trascina sulla pagina per aprire una finestra",
+  "win.max": "Apri a schermo intero",
+  "win.close": "Chiudi finestra",
+  "win.bubble": "Apri la conversazione con il tutor",
+  "win.bubbleHide": "Nascondi bolla",
+  "win.setting": "Finestre mobili",
+  "win.settingNote": "Riordina le schede trascinandole (sugli schermi touch, tieni premuto prima). Sul computer trascina una scheda dalla barra in alto sulla pagina e si apre in una finestra che puoi spostare e ridimensionare. La conversazione con il tutor resta visibile come bolla.",
+  "win.reset": "Ripristina disposizione",
+  "win.resetDone": "La disposizione è stata ripristinata.",
+  "full.close": "Chiudi",
+  "full.message": "Il tuo messaggio",
+  "full.task": "Testo dell'esercizio"
 }

@@ -2609,5 +2609,17 @@
   "pay.giftWithdrawal": "Știu că mă pot retrage în 14 zile de la cumpărare și primesc rambursarea integrală dacă codul nu a fost folosit. Odată folosit codul, utilizarea începe și dreptul de retragere încetează.",
   "pay.howMany": "Pentru câți copii?",
   "pay.seats1": "1 copil",
-  "pay.seats2": "2 copii"
+  "pay.seats2": "2 copii",
+  "win.dragHint": "Trage pe pagină pentru o fereastră",
+  "win.max": "Deschide pe tot ecranul",
+  "win.close": "Închide fereastra",
+  "win.bubble": "Deschide conversația cu tutorul",
+  "win.bubbleHide": "Ascunde bula",
+  "win.setting": "Ferestre mobile",
+  "win.settingNote": "Reordonezi filele trăgându-le (pe ecran tactil, ține apăsat mai întâi). Pe calculator, trage o filă din bara de sus pe pagină și se deschide într-o fereastră pe care o poți muta și redimensiona. Conversația cu tutorul rămâne vizibilă ca bulă.",
+  "win.reset": "Resetează aranjamentul",
+  "win.resetDone": "Aranjamentul a fost resetat.",
+  "full.close": "Închide",
+  "full.message": "Mesajul tău",
+  "full.task": "Enunțul problemei"
 }

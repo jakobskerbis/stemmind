@@ -2580,5 +2580,17 @@
   "pay.giftWithdrawal": "Najua kwamba ninaweza kujiondoa ndani ya siku 14 tangu ununuzi na kurudishiwa pesa zote ikiwa msimbo bado haujatumika. Msimbo ukishatumika, matumizi huanza na haki ya kujiondoa inaisha.",
   "pay.howMany": "Kwa watoto wangapi?",
   "pay.seats1": "Mtoto 1",
-  "pay.seats2": "Watoto 2"
+  "pay.seats2": "Watoto 2",
+  "win.dragHint": "Buruta kwenye ukurasa ili kufungua dirisha",
+  "win.max": "Fungua skrini nzima",
+  "win.close": "Funga dirisha",
+  "win.bubble": "Fungua mazungumzo na mwalimu",
+  "win.bubbleHide": "Ficha kiputo",
+  "win.setting": "Madirisha yanayohamishika",
+  "win.settingNote": "Panga upya vichupo kwa kuviburuta (kwenye skrini ya kugusa, bonyeza na ushikilie kwanza). Kwenye kompyuta, buruta kichupo kutoka upau wa juu hadi kwenye ukurasa na kitafunguka katika dirisha unaloweza kulihamisha na kubadilisha ukubwa wake. Mazungumzo na mwalimu yanabaki yakionekana kama kiputo.",
+  "win.reset": "Weka upya mpangilio",
+  "win.resetDone": "Mpangilio umewekwa upya.",
+  "full.close": "Funga",
+  "full.message": "Ujumbe wako",
+  "full.task": "Maandishi ya swali"
 }

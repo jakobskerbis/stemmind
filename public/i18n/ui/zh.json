@@ -2558,5 +2558,17 @@
   "pay.giftWithdrawal": "我知道，如果礼品码尚未兑换，我可以在购买后 14 天内撤销并获得全额退款。礼品码一经兑换即开始使用，撤销权随即终止。",
   "pay.howMany": "为几个孩子订阅？",
   "pay.seats1": "1个孩子",
-  "pay.seats2": "2个孩子"
+  "pay.seats2": "2个孩子",
+  "win.dragHint": "拖到页面上以窗口打开",
+  "win.max": "全屏打开",
+  "win.close": "关闭窗口",
+  "win.bubble": "打开与辅导老师的对话",
+  "win.bubbleHide": "隐藏气泡",
+  "win.setting": "可移动窗口",
+  "win.settingNote": "拖动标签即可调整顺序（触摸屏上请先长按）。在电脑上，把顶部栏的标签拖到页面上，它会在一个可移动、可调整大小的窗口中打开。与辅导老师的对话会以气泡形式保持可见。",
+  "win.reset": "重置布局",
+  "win.resetDone": "布局已重置。",
+  "full.close": "关闭",
+  "full.message": "你的消息",
+  "full.task": "题目"
 }

@@ -2582,5 +2582,17 @@
   "pay.giftWithdrawal": "I know I can withdraw within 14 days of purchase and get a full refund if the code has not been redeemed. Once the code is redeemed, use begins and the right of withdrawal ends.",
   "pay.howMany": "How many children is it for?",
   "pay.seats1": "1 child",
-  "pay.seats2": "2 children"
+  "pay.seats2": "2 children",
+  "win.dragHint": "Drag onto the page for a window",
+  "win.max": "Open full screen",
+  "win.close": "Close window",
+  "win.bubble": "Open the conversation with the tutor",
+  "win.bubbleHide": "Hide bubble",
+  "win.setting": "Movable windows",
+  "win.settingNote": "Drag tabs to reorder them (on touch screens, press and hold first). On a computer, drag a tab from the top bar onto the page and it opens in a window you can move and resize. The conversation with the tutor stays visible as a bubble.",
+  "win.reset": "Reset layout",
+  "win.resetDone": "Layout has been reset.",
+  "full.close": "Close",
+  "full.message": "Your message",
+  "full.task": "Task text"
 }

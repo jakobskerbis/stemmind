@@ -2,6 +2,7 @@
 // znanja z vnaprej vidnimi pogoji in pogled »preglej« (katera snov in kdaj je prinesla predmet).
 import { t } from "./i18n.js";
 import { icon } from "./icons.js";
+import { makeRowSortable } from "./vrstice.js";
 import { avatarSvg, itemName, itemOf, DEFAULT_AVATAR, isNew, isWorn, wear, takeOff, slotFull, MULTI_MAX } from "./avatar.js";
 import { COLLECTIONS, KNOWLEDGE, PASS_REWARDS, AWARD_MIN, baseId, variantOf, seasonLabel, elementTile } from "./zbirke.js";
 
@@ -214,6 +215,7 @@ function render(focus = null) {
     ${open ? inspect(open) : ""}`;
   // Izbran zavihek naj bo viden (vrstica zavihkov se na ozkem zaslonu drsi vodoravno).
   const tabRow = root.querySelector(".zb-tabs");
+  makeRowSortable(tabRow, "zbirke"); // vrstni red zavihkov po želji učenca (public/vrstice.js)
   const act = tabRow?.querySelector(".active");
   if (tabRow && act && act.offsetLeft + act.offsetWidth > tabRow.scrollLeft + tabRow.clientWidth) tabRow.scrollLeft = act.offsetLeft - tabRow.offsetLeft - 16;
   // Trak passa: trenutna stopnja na sredini.

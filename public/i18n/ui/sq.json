@@ -2582,5 +2582,17 @@
   "pay.giftWithdrawal": "E di se mund të tërhiqem brenda 14 ditëve nga blerja dhe të marr rimbursim të plotë nëse kodi nuk është përdorur ende. Pasi kodi përdoret, përdorimi fillon dhe e drejta e tërheqjes përfundon.",
   "pay.howMany": "Për sa fëmijë?",
   "pay.seats1": "1 fëmijë",
-  "pay.seats2": "2 fëmijë"
+  "pay.seats2": "2 fëmijë",
+  "win.dragHint": "Tërhiqe në faqe për një dritare",
+  "win.max": "Hape në ekran të plotë",
+  "win.close": "Mbyll dritaren",
+  "win.bubble": "Hap bisedën me tutorin",
+  "win.bubbleHide": "Fshih flluskën",
+  "win.setting": "Dritare të lëvizshme",
+  "win.settingNote": "Skedat i rirendit duke i tërhequr (në ekran me prekje, mbaje fillimisht të shtypur). Në kompjuter, tërhiq një skedë nga shiriti i sipërm në faqe dhe ajo hapet në një dritare që mund ta lëvizësh dhe t'i ndryshosh madhësinë. Biseda me tutorin mbetet e dukshme si flluskë.",
+  "win.reset": "Rivendos paraqitjen",
+  "win.resetDone": "Paraqitja u rivendos.",
+  "full.close": "Mbyll",
+  "full.message": "Mesazhi yt",
+  "full.task": "Teksti i detyrës"
 }

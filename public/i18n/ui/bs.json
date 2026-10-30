@@ -2607,5 +2607,17 @@
   "pay.giftWithdrawal": "Znam da mogu odustati u roku od 14 dana od kupovine i dobiti povrat cijelog iznosa ako kod još nije unesen. Kada se kod unese, korištenje počinje i pravo na odustajanje prestaje.",
   "pay.howMany": "Za koliko djece?",
   "pay.seats1": "1 dijete",
-  "pay.seats2": "2 djece"
+  "pay.seats2": "2 djece",
+  "win.dragHint": "Povuci na stranicu za prozor",
+  "win.max": "Otvori preko cijelog ekrana",
+  "win.close": "Zatvori prozor",
+  "win.bubble": "Otvori razgovor s instruktorom",
+  "win.bubbleHide": "Sakrij oblačić",
+  "win.setting": "Pomični prozori",
+  "win.settingNote": "Kartice preurediš povlačenjem (na ekranu osjetljivom na dodir prvo dugo pritisni). Na računaru povuci karticu s gornje trake na stranicu i otvorit će se u prozoru koji možeš pomjerati i mijenjati mu veličinu. Razgovor s instruktorom ostaje vidljiv kao oblačić.",
+  "win.reset": "Vrati izvorni raspored",
+  "win.resetDone": "Raspored je vraćen na izvorni.",
+  "full.close": "Zatvori",
+  "full.message": "Tvoja poruka",
+  "full.task": "Tekst zadatka"
 }
