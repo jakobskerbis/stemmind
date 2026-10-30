@@ -57,6 +57,7 @@
   "lock.auth": "Mật khẩu tài khoản hoặc mật khẩu hồ sơ hiện tại",
   "lock.saved": "Đã lưu mật khẩu hồ sơ.",
   "lock.none": "chưa có mật khẩu",
+  "lock.offline": "Không kết nối được với máy chủ Evklid. Hãy kiểm tra máy tính chạy Evklid đã bật chưa rồi thử lại.",
   "mock.title": "Chế độ thử nghiệm.",
   "mock.text": "Khi không có khóa API, gia sư trả lời bằng câu soạn sẵn.",
   "common.loading": "Đang tải …",

@@ -57,6 +57,7 @@
   "lock.auth": "계정 비밀번호 또는 현재 프로필 비밀번호",
   "lock.saved": "프로필 비밀번호를 저장했습니다.",
   "lock.none": "비밀번호 없음",
+  "lock.offline": "Evklid 서버에 연결할 수 없습니다. Evklid가 실행되는 컴퓨터가 켜져 있는지 확인한 뒤 다시 시도하세요.",
   "mock.title": "테스트 모드.",
   "mock.text": "API 키가 없으면 튜터가 미리 준비된 답변을 보여 줍니다.",
   "common.loading": "불러오는 중 …",
