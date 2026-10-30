@@ -1,17 +1,20 @@
 // Aktivacijska koda za prve stranke: prvih N računov dobi poln dostop za D dni.
-// Nastavitve v .env: EVKLID_PROMO_CODE (privzeto EVKLID100), EVKLID_PROMO_LIMIT (100),
-// EVKLID_PROMO_DAYS (365), EVKLID_PROMO_SEATS (1 otrok). EVKLID_PROMO_CODE=off kodo izklopi.
+// Nastavitve v .env: EVKLID_PROMO_CODE (privzeto EVKLID3X), EVKLID_PROMO_LIMIT (100),
+// EVKLID_PROMO_DAYS (90 = 3 meseci), EVKLID_PROMO_SEATS (1 otrok). EVKLID_PROMO_CODE=off kodo izklopi.
+// EVKLID_PROMO_MODEL: najzmogljivejši model za imetnike kode, privzeto »sonnet« (j 2026-10-30:
+// nikoli Opus); »opus« omejitev izklopi.
 import "../env.js";
 import { isoIn } from "./plans.js";
 
 export function promoConfig(env = process.env) {
-  const code = String(env.EVKLID_PROMO_CODE ?? "EVKLID100").trim().toUpperCase();
+  const code = String(env.EVKLID_PROMO_CODE ?? "EVKLID3X").trim().toUpperCase();
   const num = (v, def) => (Number.isFinite(Number(v)) && Number(v) > 0 ? Math.floor(Number(v)) : def);
   return {
     code: code === "OFF" || code === "" ? null : code,
     limit: num(env.EVKLID_PROMO_LIMIT, 100),
-    days: num(env.EVKLID_PROMO_DAYS, 365),
+    days: num(env.EVKLID_PROMO_DAYS, 90),
     seats: num(env.EVKLID_PROMO_SEATS, 1),
+    maxModel: String(env.EVKLID_PROMO_MODEL ?? "sonnet").trim().toLowerCase() === "opus" ? null : "sonnet",
   };
 }
 

@@ -77,7 +77,8 @@ export class Usage {
   // kadar je zmogljivejši model zaradi omejitve nadomeščen.
   // wantThink: prva ponovna razlaga (Haiku z več razmisleka); wantDeep: ponovna prošnja zapored (Opus).
   // free: brezplačni paket (brez naročnine, preizkusa ali kode) nikoli ne dobi zmogljivejšega modela.
-  chooseMode(studentId, { wantDeep = false, wantThink = false, competition = false, lite = false, free = false, deepModel = "claude-opus" } = {}) {
+  // capped: paket z omejenim modelom (aktivacijska koda) dobi namesto Opusa največ Sonnet.
+  chooseMode(studentId, { wantDeep = false, wantThink = false, competition = false, lite = false, free = false, deepModel = "claude-opus", capped = false } = {}) {
     if (competition && !wantDeep && !LIMITS.competitionDeep()) return { mode: "think", note: null };
     if (free && (wantDeep || competition)) return { mode: "think", note: wantDeep ? NOTES.free : null };
     if (wantDeep || competition) {
@@ -85,7 +86,8 @@ export class Usage {
       if (daily && this.deepToday(studentId, deepModel) >= daily) return { mode: "think", note: NOTES.dailyDeep(daily) };
       const soft = LIMITS.studentSoftUsd();
       if (soft && this.monthTotal(studentId) >= soft) return { mode: "think", note: NOTES.softBudget };
-      return { mode: "deep", note: null };
+      // Aktivacijska koda: zmogljivejši model je največ Sonnet (mode "mid"), nikoli Opus.
+      return { mode: capped ? "mid" : "deep", note: null };
     }
     if (wantThink) return { mode: "think", note: null };
     return { mode: lite ? "lite" : "chat", note: null };

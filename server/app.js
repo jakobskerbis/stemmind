@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
 import { createStreamFilter, parseMeta, parseCards, stripMeta } from "./meta.js";
 import { studentResults } from "./results.js";
-import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
+import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, MODEL_MID, REFUSAL_TEXT, ERROR_TEXT } from "./claude.js";
 import { Usage, LIMITS, windowHistory, recentHistory } from "./usage.js";
 import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
@@ -53,6 +53,7 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
   if (norm.length < 8) return null;
   const parts = [norm, settings.subject, settings.track, settings.educational_track, settings.study_program, settings.study_course, settings.curriculum_level, settings.solving_mode, settings.personality_setting, mode === "deep" ? 1 : 0];
   if (mode === "think") parts.push("think");
+  if (mode === "mid") parts.push("mid");
   // Pri temi učne poti tudi šibke točke, da se osebni odgovor ne prenese k drugemu učencu.
   if (pathTopic) parts.push(`tema:${pathTopic}`, weak.join(","));
   // Jezik dodamo samo, kadar ni slovenščina, da obstoječi shranjeni odgovori ostanejo veljavni.
@@ -333,15 +334,18 @@ export function createApp(store, opts = {}) {
     const again = req.body?.deep === true;
     const againStreak = again ? (conv.deep || 0) + 1 : 0;
     if (againStreak !== (conv.deep || 0)) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(againStreak, conv.id);
+    const capped = !!accounts?.modelCapFor?.(student.id);
     const { mode, note } = usage.chooseMode(student.id, {
       wantDeep: againStreak >= 2,
       wantThink: againStreak === 1,
       competition: student.settings.track === "COMPETITION",
       lite,
       free: !!accounts && !accounts.premiumFor(student.id),
-      deepModel: MODEL_DEEP,
+      deepModel: capped ? MODEL_MID : MODEL_DEEP,
+      capped,
     });
-    const deep = mode === "deep";
+    // »mid« (Sonnet pri aktivacijski kodi) se obnaša kot podrobna razlaga, le z drugim modelom.
+    const deep = mode === "deep" || mode === "mid";
 
     const userContent = [];
     if (image) userContent.push({ type: "image", source: { type: "base64", media_type: image.media_type, data: image.data } });
@@ -448,7 +452,7 @@ export function createApp(store, opts = {}) {
       // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
       let content = [{ type: "text", text: result.text || "…" }];
-      const cost = cached ? 0 : usage.log(student.id, result.model || (deep ? MODEL_DEEP : MODEL), result.usage);
+      const cost = cached ? 0 : usage.log(student.id, result.model || (mode === "mid" ? MODEL_MID : deep ? MODEL_DEEP : MODEL), result.usage);
       if (settingsTools.state.proposal) send("proposal", settingsTools.state.proposal);
       if (key && !cached && !result.toolCalls && !settingsTools.state.used && result.stopReason === "end_turn" && result.text) {
         const generic = student.name.length > 1 ? result.text.replaceAll(student.name, "{{IME}}") : result.text;

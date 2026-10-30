@@ -137,6 +137,14 @@ export function mountAccounts(app, store, opts = {}) {
     return isPremiumChild(access, childIds(parentId), studentId);
   }
 
+  // Najzmogljivejši dovoljeni model za učenca: pri dostopu iz aktivacijske kode »sonnet«
+  // (namesto Opusa), sicer null (brez omejitve; brezplačni paket omeji usage.chooseMode).
+  function modelCapFor(studentId) {
+    const parentId = ownerOf(studentId);
+    if (!parentId || !promoCfg.maxModel) return null;
+    return accessOf(getParent(parentId)).tier === "promo" ? promoCfg.maxModel : null;
+  }
+
   // Poraba AI brezplačnih učencev v tem mesecu (učenci brez naročnine, preizkusa, bonusa ali kode).
   const monthUsdByStudent = () =>
     db.prepare("SELECT student_id AS id, COALESCE(SUM(cost_usd),0) AS usd FROM usage WHERE created_at >= date('now','start of month') GROUP BY student_id").all();
@@ -1039,6 +1047,6 @@ export function mountAccounts(app, store, opts = {}) {
     timer.unref();
   }
 
-  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, guests };
+  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, guests };
 }
 

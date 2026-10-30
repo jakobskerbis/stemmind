@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { Usage, recentHistory, windowHistory } from "../server/usage.js";
-import { modeParams, MODEL, MODEL_DEEP, quickParams } from "../server/claude.js";
+import { modeParams, MODEL, MODEL_DEEP, MODEL_MID, quickParams } from "../server/claude.js";
 import { codeHint } from "../server/hints.js";
 import { generateTask } from "../server/practice/index.js";
 
@@ -97,6 +97,19 @@ test("competition track: thinking Haiku by default, Opus only on request", () =>
   const u = new Usage(store.db);
   assert.equal(u.chooseMode(s.id, { competition: true }).mode, "think");
   assert.equal(u.chooseMode(s.id, { competition: true, wantDeep: true, deepModel: MODEL_DEEP }).mode, "deep");
+});
+
+test("activation code caps the deep model at Sonnet", () => {
+  const store = openDb(":memory:");
+  const s = store.createStudent("Ana");
+  const u = new Usage(store.db);
+  assert.equal(u.chooseMode(s.id, { wantDeep: true, capped: true, deepModel: MODEL_MID }).mode, "mid");
+  assert.equal(u.chooseMode(s.id, { competition: true, wantDeep: true, capped: true, deepModel: MODEL_MID }).mode, "mid");
+  assert.equal(u.chooseMode(s.id, { wantThink: true, capped: true }).mode, "think");
+  assert.equal(u.chooseMode(s.id, { capped: true }).mode, "chat");
+  const p = modeParams("mid");
+  assert.match(p.model, /sonnet/);
+  assert.equal(p.max_tokens, modeParams("deep").max_tokens);
 });
 
 test("free tier never gets Opus: re-explain and competition use thinking Haiku", () => {
