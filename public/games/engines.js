@@ -7,6 +7,10 @@ import { ARCADE2 } from "./arcade2.js";
 import { SENSOR_GAMES } from "./sensors.js";
 import { FUN_GAMES } from "./fun.js";
 import { RETRO_GAMES } from "./retro.js";
+import { DEDUCTION_GAMES } from "./deduction.js";
+import { statement } from "./topics.js";
+
+export { statement };
 
 const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -546,12 +550,6 @@ export const runner = {
 };
 
 // ============ SORTIRNICA: zaboje s pravilnimi trditvami v zeleni koš, z napačnimi v rdečega ============
-// Trditev iz naloge: »?« zamenja ponujena vrednost, sicer »= vrednost«.
-export function statement(q, v) {
-  if (/\?$/.test(q) && !/[=:]\s*\?$/.test(q) && !/\?°$/.test(q)) return [q, v];
-  if (q.includes("?")) return ["", q.replace("?", v)];
-  return [q, /^[a-zA-Zα-ω(]{0,3}\s?[=<>≤≥]/.test(v) || v.startsWith("{") ? `⇒ ${v}` : `= ${v}`];
-}
 export const sorter = {
   id: "sorter",
   story: {"sl": [["Prvi dan v tovarni", "Robot Zobko preverja zaboje v tovarni števil."], ["Nočna izmena", "Ponoči je dela še več."], ["Velika naročila", "Prispela so velika naročila."], ["Mojster tovarne", "Zobko in ti sta najboljša ekipa!"]], "en": [["First day at the factory", "Zobko the robot checks crates in the number factory."], ["Night shift", "There is even more work at night."], ["Big orders", "Big orders have arrived."], ["Factory master", "You and Zobko are the best team!"]]},
@@ -680,4 +678,4 @@ export const sorter = {
   },
 };
 
-export const ENGINES = [meteor, balloons, runner, sorter, ...ARCADE, ...ARCADE2, ...BUILD_GAMES, ...SENSOR_GAMES, ...FUN_GAMES, ...RETRO_GAMES];
+export const ENGINES = [meteor, balloons, runner, sorter, ...ARCADE, ...ARCADE2, ...BUILD_GAMES, ...SENSOR_GAMES, ...FUN_GAMES, ...RETRO_GAMES, ...DEDUCTION_GAMES];

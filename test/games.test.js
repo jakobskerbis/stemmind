@@ -277,3 +277,47 @@ test("games: own childhood game titles map to genres or wishes", async () => {
   assert.deepEqual(s.settings.game_titles, []);
   assert.deepEqual(store.updateStudent(s.id, { settings: { game_titles: ["Fortnite", "fortnite"] } }).settings.game_titles, ["Fortnite"]);
 });
+
+test("games: »Kdo je slepar?« – one impostor with a wrong answer, the crew is right, voting finds it", async () => {
+  const { impostor, deal } = await import("../public/games/deduction.js");
+  const { matchTitle } = await import("../public/games/childhood.js");
+  const sl = (await import("../public/i18n/sl.js")).default;
+  assert.ok(ENGINES.includes(impostor));
+  for (const k of ["games.e.impostor", "games.e.impostor.how", "games.e.impostor.was", impostor.prompt]) assert.ok(sl[k], k);
+  for (const x of ["Among Us", "amongus", "Mafija", "Town of Salem"]) assert.deepEqual(matchTitle(x), { genre: "impostor" }, x);
+  for (const x of ["Jezus", "Suspenz"]) assert.deepEqual(matchTitle(x), {}, x);
+  const cids = CONCEPTS.map((c) => c.id).filter((_, i) => i % 25 === 0);
+  for (const cid of cids) for (const tier of [1, 3]) {
+    const q = makeQuestion(cid, tier), n = tier >= 2 ? 4 : 3;
+    const tasks = deal(q, () => makeQuestion(cid, tier), n);
+    assert.equal(tasks.length, n, cid);
+    const bad = tasks.filter((m) => m.imp);
+    assert.equal(bad.length, 1, cid);
+    assert.equal(bad[0].q, q.q);
+    assert.notEqual(bad[0].claim, q.a, cid);
+    assert.ok(q.w.includes(bad[0].claim), cid);
+    assert.ok(tasks.filter((m) => m.q === q.q).length === 1 || new Set(tasks.map((m) => m.q)).size === 1, cid); // sleparjeva naloga samo enkrat
+    assert.equal(bad[0].truth, q.a);
+    // naloga z izbiro (»Katero število je največje?«) pokaže svoje možnosti; sleparjeve vsebujejo napačni in pravilni odgovor
+    if (bad[0].pick) assert.ok(bad[0].pick.includes(q.a) && bad[0].pick.includes(bad[0].claim), cid);
+  }
+  // glas: pravilno samo za sleparja, en glas na rundo, tipke le 1–n
+  const cid = cids[0];
+  for (let round = 0; round < 12; round++) {
+    const got = [];
+    const G = { W: 400, H: 600, tier: 1, waiting: false, reduced: true, t: (k, v) => `${k} ${JSON.stringify(v)}`, ask: () => makeQuestion(cid, 1), answer: (ok, x, y, o) => got.push([ok, o]) };
+    const e = impostor.create(G);
+    e.reset();
+    G.q = makeQuestion(cid, 1);
+    e.question(G.q);
+    const pick = round % 3;
+    assert.ok(e.key(String(pick + 1), true));
+    assert.equal(e.key(String(pick + 1), true), true);
+    assert.equal(got.length, 1);
+    assert.equal(e.key("4", true), false);
+    const [ok, o] = got[0], crew = e.peek();
+    assert.equal(ok, crew[pick].imp === true);
+    // napačen glas: razlaga pove, kateri robotek je bil slepar, in pusti čas za branje
+    if (!ok) assert.ok(o.delay >= 3 && o.note.includes(`"n":${crew.findIndex((m) => m.imp) + 1}`), o.note);
+  }
+});
