@@ -88,13 +88,22 @@ export function deal(q, ask, n) {
   const seen = new Set([q.q]), tasks = [];
   for (let k = 0; tasks.length < n - 1; k++) {
     const x = ask();
-    if (seen.has(x.q) && k < n * 5) continue;
+    // sleparjeve naloge nikoli dvakrat (dve vrsti z isto nalogo bi ga izdali brez računanja); pri zelo majhni
+    // zbirki nalog po mnogo poskusih vseeno sprejme
+    if ((x.q === q.q && k < n * 40) || (seen.has(x.q) && k < n * 5)) continue;
     seen.add(x.q);
-    tasks.push({ q: x.q, claim: x.a, say: statement(x.q, x.a) });
+    tasks.push(task(x, x.a));
   }
   const lie = q.w[Math.floor(Math.random() * Math.min(3, q.w.length))];
-  tasks.push({ q: q.q, claim: lie, truth: q.a, say: statement(q.q, lie), fix: statement(q.q, q.a)[1], imp: true });
+  tasks.push({ ...task(q, lie), truth: q.a, fix: statement(q.q, q.a)[1], imp: true });
   return shuffle(tasks);
+}
+// Naloga z izbiro (»Katero število je največje?«) velja le med svojimi možnostmi: te so zato v oblačku
+// (pick). Pri sleparju so med njimi tudi njegov napačni in pravilni odgovor.
+function task(x, claim) {
+  const say = statement(x.q, claim);
+  const pick = say[0] && say[1] === claim ? shuffle([x.a, ...x.w.slice(0, 3)]) : null;
+  return { q: x.q, claim, say, pick };
 }
 
 // Odgovor v okvirčku; struck: prečrtan (sleparjev napačni odgovor).
@@ -116,17 +125,32 @@ function tag(G, g, txt, x, y, w, h, fill, line, struck) {
   }
 }
 
+// Možnosti naloge z izbiro v vrsti majhnih ploščic.
+function chips(G, g, list, cx, y, w, h) {
+  const gap = 6, cw = Math.min(120, (w - gap * (list.length - 1)) / list.length), x0 = cx - (list.length * cw + gap * (list.length - 1)) / 2;
+  list.forEach((txt, i) => {
+    const x = x0 + i * (cw + gap);
+    G.rr(x, y - h / 2, cw, h, Math.min(8, h / 3));
+    g.fillStyle = "#e2e8f0";
+    g.fill();
+    g.lineWidth = 1.5;
+    g.strokeStyle = "#94a3b8";
+    g.stroke();
+    G.fit(txt, x + cw / 2, y + 1, cw - 6, h * 0.62, { color: "#334155", weight: 800 });
+  });
+}
+
 export const impostor = {
   id: "impostor",
   added: "2026-10-30", // oznaka »Novo« 7 dni (docs/igre-tedensko.md)
   story: {
-    sl: [["Postaja Pi", "Robotki na vesoljski postaji Pi rešujejo naloge. Eden med njimi goljufa."], ["Strojnica", "Motorji potrebujejo pravilne račune. Kdo je ponaredil svojega?"], ["Laboratorij", "Slepar je vse bolj zvit: njegovi odgovori so skoraj pravilni."], ["Pot domov", "Izženi še zadnje sleparje in postaja varno pristane doma."]],
-    en: [["Station Pi", "The robots on space station Pi solve tasks. One of them is cheating."], ["Engine room", "The engines need correct sums. Who faked theirs?"], ["The lab", "The impostor gets sneakier: the answers are almost right."], ["Way home", "Send out the last impostors and the station lands safely home."]],
+    sl: [["Postaja Pi", "Robotki na vesoljski postaji Pi rešujejo naloge. Eden med njimi goljufa."], ["Strojnica", "Motorji potrebujejo pravilne račune. Kdo je ponaredil svojega?"], ["Laboratorij", "V laboratoriju so naloge težje, slepar pa se dobro skriva."], ["Pot domov", "Izženi še zadnje sleparje in postaja varno pristane doma."]],
+    en: [["Station Pi", "The robots on space station Pi solve tasks. One of them is a faker."], ["Engine room", "The engines need correct sums. Who faked theirs?"], ["The lab", "The tasks get harder in the lab, and the faker hides well."], ["Way home", "Send out the last fakers and the station lands safely home."]],
   },
   icon: "venetian-mask",
   colors: ["#1e1b4b", "#f43f5e"],
   options: 2,
-  timer: 30,
+  timer: (G) => (G.tier >= 2 ? 48 : 36), // 12 s na robotka: čas za razmislek, ne za refleks (mirna igra)
   // v glavi je navodilo, ne sleparjeva naloga (sicer bi glava izdala sleparja)
   prompt: "games.e.impostor.ask",
   create(G) {
@@ -144,11 +168,15 @@ export const impostor = {
       r = clamp(Math.min(rh / 2.75, G.W * 0.065), 12, 40);
     };
     const imp = () => crew.find((m) => m.imp);
+    // »Slepar je bil robotek 3. Pravilno: 5 + 9 = 14«
+    const was = (m) => G.t("games.e.impostor.was", { n: crew.indexOf(m) + 1, s: `${m.say[0]} ${m.fix}`.trim() });
+    // razkrije sleparja; vrne razlago za vrstico pod navodilom in daljši premor, da se jo prebere
     const reveal = () => {
       const m = imp();
-      if (!m) return;
+      if (!m) return {};
       m.shown = true;
       for (const c of crew) if (!c.cleared) c.mood = c.imp ? 0 : -1;
+      return { delay: 3, note: was(m) };
     };
     const vote = (i) => {
       const m = crew[i];
@@ -162,12 +190,11 @@ export const impostor = {
         m.shown = true;
         m.eject = true;
         for (const c of crew) c.mood = c.imp ? -1 : 1;
-        G.answer(true, p.x, p.y, { delay: 1.7 });
+        G.answer(true, p.x, p.y, { delay: 1.7, note: was(m) });
       } else {
         m.cleared = true;
         m.shake = 0.5;
-        reveal();
-        G.answer(false, p.x, p.y);
+        G.answer(false, p.x, p.y, reveal());
       }
     };
     return {
@@ -184,13 +211,15 @@ export const impostor = {
         crew = deal(q, G.ask, G.tier >= 2 ? 4 : 3).map((m, i) => ({ ...m, col: look[i][0], tip: look[i][1], mood: 0, ex: 0, ey: 0, vx: 0, rot: 0, alpha: 1, shake: 0, hop: i * 1.7 }));
         done = false;
         layout();
+        // za bralnik zaslona: naloge in odgovori so sicer samo na platnu
+        return crew.map((m, i) => `${i + 1}: ${m.say.filter(Boolean).join(" ")}${m.pick ? ` (${m.pick.join("; ")})` : ""}.`).join(" ");
       },
       timeout() {
         done = true;
-        reveal();
+        return reveal();
       },
       update(dt) {
-        blink += dt;
+        if (!G.reduced) blink += dt;
         for (const m of crew) {
           m.hop += dt * 5;
           m.shake = Math.max(0, m.shake - dt);
@@ -236,7 +265,7 @@ export const impostor = {
         g.fillRect(0, 0, G.W, hdr);
         g.fillStyle = INK;
         g.fillRect(0, hdr - 3, G.W, 3);
-        const on = !done && Math.sin(blink * 6) > 0;
+        const on = !done && (G.reduced || Math.sin(blink * 6) > 0);
         circle(g, 10 + hdr * 0.3, hdr / 2, hdr * 0.26, on ? "#ef4444" : "#7f1d1d", 2);
         G.rr(18 + hdr * 0.6, hdr * 0.2, 86, hdr * 0.6, 10);
         g.fillStyle = "#fef9c3";
@@ -244,7 +273,7 @@ export const impostor = {
         g.lineWidth = 2.5;
         g.strokeStyle = INK;
         g.stroke();
-        G.fit(`🚀 ${caught}`, 18 + hdr * 0.6 + 43, hdr / 2 + 1, 78, Math.min(20, hdr * 0.42), { color: INK, weight: 900 });
+        G.fit(`🕵️ ${caught}`, 18 + hdr * 0.6 + 43, hdr / 2 + 1, 78, Math.min(20, hdr * 0.42), { color: INK, weight: 900 });
         const dw = Math.min(150, G.W * 0.32), dx = G.W - dw - 8;
         G.rr(dx, 5, dw, hdr - 12, 8);
         g.fillStyle = "#020617";
@@ -293,9 +322,14 @@ export const impostor = {
           if (!task) one(by + bh / 2, clamp(bh * 0.62, 24, 52), bw - 18, bx + bw / 2);
           else {
             const tw = wide ? bw * 0.6 : bw - 18, tx = wide ? bx + 10 + tw / 2 : bx + bw / 2;
-            answerText(G, task, tx, wide ? by + bh / 2 : by + bh * 0.3, tw, wide ? clamp(bh * 0.3, 12, 22) : clamp(bh * 0.2, 11, 19), { color: "#334155", weight: 800 });
+            // naloga z izbiro: pod njo še možnosti (manjše), da se odgovor da preveriti
+            const ty = m.pick ? (wide ? by + bh * 0.32 : by + bh * 0.2) : wide ? by + bh / 2 : by + bh * 0.3;
+            const ts = m.pick ? (wide ? clamp(bh * 0.24, 12, 20) : clamp(bh * 0.16, 11, 17)) : wide ? clamp(bh * 0.3, 12, 22) : clamp(bh * 0.2, 11, 19);
+            answerText(G, task, tx, ty, tw, ts, { color: "#334155", weight: 800 });
+            if (m.pick) chips(G, g, m.pick, tx, wide ? by + bh * 0.72 : by + bh * 0.45, tw, wide ? clamp(bh * 0.28, 16, 28) : clamp(bh * 0.19, 16, 24));
             const cw = wide ? bw * 0.36 : Math.min(bw - 18, 320);
-            one(wide ? by + bh / 2 : by + bh * 0.72, wide ? clamp(bh * 0.55, 24, 46) : clamp(bh * 0.36, 20, 38), cw, wide ? bx + bw - 8 - cw / 2 : bx + bw / 2);
+            const ch = wide ? clamp(bh * 0.55, 24, 46) : m.pick ? clamp(bh * 0.28, 18, 34) : clamp(bh * 0.36, 20, 38);
+            one(wide ? by + bh / 2 : by + bh * (m.pick ? 0.77 : 0.72), ch, cw, wide ? bx + bw - 8 - cw / 2 : bx + bw / 2);
           }
           // robotek (izgnani odleti čez oblaček v vesolje)
           const hop = m.mood > 0 && !G.reduced ? Math.abs(Math.sin(m.hop)) * r * 0.25 : 0;
@@ -308,8 +342,9 @@ export const impostor = {
           bot(G, g, 0, 0, r, m.col, m.tip, m.mood, m.imp && m.shown);
           g.restore();
           if (!m.eject) {
-            circle(g, p.x - r * 0.95, p.y - r * 0.85, Math.max(8, r * 0.3), "#fff", 2);
-            G.fit(`${i + 1}`, p.x - r * 0.95, p.y - r * 0.84, r * 0.5, Math.max(10, r * 0.36), { color: INK, weight: 900 });
+            const br = Math.max(10, r * 0.34);
+            circle(g, p.x - r * 0.95, p.y - r * 0.85, br, "#fff", 2);
+            G.fit(`${i + 1}`, p.x - r * 0.95, p.y - r * 0.84, br * 1.5, br * 1.25, { color: INK, weight: 900 });
           }
         });
       },

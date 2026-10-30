@@ -137,8 +137,17 @@ export function runGame(host, opts) {
     G.opts = shuffle([q.a, ...q.w.slice(0, n - 1)]);
     // igra z več nalogami hkrati (npr. »Kdo je slepar?«) ima v glavi svoje navodilo namesto ene naloge
     $(".gm-q").textContent = engine.prompt ? t(engine.prompt) : q.q;
-    if (engine.timer) startTimer(engine.timer / Math.max(0.8, Math.min(1.4, G.speed)));
-    eng.question?.(q);
+    // timer je število sekund ali funkcija (npr. več časa za več nalog hkrati)
+    const sec = typeof engine.timer === "function" ? engine.timer(G) : engine.timer;
+    if (sec) startTimer(sec / Math.max(0.8, Math.min(1.4, G.speed)));
+    // igra lahko vrne opis prizora za bralnik zaslona (npr. vse naloge robotkov, ki so samo na platnu)
+    const said = eng.question?.(q);
+    if (typeof said === "string") {
+      const sr = document.createElement("span");
+      sr.className = "sr-only";
+      sr.textContent = ` ${said}`;
+      $(".gm-q").append(sr);
+    }
   }
   G.isRight = (s) => s === G.q?.a;
   // dodatna naloga iste snovi (za igre, ki pokažejo več nalog hkrati)
@@ -159,7 +168,7 @@ export function runGame(host, opts) {
   }
 
   // Odgovor igralca. keep: naloga ostane (npr. baloni), sicer nova po kratkem premoru.
-  G.answer = (ok, x = G.W / 2, y = G.H / 2, { keep = false, delay = 0.45, silent = false } = {}) => {
+  G.answer = (ok, x = G.W / 2, y = G.H / 2, { keep = false, delay = 0.45, silent = false, note = "" } = {}) => {
     if (G.over) return;
     if (ok) {
       G.correct++;
@@ -170,7 +179,7 @@ export function runGame(host, opts) {
       G.burst(x, y, "#22c55e", 18);
       G.float(x, y - 10, `+${pts}`, "#16a34a");
       beep("ok");
-      showFb(`${icon("check")} ${esc(G.q.a)}`, "ok");
+      showFb(`${icon("check")} ${esc(note || G.q.a)}`, "ok");
       if (G.streak % 15 === 0 && G.lives < 5) {
         G.lives++;
         G.float(G.W / 2, G.H / 3, "+❤", "#ef4444");
@@ -195,7 +204,8 @@ export function runGame(host, opts) {
       }
       beep("bad");
       // Če naloga ostane (izbira med več predmeti), pravilnega odgovora še ne izdamo.
-      showFb(`${icon("x")} ${esc(keep ? t("games.tryAgain") : t("games.correctWas", { a: G.q.a }))}`, "bad");
+      // note: igra lahko pove svojo razlago (npr. kateri robotek je bil slepar)
+      showFb(`${icon("x")} ${esc(note || (keep ? t("games.tryAgain") : t("games.correctWas", { a: G.q.a })))}`, "bad");
       if (G.badStreak >= 2 && G.tier > 1) {
         G.tier--;
         G.badStreak = 0;
@@ -301,8 +311,9 @@ export function runGame(host, opts) {
         $(".gm-timer i").style.transform = `scaleX(${Math.max(0, timer.left / timer.total)})`;
         if (timer.left <= 0) {
           G.stopTimer();
-          eng.timeout?.();
-          G.answer(false, G.W / 2, G.H / 2, { silent: true });
+          // igra lahko vrne dodatne možnosti odgovora (note, delay)
+          const more = eng.timeout?.();
+          G.answer(false, G.W / 2, G.H / 2, { ...more, silent: true });
         }
       }
       eng.update(dt);
