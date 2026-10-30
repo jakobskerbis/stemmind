@@ -1573,7 +1573,7 @@ export default {
   "ap.styleIgrivText": "Zaobljen in topel",
   "ap.styleTemen": "Temen",
   "ap.styleTemenText": "Vedno temen, za večer",
-  "ap.temenMode": "Slog Temen je vedno temen. Za svetli način izberi Čist ali Igriv.",
+  "ap.temenMode": "Slog Temen je vedno temen. Za svetli način izberi Čist, Igriv ali Antični.",
   "ap.styleAntik": "Antični",
   "ap.styleAntikText": "Marmor in terakota, kot v stari Grčiji",
   // Grški matematiki (public/greek.js): kratka dejstva v praznem klepetu in na Učni poti. »Evklid« je matematik.

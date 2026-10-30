@@ -26,7 +26,7 @@ Trije slogi iz osnutka »Evklid UI« (2026-10-29) in Antični (2026-10-30). `the
 | **Čist** (privzeti) | Instrument Sans | robovi 14/10 px, brez senc pod gumbi, ravne kartice | ozadje #F6F7F9, okna bela, poudarek #2353D1; temni način #0D1117 / #6E9BFF |
 | **Igriv** | Nunito | robovi 22/14 px, pritisnjeni gumbi (`--press: 3px`) | toplo ozadje #FFF6EA, vijolični poudarek #6A3BD6 |
 | **Temen** | IBM Plex Sans | robovi 10/7 px | vedno temen: #0D1117, metin poudarek #4CD3A4 (izbira Svetlo/Temno se skrije) |
-| **Antični** | besedilo Instrument Sans, naslovi (h1–h3, ime ob logotipu) EB Garamond | robovi 16/11 px, meander pod glavo sklopov | topel marmor #F5F0E8 z rahlimi žilami, okna #FFFCF7, terakota #A8461F; temni način kot črnofiguralna keramika #16110D / #211A14, poudarek #E08A52 |
+| **Antični** | besedilo Instrument Sans, glavni naslovi (h1, naslovi sklopov, ime ob logotipu) EB Garamond | robovi 16/11 px; nevsiljivo (j, 2026-10-30): enobarvno ozadje, preliv logotipa in kartice Današnji trening ostane v odtenku terakote | topel marmor #F5F0E8, okna #FFFCF7, terakota #A8461F; temni način kot črnofiguralna keramika #16110D / #211A14, poudarek #E08A52 |
 
 Pravila za Čist veljajo v `style.css` (`:root`), Igriv, Temen in Antični v `ui.css` (»Slogi«). Pisave so v `node_modules/@fontsource-variable/*` in se prenesejo le, ko jih slog uporablja; v lahkem načinu ostane sistemska pisava. Inštruktor slog spremeni z nastavitvijo naprave `style`.
 
@@ -45,8 +45,8 @@ Pisava je spremenljivka `--font` (po slogu), naslovi v slogu Antični `--font-he
 Ime Evklid je po grškem matematiku, zato je v vmesniku nekaj tihih grških drobnarij (j, 2026-10-30). Nikoli na račun berljivosti, temnega načina, lastnih barv, telefona ali RTL.
 
 - **Logotip**: ikona `elementi` (`public/icons.js`, lastna ikona v `scripts/build-icons.js` → `CUSTOM`): Evklidovi Elementi, I. knjiga, 1. trditev (dva kroga in enakostranični trikotnik nad njunima središčema), `currentColor`. Favicon in ikone za namestitev ostanejo.
-- **Meander** (grški ključ): maska SVG v `--meander`, višina `--meander-h` (8 px), barva `--meander-c` (mešanica poudarka in roba), zato sledi temnemu načinu in lastnim barvam. Uporabljen redko: pod zgornjo vrstico na računalniku, na vrhu kartice Grški matematiki, v slogu Antični pod glavo vsakega sklopa. Ne dodajaj ga na vse kartice.
-- **Grški matematiki** (`public/greek.js`, `.gr-fact`): kartica z enim od 11 kratkih zgodovinskih dejstev (`greek.f1` … `greek.f11`) v praznem klepetu z Inštruktorjem in na dnu Učne poti; naključno, gumb ↻ pokaže drugo. Legende so označene (»po izročilu«, »naj bi«). Novo dejstvo: preveri letnice in vire, dodaj ključ v vseh 33 jezikih in v `FACTS`.
+- **Meander** (grški ključ): maska SVG v `--meander`, višina `--meander-h` (8 px), barva `--meander-c` (mešanica poudarka in roba), zato sledi temnemu načinu in lastnim barvam. Samo na vrhu kartice Grški matematiki, torej največ en pas na zaslon (j: »naj ne bo vsiljivo«). Ne dodajaj ga drugam.
+- **Grški matematiki** (`public/greek.js`, `.gr-fact`): kompaktna kartica (naslov in gumb v eni vrsti, brez ikone) z enim od 11 kratkih zgodovinskih dejstev (`greek.f1` … `greek.f11`) v praznem klepetu z Inštruktorjem in na dnu Učne poti; naključno, gumb ↻ pokaže drugo. Legende so označene (»po izročilu«, »naj bi«). Novo dejstvo: preveri letnice in vire, dodaj ključ v vseh 33 jezikih in v `FACTS`.
 
 ## Gradniki (`public/ui.css`)
 

@@ -164,7 +164,8 @@
     const accent = fit(s.accent || base.accent, [surface, bg], MIN.accent);
     const [ah, as] = toHsl(accent);
     const heroA = fit(accent, ["#ffffff"], MIN.onAccent, -1);
-    const heroB = fit(hsl(ah + 28, Math.max(as, 60), toHsl(heroA)[2] + 6), ["#ffffff"], MIN.onAccent, -1);
+    // Antični: preliv ostane v odtenku terakote (brez dodatne barve), drugi slogi zasukajo odtenek za 28°.
+    const heroB = fit(hsl(ah + (s.style === "antik" ? 6 : 28), Math.max(as, 60), toHsl(heroA)[2] + 6), ["#ffffff"], MIN.onAccent, -1);
     const accentText = onColor(accent);
     const vars = {
       "--bg": bg,
