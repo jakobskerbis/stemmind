@@ -424,6 +424,8 @@ test("izvoz želja za kozmetiko: šifrirano besedilo gre ven odšifrirano", asyn
       assert.ok(isEncrypted(store.db.prepare("SELECT ideas FROM feedback").get().ideas));
       const out = await (await fetch(base + "/api/kozmetika/export")).json();
       assert.deepEqual(out.wishes.map((w) => w.text), ["zmajevo jajce"]);
+      const row = store.db.prepare("SELECT actor, action, target FROM audit_log WHERE action = 'cosmetics_export'").get();
+      assert.deepEqual({ ...row }, { actor: "system", action: "cosmetics_export", target: "wishes:1" });
     } finally {
       server.close();
     }

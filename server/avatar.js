@@ -6,6 +6,7 @@ import crypto from "node:crypto";
 import { ensureKnowledgeTables } from "./zbirke.js";
 import { isLocalRequest, purgeOldWishes } from "./feedback.js";
 import { unseal } from "./crypto-polje.js";
+import { audit } from "./dnevnik-dostopov.js";
 
 export function ensureAvatarTables(db) {
   ensureKnowledgeTables(db); // predmeti za znanje (server/zbirke.js) so tudi del inventarja
@@ -166,6 +167,8 @@ export function mountAvatar(app, avatars, { loadStudent, trendsFile = null }) {
       // ideas je šifrirano (server/crypto-polje.js); prazna želja je zašifrirana kot neprazen niz.
       .map((r) => ({ text: unseal(r.ideas, ""), lang: r.lang || null, day: r.day }))
       .filter((w) => w.text);
+    const admin = !!req.parent?.is_admin && !exportTokenOk(req);
+    audit(avatars.db, { req, parentId: admin ? req.parent.id : null, actor: admin ? "admin" : "system", action: "cosmetics_export", target: `wishes:${wishes.length}` });
     res.json({ at: new Date().toISOString(), trends: avatars.trends(), wishes });
   });
   // Kopija v data/kozmetika-trendi.json (ob zagonu in vsakih 6 h), da jo tedenska posodobitev prebere brez baze.
