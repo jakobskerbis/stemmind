@@ -1,6 +1,6 @@
 # Stroški AI na učenca
 
-Ocena: `node scripts/ocena-stroska.js` (z `--db` še dejanska poraba iz `data/evklid.db`). Natančnost modelov: `node scripts/primerjava-modelov.js` (rešeni primeri iz lekcij, Haiku in Sonnet z navodili iz aplikacije, Opus oceni proti rešitvi; `--dry` brez klicev, meja `--max-usd 5`). Skript ne kliče modela. Cene (oktober 2026, USD na milijon žetonov): Haiku 5.5 0,10 vhod / 0,50 izhod / 0,01 branje predpomnilnika; Opus 5.5 4 / 20 / 0,20.
+Ocena: `node scripts/ocena-stroska.js` (z `--db` še dejanska poraba iz `data/evklid.db`); skript ne kliče modela. Natančnost modelov: `node scripts/primerjava-modelov.js` (rešeni primeri iz lekcij, Haiku in Sonnet z navodili iz aplikacije, Opus oceni proti rešitvi; kliče API, `--dry` brez klicev, meja `--max-usd 5`). Cene (oktober 2026, USD na milijon žetonov): Haiku 5.5 0,10 vhod / 0,50 izhod / 0,01 branje predpomnilnika; Opus 5.5 4 / 20 / 0,20.
 
 ## Kje je bil strošek
 

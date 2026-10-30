@@ -1,5 +1,5 @@
 // Primerjava natančnosti modelov za inštruktorja (j 2026-10-30: »ali bo Haiku dovolj natančen za učenje«).
-// Iz pregledanih lekcij vzame rešene primere (naloga + rešitev po korakih), jih kot učenec pošlje
+// Iz lekcij vzame rešene primere (naloga + rešitev po korakih), jih kot učenec pošlje
 // inštruktorju z istimi navodili in nastavitvami kot v aplikaciji (Haiku = način chat, Sonnet = mid),
 // nato Opus vsak odgovor primerja z rešitvijo iz lekcije in oceni: pravilno / manjša napaka / napaka.
 //
@@ -18,6 +18,7 @@ import { streamReply, modeParams, costUsd, getClient, isMockMode, MODEL_DEEP } f
 import { getTopic, getPath, learningPathPrompt } from "../server/curriculum.js";
 import { lessonSummaryForPrompt } from "../server/textbook.js";
 import { EUR_PER_USD } from "../server/usage.js";
+import { PROGRAMS } from "../server/university-data.js";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const arg = (name, d) => {
@@ -33,7 +34,7 @@ const MOCK = isMockMode();
 const LABEL = { chat: "Haiku", think: "Haiku (več razmisleka)", mid: "Sonnet", deep: "Opus" };
 
 // --- 1. Naloge iz lekcij --------------------------------------------------
-// Rešeni primeri so napisani in trikrat pregledani (Opus/Fable), zato je njihova rešitev merilo.
+// Rešene primere pišeta in pregledujeta Opus ali Fable, zato je njihova rešitev merilo.
 function examplesOf(file) {
   const md = fs.readFileSync(file, "utf8");
   const sec = md.split(/^## Rešeni primeri\s*$/m)[1]?.split(/^## (?!#)/m)[0];
@@ -45,7 +46,10 @@ function examplesOf(file) {
       const [head, ...rest] = block.split("\n");
       const body = rest.join("\n").trim();
       const cut = body.search(/^\*\*(Podatki|Rešitev|Iščemo)[:*]/m);
-      const task = (cut > 0 ? body.slice(0, cut) : "").replace(/:::formula[\s\S]*?:::/g, "").trim();
+      // Vprašanje je pogosto le v »Iščemo« (ne izda rešitve), zato ga dodamo; formulo (namig) izpustimo.
+      const wanted = body.match(/^\*\*Iščemo(?::\*\*|\*\*:)\s*(.+)$/m)?.[1];
+      const prose = (cut > 0 ? body.slice(0, cut) : "").replace(/:::formula[\s\S]*?:::/g, "").trim();
+      const task = prose && wanted ? `${prose}\n\nIščemo: ${wanted.trim()}` : prose;
       return { title: head.trim(), task, solution: body, hard: /težj/i.test(head) };
     })
     .filter((e) => e.task.length >= 30 && /Rešitev/.test(e.solution));
@@ -94,9 +98,13 @@ function pick() {
 function settingsFor(p) {
   const meta = getPath(p) || {};
   const s = { ...DEFAULT_SETTINGS, subject: meta.subject || DEFAULT_SETTINGS.subject };
-  if (meta.school === "UNI") return { ...s, educational_track: "UNIVERZA", curriculum_level: `${meta.grade || 1}. letnik` };
+  if (meta.school === "UNI") {
+    const prog = Object.keys(PROGRAMS).find((k) => PROGRAMS[k].courseKeys?.flat().includes(p)) || "";
+    return { ...s, educational_track: "UNIVERZA", study_program: prog, study_course: p, curriculum_level: `${meta.grade || 1}. letnik` };
+  }
   if (meta.school === "SS") return { ...s, educational_track: "SREDNJA_SOLA", curriculum_level: `${meta.grade}. letnik` };
-  if (meta.school === "TEK") return { ...s, educational_track: "OSNOVNA_SOLA", curriculum_level: "9. razred" };
+  // Pogovor o tekmovalni temi ima v aplikaciji track COMPETITION (server/app.js tekTopic).
+  if (meta.school === "TEK") return { ...s, track: "COMPETITION", educational_track: "OSNOVNA_SOLA", curriculum_level: "9. razred" };
   return { ...s, educational_track: "OSNOVNA_SOLA", curriculum_level: `${meta.grade || 8}. razred` };
 }
 
@@ -113,14 +121,14 @@ function estimate(n) {
     const model = modeParams(m).model;
     usd += n * costUsd(model, { input_tokens: 1500, output_tokens: OUT_TOK[m], cache_read_input_tokens: 11000 });
     usd += costUsd(model, { cache_creation_input_tokens: 11000 }) * 2; // hladen predpomnilnik
-    usd += n * costUsd(MODEL_DEEP, { input_tokens: 3000, output_tokens: 600 });
+    usd += n * costUsd(MODEL_DEEP, { input_tokens: 3000, output_tokens: 1500 });
   }
   return usd;
 }
 
 // --- 3. Ocenjevalec ----------------------------------------------------------
 const GRADER = `Si strog, a pravičen ocenjevalec matematike in naravoslovja. Dobiš nalogo, uradno rešitev iz
-pregledanega učbenika in odgovor AI inštruktorja učencu. Oceni samo STROKOVNO PRAVILNOST odgovora
+učbenika in odgovor AI inštruktorja učencu. Oceni samo STROKOVNO PRAVILNOST odgovora
 (slog in pedagogika nista pomembna; inštruktor sme učenca voditi z vprašanji namesto da pove rezultat).
 
 - "pravilno": vse trditve, enačbe, računi in (če je podan) končni rezultat so pravilni.
@@ -131,6 +139,13 @@ pregledanega učbenika in odgovor AI inštruktorja učencu. Oceni samo STROKOVNO
 Uradna rešitev je pravilna; drugačna pravilna pot je dovoljena. Odgovori samo z JSON:
 {"ocena":"pravilno|manjsa_napaka|napaka","rezultat_podan":true|false,"razlog":"en stavek v slovenščini"}`;
 
+const GRADER_MAX_TOKENS = 4000;
+// Najdražji možni korak (poln izhod inštruktorja in ocenjevalca, hladen predpomnilnik): pred vsakim
+// korakom preverimo, da ga meja še prenese, zato skupni strošek --max-usd ne preseže.
+const worstStep = (m) =>
+  costUsd(modeParams(m).model, { input_tokens: 3000, cache_creation_input_tokens: 14000, output_tokens: modeParams(m).max_tokens }) +
+  costUsd(MODEL_DEEP, { input_tokens: 10000, output_tokens: GRADER_MAX_TOKENS });
+
 async function grade(ex, answer) {
   if (MOCK) {
     const r = ["pravilno", "pravilno", "manjsa_napaka", "napaka"][Math.floor(Math.random() * 4)];
@@ -138,7 +153,7 @@ async function grade(ex, answer) {
   }
   const res = await getClient().messages.create({
     model: MODEL_DEEP,
-    max_tokens: 4000,
+    max_tokens: GRADER_MAX_TOKENS,
     output_config: { effort: "medium" },
     system: GRADER,
     messages: [{ role: "user", content: `NALOGA:\n${ex.task}\n\nURADNA REŠITEV:\n${ex.solution}\n\nODGOVOR INŠTRUKTORJA:\n${answer}` }],
@@ -150,7 +165,8 @@ async function grade(ex, answer) {
   } catch {
     j = { ocena: "neocenjeno", rezultat_podan: false, razlog: text.slice(0, 200) };
   }
-  return { ...j, usd: costUsd(res.model || MODEL_DEEP, res.usage) };
+  const ocena = String(j?.ocena ?? "neocenjeno").toLowerCase().replace("š", "s").replace(/\s+/g, "_");
+  return { ...j, ocena, usd: costUsd(res.model || MODEL_DEEP, res.usage) };
 }
 
 // --- 4. Zagon ----------------------------------------------------------------
@@ -170,6 +186,7 @@ if (!MOCK && est > MAX_USD) {
 }
 
 let spent = 0;
+let stopped = false;
 const rows = [];
 for (const [i, t] of tasks.entries()) {
   const system = buildSystemPrompt({
@@ -178,36 +195,48 @@ for (const [i, t] of tasks.entries()) {
     learningPath: [learningPathPrompt(t.id), lessonSummaryForPrompt(t.id)].filter(Boolean).join("\n"),
   });
   for (const m of MODES) {
-    if (!MOCK && spent > MAX_USD) break;
-    const r = await streamReply({ system, messages: [{ role: "user", content: question(t.task) }], mode: m, onText: () => {} });
-    const answer = stripMeta(r.text);
-    const usd = MOCK ? 0 : costUsd(r.model, r.usage);
-    const g = await grade(t, answer);
+    if (!MOCK && spent + worstStep(m) > MAX_USD) {
+      stopped = true;
+      break;
+    }
+    let answer = "";
+    let usd = 0;
+    let g;
+    try {
+      const r = await streamReply({ system, messages: [{ role: "user", content: question(t.task) }], mode: m, onText: () => {} });
+      answer = stripMeta(r.text);
+      usd = MOCK ? 0 : costUsd(r.model, r.usage);
+      g = await grade(t, answer);
+    } catch (err) {
+      // Napaka klica ne sme zavreči že plačanih rezultatov.
+      g = { ocena: "neocenjeno", rezultat_podan: false, razlog: `napaka klica: ${String(err?.message || err).slice(0, 200)}`, usd: 0 };
+    }
     spent += usd + g.usd;
     rows.push({ ...t, mode: m, answer, usd, ...g });
     console.log(`[${i + 1}/${tasks.length}] ${LABEL[m].padEnd(8)} ${String(g.ocena).padEnd(13)} ${t.id}  (skupaj ${spent.toFixed(2)} $)`);
   }
-  if (!MOCK && spent > MAX_USD) {
-    console.error(`Dosežena meja ${MAX_USD} $, ustavljam.`);
+  if (stopped) {
+    console.error(`Naslednji korak bi lahko presegel mejo ${MAX_USD} $, ustavljam.`);
     break;
   }
 }
 
 // --- 5. Poročilo -------------------------------------------------------------
+const dec = (x, d) => x.toFixed(d).replace(".", ",");
 const pct = (a, b) => (b ? `${Math.round((100 * a) / b)} %` : "–");
 const lines = [
   `# Primerjava modelov za inštruktorja`,
   ``,
-  `${new Date().toISOString().slice(0, 10)} · ${tasks.length} rešenih primerov iz pregledanih lekcij · ocenjevalec ${MODEL_DEEP}${MOCK ? " · PREIZKUSNI NAČIN (izmišljeni rezultati)" : ""}`,
+  `${new Date().toISOString().slice(0, 10)} · ${new Set(rows.map((r) => r.id)).size} rešenih primerov iz lekcij · ocenjevalec ${MODEL_DEEP}${MOCK ? " · PREIZKUSNI NAČIN (izmišljeni rezultati)" : ""}`,
   ``,
-  `| Model | Pravilno | Manjša napaka | Napaka | Cena na odgovor |`,
-  `|---|---|---|---|---|`,
+  `| Model | Pravilno | Manjša napaka | Napaka | Rezultat podan | Cena na odgovor |`,
+  `|---|---|---|---|---|---|`,
 ];
 for (const m of MODES) {
   const r = rows.filter((x) => x.mode === m);
   const c = (o) => r.filter((x) => x.ocena === o).length;
   const avg = r.length ? r.reduce((s, x) => s + x.usd, 0) / r.length : 0;
-  lines.push(`| ${LABEL[m]} | ${pct(c("pravilno"), r.length)} | ${pct(c("manjsa_napaka"), r.length)} | ${pct(c("napaka"), r.length)} | ${(avg * eur * 100).toFixed(2)} centa |`);
+  lines.push(`| ${LABEL[m]} | ${pct(c("pravilno"), r.length)} | ${pct(c("manjsa_napaka"), r.length)} | ${pct(c("napaka"), r.length)} | ${pct(r.filter((x) => x.rezultat_podan === true).length, r.length)} | ${dec(avg * eur * 100, 2)} centa |`);
 }
 lines.push(``, `## Po stopnjah (delež napak)`, ``, `| Stopnja | ${MODES.map((m) => LABEL[m]).join(" | ")} |`, `|---|${MODES.map(() => "---").join("|")}|`);
 for (const g of Object.keys(SHARE)) {
@@ -219,7 +248,7 @@ for (const g of Object.keys(SHARE)) {
 }
 lines.push(``, `## Napake`, ``);
 for (const x of rows.filter((r) => r.ocena === "napaka")) lines.push(`- **${LABEL[x.mode]}** · ${x.id} · ${x.title}: ${x.razlog}`);
-lines.push(``, `Skupni strošek preizkusa: ${spent.toFixed(2)} $ (${(spent * eur).toFixed(2)} €).`);
+lines.push(``, `Skupni strošek preizkusa: ${dec(spent, 2)} $ (${dec(spent * eur, 2)} €).`);
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, lines.join("\n") + "\n");
 fs.writeFileSync(OUT.replace(/\.md$/, ".json"), JSON.stringify(rows, null, 1));
