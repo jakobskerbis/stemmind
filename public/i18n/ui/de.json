@@ -2303,5 +2303,35 @@
   "gr.weakSheet": "Arbeitsblatt aus schwachen Themen",
   "gr.pastTitle": "Frühere Prüfungen mit Lösungen",
   "gr.pastText": "Die offiziellen Prüfungsbögen und Bewertungsanleitungen veröffentlicht das Staatliche Prüfungszentrum (RIC), das alle Rechte daran hält; deshalb kopieren wir sie hier nicht. Die Probeprüfung oben enthält unsere eigenen Aufgaben im gleichen Format und mit gleicher Zeit.",
-  "gr.pastOpen": "Prüfungsbögen auf ric.si öffnen"
+  "gr.pastOpen": "Prüfungsbögen auf ric.si öffnen",
+  "pilot.title": "Pilotmessung",
+  "pilot.period": "Zeitraum",
+  "pilot.days": "letzte {n} Tage",
+  "pilot.school": "Schule",
+  "pilot.allSchools": "alle Schüler",
+  "pilot.qPerDay": "Fragen an den Tutor pro Tag",
+  "pilot.qPerStudent": "Fragen pro Schüler und Tag (an Tagen mit Fragen)",
+  "pilot.aiPerStudent": {
+    "one": "KI-Kosten pro Schüler und Monat ({n} Schüler mit KI)",
+    "other": "KI-Kosten pro Schüler und Monat ({n} Schüler mit KI)"
+  },
+  "pilot.aiTotal": "KI-Kosten im Zeitraum",
+  "pilot.visitsParents": {
+    "one": "Aufruf der Elternseite",
+    "other": "Aufrufe der Elternseite"
+  },
+  "pilot.visitsPay": {
+    "one": "Aufruf der Zahlungsseite",
+    "other": "Aufrufe der Zahlungsseite"
+  },
+  "pilot.schoolStudents": {
+    "one": "Die Schule hat {n} Schüler in Klassen.",
+    "other": "Die Schule hat {n} Schüler in Klassen."
+  },
+  "pilot.day": "Tag",
+  "pilot.questions": "Fragen",
+  "pilot.askers": "Schüler",
+  "pilot.ai": "KI",
+  "pilot.parents": "Eltern",
+  "pilot.note": "Seitenaufrufe werden ohne Cookies und ohne IP-Adressen gezählt, nur als Anzahl pro Tag. Bots und Linkvorschauen werden nicht gezählt."
 }

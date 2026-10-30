@@ -2303,5 +2303,35 @@
   "gr.weakSheet": "Scheda dagli argomenti deboli",
   "gr.pastTitle": "Prove passate con soluzioni",
   "gr.pastText": "Le prove ufficiali e le griglie di valutazione sono pubblicate dal Centro nazionale per gli esami (RIC), che ne detiene tutti i diritti, quindi qui non le copiamo. La simulazione qui sopra usa nostri esercizi con lo stesso formato e la stessa durata.",
-  "gr.pastOpen": "Apri le prove su ric.si"
+  "gr.pastOpen": "Apri le prove su ric.si",
+  "pilot.title": "Misurazione del pilota",
+  "pilot.period": "Periodo",
+  "pilot.days": "ultimi {n} giorni",
+  "pilot.school": "Scuola",
+  "pilot.allSchools": "tutti gli studenti",
+  "pilot.qPerDay": "domande al tutor al giorno",
+  "pilot.qPerStudent": "domande per studente al giorno (nei giorni in cui chiede)",
+  "pilot.aiPerStudent": {
+    "one": "costo IA per studente al mese ({n} studente con IA)",
+    "other": "costo IA per studente al mese ({n} studenti con IA)"
+  },
+  "pilot.aiTotal": "costo IA nel periodo",
+  "pilot.visitsParents": {
+    "one": "visita alla pagina per i genitori",
+    "other": "visite alla pagina per i genitori"
+  },
+  "pilot.visitsPay": {
+    "one": "visita alla pagina di pagamento",
+    "other": "visite alla pagina di pagamento"
+  },
+  "pilot.schoolStudents": {
+    "one": "La scuola ha {n} studente nelle classi.",
+    "other": "La scuola ha {n} studenti nelle classi."
+  },
+  "pilot.day": "Giorno",
+  "pilot.questions": "Domande",
+  "pilot.askers": "Studenti",
+  "pilot.ai": "IA",
+  "pilot.parents": "Genitori",
+  "pilot.note": "Le visite alle pagine sono contate senza cookie e senza indirizzi IP, solo come numero al giorno. Bot e anteprime dei link non vengono contati."
 }

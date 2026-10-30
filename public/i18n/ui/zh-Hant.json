@@ -2283,5 +2283,31 @@
   "gr.weakSheet": "弱點主題練習單",
   "gr.pastTitle": "歷屆試題及解答",
   "gr.pastText": "官方試題與評分標準由擁有全部權利的國家考試中心（RIC）公布，因此我們不在這裡複製。上方的模擬考使用我們自己的題目，形式與時間相同。",
-  "gr.pastOpen": "在 ric.si 開啟試題"
+  "gr.pastOpen": "在 ric.si 開啟試題",
+  "pilot.title": "試辦數據",
+  "pilot.period": "期間",
+  "pilot.days": "最近 {n} 天",
+  "pilot.school": "學校",
+  "pilot.allSchools": "所有學生",
+  "pilot.qPerDay": "每天向輔導老師提問數",
+  "pilot.qPerStudent": "每位學生每天提問數（僅計提問當天）",
+  "pilot.aiPerStudent": {
+    "other": "每位學生每月 AI 成本（{n} 名學生使用 AI）"
+  },
+  "pilot.aiTotal": "期間內 AI 成本",
+  "pilot.visitsParents": {
+    "other": "家長頁面瀏覽次數"
+  },
+  "pilot.visitsPay": {
+    "other": "付款頁面瀏覽次數"
+  },
+  "pilot.schoolStudents": {
+    "other": "該校班級中共有 {n} 名學生。"
+  },
+  "pilot.day": "日期",
+  "pilot.questions": "提問",
+  "pilot.askers": "學生",
+  "pilot.ai": "AI",
+  "pilot.parents": "家長",
+  "pilot.note": "頁面瀏覽次數的統計不使用 Cookie，也不記錄 IP 位址，只記錄每天的次數。機器人和連結預覽不計入。"
 }

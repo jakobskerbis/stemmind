@@ -2307,5 +2307,35 @@
   "gr.weakSheet": "Ficha dos temas fracos",
   "gr.pastTitle": "Exames anteriores com soluções",
   "gr.pastText": "Os exames oficiais e os critérios de correção são publicados pelo Centro Nacional de Exames (RIC), que detém todos os direitos, por isso não os copiamos aqui. O exame de treino acima usa tarefas nossas no mesmo formato e com o mesmo tempo.",
-  "gr.pastOpen": "Abrir exames em ric.si"
+  "gr.pastOpen": "Abrir exames em ric.si",
+  "pilot.title": "Medição do piloto",
+  "pilot.period": "Período",
+  "pilot.days": "últimos {n} dias",
+  "pilot.school": "Escola",
+  "pilot.allSchools": "todos os alunos",
+  "pilot.qPerDay": "perguntas ao tutor por dia",
+  "pilot.qPerStudent": "perguntas por aluno por dia (nos dias em que pergunta)",
+  "pilot.aiPerStudent": {
+    "one": "custo de IA por aluno por mês ({n} aluno com IA)",
+    "other": "custo de IA por aluno por mês ({n} alunos com IA)"
+  },
+  "pilot.aiTotal": "custo de IA no período",
+  "pilot.visitsParents": {
+    "one": "visualização da página para pais",
+    "other": "visualizações da página para pais"
+  },
+  "pilot.visitsPay": {
+    "one": "visualização da página de pagamento",
+    "other": "visualizações da página de pagamento"
+  },
+  "pilot.schoolStudents": {
+    "one": "A escola tem {n} aluno em turmas.",
+    "other": "A escola tem {n} alunos em turmas."
+  },
+  "pilot.day": "Dia",
+  "pilot.questions": "Perguntas",
+  "pilot.askers": "Alunos",
+  "pilot.ai": "IA",
+  "pilot.parents": "Pais",
+  "pilot.note": "As visualizações são contadas sem cookies e sem endereços IP, apenas o número por dia. Bots e pré-visualizações de ligações não são contados."
 }

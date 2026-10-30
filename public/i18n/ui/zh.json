@@ -2283,5 +2283,31 @@
   "gr.weakSheet": "薄弱主题练习单",
   "gr.pastTitle": "往年试卷及答案",
   "gr.pastText": "官方试卷和评分标准由拥有全部权利的国家考试中心（RIC）发布，因此我们不在这里复制。上面的模拟考试使用我们自己的题目，形式和时间相同。",
-  "gr.pastOpen": "在 ric.si 打开试卷"
+  "gr.pastOpen": "在 ric.si 打开试卷",
+  "pilot.title": "试点数据",
+  "pilot.period": "时间段",
+  "pilot.days": "最近 {n} 天",
+  "pilot.school": "学校",
+  "pilot.allSchools": "所有学生",
+  "pilot.qPerDay": "每天向辅导老师提问数",
+  "pilot.qPerStudent": "每名学生每天提问数（仅计提问当天）",
+  "pilot.aiPerStudent": {
+    "other": "每名学生每月 AI 成本（{n} 名学生使用 AI）"
+  },
+  "pilot.aiTotal": "时间段内 AI 成本",
+  "pilot.visitsParents": {
+    "other": "家长页面浏览量"
+  },
+  "pilot.visitsPay": {
+    "other": "付款页面浏览量"
+  },
+  "pilot.schoolStudents": {
+    "other": "该校班级中共有 {n} 名学生。"
+  },
+  "pilot.day": "日期",
+  "pilot.questions": "提问",
+  "pilot.askers": "学生",
+  "pilot.ai": "AI",
+  "pilot.parents": "家长",
+  "pilot.note": "页面浏览量的统计不使用 Cookie，也不记录 IP 地址，只记录每天的次数。机器人和链接预览不计入。"
 }

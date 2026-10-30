@@ -2343,5 +2343,41 @@
   "gr.weakSheet": "Pracovný list zo slabých tém",
   "gr.pastTitle": "Minulé testy s riešeniami",
   "gr.pastText": "Oficiálne testy a pokyny na hodnotenie zverejňuje Štátne skúšobné centrum (RIC), ktoré má k nim všetky práva, preto ich tu nekopírujeme. Skúšobný test vyššie obsahuje naše úlohy v rovnakej podobe a s rovnakým časom.",
-  "gr.pastOpen": "Otvoriť testy na ric.si"
+  "gr.pastOpen": "Otvoriť testy na ric.si",
+  "pilot.title": "Meranie v pilote",
+  "pilot.period": "Obdobie",
+  "pilot.days": "posledných {n} dní",
+  "pilot.school": "Škola",
+  "pilot.allSchools": "všetci žiaci",
+  "pilot.qPerDay": "otázok tútorovi za deň",
+  "pilot.qPerStudent": "otázok na žiaka za deň (v dňoch, keď sa pýta)",
+  "pilot.aiPerStudent": {
+    "one": "náklady na AI na žiaka za mesiac ({n} žiak s AI)",
+    "few": "náklady na AI na žiaka za mesiac ({n} žiaci s AI)",
+    "many": "náklady na AI na žiaka za mesiac ({n} žiaka s AI)",
+    "other": "náklady na AI na žiaka za mesiac ({n} žiakov s AI)"
+  },
+  "pilot.aiTotal": "náklady na AI za obdobie",
+  "pilot.visitsParents": {
+    "one": "zobrazenie stránky pre rodičov",
+    "few": "zobrazenia stránky pre rodičov",
+    "other": "zobrazení stránky pre rodičov"
+  },
+  "pilot.visitsPay": {
+    "one": "zobrazenie platobnej stránky",
+    "few": "zobrazenia platobnej stránky",
+    "other": "zobrazení platobnej stránky"
+  },
+  "pilot.schoolStudents": {
+    "one": "Škola má v triedach {n} žiaka.",
+    "few": "Škola má v triedach {n} žiakov.",
+    "many": "Škola má v triedach {n} žiaka.",
+    "other": "Škola má v triedach {n} žiakov."
+  },
+  "pilot.day": "Deň",
+  "pilot.questions": "Otázky",
+  "pilot.askers": "Žiaci",
+  "pilot.ai": "AI",
+  "pilot.parents": "Rodičia",
+  "pilot.note": "Zobrazenia stránok sa počítajú bez cookies a bez IP adries, iba ako počet za deň. Roboty a náhľady odkazov sa nepočítajú."
 }

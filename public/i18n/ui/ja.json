@@ -2283,5 +2283,31 @@
   "gr.weakSheet": "苦手なトピックのワークシート",
   "gr.pastTitle": "解答付きの過去問",
   "gr.pastText": "公式の試験問題と採点基準は、すべての権利を持つ国立試験センター（RIC）が公開しているため、ここでは複製しません。上の模擬試験は同じ形式・同じ時間で作成した独自の問題です。",
-  "gr.pastOpen": "ric.si で問題を開く"
+  "gr.pastOpen": "ric.si で問題を開く",
+  "pilot.title": "パイロット計測",
+  "pilot.period": "期間",
+  "pilot.days": "過去 {n} 日間",
+  "pilot.school": "学校",
+  "pilot.allSchools": "全生徒",
+  "pilot.qPerDay": "1 日あたりのチューターへの質問数",
+  "pilot.qPerStudent": "生徒 1 人・1 日あたりの質問数（質問した日のみ）",
+  "pilot.aiPerStudent": {
+    "other": "生徒 1 人・1 か月あたりの AI コスト（AI 利用生徒 {n} 人）"
+  },
+  "pilot.aiTotal": "期間中の AI コスト",
+  "pilot.visitsParents": {
+    "other": "保護者向けページの閲覧数"
+  },
+  "pilot.visitsPay": {
+    "other": "支払いページの閲覧数"
+  },
+  "pilot.schoolStudents": {
+    "other": "この学校のクラスには生徒が {n} 人います。"
+  },
+  "pilot.day": "日付",
+  "pilot.questions": "質問",
+  "pilot.askers": "生徒",
+  "pilot.ai": "AI",
+  "pilot.parents": "保護者",
+  "pilot.note": "ページ閲覧数は Cookie も IP アドレスも使わず、1 日ごとの件数だけを数えます。ボットやリンクのプレビューは数えません。"
 }

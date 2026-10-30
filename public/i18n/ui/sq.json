@@ -2303,5 +2303,35 @@
   "gr.weakSheet": "Fletë pune nga temat e dobëta",
   "gr.pastTitle": "Provime të mëparshme me zgjidhje",
   "gr.pastText": "Provimet zyrtare dhe udhëzimet e vlerësimit i publikon Qendra Shtetërore e Provimeve (RIC), që ka të gjitha të drejtat, prandaj nuk i kopjojmë këtu. Provimi provë më lart ka detyrat tona në të njëjtën formë dhe me të njëjtën kohë.",
-  "gr.pastOpen": "Hap provimet në ric.si"
+  "gr.pastOpen": "Hap provimet në ric.si",
+  "pilot.title": "Matja në pilot",
+  "pilot.period": "Periudha",
+  "pilot.days": "{n} ditët e fundit",
+  "pilot.school": "Shkolla",
+  "pilot.allSchools": "të gjithë nxënësit",
+  "pilot.qPerDay": "pyetje për tutorin në ditë",
+  "pilot.qPerStudent": "pyetje për nxënës në ditë (në ditët kur pyet)",
+  "pilot.aiPerStudent": {
+    "one": "kosto e IA-së për nxënës në muaj ({n} nxënës me IA)",
+    "other": "kosto e IA-së për nxënës në muaj ({n} nxënës me IA)"
+  },
+  "pilot.aiTotal": "kosto e IA-së në periudhë",
+  "pilot.visitsParents": {
+    "one": "shikim i faqes për prindërit",
+    "other": "shikime të faqes për prindërit"
+  },
+  "pilot.visitsPay": {
+    "one": "shikim i faqes së pagesës",
+    "other": "shikime të faqes së pagesës"
+  },
+  "pilot.schoolStudents": {
+    "one": "Shkolla ka {n} nxënës në klasa.",
+    "other": "Shkolla ka {n} nxënës në klasa."
+  },
+  "pilot.day": "Dita",
+  "pilot.questions": "Pyetje",
+  "pilot.askers": "Nxënës",
+  "pilot.ai": "IA",
+  "pilot.parents": "Prindër",
+  "pilot.note": "Shikimet e faqeve numërohen pa cookies dhe pa adresa IP, vetëm si numër në ditë. Robotët dhe parapamjet e lidhjeve nuk numërohen."
 }

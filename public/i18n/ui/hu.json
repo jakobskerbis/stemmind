@@ -2303,5 +2303,33 @@
   "gr.weakSheet": "Feladatlap a gyenge témákból",
   "gr.pastTitle": "Korábbi feladatlapok megoldásokkal",
   "gr.pastText": "A hivatalos feladatlapokat és javítási útmutatókat az Állami Vizsgaközpont (RIC) teszi közzé, minden jog az övé, ezért itt nem másoljuk őket. A fenti próbavizsga saját feladatainkat tartalmazza, azonos formában és időtartammal.",
-  "gr.pastOpen": "Feladatlapok megnyitása a ric.si oldalon"
+  "gr.pastOpen": "Feladatlapok megnyitása a ric.si oldalon",
+  "pilot.title": "Pilotmérés",
+  "pilot.period": "Időszak",
+  "pilot.days": "az elmúlt {n} nap",
+  "pilot.school": "Iskola",
+  "pilot.allSchools": "minden diák",
+  "pilot.qPerDay": "kérdés az oktatónak naponta",
+  "pilot.qPerStudent": "kérdés diákonként naponta (azokon a napokon, amikor kérdez)",
+  "pilot.aiPerStudent": {
+    "one": "MI-költség diákonként havonta ({n} MI-t használó diák)",
+    "other": "MI-költség diákonként havonta ({n} MI-t használó diák)"
+  },
+  "pilot.aiTotal": "MI-költség az időszakban",
+  "pilot.visitsParents": {
+    "other": "a szülőknek szóló oldal megtekintései"
+  },
+  "pilot.visitsPay": {
+    "other": "a fizetési oldal megtekintései"
+  },
+  "pilot.schoolStudents": {
+    "one": "Az iskola osztályaiban {n} diák van.",
+    "other": "Az iskola osztályaiban {n} diák van."
+  },
+  "pilot.day": "Nap",
+  "pilot.questions": "Kérdések",
+  "pilot.askers": "Diákok",
+  "pilot.ai": "MI",
+  "pilot.parents": "Szülők",
+  "pilot.note": "Az oldalmegtekintéseket sütik és IP-címek nélkül számoljuk, csak napi darabszámként. A robotokat és a linkelőnézeteket nem számoljuk."
 }

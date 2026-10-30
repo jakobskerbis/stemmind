@@ -2303,5 +2303,33 @@
   "gr.weakSheet": "Karatasi ya mazoezi kutoka mada dhaifu",
   "gr.pastTitle": "Mitihani iliyopita yenye majibu",
   "gr.pastText": "Mitihani rasmi na miongozo ya usahihishaji huchapishwa na Kituo cha Taifa cha Mitihani (RIC), chenye haki zote, kwa hiyo hatuinakili hapa. Mtihani wa majaribio hapo juu una maswali yetu wenyewe kwa muundo na muda uleule.",
-  "gr.pastOpen": "Fungua mitihani kwenye ric.si"
+  "gr.pastOpen": "Fungua mitihani kwenye ric.si",
+  "pilot.title": "Upimaji wa majaribio",
+  "pilot.period": "Kipindi",
+  "pilot.days": "siku {n} zilizopita",
+  "pilot.school": "Shule",
+  "pilot.allSchools": "wanafunzi wote",
+  "pilot.qPerDay": "maswali kwa Mwalimu wa programu kwa siku",
+  "pilot.qPerStudent": "maswali kwa kila mwanafunzi kwa siku (siku anazouliza)",
+  "pilot.aiPerStudent": {
+    "one": "gharama ya AI kwa mwanafunzi kwa mwezi (mwanafunzi {n} anayetumia AI)",
+    "other": "gharama ya AI kwa mwanafunzi kwa mwezi (wanafunzi {n} wanaotumia AI)"
+  },
+  "pilot.aiTotal": "gharama ya AI katika kipindi",
+  "pilot.visitsParents": {
+    "other": "mara ukurasa wa wazazi ulitazamwa"
+  },
+  "pilot.visitsPay": {
+    "other": "mara ukurasa wa malipo ulitazamwa"
+  },
+  "pilot.schoolStudents": {
+    "one": "Shule ina mwanafunzi {n} katika madarasa.",
+    "other": "Shule ina wanafunzi {n} katika madarasa."
+  },
+  "pilot.day": "Siku",
+  "pilot.questions": "Maswali",
+  "pilot.askers": "Wanafunzi",
+  "pilot.ai": "AI",
+  "pilot.parents": "Wazazi",
+  "pilot.note": "Kutazamwa kwa kurasa kunahesabiwa bila vidakuzi na bila anwani za IP, kama idadi kwa siku tu. Roboti na muhtasari wa viungo hazihesabiwi."
 }
