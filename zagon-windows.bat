@@ -1,5 +1,5 @@
 @echo off
-rem EVKLID-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom        
+rem EVKLID-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom                                            
 rem (dolgi ukazi so v eni vrstici z "exit /b", po posodobitvi se datoteka prebere znova).
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
