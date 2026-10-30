@@ -29,6 +29,8 @@ import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competi
 import { examInfo, examKeyFor, isExamPath, examOf, examPrompt, taskLanguage, localizeExamView, localizeExamTopic } from "./exams.js";
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
+import { mountReports, chatOff, messageCode } from "./reports.js";
+import { verifyAnswer, codeCheck } from "./verify.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { Avatars, mountAvatar } from "./avatar.js";
@@ -183,6 +185,17 @@ export function createApp(store, opts = {}) {
   // »Vprašaj Evklida« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
   const helpTasks = new Map();
   const usage = new Usage(store.db);
+  // Kartice, ki so čakale na preverjanje ob ponovnem zagonu, ne bodo nikoli preverjene: proč z njimi
+  // (sicer bi skrite blokirale isto vprašanje, UNIQUE student_id + norm).
+  store.db.prepare("DELETE FROM flashcards WHERE verified = 0").run();
+  // Trojno preverjanje pred shranjevanjem za ponovno uporabo (server/verify.js). Brez API ključa
+  // (preizkusni način) so odgovori vnaprej pripravljeni: preveri jih samo koda.
+  const verifyLive = () => !!opts.verifyFn || !isMockMode();
+  const runVerify = opts.verifyFn || ((a) => verifyAnswer({ ...a, usage }));
+  const settleLater = (promise, done) =>
+    Promise.resolve(promise)
+      .then((v) => done(!!v?.ok, v?.reason || ""), (e) => done(false, e?.message || "napaka"))
+      .catch((e) => console.warn(`[evklid] preverjanje: ${e?.message || e}`));
   const progress = new Progress(store);
   const knowledge = new Knowledge(store.db); // zbirke znanja in učni pass (server/zbirke.js)
   // Urnik učenca (server/schedule.js): ure, testi; gre v prompt in v Pripravo na test.
@@ -202,6 +215,10 @@ export function createApp(store, opts = {}) {
   };
 
   mountFeedback(app, store, { usage, file: opts.feedbackFile ?? null, createFn: opts.feedbackCreateFn });
+  mountReports(app, store, {
+    loadConversation,
+    localOnly: (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Samo na računalniku, kjer teče Evklid." })),
+  });
 
   app.get("/api/config", (req, res) => {
     res.json({
@@ -212,6 +229,7 @@ export function createApp(store, opts = {}) {
       defaults: DEFAULT_SETTINGS,
       daily_questions: LIMITS.dailyQuestions() || null,
       feedback: { prompt: feedbackPromptOn(), ai: feedbackAiOn(), admin: isLocalRequest(req) },
+      chat_off: chatOff(),
     });
   });
 
@@ -291,12 +309,15 @@ export function createApp(store, opts = {}) {
     const c = loadConversation(req, res);
     if (!c) return;
     const last = store.lastEvent(c.id);
+    const reported = new Set(store.db.prepare("SELECT message_id FROM message_reports WHERE conversation_id = ?").all(c.id).map((r) => r.message_id));
     res.json({
       ...c,
       state: last ? { subject: last.subject, mode: last.mode } : null,
       topic: c.path_topic ? { id: c.path_topic, name: getTopic(c.path_topic)?.name } : null,
       messages: store.listMessages(c.id).map((m) => ({
         id: m.id,
+        code: m.role === "assistant" ? messageCode(m.id) : undefined,
+        reported: reported.has(m.id) || undefined,
         role: m.role,
         text: m.display_text,
         has_image: !!m.has_image,
@@ -306,7 +327,10 @@ export function createApp(store, opts = {}) {
   });
   app.delete("/api/conversations/:id", (req, res) => {
     const c = loadConversation(req, res);
-    if (c) res.json({ ok: store.deleteConversation(c.id) });
+    if (!c) return;
+    // Prijava napake ostane kot zapis dogodka (odgovor inštruktorja), učenčevo vprašanje in opomba pa se izbrišeta.
+    store.db.prepare("UPDATE message_reports SET question = NULL, note = NULL WHERE conversation_id = ?").run(c.id);
+    res.json({ ok: store.deleteConversation(c.id) });
   });
 
   // --- klepet (Server-Sent Events) ---
@@ -321,6 +345,8 @@ export function createApp(store, opts = {}) {
       return res.status(400).json({ error: "Slika mora biti JPG, PNG, WEBP ali GIF in manjša od 5 MB." });
     }
     if (!text && !image) return res.status(400).json({ error: "Sporočilo je prazno." });
+    // Stikalo za nujne primere (docs/krizni-nacrt.md): klepet izklopljen, Vadnica in lekcije delujejo.
+    if (chatOff()) return res.status(503).json({ error: "Klepet z inštruktorjem je začasno izklopljen. Ostali deli aplikacije delujejo.", chat_off: true });
     if (busy.has(conv.id)) return res.status(409).json({ error: "Počakaj, da Evklid odgovori." });
     const blocked = usage.blockReason(student.id);
     if (blocked) return res.status(429).json({ error: blocked, limit: true });
@@ -334,7 +360,10 @@ export function createApp(store, opts = {}) {
     const again = req.body?.deep === true;
     const againStreak = again ? (conv.deep || 0) + 1 : 0;
     if (againStreak !== (conv.deep || 0)) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(againStreak, conv.id);
-    const capped = !!accounts?.modelCapFor?.(student.id);
+    // Aktivacijska koda: druga zaporedna prošnja gre k Sonnetu, šele tretja (in vsaka naslednja) k Opusu
+    // (j 2026-10-30). Tekmovanja in fotografija urnika pri kodi ostanejo pri Sonnetu.
+    // Nad skrito omejitvijo Opusa (usage.promoOpusSpent) tudi tretja prošnja tiho dobi Sonnet, brez opombe.
+    const capped = !!accounts?.modelCapFor?.(student.id) && (againStreak < 3 || usage.promoOpusSpent(student.id, MODEL_DEEP));
     const { mode, note } = usage.chooseMode(student.id, {
       wantDeep: againStreak >= 2,
       wantThink: againStreak === 1,
@@ -416,7 +445,7 @@ export function createApp(store, opts = {}) {
               lastAnswer: help.task.last_answer,
             })
           : null;
-      const cached = hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND created_at >= datetime('now','-30 days')").get(key);
+      const cached = hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND verified = 1 AND created_at >= datetime('now','-30 days')").get(key);
       if (note) send("delta", { text: note });
       const run = cached
         ? async ({ onText }) => {
@@ -455,8 +484,22 @@ export function createApp(store, opts = {}) {
       const cost = cached ? 0 : usage.log(student.id, result.model || (mode === "mid" ? MODEL_MID : deep ? MODEL_DEEP : MODEL), result.usage);
       if (settingsTools.state.proposal) send("proposal", settingsTools.state.proposal);
       if (key && !cached && !result.toolCalls && !settingsTools.state.used && result.stopReason === "end_turn" && result.text) {
+        // Drugim učencem gre odgovor šele po trojnem preverjanju (koda + dva AI pregleda, server/verify.js).
         const generic = student.name.length > 1 ? result.text.replaceAll(student.name, "{{IME}}") : result.text;
-        store.db.prepare("INSERT OR REPLACE INTO answer_cache (key, text) VALUES (?, ?)").run(key, generic);
+        const plain = stripMeta(result.text);
+        if (!codeCheck(plain)) {
+          const live = verifyLive();
+          store.db.prepare("INSERT OR REPLACE INTO answer_cache (key, text, verified) VALUES (?, ?, ?)").run(key, generic, live ? 0 : 1);
+          if (live) {
+            settleLater(runVerify({ question: text, answer: plain }), (ok, reason) => {
+              if (ok) store.db.prepare("UPDATE answer_cache SET verified = 1 WHERE key = ? AND text = ?").run(key, generic);
+              else {
+                store.db.prepare("DELETE FROM answer_cache WHERE key = ? AND text = ? AND verified = 0").run(key, generic);
+                console.warn(`[evklid] odgovor ni shranjen za ponovno uporabo (${reason})`);
+              }
+            });
+          }
+        }
       }
       if (result.stopReason === "refusal") {
         display = REFUSAL_TEXT;
@@ -467,16 +510,29 @@ export function createApp(store, opts = {}) {
 
       const assistantId = store.addMessage(conv.id, "assistant", content, display);
       // Kartice za ponavljanje iz odgovora (ne pri zavrnitvi in ne pri opozorilih).
+      // Kartice so vidne šele po trojnem preverjanju; z napačnim računom se sploh ne shranijo.
+      const parsedCards = result.stopReason !== "refusal" && (!meta || meta.flag === "none") ? parseCards(result.text) : [];
+      const cardsText = parsedCards.map((c) => `${c.front} → ${c.back}`).join("\n");
+      const liveCards = verifyLive();
       const cards =
-        result.stopReason !== "refusal" && (!meta || meta.flag === "none")
-          ? store.cards.add(student.id, parseCards(result.text), {
+        parsedCards.length && !codeCheck(cardsText)
+          ? store.cards.add(student.id, parsedCards, {
               conversationId: conv.id,
               topicId: conv.path_topic,
               subject: meta?.subject ?? student.settings.subject,
               topic: meta?.topic ?? (conv.path_topic ? getTopic(conv.path_topic)?.name : null),
+              verified: !liveCards,
             })
           : [];
-      if (cards.length) send("cards", { cards: cards.map((c) => ({ id: c.id, front: c.front })), due: store.cards.dueCount(student.id) });
+      if (cards.length && liveCards) {
+        const ids = cards.map((c) => c.id);
+        settleLater(runVerify({ question: text, answer: cardsText, kind: "cards" }), (ok, reason) => {
+          store.cards.settle(ids, ok);
+          if (!ok) console.warn(`[evklid] kartice niso shranjene (${reason})`);
+        });
+      }
+      // Nepreverjenih kartic učenec še ne vidi (tudi ne v obvestilu »dodane kartice«).
+      if (cards.length && !liveCards) send("cards", { cards: cards.map((c) => ({ id: c.id, front: c.front })), due: store.cards.dueCount(student.id) });
       if (meta) {
         store.addEvent({ student_id: student.id, conversation_id: conv.id, message_id: assistantId, ...meta });
         if (meta.done && conv.path_topic && progress.markMastered(student.id, conv.path_topic, "chat")) {
@@ -488,6 +544,7 @@ export function createApp(store, opts = {}) {
       finished = true;
       send("done", {
         id: assistantId,
+        code: messageCode(assistantId),
         text: display,
         state: meta ? { subject: meta.subject, mode: meta.mode } : null,
         title: store.getConversation(conv.id).title,

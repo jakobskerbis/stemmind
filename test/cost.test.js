@@ -112,6 +112,20 @@ test("activation code caps the deep model at Sonnet", () => {
   assert.equal(p.max_tokens, modeParams("deep").max_tokens);
 });
 
+test("hidden Opus limit for activation-code holders: per day and per month", () => {
+  const store = openDb(":memory:");
+  const s = store.createStudent("Ana");
+  const u = new Usage(store.db);
+  assert.equal(u.promoOpusSpent(s.id, MODEL_DEEP), false);
+  u.log(s.id, MODEL_DEEP, {});
+  assert.equal(u.promoOpusSpent(s.id, MODEL_DEEP), false);
+  u.log(s.id, MODEL_DEEP, {});
+  assert.equal(u.promoOpusSpent(s.id, MODEL_DEEP), true); // 2 na dan
+  const t = store.createStudent("Bor");
+  store.db.prepare("INSERT INTO usage (student_id, model, kind, cost_usd, created_at) VALUES (?, ?, 'chat', 0.3, datetime('now','-1 day'))").run(t.id, MODEL_DEEP);
+  assert.equal(u.promoOpusSpent(t.id, MODEL_DEEP), new Date().getUTCDate() !== 1); // 0,3 $ na mesec
+});
+
 test("free tier never gets Opus: re-explain and competition use thinking Haiku", () => {
   const store = openDb(":memory:");
   const s = store.createStudent("Ana");

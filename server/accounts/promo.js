@@ -4,8 +4,8 @@
 // izklop iz zavihka Račun pa ostane tudi po ponovnem zagonu.
 // Nastavitve v .env: EVKLID_PROMO_CODE (privzeto EVKLID3X), EVKLID_PROMO_LIMIT (100),
 // EVKLID_PROMO_DAYS (90 = 3 meseci), EVKLID_PROMO_SEATS (1 otrok). EVKLID_PROMO_CODE=off kode iz .env ne doda.
-// EVKLID_PROMO_MODEL: najzmogljivejši model za imetnike kode, privzeto »sonnet« (j 2026-10-30:
-// nikoli Opus); »opus« omejitev izklopi.
+// EVKLID_PROMO_MODEL: zmogljivejši model za imetnike kode, privzeto »sonnet« (j 2026-10-30): Sonnet
+// ob 2. zaporedni »Razloži podrobneje«, Opus šele ob 3.; »opus« omejitev izklopi.
 // Vsak račun porabi največ eno aktivacijsko kodo (dve kodi se ne seštevata).
 import "../env.js";
 import { isoIn } from "./plans.js";
