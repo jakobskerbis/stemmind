@@ -23,6 +23,9 @@ Strošek: paket Starter ≈ 7 $/mesec + disk 1 GB ≈ 0,25 $/mesec. Brezplačni 
 
 ## Po prvem zagonu
 
+- **Potrditev e-naslova brez e-pošte:** dokler `RESEND_API_KEY` ni nastavljen, Evklid ne pošilja e-pošte, povezava za potrditev pa se zaradi varnosti pokaže samo na računalniku, kjer teče strežnik. Registriraj se na spletnem naslovu, nato v Render → evklid → **Shell** poženi `node scripts/potrdi-racun.js tvoj@naslov.si` in osveži stran. Naslov iz `EVKLID_ADMIN_EMAILS` je po potrditvi skrbniški.
+- **Node:** `NODE_VERSION` mora biti vsaj 22.13 (prej `node:sqlite` ne obstaja brez zastavice); `render.yaml` nastavi `22`.
+
 - **Stripe webhook:** v Stripe → Developers → Webhooks dodaj `https://<tvoj-naslov>/api/stripe/webhook`, nato skopiraj `whsec_…` v Render → Environment → `STRIPE_WEBHOOK_SECRET`.
 - **Lastna domena (npr. evklid.si):** Render → Settings → Custom Domains; pri registrarju dodaj CNAME, ki ga pokaže Render. Nato posodobi `EVKLID_BASE_URL`.
 - **Razlage in učbenik:** enkrat poženi generiranje (v Render → Shell):

@@ -1066,3 +1066,15 @@ test("guest mode is removed: off everywhere, EVKLID_GUEST cannot turn it on", as
   assert.equal(netKey("::ffff:10.0.0.7"), "10.0.0.7");
   assert.equal(netKey("2001:db8:1:2:aaaa::1"), netKey("2001:db8:1:2:bbbb:cccc:dddd:eeee"));
 });
+
+test("potrdi-racun.js potrdi e-naslov brez e-pošte (strežnik brez Resend)", async () => {
+  const { confirmEmail } = await import("../scripts/potrdi-racun.js");
+  const { migrateAccounts } = await import("../server/accounts/schema.js");
+  const db = openDb(":memory:").db;
+  migrateAccounts(db);
+  db.prepare("INSERT INTO parents (email, password_hash, privacy_version, unsubscribe_token, referral_code) VALUES (?, ?, ?, ?, ?)").run("Jaz@Primer.si", "x", "1", "u", "r");
+  assert.deepEqual(confirmEmail(db, "nihce@primer.si"), { found: false });
+  assert.deepEqual(confirmEmail(db, " jaz@primer.si "), { found: true, already: false });
+  assert.ok(db.prepare("SELECT email_verified_at FROM parents").get().email_verified_at);
+  assert.deepEqual(confirmEmail(db, "JAZ@primer.si"), { found: true, already: true });
+});
