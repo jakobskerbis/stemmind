@@ -92,11 +92,35 @@ export const EN_UNITS = {
   "Kisline in baze": "Acids and bases",
   "Redoks in elektrokemija": "Redox and electrochemistry",
   "Organska kemija": "Organic chemistry",
+  "Fizika in okolje": "Physics and the environment",
+  Funkcije: "Functions",
+  Astronomija: "Astronomy",
 };
 
 // Teme slovenskih poti: "Ime | cilji".
 export const EN = {
   // MAT-OS-6
+// nove teme (vrzeli po učnih načrtih, 2026-10-30)
+  "MAT-OS-6/mnozice-in-diagrami": "Sets and diagrams | sort elements with Euler-Venn and Carroll diagrams, element, set, intersection and union in examples",
+  "MAT-OS-9/tocke-premice-in-ravnine-v-prostoru": "Points, lines and planes in space | relative position of points, lines and planes, line perpendicular to a plane, distance from a point to a plane",
+  "FIZ-OS-9/fizika-v-sodobnih-napravah": "Physics in modern devices | explain how a modern device works (GPS, laser, solar cell, nuclear power plant)",
+  "MAT-SS-1/osnove-logike": "Basic logic | statements and connectives (negation, conjunction, disjunction, implication, equivalence), truth tables, tautologies, equivalent statements",
+  "MAT-SS-1/pravokotni-koordinatni-sistem-v-ravnini": "The Cartesian plane | distance between two points, midpoint of a segment, area of a triangle from coordinates",
+  "MAT-SS-2/funkcije-in-njihove-lastnosti": "Functions and their properties | domain, range, zeros, increasing and decreasing, even and odd, injective, composite and inverse functions",
+  "MAT-SS-2/transformacije-grafov": "Transformations of graphs | translation, reflection in the axes and stretching of a graph",
+  "MAT-SS-2/potencna-in-korenska-funkcija": "Power and root functions | graphs and properties of power functions with integer exponents, root function as inverse, modelling",
+  "MAT-SS-4/matematicna-indukcija": "Mathematical induction | prove a statement for all natural numbers by induction (sums, divisibility, inequalities)",
+  "FIZ-SS-1/navor-in-ravnovesje": "Torque and equilibrium | torque, lever arm, equilibrium of a rigid body, centre of mass, levers",
+  "FIZ-SS-1/proznost": "Elasticity | Hooke's law, spring constant, springs in series and in parallel",
+  "FIZ-SS-2/prevajanje-toplote-in-sevanje": "Heat conduction and radiation | heat flow, thermal conductivity, Stefan's law of radiation",
+  "FIZ-SS-3/izmenicni-tok-in-nihajni-krog": "Alternating current and the LC circuit | sinusoidal voltage, effective value, oscillating circuit, natural frequency",
+  "FIZ-SS-3/elektromagnetno-valovanje": "Electromagnetic waves | origin, spectrum, speed of light, c = λν",
+  "FIZ-SS-4/osoncje-in-gibanje-planetov": "The Solar System and planetary motion | bodies in the Solar System, Kepler's laws, gravity and orbits",
+  "FIZ-SS-4/zvezde-in-vesolje": "Stars and the universe | luminosity, Stefan's law, star temperature, fusion in stars, distances in space",
+  "KEM-SS-2/lastnosti-elementov-v-periodnem-sistemu": "Properties of elements in the periodic table | metals, non-metals and metalloids, trends, acidic and basic oxides",
+  "KEM-SS-2/alkalijske-kovine-in-halogeni": "Alkali metals and halogens | reactions with water and oxygen, halides, displacement of halogens",
+  "KEM-SS-2/elementi-v-bioloskih-sistemih": "Elements in living systems | biogenic elements (C, H, O, N, P, S, Ca, Fe) and their compounds in living things",
+  "KEM-SS-3/dusikove-organske-spojine": "Organic nitrogen compounds | amines, amides, amino acids, basicity of amines",
   "MAT-OS-6/zapis-in-urejanje-velikih-stevil": "Reading and ordering large numbers | read, write and order numbers to a million and beyond, rounding",
   "MAT-OS-6/racunske-operacije-in-lastnosti": "Operations and their properties | order of operations with brackets, laws of arithmetic",
   "MAT-OS-6/deljivost": "Divisibility | divisibility rules for 2, 3, 5, 9 and 10, even and odd numbers",

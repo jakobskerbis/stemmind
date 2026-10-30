@@ -42,6 +42,7 @@ export const PATHS = {
         "Kocka in kvader | mreža, površina, prostornina",
       ]],
       ["Obdelava podatkov", [
+        "Množice in diagrami | razvrsti elemente z Euler-Vennovim in Carrollovim diagramom, na primerih uporablja pojme element, množica, presek in unija",
         "Prikazi podatkov | preglednica, stolpčni in črtični prikaz, branje prikazov",
         "Kombinatorične situacije | drevesni prikaz, preštevanje možnosti",
       ]],
@@ -144,6 +145,7 @@ export const PATHS = {
         "Talesov izrek | uporaba pri deljenju daljice in nalogah",
       ]],
       ["Geometrijska telesa", [
+        "Točke, premice in ravnine v prostoru | opiše medsebojno lego točk, premic in ravnin v prostoru, pravokotnost premice na ravnino, razdalja točke od ravnine",
         "Prizma | mreža, površina, prostornina",
         "Valj | površina, prostornina, valj kot vrtenina",
         "Piramida | plašč, površina, prostornina, višine",
@@ -220,6 +222,9 @@ export const PATHS = {
       ["Magnetizem", [
         "Magneti in magnetno polje | Zemljino magnetno polje, kompas",
         "Elektromagnet | magnetno polje tuljave",
+      ]],
+      ["Fizika in okolje", [
+        "Fizika v sodobnih napravah | z znanjem fizike razloži delovanje izbrane sodobne naprave (GPS, laser, sončna celica, jedrska elektrarna)",
       ]],
     ],
   },
@@ -423,6 +428,7 @@ export const PATHS = {
     label: "Matematika, 1. letnik",
     units: [
       ["Množice in števila", [
+        "Osnove logike | izjave in logične povezave (negacija, konjunkcija, disjunkcija, implikacija, ekvivalenca), pravilnostne tabele, tavtologija, enakovredne izjave",
         "Množice | operacije z množicami, Vennov diagram",
         "Naravna in cela števila | deljivost, praštevila, D in v",
         "Racionalna števila | ulomki, decimalni zapis, urejenost",
@@ -444,6 +450,7 @@ export const PATHS = {
         "Osnovni geometrijski pojmi | premice, koti, vzporednost",
         "Trikotnik | skladnost, značilne točke",
         "Štirikotniki in krog | lastnosti, ploščine",
+        "Pravokotni koordinatni sistem v ravnini | razdalja med točkama, razpolovišče daljice, ploščina trikotnika z oglišči v koordinatah",
       ]],
       ["Statistika", [
         "Obdelava podatkov | srednje vrednosti, mere razpršenosti, prikazi",
@@ -459,6 +466,11 @@ export const PATHS = {
       ]],
       ["Kompleksna števila", [
         "Kompleksna števila | računanje, konjugirano število, absolutna vrednost",
+      ]],
+      ["Funkcije", [
+        "Funkcije in njihove lastnosti | definicijsko območje, zaloga vrednosti, ničle, naraščanje in padanje, sodost in lihost, injektivnost, sestavljena in inverzna funkcija",
+        "Transformacije grafov | vzporedni premik, zrcaljenje čez osi in raztezanje grafa funkcije",
+        "Potenčna in korenska funkcija | grafi in lastnosti potenčnih funkcij s celim eksponentom, korenska funkcija kot inverzna funkcija, modeliranje",
       ]],
       ["Kvadratna funkcija", [
         "Kvadratna funkcija | oblike zapisa, teme, ničle, graf",
@@ -509,6 +521,7 @@ export const PATHS = {
     label: "Matematika, 4. letnik",
     units: [
       ["Zaporedja in vrste", [
+        "Matematična indukcija | dokaže trditev za vsa naravna števila s popolno indukcijo (vsote, deljivost, neenakosti)",
         "Zaporedja | lastnosti, limita zaporedja",
         "Aritmetično in geometrijsko zaporedje | splošni člen, vsota",
         "Geometrijska vrsta | konvergenca, vsota",
@@ -550,7 +563,9 @@ export const PATHS = {
       ]],
       ["Dinamika", [
         "Sile | vrste sil, sestavljanje in razstavljanje",
+        "Prožnost | Hookov zakon, prožnostni koeficient, zaporedna in vzporedna vezava vzmeti",
         "Newtonovi zakoni | uporaba pri gibanju teles",
+        "Navor in ravnovesje | navor sile, ročica, ravnovesje togega telesa, težišče, vzvod",
         "Trenje | lepenje, drsenje, klanec",
         "Gibalna količina | izrek o gibalni količini, trki",
       ]],
@@ -574,6 +589,7 @@ export const PATHS = {
         "Temperatura in raztezanje | linearni in prostorninski razteznostni koeficient",
         "Plinska enačba | idealni plin, plinski zakoni",
         "Notranja energija in toplota | specifična toplota, fazni prehodi",
+        "Prevajanje toplote in sevanje | toplotni tok, toplotna prevodnost, Stefanov zakon sevanja",
         "Termodinamika | prvi zakon, toplotni stroji, izkoristek",
       ]],
       ["Elektrika", [
@@ -591,6 +607,7 @@ export const PATHS = {
         "Magnetno polje | gostota magnetnega polja, polje tokovodnika",
         "Magnetna sila | sila na tokovodnik in na naboj",
         "Indukcija | inducirana napetost, Lenzovo pravilo, transformator",
+        "Izmenični tok in nihajni krog | sinusna napetost, efektivna vrednost, električni nihajni krog, lastna frekvenca",
       ]],
       ["Nihanje in valovanje", [
         "Nihanje | nihalo na vzmeti, matematično nihalo, energija",
@@ -598,6 +615,7 @@ export const PATHS = {
         "Zvok | jakost, Dopplerjev pojav",
       ]],
       ["Optika", [
+        "Elektromagnetno valovanje | nastanek, spekter, hitrost svetlobe, c = λν",
         "Geometrijska optika | odboj, lom, popolni odboj, leče",
         "Valovna optika | uklon, interferenca, polarizacija",
       ]],
@@ -610,6 +628,10 @@ export const PATHS = {
         "Fotoefekt in foton | energija fotona, izstopno delo",
         "Atom | energijski nivoji, spektri",
         "Jedro in radioaktivnost | razpadi, razpolovni čas, jedrska energija",
+      ]],
+      ["Astronomija", [
+        "Osončje in gibanje planetov | telesa v Osončju, Keplerjevi zakoni, gravitacija in kroženje planetov",
+        "Zvezde in vesolje | svetilnost, Stefanov zakon, temperatura zvezd, fuzija v zvezdah, razdalje v vesolju",
       ]],
       ["Priprava na maturo", [
         "Mešane maturitetne naloge | ponovitev vseh letnikov",
@@ -657,6 +679,11 @@ export const PATHS = {
         "Redoks reakcije | urejanje s polreakcijami",
         "Galvanski členi in elektroliza | standardni potencial",
       ]],
+      ["Elementi v periodnem sistemu", [
+        "Lastnosti elementov v periodnem sistemu | kovine, nekovine in polkovine, trendi lastnosti, kislost in bazičnost oksidov",
+        "Alkalijske kovine in halogeni | reakcije z vodo in kisikom, halogenidi, izpodrivanje halogenov",
+        "Elementi v bioloških sistemih | biogeni elementi (C, H, O, N, P, S, Ca, Fe) in njihove spojine v živih bitjih",
+      ]],
     ],
   },
   "KEM-SS-3": {
@@ -668,6 +695,7 @@ export const PATHS = {
         "Halogenoalkani in alkoholi | lastnosti, reakcije",
         "Karbonilne spojine | aldehidi in ketoni",
         "Karboksilne kisline in derivati | estri, amidi",
+        "Dušikove organske spojine | amini, amidi, aminokisline, bazičnost aminov",
         "Organske reakcije | adicija, substitucija, eliminacija",
       ]],
       ["Biološko pomembne spojine", [

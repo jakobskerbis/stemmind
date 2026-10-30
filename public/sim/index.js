@@ -150,6 +150,9 @@ export const ENGINES = {
   // virtualni laboratorij (modeli v lab-model.js, testi v test/laboratorij.test.js, opis v docs/laboratorij.md)
   "lab-ohm": ["lab-fiz.js", "labOhm"],
   "lab-co2": ["lab-kem.js", "labCo2"],
+  // teme, dodane po primerjavi z učnimi načrti (2026-10-30)
+  logika: ["vrzeli.js", "logika"], prostor: ["vrzeli.js", "prostor"], "koord-trikotnik": ["vrzeli.js", "koordTrikotnik"],
+  "vezava-vzmeti": ["vrzeli.js", "vezavaVzmeti"], izmenicni: ["vrzeli.js", "izmenicni"], "em-spekter": ["vrzeli.js", "emSpekter"], zvezde: ["vrzeli.js", "zvezde"],
   // zbirka več simulacij (za mešane maturitetne naloge)
   zbirka: ["index.js", "zbirka"],
 };
