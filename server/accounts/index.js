@@ -16,7 +16,7 @@ import { cleanText } from "../settings.js";
 import { Usage } from "../usage.js";
 import { promoConfig, createPromo } from "./promo.js";
 import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
-import { guestModeOn, guestNet, guestPerDay, GuestQuota, GUEST_SESSION_DAYS } from "./guest.js";
+import { guestModeOn, guestNet, guestPerDay, GuestQuota, GUEST_SESSION_DAYS, netKey } from "./guest.js";
 import { ProfileLocks, checkProfilePassword } from "./profile-lock.js";
 import { gateNeeded } from "../gate.js";
 
@@ -75,6 +75,7 @@ export function mountAccounts(app, store, opts = {}) {
   const signupThrottle = new Throttle(Number(env.EVKLID_SIGNUPS_PER_DAY) || 5, 24 * 3600000);
   // Povezava za potrditev ali novo geslo v odgovoru (ko e-pošta ni nastavljena) samo na računalniku s strežnikom
   // ali za skupnim geslom; sicer bi kdorkoli prevzel tuj račun (»pozabljeno geslo«) ali potrdil izmišljen e-naslov.
+  const forgotThrottle = new Throttle(5, 3600000); // pošiljanje povezav za novo geslo: 5 na uro
   const devLinks = (req) => !mailer.enabled && (isLocalRequest(req) || gateNeeded(env));
   const locks = new ProfileLocks(db);
   const profileThrottle = new Throttle(10);
@@ -296,10 +297,12 @@ export function mountAccounts(app, store, opts = {}) {
   }
 
   app.post("/api/auth/register", json, async (req, res) => {
-    if (!isLocalRequest(req) && signupThrottle.blocked(req.ip)) return res.status(429).json({ error: "Z tega omrežja je danes ustvarjenih že preveč računov. Poskusite jutri." });
+    // Ključ je omrežje (IPv6: /64), sicer bi en priključek z menjavo naslovov v svojem /64 ustvaril neomejeno računov.
+    const signupKey = netKey(req.ip);
+    if (!isLocalRequest(req) && signupThrottle.blocked(signupKey)) return res.status(429).json({ error: "Z tega omrežja je danes ustvarjenih že preveč računov. Poskusite jutri." });
     const v = checkSignup(req, res);
     if (!v) return;
-    signupThrottle.fail(req.ip);
+    signupThrottle.fail(signupKey);
     const { email, password } = v;
 
     const refCode = String(req.body?.referral_code || "").trim().toUpperCase();
@@ -454,7 +457,11 @@ export function mountAccounts(app, store, opts = {}) {
   });
 
   app.post("/api/auth/forgot", json, async (req, res) => {
-    const p = parentByEmail(String(req.body?.email || "").trim().toLowerCase());
+    const email = String(req.body?.email || "").trim().toLowerCase();
+    if (forgotThrottle.blocked(email) || forgotThrottle.blocked(req.ip)) return res.status(429).json({ error: "Preveč zahtev. Poskusite čez eno uro." });
+    forgotThrottle.fail(email);
+    forgotThrottle.fail(req.ip);
+    const p = parentByEmail(email);
     let devUrl;
     if (p) {
       const token = randomToken();

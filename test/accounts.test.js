@@ -548,9 +548,16 @@ test("brez e-pošte: povezava za potrditev in novo geslo samo na računalniku s 
       const forgot = await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" }, headers: remote });
       assert.equal(forgot.body.dev_reset_url, undefined);
       assert.match((await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" } })).body.dev_reset_url, /\?reset=/);
+      // Povezave za novo geslo: največ 5 na uro za isti e-naslov (ne zasujemo nabiralnika).
+      for (let i = 0; i < 3; i++) assert.equal((await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" } })).status, 200);
+      assert.equal((await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" } })).status, 429);
       // Največ 5 novih računov z enega naslova na dan (prvi je že zgoraj).
       for (let i = 0; i < 4; i++) assert.equal((await client()("/api/auth/register", { method: "POST", body: body(`r${i}@primer.si`), headers: remote })).status, 201);
       assert.equal((await client()("/api/auth/register", { method: "POST", body: body("r9@primer.si"), headers: remote })).status, 429);
+      // IPv6: vsi naslovi istega /64 štejejo skupaj.
+      for (let i = 1; i <= 5; i++) assert.equal((await client()("/api/auth/register", { method: "POST", body: body(`v${i}@primer.si`), headers: { "X-Forwarded-For": `2001:db8:1:2::${i}` } })).status, 201);
+      assert.equal((await client()("/api/auth/register", { method: "POST", body: body("v6@primer.si"), headers: { "X-Forwarded-For": "2001:db8:1:2:abcd::9" } })).status, 429);
+      assert.equal((await client()("/api/auth/register", { method: "POST", body: body("v7@primer.si"), headers: { "X-Forwarded-For": "2001:db8:1:3::1" } })).status, 201);
     },
     { resendKey: "" },
   );

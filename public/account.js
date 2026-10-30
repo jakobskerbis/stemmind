@@ -472,6 +472,7 @@ function renderVerify() {
       <p>Na <b>${esc(status.parent.email)}</b> smo poslali povezavo. Kliknite jo, nato se vrnite sem.</p>
       <p class="muted">S potrditvijo tudi izjavite, da ste starš ali zakoniti zastopnik otroka. To zahteva zakon o varstvu podatkov za otroke, mlajše od 15 let.</p>
       ${dev && !status.email ? `<p class="muted">Razvojni način (e-pošta ni nastavljena): <a href="${esc(dev)}">potrdi e-naslov</a></p>` : ""}
+      ${!dev && !status.email ? `<p class="warn">E-pošta na strežniku še ni nastavljena, zato povezava ni prišla. Na računalniku, kjer teče Evklid, se prijavite v ta račun in kliknite »Pošlji znova«.</p>` : ""}
       <div class="form-actions">
         <button class="primary" id="verify-done" type="button">Sem potrdil(a)</button>
         <button id="verify-resend" type="button">Pošlji znova</button>
