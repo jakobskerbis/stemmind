@@ -97,8 +97,8 @@ function budgetHtml(b) {
     <div class="um-tip ${cls}"><p>${t(level)}</p></div>
     ${b.credit_out ? `<div class="um-tip act"><p>${t("meter.creditOut")}</p></div>` : ""}
     ${on && b.projected != null ? `<p class="muted">${t("meter.budgetForecast", { usd: usd(b.projected) })}</p>` : ""}
-    <form class="um-budget-form" data-act="base"><label>${t("meter.budgetBase")} <input type="number" name="v" min="0" step="1" inputmode="decimal" value="${b.base || ""}"></label><button type="submit" class="secondary">${t("meter.save")}</button></form>
-    <form class="um-budget-form" data-act="add"><label>${t("meter.budgetAdd")} <input type="number" name="v" min="1" step="1" inputmode="decimal"></label><button type="submit" class="secondary">${t("meter.add")}</button></form>
+    <form class="um-budget-form" data-act="base"><label>${t("meter.budgetBase")} <input type="number" name="v" min="0" step="any" inputmode="decimal" value="${b.base || ""}"></label><button type="submit" class="secondary">${t("meter.save")}</button></form>
+    <form class="um-budget-form" data-act="add"><label>${t("meter.budgetAdd")} <input type="number" name="v" min="1" step="any" inputmode="decimal"></label><button type="submit" class="secondary">${t("meter.add")}</button></form>
     <small class="muted">${t("meter.budgetHint", { reserve: b.reserve_pct })}</small>
   </section>`;
 }

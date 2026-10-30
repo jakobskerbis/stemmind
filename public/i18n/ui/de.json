@@ -1122,15 +1122,28 @@
   "meter.add": "Hinzufügen",
   "meter.budgetSaved": "Budget aktualisiert.",
   "meter.budgetHint": "Evklid stoppt {reserve} % vor der Grenze, damit das Budget nie überschritten wird. Der Gratis-Tarif erhält kein Upgrade.",
-  "credit.title": "Zusätzliche Nutzung des KI-Tutors",
-  "credit.text": "Jedes Profil erhält jeden Monat einen eigenen Anteil an der gemeinsamen KI-Nutzung, bezahlte Tarife einen größeren. Ist er aufgebraucht, kannst du hier zusätzliche Nutzung für alle Profile dieses Kontos kaufen.",
-  "credit.balance": "Verbleibende Zusatznutzung: {usd} $",
-  "credit.pack": "{price} → {usd} $ KI-Nutzung",
-  "credit.note": "{pct} % der Zahlung werden zu KI-Nutzung, der Rest deckt MwSt., Zahlungsgebühren und die Entwicklung von Evklid. Zusatznutzung verfällt nicht.",
-  "credit.minor": "Die Zusatznutzung bezahlt ein volljähriger Kontoinhaber (Elternteil oder Erziehungsberechtigter).",
+  "credit.title": "Zusätzliche Gespräche mit dem Tutor",
+  "credit.text": "Jedes Profil erhält jeden Monat einen eigenen Anteil an Gesprächen mit dem KI-Tutor, bezahlte Tarife einen größeren. Ist er aufgebraucht, kannst du hier zusätzliche Gespräche für alle Profile dieses Kontos kaufen.",
+  "credit.balance": {
+    "one": "Noch etwa {n} gekauftes Gespräch",
+    "other": "Noch etwa {n} gekaufte Gespräche"
+  },
+  "credit.pack": {
+    "one": "{price} → etwa {n} Gespräch mit dem Tutor",
+    "other": "{price} → etwa {n} Gespräche mit dem Tutor"
+  },
+  "credit.note": "Die Zahl der Gespräche ist eine Schätzung: Je nach Stärke des antwortenden Modells kannst du sogar mehr bekommen. Gekaufte Gespräche verfallen nicht und gelten für alle Profile dieses Kontos.",
+  "credit.minor": "Zusätzliche Gespräche bezahlt ein volljähriger Kontoinhaber (Elternteil oder Erziehungsberechtigter).",
   "credit.off": "Zahlungen sind auf dem Server noch nicht eingerichtet.",
-  "credit.paid": "Zahlung erfolgreich. Zusätzliche KI-Nutzung wurde gutgeschrieben.",
-  "credit.pending": "Wir prüfen die Zahlung noch. Die Nutzung wird gutgeschrieben, sobald die Bank sie bestätigt.",
+  "credit.custom": "Anderer Betrag:",
+  "credit.customLabel": "Betrag in Euro",
+  "credit.customEst": {
+    "one": "etwa {n} Gespräch mit dem Tutor",
+    "other": "etwa {n} Gespräche mit dem Tutor"
+  },
+  "credit.customMin": "Der Mindestbetrag ist {min}.",
+  "credit.paid": "Zahlung erfolgreich. Die zusätzlichen Gespräche wurden gutgeschrieben.",
+  "credit.pending": "Wir prüfen die Zahlung noch. Die Gespräche werden gutgeschrieben, sobald die Bank sie bestätigt.",
   "nav.games": "Spiele",
   "games.meSub": "Mathe spielerisch",
   "games.intro": "Spielen und lernen: {n} Spiele für Mathe, Physik, Chemie, Biologie und mehr. Die Schwierigkeit passt sich dir an.",

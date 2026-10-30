@@ -1122,15 +1122,28 @@
   "meter.add": "Hozzáadás",
   "meter.budgetSaved": "A keret frissítve.",
   "meter.budgetHint": "Az Evklid {reserve} %-kal a határ előtt megáll, hogy soha ne lépje túl. Az ingyenes csomag nem kap fejlesztést.",
-  "credit.title": "Az AI-tanító extra használata",
-  "credit.text": "Minden profil havonta saját részt kap a közös AI-használatból, a fizetős csomagok nagyobbat. Ha elfogy, itt vásárolhatsz extra használatot a fiók összes profiljának.",
-  "credit.balance": "Hátralévő extra használat: {usd} $",
-  "credit.pack": "{price} → {usd} $ AI-használat",
-  "credit.note": "A fizetés {pct} %-a AI-használat lesz, a többi fedezi az áfát, a fizetési díjakat és az Evklid fejlesztését. Az extra használat nem jár le.",
-  "credit.minor": "Az extra használatot nagykorú fióktulajdonos fizeti (szülő vagy gondviselő).",
+  "credit.title": "Extra beszélgetések a tanítóval",
+  "credit.text": "Minden profil havonta saját részt kap az AI-tanítóval folytatott beszélgetésekből, a fizetős csomagok nagyobbat. Ha elfogy, itt vásárolhatsz extra beszélgetéseket a fiók összes profiljának.",
+  "credit.balance": {
+    "one": "Még körülbelül {n} vásárolt beszélgetés maradt",
+    "other": "Még körülbelül {n} vásárolt beszélgetés maradt"
+  },
+  "credit.pack": {
+    "one": "{price} → körülbelül {n} beszélgetés a tanítóval",
+    "other": "{price} → körülbelül {n} beszélgetés a tanítóval"
+  },
+  "credit.note": "A beszélgetések száma becslés: a válaszoló modell erejétől függően akár többet is kaphatsz. A vásárolt beszélgetések nem járnak le, és a fiók minden profiljára érvényesek.",
+  "credit.minor": "Az extra beszélgetéseket nagykorú fióktulajdonos fizeti (szülő vagy gondviselő).",
   "credit.off": "A fizetés még nincs beállítva a szerveren.",
-  "credit.paid": "Sikeres fizetés. Az extra AI-használat jóváírva.",
-  "credit.pending": "Még ellenőrizzük a fizetést. A használatot a banki megerősítés után írjuk jóvá.",
+  "credit.custom": "Más összeg:",
+  "credit.customLabel": "Összeg euróban",
+  "credit.customEst": {
+    "one": "körülbelül {n} beszélgetés a tanítóval",
+    "other": "körülbelül {n} beszélgetés a tanítóval"
+  },
+  "credit.customMin": "A legkisebb összeg {min}.",
+  "credit.paid": "Sikeres fizetés. Az extra beszélgetéseket jóváírtuk.",
+  "credit.pending": "Még ellenőrizzük a fizetést. A beszélgetéseket a banki megerősítés után írjuk jóvá.",
   "nav.games": "Játékok",
   "games.meSub": "Matek játékosan",
   "games.intro": "Játssz és tanulj: {n} játék matekból, fizikából, kémiából, biológiából és más tárgyakból. A nehézség hozzád igazodik.",

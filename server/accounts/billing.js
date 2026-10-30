@@ -14,7 +14,7 @@ import { cleanText } from "../settings.js";
 import { ljNow } from "./goal-reminder.js";
 import { promoEndingEmail, renewalEmail } from "./email.js";
 import { audit } from "../dnevnik-dostopov.js";
-import { CREDIT_PACKS, packById, creditUsdFor, creditShare } from "../placila/krediti.js";
+import { CREDIT_PACKS, packById, customPack, CUSTOM_MIN_CENTS, creditUsdFor, conversationsFor } from "../placila/krediti.js";
 
 export const ADULT_TEXT = "Sem polnoleten/-na in plačujem za svoj profil ali kot starš oziroma skrbnik.";
 export const WITHDRAWAL_TEXT =
@@ -313,17 +313,18 @@ export function mountBilling(app, ctx) {
   // --- dokup porabe AI (server/placila/krediti.js) ---
   // Ko učenec porabi svoj del mesečnega proračuna, imetnik računa dokupi kredit: polovica plačila
   // postane kredit v $, vezan na račun (velja za vse njegove profile).
-  const publicPack = (p) => ({ id: p.id, amount: p.amount, currency: p.currency, credit_usd: creditUsdFor(p.amount) });
+  // Navzven samo cena in število pogovorov, ne delež plačila ali znesek kredita (j 2026-10-30).
+  const publicPack = (p) => ({ id: p.id, amount: p.amount, currency: p.currency, conversations: conversationsFor(creditUsdFor(p.amount)) });
   app.get("/api/billing/credit", (req, res) => {
     const p = req.parent;
-    if (!credits || !p || p.is_guest) return res.json({ billing: false, balance_usd: 0, packs: [] });
+    if (!credits || !p || p.is_guest) return res.json({ billing: false, balance_conversations: 0, packs: [] });
     res.json({
       billing: stripe.enabled,
-      balance_usd: credits.balance(p.id),
-      share: creditShare(),
+      balance_conversations: conversationsFor(credits.balance(p.id)),
       packs: currencyOf(req, p) === "EUR" ? CREDIT_PACKS.map(publicPack) : [],
+      // Poljuben znesek: najmanjši znesek in ocena pogovorov na 1 € (za sprotni izračun v kartici).
+      custom: { min: CUSTOM_MIN_CENTS, per_eur: conversationsFor(creditUsdFor(100_000)) / 1000 },
       minor: isMinor(p),
-      history: credits.list(p.id),
     });
   });
 
@@ -332,8 +333,8 @@ export function mountBilling(app, ctx) {
     const p = req.parent;
     if (!credits || !p || p.is_guest) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
     if (isMinor(p)) return res.status(403).json({ error: "Dokup porabe plača polnoleten imetnik računa (starš ali skrbnik)." });
-    const pack = packById(req.body?.pack);
-    if (!pack) return res.status(400).json({ error: "Neznan paket." });
+    const pack = req.body?.pack === "custom" ? customPack(req.body?.amount_eur) : packById(req.body?.pack);
+    if (!pack) return res.status(400).json({ error: req.body?.pack === "custom" ? "Najmanjši znesek je 5 €." : "Neznan paket." });
     if (currencyOf(req, p) !== "EUR") return res.status(400).json({ error: "Dokup porabe je zaenkrat na voljo samo v evrih." });
     if (!consented(req.body)) return res.status(400).json(consentError);
     try {
@@ -388,7 +389,7 @@ export function mountBilling(app, ctx) {
       if (String(session.metadata?.parent_id) !== String(req.parent.id)) return res.status(404).json({ error: "Plačilo ne obstaja." });
       completeCreditSession(session);
       const c = credits.get(session.metadata?.credit_id);
-      res.json({ paid: c?.status === "active", balance_usd: credits.balance(req.parent.id) });
+      res.json({ paid: c?.status === "active", balance_conversations: conversationsFor(credits.balance(req.parent.id)) });
     } catch (err) {
       log.error?.("[evklid] Stripe dokup porabe (potrditev):", err.message);
       res.status(502).json({ error: "Plačila ni bilo mogoče preveriti. Osvežite stran čez minuto." });

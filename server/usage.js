@@ -57,13 +57,16 @@ export class Usage {
     // Brez računov (lokalno): vsi profili imajo enako utež, dokupa ni.
     this.weightOf = () => 1;
     this.ownerOf = () => null;
+    this.freeOver = () => false;
     this.credits = null;
     this.shareCache = null;
   }
   // Računi (server/accounts/index.js): utež profila po paketu, lastnik računa in dokupljeni kredit.
-  configure({ weightOf, ownerOf, credits } = {}) {
+  // freeOver: brezplačni profil je nad mejo brezplačnega paketa (s kreditom nadaljuje, ves strošek gre iz kredita).
+  configure({ weightOf, ownerOf, credits, freeOver } = {}) {
     if (weightOf) this.weightOf = weightOf;
     if (ownerOf) this.ownerOf = ownerOf;
+    if (freeOver) this.freeOver = freeOver;
     if (credits) this.credits = credits;
     this.shareCache = null;
   }
@@ -140,7 +143,8 @@ export class Usage {
   route(studentId, mode, { lite = false, maxTier = "deep", state = this.budgetState() } = {}) {
     if (!state.cap) return { mode, boosted: false, saved: false, level: state.level };
     const sb = this.studentBudget(studentId, state);
-    const near = sb.spent >= sb.allowance * SHARE_SOFT && sb.credit <= 0;
+    // Tudi pri porabi iz dokupljenega kredita brez nadgradnje: kupljeni pogovori so ocenjeni za običajne modele.
+    const near = sb.spent >= sb.allowance * SHARE_SOFT;
     return { ...budgetMode(mode, { level: state.level, maxTier, lite, overShare: near }), level: state.level };
   }
   // API račun nima dobroimetja (napaka 400): nekaj minut ne kličemo, učenec dobi jasno sporočilo.
@@ -179,11 +183,13 @@ export class Usage {
   // Del stroška nad deležem učenca (ali nad skupnim proračunom) gre iz dokupljenega kredita računa.
   chargeCredit(studentId, cost) {
     if (!this.credits || studentId == null || !(cost > 0)) return;
+    // Meja brezplačnega paketa ob kreditu ne velja (accounts/index.js), zato tam plača kredit ves strošek, tudi brez proračuna.
+    const free = !!this.freeOver(studentId);
     const state = this.budgetState();
-    if (!state.cap) return;
+    if (!state.cap && !free) return;
     const sb = this.studentBudget(studentId, state);
     if (!sb.owner || sb.credit <= 0) return;
-    const over = Math.max(sb.spent - sb.allowance, state.spent - state.cap, 0);
+    const over = free ? cost : Math.max(sb.spent - sb.allowance, state.spent - state.cap, 0);
     const take = Math.min(cost, over, sb.credit);
     if (take > 0) this.credits.use(sb.owner, studentId, Math.round(take * 1e6) / 1e6);
   }

@@ -1128,15 +1128,31 @@
   "meter.add": "Dodaj",
   "meter.budgetSaved": "Proračun je ažuriran.",
   "meter.budgetHint": "Evklid staje {reserve} % prije granice da je nikad ne prijeđe. Besplatni paket ne dobiva nadogradnju.",
-  "credit.title": "Dodatna potrošnja AI instruktora",
-  "credit.text": "Svaki profil svaki mjesec dobiva svoj dio zajedničke potrošnje AI, plaćeni paketi veći. Kad ga potroši, ovdje možete dokupiti potrošnju za sve profile ovog računa.",
-  "credit.balance": "Preostala dokupljena potrošnja: {usd} $",
-  "credit.pack": "{price} → {usd} $ potrošnje AI",
-  "credit.note": "{pct} % plaćanja postaje potrošnja AI, ostatak pokriva PDV, troškove plaćanja i razvoj Evklida. Dokupljena potrošnja ne istječe.",
+  "credit.title": "Dodatni razgovori s instruktorom",
+  "credit.text": "Svaki profil svaki mjesec dobiva svoj dio razgovora s AI instruktorom, plaćeni paketi veći. Kad ga potroši, ovdje možete dokupiti razgovore za sve profile ovog računa.",
+  "credit.balance": {
+    "one": "Preostao je otprilike {n} kupljeni razgovor",
+    "few": "Preostala su otprilike {n} kupljena razgovora",
+    "other": "Preostalo je otprilike {n} kupljenih razgovora"
+  },
+  "credit.pack": {
+    "one": "{price} → otprilike {n} razgovor s instruktorom",
+    "few": "{price} → otprilike {n} razgovora s instruktorom",
+    "other": "{price} → otprilike {n} razgovora s instruktorom"
+  },
+  "credit.note": "Broj razgovora je procjena: ovisno o snazi modela koji odgovara, možeš dobiti i više. Kupljeni razgovori ne istječu i vrijede za sve profile ovog računa.",
   "credit.minor": "Dokup plaća punoljetni vlasnik računa (roditelj ili skrbnik).",
   "credit.off": "Plaćanja još nisu postavljena na poslužitelju.",
-  "credit.paid": "Plaćanje je uspjelo. Dodatna potrošnja AI je pripisana.",
-  "credit.pending": "Plaćanje još provjeravamo. Potrošnja se pripisuje kad banka potvrdi plaćanje.",
+  "credit.custom": "Drugi iznos:",
+  "credit.customLabel": "Iznos u eurima",
+  "credit.customEst": {
+    "one": "otprilike {n} razgovor s instruktorom",
+    "few": "otprilike {n} razgovora s instruktorom",
+    "other": "otprilike {n} razgovora s instruktorom"
+  },
+  "credit.customMin": "Najmanji iznos je {min}.",
+  "credit.paid": "Plaćanje je uspjelo. Dodatni razgovori su pripisani.",
+  "credit.pending": "Plaćanje još provjeravamo. Razgovori se pripisuju kad banka potvrdi plaćanje.",
   "nav.games": "Igre",
   "games.meSub": "Matematika kroz igru",
   "games.intro": "Igraj i uči: {n} igara iz matematike, fizike, kemije, biologije i drugih predmeta. Težina se prilagođava tebi.",

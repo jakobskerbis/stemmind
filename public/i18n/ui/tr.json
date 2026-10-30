@@ -1122,15 +1122,28 @@
   "meter.add": "Ekle",
   "meter.budgetSaved": "Bütçe güncellendi.",
   "meter.budgetHint": "Evklid bütçeyi asla aşmamak için sınırdan {reserve} % önce durur. Ücretsiz plan yükseltme almaz.",
-  "credit.title": "Yapay zekâ öğretmeni için ek kullanım",
-  "credit.text": "Her profil her ay ortak yapay zekâ kullanımından kendi payını alır, ücretli planlar daha büyük bir pay. Bittiğinde bu hesaptaki tüm profiller için buradan ek kullanım satın alabilirsiniz.",
-  "credit.balance": "Kalan ek kullanım: {usd} $",
-  "credit.pack": "{price} → {usd} $ yapay zekâ kullanımı",
-  "credit.note": "Ödemenin {pct} %’i yapay zekâ kullanımına dönüşür, kalanı KDV’yi, ödeme ücretlerini ve Evklid’in geliştirilmesini karşılar. Ek kullanımın süresi dolmaz.",
-  "credit.minor": "Ek kullanımı reşit bir hesap sahibi (ebeveyn veya vasi) öder.",
+  "credit.title": "Öğretmenle ek sohbetler",
+  "credit.text": "Her profil her ay yapay zekâ öğretmeniyle sohbetlerden kendi payını alır, ücretli planlar daha büyük bir pay. Bittiğinde bu hesaptaki tüm profiller için buradan ek sohbet satın alabilirsiniz.",
+  "credit.balance": {
+    "one": "Yaklaşık {n} satın alınmış sohbet kaldı",
+    "other": "Yaklaşık {n} satın alınmış sohbet kaldı"
+  },
+  "credit.pack": {
+    "one": "{price} → öğretmenle yaklaşık {n} sohbet",
+    "other": "{price} → öğretmenle yaklaşık {n} sohbet"
+  },
+  "credit.note": "Sohbet sayısı bir tahmindir: yanıt veren modelin gücüne göre daha fazlasını da alabilirsin. Satın alınan sohbetlerin süresi dolmaz ve bu hesaptaki tüm profiller için geçerlidir.",
+  "credit.minor": "Ek sohbetleri reşit bir hesap sahibi (ebeveyn veya vasi) öder.",
   "credit.off": "Ödemeler sunucuda henüz ayarlanmadı.",
-  "credit.paid": "Ödeme başarılı. Ek yapay zekâ kullanımı eklendi.",
-  "credit.pending": "Ödemeyi hâlâ kontrol ediyoruz. Kullanım, banka onayladığında eklenir.",
+  "credit.custom": "Başka tutar:",
+  "credit.customLabel": "Euro cinsinden tutar",
+  "credit.customEst": {
+    "one": "öğretmenle yaklaşık {n} sohbet",
+    "other": "öğretmenle yaklaşık {n} sohbet"
+  },
+  "credit.customMin": "En düşük tutar {min}.",
+  "credit.paid": "Ödeme başarılı. Ek sohbetler eklendi.",
+  "credit.pending": "Ödemeyi hâlâ kontrol ediyoruz. Sohbetler, banka onayladığında eklenir.",
   "nav.games": "Oyunlar",
   "games.meSub": "Oynayarak matematik",
   "games.intro": "Oyna ve öğren: matematik, fizik, kimya, biyoloji ve daha fazlası için {n} oyun. Zorluk sana göre ayarlanır.",

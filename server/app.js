@@ -262,7 +262,7 @@ export function createApp(store, opts = {}) {
   const helpTasks = new Map();
   const usage = new Usage(store.db);
   // Delitev mesečnega proračuna po profilih in dokupljeni kredit (z računi; server/proracun.js).
-  if (accounts?.credits) usage.configure({ weightOf: accounts.shareWeightFor, ownerOf: accounts.ownerOf, credits: accounts.credits });
+  if (accounts?.credits) usage.configure({ weightOf: accounts.shareWeightFor, ownerOf: accounts.ownerOf, credits: accounts.credits, freeOver: accounts.freeOver });
   // Kartice, ki so čakale na preverjanje ob ponovnem zagonu, ne bodo nikoli preverjene: proč z njimi
   // (sicer bi skrite blokirale isto vprašanje, UNIQUE student_id + norm).
   store.db.prepare("DELETE FROM flashcards WHERE verified = 0").run();
@@ -461,7 +461,8 @@ export function createApp(store, opts = {}) {
     // Brezplačni paket brez nadgradnje (nikoli Opus, ima svoje meje); koda in šolska licenca največ Sonnet.
     const premium = !accounts || accounts.premiumFor(student.id);
     const maxTier = !premium ? null : ladder && (!ladder.opus || ladder.promo) ? "mid" : "deep";
-    const routed = usage.route(student.id, chosen.mode, { lite, maxTier });
+    // Z opombo (dnevna meja Opusa, mehka meja, brezplačni paket) ostane izbrani hitri model: opomba mora držati.
+    const routed = chosen.note ? { mode: chosen.mode, boosted: false, saved: false } : usage.route(student.id, chosen.mode, { lite, maxTier });
     const mode = routed.mode;
     const note = chosen.note || (routed.saved ? NOTES.appBudget : null);
     // »mid« (Sonnet: šolska licenca, Osebno pred 3. prošnjo, aktivacijska koda) se obnaša kot podrobna razlaga, le z drugim modelom.

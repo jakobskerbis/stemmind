@@ -21,6 +21,24 @@ export const CREDIT_PACKS = [
   { id: "k20", amount: 2000, currency: "EUR" },
 ];
 export const packById = (id) => CREDIT_PACKS.find((p) => p.id === id) || null;
+// Poljuben znesek brez zgornje meje (j 2026-10-30); spodnja meja zaradi plačilnih stroškov,
+// zgornja je le tehnična meja enega plačila pri Stripu (999.999,99 €).
+export const CUSTOM_MIN_CENTS = 500;
+export const CUSTOM_MAX_CENTS = 99_999_999;
+export function customPack(amountEur) {
+  const cents = Math.round(Number(amountEur) * 100);
+  if (!Number.isFinite(cents) || cents < CUSTOM_MIN_CENTS || cents > CUSTOM_MAX_CENTS) return null;
+  return { id: "custom", amount: cents, currency: "EUR" };
+}
+
+// Učencu in staršu pokažemo samo, za koliko pogovorov z inštruktorjem zadošča kredit (j 2026-10-30:
+// ne deleža plačila ali zneska kredita). Ocena za običajen pogovor (~10 sporočil, hitri model, včasih
+// podrobna razlaga); zaokroženo navzdol, da je obljuba vedno izpolnjena.
+export const usdPerConversation = () => Math.max(0.001, num("EVKLID_USD_PER_CONVERSATION", 0.05));
+export function conversationsFor(usd) {
+  const n = Math.floor((usd || 0) / usdPerConversation());
+  return n >= 20 ? n - (n % 5) : n;
+}
 
 // Kredit v $ za plačilo v centih (evri): polovica zneska, pretvorjena v dolarje.
 export const creditUsdFor = (amountCents) => Math.floor(((amountCents / 100) * creditShare() * 100) / eurPerUsd()) / 100;

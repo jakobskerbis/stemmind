@@ -1122,15 +1122,28 @@
   "meter.add": "Ongeza",
   "meter.budgetSaved": "Bajeti imesasishwa.",
   "meter.budgetHint": "Evklid inasimama {reserve} % kabla ya kikomo ili isikizidi kamwe. Mpango wa bure haupati uboreshaji.",
-  "credit.title": "Matumizi ya ziada ya mwalimu wa AI",
-  "credit.text": "Kila wasifu hupata sehemu yake ya matumizi ya pamoja ya AI kila mwezi, mipango ya kulipia sehemu kubwa zaidi. Ikiisha, unaweza kununua hapa matumizi ya ziada kwa wasifu wote wa akaunti hii.",
-  "credit.balance": "Matumizi ya ziada yaliyobaki: {usd} $",
-  "credit.pack": "{price} → {usd} $ ya matumizi ya AI",
-  "credit.note": "{pct} % ya malipo huwa matumizi ya AI, kilichobaki hulipia kodi, ada za malipo na maendeleo ya Evklid. Matumizi ya ziada hayaishi muda.",
-  "credit.minor": "Matumizi ya ziada hulipwa na mmiliki mtu mzima wa akaunti (mzazi au mlezi).",
+  "credit.title": "Mazungumzo ya ziada na mwalimu",
+  "credit.text": "Kila wasifu hupata sehemu yake ya mazungumzo na mwalimu wa AI kila mwezi, mipango ya kulipia sehemu kubwa zaidi. Ikiisha, unaweza kununua hapa mazungumzo ya ziada kwa wasifu wote wa akaunti hii.",
+  "credit.balance": {
+    "one": "Yamebaki takriban mazungumzo {n} yaliyonunuliwa",
+    "other": "Yamebaki takriban mazungumzo {n} yaliyonunuliwa"
+  },
+  "credit.pack": {
+    "one": "{price} → takriban mazungumzo {n} na mwalimu",
+    "other": "{price} → takriban mazungumzo {n} na mwalimu"
+  },
+  "credit.note": "Idadi ya mazungumzo ni makadirio: kulingana na nguvu ya mfano unaojibu, unaweza kupata hata zaidi. Mazungumzo yaliyonunuliwa hayaishi muda na yanatumika kwa wasifu wote wa akaunti hii.",
+  "credit.minor": "Mazungumzo ya ziada hulipwa na mmiliki mtu mzima wa akaunti (mzazi au mlezi).",
   "credit.off": "Malipo bado hayajawekwa kwenye seva.",
-  "credit.paid": "Malipo yamefaulu. Matumizi ya ziada ya AI yameongezwa.",
-  "credit.pending": "Bado tunathibitisha malipo. Matumizi yataongezwa benki ikithibitisha.",
+  "credit.custom": "Kiasi kingine:",
+  "credit.customLabel": "Kiasi kwa euro",
+  "credit.customEst": {
+    "one": "takriban mazungumzo {n} na mwalimu",
+    "other": "takriban mazungumzo {n} na mwalimu"
+  },
+  "credit.customMin": "Kiasi cha chini ni {min}.",
+  "credit.paid": "Malipo yamefaulu. Mazungumzo ya ziada yameongezwa.",
+  "credit.pending": "Bado tunathibitisha malipo. Mazungumzo yataongezwa benki ikithibitisha.",
   "nav.games": "Michezo",
   "games.meSub": "Hisabati kwa kucheza",
   "games.intro": "Cheza na ujifunze: michezo {n} ya hisabati, fizikia, kemia, biolojia na mengine. Ugumu unajirekebisha kwako.",

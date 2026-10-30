@@ -186,7 +186,9 @@ export function mountAccounts(app, store, opts = {}) {
   }
   // Dokupljena poraba AI, vezana na račun (server/placila/krediti.js).
   const credits = new Credits(db);
-  aiUsage.configure({ weightOf: shareWeightFor, ownerOf, credits });
+  // Brezplačni profil nad mejo paketa: s kreditom nadaljuje, strošek gre iz kredita (server/usage.js chargeCredit).
+  const freeOver = (studentId) => !premiumFor(studentId) && !!freeBudgetReason(studentId);
+  aiUsage.configure({ weightOf: shareWeightFor, ownerOf, credits, freeOver });
 
   // Interaktivni del lekcije: Osebno za vse teme, šolska licenca za svoje predmete in razrede.
   const lessonInteractive = (studentId, topicId) => lessonOpen(rightsFor(studentId), topicId);
@@ -1327,6 +1329,6 @@ export function mountAccounts(app, store, opts = {}) {
 
   // Za mobilno aplikacijo (server/mobile): prijava z Apple, nakupi v trgovinah, obvestila.
   const mobile = { db, sessions, getParent, parentByEmail, publicParent, accountView, createParent, checkAge, childIds, children, accessOf, signupThrottle, addReauth: (fn) => reauthHooks.push(fn) };
-  return { credits, shareWeightFor, ownerOf, sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, offersFor, rightsFor, lessonInteractive, ladderFor, schools, guests, billing, mobile };
+  return { credits, shareWeightFor, ownerOf, freeOver, sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, offersFor, rightsFor, lessonInteractive, ladderFor, schools, guests, billing, mobile };
 }
 

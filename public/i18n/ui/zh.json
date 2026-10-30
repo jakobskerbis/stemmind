@@ -1116,15 +1116,28 @@
   "meter.add": "添加",
   "meter.budgetSaved": "预算已更新。",
   "meter.budgetHint": "Evklid 会在上限前 {reserve} % 停止，绝不超出预算。免费套餐不升级。",
-  "credit.title": "AI 导师额外用量",
-  "credit.text": "每个档案每月都会获得共享 AI 用量中的一份，付费套餐的份额更大。用完后，你可以在这里为本账户的所有档案购买额外用量。",
-  "credit.balance": "剩余额外用量：{usd} $",
-  "credit.pack": "{price} → {usd} $ AI 用量",
-  "credit.note": "付款的 {pct} % 转为 AI 用量，其余用于税费、支付手续费和 Evklid 的开发。额外用量不会过期。",
-  "credit.minor": "额外用量由成年账户持有人（家长或监护人）支付。",
+  "credit.title": "与导师的额外对话",
+  "credit.text": "每个档案每月都会获得与 AI 导师对话的一份额度，付费套餐的更多。用完后，你可以在这里为本账户的所有档案购买额外对话。",
+  "credit.balance": {
+    "one": "剩余约 {n} 次已购对话",
+    "other": "剩余约 {n} 次已购对话"
+  },
+  "credit.pack": {
+    "one": "{price} → 与导师对话约 {n} 次",
+    "other": "{price} → 与导师对话约 {n} 次"
+  },
+  "credit.note": "对话次数为估算：根据回答模型的能力，你可能获得更多。已购对话不会过期，适用于本账户的所有档案。",
+  "credit.minor": "额外对话由成年账户持有人（家长或监护人）支付。",
   "credit.off": "服务器尚未设置付款。",
-  "credit.paid": "付款成功。额外 AI 用量已到账。",
-  "credit.pending": "我们仍在核实付款。银行确认后用量即到账。",
+  "credit.custom": "其他金额：",
+  "credit.customLabel": "金额（欧元）",
+  "credit.customEst": {
+    "one": "与导师对话约 {n} 次",
+    "other": "与导师对话约 {n} 次"
+  },
+  "credit.customMin": "最低金额为 {min}。",
+  "credit.paid": "付款成功。额外对话已到账。",
+  "credit.pending": "我们仍在核实付款。银行确认后对话即到账。",
   "nav.games": "游戏",
   "games.meSub": "在游戏中学数学",
   "games.intro": "边玩边学：{n} 个数学、物理、化学、生物等科目的游戏。难度会随你调整。",

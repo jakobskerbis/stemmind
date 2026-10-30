@@ -123,7 +123,39 @@ test("admin sets the monthly budget and adds bought credit; the tutor upgrades w
     const sum = (await call("/api/usage")).body;
     assert.equal(sum.budget.level, 3);
     assert.ok(sum.by_model.some((m) => m.kind === "boost"));
+
+    // Dnevna meja Opusa dosežena: opomba »hitrejši model« drži, proračun odgovora ne nadgradi.
+    process.env.EVKLID_DAILY_DEEP = "1";
+    store.db.prepare("INSERT INTO usage (student_id, model, kind, cost_usd) VALUES (?, ?, 'chat', 0)").run(s.id, modeParams("deep").model);
+    await call(`/api/conversations/${c.id}/messages`, { method: "POST", body: { text: "Še enkrat.", deep: true } });
+    await call(`/api/conversations/${c.id}/messages`, { method: "POST", body: { text: "Še enkrat.", deep: true } });
+    assert.equal(seen.at(-1).mode, "think");
   } finally {
+    delete process.env.EVKLID_DAILY_DEEP;
     server.close();
   }
+});
+
+test("free plan over its own cap with bought credit: the whole cost comes from credit, also without a budget", () => {
+  const { u, credits, student } = setup();
+  const free = student("Brezplačni", 3);
+  let over = false;
+  u.configure({ ownerOf: () => 3, credits, freeOver: () => over });
+  assert.ok(credits.activate(credits.create(3, CREDIT_PACKS.find((p) => p.id === "k10")), "pi_2"));
+  assert.equal(u.budget().cap, 0, "brez proračuna");
+  u.log(free, "claude-haiku-5-5", { input_tokens: 1_000_000, output_tokens: 0 }); // 0,10 $, pod mejo
+  assert.equal(credits.balance(3), 5.74, "pod mejo brezplačnega paketa kredit ostane");
+  over = true;
+  u.log(free, "claude-haiku-5-5", { input_tokens: 1_000_000, output_tokens: 0 });
+  assert.ok(Math.abs(credits.balance(3) - 5.64) < 1e-6, "nad mejo gre ves strošek iz kredita");
+});
+
+test("any amount from 5 € can be bought, without an upper limit beyond Stripe's per-payment maximum", async () => {
+  const { customPack, conversationsFor, creditUsdFor } = await import("../server/placila/krediti.js");
+  assert.equal(customPack(4.99), null);
+  assert.equal(customPack("abc"), null);
+  assert.deepEqual(customPack(37.5), { id: "custom", amount: 3750, currency: "EUR" });
+  assert.equal(customPack(250000).amount, 25_000_000);
+  assert.equal(customPack(2_000_000), null, "Stripe ne sprejme več kot 999.999,99 € na plačilo");
+  assert.ok(conversationsFor(creditUsdFor(100_000)) > conversationsFor(creditUsdFor(1000)) * 90);
 });

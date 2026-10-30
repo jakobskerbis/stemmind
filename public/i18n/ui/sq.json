@@ -1122,15 +1122,28 @@
   "meter.add": "Shto",
   "meter.budgetSaved": "Buxheti u përditësua.",
   "meter.budgetHint": "Evklid ndalon {reserve} % para kufirit që të mos e kalojë kurrë. Plani falas nuk merr përmirësim.",
-  "credit.title": "Përdorim shtesë i tutorit AI",
-  "credit.text": "Çdo profil merr çdo muaj pjesën e vet të përdorimit të përbashkët të AI, paketat me pagesë një më të madhe. Kur mbaron, këtu mund të blini përdorim shtesë për të gjitha profilet e kësaj llogarie.",
-  "credit.balance": "Përdorimi shtesë i mbetur: {usd} $",
-  "credit.pack": "{price} → {usd} $ përdorim AI",
-  "credit.note": "{pct} % e pagesës bëhet përdorim AI, pjesa tjetër mbulon TVSH-në, tarifat e pagesës dhe zhvillimin e Evklid. Përdorimi shtesë nuk skadon.",
-  "credit.minor": "Përdorimin shtesë e paguan një mbajtës i rritur i llogarisë (prind ose kujdestar).",
+  "credit.title": "Biseda shtesë me tutorin",
+  "credit.text": "Çdo profil merr çdo muaj pjesën e vet të bisedave me tutorin AI, paketat me pagesë një më të madhe. Kur mbaron, këtu mund të blini biseda shtesë për të gjitha profilet e kësaj llogarie.",
+  "credit.balance": {
+    "one": "Ka mbetur rreth {n} bisedë e blerë",
+    "other": "Kanë mbetur rreth {n} biseda të blera"
+  },
+  "credit.pack": {
+    "one": "{price} → rreth {n} bisedë me tutorin",
+    "other": "{price} → rreth {n} biseda me tutorin"
+  },
+  "credit.note": "Numri i bisedave është një vlerësim: në varësi të fuqisë së modelit që përgjigjet, mund të marrësh edhe më shumë. Bisedat e blera nuk skadojnë dhe vlejnë për të gjitha profilet e kësaj llogarie.",
+  "credit.minor": "Bisedat shtesë i paguan një mbajtës i rritur i llogarisë (prind ose kujdestar).",
   "credit.off": "Pagesat ende nuk janë konfiguruar në server.",
-  "credit.paid": "Pagesa u krye. Përdorimi shtesë i AI u shtua.",
-  "credit.pending": "Po e kontrollojmë ende pagesën. Përdorimi shtohet kur banka ta konfirmojë.",
+  "credit.custom": "Shumë tjetër:",
+  "credit.customLabel": "Shuma në euro",
+  "credit.customEst": {
+    "one": "rreth {n} bisedë me tutorin",
+    "other": "rreth {n} biseda me tutorin"
+  },
+  "credit.customMin": "Shuma minimale është {min}.",
+  "credit.paid": "Pagesa u krye. Bisedat shtesë u shtuan.",
+  "credit.pending": "Po e kontrollojmë ende pagesën. Bisedat shtohen kur banka ta konfirmojë.",
   "nav.games": "Lojëra",
   "games.meSub": "Matematikë me lojë",
   "games.intro": "Luaj dhe mëso: {n} lojëra për matematikë, fizikë, kimi, biologji e më shumë. Vështirësia përshtatet me ty.",

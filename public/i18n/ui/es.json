@@ -1122,15 +1122,28 @@
   "meter.add": "Añadir",
   "meter.budgetSaved": "Presupuesto actualizado.",
   "meter.budgetHint": "Evklid se detiene un {reserve} % antes del límite para no superarlo nunca. El plan gratuito no recibe mejora.",
-  "credit.title": "Uso adicional del tutor de IA",
-  "credit.text": "Cada perfil recibe cada mes su parte del uso compartido de IA; los planes de pago, una mayor. Cuando se agota, aquí puedes comprar uso adicional para todos los perfiles de esta cuenta.",
-  "credit.balance": "Uso adicional restante: {usd} $",
-  "credit.pack": "{price} → {usd} $ de uso de IA",
-  "credit.note": "El {pct} % del pago se convierte en uso de IA; el resto cubre el IVA, las comisiones de pago y el desarrollo de Evklid. El uso adicional no caduca.",
-  "credit.minor": "El uso adicional lo paga un titular adulto de la cuenta (padre, madre o tutor).",
+  "credit.title": "Conversaciones extra con el tutor",
+  "credit.text": "Cada perfil recibe cada mes su parte de conversaciones con el tutor de IA; los planes de pago, una mayor. Cuando se agota, aquí puedes comprar conversaciones extra para todos los perfiles de esta cuenta.",
+  "credit.balance": {
+    "one": "Queda aproximadamente {n} conversación comprada",
+    "other": "Quedan aproximadamente {n} conversaciones compradas"
+  },
+  "credit.pack": {
+    "one": "{price} → aproximadamente {n} conversación con el tutor",
+    "other": "{price} → aproximadamente {n} conversaciones con el tutor"
+  },
+  "credit.note": "El número de conversaciones es una estimación: según la potencia del modelo que responde, puedes obtener incluso más. Las conversaciones compradas no caducan y sirven para todos los perfiles de esta cuenta.",
+  "credit.minor": "Las conversaciones extra las paga un titular adulto de la cuenta (padre, madre o tutor).",
   "credit.off": "Los pagos aún no están configurados en el servidor.",
-  "credit.paid": "Pago realizado. Se ha añadido el uso adicional de IA.",
-  "credit.pending": "Seguimos comprobando el pago. El uso se añade cuando el banco lo confirme.",
+  "credit.custom": "Otro importe:",
+  "credit.customLabel": "Importe en euros",
+  "credit.customEst": {
+    "one": "aproximadamente {n} conversación con el tutor",
+    "other": "aproximadamente {n} conversaciones con el tutor"
+  },
+  "credit.customMin": "El importe mínimo es {min}.",
+  "credit.paid": "Pago realizado. Se han añadido las conversaciones extra.",
+  "credit.pending": "Seguimos comprobando el pago. Las conversaciones se añaden cuando el banco lo confirme.",
   "nav.games": "Juegos",
   "games.meSub": "Matemáticas jugando",
   "games.intro": "Juega y aprende: {n} juegos de matemáticas, física, química, biología y más. La dificultad se adapta a ti.",

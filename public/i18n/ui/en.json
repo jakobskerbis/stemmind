@@ -1122,15 +1122,28 @@
   "meter.add": "Add",
   "meter.budgetSaved": "Budget updated.",
   "meter.budgetHint": "Evklid stops {reserve} % before the limit so it never goes over. The free plan gets no upgrade.",
-  "credit.title": "Extra AI tutor usage",
-  "credit.text": "Each profile gets its own share of the shared AI usage every month, paid plans a larger one. When it is used up, you can buy extra usage here for all profiles on this account.",
-  "credit.balance": "Remaining extra usage: {usd} $",
-  "credit.pack": "{price} → {usd} $ of AI usage",
-  "credit.note": "{pct} % of the payment becomes AI usage, the rest covers VAT, payment fees and Evklid's development. Extra usage does not expire.",
-  "credit.minor": "Extra usage is paid by an adult account holder (parent or guardian).",
+  "credit.title": "Extra conversations with the tutor",
+  "credit.text": "Each profile gets its own share of conversations with the AI tutor every month, paid plans a larger one. When it is used up, you can buy extra conversations here for all profiles on this account.",
+  "credit.balance": {
+    "one": "About {n} bought conversation left",
+    "other": "About {n} bought conversations left"
+  },
+  "credit.pack": {
+    "one": "{price} → about {n} conversation with the tutor",
+    "other": "{price} → about {n} conversations with the tutor"
+  },
+  "credit.note": "The number of conversations is an estimate: depending on the strength of the model that answers, you may get even more. Bought conversations do not expire and work for all profiles on this account.",
+  "credit.minor": "Extra conversations are paid for by an adult account holder (parent or guardian).",
   "credit.off": "Payments are not set up on the server yet.",
-  "credit.paid": "Payment successful. Extra AI usage has been added.",
-  "credit.pending": "We are still checking the payment. Usage is added once the bank confirms it.",
+  "credit.custom": "Other amount:",
+  "credit.customLabel": "Amount in euros",
+  "credit.customEst": {
+    "one": "about {n} conversation with the tutor",
+    "other": "about {n} conversations with the tutor"
+  },
+  "credit.customMin": "The minimum amount is {min}.",
+  "credit.paid": "Payment successful. The extra conversations have been added.",
+  "credit.pending": "We are still checking the payment. The conversations are added once the bank confirms it.",
   "nav.games": "Games",
   "games.meSub": "Maths through play",
   "games.intro": "Play and learn: {n} games for maths, physics, chemistry, biology and more. The difficulty adapts to you.",

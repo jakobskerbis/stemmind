@@ -1116,15 +1116,28 @@
   "meter.add": "加入",
   "meter.budgetSaved": "預算已更新。",
   "meter.budgetHint": "Evklid 會在上限前 {reserve} % 停止，絕不超出預算。免費方案不升級。",
-  "credit.title": "AI 導師額外用量",
-  "credit.text": "每個檔案每月都會獲得共享 AI 用量中的一份，付費方案的份額更大。用完後，你可以在這裡為本帳戶的所有檔案購買額外用量。",
-  "credit.balance": "剩餘額外用量：{usd} $",
-  "credit.pack": "{price} → {usd} $ AI 用量",
-  "credit.note": "付款的 {pct} % 轉為 AI 用量，其餘用於稅費、付款手續費和 Evklid 的開發。額外用量不會過期。",
-  "credit.minor": "額外用量由成年帳戶持有人（家長或監護人）支付。",
+  "credit.title": "與導師的額外對話",
+  "credit.text": "每個檔案每月都會獲得與 AI 導師對話的一份額度，付費方案的更多。用完後，你可以在這裡為本帳戶的所有檔案購買額外對話。",
+  "credit.balance": {
+    "one": "剩餘約 {n} 次已購對話",
+    "other": "剩餘約 {n} 次已購對話"
+  },
+  "credit.pack": {
+    "one": "{price} → 與導師對話約 {n} 次",
+    "other": "{price} → 與導師對話約 {n} 次"
+  },
+  "credit.note": "對話次數為估算：依回答模型的能力，你可能獲得更多。已購對話不會過期，適用於本帳戶的所有檔案。",
+  "credit.minor": "額外對話由成年帳戶持有人（家長或監護人）支付。",
   "credit.off": "伺服器尚未設定付款。",
-  "credit.paid": "付款成功。額外 AI 用量已入帳。",
-  "credit.pending": "我們仍在確認付款。銀行確認後用量即入帳。",
+  "credit.custom": "其他金額：",
+  "credit.customLabel": "金額（歐元）",
+  "credit.customEst": {
+    "one": "與導師對話約 {n} 次",
+    "other": "與導師對話約 {n} 次"
+  },
+  "credit.customMin": "最低金額為 {min}。",
+  "credit.paid": "付款成功。額外對話已入帳。",
+  "credit.pending": "我們仍在確認付款。銀行確認後對話即入帳。",
   "nav.games": "遊戲",
   "games.meSub": "在遊戲中學數學",
   "games.intro": "邊玩邊學：{n} 個數學、物理、化學、生物等科目的遊戲。難度會隨你調整。",
