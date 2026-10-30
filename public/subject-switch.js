@@ -76,6 +76,8 @@ export async function mountSubjectSwitch(box, { onPicked } = {}) {
       onPicked?.(item);
     } finally {
       list.querySelectorAll(".subj-sw-opt").forEach((o) => (o.disabled = false));
+      // Onemogočen gumb izgubi fokus: ob napaki ga vrnemo, da tipke (Esc, puščice) spet delujejo v meniju.
+      if (b.isConnected && (!document.activeElement || document.activeElement === document.body)) b.focus({ preventScroll: true });
     }
   });
 }
