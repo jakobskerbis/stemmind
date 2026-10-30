@@ -23,6 +23,7 @@ jobs:
             scripts/render-objava.js
             server/brand.js
             brand.json
+            package.json
           sparse-checkout-cone-mode: false
       - uses: actions/setup-node@v4
         with:

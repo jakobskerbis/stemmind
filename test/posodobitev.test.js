@@ -154,9 +154,13 @@ test("Render: objava, ko je strežnik miren, med uporabo največ 3 ure čakanja,
   const now = Date.now();
   assert.equal(decide({ stanje: miren, mainSha: sha, cakaMin: 200, zadnja: { sha, at: now - ura }, now }).objavi, false);
   assert.equal(decide({ stanje: miren, mainSha: sha, cakaMin: 200, zadnja: { sha, at: now - 4 * ura }, now }).objavi, true);
-  assert.equal(decide({ stanje: miren, mainSha: sha, cakaMin: 5, zadnja: { sha: "drugi", at: now }, now }).objavi, true);
-  const c = (date, parents = 1) => ({ commit: { committer: { date } }, parents: Array(parents).fill({}) });
-  assert.equal(pendingSince([c("2026-10-30T01:00:00Z"), c("2026-10-30T08:00:00Z", 2), c("2026-10-30T09:00:00Z", 2)]), Date.parse("2026-10-30T08:00:00Z"));
-  assert.equal(pendingSince([c("2026-10-30T01:00:00Z"), c("2026-10-30T07:00:00Z")]), Date.parse("2026-10-30T07:00:00Z"));
+  assert.equal(decide({ stanje: miren, mainSha: sha, cakaMin: 5, zadnja: { sha: "drugi", at: now - 2 * ura }, now }).objavi, true);
+  assert.equal(decide({ stanje: miren, mainSha: sha, cakaMin: 5, zadnja: { sha: "drugi", at: now - 20 * 60000 }, now }).objavi, false);
+  assert.equal(decide({ stanje: null, mainSha: sha, cakaMin: 61, zadnja: { sha: "drugi", at: now - 20 * 60000 }, now }).objavi, false);
+  const c = (sha, date, ...parents) => ({ sha, commit: { committer: { date } }, parents: parents.map((p) => ({ sha: p })) });
+  // m1, m2: združitvi v main; b1 (star commit v veji), bm (»Merge main« v veji, star datum) se ne štejeta.
+  const vrsta = [c("b1", "2026-10-30T01:00:00Z", "x"), c("bm", "2026-10-30T02:00:00Z", "b1", "x"), c("m1", "2026-10-30T08:00:00Z", "x", "bm"), c("s1", "2026-10-30T08:30:00Z", "m1"), c("m2", "2026-10-30T09:00:00Z", "s1", "y")];
+  assert.equal(pendingSince(vrsta, "m2"), Date.parse("2026-10-30T08:00:00Z"));
+  assert.equal(pendingSince([c("a", "2026-10-30T07:00:00Z", "x")], "a"), Date.parse("2026-10-30T07:00:00Z"));
   assert.equal(pendingSince([]), null);
 });

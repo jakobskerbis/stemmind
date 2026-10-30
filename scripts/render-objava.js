@@ -17,22 +17,30 @@ export function decide({ stanje, mainSha, cakaMin, rocno = false, zadnja = null,
   if (rocno) return { objavi: true, zakaj: "ročni zagon" };
   // Ista različica je bila sprožena, a ne teče: objava še poteka ali ni uspela. Ne ponavljaj vsakih 15 min.
   if (zadnja?.sha === mainSha && now - zadnja.at < NAJDLJE_MIN * 60000) return { objavi: false, zakaj: "ta različica je že bila sprožena (objava poteka ali ni uspela)" };
-  if (!stanje) return cakaMin >= MED_OBJAVAMA_MIN ? { objavi: true, zakaj: "strežnik ni dosegljiv, sprememba čaka že dolgo" } : { objavi: false, zakaj: "strežnik ni dosegljiv (morda se ravno objavlja)" };
+  // Sprožena pred kratkim (druga različica): objava morda še poteka ali ni uspela – strežnik je še star, gorMs velik.
+  const sprozenaMin = zadnja?.at ? (now - zadnja.at) / 60000 : Infinity;
+  if (!stanje) return cakaMin >= MED_OBJAVAMA_MIN && sprozenaMin >= MED_OBJAVAMA_MIN ? { objavi: true, zakaj: "strežnik ni dosegljiv, sprememba čaka že dolgo" } : { objavi: false, zakaj: "strežnik ni dosegljiv (morda se ravno objavlja)" };
   if (cakaMin >= NAJDLJE_MIN) return { objavi: true, zakaj: `sprememba čaka že ${Math.round(cakaMin)} min` };
-  const gorMin = (stanje.gorMs ?? Infinity) / 60000;
+  const gorMin = Math.min((stanje.gorMs ?? Infinity) / 60000, sprozenaMin);
   if (gorMin < MED_OBJAVAMA_MIN) return { objavi: false, zakaj: `zadnja objava pred ${Math.round(gorMin)} min` };
   const miren = !stanje.aktivni && (stanje.mirujeMs == null || stanje.mirujeMs >= MIRNO_MIN * 60000);
   return miren ? { objavi: true, zakaj: "strežnik je miren" } : { objavi: false, zakaj: "nekdo se ravno uči, počakam" };
 }
 
-// Od kdaj je v main sprememba, ki je na strežniku še ni. Commiti iz vej PR imajo stare datume,
-// zato štejejo združitve (merge commit, datum = trenutek združitve); brez njih zadnji commit.
-export function pendingSince(commits) {
+// Od kdaj je v main sprememba, ki je na strežniku še ni. Commiti iz vej PR (tudi »Merge main« v veji)
+// imajo stare datume, zato šteje le prva-starševska veriga main od head: združitve in squash commiti,
+// ki jih ustvari GitHub z datumom združitve.
+export function pendingSince(commits, head = commits[commits.length - 1]?.sha) {
   const date = (c) => Date.parse(c?.commit?.committer?.date || "");
-  const merges = commits.filter((c) => (c.parents?.length || 0) > 1).map(date).filter(Number.isFinite);
-  if (merges.length) return Math.min(...merges);
-  const last = date(commits[commits.length - 1]);
-  return Number.isFinite(last) ? last : null;
+  const bySha = new Map(commits.filter((c) => c?.sha).map((c) => [c.sha, c]));
+  let t = null;
+  const seen = new Set();
+  for (let c = bySha.get(head) || commits[commits.length - 1]; c && !seen.has(c); c = bySha.get(c.parents?.[0]?.sha)) {
+    seen.add(c);
+    const d = date(c);
+    if (Number.isFinite(d) && (t == null || d < t)) t = d;
+  }
+  return t;
 }
 
 async function main() {
@@ -54,7 +62,7 @@ async function main() {
   let cakaMin = 0;
   try {
     const cmp = stanje?.razlicica ? await gh(`compare/${stanje.razlicica}...main`) : { commits: [await gh("commits/main")] };
-    const t = pendingSince(cmp.commits || []);
+    const t = pendingSince(cmp.commits || [], mainSha);
     if (t) cakaMin = (Date.now() - t) / 60000;
   } catch {}
   const fs = await import("node:fs");
