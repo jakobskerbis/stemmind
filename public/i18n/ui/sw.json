@@ -1681,7 +1681,7 @@
   "scan.s.allXIneq": "Kutolingana ni kweli kwa kila thamani ya {v}.",
   "scan.s.noXIneq": "Kutolingana hakuna suluhisho.",
   "scan.s.check": "Uhakiki: tunaweka suluhisho kwenye swali la awali.",
-  "scan.w.check": "Upande wa kushoto (L) na upande wa kulia (D) vinalingana, kwa hiyo suluhisho ni sahihi. Ukitatua kwenye daftari, fanya uhakiki mwenyewe pia.",
+  "scan.w.check": "Upande wa kushoto ({l}) na upande wa kulia ({r}) vinalingana, kwa hiyo suluhisho ni sahihi. Ukitatua kwenye daftari, fanya uhakiki mwenyewe pia.",
   "scan.w.checkSys": "Tunaweka suluhisho kwenye milinganyo yote miwili ya awali. Yote miwili ni kweli, kwa hiyo suluhisho ni sahihi.",
   "scan.s.interval": "Tunaandika suluhisho kama muda.",
   "scan.w.interval": "Mabano ya duara yanamaanisha kwamba ncha si suluhisho (< au >), mabano ya mraba yanamaanisha ni suluhisho (≤ au ≥). Kwenye ∞ mabano huwa ya duara kila mara.",
@@ -1833,5 +1833,7 @@
   "scan.s.reject": "{v} = {r} si jibu, kwa sababu kiasi kingekuwa 0.",
   "scan.w.reject": "Thamani ambayo ingetufanya tugawanye kwa 0 haimo kwenye kikoa, kwa hiyo tunaiondoa.",
   "scan.s.numeric": "Hakuna mizizi ya namba wiano, kwa hiyo tunatafuta mizizi kwa njia ya kihesabu (kwa kugawanya nusu).",
-  "scan.w.numeric": "Kugawanya nusu: muda ambao polinomia hubadilisha alama tunaugawa nusu mara kwa mara hadi uwe mdogo vya kutosha. Mizizi unaiona pia kwenye grafu."
+  "scan.w.numeric": "Kugawanya nusu: muda ambao polinomia hubadilisha alama tunaugawa nusu mara kwa mara hadi uwe mdogo vya kutosha. Mizizi unaiona pia kwenye grafu.",
+  "scan.sideL": "Kushoto",
+  "scan.sideR": "Kulia"
 }

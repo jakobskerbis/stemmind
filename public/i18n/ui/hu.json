@@ -1681,7 +1681,7 @@
   "scan.s.allXIneq": "Az egyenlőtlenség {v} minden értékére igaz.",
   "scan.s.noXIneq": "Az egyenlőtlenségnek nincs megoldása.",
   "scan.s.check": "Ellenőrzés: a megoldást behelyettesítjük az eredeti feladatba.",
-  "scan.w.check": "A bal oldal (L) és a jobb oldal (D) egyenlő, tehát a megoldás helyes. Az ellenőrzést te is végezd el, amikor a füzetedben oldasz meg feladatot.",
+  "scan.w.check": "A bal oldal ({l}) és a jobb oldal ({r}) egyenlő, tehát a megoldás helyes. Az ellenőrzést te is végezd el, amikor a füzetedben oldasz meg feladatot.",
   "scan.w.checkSys": "A megoldást mindkét eredeti egyenletbe behelyettesítjük. Mindkettő teljesül, tehát a megoldás helyes.",
   "scan.s.interval": "A megoldást intervallummal írjuk fel.",
   "scan.w.interval": "A kerek zárójel azt jelenti, hogy a végpont nem megoldás (< vagy >), a szögletes, hogy megoldás (≤ vagy ≥). A ∞ mellett mindig kerek zárójel áll.",
@@ -1833,5 +1833,7 @@
   "scan.s.reject": "{v} = {r} nem megoldás, mert egy nevező 0 lenne.",
   "scan.w.reject": "Az az érték, amelynél 0-val osztanánk, nincs benne az értelmezési tartományban, ezért kizárjuk.",
   "scan.s.numeric": "Nincs racionális gyök, ezért a gyököket numerikusan keressük (intervallumfelezéssel).",
-  "scan.w.numeric": "Intervallumfelezés: azt az intervallumot, amelyen a polinom előjelet vált, addig felezzük, amíg elég kicsi nem lesz. A gyököket a grafikonon is látod."
+  "scan.w.numeric": "Intervallumfelezés: azt az intervallumot, amelyen a polinom előjelet vált, addig felezzük, amíg elég kicsi nem lesz. A gyököket a grafikonon is látod.",
+  "scan.sideL": "B",
+  "scan.sideR": "J"
 }

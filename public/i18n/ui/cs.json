@@ -1697,7 +1697,7 @@
   "scan.s.allXIneq": "Nerovnice platí pro každé {v}.",
   "scan.s.noXIneq": "Nerovnice nemá řešení.",
   "scan.s.check": "Zkouška: řešení dosadíme do původní úlohy.",
-  "scan.w.check": "Levá strana (L) a pravá strana (D) se rovnají, takže řešení je správné. Zkoušku si udělej i sám, když řešíš do sešitu.",
+  "scan.w.check": "Levá strana ({l}) a pravá strana ({r}) se rovnají, takže řešení je správné. Zkoušku si udělej i sám, když řešíš do sešitu.",
   "scan.w.checkSys": "Řešení dosadíme do obou původních rovnic. Obě platí, takže řešení je správné.",
   "scan.s.interval": "Řešení zapíšeme intervalem.",
   "scan.w.interval": "Kulatá závorka znamená, že krajní bod není řešením (< nebo >), hranatá, že je (≤ nebo ≥). U ∞ je závorka vždy kulatá.",
@@ -1849,5 +1849,7 @@
   "scan.s.reject": "{v} = {r} není řešení, protože by jmenovatel byl 0.",
   "scan.w.reject": "Hodnota, při které bychom dělili nulou, nepatří do definičního oboru, proto ji vyřadíme.",
   "scan.s.numeric": "Racionální kořeny neexistují, proto kořeny hledáme numericky (metodou půlení intervalu).",
-  "scan.w.numeric": "Půlení intervalu: interval, na kterém mnohočlen mění znaménko, půlíme, dokud není dost malý. Kořeny vidíš i v grafu."
+  "scan.w.numeric": "Půlení intervalu: interval, na kterém mnohočlen mění znaménko, půlíme, dokud není dost malý. Kořeny vidíš i v grafu.",
+  "scan.sideL": "L",
+  "scan.sideR": "P"
 }

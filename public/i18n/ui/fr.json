@@ -1681,7 +1681,7 @@
   "scan.s.allXIneq": "L'inéquation est vraie pour toute valeur de {v}.",
   "scan.s.noXIneq": "L'inéquation n'a pas de solution.",
   "scan.s.check": "Vérification : on remplace la solution dans l'exercice de départ.",
-  "scan.w.check": "Le membre de gauche (L) et le membre de droite (D) sont égaux, donc la solution est juste. Fais aussi la vérification toi-même quand tu résous dans ton cahier.",
+  "scan.w.check": "Le membre de gauche ({l}) et le membre de droite ({r}) sont égaux, donc la solution est juste. Fais aussi la vérification toi-même quand tu résous dans ton cahier.",
   "scan.w.checkSys": "On remplace la solution dans les deux équations de départ. Les deux sont vérifiées, donc la solution est juste.",
   "scan.s.interval": "On écrit la solution sous forme d'intervalle.",
   "scan.w.interval": "Une parenthèse signifie que la borne n'est pas solution (< ou >), un crochet qu'elle l'est (≤ ou ≥). Du côté de ∞, on met toujours une parenthèse.",
@@ -1833,5 +1833,7 @@
   "scan.s.reject": "{v} = {r} n'est pas une solution, car un dénominateur serait égal à 0.",
   "scan.w.reject": "Une valeur qui ferait diviser par 0 n'appartient pas au domaine de définition, on l'élimine donc.",
   "scan.s.numeric": "Il n'y a pas de racine rationnelle, on cherche donc les racines numériquement (par dichotomie).",
-  "scan.w.numeric": "Dichotomie : on coupe en deux un intervalle sur lequel le polynôme change de signe, jusqu'à ce qu'il soit assez petit. Tu vois aussi les racines sur le graphique."
+  "scan.w.numeric": "Dichotomie : on coupe en deux un intervalle sur lequel le polynôme change de signe, jusqu'à ce qu'il soit assez petit. Tu vois aussi les racines sur le graphique.",
+  "scan.sideL": "G",
+  "scan.sideR": "D"
 }

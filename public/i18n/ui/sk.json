@@ -1697,7 +1697,7 @@
   "scan.s.allXIneq": "Nerovnica platí pre každé {v}.",
   "scan.s.noXIneq": "Nerovnica nemá riešenie.",
   "scan.s.check": "Skúška: riešenie dosadíme do pôvodnej úlohy.",
-  "scan.w.check": "Ľavá strana (L) a pravá strana (D) sa rovnajú, takže riešenie je správne. Skúšku si urob aj sám, keď riešiš do zošita.",
+  "scan.w.check": "Ľavá strana ({l}) a pravá strana ({r}) sa rovnajú, takže riešenie je správne. Skúšku si urob aj sám, keď riešiš do zošita.",
   "scan.w.checkSys": "Riešenie dosadíme do oboch pôvodných rovníc. Obe platia, takže riešenie je správne.",
   "scan.s.interval": "Riešenie zapíšeme intervalom.",
   "scan.w.interval": "Okrúhla zátvorka znamená, že krajný bod nie je riešením (< alebo >), hranatá, že je (≤ alebo ≥). Pri ∞ je zátvorka vždy okrúhla.",
@@ -1849,5 +1849,7 @@
   "scan.s.reject": "{v} = {r} nie je riešenie, pretože menovateľ by bol 0.",
   "scan.w.reject": "Hodnota, pri ktorej by sme delili nulou, nepatrí do definičného oboru, preto ju vylúčime.",
   "scan.s.numeric": "Racionálne korene neexistujú, preto korene hľadáme numericky (metódou polenia intervalu).",
-  "scan.w.numeric": "Polenie intervalu: interval, na ktorom mnohočlen mení znamienko, delíme na polovicu, kým nie je dosť malý. Korene vidíš aj v grafe."
+  "scan.w.numeric": "Polenie intervalu: interval, na ktorom mnohočlen mení znamienko, delíme na polovicu, kým nie je dosť malý. Korene vidíš aj v grafe.",
+  "scan.sideL": "L",
+  "scan.sideR": "P"
 }

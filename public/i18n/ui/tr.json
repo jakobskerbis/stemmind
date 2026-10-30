@@ -1681,7 +1681,7 @@
   "scan.s.allXIneq": "Eşitsizlik her {v} değeri için sağlanır.",
   "scan.s.noXIneq": "Eşitsizliğin çözümü yok.",
   "scan.s.check": "Sağlama: çözümü ilk soruda yerine koyalım.",
-  "scan.w.check": "Sol (L) ve sağ (D) taraf birbirine eşit, yani çözüm doğru. Defterde çözerken sağlamayı sen de yap.",
+  "scan.w.check": "Sol ({l}) ve sağ ({r}) taraf birbirine eşit, yani çözüm doğru. Defterde çözerken sağlamayı sen de yap.",
   "scan.w.checkSys": "Çözümü iki ilk denklemde de yerine koyarız. İkisi de sağlandığı için çözüm doğrudur.",
   "scan.s.interval": "Çözümü aralık olarak yazalım.",
   "scan.w.interval": "Açık parantez uç noktanın çözüm olmadığını (< veya >), köşeli parantez çözüm olduğunu (≤ veya ≥) gösterir. ∞ yanında parantez her zaman açıktır.",
@@ -1833,5 +1833,7 @@
   "scan.s.reject": "{v} = {r} bir çözüm değildir, çünkü bir payda 0 olurdu.",
   "scan.w.reject": "0'a bölmemize yol açacak bir değer tanım kümesinde değildir, bu yüzden onu çıkarıyoruz.",
   "scan.s.numeric": "Rasyonel kök yok, bu yüzden kökleri sayısal olarak (ikiye bölme yöntemiyle) buluyoruz.",
-  "scan.w.numeric": "İkiye bölme: polinomun işaret değiştirdiği aralığı, yeterince küçülene kadar ikiye bölüyoruz. Kökleri grafikte de görebilirsin."
+  "scan.w.numeric": "İkiye bölme: polinomun işaret değiştirdiği aralığı, yeterince küçülene kadar ikiye bölüyoruz. Kökleri grafikte de görebilirsin.",
+  "scan.sideL": "Sol",
+  "scan.sideR": "Sağ"
 }

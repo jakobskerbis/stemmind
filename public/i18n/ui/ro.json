@@ -1689,7 +1689,7 @@
   "scan.s.allXIneq": "Inecuația este adevărată pentru orice valoare a lui {v}.",
   "scan.s.noXIneq": "Inecuația nu are soluție.",
   "scan.s.check": "Verificare: înlocuim soluția în exercițiul inițial.",
-  "scan.w.check": "Membrul stâng (L) și membrul drept (D) sunt egali, deci soluția este corectă. Fă și tu verificarea când rezolvi în caiet.",
+  "scan.w.check": "Membrul stâng ({l}) și membrul drept ({r}) sunt egali, deci soluția este corectă. Fă și tu verificarea când rezolvi în caiet.",
   "scan.w.checkSys": "Înlocuim soluția în ambele ecuații inițiale. Amândouă sunt adevărate, deci soluția este corectă.",
   "scan.s.interval": "Scriem soluția sub formă de interval.",
   "scan.w.interval": "Paranteza rotundă înseamnă că capătul nu este soluție (< sau >), paranteza dreaptă că este (≤ sau ≥). La ∞ paranteza este mereu rotundă.",
@@ -1841,5 +1841,7 @@
   "scan.s.reject": "{v} = {r} nu este soluție, pentru că un numitor ar fi 0.",
   "scan.w.reject": "O valoare pentru care am împărți la 0 nu aparține domeniului de definiție, așa că o eliminăm.",
   "scan.s.numeric": "Nu există rădăcini raționale, așa că găsim rădăcinile numeric (prin metoda bisecției).",
-  "scan.w.numeric": "Bisecția: înjumătățim un interval pe care polinomul își schimbă semnul până devine destul de mic. Rădăcinile le vezi și pe grafic."
+  "scan.w.numeric": "Bisecția: înjumătățim un interval pe care polinomul își schimbă semnul până devine destul de mic. Rădăcinile le vezi și pe grafic.",
+  "scan.sideL": "S",
+  "scan.sideR": "D"
 }

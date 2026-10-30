@@ -1689,7 +1689,7 @@
   "scan.s.allXIneq": "Nejednačina vrijedi za svako {v}.",
   "scan.s.noXIneq": "Nejednačina nema rješenja.",
   "scan.s.check": "Provjera: rješenje uvrštavamo u početni zadatak.",
-  "scan.w.check": "Lijeva (L) i desna (D) strana se poklapaju, pa je rješenje tačno. Provjeru uradi i sam kad rješavaš u svesci.",
+  "scan.w.check": "Lijeva ({l}) i desna ({r}) strana se poklapaju, pa je rješenje tačno. Provjeru uradi i sam kad rješavaš u svesci.",
   "scan.w.checkSys": "Rješenje uvrštavamo u obje početne jednačine. Obje vrijede, pa je rješenje tačno.",
   "scan.s.interval": "Rješenje zapisujemo intervalom.",
   "scan.w.interval": "Obla zagrada znači da kraj intervala nije rješenje (< ili >), uglasta da jeste (≤ ili ≥). Kod ∞ je zagrada uvijek obla.",
@@ -1841,5 +1841,7 @@
   "scan.s.reject": "{v} = {r} nije rješenje jer bi nazivnik bio 0.",
   "scan.w.reject": "Vrijednost pri kojoj bismo dijelili sa 0 nije u oblasti definisanosti, zato je odbacujemo.",
   "scan.s.numeric": "Racionalnih nula nema, zato nule tražimo numerički (metodom polovljenja intervala).",
-  "scan.w.numeric": "Polovljenje intervala: interval na kojem polinom mijenja znak dijelimo na pola dok ne bude dovoljno mali. Nule vidiš i na grafiku."
+  "scan.w.numeric": "Polovljenje intervala: interval na kojem polinom mijenja znak dijelimo na pola dok ne bude dovoljno mali. Nule vidiš i na grafiku.",
+  "scan.sideL": "L",
+  "scan.sideR": "D"
 }

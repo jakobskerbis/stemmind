@@ -1681,7 +1681,7 @@
   "scan.s.allXIneq": "A inequação é verdadeira para qualquer valor de {v}.",
   "scan.s.noXIneq": "A inequação não tem solução.",
   "scan.s.check": "Verificação: substituímos a solução no exercício original.",
-  "scan.w.check": "O primeiro membro (L) e o segundo membro (D) são iguais, por isso a solução está correta. Faz também a verificação quando resolves no caderno.",
+  "scan.w.check": "O primeiro membro ({l}) e o segundo membro ({r}) são iguais, por isso a solução está correta. Faz também a verificação quando resolves no caderno.",
   "scan.w.checkSys": "Substituímos a solução nas duas equações originais. Ambas são verdadeiras, por isso a solução está correta.",
   "scan.s.interval": "Escrevemos a solução na forma de intervalo.",
   "scan.w.interval": "O parêntese curvo indica que o extremo não é solução (< ou >), o parêntese reto indica que é (≤ ou ≥). Junto a ∞ o parêntese é sempre curvo.",
@@ -1833,5 +1833,7 @@
   "scan.s.reject": "{v} = {r} não é solução, porque um denominador seria 0.",
   "scan.w.reject": "Um valor que nos faria dividir por 0 não pertence ao domínio, por isso eliminamo-lo.",
   "scan.s.numeric": "Não há raízes racionais, por isso procuramos as raízes numericamente (pelo método da bissecção).",
-  "scan.w.numeric": "Bissecção: dividimos ao meio um intervalo em que o polinómio muda de sinal até ficar suficientemente pequeno. Também vês as raízes no gráfico."
+  "scan.w.numeric": "Bissecção: dividimos ao meio um intervalo em que o polinómio muda de sinal até ficar suficientemente pequeno. Também vês as raízes no gráfico.",
+  "scan.sideL": "E",
+  "scan.sideR": "D"
 }

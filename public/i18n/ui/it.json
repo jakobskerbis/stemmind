@@ -1681,7 +1681,7 @@
   "scan.s.allXIneq": "La disequazione è vera per ogni valore di {v}.",
   "scan.s.noXIneq": "La disequazione non ha soluzioni.",
   "scan.s.check": "Verifica: sostituiamo la soluzione nell'esercizio di partenza.",
-  "scan.w.check": "Il membro di sinistra (L) e quello di destra (D) coincidono, quindi la soluzione è corretta. Fai anche tu la verifica quando risolvi sul quaderno.",
+  "scan.w.check": "Il membro di sinistra ({l}) e quello di destra ({r}) coincidono, quindi la soluzione è corretta. Fai anche tu la verifica quando risolvi sul quaderno.",
   "scan.w.checkSys": "Sostituiamo la soluzione in entrambe le equazioni di partenza. Sono vere tutte e due, quindi la soluzione è corretta.",
   "scan.s.interval": "Scriviamo la soluzione come intervallo.",
   "scan.w.interval": "La parentesi tonda indica che l'estremo non è soluzione (< o >), quella quadra che lo è (≤ o ≥). Vicino a ∞ la parentesi è sempre tonda.",
@@ -1833,5 +1833,7 @@
   "scan.s.reject": "{v} = {r} non è una soluzione, perché un denominatore sarebbe 0.",
   "scan.w.reject": "Un valore per cui divideremmo per 0 non è nel dominio, quindi lo scartiamo.",
   "scan.s.numeric": "Non ci sono radici razionali, quindi cerchiamo le radici numericamente (con il metodo di bisezione).",
-  "scan.w.numeric": "Bisezione: dimezziamo un intervallo in cui il polinomio cambia segno finché non è abbastanza piccolo. Le radici si vedono anche nel grafico."
+  "scan.w.numeric": "Bisezione: dimezziamo un intervallo in cui il polinomio cambia segno finché non è abbastanza piccolo. Le radici si vedono anche nel grafico.",
+  "scan.sideL": "S",
+  "scan.sideR": "D"
 }

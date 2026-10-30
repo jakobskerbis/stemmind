@@ -392,7 +392,7 @@ function checkStep(sides, ops, v, sols, envOther = {}) {
       const parts = sides.map((x, i) => {
         const sub = tex(substitute(x, env));
         const val = vals[i].tex();
-        return `${i === 0 ? "L" : "D"} = ${sub === val ? val : `${sub} = ${val}`}`;
+        return `${i === 0 ? "\\sideL" : "\\sideR"} = ${sub === val ? val : `${sub} = ${val}`}`;
       });
       rows.push(`${v} = ${s.q.tex()}:\\quad ${parts.join(",\\quad ")}${holds ? "\\;\\checkmark" : ""}`);
     } else {
@@ -400,10 +400,10 @@ function checkStep(sides, ops, v, sols, envOther = {}) {
       const vals = sides.map((x) => valueNum(x, numEnv));
       const holds = Math.abs(vals[0] - vals[1]) < 1e-7 * Math.max(1, Math.abs(vals[0]));
       ok &&= holds;
-      rows.push(`${v} \\approx ${approxTex(s.num, 4)}:\\quad L \\approx ${approxTex(vals[0], 4)},\\quad D \\approx ${approxTex(vals[1], 4)}${holds ? "\\;\\checkmark" : ""}`);
+      rows.push(`${v} \\approx ${approxTex(s.num, 4)}:\\quad \\sideL \\approx ${approxTex(vals[0], 4)},\\quad \\sideR \\approx ${approxTex(vals[1], 4)}${holds ? "\\;\\checkmark" : ""}`);
     }
   }
-  return { ok, step: rows.length ? step(T("scan.s.check"), lines(rows), { why: T("scan.w.check") }) : null };
+  return { ok, step: rows.length ? step(T("scan.s.check"), lines(rows), { why: T("scan.w.check", { l: "\\sideL", r: "\\sideR" }) }) : null };
 }
 
 function relHolds(vals, ops) {
@@ -591,7 +591,7 @@ function quadraticMethods(a, b, c, v, opt = {}) {
       const lin = fs.map((s) => new P([{ m: { [v]: 1 }, c: new Q(s.q.d) }, { m: {}, c: new Q(-s.q.n) }]));
       const lead = a.div(new Q(fs[0].q.d * fs[1].q.d));
       const pre = lead.one ? "" : lead.tex();
-      st.push(step(T("scan.s.acMethod", { ac: String(A * C), b: String(B) }), `${v}_{1} + ${v}_{2} = -\\frac{b}{a} = ${b.neg().div(a).tex()},\\quad ${v}_{1} \\cdot ${v}_{2} = \\frac{c}{a} = ${c.div(a).tex()}`, { why: T("scan.w.vietaA") }));
+      st.push(step(T("scan.s.acMethod", { ac: String(A * C), b: String(B) }), lines([`${v}_{1} + ${v}_{2} = -\\frac{b}{a} = ${b.neg().div(a).tex()},\\quad ${v}_{1} \\cdot ${v}_{2} = \\frac{c}{a} = ${c.div(a).tex()}`, `\\Rightarrow\\; ${solsTex}`]), { why: T("scan.w.vietaA") }));
       st.push(step(T("scan.s.factored"), sols.length > 1 ? `${pre}\\left(${lin[0].tex()}\\right)\\left(${lin[1].tex()}\\right) = 0` : `${pre}\\left(${lin[0].tex()}\\right)^{2} = 0`, { why: T("scan.w.factored") }));
     }
     st.push(step(T("scan.s.zeroProduct"), solsTex, { why: T("scan.w.zeroProduct") }));

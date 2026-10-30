@@ -1681,7 +1681,7 @@
   "scan.s.allXIneq": "The inequality holds for every value of {v}.",
   "scan.s.noXIneq": "The inequality has no solution.",
   "scan.s.check": "Check: substitute the solution into the original problem.",
-  "scan.w.check": "The left side (L) and the right side (D) are equal, so the solution is correct. Do the check yourself too when you solve in your notebook.",
+  "scan.w.check": "The left side ({l}) and the right side ({r}) are equal, so the solution is correct. Do the check yourself too when you solve in your notebook.",
   "scan.w.checkSys": "Substitute the solution into both original equations. Both hold, so the solution is correct.",
   "scan.s.interval": "Write the solution in interval notation.",
   "scan.w.interval": "A round bracket means the endpoint is not a solution (< or >), a square bracket means it is (≤ or ≥). Next to ∞ the bracket is always round.",
@@ -1833,5 +1833,7 @@
   "scan.s.reject": "{v} = {r} is not a solution, because a denominator would be 0.",
   "scan.w.reject": "A value that would make us divide by 0 is not in the domain, so we discard it.",
   "scan.s.numeric": "There are no rational roots, so we find the roots numerically (by bisection).",
-  "scan.w.numeric": "Bisection: we keep halving an interval on which the polynomial changes sign until it is small enough. You can also see the roots on the graph."
+  "scan.w.numeric": "Bisection: we keep halving an interval on which the polynomial changes sign until it is small enough. You can also see the roots on the graph.",
+  "scan.sideL": "LHS",
+  "scan.sideR": "RHS"
 }

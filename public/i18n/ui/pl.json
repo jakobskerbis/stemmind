@@ -1697,7 +1697,7 @@
   "scan.s.allXIneq": "Nierówność jest spełniona dla każdej wartości {v}.",
   "scan.s.noXIneq": "Nierówność nie ma rozwiązań.",
   "scan.s.check": "Sprawdzenie: podstawiamy rozwiązanie do wyjściowego zadania.",
-  "scan.w.check": "Lewa strona (L) i prawa strona (D) są równe, więc rozwiązanie jest poprawne. Rób sprawdzenie też sam, gdy rozwiązujesz w zeszycie.",
+  "scan.w.check": "Lewa strona ({l}) i prawa strona ({r}) są równe, więc rozwiązanie jest poprawne. Rób sprawdzenie też sam, gdy rozwiązujesz w zeszycie.",
   "scan.w.checkSys": "Podstawiamy rozwiązanie do obu wyjściowych równań. Oba są spełnione, więc rozwiązanie jest poprawne.",
   "scan.s.interval": "Zapisujemy rozwiązanie w postaci przedziału.",
   "scan.w.interval": "Nawias okrągły oznacza, że koniec przedziału nie jest rozwiązaniem (< lub >), kwadratowy (ostry) – że jest (≤ lub ≥). Przy ∞ nawias jest zawsze okrągły.",
@@ -1849,5 +1849,7 @@
   "scan.s.reject": "{v} = {r} nie jest rozwiązaniem, bo mianownik byłby równy 0.",
   "scan.w.reject": "Wartość, przy której dzielilibyśmy przez 0, nie należy do dziedziny, więc ją odrzucamy.",
   "scan.s.numeric": "Nie ma pierwiastków wymiernych, więc pierwiastki szukamy numerycznie (metodą bisekcji).",
-  "scan.w.numeric": "Bisekcja: przedział, na którym wielomian zmienia znak, dzielimy na pół, aż będzie dość mały. Pierwiastki widzisz też na wykresie."
+  "scan.w.numeric": "Bisekcja: przedział, na którym wielomian zmienia znak, dzielimy na pół, aż będzie dość mały. Pierwiastki widzisz też na wykresie.",
+  "scan.sideL": "L",
+  "scan.sideR": "P"
 }

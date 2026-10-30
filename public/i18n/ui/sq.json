@@ -1681,7 +1681,7 @@
   "scan.s.allXIneq": "Mosbarazimi vlen për çdo vlerë të {v}.",
   "scan.s.noXIneq": "Mosbarazimi nuk ka zgjidhje.",
   "scan.s.check": "Prova: zgjidhjen e zëvendësojmë në ushtrimin fillestar.",
-  "scan.w.check": "Ana e majtë (L) dhe ana e djathtë (D) përputhen, prandaj zgjidhja është e saktë. Bëje provën edhe vetë kur zgjidh në fletore.",
+  "scan.w.check": "Ana e majtë ({l}) dhe ana e djathtë ({r}) përputhen, prandaj zgjidhja është e saktë. Bëje provën edhe vetë kur zgjidh në fletore.",
   "scan.w.checkSys": "Zgjidhjen e zëvendësojmë në të dy ekuacionet fillestare. Të dy vlejnë, prandaj zgjidhja është e saktë.",
   "scan.s.interval": "Zgjidhjen e shkruajmë me interval.",
   "scan.w.interval": "Kllapa e rrumbullakët tregon se skaji nuk është zgjidhje (< ose >), kllapa katrore se është (≤ ose ≥). Te ∞ kllapa është gjithmonë e rrumbullakët.",
@@ -1833,5 +1833,7 @@
   "scan.s.reject": "{v} = {r} nuk është zgjidhje, sepse emëruesi do të ishte 0.",
   "scan.w.reject": "Një vlerë për të cilën do të pjesëtonim me 0 nuk është në bashkësinë e përkufizimit, prandaj e përjashtojmë.",
   "scan.s.numeric": "Nuk ka rrënjë racionale, prandaj rrënjët i gjejmë numerikisht (me metodën e përgjysmimit).",
-  "scan.w.numeric": "Përgjysmimi: intervalin ku polinomi ndryshon shenjë e ndajmë përgjysmë derisa të jetë mjaft i vogël. Rrënjët i sheh edhe në grafik."
+  "scan.w.numeric": "Përgjysmimi: intervalin ku polinomi ndryshon shenjë e ndajmë përgjysmë derisa të jetë mjaft i vogël. Rrënjët i sheh edhe në grafik.",
+  "scan.sideL": "M",
+  "scan.sideR": "Dj"
 }

@@ -1689,7 +1689,7 @@
   "scan.s.allXIneq": "Nejednadžba vrijedi za svaki {v}.",
   "scan.s.noXIneq": "Nejednadžba nema rješenja.",
   "scan.s.check": "Provjera: rješenje uvrštavamo u početni zadatak.",
-  "scan.w.check": "Lijeva (L) i desna (D) strana se podudaraju, pa je rješenje točno. Provjeru napravi i sam kad rješavaš u bilježnicu.",
+  "scan.w.check": "Lijeva ({l}) i desna ({r}) strana se podudaraju, pa je rješenje točno. Provjeru napravi i sam kad rješavaš u bilježnicu.",
   "scan.w.checkSys": "Rješenje uvrštavamo u obje početne jednadžbe. Obje vrijede, pa je rješenje točno.",
   "scan.s.interval": "Rješenje zapisujemo intervalom.",
   "scan.w.interval": "Okrugla zagrada znači da rub intervala nije rješenje (< ili >), uglata da jest (≤ ili ≥). Uz ∞ je zagrada uvijek okrugla.",
@@ -1841,5 +1841,7 @@
   "scan.s.reject": "{v} = {r} nije rješenje jer bi nazivnik bio 0.",
   "scan.w.reject": "Vrijednost pri kojoj bismo dijelili s 0 nije u domeni, zato je odbacujemo.",
   "scan.s.numeric": "Racionalnih nultočaka nema, zato nultočke tražimo numerički (metodom bisekcije).",
-  "scan.w.numeric": "Bisekcija: interval na kojem polinom mijenja predznak raspolavljamo dok ne bude dovoljno malen. Nultočke vidiš i na grafu."
+  "scan.w.numeric": "Bisekcija: interval na kojem polinom mijenja predznak raspolavljamo dok ne bude dovoljno malen. Nultočke vidiš i na grafu.",
+  "scan.sideL": "L",
+  "scan.sideR": "D"
 }

@@ -43,9 +43,12 @@ const sid = () => D.getStudent()?.id ?? 0;
 const HIST = () => `evklid.scan.${sid()}`;
 const coarse = () => window.matchMedia?.("(pointer: coarse)").matches;
 
+// leva in desna stran pri preizkusu (\\sideL, \\sideR iz solvecore.js) v jeziku vmesnika
+const sideMacros = () => ({ "\\sideL": `\\text{${t("scan.sideL")}}`, "\\sideR": `\\text{${t("scan.sideR")}}` });
+const plainSides = (tx) => String(tx ?? "").replace(/\\sideL/g, t("scan.sideL")).replace(/\\sideR/g, t("scan.sideR"));
 function math(tx, display = false) {
   try {
-    return window.katex.renderToString(String(tx ?? ""), { throwOnError: false, strict: "ignore", displayMode: display });
+    return window.katex.renderToString(String(tx ?? ""), { throwOnError: false, strict: "ignore", displayMode: display, macros: sideMacros() });
   } catch {
     return esc(tx);
   }
@@ -668,7 +671,7 @@ function bindSolution(box) {
     const i = Number(e.currentTarget.dataset.ask);
     const s = S.result.methods[S.method].steps[i];
     const title = typeof s.title === "string" ? s.title : t(s.title.k, s.title.v);
-    D.askTutor(t("scan.askStepText", { problem: S.text, n: i + 1, title, tex: s.tex }));
+    D.askTutor(t("scan.askStepText", { problem: S.text, n: i + 1, title, tex: plainSides(s.tex) }));
   });
   on('[data-act="ask"]', () => D.askTutor(t("scan.askAllText", { problem: S.text, answer: S.result?.answer?.tex || "?" })));
   on('[data-act="new"]', () => {

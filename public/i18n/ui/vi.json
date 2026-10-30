@@ -1673,7 +1673,7 @@
   "scan.s.allXIneq": "Bất phương trình đúng với mọi giá trị của {v}.",
   "scan.s.noXIneq": "Bất phương trình vô nghiệm.",
   "scan.s.check": "Thử lại: thay nghiệm vào đề bài ban đầu.",
-  "scan.w.check": "Vế trái (L) và vế phải (D) bằng nhau, nên nghiệm đúng. Khi giải vào vở, bạn cũng nhớ thử lại nhé.",
+  "scan.w.check": "Vế trái ({l}) và vế phải ({r}) bằng nhau, nên nghiệm đúng. Khi giải vào vở, bạn cũng nhớ thử lại nhé.",
   "scan.w.checkSys": "Thay nghiệm vào cả hai phương trình ban đầu. Cả hai đều đúng, nên nghiệm đúng.",
   "scan.s.interval": "Viết tập nghiệm dưới dạng khoảng.",
   "scan.w.interval": "Ngoặc tròn nghĩa là đầu mút không thuộc tập nghiệm (< hoặc >), ngoặc vuông nghĩa là có thuộc (≤ hoặc ≥). Ở ∞ luôn dùng ngoặc tròn.",
@@ -1825,5 +1825,7 @@
   "scan.s.reject": "{v} = {r} không phải là nghiệm, vì khi đó một mẫu số bằng 0.",
   "scan.w.reject": "Giá trị khiến ta phải chia cho 0 không thuộc tập xác định, nên ta loại nó.",
   "scan.s.numeric": "Không có nghiệm hữu tỉ, nên ta tìm nghiệm bằng phương pháp số (phương pháp chia đôi).",
-  "scan.w.numeric": "Chia đôi: ta chia đôi khoảng mà trên đó đa thức đổi dấu cho đến khi đủ nhỏ. Bạn cũng có thể thấy các nghiệm trên đồ thị."
+  "scan.w.numeric": "Chia đôi: ta chia đôi khoảng mà trên đó đa thức đổi dấu cho đến khi đủ nhỏ. Bạn cũng có thể thấy các nghiệm trên đồ thị.",
+  "scan.sideL": "VT",
+  "scan.sideR": "VP"
 }

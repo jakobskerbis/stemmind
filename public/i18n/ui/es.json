@@ -1681,7 +1681,7 @@
   "scan.s.allXIneq": "La inecuación se cumple para cualquier valor de {v}.",
   "scan.s.noXIneq": "La inecuación no tiene solución.",
   "scan.s.check": "Comprobación: sustituimos la solución en el ejercicio original.",
-  "scan.w.check": "El miembro izquierdo (L) y el derecho (D) coinciden, así que la solución es correcta. Haz tú también la comprobación cuando resuelvas en el cuaderno.",
+  "scan.w.check": "El miembro izquierdo ({l}) y el derecho ({r}) coinciden, así que la solución es correcta. Haz tú también la comprobación cuando resuelvas en el cuaderno.",
   "scan.w.checkSys": "Sustituimos la solución en las dos ecuaciones originales. Las dos se cumplen, así que la solución es correcta.",
   "scan.s.interval": "Escribimos la solución en forma de intervalo.",
   "scan.w.interval": "El paréntesis indica que el extremo no es solución (< o >); el corchete, que sí lo es (≤ o ≥). Junto a ∞ siempre va paréntesis.",
@@ -1833,5 +1833,7 @@
   "scan.s.reject": "{v} = {r} no es solución, porque un denominador sería 0.",
   "scan.w.reject": "Un valor con el que dividiríamos entre 0 no está en el dominio, así que lo descartamos.",
   "scan.s.numeric": "No hay raíces racionales, así que buscamos las raíces numéricamente (por bisección).",
-  "scan.w.numeric": "Bisección: partimos por la mitad un intervalo en el que el polinomio cambia de signo hasta que sea lo bastante pequeño. Las raíces también se ven en la gráfica."
+  "scan.w.numeric": "Bisección: partimos por la mitad un intervalo en el que el polinomio cambia de signo hasta que sea lo bastante pequeño. Las raíces también se ven en la gráfica.",
+  "scan.sideL": "I",
+  "scan.sideR": "D"
 }

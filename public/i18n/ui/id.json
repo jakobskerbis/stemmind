@@ -1673,7 +1673,7 @@
   "scan.s.allXIneq": "Pertidaksamaan berlaku untuk setiap nilai {v}.",
   "scan.s.noXIneq": "Pertidaksamaan tidak punya penyelesaian.",
   "scan.s.check": "Uji: substitusikan penyelesaian ke soal awal.",
-  "scan.w.check": "Ruas kiri (L) dan ruas kanan (D) sama, jadi penyelesaiannya benar. Lakukan juga uji ini sendiri saat mengerjakan di buku.",
+  "scan.w.check": "Ruas kiri ({l}) dan ruas kanan ({r}) sama, jadi penyelesaiannya benar. Lakukan juga uji ini sendiri saat mengerjakan di buku.",
   "scan.w.checkSys": "Penyelesaian disubstitusikan ke kedua persamaan awal. Keduanya terpenuhi, jadi penyelesaiannya benar.",
   "scan.s.interval": "Tulis penyelesaian dalam notasi interval.",
   "scan.w.interval": "Kurung biasa berarti titik ujung bukan penyelesaian (< atau >), kurung siku berarti termasuk (≤ atau ≥). Di ∞ kurungnya selalu kurung biasa.",
@@ -1825,5 +1825,7 @@
   "scan.s.reject": "{v} = {r} bukan penyelesaian, karena penyebutnya akan bernilai 0.",
   "scan.w.reject": "Nilai yang membuat kita membagi dengan 0 tidak termasuk daerah asal, jadi kita buang.",
   "scan.s.numeric": "Tidak ada akar rasional, jadi akar-akarnya kita cari secara numerik (dengan metode bagi dua).",
-  "scan.w.numeric": "Metode bagi dua: interval tempat polinom berganti tanda kita bagi dua terus sampai cukup kecil. Akar-akarnya juga terlihat pada grafik."
+  "scan.w.numeric": "Metode bagi dua: interval tempat polinom berganti tanda kita bagi dua terus sampai cukup kecil. Akar-akarnya juga terlihat pada grafik.",
+  "scan.sideL": "Kiri",
+  "scan.sideR": "Kanan"
 }
