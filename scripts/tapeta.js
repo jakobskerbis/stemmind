@@ -27,13 +27,16 @@ export function eras() {
 const n = (v) => +v.toFixed(2);
 
 // En motiv kot <g>: lastnosti korenskega <svg> (fill, stroke …) gredo na skupino, vsebina ostane.
-function motif(id, name, cx, cy) {
+// Oznake id (npr. clipPath) dobijo predpono mesta i, da se ponovljen motiv (slog s manj kot osmimi) ne podvoji.
+function motif(id, name, cx, cy, i) {
   const svg = fs.readFileSync(path.join(PUB, "eras", id, `${name}.svg`), "utf8").trim();
   const m = svg.match(/^<svg ([^>]*)>([\s\S]*)<\/svg>$/);
   if (!m || !/viewBox="0 0 64 64"/.test(m[1])) throw new Error(`${id}/${name}.svg: pričakujem <svg viewBox="0 0 64 64">`);
+  if (/<script|href=|<text|<svg/i.test(m[2])) throw new Error(`${id}/${name}.svg: brez skript, povezav, besedila in gnezdenih <svg>`);
   const attrs = m[1].replace(/\s*(xmlns|viewBox)="[^"]*"/g, "").trim();
+  const body = m[2].replace(/\bid="([^"]+)"/g, `id="m${i}-$1"`).replace(/url\(#([^)]+)\)/g, `url(#m${i}-$1)`);
   const k = SIZE / 64;
-  return `<g transform="translate(${n(cx - SIZE / 2)} ${n(cy - SIZE / 2)}) scale(${n(k)})" ${attrs}>${m[2]}</g>`;
+  return `<g transform="translate(${n(cx - SIZE / 2)} ${n(cy - SIZE / 2)}) scale(${n(k)})" ${attrs}>${body}</g>`;
 }
 
 export function sestavi(id, era) {
@@ -54,7 +57,7 @@ export function sestavi(id, era) {
     lines.map(([a, b, c, d]) => `<path d="M${a} ${b}L${c} ${d}"/>`).join(""),
     `</g>`,
     `<g fill="none" stroke="#000" stroke-width="1.2" stroke-linecap="round">${knots.map(([x, y]) => rosette(x, y)).join("")}</g>`,
-    centers.map(([x, y], i) => motif(id, list[i % list.length], x, y)).join(""),
+    centers.map(([x, y], i) => motif(id, list[i % list.length], x, y, i)).join(""),
     `</svg>`,
     "",
   ].join("\n");
@@ -66,6 +69,8 @@ if (isMain) {
   const check = args.includes("--check");
   const all = eras();
   const ids = args.filter((a) => !a.startsWith("--"));
+  const unknown = ids.filter((a) => !Object.hasOwn(all, a)).concat(args.filter((a) => a.startsWith("--") && a !== "--check"));
+  if (unknown.length) { console.error(`neznan slog ali možnost: ${unknown.join(", ")} (slogi: ${Object.keys(all).join(", ")})`); process.exit(2); }
   let bad = 0;
   for (const [id, era] of Object.entries(all)) {
     if (ids.length && !ids.includes(id)) continue;
