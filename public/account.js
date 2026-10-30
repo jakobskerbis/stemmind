@@ -57,7 +57,7 @@ function watchTakenProfiles() {
     if (res.status === 409) {
       res.clone().json().then((d) => d?.taken && showTaken(d, orig)).catch(() => {});
     }
-    // Profil je bil medtem zaklenjen (odklep drugega profila na tej napravi, novo geslo, odjava drugod).
+    // Profil je bil medtem zaklenjen (novo geslo profila, »Odjavi vse druge naprave« na drugi napravi).
     if (res.status === 423) {
       res.clone().json().then((d) => {
         if (!d?.locked || $("#lock-overlay")) return;

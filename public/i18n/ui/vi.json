@@ -43,7 +43,7 @@
   "lock.repeat": "Nhập lại mật khẩu",
   "lock.open": "Mở hồ sơ",
   "lock.save": "Lưu mật khẩu",
-  "lock.hint": "Ít nhất 4 ký tự. Cần nhập trên thiết bị mới, sau khi đăng xuất và sau khi mở hồ sơ khác trên thiết bị.",
+  "lock.hint": "Ít nhất 4 ký tự. Bạn chỉ cần nhập một lần trên mỗi thiết bị.",
   "lock.mismatch": "Mật khẩu không khớp.",
   "lock.short": "Mật khẩu phải có ít nhất 4 ký tự.",
   "lock.wrong": "Sai mật khẩu.",

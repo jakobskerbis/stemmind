@@ -1,7 +1,8 @@
 // Geslo za vsak profil (j, 2026-10-29: »vsak profil naj ima svoje geslo«).
 // Račun (e-naslov + geslo) ima lahko več profilov; vsak profil ima še svoje geslo.
 // Profil z geslom je na napravi odprt šele po vpisu gesla. Geslo se vpiše enkrat na napravo (j, 2026-10-30:
-// »naj aplikacija ne zahteva gesla več kot enkrat«): odklep velja do odjave, nove nastavitve gesla ali UNLOCK_DAYS.
+// »naj aplikacija ne zahteva gesla več kot enkrat«): odklep ostane tudi ob menjavi profila in odjavi;
+// velja do novega gesla profila, »Odjavi vse druge naprave« (na drugih napravah) ali UNLOCK_DAYS.
 // Profil brez gesla (stari profili, gost) strežnik ne zaklene; aplikacija ob odprtju zahteva, da ga nastaviš.
 import { hashPassword, verifyPassword, needsRehash } from "./auth.js";
 
@@ -71,7 +72,7 @@ export class ProfileLocks {
     return this.hasPassword(studentId) && !this.isUnlocked(studentId, deviceId);
   }
   // Odklene profil na tej napravi. Drugi odklenjeni profili ostanejo odklenjeni (menjava profila brez gesla).
-  unlock(studentId, deviceId, _siblingIds = [], now = Date.now()) {
+  unlock(studentId, deviceId, now = Date.now()) {
     this.db
       .prepare(
         `INSERT INTO profile_unlocks (student_id, device_id, expires_at) VALUES (?, ?, ?)

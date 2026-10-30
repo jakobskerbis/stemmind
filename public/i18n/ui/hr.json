@@ -45,7 +45,7 @@
   "lock.repeat": "Ponovi lozinku",
   "lock.open": "Otvori profil",
   "lock.save": "Spremi lozinku",
-  "lock.hint": "Najmanje 4 znaka. Potrebna je na novom uređaju, nakon odjave i nakon što je na uređaju otvoren drugi profil.",
+  "lock.hint": "Najmanje 4 znaka. Na svakom uređaju je upisuješ samo jednom.",
   "lock.mismatch": "Lozinke se ne podudaraju.",
   "lock.short": "Lozinka mora imati najmanje 4 znaka.",
   "lock.wrong": "Pogrešna lozinka.",

@@ -442,7 +442,7 @@ test("anti-sharing: a profile is open on one device at a time", async () => {
   });
 });
 
-test("profile password: each profile has its own, locks other devices and siblings, owner can reset", async () => {
+test("profile password: each profile has its own, once per device, locks other devices, owner can reset", async () => {
   await withServer(async ({ client, calls }) => {
     const phone = client();
     await registerVerified(phone, calls, "mia@primer.si");

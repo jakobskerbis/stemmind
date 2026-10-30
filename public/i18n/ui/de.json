@@ -44,7 +44,7 @@
   "lock.repeat": "Passwort wiederholen",
   "lock.open": "Profil öffnen",
   "lock.save": "Passwort speichern",
-  "lock.hint": "Mindestens 4 Zeichen. Es wird auf einem neuen Gerät, nach dem Abmelden und nach dem Öffnen eines anderen Profils auf dem Gerät abgefragt.",
+  "lock.hint": "Mindestens 4 Zeichen. Du gibst es auf jedem Gerät nur einmal ein.",
   "lock.mismatch": "Die Passwörter stimmen nicht überein.",
   "lock.short": "Das Passwort muss mindestens 4 Zeichen lang sein.",
   "lock.wrong": "Falsches Passwort.",

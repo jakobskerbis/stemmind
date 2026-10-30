@@ -915,7 +915,7 @@ export function mountAccounts(app, store, opts = {}) {
       const bad = checkProfilePassword(pw);
       if (bad) return res.status(400).json({ error: bad });
       await locks.setPassword(id, pw);
-      locks.unlock(id, req.deviceId, childIds(p.id));
+      locks.unlock(id, req.deviceId);
       audit(db, { req, parentId: p.id, action: "profile_password_set", target: `student:${id}` });
       return res.json({ ok: true });
     }
@@ -928,7 +928,7 @@ export function mountAccounts(app, store, opts = {}) {
       return res.status(401).json({ error: "Napačno geslo profila." });
     }
     profileThrottle.reset(key);
-    locks.unlock(id, req.deviceId, childIds(p.id));
+    locks.unlock(id, req.deviceId);
     res.json({ ok: true });
   });
 
@@ -1030,7 +1030,7 @@ export function mountAccounts(app, store, opts = {}) {
     devices.use(s.id, req.deviceId, deviceLabel(req.get("user-agent")));
     if (profilePw) {
       await locks.setPassword(s.id, profilePw);
-      locks.unlock(s.id, req.deviceId, childIds(p.id));
+      locks.unlock(s.id, req.deviceId);
     }
     res.status(201).json({ ...store.getStudent(s.id), birth_year: year });
   });

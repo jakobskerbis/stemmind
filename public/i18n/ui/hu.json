@@ -44,7 +44,7 @@
   "lock.repeat": "Jelszó ismét",
   "lock.open": "Profil megnyitása",
   "lock.save": "Jelszó mentése",
-  "lock.hint": "Legalább 4 karakter. Új eszközön, kijelentkezés után és akkor kell, ha közben másik profilt nyitottak meg az eszközön.",
+  "lock.hint": "Legalább 4 karakter. Minden eszközön csak egyszer kell megadnod.",
   "lock.mismatch": "A jelszavak nem egyeznek.",
   "lock.short": "A jelszónak legalább 4 karakterből kell állnia.",
   "lock.wrong": "Hibás jelszó.",
