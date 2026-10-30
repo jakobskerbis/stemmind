@@ -141,6 +141,6 @@ Obe ploščini sta enaki, zato $a^2 + 2ab + b^2 = 2ab + c^2$. Na obeh straneh od
 > Trikotnik je pravokoten samo, če je vsota kvadratov krajših stranic enaka kvadratu najdaljše. $61 \ne 64$.
 
 :::simboli
-a, b | kateti pravokotnega trikotnika | | | oklepata pravi kot
+a, b | kateta pravokotnega trikotnika | | | kateti oklepata pravi kot
 c | hipotenuza | c = \sqrt{a^2 + b^2} | | leži nasproti pravega kota, najdaljša stranica
 :::

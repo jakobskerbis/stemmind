@@ -43,6 +43,9 @@ test("oznaka lekcije ima prednost pred slovarjem (T = prepustnost, ne temperatur
     const local = c.find((x) => x.endsWith(":T")).split(":")[1];
     assert.match(local, /^@\d+$/);
     assert.equal(lookupSymbol("T", local).n, "prepustnost (transmitanca)");
+    // »I, I_0 | jakost svetlobe«: kartica pokaže obe oznaki skupaj (ime v dvojini ali množini).
+    assert.deepEqual(lookupSymbol("I_0", local).keys, ["I", "I_0"]);
+    assert.deepEqual(lookupSymbol("I_0", local).texs, ["I", "I_0"]);
     assert.ok(c.includes(`s:${local}:I_0`) && c.includes(`s:${local}:ΔH`) && c.includes(`s:${local}:pH`));
     assert.ok(c.includes("s:KEM:c"), "oznake, ki jih lekcija nima, vzame iz slovarja");
     assert.ok(c.includes("u:kJ/mol") && c.includes("u:mol/L"));

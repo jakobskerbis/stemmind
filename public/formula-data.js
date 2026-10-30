@@ -367,7 +367,7 @@ function registerGlossary(subject, glossary) {
   const sig = `${subject}|${JSON.stringify(glossary)}`;
   if (localIds.has(sig)) { glossaryIds.set(glossary, [subject, `@${localIds.get(sig)}`]); return `@${localIds.get(sig)}`; }
   const table = {};
-  for (const g of glossary) g.keys.forEach((k, i) => { table[k] = { ...g, tex: g.tex?.[i] || null, local: true }; });
+  for (const g of glossary) g.keys.forEach((k, i) => { table[k] = { ...g, tex: g.tex?.[i] || null, texs: g.tex, local: true }; });
   const id = LOCAL.push({ subject: subject || "MAT", table }) - 1;
   localIds.set(sig, id);
   glossaryIds.set(glossary, [subject, `@${id}`]);

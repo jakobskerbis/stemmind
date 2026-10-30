@@ -189,7 +189,7 @@ Zakon velja le do neke meje. Če vzmet preveč raztegneš, se trajno deformira i
 :::simboli
 F | sila | F = k \cdot x | N
 k | koeficient (konstanta) vzmeti | | N/m | odvisen od vzmeti
-x | raztezek vzmeti | x = \dfrac{x_1}{F_1} \cdot F | m | v nalogah pogosto v cm
+x | raztezek vzmeti | x = \dfrac{F}{k} | m | v nalogah pogosto v cm
 x_1 | raztezek pri znani sili F₁ | | cm
 x_2 | raztezek pri sili F₂ | x_2 = \dfrac{x_1}{F_1} \cdot F_2 | cm
 F_1 | znana sila (prva meritev) | | N

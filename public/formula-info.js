@@ -21,8 +21,17 @@ const unitTex = (key) => `\\mathrm{${key.replace(/Ω/g, "\\Omega ").replace(/μ/
 
 // Ime in opomba oznake: besedilo, $…$ v njem je formula (»največje odstopanje od $\bar{h}$«).
 function richText(text, tex, esc) {
-  return String(text).split(/\$([^$]+)\$/).map((part, i) => (i % 2 ? tex(part) : esc(part))).join("");
+  return String(text).split(/\$([^$]+)\$/).map((part, i) => (i % 2 ? tex(part) : subSup(esc(part)))).join("");
 }
+// Zapis brez $…$ (»F_r = 0«, »2^n«): indeks in potenca kot <sub>/<sup>, ne surov _ in ^;
+// število ostane v isti vrstici kot enota (»1 m/s²«).
+const subSup = (s) => s
+  .replace(/(\d) (?=[\p{L}°%])/gu, "$1\u00a0")
+  .replace(/([\p{L}\d)'′])_(?:\{([^{}]+)\}|([\p{L}\d]+))/gu, (m, b, x, y) => `${b}<sub>${x ?? y}</sub>`)
+  .replace(/([\p{L}\d)])\^(?:\{([^{}]+)\}|([−-]?[\p{L}\d]+))/gu, (m, b, x, y) => `${b}<sup>${x ?? y}</sup>`);
+// Ključ za bralnik zaslona: bar(x) → x̄, F_g → F g.
+const MARKS = { bar: "\u0304", hat: "\u0302", vec: "\u20D7", tilde: "\u0303", dot: "\u0307", ddot: "\u0308" };
+const plainKey = (key) => key.replace(/^(\w+)\(([^()]+)\)/, (m, d, x) => (MARKS[d] ? x + MARKS[d] : m)).replace("_", " ");
 const plainText = (text) => String(text).replace(/\$([^$]+)\$/g, "$1");
 
 function cardFor(code) {
@@ -37,7 +46,7 @@ function cardFor(code) {
       label: `${u.key} — ${nameOf(u)}`,
       html: `<div class="fx-title">${tex(unitTex(u.key))}<b>${esc(nameOf(u))}</b></div>
         ${u.c ? `<div class="fx-line"><span class="fx-k">${t("fx.makeup")}</span>${tex(u.c)}</div>` : ""}
-        ${descOf(u) ? `<div class="fx-note">${esc(descOf(u))}</div>` : ""}`,
+        ${descOf(u) ? `<div class="fx-note" dir="auto">${subSup(esc(descOf(u)))}</div>` : ""}`,
     };
   }
   const [subject, key] = rest;
@@ -45,14 +54,14 @@ function cardFor(code) {
   if (!e) return null;
   const delta = kind === "d";
   const name = delta ? t("fx.change", { what: nameOf(e) }) : nameOf(e);
-  const symbol = (delta ? "\\Delta " : "") + (e.tex || symTex(key));
+  const symbol = (delta ? "\\Delta " : "") + (delta ? e.tex || symTex(key) : groupTex(e, key));
   const relation = e.r && !delta ? e.r : "";
   return {
-    label: `${delta ? "Δ" : ""}${key.replace("_", " ")} — ${plainText(name)}`,
-    html: `<div class="fx-title">${tex(symbol)}<b>${richText(name, tex, esc)}</b></div>
+    label: `${delta ? "Δ" : ""}${plainKey(key)}${inGroup(e, key) ? ` (${e.keys.map(plainKey).join(", ")})` : ""} — ${plainText(name)}`,
+    html: `<div class="fx-title">${tex(symbol)}<b dir="auto">${richText(name, tex, esc)}</b></div>
       ${relation ? `<div class="fx-line"><span class="fx-k">${t("fx.formula")}</span>${tex(`\\displaystyle ${relation}`)}</div>${partsHtml(relation, subject, key, tex, esc)}` : ""}
       ${unitHtml(e, tex, esc)}
-      ${noteOf(e) ? `<div class="fx-note">${richText(noteOf(e), tex, esc)}</div>` : ""}`,
+      ${noteOf(e) ? `<div class="fx-note" dir="auto">${richText(noteOf(e), tex, esc)}</div>` : ""}`,
   };
 }
 
@@ -65,22 +74,30 @@ function unitHtml(e, tex, esc) {
   } else if (!e.u) return noteOf(e) ? "" : noUnit;
   const u = lookupUnit(normUnitKey(e.u));
   if (!u) return `<div class="fx-line"><span class="fx-k">${t("fx.unit")}</span>${tex(`\\mathrm{${e.u.replace(/ +/g, "\\,")}}`)}</div>`;
-  return `<div class="fx-line"><span class="fx-k">${t("fx.unit")}</span>${tex(unitTex(u.key))}${nameOf(u) !== u.key ? `<span class="fx-un">(${esc(nameOf(u))})</span>` : ""}</div>
-    ${u.c ? `<div class="fx-line fx-sub">${tex(u.c)}${descOf(u) ? ` <span>${esc(descOf(u))}</span>` : ""}</div>` : descOf(u) ? `<div class="fx-line fx-sub"><span>${esc(descOf(u))}</span></div>` : ""}`;
+  return `<div class="fx-line"><span class="fx-k">${t("fx.unit")}</span>${tex(unitTex(u.key))}${nameOf(u) !== u.key ? `<span class="fx-un" dir="auto">(${esc(nameOf(u))})</span>` : ""}</div>
+    ${u.c ? `<div class="fx-line fx-sub">${tex(u.c)}${descOf(u) ? ` <span dir="auto">${subSup(esc(descOf(u)))}</span>` : ""}</div>` : descOf(u) ? `<div class="fx-line fx-sub"><span dir="auto">${subSup(esc(descOf(u)))}</span></div>` : ""}`;
 }
 const normUnitKey = (s) => s.replace(/\\mathrm\s*\{([^{}]*)\}/g, "$1").replace(/\\[,;: ]|~/g, " ").replace(/\\Omega\s*/g, "Ω").replace(/\\mu\s*/g, "μ")
   .replace(/\^\{(-?\d)\}/g, "^$1").replace(/[{}]/g, "").replace(/\s+/g, " ").trim();
 
+// Vrstica oznak lekcije z več oznakami (»m_1, m_2 | masi teles«): kartica pokaže vse,
+// da se ime v dvojini ali množini ujema z oznakami.
+const inGroup = (e, key) => e.local && e.keys?.length > 1 && e.keys.includes(key);
+const groupTex = (e, key) => (inGroup(e, key) ? e.keys.map((k, i) => e.texs?.[i] || symTex(k)).join(",\\ ") : e.tex || symTex(key));
 // Sestavni deli zveze (ρ = m/V → m masa, V prostornina), vsak z enoto, če jo ima.
 function partsHtml(relation, subject, self, tex, esc) {
   const parts = symbolsIn(relation, subject).filter(([k, , d]) => k !== self || d);
   if (!parts.length) return "";
+  const groups = new Set();
   const rows = parts.map(([k, subj, d]) => {
     const p = lookupSymbol(k, subj, relation) || lookupSymbolAny(k, subj);
     if (!p) return "";
+    const g = !d && inGroup(p, k) ? `${subj}|${p.keys.join(",")}` : "";
+    if (g && groups.has(g)) return ""; // m_1 in m_2 z istim imenom: ena vrstica »m₁, m₂ masi teles«
+    if (g) groups.add(g);
     const nm = d ? t("fx.change", { what: nameOf(p) }) : nameOf(p);
     const unit = p.u && !/^(–|-|—|1|brez)$/.test(p.u) ? (lookupUnit(normUnitKey(p.u))?.key ? unitTex(lookupUnit(normUnitKey(p.u)).key) : `\\mathrm{${p.u.replace(/ +/g, "\\,")}}`) : "";
-    return `<li>${tex((d ? "\\Delta " : "") + (p.tex || symTex(k)))}<span>${richText(nm, tex, esc)}${unit ? ` <span class="fx-un">[${tex(unit)}]</span>` : ""}</span></li>`;
+    return `<li>${tex(d ? `\\Delta ${p.tex || symTex(k)}` : groupTex(p, k))}<span dir="auto">${richText(nm, tex, esc)}${unit ? ` <span class="fx-un">[${tex(unit)}]</span>` : ""}</span></li>`;
   }).join("");
   return rows ? `<div class="fx-parts"><span class="fx-k">${t("fx.parts")}</span><ul>${rows}</ul></div>` : "";
 }
@@ -139,6 +156,22 @@ function open(el) {
   pop.style.top = `${(below ? r.bottom + 8 : r.top - pop.offsetHeight - 8) + window.scrollY}px`;
 }
 
+// Okvir dotika naj objame znak, ne razmika za njim: KaTeX da presledek pred »=« in
+// poševni popravek črke (margin-right) v ovoj oznake, zato je bil znak levo v okvirju.
+const PAD = 0.08; // em, enako kot v ui.css
+function fit(el) {
+  while (el.lastElementChild?.classList.contains("mspace")) el.after(el.lastElementChild);
+  while (el.firstElementChild?.classList.contains("mspace")) el.before(el.firstElementChild);
+  const last = el.lastElementChild;
+  const mr = last?.classList.contains("mord") && /em$/.test(last.style.marginRight) ? parseFloat(last.style.marginRight) : 0;
+  if (mr > 0) {
+    // Polovico popravka pustimo v okvirju (nagnjen vrh črke), polovico zunaj; širina vrstice ostane ista.
+    last.style.marginRight = "0";
+    el.style.paddingRight = `${PAD + mr / 2}em`;
+    el.style.marginRight = `${mr / 2 - PAD}em`;
+  }
+}
+
 // Simboli postanejo gumbi za tipkovnico in bralnike zaslona.
 function enhance(root) {
   const els = root.querySelectorAll ? root.querySelectorAll("[data-fx]:not([tabindex])") : [];
@@ -150,6 +183,7 @@ function enhance(root) {
     el.setAttribute("role", "button");
     el.setAttribute("aria-expanded", "false");
     el.setAttribute("aria-label", card.label);
+    fit(el);
     const html = el.closest(".katex-html");
     if (html && html.getAttribute("aria-hidden") === "true") {
       html.removeAttribute("aria-hidden");
