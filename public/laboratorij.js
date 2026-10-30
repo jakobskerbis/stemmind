@@ -27,15 +27,18 @@ export function initLab(deps) {
     if (e.target.closest("[data-lab-upgrade]")) document.querySelector("#account-tab")?.click();
   });
   // Esc v odprtem poskusu: nazaj na seznam (ne, ko je odprt meni ali okno, ki Esc porabi samo).
-  document.addEventListener("keydown", (e) => {
+  // Tudi na pogledu samem, da v premičnem oknu (public/okna.js) Esc najprej vrne na seznam, šele nato zapre okno.
+  const onEsc = (e) => {
     if (e.key !== "Escape" || e.defaultPrevented || !openKey || root.hidden) return;
     const shown = (el) => !el.closest("[hidden]") && el.getClientRects().length > 0;
     if ([...document.querySelectorAll('[aria-modal="true"], [role="listbox"], [role="menu"]')].some(shown)) return;
     const at = e.target;
     if (at !== document.body && !root.contains(at)) return;
     if (at.matches?.("textarea, select, input:not([type=range], [type=checkbox], [type=radio], [type=button])")) return;
-    labBack();
-  });
+    if (labBack()) e.preventDefault();
+  };
+  root.addEventListener("keydown", onEsc);
+  document.addEventListener("keydown", onEsc);
 }
 
 // Prikaz pogleda: seznam ali že odprt poskus (ostane, kot je bil, npr. po skoku v kalkulator).
@@ -43,12 +46,14 @@ export async function showLab() {
   const s = D?.getStudent();
   if (!s || !box()) return;
   if (data && data.sid !== s.id) openKey = null; // drug profil: seznam znova
-  if (openKey && box().querySelector(".lab-stage")) return;
+  if (openKey && box().querySelector(".lab-stage") && !find(openKey)?.locked) return; // zaklenjen: znova (morda je zdaj odklenjen)
   if (!data || data.sid !== s.id) box().innerHTML = `<p class="muted">${esc(t("common.loading"))}</p>`;
   try {
     const r = await D.api(`/api/students/${s.id}/lab`);
+    if (D.getStudent()?.id !== s.id) return; // med nalaganjem zamenjan profil: velja novejši klic
     data = { ...r, sid: s.id };
   } catch {
+    if (D.getStudent()?.id !== s.id) return;
     box().innerHTML = `<p class="muted">${esc(t("lab.error"))}</p>`;
     return;
   }
