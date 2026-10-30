@@ -200,7 +200,8 @@ export function openWindow(name, opts = {}) {
   wins.set(name, win);
   ($("#okna") || document.body).append(el);
   if (sheet) {
-    el.style.setProperty("--sheet-h", `${Math.round(window.innerHeight * 0.6)}px`);
+    // Kalkulator potrebuje zaslon in vse vrstice tipk: list skoraj čez cel zaslon (CSS ga omeji nad spodnjo vrstico).
+    el.style.setProperty("--sheet-h", `${Math.round(window.innerHeight * (name === "graph" ? 0.92 : 0.6))}px`);
     wireSheet(win);
   } else {
     let g = layout.geo[name] ? { ...layout.geo[name] } : defaultGeo(opts.side);
