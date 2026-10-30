@@ -333,14 +333,19 @@ function wireMaterials(body, c) {
     const id = topic();
     if (id) openPrintable(`${base}/delovni-list?topic=${encodeURIComponent(id)}&n=${f.elements.n.value}${f.elements.key.checked ? "" : "&resitve=0"}`, toast, headers());
   });
+  let starting = false; // dvojni klik ne odpre dveh projektorjev (drugi kviz bi zamenjal prvega)
   $("[data-quiz]", f).addEventListener("click", async () => {
+    if (starting) return;
     const id = topic();
     if (!id) return;
     if (!reopen.hidden && !confirm(t("kv.replaceConfirm"))) return;
+    starting = true;
     try {
       host(await api(`${base}/kviz`, { method: "POST", code: c.code, body: { topicId: id, n: Number(f.elements.n.value), seconds: Number(f.elements.seconds.value) } }));
     } catch (e) {
       toast(e.message);
+    } finally {
+      starting = false;
     }
   });
 }

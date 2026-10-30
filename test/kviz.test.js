@@ -69,6 +69,24 @@ test("live quiz: lobby, questions, speed points, reveal when all answered or tim
   assert.equal(k.forClass(1), null);
 });
 
+test("live quiz: late answer within grace counts, score and rank do not leak before reveal", () => {
+  let now = 50_000;
+  const k = new Kvizi(() => now);
+  const g = k.create(cls, { topicId: OHM, n: 5, seconds: 20, seed: 4 });
+  k.join(g, 1, "Ana");
+  k.join(g, 2, "Bor");
+  k.next(g);
+  assert.deepEqual(k.answer(g, 1, 0, right(g.tasks[0])), { ok: true });
+  const pv = playerView(g, 1, now);
+  assert.deepEqual([pv.score, pv.correct, pv.rank], [0, 0, 1], "med vprašanjem točke brez tega odgovora");
+  now += 20_000 + KVIZ.graceMs / 2; // čas je potekel, oddaja je še na poti
+  assert.equal(g.state, "question");
+  assert.deepEqual(k.answer(g, 2, 0, right(g.tasks[0])), { ok: true });
+  assert.equal(g.players.get(2).score, KVIZ.base, "brez bonusa za hitrost");
+  assert.equal(g.state, "reveal");
+  assert.equal(playerView(g, 1, now).score, g.players.get(1).score);
+});
+
 test("live quiz: multiple choice counts per option", () => {
   const now = 5_000;
   const k = new Kvizi(() => now);
