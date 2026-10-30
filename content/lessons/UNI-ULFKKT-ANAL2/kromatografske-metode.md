@@ -242,12 +242,14 @@ Na startu je vse ena gneča. Na cilju se tekači razporedijo v skupine po hitros
 > Propan-1-ol je notranji standard. Če se injicira manj vzorca, se zmanjšata obe površini, razmerje pa ostane enako.
 
 :::simboli
-A | absorbanca zmesi | A = b\,(\varepsilon_1 c_1 + \varepsilon_2 c_2 + \dots) | – | pri umeritvi: površina vrha (Ā povprečje)
+A | absorbanca zmesi | A = b\,(\varepsilon_1 c_1 + \varepsilon_2 c_2 + \dots) | – | b je tu dolžina poti; pri umeritvi A površina vrha
+\bar{A} | povprečna površina vrha standardov | | mAU s
 \varepsilon_1, \varepsilon_2 | molarna absorpcijska koeficienta snovi | | L\,mol^{-1}\,cm^{-1}
 c_1, c_2 | koncentraciji snovi v zmesi | | mol/L
 b | naklon umeritvene premice | b = \dfrac{\sum (c_i - \bar c)(A_i - \bar A)}{\sum (c_i - \bar c)^2} | | v A = b(εc + …): dolžina poti skozi kiveto
 a | odsek umeritvene premice | a = \bar A - b\,\bar c | | premica y = a + b c
-c | masna koncentracija | | mg/L | c̄: povprečje koncentracij standardov
+c | masna koncentracija | | mg/L
+\bar{c} | povprečna koncentracija standardov | | mg/L
 c_i | koncentracija i-tega standarda | | mg/L
 A_i | površina vrha i-tega standarda | | mAU s
 A_\mathrm{vz} | površina vrha vzorca | | mAU s

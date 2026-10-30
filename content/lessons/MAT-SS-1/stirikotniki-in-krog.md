@@ -217,7 +217,7 @@ Vzemimo pravokotnik s stranicama $a = 9\,\text{cm}$ in $b = 12\,\text{cm}$ ter m
 \alpha, \beta, \gamma, \delta | notranji koti štirikotnika | | | α je drugje tudi središčni kot
 o | obseg | | |
 r | polmer kroga | | |
-S | ploščina | S = \pi r^2 | | S je tudi središče krožnice
+S | ploščina lika | | | krog: S = πr²; S je tudi središče krožnice
 l | dolžina krožnega loka | l = \frac{\pi r \alpha}{180^\circ} | | α je središčni kot
 S_{\text{izs}} | ploščina krožnega izseka | S_{\text{izs}} = \frac{\pi r^2 \alpha}{360^\circ} | |
 a, c | osnovnici trapeza | | | a je tudi stranica kvadrata ali romba

@@ -234,5 +234,6 @@ p_a, p_b | ploščini kvadratov nad katetama | | |
 p_c | ploščina kvadrata nad hipotenuzo | p_c = p_a + p_b | |
 p | ploščina trikotnika | p = \frac{a \cdot b}{2} | |
 D | telesna diagonala škatle | D^2 = d^2 + c^2 | |
-A, B | začetna in končna točka poti | | | B′ je zrcalna slika točke B čez rob pulta
+A, B | začetna in končna točka poti | | |
+B' | zrcalna slika točke B čez rob pulta | | | razdalja AB′ je dolžina najkrajše poti
 :::

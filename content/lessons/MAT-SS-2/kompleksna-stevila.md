@@ -230,7 +230,8 @@ Pari oblike $(a, 0)$ se obnašajo natanko kot realna števila, par $(0, 1)$ pa o
 
 :::simboli
 i | imaginarna enota | i^2 = -1 | |
-z | kompleksno število | z = a + bi | | z̄ = a − bi je konjugirano število
+z | kompleksno število | z = a + bi | |
+\bar{z} | konjugirano kompleksno število | \bar{z} = a - bi | |
 a | realni del | | | Re z = a
 b | imaginarni del | | | Im z = b je realno število, ne bi
 c | realni del drugega kompleksnega števila | | |

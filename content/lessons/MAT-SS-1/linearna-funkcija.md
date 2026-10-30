@@ -177,7 +177,7 @@ Razmerje je za **vsak** par točk enako $k$. To je prav lastnost premice: konsta
 f | linearna funkcija | f(x) = kx + n | |
 x | neodvisna spremenljivka | | |
 y | odvisna spremenljivka (vrednost funkcije) | y = kx + n | |
-k | smerni koeficient | k = \frac{y_2 - y_1}{x_2 - x_1} | | za koliko se y spremeni, ko x poveča za 1
+k | smerni koeficient | k = \frac{y_2 - y_1}{x_2 - x_1} | | za koliko se y spremeni, ko se x poveča za 1
 n | začetna vrednost (presečišče z osjo y) | | |
 x_1, x_2 | abscisi dveh točk grafa | | | x₁ ≠ x₂
 y_1, y_2 | ordinati dveh točk grafa | | |

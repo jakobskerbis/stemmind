@@ -221,7 +221,8 @@ Pri vsakem koraku preveri enote ($\text{cm}$ in $\text{cm}^2$) in smiselnost: po
 > Središče očrtane krožnice je enako oddaljeno od vseh treh oglišč, torej leži na simetralah stranic. Simetrale kotov se sekajo v središču včrtane krožnice.
 
 :::simboli
-\alpha, \beta, \gamma | notranji koti trikotnika | | | γ′ je zunanji kot pri oglišču C
+\alpha, \beta, \gamma | notranji koti trikotnika | | |
+\gamma' | zunanji kot pri oglišču C | \gamma' = 180^\circ - \gamma = \alpha + \beta | |
 a, b, c | stranice trikotnika | | | v pravokotnem trikotniku je c hipotenuza
 S | ploščina trikotnika | S = r \cdot s | |
 r | polmer včrtane krožnice | r = \frac{S}{s} | |

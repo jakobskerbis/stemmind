@@ -246,7 +246,8 @@ Pri poročilu vsi trije zapišejo le toliko števk, kolikor jih znajo upravičit
 > $1{,}25 + 0{,}3 = 1{,}55$, rezultat zaokrožimo na eno decimalno mesto (kot $0{,}3$): $1{,}6\,\mathrm{m}$.
 
 :::simboli
-x | izmerjena vrednost | \bar x = \dfrac{\sum x_i}{n} | mm | s črtico (x̄): povprečje meritev
+x | izmerjena vrednost | | mm
+\bar{x} | povprečje meritev (aritmetična sredina) | \bar x = \dfrac{\sum x_i}{n} | mm
 x_i | i-ta meritev | | mm
 i | zaporedna številka meritve | | – | od 1 do n
 n | število meritev | | –

@@ -287,7 +287,8 @@ V_\mathrm{max} | največja hitrost reakcije | | µmol/min | pri nasičenju encim
 K_\mathrm{M} | Michaelisova konstanta | K_\mathrm{M} = \frac{k_{-1} + k_2}{k_1} | mM | [S], pri kateri je v₀ = V_max/2
 I | inhibitor | | | [I]: koncentracija inhibitorja
 K_\mathrm{i} | inhibicijska konstanta | | mM | manjša K_i pomeni močnejšo vezavo
-\alpha | faktor inhibicije | \alpha = 1 + \frac{[I]}{K_\mathrm{i}} | – | α' velja za vezavo na ES
+\alpha | faktor inhibicije | \alpha = 1 + \frac{[I]}{K_\mathrm{i}} | – | za vezavo inhibitorja na prost encim
+\alpha' | faktor inhibicije za vezavo na ES | \alpha' = 1 + \frac{[I]}{K_\mathrm{i}'} | – | pri akompetitivni in mešani inhibiciji
 k_1 | konstanta hitrosti nastanka ES | | 1/(mM s)
 k_{-1} | konstanta hitrosti razpada ES nazaj v E in S | | 1/s
 k_2 | konstanta hitrosti nastanka produkta | | 1/s | k_cat = k₂

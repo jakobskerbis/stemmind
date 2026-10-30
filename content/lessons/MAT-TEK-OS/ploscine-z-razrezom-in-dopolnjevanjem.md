@@ -225,7 +225,7 @@ Ko je eno oglišče v kotu okvira, so kotni trikotniki natanko trije. Če se lik
 > $p = \dfrac{8 \cdot 6}{2} = 24\,\text{cm}^2$, ne glede na lego $P$ na $CD$.
 
 :::simboli
-p | ploščina lika | p = a \cdot v | |
+p | ploščina lika | p = a \cdot v | | p = a · v velja za paralelogram
 a | osnovnica (stranica kvadrata) | | |
 v | višina na osnovnico | | |
 p_{\text{okvir}} | ploščina okvirnega pravokotnika | | |

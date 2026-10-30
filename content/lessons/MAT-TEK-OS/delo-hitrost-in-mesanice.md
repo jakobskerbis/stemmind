@@ -227,5 +227,5 @@ d | dolžina jarka | | m |
 v_A, v_B | hitrosti kopanja bagrov A in B | | m/h |
 s_A | dolžina, ki jo izkoplje bager A | s_A = v_A \cdot t | m |
 x | masa dodanega cementa | | kg |
-v_\mathrm{p} | povprečna hitrost | v_\mathrm{p} = \frac{s}{t} | km/h | s celotna pot, t celotni čas
+v_\mathrm{p} | povprečna hitrost | v_\mathrm{p} = \frac{\text{celotna pot}}{\text{celotni čas}} | km/h |
 :::

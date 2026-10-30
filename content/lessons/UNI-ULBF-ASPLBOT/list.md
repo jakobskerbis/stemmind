@@ -245,7 +245,7 @@ Puščice: CO₂ vstopa spodaj skozi režo in se po praznih prostorih razširi d
 :::simboli
 g | gostota listnih rež | g = \dfrac{N}{A} | mm^{-2} | število rež na kvadratni milimeter
 N | število listnih rež | | –
-A | ploščina vidnega polja | A = a^2 | mm^2 | pri celem listu: ploščina listne ploskve
+A | ploščina vidnega polja | A = a^2 | mm^2 | krožno polje: A = πr²; pri celem listu ploščina lista
 a | stranica kvadratnega polja | | mm
 g_\mathrm{s} | gostota rež na spodnji strani lista | | mm^{-2}
 g_\mathrm{z} | gostota rež na zgornji strani lista | | mm^{-2}

@@ -262,7 +262,9 @@ V vsaki vrstici se $a^3$ pokrajša, zato $f$ ni odvisna od velikosti atomov.
 :::simboli
 f | gostota zloga (delež zapolnjene prostornine) | f = \frac{Z \cdot \tfrac43 \pi r^3}{a^3} | – | odvisna le od vrste celice
 Z | število atomov (formulskih enot) v celici | | – | npr. telesno centrirana kocka: Z = 2
-r | polmer atoma | | pm | v telesno centrirani celici a√3 = 4r
+r | polmer atoma | | pm | bcc: a√3 = 4r
+r_+ | polmer kationa | | pm
+r_- | polmer aniona | | pm
 a | mrežni parameter (rob kocke) | | pm | 1 pm = 10⁻¹⁰ cm
 \rho | gostota snovi | \rho = \dfrac{Z \cdot M}{N_\mathrm{A} \cdot a^3} | g/cm^3
 M | molska masa | | g/mol

@@ -307,19 +307,19 @@ export const SYMBOLS_BLOCK_RE = /^[ \t]*:::[ \t]*simboli[ \t]*\n([\s\S]*?)\n[ \t
 // Ključ oznake iz TeX: "I_0", "I_{0}" → "I_0"; "\\varepsilon" → "ε"; "\\Delta H" → "ΔH"; "\\mathrm{pH}" → "pH".
 export function symbolKeyOf(tex) {
   let s = String(tex).trim();
-  const dec = /^\\(bar|overline|hat|vec|tilde|dot)\s*(\{[^{}]*\}|[A-Za-z])\s*(?:_\s*(\{.*\}|\\?[A-Za-z0-9]+))?$/.exec(s); // \bar{x}, \vec F_1
+  const dec = /^\\(bar|overline|hat|vec|tilde|dot)\s*(\{[^{}]*\}|[A-Za-z])\s*(?:_\s*(\{.*\}|\\?[A-Za-z0-9]+|[+-]))?$/.exec(s); // \bar{x}, \vec F_1
   if (dec) {
     const inner = symbolKeyOf(dec[2].replace(/^\{|\}$/g, ""));
     return inner && !inner.includes("_") ? `${DECOR[dec[1]]}(${inner})${dec[3] ? `_${normSub(dec[3])}` : ""}` : null;
   }
   const dm = /^\\Delta\s*(\\(?:mathrm|text)\s*\{.*)$/.exec(s); // \Delta\mathrm{EN}
   if (dm) { const k = symbolKeyOf(dm[1]); return k ? `Δ${k}` : null; }
-  const raw = /^\\(?:mathrm|text|textrm)\s*\{([^{}]+)\}([A-Za-z]?)\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+))?$/.exec(s);
+  const raw = /^\\(?:mathrm|text|textrm)\s*\{([^{}]+)\}([A-Za-z]?)\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+|[+-]))?$/.exec(s);
   if (raw) return raw[1].replace(/\s+/g, "") + raw[2] + (raw[3] ? `_${normSub(raw[3])}` : "");
   let delta = "";
   const d = /^\\Delta\s*(?!_)/.exec(s);
   if (d && s.length > d[0].length) { delta = "Δ"; s = s.slice(d[0].length); }
-  const m = /^(\\([a-zA-Z]+)|[A-Za-z])\s*('*)\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+))?\s*('*)$/.exec(s);
+  const m = /^(\\([a-zA-Z]+)|[A-Za-z])\s*('*)\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+|[+-]))?\s*('*)$/.exec(s);
   if (!m) return null;
   const base = m[2] ? GREEK[m[2]] : m[1];
   if (!base) return null;
@@ -407,7 +407,7 @@ export function annotateTex(tex, subject = override || subjectFn()) {
     q++;
     while (tex[q] === " ") q++;
     if (tex[q] === "{") { const e = readGroup(q); return { end: e, raw: tex.slice(q + 1, e - 1) }; }
-    const m = /^\\(?:mathrm|text)\s*\{[^{}]*\}|^\\[a-zA-Z]+|^[A-Za-z0-9]/.exec(tex.slice(q));
+    const m = /^\\(?:mathrm|text)\s*\{[^{}]*\}|^\\[a-zA-Z]+|^[A-Za-z0-9+-]/.exec(tex.slice(q));
     return m ? { end: q + m[0].length, raw: m[0] } : null;
   };
   // Enota šele za številom ali presledkom za številom (9,81\,m/s²), sicer je besedilo ali kemijska formula.

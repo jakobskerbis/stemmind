@@ -186,6 +186,7 @@ $$P(A \mid B) = \frac{|A \cdot B|}{|B|} = \frac{|A \cdot B|/n}{|B|/n} = \frac{P(
 :::simboli
 P | verjetnost dogodka | P(A) = \frac{m}{n} | | vedno med 0 in 1
 A, B | dogodka | | | v primeru s stroji: izdelek je s stroja A oz. B
+\overline{A} | nasprotni dogodek dogodka A | | | zgodi se, kadar se A ne zgodi
 m | število izidov, ugodnih za dogodek A | | |
 n | število vseh enako verjetnih izidov | | |
 N | dogodek, da je izdelek pokvarjen | | |

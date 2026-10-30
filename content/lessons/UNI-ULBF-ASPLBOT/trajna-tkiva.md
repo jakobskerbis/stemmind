@@ -232,8 +232,8 @@ Q_\mathrm{t} | pretok vode skozi trahejo | | | Q je sorazmeren z r⁴
 Q_\mathrm{d} | pretok vode skozi traheido | | |
 r_\mathrm{t} | polmer traheje | | µm
 r_\mathrm{d} | polmer traheide | | µm
-S_\mathrm{t} | prečni presek traheje | | µm^2
-S_\mathrm{d} | prečni presek traheide | | µm^2
+S_\mathrm{t} | ploščina prečnega preseka traheje | | µm^2
+S_\mathrm{d} | ploščina prečnega preseka traheide | | µm^2
 N | število listnih rež | N = (g_\mathrm{sp} + g_\mathrm{zg}) \cdot S | –
 g_\mathrm{sp} | gostota rež na spodnji povrhnjici | | mm^{-2}
 g_\mathrm{zg} | gostota rež na zgornji povrhnjici | | mm^{-2}

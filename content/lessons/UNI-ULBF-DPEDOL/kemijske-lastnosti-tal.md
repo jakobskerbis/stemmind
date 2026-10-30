@@ -270,7 +270,7 @@ w | masni delež primešane organske snovi | | – | KIK = (1 − w) KIK_reg + w
 V | bazična nasičenost | V = \dfrac{\text{bazični kationi}}{\mathrm{KIK}} \cdot 100\,\% | \% | nad 50 % evtrična, pod 50 % distrična tla
 n | množina naboja izmenljivih kationov | | cmol(+)/kg | n(+), na kilogram tal
 n_\mathrm{Ca} | množina izmenljivega kalcija | n_\mathrm{Ca} = \dfrac{n(+)}{2} | cmol/kg | Ca²⁺ nosi dva naboja
-m_\mathrm{Ca} | masa izmenljivega kalcija | m_\mathrm{Ca} = n_\mathrm{Ca} \cdot M | kg
+m_\mathrm{Ca} | masa izmenljivega kalcija na kilogram tal | m_\mathrm{Ca} = n_\mathrm{Ca} \cdot M | g/kg | pomnoži z m_tal za maso na hektar
 M | molska masa kalcija | | g/mol | 40,08 g/mol
 m_\mathrm{tal} | masa tal | m_\mathrm{tal} = A \cdot h \cdot \rho | kg
 A | površina | | m^2 | 1 ha = 10 000 m²

@@ -256,6 +256,7 @@ V_\mathrm{b,EP} | prostornina baze do ekvivalentne točke | | mL
 V_\mathrm{EP} | prostornina titranta v ekvivalentni točki | | mL
 V_\mathrm{skupaj} | skupna prostornina raztopine v čaši | | mL | prostornina kisline + dodanega titranta
 K_\mathrm{a} | konstanta kisline | K_\mathrm{a} = 10^{-\mathrm{p}K_\mathrm{a}} | mol/L | ocetna kislina: 1,75 · 10⁻⁵
+\mathrm{p}K_\mathrm{a} | negativni logaritem konstante kisline | \mathrm{p}K_\mathrm{a} = -\log K_\mathrm{a} | – | ocetna kislina: 4,76
 K_\mathrm{b} | konstanta baze | K_\mathrm{b} = \dfrac{K_\mathrm{w}}{K_\mathrm{a}} | mol/L | za konjugirano bazo, npr. acetat
 K_\mathrm{w} | ionski produkt vode | | mol^2/L^2 | 1,0 · 10⁻¹⁴ pri 25 °C
 :::

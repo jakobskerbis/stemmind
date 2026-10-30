@@ -269,5 +269,5 @@ c | hitrost svetlobe | | m/s | 2,998 · 10⁸ m/s
 \lambda | valovna dolžina vsrkane svetlobe | | nm | v formulo vstavi v metrih
 N_\mathrm{A} | Avogadrova konstanta | | 1/mol | 6,022 · 10²³ mol⁻¹
 E | standardni elektrodni potencial | E^\circ_\text{celice} = E^\circ_\text{oksidant} - E^\circ_\text{reducent} | V | reakcija poteče, če je E°celice > 0
-\Delta_\mathrm{o} | razcep ligandnega polja (oktaedrični) | | kJ/mol | energija prehoda elektrona iz t₂g v e_g
+\Delta_\mathrm{o} | razcep ligandnega polja (oktaedrični) | \Delta_\mathrm{o} = N_\mathrm{A} \cdot E_\text{foton} | kJ/mol | energija prehoda elektrona iz t₂g v e_g
 :::

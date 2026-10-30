@@ -152,6 +152,7 @@ Primer: pravokotni trikotnik s katetama $3\,\text{cm}$ in $4\,\text{cm}$ ima plo
 
 :::simboli
 a, b, c | stranice trikotnika | | | a′, b′, c′ so istoležne stranice podobnega trikotnika
+a', b', c' | istoležne stranice podobnega trikotnika | | |
 k | razmerje podobnosti | k = \frac{a'}{a} | | k > 1 povečava, k < 1 pomanjšava
 h | višina drevesa | | |
 :::

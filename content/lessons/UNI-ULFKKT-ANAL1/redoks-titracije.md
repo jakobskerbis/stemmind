@@ -231,8 +231,10 @@ Rjasti madeži na skalah ob izviru, kjer železova voda pride na zrak, so ista o
 > $\mathrm{Mn(OH)_2}$ veže ves dostopen kisik, tudi tistega iz mehurčka, zato je poraba tiosulfata večja.
 
 :::simboli
-K_a | konstanta kisline | | mol/L | moč kisline pove pKₐ
-E | elektrodni potencial | E = E^\circ + \frac{0{,}0592\ \mathrm{V}}{n}\log\frac{[\mathrm{ox}]}{[\mathrm{red}]} | V | E° je standardni elektrodni potencial
+K_a | konstanta kisline | | mol/L |
+\mathrm{p}K_a | negativni logaritem konstante kisline | \mathrm{p}K_a = -\log K_a | – | moč kisline: manjši pKₐ, močnejša kislina
+\mathrm{pH} | pH raztopine | \mathrm{pH} = \mathrm{p}K_a + \log\frac{[\mathrm{A^-}]}{[\mathrm{HA}]} | – | Henderson-Hasselbalchova enačba
+E | elektrodni potencial | E = E^\circ + \frac{0{,}0592\ \mathrm{V}}{n}\log\frac{[\mathrm{ox}]}{[\mathrm{red}]} | V | n je tu število izmenjanih elektronov; E° standardni potencial
 n | množina snovi | | mol | v Nernstovi enačbi: število izmenjanih elektronov
 c | množinska koncentracija | c = \dfrac{n(\mathrm{S_2O_3^{2-}})}{V(\mathrm{S_2O_3^{2-}})} | mol/L
 V | prostornina porabljenega titranta | | mL

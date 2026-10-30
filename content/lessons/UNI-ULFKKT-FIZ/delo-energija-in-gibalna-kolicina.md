@@ -289,7 +289,8 @@ $$\int_1^2\vec{F}\cdot\mathrm{d}\vec{r} = \int_{t_1}^{t_2} m\frac{\mathrm{d}\vec
 > Navzgor vzemimo za pozitivno smer: $\Delta G = mv - (-mv) = 2mv$. Ta sunek žogi dajo tla, zato je sila tal med odbojem velika.
 
 :::simboli
-A | delo sile | A = \vec{F}\cdot\Delta\vec{r} = F\,\Delta r\cos\varphi | J | A' je delo nekonservativnih sil
+A | delo sile | A = \vec{F}\cdot\Delta\vec{r} = F\,\Delta r\cos\varphi | J |
+A' | delo nekonservativnih sil | A' = \Delta W_k + \Delta W_p | J | pri A' = 0 se mehanska energija ohranja
 F | sila | | N
 r | krajevni vektor | | m | Δr: premik
 \varphi | kot med silo in premikom | | °
@@ -297,7 +298,10 @@ A_{\text{vseh sil}} | delo vseh sil na telo | A_{\text{vseh sil}} = \Delta W_k |
 \Delta W_k | sprememba kinetične energije | \Delta W_k = \tfrac{1}{2}mv_2^2 - \tfrac{1}{2}mv_1^2 | J | kinetična energija je ½mv²
 \Delta W_p | sprememba potencialne energije | | J | delo konservativnih sil je −ΔW_p
 m | masa telesa (krogle) | | kg
-v | hitrost | | m/s | v' je hitrost po trku
+v | hitrost | | m/s |
+v' | skupna hitrost po popolnoma neprožnem trku | | m/s
+v_1' | hitrost prvega telesa po prožnem trku | v_1' = \frac{m_1 - m_2}{m_1 + m_2}\,v_1 | m/s | drugo telo pred trkom miruje
+v_2' | hitrost drugega telesa po prožnem trku | v_2' = \frac{2m_1}{m_1 + m_2}\,v_1 | m/s | drugo telo pred trkom miruje
 v_1 | hitrost prvega telesa (začetna hitrost) | | m/s | pri trku: hitrost prvega telesa pred trkom
 v_2 | hitrost drugega telesa (končna hitrost) | | m/s | pri trku: hitrost drugega telesa
 v_0 | hitrost na dnu brez trenja | \tfrac{1}{2}mv_0^2 = mgh | m/s
