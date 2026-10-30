@@ -412,7 +412,7 @@ async function renderLesson(topicId) {
     : locked
       ? `<section class="card tb-locked"><h2>${ic("lock")}Poskus: ${esc(L.locked.demo)}</h2>
           <p>Interaktivni poskusi, simulacije in sprotno preverjanje so na voljo v plačljivem paketu in med 7-dnevnim preizkusom. Besedilo lekcije in PDF sta brezplačna.</p>
-          <button type="button" class="primary" id="tb-upgrade">${ic("sparkles")}Poglej pakete</button></section>`
+          ${!L.offers || (L.offers.show && L.offers.prices) ? `<button type="button" class="primary" id="tb-upgrade">${ic("sparkles")}Poglej pakete</button>` : ""}</section>`
       : "";
   const altHtml = lesson?.alternatives?.length
     ? `<div class="tb-alt">

@@ -192,7 +192,9 @@ export function mountAccounts(app, store, opts = {}) {
   const schedules = new Schedules(db);
   function offersFor(studentId, now = new Date()) {
     const year = birthYear(studentId);
-    const age = year ? Number(nowParts(now).date.slice(0, 4)) - year - 1 : null;
+    // Lasten profil imetnika (dijak ali študent): letnica je iz njegovega datuma rojstva, zato velja točna starost.
+    const own = getParent(ownerOf(studentId))?.birth_date;
+    const age = own && Number(own.slice(0, 4)) === year ? ageOn(own, now) : year ? Number(nowParts(now).date.slice(0, 4)) - year - 1 : null;
     return offerPolicy({ age, membership: schools.membership(studentId), lessons: schedules.get(studentId).lessons, now: nowParts(now) });
   }
   // Ali sme sporočilo o porabljenih vprašanjih predlagati nakup: le ponudba s ceno in ne učencu iz šole
@@ -1237,6 +1239,6 @@ export function mountAccounts(app, store, opts = {}) {
 
   // Za mobilno aplikacijo (server/mobile): prijava z Apple, nakupi v trgovinah, obvestila.
   const mobile = { db, sessions, getParent, parentByEmail, publicParent, accountView, createParent, checkAge, childIds, children, accessOf, signupThrottle, addReauth: (fn) => reauthHooks.push(fn) };
-  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, rightsFor, lessonInteractive, ladderFor, schools, guests, billing, mobile };
+  return { sendWeeklyAll, sendGoalRemindersAll, maybeRewardReferral, stripe, mailer, premiumFor, modelCapFor, offersFor, rightsFor, lessonInteractive, ladderFor, schools, guests, billing, mobile };
 }
 

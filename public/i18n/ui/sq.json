@@ -1732,7 +1732,7 @@
   },
   "payp.consentMissing": "Para pagesës shënoni të dyja konfirmimet.",
   "pass.until": "deri më {date}",
-  "pass.parentInfo": "Testi „{name}“ ({date}) është afër. Prindërit e tu mund të zgjedhin një paketë përgatitjeje para testit.",
+  "pass.parentInfo": "Testi «{name}» ({date}) është afër. Prindërit e tu mund të zgjedhin një paketë para testit.",
   "pass.parentInfoLink": "Informacion për prindërit",
   "pay.parentOptions": "Si mund të paguajë një prind?",
   "pay.linkLabel": "Lidhja e pagesës",

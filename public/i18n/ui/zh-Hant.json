@@ -1720,7 +1720,7 @@
   },
   "payp.consentMissing": "請您在付款前勾選兩項確認。",
   "pass.until": "至{date}",
-  "pass.parentInfo": "「{name}」測驗（{date}）快到了。你的家長可以選擇考前準備方案。",
+  "pass.parentInfo": "「{name}」考試（{date}）快到了。你的家長可以為你選擇考前方案。",
   "pass.parentInfoLink": "給家長的資訊",
   "pay.parentOptions": "家長如何付款？",
   "pay.linkLabel": "付款連結",

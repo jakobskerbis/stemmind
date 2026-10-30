@@ -23,6 +23,10 @@ test("offerPolicy: pouk, učitelj, šolski čas, starost", () => {
     reason: null,
   });
   assert.equal(offerPolicy({ age: 16, lessons, now: mon10 }).reason, "lesson");
+  // Odmor med urami istega dne je še pouk; po zadnji uri ponudba sme biti.
+  const day2 = [...lessons, { day: 1, start: "11:40", end: "12:25" }];
+  assert.equal(offerPolicy({ age: 16, lessons: day2, now: { day: 1, time: "11:00" } }).reason, "lesson");
+  assert.equal(offerPolicy({ age: 16, lessons: day2, now: { day: 1, time: "12:25" } }).show, true);
   assert.equal(
     offerPolicy({ age: 16, membership: { offersOff: true }, now: sat10 })
       .reason,
@@ -168,6 +172,8 @@ test("paket pred testom: pod 15 brez cene, med poukom in z izklopom učitelja br
     const offer = async (k) =>
       (await call(`/api/students/${k.id}/pass-offer`)).body;
     // Pod 15 let: le povezava s podatki za starše, brez cen.
+    // Brez gumba »Poglej pakete« ob prehodu v višjo stopnjo in pri zaklenjenem poskusu za otroka pod 15.
+    assert.equal((await call(`/api/students/${young.id}/level-up`)).body.offers.prices, false);
     const y = await offer(young);
     assert.equal(y.offer.parent_info, true);
     assert.deepEqual(y.passes, []);
@@ -229,4 +235,28 @@ test("porabljena vprašanja: učenec iz šole in otrok pod 15 ne dobita ponudbe 
   } finally {
     delete process.env.EVKLID_FREE_DAILY_QUESTIONS;
   }
+});
+
+test("lasten profil 15-letnega imetnika: točna starost iz datuma rojstva, cena in povezava za starše", async () => {
+  await withServer(async ({ call, store, young, teen }) => {
+    // Preizkus, ki pokrije test: otrok pod 15 ne dobi niti kartice za starše.
+    await call(`/api/students/${young.id}/schedule`, {
+      method: "PUT",
+      body: { events: [{ date: day(2), kind: "test", name: "Test iz ulomkov" }] },
+    });
+    store.db.prepare("UPDATE parents SET trial_ends_at = ?").run(new Date(Date.now() + 9 * 86400000).toISOString());
+    assert.equal((await call(`/api/students/${young.id}/pass-offer`)).body.offer, null);
+    store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z'").run();
+    // Imetnik, ki je 15 let že dopolnil (letnica sama bi previdno dala 14).
+    store.db.prepare("UPDATE parents SET birth_date = ?").run(`${YEAR - 15}-01-01`);
+    store.db.prepare("UPDATE students SET birth_year = ? WHERE id = ?").run(YEAR - 15, teen.id);
+    await call(`/api/students/${teen.id}/schedule`, {
+      method: "PUT",
+      body: { events: [{ date: day(5), kind: "test", name: "Test iz ulomkov" }] },
+    });
+    const r = (await call(`/api/students/${teen.id}/pass-offer`)).body;
+    assert.equal(r.offer.parent_info, undefined);
+    assert.equal(r.offer.pay_link, true);
+    assert.equal(r.passes.length, 3);
+  });
 });

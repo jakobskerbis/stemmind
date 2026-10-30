@@ -1732,7 +1732,7 @@
   },
   "payp.consentMissing": "Fizetés előtt jelölje be mindkét megerősítést.",
   "pass.until": "eddig: {date}",
-  "pass.parentInfo": "Közeleg a(z) „{name}” dolgozat ({date}). A szüleid választhatnak dolgozat előtti felkészítő csomagot.",
+  "pass.parentInfo": "Közeleg a dolgozatod: „{name}” ({date}). A szüleid választhatnak neked felkészülési csomagot.",
   "pass.parentInfoLink": "Információ szülőknek",
   "pay.parentOptions": "Hogyan fizethet a szülő?",
   "pay.linkLabel": "Fizetési link",

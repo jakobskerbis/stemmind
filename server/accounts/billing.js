@@ -251,11 +251,11 @@ export function mountBilling(app, ctx) {
     // pod 15 let brez cene, le povezava s podatki za starše.
     const policy = offersFor(studentId);
     if (!policy.show) return res.json({ ...base, offer: null });
-    if (!policy.prices) return res.json({ ...base, passes: [], offer: { test, parent_info: true } });
     // Preizkus, koda ali bonus, ki pokrije čas do dneva po testu: ponudba ni potrebna.
     const access = accessOf(parent);
     const coverEnd = Date.parse(`${test.date}T23:59:59Z`) + 86400000;
     if (isPremiumChild(access, childIds(parent.id), studentId) && access.until && Date.parse(access.until) >= coverEnd) return res.json({ ...base, offer: null });
+    if (!policy.prices) return res.json({ ...base, passes: [], offer: { test, parent_info: true } });
     res.json({ ...base, offer: { test, suggested: passForDaysLeft(test.daysLeft)?.days ?? 30, pay_link: isMinor(parent) } });
   });
 

@@ -40,7 +40,7 @@ export async function renderPassOffer(el, { api, studentId, toast }) {
       <div class="card pass-card">
         <h3>${icon("clipboard-check")} ${esc(t("pass.title"))}</h3>
         <p>${esc(t("pass.parentInfo", { name: o.test.name, date: fmtDay(o.test.date) }))}</p>
-        <p><a href="/starsi.html" target="_blank" rel="noopener">${esc(t("pass.parentInfoLink"))}</a></p>
+        <p class="pass-parent-info"><a href="/starsi.html" target="_blank" rel="noopener">${esc(t("pass.parentInfoLink"))}</a></p>
       </div>`;
     hydrateIcons?.(el);
     return;

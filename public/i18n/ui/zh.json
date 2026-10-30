@@ -1720,7 +1720,7 @@
   },
   "payp.consentMissing": "请您在付款前勾选两项确认。",
   "pass.until": "至{date}",
-  "pass.parentInfo": "“{name}”测验（{date}）快到了。你的家长可以选择考前备考套餐。",
+  "pass.parentInfo": "“{name}”考试（{date}）快到了。你的家长可以为你选择考前套餐。",
   "pass.parentInfoLink": "给家长的信息",
   "pay.parentOptions": "家长如何付款？",
   "pay.linkLabel": "付款链接",

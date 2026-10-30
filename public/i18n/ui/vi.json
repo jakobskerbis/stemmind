@@ -1720,7 +1720,7 @@
   },
   "payp.consentMissing": "Vui lòng đánh dấu cả hai ô xác nhận trước khi thanh toán.",
   "pass.until": "đến {date}",
-  "pass.parentInfo": "Bài kiểm tra “{name}” ({date}) sắp đến. Bố mẹ em có thể chọn gói ôn trước bài kiểm tra.",
+  "pass.parentInfo": "Bài kiểm tra “{name}” ({date}) sắp đến. Bố mẹ em có thể chọn gói ôn thi cho em.",
   "pass.parentInfoLink": "Thông tin cho phụ huynh",
   "pay.parentOptions": "Phụ huynh có thể thanh toán bằng cách nào?",
   "pay.linkLabel": "Liên kết thanh toán",

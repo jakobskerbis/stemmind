@@ -266,7 +266,7 @@ export function createApp(store, opts = {}) {
   app.get("/api/students/:id/level-up", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
-    res.json({ suggestion: levelUpSuggestion(s), next: nextLevel(s.settings), premium: !accounts || accounts.premiumFor(s.id) });
+    res.json({ suggestion: levelUpSuggestion(s), next: nextLevel(s.settings), premium: !accounts || accounts.premiumFor(s.id), offers: accounts ? accounts.offersFor(s.id) : null });
   });
   app.delete("/api/students/:id", (req, res) => {
     const s = loadStudent(req, res);
@@ -633,6 +633,8 @@ export function createApp(store, opts = {}) {
       ...view,
       pretest_due,
       interactive: false,
+      // Pravila ponudb (server/placila/ponudbe.js): gumb »Poglej pakete« le, ko ponudba s ceno sme biti prikazana.
+      offers: accounts.offersFor(s.id),
       locked: { demo: view.demo?.title || null },
       demos: [],
       demo: null,

@@ -31,8 +31,13 @@ export function offerPolicy({
 }) {
   const m = membership || {};
   if (m.offersOff) return { show: false, prices: false, reason: "teacher_off" };
-  if (inLesson(lessons, now))
-    return { show: false, prices: false, reason: "lesson" };
+  // Šolski dan po Urniku: od prve do zadnje ure tega dne, z odmori vred.
+  const today = lessons.filter((l) => l.day === now.day && l.start && l.end);
+  if (today.length) {
+    const from = today.map((l) => l.start).sort()[0];
+    const to = today.map((l) => l.end).sort().at(-1);
+    if (from <= now.time && now.time < to) return { show: false, prices: false, reason: "lesson" };
+  }
   const school = m.inSchool || m.inClass;
   if (
     school &&
