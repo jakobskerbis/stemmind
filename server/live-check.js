@@ -237,14 +237,15 @@ export async function reviewAnswer({ question, answer, createFn = null, usage = 
 // Popravek: en kratek klic istega modela
 
 const FIX_SYSTEM = `You fix one mistake in an AI tutor's answer to a student. You get the answer and a problem that an exact check or a reviewer found in it.
-If the problem is real (the answer states something wrong as true), write a correction of 1 to 3 short sentences addressed to the student, in the language of the answer, that starts with the word for "Correction" in that language followed by a colon (Slovenian: "Popravek:"). Give the correct value or fact. Write maths as $…$. Do not mention a program, a check or a reviewer, and do not repeat the answer.
+If the problem is real (the answer states something wrong as true), write a correction of 1 to 3 short sentences addressed to the student, in the language of the answer, that starts with the word for "Correction" in that language followed by a colon (Slovenian: "Popravek:"). Give the correct value or fact. If the answer leaves later steps to the student, correct only the wrong part and do not solve the rest. Write maths as $…$. Do not mention a program, a check or a reviewer, and do not repeat the answer.
 If the answer does not really claim the wrong thing (for example it shows the student's mistake, a hypothetical case, or the check misread it), reply exactly OK.`;
 
 // Odgovor modela → blok za prikaz (»> **Popravek:** …«) ali null.
 export function fixBlock(text) {
   const t = String(text || "").trim();
   if (!t || /^[*`_\s]*OK[.!]?[*`_\s]*$/i.test(t) || t.length > 1200) return null;
-  const m = /^[*_\s]*([\p{L}]{3,20})[*_\s]*:[*_\s]*/u.exec(t);
+  // Naslov v vseh pisavah (hindijščina in tajščina imata znake \p{M}, kitajščina »更正：«, vietnamščina »Sửa lỗi:«).
+  const m = /^[*_\s]*([\p{L}\p{M}]{2,20}(?: [\p{L}\p{M}]{2,20})?)[*_\s]*[:：][*_\s]*/u.exec(t);
   const body = m ? `**${m[1]}:** ${t.slice(m[0].length)}` : t;
   return "\n\n" + body.split("\n").map((l) => `> ${l}`.trimEnd()).join("\n");
 }
