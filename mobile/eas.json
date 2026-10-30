@@ -4,10 +4,12 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
+      "channel": "development",
       "env": { "EXPO_PUBLIC_CHANNEL": "store" }
     },
     "direct": {
       "distribution": "internal",
+      "channel": "direct",
       "android": { "buildType": "apk" },
       "ios": { "simulator": false },
       "autoIncrement": true,
@@ -15,6 +17,7 @@
     },
     "production": {
       "autoIncrement": true,
+      "channel": "production",
       "env": { "EXPO_PUBLIC_CHANNEL": "store" }
     }
   },

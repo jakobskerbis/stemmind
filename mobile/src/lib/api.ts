@@ -1,6 +1,7 @@
 // Klici strežnika Evklid. Seja je v varni shrambi telefona (Keychain / Keystore), ne v piškotku:
 // pošljemo jo v glavi Authorization, strežnik novo sejo vrne v glavi X-App-Session (server/mobile/index.js).
 import Constants from "expo-constants";
+import * as Updates from "expo-updates";
 import * as SecureStore from "expo-secure-store";
 import * as Crypto from "expo-crypto";
 import { Platform } from "react-native";
@@ -9,7 +10,8 @@ import brand from "../../../brand.json";
 import { t } from "./i18n";
 
 export const API_URL: string = (Constants.expoConfig?.extra?.apiUrl as string) || `https://${brand.domain}`;
-export const CHANNEL: "store" | "direct" = Constants.expoConfig?.extra?.channel === "direct" ? "direct" : "store";
+// Kanal gradnje: najprej kanal EAS Update, zapisan v sami gradnji (eas.json), ki ga posodobitev ne spremeni.
+export const CHANNEL: "store" | "direct" = (Updates.channel || Constants.expoConfig?.extra?.channel) === "direct" ? "direct" : "store";
 const APP_HEADER = `${Platform.OS}/${Constants.expoConfig?.version ?? "1"}`;
 const SESSION_KEY = `${brand.slug}.session`;
 const DEVICE_KEY = `${brand.slug}.device`;

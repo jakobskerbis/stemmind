@@ -13,6 +13,7 @@ import { initOkna, isFloating, openWindow, closeWindow, focusWindow, refreshBubb
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
 import { openPrintable, stopReading } from "./gradiva.js";
+import { initSubjectSwitch } from "./subject-switch.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
@@ -498,6 +499,8 @@ async function selectStudent(id) {
 $("#student-select").addEventListener("change", (e) => selectStudent(e.target.value));
 
 // Klik na klobuk zgoraj levo: »Nadaljuj z učenjem« (naslednja tema, trening, kar je danes na vrsti).
+// Menjava predmeta v obeh menijih zgoraj (klobuk in ime), ne le v Nastavitvah.
+initSubjectSwitch({ choices: subjectChoices, pick: pickSubject });
 initQuickStart({ getState: () => state, refresh: refreshModes, showView, goNew, startSession, showTestPrep, overlayOpened, overlayClosed });
 
 // Klik na ime zgoraj desno: meni profila (menjava, nov profil, zbirke, mnenje, nastavitve, račun, odjava).
@@ -1012,25 +1015,61 @@ function fillSubjectOptions() {
 
 const courseCache = new Map(); // program → predmeti po letnikih (/api/paths?program=)
 let courseReq = 0;
+// Predmeti študijskega programa za letnik: predmeti letnika in izbirni predmeti (Nastavitve in meni profila).
+async function courseChoices(program, level) {
+  if (!courseCache.has(program)) courseCache.set(program, await api(`/api/paths?program=${encodeURIComponent(program)}`).catch(() => []));
+  const list = courseCache.get(program);
+  const year = Number((String(level).match(/([1-4])/) || [])[1]) || 1;
+  // Letnik brez predmetov (moduli): zadnji letnik s predmeti, kot na učni poti.
+  const years = [...new Set(list.filter((c) => c.year).map((c) => c.year))].filter((y) => y <= year);
+  const y = years.length ? Math.max(...years) : null;
+  return { y, mine: list.filter((c) => c.year === y), elect: list.filter((c) => c.elective) };
+}
+const courseName = (c) => c.label.replace(/ \([^)]*\)$/, "");
+const currentCourse = (mine, elect, s) =>
+  [...mine, ...elect].some((c) => c.key === s.study_course) ? s.study_course : (mine.find((c) => c.subject === s.subject) || mine[0] || elect[0])?.key;
+
+// Menjava predmeta iz menija profila (zgoraj desno, na vsakem zaslonu), ne le v Nastavitvah.
+async function subjectChoices() {
+  const s = state.student?.settings || {};
+  if (!isUni(s)) {
+    const list = schoolSubjectsFor(s.educational_track, s.curriculum_level, isRegional(s.school_system));
+    return [{ items: list.map((k) => ({ id: k, label: SUBJECT_NAMES[k], current: k === s.subject })) }];
+  }
+  if (!s.study_program) return [];
+  const { y, mine, elect } = await courseChoices(s.study_program, s.curriculum_level);
+  const cur = currentCourse(mine, elect, s);
+  const items = (list) => list.map((c) => ({ id: c.key, subject: c.subject, label: courseName(c), current: c.key === cur }));
+  return [
+    { label: y ? t("path.year", { n: y }) : null, items: items(mine) },
+    { label: t("path.electives"), items: items(elect) },
+  ].filter((g) => g.items.length);
+}
+async function pickSubject(item) {
+  const uni = isUni(state.student.settings);
+  const settings = uni ? { study_course: item.id, subject: item.subject || state.student.settings.subject } : { subject: item.id, study_course: "" };
+  const updated = await api(`/api/students/${state.student.id}`, { method: "PUT", body: { settings } });
+  studentUpdated(updated);
+  toast(`${t("set.subject")}: ${item.label}`, "check");
+  // Odprt zaslon pokaže novi predmet takoj.
+  if (currentView === "path") loadPath();
+  else if (currentView === "textbook") showTextbook();
+  else if (currentView === "me") renderMe();
+  else if (currentView === "exams") loadExams();
+  else if (currentView === "competition") regionalExams() ? loadExams() : loadCompetition();
+}
+
 async function fillCourseOptions() {
   const f = $("#settings-form");
   const program = f.study_program.value;
   const sel = f.study_course;
   if (!program) return (sel.innerHTML = "");
   const req = ++courseReq;
-  if (!courseCache.has(program)) courseCache.set(program, await api(`/api/paths?program=${encodeURIComponent(program)}`).catch(() => []));
+  const { y, mine, elect } = await courseChoices(program, f.curriculum_level.value);
   if (req !== courseReq) return; // medtem je bil izbran drug program
-  const list = courseCache.get(program);
-  const year = Number((String(f.curriculum_level.value).match(/([1-4])/) || [])[1]) || 1;
-  // Letnik brez predmetov (moduli): zadnji letnik s predmeti, kot na učni poti.
-  const years = [...new Set(list.filter((c) => c.year).map((c) => c.year))].filter((y) => y <= year);
-  const y = years.length ? Math.max(...years) : null;
-  const mine = list.filter((c) => c.year === y);
-  const elect = list.filter((c) => c.elective);
   const s = state.student?.settings || {};
-  const keys = [...mine, ...elect].map((c) => c.key);
-  const prev = keys.includes(sel.value) ? sel.value : keys.includes(s.study_course) ? s.study_course : (mine.find((c) => c.subject === s.subject) || mine[0] || elect[0])?.key;
-  const opt = (c) => `<option value="${c.key}" data-subject="${c.subject}"${c.key === prev ? " selected" : ""}>${escapeHtml(c.label.replace(/ \([^)]*\)$/, ""))}</option>`;
+  const prev = [...mine, ...elect].some((c) => c.key === sel.value) ? sel.value : currentCourse(mine, elect, s);
+  const opt = (c) => `<option value="${c.key}" data-subject="${c.subject}"${c.key === prev ? " selected" : ""}>${escapeHtml(courseName(c))}</option>`;
   sel.innerHTML =
     (mine.length ? `<optgroup label="${escapeHtml(t("path.year", { n: y }))}">${mine.map(opt).join("")}</optgroup>` : "") +
     (elect.length ? `<optgroup label="${escapeHtml(t("path.electives"))}">${elect.map(opt).join("")}</optgroup>` : "");

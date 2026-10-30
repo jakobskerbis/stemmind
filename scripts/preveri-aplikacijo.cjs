@@ -745,6 +745,37 @@ async function scan(p, label) {
   await screen(p, `skeniraj-zgodovina-${label}`);
 }
 
+// Predmet v menijih zgoraj (public/subject-switch.js): menjava pod klobukom (meni ostane odprt)
+// in v meniju profila (meni se zapre); na koncu spet prvotni predmet.
+async function subjectSwitch(p, lbl) {
+  await tab(p, "path");
+  const label = (pop) => p.locator(`${pop} .subj-sw-btn b`).innerText().then((x) => x.trim());
+  await click(p, ".topbar .brand", { wait: 300 });
+  await expectVisible(p, "#quick-pop .subj-sw-btn", "predmet pod klobukom");
+  const first = await label("#quick-pop");
+  await click(p, "#quick-pop .subj-sw-btn", { wait: 200 });
+  await expectVisible(p, "#quick-pop .subj-sw-opt[aria-checked=false]", "seznam predmetov pod klobukom");
+  await screen(p, `predmet-klobuk-${lbl}`);
+  const other = p.locator("#quick-pop .subj-sw-opt[aria-checked=false]").first();
+  const want = (await other.innerText()).trim();
+  await other.click();
+  await settle(p, 700);
+  if (!(await p.locator("#quick-pop").isVisible())) throw new Error("po menjavi predmeta se meni pod klobukom zapre");
+  if ((await label("#quick-pop")) !== want) throw new Error(`predmet pod klobukom: pričakoval »${want}«, vidim »${await label("#quick-pop")}«`);
+  await expectVisible(p, "#quick-pop .qs-row", "naslednji korak v novem predmetu");
+  await p.keyboard.press("Escape");
+  await click(p, "#profile-btn", { wait: 300 });
+  if ((await label("#profile-pop")) !== want) throw new Error("meni profila ne kaže novega predmeta");
+  await click(p, "#profile-pop .subj-sw-btn", { wait: 200 });
+  await screen(p, `predmet-profil-${lbl}`);
+  await p.locator("#profile-pop .subj-sw-opt").filter({ has: p.getByText(first, { exact: true }) }).first().click();
+  await settle(p, 700);
+  if (await p.locator("#profile-pop").isVisible()) throw new Error("po menjavi predmeta se meni profila ne zapre");
+  await click(p, "#profile-btn", { wait: 300 });
+  if ((await label("#profile-pop")) !== first) throw new Error("predmet se ni vrnil na prvotnega");
+  await p.keyboard.press("Escape");
+}
+
 async function profileMenu(p) {
   await click(p, "#profile-btn");
   await expectVisible(p, "#profile-pop .pm-item", "meni profila");
@@ -813,6 +844,7 @@ async function desktop(browser, app) {
     await click(p, "#back-to-path");
   });
   await step(p, "nadaljuj", () => quickStart(p));
+  await step(p, "predmet-meni", () => subjectSwitch(p, "OS"));
   // Zbirke so na računalniku v meniju profila (na telefonu pod »Jaz«).
   await step(p, "profil-zbirke", async () => {
     await click(p, "#profile-btn");
@@ -875,6 +907,7 @@ async function desktop(browser, app) {
       await click(p, "#back-to-path");
     });
     await step(p, `ucbenik-${lbl}`, () => textbook(p, lbl));
+    if (lbl === "UNI") await step(p, "predmet-meni-UNI", () => subjectSwitch(p, lbl));
     await step(p, `klepet-${lbl}`, () => chat(p, lbl));
     if (lbl === "SS") await step(p, `tekmovanja-${lbl}`, () => competition(p, lbl));
     if (lbl === "SS") await step(p, `npz-matura-${lbl}`, () => examsView(p, lbl));

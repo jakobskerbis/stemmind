@@ -1,6 +1,7 @@
 // Korenska postavitev: prijava → izbira profila → zavihki. Zasloni nad zavihki (lekcija, vaje,
 // pogovor, naročnina) se odprejo kot naravni sklad (iOS: potisk z robu nazaj, Android: gumb nazaj).
 import React, { useEffect } from "react";
+import { ActivityIndicator, Modal, Text, View } from "react-native";
 import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import * as Notifications from "expo-notifications";
@@ -9,6 +10,7 @@ import { SessionProvider, useSession } from "@/lib/session";
 import { t, useLanguage } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
 import { watchPurchases } from "@/lib/billing";
+import { useAppUpdates } from "@/lib/updates";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -16,6 +18,8 @@ function Root() {
   const { ready, signedIn, student, refresh } = useSession();
   const th = useTheme();
   useLanguage();
+  // Nova različica: ob prijavi (in po nekaj urah v ozadju) ponudi posodobitev na en klik (src/lib/updates.ts).
+  const [updating, cancelUpdate] = useAppUpdates(ready && signedIn);
 
   useEffect(() => {
     if (ready) SplashScreen.hideAsync().catch(() => {});
@@ -55,6 +59,18 @@ function Root() {
           <Stack.Screen name="delete-account" options={{ title: t("mob.deleteAccount"), presentation: "modal" }} />
         </Stack.Protected>
       </Stack>
+      {/* Prenos novega APK; gumb nazaj prekliče prenos. */}
+      <Modal transparent visible={updating !== null} animationType="fade" statusBarTranslucent onRequestClose={cancelUpdate}>
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(0,0,0,0.4)", padding: 24 }}>
+          <View style={{ backgroundColor: th.surface, borderColor: th.border, borderWidth: 1, borderRadius: 16, padding: 24, alignItems: "center", gap: 12, minWidth: 240 }}>
+            <ActivityIndicator color={th.accent} />
+            {/* po 10 %, da bralnik zaslona ne bere vsakega odstotka */}
+            <Text style={{ color: th.text, fontSize: 16, textAlign: "center" }} accessibilityLiveRegion="polite">
+              {t("mob.updateDownloading", { pct: Math.floor((updating ?? 0) / 10) * 10 })}
+            </Text>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 }
