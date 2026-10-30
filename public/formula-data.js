@@ -317,7 +317,11 @@ export function annotateTex(tex, subject = override || subjectFn()) {
     if (!key) { out += tex.slice(from, end); return end; }
     const withSub = key.includes("_") || (sub && /^\d$/.test(normSub(sub.raw)));
     const bodyEnd = withSub ? end : j;
-    out += wrap(`${delta ? "d" : "s"}:${subject}:${key}`, tex.slice(from, bodyEnd).trimEnd()) + tex.slice(from, bodyEnd).match(/\s*$/)[0];
+    // Za golim _ ali ^ (\log_a, \int_a^b, e^x) ali ukazom brez oklepajev (\vec F, \bar v) mora biti
+    // oznaka v zavitih oklepajih, sicer jo KaTeX vzame za argument brez njenih argumentov (rdeč surov LaTeX).
+    const bare = /(?:[_^]|\\[a-zA-Z]+|\\[dt]?frac\s*\w)\s*$/.test(out);
+    const marked = wrap(`${delta ? "d" : "s"}:${subject}:${key}`, tex.slice(from, bodyEnd).trimEnd());
+    out += (bare ? `{${marked}}` : marked) + tex.slice(from, bodyEnd).match(/\s*$/)[0];
     out += tex.slice(bodyEnd, end);
     return end;
   };

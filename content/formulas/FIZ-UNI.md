@@ -77,7 +77,7 @@
 |---|---|
 | Lomni zakon | $n_1 \sin\alpha_1 = n_2 \sin\alpha_2$, $\; n = \dfrac{c_0}{c}$, totalni odboj $\sin\alpha_m = \dfrac{n_2}{n_1}$ |
 | Leče, zrcala | $\dfrac{1}{f} = \dfrac{1}{a} + \dfrac{1}{b}$, $\; M = -\dfrac{b}{a}$, zrcalo $f = \dfrac{r}{2}$, $\; \omega = \dfrac{1}{f}$ |
-| Interferenca | dve reži $d \sin\vartheta = N\lambda$ (ojačitev), uklonska mrežica enako, ena reža $b \sin\vartheta = N\lambda$ (minimum) |
+| Interferenca | dve reži ali uklonska mrežica $d \sin\vartheta = N\lambda$ (ojačitev), ena reža $b \sin\vartheta = N\lambda$ (minimum) |
 | Tanka plast | $2 n d \cos\beta = \left(N + \tfrac{1}{2}\right)\lambda$ ojačitev (z enim odbojem na gostejši snovi) |
 | Ločljivost | $\sin\vartheta_{\min} = 1{,}22\,\dfrac{\lambda}{D}$ |
 | Polarizacija | Malus $j = j_0 \cos^2\varphi$, Brewster $\tan\alpha_B = \dfrac{n_2}{n_1}$ |

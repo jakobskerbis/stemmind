@@ -443,6 +443,7 @@ body.graph-open { overflow: hidden; }
 .fm-item { display: grid; grid-template-columns: minmax(120px, 32%) minmax(0, 1fr); gap: 4px 16px; padding: 10px 0; border-top: 1px solid var(--border); align-items: baseline; }
 .fm-list .fm-item:first-child { border-top: 0; }
 .fm-head { font-weight: 800; color: var(--muted); }
+.fm-item.fm-cont { border-top-style: dashed; }
 .fm-name { font-weight: 700; color: var(--muted); }
 /* formula se ne prelomi sredi izraza: lomi se le med formulami; predolga se pomakne vodoravno */
 .fm-f { min-width: 0; overflow-x: auto; overflow-y: hidden; line-height: 1.55; padding: 2px 0; }
@@ -455,6 +456,7 @@ body.graph-open { overflow: hidden; }
   .fm-body .fm-sec { padding: 14px 16px; }
   .fm-item { grid-template-columns: minmax(0, 1fr); padding: 10px 0 12px; }
   .fm-name { font-size: 0.85rem; }
+  .fm-cont .fm-name { display: none; }
 }
 
 .calc-modes { max-width: 100%; overflow-x: auto; }

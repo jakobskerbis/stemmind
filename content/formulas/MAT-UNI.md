@@ -49,7 +49,7 @@
 | Gradient | $\nabla f = \left(\dfrac{\partial f}{\partial x}, \dfrac{\partial f}{\partial y}, \dfrac{\partial f}{\partial z}\right)$, smerni odvod $\dfrac{\partial f}{\partial \vec{e}} = \nabla f \cdot \vec{e}$ |
 | Totalni diferencial | $df = \dfrac{\partial f}{\partial x}dx + \dfrac{\partial f}{\partial y}dy$ |
 | Ekstremi | $\nabla f = 0$; $D = f_{xx} f_{yy} - f_{xy}^2$: $D > 0$ in $f_{xx} > 0$ minimum, $D > 0$ in $f_{xx} < 0$ maksimum, $D < 0$ sedlo |
-| Vezani ekstremi | $\nabla f = \lambda \nabla g$, $\; g = 0$ (Lagrange) |
+| Vezani ekstremi | $\nabla f = \lambda \nabla g$ in $g = 0$ (Lagrange) |
 | Dvojni integral | polarne koordinate: $dx\,dy = r\,dr\,d\varphi$; cilindrične $dV = r\,dr\,d\varphi\,dz$; sferne $dV = r^2 \sin\vartheta\,dr\,d\vartheta\,d\varphi$ |
 
 ## Diferencialne enačbe

@@ -262,6 +262,11 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 :where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:first-child) > tr:first-child > :where(th, td):last-child { border-start-end-radius: calc(var(--radius-sm) - 1px); }
 :where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:last-child) > tr:last-child > :where(th, td):first-child { border-end-start-radius: calc(var(--radius-sm) - 1px); }
 :where(.md-table, .table, .demo-table, .pse-tab, .doc table) > :where(:last-child) > tr:last-child > :where(th, td):last-child { border-end-end-radius: calc(var(--radius-sm) - 1px); }
+/* Ena formula v eni vrstici (rich.js splitFormulaCells): prazna prva celica nadaljuje ime nad njo,
+   zato med njima ni črte in ne progastega ozadja; formule imajo vsaka svojo celico s črto. */
+.md-table > tbody > tr:has(+ tr > td:first-child:empty) > td:first-child { border-bottom-color: transparent; }
+.md-table > tbody > tr:has(+ tr > td:first-child:empty) > td:first-child,
+.md-table > tbody > tr > td:first-child:empty { background: transparent; vertical-align: top; }
 :where(.md-table, .table, .demo-table, .pse-tab, .doc table) [align="center"] { text-align: center; }
 :where(.md-table, .table, .demo-table, .pse-tab, .doc table) [align="right"] { text-align: right; }
 

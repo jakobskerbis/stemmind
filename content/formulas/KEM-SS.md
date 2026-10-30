@@ -49,7 +49,10 @@
 
 | | |
 |---|---|
-| Oksidacijska števila | element $0$; $\mathrm{H}$ $+\mathrm{I}$ (v hidridih kovin $-\mathrm{I}$); $\mathrm{O}$ $-\mathrm{II}$ (v peroksidih $-\mathrm{I}$); vsota v spojini $0$, v ionu naboj |
+| Oksidacijska števila | element $0$ |
+| | vodik $\mathrm{H}$ $+\mathrm{I}$ (v hidridih kovin $-\mathrm{I}$) |
+| | kisik $\mathrm{O}$ $-\mathrm{II}$ (v peroksidih $-\mathrm{I}$) |
+| | vsota v spojini $0$, v ionu naboj |
 | Oksidacija, redukcija | oksidacija: oddaja elektronov (oksidacijsko število se poveča); redukcija: sprejem elektronov (se zmanjša) |
 | Napetost člena | $E^\circ = E^\circ_{\text{katoda}} - E^\circ_{\text{anoda}}$ |
 | Elektroliza (Faraday) | $m = \dfrac{M I t}{z F}$, $\; n(e^-) = \dfrac{I t}{F}$ |

@@ -4,6 +4,7 @@ import katex from "katex";
 import { marked } from "marked";
 import { getPath, getTopic, topicOrder } from "./curriculum.js";
 import { loadLesson, simsFor, expandFormulaBlocks, getBook, formulaSheet } from "./textbook.js";
+import { splitFormulaCells } from "../public/rich.js";
 
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -17,7 +18,7 @@ export function renderMd(text) {
     .replace(/\$\$([\s\S]+?)\$\$/g, (_, t) => stash(t, true))
     .replace(/(^|[^\\$])\$([^$\n]+?)\$/g, (_, pre, t) => pre + stash(t, false));
   return marked
-    .parse(src, { breaks: true })
+    .parse(splitFormulaCells(src, math), { breaks: true })
     .replace(/@@MATH(\d+)@@/g, (_, i) => katex.renderToString(math[i].tex, { displayMode: math[i].display, throwOnError: false, strict: "ignore" }));
 }
 
@@ -177,6 +178,9 @@ function shell(title, content) {
   .sheet td, .sheet th { padding: 2px 6px; vertical-align: middle; }
   .sheet td:first-child { font-weight: 600; white-space: nowrap; }
   .sheet tr { break-inside: avoid; }
+  /* Vsaka formula v svoji vrstici; prazna prva celica nadaljuje ime iz vrstice nad njo. */
+  td:first-child:empty { border-top-color: transparent; }
+  tr:has(+ tr > td:first-child:empty) > td:first-child { border-bottom-color: transparent; }
   .sheet p { margin: 4px 0; }
   .part h1 { font-size: 2rem; margin: 30vh 0 6px; } .toc-part { margin: 16px 0 4px; font-size: 1.05rem; }
   .lesson h2 { font-size: 1.6rem; margin: 0 0 6px; }

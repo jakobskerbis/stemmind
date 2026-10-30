@@ -10,9 +10,17 @@ export function createRenderer({ marked = lib("marked"), katex = lib("katex"), s
   const plain = { throwOnError: false, strict: "ignore" };
   const trusted = { ...plain, trust: (c) => c.command === "\\htmlData" };
 
+  // Označena formula, ki je KaTeX ne zna izrisati, se izriše neoznačena (nikoli rdeč surov LaTeX).
   function renderMath(tex, display, fx = true) {
     try {
-      if (annotate && fx) return katex.renderToString(annotate(tex), { ...trusted, displayMode: display });
+      if (annotate && fx) {
+        const annotated = annotate(tex);
+        if (annotated !== tex) {
+          try {
+            return katex.renderToString(annotated, { ...trusted, throwOnError: true, displayMode: display });
+          } catch { /* spodaj brez oznak */ }
+        }
+      }
       return katex.renderToString(tex, { ...plain, displayMode: display });
     } catch {
       try {
@@ -32,7 +40,7 @@ export function createRenderer({ marked = lib("marked"), katex = lib("katex"), s
       .replace(/\\\[([\s\S]+?)\\\]/g, (_, t) => stash(t, true))
       .replace(/\\\((.+?)\\\)/g, (_, t) => stash(t, false))
       .replace(/(^|[^\\$])\$([^$\n]+?)\$/g, (_, pre, t) => pre + stash(t, false));
-    let html = clean(marked.parse(fixTables(src), { breaks: true, gfm: true }));
+    let html = clean(marked.parse(splitFormulaCells(fixTables(src), math), { breaks: true, gfm: true }));
     // Tabela dobi svoj razred (oblika v style.css velja povsod, ne glede na okvir okoli nje);
     // ulomki in potence v njej so v polni velikosti (\displaystyle), sicer so premajhni za branje.
     html = html.replace(/<table>([\s\S]*?)<\/table>/g, (_, body) => {
@@ -85,6 +93,112 @@ export function centerNumberColumns(html) {
       return a === attrs ? m : `<${tag}${a}>${inner}</${tag}>`;
     })}</tr>`;
   });
+}
+
+// ---------- ena formula v eni celici (j, 2026-10-30) ----------
+
+// Zveza v formuli (enačaj, neenačaj, ekvivalenca …): kos s tako formulo je samostojna formula ali izrek.
+const RELATION = /=|<|>|[≈≤≥≠→⇒⇔]|\\(?:le|ge|leq|geq|ne|neq|approx|iff|implies|Rightarrow|Leftrightarrow|to|equiv|sim|simeq|propto|parallel|perp|in|notin|subset|subseteq|rightarrow|longrightarrow|rightleftharpoons)(?![a-zA-Z])/;
+// Poimenovana formula (»gorišče $G$«, »alkohol $-OH$«): beseda zunaj formul in oklepajev.
+const NAME_WORD = /\p{L}{3,}/u;
+const NOT_NAME = /\b(?:npr|tj|oz|ali|in|ter)\b\.?/giu;
+const LEAD_SPACE = /^(?:\s|\\[;,:!>]|\\q?quad(?![a-zA-Z])|~)+/;
+
+// Besedilo celice razdeli pri vejici ali podpičju (s presledkom za njim) zunaj oklepajev in formul.
+// Kos brez zveze (»maksimum,«, »$a$,«) se pridruži naslednjemu, zadnji pa prejšnjemu.
+function splitCell(cell, isFormula) {
+  const parts = [];
+  let depth = 0;
+  let start = 0;
+  for (let k = 0; k < cell.length; k++) {
+    if (cell.startsWith("@@MATH", k)) {
+      k = cell.indexOf("@@", k + 6) + 1;
+      if (k === 0) break;
+      continue;
+    }
+    const ch = cell[k];
+    if (ch === "(" || ch === "[") depth++;
+    else if ((ch === ")" || ch === "]") && depth > 0) depth--;
+    else if (!depth && (ch === "," || ch === ";") && /\s/.test(cell[k + 1] || "")) {
+      parts.push({ text: cell.slice(start, k), sep: ch });
+      start = k + 1;
+    }
+  }
+  parts.push({ text: cell.slice(start), sep: "" });
+  const out = [];
+  let carry = "";
+  for (const p of parts) {
+    const text = carry + p.text;
+    if (isFormula(text)) {
+      out.push({ text, sep: p.sep });
+      carry = "";
+    } else carry = text + p.sep;
+  }
+  if (carry.trim()) {
+    if (!out.length) return [cell];
+    const last = out[out.length - 1];
+    last.text += last.sep + carry;
+  }
+  return out.map((p) => p.text.trim());
+}
+
+/**
+ * Dvostolpčna tabela »ime | formule«: vsaka formula ali izrek dobi svojo vrstico (j: »samo ena mala
+ * vejica je nejasna«). Nadaljnje vrstice imajo prazno prvo celico; CSS jih poveže z imenom nad njimi.
+ * Dela na besedilu, v katerem so formule že oznake @@MATHn@@ (math[n].tex je njihov LaTeX).
+ */
+export function splitFormulaCells(src, math) {
+  const texOf = (n) => math[n]?.tex || "";
+  const idsOf = (piece) => [...piece.matchAll(/@@MATH(\d+)@@/g)].map((m) => m[1]);
+  const hasRelation = (piece) => idsOf(piece).some((n) => RELATION.test(texOf(n)));
+  // Samostojen kos: formula z zvezo ali poimenovana formula (»obroč $m r^2$«). Seznami samih simbolov
+  // ali števil (»$2$, $8$, $8$«, ioni, »$a$, $b$ kateti«) in stavki (»kot ob $B$, del kotov ob $A$«)
+  // ostanejo skupaj: ime velja le pred pravo formulo ali v celici, ki že ima formule z zvezo.
+  const isFormula = (piece, cellRel) => {
+    const ids = idsOf(piece);
+    if (!ids.length) return false;
+    if (hasRelation(piece)) return true;
+    let flat = piece.replace(/@@MATH\d+@@/g, " ");
+    while (/\([^()]*\)/.test(flat)) flat = flat.replace(/\([^()]*\)/g, " ");
+    if (!NAME_WORD.test(flat.replace(NOT_NAME, " "))) return false;
+    return cellRel || ids.reduce((n, id) => n + texOf(id).replace(/\s/g, "").length, 0) >= 4;
+  };
+  const split = (cell) => splitCell(cell, (piece) => isFormula(piece, hasRelation(cell)));
+  const lines = String(src).split("\n");
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    const head = lines[i];
+    const sep = lines[i + 1];
+    out.push(head);
+    if (sep === undefined || /^\s*>/.test(head) || !isTableRow(head) || !isTableSeparator(sep) || isTableSeparator(head)) continue;
+    if (cells(head).length !== 2 || cells(sep).length !== 2) continue;
+    out.push(sep);
+    const body = [];
+    while (i + 2 < lines.length && lines[i + 2].trim() !== "" && isTableRow(lines[i + 2])) body.push(lines[++i + 1]);
+    i += 1;
+    const rows = body.map((line) => {
+      const c = cells(line);
+      return { line, c, pieces: c.length === 2 ? split(c[1].trim()) : [] };
+    });
+    // Tudi prvi stolpec je seznam (kisline | baze): to ni tabela »ime | formule«, ostane kot je.
+    if (rows.some((r) => r.c.length === 2 && split(r.c[0].trim()).length > 1)) {
+      out.push(...body);
+      continue;
+    }
+    for (const { line, c, pieces } of rows) {
+      if (pieces.length < 2) {
+        out.push(line);
+        continue;
+      }
+      pieces.forEach((p, k) => {
+        // Presledek (\\;) pred formulo je bil ločilo za vejico; v svoji celici ni več potreben.
+        const first = /^@@MATH(\d+)@@/.exec(p);
+        if (first && math[first[1]]) math[first[1]].tex = math[first[1]].tex.replace(LEAD_SPACE, "");
+        out.push(`| ${k ? "" : c[0].trim()} | ${p} |`);
+      });
+    }
+  }
+  return out.join("\n");
 }
 
 const SEP_CELL = /^\s*:?-{1,}:?\s*$/;

@@ -15,7 +15,9 @@
 |---|---|
 | Splošna oblika | $f(x) = a x^2 + b x + c$, $\; D = b^2 - 4 a c$ |
 | Rešitvi enačbe | $x_{1,2} = \dfrac{-b \pm \sqrt{D}}{2 a}$ ($D > 0$ dve, $D = 0$ ena, $D < 0$ ni realnih) |
-| Teme | $T(p, q)$, $\; p = -\dfrac{b}{2 a}$, $\; q = -\dfrac{D}{4 a}$ |
+| Teme | $T(p, q)$ |
+| | $p = -\dfrac{b}{2 a}$ |
+| | $q = -\dfrac{D}{4 a}$ |
 | Temenska oblika | $f(x) = a (x - p)^2 + q$ |
 | Ničelna oblika | $f(x) = a (x - x_1)(x - x_2)$ |
 | Vietovi formuli | $x_1 + x_2 = -\dfrac{b}{a}$, $\; x_1 x_2 = \dfrac{c}{a}$ |
