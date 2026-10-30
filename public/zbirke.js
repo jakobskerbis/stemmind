@@ -151,9 +151,9 @@ export const KNOWLEDGE = [
     ["meme_gelato", "hat", "common", 600, "Sladoledina Kapelina", "Gelatina Hattina"],
     ["meme_spageti", "hat", "common", 800, "Špagetini Klobučini", "Spaghettini Hattini"],
     ["meme_tung", "kind", "rare", 1000, "Tung Tung Tung Hlodek", "Tung Tung Tung Loggy"],
-    ["meme_skampi", "kind", "rare", 1200, "Škampi Mačkini", "Shrimpini Kittini"],
+    ["meme_skampi", "kind", "rare", 1200, "Škampini Mačkini", "Shrimpini Kittini"],
     ["meme_tungfx", "fx", "rare", 1500, "Tung! Tung! Tung!", "Tung! Tung! Tung!"],
-    ["meme_testenine", "fx", "rare", 2000, "Leteče testenine", "Flying pasta"],
+    ["meme_testenine", "fx", "rare", 1800, "Leteče testenine", "Flying pasta"],
     ["meme_kavicina", "kind", "epic", 2500, "Balerina Kavičina", "Ballerina Coffeeina"],
     ["meme_kokos", "kind", "epic", 3200, "Kapibarini Kokosini", "Capybarini Coconutini"],
     ["meme_bananini", "kind", "epic", 4000, "Opičini Bananini", "Monkeyini Bananini"],
@@ -417,7 +417,7 @@ const OUTFIT = {
 
 const ACC = {
   meme_limone: () =>
-    `<path d="M31 50H20M69 50h11M49 52h2" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/>${[40, 60].map((x) => `<g transform="translate(${x} 52)"><circle r="9" fill="#fef9c3" fill-opacity=".9" stroke="#facc15" stroke-width="2.6"/><circle r="6.6" fill="none" stroke="#fff" stroke-width="1"/><g stroke="#fde047" stroke-width="1.1">${[0, 60, 120].map((a) => `<path d="M0-6.2V6.2" transform="rotate(${a})"/>`).join("")}</g></g>`).join("")}`,
+    `<path d="M31 50H20M69 50h11M49 52h2" stroke="${INK}" stroke-width="2.2" stroke-linecap="round"/>${[40, 60].map((x) => `<g transform="translate(${x} 52)"><circle r="9" fill="#fef9c3" fill-opacity=".6" stroke="#facc15" stroke-width="2.6"/><circle r="6.6" fill="none" stroke="#fff" stroke-width="1"/><g stroke="#fde047" stroke-width="1.1">${[0, 60, 120].map((a) => `<path d="M0-6.2V6.2" transform="rotate(${a})"/>`).join("")}</g></g>`).join("")}`,
   acc_joystick: () =>
     `<g transform="translate(74 82) rotate(-14)"><rect x="-14" y="-7.5" width="28" height="15" rx="7.5" fill="#334155" stroke="${INK}" stroke-width="2"/><path d="M-8.5-3v6M-11.5 0h6" stroke="#f8fafc" stroke-width="2.2" stroke-linecap="round"/><circle cx="5" cy="-2" r="2" fill="#ef4444"/><circle cx="9.5" cy="1.5" r="2" fill="#22c55e"/></g>`,
   pot_pregl: () => `<circle cx="60" cy="52" r="10" fill="#e0f2fe" fill-opacity=".35" stroke="#a16207" stroke-width="3"/><path d="M67 59l12 12" stroke="#78350f" stroke-width="4.5" stroke-linecap="round"/><path d="M55 47q3-3 7-2" stroke="#fff" stroke-width="1.6" fill="none"/>`,
@@ -427,7 +427,7 @@ const ACC = {
 
 const HAT = {
   meme_spageti: () =>
-    `<path d="M60 18L70 3" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"/><path d="M67 2l2.4-2M70 3.5l2.6-1.8M71.5 5.5l3-1" stroke="#94a3b8" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="50" cy="26" rx="24" ry="5" fill="#f8fafc" stroke="${INK}" stroke-width="2"/><path d="M32 25q2-13 18-14t18 14z" fill="#fde68a" stroke="${INK}" stroke-width="1.8" stroke-linejoin="round"/><path d="M36 21q4-4 8 0t8 0 8 0M39 16q4-4 8 0t8 0" stroke="#eab308" stroke-width="1.3" fill="none"/><path d="M41 14q9-7 18 0-3 4-9 3-6 1-9-3z" fill="#ef4444"/><circle cx="50" cy="9.5" r="4.5" fill="#92400e" stroke="${INK}" stroke-width="1.5"/><circle cx="48.6" cy="8.2" r="1.2" fill="#fff" opacity=".5"/>`,
+    `<path d="M58 20L68 5" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round"/><path d="M65 4l2.4-2M68 5.5l2.6-1.8M69.5 7.5l3-1" stroke="#94a3b8" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="50" cy="26" rx="24" ry="5" fill="#f8fafc" stroke="${INK}" stroke-width="2"/><path d="M32 25q2-13 18-14t18 14z" fill="#fde68a" stroke="${INK}" stroke-width="1.8" stroke-linejoin="round"/><path d="M36 21q4-4 8 0t8 0 8 0M39 16q4-4 8 0t8 0" stroke="#eab308" stroke-width="1.3" fill="none"/><path d="M41 14q9-7 18 0-3 4-9 3-6 1-9-3z" fill="#ef4444"/><circle cx="50" cy="9.5" r="4.5" fill="#92400e" stroke="${INK}" stroke-width="1.5"/><circle cx="48.6" cy="8.2" r="1.2" fill="#fff" opacity=".5"/>`,
   meme_gelato: () =>
     `<path d="M37 22L50 2 63 22z" fill="#f59e0b" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M43 22l9-14M57 22l-9-14M41 17h18M46 10h8" stroke="#b45309" stroke-width="1.1"/><path d="M33 26q0-11 17-11t17 11q-3 3-6 0-2 5-6 1-3 4-6 0-3 4-6 0-3 3-6-1-2 3-4 0z" fill="#f9a8d4" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><g stroke-width="1.6" stroke-linecap="round"><path d="M41 20l2-1" stroke="#22c55e"/><path d="M50 18l2 1" stroke="#3b82f6"/><path d="M58 21l2-1" stroke="#facc15"/><path d="M45 23l1 1.5" stroke="#fff"/></g>`,
   pot_starcrown: () =>
@@ -438,10 +438,11 @@ const HAT = {
 };
 
 // Liki (predal »kind«): back = za telesom (ušesa, rogovi, krila), front = na telesu (gobček, trebuh, brki).
-// Barva telesa (url(#g…)) ostane učenčeva izbira, lik doda obliko.
+// Barva telesa (url(#g…)) ostane učenčeva izbira, lik doda obliko (izjema: Hlodek, Hladilnikini, Lubenicini).
 const F = (u) => `url(#g${u})`;
-// Obris telesa (kot BODY_PATH v public/avatar.js) za lubenično lupino.
-const BODY_OUTLINE = "M50 24c19 0 31 13 31 34v24c0 8-6 12-14 12H33c-8 0-14-4-14-12V58c0-21 12-34 31-34z";
+// Obris telesa (uporablja ga tudi public/avatar.js). Liki, ki prekrijejo barvo telesa, obris narišejo znova.
+export const BODY_PATH = "M50 24c19 0 31 13 31 34v24c0 8-6 12-14 12H33c-8 0-14-4-14-12V58c0-21 12-34 31-34z";
+const OUTLINE = `<path d="${BODY_PATH}" fill="none" stroke="${INK}" stroke-width="3"/>`;
 const KIND = {
   meme_skampi: {
     back: (u) =>
@@ -450,14 +451,14 @@ const KIND = {
       `<g clip-path="url(#c${u})" fill="none" stroke="#fb923c" stroke-width="3.2" opacity=".75"><path d="M16 76q34 8 68 0M16 86q34 8 68 0"/></g><path d="M47 60h6l-3 3z" fill="#fb7185" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/><g stroke="${INK}" stroke-width="1.3" stroke-linecap="round"><path d="M22 59l12 2M22 66l12-2M78 59l-12 2M78 66l-12-2"/></g>`,
   },
   meme_kokos: {
-    back: (u) => `<circle cx="31" cy="33" r="5.5" fill="${F(u)}" stroke="${INK}" stroke-width="2.2"/><circle cx="69" cy="33" r="5.5" fill="${F(u)}" stroke="${INK}" stroke-width="2.2"/>`,
+    back: (u) => `<circle cx="26" cy="36" r="5.5" fill="${F(u)}" stroke="${INK}" stroke-width="2.2"/><circle cx="74" cy="36" r="5.5" fill="${F(u)}" stroke="${INK}" stroke-width="2.2"/>`,
     front: () =>
-      `<rect x="37" y="55" width="26" height="16" rx="8" fill="#fff" opacity=".3"/><ellipse cx="45" cy="59.5" rx="1.6" ry="1.1" fill="${INK}"/><ellipse cx="55" cy="59.5" rx="1.6" ry="1.1" fill="${INK}"/><path d="M58 18l8-14h6" stroke="#f472b6" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 31q0-17 20-17t20 17z" fill="#7c4a1e" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M31 30.5h38" stroke="#fef3c7" stroke-width="3" stroke-linecap="round"/><g stroke="#a16207" stroke-width="1" stroke-linecap="round"><path d="M38 22l2-2M46 18l2-2M56 20l2-2M62 25l2-2M42 27l2-2"/></g><g transform="translate(38 16) rotate(-20)"><path d="M0 0v-9" stroke="${INK}" stroke-width="1.2"/><path d="M-8-8q8-8 16 0z" fill="#22d3ee" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/></g>`,
+      `<rect x="37" y="55" width="26" height="16" rx="8" fill="#7c4a1e" opacity=".22"/><ellipse cx="45" cy="59.5" rx="1.6" ry="1.1" fill="${INK}"/><ellipse cx="55" cy="59.5" rx="1.6" ry="1.1" fill="${INK}"/><path d="M58 18l8-14h6" stroke="#f472b6" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 31q0-17 20-17t20 17z" fill="#7c4a1e" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M31 30.5h38" stroke="#fef3c7" stroke-width="3" stroke-linecap="round"/><g stroke="#a16207" stroke-width="1" stroke-linecap="round"><path d="M38 22l2-2M46 18l2-2M56 20l2-2M62 25l2-2M42 27l2-2"/></g><g transform="translate(38 16) rotate(-20)"><path d="M0 0v-9" stroke="${INK}" stroke-width="1.2"/><path d="M-8-8q8-8 16 0z" fill="#22d3ee" stroke="${INK}" stroke-width="1.2" stroke-linejoin="round"/></g>`,
   },
   meme_frigo: {
     back: () => `<path d="M24 44Q22 8 38 8Q48 8 50 26Q52 6 64 6Q80 8 76 44z" fill="#d6a86b" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M24 66Q10 58 11 38" fill="none" stroke="${INK}" stroke-width="10" stroke-linecap="round"/><path d="M24 66Q10 58 11 38" fill="none" stroke="#d6a86b" stroke-width="6" stroke-linecap="round"/><ellipse cx="8" cy="33" rx="7.5" ry="5" fill="#d6a86b" stroke="${INK}" stroke-width="2"/><path d="M11 28l2-4 2 4" fill="#d6a86b" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/><circle cx="9" cy="31.5" r="1.2" fill="${INK}"/><path d="M2 35.5h2" stroke="${INK}" stroke-width="1.2" stroke-linecap="round"/><g stroke="#b45309" stroke-width="4" stroke-linecap="round"><path d="M30 92v6M42 92v6M58 92v6M70 92v6"/></g>`,
     front: (u) =>
-      `<g clip-path="url(#c${u})"><rect width="100" height="100" fill="#f1f5f9"/><rect y="70" width="100" height="2.5" fill="#94a3b8"/><path d="M26 36q4-6 10-7" stroke="#cbd5e1" stroke-width="3" fill="none" stroke-linecap="round"/></g><rect x="72" y="75" width="3.5" height="13" rx="1.75" fill="#e2e8f0" stroke="${INK}" stroke-width="1.4"/><circle cx="31" cy="80" r="3" fill="#ef4444" stroke="${INK}" stroke-width="1"/><rect x="38" y="81" width="8" height="7" rx="1.2" fill="#facc15" stroke="${INK}" stroke-width="1"/><text x="42" y="87" font-size="6" font-weight="800" text-anchor="middle" font-family="Georgia,serif" fill="${INK}">π</text>`,
+      `<g clip-path="url(#c${u})"><rect width="100" height="100" fill="#f1f5f9"/><rect y="70" width="100" height="2.5" fill="#94a3b8"/><path d="M26 36q4-6 10-7" stroke="#cbd5e1" stroke-width="3" fill="none" stroke-linecap="round"/></g>${OUTLINE}<rect x="72" y="75" width="3.5" height="13" rx="1.75" fill="#e2e8f0" stroke="${INK}" stroke-width="1.4"/><circle cx="31" cy="80" r="3" fill="#ef4444" stroke="${INK}" stroke-width="1"/><rect x="38" y="81" width="8" height="7" rx="1.2" fill="#facc15" stroke="${INK}" stroke-width="1"/><text x="42" y="87" font-size="6" font-weight="800" text-anchor="middle" font-family="Georgia,serif" fill="${INK}">π</text>`,
   },
   meme_cajnik: {
     back: (u) =>
@@ -469,12 +470,12 @@ const KIND = {
     back: () =>
       `<path d="M78 80q16 0 20-12 2 10-4 16 4 2 4 6-10 4-20-2z" fill="#16a34a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M32 32l2-8 6 4 3-8 7 6 7-6 3 8 6-4 2 8z" fill="#16a34a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`,
     front: (u) =>
-      `<g clip-path="url(#c${u})"><rect width="100" height="100" fill="#f87171"/><path d="${BODY_OUTLINE}" fill="none" stroke="#bbf7d0" stroke-width="16"/><path d="${BODY_OUTLINE}" fill="none" stroke="#16a34a" stroke-width="9"/></g>${[[38, 72], [50, 78], [62, 72], [44, 86], [57, 87], [36, 40], [64, 40]].map(([x, y]) => `<path transform="translate(${x} ${y})" d="M0-2.4q1.8 1.8 0 4-1.8-2.2 0-4z" fill="${INK}"/>`).join("")}<g fill="#16a34a" stroke="${INK}" stroke-width="1.8"><ellipse cx="34" cy="94" rx="9" ry="4"/><ellipse cx="66" cy="94" rx="9" ry="4"/></g><path d="M28 96v-2M32 97v-2M62 97v-2M66 97v-2M70 96v-2" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>`,
+      `<g clip-path="url(#c${u})"><rect width="100" height="100" fill="#f87171"/><path d="${BODY_PATH}" fill="none" stroke="#bbf7d0" stroke-width="16"/><path d="${BODY_PATH}" fill="none" stroke="#16a34a" stroke-width="9"/></g>${OUTLINE}${[[38, 72], [50, 78], [62, 72], [44, 86], [57, 87], [36, 40], [64, 40]].map(([x, y]) => `<path transform="translate(${x} ${y})" d="M0-2.4q1.8 1.8 0 4-1.8-2.2 0-4z" fill="${INK}"/>`).join("")}<g fill="#16a34a" stroke="${INK}" stroke-width="1.8"><ellipse cx="34" cy="94" rx="9" ry="4"/><ellipse cx="66" cy="94" rx="9" ry="4"/></g><path d="M28 96v-2M32 97v-2M62 97v-2M66 97v-2M70 96v-2" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>`,
   },
-  // Smešni liki: Hlodek je lesen (barvo telesa prekrije les), ostali obdržijo učenčevo barvo.
+  // Smešni liki: Hlodek, Hladilnikini in Lubenicini prekrijejo barvo telesa, ostali jo obdržijo.
   meme_tung: {
     front: (u) =>
-      `<g clip-path="url(#c${u})"><rect width="100" height="100" fill="#c68a4e"/><g stroke="#7c4a1e" stroke-width="1.6" fill="none" opacity=".45"><path d="M27 40q-3 25 0 56M38 32q-2 30 0 64M62 32q2 30 0 64M73 40q3 25 0 56"/></g></g><ellipse cx="50" cy="31" rx="17" ry="5.5" fill="#ecc994" stroke="${INK}" stroke-width="1.8"/><ellipse cx="50" cy="31" rx="11" ry="3.4" fill="none" stroke="#a16207" stroke-width="1.1"/><ellipse cx="50" cy="31" rx="5" ry="1.5" fill="none" stroke="#a16207" stroke-width="1.1"/><g transform="rotate(12 86 72)"><rect x="84" y="48" width="4" height="40" rx="2" fill="#ecc994" stroke="${INK}" stroke-width="1.5"/><ellipse cx="86" cy="47" rx="6" ry="5" fill="#fef3c7" stroke="${INK}" stroke-width="1.6"/></g><circle cx="85" cy="74" r="4.2" fill="#c68a4e" stroke="${INK}" stroke-width="1.6"/>`,
+      `<g clip-path="url(#c${u})"><rect width="100" height="100" fill="#c68a4e"/><g stroke="#7c4a1e" stroke-width="1.6" fill="none" opacity=".45"><path d="M27 40q-3 25 0 56M38 32q-2 30 0 64M62 32q2 30 0 64M73 40q3 25 0 56"/></g></g>${OUTLINE}<ellipse cx="50" cy="31" rx="17" ry="5.5" fill="#ecc994" stroke="${INK}" stroke-width="1.8"/><ellipse cx="50" cy="31" rx="11" ry="3.4" fill="none" stroke="#a16207" stroke-width="1.1"/><ellipse cx="50" cy="31" rx="5" ry="1.5" fill="none" stroke="#a16207" stroke-width="1.1"/><g transform="rotate(12 86 72)"><rect x="84" y="48" width="4" height="40" rx="2" fill="#ecc994" stroke="${INK}" stroke-width="1.5"/><ellipse cx="86" cy="47" rx="6" ry="5" fill="#fef3c7" stroke="${INK}" stroke-width="1.6"/></g><circle cx="85" cy="74" r="4.2" fill="#c68a4e" stroke="${INK}" stroke-width="1.6"/>`,
   },
   meme_kavicina: {
     front: () =>
