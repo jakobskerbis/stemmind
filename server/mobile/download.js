@@ -10,6 +10,7 @@ import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import express from "express";
 import { BRAND } from "../brand.js";
+import { apkVersion } from "./apk-info.js";
 import { uiText, manifestLang } from "../webapp.js";
 import { RTL } from "../../public/i18n/languages.js";
 
@@ -76,7 +77,8 @@ export async function fetchApk(url, file, fetchImpl = fetch) {
           yield chunk;
         }
       },
-      fs.createWriteStream(tmp),
+      // Datoteko odpremo takoj: lenobno odpiranje bi jo lahko ustvarilo šele po brisanju ob napaki.
+      fs.createWriteStream(tmp, { fd: fs.openSync(tmp, "w") }),
     );
     if (!head.equals(ZIP)) stop("To ni datoteka APK.");
     fs.renameSync(tmp, file);
@@ -93,13 +95,27 @@ export function mountDownload(app, opts = {}) {
   const dataDir = path.dirname(env.EVKLID_DB || `data/${BRAND.slug}.db`);
   const apkFile = opts.apkFile || path.resolve(env.EVKLID_ANDROID_APK_FILE || path.join(dataDir, apkName));
 
-  // Kje je aplikacija za posamezno napravo (gumb »Namesti aplikacijo« v spletni aplikaciji).
-  const links = () => ({
-    apk: httpsUrl(env.EVKLID_ANDROID_APK_URL) || (fs.existsSync(apkFile) ? `/prenesi/${apkName}` : null),
-    play: httpsUrl(env.EVKLID_PLAY_URL),
-    appStore: httpsUrl(env.EVKLID_APP_STORE_URL),
-    testflight: httpsUrl(env.EVKLID_TESTFLIGHT_URL),
-  });
+  // Različica naloženega APK (versionCode iz manifesta); aplikacija jo primerja s svojo in ponudi posodobitev.
+  let versionCache = { mtime: 0, version: null };
+  const fileVersion = (st) => {
+    if (!st) return null;
+    if (versionCache.mtime !== st.mtimeMs) versionCache = { mtime: st.mtimeMs, version: apkVersion(apkFile) };
+    return versionCache.version;
+  };
+
+  // Kje je aplikacija za posamezno napravo (gumb »Namesti aplikacijo« v spletni aplikaciji in
+  // preverjanje posodobitev v aplikaciji). apkVersion samo za APK na tem strežniku.
+  const links = () => {
+    const url = httpsUrl(env.EVKLID_ANDROID_APK_URL);
+    const st = url ? null : fs.statSync(apkFile, { throwIfNoEntry: false });
+    return {
+      apk: url || (st ? `/prenesi/${apkName}` : null),
+      apkVersion: fileVersion(st),
+      play: httpsUrl(env.EVKLID_PLAY_URL),
+      appStore: httpsUrl(env.EVKLID_APP_STORE_URL),
+      testflight: httpsUrl(env.EVKLID_TESTFLIGHT_URL),
+    };
+  };
   app.get("/api/app-links", (_req, res) => res.set("Cache-Control", "no-cache").json(links()));
 
   const admin = (req, res) => {
@@ -109,7 +125,7 @@ export function mountDownload(app, opts = {}) {
   };
   const apkStatus = () => {
     const st = fs.statSync(apkFile, { throwIfNoEntry: false });
-    return { file: st ? { bytes: st.size, at: st.mtime.toISOString() } : null, url: httpsUrl(env.EVKLID_ANDROID_APK_URL) };
+    return { file: st ? { bytes: st.size, at: st.mtime.toISOString(), version: fileVersion(st) } : null, url: httpsUrl(env.EVKLID_ANDROID_APK_URL) };
   };
   app.get("/api/admin/apk", (req, res) => {
     if (admin(req, res)) res.json(apkStatus());
