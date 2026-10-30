@@ -18,6 +18,7 @@ import { promoConfig, createPromo } from "./promo.js";
 import { minAgeOf, ageOn, parseBirthDate, ADULT_AGE } from "./age.js";
 import { guestModeOn, guestNet, guestPerDay, GuestQuota, GUEST_SESSION_DAYS } from "./guest.js";
 import { ProfileLocks, checkProfilePassword } from "./profile-lock.js";
+import { gateNeeded } from "../gate.js";
 
 export const CONSENT_TEXT =
   "Izjavljam, da sem starš ali zakoniti zastopnik tega otroka in soglašam, da Evklid obdeluje otrokove osebne podatke " +
@@ -70,6 +71,11 @@ export function mountAccounts(app, store, opts = {}) {
   const sessions = new Sessions(db);
   const devices = new Devices(db);
   const throttle = new Throttle();
+  // Brez skupnega gesla je registracija odprta spletu: največ 5 novih računov z enega naslova IP na dan.
+  const signupThrottle = new Throttle(Number(env.EVKLID_SIGNUPS_PER_DAY) || 5, 24 * 3600000);
+  // Povezava za potrditev ali novo geslo v odgovoru (ko e-pošta ni nastavljena) samo na računalniku s strežnikom
+  // ali za skupnim geslom; sicer bi kdorkoli prevzel tuj račun (»pozabljeno geslo«) ali potrdil izmišljen e-naslov.
+  const devLinks = (req) => !mailer.enabled && (isLocalRequest(req) || gateNeeded(env));
   const locks = new ProfileLocks(db);
   const profileThrottle = new Throttle(10);
   const json = express.json({ limit: "100kb" });
@@ -94,6 +100,9 @@ export function mountAccounts(app, store, opts = {}) {
     db.prepare(`UPDATE parents SET ${keys.map((k) => `${k} = ?`).join(", ")} WHERE id = ?`).run(...keys.map((k) => fields[k]), id);
   };
 
+  // Skrbnik po e-naslovu (EVKLID_ADMIN_EMAILS) šele po potrditvi e-naslova: sicer bi se kdorkoli registriral z njim.
+  const isAdminEmail = (p) => !!p?.email_verified_at && adminEmails.includes(String(p.email).toLowerCase());
+
   // Imetnik računa, mlajši od 18 let (dijak, ki je račun ustvaril sam): sme imeti samo svoj profil.
   const isMinor = (p) => {
     const age = p?.birth_date ? ageOn(p.birth_date) : null;
@@ -108,7 +117,7 @@ export function mountAccounts(app, store, opts = {}) {
     minor: isMinor(p),
     birth_year: p.birth_date ? Number(p.birth_date.slice(0, 4)) : null,
     verified: !!p.email_verified_at,
-    is_admin: !!p.is_admin || adminEmails.includes(String(p.email).toLowerCase()),
+    is_admin: !!p.is_admin || isAdminEmail(p),
     weekly_email: !!p.weekly_email,
     referral_code: p.referral_code,
     trial_ends_at: p.trial_ends_at,
@@ -174,7 +183,7 @@ export function mountAccounts(app, store, opts = {}) {
     const pid = sessions.parentId(readCookie(req));
     req.parent = pid ? getParent(pid) : null;
     // Skrbnik: e-naslov v EVKLID_ADMIN_EMAILS (tudi če je bil dodan po registraciji).
-    if (req.parent && adminEmails.includes(String(req.parent.email).toLowerCase())) req.parent.is_admin = 1;
+    if (req.parent && isAdminEmail(req.parent)) req.parent.is_admin = 1;
     req.deviceId = devices.identify(req, _res);
     next();
   });
@@ -287,8 +296,10 @@ export function mountAccounts(app, store, opts = {}) {
   }
 
   app.post("/api/auth/register", json, async (req, res) => {
+    if (!isLocalRequest(req) && signupThrottle.blocked(req.ip)) return res.status(429).json({ error: "Z tega omrežja je danes ustvarjenih že preveč računov. Poskusite jutri." });
     const v = checkSignup(req, res);
     if (!v) return;
+    signupThrottle.fail(req.ip);
     const { email, password } = v;
 
     const refCode = String(req.body?.referral_code || "").trim().toUpperCase();
@@ -296,19 +307,16 @@ export function mountAccounts(app, store, opts = {}) {
     const token = randomToken();
     let code = referralCode();
     while (db.prepare("SELECT 1 FROM parents WHERE referral_code = ?").get(code)) code = referralCode();
-    const isAdmin = adminEmails.includes(email) ? 1 : 0;
     const r = db
       .prepare(
         `INSERT INTO parents (email, password_hash, name, is_admin, verify_token_hash, privacy_version, trial_ends_at, unsubscribe_token, referral_code, referred_by)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       )
-      .run(email, hashPassword(password), cleanText(req.body?.name, 60), isAdmin, sha256(token), PRIVACY_VERSION, isoIn(TRIAL_DAYS), randomToken(18), code, referrer?.id ?? null);
+      .run(email, hashPassword(password), cleanText(req.body?.name, 60), 0, sha256(token), PRIVACY_VERSION, isoIn(TRIAL_DAYS), randomToken(18), code, referrer?.id ?? null);
     const id = Number(r.lastInsertRowid);
     db.prepare("UPDATE parents SET birth_date = ? WHERE id = ?").run(v.birthIso, id);
     const country = String(req.headers["cf-ipcountry"] || req.body?.country || "").toUpperCase();
     if (/^[A-Z]{2}$/.test(country)) db.prepare("UPDATE parents SET country = ? WHERE id = ?").run(country, id);
-    // Skrbnik prevzame učence iz časa pred računi.
-    if (isAdmin) db.prepare("UPDATE students SET parent_id = ? WHERE parent_id IS NULL").run(id);
 
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(email, verifyEmail(url));
@@ -320,7 +328,7 @@ export function mountAccounts(app, store, opts = {}) {
       parent: publicParent(getParent(id)),
       referred: !!referrer,
       ...(promoResult?.ok ? { promo_until: promoResult.until } : promoResult ? { promo_error: promoResult.error } : {}),
-      ...(mailer.enabled ? {} : { dev_verify_url: url }),
+      ...(devLinks(req) ? { dev_verify_url: url } : {}),
     });
   });
 
@@ -362,18 +370,16 @@ export function mountAccounts(app, store, opts = {}) {
     const v = checkSignup(req, res);
     if (!v) return;
     const token = randomToken();
-    const isAdmin = adminEmails.includes(v.email) ? 1 : 0;
     db.prepare(
       `UPDATE parents SET email = ?, password_hash = ?, name = ?, is_admin = ?, verify_token_hash = ?, privacy_version = ?,
          privacy_accepted_at = datetime('now'), birth_date = ?, weekly_email = 1, is_guest = 0 WHERE id = ?`,
-    ).run(v.email, hashPassword(v.password), cleanText(req.body?.name, 60), isAdmin, sha256(token), PRIVACY_VERSION, v.birthIso, p.id);
+    ).run(v.email, hashPassword(v.password), cleanText(req.body?.name, 60), 0, sha256(token), PRIVACY_VERSION, v.birthIso, p.id);
     db.prepare("UPDATE consents SET parent_email = ? WHERE parent_id = ?").run(v.email, p.id);
-    if (isAdmin) db.prepare("UPDATE students SET parent_id = ? WHERE parent_id IS NULL").run(p.id);
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(v.email, verifyEmail(url));
     sessions.destroyAll(p.id);
     setSessionCookie(req, res, sessions.create(p.id));
-    res.json({ parent: publicParent(getParent(p.id)), ...(mailer.enabled ? {} : { dev_verify_url: url }) });
+    res.json({ parent: publicParent(getParent(p.id)), ...(devLinks(req) ? { dev_verify_url: url } : {}) });
   });
 
   // Gost se prijavi v obstoječi račun: njegove profile prenesemo, če je v paketu prostor.
@@ -398,6 +404,11 @@ export function mountAccounts(app, store, opts = {}) {
     // Nekdanji gost: s potrditvijo zapusti kvoto omrežja in dobi 7-dnevni preizkus.
     const full = getParent(p.id);
     if (full.guest_net && !full.is_guest) update(p.id, { guest_net: null, trial_ends_at: full.trial_ends_at || isoIn(TRIAL_DAYS) });
+    // Skrbnik (potrjen e-naslov iz EVKLID_ADMIN_EMAILS) prevzame učence iz časa pred računi.
+    if (isAdminEmail(full)) {
+      update(p.id, { is_admin: 1 });
+      db.prepare("UPDATE students SET parent_id = ? WHERE parent_id IS NULL").run(p.id);
+    }
     res.redirect("/?verified=1");
   });
 
@@ -410,7 +421,7 @@ export function mountAccounts(app, store, opts = {}) {
     update(p.id, { verify_token_hash: sha256(token) });
     const url = `${baseUrl(req)}/api/auth/verify?token=${token}`;
     await sendMail(p.email, verifyEmail(url));
-    res.json({ ok: true, ...(mailer.enabled ? {} : { dev_verify_url: url }) });
+    res.json({ ok: true, ...(devLinks(req) ? { dev_verify_url: url } : {}) });
   });
 
   app.post("/api/auth/login", json, (req, res) => {
@@ -436,7 +447,9 @@ export function mountAccounts(app, store, opts = {}) {
   app.post("/api/auth/logout", (req, res) => {
     if (req.parent) locks.lockDevice(childIds(req.parent.id), req.deviceId);
     sessions.destroy(readCookie(req));
-    clearSessionCookie(res);
+    clearSessionCookie(req, res);
+    // Gumb »Odjava« na zaslonu za geslo profila je navaden obrazec (deluje tudi, če skript odpove).
+    if (req.accepts(["json", "html"]) === "html") return res.redirect(303, "/");
     res.json({ ok: true });
   });
 
@@ -450,7 +463,7 @@ export function mountAccounts(app, store, opts = {}) {
       await sendMail(p.email, resetEmail(devUrl));
     }
     // Enak odgovor ne glede na to, ali račun obstaja.
-    res.json({ ok: true, ...(!mailer.enabled && devUrl ? { dev_reset_url: devUrl } : {}) });
+    res.json({ ok: true, ...(devLinks(req) && devUrl ? { dev_reset_url: devUrl } : {}) });
   });
 
   app.post("/api/auth/reset", json, (req, res) => {
@@ -627,7 +640,7 @@ export function mountAccounts(app, store, opts = {}) {
     guests.snapshotParent(p.id); // poraba gosta ostane šteta za omrežje
     db.prepare("DELETE FROM students WHERE parent_id = ?").run(p.id);
     db.prepare("DELETE FROM parents WHERE id = ?").run(p.id);
-    clearSessionCookie(res);
+    clearSessionCookie(req, res);
     res.json({ ok: true });
   });
 

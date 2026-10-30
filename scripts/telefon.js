@@ -1,4 +1,4 @@
-// Odpre Evklid na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
+// Odpre Evklid na telefonu: zažene strežnik (z računi prijava v račun, sicer skupno geslo) in odpre povezavo z interneta.
 // Lastna domena (npr. https://evklid.app): tunel Cloudflare, nameščen kot storitev na računalniku
 // (žeton je v storitvi, ne v .env). Skript storitev zazna sam, naslov je EVKLID_JAVNI_NASLOV v .env
 // ali domena iz brand.json. Sicer stalna povezava ngrok (NGROK_AUTHTOKEN in NGROK_DOMAIN v .env,
@@ -84,11 +84,20 @@ async function ensurePassword() {
 let server = null; // nadzor strežnika (scripts/nadzor.js), da ga lahko posodobitev znova zažene
 let log = null;
 
+// Strežnik, ki že teče, ima vklopljene račune (vstop je prijava v račun).
+async function accountsRunning() {
+  try {
+    const r = await fetch(`${local}/api/account/status`, { signal: AbortSignal.timeout(2000) });
+    return r.ok && (await r.json()).enabled === true;
+  } catch { return false; }
+}
+
 async function ensureServer() {
   const s = await serverStatus(port);
   if (s === 401) return false; // že teče z geslom (v drugem oknu)
+  if (s && !gateOn() && (await accountsRunning())) return false; // že teče z računi (v drugem oknu)
   if (s) {
-    say("Evklid že teče brez gesla. Zapri drugo okno Evklida in znova zaženi to datoteko.");
+    say(`Evklid že teče brez ${accountsOn() ? "prijave" : "gesla"}. Zapri drugo okno Evklida in znova zaženi to datoteko.`);
     return stopAll(1);
   }
   log = openLog(root);
@@ -366,7 +375,7 @@ async function main() {
     say("  Ob prvem odprtju brez gesla v povezavi stran vpraša za geslo iz .env.");
   } else {
     if (copied) say("  Povezava je že kopirana: prilepi jo v sporočilo.");
-    say("  Kdor ni prijavljen, vidi stran za prijavo: prijavi se v svoj račun ali ga ustvari.");
+    say("  Kdor ni prijavljen, vidi stran za prijavo: tam se prijavi v svoj račun ali ga ustvari.");
   }
   say("  Na telefonu v meniju brskalnika izberi »Dodaj na začetni zaslon«.");
   say();
