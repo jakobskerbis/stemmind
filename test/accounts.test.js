@@ -167,7 +167,9 @@ test("free tier limits tutor questions; subscription via webhook lifts it", asyn
       assert.equal((await ask("drugo")).status, 200);
       const blocked = await ask("tretje");
       assert.equal(blocked.status, 429);
-      assert.equal(blocked.body.upgrade, true);
+      // Otrok, mlajši od 15 let: brez ponudbe nakupa (server/placila/ponudbe.js).
+      assert.equal(blocked.body.upgrade, false);
+      assert.doesNotMatch(blocked.body.error, /naročnin/);
 
       // Plačilo: checkout s pravilno ceno.
       const co = await a("/api/billing/checkout", { method: "POST", body: { seats: 1, interval: "year", adult: true, withdrawal: true } });

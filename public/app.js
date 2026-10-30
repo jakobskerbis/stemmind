@@ -1139,7 +1139,7 @@ async function showLevelCard() {
     const { stage } = state.welcome;
     state.welcome = null;
     const r = await api(`/api/students/${sid}/level-up`).catch(() => ({ premium: true }));
-    renderWelcome(box, { stage, premium: r.premium, accounts: accountsOn(), onAccount: () => $("#account-tab").click() });
+    renderWelcome(box, { stage, premium: r.premium, offers: r.offers, accounts: accountsOn(), onAccount: () => $("#account-tab").click() });
     return;
   }
   if (!box.hidden || state.levelChecked === sid) return;
