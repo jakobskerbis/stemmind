@@ -2333,5 +2333,15 @@
   "pilot.askers": "Schüler",
   "pilot.ai": "KI",
   "pilot.parents": "Eltern",
-  "pilot.note": "Seitenaufrufe werden ohne Cookies und ohne IP-Adressen gezählt, nur als Anzahl pro Tag. Bots und Linkvorschauen werden nicht gezählt."
+  "pilot.note": "Seitenaufrufe werden ohne Cookies und ohne IP-Adressen gezählt, nur als Anzahl pro Tag. Bots und Linkvorschauen werden nicht gezählt.",
+  "gr.video": "Kurzes Video",
+  "gr.poskus": "Experiment für zu Hause",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Dieses Material ist im Paket enthalten.",
+  "gr.play": "Abspielen",
+  "gr.pause": "Pause",
+  "gr.again": "Von vorn",
+  "gr.close": "Schließen",
+  "gr.voice": "Vorlesen",
+  "gr.videoDraft": "Entwurf: Eine Lehrkraft prüft dieses Video noch."
 }

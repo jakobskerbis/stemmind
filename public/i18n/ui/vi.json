@@ -2309,5 +2309,15 @@
   "pilot.askers": "Học sinh",
   "pilot.ai": "AI",
   "pilot.parents": "Phụ huynh",
-  "pilot.note": "Lượt xem trang được đếm không dùng cookie và không lưu địa chỉ IP, chỉ là số lượng mỗi ngày. Bot và bản xem trước liên kết không được tính."
+  "pilot.note": "Lượt xem trang được đếm không dùng cookie và không lưu địa chỉ IP, chỉ là số lượng mỗi ngày. Bot và bản xem trước liên kết không được tính.",
+  "gr.video": "Video ngắn",
+  "gr.poskus": "Thí nghiệm tại nhà",
+  "gr.projekt": "Dự án",
+  "gr.lockedAny": "Tài liệu này nằm trong gói.",
+  "gr.play": "Phát",
+  "gr.pause": "Tạm dừng",
+  "gr.again": "Bắt đầu lại",
+  "gr.close": "Đóng",
+  "gr.voice": "Đọc to",
+  "gr.videoDraft": "Bản nháp: giáo viên vẫn đang xem lại video này."
 }

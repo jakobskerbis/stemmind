@@ -2309,5 +2309,15 @@
   "pilot.askers": "学生",
   "pilot.ai": "AI",
   "pilot.parents": "家长",
-  "pilot.note": "页面浏览量的统计不使用 Cookie，也不记录 IP 地址，只记录每天的次数。机器人和链接预览不计入。"
+  "pilot.note": "页面浏览量的统计不使用 Cookie，也不记录 IP 地址，只记录每天的次数。机器人和链接预览不计入。",
+  "gr.video": "短视频",
+  "gr.poskus": "家庭实验",
+  "gr.projekt": "项目",
+  "gr.lockedAny": "此资料包含在套餐中。",
+  "gr.play": "播放",
+  "gr.pause": "暂停",
+  "gr.again": "从头开始",
+  "gr.close": "关闭",
+  "gr.voice": "朗读",
+  "gr.videoDraft": "草稿：老师仍在审核此视频。"
 }

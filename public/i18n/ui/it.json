@@ -2333,5 +2333,15 @@
   "pilot.askers": "Studenti",
   "pilot.ai": "IA",
   "pilot.parents": "Genitori",
-  "pilot.note": "Le visite alle pagine sono contate senza cookie e senza indirizzi IP, solo come numero al giorno. Bot e anteprime dei link non vengono contati."
+  "pilot.note": "Le visite alle pagine sono contate senza cookie e senza indirizzi IP, solo come numero al giorno. Bot e anteprime dei link non vengono contati.",
+  "gr.video": "Video breve",
+  "gr.poskus": "Esperimento a casa",
+  "gr.projekt": "Progetto",
+  "gr.lockedAny": "Questo materiale è incluso nel pacchetto.",
+  "gr.play": "Riproduci",
+  "gr.pause": "Pausa",
+  "gr.again": "Ricomincia",
+  "gr.close": "Chiudi",
+  "gr.voice": "Leggi ad alta voce",
+  "gr.videoDraft": "Bozza: un insegnante sta ancora rivedendo questo video."
 }

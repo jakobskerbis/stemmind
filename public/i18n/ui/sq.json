@@ -2333,5 +2333,15 @@
   "pilot.askers": "Nxënës",
   "pilot.ai": "IA",
   "pilot.parents": "Prindër",
-  "pilot.note": "Shikimet e faqeve numërohen pa cookies dhe pa adresa IP, vetëm si numër në ditë. Robotët dhe parapamjet e lidhjeve nuk numërohen."
+  "pilot.note": "Shikimet e faqeve numërohen pa cookies dhe pa adresa IP, vetëm si numër në ditë. Robotët dhe parapamjet e lidhjeve nuk numërohen.",
+  "gr.video": "Video e shkurtër",
+  "gr.poskus": "Eksperiment në shtëpi",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Ky material është pjesë e paketës.",
+  "gr.play": "Luaj",
+  "gr.pause": "Pauzë",
+  "gr.again": "Nga fillimi",
+  "gr.close": "Mbyll",
+  "gr.voice": "Lexo me zë",
+  "gr.videoDraft": "Draft: një mësues ende po e kontrollon këtë video."
 }

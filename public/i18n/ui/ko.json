@@ -2309,5 +2309,15 @@
   "pilot.askers": "학생",
   "pilot.ai": "AI",
   "pilot.parents": "학부모",
-  "pilot.note": "페이지 조회는 쿠키와 IP 주소 없이 하루 단위 횟수로만 집계합니다. 봇과 링크 미리보기는 집계하지 않습니다."
+  "pilot.note": "페이지 조회는 쿠키와 IP 주소 없이 하루 단위 횟수로만 집계합니다. 봇과 링크 미리보기는 집계하지 않습니다.",
+  "gr.video": "짧은 영상",
+  "gr.poskus": "집에서 하는 실험",
+  "gr.projekt": "프로젝트",
+  "gr.lockedAny": "이 자료는 요금제에 포함되어 있습니다.",
+  "gr.play": "재생",
+  "gr.pause": "일시 정지",
+  "gr.again": "처음부터",
+  "gr.close": "닫기",
+  "gr.voice": "소리 내어 읽기",
+  "gr.videoDraft": "초안: 선생님이 아직 이 영상을 검토 중입니다."
 }

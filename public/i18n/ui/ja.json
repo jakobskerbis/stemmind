@@ -2309,5 +2309,15 @@
   "pilot.askers": "生徒",
   "pilot.ai": "AI",
   "pilot.parents": "保護者",
-  "pilot.note": "ページ閲覧数は Cookie も IP アドレスも使わず、1 日ごとの件数だけを数えます。ボットやリンクのプレビューは数えません。"
+  "pilot.note": "ページ閲覧数は Cookie も IP アドレスも使わず、1 日ごとの件数だけを数えます。ボットやリンクのプレビューは数えません。",
+  "gr.video": "短い動画",
+  "gr.poskus": "家でできる実験",
+  "gr.projekt": "プロジェクト",
+  "gr.lockedAny": "この教材はプランに含まれています。",
+  "gr.play": "再生",
+  "gr.pause": "一時停止",
+  "gr.again": "最初から",
+  "gr.close": "閉じる",
+  "gr.voice": "読み上げ",
+  "gr.videoDraft": "下書き：先生がまだこの動画を確認しています。"
 }

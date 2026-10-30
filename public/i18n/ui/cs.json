@@ -2375,5 +2375,15 @@
   "pilot.askers": "Žáci",
   "pilot.ai": "AI",
   "pilot.parents": "Rodiče",
-  "pilot.note": "Zobrazení stránek se počítají bez cookies a bez IP adres, jen jako počet za den. Roboti a náhledy odkazů se nepočítají."
+  "pilot.note": "Zobrazení stránek se počítají bez cookies a bez IP adres, jen jako počet za den. Roboti a náhledy odkazů se nepočítají.",
+  "gr.video": "Krátké video",
+  "gr.poskus": "Pokus doma",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Tento materiál je součástí balíčku.",
+  "gr.play": "Přehrát",
+  "gr.pause": "Pozastavit",
+  "gr.again": "Znovu od začátku",
+  "gr.close": "Zavřít",
+  "gr.voice": "Číst nahlas",
+  "gr.videoDraft": "Koncept: učitel toto video ještě kontroluje."
 }

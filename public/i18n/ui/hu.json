@@ -2331,5 +2331,15 @@
   "pilot.askers": "Diákok",
   "pilot.ai": "MI",
   "pilot.parents": "Szülők",
-  "pilot.note": "Az oldalmegtekintéseket sütik és IP-címek nélkül számoljuk, csak napi darabszámként. A robotokat és a linkelőnézeteket nem számoljuk."
+  "pilot.note": "Az oldalmegtekintéseket sütik és IP-címek nélkül számoljuk, csak napi darabszámként. A robotokat és a linkelőnézeteket nem számoljuk.",
+  "gr.video": "Rövid videó",
+  "gr.poskus": "Otthoni kísérlet",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Ez az anyag a csomag része.",
+  "gr.play": "Lejátszás",
+  "gr.pause": "Szünet",
+  "gr.again": "Újrakezdés",
+  "gr.close": "Bezárás",
+  "gr.voice": "Felolvasás",
+  "gr.videoDraft": "Vázlat: egy tanár még ellenőrzi ezt a videót."
 }

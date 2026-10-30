@@ -2331,5 +2331,15 @@
   "pilot.askers": "Wanafunzi",
   "pilot.ai": "AI",
   "pilot.parents": "Wazazi",
-  "pilot.note": "Kutazamwa kwa kurasa kunahesabiwa bila vidakuzi na bila anwani za IP, kama idadi kwa siku tu. Roboti na muhtasari wa viungo hazihesabiwi."
+  "pilot.note": "Kutazamwa kwa kurasa kunahesabiwa bila vidakuzi na bila anwani za IP, kama idadi kwa siku tu. Roboti na muhtasari wa viungo hazihesabiwi.",
+  "gr.video": "Video fupi",
+  "gr.poskus": "Jaribio la nyumbani",
+  "gr.projekt": "Mradi",
+  "gr.lockedAny": "Nyenzo hii ni sehemu ya kifurushi.",
+  "gr.play": "Cheza",
+  "gr.pause": "Sitisha",
+  "gr.again": "Anza upya",
+  "gr.close": "Funga",
+  "gr.voice": "Soma kwa sauti",
+  "gr.videoDraft": "Rasimu: mwalimu bado anakagua video hii."
 }

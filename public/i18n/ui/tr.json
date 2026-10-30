@@ -2331,5 +2331,15 @@
   "pilot.askers": "Öğrenciler",
   "pilot.ai": "YZ",
   "pilot.parents": "Veliler",
-  "pilot.note": "Sayfa görüntülenmeleri çerez ve IP adresi olmadan, yalnızca günlük sayı olarak sayılır. Botlar ve bağlantı önizlemeleri sayılmaz."
+  "pilot.note": "Sayfa görüntülenmeleri çerez ve IP adresi olmadan, yalnızca günlük sayı olarak sayılır. Botlar ve bağlantı önizlemeleri sayılmaz.",
+  "gr.video": "Kısa video",
+  "gr.poskus": "Evde deney",
+  "gr.projekt": "Proje",
+  "gr.lockedAny": "Bu materyal pakete dahildir.",
+  "gr.play": "Oynat",
+  "gr.pause": "Duraklat",
+  "gr.again": "Baştan başla",
+  "gr.close": "Kapat",
+  "gr.voice": "Sesli oku",
+  "gr.videoDraft": "Taslak: bir öğretmen bu videoyu hâlâ inceliyor."
 }

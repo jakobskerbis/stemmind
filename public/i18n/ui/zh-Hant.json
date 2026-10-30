@@ -2309,5 +2309,15 @@
   "pilot.askers": "學生",
   "pilot.ai": "AI",
   "pilot.parents": "家長",
-  "pilot.note": "頁面瀏覽次數的統計不使用 Cookie，也不記錄 IP 位址，只記錄每天的次數。機器人和連結預覽不計入。"
+  "pilot.note": "頁面瀏覽次數的統計不使用 Cookie，也不記錄 IP 位址，只記錄每天的次數。機器人和連結預覽不計入。",
+  "gr.video": "短影片",
+  "gr.poskus": "居家實驗",
+  "gr.projekt": "專題",
+  "gr.lockedAny": "此教材包含在方案中。",
+  "gr.play": "播放",
+  "gr.pause": "暫停",
+  "gr.again": "從頭開始",
+  "gr.close": "關閉",
+  "gr.voice": "朗讀",
+  "gr.videoDraft": "草稿：老師仍在審閱此影片。"
 }

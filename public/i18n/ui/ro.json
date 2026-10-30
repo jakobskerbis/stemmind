@@ -2357,5 +2357,15 @@
   "pilot.askers": "Elevi",
   "pilot.ai": "AI",
   "pilot.parents": "Părinți",
-  "pilot.note": "Vizualizările paginilor se numără fără cookie-uri și fără adrese IP, doar ca număr pe zi. Roboții și previzualizările de linkuri nu se numără."
+  "pilot.note": "Vizualizările paginilor se numără fără cookie-uri și fără adrese IP, doar ca număr pe zi. Roboții și previzualizările de linkuri nu se numără.",
+  "gr.video": "Videoclip scurt",
+  "gr.poskus": "Experiment acasă",
+  "gr.projekt": "Proiect",
+  "gr.lockedAny": "Acest material face parte din pachet.",
+  "gr.play": "Redă",
+  "gr.pause": "Pauză",
+  "gr.again": "De la început",
+  "gr.close": "Închide",
+  "gr.voice": "Citește cu voce tare",
+  "gr.videoDraft": "Ciornă: un profesor încă verifică acest videoclip."
 }

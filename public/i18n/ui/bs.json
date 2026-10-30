@@ -2355,5 +2355,15 @@
   "pilot.askers": "Učenici",
   "pilot.ai": "AI",
   "pilot.parents": "Roditelji",
-  "pilot.note": "Pregledi stranica broje se bez kolačića i bez IP adresa, samo kao broj po danu. Roboti i pregledi linkova se ne broje."
+  "pilot.note": "Pregledi stranica broje se bez kolačića i bez IP adresa, samo kao broj po danu. Roboti i pregledi linkova se ne broje.",
+  "gr.video": "Kratki video",
+  "gr.poskus": "Ogled kod kuće",
+  "gr.projekt": "Projekat",
+  "gr.lockedAny": "Ovaj materijal je dio paketa.",
+  "gr.play": "Pokreni",
+  "gr.pause": "Pauza",
+  "gr.again": "Ispočetka",
+  "gr.close": "Zatvori",
+  "gr.voice": "Čitaj naglas",
+  "gr.videoDraft": "Nacrt: nastavnik još pregleda ovaj video."
 }

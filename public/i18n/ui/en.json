@@ -2333,5 +2333,15 @@
   "pilot.askers": "Students",
   "pilot.ai": "AI",
   "pilot.parents": "Parents",
-  "pilot.note": "Page views are counted without cookies and without IP addresses, only as a daily total. Bots and link previews are not counted."
+  "pilot.note": "Page views are counted without cookies and without IP addresses, only as a daily total. Bots and link previews are not counted.",
+  "gr.video": "Short video",
+  "gr.poskus": "Home experiment",
+  "gr.projekt": "Project",
+  "gr.lockedAny": "This material is part of the plan.",
+  "gr.play": "Play",
+  "gr.pause": "Pause",
+  "gr.again": "Start again",
+  "gr.close": "Close",
+  "gr.voice": "Read aloud",
+  "gr.videoDraft": "Draft: a teacher is still reviewing this video."
 }

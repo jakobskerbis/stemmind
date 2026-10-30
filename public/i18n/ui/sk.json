@@ -2379,5 +2379,15 @@
   "pilot.askers": "Žiaci",
   "pilot.ai": "AI",
   "pilot.parents": "Rodičia",
-  "pilot.note": "Zobrazenia stránok sa počítajú bez cookies a bez IP adries, iba ako počet za deň. Roboty a náhľady odkazov sa nepočítajú."
+  "pilot.note": "Zobrazenia stránok sa počítajú bez cookies a bez IP adries, iba ako počet za deň. Roboty a náhľady odkazov sa nepočítajú.",
+  "gr.video": "Krátke video",
+  "gr.poskus": "Pokus doma",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Tento materiál je súčasťou balíka.",
+  "gr.play": "Prehrať",
+  "gr.pause": "Pozastaviť",
+  "gr.again": "Znova od začiatku",
+  "gr.close": "Zavrieť",
+  "gr.voice": "Čítať nahlas",
+  "gr.videoDraft": "Koncept: učiteľ toto video ešte kontroluje."
 }

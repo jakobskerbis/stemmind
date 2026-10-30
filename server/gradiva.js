@@ -5,12 +5,12 @@
 // šolska licenca za teme svojih predmetov in razredov, Evklid Osebno za vse.
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { getTopic, getPath } from "./curriculum.js";
 import { loadLesson } from "./textbook.js";
 import { renderMd, shell } from "./textbook-print.js";
 import { generateTask, hasGenerator } from "./practice/index.js";
 import { speakMarkdown } from "./govor.js";
+import { GRADIVA_DIR, hasGradivo, gradivoPage, videoFor } from "./gradiva-vsebina.js";
 
 // free: brezplačno kot besedilo učbenika (narejeno iz lekcije, brez stroškov).
 // Ostalo velja za šolsko licenco (šolski predmeti) in Evklid Osebno (vsi predmeti).
@@ -18,6 +18,10 @@ export const VRSTE = {
   povzetek: { icon: "file-text", free: true },
   zvok: { icon: "volume-2", free: true },
   "delovni-list": { icon: "clipboard-check", free: false },
+  // Napisana gradiva (server/gradiva-vsebina.js): samo, kjer datoteka obstaja.
+  video: { icon: "play", free: false },
+  poskus: { icon: "flask-conical", free: false },
+  projekt: { icon: "lightbulb", free: false },
 };
 
 const esc = (s) =>
@@ -56,7 +60,6 @@ export function branchOf(text) {
 // Napisan miselni vzorec (content/gradiva/miselni/<POT>/<tema>.md, docs/gradiva.md): alineje prve
 // ravni so veje (»Veja: podrobnost«), zamaknjene alineje so podrobnosti veje. Brez datoteke so veje
 // alineje povzetka lekcije.
-export const GRADIVA_DIR = process.env.EVKLID_GRADIVA || path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "content", "gradiva");
 export function authoredMap(topicId) {
   const file = path.join(GRADIVA_DIR, "miselni", `${topicId}.md`);
   if (!/^[A-Z0-9-]+\/[a-z0-9-]+$/.test(topicId) || !fs.existsSync(file)) return null;
@@ -326,6 +329,7 @@ export function mountGradiva(app, store, { loadStudent, accounts }) {
       items.push({ vrsta: "povzetek", url: `/gradiva/povzetek/${p}/${slug}` }, { vrsta: "zvok" });
     }
     if (hasGenerator(t.id)) items.push({ vrsta: "delovni-list" });
+    for (const v of ["video", "poskus", "projekt"]) if (hasGradivo(v, t.id)) items.push({ vrsta: v });
     res.json({ topic: t.id, items: items.map((x) => ({ ...x, icon: VRSTE[x.vrsta].icon, locked: !canUse(s, x.vrsta, t.id) })) });
   });
 
@@ -345,6 +349,32 @@ export function mountGradiva(app, store, { loadStudent, accounts }) {
     const a = audioSummary(t.id);
     if (!a) return res.status(404).json({ error: "Za to temo povzetka še ni." });
     res.json(a);
+  });
+
+  // Domači poskus ali projekt: stran za tisk (odjemalec jo odpre v novem oknu).
+  app.get("/api/students/:id/gradiva/stran", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const vrsta = String(req.query.vrsta || "");
+    if (vrsta !== "poskus" && vrsta !== "projekt") return res.status(400).json({ error: "Neznana vrsta gradiva." });
+    const t = topicOf(req, res);
+    if (!t) return;
+    if (!canUse(s, vrsta, t.id)) return res.status(403).json({ error: "To gradivo je v paketu.", code: "gr.lockedAny" });
+    const html = gradivoPage(vrsta, t.id);
+    if (!html) return res.status(404).json({ error: "Za to temo tega gradiva še ni." });
+    res.type("html").send(html);
+  });
+
+  // Kratek video: scenarij, po katerem predvajalnik upravlja simulacijo in bere podnapise.
+  app.get("/api/students/:id/gradiva/video", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const t = topicOf(req, res);
+    if (!t) return;
+    if (!canUse(s, "video", t.id)) return res.status(403).json({ error: "To gradivo je v paketu.", code: "gr.lockedAny" });
+    const v = videoFor(t.id);
+    if (!v) return res.status(404).json({ error: "Za to temo videa še ni." });
+    res.json(v);
   });
 
   // Delovni list za doma: ena tema ali šibke teme (?sibke=1). Odjemalec stran odpre v novem oknu.

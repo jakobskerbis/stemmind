@@ -2381,5 +2381,15 @@
   "pilot.askers": "Uczniowie",
   "pilot.ai": "AI",
   "pilot.parents": "Rodzice",
-  "pilot.note": "Wyświetlenia stron są liczone bez plików cookie i bez adresów IP, tylko jako liczba na dzień. Boty i podglądy linków nie są liczone."
+  "pilot.note": "Wyświetlenia stron są liczone bez plików cookie i bez adresów IP, tylko jako liczba na dzień. Boty i podglądy linków nie są liczone.",
+  "gr.video": "Krótki film",
+  "gr.poskus": "Doświadczenie w domu",
+  "gr.projekt": "Projekt",
+  "gr.lockedAny": "Ten materiał jest w pakiecie.",
+  "gr.play": "Odtwórz",
+  "gr.pause": "Pauza",
+  "gr.again": "Od początku",
+  "gr.close": "Zamknij",
+  "gr.voice": "Czytaj na głos",
+  "gr.videoDraft": "Wersja robocza: nauczyciel jeszcze sprawdza ten film."
 }
