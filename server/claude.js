@@ -9,6 +9,8 @@ const env = (k, d) => (process.env[k] === undefined || process.env[k] === "" ? d
 // Privzeto poceni hiter model; zmogljivejši za »Razloži podrobneje« in tekmovanja.
 export const MODEL = env("EVKLID_MODEL", "claude-haiku-5-5");
 export const MODEL_DEEP = env("EVKLID_MODEL_DEEP", "claude-opus-5-5");
+// Zmogljivejši model za omejene pakete (aktivacijska koda: največ Sonnet, j 2026-10-30).
+export const MODEL_MID = env("EVKLID_MODEL_MID", "claude-sonnet-5-5");
 const EFFORT = env("EVKLID_EFFORT", "low");
 // »Razloži podrobneje« je druga razlaga snovi, ne težko sklepanje: Opus pri effort low
 // razloži enako dobro z manj razmišljanja (manj izhodnih žetonov). Prej: medium.
@@ -30,9 +32,10 @@ export const MAX_TOKENS = {
 };
 
 // Način klica: "chat" (Haiku, malo razmisleka), "lite" (Haiku, kratko),
-// "think" (Haiku, več razmisleka), "deep" (Opus).
+// "think" (Haiku, več razmisleka), "deep" (Opus), "mid" (Sonnet namesto Opusa pri aktivacijski kodi).
 export function modeParams(mode = "chat") {
   if (mode === "deep") return { model: MODEL_DEEP, effort: EFFORT_DEEP, max_tokens: MAX_TOKENS.deep };
+  if (mode === "mid") return { model: MODEL_MID, effort: EFFORT_DEEP, max_tokens: MAX_TOKENS.deep };
   if (mode === "think") return { model: MODEL, effort: EFFORT_THINK, max_tokens: MAX_TOKENS.think };
   if (mode === "lite") return { model: MODEL, effort: EFFORT, max_tokens: MAX_TOKENS.lite };
   return { model: MODEL, effort: EFFORT, max_tokens: MAX_TOKENS.chat };
@@ -95,7 +98,7 @@ export async function streamReply({ system, messages, deep = false, mode = deep 
     max_tokens,
     // Stalni del prompta (enak za vse učence) ima svojo oznako predpomnilnika,
     // zato se deli med vsemi pogovori; nastavitve učenca so v drugem bloku.
-    system: typeof system === "string" ? systemBlocks(system, { ttl: mode === "deep" && DEEP_CACHE_TTL === "1h" ? "1h" : null }) : system,
+    system: typeof system === "string" ? systemBlocks(system, { ttl: (mode === "deep" || mode === "mid") && DEEP_CACHE_TTL === "1h" ? "1h" : null }) : system,
     messages,
     thinking: { type: "adaptive" },
     output_config: { effort },

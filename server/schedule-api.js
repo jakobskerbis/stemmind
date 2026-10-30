@@ -15,7 +15,7 @@ import {
   mergeImport,
 } from "./schedule.js";
 
-export function mountSchedule(app, store, { loadStudent, progress, usage, schedules = new Schedules(store.db), photoFn = readTimetablePhoto, fetchFn = fetch, lookup } = {}) {
+export function mountSchedule(app, store, { loadStudent, progress, usage, schedules = new Schedules(store.db), photoFn = readTimetablePhoto, fetchFn = fetch, lookup, modelCapFor = () => null } = {}) {
   // Pogled urnika + Priprava na test, usklajena z najbližjim testom.
   const view = (s) => {
     const v = scheduleView(schedules.get(s.id), s.settings);
@@ -68,7 +68,7 @@ export function mountSchedule(app, store, { loadStudent, progress, usage, schedu
     const blocked = usage?.blockReason(s.id);
     if (blocked) return res.status(429).json({ error: blocked });
     try {
-      const out = await photoFn({ imageBase64: m[2], mediaType: m[1] });
+      const out = await photoFn({ imageBase64: m[2], mediaType: m[1], capped: !!modelCapFor(s.id) });
       if (out.mock) return res.json({ lessons: [], events: [], mock: true });
       if (out.usage) usage?.log(s.id, out.model, out.usage, "urnik");
       const clean = normalizeSchedule({ lessons: out.lessons, events: out.events }, s.settings);

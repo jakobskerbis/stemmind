@@ -4,6 +4,7 @@ import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { Stripe, signWebhook, verifyWebhook, formEncode } from "../server/accounts/stripe.js";
 import { accessFor, isPremiumChild } from "../server/accounts/plans.js";
+import { promoConfig } from "../server/accounts/promo.js";
 import { weekKey, isSendTime } from "../server/accounts/weekly.js";
 
 const SECRET = "whsec_test";
@@ -707,6 +708,47 @@ test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", asyn
   }, { promo });
 });
 
+test("aktivacijska koda EVKLID3X: 3 meseci, zmogljivejši model največ Sonnet", async () => {
+  const cfg = promoConfig({});
+  assert.deepEqual([cfg.code, cfg.days, cfg.limit, cfg.maxModel], ["EVKLID3X", 90, 100, "sonnet"]);
+  assert.equal(promoConfig({ EVKLID_PROMO_MODEL: "Opus" }).maxModel, null);
+  const modes = [];
+  const streamFn = async ({ mode, onText }) => {
+    modes.push(mode);
+    onText("ok");
+    return { text: 'ok\n<<META subject=MAT topic="-" error=0 mode=A flag=none>>', stopReason: "end_turn" };
+  };
+  const photoCaps = [];
+  const schedulePhotoFn = async ({ capped }) => {
+    photoCaps.push(capped);
+    return { lessons: [], events: [], usage: null, model: "test" };
+  };
+  await withServer(async ({ client, calls, store }) => {
+    const a = client();
+    const reg = await registerVerified(a, calls, "sonnet@kod.si", { promo_code: "evklid3x" });
+    const days = (Date.parse(store.db.prepare("SELECT promo_until FROM parents WHERE id = ?").get(reg.id).promo_until) - Date.now()) / 86400000;
+    assert.ok(days > 89.9 && days <= 90, String(days));
+    store.db.prepare("UPDATE parents SET trial_ends_at = '2020-01-01T00:00:00Z'").run();
+    const kid = (await a("/api/students", { method: "POST", body: { name: "Lan", birth_year: YEAR - 10, consent: true } })).body;
+    const conv = (await a(`/api/students/${kid.id}/conversations`, { method: "POST" })).body;
+    const again = () => a(`/api/conversations/${conv.id}/messages`, { method: "POST", body: { text: "Razloži podrobneje.", deep: true } });
+    // Prva ponovna razlaga: Haiku z več razmisleka; druga zapored: Sonnet namesto Opusa.
+    assert.equal((await again()).status, 200);
+    assert.equal((await again()).status, 200);
+    assert.deepEqual(modes, ["think", "mid"]);
+    // Tudi fotografija urnika ne gre k Opusu.
+    const photo = () => a(`/api/students/${kid.id}/schedule/photo`, { method: "POST", body: { image: "data:image/jpeg;base64,AAAA" } });
+    assert.equal((await photo()).status, 200);
+    assert.deepEqual(photoCaps, [true]);
+    // Z naročnino omejitve ni: druga zaporedna prošnja gre k Opusu.
+    store.db.prepare("UPDATE parents SET sub_status = 'active', sub_seats = 1 WHERE id = ?").run(reg.id);
+    assert.equal((await again()).status, 200);
+    assert.equal(modes.at(-1), "deep");
+    await photo();
+    assert.deepEqual(photoCaps, [true, false]);
+  }, { promo: cfg, streamFn, schedulePhotoFn });
+});
+
 test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
   process.env.EVKLID_ADMIN_EMAILS = "skrbnik@kod.si";
   try {
@@ -721,9 +763,9 @@ test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
       assert.notEqual(store.db.prepare("SELECT parent_id FROM students WHERE id = ?").get(old.id).parent_id, null);
       assert.equal((await a("/api/usage", { headers: { "X-Forwarded-For": "1.2.3.4" } })).status, 200);
       const { admin } = (await a("/api/account")).body.promo;
-      assert.equal(admin.code, "EVKLID100");
-      assert.deepEqual([admin.used, admin.limit, admin.days], [0, 100, 365]);
-      assert.match(admin.url, /\/\?koda=EVKLID100$/);
+      assert.equal(admin.code, "EVKLID3X");
+      assert.deepEqual([admin.used, admin.limit, admin.days], [0, 100, 90]);
+      assert.match(admin.url, /\/\?koda=EVKLID3X$/);
     });
   } finally {
     delete process.env.EVKLID_ADMIN_EMAILS;
