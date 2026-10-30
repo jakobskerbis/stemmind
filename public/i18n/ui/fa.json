@@ -2427,5 +2427,17 @@
   "kv.sheet": "برگهٔ تمرین",
   "kv.top": "صدر جدول",
   "kv.wait": "پیوستی. صبر کن تا معلم شروع کند.",
-  "kv.withKey": "با راه‌حل‌ها در صفحهٔ آخر"
+  "kv.withKey": "با راه‌حل‌ها در صفحهٔ آخر",
+  "sim.layers": "نمایش روی نمودار",
+  "sim.layers.show": "نمایش:",
+  "sim.layer.grid": "شبکه",
+  "sim.layer.marks": "نشانه‌ها",
+  "sim.layer.fit": "{name}: خط راست",
+  "sim.color.accent": "آبی",
+  "sim.color.a": "نارنجی",
+  "sim.color.b": "فیروزه‌ای",
+  "sim.color.c": "بنفش",
+  "sim.color.ok": "سبز",
+  "sim.color.danger": "قرمز",
+  "sim.color.muted": "خاکستری"
 }

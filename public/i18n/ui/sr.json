@@ -2451,5 +2451,17 @@
   "kv.sheet": "Радни лист",
   "kv.top": "Врх табеле",
   "kv.wait": "Придружио си се. Сачекај да наставник почне.",
-  "kv.withKey": "Са решењима на последњој страни"
+  "kv.withKey": "Са решењима на последњој страни",
+  "sim.layers": "Прикажи на графику",
+  "sim.layers.show": "Прикажи:",
+  "sim.layer.grid": "Мрежа",
+  "sim.layer.marks": "Ознаке",
+  "sim.layer.fit": "{name}: права",
+  "sim.color.accent": "Плава",
+  "sim.color.a": "Наранџаста",
+  "sim.color.b": "Тиркизна",
+  "sim.color.c": "Љубичаста",
+  "sim.color.ok": "Зелена",
+  "sim.color.danger": "Црвена",
+  "sim.color.muted": "Сива"
 }

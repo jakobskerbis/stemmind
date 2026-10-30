@@ -2477,5 +2477,17 @@
   "kv.sheet": "Рабочий лист",
   "kv.top": "Лидеры",
   "kv.wait": "Ты в игре. Подожди, пока учитель начнёт.",
-  "kv.withKey": "С решениями на последней странице"
+  "kv.withKey": "С решениями на последней странице",
+  "sim.layers": "Показать на графике",
+  "sim.layers.show": "Показать:",
+  "sim.layer.grid": "Сетка",
+  "sim.layer.marks": "Отметки",
+  "sim.layer.fit": "{name}: прямая",
+  "sim.color.accent": "Синий",
+  "sim.color.a": "Оранжевый",
+  "sim.color.b": "Бирюзовый",
+  "sim.color.c": "Фиолетовый",
+  "sim.color.ok": "Зелёный",
+  "sim.color.danger": "Красный",
+  "sim.color.muted": "Серый"
 }

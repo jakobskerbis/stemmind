@@ -2427,5 +2427,17 @@
   "kv.sheet": "Karatasi ya kazi",
   "kv.top": "Juu ya jedwali",
   "kv.wait": "Umejiunga. Subiri mwalimu aanze.",
-  "kv.withKey": "Pamoja na majibu kwenye ukurasa wa mwisho"
+  "kv.withKey": "Pamoja na majibu kwenye ukurasa wa mwisho",
+  "sim.layers": "Onyesha kwenye grafu",
+  "sim.layers.show": "Onyesha:",
+  "sim.layer.grid": "Gridi",
+  "sim.layer.marks": "Alama",
+  "sim.layer.fit": "{name}: mstari",
+  "sim.color.accent": "Bluu",
+  "sim.color.a": "Rangi ya chungwa",
+  "sim.color.b": "Feruzi",
+  "sim.color.c": "Zambarau",
+  "sim.color.ok": "Kijani",
+  "sim.color.danger": "Nyekundu",
+  "sim.color.muted": "Kijivu"
 }

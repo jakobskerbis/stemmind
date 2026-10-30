@@ -2475,5 +2475,17 @@
   "kv.sheet": "Pracovný list",
   "kv.top": "Čelo rebríčka",
   "kv.wait": "Si pripojený. Počkaj, kým učiteľ začne.",
-  "kv.withKey": "S riešeniami na poslednej strane"
+  "kv.withKey": "S riešeniami na poslednej strane",
+  "sim.layers": "Zobraziť v grafe",
+  "sim.layers.show": "Zobraziť:",
+  "sim.layer.grid": "Mriežka",
+  "sim.layer.marks": "Značky",
+  "sim.layer.fit": "{name}: priamka",
+  "sim.color.accent": "Modrá",
+  "sim.color.a": "Oranžová",
+  "sim.color.b": "Tyrkysová",
+  "sim.color.c": "Fialová",
+  "sim.color.ok": "Zelená",
+  "sim.color.danger": "Červená",
+  "sim.color.muted": "Sivá"
 }

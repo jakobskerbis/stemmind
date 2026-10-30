@@ -2427,5 +2427,17 @@
   "kv.sheet": "Feladatlap",
   "kv.top": "A ranglista élén",
   "kv.wait": "Csatlakoztál. Várj, amíg a tanár elindítja.",
-  "kv.withKey": "Megoldásokkal az utolsó oldalon"
+  "kv.withKey": "Megoldásokkal az utolsó oldalon",
+  "sim.layers": "Megjelenítés a grafikonon",
+  "sim.layers.show": "Megjelenítés:",
+  "sim.layer.grid": "Rács",
+  "sim.layer.marks": "Jelölések",
+  "sim.layer.fit": "{name}: egyenes",
+  "sim.color.accent": "Kék",
+  "sim.color.a": "Narancs",
+  "sim.color.b": "Türkiz",
+  "sim.color.c": "Lila",
+  "sim.color.ok": "Zöld",
+  "sim.color.danger": "Piros",
+  "sim.color.muted": "Szürke"
 }

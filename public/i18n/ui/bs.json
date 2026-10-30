@@ -2451,5 +2451,17 @@
   "kv.sheet": "Radni list",
   "kv.top": "Vrh tabele",
   "kv.wait": "Pridružio si se. Sačekaj da nastavnik počne.",
-  "kv.withKey": "S rješenjima na zadnjoj stranici"
+  "kv.withKey": "S rješenjima na zadnjoj stranici",
+  "sim.layers": "Prikaži na grafu",
+  "sim.layers.show": "Prikaži:",
+  "sim.layer.grid": "Mreža",
+  "sim.layer.marks": "Oznake",
+  "sim.layer.fit": "{name}: prava",
+  "sim.color.accent": "Plava",
+  "sim.color.a": "Narandžasta",
+  "sim.color.b": "Tirkizna",
+  "sim.color.c": "Ljubičasta",
+  "sim.color.ok": "Zelena",
+  "sim.color.danger": "Crvena",
+  "sim.color.muted": "Siva"
 }

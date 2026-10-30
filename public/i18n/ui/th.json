@@ -2405,5 +2405,17 @@
   "kv.sheet": "ใบงาน",
   "kv.top": "อันดับต้น",
   "kv.wait": "เข้าร่วมแล้ว รอครูเริ่ม",
-  "kv.withKey": "มีเฉลยที่หน้าสุดท้าย"
+  "kv.withKey": "มีเฉลยที่หน้าสุดท้าย",
+  "sim.layers": "แสดงบนกราฟ",
+  "sim.layers.show": "แสดง:",
+  "sim.layer.grid": "เส้นตาราง",
+  "sim.layer.marks": "เครื่องหมาย",
+  "sim.layer.fit": "{name}: เส้นตรง",
+  "sim.color.accent": "น้ำเงิน",
+  "sim.color.a": "ส้ม",
+  "sim.color.b": "ฟ้าอมเขียว",
+  "sim.color.c": "ม่วง",
+  "sim.color.ok": "เขียว",
+  "sim.color.danger": "แดง",
+  "sim.color.muted": "เทา"
 }

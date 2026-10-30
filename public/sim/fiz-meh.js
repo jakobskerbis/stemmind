@@ -254,7 +254,7 @@ export function sile(el) {
     const R = [F1[0] + F2[0], F1[1] + F2[1]];
     const P = (v) => [A.X(v[0]), A.Y(v[1])];
     s("polygon", { points: [O, P(F1), P(R), P(F2)].map((q) => q.join(",")).join(" "), class: "shape fill-soft", "stroke-opacity": 0 }, svg);
-    s("line", { x1: P(F1)[0], y1: P(F1)[1], x2: P(R)[0], y2: P(R)[1], class: "guide" }, svg);
+    s("line", { x1: P(F1)[0], y1: P(F1)[1], x2: P(R)[0], y2: P(R)[1], class: "guide", "data-name": "Paralelogram" }, svg);
     s("line", { x1: P(F2)[0], y1: P(F2)[1], x2: P(R)[0], y2: P(R)[1], class: "guide" }, svg);
     if (comp) [[F1, "a"], [F2, "b"]].forEach(([F, col]) => {
       s("line", { x1: O[0], y1: O[1], x2: A.X(F[0]), y2: O[1], class: `guide stroke-${col}` }, svg);

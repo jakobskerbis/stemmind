@@ -2477,5 +2477,17 @@
   "kv.sheet": "Робочий аркуш",
   "kv.top": "Лідери",
   "kv.wait": "Ти приєднався. Зачекай, поки вчитель почне.",
-  "kv.withKey": "З розв'язками на останній сторінці"
+  "kv.withKey": "З розв'язками на останній сторінці",
+  "sim.layers": "Показати на графіку",
+  "sim.layers.show": "Показати:",
+  "sim.layer.grid": "Сітка",
+  "sim.layer.marks": "Позначки",
+  "sim.layer.fit": "{name}: пряма",
+  "sim.color.accent": "Синій",
+  "sim.color.a": "Помаранчевий",
+  "sim.color.b": "Бірюзовий",
+  "sim.color.c": "Фіолетовий",
+  "sim.color.ok": "Зелений",
+  "sim.color.danger": "Червоний",
+  "sim.color.muted": "Сірий"
 }

@@ -2405,5 +2405,17 @@
   "kv.sheet": "學習單",
   "kv.top": "排行榜前列",
   "kv.wait": "你已加入，請等老師開始。",
-  "kv.withKey": "最後一頁附解答"
+  "kv.withKey": "最後一頁附解答",
+  "sim.layers": "在圖上顯示",
+  "sim.layers.show": "顯示：",
+  "sim.layer.grid": "格線",
+  "sim.layer.marks": "標記",
+  "sim.layer.fit": "{name}：直線",
+  "sim.color.accent": "藍色",
+  "sim.color.a": "橙色",
+  "sim.color.b": "青綠色",
+  "sim.color.c": "紫色",
+  "sim.color.ok": "綠色",
+  "sim.color.danger": "紅色",
+  "sim.color.muted": "灰色"
 }

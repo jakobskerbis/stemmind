@@ -2405,5 +2405,17 @@
   "kv.sheet": "练习单",
   "kv.top": "排行榜前列",
   "kv.wait": "你已加入，请等老师开始。",
-  "kv.withKey": "最后一页附答案"
+  "kv.withKey": "最后一页附答案",
+  "sim.layers": "在图上显示",
+  "sim.layers.show": "显示：",
+  "sim.layer.grid": "网格",
+  "sim.layer.marks": "标记",
+  "sim.layer.fit": "{name}：直线",
+  "sim.color.accent": "蓝色",
+  "sim.color.a": "橙色",
+  "sim.color.b": "青绿色",
+  "sim.color.c": "紫色",
+  "sim.color.ok": "绿色",
+  "sim.color.danger": "红色",
+  "sim.color.muted": "灰色"
 }

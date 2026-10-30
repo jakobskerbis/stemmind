@@ -2427,5 +2427,17 @@
   "kv.sheet": "ওয়ার্কশিট",
   "kv.top": "তালিকার শীর্ষে",
   "kv.wait": "তুমি যোগ দিয়েছ। শিক্ষক শুরু করা পর্যন্ত অপেক্ষা করো।",
-  "kv.withKey": "শেষ পৃষ্ঠায় সমাধানসহ"
+  "kv.withKey": "শেষ পৃষ্ঠায় সমাধানসহ",
+  "sim.layers": "গ্রাফে দেখাও",
+  "sim.layers.show": "দেখাও:",
+  "sim.layer.grid": "গ্রিড",
+  "sim.layer.marks": "চিহ্ন",
+  "sim.layer.fit": "{name}: সরলরেখা",
+  "sim.color.accent": "নীল",
+  "sim.color.a": "কমলা",
+  "sim.color.b": "ফিরোজা",
+  "sim.color.c": "বেগুনি",
+  "sim.color.ok": "সবুজ",
+  "sim.color.danger": "লাল",
+  "sim.color.muted": "ধূসর"
 }

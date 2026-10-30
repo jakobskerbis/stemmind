@@ -2429,5 +2429,17 @@
   "kv.sheet": "Fiche d'exercices",
   "kv.top": "En tête du classement",
   "kv.wait": "Tu as rejoint le quiz. Attends que l'enseignant commence.",
-  "kv.withKey": "Avec les solutions à la dernière page"
+  "kv.withKey": "Avec les solutions à la dernière page",
+  "sim.layers": "Afficher sur le graphique",
+  "sim.layers.show": "Afficher :",
+  "sim.layer.grid": "Grille",
+  "sim.layer.marks": "Repères",
+  "sim.layer.fit": "{name} : droite",
+  "sim.color.accent": "Bleu",
+  "sim.color.a": "Orange",
+  "sim.color.b": "Turquoise",
+  "sim.color.c": "Violet",
+  "sim.color.ok": "Vert",
+  "sim.color.danger": "Rouge",
+  "sim.color.muted": "Gris"
 }

@@ -2429,5 +2429,17 @@
   "kv.sheet": "Scheda di lavoro",
   "kv.top": "In cima alla classifica",
   "kv.wait": "Sei dentro. Aspetta che l'insegnante inizi.",
-  "kv.withKey": "Con le soluzioni nell'ultima pagina"
+  "kv.withKey": "Con le soluzioni nell'ultima pagina",
+  "sim.layers": "Mostra nel grafico",
+  "sim.layers.show": "Mostra:",
+  "sim.layer.grid": "Griglia",
+  "sim.layer.marks": "Indicatori",
+  "sim.layer.fit": "{name}: retta",
+  "sim.color.accent": "Blu",
+  "sim.color.a": "Arancione",
+  "sim.color.b": "Turchese",
+  "sim.color.c": "Viola",
+  "sim.color.ok": "Verde",
+  "sim.color.danger": "Rosso",
+  "sim.color.muted": "Grigio"
 }

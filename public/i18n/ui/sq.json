@@ -2429,5 +2429,17 @@
   "kv.sheet": "Fletë pune",
   "kv.top": "Kreu i renditjes",
   "kv.wait": "U bashkove. Prit që mësuesi të fillojë.",
-  "kv.withKey": "Me zgjidhjet në faqen e fundit"
+  "kv.withKey": "Me zgjidhjet në faqen e fundit",
+  "sim.layers": "Shfaq në grafik",
+  "sim.layers.show": "Shfaq:",
+  "sim.layer.grid": "Rrjeta",
+  "sim.layer.marks": "Shenjat",
+  "sim.layer.fit": "{name}: drejtëz",
+  "sim.color.accent": "Blu",
+  "sim.color.a": "Portokalli",
+  "sim.color.b": "Bruz",
+  "sim.color.c": "Vjollcë",
+  "sim.color.ok": "Jeshile",
+  "sim.color.danger": "E kuqe",
+  "sim.color.muted": "Gri"
 }

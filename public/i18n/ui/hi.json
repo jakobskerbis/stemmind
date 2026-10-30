@@ -2427,5 +2427,17 @@
   "kv.sheet": "वर्कशीट",
   "kv.top": "सूची में सबसे ऊपर",
   "kv.wait": "तुम शामिल हो गए। शिक्षक के शुरू करने की प्रतीक्षा करो।",
-  "kv.withKey": "अंतिम पृष्ठ पर हल के साथ"
+  "kv.withKey": "अंतिम पृष्ठ पर हल के साथ",
+  "sim.layers": "ग्राफ़ पर दिखाएँ",
+  "sim.layers.show": "दिखाएँ:",
+  "sim.layer.grid": "ग्रिड",
+  "sim.layer.marks": "निशान",
+  "sim.layer.fit": "{name}: सरल रेखा",
+  "sim.color.accent": "नीला",
+  "sim.color.a": "नारंगी",
+  "sim.color.b": "फ़िरोज़ी",
+  "sim.color.c": "बैंगनी",
+  "sim.color.ok": "हरा",
+  "sim.color.danger": "लाल",
+  "sim.color.muted": "धूसर"
 }

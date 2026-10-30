@@ -2405,5 +2405,17 @@
   "kv.sheet": "학습지",
   "kv.top": "순위 상위",
   "kv.wait": "참여했습니다. 선생님이 시작할 때까지 기다리세요.",
-  "kv.withKey": "마지막 쪽에 풀이 포함"
+  "kv.withKey": "마지막 쪽에 풀이 포함",
+  "sim.layers": "그래프에 표시",
+  "sim.layers.show": "표시:",
+  "sim.layer.grid": "격자",
+  "sim.layer.marks": "표시선",
+  "sim.layer.fit": "{name}: 직선",
+  "sim.color.accent": "파랑",
+  "sim.color.a": "주황",
+  "sim.color.b": "청록",
+  "sim.color.c": "보라",
+  "sim.color.ok": "초록",
+  "sim.color.danger": "빨강",
+  "sim.color.muted": "회색"
 }

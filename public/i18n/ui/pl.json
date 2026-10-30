@@ -2477,5 +2477,17 @@
   "kv.sheet": "Karta pracy",
   "kv.top": "Czołówka",
   "kv.wait": "Dołączyłeś. Poczekaj, aż nauczyciel zacznie.",
-  "kv.withKey": "Z rozwiązaniami na ostatniej stronie"
+  "kv.withKey": "Z rozwiązaniami na ostatniej stronie",
+  "sim.layers": "Pokaż na wykresie",
+  "sim.layers.show": "Pokaż:",
+  "sim.layer.grid": "Siatka",
+  "sim.layer.marks": "Znaczniki",
+  "sim.layer.fit": "{name}: prosta",
+  "sim.color.accent": "Niebieski",
+  "sim.color.a": "Pomarańczowy",
+  "sim.color.b": "Turkusowy",
+  "sim.color.c": "Fioletowy",
+  "sim.color.ok": "Zielony",
+  "sim.color.danger": "Czerwony",
+  "sim.color.muted": "Szary"
 }

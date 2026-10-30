@@ -2453,5 +2453,17 @@
   "kv.sheet": "Fișă de lucru",
   "kv.top": "Vârful clasamentului",
   "kv.wait": "Ai intrat. Așteaptă să înceapă profesorul.",
-  "kv.withKey": "Cu soluțiile pe ultima pagină"
+  "kv.withKey": "Cu soluțiile pe ultima pagină",
+  "sim.layers": "Afișează pe grafic",
+  "sim.layers.show": "Afișează:",
+  "sim.layer.grid": "Grilă",
+  "sim.layer.marks": "Marcaje",
+  "sim.layer.fit": "{name}: dreaptă",
+  "sim.color.accent": "Albastru",
+  "sim.color.a": "Portocaliu",
+  "sim.color.b": "Turcoaz",
+  "sim.color.c": "Violet",
+  "sim.color.ok": "Verde",
+  "sim.color.danger": "Roșu",
+  "sim.color.muted": "Gri"
 }

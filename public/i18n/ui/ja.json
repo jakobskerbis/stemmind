@@ -2405,5 +2405,17 @@
   "kv.sheet": "プリント",
   "kv.top": "ランキング上位",
   "kv.wait": "参加しました。先生が始めるまで待ってください。",
-  "kv.withKey": "最後のページに解答付き"
+  "kv.withKey": "最後のページに解答付き",
+  "sim.layers": "グラフに表示",
+  "sim.layers.show": "表示:",
+  "sim.layer.grid": "方眼",
+  "sim.layer.marks": "目印",
+  "sim.layer.fit": "{name}: 直線",
+  "sim.color.accent": "青",
+  "sim.color.a": "オレンジ",
+  "sim.color.b": "青緑",
+  "sim.color.c": "紫",
+  "sim.color.ok": "緑",
+  "sim.color.danger": "赤",
+  "sim.color.muted": "灰色"
 }

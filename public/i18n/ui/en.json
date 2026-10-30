@@ -2429,5 +2429,17 @@
   "kv.sheet": "Worksheet",
   "kv.top": "Leaderboard",
   "kv.wait": "You're in. Wait for the quiz to start.",
-  "kv.withKey": "With solutions on the last page"
+  "kv.withKey": "With solutions on the last page",
+  "sim.layers": "Show on the graph",
+  "sim.layers.show": "Show:",
+  "sim.layer.grid": "Grid",
+  "sim.layer.marks": "Markers",
+  "sim.layer.fit": "{name}: line",
+  "sim.color.accent": "Blue",
+  "sim.color.a": "Orange",
+  "sim.color.b": "Teal",
+  "sim.color.c": "Purple",
+  "sim.color.ok": "Green",
+  "sim.color.danger": "Red",
+  "sim.color.muted": "Grey"
 }

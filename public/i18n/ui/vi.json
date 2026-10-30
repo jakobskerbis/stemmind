@@ -2405,5 +2405,17 @@
   "kv.sheet": "Phiếu bài tập",
   "kv.top": "Đầu bảng xếp hạng",
   "kv.wait": "Em đã tham gia. Chờ giáo viên bắt đầu.",
-  "kv.withKey": "Kèm lời giải ở trang cuối"
+  "kv.withKey": "Kèm lời giải ở trang cuối",
+  "sim.layers": "Hiện trên đồ thị",
+  "sim.layers.show": "Hiện:",
+  "sim.layer.grid": "Lưới",
+  "sim.layer.marks": "Điểm đánh dấu",
+  "sim.layer.fit": "{name}: đường thẳng",
+  "sim.color.accent": "Xanh dương",
+  "sim.color.a": "Cam",
+  "sim.color.b": "Xanh ngọc",
+  "sim.color.c": "Tím",
+  "sim.color.ok": "Xanh lá",
+  "sim.color.danger": "Đỏ",
+  "sim.color.muted": "Xám"
 }

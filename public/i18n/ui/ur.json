@@ -2427,5 +2427,17 @@
   "kv.sheet": "ورک شیٹ",
   "kv.top": "فہرست میں سب سے اوپر",
   "kv.wait": "آپ شامل ہو گئے۔ استاد کے شروع کرنے کا انتظار کریں۔",
-  "kv.withKey": "آخری صفحے پر حل کے ساتھ"
+  "kv.withKey": "آخری صفحے پر حل کے ساتھ",
+  "sim.layers": "گراف پر دکھائیں",
+  "sim.layers.show": "دکھائیں:",
+  "sim.layer.grid": "گرڈ",
+  "sim.layer.marks": "نشانات",
+  "sim.layer.fit": "{name}: سیدھی لکیر",
+  "sim.color.accent": "نیلا",
+  "sim.color.a": "نارنجی",
+  "sim.color.b": "فیروزی",
+  "sim.color.c": "جامنی",
+  "sim.color.ok": "سبز",
+  "sim.color.danger": "سرخ",
+  "sim.color.muted": "سرمئی"
 }

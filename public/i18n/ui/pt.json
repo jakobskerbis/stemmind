@@ -2433,5 +2433,17 @@
   "kv.sheet": "Ficha de trabalho",
   "kv.top": "Topo da tabela",
   "kv.wait": "Entraste. Espera que o professor comece.",
-  "kv.withKey": "Com soluções na última página"
+  "kv.withKey": "Com soluções na última página",
+  "sim.layers": "Mostrar no gráfico",
+  "sim.layers.show": "Mostrar:",
+  "sim.layer.grid": "Grelha",
+  "sim.layer.marks": "Marcas",
+  "sim.layer.fit": "{name}: reta",
+  "sim.color.accent": "Azul",
+  "sim.color.a": "Laranja",
+  "sim.color.b": "Turquesa",
+  "sim.color.c": "Roxo",
+  "sim.color.ok": "Verde",
+  "sim.color.danger": "Vermelho",
+  "sim.color.muted": "Cinzento"
 }

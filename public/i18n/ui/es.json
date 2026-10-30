@@ -2429,5 +2429,17 @@
   "kv.sheet": "Hoja de trabajo",
   "kv.top": "Primeros puestos",
   "kv.wait": "Te has unido. Espera a que empiece el docente.",
-  "kv.withKey": "Con soluciones en la última página"
+  "kv.withKey": "Con soluciones en la última página",
+  "sim.layers": "Mostrar en la gráfica",
+  "sim.layers.show": "Mostrar:",
+  "sim.layer.grid": "Cuadrícula",
+  "sim.layer.marks": "Marcas",
+  "sim.layer.fit": "{name}: recta",
+  "sim.color.accent": "Azul",
+  "sim.color.a": "Naranja",
+  "sim.color.b": "Turquesa",
+  "sim.color.c": "Violeta",
+  "sim.color.ok": "Verde",
+  "sim.color.danger": "Rojo",
+  "sim.color.muted": "Gris"
 }

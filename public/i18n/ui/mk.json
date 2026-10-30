@@ -2429,5 +2429,17 @@
   "kv.sheet": "Работен лист",
   "kv.top": "Врвот на табелата",
   "kv.wait": "Се приклучи. Почекај наставникот да започне.",
-  "kv.withKey": "Со решенија на последната страница"
+  "kv.withKey": "Со решенија на последната страница",
+  "sim.layers": "Прикажи на графикот",
+  "sim.layers.show": "Прикажи:",
+  "sim.layer.grid": "Мрежа",
+  "sim.layer.marks": "Ознаки",
+  "sim.layer.fit": "{name}: права",
+  "sim.color.accent": "Сина",
+  "sim.color.a": "Портокалова",
+  "sim.color.b": "Тиркизна",
+  "sim.color.c": "Виолетова",
+  "sim.color.ok": "Зелена",
+  "sim.color.danger": "Црвена",
+  "sim.color.muted": "Сива"
 }
