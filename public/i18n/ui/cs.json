@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Všechny části aplikace",
-  "apps.zbirke": "Sbírky",
+  "qs.title": "Pokračuj v učení",
+  "qs.test": "Test je {when}",
   "nav.path": "Cesta učení",
   "nav.textbook": "Učebnice",
   "nav.chat": "Doučovatel",

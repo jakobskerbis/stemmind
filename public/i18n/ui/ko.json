@@ -1,6 +1,6 @@
 {
-  "apps.menu": "앱의 모든 기능",
-  "apps.zbirke": "컬렉션",
+  "qs.title": "학습 이어 하기",
+  "qs.test": "시험은 {when}",
   "nav.path": "학습 경로",
   "nav.textbook": "교과서",
   "nav.chat": "튜터",

@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Az alkalmazás összes része",
-  "apps.zbirke": "Gyűjtemények",
+  "qs.title": "Tanulj tovább",
+  "qs.test": "A dolgozat {when} lesz",
   "nav.path": "Tanulási út",
   "nav.textbook": "Tankönyv",
   "nav.chat": "Oktató",

@@ -1,6 +1,6 @@
 {
-  "apps.menu": "অ্যাপের সব অংশ",
-  "apps.zbirke": "সংগ্রহ",
+  "qs.title": "শেখা চালিয়ে যাও",
+  "qs.test": "পরীক্ষা {when}",
   "nav.path": "শেখার পথ",
   "nav.textbook": "পাঠ্যবই",
   "nav.chat": "টিউটর",

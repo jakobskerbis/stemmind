@@ -1,6 +1,6 @@
 {
-  "apps.menu": "应用的所有部分",
-  "apps.zbirke": "收藏",
+  "qs.title": "继续学习",
+  "qs.test": "考试在{when}",
   "nav.path": "学习路径",
   "nav.textbook": "课本",
   "nav.chat": "辅导老师",

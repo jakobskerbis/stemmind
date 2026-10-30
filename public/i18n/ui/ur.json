@@ -1,6 +1,6 @@
 {
-  "apps.menu": "ایپ کے تمام حصے",
-  "apps.zbirke": "مجموعے",
+  "qs.title": "سیکھنا جاری رکھیں",
+  "qs.test": "ٹیسٹ {when} ہے",
   "nav.path": "سیکھنے کا راستہ",
   "nav.textbook": "نصابی کتاب",
   "nav.chat": "ٹیوٹر",

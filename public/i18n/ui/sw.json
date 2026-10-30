@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Sehemu zote za programu",
-  "apps.zbirke": "Mikusanyiko",
+  "qs.title": "Endelea kujifunza",
+  "qs.test": "Mtihani ni {when}",
   "nav.path": "Njia ya kujifunza",
   "nav.textbook": "Kitabu cha kiada",
   "nav.chat": "Mwalimu",

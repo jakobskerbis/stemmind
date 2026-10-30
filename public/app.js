@@ -9,7 +9,7 @@ import { dialectsFor } from "./dialects.js";
 hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock } from "./account.js";
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
-import { initAppsMenu, closeAppsMenu } from "./apps-menu.js";
+import { initQuickStart, closeQuickStart } from "./quick-start.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
@@ -109,7 +109,7 @@ function renderUserText(text) {
 // ---------- pogledi ----------
 
 function showView(name) {
-  // Uvod profila: izbira dela v meniju pod logotipom ali tipka Nazaj ga zapreta (prej so ostali skriti vsi zavihki).
+  // Uvod profila: izbira v meniju pod logotipom ali tipka Nazaj ga zapreta (prej so ostali skriti vsi zavihki).
   // Prvi profil na napravi mora nastati, zato takrat ostanemo na uvodu.
   if (name !== "onboard" && document.body.classList.contains("onboarding")) {
     if (!state.student) return;
@@ -209,7 +209,7 @@ window.addEventListener("popstate", () => {
   overlayEntry = false;
   const keep = () => currentView !== "path" && history.pushState({ stm: 1, v: currentView }, "");
   // Odprt meni (klobuk ali profil) Nazaj le zapre, pogled ostane.
-  if (closeAppsMenu() || closeProfileMenu()) return keep();
+  if (closeQuickStart() || closeProfileMenu()) return keep();
   if (installSheetOpen()) {
     closeInstallSheet({ fromBack: true });
     return keep();
@@ -451,10 +451,10 @@ async function selectStudent(id) {
 }
 $("#student-select").addEventListener("change", (e) => selectStudent(e.target.value));
 
-// Klik na klobuk zgoraj levo: mreža vseh delov aplikacije.
-initAppsMenu({ getState: () => state, showView, currentView: () => currentView });
+// Klik na klobuk zgoraj levo: »Nadaljuj z učenjem« (naslednja tema, trening, kar je danes na vrsti).
+initQuickStart({ getState: () => state, refresh: refreshModes, showView, goNew, startSession, showTestPrep, overlayOpened, overlayClosed });
 
-// Klik na ime zgoraj desno: meni profila (menjava, nov profil, nastavitve, račun, odjava).
+// Klik na ime zgoraj desno: meni profila (menjava, nov profil, zbirke, mnenje, nastavitve, račun, odjava).
 initProfileMenu({
   getState: () => state,
   showView,

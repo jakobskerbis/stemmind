@@ -1,4 +1,4 @@
-// Meni profila zgoraj desno (klik na ime): kdo uči, menjava profila, nov profil, nastavitve,
+// Meni profila zgoraj desno (klik na ime): kdo uči, menjava profila, nov profil, zbirke, mnenje, nastavitve,
 // račun in odjava. Skriti <select id="student-select"> še vedno hrani izbranega učenca
 // (ostala koda bere in nastavlja njega), ta meni je le njegov obraz.
 import { icon } from "./icons.js";
@@ -102,6 +102,8 @@ function render() {
     <div class="pm-sep" role="separator"></div>
     ${others}
     ${item("add", "user-plus", t("pm.add"))}
+    ${item("zbirke", "award", t("zb.title"))}
+    ${item("feedback", "message-square-heart", t("nav.feedback"))}
     ${item("settings", "settings", t("nav.settings"))}
     ${accounts ? item("account", "user", t("nav.account")) : ""}
     ${accounts ? `<div class="pm-sep" role="separator"></div>${item("logout", "log-out", t("pm.logout"))}` : ""}`;
@@ -120,7 +122,8 @@ function onPick(e) {
   }
   close();
   const act = b.dataset.act;
-  if (act === "settings") return D.showView("settings");
+  // Zbirke in mnenje sta na računalniku dosegljiva tu (na telefonu tudi pod »Jaz«).
+  if (act === "settings" || act === "zbirke" || act === "feedback") return D.showView(act);
   if (act === "account") return $("#account-tab")?.click();
   if (act === "logout") return D.logout();
   if (act === "add") {
