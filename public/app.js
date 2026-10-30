@@ -29,7 +29,7 @@ import { initUsageMeter, refreshUsageMeter } from "./usage-meter.js";
 import { initFullscreen } from "./fullscreen.js";
 import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-settings.js";
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
-import { initScan, showScan, leaveScan } from "./scan/scan.js";
+import { initScan, showScan, leaveScan, scanBack } from "./scan/scan.js";
 import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
 import { xpStatsHtml, xpItemsHtml, levelRowHtml, paintBadge, celebrateXp } from "./xp-fx.js";
@@ -229,6 +229,7 @@ window.addEventListener("popstate", () => {
   }
   if (currentView === "textbook" && textbookBack()) return keep();
   if (currentView === "games" && gamesBack()) return keep();
+  if (currentView === "scan" && scanBack()) return keep();
   const subMe = ME_VIEWS.includes(currentView) && !["me", "graph"].includes(currentView);
   if (subMe && $("#tabbar").offsetParent) return showView("me"); // telefon: nazaj na »Jaz«
   fromBack = true;
@@ -442,6 +443,7 @@ async function selectStudent(id) {
   if (!$("#view-settings").hidden) fillSettingsForm();
   if (!$("#view-progress").hidden) loadProgress();
   if (!$("#view-league").hidden) loadLeague(state.student.id);
+  if (!$("#view-scan").hidden) showScan(); // naloga prejšnjega profila ne ostane na zaslonu
   state.pathKey = null;
   clearLevelCard();
   state.symbols?.refresh();

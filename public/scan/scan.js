@@ -8,18 +8,22 @@ import { solve, analyze, prep, tex as exprTex, parseTask } from "./solvecore.js"
 import { mountSymbols } from "../symbols.js";
 
 let D = null; // { api, getStudent, toast, escapeHtml, askTutor, openGraph }
-const S = {
+const fresh = () => ({
   mode: "capture", // capture | crop | reading | confirm | solution
   image: null, // { url, w, h } za izrez
   problems: [],
   text: "",
   goal: null,
+  goals: [],
   result: null,
   method: 0,
   shown: 1, // koliko korakov je razkritih
   ai: null, // { loading, error }
   note: null, // obvestilo nad poljem (npr. brez povezave)
-};
+});
+const S = fresh();
+let owner = null; // profil, čigar naloga je v S (drug profil začne na praznem zaslonu)
+let aiSeq = 0; // odgovor AI za prejšnjo nalogo ne prepiše nove
 let stream = null;
 let frame = { x: 0.06, y: 0.34, w: 0.88, h: 0.26 };
 let graphView = null;
@@ -28,9 +32,8 @@ let symbols = null;
 export function initScan(deps) {
   D = deps;
   const view = document.getElementById("view-scan");
-  view?.addEventListener("paste", onPaste);
   document.addEventListener("paste", (e) => {
-    if (!view?.hidden && S.mode === "capture") onPaste(e);
+    if (view && !view.hidden && (S.mode === "capture" || S.mode === "crop")) onPaste(e);
   });
 }
 
@@ -65,6 +68,12 @@ function tr(item) {
 // ---------------------------------------------------------------------------
 
 export function showScan({ text = null } = {}) {
+  if (owner !== sid()) {
+    owner = sid();
+    Object.assign(S, fresh());
+    aiSeq++;
+    if (stream) stopCamera();
+  }
   if (text) {
     S.text = text;
     S.problems = [];
@@ -73,6 +82,17 @@ export function showScan({ text = null } = {}) {
   }
   if (S.mode === "reading") S.mode = "capture";
   render();
+}
+
+// Tipka Nazaj (telefon): rešitev, prepis ali izrez → nazaj na zajem; na zajemu zapusti zaslon.
+export function scanBack() {
+  if (S.mode === "capture") return false;
+  S.mode = "capture";
+  S.note = null;
+  frame = { x: 0.06, y: 0.34, w: 0.88, h: 0.26 };
+  aiSeq++;
+  render();
+  return true;
 }
 
 export function leaveScan() {
@@ -175,14 +195,15 @@ function showCamOff(on) {
   if (video) video.hidden = on;
 }
 
+const scanHidden = () => document.getElementById("view-scan")?.hidden !== false;
 async function startCamera(userAsked) {
   const video = $v()?.querySelector("video");
-  if (!video) return;
+  if (!video || scanHidden()) return;
   if (!navigator.mediaDevices?.getUserMedia) return showCamOff(true);
   try {
     stopCamera();
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
-    if (S.mode !== "capture" || !video.isConnected) return stopCamera();
+    if (S.mode !== "capture" || !video.isConnected || scanHidden()) return stopCamera();
     video.srcObject = stream;
     await video.play().catch(() => {});
     showCamOff(false);
@@ -391,6 +412,7 @@ async function readImage(dataUrl) {
     S.mode = "confirm";
     render();
   } catch (err) {
+    if (S.mode !== "reading") return;
     D.toast(err?.message || t("scan.readFail"));
     S.mode = S.image ? "crop" : "capture";
     render();
@@ -407,7 +429,7 @@ function renderConfirm(box) {
     <div class="card scan-confirm">
       ${S.problems.length ? `<p class="scan-label">${esc(t("scan.readAs"))}</p>` : ""}
       <div class="scan-preview" aria-live="polite"></div>
-      <label class="scan-label" for="scan-input">${esc(S.problems.length ? t("scan.inputLabel") : t("scan.title"))}</label>
+      <label class="scan-label" for="scan-input">${esc(S.problems.length ? t("scan.inputLabel") : t("scan.typeLabel"))}</label>
       <div class="scan-input-row">
         <input id="scan-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" placeholder="${esc(t("scan.placeholder"))}" value="${esc(S.text)}">
         <button type="button" class="ghost icon-only" data-act="sym" aria-label="${esc(t("scan.symbols"))}" title="${esc(t("scan.symbols"))}" aria-expanded="false">${icon("sigma")}</button>
@@ -480,7 +502,7 @@ function renderConfirm(box) {
 // ---------- 4. rešitev ----------
 
 function solveNow() {
-  const complex = ["SS", "UNIVERZA"].includes(D.getStudent()?.settings?.educational_track) || /SŠ|faks/i.test(D.getStudent()?.settings?.curriculum_level || "");
+  const complex = ["SREDNJA_SOLA", "UNIVERZA"].includes(D.getStudent()?.settings?.educational_track) || /SŠ|faks/i.test(D.getStudent()?.settings?.curriculum_level || "");
   const r = solve(S.text, { goal: S.goal, complex });
   S.result = r.ok ? r : null;
   S.goals = r.goals || [];
@@ -488,6 +510,7 @@ function solveNow() {
   S.method = 0;
   S.shown = 1;
   S.ai = null;
+  aiSeq++;
   S.mode = "solution";
   if (r.ok) remember(r);
   render();
@@ -495,15 +518,19 @@ function solveNow() {
 }
 
 async function solveAi() {
+  const seq = ++aiSeq;
   if (!navigator.onLine) {
-    S.ai = { error: t("scan.offline") };
+    S.ai = { error: t("scan.offline"), retry: true };
     return render();
   }
   S.ai = { loading: true };
   render();
+  // izbrani cilj gre zraven (»Razstavi«, »Odvod« …); ničle izraza = rešitve enačbe izraz = 0
+  const text = prep(S.text);
+  const body = S.goal === "zeros" ? { text: `${text}=0`, goal: "solve" } : { text, goal: S.goal || null };
   try {
-    const out = await D.api(`/api/students/${sid()}/scan/solve`, { method: "POST", body: { text: prep(S.text) } });
-    if (S.mode !== "solution") return;
+    const out = await D.api(`/api/students/${sid()}/scan/solve`, { method: "POST", body });
+    if (seq !== aiSeq || S.mode !== "solution") return;
     if (out.mock || !out.solution) {
       S.ai = { error: t("scan.noSolve") };
       return render();
@@ -515,6 +542,7 @@ async function solveAi() {
     remember(S.result);
     render();
   } catch (err) {
+    if (seq !== aiSeq || S.mode !== "solution") return;
     S.ai = { error: err?.message || t("scan.aiFail"), retry: true };
     render();
   }

@@ -26,8 +26,9 @@ function values(expr) {
   return [...new Set(out)];
 }
 
-// Ničle L − D na intervalu (za rešitve, ki jih AI morda ni našel).
-function scanRoots(eqText, v, a = -50, b = 50, n = 4000) {
+// Ničle L − D (za rešitve, ki jih AI morda ni našel): gosta mreža na [−50, 50], redkejša (geometrijska) do ±10⁶,
+// predznak se zamenja → bisekcija; dotikalne ničle (|L − D| ima lokalni minimum ≈ 0, npr. |x − 1,1| = 0) → zlati rez.
+function scanRoots(eqText, v) {
   let ast;
   try {
     ast = parse(prep(eqText));
@@ -38,27 +39,68 @@ function scanRoots(eqText, v, a = -50, b = 50, n = 4000) {
   const L = compile(ast.terms[0]);
   const R = compile(ast.terms[1]);
   const g = (x) => L({ [v]: x }) - R({ [v]: x });
+  const tol = (x) => 1e-9 * Math.max(1, Math.abs(L({ [v]: x })), Math.abs(R({ [v]: x })));
+  const xs = [];
+  for (let i = 0; i <= 4000; i++) xs.push(-50 + i / 40);
+  for (let i = 1; i <= 400; i++) {
+    const x = 50 * Math.pow(2e4, i / 400);
+    xs.push(x, -x);
+  }
+  xs.sort((a, b) => a - b);
+  const ys = xs.map(g);
   const roots = [];
-  let px = a;
-  let py = g(a);
-  for (let i = 1; i <= n; i++) {
-    const x = a + ((b - a) * i) / n;
-    const y = g(x);
-    if (fin(py) && fin(y) && (py === 0 || py * y < 0) && Math.abs(y - py) < 1e3) {
+  const add = (r) => {
+    if (fin(g(r)) && Math.abs(g(r)) <= tol(r) && !roots.some((q) => Math.abs(q - r) < 1e-6 * Math.max(1, Math.abs(r)))) roots.push(r);
+  };
+  for (let i = 1; i < xs.length; i++) {
+    const [px, x, py, y] = [xs[i - 1], xs[i], ys[i - 1], ys[i]];
+    if (fin(py) !== fin(y)) {
+      // rob definicijskega območja (npr. √(x − 60) = 0 ima ničlo v x = 60)
       let lo = px;
       let hi = x;
-      for (let k = 0; k < 60; k++) {
+      for (let k = 0; k < 80; k++) {
+        const m = (lo + hi) / 2;
+        if (fin(g(m)) === fin(py)) lo = m;
+        else hi = m;
+      }
+      add(fin(py) ? lo : hi);
+      continue;
+    }
+    if (!fin(py) || !fin(y)) continue;
+    if (py === 0) add(px);
+    if (py * y < 0) {
+      let lo = px;
+      let hi = x;
+      for (let k = 0; k < 80; k++) {
         const m = (lo + hi) / 2;
         if (g(lo) * g(m) <= 0) hi = m;
         else lo = m;
       }
-      const r = (lo + hi) / 2;
-      if (Math.abs(g(r)) < 1e-6 && !roots.some((q) => Math.abs(q - r) < 1e-6)) roots.push(r);
+      add((lo + hi) / 2);
+    } else if (i + 1 < xs.length && fin(ys[i + 1]) && Math.abs(y) <= Math.abs(py) && Math.abs(y) <= Math.abs(ys[i + 1]) && y * ys[i + 1] > 0) {
+      let a = px;
+      let b = xs[i + 1];
+      const k = (Math.sqrt(5) - 1) / 2;
+      for (let n = 0; n < 120 && b - a > 1e-15 * Math.max(1, Math.abs(a)); n++) {
+        const c = b - k * (b - a);
+        const d = a + k * (b - a);
+        if (Math.abs(g(c)) < Math.abs(g(d))) b = d;
+        else a = c;
+      }
+      add((a + b) / 2);
     }
-    px = x;
-    py = y;
   }
-  return roots;
+  return roots.sort((a, b) => Math.abs(a) - Math.abs(b));
+}
+
+// enačba z enim samim »=« (neenačbe in izrazi se ne preverjajo kot enačbe)
+function isEquation(text) {
+  try {
+    const ast = parse(prep(text));
+    return ast.k === "cmp" && ast.ops.every((o) => o === "=");
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -66,6 +108,11 @@ function scanRoots(eqText, v, a = -50, b = 50, n = 4000) {
  * Vrne { verified: bool, reason, missing: [x …] }
  */
 export function verifyAi(problemText, ai) {
+  const r = check(problemText, ai);
+  return r.verified ? { ...r, reason: null } : r;
+}
+
+function check(problemText, ai) {
   const kind = ai?.kind;
   const v = /^[a-zA-Z]$/.test(ai?.variable || "") ? ai.variable : "x";
   try {
@@ -83,7 +130,9 @@ export function verifyAi(problemText, ai) {
       return { verified: (ai.solutions || []).length > 0, reason: (ai.solutions || []).length ? null : "empty" };
     }
     if (kind === "equation") {
-      const sols = (ai.solutions || []).flatMap((s) => values(s));
+      if (!isEquation(problemText)) return { verified: false, reason: "kind" };
+      // »x = 2« ali »x_1 = 2« → »2«
+      const sols = (ai.solutions || []).flatMap((s) => values(String(s).replace(/^\s*[a-zA-Z](?:_\{?\d+\}?)?\s*=(?!=)/, "")));
       if (!(ai.solutions || []).length) {
         // »ni rešitve«: preverimo, da numerično res ni ničle
         const r = scanRoots(problemText, v);

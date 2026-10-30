@@ -1,6 +1,8 @@
 /* Skeniraj nalogo (public/scan/scan.js) */
 #view-scan .scan-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
 #view-scan .scan-body > *, .scan-steps li, .scan-step-title { min-width: 0; overflow-wrap: anywhere; }
+/* matematika ostane od leve proti desni tudi v arabščini, perzijščini in urdu (RTL) */
+#view-scan .katex, #scan-input { direction: ltr; unicode-bidi: isolate; }
 .scan-label { display: block; font-size: 0.82rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 6px; }
 .scan-h2 { font-size: 1rem; margin: 0 0 10px; }
 .scan-hint { text-align: center; font-size: 0.9rem; margin: 10px 0 0; }
@@ -11,7 +13,7 @@
 .scan-cam { position: relative; padding: 10px; }
 .scan-stage { position: relative; overflow: hidden; border-radius: var(--radius-sm); background: #0b0f17; aspect-ratio: 3 / 4; max-height: 62vh; width: 100%; margin: 0 auto; touch-action: none; user-select: none; -webkit-user-select: none; }
 @media (min-width: 700px) { .scan-stage { aspect-ratio: 16 / 10; } }
-@media (max-width: 699px) { .scan-stage { max-height: calc(100dvh - 330px); min-height: 240px; } }
+@media (max-width: 699px) { .scan-stage { max-height: calc(100dvh - 400px); min-height: 240px; } }
 .scan-stage video, .scan-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .scan-stage.contain img { object-fit: contain; }
 .scan-stage.busy .scan-frame { animation: scan-pulse 1.2s ease-in-out infinite; }
@@ -53,7 +55,7 @@
 .scan-note { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; margin: 0; }
 .scan-note .i { flex: none; color: var(--accent); margin-top: 2px; }
 .scan-picks { display: grid; gap: 8px; }
-.scan-pick { text-align: left; padding: 10px 14px; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); overflow-x: auto; cursor: pointer; min-height: 48px; }
+.scan-pick { text-align: start; padding: 10px 14px; border: 2px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); overflow-x: auto; cursor: pointer; min-height: 48px; }
 .scan-pick.on { border-color: var(--accent); background: var(--accent-soft); }
 .scan-confirm { padding: 16px; }
 .scan-preview { min-height: 52px; overflow-x: auto; overflow-y: hidden; padding: 4px 2px 10px; font-size: 1.15rem; }
@@ -65,7 +67,7 @@
 .scan-err { color: var(--danger); font-weight: 600; margin: 8px 0 0; }
 
 /* rešitev */
-.scan-problem { display: flex; align-items: center; gap: 8px; padding: 10px 12px 10px 16px; }
+.scan-problem { display: flex; align-items: center; gap: 8px; padding-block: 10px; padding-inline: 16px 12px; }
 .scan-problem-tex { flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; font-size: 1.1rem; }
 .scan-problem-tex .katex-display { margin: 0.2em 0; }
 .scan-problem > button { flex: none; width: 44px; height: 44px; }
@@ -88,21 +90,23 @@
 .scan-step-head { display: flex; gap: 10px; align-items: flex-start; }
 .scan-step-n { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--accent-text, #fff); font-weight: 800; font-size: 0.9rem; }
 .scan-step-title { margin: 3px 0 0; font-weight: 600; line-height: 1.45; }
-.scan-step-math { display: flex; align-items: center; gap: 12px; overflow-x: auto; overflow-y: hidden; padding: 2px 0 2px 38px; }
+.scan-step-math { display: flex; align-items: center; gap: 12px; overflow-x: auto; overflow-y: hidden; padding-block: 2px; padding-inline: 38px 0; }
 .scan-step-math .katex-display { margin: 0.5em 0; text-align: left; }
 .scan-step-math .katex-display > .katex { text-align: left; }
+[dir="rtl"] .scan-step-math .katex-display > .katex, [dir="rtl"] .scan-why .katex-display > .katex { text-align: right; }
+[dir="rtl"] .scan-step-math .katex-display, [dir="rtl"] .scan-why .katex-display { text-align: right; }
 .scan-step-note { flex: none; color: var(--muted); font-size: 0.95rem; white-space: nowrap; }
-.scan-step-actions { display: flex; flex-wrap: wrap; gap: 4px 14px; padding-left: 38px; }
+.scan-step-actions { display: flex; flex-wrap: wrap; gap: 4px 14px; padding-inline-start: 38px; }
 .scan-step-actions .text-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; }
 .scan-step-actions .i { width: 16px; height: 16px; }
-.scan-why { margin: 6px 0 0 38px; padding: 10px 12px; border-left: 3px solid var(--accent); background: var(--surface-2); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; overflow-x: auto; }
+.scan-why { margin: 6px 0 0; margin-inline-start: 38px; padding: 10px 12px; border-inline-start: 3px solid var(--accent); background: var(--surface-2); border-start-end-radius: var(--radius-sm); border-end-end-radius: var(--radius-sm); overflow-x: auto; }
 .scan-why p { margin: 0 0 6px; line-height: 1.5; }
 .scan-why .katex-display { margin: 0.4em 0 0; text-align: left; }
 .scan-more { justify-content: space-between; align-items: center; }
-.scan-more .muted { font-weight: 600; margin-left: 4px; }
+.scan-more .muted { font-weight: 600; margin-inline-start: 4px; color: inherit; opacity: 0.85; }
 @media (max-width: 520px) {
-  .scan-step-math, .scan-step-actions { padding-left: 0; }
-  .scan-why { margin-left: 0; }
+  .scan-step-math, .scan-step-actions { padding-inline-start: 0; }
+  .scan-why { margin-inline-start: 0; }
   .scan-actions > button { flex: 1 1 auto; justify-content: center; }
   .scan-step-math { flex-wrap: wrap; gap: 0 12px; }
   .scan-step-math .katex, .scan-why .katex { font-size: 1.02em; }
@@ -110,6 +114,8 @@
 
 .scan-graph-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .scan-graph-head h2 { margin: 0; }
+.scan-graph-head > button { min-height: 44px; }
+.scan-graph-host, .scan-nl-svg { direction: ltr; }
 .scan-graph-host { position: relative; height: 260px; margin-top: 10px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
 .scan-graph-host .gc-canvas { width: 100%; height: 100%; display: block; }
 .scan-nl-svg { width: 100%; max-width: 520px; height: auto; display: block; margin: 0 auto; overflow: visible; }

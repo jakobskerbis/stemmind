@@ -1,6 +1,6 @@
 // Skeniranje nalog (zaslon »Skeniraj«, public/scan/):
 //   POST /api/students/:id/scan/read   { image: dataURL }  → { problems: [{ text, tex }] }  prepis s fotografije
-//   POST /api/students/:id/scan/solve  { text }            → { solution }                   AI rešitev po korakih
+//   POST /api/students/:id/scan/solve  { text, goal? }     → { solution }                   AI rešitev po korakih
 // Večino nalog reši brez AI že vmesnik (public/scan/solvecore.js). AI pride na vrsto le pri nalogah, ki jih
 // ta ne zna (koreni, logaritmi, trigonometrija, integrali …). AI rešitev strežnik preveri z isto kodo kot vmesnik
 // (public/scan/verify.js); nepreverjena se pokaže z opozorilom, nikoli kot »preverjeno«.
@@ -68,9 +68,19 @@ export function cleanProblems(list) {
     }));
 }
 
-export function solvePrompt(text, lang, feedback = null) {
+// Cilj, ki ga je učenec izbral na zaslonu (npr. »Razstavi«): brez njega bi AI izraz morda le poenostavil.
+const GOAL_TEXT = {
+  factor: "Task: factor the expression completely (kind expression, value = the factored form).",
+  simplify: "Task: simplify the expression (kind expression).",
+  evaluate: "Task: evaluate it (kind arith).",
+  derivative: "Task: differentiate it with respect to the variable (kind derivative).",
+  solve: "Task: solve it.",
+};
+
+export function solvePrompt(text, lang, feedback = null, goal = null) {
   return (
     `A student wants a step-by-step solution of this maths problem (calculator syntax): ${text}\n` +
+    (GOAL_TEXT[goal] ? `${GOAL_TEXT[goal]}\n` : "") +
     `Write every title and explanation in ${lang}, simply, for a student at school level; use the notation of Slovenian schools (decimal comma in LaTeX as {,}, intervals with ( ) and [ ], »D« for the discriminant).\n` +
     "Solve it correctly; check your result yourself before answering. Steps must be small (one idea each), as a good teacher writes them on the board. Give a second method only if it is commonly taught.\n" +
     "Return only JSON:\n" +
@@ -104,7 +114,7 @@ export function cleanSolution(s) {
   };
 }
 
-export async function solveWithAi({ text, lang = "sl" }) {
+export async function solveWithAi({ text, lang = "sl", goal = null }) {
   const model = SOLVE_MODEL();
   if (isMockMode()) return { mock: true, solution: null, usage: null, model };
   const ask = async (feedback) => {
@@ -113,7 +123,7 @@ export async function solveWithAi({ text, lang = "sl" }) {
       max_tokens: 8000,
       thinking: { type: "adaptive" },
       output_config: { effort: "medium" },
-      messages: [{ role: "user", content: solvePrompt(text, languagePrompt(lang), feedback) }],
+      messages: [{ role: "user", content: solvePrompt(text, languagePrompt(lang), feedback, goal) }],
     });
     return { sol: cleanSolution(jsonFrom(textOf(final))), usage: final.usage, model: final.model || model };
   };
@@ -122,7 +132,7 @@ export async function solveWithAi({ text, lang = "sl" }) {
   let check = out.sol ? verifyAi(text, out.sol) : { verified: false, reason: "parse" };
   // Ena ponovitev, kadar preverjanje pokaže napačno ali manjkajočo rešitev.
   if (out.sol && !check.verified && (check.reason === "wrong" || check.reason === "missing")) {
-    const fb = check.reason === "missing" ? `x ≈ ${check.missing.map((m) => m.toFixed(4)).join(", ")} also satisfies the equation` : "substituting your result back does not give the original";
+    const fb = check.reason === "missing" ? `x ≈ ${check.missing.slice(0, 6).map((m) => m.toFixed(4)).join(", ")} also satisfies the equation` : "substituting your result back does not give the original";
     const again = await ask(fb);
     usage.push(again.usage);
     const c2 = again.sol ? verifyAi(text, again.sol) : { verified: false };
@@ -158,10 +168,12 @@ export function mountScan(app, { loadStudent, usage, readFn = readMathPhoto, sol
     if (!s) return;
     const text = typeof req.body?.text === "string" ? req.body.text.trim() : "";
     if (!text || text.length > MAX_TEXT) return res.status(400).json({ error: "Naloga manjka ali je predolga." });
+    const goal = req.body?.goal ?? null;
+    if (goal !== null && !GOALS.includes(goal)) return res.status(400).json({ error: "Neznan cilj naloge." });
     const blocked = usage?.blockReason(s.id);
     if (blocked) return res.status(429).json({ error: blocked });
     try {
-      const out = await solveFn({ text, lang: s.settings?.language || "sl" });
+      const out = await solveFn({ text, goal, lang: s.settings?.language || "sl" });
       if (out.mock) return res.json({ solution: null, mock: true });
       for (const u of [].concat(out.usage || [])) if (u) usage?.log(s.id, out.model, u, "skeniranje");
       if (!out.solution) return res.status(502).json({ error: "Rešitve ni bilo mogoče sestaviti. Poskusi znova ali vprašaj inštruktorja." });

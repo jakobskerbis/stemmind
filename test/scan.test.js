@@ -131,6 +131,20 @@ test("expressions: simplify, factor (common factor, special products, trinomials
   assert.equal(f("x^3-2x^2-5x+6"), "\\left(x+2\\right)\\left(x-1\\right)\\left(x-3\\right)");
   assert.deepEqual(analyze("x^2-5x+6").goals, ["simplify", "factor", "zeros", "derivative"]);
   assert.equal(flat(ans("x^2-5x+6", { goal: "zeros" }).answer.tex), "x_{1}=2,\\quadx_{2}=3");
+  // brez »x^{0}« v skupnem faktorju, −1 kot faktor, razlika kvadratov do konca
+  assert.equal(f("2x^2-8"), "2\\left(x-2\\right)\\left(x+2\\right)");
+  assert.equal(f("ax+ay"), "a\\left(x+y\\right)");
+  assert.equal(f("-x^2+5x-6"), "-\\left(x-2\\right)\\left(x-3\\right)");
+  assert.equal(f("x^4-16"), "\\left(x-2\\right)\\left(x+2\\right)\\left(x^{2}+4\\right)");
+  // racionalna enačba, ki velja za vsak x: brez ničel imenovalca
+  assert.equal(flat(ans("(x^2-1)/(x-1)=x+1").answer.tex), "x\\in\\mathbb{R}\\setminus\\left\\{1\\right\\}");
+  assert.equal(ans("(x^2-1)/(x-1)=x+1").answer.key, undefined);
+  assert.equal(solve("1/(x^2-2)=1/(x^2-2)").ok, false);
+  // ulomek z x v imenovalcu: privzeto okrajšamo (AI), odvod je drugi cilj
+  assert.deepEqual(analyze("(x^2-1)/(x-1)").goals, ["simplify", "derivative"]);
+  const r = solve("(x^2-1)/(x-1)");
+  assert.equal(r.ok, false);
+  assert.equal(r.goal, "simplify");
 });
 
 test("derivatives: rule per step, result checked against a numeric derivative", () => {
@@ -141,6 +155,10 @@ test("derivatives: rule per step, result checked against a numeric derivative", 
   assert.equal(d("ln(x^2+1)"), "f'(x)=\\frac{2x}{x^{2}+1}");
   assert.equal(d("sqrt(x^2+1)"), "f'(x)=\\frac{x}{\\sqrt{x^{2}+1}}");
   assert.equal(d("sin(3x)-2cos(x)"), "f'(x)=3\\cos\\left(3x\\right)+2\\sin\\left(x\\right)");
+  // predznak verižnega pravila pred produktom, nikoli »· −« ali »−−«
+  assert.equal(d("cos(3x^2)"), "f'(x)=-6x\\cdot\\sin\\left(3x^{2}\\right)");
+  assert.equal(d("-cos(x^2)"), "f'(x)=2x\\cdot\\sin\\left(x^{2}\\right)");
+  assert.equal(d("-(1-x)^3"), "f'(x)=3\\left(1-x\\right)^{2}");
   const r = ans("sin(x)*x^2", { goal: "derivative" });
   assert.equal(r.methods[0].steps[0].title.k, "scan.s.dProduct");
 });
@@ -202,6 +220,12 @@ test("AI solutions are verified: substitution, missing roots, derivatives, integ
   assert.equal(verifyAi("x+y=3; x-y=1", { kind: "system", solutions: ["x=2; y=1"] }).verified, true);
   assert.equal(verifyAi("x+y=3; x-y=1", { kind: "system", solutions: ["x=1; y=2"] }).verified, false);
   assert.equal(verifyAi("(x^2-1)/(x-1)", { kind: "expression", value: "x+1" }).verified, true);
+  // »ni rešitve« ni preverjeno, kadar ničla obstaja zunaj [−50, 50], na robu območja ali kot dotikalna ničla
+  for (const t of ["x/200 = 1", "e^x = 100000", "log(x) = 3", "sqrt(x-60) = 0", "abs(x-1.1) = 0"]) assert.equal(verifyAi(t, { kind: "equation", solutions: [] }).verified, false, t);
+  assert.equal(verifyAi("sqrt(x) = -1", { kind: "equation", solutions: [] }).verified, true);
+  // neenačba ni enačba; »x = 2« je dovoljen zapis rešitve
+  assert.equal(verifyAi("x > 0", { kind: "equation", solutions: ["1"] }).verified, false);
+  assert.equal(verifyAi("x^2 = 4", { kind: "equation", solutions: ["x = 2", "x = -2"] }).verified, true);
 });
 
 test("server cleans AI output (limits, types)", () => {
@@ -234,7 +258,8 @@ async function withApp(opts, fn) {
 test("API: scan read and solve validate input, log usage and return the cleaned result", async () => {
   const img = "data:image/jpeg;base64," + Buffer.from("x").toString("base64");
   const scanReadFn = async () => ({ problems: [{ text: "2x=4", tex: "2x=4", goal: null }], usage: { input_tokens: 1500, output_tokens: 40 }, model: "claude-sonnet-5-5" });
-  const scanSolveFn = async ({ text, lang }) => ({
+  const goals = [];
+  const scanSolveFn = async ({ text, lang, goal }) => (goals.push(goal), {
     solution: { kind: "equation", problem_tex: text, answer_tex: "x=6", solutions: ["6"], methods: [{ name: lang, steps: [{ title: "t", tex: "x=6", why: "" }] }], verified: true },
     usage: [{ input_tokens: 500, output_tokens: 900 }],
     model: "claude-sonnet-5-5",
@@ -250,8 +275,12 @@ test("API: scan read and solve validate input, log usage and return the cleaned 
     const sol = await req("POST", `/api/students/${s.id}/scan/solve`, { text: "sqrt(x+3)=x-3" });
     assert.equal(sol.status, 200);
     assert.equal(sol.body.solution.methods[0].name, "de");
+    // izbrani cilj (npr. »Razstavi«) gre do AI; neznan cilj je napaka odjemalca
+    assert.equal((await req("POST", `/api/students/${s.id}/scan/solve`, { text: "x^4+4", goal: "factor" })).status, 200);
+    assert.deepEqual(goals, [null, "factor"]);
+    assert.equal((await req("POST", `/api/students/${s.id}/scan/solve`, { text: "x^4+4", goal: "hack" })).status, 400);
     const rows = store.db.prepare("SELECT kind FROM usage WHERE student_id = ?").all(s.id);
-    assert.equal(rows.filter((r) => r.kind === "skeniranje").length, 2);
+    assert.equal(rows.filter((r) => r.kind === "skeniranje").length, 3);
     assert.equal((await req("POST", `/api/students/999/scan/solve`, { text: "x=1" })).status, 404);
   });
 });

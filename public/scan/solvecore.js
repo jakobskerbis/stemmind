@@ -459,7 +459,7 @@ function linearSteps(pl, pr, v, op = "=") {
   const b = b2.sub(b1);
   if (a.zero) {
     const holds = relHolds([Q.ZERO, b], [op]);
-    steps.push(step(T(holds ? "scan.s.allX" : "scan.s.noX", { v }), `0 ${R} ${b.tex()}`, { why: T(holds ? "scan.w.allX" : "scan.w.noX", { v }) }));
+    steps.push(step(T(`scan.s.${holds ? "allX" : "noX"}${op === "=" ? "" : "Ineq"}`, { v }), `0 ${R} ${b.tex()}`, { why: T(holds ? "scan.w.allX" : "scan.w.noX", { v }) }));
     return { steps, all: holds, none: !holds };
   }
   let rop = op;
@@ -611,9 +611,9 @@ function quadraticMethods(a, b, c, v, opt = {}) {
         const { k, r } = sqfree(-D);
         const re = new Q(-B, 2n * A);
         const im = new Q(k, 2n * A);
-        const imT = r === 1n ? im.tex() : `${im.one ? "" : im.tex()}\\sqrt{${r}}`;
+        const imT = im.one ? (r === 1n ? "" : `\\sqrt{${r}}`) : `${im.tex()}${r === 1n ? "" : `\\sqrt{${r}}`}`;
         const reT = re.zero ? "" : re.tex();
-        st.push(step(T("scan.s.complex"), `${v}_{1,2} = \\frac{-b \\pm \\sqrt{D}}{2a} = ${reT} \\pm ${imT}\\, i`, { why: T("scan.w.complex") }));
+        st.push(step(T("scan.s.complex"), `${v}_{1,2} = \\frac{-b \\pm \\sqrt{D}}{2a} = ${reT} \\pm ${imT ? `${imT}\\, ` : ""}i`, { why: T("scan.w.complex") }));
       }
     } else {
       const pm = rational ? null : surdSolutions(A, B, D);
@@ -718,6 +718,19 @@ function solveOneVar(ast, v, opt = {}) {
   if (deg <= 1) {
     const lin = linearSteps(pl, pr, v, op);
     steps.push(...lin.steps);
+    if (lin.all && isEq && (opt.exclude?.length || opt.domainOpen)) {
+      // racionalna enačba, ki velja »za vsak x«: vrednosti, pri katerih je imenovalec 0, niso rešitve
+      if (opt.domainOpen) return null; // imenovalec z ničlami, ki jih ne znamo zapisati (npr. x² − 2): reši AI
+      exclude(opt.exclude.map((q) => ({ q })), steps);
+      return result({
+        kind: "linear",
+        problemTex,
+        answer: { tex: `${v} \\in \\mathbb{R} \\setminus \\left\\{${opt.exclude.map((e) => e.tex()).join(", ")}\\right\\}` },
+        methods: [{ id: "balance", steps }],
+        graph,
+        verified: true,
+      });
+    }
     if (lin.all || lin.none) {
       return result({
         kind: isEq ? "linear" : "lin-ineq",
@@ -1040,7 +1053,8 @@ function solveRational(ast, v, opt) {
       .join("") || "0";
   const newAst = parse(`${sideText(mulTerms[0])} = ${sideText(mulTerms[1])}`);
   pre.push(step(T("scan.s.mulLcd", { d: lcdTex }), tex(newAst), { note: `/ \\cdot ${lcdTex}`, why: T("scan.w.mulLcd") }));
-  return solveOneVar(newAst, v, { ...opt, pre, orig: { ast, sides: ast.terms, ops: ast.ops }, exclude: excluded });
+  const domainOpen = [...lcd.values()].some(({ f }) => f.degree(v) >= 2);
+  return solveOneVar(newAst, v, { ...opt, pre, orig: { ast, sides: ast.terms, ops: ast.ops }, exclude: excluded, domainOpen });
 }
 
 function hornerTable(cs, r) {
@@ -1583,7 +1597,10 @@ function factorPoly(p, steps) {
   if (terms[0].c.sign < 0) g = g.neg();
   const vars = p.vars();
   const mono = {};
-  for (const v of vars) mono[v] = Math.min(...terms.map((t) => t.m[v] || 0));
+  for (const v of vars) {
+    const e = Math.min(...terms.map((t) => t.m[v] || 0));
+    if (e > 0) mono[v] = e; // brez x^0 v zapisu skupnega faktorja
+  }
   const monoNonEmpty = Object.values(mono).some((e) => e > 0);
   let rest = p;
   let pre = "";
@@ -1594,7 +1611,7 @@ function factorPoly(p, steps) {
     pre = termTex({ m: mono, c: g }, true);
     if (pre === "-1") pre = "-";
     if (pre === "1") pre = "";
-    steps.push(step(T("scan.s.commonFactor", { f: pre || "1" }), `${pre}\\left(${rest.tex()}\\right)`, { why: T("scan.w.commonFactor") }));
+    steps.push(step(T("scan.s.commonFactor", { f: pre === "-" ? "-1" : pre || "1" }), `${pre}\\left(${rest.tex()}\\right)`, { why: T("scan.w.commonFactor") }));
   }
   const inner = factorRest(rest, steps);
   if (!inner) {
@@ -1656,7 +1673,16 @@ function factorRest(p, steps) {
       const B = monoT(sqMono({ ...neg, c: neg.c.neg() }));
       const res = `\\left(${A} - ${B}\\right)\\left(${A} + ${B}\\right)`;
       steps.push(step(T("scan.s.diffSquares"), res, { why: T("scan.w.diffSquares"), whyTex: `A^{2} - B^{2} = (A - B)(A + B),\\quad A = ${A},\\; B = ${B}` }));
-      return res;
+      // A − B razstavimo naprej, kadar gre (x⁴ − 1 = (x² − 1)(x² + 1) = (x − 1)(x + 1)(x² + 1))
+      const sa = sqMono(pos);
+      const sb = sqMono({ ...neg, c: neg.c.neg() });
+      const sub = [];
+      const more = factorRest(new P([sa, { ...sb, c: sb.c.neg() }]), sub);
+      if (!more) return res;
+      steps.push(...sub);
+      const all = `${more}\\left(${A} + ${B}\\right)`;
+      steps.push(step(T("scan.s.factorResult"), all));
+      return all;
     }
     const ca = cubeMono(a);
     const cb = cubeMono(b);
@@ -1778,7 +1804,16 @@ const wrapT = (n) => {
   const u = unwrap(n);
   return u.k === "+" || u.k === "-" ? `\\left(${tex(u)}\\right)` : tex(u);
 };
-const wrapS = (s) => (/[+-]/.test(s.replace(/^-/, "").replace(/\{[^{}]*\}/g, "")) ? `\\left(${s}\\right)` : s);
+// oklepaj okoli zapisa, ki ima + ali − na najvišji ravni (vsebino {…} in \left(…\right) preskočimo)
+const topLevel = (s) => {
+  let out = s.replace(/^-/, "");
+  for (let prev = null; prev !== out; ) {
+    prev = out;
+    out = out.replace(/\{[^{}]*\}/g, "").replace(/\\left\((?:(?!\\left\(|\\right\)).)*\\right\)/g, "");
+  }
+  return out;
+};
+const wrapS = (s) => (/[+-]/.test(topLevel(s)) ? `\\left(${s}\\right)` : s);
 function cleanD(n) {
   const s = simplify(n);
   const p = tryPoly(s);
@@ -1842,7 +1877,17 @@ function dTerm(node, v) {
     }
     else if (u.f === "tan") res = `\\frac{${gpT}}{\\cos^{2}\\left(${gT}\\right)}`;
     else if (constQ(gp)) res = `${OUTER[u.f](gT).startsWith("-") ? "-" : ""}${constQ(gp).abs().one ? "" : constQ(gp).abs().tex()}${OUTER[u.f](gT).replace(/^-/, "")}`.replace(/^--/, "");
-    else res = `${wrapS(gpT)} \\cdot ${OUTER[u.f](gT)}`;
+    else {
+      // 6x · (−sin(3x²)) zapišemo kot −6x · sin(3x²)
+      const o = OUTER[u.f](gT);
+      let a = wrapS(gpT);
+      let neg = o.startsWith("-");
+      if (gpT.startsWith("-") && wrapS(gpT.slice(1)) === gpT.slice(1)) {
+        a = gpT.slice(1);
+        neg = !neg;
+      }
+      res = `${neg ? "-" : ""}${a} \\cdot ${o.replace(/^-/, "")}`;
+    }
     if (u.f !== "ln" && u.f !== "sqrt" && u.f !== "tan" && constQ(gp)?.sign < 0) res = res.startsWith("-") ? res.slice(1) : `-${res}`;
     return { ...out, res, mid, k: "scan.s.dChain", formula: "\\big(f(g(x))\\big)' = f'(g(x)) \\cdot g'(x)" };
   }
@@ -1868,7 +1913,8 @@ function dTerm(node, v) {
     let res = out.res;
     if (pu && pv) {
       const N = polyOf(diff(u.a, v)).mul(pv).sub(pu.mul(polyOf(diff(u.b, v))));
-      res = `\\frac{${N.tex({ main: v })}}{\\left(${pv.tex({ main: v })}\\right)^{2}}`;
+      const pvT = pv.tex({ main: v });
+      res = `\\frac{${N.tex({ main: v })}}{${/^[a-zA-Z]$/.test(pvT) ? pvT : `\\left(${pvT}\\right)`}^{2}}`;
     }
     return { ...out, res, mid, k: "scan.s.dQuotient", formula: "\\left(\\frac{u}{v}\\right)' = \\frac{u' v - u v'}{v^{2}}" };
   }
@@ -1888,7 +1934,13 @@ function solveDerivative(ast, v = "x") {
   const total = cleanD(diff(ast, v));
   const tp = tryPoly(total);
   let ansTex;
-  if (parts.length === 1) ansTex = (parts[0].sign < 0 ? "-" : "") + (parts[0].sign < 0 ? wrapS(parts[0].r.res) : parts[0].r.res);
+  if (parts.length === 1) {
+    const r0 = parts[0].r.res;
+    // −(−2x · sin x²) = 2x · sin x², −(−x + 1) = −(−x + 1) z oklepajem, nikoli »−−«
+    if (parts[0].sign > 0) ansTex = r0;
+    else if (r0.startsWith("-") && wrapS(r0.slice(1)) === r0.slice(1)) ansTex = r0.slice(1);
+    else ansTex = `-${r0.startsWith("-") ? `\\left(${r0}\\right)` : wrapS(r0)}`;
+  }
   else if (tp) ansTex = tp.tex({ main: v });
   else
     ansTex =
@@ -1948,15 +2000,16 @@ export function equalNumerically(a, b, vars = null) {
     const fb = compile(b);
     const vs = vars || [...new Set([...varsOf(a), ...varsOf(b)])];
     let tested = 0;
-    for (let i = 0; i < 12; i++) {
-      const env = Object.fromEntries(vs.map((v, j) => [v, 0.3 + ((i * 7 + j * 3) % 11) * 0.41 - 2]));
+    // točke v [−1,7; 2,4] in še v [4,3; 12] (izrazi, definirani le za večje x, npr. √(x − 3))
+    for (let i = 0; i < 18; i++) {
+      const env = Object.fromEntries(vs.map((v, j) => [v, i < 12 ? 0.3 + ((i * 7 + j * 3) % 11) * 0.41 - 2 : 4.3 + ((i * 5 + j * 3) % 11) * 0.77]));
       const x = fa(env);
       const y = fb(env);
       if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
       tested++;
       if (Math.abs(x - y) > 1e-8 * Math.max(1, Math.abs(x))) return false;
     }
-    return tested > 0;
+    return tested >= (vs.length ? 3 : 1);
   } catch {
     return false;
   }
@@ -2020,8 +2073,19 @@ export function analyze(text) {
   const poly = tryPoly(ast);
   if (poly && vars.length === 1) return { type: "expr", ast, v: vars[0], goals: ["simplify", "factor", "zeros", "derivative"] };
   if (poly) return { type: "expr", ast, goals: ["simplify", "factor"] };
-  if (vars.length === 1) return { type: "func", ast, v: vars[0], goals: ["derivative"] };
+  // ulomek s spremenljivko v imenovalcu (npr. (x² − 1)/(x − 1)) v šoli največkrat okrajšamo; to naredi AI
+  if (vars.length === 1) return { type: "func", ast, v: vars[0], goals: rationalExpr(ast) ? ["simplify", "derivative"] : ["derivative"] };
   return { type: "other", ast, goals: [] };
+}
+
+function rationalExpr(ast) {
+  let calls = false;
+  let den = false;
+  walkTree(ast, (n) => {
+    if (n.k === "call" || n.k === "const" || (n.k === "^" && varsOf(n.b).length)) calls = true;
+    if (n.k === "/" && varsOf(n.b).length) den = true;
+  });
+  return den && !calls;
 }
 
 // Besedilo naloge → drevo za izpis (ulomki brez odvečnih oklepajev).
@@ -2032,10 +2096,10 @@ export function parseTask(text) {
 // Glavni vstop. Vrne { ok:false, reason } kadar naloge ne znamo rešiti po korakih (takrat pomaga AI).
 export function solve(text, { goal = null, complex = false } = {}) {
   const info = analyze(text);
-  const base = { goals: info.goals };
+  const g = goal && info.goals.includes(goal) ? goal : info.goals[0];
+  const base = { goals: info.goals, goal: g ?? null };
   try {
     let r = null;
-    const g = goal && info.goals.includes(goal) ? goal : info.goals[0];
     switch (info.type) {
       case "system":
         r = solveSystem(info.parts);
@@ -2060,7 +2124,7 @@ export function solve(text, { goal = null, complex = false } = {}) {
         r = solveDerivative(info.ast, info.v);
         break;
       case "func":
-        r = solveDerivative(info.ast, info.v);
+        r = g === "derivative" ? solveDerivative(info.ast, info.v) : null;
         break;
     }
     if (!r) return { ok: false, reason: info.type === "error" ? "parse" : "unsupported", ...base, type: info.type };
