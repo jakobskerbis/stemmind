@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { modeParams } from "../server/claude.js";
-import { presolve, codeFindings, needsReview, fixBlock, insertFix } from "../server/live-check.js";
+import { presolve, codeFindings, needsReview, fixBlock, insertFix, withNote } from "../server/live-check.js";
 
 const META = '\n<<META subject=MAT topic="enačbe" error=0 mode=A flag=none done=0>>';
 const LONG = "Pri tekmovalnih nalogah iz geometrije najprej narišemo skico in označimo vse dane količine. Pitagorov izrek velja v vsakem trikotniku, zato ga uporabimo kar takoj, brez dodatnega preverjanja kotov.";
@@ -215,4 +215,45 @@ test("live check: extraction stays conservative and stated values are checked ag
   assert.equal(fixBlock("OK"), null);
   assert.equal(fixBlock("Popravek: $7 \\cdot 8 = 56$."), "\n\n> **Popravek:** $7 \\cdot 8 = 56$.");
   assert.equal(insertFix("A." + META, "\n\nB"), "A.\n\nB" + META);
+});
+
+test("live check: rounded, approximate and ± values and quoted student mistakes are not corrected", () => {
+  const pre = presolve("Reši enačbo $x^2 - 2 = 0$");
+  for (const a of [
+    "Rešitvi sta $x_1 = \\sqrt{2} \\approx 1{,}41$ in $x_2 = -\\sqrt{2}$.",
+    "Rešitvi sta $x_1 = 1,41$ in $x_2 = -1,41$ (zaokroženo).",
+    "Rešitvi sta $x_1 = 1{,}414$ in $x_2 = -1{,}414$.",
+    "Torej $x = \\pm\\sqrt{2}$.",
+    "Torej $x \\approx 1{,}4$.",
+  ])
+    assert.equal(codeFindings(a, pre).issue, null, a);
+  for (const a of ["Torej $x = 2$.", "Torej $x_1 = \\sqrt{3} \\approx 1{,}73$.", "Torej $x \\approx 1{,}7$."]) assert.ok(codeFindings(a, pre).issue, a);
+  const sys = presolve("Reši sistem: 3x + y = 1, x - y = 2");
+  assert.equal(codeFindings("$x = 0{,}75$ in $y = -1{,}25$", sys).issue, null);
+  assert.ok(codeFindings("$x = 1$ in $y = -1$", sys).issue);
+  // Zavrnjen kandidat in učenčev račun nista trditev odgovora.
+  const lin = presolve("Reši 2x + 3 = 7");
+  assert.equal(codeFindings("Kandidat $x = 1$ odpade.\nRešitev je $x = 2$.", lin).issue, null);
+  assert.equal(codeFindings("Ti si napisal $3 + 4 \\cdot 2 = 14$. Pazi na vrstni red.").issue, null);
+  assert.equal(codeFindings("Če bi najprej sešteli, bi dobili $3 + 4 \\cdot 2 = 14$.").issue, null);
+  assert.ok(codeFindings("Torej $3 + 4 \\cdot 2 = 14$.").issue, "lasten napačen račun ostane ujet");
+});
+
+test("live check: later turns are presolved only as a new task; the note keeps the history cacheable", () => {
+  // Med vodenjem je »2x = 12« učenčev (morda napačen) korak: opomba bi ga potrdila, preračun pa bi
+  // pravilen odgovor (»x = 5« za 2x + 3 = 13) označil za napačnega.
+  assert.equal(presolve("2x = 12", { first: false }), null);
+  assert.equal(presolve("Dobil sem $2x = 12$", { first: false }), null);
+  assert.ok(presolve("Reši še $3x + 1 = 7$", { first: false }));
+  assert.ok(presolve("2x = 12"), "prvo sporočilo pogovora je naloga");
+  const sent = withNote([{ role: "user", content: [{ type: "text", text: "Reši 2x + 3 = 7" }] }], "<preverjen_racun>…</preverjen_racun>");
+  assert.deepEqual(sent[0].content[0], { type: "text", text: "Reši 2x + 3 = 7", cache_control: { type: "ephemeral" } }, "točka predpomnilnika pred opombo");
+  assert.equal(sent[0].content[1].cache_control, undefined);
+});
+
+test("live check: a corrector reply that is not a headed correction is not shown", () => {
+  assert.equal(fixBlock("OK – the answer only shows the student's mistake."), null);
+  assert.equal(fixBlock("**OK**"), null);
+  assert.equal(fixBlock("The answer is correct."), null);
+  assert.match(fixBlock("Popravek: $x = 4$."), /\*\*Popravek:\*\* \$x = 4\$/);
 });

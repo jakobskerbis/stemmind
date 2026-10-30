@@ -564,7 +564,7 @@ export function createApp(store, opts = {}) {
       const cached = win ? { text: win.text, hint: true } : hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND verified = 1 AND created_at >= datetime('now','-30 days')").get(key);
       if (note) send("delta", { text: note });
       // Naloga, ki jo reši naš preverjeni reševalnik: model dobi pravilen rezultat v skriti opombi.
-      const pre = liveCheckOn() && !cached && !image && !win && !hinted ? presolve(text) : null;
+      const pre = liveCheckOn() && !cached && !image && !win && !hinted ? presolve(text, { first: isFirst }) : null;
       const history = deep && !routed.boosted ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id));
       const run = cached
         ? async ({ onText }) => {
