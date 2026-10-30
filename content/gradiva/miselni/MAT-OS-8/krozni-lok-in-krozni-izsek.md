@@ -1,0 +1,23 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Del kroga
+  - delež je $\dfrac{\alpha}{360^\circ}$
+  - $90^\circ$ je četrtina kroga
+- Pojmi
+  - krožni lok: del krožnice
+  - krožni izsek: med dvema polmeroma in lokom
+  - središčni kot ima vrh v središču
+- Dolžina loka
+  - $l = \dfrac{\alpha}{360^\circ} \cdot 2\pi r$
+  - enota: $\text{cm}$, $\text{km}$
+- Ploščina izseka
+  - $p_i = \dfrac{\alpha}{360^\circ} \cdot \pi r^2$
+  - enota: $\text{cm}^2$, $\text{m}^2$
+- Vpliv polmera
+  - dvakrat večji $r$: lok dvakrat daljši
+  - izsek štirikrat večji
+- Obratna naloga
+  - kot iz deleža $\dfrac{l}{o}$
+  - napaka: premer namesto polmera

@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Hitra ocena
+  - zaokroži na 1–2 veljavni števki
+  - $9{,}87 : 0{,}49 \approx 10 : 0{,}5 = 20$
+- Zgornja in spodnja meja
+  - vse navzgor: zgornja meja
+  - »ali je dovolj«: rabiš zgornjo mejo
+- Red velikosti
+  - znanstveni zapis $a \cdot 10^n$, $1 \le a < 10$
+  - $10^3 \cdot 10^5 = 10^8$
+  - deliti z $0{,}1$ je množiti z $10$
+- Fermijeva naloga
+  - razbij, oceni, zmnoži, preveri
+  - napake se delno izničijo
+- Razumne enote
+  - število med 1 in 1000
+  - $2{,}3 \cdot 10^8\,\text{g} = 230\,\text{t}$
+  - napaka: pozabljeni centi ali grami
+- Smiselno zaokroževanje
+  - $11{,}5$ tovornjaka: $12$
+  - rezultat z eno veljavno števko

@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Endokrine žleze
+  - brez izvodila, hormon gre v kri
+  - napaka: slinavka in znojnica sta eksokrini
+- Tarčne celice
+  - odzovejo se le celice z receptorjem
+  - kri raznese hormon povsod
+- Hipofiza in hipotalamus
+  - TSH spodbudi ščitnico
+  - negativna povratna zanka kot termostat pečice
+- Ščitnica
+  - tiroksin pospeši presnovo
+  - potrebuje jod, jodirana sol
+- Langerhansovi otočki
+  - celice beta: inzulin zniža glukozo
+  - celice alfa: glukagon zviša glukozo
+  - glukoza na tešče okoli $4$ do $6\,\mathrm{mmol/L}$
+- Endokrine bolezni
+  - sladkorna tip 1: inzulina ni
+  - sladkorna tip 2: celice slabo odzivne
+  - golša: premalo joda, veliko TSH

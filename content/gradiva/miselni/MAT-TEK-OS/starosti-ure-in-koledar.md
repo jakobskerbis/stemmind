@@ -1,0 +1,27 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Stalna razlika starosti
+  - vsako leto obema $+1$
+  - razmerje se približuje 1
+- Kdaj k-krat starejši
+  - mlajši $= \dfrac{\text{razlika}}{k-1}$
+  - babica 67, Ana 11: čez 3 leta
+- Vsota starosti skupine
+  - $m$ oseb, $n$ let: $+m \cdot n$
+  - manjši prirastek: nekdo še ni bil rojen
+- Hitrosti kazalcev
+  - minutni $6^\circ$ na minuto
+  - urni $0{,}5^\circ$ na minuto, $30^\circ$ na uro
+  - past: ob 3.15 kot $7{,}5^\circ$
+- Kot med kazalcema
+  - $|30 \cdot h - 5{,}5 \cdot m|$
+  - nad $180^\circ$: $360^\circ$ minus razlika
+  - prekrivanje vsakih $\dfrac{720}{11}$ minute
+- Dnevi v tednu
+  - ostanek pri deljenju s $7$
+  - $100 = 14 \cdot 7 + 2$
+- Leto in prestopno leto
+  - $365$: pomik 1 dan, $366$: pomik 2
+  - 1900 ni prestopno, 2000 je

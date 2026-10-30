@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Kvadrat števila
+  - $a^2 = a \cdot a$
+  - napaka: $7^2 = 14$
+- Ploščina kvadrata
+  - stranica $a$, ploščina $a^2$
+  - dvakrat daljša stranica, štirikrat večja ploščina
+- Popolni kvadrati
+  - $1, 4, 9, \dots, 225$ na pamet
+- Negativna osnova
+  - $(-4)^2 = 16$
+  - $-4^2 = -16$
+- Ulomki in decimalke
+  - $\left(\dfrac{2}{3}\right)^2 = \dfrac{4}{9}$
+  - dvakrat toliko decimalk: $(0{,}3)^2 = 0{,}09$
+  - med $0$ in $1$: kvadrat je manjši
+- Ocenjevanje
+  - $400 < 27^2 < 900$
+  - $48^2 \approx 50^2 = 2500$
+- Zadnja števka
+  - nikoli $2$, $3$, $7$, $8$
