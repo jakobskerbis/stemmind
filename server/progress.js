@@ -585,6 +585,46 @@ export class Progress {
     return { saved: true, skipped: true, next, ...(next.contest ? { contest: next.contest } : {}) };
   }
 
+  // Pripravljenost na izpit (NPZ, matura): delež snovi izpita, ki jo učenec že zna, in tri najšibkejše teme.
+  // Tema izpita šteje kot njena osnovna tema na Učni poti (MAT-EX-NPZ9/… ↔ MAT-OS-8/…): velja boljše stanje.
+  // Ocena teme: obvladana 1 (za ponovitev 0,8), v učenju 0,2–0,6 po stopnji, nova 0.
+  // Šibke so teme z najnižjo oceno; ob enaki oceni najprej tiste z več napačnimi prvimi odgovori.
+  examReadiness(studentId, pathKey) {
+    if (!isExamPath(pathKey)) return null;
+    const path = getPath(pathKey);
+    const now = nowSql();
+    const stateOf = this.db.prepare("SELECT status, level, review_due FROM topic_state WHERE student_id = ? AND topic_id = ?");
+    const tries = this.db.prepare("SELECT COUNT(*) AS n, SUM(CASE WHEN first_try_correct = 0 THEN 1 ELSE 0 END) AS wrong FROM tasks WHERE student_id = ? AND topic_id = ? AND first_try_correct IS NOT NULL");
+    const ui = this.uiLang(studentId);
+    const scoreOf = (s) => (!s ? 0 : s.status === "mastered" ? (s.review_due && s.review_due <= now ? 0.8 : 1) : s.status === "learning" ? 0.2 * Math.min(3, s.level || 1) : 0);
+    const topics = [];
+    path.units.forEach((u, ui0) =>
+      u.topics.forEach((t0, ti) => {
+        if (!hasGenerator(t0.id)) return;
+        const ids = [t0.id, ...(t0.base || [])];
+        let score = 0;
+        let n = 0;
+        let wrong = 0;
+        for (const id of ids) {
+          score = Math.max(score, scoreOf(stateOf.get(studentId, id)));
+          const r = tries.get(studentId, id);
+          n += r.n || 0;
+          wrong += r.wrong || 0;
+        }
+        const t = localTopic(t0, ui);
+        topics.push({ id: t0.id, name: t.name, unit: localUnitTitle(u, ui), score, tried: n, wrongRate: n ? wrong / n : 0, order: ui0 * 1000 + ti });
+      }),
+    );
+    if (!topics.length) return { percent: 0, weakest: [] };
+    const percent = Math.round((100 * topics.reduce((s, t) => s + t.score, 0)) / topics.length);
+    const weakest = topics
+      .filter((t) => t.score < 1)
+      .sort((a, b) => a.score - b.score || b.wrongRate - a.wrongRate || b.tried - a.tried || a.order - b.order)
+      .slice(0, 3)
+      .map(({ id, name, unit, score }) => ({ id, name, unit, status: score === 0 ? "new" : score < 0.8 ? "learning" : "due" }));
+    return { percent, weakest };
+  }
+
   // Zadnji rezultati poskusnih tekmovanj na tej poti.
   contestHistory(studentId, pathKey, limit = 5) {
     return this.db

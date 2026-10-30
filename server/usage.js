@@ -54,6 +54,8 @@ export class Usage {
     this.db = db;
     this.db.exec("CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT NOT NULL)");
     this.creditOutAt = 0;
+    // Zadnja napaka »ni dobroimetja« ostane zapisana do prvega uspešnega klica (tudi čez ponovni zagon): obvestilo »Testna verzija«.
+    this.lastCreditOut = Number(this.kvGet("ai_credit_out_at")) || 0;
     // Brez računov (lokalno): vsi profili imajo enako utež, dokupa ni.
     this.weightOf = () => 1;
     this.ownerOf = () => null;
@@ -149,7 +151,12 @@ export class Usage {
   }
   // API račun nima dobroimetja (napaka 400): nekaj minut ne kličemo, učenec dobi jasno sporočilo.
   markCreditOut() {
-    this.creditOutAt = Date.now();
+    this.creditOutAt = this.lastCreditOut = Date.now();
+    this.kvSet("ai_credit_out_at", this.lastCreditOut);
+  }
+  // Je v zadnjem dnevu zmanjkalo AI kredita in od takrat ni bilo nobenega uspešnega klica?
+  creditOutRecently(ms = 24 * 3600_000) {
+    return !!this.lastCreditOut && Date.now() - this.lastCreditOut < ms;
   }
   creditOut() {
     return !!this.creditOutAt && Date.now() - this.creditOutAt < CREDIT_PAUSE_MS;
@@ -172,6 +179,10 @@ export class Usage {
         cost,
       );
     this.creditOutAt = 0;
+    if (this.lastCreditOut) {
+      this.lastCreditOut = 0;
+      this.kvSet("ai_credit_out_at", 0);
+    }
     this.chargeCredit(studentId, cost);
     const month = this.baseSpent();
     const budget = this.budget().total;
