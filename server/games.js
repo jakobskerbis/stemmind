@@ -196,10 +196,10 @@ export function gameTrends(db, now = new Date()) {
     if (ok.length) contributors.add(r.id);
     for (const g of ok) childhood[g] = (childhood[g] || 0) + 1;
   }
-  // Igranost v zadnjih 7 dneh: koliko različnih učencev je igralo vrsto igre.
+  // Igranost v zadnjih 7 dneh: koliko različnih učencev je igralo vrsto igre. Igranje ni mnenje,
+  // zato ne šteje k MIN_STUDENTS (sicer bi trije igralci razkrili glas edinega glasovalca).
   const plays = {};
   for (const r of db.prepare("SELECT DISTINCT student_id, substr(game, 1, instr(game, ':') - 1) AS engine FROM game_scores WHERE updated_at >= datetime('now', '-7 days')").all()) {
-    contributors.add(r.student_id);
     plays[r.engine] = (plays[r.engine] || 0) + 1;
   }
   const base = { week, lastWeek: last, minStudents: MIN_STUDENTS, students: contributors.size };

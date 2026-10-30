@@ -243,6 +243,13 @@ test("games: ratings, weekly vote and the anonymous trends summary", async () =>
     const g = await (await fetch(`${base}/api/students/${ids[2]}/games`)).json();
     assert.equal(g.wish, "golf");
     assert.equal((await fetch(`${base}/api/games/trends`)).status, 200); // na računalniku s strežnikom
+    assert.equal((await fetch(`${base}/api/games/trends`, { headers: { "X-Forwarded-For": "203.0.113.5" } })).status, 403); // od drugod ne
+    // trije igralci in en glas: samo igranje ne odpre števil (glas bi bil razkrit)
+    const st2 = openDb(":memory:");
+    createApp(st2, {});
+    for (const n of ["D", "E", "F"]) st2.db.prepare("INSERT INTO game_scores (student_id, game, best) VALUES (?, 'cards:frac_add', 1)").run(st2.createStudent(n, {}).id);
+    st2.db.prepare("INSERT INTO game_wishes (student_id, week, genre) VALUES (1, ?, 'golf')").run(weekKey());
+    assert.equal(gameTrends(st2.db).enough, false);
   } finally {
     server.close();
   }

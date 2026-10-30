@@ -391,6 +391,18 @@ function askWish() {
     ctx.toast?.(t("games.wishThanks"));
   });
   dlg.addEventListener("keydown", (e) => {
+    // skupina izbir (role=radiogroup): puščice premaknejo fokus in izbiro na sosednjo zvrst
+    const opts = [...dlg.querySelectorAll("[data-w]")];
+    const at = opts.indexOf(document.activeElement);
+    const rtl = document.documentElement.dir === "rtl" ? -1 : 1;
+    const step = { ArrowRight: rtl, ArrowDown: 1, ArrowLeft: -rtl, ArrowUp: -1 }[e.key];
+    if (step && at >= 0) {
+      e.preventDefault();
+      const next = opts[(at + step + opts.length) % opts.length];
+      next.focus();
+      next.click();
+      return;
+    }
     if (e.key === "Escape") {
       e.stopPropagation();
       close();
@@ -425,12 +437,13 @@ function openGame(id) {
     t,
     onExit: closeGame,
     rating: data.rated?.[eid] ?? null,
-    onRate: (up) => {
+    // brez profila ocene ni kam shraniti: tudi gumbov 👍/👎 ni
+    onRate: ctx.getStudent() && ((up) => {
       const s = ctx.getStudent();
       if (!s) return;
       data.rated = { ...data.rated, [eid]: up };
       ctx.api(`/api/students/${s.id}/games/rate`, { method: "POST", body: JSON.stringify({ engine: eid, up }) }).catch(() => {});
-    },
+    }),
     onEnd: async (r) => {
       const s = ctx.getStudent();
       if (!s) return null;
