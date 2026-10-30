@@ -962,6 +962,8 @@ async function fillSettingsForm() {
   const s = state.student.settings;
   fillCornerSummary();
   f.name.value = state.student.name;
+  $("#delete-student-text").textContent = t("set.deleteText", { name: state.student.name });
+  $("#delete-student").textContent = t("set.deleteStudent", { name: state.student.name });
   const programs = await loadPrograms(api);
   for (const key of ["track", "personality_setting"]) f[key].value = s[key];
   f.data_mode.value = s.data_mode || "auto";

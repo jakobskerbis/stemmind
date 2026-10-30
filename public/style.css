@@ -243,7 +243,7 @@ button.danger { background: none; border: 1.5px solid var(--danger); color: var(
 .form label.radio { flex-direction: row; align-items: center; font-weight: 600; gap: 10px; min-height: 36px; }
 .form-actions { display: flex; align-items: center; gap: 12px; }
 .inline { display: flex; gap: 8px; }
-.inline input { flex: 1; }
+.inline input { flex: 1; min-width: 0; }
 .pill-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
 .pill-list li { background: var(--surface-2); border-radius: 999px; padding: 5px 12px; font-size: 0.9rem; font-weight: 700; }
 .pill-list li.auto { border: 1.5px dashed var(--danger); }
