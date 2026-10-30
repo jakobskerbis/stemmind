@@ -60,8 +60,8 @@ export async function renderCreditCard(el, { api }) {
   const err = form.querySelector(".form-error");
   const amount = form.amount_eur;
   const est = form.querySelector(".credit-est");
-  // Znesek sprejme decimalno vejico ali piko (»12,50«).
-  const eurValue = () => Number(String(amount?.value || "").trim().replace(/\s/g, "").replace(",", "."));
+  // Znesek sprejme decimalno vejico ali piko (»12,50«) in pike ali presledke med tisočicami (»1.000«).
+  const eurValue = () => Number(String(amount?.value || "").replace(/\s/g, "").replace(/\.(?=\d{3}(?:\D|$))/g, "").replace(",", "."));
   const estimate = () => {
     const eur = eurValue();
     let n = eur >= c.min / 100 ? Math.floor(eur * c.per_eur) : 0;
@@ -71,6 +71,13 @@ export async function renderCreditCard(el, { api }) {
   amount?.addEventListener("input", () => {
     form.querySelector('input[name="pack"][value="custom"]').checked = true;
     estimate();
+  });
+  // Klik na € ali rob okvirja postavi kazalec v polje.
+  form.querySelector(".credit-amount")?.addEventListener("click", (e) => {
+    if (e.target !== amount) {
+      e.preventDefault();
+      amount.focus();
+    }
   });
   amount?.addEventListener("focus", () => (form.querySelector('input[name="pack"][value="custom"]').checked = true));
   if (amount) estimate();
