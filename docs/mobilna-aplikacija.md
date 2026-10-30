@@ -50,7 +50,7 @@ polnoletnost in pravo identiteto; ime razvijalca je javno vidno v trgovini.
 ### 1. APK za Android (brezplačno, zdaj)
 
 1. Na [expo.dev](https://expo.dev) ustvari brezplačen račun.
-2. V ukazni vrstici v mapi `stemmind-main\mobile`:
+2. V ukazni vrstici v mapi `evklid-main\mobile` (mapa z aplikacijo, podmapa `mobile`):
    ```
    npm install
    npx eas-cli login
