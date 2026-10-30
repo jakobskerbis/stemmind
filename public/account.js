@@ -124,7 +124,7 @@ export function openProfileLock(student, students = []) {
       </form></details>`}
     ${others.length ? `<p class="muted lock-others-title">${esc(t("lock.other"))}</p>
       <div class="lock-others">${others.map((o) => `<button type="button" data-id="${o.id}" dir="auto">${esc(o.name)}</button>`).join("")}</div>` : ""}
-    <button type="button" class="ghost" id="lock-logout">${esc(t("pm.logout"))}</button>
+    <form method="post" action="/api/auth/logout" class="lock-logout"><button type="submit" class="ghost" id="lock-logout">${esc(t("pm.logout"))}</button></form>
   </div>`;
   document.body.appendChild(box);
   // Aplikacija za zaslonom ni dosegljiva s tipko Tab ali bralnikom zaslona, dokler je profil zaklenjen.
@@ -183,7 +183,8 @@ export function openProfileLock(student, students = []) {
       });
     }
     box.querySelectorAll(".lock-others [data-id]").forEach((b) => b.addEventListener("click", () => done(Number(b.dataset.id))));
-    $("#lock-logout", box).addEventListener("click", () => logout());
+    // Odjava je navaden obrazec (strežnik preusmeri na prijavo), da deluje v vsakem brskalniku, tudi brez skripta.
+    $(".lock-logout", box).addEventListener("submit", () => store.set("studentId", null));
   });
 }
 
@@ -471,6 +472,7 @@ function renderVerify() {
       <p>Na <b>${esc(status.parent.email)}</b> smo poslali povezavo. Kliknite jo, nato se vrnite sem.</p>
       <p class="muted">S potrditvijo tudi izjavite, da ste starš ali zakoniti zastopnik otroka. To zahteva zakon o varstvu podatkov za otroke, mlajše od 15 let.</p>
       ${dev && !status.email ? `<p class="muted">Razvojni način (e-pošta ni nastavljena): <a href="${esc(dev)}">potrdi e-naslov</a></p>` : ""}
+      ${!dev && !status.email ? `<p class="warn">E-pošta na strežniku še ni nastavljena, zato povezava ni prišla. Na računalniku, kjer teče Evklid, se prijavite v ta račun in kliknite »Pošlji znova«.</p>` : ""}
       <div class="form-actions">
         <button class="primary" id="verify-done" type="button">Sem potrdil(a)</button>
         <button id="verify-resend" type="button">Pošlji znova</button>
@@ -987,7 +989,8 @@ async function renderAccount() {
 
 export async function logout() {
   if (status?.parent?.guest && !confirm(t("guest.logoutConfirm"))) return;
-  await api("/api/auth/logout", { method: "POST" }).catch(() => {});
+  // Ob počasni ali prekinjeni povezavi ne čakamo v nedogled: stran se po 4 s vseeno naloži znova.
+  await Promise.race([api("/api/auth/logout", { method: "POST" }).catch(() => {}), new Promise((r) => setTimeout(r, 4000))]);
   store.set("studentId", null);
-  location.href = "/";
+  location.replace("/?odjava=1");
 }

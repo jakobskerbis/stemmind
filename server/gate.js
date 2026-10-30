@@ -62,6 +62,14 @@ function loginPage({ next = "/", error = "" } = {}) {
 </body></html>`;
 }
 
+// Skupno geslo velja samo brez računov. Z računi (EVKLID_ACCOUNTS=1) je vstop prijava v račun:
+// kdor ni prijavljen, vidi stran za prijavo (j, 2026-10-30: »Brez skupnega gesla«).
+// EVKLID_GATE=1 skupno geslo obdrži tudi z računi.
+export function gateNeeded(env = process.env) {
+  if (!env.EVKLID_PASSWORD) return false;
+  return env.EVKLID_ACCOUNTS !== "1" || env.EVKLID_GATE === "1";
+}
+
 export function passwordGate(password) {
   const expected = Buffer.from(password);
   const token = crypto.createHmac("sha256", password).update(`${BRAND.slug}-gate-v1`).digest("hex");

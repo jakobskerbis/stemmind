@@ -534,6 +534,46 @@ test("profile password: guests are never locked", async () => {
   });
 });
 
+test("brez e-pošte: povezava za potrditev in novo geslo samo na računalniku s strežnikom; omejitev registracij", async () => {
+  await withServer(
+    async ({ client }) => {
+      const remote = { "X-Forwarded-For": "203.0.113.9" };
+      const body = (email) => ({ email, password: "geslo1234", accept_privacy: true, birth_date: ADULT });
+      const local = await client()("/api/auth/register", { method: "POST", body: body("doma@primer.si") });
+      assert.match(local.body.dev_verify_url, /\/api\/auth\/verify\?token=/);
+      const far = await client()("/api/auth/register", { method: "POST", body: body("tujec@primer.si"), headers: remote });
+      assert.equal(far.status, 201);
+      assert.equal(far.body.dev_verify_url, undefined);
+      // Pozabljeno geslo: od drugod nikoli povezave v odgovoru (prevzem tujega računa).
+      const forgot = await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" }, headers: remote });
+      assert.equal(forgot.body.dev_reset_url, undefined);
+      assert.match((await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" } })).body.dev_reset_url, /\?reset=/);
+      // Povezave za novo geslo: največ 5 na uro za isti e-naslov (ne zasujemo nabiralnika).
+      for (let i = 0; i < 3; i++) assert.equal((await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" } })).status, 200);
+      assert.equal((await client()("/api/auth/forgot", { method: "POST", body: { email: "doma@primer.si" } })).status, 429);
+      // Največ 5 novih računov z enega naslova na dan (prvi je že zgoraj).
+      for (let i = 0; i < 4; i++) assert.equal((await client()("/api/auth/register", { method: "POST", body: body(`r${i}@primer.si`), headers: remote })).status, 201);
+      assert.equal((await client()("/api/auth/register", { method: "POST", body: body("r9@primer.si"), headers: remote })).status, 429);
+      // IPv6: vsi naslovi istega /64 štejejo skupaj.
+      for (let i = 1; i <= 5; i++) assert.equal((await client()("/api/auth/register", { method: "POST", body: body(`v${i}@primer.si`), headers: { "X-Forwarded-For": `2001:db8:1:2::${i}` } })).status, 201);
+      assert.equal((await client()("/api/auth/register", { method: "POST", body: body("v6@primer.si"), headers: { "X-Forwarded-For": "2001:db8:1:2:abcd::9" } })).status, 429);
+      assert.equal((await client()("/api/auth/register", { method: "POST", body: body("v7@primer.si"), headers: { "X-Forwarded-For": "2001:db8:1:3::1" } })).status, 201);
+    },
+    { resendKey: "" },
+  );
+});
+
+test("odjava z obrazcem (brez skripta) preusmeri na prijavo", async () => {
+  await withServer(async ({ client, calls }) => {
+    const a = client();
+    await registerVerified(a, calls, "obrazec@primer.si");
+    const r = await a("/api/auth/logout", { method: "POST", headers: { Accept: "text/html", "Content-Type": "application/x-www-form-urlencoded" } });
+    assert.equal(r.status, 303);
+    assert.equal(r.headers.get("location"), "/");
+    assert.equal((await a("/api/students")).status, 401);
+  });
+});
+
 test("textbook: interactive part only with a paid plan or trial; PDF is public", async () => {
   await withServer(async ({ client, calls, store, base }) => {
     const a = client();
@@ -670,9 +710,15 @@ test("aktivacijska koda: poln dostop za prve N računov, enkrat na račun", asyn
 test("aktivacijska koda: skrbnik vidi porabo in povezavo", async () => {
   process.env.EVKLID_ADMIN_EMAILS = "skrbnik@kod.si";
   try {
-    await withServer(async ({ client }) => {
+    await withServer(async ({ client, calls, store }) => {
       const a = client();
+      const old = store.createStudent("Iz časa pred računi");
       await a("/api/auth/register", { method: "POST", body: { email: "skrbnik@kod.si", password: "geslo1234", accept_privacy: true, birth_date: ADULT } });
+      // Skrbnik šele po potrditvi e-naslova (sicer bi se kdorkoli registriral s tem naslovom).
+      assert.equal((await a("/api/usage", { headers: { "X-Forwarded-For": "1.2.3.4" } })).status, 403);
+      assert.equal(store.db.prepare("SELECT parent_id FROM students WHERE id = ?").get(old.id).parent_id, null);
+      await a(verifyLink(calls));
+      assert.notEqual(store.db.prepare("SELECT parent_id FROM students WHERE id = ?").get(old.id).parent_id, null);
       assert.equal((await a("/api/usage", { headers: { "X-Forwarded-For": "1.2.3.4" } })).status, 200);
       const { admin } = (await a("/api/account")).body.promo;
       assert.equal(admin.code, "EVKLID100");

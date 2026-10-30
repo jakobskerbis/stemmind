@@ -64,8 +64,9 @@ export function setSessionCookie(req, res, { token, maxAge }) {
   const secure = req.secure ? "; Secure" : "";
   res.append("Set-Cookie", `${COOKIE}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${maxAge}${secure}`);
 }
-export function clearSessionCookie(res) {
-  res.append("Set-Cookie", `${COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`);
+export function clearSessionCookie(req, res) {
+  const secure = req.secure ? "; Secure" : "";
+  res.append("Set-Cookie", `${COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${secure}`);
 }
 
 // Preprosta omejitev poskusov prijave (v pomnilniku).

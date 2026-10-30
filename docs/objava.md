@@ -10,7 +10,7 @@ Strošek: paket Starter ≈ 7 $/mesec + disk 1 GB ≈ 0,25 $/mesec. Brezplačni 
 2. Klikni **New → Blueprint** in izberi repozitorij `jakobskerbis/stemmind`.
 3. Render prebere `render.yaml` in prosi za vrednosti, ki jih ne sme poznati nihče drug. Vpiši jih tam (nikoli v klepet):
    - `ANTHROPIC_API_KEY` – iz <https://console.anthropic.com> → API Keys.
-   - `EVKLID_PASSWORD` – začasno geslo, dokler aplikacija ni javna (lahko pustiš prazno).
+   - `EVKLID_PASSWORD` – začasno skupno geslo, samo brez računov (z `EVKLID_ACCOUNTS=1` ne velja; `EVKLID_GATE=1` ga obdrži).
    - `EVKLID_BASE_URL` – pusti prazno; po prvem zagonu vpiši naslov, ki ga dobiš (npr. `https://evklid.onrender.com`).
    - `EVKLID_ADMIN_EMAILS` – tvoj e-naslov.
    - `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `RESEND_API_KEY`, `RESEND_FROM` – lahko pustiš prazno; brez njih plačila niso vklopljena, e-pošta pa se le izpiše v dnevnik.

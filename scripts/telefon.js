@@ -1,4 +1,4 @@
-// Odpre Evklid na telefonu: zažene strežnik z geslom in odpre povezavo z interneta.
+// Odpre Evklid na telefonu: zažene strežnik (z računi prijava v račun, sicer skupno geslo) in odpre povezavo z interneta.
 // Lastna domena (npr. https://evklid.app): tunel Cloudflare, nameščen kot storitev na računalniku
 // (žeton je v storitvi, ne v .env). Skript storitev zazna sam, naslov je EVKLID_JAVNI_NASLOV v .env
 // ali domena iz brand.json. Sicer stalna povezava ngrok (NGROK_AUTHTOKEN in NGROK_DOMAIN v .env,
@@ -15,6 +15,7 @@ import readline from "node:readline/promises";
 import { fileURLToPath } from "node:url";
 import { superviseServer, autoUpdate, openLog, logSay, serverStatus, RESTART_CODE } from "./nadzor.js";
 import { renameLegacyShortcuts } from "./bliznjice.js";
+import { gateNeeded } from "../server/gate.js";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const envFile = path.join(root, ".env");
@@ -57,9 +58,17 @@ function appendEnv(lines) {
   fs.writeFileSync(envFile, `${text}${sep}${lines.join("\n")}\n`);
 }
 
+// Z računi (EVKLID_ACCOUNTS=1) skupnega gesla ni: vsak se prijavi v svoj račun (server/gate.js).
+const accountsOn = () => envValue(readEnv(), "EVKLID_ACCOUNTS") === "1";
+const gateOn = () => {
+  const text = readEnv();
+  const env = Object.fromEntries(["EVKLID_PASSWORD", "EVKLID_ACCOUNTS", "EVKLID_GATE"].map((k) => [k, envValue(text, k)]));
+  return gateNeeded(env);
+};
+
 async function ensurePassword() {
   const text = readEnv();
-  if (envValue(text, "EVKLID_PASSWORD")) return;
+  if (envValue(text, "EVKLID_PASSWORD") || accountsOn()) return;
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   say("Povezava za telefon bo zaščitena z geslom, da je ne more odpreti kdorkoli.");
   let pw = "";
@@ -75,11 +84,20 @@ async function ensurePassword() {
 let server = null; // nadzor strežnika (scripts/nadzor.js), da ga lahko posodobitev znova zažene
 let log = null;
 
+// Strežnik, ki že teče, ima vklopljene račune (vstop je prijava v račun).
+async function accountsRunning() {
+  try {
+    const r = await fetch(`${local}/api/account/status`, { signal: AbortSignal.timeout(2000) });
+    return r.ok && (await r.json()).enabled === true;
+  } catch { return false; }
+}
+
 async function ensureServer() {
   const s = await serverStatus(port);
   if (s === 401) return false; // že teče z geslom (v drugem oknu)
+  if (s && !gateOn() && (await accountsRunning())) return false; // že teče z računi (v drugem oknu)
   if (s) {
-    say("Evklid že teče brez gesla. Zapri drugo okno Evklida in znova zaženi to datoteko.");
+    say(`Evklid že teče brez ${accountsOn() ? "prijave" : "gesla"}. Zapri drugo okno Evklida in znova zaženi to datoteko.`);
     return stopAll(1);
   }
   log = openLog(root);
@@ -334,11 +352,13 @@ async function main() {
         .catch(() => {});
     }
   }
-  const pw = envValue(readEnv(), "EVKLID_PASSWORD");
-  const friend = `${url}/?geslo=${encodeURIComponent(pw)}`;
+  // Povezava z geslom samo, če velja skupno geslo; z računi se vsak prijavi v svoj račun.
+  const gate = gateOn();
+  const friend = gate ? `${url}/?geslo=${encodeURIComponent(envValue(readEnv(), "EVKLID_PASSWORD"))}` : url;
   fs.mkdirSync(path.dirname(urlFile), { recursive: true });
   fs.writeFileSync(urlFile, url + "\n");
-  fs.writeFileSync(friendFile, friend + "\n");
+  if (gate) fs.writeFileSync(friendFile, friend + "\n");
+  else fs.rmSync(friendFile, { force: true }); // stara povezava z geslom ne velja več
   const copied = copyToClipboard(friend);
   say();
   say("==============================================================");
@@ -346,12 +366,17 @@ async function main() {
   say();
   say(`  ${url}`);
   say();
-  say("  Povezava za prijatelje (prijavi jih takoj, brez vpisa gesla):");
-  say();
-  say(`  ${friend}`);
-  say();
-  if (copied) say("  Povezava za prijatelje je že kopirana: prilepi jo v sporočilo.");
-  say("  Ob prvem odprtju brez gesla v povezavi stran vpraša za geslo iz .env.");
+  if (gate) {
+    say("  Povezava za prijatelje (prijavi jih takoj, brez vpisa gesla):");
+    say();
+    say(`  ${friend}`);
+    say();
+    if (copied) say("  Povezava za prijatelje je že kopirana: prilepi jo v sporočilo.");
+    say("  Ob prvem odprtju brez gesla v povezavi stran vpraša za geslo iz .env.");
+  } else {
+    if (copied) say("  Povezava je že kopirana: prilepi jo v sporočilo.");
+    say("  Kdor ni prijavljen, vidi stran za prijavo: tam se prijavi v svoj račun ali ga ustvari.");
+  }
   say("  Na telefonu v meniju brskalnika izberi »Dodaj na začetni zaslon«.");
   say();
   say("  Povezava deluje, dokler je to okno odprto in računalnik prižgan.");
