@@ -19,8 +19,8 @@ export const liveCheckOn = () => process.env.EVKLID_LIVE_CHECK !== "0";
 // Največ toliko USD na dan za pregled z modelom (vrsta »preverjanje«); negativno = brez meje.
 export const LIVE_CHECK_DAILY_USD = () => {
   const raw = process.env.EVKLID_LIVE_CHECK_DAILY_USD;
-  const v = Number(raw === undefined || raw === "" ? 1 : raw);
-  return Number.isFinite(v) ? v : 1;
+  const v = Number(raw === undefined || raw === "" ? 0.3 : raw);
+  return Number.isFinite(v) ? v : 0.3;
 };
 
 // Oznaka skrite opombe; preizkusni način (server/claude.js) jo pri izbiri odgovora prezre.
