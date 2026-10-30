@@ -34,7 +34,7 @@ jobs:
         with:
           node-version: 22
       # Zadnja sprožena objava (da neuspele objave ne ponavlja ob vsakem teku).
-      - uses: actions/cache/restore@v4
+      - uses: actions/cache/restore@v6
         with:
           path: .render-objava.json
           key: render-objava-${{ github.run_id }}
@@ -49,7 +49,7 @@ jobs:
           # Tudi urnik čaka: novi tek (cancel-in-progress) prekine čakajočega, zato mora čakati naprej sam.
           CAKAJ: ${{ github.event_name != 'workflow_dispatch' && '1' || '0' }}
         run: node scripts/render-objava.js
-      - uses: actions/cache/save@v4
+      - uses: actions/cache/save@v6
         # always(): shrani tudi, če novejši tek prekliče ta tek takoj po sprožitvi.
         if: always() && steps.objava.outputs.sprozeno == '1'
         with:
