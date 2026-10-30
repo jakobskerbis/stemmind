@@ -19,6 +19,36 @@ test("verdict parsing", () => {
   assert.equal(parseVerdict("NAPAKA: 7 · 8 je 56").ok, false);
   assert.equal(parseVerdict("NAPAKA: 7 · 8 je 56").reason, "7 · 8 je 56");
   assert.equal(parseVerdict("OK, but 7·8 is 56").ok, false, "vse razen golega OK je dvom");
+  assert.equal(parseVerdict("**OK**").ok, true);
+});
+
+test("a cut-off or refused reviewer, a failed call or a too long answer is never OK; costs are still logged", async () => {
+  const cut = async (p) => ({ content: [{ type: "text", text: "OK" }], stop_reason: "max_tokens", usage: { output_tokens: 10 }, model: p.model });
+  assert.equal((await verifyAnswer({ question: "q", answer: "a", createFn: cut })).ok, false);
+  const logged = [];
+  const usage = { kindToday: () => 0, log: (...a) => logged.push(a) };
+  const half = fake((m) => (/opus/.test(m) ? new Error("timeout") : "OK"));
+  const r = await verifyAnswer({ question: "q", answer: "a", usage, createFn: half.fn });
+  assert.equal(r.ok, false);
+  assert.equal(logged.length, 1, "strošek uspelega klica gre v dnevno omejitev");
+  assert.equal(logged[0][0], null);
+  const long = fake("OK");
+  assert.equal((await verifyAnswer({ question: "q", answer: "x".repeat(12001), createFn: long.fn })).ok, false);
+  assert.equal(long.calls.length, 0);
+});
+
+test("an invalid daily budget does not switch the cap off", async () => {
+  const old = process.env.EVKLID_VERIFY_DAILY_USD;
+  process.env.EVKLID_VERIFY_DAILY_USD = "abc";
+  try {
+    const { fn, calls } = fake("OK");
+    const r = await verifyAnswer({ question: "q", answer: "a", usage: { kindToday: () => 5, log() {} }, createFn: fn });
+    assert.equal(r.ok, false);
+    assert.equal(calls.length, 0);
+  } finally {
+    if (old === undefined) delete process.env.EVKLID_VERIFY_DAILY_USD;
+    else process.env.EVKLID_VERIFY_DAILY_USD = old;
+  }
 });
 
 test("pass 1: code recomputes arithmetic before any model is asked", async () => {
@@ -129,12 +159,27 @@ test("chat: flashcards stay hidden until checked, rejected ones are deleted", as
   const wait = new Promise((r) => (release = r));
   const bad = await chatServer(card, () => wait);
   try {
-    await bad.ask("razloži ploščino pravokotnika");
+    const sse = await bad.ask("razloži ploščino pravokotnika");
     assert.equal((await bad.cards()).length, 0, "skrita, dokler ni preverjena");
+    assert.doesNotMatch(sse, /event: cards/, "obvestilo »dodane kartice« ne pokaže nepreverjene");
+    const id = bad.store.db.prepare("SELECT id FROM flashcards").get().id;
+    assert.equal(bad.store.cards.review(bad.store.db.prepare("SELECT student_id FROM flashcards").get().student_id, id, true), null, "ni je mogoče ponavljati");
     release({ ok: false, reason: "NAPAKA" });
     await tick();
     assert.equal(bad.store.db.prepare("SELECT COUNT(*) AS n FROM flashcards").get().n, 0);
   } finally {
     bad.close();
+  }
+});
+
+test("three checks need two different models", async () => {
+  process.env.EVKLID_VERIFY_MODELS = "claude-sonnet-5-5, claude-sonnet-5-5";
+  try {
+    const { fn, calls } = fake("OK");
+    const r = await verifyAnswer({ question: "q", answer: "a", createFn: fn });
+    assert.equal(r.ok, false);
+    assert.equal(calls.length, 0);
+  } finally {
+    delete process.env.EVKLID_VERIFY_MODELS;
   }
 });

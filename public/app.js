@@ -590,6 +590,8 @@ async function send(text, { deep = false } = {}) {
   if (state.sending) return;
   const image = state.image;
   if (!text && !image) return;
+  // Izklopljen klepet (EVKLID_CHAT_OFF): nič ne pošljemo, vprašanje in fotografija ostaneta.
+  if (!$("#chat-off").hidden) return;
   let userEl = null;
   state.sending = true;
   $("#send").disabled = true;
@@ -683,12 +685,15 @@ async function send(text, { deep = false } = {}) {
     // Izklopljen klepet: samo obvestilo nad poljem, vprašanje ostane v polju.
     if (err.chatOff) {
       userEl?.remove();
+      if (!$("#messages .msg")) renderEmptyChat(); // prazen pogovor spet pokaže pozdrav in predloge
       $("#chat-off").hidden = false;
       $("#input").value = text;
+      autoGrow();
       return;
     }
     addMessage("assistant", err.message, false, { error: true });
     $("#input").value = text;
+    autoGrow();
   } finally {
     state.sending = false;
     $("#send").disabled = false;

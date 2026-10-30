@@ -185,6 +185,9 @@ export function createApp(store, opts = {}) {
   // »Vprašaj Evklida« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
   const helpTasks = new Map();
   const usage = new Usage(store.db);
+  // Kartice, ki so čakale na preverjanje ob ponovnem zagonu, ne bodo nikoli preverjene: proč z njimi
+  // (sicer bi skrite blokirale isto vprašanje, UNIQUE student_id + norm).
+  store.db.prepare("DELETE FROM flashcards WHERE verified = 0").run();
   // Trojno preverjanje pred shranjevanjem za ponovno uporabo (server/verify.js). Brez API ključa
   // (preizkusni način) so odgovori vnaprej pripravljeni: preveri jih samo koda.
   const verifyLive = () => !!opts.verifyFn || !isMockMode();
@@ -528,7 +531,8 @@ export function createApp(store, opts = {}) {
           if (!ok) console.warn(`[evklid] kartice niso shranjene (${reason})`);
         });
       }
-      if (cards.length) send("cards", { cards: cards.map((c) => ({ id: c.id, front: c.front })), due: store.cards.dueCount(student.id) });
+      // Nepreverjenih kartic učenec še ne vidi (tudi ne v obvestilu »dodane kartice«).
+      if (cards.length && !liveCards) send("cards", { cards: cards.map((c) => ({ id: c.id, front: c.front })), due: store.cards.dueCount(student.id) });
       if (meta) {
         store.addEvent({ student_id: student.id, conversation_id: conv.id, message_id: assistantId, ...meta });
         if (meta.done && conv.path_topic && progress.markMastered(student.id, conv.path_topic, "chat")) {

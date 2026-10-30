@@ -361,12 +361,12 @@ button.ghost.msg-report { font-size: 0.78rem; font-weight: 600; padding: 4px 8px
 .report-box .rep-reasons, .report-box .rep-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .report-box .rep-reasons button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
 .report-box .rep-reasons button { min-height: 40px !important; }
-.report-box .rep-reasons button[aria-pressed="true"]::before { content: "✓"; margin-inline-end: 6px; } /* izbira ne le z barvo */
+.report-box .rep-reasons button[aria-pressed="true"]::before { content: "✓"; content: "✓" / ""; margin-inline-end: 6px; } /* izbira ne le z barvo; bralnik zaslona ima aria-pressed, kljukice ne prebere */
 .report-box .rep-cancel { color: var(--text); } /* --muted na --surface-2 je v slogih Igriv/Temen pod 4,5 : 1 */
 .report-box textarea { width: 100%; min-height: 56px; resize: vertical; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); box-sizing: border-box; }
 .report-box .rep-err { color: var(--text); margin: 0; font-weight: 400; border-inline-start: 3px solid var(--danger); padding-inline-start: 8px; } /* --danger na --surface-2 je pod 4,5 : 1 */
 .ai-note { font-size: 0.75rem; color: var(--muted); text-align: center; margin: 6px auto 0; max-width: 900px; }
-.chat-off { margin: 0 16px 8px; padding: 10px 14px; border: 1px solid var(--danger); border-radius: 12px; background: var(--danger-bg); color: var(--text); font-size: 0.9rem; text-align: center; } /* --danger na --danger-bg je v svetlem načinu 4,1 : 1 */
+.chat-off { max-width: 900px; margin: 0 auto 8px; width: calc(100% - 32px); box-sizing: border-box; padding: 10px 14px; border: 1px solid var(--danger); border-radius: 12px; background: var(--danger-bg); color: var(--text); font-size: 0.9rem; text-align: center; } /* --danger na --danger-bg je v svetlem načinu 4,1 : 1 */
 .composer { border-top: 1px solid var(--border); padding: 12px 16px 14px; background: var(--surface); }
 .composer-row { display: flex; gap: 8px; align-items: flex-end; max-width: 900px; margin: 0 auto; background: var(--bg); border: 1.5px solid var(--border); border-radius: 22px; padding: 6px; }
 .composer-row:focus-within { border-color: var(--accent); }

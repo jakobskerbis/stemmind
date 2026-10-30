@@ -8,14 +8,18 @@ import "./env.js";
 import { checkArithmetic } from "./lesson-math.js";
 import { getClient, isMockMode, costUsd, MODEL_MID, MODEL_DEEP } from "./claude.js";
 
-const env = (k, d) => process.env[k] ?? d;
+const env = (k, d) => (process.env[k] === undefined || process.env[k] === "" ? d : process.env[k]);
 export const VERIFY_MODELS = () =>
   env("EVKLID_VERIFY_MODELS", `${MODEL_MID},${MODEL_DEEP}`)
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
 // Največ toliko USD na dan za preverjanje; nad tem se novi odgovori in kartice ne shranijo.
-export const VERIFY_DAILY_USD = () => Number(env("EVKLID_VERIFY_DAILY_USD", 1));
+export const VERIFY_DAILY_USD = () => {
+  // Neveljavna vrednost ne sme izklopiti omejitve (NaN >= x je vedno false).
+  const v = Number(env("EVKLID_VERIFY_DAILY_USD", 1));
+  return Number.isFinite(v) ? v : 1;
+};
 const EFFORT = env("EVKLID_VERIFY_EFFORT", "medium");
 
 const SYSTEM = `You are a strict fact-checker for an AI tutor that teaches school and university maths, physics, chemistry and biology.
@@ -28,22 +32,31 @@ Reply with exactly one line: OK, or NAPAKA: <short reason>.`;
 // Ena vrstica odgovora preverjevalca → { ok, reason }.
 export function parseVerdict(text) {
   const t = String(text || "").trim();
-  if (/^OK\.?$/i.test(t)) return { ok: true };
+  // »**OK**« ali »`OK`« je še vedno golo OK.
+  if (/^OK\.?$/i.test(t.replace(/^[*`_\s]+|[*`_\s]+$/g, ""))) return { ok: true };
   const m = /NAPAKA\s*:?\s*(.*)/i.exec(t);
   return { ok: false, reason: (m ? m[1] : t).slice(0, 300) || "brez razloga" };
 }
 
 // Prvi pregled: koda. Vrne razlog, če se kateri račun ne izide.
 export function codeCheck(text) {
-  const { mismatches } = checkArithmetic(String(text || ""));
+  let mismatches;
+  try {
+    ({ mismatches } = checkArithmetic(String(text || "")));
+  } catch (e) {
+    return `računa ni bilo mogoče preveriti (${e?.message || e})`;
+  }
   return mismatches.length ? `račun se ne izide: ${mismatches[0].left} ≠ ${mismatches[0].right}` : null;
 }
 
 async function askModel(model, user, createFn) {
   const create = createFn || ((p) => getClient().messages.create(p));
-  const r = await create({ model, max_tokens: 4000, output_config: { effort: EFFORT }, system: SYSTEM, messages: [{ role: "user", content: user }] });
+  const r = await create({ model, max_tokens: 8000, output_config: { effort: EFFORT }, system: SYSTEM, messages: [{ role: "user", content: user }] });
   const text = (r.content || []).filter((b) => b.type === "text").map((b) => b.text).join("").trim();
-  return { verdict: parseVerdict(text), usage: r.usage, model: r.model || model };
+  // Odrezan (max_tokens) ali zavrnjen odgovor preverjevalca ni OK, tudi če se začne z »OK«.
+  const cut = r.stop_reason && r.stop_reason !== "end_turn" && r.stop_reason !== "stop_sequence";
+  const verdict = cut ? { ok: false, reason: `preverjevalec ni končal (${r.stop_reason})` } : parseVerdict(text);
+  return { verdict, usage: r.usage, model: r.model || model };
 }
 
 /**
@@ -56,15 +69,24 @@ export async function verifyAnswer({ question, answer, kind = "answer", usage = 
   // Brez API ključa (preizkusni način) so odgovori vnaprej pripravljeni in jih ni treba preverjati.
   if (!createFn && isMockMode()) return { ok: true, cost: 0, mock: true };
   if (usage && VERIFY_DAILY_USD() >= 0 && usage.kindToday?.("verify") >= VERIFY_DAILY_USD()) return { ok: false, reason: "dnevni znesek za preverjanje je porabljen", cost: 0 };
+  // Predolgega odgovora preverjevalec ne bi videl v celoti: tak se ne shrani.
+  if (String(answer).length > 12000) return { ok: false, reason: "odgovor je predolg za celotno preverjanje", cost: 0 };
+  // Pravilo treh pregledov: koda in vsaj dva različna modela.
+  const models = [...new Set(VERIFY_MODELS())];
+  if (models.length < 2) return { ok: false, reason: "za preverjanje sta potrebna dva različna modela (EVKLID_VERIFY_MODELS)", cost: 0 };
   const label = kind === "cards" ? "FLASHCARDS (question → answer)" : "TUTOR ANSWER";
-  const user = `STUDENT QUESTION:\n${String(question || "(none)").slice(0, 4000)}\n\n${label}:\n${String(answer).slice(0, 12000)}`;
+  const user = `STUDENT QUESTION:\n${String(question || "(none)").slice(0, 4000)}\n\n${label}:\n${String(answer)}`;
   let cost = 0;
   try {
-    const results = await Promise.all(VERIFY_MODELS().map((m) => askModel(m, user, createFn)));
+    // allSettled: tudi ko en klic pade, se strošek uspelega zabeleži (dnevna omejitev).
+    const settled = await Promise.allSettled(models.map((m) => askModel(m, user, createFn)));
+    const results = settled.filter((s) => s.status === "fulfilled").map((s) => s.value);
     for (const r of results) {
       cost += costUsd(r.model, r.usage || {});
       usage?.log(null, r.model, r.usage, "verify");
     }
+    const failed = settled.find((s) => s.status === "rejected");
+    if (failed) return { ok: false, reason: `preverjanje ni uspelo: ${failed.reason?.message || failed.reason}`, cost };
     const bad = results.find((r) => !r.verdict.ok);
     return bad ? { ok: false, reason: `${bad.model}: ${bad.verdict.reason}`, cost } : { ok: results.length > 0, cost };
   } catch (e) {

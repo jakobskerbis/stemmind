@@ -71,10 +71,13 @@ export function mountReports(app, store, { loadConversation, localOnly }) {
     const msg = msgs[i];
     const question = msgs.slice(0, i).reverse().find((m) => m.role === "user");
     const raw = msg.api_content?.find?.((b) => b.type === "text")?.text || "";
-    const purged = purgeCachedAnswer(store.db, raw, store.getStudent(conv.student_id)?.name || "");
+    const name = store.getStudent(conv.student_id)?.name || "";
+    const purged = purgeCachedAnswer(store.db, raw, name);
+    // Odgovor ostane kot zapis dogodka tudi po izbrisu pogovora, zato brez učenčevega imena.
+    const anonymize = (t) => (name.length > 1 ? t.replaceAll(name, "[ime]") : t);
     store.db
       .prepare("INSERT INTO message_reports (student_id, conversation_id, message_id, reason, note, question, answer, purged) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
-      .run(conv.student_id, conv.id, mid, reason, cleanText(req.body?.note, 500) || null, question?.display_text?.slice(0, 2000) || null, msg.display_text.slice(0, 8000), purged);
+      .run(conv.student_id, conv.id, mid, reason, cleanText(req.body?.note, 500) || null, question?.display_text?.slice(0, 2000) || null, anonymize(msg.display_text).slice(0, 8000), purged);
     console.warn(`[evklid] prijava napake ${code} (${reason}), pogovor ${conv.id}`);
     res.status(201).json({ ok: true, code });
   });

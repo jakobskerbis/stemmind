@@ -1570,7 +1570,7 @@
   "games.e.mines": "Căutătorul de mine",
   "games.e.mines.how": "Un răspuns corect încarcă detectorul, care arată o mină și un pătrat sigur. Deschide toate pătratele sigure; 🚩 marchează o mină. Taste 1–4 și F.",
   "chat.aiNote": "Evklid poate greși. Verifică rezultatele importante.",
-  "chat.off": "Chatul cu tutorele este oprit temporar. Restul aplicației funcționează în continuare.",
+  "chat.off": "Chatul cu tutorul este oprit temporar. Restul aplicației funcționează în continuare.",
   "rep.btn": "Raportează o greșeală",
   "rep.code": "Codul mesajului",
   "rep.ask": "Ce nu este în regulă?",

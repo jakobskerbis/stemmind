@@ -60,16 +60,17 @@ export class Flashcards {
       const norm = normCard(front);
       if (!norm || !back) continue;
       const r = ins.run(studentId, conversationId, topicId, subject, topic ? String(topic).slice(0, 80) : null, front, back, norm, source, verified ? 1 : 0);
-      if (r.changes) added.push(this.get(studentId, Number(r.lastInsertRowid)));
+      if (r.changes) added.push(this.get(studentId, Number(r.lastInsertRowid), { pending: true }));
     }
     return added;
   }
 
-  get(studentId, id) {
+  // pending = true: tudi kartica, ki še čaka na preverjanje (samo za add); sicer samo preverjene.
+  get(studentId, id, { pending = false } = {}) {
     return view(
       this.db
-        .prepare("SELECT *, due <= datetime('now') AS is_due FROM flashcards WHERE id = ? AND student_id = ?")
-        .get(id, studentId),
+        .prepare("SELECT *, due <= datetime('now') AS is_due FROM flashcards WHERE id = ? AND student_id = ? AND (verified = 1 OR ?)")
+        .get(id, studentId, pending ? 1 : 0),
     );
   }
 
