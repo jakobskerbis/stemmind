@@ -45,7 +45,8 @@ function Root() {
           onPress: () =>
             api(`/api/students/${id}/claim`, { body: {} })
               .then(() => setEpoch((e) => e + 1))
-              .catch(() => {})
+              // Brez povezave ali druga napaka: povemo zakaj; naslednja zahteva profila vprašanje ponovi.
+              .catch((err) => Alert.alert((err as Error).message))
               .finally(done),
         },
       ], { cancelable: false });
