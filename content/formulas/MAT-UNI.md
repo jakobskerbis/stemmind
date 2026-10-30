@@ -27,8 +27,8 @@
 | Kotni | $\int \sin x\,dx = -\cos x + C$, $\; \int \cos x\,dx = \sin x + C$, $\; \int \dfrac{dx}{\cos^2 x} = \tan x + C$ |
 | Racionalni | $\int \dfrac{dx}{1+x^2} = \arctan x + C$, $\; \int \dfrac{dx}{a^2 + x^2} = \dfrac{1}{a}\arctan\dfrac{x}{a} + C$, $\; \int \dfrac{dx}{\sqrt{1-x^2}} = \arcsin x + C$ |
 | Per partes | $\int u\,dv = u v - \int v\,du$ |
-| Uvedba nove spremenljivke | $\int f(g(x))\, g'(x)\,dx = \int f(t)\,dt$, $\; t = g(x)$ |
-| Newton–Leibniz | $\int_a^b f(x)\,dx = F(b) - F(a)$, $\; F' = f$ |
+| Uvedba nove spremenljivke | $\int f(g(x))\, g'(x)\,dx = \int f(t)\,dt$ ($t = g(x)$) |
+| Newton–Leibniz | $\int_a^b f(x)\,dx = F(b) - F(a)$ ($F' = f$) |
 | Ploščina, prostornina | $S = \int_a^b \lvert f(x) - g(x)\rvert\,dx$, $\; V = \pi \int_a^b f(x)^2\,dx$ (vrtenje okoli osi $x$) |
 | Dolžina loka | $s = \int_a^b \sqrt{1 + f'(x)^2}\,dx$ |
 
@@ -36,7 +36,7 @@
 
 | | |
 |---|---|
-| Geometrijska | $\sum\limits_{n=0}^{\infty} q^n = \dfrac{1}{1-q}$, $\; \lvert q\rvert < 1$ |
+| Geometrijska | $\sum\limits_{n=0}^{\infty} q^n = \dfrac{1}{1-q}$ ($\lvert q\rvert < 1$) |
 | Taylorjeva | $f(x) = \sum\limits_{n=0}^{\infty} \dfrac{f^{(n)}(a)}{n!}(x-a)^n$ |
 | Razvoji pri $0$ | $e^x = \sum \dfrac{x^n}{n!}$, $\; \sin x = x - \dfrac{x^3}{3!} + \dfrac{x^5}{5!} - \dots$, $\; \cos x = 1 - \dfrac{x^2}{2!} + \dfrac{x^4}{4!} - \dots$ |
 | | $\ln(1+x) = x - \dfrac{x^2}{2} + \dfrac{x^3}{3} - \dots$ ($-1 < x \le 1$), $\; (1+x)^a = \sum \binom{a}{n} x^n$ ($\lvert x\rvert < 1$) |
@@ -49,8 +49,8 @@
 | Gradient | $\nabla f = \left(\dfrac{\partial f}{\partial x}, \dfrac{\partial f}{\partial y}, \dfrac{\partial f}{\partial z}\right)$, smerni odvod $\dfrac{\partial f}{\partial \vec{e}} = \nabla f \cdot \vec{e}$ |
 | Totalni diferencial | $df = \dfrac{\partial f}{\partial x}dx + \dfrac{\partial f}{\partial y}dy$ |
 | Ekstremi | $\nabla f = 0$; $D = f_{xx} f_{yy} - f_{xy}^2$: $D > 0$ in $f_{xx} > 0$ minimum, $D > 0$ in $f_{xx} < 0$ maksimum, $D < 0$ sedlo |
-| Vezani ekstremi | $\nabla f = \lambda \nabla g$, $\; g = 0$ (Lagrange) |
-| Dvojni integral | polarne koordinate: $dx\,dy = r\,dr\,d\varphi$; cilindrične $dV = r\,dr\,d\varphi\,dz$; sferne $dV = r^2 \sin\vartheta\,dr\,d\vartheta\,d\varphi$ |
+| Vezani ekstremi | $\nabla f = \lambda \nabla g$ in $g = 0$ (Lagrange) |
+| Dvojni, trojni integral | polarne koordinate: $dx\,dy = r\,dr\,d\varphi$; cilindrične $dV = r\,dr\,d\varphi\,dz$; sferne $dV = r^2 \sin\vartheta\,dr\,d\vartheta\,d\varphi$ |
 
 ## Diferencialne enačbe
 
@@ -76,7 +76,7 @@
 | Pravila | $(A B)^{-1} = B^{-1} A^{-1}$, $\; (A B)^T = B^T A^T$, $\; \det(A B) = \det A \det B$ |
 | Lastne vrednosti | $A\vec{v} = \lambda\vec{v}$, $\; \det(A - \lambda I) = 0$, $\; \sum \lambda_i = \operatorname{sl} A$, $\; \prod \lambda_i = \det A$ |
 | Cramerjevo pravilo | $x_i = \dfrac{\det A_i}{\det A}$ |
-| Rang | $A\vec{x} = \vec{b}$ je rešljiv natanko tedaj, ko $\operatorname{rang} A = \operatorname{rang}[A \mid \vec{b}]$ |
+| Rang | $A\vec{x} = \vec{b}$ je rešljiv $\iff \operatorname{rang} A = \operatorname{rang}[A \mid \vec{b}]$ |
 
 ## Kompleksna števila
 
@@ -84,7 +84,7 @@
 |---|---|
 | Zapis | $z = a + b i = r(\cos\varphi + i \sin\varphi) = r e^{i\varphi}$, $\; r = \sqrt{a^2 + b^2}$ |
 | De Moivre | $z^n = r^n (\cos n\varphi + i \sin n\varphi)$ |
-| Koreni | $\sqrt[n]{z} = \sqrt[n]{r}\left(\cos\dfrac{\varphi + 2k\pi}{n} + i \sin\dfrac{\varphi + 2k\pi}{n}\right)$, $\; k = 0, \dots, n-1$ |
+| Koreni | $\sqrt[n]{z} = \sqrt[n]{r}\left(\cos\dfrac{\varphi + 2k\pi}{n} + i \sin\dfrac{\varphi + 2k\pi}{n}\right)$ ($k = 0, \dots, n-1$) |
 | Euler | $e^{i\varphi} = \cos\varphi + i \sin\varphi$ |
 
 ## Verjetnost in statistika

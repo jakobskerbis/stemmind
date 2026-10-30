@@ -57,7 +57,8 @@
 | Koti v trikotniku | $\alpha + \beta + \gamma = 180^\circ$ |
 | Koti v $n$-kotniku | vsota notranjih kotov $(n - 2) \cdot 180^\circ$ |
 | Diagonale $n$-kotnika | $d_n = \dfrac{n (n - 3)}{2}$ |
-| Podobni liki | razmerje stranic $k$, razmerje ploščin $k^2$ |
+| Podobni liki | razmerje stranic $k$ |
+| | razmerje ploščin $k^2$ |
 
 ## Telesa
 

@@ -74,7 +74,7 @@
 | | |
 |---|---|
 | Raoultov zakon | $p = x_{\text{topilo}}\,p^\circ$ |
-| Zvišanje vrelišča, znižanje tališča | $\Delta T_v = i K_e b$, $\; \Delta T_t = i K_k b$ (voda: $K_e = 0{,}512$, $K_k = 1{,}86\,\mathrm{K\,kg/mol}$) |
+| Zvišanje vrelišča, znižanje tališča | $\Delta T_v = i K_e b$ (voda: $K_e = 0{,}512\,\mathrm{K\,kg/mol}$); $\Delta T_t = i K_k b$ (voda: $K_k = 1{,}86\,\mathrm{K\,kg/mol}$) |
 | Osmozni tlak | $\Pi = i c R T$ |
 
 ## Zgradba atoma in vez
