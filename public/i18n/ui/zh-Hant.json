@@ -2049,7 +2049,7 @@
   "mob.endsOn": "有效期至 {date}，不會續訂",
   "mob.updateTitle": "新版本",
   "mob.updateApk": "應用程式有新版本可用。安裝大約需要一分鐘，你的學習進度會保留。",
-  "mob.updateReady": "更新已準備好。應用程式將短暫重新啟動。",
+  "mob.updateReady": "更新已準備好。應用程式將重新啟動，只需片刻。",
   "mob.updateNow": "更新",
   "mob.updateLater": "稍後",
   "mob.updateDownloading": "正在下載更新 … {pct}%",

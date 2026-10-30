@@ -59,11 +59,12 @@ function Root() {
           <Stack.Screen name="delete-account" options={{ title: t("mob.deleteAccount"), presentation: "modal" }} />
         </Stack.Protected>
       </Stack>
-      <Modal transparent visible={updating !== null} animationType="fade" statusBarTranslucent>
+      {/* Prenos novega APK; gumb nazaj ga ne zapre, ker prenosa ni mogoče preklicati. */}
+      <Modal transparent visible={updating !== null} animationType="fade" statusBarTranslucent onRequestClose={() => {}}>
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(0,0,0,0.4)", padding: 24 }}>
-          <View style={{ backgroundColor: th.surface, borderRadius: 16, padding: 24, alignItems: "center", gap: 12, minWidth: 240 }}>
+          <View style={{ backgroundColor: th.surface, borderColor: th.border, borderWidth: 1, borderRadius: 16, padding: 24, alignItems: "center", gap: 12, minWidth: 240 }}>
             <ActivityIndicator color={th.accent} />
-            <Text style={{ color: th.text, fontSize: 16 }} accessibilityLiveRegion="polite">
+            <Text style={{ color: th.text, fontSize: 16, textAlign: "center" }} accessibilityLiveRegion="polite">
               {t("mob.updateDownloading", { pct: updating ?? 0 })}
             </Text>
           </View>
