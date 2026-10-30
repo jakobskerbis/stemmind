@@ -469,7 +469,7 @@ export default {
   "set.deleteTitle": "Izbriši profil",
   "set.deleteText": "Trajno izbriše profil »{name}«: učno pot, napredek, nastavitve in vse pogovore. Tega ni mogoče razveljaviti.",
   "set.deleteStudent": "Izbriši profil »{name}«",
-  "set.confirmDelete": "Res trajno izbrišem profil »{name}« z vsem napredkom in pogovori? Tega ni mogoče razveljaviti.",
+  "set.confirmDelete": "Res trajno izbrišem profil »{name}« z vsem napredkom in vsemi pogovori? Tega ni mogoče razveljaviti.",
   "pace.zelo_pocasi": "Zelo počasi",
   "pace.pocasi": "Počasi",
   "pace.srednje": "Srednje",

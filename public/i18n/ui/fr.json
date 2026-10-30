@@ -330,7 +330,7 @@
   "set.newStudentText": "Un nouveau profil pour un autre élève : chacun a son propre parcours, sa progression et ses conversations.",
   "set.namePh": "Prénom",
   "set.deleteTitle": "Supprimer le profil",
-  "set.deleteText": "Supprime définitivement le profil « {name} » : parcours, progression, réglages et toutes les conversations. Action irréversible.",
+  "set.deleteText": "Supprime définitivement le profil « {name} » : parcours, progression, paramètres et toutes les conversations. Action irréversible.",
   "set.deleteStudent": "Supprimer le profil « {name} »",
   "set.confirmDelete": "Supprimer définitivement le profil « {name} » avec toute sa progression et ses conversations ? Action irréversible.",
   "pace.zelo_pocasi": "Très lent",
