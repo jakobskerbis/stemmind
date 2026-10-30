@@ -101,6 +101,7 @@ export function makeSplitter(host, o) {
   host.append(h);
 
   let lim = { min: o.min, max: o.min };
+  let known = false; // lim je izmerjen
   let applied; // px, 0 ali null (privzeto)
   let collapsed = false;
   let drag = null;
@@ -170,6 +171,15 @@ export function makeSplitter(host, o) {
 
   function refresh() {
     if (h.parentNode !== host) host.append(h);
+    const g = gridOf();
+    if (!g || !g.isConnected || !g.getClientRects().length) {
+      // Del ni prikazan (drug pogled, nova vsebina): velikost ostane, da je ob ponovnem prikazu prava že v prvi sliki.
+      if (!g?.isConnected) watch(null);
+      h.hidden = true;
+      if (!splitsOn() || matchMedia(PHONE).matches) setSize(null);
+      else setSize(sizeFor(readSize(o.key), known ? lim : { min: o.min, max: typeof o.max === "number" ? o.max : Infinity }, o.collapse));
+      return;
+    }
     let m = measure();
     watch(m ? gridOf() : null);
     if (!m) {
@@ -178,6 +188,7 @@ export function makeSplitter(host, o) {
       return;
     }
     lim = limits(m.avail, o);
+    known = true;
     const want = drag ? drag.v : readSize(o.key);
     if (setSize(sizeFor(want, lim, o.collapse))) m = measure() || m;
     h.hidden = false;
@@ -244,8 +255,11 @@ export function makeSplitter(host, o) {
     const fwd = x ? "ArrowRight" : "ArrowDown";
     const back = x ? "ArrowLeft" : "ArrowUp";
     let v;
-    if (e.key === fwd || e.key === back) v = collapsed ? lim.min : clampSize(cur + (e.key === fwd ? STEP : -STEP) * m.dir, lim.min, lim.max);
-    else if (e.key === "Home") v = lim.min;
+    if (e.key === fwd || e.key === back) {
+      // Skriti seznam odpre samo puščica v smeri, ki ga poveča.
+      if (collapsed && (e.key === fwd ? 1 : -1) * m.dir < 0) return e.preventDefault();
+      v = collapsed ? lim.min : clampSize(cur + (e.key === fwd ? STEP : -STEP) * m.dir, lim.min, lim.max);
+    } else if (e.key === "Home") v = lim.min;
     else if (e.key === "End") v = lim.max;
     else if (e.key === "Enter" && o.collapse) v = collapsed ? (lastOpen ?? null) : 0;
     else return;
