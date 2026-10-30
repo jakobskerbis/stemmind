@@ -237,13 +237,16 @@ Nauk zgodbe: šele ko poznaš velikost svoje merske napake, lahko presodiš, ali
 > Pozni zagon vsako meritev skrajša za približno enako. Povprečje te sistematične napake ne odpravi; pomaga le boljši način merjenja.
 
 :::simboli
-t | izmerjeni čas | | s | \bar{t} je povprečje meritev
+t | izmerjeni čas | | s | rezultat zapišemo kot t = (t̄ ± Δt)
+\bar{t} | povprečje meritev časa | \bar{t} = \dfrac{t_1 + t_2 + \dots + t_n}{n} | s
 t_1, t_2, t_n | posamezne meritve časa | | s
 \Delta t | absolutna napaka časa | | s | največji odmik meritve od povprečja
 n | število meritev | | –
-d | premer | | mm | \bar{d} je povprečni premer
+d | premer | | mm
+\bar{d} | povprečni premer | \bar{d} = \dfrac{d_1 + d_2 + d_3 + d_4}{n} | mm
 d_1, d_2, d_3, d_4 | posamezne meritve premera | | mm
-l | dolžina | | cm | \bar{l} je povprečna dolžina
+l | dolžina | | cm | rezultat zapišemo kot l = (l̄ ± Δl)
+\bar{l} | povprečna dolžina | \bar{l} = \dfrac{l_1 + l_2 + \dots + l_5}{n} | cm
 l_1, l_2, l_5 | posamezne meritve dolžine | | cm
 \Delta l | absolutna napaka dolžine | | cm | največji odmik meritve od povprečja
 :::

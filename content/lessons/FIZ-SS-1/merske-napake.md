@@ -238,7 +238,8 @@ x | izmerjena količina
 \Delta x | absolutna napaka | | | največje odstopanje od povprečja
 T | izmerjena telesna temperatura | | ^\circ C
 \Delta T | absolutna napaka temperature | | ^\circ C | pri eni meritvi najmanjši razdelek
-h | telesna višina | | cm | \bar{h} je povprečje meritev
+h | telesna višina | | cm | rezultat zapišemo kot h = (h̄ ± Δh)
+\bar{h} | povprečje meritev višine | \bar{h} = \dfrac{h_1 + h_2 + \dots + h_5}{5} | cm
 h_1, h_2, h_5 | posamezne meritve višine | | cm
 \Delta h | absolutna napaka višine | | cm | največje odstopanje od \bar{h}
 V | odmerjena prostornina | V = \dfrac{\Delta V}{\delta} | ml

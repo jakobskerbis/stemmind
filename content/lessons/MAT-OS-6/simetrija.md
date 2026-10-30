@@ -222,5 +222,8 @@ Osno simetričen lik pomeni natančno to: njegova zrcalna slika čez neko premic
 :::simboli
 A, B | točki, ki ju zrcalimo | | | A' (A črtica) je zrcalna slika točke A
 X | poljubno oglišče lika | | | X' je njegova zrcalna slika
-d | razdalja točke od osi zrcaljenja | | | d' je razdalja slike od osi; d' = d
+d | razdalja točke od osi zrcaljenja | | | razdalja med točko in sliko je 2d
+d' | razdalja zrcalne slike od osi | d' = d | | zrcaljenje ohranja razdalje
+A', B' | zrcalni sliki točk A in B | | | beremo »A črtica«
+X' | zrcalna slika oglišča X | |
 :::

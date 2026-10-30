@@ -201,8 +201,8 @@ v | hitrost | | m/s
 v_0 | začetna hitrost | | m/s
 F | sila (potisna ali vlečna) | | N
 F_{\mathrm{tr}} | sila trenja | F_\mathrm{tr} = k_\mathrm{tr}\,F_\mathrm{p} | N
-F_{12} | sila prvega telesa na drugo | \vec F_{21} = -\vec F_{12} | N | tretji Newtonov zakon
-F_{21} | sila drugega telesa na prvo | | N
+\vec F_{12} | sila prvega telesa na drugo | \vec F_{21} = -\vec F_{12} | N | tretji Newtonov zakon
+\vec F_{21} | sila drugega telesa na prvo | | N
 F_{\mathrm{p}} | sila podlage | | N | to kaže tehtnica
 F_{\mathrm{g}} | teža | F_\mathrm{g} = m\,g | N
 g | težni pospešek | | m/s^2 | približno 9,8 m/s²

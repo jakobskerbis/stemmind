@@ -241,10 +241,11 @@ Nejc poskusi znova. Zajemalko potisne malo globlje, kot kaže oko, in cmok je uj
 > Na gladini gre svetloba v optično redkejši zrak in se lomi stran od pravokotnice. Oko podaljša žarke naravnost nazaj, zato je potopljeni del videti višje in žlica prelomljena.
 
 :::simboli
-\alpha | vpadni kot | \alpha = 90^\circ - \gamma | ^\circ | merimo ga od vpadne pravokotnice
+\alpha | vpadni kot | | ^\circ | merimo ga od vpadne pravokotnice; v primeru je α = 90° − γ
 \beta | lomni kot | | ^\circ | v optično gostejši snovi je β < α
 \gamma | kot med žarkom in gladino | | ^\circ
-f | goriščna razdalja leče | | cm | \bar{f} je povprečje meritev
+f | goriščna razdalja leče | | cm
+\bar{f} | povprečje izmerjenih goriščnih razdalj | \bar{f} = \dfrac{f_1 + f_2 + f_3}{3} | cm
 f_1, f_2, f_3 | izmerjene goriščne razdalje | | cm
 \Delta f | absolutna napaka goriščne razdalje | | cm | največji odmik meritve od povprečja
 :::

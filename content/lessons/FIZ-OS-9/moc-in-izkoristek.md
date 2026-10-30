@@ -197,7 +197,7 @@ A_{\text{koristno}} | koristno delo | | J
 A_{\text{dovedeno}} | dovedeno delo | | J
 P_{\text{koristna}} | koristna moč | P_\text{koristna} = \dfrac{A}{t} | W
 P_{\text{dovedena}} | dovedena moč | | W
-F | sila | F = m \cdot g | N | v nalogi teža bremena
+F | sila v smeri gibanja | | N | pri dvigovanju bremena F = m · g (teža)
 s | pot | | m
 v | hitrost | v = \dfrac{s}{t} | m/s
 m | masa | | kg

@@ -285,8 +285,8 @@ F | rezultanta sil | F = m \cdot a | N
 m | masa | | kg
 F_g | teža | F_g = m \cdot g | N
 g | težni pospešek | | m/s^2 | približno 10 m/s² = 10 N/kg
-F_{1\to 2} | sila prvega telesa na drugo | \vec F_{1\to 2} = -\vec F_{2\to 1} | N | tretji Newtonov zakon
-F_{2\to 1} | sila drugega telesa na prvo | | N
+\vec F_{1\to 2} | sila prvega telesa na drugo | \vec F_{1\to 2} = -\vec F_{2\to 1} | N | tretji Newtonov zakon
+\vec F_{2\to 1} | sila drugega telesa na prvo | | N
 F_1 | vlečna sila (sila motorja) | | N
 F_2 | zaviralna sila (upor in trenje) | | N
 F_{\text{tr}} | sila trenja | | N

@@ -259,6 +259,7 @@ n | število meritev (velikost vzorca) | | –
 s | standardni odklon | s = \sqrt{\dfrac{\sum (x_i - \bar{x})^2}{n - 1}} | /min | tipična razdalja meritve od povprečja
 s_1, s_2 | standardna odklona obeh skupin | | /min
 n_1, n_2 | števili meritev v obeh skupinah | | –
+\bar{x}_1, \bar{x}_2 | povprečji obeh skupin | | /min
 \mathrm{SE} | standardna napaka | \mathrm{SE} = \dfrac{s}{\sqrt{n}} | /min | koliko se povprečje tipično premakne od vzorca do vzorca
 \mathrm{SE}_r | standardna napaka razlike | \mathrm{SE}_r = \sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}} | /min | r pomeni razliko, ne korelacije
 t | testna statistika t | t = \dfrac{\bar{x}_1 - \bar{x}_2}{\mathrm{SE}_r} | – | koliko standardnih napak sta povprečji narazen

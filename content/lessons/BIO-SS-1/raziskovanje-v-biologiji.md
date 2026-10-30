@@ -237,7 +237,8 @@ Sklep skoraj vedno odpre novo vprašanje, na primer: »Ali premaz deluje tudi na
 > Model izbere, kar je pomembno za razlago ali napoved, ostalo izpusti. Zato ga uporabljamo le v mejah, kjer smo ga preverili.
 
 :::simboli
-h | višina vzhajanega testa | | cm | \bar{h} je povprečna višina; v zadnji formuli ocena pri 35 °C
+\bar{h} | povprečna višina testa v treh skledah | \bar{h} = \dfrac{h_1 + h_2 + h_3}{3} | cm
+h | napovedana višina testa pri 35 °C | h = \dfrac{h_{30} + h_{40}}{2} | cm | sredina med 30 °C in 40 °C
 h_1, h_2, h_3 | višine testa v treh skledah | | cm
 h_{30}, h_{40} | povprečna višina testa pri 30 °C oziroma 40 °C | | cm
 :::

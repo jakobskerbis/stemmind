@@ -223,8 +223,8 @@ c | specifična toplota | c = \dfrac{Q}{m\,\Delta T} | J/(kg\,K) | voda 4200 J/(
 T | temperatura | | ^\circ C | razlika 1 K je enaka razliki 1 °C
 T_1 | začetna temperatura | | ^\circ C
 T_2 | končna temperatura | | ^\circ C
-\Delta T_1 | segrevanje ledu do tališča | \Delta T_1 = 0\,^\circ\text{C} - T_1 | K
-\Delta T_2 | segrevanje vode od tališča | \Delta T_2 = T_2 - 0\,^\circ\text{C} | K
+\Delta T_1 | sprememba temperature ledu do tališča | \Delta T_1 = 0\,^\circ\text{C} - T_1 | K
+\Delta T_2 | sprememba temperature vode od tališča | \Delta T_2 = T_2 - 0\,^\circ\text{C} | K
 q_t | specifična talilna toplota | | J/kg | voda 334 kJ/kg
 q_i | specifična izparilna toplota | | J/kg | voda 2260 kJ/kg
 Q_{\text{oddana}} | toplota, ki jo toplejše telo odda | | J

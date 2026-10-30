@@ -237,7 +237,7 @@ Meja primerjave: posodobitev izda podjetje, ko se tako odloči, znanstveno razla
 
 :::simboli
 x | posamezna meritev
-\bar{x} | povprečje meritev | \bar{x} = \frac{\sum x_i}{n}
+\bar{x} | povprečje meritev | \bar{x} = \dfrac{x_1 + x_2 + \dots + x_n}{n}
 x_1, x_2, x_n | prva, druga in zadnja meritev | | 
 n | število meritev | | –
 :::
