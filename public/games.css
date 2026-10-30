@@ -95,6 +95,16 @@
 .gm-kidnew .gm-tile:nth-child(2n) { animation-delay: 0.06s; }
 .gm-kidnew .gm-tile:nth-child(3n) { animation-delay: 0.12s; }
 @keyframes gm-kidpop { from { transform: scale(0.6); opacity: 0; } to { transform: none; opacity: 1; } }
+.gm-trends { margin: 0 0 12px; padding: 10px 14px; }
+.gm-trends summary { cursor: pointer; font-weight: 800; }
+.gm-trends h3 { margin: 12px 0 4px; font-size: 0.95rem; }
+.gm-trends ol { margin: 0; padding-inline-start: 22px; }
+.gm-trends button { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; }
+.gm-wishlink { margin-inline-end: 8px; }
+.gm-rate { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin: 10px 0 2px; font-weight: 700; }
+.gm-rate button { min-width: 48px; min-height: 44px; font-size: 1.35rem; line-height: 1; border: 2px solid var(--border); border-radius: 12px; }
+.gm-rate button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.gm-rate small { flex-basis: 100%; min-height: 1.2em; text-align: center; color: var(--muted); font-weight: 600; }
 @media (prefers-reduced-motion: reduce) { .gm-kidnew .gm-tile { animation: none; } }
 /* Zaklenjena igra: siva, s ključavnico; klik pokaže, kako jo odkleneš. */
 .gm-tile.gm-locked { filter: grayscale(0.85) brightness(0.82); }

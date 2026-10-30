@@ -2,7 +2,10 @@
 // Igra = vrsta igre + pojem, npr. "meteor:frac_add". Naloge nastanejo v brskalniku (public/games/topics.js).
 import { gradeInfo } from "../public/regions.js";
 import { baseTopicIds } from "./curriculum.js";
-import { isCleared } from "../public/games/unlock.js";
+import { isCleared, PACE } from "../public/games/unlock.js";
+import { WISH_IDS, weekKey } from "../public/games/wishes.js";
+import { GENRE_IDS } from "../public/games/childhood.js";
+import { isLocalRequest } from "./feedback.js";
 
 const GAME_ID = /^[a-z]{2,20}:[a-z0-9_]{2,30}$/;
 const XP_PER_GAME = 20; // največ na igro (1 XP za vsaka 2 pravilna odgovora)
@@ -35,6 +38,21 @@ export function mountGames(app, store, { loadStudent, progress, avatars, knowled
       updated_at TEXT NOT NULL DEFAULT (datetime('now')),
       PRIMARY KEY (student_id, game)
     );
+    -- Povratne informacije za tedenske nove igre (docs/igre-tedensko.md): 👍/👎 po vrsti igre in
+    -- en glas na teden za naslednjo vrsto igre (public/games/wishes.js).
+    CREATE TABLE IF NOT EXISTS game_ratings (
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      engine TEXT NOT NULL,
+      up INTEGER NOT NULL,
+      updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+      PRIMARY KEY (student_id, engine)
+    );
+    CREATE TABLE IF NOT EXISTS game_wishes (
+      student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
+      week TEXT NOT NULL,
+      genre TEXT NOT NULL,
+      PRIMARY KEY (student_id, week)
+    );
     CREATE TABLE IF NOT EXISTS game_unlocks (
       student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE CASCADE,
       concept TEXT NOT NULL,
@@ -66,7 +84,9 @@ export function mountGames(app, store, { loadStudent, progress, avatars, knowled
     for (const r of db.prepare("SELECT topic_id FROM topic_state WHERE student_id = ? AND status = 'mastered' AND COALESCE(source, '') <> 'manual'").all(s.id))
       for (const b of baseTopicIds(r.topic_id)) known.add(b);
     const passed = db.prepare("SELECT concept FROM game_unlocks WHERE student_id = ?").all(s.id).map((r) => r.concept);
-    res.json({ year: schoolYear(s.settings), games, concepts, known: [...known], passed, xpToday: xpToday(s.id), xpPerDay: XP_PER_DAY });
+    const rated = Object.fromEntries(db.prepare("SELECT engine, up FROM game_ratings WHERE student_id = ?").all(s.id).map((r) => [r.engine, !!r.up]));
+    const wish = db.prepare("SELECT genre FROM game_wishes WHERE student_id = ? AND week = ?").get(s.id, weekKey())?.genre || null;
+    res.json({ year: schoolYear(s.settings), games, concepts, known: [...known], passed, xpToday: xpToday(s.id), xpPerDay: XP_PER_DAY, rated, wish });
   });
 
   // Preizkus pred igrami: 4 od 5 pravilnih odklene mirne igre te snovi.
@@ -112,4 +132,77 @@ export function mountGames(app, store, { loadStudent, progress, avatars, knowled
       total: summary?.total ?? null,
     });
   });
+
+  // 👍/👎 po koncu igre (zadnja ocena vrste igre velja, null jo odstrani).
+  app.post("/api/students/:id/games/rate", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const engine = String(req.body?.engine || "");
+    if (!Object.hasOwn(PACE, engine)) return res.status(400).json({ error: "Neznana igra." });
+    const up = req.body?.up === true ? 1 : req.body?.up === false ? 0 : null;
+    if (up === null) db.prepare("DELETE FROM game_ratings WHERE student_id = ? AND engine = ?").run(s.id, engine);
+    else
+      db.prepare(
+        "INSERT INTO game_ratings (student_id, engine, up) VALUES (?, ?, ?) ON CONFLICT(student_id, engine) DO UPDATE SET up = excluded.up, updated_at = datetime('now')",
+      ).run(s.id, engine, up);
+    res.json({ ok: true });
+  });
+
+  // Glas za naslednjo vrsto igre: en na teden (od srede do srede), spremeniti ga je mogoče.
+  app.post("/api/students/:id/games/wish", (req, res) => {
+    const s = loadStudent(req, res);
+    if (!s) return;
+    const genre = String(req.body?.genre || "");
+    if (!WISH_IDS.includes(genre)) return res.status(400).json({ error: "Neznana vrsta igre." });
+    db.prepare("INSERT INTO game_wishes (student_id, week, genre) VALUES (?, ?, ?) ON CONFLICT(student_id, week) DO UPDATE SET genre = excluded.genre").run(s.id, weekKey(), genre);
+    res.json({ ok: true, week: weekKey() });
+  });
+
+  // Anonimni povzetek za tedenske nove igre (docs/igre-tedensko.md). Vidi ga samo skrbnik ali kdor
+  // aplikacijo odpre na računalniku, kjer teče strežnik (kot porabo AI).
+  app.get("/api/games/trends", (req, res) => {
+    if (!req.parent?.is_admin && !isLocalRequest(req)) return res.status(403).json({ error: "Samo za skrbnika." });
+    res.set("Cache-Control", "no-store").json(gameTrends(db));
+  });
+}
+
+// Samo števila, brez imen, besedil in id-jev; dokler prispeva manj kot MIN_STUDENTS učencev, nič
+// (iz majhnih števil bi se dalo sklepati, kdo je kaj izbral).
+export const MIN_STUDENTS = 3;
+export function gameTrends(db, now = new Date()) {
+  const week = weekKey(now);
+  const last = weekKey(new Date(Date.parse(week) - 86400000));
+  const contributors = new Set();
+  const ratings = {};
+  for (const r of db.prepare("SELECT student_id, engine, up FROM game_ratings").all()) {
+    contributors.add(r.student_id);
+    const x = (ratings[r.engine] ||= { up: 0, down: 0 });
+    x[r.up ? "up" : "down"]++;
+  }
+  const wishes = { [last]: {}, [week]: {} };
+  const allWishes = {};
+  for (const r of db.prepare("SELECT student_id, week, genre FROM game_wishes").all()) {
+    contributors.add(r.student_id);
+    allWishes[r.genre] = (allWishes[r.genre] || 0) + 1;
+    if (wishes[r.week]) wishes[r.week][r.genre] = (wishes[r.week][r.genre] || 0) + 1;
+  }
+  const childhood = {};
+  for (const r of db.prepare("SELECT id, settings FROM students").all()) {
+    let list = [];
+    try {
+      list = JSON.parse(r.settings || "{}").game_childhood || [];
+    } catch {}
+    const ok = Array.isArray(list) ? list.filter((g) => GENRE_IDS.includes(g)) : [];
+    if (ok.length) contributors.add(r.id);
+    for (const g of ok) childhood[g] = (childhood[g] || 0) + 1;
+  }
+  // Igranost v zadnjih 7 dneh: koliko različnih učencev je igralo vrsto igre.
+  const plays = {};
+  for (const r of db.prepare("SELECT DISTINCT student_id, substr(game, 1, instr(game, ':') - 1) AS engine FROM game_scores WHERE updated_at >= datetime('now', '-7 days')").all()) {
+    contributors.add(r.student_id);
+    plays[r.engine] = (plays[r.engine] || 0) + 1;
+  }
+  const base = { week, lastWeek: last, minStudents: MIN_STUDENTS, students: contributors.size };
+  if (contributors.size < MIN_STUDENTS) return { ...base, enough: false };
+  return { ...base, enough: true, ratings, wishes, allWishes, childhood, plays };
 }

@@ -17,6 +17,7 @@ function onPath(e, c) {
 import { ENGINES } from "./engines.js";
 import { runGame } from "./core.js";
 import { GENRES, childhoodEngines } from "./childhood.js";
+import { WISHES } from "./wishes.js";
 import { ITEMS, SLOTS, DEFAULT_AVATAR, MULTI_MAX, avatarSvg, itemName, itemOf, itemRarity, isMulti, isWorn, worn, wear, takeOff, slotFull } from "../avatar.js";
 import { seasonOf } from "../zbirke.js";
 import { unlockedText } from "../zbirke-view.js";
@@ -67,6 +68,8 @@ let filter = { subject: "MAT", area: "you", kind: "all", q: "" };
 // Znak na ploščici za pojme drugih predmetov, če pojem nima svojega.
 const SUBJ_GLYPH = { MAT: "∑", FIZ: "⚛", KEM: "⚗", BIO: "❀", NAR: "☼", GEO: "⛰", RAC: "01", EKO: "€" };
 let game = null; // odprta igra
+let trOpen = false;
+let trends = null; // glasovi tedna (samo skrbnik ali računalnik s strežnikom, server/games.js)
 let root = null;
 
 const kindName = (e) => t(`games.e.${e.id}`);
@@ -95,7 +98,7 @@ export async function showGames() {
   renderPortal();
   try {
     const s = ctx.getStudent();
-    if (s) [data, av] = await Promise.all([ctx.api(`/api/students/${s.id}/games`), ctx.api(`/api/students/${s.id}/avatar`).catch(() => av)]);
+    if (s) [data, av, trends] = await Promise.all([ctx.api(`/api/students/${s.id}/games`), ctx.api(`/api/students/${s.id}/avatar`).catch(() => av), ctx.api("/api/games/trends").catch(() => null)]);
     LS = lockState();
     if (!game) renderPortal();
   } catch {}
@@ -129,6 +132,33 @@ function tile(e, c) {
 
 // Igre iz otroštva (childhood.js): null = vprašalnik še ni bil izpolnjen, [] = preskočen.
 const kidList = () => ctx.getStudent()?.settings?.game_childhood ?? null;
+
+// Glasovi tedna za j-jev pregled (j 2026-10-30: »vsak teden seznam glasov, meni v pregled«).
+const sorted = (o) => Object.entries(o || {}).sort((a, b) => b[1] - a[1]);
+const wishName = (id) => t(`games.w.${id}`);
+function trendsText() {
+  const tr = trends;
+  const line = (list, name) => list.map(([id, n]) => `${name(id)} ${n}`).join(", ") || "—";
+  return [
+    `${t("games.trVotes", { week: tr.lastWeek })}: ${line(sorted(tr.wishes?.[tr.lastWeek]), wishName)}`,
+    `${t("games.trNow")}: ${line(sorted(tr.wishes?.[tr.week]), wishName)}`,
+    `${t("games.trRatings")}: ${line(Object.entries(tr.ratings || {}).map(([id, r]) => [id, `👍${r.up} 👎${r.down}`]), (id) => t(`games.e.${id}`))}`,
+    `${t("games.trKid")}: ${line(sorted(tr.childhood), (id) => t(`games.g.${id}`))}`,
+  ].join("\n");
+}
+function trendsCard() {
+  if (!trends) return "";
+  const tr = trends;
+  const rows = (list, name) => (list.length ? `<ol>${list.map(([id, n]) => `<li>${esc(name(id))} <b>${esc(n)}</b></li>`).join("")}</ol>` : `<p class="muted">${esc(t("games.trNone"))}</p>`);
+  const body = !tr.enough
+    ? `<p class="muted">${esc(t("games.trFew", { n: tr.students, min: tr.minStudents }))}</p>`
+    : `<h3>${esc(t("games.trVotes", { week: tr.lastWeek }))}</h3>${rows(sorted(tr.wishes?.[tr.lastWeek]), wishName)}
+      <h3>${esc(t("games.trNow"))}</h3>${rows(sorted(tr.wishes?.[tr.week]), wishName)}
+      <h3>${esc(t("games.trRatings"))}</h3>${rows(Object.entries(tr.ratings || {}).map(([id, r]) => [id, `👍 ${r.up} · 👎 ${r.down}`]), (id) => t(`games.e.${id}`))}
+      <h3>${esc(t("games.trKid"))}</h3>${rows(sorted(tr.childhood), (id) => t(`games.g.${id}`))}
+      <button type="button" class="secondary" data-act="trcopy">${icon("clipboard-check")}${esc(t("games.trCopy"))}</button>`;
+  return `<details class="card gm-trends"${trOpen ? " open" : ""}><summary>📋 ${esc(t("games.trTitle"))}</summary><p class="muted small">${esc(t("games.trOnly"))}</p>${body}</details>`;
+}
 
 function renderPortal() {
   const q = filter.q.trim().toLowerCase();
@@ -188,7 +218,7 @@ function renderPortal() {
       <div class="chip-row gm-kinds" role="group" aria-label="${esc(t("games.kinds"))}">
         ${chip("all", t("games.allKinds"), filter.kind === "all")}${kidEngines.length ? chip("kid", `🕹️ ${t("games.kidChip")}`, filter.kind === "kid") : ""}${ENGINES.map((e) => chip(e.id, kindName(e), filter.kind === e.id)).join("")}
       </div>
-      ${kidAsk}${kid && !kidEngines.length ? `<button type="button" class="ghost gm-kidlink" data-act="kid">🕹️ ${esc(t("games.kidLink"))}</button>` : ""}
+      ${q ? "" : trendsCard()}${kidAsk}${ctx.getStudent() && !q ? `<button type="button" class="ghost gm-kidlink gm-wishlink" data-act="wish">🗳️ ${esc(data.wish ? t("games.wishMine", { g: t(`games.w.${data.wish}`) }) : t("games.wishAsk"))}</button>` : ""}${kid && !kidEngines.length ? `<button type="button" class="ghost gm-kidlink" data-act="kid">🕹️ ${esc(t("games.kidLink"))}</button>` : ""}
       ${paths ? `<p class="gm-pathhint">${icon("compass")} ${esc(t("games.pathHint"))}</p>` : ""}
       ${kidSec}${total ? sections : `<p class="muted gm-none">${esc(t("games.none"))}</p>`}
     </div>`;
@@ -225,6 +255,14 @@ function renderPortal() {
   });
   root.querySelectorAll(".gm-tile").forEach((b) => b.addEventListener("click", () => openGame(b.dataset.game)));
   root.querySelector('[data-act="shop"]').addEventListener("click", () => renderShop("", true));
+  root.querySelector('[data-act="wish"]')?.addEventListener("click", askWish);
+  root.querySelector(".gm-trends")?.addEventListener("toggle", (e) => (trOpen = e.target.open));
+  root.querySelector('[data-act="trcopy"]')?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(trendsText());
+      ctx.toast?.(t("games.trCopied"));
+    } catch {}
+  });
   root.querySelectorAll('[data-act="kid"]').forEach((b) => b.addEventListener("click", askChildhood));
   root.querySelector('[data-act="kidskip"]')?.addEventListener("click", () => saveChildhood([]));
   root.querySelector('.gm-top [data-act="zbirke"]')?.addEventListener("click", () => window.evklid?.openZbirke(null, "games"));
@@ -306,6 +344,68 @@ function askChildhood() {
   dlg.querySelector(".iq-opt")?.focus({ preventScroll: true });
 }
 
+// Glasovanje za novo vrsto igre tega tedna (wishes.js); tedenski zagon naredi najbolj želeno.
+function askWish() {
+  const s = ctx.getStudent();
+  if (!s || document.querySelector(".gm-wishq")) return;
+  let pick = data.wish;
+  const back = document.activeElement;
+  const dlg = document.createElement("div");
+  dlg.className = "iq-wrap";
+  dlg.innerHTML = `<div class="iq card gm-wishq" role="dialog" aria-modal="true" aria-labelledby="wish-title">
+    <h2 id="wish-title">🗳️ ${esc(t("games.wishQ"))}</h2>
+    <p class="muted">${esc(t("games.wishSub"))}</p>
+    <div class="iq-grid" role="radiogroup" aria-labelledby="wish-title">${WISHES.map((w) => `<button type="button" class="iq-opt${pick === w.id ? " on" : ""}" data-w="${w.id}" role="radio" aria-checked="${pick === w.id}"><span class="iq-emoji" aria-hidden="true">${w.emoji}</span><span>${esc(t(`games.w.${w.id}`))}</span></button>`).join("")}</div>
+    <div class="iq-actions"><button type="button" class="ghost" data-k="close">${esc(t("games.kidLater"))}</button><button type="button" class="primary" data-k="save"${pick ? "" : " disabled"}>${icon("check")}${esc(t("games.wishVote"))}</button></div>
+  </div>`;
+  document.body.appendChild(dlg);
+  const save = dlg.querySelector('[data-k="save"]');
+  const close = () => {
+    dlg.remove();
+    (back?.isConnected ? back : root?.querySelector('[data-act="wish"]'))?.focus?.({ preventScroll: true });
+  };
+  dlg.addEventListener("click", async (ev) => {
+    const opt = ev.target.closest("[data-w]");
+    if (opt) {
+      pick = opt.dataset.w;
+      dlg.querySelectorAll("[data-w]").forEach((b) => {
+        b.classList.toggle("on", b === opt);
+        b.setAttribute("aria-checked", String(b === opt));
+      });
+      save.disabled = false;
+      return;
+    }
+    if (ev.target === dlg || ev.target.closest('[data-k="close"]')) return close();
+    if (!ev.target.closest('[data-k="save"]') || !pick) return;
+    save.disabled = true;
+    try {
+      await ctx.api(`/api/students/${s.id}/games/wish`, { method: "POST", body: JSON.stringify({ genre: pick }) });
+    } catch (err) {
+      ctx.toast?.(err.message, null);
+      save.disabled = false;
+      return;
+    }
+    data.wish = pick;
+    if (!game) renderPortal();
+    close();
+    ctx.toast?.(t("games.wishThanks"));
+  });
+  dlg.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.stopPropagation();
+      close();
+    } else if (e.key === "Tab") {
+      const f = [...dlg.querySelectorAll("button:not(:disabled)")];
+      const i = f.indexOf(document.activeElement);
+      if (e.shiftKey ? i <= 0 : i === f.length - 1) {
+        e.preventDefault();
+        f.at(e.shiftKey ? -1 : 0)?.focus();
+      }
+    }
+  });
+  dlg.querySelector(".iq-opt")?.focus({ preventScroll: true });
+}
+
 function openGame(id) {
   const [eid, cid] = id.split(":");
   const engine = ENGINES.find((e) => e.id === eid);
@@ -324,6 +424,13 @@ function openGame(id) {
     title,
     t,
     onExit: closeGame,
+    rating: data.rated?.[eid] ?? null,
+    onRate: (up) => {
+      const s = ctx.getStudent();
+      if (!s) return;
+      data.rated = { ...data.rated, [eid]: up };
+      ctx.api(`/api/students/${s.id}/games/rate`, { method: "POST", body: JSON.stringify({ engine: eid, up }) }).catch(() => {});
+    },
     onEnd: async (r) => {
       const s = ctx.getStudent();
       if (!s) return null;
