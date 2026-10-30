@@ -12,6 +12,7 @@ import { BUNDLE_ID, STORE_PRODUCTS, appleState } from "../server/mobile/store-bi
 import { googleSubscriptionState } from "../server/mobile/google-play.js";
 import { goalPushText } from "../server/mobile/push.js";
 import { fetchApk } from "../server/mobile/download.js";
+import { apkVersion, manifestVersion } from "../server/mobile/apk-info.js";
 import os from "node:os";
 import path from "node:path";
 
@@ -358,6 +359,24 @@ test("app links: APK and TestFlight for the install button", async () => {
 });
 
 // Skrbnik naloži APK s povezave iz expo.dev; strežnik sledi preusmeritvam samo na znane strežnike.
+// Prava gradnja 4 (1.0.0): AndroidManifest.xml iz APK z expo.dev, zapakiran v majhen ZIP.
+const MINI_APK = fileURLToPath(new URL("./fixtures/mini.apk", import.meta.url));
+
+test("APK version: versionCode and versionName from the binary manifest", () => {
+  assert.deepEqual(apkVersion(MINI_APK), { versionCode: 4, versionName: "1.0.0" });
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "apkv-"));
+  try {
+    const junk = path.join(dir, "x.apk");
+    fs.writeFileSync(junk, Buffer.concat([Buffer.from([0x50, 0x4b, 0x03, 0x04]), Buffer.alloc(100, 7)]));
+    assert.equal(apkVersion(junk), null);
+    assert.equal(apkVersion(path.join(dir, "missing.apk")), null);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+  assert.equal(manifestVersion(Buffer.alloc(4)), null);
+  assert.equal(manifestVersion(Buffer.from([3, 0, 8, 0, 0xff, 0xff, 0xff, 0x7f])), null); // pokvarjena dolžina
+});
+
 test("admin APK upload: only admins, only known hosts, only ZIP files", async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "apk-"));
   const file = path.join(dir, "evklid.apk");
@@ -401,6 +420,11 @@ test("admin APK upload: only admins, only known hosts, only ZIP files", async ()
         assert.equal(r.body.file.bytes, zip.length);
         assert.equal((await c("/api/admin/apk", { body: { url: "https://example.com/x.apk" } })).status, 400);
         assert.equal((await c("/api/app-links")).body.apk, "/prenesi/evklid.apk");
+        assert.equal((await c("/api/app-links")).body.apkVersion, null); // lažni APK nima manifesta
+        // pravi manifest: aplikacija primerja versionCode s svojo gradnjo
+        fs.copyFileSync(MINI_APK, path.join(dir, "server.apk"));
+        assert.deepEqual((await c("/api/app-links")).body.apkVersion, { versionCode: 4, versionName: "1.0.0" });
+        assert.equal((await c("/api/admin/apk")).body.file.version.versionCode, 4);
       },
       { apkFile: path.join(dir, "server.apk"), fetch: fake },
     );

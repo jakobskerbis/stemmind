@@ -2002,6 +2002,12 @@ export default {
   "mob.purchasePending": "Nakup čaka na potrditev. Naročnina začne veljati, ko je plačilo potrjeno.",
   "mob.accessUntil": "Poln dostop do {date}",
   "mob.endsOn": "Velja do {date}, ne podaljša se",
+  "mob.updateTitle": "Nova različica",
+  "mob.updateApk": "Na voljo je nova različica aplikacije. Namestitev traja le minuto, tvoj napredek ostane.",
+  "mob.updateReady": "Posodobitev je pripravljena. Aplikacija se za trenutek znova zažene.",
+  "mob.updateNow": "Posodobi",
+  "mob.updateLater": "Pozneje",
+  "mob.updateDownloading": "Prenašam posodobitev … {pct} %",
   // skeniranje nalog (public/scan/)
   "scan.title": "Skeniraj nalogo",
   "scan.nav": "Skeniraj",

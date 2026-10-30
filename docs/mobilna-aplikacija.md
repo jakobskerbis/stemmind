@@ -66,6 +66,23 @@ polnoletnost in pravo identiteto; ime razvijalca je javno vidno v trgovini.
 Takoj zatem gumb **»Namesti aplikacijo«** na Androidu ponudi pravo aplikacijo (APK s koraki za namestitev)
 namesto spletne različice, prav tako stran https://evklid.app/prenesi. Ob novi različici ponovi koraka 3 in 4.
 
+**Posodobitve nameščene aplikacije** (`mobile/src/lib/updates.ts`):
+- **Manjše spremembe (JavaScript, besedila, prevodi)** pridejo same. Ob vsaki združitvi v `main`, ki spremeni
+  `mobile/` ali skupne datoteke s spletom, Expo (EAS Workflows, `mobile/.eas/workflows/posodobitev.yml`)
+  objavi posodobitev na kanal `direct`. Telefon jo prenese ob zagonu in jo uporabi ob naslednjem zagonu;
+  ko je prenesena, aplikacija ponudi »Posodobi« (takojšen ponovni zagon). Dobijo jo samo gradnje z enako
+  domorodno kodo (`runtimeVersion: fingerprint`). Brezplačni načrt Expo pokrije do 1.000 uporabnikov na mesec.
+- **Nova domorodna koda** (nov paket Expo, nova različica SDK, sprememba `app.config.ts`) potrebuje nov APK:
+  ponovi koraka 3 in 4. Strežnik iz naloženega APK prebere `versionCode` (`server/mobile/apk-info.js`,
+  `/api/app-links` → `apkVersion`). Aplikacija ga ob prijavi primerja s svojo gradnjo in, če je novejši,
+  ponudi »Posodobi«: en dotik prenese APK in odpre sistemsko namestitev (prvič Android vpraša, ali Evklid
+  sme nameščati aplikacije). Podatki ostanejo, ker je APK podpisan z istim ključem (keystore na expo.dev,
+  nikoli ga ne briši).
+- Če je APK zunaj strežnika (`EVKLID_ANDROID_APK_URL`), strežnik njegove različice ne pozna in aplikacija nove
+  različice APK ne ponudi; posodobitve JavaScripta delujejo vseeno.
+- Nov jezik vmesnika (nova datoteka v `public/i18n/ui/`) spremeni prstni odtis, zato potrebuje nov APK.
+- APK 1.0.0 (gradnja 4, 30. 10. 2026) posodabljanja še nima: nanj je treba novo različico enkrat namestiti ročno.
+
 **Gumb »Namesti aplikacijo« po napravah** (`public/install.js`, podatki z `/api/app-links`):
 - Android: Google Play, ko je objavljena (`EVKLID_PLAY_URL`), sicer APK; spletna različica ostane druga možnost.
 - iPhone, iPad: App Store (`EVKLID_APP_STORE_URL`), sicer TestFlight (`EVKLID_TESTFLIGHT_URL`), sicer koraki
