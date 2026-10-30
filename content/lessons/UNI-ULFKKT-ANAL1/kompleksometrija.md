@@ -231,3 +231,17 @@ $$K_f = \frac{[\mathrm{CaY^{2-}}]}{[\mathrm{Ca^{2+}}]\,\alpha_{\mathrm{Y^{4-}}}[
 ~ Pri višjem pH je $\mathrm{Y^{4-}}$ več, ne manj; na porabo pa vpliva množina kovine.
 + Pri $\mathrm{pH}\ 12{,}5$ se magnezij obori kot $\mathrm{Mg(OH)_2}$, zato titriramo le kalcij.
 > Razlika $15{,}2 - 11{,}0 = 4{,}2\ \mathrm{mL}$ ustreza magneziju v vzorcu.
+
+:::simboli
+K_f | konstanta tvorbe kompleksa | K_f = \frac{[\mathrm{ML}]}{[\mathrm{M}]\,[\mathrm{L}]} | L/mol | navajamo log K_f
+K'_f | pogojna konstanta tvorbe | K'_f = \alpha_{\mathrm{Y^{4-}}} \cdot K_f | L/mol | za titracijo mora biti log K'_f ≥ 8
+\alpha_{\mathrm{Y^{4-}}} | delež EDTA v obliki Y⁴⁻ | \alpha_{\mathrm{Y^{4-}}} = \frac{K_1K_2K_3K_4}{[\mathrm{H^+}]^4 + K_1[\mathrm{H^+}]^3 + K_1K_2[\mathrm{H^+}]^2 + K_1K_2K_3[\mathrm{H^+}] + K_1K_2K_3K_4} | – | raste z naraščajočim pH
+K_1, K_2, K_3, K_4 | kislinske konstante EDTA | | mol/L | drugje: stopenjske konstante tvorbe kompleksa
+n | množina snovi | | mol | v EP: n(M) = n(EDTA)
+c | množinska koncentracija | | mol/L
+V | prostornina | | mL
+V_{10} | prostornina EDTA pri titraciji pri pH 10 | | mL | določimo Ca in Mg skupaj
+V_{12{,}5} | prostornina EDTA pri titraciji pri pH 12,5 | | mL | določimo samo Ca
+\gamma | masna koncentracija | \gamma = c \cdot M | mg/L
+M | molska masa | | g/mol
+:::

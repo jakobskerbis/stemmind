@@ -219,3 +219,22 @@ Pomisli na domači vrt. Jeseni gredico prekoplješ z lopato in pustiš grude če
 ~ $42$ zadetkov je odstotek le pri $100$ oznakah; tu jih je $120$. Pa tudi $42\,\%$ bi zadoščalo.
 + Da, ker je pokritost $35\,\%$.
 > $D = \dfrac{42}{120} = 0{,}35 = 35\,\%$, kar je več od meje $30\,\%$.
+
+:::simboli
+P | poroznost tal | P = 1 - \dfrac{\rho_v}{\rho_t} | – | zrahljana tla imajo večjo poroznost
+\rho_v | gostota tal (s porami) | | g/cm^3 | masa suhih tal na prostornino s porami
+\rho_t | gostota trdnih delcev | | g/cm^3 | okrog 2,65 g/cm³
+V | prostornina ornice | V = A \cdot h | m^3
+A | površina njive | | m^2 | 1 ha = 10 000 m²
+h | globina ornice | | m
+m | masa ornice | m = \rho_v \cdot V | t
+D | pokritost tal z ostanki | D = \dfrac{\text{zadetki}}{\text{vse oznake}} | – | konzervirajoča obdelava: vsaj 30 %
+\Delta G | letni prihranek goriva | \Delta G = (g_\text{prej} - g_\text{zdaj}) \cdot A | L
+g_\text{prej} | poraba goriva na hektar pred spremembo | | L/ha
+g_\text{zdaj} | poraba goriva na hektar zdaj | | L/ha
+U | učinek stroja | U = b \cdot v \cdot \eta | m^2/h
+b | delovna širina stroja | | m
+v | hitrost vožnje | | m/h
+\eta | izkoristek časa | | – | manjši od 1 zaradi obračanja
+t | čas obdelave njive | t = \dfrac{A}{U} | h
+:::

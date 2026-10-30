@@ -258,3 +258,13 @@ V vsaki vrstici se $a^3$ pokrajša, zato $f$ ni odvisna od velikosti atomov.
 - 1 in 1
 ~ En par ionov na celico ima struktura CsCl. NaCl temelji na fcc, ki ima 4 mrežne točke.
 > Anioni: $8 \cdot \tfrac18 + 6 \cdot \tfrac12 = 4$. Kationi: $12 \cdot \tfrac14 + 1 = 4$. Torej $Z = 4$ formulske enote $\mathrm{MgO}$.
+
+:::simboli
+f | gostota zloga (delež zapolnjene prostornine) | f = \frac{Z \cdot \tfrac43 \pi r^3}{a^3} | – | odvisna le od vrste celice
+Z | število atomov (formulskih enot) v celici | | – | npr. telesno centrirana kocka: Z = 2
+r | polmer atoma | | pm | v telesno centrirani celici a√3 = 4r
+a | mrežni parameter (rob kocke) | | pm | 1 pm = 10⁻¹⁰ cm
+\rho | gostota snovi | \rho = \dfrac{Z \cdot M}{N_\mathrm{A} \cdot a^3} | g/cm^3
+M | molska masa | | g/mol
+N_\mathrm{A} | Avogadrova konstanta | | 1/mol | 6,022 · 10²³ mol⁻¹
+:::

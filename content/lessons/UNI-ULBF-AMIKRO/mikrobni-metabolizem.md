@@ -222,3 +222,11 @@ Elektron je kot kamen, ki ga spustiš z darovalca do sprejemnika. Več kot je vi
 - Oksigena fotosinteza.
 ~ Oksigena fotosinteza bi sproščala kisik, ne dušika, nitrata pa ne porablja kot sprejemnik elektronov.
 > Nitrat je končni sprejemnik elektronov in se reducira do $\mathrm{N_2}$. To je denitrifikacija, oblika anaerobnega dihanja.
+
+:::simboli
+\Delta G_0' | standardna sprememba proste entalpije | \Delta G_0' = -n\,F\,\Delta E_0' | kJ/mol | negativna: reakcija sprošča energijo
+n | število prenesenih elektronov | | –
+F | Faradayeva konstanta | | kJ/(V mol) | 96,485 kJ/(V mol)
+\Delta E_0' | razlika standardnih redoks potencialov | \Delta E_0' = E_0'(\text{sprejemnik}) - E_0'(\text{darovalec}) | V | večja razlika, več energije
+E_0' | standardni redoks potencial pri pH 7 | | V
+:::

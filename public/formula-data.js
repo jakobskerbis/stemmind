@@ -317,14 +317,14 @@ export function symbolKeyOf(tex) {
   const raw = /^\\(?:mathrm|text|textrm)\s*\{([^{}]+)\}\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+))?$/.exec(s);
   if (raw) return raw[1].replace(/\s+/g, "") + (raw[2] ? `_${normSub(raw[2])}` : "");
   let delta = "";
-  const d = /^\\Delta\s*/.exec(s);
+  const d = /^\\Delta\s*(?!_)/.exec(s);
   if (d && s.length > d[0].length) { delta = "Δ"; s = s.slice(d[0].length); }
-  const m = /^(\\([a-zA-Z]+)|[A-Za-z])\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+))?$/.exec(s);
+  const m = /^(\\([a-zA-Z]+)|[A-Za-z])\s*('*)\s*(?:_\s*(\{.*\}|\\(?:mathrm|text)\s*\{[^{}]*\}|\\?[A-Za-z0-9]+))?\s*('*)$/.exec(s);
   if (!m) return null;
   const base = m[2] ? GREEK[m[2]] : m[1];
   if (!base) return null;
-  const sub = m[3] ? normSub(m[3]) : "";
-  return `${delta}${base}${sub ? `_${sub}` : ""}`;
+  const sub = m[4] ? normSub(m[4]) : "";
+  return `${delta}${base}${m[3]}${m[5]}${sub ? `_${sub}` : ""}`;
 }
 
 // »I, I_0, x_{1,2}« → ["I", "I_0", "x_{1,2}"] (vejice v {…} ne ločijo).
@@ -415,6 +415,23 @@ export function annotateTex(tex, subject = override || subjectFn()) {
   const wrap = (data, body) => `\\htmlData{fx=${encodeURIComponent(data).replace(/\./g, "%2E").replace(/%/g, ".")}}{${body}}`;
   // Simbol od i (vključno s predpono, npr. \Delta) do j (konec osnovnega znaka); indeks vedno prepišemo nespremenjen.
   const symbol = (base, from, j, delta) => {
+    // Črtica (K'_f, E_0'): samo kot oznaka lekcije s črtico v ključu.
+    if (subject?.[0] === "@" && (tex[j] === "'" || /^_[^']*'/.test(readSub(j) ? tex.slice(j, readSub(j).end + 1) : ""))) {
+      let q = j;
+      while (tex[q] === "'") q++;
+      const s1 = readSub(q);
+      let e = s1 ? s1.end : q;
+      while (tex[e] === "'") e++;
+      const primes = "'".repeat(q - j + (e - (s1 ? s1.end : q)));
+      const keyP = `${base}${primes}${s1 ? `_${normSub(s1.raw)}` : ""}`;
+      const hitP = primes && (lookupSymbol(keyP, subject) ? keyP : lookupSymbol(`${base}${primes}`, subject) && !s1 ? `${base}${primes}` : null);
+      if (hitP) {
+        const bare = /(?:[_^]|\\[a-zA-Z]+|\\[dt]?frac\s*\w)\s*$/.test(out);
+        const marked = wrap(`${delta ? "d" : "s"}:${subject}:${hitP}`, tex.slice(from, e));
+        out += bare ? `{${marked}}` : marked;
+        return e;
+      }
+    }
     const sub = readSub(j);
     const hit = symbolKey(base, sub ? normSub(sub.raw) : "", subject, tex);
     const end = sub ? sub.end : j;
@@ -478,7 +495,8 @@ export function annotateTex(tex, subject = override || subjectFn()) {
       }
       const g = GREEK[name];
       // ΔH, ΔG … kot lastna oznaka lekcije; sicer Δx = »sprememba« osnovne količine.
-      if (g === "Δ" && /^[A-Za-z]/.test(tex.slice(j)) && subject?.[0] === "@" && lookupSymbol(`Δ${tex[j]}`, subject)) { i = symbol(`Δ${tex[j]}`, i, j + 1, false); continue; }
+      if (g === "Δ" && /^[A-Za-z]/.test(tex.slice(j)) && subject?.[0] === "@" && (subject === "@*" ? lookupSymbol(`Δ${tex[j]}`, subject) : Object.keys(LOCAL[subject.slice(1)]?.table || {}).some((k) => k.startsWith(`Δ${tex[j]}`)))) { i = symbol(`Δ${tex[j]}`, i, j + 1, false); continue; }
+      if (g === "Δ" && /^\s*_/.test(tex.slice(j)) && subject?.[0] === "@") { i = symbol("Δ", i, j, false); continue; }
       const dRaw = g === "Δ" && subject?.[0] === "@" && subject !== "@*" && /^\\(?:mathrm|text)\s*\{([^{}]+)\}/.exec(tex.slice(j));
       if (dRaw && lookupSymbol(`Δ${normSub(dRaw[1])}`, subject)) {
         out += wrap(`s:${subject}:Δ${normSub(dRaw[1])}`, tex.slice(i, j + dRaw[0].length));

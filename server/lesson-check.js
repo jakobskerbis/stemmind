@@ -147,13 +147,14 @@ export function checkSymbols(body, err, warn) {
   const used = new Set();
   const missing = new Set();
   const inner = (k) => /^\w+\((.+)\)/.exec(k)?.[1]; // bar(x) → x
-  const covered = (k) => keys.has(k) || keys.has(k.split("_")[0]) || (k[0] === "Δ" && keys.has(k.slice(1).split("_")[0])) || keys.has(inner(k));
+  const covered = (k) => covered1(k) || covered1(k.replace(/'/g, "")); // v'_1 brez lastne vrstice = pomen v
+  const covered1 = (k) => keys.has(k) || keys.has(k.split("_")[0]) || (k[0] === "Δ" && keys.has(k.slice(1).split("_")[0])) || keys.has(inner(k));
   for (const tex of display) {
     for (const [k] of symbolsIn(tex, "@*")) if (!covered(k) && !ALWAYS_KNOWN.has(k)) missing.add(k);
   }
   const all = [];
   text.replace(/\$\$?([^$]+?)\$\$?/g, (_, t) => (all.push(t), ""));
-  for (const tex of all) for (const [k] of symbolsIn(tex, "@*")) { used.add(k); used.add(k.split("_")[0]); if (k[0] === "Δ") used.add(k.slice(1).split("_")[0]); if (inner(k)) used.add(inner(k)); }
+  for (const tex of all) for (const [k] of symbolsIn(tex, "@*")) { used.add(k); used.add(k.split("_")[0]); if (k[0] === "Δ") used.add(k.slice(1).split("_")[0]); if (inner(k)) used.add(inner(k)).add(k.replace(/^\w+\((.+?)\)/, "$1")); }
   if (missing.size) {
     const list = [...missing];
     warn(`${list.length} oznak v formulah nima vrstice v »:::simboli«: ${list.slice(0, 12).join(", ")}${list.length > 12 ? " …" : ""}`);

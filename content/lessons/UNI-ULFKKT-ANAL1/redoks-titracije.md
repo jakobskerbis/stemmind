@@ -229,3 +229,16 @@ Rjasti madeži na skalah ob izviru, kjer železova voda pride na zrak, so ista o
 - Rezultat bo prenizek, ker kisik pobegne v mehurček.
 ~ Kisik ne uhaja: $\mathrm{Mn(OH)_2}$ ga veže, in zrak v mehurčku ima več kisika, kot ga je v enaki prostornini vode.
 > $\mathrm{Mn(OH)_2}$ veže ves dostopen kisik, tudi tistega iz mehurčka, zato je poraba tiosulfata večja.
+
+:::simboli
+K_a | konstanta kisline | | mol/L | moč kisline pove pKₐ
+E | elektrodni potencial | E = E^\circ + \frac{0{,}0592\ \mathrm{V}}{n}\log\frac{[\mathrm{ox}]}{[\mathrm{red}]} | V | E° je standardni elektrodni potencial
+n | množina snovi | | mol | v Nernstovi enačbi: število izmenjanih elektronov
+c | množinska koncentracija | c = \dfrac{n(\mathrm{S_2O_3^{2-}})}{V(\mathrm{S_2O_3^{2-}})} | mol/L
+V | prostornina porabljenega titranta | | mL
+w | masni delež železa v vzorcu | w(\mathrm{Fe}) = \dfrac{n(\mathrm{Fe})\,M(\mathrm{Fe})}{m(\text{vzorec})} | –
+M | molska masa | | g/mol
+m | masa vzorca | | g
+\gamma | masna koncentracija kisika | \gamma(\mathrm{O_2}) = \dfrac{n(\mathrm{O_2})\,M(\mathrm{O_2})}{V(\text{vzorec})} | mg/L
+\gamma_{\text{nas}} | masna koncentracija kisika v nasičeni vodi | | mg/L | odvisna od temperature; pri 25 °C 8,26 mg/L
+:::

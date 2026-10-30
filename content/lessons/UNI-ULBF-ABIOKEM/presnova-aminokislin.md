@@ -253,3 +253,10 @@ Slika pokaže, zakaj se cikla imenujeta tudi »Krebsovo dvokolo«: ogljik kroži
 - Ker iz sečnine žaba pridobi energijo.
 ~ Pretvorba v sečnino energijo porabi (3 ATP na molekulo), ne daje je.
 > Sečnina je manj strupena in jo lahko izločimo z manj vode. Žaba za to plača z ATP, prihrani pa vodo.
+
+:::simboli
+n | množina snovi | n(\mathrm{N}) = \dfrac{m(\mathrm{N})}{M(\mathrm{N})} | mol
+m | masa | | g
+M | molska masa | | g/mol | M(N) = 14 g/mol
+\alpha | položaj ob karboksilni skupini (α-ogljik) | | | del imena, npr. α-ketoglutarat; ni količina
+:::

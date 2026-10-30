@@ -240,3 +240,31 @@ Na startu je vse ena gneča. Na cilju se tekači razporedijo v skupine po hitros
 ~ FID etanol zazna sam. Propan-1-ol je referenca, ne pomoč detektorju.
 + Ker razmerje izniči razlike v injiciranem volumnu in nihanja instrumenta med meritvami.
 > Propan-1-ol je notranji standard. Če se injicira manj vzorca, se zmanjšata obe površini, razmerje pa ostane enako.
+
+:::simboli
+A | absorbanca zmesi | A = b\,(\varepsilon_1 c_1 + \varepsilon_2 c_2 + \dots) | – | pri umeritvi: površina vrha (Ā povprečje)
+\varepsilon_1, \varepsilon_2 | molarna absorpcijska koeficienta snovi | | L\,mol^{-1}\,cm^{-1}
+c_1, c_2 | koncentraciji snovi v zmesi | | mol/L
+b | naklon umeritvene premice | b = \dfrac{\sum (c_i - \bar c)(A_i - \bar A)}{\sum (c_i - \bar c)^2} | | v A = b(εc + …): dolžina poti skozi kiveto
+a | odsek umeritvene premice | a = \bar A - b\,\bar c | | premica y = a + b c
+c | masna koncentracija | | mg/L | c̄: povprečje koncentracij standardov
+c_i | koncentracija i-tega standarda | | mg/L
+A_i | površina vrha i-tega standarda | | mAU s
+A_\mathrm{vz} | površina vrha vzorca | | mAU s
+c_0 | koncentracija v prvotnem vzorcu | c_0 = f \cdot \dfrac{A_\mathrm{vz} - a}{b} | mg/L
+f | faktor razredčitve | | – | kolikokrat smo vzorec razredčili
+R_\mathrm{s} | ločljivost | R_\mathrm{s} = \dfrac{2\,(t_\mathrm{R,2} - t_\mathrm{R,1})}{w_1 + w_2} | – | pri R_s ≥ 1,5 ločitev do bazne linije
+R_\mathrm{s,1} | ločljivost na krajši koloni | | –
+R_\mathrm{s,2} | ločljivost na daljši koloni | | –
+t_\mathrm{R} | retencijski čas | | min | od injiciranja do vrha
+t_\mathrm{R,1} | retencijski čas prve snovi | | min
+t_\mathrm{R,2} | retencijski čas druge snovi | | min
+w_1 | širina prvega vrha na bazni liniji | | min
+w_2 | širina drugega vrha na bazni liniji | | min
+N | število teoretskih podov | | – | N = 16 (t_R/w)²
+L | dolžina kolone | | m
+L_1 | dolžina prvotne kolone | | m
+L_2 | dolžina nove kolone | | m
+A_x | površina vrha analita | | mAU s
+A_\mathrm{IS} | površina vrha notranjega standarda | | mAU s
+:::

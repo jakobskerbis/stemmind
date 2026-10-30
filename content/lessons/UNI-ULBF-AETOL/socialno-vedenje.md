@@ -233,3 +233,12 @@ Pri $k = 1$ je $0{,}75$, pri $k = 2$ je $0{,}5$, pri $k = 10$ le $0{,}3$. Pri me
 ~ To bi veljalo za polnega sorojenca ($r = 0{,}5$), ne za bratranca.
 + več kot $4$
 > $B > \dfrac{C}{r} = \dfrac{0{,}5}{0{,}125} = 4$ potomci.
+
+:::simboli
+r | koeficient sorodnosti | r = \sum_{\text{poti}} \left(\tfrac{1}{2}\right)^{L} | – | od 0 do 1
+B | korist: dodatni potomci prejemnika | | – | v isti »valuti« kot C
+C | cena: izgubljeni lastni potomci izvajalca | | – | v isti »valuti« kot B
+L | število korakov poti prek skupnega prednika | | – | štejemo za vsako pot posebej
+k | število samcev, s katerimi se matica pari | | – | povprečna sorodnost delavk: r̄ = 0,25 + 0,5/k
+r_{\text{sestra}} | sorodnost med sestrama pri haplodiploidiji | r_{\text{sestra}} = 0{,}5 \cdot 1 + 0{,}5 \cdot 0{,}5 | – | 0,75
+:::

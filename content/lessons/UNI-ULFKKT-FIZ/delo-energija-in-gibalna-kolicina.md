@@ -287,3 +287,31 @@ $$\int_1^2\vec{F}\cdot\mathrm{d}\vec{r} = \int_{t_1}^{t_2} m\frac{\mathrm{d}\vec
 - $mv$, usmerjena navzgor.
 ~ Upošteval si le gibalno količino po odboju; odšteti moraš še začetno, ki kaže navzdol, zato se njeni velikosti seštejeta.
 > Navzgor vzemimo za pozitivno smer: $\Delta G = mv - (-mv) = 2mv$. Ta sunek žogi dajo tla, zato je sila tal med odbojem velika.
+
+:::simboli
+A | delo sile | A = \vec{F}\cdot\Delta\vec{r} = F\,\Delta r\cos\varphi | J | A' je delo nekonservativnih sil
+F | sila | | N
+r | krajevni vektor | | m | Δr: premik
+\varphi | kot med silo in premikom | | °
+A_{\text{vseh sil}} | delo vseh sil na telo | A_{\text{vseh sil}} = \Delta W_k | J | izrek o kinetični energiji
+\Delta W_k | sprememba kinetične energije | \Delta W_k = \tfrac{1}{2}mv_2^2 - \tfrac{1}{2}mv_1^2 | J | kinetična energija je ½mv²
+\Delta W_p | sprememba potencialne energije | | J | delo konservativnih sil je −ΔW_p
+m | masa telesa (krogle) | | kg
+v | hitrost | | m/s | v' je hitrost po trku
+v_1 | hitrost prvega telesa (začetna hitrost) | | m/s | pri trku: hitrost prvega telesa pred trkom
+v_2 | hitrost drugega telesa (končna hitrost) | | m/s | pri trku: hitrost drugega telesa
+v_0 | hitrost na dnu brez trenja | \tfrac{1}{2}mv_0^2 = mgh | m/s
+G | gibalna količina | G = mv | kg m/s | drugje G: gravitacijska konstanta
+t | čas | | s
+i | zaporedna številka telesa v sistemu | | –
+m_i | masa i-tega telesa | | kg
+m_1 | masa prvega telesa | | kg
+m_2 | masa drugega telesa | | kg
+s | pot | | m
+A_{tr} | delo sile trenja | A_{tr} = \Delta W_k + \Delta W_p | J | negativno, ker trenje zmanjša mehansko energijo
+g | težni pospešek | | m/s^2 | 9,81 m/s²
+h | višina | | m
+M | masa klade | | kg | drugje: masa Zemlje v −GmM/r
+k | koeficient vzmeti | | N/m
+x | raztezek vzmeti | | m
+:::

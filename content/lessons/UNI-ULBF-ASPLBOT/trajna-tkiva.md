@@ -223,3 +223,19 @@ Opazi dve stvari. Floem je v snopu stebla praviloma bliže povrhnju kot ksilem. 
 - Nič, ker floem prevaja le navzgor in korenine sladkorja ne potrebujejo.
 ~ Korenine so ponor: sladkor dobijo iz listov po floemu. Brez njega stradajo.
 > Obročkanje prekine floem. Korenine porabijo zaloge in odmrejo, nato drevo ne more več črpati vode.
+
+:::simboli
+t | čas prenosa po prevodnem tkivu | t = \dfrac{h}{v} | h
+h | višina rastline | | m
+v | hitrost toka v ksilemu ali floemu | | m/h
+Q_\mathrm{t} | pretok vode skozi trahejo | | | Q je sorazmeren z r⁴
+Q_\mathrm{d} | pretok vode skozi traheido | | |
+r_\mathrm{t} | polmer traheje | | µm
+r_\mathrm{d} | polmer traheide | | µm
+S_\mathrm{t} | prečni presek traheje | | µm^2
+S_\mathrm{d} | prečni presek traheide | | µm^2
+N | število listnih rež | N = (g_\mathrm{sp} + g_\mathrm{zg}) \cdot S | –
+g_\mathrm{sp} | gostota rež na spodnji povrhnjici | | mm^{-2}
+g_\mathrm{zg} | gostota rež na zgornji povrhnjici | | mm^{-2}
+S | ploščina lista | | cm^2 | pred množenjem pretvori v mm²
+:::
