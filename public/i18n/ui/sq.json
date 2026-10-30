@@ -1560,5 +1560,19 @@
   "games.e.water": "Ku rrjedh uji",
   "games.e.water.how": "Gërmo me gisht një rrugë nëpër dhe që uji të rrjedhë në govatën me përgjigjen e saktë. Tastet 1–3.",
   "games.e.mines": "Minat",
-  "games.e.mines.how": "Përgjigjja e saktë mbush detektorin, që tregon një minë dhe një kuti të sigurt. Hap të gjitha kutitë e sigurta; 🚩 shënon minën. Tastet 1–4 dhe F."
+  "games.e.mines.how": "Përgjigjja e saktë mbush detektorin, që tregon një minë dhe një kuti të sigurt. Hap të gjitha kutitë e sigurta; 🚩 shënon minën. Tastet 1–4 dhe F.",
+  "chat.aiNote": "Evklid mund të gabojë. Kontrollo rezultatet e rëndësishme.",
+  "chat.off": "Biseda me tutorin është çaktivizuar përkohësisht. Ushtrimet dhe libri vazhdojnë të funksionojnë.",
+  "rep.btn": "Raporto një gabim",
+  "rep.code": "Kodi i mesazhit",
+  "rep.ask": "Çfarë nuk shkon?",
+  "rep.wrong": "Përgjigje ose llogaritje e gabuar",
+  "rep.unsafe": "Përmbajtje e papërshtatshme",
+  "rep.other": "Diçka tjetër",
+  "rep.notePh": "Çfarë duhet të shkruante? (jo e detyrueshme)",
+  "rep.send": "Dërgo raportin",
+  "rep.cancel": "Anulo",
+  "rep.thanks": "Faleminderit! Do ta kontrollojmë dhe korrigjojmë përgjigjen.",
+  "rep.done": "U raportua",
+  "rep.pick": "Zgjidh çfarë nuk shkon."
 }

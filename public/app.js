@@ -534,7 +534,7 @@ async function openConversation(id) {
   const box = $("#messages");
   box.innerHTML = "";
   if (!conv.messages.length) renderEmptyChat();
-  for (const m of conv.messages) addMessage(m.role, m.text, m.has_image);
+  for (const m of conv.messages) addMessage(m.role, m.text, m.has_image, m);
   renderState(conv.state);
   renderConversationList();
   box.scrollTop = box.scrollHeight;
@@ -561,7 +561,7 @@ $("#new-chat").addEventListener("click", () => {
 
 // ---------- sporočila ----------
 
-function addMessage(role, text, hasImage = false) {
+function addMessage(role, text, hasImage = false, info = null) {
   const box = $("#messages");
   box.querySelector(".empty")?.remove();
   const el = document.createElement("div");
@@ -578,6 +578,7 @@ function addMessage(role, text, hasImage = false) {
     el.innerHTML = renderRich(text);
     if (text) addDeepButton(el, false);
     if (text) addGraphButton(el, text);
+    if (text && info?.id) addMsgFoot(el, info);
   }
   box.appendChild(el);
   box.scrollTop = box.scrollHeight;
@@ -625,7 +626,8 @@ async function send(text, { deep = false } = {}) {
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       bubble.remove();
-      throw new Error(err.error || t("common.error", { status: res.status }));
+      if (err.chat_off) $("#chat-off").hidden = false;
+      throw new Error(err.chat_off ? t("chat.off") : err.error || t("common.error", { status: res.status }));
     }
 
     let doneData = null;
@@ -667,6 +669,7 @@ async function send(text, { deep = false } = {}) {
       if (doneData && !doneData.settings) addDeepButton(bubble, doneData.deep);
       if (doneData?.text) addGraphButton(bubble, doneData.text);
       if (cardsData) addCardsNote(bubble, cardsData);
+      if (doneData?.id) addMsgFoot(bubble, doneData);
       if (proposal) addProposal(bubble, proposal, { onConfirm: confirmChatProposal });
       if (state.pacer === pacer) state.pacer = null;
       // Nov jezik: vmesnik se naloži znova v njem (ko je odgovor izpisan).
@@ -1234,6 +1237,105 @@ async function loadProgress() {
 }
 
 // Gumb »Razloži podrobneje« uporabi zmogljivejši (dražji) model samo na zahtevo.
+// Pod odgovorom inštruktorja: koda sporočila (z njo najdemo sporočilo s posnetka zaslona,
+// scripts/najdi-sporocilo.js) in »Prijavi napako« (server/reports.js, docs/krizni-nacrt.md).
+function addMsgFoot(el, { id, code, reported }) {
+  if (el.classList.contains("error") || el.querySelector(".msg-foot")) return;
+  const foot = document.createElement("div");
+  foot.className = "msg-foot";
+  const tag = document.createElement("span");
+  tag.className = "msg-code";
+  tag.textContent = code || "";
+  tag.title = t("rep.code");
+  const done = () => {
+    foot.querySelector(".msg-report")?.remove();
+    const s = document.createElement("span");
+    s.className = "rep-done";
+    s.innerHTML = `${icon("check")}<span></span>`;
+    s.lastChild.textContent = t("rep.done");
+    foot.append(s);
+  };
+  foot.append(tag);
+  if (reported) done();
+  else {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "ghost msg-report";
+    b.innerHTML = `${icon("flag")}<span></span>`;
+    b.lastChild.textContent = t("rep.btn");
+    b.addEventListener("click", () => openReport(el, foot, b, id, done));
+    foot.append(b);
+  }
+  el.appendChild(foot);
+}
+
+function openReport(el, foot, btn, id, done) {
+  if (el.querySelector(".report-box")) return;
+  const convId = state.conversationId;
+  btn.setAttribute("aria-expanded", "true");
+  const box = document.createElement("div");
+  box.className = "report-box";
+  box.setAttribute("role", "group");
+  box.innerHTML = `<p></p><div class="rep-reasons"></div><textarea maxlength="500" rows="2"></textarea>
+    <p class="rep-err" role="alert" hidden></p>
+    <div class="rep-actions"><button type="button" class="primary small rep-send"></button><button type="button" class="ghost rep-cancel"></button></div>`;
+  box.querySelector("p").textContent = t("rep.ask");
+  box.setAttribute("aria-label", t("rep.ask"));
+  const area = box.querySelector("textarea");
+  area.placeholder = t("rep.notePh");
+  area.setAttribute("aria-label", t("rep.notePh"));
+  let reason = null;
+  for (const r of ["wrong", "unsafe", "other"]) {
+    const rb = document.createElement("button");
+    rb.type = "button";
+    rb.className = "secondary small";
+    rb.setAttribute("aria-pressed", "false");
+    rb.textContent = t(`rep.${r}`);
+    rb.addEventListener("click", () => {
+      reason = r;
+      box.querySelectorAll(".rep-reasons button").forEach((x) => x.setAttribute("aria-pressed", String(x === rb)));
+      err.hidden = true;
+    });
+    box.querySelector(".rep-reasons").append(rb);
+  }
+  const err = box.querySelector(".rep-err");
+  const sendBtn = box.querySelector(".rep-send");
+  const close = () => {
+    box.remove();
+    btn.setAttribute("aria-expanded", "false");
+    btn.focus();
+  };
+  sendBtn.textContent = t("rep.send");
+  box.querySelector(".rep-cancel").textContent = t("rep.cancel");
+  box.querySelector(".rep-cancel").addEventListener("click", close);
+  box.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.stopPropagation();
+      close();
+    }
+  });
+  sendBtn.addEventListener("click", async () => {
+    if (!reason) {
+      err.textContent = t("rep.pick");
+      err.hidden = false;
+      return;
+    }
+    sendBtn.disabled = true;
+    try {
+      await api(`/api/conversations/${convId}/messages/${id}/report`, { method: "POST", body: { reason, note: area.value } });
+      box.remove();
+      done();
+      toast(t("rep.thanks"), "check");
+    } catch (e) {
+      err.textContent = e.message;
+      err.hidden = false;
+      sendBtn.disabled = false;
+    }
+  });
+  foot.after(box);
+  box.querySelector(".rep-reasons button").focus();
+}
+
 function addDeepButton(el, wasDeep) {
   // Ponovna razlaga je vedno na voljo (tudi po ponovni razlagi); strežnik izbere najcenejši model.
   if (el.classList.contains("error") || el.querySelector(".deep-btn")) return;
@@ -2834,6 +2936,7 @@ initFormulaInfo();
 (async () => {
   const cfg = await api("/api/config");
   $("#mock-banner").hidden = !cfg.mock;
+  $("#chat-off").hidden = !cfg.chat_off;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   initGames({ api, getStudent: () => state.student, refreshXp, currentLang });
   initZbirke({ api, getStudent: () => state.student, currentLang, showView });

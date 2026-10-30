@@ -29,6 +29,7 @@ import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competi
 import { examInfo, examKeyFor, isExamPath, examOf, examPrompt, taskLanguage, localizeExamView, localizeExamTopic } from "./exams.js";
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
+import { mountReports, chatOff, messageCode } from "./reports.js";
 import { mountGraphs } from "./graphs.js";
 import { mountGames } from "./games.js";
 import { Avatars, mountAvatar } from "./avatar.js";
@@ -202,6 +203,10 @@ export function createApp(store, opts = {}) {
   };
 
   mountFeedback(app, store, { usage, file: opts.feedbackFile ?? null, createFn: opts.feedbackCreateFn });
+  mountReports(app, store, {
+    loadConversation,
+    localOnly: (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Samo na računalniku, kjer teče Evklid." })),
+  });
 
   app.get("/api/config", (req, res) => {
     res.json({
@@ -212,6 +217,7 @@ export function createApp(store, opts = {}) {
       defaults: DEFAULT_SETTINGS,
       daily_questions: LIMITS.dailyQuestions() || null,
       feedback: { prompt: feedbackPromptOn(), ai: feedbackAiOn(), admin: isLocalRequest(req) },
+      chat_off: chatOff(),
     });
   });
 
@@ -291,12 +297,15 @@ export function createApp(store, opts = {}) {
     const c = loadConversation(req, res);
     if (!c) return;
     const last = store.lastEvent(c.id);
+    const reported = new Set(store.db.prepare("SELECT message_id FROM message_reports WHERE conversation_id = ?").all(c.id).map((r) => r.message_id));
     res.json({
       ...c,
       state: last ? { subject: last.subject, mode: last.mode } : null,
       topic: c.path_topic ? { id: c.path_topic, name: getTopic(c.path_topic)?.name } : null,
       messages: store.listMessages(c.id).map((m) => ({
         id: m.id,
+        code: m.role === "assistant" ? messageCode(m.id) : undefined,
+        reported: reported.has(m.id) || undefined,
         role: m.role,
         text: m.display_text,
         has_image: !!m.has_image,
@@ -321,6 +330,8 @@ export function createApp(store, opts = {}) {
       return res.status(400).json({ error: "Slika mora biti JPG, PNG, WEBP ali GIF in manjša od 5 MB." });
     }
     if (!text && !image) return res.status(400).json({ error: "Sporočilo je prazno." });
+    // Stikalo za nujne primere (docs/krizni-nacrt.md): klepet izklopljen, Vadnica in lekcije delujejo.
+    if (chatOff()) return res.status(503).json({ error: "Klepet z inštruktorjem je začasno izklopljen. Vadnica in učbenik delujeta.", chat_off: true });
     if (busy.has(conv.id)) return res.status(409).json({ error: "Počakaj, da Evklid odgovori." });
     const blocked = usage.blockReason(student.id);
     if (blocked) return res.status(429).json({ error: blocked, limit: true });
@@ -491,6 +502,7 @@ export function createApp(store, opts = {}) {
       finished = true;
       send("done", {
         id: assistantId,
+        code: messageCode(assistantId),
         text: display,
         state: meta ? { subject: meta.subject, mode: meta.mode } : null,
         title: store.getConversation(conv.id).title,

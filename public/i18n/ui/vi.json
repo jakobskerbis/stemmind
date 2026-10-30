@@ -1552,5 +1552,19 @@
   "games.e.water": "Nước chảy đi đâu",
   "games.e.water.how": "Dùng ngón tay đào đường trong đất để nước chảy vào chậu có đáp án đúng. Phím 1–3.",
   "games.e.mines": "Dò mìn",
-  "games.e.mines.how": "Đáp án đúng nạp máy dò, máy chỉ ra một quả mìn và một ô an toàn. Mở hết ô an toàn; 🚩 đánh dấu mìn. Phím 1–4 và F."
+  "games.e.mines.how": "Đáp án đúng nạp máy dò, máy chỉ ra một quả mìn và một ô an toàn. Mở hết ô an toàn; 🚩 đánh dấu mìn. Phím 1–4 và F.",
+  "chat.aiNote": "Evklid có thể nhầm. Hãy kiểm tra các kết quả quan trọng.",
+  "chat.off": "Trò chuyện với gia sư tạm thời bị tắt. Phần luyện tập và sách giáo khoa vẫn hoạt động.",
+  "rep.btn": "Báo lỗi",
+  "rep.code": "Mã tin nhắn",
+  "rep.ask": "Có gì sai?",
+  "rep.wrong": "Câu trả lời hoặc phép tính sai",
+  "rep.unsafe": "Nội dung không phù hợp",
+  "rep.other": "Khác",
+  "rep.notePh": "Lẽ ra phải ghi gì? (không bắt buộc)",
+  "rep.send": "Gửi báo cáo",
+  "rep.cancel": "Hủy",
+  "rep.thanks": "Cảm ơn bạn! Chúng tôi sẽ kiểm tra và sửa câu trả lời.",
+  "rep.done": "Đã báo cáo",
+  "rep.pick": "Chọn điều gì sai."
 }
