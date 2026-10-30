@@ -1006,6 +1006,25 @@ async function accounts(browser, app) {
     await click(p, '#lock-form button[type="submit"]', { wait: 600 });
     await expectVisible(p, "#view-path #xp-card .hero", "učna pot po prijavi", 8000);
   });
+  await step(p, "ucitelj", async () => {
+    await p.goto(app.base + "/ucitelj.html");
+    await expectVisible(p, "#class-form", "stran za učitelje", 8000);
+    if (await p.$("#school-form")) {
+      await p.fill('#school-form input[name="name"]', "OŠ Preizkus");
+      await click(p, '#school-form button[type="submit"]', { wait: 600 });
+      await expectVisible(p, "[data-leave-school]", "šola dodana");
+    }
+    await p.fill('#class-form input[name="name"]', "7.a");
+    await p.selectOption('#class-form select[name="path"]', "MAT-OS-7");
+    await click(p, '#class-form button[type="submit"]', { wait: 800 });
+    await expectVisible(p, "[data-class] .tc-add", "pregled novega razreda", 8000);
+    await p.waitForFunction(() => document.querySelector('.tc-add select[name="topic"]')?.options.length > 2, null, { timeout: 8000 });
+    const topic = await p.$eval('.tc-add select[name="topic"] optgroup option', (o) => o.value);
+    await p.selectOption('.tc-add select[name="topic"]', topic);
+    await click(p, '.tc-add button[type="submit"]', { wait: 800 });
+    await expectVisible(p, ".tc-assign li", "naloga razreda dodana", 8000);
+    await screen(p, "ucitelj");
+  });
   await step(p, "starsi", async () => {
     await p.goto(app.base + "/starsi.html");
     await settle(p, 400);
