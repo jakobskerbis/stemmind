@@ -288,7 +288,7 @@ html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important;
 }
 /* Zgodovinski slogi (data-era; docs/oblikovanje.md → »Zgodovinski slogi«). Nevsiljivo (j, 2026-10-30): enobarvno
    ozadje, besedilo ostane v --font, pisava sloga (--era-font iz theme.js) samo za h1, naslove sklopov na Učni poti in
-   ime ob logotipu; en pas vzorca samo na kartici dejstev; motivi le kot zelo bled sloj ozadja (»Motivi« spodaj). */
+   ime ob logotipu; en pas vzorca samo na kartici dejstev; risbe obdobja le kot zelo bleda tapeta ozadja (»Tapeta« spodaj). */
 :root[data-era] {
   --font-head: var(--era-font), Georgia, "Times New Roman", serif;
   --radius: 16px;
@@ -302,103 +302,22 @@ html.lite .tabs { box-shadow: none !important; backdrop-filter: none !important;
 /* Lahki način: brez spletne pisave tudi za naslove. */
 html.lite[data-era] { --font-head: Georgia, "Times New Roman", serif; }
 
-/* Motivi (zgodovinski slogi): risbe iz obdobja (stebri, sestilo, astrolab, lotos …; public/eras/<slog>/, --m1 … --m8
-   iz theme.js) kot bled vodni žig v barvi besedila, vedno pod vsebino, da jih učenec odkriva (j, 2026-10-30: »tako je
-   prav, a uporabi jih veliko bolj velikodušno«):
-   - vsak zaslon ima za seboj dva nepremična sloja (.view::before 7 %, .view::after 5 % in malo zasukan), skupaj osem
-     risb različnih velikosti, nekatere velike in odrezane ob robu okna; kartice ostanejo polne, zato se risbe vidijo
-     v ozadju, presledkih in praznem delu klepeta. Položaje da predloga (--g1 … --g8: P1, P2, P3, na telefonu PM),
-     vrstni red risb skupina zaslonov (--a1 … --a8), zato vsak zaslon kaže drugo razporeditev in vseh osem risb;
-   - sklopi Učne poti, stranska vrstica pogovorov in nekaj kartic s praznim kotom (Jaz, Napredek) imajo svojo risbo v kotu.
-   Sloja se lahko prekrivata (7 % + 5 %): theme.js preveri kontrast besedila na podlagi z MOTIF = 12 %. Nova tema da
-   samo risbe; položaji so tu. */
-:root[data-era] {
-  --motif-c: color-mix(in srgb, var(--text) 7%, transparent);
-  --motif-c2: color-mix(in srgb, var(--text) 5%, transparent);
-  --a1: var(--m1); --a2: var(--m2); --a3: var(--m3); --a4: var(--m4); --a5: var(--m5); --a6: var(--m6); --a7: var(--m7); --a8: var(--m8);
-  /* P1 (privzeta): velika risba odrezana levo, velika spodaj desno, manjše vmes. */
-  --g1: left -90px top 24% / 300px 300px; --g2: right -70px bottom -60px / 360px 360px; --g3: left 36% bottom 2% / 110px 110px;
-  --g4: right 22% top 12% / 86px 86px; --g5: left 15% bottom 14% / 150px 150px;
-  --g6: right 4% top 40% / 170px 170px; --g7: left 30% top 22% / 120px 120px; --g8: left 58% top 56% / 96px 96px;
-  --mrot: -9deg;
+/* Tapeta (zgodovinski slogi; j, 2026-10-30: »naj bodo ti simboli v stilu tapet«): risbe iz obdobja (stebri, sestilo,
+   astrolab, lotos …) kot ploščica, ki se brez šivov ponavlja po vsem ozadju (public/eras/<slog>/tapeta.svg, --tapeta iz
+   theme.js; sestavi jo scripts/tapeta.js iz motivov sloga: pikčasta rombasta rešetka, v vsakem rombu en motiv,
+   na križiščih rozete). En nepremičen sloj za vsebino (position: fixed, se ne riše znova ob drsenju) v barvi besedila;
+   kartice ostanejo polne. theme.js preveri kontrast besedila tudi na tapeti (MOTIF ≥ --wall-c, test). */
+:root[data-era] { --wall-c: color-mix(in srgb, var(--text) 6%, transparent); --wall-s: 300px; }
+:root[data-era] .view::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: var(--wall-c);
+  -webkit-mask: var(--tapeta) repeat center top / var(--wall-s) var(--wall-s);
+  mask: var(--tapeta) repeat center top / var(--wall-s) var(--wall-s);
 }
-:root[data-era] .view::before, :root[data-era] .view::after {
-  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: var(--motif-c);
-  -webkit-mask: var(--a1) no-repeat var(--g1), var(--a2) no-repeat var(--g2), var(--a3) no-repeat var(--g3), var(--a4) no-repeat var(--g4), var(--a5) no-repeat var(--g5);
-  mask: var(--a1) no-repeat var(--g1), var(--a2) no-repeat var(--g2), var(--a3) no-repeat var(--g3), var(--a4) no-repeat var(--g4), var(--a5) no-repeat var(--g5);
-}
-:root[data-era] .view::after {
-  background: var(--motif-c2); transform: rotate(var(--mrot));
-  -webkit-mask: var(--a6) no-repeat var(--g6), var(--a7) no-repeat var(--g7), var(--a8) no-repeat var(--g8);
-  mask: var(--a6) no-repeat var(--g6), var(--a7) no-repeat var(--g7), var(--a8) no-repeat var(--g8);
-}
-/* P2: zrcaljena (Inštruktor, tekmovanja, prijava). */
-:root[data-era] :is(#view-chat, #view-competition, #view-exams, #view-league, #view-schedule, #view-auth, #view-onboard, #view-account) {
-  --g1: right -100px top 20% / 320px 320px; --g2: left -60px bottom -70px / 340px 340px; --g3: right 36% bottom 4% / 100px 100px;
-  --g4: left 30% top 12% / 90px 90px; --g5: right 14% bottom 20% / 150px 150px;
-  --g6: left 7% top 34% / 160px 160px; --g7: right 30% top 24% / 112px 112px; --g8: left 46% top 64% / 84px 84px;
-  --mrot: 8deg;
-}
-/* P3: Učbenik, lekcija, naloga, kartice, igre. */
-:root[data-era] :is(#view-textbook, #view-topic, #view-cards, #view-games, #view-zbirke, #view-corner, #view-graph, #view-scan) {
-  --g1: left 3% top 10% / 190px 190px; --g2: right -120px top 34% / 380px 380px; --g3: left -60px bottom 4% / 250px 250px;
-  --g4: left 46% bottom 1% / 100px 100px; --g5: right 24% bottom -50px / 170px 170px;
-  --g6: left 21% top 50% / 120px 120px; --g7: right 17% top 9% / 116px 116px; --g8: left 62% top 30% / 80px 80px;
-  --mrot: -6deg;
-}
-/* Vrstni red risb po skupinah zaslonov: vsak zaslon začne pri drugi risbi. */
-:root[data-era] #view-chat { --a1: var(--m4); --a2: var(--m3); --a3: var(--m6); --a4: var(--m1); --a5: var(--m8); --a6: var(--m2); --a7: var(--m5); --a8: var(--m7); }
-:root[data-era] :is(#view-textbook, #view-topic, #view-cards) { --a1: var(--m5); --a2: var(--m6); --a3: var(--m7); --a4: var(--m8); --a5: var(--m1); --a6: var(--m2); --a7: var(--m3); --a8: var(--m4); }
-:root[data-era] :is(#view-competition, #view-exams, #view-league, #view-schedule) { --a1: var(--m6); --a2: var(--m3); --a3: var(--m8); --a4: var(--m5); --a5: var(--m2); --a6: var(--m7); --a7: var(--m4); --a8: var(--m1); }
-:root[data-era] :is(#view-games, #view-zbirke, #view-corner, #view-graph, #view-scan, #view-feedback) { --a1: var(--m2); --a2: var(--m7); --a3: var(--m4); --a4: var(--m3); --a5: var(--m6); --a6: var(--m8); --a7: var(--m1); --a8: var(--m5); }
-:root[data-era] :is(#view-settings, #view-progress, #view-me, #view-account) { --a1: var(--m7); --a2: var(--m8); --a3: var(--m1); --a4: var(--m2); --a5: var(--m3); --a6: var(--m4); --a7: var(--m6); --a8: var(--m5); }
-:root[data-era] :is(#view-auth, #view-onboard) { --a1: var(--m1); --a2: var(--m4); --a3: var(--m2); --a4: var(--m7); --a5: var(--m5); --a6: var(--m3); --a7: var(--m8); --a8: var(--m6); }
-/* Telefon (PM): manjše risbe ob robovih, v presledkih med karticami in za glavo zaslona. */
-@media (max-width: 700px) {
-  :root[data-era] .view {
-    --g1: left -48px top 21% / 140px 140px; --g2: right -56px bottom 10% / 170px 170px; --g3: right 10px top 12% / 66px 66px;
-    --g4: left 4% bottom 13% / 78px 78px; --g5: left 50% top 52% / 92px 92px;
-    --g6: right -28px top 40% / 108px 108px; --g7: left -26px top 64% / 100px 100px; --g8: left 62% top 31% / 62px 62px;
-  }
-  :root[data-era] :is(#view-chat, #view-competition, #view-exams, #view-league, #view-schedule, #view-auth, #view-onboard, #view-account, #view-me) {
-    --g1: right -50px top 24% / 150px 150px; --g2: left -60px bottom 12% / 170px 170px; --g3: left 10px top 13% / 64px 64px;
-    --g4: right 6% bottom 14% / 80px 80px; --g5: right 44% top 50% / 90px 90px;
-    --g6: left -30px top 42% / 104px 104px; --g7: right -24px top 66% / 100px 100px; --g8: right 58% top 33% / 60px 60px;
-  }
-}
-/* Risbe v kotu: sklopi Učne poti (osem po vrsti), stranska vrstica pogovorov, kartice s praznim kotom. */
-:root[data-era] :is(.unit, #view-me .me-head, #view-progress .card:not(.goal-card)) { position: relative; isolation: isolate; }
-/* Na telefonu je odprta vrstica pogovorov absolutna (style.css: .sidebar.open), zato ji položaja ne spreminjamo. */
-:root[data-era] .chat-view .sidebar { isolation: isolate; }
-:root[data-era] .chat-view .sidebar:not(.open) { position: relative; }
-/* :where, da posamezni primeri spodaj (telefon, Jaz, Napredek) prepišejo velikost in mesto. */
-:root[data-era] :where(.unit, #view-me .me-head, #view-progress .card:not(.goal-card))::after,
-:root[data-era] .chat-view .sidebar::after {
-  content: ""; position: absolute; z-index: -1; inset-inline-end: 14px; top: 18px; width: 112px; height: 112px; pointer-events: none;
-  background: var(--motif-c); -webkit-mask: var(--um, var(--m1)) center / contain no-repeat; mask: var(--um, var(--m1)) center / contain no-repeat;
-}
-:root[data-era] .unit:nth-child(8n + 2) { --um: var(--m2); }
-:root[data-era] .unit:nth-child(8n + 3) { --um: var(--m3); }
-:root[data-era] .unit:nth-child(8n + 4) { --um: var(--m4); }
-:root[data-era] .unit:nth-child(8n + 5) { --um: var(--m5); }
-:root[data-era] .unit:nth-child(8n + 6) { --um: var(--m6); }
-:root[data-era] .unit:nth-child(8n + 7) { --um: var(--m7); }
-:root[data-era] .unit:nth-child(8n) { --um: var(--m8); }
-/* Stranska vrstica pogovorov: dve risbi pod seznamom (velika odrezana spodaj, manjša zasukana). */
-:root[data-era] .chat-view .sidebar::after {
-  inset: auto 0 0 0; width: auto; height: 100%;
-  -webkit-mask: var(--m1) no-repeat right -50px bottom -40px / 210px 210px, var(--m6) no-repeat left 22px bottom 46% / 92px 92px;
-  mask: var(--m1) no-repeat right -50px bottom -40px / 210px 210px, var(--m6) no-repeat left 22px bottom 46% / 92px 92px;
-}
-:root[data-era] #view-me .me-head::after { --um: var(--m2); width: 80px; height: 80px; top: auto; bottom: -20px; inset-inline-end: 36px; transform: rotate(-10deg); }
-/* Napredek: majhna risba ob kratkem naslovu (h2), nad prvo vrstico besedila (ta je ~58 px pod robom kartice). */
-:root[data-era] #view-progress .card::after { --um: var(--m5); width: 44px; height: 44px; top: 7px; transform: rotate(8deg); }
-:root[data-era] #view-progress .card:nth-of-type(2n)::after { --um: var(--m8); transform: rotate(-7deg); }
-/* Telefon: naslov sklopa sega čez vso širino, zato je risba spodaj ob gumbu Preizkus znanja (na začetku vrstice). */
-@media (max-width: 700px) { :root[data-era] .unit::after { width: 64px; height: 64px; top: auto; bottom: 12px; inset-inline-end: 12px; transform: rotate(-8deg); } }
-html.lite[data-era] .view::before, html.lite[data-era] :is(.view, .unit, .sidebar, .card)::after { display: none; }
+/* Telefon: manjša ploščica in tanjše črte, zato malo močneje (MOTIF to pokrije). */
+@media (max-width: 700px) { :root[data-era] { --wall-s: 210px; --wall-c: color-mix(in srgb, var(--text) 7%, transparent); } }
+html.lite[data-era] .view::before { display: none; }
 @media (prefers-reduced-transparency: reduce), (forced-colors: active), print {
-  :root[data-era] .view::before, :root[data-era] :is(.view, .unit, .sidebar, .card)::after { display: none; }
+  :root[data-era] .view::before { display: none; }
 }
 
 /* Čist in Temen: brez prelivov in senc pod logotipom in kartico Današnji trening. */

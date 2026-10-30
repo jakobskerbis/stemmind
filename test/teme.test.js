@@ -43,14 +43,18 @@ test("every history style passes the contrast check in light and dark mode, also
   }
 });
 
-test("the motif contrast check covers the strongest motif opacity in ui.css (two layers may overlap)", () => {
+test("the contrast check covers the wallpaper opacity in ui.css and every wallpaper tile is up to date", async () => {
   const css = fs.readFileSync(path.join(PUB, "ui.css"), "utf8");
-  const pct = (v) => Number(css.match(new RegExp(`${v}: color-mix\\(in srgb, var\\(--text\\) ([\\d.]+)%`))?.[1]) / 100;
-  const a = pct("--motif-c"), b = pct("--motif-c2");
-  assert.ok(a > 0 && b > 0, "--motif-c in --motif-c2 v ui.css");
-  assert.ok(T.MOTIF >= 1 - (1 - a) * (1 - b) - 1e-9, `MOTIF ${T.MOTIF} < ${(1 - (1 - a) * (1 - b)).toFixed(3)}`);
-  // Vsak zaslon ima oba sloja; osem mest (--a1 … --a8) za osem risb sloga.
-  for (let i = 1; i <= 8; i++) assert.ok(css.includes(`var(--a${i}) no-repeat var(--g${i})`), `--a${i}`);
+  const pcts = [...css.matchAll(/--wall-c: color-mix\(in srgb, var\(--text\) ([\d.]+)%/g)].map((m) => Number(m[1]) / 100);
+  assert.ok(pcts.length && pcts.every((p) => p > 0), "--wall-c v ui.css");
+  assert.ok(T.MOTIF >= Math.max(...pcts), `MOTIF ${T.MOTIF} < ${Math.max(...pcts)}`);
+  assert.match(css, /mask: var\(--tapeta\) repeat/);
+  // Tapeta je sestavljena iz motivov sloga (node scripts/tapeta.js); nova risba ali tema zahteva novo sestavo.
+  const { sestavi } = await import("../scripts/tapeta.js");
+  for (const [id, e] of Object.entries(T.ERAS)) {
+    const file = path.join(PUB, "eras", id, "tapeta.svg");
+    assert.equal(fs.existsSync(file) && fs.readFileSync(file, "utf8"), sestavi(id, e), `${id}: node scripts/tapeta.js ${id}`);
+  }
 });
 
 test("every history style has its font, motif files, fact texts, picker names and tutor setting", () => {

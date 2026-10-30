@@ -35,8 +35,8 @@
   //   font: [ime pisave, paket @fontsource-variable/<paket>] samo za h1 in naslove sklopov (besedilo ostane --font)
   //   hero: zasuk odtenka preliva logotipa in kartice Današnji trening (drugi slogi 28°)
   //   band: [datoteka, širina, višina] vzorca v pasu na vrhu kartice dejstev (public/eras/<slog>/<datoteka>.svg)
-  //   glyph: majhna ikona ob naslovu kartice dejstev; motifs: 6–8 risb (črte, viewBox 0 0 64 64) za ozadja
-  //     zaslonov, skritih ob robovih (ui.css → »Motivi«); vse datoteke so v public/eras/<slog>/
+  //   glyph: majhna ikona ob naslovu kartice dejstev; motifs: 6–8 risb (črte, viewBox 0 0 64 64), iz katerih
+  //     scripts/tapeta.js sestavi tapeta.svg za ozadje zaslonov (ui.css → »Tapeta«); vse datoteke so v public/eras/<slog>/
   //   facts: [predpona ključev i18n, število]: <predpona>.title in <predpona>.f1 … .fN
   //   Ime v izbiri sloga: ap.style<Slog> in ap.style<Slog>Text (prva črka velika), npr. ap.styleRenesansa.
   const ERAS = {
@@ -86,9 +86,9 @@
     },
   };
   for (const [k, e] of Object.entries(ERAS)) BASES[k] = { light: e.light, dark: e.dark };
-  // Motivi v ozadju so v barvi besedila (ui.css: sloja 7 % in 5 %, ki se lahko prekrivata: 1 − 0,93 · 0,95 ≈ 11,7 %);
-  // kontrast besedila se preverja na podlagi z najmočnejšim deležem, ki se lahko pojavi pod besedilom.
-  const MOTIF = 0.12;
+  // Tapeta v ozadju je v barvi besedila (ui.css: --wall-c 6 %, na telefonu 7 %, en sloj, črte se ne prekrivajo);
+  // kontrast besedila se preverja tudi na podlagi z najmočnejšim deležem.
+  const MOTIF = 0.07;
   const BASE = BASES.cist;
   const baseOf = (s) => BASES[s && STYLES.includes(s.style) ? s.style : "cist"];
   // Najmanjši kontrast (WCAG): navadno besedilo 7 (AAA), sivo besedilo in poudarki 4.5 (AA).
@@ -247,7 +247,7 @@
   }
 
   const ALL_VARS = ["--bg", "--surface", "--text", "--muted", "--surface-2", "--border", "--accent", "--accent-2", "--accent-grad", "--accent-soft", "--accent-text", "--hero-a", "--hero-b", "--user-bubble", "--user-text", "--menu", "--menu-text", "--menu-muted", "--menu-2", "--menu-border", "--menu-accent", "--menu-accent-soft", "--band-c"];
-  const ERA_VARS = ["--era-font", "--band", "--band-w", "--band-h", "--glyph", ...[1, 2, 3, 4, 5, 6, 7, 8].map((i) => `--m${i}`)];
+  const ERA_VARS = ["--era-font", "--band", "--band-w", "--band-h", "--glyph", "--tapeta"];
   const eraUrl = (id, f) => `url("/eras/${id}/${f}.svg")`;
   // Pisava sloga (/vendor/<paket>/index.css) se doda le enkrat; brskalnik prenese datoteke šele, ko jih rabi.
   function loadFont(pkg) {
@@ -264,14 +264,12 @@
     if (!era) return root.removeAttribute("data-era");
     root.dataset.era = id;
     loadFont(era.font[1]);
-    const m = era.motifs;
     root.style.setProperty("--era-font", `"${era.font[0]}"`);
     root.style.setProperty("--band", eraUrl(id, era.band[0]));
     root.style.setProperty("--band-w", era.band[1] + "px");
     root.style.setProperty("--band-h", era.band[2] + "px");
     root.style.setProperty("--glyph", eraUrl(id, era.glyph));
-    // Osem mest za motive (ui.css); krajši seznam se ponovi.
-    for (let i = 0; i < 8; i++) root.style.setProperty(`--m${i + 1}`, eraUrl(id, m[i % m.length]));
+    root.style.setProperty("--tapeta", eraUrl(id, "tapeta"));
   }
 
   function apply(s = load()) {
