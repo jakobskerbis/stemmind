@@ -300,3 +300,38 @@ Ker je $|\vec{e}_t| = 1$, je $\mathrm{d}\vec{e}_t/\mathrm{d}t$ pravokoten na $\v
 - Pospešek.
 ~ Pospešek je odvod vektorja hitrosti in ima smer, npr. pri zavijanju okoli police kaže proti središču zavoja.
 > Pot je dolžina krivulje, ki jo kupec prehodi, in nima smeri; zato je vedno vsaj tolikšna kot velikost premika.
+
+:::simboli
+\vec{r} | krajevni vektor (lega telesa) | \vec{r}(t) = x(t)\,\vec{i} + y(t)\,\vec{j} + z(t)\,\vec{k} | m
+\vec{r}_0 | začetna lega (krajevni vektor ob t = 0) | | m
+r | polmer krožnice | | m
+\vec{v} | vektor hitrosti | \vec{v} = \frac{\mathrm{d}\vec{r}}{\mathrm{d}t} | m/s
+\vec{v}_0 | vektor začetne hitrosti | | m/s
+v | velikost hitrosti | v = \frac{\mathrm{d}s}{\mathrm{d}t} | m/s | kaže jo merilnik hitrosti
+v_0 | začetna hitrost | | m/s
+v_x | vodoravna komponenta hitrosti | v_x = v_0\cos\alpha | m/s | pri poševnem metu stalna
+v_y | navpična komponenta hitrosti | v_y = v_0\sin\alpha - gt | m/s
+v_{0y} | navpična komponenta začetne hitrosti | v_{0y} = v_0\sin\alpha | m/s
+\vec{a} | vektor pospeška | \vec{a} = \frac{\mathrm{d}\vec{v}}{\mathrm{d}t} | m/s^2
+a | pospešek pri premem gibanju | | m/s^2
+a_t | tangentni pospešek | a_t = \frac{\mathrm{d}v}{\mathrm{d}t} | m/s^2 | spreminja velikost hitrosti
+a_r | radialni pospešek | a_r = \omega^2 r | m/s^2 | splošno v²/R, R je polmer ukrivljenosti
+t | čas | | s
+t_{\text{let}} | čas leta | t_{\text{let}} = \frac{2v_0\sin\alpha}{g} | s
+x, y, z | koordinate lege telesa | | m
+\dot{x}, \dot{y}, \dot{z} | komponente hitrosti (odvodi koordinat po času) | | m/s
+x_0 | začetna lega | | m
+\vec{i}, \vec{j}, \vec{k} | enotski vektorji v smereh osi x, y, z | | – | dolžina 1, pravokotni drug na drugega
+\alpha | kot meta glede na vodoravnico | | ° | pri kroženju kotni pospešek v s⁻²
+g | težni pospešek | | m/s^2 | 9,81 m/s²
+h | višina | | m
+h_{\max} | največja višina meta | h_{\max} = \frac{v_0^2\sin^2\alpha}{2g} | m
+D | domet | D = v_x\,t_{\text{let}} | m | največji pri 45°
+\vec{u} | hitrost sistema S' glede na sistem S | | m/s
+\vec{e}_t | enotski tangentni vektor | \vec{e}_t = \frac{\vec{v}}{v} | – | kaže v smeri hitrosti
+s | pot | | m | dolžina krivulje, ne velikost premika
+\varphi | kot zasuka pri kroženju | | rad
+\omega | kotna hitrost | \omega = \frac{\mathrm{d}\varphi}{\mathrm{d}t} | s^{-1}
+\omega_0 | začetna kotna hitrost | | s^{-1}
+N | število obratov | N = \frac{\varphi}{2\pi} | –
+:::

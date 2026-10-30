@@ -303,3 +303,36 @@ Za središče krožne zanke so vsi prispevki vzporedni in $r = R$, zato je $B = 
 - Napake ni, saj magnetna sila ne opravlja dela.
 ~ Lorentzova sila na posamezen naboj res ne opravlja dela, sila $IlB$ na palico pa jo zavira in pretvarja njeno kinetično energijo v toploto.
 > Če bi sila pomagala gibanju, bi palica dobivala kinetično energijo in hkrati grela upor brez vloženega dela, kar krši ohranitev energije. Zato inducirani tok vedno nasprotuje spremembi, ki ga povzroča.
+
+:::simboli
+\vec{F} | magnetna (Lorentzova) sila | \vec{F} = q\,\vec{v} \times \vec{B} | N | pravokotna na hitrost in na polje
+F | velikost magnetne sile | F = \lvert q\rvert vB\sin\theta | N | na vodnik: F = IlB sin θ
+q | naboj delca | | C
+\vec{v} | vektor hitrosti delca | | m/s
+v | hitrost delca | | m/s | pri drsečem vodniku hitrost vodnika
+\vec{B} | vektor gostote magnetnega polja | | T
+B | gostota magnetnega polja | | T
+\theta | kot med hitrostjo (tokom) in poljem | | ° | pri pretoku kot med poljem in normalo
+r | polmer krožnice ali razdalja od vodnika | r = \frac{mv}{\lvert q\rvert B} | m
+r_{12}, r_{13} | polmera tirov ionov ogljika-12 in ogljika-13 | | m
+m | masa delca | | kg
+\omega | kotna hitrost kroženja delca | \omega = \frac{\lvert q\rvert B}{m} | s^{-1} | pri generatorju kotna hitrost tuljave
+I | električni tok | | A
+I_1, I_2 | tokova v vzporednih vodnikih 1 in 2 | | A
+\vec{l} | vektor dolžine vodnika (v smeri toka) | | m
+l | dolžina vodnika ali tuljave | | m
+\vec{s} | element poti okoli toka | | m | pri Amperovem zakonu
+\mu_0 | indukcijska konstanta | | V\,s/(A\,m) | 4π · 10⁻⁷ V s/(A m)
+N | število ovojev tuljave | | –
+\Phi_m | magnetni pretok | \Phi_m = BS\cos\theta | Wb | 1 Wb = 1 T m²
+\vec{S} | vektor ploskve (pravokoten na ploskev) | | m^2 | velikost je površina ploskve
+S | površina ploskve (ovoja) | | m^2
+U_i | inducirana napetost | U_i = -N\,\frac{\mathrm{d}\Phi_m}{\mathrm{d}t} | V | premikajoči vodnik: U_i = Blv
+t | čas | | s
+e_0 | osnovni naboj | | C | 1,602 · 10⁻¹⁹ C
+U | pospeševalna napetost | | V
+\Delta x | razdalja med mestoma zadetka ionov | \Delta x = 2(r_{13} - r_{12}) | m
+R | električni upor tokokroga | | Ω | pri krožni zanki njen polmer
+P | moč | P = Fv = I^2R | W
+\hat{r} | enotski vektor od elementa vodnika do točke | | –
+:::

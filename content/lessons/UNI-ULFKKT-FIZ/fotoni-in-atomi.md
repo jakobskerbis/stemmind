@@ -294,3 +294,34 @@ Preizkus za $n = 2$: obseg $2\pi \cdot 0{,}212\,\mathrm{nm} \approx 1{,}33\,\mat
 - Paschenova (prehodi na $n = 3$)
 ~ Misliš, da manjša energija fotona še pomeni vidno svetlobo; prehodi na $n = 3$ dajo fotone pod $1{,}6\,\mathrm{eV}$, ki so že v infrardečem delu.
 > Balmerjeva serija ima črte pri $656$, $486$, $434$ in $410\,\mathrm{nm}$, torej v vidnem delu.
+
+:::simboli
+W_f | energija fotona | W_f = h\nu = \frac{hc}{\lambda} | J | pogosto v eV
+h | Planckova konstanta | | J\,s | 6,626 · 10⁻³⁴ J s
+\nu | frekvenca svetlobe | \nu = \frac{c}{\lambda} | Hz
+\nu_0 | mejna frekvenca | \nu_0 = \frac{A_i}{h} | Hz
+c | hitrost svetlobe | | m/s | 3,00 · 10⁸ m/s
+\lambda | valovna dolžina | \lambda = \frac{h}{p} | m | hc ≈ 1240 eV nm
+\lambda_e | valovna dolžina elektrona | \lambda_e = \frac{h}{m_e v} | m
+\lambda_0 | mejna valovna dolžina | \lambda_0 = \frac{hc}{A_i} | m
+p | gibalna količina | p = \frac{h}{\lambda} | kg\,m/s
+W_{k,\max} | največja kinetična energija izbitih elektronov | W_{k,\max} = h\nu - A_i | J
+W_k | kinetična energija delca | W_k = e_0U | J | pri pospeševanju elektrona z napetostjo U
+A_i | izstopno delo | | J | običajno v eV
+m | masa delca | | kg | v Rydbergovi formuli kvantno število višjega nivoja
+m_e | masa elektrona | | kg | 9,11 · 10⁻³¹ kg
+v | hitrost delca | v = \sqrt{\frac{2W_k}{m_e}} | m/s
+e_0 | osnovni naboj | | C | 1,602 · 10⁻¹⁹ C
+U | pospeševalna napetost | | V
+U_z | zaporna napetost | e_0U_z = W_{k,\max} | V
+W_m | energija višjega nivoja | | J | začetno stanje pri izsevanju
+W_n | energija n-tega nivoja vodikovega atoma | W_n = -\frac{13{,}6\,\mathrm{eV}}{n^2} | J | običajno v eV
+n | glavno kvantno število | | – | n = 1, 2, 3, …
+R_\infty | Rydbergova konstanta | | m^{-1} | 1,097 · 10⁷ m⁻¹
+r_n | polmer n-te Bohrove orbite | r_n = n^2 \cdot 0{,}0529\,\mathrm{nm} | m
+\varepsilon_0 | influenčna konstanta | | A\,s/(V\,m)
+N | število fotonov | N = \frac{Pt}{W_f} | –
+P | moč svetlobnega toka | | W
+t | čas | | s
+\hbar | reducirana Planckova konstanta | \hbar = \frac{h}{2\pi} | J s | ≈ 1,055 · 10⁻³⁴ J s
+:::

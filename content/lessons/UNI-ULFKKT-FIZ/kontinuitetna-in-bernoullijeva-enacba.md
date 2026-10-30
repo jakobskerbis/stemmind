@@ -264,3 +264,26 @@ Za stalno $\rho$ integracija da $p = p_0 + \rho g h$. Za idealni plin pri stalni
 ~ Ožji del ni »zamašek«, ki tok upočasni: po kontinuitetni enačbi je hitrost tam večja, ker je presek manjši.
 + Hitrost: majhna – velika – majhna; tlak: velik – majhen – velik.
 > Iz $S_1v_1 = S_2v_2$ je hitrost v ozkem delu največja, iz Bernoullijeve enačbe na isti višini pa je tam tlak najmanjši. Ko se cev razširi, se hitrost in tlak vrneta na začetni vrednosti.
+
+:::simboli
+p | tlak | p = p_0 + \rho g h | Pa | v Bernoullijevi enačbi tlak v tekočini
+p_0 | tlak na gladini (zračni tlak) | | Pa | normalni zračni tlak 1,013 · 10⁵ Pa
+p_1, p_2 | tlak v prerezih 1 in 2 | | Pa
+h | globina pod gladino | | m
+\rho | gostota tekočine | \rho = \frac{m}{V} | kg/m^3 | voda: 1000 kg/m³
+\rho_1, \rho_2 | gostota tekočine v prerezih 1 in 2 | | kg/m^3 | pri nestisljivi tekočini enaki
+\rho_{\text{tek}} | gostota tekočine | | kg/m^3
+g | težni pospešek | | m/s^2 | 9,81 m/s²
+g_M | težni pospešek na Marsu | | m/s^2 | 3,71 m/s²
+F_{vz} | sila vzgona | F_{vz} = \rho_{\text{tek}}\,g\,V_{\text{pot}} | N
+V_{\text{pot}} | prostornina potopljenega dela telesa | | m^3
+S | ploščina preseka cevi | S = \frac{\pi d^2}{4} | m^2
+S_1, S_2 | ploščini presekov 1 in 2 | | m^2
+v | hitrost tekočine | | m/s
+v_1, v_2 | hitrost tekočine v prerezih 1 in 2 | S_1v_1 = S_2v_2 | m/s
+z | višina nad izbrano ravnino | | m
+z_1, z_2 | višina prerezov 1 in 2 | | m
+\Phi_V | prostorninski pretok | \Phi_V = Sv | m^3/s
+d | notranji premer cevi | | m
+d_1, d_2 | premera cevi v prerezih 1 in 2 | | m
+:::

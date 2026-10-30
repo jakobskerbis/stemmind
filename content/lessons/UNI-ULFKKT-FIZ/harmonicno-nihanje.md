@@ -287,3 +287,31 @@ Pri $\varphi_0 = 20^\circ$ ($0{,}35\,\mathrm{rad}$) je popravek manj kot $1\,\%$
 - Krožna frekvenca.
 ~ Krožna frekvenca je $2\pi$-krat večja, $\omega = 2\pi\nu \approx 2760\,\mathrm{s^{-1}}$.
 > Frekvenca $\nu = 1/t_0$ je število nihajev v sekundi, enota $\mathrm{Hz} = \mathrm{s^{-1}}$.
+
+:::simboli
+F | sila vzmeti (vračajoča sila) | F = -kx | N
+k | koeficient vzmeti | | N/m
+x | odmik od ravnovesne lege | x(t) = x_0\cos(\omega_0 t + \delta) | m
+x_0 | amplituda | | m | največji odmik
+\omega_0 | lastna krožna frekvenca | \omega_0 = \sqrt{\frac{k}{m}} | s^{-1} | pri nitnem nihalu ω₀ = √(g/l)
+\omega | krožna frekvenca dušenega nihanja | \omega = \sqrt{\omega_0^2 - \beta^2} | s^{-1}
+m | masa uteži | | kg
+t | čas | | s
+\delta | fazni zamik | | rad | določen z začetno lego in hitrostjo
+\dot{x} | hitrost (odvod odmika po času) | \dot{x} = \frac{\mathrm{d}x}{\mathrm{d}t} | m/s
+v | hitrost uteži | v = \dot{x} = -\omega_0 x_0\sin(\omega_0 t + \delta) | m/s
+v_{\max} | največja hitrost | v_{\max} = \omega_0 x_0 | m/s | v ravnovesni legi
+a | pospešek uteži | a = \ddot{x} = -\omega_0^2 x | m/s^2
+a_{\max} | največji pospešek | a_{\max} = \omega_0^2 x_0 | m/s^2 | v skrajnih legah
+t_0 | nihajni čas | t_0 = \frac{2\pi}{\omega_0} | s | v mnogih učbenikih T
+\nu | frekvenca | \nu = \frac{1}{t_0} | Hz
+\nu_0 | lastna frekvenca | \nu_0 = \frac{\omega_0}{2\pi} | Hz
+l | dolžina vrvice nihala | | m
+\varphi | odklon nihala od navpičnice | | rad
+\varphi_0 | amplituda odklona (največji odklon) | | rad
+g | težni pospešek | | m/s^2 | 9,81 m/s²
+W | energija nihanja | W = \tfrac{1}{2}kx_0^2 = \tfrac{1}{2}mv_{\max}^2 | J
+b | koeficient upora | | kg/s | sila upora F_u = -bv
+\beta | koeficient dušenja | \beta = \frac{b}{2m} | s^{-1}
+e | osnova naravnega logaritma | | – | e ≈ 2,718
+:::

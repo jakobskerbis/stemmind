@@ -216,7 +216,7 @@ const PREFIX = {
 const PREFIX_BASES = ["m", "g", "s", "A", "V", "W", "J", "N", "Pa", "L", "l", "Hz", "eV", "C", "Ω", "F", "mol"];
 
 const GREEK = {
-  varepsilon: "ε", epsilon: "ε", kappa: "κ", chi: "χ", psi: "ψ", xi: "ξ", zeta: "ζ", Gamma: "Γ", Lambda: "Λ", Theta: "Θ", Psi: "Ψ",
+  varepsilon: "ε", epsilon: "ε", hbar: "ħ", kappa: "κ", chi: "χ", psi: "ψ", xi: "ξ", zeta: "ζ", Gamma: "Γ", Lambda: "Λ", Theta: "Θ", Psi: "Ψ",
   alpha: "α", beta: "β", gamma: "γ", delta: "δ", eta: "η", lambda: "λ", mu: "μ", nu: "ν", omega: "ω", pi: "π", rho: "ρ",
   varphi: "φ", phi: "φ", Phi: "Φ", sigma: "σ", tau: "τ", theta: "θ", vartheta: "θ", varrho: "ρ", Omega: "Ω", Delta: "Δ",
 };

@@ -280,3 +280,33 @@ Na mokri cesti je $k_l$ lahko le okoli $0{,}4$; ker je $v_{\max} \propto \sqrt{k
 ~ Sile delujejo (teža, normalna sila, potiskanje, trenje), le njihova vsota je nič.
 + Vsota vseh sil nanj je nič.
 > Prvi zakon: telo se giblje premo enakomerno natanko takrat, ko je vsota sil nanj nič. Posamezne sile so lahko velike, a se uravnotežijo.
+
+:::simboli
+\vec{F} | vektor sile | \sum \vec{F} = m\vec{a} | N | vsota vseh zunanjih sil
+F | velikost sile | F = G\frac{m_1 m_2}{r^2} | N | v primeru s klancem vlečna sila
+F_x | komponenta sile v smeri x | | N
+F_N | pravokotna sila podlage | F_N = mg | N | na klancu F_N = mg cos α
+F_{tr} | sila trenja (kinetično trenje) | F_{tr} = k_t F_N | N
+F_l | sila lepenja | | N | največ k_l F_N
+F_{l,\max} | največja sila lepenja | F_{l,\max} = k_l F_N | N
+k_t | koeficient trenja | | – | običajno manjši od k_l
+k_l | koeficient lepenja | | – | telo zdrsne, ko tan α > k_l
+G | gravitacijska konstanta | | N\,m^2/kg^2 | 6,674 · 10⁻¹¹ N m²/kg²
+\vec{G} | gibalna količina | \vec{G} = m\vec{v} | kg\,m/s
+m | masa telesa | | kg
+m_1, m_2 | masi telesa, ki se privlačita | | kg
+M | masa osrednjega telesa (npr. Zemlje) | | kg
+M_Z | masa Zemlje | | kg | 5,972 · 10²⁴ kg
+\vec{a} | vektor pospeška | | m/s^2
+a | pospešek | | m/s^2
+a_r | radialni (centripetalni) pospešek | a_r = \frac{v^2}{r} = \omega^2 r | m/s^2 | kaže proti središču
+v | hitrost | | m/s | pri kroženju obodna hitrost
+v_0 | začetna hitrost | | m/s
+r | polmer kroženja (razdalja med središčema) | | m
+\omega | kotna hitrost | \omega = \frac{2\pi}{T} | s^{-1}
+T | obhodni čas | | s
+t | čas | | s
+g | težni pospešek | | m/s^2 | 9,81 m/s² ob površju Zemlje
+\alpha | naklonski kot klanca | | °
+s | pot po klancu | | m
+:::
