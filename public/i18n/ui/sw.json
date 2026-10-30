@@ -1242,6 +1242,8 @@
   "games.rarity.epic": "Kubwa",
   "games.rarity.legendary": "Hadithi",
   "games.rarity.mythic": "Cha kihekaya",
+  "games.rarity.cosmic": "Cha anga za juu",
+  "games.rarity.eternal": "Cha milele",
   "zb.needXp": "Kusanya {xp} XP kwa kujifunza.",
   "zb.fromXp": "Njia ya maarifa: {xp} XP",
   "zb.need.week": "Shika nafasi ya 1 katika kikundi chako cha wiki kwenye ligi hii.",

@@ -7,7 +7,8 @@
 // Pot znanja (j, 29. 10. 2026 18:14): epski, legendarni in mitični predmeti za skupne XP, ki jih učenec
 // zbere z učenjem, kot je bilo do zdaj urejeno; več XP pomeni več vloženega časa.
 
-export const RARITY_TIER = { common: 1, rare: 2, epic: 3, legendary: 4, mythic: 5 };
+// Nad mitičnimi (j, 30. 10. 2026: »naj obstajajo redkejši predmeti«): kozmični in večni, samo za največ XP in iger.
+export const RARITY_TIER = { common: 1, rare: 2, epic: 3, legendary: 4, mythic: 5, cosmic: 6, eternal: 7 };
 export const RARITY_BY_TIER = ["common", "common", "rare", "epic", "legendary", "mythic"];
 
 export const COLLECTIONS = [
@@ -137,6 +138,9 @@ export const KNOWLEDGE = [
     ["pot_aurora", "fx", "mythic", 80000, "Polarni sij", "Aurora"],
     ["pot_tesla", "outfit", "mythic", 100000, "Teslov plašč", "Tesla's coat"],
     ["pot_infinity", "badge", "mythic", 120000, "Neskončnost", "Infinity"],
+    ["pot_blackhole", "bg", "cosmic", 160000, "Črna luknja", "Black hole"],
+    ["pot_comet", "fx", "cosmic", 200000, "Komet", "Comet"],
+    ["pot_starcrown", "hat", "eternal", 300000, "Zvezdna krona", "Crown of stars"],
   ].map(([id, slot, rarity, xp, sl, en]) => ({ id, collection: "pot", slot, rarity, name: { sl, en }, need: { xp }, ...(ABOUT[id] ? { about: ABOUT[id] } : {}) })),
   // Zmage na lestvicah (server/leagues.js): 1. mesto v tedenski skupini po ligi, stopničke, mesečni prvak.
   ...[
@@ -169,6 +173,8 @@ export const KNOWLEDGE = [
     ["fx_pixels", "fx", "legendary", { games: 1800 }, "Pikselne iskrice", "Pixel sparkles"],
     ["kind_unicorn", "kind", "legendary", { cleared: 100 }, "Samorog", "Unicorn"],
     ["kind_dragon", "kind", "legendary", { games: 2500 }, "Zmaj", "Dragon"],
+    ["kind_phoenix", "kind", "cosmic", { games: 4000 }, "Feniks", "Phoenix"],
+    ["kind_whale", "kind", "eternal", { cleared: 200 }, "Zvezdni kit", "Star whale"],
   ].map(([id, slot, rarity, need, sl, en]) => ({ id, collection: "igre", slot, rarity, name: { sl, en }, need })),
   // Učni pass (sezonski; barva in letnica sezone)
   { id: "pass_board", collection: "pass", slot: "bg", rarity: "common", tier: 5, name: { sl: "Šolska tabla", en: "Chalkboard" } },
@@ -225,8 +231,15 @@ const BADGE = {
     `<g transform="translate(64 82)"><path d="M-5 6l-3 9 4-2 4 3 0-10zM5 6l3 9-4-2-4 3 0-10z" fill="hsl(${seasonHue(v)} 80% 55%)" stroke="${INK}" stroke-width="1.2"/><circle r="9" fill="#facc15" stroke="${INK}" stroke-width="1.6"/><path d="M0-5l1.5 3.2 3.5.4-2.6 2.3.8 3.5L0 2.6-3.2 4.4l.8-3.5-2.6-2.3 3.5-.4z" fill="#fff7cc" stroke="#a16207" stroke-width=".8"/></g>`,
 };
 
+const star = (x, y, r, c) => `<path transform="translate(${x} ${y}) scale(${r / 6})" d="M0-6l1.8 3.7 4 .6-2.9 2.8.7 4L0 3.2-3.6 5.1l.7-4-2.9-2.8 4-.6z" fill="${c}" stroke="${INK}" stroke-width="${(6 / r).toFixed(2)}" stroke-linejoin="round"/>`;
+
 // Sledi: back = za telesom, front = pred njim.
 const FX = {
+  pot_comet: {
+    back: (v, u) =>
+      `<defs><linearGradient id="cmt${u}" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset=".35" stop-color="#7dd3fc" stop-opacity=".9"/><stop offset="1" stop-color="#e0f2fe" stop-opacity="0"/></linearGradient></defs><path d="M82 28L24 -6h26L90 20z" fill="url(#cmt${u})"/><path d="M80 30L34 18l2-6 46 12z" fill="url(#cmt${u})" opacity=".7"/>`,
+    front: () => `<circle cx="85" cy="24" r="10" fill="#7dd3fc" opacity=".45"/><circle cx="85" cy="24" r="6" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.6"/><circle cx="83" cy="22" r="2" fill="#fff"/>${[[12, 34, 2.2], [18, 86, 1.8], [90, 70, 2]].map(([x, y, r]) => `<path transform="translate(${x} ${y}) scale(${r / 2})" d="M0-2.4l.6 1.8 1.8.6-1.8.6-.6 1.8-.6-1.8-1.8-.6 1.8-.6z" fill="#38bdf8"/>`).join("")}`,
+  },
   pot_hourglass: {
     front: () => `<g transform="translate(86 24)"><path d="M-7-11h14M-7 11h14" stroke="#92400e" stroke-width="2.4" stroke-linecap="round"/><path d="M-5.5-10q0 7 5.5 10q-5.5 3-5.5 10h11q0-7-5.5-10q5.5-3 5.5-10z" fill="#e0f2fe" fill-opacity=".8" stroke="${INK}" stroke-width="1.4"/><path d="M-3.5-6h7l-3.5 5zM-4 9q4-4 8 0z" fill="#f59e0b"/><path d="M0 0v6" stroke="#f59e0b" stroke-width="1" stroke-dasharray="1 1"/></g>`,
   },
@@ -295,6 +308,8 @@ const FX = {
 const INVADER = ["00100100", "00011000", "00111100", "01011010", "11111111", "10100101"];
 const pixels = (rows, x0, y0, s, c) => rows.flatMap((r, y) => [...r].map((b, x) => (b === "1" ? `<rect x="${x0 + x * s}" y="${y0 + y * s}" width="${s}" height="${s}"/>` : ""))).join("").replace(/^/, `<g fill="${c}">`) + "</g>";
 const BG = {
+  pot_blackhole: (v, u) =>
+    `<defs><linearGradient id="bhd${u}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c3aed"/><stop offset=".5" stop-color="#fde047"/><stop offset="1" stop-color="#f97316"/></linearGradient><radialGradient id="bhg${u}"><stop offset=".5" stop-color="#fb923c" stop-opacity=".55"/><stop offset="1" stop-color="#fb923c" stop-opacity="0"/></radialGradient></defs><rect width="100" height="100" fill="#05030f"/><g fill="#e2e8f0">${[[8, 10], [36, 6], [58, 16], [6, 44], [94, 50], [10, 80], [90, 88], [40, 30]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1"/>`).join("")}</g><circle cx="76" cy="24" r="20" fill="url(#bhg${u})"/><ellipse cx="76" cy="24" rx="24" ry="6" fill="none" stroke="url(#bhd${u})" stroke-width="3.5" transform="rotate(-16 76 24)"/><circle cx="76" cy="24" r="9" fill="#000" stroke="#fdba74" stroke-width="1.4"/><path d="M53 31q23-6 46-14" stroke="url(#bhd${u})" stroke-width="3.5" fill="none" opacity=".95" transform="rotate(-2 76 24)"/>`,
   bg_arcade: () =>
     `<rect width="100" height="100" fill="#1e1b4b"/><g stroke="#4338ca" stroke-width=".5" opacity=".6">${Array.from({ length: 9 }, (_, i) => `<path d="M${(i + 1) * 10} 0V100M0 ${(i + 1) * 10}H100"/>`).join("")}</g>${pixels(INVADER, 6, 8, 2, "#a3e635")}${pixels(INVADER, 76, 12, 2, "#f472b6")}${pixels(INVADER, 8, 70, 1.6, "#22d3ee")}<rect x="0" y="94" width="100" height="6" fill="#facc15"/><g fill="#fde047">${[[30, 10], [60, 6], [92, 40], [4, 44]].map(([x, y]) => `<rect x="${x}" y="${y}" width="2" height="2"/>`).join("")}</g>`,
   pot_library: () => `<rect width="100" height="100" fill="#78350f"/>${[8, 38, 68].map((y) => `<rect x="0" y="${y + 24}" width="100" height="4" fill="#451a03"/>${Array.from({ length: 12 }, (_, i) => `<rect x="${2 + i * 8.2}" y="${y + 4 + (i % 3) * 2}" width="7" height="${20 - (i % 3) * 2}" fill="${["#dc2626", "#2563eb", "#16a34a", "#ca8a04", "#7c3aed", "#0891b2"][(i + y) % 6]}" stroke="#1c1917" stroke-width=".5"/>`).join("")}`).join("")}`,
@@ -370,6 +385,8 @@ const ACC = {
 };
 
 const HAT = {
+  pot_starcrown: () =>
+    `<ellipse cx="50" cy="16" rx="25" ry="6" fill="none" stroke="#fef08a" stroke-width="7" opacity=".45"/><ellipse cx="50" cy="16" rx="25" ry="6" fill="none" stroke="#facc15" stroke-width="2.6"/>${[[27, 16, 4.5, "#e0f2fe"], [38, 10, 5.5, "#fde047"], [50, 7, 7.5, "#fff7ad"], [62, 10, 5.5, "#fde047"], [73, 16, 4.5, "#e0f2fe"]].map(([x, y, r, c]) => star(x, y, r, c)).join("")}`,
   hat_pixel: () => `<path d="M30 34V16h5v6h5V12h6v10h8V12h6v10h5v-6h5v18z" fill="#facc15" stroke="${INK}" stroke-width="2" stroke-linejoin="miter"/><g fill="#ef4444"><rect x="36" y="26" width="4" height="4"/><rect x="60" y="26" width="4" height="4"/></g><rect x="48" y="25" width="4" height="5" fill="#3b82f6"/>`,
   pot_owl: () => `<g transform="translate(50 18)"><ellipse rx="12" ry="11" fill="#a16207" stroke="${INK}" stroke-width="2"/><path d="M-10-8l-3-6 6 3M10-8l3-6-6 3" fill="#a16207" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/><circle cx="-5" cy="-2" r="4.2" fill="#fef3c7" stroke="${INK}" stroke-width="1.2"/><circle cx="5" cy="-2" r="4.2" fill="#fef3c7" stroke="${INK}" stroke-width="1.2"/><circle cx="-5" cy="-2" r="1.8" fill="${INK}"/><circle cx="5" cy="-2" r="1.8" fill="${INK}"/><path d="M-1.5 2l1.5 3 1.5-3z" fill="#f59e0b"/><path d="M-6 6q6 4 12 0" stroke="#fde68a" stroke-width="1.2" fill="none"/></g>`,
   pot_laurel: () => `<g fill="#65a30d" stroke="#365314" stroke-width=".8">${Array.from({ length: 7 }, (_, i) => { const a = Math.PI * (0.95 + i * 0.09); return `<ellipse cx="${(50 + 30 * Math.cos(a)).toFixed(1)}" cy="${(40 + 18 * Math.sin(a)).toFixed(1)}" rx="5" ry="2.4" transform="rotate(${((a * 180) / Math.PI + 70).toFixed(0)} ${(50 + 30 * Math.cos(a)).toFixed(1)} ${(40 + 18 * Math.sin(a)).toFixed(1)})"/><ellipse cx="${(50 - 30 * Math.cos(a)).toFixed(1)}" cy="${(40 + 18 * Math.sin(a)).toFixed(1)}" rx="5" ry="2.4" transform="rotate(${(110 - (a * 180) / Math.PI).toFixed(0)} ${(50 - 30 * Math.cos(a)).toFixed(1)} ${(40 + 18 * Math.sin(a)).toFixed(1)})"/>`; }).join("")}</g><circle cx="50" cy="23" r="2.4" fill="#facc15" stroke="${INK}" stroke-width=".8"/>`,
@@ -422,6 +439,19 @@ const KIND = {
   kind_unicorn: {
     back: () => `<path d="M24 40q-10-14 0-26 6 10 10 12-8-12 4-22 2 12 8 14" fill="#f9a8d4" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`,
     front: () => `<path d="M45 26L50 2l5 24z" fill="#fde68a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M46.5 20l7-2M47.5 13l5-1.5M48.5 7l3-1" stroke="#f59e0b" stroke-width="1.5"/>`,
+  },
+  kind_phoenix: {
+    back: () => {
+      const wing = `<path d="M22 60Q2 52 4 30q6 6 10 6-2-8 2-14 4 8 10 10 0-6 4-10 2 10 6 16z" fill="#f97316" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M22 60Q10 54 10 42q6 4 10 4 0-4 2-6 2 6 4 12z" fill="#fde047"/>`;
+      return `${wing}<g transform="translate(100 0) scale(-1 1)">${wing}</g><path d="M44 28q-6-12 0-22 2 8 4 10 0-10 6-14 0 10 2 12 4-6 8-6-2 8-6 20z" fill="#ef4444" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`;
+    },
+    front: () => `<path d="M45 59h10l-5 7z" fill="#f59e0b" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/><g fill="#fde047" opacity=".9"><path d="M28 70q2-5 6-6-2 4 0 8z"/><path d="M72 70q-2-5-6-6 2 4 0 8z"/></g>`,
+  },
+  kind_whale: {
+    back: (u) =>
+      `<path d="M76 80q12 0 15-12 4 8-1 13 9-1 10 8-12 3-24-3z" fill="${F(u)}" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"/><g stroke="#38bdf8" stroke-width="2.6" fill="none" stroke-linecap="round"><path d="M50 22v-9"/><path d="M50 14q-6-7-12-3"/><path d="M50 14q6-7 12-3"/></g><g fill="#7dd3fc"><circle cx="37" cy="12" r="2"/><circle cx="63" cy="12" r="2"/><circle cx="50" cy="5" r="2.2"/></g>`,
+    front: (u) =>
+      `<g clip-path="url(#c${u})" stroke="#fff" stroke-width="1.6" opacity=".5" fill="none"><path d="M30 80q20 6 40 0M32 86q18 5 36 0M35 92q15 4 30 0"/></g>${[[30, 40, 2.6], [70, 36, 2.2], [66, 76, 1.8], [33, 70, 1.6]].map(([x, y, r]) => `<path transform="translate(${x} ${y}) scale(${r / 2})" d="M0-2.4l.6 1.8 1.8.6-1.8.6-.6 1.8-.6-1.8-1.8-.6 1.8-.6z" fill="#fef9c3"/>`).join("")}`,
   },
   kind_dragon: {
     back: (u) => `<path d="M22 56Q4 40 6 22q8 8 10 4 4 10 10 6 2 10 8 12z" fill="#7c3aed" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M78 56Q96 40 94 22q-8 8-10 4-4 10-10 6-2 10-8 12z" fill="#7c3aed" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M34 30q-8-10-4-22 6 8 12 16M66 30q8-10 4-22-6 8-12 16" fill="#fde68a" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`,

@@ -1242,6 +1242,8 @@
   "games.rarity.epic": "Epikus",
   "games.rarity.legendary": "Legendás",
   "games.rarity.mythic": "Mitikus",
+  "games.rarity.cosmic": "Kozmikus",
+  "games.rarity.eternal": "Örök",
   "zb.needXp": "Gyűjts {xp} XP-t tanulással.",
   "zb.fromXp": "A tudás útja: {xp} XP",
   "zb.need.week": "Szerezd meg az 1. helyet a heti csoportodban ebben a ligában.",

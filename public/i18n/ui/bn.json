@@ -1242,6 +1242,8 @@
   "games.rarity.epic": "মহাকাব্যিক",
   "games.rarity.legendary": "কিংবদন্তি",
   "games.rarity.mythic": "পৌরাণিক",
+  "games.rarity.cosmic": "মহাজাগতিক",
+  "games.rarity.eternal": "চিরন্তন",
   "zb.needXp": "শিখে {xp} XP জমাও।",
   "zb.fromXp": "জ্ঞানের পথ: {xp} XP",
   "zb.need.week": "এই লিগে তোমার সাপ্তাহিক দলে প্রথম স্থান অর্জন করো।",

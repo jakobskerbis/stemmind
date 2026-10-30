@@ -1242,6 +1242,8 @@
   "games.rarity.epic": "شاندار",
   "games.rarity.legendary": "افسانوی",
   "games.rarity.mythic": "اساطیری",
+  "games.rarity.cosmic": "کائناتی",
+  "games.rarity.eternal": "ابدی",
   "zb.needXp": "سیکھ کر {xp} XP جمع کرو۔",
   "zb.fromXp": "علم کا راستہ: {xp} XP",
   "zb.need.week": "اس لیگ میں اپنے ہفتہ وار گروپ میں پہلی پوزیشن لو۔",

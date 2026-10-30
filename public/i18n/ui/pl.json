@@ -1254,6 +1254,8 @@
   "games.rarity.epic": "Epicki",
   "games.rarity.legendary": "Legendarny",
   "games.rarity.mythic": "Mityczny",
+  "games.rarity.cosmic": "Kosmiczny",
+  "games.rarity.eternal": "Wieczny",
   "zb.needXp": "Zbierz {xp} XP, ucząc się.",
   "zb.fromXp": "Droga wiedzy: {xp} XP",
   "zb.need.week": "Zajmij 1. miejsce w swojej grupie tygodniowej w tej lidze.",

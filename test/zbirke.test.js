@@ -4,7 +4,8 @@ import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
 import { getTopic, getPath } from "../server/curriculum.js";
 import { KNOWLEDGE, COLLECTIONS, PASS, PASS_REWARDS, RARITY_TIER, seasonOf, seasonLabel, topicTier } from "../public/zbirke.js";
-import { avatarSvg, cleanAvatar, SLOTS, ITEMS } from "../public/avatar.js";
+import { avatarSvg, cleanAvatar, SLOTS, ITEMS, itemRarity } from "../public/avatar.js";
+import SL from "../public/i18n/sl.js";
 import { publicAvatar } from "../server/avatar.js";
 
 test("zbirke: every item draws, every condition topic exists at the item's level, XP ladder rises with rarity", () => {
@@ -25,12 +26,15 @@ test("zbirke: every item draws, every condition topic exists at the item's level
   // Za znanje snovi je legendaren en sam predmet; ostali epski, legendarni in mitični so na Poti znanja (XP).
   assert.deepEqual(KNOWLEDGE.filter((x) => x.rarity === "legendary" && !x.need?.xp && !x.need?.league && x.collection !== "igre").map((x) => x.id), ["fx_doppler"]);
   const pot = KNOWLEDGE.filter((x) => x.collection === "pot");
-  assert.ok(pot.length >= 12 && pot.every((x) => x.need.xp > 0 && ["epic", "legendary", "mythic"].includes(x.rarity)));
+  assert.ok(pot.length >= 12 && pot.every((x) => x.need.xp > 0 && ["epic", "legendary", "mythic", "cosmic", "eternal"].includes(x.rarity)));
   for (let i = 1; i < pot.length; i++) {
     assert.ok(pot[i].need.xp > pot[i - 1].need.xp, pot[i].id);
     assert.ok(RARITY_TIER[pot[i].rarity] >= RARITY_TIER[pot[i - 1].rarity], pot[i].id);
   }
   assert.ok(KNOWLEDGE.filter((x) => x.rarity === "mythic").every((x) => ["pot", "lige"].includes(x.collection)));
+  for (const x of ITEMS) assert.ok(SL[`games.rarity.${itemRarity(x)}`], `${x.id}: ni imena redkosti`);
+  // Kozmični in večni (j, 30. 10. 2026): nad mitičnimi, samo za največ XP ali iger, nikoli za kovance.
+  for (const r of ["cosmic", "eternal"]) assert.ok(KNOWLEDGE.filter((x) => x.rarity === r).length >= 2 && KNOWLEDGE.filter((x) => x.rarity === r).every((x) => ["pot", "igre"].includes(x.collection)), r);
   // Zmage na lestvicah: samo značke, ena za vsako ligo, nobena se ne kupi.
   const lige = KNOWLEDGE.filter((x) => x.collection === "lige");
   assert.ok(lige.length === 10 && lige.every((x) => x.slot === "badge" && x.need.league && x.earn && !x.price));

@@ -1242,6 +1242,8 @@
   "games.rarity.epic": "महाकाव्य",
   "games.rarity.legendary": "पौराणिक",
   "games.rarity.mythic": "मिथकीय",
+  "games.rarity.cosmic": "ब्रह्मांडीय",
+  "games.rarity.eternal": "शाश्वत",
   "zb.needXp": "सीखकर {xp} XP इकट्ठा करो।",
   "zb.fromXp": "ज्ञान का मार्ग: {xp} XP",
   "zb.need.week": "इस लीग में अपने साप्ताहिक समूह में पहला स्थान पाओ।",

@@ -1248,6 +1248,8 @@
   "games.rarity.epic": "Епски",
   "games.rarity.legendary": "Легендаран",
   "games.rarity.mythic": "Митски",
+  "games.rarity.cosmic": "Космички",
+  "games.rarity.eternal": "Вечни",
   "zb.needXp": "Скупи {xp} XP учењем.",
   "zb.fromXp": "Пут знања: {xp} XP",
   "zb.need.week": "Освоји 1. место у својој недељној групи у овој лиги.",

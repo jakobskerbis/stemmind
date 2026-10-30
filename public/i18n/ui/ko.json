@@ -1236,6 +1236,8 @@
   "games.rarity.epic": "영웅",
   "games.rarity.legendary": "전설",
   "games.rarity.mythic": "신화",
+  "games.rarity.cosmic": "우주",
+  "games.rarity.eternal": "영원",
   "zb.needXp": "학습으로 {xp} XP를 모으세요.",
   "zb.fromXp": "지식의 길: {xp} XP",
   "zb.need.week": "이 리그의 주간 그룹에서 1등을 해요.",

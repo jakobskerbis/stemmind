@@ -1244,6 +1244,8 @@ export default {
   "games.rarity.epic": "Epski",
   "games.rarity.legendary": "Legendaren",
   "games.rarity.mythic": "Mitičen",
+  "games.rarity.cosmic": "Kozmičen",
+  "games.rarity.eternal": "Večen",
   "zb.needXp": "Zberi {xp} XP z učenjem.",
   "zb.need.week": "Osvoji 1. mesto v svoji tedenski skupini v tej ligi.",
   "zb.need.weekPodium": "Uvrsti se med prve tri v svoji tedenski skupini.",

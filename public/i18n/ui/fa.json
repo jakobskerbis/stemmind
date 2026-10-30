@@ -1242,6 +1242,8 @@
   "games.rarity.epic": "حماسی",
   "games.rarity.legendary": "افسانه‌ای",
   "games.rarity.mythic": "اسطوره‌ای",
+  "games.rarity.cosmic": "کیهانی",
+  "games.rarity.eternal": "جاودان",
   "zb.needXp": "با یادگیری {xp} XP جمع کن.",
   "zb.fromXp": "مسیر دانش: {xp} XP",
   "zb.need.week": "در این لیگ در گروه هفتگی‌ات اول شو.",

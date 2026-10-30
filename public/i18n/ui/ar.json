@@ -1266,6 +1266,8 @@
   "games.rarity.epic": "ملحمي",
   "games.rarity.legendary": "أسطوري",
   "games.rarity.mythic": "خرافي",
+  "games.rarity.cosmic": "كوني",
+  "games.rarity.eternal": "أبدي",
   "zb.needXp": "اجمع {xp} XP بالتعلّم.",
   "zb.fromXp": "طريق المعرفة: {xp} XP",
   "zb.need.week": "احصل على المركز الأول في مجموعتك الأسبوعية في هذا الدوري.",

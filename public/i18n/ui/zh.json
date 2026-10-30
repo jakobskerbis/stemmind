@@ -1236,6 +1236,8 @@
   "games.rarity.epic": "史诗",
   "games.rarity.legendary": "传说",
   "games.rarity.mythic": "神话",
+  "games.rarity.cosmic": "宇宙",
+  "games.rarity.eternal": "永恒",
   "zb.needXp": "通过学习累积 {xp} XP。",
   "zb.fromXp": "知识之路：{xp} XP",
   "zb.need.week": "在这个联赛的每周小组中拿到第 1 名。",

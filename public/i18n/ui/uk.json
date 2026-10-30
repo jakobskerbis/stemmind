@@ -1254,6 +1254,8 @@
   "games.rarity.epic": "Епічний",
   "games.rarity.legendary": "Легендарний",
   "games.rarity.mythic": "Міфічний",
+  "games.rarity.cosmic": "Космічний",
+  "games.rarity.eternal": "Вічний",
   "zb.needXp": "Збери {xp} XP, навчаючись.",
   "zb.fromXp": "Шлях знань: {xp} XP",
   "zb.need.week": "Посядь 1-ше місце у своїй тижневій групі в цій лізі.",
