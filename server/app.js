@@ -334,7 +334,10 @@ export function createApp(store, opts = {}) {
     const again = req.body?.deep === true;
     const againStreak = again ? (conv.deep || 0) + 1 : 0;
     if (againStreak !== (conv.deep || 0)) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(againStreak, conv.id);
-    const capped = !!accounts?.modelCapFor?.(student.id);
+    // Aktivacijska koda: druga zaporedna prošnja gre k Sonnetu, šele tretja (in vsaka naslednja) k Opusu
+    // (j 2026-10-30). Tekmovanja in fotografija urnika pri kodi ostanejo pri Sonnetu.
+    // Nad skrito omejitvijo Opusa (usage.promoOpusSpent) tudi tretja prošnja tiho dobi Sonnet, brez opombe.
+    const capped = !!accounts?.modelCapFor?.(student.id) && (againStreak < 3 || usage.promoOpusSpent(student.id, MODEL_DEEP));
     const { mode, note } = usage.chooseMode(student.id, {
       wantDeep: againStreak >= 2,
       wantThink: againStreak === 1,

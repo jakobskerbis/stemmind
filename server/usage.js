@@ -16,6 +16,10 @@ export const LIMITS = {
   studentMonthlyUsd: () => num("EVKLID_STUDENT_MONTHLY_USD", 3),
   // Koliko odgovorov zmogljivejšega modela (Opus) na učenca na dan.
   dailyDeep: () => num("EVKLID_DAILY_DEEP", 5),
+  // Skrita omejitev Opusa za imetnike aktivacijske kode (ne plačujejo; j 2026-10-30): nad njo
+  // tiho odgovori Sonnet, brez opombe. Na učenca: odgovorov na dan in $ na mesec (0 = brez meje).
+  promoOpusDaily: () => num("EVKLID_PROMO_OPUS_DAILY", 2),
+  promoOpusMonthUsd: () => num("EVKLID_PROMO_OPUS_MONTH_USD", 0.3),
   alertRatio: 0.8,
   historyTurns: () => num("EVKLID_HISTORY_TURNS", 10),
   // Zmogljivejši model dobi samo zadnje izmenjave (njegov predpomnilnik je ločen, vsak žeton je drag).
@@ -73,11 +77,23 @@ export class Usage {
       .prepare("SELECT COUNT(*) AS n FROM usage WHERE student_id = ? AND kind = 'chat' AND model LIKE ? AND date(created_at) = date('now')")
       .get(studentId, `%${String(deepModel).replace(/^claude-/, "").split("-")[0]}%`).n;
   }
+  // Ali je imetnik aktivacijske kode dosegel skrito omejitev Opusa (danes ali ta mesec).
+  promoOpusSpent(studentId, deepModel) {
+    const daily = LIMITS.promoOpusDaily();
+    if (daily && this.deepToday(studentId, deepModel) >= daily) return true;
+    const month = LIMITS.promoOpusMonthUsd();
+    if (!month) return false;
+    const like = `%${String(deepModel).replace(/^claude-/, "").split("-")[0]}%`;
+    const spent = this.db
+      .prepare("SELECT COALESCE(SUM(cost_usd),0) AS s FROM usage WHERE student_id = ? AND model LIKE ? AND created_at >= date('now','start of month')")
+      .get(studentId, like).s;
+    return spent >= month;
+  }
   // Izbere način klica za sporočilo. Vrne { mode, note }: note je opomba za učenca,
   // kadar je zmogljivejši model zaradi omejitve nadomeščen.
   // wantThink: prva ponovna razlaga (Haiku z več razmisleka); wantDeep: ponovna prošnja zapored (Opus).
   // free: brezplačni paket (brez naročnine, preizkusa ali kode) nikoli ne dobi zmogljivejšega modela.
-  // capped: paket z omejenim modelom (aktivacijska koda) dobi namesto Opusa največ Sonnet.
+  // capped: paket z omejenim modelom (aktivacijska koda) dobi namesto Opusa Sonnet (Opus šele ob 3. zaporedni prošnji, glej app.js).
   chooseMode(studentId, { wantDeep = false, wantThink = false, competition = false, lite = false, free = false, deepModel = "claude-opus", capped = false } = {}) {
     if (competition && !wantDeep && !LIMITS.competitionDeep()) return { mode: "think", note: null };
     if (free && (wantDeep || competition)) return { mode: "think", note: wantDeep ? NOTES.free : null };
@@ -86,7 +102,7 @@ export class Usage {
       if (daily && this.deepToday(studentId, deepModel) >= daily) return { mode: "think", note: NOTES.dailyDeep(daily) };
       const soft = LIMITS.studentSoftUsd();
       if (soft && this.monthTotal(studentId) >= soft) return { mode: "think", note: NOTES.softBudget };
-      // Aktivacijska koda: zmogljivejši model je največ Sonnet (mode "mid"), nikoli Opus.
+      // Aktivacijska koda (capped): Sonnet (mode "mid") namesto Opusa.
       return { mode: capped ? "mid" : "deep", note: null };
     }
     if (wantThink) return { mode: "think", note: null };
