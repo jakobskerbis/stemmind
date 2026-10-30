@@ -1601,4 +1601,18 @@ export default {
   "tbk.hits": "Zadetki za »{q}«",
   "tbk.noHits": "Ni zadetkov za »{q}«. Poskusi z drugo besedo ali vprašaj tutorja.",
   "tbk.noBook": "Za ta predmet še ni učbenika.",
+  // stran za prenos aplikacije (/prenesi, server/mobile/download.js)
+  "dl.title": "Aplikacija za telefon in tablico",
+  "dl.intro": "Evklid je na voljo kot aplikacija za Android in iPhone. Prijaviš se z istim računom kot na spletu, napredek ostane isti.",
+  "dl.android": "Android",
+  "dl.play": "Prenesi v Google Play",
+  "dl.apk": "Prenesi za Android (APK)",
+  "dl.apkSteps": "Odpri preneseno datoteko in potrdi namestitev. Če telefon vpraša, dovoli nameščanje iz tega brskalnika.",
+  "dl.ios": "iPhone in iPad",
+  "dl.appStore": "Prenesi v App Store",
+  "dl.testflight": "Namesti prek TestFlight",
+  "dl.testflightSteps": "Najprej iz App Store namesti brezplačno aplikacijo TestFlight, nato se vrni na to povezavo.",
+  "dl.iosWeb": "Na iPhonu Evklid zaenkrat odpreš v Safariju: Deli → Dodaj na začetni zaslon.",
+  "dl.openWeb": "Odpri Evklid v brskalniku",
+  "dl.soon": "Kmalu na voljo.",
 };

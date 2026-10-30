@@ -39,6 +39,7 @@ import { Schedules, scheduleView, schedulePrompt, syncTestPlan } from "./schedul
 import { mountSchedule } from "./schedule-api.js";
 import { appVersion, vendorVersion } from "./razlicica.js";
 import { BRAND } from "./brand.js";
+import { mobileClient, mountMobile } from "./mobile/index.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
@@ -116,7 +117,9 @@ export function createApp(store, opts = {}) {
     res.set("Cache-Control", "no-store");
     res.json({ id: INSTANCE, razlicica: version, aktivni: activity.active, mirujeMs: activity.lastSend ? Date.now() - activity.lastSend : null });
   });
+  app.use(mobileClient); // mobilna aplikacija: seja v glavi namesto piškotka (server/mobile)
   const accounts = mountAccounts(app, store, opts); // starševski računi in plačila (EVKLID_ACCOUNTS=1)
+  mountMobile(app, accounts, { scheduler: opts.scheduler, fetchFn: opts.fetchFn, ...opts.mobile }); // prijava z Apple, nakupi v trgovinah, obvestila, /prenesi
   if (gateNeeded()) app.use(passwordGate(process.env.EVKLID_PASSWORD)); // skupno geslo (samo brez računov, glej gate.js)
   mountWebApp(app); // manifest v jeziku vmesnika, povezava za Google Play
   app.use("/api", (req, res, next) => {
