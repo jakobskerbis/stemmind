@@ -16,7 +16,7 @@ import { goalsFor, validDate } from "../public/goal-data.js";
 import { Avatars } from "./avatar.js";
 import { ITEMS, SLOTS, MULTI_MAX, isMulti, itemOf, wear } from "../public/avatar.js";
 import { INTERESTS, cleanInterests } from "../public/interests.js";
-import { GENRE_IDS, cleanChildhood } from "../public/games/childhood.js";
+import { GENRE_IDS, cleanChildhood, cleanTitles } from "../public/games/childhood.js";
 import { dialectsFor } from "../public/dialects.js";
 
 const PATH_KEYS = Object.keys(PROFILE_SETTINGS).filter((k) => PROFILE_SETTINGS[k].confirm);
@@ -212,6 +212,7 @@ function profileView(student) {
     news_level: s.news_level,
     news_lang: s.news_lang,
     game_childhood: s.game_childhood ?? [],
+    game_titles: s.game_titles ?? [],
     weak_points: student.manual_weaknesses || [],
   };
 }
@@ -325,6 +326,7 @@ function validateProfile(changes, student) {
     if (bad.length) errors.push(`game_childhood: unknown ${bad.join(", ")}; allowed ${GENRE_IDS.join(", ")}`);
     else patch.game_childhood = cleanChildhood(raw);
   }
+  if (changes.game_titles !== undefined) patch.game_titles = cleanTitles(Array.isArray(changes.game_titles) ? changes.game_titles : String(changes.game_titles ?? "").split(","));
   if (changes.interest_custom !== undefined) patch.interest_custom = cleanText(String(changes.interest_custom ?? ""), 40);
   for (const key of ["track", "solving_mode", "data_mode", "news_level", "news_lang"]) {
     if (changes[key] === undefined) continue;
@@ -630,6 +632,7 @@ const MOCK_LABELS = {
   solving_mode: "način",
   dialect: "narečje",
   game_childhood: "igre iz otroštva",
+  game_titles: "lastni naslovi iger",
 };
 
 // Besedilo odgovora v preizkusnem načinu iz rezultata orodja.

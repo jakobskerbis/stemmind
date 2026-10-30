@@ -254,3 +254,26 @@ test("games: ratings, weekly vote and the anonymous trends summary", async () =>
     server.close();
   }
 });
+
+test("games: own childhood game titles map to genres or wishes", async () => {
+  const { matchTitle, cleanTitles, GENRE_IDS } = await import("../public/games/childhood.js");
+  const { WISH_IDS } = await import("../public/games/wishes.js");
+  assert.deepEqual(matchTitle("Tetris"), { genre: "blocks" });
+  assert.deepEqual(matchTitle("Minecraft"), { wish: "city" }); // ne »mines«
+  assert.deepEqual(matchTitle("2048"), { wish: "merge" });
+  assert.deepEqual(matchTitle("majnkraft"), { wish: "city" }); // slovenski zapis
+  assert.deepEqual(matchTitle("Križci krožci"), { wish: "connect" });
+  assert.deepEqual(matchTitle("nekaj čisto novega"), {});
+  // pogoste besede in daljša imena ne smejo zadeti napačne zvrsti
+  for (const [x, g] of [["Mario Kart", "racing"], ["Sonic Dash", "run"], ["Puzzle Bobble", "bubbles"], ["Jezni ptiči", "sling"], ["Angry Bird", "sling"], ["Vojna zvezd", "space"], ["Krtek", "moles"], ["tetirs", "blocks"], ["Talking Angela", "pet"], ["Worms", "sling"], ["Chrome dino", "run"], ["Royal Match", "match"]]) assert.deepEqual(matchTitle(x), { genre: g }, x);
+  for (const x of ["Skače", "Pikaču", "Igra lovcev", "Navodila", "Pouk", "Premier league", "Swordigo", "Cookie Clicker", "Ninjago", "Darth Vader", "Papagaj", "Svetovna vojna", "Dinozavri"]) assert.deepEqual(matchTitle(x), {}, x);
+  for (const x of ["Pac-Man", "Candy Crush", "Pou", "Uno", "Flappy Bird", "Plants vs Zombies", "Wordle"]) {
+    const m = matchTitle(x);
+    assert.ok(GENRE_IDS.includes(m.genre) || WISH_IDS.includes(m.wish), x);
+  }
+  assert.deepEqual(cleanTitles(["  Tetris ", "tetris", "<b>x</b>", "a".repeat(60), "1", "2", "3"]), ["Tetris", "b x /b", "a".repeat(40), "1", "2"]);
+  const store = openDb(":memory:");
+  const s = store.createStudent("Ana", {});
+  assert.deepEqual(s.settings.game_titles, []);
+  assert.deepEqual(store.updateStudent(s.id, { settings: { game_titles: ["Fortnite", "fortnite"] } }).settings.game_titles, ["Fortnite"]);
+});

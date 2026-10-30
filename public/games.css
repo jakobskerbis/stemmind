@@ -95,6 +95,17 @@
 .gm-kidnew .gm-tile:nth-child(2n) { animation-delay: 0.06s; }
 .gm-kidnew .gm-tile:nth-child(3n) { animation-delay: 0.12s; }
 @keyframes gm-kidpop { from { transform: scale(0.6); opacity: 0; } to { transform: none; opacity: 1; } }
+.gm-own { margin: 16px 0 4px; }
+.gm-own label { display: block; margin-bottom: 6px; }
+.gm-own-row { display: flex; gap: 8px; }
+.gm-own-row input { flex: 1; min-width: 0; }
+.gm-own-row button { display: inline-flex; align-items: center; gap: 4px; flex: none; }
+.gm-own-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.gm-own-list li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 10px; border: 2px solid var(--border); border-radius: var(--radius-sm, 12px); }
+.gm-own-list li span { min-width: 0; }
+.gm-own-list b, .gm-own-list small { display: block; overflow-wrap: anywhere; }
+.gm-own-list small { color: var(--muted); font-weight: 600; }
+.gm-own-list button { flex: none; padding: 4px 8px; }
 .gm-trends { margin: 0 0 12px; padding: 10px 14px; }
 .gm-trends summary { cursor: pointer; font-weight: 800; }
 .gm-trends h3 { margin: 12px 0 4px; font-size: 0.95rem; }
