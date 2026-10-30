@@ -40,7 +40,7 @@ export function layout(title, inner, footer = "") {
 <h1 style="font-size:20px;margin:0 0 16px">${esc(title)}</h1>
 ${inner}
 </div>
-<p style="font-size:12px;color:#6b7385;margin-top:16px">${footer}</p>
+<p style="font-size:12px;color:#5f6779;margin-top:16px">${footer}</p>
 </div></body></html>`;
 }
 
@@ -52,7 +52,7 @@ export function verifyEmail(url) {
     subject: "Potrdi e-naslov za Evklid",
     html: layout(
       "Potrdi svoj e-naslov",
-      `<p>Pozdravljeni! S klikom na gumb potrdite e-naslov in da ste zakoniti zastopnik otroka, ki bo uporabljal Evklid.</p>${button(url, "Potrdi e-naslov")}<p style="font-size:13px;color:#6b7385">Če se niste registrirali, to sporočilo prezrite.</p>`,
+      `<p>Pozdravljeni! S klikom na gumb potrdite e-naslov in da ste zakoniti zastopnik otroka, ki bo uporabljal Evklid.</p>${button(url, "Potrdi e-naslov")}<p style="font-size:13px;color:#5f6779">Če se niste registrirali, to sporočilo prezrite.</p>`,
     ),
     text: `Potrdite e-naslov za Evklid: ${url}`,
   };
@@ -61,7 +61,7 @@ export function verifyEmail(url) {
 export function resetEmail(url) {
   return {
     subject: "Novo geslo za Evklid",
-    html: layout("Nastavi novo geslo", `<p>Za novo geslo kliknite spodnji gumb. Povezava velja 1 uro.</p>${button(url, "Nastavi novo geslo")}<p style="font-size:13px;color:#6b7385">Če niste zahtevali novega gesla, sporočilo prezrite.</p>`),
+    html: layout("Nastavi novo geslo", `<p>Za novo geslo kliknite spodnji gumb. Povezava velja 1 uro.</p>${button(url, "Nastavi novo geslo")}<p style="font-size:13px;color:#5f6779">Če niste zahtevali novega gesla, sporočilo prezrite.</p>`),
     text: `Novo geslo za Evklid (velja 1 uro): ${url}`,
   };
 }

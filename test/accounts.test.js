@@ -881,6 +881,8 @@ test("preverjanje starosti: premlad otrok dobi povezavo za starše, dijak ima sa
     assert.equal(mine.status, 201);
     assert.equal(mine.body.birth_year, Number(ymd(18).slice(0, 4)));
     assert.match(store.db.prepare("SELECT text FROM consents WHERE student_id = ?").get(mine.body.id).text, /^Profil je moj/);
+    // Tedensko poročilo za »Zame« nagovori dijaka samega.
+    assert.match((await adult("/api/account/weekly-report/preview")).body, /Živjo, Tina/);
     // Star račun brez datuma rojstva: »Zame« samo, če je letnica dovolj stara.
     store.db.prepare("UPDATE parents SET birth_date = NULL WHERE email = 'maturant@primer.si'").run();
     const tooYoung = await adult("/api/students", { method: "POST", body: { name: "Mlajši", birth_year: YEAR - 15, self: true, consent: true } });

@@ -9,7 +9,7 @@ import { BRAND } from "../brand.js";
 import { esc, layout, button } from "./email.js";
 
 const BLUE = "#4f6bed";
-const MUTED = "#6b7385";
+const MUTED = "#5f6779"; // AA (≥ 4,5 : 1) tudi na sivi podlagi ploščic
 const DAYS_SL = ["ne", "po", "to", "sr", "če", "pe", "so"];
 const GOAL_NAMES = { test: "Test v šoli", npz: "NPZ", matura: "Matura", tekmovanje: "Tekmovanje", izpit: "Izpit" };
 
@@ -51,7 +51,10 @@ export function childWeek(db, student) {
     return { label: DAYS_SL[d.getUTCDay()], active: dates.has(d.toISOString().slice(0, 10)) };
   });
 
-  const tasks = one(`SELECT COUNT(*) AS solved, COALESCE(SUM(first_try_correct), 0) AS first_try FROM tasks WHERE student_id = ? AND solved = 1 AND ${W}`);
+  const tasks = one(
+    `SELECT COUNT(*) AS solved, COALESCE(SUM(first_try_correct = 1), 0) AS first_try, COUNT(first_try_correct) AS judged
+     FROM tasks WHERE student_id = ? AND solved = 1 AND ${W}`,
+  );
   const prevSolved = one(`SELECT COUNT(*) AS n FROM tasks WHERE student_id = ? AND solved = 1 AND ${PREV}`).n;
   const xp = one(`SELECT COALESCE(SUM(amount), 0) AS xp FROM xp_events WHERE student_id = ? AND ${W}`).xp;
   const questions = one(
@@ -101,6 +104,7 @@ export function childWeek(db, student) {
     .all(id);
   const hardChat = detectWeakTopics(chatStats)
     .filter((w) => !hardPractice.some((h) => h.name.toLowerCase() === String(w.topic).toLowerCase()))
+    .filter((w, i, all) => all.findIndex((x) => String(x.topic).toLowerCase() === String(w.topic).toLowerCase()) === i) // ista tema pri dveh predmetih
     .map((w) => ({ name: w.topic, detail: `v klepetu pogosto napake${w.subject ? ` (${subjectName(w.subject).toLowerCase()})` : ""}` }));
   const weak = [...hardPractice, ...hardChat].slice(0, 3);
 
@@ -127,7 +131,7 @@ export function childWeek(db, student) {
     strip,
     solved: tasks.solved,
     prev_solved: prevSolved,
-    accuracy: tasks.solved ? Math.round((tasks.first_try / tasks.solved) * 100) : null,
+    accuracy: tasks.judged ? Math.round((tasks.first_try / tasks.judged) * 100) : null,
     xp,
     questions,
     subjects: [...subjects.values()],
@@ -150,7 +154,7 @@ export function headline(w) {
   const parts = [`${plural(w.active_days, DNI)} vaje`];
   if (w.solved) parts.push(plural(w.solved, ["rešena naloga", "rešeni nalogi", "rešene naloge", "rešenih nalog"]));
   if (w.mastered.length) parts.push(plural(w.mastered.length, ["nova osvojena tema", "novi osvojeni temi", "nove osvojene teme", "novih osvojenih tem"]));
-  const mood = w.active_days >= 4 || w.mastered.length ? "Odličen teden" : w.active_days >= 2 ? "Dober teden" : "Začetek je tu";
+  const mood = w.active_days >= 4 || w.mastered.length ? "Odličen teden" : w.active_days >= 2 ? "Dober teden" : w.prev_active_days > 1 ? "Mirnejši teden" : "Dober začetek";
   return `${mood}: ${parts.join(", ")}.`;
 }
 
@@ -159,12 +163,12 @@ export function nextSteps(w, self = false) {
   const steps = [];
   if (!w.active_days) {
     const start = self ? "Začni" : "Začnite";
-    steps.push(w.next ? `${start} s 15 minutami: Današnji trening ali tema »${w.next}«.` : `${start} s 15 minutami: gumb »Današnji trening« na Učni poti.`);
+    steps.push(w.next ? `${start} s 15 minutami: »Današnji trening« ali tema »${w.next}«.` : `${start} s 15 minutami: gumb »Današnji trening« na Učni poti.`);
     if (w.due_reviews) steps.push(`${plural(w.due_reviews, ["tema čaka", "temi čakata", "teme čakajo", "tem čaka"])} na ponovitev, da se znanje ne pozabi.`);
     return steps;
   }
   if (w.due_reviews) steps.push(`Kratka ponovitev (okoli 5 minut): ${plural(w.due_reviews, ["tema čaka", "temi čakata", "teme čakajo", "tem čaka"])} na osvežitev.`);
-  if (w.weak[0]) steps.push(`Vaja iz teme »${w.weak[0].name}«, kjer je bilo največ napak. Pomaga prositi inštruktorja za rešen primer.`);
+  if (w.weak[0]) steps.push(`Vaja iz teme »${w.weak[0].name}«, kjer je bilo največ napak. Inštruktor lahko pokaže rešen primer korak za korakom.`);
   if (w.next && !w.weak.some((x) => x.name === w.next)) steps.push(`Nadaljevanje na Učni poti: »${w.next}«.`);
   if (w.active_days < 4) steps.push("Cilj za naslednji teden: 4 dni po 15 minut. Kratko in redno se najbolj obrestuje.");
   return steps.slice(0, 3);
@@ -184,11 +188,11 @@ function stripHtml(strip) {
 
 function trend(now, prev) {
   if (!prev && !now) return "";
-  if (!prev) return `<div style="font-size:12px;color:#1f9d55">nov začetek</div>`;
+  if (!prev) return `<div style="font-size:12px;color:#167a3e">nov začetek</div>`;
   const d = now - prev;
-  if (d > 0) return `<div style="font-size:12px;color:#1f9d55">▲ ${d} več kot prejšnji teden</div>`;
-  if (d < 0) return `<div style="font-size:12px;color:#b45309">▼ ${-d} manj kot prejšnji teden</div>`;
-  return `<div style="font-size:12px;color:${MUTED}">enako kot prejšnji teden</div>`;
+  if (d > 0) return `<div style="font-size:12px;color:#167a3e">▲ ${d} več kot teden prej</div>`;
+  if (d < 0) return `<div style="font-size:12px;color:#b45309">▼ ${-d} manj kot teden prej</div>`;
+  return `<div style="font-size:12px;color:${MUTED}">enako kot teden prej</div>`;
 }
 
 function tiles(w) {
@@ -196,9 +200,9 @@ function tiles(w) {
     `<td style="width:33%;padding:4px;vertical-align:top"><div style="background:#f4f6fb;border-radius:10px;padding:12px 8px;text-align:center">
 <div style="font-size:24px;font-weight:bold;color:#1d2433">${value}</div><div style="font-size:12px;color:${MUTED};margin-top:2px">${label}</div>${extra}</div></td>`;
   return `<table role="presentation" style="width:100%;border-collapse:collapse;margin:12px 0 0"><tr>
-${tile(`<b>${w.solved}</b>`, "rešenih nalog", trend(w.solved, w.prev_solved))}
+${tile(`<b>${w.solved}</b>`, plural(w.solved, ["rešena naloga", "rešeni nalogi", "rešene naloge", "rešenih nalog"]).replace(/^\d+ /, ""), trend(w.solved, w.prev_solved))}
 ${tile(w.accuracy === null ? "–" : `${w.accuracy} %`, "prav v prvem poskusu")}
-${tile(`${w.questions}`, "vprašanj inštruktorju")}
+${tile(`${w.questions}`, plural(w.questions, ["vprašanje", "vprašanji", "vprašanja", "vprašanj"]).replace(/^\d+ /, "") + " inštruktorju")}
 </tr></table>`;
 }
 
@@ -206,7 +210,7 @@ function learnedHtml(subjects) {
   if (!subjects.length) return "";
   const row = (s) => {
     const items = [
-      ...s.practice.map((t) => `${esc(t.name)} <span style="color:${MUTED}">(${plural(t.solved || 0, NALOG)}${t.rate !== null && t.judged >= 2 ? `, ${Math.round(t.rate * 100)} %` : ""})</span>`),
+      ...s.practice.map((t) => `${esc(t.name)} <span style="color:${MUTED}">(${plural(t.solved || 0, NALOG)}${t.rate !== null && t.judged >= 2 ? `, ${Math.round(t.rate * 100)} % prav` : ""})</span>`),
       ...s.chat.map((c) => `${esc(c)} <span style="color:${MUTED}">(klepet)</span>`),
     ];
     return `<p style="margin:4px 0"><b>${esc(s.name)}:</b> ${items.join(", ")}</p>`;
@@ -221,7 +225,8 @@ function listHtml(icon, title, items) {
 
 function childBlock({ child, week: w, self }) {
   const quiet = !w.active_days;
-  const streak = w.streak >= 2 ? `<span style="float:right;font-size:13px;color:#b45309;font-weight:bold">🔥 ${plural(w.streak, DNI)} zapored</span>` : "";
+  // Brez float (Outlook ga ne upošteva): ime in niz dni v isti vrstici tabele.
+  const streak = w.streak >= 2 ? `<td style="text-align:right;vertical-align:middle;white-space:nowrap;font-size:13px;color:#b45309;font-weight:bold">🔥 ${plural(w.streak, DNI)} zapored</td>` : "";
   const goal = w.goal
     ? `<p style="margin:12px 0 0;padding:10px 12px;background:#fff8e6;border-radius:8px">🎯 <b>${esc(w.goal.name)}</b> ${esc(w.goal.date)}: ${
         w.goal.days === 0 ? "danes je dan cilja" : `še ${plural(w.goal.days, DNI)}`
@@ -230,7 +235,7 @@ function childBlock({ child, week: w, self }) {
   const steps = nextSteps(w, self);
   const stepsHtml = steps.length
     ? `<div style="margin:16px 0 0;padding:12px 14px;background:#eef1fd;border-radius:10px">
-<p style="margin:0 0 6px;font-weight:bold;color:${BLUE}">Naslednji koraki</p>
+<p style="margin:0 0 6px;font-weight:bold;color:#3b55d9">Naslednji koraki</p>
 <ol style="margin:0;padding-left:20px">${steps.map((s) => `<li style="margin:4px 0">${esc(s)}</li>`).join("")}</ol></div>`
     : "";
   // Starš vpraša po temi, ki jo otrok že obvlada: razlaganje utrdi znanje in otrok se pokaže v dobri luči.
@@ -241,7 +246,7 @@ function childBlock({ child, week: w, self }) {
       : "";
   return `
 <div style="border-top:1px solid #e6e9f2;margin-top:20px;padding-top:16px">
-${streak}<h2 style="font-size:19px;margin:0 0 4px">${esc(child.name)}</h2>
+<table role="presentation" style="width:100%;border-collapse:collapse;margin:0 0 4px"><tr><td style="vertical-align:middle"><h2 style="font-size:19px;margin:0">${esc(child.name)}</h2></td>${streak}</tr></table>
 <p style="margin:0 0 10px;font-size:15px">${esc(headline(w))}</p>
 ${stripHtml(w.strip)}
 ${quiet ? "" : tiles(w)}
@@ -261,7 +266,7 @@ function childText({ child, week: w, self }) {
   for (const s of w.subjects) lines.push(`${s.name}: ${[...s.practice.map((t) => t.name), ...s.chat].join(", ")}`);
   if (w.mastered.length) lines.push(`Osvojeno: ${w.mastered.join(", ")}`);
   if (w.weak.length) lines.push(`Še vaditi: ${w.weak.map((x) => x.name).join(", ")}`);
-  if (w.goal) lines.push(`${w.goal.name} ${w.goal.date}: še ${plural(w.goal.days, DNI)}`);
+  if (w.goal) lines.push(`${w.goal.name} ${w.goal.date}: ${w.goal.days === 0 ? "danes je dan cilja" : `še ${plural(w.goal.days, DNI)}`}`);
   const steps = nextSteps(w, self);
   if (steps.length) lines.push("Naslednji koraki:", ...steps.map((s, i) => `${i + 1}. ${s}`));
   return lines.join("\n");
@@ -274,10 +279,10 @@ function subjectLine(rows) {
     const bits = [plural(w.active_days, DNI) + " vaje"];
     if (w.mastered.length) bits.push(`🏆 ${plural(w.mastered.length, ["nova tema", "novi temi", "nove teme", "novih tem"])}`);
     else if (w.solved) bits.push(plural(w.solved, NALOG));
-    if (w.streak >= 3) bits.push(`🔥 ${w.streak} zapored`);
+    if (w.streak >= 3) bits.push(`🔥 ${plural(w.streak, DNI)} zapored`);
     return `${child.name} ta teden: ${bits.join(", ")}`;
   }
-  return `${BRAND.name}: tedenski pregled za ${rows.map((r) => r.child.name).join(" in ")}`;
+  return `${BRAND.name}, tedenski pregled: ${rows.map((r) => r.child.name).join(", ").replace(/, ([^,]*)$/, " in $1")}`;
 }
 
 export function buildWeeklyReport(db, parent, children, { appUrl, unsubscribeUrl, selfIds = [] }) {
@@ -286,7 +291,7 @@ export function buildWeeklyReport(db, parent, children, { appUrl, unsubscribeUrl
   const hello = allSelf
     ? `<p style="margin:0">Živjo${rows[0] ? `, ${esc(rows[0].child.name)}` : ""}! Tvoj teden na kratko.</p>`
     : `<p style="margin:0">Pozdravljeni${parent.name ? `, ${esc(parent.name)}` : ""}! Takole je minil zadnji teden.</p>`;
-  const html = layout("Tedenski pregled", `${hello}${rows.map(childBlock).join("")}${button(appUrl, `Odpri ${BRAND.name}`)}`,
+  const html = layout("Tedenski pregled", `${hello}${rows.map(childBlock).join("")}${button(appUrl, `${allSelf ? "Odpri" : "Odprite"} ${BRAND.name}`)}`,
     `To poročilo prihaja vsako nedeljo zvečer. Če dva tedna ni vaje, ga ne pošljemo. <a href="${esc(unsubscribeUrl)}" style="color:${MUTED}">Odjava od tedenskih poročil</a>.`,
   );
   const text = `${rows.map(childText).join("\n\n")}\n\n${appUrl}\n\nOdjava: ${unsubscribeUrl}`;
