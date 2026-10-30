@@ -5,7 +5,7 @@ import fs from "node:fs";
 // Napisana gradiva iz testnih primerov (učenci jih ne vidijo).
 process.env.EVKLID_GRADIVA = new URL("./fixtures/gradiva", import.meta.url).pathname;
 const { checkGradivo, gradivaFor, gradivoPage, videoFor, seconds, parseGradivo } = await import("../server/gradiva-vsebina.js");
-const { mountGradiva } = await import("../server/gradiva.js");
+const { mountGradiva, authoredMap } = await import("../server/gradiva.js");
 const { default: express } = await import("express");
 const { openDb } = await import("../server/db.js");
 const { createApp } = await import("../server/app.js");
@@ -19,6 +19,14 @@ test("fixtures pass the format check", () => {
   assert.deepEqual(gradivaFor("FIZ-OS-9/delo"), []);
   assert.equal(seconds("1:30"), 90);
   assert.equal(seconds("90"), null);
+});
+
+test("authored mind map: keyword branches, and »Label: detail« keeps its detail", () => {
+  assert.deepEqual(authoredMap(OHM), [
+    { label: "Upor", detail: "nasprotuje toku · enota ohm ($\\Omega$)" },
+    { label: "Ohmov zakon", detail: "velja za kovine · $I = \\dfrac{U}{R}$" },
+    { label: "Graf $I(U)$", detail: "premica skozi izhodišče" },
+  ]);
 });
 
 test("format check catches missing safety, bad scenes and unknown simulations", () => {

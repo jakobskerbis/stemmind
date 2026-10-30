@@ -72,7 +72,11 @@ export function authoredMap(topicId) {
     else if (out.length) out[out.length - 1].subs.push(m[2].trim());
   }
   return out.length
-    ? out.slice(0, 8).map((b) => (b.subs.length ? { label: b.label || b.detail, detail: b.subs.join(" · ") } : { label: b.label, detail: b.detail }))
+    ? out.slice(0, 8).map((b) => {
+        if (!b.subs.length) return { label: b.label, detail: b.detail };
+        // »Veja: podrobnost« s podalinejami: podrobnost za dvopičjem ostane pred podalinejami.
+        return b.label ? { label: b.label, detail: [b.detail, ...b.subs].join(" · ") } : { label: b.detail, detail: b.subs.join(" · ") };
+      })
     : null;
 }
 

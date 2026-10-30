@@ -42,14 +42,16 @@ Without a file the mind map branches are the lesson's summary bullets. A better 
 avtor: AI
 stanje: osnutek
 ---
-- Upor: nasprotuje toku
+- Upor
+  - nasprotuje toku
   - enota ohm ($\Omega$)
 - Ohmov zakon
   - $I = \dfrac{U}{R}$
 ```
 
-Top-level bullets are branches (at most 8, keyword first, `Label: detail` allowed), indented bullets are
-details. With an authored map the summary page also shows the lesson summary.
+Top-level bullets are branches (at most 8): a keyword of 1–4 words, no colon (as the lesson brief says).
+Indented bullets are details. A branch written `Label: detail` still works: the detail is shown before the
+indented bullets. With an authored map the summary page also shows the lesson summary.
 
 ## Written materials (content files)
 
