@@ -9,8 +9,8 @@ import { fileURLToPath } from "node:url";
 import { buildSystemPrompt } from "./prompt.js";
 import { createStreamFilter, parseMeta, parseCards, stripMeta } from "./meta.js";
 import { studentResults } from "./results.js";
-import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, MODEL_MID, REFUSAL_TEXT, errorText } from "./claude.js";
-import { Usage, LIMITS, windowHistory, recentHistory } from "./usage.js";
+import { streamReply, readHandwriting, isMockMode, MODEL, MODEL_DEEP, MODEL_MID, REFUSAL_TEXT, errorText, apiErrorCode } from "./claude.js";
+import { Usage, LIMITS, NOTES, windowHistory, recentHistory } from "./usage.js";
 import { pricingAdvice } from "./advice.js";
 import { codeHint } from "./hints.js";
 import { Progress } from "./progress.js";
@@ -32,6 +32,7 @@ import { mountAccounts } from "./accounts/index.js";
 import { passwordGate, gateNeeded } from "./gate.js";
 import { levelUpSuggestion, nextLevel } from "./level-up.js";
 import { competitionInfo, competitionKeyFor, isCompetitionPath } from "./competition.js";
+import { PAPERS_SI, PAPERS_SOURCE } from "./exam-papers-si.js";
 import { examInfo, examKeyFor, isExamPath, examOf, examPrompt, taskLanguage, localizeExamView, localizeExamTopic } from "./exams.js";
 import { compressedStatic, compressedJson } from "./compress.js";
 import { mountFeedback, feedbackAiOn, feedbackPromptOn, isLocalRequest } from "./feedback.js";
@@ -263,6 +264,8 @@ export function createApp(store, opts = {}) {
   // »Vprašaj Evklida« iz Vadnice: pogovor -> naloga, da prvi odgovor sestavi koda.
   const helpTasks = new Map();
   const usage = new Usage(store.db);
+  // Delitev mesečnega proračuna po profilih in dokupljeni kredit (z računi; server/proracun.js).
+  if (accounts?.credits) usage.configure({ weightOf: accounts.shareWeightFor, ownerOf: accounts.ownerOf, credits: accounts.credits, freeOver: accounts.freeOver });
   // Kartice, ki so čakale na preverjanje ob ponovnem zagonu, ne bodo nikoli preverjene: proč z njimi
   // (sicer bi skrite blokirale isto vprašanje, UNIQUE student_id + norm).
   store.db.prepare("DELETE FROM flashcards WHERE verified = 0").run();
@@ -298,6 +301,15 @@ export function createApp(store, opts = {}) {
     localOnly: (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Samo na računalniku, kjer teče Evklid." })),
   });
 
+  // Obvestilo »Testna verzija«: kaj še ne dela. EVKLID_TESTNA_VERZIJA=off ga skrije (ob javni objavi).
+  const testNotice = () => {
+    if (/^(off|0|false|ne)$/i.test(process.env.EVKLID_TESTNA_VERZIJA || "")) return [];
+    const items = [usage.creditOutRecently() ? "tutorOff" : "tutor"];
+    if (!/_live_/.test(process.env.STRIPE_SECRET_KEY || "")) items.push("pay");
+    if (!process.env.RESEND_API_KEY) items.push("email");
+    items.push("apps");
+    return items;
+  };
   app.get("/api/config", (req, res) => {
     res.json({
       mock: isMockMode(),
@@ -308,6 +320,7 @@ export function createApp(store, opts = {}) {
       daily_questions: LIMITS.dailyQuestions() || null,
       feedback: { prompt: feedbackPromptOn(), ai: feedbackAiOn(), admin: isLocalRequest(req) },
       chat_off: chatOff(),
+      test_notice: testNotice(),
     });
   });
 
@@ -448,7 +461,7 @@ export function createApp(store, opts = {}) {
     const capped =
       !!ladder &&
       (!ladder.opus || (ladder.promo ? againStreak < 3 || usage.promoOpusSpent(student.id, MODEL_DEEP) : againStreak > 0 && againStreak < 3));
-    const { mode, note } = usage.chooseMode(student.id, {
+    const chosen = usage.chooseMode(student.id, {
       wantDeep: againStreak >= 2,
       wantThink: againStreak === 1,
       competition: student.settings.track === "COMPETITION",
@@ -457,6 +470,14 @@ export function createApp(store, opts = {}) {
       deepModel: capped ? MODEL_MID : MODEL_DEEP,
       capped,
     });
+    // Mesečni proračun API (server/proracun.js): pod načrtom porabe močnejši model, nad njim hitri.
+    // Brezplačni paket brez nadgradnje (nikoli Opus, ima svoje meje); koda in šolska licenca največ Sonnet.
+    const premium = !accounts || accounts.premiumFor(student.id);
+    const maxTier = !premium ? null : ladder && (!ladder.opus || ladder.promo) ? "mid" : "deep";
+    // Z opombo (dnevna meja Opusa, mehka meja, brezplačni paket) ostane izbrani hitri model: opomba mora držati.
+    const routed = chosen.note ? { mode: chosen.mode, boosted: false, saved: false } : usage.route(student.id, chosen.mode, { lite, maxTier });
+    const mode = routed.mode;
+    const note = chosen.note || (routed.saved ? NOTES.appBudget : null);
     // »mid« (Sonnet: šolska licenca, Osebno pred 3. prošnjo, aktivacijska koda) se obnaša kot podrobna razlaga, le z drugim modelom.
     const deep = mode === "deep" || mode === "mid";
 
@@ -543,8 +564,9 @@ export function createApp(store, opts = {}) {
         : streamFn;
       const result = await run({
         system,
-        // Opus dobi samo zadnje izmenjave; Haiku daljše okno (predpomnjeno).
-        messages: deep ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id)),
+        // Opus dobi samo zadnje izmenjave; Haiku daljše okno (predpomnjeno). Nadgrajen običajen
+        // odgovor (proračun) ohrani celo okno, saj nadaljuje pogovor.
+        messages: deep && !routed.boosted ? recentHistory(store.apiHistory(conv.id)) : windowHistory(store.apiHistory(conv.id)),
         deep,
         mode,
         tools: SETTINGS_TOOLS,
@@ -568,7 +590,7 @@ export function createApp(store, opts = {}) {
       // V zgodovino shranimo samo besedilo (brez blokov razmišljanja): manj žetonov
       // pri naslednjih klicih in nobenih težav ob krajšanju zgodovine.
       let content = [{ type: "text", text: result.text || "…" }];
-      const cost = cached ? 0 : usage.log(student.id, result.model || (mode === "mid" ? MODEL_MID : deep ? MODEL_DEEP : MODEL), result.usage);
+      const cost = cached ? 0 : usage.log(student.id, result.model || (mode === "mid" ? MODEL_MID : deep ? MODEL_DEEP : MODEL), result.usage, routed.boosted ? "boost" : "chat");
       if (settingsTools.state.proposal) send("proposal", settingsTools.state.proposal);
       if (key && !cached && !result.toolCalls && !settingsTools.state.used && result.stopReason === "end_turn" && result.text) {
         // Drugim učencem gre odgovor šele po trojnem preverjanju (koda + dva AI pregleda, server/verify.js).
@@ -648,6 +670,7 @@ export function createApp(store, opts = {}) {
       if (again) store.db.prepare("UPDATE conversations SET deep = ? WHERE id = ?").run(conv.deep || 0, conv.id);
       if (!controller.signal.aborted) {
         console.error("[evklid] napaka pri klicu modela:", err?.status ?? "", err?.message ?? err);
+        if (/dobroimetja/.test(apiErrorCode(err) || "")) usage.markCreditOut();
         send("error", { error: errorText(err) });
       }
       res.end();
@@ -871,7 +894,13 @@ export function createApp(store, opts = {}) {
       defaultExam: examOf(defaultKey),
       history: progress.contestHistory(s.id, key),
       openContest: progress.openContest(s.id, key),
+      readiness: progress.examReadiness(s.id, key),
     });
+  });
+  // Pretekle pole NPZ in mature: samo povezave na ric.si (server/exam-papers-si.js), brez besedila pol.
+  app.get("/api/exam-papers", (_req, res) => {
+    res.set("Cache-Control", "public, max-age=3600");
+    res.json({ source: PAPERS_SOURCE, papers: PAPERS_SI });
   });
   app.post("/api/students/:id/competition-training", (req, res) => {
     const s = loadStudent(req, res);
@@ -1034,6 +1063,16 @@ export function createApp(store, opts = {}) {
     const claim = !!accounts && isLocalRequest(req) && !req.parent?.is_admin;
     const sum = usage.summary();
     res.json({ ...sum, can_claim: claim, advice: pricingAdvice(store.db, sum) });
+  });
+  // Mesečni proračun API: skrbnik nastavi znesek ali doda kupljeni kredit za ta mesec (server/proracun.js).
+  // Ni v nastavitvah iz klepeta (finančni podatek, public/settings-registry.js).
+  app.post("/api/usage/budget", (req, res) => {
+    if (!accounts && !isLocalRequest(req)) return res.status(403).json({ error: "Samo za skrbnika." });
+    const { base_usd: base, add_usd: add } = req.body || {};
+    if (base === undefined && add === undefined) return res.status(400).json({ error: "Manjka znesek." });
+    if (base !== undefined && !usage.setBudgetBase(base)) return res.status(400).json({ error: "Napačen znesek." });
+    if (add !== undefined && !usage.addBudget(add)) return res.status(400).json({ error: "Napačen znesek." });
+    res.json({ ok: true, budget: usage.budgetState() });
   });
   app.get("/api/students/:id/usage", (req, res) => {
     const s = loadStudent(req, res);

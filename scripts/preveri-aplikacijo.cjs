@@ -547,11 +547,12 @@ async function calculator(p, label) {
   await click(p, '#view-graph [data-calc-mode="sci"]', { wait: 300 });
 }
 
-async function competition(p, label) {
-  await tab(p, "competition");
-  await expectVisible(p, "#competition-content [data-comp-train]", "tekmovanja ali izpiti");
-  await screen(p, `tekmovanja-${label}`);
-  await click(p, "#competition-content [data-comp-train]", { wait: 400 });
+async function competition(p, label, view = "competition") {
+  await tab(p, view);
+  await expectVisible(p, `#${view}-content [data-comp-train]`, "tekmovanja ali izpiti");
+  if (view === "competition" && (await p.locator("#competition-content [data-prep]").count())) throw new Error("v Tekmovanjih je še preklop na NPZ in maturo");
+  await screen(p, `${view === "exams" ? "npz-matura" : "tekmovanja"}-${label}`);
+  await click(p, `#${view}-content [data-comp-train]`, { wait: 400 });
   await expectVisible(p, "#practice .task", "naloga tekmovalnega treninga");
   // Trening do konca: »Ne vem« ni, zato odgovorimo pravilno ali narobe, dokler ni konec.
   for (let i = 0; i < 12; i++) {
@@ -569,12 +570,12 @@ async function competition(p, label) {
   if (!(await p.locator("#practice .result").isVisible())) throw new Error("trening se ni končal");
   await screen(p, `trening-konec-${label}`);
   await click(p, "#fb-back");
-  if ((await currentView(p)) !== "view-competition") throw new Error("gumb na koncu treninga ne vodi na tekmovanja");
+  if ((await currentView(p)) !== `view-${view}`) throw new Error(`gumb na koncu treninga ne vodi na ${view}`);
 }
 
-async function contest(p, label) {
+async function contest(p, label, view = "competition") {
   // Poskusno tekmovanje: začni, preskoči eno nalogo, končaj, poglej rezultat.
-  await click(p, "#competition-content [data-comp-contest]", { wait: 400 });
+  await click(p, `#${view}-content [data-comp-contest]`, { wait: 400 });
   await expectVisible(p, "#practice .task", "naloga poskusnega tekmovanja");
   await screen(p, `poskusni-${label}`);
   await click(p, "#c-skip", { wait: 300 });
@@ -582,6 +583,23 @@ async function contest(p, label) {
   await expectVisible(p, "#practice .result", "rezultat poskusnega tekmovanja");
   await screen(p, `poskusni-rezultat-${label}`);
   await click(p, "#fb-back");
+  if ((await currentView(p)) !== `view-${view}`) throw new Error(`rezultat poskusnega izpita ne vodi na ${view}`);
+}
+
+// NPZ in matura (slovenska OŠ in SŠ): pripravljenost, »Vadi« pri šibki temi, pretekle pole (samo povezave na ric.si).
+async function examsView(p, label) {
+  await tab(p, "exams");
+  await expectVisible(p, "#exams-content .exam-ready", "NPZ in matura: pripravljenost");
+  await expectVisible(p, '#exam-papers .pp-row a[href^="https://www.ric.si/mma/"]', "pretekle pole");
+  await screen(p, `npz-matura-pole-${label}`);
+  await click(p, "#exams-content [data-er-practice]", { wait: 500 });
+  await expectVisible(p, "#view-topic #practice .task", "vaja šibke teme");
+  await click(p, "#back-to-path", { wait: 300 });
+  if ((await currentView(p)) !== "view-exams") throw new Error("»Nazaj« z vaje šibke teme ne vodi v NPZ in maturo");
+  // Izbira pol po korakih: krušne drobtine vrnejo korak, izbira ga zapre.
+  await click(p, "#exam-papers .lp-crumb[data-pp-step=\"exam\"]", { wait: 200 });
+  await expectVisible(p, "#exam-papers .lp-opt", "izbira izpita pri polah");
+  await click(p, "#exam-papers .lp-opt", { wait: 200 });
 }
 
 async function games(p, label) {
@@ -688,6 +706,37 @@ async function scan(p, label) {
   await screen(p, `skeniraj-zgodovina-${label}`);
 }
 
+// Predmet v menijih zgoraj (public/subject-switch.js): menjava pod klobukom (meni ostane odprt)
+// in v meniju profila (meni se zapre); na koncu spet prvotni predmet.
+async function subjectSwitch(p, lbl) {
+  await tab(p, "path");
+  const label = (pop) => p.locator(`${pop} .subj-sw-btn b`).innerText().then((x) => x.trim());
+  await click(p, ".topbar .brand", { wait: 300 });
+  await expectVisible(p, "#quick-pop .subj-sw-btn", "predmet pod klobukom");
+  const first = await label("#quick-pop");
+  await click(p, "#quick-pop .subj-sw-btn", { wait: 200 });
+  await expectVisible(p, "#quick-pop .subj-sw-opt[aria-checked=false]", "seznam predmetov pod klobukom");
+  await screen(p, `predmet-klobuk-${lbl}`);
+  const other = p.locator("#quick-pop .subj-sw-opt[aria-checked=false]").first();
+  const want = (await other.innerText()).trim();
+  await other.click();
+  await settle(p, 700);
+  if (!(await p.locator("#quick-pop").isVisible())) throw new Error("po menjavi predmeta se meni pod klobukom zapre");
+  if ((await label("#quick-pop")) !== want) throw new Error(`predmet pod klobukom: pričakoval »${want}«, vidim »${await label("#quick-pop")}«`);
+  await expectVisible(p, "#quick-pop .qs-row", "naslednji korak v novem predmetu");
+  await p.keyboard.press("Escape");
+  await click(p, "#profile-btn", { wait: 300 });
+  if ((await label("#profile-pop")) !== want) throw new Error("meni profila ne kaže novega predmeta");
+  await click(p, "#profile-pop .subj-sw-btn", { wait: 200 });
+  await screen(p, `predmet-profil-${lbl}`);
+  await p.locator("#profile-pop .subj-sw-opt").filter({ has: p.getByText(first, { exact: true }) }).first().click();
+  await settle(p, 700);
+  if (await p.locator("#profile-pop").isVisible()) throw new Error("po menjavi predmeta se meni profila ne zapre");
+  await click(p, "#profile-btn", { wait: 300 });
+  if ((await label("#profile-pop")) !== first) throw new Error("predmet se ni vrnil na prvotnega");
+  await p.keyboard.press("Escape");
+}
+
 async function profileMenu(p) {
   await click(p, "#profile-btn");
   await expectVisible(p, "#profile-pop .pm-item", "meni profila");
@@ -756,6 +805,7 @@ async function desktop(browser, app) {
     await click(p, "#back-to-path");
   });
   await step(p, "nadaljuj", () => quickStart(p));
+  await step(p, "predmet-meni", () => subjectSwitch(p, "OS"));
   // Zbirke so na računalniku v meniju profila (na telefonu pod »Jaz«).
   await step(p, "profil-zbirke", async () => {
     await click(p, "#profile-btn");
@@ -776,6 +826,9 @@ async function desktop(browser, app) {
   await step(p, "kalkulator", () => calculator(p, "OS"));
   await step(p, "tekmovanja", () => competition(p, "OS"));
   await step(p, "poskusno-tekmovanje", () => contest(p, "OS"));
+  await step(p, "npz-matura", () => examsView(p, "OS"));
+  await step(p, "npz-trening", () => competition(p, "OS-npz", "exams"));
+  await step(p, "npz-poskusni", () => contest(p, "OS-npz", "exams"));
   await step(p, "igre", () => games(p, "OS"));
   await views(p, "OS");
   await step(p, "mnenje", () => feedback(p, "OS"));
@@ -814,8 +867,14 @@ async function desktop(browser, app) {
       await click(p, "#back-to-path");
     });
     await step(p, `ucbenik-${lbl}`, () => textbook(p, lbl));
+    if (lbl === "UNI") await step(p, "predmet-meni-UNI", () => subjectSwitch(p, lbl));
     await step(p, `klepet-${lbl}`, () => chat(p, lbl));
     if (lbl === "SS") await step(p, `tekmovanja-${lbl}`, () => competition(p, lbl));
+    if (lbl === "SS") await step(p, `npz-matura-${lbl}`, () => examsView(p, lbl));
+    if (lbl === "UNI")
+      await step(p, "faks-brez-npz", async () => {
+        if (await p.locator("#exams-tab").isVisible()) throw new Error("fakulteta ima zavihek NPZ in matura");
+      });
     if (lbl === "UNI")
       await step(p, "faks-brez-tekmovanj", async () => {
         if (await p.locator("#competition-tab").isVisible()) throw new Error("fakulteta ima zavihek Tekmovanja");
@@ -835,6 +894,7 @@ async function desktop(browser, app) {
     await expectVisible(p, "#view-path #xp-card .hero", `učna pot po osvežitvi (${p.url()})`, 8000);
     await tab(p, "competition");
     await expectVisible(p, "#competition-content [data-comp-train]", "izpiti");
+    if (await p.locator("#exams-tab").isVisible()) throw new Error("regijski sistem ima zavihek NPZ in matura");
     await screen(p, "izpiti");
     await click(p, "#competition-content [data-comp-train]", { wait: 400 });
     await expectVisible(p, "#practice .task", "naloga izpitnega treninga");

@@ -69,6 +69,7 @@ const MATURA_PAGE = { MAT: "matematika", FIZ: "fizika", KEM: "kemija", BIO: "bio
 export function officialPapers(examId, subject) {
   if (examId === "NPZ6" || examId === "NPZ9") return { source: "RIC", url: "https://www.ric.si/nacionalno-preverjanje-znanja/preizkusi-znanja/" };
   if (examId === "MATURA" && MATURA_PAGE[subject]) return { source: "RIC", url: `https://www.ric.si/splosna-matura/predmeti/${MATURA_PAGE[subject]}/` };
+  if (examId === "POKLICNA" && subject === "MAT") return { source: "RIC", url: "https://www.ric.si/poklicna-matura/predmeti/tretji-predmet/matematika/" };
   return null;
 }
 
@@ -80,7 +81,7 @@ export function examInfo(key, system, lang = "en") {
   const mock = mockOf(key);
   const groups = mock.groups;
   const { own, other } = examsFor(system);
-  const brief = (x) => ({ id: x, name: localExam(x, lang).name, country: localExam(x, lang).country });
+  const brief = (x) => ({ id: x, name: localExam(x, lang).name, country: localExam(x, lang).country, ...(EXAMS[x].track ? { track: EXAMS[x].track } : {}) });
   return {
     key,
     exam: id,

@@ -237,7 +237,7 @@ body.graph-open { overflow: hidden; }
   .gc .gc-fab { width: 38px; height: 38px; }
   .gc.kp-open .gc-help { display: none; }
   .gc.kp-open .gc .gc-key, .gc.kp-open .gc-key { min-height: 40px; }
-  body.gc-kp .tabbar, body.gc-kp #mock-banner, body.gc-kp #view-graph .me-back, body.gc-kp #offline-banner { display: none !important; }
+  body.gc-kp .tabbar, body.gc-kp #mock-banner, body.gc-kp #test-notice, body.gc-kp #view-graph .me-back, body.gc-kp #offline-banner { display: none !important; }
   .gc-pop { max-height: 60vh; }
   .gc-row:not(.editing) .gc-math { min-height: 40px; }
 }
@@ -583,7 +583,7 @@ button.sol-c:hover, button.sol-c:focus-visible, .sol-c.sel { border-color: var(-
 /* Na telefonu znanstveni kalkulator skrije zgornjo vrstico (ostaneta ← in spodnji zavihki), da ostane prostor za zgodovino. */
 @media (max-width: 760px) {
   body:has(#view-graph:not([hidden]) #graph-slot > .sc) .topbar,
-  body:has(#view-graph:not([hidden]) #graph-slot > .sc) #mock-banner { display: none !important; }
+  body:has(#view-graph:not([hidden]) #graph-slot > .sc) #mock-banner, body:has(#view-graph:not([hidden]) #graph-slot > .sc) #test-notice { display: none !important; }
   .sc-key { min-height: 40px; }
   .sc-key.n { min-height: 44px; }
   .sc-parts { display: flex; flex-wrap: wrap; justify-content: flex-end; column-gap: 14px; }

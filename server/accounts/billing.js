@@ -14,6 +14,7 @@ import { cleanText } from "../settings.js";
 import { ljNow } from "./goal-reminder.js";
 import { promoEndingEmail, renewalEmail } from "./email.js";
 import { audit } from "../dnevnik-dostopov.js";
+import { CREDIT_PACKS, packById, customPack, CUSTOM_MIN_CENTS, creditUsdFor, conversationsFor } from "../placila/krediti.js";
 
 export const ADULT_TEXT = "Sem polnoleten/-na in plačujem za svoj profil ali kot starš oziroma skrbnik.";
 export const WITHDRAWAL_TEXT =
@@ -155,7 +156,7 @@ export function nextTest(schedules, studentId, now = new Date()) {
 }
 
 export function mountBilling(app, ctx) {
-  const { db, store, stripe, log, json, getParent, update, childIds, ownerOf, ensureCustomer, accessOf, baseUrl, sendMail, currencyOf, isMinor, applySubscription, syncCustomer, promo, kv, offersFor = () => ({ show: true, prices: true }), hasSchoolChild = () => false } = ctx;
+  const { credits = null, db, store, stripe, log, json, getParent, update, childIds, ownerOf, ensureCustomer, accessOf, baseUrl, sendMail, currencyOf, isMinor, applySubscription, syncCustomer, promo, kv, offersFor = () => ({ show: true, prices: true }), hasSchoolChild = () => false } = ctx;
   migrateBilling(db);
   const passes = new Passes(db);
   const schedules = new Schedules(db);
@@ -305,6 +306,92 @@ export function mountBilling(app, ctx) {
       res.json({ pass: publicPass(pass), paid: pass?.status === "active" });
     } catch (err) {
       log.error?.("[evklid] Stripe paket (potrditev):", err.message);
+      res.status(502).json({ error: "Plačila ni bilo mogoče preveriti. Osvežite stran čez minuto." });
+    }
+  });
+
+  // --- dokup porabe AI (server/placila/krediti.js) ---
+  // Ko učenec porabi svoj del mesečnega proračuna, imetnik računa dokupi kredit: polovica plačila
+  // postane kredit v $, vezan na račun (velja za vse njegove profile).
+  // Navzven samo cena in število pogovorov, ne delež plačila ali znesek kredita (j 2026-10-30).
+  const publicPack = (p) => ({ id: p.id, amount: p.amount, currency: p.currency, conversations: conversationsFor(creditUsdFor(p.amount)) });
+  app.get("/api/billing/credit", (req, res) => {
+    const p = req.parent;
+    if (!credits || !p || p.is_guest) return res.json({ billing: false, balance_conversations: 0, packs: [] });
+    res.json({
+      billing: stripe.enabled,
+      balance_conversations: conversationsFor(credits.balance(p.id)),
+      packs: currencyOf(req, p) === "EUR" ? CREDIT_PACKS.map(publicPack) : [],
+      // Poljuben znesek: najmanjši znesek in ocena pogovorov na 1 € (za sprotni izračun v kartici).
+      custom: { min: CUSTOM_MIN_CENTS, per_eur: conversationsFor(creditUsdFor(100_000)) / 1000 },
+      minor: isMinor(p),
+    });
+  });
+
+  app.post("/api/billing/credit", json, async (req, res) => {
+    if (needStripe(res)) return;
+    const p = req.parent;
+    if (!credits || !p || p.is_guest) return res.status(403).json({ error: "Najprej ustvari račun v zavihku Račun.", guest: true });
+    if (isMinor(p)) return res.status(403).json({ error: "Dokup porabe plača polnoleten imetnik računa (starš ali skrbnik)." });
+    const pack = req.body?.pack === "custom" ? customPack(req.body?.amount_eur) : packById(req.body?.pack);
+    if (!pack) return res.status(400).json({ error: req.body?.pack === "custom" ? "Najmanjši znesek je 5 €." : "Neznan paket." });
+    if (currencyOf(req, p) !== "EUR") return res.status(400).json({ error: "Dokup porabe je zaenkrat na voljo samo v evrih." });
+    if (!consented(req.body)) return res.status(400).json(consentError);
+    try {
+      const customer = await ensureCustomer(p);
+      const creditId = credits.create(p.id, pack);
+      const base = baseUrl(req);
+      const meta = { kind: "credit", credit_id: creditId, parent_id: p.id };
+      const session = await stripe.request("POST", "/checkout/sessions", {
+        mode: "payment",
+        customer,
+        client_reference_id: String(p.id),
+        line_items: [
+          {
+            price_data: {
+              currency: pack.currency.toLowerCase(),
+              unit_amount: pack.amount,
+              tax_behavior: "inclusive",
+              product_data: { name: `Evklid – dodatna poraba AI inštruktorja (${(pack.amount / 100).toFixed(2).replace(".", ",")} €)` },
+            },
+            quantity: 1,
+          },
+        ],
+        success_url: `${base}/?billing=credit&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${base}/?billing=cancel`,
+        locale: "sl",
+        metadata: meta,
+        payment_intent_data: { metadata: meta },
+      });
+      credits.setCheckout(creditId, session.id);
+      recordConsent(p.id, p.email, "credit", req.body?.lang);
+      res.json({ url: session.url });
+    } catch (err) {
+      log.error?.("[evklid] Stripe dokup porabe:", err.message);
+      res.status(502).json({ error: "Plačilne strani ni bilo mogoče odpreti. Poskusite znova." });
+    }
+  });
+
+  // Plačilo dokupa je uspelo: kredit se pripiše (enkrat).
+  function completeCreditSession(session) {
+    if (!credits || session?.metadata?.kind !== "credit" || session.payment_status !== "paid") return false;
+    const c = credits.get(session.metadata.credit_id);
+    if (!c || String(c.parent_id) !== String(session.metadata.parent_id)) return false;
+    return credits.activate(c.id, typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id);
+  }
+
+  app.post("/api/billing/credit/confirm", json, async (req, res) => {
+    if (needStripe(res)) return;
+    const id = String(req.body?.session_id || "");
+    if (!/^cs_[\w]+$/.test(id)) return res.status(400).json({ error: "Neznana seja plačila." });
+    try {
+      const session = await stripe.request("GET", `/checkout/sessions/${id}`);
+      if (String(session.metadata?.parent_id) !== String(req.parent.id)) return res.status(404).json({ error: "Plačilo ne obstaja." });
+      completeCreditSession(session);
+      const c = credits.get(session.metadata?.credit_id);
+      res.json({ paid: c?.status === "active", balance_conversations: conversationsFor(credits.balance(req.parent.id)) });
+    } catch (err) {
+      log.error?.("[evklid] Stripe dokup porabe (potrditev):", err.message);
       res.status(502).json({ error: "Plačila ni bilo mogoče preveriti. Osvežite stran čez minuto." });
     }
   });
@@ -548,5 +635,5 @@ export function mountBilling(app, ctx) {
     return out;
   }
 
-  return { passes, passPremium, completePassSession, completeSubSession, billingDaily, recordConsent };
+  return { passes, passPremium, completePassSession, completeCreditSession, completeSubSession, billingDaily, recordConsent };
 }

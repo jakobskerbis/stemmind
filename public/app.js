@@ -11,6 +11,7 @@ import { initAccount, accountsOn, openAddChild, logout, openProfileLock } from "
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
 import { openPrintable, stopReading } from "./gradiva.js";
+import { initSubjectSwitch } from "./subject-switch.js";
 import { initTextbook, showTextbook, openLesson, textbookBack } from "./textbook.js";
 import { loadLeague } from "./leagues.js";
 import { PACES, DEFAULT_PACE, createPacer } from "./pace.js";
@@ -32,9 +33,12 @@ import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-setting
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
 import { initScan, showScan, leaveScan, scanBack } from "./scan/scan.js";
 import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
+import { initTestNotice } from "./testna-verzija.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
 import { xpStatsHtml, xpItemsHtml, levelRowHtml, paintBadge, celebrateXp } from "./xp-fx.js";
-import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml } from "./goal.js";
+import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml, fmtDate } from "./goal.js";
+import { validDate } from "./goal-data.js";
+import { loadPapers, mountPapers, examName as siExamName, SI_EXAMS } from "./exam-papers.js";
 
 const $ = (sel) => document.querySelector(sel);
 // Brez povezave odgovori vadnica iz shranjenega paketa nalog (public/offline.js).
@@ -124,11 +128,11 @@ function showView(name) {
   syncHistory(name);
   currentView = name;
   syncCompetitionTab();
-  if (name === "path" || name === "competition") setBack(name);
+  if (name === "path" || name === "competition" || name === "exams") setBack(name);
   if (name !== "topic") stopContestTimer();
   document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("active", t.dataset.view === name));
   // Na telefonu so Napredek, Lige, Nastavitve in Račun pod zavihkom »Jaz«.
-  if (ME_VIEWS.includes(name)) $('#tabbar [data-view="me"]').classList.add("active");
+  if (meView(name)) $('#tabbar [data-view="me"]').classList.add("active");
   if (name === "me") renderMe();
   document.querySelectorAll(".view").forEach((v) => (v.hidden = v.id !== `view-${name}`));
   if (name === "settings") {
@@ -143,7 +147,8 @@ function showView(name) {
   if (name === "league") loadLeague(state.student.id);
   if (name === "path") loadPath();
   if (name === "textbook") showTextbook();
-  if (name === "competition") (examMode() ? loadExams() : loadCompetition());
+  if (name === "competition") (regionalExams() ? loadExams() : loadCompetition());
+  if (name === "exams") loadExams();
   if (name === "feedback") showFeedback();
   if (name === "games") showGames();
   else leaveGames();
@@ -235,7 +240,7 @@ window.addEventListener("popstate", () => {
   if (currentView === "textbook" && textbookBack()) return keep();
   if (currentView === "games" && gamesBack()) return keep();
   if (currentView === "scan" && scanBack()) return keep();
-  const subMe = ME_VIEWS.includes(currentView) && !["me", "graph"].includes(currentView);
+  const subMe = meView(currentView) && !["me", "graph"].includes(currentView);
   if (subMe && $("#tabbar").offsetParent) return showView("me"); // telefon: nazaj na »Jaz«
   fromBack = true;
   try {
@@ -246,6 +251,8 @@ window.addEventListener("popstate", () => {
 });
 
 const ME_VIEWS = ["me", "progress", "league", "settings", "account", "feedback", "graph", "games", "corner", "schedule", "zbirke", "scan"];
+// Tekmovanja in »NPZ in matura« si na telefonu delita četrto mesto spodnje vrstice; tisti, ki ga tam ni, je pod »Jaz«.
+const meView = (name) => ME_VIEWS.includes(name) || (!!name && name === offTabbarPrep());
 // Zbirke in učni pass: odpre pogled, po želji s predmetom v pogledu »preglej« (from = pogled za Nazaj).
 let zbOpen = {};
 function openZbirke(item = null, from = null) {
@@ -455,6 +462,10 @@ async function selectStudent(id) {
   state.symbols?.refresh();
   maybeTour.done = false; // vodič je za vsak profil posebej (settings.tour_version)
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
+  // Tekmovanja, Izpiti ter NPZ in matura: izbira in rezultati prejšnjega profila ne ostanejo na zaslonu.
+  state.examKey = state.compKey = null;
+  if (!$("#view-exams").hidden) showView(siExams() ? "exams" : "path");
+  if (!$("#view-competition").hidden) showView(isUni(state.student.settings) ? "path" : "competition");
   refreshProfileButton();
   refreshXp();
   // Vprašalnik kotička zanimanj: profil, ki ga še ni izpolnil, ga dobi ob zagonu (enkrat).
@@ -463,6 +474,8 @@ async function selectStudent(id) {
 $("#student-select").addEventListener("change", (e) => selectStudent(e.target.value));
 
 // Klik na klobuk zgoraj levo: »Nadaljuj z učenjem« (naslednja tema, trening, kar je danes na vrsti).
+// Menjava predmeta v obeh menijih zgoraj (klobuk in ime), ne le v Nastavitvah.
+initSubjectSwitch({ choices: subjectChoices, pick: pickSubject });
 initQuickStart({ getState: () => state, refresh: refreshModes, showView, goNew, startSession, showTestPrep, overlayOpened, overlayClosed });
 
 // Klik na ime zgoraj desno: meni profila (menjava, nov profil, zbirke, mnenje, nastavitve, račun, odjava).
@@ -917,25 +930,61 @@ function fillSubjectOptions() {
 
 const courseCache = new Map(); // program → predmeti po letnikih (/api/paths?program=)
 let courseReq = 0;
+// Predmeti študijskega programa za letnik: predmeti letnika in izbirni predmeti (Nastavitve in meni profila).
+async function courseChoices(program, level) {
+  if (!courseCache.has(program)) courseCache.set(program, await api(`/api/paths?program=${encodeURIComponent(program)}`).catch(() => []));
+  const list = courseCache.get(program);
+  const year = Number((String(level).match(/([1-4])/) || [])[1]) || 1;
+  // Letnik brez predmetov (moduli): zadnji letnik s predmeti, kot na učni poti.
+  const years = [...new Set(list.filter((c) => c.year).map((c) => c.year))].filter((y) => y <= year);
+  const y = years.length ? Math.max(...years) : null;
+  return { y, mine: list.filter((c) => c.year === y), elect: list.filter((c) => c.elective) };
+}
+const courseName = (c) => c.label.replace(/ \([^)]*\)$/, "");
+const currentCourse = (mine, elect, s) =>
+  [...mine, ...elect].some((c) => c.key === s.study_course) ? s.study_course : (mine.find((c) => c.subject === s.subject) || mine[0] || elect[0])?.key;
+
+// Menjava predmeta iz menija profila (zgoraj desno, na vsakem zaslonu), ne le v Nastavitvah.
+async function subjectChoices() {
+  const s = state.student?.settings || {};
+  if (!isUni(s)) {
+    const list = schoolSubjectsFor(s.educational_track, s.curriculum_level, isRegional(s.school_system));
+    return [{ items: list.map((k) => ({ id: k, label: SUBJECT_NAMES[k], current: k === s.subject })) }];
+  }
+  if (!s.study_program) return [];
+  const { y, mine, elect } = await courseChoices(s.study_program, s.curriculum_level);
+  const cur = currentCourse(mine, elect, s);
+  const items = (list) => list.map((c) => ({ id: c.key, subject: c.subject, label: courseName(c), current: c.key === cur }));
+  return [
+    { label: y ? t("path.year", { n: y }) : null, items: items(mine) },
+    { label: t("path.electives"), items: items(elect) },
+  ].filter((g) => g.items.length);
+}
+async function pickSubject(item) {
+  const uni = isUni(state.student.settings);
+  const settings = uni ? { study_course: item.id, subject: item.subject || state.student.settings.subject } : { subject: item.id, study_course: "" };
+  const updated = await api(`/api/students/${state.student.id}`, { method: "PUT", body: { settings } });
+  studentUpdated(updated);
+  toast(`${t("set.subject")}: ${item.label}`, "check");
+  // Odprt zaslon pokaže novi predmet takoj.
+  if (currentView === "path") loadPath();
+  else if (currentView === "textbook") showTextbook();
+  else if (currentView === "me") renderMe();
+  else if (currentView === "exams") loadExams();
+  else if (currentView === "competition") regionalExams() ? loadExams() : loadCompetition();
+}
+
 async function fillCourseOptions() {
   const f = $("#settings-form");
   const program = f.study_program.value;
   const sel = f.study_course;
   if (!program) return (sel.innerHTML = "");
   const req = ++courseReq;
-  if (!courseCache.has(program)) courseCache.set(program, await api(`/api/paths?program=${encodeURIComponent(program)}`).catch(() => []));
+  const { y, mine, elect } = await courseChoices(program, f.curriculum_level.value);
   if (req !== courseReq) return; // medtem je bil izbran drug program
-  const list = courseCache.get(program);
-  const year = Number((String(f.curriculum_level.value).match(/([1-4])/) || [])[1]) || 1;
-  // Letnik brez predmetov (moduli): zadnji letnik s predmeti, kot na učni poti.
-  const years = [...new Set(list.filter((c) => c.year).map((c) => c.year))].filter((y) => y <= year);
-  const y = years.length ? Math.max(...years) : null;
-  const mine = list.filter((c) => c.year === y);
-  const elect = list.filter((c) => c.elective);
   const s = state.student?.settings || {};
-  const keys = [...mine, ...elect].map((c) => c.key);
-  const prev = keys.includes(sel.value) ? sel.value : keys.includes(s.study_course) ? s.study_course : (mine.find((c) => c.subject === s.subject) || mine[0] || elect[0])?.key;
-  const opt = (c) => `<option value="${c.key}" data-subject="${c.subject}"${c.key === prev ? " selected" : ""}>${escapeHtml(c.label.replace(/ \([^)]*\)$/, ""))}</option>`;
+  const prev = [...mine, ...elect].some((c) => c.key === sel.value) ? sel.value : currentCourse(mine, elect, s);
+  const opt = (c) => `<option value="${c.key}" data-subject="${c.subject}"${c.key === prev ? " selected" : ""}>${escapeHtml(courseName(c))}</option>`;
   sel.innerHTML =
     (mine.length ? `<optgroup label="${escapeHtml(t("path.year", { n: y }))}">${mine.map(opt).join("")}</optgroup>` : "") +
     (elect.length ? `<optgroup label="${escapeHtml(t("path.electives"))}">${elect.map(opt).join("")}</optgroup>` : "");
@@ -1702,7 +1751,7 @@ $("#path-select").addEventListener("change", (e) => loadPath(e.target.value));
 document.addEventListener("click", (e) => {
   const open = e.target.closest("[data-open]");
   if (open && !open.disabled) {
-    setBack(open.closest("#view-competition") ? "competition" : open.closest("#view-path") ? "path" : state.backTo || "path");
+    setBack(open.closest("#view-competition") ? "competition" : open.closest("#view-exams") ? "exams" : open.closest("#view-path") ? "path" : state.backTo || "path");
     openTopic(open.dataset.open);
   }
   const pl = e.target.closest("[data-placement]");
@@ -1716,24 +1765,46 @@ $("#back-to-path").addEventListener("click", () => showView(state.backTo || "pat
 // Šolski sistemi zunaj Slovenije: isti zavihek je »Izpiti« (SAT, gaokao, JEE, NEET, CBSE …).
 // Sporočilo preverjanja: slovensko besedilo s strežnika, v drugih jezikih prevod po kodi.
 const fbText = (r) => (r.code && currentLang() !== "sl" ? t(r.code, r.params || {}) : r.message);
-// Slovenski učenci imajo v zavihku »Tekmovanja« še preklop na NPZ in maturo (state.siExams).
+// Slovenski učenci OŠ in SŠ imajo NPZ in maturo v svojem razdelku (#view-exams, zavihek »NPZ in matura«).
 const regionalExams = () => !!state.student && isRegional(state.student.settings.school_system);
-const examMode = () => regionalExams() || (!!state.student && !!state.siExams);
+const siExams = () => !!state.student && !regionalExams() && Object.hasOwn(SI_EXAMS, state.student.settings.educational_track || "");
+// Izpitni naslovi (trening, poskusni izpit, rezultat): regijski »Izpiti« ali serija iz razdelka »NPZ in matura«.
+const examMode = () => regionalExams() || state.backTo === "exams";
 const prepLabel = () => (regionalExams() ? t("nav.exams") : t("nav.competition"));
 const prepBack = () => (examMode() ? t("exam.back") : t("result.toCompetitions"));
+// Telefon: na četrtem mestu »NPZ in matura«, ko je cilj NPZ ali matura, sicer Tekmovanja.
+const examsInTabbar = () => siExams() && ["npz", "matura"].includes(state.student.settings.goal);
+function offTabbarPrep() {
+  if (!siExams()) return null;
+  return examsInTabbar() ? "competition" : "exams";
+}
+const meBackHtml = () => `<button type="button" class="ghost back me-back">${icon("arrow-left")}<span>${t("nav.me")}</span></button>`;
 function syncCompetitionTab() {
-  $("#competition-tab").hidden = $("#competition-tab-m").hidden = !state.student || isUni(state.student.settings);
-  for (const tab of [$("#competition-tab"), $("#competition-tab-m")]) {
-    const span = tab.querySelector("span");
-    span.dataset.i18n = regionalExams() ? "nav.exams" : "nav.competition";
-    span.textContent = prepLabel();
-    tab.querySelector("i, svg").outerHTML = icon(regionalExams() ? "clipboard-check" : "medal");
-  }
+  const noComp = !state.student || isUni(state.student.settings);
+  $("#competition-tab").hidden = noComp;
+  $("#exams-tab").hidden = !siExams();
+  const span = $("#competition-tab").querySelector("span");
+  span.dataset.i18n = regionalExams() ? "nav.exams" : "nav.competition";
+  span.textContent = prepLabel();
+  $("#competition-tab").querySelector("i, svg").outerHTML = icon(regionalExams() ? "clipboard-check" : "medal");
+  const m = $("#competition-tab-m");
+  const exams = examsInTabbar();
+  m.hidden = noComp;
+  m.dataset.view = exams ? "exams" : "competition";
+  const ms = m.querySelector("span");
+  // Na ozki spodnji vrstici kratko: »NPZ« v OŠ, »Matura« v SŠ (zgoraj »NPZ in matura«).
+  const short = state.student?.settings.educational_track === "OSNOVNA_SOLA" ? "goal.npz" : "goal.matura";
+  ms.dataset.i18n = exams ? short : regionalExams() ? "nav.exams" : "nav.competition";
+  ms.textContent = exams ? t(short) : prepLabel();
+  m.querySelector("i, svg").outerHTML = icon(exams || regionalExams() ? "clipboard-check" : "medal");
+  m.classList.toggle("active", currentView === m.dataset.view);
+  $("#me-exams").hidden = !siExams() || exams;
+  $("#me-competition").hidden = noComp || !exams;
 }
 // Gumb »nazaj« na temi oziroma pri seriji nalog vodi tja, od koder je učenec prišel.
 function setBack(view) {
   state.backTo = view;
-  $("#back-to-path").innerHTML = `${icon("arrow-left")}${view === "competition" ? prepLabel() : t("nav.path")}`;
+  $("#back-to-path").innerHTML = `${icon("arrow-left")}${view === "competition" ? prepLabel() : view === "exams" ? t("nav.examsSi") : t("nav.path")}`;
 }
 
 async function openTopic(topicId) {
@@ -1881,7 +1952,7 @@ async function startSession(kind, body = {}) {
 function sessionDoneCard(mode, n) {
   return `<div class="card result celebrate"><div class="result-icon">${icon("trophy")}</div><h2>${SESSION_DONE[mode] || t("common.done")}!</h2>
     <p>${t("result.firstTry", { correct: n.correct, total: n.total })}${n.xp ? ` · +${n.xp.gained} XP` : ""}</p>
-    <button class="primary big" id="fb-back">${state.backTo === "competition" ? prepBack() : t("result.toPath")}</button></div>`;
+    <button class="primary big" id="fb-back">${state.backTo === "competition" || state.backTo === "exams" ? prepBack() : t("result.toPath")}</button></div>`;
 }
 
 // Slike pri nalogah: graf premice in številska premica. Barve so enake v svetlem
@@ -2384,8 +2455,8 @@ async function loadCompetition(key = state.compKey) {
     : `<p class="muted small-note">${t("comp.historyEmpty")}</p>`;
   const learning = c.units.flatMap((u) => u.topics).filter((t) => t.status !== "new").length;
   box.innerHTML = `
+    ${offTabbarPrep() === "competition" ? meBackHtml() : ""}
     <h1>${t("comp.title")}</h1>
-    ${prepSwitch("comp")}
     <div class="comp-pickers">
       ${seg(["MAT", "FIZ", "KEM"].map((k) => [k, SUBJECT_NAMES[k] || k]), c.subject, "data-comp-subject")}
       ${seg(Object.entries(SCHOOL_NAMES), c.school, "data-comp-school")}
@@ -2434,51 +2505,100 @@ document.addEventListener("click", (e) => {
     const [s0, , sc0] = (state.compKey || "MAT-TEK-OS").split("-");
     loadCompetition(`${subj ? subj.dataset.compSubject : s0}-TEK-${school ? school.dataset.compSchool : sc0}`);
   }
+  // Iz razdelka »NPZ in matura« gre serija na izpitno pot in nazaj tja; regijski »Izpiti« so v zavihku Tekmovanja.
+  const prep = e.target.closest("#view-exams") ? "exams" : "competition";
+  const key = prep === "exams" || regionalExams() ? state.examKey : state.compKey;
   if (e.target.closest("[data-comp-train]")) {
-    setBack("competition");
-    startSession("tek", { path: state.compKey });
+    setBack(prep);
+    startSession("tek", { path: key });
   }
   if (e.target.closest("[data-comp-contest]")) {
-    setBack("competition");
-    startSession("contest", { path: state.compKey });
+    setBack(prep);
+    startSession("contest", { path: key });
   }
 });
 
-// ---------- priprave na izpite (šolski sistemi zunaj Slovenije) ----------
+// ---------- priprave na izpite: regijski »Izpiti« (v zavihku Tekmovanja) in slovenski »NPZ in matura« ----------
+
+// Cilj, ki ustreza izpitom šole: NPZ v OŠ, matura v SŠ (splošna ali poklicna).
+const siGoal = () => (state.student?.settings.educational_track === "OSNOVNA_SOLA" ? "npz" : "matura");
+
+// Kartica Pripravljenost: dni do izpita (datum cilja), delež znane snovi izpita in tri najšibkejše teme.
+function readinessHtml(c) {
+  const s = state.student.settings;
+  const r = c.readiness || { percent: 0, weakest: [] };
+  const date = s.goal === siGoal() && validDate(s.goal_date) ? s.goal_date : "";
+  const d = new Date();
+  const min = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const name = siExamName(c.exam);
+  const dateForm = `<div class="er-form" ${date ? "hidden" : ""}>
+      <label class="goal-date"><span>${t("ready.date")}</span><input type="date" id="er-date" value="${date}" min="${min}"></label>
+      <button type="button" class="primary" data-er-save>${t("common.save")}</button>
+      <small class="muted er-note">${t("ready.saveNote")}</small>
+    </div>`;
+  const weak = r.weakest.length
+    ? `<ul class="er-weak">${r.weakest
+        .map(
+          (w) => `<li><span class="node-dot er-dot ${w.status}">${icon(NODE[w.status][0])}</span><span class="er-name"><b>${escapeHtml(w.name)}</b><small>${escapeHtml(levelLabel(w.unit))}</small></span>
+          <button type="button" class="secondary small" data-er-practice="${escapeHtml(w.id)}">${icon("pencil")}${t("ready.practice")}</button></li>`,
+        )
+        .join("")}</ul>`
+    : `<p class="muted small-note">${t("ready.weakNone")}</p>`;
+  return `<section class="card exam-ready">
+    <div class="er-top">
+      <div class="ring er-ring" style="--p:${r.percent}" role="img" aria-label="${escapeHtml(`${t("ready.title")}: ${name}, ${r.percent} %`)}"><span>${r.percent}%</span></div>
+      <div class="er-text"><span class="eyebrow">${t("ready.title")}</span><h2>${escapeHtml(name)}</h2><p class="muted small-note">${t("ready.pctNote")}</p></div>
+    </div>
+    <div class="er-date">
+      ${date ? `<p class="er-when">${icon("calendar")}<span><b>${escapeHtml(fmtDate(date))}</b> · ${escapeHtml(countdown(date))}</span><button type="button" class="text-btn" data-er-edit>${t("ready.changeDate")}</button></p>` : ""}
+      ${dateForm}
+    </div>
+    <h3 class="er-weak-title">${t("ready.weakTitle")}</h3>
+    ${weak}
+  </section>`;
+}
 
 async function loadExams(key = state.examKey, exam = null) {
-  const box = $("#competition-content");
+  const si = siExams();
+  const box = si ? $("#exams-content") : $("#competition-content");
   const q = key ? `?key=${encodeURIComponent(key)}` : exam ? `?exam=${encodeURIComponent(exam)}` : "";
   let c;
   try {
     c = await api(`/api/students/${state.student.id}/exams${q}`);
   } catch (err) {
-    box.innerHTML = `<p class="muted">${t("comp.loadError", { msg: escapeHtml(err.message) })}</p>`;
+    box.innerHTML = `<p class="muted">${t("exam.loadError", { msg: escapeHtml(err.message) })}</p>`;
     return;
   }
+  // Slovenski izpit zunaj šole učenca (npr. ostanek izbire po menjavi OŠ → SŠ): privzeti izpit šole.
+  const own = si ? SI_EXAMS[state.student.settings.educational_track] : null;
+  if (si && !own.includes(c.exam) && (key || exam)) return loadExams(null, null);
   if (!c.key) {
     box.innerHTML = `<h1>${t("exam.title")}</h1>`;
     return;
   }
-  state.examKey = state.compKey = c.key;
+  state.examKey = c.key;
+  if (!si) state.compKey = c.key;
   const seg = (items, cur, attr) =>
     `<div class="seg" role="group">${items.map(([v, label]) => `<button type="button" class="${v === cur ? "active" : ""}" aria-pressed="${v === cur}" ${attr}="${v}">${escapeHtml(label)}</button>`).join("")}</div>`;
   const left = c.openContest ? Math.max(1, Math.ceil((c.openContest.deadline - Date.now()) / 60000)) : 0;
   const hist = c.history.length
     ? `<ul class="contest-history">${c.history.map((h) => `<li><span>${escapeHtml(new Date(h.date).toLocaleDateString(locale()))}</span><b>${h.points} / ${h.maxPoints}</b><span class="bar"><i style="width:${Math.max(0, Math.round((h.points / h.maxPoints) * 100))}%"></i></span></li>`).join("")}</ul>`
     : `<p class="muted small-note">${t("exam.historyEmpty")}</p>`;
-  const others = c.exams.other.filter((x) => x.id !== c.exam);
+  const others = si ? [] : c.exams.other.filter((x) => x.id !== c.exam);
   const ownIds = c.exams.own.map((x) => x.id);
-  const examSeg = [...c.exams.own, ...(ownIds.includes(c.exam) ? [] : [{ id: c.exam, name: c.name }])].map((x) => [x.id, x.name]);
+  const examSeg = si
+    ? own.map((id) => [id, siExamName(id)])
+    : [...c.exams.own, ...(ownIds.includes(c.exam) ? [] : [{ id: c.exam, name: c.name }])].map((x) => [x.id, x.name]);
   const m = c.mock;
   box.innerHTML = `
-    <h1>${t("exam.title")}</h1>
-    ${prepSwitch("exam")}
+    ${si && offTabbarPrep() === "exams" ? meBackHtml() : ""}
+    <h1>${si ? t("nav.examsSi") : t("exam.title")}</h1>
     <div class="comp-pickers">
       ${seg(examSeg, c.exam, "data-exam")}
       ${others.length ? `<label class="field exam-other"><span class="field-label">${t("exam.otherExams")}</span><select data-exam-other><option value="">…</option>${others.map((x) => `<option value="${x.id}">${escapeHtml(`${x.name} (${x.country})`)}</option>`).join("")}</select></label>` : ""}
       ${c.subjects.length > 1 ? seg(c.subjects.map((x) => [x.key, SUBJECT_NAMES[x.subject] || x.name]), c.key, "data-exam-subject") : ""}
     </div>
+    ${si ? readinessHtml(c) : ""}
     <details class="card exam-about"><summary>${icon("info")}<span><b>${escapeHtml(c.full)}</b> · ${escapeHtml(c.country)}</span></summary><p lang="${c.lang || "en"}">${escapeHtml(c.about)}</p></details>
     <div class="card xp-card comp-hero">
       <div class="hero">
@@ -2500,14 +2620,20 @@ async function loadExams(key = state.examKey, exam = null) {
       <span class="field-label">${t("comp.lastResults")}</span>
       ${hist}
     </section>
-    ${c.official ? `<section class="card exam-official"><h2>${icon("file-text")}${t("gr.pastTitle")}</h2><p class="muted">${t("gr.pastText", { src: escapeHtml(c.official.source) })}</p><a class="btn-secondary" href="${escapeHtml(c.official.url)}" target="_blank" rel="noopener">${icon("external-link")}${t("gr.pastOpen")}</a></section>` : ""}
+    ${
+      si
+        ? `<section class="card exam-official exam-papers"><h2>${icon("file-text")}${t("pp.title")}</h2><p class="muted">${t("pp.text")}</p><div id="exam-papers" class="pp-picker"><p class="muted">${t("common.loading")}</p></div></section>`
+        : c.official
+          ? `<section class="card exam-official"><h2>${icon("file-text")}${t("gr.pastTitle")}</h2><p class="muted">${t("gr.pastText", { src: escapeHtml(c.official.source) })}</p><a class="btn-secondary" href="${escapeHtml(c.official.url)}" target="_blank" rel="noopener">${icon("external-link")}${t("gr.pastOpen")}</a></section>`
+          : ""
+    }
     <h2 class="comp-topics-title">${t("comp.topics")}</h2>
     <p class="muted small-note">${c.tasksLang === "en" && currentLang() !== "en" ? t("exam.topicsNote") : t("exam.topicsPick")}</p>
     ${c.units
       .map(
         (u, ui) => `<section class="unit card">
         <div class="unit-head"><div class="ring" style="--p:${Math.round(u.progress * 100)}"><span>${Math.round(u.progress * 100)}%</span></div>
-          <div class="unit-title"><span class="eyebrow">${t("unit.label", { n: ui + 1 })}</span><h2>${escapeHtml(u.title)}</h2></div></div>
+          <div class="unit-title"><span class="eyebrow">${t("unit.label", { n: ui + 1 })}</span><h2>${escapeHtml(si ? levelLabel(u.title) : u.title)}</h2></div></div>
         <ol class="path">${u.topics
           .map((tp) => {
             const st = tp.due ? "due" : tp.status;
@@ -2517,7 +2643,53 @@ async function loadExams(key = state.examKey, exam = null) {
           .join("")}</ol></section>`,
       )
       .join("")}`;
+  if (si) showPapers(c);
 }
+
+// Pretekle pole: privzeto izbrani izpit in predmet razdelka ter učenčeva raven matematike (OR/VR).
+async function showPapers(c) {
+  const slot = $("#exam-papers");
+  let papers;
+  try {
+    papers = await loadPapers(api);
+  } catch (err) {
+    if (slot.isConnected) slot.innerHTML = `<p class="muted">${t("pp.loadError", { msg: escapeHtml(err.message) })}</p>`;
+    return;
+  }
+  if (!slot.isConnected) return;
+  const s = state.student.settings;
+  const level = /VR/.test(String(s.curriculum_level || "")) ? "VR" : "OR";
+  mountPapers(slot, papers, { track: s.educational_track, exam: c.exam, subject: c.subject, level }, { subjectName: (k) => SUBJECT_NAMES[k] || k });
+}
+
+document.addEventListener("click", async (e) => {
+  if (!e.target.closest("#view-exams")) return;
+  const edit = e.target.closest("[data-er-edit]");
+  if (edit) {
+    $("#view-exams .er-form").hidden = false;
+    edit.closest(".er-when").hidden = true;
+    return $("#er-date").focus();
+  }
+  if (e.target.closest("[data-er-save]")) {
+    const date = $("#er-date").value;
+    if (!validDate(date)) return $("#er-date").focus();
+    try {
+      const updated = await api(`/api/students/${state.student.id}`, { method: "PUT", body: { settings: { goal: siGoal(), goal_date: date } } });
+      studentUpdated(updated);
+      renderGoal();
+      toast(t("ready.saved"));
+    } catch (err) {
+      return toast(err.message);
+    }
+    return loadExams(state.examKey);
+  }
+  const pr = e.target.closest("[data-er-practice]");
+  if (pr) {
+    setBack("exams");
+    const pretest = await openTopic(pr.dataset.erPractice);
+    if (!pretest && $("#t-practice")) nextPractice();
+  }
+});
 
 $("#weak-sheet")?.addEventListener("click", () => {
   const msg = $("#weak-sheet-msg");
@@ -2528,20 +2700,7 @@ $("#weak-sheet")?.addEventListener("click", () => {
   });
 });
 
-// Slovenija: preklop med tekmovanji ter NPZ in maturo (drugje je zavihek samo »Izpiti«).
-function prepSwitch(cur) {
-  if (regionalExams()) return "";
-  const items = [["comp", t("comp.title")], ["exam", t("exam.national")]];
-  return `<div class="seg prep-switch" role="group">${items.map(([v, label]) => `<button type="button" class="${v === cur ? "active" : ""}" aria-pressed="${v === cur}" data-prep="${v}">${escapeHtml(label)}</button>`).join("")}</div>`;
-}
-
 document.addEventListener("click", (e) => {
-  const prep = e.target.closest("[data-prep]");
-  if (prep) {
-    state.siExams = prep.dataset.prep === "exam";
-    state.examKey = null;
-    return state.siExams ? loadExams() : loadCompetition();
-  }
   const ex = e.target.closest("[data-exam]");
   if (ex) loadExams(null, ex.dataset.exam);
   const sub = e.target.closest("[data-exam-subject]");
@@ -2639,7 +2798,7 @@ function showContestResult(c, timeUp = false) {
       </details>`;
       })
       .join("")}`;
-  $("#fb-back").addEventListener("click", () => showView("competition"));
+  $("#fb-back").addEventListener("click", () => showView(state.backTo === "exams" ? "exams" : "competition"));
   countUp($("#practice .count-up"));
   refreshXp();
 }
@@ -3027,6 +3186,7 @@ initFormulaInfo();
 (async () => {
   const cfg = await api("/api/config");
   $("#mock-banner").hidden = !cfg.mock;
+  initTestNotice(cfg.test_notice, { showView });
   $("#chat-off").hidden = !cfg.chat_off;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   initGames({ api, getStudent: () => state.student, setStudent: studentUpdated, toast: (m, ic = "check") => toast(m, ic), refreshXp, currentLang });
