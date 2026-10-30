@@ -40,6 +40,7 @@
   "lock.text": "Hồ sơ này đã bị khóa. Hãy nhập mật khẩu của hồ sơ.",
   "lock.setText": "Mỗi hồ sơ có mật khẩu riêng. Hãy đặt mật khẩu cho hồ sơ này để không ai khác mở được nếu không có nó.",
   "lock.password": "Mật khẩu hồ sơ",
+  "lock.passwordFor": "Mật khẩu hồ sơ của {name}",
   "lock.repeat": "Nhập lại mật khẩu",
   "lock.open": "Mở hồ sơ",
   "lock.save": "Lưu mật khẩu",

@@ -401,7 +401,13 @@ test("app link: signed-in phone browser opens the app signed in, with its open p
     store.db.prepare("UPDATE parents SET email_verified_at = datetime('now') WHERE email = ?").run("brskalnik@primer.si");
     const ana = await web("/api/students", { body: { name: "Ana", self: true, consent: true } });
     assert.equal(ana.status, 201, JSON.stringify(ana.body));
+    // En profil brez gesla profila: povezava v aplikacijo ga vseeno odpre na telefonu.
+    const t0 = token((await web("/prenesi?app=1")).body);
+    assert.equal((await appClient()("/api/auth/app-link", { body: { token: t0 } })).body.student_id, ana.body.id, "en profil: telefon ga prevzame");
     assert.equal((await web(`/api/students/${ana.body.id}/unlock`, { body: { password: "ana1", set: true } })).status, 200);
+    // Drugi profil na računu: šele z njim velja geslo profila (račun z enim profilom ga ne potrebuje).
+    const bor = await web("/api/students", { body: { name: "Bor", birth_year: new Date().getFullYear() - 10, consent: true } });
+    assert.equal(bor.status, 201, JSON.stringify(bor.body));
 
     // Računalnik: aplikacije ni, gumba tudi ne.
     assert.equal(token((await web("/prenesi", { ua: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130" })).body), undefined);
@@ -450,6 +456,49 @@ test("app link: signed-in phone browser opens the app signed in, with its open p
     const late = await appClient()("/api/auth/app-link", { body: { token: t2 } });
     assert.equal(late.status, 400);
     assert.equal(late.body.expired, true);
+  });
+});
+
+// j 2026-10-30: »nočem, da se ta zaslon prikazuje« – račun z enim profilom gesla profila ne vidi.
+test("profile password only when the account has more than one profile", async () => {
+  await withServer(async ({ appClient, adult }) => {
+    const c = appClient();
+    await adult(c, "en@primer.si");
+    const ana = await c("/api/students", { body: { name: "Ana", self: true, consent: true } });
+    assert.equal(ana.status, 201);
+    // Brez gesla profila: nova naprava po prijavi v račun odpre profil takoj.
+    const ipad = appClient();
+    assert.equal((await ipad("/api/auth/login", { body: { email: "en@primer.si", password: "geslo12345" } })).status, 200);
+    const list = await ipad("/api/students");
+    assert.deepEqual([list.body[0].locked, list.body[0].needs_password], [undefined, undefined]);
+    assert.equal((await ipad(`/api/students/${ana.body.id}/claim`, { body: {} })).status, 200, "prevzem, ne geslo");
+    assert.equal((await ipad(`/api/students/${ana.body.id}`)).status, 200);
+    // Z geslom, nastavljenim prej (stari računi), prav tako.
+    assert.equal((await ipad(`/api/students/${ana.body.id}/unlock`, { body: { password: "ana1", set: true } })).status, 200);
+    const ipad2 = appClient();
+    assert.equal((await ipad2("/api/auth/login", { body: { email: "en@primer.si", password: "geslo12345" } })).status, 200);
+    assert.ok(!(await ipad2("/api/students")).body[0].locked);
+    assert.notEqual((await ipad2(`/api/students/${ana.body.id}`)).status, 423, "ni zaklenjen (409 = odprt na drugi napravi)");
+  });
+});
+
+test("second profile: existing profiles without a password get theirs in the same step", async () => {
+  await withServer(async ({ appClient, adult }) => {
+    const c = appClient();
+    await adult(c, "dva@primer.si");
+    const ana = (await c("/api/students", { body: { name: "Ana", birth_year: new Date().getFullYear() - 12, consent: true } })).body;
+    const year = new Date().getFullYear() - 10;
+    // Prekratko geslo za obstoječi profil: nič se ne ustvari.
+    const bad = await c("/api/students", { body: { name: "Bor", birth_year: year, consent: true, profile_password: "bor1", other_passwords: { [ana.id]: "a" } } });
+    assert.equal(bad.status, 400);
+    assert.equal((await c("/api/students")).body.length, 1);
+    const bor = await c("/api/students", { body: { name: "Bor", birth_year: year, consent: true, profile_password: "bor1", other_passwords: { [ana.id]: "ana1" } } });
+    assert.equal(bor.status, 201, JSON.stringify(bor.body));
+    // Na tej napravi oba odprta; na novi napravi oba zaklenjena, nobeden »brez gesla«.
+    assert.deepEqual((await c("/api/students")).body.map((s) => !!(s.locked || s.needs_password)), [false, false]);
+    const other = appClient();
+    assert.equal((await other("/api/auth/login", { body: { email: "dva@primer.si", password: "geslo12345" } })).status, 200);
+    assert.deepEqual((await other("/api/students")).body.map((s) => [!!s.locked, !!s.needs_password]), [[true, false], [true, false]]);
   });
 });
 

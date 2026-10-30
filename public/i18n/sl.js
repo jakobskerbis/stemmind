@@ -42,6 +42,7 @@ export default {
   "lock.text": "Ta profil je zaklenjen. Vpiši geslo profila.",
   "lock.setText": "Vsak profil ima svoje geslo. Nastavi geslo za ta profil, da ga brez njega ne odpre nihče drug.",
   "lock.password": "Geslo profila",
+  "lock.passwordFor": "Geslo profila {name}",
   "lock.repeat": "Ponovi geslo",
   "lock.open": "Odpri profil",
   "lock.save": "Shrani geslo",

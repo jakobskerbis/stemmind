@@ -41,6 +41,7 @@
   "lock.text": "Ce profil est verrouillé. Saisis son mot de passe.",
   "lock.setText": "Chaque profil a son propre mot de passe. Choisis un mot de passe pour ce profil afin que personne d'autre ne puisse l'ouvrir sans lui.",
   "lock.password": "Mot de passe du profil",
+  "lock.passwordFor": "Mot de passe du profil de {name}",
   "lock.repeat": "Répète le mot de passe",
   "lock.open": "Ouvrir le profil",
   "lock.save": "Enregistrer le mot de passe",

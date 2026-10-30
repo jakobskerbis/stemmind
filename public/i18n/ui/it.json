@@ -41,6 +41,7 @@
   "lock.text": "Questo profilo è bloccato. Inserisci la sua password.",
   "lock.setText": "Ogni profilo ha la sua password. Imposta una password per questo profilo, così nessun altro potrà aprirlo senza.",
   "lock.password": "Password del profilo",
+  "lock.passwordFor": "Password del profilo di {name}",
   "lock.repeat": "Ripeti la password",
   "lock.open": "Apri profilo",
   "lock.save": "Salva password",

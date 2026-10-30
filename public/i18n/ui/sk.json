@@ -43,6 +43,7 @@
   "lock.text": "Tento profil je zamknutý. Zadaj jeho heslo.",
   "lock.setText": "Každý profil má svoje heslo. Nastav heslo pre tento profil, aby ho nikto iný bez neho neotvoril.",
   "lock.password": "Heslo profilu",
+  "lock.passwordFor": "Heslo profilu {name}",
   "lock.repeat": "Zopakuj heslo",
   "lock.open": "Otvoriť profil",
   "lock.save": "Uložiť heslo",
