@@ -86,7 +86,7 @@ export class Usage {
       if (daily && this.deepToday(studentId, deepModel) >= daily) return { mode: "think", note: NOTES.dailyDeep(daily) };
       const soft = LIMITS.studentSoftUsd();
       if (soft && this.monthTotal(studentId) >= soft) return { mode: "think", note: NOTES.softBudget };
-      // Aktivacijska koda: zmogljivejši model je največ Sonnet (mode "mid"), nikoli Opus.
+      // Aktivacijska koda (capped): Sonnet (mode "mid") namesto Opusa.
       return { mode: capped ? "mid" : "deep", note: null };
     }
     if (wantThink) return { mode: "think", note: null };
