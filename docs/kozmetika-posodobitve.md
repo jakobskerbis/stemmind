@@ -35,6 +35,8 @@ v poročilu povej, da podatkov ni bilo.
   - vsaj 2 za kovance v trgovini (public/avatar.js, `it(...)` + risba; cena določi redkost),
   - vsaj 1 za znanje ali igre (public/zbirke.js: Pot znanja, zbirka predmeta ali `igre`; nikoli cena),
   - kadar želje to kažejo, nov lik (predal `kind`, odklene se samo z igrami).
+    Izjema: zbirka »Smešni liki« (`smesni`, j 30. 10. 2026) ima like za XP, po znanih nesmiselnih »brainrot«
+    likih, samo primerni (brez kletvic, nasilja, njihovih pesmi), največ legendarni.
 - Če se izide, še eno manjšo izboljšavo (npr. nova kombinacija, popravek risbe, ki so jo otroci omenili).
 - Vsak nov predmet dobi vrstico v `ADDED` (public/avatar.js) z datumom posodobitve: teden dni nosi oznako
   »Novo« in je v vrstici »Novo ta teden« v trgovini.

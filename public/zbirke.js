@@ -142,8 +142,9 @@ export const KNOWLEDGE = [
     ["pot_comet", "fx", "cosmic", 200000, "Komet", "Comet"],
     ["pot_starcrown", "hat", "eternal", 300000, "Zvezdna krona", "Crown of stars"],
   ].map(([id, slot, rarity, xp, sl, en]) => ({ id, collection: "pot", slot, rarity, name: { sl, en }, need: { xp }, ...(ABOUT[id] ? { about: ABOUT[id] } : {}) })),
-  // Smešni liki (j, 30. 10. 2026: »italian brainrot« predmeti za XP, samo primerni). Izvirne risbe v tem
-  // nesmiselnem slogu (žival + predmet), brez likov in pesmi iz spleta: več izvirnih ima kletvice ali nasilje.
+  // Smešni liki (j, 30. 10. 2026: »italian brainrot« predmeti in liki za XP, samo primerni). Naše risbe in
+  // imena po znanih nesmiselnih likih (žival + predmet), brez njihovih pesmi; izpuščeni so tisti s kletvicami
+  // ali nasiljem. Edini liki (kind), ki se odklenejo z XP; nikoli kozmični ali večni.
   ...[
     ["meme_pica", "badge", "common", 300, "Pi-ca", "Pi-zza"],
     ["meme_gelato", "hat", "common", 600, "Sladoledina Kapelina", "Gelatina Hattina"],
@@ -408,7 +409,7 @@ const ACC = {
 
 const HAT = {
   meme_gelato: () =>
-    `<path d="M37 22L50 2 63 22z" fill="#f59e0b" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M43 22l9-14M57 22l-9-14M41 17h18M46 10h8" stroke="#b45309" stroke-width="1.1"/><path d="M33 26q0-11 17-11t17 11q-3 3-6 0-2 5-6 1-3 4-6 0-3 4-6 0-3 3-6-1-4 3-10 0z" fill="#f9a8d4" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><g stroke-width="1.6" stroke-linecap="round"><path d="M41 20l2-1" stroke="#22c55e"/><path d="M50 18l2 1" stroke="#3b82f6"/><path d="M58 21l2-1" stroke="#facc15"/><path d="M45 23l1 1.5" stroke="#fff"/></g>`,
+    `<path d="M37 22L50 2 63 22z" fill="#f59e0b" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M43 22l9-14M57 22l-9-14M41 17h18M46 10h8" stroke="#b45309" stroke-width="1.1"/><path d="M33 26q0-11 17-11t17 11q-3 3-6 0-2 5-6 1-3 4-6 0-3 4-6 0-3 3-6-1-2 3-4 0z" fill="#f9a8d4" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><g stroke-width="1.6" stroke-linecap="round"><path d="M41 20l2-1" stroke="#22c55e"/><path d="M50 18l2 1" stroke="#3b82f6"/><path d="M58 21l2-1" stroke="#facc15"/><path d="M45 23l1 1.5" stroke="#fff"/></g>`,
   pot_starcrown: () =>
     `<ellipse cx="50" cy="13" rx="34" ry="13" fill="#fde047" opacity=".28"/><ellipse cx="50" cy="17" rx="27" ry="7" fill="none" stroke="#fef08a" stroke-width="9" opacity=".55"/><ellipse cx="50" cy="17" rx="27" ry="7" fill="none" stroke="#f59e0b" stroke-width="3.2"/>${[[23, 17, 7, "#7dd3fc"], [35, 10, 8.5, "#facc15"], [50, 7, 11, "#fde047"], [65, 10, 8.5, "#facc15"], [77, 17, 7, "#f9a8d4"]].map(([x, y, r, c]) => star(x, y, r, c)).join("")}<path d="M50 1l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#fff"/>`,
   hat_pixel: () => `<path d="M30 34V16h5v6h5V12h6v10h8V12h6v10h5v-6h5v18z" fill="#facc15" stroke="${INK}" stroke-width="2" stroke-linejoin="miter"/><g fill="#ef4444"><rect x="36" y="26" width="4" height="4"/><rect x="60" y="26" width="4" height="4"/></g><rect x="48" y="25" width="4" height="5" fill="#3b82f6"/>`,
@@ -444,7 +445,7 @@ const KIND = {
   meme_smrekini: {
     back: () => `<path d="M50 1L32 20h7L27 33h46L61 20h7z" fill="#15803d" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M50 6l-5 6M50 6l5 6M42 24l-4 5M58 24l4 5" stroke="#86efac" stroke-width="1.3" fill="none" opacity=".7"/>`,
     front: (u) =>
-      `<g clip-path="url(#c${u})" fill="#4d7c0f" opacity=".55">${[[28, 72], [70, 66], [40, 86], [64, 88]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="4" ry="2" transform="rotate(-30 ${x} ${y})"/>`).join("")}</g><ellipse cx="59" cy="58" rx="10" ry="3.6" transform="rotate(14 59 58)" fill="#fdba74" stroke="${INK}" stroke-width="1.6"/><g fill="#d6a86b" stroke="${INK}" stroke-width="2"><ellipse cx="33" cy="94" rx="14" ry="5"/><ellipse cx="67" cy="94" rx="14" ry="5"/></g><path d="M24 92v3M29 91v4M71 91v4M76 92v3" stroke="${INK}" stroke-width="1.2"/><path d="M12 48q-3 3 0 6t0 6M88 48q3 3 0 6t0 6" stroke="${INK}" stroke-width="1.5" fill="none" opacity=".6"/>`,
+      `<g clip-path="url(#c${u})" fill="#dcfce7" opacity=".45">${[[28, 72], [70, 66], [40, 86], [64, 88]].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="4" ry="2" transform="rotate(-30 ${x} ${y})"/>`).join("")}</g><path d="M50 56.5l13 2.5-13 2.5z" fill="#fb923c" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/><g fill="#d6a86b" stroke="${INK}" stroke-width="2"><ellipse cx="33" cy="94" rx="14" ry="5"/><ellipse cx="67" cy="94" rx="14" ry="5"/></g><path d="M24 92v3M29 91v4M71 91v4M76 92v3" stroke="${INK}" stroke-width="1.2"/><path d="M12 48q-3 3 0 6t0 6M88 48q3 3 0 6t0 6" stroke="${INK}" stroke-width="1.5" fill="none" opacity=".6"/>`,
   },
   kind_cat: {
     back: (u) => `<path d="M24 44L26 12 46 27z" fill="${F(u)}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M76 44L74 12 54 27z" fill="${F(u)}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><path d="M29 33l1-14 10 8zM71 33l-1-14-10 8z" fill="#fda4af"/>`,

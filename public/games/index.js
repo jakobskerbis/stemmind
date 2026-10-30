@@ -692,7 +692,7 @@ function renderShop(msg = "", top = false) {
     ${freshRow}
     <div class="chip-row gm-slots" role="group">${SLOTS.map((x) => `<button type="button" class="${shop.slot === x ? "active" : ""}" data-slot="${x}">${fresh.some((i) => i.slot === x) ? `<span class="gm-new-dot" aria-hidden="true"></span>` : ""}${esc(t(`games.slot.${x}`))}${isMulti(x) && worn(av.equipped, x).length ? ` <small>${worn(av.equipped, x).length}/${MULTI_MAX}</small>` : ""}</button>`).join("")}</div>
     ${isMulti(shop.slot) ? `<p class="muted gm-earn-hint">${icon("layers")}<span>${esc(t("games.multiHint", { n: MULTI_MAX }))}</span></p>` : ""}
-    ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon(shop.slot === "kind" ? "gamepad-2" : "award")}<span>${esc(t(shop.slot === "kind" ? "zb.shopHintKind" : "zb.shopHint"))} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
+    ${slotItems(shop.slot, owned).some((x) => x.earn) ? `<p class="muted gm-earn-hint">${icon(shop.slot === "kind" ? "gamepad-2" : "award")}<span>${esc(t(shop.slot === "kind" ? "zb.shopHintKind" : "zb.shopHint"))}${shop.slot === "kind" ? ` ${esc(t("zb.shopHintKindXp"))}` : ""} <button type="button" class="text-btn" data-act="zbirke">${esc(t("zb.open"))}</button></span></p>` : ""}
     <div class="gm-items">${slotItems(shop.slot, owned).map(card).join("")}</div>
     ${wishBox}
   </div>`;

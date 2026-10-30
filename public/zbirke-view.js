@@ -155,7 +155,7 @@ function inspect(id) {
   const on = isWorn(equipped(), id);
   const shown = data.showcase.includes(id);
   const v = variantOf(id);
-  const where = row?.topic ? t("zb.fromTopic", { topic: `${row.topic.name} (${row.topic.path})` }) : row?.source === "pass" ? t("zb.fromPass", { season: seasonLabel(v) }) : row?.source === "set" ? t("zb.fromSet") : row?.source === "xp" ? t("zb.fromXp", { xp: num(x.need?.xp) }) : row?.source === "league" ? t("zb.fromLeague") : row?.source === "games" ? t("zb.fromGames") : "";
+  const where = row?.topic ? t("zb.fromTopic", { topic: `${row.topic.name} (${row.topic.path})` }) : row?.source === "pass" ? t("zb.fromPass", { season: seasonLabel(v) }) : row?.source === "set" ? t("zb.fromSet") : row?.source === "xp" ? t(x.collection === "pot" ? "zb.fromXp" : "zb.fromXpAt", { xp: num(x.need?.xp) }) : row?.source === "league" ? t("zb.fromLeague") : row?.source === "games" ? t("zb.fromGames") : "";
   return `<div class="zb-inspect card" role="dialog" tabindex="-1" aria-modal="false" aria-label="${esc(itemName(x, lang()))}">
     <button type="button" class="ghost zb-x" data-act="close" aria-label="${esc(t("nav.back"))}">${icon("x")}</button>
     <div class="zb-big">${x.sym ? itemThumb(id, 120) : avatarSvg(wear(equipped(), id), { size: 170, title: itemName(x, lang()) })}</div>
