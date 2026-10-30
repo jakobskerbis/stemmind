@@ -577,7 +577,8 @@ function renderVerify() {
 
 // ---------- otroci ----------
 
-function childForm(consentText, programs = []) {
+// password: geslo profila samo za drugi in nadaljnje profile (en profil ga ne potrebuje, j 2026-10-30).
+function childForm(consentText, programs = [], password = true) {
   const y = new Date().getFullYear();
   const years = Array.from({ length: 60 }, (_, i) => y - 6 - i);
   // Mladoletni imetnik računa ustvari samo svoj profil (letnica iz datuma rojstva ob registraciji).
@@ -607,7 +608,7 @@ function childForm(consentText, programs = []) {
       <label class="year-field"${self ? " hidden" : ""}>Letnica rojstva
         <select name="birth_year"${self ? "" : " required"}><option value="">Izberite …</option>${years.map((v) => `<option>${v}</option>`).join("")}</select>
       </label>
-      ${status?.parent?.guest ? "" : `<label>${esc(t("lock.password"))} <input type="password" name="profile_password" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="new-password" required></label>
+      ${status?.parent?.guest || !password ? "" : `<label>${esc(t("lock.password"))} <input type="password" name="profile_password" minlength="${PROFILE_PW_MIN}" maxlength="200" autocomplete="new-password" required></label>
       <small class="muted">${esc(t("lock.hint"))}</small>`}
       <label class="check"><input type="checkbox" name="consent" required>
         <span class="consent-self"${self ? "" : " hidden"}>Profil je moj. Prebral(a) sem <a href="/zasebnost.html" target="_blank">obvestilo o varstvu podatkov</a> in soglašam z obdelavo svojih podatkov (ime ali vzdevek, letnica rojstva, nastavitve, pogovori z AI inštruktorjem, fotografije nalog in napredek) za namen učenja.</span>
@@ -672,7 +673,7 @@ async function renderAddChild() {
   shell(`
     <h1>Ustvarite profil</h1>
     <p class="muted">Vsak učenec, dijak ali študent ima svoj profil z učno potjo in napredkom. Za otroke, mlajše od 15 let, je potrebno soglasje starša.</p>
-    ${childForm(acc.consent_text, programs)}
+    ${childForm(acc.consent_text, programs, acc.children?.length > 0)}
     <p class="auth-links"><a href="#" id="add-child-logout">Odjava</a></p>`);
   $("#add-child-logout").addEventListener("click", (e) => (e.preventDefault(), logout()));
   bindChildForm(continueFlow);

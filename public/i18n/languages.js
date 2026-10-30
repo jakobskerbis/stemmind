@@ -392,6 +392,12 @@ function parseTag(tag) {
   return { language, script, region };
 }
 
+// Naprava v angleščini v Sloveniji (časovni pas Ljubljana): Evklid je slovenski, zato slovenščina.
+// Drug jezik učenec izbere v Nastavitvah (j, 2026-10-30: angleški iPad je pokazal angleške zaslone).
+export function homeLanguage(code, timeZone) {
+  return code === "en" && timeZone === "Europe/Ljubljana" ? "sl" : code;
+}
+
 export function detectLanguage(tags = []) {
   const byLower = new Map(LANGUAGE_CODES.map((c) => [c.toLowerCase(), c]));
   for (const tag of tags) {

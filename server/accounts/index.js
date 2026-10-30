@@ -92,6 +92,10 @@ export function mountAccounts(app, store, opts = {}) {
   const forgotThrottle = new Throttle(5, 3600000); // pošiljanje povezav za novo geslo: 5 na uro
   const devLinks = (req) => !mailer.enabled && (isLocalRequest(req) || gateNeeded(env));
   const locks = new ProfileLocks(db);
+  // Geslo profila ločuje profile na istem računu (brat ne odpre sestrinega). Račun z enim profilom ga ne
+  // potrebuje, prijava v račun zadošča (j, 2026-10-30: »nočem, da se ta zaslon prikazuje«).
+  const profileLockOn = (p) => !p.is_guest && childIds(p.id).length > 1;
+  const profileLocked = (p, studentId, deviceId) => profileLockOn(p) && locks.locked(studentId, deviceId);
   const accountLocks = new AccountLocks(db);
   // Zaklep računa: dejanja lastnika zahtevajo geslo računa. Privzeto izklopljen (j, 2026-10-30: geslo samo
   // enkrat); EVKLID_ACCOUNT_LOCK=1 ga vklopi. Izvoz in izbris računa geslo zahtevata vedno.
@@ -325,7 +329,7 @@ export function mountAccounts(app, store, opts = {}) {
 
     // Geslo profila: odklep je mogoč brez odklepa; profil z geslom je sicer odprt samo na napravi, kjer je bil odklenjen.
     if (s && req.method === "POST" && req.path === `/students/${studentId}/unlock`) return next();
-    if (studentId !== null && !p.is_guest && locks.locked(studentId, req.deviceId)) {
+    if (studentId !== null && profileLocked(p, studentId, req.deviceId)) {
       return res.status(423).json({
         error: "Profil je zaklenjen. Vpiši geslo profila.",
         locked: true,
@@ -898,6 +902,7 @@ export function mountAccounts(app, store, opts = {}) {
     res.json(
       children(p.id).map((c) => {
         if (p.is_guest) return c;
+        if (!profileLockOn(p)) return c;
         if (locks.locked(c.id, req.deviceId)) return { id: c.id, name: c.name, locked: true };
         return { ...c, needs_password: !locks.hasPassword(c.id) };
       }),
