@@ -25,7 +25,7 @@ import { uiLanguage } from "../public/i18n/languages.js";
 import { lessonView, tocView, bookView, listBooks, searchTextbook, lessonSummaryForPrompt, lessonExplanation, explanationFor, formulaSheet } from "./textbook.js";
 import { printPage } from "./textbook-print.js";
 import { programReferences, referencesFor, themesFor } from "./references.js";
-import { SETTINGS_TOOLS, createSettingsTools, cleanDevice, looksLikeSettings } from "./chat-settings.js";
+import { SETTINGS_TOOLS, createSettingsTools, cleanDevice, looksLikeSettings, openWindowIntent } from "./chat-settings.js";
 import { detectWeakTopics, weaknessesForPrompt } from "./weaknesses.js";
 import { cleanText, ENUMS, DEFAULT_SETTINGS } from "./settings.js";
 import { mountAccounts } from "./accounts/index.js";
@@ -550,7 +550,13 @@ export function createApp(store, opts = {}) {
               lastAnswer: help.task.last_answer,
             })
           : null;
-      const cached = hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND verified = 1 AND created_at >= datetime('now','-30 days')").get(key);
+      // »Odpri kalkulator« in podobni kratki ukazi: okno odpre odjemalec, odgovor je en stavek brez modela.
+      const win = !image && !help ? openWindowIntent(text) : null;
+      if (win) {
+        send("open_window", { view: win.view, ...(win.mode ? { mode: win.mode } : {}) });
+        settingsTools.state.used = true; // brez »Razloži podrobneje«
+      }
+      const cached = win ? { text: win.text, hint: true } : hinted ? { text: hinted, hint: true } : key && store.db.prepare("SELECT text FROM answer_cache WHERE key = ? AND verified = 1 AND created_at >= datetime('now','-30 days')").get(key);
       if (note) send("delta", { text: note });
       const run = cached
         ? async ({ onText }) => {
@@ -647,7 +653,7 @@ export function createApp(store, opts = {}) {
         if (meta.done && conv.path_topic && progress.markMastered(student.id, conv.path_topic, "chat")) {
           send("mastered", { topic: getTopic(conv.path_topic)?.name, unlocked: knowledge.sync(student.id) });
         }
-      } else {
+      } else if (!win) {
         console.warn(`[evklid] odgovor brez META (pogovor ${conv.id})`);
       }
       finished = true;

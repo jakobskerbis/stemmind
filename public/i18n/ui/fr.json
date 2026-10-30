@@ -2569,5 +2569,17 @@
   "pay.giftWithdrawal": "Je sais que je peux me rétracter dans les 14 jours suivant l'achat et être remboursé(e) intégralement si le code n'a pas été utilisé. Dès que le code est utilisé, l'accès commence et le droit de rétractation prend fin.",
   "pay.howMany": "Pour combien d’enfants ?",
   "pay.seats1": "1 enfant",
-  "pay.seats2": "2 enfants"
+  "pay.seats2": "2 enfants",
+  "win.dragHint": "Glisse sur la page pour ouvrir une fenêtre",
+  "win.max": "Ouvrir en plein écran",
+  "win.close": "Fermer la fenêtre",
+  "win.bubble": "Ouvrir la conversation avec le tuteur",
+  "win.bubbleHide": "Masquer la bulle",
+  "win.setting": "Fenêtres mobiles",
+  "win.settingNote": "Réorganise les onglets en les faisant glisser (sur écran tactile, maintiens d'abord le doigt appuyé). Sur ordinateur, fais glisser un onglet de la barre du haut sur la page : il s'ouvre dans une fenêtre que tu peux déplacer et redimensionner. La conversation avec le tuteur reste visible sous forme de bulle.",
+  "win.reset": "Réinitialiser la disposition",
+  "win.resetDone": "La disposition a été réinitialisée.",
+  "full.close": "Fermer",
+  "full.message": "Ton message",
+  "full.task": "Énoncé de l'exercice"
 }

@@ -2623,5 +2623,17 @@
   "pay.giftWithdrawal": "Wiem, że mogę odstąpić w ciągu 14 dni od zakupu i otrzymać pełny zwrot, jeśli kod nie został jeszcze wykorzystany. Po wykorzystaniu kodu korzystanie się rozpoczyna, a prawo do odstąpienia wygasa.",
   "pay.howMany": "Dla ilu dzieci?",
   "pay.seats1": "1 dziecko",
-  "pay.seats2": "2 dzieci"
+  "pay.seats2": "2 dzieci",
+  "win.dragHint": "Przeciągnij na stronę, aby otworzyć okno",
+  "win.max": "Otwórz na pełnym ekranie",
+  "win.close": "Zamknij okno",
+  "win.bubble": "Otwórz rozmowę z korepetytorem",
+  "win.bubbleHide": "Ukryj dymek",
+  "win.setting": "Ruchome okna",
+  "win.settingNote": "Karty ułożysz w innej kolejności, przeciągając je (na ekranie dotykowym najpierw przytrzymaj). Na komputerze przeciągnij kartę z górnego paska na stronę, a otworzy się w oknie, które możesz przesuwać i którego rozmiar możesz zmieniać. Rozmowa z korepetytorem pozostaje widoczna jako dymek.",
+  "win.reset": "Przywróć układ",
+  "win.resetDone": "Układ został przywrócony.",
+  "full.close": "Zamknij",
+  "full.message": "Twoja wiadomość",
+  "full.task": "Treść zadania"
 }

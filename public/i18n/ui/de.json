@@ -2569,5 +2569,17 @@
   "pay.giftWithdrawal": "Ich weiß, dass ich innerhalb von 14 Tagen nach dem Kauf widerrufen kann und den vollen Betrag zurückerhalte, solange der Code nicht eingelöst ist. Sobald der Code eingelöst ist, beginnt die Nutzung und das Widerrufsrecht erlischt.",
   "pay.howMany": "Für wie viele Kinder?",
   "pay.seats1": "1 Kind",
-  "pay.seats2": "2 Kinder"
+  "pay.seats2": "2 Kinder",
+  "win.dragHint": "Auf die Seite ziehen für ein Fenster",
+  "win.max": "Im Vollbild öffnen",
+  "win.close": "Fenster schließen",
+  "win.bubble": "Gespräch mit dem Tutor öffnen",
+  "win.bubbleHide": "Blase ausblenden",
+  "win.setting": "Verschiebbare Fenster",
+  "win.settingNote": "Tabs ordnest du durch Ziehen neu (auf Touchscreens zuerst lange drücken). Am Computer ziehst du einen Tab aus der oberen Leiste auf die Seite, dann öffnet er sich in einem Fenster, das du verschieben und in der Größe ändern kannst. Das Gespräch mit dem Tutor bleibt als Blase sichtbar.",
+  "win.reset": "Anordnung zurücksetzen",
+  "win.resetDone": "Die Anordnung wurde zurückgesetzt.",
+  "full.close": "Schließen",
+  "full.message": "Deine Nachricht",
+  "full.task": "Aufgabentext"
 }

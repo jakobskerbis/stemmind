@@ -2573,5 +2573,17 @@
   "pay.giftWithdrawal": "Sei que posso desistir no prazo de 14 dias após a compra e receber o reembolso total se o código não tiver sido resgatado. Depois de resgatado, o uso começa e o direito de desistência termina.",
   "pay.howMany": "Para quantos filhos?",
   "pay.seats1": "1 filho",
-  "pay.seats2": "2 filhos"
+  "pay.seats2": "2 filhos",
+  "win.dragHint": "Arraste para a página para abrir uma janela",
+  "win.max": "Abrir em ecrã inteiro",
+  "win.close": "Fechar janela",
+  "win.bubble": "Abrir a conversa com o tutor",
+  "win.bubbleHide": "Ocultar bolha",
+  "win.setting": "Janelas móveis",
+  "win.settingNote": "Reordene os separadores arrastando-os (em ecrãs táteis, mantenha premido primeiro). No computador, arraste um separador da barra superior para a página e ele abre numa janela que pode mover e redimensionar. A conversa com o tutor continua visível como uma bolha.",
+  "win.reset": "Repor disposição",
+  "win.resetDone": "A disposição foi reposta.",
+  "full.close": "Fechar",
+  "full.message": "A tua mensagem",
+  "full.task": "Enunciado do exercício"
 }

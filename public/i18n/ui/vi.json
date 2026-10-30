@@ -2545,5 +2545,17 @@
   "pay.giftWithdrawal": "Tôi biết mình có thể hủy trong vòng 14 ngày kể từ khi mua và được hoàn tiền toàn bộ nếu mã chưa được sử dụng. Khi mã đã được sử dụng, việc dùng bắt đầu và quyền hủy chấm dứt.",
   "pay.howMany": "Cho bao nhiêu con?",
   "pay.seats1": "1 con",
-  "pay.seats2": "2 con"
+  "pay.seats2": "2 con",
+  "win.dragHint": "Kéo vào trang để mở cửa sổ",
+  "win.max": "Mở toàn màn hình",
+  "win.close": "Đóng cửa sổ",
+  "win.bubble": "Mở cuộc trò chuyện với gia sư",
+  "win.bubbleHide": "Ẩn bong bóng",
+  "win.setting": "Cửa sổ di chuyển được",
+  "win.settingNote": "Kéo các thẻ để sắp xếp lại (trên màn hình cảm ứng, hãy nhấn giữ trước). Trên máy tính, kéo một thẻ từ thanh trên cùng vào trang và nó sẽ mở trong một cửa sổ mà bạn có thể di chuyển và đổi kích thước. Cuộc trò chuyện với gia sư vẫn hiển thị dưới dạng bong bóng.",
+  "win.reset": "Đặt lại bố cục",
+  "win.resetDone": "Đã đặt lại bố cục.",
+  "full.close": "Đóng",
+  "full.message": "Tin nhắn của bạn",
+  "full.task": "Đề bài"
 }

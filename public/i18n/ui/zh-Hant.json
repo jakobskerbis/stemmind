@@ -2545,5 +2545,17 @@
   "pay.giftWithdrawal": "我知道，如果禮品碼尚未兌換，我可以在購買後 14 天內撤銷並獲得全額退款。禮品碼一經兌換即開始使用，撤銷權隨即終止。",
   "pay.howMany": "為幾個孩子訂閱？",
   "pay.seats1": "1個孩子",
-  "pay.seats2": "2個孩子"
+  "pay.seats2": "2個孩子",
+  "win.dragHint": "拖到頁面上以視窗開啟",
+  "win.max": "全螢幕開啟",
+  "win.close": "關閉視窗",
+  "win.bubble": "開啟與輔導老師的對話",
+  "win.bubbleHide": "隱藏泡泡",
+  "win.setting": "可移動視窗",
+  "win.settingNote": "拖曳分頁即可調整順序（觸控螢幕上請先長按）。在電腦上，把頂部列的分頁拖到頁面上，它會在可移動、可調整大小的視窗中開啟。與輔導老師的對話會以泡泡形式保持可見。",
+  "win.reset": "重設版面",
+  "win.resetDone": "版面已重設。",
+  "full.close": "關閉",
+  "full.message": "你的訊息",
+  "full.task": "題目"
 }

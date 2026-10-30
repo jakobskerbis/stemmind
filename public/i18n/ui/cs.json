@@ -2617,5 +2617,17 @@
   "pay.giftWithdrawal": "Vím, že mohu do 14 dnů od nákupu odstoupit a dostat zpět celou částku, pokud kód ještě nebyl uplatněn. Po uplatnění kódu začíná užívání a právo na odstoupení zaniká.",
   "pay.howMany": "Pro kolik dětí?",
   "pay.seats1": "1 dítě",
-  "pay.seats2": "2 děti"
+  "pay.seats2": "2 děti",
+  "win.dragHint": "Přetáhni na stránku pro okno",
+  "win.max": "Otevřít na celou obrazovku",
+  "win.close": "Zavřít okno",
+  "win.bubble": "Otevřít rozhovor s doučovatelem",
+  "win.bubbleHide": "Skrýt bublinu",
+  "win.setting": "Pohyblivá okna",
+  "win.settingNote": "Karty přeuspořádáš přetažením (na dotykové obrazovce nejdřív dlouze podrž). Na počítači přetáhni kartu z horní lišty na stránku a otevře se v okně, které můžeš přesouvat a měnit jeho velikost. Rozhovor s doučovatelem zůstane vidět jako bublina.",
+  "win.reset": "Obnovit rozložení",
+  "win.resetDone": "Rozložení bylo obnoveno.",
+  "full.close": "Zavřít",
+  "full.message": "Tvoje zpráva",
+  "full.task": "Zadání úlohy"
 }

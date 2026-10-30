@@ -2545,5 +2545,17 @@
   "pay.giftWithdrawal": "Saya tahu bahwa saya dapat membatalkan dalam 14 hari sejak pembelian dan mendapat pengembalian penuh jika kode belum ditukarkan. Setelah kode ditukarkan, penggunaan dimulai dan hak pembatalan berakhir.",
   "pay.howMany": "Untuk berapa anak?",
   "pay.seats1": "1 anak",
-  "pay.seats2": "2 anak"
+  "pay.seats2": "2 anak",
+  "win.dragHint": "Seret ke halaman untuk membuka jendela",
+  "win.max": "Buka layar penuh",
+  "win.close": "Tutup jendela",
+  "win.bubble": "Buka percakapan dengan tutor",
+  "win.bubbleHide": "Sembunyikan gelembung",
+  "win.setting": "Jendela yang dapat dipindah",
+  "win.settingNote": "Urutkan ulang tab dengan menyeretnya (di layar sentuh, tekan lama terlebih dahulu). Di komputer, seret tab dari bilah atas ke halaman dan tab itu terbuka di jendela yang bisa kamu pindahkan dan ubah ukurannya. Percakapan dengan tutor tetap terlihat sebagai gelembung.",
+  "win.reset": "Atur ulang tata letak",
+  "win.resetDone": "Tata letak telah diatur ulang.",
+  "full.close": "Tutup",
+  "full.message": "Pesanmu",
+  "full.task": "Teks soal"
 }

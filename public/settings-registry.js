@@ -61,6 +61,7 @@ export const DEVICE_SETTINGS = {
   writing_pad_tab: { values: ["keys", "draw"], desc: "pad opens on keypad (keys) or handwriting (draw)" },
   game_sound: { values: ["on", "off"], ls: ["evklid.gameSound"], desc: "sound in games" },
   game_speed: { values: ["slow", "mid", "fast"], ls: ["evklid.gamePace"], desc: "game speed" },
+  windows: { values: ["on", "off"], ls: ["evklid.windows", { on: "1", off: "0" }], desc: "movable windows: drag top tabs onto the page to open them as windows, tutor chat bubble outside the chat (on by default)" },
   schedule_reminders: { values: ["on", "off"], ls: ["evklid.scheduleReminders", { on: "1", off: "0" }], desc: "notification on this device the day before a test from the timetable (the app also shows it in the app)" },
 };
 

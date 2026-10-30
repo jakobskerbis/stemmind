@@ -2567,5 +2567,17 @@
   "pay.giftWithdrawal": "Tudom, hogy a vásárlástól számított 14 napon belül elállhatok, és a teljes összeget visszakapom, ha a kódot még nem váltották be. A kód beváltásával a használat megkezdődik, és az elállási jog megszűnik.",
   "pay.howMany": "Hány gyereknek?",
   "pay.seats1": "1 gyerek",
-  "pay.seats2": "2 gyerek"
+  "pay.seats2": "2 gyerek",
+  "win.dragHint": "Húzd az oldalra, hogy ablakban nyíljon meg",
+  "win.max": "Megnyitás teljes képernyőn",
+  "win.close": "Ablak bezárása",
+  "win.bubble": "Beszélgetés megnyitása az oktatóval",
+  "win.bubbleHide": "Buborék elrejtése",
+  "win.setting": "Mozgatható ablakok",
+  "win.settingNote": "A füleket húzással rendezheted át (érintőképernyőn előbb tartsd lenyomva). Számítógépen húzz egy fület a felső sávból az oldalra, és egy mozgatható, átméretezhető ablakban nyílik meg. Az oktatóval folytatott beszélgetés buborékként látható marad.",
+  "win.reset": "Elrendezés visszaállítása",
+  "win.resetDone": "Az elrendezés visszaállt.",
+  "full.close": "Bezárás",
+  "full.message": "Az üzeneted",
+  "full.task": "A feladat szövege"
 }

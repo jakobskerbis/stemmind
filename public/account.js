@@ -1132,7 +1132,7 @@ function renderGuestOff() {
   bindGuestForms(continueFlow);
 }
 
-async function renderAccount() {
+export async function renderAccount() {
   const view = $("#view-account");
   let acc;
   try {

@@ -582,8 +582,9 @@ button.sol-c:hover, button.sol-c:focus-visible, .sol-c.sel { border-color: var(-
 .sc-parts { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; column-gap: 18px; row-gap: 2px; max-width: 100%; }
 /* Na telefonu znanstveni kalkulator skrije zgornjo vrstico (ostaneta ← in spodnji zavihki), da ostane prostor za zgodovino. */
 @media (max-width: 760px) {
-  body:has(#view-graph:not([hidden]) #graph-slot > .sc) .topbar,
-  body:has(#view-graph:not([hidden]) #graph-slot > .sc) #mock-banner, body:has(#view-graph:not([hidden]) #graph-slot > .sc) #test-notice { display: none !important; }
+  /* Ne, ko je kalkulator v spodnjem listu (public/okna.js): zgornja vrstica ostane. */
+  body:has(#view-graph:not([hidden], .in-okno) #graph-slot > .sc) .topbar,
+  body:has(#view-graph:not([hidden], .in-okno) #graph-slot > .sc) #mock-banner, body:has(#view-graph:not([hidden], .in-okno) #graph-slot > .sc) #test-notice { display: none !important; }
   .sc-key { min-height: 40px; }
   .sc-key.n { min-height: 44px; }
   .sc-parts { display: flex; flex-wrap: wrap; justify-content: flex-end; column-gap: 14px; }

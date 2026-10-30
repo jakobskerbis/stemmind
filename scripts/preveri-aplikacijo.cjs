@@ -291,7 +291,7 @@ async function tab(p, view) {
   await click(p, '#tabbar .tab[data-view="me"]');
   await click(p, `#view-me [data-go="${view}"]`);
 }
-const currentView = (p) => p.evaluate(() => [...document.querySelectorAll("main.view")].find((v) => !v.hidden)?.id || "");
+const currentView = (p) => p.evaluate(() => [...document.querySelectorAll("main.view:not(.in-okno)")].find((v) => !v.hidden)?.id || "");
 
 // Klobuk zgoraj levo: »Nadaljuj z učenjem« (public/quick-start.js). Nazaj zapre meni, vrstica odpre temo.
 async function quickStart(p) {
@@ -547,6 +547,45 @@ async function calculator(p, label) {
   await click(p, '#view-graph [data-calc-mode="sci"]', { wait: 300 });
 }
 
+// Premična okna (public/okna.js): ukaz inštruktorju odpre kalkulator v oknu (telefon: spodnji list),
+// zunaj klepeta ostane mehurček, ki odpre klepet v oknu; zavihek iz zgornje vrstice potegnemo na stran.
+async function okna(p, label) {
+  const sheet = label === "tel";
+  await tab(p, "chat");
+  await p.fill("#input", "Pokaži periodni sistem");
+  await click(p, "#send", { wait: 300 });
+  await expectVisible(p, '.okno[data-view="graph"] #graph-slot .pse, .okno[data-view="graph"] #graph-slot > *', "kalkulator v oknu po ukazu inštruktorju", 8000);
+  if (sheet !== (await p.locator(".okno-sheet").count()) > 0) throw new Error(sheet ? "na telefonu okno ni spodnji list" : "na računalniku je okno spodnji list");
+  if ((await currentView(p)) !== "view-chat") throw new Error("ukaz za okno je zamenjal glavni pogled");
+  await screen(p, `okno-kalkulator-${label}`);
+  await click(p, '.okno[data-view="graph"] .okno-x');
+  if (await p.locator(".okno").count()) throw new Error("okno se ni zaprlo");
+  if (!(await p.locator("#view-graph").evaluate((v) => v.hidden && v.parentElement === document.body))) throw new Error("kalkulator se po zaprtju okna ni vrnil na svoje mesto");
+  await tab(p, "path");
+  await expectVisible(p, "#chat-bubble .cb-main", "mehurček inštruktorja zunaj klepeta");
+  await screen(p, `mehurcek-${label}`);
+  await click(p, "#chat-bubble .cb-main", { wait: 300 });
+  await expectVisible(p, '.okno[data-view="chat"] #composer', "klepet v oknu iz mehurčka");
+  if (await p.locator("#chat-bubble").isVisible()) throw new Error("mehurček ostane, ko je klepet odprt");
+  await click(p, '.okno[data-view="chat"] .okno-x');
+  if (!sheet) {
+    // Poteg zavihka Učbenik na desni rob: okno, pripeto na desno polovico.
+    const b = await p.locator('.topbar .tab[data-view="textbook"]').boundingBox();
+    const vw = p.viewportSize().width;
+    await p.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+    await p.mouse.down();
+    for (let i = 1; i <= 10; i++) await p.mouse.move(b.x + b.width / 2 + (vw - 4 - b.x - b.width / 2) * (i / 10), b.y + 30 + 300 * (i / 10));
+    await p.mouse.up();
+    await settle(p, 300);
+    const w = await p.locator('.okno[data-view="textbook"]').boundingBox();
+    if (!w || Math.abs(w.x + w.width - vw) > 2 || Math.abs(w.width - vw / 2) > 2) throw new Error("zavihek, spuščen ob desnem robu, ni okno na desni polovici");
+    await screen(p, `okno-ucbenik-desno-${label}`);
+    await click(p, '.okno[data-view="textbook"] .okno-max');
+    if ((await currentView(p)) !== "view-textbook" || (await p.locator(".okno").count())) throw new Error("»Odpri čez cel zaslon« ne vrne Učbenika v glavni pogled");
+    await tab(p, "path");
+  }
+}
+
 async function competition(p, label, view = "competition") {
   await tab(p, view);
   await expectVisible(p, `#${view}-content [data-comp-train]`, "tekmovanja ali izpiti");
@@ -792,6 +831,7 @@ async function desktop(browser, app) {
   await step(p, "ucbenik", () => textbook(p, "OS"));
   await step(p, "klepet", () => chat(p, "OS"));
   await step(p, "kalkulator", () => calculator(p, "OS"));
+  await step(p, "okna", () => okna(p, "OS"));
   await step(p, "tekmovanja", () => competition(p, "OS"));
   await step(p, "poskusno-tekmovanje", () => contest(p, "OS"));
   await step(p, "npz-matura", () => examsView(p, "OS"));
@@ -951,6 +991,7 @@ async function phone(browser, app) {
   });
   await step(p, "tel-ucbenik", () => textbook(p, "tel"));
   await step(p, "tel-kalkulator", () => calculator(p, "tel"));
+  await step(p, "tel-okna", () => okna(p, "tel"));
   await step(p, "tel-igre", () => games(p, "tel"));
   await step(p, "tel-skeniraj", () => scan(p, "tel"));
   await p.context().close();
