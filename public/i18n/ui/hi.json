@@ -1,6 +1,6 @@
 {
-  "apps.menu": "ऐप के सभी हिस्से",
-  "apps.zbirke": "कलेक्शन",
+  "qs.title": "सीखना जारी रखें",
+  "qs.test": "टेस्ट {when} है",
   "nav.path": "सीखने का रास्ता",
   "nav.textbook": "पाठ्यपुस्तक",
   "nav.chat": "ट्यूटर",

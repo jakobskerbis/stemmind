@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Të gjitha pjesët e aplikacionit",
-  "apps.zbirke": "Koleksione",
+  "qs.title": "Vazhdo të mësosh",
+  "qs.test": "Testi është {when}",
   "nav.path": "Rruga e të mësuarit",
   "nav.textbook": "Teksti",
   "nav.chat": "Tutori",

@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Wszystkie części aplikacji",
-  "apps.zbirke": "Kolekcje",
+  "qs.title": "Ucz się dalej",
+  "qs.test": "Sprawdzian jest {when}",
   "nav.path": "Ścieżka nauki",
   "nav.textbook": "Podręcznik",
   "nav.chat": "Korepetytor",

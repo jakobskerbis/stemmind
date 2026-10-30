@@ -1,4 +1,4 @@
-// Meni profila zgoraj desno (klik na ime): kdo uči, menjava profila, nov profil, nastavitve,
+// Meni profila zgoraj desno (klik na ime): kdo uči, menjava profila, nov profil, zbirke, mnenje, nastavitve,
 // račun in odjava. Skriti <select id="student-select"> še vedno hrani izbranega učenca
 // (ostala koda bere in nastavlja njega), ta meni je le njegov obraz.
 import { icon } from "./icons.js";
@@ -62,7 +62,10 @@ function open() {
   const pop = $("#profile-pop");
   const r = btn.getBoundingClientRect();
   pop.style.top = `${Math.round(r.bottom + 8)}px`;
-  pop.style.right = `${Math.max(8, Math.round(window.innerWidth - r.right))}px`;
+  // Ob gumbu profila; v RTL je gumb levo, zato meni poravnamo z levim robom.
+  const rtl = document.documentElement.dir === "rtl";
+  pop.style.left = pop.style.right = "";
+  pop.style[rtl ? "left" : "right"] = `${Math.max(8, Math.round(rtl ? r.left : window.innerWidth - r.right))}px`;
   pop.hidden = false;
   btn.setAttribute("aria-expanded", "true");
   (pop.querySelector('[aria-checked="false"]') || pop.querySelector(".pm-item"))?.focus({ preventScroll: true });
@@ -102,6 +105,8 @@ function render() {
     <div class="pm-sep" role="separator"></div>
     ${others}
     ${item("add", "user-plus", t("pm.add"))}
+    ${item("zbirke", "award", t("zb.title"))}
+    ${item("feedback", "message-square-heart", t("nav.feedback"))}
     ${item("settings", "settings", t("nav.settings"))}
     ${accounts ? item("account", "user", t("nav.account")) : ""}
     ${accounts ? `<div class="pm-sep" role="separator"></div>${item("logout", "log-out", t("pm.logout"))}` : ""}`;
@@ -120,7 +125,8 @@ function onPick(e) {
   }
   close();
   const act = b.dataset.act;
-  if (act === "settings") return D.showView("settings");
+  // Zbirke in mnenje sta na računalniku dosegljiva tu (na telefonu tudi pod »Jaz«).
+  if (act === "settings" || act === "zbirke" || act === "feedback") return D.showView(act);
   if (act === "account") return $("#account-tab")?.click();
   if (act === "logout") return D.logout();
   if (act === "add") {

@@ -1,6 +1,6 @@
 {
-  "apps.menu": "ทุกส่วนของแอป",
-  "apps.zbirke": "คอลเลกชัน",
+  "qs.title": "เรียนต่อ",
+  "qs.test": "สอบ{when}",
   "nav.path": "เส้นทางการเรียน",
   "nav.textbook": "หนังสือเรียน",
   "nav.chat": "ติวเตอร์",

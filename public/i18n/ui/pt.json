@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Todas as partes da app",
-  "apps.zbirke": "Coleções",
+  "qs.title": "Continuar a aprender",
+  "qs.test": "O teste é {when}",
   "nav.path": "Percurso",
   "nav.textbook": "Manual",
   "nav.chat": "Tutor",

@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Tất cả các phần của ứng dụng",
-  "apps.zbirke": "Bộ sưu tập",
+  "qs.title": "Tiếp tục học",
+  "qs.test": "Có bài kiểm tra {when}",
   "nav.path": "Lộ trình học",
   "nav.textbook": "Sách giáo khoa",
   "nav.chat": "Gia sư",

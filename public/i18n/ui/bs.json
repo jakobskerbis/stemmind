@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Svi dijelovi aplikacije",
-  "apps.zbirke": "Zbirke",
+  "qs.title": "Nastavi sa učenjem",
+  "qs.test": "Ispit je {when}",
   "nav.path": "Put učenja",
   "nav.textbook": "Udžbenik",
   "nav.chat": "Instruktor",

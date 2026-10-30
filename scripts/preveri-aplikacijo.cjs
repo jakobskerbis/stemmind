@@ -293,6 +293,26 @@ async function tab(p, view) {
 }
 const currentView = (p) => p.evaluate(() => [...document.querySelectorAll("main.view")].find((v) => !v.hidden)?.id || "");
 
+// Klobuk zgoraj levo: »Nadaljuj z učenjem« (public/quick-start.js). Nazaj zapre meni, vrstica odpre temo.
+async function quickStart(p) {
+  await tab(p, "path");
+  await click(p, ".topbar .brand", { wait: 300 });
+  await expectVisible(p, '#quick-pop .qs-row[data-act="new"]', "»Nadaljuj« pod klobukom");
+  if ((await p.locator("#quick-pop .qs-row").count()) < 2) throw new Error("pod klobukom manjka današnji trening");
+  await screen(p, "nadaljuj-meni");
+  await p.goBack();
+  await settle(p, 200);
+  if (await p.locator("#quick-pop").isVisible()) throw new Error("tipka Nazaj ne zapre menija pod klobukom");
+  await click(p, ".topbar .brand", { wait: 300 });
+  await click(p, '#quick-pop .qs-row[data-act="new"]', { wait: 500 });
+  if ((await currentView(p)) !== "view-topic") throw new Error("»Nadaljuj« ne odpre teme");
+  await screen(p, "nadaljuj-tema");
+  // Na telefonu plošča za vnos prekrije spodnjo vrstico: nazaj s tipko Nazaj.
+  await p.goBack();
+  await settle(p, 300);
+  if ((await currentView(p)) !== "view-path") throw new Error("tipka Nazaj po »Nadaljuj« ne vodi na učno pot");
+}
+
 // ---------- koraki ----------
 
 // Vodič ob prvi uporabi: vsak profil ga dobi enkrat (settings.tour_version na strežniku).
@@ -700,6 +720,14 @@ async function desktop(browser, app) {
     await screen(p, "dnevni-trening");
     await click(p, "#back-to-path");
   });
+  await step(p, "nadaljuj", () => quickStart(p));
+  // Zbirke so na računalniku v meniju profila (na telefonu pod »Jaz«).
+  await step(p, "profil-zbirke", async () => {
+    await click(p, "#profile-btn");
+    await click(p, '#profile-pop [data-act="zbirke"]', { wait: 400 });
+    if ((await currentView(p)) !== "view-zbirke") throw new Error("Zbirke se iz menija profila niso odprle");
+    await tab(p, "path");
+  });
   for (const m of ["review", "test", "cards"]) {
     await step(p, `nacin-${m}`, async () => {
       await tab(p, "path");
@@ -843,6 +871,7 @@ async function phone(browser, app) {
     await settle(p, 300);
     if ((await currentView(p)) !== "view-path") throw new Error("tipka Nazaj s teme ne vodi na učno pot");
   });
+  await step(p, "tel-nadaljuj", () => quickStart(p));
   await step(p, "tel-klepet", () => chat(p, "tel"));
   await step(p, "tel-osvezitev", async () => {
     // Osvežitev na podstrani (potegni za osvežitev) in tipka Nazaj: aplikacija mora ostati odprta.

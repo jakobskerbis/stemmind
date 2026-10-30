@@ -1,6 +1,6 @@
 {
-  "apps.menu": "アプリのすべての機能",
-  "apps.zbirke": "コレクション",
+  "qs.title": "学習を続ける",
+  "qs.test": "テストは{when}",
   "nav.path": "学習パス",
   "nav.textbook": "教科書",
   "nav.chat": "チューター",

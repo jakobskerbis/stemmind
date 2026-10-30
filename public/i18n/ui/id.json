@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Semua bagian aplikasi",
-  "apps.zbirke": "Koleksi",
+  "qs.title": "Lanjutkan belajar",
+  "qs.test": "Ujiannya {when}",
   "nav.path": "Jalur belajar",
   "nav.textbook": "Buku pelajaran",
   "nav.chat": "Tutor",

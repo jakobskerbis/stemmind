@@ -1,6 +1,6 @@
 {
-  "apps.menu": "Toate secțiunile aplicației",
-  "apps.zbirke": "Colecții",
+  "qs.title": "Continuă să înveți",
+  "qs.test": "Testul este {when}",
   "nav.path": "Traseu de învățare",
   "nav.textbook": "Manual",
   "nav.chat": "Tutor",
