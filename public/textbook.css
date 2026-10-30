@@ -594,7 +594,8 @@ a.ref-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px;
 .gr-video-cap p { margin: 0; }
 .gr-video-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .gr-video-bar progress { flex: 1 1 120px; height: 8px; accent-color: var(--accent); }
-.gr-video-time { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 0.9rem; }
+.gr-video-time { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 0.9rem; direction: ltr; unicode-bidi: isolate; }
+.gr-video-cap .katex { direction: ltr; unicode-bidi: isolate; }
 .gr-video-voice { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; }
 .gr-video-draft { margin: 6px 0 0; font-size: 0.85rem; }
 @media (prefers-reduced-motion: reduce) { .gr-video-cap { transition: none; } }

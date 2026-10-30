@@ -149,13 +149,21 @@ const mmss = (t) => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart
 
 function applyAction(simEl, a) {
   const field = [...simEl.querySelectorAll("input[aria-label], select[aria-label]")].find((x) => x.getAttribute("aria-label") === a.target);
-  if (a.do === "set" && field) {
+  if (a.do === "set" && field?.tagName === "SELECT") {
+    // Vrednost možnosti ali njen napis (avtor vidi napis).
+    const o = [...field.options].find((x) => x.value === a.value) || [...field.options].find((x) => x.textContent.trim() === a.value);
+    if (o) {
+      field.value = o.value;
+      field.dispatchEvent(new Event("change", { bubbles: true }));
+      return true;
+    }
+  } else if (a.do === "set" && field) {
     field.value = String(a.value).replace(",", ".");
-    field.dispatchEvent(new Event(field.tagName === "SELECT" ? "change" : "input", { bubbles: true }));
+    field.dispatchEvent(new Event("input", { bubbles: true }));
     return true;
   }
   if (a.do === "click") {
-    const b = [...simEl.querySelectorAll("button, [role=button]")].find((x) => (x.getAttribute("aria-label") || x.textContent).trim() === a.target);
+    const b = [...simEl.querySelectorAll("button, [role=button]")].find((x) => x.getAttribute("aria-label")?.trim() === a.target || x.textContent.trim() === a.target);
     if (b) return b.click(), true;
   }
   console.warn(`Video: v simulaciji ni »${a.target}«.`);
@@ -174,17 +182,19 @@ export async function openVideo(studentId, topicId, onError) {
     return onError(t("off.noConnection"));
   }
   const { mountSim } = await import("./sim/index.js");
+  // Dvojni klik na gumb: odprt je lahko le en video.
+  document.querySelectorAll("dialog.gr-video").forEach((d) => d.close());
   const dlg = document.createElement("dialog");
   dlg.className = "gr-video";
   dlg.setAttribute("aria-label", v.title);
-  dlg.innerHTML = `<div class="gr-video-head"><h2>${esc(v.title)}</h2>
+  dlg.innerHTML = `<div class="gr-video-head"><h2 dir="auto">${esc(v.title)}</h2>
       <button type="button" class="ghost gr-video-close" aria-label="${esc(t("gr.close"))}">${icon("x")}</button></div>
     <div class="gr-video-sim"></div>
-    <div class="gr-video-foot"><div class="gr-video-cap" aria-live="polite"></div>
+    <div class="gr-video-foot"><div class="gr-video-cap" dir="auto" aria-live="polite"></div>
     <div class="gr-video-bar">
       <button type="button" class="primary gr-video-play">${icon("play")}<span>${esc(t("gr.play"))}</span></button>
       <button type="button" class="secondary gr-video-again" aria-label="${esc(t("gr.again"))}">${icon("rotate-ccw")}</button>
-      <progress max="${v.duration}" value="0"></progress><span class="gr-video-time">0:00 / ${mmss(v.duration)}</span>
+      <progress max="${v.duration}" value="0" aria-label="${esc(t("gr.video"))}"></progress><span class="gr-video-time">0:00 / ${mmss(v.duration)}</span>
       <label class="gr-video-voice"><input type="checkbox" checked> ${esc(t("gr.voice"))}</label>
     </div>
     ${v.draft ? `<p class="muted gr-video-draft">${esc(t("gr.videoDraft"))}</p>` : ""}</div>`;
@@ -193,11 +203,13 @@ export async function openVideo(studentId, topicId, onError) {
   const simEl = $(".gr-video-sim");
   const voiceBox = $(".gr-video-voice input");
   let voice = null;
-  voiceReady().then((x) => {
+  // Prvi prizor začne šele, ko vemo, ali je glas (Chrome glasove naloži z zamikom).
+  const voiceKnown = voiceReady().then((x) => {
     voice = x;
     if (!x) (voiceBox.checked = false), (voiceBox.disabled = true), $(".gr-video-voice").setAttribute("title", t("gr.noVoice"));
   });
-  let time = 0, next = 0, playing = false, last = 0, talking = false, raf = 0, run = 0;
+  // waited: koliko sekund čas že stoji zaradi branja; če glas ne javi konca (znana napaka brskalnikov), gremo naprej.
+  let time = 0, next = 0, playing = false, last = 0, talking = false, waited = 0, raf = 0, run = 0, loading = false;
 
   const scene = (i) => {
     const sc = v.scenes[i];
@@ -210,6 +222,7 @@ export async function openVideo(studentId, topicId, onError) {
       u.lang = voice.lang;
       u.rate = 0.95;
       talking = true;
+      waited = 0;
       u.onend = u.onerror = () => id === run && (talking = false);
       window.speechSynthesis.speak(u);
     }
@@ -228,20 +241,31 @@ export async function openVideo(studentId, topicId, onError) {
     if (!playing) return;
     const due = next < v.scenes.length ? v.scenes[next].t : v.duration;
     // Med branjem čas ne preskoči v naslednji prizor (ali na konec).
-    if (talking && time + dt >= due) return;
+    if (talking && time + dt >= due) {
+      if ((waited += dt) < 20) return;
+      talking = false;
+    }
     time = Math.min(v.duration, time + dt);
     while (next < v.scenes.length && v.scenes[next].t <= time) scene(next++);
     $("progress").value = time;
     $(".gr-video-time").textContent = `${mmss(time)} / ${mmss(v.duration)}`;
     if (time >= v.duration) setPlay(false);
   };
+  // cancel() ne prekliče pause(): brez resume() bi glas (tudi zvočni povzetek) potem molčal.
+  const hush = () => (window.speechSynthesis?.cancel(), window.speechSynthesis?.resume());
   const restart = async () => {
     run++;
-    window.speechSynthesis?.cancel();
+    // Med nalaganjem simulacije čas stoji, sicer bi prvi prizor šel v staro simulacijo in podnapis bi se izbrisal.
+    playing = false;
+    hush();
     talking = false;
     time = 0;
     next = 0;
-    await mountSim(v.sim, simEl, { ...v.opts, noReset: true });
+    const my = run;
+    loading = true;
+    await Promise.all([mountSim(v.sim, simEl, { ...v.opts, noReset: true }), voiceKnown]);
+    if (my !== run) return;
+    loading = false;
     $(".gr-video-cap").textContent = "";
     $("progress").value = 0;
     setPlay(true);
@@ -249,12 +273,12 @@ export async function openVideo(studentId, topicId, onError) {
   const close = () => {
     run++;
     cancelAnimationFrame(raf);
-    window.speechSynthesis?.cancel();
+    hush();
     dlg.remove();
   };
   $(".gr-video-close").addEventListener("click", () => dlg.close());
   dlg.addEventListener("close", close);
-  $(".gr-video-play").addEventListener("click", () => (time >= v.duration ? restart() : setPlay(!playing)));
+  $(".gr-video-play").addEventListener("click", () => loading || (time >= v.duration ? restart() : setPlay(!playing)));
   $(".gr-video-again").addEventListener("click", restart);
   voiceBox.addEventListener("change", () => !voiceBox.checked && window.speechSynthesis?.cancel());
   dlg.showModal();

@@ -15,14 +15,14 @@ export const GRADIVA_DIR = process.env.EVKLID_GRADIVA || path.join(path.dirname(
 
 // Obvezni razdelki (## naslov) in polja v glavi za vsako vrsto.
 export const FORMATS = {
-  poskus: { meta: ["naslov", "cas", "odrasli", "avtor", "stanje"], sections: ["Potrebuješ", "Varnost", "Postopek", "Kaj opaziš", "Zakaj", "Vprašanje"] },
+  poskus: { meta: ["naslov", "cas", "odrasli", "avtor", "stanje"], sections: ["Varnost", "Potrebuješ", "Postopek", "Kaj opaziš", "Zakaj", "Vprašanje"] },
   projekt: { meta: ["naslov", "cas", "avtor", "stanje"], sections: ["Izziv", "Potrebuješ", "Koraki", "Kaj oddaš", "Merila"] },
   video: { meta: ["naslov", "simulacija", "trajanje", "avtor", "stanje"], sections: [] },
 };
 const VRSTE = Object.keys(FORMATS);
 const ID_RE = /^[A-Z0-9-]+\/[a-z0-9-]+$/;
 
-const fileOf = (vrsta, topicId) => (FORMATS[vrsta] && ID_RE.test(topicId) ? path.join(GRADIVA_DIR, vrsta, `${topicId}.md`) : null);
+const fileOf = (vrsta, topicId) => (Object.hasOwn(FORMATS, vrsta) && ID_RE.test(topicId) ? path.join(GRADIVA_DIR, vrsta, `${topicId}.md`) : null);
 
 const cache = new Map();
 export function loadGradivo(vrsta, topicId) {
@@ -65,8 +65,9 @@ export function parseGradivo(vrsta, src) {
             if (!a) return true;
             if (a[1].toLowerCase() === "klikni") actions.push({ do: "click", target: a[2] });
             else {
+              // Brez »=« ni vrednosti (checkGradivo to javi), oznaka ostane cela.
               const eq = a[2].lastIndexOf("=");
-              actions.push({ do: "set", target: a[2].slice(0, eq).trim(), value: a[2].slice(eq + 1).trim() });
+              actions.push(eq < 0 ? { do: "set", target: a[2], value: "" } : { do: "set", target: a[2].slice(0, eq).trim(), value: a[2].slice(eq + 1).trim() });
             }
             return false;
           })
@@ -81,8 +82,8 @@ export function parseGradivo(vrsta, src) {
 
 // Napake oblike (scripts/check-gradivo.js in testi). Vrne seznam besedil; prazen seznam = v redu.
 export function checkGradivo(vrsta, src, topicId = null) {
+  if (!Object.hasOwn(FORMATS, vrsta)) return [`neznana vrsta ${vrsta}`];
   const f = FORMATS[vrsta];
-  if (!f) return [`neznana vrsta ${vrsta}`];
   const errs = [];
   const g = parseGradivo(vrsta, src);
   if (topicId && !getTopic(topicId)) errs.push(`tema ${topicId} ne obstaja`);
@@ -95,19 +96,29 @@ export function checkGradivo(vrsta, src, topicId = null) {
     if (!sec) errs.push(`manjka razdelek »## ${s}«`);
     else if (!sec.md.trim()) errs.push(`razdelek »${s}« je prazen`);
   }
-  if (vrsta !== "video") for (const t of titles) if (!f.sections.includes(t)) errs.push(`nepričakovan razdelek »## ${t}«`);
+  if (vrsta !== "video") {
+    for (const t of titles) if (!f.sections.includes(t)) errs.push(`nepričakovan razdelek »## ${t}«`);
+    for (const t of new Set(titles)) if (titles.filter((x) => x === t).length > 1) errs.push(`razdelek »## ${t}« je dvakrat`);
+    const order = titles.filter((t) => f.sections.includes(t));
+    const want = f.sections.filter((t) => order.includes(t));
+    if (order.join("|") !== want.join("|")) errs.push(`razdelki naj bodo v vrstnem redu: ${f.sections.join(", ")}`);
+  }
   if (vrsta === "poskus") {
     if (g.meta.odrasli && !["da", "ne"].includes(g.meta.odrasli)) errs.push("odrasli: da ali ne");
     const need = g.sections.find((x) => x.title === "Potrebuješ")?.md || "";
     if (!/^\s*-\s+\S/m.test(need)) errs.push("»Potrebuješ« naj bo seznam (- …)");
     const steps = g.sections.find((x) => x.title === "Postopek")?.md || "";
     if (!/^\s*1\.\s+\S/m.test(steps)) errs.push("»Postopek« naj bo oštevilčen seznam (1. …)");
+    const q = g.sections.find((x) => x.title === "Vprašanje")?.md || "";
+    if (q && !/^>\s*Odgovor\s*:\s*\S/m.test(q)) errs.push("»Vprašanje« naj ima vrstico »> Odgovor: …«");
+    else if (q && !q.split(/^>/m)[0].trim()) errs.push("»Vprašanje« nima vprašanja pred odgovorom");
   }
   if (vrsta === "video") {
     if (g.meta.simulacija && !Object.hasOwn(ENGINES, g.meta.simulacija)) errs.push(`simulacija »${g.meta.simulacija}« ne obstaja`);
     if (g.meta.moznosti) {
       try {
-        JSON.parse(g.meta.moznosti);
+        const o = JSON.parse(g.meta.moznosti);
+        if (!o || typeof o !== "object" || Array.isArray(o)) throw new Error();
       } catch {
         errs.push("moznosti naj bodo JSON, npr. {\"mode\": \"uporniki\"}");
       }
@@ -122,7 +133,9 @@ export function checkGradivo(vrsta, src, topicId = null) {
       if (sc.t != null) prev = sc.t;
       if (!sc.md) errs.push(`prizor ${sc.t ?? "?"} s nima besedila`);
       if (sc.md.length > 260) errs.push(`besedilo prizora ${sc.t} s je predolgo (največ 260 znakov, en ali dva stavka)`);
-      for (const a of sc.actions) if (a.do === "set" && a.value === "") errs.push(`prizor ${sc.t} s: nastavi brez vrednosti`);
+      for (const a of sc.actions) if (a.do === "set" && a.value === "") errs.push(`prizor ${sc.t} s: nastavi brez vrednosti (- nastavi: oznaka = vrednost)`);
+      // Alineja v podnapisu je skoraj vedno zatipkano dejanje (»- nastvai: …«); predvajalnik bi jo prebral.
+      if (/^\s*[-*+]\s/m.test(sc.md)) errs.push(`prizor ${sc.t ?? "?"} s: alineja v besedilu (dejanja so le »- nastavi:« in »- klikni:«)`);
     }
     if (g.scenes[0] && g.scenes[0].t !== 0) errs.push("prvi prizor naj bo ob 0:00");
   }
@@ -168,9 +181,11 @@ export function gradivoPage(vrsta, topicId) {
   if (vrsta === "poskus") {
     const q = sec("Vprašanje")?.md || "";
     // Odgovor na vprašanje je za črto »> Odgovor: …« in se natisne na dnu strani.
-    const [ask, ans] = q.split(/^>\s*/m);
+    const at = q.search(/^>/m);
+    const ask = at < 0 ? q : q.slice(0, at);
+    const ans = at < 0 ? "" : q.slice(at).replace(/^>[ \t]?/gm, "");
     body = `${g.meta.odrasli === "da" ? `<p class="adult">Poskus delaj skupaj z odraslo osebo.</p>` : ""}
-      <div class="safety"><h2>Varnost</h2>${renderMd(sec("Varnost").md)}</div>
+      <div class="safety"><h2>Varnost</h2>${renderMd(sec("Varnost")?.md || "")}</div>
       ${block("Potrebuješ")}${block("Postopek")}${block("Kaj opaziš")}${block("Zakaj")}
       <h2>Vprašanje</h2>${renderMd(ask.trim())}
       ${ans ? `<div class="answer">${renderMd(ans.trim())}</div>` : ""}`;
@@ -191,18 +206,23 @@ export function gradivoPage(vrsta, topicId) {
 // Kratek video: scenarij za predvajalnik v aplikaciji (public/gradiva.js), ki upravlja simulacijo.
 export function videoFor(topicId) {
   const g = loadGradivo("video", topicId);
-  if (!g || !Object.hasOwn(ENGINES, g.meta.simulacija) || !g.scenes.length) return null;
+  // Prizori brez časa se ne predvajajo; brez »trajanje« video traja do zadnjega prizora in še 10 s.
+  const scenes = (g?.scenes.filter((sc) => sc.t != null) || []).sort((a, b) => a.t - b.t);
+  if (!g || !Object.hasOwn(ENGINES, g.meta.simulacija) || !scenes.length) return null;
   let opts = {};
   try {
     opts = g.meta.moznosti ? JSON.parse(g.meta.moznosti) : {};
   } catch {}
+  if (!opts || typeof opts !== "object" || Array.isArray(opts)) opts = {};
+  const last = scenes.at(-1).t;
+  const duration = g.duration > last ? g.duration : last + 10;
   return {
     topic: topicId,
-    title: g.meta.naslov,
+    title: g.meta.naslov || getTopic(topicId)?.name || "",
     sim: g.meta.simulacija,
     opts,
-    duration: g.duration,
+    duration,
     draft: g.meta.stanje !== "pregledano",
-    scenes: g.scenes.map((sc) => ({ t: sc.t, html: renderMd(sc.md), speak: speakMarkdown(sc.md).replace(/\n/g, " "), actions: sc.actions })),
+    scenes: scenes.map((sc) => ({ t: sc.t, html: renderMd(sc.md), speak: speakMarkdown(sc.md).replace(/\n/g, " "), actions: sc.actions })),
   };
 }

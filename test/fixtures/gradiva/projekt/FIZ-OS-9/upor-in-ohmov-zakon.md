@@ -7,7 +7,7 @@ stanje: osnutek
 
 ## Izziv
 
-Ugotovi, koliko električne energije porabi tvoj telefon v enem mesecu.
+Ugotovi, koliko električne energije porabi tvoj telefon v enem mesecu. (Testni primer: podatki s polnilnika dajo le zgornjo mejo.)
 
 ## Potrebuješ
 

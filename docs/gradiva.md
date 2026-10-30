@@ -46,23 +46,32 @@ details. With an authored map the summary page also shows the lesson summary.
 
 Check every file with `node scripts/check-gradivo.js -q <files>` (format, KaTeX, simulation id, scene times).
 Front matter always has `naslov`, `avtor: AI`, `stanje: osnutek|pregledano`. Examples: `test/fixtures/gradiva/`.
+Write as the lessons do: Slovenian, addressing the student with »ti« (»Nariši …«, »Opazuj …«), the terms and
+level of the topic (`node scripts/lesson-topic.js <id>`), maths in `$…$`, decimal comma, units with `\,`.
+Every number and every claim in `Kaj opaziš`/`Zakaj` must match what really happens with those items.
 
 **Home experiment** (`poskus`): only experiments that are safe at home with household items; anything with
 acids, flames, mains electricity or heat beyond a kettle belongs to the virtual lab instead. Front matter also
-`cas` (e.g. `20 min`) and `odrasli: da|ne` (adult present). Sections in this order: `## Varnost` (always
-first, concrete: what could go wrong and how to avoid it), `## Potrebuješ` (bullet list), `## Postopek`
-(numbered), `## Kaj opaziš`, `## Zakaj` (the physics/chemistry at the topic's level), `## Vprašanje` (one
-question, then a line `> Odgovor: …`, printed at the bottom).
+`cas` (e.g. `20 min`) and `odrasli: da|ne` (`da` when any step uses hot water or a sharp knife;
+the page then prints »Poskus delaj skupaj z odraslo osebo.«). Sections in
+this order: `## Varnost` (always first, 2–4 concrete bullets: what could go wrong and how to avoid it),
+`## Potrebuješ` (bullet list with amounts), `## Postopek` (numbered, 3–8 steps, one action each),
+`## Kaj opaziš` (what the student should see, measured if possible), `## Zakaj` (≤ 4 sentences linking the
+observation to the topic's law or formula), `## Vprašanje` (one question that asks to predict or explain a
+change, not to repeat the text, then a line `> Odgovor: …`, printed at the bottom).
 
-**Project** (`projekt`): `cas` (e.g. `1 teden`); sections `## Izziv`, `## Potrebuješ`, `## Koraki`,
-`## Kaj oddaš`, `## Merila` (a short rubric the teacher can grade by).
+**Project** (`projekt`): `cas` (e.g. `1 teden`); sections `## Izziv` (one question from the student's own
+life with a measurable answer), `## Potrebuješ`, `## Koraki` (numbered, 3–8), `## Kaj oddaš` (one concrete
+product: table, graph, short report) and `## Merila` (3–5 bullets the teacher can tick off).
 
 **Short video** (`video`): `simulacija` (an id from `public/sim/index.js` ENGINES, normally one listed for the
 topic in `public/sim/katalog.js`), optional `moznosti` (JSON options for the simulation), `trajanje` m:ss
 between 0:45 and 2:30. Each scene is `## m:ss` (first 0:00, increasing), one or two sentences of caption
 (≤ 260 characters, read aloud), and action lines `- nastavi: <slider aria-label> = <value>` or
-`- klikni: <button text>`. Slider labels are the `label` of `kit.slider` in the simulation's source. The
-player waits for the voice to finish a caption before the next scene, so keep captions short.
+`- klikni: <button text or aria-label>`. Slider labels are the `label` of `kit.slider` in the simulation's source; for a `kit.select` the value is the option value or its text. A bullet line that is not an action is an error (usually a typo). The
+player waits for the voice to finish a caption before the next scene, so keep captions short. One idea per
+video, 4–8 scenes: each scene changes one thing and its caption says what to watch; the last scene states the
+rule. A caption never names a value the simulation does not show at that moment.
 
 ## Content rules
 

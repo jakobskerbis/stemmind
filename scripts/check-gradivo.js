@@ -4,7 +4,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { checkGradivo, GRADIVA_DIR, FORMATS } from "../server/gradiva-vsebina.js";
-import { authoredMap } from "../server/gradiva.js";
 
 const args = process.argv.slice(2);
 const quiet = args.includes("-q");
@@ -13,13 +12,13 @@ const files = args.filter((a) => a !== "-q");
 const list = files.length ? files : walk(GRADIVA_DIR);
 let bad = 0;
 for (const file of list) {
-  const rel = path.relative(GRADIVA_DIR, path.resolve(file)).split(path.sep);
-  const vrsta = rel[0];
-  const topicId = rel.slice(1).join("/").replace(/\.md$/, "");
+  // …/<vrsta>/<POT>/<tema>.md, tudi zunaj GRADIVA_DIR (npr. test/fixtures/gradiva).
+  const [vrsta, pot, tema] = path.resolve(file).split(path.sep).slice(-3);
+  const topicId = `${pot}/${tema.replace(/\.md$/, "")}`;
   let errs;
   if (vrsta === "miselni") {
-    const m = authoredMap(topicId);
-    errs = !m ? ["miselni vzorec nima alinej (- veja)"] : fs.readFileSync(file, "utf8").split("\n").filter((l) => /^[-*+]\s/.test(l)).length > 8 ? ["največ 8 vej"] : [];
+    const veje = fs.readFileSync(file, "utf8").split(/\r?\n/).filter((l) => /^[-*+]\s+\S/.test(l)).length;
+    errs = !veje ? ["miselni vzorec nima alinej (- veja)"] : veje > 8 ? ["največ 8 vej"] : [];
   } else if (FORMATS[vrsta]) errs = checkGradivo(vrsta, fs.readFileSync(file, "utf8"), topicId);
   else errs = [`neznana mapa »${vrsta}« (${[...Object.keys(FORMATS), "miselni"].join(", ")})`];
   if (errs.length) {
