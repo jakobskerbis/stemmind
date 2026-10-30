@@ -32,6 +32,7 @@ import { deviceSnapshot, applyDeviceSettings, addProposal } from "./chat-setting
 import { initSchedule, showSchedule, renderScheduleCard } from "./schedule.js";
 import { initScan, showScan, leaveScan, scanBack } from "./scan/scan.js";
 import { initZbirke, showZbirke, meCard, unlockedText, itemThumb } from "./zbirke-view.js";
+import { initTestNotice } from "./testna-verzija.js";
 import { initFormulaInfo, annotateTex, setFormulaSubject } from "./formula-info.js";
 import { xpStatsHtml, xpItemsHtml, levelRowHtml, paintBadge, celebrateXp } from "./xp-fx.js";
 import { goalFieldsHtml, wireGoalFields, readGoalFields, goalLineHtml, goalName, countdown, hasGoal, reminderDue, dismissReminder, reminderCardHtml, fmtDate } from "./goal.js";
@@ -3146,6 +3147,7 @@ initFormulaInfo();
 (async () => {
   const cfg = await api("/api/config");
   $("#mock-banner").hidden = !cfg.mock;
+  initTestNotice(cfg.test_notice, { showView });
   $("#chat-off").hidden = !cfg.chat_off;
   initFeedback({ api, getStudent: () => state.student, showView, toast, currentLang }, cfg);
   initGames({ api, getStudent: () => state.student, setStudent: studentUpdated, toast: (m, ic = "check") => toast(m, ic), refreshXp, currentLang });
