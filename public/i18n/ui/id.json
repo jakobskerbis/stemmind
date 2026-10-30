@@ -1254,6 +1254,13 @@
   "games.bought": "Dibeli dan dipakai!",
   "games.multiHint": "Dari laci ini kamu bisa memakai hingga {n} barang sekaligus. Barang di tempat yang sama (mis. kacamata kedua) menggantikan yang lama; ketuk lagi untuk melepasnya.",
   "games.slotFull": "Kamu sudah memakai {n} barang dari laci ini. Lepas satu untuk memakai yang baru.",
+  "games.new": "Baru",
+  "games.newWeek": "Baru minggu ini",
+  "games.wishTitle": "Kamu ingin apa di toko?",
+  "games.wishHint": "Setiap minggu kami menambah barang baru. Tulis topi, karakter, latar, atau lencana apa yang kamu inginkan. Jangan tulis namamu atau data pribadi lainnya.",
+  "games.wishPlaceholder": "Misalnya: topi bajak laut, karakter burung hantu berkacamata …",
+  "games.wishSend": "Kirim keinginan",
+  "games.wishThanks": "Terima kasih! Kami akan memperhatikan keinginanmu di pembaruan berikutnya.",
   "games.boughtFull": "Terbeli! Kamu sudah memakai {n} barang dari laci ini: lepas satu untuk memakai yang baru.",
   "games.slot.kind": "Karakter",
   "games.slot.body": "Warna",
@@ -2276,5 +2283,41 @@
   "gr.weakSheet": "Lembar kerja dari topik lemah",
   "gr.pastTitle": "Soal ujian lalu dengan pembahasan",
   "gr.pastText": "Soal resmi dan pedoman penilaian diterbitkan oleh Pusat Ujian Nasional (RIC), yang memegang semua haknya, jadi kami tidak menyalinnya di sini. Ujian percobaan di atas memakai soal kami sendiri dengan format dan waktu yang sama.",
-  "gr.pastOpen": "Buka soal di ric.si"
+  "gr.pastOpen": "Buka soal di ric.si",
+  "pilot.title": "Pengukuran pilot",
+  "pilot.period": "Periode",
+  "pilot.days": "{n} hari terakhir",
+  "pilot.school": "Sekolah",
+  "pilot.allSchools": "semua siswa",
+  "pilot.qPerDay": "pertanyaan ke tutor per hari",
+  "pilot.qPerStudent": "pertanyaan per siswa per hari (pada hari siswa bertanya)",
+  "pilot.aiPerStudent": {
+    "other": "biaya AI per siswa per bulan ({n} siswa memakai AI)"
+  },
+  "pilot.aiTotal": "biaya AI dalam periode",
+  "pilot.visitsParents": {
+    "other": "tayangan halaman untuk orang tua"
+  },
+  "pilot.visitsPay": {
+    "other": "tayangan halaman pembayaran"
+  },
+  "pilot.schoolStudents": {
+    "other": "Sekolah ini punya {n} siswa di kelas."
+  },
+  "pilot.day": "Hari",
+  "pilot.questions": "Pertanyaan",
+  "pilot.askers": "Siswa",
+  "pilot.ai": "AI",
+  "pilot.parents": "Orang tua",
+  "pilot.note": "Tayangan halaman dihitung tanpa cookie dan tanpa alamat IP, hanya sebagai jumlah per hari. Bot dan pratinjau tautan tidak dihitung.",
+  "gr.video": "Video singkat",
+  "gr.poskus": "Percobaan di rumah",
+  "gr.projekt": "Proyek",
+  "gr.lockedAny": "Materi ini termasuk dalam paket.",
+  "gr.play": "Putar",
+  "gr.pause": "Jeda",
+  "gr.again": "Ulang dari awal",
+  "gr.close": "Tutup",
+  "gr.voice": "Bacakan",
+  "gr.videoDraft": "Draf: guru masih meninjau video ini."
 }

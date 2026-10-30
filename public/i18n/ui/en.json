@@ -1260,6 +1260,13 @@
   "games.bought": "Bought and on!",
   "games.multiHint": "You can wear up to {n} items from this drawer at once. An item on the same spot (e.g. a second pair of glasses) replaces the old one; tap again to take it off.",
   "games.slotFull": "You already wear {n} items from this drawer. Take one off to wear a new one.",
+  "games.new": "New",
+  "games.newWeek": "New this week",
+  "games.wishTitle": "What would you like in the shop?",
+  "games.wishHint": "We add new items every week. Write which hat, character, background or badge you'd like. Don't write your name or any other personal details.",
+  "games.wishPlaceholder": "For example: a pirate hat, an owl character with glasses …",
+  "games.wishSend": "Send wish",
+  "games.wishThanks": "Thank you! We'll read your wish before the next update.",
   "games.boughtFull": "Bought! You already wear {n} items from this drawer: take one off to wear the new one.",
   "games.slot.kind": "Character",
   "games.slot.body": "Colour",
@@ -2296,5 +2303,45 @@
   "gr.weakSheet": "Worksheet from weak topics",
   "gr.pastTitle": "Past papers with solutions",
   "gr.pastText": "Official papers and marking guides are published by the National Examinations Centre (RIC), which holds all rights to them, so we do not copy them here. The mock exam above uses our own tasks in the same format and time.",
-  "gr.pastOpen": "Open papers on ric.si"
+  "gr.pastOpen": "Open papers on ric.si",
+  "pilot.title": "Pilot measurement",
+  "pilot.period": "Period",
+  "pilot.days": "last {n} days",
+  "pilot.school": "School",
+  "pilot.allSchools": "all students",
+  "pilot.qPerDay": "questions to the tutor per day",
+  "pilot.qPerStudent": "questions per student per day (on days they ask)",
+  "pilot.aiPerStudent": {
+    "one": "AI cost per student per month ({n} student using AI)",
+    "other": "AI cost per student per month ({n} students using AI)"
+  },
+  "pilot.aiTotal": "AI cost in the period",
+  "pilot.visitsParents": {
+    "one": "view of the parents page",
+    "other": "views of the parents page"
+  },
+  "pilot.visitsPay": {
+    "one": "view of the payment page",
+    "other": "views of the payment page"
+  },
+  "pilot.schoolStudents": {
+    "one": "The school has {n} student in classes.",
+    "other": "The school has {n} students in classes."
+  },
+  "pilot.day": "Day",
+  "pilot.questions": "Questions",
+  "pilot.askers": "Students",
+  "pilot.ai": "AI",
+  "pilot.parents": "Parents",
+  "pilot.note": "Page views are counted without cookies and without IP addresses, only as a daily total. Bots and link previews are not counted.",
+  "gr.video": "Short video",
+  "gr.poskus": "Home experiment",
+  "gr.projekt": "Project",
+  "gr.lockedAny": "This material is part of the plan.",
+  "gr.play": "Play",
+  "gr.pause": "Pause",
+  "gr.again": "Start again",
+  "gr.close": "Close",
+  "gr.voice": "Read aloud",
+  "gr.videoDraft": "Draft: a teacher is still reviewing this video."
 }

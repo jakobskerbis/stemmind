@@ -289,7 +289,7 @@ async function renderAdmin(box) {
         <a class="btn-secondary" href="/api/feedback/export?format=md" download>${icon("download")}<span>${esc(t("fb.downloadSummary"))}</span></a>
         <a class="btn-secondary" href="/api/feedback/export?format=json" download>${icon("download")}<span>${esc(t("fb.download"))}</span></a>
       </div>
-      ${data.count ? `<div class="fb-summary">${window.DOMPurify && window.marked ? createRenderer().renderRich(data.summary) : `<pre>${esc(data.summary)}</pre>`}</div>` : ""}
+      ${data.count || data.wishes ? `<div class="fb-summary">${window.DOMPurify && window.marked ? createRenderer().renderRich(data.summary) : `<pre>${esc(data.summary)}</pre>`}</div>` : ""}
     </div>`;
   hydrateIcons(box);
 }

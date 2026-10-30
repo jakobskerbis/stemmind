@@ -31,6 +31,9 @@ services:
         sync: false
       - key: EVKLID_ADMIN_EMAILS
         sync: false
+      # Ključ za tedenski izvoz kozmetike (GET /api/kozmetika/export, docs/kozmetika-posodobitve.md).
+      - key: EVKLID_EXPORT_TOKEN
+        generateValue: true
       - key: EVKLID_DAILY_QUESTIONS
         value: "0"
       - key: EVKLID_FREE_DAILY_QUESTIONS

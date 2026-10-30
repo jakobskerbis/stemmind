@@ -18,6 +18,8 @@ export const AREA_NAMES = {
   speed: "Hitrost in delovanje",
   league: "Točke in lige",
 };
+// cosmetics: želja za tedensko posodobitev trgovine z avatarji (public/games/index.js, docs/kozmetika-posodobitve.md).
+const KINDS = ["form", "interview", "cosmetics"];
 const RECOMMEND = ["yes", "maybe", "no"];
 const DEVICES = ["phone", "tablet", "desktop"];
 const MAX_TEXT = 2000;
@@ -40,13 +42,20 @@ export function isLocalRequest(req) {
   return ip === "127.0.0.1" || ip === "::1" || ip === "::ffff:127.0.0.1";
 }
 
+// Želje za trgovino so prosto besedilo otrok: hranimo jih največ WISH_DAYS dni (docs/kozmetika-posodobitve.md).
+export const WISH_DAYS = 90;
+export function purgeOldWishes(db) {
+  ensureFeedbackTable(db);
+  return Number(db.prepare(`DELETE FROM feedback WHERE kind = 'cosmetics' AND created_at < datetime('now', '-${WISH_DAYS} days')`).run().changes);
+}
+
 export function ensureFeedbackTable(db) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS feedback (
       id INTEGER PRIMARY KEY,
       student_id INTEGER REFERENCES students(id) ON DELETE SET NULL,
       name TEXT,
-      kind TEXT NOT NULL DEFAULT 'form',   -- form | interview
+      kind TEXT NOT NULL DEFAULT 'form',   -- form | interview | cosmetics
       ratings TEXT NOT NULL DEFAULT '{}',  -- {področje: 1–5}
       recommend TEXT,                      -- yes | maybe | no
       good TEXT, bad TEXT, ideas TEXT,
@@ -71,7 +80,7 @@ export function normalizeFeedback(body = {}) {
     .map((x) => ({ q: longText(x?.q).slice(0, 500), a: longText(x?.a), ...(QUESTION_KEYS.includes(x?.k) ? { k: x.k } : {}) }))
     .filter((x) => x.q && x.a);
   const fb = {
-    kind: body.kind === "interview" ? "interview" : "form",
+    kind: KINDS.includes(body.kind) ? body.kind : "form",
     name: cleanText(body.name, 40) || null,
     ratings,
     recommend: RECOMMEND.includes(body.recommend) ? body.recommend : null,
@@ -207,10 +216,14 @@ const quote = (items, max = 8) =>
     .map((i) => `- »${i.text.length > 300 ? i.text.slice(0, 300) + " …" : i.text}« (${i.who})`)
     .join("\n") + (items.length > max ? `\n- … in še ${items.length - max}` : "");
 
-export function summaryMarkdown(entries, now = new Date()) {
+export function summaryMarkdown(all, now = new Date()) {
+  // Želje za trgovino z avatarji gredo v svoj razdelek (tedenska posodobitev kozmetike), ne med ocene aplikacije.
+  const wishes = all.filter((e) => e.kind === "cosmetics" && e.ideas).map((e) => ({ text: oneLine(e.ideas), who: e.name || `#${e.id}` }));
+  const entries = all.filter((e) => e.kind !== "cosmetics");
   const s = summarize(entries);
   const out = [`# Povratne informacije testerjev`, ``, `Povzetek ${now.toISOString().slice(0, 10)} · ${s.count} mnenj · priporočil bi: da ${s.recommend.yes}, mogoče ${s.recommend.maybe}, ne ${s.recommend.no}`, ``];
-  if (!s.count) return out.concat(["Še ni mnenj."]).join("\n") + "\n";
+  const wishPart = wishes.length ? [``, `## Želje za trgovino z avatarji (${wishes.length})`, ``, quote(wishes.slice().reverse(), 30)] : [];
+  if (!s.count) return out.concat(["Še ni mnenj."], wishPart).join("\n") + "\n";
   out.push(`## Ocene po področjih (1–5)`, ``, `| Področje | Povprečje | Ocen | Slabih (1–2) |`, `|---|---|---|---|`);
   for (const r of s.rows) out.push(`| ${r.name} | ${r.avg === null ? "–" : fmt(r.avg)} | ${r.n} | ${r.low} |`);
   out.push(``, `## Predlogi sprememb (najprej najpomembnejše)`, ``);
@@ -228,6 +241,7 @@ export function summaryMarkdown(entries, now = new Date()) {
   const seen = new Set();
   const uniq = praise.filter((p) => !seen.has(p.text) && seen.add(p.text));
   if (uniq.length) out.push(``, `## Kaj je testerjem všeč (tega ne spreminjaj)`, ``, quote(uniq, 12));
+  out.push(...wishPart);
   out.push(
     ``,
     `## Kako naprej`,
@@ -265,6 +279,7 @@ export async function nextInterviewQuestion({ answers, lang = "sl", createFn }) 
 
 export function mountFeedback(app, store, { usage, file = null, createFn } = {}) {
   const fb = new FeedbackStore(store.db, file);
+  if (purgeOldWishes(store.db)) fb.writeFile();
 
   // Mnenje je vezano na profil (pri starševskih računih to preveri prijava za /api/students/:id).
   const student = (req, res) => {
@@ -279,7 +294,15 @@ export function mountFeedback(app, store, { usage, file = null, createFn } = {})
     const entry = normalizeFeedback(req.body);
     if (!entry) return res.status(400).json({ error: "Oceni vsaj eno področje ali napiši pripombo." });
     if (fb.count() >= MAX_ROWS) return res.status(429).json({ error: "Zbranih je že dovolj mnenj. Hvala!" });
-    if (!entry.name) entry.name = s.name;
+    // Želje za trgovino: največ 5 na dan na učenca, da otrok ne zasuje tabele.
+    if (entry.kind === "cosmetics" && fb.db.prepare("SELECT COUNT(*) AS n FROM feedback WHERE student_id = ? AND kind = 'cosmetics' AND date(created_at) = date('now')").get(s.id).n >= 5)
+      return res.status(429).json({ error: "Za danes je želja dovolj. Hvala!" });
+    // Želje za trgovino brez imena (otrok piše prosto besedilo; povzetek pokaže samo #id).
+    if (entry.kind === "cosmetics") {
+      entry.name = null;
+      if (purgeOldWishes(fb.db)) fb.writeFile();
+    }
+    else if (!entry.name) entry.name = s.name;
     res.status(201).json({ id: fb.add(s.id, entry) });
   });
 
@@ -303,7 +326,8 @@ export function mountFeedback(app, store, { usage, file = null, createFn } = {})
   const localOnly = (req, res, next) => (isLocalRequest(req) ? next() : res.status(403).json({ error: "Mnenja so vidna samo na računalniku, kjer teče Evklid." }));
   app.get("/api/feedback", localOnly, (_req, res) => {
     const list = fb.list();
-    res.json({ count: list.length, entries: list, summary: summaryMarkdown(list), file });
+    const wishes = list.filter((e) => e.kind === "cosmetics").length;
+    res.json({ count: list.length - wishes, wishes, entries: list, summary: summaryMarkdown(list), file });
   });
   app.get("/api/feedback/export", localOnly, (req, res) => {
     const list = fb.list();

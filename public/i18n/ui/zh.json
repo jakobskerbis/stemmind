@@ -1254,6 +1254,13 @@
   "games.bought": "已购买并穿戴！",
   "games.multiHint": "这个抽屉里的物品最多可以同时穿戴 {n} 件。同一位置的物品(如第二副眼镜)会替换原来的,再点一次即可取下。",
   "games.slotFull": "这个抽屉里你已经穿戴了 {n} 件。先取下一件才能穿戴新的。",
+  "games.new": "新品",
+  "games.newWeek": "本周新品",
+  "games.wishTitle": "你希望商店里有什么？",
+  "games.wishHint": "每周都会上新物品。写下你想要的帽子、角色、背景或徽章。不要写你的名字或其他个人信息。",
+  "games.wishPlaceholder": "例如：海盗帽、戴眼镜的猫头鹰角色 …",
+  "games.wishSend": "发送心愿",
+  "games.wishThanks": "谢谢！我们会在下次更新时参考你的心愿。",
   "games.boughtFull": "已购买!这个抽屉里你已经穿戴了 {n} 件:先取下一件才能穿戴新的。",
   "games.slot.kind": "角色",
   "games.slot.body": "颜色",
@@ -2276,5 +2283,41 @@
   "gr.weakSheet": "薄弱主题练习单",
   "gr.pastTitle": "往年试卷及答案",
   "gr.pastText": "官方试卷和评分标准由拥有全部权利的国家考试中心（RIC）发布，因此我们不在这里复制。上面的模拟考试使用我们自己的题目，形式和时间相同。",
-  "gr.pastOpen": "在 ric.si 打开试卷"
+  "gr.pastOpen": "在 ric.si 打开试卷",
+  "pilot.title": "试点数据",
+  "pilot.period": "时间段",
+  "pilot.days": "最近 {n} 天",
+  "pilot.school": "学校",
+  "pilot.allSchools": "所有学生",
+  "pilot.qPerDay": "每天向辅导老师提问数",
+  "pilot.qPerStudent": "每名学生每天提问数（仅计提问当天）",
+  "pilot.aiPerStudent": {
+    "other": "每名学生每月 AI 成本（{n} 名学生使用 AI）"
+  },
+  "pilot.aiTotal": "时间段内 AI 成本",
+  "pilot.visitsParents": {
+    "other": "家长页面浏览量"
+  },
+  "pilot.visitsPay": {
+    "other": "付款页面浏览量"
+  },
+  "pilot.schoolStudents": {
+    "other": "该校班级中共有 {n} 名学生。"
+  },
+  "pilot.day": "日期",
+  "pilot.questions": "提问",
+  "pilot.askers": "学生",
+  "pilot.ai": "AI",
+  "pilot.parents": "家长",
+  "pilot.note": "页面浏览量的统计不使用 Cookie，也不记录 IP 地址，只记录每天的次数。机器人和链接预览不计入。",
+  "gr.video": "短视频",
+  "gr.poskus": "家庭实验",
+  "gr.projekt": "项目",
+  "gr.lockedAny": "此资料包含在套餐中。",
+  "gr.play": "播放",
+  "gr.pause": "暂停",
+  "gr.again": "从头开始",
+  "gr.close": "关闭",
+  "gr.voice": "朗读",
+  "gr.videoDraft": "草稿：老师仍在审核此视频。"
 }

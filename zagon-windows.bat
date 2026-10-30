@@ -1,5 +1,5 @@
 @echo off
-rem EVKLID-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom                        
+rem EVKLID-SAMOPOSODOBITEV: to datoteko lahko samodejna posodobitev varno prepise tudi med tekom                                            
 rem (dolgi ukazi so v eni vrstici z "exit /b", po posodobitvi se datoteka prebere znova).
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
@@ -28,9 +28,9 @@ if not "%~1"=="--posodobljeno" (
     echo Prenasam najnovejso razlicico ...
     if exist "%TEMP%\evklid-posodobitev" rmdir /s /q "%TEMP%\evklid-posodobitev"
     mkdir "%TEMP%\evklid-posodobitev"
-    curl -L -s -o "%TEMP%\evklid-posodobitev\main.zip" https://github.com/jakobskerbis/stemmind/archive/refs/heads/main.zip
+    curl -L -s -o "%TEMP%\evklid-posodobitev\main.zip" https://github.com/jakobskerbis/evklid/archive/refs/heads/main.zip
     tar -xf "%TEMP%\evklid-posodobitev\main.zip" -C "%TEMP%\evklid-posodobitev" >nul 2>nul
-    if exist "%TEMP%\evklid-posodobitev\stemmind-main\package.json" robocopy "%TEMP%\evklid-posodobitev\stemmind-main" "%~dp0." /E /NFL /NDL /NJH /NJS /XF .env /XD data node_modules .git >nul
+    for /d %%d in ("%TEMP%\evklid-posodobitev\*-main") do if exist "%%d\package.json" robocopy "%%d" "%~dp0." /E /NFL /NDL /NJH /NJS /XF .env /XD data node_modules .git >nul
     rmdir /s /q "%TEMP%\evklid-posodobitev" >nul 2>nul
   )
   call "%~f0" --posodobljeno

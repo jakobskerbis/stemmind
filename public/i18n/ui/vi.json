@@ -1254,6 +1254,13 @@
   "games.bought": "Đã mua và mặc!",
   "games.multiHint": "Từ ngăn này em có thể đeo tối đa {n} món cùng lúc. Món ở cùng vị trí (vd. cặp kính thứ hai) sẽ thay món cũ; chạm lần nữa để tháo ra.",
   "games.slotFull": "Em đã đeo {n} món từ ngăn này. Tháo một món để đeo món mới.",
+  "games.new": "Mới",
+  "games.newWeek": "Mới trong tuần",
+  "games.wishTitle": "Em muốn có gì trong cửa hàng?",
+  "games.wishHint": "Mỗi tuần chúng tôi thêm đồ mới. Hãy viết em muốn mũ, nhân vật, nền hay huy hiệu như thế nào. Đừng viết tên em hay thông tin cá nhân khác.",
+  "games.wishPlaceholder": "Ví dụ: mũ cướp biển, nhân vật cú đeo kính …",
+  "games.wishSend": "Gửi mong muốn",
+  "games.wishThanks": "Cảm ơn em! Chúng tôi sẽ cân nhắc mong muốn của em trong lần cập nhật tới.",
   "games.boughtFull": "Đã mua! Em đã đeo {n} món từ ngăn này: tháo một món để đeo món mới.",
   "games.slot.kind": "Nhân vật",
   "games.slot.body": "Màu",
@@ -2276,5 +2283,41 @@
   "gr.weakSheet": "Phiếu bài tập từ chủ đề yếu",
   "gr.pastTitle": "Đề thi cũ có lời giải",
   "gr.pastText": "Đề thi chính thức và hướng dẫn chấm do Trung tâm Khảo thí Quốc gia (RIC) công bố và giữ mọi quyền, nên chúng tôi không sao chép ở đây. Bài thi thử ở trên dùng bài tập của chúng tôi với cùng định dạng và thời gian.",
-  "gr.pastOpen": "Mở đề thi trên ric.si"
+  "gr.pastOpen": "Mở đề thi trên ric.si",
+  "pilot.title": "Đo lường thí điểm",
+  "pilot.period": "Khoảng thời gian",
+  "pilot.days": "{n} ngày qua",
+  "pilot.school": "Trường",
+  "pilot.allSchools": "tất cả học sinh",
+  "pilot.qPerDay": "câu hỏi cho gia sư mỗi ngày",
+  "pilot.qPerStudent": "câu hỏi mỗi học sinh mỗi ngày (vào ngày có hỏi)",
+  "pilot.aiPerStudent": {
+    "other": "chi phí AI mỗi học sinh mỗi tháng ({n} học sinh dùng AI)"
+  },
+  "pilot.aiTotal": "chi phí AI trong khoảng thời gian",
+  "pilot.visitsParents": {
+    "other": "lượt xem trang dành cho phụ huynh"
+  },
+  "pilot.visitsPay": {
+    "other": "lượt xem trang thanh toán"
+  },
+  "pilot.schoolStudents": {
+    "other": "Trường có {n} học sinh trong các lớp."
+  },
+  "pilot.day": "Ngày",
+  "pilot.questions": "Câu hỏi",
+  "pilot.askers": "Học sinh",
+  "pilot.ai": "AI",
+  "pilot.parents": "Phụ huynh",
+  "pilot.note": "Lượt xem trang được đếm không dùng cookie và không lưu địa chỉ IP, chỉ là số lượng mỗi ngày. Bot và bản xem trước liên kết không được tính.",
+  "gr.video": "Video ngắn",
+  "gr.poskus": "Thí nghiệm tại nhà",
+  "gr.projekt": "Dự án",
+  "gr.lockedAny": "Tài liệu này nằm trong gói.",
+  "gr.play": "Phát",
+  "gr.pause": "Tạm dừng",
+  "gr.again": "Bắt đầu lại",
+  "gr.close": "Đóng",
+  "gr.voice": "Đọc to",
+  "gr.videoDraft": "Bản nháp: giáo viên vẫn đang xem lại video này."
 }

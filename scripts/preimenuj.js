@@ -38,7 +38,9 @@ const stem = cur.slug.replace(/[aeiou]$/, ""); // koren za sklone: kompreno → 
 const SKIP_DIRS = new Set([".git", ".claude", "node_modules", "data", "vendor"]);
 const SKIP_FILES = new Set(["brand.json", "test/ime.test.js", "scripts/preimenuj.js"]);
 const TEXT = /\.(js|cjs|mjs|json|md|html|css|bat|cmd|command|yaml|yml|txt|svg|webmanifest|py|csv)$|^(Dockerfile|\.env\.example)$/;
-const KEEP = [/jakobskerbis\/stemmind/g, /stemmind-(?:main|sim)\b/g]; // ime repozitorija in j-jeve mape
+// Ime repozitorija in j-jeve mape (<slug>-main, <slug>-sim) se ne menjata sama: repozitorij preimenuje j na GitHubu,
+// nato v brand.json → repo vpiši novo ime in staro dodaj v legacy[].repo.
+const KEEP = [new RegExp(esc(cur.repo || "\u0000"), "g"), new RegExp(`${esc(cur.slug)}-(?:main|sim)\\b`, "g")];
 
 function* walk(dir) {
   for (const d of fs.readdirSync(dir, { withFileTypes: true })) {

@@ -1260,6 +1260,13 @@
   "games.bought": "Comprato e indossato!",
   "games.multiHint": "Da questo cassetto puoi indossare fino a {n} oggetti insieme. Un oggetto nello stesso punto (es. un secondo paio di occhiali) sostituisce il precedente; toccalo di nuovo per toglierlo.",
   "games.slotFull": "Da questo cassetto indossi già {n} oggetti. Togline uno per indossarne uno nuovo.",
+  "games.new": "Nuovo",
+  "games.newWeek": "Novità della settimana",
+  "games.wishTitle": "Cosa ti piacerebbe nel negozio?",
+  "games.wishHint": "Ogni settimana aggiungiamo nuovi oggetti. Scrivi quale cappello, personaggio, sfondo o distintivo ti piacerebbe. Non scrivere il tuo nome né altri dati personali.",
+  "games.wishPlaceholder": "Per esempio: un cappello da pirata, un personaggio gufo con gli occhiali …",
+  "games.wishSend": "Invia il desiderio",
+  "games.wishThanks": "Grazie! Terremo conto del tuo desiderio nel prossimo aggiornamento.",
   "games.boughtFull": "Comprato! Da questo cassetto indossi già {n} oggetti: togline uno per indossare il nuovo.",
   "games.slot.kind": "Personaggio",
   "games.slot.body": "Colore",
@@ -2296,5 +2303,45 @@
   "gr.weakSheet": "Scheda dagli argomenti deboli",
   "gr.pastTitle": "Prove passate con soluzioni",
   "gr.pastText": "Le prove ufficiali e le griglie di valutazione sono pubblicate dal Centro nazionale per gli esami (RIC), che ne detiene tutti i diritti, quindi qui non le copiamo. La simulazione qui sopra usa nostri esercizi con lo stesso formato e la stessa durata.",
-  "gr.pastOpen": "Apri le prove su ric.si"
+  "gr.pastOpen": "Apri le prove su ric.si",
+  "pilot.title": "Misurazione del pilota",
+  "pilot.period": "Periodo",
+  "pilot.days": "ultimi {n} giorni",
+  "pilot.school": "Scuola",
+  "pilot.allSchools": "tutti gli studenti",
+  "pilot.qPerDay": "domande al tutor al giorno",
+  "pilot.qPerStudent": "domande per studente al giorno (nei giorni in cui chiede)",
+  "pilot.aiPerStudent": {
+    "one": "costo IA per studente al mese ({n} studente con IA)",
+    "other": "costo IA per studente al mese ({n} studenti con IA)"
+  },
+  "pilot.aiTotal": "costo IA nel periodo",
+  "pilot.visitsParents": {
+    "one": "visita alla pagina per i genitori",
+    "other": "visite alla pagina per i genitori"
+  },
+  "pilot.visitsPay": {
+    "one": "visita alla pagina di pagamento",
+    "other": "visite alla pagina di pagamento"
+  },
+  "pilot.schoolStudents": {
+    "one": "La scuola ha {n} studente nelle classi.",
+    "other": "La scuola ha {n} studenti nelle classi."
+  },
+  "pilot.day": "Giorno",
+  "pilot.questions": "Domande",
+  "pilot.askers": "Studenti",
+  "pilot.ai": "IA",
+  "pilot.parents": "Genitori",
+  "pilot.note": "Le visite alle pagine sono contate senza cookie e senza indirizzi IP, solo come numero al giorno. Bot e anteprime dei link non vengono contati.",
+  "gr.video": "Video breve",
+  "gr.poskus": "Esperimento a casa",
+  "gr.projekt": "Progetto",
+  "gr.lockedAny": "Questo materiale è incluso nel pacchetto.",
+  "gr.play": "Riproduci",
+  "gr.pause": "Pausa",
+  "gr.again": "Ricomincia",
+  "gr.close": "Chiudi",
+  "gr.voice": "Leggi ad alta voce",
+  "gr.videoDraft": "Bozza: un insegnante sta ancora rivedendo questo video."
 }
