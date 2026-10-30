@@ -241,7 +241,7 @@ T | izmerjena telesna temperatura | | ^\circ C
 h | telesna višina | | cm | rezultat zapišemo kot h = (h̄ ± Δh)
 \bar{h} | povprečje meritev višine | \bar{h} = \dfrac{h_1 + h_2 + \dots + h_5}{5} | cm
 h_1, h_2, h_5 | posamezne meritve višine | | cm
-\Delta h | absolutna napaka višine | | cm | največje odstopanje od \bar{h}
+\Delta h | absolutna napaka višine | | cm | največje odstopanje od $\bar{h}$
 V | odmerjena prostornina | V = \dfrac{\Delta V}{\delta} | ml
 \Delta V | absolutna napaka prostornine | | ml | najmanjši razdelek brizge
 f | srčni utrip na minuto | f = 4N | /min

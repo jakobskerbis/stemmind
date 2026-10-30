@@ -287,7 +287,7 @@ k | koeficient vzmeti | | N/m | v nastavku večkratnost ničle karakteristične 
 F | zunanja sila | | N
 t | čas | | s
 T | nihajni čas dušenega nihanja | T = \frac{2\pi}{\beta} | s
-A | koeficient desne strani f = A e^{μx} | |
+A | koeficient desne strani $f = A e^{\mu x}$ | |
 B | neznani koeficient v nastavku za y_p | |
-\mu | eksponent v desni strani f = A e^{μx} | |
+\mu | eksponent v desni strani $f = A e^{\mu x}$ | |
 :::

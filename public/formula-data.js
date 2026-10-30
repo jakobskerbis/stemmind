@@ -266,6 +266,7 @@ export function lookupSymbol(key, subject, tex = "") {
 }
 
 export function lookupUnit(key) {
+  if (!key) return null; // \mathrm{} ali nezaprt \mathrm{
   if (UNITS[key]) return { key, ...UNITS[key] };
   const p = [...key][0];
   const rest = key.slice(p.length);
@@ -307,7 +308,7 @@ export const SYMBOLS_BLOCK_RE = /^[ \t]*:::[ \t]*simboli[ \t]*\n([\s\S]*?)\n[ \t
 // Ključ oznake iz TeX: "I_0", "I_{0}" → "I_0"; "\\varepsilon" → "ε"; "\\Delta H" → "ΔH"; "\\mathrm{pH}" → "pH".
 export function symbolKeyOf(tex) {
   let s = String(tex).trim();
-  const dec = /^\\(ddot|bar|overline|hat|vec|tilde|dot)\s*(\{[^{}]*\}|[A-Za-z])\s*(?:_\s*(\{.*\}|\\?[A-Za-z0-9]+|[+-]))?$/.exec(s); // \bar{x}, \vec F_1
+  const dec = /^\\(ddot|bar|overline|hat|vec|tilde|dot)\s*(\{[^{}]*\}|\\[a-zA-Z]+|[A-Za-z])\s*(?:_\s*(\{.*\}|\\?[A-Za-z0-9]+|[+-]))?$/.exec(s); // \bar{x}, \vec F_1
   if (dec) {
     const inner = symbolKeyOf(dec[2].replace(/^\{|\}$/g, ""));
     return inner && !inner.includes("_") ? `${DECOR[dec[1]]}(${inner})${dec[3] ? `_${normSub(dec[3])}` : ""}` : null;
@@ -359,13 +360,17 @@ export function parseSymbolsBlock(body) {
   return { list, errors };
 }
 
+const glossaryIds = new WeakMap(); // isti seznam (ista lekcija) brez ponovnega JSON.stringify
 function registerGlossary(subject, glossary) {
+  const seen = glossaryIds.get(glossary);
+  if (seen && seen[0] === subject) return seen[1];
   const sig = `${subject}|${JSON.stringify(glossary)}`;
-  if (localIds.has(sig)) return `@${localIds.get(sig)}`;
+  if (localIds.has(sig)) { glossaryIds.set(glossary, [subject, `@${localIds.get(sig)}`]); return `@${localIds.get(sig)}`; }
   const table = {};
   for (const g of glossary) g.keys.forEach((k, i) => { table[k] = { ...g, tex: g.tex?.[i] || null, local: true }; });
   const id = LOCAL.push({ subject: subject || "MAT", table }) - 1;
   localIds.set(sig, id);
+  glossaryIds.set(glossary, [subject, `@${id}`]);
   return `@${id}`;
 }
 
@@ -412,6 +417,8 @@ export function annotateTex(tex, subject = override || subjectFn()) {
   };
   // Enota šele za številom ali presledkom za številom (9,81\,m/s²), sicer je besedilo ali kemijska formula.
   const afterNumber = () => /(\d\}?|\\[,;: ]|~|\[)\s*$/.test(out);
+  // Za golim _ ali ^ ali ukazom brez oklepajev mora biti oznaka v {…} (glej symbol spodaj).
+  const guard = (marked) => (/(?:[_^]|\\[a-zA-Z]+|\\[dt]?frac\s*\w)\s*$/.test(out) ? `{${marked}}` : marked);
   const wrap = (data, body) => `\\htmlData{fx=${encodeURIComponent(data).replace(/\./g, "%2E").replace(/%/g, ".")}}{${body}}`;
   // Simbol od i (vključno s predpono, npr. \Delta) do j (konec osnovnega znaka); indeks vedno prepišemo nespremenjen.
   const symbol = (base, from, j, delta) => {
@@ -452,11 +459,19 @@ export function annotateTex(tex, subject = override || subjectFn()) {
     const ch = tex[i];
     if (ch === "\\") {
       const m = /^\\([a-zA-Z]+)\s*/.exec(tex.slice(i));
-      if (!m) { out += tex.slice(i, i + 2); i += 2; continue; }
+      if (!m) { // \\[2mm]: razmik ostane nespremenjen (sicer m → masa in KaTeX ne zna izrisati)
+        const sp = tex[i + 1] === "\\" && /^\\\\\s*\[[^\]]*\]/.exec(tex.slice(i));
+        const len = sp ? sp[0].length : 2;
+        out += tex.slice(i, i + len);
+        i += len;
+        continue;
+      }
       const name = m[1];
       const j = i + m[0].length;
       if (RAW_ARG.has(name)) {
-        const end = tex[j] === "{" ? readGroup(j) : j;
+        let end = tex[j] === "{" ? readGroup(j) : j;
+        // \begin{array}{c|c}: opis stolpcev ni formula.
+        if (name === "begin" && /^\{\s*(?:array|darray|subarray|tabular)\s*\}\s*\{/.test(tex.slice(j))) end = readGroup(tex.indexOf("{", end));
         const whole = tex.slice(i, end);
         if (UNIT_CMDS.has(name) && tex[j] === "{") {
           const u = lookupUnit(normUnit(tex.slice(j + 1, end - 1)));
@@ -468,13 +483,13 @@ export function annotateTex(tex, subject = override || subjectFn()) {
             const k2 = `${own}${tex[end]}`;
             const full2 = sub2 && `${k2}_${normSub(sub2.raw)}`;
             const hit2 = full2 && lookupSymbol(full2, subject) ? [full2, sub2.end] : lookupSymbol(k2, subject) ? [k2, end + 1] : null;
-            if (hit2) { out += wrap(`s:${subject}:${hit2[0]}`, tex.slice(i, hit2[1])); i = hit2[1]; continue; }
+            if (hit2) { out += guard(wrap(`s:${subject}:${hit2[0]}`, tex.slice(i, hit2[1]))); i = hit2[1]; continue; }
           }
           if (own) {
             const sub = readSub(end);
             const full = sub && `${own}_${normSub(sub.raw)}`;
-            if (full && lookupSymbol(full, subject)) { out += wrap(`s:${subject}:${full}`, tex.slice(i, sub.end)); i = sub.end; continue; }
-            if (lookupSymbol(own, subject)) { out += wrap(`s:${subject}:${own}`, whole); i = end; continue; }
+            if (full && lookupSymbol(full, subject)) { out += guard(wrap(`s:${subject}:${full}`, tex.slice(i, sub.end))); i = sub.end; continue; }
+            if (lookupSymbol(own, subject)) { out += guard(wrap(`s:${subject}:${own}`, whole)); i = end; continue; }
           }
         }
         // Indeks za besedilom (\mathrm{SE}_r, \text{H}_2) ostane del besedila.
@@ -511,7 +526,7 @@ export function annotateTex(tex, subject = override || subjectFn()) {
       if (g === "Δ" && /^\s*_/.test(tex.slice(j)) && subject?.[0] === "@") { i = symbol("Δ", i, j, false); continue; }
       const dRaw = g === "Δ" && subject?.[0] === "@" && subject !== "@*" && /^\\(?:mathrm|text)\s*\{([^{}]+)\}/.exec(tex.slice(j));
       if (dRaw && lookupSymbol(`Δ${normSub(dRaw[1])}`, subject)) {
-        out += wrap(`s:${subject}:Δ${normSub(dRaw[1])}`, tex.slice(i, j + dRaw[0].length));
+        out += guard(wrap(`s:${subject}:Δ${normSub(dRaw[1])}`, tex.slice(i, j + dRaw[0].length)));
         i = j + dRaw[0].length;
         continue;
       }

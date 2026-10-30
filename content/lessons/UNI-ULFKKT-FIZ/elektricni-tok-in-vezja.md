@@ -310,7 +310,7 @@ v | hitrost potovanja nosilcev naboja | v = \frac{I}{n e_0 S} | m/s | zelo majhn
 S | presek vodnika | | m^2
 U | električna napetost | U = RI | V
 U_1, U_2 | gonilni napetosti virov v vezju | | V
-U_C | napetost na kondenzatorju | U_C = \frac{Q}{C} | V | pri polnjenju U_C = U_g(1 − e^{−t/τ})
+U_C | napetost na kondenzatorju | U_C = \frac{Q}{C} | V | pri polnjenju $U_C = U_g(1 - e^{-t/\tau})$
 U_0 | začetna napetost na kondenzatorju | | V | pri praznjenju
 R | električni upor | R = \frac{U}{I} | Ω | žica: R = ζ l/S
 R_1, R_2, R_3 | upori v vejah vezja | | Ω
