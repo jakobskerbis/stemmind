@@ -1443,7 +1443,7 @@
   "zb.igreHint": "Tu ne peux débloquer ces personnages et objets qu'en jouant dans Jeux. Le personnage prend la couleur que tu choisis dans le tiroir Couleur. Tu ne peux pas les acheter.",
   "zb.smesniHint": "Tu débloques ces personnages et objets rigolos avec l'XP gagnée en apprenant et en jouant. Tu ne peux pas les acheter.",
   "zb.fromXpAt": "Débloqué à {xp} XP",
-  "zb.shopHintKindXp": "Tu débloques les personnages rigolos avec l'XP (Collections, Personnages rigolos).",
+  "zb.shopHintKindXp": "Tu débloques les personnages rigolos avec l'XP.",
   "zb.how": "Comment l'obtenir ?",
   "zb.shopHint": "Les badges, les effets et certains fonds ne s'achètent pas : tu les débloques grâce à tes connaissances dans Collections.",
   "fx.formula": "Formule",

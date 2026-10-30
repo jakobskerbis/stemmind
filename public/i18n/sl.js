@@ -1553,7 +1553,7 @@ export default {
   "zb.igreHint": "Te like in predmete odkleneš samo z igranjem iger v Igrah. Lik dobi barvo, ki jo izbereš v predalu Barva. Kupiti jih ne moreš.",
   "zb.smesniHint": "Te smešne like in predmete odkleneš z XP, ki ga dobiš z učenjem in igrami. Kupiti jih ne moreš.",
   "zb.fromXpAt": "Odklenjeno pri {xp} XP",
-  "zb.shopHintKindXp": "Smešne like odkleneš z XP (Zbirke, Smešni liki).",
+  "zb.shopHintKindXp": "Smešne like odkleneš z XP.",
   "zb.how": "Kako ga dobim?",
   "zb.shopHint": "Značke, efekti in nekatera ozadja se ne kupijo: odkleneš jih z znanjem v Zbirkah.",
   "games.unlockedFaster": "Odklenjene so hitrejše igre o tej snovi!",

@@ -1461,7 +1461,7 @@
   "zb.igreHint": "Te postacie i przedmioty odblokujesz tylko, grając w sekcji Gry. Postać dostaje kolor, który wybierzesz w szufladzie Kolor. Nie możesz ich kupić.",
   "zb.smesniHint": "Te zabawne postacie i przedmioty odblokowujesz za XP zdobyte w nauce i grach. Nie da się ich kupić.",
   "zb.fromXpAt": "Odblokowano przy {xp} XP",
-  "zb.shopHintKindXp": "Zabawne postacie odblokowujesz za XP (Kolekcje, Zabawne postacie).",
+  "zb.shopHintKindXp": "Zabawne postacie odblokowujesz za XP.",
   "zb.how": "Jak to zdobyć?",
   "zb.shopHint": "Odznak, efektów i niektórych teł nie da się kupić: odblokowujesz je wiedzą w Kolekcjach.",
   "fx.formula": "Wzór",

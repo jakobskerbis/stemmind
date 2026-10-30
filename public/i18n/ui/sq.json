@@ -1443,7 +1443,7 @@
   "zb.igreHint": "Këta personazhe dhe sende i zhbllokon vetëm duke luajtur te Lojëra. Personazhi merr ngjyrën që zgjedh te sirtari Ngjyra. Nuk mund t'i blesh.",
   "zb.smesniHint": "Këto personazhe dhe sende qesharake i hap me XP nga mësimi dhe lojërat. Nuk mund t'i blesh.",
   "zb.fromXpAt": "U hap në {xp} XP",
-  "zb.shopHintKindXp": "Personazhet qesharake i hap me XP (Koleksionet, Personazhe qesharake).",
+  "zb.shopHintKindXp": "Personazhet qesharake i hap me XP.",
   "zb.how": "Si ta marr?",
   "zb.shopHint": "Distinktivët, efektet dhe disa sfonde nuk blihen: i zhbllokon me dije te Koleksionet.",
   "fx.formula": "Llogaritja",

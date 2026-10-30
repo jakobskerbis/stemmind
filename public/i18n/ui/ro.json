@@ -1452,7 +1452,7 @@
   "zb.igreHint": "Aceste personaje și obiecte le deblochezi doar jucând în Jocuri. Personajul primește culoarea pe care o alegi în sertarul Culoare. Nu le poți cumpăra.",
   "zb.smesniHint": "Deblochezi aceste personaje și obiecte amuzante cu XP din învățat și jocuri. Nu le poți cumpăra.",
   "zb.fromXpAt": "Deblocat la {xp} XP",
-  "zb.shopHintKindXp": "Personajele amuzante le deblochezi cu XP (Colecții, Personaje amuzante).",
+  "zb.shopHintKindXp": "Personajele amuzante le deblochezi cu XP.",
   "zb.how": "Cum îl obțin?",
   "zb.shopHint": "Insignele, efectele și unele fundaluri nu se cumpără: le deblochezi prin cunoștințe în Colecții.",
   "fx.formula": "Formulă",

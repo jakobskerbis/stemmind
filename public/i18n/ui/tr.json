@@ -1443,7 +1443,7 @@
   "zb.igreHint": "Bu karakterlerin ve eşyaların kilidini yalnızca Oyunlar bölümünde oynayarak açabilirsin. Karakter, Renk çekmecesinde seçtiğin rengi alır. Bunları satın alamazsın.",
   "zb.smesniHint": "Bu komik karakterlerin ve eşyaların kilidini öğrenme ve oyunlardan kazandığın XP ile açarsın. Satın alamazsın.",
   "zb.fromXpAt": "{xp} XP'de açıldı",
-  "zb.shopHintKindXp": "Komik karakterlerin kilidini XP ile açarsın (Koleksiyonlar, Komik karakterler).",
+  "zb.shopHintKindXp": "Komik karakterlerin kilidini XP ile açarsın.",
   "zb.how": "Nasıl alırım?",
   "zb.shopHint": "Rozetler, efektler ve bazı arka planlar satın alınamaz: bunları Koleksiyonlar'da bilginle açarsın.",
   "fx.formula": "Formül",
