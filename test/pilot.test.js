@@ -41,7 +41,9 @@ test("pilot report: questions per day, AI cost per student, parent page visits; 
     await fetch(`${base}/starsi.html`, { headers: { ...ua, "Sec-Purpose": "prefetch;prerender" } });
     await fetch(`${base}/placaj.html`, { headers: ua });
     await fetch(`${base}/index.html`, { headers: ua });
-    assert.equal((await fetch(`${base}/sole`, { headers: ua })).status, 404); // strani še ni: ne šteje
+    assert.equal((await fetch(`${base}/sole`, { headers: ua })).status, 200); // stran za šole (server/sole.js)
+    assert.equal((await fetch(`${base}/sole.html?x`, { headers: ua })).status, 200);
+    assert.equal((await fetch(`${base}/sole-ni`, { headers: ua })).status, 404);
     await new Promise((r) => setTimeout(r, 20)); // števec piše ob koncu odgovora
 
     const r = pilotReport(db, { days: 7 });
@@ -56,7 +58,7 @@ test("pilot report: questions per day, AI cost per student, parent page visits; 
     assert.equal(r.totals.aiUsers, 2);
     // Prva poraba je bila včeraj: ocena na 30 dni iz 2 dni porabe, ne iz vseh 7 dni obdobja.
     assert.ok(Math.abs(r.totals.aiEurPerStudentMonth - ((0.06 * 0.87) / 2) * (30 / 2)) < 0.001);
-    assert.deepEqual(r.totals.visits, { starsi: 2, placaj: 1, sole: 0 });
+    assert.deepEqual(r.totals.visits, { starsi: 2, placaj: 1, sole: 2 });
 
     // Prek API (brez računov samo na računalniku s strežnikom); nesmiselni parametri ne podrejo poročila.
     const api = await (await fetch(`${base}/api/admin/pilot?days=abc&school[]=1`)).json();

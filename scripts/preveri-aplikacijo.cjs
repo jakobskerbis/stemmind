@@ -1030,6 +1030,11 @@ async function accounts(browser, app) {
     await settle(p, 400);
     await screen(p, "starsi");
   });
+  await step(p, "sole", async () => {
+    await p.goto(app.base + "/sole");
+    await settle(p, 400);
+    await screen(p, "sole");
+  });
   await p.context().close();
 }
 

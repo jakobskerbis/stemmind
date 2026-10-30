@@ -271,7 +271,7 @@ export function mountAccounts(app, store, opts = {}) {
     next();
   });
 
-  const PUBLIC = [/^\/kozmetika\/export$/, /^\/app-links$/, /^\/auth\//, /^\/account\/status$/, /^\/account\/prices$/, /^\/account\/unsubscribe$/, /^\/stripe\/webhook$/, /^\/config$/, /^\/pay\/[^/]+(\/checkout|\/confirm)?$/];
+  const PUBLIC = [/^\/kozmetika\/export$/, /^\/app-links$/, /^\/auth\//, /^\/account\/status$/, /^\/account\/prices$/, /^\/account\/unsubscribe$/, /^\/stripe\/webhook$/, /^\/config$/, /^\/school-orders$/, /^\/pay\/[^/]+(\/checkout|\/confirm)?$/];
   app.use("/api", (req, res, next) => {
     if (PUBLIC.some((re) => re.test(req.path))) return next();
     const p = req.parent;

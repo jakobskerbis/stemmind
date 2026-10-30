@@ -19,6 +19,13 @@ export const SCHOOL = {
   maxFailedJoins: 10, // na uro, proti ugibanju kod šol
 };
 export const PLANS = ["class", "school", "pilot"];
+// Cene šolske licence v € na učenca na leto (j, 2026-10-30). Edino mesto za cene: stran /sole, obrazec in predračun
+// (server/sole.js) jih berejo od tu. Pilotna cena velja `years` let.
+export const SCHOOL_LICENCE_PRICES = {
+  class: { eur: 20, years: 1 }, // licenca za razrede
+  school: { eur: 14, years: 1 }, // cela šola
+  pilot: { eur: 12, years: 2 }, // pilotna šola
+};
 export const STAGES = ["OS", "SS"];
 export const SUBJECTS = ["MAT", "FIZ", "KEM", "BIO", "NAR"];
 
