@@ -15,9 +15,9 @@ const BRAND = JSON.parse(fs.readFileSync(path.join(root, "brand.json"), "utf8"))
 const LEGACY = BRAND.legacy || [];
 const OLD = LEGACY.map((l) => new RegExp(l.match || l.slug, "i"));
 
-// Smejo ostati: ime repozitorija na GitHubu in mape na j-jevem računalniku (dokler j repozitorija ne
-// preimenuje) ter vrstice, označene z »brand:legacy« (seznam prejšnjih imen v theme.js).
-const ALLOW = [/jakobskerbis\/stemmind/gi, /stemmind-(main|sim)\b/gi];
+// Smejo ostati samo vrstice, označene z »brand:legacy« (seznam prejšnjih imen v theme.js).
+// Prejšnje ime repozitorija na GitHubu je v brand.json → legacy[].repo.
+const ALLOW = [];
 const SKIP_FILES = new Set(["brand.json", "test/ime.test.js", "scripts/preimenuj.js"]);
 const SKIP_DIRS = new Set([".git", ".claude", "node_modules", "data", "vendor"]);
 const TEXT = /\.(js|cjs|mjs|json|md|html|css|bat|cmd|command|yaml|yml|txt|svg|webmanifest|py|csv)$|^(Dockerfile|\.env\.example|\.gitattributes)$/;

@@ -44,9 +44,10 @@ export function pendingSince(commits, head = commits[commits.length - 1]?.sha) {
 }
 
 async function main() {
-  const { HOOK, GH_TOKEN, REPO = "jakobskerbis/stemmind", ROCNO } = process.env;
+  const { HOOK, GH_TOKEN, ROCNO } = process.env;
   if (!HOOK) return console.log("RENDER_DEPLOY_HOOK ni nastavljen, preskočeno.");
   const { BRAND } = await import("../server/brand.js");
+  const REPO = process.env.REPO || BRAND.repo;
   const url = process.env.URL || `https://${BRAND.domain}`;
   const gh = async (p) => {
     const r = await fetch(`https://api.github.com/repos/${REPO}/${p}`, { headers: { Accept: "application/vnd.github+json", "User-Agent": "evklid-render-objava", ...(GH_TOKEN ? { Authorization: `Bearer ${GH_TOKEN}` } : {}) } });
