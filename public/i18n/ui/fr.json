@@ -1754,7 +1754,7 @@
   "gift.codeSummary": "Vous avez un code d’activation ou un code cadeau ?",
   "gift.redeemed": "Code cadeau valide ✓ Accès complet jusqu’au {date}.",
   "gift.paid": "Paiement réussi. Le code cadeau se trouve dans l’onglet Compte.",
-  "school.planHead": "Avec la licence de l’établissement",
+  "school.planHead": "1 enfant avec licence scolaire",
   "school.perMonth": "mois",
   "school.perYear": "année scolaire",
   "school.planNote": "Prix réduit pour un profil couvert par la licence de l’établissement : l’établissement paie déjà les matières scolaires, et Osebno ajoute toutes les autres matières et tous les autres niveaux, plus de questions au tuteur et des explications plus détaillées.",

@@ -2182,7 +2182,7 @@ export default {
   "gift.codeSummary": "Imate aktivacijsko ali darilno kodo?",
   "gift.redeemed": "Darilna koda velja ✓ Poln dostop do {date}.",
   "gift.paid": "Plačilo je uspelo. Darilna koda je v zavihku Račun.",
-  "school.planHead": "Ob šolski licenci",
+  "school.planHead": "1 otrok s šolsko licenco",
   "school.perMonth": "mesec",
   "school.perYear": "šolsko leto",
   "school.planNote": "Nižja cena za profil s šolsko licenco: šola že plača šolske predmete, Osebno doda vse ostale predmete in ravni, več vprašanj inštruktorju in podrobnejše razlage.",

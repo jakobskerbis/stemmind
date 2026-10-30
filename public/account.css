@@ -16,6 +16,7 @@ label.check input { margin-top: 4px; flex: none; width: 18px; height: 18px; }
 .plan-who-opts .plan { align-items: center; min-height: 44px; }
 .plan-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: stretch; }
 .plan-note { grid-column: 1 / -1; margin: 0; }
+#plan-rest { margin-top: 0; }
 .plan { display: flex; gap: 8px; align-items: flex-start; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px; cursor: pointer; background: var(--bg); }
 .plan:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); background: var(--accent-soft); }
 .plan input { margin-top: 4px; }
