@@ -67,10 +67,21 @@ export const ERROR_TEXT = "Ups, nekaj je šlo narobe pri povezavi. Poskusi znova
 
 // Kratka koda vzroka napake API-ja za sporočilo učencu (in lastniku strežnika, ki iz nje
 // vidi, kaj popraviti), npr. »ključ«, ko ANTHROPIC_API_KEY ni veljaven.
+// Napake SDK imajo name »Error«, zato razred preverimo z instanceof (ime pa za preproste objekte).
+// Napaka sredi pretoka (SSE) pride brez statusa, le s tipom v telesu (npr. overloaded_error).
+const ERROR_TYPE_STATUS = {
+  invalid_request_error: 400, authentication_error: 401, permission_error: 403, not_found_error: 404,
+  request_too_large: 413, rate_limit_error: 429, api_error: 500, overloaded_error: 529,
+};
 export function apiErrorCode(err) {
-  const status = Number(err?.status) || 0;
+  const is = (C, name) => (typeof C === "function" && err instanceof C) || err?.name === name;
+  const status = Number(err?.status) || ERROR_TYPE_STATUS[err?.error?.error?.type] || 0;
   const msg = String(err?.error?.error?.message || err?.message || "");
-  if (!status) return /abort/i.test(err?.name || msg) ? null : "brez povezave do Anthropic";
+  if (!status) {
+    if (is(Anthropic.APIUserAbortError, "APIUserAbortError") || err?.name === "AbortError") return null;
+    // Druge napake brez statusa so napake v naši kodi: vzrok je v konzoli strežnika, ne pri povezavi.
+    return is(Anthropic.APIConnectionError, "APIConnectionError") ? "brez povezave do Anthropic" : null;
+  }
   if (status === 401) return "401 neveljaven API ključ";
   if (status === 403) return "403 ključ nima dovoljenja";
   if (status === 400 && /credit|balance|billing/i.test(msg)) return "400 ni dobroimetja na API računu";

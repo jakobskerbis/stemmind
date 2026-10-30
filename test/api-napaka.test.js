@@ -20,3 +20,12 @@ test("sporočilo ima kodo na koncu", () => {
   assert.equal(errorText({ status: 429 }, "Branje ne deluje."), "Branje ne deluje. (Koda: 429 omejitev porabe)");
   assert.equal(errorText({ name: "AbortError" }), ERROR_TEXT);
 });
+
+test("prave napake SDK: prekinitev, časovna omejitev, napaka sredi pretoka, naša napaka", async () => {
+  const { default: Anthropic } = await import("@anthropic-ai/sdk");
+  assert.equal(apiErrorCode(new Anthropic.APIUserAbortError()), null);
+  assert.equal(apiErrorCode(new Anthropic.APIConnectionTimeoutError()), "brez povezave do Anthropic");
+  const sse = new Anthropic.APIError(undefined, { type: "error", error: { type: "overloaded_error", message: "Overloaded" } }, undefined, undefined);
+  assert.equal(apiErrorCode(sse), "529 Anthropic je preobremenjen");
+  assert.equal(apiErrorCode(new TypeError("x is undefined")), null);
+});
