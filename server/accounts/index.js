@@ -164,7 +164,8 @@ export function mountAccounts(app, store, opts = {}) {
   // aktivacijske kode (usage.promoOpusSpent). Šolska licenca brez osebnega paketa: največ Sonnet.
   function ladderFor(studentId) {
     const r = rightsFor(studentId);
-    return { opus: r.maxModel === "opus", promo: r.personalTier === "promo" };
+    // Skrita meja velja le za kodo z omejenim modelom (EVKLID_PROMO_MODEL=opus je brez nje, kot doslej).
+    return { opus: r.maxModel === "opus", promo: r.personalTier === "promo" && !!promo.termsOf(ownerOf(studentId)).maxModel };
   }
 
   // Najzmogljivejši dovoljeni model za učenca (za klice zunaj lestve, npr. fotografija urnika): pri dostopu
@@ -286,7 +287,7 @@ export function mountAccounts(app, store, opts = {}) {
       }
     }
 
-    // Vprašanja inštruktorju na dan: brezplačni paket, šolska licenca (15) in Osebno (60) se seštejejo.
+    // Vprašanja inštruktorju na dan: brezplačni paket (10) ali vsota šolske licence (15) in Osebno (60).
     if (c && req.method === "POST" && /\/messages$/i.test(req.path)) {
       const r = rightsFor(studentId);
       if (!r.personal && !r.school) {

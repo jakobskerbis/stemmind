@@ -370,7 +370,10 @@ export function createApp(store, opts = {}) {
     // Pravice (server/placila/pravice.js): Osebno do Opusa šele ob 3. prošnji, šolska licenca največ Sonnet,
     // aktivacijska koda še s skrito mejo Opusa. Brez računov (lokalno) ostane Opus ob 2. prošnji.
     const ladder = accounts?.ladderFor?.(student.id) || null;
-    const capped = !!ladder && (!ladder.opus || againStreak < 3 || (ladder.promo && usage.promoOpusSpent(student.id, MODEL_DEEP)));
+    // Tekmovanja (againStreak 0) pri Osebno ostanejo kot doslej; pri kodi in šoli največ Sonnet.
+    const capped =
+      !!ladder &&
+      (!ladder.opus || (ladder.promo ? againStreak < 3 || usage.promoOpusSpent(student.id, MODEL_DEEP) : againStreak > 0 && againStreak < 3));
     const { mode, note } = usage.chooseMode(student.id, {
       wantDeep: againStreak >= 2,
       wantThink: againStreak === 1,
@@ -380,7 +383,7 @@ export function createApp(store, opts = {}) {
       deepModel: capped ? MODEL_MID : MODEL_DEEP,
       capped,
     });
-    // »mid« (Sonnet pri aktivacijski kodi) se obnaša kot podrobna razlaga, le z drugim modelom.
+    // »mid« (Sonnet: šolska licenca, Osebno pred 3. prošnjo, aktivacijska koda) se obnaša kot podrobna razlaga, le z drugim modelom.
     const deep = mode === "deep" || mode === "mid";
 
     const userContent = [];

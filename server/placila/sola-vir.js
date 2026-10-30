@@ -2,16 +2,10 @@
 // server/schools.js (ločen del: učiteljevi računi, razredi, licence, ki jih vnese skrbnik). Tukaj jih
 // samo beremo: schoolAccess(db, studentId, now) in schoolStudents(db, schoolId). Dokler modula ni,
 // šolskih pravic ni (vsi učenci imajo samo osebne vire).
-let schools = null;
-try {
-  schools = await import("../schools.js");
-} catch (e) {
-  if (
-    e?.code !== "ERR_MODULE_NOT_FOUND" ||
-    !/schools\.js/.test(String(e.message))
-  )
-    throw e;
-}
+// Uvozimo le, če datoteka obstaja: napaka v schools.js (tudi manjkajoč modul, ki ga ta uvaža) se ne sme skriti.
+import { existsSync } from "node:fs";
+const SCHOOLS_URL = new URL("../schools.js", import.meta.url);
+const schools = existsSync(SCHOOLS_URL) ? await import(SCHOOLS_URL.href) : null;
 
 const SPENT_MS = 60000; // poraba AI šole se preračuna največ enkrat na minuto
 const CACHES = new WeakMap(); // db → Map(schoolId → { at, usd })

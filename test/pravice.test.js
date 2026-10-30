@@ -93,6 +93,16 @@ test("rights: šolska licenca pokriva svoje predmete in razrede, fakultete ne", 
     schoolCovers({ subjects: null, grades: null }, "ne-obstaja"),
     false,
   );
+  // Druge oblike zapisa iz server/schools.js: številka razreda, »MAT, FIZ«, male črke, »OŠ-8«; pokvarjen JSON ne pokrije ničesar.
+  assert.equal(schoolCovers({ subjects: ["mat"], grades: [8] }, MAT), true);
+  assert.equal(schoolCovers({ subjects: "FIZ, MAT", grades: "8" }, MAT), true);
+  assert.equal(schoolCovers({ subjects: null, grades: ["OŠ-8"] }, MAT), true);
+  assert.equal(schoolCovers({ subjects: null, grades: ["2"] }, MAT), false);
+  assert.equal(schoolCovers({ subjects: '["MAT"', grades: null }, MAT), false);
+  // Rok brez ure velja ves ta dan.
+  const today = new Date().toISOString().slice(0, 10);
+  assert.equal(schoolValid({ valid_until: today }), true);
+  assert.equal(schoolValid({ valid_until: iso(-1).slice(0, 10) }), false);
   const r = rights({ schools: [{ id: 1, ...s }] });
   assert.equal(lessonInteractive(r, MAT), true);
   assert.equal(lessonInteractive(r, FIZ), false);

@@ -1,6 +1,6 @@
 // Pravice: kaj učenec dobi iz vseh virov skupaj (j 2026-10-30, načrt »Šolska licenca in Evklid Osebno«).
 // Ena funkcija za vso aplikacijo; viri so osebni paket (naročnina, preizkus, koda, bonus, paket pred
-// testom = »Evklid Osebno«) in šolska licenca. Viri se seštejejo: učenec dobi vse, kar da kateri koli
+// testom = »Evklid Osebno«) in šolska licenca. Viri se združijo: učenec dobi vse, kar da kateri koli
 // vir, vprašanja na dan pa se seštejejo. Brez vira velja brezplačni paket (kot doslej).
 //
 // Šolska licenca: vse za šolske predmete licence (tudi interaktivne lekcije), inštruktor 15 vprašanj
@@ -24,11 +24,13 @@ export const schoolDailyQuestions = () =>
 export const personalDailyQuestions = () =>
   envNum("EVKLID_OSEBNO_DAILY_QUESTIONS", 60);
 
-const later = (iso, now) =>
-  !!iso &&
-  Date.parse(
-    String(iso).replace(" ", "T") + (/Z|[+-]\d\d:?\d\d$/.test(iso) ? "" : "Z"),
-  ) > now;
+// Rok brez ure (»2027-06-30«) velja do konca tega dne (UTC).
+const later = (iso, now) => {
+  if (!iso) return false;
+  const v = String(iso);
+  if (/^\d{4}-\d\d-\d\d$/.test(v)) return Date.parse(`${v}T23:59:59.999Z`) > now;
+  return Date.parse(v.replace(" ", "T") + (/Z|[+-]\d\d:?\d\d$/.test(v) ? "" : "Z")) > now;
+};
 
 // Ali licenca še velja: rok ni potekel in šola ni porabila mesečne meje AI (0 ali prazno = brez meje).
 export function schoolValid(s, now = Date.now()) {
@@ -37,11 +39,23 @@ export function schoolValid(s, now = Date.now()) {
   return !(s.ai_month_usd > 0 && (s.ai_spent_usd || 0) >= s.ai_month_usd);
 }
 
-const list = (v) =>
-  Array.isArray(v) ? v : typeof v === "string" && v ? JSON.parse(v) : null;
+// Seznam iz licence: tabela, besedilo JSON ali »MAT, FIZ«; napačna oblika ne sme podreti zahteve.
+const list = (v) => {
+  if (v == null || v === "") return null;
+  if (Array.isArray(v)) return v.map((x) => String(x).trim().toUpperCase().replace(/Š/g, "S"));
+  if (typeof v === "string" && v.trim().startsWith("[")) {
+    try {
+      return list(JSON.parse(v));
+    } catch {
+      return ["?"]; // pokvarjen zapis ne pokrije ničesar (ne vsega)
+    }
+  }
+  return list(String(v).split(","));
+};
 
 // Ali licenca pokriva temo: samo šolske poti (OŠ, SŠ), predmet in razred s seznama licence
-// (prazen seznam = vsi šolski predmeti oziroma razredi). Razred je zapisan kot »OS-8«, »SS-2«.
+// (prazen seznam = vsi šolski predmeti oziroma razredi). Razred je zapisan kot »OS-8«, »SS-2« ali samo
+// številka (8, »2«): razredi OŠ (6–9) in SŠ (1–4) se ne prekrivajo.
 export function schoolCovers(s, topicId) {
   const t = getTopic(topicId);
   if (!t) return false;
@@ -50,7 +64,7 @@ export function schoolCovers(s, topicId) {
   const subjects = list(s.subjects);
   const grades = list(s.grades);
   if (subjects?.length && !subjects.includes(subject)) return false;
-  if (grades?.length && !grades.includes(`${school}-${grade}`)) return false;
+  if (grades?.length && !grades.includes(`${school}-${grade}`) && !grades.includes(String(Number(grade)))) return false;
   return true;
 }
 
@@ -67,7 +81,7 @@ export function rights({
   const own = !!personal;
   // Vprašanja na dan: vsota virov; 0 pri katerem koli viru pomeni brez omejitve (null).
   const parts = [
-    own && personalDailyQuestions(),
+    own && (personal.tier === "legacy" ? 0 : personalDailyQuestions()), // stari profili brez starša: brez meje kot doslej
     school && schoolDailyQuestions(),
   ].filter((x) => x !== false);
   const dailyQuestions = !parts.length
