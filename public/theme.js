@@ -238,13 +238,14 @@
     const chrome = era && !ownWin ? [base.bar, base.banner].filter((x) => hexToRgb(x)) : [];
     // Izbrano pisavo spoštujemo, dokler je berljiva (4.5); samodejno izbrana mora doseči 7.
     // Klepet obdobja (ERAS[…].chat): papirus pod odgovori inštruktorja in les okvirja polja za pisanje.
-    const paper = era && era.chat && !ownWin && hexToRgb(base.paper) ? base.paper : null;
+    // Z lastnimi barvami oken (tudi »naključne barve«) je papirus v barvi okna, vlakna v barvi besedila.
+    const paper = era && era.chat ? (ownWin ? surface : hexToRgb(base.paper) ? base.paper : null) : null;
     const textOn = [bg, surface, ...chrome, ...(paper ? [paper] : [])];
     const text = hexToRgb(pal.text) ? readable(textOn, pal.text, MIN.muted) : readable(textOn, base.text);
     // Zgodovinski slogi: podlaga pod motivi (ozadje in kartice z MOTIF deleža besedila) mora biti prav tako berljiva.
     const motifBg = era ? [mix(bg, text, MOTIF), mix(surface, text, MOTIF)] : [];
     // Papir: vlakna (PAPER deleža lesa) in temnejši papir za kodo in glavo tabele (+6 % besedila).
-    const paperBg = paper ? [paper, mix(paper, base.wood || text, PAPER), mix(paper, text, 0.06)] : [];
+    const paperBg = paper ? [paper, mix(paper, (!ownWin && base.wood) || text, PAPER), mix(paper, text, 0.06)] : [];
     const onBg = [surface, bg, ...chrome, ...motifBg, ...paperBg];
     const accent = fit(s.accent || base.accent, onBg, MIN.accent);
     const [ah, as] = toHsl(accent);

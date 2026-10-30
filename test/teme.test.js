@@ -182,6 +182,11 @@ test("every history chat look and column set is styled in ui.css, readable and s
         assert.ok(T.check(c), `${id} ${mode}: kontrast na papirju`);
         const own = T.compute({ style: id, mode, accent: "#1d7a3a", light: null, dark: null });
         assert.ok(T.check(own), `${id} ${mode}: lastni poudarek na papirju`);
+        // Lastne barve oken (tudi »naključne barve«): papirus v barvi okna, nikoli brez --paper.
+        const pal = mode === "dark" ? { bg: "#101820", surface: "#18222c", text: "#eef2f6" } : { bg: "#eef3f8", surface: "#ffffff", text: "#13202c" };
+        const win = T.compute({ style: id, mode, accent: "#1d5fa8", light: mode === "light" ? pal : null, dark: mode === "dark" ? pal : null });
+        assert.equal(win.vars["--paper"], pal.surface, `${id} ${mode}: papir z lastnimi barvami`);
+        assert.ok(win.vars["--paper-fibre"] && win.vars["--paper-2"] && T.check(win), `${id} ${mode}: kontrast papirja z lastnimi barvami`);
       }
       if (e.arch) for (const k of ["cap", "shaft", "base"]) assert.match(c.vars[`--arch-${k}`] + c.vars[`--arch-${k}-m`], /^url\("data:image\/svg\+xml,.*url\("data:image\/svg\+xml,/, `${id} ${mode}: --arch-${k}`);
     }

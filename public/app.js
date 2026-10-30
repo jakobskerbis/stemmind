@@ -805,7 +805,7 @@ const input = $("#input");
 // Polje raste z besedilom do 40 % vidne višine (tudi z odprto tipkovnico), nato drsi; nobena vrstica ni odrezana.
 // Če besedilo ne gre več v polje, se samodejno pokaže v večjem oknu (public/razpri.js). Zadnja sporočila
 // ostanejo vidna nad poljem.
-function autoGrow(stick) {
+function autoGrow(stick, again) {
   const box = $("#messages");
   const atBottom = typeof stick === "boolean" ? stick : box.scrollHeight - box.scrollTop - box.clientHeight < 80;
   const max = Math.max(80, Math.round((window.visualViewport?.height || window.innerHeight) * 0.4));
@@ -817,9 +817,10 @@ function autoGrow(stick) {
   // Telefon: daljše besedilo dobi celo širino vrstice, gumbi gredo pod polje (nazaj šele, ko je polje prazno).
   const row = input.closest(".composer-row");
   const multi = h > 60 || (row.classList.contains("multi") && !!input.value);
-  if (multi !== row.classList.contains("multi")) {
+  // Samo enkrat: v ozkem oknu se prazno polje z zavitim namigom sicer preklaplja v neskončnost (prekoračen sklad).
+  if (multi !== row.classList.contains("multi") && !again) {
     row.classList.toggle("multi", multi);
-    return autoGrow(atBottom); // širina polja se je spremenila: višino izmerimo znova
+    return autoGrow(atBottom, true); // širina polja se je spremenila: višino izmerimo znova
   }
   if (atBottom) box.scrollTop = box.scrollHeight;
   if (h > max + 2 && input.value.trim() && input.offsetParent) showFull({ kind: "composer", title: t("full.message"), field: input });

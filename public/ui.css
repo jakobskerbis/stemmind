@@ -539,13 +539,14 @@ html.lite[data-era] .chat-view .sidebar::before { display: none; }
   @media (min-width: 761px) {
     :root[dir="rtl"][data-arch]:not(.lite) body:not(.docked) > .chat-view .sidebar { background-position: left 2px top, left 2px bottom, left 2px top; }
   }
-  /* Učna pot na širokem zaslonu: steber ob stranskem stolpcu (v presledku med stolpcema). */
+  /* Učna pot na širokem zaslonu: steber ob stranskem stolpcu (v presledku med stolpcema); ne v oknu ali ob pripetem
+     oknu (tam je pot en stolpec, okna.css → @container okno). */
   @media (min-width: 1200px), (min-width: 1000px) and (hover: none) and (pointer: coarse) {
-    :root[data-arch]:not(.lite) #view-path > .path-side {
+    :root[data-arch]:not(.lite) body:not(.docked) > #view-path > .path-side {
       margin-inline-end: -26px; padding-inline-end: 32px;
       background: var(--arch-cap) right 2px top / 20px 13px no-repeat, var(--arch-base) right 2px bottom / 20px 10px no-repeat, var(--arch-shaft) right 2px top / 20px 8px repeat-y;
     }
-    :root[dir="rtl"][data-arch]:not(.lite) #view-path > .path-side { background-position: left 2px top, left 2px bottom, left 2px top; }
+    :root[dir="rtl"][data-arch]:not(.lite) body:not(.docked) > #view-path > .path-side { background-position: left 2px top, left 2px bottom, left 2px top; }
   }
 }
 
