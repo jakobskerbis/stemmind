@@ -76,6 +76,9 @@ const boardHtml = (rows, total, me = null) =>
     .map((r) => `<li${r.nick === me ? ' class="me"' : ""}><span class="kv-rank">${r.rank}.</span><bdi>${esc(r.nick)}</bdi><b>${r.score}</b>${total ? `<small>${esc(t("kv.correctOf", { n: r.correct, total }))}</small>` : ""}</li>`)
     .join("")}</ol>`;
 
+// Odgovor, ki je prišel pozneje od novejšega (poizvedba je bila na poti med klikom), ne sme stanja vrniti nazaj.
+const stale = (v, nv) => v && nv.id === v.id && nv.v < v.v;
+
 const head = (v) => (v.q >= 0 ? `<p class="kv-qn">${esc(t("kv.question", { n: v.q + 1, total: v.total }))}</p>` : "");
 
 // --- učitelj (projektor) ---
@@ -94,15 +97,23 @@ export function hostQuiz({ code, key, game, onClose }) {
   let busy = false;
 
   const render = (nv) => {
+    if (stale(v, nv)) return;
     v = nv;
     tm.set(v);
+    if (v.state === "end") clearInterval(poll); // rezultati se ne spreminjajo več
     const k = `${v.state}:${v.q}`;
     if (k === shown && v.state === "question") {
       // isto vprašanje: posodobimo samo števec odgovorov (brez utripanja formul)
       $(s.body, ".kv-answered").textContent = t("kv.answered", { n: v.answered, total: v.players });
       return;
     }
-    if (k === shown && v.state !== "lobby") return;
+    if (k === shown && v.state === "lobby") {
+      // čakalnica: samo vzdevki, gumbi ostanejo (sicer bi klik ob osvežitvi zgrešil, fokus bi skakal)
+      $(s.body, ".kv-count").textContent = t("kv.joined", { n: v.players });
+      $(s.body, ".kv-nicks").innerHTML = (v.nicks || []).map((n) => `<span class="code-chip"><bdi>${esc(n)}</bdi></span>`).join("");
+      return;
+    }
+    if (k === shown) return;
     shown = k;
     const q = v.question;
     let html = "";
@@ -147,6 +158,8 @@ export function hostQuiz({ code, key, game, onClose }) {
     s.body.innerHTML = `<p>${esc(e.message)}</p>`;
     s.foot.innerHTML = "";
     clearInterval(poll);
+    tm.stop();
+    $(s.dlg, ".kv-timer").textContent = "";
   };
   async function go() {
     if (v.state === "end") return s.close();
@@ -191,8 +204,10 @@ export function playQuiz(studentId, gameId, onClose) {
 
   const scoreLine = () => (v.rank ? `<p class="kv-score">${esc(t("kv.score", { n: v.score, rank: v.rank, players: v.players }))}</p>` : "");
   const render = (nv) => {
+    if (stale(v, nv)) return;
     v = nv;
     tm.set(v);
+    if (v.state === "end") clearInterval(poll);
     $(s.dlg, "h2").textContent = `${t("kv.live")} · ${v.className}`;
     const k = `${v.state}:${v.q}:${v.answered}`;
     if (k === shown && v.state !== "lobby") return;
@@ -253,6 +268,7 @@ export function playQuiz(studentId, gameId, onClose) {
     .then((nv) => {
       if (s.isClosed()) return;
       render(nv);
+      if (v.state === "end") return;
       poll = setInterval(async () => {
         if (sending || s.isClosed()) return;
         try {

@@ -79,11 +79,12 @@ export class Kvizi {
     return this.games.delete(classId);
   }
 
-  // Vprašanje se zapre samo, ko poteče čas ali ko so odgovorili vsi.
+  // Vprašanje se zapre samo, ko poteče čas (z zamikom graceMs, sicer pozna oddaja ne bi nikoli prišla
+  // skozi) ali ko so odgovorili vsi. Po zaprtju je odgovor viden, zato potem ne sprejmemo nobene oddaje več.
   tick(g) {
     if (g.state === "question") {
       const all = g.players.size > 0 && [...g.players.values()].every((p) => p.answers[g.q]);
-      if (all || this.now() >= g.endsAt) {
+      if (all || this.now() >= g.endsAt + KVIZ.graceMs) {
         g.state = "reveal";
         g.v++;
       }
@@ -133,8 +134,10 @@ export class Kvizi {
     // Enoto pokaže vnosno polje; učenec vpiše samo število.
     if (r.kind === "unit" && r.code === "chk.addUnit" && task.answer.unit) r = checkAnswer(task.answer, `${input} ${task.answer.unit}`);
     if (r.kind === "format" || r.kind === "unit") return { retry: true, code: r.code, params: r.params, message: r.message };
-    // Zaokroženo drugače (npr. 0,03 namesto 0,028) šteje: kviz preverja razumevanje, ne zaokroževanja.
-    const ok = r.kind === "correct" || r.kind === "rounding";
+    // Zaokroženo drugače (npr. 0,03 namesto 0,028) in neokrajšan ulomek ali koeficienti (6/8 namesto 3/4)
+    // štejejo: kviz preverja razumevanje, ne zapisa. Ponovni vnos pri »simplify« bi pred zaprtjem izdal,
+    // da je vrednost pravilna.
+    const ok = r.kind === "correct" || r.kind === "rounding" || r.kind === "simplify";
     const left = Math.max(0, Math.min(1, (g.endsAt - now) / (g.seconds * 1000)));
     const points = ok ? Math.round(KVIZ.base + KVIZ.bonus * left) : 0;
     p.answers[q] = { ok, points, choice: task.answer.type === "choice" ? Number(input) : null };
@@ -202,11 +205,19 @@ export function hostView(g, now) {
   return out;
 }
 
+// Točke brez odprtega vprašanja: dokler je vprašanje odprto, se po točkah, številu pravilnih in mestu
+// ne sme videti, ali je bil oddan odgovor pravilen (učenec bi to lahko povedal sošolcem).
+const frozen = (g, p) => {
+  const a = g.state === "question" ? p.answers[g.q] : null;
+  return { score: p.score - (a?.points || 0), correct: p.correct - (a?.ok ? 1 : 0) };
+};
+
 // Pogled učenca: vprašanje brez odgovora; po zaprtju svoj rezultat, točke in mesto.
 export function playerView(g, studentId, now) {
-  const players = sortedPlayers(g);
+  const players = [...g.players.values()].map((p) => frozen(g, p));
   const me = g.players.get(studentId);
   const mine = me?.answers[g.q] || null;
+  const my = me ? frozen(g, me) : null;
   return {
     id: g.id,
     v: g.v,
@@ -222,9 +233,9 @@ export function playerView(g, studentId, now) {
     answered: !!mine,
     question: g.state === "question" || g.state === "reveal" ? questionOut(g, g.state === "reveal") : null,
     result: g.state === "reveal" ? { ok: !!mine?.ok, points: mine?.points || 0, none: !mine } : null,
-    score: me?.score || 0,
-    correct: me?.correct || 0,
-    rank: me && g.state !== "lobby" ? rankOf(players, me.score) : null,
+    score: my?.score || 0,
+    correct: my?.correct || 0,
+    rank: my && g.state !== "lobby" ? rankOf(players, my.score) : null,
     players: players.length,
   };
 }
