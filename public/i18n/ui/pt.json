@@ -2240,5 +2240,6 @@
   "tc.moveTo": "Escola da turma:",
   "tc.deleteClass": "Eliminar turma",
   "tc.deleteClassConfirm": "A turma será eliminada para todos os alunos. O progresso deles mantém-se. Continuar?",
-  "tc.free": "A conta de professor, as turmas, os trabalhos, a exportação e a transferência de uma turma para outra escola são sempre gratuitos."
+  "tc.free": "A conta de professor, as turmas, os trabalhos, a exportação e a transferência de uma turma para outra escola são sempre gratuitos.",
+  "tc.offersOff": "Não mostrar ofertas de planos pagos aos alunos desta turma"
 }

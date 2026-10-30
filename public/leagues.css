@@ -98,7 +98,7 @@
 .tc-warn { color: var(--danger); font-weight: 700; }
 .tc-body { margin-top: 12px; }
 .tc-body h3 { margin: 16px 0 6px; font-size: 1rem; }
-.tc-scroll { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
+.tc-scroll { position: relative; overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
 .tc-table th, .tc-table td { padding: 6px 8px; text-align: start; white-space: nowrap; vertical-align: middle; }
 .tc-table input.tc-label { min-width: 110px; max-width: 160px; min-height: 40px; padding: 6px 8px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: var(--surface, transparent); color: inherit; font: inherit; }
 .tc-st { text-align: center; }
@@ -111,10 +111,18 @@
 .tc-assign li > span::before { content: counter(tca) ". "; font-weight: 800; }
 .tc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 14px; }
 .tc-move { display: flex; align-items: center; gap: 6px; font-weight: 700; flex-wrap: wrap; }
-.tc-move select { min-height: 40px; }
+.tc-move select { min-height: 40px; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: inherit; font: inherit; font-weight: 600; }
+.tc-actions button.danger { margin-top: 0; }
+/* Dotik: najmanj 40 px (button.small je sicer 38 px) */
+#teacher-root button.small, .tc-actions button.small, .lg-tasks button.small, #league-content [data-leave] { min-height: 40px !important; }
+[dir="rtl"] [data-toggle] svg.i { transform: scaleX(-1); }
+#teacher-root details > summary { min-height: 40px; display: flex; align-items: center; cursor: pointer; }
 .lg-tasks { list-style: none; padding: 0; margin: 8px 0 12px; display: flex; flex-direction: column; gap: 8px; }
 .lg-tasks li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); }
-.lg-tasks li.done { opacity: 0.75; }
+.lg-tasks li.done { background: var(--surface-2); } /* brez prosojnosti: sivo besedilo mora ostati AA */
+.lg-tasks li.done .st svg.i { color: var(--ok); }
 .lg-tasks .st { font-size: 0.85rem; color: var(--muted); }
 .lg-transfer { margin-top: 8px; }
 .tc-add { margin-top: 14px; padding-top: 12px; border-top: 1.5px solid var(--border); }
+.tc-offers { display: flex; align-items: center; gap: 8px; min-height: 40px; font-weight: 700; flex-basis: 100%; }
+.tc-offers input { width: 20px; height: 20px; accent-color: var(--accent); }

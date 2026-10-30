@@ -2217,7 +2217,7 @@ export default {
   "tc.assignments": "Naloge razreda",
   "tc.noAssignments": "Še ni nalog. Izberite temo in rok.",
   "tc.due": "rok {date}",
-  "tc.doneCount": "Opravilo: {done} od {n}",
+  "tc.doneCount": "Opravljeno: {done} od {n}",
   "tc.deleteAssignment": "Izbriši nalogo",
   "tc.deleteAssignmentConfirm": "Izbrišem nalogo za ves razred?",
   "tc.topic": "Tema",
@@ -2245,5 +2245,6 @@ export default {
   "tc.moveTo": "Šola razreda:",
   "tc.deleteClass": "Izbriši razred",
   "tc.deleteClassConfirm": "Razred bo izbrisan za vse učence. Njihov napredek ostane. Nadaljujem?",
+  "tc.offersOff": "Brez ponudb plačljivih paketov za učence tega razreda",
   "tc.free": "Učiteljev račun, razredi, naloge, izvoz in prenos razreda na drugo šolo so vedno brezplačni.",
 };

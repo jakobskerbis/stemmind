@@ -77,6 +77,7 @@ function schoolCard(s) {
 }
 
 function schoolForms() {
+  if (home.accounts === false) return ""; // brez računov ni šol, samo razredi s ključem
   if (!home.verified) return `<div class="card"><p>${icon("info")} ${esc(t("tc.verifyFirst"))}</p></div>`;
   if (home.schools.length >= 3) return "";
   return `<details class="card" ${home.schools.length ? "" : "open"}>
@@ -104,7 +105,7 @@ function classForm() {
     <h2 class="h-icon">${icon("plus")} ${esc(t("tc.newClass"))}</h2>
     <p class="muted">${esc(t("tc.newClassHint"))}</p>
     <label>${esc(t("tc.className"))}<input name="name" maxlength="40" required placeholder="${esc(t("tc.classNamePh"))}"></label>
-    <label>${esc(t("tc.path"))}<select name="path">${pathOptions("")}</select></label>
+    ${home.accounts === false ? "" : `<label>${esc(t("tc.path"))}<select name="path">${pathOptions("")}</select></label>`}
     ${home.schools.length ? `<label>${esc(t("tc.school"))}<select name="schoolId">${schoolOptions(home.schools[0].id)}</select></label>` : ""}
     <div class="form-actions"><button class="primary" type="submit">${esc(t("tc.create"))}</button></div>
   </form>`;
@@ -114,7 +115,7 @@ function classCard(c) {
   const school = home.schools.find((s) => s.id === c.schoolId);
   const sub = [pathLabel(c.path), school?.name, c.members != null ? t("tc.members", { n: c.members }) : ""].filter(Boolean).join(" · ");
   return `<div class="card" data-class="${esc(c.code)}">
-    <div class="group-head"><h2 class="h-icon">${icon("graduation-cap")} ${esc(c.name)}</h2><span class="code-chip" title="${esc(t("tc.codeHint"))}">${esc(c.code)}</span></div>
+    <div class="group-head"><h2 class="h-icon">${icon("graduation-cap")} <bdi>${esc(c.name)}</bdi></h2><span class="code-chip" title="${esc(t("tc.codeHint"))}">${esc(c.code)}</span></div>
     ${sub ? `<p class="muted">${esc(sub)}</p>` : ""}
     <button type="button" class="secondary" data-toggle="${esc(c.code)}" aria-expanded="${open.has(c.code)}">${icon(open.has(c.code) ? "chevron-down" : "chevron-right")}<span>${esc(t("tc.overview"))}</span></button>
     <div class="tc-body" ${open.has(c.code) ? "" : "hidden"}></div>
@@ -122,7 +123,7 @@ function classCard(c) {
 }
 
 function overviewHtml(c, v) {
-  const head = v.assignments.map((a, i) => `<th scope="col" title="${esc(a.title)}">${i + 1}</th>`).join("");
+  const head = v.assignments.map((a, i) => `<th scope="col" title="${esc(a.title)}"><span aria-hidden="true">${i + 1}</span><span class="sr-only">${i + 1}. ${esc(a.title)}</span></th>`).join("");
   const rows = v.members
     .map(
       (m) => `<tr><th scope="row">${esc(m.nickname)}</th>
@@ -158,9 +159,10 @@ function overviewHtml(c, v) {
     </form>
     <h3>${esc(t("tc.students"))}</h3>
     ${v.members.length
-      ? `<div class="tc-scroll"><table class="table tc-table"><thead><tr><th scope="col">${esc(t("tc.nick"))}</th><th scope="col">${esc(t("tc.label"))}</th><th scope="col">${esc(t("tc.xpWeek"))}</th><th scope="col">${esc(t("tc.xpTotal"))}</th>${head}<th></th></tr></thead><tbody>${rows}</tbody></table></div>`
+      ? `<div class="tc-scroll"><table class="table tc-table"><thead><tr><th scope="col">${esc(t("tc.nick"))}</th><th scope="col">${esc(t("tc.label"))}</th><th scope="col">${esc(t("tc.xpWeek"))}</th><th scope="col">${esc(t("tc.xpTotal"))}</th>${head}<th scope="col"><span class="sr-only">${esc(t("tc.remove"))}</span></th></tr></thead><tbody>${rows}</tbody></table></div>`
       : `<p class="muted">${esc(t("tc.empty", { code: c.code }))}</p>`}
     <div class="tc-actions">
+      <label class="tc-offers"><input type="checkbox" data-offers ${v.offersOff ? "checked" : ""}> ${esc(t("tc.offersOff"))}</label>
       <button type="button" class="secondary" data-export>${icon("download")}<span>${esc(t("tc.export"))}</span></button>
       ${home.schools.length ? `<label class="tc-move">${esc(t("tc.moveTo"))} <select data-move>${schoolOptions(c.schoolId ?? null)}</select></label>` : ""}
       <button type="button" class="danger" data-del-class>${esc(t("tc.deleteClass"))}</button>
@@ -189,10 +191,22 @@ async function loadOverview(card, c) {
   try {
     v = await api(`/api/teacher/classes/${encodeURIComponent(c.code)}/overview`, { code: c.code });
   } catch (e) {
+    // Razred s ključem, ki ga ni več (izbrisan ali napačen ključ): pozabimo ga, kot prej stara stran.
+    if (e.status === 403 && keyOf(c.code) && !home.classes.some((x) => x.code === c.code)) {
+      saveKeys(loadKeys().filter((x) => x.code !== c.code));
+      open.delete(c.code);
+    }
     body.innerHTML = `<p class="muted">${esc(e.message)}</p>`;
     return;
   }
   c.members = v.members.length;
+  // Stari razred s ključem iz povezave ima za ime kodo; ime vzamemo s strežnika.
+  if (keyOf(c.code) && c.name !== v.name) {
+    c.name = v.name;
+    saveKeys(loadKeys().map((x) => (x.code === c.code ? { ...x, name: v.name } : x)));
+    const h2 = card.querySelector(".group-head h2");
+    if (h2) h2.innerHTML = `${icon("graduation-cap")} <bdi>${esc(v.name)}</bdi>`;
+  }
   body.innerHTML = overviewHtml(c, v);
   hydrateIcons(body);
   const add = $(".tc-add", body);
@@ -241,6 +255,15 @@ async function loadOverview(card, c) {
     a.download = `${c.name.replace(/[^\p{L}\p{N}]+/gu, "-")}.csv`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+  $("[data-offers]", body).addEventListener("change", async (e) => {
+    try {
+      await api(`/api/teacher/classes/${encodeURIComponent(c.code)}/offers`, { method: "PUT", code: c.code, body: { off: e.target.checked } });
+      toast(t("common.saved"));
+    } catch (err) {
+      e.target.checked = !e.target.checked;
+      toast(err.message);
+    }
   });
   $("[data-move]", body)?.addEventListener("change", async (e) => {
     try {
@@ -321,7 +344,12 @@ async function render() {
     e.preventDefault();
     const f = e.target.elements;
     try {
-      const c = await api("/api/teacher/classes", { method: "POST", body: { name: f.name.value, path: f.path.value || null, schoolId: f.schoolId?.value || null } });
+      let c;
+      if (home.accounts === false) {
+        // Brez računov: razred s ključem, ki ostane v tem brskalniku (kot v stari različici).
+        c = await api("/api/classes", { method: "POST", body: { name: f.name.value } });
+        saveKeys([...loadKeys(), { code: c.code, key: c.teacherKey, name: c.name }]);
+      } else c = await api("/api/teacher/classes", { method: "POST", body: { name: f.name.value, path: f.path.value || null, schoolId: f.schoolId?.value || null } });
       toast(t("tc.classCreated", { code: c.code }));
       open.add(c.code);
       render();

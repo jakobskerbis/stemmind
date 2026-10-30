@@ -2236,5 +2236,6 @@
   "tc.moveTo": "Sınıfın okulu:",
   "tc.deleteClass": "Sınıfı sil",
   "tc.deleteClassConfirm": "Sınıf tüm öğrenciler için silinecek. Öğrencilerin ilerlemesi korunur. Devam edilsin mi?",
-  "tc.free": "Öğretmen hesabı, sınıflar, ödevler, dışa aktarma ve bir sınıfı başka bir okula taşıma her zaman ücretsizdir."
+  "tc.free": "Öğretmen hesabı, sınıflar, ödevler, dışa aktarma ve bir sınıfı başka bir okula taşıma her zaman ücretsizdir.",
+  "tc.offersOff": "Bu sınıftaki öğrencilere ücretli paket teklifleri gösterme"
 }

@@ -2216,5 +2216,6 @@
   "tc.moveTo": "Sekolah kelas ini:",
   "tc.deleteClass": "Hapus kelas",
   "tc.deleteClassConfirm": "Kelas akan dihapus untuk semua siswa. Kemajuan mereka tetap ada. Lanjutkan?",
-  "tc.free": "Akun guru, kelas, tugas, ekspor, dan pemindahan kelas ke sekolah lain selalu gratis."
+  "tc.free": "Akun guru, kelas, tugas, ekspor, dan pemindahan kelas ke sekolah lain selalu gratis.",
+  "tc.offersOff": "Jangan tampilkan penawaran paket berbayar kepada siswa di kelas ini"
 }

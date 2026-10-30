@@ -2236,5 +2236,6 @@
   "tc.moveTo": "Az osztály iskolája:",
   "tc.deleteClass": "Osztály törlése",
   "tc.deleteClassConfirm": "Az osztály minden diák számára törlődik. A haladásuk megmarad. Folytatja?",
-  "tc.free": "A tanári fiók, az osztályok, a feladatok, az exportálás és az osztály áthelyezése másik iskolába mindig ingyenes."
+  "tc.free": "A tanári fiók, az osztályok, a feladatok, az exportálás és az osztály áthelyezése másik iskolába mindig ingyenes.",
+  "tc.offersOff": "Ne jelenjenek meg fizetős csomagajánlatok ennek az osztálynak a tanulóinak"
 }

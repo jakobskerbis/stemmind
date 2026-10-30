@@ -2224,7 +2224,7 @@
   "tc.assignments": "Zadaće razreda",
   "tc.noAssignments": "Još nema zadaća. Odaberite temu i rok.",
   "tc.due": "rok {date}",
-  "tc.doneCount": "Riješilo: {done} od {n}",
+  "tc.doneCount": "Riješeno: {done} od {n}",
   "tc.deleteAssignment": "Izbriši zadaću",
   "tc.deleteAssignmentConfirm": "Izbrisati zadaću za cijeli razred?",
   "tc.topic": "Tema",
@@ -2256,5 +2256,6 @@
   "tc.moveTo": "Škola razreda:",
   "tc.deleteClass": "Izbriši razred",
   "tc.deleteClassConfirm": "Razred će biti izbrisan za sve učenike. Njihov napredak ostaje. Nastaviti?",
-  "tc.free": "Učiteljski račun, razredi, zadaće, izvoz i prijenos razreda u drugu školu uvijek su besplatni."
+  "tc.free": "Učiteljski račun, razredi, zadaće, izvoz i prijenos razreda u drugu školu uvijek su besplatni.",
+  "tc.offersOff": "Ne prikazuj ponude plaćenih paketa učenicima ovog razreda"
 }

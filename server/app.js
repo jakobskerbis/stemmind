@@ -929,7 +929,7 @@ export function createApp(store, opts = {}) {
   // --- tedenske lige, razredi in skupine prijateljev ---
   const avatars = new Avatars(store.db);
   const leagues = mountLeagues(app, store, { loadStudent });
-  mountSchools(app, store, { loadStudent, leagues }); // šole, učitelji, licence, razredne naloge
+  mountSchools(app, store, { loadStudent, leagues, accounts: !!accounts }); // šole, učitelji, licence, razredne naloge
   mountGraphs(app, store, { loadStudent });
   mountGames(app, store, { loadStudent, progress, avatars, knowledge });
   mountAvatar(app, avatars, { loadStudent });

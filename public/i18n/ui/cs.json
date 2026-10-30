@@ -2276,5 +2276,6 @@
   "tc.moveTo": "Škola třídy:",
   "tc.deleteClass": "Smazat třídu",
   "tc.deleteClassConfirm": "Třída bude smazána pro všechny žáky. Jejich pokrok zůstane. Pokračovat?",
-  "tc.free": "Učitelský účet, třídy, úkoly, export a přesun třídy na jinou školu jsou vždy zdarma."
+  "tc.free": "Učitelský účet, třídy, úkoly, export a přesun třídy na jinou školu jsou vždy zdarma.",
+  "tc.offersOff": "Nezobrazovat žákům této třídy nabídky placených balíčků"
 }

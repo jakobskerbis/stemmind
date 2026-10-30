@@ -3,7 +3,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { openDb } from "../server/db.js";
 import { createApp } from "../server/app.js";
-import { schoolAccess } from "../server/schools.js";
+import { schoolAccess, schoolMembership } from "../server/schools.js";
 
 const YEAR = new Date().getFullYear();
 const TOPIC = "MAT-OS-7/razsirjanje-in-krajsanje-ulomkov";
@@ -24,7 +24,7 @@ async function withServer(fn) {
       const res = await fetch(base + path, {
         method: opts.method || "GET",
         redirect: "manual",
-        headers: { "Content-Type": "application/json", cookie: Object.entries(jar).map(([k, v]) => `${k}=${v}`).join("; ") },
+        headers: { "Content-Type": "application/json", ...opts.headers, cookie: Object.entries(jar).map(([k, v]) => `${k}=${v}`).join("; ") },
         body: opts.body ? JSON.stringify(opts.body) : undefined,
       });
       for (const c of res.headers.getSetCookie()) {
@@ -177,7 +177,82 @@ test("private space: teacher sees only assignment results and XP; licence seats;
     assert.deepEqual(tr.body.left, ["7.a"]);
     assert.equal(db.prepare("SELECT COUNT(*) AS n FROM tasks WHERE student_id = ?").get(kids[0].id).n, 6);
     assert.equal((await t(`/api/teacher/classes/${cls.code}/overview`)).body.members.length, 1);
+    // Pravila ponudb: članstvo in izklop ponudb (učitelj razreda).
+    assert.deepEqual(schoolMembership(db, kids[1].id), { inClass: true, inSchool: true, offersOff: false });
+    assert.equal((await t(`/api/teacher/classes/${cls.code}/offers`, { method: "PUT", body: { off: "da" } })).status, 400);
+    assert.equal((await t2(`/api/teacher/classes/${cls.code}/offers`, { method: "PUT", body: { off: true } })).status, 403);
+    assert.equal((await t(`/api/teacher/classes/${cls.code}/offers`, { method: "PUT", body: { off: true } })).status, 200);
+    assert.equal(schoolMembership(db, kids[1].id).offersOff, true);
+    assert.equal(schoolAccess(db, kids[1].id)?.stage, "OS");
     // Bor zdaj dobi prosto mesto.
     assert.equal(schoolAccess(db, kids[1].id)?.schoolId, sch.id);
   });
+});
+
+test("invalid input is 4xx; only the owner moves a class into a school; transfer rejects friend codes and rolls back", async () => {
+  await withServer(async ({ client, store, register }) => {
+    const db = store.db;
+    const t = client();
+    await register(t, "ucitelj@sola.si");
+    const sch = (await t("/api/schools", { method: "POST", body: { name: "OŠ Prule" } })).body;
+    const cls = (await t("/api/teacher/classes", { method: "POST", body: { name: "7.a", schoolId: sch.id } })).body;
+    const obj = { toString: 1 }; // Number(obj) vrže izjemo
+    assert.equal((await t("/api/teacher/classes", { method: "POST", body: { name: "x", schoolId: obj } })).status, 404);
+    assert.equal((await t("/api/teacher/classes", { method: "POST", body: { name: "x", path: obj } })).status, 400);
+    assert.equal((await t(`/api/teacher/classes/${cls.code}/school`, { method: "PUT", body: { schoolId: obj } })).status, 404);
+    assert.equal((await t(`/api/teacher/classes/${cls.code}/assignments`, { method: "POST", body: { topicId: obj, due: obj } })).status, 400);
+    db.prepare("UPDATE parents SET is_admin = 1 WHERE email = 'ucitelj@sola.si'").run();
+    const lic = { plan: "pilot", seats: obj, validUntil: "2099-01-01" };
+    assert.equal((await t(`/api/admin/schools/${sch.id}/licences`, { method: "POST", body: lic })).status, 400);
+    assert.equal((await t(`/api/admin/schools/${sch.id}/licences`, { method: "POST", body: { ...lic, seats: 5, priceEur: obj } })).status, 400);
+
+    // Ključ tujega razreda ne zadošča, da bi ga učitelj vpisal v svojo šolo (porabil bi njena mesta).
+    const b = client();
+    await register(b, "tuji@sola.si");
+    const sb = (await b("/api/schools", { method: "POST", body: { name: "OŠ Tuja" } })).body;
+    const legacy = (await t("/api/classes", { method: "POST", body: { name: "8.c" } })).body; // lastnik je t
+    const move = (who, schoolId) => who(`/api/teacher/classes/${legacy.code}/school`, { method: "PUT", body: { schoolId }, headers: { "X-Teacher-Key": legacy.teacherKey } });
+    assert.equal((await move(b, sb.id)).status, 403);
+    // Star razred brez lastnika: učitelj s ključem ga vpiše v svojo šolo in ga s tem prevzame.
+    db.prepare("UPDATE classes SET owner_parent_id = NULL WHERE id = ?").run(legacy.id);
+    assert.equal((await move(b, sb.id)).status, 200);
+    assert.ok((await b("/api/teacher/home")).body.classes.some((c) => c.id === legacy.id && c.schoolId === sb.id));
+    assert.equal((await move(t, sch.id)).status, 403, "zdaj ima lastnika");
+
+    // Prenos: koda skupine prijateljev je zavrnjena, preden bi se učenec pridružil; napačna koda ne izpiše iz razreda.
+    const p = client();
+    await register(p, "stars@primer.si");
+    const id = (await p("/api/students", { method: "POST", body: { name: "Ana", birth_year: YEAR - 12, consent: true } })).body.id;
+    assert.equal((await p(`/api/students/${id}/classes`, { method: "POST", body: { code: cls.code } })).status, 201);
+    const q = client();
+    await register(q, "drugi@primer.si");
+    const id2 = (await q("/api/students", { method: "POST", body: { name: "Bor", birth_year: YEAR - 12, consent: true } })).body.id;
+    const fr = (await q(`/api/students/${id2}/friend-groups`, { method: "POST", body: { name: "Mi" } })).body;
+    assert.equal((await p(`/api/students/${id}/transfer`, { method: "POST", body: { code: fr.code } })).status, 400);
+    assert.equal((await p(`/api/students/${id}/transfer`, { method: "POST", body: { code: obj } })).status, 404);
+    const groups = () => db.prepare("SELECT class_id FROM class_members WHERE student_id = ?").all(id).map((r) => r.class_id);
+    assert.deepEqual(groups(), [cls.id], "ni v skupini prijateljev in je še v 7.a");
+    // Polna skupina (40) zavrne pridružitev: izstop iz stare šole se razveljavi.
+    const c2 = (await b("/api/teacher/classes", { method: "POST", body: { name: "7.b", schoolId: sb.id } })).body;
+    const full = db.prepare("INSERT INTO students (name, settings) VALUES ('x', '{}')");
+    for (let i = 0; i < 40; i++) db.prepare("INSERT INTO class_members (class_id, student_id) VALUES (?, ?)").run(c2.id, Number(full.run().lastInsertRowid));
+    assert.equal((await p(`/api/students/${id}/transfer`, { method: "POST", body: { code: c2.code } })).status, 400);
+    assert.deepEqual(groups(), [cls.id]);
+  });
+});
+
+test("without accounts the teacher page still works with keyed classes", async () => {
+  const store = openDb(":memory:");
+  const app = createApp(store, { accounts: false, scheduler: false, log: { error() {} } });
+  const server = app.listen(0);
+  try {
+    const base = `http://127.0.0.1:${server.address().port}`;
+    const home = await fetch(`${base}/api/teacher/home`);
+    assert.equal(home.status, 200);
+    const h = await home.json();
+    assert.equal(h.accounts, false);
+    assert.deepEqual([h.schools, h.classes], [[], []]);
+  } finally {
+    server.close();
+  }
 });

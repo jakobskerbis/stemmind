@@ -68,7 +68,7 @@ function monthCard(M) {
     </div>`;
 }
 
-const fmtDay = (s) => new Date(`${s}T12:00:00`).toLocaleDateString(locale(), { day: "numeric", month: "numeric" });
+const fmtDay = (s, year = false) => new Date(`${s}T12:00:00`).toLocaleDateString(locale(), { day: "numeric", month: "numeric", ...(year ? { year: "numeric" } : {}) });
 
 // Razredne naloge, ki jih je dal učitelj. Učitelj vidi samo rezultate pri teh temah (zasebni prostor).
 function classTasksHtml(x) {
@@ -135,12 +135,12 @@ export async function loadLeague(studentId) {
     </div>
     ${monthCard(data.month)}
     ${data.classes.length ? `<div class="chip-row lg-period" role="group">${["week", "month"].map((k) => `<button type="button" class="${period === k ? "active" : ""}" data-period="${k}" aria-pressed="${period === k}">${esc(t(k === "week" ? "lg.thisWeek" : "lg.thisMonth"))}</button>`).join("")}</div>` : ""}
-    ${tasks?.licence ? `<p class="lg-licence muted">${icon("badge-check")} ${esc(t("lg.licence", { school: tasks.licence.school, date: fmtDay(tasks.licence.validUntil) }))}</p>` : ""}
+    ${tasks?.licence ? `<p class="lg-licence muted">${icon("badge-check")} ${esc(t("lg.licence", { school: tasks.licence.school, date: fmtDay(tasks.licence.validUntil, true) }))}</p>` : ""}
     ${data.classes
       .map(
         (c) => `<div class="card">
           <div class="group-head">
-            <h2 class="h-icon">${icon(c.kind === "class" ? "graduation-cap" : "users")} ${esc(c.name)}</h2>
+            <h2 class="h-icon">${icon(c.kind === "class" ? "graduation-cap" : "users")} <bdi>${esc(c.name)}</bdi></h2>
             <span class="code-chip" title="${esc(t(c.kind === "friends" ? "lg.shareCode" : "lg.classCode"))}">${esc(c.code)}</span>
           </div>
           <p class="muted">${esc(t(period === "month" ? "lg.classMonth" : c.kind === "friends" ? "lg.boardFriends" : "lg.board"))}</p>

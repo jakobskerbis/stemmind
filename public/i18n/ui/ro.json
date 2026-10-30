@@ -2256,5 +2256,6 @@
   "tc.moveTo": "Școala clasei:",
   "tc.deleteClass": "Șterge clasa",
   "tc.deleteClassConfirm": "Clasa va fi ștearsă pentru toți elevii. Progresul lor rămâne. Continuați?",
-  "tc.free": "Contul de profesor, clasele, temele, exportul și mutarea unei clase la altă școală sunt întotdeauna gratuite."
+  "tc.free": "Contul de profesor, clasele, temele, exportul și mutarea unei clase la altă școală sunt întotdeauna gratuite.",
+  "tc.offersOff": "Nu afișa oferte de pachete plătite elevilor din această clasă"
 }

@@ -2236,5 +2236,6 @@
   "tc.moveTo": "Shkolla e klasës:",
   "tc.deleteClass": "Fshi klasën",
   "tc.deleteClassConfirm": "Klasa do të fshihet për të gjithë nxënësit. Përparimi i tyre mbetet. Të vazhdoj?",
-  "tc.free": "Llogaria e mësuesit, klasat, detyrat, eksporti dhe zhvendosja e klasës në një shkollë tjetër janë gjithmonë falas."
+  "tc.free": "Llogaria e mësuesit, klasat, detyrat, eksporti dhe zhvendosja e klasës në një shkollë tjetër janë gjithmonë falas.",
+  "tc.offersOff": "Mos u shfaq nxënësve të kësaj klase oferta për paketa me pagesë"
 }

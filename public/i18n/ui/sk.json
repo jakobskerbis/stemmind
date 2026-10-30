@@ -2276,5 +2276,6 @@
   "tc.moveTo": "Škola triedy:",
   "tc.deleteClass": "Odstrániť triedu",
   "tc.deleteClassConfirm": "Trieda bude odstránená pre všetkých žiakov. Ich pokrok zostane. Pokračovať?",
-  "tc.free": "Učiteľský účet, triedy, úlohy, export a presun triedy na inú školu sú vždy zadarmo."
+  "tc.free": "Učiteľský účet, triedy, úlohy, export a presun triedy na inú školu sú vždy zadarmo.",
+  "tc.offersOff": "Nezobrazovať žiakom tejto triedy ponuky platených balíkov"
 }

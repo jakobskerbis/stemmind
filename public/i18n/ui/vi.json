@@ -2216,5 +2216,6 @@
   "tc.moveTo": "Trường của lớp:",
   "tc.deleteClass": "Xóa lớp",
   "tc.deleteClassConfirm": "Lớp sẽ bị xóa với tất cả học sinh. Tiến độ của các em vẫn được giữ. Tiếp tục?",
-  "tc.free": "Tài khoản giáo viên, lớp học, bài tập, xuất dữ liệu và chuyển lớp sang trường khác luôn miễn phí."
+  "tc.free": "Tài khoản giáo viên, lớp học, bài tập, xuất dữ liệu và chuyển lớp sang trường khác luôn miễn phí.",
+  "tc.offersOff": "Không hiển thị ưu đãi gói trả phí cho học sinh lớp này"
 }

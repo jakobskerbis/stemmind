@@ -34,6 +34,10 @@ const parse = (v) => {
 const clean = (v, max = 60) => (typeof v === "string" ? v.replace(/[\u0000-\u001f\u007f]+/g, " ").replace(/\s{2,}/g, " ").trim().slice(0, max) : "");
 const isDay = (v) => typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(`${v}T00:00:00Z`));
 const fmtCode = (c) => (c?.length === 6 ? `${c.slice(0, 3)}-${c.slice(3)}` : c);
+// Število iz JSON/poti: objekti in polja niso števila (Number({toString: 1}) bi vrgel izjemo → 500).
+const num = (v) => (typeof v === "number" ? v : typeof v === "string" && v.trim() ? Number(v) : NaN);
+// Neobvezen id šole: prazno = brez šole, sicer celo število (drugače NaN → 404).
+const optId = (v) => (v == null || v === "" ? null : Number.isInteger(num(v)) ? num(v) : NaN);
 const normCode = (c) => String(c || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 12);
 
 export function migrateSchools(db) {
@@ -86,6 +90,8 @@ export function migrateSchools(db) {
   if (!cols.includes("school_id")) db.exec("ALTER TABLE classes ADD COLUMN school_id INTEGER REFERENCES schools(id) ON DELETE SET NULL");
   if (!cols.includes("grade")) db.exec("ALTER TABLE classes ADD COLUMN grade INTEGER");
   if (!cols.includes("subject")) db.exec("ALTER TABLE classes ADD COLUMN subject TEXT");
+  // Učitelj izklopi ponudbe plačljivih paketov za učence razreda (pravila ponudb v pravice.js).
+  if (!cols.includes("offers_off")) db.exec("ALTER TABLE classes ADD COLUMN offers_off INTEGER NOT NULL DEFAULT 0");
   if (!cols.includes("path")) db.exec("ALTER TABLE classes ADD COLUMN path TEXT"); // učna pot razreda, npr. MAT-OS-7
   const mcols = db.prepare("PRAGMA table_info(class_members)").all().map((c) => c.name);
   // Oznaka, ki jo učitelj sam pripiše vzdevku (npr. »Ana K.«); učenec imena ne vpisuje.
@@ -103,6 +109,7 @@ export function activeLicence(db, schoolId, today = day()) {
 
 // Učenci šole (razredi kind='class') po prvi pridružitvi; prvih `seats` ima licenco.
 export function schoolStudents(db, schoolId) {
+  if (!ready(db)) return [];
   return db
     .prepare(
       `SELECT m.student_id AS id, MIN(m.joined_at) AS first FROM class_members m JOIN classes c ON c.id = m.class_id
@@ -115,10 +122,11 @@ export function schoolStudents(db, schoolId) {
 // Šolske pravice učenca (za server/placila/pravice.js): null, če ni v razredu šole z veljavno licenco in prostim mestom.
 // { schoolId, schoolName, licenceId, plan, subjects, grades, validUntil, aiCapUsdMonth }
 export function schoolAccess(db, studentId, now = new Date()) {
+  if (!ready(db)) return null;
   const today = day(now);
   const schools = db
     .prepare(
-      `SELECT DISTINCT s.id, s.name FROM class_members m JOIN classes c ON c.id = m.class_id JOIN schools s ON s.id = c.school_id
+      `SELECT DISTINCT s.id, s.name, s.stage FROM class_members m JOIN classes c ON c.id = m.class_id JOIN schools s ON s.id = c.school_id
        WHERE m.student_id = ? AND c.kind = 'class' ORDER BY s.id`,
     )
     .all(studentId);
@@ -129,6 +137,7 @@ export function schoolAccess(db, studentId, now = new Date()) {
     return {
       schoolId: s.id,
       schoolName: s.name,
+      stage: s.stage, // OS | SS (letniki licence so številke v tej stopnji)
       licenceId: lic.id,
       plan: lic.plan,
       subjects: lic.subjects,
@@ -138,6 +147,29 @@ export function schoolAccess(db, studentId, now = new Date()) {
     };
   }
   return null;
+}
+
+// Ali so šolske tabele že ustvarjene (pravice.js lahko vpraša, preden se mountSchools izvede).
+function ready(db) {
+  try {
+    return !!db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'school_licences'").get() &&
+      db.prepare("PRAGMA table_info(classes)").all().some((c) => c.name === "offers_off");
+  } catch {
+    return false;
+  }
+}
+
+// Za pravila ponudb (pravice.js): ali je učenec v kakem razredu učitelja, v razredu šole (z mestom ali brez)
+// in ali je učitelj katerega od njegovih razredov izklopil ponudbe.
+export function schoolMembership(db, studentId) {
+  if (!ready(db)) return { inClass: false, inSchool: false, offersOff: false };
+  const r = db
+    .prepare(
+      `SELECT COUNT(*) AS n, SUM(c.school_id IS NOT NULL) AS school, MAX(c.offers_off) AS off FROM class_members m
+       JOIN classes c ON c.id = m.class_id WHERE m.student_id = ? AND c.kind = 'class'`,
+    )
+    .get(studentId);
+  return { inClass: r.n > 0, inSchool: (r.school || 0) > 0, offersOff: !!r.off };
 }
 
 // Rezultati razreda pri dodeljenih temah. Samo naloge pri teh temah od dodelitve dalje (zasebni prostor).
@@ -280,6 +312,7 @@ export class Schools {
       grade: c.grade ?? null,
       subject: c.subject ?? null,
       path: c.path ?? null,
+      offersOff: !!c.offers_off,
       members: c.members,
       assignments: c.assignments,
     };
@@ -342,6 +375,7 @@ export class Schools {
   // Napredek je v profilu učenca, zato gre z njim; nič se ne briše in nič ne stane.
   leaveOtherSchools(studentId, keepClassId) {
     const keep = this.db.prepare("SELECT school_id FROM classes WHERE id = ?").get(keepClassId)?.school_id ?? null;
+    if (keep === null) return []; // razred brez šole: stare šole ostanejo
     const left = this.db
       .prepare(
         `SELECT c.id, c.name FROM class_members m JOIN classes c ON c.id = m.class_id
@@ -363,7 +397,7 @@ const csvCell = (v) => {
 };
 
 // HTTP poti. Šole potrebujejo račune (req.parent); razrede lahko učitelj brez računa upravlja s ključem (X-Teacher-Key).
-export function mountSchools(app, store, { loadStudent, leagues }) {
+export function mountSchools(app, store, { loadStudent, leagues, accounts = true }) {
   const schools = new Schools(store.db);
   const db = store.db;
   const needParent = (req, res) => {
@@ -404,6 +438,8 @@ export function mountSchools(app, store, { loadStudent, leagues }) {
 
   // --- učitelj: šole ---
   app.get("/api/teacher/home", (req, res) => {
+    // Brez računov (EVKLID_ACCOUNTS ni 1) stran za učitelje dela samo z razredi s ključem v brskalniku.
+    if (!accounts && !req.parent) return res.json({ accounts: false, verified: false, schools: [], classes: [], doneSolved: SCHOOL.doneSolved });
     const p = needParent(req, res);
     if (!p) return;
     res.json({ verified: !!p.email_verified_at, schools: schools.schoolsOf(p.id), classes: schools.classesOf(p.id), doneSolved: SCHOOL.doneSolved });
@@ -435,12 +471,12 @@ export function mountSchools(app, store, { loadStudent, leagues }) {
     if (!p) return;
     const name = clean(req.body?.name, 40);
     if (!name) return res.status(400).json({ error: "Vpišite ime razreda, npr. 8.b." });
-    const schoolId = req.body?.schoolId == null || req.body.schoolId === "" ? null : Number(req.body.schoolId);
-    if (schoolId !== null && !schools.role(schoolId, p.id)) return res.status(404).json({ error: "Šola ne obstaja." });
+    const schoolId = optId(req.body?.schoolId);
+    if (schoolId !== null && !(Number.isInteger(schoolId) && schools.role(schoolId, p.id))) return res.status(404).json({ error: "Šola ne obstaja." });
     const count = db.prepare("SELECT COUNT(*) AS n FROM classes WHERE kind = 'class' AND owner_parent_id = ?").get(p.id).n;
     if (count >= SCHOOL.maxClassesPerTeacher) return res.status(400).json({ error: `Največ ${SCHOOL.maxClassesPerTeacher} razredov na učitelja.` });
     // Učna pot razreda (predmet in letnik), npr. MAT-OS-7; neobvezno.
-    const path = req.body?.path ? getPath(String(req.body.path)) : null;
+    const path = req.body?.path ? getPath(typeof req.body.path === "string" ? req.body.path : "") : null;
     if (req.body?.path && (!path || ["UNI", "TEK"].includes(path.school))) return res.status(400).json({ error: "Izberite predmet in letnik s seznama." });
     const c = leagues.createClass(name, p.id);
     db.prepare("UPDATE classes SET school_id = ?, grade = ?, subject = ?, path = ? WHERE id = ?").run(schoolId, path?.grade ?? null, path?.subject ?? null, path?.key ?? null, c.id);
@@ -452,10 +488,21 @@ export function mountSchools(app, store, { loadStudent, leagues }) {
     if (!cls) return;
     const p = needParent(req, res);
     if (!p) return;
-    const schoolId = req.body?.schoolId == null || req.body.schoolId === "" ? null : Number(req.body.schoolId);
-    if (schoolId !== null && !schools.role(schoolId, p.id)) return res.status(404).json({ error: "Šola ne obstaja." });
-    db.prepare("UPDATE classes SET school_id = ? WHERE id = ?").run(schoolId, cls.id);
+    // Samo lastnik razreda (ključ tujega razreda ne zadošča, da bi ga vpisal v svojo šolo in porabil njena mesta).
+    // Star razred brez lastnika (samo ključ) ob tem postane učiteljev, da ga vidi na vseh napravah in ga odnese, če zapusti šolo.
+    if (cls.owner_parent_id != null && cls.owner_parent_id !== p.id) return res.status(403).json({ error: "Razred lahko v šolo prestavi samo učitelj, ki ga je ustvaril." });
+    const schoolId = optId(req.body?.schoolId);
+    if (schoolId !== null && !(Number.isInteger(schoolId) && schools.role(schoolId, p.id))) return res.status(404).json({ error: "Šola ne obstaja." });
+    db.prepare("UPDATE classes SET school_id = ?, owner_parent_id = ? WHERE id = ?").run(schoolId, p.id, cls.id);
     res.json({ ok: true });
+  });
+  // Učitelj izklopi (ali spet vklopi) ponudbe plačljivih paketov za učence razreda.
+  app.put("/api/teacher/classes/:code/offers", (req, res) => {
+    const cls = teacherClass(req, res);
+    if (!cls) return;
+    if (typeof req.body?.off !== "boolean") return res.status(400).json({ error: "Manjka off: true ali false." });
+    db.prepare("UPDATE classes SET offers_off = ? WHERE id = ?").run(req.body.off ? 1 : 0, cls.id);
+    res.json({ ok: true, offersOff: req.body.off });
   });
   app.get("/api/teacher/classes/:code/overview", (req, res) => {
     const cls = teacherClass(req, res);
@@ -471,7 +518,7 @@ export function mountSchools(app, store, { loadStudent, leagues }) {
   app.post("/api/teacher/classes/:code/assignments", (req, res) => {
     const cls = teacherClass(req, res);
     if (!cls) return;
-    const out = schools.addAssignment(cls, req.parent?.id ?? null, { topicId: String(req.body?.topicId || ""), due: req.body?.due });
+    const out = schools.addAssignment(cls, req.parent?.id ?? null, { topicId: typeof req.body?.topicId === "string" ? req.body.topicId : "", due: req.body?.due });
     if (out.error) return res.status(400).json(out);
     res.status(201).json(out);
   });
@@ -508,11 +555,24 @@ export function mountSchools(app, store, { loadStudent, leagues }) {
   app.post("/api/students/:id/transfer", (req, res) => {
     const s = loadStudent(req, res);
     if (!s) return;
-    const out = leagues.join(s.id, req.body?.code);
+    const code = typeof req.body?.code === "string" ? req.body.code : "";
+    const target = leagues.getByCode(code);
+    // Koda skupine prijateljev: zavrnemo, preden bi se učenec pridružil.
+    if (target && target.kind !== "class") return res.status(400).json({ error: "To je koda skupine prijateljev, ne razreda." });
+    // Najprej izstop iz razredov drugih šol (da omejitev števila skupin ne ustavi prenosa), nato pridružitev; ob napaki nič.
+    let left = [];
+    let out;
+    db.exec("BEGIN IMMEDIATE");
+    try {
+      if (target) left = schools.leaveOtherSchools(s.id, target.id);
+      out = leagues.join(s.id, code);
+      db.exec(out.error ? "ROLLBACK" : "COMMIT");
+    } catch (e) {
+      db.exec("ROLLBACK");
+      throw e;
+    }
     if (out.error) return res.status(out.status || 400).json({ error: out.error });
-    const cls = leagues.getByCode(req.body.code);
-    if (cls.kind !== "class") return res.status(400).json({ error: "To je koda skupine prijateljev, ne razreda." });
-    res.json({ ok: true, class: out.class, left: schools.leaveOtherSchools(s.id, cls.id) });
+    res.json({ ok: true, class: out.class, left });
   });
   // Izvoz napredka za šolo (JSON): razredi, naloge, stanje tem. Vedno zastonj, tudi brez licence.
   app.get("/api/students/:id/school-export", (req, res) => {
@@ -540,15 +600,15 @@ export function mountSchools(app, store, { loadStudent, leagues }) {
     const id = Number(req.params.id);
     if (!db.prepare("SELECT 1 FROM schools WHERE id = ?").get(id)) return res.status(404).json({ error: "Šola ne obstaja." });
     const b = req.body || {};
-    const seats = Number(b.seats);
+    const seats = num(b.seats);
     const list = (v, ok) => (Array.isArray(v) && v.length && v.every(ok) ? v : null);
     if (!PLANS.includes(b.plan)) return res.status(400).json({ error: `Paket: ${PLANS.join(", ")}.` });
     if (!Number.isInteger(seats) || seats < 1 || seats > 5000) return res.status(400).json({ error: "Število mest 1–5000." });
     const from = b.validFrom || day();
     if (!isDay(from) || !isDay(b.validUntil) || b.validUntil < from) return res.status(400).json({ error: "Veljavnost: validFrom ≤ validUntil (YYYY-MM-DD)." });
-    const cap = b.aiCapUsdMonth == null || b.aiCapUsdMonth === "" ? null : Number(b.aiCapUsdMonth);
+    const cap = b.aiCapUsdMonth == null || b.aiCapUsdMonth === "" ? null : num(b.aiCapUsdMonth);
     if (cap !== null && !(cap >= 0 && cap <= 10000)) return res.status(400).json({ error: "Meja AI 0–10000 $ na mesec." });
-    const price = Number(b.priceEur ?? 0);
+    const price = b.priceEur == null || b.priceEur === "" ? 0 : num(b.priceEur);
     if (!(price >= 0 && price <= 1000)) return res.status(400).json({ error: "Cena 0–1000 € na učenca." });
     const r = db
       .prepare(

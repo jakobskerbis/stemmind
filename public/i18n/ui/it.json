@@ -2236,5 +2236,6 @@
   "tc.moveTo": "Scuola della classe:",
   "tc.deleteClass": "Elimina classe",
   "tc.deleteClassConfirm": "La classe verrà eliminata per tutti gli studenti. I loro progressi restano. Continuo?",
-  "tc.free": "L’account insegnante, le classi, i compiti, l’esportazione e il trasferimento di una classe a un’altra scuola sono sempre gratuiti."
+  "tc.free": "L’account insegnante, le classi, i compiti, l’esportazione e il trasferimento di una classe a un’altra scuola sono sempre gratuiti.",
+  "tc.offersOff": "Non mostrare offerte di piani a pagamento agli studenti di questa classe"
 }

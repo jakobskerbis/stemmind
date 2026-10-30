@@ -2236,5 +2236,6 @@
   "tc.moveTo": "Shule ya darasa:",
   "tc.deleteClass": "Futa darasa",
   "tc.deleteClassConfirm": "Darasa litafutwa kwa wanafunzi wote. Maendeleo yao yanabaki. Niendelee?",
-  "tc.free": "Akaunti ya mwalimu, madarasa, kazi, kuhamisha data na kuhamishia darasa shule nyingine ni bure kila wakati."
+  "tc.free": "Akaunti ya mwalimu, madarasa, kazi, kuhamisha data na kuhamishia darasa shule nyingine ni bure kila wakati.",
+  "tc.offersOff": "Usiwaonyeshe wanafunzi wa darasa hili matoleo ya vifurushi vya kulipia"
 }
