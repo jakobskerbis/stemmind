@@ -2842,7 +2842,22 @@ function calcTool(mode) {
   calcTools[mode] ||= (mode === "sci" ? import("./graph/sci.js") : import("./graph/tools.js")).then((m) => {
     const host = document.createElement("div");
     const base = { t, icon, locale, onInsert: insertIntoCalc };
-    if (mode === "sci") return m.createScientific(host, { ...base, storageKey: () => `evklid.sci.${state.student?.id ?? 0}` });
+    if (mode === "sci")
+      return m.createScientific(host, {
+        ...base,
+        toast: (msg) => toast(msg, "check"),
+        storageKey: () => `evklid.sci.${state.student?.id ?? 0}`,
+        // »Nariši graf«: isti zaslon, način Grafični z vpisanimi izrazi
+        openGraph: async (exprs) => (await setCalcMode("graph"))?.show(exprs),
+        // »Po korakih«: zaslon Skeniraj (public/scan/) ima reševalnik po korakih
+        canSteps: () => !!document.getElementById("view-scan"),
+        steps: async (text) => {
+          if (!document.getElementById("view-scan")) return;
+          closeCalcOverlay();
+          showView("scan");
+          (await import("./scan/scan.js")).showScan?.({ text });
+        },
+      });
     if (mode === "tools") return m.createTools(host, { ...base, subject: calcSubject });
     if (mode === "pse") return m.createPse(host, { ...base, lang: currentLang });
     return m.createFormulas(host, { ...base, api, renderRich, bookKey: formulaBook });
