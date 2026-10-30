@@ -1,7 +1,7 @@
 // Korenska postavitev: prijava → izbira profila → zavihki. Zasloni nad zavihki (lekcija, vaje,
 // pogovor, naročnina) se odprejo kot naravni sklad (iOS: potisk z robu nazaj, Android: gumb nazaj).
-import React, { useEffect } from "react";
-import { ActivityIndicator, Modal, Text, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { ActivityIndicator, Alert, Modal, Text, View } from "react-native";
 import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import * as Notifications from "expo-notifications";
@@ -11,11 +11,12 @@ import { t, useLanguage } from "@/lib/i18n";
 import { useTheme } from "@/lib/theme";
 import { watchPurchases } from "@/lib/billing";
 import { useAppUpdates } from "@/lib/updates";
+import { api, setTakenHandler } from "@/lib/api";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 function Root() {
-  const { ready, signedIn, student, refresh } = useSession();
+  const { ready, signedIn, student, refresh, select } = useSession();
   const th = useTheme();
   useLanguage();
   // Nova različica: ob prijavi (in po nekaj urah v ozadju) ponudi posodobitev na en klik (src/lib/updates.ts).
@@ -27,6 +28,30 @@ function Root() {
 
   // Nakupi v trgovini, ki niso prišli prek gumba (prekinjeni, potrjeni pozneje), se zapišejo ob zagonu.
   useEffect(() => (signedIn ? watchPurchases(() => refresh().catch(() => {})) : undefined), [signedIn, refresh]);
+
+  // Profil je hkrati odprt samo na eni napravi. Če ga ima druga (npr. brskalnik), ponudimo prevzem kot splet
+  // (public/account.js): »Nadaljuj tukaj« ga zapre na drugi napravi in znova naloži zaslone.
+  const [epoch, setEpoch] = useState(0);
+  const askingTaken = useRef(false);
+  useEffect(() => {
+    setTakenHandler((id) => {
+      if (askingTaken.current || !id) return;
+      askingTaken.current = true;
+      const done = () => (askingTaken.current = false);
+      Alert.alert(t("mob.takenTitle"), t("mob.takenText"), [
+        { text: t("mob.takenOther"), style: "cancel", onPress: () => (done(), select(null)) },
+        {
+          text: t("mob.takenHere"),
+          onPress: () =>
+            api(`/api/students/${id}/claim`, { body: {} })
+              .then(() => setEpoch((e) => e + 1))
+              .catch(() => {})
+              .finally(done),
+        },
+      ], { cancelable: false });
+    });
+    return () => setTakenHandler(null);
+  }, [select]);
 
   // Dotik obvestila odpre učno pot.
   useEffect(() => {
@@ -41,7 +66,7 @@ function Root() {
   return (
     <>
       <StatusBar style="auto" />
-      <Stack screenOptions={header}>
+      <Stack key={epoch} screenOptions={header}>
         <Stack.Protected guard={!signedIn}>
           <Stack.Screen name="sign-in" options={{ headerShown: false }} />
           <Stack.Screen name="register" options={{ title: t("mob.register") }} />

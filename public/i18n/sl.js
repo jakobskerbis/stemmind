@@ -2020,6 +2020,10 @@ export default {
   "mob.updateNow": "Posodobi",
   "mob.updateLater": "Pozneje",
   "mob.updateDownloading": "Prenašam posodobitev … {pct} %",
+  "mob.takenTitle": "Profil je odprt drugje",
+  "mob.takenText": "Ta profil je trenutno odprt na drugi napravi. Če nadaljuješ tukaj, se tam zapre.",
+  "mob.takenHere": "Nadaljuj tukaj",
+  "mob.takenOther": "Izberi drug profil",
   // skeniranje nalog (public/scan/)
   "scan.title": "Skeniraj nalogo",
   "scan.nav": "Skeniraj",
