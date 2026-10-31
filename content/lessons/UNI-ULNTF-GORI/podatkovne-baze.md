@@ -256,3 +256,10 @@ Aplikacija za vsak tvoj klik sestavi tak ukaz, ga pošlje bazi na strežniku in 
 - $3$
 ~ Rezultat ni manjši od nobene od tabel; vsak igralec se pojavi s vsakim klubom.
 > Brez pogoja dobimo vse pare: $6 \cdot 3 = 18$ vrstic. Šele `ON i.id_kluba = k.id_kluba` jih zmanjša na $6$ pravih.
+
+:::simboli
+\sigma | izbira vrstic (selekcija) | | | v SQL WHERE
+\pi | izbira stolpcev (projekcija) | | | v SQL SELECT
+N | »mnogo« v povezavi ena proti mnogo ($1 : N$) | | | tuji ključ je na strani »mnogo«; stik tabel ($\bowtie$) je v SQL JOIN
+\text{goli} | število golov igralca | | – | stolpec tabele Igralci
+:::

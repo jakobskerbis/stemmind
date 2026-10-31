@@ -261,3 +261,8 @@ Zaokroženo število ni »napačno«. Je dogovorjena natančnost: povemo, katera
 - $100$
 ~ Sto bankovcev po $100$ € je le $10\,000$ €.
 > $1\,000\,000 : 100 = 10\,000$. Milijonu odvzameš dve ničli, ker ima sto dve ničli.
+
+:::simboli
+\text{razred} | skupina treh mest (stotice, desetice, enice) | | | razredi: enice, tisoči, milijoni
+\text{števka stotic} | števka, ki odloča pri zaokroževanju na tisočice | | | 0 do 4 navzdol, 5 do 9 navzgor
+:::

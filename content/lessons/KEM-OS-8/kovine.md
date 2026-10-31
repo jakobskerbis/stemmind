@@ -191,3 +191,16 @@ Reaktivnost narašča navzdol po skupini, ker je zunanji elektron pri večjih at
 + $\mathrm{Mg}$ in $\mathrm{Ca}$
 - $\mathrm{Na}$ in $\mathrm{Mg}$
 > Magnezij in kalcij sta v 2. skupini. Natrij, kalij in litij so alkalijske kovine iz 1. skupine.
+
+:::simboli
+\mathrm{Li} | litij | |
+\mathrm{Na} | natrij | |
+\mathrm{K} | kalij | |
+\mathrm{Mg} | magnezij | |
+\mathrm{Ca} | kalcij | |
+\mathrm{Hg} | živo srebro | | | kovina, ki je pri sobni temperaturi tekoča
+\mathrm{H_2O} | voda | |
+\mathrm{NaOH} | natrijev hidroksid | | | njegova raztopina je bazična
+\mathrm{KOH} | kalijev hidroksid | | | njegova raztopina je bazična
+\mathrm{H_2} | vodik | | | nastane pri reakciji alkalijske kovine z vodo
+:::

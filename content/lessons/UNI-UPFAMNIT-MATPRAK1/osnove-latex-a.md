@@ -323,3 +323,13 @@ Z oznakami v LaTeX-u je enako. `\label{eq:energija}` je ime stika, številka ena
 ~ Ime oznake se v PDF-ju nikoli ne izpiše, služi le za povezavo.
 + »iz (4) sledi«
 > Nova enačba dobi številko $(3)$, stara $(4)$; sklic poišče trenutno številko oznake.
+
+:::simboli
+E | energija baterije | E = U \cdot Q | Wh | primer izpostavljene enačbe s številko
+U | napetost baterije | | V |
+Q | naboj baterije | | Ah | v primeru tudi mAh
+I | povprečni tok | | mA |
+t | čas delovanja baterije | t = \dfrac{Q}{I} | h |
+n | naravno število v izreku | | |
+x | spremenljivka | | | v matematičnem načinu poševna; znak za množenje je $\times$
+:::

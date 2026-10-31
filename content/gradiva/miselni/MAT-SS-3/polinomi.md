@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Polinom
+  - $p(x) = a_n x^n + \dots + a_0$
+  - stopnja $n$, vodilni koeficient, prosti člen
+- Vrednost in ničla
+  - ničla: $p(a) = 0$
+  - teleskop: ničle $1$, $2$, $3$
+- Deljenje polinomov
+  - $p = q\,k + r$
+  - delimo vodilna člena, odštejemo cel oklepaj
+  - manjkajoči člen zapiši z $0$
+- Izrek o ostanku
+  - ostanek pri $x - a$ je $p(a)$
+  - $a$ ničla, ko $x - a$ deli $p$
+- Hornerjev algoritem
+  - pomnoži z $a$, prištej naslednji koeficient
+  - pri $x + 2$ vzemi $a = -2$
+- Iskanje ničel
+  - kandidati: delitelji prostega člena, oba predznaka
+  - največ $n$ ničel
+  - sonda: $t = 3$ in $t = 5$ min

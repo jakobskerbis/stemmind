@@ -1,0 +1,23 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Racionalna števila
+  - zapis kot ulomek $\frac{m}{n}$
+  - decimalni zapis končen ali periodičen: $0{,}333\ldots = \frac{1}{3}$
+- Iracionalna števila
+  - neskončen, neperiodičen zapis
+  - $\sqrt{2}$, $\sqrt{3}$, $\pi$
+- Koren naravnega števila
+  - popolni kvadrat: $\sqrt{16} = 4$
+  - sicer iracionalen: $\sqrt{7}$, $\sqrt{10}$
+- Realna števila
+  - $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$
+  - racionalna in iracionalna skupaj
+- Številska premica
+  - vsaki točki natanko eno realno število
+  - $k^2 < x < (k+1)^2$, torej $k < \sqrt{x} < k+1$
+  - $-\sqrt{5} \approx -2{,}24$, levo od $-2$
+- Približki
+  - $\sqrt{2} \approx 1{,}41$, ne $= 1{,}41$
+  - $\frac{22}{7}$ je le približek za $\pi$

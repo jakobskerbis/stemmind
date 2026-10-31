@@ -236,3 +236,10 @@ Nariši strukturo spojine *4-metilpent-3-en-2-on* in zapiši molekulsko formulo.
 - 1,1-dimetilbutan
 - 2-propilpropan
 > Najdaljša veriga ima $5$ atomov C, metil dobi z leve lokant $2$. Imeni *1,1-dimetilbutan* in *2-propilpropan* kažeta, da veriga ni bila izbrana kot najdaljša.
+
+:::simboli
+\text{predpone} | predpone imena (substituenti) | | | po abecedi, z lokanti
+\text{osnova} | osnova imena (glavna veriga) | | | npr. pent- za 5 atomov C
+\text{končnica} | končnica imena (glavna skupina) | | | npr. -ojska kislina
+n | število ogljikovih atomov v alkanu | | – | splošna formula alkanov $\mathrm{C}_n\mathrm{H}_{2n+2}$
+:::

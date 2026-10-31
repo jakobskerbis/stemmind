@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Projekcija kot senca
+  - senca $\vec b$ na $\vec a$: $|\vec b|\cos\varphi$
+  - pri topem kotu pade nazaj
+- Definicija
+  - $\vec a \cdot \vec b = |\vec a|\,|\vec b|\cos\varphi$
+  - rezultat je število, ne vektor
+  - kot med vektorjema s skupnim začetkom
+- Predznak produkta
+  - pozitiven: oster kot
+  - negativen: top kot
+- Pravokotnost
+  - $\vec a \cdot \vec b = 0$ pri neničelnih vektorjih
+  - pešpot $(6, t)$ na cesto $(4, 3)$: $t = -8$
+- Komponente
+  - $a_x b_x + a_y b_y + a_z b_z$
+  - napaka: zmnožiš, a ne sešteješ
+- Kot med vektorjema
+  - $\cos\varphi = \dfrac{\vec a \cdot \vec b}{|\vec a|\,|\vec b|}$
+  - napaka: pozabljeno deljenje z dolžinama
+  - $(3, 4)$ in $(5, -12)$: $\varphi \approx 120{,}5^\circ$

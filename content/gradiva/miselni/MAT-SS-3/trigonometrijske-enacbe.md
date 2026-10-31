@@ -1,0 +1,28 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Presečišča s krožnico
+  - $\sin x = a$: vodoravna premica $y = a$
+  - $\cos x = a$: navpična premica pri $a$ na vodoravni osi
+  - $\sin x = 1{,}2$: ni presečišča, ni rešitev
+- Splošna rešitev
+  - vse rešitve naenkrat, $k \in \mathbb{Z}$
+  - pri sinusu in kosinusu dve družini
+- Osnovna rešitev
+  - $x_1 = \arcsin a$, kalkulator $\sin^{-1}$
+  - lahko je negativna, npr. $-19{,}47^\circ$
+- Enačba s sinusom
+  - $x = x_1 + k \cdot 360^\circ$
+  - ali $x = 180^\circ - x_1 + k \cdot 360^\circ$
+- Enačba s kosinusom
+  - $x = \pm x_1 + k \cdot 360^\circ$
+- Enačba s tangensom
+  - $x = x_1 + k \cdot 180^\circ$
+  - ena družina, nasprotni točki
+- Radiani in argument
+  - $360^\circ \to 2\pi$, $180^\circ \to \pi$
+  - $\sin(100\pi t) = 0{,}5$: najprej argument, nato $t$
+- Izpostavljanje
+  - $\cos x\,(2\sin x - 1) = 0$
+  - napaka: deljenje s $\cos x$ izgubi rešitve

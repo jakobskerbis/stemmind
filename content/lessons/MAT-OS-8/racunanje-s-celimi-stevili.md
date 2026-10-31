@@ -5,95 +5,170 @@ avtor: AI
 
 ## Zakaj se tega učimo
 
-Cela števila poznaš že iz 7. razreda: to so $\dots, -3, -2, -1, 0, 1, 2, 3, \dots$. Znaš jih narisati na številski premici in veš, da je $-5$ manjše od $-2$. V 8. razredu se z njimi spet srečamo kot z delom racionalnih števil, zato moramo računanje z njimi obvladati brez oklevanja.
+Vzemi telefon in zapiši, koliko odstotkov baterije ima zdaj. Petnajst minut glej video, nato zapiši novo stanje. Še četrt ure ga polni in na koncu četrt ure uporabljaj navigacijo. Vsakič izračunaj **spremembo**: končno stanje minus začetno.
 
-Negativna števila uporabljamo vsak dan: temperatura pod ničlo, dolg na bančnem računu, nadmorska višina pod morsko gladino, podkletena etaža v dvigalu. Vsa ta stanja zahtevajo računanje s predznaki. Če boš pravila predznakov razumel in ne le zapomnil, jih ne boš pozabil in bo vse nadaljnje računanje (ulomki, enačbe, potence) precej lažje.
+Takole je izšlo Nini:
+
+| dejavnost | začetek | konec | sprememba |
+|---|---|---|---|
+| video | $83\,\%$ | $77\,\%$ | $-6$ |
+| polnjenje | $77\,\%$ | $89\,\%$ | $+12$ |
+| navigacija | $89\,\%$ | $80\,\%$ | $-9$ |
+
+Spremembe so cela števila: padec je negativen, porast pozitiven. Koliko se je baterija spremenila v vseh 45 minutah? Da odgovoriš, moraš znati sešteti $-6$, $12$ in $-9$. Pravila za tak račun boš odkril sam iz nekaj primerov, nato jih bomo zapisali.
 
 ## Razlaga
 
-**1. Nasprotno število in absolutna vrednost.** Število $-a$ je nasprotno število števila $a$. Na številski premici ležita na enaki razdalji od $0$, vsako na svoji strani. **Absolutna vrednost** števila je njegova razdalja od $0$: $|-7| = 7$, $|7| = 7$.
+**Seštevanje: kaj opaziš?** Najprej sestavi dva padca, video in navigacijo. Baterija je padla za $6$ in še za $9$, skupaj za $15$. Torej $(-6) + (-9) = -15$.
 
-**2. Seštevanje.**
+Zdaj video in polnjenje. Padec za $6$ in porast za $12$: porast je večji, zato baterija na koncu pridobi $6$. Torej $(-6) + 12 = 6$. Pri polnjenju in navigaciji je porast $12$ in padec $9$, ostane $12 + (-9) = 3$.
 
-- Seštevanec z **enakima predznakoma**: absolutni vrednosti seštejemo, predznak ostane. $(-3) + (-4) = -7$.
-- Seštevanca z **različnima predznakoma**: od večje absolutne vrednosti odštejemo manjšo, predznak pa je tak kot pri številu z večjo absolutno vrednostjo. $(-9) + 5 = -4$, $(-2) + 6 = 4$.
-- Vsota nasprotnih števil je $0$: $7 + (-7) = 0$.
+Na številski premici je to vidno kot skoki. Seštevanje pozitivnega števila je skok v desno, seštevanje negativnega skok v levo:
 
-**3. Odštevanje.** Odštevanje pretvorimo v seštevanje nasprotnega števila:
+```
+ -15             -6         0
+  |<--------------|         |
+   skok za 9 v levo
+```
+
+Iz teh primerov sledi pravilo. Pri **enakih predznakih** absolutni vrednosti seštejemo in predznak obdržimo. Pri **različnih predznakih** manjšo absolutno vrednost odštejemo od večje, rezultat pa dobi predznak števila z večjo absolutno vrednostjo. Vseh 45 minut skupaj: $(-6) + 12 + (-9) = -3$. Res, iz $83\,\%$ smo prišli na $80\,\%$.
+
+V simulaciji spodaj (Računanje s celimi števili) nastavi račun, v katerem prišteješ negativno število, na primer $3 + (-5)$. Opazuj, v katero smer skoči točka in kje pristane glede na $0$.
+
+**Odštevanje: vzorec v stolpcu.** Spremembo smo računali kot »konec minus začetek«. Pri videu je to $77 - 83 = -6$. Kaj pa, ko odštevamo negativno število? Poglej stolpec, v katerem se odštevanec vsakič zmanjša za $1$:
+
+$5 - 2 = 3$, $5 - 1 = 4$, $5 - 0 = 5$, $5 - (-1) = 6$, $5 - (-2) = 7$.
+
+:::premisli
+Kaj pride v naslednji vrstici, $5 - (-3)$? Napovej iz vzorca, nato pomisli, kateremu seštevanju je enako.
+---
+$8$. Rezultat se vsakič poveča za $1$. Enak rezultat da $5 + 3$, torej odšteti $-3$ pomeni prišteti $3$.
+:::
+
+Isto opazimo pri $5 - 3 = 2$ in $5 + (-3) = 2$. Odštevanje je vedno seštevanje **nasprotnega števila**:
 
 $$a - b = a + (-b)$$
 
-Torej: $5 - (-3) = 5 + 3 = 8$ in $(-4) - 6 = (-4) + (-6) = -10$.
+Zato $(-4) - 3 = (-4) + (-3) = -7$ in $(-6) - (-10) = (-6) + 10 = 4$.
 
-**4. Množenje.** Najprej zmnožimo absolutni vrednosti, nato določimo predznak:
+**Množenje: še en vzorec.** Baterija med igranjem vsakih $10$ minut pade za $3$ odstotne točke. V $40$ minutah, to so štiri desetminutni deli, pade za $4 \cdot (-3) = -12$. Pozitivno število krat negativno da negativno.
 
-- enaka predznaka dasta **pozitiven** zmnožek: $(-3)\cdot(-4) = 12$,
-- različna predznaka dasta **negativen** zmnožek: $(-3)\cdot 4 = -12$.
+Kaj pa negativno krat negativno? Spet si pomagaj s stolpcem, kjer se prvi faktor zmanjšuje za $1$:
 
-Množenje z $0$ vedno da $0$.
+| račun | rezultat |
+|---|---|
+| $3 \cdot (-2)$ | $-6$ |
+| $2 \cdot (-2)$ | $-4$ |
+| $1 \cdot (-2)$ | $-2$ |
+| $0 \cdot (-2)$ | $0$ |
+| $(-1) \cdot (-2)$ | ? |
 
-**5. Deljenje.** Predznaki se obnašajo enako kot pri množenju:
+Rezultat se v vsaki vrstici poveča za $2$.
 
-- enaka predznaka: količnik je pozitiven, $(-12) : (-3) = 4$,
-- različna predznaka: količnik je negativen, $12 : (-3) = -4$.
+:::premisli
+Koliko je $(-1) \cdot (-2)$ in koliko $(-2) \cdot (-2)$, če vzorec nadaljuješ? Kaj to pomeni pri bateriji, ki vsakih $10$ minut pade za $3$, če vprašaš, koliko je imela pred $20$ minutami?
+---
+$(-1)\cdot(-2) = 2$ in $(-2)\cdot(-2) = 4$. Pri bateriji: pred $20$ minutami pomeni $-2$ desetminutna dela, zato $(-2)\cdot(-3) = 6$. Takrat je imela $6$ odstotnih točk več kot zdaj.
+:::
 
-Z $0$ ne smemo deliti. $0 : 5 = 0$, izraz $5 : 0$ pa nima pomena.
+Pravilo za **predznak zmnožka**: enaka predznaka dasta pozitiven zmnožek, različna predznaka negativnega. Absolutni vrednosti zmnožimo kot običajno. Kar koli pomnožimo z $0$, dobimo $0$.
 
-**6. Vrstni red računskih operacij.** Najprej račun v oklepajih, nato množenje in deljenje (od leve proti desni), nazadnje seštevanje in odštevanje (od leve proti desni).
+**Deljenje.** Deljenje preverimo z množenjem. Ker je $4 \cdot (-3) = -12$, velja $(-12) : 4 = -3$. Ker je $(-3) \cdot 4 = -12$, velja $(-12) : (-3) = 4$. Za predznak količnika torej velja isto pravilo kot za zmnožek. Z $0$ ne delimo: števila, ki bi pomnoženo z $0$ dalo na primer $5$, ni.
 
-**7. Pisanje.** Predznak negativnega števila ob računski operaciji damo v oklepaj: pišemo $5 + (-3)$, ne $5 + -3$.
+**Vrstni red.** V daljšem računu najprej izračunamo oklepaje, nato množenje in deljenje, na koncu seštevanje in odštevanje, vse od leve proti desni. Negativno število ob računskem znaku pišemo v oklepaju: $5 + (-3)$, ne $5 + -3$.
 
 ## Rešeni primeri
 
 ### Primer 1 (lažji): seštevanje in odštevanje
 
-Izračunaj: a) $(-8) + 5$, b) $4 - 9$, c) $(-6) - (-10)$.
+Telefon je čez noč ostal v avtu in se ohladil na $-7\,^\circ\mathrm{C}$. V žepu se segreje za $12\,^\circ\mathrm{C}$. Izračunaj njegovo novo temperaturo, nato pa še računa $3 - 10$ in $(-6) - (-10)$.
 
-a) Predznaka sta različna, zato odštejemo absolutni vrednosti: $8 - 5 = 3$. Večjo absolutno vrednost ima $-8$, zato je predznak minus: $(-8) + 5 = -3$.
+**Podatki:** začetna temperatura $-7\,^\circ\mathrm{C}$, segrevanje za $12\,^\circ\mathrm{C}$; računa $3 - 10$ in $(-6) - (-10)$
+**Iščemo:** novo temperaturo telefona in vrednosti obeh računov
 
-b) Odštevanje pretvorimo v seštevanje: $4 - 9 = 4 + (-9)$. Različna predznaka: $9 - 4 = 5$, večjo absolutno vrednost ima $-9$, torej $-5$.
+:::formula
+Seštevanje z različnima predznakoma: večja absolutna vrednost minus manjša, predznak števila z večjo absolutno vrednostjo.
+Odštevanje: $a - b = a + (-b)$
+:::
 
-c) Odštevanje negativnega števila je seštevanje pozitivnega: $(-6) - (-10) = (-6) + 10 = 4$. Večjo absolutno vrednost ima $10$, zato je rezultat pozitiven.
+**Rešitev:**
 
-Preverimo c) na številski premici: od $-6$ se premaknemo za $10$ enot v desno in pridemo do $4$. ✓
+1. $(-7) + 12$: predznaka sta različna, $12 - 7 = 5$. Večjo absolutno vrednost ima $12$, zato je rezultat pozitiven: $(-7) + 12 = 5$.
+2. $3 - 10 = 3 + (-10)$, ker odštevanje zamenjamo s prištevanjem nasprotnega. Različna predznaka: $10 - 3 = 7$, predznak od $-10$, torej $3 - 10 = -7$.
+3. $(-6) - (-10) = (-6) + 10 = 4$, ker je nasprotno število od $-10$ število $10$.
+4. Odgovor: telefon ima $5\,^\circ\mathrm{C}$; računa data $-7$ in $4$.
 
 ### Primer 2: množenje in deljenje
 
-Izračunaj: a) $(-7)\cdot 6$, b) $(-5)\cdot(-9)$, c) $(-48) : 6$, d) $(-72) : (-8)$.
+Izračunaj štiri račune: $(-7)\cdot 6$, $(-5)\cdot(-9)$, $(-48) : 6$ in $(-72) : (-8)$.
 
-a) Različna predznaka, zato je rezultat negativen. $7 \cdot 6 = 42$, torej $-42$.
+**Podatki:** računi $(-7)\cdot 6$, $(-5)\cdot(-9)$, $(-48) : 6$, $(-72) : (-8)$
+**Iščemo:** zmnožka in količnika
 
-b) Enaka predznaka, zato je rezultat pozitiven. $5 \cdot 9 = 45$, torej $45$.
+:::formula
+Enaka predznaka dasta $+$, različna predznaka dasta $-$ (pri množenju in pri deljenju).
+:::
 
-c) Različna predznaka, zato je količnik negativen. $48 : 6 = 8$, torej $-8$.
+**Rešitev:**
 
-d) Enaka predznaka, zato je količnik pozitiven. $72 : 8 = 9$, torej $9$.
+1. $(-7)\cdot 6$: predznaka sta različna, zato je zmnožek negativen; $7 \cdot 6 = 42$, torej $-42$.
+2. $(-5)\cdot(-9)$: predznaka sta enaka, zato je zmnožek pozitiven; $5 \cdot 9 = 45$.
+3. $(-48) : 6$: različna predznaka, količnik je negativen; $48 : 6 = 8$, torej $-8$.
+4. $(-72) : (-8)$: enaka predznaka, količnik je pozitiven; $72 : 8 = 9$.
+5. Preizkus deljenja z množenjem: $(-8)\cdot 6 = -48$ in $9 \cdot (-8) = -72$.
+6. Odgovor: rezultati so $-42$, $45$, $-8$ in $9$.
 
-Preverimo deljenje z obratnim računom: c) $(-8)\cdot 6 = -48$ ✓, d) $9 \cdot (-8) = -72$ ✓.
+### Primer 3 (težji): baterija med igro in polnjenjem
 
-### Primer 3 (težji): sestavljen račun in besedilna naloga
+Telefon ima $41\,\%$ baterije. Med igranjem vsakih $10$ minut pade za $3$ odstotne točke, med polnjenjem pa vsakih $10$ minut naraste za $8$. Miha igra $50$ minut, nato telefon polni $30$ minut. Koliko baterije ima na koncu?
 
-**a)** Izračunaj: $(-3)\cdot(-4) - 2\cdot(5 - 9) + (-20) : 4$.
+**Podatki:** začetek $41\,\%$; igra: sprememba $-3$ na $10\,\mathrm{min}$, trajanje $50\,\mathrm{min}$; polnjenje: sprememba $+8$ na $10\,\mathrm{min}$, trajanje $30\,\mathrm{min}$
+**Iščemo:** končno stanje baterije
 
-1. Najprej oklepaj: $5 - 9 = -4$.
-2. Nato množenje in deljenje: $(-3)\cdot(-4) = 12$, $2\cdot(-4) = -8$, $(-20) : 4 = -5$.
-3. Zapišemo: $12 - (-8) + (-5)$.
-4. Odštevanje pretvorimo v seštevanje: $12 + 8 + (-5) = 20 - 5 = 15$.
+:::formula
+skupna sprememba $=$ število delov $\cdot$ sprememba v enem delu
+končno stanje $=$ začetno stanje $+$ vse spremembe
+:::
 
-**b)** Zjutraj je bila temperatura $-6\,^\circ\mathrm{C}$. Vsako uro se je znižala za $2\,^\circ\mathrm{C}$. Kolikšna je temperatura po $4$ urah?
+**Rešitev:**
 
-1. Znižanje za $2\,^\circ\mathrm{C}$ na uro pomeni spremembo $-2$ na uro. V $4$ urah je sprememba $4\cdot(-2) = -8$.
-2. Začetni temperaturi prištejemo spremembo: $(-6) + (-8) = -14$.
-3. Odgovor: po $4$ urah je temperatura $-14\,^\circ\mathrm{C}$. Smiselno, saj se je temperatura znižala, rezultat pa je manjši od začetne vrednosti.
+1. Igra traja $5$ desetminutnih delov, zato je sprememba $5 \cdot (-3) = -15$ (različna predznaka, negativno).
+2. Polnjenje traja $3$ dele: $3 \cdot 8 = 24$.
+3. Spremembe prištejemo začetku: $41 + (-15) + 24 = 50$.
+4. Preverimo smiselnost: igra je odvzela manj, kot je polnjenje dodalo, zato mora biti konec nad $41\,\%$.
+5. Odgovor: na koncu ima telefon $50\,\%$ baterije.
+
+### Primer 4 – zdaj ti
+
+Izračunaj $(-3)\cdot(-4) - 2\cdot(5 - 9) + (-20) : 4$.
+
+**Podatki:** izraz $(-3)\cdot(-4) - 2\cdot(5 - 9) + (-20) : 4$
+**Iščemo:** vrednost izraza
+
+:::formula
+Vrstni red: oklepaji, nato množenje in deljenje, nato seštevanje in odštevanje.
+Odštevanje: $a - b = a + (-b)$
+:::
+
+**Rešitev:**
+
+1. Oklepaj: $5 - 9 = -4$.
+2. Množenje in deljenje: $(-3)\cdot(-4) = 12$, $2 \cdot (-4) = -8$, $(-20) : 4 = -5$.
+3. Izraz je zdaj $12 - (-8) + (-5)$. Odštevanje zamenjaj s prištevanjem nasprotnega števila in izračunaj sam.
+
+:::premisli
+Napovej, ali bo $12 - (-8) + (-5)$ več ali manj kot $12$, nato izračunaj.
+---
+Več, ker odštevanje $-8$ doda $8$, $-5$ pa odvzame le $5$. $12 + 8 + (-5) = 20 + (-5) = 15$. Vrednost izraza je $15$.
+:::
 
 ## Pogoste napake
 
-- **Mešanje pravil za seštevanje in množenje.** $(-3) + (-4) = -7$ (predznaka enaka, absolutni vrednosti seštejemo), $(-3)\cdot(-4) = 12$ (enaka predznaka dasta plus). Pravilo »minus in minus je plus« velja pri množenju in deljenju, ne pri seštevanju.
-- **Napačen predznak pri odštevanju.** $5 - (-3)$ ni $2$, ampak $5 + 3 = 8$.
-- **Predznak pri različnih predznakih.** $(-9) + 5$ ni $4$. Predznak določi število z večjo absolutno vrednostjo, torej $-4$.
-- **Pozabljeni oklepaji.** $-3^2$ in $(-3)^2$ nista isto, vendar potenc še ne računamo. Zato vedno piši $(-3)\cdot(-3)$ in negativna števila ob operaciji daj v oklepaj.
-- **Napačen vrstni red.** $2 + 3\cdot(-4)$ je $2 + (-12) = -10$, ne $5\cdot(-4) = -20$.
-- **Deljenje z ničlo.** $0$ ne smemo biti delitelj.
+- **»Minus in minus je plus« tudi pri seštevanju.** Kdo zapiše $(-3) + (-4) = 7$, ker si je zapomnil le kratek stavek. Pri seštevanju dveh negativnih števil gremo dvakrat v levo, zato $(-3) + (-4) = -7$. Pravilo o dveh minusih velja le za množenje in deljenje.
+- **Odšteti negativno, kot da bi bilo pozitivno.** $5 - (-3) = 2$ je napačno, ker je odštevanec obravnavan kot $3$. Odštevanje negativnega števila je prištevanje nasprotnega: $5 - (-3) = 5 + 3 = 8$.
+- **Predznak od pozitivnega števila.** Pri $(-9) + 5$ kdo napiše $4$ ali vzame predznak kar od $5$. Odločilna je večja absolutna vrednost, to je $9$, zato $(-9) + 5 = -4$.
+- **Računanje od leve proti desni brez vrstnega reda.** $2 + 3 \cdot (-4)$ ni $5 \cdot (-4) = -20$. Množenje ima prednost: $2 + (-12) = -10$.
+- **Napačen predznak količnika.** $(-12) : (-3) = -4$ je napačno, ker so minus prepisali iz deljenca. Preizkus z množenjem pokaže: $(-4)\cdot(-3) = 12$, ne $-12$. Pravilno je $4$.
 
 ## Povzetek
 
@@ -103,98 +178,87 @@ Preverimo deljenje z obratnim računom: c) $(-8)\cdot 6 = -48$ ✓, d) $9 \cdot 
 - Z $0$ ne delimo.
 - Vrstni red: oklepaji, množenje in deljenje, seštevanje in odštevanje.
 
-## Drugače: Na sliki
-
-Predstavljaj si številsko premico. Seštevanje pozitivnega števila je premik v desno, seštevanje negativnega števila je premik v levo.
-
-- $2 + (-5)$: začneš pri $2$, greš $5$ enot v levo in prideš do $-3$.
-- $(-4) + 7$: začneš pri $-4$, greš $7$ enot v desno in prideš do $3$.
-
-Odštevanje obrne smer: $2 - (-5)$ pomeni, da namesto premika v levo za $5$ narediš premik v desno za $5$, torej pridemo do $7$.
-
-Pri množenju si predstavljaj **obračanje**. Množenje z $-1$ premico prezrcali čez $0$: $3$ preide v $-3$ in $-3$ preide v $3$. Pri $(-2)\cdot(-3)$ dvakrat obrneš smer: najprej $(-2)\cdot 3 = -6$, nato z drugim obratom dobiš $6$. Dva obrata (dva minusa) te vrneta v prvotno smer, zato je rezultat pozitiven.
-
-## Drugače: Iz vsakdanjega življenja
-
-**Denar in dolgovi.** Pozitivno število je denar, ki ga imaš, negativno je dolg.
-
-- $(-10) + (-5) = -15$: dolgujem $10\,€$ in še $5\,€$, skupaj dolgujem $15\,€$.
-- $(-10) + 4 = -6$: dolgujem $10\,€$, vrnem $4\,€$, ostane dolg $6\,€$.
-- $20 - (-5) = 25$: če mi nekdo **odvzame dolg** $5\,€$, sem bogatejši za $5\,€$.
-
-**Množenje.** $3\cdot(-4)$: trikrat si si izposodil $4\,€$, dolg je $12\,€$, torej $-12$. $(-3)\cdot(-4)$: trije dolgovi po $4\,€$ so izginili (minus pomeni odvzem), imaš $12\,€$ več.
-
-**Deljenje.** $(-12) : 4 = -3$: dolg $12\,€$ razdelimo na $4$ enake dele, vsak del je dolg $3\,€$.
-
 ## Drugače: Korak za korakom s številkami
 
-Postopek, ki deluje pri vsakem računu:
+Vsak račun s celimi števili rešiš v štirih korakih:
 
-1. Odštevanje pretvori v seštevanje.
-2. Pri seštevanju in množenju vprašaj: ali sta predznaka enaka?
-3. Izračunaj z absolutnimi vrednostmi.
-4. Določi predznak.
+1. Odštevanje zamenjaj s prištevanjem nasprotnega števila.
+2. Poglej, ali sta predznaka enaka.
+3. Računaj z absolutnimi vrednostmi.
+4. Določi predznak po pravilu.
 
-Tabela predznaka pri množenju in deljenju:
+Tabela predznakov pri množenju in deljenju:
 
-| prvi faktor | drugi faktor | rezultat |
+| prvo število | drugo število | rezultat |
 |---|---|---|
 | $+$ | $+$ | $+$ |
 | $-$ | $-$ | $+$ |
 | $+$ | $-$ | $-$ |
 | $-$ | $+$ | $-$ |
 
-Primer: $(-15) - (-6)\cdot 3 + (-12):(-4)$.
+Uporaba na izrazu $(-15) - (-6)\cdot 3 + (-12) : (-4)$:
 
-1. Množenje: $(-6)\cdot 3 = -18$.
-2. Deljenje: $(-12):(-4) = 3$.
-3. Zapišemo: $(-15) - (-18) + 3$.
+1. Množenje: $(-6)\cdot 3 = -18$ (različna predznaka).
+2. Deljenje: $(-12) : (-4) = 3$ (enaka predznaka).
+3. Izraz: $(-15) - (-18) + 3$.
 4. Odštevanje v seštevanje: $(-15) + 18 + 3$.
 5. $(-15) + 18 = 3$, nato $3 + 3 = 6$.
 
-Rezultat: $6$.
+Rezultat je $6$.
 
-## Drugače: Bolj natančno
+## Drugače: Kot zgodba
 
-Zakaj je $(-1)\cdot(-1) = 1$? Poglej zaporedje:
+Ana pride v trgovski center z avtom in parkira v kleti, v nadstropju $-2$. Stopi v dvigalo in se pelje $7$ nadstropij gor: $(-2) + 7 = 5$. V petem nadstropju je trgovina s telefoni.
 
-$$3\cdot(-1) = -3,\quad 2\cdot(-1) = -2,\quad 1\cdot(-1) = -1,\quad 0\cdot(-1) = 0$$
+Ko kupi polnilnik, se spomni, da je pozabila vrečko v avtu. Pelje se $9$ nadstropij dol: $5 - 9 = -4$. Ups, to je prenizko! Avto je v $-2$. Za koliko je zgrešila? Razlika je $(-2) - (-4) = (-2) + 4 = 2$, torej mora $2$ nadstropji gor.
 
-Pri vsakem koraku se prvi faktor zmanjša za $1$, rezultat pa se poveča za $1$. Če vzorec nadaljujemo:
-
-$$(-1)\cdot(-1) = 1,\quad (-2)\cdot(-1) = 2$$
-
-Drug pogled: število $-a$ je nasprotno številu $a$, torej $a + (-a) = 0$. Iz tega sledi:
-
-$$(-1)\cdot(-1) + (-1)\cdot 1 = (-1)\cdot\big((-1) + 1\big) = (-1)\cdot 0 = 0$$
-
-Ker je $(-1)\cdot 1 = -1$, mora biti $(-1)\cdot(-1) + (-1) = 0$, torej $(-1)\cdot(-1) = 1$. Pravilo za predznake torej ni dogovor, ampak posledica tega, da za cela števila veljajo običajni računski zakoni (distributivnost).
-
-Podobno velja za odštevanje: $a - b$ je tisto število $x$, za katero je $x + b = a$. Pri $5 - (-3)$ iščemo $x$, da je $x + (-3) = 5$. To izpolnjuje $x = 8$, ker $8 + (-3) = 5$. Zato $5 - (-3) = 5 + 3$.
+Dvigalo med vožnjo dol vsako sekundo prevozi $-1$ nadstropje. Po $3$ sekundah je sprememba $3 \cdot (-1) = -3$. Kje je bilo dvigalo $3$ sekunde *pred* tem trenutkom? Čas nazaj je $-3$, zato sprememba $(-3)\cdot(-1) = 3$: bilo je $3$ nadstropja višje. Tako se v zgodbi pokaže, zakaj negativno krat negativno da pozitivno: vrtimo film nazaj, dvigalo pa se je peljalo dol.
 
 ## Preveri se
 
-? Izračunaj: $(-7) + (-5)$.
-- $12$
-- $-2$
-+ $-12$
-- $35$
-> Predznaka sta enaka (oba minus), zato absolutni vrednosti seštejemo, $7 + 5 = 12$, predznak minus ostane: $-12$. Odgovor $12$ pozabi predznak, $35$ je zmnožek.
+? Katera tabela pravilno kaže predznak rezultata pri množenju?
+- $(-)\cdot(-) = -$ in $(+)\cdot(-) = -$
+~ Tako misli, kdor meni, da en sam minus »okuži« ves račun. Enaka predznaka dasta plus.
++ $(-)\cdot(-) = +$ in $(+)\cdot(-) = -$
+- $(-)\cdot(-) = +$ in $(+)\cdot(-) = +$
+~ Različna predznaka dasta minus: $3 \cdot (-2) = -6$, kar je pri bateriji padec.
+> Enaka predznaka dasta pozitiven zmnožek, različna negativnega. Velja tudi za deljenje.
 
-? Izračunaj: $6 - (-9)$.
-- $-3$
-+ $15$
-- $-15$
-- $3$
-> Odštevanje negativnega števila je seštevanje nasprotnega: $6 - (-9) = 6 + 9 = 15$. Ostali odgovori nastanejo, če predznak odštevanca napačno upoštevamo.
+? Oceni brez natančnega računanja: koliko je približno $(-49)\cdot 21$?
+- približno $1000$
+~ Absolutna vrednost je prava, predznak pa ne: predznaka sta različna, zato je zmnožek negativen.
++ približno $-1000$
+- približno $-70$
+~ To je približno $(-49) + (-21)$; pri množenju se absolutni vrednosti zmnožita.
+> $-49 \approx -50$ in $21 \approx 20$, $(-50)\cdot 20 = -1000$. Natančno je $-1029$.
 
-? Izračunaj: $(-4)\cdot(-3) + (-18) : 6$.
-- $-15$
-- $-9$
-+ $9$
-- $15$
-> Najprej množenje in deljenje: $(-4)\cdot(-3) = 12$ in $(-18):6 = -3$. Nato seštevanje: $12 + (-3) = 9$.
+? Zakaj je $5 - (-3) = 8$?
+- Ker je minus krat minus plus.
+~ Tu ni množenja. Pravilo o dveh minusih velja za množenje in deljenje, pri odštevanju pa zamenjamo odštevanje s prištevanjem nasprotnega.
+- Ker odštejemo $3$ od $5$ in dobimo $8$.
+~ $5 - 3 = 2$, ne $8$. Odštevanec je $-3$, ne $3$.
++ Ker odšteti število pomeni prišteti njegovo nasprotno število, $5 + 3 = 8$.
+> Vzorec $5 - 1 = 4$, $5 - 0 = 5$, $5 - (-1) = 6$, … pokaže, da se rezultat veča, ko odštevamo vse manjša števila. Splošno: $a - b = a + (-b)$.
+
+? S katerim številom moraš pomnožiti $-4$, da dobiš $28$?
+- $7$
+~ $(-4)\cdot 7 = -28$, različna predznaka dasta negativen zmnožek.
++ $-7$
+- $32$
+~ To je $28 - (-4)$; iskali smo faktor, ne razlike.
+> Iščemo $28 : (-4) = -7$. Preizkus: $(-4)\cdot(-7) = 28$, enaka predznaka dasta pozitiven zmnožek.
+
+? Baterija tablice v $4$ urah filma pade skupno za $36$ odstotnih točk, vsako uro enako. Kolikšna je sprememba na uro?
+- $+9$
+~ Baterija pada, zato je sprememba negativna.
+- $-32$
+~ To je $(-36) + 4$; skupni padec razdelimo na $4$ enake dele, torej delimo.
++ $-9$
+- $-144$
+~ To je $(-36)\cdot 4$, kar bi bil padec v $16$ urah, ne v eni.
+> Skupna sprememba je $-36$, razdelimo jo na $4$ ure: $(-36) : 4 = -9$ odstotnih točk na uro.
 
 :::simboli
-a, b | celi števili | | | −b je nasprotno število števila b
+a | celo število (zmanjševanec) | |  | 
+b | celo število (odštevanec) | |  | $-b$ je nasprotno število števila $b$
 :::

@@ -1,0 +1,29 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Vektor
+  - dolžina, smer in usmerjenost
+  - enaki puščici na različnih mestih
+- Seštevanje na sliki
+  - pravilo trikotnika
+  - pravilo paralelograma: diagonala
+- Komponente
+  - $\vec a = (a_x, a_y, a_z)$
+  - seštevamo po komponentah
+- Dolžina
+  - $|\vec a| = \sqrt{a_x^2 + a_y^2 + a_z^2}$
+  - napaka: $|\vec a + \vec b| = |\vec a| + |\vec b|$
+- Množenje s skalarjem
+  - $k\vec a = (ka_x,\ ka_y,\ ka_z)$
+  - $k < 0$ obrne usmerjenost
+  - dolžina $|k| \cdot |\vec a|$
+- Odštevanje
+  - $\vec a - \vec b = \vec a + (-\vec b)$
+  - negativne komponente v oklepaju
+- Linearna kombinacija
+  - $k\vec a + m\vec b = \vec c$
+  - sistem dveh enačb za $k$ in $m$
+- Uporaba v športu
+  - sile na saneh pod $120^\circ$
+  - kajak: hitrost reke se prišteje

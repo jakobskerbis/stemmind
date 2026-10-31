@@ -259,3 +259,10 @@ Pri blagajni se ostanki srečujejo vsak dan.
 - $23{,}45$ €
 ~ Število $2345$ je liho, vsota števk $14$ pa ni deljiva s $3$. Ne izpolni nobenega od pogojev.
 > Znesek v centih mora biti deljiv s $6$, torej z $2$ in s $3$. Število $2736$ je sodo, vsota števk je $18$. Ena majica stane $4{,}56$ €.
+
+:::simboli
+n | eksponent potence | | | pri $7^n$ zadnja števka ponavlja krog
+m | modul (delitelj) | | | v zapisu $a \equiv b \pmod{m}$
+a, b | celi števili, ki ju primerjamo po ostanku | | | v primeru z nahrbtniki neznani števki; v simulaciji je $a$ osnova potence
+d | delitelj | | | ostanek je eno od števil $0, 1, \dots, d - 1$
+:::

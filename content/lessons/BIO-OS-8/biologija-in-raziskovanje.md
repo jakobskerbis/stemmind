@@ -232,3 +232,9 @@ Analogija ima meje: celice v tkivu so si podobnejše kot igralke.
 - Preverimo, koliko ljudi je zapestnico kupilo.
 ~ Prodaja pove, da je reklama uspešna, ne pa, ali zapestnica vpliva na ravnotežje.
 > Načrt ima merljiv rezultat, več osebkov in kontrolno skupino, ki se razlikuje le v zapestnici.
+
+:::simboli
+\text{povprečje} | povprečje meritev v skupini | \text{povprečje} = \dfrac{\text{vsota meritev}}{\text{število meritev}} | | v isti enoti kot meritve (cm, s)
+\text{vsota meritev} | vsota vseh meritev v skupini | | | v isti enoti kot meritve
+\text{število meritev} | število meritev (osebkov v skupini) | | – | npr. 5 igralcev
+:::

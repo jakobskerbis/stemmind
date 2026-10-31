@@ -210,3 +210,16 @@ Torej pri kubičnih enotah ne množimo z $10$, ampak z $1000$. Prav tako je $1\,
 - $m = 4\,\text{m}$
 + $m = 4\,\text{kg}$
 > Meritev je sestavljena iz števila in prave enote. Za maso je enota SI kilogram ($\text{kg}$). Samo število nima pomena, $\text{m}$ pa je enota za dolžino.
+
+:::simboli
+\text{količina} | fizikalna količina | \text{količina} = \text{številska vrednost} \cdot \text{enota} | | npr. $m = 3\,\text{kg}$
+\text{številska vrednost} | številska vrednost | | – | samo število nima pomena
+\text{enota} | enota | | | npr. m, kg, s
+l | dolžina | | m
+m | masa | | kg
+t | čas | | s
+T | temperatura | | K
+s | prevožena pot | | m | v primeru v km
+V | prostornina kvadra | V = a \cdot b \cdot c | m^3 | izpeljana količina
+a, b, c | dolžine robov kvadra | | m
+:::

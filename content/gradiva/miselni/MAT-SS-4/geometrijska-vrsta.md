@@ -1,0 +1,25 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Zenonov paradoks
+  - Ahil teče neskončno odsekov, a končno pot
+  - $100 + 10 + 1 + \dots = \frac{1000}{9}\,\mathrm{m}$
+- Delne vsote
+  - $S_n = a_1 \cdot \dfrac{1 - q^n}{1 - q}$
+  - zaporedje $S_1, S_2, S_3, \dots$
+- Konvergenca
+  - vrsta konvergira natanko pri $|q| < 1$
+  - pri $|q| < 1$ gre $q^n \to 0$
+- Vsota vrste
+  - $S = \dfrac{a_1}{1 - q}$
+  - $6 + 2 + \frac{2}{3} + \dots = 9$
+- Divergenca
+  - $|q| \ge 1$ in $a_1 \ne 0$: vsote ni
+  - napaka: $1 + 2 + 4 + \dots = -1$
+- Negativen količnik
+  - delne vsote skačejo okoli vsote
+  - $1 - \left(-\frac{1}{2}\right) = \frac{3}{2}$
+- Uporaba
+  - odbijajoča se žoga: vsak dvig dvakrat
+  - $0{,}\overline{36} = \frac{4}{11}$

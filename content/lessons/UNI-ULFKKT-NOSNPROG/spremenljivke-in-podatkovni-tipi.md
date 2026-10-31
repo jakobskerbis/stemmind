@@ -325,3 +325,9 @@ Pravilo: če s podatkom računaš, je število; če ga samo prikazuješ ali prim
 - Napako `ValueError`.
 ~ Napako bi dobil pri `int("2.9")`. Tu je niz najprej pretvorjen s `float`, kar deluje.
 > `float("2.9")` je `2.9`, `int(2.9)` je `2` (odreže), `2 + 1` je `3`.
+
+:::simboli
+\text{cena} | cena ene kave | | € | v programu cena = 3.5 (tip float)
+\text{količina} | število kav | | – | v programu kolicina = 4 (tip int)
+\text{skupaj} | znesek za vse kave | \text{skupaj} = \text{cena} \cdot \text{količina} | € | tip float, ker je cena decimalno število
+:::

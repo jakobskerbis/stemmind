@@ -205,3 +205,8 @@ Na urgenci zdravnik zapiše kvadrant, kjer boli, in s tem zoži nabor možnih or
 - transverzalni
 ~ Transverzalna rezina bi ločila zgornji del od spodnjega, na primer stegnenico od golenice.
 > Pogačica je spredaj, podkolenska jama zadaj. Rezino, ki loči spredaj od zadaj, da frontalna ravnina, vzporedna s čelom.
+
+:::simboli
+\text{medialno} | bliže mediani ravnini | | | nasprotje: lateralno
+\text{lateralno} | dlje od mediane ravnine | | | vedno v anatomskem položaju
+:::

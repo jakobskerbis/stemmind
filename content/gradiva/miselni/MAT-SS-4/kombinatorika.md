@@ -1,0 +1,24 @@
+---
+avtor: AI
+stanje: osnutek
+---
+- Osnovni izrek
+  - drevo možnosti, zaporedni koraki
+  - $m$ in $n$ možnosti: skupaj $m \cdot n$
+  - napaka: seštevanje namesto množenja
+- Permutacije
+  - vsi elementi, vrstni red pomemben
+  - $P_n = n!$, $0! = 1$
+  - $5$ krajev: $120$ vrstnih redov
+- Variacije
+  - $k$ od $n$, vrstni red pomemben
+  - $V_n^k = \frac{n!}{(n-k)!}$
+  - s ponavljanjem $n^k$, koda kovčka $10^4$
+- Kombinacije
+  - $k$ od $n$, vrstni red ni pomemben
+  - $\binom{n}{k} = \frac{V_n^k}{k!}$
+  - $\binom{n}{k} = \binom{n}{n-k}$
+- Izbira formule
+  - vsi ali le nekateri?
+  - je vrstni red pomemben?
+  - se smejo ponavljati?
