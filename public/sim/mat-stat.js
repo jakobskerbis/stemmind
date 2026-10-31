@@ -258,13 +258,13 @@ const choose = (n, k) => (k < 0 || k > n ? 0 : Math.round(fact(n) / (fact(k) * f
 export function kombinatorika(el, { mode = "drevo" } = {}) {
   const svg = svgBox(340, 300);
   const out = readout();
-  let a = 3, b = 2, c = 2, n = 4, k = 2, order = true, rep = false;
+  let a = 3, b = 2, c = 2, n = 4, k = 2, order = true, rep = false, kSl = null;
   const ctl = h("div", { class: "demo-controls" });
   const build = () => {
     ctl.replaceChildren(
       ...(mode === "drevo"
         ? [slider({ label: "majice", min: 1, max: 4, value: a, onInput: (v) => ((a = v), draw()) }), slider({ label: "hlače", min: 1, max: 3, value: b, onInput: (v) => ((b = v), draw()) }), slider({ label: "čevlji", min: 1, max: 3, value: c, onInput: (v) => ((c = v), draw()) })]
-        : [slider({ label: "n (vseh)", min: 1, max: 6, value: n, onInput: (v) => ((n = v), (k = Math.min(k, n)), draw()) }), slider({ label: "k (izberemo)", min: 1, max: 6, value: k, onInput: (v) => ((k = v), draw()) }), toggle("vrstni red je pomemben", order, (v) => ((order = v), draw())), toggle("ponavljanje je dovoljeno", rep, (v) => ((rep = v), draw()))]),
+        : [slider({ label: "n (vseh)", min: 1, max: 6, value: n, onInput: (v) => ((n = v), (k = Math.min(k, n)), kSl.set(k, true), draw()) }), (kSl = slider({ label: "k (izberemo)", min: 1, max: 6, value: k, onInput: (v) => ((k = v), draw()) })), toggle("vrstni red je pomemben", order, (v) => ((order = v), draw())), toggle("ponavljanje je dovoljeno", rep, (v) => ((rep = v), draw()))]),
     );
     draw();
   };

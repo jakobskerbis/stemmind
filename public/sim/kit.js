@@ -61,20 +61,57 @@ export function arrow(parent, x1, y1, x2, y2, color = "text", width = 2.5, extra
 export const label = (parent, x, y, t, cls = "lbl", anchor = "middle") =>
   s("text", { x, y, class: cls, "text-anchor": anchor, "dominant-baseline": "middle" }, parent, t);
 
-// Drsnik z oznako in prikazano vrednostjo.
+// Največ toliko vrednosti pokažemo kot gumbe namesto drsnika (j 2026-10-31: »za samo štiri nastavitve
+// nočem drsnika«). Drsnik pod osjo grafa (axisSlider) ostane drsnik.
+export const GUMBI_DO = 6;
+
+// Drsnik z oznako in prikazano vrednostjo. Pri največ GUMBI_DO vrednostih so namesto njega gumbi
+// (npr. n: 2 · 3 · 4 · 5); skriti drsnik ostane vir vrednosti, zato set/get/input delujejo enako.
 // cls (a, b, c, accent …): barvni krog ob oznaki, ko ima drsnik oznako na grafu iste barve (axisMark, spanMark).
 export function slider({ label: lab, min, max, step = 1, value, unit = "", digits, onInput, format, cls }) {
   const d = digits ?? (String(step).split(".")[1]?.length || 0);
   const out = h("output");
   const input = h("input", { type: "range", min, max, step, value, "aria-label": lab });
-  const show = () => (out.textContent = format ? format(Number(input.value)) : `${fmt(Number(input.value), d)}${unit ? (unit === "°" || unit === "%" ? "" : " ") + unit : ""}`);
+  const txt = (v) => (format ? format(v) : `${fmt(v, d)}${unit ? (unit === "°" || unit === "%" ? "" : " ") + unit : ""}`);
+  const choice = h("div", { class: "demo-seg demo-choice", role: "radiogroup", "aria-label": lab, hidden: true });
+  let key = "";
+  const sync = () => {
+    const lo = Number(input.min), hi = Number(input.max), st = Number(input.step) || 1;
+    const n = Math.round((hi - lo) / st) + 1;
+    const gumbi = n >= 2 && n <= GUMBI_DO && !wrap.classList.contains("axis-slider");
+    wrap.classList.toggle("as-choice", gumbi);
+    input.hidden = gumbi;
+    out.hidden = gumbi;
+    choice.hidden = !gumbi;
+    if (!gumbi) return;
+    if (key !== `${lo}|${hi}|${st}`) {
+      key = `${lo}|${hi}|${st}`;
+      choice.replaceChildren(
+        ...Array.from({ length: n }, (_, i) => {
+          const v = Number((lo + i * st).toFixed(10));
+          const b = h("button", { type: "button", role: "radio", class: "seg-btn", onclick: () => v !== Number(input.value) && ((input.value = v), input.dispatchEvent(new Event("input"))) }, txt(v));
+          b.dataset.v = v;
+          return b;
+        })
+      );
+    }
+    for (const b of choice.children) {
+      const on = Number(b.dataset.v) === Number(input.value);
+      b.classList.toggle("on", on);
+      b.setAttribute("aria-checked", String(on));
+    }
+  };
+  const show = () => {
+    out.textContent = txt(Number(input.value));
+    sync();
+  };
   input.addEventListener("input", () => {
     show();
     onInput?.(Number(input.value));
   });
-  show();
   const name = h("span", { class: "demo-slider-label" }, cls ? h("i", { class: `dot dot-${cls}`, "aria-hidden": "true" }) : null, lab);
-  const wrap = h("label", { class: "demo-slider" }, name, input, out);
+  const wrap = h("label", { class: "demo-slider" }, name, input, out, choice);
+  show();
   wrap.set = (v, silent) => {
     input.value = v;
     show();
@@ -82,6 +119,7 @@ export function slider({ label: lab, min, max, step = 1, value, unit = "", digit
   };
   wrap.get = () => Number(input.value);
   wrap.input = input;
+  wrap.sync = sync; // po spremembi min/max/step od zunaj
   return wrap;
 }
 
@@ -292,6 +330,7 @@ export function spanMark(svg, A, x1, x2, text, cls = "a", { sl, key, parent, y2 
 // Po vsakem izrisu pokliči sl.align(A); meje drsnika so večkratniki koraka znotraj okna osi.
 export function axisSlider(sl, svg) {
   sl.classList.add("axis-slider");
+  sl.sync?.();
   let A = null;
   const place = () => {
     const m = A && svg.isConnected && svg.getScreenCTM();
@@ -311,6 +350,7 @@ export function axisSlider(sl, svg) {
       const v = sl.get();
       inp.min = lo;
       inp.max = hi;
+      sl.sync?.();
       if (v !== clamp(v, lo, hi)) sl.set(clamp(v, lo, hi), true);
     }
     place();
