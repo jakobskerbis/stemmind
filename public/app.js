@@ -1898,7 +1898,7 @@ async function loadPath(key = state.pathKey) {
         <div class="unit-head">
           <div class="ring" style="--p:${pct}">${u.mastered ? icon("award") : `<span>${pct}%</span>`}</div>
           <div class="unit-title"><span class="eyebrow">${t("unit.label", { n: ui + 1 })}</span><h2>${escapeHtml(u.title)}</h2>
-            <span class="muted">${u.suggest ? t("unit.aheadNote", { unit: escapeHtml(u.suggest.unit) }) : t("unit.progress", { done: nDone, total: rel.length })}</span></div>
+            <span class="muted">${u.suggest ? t("unit.aheadNote", { unit: `<bdi>${escapeHtml(u.suggest.unit)}</bdi>` }) : t("unit.progress", { done: nDone, total: rel.length })}</span></div>
         </div>
         <ol class="path">
           ${u.topics
@@ -1998,7 +1998,7 @@ async function openTopic(topicId) {
   // Vse teme so odprte; če prejšnji sklop še ni osvojen, samo priporočimo, kje začeti.
   const tip = unit?.suggest?.topic;
   const aheadHint = tip
-    ? `<div class="fb info ahead-hint">${icon("info")}<span>${t("topic.aheadHint", { unit: escapeHtml(unit.suggest.unit) })} <button type="button" class="text-btn" data-open="${escapeHtml(tip.id)}">${escapeHtml(tip.name)}</button></span></div>`
+    ? `<div class="fb info ahead-hint">${icon("info")}<span>${t("topic.aheadHint", { unit: `<bdi>${escapeHtml(unit.suggest.unit)}</bdi>` })} <button type="button" class="text-btn" data-open="${escapeHtml(tip.id)}">${escapeHtml(tip.name)}</button></span></div>`
     : "";
   const canPractice = !!hasPractice?.practice;
   $("#topic-content").innerHTML = `<div class="topic-grid">

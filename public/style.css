@@ -536,7 +536,7 @@ button.sym-key:active { background: var(--accent-soft); }
 .topic-head .goals { display: flex; gap: 8px; align-items: flex-start; color: var(--muted); font-weight: 600; margin: 4px 0 0; }
 .topic-head .goals svg.i { color: var(--accent); margin-top: 3px; }
 .topic-head .ahead-hint { margin: 12px 0 0; }
-.ahead-hint .text-btn { display: inline; padding: 0; font-weight: 800; }
+.ahead-hint .text-btn { display: inline; padding: 8px 2px; margin: 0; font-weight: 800; } /* navpični odmik poveča površino dotika na ≥ 40 px, vrstica ostane enaka */
 .explanation h3 { font-size: 1rem; margin: 14px 0 4px; }
 .explanation details { background: var(--surface-2); border-radius: 10px; padding: 6px 12px; margin: 6px 0; }
 .session-head { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }

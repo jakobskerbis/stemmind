@@ -78,6 +78,7 @@ test("all units open; later units only get a recommendation; placement test skip
   // Priporočilo kaže na prvo neosvojeno temo prejšnjega sklopa z vajami.
   const first = view.units[0].topics.find((t) => t.practice);
   assert.deepEqual(view.units[1].suggest, { unit: view.units[0].title, topic: { id: first.id, name: first.name } });
+  assert.ok(view.units.filter((u) => u.ahead).every((u) => u.suggest.topic.id === first.id), "vsi sklopi naprej kažejo tja, kjer učenec je");
   // Sklop »naprej« lahko vadiš takoj (prej je bil zaklenjen).
   const later = p.startUnit(s.id, "MAT-OS-8", 2);
   assert.ok(later.task.id, "vaja sklopa naprej deluje");

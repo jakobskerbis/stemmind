@@ -163,15 +163,19 @@ export class Progress {
     // še ni osvojen in ga učenec še ni začel, je »naprej« (ahead): pot zanj priporoči najprej temo iz prejšnjega
     // sklopa, dnevni trening, ponovitev pred uro in vaje brez povezave pa ostanejo pri snovi, kjer učenec je.
     // Tekmovalne in izpitne poti so brez priporočil: sklopi so neodvisni, učenec izbira sam.
+    // Priporočimo sklop, kjer učenec je (zadnji neosvojen sklop z vajami, ki ni »naprej«), ne verige sklopov nazaj.
     let prevGate = null;
+    let here = null;
     const ordered = !isPrepPath(pathKey);
     for (const u of units) {
       u.ahead = !!(ordered && u.hasPractice && prevGate && !prevGate.mastered && !u.started);
       if (u.ahead) {
-        const t = prevGate.topics.find((x) => x.practice && x.status !== "mastered");
-        u.suggest = { unit: prevGate.title, topic: t ? { id: t.id, name: t.name } : null };
+        const from = here || prevGate;
+        const t = from.topics.find((x) => x.practice && x.status !== "mastered");
+        u.suggest = { unit: from.title, topic: t ? { id: t.id, name: t.name } : null };
       }
       if (u.hasPractice) prevGate = u;
+      if (u.hasPractice && !u.ahead && !u.mastered) here = u;
     }
     const next =
       units.flatMap((u) => (u.ahead ? [] : u.topics)).find((t) => t.status !== "mastered") || null;
