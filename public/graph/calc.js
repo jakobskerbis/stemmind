@@ -1227,14 +1227,17 @@ export function createCalculator(root, opts) {
     const tab = e.target.closest("[data-kt]");
     if (tab) {
       if (tab.dataset.kt === "abc") {
-        // sistemska tipkovnica za črke
-        showKeypad(false);
+        // Sistemska tipkovnica za črke. Polje znova dobi fokus takoj, še med dotikom:
+        // telefon odpre tipkovnico samo ob fokusu iz dotika, s zamikom pa je ne odpre.
+        // Prej je zamik tudi sprožil »focusout«, ki je izklopil sysKeyboard in vrnil našo tipkovnico.
         forceKeypad = false;
         sysKeyboard = true;
-        if (lastField) {
-          lastField.removeAttribute("inputmode");
-          lastField.blur();
-          setTimeout(() => lastField.focus(), 30);
+        showKeypad(false);
+        const f = lastField;
+        if (f && root.contains(f)) {
+          f.removeAttribute("inputmode");
+          f.blur();
+          f.focus({ preventScroll: true });
         }
         return;
       }
