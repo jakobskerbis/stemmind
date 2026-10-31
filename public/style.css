@@ -114,13 +114,13 @@ button.primary:hover:not(:disabled) { filter: brightness(1.06); }
 button.primary:active:not(:disabled) { transform: translateY(calc(var(--press) * 0.66)); box-shadow: 0 calc(var(--press) / 3) 0 color-mix(in srgb, var(--accent) 65%, #000); }
 button.primary:disabled { opacity: 0.5; cursor: default; }
 button.big { min-height: 52px; padding: 12px 24px; font-size: 1.05rem; }
-button.secondary, button:where(:not(.primary, .tab, .danger, .ghost, .text-btn, .node, .next-row, .brand, .link, .choice, .key, .idea)) {
+button.secondary, button:where(:not(.primary, .tab, .danger, .ghost, .text-btn, .node, .next-row, .brand, .link, .choice, .tk-k, .tk-tab, .tk-hide, .tk-chip, .tk-subtab, .idea)) {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   border: 1.5px solid var(--border); background: var(--surface); border-radius: var(--radius-sm);
   padding: 9px 16px; min-height: 44px; font-weight: 700; color: var(--text);
   transition: border-color 0.15s, background 0.15s;
 }
-button.secondary:hover, button:where(:not(.primary, .tab, .danger, .ghost, .text-btn, .node, .next-row, .brand, .link, .choice, .key, .idea)):hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+button.secondary:hover, button:where(:not(.primary, .tab, .danger, .ghost, .text-btn, .node, .next-row, .brand, .link, .choice, .tk-k, .tk-tab, .tk-hide, .tk-chip, .tk-subtab, .idea)):hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
 button.secondary svg.i { color: var(--accent); }
 button.small { min-height: 38px !important; padding: 6px 12px !important; font-size: 0.9rem; }
 button.ghost { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; color: var(--muted); font-weight: 700; padding: 8px 10px; border-radius: var(--radius-sm); min-height: 40px; }
@@ -437,14 +437,6 @@ button.icon-btn.on { color: var(--accent); background: var(--accent-soft); }
 button.mic-btn.rec { color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, transparent); animation: mic-pulse 1.3s ease-in-out infinite; }
 @keyframes mic-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 45%, transparent); } 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--danger) 0%, transparent); } }
 @media (prefers-reduced-motion: reduce) { button.mic-btn.rec { animation: none; } }
-.sym-panel { max-width: 900px; margin: 0 auto 8px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 8px; }
-.sym-head { margin-bottom: 8px; }
-.sym-head .chip-row > button { min-height: 36px; }
-.sym-keys { display: grid; grid-template-columns: repeat(auto-fill, minmax(54px, 1fr)); gap: 6px; max-height: 196px; overflow-y: auto; overscroll-behavior: contain; }
-button.sym-key { min-height: 44px; padding: 0 6px; font-size: 1.08rem; font-weight: 700; border-radius: var(--radius-sm); background: var(--bg); border: 1.5px solid var(--border); color: var(--text); box-shadow: none; white-space: nowrap; }
-button.sym-key:hover { border-color: var(--accent); color: var(--accent); }
-button.sym-key:active { background: var(--accent-soft); }
-.sym-foot { margin-top: 6px; }
 
 /* Učna pot: prehod v višji razred / na novo stopnjo */
 .level-card { border: 1.5px solid var(--accent); }
@@ -624,7 +616,6 @@ button.sym-key:active { background: var(--accent-soft); }
 .work-text:focus { outline: none; border-color: var(--accent); }
 .work-sym { position: absolute; top: 6px; right: 6px; min-height: 36px !important; }
 .work-sym.on { color: var(--accent); background: var(--accent-soft); }
-.work-sym-panel { margin: 8px 0 0; max-width: none; }
 
 /* Razloži / Preglej s tutorjem pod rešeno nalogo */
 .tutor-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
@@ -784,14 +775,10 @@ label.check input { width: 18px; height: 18px; accent-color: var(--accent); }
 .pad-value { flex: 1; min-height: 44px; display: flex; align-items: center; padding: 6px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); font-size: 1.25rem; overflow-x: auto; white-space: pre; }
 .pad-value.ph { color: var(--muted); font-size: 1rem; }
 .pad-body { display: none; }
-.pad[data-tab="keys"] .pad-keys, .pad[data-tab="draw"] .pad-draw { display: block; }
+.pad[data-tab="draw"] .pad-draw { display: block; }
 .pad-units { display: flex; gap: 6px; }
 .pad-units:empty { display: none; }
 .pad-units button { min-height: 44px; padding: 6px 14px; border-radius: 12px; }
-.keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.key { border: 1.5px solid var(--border); background: var(--surface); font-weight: 800; box-shadow: 0 2px 0 var(--border); min-height: 46px; font-size: 1.3rem; border-radius: 12px; touch-action: manipulation; user-select: none; }
-.key.fn { background: var(--surface-2); }
-.key:active { transform: scale(0.96); }
 .draw-tools { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
 .draw-tools button { padding: 6px 12px; border-radius: 10px; }
 .draw-tools button.on { outline: 2px solid var(--accent); }

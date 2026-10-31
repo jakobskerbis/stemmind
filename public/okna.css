@@ -83,7 +83,6 @@ body.docked > main.view { container: okno / inline-size; min-width: 0; }
   .gc { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto; }
   .gc-stage { grid-row: 1; }
   .gc-panel { grid-row: 2; border-right: 0; border-top: 1px solid var(--border); }
-  .gc-keypad { grid-column: 1; grid-row: 3; }
   .gc.kp-open { grid-template-rows: minmax(0, 1fr) minmax(0, 0.9fr) auto; }
   .pse-cards { grid-template-columns: minmax(0, 1fr); }
   .calc-top { padding: 6px 8px; }

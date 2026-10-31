@@ -4,6 +4,7 @@ import { buildModel, emptyState, newId, derivativeOf, sliderRange, MODELS, DEFAU
 import { niceNumber, parse, compile } from "./math.js";
 import { GraphView, PALETTE } from "./plot.js";
 import { EXAMPLES } from "./examples.js";
+import { configureKeyboard, initKeyboard, toggleKeyboard, keyboardOpenFor } from "../tipkovnica.js";
 
 const MAX_HISTORY = 80;
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -45,7 +46,6 @@ export function createCalculator(root, opts) {
   let lastSnap = JSON.stringify(state);
   let snapTimer = null;
   let saveTimer = null;
-  let keypadOn = false;
 
   root.classList.add("gc");
   root.innerHTML = `
@@ -74,12 +74,10 @@ export function createCalculator(root, opts) {
       </div>
       <button type="button" class="gc-fab gc-expand" data-act="expand" title="${esc(t("gc.fullGraph"))}" aria-label="${esc(t("gc.fullGraph"))}" aria-pressed="false">${icon("maximize-2")}</button>
     </section>
-    <div class="gc-keypad" hidden></div>
     <div class="gc-pop" hidden role="dialog"></div>`;
   const $ = (sel) => root.querySelector(sel);
   const list = $(".gc-list");
   const pop = $(".gc-pop");
-  const keypad = $(".gc-keypad");
 
   const view = new GraphView($(".gc-graph"), {
     getState: () => state,
@@ -235,14 +233,9 @@ export function createCalculator(root, opts) {
   function renderList() {
     if (!state.items.length) state.items.push({ id: newId(), type: "expr", text: "", color: nextColor() });
     list.innerHTML = state.items.map(rowHtml).join("");
-    list.querySelectorAll(".gc-input").forEach(setInputMode);
     for (const it of state.items) if (it.type === "table") renderTable(it);
   }
 
-  function setInputMode(input) {
-    if (keypadOn) input.setAttribute("inputmode", "none");
-    else input.removeAttribute("inputmode");
-  }
 
   function nextColor() {
     const used = state.items.map((x) => x.color);
@@ -527,7 +520,6 @@ export function createCalculator(root, opts) {
           const tr = document.createElement("tr");
           tr.innerHTML = it.cols.map((c, jj) => `<td><input class="gc-cell" data-col="${jj}" data-row="${rows}" value="" inputmode="decimal" ${it.ref && jj ? "readonly tabindex='-1'" : ""}></td>`).join("");
           tb.append(tr);
-          tr.querySelectorAll("input").forEach(setInputMode);
         }
       }
       commit(false);
@@ -569,7 +561,6 @@ export function createCalculator(root, opts) {
       row.classList.add("editing");
       focusId = row.dataset.id;
       lastField = e.target;
-      if (e.target.classList.contains("gc-input") || e.target.classList.contains("gc-cell")) maybeKeypad(true);
       const o = modelItem(row.dataset.id);
       if (o && view.selected !== o.id && row.classList.contains("plotted")) {
         view.select(o.id);
@@ -581,7 +572,6 @@ export function createCalculator(root, opts) {
     const row = e.target.closest(".gc-row");
     setTimeout(() => {
       if (row && !row.contains(document.activeElement)) row.classList.remove("editing");
-      if (!root.contains(document.activeElement) && !keypad.contains(document.activeElement)) maybeKeypad(false);
     }, 0);
   });
   list.addEventListener("click", (e) => {
@@ -1063,7 +1053,7 @@ export function createCalculator(root, opts) {
     const html = `
       <button type="button" class="gc-menu-row" data-m="export">${icon("image-down")}<span>${esc(t("gc.export"))}</span></button>
       <button type="button" class="gc-menu-row" data-m="ask">${icon("message-circle")}<span>${esc(t("gc.ask"))}</span></button>
-      <button type="button" class="gc-menu-row" data-m="keypad" aria-pressed="${keypadOn}">${icon("keyboard")}<span>${esc(t("gc.keypad"))}</span></button>
+      <button type="button" class="gc-menu-row" data-m="keypad" aria-pressed="${keyboardOpenFor(root)}">${icon("keyboard")}<span>${esc(t("gc.keypad"))}</span></button>
       <button type="button" class="gc-menu-row" data-m="settings">${icon("wrench")}<span>${esc(t("gc.settings"))}</span></button>
       <div class="gc-pop-sep"></div>
       <button type="button" class="gc-menu-row danger" data-m="clear">${icon("trash-2")}<span>${esc(t("gc.clear"))}</span></button>`;
@@ -1074,9 +1064,9 @@ export function createCalculator(root, opts) {
       if (m === "export") exportImage();
       if (m === "ask") askTutor();
       if (m === "keypad") {
-        forceKeypad = !keypadOn;
-        if (forceKeypad) sysKeyboard = false;
-        showKeypad(!keypadOn);
+        const f = lastField?.isConnected ? lastField : list.querySelector(".gc-input");
+        f?.closest(".gc-row")?.classList.add("editing"); // polje vrstice je skrito, dokler vrstica ni v urejanju
+        if (f) toggleKeyboard(f);
       }
       if (m === "settings") openSettings($('[data-act="settings"]'));
       if (m === "clear") loadState(emptyState());
@@ -1175,11 +1165,10 @@ export function createCalculator(root, opts) {
     }
   });
 
-  // ---------- tipkovnica za dotik ----------
+  // ---------- tipkovnica (Evklidova tipkovnica, public/tipkovnica.js) ----------
+  // Plasti 123 in f(x) sta mreži kalkulatorja; Σ in ABC sta skupni. Enter v vrstici doda novo vrstico.
 
   let lastField = null;
-  let forceKeypad = false;
-  let kpTab = "123";
   const KEYS = {
     "123": [
       ["x", "x"], ["y", "y"], ["a²", "^2", "x²"], ["aᵇ", "^"], ["7"], ["8"], ["9"], ["÷", "/"],
@@ -1194,124 +1183,21 @@ export function createCalculator(root, opts) {
       ["r", "r"], ["a", "a"], ["b", "b"], ["k", "k"], ["n", "n"], ["mean", "mean(@)"], ["nCr", "nCr(@, )"], ["%", "%"],
     ],
   };
-  function renderKeypad() {
-    const keys = KEYS[kpTab];
-    const tabs = [
-      ["123", "123"],
-      ["fx", "f(x)"],
-      ["sym", "Σ"],
-    ];
-    keypad.innerHTML = `<div class="gc-kp-top">
-        <div class="chip-row">${tabs.map(([k, l]) => `<button type="button" data-kt="${k}" class="${kpTab === k ? "active" : ""}">${esc(l)}</button>`).join("")}<button type="button" data-kt="abc">ABC</button></div>
-        <button type="button" class="gc-x" data-k="hide" aria-label="${esc(t("gc.hideKeypad"))}">${icon("chevron-down")}</button>
-      </div>
-      ${
-        kpTab === "sym"
-          ? `<div class="gc-kp-sym"></div>`
-          : `<div class="gc-kp-grid">${keys.map((k, i) => `<button type="button" class="gc-key ${/^[0-9.]$/.test(k[0]) ? "num" : ""}" data-i="${i}">${esc(k[0])}</button>`).join("")}</div>`
-      }
-      <div class="gc-kp-nav">
-        <button type="button" class="gc-key" data-k="left" aria-label="←">${icon("arrow-left")}</button>
-        <button type="button" class="gc-key" data-k="right" aria-label="→">${icon("arrow-right")}</button>
-        <button type="button" class="gc-key" data-k="back" aria-label="⌫">${icon("delete")}</button>
-        <button type="button" class="gc-key enter" data-k="enter" aria-label="↵">${icon("corner-down-left")}</button>
-      </div>`;
-    if (kpTab === "sym" && opts.symbols && lastField) {
-      const ctl = opts.symbols(keypad.querySelector(".gc-kp-sym"), lastField, () => lastField?.dispatchEvent(new Event("input", { bubbles: true })));
-      ctl?.toggle(true);
-    }
-  }
-  keypad.addEventListener("pointerdown", (e) => {
-    if (e.target.closest("button")) e.preventDefault(); // polje obdrži fokus
+  root.dataset.kbScope = "";
+  initKeyboard();
+  configureKeyboard(list, {
+    math: true,
+    layers: [{ id: "num", label: "123", cols: 8, keys: KEYS["123"] }, { id: "fx", label: "f(x)", cols: 8, keys: KEYS.fx }, "sym", "abc"],
+    start: "num",
+    enter: "go",
   });
-  keypad.addEventListener("click", (e) => {
-    const tab = e.target.closest("[data-kt]");
-    if (tab) {
-      if (tab.dataset.kt === "abc") {
-        // Sistemska tipkovnica za črke. Polje znova dobi fokus takoj, še med dotikom:
-        // telefon odpre tipkovnico samo ob fokusu iz dotika, s zamikom pa je ne odpre.
-        // Prej je zamik tudi sprožil »focusout«, ki je izklopil sysKeyboard in vrnil našo tipkovnico.
-        forceKeypad = false;
-        sysKeyboard = true;
-        showKeypad(false);
-        const f = lastField;
-        if (f && root.contains(f)) {
-          f.removeAttribute("inputmode");
-          f.blur();
-          f.focus({ preventScroll: true });
-        }
-        return;
-      }
-      kpTab = tab.dataset.kt;
-      renderKeypad();
-      return;
-    }
-    const f = lastField;
-    const k = e.target.closest("[data-k]")?.dataset.k;
-    if (k === "hide") {
-      forceKeypad = false;
-      showKeypad(false);
-      f?.blur();
-      return;
-    }
-    if (!f || !root.contains(f)) return;
-    const s = f.selectionStart ?? f.value.length;
-    const end = f.selectionEnd ?? s;
-    if (k === "left" || k === "right") {
-      const p = Math.max(0, Math.min(f.value.length, s + (k === "left" ? -1 : 1)));
-      f.setSelectionRange(p, p);
-      return;
-    }
-    if (k === "back") {
-      if (s === end && s > 0) f.setRangeText("", s - 1, s, "end");
-      else f.setRangeText("", s, end, "end");
-      f.dispatchEvent(new Event("input", { bubbles: true }));
-      return;
-    }
-    if (k === "enter") {
-      f.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
-      return;
-    }
-    const b = e.target.closest(".gc-key[data-i]");
-    if (!b) return;
-    const key = KEYS[kpTab][Number(b.dataset.i)];
-    const ins = key[1] ?? key[0];
-    const sel = f.value.slice(s, end);
-    const at = ins.indexOf("@");
-    const text = at < 0 ? ins : ins.replace("@", sel);
-    f.setRangeText(text, s, end, "end");
-    const caret = at < 0 ? s + text.length : s + at + sel.length;
-    f.setSelectionRange(caret, caret);
-    f.dispatchEvent(new Event("input", { bubbles: true }));
-    navigator.vibrate?.(6);
-  });
-  // Način ABC (sistemska tipkovnica) ostane, dokler se učenec ne dotakne nečesa izven kalkulatorja.
-  // Ne izklopi ga izguba fokusa: telefon ob odpiranju tipkovnice polje včasih za hip odfokusira
-  // in naslednji dotik polja bi sicer spet prikazal našo tipkovnico (»glitch«, j 31. 10.).
-  let sysKeyboard = false;
-  document.addEventListener(
-    "pointerdown",
-    (e) => {
-      if (sysKeyboard && root.isConnected && !root.contains(e.target)) sysKeyboard = false;
-    },
-    true,
-  );
-  function maybeKeypad(on) {
-    if (on) {
-      if ((isTouch() && !sysKeyboard) || forceKeypad) showKeypad(true);
-    } else if (!forceKeypad) showKeypad(false);
-  }
-  function showKeypad(on) {
-    if (keypadOn === on && !keypad.hidden === on) return;
-    keypadOn = on;
-    keypad.hidden = !on;
+  // Odprta tipkovnica: graf in seznam se stisneta, pomoč pod seznamom se skrije.
+  const onKeyboard = (e) => {
+    const on = !!e.detail?.open && root.contains(e.detail.field);
     root.classList.toggle("kp-open", on);
-    // na telefonu skrijemo spodnjo vrstico, da ostane prostor za graf in vrstico
-    document.body.classList.toggle("gc-kp", on);
-    list.querySelectorAll(".gc-input, .gc-cell").forEach(setInputMode);
-    if (on) renderKeypad();
-    lastField?.scrollIntoView?.({ block: "nearest" });
-  }
+    if (on) e.detail.field.scrollIntoView?.({ block: "nearest" });
+  };
+  window.addEventListener("evklid:tipkovnica", onKeyboard);
 
   // ---------- teme in velikost ----------
 

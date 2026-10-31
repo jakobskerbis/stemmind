@@ -1,4 +1,4 @@
-// Napredna tipkovnica s simboli za Inštruktorja: koreni, potence, integrali,
+// Simboli za plast Σ Evklidove tipkovnice (public/tipkovnica.js): koreni, potence, integrali,
 // grške črke in kemijske enačbe brez iskanja po sistemski tipkovnici.
 // Skupine so razvrščene po ravni: osnovnošolec najprej vidi osnovne znake,
 // študent najprej analizo.
@@ -24,7 +24,7 @@ export const GROUPS = {
       k("log", "log(@)"), k("ln", "ln(@)"), k("logₐ", "log_(@)()", "logaritem z osnovo"), k("eˣ", "e^(@)"),
       k("f(x)", "f(x)"), k("f⁻¹", "f⁻¹(x)"), k("x₁", "₁", "indeks 1"), k("x₂", "₂", "indeks 2"),
       k("∠", "∠", "kot"), k("⊥", "⊥", "pravokotno"), k("∥", "∥", "vzporedno"), k("△", "△", "trikotnik"),
-      k("→"), k("Δ", "Δ", "sprememba"), k("ℕ"), k("ℤ"), k("ℚ"), k("ℝ"), k("∈"), k("∅"),
+      k("→"), k("Δ", "Δ", "sprememba"), k("ℕ"), k("ℤ"), k("ℚ"), k("ℝ"), k("ℂ"), k("∈"), k("∅"),
     ],
   },
   analiza: {
@@ -107,78 +107,4 @@ export function chemFormat(text) {
     })
     .join("")
     .replace(/(\S)\s+([²³]?[⁺⁻])(?=\s|$)/g, "$1$2");
-}
-
-const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-
-/**
- * Plošča s simboli nad poljem za vnos.
- * @param {HTMLElement} panel prazen element, kamor se nariše plošča
- * @param {HTMLTextAreaElement} field
- * @param {{ settings: () => object, onChange?: () => void }} opts
- */
-export function mountSymbols(panel, field, { settings, onChange = () => {} }) {
-  let group = null;
-
-  function insert(key) {
-    const start = field.selectionStart ?? field.value.length;
-    const end = field.selectionEnd ?? start;
-    const sel = field.value.slice(start, end);
-    // Kazalec gre na @; označeno besedilo gre tja (označiš 16 in pritisneš √ → √(16)).
-    const at = key.ins.indexOf("@");
-    const ins = at < 0 ? key.ins : key.ins.replace("@", sel);
-    field.setRangeText(ins, start, end, "end");
-    const caret = at < 0 ? start + ins.length : start + at + sel.length;
-    field.setSelectionRange(caret, caret);
-    onChange();
-    navigator.vibrate?.(8);
-  }
-
-  function render() {
-    const s = settings() || {};
-    const order = groupOrder(s.educational_track, s.subject);
-    if (!order.includes(group)) group = order[0];
-    const chem = group === "kemija";
-    panel.innerHTML = `
-      <div class="sym-head">
-        <div class="chip-row" role="tablist">${order
-          .map((g) => `<button type="button" role="tab" data-g="${g}" class="${g === group ? "active" : ""}" aria-selected="${g === group}">${GROUPS[g].name}</button>`)
-          .join("")}</div>
-      </div>
-      <div class="sym-keys">${GROUPS[group].keys
-        .map((key, i) => `<button type="button" class="sym-key" data-i="${i}" title="${esc(key.title || key.label)}">${esc(key.label)}</button>`)
-        .join("")}</div>
-      ${chem ? `<div class="sym-foot"><button type="button" class="text-btn" data-chem>H2O → H₂O: pretvori formule v polju</button></div>` : ""}`;
-  }
-
-  // Tipke ne vzamejo fokusa polju (na telefonu ostane odprta tipkovnica in kazalec).
-  panel.addEventListener("pointerdown", (e) => {
-    if (e.target.closest(".sym-key, [data-chem]")) e.preventDefault();
-  });
-  panel.addEventListener("click", (e) => {
-    const g = e.target.closest("[data-g]");
-    if (g) {
-      group = g.dataset.g;
-      render();
-      return;
-    }
-    const b = e.target.closest(".sym-key");
-    if (b) insert(GROUPS[group].keys[Number(b.dataset.i)]);
-    if (e.target.closest("[data-chem]")) {
-      field.value = chemFormat(field.value);
-      onChange();
-    }
-  });
-
-  return {
-    toggle(open = panel.hidden) {
-      if (open) render();
-      panel.hidden = !open;
-      return open;
-    },
-    refresh() {
-      group = null;
-      if (!panel.hidden) render();
-    },
-  };
 }

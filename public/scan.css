@@ -63,7 +63,6 @@
 .scan-input-row { display: flex; gap: 8px; align-items: center; }
 .scan-input-row input { flex: 1; min-width: 0; font-size: 1.1rem; min-height: 48px; font-variant-numeric: tabular-nums; }
 .scan-input-row button { flex: none; width: 48px; height: 48px; }
-.scan-sym { margin-top: 10px; }
 .scan-err { color: var(--danger); font-weight: 600; margin: 8px 0 0; }
 
 /* rešitev */

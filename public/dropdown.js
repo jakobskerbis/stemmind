@@ -94,7 +94,7 @@ function open(sel, btn) {
   const chosen = sel.options[current];
   const shown = chosen && chosen.value !== "" ? chosen.textContent : "";
   const empty = `<div class="dd-group dd-empty"${html ? " hidden" : ""}>${esc(sel.dataset.emptyText || tr("common.noOptions", "Ni možnosti"))}</div>`;
-  const search = `<div class="dd-search${shown ? " has-value" : ""}"><input type="search" autocomplete="off" placeholder="${esc(shown || ph)}" aria-label="${esc(shown ? `${shown}. ${ph}` : ph)}">${shown ? CHECK : ""}</div>`;
+  const search = `<div class="dd-search${shown ? " has-value" : ""}"><input type="search" autocomplete="off" data-system-kb placeholder="${esc(shown || ph)}" aria-label="${esc(shown ? `${shown}. ${ph}` : ph)}">${shown ? CHECK : ""}</div>`;
   list.innerHTML = (searchable ? search : "") + html + empty;
   list.querySelectorAll(".dd-opt").forEach((el) => items.push(el));
   if (searchable) list.classList.add("dd-searchable");

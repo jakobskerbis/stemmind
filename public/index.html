@@ -34,6 +34,7 @@
   <link rel="stylesheet" href="xp.css">
   <link rel="stylesheet" href="touch.css">
   <link rel="stylesheet" href="okna.css">
+  <link rel="stylesheet" href="tipkovnica.css">
 </head>
 <body>
   <header class="topbar">
@@ -187,7 +188,6 @@
           <img alt="Predogled fotografije" data-i18n-alt="chat.photoPreview">
           <button type="button" id="remove-image" aria-label="Odstrani sliko" data-i18n-aria="chat.removeImage">×</button>
         </div>
-        <div id="sym-panel" class="sym-panel" hidden aria-label="Simboli" data-i18n-aria="chat.symbols"></div>
         <div class="composer-row">
           <label class="icon-btn" title="Fotografiraj nalogo" aria-label="Fotografiraj nalogo" data-i18n-title="chat.photo" data-i18n-aria="chat.photo">
             <i data-icon="camera"></i><input id="image-input" type="file" accept="image/*" capture="environment" hidden>
@@ -298,6 +298,7 @@
     </div>
 
     <div id="appearance" class="card appearance"></div>
+    <div id="tipkovnica-card" class="card" hidden></div>
 
     <div id="fullscreen-card" class="card" hidden></div>
     <div id="okna-card" class="card okna-card" hidden></div>

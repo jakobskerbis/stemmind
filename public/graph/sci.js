@@ -106,7 +106,7 @@ export function createScientific(root, opts) {
         <div class="sc-line">
           <div class="sc-preview" aria-hidden="true"></div>
         </div>
-        <input class="sc-input" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="${esc(t("sc.title"))}" placeholder="${esc(t("sc.placeholder"))}">
+        <input class="sc-input" data-kb-own autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" aria-label="${esc(t("sc.title"))}" placeholder="${esc(t("sc.placeholder"))}">
         <div class="sc-live" aria-live="polite"></div>
       </div>
     </div>

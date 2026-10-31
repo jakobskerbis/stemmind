@@ -23,7 +23,8 @@ import { createRenderer, streamSafe } from "./rich.js";
 import { loadPrograms, programsCache, subjectOptions, schoolSubjectsFor, SUBJECT_NAMES } from "./programs.js";
 import { mountLevelPicker, levelLabel, schoolSystemOptions } from "./level-picker.js";
 import { attachMic } from "./speech.js";
-import { mountSymbols } from "./symbols.js";
+import { initKeyboard, configureKeyboard, toggleKeyboard, hideKeyboard, keyboardOpenFor, keyboardLayer, setKeyboardContext, mountKeyboardSettings } from "./tipkovnica.js";
+import { TUTOR_CHIPS } from "./tipkovnica-data.js";
 import { renderSuggestion, renderWelcome, stageUp } from "./level-up.js";
 import { offlineApi, refreshPack, syncOffline, packTaskCount, pendingCount } from "./offline.js";
 import { initFeedback, showFeedback } from "./feedback.js";
@@ -158,7 +159,7 @@ function showView(name) {
   if (away("scan")) leaveScan();
   if (away("games")) leaveGames();
   if (away("corner")) closeBoard();
-  if (away("graph")) document.body.classList.remove("gc-kp");
+  hideKeyboard(); // odhod z zaslona: Evklidova tipkovnica se zapre (public/tipkovnica.js)
   closeCalcOverlay();
   if (name !== "topic") closePad();
   if (name !== "topic" && name !== "cards") setActiveMode(null);
@@ -531,7 +532,6 @@ async function selectStudent(id) {
   state.pathKey = null;
   state.modes = null; // »Nadaljuj z učenjem« in goNew ne smeta pokazati naslednje teme prejšnjega profila
   clearLevelCard();
-  state.symbols?.refresh();
   maybeTour.done = false; // vodič je za vsak profil posebej (settings.tour_version)
   if (!$("#view-path").hidden || !$("#view-topic").hidden) showView("path");
   // Tekmovanja, Izpiti ter NPZ in matura: izbira in rezultati prejšnjega profila ne ostanejo na zaslonu.
@@ -945,21 +945,21 @@ input.addEventListener("keydown", (e) => {
 });
 $("#composer").addEventListener("submit", (e) => {
   e.preventDefault();
-  setSymbols(false);
   send(input.value.trim());
 });
 
 // Glasovni vnos (brskalnik, sl-SI) in napredna tipkovnica s simboli.
 attachMic($("#mic-btn"), input, { onMessage: (m) => toast(m, "mic"), onChange: autoGrow });
-state.symbols = mountSymbols($("#sym-panel"), input, { settings: () => state.student?.settings, onChange: autoGrow });
-function setSymbols(open) {
-  open = state.symbols.toggle(open);
-  $("#sym-btn").setAttribute("aria-pressed", String(open));
-  $("#sym-btn").classList.toggle("on", open);
-  return open;
-}
-$("#sym-btn").addEventListener("click", () => {
-  if (setSymbols() && !matchMedia("(pointer: coarse)").matches) input.focus();
+// Evklidova tipkovnica (public/tipkovnica.js): na dotik za vsa polja, Σ jo odpre na plasti simbolov (tudi na računalniku).
+initKeyboard();
+setKeyboardContext({ settings: () => state.student?.settings });
+mountKeyboardSettings($("#tipkovnica-card"));
+configureKeyboard(input, { layers: ["abc", "num", "fx", "sym", "kem"], start: "abc", enter: "send", ctx: TUTOR_CHIPS });
+$("#sym-btn").addEventListener("click", () => toggleKeyboard(input, { layer: "sym" }));
+window.addEventListener("evklid:tipkovnica", () => {
+  const on = keyboardOpenFor(input) && keyboardLayer() === "sym";
+  $("#sym-btn").setAttribute("aria-pressed", String(on));
+  $("#sym-btn").classList.toggle("on", on);
 });
 
 // ---------- fotografije ----------
@@ -1291,7 +1291,6 @@ $("#settings-form").addEventListener("submit", async (e) => {
   fillDeleteCard();
   refreshProfileButton();
   renderState(null);
-  state.symbols?.refresh();
   if (levelChanged(before, updated.settings)) state.pathKey = null;
   // Prehod OŠ → SŠ ali SŠ → fakulteta: na Učni poti pokažemo, kaj je novega.
   const up = stageUp(before, updated.settings);
@@ -1317,7 +1316,6 @@ function studentUpdated(updated) {
   applyLite();
   refreshProfileButton();
   renderState(null);
-  state.symbols?.refresh();
   if (levelChanged(before, updated.settings) || before.subject !== updated.settings.subject || before.study_course !== updated.settings.study_course) state.pathKey = null;
   const up = stageUp(before, updated.settings);
   if (up) state.welcome = { stage: up };
@@ -1384,7 +1382,6 @@ async function applyLevel(settings) {
   state.students[state.students.findIndex((s) => s.id === updated.id)] = updated;
   state.student = updated;
   syncCompetitionTab();
-  state.symbols?.refresh();
   state.pathKey = null;
   const up = stageUp(before, updated.settings);
   if (up) state.welcome = { stage: up };
@@ -2353,6 +2350,7 @@ function renderTask(task, ctx) {
       form,
       input: $("#answer"),
       opener: form.querySelector(".pad-open-btn"),
+      subject: calcSubject(),
       readFn: (image) => api(`/api/students/${state.student.id}/tasks/${task.id}/read`, { method: "POST", body: { image } }),
     });
     if (!document.body.classList.contains("pad-open")) $("#answer").focus();
@@ -2383,7 +2381,6 @@ function workHtml() {
     <div class="work-body" hidden>
       <textarea class="work-text" rows="3" spellcheck="false" placeholder="${escapeHtml(t("task.workPh"))}"></textarea>
       <button type="button" class="ghost small icon-only work-sym" aria-pressed="false" title="${escapeHtml(t("chat.symbols"))}" aria-label="${escapeHtml(t("chat.symbols"))}">${icon("sigma")}</button>
-      <div class="sym-panel work-sym-panel" hidden></div>
     </div>
   </div>`;
 }
@@ -2418,21 +2415,21 @@ function wireWork(box, task) {
     lsSet(workKey(task.id), ta.value.trim() ? ta.value : "");
     grow();
   });
-  // Na telefonu bi plošča za vnos in sistemska tipkovnica skupaj prekrili vse.
+  // Na telefonu bi plošča Piši in tipkovnica skupaj prekrili vse.
   ta.addEventListener("focus", () => {
     if (padIsSheet()) closePad();
   });
-  const panel = w.querySelector(".work-sym-panel");
+  // Σ odpre Evklidovo tipkovnico na plasti simbolov za zvezek.
+  configureKeyboard(ta, { math: true, layers: ["abc", "num", "fx", "sym", "kem"], start: "num" });
   const symBtn = w.querySelector(".work-sym");
-  const sym = mountSymbols(panel, ta, {
-    settings: () => state.student?.settings,
-    onChange: () => ta.dispatchEvent(new Event("input")),
-  });
-  symBtn.addEventListener("click", () => {
-    const open = sym.toggle();
-    symBtn.setAttribute("aria-pressed", String(open));
-    symBtn.classList.toggle("on", open);
-  });
+  symBtn.addEventListener("click", () => toggleKeyboard(ta, { layer: "sym" }));
+  const sync = () => {
+    if (!symBtn.isConnected) return window.removeEventListener("evklid:tipkovnica", sync);
+    const on = keyboardOpenFor(ta) && keyboardLayer() === "sym";
+    symBtn.setAttribute("aria-pressed", String(on));
+    symBtn.classList.toggle("on", on);
+  };
+  window.addEventListener("evklid:tipkovnica", sync);
 }
 
 const tutorRow = (taskId) =>
@@ -3186,7 +3183,6 @@ function graphCalc() {
         autoGrow();
         box.focus();
       },
-      symbols: (panel, field, onChange) => mountSymbols(panel, field, { settings: () => state.student?.settings, onChange }),
     });
   });
   return calcP;
@@ -3245,7 +3241,7 @@ async function setCalcMode(mode) {
     b.classList.toggle("active", b.dataset.calcMode === mode);
     b.setAttribute("aria-selected", String(b.dataset.calcMode === mode));
   });
-  if (mode !== "graph") document.body.classList.remove("gc-kp");
+  hideKeyboard();
   const tool = await calcTool(mode);
   if (calcMode !== mode) return; // medtem izbran drug način
   // zgodovina in grafi so po učencih: ob menjavi učenca naložimo njegove
@@ -3285,7 +3281,8 @@ function closeCalcOverlay({ fromBack = false } = {}) {
   if (!calcOverlayOpen()) return;
   if (!fromBack) overlayClosed();
   $("#graph-overlay").hidden = true;
-  document.body.classList.remove("graph-open", "gc-kp");
+  document.body.classList.remove("graph-open");
+  hideKeyboard();
   $("#graph-overlay-body").replaceChildren();
   if (!$("#view-graph").hidden) setCalcMode(calcMode);
 }
@@ -3387,7 +3384,7 @@ initOkna({
     if (name === "scan") leaveScan();
     if (name === "games") leaveGames();
     if (name === "corner") closeBoard();
-    if (name === "graph") document.body.classList.remove("gc-kp");
+    if (name === "graph") hideKeyboard();
   },
   // Pogled iz glavnega dela je šel v okno: glavni del pokaže prvi prosti zavihek.
   leaveMain: (name) =>

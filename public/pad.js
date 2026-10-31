@@ -1,8 +1,9 @@
-// Vnos z dotikom: plošča s tipkami in risalno površino.
-// Na telefonu se odpre spodaj (besedilo naloge ostane pripeto zgoraj),
+// Vnos odgovora pri nalogi: tipke so Evklidova tipkovnica (public/tipkovnica.js, 123 + enote, Enter = Preveri),
+// plošča »Piši« je risalna površina. Na telefonu se plošča odpre spodaj (besedilo naloge ostane pripeto zgoraj),
 // na širšem zaslonu ob strani, tako da je naloga ves čas vidna.
 import { icon } from "./icons.js";
 import { t as tr, currentLang } from "./i18n.js";
+import { configureKeyboard, openKeyboard, hideKeyboard, keyboardOpenFor, keyboardPrefs, initKeyboard } from "./tipkovnica.js";
 
 const LS_KEY = "evklid.pad";
 const prefs = (() => {
@@ -47,13 +48,6 @@ function build() {
     </div>
     <div class="pad-answer"><span class="pad-value" aria-live="polite"></span><span class="pad-units"></span><button type="button" class="primary pad-check">${tr("task.check")}</button></div>
     <div class="read-result" aria-live="polite"></div>
-    <div class="pad-body pad-keys">
-      <div class="keys">
-        ${["7", "8", "9", "⌫", "4", "5", "6", ",", "1", "2", "3", "−", "0", "/", "␣", "C"]
-          .map((k) => `<button type="button" class="key${k === "⌫" || k === "C" ? " fn" : ""}" data-k="${k}">${k === "␣" ? tr("pad.space") : k}</button>`)
-          .join("")}
-      </div>
-    </div>
     <div class="pad-body pad-draw">
       <div class="draw-tools">
         <button type="button" data-tool="pen" class="on" title="${tr("pad.pen")}" aria-label="${tr("pad.pen")}">${icon("pencil")}<span>${tr("pad.pen")}</span></button>
@@ -76,13 +70,9 @@ function build() {
     closePad();
   });
   pad.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => setTab(b.dataset.tab)));
-  pad.querySelector(".keys").addEventListener("click", (e) => {
-    const b = e.target.closest(".key");
-    if (b) press(b.dataset.k);
-  });
   pad.querySelector(".pad-units").addEventListener("click", (e) => {
     const b = e.target.closest("button");
-    if (b) press(" " + b.dataset.u, true);
+    if (b) press(" " + b.dataset.u);
   });
   pad.querySelector(".pad-check").addEventListener("click", submit);
   ink = createInk(pad.querySelector("canvas.ink"));
@@ -105,6 +95,13 @@ function build() {
 function setTab(tab) {
   prefs.tab = tab;
   savePrefs();
+  // Tipke: plošča se umakne, odpre se Evklidova tipkovnica za polje odgovora.
+  if (tab === "keys") {
+    hideDraw();
+    if (cur) openKeyboard(cur.input);
+    return;
+  }
+  hideKeyboard();
   pad.dataset.tab = tab;
   pad.querySelectorAll("[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
   if (tab === "draw") ink.fit();
@@ -125,22 +122,11 @@ function syncValue() {
   span.classList.toggle("ph", !v);
 }
 
-function press(k, isUnit = false) {
+function press(unit) {
   if (!cur) return;
-  const inp = cur.input;
-  let v = inp.value;
-  if (isUnit) {
-    // Zamenjaj morebitno prejšnjo enoto.
-    v = v.replace(/\s+[^\d\s,./−-][^\s]*$/, "").trimEnd() + k;
-  } else if (k === "⌫") v = v.slice(0, -1);
-  else if (k === "C") v = "";
-  else if (k === "␣") v += " ";
-  else if (k === "−") v += "-";
-  else if (k === "," && cur.task.answerType === "coefficients") v += ", ";
-  else v += k;
-  inp.value = v;
+  // Zamenjaj morebitno prejšnjo enoto.
+  cur.input.value = cur.input.value.replace(/\s+[^\d\s,./−-][^\s]*$/, "").trimEnd() + unit;
   syncValue();
-  navigator.vibrate?.(8);
 }
 
 function submit() {
@@ -205,56 +191,82 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 }
 
+// Začetna plast tipkovnice pri nalogi: številke, pri kemiji brez številskega odgovora Kem, pri besedilu ABC.
+function startLayer(task, subject) {
+  const numeric = ["number", "fraction", "coefficients"].includes(task.answerType);
+  if (subject === "KEM" && !numeric) return "kem";
+  return numeric || task.unit ? "num" : "abc";
+}
+
 /**
- * Poveži ploščo z nalogo. Na napravah na dotik se odpre sama (razen če jo je učenec zaprl).
- * @param {{task, input: HTMLInputElement, form: HTMLFormElement, readFn: (dataUrl) => Promise<{text, message}>, opener: HTMLElement}} opts
+ * Poveži ploščo in tipkovnico z nalogo. Na napravah na dotik se tipkovnica (ali plošča Piši, če jo je
+ * učenec izbral nazadnje) odpre sama, razen če jo je učenec zaprl.
+ * @param {{task, input: HTMLInputElement, form: HTMLFormElement, readFn: (dataUrl) => Promise<{text, message}>, opener: HTMLElement, subject?: string}} opts
  */
 export function attachPad(opts) {
   if (!pad) build();
+  initKeyboard();
   cur = opts;
   ink.clear(true);
   pad.querySelector(".read-result").innerHTML = "";
   const units = opts.task.unit ? [opts.task.unit] : [];
   pad.querySelector(".pad-units").innerHTML = units.map((u) => `<button type="button" data-u="${escapeHtml(u)}">${escapeHtml(u)}</button>`).join("");
+  const kem = opts.subject === "KEM";
+  configureKeyboard(opts.input, {
+    math: true,
+    layers: kem ? ["num", "kem", "abc", "sym"] : ["num", "abc", "fx", "sym"],
+    start: startLayer(opts.task, opts.subject),
+    enter: "check",
+    ctx: units.map((u) => ({ label: u, ins: u, unit: true })),
+  });
   opts.input.addEventListener("input", syncValue);
   opts.opener?.addEventListener("click", () => {
     prefs.auto = true;
     savePrefs();
-    openPad();
+    openPad("draw");
   });
   syncValue();
-  if (prefs.auto ?? isTouch()) openPad();
-  else closePad();
+  // Tipkovnico odpre sama samo na dotik (na računalniku je prava tipkovnica); Piši tudi na računalniku.
+  const auto = prefs.auto ?? isTouch();
+  if (auto && prefs.tab === "draw") openPad("draw");
+  else {
+    hideDraw();
+    if (auto && isTouch() && keyboardPrefs().mode !== "never") openKeyboard(opts.input);
+  }
 }
 
 export function openPad(tab) {
   if (!pad || !cur) return;
+  if ((tab || prefs.tab || "keys") === "keys") return setTab("keys");
   pad.hidden = false;
   document.body.classList.add("pad-open");
   // Vrh plošče ob strani = spodnji rob vrstice z naslovom (izmerjeno, ko so zavihki že skriti).
   const top = document.querySelector(".topbar")?.getBoundingClientRect().bottom;
   if (top) document.documentElement.style.setProperty("--pad-top", Math.round(top) + "px");
-  setTab(tab || prefs.tab || "keys");
-  // Na telefonu brez sistemske tipkovnice, ki bi prekrila nalogo.
-  if (isTouch()) cur.input.setAttribute("inputmode", "none");
+  setTab("draw");
   document.documentElement.style.setProperty("--pad-h", pad.offsetHeight + "px");
   // Naloga naj bo na vrhu vidnega dela.
   showTask();
 }
 
-// Ali je plošča odprta kot list čez spodnji del zaslona (telefon pokončno) in ne ob strani.
+// Ali je plošča Piši odprta kot list čez spodnji del zaslona (telefon pokončno) in ne ob strani.
 export function padIsSheet() {
   if (!pad || pad.hidden) return false;
   const r = pad.getBoundingClientRect();
   return r.left < 1 && r.width > innerWidth - 2;
 }
 
-export function closePad() {
+function hideDraw() {
   if (!pad) return;
   pad.hidden = true;
   document.body.classList.remove("pad-open");
   document.documentElement.style.setProperty("--pad-h", "0px");
-  cur?.input.removeAttribute("inputmode");
+}
+
+// Zapre ploščo in tipkovnico naloge (nova stran, pravilen odgovor, zaprta plošča).
+export function closePad() {
+  hideDraw();
+  if (cur && keyboardOpenFor(cur.input)) hideKeyboard();
 }
 
 // Po oddanem odgovoru: pri pravilnem odgovoru plošča izgine, da je vidna razlaga.

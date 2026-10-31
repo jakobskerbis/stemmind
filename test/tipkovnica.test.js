@@ -1,0 +1,206 @@
+// Evklidova tipkovnica (public/tipkovnica.js, tipkovnica-data.js): katera polja jo dobijo, vstavljanje predlog,
+// razporeditve po jeziku, funkcije, ki jih kalkulator razume, nastavitve in prevodi.
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import {
+  fieldKind, usesOwnKeyboard, applyTemplate, deleteBack, stepCaret, withUnit, layoutFor, LAYOUTS, VARIANTS, FX_GROUPS, KEM_ROWS,
+  NUM_TOP_MATH, TUTOR_CHIPS, parsePrefs, DEFAULT_PREFS, PREF_KEY, suggest,
+} from "../public/tipkovnica-data.js";
+import { WORDS } from "../public/tipkovnica-besede.js";
+import { GROUPS } from "../public/symbols.js";
+import { DEVICE_SETTINGS, deviceValue } from "../public/settings-registry.js";
+import { BUILTINS } from "../public/graph/math.js";
+import { evaluate } from "../public/graph/scicore.js";
+import { UI_LANGUAGES } from "../public/i18n/languages.js";
+import SL from "../public/i18n/sl.js";
+
+const ROOT = path.join(import.meta.dirname, "..");
+const read = (f) => fs.readFileSync(path.join(ROOT, f), "utf8");
+
+// Preprost »element« za fieldKind (brez DOM).
+function el(tag, attrs = {}, { parent = null, editable = false } = {}) {
+  const a = { ...attrs };
+  return {
+    tagName: tag.toUpperCase(),
+    type: tag === "input" ? a.type || "text" : undefined,
+    disabled: "disabled" in a,
+    readOnly: "readonly" in a,
+    isContentEditable: editable,
+    getAttribute: (k) => (k in a ? a[k] : null),
+    hasAttribute: (k) => k in a,
+    closest: (sel) => (parent && sel === "[data-system-kb]" && parent.sys ? parent : null),
+  };
+}
+
+test("which fields get Evklid's keyboard: login e-mail and password keep the phone keyboard", () => {
+  assert.equal(fieldKind(el("input")), "text");
+  assert.equal(fieldKind(el("input", { type: "search" })), "text");
+  assert.equal(fieldKind(el("textarea")), "text");
+  assert.equal(fieldKind(el("div", {}, { editable: true })), "text");
+  // samo 123
+  assert.equal(fieldKind(el("input", { type: "number" })), "num");
+  assert.equal(fieldKind(el("input", { inputmode: "decimal" })), "num");
+  assert.equal(fieldKind(el("input", { inputmode: "numeric" })), "num");
+  assert.equal(fieldKind(el("input", { type: "tel" })), "num");
+  // izvirni inputmode šteje, tudi ko ga tipkovnica nastavi na »none«
+  assert.equal(fieldKind(el("input", { inputmode: "none" }), "decimal"), "num");
+  // prijava in registracija: telefon ponudi shranjeno geslo (j, 31. 10.)
+  for (const a of [{ type: "email" }, { type: "password" }, { autocomplete: "username" }, { autocomplete: "current-password" }, { autocomplete: "new-password" }, { autocomplete: "one-time-code" }]) {
+    assert.equal(fieldKind(el("input", a)), null, JSON.stringify(a));
+  }
+  // izjeme
+  for (const type of ["file", "date", "color", "range", "checkbox", "radio", "submit", "hidden", "time"]) assert.equal(fieldKind(el("input", { type })), null, type);
+  assert.equal(fieldKind(el("input", { "data-system-kb": "" })), null);
+  assert.equal(fieldKind(el("input", {}, { parent: { sys: true } })), null, "data-system-kb na okvirju");
+  assert.equal(fieldKind(el("input", { readonly: "" })), null);
+  assert.equal(fieldKind(el("input", { disabled: "" })), null);
+  assert.equal(fieldKind(el("select")), null);
+  assert.equal(fieldKind(el("button")), null);
+  // nastavitev Vedno / Samo za matematiko / Nikoli
+  const text = el("input");
+  assert.equal(usesOwnKeyboard(text, "always"), true);
+  assert.equal(usesOwnKeyboard(text, "math"), false);
+  assert.equal(usesOwnKeyboard(text, "math", { math: true }), true);
+  assert.equal(usesOwnKeyboard(el("input", { type: "number" }), "math"), true);
+  assert.equal(usesOwnKeyboard(text, "never", { math: true }), false);
+  assert.equal(usesOwnKeyboard(el("input", { type: "password" }), "always"), false);
+});
+
+test("templates: @ marks the caret and takes the selected text", () => {
+  assert.deepEqual(applyTemplate("", 0, 0, "√(@)"), { value: "√()", caret: 2, text: "√()" });
+  assert.deepEqual(applyTemplate("x16", 1, 3, "√(@)"), { value: "x√(16)", caret: 5, text: "√(16)" });
+  assert.deepEqual(applyTemplate("a", 1, 1, "²"), { value: "a²", caret: 2, text: "²" });
+  assert.deepEqual(applyTemplate("ab", 1, 1, "(@)/()"), { value: "a()/()b", caret: 2, text: "()/()" });
+  assert.equal(applyTemplate("12", 2, 2, "log_(@)()").caret, 7);
+  // maxlength: ne preseže meje
+  assert.equal(applyTemplate("abc", 3, 3, "def", 4).value, "abcd");
+  assert.equal(applyTemplate("abcd", 4, 4, "e", 4).text, "");
+  // brisanje in kazalec po celih znakih (tudi znaki zunaj BMP)
+  assert.deepEqual(deleteBack("ab", 2, 2), { value: "a", caret: 1 });
+  assert.deepEqual(deleteBack("abc", 0, 2), { value: "c", caret: 0 });
+  assert.deepEqual(deleteBack("a𝑥", 3, 3), { value: "a", caret: 1 });
+  assert.equal(stepCaret("a𝑥b", 1, 1), 3);
+  assert.equal(stepCaret("a𝑥b", 3, -1), 1);
+  assert.equal(stepCaret("ab", 0, -1), 0);
+  // enota pri nalogi zamenja prejšnjo
+  assert.equal(withUnit("12", "km/h"), "12 km/h");
+  assert.equal(withUnit("12 m/s", "km/h"), "12 km/h");
+  // vse predloge imajo največ en @
+  const all = [...FX_GROUPS.flatMap(([, , k]) => k), ...NUM_TOP_MATH, ...TUTOR_CHIPS, ...Object.values(GROUPS).flatMap((g) => g.keys.map((x) => [x.label, x.ins]))];
+  for (const [label, ins] of all) assert.ok((ins.match(/@/g) || []).length <= 1, label);
+});
+
+test("letter layouts per app language", () => {
+  const sl = layoutFor("sl");
+  assert.equal(sl.id, "sl");
+  assert.deepEqual(sl.rows[0], [..."qwertzuiopš"]);
+  assert.ok(sl.rows[1].includes("č") && sl.rows[1].includes("ž"));
+  assert.deepEqual(sl.variants.c, ["č", "ć"]);
+  assert.equal(layoutFor("en").rows[0].join(""), "qwertyuiop");
+  const de = layoutFor("de").rows.flat();
+  for (const c of ["ä", "ö", "ü", "ß"]) assert.ok(de.includes(c), c);
+  for (const code of ["fr", "es", "it", "pl", "tr", "sw", "id", "sq", "ro", "pt"]) {
+    const l = layoutFor(code);
+    assert.equal(l.rows[0].join(""), "qwertyuiop", code);
+    assert.ok(l.variants.e?.length && l.variants.a?.length, `${code}: dolg pritisk za naglase`);
+  }
+  for (const code of ["hr", "bs", "sr-Latn"]) assert.equal(layoutFor(code).id, "sl", code);
+  for (const code of ["cs", "sk", "hu"]) assert.equal(layoutFor(code).rows[0].join(""), "qwertzuiop", code);
+  const ar = layoutFor("ar");
+  assert.ok(ar.rtl && ar.caseless && !ar.globe);
+  assert.ok(ar.rows.flat().every((c) => /\p{Script=Arabic}/u.test(c)));
+  assert.ok(layoutFor("fa").rtl && layoutFor("ur").rtl && layoutFor("arz").rtl, "arabska pisava od desne proti levi");
+  assert.ok(layoutFor("ru").rows.flat().includes("ы"));
+  assert.ok(layoutFor("uk").rows.flat().includes("є"));
+  assert.ok(layoutFor("sr").rows.flat().includes("љ") && layoutFor("mk").rows.flat().includes("ќ"));
+  // jeziki z načinom za znake: 🌐 da telefonovo tipkovnico za to polje
+  for (const code of ["ja", "zh", "zh-Hant", "ko", "hi", "bn", "th", "vi"]) assert.equal(layoutFor(code).globe, true, code);
+  for (const code of ["sl", "en", "de", "ar", "ru"]) assert.equal(layoutFor(code).globe, false, code);
+  // vsak jezik vmesnika ima razporeditev s tremi vrsticami, največ 11 tipk v vrsti
+  for (const code of UI_LANGUAGES) {
+    const l = layoutFor(code);
+    assert.equal(l.rows.length, 3, code);
+    for (const r of l.rows) assert.ok(r.length >= 7 && r.length <= 11, `${code}: ${r.join("")}`);
+  }
+  for (const [id, v] of Object.entries(VARIANTS)) for (const [k, list] of Object.entries(v)) assert.ok(Array.isArray(list) && list.length, `${id} ${k}`);
+  assert.ok(Object.keys(LAYOUTS).length >= 10);
+});
+
+test("f(x) keys only insert what the calculator understands; ℂ is among the sets", () => {
+  const extra = new Set(["d", "dx", "x", "y", "e", "f", "g", "n", "i", "Ans", "π"]);
+  for (const [, , list] of FX_GROUPS) {
+    for (const [label, ins] of list) {
+      for (const name of ins.match(/[a-zA-Z]{2,}(?=\()/g) || []) assert.ok(BUILTINS.has(name) || extra.has(name), `${label}: ${name} ni funkcija kalkulatorja`);
+      // znanstveni kalkulator zapis prebere (»@« in prazni argumenti dobijo število); znaki za enačbe so samo delčki
+      if (/^(=|;|<|>|≤|≥|[fg]\(x\)=|[∑∏]_)/.test(ins)) continue;
+      const filled = ("2" + ins).replaceAll("@", "2").replace(/;(?=[;)])/g, ";3").replace(/\(\)/g, "(3)");
+      const r = evaluate(filled);
+      assert.ok(!r?.error || r.error.code === "missing", `${label}: ${filled} → ${JSON.stringify(r?.error)}`);
+    }
+  }
+  assert.ok(GROUPS.funkcije.keys.some((k) => k.label === "ℂ"), "ℂ v skupini množic");
+  assert.ok(KEM_ROWS.flat().includes("(aq)") && KEM_ROWS.flat().includes("₂") && KEM_ROWS.flat().includes("⇌"));
+});
+
+test("settings: registry keys for the tutor, defaults, stored per device", () => {
+  assert.deepEqual(DEVICE_SETTINGS.keyboard.values, ["always", "math", "never"]);
+  assert.deepEqual(DEVICE_SETTINGS.keyboard_words.values, ["on", "off"]);
+  assert.deepEqual(DEVICE_SETTINGS.keyboard_vibration.values, ["on", "off"]);
+  assert.equal(deviceValue("keyboard", "math"), "math");
+  assert.equal(deviceValue("keyboard", "sometimes"), null);
+  assert.equal(PREF_KEY, `${JSON.parse(read("brand.json")).slug}.tipkovnica`);
+  assert.deepEqual(parsePrefs(null), DEFAULT_PREFS);
+  assert.deepEqual(DEFAULT_PREFS, { mode: "always", words: false, buzz: true }, "privzeto: Vedno, brez predlogov, s tresljajem");
+  assert.deepEqual(parsePrefs('{"mode":"never","words":true}'), { mode: "never", words: true, buzz: true });
+  assert.deepEqual(parsePrefs("{pokvarjeno"), DEFAULT_PREFS);
+  assert.deepEqual(parsePrefs('{"mode":"x"}').mode, "always");
+  const cs = read("public/chat-settings.js");
+  for (const k of ["keyboard", "keyboard_words", "keyboard_vibration"]) assert.ok(cs.includes(k), `chat-settings.js: ${k}`);
+  // predlogi besed: lokalni seznam, brez klicev
+  assert.ok(WORDS.sl.length > 200 && WORDS.sl.includes("enačba"));
+  assert.deepEqual(suggest(WORDS.sl, "enač").slice(0, 1), ["enačba"]);
+  assert.equal(suggest(WORDS.sl, "Enač")[0], "Enačba");
+  assert.deepEqual(suggest(WORDS.sl, ""), []);
+  const src = read("public/tipkovnica.js") + read("public/tipkovnica-besede.js");
+  assert.ok(!/fetch\(|\/api\//.test(src), "tipkovnica ne kliče strežnika");
+});
+
+test("i18n: every keyboard string is in Slovenian and all 32 UI languages, translated", () => {
+  const src = read("public/tipkovnica.js") + read("public/tipkovnica-data.js");
+  const used = new Set([...src.matchAll(/\bt\(\s*["'`]([a-zA-Z0-9_.]+)["'`]/g)].map((m) => m[1]));
+  for (const m of src.matchAll(/"(tk\.[a-zA-Z0-9_.]+|sc\.grp\.[a-z]+)"/g)) used.add(m[1]);
+  for (const g of Object.keys(GROUPS)) if (g !== "analiza") used.add(`tk.g.${g}`);
+  for (const m of ["always", "math", "never"]) used.add(`tk.set.${m}`);
+  const tk = Object.keys(SL).filter((k) => k.startsWith("tk."));
+  assert.ok(tk.length >= 20);
+  for (const k of used) assert.ok(SL[k], `sl.js: ${k}`);
+  const files = UI_LANGUAGES.filter((c) => c !== "sl");
+  assert.equal(files.length, 32);
+  for (const code of files) {
+    const d = JSON.parse(read(`public/i18n/ui/${code}.json`));
+    for (const k of [...used, ...tk]) assert.ok(d[k], `${code}: ${k}`);
+    // prevedeno, ne slovenska kopija (razen kratic in imen, ki so v več jezikih enaka)
+    const same = tk.filter((k) => d[k] === SL[k] && !["tk.l.kem", "tk.g.osnovno", "tk.g.funkcije", "tk.g.kemija", "tk.set.title"].includes(k));
+    assert.ok(same.length <= 3, `${code}: neprevedeno ${same.join(", ")}`);
+  }
+});
+
+test("old keypads are replaced by the shared keyboard", () => {
+  const calc = read("public/graph/calc.js");
+  assert.ok(!calc.includes("gc-keypad") && !calc.includes("renderKeypad"), "kalkulator nima svoje tipkovnice");
+  assert.ok(calc.includes("configureKeyboard"));
+  const pad = read("public/pad.js");
+  assert.ok(!/class="keys"|data-k="⌫"/.test(pad) && pad.includes("openKeyboard"), "plošča: tipke so Evklidova tipkovnica");
+  assert.ok(pad.includes("pad-draw"), "Piši ostane");
+  assert.ok(!read("public/index.html").includes('id="sym-panel"'), "Inštruktor: Σ je plast tipkovnice");
+  assert.ok(!read("public/symbols.js").includes("mountSymbols"));
+  assert.ok(read("public/graph/sci.js").includes("data-kb-own"), "znanstveni kalkulator ima svoje tipke");
+  assert.ok(read("public/index.html").includes('href="tipkovnica.css"'));
+  // tipke ne vzamejo fokusa, višina tipk ≥ 44 px, ikone imajo opis
+  const js = read("public/tipkovnica.js");
+  assert.match(js, /addEventListener\("pointerdown", \(e\) => \{\s*e\.preventDefault\(\)/);
+  assert.match(read("public/tipkovnica.css"), /\.tk-k \{[^}]*min-height: 44px/);
+  assert.match(js, /class="tk-hide"[^>]*aria-label/);
+});
