@@ -97,6 +97,15 @@ Kjer sta na računalniku ali tablici dva dela strani drug ob drugem, je med njim
 - **Kdaj je ni**: na telefonu (do 760 px), ko ima mreža en stolpec (ožji zaslon ali ozko premično okno, pravila `@container okno`) in ko je izklopljena nastavitev »Premična okna«. Velikost se meri po vsebniku, zato ločnica deluje tudi v premičnem oknu. V RTL je stranski del na desni in poteg sledi vidni strani.
 - Širine so shranjene na napravi (`evklid.razdelilnik`); »Ponastavi postavitev« jih pozabi.
 
+### Nove stvari (tudi tedenske posodobitve)
+
+j (2026-10-31): okna, preurejanje vrstic in ločnice morajo delovati tudi pri vsem, kar dodamo pozneje, tudi pri tedenskih novostih (igre, kotiček, videz, nove strani). Zato:
+
+- **Nov zavihek zgoraj** dobi svoj `<main id="view-…" class="view">`, ime v `WINDOW_VIEWS` (`server/chat-settings.js`, da ga inštruktor odpre z ukazom) in mora delovati v ozkem oknu (`@container okno` v `okna.css`, brez računanja na širino zaslona). Izjeme so le v `test/okna-vsi.test.js` z razlogom.
+- **Nova vrstica zavihkov ali načinov** uporabi `makeRowSortable`, **nov dvodelni pogled** `makeSplitter` (glej zgoraj).
+- **Nov videz ali tema** (barve, slog) uporablja le spremenljivke, zato okna, mehurček in ločnice samodejno dobijo njene barve; preveri jih na posnetku v svetlem in temnem načinu.
+- Samodejno: `test/okna-vsi.test.js` in korak `okna-vsi` v `scripts/preveri-aplikacijo.cjs` (vsak zavihek se odpre kot okno brez napak in vodoravnega drsenja; glavni pogled z dvema visokima stolpcema brez ločnice je napaka).
+
 ## Besedilo vedno vidno
 
 Učenčevo besedilo, odgovor inštruktorja in besedilo naloge morajo biti vedno berljivi (`public/razpri.js`).

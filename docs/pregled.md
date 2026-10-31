@@ -30,7 +30,8 @@ at 360×740 and 1280×800, light and dark, Slovenian plus one RTL language (Arab
 at them. Checklist: nothing overlaps, clips or scrolls sideways; touch targets ≥ 40 px; contrast AA;
 focus visible and keyboard works; icon buttons have `aria-label`; no information only in colour;
 every new string has a key in `public/i18n/sl.js` and all 32 `public/i18n/ui/*.json`, none left in
-Slovenian in other languages; correct Slovenian (terms of the school level, decimal comma); any
+Slovenian in other languages; a new top tab, menu row or two-panel view works with movable windows,
+row reordering and width handles (`docs/oblikovanje.md` »Nove stvari«); correct Slovenian (terms of the school level, decimal comma); any
 student-facing maths/physics/chemistry is correct and at the right level.
 
 Each reviewer fixes what it is sure about with small edits (or returns a list), then the author
