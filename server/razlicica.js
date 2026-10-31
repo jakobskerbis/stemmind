@@ -28,7 +28,9 @@ export function appVersion() {
 // Različice knjižnic, ki jih service worker hrani brez preverjanja (/vendor/): ob spremembi
 // dobi nov predpomnilnik, da telefon ne obdrži stare knjižnice.
 export function vendorVersion() {
-  const mods = ["katex", "marked", "dompurify", "@fontsource-variable/nunito", "@fontsource-variable/instrument-sans", "@fontsource-variable/ibm-plex-sans"];
+  let fonts = [];
+  try { fonts = Object.keys(JSON.parse(read(path.join(root, "package.json"))).dependencies || {}).filter((m) => m.startsWith("@fontsource-variable/")).sort(); } catch {}
+  const mods = ["katex", "marked", "dompurify", ...fonts];
   const v = mods.map((m) => {
     try { return JSON.parse(read(path.join(root, "node_modules", m, "package.json"))).version; } catch { return "?"; }
   });

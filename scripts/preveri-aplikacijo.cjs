@@ -282,13 +282,31 @@ async function expectVisible(p, sel, what, timeout = 5000) {
     throw new Error(`ni vidno: ${what || sel}`);
   });
 }
+// Telefon: na zaslonih za branje (klepet, tema, lekcija, kalkulator) se spodnja vrstica umakne (touch.css);
+// kolešček ali poteg navzgor po vsebini jo pokaže (app.js). Ob fokusu v polju (tipkovnica) se ne pokaže.
+async function revealBar(p) {
+  const bar = p.locator("#tabbar");
+  if ((await bar.isVisible()) || !(await bar.evaluate((b) => getComputedStyle(b).position === "fixed"))) return;
+  await p.evaluate(() => {
+    document.activeElement?.blur();
+    document.body.dispatchEvent(new WheelEvent("wheel", { deltaY: -200, bubbles: true }));
+  });
+  await bar.waitFor({ state: "visible", timeout: 2000 }).catch(() => {
+    throw new Error("spodnja vrstica se ob drsenju gor ne pokaže");
+  });
+}
+async function barTab(p, view, opts) {
+  await revealBar(p);
+  return click(p, `#tabbar .tab[data-view="${view}"]`, opts);
+}
 async function tab(p, view) {
   // Računalnik: zgornja vrstica; telefon: spodnja vrstica ali »Jaz« → seznam.
   const top = p.locator(`.topbar .tab[data-view="${view}"]`);
   if (await top.isVisible()) return click(p, `.topbar .tab[data-view="${view}"]`);
+  await revealBar(p);
   const bottom = p.locator(`#tabbar .tab[data-view="${view}"]`);
   if (await bottom.isVisible()) return click(p, `#tabbar .tab[data-view="${view}"]`);
-  await click(p, '#tabbar .tab[data-view="me"]');
+  await barTab(p, "me");
   await click(p, `#view-me [data-go="${view}"]`);
 }
 const currentView = (p) => p.evaluate(() => [...document.querySelectorAll("main.view:not(.in-okno)")].find((v) => !v.hidden)?.id || "");
@@ -951,7 +969,7 @@ async function flashcards(p) {
 
 async function feedback(p, label) {
   const t = p.locator('.topbar .tab[data-view="feedback"]');
-  if (!(await t.isVisible()) && !(await p.locator('#tabbar').isVisible())) return;
+  if (!(await t.isVisible()) && !(await p.locator("#tabbar").evaluate((b) => getComputedStyle(b).display !== "none"))) return;
   await tab(p, "feedback");
   await settle(p, 300);
   if ((await currentView(p)) !== "view-feedback") throw new Error("Mnenje se ni odprlo");
@@ -1095,7 +1113,7 @@ async function phone(browser, app) {
   });
   // Vodič na telefonu: »Ponovi uvodni ogled« v Nastavitvah, vsi koraki (zavihki pod »Jaz« se preskočijo).
   await step(p, "tel-vodic", async () => {
-    await click(p, '#tabbar .tab[data-view="me"]', { wait: 200 });
+    await barTab(p, "me", { wait: 200 });
     await click(p, '#view-me [data-go="settings"]', { wait: 300 });
     await click(p, "#tour-again", { wait: 200 });
     await closeTour(p, "vse");
@@ -1103,13 +1121,25 @@ async function phone(browser, app) {
   });
   for (const v of ["textbook", "chat", "competition"]) {
     await step(p, `zavihek-${v}`, async () => {
-      await click(p, `#tabbar .tab[data-view="${v}"]`, { wait: 300 });
+      await barTab(p, v, { wait: 300 });
       if ((await currentView(p)) !== `view-${v}`) throw new Error(`zavihek ${v} se ni odprl`);
       await screen(p, v);
     });
   }
+  // Klepet: spodnja vrstica umaknjena, vrstica za pisanje na dnu; kolešček gor jo pokaže, Nazaj v glavi vodi nazaj.
+  await step(p, "tel-vrstica", async () => {
+    await barTab(p, "chat", { wait: 400 });
+    if (await p.locator("#tabbar").isVisible()) throw new Error("spodnja vrstica v klepetu ni skrita");
+    const gap = await p.evaluate(() => innerHeight - document.querySelector("#composer").getBoundingClientRect().bottom);
+    if (Math.abs(gap) > 1) throw new Error(`vrstica za pisanje ni na dnu (${gap} px)`);
+    await revealBar(p);
+    const over = await p.evaluate(() => document.querySelector("#composer").getBoundingClientRect().bottom - document.querySelector("#tabbar").getBoundingClientRect().top);
+    if (over > 1) throw new Error(`pokazana spodnja vrstica prekrije vrstico za pisanje (${over} px)`);
+    await click(p, "#chat-back", { wait: 400 });
+    if ((await currentView(p)) !== "view-competition") throw new Error(`Nazaj v klepetu vodi na ${await currentView(p)}`);
+  });
   await step(p, "jaz", async () => {
-    await click(p, '#tabbar .tab[data-view="me"]', { wait: 300 });
+    await barTab(p, "me", { wait: 300 });
     await expectVisible(p, "#view-me .me-head", "Jaz");
     await screen(p, "jaz");
   });
@@ -1117,7 +1147,7 @@ async function phone(browser, app) {
   const rows = await p.locator("#view-me [data-go]").evaluateAll((bs) => bs.filter((b) => !b.hidden && b.offsetParent).map((b) => b.dataset.go));
   for (const v of rows) {
     await step(p, `jaz-${v}`, async () => {
-      await click(p, '#tabbar .tab[data-view="me"]', { wait: 200 });
+      await barTab(p, "me", { wait: 200 });
       await click(p, `#view-me [data-go="${v}"]`, { wait: 400 });
       if ((await currentView(p)) !== `view-${v}`) throw new Error(`»${v}« se ni odprl`);
       await screen(p, `jaz-${v}`);
@@ -1128,7 +1158,7 @@ async function phone(browser, app) {
     });
   }
   await step(p, "tel-naloga", async () => {
-    await click(p, '#tabbar .tab[data-view="path"]', { wait: 300 });
+    await barTab(p, "path", { wait: 300 });
     await click(p, "#xp-card .next-row[data-open]", { wait: 400 });
     await expectVisible(p, "#view-topic", "tema");
     await screen(p, "tema");
@@ -1143,12 +1173,12 @@ async function phone(browser, app) {
   await step(p, "tel-klepet", () => chat(p, "tel"));
   await step(p, "tel-osvezitev", async () => {
     // Osvežitev na podstrani (potegni za osvežitev) in tipka Nazaj: aplikacija mora ostati odprta.
-    await click(p, '#tabbar .tab[data-view="me"]', { wait: 200 });
+    await barTab(p, "me", { wait: 200 });
     await click(p, '#view-me [data-go="settings"]', { wait: 300 });
     await p.reload();
     await settle(p, 600);
     await expectVisible(p, "#view-path #xp-card .hero", "učna pot po osvežitvi", 8000);
-    await click(p, '#tabbar .tab[data-view="chat"]', { wait: 300 });
+    await barTab(p, "chat", { wait: 300 });
     await p.goBack();
     await settle(p, 400);
     if (!p.url().startsWith(p.base)) throw new Error(`tipka Nazaj po osvežitvi zapre aplikacijo (${p.url()})`);

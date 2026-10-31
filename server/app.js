@@ -81,9 +81,11 @@ function cacheKey(text, settings, mode, lite = false, pathTopic = null, weak = [
   return crypto.createHash("sha256").update(parts.join("|")).digest("hex");
 }
 
-// Pisave slogov (docs/oblikovanje.md): Čist = Instrument Sans, Igriv = Nunito, Temen = IBM Plex Sans.
-// Brskalnik prenese le pisavo, ki jo slog res uporablja.
-const FONTS = [["nunito", "nunito"], ["instrument-sans", "instrument-sans"], ["ibm-plex-sans", "ibm-plex-sans"]];
+// Pisave slogov (docs/oblikovanje.md): vsak paket @fontsource-variable/* iz package.json se streže pod /vendor/<ime>/
+// (Čist = Instrument Sans, Igriv = Nunito, Temen = IBM Plex Sans, zgodovinski slogi po public/theme.js → ERAS).
+const FONTS = Object.keys(JSON.parse(fs.readFileSync(new URL("../package.json", import.meta.url), "utf8")).dependencies || {})
+  .filter((m) => m.startsWith("@fontsource-variable/"))
+  .map((m) => [m.split("/")[1], m.split("/")[1]]);
 
 // Stara povezava (ngrok ali začasni tunel Cloudflare) vodi na lastno domeno (brand.json), ko ta
 // kaže na ta isti strežnik: nameščena aplikacija in shranjene povezave tako ne ostanejo prazne.

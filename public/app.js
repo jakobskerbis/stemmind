@@ -1,6 +1,7 @@
 // Evklid – odjemalec (brez ogrodja).
 import { attachPad, closePad, openPad, padIsSheet } from "./pad.js";
 import { icon, hydrateIcons } from "./icons.js";
+import { greekFactHtml, wireGreekFacts } from "./greek.js";
 import { t, locale, currentLang, currentRegion, regionFor, setLanguage, deviceRegion } from "./i18n.js";
 import { systemForCountry, isRegional, SCHOOL_SYSTEMS } from "./regions.js";
 import { mountLanguageCard } from "./language.js";
@@ -10,7 +11,7 @@ hydrateIcons();
 import { initAccount, accountsOn, openAddChild, logout, openProfileLock, renderAccount } from "./account.js";
 import { showFull, closeFull, fullOpen } from "./razpri.js";
 import { makeSplitter } from "./razdelilnik.js";
-import { initOkna, isFloating, openWindow, closeWindow, focusWindow, refreshBubble, chatReply, restoreWindows, windowsOn, tabHint, floatingViews } from "./okna.js";
+import { initOkna, isFloating, openWindow, closeWindow, focusWindow, refreshBubble, chatReply, restoreWindows, windowsOn, tabHint, floatingViews, syncTabbarH } from "./okna.js";
 import { initProfileMenu, refreshProfileButton, closeProfileMenu } from "./profile-menu.js";
 import { initQuickStart, closeQuickStart } from "./quick-start.js";
 import { openPrintable, stopReading } from "./gradiva.js";
@@ -142,6 +143,7 @@ function showView(name) {
   const away = (v) => name !== v && !isFloating(v); // pogled ni ne glavni ne v oknu
   if (away("textbook")) stopReading(); // branje povzetka na glas ne teče naprej brez gumba za ustavitev
   syncHistory(name);
+  if (name !== currentView) prevView = currentView;
   currentView = name;
   syncCompetitionTab();
   if (name === "path" || name === "competition" || name === "exams") setBack(name);
@@ -161,6 +163,7 @@ function showView(name) {
   if (name !== "topic") closePad();
   if (name !== "topic" && name !== "cards") setActiveMode(null);
   refreshBubble();
+  peekBar(false);
   window.scrollTo(0, 0);
 }
 // Priprava pogleda ob prikazu (glavni del ali premično okno); ne spremeni trenutnega pogleda in zgodovine.
@@ -193,6 +196,46 @@ function initView(name) {
   }
   if (name === "graph") showGraph();
 }
+// ---------- spodnja vrstica se pri branju umakne (telefon, tablica na dotik; touch.css) ----------
+// Kje se umakne, določa touch.css (vrstica je takrat position: fixed in skrita pod robom). Poteg navzdol (drsenje
+// nazaj gor) ali kolešček gor jo pokaže (body.tb-peek), poteg navzgor jo spet skrije. Med pisanjem (odprta
+// tipkovnica) se ne pokaže. Na vseh teh zaslonih je v glavi gumb Nazaj.
+const tabbarEl = $("#tabbar");
+const barAuto = () => !!tabbarEl && getComputedStyle(tabbarEl).position === "fixed";
+const typing = () => !!document.activeElement?.matches?.('textarea, [contenteditable="true"], input:not([type="checkbox"], [type="radio"], [type="range"], [type="button"], [type="submit"])');
+const NO_SWIPE = "#tabbar, canvas, input[type=range], .pad, .graph-slot, .demo, .okno, .tour";
+function peekBar(on) {
+  if (on && typing()) on = false;
+  if (document.body.classList.contains("tb-peek") !== on) document.body.classList.toggle("tb-peek", on);
+  syncTabbarH();
+}
+let swipe = null;
+document.addEventListener("touchstart", (e) => {
+  const t = e.touches[0];
+  swipe = e.touches.length === 1 && !e.target.closest?.(NO_SWIPE) ? { x: t.clientX, y: t.clientY } : null;
+}, { passive: true });
+document.addEventListener("touchmove", (e) => {
+  if (!swipe) return;
+  const t = e.touches[0];
+  const dy = t.clientY - swipe.y;
+  if (Math.abs(dy) < 24 || Math.abs(t.clientX - swipe.x) > Math.abs(dy)) return;
+  swipe = null;
+  requestAnimationFrame(() => barAuto() && peekBar(dy > 0));
+}, { passive: true });
+let wheelFrame = 0;
+document.addEventListener("wheel", (e) => {
+  if (wheelFrame || Math.abs(e.deltaY) < 4 || e.target.closest?.(NO_SWIPE)) return;
+  const up = e.deltaY < 0;
+  wheelFrame = requestAnimationFrame(() => {
+    wheelFrame = 0;
+    if (barAuto()) peekBar(up);
+  });
+}, { passive: true });
+document.addEventListener("focusin", () => document.body.classList.contains("tb-peek") && typing() && peekBar(false));
+// Odprta lekcija v Učbeniku (vrstica se umakne) ali nazaj na kazalo: pogled ostane isti, vsebina se zamenja.
+new MutationObserver(() => peekBar(false)).observe($("#view-textbook"), { childList: true });
+$("#chat-back").addEventListener("click", () => showView(!["chat", "onboard", "auth"].includes(prevView) && !isFloating(prevView) ? prevView : "path"));
+
 // Zavihek pogleda v premičnem oknu okno le prinese v ospredje (branje, vnos in drsenje v njem ostanejo).
 document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => (isFloating(t.dataset.view) ? focusWindow(t.dataset.view) : showView(t.dataset.view))));
 
@@ -201,6 +244,7 @@ document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () 
 // trenutni pogled (1). Nazaj najprej zapre odprto okno (kalkulator, navodila) ali lekcijo,
 // s podstrani »Jaz« (Nastavitve, Napredek …) vodi na »Jaz«, sicer na Učno pot.
 let currentView = "path";
+let prevView = "path"; // za gumb Nazaj v glavi klepeta (telefon)
 let fromBack = false;
 let skipPop = 0;
 let overlayEntry = false; // zapis v zgodovini samo za okno, odprto na Učni poti
@@ -555,11 +599,16 @@ function renderConversationList() {
 function renderEmptyChat() {
   $("#chat-title").textContent = t("chat.new");
   const ideas = [t("chat.idea1"), t("chat.idea2"), t("chat.idea3")];
-  $("#messages").innerHTML = `<div class="empty">
+  // .empty-hall: okvir pozdrava (v slogu s chat.frame »stebri« pročelje templa iz ERAS[…].arch.temple, ui.css →
+  // »Klepet obdobja«; templeParts doda dele, ob menjavi sloga jih zamenja).
+  $("#messages").innerHTML = `<div class="empty"><div class="empty-hall">
     <div class="tutor-avatar big" aria-hidden="true">${icon("sparkles")}</div>
     <p class="big">${t("chat.hello", { name: escapeHtml(state.student.name) })}</p>
     <p>${t("chat.intro")}</p>
-    <div class="ideas">${ideas.map((t) => `<button type="button" class="idea" data-idea="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("")}</div></div>`;
+    <div class="ideas">${ideas.map((t) => `<button type="button" class="idea" data-idea="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("")}</div></div>
+    ${greekFactHtml("gr-chat")}</div>`;
+  templeParts();
+  wireGreekFacts($("#messages"));
   $("#messages").querySelectorAll("[data-idea]").forEach((b) =>
     b.addEventListener("click", () => {
       $("#input").value = b.dataset.idea;
@@ -568,6 +617,17 @@ function renderEmptyChat() {
   );
   renderState(null);
 }
+
+function templeParts() {
+  const hall = $("#messages .empty-hall");
+  if (!hall) return;
+  hall.querySelectorAll(".t-part").forEach((e) => e.remove());
+  const t = window.STEMTheme?.temple?.(document.documentElement.dataset.era);
+  if (!t) return;
+  hall.insertAdjacentHTML("afterbegin", t.top);
+  hall.insertAdjacentHTML("beforeend", t.bottom);
+}
+window.addEventListener("evklid:era", templeParts);
 
 function renderState(convState) {
   const s = state.student.settings;
@@ -680,9 +740,10 @@ async function send(text, { deep = false } = {}) {
     const box = $("#messages");
     const paint = (shown) => {
       const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
-      bubble.innerHTML = renderRich(streamSafe(shown));
+      bubble.innerHTML = renderRich(streamSafe(shown)) || "<p></p>"; // prazen odstavek nosi piko »piše« (style.css)
       if (atBottom) box.scrollTop = box.scrollHeight;
     };
+    paint("");
     // Odgovor se izpisuje z berljivim tempom; dotik sporočila pokaže vse naenkrat.
     const pacer = createPacer(currentPace(), paint);
     state.pacer = pacer;
@@ -807,7 +868,7 @@ const input = $("#input");
 // Polje raste z besedilom do 40 % vidne višine (tudi z odprto tipkovnico), nato drsi; nobena vrstica ni odrezana.
 // Če besedilo ne gre več v polje, se samodejno pokaže v večjem oknu (public/razpri.js). Zadnja sporočila
 // ostanejo vidna nad poljem.
-function autoGrow(stick) {
+function autoGrow(stick, again) {
   const box = $("#messages");
   const atBottom = typeof stick === "boolean" ? stick : box.scrollHeight - box.scrollTop - box.clientHeight < 80;
   const max = Math.max(80, Math.round((window.visualViewport?.height || window.innerHeight) * 0.4));
@@ -819,15 +880,41 @@ function autoGrow(stick) {
   // Telefon: daljše besedilo dobi celo širino vrstice, gumbi gredo pod polje (nazaj šele, ko je polje prazno).
   const row = input.closest(".composer-row");
   const multi = h > 60 || (row.classList.contains("multi") && !!input.value);
-  if (multi !== row.classList.contains("multi")) {
+  // Samo enkrat: v ozkem oknu se prazno polje z zavitim namigom sicer preklaplja v neskončnost (prekoračen sklad).
+  if (multi !== row.classList.contains("multi") && !again) {
     row.classList.toggle("multi", multi);
-    return autoGrow(atBottom); // širina polja se je spremenila: višino izmerimo znova
+    return autoGrow(atBottom, true); // širina polja se je spremenila: višino izmerimo znova
   }
   if (atBottom) box.scrollTop = box.scrollHeight;
   if (h > max + 2 && input.value.trim() && input.offsetParent) showFull({ kind: "composer", title: t("full.message"), field: input });
   else if (fullOpen("composer") && (h <= max || !input.value.trim())) closeFull();
 }
 input.addEventListener("input", autoGrow);
+// Ozko polje (telefon): namig se ne odreže sredi besede (»Napiši nalogo a«), ampak za zadnjo celo besedo
+// (»Napiši nalogo …«). Celoten namig ostane v polju, ko je prostora dovolj; nov namig (jezik, način) se izmeri znova.
+{
+  let full = "";
+  let shown = "";
+  const ctx = document.createElement("canvas").getContext("2d");
+  const fit = () => {
+    if (input.placeholder !== shown) full = input.placeholder;
+    const cs = getComputedStyle(input);
+    const room = input.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2;
+    if (!full || !ctx || room <= 0) return;
+    ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    let text = full;
+    if (ctx.measureText(full).width > room) {
+      const words = full.replace(/\s*…$/, "").split(/\s+/);
+      while (words.length > 1 && ctx.measureText(`${words.join(" ")} …`).width > room) words.pop();
+      text = `${words.join(" ")} …`;
+    }
+    shown = text;
+    if (input.placeholder !== text) input.placeholder = text;
+  };
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(input);
+  new MutationObserver(() => input.placeholder !== shown && fit()).observe(input, { attributes: true, attributeFilter: ["placeholder"] });
+  document.fonts?.ready.then(fit);
+}
 // Besedilo, vpisano iz kode (predlogi, kalkulator, kotiček, vrnjeno po napaki), tudi poveča polje.
 {
   const desc = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value");
@@ -1833,7 +1920,10 @@ async function loadPath(key = state.pathKey) {
         </div>
       </section>`;
       })
-      .join("");  if (!maybeTour.done) {
+      .join("") +
+    greekFactHtml("gr-path");
+  wireGreekFacts(content);
+  if (!maybeTour.done) {
     maybeTour.done = true;
     maybeTour();
   }

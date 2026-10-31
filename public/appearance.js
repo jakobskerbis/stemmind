@@ -1,4 +1,4 @@
-// Nastavitve → Videz: slog (Čist / Igriv / Temen), svetli/temni način, poudarki, barve oken, menijev in pisave, naključne barve.
+// Nastavitve → Videz: slog (Čist / Igriv / Temen in zgodovinski slogi iz theme.js → ERAS), svetli/temni način, poudarki, barve oken, menijev in pisave, naključne barve.
 // Vse se zgodi takoj in velja za to napravo (theme.js).
 import { icon } from "./icons.js";
 import { t } from "./i18n.js";
@@ -20,12 +20,34 @@ const STYLES = [
   ["igriv", t("ap.styleIgriv"), t("ap.styleIgrivText"), ["#fff6ea", "#ffc56b", "#6a3bd6"], "Nunito Variable"],
   ["temen", t("ap.styleTemen"), t("ap.styleTemenText"), ["#0d1117", "#151b23", "#4cd3a4"], "IBM Plex Sans Variable"],
 ];
+// Zgodovinski slogi iz tabele v theme.js (ERAS): ime ap.style<Slog>, vzorec iz svetlih barv (ozadje, pas, poudarek), pisava naslovov.
+const cap = (s) => s[0].toUpperCase() + s.slice(1);
+const ERA_STYLES = Object.entries(T?.ERAS || {}).map(([v, e]) => [v, t(`ap.style${cap(v)}`), t(`ap.style${cap(v)}Text`), [e.light.bg, e.light.band || e.light.surface, e.light.accent], e.font[0]]);
 const MODES = [["light", "sun", t("ap.light")], ["dark", "moon", t("ap.dark")], ["system", "sun-moon", t("ap.system")]];
 
 export function mountAppearance(box) {
   if (!box || !T) return;
+  // Pisave zgodovinskih slogov za predogled imen: šele ko je Videz res na zaslonu (modul se naloži ob zagonu)
+  // in ne v lahkem načinu; brskalnik prenese le znake, ki jih res izriše.
+  const previewFonts = () => {
+    if (document.documentElement.classList.contains("lite")) return;
+    for (const e of Object.values(T.ERAS || {})) T.loadFont?.(e.font[1]);
+  };
+  if (typeof IntersectionObserver === "function") {
+    const io = new IntersectionObserver((en) => {
+      if (!en.some((x) => x.isIntersecting)) return;
+      io.disconnect();
+      previewFonts();
+    });
+    io.observe(box);
+  } else previewFonts();
   const render = () => {
     const s = T.load();
+    const card = ([v, name, text, sw, font]) => `
+          <button type="button" role="radio" class="style-card${s.style === v ? " on" : ""}" data-style="${v}" aria-checked="${s.style === v}">
+            <span class="style-sw" aria-hidden="true">${sw.map((c) => `<i style="background:${c}"></i>`).join("")}</span>
+            <span class="style-txt"><b style="font-family:'${font}', system-ui, sans-serif">${name}</b><small>${text}</small></span>
+          </button>`;
     const key = T.isDarkMode(s) ? "dark" : "light";
     const c = T.compute(s);
     const base = T.baseOf(s)[key];
@@ -39,11 +61,8 @@ export function mountAppearance(box) {
 
       <div class="ap-row">
         <span class="field-label">${t("ap.style")}</span>
-        <div class="style-cards" role="radiogroup" aria-label="${t("ap.style")}">${STYLES.map(([v, name, text, sw, font]) => `
-          <button type="button" role="radio" class="style-card${s.style === v ? " on" : ""}" data-style="${v}" aria-checked="${s.style === v}">
-            <span class="style-sw" aria-hidden="true">${sw.map((c) => `<i style="background:${c}"></i>`).join("")}</span>
-            <span class="style-txt"><b style="font-family:'${font}', system-ui, sans-serif">${name}</b><small>${text}</small></span>
-          </button>`).join("")}
+        <div class="style-cards" role="radiogroup" aria-label="${t("ap.style")}">${STYLES.map(card).join("")}
+          <span class="style-group" id="ap-style-history">${t("ap.styleHistory")}</span>${ERA_STYLES.map(card).join("")}
         </div>
       </div>
 

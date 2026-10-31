@@ -382,7 +382,11 @@ body.onboarding .test-notice .tn-report, body.auth-mode .test-notice .tn-report 
 }
 .msg.assistant::after {
   content: "S"; position: absolute; inset-inline-start: -44px; bottom: 0; width: 34px; height: 34px; display: grid; place-items: center;
-  color: #fff; font-weight: 900; font-size: 0.95rem;
+  color: #fff; font-weight: 900; font-size: 0.95rem; line-height: 1; text-box: trim-both cap alphabetic; /* črka na optični sredini */
+}
+/* Zgodovinski slogi: namesto črke ikona inštruktorja obdobja (icons.js → --tutor-ic, maska iz ikone »sparkles«). */
+html[data-tutor-ic] .msg.assistant::after {
+  content: ""; background: #fff; -webkit-mask: var(--tutor-ic) center / 20px 20px no-repeat; mask: var(--tutor-ic) center / 20px 20px no-repeat;
 }
 .msg.assistant p { margin: 0.45em 0; }
 .msg.assistant > :first-child { margin-top: 0; }
@@ -393,7 +397,10 @@ body.onboarding .test-notice .tn-report, body.auth-mode .test-notice .tn-report 
 .msg .katex-display:has(.mfrac [data-fx]) { padding-top: 9px; margin-top: calc(1em - 5px); }
 .msg .photo-note { display: flex; align-items: center; gap: 6px; font-size: 0.85em; opacity: 0.9; margin-bottom: 4px; }
 .msg.error { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
-.typing::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-inline-start: 4px; border-radius: 50%; background: var(--accent); animation: blink 1s ease-in-out infinite; }
+/* Pika »piše …« na koncu zadnjega odstavka; ::before in ::after mehurčka sta avatar inštruktorja in ju ne smemo zadeti
+   (prej je .typing::after avatarju dodal zamik 4 px, utripanje in modro ozadje, zato je bil znak izven sredine). */
+/* Pri seznamu za besedilom zadnje točke, ne v novi vrstici; prazen mehurček dobi <p></p> (app.js, paint). */
+.msg.assistant.typing > :last-child:not(ul, ol)::after, .msg.assistant.typing > :is(ul, ol):last-child > li:last-child::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-inline-start: 4px; border-radius: 50%; background: var(--accent); animation: blink 1s ease-in-out infinite; }
 @keyframes blink { 50% { opacity: 0.2; } }
 .deep-btn { display: inline-flex !important; margin-top: 10px; font-size: 0.85rem; min-height: 34px !important; padding: 4px 12px !important; color: var(--muted) !important; }
 /* Pod odgovorom: koda sporočila (za preverjanje posnetkov zaslona) in »Prijavi napako« (server/reports.js) */
@@ -422,7 +429,7 @@ button.ghost.msg-report { font-size: 0.78rem; font-weight: 600; padding: 4px 8px
 .icon-btn:hover { background: var(--surface-2); color: var(--accent); }
 .icon-btn svg.i { width: 22px; height: 22px; }
 button.send { border-radius: 18px; min-height: 42px; padding: 8px 16px; box-shadow: none; }
-.composer > .hint { font-size: 0.8rem; color: var(--muted); margin: 6px auto 0; max-width: 900px; padding-inline-start: 8px; }
+.composer > .hint { font-size: 0.8rem; color: var(--muted); margin: 6px auto 0; max-width: 900px; text-align: center; }
 
 /* Inštruktor: mikrofon (glasovni vnos) in napredna tipkovnica s simboli */
 button.icon-btn { border: 0; background: none; padding: 0; min-height: 0; box-shadow: none; flex: none; }
