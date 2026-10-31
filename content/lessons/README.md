@@ -59,6 +59,8 @@ Nekaj vrstic. Tutor ga dobi v kontekst, da razlaga skladno z učbenikom.
 ## Drugače: Bolj natančno
 Razdelki, ki se začnejo z »Drugače:«, se pokažejo pod gumbom »Razloži drugače«.
 
+**Telefon (360 px).** Prikazna formula ali tabela, ki je na telefonu preširoka, se pomanjša do 80 %, ostalo se pomika vstran (`public/sirina.js`). Zato dolgo verigo enačb razdeli v več `$$…$$`, vsak naj bo cela enačba z levo stranjo (`$$s = v \cdot t$$`, nato `$$s = 9 \cdot 45 = 405\,\mathrm{m}$$`), sicer `check-lesson.js` korakov ne preračuna; `aligned` in `$$= …$$` brez leve strani ne preverita ničesar. Tabela naj ima največ 3–4 kratke stolpce. Videz preveri `node scripts/preveri-videz-lekcij.cjs --samo POT/tema --vse` (napake: koreni brez črte, neporavnane tabele, formule čez rob ali ne na sredini; »drsnik« je opozorilo, kje bi krajši zapis pomagal).
+
 ## Preveri se
 ? Vprašanje (Markdown in $LaTeX$ sta dovoljena)
 - napačen odgovor

@@ -3,7 +3,8 @@
 .textbook { --demo-a: #e8833a; --demo-b: #2f9e8f; --demo-c: #7b61d1; }
 .dark .textbook { --demo-a: #f2a061; --demo-b: #4cc3b2; --demo-c: #a58ff0; }
 
-.textbook svg:not(.demo-svg) { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 6px; }
+/* Ikone v učbeniku. Ne KaTeX: njegovi SVG-ji (znak korena s črto, puščice, oklepaji) imajo svojo širino (j 2026-10-31). */
+.textbook svg:not(.demo-svg):not(.katex svg) { width: 1.1em; height: 1.1em; vertical-align: -0.15em; margin-right: 6px; }
 .tb-head h1 { display: flex; align-items: center; }
 .tb-search input {
   width: 100%; padding: 11px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); font-size: 1rem;
@@ -59,6 +60,12 @@
 .tb-draft { background: color-mix(in srgb, #e0a100 14%, transparent); border-radius: 10px; padding: 8px 12px; font-size: 0.9rem; }
 .tb-section .explanation { line-height: 1.65; }
 .tb-section .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0 6px; } /* 6px: osvetlitev klikljive oznake v imenovalcu ni odrezana */
+/* Široke formule in tabele (public/sirina.js): kar ostane preširoko po pomanjšanju, se pomika, desni rob zbledi. */
+.textbook :is(.katex-display, .md-table-wrap).tb-drsnik:not(.tb-konec) { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent); }
+[dir="rtl"] .textbook :is(.katex-display, .md-table-wrap).tb-drsnik:not(.tb-konec) { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent); }
+@media print { .textbook :is(.katex-display, .md-table-wrap) { -webkit-mask-image: none; mask-image: none; } }
+.textbook .katex.tb-dolga { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; padding: 2px 0 4px; }
+.textbook .explanation code { overflow-wrap: anywhere; }
 /* Nizek števec (m/V): okvir oznake sega 4,6 px nad formulo; brez tega je osvetlitev zgoraj odrezana. */
 .tb-section .katex-display:has(.mfrac [data-fx]) { padding-top: 9px; margin-top: calc(1em - 5px); }
 .tb-why { border-inline-start: 4px solid var(--accent); }

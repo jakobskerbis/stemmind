@@ -4,6 +4,7 @@ import { t, locale } from "./i18n.js";
 import { withFormulaSubject } from "./formula-data.js";
 import { lessonSteps } from "./lesson-steps.js";
 import { gradivaHtml, wireGradiva, stopReading } from "./gradiva.js";
+import { prilagodiSirino } from "./sirina.js";
 
 let ctx = null; // { api, renderRich, escapeHtml, getStudent, openTopic, nextPractice, learnWithTutor, showView }
 const $ = (sel) => document.querySelector(sel);
@@ -531,6 +532,7 @@ async function renderLesson(topicId) {
     renderHome();
   });
   wireFormulas(box);
+  prilagodiSirino(box);
   box.querySelectorAll(".tb-demo-mount").forEach((m) => {
     const d = demos[Number(m.dataset.sim)];
     mountSim(d.id, m, d.opts);
@@ -543,6 +545,7 @@ async function renderLesson(topicId) {
     box.querySelectorAll("[data-alt]").forEach((b) => b.classList.toggle("active", Number(b.dataset.alt) === i));
     altBody.innerHTML = `<div class="explanation">${R(lesson.alternatives[i].md)}</div>`;
     wireFormulas(altBody);
+    prilagodiSirino(altBody);
   };
   $("#tb-alt-btn")?.addEventListener("click", () => {
     const altBox = $("#tb-alt-box");
@@ -567,6 +570,7 @@ async function renderLesson(topicId) {
           : wrongWhy
           ? `Ni čisto tako. ${R(wrongWhy)} Poskusi še enkrat.`
           : "Ni čisto tako. Premisli še enkrat ali preberi razlago zgoraj.";
+        prilagodiSirino(why);
         if (ok) el.querySelectorAll(".tb-opt").forEach((x) => (x.disabled = true));
       }),
     );
