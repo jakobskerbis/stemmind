@@ -483,7 +483,6 @@ button.mic-btn.rec { color: var(--danger); background: color-mix(in srgb, var(--
 .lg.mastered svg.i { background: var(--ok); }
 .lg.learning svg.i { background: var(--accent); }
 .lg.due svg.i { background: var(--gold); }
-.lg.locked svg.i { background: #a3adc3; }
 
 .unit { padding: 20px 20px 16px; }
 .unit-head { display: flex; align-items: center; gap: 14px; }
@@ -497,8 +496,6 @@ button.mic-btn.rec { color: var(--danger); background: color-mix(in srgb, var(--
 .ring::before { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: var(--surface); }
 .ring > * { position: relative; }
 .unit.mastered .ring { color: var(--ok); }
-.unit.locked .ring { color: var(--muted); }
-.unit.locked { background: color-mix(in srgb, var(--surface) 70%, var(--bg)); box-shadow: none; }
 .path { list-style: none; margin: 16px 0 6px; padding: 0; position: relative; }
 .path::before { content: ""; position: absolute; inset-inline-start: 25px; top: 26px; bottom: 26px; width: 4px; border-radius: 4px; background: var(--surface-2); }
 .path li { position: relative; }
@@ -517,12 +514,10 @@ button.mic-btn.rec { color: var(--danger); background: color-mix(in srgb, var(--
 .node.learning .node-dot { background: var(--accent); color: var(--accent-text); box-shadow: 0 var(--press) 0 color-mix(in srgb, var(--accent) 60%, #000); }
 .node.due .node-dot { background: var(--gold); color: #fff; box-shadow: 0 var(--press) 0 color-mix(in srgb, var(--gold) 60%, #000); }
 .node.new .node-dot { background: var(--surface); color: var(--accent); border-color: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent-soft); }
-.node.locked .node-dot { background: var(--surface-2); color: #a3adc3; }
 .node.current .node-dot { animation: pulse 1.8s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 45%, transparent); } 50% { box-shadow: 0 0 0 10px transparent; } }
 .node-text { display: flex; flex-direction: column; min-width: 0; }
 .node-name { font-weight: 800; }
-.node.locked .node-name { color: var(--muted); }
 .node-sub { font-size: 0.82rem; color: var(--muted); font-weight: 700; }
 .node.current .node-sub { color: var(--accent); }
 .unit-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--border); }
@@ -532,6 +527,8 @@ button.mic-btn.rec { color: var(--danger); background: color-mix(in srgb, var(--
 .back { margin: -6px 0 10px -6px; }
 .topic-head .goals { display: flex; gap: 8px; align-items: flex-start; color: var(--muted); font-weight: 600; margin: 4px 0 0; }
 .topic-head .goals svg.i { color: var(--accent); margin-top: 3px; }
+.topic-head .ahead-hint { margin: 12px 0 0; }
+.ahead-hint .text-btn { display: inline; padding: 8px 2px; margin: 0; font-weight: 800; } /* navpični odmik poveča površino dotika na ≥ 40 px, vrstica ostane enaka */
 .explanation h3 { font-size: 1rem; margin: 14px 0 4px; }
 .explanation details { background: var(--surface-2); border-radius: 10px; padding: 6px 12px; margin: 6px 0; }
 .session-head { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }

@@ -14,7 +14,7 @@ import { Banner, Body, Button, Card, ErrorView, Icon, Loading, ProgressBar, TabS
 import { XpHeader, type Xp } from "@/components/XpHeader";
 
 type Topic = { id: string; name: string; goals?: string; practice: boolean; status: "new" | "learning" | "mastered"; due?: boolean };
-type Unit = { title: string; topics: Topic[]; progress: number; locked: boolean; mastered: boolean };
+type Unit = { title: string; topics: Topic[]; progress: number; ahead?: boolean; mastered: boolean };
 type PathView = { key: string | null; label?: string; units?: Unit[]; message?: string; offline?: boolean };
 type Modes = { newTopic: Topic | null; dueCount: number; daily: { done: boolean; open: boolean } };
 
@@ -82,10 +82,10 @@ export default function Path() {
       {!path.units ? <Banner text={path.message || t("mob.noPath")} /> : null}
       {path.label ? <Text style={{ color: th.muted, fontSize: 15, fontWeight: "600", marginTop: 6 }}>{path.label}</Text> : null}
       {(path.units || []).map((u, i) => (
-        <Card key={u.title + i} style={u.locked ? { opacity: 0.75 } : undefined}>
+        <Card key={u.title + i}>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <Text style={{ flex: 1, color: th.text, fontSize: 18, fontWeight: "700" }}>{u.title}</Text>
-            {u.mastered ? <Icon name={{ ios: "checkmark.seal.fill", android: "verified" }} color={th.ok} size={20} /> : u.locked ? <Icon name={{ ios: "lock.fill", android: "lock" }} color={th.muted} size={16} /> : null}
+            {u.mastered ? <Icon name={{ ios: "checkmark.seal.fill", android: "verified" }} color={th.ok} size={20} /> : null}
           </View>
           <ProgressBar value={u.progress || 0} color={u.mastered ? th.ok : th.accent} />
           {u.topics.map((tp) => (
