@@ -488,7 +488,8 @@ async function renderLesson(topicId) {
     : "";
 
   // »Kaj zdaj?«: po korakih je del zadnjega koraka, nad krogi Nazaj · 1/12 · Naprej (ti plavajo na dnu nad
-  // vsebino; vrstica zavzame svojo višino na koncu, zato zadnje vrstice odpeljemo nadnjo).
+  // vsebino; vrstica zavzame svojo višino na koncu, zato zadnje vrstice odpeljemo nadnjo). Krogi so za mrežo,
+  // ne v levem stolpcu: na računalniku s poskusi desno je ← levo spodaj, številka na sredini in → desno spodaj.
   const nextHtml = `<section class="card tb-next"${stepMode ? " hidden" : ""}>
     <h2>Kaj zdaj?</h2>
     <div class="actions">
@@ -509,8 +510,8 @@ async function renderLesson(topicId) {
     ${L.goals ? `<p class="tb-goals"><b>Cilji:</b> ${esc(L.goals)}</p>` : ""}
     ${L.pretest_due ? `<section class="card tb-pretest"><h2>${ic("target")}${esc(t("pretest.title"))}</h2><p>${esc(t("pretest.lessonIntro"))}</p><button type="button" class="primary" id="tb-pretest">${ic("play")}${esc(t("pretest.start"))}</button></section>` : ""}
     ${lesson && lesson.status !== "pregledano" ? `<p class="tb-draft">Osnutek: lekcijo mora še pregledati učitelj. Če opaziš napako, povej inštruktorju.</p>` : ""}
-    ${stepMode ? `<div class="tb-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${steps.length}"><span></span></div>${stepsHtml}${nextHtml}${stepper}` : `${sectionHtml}${fallback}${checksHtml}${nextHtml}`}
-    </div><aside class="tb-side">${demoHtml}</aside></div>`;
+    ${stepMode ? `<div class="tb-progress" role="progressbar" aria-valuemin="1" aria-valuemax="${steps.length}"><span></span></div>${stepsHtml}${nextHtml}` : `${sectionHtml}${fallback}${checksHtml}${nextHtml}`}
+    </div><aside class="tb-side">${demoHtml}</aside></div>${stepper}`;
   placeDemos(box);
   window.scrollTo(0, 0);
   // Gradiva (povzetek na eni strani, branje na glas, delovni list) naložimo zraven.
