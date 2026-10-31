@@ -1,7 +1,7 @@
 // Široke formule in tabele v lekciji (j 2026-10-31: na telefonu so se skrivali stolpci in konci formul).
 // Kar je preširoko za kartico, najprej malo pomanjšamo (do 80 %). Kar je še vedno preširoko, se pomika
-// vstran, desni rob pa zbledi, da se vidi, da se nadaljuje. Dolga formula sredi besedila se zmanjša ali
-// dobi svoj drsnik, da ne gleda čez rob kartice. Preverja scripts/preveri-videz-lekcij.cjs.
+// vstran, desni rob pa zbledi, da se vidi, da se nadaljuje. Formula sredi besedila se nikoli ne prelomi
+// v dve vrstici; če je širša od vrstice, se zmanjša ali dobi svoj drsnik, da ne gleda čez rob kartice. Preverja scripts/preveri-videz-lekcij.cjs.
 
 export const MIN = 0.8;
 const BOX = ".katex-display, .md-table-wrap";
@@ -41,15 +41,16 @@ function okvir(el) {
 
 // Odstavek ali alineja z dolgo formulo med besedilom.
 function vrstica(el) {
-  const w = el.clientWidth;
-  if (!w || sirine.get(el) === w) return;
-  sirine.set(el, w);
+  const cw = el.clientWidth;
+  if (!cw || sirine.get(el) === cw) return;
+  sirine.set(el, cw);
+  const w = cw - 8; // prostor za ločilo za formulo (vejica, pika), ki ostane v isti vrstici
   for (const k of el.querySelectorAll(":scope .katex")) {
     if (k.closest(".katex-display, table")) continue;
     k.classList.remove("tb-dolga");
     k.style.fontSize = "";
-    // Med deli formule (.katex-base) se vrstica lahko prelomi; preširok je lahko le posamezen del.
-    const del = () => Math.max(0, ...[...k.querySelectorAll(".katex-html > :is(.base, .katex-base)")].map((b) => b.getBoundingClientRect().width));
+    // Formula se ne prelomi v novo vrstico (j 2026-10-31, textbook.css), zato šteje njena cela širina.
+    const del = () => k.getBoundingClientRect().width;
     if (del() <= w + 1) continue;
     pomanjsaj(k, w, del);
     if (del() > w + 1) k.classList.add("tb-dolga");

@@ -48,3 +48,16 @@ test("lesson and »Razloži drugače« both get fitted", () => {
   assert.match(js, /wireFormulas\(box\);\n\s+prilagodiSirino\(box\);/);
   assert.match(js, /wireFormulas\(altBody\);\n\s+prilagodiSirino\(altBody\);/);
 });
+
+test("an inline formula never breaks across two lines", () => {
+  assert.match(pub("textbook.css"), /^\.textbook \.katex \{ white-space: nowrap; \}$/m);
+});
+
+test("a setting with only a few values is buttons, not a slider (axis sliders stay sliders)", async () => {
+  const { GUMBI_DO } = await import("../public/sim/kit.js");
+  assert.ok(GUMBI_DO >= 4 && GUMBI_DO <= 8);
+  const kit = pub("sim/kit.js");
+  assert.match(kit, /n <= GUMBI_DO && !wrap\.classList\.contains\("axis-slider"\)/);
+  assert.match(kit, /sl\.classList\.add\("axis-slider"\);\n\s+sl\.sync\?\.\(\);/);
+  assert.match(pub("textbook.css"), /\.demo-slider\.as-choice \.demo-choice/);
+});

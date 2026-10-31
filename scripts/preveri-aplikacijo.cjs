@@ -493,8 +493,8 @@ async function textbook(p, label) {
       await demo.scrollIntoViewIfNeeded();
       await p.waitForTimeout(300);
       if (!(await demo.locator(".tb-demo-mount").first().evaluate((m) => m.children.length))) throw new Error("simulacija se ni naložila");
-      // Prvi drsnik ali gumb simulacije.
-      const ctl = demo.locator("input[type=range], button").first();
+      // Prvi viden drsnik ali gumb simulacije (nastavitev z malo vrednostmi ima skrit drsnik in gumbe).
+      const ctl = demo.locator("input[type=range]:visible, button:visible").first();
       if (await ctl.count()) {
         if ((await ctl.getAttribute("type")) === "range") await ctl.fill(String(await ctl.evaluate((x) => x.max)));
         else await ctl.click();

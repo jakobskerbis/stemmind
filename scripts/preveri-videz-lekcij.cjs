@@ -175,8 +175,11 @@ function measure() {
           (report[id] ||= []).push({ view: label, kind: "napaka", detail: "lekcija se ni odprla" });
           continue;
         }
-        // Odpri »Razloži drugače«, da se izriše tudi prvi alternativni zavihek.
-        await p.evaluate(() => document.querySelector("#tb-alt-btn")?.click());
+        // Odpri »Razloži drugače« (prvi zavihek) in vse skrite odgovore (<details>), da se izmeri tudi njihova vsebina.
+        await p.evaluate(() => {
+          document.querySelector("#tb-alt-btn")?.click();
+          document.querySelectorAll("#view-textbook details").forEach((d) => (d.open = true));
+        });
         await p.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(r, 40)))));
         const found = await p.evaluate(measure);
         for (const f of found) (report[id] ||= []).push({ view: label, ...f });

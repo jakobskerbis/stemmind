@@ -184,6 +184,7 @@ export function organska(el, { groups = ["alkan", "alken", "alkin", "alkohol", "
     slP.hidden = !SKUPINE[g][2] || pMax() <= pMin();
     slP.input.min = pMin();
     slP.input.max = Math.max(pMin(), pMax());
+    slP.sync?.();
     slP.set(p, true);
     slM.hidden = g !== "ester";
   };
