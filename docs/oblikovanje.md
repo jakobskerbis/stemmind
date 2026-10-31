@@ -75,7 +75,7 @@ Pravilo izbranega stanja: izbrano je vedno modro (`--accent` besedilo ali rob, `
 
 ## Premična okna
 
-Deli aplikacije se dajo prijeti in premakniti kot okna v Windows (`public/okna.js`, `public/vrstice.js`, `public/okna.css`). Vklop v Nastavitve → »Premična okna« (nastavitev naprave `windows`, privzeto vključena), tam je tudi »Ponastavi postavitev« (vrstni red zavihkov, okna in mehurček).
+Deli aplikacije se dajo prijeti in premakniti kot okna v Windows (`public/okna.js`, `public/vrstice.js`, `public/okna.css`). Vklop v Nastavitve → »Premična okna« (nastavitev naprave `windows`, privzeto vključena), tam je tudi »Ponastavi postavitev« (vrstni red zavihkov, okna, mehurček in širine delov strani).
 
 - **Vrstni red v vrsticah**: zgornji zavihki, spodnja vrstica `#tabbar`, načini na Učni poti `#modebar`, načini kalkulatorja `.calc-modes` in zavihki Zbirk se preuredijo s potegom (miška: premik vsaj 6 px, dotik: dolg pritisk 0,4 s, tipkovnica: Alt+Shift+puščica). Modra črta kaže mesto. Red je shranjen na napravi (`evklid.vrsta.<ime>`); nove ali skrite postavke ostanejo na privzetem mestu. Nova vrstica zavihkov dobi isti pomočnik `makeRowSortable(vrstica, ime)`, ne svojega. Preklopniki v obrazcih (`.seg` z možnostmi) se ne preurejajo.
 - **Okno**: na računalniku (miška, nad 760 px) zgornji zavihek povlečeš navzdol na stran. Pogled (`<main class="view">`) se preseli v okno z naslovno vrstico (ikona in ime zavihka, »Odpri čez cel zaslon«, ×); okno premikaš za naslovno vrstico, velikost spreminjaš na robovih in spodnjih kotih. Spust ali premik ob levem ali desnem robu (28 px) pripne okno na polovico vsebinskega dela (prosojni predogled med potegom), glavni pogled se takrat odmakne na drugo polovico. Dvoklik na naslovno vrstico pripne ali odpne. Okno se da odpreti iz vseh zgornjih zavihkov; več oken hkrati, klik na okno ga prinese naprej. Položaji, velikosti in odprta okna so na napravi (`evklid.okna`) in se vrnejo ob ponovnem odprtju; ob spremembi velikosti zaslona okna ostanejo na zaslonu. Esc zapre okno samo, ko je fokus v njem (ne v polju za vnos).
@@ -85,6 +85,17 @@ Deli aplikacije se dajo prijeti in premakniti kot okna v Windows (`public/okna.j
 - **Ukaz inštruktorju**: »odpri kalkulator«, »odpri učbenik«, »pokaži periodni sistem«, »odpri grafični kalkulator«, »open calculator« … odpre okno ob klepetu (kalkulator v pravem načinu) z odgovorom v enem stavku brez klica modela (`openWindowIntent` v `server/chat-settings.js`); model ima za druge prošnje orodje `open_window`. Strežnik pošlje dogodek `open_window`.
 - **Mehurček inštruktorja**: ko ima učenec pogovor z vsaj enim sporočilom in klepet ni na zaslonu (ne glavni pogled ne okno), je ob robu okrogel gumb v barvi poudarka. Premakneš ga kamorkoli; ob spustu se prilepi na bližji levi ali desni rob (položaj na napravi, `evklid.mehurcek`). Tap odpre klepet v oknu (telefon: spodnji list). Nov odgovor doda značko s številom in za 6 s pokaže predogled ob mehurčku (prvih 80 znakov, kot SMS; tap ga odpre). Odstraniš ga z × (ob lebdenju ali po dolgem pritisku) ali s potegom na × spodaj na sredini; skrit ostane do naslednjega sporočila ali pogovora. Ni ga med uvodom, prijavo, tekmovalno uro in ko je klepet izklopljen.
 - Plasti: okna `z-index` 40+, list in mehurček 45–46, nad njimi menija, kalkulator čez cel zaslon, vodič (60) in obvestila.
+
+## Spreminjanje velikosti delov
+
+Kjer sta na računalniku ali tablici dva dela strani drug ob drugem, je med njima ločnica (`public/razdelilnik.js`, slog v `okna.css`): seznam pogovorov in klepet, Učna pot (levi stolpec), tema ali serija nalog (razlaga desno), lekcija (poskusi in simulacije desno), grafični kalkulator (seznam izrazov) in znanstveni kalkulator (tipkovnica). Formule nimajo dveh delov, zato nimajo ločnice.
+
+- **Videz**: tanka ručka na sredini razmika (siva, ob lebdenju, fokusu in potegu v barvi poudarka s črto čez celo višino), območje za miško 12 px (na dotik 28 px), kazalec `col-resize`.
+- **Uporaba**: poteg z miško ali prstom; tipkovnica: ločnica je `role="separator"` (Tab), puščici ±16 px, Home/End najmanjša/največja širina; dvoklik vrne privzeto širino. Seznam pogovorov se skrije, če ločnico potegneš do roba (ali Enter na ločnici); vrne ga gumb s seznamom v glavi klepeta (»Pokaži seznam pogovorov«).
+- **Meje**: vsak del ima najmanjšo širino (npr. seznam pogovorov 200–480 px, klepet ob njem vsaj 420 px). Ob ožjem zaslonu ali oknu se širina stisne v meje, shranjena vrednost pa ostane in se vrne, ko je spet prostor.
+- **Postavitev ostane v CSS**: ločnica le nastavi spremenljivko na vsebniku (`--split-chat`, `--split-path`, `--split-topic`, `--split-lesson`, `--split-sc`, `--gc-panel`), mreža pa jo uporabi s privzeto vrednostjo, npr. `grid-template-columns: var(--split-chat, 270px) minmax(0, 1fr)`. Nov dvodelni pogled dobi isti pomočnik `makeSplitter(vsebnik, { key, varName, side, min, max, otherMin })` v `app.js`, ne svojega.
+- **Kdaj je ni**: na telefonu (do 760 px), ko ima mreža en stolpec (ožji zaslon ali ozko premično okno, pravila `@container okno`) in ko je izklopljena nastavitev »Premična okna«. Velikost se meri po vsebniku, zato ločnica deluje tudi v premičnem oknu. V RTL je stranski del na desni in poteg sledi vidni strani.
+- Širine so shranjene na napravi (`evklid.razdelilnik`); »Ponastavi postavitev« jih pozabi.
 
 ## Besedilo vedno vidno
 

@@ -53,8 +53,8 @@
 /* ---------- tablica ležeče (na dotik, 1000–1199 px): dva stolpca kot na računalniku ----------
    Sama postavitev je v ui.css (isti pogoj); tu samo ožji stolpci. */
 @media (min-width: 1000px) and (max-width: 1199px) and (hover: none) and (pointer: coarse) {
-  .tb-lesson-grid.has-side { grid-template-columns: minmax(0, 1fr) minmax(360px, 42%); gap: 0 20px; }
-  #view-path { grid-template-columns: minmax(320px, 380px) minmax(0, 1fr); gap: 0 20px; }
+  .tb-lesson-grid.has-side { grid-template-columns: minmax(0, 1fr) var(--split-lesson, minmax(360px, 42%)); gap: 0 20px; }
+  #view-path { grid-template-columns: var(--split-path, minmax(320px, 380px)) minmax(0, 1fr); gap: 0 20px; }
   /* Levi stolpec je na tablici višji od zaslona: pripet bi skril spodnje načine. */
   #view-path > .path-side { position: static; max-height: none; overflow: visible; }
 }
