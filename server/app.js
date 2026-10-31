@@ -916,7 +916,7 @@ export function createApp(store, opts = {}) {
     const s = loadStudent(req, res);
     if (!s) return;
     const out = progress.startUnit(s.id, String(req.body?.path || ""), Number(req.body?.unit));
-    if (!out) return res.status(400).json({ error: "Ta sklop je še zaklenjen ali nima vaj." });
+    if (!out) return res.status(400).json({ error: "Ta sklop nima vaj." });
     res.json(out);
   });
   // --- tekmovanja: samo težje naloge v slogu tekmovanj ---

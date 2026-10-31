@@ -128,7 +128,7 @@ test("exam mock: JEE negative marking, SAT scaled score, XP", () => {
   const store = openDb(":memory:");
   const p = new Progress(store);
   const s = store.createStudent("Arjun");
-  assert.ok(p.pathView(s.id, "MAT-EX-JEEM").units.every((u) => !u.locked));
+  assert.ok(p.pathView(s.id, "MAT-EX-JEEM").units.every((u) => !u.ahead));
   let n = p.startContest(s.id, "MAT-EX-JEEM");
   assert.equal(n.total, 25);
   assert.equal(n.task.points, 4);
