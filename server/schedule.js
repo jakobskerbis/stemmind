@@ -507,13 +507,13 @@ export function schedulePrompt(view) {
   return `danes je ${DAY_NAMES[view.now.day]} ${view.now.date}, ura ${view.now.time}; danes: ${fmt(view.today)}; jutri: ${fmt(view.tomorrow)}; testi in roki: ${tests.length ? tests.join("; ") : "ni vnesenih"}`;
 }
 
-// Enote za test brez izbranih sklopov: zadnja dva sklopa, ki jih je učenec že začel, sicer prvi odklenjen.
+// Enote za test brez izbranih sklopov: zadnja dva sklopa, ki jih je učenec že začel, sicer prvi, ki ni »naprej«.
 function defaultUnits(view) {
   if (!view) return [];
   const idx = view.units.map((u, i) => ({ u, i })).filter(({ u }) => u.topics.some((t) => t.practice));
   const started = idx.filter(({ u }) => u.topics.some((t) => t.status === "learning" || t.status === "mastered"));
   if (started.length) return started.slice(-2).map(({ i }) => i);
-  const open = idx.find(({ u }) => !u.locked);
+  const open = idx.find(({ u }) => !u.ahead);
   return open ? [open.i] : [];
 }
 

@@ -159,17 +159,26 @@ export class Progress {
         progress: relevant.filter((t) => t.status === "mastered").length / relevant.length,
       };
     });
-    // Odklepanje: sklop z vajami je zaklenjen, dokler ni obvladan prejšnji sklop z vajami
-    // (razen če ga je učenec že začel ali opravil preizkus znanja).
-    // Tekmovalne in izpitne poti niso zaklenjene: sklopi so neodvisni, učenec izbira sam.
+    // Brez ključavnic (j, 31. 10. 2026): vsak sklop je vedno odprt. Sklop, pred katerim prejšnji sklop z vajami
+    // še ni osvojen in ga učenec še ni začel, je »naprej« (ahead): pot zanj priporoči najprej temo iz prejšnjega
+    // sklopa, dnevni trening, ponovitev pred uro in vaje brez povezave pa ostanejo pri snovi, kjer učenec je.
+    // Tekmovalne in izpitne poti so brez priporočil: sklopi so neodvisni, učenec izbira sam.
+    // Priporočimo sklop, kjer učenec je (zadnji neosvojen sklop z vajami, ki ni »naprej«), ne verige sklopov nazaj.
     let prevGate = null;
-    const gated = !isPrepPath(pathKey);
+    let here = null;
+    const ordered = !isPrepPath(pathKey);
     for (const u of units) {
-      u.locked = !!(gated && u.hasPractice && prevGate && !prevGate.mastered && !u.started);
+      u.ahead = !!(ordered && u.hasPractice && prevGate && !prevGate.mastered && !u.started);
+      if (u.ahead) {
+        const from = here || prevGate;
+        const t = from.topics.find((x) => x.practice && x.status !== "mastered");
+        u.suggest = { unit: from.title, topic: t ? { id: t.id, name: t.name } : null };
+      }
       if (u.hasPractice) prevGate = u;
+      if (u.hasPractice && !u.ahead && !u.mastered) here = u;
     }
     const next =
-      units.flatMap((u) => (u.locked ? [] : u.topics)).find((t) => t.status !== "mastered") || null;
+      units.flatMap((u) => (u.ahead ? [] : u.topics)).find((t) => t.status !== "mastered") || null;
     return { key: path.key, label: path.label, units, next, dueCount: this.dueTopics(studentId).length };
   }
 
@@ -380,13 +389,13 @@ export class Progress {
   currentTopic(studentId, pathKey) {
     const view = this.pathView(studentId, pathKey);
     if (!view) return null;
-    const open = new Map(view.units.filter((u) => !u.locked).flatMap((u) => u.topics.map((t) => [t.id, t])));
+    const open = new Map(view.units.filter((u) => !u.ahead).flatMap((u) => u.topics.map((t) => [t.id, t])));
     const recent = this.db
       .prepare("SELECT topic_id FROM topic_state WHERE student_id = ? AND topic_id LIKE ? AND status = 'learning' ORDER BY updated_at DESC")
       .all(studentId, `${pathKey}/%`)
       .map((r) => open.get(r.topic_id))
       .find((t) => t && t.practice);
-    const t = recent || view.units.filter((u) => !u.locked).flatMap((u) => u.topics).find((x) => x.status !== "mastered" && x.practice) || view.next;
+    const t = recent || view.units.filter((u) => !u.ahead).flatMap((u) => u.topics).find((x) => x.status !== "mastered" && x.practice) || view.next;
     return t ? { id: t.id, name: t.name, practice: t.practice } : null;
   }
 
@@ -397,14 +406,14 @@ export class Progress {
     if (open) return this.sessionNext(open.id);
     const view = this.pathView(studentId, pathKey);
     if (!view) return null;
-    const unlocked = view.units.filter((u) => !u.locked).flatMap((u) => u.topics).filter((t) => t.practice);
+    const here = view.units.filter((u) => !u.ahead).flatMap((u) => u.topics).filter((t) => t.practice);
     const cur = this.currentTopic(studentId, pathKey);
-    const fresh = [cur?.practice ? cur.id : null, ...unlocked.filter((t) => t.status === "learning").map((t) => t.id)]
+    const fresh = [cur?.practice ? cur.id : null, ...here.filter((t) => t.status === "learning").map((t) => t.id)]
       .filter((v, i, a) => v && a.indexOf(v) === i)
       .slice(0, 2);
     const due = this.dueTopics(studentId);
     // Če ni ničesar na vrsti, priklic že osvojenih tem (brez vpliva na urnik ponavljanja).
-    const old = due.length ? due : unlocked.filter((t) => t.status === "mastered").map((t) => t.id);
+    const old = due.length ? due : here.filter((t) => t.status === "mastered").map((t) => t.id);
     const oldMode = due.length ? "review" : "test";
     const backlog = due.length * RULES.reviewPerTopic;
     const share = backlog > RULES.backlogSuggest ? 1 - RULES.dailyNewShare : RULES.dailyNewShare;
@@ -431,7 +440,7 @@ export class Progress {
     if (open) return this.sessionNext(open.id);
     const view = this.pathView(studentId, pathKey);
     if (!view) return null;
-    const topics = view.units.filter((u) => !u.locked).flatMap((u) => u.topics).filter((t) => t.practice);
+    const topics = view.units.filter((u) => !u.ahead).flatMap((u) => u.topics).filter((t) => t.practice);
     const ids = new Set(topics.map((t) => t.id));
     const recent = (status) =>
       this.db
@@ -453,11 +462,11 @@ export class Progress {
     return this.sessionNext(this.createSession(studentId, "class", plan, { path: pathKey }));
   }
 
-  // Vaja posameznega (odklenjenega) sklopa: prepletene naloge iz vseh tem sklopa.
+  // Vaja posameznega sklopa: prepletene naloge iz vseh tem sklopa (vsi sklopi so odprti).
   startUnit(studentId, pathKey, unitIndex) {
     const view = this.pathView(studentId, pathKey);
     const unit = view?.units[unitIndex];
-    if (!unit || unit.locked) return null;
+    if (!unit) return null;
     const topics = unit.topics.filter((t) => t.practice).map((t) => t.id);
     if (!topics.length) return null;
     const open = this.openSession(studentId, "unit", (x) => x.params.path === pathKey && x.params.unit === unitIndex);
@@ -715,12 +724,12 @@ export class Progress {
   }
 
   // ---------- vaje brez povezave (lahki način) ----------
-  // Paket nalog za odklenjene teme poti: naloge z rešitvami, da jih odjemalec preveri sam.
+  // Paket nalog za teme poti, kjer učenec je (brez sklopov »naprej«): naloge z rešitvami, da jih odjemalec preveri sam.
   // Ob ponovni povezavi strežnik iz semena znova ustvari isto nalogo in odgovor preveri še enkrat.
   offlinePack(studentId, pathKey, perTopic = 6) {
     const view = this.pathView(studentId, pathKey);
     if (!view) return null;
-    const topics = view.units.filter((u) => !u.locked).flatMap((u) => u.topics.map((t) => ({ ...t, unit: u.title }))).filter((t) => t.practice);
+    const topics = view.units.filter((u) => !u.ahead).flatMap((u) => u.topics.map((t) => ({ ...t, unit: u.title }))).filter((t) => t.practice);
     const path = getPath(pathKey);
     const tasks = {};
     const info = {};
