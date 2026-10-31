@@ -101,10 +101,34 @@
 @media (hover: none) and (pointer: coarse) { .tb-tools { row-gap: 0; } .tb-tools .tb-pdf { min-height: 40px; padding-block: 0; margin-block: 0; } }
 .tb-progress { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; margin: 4px 0 12px; scroll-margin-top: 80px; }
 .tb-progress > span { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.2s ease; }
-.tb-stepper { position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 4px 0 12px; padding: 10px 0; background: var(--bg); border-top: 1px solid var(--border); box-shadow: 0 64px 0 0 var(--bg); }
-.tb-stepper button { min-height: 44px; }
-.tb-stepper button[hidden] { display: none; }
-.tb-step-count { color: var(--muted); font-size: 0.9rem; white-space: nowrap; font-variant-numeric: tabular-nums; text-align: center; flex: 1; }
+/* Koraki lekcije: plavajoči krogi Nazaj · 1/12 · Naprej na dnu pogleda. Vsebina teče pod njimi (prozorna vrstica,
+   rahel preliv ozadja za berljivost); vrstica na koncu zavzame svojo višino, zato zadnje vrstice odpeljemo nadnjo.
+   Pogled pod njo nima spodnjega odmika (brez praznega pasu); varno območje doda touch.css. */
+#view-textbook:has(.tb-stepper) { padding-bottom: 0; }
+.tb-stepper {
+  position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 8px 0 0; padding: 14px 2px 12px; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg) 60%, transparent) 60%, color-mix(in srgb, var(--bg) 75%, transparent));
+}
+.tb-stepper > * { pointer-events: auto; }
+.tb-step-btn, .tb-step-count { flex: none; width: 52px; height: 52px; border-radius: 50%; box-shadow: var(--shadow-lg); }
+.tb-step-btn {
+  display: grid; place-items: center; margin: 0; padding: 0; min-height: 0; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+}
+.tb-step-btn.next { border-color: var(--accent); background: var(--accent); color: var(--accent-text); }
+.tb-step-btn svg { width: 24px; height: 24px; margin: 0; }
+.tb-step-btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 3px; }
+.tb-step-btn:disabled { cursor: default; box-shadow: var(--shadow); border-color: var(--border); background: var(--surface); color: var(--muted); }
+.tb-step-btn:disabled svg { opacity: 0.4; }
+@media (hover: hover) { .tb-step-btn:not(:disabled):hover { border-color: var(--accent); } .tb-step-btn.next:not(:disabled):hover { filter: brightness(1.08); } }
+[dir="rtl"] .tb-step-btn svg { transform: scaleX(-1); }
+.tb-step-count {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1;
+  border: 2px solid var(--accent); background: var(--surface); color: var(--text); font-variant-numeric: tabular-nums;
+}
+.tb-step-count b { font-size: 1.12rem; font-weight: 800; }
+.tb-step-count small { margin-top: 2px; font-size: 0.72rem; font-weight: 600; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .tb-progress > span { transition: none; } }
 
 /* demonstracije */

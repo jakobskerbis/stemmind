@@ -509,7 +509,10 @@ function placeBubble() {
   const a = area();
   const pref = bstate.side === "left" ? "left" : "right";
   const lo = a.top + 8;
-  const hi = Math.max(lo, a.bottom - size - 8);
+  let hi = Math.max(lo, a.bottom - size - 8);
+  // Lekcija po korakih: krogi Nazaj · 1/12 · Naprej plavajo na dnu glavnega pogleda, mehurček ostane nad njimi.
+  const st = document.querySelector("body > main.view:not([hidden]):not(.in-okno) .tb-stepper");
+  if (st && st.offsetParent) hi = Math.max(lo, Math.min(hi, a.bottom - st.offsetHeight - size));
   const y0 = Math.min(Math.max(Math.round((bstate.y ?? 0.72) * window.innerHeight - size / 2), lo), hi);
   const xOf = (side) => (side === "left" ? 12 : window.innerWidth - size - 12);
   const rects = [...wins.values()].map((w) => w.el.getBoundingClientRect());
@@ -679,6 +682,7 @@ export function initOkna(opts) {
       if (bubble && !bubble.hidden) placeBubble();
     });
   });
+  window.addEventListener("evklid:stepper", () => bubble && !bubble.hidden && placeBubble());
   // Uvod, prijava in tekmovalna ura skrijejo mehurček (razredi na <body>).
   new MutationObserver(() => refreshBubble()).observe(document.body, { attributes: true, attributeFilter: ["class"] });
 }
