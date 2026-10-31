@@ -17,7 +17,7 @@ try {
 const PUB = path.resolve("public");
 const TYPES = { ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".html": "text/html" };
 const PAGES = {
-  "/t-calc.html": `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/ui.css"><link rel="stylesheet" href="/graph.css"><div id="g" style="height:600px"></div>
+  "/t-calc.html": `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/ui.css"><link rel="stylesheet" href="/graph.css"><div id="g" style="height:600px"></div><button id="ven" style="position:fixed;top:0;left:0;z-index:9999;width:44px;height:44px">x</button>
 <script type="module">
 import { createCalculator } from "/graph/calc.js";
 window.calc = createCalculator(document.getElementById("g"), { t: (k) => k, icon: () => "", locale: () => "sl", storageKey: () => "t-calc", studentId: () => "", toast() {}, askTutor() {} });
@@ -73,8 +73,21 @@ test("touch-browser checks", { skip }, async (t) => {
     });
     assert.deepEqual(st, { focused: true, inputmode: null, keypadHidden: true });
     // Tipkanje s sistemsko tipkovnico gre v polje.
-    await page.keyboard.type("y=ax");
-    assert.equal(await page.inputValue(".gc-input"), "y=ax");
+    await page.keyboard.type("y=2x");
+    assert.equal(await page.inputValue(".gc-input"), "y=2x");
+    // Telefon polje ob odpiranju tipkovnice za hip odfokusira: naslednji dotik ne vrne naše tipkovnice.
+    await page.evaluate(() => document.querySelector(".gc-input").blur());
+    await page.waitForTimeout(100);
+    await page.tap(".gc-row .gc-main"); // vrstica z izrazom: dotik odpre urejanje
+    await page.waitForTimeout(100);
+    assert.equal(await page.evaluate(() => document.activeElement?.classList.contains("gc-input")), true, "dotik vrstice odpre urejanje");
+    assert.equal(await page.evaluate(() => document.querySelector(".gc-keypad").hidden), true, "ABC ostane po izgubi fokusa");
+    assert.equal(await page.getAttribute(".gc-input", "inputmode"), null);
+    // Dotik izven kalkulatorja konča način ABC; naslednji dotik polja spet pokaže našo tipkovnico.
+    await page.evaluate(() => document.querySelector(".gc-input").blur());
+    await page.tap("#ven");
+    await page.tap(".gc-row .gc-main");
+    await page.waitForSelector(".gc-keypad:not([hidden])");
     assert.deepEqual(errors, []);
   });
 
