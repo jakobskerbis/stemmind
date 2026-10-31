@@ -209,25 +209,6 @@
 .gc-win input { width: 100%; min-height: 38px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg); padding: 4px 8px; font-weight: 700; }
 .gc-win4 label { display: flex; align-items: center; gap: 6px; }
 
-/* tipkovnica (telefon in tablica; na računalniku po izbiri) */
-.gc-keypad {
-  grid-column: 2; background: var(--surface-2); border-top: 1px solid var(--border);
-  padding: 6px 6px calc(6px + env(safe-area-inset-bottom)); user-select: none; -webkit-user-select: none;
-}
-.gc-keypad[hidden] { display: none; }
-.gc-kp-top { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
-.gc-kp-top .chip-row { flex: 1; }
-.gc-kp-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; }
-.gc .gc-key {
-  min-height: 44px; padding: 2px; border-radius: 10px; border: 0; background: var(--surface); color: var(--text);
-  font-weight: 800; font-size: 1rem; box-shadow: 0 1px 0 var(--border); touch-action: manipulation; white-space: nowrap; overflow: hidden;
-}
-.gc .gc-key.num { background: var(--bg); font-size: 1.12rem; }
-.gc .gc-key:active { background: var(--accent-soft); }
-.gc .gc-key.enter { background: var(--accent); color: var(--accent-text); }
-.gc-kp-nav { display: grid; grid-template-columns: 1fr 1fr 1fr 2fr; gap: 5px; margin-top: 5px; }
-.gc-kp-sym .sym-keys { max-height: 190px; overflow-y: auto; }
-
 /* odprt iz naloge ali inštruktorja: čez cel zaslon */
 .graph-overlay { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; background: var(--bg); }
 .graph-overlay[hidden] { display: none; }
@@ -246,7 +227,6 @@ body.graph-open { overflow: hidden; }
   .gc { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto; }
   .gc-stage { grid-row: 1; }
   .gc-panel { grid-row: 2; border-right: 0; border-top: 1px solid var(--border); }
-  .gc-keypad { grid-column: 1; grid-row: 3; }
   .gc.kp-open { grid-template-rows: minmax(0, 1fr) minmax(0, 0.9fr) auto; }
   .gc.gc-full { grid-template-rows: 1fr 0 auto; }
   .gc.gc-full .gc-panel { display: none; }
@@ -255,14 +235,8 @@ body.graph-open { overflow: hidden; }
   .gc-zoom { top: 8px; right: 8px; gap: 5px; flex-direction: row; }
   .gc .gc-fab { width: 38px; height: 38px; }
   .gc.kp-open .gc-help { display: none; }
-  .gc.kp-open .gc .gc-key, .gc.kp-open .gc-key { min-height: 40px; }
-  body.gc-kp .tabbar, body.gc-kp #mock-banner, body.gc-kp #test-notice, body.gc-kp #view-graph .me-back, body.gc-kp #offline-banner { display: none !important; }
   .gc-pop { max-height: 60vh; }
   .gc-row:not(.editing) .gc-math { min-height: 40px; }
-}
-@media (max-width: 380px) {
-  .gc-kp-grid { gap: 4px; }
-  .gc .gc-key { font-size: 0.92rem; min-height: 42px; }
 }
 /* tablica ležeče: seznam ožji */
 @media (min-width: 861px) and (max-width: 1100px) { .gc { --gc-panel: 330px; } }

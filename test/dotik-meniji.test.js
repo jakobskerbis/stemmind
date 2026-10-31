@@ -1,5 +1,6 @@
 // Telefon v pravem brskalniku (Playwright, če je nameščen):
-// 1) tipka ABC v grafičnem kalkulatorju odpre sistemsko tipkovnico in naša tipkovnica ne skoči nazaj;
+// 1) grafični kalkulator piše z Evklidovo tipkovnico (ABC, 123, predloge z @, polje ne izgubi fokusa);
+//    tipka 🌐 (japonščina) da polju telefonovo tipkovnico, ki ostane tudi po izgubi fokusa (#247);
 // 2) dolg spustni meni se odpre čez gumb: izbrana možnost je v iskalnem okencu, seznam se začne za njo.
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -17,7 +18,7 @@ try {
 const PUB = path.resolve("public");
 const TYPES = { ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".html": "text/html" };
 const PAGES = {
-  "/t-calc.html": `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/ui.css"><link rel="stylesheet" href="/graph.css"><div id="g" style="height:600px"></div><button id="ven" style="position:fixed;top:0;left:0;z-index:9999;width:44px;height:44px">x</button>
+  "/t-calc.html": `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/ui.css"><link rel="stylesheet" href="/graph.css"><link rel="stylesheet" href="/tipkovnica.css"><div id="g" style="height:600px"></div><button id="ven" style="position:fixed;top:0;left:0;z-index:9999;width:44px;height:44px">x</button>
 <script type="module">
 import { createCalculator } from "/graph/calc.js";
 window.calc = createCalculator(document.getElementById("g"), { t: (k) => k, icon: () => "", locale: () => "sl", storageKey: () => "t-calc", studentId: () => "", toast() {}, askTutor() {} });
@@ -56,39 +57,78 @@ test("touch-browser checks", { skip }, async (t) => {
     server.close();
   });
 
-  await t.test("graphing calculator: ABC keeps the system keyboard", async () => {
+  await t.test("graphing calculator types with Evklid's keyboard; 🌐 keeps the phone keyboard for that field", async () => {
     const page = await ctx.newPage();
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(`${base}/t-calc.html`);
     await page.waitForFunction(() => window.ready);
-    await page.tap(".gc-input");
-    await page.waitForSelector(".gc-keypad:not([hidden])");
-    assert.equal(await page.getAttribute(".gc-input", "inputmode"), "none", "own keypad: system keyboard off");
-    await page.tap('.gc-keypad [data-kt="abc"]');
-    await page.waitForTimeout(300);
-    const st = await page.evaluate(() => {
-      const f = document.querySelector(".gc-input");
-      return { focused: document.activeElement === f, inputmode: f.getAttribute("inputmode"), keypadHidden: document.querySelector(".gc-keypad").hidden };
+    const kb = "#tipkovnica";
+    // tipka po napisu (brez namiga različic v kotu)
+    const key = (label) => ({
+      tap: async () => {
+        const i = await page.evaluate((l) => [...document.querySelectorAll("#tipkovnica .tk-k")].findIndex((b) => b.firstChild?.textContent === l), label);
+        assert.ok(i >= 0, `tipka ${label}`);
+        await page.locator("#tipkovnica .tk-k").nth(i).tap();
+      },
     });
-    assert.deepEqual(st, { focused: true, inputmode: null, keypadHidden: true });
-    // Tipkanje s sistemsko tipkovnico gre v polje.
-    await page.keyboard.type("y=2x");
+    await page.tap(".gc-input");
+    await page.waitForSelector(`${kb}:not([hidden])`);
+    assert.equal(await page.getAttribute(".gc-input", "inputmode"), "none", "telefonova tipkovnica se ne odpre");
+    assert.equal(await page.locator(`${kb} .tk-rows`).getAttribute("data-layer"), "num", "kalkulator začne s 123");
+    // ABC: črke iz naše tipkovnice, polje obdrži fokus (prej je ABC odprl telefonovo tipkovnico)
+    await page.locator(`${kb} .tk-tab`, { hasText: "ABC" }).tap();
+    assert.equal(await page.locator(`${kb} .tk-rows`).getAttribute("data-layer"), "abc");
+    await key("y").tap();
+    await page.locator(`${kb} .tk-tab`, { hasText: "123" }).tap();
+    for (const k of ["=", "2", "x"]) await key(k).tap();
     assert.equal(await page.inputValue(".gc-input"), "y=2x");
-    // Telefon polje ob odpiranju tipkovnice za hip odfokusira: naslednji dotik ne vrne naše tipkovnice.
-    await page.evaluate(() => document.querySelector(".gc-input").blur());
-    await page.waitForTimeout(100);
-    await page.tap(".gc-row .gc-main"); // vrstica z izrazom: dotik odpre urejanje
-    await page.waitForTimeout(100);
-    assert.equal(await page.evaluate(() => document.activeElement?.classList.contains("gc-input")), true, "dotik vrstice odpre urejanje");
-    assert.equal(await page.evaluate(() => document.querySelector(".gc-keypad").hidden), true, "ABC ostane po izgubi fokusa");
-    assert.equal(await page.getAttribute(".gc-input", "inputmode"), null);
-    // Dotik izven kalkulatorja konča način ABC; naslednji dotik polja spet pokaže našo tipkovnico.
-    await page.evaluate(() => document.querySelector(".gc-input").blur());
-    await page.tap("#ven");
-    await page.tap(".gc-row .gc-main");
-    await page.waitForSelector(".gc-keypad:not([hidden])");
+    // predloga z @: kazalec gre v oklepaj
+    await key("√").tap();
+    await key("4").tap();
+    assert.equal(await page.inputValue(".gc-input"), "y=2x√(4)");
+    const st = await page.evaluate(() => ({ focused: document.activeElement?.classList.contains("gc-input"), inputmode: document.querySelector(".gc-input").getAttribute("inputmode"), open: !document.querySelector("#tipkovnica").hidden }));
+    assert.deepEqual(st, { focused: true, inputmode: "none", open: true });
+    // ⌄ skrije tipkovnico
+    await page.tap(`${kb} .tk-hide`);
+    assert.equal(await page.evaluate(() => document.querySelector("#tipkovnica").hidden), true);
     assert.deepEqual(errors, []);
+    await page.close();
+
+    // Japonščina: ABC ima 🌐, ki da temu polju telefonovo tipkovnico.
+    const jp = await ctx.newPage();
+    jp.on("pageerror", (e) => errors.push(e.message));
+    await jp.addInitScript(() => localStorage.setItem("evklid.lang", "ja"));
+    await jp.goto(`${base}/t-calc.html`);
+    await jp.waitForFunction(() => window.ready);
+    await jp.tap(".gc-input");
+    await jp.waitForSelector(`${kb}:not([hidden])`);
+    await jp.locator(`${kb} .tk-tab`, { hasText: "ABC" }).tap();
+    await jp.locator(`${kb} .tk-k`, { hasText: "🌐" }).tap();
+    await jp.waitForTimeout(200);
+    const sys = await jp.evaluate(() => {
+      const f = document.querySelector(".gc-input");
+      return { focused: document.activeElement === f, inputmode: f.getAttribute("inputmode"), hidden: document.querySelector("#tipkovnica").hidden };
+    });
+    assert.deepEqual(sys, { focused: true, inputmode: null, hidden: true });
+    await jp.keyboard.type("y=2x");
+    assert.equal(await jp.inputValue(".gc-input"), "y=2x");
+    // Telefon polje ob odpiranju tipkovnice za hip odfokusira: naslednji dotik ne vrne naše tipkovnice.
+    await jp.evaluate(() => document.querySelector(".gc-input").blur());
+    await jp.waitForTimeout(100);
+    await jp.tap(".gc-row .gc-main"); // vrstica z izrazom: dotik odpre urejanje
+    await jp.waitForTimeout(100);
+    assert.equal(await jp.evaluate(() => document.activeElement?.classList.contains("gc-input")), true, "dotik vrstice odpre urejanje");
+    assert.equal(await jp.evaluate(() => document.querySelector("#tipkovnica").hidden), true, "🌐 ostane po izgubi fokusa");
+    assert.equal(await jp.getAttribute(".gc-input", "inputmode"), null);
+    // Dotik izven kalkulatorja konča način 🌐; naslednji dotik polja spet pokaže našo tipkovnico.
+    await jp.evaluate(() => document.querySelector(".gc-input").blur());
+    await jp.tap("#ven");
+    await jp.tap(".gc-row .gc-main");
+    await jp.waitForSelector(`${kb}:not([hidden])`);
+    assert.equal(await jp.getAttribute(".gc-input", "inputmode"), "none");
+    assert.deepEqual(errors, []);
+    await jp.close();
   });
 
   await t.test("long dropdown opens over its button with the chosen item in the search box", async () => {

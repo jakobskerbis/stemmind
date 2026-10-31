@@ -5,7 +5,7 @@
 import { icon, hydrateIcons } from "../icons.js";
 import { t } from "../i18n.js";
 import { solve, analyze, prep, tex as exprTex, parseTask } from "./solvecore.js";
-import { mountSymbols } from "../symbols.js";
+import { configureKeyboard, toggleKeyboard, keyboardOpenFor, keyboardLayer } from "../tipkovnica.js";
 
 let D = null; // { api, getStudent, toast, escapeHtml, askTutor, openGraph }
 const fresh = () => ({
@@ -27,7 +27,6 @@ let aiSeq = 0; // odgovor AI za prejšnjo nalogo ne prepiše nove
 let stream = null;
 let frame = { x: 0.06, y: 0.34, w: 0.88, h: 0.26 };
 let graphView = null;
-let symbols = null;
 
 export function initScan(deps) {
   D = deps;
@@ -437,7 +436,6 @@ function renderConfirm(box) {
         <input id="scan-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="text" placeholder="${esc(t("scan.placeholder"))}" value="${esc(S.text)}">
         <button type="button" class="ghost icon-only" data-act="sym" aria-label="${esc(t("scan.symbols"))}" title="${esc(t("scan.symbols"))}" aria-expanded="false">${icon("sigma")}</button>
       </div>
-      <div class="sym-panel scan-sym" hidden></div>
       <p class="scan-err" hidden></p>
       <div class="scan-actions">
         <button type="button" class="secondary" data-act="retake">${icon("camera")}${esc(t("scan.retake"))}</button>
@@ -466,13 +464,15 @@ function renderConfirm(box) {
     }
   });
   update();
-  const panel = box.querySelector(".scan-sym");
-  symbols = mountSymbols(panel, input, { settings: () => D.getStudent()?.settings, onChange: update });
-  box.querySelector('[data-act="sym"]').addEventListener("click", (e) => {
-    const open = symbols.toggle();
-    e.currentTarget.setAttribute("aria-expanded", String(open));
-    input.focus();
-  });
+  // Σ odpre Evklidovo tipkovnico na plasti simbolov (public/tipkovnica.js); Enter = Reši.
+  configureKeyboard(input, { math: true, layers: ["num", "fx", "sym", "abc"], start: "num", enter: "go", enterText: t("scan.solve") });
+  const symBtn = box.querySelector('[data-act="sym"]');
+  symBtn.addEventListener("click", () => toggleKeyboard(input, { layer: "sym" }));
+  const sync = () => {
+    if (!symBtn.isConnected) return window.removeEventListener("evklid:tipkovnica", sync);
+    symBtn.setAttribute("aria-expanded", String(keyboardOpenFor(input) && keyboardLayer() === "sym"));
+  };
+  window.addEventListener("evklid:tipkovnica", sync);
   box.querySelectorAll("[data-pick]").forEach((b) =>
     b.addEventListener("click", () => {
       const p = S.problems[Number(b.dataset.pick)];

@@ -6,6 +6,7 @@ import { icon } from "./icons.js";
 import { t } from "./i18n.js";
 import { DEVICE_SETTINGS } from "./settings-registry.js";
 import { levelLabel } from "./level-picker.js";
+import { PREF_KEY, parsePrefs } from "./tipkovnica-data.js";
 
 const get = (k) => {
   try {
@@ -26,6 +27,9 @@ const padPrefs = () => {
     return {};
   }
 };
+// Evklidova tipkovnica (public/tipkovnica-data.js): { mode, words, buzz }.
+const kbPrefs = () => parsePrefs(get(PREF_KEY));
+const KB_KEYS = { keyboard: "mode", keyboard_words: "words", keyboard_vibration: "buzz" };
 // Imena barv iz nastavitev → deli palete v theme.js.
 const PART = { color_background: "bg", color_windows: "surface", color_menus: "menu", color_text: "text" };
 
@@ -51,6 +55,11 @@ export function deviceSnapshot() {
   const pad = padPrefs();
   if (pad.auto !== undefined) out.writing_pad = pad.auto ? "auto" : "off";
   if (pad.tab) out.writing_pad_tab = pad.tab;
+  const kb = kbPrefs();
+  // samo, kar ni privzeto (privzeto piše v opisu nastavitve; manj besedila za inštruktorja)
+  if (kb.mode !== "always") out.keyboard = kb.mode;
+  if (kb.words) out.keyboard_words = "on";
+  if (!kb.buzz) out.keyboard_vibration = "off";
   return out;
 }
 
@@ -82,6 +91,11 @@ export function applyDeviceSettings(changes = {}) {
       if (key === "writing_pad") p.auto = value === "auto";
       else p.tab = value;
       set("evklid.pad", JSON.stringify(p));
+    }
+    if (KB_KEYS[key]) {
+      const p = kbPrefs();
+      p[KB_KEYS[key]] = key === "keyboard" ? value : value === "on";
+      set(PREF_KEY, JSON.stringify(p));
     }
     // Moduli, ki imajo vrednost v pomnilniku (kalkulator, plošča, cel zaslon), se odzovejo na dogodek.
     window.dispatchEvent(new CustomEvent("evklid:device-setting", { detail: { key, value } }));

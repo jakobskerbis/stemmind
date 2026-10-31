@@ -1,0 +1,85 @@
+/* Evklidova tipkovnica (public/tipkovnica.js). Barve samo iz spremenljivk sloga (docs/oblikovanje.md). */
+.tk {
+  --tk-key: var(--surface);
+  --tk-fn: color-mix(in srgb, var(--surface-2) 82%, var(--text) 10%);
+  --tk-board: var(--surface-2);
+  --tk-ink: var(--text);
+  --tk-dim: var(--muted);
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 500;
+  background: var(--tk-board); color: var(--tk-ink); border-top: 1px solid var(--border);
+  padding: 6px max(4px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left));
+  font-family: var(--font); user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: manipulation;
+}
+.tk[hidden] { display: none !important; }
+/* zgodovinski slogi: plošča v barvi menija obdobja */
+:root[data-era] .tk { --tk-board: var(--menu, var(--surface-2)); --tk-ink: var(--menu-text, var(--text)); --tk-dim: var(--menu-muted, var(--muted)); --tk-fn: color-mix(in srgb, var(--menu, var(--surface-2)) 80%, var(--menu-text, var(--text)) 14%); border-top-color: var(--menu-border, var(--border)); }
+.tk-in { position: relative; max-width: 640px; margin: 0 auto; display: grid; gap: 6px; }
+.tk-ctx { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; min-height: 32px; padding: 0 2px; }
+.tk-ctx::-webkit-scrollbar { display: none; }
+.tk-chip { flex: none; min-height: 32px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: 700 0.86rem var(--font); padding: 4px 12px; border-radius: 99px; cursor: pointer; box-shadow: none; }
+.tk-chip.unit { border-color: var(--accent); color: var(--accent); }
+.tk-ctx.words .tk-chip { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tk-tabs { display: flex; align-items: center; gap: 4px; min-height: 36px; }
+.tk-tablist { display: flex; gap: 3px; flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.tk-tab, .tk-hide { border: 0; background: none; color: var(--tk-dim); font: 800 0.84rem var(--font); min-height: 36px; padding: 4px 11px; border-radius: var(--radius-sm); cursor: pointer; box-shadow: none; flex: none; }
+.tk-tab.on { background: var(--surface); color: var(--accent); box-shadow: 0 var(--press) 0 var(--tk-fn); }
+.tk-hide { margin-inline-start: auto; min-width: 44px; display: grid; place-items: center; font-size: 1rem; }
+.tk-rows { display: grid; gap: 6px; min-height: calc(4 * 44px + 3 * 6px); align-content: start; }
+.tk-row { display: flex; gap: 4px; justify-content: center; }
+.tk-grid { display: grid; grid-template-columns: repeat(var(--cols, 6), minmax(0, 1fr)); gap: 6px 4px; }
+.tk-scroll { max-height: calc(3 * 44px + 2 * 6px); overflow-y: auto; overscroll-behavior: contain; }
+.tk-sub { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.tk-sub::-webkit-scrollbar, .tk-tablist::-webkit-scrollbar { display: none; }
+.tk-subtab { flex: none; min-height: 32px; border: 1px solid var(--border); background: var(--tk-key); color: var(--text); font: 700 0.8rem var(--font); padding: 3px 10px; border-radius: 99px; cursor: pointer; box-shadow: none; }
+.tk-subtab.on { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+
+.tk-k {
+  flex: 1 1 0; min-width: 0; height: 44px; min-height: 44px; border: 0; padding: 0; position: relative; cursor: pointer;
+  border-radius: var(--radius-sm); background: var(--tk-key); color: var(--text); font: 500 1.15rem var(--font);
+  display: grid; place-items: center; box-shadow: 0 var(--press) 0 var(--tk-fn); white-space: nowrap; overflow: hidden;
+}
+.tk-k.fn { background: var(--tk-fn); color: var(--tk-ink); font-size: 0.95rem; font-weight: 700; }
+.tk-k.sm { font-size: 0.92rem; }
+.tk-k.dig { font-size: 1.25rem; font-weight: 600; }
+.tk-k.sym { font-size: 1.05rem; font-weight: 700; }
+.tk-k.go { background: var(--accent); color: var(--accent-text); font-size: 0.95rem; font-weight: 800; box-shadow: 0 var(--press) 0 color-mix(in srgb, var(--accent) 60%, var(--text)); }
+.tk-k.go.txt { padding: 0 6px; }
+.tk-k.shift.on { background: var(--surface); color: var(--accent); }
+.tk-k.shift.lock { box-shadow: inset 0 -3px 0 var(--accent); }
+.tk-k.w15 { flex-grow: 1.5; } .tk-k.w2 { flex-grow: 2.2; } .tk-k.w3 { flex-grow: 3; } .tk-k.w5 { flex-grow: 5; }
+.tk-grid .tk-k { width: 100%; }
+/* poteg po tipki (različice, preslednica) ne premika strani; v mreži, ki se pomika, ostane navpični poteg */
+.tk-k { touch-action: none; }
+.tk-scroll .tk-k { touch-action: pan-y; }
+.tk-k svg.i { width: 1.25em; height: 1.25em; }
+.tk-k .tk-v { position: absolute; top: 2px; inset-inline-end: 4px; font-size: 0.6rem; line-height: 1; color: var(--muted); font-weight: 700; }
+.tk-k:active, .tk-k.down { filter: brightness(0.9); transform: translateY(calc(var(--press) * 0.6)); box-shadow: none; }
+.tk-k:focus-visible, .tk-tab:focus-visible, .tk-hide:focus-visible, .tk-chip:focus-visible, .tk-subtab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tk-pop { position: absolute; z-index: 3; display: flex; gap: 3px; padding: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow); }
+.tk-pop button { width: 38px; height: 44px; border: 0; border-radius: 6px; background: var(--surface-2); color: var(--text); font: 500 1.1rem var(--font); cursor: pointer; padding: 0; box-shadow: none; }
+.tk-pop button:hover, .tk-pop button.on, .tk-pop button:focus-visible { background: var(--accent); color: var(--accent-text); }
+
+/* Nastavitve → Vnos */
+.tk-set-checks { display: grid; gap: 14px; margin-top: 16px; }
+
+/* telefon: ožje razmike, da gre 11 črk v vrsto */
+@media (max-width: 380px) {
+  .tk-row { gap: 3px; }
+  .tk-k { font-size: 1.05rem; }
+  .tk-tab, .tk-hide { padding-inline: 8px; }
+}
+/* Zaslon se umakne nad tipkovnico; spodnja vrstica in pasovi so med pisanjem skriti (prej body.gc-kp). */
+body.tk-open { padding-bottom: var(--tk-h, 0px); box-sizing: border-box; }
+body.tk-open :is(.graph-overlay, .overlay, .corner-board) { bottom: var(--tk-h, 0px); }
+@media (max-width: 860px), (hover: none) and (pointer: coarse) {
+  body.tk-open :is(.tabbar, #mock-banner, #test-notice, #offline-banner, #view-graph .me-back) { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tk-k:active, .tk-k.down { transform: none; }
+}
+@media (forced-colors: active) {
+  .tk { border-top: 1px solid CanvasText; }
+  .tk-k, .tk-chip, .tk-subtab, .tk-tab, .tk-pop button { border: 1px solid ButtonText; forced-color-adjust: auto; }
+  .tk-tab.on, .tk-subtab.on, .tk-k.shift.on { outline: 2px solid Highlight; }
+  .tk-k.go { background: ButtonText; color: ButtonFace; }
+}
